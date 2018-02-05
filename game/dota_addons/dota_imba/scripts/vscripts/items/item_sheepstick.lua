@@ -1,3 +1,20 @@
+-- Copyright (C) 2018  The Dota IMBA Development Team
+--
+-- Licensed under the Apache License, Version 2.0 (the "License");
+-- you may not use this file except in compliance with the License.
+-- You may obtain a copy of the License at
+--
+-- http://www.apache.org/licenses/LICENSE-2.0
+--
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- See the License for the specific language governing permissions and
+-- limitations under the License.
+--
+-- Editors:
+--
+
 --	Author: Firetoad
 --	Date: 			09.05.2015
 --	Last Update:	18.03.2017
@@ -24,7 +41,7 @@ function item_imba_sheepstick:GetIntrinsicModifierName()
 function item_imba_sheepstick:CastFilterResultTarget(target)
 	if IsServer() then
 		local caster = self:GetCaster()
-		
+
 		-- Can't cast on allies, except for yourself
 		if caster:GetTeam() == target:GetTeam() and caster ~= target then
 			return UF_FAIL_CUSTOM
@@ -57,7 +74,7 @@ function item_imba_sheepstick:OnSpellStart()
 		-- Parameters
 		local caster = self:GetCaster()
 		local target = self:GetCursorTarget()
-		local hex_duration = self:GetSpecialValueFor("hex_duration")		
+		local hex_duration = self:GetSpecialValueFor("hex_duration")
 		local modified_duration = hex_duration
 
 		-- If the target possesses a ready Linken's Sphere, do nothing
@@ -90,8 +107,8 @@ function item_imba_sheepstick:OnSpellStart()
 		if caster == target then
 			target:AddNewModifier(caster, self, "modifier_item_imba_sheepstick_buff", {duration = hex_duration})
 			target:Purge(false, true, false, false, false)
-		else			
-			
+		else
+
 			target:AddNewModifier(caster, self, "modifier_item_imba_sheepstick_debuff", {duration = modified_duration})
 		end
 	end

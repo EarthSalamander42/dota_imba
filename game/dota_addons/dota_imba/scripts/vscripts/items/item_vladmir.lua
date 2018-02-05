@@ -1,3 +1,20 @@
+-- Copyright (C) 2018  The Dota IMBA Development Team
+--
+-- Licensed under the Apache License, Version 2.0 (the "License");
+-- you may not use this file except in compliance with the License.
+-- You may obtain a copy of the License at
+--
+-- http://www.apache.org/licenses/LICENSE-2.0
+--
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- See the License for the specific language governing permissions and
+-- limitations under the License.
+--
+-- Editors:
+--
+
 --	Author: Firetoad
 --	Date: 			03.08.2015
 --	Last Update:	14.03.2017
@@ -12,7 +29,7 @@ LinkLuaModifier( "modifier_item_imba_vladmir_aura_emitter", "items/item_vladmir.
 LinkLuaModifier( "modifier_item_imba_vladmir_aura", "items/item_vladmir.lua", LUA_MODIFIER_MOTION_NONE )			-- Aura buff
 
 function item_imba_vladmir:GetAbilityTextureName()
-   return "custom/imba_vladmir"
+	return "custom/imba_vladmir"
 end
 
 function item_imba_vladmir:GetBehavior()
@@ -86,10 +103,10 @@ function modifier_item_imba_vladmir_aura_emitter:IsPurgable() return false end
 
 function modifier_item_imba_vladmir_aura_emitter:GetAuraSearchTeam()
 	return DOTA_UNIT_TARGET_TEAM_FRIENDLY end
-	
+
 function modifier_item_imba_vladmir_aura_emitter:GetAuraSearchType()
 	return DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO end
-	
+
 function modifier_item_imba_vladmir_aura_emitter:GetModifierAura()
 	if IsServer() then
 		if self:GetParent():IsAlive() then
@@ -99,7 +116,7 @@ function modifier_item_imba_vladmir_aura_emitter:GetModifierAura()
 		end
 	end
 end
-	
+
 function modifier_item_imba_vladmir_aura_emitter:GetAuraRadius()
 	return self:GetAbility():GetSpecialValueFor("aura_radius") end
 
@@ -205,7 +222,7 @@ function modifier_item_imba_vladmir_aura:OnAttackLanded( keys )
 		-- Else, keep going
 		local target = keys.target
 		local lifesteal_amount = self:GetAbility():GetSpecialValueFor("vampiric_aura")
-		
+
 		-- If there's no valid target, do nothing
 		if target:IsBuilding() or target:IsIllusion() or (target:GetTeam() == attacker:GetTeam()) then
 			return end
@@ -221,7 +238,7 @@ function modifier_item_imba_vladmir_aura:OnAttackLanded( keys )
 			ParticleManager:SetParticleControl(lifesteal_pfx, 0, attacker:GetAbsOrigin())
 			ParticleManager:ReleaseParticleIndex(lifesteal_pfx)
 
-		-- If its a creep, heal and draw its appropriate particle
+			-- If its a creep, heal and draw its appropriate particle
 		else
 			attacker:Heal(heal, attacker)
 			local lifesteal_pfx = ParticleManager:CreateParticle("particles/generic_gameplay/generic_lifesteal_lanecreeps.vpcf", PATTACH_ABSORIGIN_FOLLOW, attacker)
@@ -241,7 +258,7 @@ LinkLuaModifier( "modifier_item_imba_vladmir_blood_aura_emitter", "items/item_vl
 LinkLuaModifier( "modifier_item_imba_vladmir_blood_aura", "items/item_vladmir.lua", LUA_MODIFIER_MOTION_NONE )			-- Aura buff
 
 function item_imba_vladmir_2:GetAbilityTextureName()
-   return "custom/imba_vladmir_2"
+	return "custom/imba_vladmir_2"
 end
 
 function item_imba_vladmir_2:GetBehavior()
@@ -316,10 +333,10 @@ function modifier_item_imba_vladmir_blood_aura_emitter:IsPurgable() return false
 
 function modifier_item_imba_vladmir_blood_aura_emitter:GetAuraSearchTeam()
 	return DOTA_UNIT_TARGET_TEAM_FRIENDLY end
-	
+
 function modifier_item_imba_vladmir_blood_aura_emitter:GetAuraSearchType()
 	return DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO end
-	
+
 function modifier_item_imba_vladmir_blood_aura_emitter:GetModifierAura()
 	if IsServer() then
 		if self:GetParent():IsAlive() then
@@ -329,7 +346,7 @@ function modifier_item_imba_vladmir_blood_aura_emitter:GetModifierAura()
 		end
 	end
 end
-	
+
 function modifier_item_imba_vladmir_blood_aura_emitter:GetAuraRadius()
 	return self:GetAbility():GetSpecialValueFor("aura_radius") end
 
@@ -410,7 +427,7 @@ function modifier_item_imba_vladmir_blood_aura:OnAttackLanded( keys )
 		-- Else, keep going
 		local target = keys.target
 		local lifesteal_amount = self:GetAbility():GetSpecialValueFor("vampiric_aura")
-		
+
 		-- If there's no valid target, do nothing
 		if target:IsBuilding() or target:IsIllusion() or (target:GetTeam() == attacker:GetTeam()) then
 			return end
@@ -426,7 +443,7 @@ function modifier_item_imba_vladmir_blood_aura:OnAttackLanded( keys )
 			ParticleManager:SetParticleControl(lifesteal_pfx, 0, attacker:GetAbsOrigin())
 			ParticleManager:ReleaseParticleIndex(lifesteal_pfx)
 
-		-- If its a creep, heal and draw its appropriate particle
+			-- If its a creep, heal and draw its appropriate particle
 		else
 			attacker:Heal(heal, attacker)
 			local lifesteal_pfx = ParticleManager:CreateParticle("particles/item/vladmir/vladmir_offering_lifesteal_creeps.vpcf", PATTACH_ABSORIGIN_FOLLOW, attacker)

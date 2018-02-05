@@ -1,3 +1,20 @@
+-- Copyright (C) 2018  The Dota IMBA Development Team
+--
+-- Licensed under the Apache License, Version 2.0 (the "License");
+-- you may not use this file except in compliance with the License.
+-- You may obtain a copy of the License at
+--
+-- http://www.apache.org/licenses/LICENSE-2.0
+--
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- See the License for the specific language governing permissions and
+-- limitations under the License.
+--
+-- Editors:
+--
+
 -- Author: Ported from Angel Arena Black Star's Github
 -- https://github.com/ark120202/aabs/blob/1faaadbc3cbf9f9d9bf2cbb8c1e2463141c17d2e/game/scripts/vscripts/items/item_bottle.lua
 
@@ -85,19 +102,19 @@ end
 function modifier_item_imba_bottle_texture_controller:OnIntervalThink()
 	local bottle = self:GetAbility()
 	local rune_table = {
-						"0",--1
-						"1",--2
-						"2",--3
-						"3",--4
-						"arcane", --5
-						"double_damage", --6
-						"haste", --7
-						"regeneration", --8
-						"illusion", --9
-						"invisibility",  --10
-						"frost", --11
-						"bounty", --12
-						}
+		"0",--1
+		"1",--2
+		"2",--3
+		"3",--4
+		"arcane", --5
+		"double_damage", --6
+		"haste", --7
+		"regeneration", --8
+		"illusion", --9
+		"invisibility",  --10
+		"frost", --11
+		"bounty", --12
+	}
 	if IsServer() then
 		if bottle:IsCooldownReady() and self:GetParent():HasModifier("modifier_fountain_aura_buff") or self:GetParent():HasModifier("modifier_fountain_aura_effect_lua") then
 			bottle:SetCurrentCharges(3)

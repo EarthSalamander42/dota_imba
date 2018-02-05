@@ -1,23 +1,40 @@
+-- Copyright (C) 2018  The Dota IMBA Development Team
+--
+-- Licensed under the Apache License, Version 2.0 (the "License");
+-- you may not use this file except in compliance with the License.
+-- You may obtain a copy of the License at
+--
+-- http://www.apache.org/licenses/LICENSE-2.0
+--
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- See the License for the specific language governing permissions and
+-- limitations under the License.
+--
+-- Editors:
+--
+
 --	Angelic Alliance
 --	Author: zimberzimber
 --	Date:	27.1.2017
 
 if item_imba_angelic_alliance == nil then item_imba_angelic_alliance = class({}) end
 LinkLuaModifier( "modifier_imba_angelic_alliance_debuff", "items/item_angelic_alliance.lua", LUA_MODIFIER_MOTION_NONE )					--	Disarm, armor reduction, vision
-LinkLuaModifier( "modifier_imba_angelic_alliance_passive_effect", "items/item_angelic_alliance.lua", LUA_MODIFIER_MOTION_NONE )			--	Item Modifier + attack/hit effect 
+LinkLuaModifier( "modifier_imba_angelic_alliance_passive_effect", "items/item_angelic_alliance.lua", LUA_MODIFIER_MOTION_NONE )			--	Item Modifier + attack/hit effect
 LinkLuaModifier( "modifier_imba_angelic_alliance_slow_decaying", "items/item_angelic_alliance.lua", LUA_MODIFIER_MOTION_NONE )			--	Decaying slow
 LinkLuaModifier( "modifier_imba_angelic_alliance_buff", "items/item_angelic_alliance.lua", LUA_MODIFIER_MOTION_NONE )					--	Evasion, armor, vision
 LinkLuaModifier( "modifier_imba_angelic_alliance_haste_decaying", "items/item_angelic_alliance.lua", LUA_MODIFIER_MOTION_NONE )			--	Decaying haste
 LinkLuaModifier( "modifier_imba_angelic_alliance_debuff_caster", "items/item_angelic_alliance.lua", LUA_MODIFIER_MOTION_NONE )			--	Armor reduction for the caster
-LinkLuaModifier( "modifier_imba_angelic_alliance_passive_disarm", "items/item_angelic_alliance.lua", LUA_MODIFIER_MOTION_NONE )			--	Passive disarm from attacking or getting attacked 
+LinkLuaModifier( "modifier_imba_angelic_alliance_passive_disarm", "items/item_angelic_alliance.lua", LUA_MODIFIER_MOTION_NONE )			--	Passive disarm from attacking or getting attacked
 LinkLuaModifier( "modifier_imba_angelic_alliance_passive_disarm_cooldown", "items/item_angelic_alliance.lua", LUA_MODIFIER_MOTION_NONE )--	Cooldown for the passive disarm effect per target
 
 -----------------------------------------------------------------------------------------------------------
---	Item Definition 
+--	Item Definition
 -----------------------------------------------------------------------------------------------------------
 
 function item_imba_angelic_alliance:GetAbilityTextureName()
-   return "custom/imba_angelic_alliance"
+	return "custom/imba_angelic_alliance"
 end
 
 function item_imba_angelic_alliance:GetManaCost()		return self:GetSpecialValueFor("mana_cost")	end
@@ -32,8 +49,8 @@ function item_imba_angelic_alliance:GetIntrinsicModifierName()
 end
 
 function item_imba_angelic_alliance:OnSpellStart()
-    local caster = self:GetCaster()
-    local target = self:GetCursorTarget()
+	local caster = self:GetCaster()
+	local target = self:GetCursorTarget()
 	local duration = self:GetSpecialValueFor("duration")
 
 	-- If the target possesses a ready Linken's Sphere, do nothing
@@ -54,13 +71,13 @@ function item_imba_angelic_alliance:OnSpellStart()
 		target:RemoveModifierByName("modifier_imba_angelic_alliance_haste_decaying")
 		AddStacksLua(self, caster, target, "modifier_imba_angelic_alliance_haste_decaying", duration*2)
 	else
-		if target:TriggerSpellAbsorb(self) then return nil end 
+		if target:TriggerSpellAbsorb(self) then return nil end
 		target:EmitSound("Imba.AngelicAllianceCast")
 		target:AddNewModifier(caster, self, "modifier_imba_angelic_alliance_debuff", {duration = duration})
 		target:RemoveModifierByName("modifier_imba_angelic_alliance_slow_decaying")
 		AddStacksLua(self, caster, target, "modifier_imba_angelic_alliance_slow_decaying", duration*2)
 	end
-	
+
 	caster:AddNewModifier(caster, self, "modifier_imba_angelic_alliance_debuff_caster", {duration = duration})
 end
 
@@ -77,7 +94,7 @@ function item_imba_angelic_alliance:CastFilterResultTarget(target)
 		end
 
 		local nResult = UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
-	    return nResult
+		return nResult
 	end
 end
 
@@ -98,11 +115,11 @@ function modifier_imba_angelic_alliance_passive_effect:IsPurgable() return false
 
 function modifier_imba_angelic_alliance_passive_effect:DeclareFunctions()
 	local funcs = {	MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
-					MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
-					MODIFIER_PROPERTY_EVASION_CONSTANT,
-					MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE,
-					MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
-					MODIFIER_EVENT_ON_ATTACK_LANDED,			}
+		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
+		MODIFIER_PROPERTY_EVASION_CONSTANT,
+		MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE,
+		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
+		MODIFIER_EVENT_ON_ATTACK_LANDED,			}
 	return funcs
 end
 
@@ -122,7 +139,7 @@ function modifier_imba_angelic_alliance_passive_effect:GetModifierEvasion_Consta
 	local parent = self:GetParent()
 	local ability = self:GetAbility()
 	local evasion = ability:GetSpecialValueFor("bonus_evasion")
-	
+
 	if parent:HasModifier("modifier_imba_angelic_alliance_debuff_caster") then return 0 end
 	return evasion
 end
@@ -147,14 +164,14 @@ function modifier_imba_angelic_alliance_passive_effect:OnAttackLanded( keys )
 		local ability = self:GetAbility()
 		local chance = ability:GetSpecialValueFor("passive_disarm_chance")
 		local duration = ability:GetSpecialValueFor("passive_disarm_duration")
-		
+
 		if caster:HasModifier("modifier_imba_angelic_alliance_debuff_caster") then return nil end
 		-- Proc once every 6 seconds, regardless of if it's us attacking or being attacked
 		if caster:HasModifier("modifier_imba_angelic_alliance_passive_disarm_cooldown") then return nil end
 		-- Don't disarm towers
 		if attacker:IsBuilding() or target:IsBuilding() then
 			return nil
-		end		
+		end
 
 		if caster == target and RollPseudoRandom(chance, self) then				-- Disarm attacker when the wielder is the one getting hit
 			if attacker:IsMagicImmune() then return end
@@ -166,7 +183,7 @@ function modifier_imba_angelic_alliance_passive_effect:OnAttackLanded( keys )
 end
 
 -----------------------------------------------------------------------------------------------------------
---	Enemy Debuff 
+--	Enemy Debuff
 -----------------------------------------------------------------------------------------------------------
 
 if modifier_imba_angelic_alliance_debuff == nil then modifier_imba_angelic_alliance_debuff = class({}) end
@@ -176,10 +193,10 @@ function modifier_imba_angelic_alliance_debuff:IsPurgable() return false end
 function modifier_imba_angelic_alliance_debuff:GetModifierProvidesFOWVision() return 1 end
 function modifier_imba_angelic_alliance_debuff:GetTexture() return "custom/imba_angelic_alliance" end
 
-function modifier_imba_angelic_alliance_debuff:DeclareFunctions()	
+function modifier_imba_angelic_alliance_debuff:DeclareFunctions()
 	local decFuncs = {	MODIFIER_PROPERTY_PROVIDES_FOW_POSITION,
-						MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS, }
-	return decFuncs	
+		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS, }
+	return decFuncs
 end
 
 function modifier_imba_angelic_alliance_debuff:GetEffectName()
@@ -200,7 +217,7 @@ function modifier_imba_angelic_alliance_debuff:CheckState()
 end
 
 -----------------------------------------------------------------------------------------------------------
---	Enemy Decaying Slow 
+--	Enemy Decaying Slow
 -----------------------------------------------------------------------------------------------------------
 
 if modifier_imba_angelic_alliance_slow_decaying == nil then modifier_imba_angelic_alliance_slow_decaying = class({}) end
@@ -208,11 +225,11 @@ function modifier_imba_angelic_alliance_slow_decaying:IsDebuff() return true end
 function modifier_imba_angelic_alliance_slow_decaying:IsHidden() return true end
 function modifier_imba_angelic_alliance_slow_decaying:IsPurgable() return false end
 
-function modifier_imba_angelic_alliance_slow_decaying:OnCreated()   
-    if IsServer() then self:StartIntervalThink( 0.5 ) end
+function modifier_imba_angelic_alliance_slow_decaying:OnCreated()
+	if IsServer() then self:StartIntervalThink( 0.5 ) end
 end
 
-function modifier_imba_angelic_alliance_slow_decaying:DeclareFunctions()	
+function modifier_imba_angelic_alliance_slow_decaying:DeclareFunctions()
 	local funcs = { MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE }
 	return funcs
 end
@@ -220,7 +237,7 @@ end
 function modifier_imba_angelic_alliance_slow_decaying:GetModifierMoveSpeedBonus_Percentage()
 	local target = self:GetParent()
 	if target:IsMagicImmune() then return 0 end
-	
+
 	local ability = self:GetAbility()
 	local slowRate = ability:GetSpecialValueFor("slow_decay")
 	local modifier = "modifier_imba_angelic_alliance_slow_decaying"
@@ -235,7 +252,7 @@ function modifier_imba_angelic_alliance_slow_decaying:OnIntervalThink()
 		local target = self:GetParent()
 		local modifier = "modifier_imba_angelic_alliance_slow_decaying"
 		local current_stacks = target:GetModifierStackCount(modifier, caster)
-		
+
 		if current_stacks <= 1 then
 			target:RemoveModifierByName(modifier)
 		else
@@ -245,7 +262,7 @@ function modifier_imba_angelic_alliance_slow_decaying:OnIntervalThink()
 end
 
 -----------------------------------------------------------------------------------------------------------
---	Ally Buff 
+--	Ally Buff
 -----------------------------------------------------------------------------------------------------------
 
 if modifier_imba_angelic_alliance_buff == nil then modifier_imba_angelic_alliance_buff = class({}) end
@@ -261,10 +278,10 @@ function modifier_imba_angelic_alliance_buff:GetEffectName()
 function modifier_imba_angelic_alliance_buff:GetEffectAttachType()
 	return PATTACH_OVERHEAD_FOLLOW end
 
-function modifier_imba_angelic_alliance_buff:DeclareFunctions()	
+function modifier_imba_angelic_alliance_buff:DeclareFunctions()
 	local funcs = {	MODIFIER_PROPERTY_PROVIDES_FOW_POSITION,
-					MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
-					MODIFIER_PROPERTY_EVASION_CONSTANT,}
+		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
+		MODIFIER_PROPERTY_EVASION_CONSTANT,}
 	return funcs
 end
 
@@ -273,7 +290,7 @@ function modifier_imba_angelic_alliance_buff:GetModifierPhysicalArmorBonus()
 	local armor = ability:GetSpecialValueFor("armor_change")
 	return armor
 end
- 
+
 function modifier_imba_angelic_alliance_buff:GetModifierEvasion_Constant()
 	local ability = self:GetAbility()
 	local evasion = ability:GetSpecialValueFor("active_evasion")
@@ -281,7 +298,7 @@ function modifier_imba_angelic_alliance_buff:GetModifierEvasion_Constant()
 end
 
 -----------------------------------------------------------------------------------------------------------
---	Ally Decaying Haste 
+--	Ally Decaying Haste
 -----------------------------------------------------------------------------------------------------------
 
 if modifier_imba_angelic_alliance_haste_decaying == nil then modifier_imba_angelic_alliance_haste_decaying = class({}) end
@@ -289,11 +306,11 @@ function modifier_imba_angelic_alliance_haste_decaying:IsHidden() return true en
 function modifier_imba_angelic_alliance_haste_decaying:IsDebuff() return false end
 function modifier_imba_angelic_alliance_haste_decaying:IsPurgable() return false end
 
-function modifier_imba_angelic_alliance_haste_decaying:OnCreated()   
-    if IsServer() then self:StartIntervalThink( 0.5 ) end
+function modifier_imba_angelic_alliance_haste_decaying:OnCreated()
+	if IsServer() then self:StartIntervalThink( 0.5 ) end
 end
 
-function modifier_imba_angelic_alliance_haste_decaying:DeclareFunctions()	
+function modifier_imba_angelic_alliance_haste_decaying:DeclareFunctions()
 	local funcs = { MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE }
 	return funcs
 end
@@ -314,7 +331,7 @@ function modifier_imba_angelic_alliance_haste_decaying:OnIntervalThink()
 		local target = self:GetParent()
 		local modifier = "modifier_imba_angelic_alliance_haste_decaying"
 		local current_stacks = target:GetModifierStackCount(modifier, caster)
-		
+
 		if current_stacks <= 1 then
 			target:RemoveModifierByName(modifier)
 		else
@@ -324,7 +341,7 @@ function modifier_imba_angelic_alliance_haste_decaying:OnIntervalThink()
 end
 
 -----------------------------------------------------------------------------------------------------------
---	Caster Debuff 
+--	Caster Debuff
 -----------------------------------------------------------------------------------------------------------
 
 if modifier_imba_angelic_alliance_debuff_caster == nil then modifier_imba_angelic_alliance_debuff_caster = class({}) end
@@ -350,7 +367,7 @@ function modifier_imba_angelic_alliance_debuff_caster:GetModifierPhysicalArmorBo
 end
 
 -----------------------------------------------------------------------------------------------------------
---	Passive disarm (from attacks or getting attacked) 
+--	Passive disarm (from attacks or getting attacked)
 -----------------------------------------------------------------------------------------------------------
 
 if modifier_imba_angelic_alliance_passive_disarm == nil then modifier_imba_angelic_alliance_passive_disarm = class({}) end
@@ -377,13 +394,13 @@ function modifier_imba_angelic_alliance_passive_disarm:OnCreated( keys )
 		local caster = self:GetCaster()
 		local ability = self:GetAbility()
 		local duration = ability:GetSpecialValueFor("passive_disarm_cooldown")
-	
+
 		caster:AddNewModifier(caster, ability, "modifier_imba_angelic_alliance_passive_disarm_cooldown", {duration = duration})
 	end
 end
 
 -----------------------------------------------------------------------------------------------------------
---	Passive disarm cooldown (prevents the passive disarm from proccing) 
+--	Passive disarm cooldown (prevents the passive disarm from proccing)
 -----------------------------------------------------------------------------------------------------------
 
 if modifier_imba_angelic_alliance_passive_disarm_cooldown == nil then modifier_imba_angelic_alliance_passive_disarm_cooldown = class({}) end

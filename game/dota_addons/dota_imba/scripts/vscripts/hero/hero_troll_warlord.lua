@@ -1,9 +1,21 @@
---[[
-		By: AtroCty
-		Prev. Authors: Firetoad
-		Date: 25.02.2015
-		Updated:  09.04.2017
---]]
+-- Copyright (C) 2018  The Dota IMBA Development Team
+--
+-- Licensed under the Apache License, Version 2.0 (the "License");
+-- you may not use this file except in compliance with the License.
+-- You may obtain a copy of the License at
+--
+-- http://www.apache.org/licenses/LICENSE-2.0
+--
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- See the License for the specific language governing permissions and
+-- limitations under the License.
+--
+-- Editors:
+--     Firetoad
+--     AtroCty, 09.04.2017
+--     suthernfriend, 03.02.2018
 
 CreateEmptyTalents("troll_warlord")
 
@@ -22,13 +34,13 @@ function imba_troll_warlord_berserkers_rage:IsNetherWardStealable() return false
 function imba_troll_warlord_berserkers_rage:ResetToggleOnRespawn() return true end
 
 function imba_troll_warlord_berserkers_rage:GetAbilityTextureName()
-   return "troll_warlord_berserkers_rage"
+	return "troll_warlord_berserkers_rage"
 end
 -------------------------------------------
 
 -- Always have one of the buffs
 function imba_troll_warlord_berserkers_rage:OnUpgrade()
-    if IsServer() then
+	if IsServer() then
 		local caster = self:GetCaster()
 		if not (caster:HasModifier("modifier_imba_berserkers_rage_ranged") or caster:HasModifier("modifier_imba_berserkers_rage_melee")) then
 			if self:GetToggleState() then
@@ -50,7 +62,7 @@ function imba_troll_warlord_berserkers_rage:OnOwnerSpawned()
 end
 
 function imba_troll_warlord_berserkers_rage:OnToggle()
-    if IsServer() then
+	if IsServer() then
 		local caster = self:GetCaster()
 		caster:EmitSound("Hero_TrollWarlord.BerserkersRage.Toggle")
 		-- Randomly play a cast line
@@ -98,17 +110,17 @@ function modifier_imba_berserkers_rage_melee:RemoveOnDeath() return false end
 -------------------------------------------
 
 function modifier_imba_berserkers_rage_melee:DeclareFunctions()
-    local decFuns =
-    {
-		MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS,
-		MODIFIER_PROPERTY_ATTACK_RANGE_BONUS,
-		MODIFIER_EVENT_ON_ATTACK_LANDED,
-		MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT,
-		MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT,
-		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
-		MODIFIER_PROPERTY_TRANSLATE_ATTACK_SOUND
-    }
-    return decFuns
+	local decFuns =
+		{
+			MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS,
+			MODIFIER_PROPERTY_ATTACK_RANGE_BONUS,
+			MODIFIER_EVENT_ON_ATTACK_LANDED,
+			MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT,
+			MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT,
+			MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
+			MODIFIER_PROPERTY_TRANSLATE_ATTACK_SOUND
+		}
+	return decFuns
 end
 
 function modifier_imba_berserkers_rage_melee:GetAttackSound()
@@ -181,14 +193,14 @@ function modifier_imba_berserkers_rage_ranged:RemoveOnDeath() return false end
 -------------------------------------------
 
 function modifier_imba_berserkers_rage_ranged:DeclareFunctions()
-    local decFuns =
-    {
-		MODIFIER_EVENT_ON_ATTACK_LANDED,
-		MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT,
-		MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT,
-		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS
-    }
-    return decFuns
+	local decFuns =
+		{
+			MODIFIER_EVENT_ON_ATTACK_LANDED,
+			MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT,
+			MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT,
+			MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS
+		}
+	return decFuns
 end
 
 function modifier_imba_berserkers_rage_ranged:GetModifierMoveSpeedBonus_Constant()
@@ -235,11 +247,11 @@ function modifier_imba_berserkers_rage_slow:RemoveOnDeath() return true end
 -------------------------------------------
 
 function modifier_imba_berserkers_rage_slow:DeclareFunctions()
-    local decFuns =
-    {
-		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
-    }
-    return decFuns
+	local decFuns =
+		{
+			MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
+		}
+	return decFuns
 end
 
 function modifier_imba_berserkers_rage_slow:OnCreated()
@@ -262,7 +274,7 @@ function imba_troll_warlord_whirling_axes_ranged:IsStealable() return true end
 function imba_troll_warlord_whirling_axes_ranged:IsNetherWardStealable() return true end
 
 function imba_troll_warlord_whirling_axes_ranged:GetAbilityTextureName()
-   return "troll_warlord_whirling_axes_ranged"
+	return "troll_warlord_whirling_axes_ranged"
 end
 -------------------------------------------
 
@@ -329,27 +341,27 @@ function imba_troll_warlord_whirling_axes_ranged:OnSpellStart()
 		for i = 1, axe_count, 1 do
 			local angle = start_angle + (i-1) * interval_angle
 			local velocity = RotateVector2D(direction,angle,true) * axe_speed
-			
-			local projectile = 
-			{
-				Ability				= self,
-				EffectName			= "particles/units/heroes/hero_troll_warlord/troll_warlord_whirling_axe_ranged.vpcf",
-				vSpawnOrigin		= caster_loc,
-				fDistance			= axe_range,
-				fStartRadius		= axe_width,
-				fEndRadius			= axe_width,
-				Source				= caster,
-				bHasFrontalCone		= false,
-				bReplaceExisting	= false,
-				iUnitTargetTeam		= self:GetAbilityTargetTeam(),
-				iUnitTargetFlags	= self:GetAbilityTargetFlags(),
-				iUnitTargetType		= self:GetAbilityTargetType(),
-				fExpireTime 		= GameRules:GetGameTime() + 10.0,
-				bDeleteOnHit		= false,
-				vVelocity			= Vector(velocity.x,velocity.y,0),
-				bProvidesVision		= false,
-				ExtraData			= {index = index, damage = axe_damage, duration = duration, axe_count = axe_count, on_hit_pct = on_hit_pct}
-			}
+
+			local projectile =
+				{
+					Ability				= self,
+					EffectName			= "particles/units/heroes/hero_troll_warlord/troll_warlord_whirling_axe_ranged.vpcf",
+					vSpawnOrigin		= caster_loc,
+					fDistance			= axe_range,
+					fStartRadius		= axe_width,
+					fEndRadius			= axe_width,
+					Source				= caster,
+					bHasFrontalCone		= false,
+					bReplaceExisting	= false,
+					iUnitTargetTeam		= self:GetAbilityTargetTeam(),
+					iUnitTargetFlags	= self:GetAbilityTargetFlags(),
+					iUnitTargetType		= self:GetAbilityTargetType(),
+					fExpireTime 		= GameRules:GetGameTime() + 10.0,
+					bDeleteOnHit		= false,
+					vVelocity			= Vector(velocity.x,velocity.y,0),
+					bProvidesVision		= false,
+					ExtraData			= {index = index, damage = axe_damage, duration = duration, axe_count = axe_count, on_hit_pct = on_hit_pct}
+				}
 			ProjectileManager:CreateLinearProjectile(projectile)
 		end
 	end
@@ -395,11 +407,11 @@ function modifier_imba_whirling_axes_ranged:RemoveOnDeath() return true end
 -------------------------------------------
 
 function modifier_imba_whirling_axes_ranged:DeclareFunctions()
-    local decFuns =
-    {
-		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
-    }
-    return decFuns
+	local decFuns =
+		{
+			MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
+		}
+	return decFuns
 end
 
 function modifier_imba_whirling_axes_ranged:OnCreated()
@@ -421,7 +433,7 @@ function imba_troll_warlord_whirling_axes_melee:IsStealable() return true end
 function imba_troll_warlord_whirling_axes_melee:IsNetherWardStealable() return true end
 
 function imba_troll_warlord_whirling_axes_melee:GetAbilityTextureName()
-   return "troll_warlord_whirling_axes_melee"
+	return "troll_warlord_whirling_axes_melee"
 end
 -------------------------------------------
 
@@ -540,12 +552,12 @@ function modifier_imba_whirling_axes_melee:RemoveOnDeath() return true end
 -------------------------------------------
 
 function modifier_imba_whirling_axes_melee:DeclareFunctions()
-    local decFuns =
-    {
-		MODIFIER_PROPERTY_MISS_PERCENTAGE,
-		MODIFIER_EVENT_ON_ATTACK_FAIL
-    }
-    return decFuns
+	local decFuns =
+		{
+			MODIFIER_PROPERTY_MISS_PERCENTAGE,
+			MODIFIER_EVENT_ON_ATTACK_FAIL
+		}
+	return decFuns
 end
 
 function modifier_imba_whirling_axes_melee:OnCreated(params)
@@ -587,7 +599,7 @@ function imba_troll_warlord_fervor:IsStealable() return false end
 function imba_troll_warlord_fervor:IsNetherWardStealable() return false end
 
 function imba_troll_warlord_fervor:GetAbilityTextureName()
-   return "troll_warlord_fervor"
+	return "troll_warlord_fervor"
 end
 -------------------------------------------
 
@@ -619,19 +631,19 @@ function modifier_imba_fervor:RemoveOnDeath() return false end
 -------------------------------------------
 
 function modifier_imba_fervor:DeclareFunctions()
-    local decFuns =
-    {
-		MODIFIER_EVENT_ON_ATTACK_LANDED
-    }
-    return decFuns
+	local decFuns =
+		{
+			MODIFIER_EVENT_ON_ATTACK_LANDED
+		}
+	return decFuns
 end
 
 function modifier_imba_fervor:OnAttackLanded(params)
 	local parent = self:GetParent()
 	if (
-	(params.attacker == parent) or 
-	((params.attacker:GetTeamNumber() == parent:GetTeamNumber()) and params.attacker:HasModifier("modifier_imba_battle_trance") and parent:HasScepter())) and 
-	(not params.attacker:PassivesDisabled()) and (params.attacker:IsRealHero() or params.attacker:IsClone()) then
+		(params.attacker == parent) or
+		((params.attacker:GetTeamNumber() == parent:GetTeamNumber()) and params.attacker:HasModifier("modifier_imba_battle_trance") and parent:HasScepter())) and
+		(not params.attacker:PassivesDisabled()) and (params.attacker:IsRealHero() or params.attacker:IsClone()) then
 		local modifier = params.attacker:FindModifierByNameAndCaster("modifier_imba_fervor_stacks",parent)
 		if modifier then
 			if modifier.last_target == params.target then
@@ -661,15 +673,15 @@ function modifier_imba_fervor_stacks:RemoveOnDeath() return false end
 -------------------------------------------
 
 function modifier_imba_fervor_stacks:DeclareFunctions()
-    local decFuns =
-    {
-		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT
-    }
-    return decFuns
+	local decFuns =
+		{
+			MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT
+		}
+	return decFuns
 end
 
 function modifier_imba_fervor_stacks:OnCreated()
-    if IsServer() then
+	if IsServer() then
 		self:SetStackCount(1)
 	end
 end
@@ -693,7 +705,7 @@ function imba_troll_warlord_battle_trance:IsStealable() return true end
 function imba_troll_warlord_battle_trance:IsNetherWardStealable() return true end
 
 function imba_troll_warlord_battle_trance:GetAbilityTextureName()
-   return "troll_warlord_battle_trance"
+	return "troll_warlord_battle_trance"
 end
 -------------------------------------------
 
@@ -701,10 +713,10 @@ function imba_troll_warlord_battle_trance:OnSpellStart()
 	if IsServer() then
 		local caster = self:GetCaster()
 		local duration = self:GetTalentSpecialValueFor("buff_duration")
-		
+
 		-- Decide which cast sound to play
 		local sound = "troll_warlord_troll_battletrance_0"..math.random(1,6)
-		if (math.random(1,100) <= 30) then		
+		if (math.random(1,100) <= 30) then
 			local heroes = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, 3000, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, FIND_ANY_ORDER, false)
 			if #heroes >= IMBA_PLAYERS_ON_GAME * 0.6666 then
 				sound = "Imba.TrollAK47"
@@ -734,18 +746,18 @@ function modifier_imba_battle_trance:RemoveOnDeath() return true end
 -------------------------------------------
 
 function modifier_imba_battle_trance:DeclareFunctions()
-    local decFuns =
-    {
-		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
-		MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT
-    }
-    return decFuns
+	local decFuns =
+		{
+			MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+			MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT
+		}
+	return decFuns
 end
 
 function modifier_imba_battle_trance:OnCreated()
 	local ability = self:GetAbility()
 	local parent = self:GetParent()
-    self.bonus_as = ability:GetTalentSpecialValueFor("bonus_as")
+	self.bonus_as = ability:GetTalentSpecialValueFor("bonus_as")
 	local bonus_bat = ability:GetTalentSpecialValueFor("bonus_bat")
 	if parent:IsRealHero() and IsServer() then
 		EmitSoundOnClient("Hero_TrollWarlord.BattleTrance.Cast.Team", parent:GetPlayerOwner())
@@ -761,11 +773,11 @@ function modifier_imba_battle_trance:OnCreated()
 end
 
 function modifier_imba_battle_trance:OnRefresh()
-    self:OnCreated()
+	self:OnCreated()
 end
 
 function modifier_imba_battle_trance:OnDestroy()
-    if IsServer() then
+	if IsServer() then
 		local parent = self:GetParent()
 		if not parent:HasAbility("imba_troll_warlord_fervor") and parent:HasModifier("modifier_imba_fervor_stacks") then
 			parent:RemoveModifierByName("modifier_imba_fervor_stacks")
@@ -774,7 +786,7 @@ function modifier_imba_battle_trance:OnDestroy()
 end
 
 function modifier_imba_battle_trance:GetPriority()
-    return 10
+	return 10
 end
 
 function modifier_imba_battle_trance:GetModifierAttackSpeedBonus_Constant()

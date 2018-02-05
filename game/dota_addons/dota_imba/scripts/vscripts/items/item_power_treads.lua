@@ -1,3 +1,20 @@
+-- Copyright (C) 2018  The Dota IMBA Development Team
+--
+-- Licensed under the Apache License, Version 2.0 (the "License");
+-- you may not use this file except in compliance with the License.
+-- You may obtain a copy of the License at
+--
+-- http://www.apache.org/licenses/LICENSE-2.0
+--
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- See the License for the specific language governing permissions and
+-- limitations under the License.
+--
+-- Editors:
+--
+
 --[[	Author: zimberzimber
 		Date:	5.2.2017	]]
 
@@ -7,7 +24,7 @@ LinkLuaModifier( "modifier_imba_mega_treads_stat_multiplier_01", "items/item_pow
 LinkLuaModifier( "modifier_imba_mega_treads_stat_multiplier_02", "items/item_power_treads.lua", LUA_MODIFIER_MOTION_NONE )	-- Mega Treads intelligence stat multiplier
 
 -----------------------------------------------------------------------------------------------------------
---	Item Definition 
+--	Item Definition
 -----------------------------------------------------------------------------------------------------------
 
 if item_imba_power_treads_2 == nil then item_imba_power_treads_2 = class({}) end
@@ -19,28 +36,28 @@ end
 
 function item_imba_power_treads_2:OnSpellStart()
 	if IsServer() then
-		
+
 		local caster = self:GetCaster()
 		if not caster:IsHero() or caster:IsClone() then return end
-		
+
 		-- Switch tread attribute
 		local modifiers = caster:FindAllModifiersByName("modifier_imba_power_treads_2")
 		for _,modifier in pairs(modifiers) do
 			if modifier:GetAbility() == self then
 				local state = modifier:GetStackCount()
 				modifier:SetStackCount((state - 1 + DOTA_ATTRIBUTE_MAX) % DOTA_ATTRIBUTE_MAX)
-				self.state = state		
+				self.state = state
 				break
 			end
-		end	
-		
+		end
+
 		-- Remove stat multiplier modifiers (they get reapplied in the item modifier if relevant)
-		for i = 0,2 do 
+		for i = 0,2 do
 			local mod = caster:FindModifierByName("modifier_imba_mega_treads_stat_multiplier_0"..i)
 			if mod then caster:RemoveModifierByName("modifier_imba_mega_treads_stat_multiplier_0"..i) end
 		end
 		caster:CalculateStatBonus()
-	end		
+	end
 end
 
 function item_imba_power_treads_2:GetAbilityTextureName()
@@ -64,11 +81,11 @@ function modifier_imba_power_treads_2:GetAttributes() return MODIFIER_ATTRIBUTE_
 
 function modifier_imba_power_treads_2:DeclareFunctions()
 	local funcs = {	MODIFIER_PROPERTY_MOVESPEED_BONUS_UNIQUE,
-					MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
-					MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
-					MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
-					MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT
-				}	
+		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
+		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
+		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT
+	}
 	return funcs
 end
 
@@ -78,12 +95,12 @@ function modifier_imba_power_treads_2:OnCreated()
 		if self:GetParent():IsHero() then
 			local ability = self:GetAbility()
 			local parent = self:GetParent()
-			
-			if parent:IsRealHero() then				
+
+			if parent:IsRealHero() then
 				self:StartIntervalThink(0.2)
 			else
 				Timers:CreateTimer(FrameTime(), function()	-- Timer because Valve decided that modifiers should be applied before items are added
-					local ownerFinder = FindUnitsInRadius(parent:GetTeamNumber(), parent:GetAbsOrigin(), nil, 25000, DOTA_UNIT_TARGET_TEAM_BOTH , DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_DEAD + DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD , FIND_ANY_ORDER , false) 
+					local ownerFinder = FindUnitsInRadius(parent:GetTeamNumber(), parent:GetAbsOrigin(), nil, 25000, DOTA_UNIT_TARGET_TEAM_BOTH , DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_DEAD + DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD , FIND_ANY_ORDER , false)
 					for _,hero in pairs(ownerFinder) do
 						if hero:GetName() == parent:GetName() then
 							for i = 0,5 do
@@ -97,10 +114,10 @@ function modifier_imba_power_treads_2:OnCreated()
 										ability.state = state
 										local healthPcnt = hero:GetHealthPercent()/100
 										local manaPcnt = hero:GetManaPercent()/100
-										
+
 										local maxHealth = parent:GetMaxHealth()
-										local maxMana = parent:GetMaxMana() 
-										
+										local maxMana = parent:GetMaxMana()
+
 										parent:SetHealth(maxHealth*healthPcnt)
 										parent:SetMana(maxMana*manaPcnt)
 										break
@@ -109,12 +126,12 @@ function modifier_imba_power_treads_2:OnCreated()
 							end
 							break
 						end
-					end	
-					self:StartIntervalThink(0.2)									
+					end
+					self:StartIntervalThink(0.2)
 				end)
-			end			
+			end
 		end
-	end	
+	end
 	if IsClient() then
 		self:StartIntervalThink( 0.2 )
 	end
@@ -129,15 +146,15 @@ function modifier_imba_power_treads_2:OnIntervalThink()
 		end
 
 		ability.state = state
-		
+
 	elseif IsServer() then
 		local state = self:GetStackCount()
 		local ability = self:GetAbility()
 		local parent = self:GetParent()
-		if not parent:IsRealHero() then return end		
+		if not parent:IsRealHero() then return end
 
 		if not parent:HasModifier("modifier_imba_mega_treads_stat_multiplier_0"..state) then
-		 	parent:AddNewModifier(parent, ability, "modifier_imba_mega_treads_stat_multiplier_0"..state, {})
+			parent:AddNewModifier(parent, ability, "modifier_imba_mega_treads_stat_multiplier_0"..state, {})
 		end
 	end
 end
@@ -159,10 +176,10 @@ end
 
 function modifier_imba_power_treads_2:GetModifierBonusStats_Strength()
 	if self:GetStackCount() ~= DOTA_ATTRIBUTE_STRENGTH then return end
-	
+
 	local parent = self:GetParent()
 	if not parent:IsHero() or parent:IsClone() then return end
-	
+
 	local ability = self:GetAbility()
 	local stat_bonus = ability:GetSpecialValueFor("bonus_stat")
 	return stat_bonus
@@ -170,21 +187,21 @@ end
 
 function modifier_imba_power_treads_2:GetModifierBonusStats_Agility()
 	if self:GetStackCount() ~= DOTA_ATTRIBUTE_AGILITY then return end
-	
+
 	local ability = self:GetAbility()
 	local parent = self:GetParent()
 	if not parent:IsHero() or parent:IsClone() then return end
-	
+
 	local stat_bonus = ability:GetSpecialValueFor("bonus_stat")
 	return stat_bonus
 end
 
 function modifier_imba_power_treads_2:GetModifierBonusStats_Intellect()
 	if self:GetStackCount() ~= DOTA_ATTRIBUTE_INTELLECT then return end
-	
+
 	local parent = self:GetParent()
 	if not parent:IsHero() or parent:IsClone() then return end
-	
+
 	local ability = self:GetAbility()
 	local stat_bonus = ability:GetSpecialValueFor("bonus_stat")
 	return stat_bonus
@@ -232,7 +249,7 @@ end
 
 
 -----------------------------------------------------------------------------------------------------------
---	Intelliegence cast range bonus modifier 
+--	Intelliegence cast range bonus modifier
 -----------------------------------------------------------------------------------------------------------
 if modifier_imba_mega_treads_stat_multiplier_02 == nil then modifier_imba_mega_treads_stat_multiplier_02 = class({}) end
 function modifier_imba_mega_treads_stat_multiplier_02:IsHidden() return true end

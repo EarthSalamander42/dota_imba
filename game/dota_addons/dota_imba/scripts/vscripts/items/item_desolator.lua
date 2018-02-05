@@ -1,3 +1,20 @@
+-- Copyright (C) 2018  The Dota IMBA Development Team
+--
+-- Licensed under the Apache License, Version 2.0 (the "License");
+-- you may not use this file except in compliance with the License.
+-- You may obtain a copy of the License at
+--
+-- http://www.apache.org/licenses/LICENSE-2.0
+--
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- See the License for the specific language governing permissions and
+-- limitations under the License.
+--
+-- Editors:
+--
+
 --	Author: Firetoad
 --	Date: 			07.01.2015
 --	Last Update:	02.04.2017
@@ -15,7 +32,7 @@ function item_imba_blight_stone:GetIntrinsicModifierName()
 	return "modifier_item_imba_blight_stone" end
 
 function item_imba_blight_stone:GetAbilityTextureName()
-   return "custom/imba_blight_stone"
+	return "custom/imba_blight_stone"
 end
 
 -----------------------------------------------------------------------------------------------------------
@@ -91,7 +108,7 @@ function modifier_item_imba_blight_stone_debuff:OnCreated()
 		self:Destroy()
 		return nil
 	end
-	
+
 	self.armor_reduction = (-1) * ability:GetSpecialValueFor("armor_reduction")
 	self.vision_reduction = (-1) * ability:GetSpecialValueFor("vision_reduction")
 end
@@ -126,7 +143,7 @@ LinkLuaModifier( "modifier_item_imba_desolator", "items/item_desolator.lua", LUA
 LinkLuaModifier( "modifier_item_imba_desolator_debuff", "items/item_desolator.lua", LUA_MODIFIER_MOTION_NONE )		-- Armor/vision debuff
 
 function item_imba_desolator:GetAbilityTextureName()
-   return "custom/imba_desolator"
+	return "custom/imba_desolator"
 end
 
 function item_imba_desolator:GetIntrinsicModifierName()
@@ -165,7 +182,7 @@ function item_imba_desolator:OnSpellStart()
 			iUnitTargetTeam		= DOTA_UNIT_TARGET_TEAM_ENEMY,
 			iUnitTargetFlags	= DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
 			iUnitTargetType		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-		--	fExpireTime			= ,
+			--	fExpireTime			= ,
 			bDeleteOnHit		= false,
 			vVelocity			= projectile_direction * projectile_speed,
 			bProvidesVision		= false,
@@ -237,7 +254,7 @@ function modifier_item_imba_desolator:DeclareFunctions()
 end
 
 function modifier_item_imba_desolator:GetModifierPreAttack_BonusDamage()
-	return self:GetAbility():GetSpecialValueFor("damage") 
+	return self:GetAbility():GetSpecialValueFor("damage")
 end
 
 -- On attack landed, apply the debuff
@@ -313,13 +330,13 @@ LinkLuaModifier( "modifier_item_imba_desolator_2", "items/item_desolator.lua", L
 LinkLuaModifier( "modifier_item_imba_desolator_2_debuff", "items/item_desolator.lua", LUA_MODIFIER_MOTION_NONE )	-- Armor/vision debuff
 
 function item_imba_desolator_2:GetAbilityTextureName()
-   return "custom/imba_desolator_2"
+	return "custom/imba_desolator_2"
 end
 
 function item_imba_desolator_2:GetIntrinsicModifierName()
 	return "modifier_item_imba_desolator_2" end
 
-function item_imba_desolator_2:OnSpellStart()	
+function item_imba_desolator_2:OnSpellStart()
 	-- Parameters
 	local caster = self:GetCaster()
 	local caster_loc = caster:GetAbsOrigin()
@@ -334,7 +351,7 @@ function item_imba_desolator_2:OnSpellStart()
 	local projectile_directions = {}
 	local main_direction = (target_loc - caster_loc):Normalized()
 	if target_loc == caster_loc then
-		main_direction = caster:GetForwardVector()		
+		main_direction = caster:GetForwardVector()
 	end
 	local angle_step = projectile_cone / (projectile_amount - 1)
 	for i = 1, projectile_amount do
@@ -355,7 +372,7 @@ function item_imba_desolator_2:OnSpellStart()
 		iUnitTargetTeam		= DOTA_UNIT_TARGET_TEAM_ENEMY,
 		iUnitTargetFlags	= DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
 		iUnitTargetType		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-	--	fExpireTime			= ,
+		--	fExpireTime			= ,
 		bDeleteOnHit		= false,
 		vVelocity			= main_direction * projectile_speed,
 		bProvidesVision		= false,
@@ -377,7 +394,7 @@ function item_imba_desolator_2:OnSpellStart()
 		if projectiles_launched < projectile_amount then
 			return 0.1
 		end
-	end)	
+	end)
 end
 
 function item_imba_desolator_2:OnProjectileHit(target, target_loc)

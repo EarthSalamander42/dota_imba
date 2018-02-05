@@ -1,6 +1,20 @@
--- Author: Shush
--- Date: 26/03/2017
-
+-- Copyright (C) 2018  The Dota IMBA Development Team
+--
+-- Licensed under the Apache License, Version 2.0 (the "License");
+-- you may not use this file except in compliance with the License.
+-- You may obtain a copy of the License at
+--
+-- http://www.apache.org/licenses/LICENSE-2.0
+--
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- See the License for the specific language governing permissions and
+-- limitations under the License.
+--
+-- Editors:
+--     Shush, 26.03.2017
+--     suthernfriend, 03.02.2018
 
 CreateEmptyTalents("mirana")
 
@@ -13,7 +27,7 @@ LinkLuaModifier("modifier_imba_starfall_scepter_thinker", "hero/hero_mirana", LU
 LinkLuaModifier("modifier_imba_starfall_talent_seed_debuff", "hero/hero_mirana", LUA_MODIFIER_MOTION_NONE)
 
 function imba_mirana_starfall:GetAbilityTextureName()
-   return "mirana_starfall"
+	return "mirana_starfall"
 end
 
 function imba_mirana_starfall:GetIntrinsicModifierName()
@@ -37,14 +51,14 @@ end
 function imba_mirana_starfall:OnSpellStart()
 	-- Ability properties
 	local caster = self:GetCaster()
-	local ability = self            
+	local ability = self
 	local particle_circle = "particles/units/heroes/hero_mirana/mirana_starfall_circle.vpcf"
 	local particle_moon = "particles/units/heroes/hero_mirana/mirana_moonlight_owner.vpcf"
 	local cast_response = "mirana_mir_ability_star_0"
-	local sound_cast = "Ability.Starfall"        
+	local sound_cast = "Ability.Starfall"
 
 	-- Ability specials
-	local radius = ability:GetSpecialValueFor("radius")    
+	local radius = ability:GetSpecialValueFor("radius")
 	local damage = ability:GetSpecialValueFor("damage")
 	local secondary_damage_pct = ability:GetSpecialValueFor("secondary_damage_pct")
 	local additional_waves_count = ability:GetSpecialValueFor("additional_waves_count")
@@ -62,14 +76,14 @@ function imba_mirana_starfall:OnSpellStart()
 	end
 
 	-- Play cast sound
-	EmitSoundOn(sound_cast, caster)    
+	EmitSoundOn(sound_cast, caster)
 
 	-- Assign caster's location on cast, since the waves do not move with Mirana
 	local caster_position = caster:GetAbsOrigin()
 
 	-- Add circle particle, repeat it every second until all waves came down
 	local repeats = additional_waves_count * additional_waves_interval
-	local current_instance = 0    
+	local current_instance = 0
 
 	-- Start repeating
 	Timers:CreateTimer(function()
@@ -80,12 +94,12 @@ function imba_mirana_starfall:OnSpellStart()
 		current_instance = current_instance + 1
 
 		-- If there are still waves incoming, repeat the particle creation
-		if current_instance <= repeats then            
+		if current_instance <= repeats then
 			return 1
 		else
 			return nil
 		end
-	end)        
+	end)
 
 	-- Add moon particle
 	local particle_moon_fx = ParticleManager:CreateParticle(particle_moon, PATTACH_ABSORIGIN, caster)
@@ -104,8 +118,8 @@ function imba_mirana_starfall:OnSpellStart()
 	local secondary_wave_damage = damage * (secondary_damage_pct * 0.01)
 	SecondaryStarfall(caster, ability, caster_position, radius, secondary_wave_damage)
 
-	-- Additional waves    
-	local current_wave = 1     
+	-- Additional waves
+	local current_wave = 1
 	local additional_wave_damage = damage * (additional_waves_dmg_pct * 0.01)
 	local additional_secondary_damage = additional_wave_damage * (secondary_damage_pct * 0.01)
 
@@ -120,25 +134,25 @@ function imba_mirana_starfall:OnSpellStart()
 			return additional_waves_interval
 		else
 			return nil
-		end 
-	end)    
+		end
+	end)
 end
 
 function StarfallWave(caster, ability, caster_position, radius, damage)
 	local particle_starfall = "particles/units/heroes/hero_mirana/mirana_starfall_attack.vpcf"
-	local hit_delay = ability:GetSpecialValueFor("hit_delay")    
-	local sound_impact = "Ability.StarfallImpact"    
+	local hit_delay = ability:GetSpecialValueFor("hit_delay")
+	local sound_impact = "Ability.StarfallImpact"
 
 	-- Find enemies in radius
 	local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
-									  caster_position,
-									  nil,
-									  radius,
-									  DOTA_UNIT_TARGET_TEAM_ENEMY,
-									  DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-									  DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE,
-									  FIND_ANY_ORDER,
-									  false)
+		caster_position,
+		nil,
+		radius,
+		DOTA_UNIT_TARGET_TEAM_ENEMY,
+		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+		DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE,
+		FIND_ANY_ORDER,
+		false)
 
 	for _,enemy in pairs(enemies) do
 
@@ -155,59 +169,59 @@ function StarfallWave(caster, ability, caster_position, radius, damage)
 			-- Wait for the star to get to the target
 			Timers:CreateTimer(hit_delay, function()
 
-				-- Deal damage if the target did not become magic immune
-				if not enemy:IsMagicImmune() then
+					-- Deal damage if the target did not become magic immune
+					if not enemy:IsMagicImmune() then
 
-					-- Play impact sound
-					EmitSoundOn(sound_impact, enemy)
+						-- Play impact sound
+						EmitSoundOn(sound_impact, enemy)
 
-					local damageTable = {victim = enemy,
-										damage = damage,
-										damage_type = DAMAGE_TYPE_MAGICAL,
-										attacker = caster,
-										ability = ability
-										}
-						
-					ApplyDamage(damageTable)
+						local damageTable = {victim = enemy,
+							damage = damage,
+							damage_type = DAMAGE_TYPE_MAGICAL,
+							attacker = caster,
+							ability = ability
+						}
 
-					-- #8 Talent: Each Starstorm wave marks the target. If Mirana lands an attack on the target, she drops an additional secondary star on it.
-					if caster:HasTalent("special_bonus_imba_mirana_8") then
-						local seed_duration = caster:FindTalentValue("special_bonus_imba_mirana_8")
-						enemy:AddNewModifier(caster, ability, "modifier_imba_starfall_talent_seed_debuff", {duration = seed_duration})
+						ApplyDamage(damageTable)
+
+						-- #8 Talent: Each Starstorm wave marks the target. If Mirana lands an attack on the target, she drops an additional secondary star on it.
+						if caster:HasTalent("special_bonus_imba_mirana_8") then
+							local seed_duration = caster:FindTalentValue("special_bonus_imba_mirana_8")
+							enemy:AddNewModifier(caster, ability, "modifier_imba_starfall_talent_seed_debuff", {duration = seed_duration})
+						end
 					end
-				end
-			end)                
-		end    
-	end    
+			end)
+		end
+	end
 end
 
-function SecondaryStarfall(caster, ability, caster_position, radius, damage)    
-	local secondary_delay = ability:GetSpecialValueFor("secondary_delay")    
+function SecondaryStarfall(caster, ability, caster_position, radius, damage)
+	local secondary_delay = ability:GetSpecialValueFor("secondary_delay")
 
 	-- Find the closest enemy in the secondary radius
 	local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
-									  caster_position,
-									  nil,
-									  radius,
-									  DOTA_UNIT_TARGET_TEAM_ENEMY,
-									  DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-									  DOTA_UNIT_TARGET_FLAG_NO_INVIS,
-									  FIND_CLOSEST,
-									  false)
+		caster_position,
+		nil,
+		radius,
+		DOTA_UNIT_TARGET_TEAM_ENEMY,
+		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+		DOTA_UNIT_TARGET_FLAG_NO_INVIS,
+		FIND_CLOSEST,
+		false)
 
 	-- Check if there is an enemy to rain on
 	if enemies[1] then
 		-- Commence after a small delay
 		Timers:CreateTimer(secondary_delay, function()
-			SecondaryStarfallTarget(caster, ability, enemies[1], damage)        
+			SecondaryStarfallTarget(caster, ability, enemies[1], damage)
 		end)
 	end
 end
 
 function SecondaryStarfallTarget(caster, ability, target, damage)
 	local particle_starfall = "particles/units/heroes/hero_mirana/mirana_starfall_attack.vpcf"
-	local hit_delay = ability:GetSpecialValueFor("hit_delay")        
-	local sound_impact = "Ability.StarfallImpact"    
+	local hit_delay = ability:GetSpecialValueFor("hit_delay")
+	local sound_impact = "Ability.StarfallImpact"
 
 	-- Add starfall effect
 	local particle_starfall_fx = ParticleManager:CreateParticle(particle_starfall, PATTACH_ABSORIGIN_FOLLOW, target)
@@ -219,21 +233,21 @@ function SecondaryStarfallTarget(caster, ability, target, damage)
 	-- Wait for the star to get to the target
 	Timers:CreateTimer(hit_delay, function()
 
-		-- Deal damage if the target did not become magic immune
-		if not target:IsMagicImmune() then
+			-- Deal damage if the target did not become magic immune
+			if not target:IsMagicImmune() then
 
-			-- Play impact sound
-			EmitSoundOn(sound_impact, target)
+				-- Play impact sound
+				EmitSoundOn(sound_impact, target)
 
-			local damageTable = {victim = target,
-								 damage = damage,
-								 damage_type = DAMAGE_TYPE_MAGICAL,
-								 attacker = caster,
-								 ability = ability
-								}
-				
-			ApplyDamage(damageTable)
-		end
+				local damageTable = {victim = target,
+					damage = damage,
+					damage_type = DAMAGE_TYPE_MAGICAL,
+					attacker = caster,
+					ability = ability
+				}
+
+				ApplyDamage(damageTable)
+			end
 	end)
 end
 
@@ -244,7 +258,7 @@ function modifier_imba_starfall_scepter_thinker:OnCreated()
 	if IsServer() then
 		-- Ability properties
 		self.caster = self:GetCaster()
-		self.ability = self:GetAbility()        
+		self.ability = self:GetAbility()
 
 		-- Start thinking!
 		self:StartIntervalThink(1)
@@ -254,9 +268,9 @@ end
 function modifier_imba_starfall_scepter_thinker:IsHidden()
 	if self:GetCaster():HasScepter() then
 		return false
-	end        
+	end
 
-	return true 
+	return true
 end
 
 function modifier_imba_starfall_scepter_thinker:IsPurgable() return false end
@@ -270,7 +284,7 @@ function modifier_imba_starfall_scepter_thinker:OnIntervalThink()
 		-- Ability specials
 		self.radius = self.ability:GetSpecialValueFor("radius")
 		self.damage = self.ability:GetSpecialValueFor("damage")
-		self.scepter_starfall_cd = self.ability:GetSpecialValueFor("scepter_starfall_cd")        
+		self.scepter_starfall_cd = self.ability:GetSpecialValueFor("scepter_starfall_cd")
 
 		-- If the buff is not ready yet, do nothing
 		if self:GetRemainingTime() > 0.5 then
@@ -279,16 +293,16 @@ function modifier_imba_starfall_scepter_thinker:OnIntervalThink()
 			-- Set the buff's duration to -1
 			self:SetDuration(-1, true)
 		end
-		
+
 		-- If caster is dead, do nothing
 		if not self.caster:IsAlive() then
 			return nil
 		end
-		
+
 		-- If caster does not have scepter, do nothing
 		if not self.caster:HasScepter() then
 			return nil
-		end        
+		end
 
 		-- If caster is invisible, do nothing
 		if self.caster:IsInvisible() then
@@ -297,14 +311,14 @@ function modifier_imba_starfall_scepter_thinker:OnIntervalThink()
 
 		-- Look for nearby enemy units to use Starfall on
 		local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(),
-										  self.caster:GetAbsOrigin(),
-										  nil,
-										  self.radius-50,
-										  DOTA_UNIT_TARGET_TEAM_ENEMY,
-										  DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-										  DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE,
-										  FIND_ANY_ORDER,
-										  false)
+			self.caster:GetAbsOrigin(),
+			nil,
+			self.radius-50,
+			DOTA_UNIT_TARGET_TEAM_ENEMY,
+			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+			DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE,
+			FIND_ANY_ORDER,
+			false)
 
 		-- If there are no enemies, do nothing
 		if #enemies == 0 then
@@ -312,7 +326,7 @@ function modifier_imba_starfall_scepter_thinker:OnIntervalThink()
 		end
 
 		-- Otherwise, Commence Starfall
-		StarfallWave(self.caster, self.ability, self.caster:GetAbsOrigin(), self.radius, self.damage)        
+		StarfallWave(self.caster, self.ability, self.caster:GetAbsOrigin(), self.radius, self.damage)
 
 		-- Restart the buff duration
 		self:SetDuration(self.scepter_starfall_cd, true)
@@ -359,7 +373,7 @@ function modifier_imba_starfall_talent_seed_debuff:OnAttackLanded(keys)
 		if target:IsMagicImmune() then
 			return nil
 		end
-		
+
 		-- Drop a star!
 		SecondaryStarfallTarget(self.caster, self.ability, target, self.secondary_damage)
 
@@ -378,7 +392,7 @@ LinkLuaModifier("modifier_imba_sacred_arrow_stun", "hero/hero_mirana", LUA_MODIF
 LinkLuaModifier("modifier_imba_sacred_arrow_haste", "hero/hero_mirana", LUA_MODIFIER_MOTION_NONE)
 
 function imba_mirana_arrow:GetAbilityTextureName()
-   return "mirana_arrow"
+	return "mirana_arrow"
 end
 
 function imba_mirana_arrow:IsHiddenWhenStolen()
@@ -388,9 +402,9 @@ end
 function imba_mirana_arrow:OnSpellStart()
 	-- Ability properties
 	local caster = self:GetCaster()
-	local ability = self        
+	local ability = self
 	local target_point = self:GetCursorPosition()
-	local sound_cast = "Hero_Mirana.ArrowCast"        
+	local sound_cast = "Hero_Mirana.ArrowCast"
 
 	-- Ability specials
 	local spawn_distance = ability:GetSpecialValueFor("spawn_distance")
@@ -401,11 +415,11 @@ function imba_mirana_arrow:OnSpellStart()
 	-- Set direction for main arrow
 	local direction = (target_point - caster:GetAbsOrigin()):Normalized()
 
-	-- Get spawn point    
-	local spawn_point = caster:GetAbsOrigin() + direction * spawn_distance    
+	-- Get spawn point
+	local spawn_point = caster:GetAbsOrigin() + direction * spawn_distance
 
 	-- Fire main arrow
-	FireSacredArrow(caster, ability, spawn_point, direction)    
+	FireSacredArrow(caster, ability, spawn_point, direction)
 
 	-- #4 Talent: Two additional Sacred Arrows to the sides
 	if caster:HasTalent("special_bonus_imba_mirana_4") then
@@ -416,16 +430,16 @@ function imba_mirana_arrow:OnSpellStart()
 
 		-- Left arrow variables
 		local left_spawn_point = RotatePosition(caster:GetAbsOrigin(), left_QAngle, spawn_point)
-		local left_direction = (left_spawn_point - caster:GetAbsOrigin()):Normalized()                
+		local left_direction = (left_spawn_point - caster:GetAbsOrigin()):Normalized()
 
 		-- Right arrow variables
 		local right_spawn_point = RotatePosition(caster:GetAbsOrigin(), right_QAngle, spawn_point)
-		local right_direction = (right_spawn_point - caster:GetAbsOrigin()):Normalized()        
+		local right_direction = (right_spawn_point - caster:GetAbsOrigin()):Normalized()
 
 		-- Fire left and right arrows
 		FireSacredArrow(caster, ability, left_spawn_point, left_direction)
 		FireSacredArrow(caster, ability, right_spawn_point, right_direction)
-	end    
+	end
 end
 
 function FireSacredArrow(caster, ability, spawn_point, direction)
@@ -438,44 +452,44 @@ function FireSacredArrow(caster, ability, spawn_point, direction)
 	local arrow_distance
 
 	-- If ability is not levelled, assign level 1 values
-	if ability:GetLevel() == 0 then        
+	if ability:GetLevel() == 0 then
 		arrow_radius = ability:GetLevelSpecialValueFor("arrow_radius", 1)
 		arrow_speed = ability:GetLevelSpecialValueFor("arrow_speed", 1)
 		vision_radius = ability:GetLevelSpecialValueFor("vision_radius", 1)
-		arrow_distance = ability:GetLevelSpecialValueFor("arrow_distance", 1)        
+		arrow_distance = ability:GetLevelSpecialValueFor("arrow_distance", 1)
 	else
 		arrow_radius = ability:GetSpecialValueFor("arrow_radius")
 		arrow_speed = ability:GetSpecialValueFor("arrow_speed")
 		vision_radius = ability:GetSpecialValueFor("vision_radius")
-		arrow_distance = ability:GetSpecialValueFor("arrow_distance")    
+		arrow_distance = ability:GetSpecialValueFor("arrow_distance")
 	end
 
 	-- Fire arrow in the set direction
 	local arrow_projectile = {  Ability = ability,
-								EffectName = particle_arrow,
-								vSpawnOrigin = spawn_point,
-								fDistance = arrow_distance,
-								fStartRadius = arrow_radius,
-								fEndRadius = arrow_radius,
-								Source = caster,
-								bHasFrontalCone = false,
-								bReplaceExisting = false,
-								iUnitTargetTeam = DOTA_UNIT_TARGET_TEAM_ENEMY,                                                          
-								iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,                           
-								bDeleteOnHit = true,
-								vVelocity = direction * arrow_speed * Vector(1, 1, 0),
-								bProvidesVision = true, 
-								iVisionRadius = vision_radius,
-								iVisionTeamNumber = caster:GetTeamNumber(),
-								ExtraData = {cast_loc_x = tostring(caster:GetAbsOrigin().x),
-											cast_loc_y = tostring(caster:GetAbsOrigin().y),
-											cast_loc_z = tostring(caster:GetAbsOrigin().z)}                         
-							}
-				 
+		EffectName = particle_arrow,
+		vSpawnOrigin = spawn_point,
+		fDistance = arrow_distance,
+		fStartRadius = arrow_radius,
+		fEndRadius = arrow_radius,
+		Source = caster,
+		bHasFrontalCone = false,
+		bReplaceExisting = false,
+		iUnitTargetTeam = DOTA_UNIT_TARGET_TEAM_ENEMY,
+		iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+		bDeleteOnHit = true,
+		vVelocity = direction * arrow_speed * Vector(1, 1, 0),
+		bProvidesVision = true,
+		iVisionRadius = vision_radius,
+		iVisionTeamNumber = caster:GetTeamNumber(),
+		ExtraData = {cast_loc_x = tostring(caster:GetAbsOrigin().x),
+			cast_loc_y = tostring(caster:GetAbsOrigin().y),
+			cast_loc_z = tostring(caster:GetAbsOrigin().z)}
+	}
+
 	ProjectileManager:CreateLinearProjectile(arrow_projectile)
 end
 
-function imba_mirana_arrow:OnProjectileHit_ExtraData(target, location, extra_data)    
+function imba_mirana_arrow:OnProjectileHit_ExtraData(target, location, extra_data)
 	-- If no target was hit, do nothing
 	if not target then
 		return nil
@@ -518,7 +532,7 @@ function imba_mirana_arrow:OnProjectileHit_ExtraData(target, location, extra_dat
 	EmitSoundOn(sound_impact, target)
 
 	-- Add FOW viewer for the linger duration
-	AddFOWViewer(caster:GetTeamNumber(), location, vision_radius, vision_linger_duration, false)   
+	AddFOWViewer(caster:GetTeamNumber(), location, vision_radius, vision_linger_duration, false)
 
 	-- If target was a creep, kill it immediately and exit
 	if target:IsCreep() and not IsRoshan(target) and not target:IsAncient() then
@@ -539,25 +553,25 @@ function imba_mirana_arrow:OnProjectileHit_ExtraData(target, location, extra_dat
 	local distance = (target:GetAbsOrigin() - cast_location):Length2D()
 
 	-- Calculate damage
-	local damage = base_damage + (distance / distance_tick * damage_increase_per_tick)    
+	local damage = base_damage + (distance / distance_tick * damage_increase_per_tick)
 
 	-- Apply damage
 	local damageTable = {victim = target,
-						damage = damage,
-						damage_type = DAMAGE_TYPE_MAGICAL,
-						attacker = caster,
-						ability = ability
-						}
-						
-	ApplyDamage(damageTable)    
+		damage = damage,
+		damage_type = DAMAGE_TYPE_MAGICAL,
+		attacker = caster,
+		ability = ability
+	}
 
-	-- Calculate stun duration 
+	ApplyDamage(damageTable)
+
+	-- Calculate stun duration
 	local stun_duration = base_stun + (distance / distance_tick * stun_increase_per_tick)
 
 	-- Cannot exceed max stun
 	if stun_duration > max_stun_duration then
 		stun_duration = max_stun_duration
-	end       
+	end
 
 	-- Cast response for heroes
 	if target:IsRealHero() then
@@ -591,9 +605,9 @@ function modifier_imba_sacred_arrow_stun:OnCreated()
 		self.attackers_table = {}
 
 		-- Ability specials
-		self.on_prow_crit_damage = self.ability:GetSpecialValueFor("on_prow_crit_damage")        
+		self.on_prow_crit_damage = self.ability:GetSpecialValueFor("on_prow_crit_damage")
 	end
- end 
+end
 
 function modifier_imba_sacred_arrow_stun:IsHidden() return false end
 function modifier_imba_sacred_arrow_stun:IsStunDebuff() return true end
@@ -614,12 +628,12 @@ end
 
 function modifier_imba_sacred_arrow_stun:DeclareFunctions()
 	local decFuncs = {MODIFIER_EVENT_ON_ORDER,
-					  MODIFIER_EVENT_ON_TAKEDAMAGE}
+		MODIFIER_EVENT_ON_TAKEDAMAGE}
 
 	return decFuncs
 end
 
-function modifier_imba_sacred_arrow_stun:OnOrder(keys)    
+function modifier_imba_sacred_arrow_stun:OnOrder(keys)
 	if IsServer() then
 		local unit = keys.unit
 		local order_type = keys.order_type
@@ -641,7 +655,7 @@ function modifier_imba_sacred_arrow_stun:OnOrder(keys)
 end
 
 function modifier_imba_sacred_arrow_stun:OnTakeDamage(keys)
-	if IsServer() then        
+	if IsServer() then
 		local attacker = keys.attacker
 		local target = keys.unit
 
@@ -651,14 +665,14 @@ function modifier_imba_sacred_arrow_stun:OnTakeDamage(keys)
 			-- If the attacker is on the list of attackers, do nothing
 			if #self.attackers_table > 0 then
 				for i = 1 , #self.attackers_table do
-					if attacker == self.attackers_table[i] then                                                
+					if attacker == self.attackers_table[i] then
 						return nil
 					end
 				end
 			end
 
-			-- Add the attacker to the list            
-			table.insert(self.attackers_table, attacker)            
+			-- Add the attacker to the list
+			table.insert(self.attackers_table, attacker)
 		end
 	end
 end
@@ -667,14 +681,14 @@ function modifier_imba_sacred_arrow_stun:OnDestroy()
 	if IsServer() then
 		-- Find all enemies
 		local enemies = FindUnitsInRadius(self.parent:GetTeamNumber(),
-										  self.parent:GetAbsOrigin(),
-										  nil,
-										  25000, -- global
-										  DOTA_UNIT_TARGET_TEAM_ENEMY,
-										  DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-										  DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD,
-										  FIND_ANY_ORDER,
-										  false)
+			self.parent:GetAbsOrigin(),
+			nil,
+			25000, -- global
+			DOTA_UNIT_TARGET_TEAM_ENEMY,
+			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+			DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD,
+			FIND_ANY_ORDER,
+			false)
 
 		-- Check if they have the haste modifier, if they do, remove it
 		for _, enemy in pairs(enemies) do
@@ -702,7 +716,7 @@ end
 
 function modifier_imba_sacred_arrow_haste:DeclareFunctions()
 	local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_BASE_OVERRIDE,
-					  MODIFIER_PROPERTY_MOVESPEED_MAX}
+		MODIFIER_PROPERTY_MOVESPEED_MAX}
 
 	return decFuncs
 end
@@ -735,20 +749,20 @@ LinkLuaModifier("modifier_imba_leap_speed_boost", "hero/hero_mirana", LUA_MODIFI
 LinkLuaModifier("modifier_imba_leap_talent_cast_angle_handler", "hero/hero_mirana", LUA_MODIFIER_MOTION_NONE)
 
 function imba_mirana_leap:GetAbilityTextureName()
-   return "mirana_leap"
+	return "mirana_leap"
 end
 
-function imba_mirana_leap:GetCastRange(location, target)    
-if IsServer() then return end    
-local ability = self
-local leap_range = ability:GetSpecialValueFor("leap_range")
-local night_leap_range_bonus = ability:GetSpecialValueFor("night_leap_range_bonus")
-	
+function imba_mirana_leap:GetCastRange(location, target)
+	if IsServer() then return end
+	local ability = self
+	local leap_range = ability:GetSpecialValueFor("leap_range")
+	local night_leap_range_bonus = ability:GetSpecialValueFor("night_leap_range_bonus")
+
 	if IsDaytime() then
-		return leap_range        
-	else            
-		return leap_range + night_leap_range_bonus        
-	end            
+		return leap_range
+	else
+		return leap_range + night_leap_range_bonus
+	end
 end
 
 function imba_mirana_leap:IsHiddenWhenStolen()
@@ -759,7 +773,7 @@ function imba_mirana_leap:OnSpellStart()
 	-- Ability properties
 	local caster = self:GetCaster()
 	local ability = self
-	local target_point = self:GetCursorPosition()    
+	local target_point = self:GetCursorPosition()
 	local modifier_movement = "modifier_imba_leap_movement"
 	local sound_cast = "Ability.Leap"
 
@@ -797,28 +811,28 @@ function imba_mirana_leap:OnSpellStart()
 		local direction = (target_point - caster:GetAbsOrigin()):Normalized()
 
 		-- Set caster's location BEFORE the jump
-		local caster_location = caster:GetAbsOrigin()        
+		local caster_location = caster:GetAbsOrigin()
 
 		-- Create Timer
 		Timers:CreateTimer(jump_time, function()
 
-			-- Get the Sacred Arrow ability definition and distance
-			local sacred_arrow_ability = caster:FindAbilityByName("imba_mirana_arrow")            
+				-- Get the Sacred Arrow ability definition and distance
+				local sacred_arrow_ability = caster:FindAbilityByName("imba_mirana_arrow")
 
-			-- Get values for at least level 1 arrow            
-			local spawn_distance
+				-- Get values for at least level 1 arrow
+				local spawn_distance
 
-			if sacred_arrow_ability:GetLevel() > 0 then
-				spawn_distance = sacred_arrow_ability:GetSpecialValueFor("spawn_distance")       
-			else
-				spawn_distance = sacred_arrow_ability:GetLevelSpecialValueFor("spawn_distance", sacred_arrow_ability:GetLevel()+1)       
-			end
+				if sacred_arrow_ability:GetLevel() > 0 then
+					spawn_distance = sacred_arrow_ability:GetSpecialValueFor("spawn_distance")
+				else
+					spawn_distance = sacred_arrow_ability:GetLevelSpecialValueFor("spawn_distance", sacred_arrow_ability:GetLevel()+1)
+				end
 
-			-- Get spawn point    
-			local spawn_point = caster_location + direction * (spawn_distance + distance)
+				-- Get spawn point
+				local spawn_point = caster_location + direction * (spawn_distance + distance)
 
-			-- Fire Sacred Arrow
-			FireSacredArrow(caster, sacred_arrow_ability, spawn_point, direction)
+				-- Fire Sacred Arrow
+				FireSacredArrow(caster, sacred_arrow_ability, spawn_point, direction)
 		end)
 	end
 end
@@ -829,7 +843,7 @@ modifier_imba_leap_movement = class({})
 function modifier_imba_leap_movement:OnCreated()
 	-- Ability properties
 	self.caster = self:GetCaster()
-	self.ability = self:GetAbility()                
+	self.ability = self:GetAbility()
 	self.modifier_aura = "modifier_imba_leap_aura"
 
 	-- Ability specials
@@ -885,19 +899,19 @@ function modifier_imba_leap_movement:VerticalMotion(me, dt)
 
 			-- Check if we should be going up or down
 			if self.time_elapsed <= self.jump_time / 2 then
-				-- Going up                
-				self.leap_z = self.leap_z + 30                
-				
+				-- Going up
+				self.leap_z = self.leap_z + 30
 
-				self.caster:SetAbsOrigin(GetGroundPosition(self.caster:GetAbsOrigin(), self.caster) + Vector(0,0,self.leap_z))                
+
+				self.caster:SetAbsOrigin(GetGroundPosition(self.caster:GetAbsOrigin(), self.caster) + Vector(0,0,self.leap_z))
 			else
 				-- Going down
 				self.leap_z = self.leap_z - 30
 				if self.leap_z > 0 then
 					self.caster:SetAbsOrigin(GetGroundPosition(self.caster:GetAbsOrigin(), self.caster) + Vector(0,0,self.leap_z))
 				end
-				
-			end 
+
+			end
 		end
 	end
 end
@@ -910,11 +924,11 @@ function modifier_imba_leap_movement:HorizontalMotion(me, dt)
 
 			-- Go forward
 			local new_location = self.caster:GetAbsOrigin() + self.direction * self.jump_speed * dt
-			self.caster:SetAbsOrigin(new_location)            
-		else            
+			self.caster:SetAbsOrigin(new_location)
+		else
 			self:Destroy()
 		end
-	end 
+	end
 end
 
 function modifier_imba_leap_movement:DeclareFunctions()
@@ -936,14 +950,14 @@ function modifier_imba_leap_movement:CheckState()
 	-- #7 Talent: Leap can now be cast without needing to turn. Makes Mirana invisible for the duration of the jump, causing her to dodge projectiles.
 	-- Check if the caster should get invisibility
 	if self.caster:HasTalent("special_bonus_imba_mirana_7") then
-		state = {[MODIFIER_STATE_INVISIBLE] = true}        
+		state = {[MODIFIER_STATE_INVISIBLE] = true}
 	end
 
 	return state
 end
 
 
-function modifier_imba_leap_movement:OnRemoved()    
+function modifier_imba_leap_movement:OnRemoved()
 	if IsServer() then
 		self.caster:SetUnitOnClearGround()
 		self.caster:AddNewModifier(self.caster, self.ability, self.modifier_aura, {duration = self.aura_duration})
@@ -956,11 +970,11 @@ modifier_imba_leap_aura = class({})
 function modifier_imba_leap_aura:OnCreated()
 	-- Ability properties
 	self.caster = self:GetCaster()
-	self.ability = self:GetAbility()        
+	self.ability = self:GetAbility()
 
 	-- Ability specials
 	self.aura_aoe = self.ability:GetSpecialValueFor("aura_aoe")
-	self.aura_linger_duration = self.ability:GetSpecialValueFor("aura_linger_duration")    
+	self.aura_linger_duration = self.ability:GetSpecialValueFor("aura_linger_duration")
 end
 
 function modifier_imba_leap_aura:IsHidden() return false end
@@ -1001,20 +1015,20 @@ modifier_imba_leap_speed_boost = class({})
 function modifier_imba_leap_speed_boost:OnCreated()
 	-- Ability properties
 	self.caster = self:GetCaster()
-	self.ability = self:GetAbility()    
+	self.ability = self:GetAbility()
 	self.parent = self:GetParent()
 
 	-- Ability specials
 	self.move_speed_pct = self.ability:GetSpecialValueFor("move_speed_pct")
-	self.attack_speed = self.ability:GetSpecialValueFor("attack_speed")    
+	self.attack_speed = self.ability:GetSpecialValueFor("attack_speed")
 end
 
-function modifier_imba_leap_speed_boost:IsHidden() 
+function modifier_imba_leap_speed_boost:IsHidden()
 	if self.parent == self.caster and self.caster:HasModifier("modifier_imba_leap_aura") then
 		return true
 	end
 
-	return false 
+	return false
 end
 
 function modifier_imba_leap_speed_boost:IsPurgable() return false end
@@ -1022,7 +1036,7 @@ function modifier_imba_leap_speed_boost:IsDebuff() return false end
 
 function modifier_imba_leap_speed_boost:DeclareFunctions()
 	local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-					  MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT}
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT}
 
 	return decFuncs
 end
@@ -1042,10 +1056,10 @@ modifier_imba_leap_talent_cast_angle_handler = modifier_imba_leap_talent_cast_an
 
 function modifier_imba_leap_talent_cast_angle_handler:DeclareFunctions()
 	local decFuncs =
-	{
-		MODIFIER_PROPERTY_IGNORE_CAST_ANGLE,
-		MODIFIER_PROPERTY_DISABLE_TURNING
-	}
+		{
+			MODIFIER_PROPERTY_IGNORE_CAST_ANGLE,
+			MODIFIER_PROPERTY_DISABLE_TURNING
+		}
 	return decFuncs
 end
 
@@ -1078,7 +1092,7 @@ LinkLuaModifier("modifier_imba_moonlight_shadow_invis_fade_time", "hero/hero_mir
 LinkLuaModifier("modifier_imba_moonlight_shadow_talent_starstorm", "hero/hero_mirana", LUA_MODIFIER_MOTION_NONE)
 
 function imba_mirana_moonlight_shadow:GetAbilityTextureName()
-   return "mirana_invis"
+	return "mirana_invis"
 end
 
 function imba_mirana_moonlight_shadow:IsHiddenWhenStolen()
@@ -1105,9 +1119,9 @@ function imba_mirana_moonlight_shadow:OnSpellStart()
 	EmitSoundOn(sound_cast, caster)
 
 	-- Add particle effect
-	local particle_moon_fx = ParticleManager:CreateParticle(particle_moon, PATTACH_POINT_FOLLOW, caster)    
+	local particle_moon_fx = ParticleManager:CreateParticle(particle_moon, PATTACH_POINT_FOLLOW, caster)
 	ParticleManager:SetParticleControlEnt(particle_moon_fx, 0, caster, PATTACH_POINT_FOLLOW, "attach_hitloc", caster:GetAbsOrigin(), true)
-	ParticleManager:ReleaseParticleIndex(particle_moon_fx)    
+	ParticleManager:ReleaseParticleIndex(particle_moon_fx)
 
 	-- Apply main modifier
 	caster:AddNewModifier(caster, ability, modifier_main, {duration = duration})
@@ -1124,14 +1138,14 @@ function imba_mirana_moonlight_shadow:OnSpellStart()
 
 		if starstorm_ability then
 			local allies = FindUnitsInRadius(caster:GetTeamNumber(),
-											 caster:GetAbsOrigin(),
-											 nil,
-											 25000,
-											 DOTA_UNIT_TARGET_TEAM_FRIENDLY,
-											 DOTA_UNIT_TARGET_HERO,
-											 DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS,
-											 FIND_ANY_ORDER,
-											 false)
+				caster:GetAbsOrigin(),
+				nil,
+				25000,
+				DOTA_UNIT_TARGET_TEAM_FRIENDLY,
+				DOTA_UNIT_TARGET_HERO,
+				DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS,
+				FIND_ANY_ORDER,
+				false)
 
 			for _, ally in pairs(allies) do
 				ally:AddNewModifier(caster, starstorm_ability, modifier_talent_starstorm, {duration = duration})
@@ -1163,17 +1177,17 @@ function modifier_imba_moonlight_shadow:IsDebuff() return false end
 function modifier_imba_moonlight_shadow:OnIntervalThink()
 	if IsServer() then
 		local duration = self:GetRemainingTime()
-		
+
 		-- Find all allied heroes
 		local allies = FindUnitsInRadius(self.caster:GetTeamNumber(),
-										 self.caster:GetAbsOrigin(),
-										 nil,
-										 25000,
-										 DOTA_UNIT_TARGET_TEAM_FRIENDLY,
-										 DOTA_UNIT_TARGET_HERO,
-										 DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_INVULNERABLE,
-										 FIND_ANY_ORDER,
-										 false)
+			self.caster:GetAbsOrigin(),
+			nil,
+			25000,
+			DOTA_UNIT_TARGET_TEAM_FRIENDLY,
+			DOTA_UNIT_TARGET_HERO,
+			DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_INVULNERABLE,
+			FIND_ANY_ORDER,
+			false)
 
 		-- If they don't have invisibility modifiers, give it to them
 		for _,ally in pairs(allies) do
@@ -1192,14 +1206,14 @@ function modifier_imba_moonlight_shadow:OnDestroy()
 	if IsServer() then
 		-- Find all allied heroes
 		local allies = FindUnitsInRadius(self.caster:GetTeamNumber(),
-										 self.caster:GetAbsOrigin(),
-										 nil,
-										 25000,
-										 DOTA_UNIT_TARGET_TEAM_FRIENDLY,
-										 DOTA_UNIT_TARGET_HERO,
-										 DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_INVULNERABLE,
-										 FIND_ANY_ORDER,
-										 false)
+			self.caster:GetAbsOrigin(),
+			nil,
+			25000,
+			DOTA_UNIT_TARGET_TEAM_FRIENDLY,
+			DOTA_UNIT_TARGET_HERO,
+			DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_INVULNERABLE,
+			FIND_ANY_ORDER,
+			false)
 
 		-- If they have the invisibility modifiers, remove it
 		for _,ally in pairs(allies) do
@@ -1215,7 +1229,7 @@ end
 
 -- Invisibility modifier (hidden)
 modifier_imba_moonlight_shadow_invis = class({})
- 
+
 function modifier_imba_moonlight_shadow_invis:OnCreated()
 	-- this stacks is the actual invisibility, but since it has a on/off triggers, it's counted with stacks
 	-- 0 stacks means the hero is not invisible
@@ -1225,14 +1239,14 @@ function modifier_imba_moonlight_shadow_invis:OnCreated()
 	-- Ability properties
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
-	self.parent = self:GetParent() 
+	self.parent = self:GetParent()
 	self.modifier_dummy_name = "modifier_imba_moonlight_shadow_invis_dummy"
 
 	-- Ability specials
 	self.fade_delay = self.ability:GetSpecialValueFor("fade_delay")
 	self.truesight_immunity_radius = self.ability:GetSpecialValueFor("truesight_immunity_radius")
 
-	if IsServer() then   
+	if IsServer() then
 
 		self.modifier_dummy = self.parent:FindModifierByName("modifier_imba_moonlight_shadow_invis_dummy")
 
@@ -1242,7 +1256,7 @@ function modifier_imba_moonlight_shadow_invis:OnCreated()
 		-- Start thinking
 		self:StartIntervalThink(0.1)
 	end
-end 
+end
 
 function modifier_imba_moonlight_shadow_invis:IsHidden() return true end
 function modifier_imba_moonlight_shadow_invis:IsPurgable() return false end
@@ -1252,14 +1266,14 @@ function modifier_imba_moonlight_shadow_invis:OnIntervalThink()
 	if IsServer() then
 		-- Look around for enemy heroes in the immunity radius
 		local enemies = FindUnitsInRadius(self.parent:GetTeamNumber(),
-										  self.parent:GetAbsOrigin(),
-										  nil,
-										  self.truesight_immunity_radius,
-										  DOTA_UNIT_TARGET_TEAM_ENEMY,
-										  DOTA_UNIT_TARGET_HERO,
-										  DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS,
-										  FIND_ANY_ORDER,
-										  false)
+			self.parent:GetAbsOrigin(),
+			nil,
+			self.truesight_immunity_radius,
+			DOTA_UNIT_TARGET_TEAM_ENEMY,
+			DOTA_UNIT_TARGET_HERO,
+			DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS,
+			FIND_ANY_ORDER,
+			false)
 
 		-- if the hero is not invisible, do nothing
 		if self:GetStackCount() == 0 then
@@ -1267,22 +1281,22 @@ function modifier_imba_moonlight_shadow_invis:OnIntervalThink()
 		end
 
 		-- If an enemy hero was found, remove immunity
-		if #enemies > 0 then            
+		if #enemies > 0 then
 			self:SetStackCount(1)
 		else
 			-- Else, set it back
 			self:SetStackCount(2)
-		end    
+		end
 	end
 end
 
 function modifier_imba_moonlight_shadow_invis:DeclareFunctions()
 	local decFuncs = {MODIFIER_PROPERTY_INVISIBILITY_LEVEL,
-					  MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-					  MODIFIER_EVENT_ON_ABILITY_EXECUTED,
-					  MODIFIER_EVENT_ON_ATTACK}
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		MODIFIER_EVENT_ON_ABILITY_EXECUTED,
+		MODIFIER_EVENT_ON_ATTACK}
 
-	return decFuncs                      
+	return decFuncs
 end
 
 function modifier_imba_moonlight_shadow_invis:GetModifierMoveSpeedBonus_Percentage()
@@ -1294,14 +1308,14 @@ function modifier_imba_moonlight_shadow_invis:GetModifierMoveSpeedBonus_Percenta
 	return 0
 end
 
-function modifier_imba_moonlight_shadow_invis:GetModifierInvisibilityLevel()    
+function modifier_imba_moonlight_shadow_invis:GetModifierInvisibilityLevel()
 	local stacks = self:GetStackCount()
 
 	if stacks == 2 or stacks == 1 then
 		return 1
 	else
 		return 0
-	end    
+	end
 end
 
 function modifier_imba_moonlight_shadow_invis:OnAbilityExecuted(keys)
@@ -1324,7 +1338,7 @@ end
 
 function modifier_imba_moonlight_shadow_invis:OnAttack(keys)
 	if IsServer() then
-		local attacker = keys.attacker    
+		local attacker = keys.attacker
 
 		-- Only apply if the parent is the one attacking
 		if self.parent == attacker then
@@ -1353,11 +1367,11 @@ function modifier_imba_moonlight_shadow_invis:CheckState()
 		-- If parent is truesight immune and invisible, set correct state
 		if stacks == 2 then
 			state = {[MODIFIER_STATE_TRUESIGHT_IMMUNE] = true,
-					 [MODIFIER_STATE_INVISIBLE] = true}
+				[MODIFIER_STATE_INVISIBLE] = true}
 		else
 			state = {[MODIFIER_STATE_INVISIBLE] = true}
 		end
-		
+
 		return state
 	end
 end
@@ -1398,17 +1412,17 @@ function modifier_imba_moonlight_shadow_talent_starstorm:OnCreated()
 		-- Talent properties
 		self.caster = self:GetCaster()
 		self.ability = self:GetAbility()
-		self.parent = self:GetParent()        
+		self.parent = self:GetParent()
 
 		-- Talent specials
 		self.delay_time = self.caster:FindTalentValue("special_bonus_imba_mirana_1", "delay_time")
 
 		-- Ability specials
-		self.radius = self.ability:GetSpecialValueFor("radius")        
-		self.damage = self.ability:GetSpecialValueFor("damage")      
-		self.secondary_damage_pct = self.ability:GetSpecialValueFor("secondary_damage_pct")                  
+		self.radius = self.ability:GetSpecialValueFor("radius")
+		self.damage = self.ability:GetSpecialValueFor("damage")
+		self.secondary_damage_pct = self.ability:GetSpecialValueFor("secondary_damage_pct")
 
-		-- Wait for the delay time before starting to think 
+		-- Wait for the delay time before starting to think
 		Timers:CreateTimer(self.delay_time, function()
 			-- Think immediately
 			self:OnIntervalThink()
@@ -1422,31 +1436,31 @@ end
 function modifier_imba_moonlight_shadow_talent_starstorm:OnIntervalThink()
 	if IsServer() then
 		-- If the parent is invisible, do nothing
-		if self.parent:IsInvisible() then            
+		if self.parent:IsInvisible() then
 			return nil
 		end
 
 		-- Look for nearby enemy units to use Starfall on
 		local enemies = FindUnitsInRadius(self.parent:GetTeamNumber(),
-										  self.parent:GetAbsOrigin(),
-										  nil,
-										  self.radius-50,
-										  DOTA_UNIT_TARGET_TEAM_ENEMY,
-										  DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-										  DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE,
-										  FIND_ANY_ORDER,
-										  false)
+			self.parent:GetAbsOrigin(),
+			nil,
+			self.radius-50,
+			DOTA_UNIT_TARGET_TEAM_ENEMY,
+			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+			DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE,
+			FIND_ANY_ORDER,
+			false)
 
 		-- If there are no enemies, do nothing
-		if #enemies == 0 then            
+		if #enemies == 0 then
 			return nil
 		end
 
 		-- Otherwise, Commence Starfall
-		StarfallWave(self.parent, self.ability, self.parent:GetAbsOrigin(), self.radius, self.damage)                
+		StarfallWave(self.parent, self.ability, self.parent:GetAbsOrigin(), self.radius, self.damage)
 
 		-- Secondary Starfall
-		local secondary_wave_damage = self.damage * (self.secondary_damage_pct * 0.01)        
+		local secondary_wave_damage = self.damage * (self.secondary_damage_pct * 0.01)
 		SecondaryStarfall(self.parent, self.ability, self.parent:GetAbsOrigin(), self.radius, secondary_wave_damage)
 
 		-- Remove the buff
@@ -1459,7 +1473,7 @@ end
 
 
 -- #5 Talent: Standing in the same spot for a few seconds grants Mirana invisibility until she moves or attack. Casting spells does not break the invisibility.
-function modifier_special_bonus_imba_mirana_5:OnCreated()    
+function modifier_special_bonus_imba_mirana_5:OnCreated()
 	if IsServer() then
 		self:GetParent():AddNewModifier(self:GetParent(), nil, "modifier_imba_mirana_silence_stance", {})
 		self:GetParent():AddNewModifier(self:GetParent(), nil, "modifier_imba_mirana_silence_stance_visible", {})
@@ -1480,8 +1494,8 @@ function modifier_imba_mirana_silence_stance:OnCreated()
 	-- 1: invisible
 
 	if IsServer() then
-		-- Talent properties    
-		self.parent = self:GetParent()    
+		-- Talent properties
+		self.parent = self:GetParent()
 
 		-- Talent specials
 		self.stand_time = self.parent:FindTalentValue("special_bonus_imba_mirana_5")
@@ -1516,8 +1530,8 @@ function modifier_imba_mirana_silence_stance:OnIntervalThink()
 			self:SetStackCount(0)
 			self.last_position = self.parent:GetAbsOrigin()
 			self.last_time_tick = GameRules:GetGameTime()
-		else            
-			-- Otherwise, check if Mirana is not invisible yet. 
+		else
+			-- Otherwise, check if Mirana is not invisible yet.
 			if self:GetStackCount() == 0 then
 
 				-- Check last tick and see if she should be awarded invisibility
@@ -1533,12 +1547,12 @@ end
 
 function modifier_imba_mirana_silence_stance:DeclareFunctions()
 	local decFuncs = {MODIFIER_EVENT_ON_ATTACK,
-					  MODIFIER_PROPERTY_INVISIBILITY_LEVEL}
+		MODIFIER_PROPERTY_INVISIBILITY_LEVEL}
 
 	return decFuncs
 end
 
-function modifier_imba_mirana_silence_stance:OnAttack(keys)    
+function modifier_imba_mirana_silence_stance:OnAttack(keys)
 	if IsServer() then
 		local attacker = keys.attacker
 
@@ -1563,10 +1577,10 @@ function modifier_imba_mirana_silence_stance:CheckState()
 	return state
 end
 
-function modifier_imba_mirana_silence_stance:GetModifierInvisibilityLevel()        
+function modifier_imba_mirana_silence_stance:GetModifierInvisibilityLevel()
 	if self:GetStackCount() == 1 then
-		return 1        
-	end    
+		return 1
+	end
 end
 
 
@@ -1577,7 +1591,7 @@ function modifier_imba_mirana_silence_stance_visible:GetTexture()
 	return "custom/mirana_princess_of_the_night"
 end
 
-function modifier_imba_mirana_silence_stance_visible:IsHidden() 
+function modifier_imba_mirana_silence_stance_visible:IsHidden()
 	local stacks = self:GetParent():GetModifierStackCount("modifier_imba_mirana_silence_stance", self:GetParent())
 
 	if stacks == 1 then

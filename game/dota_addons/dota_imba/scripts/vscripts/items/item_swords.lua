@@ -1,3 +1,20 @@
+-- Copyright (C) 2018  The Dota IMBA Development Team
+--
+-- Licensed under the Apache License, Version 2.0 (the "License");
+-- you may not use this file except in compliance with the License.
+-- You may obtain a copy of the License at
+--
+-- http://www.apache.org/licenses/LICENSE-2.0
+--
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- See the License for the specific language governing permissions and
+-- limitations under the License.
+--
+-- Editors:
+--
+
 --	Author: Firetoad
 --	Date: 			24.06.2015
 --	Last Update:	23.03.2017
@@ -13,7 +30,7 @@ LinkLuaModifier( "modifier_item_imba_sange_maim", "items/item_swords.lua", LUA_M
 LinkLuaModifier( "modifier_item_imba_sange_disarm", "items/item_swords.lua", LUA_MODIFIER_MOTION_NONE )		-- Disarm debuff
 
 function item_imba_sange:GetAbilityTextureName()
-   return "custom/imba_sange"
+	return "custom/imba_sange"
 end
 
 function item_imba_sange:GetIntrinsicModifierName()
@@ -167,7 +184,7 @@ LinkLuaModifier( "modifier_item_imba_heavens_halberd_disarm_cooldown", "items/it
 LinkLuaModifier( "modifier_item_imba_heavens_halberd_active_disarm", "items/item_swords.lua", LUA_MODIFIER_MOTION_NONE )	-- Active disarm debuff
 
 function item_imba_heavens_halberd:GetAbilityTextureName()
-   return "custom/imba_heavens_halberd"
+	return "custom/imba_heavens_halberd"
 end
 
 function item_imba_heavens_halberd:GetIntrinsicModifierName()
@@ -255,7 +272,7 @@ function modifier_item_imba_heavens_halberd:OnAttackLanded( keys )
 		local target = keys.target
 		if target:IsMagicImmune() or (not IsHeroOrCreep(target)) then -- or owner:GetTeam() == target:GetTeam() then
 			return end
-			
+
 		-- Stack the maim up
 		local ability = self:GetAbility()
 		local modifier_maim = target:AddNewModifier(owner, ability, "modifier_item_imba_sange_maim", {duration = ability:GetSpecialValueFor("maim_duration")})
@@ -263,7 +280,7 @@ function modifier_item_imba_heavens_halberd:OnAttackLanded( keys )
 			modifier_maim:SetStackCount(modifier_maim:GetStackCount() + 1)
 			target:EmitSound("Imba.SangeStack")
 		end
-		
+
 		-- If the target does not have the disarm cooldown modifier, roll for a proc
 		if (not target:HasModifier("modifier_item_imba_heavens_halberd_disarm_cooldown")) and RollPercentage(ability:GetSpecialValueFor("disarm_chance")) then
 
@@ -321,7 +338,7 @@ LinkLuaModifier( "modifier_item_imba_yasha_stacks", "items/item_swords.lua", LUA
 LinkLuaModifier( "modifier_item_imba_yasha_proc", "items/item_swords.lua", LUA_MODIFIER_MOTION_NONE )		-- Move speed proc
 
 function item_imba_yasha:GetAbilityTextureName()
-   return "custom/imba_yasha"
+	return "custom/imba_yasha"
 end
 
 function item_imba_yasha:GetIntrinsicModifierName()
@@ -366,11 +383,11 @@ function modifier_item_imba_yasha:OnAttackLanded( keys )
 	if IsServer() then
 		local owner = self:GetParent()
 		local target = keys.target
-		
+
 		-- If this attack was not performed by the modifier's owner, do nothing
 		if owner ~= keys.attacker then
 			return end
-		
+
 		-- If a higher-priority sword is present, do nothing either
 		local priority_sword_modifiers = {
 			"modifier_item_imba_sange_yasha",
@@ -536,7 +553,7 @@ function modifier_item_imba_azura:GetModifierSpellAmplify_Percentage()
 end
 
 function modifier_item_imba_azura:GetModifierPercentageManacost()
-if not self:GetAbility() then return end
+	if not self:GetAbility() then return end
 	return self:GetAbility():GetSpecialValueFor("bonus_cdr")
 end
 
@@ -552,7 +569,7 @@ LinkLuaModifier( "modifier_item_imba_sange_yasha_stacks", "items/item_swords.lua
 LinkLuaModifier( "modifier_item_imba_sange_yasha_proc", "items/item_swords.lua", LUA_MODIFIER_MOTION_NONE )			-- Move speed proc
 
 function item_imba_sange_yasha:GetAbilityTextureName()
-   return "custom/imba_sange_and_yasha"
+	return "custom/imba_sange_and_yasha"
 end
 
 function item_imba_sange_yasha:GetIntrinsicModifierName()
@@ -851,7 +868,7 @@ LinkLuaModifier( "modifier_item_imba_sange_azura_stacks", "items/item_swords.lua
 LinkLuaModifier( "modifier_item_imba_sange_azura_proc", "items/item_swords.lua", LUA_MODIFIER_MOTION_NONE )			-- Disarm/silence debuff
 
 function item_imba_sange_azura:GetAbilityTextureName()
-   return "custom/imba_sange_and_azura"
+	return "custom/imba_sange_and_azura"
 end
 
 function item_imba_sange_azura:GetIntrinsicModifierName()
@@ -1034,7 +1051,7 @@ LinkLuaModifier( "modifier_item_imba_azura_yasha_stacks", "items/item_swords.lua
 LinkLuaModifier( "modifier_item_imba_azura_yasha_proc", "items/item_swords.lua", LUA_MODIFIER_MOTION_NONE )			-- Move speed proc
 
 function item_imba_azura_yasha:GetAbilityTextureName()
-   return "custom/imba_azura_and_yasha"
+	return "custom/imba_azura_and_yasha"
 end
 
 function item_imba_azura_yasha:GetIntrinsicModifierName()
@@ -1319,7 +1336,7 @@ LinkLuaModifier( "modifier_item_imba_triumvirate_stacks_buff", "items/item_sword
 LinkLuaModifier( "modifier_item_imba_triumvirate_proc_buff", "items/item_swords.lua", LUA_MODIFIER_MOTION_NONE )		-- Move speed proc
 
 function item_imba_triumvirate:GetAbilityTextureName()
-   return "custom/imba_sange_and_azura_and_yasha"
+	return "custom/imba_sange_and_azura_and_yasha"
 end
 
 function item_imba_triumvirate:GetIntrinsicModifierName()
@@ -1454,16 +1471,16 @@ function modifier_item_imba_triumvirate_stacks_debuff:DeclareFunctions()
 	return funcs
 end
 
-function modifier_item_imba_triumvirate_stacks_debuff:GetModifierMagicalResistanceBonus()	
-	if not self.amp_stack then return nil end	
+function modifier_item_imba_triumvirate_stacks_debuff:GetModifierMagicalResistanceBonus()
+	if not self.amp_stack then return nil end
 	return self.amp_stack * self:GetStackCount() end
 
 function modifier_item_imba_triumvirate_stacks_debuff:GetModifierAttackSpeedBonus_Constant()
-	if not self.maim_stack then return nil end		
+	if not self.maim_stack then return nil end
 	return self.maim_stack * self:GetStackCount() end
 
 function modifier_item_imba_triumvirate_stacks_debuff:GetModifierMoveSpeedBonus_Percentage()
-	if not self.maim_stack then return nil end	
+	if not self.maim_stack then return nil end
 	return self.maim_stack * self:GetStackCount() end
 
 -----------------------------------------------------------------------------------------------------------
@@ -1595,7 +1612,7 @@ function modifier_item_imba_triumvirate_proc_buff:GetModifierMoveSpeedBonus_Perc
 
 
 -----------------------------------------------------------------------------------------------------------
---	Auxiliary attack functions 
+--	Auxiliary attack functions
 -----------------------------------------------------------------------------------------------------------
 
 function SangeAttack(attacker, target, ability, modifier_stacks, modifier_proc)
@@ -1637,7 +1654,7 @@ function YashaAttack(attacker, ability, modifier_stacks, modifier_proc)
 	-- If this is an illusion, do nothing else
 	if attacker:IsIllusion() then
 		return end
-	
+
 	-- If the ability is not on cooldown, roll for a proc
 	if ability:IsCooldownReady() and RollPercentage(ability:GetSpecialValueFor("proc_chance")) then
 

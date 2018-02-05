@@ -1,3 +1,20 @@
+-- Copyright (C) 2018  The Dota IMBA Development Team
+--
+-- Licensed under the Apache License, Version 2.0 (the "License");
+-- you may not use this file except in compliance with the License.
+-- You may obtain a copy of the License at
+--
+-- http://www.apache.org/licenses/LICENSE-2.0
+--
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- See the License for the specific language governing permissions and
+-- limitations under the License.
+--
+-- Editors:
+--
+
 -- Author: Shush
 -- Date: 25/01/2017
 
@@ -14,11 +31,11 @@ function item_imba_curseblade:GetIntrinsicModifierName()
 end
 
 function item_imba_curseblade:GetAbilityTextureName()
-   return "custom/imba_curseblade"
+	return "custom/imba_curseblade"
 end
 
 function item_imba_curseblade:OnSpellStart()
-	if IsServer() then		
+	if IsServer() then
 		-- Ability properties
 		local caster = self:GetCaster()
 		local ability = self
@@ -29,17 +46,17 @@ function item_imba_curseblade:OnSpellStart()
 		local debuff = "modifier_item_imba_curseblade_debuff"
 
 		-- Ability specials
-		local duration = self:GetSpecialValueFor("duration")		
+		local duration = self:GetSpecialValueFor("duration")
 
 		-- Play sound cast
 		EmitSoundOn(sound_cast, caster)
-		
+
 		-- Check for Linken's Sphere
 		if target:GetTeam() ~= caster:GetTeam() then
 			if target:TriggerSpellAbsorb(self) then
 				return nil
 			end
-		end	
+		end
 
 		-- If the target is magic immune (Lotus Orb/Anti Mage), do nothing
 		if target:IsMagicImmune() then
@@ -47,10 +64,10 @@ function item_imba_curseblade:OnSpellStart()
 		end
 
 		-- Add the curse debuff to the target
-		target:AddNewModifier(caster, ability, debuff, {duration = duration})	
-		
-		-- Find all modifiers on caster	
-		local modifiers = caster:FindAllModifiers()		
+		target:AddNewModifier(caster, ability, debuff, {duration = duration})
+
+		-- Find all modifiers on caster
+		local modifiers = caster:FindAllModifiers()
 		for _,modifier in pairs(modifiers) do
 			local modifier_found = false
 			local modifier_name = modifier:GetName()
@@ -68,34 +85,34 @@ function item_imba_curseblade:OnSpellStart()
 			end
 
 			-- If the modifier was not found yet, search it in the debuff list
-			if not modifier_found then				
+			if not modifier_found then
 
 				-- Compare debuff to try and find it in the KV debuff list
 				for _,modifier_name_in_list in pairs(DISPELLABLE_DEBUFF_LIST) do
 					if modifier_name == modifier_name_in_list then
-						modifier_found = true						
-					end	
-				end			
+						modifier_found = true
+					end
+				end
 			end
 
-			-- If the modifier was found, remove it on the caster and transfer it to the enemy			
+			-- If the modifier was found, remove it on the caster and transfer it to the enemy
 			if modifier_found then
-				local modifier_duration = modifier:GetDuration()								
+				local modifier_duration = modifier:GetDuration()
 				caster:RemoveModifierByName(modifier_name)
 
 				-- Find if it is a lua based ability or datadriven and assign the correct function
-				local modifier_ability = modifier:GetAbility()									
-				local modifier_class = modifier:GetClass()				
-				
-				if modifier_class == datadrive_baseclass then					
+				local modifier_ability = modifier:GetAbility()
+				local modifier_class = modifier:GetClass()
+
+				if modifier_class == datadrive_baseclass then
 					modifier_ability:ApplyDataDrivenModifier(caster, target, modifier_name, {duration = modifier_duration})
-				else					
+				else
 					target:AddNewModifier(caster, modifier_ability, modifier_name, {duration = modifier_duration})
-				end				
+				end
 			end
-		end				
+		end
 	end
-end		
+end
 
 -------------------------------------------
 --			SOULDRAIN AURA
@@ -122,9 +139,9 @@ function modifier_imba_souldrain:GetAuraEntityReject(target)
 end
 
 -- Start aura
-function modifier_imba_souldrain:OnCreated() 
-	if IsServer() then		
-		self:StartIntervalThink( self:GetAbility():GetSpecialValueFor("aura_damage_heal_interval"))					
+function modifier_imba_souldrain:OnCreated()
+	if IsServer() then
+		self:StartIntervalThink( self:GetAbility():GetSpecialValueFor("aura_damage_heal_interval"))
 	end
 end
 
@@ -137,7 +154,7 @@ end
 --Heal and Distribute damage modifier
 function modifier_imba_souldrain:OnIntervalThink()
 	if IsServer() then
-   		--Ability properties
+		--Ability properties
 		local item 					=	self:GetAbility()
 		local caster				= 	item:GetCaster()
 		local location 				=	caster:GetAbsOrigin()
@@ -148,19 +165,19 @@ function modifier_imba_souldrain:OnIntervalThink()
 		local heal_interval			=	item:GetSpecialValueFor("aura_damage_heal_interval")
 
 		--Search for nearby enemies
-		local enemies 				= 	FindUnitsInRadius(caster:GetTeamNumber(), location, nil, radius, item:GetAbilityTargetTeam(), item:GetAbilityTargetType(), item:GetAbilityTargetFlags(), FIND_ANY_ORDER, false)				
+		local enemies 				= 	FindUnitsInRadius(caster:GetTeamNumber(), location, nil, radius, item:GetAbilityTargetTeam(), item:GetAbilityTargetType(), item:GetAbilityTargetFlags(), FIND_ANY_ORDER, false)
 
 		local valid_enemies = 0
-		for _,enemy in pairs(enemies) do			
+		for _,enemy in pairs(enemies) do
 			if enemy:HasModifier("modifier_imba_souldrain_damage") then
-				local actual_damage = ApplyDamage({victim = enemy, attacker = caster, ability = item, damage = heal_per_enemy * heal_interval, damage_type = DAMAGE_TYPE_PURE, damage_flags = DOTA_DAMAGE_FLAG_HPLOSS, ability = item})		
+				local actual_damage = ApplyDamage({victim = enemy, attacker = caster, ability = item, damage = heal_per_enemy * heal_interval, damage_type = DAMAGE_TYPE_PURE, damage_flags = DOTA_DAMAGE_FLAG_HPLOSS, ability = item})
 
-				-- Apply aura damage and heal		
+				-- Apply aura damage and heal
 				caster:Heal(actual_damage, caster)
 
-				valid_enemies = valid_enemies + 1			
+				valid_enemies = valid_enemies + 1
 			end
-		end		
+		end
 	end
 end
 
@@ -191,23 +208,23 @@ function modifier_item_imba_curseblade:OnCreated()
 		if not parent:HasModifier("modifier_imba_souldrain") then
 			parent:AddNewModifier(parent, self:GetAbility(), "modifier_imba_souldrain", {})
 		end
-		
+
 		-- Ability properties
 		self.caster = self:GetCaster()
 		self.ability = self:GetAbility()
-	
-		--Add the aura	
+
+		--Add the aura
 
 		if not self.ability then
-			self:Destroy()			
+			self:Destroy()
 			return nil
 		end
 
 		-- Ability specials
 		self.agility_bonus = self.ability:GetSpecialValueFor("agility_bonus")
-		self.intelligence_bonus = self.ability:GetSpecialValueFor("intelligence_bonus")	
+		self.intelligence_bonus = self.ability:GetSpecialValueFor("intelligence_bonus")
 		self.strength_bonus = self.ability:GetSpecialValueFor("strength_bonus")
-		self.damage = self.ability:GetSpecialValueFor("damage") 
+		self.damage = self.ability:GetSpecialValueFor("damage")
 	end
 end
 
@@ -226,22 +243,22 @@ function modifier_item_imba_curseblade:GetAttributes() return MODIFIER_ATTRIBUTE
 
 function modifier_item_imba_curseblade:DeclareFunctions()
 	local decFuncs = {MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
-					  MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
-					  MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
-					  MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE}
-		
-	return decFuncs	
+		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
+		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
+		MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE}
+
+	return decFuncs
 end
 
-function modifier_item_imba_curseblade:GetModifierBonusStats_Agility()	
+function modifier_item_imba_curseblade:GetModifierBonusStats_Agility()
 	return self.agility_bonus
 end
 
-function modifier_item_imba_curseblade:GetModifierBonusStats_Intellect()	
+function modifier_item_imba_curseblade:GetModifierBonusStats_Intellect()
 	return self.intelligence_bonus
 end
 
-function modifier_item_imba_curseblade:GetModifierBonusStats_Strength()	
+function modifier_item_imba_curseblade:GetModifierBonusStats_Strength()
 	return self.strength_bonus
 end
 
@@ -268,23 +285,23 @@ function modifier_item_imba_curseblade_debuff:OnCreated()
 	-- Ability properties
 	self.caster = self:GetCaster()
 	self.parent = self:GetParent()
-	self.ability = self:GetAbility()	
+	self.ability = self:GetAbility()
 	self.particle_drain = "particles/hero/skeleton_king/skeleton_king_vampiric_aura_lifesteal.vpcf"
 
 	-- Ability specials
-	self.tick_rate = self.ability:GetSpecialValueFor("tick_rate")	
+	self.tick_rate = self.ability:GetSpecialValueFor("tick_rate")
 	self.slow_amount = self.ability:GetSpecialValueFor("slow_amount")
 	self.lifedrain_per_second = self.ability:GetSpecialValueFor("lifedrain_per_second")
 	self.manadrain_per_second = self.ability:GetSpecialValueFor("manadrain_per_second")
-		
+
 	-- Start interval for ticking HP/MP drain.
-	self:StartIntervalThink(self.tick_rate)	
+	self:StartIntervalThink(self.tick_rate)
 end
 
 function modifier_item_imba_curseblade_debuff:DeclareFunctions()
 	local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE}
-		
-	return decFuncs	
+
+	return decFuncs
 end
 
 function modifier_item_imba_curseblade_debuff:GetModifierMoveSpeedBonus_Percentage()
@@ -300,32 +317,30 @@ function modifier_item_imba_curseblade_debuff:GetEffectName()
 end
 
 function modifier_item_imba_curseblade_debuff:OnIntervalThink()
-	if IsServer() then		
+	if IsServer() then
 		-- Add drain particles
 		local particle_drain_fx = ParticleManager:CreateParticle(self.particle_drain, PATTACH_ABSORIGIN, self.caster)
 		ParticleManager:SetParticleControl(particle_drain_fx, 0, self.caster:GetAbsOrigin())
 		ParticleManager:SetParticleControl(particle_drain_fx, 1, self.caster:GetAbsOrigin())
-		ParticleManager:ReleaseParticleIndex(particle_drain_fx)		
-		
+		ParticleManager:ReleaseParticleIndex(particle_drain_fx)
+
 		-- Set actual damage/drain per tick
 		local lifedrain = self.lifedrain_per_second * self.tick_rate
 		local manadrain = self.manadrain_per_second * self.tick_rate
-		
+
 		-- Apply damage to enemy, heal caster
 		local damageTable = {victim = self.parent,
-							attacker = self.caster,
-							damage = lifedrain,
-							damage_flags = DOTA_DAMAGE_FLAG_HPLOSS,
-							damage_type = DAMAGE_TYPE_MAGICAL}			
-		
-		ApplyDamage(damageTable)	
-		
+			attacker = self.caster,
+			damage = lifedrain,
+			damage_flags = DOTA_DAMAGE_FLAG_HPLOSS,
+			damage_type = DAMAGE_TYPE_MAGICAL}
+
+		ApplyDamage(damageTable)
+
 		self.caster:Heal(lifedrain, self.caster)
-		
+
 		-- Reduce enemy's mana, replenish caster's.
 		self.parent:ReduceMana(manadrain)
 		self.caster:GiveMana(manadrain)
-	end	
+	end
 end
-
-

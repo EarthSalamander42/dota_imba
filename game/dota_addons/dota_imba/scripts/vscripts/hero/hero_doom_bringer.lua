@@ -1,3 +1,20 @@
+-- Copyright (C) 2018  The Dota IMBA Development Team
+--
+-- Licensed under the Apache License, Version 2.0 (the "License");
+-- you may not use this file except in compliance with the License.
+-- You may obtain a copy of the License at
+--
+-- http://www.apache.org/licenses/LICENSE-2.0
+--
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- See the License for the specific language governing permissions and
+-- limitations under the License.
+--
+-- Editors:
+--     suthernfriend, 03.02.2018
+
 -------------------------------------------
 --			GOD'S STRENGTH
 -------------------------------------------
@@ -11,7 +28,7 @@ function imba_doom_bringer_doom:IsStealable() return true end
 function imba_doom_bringer_doom:IsNetherWardStealable() return false end
 
 function imba_doom_bringer_doom:GetAbilityTextureName()
-   return "doom_bringer_doom"
+	return "doom_bringer_doom"
 end
 
 function imba_doom_bringer_doom:OnSpellStart()
@@ -87,9 +104,9 @@ end
 
 function modifier_imba_doom_bringer_doom:DeclareFunctions()
 	local decFuns =
-	{
-		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
-	}
+		{
+			MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
+		}
 	return decFuns
 end
 
@@ -112,7 +129,7 @@ function modifier_imba_doom_bringer_doom_enemies:RemoveOnDeath() return true end
 -------------------------------------------
 
 function modifier_imba_doom_bringer_doom_enemies:OnCreated()
---	self:GetParent():Purge(true, false, false, false, false)
+	--	self:GetParent():Purge(true, false, false, false, false)
 	self:StartIntervalThink(1.0)
 end
 
@@ -136,14 +153,14 @@ function modifier_imba_doom_bringer_doom_enemies:StatusEffectPriority()
 	return 10
 end
 
-function modifier_imba_doom_bringer_doom_enemies:CheckState()	
-	local state = {} 
+function modifier_imba_doom_bringer_doom_enemies:CheckState()
+	local state = {}
 	state = {
 		[MODIFIER_STATE_MUTED] = true,
 		[MODIFIER_STATE_SILENCED] = true,
 		[MODIFIER_STATE_PASSIVES_DISABLED] = true,
 	}
-	
+
 	return state
 end
 

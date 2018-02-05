@@ -1,5 +1,20 @@
--- Author: EarthSalamander #42
--- Date: 03.12.2017
+-- Copyright (C) 2018  The Dota IMBA Development Team
+--
+-- Licensed under the Apache License, Version 2.0 (the "License");
+-- you may not use this file except in compliance with the License.
+-- You may obtain a copy of the License at
+--
+-- http://www.apache.org/licenses/LICENSE-2.0
+--
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- See the License for the specific language governing permissions and
+-- limitations under the License.
+--
+-- Editors:
+--     EarthSalamander #42, 03.12.2017
+--     suthernfriend, 03.02.2018
 
 CreateEmptyTalents("elder_titan")
 
@@ -43,7 +58,7 @@ function imba_elder_titan_echo_stomp:GetChannelTime()
 	end
 end
 
-function imba_elder_titan_echo_stomp:OnChannelFinish(interrupted) 
+function imba_elder_titan_echo_stomp:OnChannelFinish(interrupted)
 
 	if IsServer() then
 		if interrupted then
@@ -78,10 +93,10 @@ function imba_elder_titan_echo_stomp:OnChannelFinish(interrupted)
 
 			for _, enemy in pairs(enemies) do
 				-- Deal damage to nearby non-magic immune enemies
-				if not enemy:IsMagicImmune() then			
+				if not enemy:IsMagicImmune() then
 					local damageTable = {victim = enemy, attacker = caster, damage = stomp_damage, damage_type = ability:GetAbilityDamageType(), ability = ability}
-											
-					ApplyDamage(damageTable)	
+
+					ApplyDamage(damageTable)
 
 					-- Stun them
 					enemy:AddNewModifier(caster, ability, "modifier_stunned", {duration = stun_duration})
@@ -91,7 +106,7 @@ function imba_elder_titan_echo_stomp:OnChannelFinish(interrupted)
 	end
 end
 
-function imba_elder_titan_echo_stomp:OnAbilityPhaseStart()	
+function imba_elder_titan_echo_stomp:OnAbilityPhaseStart()
 	if astral_spirit == nil then
 	else
 		if astral_spirit.is_returning == true then return true end
@@ -137,10 +152,10 @@ function imba_elder_titan_echo_stomp:OnSpellStart()
 
 		for _, enemy in pairs(enemies) do
 			-- Deal damage to nearby non-magic immune enemies
-			if not enemy:IsMagicImmune() then			
+			if not enemy:IsMagicImmune() then
 				local damageTable = {victim = enemy, attacker = caster, damage = stomp_damage, damage_type = ability:GetAbilityDamageType(), ability = ability}
-										
-				ApplyDamage(damageTable)	
+
+				ApplyDamage(damageTable)
 
 				-- Stun them
 				enemy:AddNewModifier(caster, ability, "modifier_stunned", {duration = stun_duration})
@@ -302,7 +317,7 @@ function modifier_imba_elder_titan_ancestral_spirit_self:OnCreated()
 end
 
 function modifier_imba_elder_titan_ancestral_spirit_self:OnIntervalThink()
---	print(self:GetAbility():GetSpecialValueFor("radius"))
+	--	print(self:GetAbility():GetSpecialValueFor("radius"))
 
 	local duration = self:GetAbility():GetCaster():FindTalentValue("special_bonus_imba_elder_titan_3")
 	local nearby_enemies = FindUnitsInRadius(self:GetParent():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
@@ -329,7 +344,7 @@ function modifier_imba_elder_titan_ancestral_spirit_self:OnIntervalThink()
 
 			if self:GetParent():GetOwner():HasTalent("special_bonus_imba_elder_titan_3") then
 				enemy:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_rooted", {duration = duration})
-				
+
 				local root_fx = ParticleManager:CreateParticle("particles/units/heroes/heroes_underlord/abyssal_underlord_pitofmalice_stun.vpcf", PATTACH_ABSORIGIN_FOLLOW, enemy)
 				ParticleManager:SetParticleControl(root_fx, 0, enemy:GetAbsOrigin())
 
@@ -340,8 +355,8 @@ function modifier_imba_elder_titan_ancestral_spirit_self:OnIntervalThink()
 			end
 
 			-- Apply slow modifier
---			self:GetAbility():ApplyDataDrivenModifier(self:GetCaster(), enemy, modifier_slow, {})
---			enemy:SetModifierStackCount(modifier_slow, self:GetCaster(), slow_initial_stacks)
+			--			self:GetAbility():ApplyDataDrivenModifier(self:GetCaster(), enemy, modifier_slow, {})
+			--			enemy:SetModifierStackCount(modifier_slow, self:GetCaster(), slow_initial_stacks)
 
 			-- Add enemy to the targets hit table
 			self.targets_hit[#self.targets_hit + 1] = enemy
@@ -450,7 +465,7 @@ function imba_elder_titan_natural_order:GetAbilityTextureName()
 	return "elder_titan_natural_order"
 end
 
-function imba_elder_titan_natural_order:GetIntrinsicModifierName()	
+function imba_elder_titan_natural_order:GetIntrinsicModifierName()
 	return "modifier_imba_elder_titan_natural_order_aura"
 end
 
@@ -471,7 +486,7 @@ end
 
 -- Aura properties
 function modifier_imba_elder_titan_natural_order_aura:GetAuraRadius()
-	return natural_order_radius 
+	return natural_order_radius
 end
 
 function modifier_imba_elder_titan_natural_order_aura:GetAuraSearchFlags()
@@ -498,7 +513,7 @@ function modifier_imba_elder_titan_natural_order:IsHidden() return false end
 function modifier_imba_elder_titan_natural_order:IsPurgable() return false end
 function modifier_imba_elder_titan_natural_order:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
-function modifier_imba_elder_titan_natural_order:OnCreated() 
+function modifier_imba_elder_titan_natural_order:OnCreated()
 	local ability = self:GetAbility()
 	self.base_armor_reduction = ability:GetSpecialValueFor("armor_reduction_pct")
 	self.magic_resist_reduction = ability:GetSpecialValueFor("magic_resistance_pct")
@@ -510,7 +525,7 @@ function modifier_imba_elder_titan_natural_order:DeclareFunctions()
 		MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS,
 		MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE,
 	}
-	return funcs 
+	return funcs
 end
 
 function modifier_imba_elder_titan_natural_order:GetModifierPhysicalArmorBonus()
@@ -610,10 +625,10 @@ function imba_elder_titan_echo_stomp_spirit:OnSpellStart()
 
 		for _, enemy in pairs(enemies) do
 			-- Deal damage to nearby non-magic immune enemies
-			if not enemy:IsMagicImmune() then			
+			if not enemy:IsMagicImmune() then
 				local damageTable = {victim = enemy, attacker = caster, damage = stomp_damage, damage_type = ability:GetAbilityDamageType(), ability = ability}
-										
-				ApplyDamage(damageTable)	
+
+				ApplyDamage(damageTable)
 
 				-- Stun them
 				enemy:AddNewModifier(caster, ability, "modifier_stunned", {duration = stun_duration})
@@ -632,7 +647,7 @@ function imba_elder_titan_earth_splitter:GetAbilityTextureName()
 	return "elder_titan_earth_splitter"
 end
 
-function imba_elder_titan_ancestral_spirit:GetIntrinsicModifierName()	
+function imba_elder_titan_ancestral_spirit:GetIntrinsicModifierName()
 	return "modifier_imba_earth_splitter"
 end
 
@@ -664,9 +679,9 @@ function imba_elder_titan_earth_splitter:OnSpellStart()
 	local radius = self:GetSpecialValueFor("radius")
 	local duration = self:GetSpecialValueFor("duration")
 	local slow_duration = self:GetSpecialValueFor("slow_duration")
---	if scepter then
---		slow_duration = self:GetSpecialValueFor("slow_duration_scepter")
---	end
+	--	if scepter then
+	--		slow_duration = self:GetSpecialValueFor("slow_duration_scepter")
+	--	end
 	local bonus_hp_per_str = self:GetSpecialValueFor("bonus_hp_per_str")
 	local effect_delay = self:GetSpecialValueFor("crack_time")
 	local crack_width = self:GetSpecialValueFor("crack_width")

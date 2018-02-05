@@ -1,9 +1,21 @@
----------------------
--- Sly King
--- Author: 
--- Contributors: Lindbrum
----------------------
-
+-- Copyright (C) 2018  The Dota IMBA Development Team
+--
+-- Licensed under the Apache License, Version 2.0 (the "License");
+-- you may not use this file except in compliance with the License.
+-- You may obtain a copy of the License at
+--
+-- http://www.apache.org/licenses/LICENSE-2.0
+--
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- See the License for the specific language governing permissions and
+-- limitations under the License.
+--
+-- Editors:
+--     Earth Salamander #42
+--     Lindbrum
+--     suthernfriend, 03.02.2018
 
 ---------------------------------------------------------------
 ----------------------- FROST GALE ----------------------------
@@ -25,7 +37,7 @@ function imba_sly_king_frost_gale:OnSpellStart()
 		local caster = self:GetCaster()
 		local target_loc = self:GetCursorPosition()
 		local caster_loc = caster:GetAbsOrigin()
-		
+
 
 		-- Ability Specials
 		local set_in_time = self:GetSpecialValueFor("set_in_time")
@@ -42,7 +54,7 @@ function imba_sly_king_frost_gale:OnSpellStart()
 		end
 		local index = DoUniqueString("index")
 		self[index] = {}
-		local travel_distance 
+		local travel_distance
 		caster:EmitSound("Hero_Venomancer.VenomousGale")
 
 		for i = 1, projectile_count, 1 do
@@ -50,26 +62,26 @@ function imba_sly_king_frost_gale:OnSpellStart()
 			local velocity = RotateVector2D(direction,angle,true)
 
 			travel_distance = self:GetSpecialValueFor("cast_range") + GetCastRangeIncrease(caster)
-			local projectile = 
-			{
-				Ability				= self,
-				EffectName			= "particles/heroes/hero_slyli/frost_gale.vpcf",
-				vSpawnOrigin		= caster:GetAbsOrigin(),
-				fDistance			= travel_distance,
-				fStartRadius		= radius,
-				fEndRadius			= radius,
-				Source				= caster,
-				bHasFrontalCone		= true,
-				bReplaceExisting	= false,
-				iUnitTargetTeam		= self:GetAbilityTargetTeam(),
-				iUnitTargetFlags	= self:GetAbilityTargetFlags(),
-				iUnitTargetType		= self:GetAbilityTargetType(),
-				fExpireTime 		= GameRules:GetGameTime() + 10.0,
-				bDeleteOnHit		= true,
-				vVelocity			= Vector(velocity.x,velocity.y,0) * projectile_speed,
-				bProvidesVision		= false,
-				ExtraData			= {index = index, duration = set_in_time, projectile_count = projectile_count}
-			}
+			local projectile =
+				{
+					Ability				= self,
+					EffectName			= "particles/heroes/hero_slyli/frost_gale.vpcf",
+					vSpawnOrigin		= caster:GetAbsOrigin(),
+					fDistance			= travel_distance,
+					fStartRadius		= radius,
+					fEndRadius			= radius,
+					Source				= caster,
+					bHasFrontalCone		= true,
+					bReplaceExisting	= false,
+					iUnitTargetTeam		= self:GetAbilityTargetTeam(),
+					iUnitTargetFlags	= self:GetAbilityTargetFlags(),
+					iUnitTargetType		= self:GetAbilityTargetType(),
+					fExpireTime 		= GameRules:GetGameTime() + 10.0,
+					bDeleteOnHit		= true,
+					vVelocity			= Vector(velocity.x,velocity.y,0) * projectile_speed,
+					bProvidesVision		= false,
+					ExtraData			= {index = index, duration = set_in_time, projectile_count = projectile_count}
+				}
 			ProjectileManager:CreateLinearProjectile(projectile)
 		end
 	end
@@ -117,7 +129,7 @@ function modifier_imba_frost_gale_setin:GetAttributes() return MODIFIER_ATTRIBUT
 
 function modifier_imba_frost_gale_setin:GetEffectName()
 	return "particles/econ/courier/courier_greevil_blue/courier_greevil_blue_ambient_3.vpcf" end
-	
+
 function modifier_imba_frost_gale_setin:GetEffectAttachType()
 	return PATTACH_ABSORIGIN_FOLLOW end
 
@@ -144,7 +156,7 @@ function modifier_imba_frost_gale_setin:OnDestroy()
 	if IsServer() then
 		--if victim isn't dead and isn't magic immune, apply the root debuff
 		if self.parent:IsAlive() and not self.parent:IsMagicImmune() then
-			
+
 			local mod = self.parent:AddNewModifier(self.ability:GetCaster(), self.ability, "modifier_imba_frost_gale_debuff", {duration = self.chill_duration})
 			mod:SetStackCount(self:GetStackCount())
 		end
@@ -153,7 +165,7 @@ end
 
 function modifier_imba_frost_gale_setin:DeclareFunctions()
 	local funcs = {	MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
-					}
+		}
 	return funcs
 end
 
@@ -168,11 +180,11 @@ end
 
 function modifier_imba_frost_gale_setin:GetModifierMoveSpeedBonus_Percentage()
 	if IsServer() then
-		
+
 		--increase slow over time
 		local duration = self:GetDuration()
 		local elapsed = math.floor(self:GetElapsedTime())
-		
+
 		local totalSlow = (self.maximum_slow - self.minimum_slow) / duration * elapsed + self.minimum_slow
 		return totalSlow * -1
 	end
@@ -195,7 +207,7 @@ end
 function modifier_imba_frost_gale_debuff:GetEffectName()
 	return "particles/hero/sly_king/sly_king_frost_gale_freeze.vpcf"
 end
-	
+
 function modifier_imba_frost_gale_debuff:GetEffectAttachType()
 	return PATTACH_ABSORIGIN_FOLLOW
 end
@@ -228,7 +240,7 @@ function modifier_imba_frost_gale_debuff:OnIntervalThink()
 	if IsServer() then
 		--apply damage proportional to the tick interval
 		local damage_per_tick = self.chill_damage * self.tick_interval
-		
+
 		ApplyDamage({victim = self.parent, attacker = self.caster, damage = damage_per_tick, damage_type = DAMAGE_TYPE_MAGICAL})
 		SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, self.parent, damage_per_tick, nil)
 	end
@@ -259,17 +271,17 @@ end
 --]]
 function imba_sly_king_burrow_blast:OnSpellStart()
 	-- Ability properties
-	local caster = self:GetCaster()    
+	local caster = self:GetCaster()
 	local ability = self
 	local target_point = self:GetCursorPosition()
 	local sound_cast = "Hero_NyxAssassin.Impale"
-	local particle_burrow = "particles/heroes/hero_slyli/sly_king_burrowblast.vpcf"        
-	local modifier_burrow = "modifier_imba_burrowblast_burrow"    
+	local particle_burrow = "particles/heroes/hero_slyli/sly_king_burrowblast.vpcf"
+	local modifier_burrow = "modifier_imba_burrowblast_burrow"
 
 	-- Ability specials
 	local burrow_speed = ability:GetSpecialValueFor("speed")
-	local burrow_radius = ability:GetSpecialValueFor("radius")    
---	local burrowblast_time = ability:GetSpecialValueFor("burrowblast_time")
+	local burrow_radius = ability:GetSpecialValueFor("radius")
+	--	local burrowblast_time = ability:GetSpecialValueFor("burrowblast_time")
 
 	-- #1 Talent: burrowblast path radius increase
 	burrow_radius = burrow_radius + caster:FindTalentValue("special_bonus_imba_sand_king_1")
@@ -289,32 +301,32 @@ function imba_sly_king_burrow_blast:OnSpellStart()
 	-- Add particle effect
 	local particle_burrow_fx = ParticleManager:CreateParticle(particle_burrow, PATTACH_WORLDORIGIN, caster)
 	ParticleManager:SetParticleControl(particle_burrow_fx, 0, caster:GetAbsOrigin())
-	ParticleManager:SetParticleControl(particle_burrow_fx, 1, target_point)    
+	ParticleManager:SetParticleControl(particle_burrow_fx, 1, target_point)
 
 	-- Projectile information
-	local burrow_projectile = {Ability = ability,                               
-							   vSpawnOrigin = caster:GetAbsOrigin(),
-							   fDistance = distance,
-							   fStartRadius = burrow_radius,
-							   fEndRadius = burrow_radius,
-							   Source = caster,
-							   bHasFrontalCone = false,
-							   bReplaceExisting = false,
-							   iUnitTargetTeam = DOTA_UNIT_TARGET_TEAM_ENEMY,                          
-							   iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,                           
-							   bDeleteOnHit = false,
-							   vVelocity = direction * burrow_speed * Vector(1, 1, 0),
-							   bProvidesVision = false,                                
-							 }
-	 
-	-- Launch projectile                        
-	ProjectileManager:CreateLinearProjectile(burrow_projectile)        
+	local burrow_projectile = {Ability = ability,
+		vSpawnOrigin = caster:GetAbsOrigin(),
+		fDistance = distance,
+		fStartRadius = burrow_radius,
+		fEndRadius = burrow_radius,
+		Source = caster,
+		bHasFrontalCone = false,
+		bReplaceExisting = false,
+		iUnitTargetTeam = DOTA_UNIT_TARGET_TEAM_ENEMY,
+		iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+		bDeleteOnHit = false,
+		vVelocity = direction * burrow_speed * Vector(1, 1, 0),
+		bProvidesVision = false,
+	}
+
+	-- Launch projectile
+	ProjectileManager:CreateLinearProjectile(burrow_projectile)
 
 	-- Cache target_point in the ability
 	self.target_point = target_point
 
 	-- Set the caster's location at the end
-	caster:SetAbsOrigin(target_point)    
+	caster:SetAbsOrigin(target_point)
 
 	-- Wait a frame, then resolve positions
 	Timers:CreateTimer(FrameTime(), function()
@@ -322,7 +334,7 @@ function imba_sly_king_burrow_blast:OnSpellStart()
 	end)
 
 	-- Add burrowed status modifier
-	caster:AddNewModifier(caster, ability, modifier_burrow, {duration = self:GetSpecialValueFor("delay_burrow")})    
+	caster:AddNewModifier(caster, ability, modifier_burrow, {duration = self:GetSpecialValueFor("delay_burrow")})
 end
 
 function imba_sly_king_burrow_blast:OnProjectileHit(target, location)
@@ -339,9 +351,9 @@ function imba_sly_king_burrow_blast:OnProjectileHit(target, location)
 	-- Ability properties
 	local caster = self:GetCaster()
 	local ability = self
-	local target_point = self.target_point    
-	local modifier_stun = "modifier_stunned"    
---	local modifier_poison = "modifier_imba_caustic_finale_poison"
+	local target_point = self.target_point
+	local modifier_stun = "modifier_stunned"
+	--	local modifier_poison = "modifier_imba_caustic_finale_poison"
 
 	-- Ability specials
 	local knockback_duration = ability:GetSpecialValueFor("knockback_duration")
@@ -352,13 +364,13 @@ function imba_sly_king_burrow_blast:OnProjectileHit(target, location)
 	local knockup_duration = ability:GetSpecialValueFor("knockup_duration")
 
 	-- Caustic Finale
---	local caustic_ability_name = "imba_sly_king_caustic_finale"
+	--	local caustic_ability_name = "imba_sly_king_caustic_finale"
 	local caustic_ability
 	local poison_duration
---	if caster:HasAbility(caustic_ability_name) then
---		caustic_ability = caster:FindAbilityByName(caustic_ability_name)
---		poison_duration = caustic_ability:GetSpecialValueFor("poison_duration")
---	end    
+	--	if caster:HasAbility(caustic_ability_name) then
+	--		caustic_ability = caster:FindAbilityByName(caustic_ability_name)
+	--		poison_duration = caustic_ability:GetSpecialValueFor("poison_duration")
+	--	end
 
 	-- If an enemy target has Linken's sphere ready, do nothing
 	if caster:GetTeamNumber() ~= target:GetTeamNumber() then
@@ -382,16 +394,16 @@ function imba_sly_king_burrow_blast:OnProjectileHit(target, location)
 
 	-- Knockback enemies up and towards the target point
 	local knockbackProperties =
-	{
-		 center_x = bump_point.x,
-		 center_y = bump_point.y,
-		 center_z = bump_point.z,
-		 duration = knockup_duration,
-		 knockback_duration = knockup_duration,
-		 knockback_distance = push_distance,
-		 knockback_height = knockup_height
-	}
- 
+		{
+			center_x = bump_point.x,
+			center_y = bump_point.y,
+			center_z = bump_point.z,
+			duration = knockup_duration,
+			knockback_duration = knockup_duration,
+			knockback_distance = push_distance,
+			knockback_height = knockup_height
+		}
+
 	target:RemoveModifierByName("modifier_knockback")
 	target:AddNewModifier(target, nil, "modifier_knockback", knockbackProperties)
 
@@ -399,24 +411,24 @@ function imba_sly_king_burrow_blast:OnProjectileHit(target, location)
 	target:AddNewModifier(caster, ability, modifier_stun, {duration = stun_duration})
 
 	-- Apply Caustic Finale to heroes, unless they already have it
---	if target:IsHero() and poison_duration and poison_duration > 0 and not target:HasModifier(modifier_poison) then
---		target:AddNewModifier(caster, caustic_ability, modifier_poison, {duration = poison_duration})
---	end
+	--	if target:IsHero() and poison_duration and poison_duration > 0 and not target:HasModifier(modifier_poison) then
+	--		target:AddNewModifier(caster, caustic_ability, modifier_poison, {duration = poison_duration})
+	--	end
 
 	-- Deal damage
 	local damageTable = {victim = target,
-						 attacker = caster, 
-						 damage = damage,
-						 damage_type = DAMAGE_TYPE_MAGICAL,
-						 ability = ability
-						 }
-		
-	ApplyDamage(damageTable)  
+		attacker = caster,
+		damage = damage,
+		damage_type = DAMAGE_TYPE_MAGICAL,
+		ability = ability
+	}
+
+	ApplyDamage(damageTable)
 
 	-- Wait until the target lands, then resolve positions
 	Timers:CreateTimer(knockup_duration + FrameTime(), function()
 		ResolveNPCPositions(target_point, 128)
-	end)    
+	end)
 end
 
 
@@ -434,9 +446,9 @@ end
 
 function modifier_imba_burrowblast_burrow:CheckState()
 	local state = {[MODIFIER_STATE_STUNNED] = true,
-				   [MODIFIER_STATE_OUT_OF_GAME] = true,
-				   [MODIFIER_STATE_INVULNERABLE] = true,
-				   [MODIFIER_STATE_NO_HEALTH_BAR] = true}
+		[MODIFIER_STATE_OUT_OF_GAME] = true,
+		[MODIFIER_STATE_INVULNERABLE] = true,
+		[MODIFIER_STATE_NO_HEALTH_BAR] = true}
 	return state
 end
 
@@ -508,7 +520,7 @@ function modifier_imba_frozen_skin_passive:OnAttackLanded(params)
 		if params.target == self.parent then
 
 			if self.caster:PassivesDisabled() or                                              -- if Sly King is broken, do nothing.
-			params.attacker:IsBuilding() or	params.attacker:IsMagicImmune() then         -- if the guy attacking Sly King is a tower or spell immune, do nothing.
+				params.attacker:IsBuilding() or	params.attacker:IsMagicImmune() then         -- if the guy attacking Sly King is a tower or spell immune, do nothing.
 				return nil
 			end
 
@@ -535,7 +547,7 @@ function modifier_imba_frozen_skin_debuff:IsPurgeException()	return true end
 function modifier_imba_frozen_skin_debuff:CheckState()			return {[MODIFIER_STATE_ROOTED] = true} end
 
 function modifier_imba_frozen_skin_debuff:OnCreated( kv )
-	if IsServer() then 
+	if IsServer() then
 		--Ability properties
 		self.caster = self:GetCaster()
 		self.ability = self:GetAbility()
@@ -547,10 +559,10 @@ function modifier_imba_frozen_skin_debuff:OnCreated( kv )
 
 		-- Immediately proc the first damage instance
 		self:OnIntervalThink()
-		
+
 		--Play sound
 		self:GetParent():EmitSound("Hero_Crystal.Frostbite")
-		
+
 		-- Get thinkin
 		self:StartIntervalThink(self.damage_interval)
 		self:GetParent():AddNewModifier(self.caster, nil, "modifier_rooted", {duration = self:GetAbility():GetSpecialValueFor("duration")})
@@ -596,7 +608,7 @@ function imba_sly_king_winterbringer:OnSpellStart()
 	local radius = ability:GetSpecialValueFor("radius")
 
 	-- Play cast sound
-   EmitSoundOnLocationWithCaster(caster:GetAbsOrigin(), sound_cast, caster)
+	EmitSoundOnLocationWithCaster(caster:GetAbsOrigin(), sound_cast, caster)
 
 	--Add the pulse modifier to the caster
 	caster:AddNewModifier(caster, ability, modifier_pulse, {})
@@ -623,10 +635,10 @@ function imba_sly_king_winterbringer:OnSpellStart()
 end
 
 function imba_sly_king_winterbringer:OnChannelFinish(interrupted)
- 
+
 	local caster = self:GetCaster()
 	local modifier_pulse = "modifier_imba_winterbringer_pulse"
-   
+
 	--Stop pulsing
 	caster:RemoveModifierByName(modifier_pulse)
 end
@@ -689,14 +701,14 @@ function modifier_imba_winterbringer_pulse:OnIntervalThink()
 
 		-- Find all nearby enemies in the damage radius
 		local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(),
-		self.caster:GetAbsOrigin(),
-		nil,
-		self.radius,
-		DOTA_UNIT_TARGET_TEAM_ENEMY,
-		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-		DOTA_UNIT_TARGET_FLAG_NONE,
-		FIND_ANY_ORDER,
-		false)
+			self.caster:GetAbsOrigin(),
+			nil,
+			self.radius,
+			DOTA_UNIT_TARGET_TEAM_ENEMY,
+			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+			DOTA_UNIT_TARGET_FLAG_NONE,
+			FIND_ANY_ORDER,
+			false)
 
 		for _,enemy in pairs(enemies) do
 
@@ -716,14 +728,14 @@ function modifier_imba_winterbringer_pulse:OnIntervalThink()
 
 		-- Find all nearby enemies in the pull radius
 		local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(),
-		self.caster:GetAbsOrigin(),
-		nil,
-		self.pull_radius,
-		DOTA_UNIT_TARGET_TEAM_ENEMY,
-		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-		DOTA_UNIT_TARGET_FLAG_NONE,
-		FIND_ANY_ORDER,
-		false)
+			self.caster:GetAbsOrigin(),
+			nil,
+			self.pull_radius,
+			DOTA_UNIT_TARGET_TEAM_ENEMY,
+			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+			DOTA_UNIT_TARGET_FLAG_NONE,
+			FIND_ANY_ORDER,
+			false)
 
 		for _,enemy in pairs(enemies) do
 

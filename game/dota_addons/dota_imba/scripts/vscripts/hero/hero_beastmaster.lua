@@ -1,36 +1,51 @@
--- Author: Fudge
--- Date: 10/07/2017
+-- Copyright (C) 2018  The Dota IMBA Development Team
+--
+-- Licensed under the Apache License, Version 2.0 (the "License");
+-- you may not use this file except in compliance with the License.
+-- You may obtain a copy of the License at
+--
+-- http://www.apache.org/licenses/LICENSE-2.0
+--
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- See the License for the specific language governing permissions and
+-- limitations under the License.
+--
+-- Editors:
+--     Fudge, 10.07.2017
+--     suthernfriend, 03.02.2018
 
 
 -- HELPER FUNCTION
 
-local function UpgradeBeastsSummons(caster, ability)    
-    local hawk_ability = "imba_beastmaster_summon_hawk"
-    local boar_ability = "imba_beastmaster_summon_boar"        
+local function UpgradeBeastsSummons(caster, ability)
+	local hawk_ability = "imba_beastmaster_summon_hawk"
+	local boar_ability = "imba_beastmaster_summon_boar"
 
-    -- Get handles
-    local hawk_ability_handler
-    local boar_ability_handler
-    local raze_far_handler
+	-- Get handles
+	local hawk_ability_handler
+	local boar_ability_handler
+	local raze_far_handler
 
-    if caster:HasAbility(hawk_ability) then
-        hawk_ability_handler = caster:FindAbilityByName(hawk_ability)
-    end
+	if caster:HasAbility(hawk_ability) then
+		hawk_ability_handler = caster:FindAbilityByName(hawk_ability)
+	end
 
-    if caster:HasAbility(boar_ability) then
-        boar_ability_handler = caster:FindAbilityByName(boar_ability)
-    end        
+	if caster:HasAbility(boar_ability) then
+		boar_ability_handler = caster:FindAbilityByName(boar_ability)
+	end
 
-    -- Get the level to compare
-    local leveled_ability_level = ability:GetLevel()
+	-- Get the level to compare
+	local leveled_ability_level = ability:GetLevel()
 
-    if hawk_ability_handler and hawk_ability_handler:GetLevel() < leveled_ability_level then
-        hawk_ability_handler:SetLevel(leveled_ability_level)
-    end
+	if hawk_ability_handler and hawk_ability_handler:GetLevel() < leveled_ability_level then
+		hawk_ability_handler:SetLevel(leveled_ability_level)
+	end
 
-    if boar_ability_handler and boar_ability_handler:GetLevel() < leveled_ability_level then
-        boar_ability_handler:SetLevel(leveled_ability_level)
-    end            
+	if boar_ability_handler and boar_ability_handler:GetLevel() < leveled_ability_level then
+		boar_ability_handler:SetLevel(leveled_ability_level)
+	end
 end
 
 
@@ -41,40 +56,40 @@ imba_beastmaster_summon_hawk    =   imba_beastmaster_summon_hawk or class({})
 LinkLuaModifier("modifier_imba_beastmaster_hawk",  "hero/hero_beastmaster", LUA_MODIFIER_MOTION_NONE)
 
 function imba_beastmaster_summon_hawk:OnUpgrade()
-    UpgradeBeastsSummons(self:GetCaster(), self)
+	UpgradeBeastsSummons(self:GetCaster(), self)
 end
 
 function imba_beastmaster_summon_hawk:OnSpellStart()
-    if IsServer() then
-        -- Ability properties
-        local caster            =   self:GetCaster()
-        local hawk_name         =   "npc_imba_dota_beastmaster_hawk_"
-        local hawk_level        =   self:GetLevel()
-        local spawn_point       =   caster:GetAbsOrigin()
-        local spawn_particle    =   "particles/units/heroes/hero_beastmaster/beastmaster_call_bird.vpcf"
-        local response          =   "beastmaster_beas_ability_summonsbird_0"
-        -- Ability paramaters
-        local hawk_duration =   self:GetSpecialValueFor("hawk_duration")
-		
-		
-        -- Say response
-        caster:EmitSound(response..RandomInt(1,5))
-        -- Emit cast sound
-        caster:EmitSound("Hero_Beastmaster.Call.Hawk")
-        -- Do the summon particle
-        local spawn_particle_fx = ParticleManager:CreateParticle(spawn_particle, PATTACH_ABSORIGIN, caster)
-        ParticleManager:SetParticleControl( spawn_particle_fx, 0, spawn_point )
+	if IsServer() then
+		-- Ability properties
+		local caster            =   self:GetCaster()
+		local hawk_name         =   "npc_imba_dota_beastmaster_hawk_"
+		local hawk_level        =   self:GetLevel()
+		local spawn_point       =   caster:GetAbsOrigin()
+		local spawn_particle    =   "particles/units/heroes/hero_beastmaster/beastmaster_call_bird.vpcf"
+		local response          =   "beastmaster_beas_ability_summonsbird_0"
+		-- Ability paramaters
+		local hawk_duration =   self:GetSpecialValueFor("hawk_duration")
 
-        -- Create hawk
-        self.hawk = CreateUnitByName(hawk_name..hawk_level, spawn_point, false, caster, caster, caster:GetTeamNumber())
-        self.hawk:AddNewModifier(caster, self, "modifier_imba_beastmaster_hawk", {})
+
+		-- Say response
+		caster:EmitSound(response..RandomInt(1,5))
+		-- Emit cast sound
+		caster:EmitSound("Hero_Beastmaster.Call.Hawk")
+		-- Do the summon particle
+		local spawn_particle_fx = ParticleManager:CreateParticle(spawn_particle, PATTACH_ABSORIGIN, caster)
+		ParticleManager:SetParticleControl( spawn_particle_fx, 0, spawn_point )
+
+		-- Create hawk
+		self.hawk = CreateUnitByName(hawk_name..hawk_level, spawn_point, false, caster, caster, caster:GetTeamNumber())
+		self.hawk:AddNewModifier(caster, self, "modifier_imba_beastmaster_hawk", {})
 		self.hawk:AddNewModifier(caster, self, "modifier_kill", {duration = hawk_duration})
-        self.hawk:SetControllableByPlayer(caster:GetPlayerID(), true)
+		self.hawk:SetControllableByPlayer(caster:GetPlayerID(), true)
 
-		end
-		local hawk_speed	=	self:GetSpecialValueFor("hawk_speed_tooltip")
-		-- Show movespeed beyond max
-		self.hawk:SetBaseMoveSpeed(hawk_speed)
+	end
+	local hawk_speed	=	self:GetSpecialValueFor("hawk_speed_tooltip")
+	-- Show movespeed beyond max
+	self.hawk:SetBaseMoveSpeed(hawk_speed)
 end
 
 -----------------
@@ -99,15 +114,15 @@ function modifier_imba_beastmaster_hawk:OnCreated()
 	end
 end
 function modifier_imba_beastmaster_hawk:DeclareFunctions()
-    local decFuncs  =   {
-        MODIFIER_PROPERTY_MOVESPEED_MAX,
-    }
+	local decFuncs  =   {
+		MODIFIER_PROPERTY_MOVESPEED_MAX,
+	}
 	return decFuncs
 end
 
 -- SUPA FAST BIRDS CAW CAW
 function modifier_imba_beastmaster_hawk:GetModifierMoveSpeed_Max()
-    return 1200
+	return 1200
 end
 --[[
 -- Kill hawk when it's duration is over
@@ -144,23 +159,23 @@ function modifier_imba_hawk_invis_handler:OnCreated()
 		local ability	=	self:GetAbility()
 		ability:StartCooldown(ability:GetSpecialValueFor("fade_time") )
 
-        self:StartIntervalThink(0.2)
+		self:StartIntervalThink(0.2)
 	end
 end
 
 function modifier_imba_hawk_invis_handler:OnIntervalThink()
-    if IsServer() then
+	if IsServer() then
 		local ability = self:GetAbility()
 		local parent = self:GetParent()
 		local fade_time = ability:GetSpecialValueFor("fade_time")
-		
+
 		-- If the passive cooldown is ready
 		if ability:IsCooldownReady() then
-			if not parent:HasModifier("modifier_imba_hawk_invis") then 
+			if not parent:HasModifier("modifier_imba_hawk_invis") then
 				parent:AddNewModifier(parent, ability, "modifier_imba_hawk_invis", {})
 			end
-		
-		-- If the passive is on cooldown, remove the invis modifier
+
+			-- If the passive is on cooldown, remove the invis modifier
 		elseif parent:HasModifier("modifier_imba_hawk_invis") then
 			parent:RemoveModifierByName("modifier_imba_hawk_invis")
 		end
@@ -168,8 +183,8 @@ function modifier_imba_hawk_invis_handler:OnIntervalThink()
 end
 
 function modifier_imba_hawk_invis_handler:DeclareFunctions()
-    local funcs = { MODIFIER_EVENT_ON_UNIT_MOVED}
-    return funcs
+	local funcs = { MODIFIER_EVENT_ON_UNIT_MOVED}
+	return funcs
 end
 
 function modifier_imba_hawk_invis_handler:OnUnitMoved(keys)
@@ -197,7 +212,7 @@ function modifier_imba_hawk_invis:IsHidden() return false end
 
 function modifier_imba_hawk_invis:OnCreated()
 	local particle = ParticleManager:CreateParticle("particles/generic_hero_status/status_invisibility_start.vpcf", PATTACH_ABSORIGIN, self:GetParent())
-	ParticleManager:ReleaseParticleIndex(particle)	
+	ParticleManager:ReleaseParticleIndex(particle)
 end
 
 function modifier_imba_hawk_invis:DeclareFunctions()
@@ -219,7 +234,7 @@ function modifier_imba_hawk_invis:CheckState()
 end
 
 function modifier_imba_hawk_invis:GetPriority()
-    return MODIFIER_PRIORITY_NORMAL
+	return MODIFIER_PRIORITY_NORMAL
 end
 
 ---------------------------------------
@@ -231,7 +246,7 @@ imba_beastmaster_summon_boar = imba_beastmaster_summon_boar or class({})
 LinkLuaModifier("modifier_imba_beastmaster_boar",  "hero/hero_beastmaster", LUA_MODIFIER_MOTION_NONE)
 
 function imba_beastmaster_summon_boar:OnUpgrade()
-    UpgradeBeastsSummons(self:GetCaster(), self)    
+	UpgradeBeastsSummons(self:GetCaster(), self)
 end
 
 function imba_beastmaster_summon_boar:OnSpellStart()
@@ -254,26 +269,26 @@ function imba_beastmaster_summon_boar:OnSpellStart()
 		local spawn_particle_fx = ParticleManager:CreateParticle(spawn_particle, PATTACH_ABSORIGIN, caster)
 		ParticleManager:SetParticleControl( spawn_particle_fx, 0, spawn_point )
 
-        -- Moar Boar talent
-        local boar_count = 1
-        if caster:HasAbility("special_bonus_unique_beastmaster_2") then
-            local talent_handler = caster:FindAbilityByName("special_bonus_unique_beastmaster_2")
-            if talent_handler and talent_handler:GetLevel() > 0 then
-                local additional_boars = talent_handler:GetSpecialValueFor("value")
-                if additional_boars then
-                    boar_count = boar_count + additional_boars
-                end
-            end
-        end
+		-- Moar Boar talent
+		local boar_count = 1
+		if caster:HasAbility("special_bonus_unique_beastmaster_2") then
+			local talent_handler = caster:FindAbilityByName("special_bonus_unique_beastmaster_2")
+			if talent_handler and talent_handler:GetLevel() > 0 then
+				local additional_boars = talent_handler:GetSpecialValueFor("value")
+				if additional_boars then
+					boar_count = boar_count + additional_boars
+				end
+			end
+		end
 
-        for i = 1, boar_count do
-    		-- Create boar
-    		boar = CreateUnitByName(boar_name..boar_level, spawn_point, true, caster, caster, caster:GetTeamNumber())
-    		boar:AddNewModifier(caster, self, "modifier_imba_beastmaster_boar", {})
-    		boar:AddNewModifier(caster, self, "modifier_kill", {duration = boar_duration})
+		for i = 1, boar_count do
+			-- Create boar
+			boar = CreateUnitByName(boar_name..boar_level, spawn_point, true, caster, caster, caster:GetTeamNumber())
+			boar:AddNewModifier(caster, self, "modifier_imba_beastmaster_boar", {})
+			boar:AddNewModifier(caster, self, "modifier_kill", {duration = boar_duration})
 
-    		boar:SetControllableByPlayer(caster:GetPlayerID(), true)
-        end
+			boar:SetControllableByPlayer(caster:GetPlayerID(), true)
+		end
 	end
 end
 
@@ -369,11 +384,11 @@ function modifier_imba_boar_poison_debuff:IsPurgable() return true end
 
 function modifier_imba_boar_poison_debuff:OnCreated()
 	-- Necessary client-side handling
-		-- Ability properties
-		local ability		=	self:GetAbility()
-		-- Ability paramaters
-		self.movespeed_slow		=	ability:GetSpecialValueFor("movespeed_slow")
-		self.attackspeed_slow	=	ability:GetSpecialValueFor("attackspeed_slow")
+	-- Ability properties
+	local ability		=	self:GetAbility()
+	-- Ability paramaters
+	self.movespeed_slow		=	ability:GetSpecialValueFor("movespeed_slow")
+	self.attackspeed_slow	=	ability:GetSpecialValueFor("attackspeed_slow")
 end
 
 function modifier_imba_boar_poison_debuff:DeclareFunctions()

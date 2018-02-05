@@ -1,3 +1,20 @@
+-- Copyright (C) 2018  The Dota IMBA Development Team
+--
+-- Licensed under the Apache License, Version 2.0 (the "License");
+-- you may not use this file except in compliance with the License.
+-- You may obtain a copy of the License at
+--
+-- http://www.apache.org/licenses/LICENSE-2.0
+--
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- See the License for the specific language governing permissions and
+-- limitations under the License.
+--
+-- Editors:
+--
+
 --[[	Author: Firetoad
 		Date:	08.07.2016	]]
 
@@ -66,7 +83,7 @@ function BattleFuryHit( keys )
 
 	-- Find enemies to damage
 	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), target_loc, nil, cleave_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
-	
+
 	-- Deal damage
 	for _,enemy in pairs(enemies) do
 		if enemy ~= target and not enemy:IsAttackImmune() then
@@ -94,7 +111,7 @@ function BattleFuryStackDown( keys )
 	if current_stacks <= 1 then
 		caster:RemoveModifierByName(modifier_cleave)
 
-	-- Else, reduce stack count by 1
+		-- Else, reduce stack count by 1
 	else
 		caster:SetModifierStackCount(modifier_cleave, caster, current_stacks - 1)
 	end

@@ -1,10 +1,20 @@
---[[
-
-			Author: MouJiaoZi
-			Date: 2018/01/04
-
-]]
-
+-- Copyright (C) 2018  The Dota IMBA Development Team
+--
+-- Licensed under the Apache License, Version 2.0 (the "License");
+-- you may not use this file except in compliance with the License.
+-- You may obtain a copy of the License at
+--
+-- http://www.apache.org/licenses/LICENSE-2.0
+--
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- See the License for the specific language governing permissions and
+-- limitations under the License.
+--
+-- Editors:
+--     MouJiaoZi, 05.01.2018
+--     suthernfriend, 03.02.2018
 
 --------------------------------------------------------
 ---- PUDGE'S HOOK
@@ -226,7 +236,7 @@ function imba_pudge_meat_hook:OnOwnerDied()
 
 	-- Allow again to launch meat hook
 	self.launched = false
-end	
+end
 
 function imba_pudge_meat_hook:OnSpellStart()
 
@@ -286,31 +296,31 @@ function imba_pudge_meat_hook:OnSpellStart()
 	ParticleManager:SetParticleControl(hook_pfx, 5, Vector( 0, 0, 0 ) )
 
 	local projectile_info = {
-							Ability = self,
-							EffectName = nil,
-							vSpawnOrigin = caster:GetAbsOrigin(),
-							fDistance = hook_range,
-							fStartRadius = hook_width,
-							fEndRadius = hook_width,
-							Source = caster,
-							bHasFrontalCone = false,
-							bReplaceExisting = false,
-							iUnitTargetTeam = DOTA_UNIT_TARGET_TEAM_BOTH,
-							iUnitTargetFlags = DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS,
-							iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-							fExpireTime = GameRules:GetGameTime() + ((hook_range / hook_speed)),
-							vVelocity = (target_position - caster:GetAbsOrigin()):Normalized() * hook_speed,
-							bProvidesVision = false,
-							bDeleteOnHit = true,
-							ExtraData = {
-										hook_width = hook_width,
-										hook_dmg = hook_dmg,
-										hook_spd = hook_speed,
-										pfx_index = hook_pfx,
-										goorback = "go",
-										rune = -1,
-										}
-							}
+		Ability = self,
+		EffectName = nil,
+		vSpawnOrigin = caster:GetAbsOrigin(),
+		fDistance = hook_range,
+		fStartRadius = hook_width,
+		fEndRadius = hook_width,
+		Source = caster,
+		bHasFrontalCone = false,
+		bReplaceExisting = false,
+		iUnitTargetTeam = DOTA_UNIT_TARGET_TEAM_BOTH,
+		iUnitTargetFlags = DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS,
+		iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+		fExpireTime = GameRules:GetGameTime() + ((hook_range / hook_speed)),
+		vVelocity = (target_position - caster:GetAbsOrigin()):Normalized() * hook_speed,
+		bProvidesVision = false,
+		bDeleteOnHit = true,
+		ExtraData = {
+			hook_width = hook_width,
+			hook_dmg = hook_dmg,
+			hook_spd = hook_speed,
+			pfx_index = hook_pfx,
+			goorback = "go",
+			rune = -1,
+		}
+	}
 	self.hook_go = ProjectileManager:CreateLinearProjectile(projectile_info)
 
 	if caster and caster:IsHero() then
@@ -330,16 +340,16 @@ function imba_pudge_meat_hook:OnProjectileThink_ExtraData(vLocation, ExtraData)
 		local location = vLocation
 		local radius = ExtraData.hook_width
 		local runes = {
-						"models/props_gameplay/rune_goldxp.vmdl",
-						"models/props_gameplay/rune_haste01.vmdl",
-						"models/props_gameplay/rune_doubledamage01.vmdl",
-						"models/props_gameplay/rune_regeneration01.vmdl",
-						"models/props_gameplay/rune_arcane.vmdl",
-						"models/props_gameplay/rune_invisibility01.vmdl",
-						"models/props_gameplay/rune_illusion01.vmdl",
-						"models/props_gameplay/rune_frost.vmdl",
-						"models/props_gameplay/gold_coin001.vmdl",	-- Overthrow coin
-						}
+			"models/props_gameplay/rune_goldxp.vmdl",
+			"models/props_gameplay/rune_haste01.vmdl",
+			"models/props_gameplay/rune_doubledamage01.vmdl",
+			"models/props_gameplay/rune_regeneration01.vmdl",
+			"models/props_gameplay/rune_arcane.vmdl",
+			"models/props_gameplay/rune_invisibility01.vmdl",
+			"models/props_gameplay/rune_illusion01.vmdl",
+			"models/props_gameplay/rune_frost.vmdl",
+			"models/props_gameplay/gold_coin001.vmdl",	-- Overthrow coin
+		}
 
 		--check if there are runes to grab
 		for _, ent in pairs(Entities:FindAllInSphere(location, radius)) do
@@ -354,7 +364,7 @@ function imba_pudge_meat_hook:OnProjectileThink_ExtraData(vLocation, ExtraData)
 		end
 
 	end
-	
+
 	if ExtraData.goorback == "back" then
 		if EntIndexToHScript(ExtraData.rune) then
 			local rune = EntIndexToHScript(ExtraData.rune)
@@ -366,7 +376,7 @@ function imba_pudge_meat_hook:OnProjectileThink_ExtraData(vLocation, ExtraData)
 			target:SetAbsOrigin(GetGroundPosition(vLocation, target))
 		end
 	end
-	
+
 end
 
 function imba_pudge_meat_hook:OnProjectileHit_ExtraData(hTarget, vLocation, ExtraData)
@@ -413,13 +423,13 @@ function imba_pudge_meat_hook:OnProjectileHit_ExtraData(hTarget, vLocation, Extr
 					dmg = dmg + talent_dmg
 				end
 				local damageTable = {
-									victim = hTarget,
-									attacker = caster,
-									damage = dmg,
-									damage_type = DAMAGE_TYPE_PURE,
-									damage_flags = DOTA_DAMAGE_FLAG_NONE, --Optional.
-									ability = self, --Optional.
-									}
+					victim = hTarget,
+					attacker = caster,
+					damage = dmg,
+					damage_type = DAMAGE_TYPE_PURE,
+					damage_flags = DOTA_DAMAGE_FLAG_NONE, --Optional.
+					ability = self, --Optional.
+				}
 				local actually_dmg = ApplyDamage(damageTable)
 				SendOverheadEventMessage(nil, OVERHEAD_ALERT_DAMAGE, hTarget, actually_dmg, nil)
 				hTarget:AddNewModifier(caster, self, "modifier_imba_hook_target_enemy", {})
@@ -428,28 +438,28 @@ function imba_pudge_meat_hook:OnProjectileHit_ExtraData(hTarget, vLocation, Extr
 			end
 		end
 		local projectile_info = {
-								Target = caster,
-								Source = target,
-								Ability = self,	
-								EffectName = nil,
-								iMoveSpeed = ExtraData.hook_spd,
-								vSourceLoc = target:GetAbsOrigin(),
-								bDrawsOnMinimap = false,
-								bDodgeable = false,
-								bIsAttack = false,
-								bVisibleToEnemies = true,
-								bReplaceExisting = false,
-								bProvidesVision = bVision,
-								iVisionRadius = 400,
-								iVisionTeamNumber = caster:GetTeamNumber(),
-								ExtraData = {
-											hooked_target = target:entindex(),
-											hook_spd = ExtraData.hook_spd,
-											pfx_index = ExtraData.pfx_index,
-											goorback = "back",
-											rune = ExtraData.rune,
-											}
-								}
+			Target = caster,
+			Source = target,
+			Ability = self,
+			EffectName = nil,
+			iMoveSpeed = ExtraData.hook_spd,
+			vSourceLoc = target:GetAbsOrigin(),
+			bDrawsOnMinimap = false,
+			bDodgeable = false,
+			bIsAttack = false,
+			bVisibleToEnemies = true,
+			bReplaceExisting = false,
+			bProvidesVision = bVision,
+			iVisionRadius = 400,
+			iVisionTeamNumber = caster:GetTeamNumber(),
+			ExtraData = {
+				hooked_target = target:entindex(),
+				hook_spd = ExtraData.hook_spd,
+				pfx_index = ExtraData.pfx_index,
+				goorback = "back",
+				rune = ExtraData.rune,
+			}
+		}
 		ProjectileManager:CreateTrackingProjectile(projectile_info)
 		if caster:IsAlive() then
 			caster:FadeGesture(ACT_DOTA_OVERRIDE_ABILITY_1)
@@ -458,7 +468,7 @@ function imba_pudge_meat_hook:OnProjectileHit_ExtraData(hTarget, vLocation, Extr
 			ProjectileManager:DestroyLinearProjectile(self.hook_go)
 		end
 		return true
-		
+
 	end
 
 
@@ -481,11 +491,11 @@ function imba_pudge_meat_hook:OnProjectileHit_ExtraData(hTarget, vLocation, Extr
 		if caster and caster:IsHero() then
 			local hHook = caster:GetTogglableWearable( DOTA_LOADOUT_TYPE_WEAPON )
 			if hHook ~= nil then
-				hHook:RemoveEffects( EF_NODRAW )								
+				hHook:RemoveEffects( EF_NODRAW )
 			end
 			StopSoundOn( "Hero_Pudge.AttackHookRetract", caster)
 			StopSoundOn( "Hero_Pudge.AttackHookExtend", caster)
-			StopSoundOn( "Hero_Pudge.AttackHookRetractStop", caster)			
+			StopSoundOn( "Hero_Pudge.AttackHookRetractStop", caster)
 		end
 		local buff1 = target:FindModifierByName("modifier_imba_hook_target_enemy")
 		local buff2 = target:FindModifierByName("modifier_imba_hook_target_ally")
@@ -506,10 +516,10 @@ function modifier_imba_pudge_meat_hook_caster_root:IsStunDebuff() return false e
 function modifier_imba_pudge_meat_hook_caster_root:RemoveOnDeath() return true end
 
 function modifier_imba_pudge_meat_hook_caster_root:CheckState()
-	local state = 
-	{
-		[MODIFIER_STATE_ROOTED] = true,
-	}
+	local state =
+		{
+			[MODIFIER_STATE_ROOTED] = true,
+		}
 	return state
 end
 
@@ -555,14 +565,14 @@ function modifier_imba_hook_target_enemy:IsStunDebuff() return false end
 function modifier_imba_hook_target_enemy:RemoveOnDeath() return false end
 
 function modifier_imba_hook_target_enemy:CheckState()
-	local state_ally = 
-	{
-		[MODIFIER_STATE_ROOTED] = true,
-	}
-	local state_enemy = 
-	{
-		[MODIFIER_STATE_STUNNED] = true,
-	}
+	local state_ally =
+		{
+			[MODIFIER_STATE_ROOTED] = true,
+		}
+	local state_enemy =
+		{
+			[MODIFIER_STATE_STUNNED] = true,
+		}
 	if self:GetCaster():GetTeamNumber() == self:GetParent():GetTeamNumber() then
 		return state_ally
 	else
@@ -586,14 +596,14 @@ function modifier_imba_hook_target_ally:IsStunDebuff() return false end
 function modifier_imba_hook_target_ally:RemoveOnDeath() return false end
 
 function modifier_imba_hook_target_ally:CheckState()
-	local state_ally = 
-	{
-		[MODIFIER_STATE_ROOTED] = true,
-	}
-	local state_enemy = 
-	{
-		[MODIFIER_STATE_STUNNED] = true,
-	}
+	local state_ally =
+		{
+			[MODIFIER_STATE_ROOTED] = true,
+		}
+	local state_enemy =
+		{
+			[MODIFIER_STATE_STUNNED] = true,
+		}
 	if self:GetCaster():GetTeamNumber() == self:GetParent():GetTeamNumber() then
 		return state_ally
 	else
@@ -680,32 +690,32 @@ function imba_pudge_rot_active:OnIntervalThink()
 	local ability = self:GetAbility()
 	local dmg = (ability:GetSpecialValueFor("rot_damage") + caster:GetMaxHealth() * ability:GetSpecialValueFor("bonus_damage") / 100 + caster:FindTalentValue("special_bonus_imba_pudge_6")) / (1 / ability:GetSpecialValueFor("rot_tick"))
 	local selfDamageTable = {
-						victim = caster,
-						attacker = caster,
-						damage = dmg,
-						damage_type = DAMAGE_TYPE_MAGICAL,
-						damage_flags = DOTA_DAMAGE_FLAG_NONE,
-						ability = ability,
-						}
+		victim = caster,
+		attacker = caster,
+		damage = dmg,
+		damage_type = DAMAGE_TYPE_MAGICAL,
+		damage_flags = DOTA_DAMAGE_FLAG_NONE,
+		ability = ability,
+	}
 	ApplyDamage(selfDamageTable)
 	local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
-									caster:GetAbsOrigin(),
-									nil,
-									self.radius,
-									DOTA_UNIT_TARGET_TEAM_ENEMY,
-									DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-									DOTA_UNIT_TARGET_FLAG_NONE,
-									FIND_ANY_ORDER,
-									false)
+		caster:GetAbsOrigin(),
+		nil,
+		self.radius,
+		DOTA_UNIT_TARGET_TEAM_ENEMY,
+		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+		DOTA_UNIT_TARGET_FLAG_NONE,
+		FIND_ANY_ORDER,
+		false)
 	for _, enemy in pairs(enemies) do
 		local DamageTable = {
-							victim = enemy,
-							attacker = caster,
-							damage = dmg,
-							damage_type = DAMAGE_TYPE_MAGICAL,
-							damage_flags = DOTA_DAMAGE_FLAG_NONE,
-							ability = ability,
-							}
+			victim = enemy,
+			attacker = caster,
+			damage = dmg,
+			damage_type = DAMAGE_TYPE_MAGICAL,
+			damage_flags = DOTA_DAMAGE_FLAG_NONE,
+			ability = ability,
+		}
 		ApplyDamage(DamageTable)
 		local stick = ability:GetSpecialValueFor("rot_stickyness")
 		enemy:AddNewModifier(caster, ability, "modifier_imba_rot_slow", {duration = stick})
@@ -729,10 +739,10 @@ function modifier_imba_rot_slow:IsPurgable() return true end
 function modifier_imba_rot_slow:IsStunDebuff() return false end
 
 function modifier_imba_rot_slow:DeclareFunctions()
-	local funcs = 
-	{
-		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-	}
+	local funcs =
+		{
+			MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		}
 	return funcs
 end
 
@@ -910,13 +920,13 @@ function modifier_dismember:OnIntervalThink()
 	local ability = self:GetAbility()
 	local dmg = ability:GetSpecialValueFor("dismember_damage") + self:GetCaster():GetStrength() * ability:GetSpecialValueFor("strength_damage") * 0.01
 	local damageTable = {
-						victim = self:GetParent(),
-						attacker = self:GetCaster(),
-						damage = dmg,
-						damage_type = DAMAGE_TYPE_MAGICAL,
-						damage_flags = DOTA_DAMAGE_FLAG_NONE,
-						ability = self:GetAbility(),
-						}
+		victim = self:GetParent(),
+		attacker = self:GetCaster(),
+		damage = dmg,
+		damage_type = DAMAGE_TYPE_MAGICAL,
+		damage_flags = DOTA_DAMAGE_FLAG_NONE,
+		ability = self:GetAbility(),
+	}
 	ApplyDamage(damageTable)
 end
 
@@ -963,10 +973,10 @@ function FleshHeapUpgrade( keys )
 	if caster.heap_stacks then
 		stack_amount = caster.heap_stacks
 		resist_amount = caster.heap_resist_stacks
-	-- Else, fetch kills/assists up to this point of the game (lazy way to make Heap retroactive)
+		-- Else, fetch kills/assists up to this point of the game (lazy way to make Heap retroactive)
 	else
 		local assists = caster:GetAssists()
-		local kills = caster:GetKills()	
+		local kills = caster:GetKills()
 		stack_amount = kills + assists
 		resist_amount = math.min(stack_amount, max_stacks)
 
@@ -1040,18 +1050,18 @@ function HeapUpdater( keys )
 	local resist_amount = caster:FindAllModifiersByName(modifier_resist)
 
 	-- If the amount of strength stacks has increased, update it
---	if caster.heap_stacks > stack_amount and caster:IsAlive() then
-		local stacks_missing = caster.heap_stacks - stack_amount
+	--	if caster.heap_stacks > stack_amount and caster:IsAlive() then
+	local stacks_missing = caster.heap_stacks - stack_amount
 
-		-- Add the appropriate amount of strength stacks
-		caster:SetModifierStackCount(modifier_stacks, ability, caster.heap_stacks)
+	-- Add the appropriate amount of strength stacks
+	caster:SetModifierStackCount(modifier_stacks, ability, caster.heap_stacks)
 
-		-- Update stats
-		caster:CalculateStatBonus()
+	-- Update stats
+	caster:CalculateStatBonus()
 
-		-- Make pudge GROW
-		caster:SetModelScale( math.min( 1 + stack_scale_up * stack_amount / 100, 2.0) )
---	end
+	-- Make pudge GROW
+	caster:SetModelScale( math.min( 1 + stack_scale_up * stack_amount / 100, 2.0) )
+	--	end
 
 	-- If the amount of resist stacks has increased, update it
 	if caster.heap_resist_stacks > #resist_amount and caster:IsAlive() then

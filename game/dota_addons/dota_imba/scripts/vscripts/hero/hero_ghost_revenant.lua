@@ -1,3 +1,20 @@
+-- Copyright (C) 2018  The Dota IMBA Development Team
+--
+-- Licensed under the Apache License, Version 2.0 (the "License");
+-- you may not use this file except in compliance with the License.
+-- You may obtain a copy of the License at
+--
+-- http://www.apache.org/licenses/LICENSE-2.0
+--
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- See the License for the specific language governing permissions and
+-- limitations under the License.
+--
+-- Editors:
+--     suthernfriend, 03.02.2018
+
 -----------------------------------------------------------------------------------------------------------
 -- Wraith
 -----------------------------------------------------------------------------------------------------------
@@ -5,7 +22,7 @@ ghost_revenant_wraith = class({})
 LinkLuaModifier("modifier_ghost_revenant_wraith", "hero/hero_ghost_revenant.lua", LUA_MODIFIER_MOTION_NONE)
 
 function ghost_revenant_wraith:GetAbilityTextureName()
-   return "custom/ghost_revenant_wraith"
+	return "custom/ghost_revenant_wraith"
 end
 
 function ghost_revenant_wraith:IsHiddenWhenStolen()
@@ -13,12 +30,12 @@ function ghost_revenant_wraith:IsHiddenWhenStolen()
 end
 
 function ghost_revenant_wraith:OnSpellStart()
-local caster = self:GetCaster()
-local ability = self
-local sound_cast = "DOTA_Item.GhostScepter.Activate"
-local modifier_decrep = "modifier_ghost_revenant_wraith"
+	local caster = self:GetCaster()
+	local ability = self
+	local sound_cast = "DOTA_Item.GhostScepter.Activate"
+	local modifier_decrep = "modifier_ghost_revenant_wraith"
 
-local duration = ability:GetSpecialValueFor("duration")
+	local duration = ability:GetSpecialValueFor("duration")
 
 	-- Play cast sound
 	EmitSoundOn(sound_cast, caster)
@@ -32,7 +49,7 @@ end
 -----------------------------------------------------------------------------------------------------------
 modifier_ghost_revenant_wraith = class({})
 
-function modifier_ghost_revenant_wraith:OnRefresh() 
+function modifier_ghost_revenant_wraith:OnRefresh()
 	if IsServer() then
 		self:OnDestroy()
 	end
@@ -88,31 +105,31 @@ if ghost_revenant_blackjack == nil then ghost_revenant_blackjack = class({}) end
 LinkLuaModifier( "modifier_ghost_revenant_blackjack_debuff", "hero/hero_ghost_revenant.lua", LUA_MODIFIER_MOTION_NONE )	-- Armor/vision debuff
 
 function ghost_revenant_blackjack:GetAbilityTextureName()
-   return "custom/ghost_revenant_blackjack"
+	return "custom/ghost_revenant_blackjack"
 end
 
-function ghost_revenant_blackjack:OnSpellStart()	
-local caster = self:GetCaster()
-local caster_loc = caster:GetAbsOrigin()
-local target_loc = self:GetCursorPosition()
+function ghost_revenant_blackjack:OnSpellStart()
+	local caster = self:GetCaster()
+	local caster_loc = caster:GetAbsOrigin()
+	local target_loc = self:GetCursorPosition()
 
-local projectile_radius = self:GetSpecialValueFor("projectile_radius")
-local projectile_length = self:GetSpecialValueFor("projectile_length")
-local projectile_speed = self:GetSpecialValueFor("projectile_speed")
-local projectile_cone = self:GetSpecialValueFor("projectile_cone")
-local projectile_amount = self:GetSpecialValueFor("projectile_amount")
-local projectile_vision = self:GetSpecialValueFor("projectile_vision")
+	local projectile_radius = self:GetSpecialValueFor("projectile_radius")
+	local projectile_length = self:GetSpecialValueFor("projectile_length")
+	local projectile_speed = self:GetSpecialValueFor("projectile_speed")
+	local projectile_cone = self:GetSpecialValueFor("projectile_cone")
+	local projectile_amount = self:GetSpecialValueFor("projectile_amount")
+	local projectile_vision = self:GetSpecialValueFor("projectile_vision")
 
--- Determine projectile geometry
-local projectile_directions = {}
-local main_direction = (target_loc - caster_loc):Normalized()
-if target_loc == caster_loc then
-	main_direction = caster:GetForwardVector()		
-end
-local angle_step = projectile_cone / (projectile_amount - 1)
-for i = 1, projectile_amount do
-	projectile_directions[i] = RotatePosition(caster_loc, QAngle(0, (i - 1) * angle_step - projectile_cone * 0.5, 0), caster_loc + main_direction * 50)
-end
+	-- Determine projectile geometry
+	local projectile_directions = {}
+	local main_direction = (target_loc - caster_loc):Normalized()
+	if target_loc == caster_loc then
+		main_direction = caster:GetForwardVector()
+	end
+	local angle_step = projectile_cone / (projectile_amount - 1)
+	for i = 1, projectile_amount do
+		projectile_directions[i] = RotatePosition(caster_loc, QAngle(0, (i - 1) * angle_step - projectile_cone * 0.5, 0), caster_loc + main_direction * 50)
+	end
 
 	local blackjack_projectile = {
 		Ability				= self,
@@ -125,12 +142,12 @@ end
 		bHasFrontalCone		= false,
 		bReplaceExisting	= false,
 		iUnitTargetTeam		= DOTA_UNIT_TARGET_TEAM_ENEMY,
---		iUnitTargetFlags	= DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
+		--		iUnitTargetFlags	= DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
 		iUnitTargetType		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-	--	fExpireTime			= ,
+		--	fExpireTime			= ,
 		bDeleteOnHit		= true,
 		vVelocity			= main_direction * projectile_speed,
-		bProvidesVision		= true, 
+		bProvidesVision		= true,
 		iVisionRadius		= projectile_vision,
 		iVisionTeamNumber	= caster:GetTeamNumber(),
 	}
@@ -148,7 +165,7 @@ end
 		if projectiles_launched < projectile_amount then
 			return 0.0
 		end
-	end)	
+	end)
 end
 
 function ghost_revenant_blackjack:OnProjectileHit(target, target_loc)
@@ -183,7 +200,7 @@ function modifier_ghost_revenant_blackjack_debuff:CheckState()
 	local state = {
 		[MODIFIER_STATE_STUNNED] = true
 	}
-	return state    
+	return state
 end
 
 function modifier_ghost_revenant_blackjack_debuff:IsHidden() return false end
@@ -201,7 +218,7 @@ LinkLuaModifier( "modifier_ghost_revenant_miasma", "hero/hero_ghost_revenant.lua
 if ghost_revenant_miasma == nil then ghost_revenant_miasma = class({}) end
 
 function ghost_revenant_miasma:GetAbilityTextureName()
-   return "custom/ghost_revenant_miasma"
+	return "custom/ghost_revenant_miasma"
 end
 
 function ghost_revenant_miasma:OnAbilityPhaseStart()
@@ -210,17 +227,17 @@ function ghost_revenant_miasma:OnAbilityPhaseStart()
 end
 
 function ghost_revenant_miasma:OnSpellStart()
-local caster = self:GetCaster()
-local target = self:GetCursorPosition()
-local aoe = self:GetSpecialValueFor("area_of_effect")
-local duration = self:GetSpecialValueFor("duration")
+	local caster = self:GetCaster()
+	local target = self:GetCursorPosition()
+	local aoe = self:GetSpecialValueFor("area_of_effect")
+	local duration = self:GetSpecialValueFor("duration")
 
 	caster:EmitSound("DOTA_Item.DustOfAppearance.Activate")
 
 	-- Creates flying vision area
 	self:CreateVisibilityNode(target, aoe, duration)
 
-	local miasma_pfx = ParticleManager:CreateParticle("particles/hero/ghost_revenant/miasma.vpcf", PATTACH_CUSTOMORIGIN, nil)	
+	local miasma_pfx = ParticleManager:CreateParticle("particles/hero/ghost_revenant/miasma.vpcf", PATTACH_CUSTOMORIGIN, nil)
 	ParticleManager:SetParticleControl(miasma_pfx, 0, target)
 	ParticleManager:SetParticleControl(miasma_pfx, 2, Vector(aoe, aoe, aoe))
 
@@ -246,12 +263,12 @@ function modifier_ghost_revenant_miasma:GetEffectName() return "particles/items2
 function modifier_ghost_revenant_miasma:GetEffectAttachType() return PATTACH_OVERHEAD_FOLLOW end
 function modifier_ghost_revenant_miasma:GetPriority() return MODIFIER_PRIORITY_SUPER_ULTRA end
 
-function modifier_ghost_revenant_miasma:DeclareFunctions()	
+function modifier_ghost_revenant_miasma:DeclareFunctions()
 	local decFuncs = {
 		MODIFIER_PROPERTY_PROVIDES_FOW_POSITION,
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 	}
-	return decFuncs	
+	return decFuncs
 end
 
 function modifier_ghost_revenant_miasma:OnCreated()
@@ -275,9 +292,9 @@ end
 
 function modifier_ghost_revenant_miasma:GetModifierProvidesFOWVision()
 	local parent = self:GetParent()
-	
+
 	if not parent:IsHero() then return 0 end
-	
+
 	local invisModifiers = {
 		"modifier_invisible",
 		"modifier_mirana_moonlight_shadow",
@@ -295,7 +312,7 @@ function modifier_ghost_revenant_miasma:GetModifierProvidesFOWVision()
 		"modifier_rune_invis",
 		"modifier_item_imba_silver_edge_invis"
 	}
-		
+
 	for _,v in ipairs(invisModifiers) do
 		if parent:HasModifier(v) then return 1 end
 	end
@@ -305,7 +322,7 @@ end
 function modifier_ghost_revenant_miasma:GetModifierMoveSpeedBonus_Percentage()
 	local parent = self:GetParent()
 	local ability = self:GetAbility()
-	
+
 	local slow = 0
 	local invisModifiers = {
 		"modifier_invisible",
@@ -342,7 +359,7 @@ end
 ghost_revenant_ghost_immolation = ghost_revenant_ghost_immolation or class({})
 
 function ghost_revenant_ghost_immolation:GetAbilityTextureName()
-   return "custom/ghost_revenant_ghost_immolation"
+	return "custom/ghost_revenant_ghost_immolation"
 end
 
 function ghost_revenant_ghost_immolation:GetIntrinsicModifierName()
@@ -506,7 +523,7 @@ LinkLuaModifier( "modifier_ghost_revenant_exhaustion", "hero/hero_ghost_revenant
 if ghost_revenant_exhaustion == nil then ghost_revenant_exhaustion = class({}) end
 
 function ghost_revenant_exhaustion:GetAbilityTextureName()
-   return "custom/ghost_revenant_exhaustion"
+	return "custom/ghost_revenant_exhaustion"
 end
 
 function ghost_revenant_exhaustion:OnAbilityPhaseStart()
@@ -515,7 +532,7 @@ function ghost_revenant_exhaustion:OnAbilityPhaseStart()
 end
 
 function ghost_revenant_exhaustion:OnSpellStart()
-local duration = self:GetSpecialValueFor("duration")
+	local duration = self:GetSpecialValueFor("duration")
 
 	self:GetCaster():EmitSound("DOTA_Item.DustOfAppearance.Activate")
 
@@ -530,11 +547,11 @@ function modifier_ghost_revenant_exhaustion:IsDebuff() return true end
 function modifier_ghost_revenant_exhaustion:IsHidden() return false end
 function modifier_ghost_revenant_exhaustion:IsPurgable() return true end
 
-function modifier_ghost_revenant_exhaustion:DeclareFunctions()	
+function modifier_ghost_revenant_exhaustion:DeclareFunctions()
 	local decFuncs = {
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 	}
-	return decFuncs	
+	return decFuncs
 end
 
 function modifier_ghost_revenant_exhaustion:OnCreated()
@@ -547,7 +564,7 @@ end
 function modifier_ghost_revenant_exhaustion:GetEffectName()
 	return "particles/econ/items/windrunner/windrunner_cape_cascade/windrunner_windrun_slow_cascade.vpcf"
 end
-	
+
 function modifier_ghost_revenant_exhaustion:GetEffectAttachType()
 	return PATTACH_OVERHEAD_FOLLOW
 end
@@ -556,6 +573,6 @@ function modifier_ghost_revenant_exhaustion:GetPriority()
 	return MODIFIER_PRIORITY_SUPER_ULTRA
 end
 
-function modifier_ghost_revenant_exhaustion:GetModifierMoveSpeedBonus_Percentage()	
+function modifier_ghost_revenant_exhaustion:GetModifierMoveSpeedBonus_Percentage()
 	return self.ms_reduction_pct
 end

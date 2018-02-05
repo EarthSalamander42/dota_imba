@@ -1,9 +1,20 @@
---[[
-			Author: MouJiaoZi
-			Date: 2017/12/06 YYYY/MM/DD
-			Thanks valve
-]]--
-
+-- Copyright (C) 2018  The Dota IMBA Development Team
+--
+-- Licensed under the Apache License, Version 2.0 (the "License");
+-- you may not use this file except in compliance with the License.
+-- You may obtain a copy of the License at
+--
+-- http://www.apache.org/licenses/LICENSE-2.0
+--
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- See the License for the specific language governing permissions and
+-- limitations under the License.
+--
+-- Editors:
+--     MouJiaoZi, 06.12.2017
+--     suthernfriend, 03.02.2018
 
 -------------------------------
 --       MIRROR IMAGE        --
@@ -67,14 +78,14 @@ function modifier_imba_naga_siren_mirror_image_invulnerable:IsHidden()
 end
 
 function modifier_imba_naga_siren_mirror_image_invulnerable:CheckState()
-	local state = 
-	{
-		[MODIFIER_STATE_INVULNERABLE] = true,
-		[MODIFIER_STATE_NO_HEALTH_BAR] = true,
-		[MODIFIER_STATE_STUNNED] = true,
-		[MODIFIER_STATE_OUT_OF_GAME] = true,
-	}
-	
+	local state =
+		{
+			[MODIFIER_STATE_INVULNERABLE] = true,
+			[MODIFIER_STATE_NO_HEALTH_BAR] = true,
+			[MODIFIER_STATE_STUNNED] = true,
+			[MODIFIER_STATE_OUT_OF_GAME] = true,
+		}
+
 	return state
 end
 
@@ -115,14 +126,14 @@ function imba_naga_siren_rip_tide:OnSpellStart()
 	local victim_table = {}
 	table.insert(caster_table, caster)
 	local casters = FindUnitsInRadius(caster:GetTeamNumber(),
-									caster:GetAbsOrigin(),
-									nil,
-									9999999,
-									DOTA_UNIT_TARGET_TEAM_FRIENDLY,
-									DOTA_UNIT_TARGET_HERO,
-									DOTA_UNIT_TARGET_FLAG_NONE,
-									FIND_ANY_ORDER,
-									false)
+		caster:GetAbsOrigin(),
+		nil,
+		9999999,
+		DOTA_UNIT_TARGET_TEAM_FRIENDLY,
+		DOTA_UNIT_TARGET_HERO,
+		DOTA_UNIT_TARGET_FLAG_NONE,
+		FIND_ANY_ORDER,
+		false)
 	for _, illusion_caster in pairs(casters) do
 		if illusion_caster:GetUnitName() == caster:GetUnitName() and illusion_caster:FindModifierByNameAndCaster(illusion_buff_name, caster) then
 			table.insert(caster_table, illusion_caster)
@@ -137,14 +148,14 @@ function imba_naga_siren_rip_tide:OnSpellStart()
 		ParticleManager:SetParticleControl(part, 3, Vector(effect_radius,effect_radius,effect_radius) )
 		ParticleManager:ReleaseParticleIndex(part)
 		local victims = FindUnitsInRadius(tide_caster:GetTeamNumber(),
-										tide_caster:GetAbsOrigin(),
-										nil,
-										effect_radius,
-										DOTA_UNIT_TARGET_TEAM_ENEMY,
-										DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-										DOTA_UNIT_TARGET_FLAG_NONE,
-										FIND_ANY_ORDER,
-										false)
+			tide_caster:GetAbsOrigin(),
+			nil,
+			effect_radius,
+			DOTA_UNIT_TARGET_TEAM_ENEMY,
+			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+			DOTA_UNIT_TARGET_FLAG_NONE,
+			FIND_ANY_ORDER,
+			false)
 		for _,victim in pairs(victims) do
 			if not victim_table[victim:entindex()] then
 				local damageTable = {
@@ -153,7 +164,7 @@ function imba_naga_siren_rip_tide:OnSpellStart()
 					damage = damage,
 					damage_type = damageType,
 					ability = ability,
-					}
+				}
 				ApplyDamage(damageTable)
 				victim:AddNewModifier(caster, ability, "modifier_imba_naga_siren_rip_tide_debuff", {duration = debuff_duration})
 				victim_table[victim:entindex()] = victim:entindex()

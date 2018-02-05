@@ -1,5 +1,22 @@
+-- Copyright (C) 2018  The Dota IMBA Development Team
+--
+-- Licensed under the Apache License, Version 2.0 (the "License");
+-- you may not use this file except in compliance with the License.
+-- You may obtain a copy of the License at
+--
+-- http://www.apache.org/licenses/LICENSE-2.0
+--
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- See the License for the specific language governing permissions and
+-- limitations under the License.
+--
+-- Editors:
+--
+
 --	Author: AtroCty
---	Date: 			15.09.2016	
+--	Date: 			15.09.2016
 --	Last Update:	03.03.2017
 --	Converted to Lua by zimberzimber
 
@@ -19,9 +36,9 @@ end
 
 function item_imba_blink:OnSpellStart()
 	local caster = self:GetCaster()
-	local origin_point = caster:GetAbsOrigin()	
-	local target_point = self:GetCursorPosition()		
-	
+	local origin_point = caster:GetAbsOrigin()
+	local target_point = self:GetCursorPosition()
+
 	local distance = (target_point - origin_point):Length2D()
 	local max_blink_range = self:GetSpecialValueFor("max_blink_range")
 
@@ -32,7 +49,7 @@ function item_imba_blink:OnSpellStart()
 	local blink_pfx = ParticleManager:CreateParticle(caster.blink_effect, PATTACH_ABSORIGIN, caster)
 	ParticleManager:ReleaseParticleIndex(blink_pfx)
 	caster:EmitSound("DOTA_Item.BlinkDagger.Activate")
-	
+
 	-- Set distance if targeted destiny is beyond range
 	if distance > max_blink_range then
 		-- Extra parameters
@@ -46,7 +63,7 @@ function item_imba_blink:OnSpellStart()
 				self:StartCooldown(self:GetCooldownTimeRemaining() + max_extra_cooldown * (1 - caster:GetCooldownReduction() * 0.01))
 			end)
 
-		-- Calculate cooldown increase if between the two extremes
+			-- Calculate cooldown increase if between the two extremes
 		else
 			local extra_fraction = (distance - max_blink_range) / (max_extra_distance - max_blink_range)
 			Timers:CreateTimer(0.03, function()
@@ -54,12 +71,12 @@ function item_imba_blink:OnSpellStart()
 			end)
 		end
 	end
-	
+
 	-- Adding an extremely small timer for the particles, else they will only appear at the dest
 	Timers:CreateTimer(0.01, function()
 		caster:SetAbsOrigin(target_point)
 		FindClearSpaceForUnit(caster, target_point, true)
-		
+
 		-- Create Particle on end-point
 		local blink_end_pfx = ParticleManager:CreateParticle(caster.blink_effect_end, PATTACH_ABSORIGIN, caster)
 		ParticleManager:ReleaseParticleIndex(blink_end_pfx)
@@ -74,7 +91,7 @@ function item_imba_blink:GetAbilityTextureName()
 end
 
 -----------------------------------------------------------------------------------------------------------
---	Blink Dagger Handler 
+--	Blink Dagger Handler
 -----------------------------------------------------------------------------------------------------------
 if modifier_imba_blink_dagger_handler == nil then modifier_imba_blink_dagger_handler = class({}) end
 function modifier_imba_blink_dagger_handler:IsHidden() return true end
@@ -87,7 +104,7 @@ function modifier_imba_blink_dagger_handler:OnCreated()
 	if IsServer() then
 		local caster = self:GetCaster()
 		if caster:IsRealHero() then
-		
+
 			local carrier_name = caster:GetName()
 			local blinkResponse = {
 				npc_dota_hero_antimage		= "antimage_anti_blink_01",
@@ -107,7 +124,7 @@ function modifier_imba_blink_dagger_handler:OnCreated()
 				npc_dota_hero_bane			= "bane_bane_blink_03",
 				npc_dota_hero_skeleton_king	= "skeleton_king_wraith_blink_02"
 			}
-			
+
 			if blinkResponse[carrier_name] then
 				Timers:CreateTimer(0.2, function()	-- So it comes after the "ka-ching"
 					EmitAnnouncerSoundForPlayer(blinkResponse[carrier_name], caster:GetPlayerID())
@@ -223,7 +240,7 @@ function item_imba_blink_boots:OnSpellStart()
 end
 
 -----------------------------------------------------------------------------------------------------------
---	Blink Boots Handler 
+--	Blink Boots Handler
 -----------------------------------------------------------------------------------------------------------
 if modifier_imba_blink_boots_handler == nil then modifier_imba_blink_boots_handler = class({}) end
 function modifier_imba_blink_boots_handler:IsHidden() return true end

@@ -1,3 +1,20 @@
+-- Copyright (C) 2018  The Dota IMBA Development Team
+--
+-- Licensed under the Apache License, Version 2.0 (the "License");
+-- you may not use this file except in compliance with the License.
+-- You may obtain a copy of the License at
+--
+-- http://www.apache.org/licenses/LICENSE-2.0
+--
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- See the License for the specific language governing permissions and
+-- limitations under the License.
+--
+-- Editors:
+--
+
 -- Author: MouJiaoZi
 -- Date: 2017/12/02  YYYY/MM/DD
 
@@ -44,9 +61,9 @@ function item_imba_gungnir:OnSpellStart()
 		EmitSoundOn("DOTA_Item.ForceStaff.Activate", target)
 		EmitSoundOn("DOTA_Item.ForceStaff.Activate", caster)
 		local startAttack = {
-							UnitIndex = caster:entindex(),
-							OrderType = DOTA_UNIT_ORDER_ATTACK_TARGET,
-							TargetIndex = target:entindex(),}
+			UnitIndex = caster:entindex(),
+			OrderType = DOTA_UNIT_ORDER_ATTACK_TARGET,
+			TargetIndex = target:entindex(),}
 		ExecuteOrderFromTable(startAttack)
 	end
 end
@@ -83,19 +100,19 @@ end
 
 function modifier_item_imba_gungnir:DeclareFunctions()
 	local decFuncs = {MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
-					 MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
-					 MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
-					 MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
-					 MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
-					 }
+		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
+		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
+		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
+		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
+	}
 	return decFuncs
 end
 
 function modifier_item_imba_gungnir:CheckState()
-	local state = 
-	{
-		[MODIFIER_STATE_CANNOT_MISS] = true,
-	}
+	local state =
+		{
+			[MODIFIER_STATE_CANNOT_MISS] = true,
+		}
 	return state
 end
 
@@ -128,9 +145,9 @@ function modifier_item_imba_gungnir_unique:RemoveOnDeath() return false end
 
 function modifier_item_imba_gungnir_unique:DeclareFunctions()
 	local decFuncs = {
-					 MODIFIER_EVENT_ON_ATTACK_LANDED,
-					 MODIFIER_PROPERTY_ATTACK_RANGE_BONUS
-					 }
+		MODIFIER_EVENT_ON_ATTACK_LANDED,
+		MODIFIER_PROPERTY_ATTACK_RANGE_BONUS
+	}
 	return decFuncs
 end
 
@@ -143,18 +160,18 @@ function modifier_item_imba_gungnir_unique:GetModifierAttackRangeBonus()
 end
 
 function modifier_item_imba_gungnir_unique:OnAttackLanded( keys )
-	if keys.attacker == self:GetParent() and keys.attacker:IsRealHero() and not keys.target:IsBuilding() then 
+	if keys.attacker == self:GetParent() and keys.attacker:IsRealHero() and not keys.target:IsBuilding() then
 		if RollPseudoRandom(self:GetAbility():GetSpecialValueFor("bash_chance"), self) then
 			local target = keys.target
 			target:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_stunned", {duration = 0.1})
 			EmitSoundOn("DOTA_Item.MKB.Minibash", caster)
 			local damageTable = {
-					victim = target,
-					attacker = self:GetParent(),
-					damage = self:GetAbility():GetSpecialValueFor("bash_damage"),
-					damage_type = DAMAGE_TYPE_PURE,
-					ability = self:GetAbility(),
-					}
+				victim = target,
+				attacker = self:GetParent(),
+				damage = self:GetAbility():GetSpecialValueFor("bash_damage"),
+				damage_type = DAMAGE_TYPE_PURE,
+				ability = self:GetAbility(),
+			}
 			ApplyDamage(damageTable)
 		end
 	end
@@ -203,14 +220,14 @@ function modifier_item_imba_gungnir_force_ally:OnIntervalThink()
 	end
 	local attacker = self:GetParent()
 	local enemies = FindUnitsInRadius(attacker:GetTeamNumber(),
-									attacker:GetAbsOrigin(),
-									nil,
-									160,
-									DOTA_UNIT_TARGET_TEAM_ENEMY,
-									DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-									DOTA_UNIT_TARGET_FLAG_NONE,
-									FIND_ANY_ORDER,
-									false)
+		attacker:GetAbsOrigin(),
+		nil,
+		160,
+		DOTA_UNIT_TARGET_TEAM_ENEMY,
+		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+		DOTA_UNIT_TARGET_FLAG_NONE,
+		FIND_ANY_ORDER,
+		false)
 	for _,enemy in pairs(enemies) do
 		if not self.attacked_target[enemy:entindex()] then
 			attacker:PerformAttack(enemy, true, true, true, true, true, false, false)
@@ -232,10 +249,10 @@ function modifier_item_imba_gungnir_force_ally:HorizontalMotion(unit, time)
 end
 
 function modifier_item_imba_gungnir_force_ally:CheckState()
-	local state = 
-	{
-		[MODIFIER_STATE_INVULNERABLE] = true,
-	}
+	local state =
+		{
+			[MODIFIER_STATE_INVULNERABLE] = true,
+		}
 	return state
 end
 
@@ -451,9 +468,9 @@ end
 
 function modifier_item_imba_gungnir_attack_speed:DeclareFunctions()
 	local decFuncs =   {MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
-						MODIFIER_EVENT_ON_ATTACK,
-						MODIFIER_EVENT_ON_ORDER,
-						MODIFIER_PROPERTY_ATTACK_RANGE_BONUS}
+		MODIFIER_EVENT_ON_ATTACK,
+		MODIFIER_EVENT_ON_ORDER,
+		MODIFIER_PROPERTY_ATTACK_RANGE_BONUS}
 	return decFuncs
 end
 
@@ -560,8 +577,8 @@ end
 
 function modifier_item_imba_force_staff:DeclareFunctions()
 	local decFuncs = {MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
-					 MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
-					 }
+		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
+	}
 	return decFuncs
 end
 
@@ -660,9 +677,9 @@ function item_imba_hurricane_pike:OnSpellStart()
 		EmitSoundOn("DOTA_Item.ForceStaff.Activate", target)
 		EmitSoundOn("DOTA_Item.ForceStaff.Activate", caster)
 		local startAttack = {
-							UnitIndex = caster:entindex(),
-							OrderType = DOTA_UNIT_ORDER_ATTACK_TARGET,
-							TargetIndex = target:entindex(),}
+			UnitIndex = caster:entindex(),
+			OrderType = DOTA_UNIT_ORDER_ATTACK_TARGET,
+			TargetIndex = target:entindex(),}
 		ExecuteOrderFromTable(startAttack)
 	end
 end
@@ -696,10 +713,10 @@ end
 
 function modifier_item_imba_hurricane_pike:DeclareFunctions()
 	local decFuncs = {MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
-					 MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
-					 MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
-					 MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
-					 }
+		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
+		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
+		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
+	}
 	return decFuncs
 end
 
@@ -728,8 +745,8 @@ function modifier_item_imba_hurricane_pike_unique:RemoveOnDeath() return false e
 
 function modifier_item_imba_hurricane_pike_unique:DeclareFunctions()
 	local decFuncs = {
-					 MODIFIER_PROPERTY_ATTACK_RANGE_BONUS
-					 }
+		MODIFIER_PROPERTY_ATTACK_RANGE_BONUS
+	}
 	return decFuncs
 end
 
@@ -910,9 +927,9 @@ end
 
 function modifier_item_imba_hurricane_pike_attack_speed:DeclareFunctions()
 	local decFuncs =   {MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
-						MODIFIER_EVENT_ON_ATTACK,
-						MODIFIER_EVENT_ON_ORDER,
-						MODIFIER_PROPERTY_ATTACK_RANGE_BONUS}
+		MODIFIER_EVENT_ON_ATTACK,
+		MODIFIER_EVENT_ON_ORDER,
+		MODIFIER_PROPERTY_ATTACK_RANGE_BONUS}
 	return decFuncs
 end
 

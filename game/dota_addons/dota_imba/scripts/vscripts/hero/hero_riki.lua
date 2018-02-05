@@ -1,9 +1,23 @@
---	Author: zimberzimber
---	Date:	19.2.2017
+-- Copyright (C) 2018  The Dota IMBA Development Team
+--
+-- Licensed under the Apache License, Version 2.0 (the "License");
+-- you may not use this file except in compliance with the License.
+-- You may obtain a copy of the License at
+--
+-- http://www.apache.org/licenses/LICENSE-2.0
+--
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- See the License for the specific language governing permissions and
+-- limitations under the License.
+--
+-- Editors:
+--     zimberzimber, 19.02.2017
+--     suthernfriend, 03.02.2018
 
 -- Attempt to implement A*-algorithm
--- https://github.com/lattejed/a-star-lua	
-
+-- https://github.com/lattejed/a-star-lua
 
 CreateEmptyTalents("riki")
 local LinkedModifiers = {}
@@ -24,7 +38,7 @@ MergeTables(LinkedModifiers,{
 imba_riki_smoke_screen = imba_riki_smoke_screen or class({})
 
 function imba_riki_smoke_screen:GetAbilityTextureName()
-   return "riki_smoke_screen"
+	return "riki_smoke_screen"
 end
 
 function imba_riki_smoke_screen:GetBehavior()
@@ -35,26 +49,26 @@ function imba_riki_smoke_screen:GetCooldown( nLevel )
 
 function imba_riki_smoke_screen:GetAOERadius()
 	return self:GetSpecialValueFor("area_of_effect") end
-	
+
 function imba_riki_smoke_screen:OnSpellStart()
 	if IsServer() then
 		local caster = self:GetCaster()
 		local target_point = self:GetCursorPosition()
 		local smoke_particle = "particles/units/heroes/hero_riki/riki_smokebomb.vpcf"
-		
+
 		local duration = self:GetSpecialValueFor("duration")
 		local aoe = self:GetSpecialValueFor("area_of_effect")
 		local smoke_handler = "modifier_imba_smoke_screen_handler"
 		local smoke_sound = "Hero_Riki.Smoke_Screen"
-		
+
 		EmitSoundOnLocationWithCaster(target_point, smoke_sound, caster)
-		
+
 		local thinker = CreateModifierThinker(caster, self, smoke_handler, {duration = duration, target_point_x = target_point.x , target_point_y = target_point.y}, target_point, caster:GetTeamNumber(), false)
-		
+
 		local particle = ParticleManager:CreateParticle(smoke_particle, PATTACH_WORLDORIGIN, thinker)
-			ParticleManager:SetParticleControl(particle, 0, thinker:GetAbsOrigin())
-			ParticleManager:SetParticleControl(particle, 1, Vector(aoe, 0, aoe))
-			
+		ParticleManager:SetParticleControl(particle, 0, thinker:GetAbsOrigin())
+		ParticleManager:SetParticleControl(particle, 1, Vector(aoe, 0, aoe))
+
 		Timers:CreateTimer(duration, function()
 			ParticleManager:DestroyParticle(particle, false)
 			ParticleManager:ReleaseParticleIndex(particle)
@@ -78,11 +92,11 @@ function modifier_imba_smoke_screen_handler:GetAuraSearchType()
 
 function modifier_imba_smoke_screen_handler:GetModifierAura()
 	return "modifier_imba_smoke_screen_debuff_miss" end
-	
-function modifier_imba_smoke_screen_handler:GetAuraRadius()	
+
+function modifier_imba_smoke_screen_handler:GetAuraRadius()
 	local ability = self:GetAbility()
 	local aoe = ability:GetSpecialValueFor("area_of_effect")
-	return aoe	
+	return aoe
 end
 
 function modifier_imba_smoke_screen_handler:OnCreated(keys)
@@ -98,19 +112,19 @@ function modifier_imba_smoke_screen_handler:OnIntervalThink()
 	local ability = self:GetAbility()
 	local caster = ability:GetCaster()
 	local parent = self:GetParent()
-		
+
 	local aoe = self:GetAbility():GetSpecialValueFor("area_of_effect")
 	local max_reduction = ability:GetSpecialValueFor("max_vision_reduction_pcnt")
 	local remaining_duration = self:GetRemainingTime()
-	
+
 	-- #3 Talent: Smokescreen grants Riki a second form of invisibility
 	if caster:HasTalent("special_bonus_imba_riki_5") then
-		
+
 		local allies = FindUnitsInRadius(parent:GetTeamNumber(), parent:GetAbsOrigin(), nil, aoe, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
-		
+
 		for _,ally in pairs (allies) do
 			if ally == caster then
-			local smoke_screen_invi = caster:AddNewModifier(caster,ability,"modifier_imba_smoke_screen_invi_indicator",{})
+				local smoke_screen_invi = caster:AddNewModifier(caster,ability,"modifier_imba_smoke_screen_invi_indicator",{})
 				if smoke_screen_invi then
 					smoke_screen_invi.thinker = self
 					smoke_screen_invi.pos_x = self.target_point_x
@@ -119,28 +133,28 @@ function modifier_imba_smoke_screen_handler:OnIntervalThink()
 			end
 		end
 	end
-	
+
 	local targets = FindUnitsInRadius(parent:GetTeamNumber(), parent:GetAbsOrigin(), nil, aoe, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
-	
+
 	-- black magic starts here
 	for _, unit in pairs(targets) do
-	
+
 		-- If the unit was never afflicted with a modifier instance from this handler, give it the modifier and index it along with the units ID
 		if not parent.afflicted[unit:entindex()] then
 			local mod = unit:AddNewModifier(caster, self:GetAbility(), "modifier_imba_smoke_screen_vision", {duration = remaining_duration})
 			table.insert(parent.afflicted, unit:entindex(), mod)
-			
+
 		else
 			-- If the parent somehow (death for example) lost the modifier and got back into the smoke(glimpse, timelapse), reapply and re-index it
 			if not parent.afflicted[unit:entindex()] then
 				local mod = unit:AddNewModifier(caster, self:GetAbility(), "modifier_imba_smoke_screen_vision", {duration = remaining_duration})
 				table.insert(parent.afflicted, unit:entindex(), mod)
 			end
-			
+
 			-- Calculate the distances between the mid point of the handlers dummy and the unit, and then convert it to % distance from closest to furthest
 			local distance = CalcDistanceBetweenEntityOBB(parent, unit)
 			local stacks = math.ceil(max_reduction * (100 - (distance * 100 / aoe)) / 100) + 1
-			
+
 			-- Check if this modifier instance is the strongest of all the other instances the unit might have
 			local isStrongest = true
 			local duplicateMods = unit:FindAllModifiersByName("modifier_imba_smoke_screen_vision")
@@ -158,14 +172,14 @@ function modifier_imba_smoke_screen_handler:OnIntervalThink()
 					end
 				end
 			end
-			
+
 			-- If it is the strongest, apply the stacks normally
 			if isStrongest and not parent.afflicted[unit:entindex()]:IsNull() then
-				parent.afflicted[unit:entindex()]:SetStackCount(stacks) 
+				parent.afflicted[unit:entindex()]:SetStackCount(stacks)
 			end
 		end
 	end
-	
+
 	for index, modifier in pairs(parent.afflicted) do
 		local unit = EntIndexToHScript(index)
 		local distance = CalcDistanceBetweenEntityOBB(parent, unit)
@@ -180,11 +194,11 @@ function modifier_imba_smoke_screen_handler:OnDestroy()
 		for _, modifier in pairs(self:GetParent().afflicted) do
 			if not modifier:IsNull() then modifier:Destroy() end
 		end
-		
+
 		-- Destroy Smokescreen #4 Invisible talent
 		local ability = self:GetAbility()
 		local caster = ability:GetCaster()
-		
+
 		if caster:HasModifier("modifier_imba_smoke_screen_invi_indicator") then
 			caster:RemoveModifierByName("modifier_imba_smoke_screen_invi_indicator")
 		end
@@ -206,7 +220,7 @@ function modifier_imba_smoke_screen_invi_indicator:OnCreated()
 	if IsServer() then
 		self.caster = self:GetCaster()
 		self.ability = self:GetAbility()
-		
+
 		self.counter = 0
 		self.interval = 0.1
 		self.radius = self.ability:GetSpecialValueFor("area_of_effect")
@@ -218,7 +232,7 @@ end
 
 function modifier_imba_smoke_screen_invi_indicator:OnIntervalThink()
 	if self.thinker then
-	self.distance = (Vector(self.pos_x,self.pos_y,0) - self.caster:GetAbsOrigin()):Length2D()
+		self.distance = (Vector(self.pos_x,self.pos_y,0) - self.caster:GetAbsOrigin()):Length2D()
 	end
 	-- Destroys itself if Riki isn't inside Smokescreen :S
 	if self.distance > self.radius then
@@ -232,7 +246,7 @@ function modifier_imba_smoke_screen_invi_indicator:OnIntervalThink()
 	else
 		-- If Riki breaks out of invisibility, set the duration to indicate its fade time
 		if self.counter == 0 then
-		self:SetDuration(self.fade_time,true)
+			self:SetDuration(self.fade_time,true)
 		end
 		self.counter = self.counter +1
 	end
@@ -269,8 +283,8 @@ end
 
 function modifier_imba_smoke_screen_debuff_miss:DeclareFunctions()
 	local funcs = {	MODIFIER_PROPERTY_MISS_PERCENTAGE,
-					MODIFIER_PROPERTY_TURN_RATE_PERCENTAGE,
-					MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE, }
+		MODIFIER_PROPERTY_TURN_RATE_PERCENTAGE,
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE, }
 	return funcs
 end
 
@@ -330,7 +344,7 @@ function imba_riki_blink_strike:IsStealable() return true end
 function imba_riki_blink_strike:IsNetherWardStealable() return false end
 
 function imba_riki_blink_strike:GetAbilityTextureName()
-   return "riki_blink_strike"
+	return "riki_blink_strike"
 end
 -------------------------------------------
 
@@ -452,7 +466,7 @@ function imba_riki_blink_strike:OnSpellStart()
 		self.hCaster = self:GetCaster()
 		self.hTarget = self:GetCursorTarget()
 		local hTarget = self.hTarget
-		
+
 		-- Parameters
 		self.damage = self:GetSpecialValueFor("damage")
 		self.duration = self:GetTalentSpecialValueFor("duration")
@@ -461,7 +475,7 @@ function imba_riki_blink_strike:OnSpellStart()
 		self.hCaster:Stop()
 		if self.tMarkedTargets then
 			local tMarkedTargets = self.tMarkedTargets
-			self.jump_interval_frames = self:GetSpecialValueFor("jump_interval_frames") 
+			self.jump_interval_frames = self:GetSpecialValueFor("jump_interval_frames")
 			local jump_interval_time = self.jump_interval_frames * FrameTime()
 			jump_duration = #tMarkedTargets * jump_interval_time + jump_interval_time
 			self.hCaster:AddNewModifier(self.hCaster, self, "modifier_imba_blink_strike_cmd", {duration = jump_duration})
@@ -474,7 +488,7 @@ function imba_riki_blink_strike:OnSpellStart()
 		else
 			self.hCaster:AddNewModifier(self.hCaster, self, "modifier_imba_blink_strike_cmd", {duration = FrameTime()})
 		end
-		
+
 		Timers:CreateTimer(jump_duration, function()
 			local target_loc_forward_vector = hTarget:GetForwardVector()
 			local final_pos = hTarget:GetAbsOrigin() - target_loc_forward_vector * 100
@@ -489,27 +503,27 @@ function imba_riki_blink_strike:OnSpellStart()
 			end
 			self.hCaster:SetForwardVector(target_loc_forward_vector)
 			EmitSoundOn("Hero_Riki.Blink_Strike", hTarget)
-			
+
 			-- #1 Talent: Blink Strike now leaves Smokescreen for 1 second after each instance
 			if self.hCaster:HasTalent("special_bonus_imba_riki_1") then
 				local smokescreen_ability = self.hCaster:FindAbilityByName("imba_riki_smoke_screen")
 				if smokescreen_ability:GetLevel() >=1 then
 					local target_point = final_pos
 					local smoke_particle = "particles/units/heroes/hero_riki/riki_smokebomb.vpcf"
-					
+
 					local duration = self.hCaster:FindTalentValue("special_bonus_imba_riki_1")
 					local aoe = smokescreen_ability:GetSpecialValueFor("area_of_effect")
 					local smoke_handler = "modifier_imba_smoke_screen_handler"
 					local smoke_sound = "Hero_Riki.Smoke_Screen"
-					
+
 					EmitSoundOnLocationWithCaster(target_point, smoke_sound, self.hCaster)
-					
+
 					local thinker = CreateModifierThinker(self.hCaster, smokescreen_ability, smoke_handler, {duration = duration, target_point_x = target_point.x , target_point_y = target_point.y}, target_point, self.hCaster:GetTeamNumber(), false)
-					
+
 					local smoke_particle_fx = ParticleManager:CreateParticle(smoke_particle, PATTACH_WORLDORIGIN, thinker)
-						ParticleManager:SetParticleControl(smoke_particle_fx, 0, thinker:GetAbsOrigin())
-						ParticleManager:SetParticleControl(smoke_particle_fx, 1, Vector(aoe, 0, aoe))
-						
+					ParticleManager:SetParticleControl(smoke_particle_fx, 0, thinker:GetAbsOrigin())
+					ParticleManager:SetParticleControl(smoke_particle_fx, 1, Vector(aoe, 0, aoe))
+
 					Timers:CreateTimer(duration, function()
 						ParticleManager:DestroyParticle(smoke_particle_fx, false)
 						ParticleManager:ReleaseParticleIndex(smoke_particle_fx)
@@ -530,27 +544,27 @@ function imba_riki_blink_strike:DoJumpAttack(hTarget, hNextTarget)
 	EmitSoundOn("Hero_Riki.Blink_Strike", hTarget)
 	local target_loc = hTarget:GetAbsOrigin()
 	local next_target_loc = hNextTarget:GetAbsOrigin()
-	
+
 	-- #1 Talent: Blink Strike now leaves Smokescreen for 1 second after each instance
 	if self.hCaster:HasTalent("special_bonus_imba_riki_1") then
 		local smokescreen_ability = self.hCaster:FindAbilityByName("imba_riki_smoke_screen")
 		if smokescreen_ability:GetLevel() >=1 then
 			local target_point = target_loc
 			local smoke_particle = "particles/units/heroes/hero_riki/riki_smokebomb.vpcf"
-			
+
 			local duration = self.hCaster:FindTalentValue("special_bonus_imba_riki_1")
 			local aoe = smokescreen_ability:GetSpecialValueFor("area_of_effect")
 			local smoke_handler = "modifier_imba_smoke_screen_handler"
 			local smoke_sound = "Hero_Riki.Smoke_Screen"
-			
+
 			EmitSoundOnLocationWithCaster(target_point, smoke_sound, self.hCaster)
-			
+
 			local thinker = CreateModifierThinker(self.hCaster, smokescreen_ability, smoke_handler, {duration = duration, target_point_x = target_point.x , target_point_y = target_point.y}, target_point, self.hCaster:GetTeamNumber(), false)
-			
+
 			local smoke_particle_fx = ParticleManager:CreateParticle(smoke_particle, PATTACH_WORLDORIGIN, thinker)
-				ParticleManager:SetParticleControl(smoke_particle_fx, 0, thinker:GetAbsOrigin())
-				ParticleManager:SetParticleControl(smoke_particle_fx, 1, Vector(aoe, 0, aoe))
-				
+			ParticleManager:SetParticleControl(smoke_particle_fx, 0, thinker:GetAbsOrigin())
+			ParticleManager:SetParticleControl(smoke_particle_fx, 1, Vector(aoe, 0, aoe))
+
 			Timers:CreateTimer(duration, function()
 				ParticleManager:DestroyParticle(smoke_particle_fx, false)
 				ParticleManager:ReleaseParticleIndex(smoke_particle_fx)
@@ -558,7 +572,7 @@ function imba_riki_blink_strike:DoJumpAttack(hTarget, hNextTarget)
 			end)
 		end
 	end
-	
+
 	local direction = (target_loc - next_target_loc):Normalized()
 	if (hTarget:GetTeamNumber() == self.hCaster:GetTeamNumber()) then
 		self.hCaster:SetForwardVector(direction)
@@ -597,15 +611,15 @@ function modifier_imba_blink_strike_thinker:IsPurgeException() return false end
 function modifier_imba_blink_strike_thinker:IsStunDebuff() return false end
 -------------------------------------------
 function modifier_imba_blink_strike_thinker:DeclareFunctions()
-    local decFuns =
-    {
-		MODIFIER_EVENT_ON_ORDER
-    }
-    return decFuns
+	local decFuns =
+		{
+			MODIFIER_EVENT_ON_ORDER
+		}
+	return decFuns
 end
 
-function modifier_imba_blink_strike_thinker:OnOrder(params)    
-    if IsServer() then
+function modifier_imba_blink_strike_thinker:OnOrder(params)
+	if IsServer() then
 		if params.unit == self:GetCaster() and self.created_flag then
 			local activity = params.unit:GetCurrentActiveAbility()
 			if activity then
@@ -617,8 +631,8 @@ function modifier_imba_blink_strike_thinker:OnOrder(params)
 					self:Destroy()
 				end
 			end
-        end
-    end
+		end
+	end
 end
 
 function modifier_imba_blink_strike_thinker:OnCreated(params)
@@ -691,9 +705,9 @@ function modifier_imba_blink_strike_thinker:OnIntervalThink()
 					graph[target_index].IsTarget = true
 				end
 				-- This are the parameters for the A-star.
-				local valid_node_func = function ( node, neighbor ) 
+				local valid_node_func = function ( node, neighbor )
 					if (node.IsCaster and (astar.distance(node.x,node.y,neighbor.x,neighbor.y ) < self.cast_range)) or
-					(astar.distance(node.x,node.y,neighbor.x,neighbor.y ) < self.jump_range) then
+						(astar.distance(node.x,node.y,neighbor.x,neighbor.y ) < self.jump_range) then
 						return true
 					end
 					return false
@@ -702,7 +716,7 @@ function modifier_imba_blink_strike_thinker:OnIntervalThink()
 				local path = astar.path(graph[caster_index],graph[target_index],graph,true,valid_node_func)
 				if path then
 					if (#path <= self.max_jumps+2) and (not (#path == 2)) then
-						self.hAbility.tStoredTargets = path						
+						self.hAbility.tStoredTargets = path
 						-- No need to re-run anymore, thinker gets destroyed if it parsed all variables.
 						self:StartIntervalThink(-1)
 					end
@@ -745,38 +759,38 @@ function modifier_imba_blink_strike_cmd:IsHidden() return true end
 function modifier_imba_blink_strike_cmd:IsDebuff() return false end
 
 function modifier_imba_blink_strike_cmd:GetPriority()
-	return MODIFIER_PRIORITY_HIGH 
+	return MODIFIER_PRIORITY_HIGH
 end
 
 function modifier_imba_blink_strike_cmd:OnCreated()
 	if IsServer() then
 		local hCaster = self:GetCaster()
-		
+
 	end
 end
-	
+
 function modifier_imba_blink_strike_cmd:CheckState()
 	if IsServer() then
 		local state = {	[MODIFIER_STATE_MUTED] = true,
-						[MODIFIER_STATE_ROOTED] = true,
-						[MODIFIER_STATE_SILENCED] = true,
-						[MODIFIER_STATE_DISARMED ] = true,
-						[MODIFIER_STATE_INVULNERABLE] = true,
-						[MODIFIER_STATE_NO_HEALTH_BAR ] = true,
-						[MODIFIER_STATE_COMMAND_RESTRICTED] = true,
-						[MODIFIER_STATE_NO_UNIT_COLLISION] = true,}
+			[MODIFIER_STATE_ROOTED] = true,
+			[MODIFIER_STATE_SILENCED] = true,
+			[MODIFIER_STATE_DISARMED ] = true,
+			[MODIFIER_STATE_INVULNERABLE] = true,
+			[MODIFIER_STATE_NO_HEALTH_BAR ] = true,
+			[MODIFIER_STATE_COMMAND_RESTRICTED] = true,
+			[MODIFIER_STATE_NO_UNIT_COLLISION] = true,}
 		return state
 	end
 end
 
 function modifier_imba_blink_strike_cmd:DeclareFunctions()
-    local decFuns =
-    {
-		MODIFIER_PROPERTY_INVISIBILITY_LEVEL,
-		MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS,
-		MODIFIER_PROPERTY_DISABLE_TURNING
-    }
-    return decFuns
+	local decFuns =
+		{
+			MODIFIER_PROPERTY_INVISIBILITY_LEVEL,
+			MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS,
+			MODIFIER_PROPERTY_DISABLE_TURNING
+		}
+	return decFuns
 end
 
 function modifier_imba_blink_strike_cmd:GetActivityTranslationModifiers()
@@ -802,14 +816,14 @@ LinkLuaModifier( "modifier_imba_riki_backbroken", "hero/hero_riki.lua", LUA_MODI
 
 
 function imba_riki_cloak_and_dagger:GetAbilityTextureName()
-   return "riki_permanent_invisibility"
+	return "riki_permanent_invisibility"
 end
 
 function imba_riki_cloak_and_dagger:GetBehavior()
 	if self:GetCaster():HasTalent("special_bonus_imba_riki_3") then
-	return DOTA_ABILITY_BEHAVIOR_NO_TARGET + DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING
+		return DOTA_ABILITY_BEHAVIOR_NO_TARGET + DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING
 	else
-	return DOTA_ABILITY_BEHAVIOR_PASSIVE
+		return DOTA_ABILITY_BEHAVIOR_PASSIVE
 	end
 end
 function imba_riki_cloak_and_dagger:IsRefreshable() return false end
@@ -819,7 +833,7 @@ function imba_riki_cloak_and_dagger:GetIntrinsicModifierName()
 end
 
 function imba_riki_cloak_and_dagger:OnOwnerSpawned()
-	self:EndCooldown() 
+	self:EndCooldown()
 end
 
 function imba_riki_cloak_and_dagger:GetCooldown( nLevel )
@@ -830,18 +844,18 @@ end
 function imba_riki_cloak_and_dagger:OnSpellStart()
 	if IsServer() then
 		local caster = self:GetCaster()
-		
+
 		if caster:HasTalent("special_bonus_imba_riki_3") then
 			local particle = ParticleManager:CreateParticle("particles/hero/riki/riki_peek_a_boo_active.vpcf", PATTACH_CUSTOMORIGIN, caster)
 			ParticleManager:SetParticleControlEnt(particle, 0, caster, PATTACH_POINT_FOLLOW, "attach_hitloc", caster:GetAbsOrigin(), true)
 			ParticleManager:SetParticleControlEnt(particle, 1, caster, PATTACH_POINT_FOLLOW, "attach_hitloc", caster:GetAbsOrigin(), true)
 			ParticleManager:SetParticleControlEnt(particle, 2, caster, PATTACH_POINT_FOLLOW, "attach_hitloc", caster:GetAbsOrigin(), true)
 			ParticleManager:SetParticleControlEnt(particle, 3, caster, PATTACH_CUSTOMORIGIN_FOLLOW, "follow_hitloc", caster:GetAbsOrigin(), true)
-			
+
 			EmitSoundOn("Hero_Riki.Blink_Strike", caster)
 			caster:AddNewModifier(caster,self,"modifier_imba_riki_peek_a_boo",{duration = caster:FindTalentValue("special_bonus_imba_riki_3","duration")})
 		end
-		
+
 		self:EndCooldown()
 		self:StartCooldown(caster:FindTalentValue("special_bonus_imba_riki_3","duration"))
 	end
@@ -865,33 +879,33 @@ function modifier_imba_riki_cloak_and_dagger:CheckState()
 		local ability = self:GetAbility()
 		local parent = self:GetParent()
 		local fade_time = ability:GetTalentSpecialValueFor("fade_time")
-		
+
 		-- If the owner is broken, remove invis modifier and restart cooldown
 		if parent:PassivesDisabled() then
-			
+
 			-- Remove the invis modifier if it exists
 			if parent:HasModifier("modifier_imba_riki_invisibility") then
 				parent:RemoveModifierByName("modifier_imba_riki_invisibility")
 			end
-			
+
 			-- Reset cooldown if it smaller than the fade time
 			if ability:GetCooldownTimeRemaining() < fade_time then
 				ability:StartCooldown(fade_time)
 			end
-		-- If the passive cooldown is ready
+			-- If the passive cooldown is ready
 		elseif ability:IsCooldownReady() or parent:HasModifier("modifier_imba_smoke_screen_invi") then
 			if parent:HasModifier("modifier_imba_riki_peek_a_boo") then
-				if parent:HasModifier("modifier_imba_riki_invisibility") then 
+				if parent:HasModifier("modifier_imba_riki_invisibility") then
 					parent:RemoveModifierByName("modifier_imba_riki_invisibility")
 				end
-			return
+				return
 			end
-			
-			if not parent:HasModifier("modifier_imba_riki_invisibility") then 
+
+			if not parent:HasModifier("modifier_imba_riki_invisibility") then
 				parent:AddNewModifier(parent, ability, "modifier_imba_riki_invisibility", {})
 			end
-		
-		-- If the passive is on cooldown, remove the invis modifier
+
+			-- If the passive is on cooldown, remove the invis modifier
 		elseif parent:HasModifier("modifier_imba_riki_invisibility") then
 			parent:RemoveModifierByName("modifier_imba_riki_invisibility")
 		end
@@ -904,34 +918,34 @@ function modifier_imba_riki_cloak_and_dagger:OnAttackLanded( keys )
 		local attacker = keys.attacker	-- Unit landing the hit
 		local parent = self:GetParent()	-- Unit holding this modifier
 		local ability = self:GetAbility()
-		
+
 		-- Check if the parent is the attacker
 		if parent == attacker then
-			
+
 			-- Get values
 			local fade_time = ability:GetTalentSpecialValueFor("fade_time")
 			local agility_multiplier = ability:GetSpecialValueFor("agility_damage_multiplier")
 			local agility_multiplier_smoke = ability:GetSpecialValueFor("agility_damage_multiplier_smoke")
 			local agility_multiplier_side = ability:GetSpecialValueFor("agility_damage_multiplier_side")
 			local agility_multiplier_invis_break = ability:GetSpecialValueFor("invis_break_agility_multiplier")
-			
+
 			local backstab_sound = "Hero_Riki.Backstab"
 			local backstab_invisbreak_sound = "Imba.RikiCritStab"
 			local backstab_particle = "particles/units/heroes/hero_riki/riki_backstab.vpcf"
 			local sucker_punch_particle = "particles/hero/riki/riki_sucker_punch.vpcf"
 			local backbreak = false
-			
+
 			-- If the target is not a building, and passives are not disabled for the passive owner
 			-- Also checks if the parent is not channeling Tricks of the Trade, since backstab is handled through there.
-			if not parent:HasModifier("modifier_imba_riki_tricks_of_the_trade_primary") and not target:IsBuilding() and not parent:PassivesDisabled() then				
-			
+			if not parent:HasModifier("modifier_imba_riki_tricks_of_the_trade_primary") and not target:IsBuilding() and not parent:PassivesDisabled() then
+
 				-- If the passive is off cooldown, apply invis break bonus to backstab damage
 				if ability:IsCooldownReady() and parent:IsInvisible() then
 					agility_multiplier = agility_multiplier * agility_multiplier_invis_break
 					agility_multiplier_smoke = agility_multiplier_smoke * agility_multiplier_invis_break
 					agility_multiplier_side = agility_multiplier_side * agility_multiplier_invis_break
 				end
-				
+
 				-- #6 Talent: Cloak and Dagger can be activated for Riki to gain bonus multiplier, but loses its invisibility over the duration
 				if parent:HasModifier("modifier_imba_riki_peek_a_boo") then
 					agility_multiplier = agility_multiplier * parent:FindTalentValue("special_bonus_imba_riki_3")
@@ -939,31 +953,31 @@ function modifier_imba_riki_cloak_and_dagger:OnAttackLanded( keys )
 					agility_multiplier_side = agility_multiplier_side * parent:FindTalentValue("special_bonus_imba_riki_3")
 					backstab_particle = "particles/hero/riki/riki_peek_a_boo_stab.vpcf"
 				end
-				
+
 				-- Find targets back
 				local victim_angle = target:GetAnglesAsVector().y
 				local origin_difference = target:GetAbsOrigin() - attacker:GetAbsOrigin()
 				local origin_difference_radian = math.atan2(origin_difference.y, origin_difference.x)
 				origin_difference_radian = origin_difference_radian * 180
-				
+
 				local attacker_angle = origin_difference_radian / math.pi
-				
+
 				-- For some reason Dota mechanics read the result as 30 degrees anticlockwise, need to adjust it down to appropriate angles for backstabbing.
 				attacker_angle = attacker_angle + 180.0 + 30.0
-				
+
 				local result_angle = attacker_angle - victim_angle
 				result_angle = math.abs(result_angle)
-				
+
 				-- Get the chance for Riki to appear at the back of the victim
 				local back_chance_success = false
 				local back_chance = parent:FindTalentValue("special_bonus_imba_riki_8") or 0
 				if RollPseudoRandom(back_chance, self) then
 					back_chance_success = true
 				end
-					
-				-- #8 Talent: Riki gains a chance to attack an opponent's back					
+
+				-- #8 Talent: Riki gains a chance to attack an opponent's back
 				if parent:HasTalent("special_bonus_imba_riki_8") and back_chance_success then
-				
+
 					-- Get the Blink Strike ability for the debuff duration. If it doesn't have it, no debuff for you!
 					blink_strike_ability = parent:FindAbilityByName("imba_riki_blink_strike")
 					local turn_debuff_duration
@@ -972,11 +986,11 @@ function modifier_imba_riki_cloak_and_dagger:OnAttackLanded( keys )
 						target:AddNewModifier(parent, blink_strike_ability, "modifier_imba_blink_strike_debuff_turn", {duration = turn_debuff_duration})
 						ApplyDamage({victim = target, attacker = attacker, damage = blink_strike_ability:GetSpecialValueFor("damage"), damage_type = blink_strike_ability:GetAbilityDamageType()})
 					end
-					
+
 					-- Emit Blink Strike sound
 					EmitSoundOn("Hero_Riki.Blink_Strike", attacker)
 
-					-- Get behind the victim						
+					-- Get behind the victim
 					local direction = target:GetForwardVector() * (-1)
 					local distance = parent:FindTalentValue("special_bonus_imba_riki_8","distance")
 
@@ -986,46 +1000,46 @@ function modifier_imba_riki_cloak_and_dagger:OnAttackLanded( keys )
 					attacker:SetUnitOnClearGround()
 
 					-- Play sound and particle
-					local particle = ParticleManager:CreateParticle(backstab_particle, PATTACH_ABSORIGIN_FOLLOW, target) 
+					local particle = ParticleManager:CreateParticle(backstab_particle, PATTACH_ABSORIGIN_FOLLOW, target)
 					ParticleManager:SetParticleControlEnt(particle, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
 					ParticleManager:ReleaseParticleIndex(particle)
 					EmitSoundOn(backstab_sound, target)
-						
+
 					-- If breaking invisibility, play the sound and particle of critstab
 					if parent:HasModifier("modifier_imba_riki_invisibility") then
-						local sucker_particle = ParticleManager:CreateParticle(sucker_punch_particle, PATTACH_ABSORIGIN_FOLLOW, target) 
+						local sucker_particle = ParticleManager:CreateParticle(sucker_punch_particle, PATTACH_ABSORIGIN_FOLLOW, target)
 						ParticleManager:SetParticleControlEnt(sucker_particle, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin() + Vector(0,0,-100) , true)
 						ParticleManager:ReleaseParticleIndex(sucker_particle)
 						EmitSoundOn(backstab_invisbreak_sound, target)
 					end
-						
+
 					-- If the attacker is an illusion, don't apply the damage
 					if not parent:IsIllusion() then
 						ApplyDamage({victim = target, attacker = attacker, damage = attacker:GetAgility() * agility_multiplier, damage_type = ability:GetAbilityDamageType()})
 						backbreak = true
 					end
 					parent:AddNewModifier(parent, self, "modifier_imba_riki_backstab_translation", {duration = parent:GetAttackSpeed()})
-					
+
 					-- #1 Talent: Blink Strike now leaves Smokescreen for 1 second after each instance
 					if parent:HasTalent("special_bonus_imba_riki_1") then
 						local smokescreen_ability = parent:FindAbilityByName("imba_riki_smoke_screen")
 						if smokescreen_ability:GetLevel() >=1 then
 							local target_point = target:GetAbsOrigin()
 							local smoke_particle = "particles/units/heroes/hero_riki/riki_smokebomb.vpcf"
-							
+
 							local duration = parent:FindTalentValue("special_bonus_imba_riki_1")
 							local aoe = smokescreen_ability:GetSpecialValueFor("area_of_effect")
 							local smoke_handler = "modifier_imba_smoke_screen_handler"
 							local smoke_sound = "Hero_Riki.Smoke_Screen"
-							
+
 							EmitSoundOnLocationWithCaster(target_point, smoke_sound, parent)
-							
+
 							local thinker = CreateModifierThinker(parent, smokescreen_ability, smoke_handler, {duration = duration, target_point_x = target_point.x , target_point_y = target_point.y}, target_point, parent:GetTeamNumber(), false)
-							
+
 							local smoke_particle_fx = ParticleManager:CreateParticle(smoke_particle, PATTACH_WORLDORIGIN, thinker)
-								ParticleManager:SetParticleControl(smoke_particle_fx, 0, thinker:GetAbsOrigin())
-								ParticleManager:SetParticleControl(smoke_particle_fx, 1, Vector(aoe, 0, aoe))
-								
+							ParticleManager:SetParticleControl(smoke_particle_fx, 0, thinker:GetAbsOrigin())
+							ParticleManager:SetParticleControl(smoke_particle_fx, 1, Vector(aoe, 0, aoe))
+
 							Timers:CreateTimer(duration, function()
 								ParticleManager:DestroyParticle(smoke_particle_fx, false)
 								ParticleManager:ReleaseParticleIndex(smoke_particle_fx)
@@ -1033,82 +1047,82 @@ function modifier_imba_riki_cloak_and_dagger:OnAttackLanded( keys )
 							end)
 						end
 					end
-					
-				-- If the attacker is in backstab angle
+
+					-- If the attacker is in backstab angle
 				elseif result_angle >= (180 - (ability:GetSpecialValueFor("backstab_angle") / 2)) and result_angle <= (180 + (ability:GetSpecialValueFor("backstab_angle") / 2)) then
-				
+
 					-- Play sound and particle
-					local particle = ParticleManager:CreateParticle(backstab_particle, PATTACH_ABSORIGIN_FOLLOW, target) 
+					local particle = ParticleManager:CreateParticle(backstab_particle, PATTACH_ABSORIGIN_FOLLOW, target)
 					ParticleManager:SetParticleControlEnt(particle, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
 					ParticleManager:ReleaseParticleIndex(particle)
 					EmitSoundOn(backstab_sound, target)
-					
+
 					-- If breaking invisibility, play the sound and particle of critstab
 					if parent:HasModifier("modifier_imba_riki_invisibility") then
-						local sucker_particle = ParticleManager:CreateParticle(sucker_punch_particle, PATTACH_ABSORIGIN_FOLLOW, target) 
+						local sucker_particle = ParticleManager:CreateParticle(sucker_punch_particle, PATTACH_ABSORIGIN_FOLLOW, target)
 						ParticleManager:SetParticleControlEnt(sucker_particle, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin() + Vector(0,0,-100) , true)
 						ParticleManager:ReleaseParticleIndex(sucker_particle)
 						EmitSoundOn(backstab_invisbreak_sound, target)
 					end
-					
+
 					-- If the attacker is an illusion, don't apply the damage
 					if not parent:IsIllusion() then
 						ApplyDamage({victim = target, attacker = attacker, damage = attacker:GetAgility() * agility_multiplier, damage_type = ability:GetAbilityDamageType()})
 						backbreak = true
 					end
 					parent:AddNewModifier(parent, self, "modifier_imba_riki_backstab_translation", {duration = parent:GetAttackSpeed()})
-					
-					
-				-- If the attacker is not in backstab angle but the target has the smoke screen modifier
+
+
+					-- If the attacker is not in backstab angle but the target has the smoke screen modifier
 				elseif target:HasModifier("modifier_imba_smoke_screen_debuff_miss") then
-				
+
 					-- Play sound and particle
-					local particle = ParticleManager:CreateParticle(backstab_particle, PATTACH_ABSORIGIN_FOLLOW, target) 
+					local particle = ParticleManager:CreateParticle(backstab_particle, PATTACH_ABSORIGIN_FOLLOW, target)
 					ParticleManager:SetParticleControlEnt(particle, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
 					ParticleManager:ReleaseParticleIndex(particle)
 					EmitSoundOn(backstab_sound, target)
-					
+
 					-- If breaking invisibility, play the sound and particle of critstab
 					if parent:HasModifier("modifier_imba_riki_invisibility") then
-						local sucker_particle = ParticleManager:CreateParticle(sucker_punch_particle, PATTACH_ABSORIGIN_FOLLOW, target) 
+						local sucker_particle = ParticleManager:CreateParticle(sucker_punch_particle, PATTACH_ABSORIGIN_FOLLOW, target)
 						ParticleManager:SetParticleControlEnt(sucker_particle, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin() + Vector(0,0,-100) , true)
 						ParticleManager:ReleaseParticleIndex(sucker_particle)
 						EmitSoundOn(backstab_invisbreak_sound, target)
 					end
-					
+
 					-- If the attacker is an illusion, don't apply the damage
 					if not parent:IsIllusion() then
 						ApplyDamage({victim = target, attacker = attacker, damage = attacker:GetAgility() * agility_multiplier_smoke, damage_type = ability:GetAbilityDamageType()})
 						backbreak = true
 					end
 					parent:AddNewModifier(parent, self, "modifier_imba_riki_backstab_translation", {duration = parent:GetAttackSpeed()})
-				
-				-- #4 Talent: Riki now applies Sidestab at reduced multiplier
+
+					-- #4 Talent: Riki now applies Sidestab at reduced multiplier
 				elseif parent:HasTalent("special_bonus_imba_riki_4") and result_angle >= (180 - (parent:FindTalentValue("special_bonus_imba_riki_4","sidestab_angle") / 2)) and result_angle <= (180 + (parent:FindTalentValue("special_bonus_imba_riki_4","sidestab_angle") / 2)) then
-				
+
 					-- Play sound and particle
-					local particle = ParticleManager:CreateParticle(backstab_particle, PATTACH_ABSORIGIN_FOLLOW, target) 
+					local particle = ParticleManager:CreateParticle(backstab_particle, PATTACH_ABSORIGIN_FOLLOW, target)
 					ParticleManager:SetParticleControlEnt(particle, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
 					ParticleManager:ReleaseParticleIndex(particle)
 					EmitSoundOn(backstab_sound, target)
-					
+
 					-- If breaking invisibility, play the sound and particle of critstab
 					if parent:HasModifier("modifier_imba_riki_invisibility") then
-						local sucker_particle = ParticleManager:CreateParticle(sucker_punch_particle, PATTACH_ABSORIGIN_FOLLOW, target) 
+						local sucker_particle = ParticleManager:CreateParticle(sucker_punch_particle, PATTACH_ABSORIGIN_FOLLOW, target)
 						ParticleManager:SetParticleControlEnt(sucker_particle, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin() + Vector(0,0,-100) , true)
 						ParticleManager:ReleaseParticleIndex(sucker_particle)
 						EmitSoundOn(backstab_invisbreak_sound, target)
 					end
-					
+
 					-- If the attacker is an illusion, don't apply the damage
 					if not parent:IsIllusion() then
 						ApplyDamage({victim = target, attacker = attacker, damage = attacker:GetAgility() * agility_multiplier_side, damage_type = ability:GetAbilityDamageType()})
 						backbreak = true
 					end
-					parent:AddNewModifier(parent, self, "modifier_imba_riki_backstab_translation", {duration = parent:GetAttackSpeed()})	
-				
-				end				
-					
+					parent:AddNewModifier(parent, self, "modifier_imba_riki_backstab_translation", {duration = parent:GetAttackSpeed()})
+
+				end
+
 				-- #7 Talent: 4 Consecutive Backstabs applies Break on the target for 5 seconds.
 				local backbreaker_mod = target:FindModifierByName("modifier_imba_riki_backbreaker")
 				if backbreak then
@@ -1116,15 +1130,15 @@ function modifier_imba_riki_cloak_and_dagger:OnAttackLanded( keys )
 						backbreaker_mod:ForceRefresh()
 					else
 						backbreaker_mod = target:AddNewModifier(parent,ability,"modifier_imba_riki_backbreaker",{duration = parent:FindTalentValue("special_bonus_imba_riki_7","duration")})
-					end	
+					end
 				else
 					if backbreaker_mod then
 						backbreaker_mod:Destroy()
 					end
 				end
-				
+
 			end
-			
+
 			-- Remove the Invisibility given by Smokescreen on #3 talent
 			if parent:HasModifier("modifier_imba_smoke_screen_invi") then
 				parent:RemoveModifierByName("modifier_imba_smoke_screen_invi")
@@ -1149,7 +1163,7 @@ function modifier_imba_riki_invisibility:IsHidden()	return false end
 
 function modifier_imba_riki_invisibility:OnCreated()
 	local particle = ParticleManager:CreateParticle("particles/generic_hero_status/status_invisibility_start.vpcf", PATTACH_ABSORIGIN, self:GetParent())
-	ParticleManager:ReleaseParticleIndex(particle)	
+	ParticleManager:ReleaseParticleIndex(particle)
 end
 
 function modifier_imba_riki_invisibility:DeclareFunctions()
@@ -1216,16 +1230,16 @@ function modifier_imba_riki_backbreaker:OnRefresh()
 		local caster = self:GetCaster()
 		local ability = self:GetAbility()
 		local parent = self:GetParent()
-		
+
 		self:IncrementStackCount()
 		if self:GetStackCount() >= caster:FindTalentValue("special_bonus_imba_riki_7") then
-			
+
 			-- Play the Backbreaker particle and sound
-			local backbreak_particle_fx = ParticleManager:CreateParticle("particles/hero/riki/riki_backbreaker_slash.vpcf", PATTACH_ABSORIGIN_FOLLOW, parent) 
+			local backbreak_particle_fx = ParticleManager:CreateParticle("particles/hero/riki/riki_backbreaker_slash.vpcf", PATTACH_ABSORIGIN_FOLLOW, parent)
 			ParticleManager:SetParticleControlEnt(backbreak_particle_fx, 1, parent, PATTACH_POINT_FOLLOW, "attach_hitloc", parent:GetAbsOrigin(), true)
 			ParticleManager:ReleaseParticleIndex(backbreak_particle_fx)
 			EmitSoundOn("Imba.RikiCritStab", parent)
-			
+
 			parent:AddNewModifier(caster,ability,"modifier_imba_riki_backbroken",{duration = caster:FindTalentValue("special_bonus_imba_riki_7","break_duration")})
 			self:Destroy()
 		end
@@ -1250,7 +1264,7 @@ LinkLuaModifier( "modifier_imba_riki_tricks_of_the_trade_secondary", "hero/hero_
 LinkLuaModifier( "modifier_imba_martyrs_mark", "hero/hero_riki.lua", LUA_MODIFIER_MOTION_NONE )
 
 function imba_riki_tricks_of_the_trade:GetAbilityTextureName()
-   return "riki_tricks_of_the_trade"
+	return "riki_tricks_of_the_trade"
 end
 
 function imba_riki_tricks_of_the_trade:GetBehavior()
@@ -1265,70 +1279,70 @@ end
 
 function imba_riki_tricks_of_the_trade:GetChannelTime()
 	if self:GetCaster():HasScepter() then
-	return self:GetSpecialValueFor("scepter_duration")
+		return self:GetSpecialValueFor("scepter_duration")
 	else
-	return self:GetSpecialValueFor("channel_duration")
+		return self:GetSpecialValueFor("channel_duration")
 	end
 end
 
 function imba_riki_tricks_of_the_trade:GetCastRange()
 	if self:GetCaster():HasScepter() then
 		return self:GetSpecialValueFor("scepter_cast_range") end
-		
+
 	return self:GetSpecialValueFor("area_of_effect")
 end
 
 function imba_riki_tricks_of_the_trade:GetAOERadius()
 	return self:GetSpecialValueFor("area_of_effect") end
-	
+
 function imba_riki_tricks_of_the_trade:OnSpellStart()
 	if IsServer() then
 		local caster = self:GetCaster()
 		local origin = caster:GetAbsOrigin()
 		local aoe = self:GetSpecialValueFor("area_of_effect")
 		local target = self:GetCursorTarget()
-		
+
 		self.channel_start_time = GameRules:GetGameTime()
-		
+
 		if caster:HasScepter() then
 			origin = target:GetAbsOrigin() end
-		
+
 		caster:AddNewModifier(caster, self, "modifier_imba_riki_tricks_of_the_trade_primary", {})
 		caster:AddNewModifier(caster, self, "modifier_imba_riki_tricks_of_the_trade_secondary", {})
-			   
+
 		local cast_particle = "particles/units/heroes/hero_riki/riki_tricks_cast.vpcf"
 		local tricks_particle = "particles/units/heroes/hero_riki/riki_tricks.vpcf"
 		local cast_sound = "Hero_Riki.TricksOfTheTrade.Cast"
 		local continuos_sound = "Hero_Riki.TricksOfTheTrade"
 		local buttsecks_sound = "Imba.RikiSurpriseButtsex"
-		
+
 		local heroes = FindUnitsInRadius(caster:GetTeamNumber(), origin, nil, aoe, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS, FIND_ANY_ORDER, false)
 		if #heroes >= IMBA_PLAYERS_ON_GAME * 0.35 then
 			-- caster:EmitSound(buttsecks_sound)
 			EmitSoundOn(buttsecks_sound, caster)
 		end
-		
+
 		EmitSoundOnLocationWithCaster(origin, cast_sound, caster)
 		EmitSoundOn(continuos_sound, caster)
 
 		local caster_loc = caster:GetAbsOrigin()
-		
+
 		if caster:HasScepter() and target ~= caster then
 			self.TricksParticle = ParticleManager:CreateParticle(tricks_particle, PATTACH_WORLDORIGIN, caster)
-			
+
 
 			ParticleManager:CreateParticle(cast_particle, PATTACH_WORLDORIGIN, nil)
 		else
 			self.TricksParticle = ParticleManager:CreateParticle(tricks_particle, PATTACH_WORLDORIGIN, caster)
-			
+
 
 			ParticleManager:CreateParticle(cast_particle, PATTACH_WORLDORIGIN, nil)
-		end		
-		
+		end
+
 		ParticleManager:SetParticleControl(self.TricksParticle, 0, caster:GetAbsOrigin())
 		ParticleManager:SetParticleControl(self.TricksParticle, 1, Vector(aoe, 0, aoe))
 		ParticleManager:SetParticleControl(self.TricksParticle, 2, Vector(aoe, 0, aoe))
-		
+
 		caster:AddNoDraw()
 	end
 end
@@ -1354,19 +1368,19 @@ function imba_riki_tricks_of_the_trade:OnChannelFinish()
 		caster:RemoveModifierByName("modifier_imba_riki_tricks_of_the_trade_primary")
 		caster:RemoveModifierByName("modifier_imba_riki_tricks_of_the_trade_secondary")
 		if backstab_ability and backstab_ability:GetLevel() > 0 then backstab_ability:EndCooldown() end
-		
+
 		StopSoundEvent("Hero_Riki.TricksOfTheTrade", caster)
 		StopSoundEvent("Imba.RikiSurpriseButtsex", caster)
 		ParticleManager:DestroyParticle(self.TricksParticle, false)
 		ParticleManager:ReleaseParticleIndex(self.TricksParticle)
-		self.TricksParticle = nil				
-		
+		self.TricksParticle = nil
+
 		local target = self:GetCursorTarget()
 		caster:RemoveNoDraw()
 		local end_particle = "particles/units/heroes/hero_riki/riki_tricks_end.vpcf"
 		local particle = ParticleManager:CreateParticle(end_particle, PATTACH_ABSORIGIN, caster)
 		ParticleManager:ReleaseParticleIndex(particle)
-		
+
 		-- #6 Talent: Tricks of the Trade refunds cooldown proportional to the channel duration remaining_duration
 		if caster:HasTalent("special_bonus_imba_riki_6") then
 			local channel_time = GameRules:GetGameTime() - self.channel_start_time
@@ -1407,19 +1421,19 @@ end
 function modifier_imba_riki_tricks_of_the_trade_primary:CheckState()
 	if IsServer() then
 		local state
-		
+
 		if self:GetParent():HasScepter() and self:GetAbility():GetCursorTarget() == self:GetParent() then
 			state = {	[MODIFIER_STATE_INVULNERABLE] = true,
-					--	[MODIFIER_STATE_UNSELECTABLE] = true,		Temporary Solution to self-casting getting cancelled
-					--	[MODIFIER_STATE_OUT_OF_GAME] = true,		Side effects - Caster will still be selectable with drag-box, and will interact with skillshots (like meat hook)
-						[MODIFIER_STATE_NOT_ON_MINIMAP] = true,
-						[MODIFIER_STATE_NO_UNIT_COLLISION] = true,}
+				--	[MODIFIER_STATE_UNSELECTABLE] = true,		Temporary Solution to self-casting getting cancelled
+				--	[MODIFIER_STATE_OUT_OF_GAME] = true,		Side effects - Caster will still be selectable with drag-box, and will interact with skillshots (like meat hook)
+				[MODIFIER_STATE_NOT_ON_MINIMAP] = true,
+				[MODIFIER_STATE_NO_UNIT_COLLISION] = true,}
 		else
 			state = {	[MODIFIER_STATE_INVULNERABLE] = true,
-						[MODIFIER_STATE_UNSELECTABLE] = true,
-						[MODIFIER_STATE_OUT_OF_GAME] = true,
-						[MODIFIER_STATE_NOT_ON_MINIMAP] = true,
-						[MODIFIER_STATE_NO_UNIT_COLLISION] = true,}
+				[MODIFIER_STATE_UNSELECTABLE] = true,
+				[MODIFIER_STATE_OUT_OF_GAME] = true,
+				[MODIFIER_STATE_NOT_ON_MINIMAP] = true,
+				[MODIFIER_STATE_NO_UNIT_COLLISION] = true,}
 		end
 
 		return state
@@ -1439,7 +1453,7 @@ function modifier_imba_riki_tricks_of_the_trade_primary:OnIntervalThink()
 		local ability = self:GetAbility()
 		local caster = ability:GetCaster()
 		local origin = caster:GetAbsOrigin()
-		
+
 		if caster:HasScepter() then
 			local target = ability:GetCursorTarget()
 			origin = target:GetAbsOrigin()
@@ -1447,7 +1461,7 @@ function modifier_imba_riki_tricks_of_the_trade_primary:OnIntervalThink()
 		end
 
 		local aoe = ability:GetSpecialValueFor("area_of_effect")
-		
+
 		local backstab_ability = caster:FindAbilityByName("imba_riki_cloak_and_dagger")
 		local backstab_particle = "particles/units/heroes/hero_riki/riki_backstab.vpcf"
 		local backstab_sound = "Hero_Riki.Backstab"
@@ -1459,11 +1473,11 @@ function modifier_imba_riki_tricks_of_the_trade_primary:OnIntervalThink()
 
 				if backstab_ability and backstab_ability:GetLevel() > 0 and not self:GetParent():PassivesDisabled() then
 					local agility_damage_multiplier = backstab_ability:GetSpecialValueFor("agility_damage_multiplier")
-										
-					local particle = ParticleManager:CreateParticle(backstab_particle, PATTACH_ABSORIGIN_FOLLOW, unit) 
+
+					local particle = ParticleManager:CreateParticle(backstab_particle, PATTACH_ABSORIGIN_FOLLOW, unit)
 					ParticleManager:SetParticleControlEnt(particle, 1, unit, PATTACH_POINT_FOLLOW, "attach_hitloc", unit:GetAbsOrigin(), true)
 					ParticleManager:ReleaseParticleIndex(particle)
-										
+
 					EmitSoundOn(backstab_sound, unit)
 					ApplyDamage({victim = unit, attacker = caster, damage = caster:GetAgility() * agility_damage_multiplier, damage_type = backstab_ability:GetAbilityDamageType()})
 
@@ -1474,7 +1488,7 @@ function modifier_imba_riki_tricks_of_the_trade_primary:OnIntervalThink()
 							backbreaker_mod:ForceRefresh()
 						else
 							backbreaker_mod = unit:AddNewModifier(caster,backstab_ability,"modifier_imba_riki_backbreaker",{duration = caster:FindTalentValue("special_bonus_imba_riki_7","duration")})
-						end	
+						end
 					end
 				end
 			end
@@ -1493,7 +1507,7 @@ function modifier_imba_riki_tricks_of_the_trade_secondary:IsHidden() return true
 function modifier_imba_riki_tricks_of_the_trade_secondary:OnCreated()
 	if IsServer() then
 		local parent = self:GetParent()
-		local aps = parent:GetAttacksPerSecond()				
+		local aps = parent:GetAttacksPerSecond()
 		self:StartIntervalThink(1/aps)
 	end
 end
@@ -1503,7 +1517,7 @@ function modifier_imba_riki_tricks_of_the_trade_secondary:OnIntervalThink()
 		local ability = self:GetAbility()
 		local caster = ability:GetCaster()
 		local origin = caster:GetAbsOrigin()
-		
+
 		if caster:HasScepter() then
 			local target = ability:GetCursorTarget()
 			origin = target:GetAbsOrigin()
@@ -1511,13 +1525,13 @@ function modifier_imba_riki_tricks_of_the_trade_secondary:OnIntervalThink()
 		end
 
 		local aoe = ability:GetSpecialValueFor("area_of_effect")
-		
+
 		local backstab_ability = caster:FindAbilityByName("imba_riki_cloak_and_dagger")
 		local backstab_particle = "particles/units/heroes/hero_riki/riki_backstab.vpcf"
 		local backstab_sound = "Hero_Riki.Backstab"
-		
+
 		local targets = FindUnitsInRadius(caster:GetTeamNumber(), origin, nil, aoe, DOTA_UNIT_TARGET_TEAM_ENEMY , DOTA_UNIT_TARGET_HERO , DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, FIND_ANY_ORDER , false)
-		
+
 		-- #2 Talent: Tricks of the Trade now applies martyrs Mark on the target, targets with martyrs Mark becomes more likely to be targetted by Marty's Strike
 		local martyrs_mark_targets = nil
 		if caster:HasTalent("special_bonus_imba_riki_2") then
@@ -1533,16 +1547,16 @@ function modifier_imba_riki_tricks_of_the_trade_secondary:OnIntervalThink()
 				end
 			end
 		end
-		
+
 		-- Check
 		if martyrs_mark_targets then
-			
+
 			local martyrs_mark_stacks
 			local martyrs_mark_target = nil
 			local martyrs_mark_checklist = {}
 			local highest_stack = 0
 			local martyrs_mark_checked = false
-			
+
 			-- Check for targets from the highest stack count to lowest stack count
 			for i=1,#martyrs_mark_targets,1 do
 				for _,target in pairs(martyrs_mark_targets) do
@@ -1563,35 +1577,35 @@ function modifier_imba_riki_tricks_of_the_trade_secondary:OnIntervalThink()
 						end
 					end
 				end
-				
+
 				-- Get the proc chance for martyrs Mark, the formula goes like this
 				-- 3 targets causes a target to have 33% chance
 				-- 5 Martyr's Mark stacks causes the target to have 66% chance to be stroke
 				-- 10 Martyr's Mark stacks causes the target to have 99% chance to be stroke
 				-- 15 Martyr's Mark stacks causes the target to have 132% chance to be stroke
-				local proc_chance = (1/#targets) * (1+martyrs_mark_stacks*caster:FindTalentValue("special_bonus_imba_riki_2")*0.01) * 100 
+				local proc_chance = (1/#targets) * (1+martyrs_mark_stacks*caster:FindTalentValue("special_bonus_imba_riki_2")*0.01) * 100
 
 				-- Don't roll the dice, don't do it Cuphead! D:
 				if RollPercentage(proc_chance) or proc_chance >= 100 then
 					self:ProcTricks(caster,ability,martyrs_mark_target,backstab_ability,backstab_particle,backstab_sound,caster:FindTalentValue("special_bonus_imba_riki_2","duration"))
-						
+
 					local caster = self:GetParent()
-					local aps = caster:GetAttacksPerSecond()				
-					self:StartIntervalThink(1/aps)				
+					local aps = caster:GetAttacksPerSecond()
+					self:StartIntervalThink(1/aps)
 					return
 				end
 				-- If the marked target doesn't get hit, add him into the checklist
 				table.insert(martyrs_mark_checklist, martyrs_mark_target)
 			end
 		end
-		
+
 		for _,unit in pairs(targets) do
 			if unit:IsAlive() and not unit:IsAttackImmune() then
 				self:ProcTricks(caster,ability,unit,backstab_ability,backstab_particle,backstab_sound,caster:FindTalentValue("special_bonus_imba_riki_2","duration"))
-				
+
 				local caster = self:GetParent()
-				local aps = caster:GetAttacksPerSecond()				
-				self:StartIntervalThink(1/aps)				
+				local aps = caster:GetAttacksPerSecond()
+				self:StartIntervalThink(1/aps)
 				return
 			end
 		end
@@ -1607,19 +1621,19 @@ function modifier_imba_riki_tricks_of_the_trade_secondary:ProcTricks(caster,abil
 			martyrs_mark_mod = target:AddNewModifier(caster,ability,"modifier_imba_martyrs_mark",{duration = talent_duration})
 		end
 	end
-						
+
 	caster:PerformAttack(target, true, true, true, false, false, false, false)
-						
+
 	if backstab_ability and backstab_ability:GetLevel() > 0 and not self:GetParent():PassivesDisabled() then
 		local agility_damage_multiplier = backstab_ability:GetSpecialValueFor("agility_damage_multiplier")
-							
-		local particle = ParticleManager:CreateParticle(backstab_particle, PATTACH_ABSORIGIN_FOLLOW, target) 
+
+		local particle = ParticleManager:CreateParticle(backstab_particle, PATTACH_ABSORIGIN_FOLLOW, target)
 		ParticleManager:SetParticleControlEnt(particle, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
 		ParticleManager:ReleaseParticleIndex(particle)
-							
+
 		EmitSoundOn(backstab_sound, target)
 		ApplyDamage({victim = target, attacker = caster, damage = caster:GetAgility() * agility_damage_multiplier, damage_type = backstab_ability:GetAbilityDamageType()})
-	
+
 		-- #7 Talent: 4 Consecutive Backstabs applies Break on the target for 5 seconds.
 		if caster:HasTalent("special_bonus_imba_riki_7") then
 			local backbreaker_mod = target:FindModifierByName("modifier_imba_riki_backbreaker")
@@ -1627,7 +1641,7 @@ function modifier_imba_riki_tricks_of_the_trade_secondary:ProcTricks(caster,abil
 				backbreaker_mod:ForceRefresh()
 			else
 				backbreaker_mod = target:AddNewModifier(caster,backstab_ability,"modifier_imba_riki_backbreaker",{duration = caster:FindTalentValue("special_bonus_imba_riki_7","duration")})
-			end	
+			end
 		end
 	end
 end
@@ -1644,19 +1658,19 @@ function modifier_imba_martyrs_mark:IsHidden() return false end
 function modifier_imba_martyrs_mark:OnCreated()
 	if IsServer() then
 		local parent = self:GetParent()
-		
+
 		self.particle_mark_fx = ParticleManager:CreateParticle("particles/hero/riki/riki_martyr_dagger_start_pos.vpcf", PATTACH_OVERHEAD_FOLLOW, parent)
 		ParticleManager:SetParticleControlEnt(self.particle_mark_fx, 0, parent, PATTACH_OVERHEAD_FOLLOW, "attach_hitloc", parent:GetAbsOrigin(), true)
 		ParticleManager:SetParticleControlEnt(self.particle_mark_fx, 1, parent, PATTACH_OVERHEAD_FOLLOW, "attach_hitloc", parent:GetAbsOrigin(), true)
 		self:AddParticle(self.particle_mark_fx, false, false, -1, false, true)
-		
+
 		self:SetStackCount(1)
 	end
 end
 
 function modifier_imba_martyrs_mark:OnRefresh()
 	if IsServer() then
-	self:IncrementStackCount()
+		self:IncrementStackCount()
 	end
 end
 

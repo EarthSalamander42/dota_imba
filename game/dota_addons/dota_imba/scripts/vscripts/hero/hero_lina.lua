@@ -1,9 +1,21 @@
---[[
-		By: AtroCty
-		Prev. Authors: Firetoad
-		Date: 26.04.2015
-		Updated:  23.03.2017
-	]]
+-- Copyright (C) 2018  The Dota IMBA Development Team
+--
+-- Licensed under the Apache License, Version 2.0 (the "License");
+-- you may not use this file except in compliance with the License.
+-- You may obtain a copy of the License at
+--
+-- http://www.apache.org/licenses/LICENSE-2.0
+--
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- See the License for the specific language governing permissions and
+-- limitations under the License.
+--
+-- Editors:
+--     Firetoad
+--     AtroCty, 23.03.2017
+--     suthernfriend, 03.02.2018
 
 CreateEmptyTalents("lina")
 
@@ -12,9 +24,9 @@ CreateEmptyTalents("lina")
 -------------------------------------------
 function modifier_special_bonus_imba_lina_8:DeclareFunctions()
 	local decFuncs =
-	{
-		MODIFIER_EVENT_ON_ATTACK_LANDED
-	}
+		{
+			MODIFIER_EVENT_ON_ATTACK_LANDED
+		}
 	return decFuncs
 end
 
@@ -56,7 +68,7 @@ function modifier_imba_blazing_fire:OnRefresh( params )
 	end
 end
 
-function modifier_imba_blazing_fire:OnIntervalThink( )	
+function modifier_imba_blazing_fire:OnIntervalThink( )
 	if IsServer() then
 		ApplyDamage({victim = self:GetParent(), attacker = self:GetCaster(), ability = nil, damage = self.dmg_per_tick, damage_type = DAMAGE_TYPE_MAGICAL})
 		self.counter = self.counter - 1
@@ -90,7 +102,7 @@ end
 imba_lina_dragon_slave = class({})
 
 function imba_lina_dragon_slave:GetAbilityTextureName()
-   return "lina_dragon_slave"
+	return "lina_dragon_slave"
 end
 
 function imba_lina_dragon_slave:OnUpgrade()
@@ -102,7 +114,7 @@ function imba_lina_dragon_slave:OnSpellStart()
 		local caster = self:GetCaster()
 		local target_loc = self:GetCursorPosition()
 		local caster_loc = caster:GetAbsOrigin()
-		
+
 		-- Parameters
 		local primary_damage = self:GetSpecialValueFor("primary_damage")
 		local secondary_damage = self:GetSpecialValueFor("secondary_damage")
@@ -118,7 +130,7 @@ function imba_lina_dragon_slave:OnSpellStart()
 		local secondary_width_end = self:GetSpecialValueFor("secondary_width_end")
 		local cdr_hero = self:GetSpecialValueFor("cdr_hero")
 		local cdr_units = self:GetSpecialValueFor("cdr_units")
-		
+
 		-- Distances
 		local direction = (target_loc - caster_loc):Normalized()
 		local primary_direction = (target_loc - caster_loc):Normalized()
@@ -126,34 +138,34 @@ function imba_lina_dragon_slave:OnSpellStart()
 		local velocity = direction * speed
 		local primary_velocity = primary_direction * speed
 
-		local projectile = 
-		{
-			Ability				= self,
-			EffectName			= "particles/units/heroes/hero_lina/lina_spell_dragon_slave.vpcf",
-			vSpawnOrigin		= caster_loc,
-			fDistance			= primary_distance,
-			fStartRadius		= width_initial,
-			fEndRadius			= width_end,
-			Source				= caster,
-			bHasFrontalCone		= true,
-			bReplaceExisting	= false,
-			iUnitTargetTeam		= DOTA_UNIT_TARGET_TEAM_ENEMY,
-			iUnitTargetFlags	= DOTA_UNIT_TARGET_FLAG_NONE,
-			iUnitTargetType		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-			fExpireTime 		= GameRules:GetGameTime() + 10.0,
-			bDeleteOnHit		= false,
-			vVelocity			= Vector(velocity.x,velocity.y,0),
-			bProvidesVision		= false,
-			ExtraData			= {damage = primary_damage, cdr_hero = cdr_hero, cdr_units = cdr_units}
-		}
+		local projectile =
+			{
+				Ability				= self,
+				EffectName			= "particles/units/heroes/hero_lina/lina_spell_dragon_slave.vpcf",
+				vSpawnOrigin		= caster_loc,
+				fDistance			= primary_distance,
+				fStartRadius		= width_initial,
+				fEndRadius			= width_end,
+				Source				= caster,
+				bHasFrontalCone		= true,
+				bReplaceExisting	= false,
+				iUnitTargetTeam		= DOTA_UNIT_TARGET_TEAM_ENEMY,
+				iUnitTargetFlags	= DOTA_UNIT_TARGET_FLAG_NONE,
+				iUnitTargetType		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+				fExpireTime 		= GameRules:GetGameTime() + 10.0,
+				bDeleteOnHit		= false,
+				vVelocity			= Vector(velocity.x,velocity.y,0),
+				bProvidesVision		= false,
+				ExtraData			= {damage = primary_damage, cdr_hero = cdr_hero, cdr_units = cdr_units}
+			}
 		ProjectileManager:CreateLinearProjectile(projectile)
 
-		if secondary_amount == 0 then 
-			return true 
+		if secondary_amount == 0 then
+			return true
 		end
-		
+
 		caster:EmitSound("Hero_Lina.DragonSlave")
-		
+
 		Timers:CreateTimer(split_timer - 0.1, function()
 			local particle_fx = ParticleManager:CreateParticle("particles/hero/lina/dragon_slave_delay.vpcf", PATTACH_ABSORIGIN, caster)
 			ParticleManager:SetParticleControl(particle_fx, 0, (target_loc + Vector(0,0,50)))
@@ -184,60 +196,60 @@ function imba_lina_dragon_slave:OnSpellStart()
 			for i = 1, secondary_amount, 1 do
 				local angle = start_angle + (i-1) * interval_angle
 				velocity = RotateVector2D(direction,angle,true) * speed
-				local projectile = 
-				{
-					Ability				= self,
-					EffectName			= "particles/units/heroes/hero_lina/lina_spell_dragon_slave.vpcf",
-					vSpawnOrigin		= target_loc,
-					fDistance			= secondary_distance,
-					fStartRadius		= secondary_width_initial,
-					fEndRadius			= secondary_width_end,
-					Source				= caster,
-					bHasFrontalCone		= true,
-					bReplaceExisting	= false,
-					iUnitTargetTeam		= DOTA_UNIT_TARGET_TEAM_ENEMY,
-					iUnitTargetFlags	= DOTA_UNIT_TARGET_FLAG_NONE,
-					iUnitTargetType		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-					fExpireTime 		= GameRules:GetGameTime() + 10.0,
-					bDeleteOnHit		= false,
-					vVelocity			= Vector(velocity.x,velocity.y,0),
-					bProvidesVision		= false,
-					ExtraData			= {damage = secondary_damage, cdr_hero = cdr_hero, cdr_units = cdr_units}
-				}
+				local projectile =
+					{
+						Ability				= self,
+						EffectName			= "particles/units/heroes/hero_lina/lina_spell_dragon_slave.vpcf",
+						vSpawnOrigin		= target_loc,
+						fDistance			= secondary_distance,
+						fStartRadius		= secondary_width_initial,
+						fEndRadius			= secondary_width_end,
+						Source				= caster,
+						bHasFrontalCone		= true,
+						bReplaceExisting	= false,
+						iUnitTargetTeam		= DOTA_UNIT_TARGET_TEAM_ENEMY,
+						iUnitTargetFlags	= DOTA_UNIT_TARGET_FLAG_NONE,
+						iUnitTargetType		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+						fExpireTime 		= GameRules:GetGameTime() + 10.0,
+						bDeleteOnHit		= false,
+						vVelocity			= Vector(velocity.x,velocity.y,0),
+						bProvidesVision		= false,
+						ExtraData			= {damage = secondary_damage, cdr_hero = cdr_hero, cdr_units = cdr_units}
+					}
 				ProjectileManager:CreateLinearProjectile(projectile)
 			end
 		end)
-		
-		if caster:HasTalent("special_bonus_imba_lina_2") then
-		local new_loc = target_loc + primary_direction * secondary_distance
-		local new_timer = (CalculateDistance(caster_loc,new_loc) / speed)
-		
-		Timers:CreateTimer((new_timer + split_delay), function()
-			EmitSoundOnLocationWithCaster( new_loc, "Hero_Lina.DragonSlave", caster )
-			
-			local projectile = 
-			{
-				Ability				= self,
-				EffectName			= "particles/units/heroes/hero_lina/lina_spell_dragon_slave.vpcf",
-				vSpawnOrigin		= new_loc,
-				fDistance			= primary_distance,
-				fStartRadius		= width_initial,
-				fEndRadius			= width_end,
-				Source				= caster,
-				bHasFrontalCone		= true,
-				bReplaceExisting	= false,
-				iUnitTargetTeam		= DOTA_UNIT_TARGET_TEAM_ENEMY,
-				iUnitTargetFlags	= DOTA_UNIT_TARGET_FLAG_NONE,
-				iUnitTargetType		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-				fExpireTime 		= GameRules:GetGameTime() + 10.0,
-				bDeleteOnHit		= false,
-				vVelocity			= Vector(primary_velocity.x,primary_velocity.y,0),
-				bProvidesVision		= false,
-				ExtraData			= {damage = primary_damage, cdr_hero = cdr_hero, cdr_units = cdr_units}
-			}
 
-			ProjectileManager:CreateLinearProjectile(projectile)
-		end)
+		if caster:HasTalent("special_bonus_imba_lina_2") then
+			local new_loc = target_loc + primary_direction * secondary_distance
+			local new_timer = (CalculateDistance(caster_loc,new_loc) / speed)
+
+			Timers:CreateTimer((new_timer + split_delay), function()
+				EmitSoundOnLocationWithCaster( new_loc, "Hero_Lina.DragonSlave", caster )
+
+				local projectile =
+					{
+						Ability				= self,
+						EffectName			= "particles/units/heroes/hero_lina/lina_spell_dragon_slave.vpcf",
+						vSpawnOrigin		= new_loc,
+						fDistance			= primary_distance,
+						fStartRadius		= width_initial,
+						fEndRadius			= width_end,
+						Source				= caster,
+						bHasFrontalCone		= true,
+						bReplaceExisting	= false,
+						iUnitTargetTeam		= DOTA_UNIT_TARGET_TEAM_ENEMY,
+						iUnitTargetFlags	= DOTA_UNIT_TARGET_FLAG_NONE,
+						iUnitTargetType		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+						fExpireTime 		= GameRules:GetGameTime() + 10.0,
+						bDeleteOnHit		= false,
+						vVelocity			= Vector(primary_velocity.x,primary_velocity.y,0),
+						bProvidesVision		= false,
+						ExtraData			= {damage = primary_damage, cdr_hero = cdr_hero, cdr_units = cdr_units}
+					}
+
+				ProjectileManager:CreateLinearProjectile(projectile)
+			end)
 		end
 	end
 end
@@ -251,12 +263,12 @@ function imba_lina_dragon_slave:OnProjectileHit_ExtraData(target, location, Extr
 		if caster:HasTalent("special_bonus_imba_lina_5") then
 			local blaze_burn = target:FindModifierByName("modifier_imba_fiery_soul_blaze_burn")
 			if blaze_burn then
-			blaze_burn:ForceRefresh()
+				blaze_burn:ForceRefresh()
 			else
-			local fiery_soul = caster:FindAbilityByName("imba_lina_fiery_soul")
-			if fiery_soul:GetLevel() > 0 then
-			target:AddNewModifier(caster,fiery_soul,"modifier_imba_fiery_soul_blaze_burn",{duration = caster:FindTalentValue("special_bonus_imba_lina_5","duration")})
-			end
+				local fiery_soul = caster:FindAbilityByName("imba_lina_fiery_soul")
+				if fiery_soul:GetLevel() > 0 then
+					target:AddNewModifier(caster,fiery_soul,"modifier_imba_fiery_soul_blaze_burn",{duration = caster:FindTalentValue("special_bonus_imba_lina_5","duration")})
+				end
 			end
 		end
 		target:RemoveModifierByName("modifier_imba_blazing_fire")
@@ -297,7 +309,7 @@ imba_lina_light_strike_array = class({})
 LinkLuaModifier("modifier_imba_lsa_talent_magma", "hero/hero_lina", LUA_MODIFIER_MOTION_NONE)
 
 function imba_lina_light_strike_array:GetAbilityTextureName()
-   return "lina_light_strike_array"
+	return "lina_light_strike_array"
 end
 
 function imba_lina_light_strike_array:OnSpellStart()
@@ -323,15 +335,15 @@ function imba_lina_light_strike_array:OnSpellStart()
 
 		-- Emit cast-sound
 		caster:EmitSound("Ability.PreLightStrikeArray")
-		
+
 		-- Response 20%
 		if (math.random(1,5) < 2) and (caster:GetName() == "npc_dota_hero_lina") then
 			caster:EmitSound("lina_lina_ability_lightstrike_0"..math.random(1,6))
 		end
-		
+
 		-- Only create the main array blast
-		self:CreateStrike( target_loc, 0, cast_delay, radius, damage, stun_duration )		
-			
+		self:CreateStrike( target_loc, 0, cast_delay, radius, damage, stun_duration )
+
 		-- #7 Talent, Main Light Strike Array's explosion is repeated 2 times
 		if caster:HasTalent("special_bonus_imba_lina_7") then
 			local nuclear_radius = radius
@@ -342,31 +354,31 @@ function imba_lina_light_strike_array:OnSpellStart()
 				self:CreateStrike( target_loc, (cast_delay * k), cast_delay, nuclear_radius, damage, nuclear_stun_duration )
 			end
 		end
-			
+
 		for i=0, array_count-1, 1 do
 			local distance = i
 			local count = i
 			local next_distance = i+1
 			local array_strike = i+1
-			
+
 			distance = radius * (distance + rings_distance)
 			next_distance = radius * (next_distance + rings_distance)
-			
+
 			--if i == 0 then
 			--	distance = 0
 			--	next_distance = 0.25 * radius
 			--else
-				--if math.mod(i,2) == 1 then
+			--if math.mod(i,2) == 1 then
 			--		distance = radius * (distance + 0.25)
 			--		next_distance = radius * (next_distance + 0.25)
-				--else
-				--	distance = radius * distance * (-1)
-				--end
+			--else
+			--	distance = radius * distance * (-1)
 			--end
-			
+			--end
+
 			local delay = math.abs(distance / (radius * 2)) * cast_delay
 			-- local position = target_loc + distance * direction
-			
+
 			-- Create 6 LSA rings around the explosion
 			local rings_direction = direction
 			for j=1, array_rings_count, 1 do
@@ -375,15 +387,15 @@ function imba_lina_light_strike_array:OnSpellStart()
 				local ring_distance = rings_radius * (array_strike + 1)
 				local ring_delay = math.abs((radius * (i + cast_delay + rings_distance)) / (rings_radius * 2)) * cast_delay
 				local ring_position = target_loc + ring_distance * rings_direction
-				self:CreateStrike( ring_position, (cast_delay + ring_delay), (cast_delay + rings_delay), rings_radius, damage, stun_duration )										
-			end		
+				self:CreateStrike( ring_position, (cast_delay + ring_delay), (cast_delay + rings_delay), rings_radius, damage, stun_duration )
+			end
 		end
 	end
 end
 
 function imba_lina_light_strike_array:CreateStrike( position, delay, cast_delay, radius, damage, stun_duration )
 	local caster = self:GetCaster()
-	
+
 	Timers:CreateTimer(delay, function()
 		local cast_pfx = ParticleManager:CreateParticleForTeam("particles/units/heroes/hero_lina/lina_spell_light_strike_array_ray_team.vpcf", PATTACH_WORLDORIGIN, caster, caster:GetTeam())
 		ParticleManager:SetParticleControl(cast_pfx, 0, position)
@@ -398,10 +410,10 @@ function imba_lina_light_strike_array:CreateStrike( position, delay, cast_delay,
 		ParticleManager:SetParticleControl(blast_pfx, 1, Vector(radius, 0, 0))
 		ParticleManager:ReleaseParticleIndex(blast_pfx)
 		EmitSoundOnLocationWithCaster( position, "Ability.LightStrikeArray", caster )
-		
+
 		-- Destroys trees
 		GridNav:DestroyTreesAroundPoint(position, radius, false)
-		
+
 		-- Deal damage and stun
 		local enemies = FindUnitsInRadius(caster:GetTeamNumber(), position, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 		for _,enemy in ipairs(enemies) do
@@ -409,7 +421,7 @@ function imba_lina_light_strike_array:CreateStrike( position, delay, cast_delay,
 		end
 
 		-- #4 Talent: After a Light Strike Array hits the ground, magma erupts and damages nearby enemy units
-		if caster:HasTalent("special_bonus_imba_lina_4") then			
+		if caster:HasTalent("special_bonus_imba_lina_4") then
 			CreateModifierThinker(caster, self, "modifier_imba_lsa_talent_magma", {duration = stun_duration, radius = radius}, position, caster:GetTeamNumber(), false)
 		end
 	end)
@@ -482,22 +494,22 @@ function modifier_imba_lsa_talent_magma:OnIntervalThink()
 	if IsServer() then
 		-- Find enemies in AoE
 		local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(),
-										  self.parent:GetAbsOrigin(),
-										  nil,
-										  self.radius,
-										  DOTA_UNIT_TARGET_TEAM_ENEMY,
-										  DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO,
-										  DOTA_UNIT_TARGET_FLAG_NONE,
-										  FIND_ANY_ORDER,
-										  false)
+			self.parent:GetAbsOrigin(),
+			nil,
+			self.radius,
+			DOTA_UNIT_TARGET_TEAM_ENEMY,
+			DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO,
+			DOTA_UNIT_TARGET_FLAG_NONE,
+			FIND_ANY_ORDER,
+			false)
 
 		-- Deal damage per tick to each enemy
 		for _,enemy in pairs(enemies) do
 			damage_table = ({victim = enemy,
-						 attacker = self.caster,
-						 ability = self.ability,
-						 damage = self.damage,
-						 damage_type = DAMAGE_TYPE_MAGICAL})
+				attacker = self.caster,
+				ability = self.ability,
+				damage = self.damage,
+				damage_type = DAMAGE_TYPE_MAGICAL})
 
 			ApplyDamage(damage_table)
 		end
@@ -514,12 +526,12 @@ LinkLuaModifier("modifier_imba_fiery_soul_counter", "hero/hero_lina", LUA_MODIFI
 LinkLuaModifier("modifier_imba_fiery_soul_blaze_burn", "hero/hero_lina", LUA_MODIFIER_MOTION_NONE)
 
 function imba_lina_fiery_soul:GetIntrinsicModifierName()
-    return "modifier_imba_fiery_soul"
+	return "modifier_imba_fiery_soul"
 end
 
 
 function imba_lina_fiery_soul:GetAbilityTextureName()
-   return "lina_fiery_soul"
+	return "lina_fiery_soul"
 end
 
 function imba_lina_fiery_soul:GetCooldown()
@@ -533,15 +545,15 @@ function imba_lina_fiery_soul:OnSpellStart()
 	if IsServer() then
 		local caster = self:GetCaster()
 		local caster_loc = caster:GetAbsOrigin()
-		
-		-- Wait for the game to tick to remove the modifier 
+
+		-- Wait for the game to tick to remove the modifier
 		Timers:CreateTimer(FrameTime(), function()
-		local fiery_modifier = caster:FindModifierByName("modifier_imba_fiery_soul_counter")
-		if fiery_modifier then
-		fiery_modifier:Destroy()
-		end
+			local fiery_modifier = caster:FindModifierByName("modifier_imba_fiery_soul_counter")
+			if fiery_modifier then
+				fiery_modifier:Destroy()
+			end
 		end)
-		
+
 		-- Parameters
 		local immolation_damage_min = caster:FindTalentValue("special_bonus_imba_lina_3")
 		local immolation_damage_max = caster:FindTalentValue("special_bonus_imba_lina_3","value2")
@@ -551,7 +563,7 @@ function imba_lina_fiery_soul:OnSpellStart()
 
 		-- Emit particle + sound
 		EmitSoundOnLocationWithCaster( caster_loc, "Hero_Phoenix.SuperNova.Explode", caster )
-		
+
 		local blast_pfx = ParticleManager:CreateParticle( "particles/hero/lina/lina_immolation.vpcf", PATTACH_CUSTOMORIGIN, nil )
 		ParticleManager:SetParticleControl( blast_pfx, 0, caster_loc )
 		ParticleManager:SetParticleControl( blast_pfx, 1, Vector(1.5,1.5,1.5) )
@@ -561,35 +573,35 @@ function imba_lina_fiery_soul:OnSpellStart()
 		ParticleManager:ReleaseParticleIndex(blast_pfx)
 		-- Destroys trees
 		GridNav:DestroyTreesAroundPoint(caster_loc, immolation_aoe, false)
-		
+
 		-- Deal damage
 		local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster_loc, nil, immolation_aoe, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 		for _,enemy in ipairs(enemies) do
 			local distance = ( caster_loc - enemy:GetAbsOrigin() ):Length2D()
 			local immolation_damage
-			
+
 			-- Deal the damage based on the target's distance
 			if distance >= min_damage_aoe then
-			immolation_damage = immolation_damage_min
+				immolation_damage = immolation_damage_min
 			elseif distance <= max_damage_aoe then
-			immolation_damage = immolation_damage_max
+				immolation_damage = immolation_damage_max
 			else
-			immolation_damage = immolation_damage_min + math.floor((immolation_damage_max - immolation_damage_min) * ((min_damage_aoe - distance)/(min_damage_aoe - max_damage_aoe)))
+				immolation_damage = immolation_damage_min + math.floor((immolation_damage_max - immolation_damage_min) * ((min_damage_aoe - distance)/(min_damage_aoe - max_damage_aoe)))
 			end
-			
+
 			enemy:RemoveModifierByName("modifier_imba_blazing_fire")
 			ApplyDamage({attacker = caster, victim = enemy, ability = self, damage = immolation_damage, damage_type = self:GetAbilityDamageType()})
-			
+
 			-- #5 Talent: Lina's Spells causes DoT based on Fiery Soul stacks
 			if caster:HasTalent("special_bonus_imba_lina_5") then
 				local blaze_burn = enemy:FindModifierByName("modifier_imba_fiery_soul_blaze_burn")
 				if blaze_burn then
-				blaze_burn:ForceRefresh()
+					blaze_burn:ForceRefresh()
 				else
-				local fiery_soul = caster:FindAbilityByName("imba_lina_fiery_soul")
-				if fiery_soul:GetLevel() > 0 then
-				enemy:AddNewModifier(caster,fiery_soul,"modifier_imba_fiery_soul_blaze_burn",{duration = caster:FindTalentValue("special_bonus_imba_lina_5","duration")})
-				end
+					local fiery_soul = caster:FindAbilityByName("imba_lina_fiery_soul")
+					if fiery_soul:GetLevel() > 0 then
+						enemy:AddNewModifier(caster,fiery_soul,"modifier_imba_fiery_soul_blaze_burn",{duration = caster:FindTalentValue("special_bonus_imba_lina_5","duration")})
+					end
 				end
 			end
 		end
@@ -607,9 +619,9 @@ end
 
 function modifier_imba_fiery_soul:DeclareFunctions()
 	local decFuncs =
-	{
-		MODIFIER_EVENT_ON_ABILITY_FULLY_CAST,
-	}
+		{
+			MODIFIER_EVENT_ON_ABILITY_FULLY_CAST,
+		}
 	return decFuncs
 end
 
@@ -623,7 +635,7 @@ function modifier_imba_fiery_soul:OnAbilityFullyCast( params )
 		local caster = params.ability:GetCaster()
 		if (caster == parent) then
 			parent:AddNewModifier(parent, self:GetAbility(), "modifier_imba_fiery_soul_counter", {duration = self:GetAbility():GetSpecialValueFor("duration")})
-			
+
 			-- Fiery Soul ability cooldown reduction
 			for ability_id = 0, 15 do
 				local caster_ability = caster:GetAbilityByIndex(ability_id)
@@ -638,7 +650,7 @@ function modifier_imba_fiery_soul:OnAbilityFullyCast( params )
 							-- Get the ability cooldown
 							local cooldown_remaining = caster_ability:GetCooldownTimeRemaining()
 							local cooldown_reduction = self:GetAbility():GetSpecialValueFor("cdr_pct") * fiery_counter:GetStackCount()
-							
+
 							caster_ability:EndCooldown()
 							if cooldown_remaining > cooldown_reduction then
 								caster_ability:StartCooldown( cooldown_remaining - cooldown_reduction )
@@ -647,7 +659,7 @@ function modifier_imba_fiery_soul:OnAbilityFullyCast( params )
 					end
 				end
 			end
-			
+
 		end
 		return true
 	end
@@ -691,7 +703,7 @@ function modifier_imba_fiery_soul_counter:OnRefresh()
 		end
 		serverCheck = 1 -- why ? ? ? ? ? ?
 	end
-	
+
 	if self:GetCaster():HasTalent("special_bonus_imba_lina_3") then
 		if stacks + serverCheck == max_stacks then -- inject function calls clientside and serverside
 			-- Change behavior
@@ -713,9 +725,9 @@ function modifier_special_bonus_imba_lina_3:OnCreated()
 		if fiery_soul:GetLevel() > 0 then
 			local fiery_soul_modifier = self:GetParent():FindModifierByName("modifier_imba_fiery_soul_counter")
 			if fiery_soul_modifier then
-			-- On refresh, it adds a stack count if its less than max stacks
-			fiery_soul_modifier:DecrementStackCount()
-			fiery_soul_modifier:ForceRefresh()
+				-- On refresh, it adds a stack count if its less than max stacks
+				fiery_soul_modifier:DecrementStackCount()
+				fiery_soul_modifier:ForceRefresh()
 			end
 		end
 	end
@@ -736,13 +748,13 @@ function modifier_imba_fiery_soul_counter:GetTexture()
 end
 
 function modifier_imba_fiery_soul_counter:DeclareFunctions()
-	local decFuncs = 
-	{	
-		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
-		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-		MODIFIER_PROPERTY_CASTTIME_PERCENTAGE,
-	}
-	return decFuncs	
+	local decFuncs =
+		{
+			MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+			MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+			MODIFIER_PROPERTY_CASTTIME_PERCENTAGE,
+		}
+	return decFuncs
 end
 
 function modifier_imba_fiery_soul_counter:GetModifierAttackSpeedBonus_Constant()
@@ -775,18 +787,18 @@ function modifier_imba_fiery_soul_blaze_burn:OnCreated()
 	self.ability = self:GetAbility()
 	self.tick = self.caster:FindTalentValue("special_bonus_imba_lina_5","tick")
 	self.particle_flame = "particles/hero/clinkz/searing_flames_active/burn_effect.vpcf"
-	
-	if IsServer() then
-    -- Add and attach flaming particle
-    self.particle_flame_fx = ParticleManager:CreateParticle(self.particle_flame, PATTACH_POINT_FOLLOW, self.parent)
-    ParticleManager:SetParticleControlEnt(self.particle_flame_fx, 0, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)
 
-    self:AddParticle(self.particle_flame_fx, false, false, -1, false, false)
-	
-	-- Set the flaming color like Firetoad. RE
-	self.parent:SetRenderColor(255, 86, 1)	
-	
-	self:StartIntervalThink(self.tick)
+	if IsServer() then
+		-- Add and attach flaming particle
+		self.particle_flame_fx = ParticleManager:CreateParticle(self.particle_flame, PATTACH_POINT_FOLLOW, self.parent)
+		ParticleManager:SetParticleControlEnt(self.particle_flame_fx, 0, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)
+
+		self:AddParticle(self.particle_flame_fx, false, false, -1, false, false)
+
+		-- Set the flaming color like Firetoad. RE
+		self.parent:SetRenderColor(255, 86, 1)
+
+		self:StartIntervalThink(self.tick)
 	end
 end
 
@@ -794,8 +806,8 @@ function modifier_imba_fiery_soul_blaze_burn:OnIntervalThink()
 	if IsServer() then
 		local fiery_soul_counter = self.caster:FindModifierByName("modifier_imba_fiery_soul_counter")
 		if fiery_soul_counter then
-		local damage = fiery_soul_counter:GetStackCount() * self.caster:FindTalentValue("special_bonus_imba_lina_5")
-		ApplyDamage({attacker = self.caster, victim = self.parent, ability = self.ability, damage = damage, damage_type = self.ability:GetAbilityDamageType()})
+			local damage = fiery_soul_counter:GetStackCount() * self.caster:FindTalentValue("special_bonus_imba_lina_5")
+			ApplyDamage({attacker = self.caster, victim = self.parent, ability = self.ability, damage = damage, damage_type = self.ability:GetAbilityDamageType()})
 		end
 	end
 end
@@ -807,13 +819,13 @@ function modifier_imba_fiery_soul_blaze_burn:OnRefresh()
 end
 
 function modifier_imba_fiery_soul_blaze_burn:OnDestroy()
-    if IsServer() then
+	if IsServer() then
 		-- Prevent conflict with Firetoad. :D
 		if self.parent:HasModifier("modifier_imba_lion_hex") then
 		else
-        self.parent:SetRenderColor(255,255,255)
+			self.parent:SetRenderColor(255,255,255)
 		end
-    end
+	end
 end
 
 -------------------------------------------
@@ -823,7 +835,7 @@ end
 imba_lina_laguna_blade = class({})
 
 function imba_lina_laguna_blade:GetAbilityTextureName()
-   return "lina_laguna_blade"
+	return "lina_laguna_blade"
 end
 
 function imba_lina_laguna_blade:OnSpellStart()
@@ -846,34 +858,34 @@ function imba_lina_laguna_blade:OnSpellStart()
 		ParticleManager:SetParticleControlEnt(blade_pfx, 0, caster, PATTACH_POINT_FOLLOW, "attach_attack1", caster_loc, true)
 		ParticleManager:SetParticleControlEnt(blade_pfx, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target_loc, true)
 		ParticleManager:ReleaseParticleIndex(blade_pfx)
-		
+
 		-- If the target possesses a ready Spell-Counter, do nothing further
 		if target:GetTeam() ~= caster:GetTeam() then
 			if target:TriggerSpellAbsorb(self) then
 				return nil
 			end
 		end
-		
+
 		Timers:CreateTimer(effect_delay, function()
 			ApplyDamage({victim = target, attacker = caster, ability = self, damage = damage, damage_type = damage_type})
-			
+
 			-- #5 Talent: Lina's Spells causes DoT based on Fiery Soul stacks
 			if caster:HasTalent("special_bonus_imba_lina_5") then
 				local blaze_burn = target:FindModifierByName("modifier_imba_fiery_soul_blaze_burn")
 				if blaze_burn then
-				blaze_burn:ForceRefresh()
+					blaze_burn:ForceRefresh()
 				else
-				local fiery_soul = caster:FindAbilityByName("imba_lina_fiery_soul")
-				if fiery_soul:GetLevel() > 0 then
-				target:AddNewModifier(caster,fiery_soul,"modifier_imba_fiery_soul_blaze_burn",{duration = caster:FindTalentValue("special_bonus_imba_lina_5","duration")})
-				end
+					local fiery_soul = caster:FindAbilityByName("imba_lina_fiery_soul")
+					if fiery_soul:GetLevel() > 0 then
+						target:AddNewModifier(caster,fiery_soul,"modifier_imba_fiery_soul_blaze_burn",{duration = caster:FindTalentValue("special_bonus_imba_lina_5","duration")})
+					end
 				end
 			end
-			
+
 			target:RemoveModifierByName("modifier_imba_blazing_fire")
 			if caster:HasTalent("special_bonus_imba_lina_6") then
 				target:AddNewModifier(caster, self, "modifier_stunned", { duration = caster:FindTalentValue("special_bonus_imba_lina_6") })
-			end		
+			end
 			-- Bouncing --
 			local enemies = FindUnitsInRadius(caster:GetTeamNumber(), target_loc, nil, bounce_range, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 			-- Remove main-target from list
@@ -884,31 +896,31 @@ function imba_lina_laguna_blade:OnSpellStart()
 			end
 			-- Bounce on remaining targets
 			Timers:CreateTimer(bounce_delay, function()
-			for i=1, math.min(#enemies,bounce_amount),1 do
-				local bounce_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_lina/lina_spell_laguna_blade.vpcf", PATTACH_CUSTOMORIGIN, caster)
-				ParticleManager:SetParticleControlEnt(bounce_pfx, 0, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target_loc, true)
-				ParticleManager:SetParticleControlEnt(bounce_pfx, 1, enemies[i], PATTACH_POINT_FOLLOW, "attach_hitloc", enemies[i]:GetAbsOrigin(), true)
-				ParticleManager:ReleaseParticleIndex(bounce_pfx)
-				Timers:CreateTimer(effect_delay, function()
-				ApplyDamage({victim = enemies[i], attacker = caster, ability = self, damage = damage, damage_type = damage_type})
-		 		-- #5 Talent: Lina's Spells causes DoT based on Fiery Soul stacks
-				if caster:HasTalent("special_bonus_imba_lina_5") then
-					local blaze_burn = enemies[i]:FindModifierByName("modifier_imba_fiery_soul_blaze_burn")
-					if blaze_burn then
-					blaze_burn:ForceRefresh()
-					else
-					local fiery_soul = caster:FindAbilityByName("imba_lina_fiery_soul")
-					if fiery_soul:GetLevel() > 0 then
-					enemies[i]:AddNewModifier(caster,fiery_soul,"modifier_imba_fiery_soul_blaze_burn",{duration = caster:FindTalentValue("special_bonus_imba_lina_5","duration")})
-					end
-					end
+				for i=1, math.min(#enemies,bounce_amount),1 do
+					local bounce_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_lina/lina_spell_laguna_blade.vpcf", PATTACH_CUSTOMORIGIN, caster)
+					ParticleManager:SetParticleControlEnt(bounce_pfx, 0, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target_loc, true)
+					ParticleManager:SetParticleControlEnt(bounce_pfx, 1, enemies[i], PATTACH_POINT_FOLLOW, "attach_hitloc", enemies[i]:GetAbsOrigin(), true)
+					ParticleManager:ReleaseParticleIndex(bounce_pfx)
+					Timers:CreateTimer(effect_delay, function()
+						ApplyDamage({victim = enemies[i], attacker = caster, ability = self, damage = damage, damage_type = damage_type})
+						-- #5 Talent: Lina's Spells causes DoT based on Fiery Soul stacks
+						if caster:HasTalent("special_bonus_imba_lina_5") then
+							local blaze_burn = enemies[i]:FindModifierByName("modifier_imba_fiery_soul_blaze_burn")
+							if blaze_burn then
+								blaze_burn:ForceRefresh()
+							else
+								local fiery_soul = caster:FindAbilityByName("imba_lina_fiery_soul")
+								if fiery_soul:GetLevel() > 0 then
+									enemies[i]:AddNewModifier(caster,fiery_soul,"modifier_imba_fiery_soul_blaze_burn",{duration = caster:FindTalentValue("special_bonus_imba_lina_5","duration")})
+								end
+							end
+						end
+						enemies[i]:RemoveModifierByName("modifier_imba_blazing_fire")
+						if caster:HasTalent("special_bonus_imba_lina_6") then
+							enemies[i]:AddNewModifier(caster, self, "modifier_stunned", { duration = caster:FindTalentValue("special_bonus_imba_lina_6") })
+						end
+					end)
 				end
-				enemies[i]:RemoveModifierByName("modifier_imba_blazing_fire")
-				if caster:HasTalent("special_bonus_imba_lina_6") then
-					enemies[i]:AddNewModifier(caster, self, "modifier_stunned", { duration = caster:FindTalentValue("special_bonus_imba_lina_6") })
-				end
-				end)
-			end
 			end)
 		end)
 	end

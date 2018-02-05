@@ -1,33 +1,51 @@
+-- Copyright (C) 2018  The Dota IMBA Development Team
+--
+-- Licensed under the Apache License, Version 2.0 (the "License");
+-- you may not use this file except in compliance with the License.
+-- You may obtain a copy of the License at
+--
+-- http://www.apache.org/licenses/LICENSE-2.0
+--
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- See the License for the specific language governing permissions and
+-- limitations under the License.
+--
+-- Editors:
+--     Cookies, 01.2016
+--     suthernfriend, 03.02.2018
+
 function GrievousWounds( keys )
-    local caster = keys.caster
-    local target = keys.target
-    local ability = keys.ability
-    local ability_level = ability:GetLevel() - 1
-    local modifier_debuff = keys.modifier_debuff
-    local particle_hit = keys.particle_hit
+	local caster = keys.caster
+	local target = keys.target
+	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
+	local modifier_debuff = keys.modifier_debuff
+	local particle_hit = keys.particle_hit
 
-    -- Don't apply if the target is dead
-    if not target:IsAlive() then
-      return nil
-    end
+	-- Don't apply if the target is dead
+	if not target:IsAlive() then
+		return nil
+	end
 
-    -- Parameters
-    local damage_increase = ability:GetLevelSpecialValueFor("damage_increase", ability_level)
+	-- Parameters
+	local damage_increase = ability:GetLevelSpecialValueFor("damage_increase", ability_level)
 
-    -- Play hit particle
-    local hit_pfx = ParticleManager:CreateParticle(particle_hit, PATTACH_ABSORIGIN, target)
-    ParticleManager:SetParticleControl(hit_pfx, 0, target:GetAbsOrigin())
+	-- Play hit particle
+	local hit_pfx = ParticleManager:CreateParticle(particle_hit, PATTACH_ABSORIGIN, target)
+	ParticleManager:SetParticleControl(hit_pfx, 0, target:GetAbsOrigin())
 
-    -- Calculate bonus damage
-    local base_damage = caster:GetAttackDamage()
-    local current_stacks = target:GetModifierStackCount(modifier_debuff, caster)
-    local total_damage = base_damage * ( 1 + current_stacks * damage_increase / 100 )
+	-- Calculate bonus damage
+	local base_damage = caster:GetAttackDamage()
+	local current_stacks = target:GetModifierStackCount(modifier_debuff, caster)
+	local total_damage = base_damage * ( 1 + current_stacks * damage_increase / 100 )
 
-    -- Apply damage
-    ApplyDamage({attacker = caster, victim = target, ability = ability, damage = total_damage, damage_type = DAMAGE_TYPE_PHYSICAL})
+	-- Apply damage
+	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = total_damage, damage_type = DAMAGE_TYPE_PHYSICAL})
 
-    -- Apply bonus damage modifier
-    AddStacks(ability, caster, target, modifier_debuff, 1, true)
+	-- Apply bonus damage modifier
+	AddStacks(ability, caster, target, modifier_debuff, 1, true)
 end
 --------------------------------------------------------------------------------------------------------
 --------------------------------------------------------------------------------------------------------
@@ -41,78 +59,78 @@ LinkLuaModifier("modifier_imba_fountain_relief_aura_buff", "hero/fountain_abilit
 LinkLuaModifier("modifier_imba_fountain_relief_aura_reject", "hero/fountain_abilities", LUA_MODIFIER_MOTION_NONE)
 
 function imba_fountain_relief:GetAbilityTextureName()
-   return "custom/fountain_relief"
+	return "custom/fountain_relief"
 end
 
 function imba_fountain_relief:GetIntrinsicModifierName()
-  return "modifier_imba_fountain_relief_aura"
+	return "modifier_imba_fountain_relief_aura"
 end
 
--- Fountain aura 
+-- Fountain aura
 modifier_imba_fountain_relief_aura = modifier_imba_fountain_relief_aura or class({})
 
 function modifier_imba_fountain_relief_aura:OnCreated()
-  self.caster = self:GetCaster()
-  self.ability = self:GetAbility()
-  if not self.ability then
-    self:Destroy()
-    return nil
-  end
+	self.caster = self:GetCaster()
+	self.ability = self:GetAbility()
+	if not self.ability then
+		self:Destroy()
+		return nil
+	end
 
-  -- Ability specials
-  self.aura_radius = self.ability:GetSpecialValueFor("aura_radius")
-  self.aura_stickyness = self.ability:GetSpecialValueFor("aura_stickyness")
+	-- Ability specials
+	self.aura_radius = self.ability:GetSpecialValueFor("aura_radius")
+	self.aura_stickyness = self.ability:GetSpecialValueFor("aura_stickyness")
 end
 
 --ability properties
 function modifier_imba_fountain_relief_aura:OnRefresh()
-  self:OnCreated()
+	self:OnCreated()
 end
 
 function modifier_imba_fountain_relief_aura:GetAuraDuration()
-  return self.aura_stickyness
+	return self.aura_stickyness
 end
 
 function modifier_imba_fountain_relief_aura:GetAuraRadius()
-  return self.aura_radius
+	return self.aura_radius
 end
 
 function modifier_imba_fountain_relief_aura:GetAuraEntityReject(target)
-    -- Reject the.. well, rejected
-    if target:HasModifier("modifier_imba_fountain_relief_aura_reject") then
-        return true
-    end
+	-- Reject the.. well, rejected
+	if target:HasModifier("modifier_imba_fountain_relief_aura_reject") then
+		return true
+	end
 
-    -- Accept everyone else
-    return false
+	-- Accept everyone else
+	return false
 end
 
 function modifier_imba_fountain_relief_aura:GetAuraSearchFlags()
-  return DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED
+	return DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED
 end
 
 function modifier_imba_fountain_relief_aura:GetAuraSearchTeam()
-  return DOTA_UNIT_TARGET_TEAM_FRIENDLY
+	return DOTA_UNIT_TARGET_TEAM_FRIENDLY
 end
 
 function modifier_imba_fountain_relief_aura:GetAuraSearchType()
-  return DOTA_UNIT_TARGET_HERO
+	return DOTA_UNIT_TARGET_HERO
 end
 
 function modifier_imba_fountain_relief_aura:GetModifierAura()
-  return "modifier_imba_fountain_relief_aura_buff"
+	return "modifier_imba_fountain_relief_aura_buff"
 end
 
 function modifier_imba_fountain_relief_aura:IsAura()
-  return true
+	return true
 end
 
 function modifier_imba_fountain_relief_aura:IsDebuff()
-  return false
+	return false
 end
 
 function modifier_imba_fountain_relief_aura:IsHidden()
-  return true
+	return true
 end
 
 ------------------------
@@ -121,88 +139,88 @@ end
 modifier_imba_fountain_relief_aura_buff = modifier_imba_fountain_relief_aura_buff or class({})
 
 function modifier_imba_fountain_relief_aura_buff:OnCreated()
-    -- Ability properties
-    self.caster = self:GetCaster()
-    self.ability = self:GetAbility()
-    self.parent = self:GetParent()
+	-- Ability properties
+	self.caster = self:GetCaster()
+	self.ability = self:GetAbility()
+	self.parent = self:GetParent()
 
-    if not self.ability then
-      self:Destroy()
-      return nil
-    end
-    self.parent = self:GetParent()
+	if not self.ability then
+		self:Destroy()
+		return nil
+	end
+	self.parent = self:GetParent()
 
-    -- Ability specials
-    self.tenacity = self.ability:GetSpecialValueFor("tenacity")
-    self.damage_reduction = self.ability:GetSpecialValueFor("damage_reduction")
-    self.disconnected_dmg_reduction = self.ability:GetSpecialValueFor("disconnected_dmg_reduction")
-    self.aura_reject_time = self.ability:GetSpecialValueFor("aura_reject_time")
+	-- Ability specials
+	self.tenacity = self.ability:GetSpecialValueFor("tenacity")
+	self.damage_reduction = self.ability:GetSpecialValueFor("damage_reduction")
+	self.disconnected_dmg_reduction = self.ability:GetSpecialValueFor("disconnected_dmg_reduction")
+	self.aura_reject_time = self.ability:GetSpecialValueFor("aura_reject_time")
 end
 
 function modifier_imba_fountain_relief_aura_buff:OnRefresh()
-    self:OnCreated()
+	self:OnCreated()
 end
 
 function modifier_imba_fountain_relief_aura_buff:IsHidden()
-    return false
+	return false
 end
 
 function modifier_imba_fountain_relief_aura_buff:GetCustomTenacity()
-    return self.tenacity
+	return self.tenacity
 end
 
 function modifier_imba_fountain_relief_aura_buff:DeclareFunctions()
-    local decFuncs = {MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
-                      MODIFIER_EVENT_ON_ATTACK,
-                      MODIFIER_EVENT_ON_ABILITY_FULLY_CAST}
+	local decFuncs = {MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
+		MODIFIER_EVENT_ON_ATTACK,
+		MODIFIER_EVENT_ON_ABILITY_FULLY_CAST}
 
-    return decFuncs
+	return decFuncs
 end
 
 function modifier_imba_fountain_relief_aura_buff:GetModifierIncomingDamage_Percentage()
-    if IsServer() then
-        -- Disconnected players take no damage at all
-        if PlayerResource:GetConnectionState(self.parent:GetPlayerOwnerID()) == 3 then            
-            return self.disconnected_dmg_reduction * (-1)            
-        end
+	if IsServer() then
+		-- Disconnected players take no damage at all
+		if PlayerResource:GetConnectionState(self.parent:GetPlayerOwnerID()) == 3 then
+			return self.disconnected_dmg_reduction * (-1)
+		end
 
-        return self.damage_reduction * (-1)
-    end
+		return self.damage_reduction * (-1)
+	end
 end
 
 function modifier_imba_fountain_relief_aura_buff:OnAttack(keys)
-    if IsServer() then
-        local target = keys.target
-        local attacker = keys.attacker
+	if IsServer() then
+		local target = keys.target
+		local attacker = keys.attacker
 
-        -- Only apply if the attacker is the parent
-        if self.parent == attacker then
+		-- Only apply if the attacker is the parent
+		if self.parent == attacker then
 
-            -- If the attacker attacked one from his team or himself, do nothing
-            if attacker:GetTeamNumber() == target:GetTeamNumber() then
-                return nil
-            end
+			-- If the attacker attacked one from his team or himself, do nothing
+			if attacker:GetTeamNumber() == target:GetTeamNumber() then
+				return nil
+			end
 
-            -- Reject him from the aura
+			-- Reject him from the aura
 			if IsNearFriendlyClass(self.parent, 1360, "ent_dota_fountain") then
-            self.parent:AddNewModifier(self.caster, self.ability, "modifier_imba_fountain_relief_aura_reject", {duration = self.aura_reject_time})
+				self.parent:AddNewModifier(self.caster, self.ability, "modifier_imba_fountain_relief_aura_reject", {duration = self.aura_reject_time})
 			end
 		end
-    end
+	end
 end
 
 function modifier_imba_fountain_relief_aura_buff:OnAbilityFullyCast(keys)
-    if IsServer() then
-        local unit = keys.unit
+	if IsServer() then
+		local unit = keys.unit
 
-        -- Only apply if the user of the ability is the parent
-        if self.parent == unit then
-            -- Reject him from the aura
+		-- Only apply if the user of the ability is the parent
+		if self.parent == unit then
+			-- Reject him from the aura
 			if IsNearFriendlyClass(self.parent, 1360, "ent_dota_fountain") then
-            self.parent:AddNewModifier(self.caster, self.ability, "modifier_imba_fountain_relief_aura_reject", {duration = self.aura_reject_time})            
+				self.parent:AddNewModifier(self.caster, self.ability, "modifier_imba_fountain_relief_aura_reject", {duration = self.aura_reject_time})
 			end
 		end
-    end
+	end
 end
 
 
@@ -215,51 +233,51 @@ function modifier_imba_fountain_relief_aura_reject:IsPurgable() return false end
 function modifier_imba_fountain_relief_aura_reject:IsDebuff() return false end
 
 function modifier_imba_fountain_relief_aura_reject:OnCreated()
-    -- Ability properties
-    self.caster = self:GetCaster()
-    self.ability = self:GetAbility()
-    self.parent = self:GetParent()
+	-- Ability properties
+	self.caster = self:GetCaster()
+	self.ability = self:GetAbility()
+	self.parent = self:GetParent()
 
-    if not self.ability then
-      self:Destroy()
-      return nil
-    end
-    self.parent = self:GetParent()    
+	if not self.ability then
+		self:Destroy()
+		return nil
+	end
+	self.parent = self:GetParent()
 end
 
 function modifier_imba_fountain_relief_aura_reject:DeclareFunctions()
-    local decFuncs = {MODIFIER_EVENT_ON_ATTACK,
-                      MODIFIER_EVENT_ON_ABILITY_FULLY_CAST}
+	local decFuncs = {MODIFIER_EVENT_ON_ATTACK,
+		MODIFIER_EVENT_ON_ABILITY_FULLY_CAST}
 
-    return decFuncs
+	return decFuncs
 end
 
 function modifier_imba_fountain_relief_aura_reject:OnAttack(keys)
-    if IsServer() then
-        local target = keys.target
-        local attacker = keys.attacker
+	if IsServer() then
+		local target = keys.target
+		local attacker = keys.attacker
 
-        -- Only apply if the attacker is the parent
-        if self.parent == attacker and IsNearFriendlyClass(attacker, self.ability:GetSpecialValueFor("aura_radius"), "ent_dota_fountain") then
+		-- Only apply if the attacker is the parent
+		if self.parent == attacker and IsNearFriendlyClass(attacker, self.ability:GetSpecialValueFor("aura_radius"), "ent_dota_fountain") then
 
-            -- If the attacker attacked one from his team or himself, do nothing
-            if attacker:GetTeamNumber() == target:GetTeamNumber() then
-                return nil
-            end
+			-- If the attacker attacked one from his team or himself, do nothing
+			if attacker:GetTeamNumber() == target:GetTeamNumber() then
+				return nil
+			end
 
-            -- Refresh aura
-            self:ForceRefresh()
-        end
-    end
+			-- Refresh aura
+			self:ForceRefresh()
+		end
+	end
 end
 
 function modifier_imba_fountain_relief_aura_reject:OnAbilityFullyCast(keys)
-    if IsServer() then
-        local unit = keys.unit
+	if IsServer() then
+		local unit = keys.unit
 
-        -- Only apply if the user of the ability is the parent
-        if self.parent == unit and IsNearFriendlyClass(unit, self.ability:GetSpecialValueFor("aura_radius"), "ent_dota_fountain") then            
-            self:ForceRefresh()
-        end
-    end
+		-- Only apply if the user of the ability is the parent
+		if self.parent == unit and IsNearFriendlyClass(unit, self.ability:GetSpecialValueFor("aura_radius"), "ent_dota_fountain") then
+			self:ForceRefresh()
+		end
+	end
 end

@@ -1,5 +1,20 @@
--- Author: Shush
--- Date: 01/04/2017
+-- Copyright (C) 2018  The Dota IMBA Development Team
+--
+-- Licensed under the Apache License, Version 2.0 (the "License");
+-- you may not use this file except in compliance with the License.
+-- You may obtain a copy of the License at
+--
+-- http://www.apache.org/licenses/LICENSE-2.0
+--
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- See the License for the specific language governing permissions and
+-- limitations under the License.
+--
+-- Editors:
+--     Shush, 01.04.2017
+--     suthernfriend, 03.02.2018
 
 CreateEmptyTalents("nyx_assassin")
 
@@ -16,7 +31,7 @@ LinkLuaModifier("modifier_imba_impale_talent_slow", "hero/hero_nyx_assassin", LU
 LinkLuaModifier("modifier_imba_impale_talent_thinker", "hero/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
 
 function imba_nyx_assassin_impale:GetAbilityTextureName()
-   return "nyx_assassin_impale"
+	return "nyx_assassin_impale"
 end
 
 function imba_nyx_assassin_impale:IsHiddenWhenStolen()
@@ -36,17 +51,17 @@ function imba_nyx_assassin_impale:GetIntrinsicModifierName()
 	return "modifier_imba_impale_suffering_aura"
 end
 
-function imba_nyx_assassin_impale:GetCastRange(location, target)    
+function imba_nyx_assassin_impale:GetCastRange(location, target)
 	-- Ability properties
 	local caster = self:GetCaster()
 	local ability = self
 	local modifier_burrowed = "modifier_nyx_assassin_burrow"
-	local base_cast_range = self.BaseClass.GetCastRange(self, location, target)    
+	local base_cast_range = self.BaseClass.GetCastRange(self, location, target)
 
 	-- Ability specials
-	local burrow_length_increase = ability:GetSpecialValueFor("burrow_length_increase")        
+	local burrow_length_increase = ability:GetSpecialValueFor("burrow_length_increase")
 
-	if caster:HasModifier(modifier_burrowed) then        
+	if caster:HasModifier(modifier_burrowed) then
 		return base_cast_range + burrow_length_increase
 	end
 
@@ -61,7 +76,7 @@ function imba_nyx_assassin_impale:GetCooldown(level)
 	local base_cooldown = self.BaseClass.GetCooldown(self, level)
 
 	-- Ability specials
-	local burrow_cd_reduction = ability:GetSpecialValueFor("burrow_cd_reduction")        
+	local burrow_cd_reduction = ability:GetSpecialValueFor("burrow_cd_reduction")
 
 	if caster:HasModifier(modifier_burrowed) then
 		return base_cooldown - burrow_cd_reduction
@@ -84,7 +99,7 @@ function imba_nyx_assassin_impale:OnSpellStart()
 	local duration = ability:GetSpecialValueFor("duration")
 	local length = ability:GetSpecialValueFor("length") + GetCastRangeIncrease(caster)
 	local speed = ability:GetSpecialValueFor("speed")
-	local burrow_length_increase = ability:GetSpecialValueFor("burrow_length_increase")    
+	local burrow_length_increase = ability:GetSpecialValueFor("burrow_length_increase")
 
 	-- Play cast sound
 	EmitSoundOn(sound_cast, caster)
@@ -99,23 +114,23 @@ function imba_nyx_assassin_impale:OnSpellStart()
 
 	-- Projectile information
 	local spikes_projectile = { Ability = ability,
-								EffectName = particle_projectile,
-								vSpawnOrigin = caster:GetAbsOrigin(),
-								fDistance = length,
-								fStartRadius = width,
-								fEndRadius = width,
-								Source = caster,
-								bHasFrontalCone = false,
-								bReplaceExisting = false,
-								iUnitTargetTeam = DOTA_UNIT_TARGET_TEAM_ENEMY,
-								iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-								bDeleteOnHit = false,
-								vVelocity = direction * speed * Vector(1, 1, 0),
-								bProvidesVision = false,
-								ExtraData = { main_spike = true }
-							}
-	
-	-- Launch projectile                        
+		EffectName = particle_projectile,
+		vSpawnOrigin = caster:GetAbsOrigin(),
+		fDistance = length,
+		fStartRadius = width,
+		fEndRadius = width,
+		Source = caster,
+		bHasFrontalCone = false,
+		bReplaceExisting = false,
+		iUnitTargetTeam = DOTA_UNIT_TARGET_TEAM_ENEMY,
+		iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+		bDeleteOnHit = false,
+		vVelocity = direction * speed * Vector(1, 1, 0),
+		bProvidesVision = false,
+		ExtraData = { main_spike = true }
+	}
+
+	-- Launch projectile
 	ProjectileManager:CreateLinearProjectile(spikes_projectile)
 end
 
@@ -182,7 +197,7 @@ function imba_nyx_assassin_impale:OnProjectileHit_ExtraData(target, location, Ex
 		damage = ability:GetSpecialValueFor("damage")
 	end
 
-	-- Play impact sound    
+	-- Play impact sound
 	EmitSoundOn(sound_impact, target)
 
 	-- Add particle effect
@@ -195,16 +210,16 @@ function imba_nyx_assassin_impale:OnProjectileHit_ExtraData(target, location, Ex
 
 	-- Hurl target in the air
 	local knockbackProperties =
-	{
-		duration = air_time,
-		knockback_duration = air_time,
-		knockback_distance = 0,
-		knockback_height = air_height
-	}
+		{
+			duration = air_time,
+			knockback_duration = air_time,
+			knockback_distance = 0,
+			knockback_height = air_height
+		}
 
 	target:RemoveModifierByName("modifier_knockback")
 	target:AddNewModifier(target, nil, "modifier_knockback", knockbackProperties)
-	 -- We need to do this because the gesture takes it's fucking time to stop
+	-- We need to do this because the gesture takes it's fucking time to stop
 	Timers:CreateTimer(0.5, function()
 		target:RemoveGesture(ACT_DOTA_FLAIL)
 	end)
@@ -216,48 +231,48 @@ function imba_nyx_assassin_impale:OnProjectileHit_ExtraData(target, location, Ex
 	-- Wait for it to land
 	Timers:CreateTimer(air_time, function()
 
-		-- Play land sound
-		EmitSoundOn(sound_land, target)
+			-- Play land sound
+			EmitSoundOn(sound_land, target)
 
-		-- Get the target's Suffering modifier
-		local total_dmg = 0
-		local modifier_suffering_handler = target:FindAllModifiersByName("modifier_imba_impale_suffering_damage_counter")
-		local suffering_damage = 0
+			-- Get the target's Suffering modifier
+			local total_dmg = 0
+			local modifier_suffering_handler = target:FindAllModifiersByName("modifier_imba_impale_suffering_damage_counter")
+			local suffering_damage = 0
 
-		if main_spike == 1 and modifier_suffering_handler then
+			if main_spike == 1 and modifier_suffering_handler then
 
-			-- Calculate Suffering damage
-			for _,damage in pairs(modifier_suffering_handler) do
-				suffering_damage = suffering_damage + damage:GetStackCount()
+				-- Calculate Suffering damage
+				for _,damage in pairs(modifier_suffering_handler) do
+					suffering_damage = suffering_damage + damage:GetStackCount()
+				end
+
+				suffering_damage = suffering_damage * damage_repeat_pct * 0.01
+
+				-- Deal Suffering damage
+				local damageTable = {victim = target,
+					attacker = caster,
+					damage = suffering_damage,
+					damage_type = DAMAGE_TYPE_MAGICAL,
+					damgae_flags = DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION,
+					ability = ability,
+				}
+
+				local dmg1 = ApplyDamage(damageTable)
+				total_dmg = total_dmg + dmg1
 			end
 
-			suffering_damage = suffering_damage * damage_repeat_pct * 0.01
+			-- Deal base damage
+			damageTable = {victim = target,
+				attacker = caster,
+				damage = damage,
+				damage_type = DAMAGE_TYPE_MAGICAL,
+				ability = ability
+			}
 
-			-- Deal Suffering damage
-			local damageTable = {victim = target,
-								 attacker = caster, 
-								 damage = suffering_damage,
-								 damage_type = DAMAGE_TYPE_MAGICAL,
-								 damgae_flags = DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION,
-								 ability = ability,
-								}
-		
-			local dmg1 = ApplyDamage(damageTable)
-			total_dmg = total_dmg + dmg1
-		end
-
-		-- Deal base damage        
-		damageTable = {victim = target,
-					  attacker = caster, 
-					  damage = damage,
-					  damage_type = DAMAGE_TYPE_MAGICAL,
-					  ability = ability
-					  }
-	
-		local dmg2 = ApplyDamage(damageTable) 
-		total_dmg = total_dmg + dmg2
-		-- Create alert
-		SendOverheadEventMessage(nil, OVERHEAD_ALERT_DAMAGE, target, total_dmg, nil)
+			local dmg2 = ApplyDamage(damageTable)
+			total_dmg = total_dmg + dmg2
+			-- Create alert
+			SendOverheadEventMessage(nil, OVERHEAD_ALERT_DAMAGE, target, total_dmg, nil)
 	end)
 end
 
@@ -307,7 +322,7 @@ function modifier_imba_impale_suffering:OnCreated()
 		-- Ability properties
 		self.caster = self:GetCaster()
 		self.ability = self:GetAbility()
-		self.parent = self:GetParent()        
+		self.parent = self:GetParent()
 
 		-- Ability specials
 		self.damage_duration = self.ability:GetSpecialValueFor("damage_duration")
@@ -375,9 +390,9 @@ end
 
 function modifier_imba_impale_stun:DeclareFunctions()
 	local funcs =   {
-	MODIFIER_PROPERTY_OVERRIDE_ANIMATION
-}
-	return funcs 
+		MODIFIER_PROPERTY_OVERRIDE_ANIMATION
+	}
+	return funcs
 end
 
 function modifier_imba_impale_stun:GetOverrideAnimation()
@@ -420,7 +435,7 @@ end
 
 function modifier_imba_impale_talent_slow:DeclareFunctions()
 	local decFuncs = {MODIFIER_EVENT_ON_UNIT_MOVED,
-					  MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE}
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE}
 
 	return decFuncs
 end
@@ -478,7 +493,7 @@ function modifier_imba_impale_talent_thinker:OnCreated( kv )
 end
 
 function modifier_imba_impale_talent_thinker:OnIntervalThink()
-	if RollPercentage(self.spike_chance)  then 
+	if RollPercentage(self.spike_chance)  then
 		-- Shameless copy-paste of Freezing Field code
 		local castDistance = RandomInt( self.spike_spawn_min_range, self.spike_spawn_max_range )
 		local angle = RandomInt( 0, 90 )
@@ -521,7 +536,7 @@ function modifier_imba_impale_talent_thinker:OnIntervalThink()
 			ExtraData = { main_spike = false }
 		}
 
-		-- Launch projectile                        
+		-- Launch projectile
 		ProjectileManager:CreateLinearProjectile(spikes_projectile)
 	end
 end
@@ -535,7 +550,7 @@ LinkLuaModifier("modifier_imba_mana_burn_parasite_charged", "hero/hero_nyx_assas
 LinkLuaModifier("modifier_imba_mana_burn_talent_parasite", "hero/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
 
 function imba_nyx_assassin_mana_burn:GetAbilityTextureName()
-   return "nyx_assassin_mana_burn"
+	return "nyx_assassin_mana_burn"
 end
 
 function imba_nyx_assassin_mana_burn:IsHiddenWhenStolen()
@@ -550,7 +565,7 @@ function imba_nyx_assassin_mana_burn:GetCastRange(location, target)
 	local base_cast_range = self.BaseClass.GetCastRange(self, location, target)
 
 	-- Ability specials
-	local burrowed_cast_range_increase = ability:GetSpecialValueFor("burrowed_cast_range_increase")        
+	local burrowed_cast_range_increase = ability:GetSpecialValueFor("burrowed_cast_range_increase")
 
 	if caster:HasModifier(modifier_burrowed) then
 		return base_cast_range + burrowed_cast_range_increase
@@ -569,8 +584,8 @@ function imba_nyx_assassin_mana_burn:OnSpellStart(target)
 	local modifier_parasite = "modifier_imba_mana_burn_parasite"
 
 	-- Ability specials
-	local intelligence_mult = ability:GetSpecialValueFor("intelligence_mult")    
-	local mana_burn_damage_pct = ability:GetSpecialValueFor("mana_burn_damage_pct")    
+	local intelligence_mult = ability:GetSpecialValueFor("intelligence_mult")
+	local mana_burn_damage_pct = ability:GetSpecialValueFor("mana_burn_damage_pct")
 	local parasite_duration = ability:GetSpecialValueFor("parasite_duration")
 
 	-- Play cast sound
@@ -581,7 +596,7 @@ function imba_nyx_assassin_mana_burn:OnSpellStart(target)
 		if target:TriggerSpellAbsorb(ability) then
 			return nil
 		end
-	end     
+	end
 
 	-- Add particle effect
 	local particle_manaburn_fx = ParticleManager:CreateParticle(particle_manaburn, PATTACH_CUSTOMORIGIN, target)
@@ -624,13 +639,13 @@ function imba_nyx_assassin_mana_burn:OnSpellStart(target)
 
 	-- Apply damage
 	damageTable =     {victim = target,
-					  attacker = caster, 
-					  damage = damage,
-					  damage_type = DAMAGE_TYPE_MAGICAL,
-					  ability = ability
-					  }
-	
-	ApplyDamage(damageTable)     
+		attacker = caster,
+		damage = damage,
+		damage_type = DAMAGE_TYPE_MAGICAL,
+		ability = ability
+	}
+
+	ApplyDamage(damageTable)
 end
 
 -- Mind Bug parasite leech modifier
@@ -654,7 +669,7 @@ function modifier_imba_mana_burn_parasite:OnCreated()
 		-- Ability specials
 		self.parasite_mana_leech = self.ability:GetSpecialValueFor("parasite_mana_leech")
 		self.parasite_charge_threshold_pct = self.ability:GetSpecialValueFor("parasite_charge_threshold_pct")
-		self.explosion_delay = self.ability:GetSpecialValueFor("explosion_delay")    
+		self.explosion_delay = self.ability:GetSpecialValueFor("explosion_delay")
 		self.leech_interval = self.ability:GetSpecialValueFor("leech_interval")
 
 		-- Adjust leech per second
@@ -670,10 +685,10 @@ function modifier_imba_mana_burn_parasite:OnCreated()
 		-- Get target's current mana, set the threshold
 		self.starting_target_mana = self.parent:GetMana()
 		self.charge_threshold = self.starting_target_mana * self.parasite_charge_threshold_pct * 0.01
-		self.last_known_target_mana = self.starting_target_mana        
+		self.last_known_target_mana = self.starting_target_mana
 
 		-- Start charging/count mana
-		self.parasite_charged_mana = 0        
+		self.parasite_charged_mana = 0
 
 		-- Add mana disruption particle
 		self.particle_flames_fx = ParticleManager:CreateParticle(self.particle_flames, PATTACH_CUSTOMORIGIN_FOLLOW, self.parent)
@@ -689,8 +704,8 @@ function modifier_imba_mana_burn_parasite:OnIntervalThink()
 	if IsServer() then
 		-- Leech mana per interval
 		local target_current_mana = self.parent:GetMana()
-		local mana_leeched = 0 
-		local mana_lost = 0                
+		local mana_leeched = 0
+		local mana_lost = 0
 
 		-- Check if there is enough mana to leech
 		if target_current_mana >= self.parasite_mana_leech then
@@ -708,16 +723,16 @@ function modifier_imba_mana_burn_parasite:OnIntervalThink()
 		end
 
 		-- Update the charge meter
-		self.parasite_charged_mana = self.parasite_charged_mana + mana_leeched + math.max(mana_lost, 0)        
+		self.parasite_charged_mana = self.parasite_charged_mana + mana_leeched + math.max(mana_lost, 0)
 
 		-- Update last known target mana
-		self.last_known_target_mana = target_current_mana                
+		self.last_known_target_mana = target_current_mana
 
 		-- Check if the threshold has been reached
 		if self.parasite_charged_mana >= self.charge_threshold then
 
 			-- Give the target the charged parasite modifier and the appropriate variables
-			local modifier_charged_handler = self.parent:AddNewModifier(self.caster, self.ability, self.modifier_charged, {duration = self.explosion_delay})            
+			local modifier_charged_handler = self.parent:AddNewModifier(self.caster, self.ability, self.modifier_charged, {duration = self.explosion_delay})
 			if modifier_charged_handler then
 				modifier_charged_handler.starting_target_mana = self.starting_target_mana
 			end
@@ -744,7 +759,7 @@ end
 function modifier_imba_mana_burn_parasite:IsHidden() return false end
 function modifier_imba_mana_burn_parasite:IsPurgable() return true end
 function modifier_imba_mana_burn_parasite:IsDebuff() return true end
- 
+
 
 -- Mind Bug parasite charge (active) modifier
 modifier_imba_mana_burn_parasite_charged = class({})
@@ -787,7 +802,7 @@ function modifier_imba_mana_burn_parasite_charged:OnCreated()
 		ParticleManager:SetParticleControlEnt(self.particle_charged_fx, 1, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)
 		ParticleManager:SetParticleControl(self.particle_charged_fx, 2, self.parent:GetAbsOrigin())
 		self:AddParticle(self.particle_charged_fx, false, false, -1, false, false)
-	end    
+	end
 end
 
 function modifier_imba_mana_burn_parasite_charged:OnDestroy()
@@ -797,7 +812,7 @@ function modifier_imba_mana_burn_parasite_charged:OnDestroy()
 		end
 
 		-- Get target's current mana
-		local target_current_mana = self.parent:GetMana()        
+		local target_current_mana = self.parent:GetMana()
 
 		-- Play explosion sound
 		EmitSoundOn(self.sound_explosion, self.parent)
@@ -817,13 +832,13 @@ function modifier_imba_mana_burn_parasite_charged:OnDestroy()
 		local damage = (self.starting_target_mana - target_current_mana) * self.parasite_mana_as_damage_pct * 0.01
 
 		damageTable = {victim = self.parent,
-					  attacker = self.caster, 
-					  damage = damage,
-					  damage_type = DAMAGE_TYPE_MAGICAL,
-					  ability = self.ability
-					  }
-	
-		ApplyDamage(damageTable) 
+			attacker = self.caster,
+			damage = damage,
+			damage_type = DAMAGE_TYPE_MAGICAL,
+			ability = self.ability
+		}
+
+		ApplyDamage(damageTable)
 	end
 end
 
@@ -881,14 +896,14 @@ end
 
 function modifier_imba_mana_burn_talent_parasite:OnIntervalThink()
 	local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(),
-			self.caster:GetAbsOrigin(),
-			nil,
-			self.search_radius,
-			DOTA_UNIT_TARGET_TEAM_ENEMY,
-			DOTA_UNIT_TARGET_HERO,
-			DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE,
-			FIND_ANY_ORDER,
-			false)
+		self.caster:GetAbsOrigin(),
+		nil,
+		self.search_radius,
+		DOTA_UNIT_TARGET_TEAM_ENEMY,
+		DOTA_UNIT_TARGET_HERO,
+		DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE,
+		FIND_ANY_ORDER,
+		false)
 
 	if #enemies > 0 and self.mana_burn_ability then
 		-- I assume it's randomized so it doesn't matter if we pick the first?
@@ -909,7 +924,7 @@ LinkLuaModifier("modifier_imba_spiked_carapace", "hero/hero_nyx_assassin", LUA_M
 LinkLuaModifier("modifier_imba_spiked_carapace_stun", "hero/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
 
 function imba_nyx_assassin_spiked_carapace:GetAbilityTextureName()
-   return "nyx_assassin_spiked_carapace"
+	return "nyx_assassin_spiked_carapace"
 end
 
 function imba_nyx_assassin_spiked_carapace:IsHiddenWhenStolen()
@@ -977,14 +992,14 @@ function modifier_imba_spiked_carapace:OnCreated()
 		-- If caster is burrowed, stun all nearby enemies and grant stacks per enemy
 		if self.caster:HasModifier(self.modifier_burrowed) then
 			local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(),
-			self.caster:GetAbsOrigin(),
-			nil,
-			self.burrowed_stun_range,
-			DOTA_UNIT_TARGET_TEAM_ENEMY,
-			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-			DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS,
-			FIND_ANY_ORDER,
-			false)
+				self.caster:GetAbsOrigin(),
+				nil,
+				self.burrowed_stun_range,
+				DOTA_UNIT_TARGET_TEAM_ENEMY,
+				DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+				DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS,
+				FIND_ANY_ORDER,
+				false)
 
 			for _,enemy in pairs(enemies) do
 				-- Stun each enemy
@@ -1210,7 +1225,7 @@ end
 modifier_imba_vendetta = class({})
 
 function modifier_imba_vendetta:OnCreated()
-	-- Ability properties    
+	-- Ability properties
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
 	self.sound_attack = "Hero_NyxAssassin.Vendetta.Crit"
@@ -1373,7 +1388,7 @@ function modifier_imba_vendetta_charge:IsDebuff() return false end
 
 function modifier_imba_vendetta_charge:OnStackCountChanged()
 	if IsServer() then
-		-- Limit stack count                
+		-- Limit stack count
 		local stacks = self:GetStackCount()
 
 		if stacks > self.maximum_vendetta_stacks then
@@ -1423,7 +1438,7 @@ function modifier_special_bonus_imba_nyx_assassin_5:DeclareFunctions()
 	local funcs = {
 		MODIFIER_EVENT_ON_TAKEDAMAGE
 	}
- 
+
 	return funcs
 end
 
