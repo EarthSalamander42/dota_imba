@@ -100,7 +100,9 @@ function Imbattlepass:Init()
 	if ImbaApiPlayersLoaded() then return end
 
 	for ID = 0, PlayerResource:GetPlayerCount() -1 do
-		ImbattlepassReward[ID] = CustomNetTables:GetTableValue("player_table", tostring(ID)).Lvl
+		if CustomNetTables:GetTableValue("player_table", tostring(ID)) ~= nil then
+			ImbattlepassReward[ID] = CustomNetTables:GetTableValue("player_table", tostring(ID)).Lvl
+		end
 	end
 end
 
@@ -122,9 +124,9 @@ function Imbattlepass:GetRewardUnlocked(ID)
 end
 
 function GetBlinkEffect(hero)
-local effect = "particles/items_fx/blink_dagger_start.vpcf"
-local effect2 = "particles/items_fx/blink_dagger_end.vpcf"
-local icon = 0
+	local effect = "particles/items_fx/blink_dagger_start.vpcf"
+	local effect2 = "particles/items_fx/blink_dagger_end.vpcf"
+	local icon = 0
 
 	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BLINK["blink10"] then
 		effect = "particles/econ/events/ti4/blink_dagger_start_ti4.vpcf"
@@ -174,11 +176,11 @@ local icon = 0
 end
 
 function GetForceStaffEffect(hero) -- still not working yet
-local effect = "particles/items_fx/force_staff.vpcf"
-local icon = 0
+	local effect = "particles/items_fx/force_staff.vpcf"
+	local icon = 0
 
 	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FORCE_STAFF["force_staff4"] then
-		
+
 		effect = "particles/econ/events/ti6/force_staff_ti6.vpcf"
 		icon = 4
 	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FORCE_STAFF["force_staff3"] then
@@ -197,8 +199,8 @@ local icon = 0
 end
 
 function GetRadianceEffect(hero)
-local effect = "particles/item/radiance/radiance_owner.vpcf"
-local icon = 0
+	local effect = "particles/item/radiance/radiance_owner.vpcf"
+	local icon = 0
 
 	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_RADIANCE["radiance2"] then
 		effect = "particles/econ/events/ti6/radiance_owner_ti6.vpcf"
@@ -213,9 +215,9 @@ local icon = 0
 end
 
 function GetSheepstickEffect(hero)
-local effect = "particles/items_fx/item_sheepstick.vpcf"
-local model = "models/props_gameplay/pig.vmdl"
-local icon = 0
+	local effect = "particles/items_fx/item_sheepstick.vpcf"
+	local model = "models/props_gameplay/pig.vmdl"
+	local icon = 0
 
 	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_SHEEPSTICK["sheepstick2"] then
 		effect = "particles/econ/items/shadow_shaman/shadow_shaman_sheepstick/shadowshaman_voodoo_sheepstick.vpcf"
@@ -233,9 +235,9 @@ local icon = 0
 end
 
 function GetShivaEffect(hero)
-local effect = "particles/items2_fx/shivas_guard_active.vpcf"
-local effect2 = "particles/items2_fx/shivas_guard_impact.vpcf"
-local icon = 0
+	local effect = "particles/items2_fx/shivas_guard_active.vpcf"
+	local effect2 = "particles/items2_fx/shivas_guard_impact.vpcf"
+	local icon = 0
 
 	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_SHIVA["shiva2"] then
 		effect = "particles/econ/events/newbloom_2015/shivas_guard_active_nian2015.vpcf"
@@ -253,9 +255,9 @@ local icon = 0
 end
 
 function GetMekansmEffect(hero)
-local effect = "particles/items2_fx/mekanism.vpcf"
-local effect2 = "particles/items2_fx/mekanism_recipient.vpcf"
-local icon = 0
+	local effect = "particles/items2_fx/mekanism.vpcf"
+	local effect2 = "particles/items2_fx/mekanism_recipient.vpcf"
+	local icon = 0
 
 	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_MEKANSM["mekansm2"] then
 		effect = "particles/econ/events/ti6/mekanism_ti6.vpcf"
@@ -273,7 +275,7 @@ local icon = 0
 end
 
 function GetFountainEffect(hero)
-local effect = ""
+	local effect = ""
 
 	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FOUNTAIN["fountain15"] then
 		effect = "particles/econ/events/ti4/radiant_fountain_regen_ti4.vpcf"
@@ -311,7 +313,7 @@ local effect = ""
 end
 
 function GetBottleEffect(hero)
-local effect = "particles/items_fx/bottle.vpcf"
+	local effect = "particles/items_fx/bottle.vpcf"
 
 	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BOTTLE["bottle4"] then
 		effect = "particles/econ/events/ti4/bottle_ti4.vpcf"

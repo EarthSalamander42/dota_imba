@@ -1,4 +1,4 @@
--- 
+--
 -- IMBA API
 --
 
@@ -66,7 +66,7 @@ function ImbaApi:perform(robj, endpoint, callback)
 		}
 
 		method = "POST"
-	
+
 		-- encode with json
 		payload = json.encode(baseRequest)
 	end
@@ -76,7 +76,7 @@ function ImbaApi:perform(robj, endpoint, callback)
 	if (method == "POST") then
 		self:debug("Payload " .. payload)
 	end
-	
+
 	-- create request
 	rqH = CreateHTTPRequestScriptVM(method, self.config.endpoint .. endpoint)
 	rqH:SetHTTPRequestAbsoluteTimeoutMS(self.config.timeout)
@@ -91,25 +91,25 @@ function ImbaApi:perform(robj, endpoint, callback)
 	-- send request
 	rqH:Send(function (result)
 
-		-- decode response (we should always get json)
-		-- 500 indi
-		if result.StatusCode == 503 then
-			self:print("Server not available!")
-			callback(true, nil)
-		elseif result.StatusCode ~= 200 then
-			self:print("Request failed with Invalid status: " .. result.StatusCode)
-			callback(true, nil)
-		else 
-			rp = json.decode(result.Body)
-			if rp.error then
-				self:print("Request failed with custom error: " .. rp.message)
-				callback(true, rp)
+			-- decode response (we should always get json)
+			-- 500 indi
+			if result.StatusCode == 503 then
+				self:print("Server not available!")
+				callback(true, nil)
+			elseif result.StatusCode ~= 200 then
+				self:print("Request failed with Invalid status: " .. result.StatusCode)
+				callback(true, nil)
 			else
-				self:debug("Request succesful")
-				self:debug("Payload: " .. result.Body)
-				callback(false, rp)
+				rp = json.decode(result.Body)
+				if rp.error then
+					self:print("Request failed with custom error: " .. rp.message)
+					callback(true, rp)
+				else
+					self:debug("Request succesful")
+					self:debug("Payload: " .. result.Body)
+					callback(false, rp)
+				end
 			end
-		end
 	end)
 end
 

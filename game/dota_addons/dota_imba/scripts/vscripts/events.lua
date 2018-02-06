@@ -1153,15 +1153,15 @@ function GameMode:OnEntityKilled( keys )
 						killed_unit:AddExperience( 50, 0, false, false )
 					end
 
-					local broadcast_team_points = 
-					{
-						radiant = GetTeamHeroKills(2),
-						dire = GetTeamHeroKills(3),
-						custom_1 = GetTeamHeroKills(6),
-						custom_2 = GetTeamHeroKills(7),
-						custom_3 = GetTeamHeroKills(8),
-					}
-					
+					local broadcast_team_points =
+						{
+							radiant = GetTeamHeroKills(2),
+							dire = GetTeamHeroKills(3),
+							custom_1 = GetTeamHeroKills(6),
+							custom_2 = GetTeamHeroKills(7),
+							custom_3 = GetTeamHeroKills(8),
+						}
+
 					CustomGameEventManager:Send_ServerToAllClients( "team_points", broadcast_team_points )
 				end
 				--Granting XP to all heroes who assisted

@@ -260,15 +260,15 @@ ApiEventCodes = {
 	PlayerDisconnected = 8,		-- (steamid)
 	ItemPurchased = 9,			-- (item_name, hero_name, steamid)
 	AbilityLearned = 10,		-- (ability_name, hero_name, steamid)
---	HeroKilled = 11,			-- (killer_unit, killer_steamid, dead_unit, dead_steamid)
---	HeroRespawned = 12,			-- (hero_name, steamid)
+	--	HeroKilled = 11,			-- (killer_unit, killer_steamid, dead_unit, dead_steamid)
+	--	HeroRespawned = 12,			-- (hero_name, steamid)
 	HeroLevelUp = 13,			-- (hero_name, level, steamid)
---	BuildingKilled = 14,		-- (killed_unit, killed_team, unit_name, steamid)
---	CourierKilled = 15,			-- (courier_team, killer_unit, steamid)
---	RoshanKilled = 16,			-- (killer_unit, steamid)
+	--	BuildingKilled = 14,		-- (killed_unit, killed_team, unit_name, steamid)
+	--	CourierKilled = 15,			-- (courier_team, killer_unit, steamid)
+	--	RoshanKilled = 16,			-- (killer_unit, steamid)
 	UnitKilled = 17,			-- (killer_unit, killer_steamid, dead_unit, dead_steamid)
 	AbilityUsed = 18,			-- (hero_name, ability, steamid)
---	ItemUsed = 19,				-- (hero_name, steamid, item)
+	--	ItemUsed = 19,				-- (hero_name, steamid, item)
 	Timing = 20,				-- ()
 	UnitSpawned = 21			-- (unit_name, steamid)
 }
@@ -314,7 +314,7 @@ function ImbaApiFrontendEventsCycle()
 	-- copy and empty queue
 	local copy = ImbaApiFrontendEventQueue
 	ImbaApiFrontendEventQueue = {}
-	
+
 	ImbaApiFrontendDebug(tostring(table.getn(copy)) .. " events")
 
 	ImbaApiInstance:GameEvents({

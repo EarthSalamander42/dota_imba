@@ -30,7 +30,7 @@ require('imba')
 require('hero_selection')
 
 function Precache(context)
-DebugPrint("[IMBA] Performing pre-load precache")
+	DebugPrint("[IMBA] Performing pre-load precache")
 
 	-- Lua modifiers activation
 	LinkLuaModifier("modifier_imba_speed_limit_break", "modifier/modifier_imba_speed_limit_break.lua", LUA_MODIFIER_MOTION_NONE )
@@ -39,9 +39,9 @@ DebugPrint("[IMBA] Performing pre-load precache")
 	LinkLuaModifier("modifier_imba_haste_rune_speed_limit_break", "modifier/modifier_imba_haste_rune_speed_limit_break.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_imba_haste_boots_speed_break", "modifier/modifier_imba_haste_boots_speed_break.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_imba_chronosphere_ally_slow", "modifier/modifier_imba_chronosphere_ally_slow.lua", LUA_MODIFIER_MOTION_NONE )
-	LinkLuaModifier("modifier_imba_range_indicator", "modifier/modifier_imba_range_indicator.lua", LUA_MODIFIER_MOTION_NONE )	
-	LinkLuaModifier("modifier_command_restricted", "modifier/modifier_command_restricted.lua", LUA_MODIFIER_MOTION_NONE )	
-	LinkLuaModifier("modifier_companion", "modifier/modifier_companion.lua", LUA_MODIFIER_MOTION_NONE )	
+	LinkLuaModifier("modifier_imba_range_indicator", "modifier/modifier_imba_range_indicator.lua", LUA_MODIFIER_MOTION_NONE )
+	LinkLuaModifier("modifier_command_restricted", "modifier/modifier_command_restricted.lua", LUA_MODIFIER_MOTION_NONE )
+	LinkLuaModifier("modifier_companion", "modifier/modifier_companion.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_river", "modifier/modifier_river.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_courier_hack", "modifier/modifier_courier_hack.lua", LUA_MODIFIER_MOTION_NONE )
 
@@ -69,7 +69,7 @@ DebugPrint("[IMBA] Performing pre-load precache")
 	LinkLuaModifier("modifier_item_imba_aegis", "items/item_aegis.lua", LUA_MODIFIER_MOTION_NONE)
 
 	-- Custom Mechanics modifier
-	LinkLuaModifier("modifier_custom_mechanics", "modifier/modifier_custom_mechanics.lua", LUA_MODIFIER_MOTION_NONE )	
+	LinkLuaModifier("modifier_custom_mechanics", "modifier/modifier_custom_mechanics.lua", LUA_MODIFIER_MOTION_NONE )
 
 	-- War Veteran modifier
 	LinkLuaModifier("modifier_imba_war_veteran_0", "modifier/modifier_imba_war_veteran.lua", LUA_MODIFIER_MOTION_NONE )
@@ -89,7 +89,7 @@ DebugPrint("[IMBA] Performing pre-load precache")
 
 	if GetMapName() == "imba_overthrow" then
 		PrecacheItemByNameSync( "item_bag_of_gold", context )
-		PrecacheResource( "particle", "particles/items2_fx/veil_of_discord.vpcf", context )	
+		PrecacheResource( "particle", "particles/items2_fx/veil_of_discord.vpcf", context )
 
 		PrecacheItemByNameSync( "item_treasure_chest", context )
 		PrecacheModel( "item_treasure_chest", context )
@@ -118,7 +118,7 @@ DebugPrint("[IMBA] Performing pre-load precache")
 		PrecacheResource( "particle", "particles/econ/wards/f2p/f2p_ward/f2p_ward_true_sight_ambient.vpcf", context )
 		PrecacheResource( "particle", "particles/econ/items/lone_druid/lone_druid_cauldron/lone_druid_bear_entangle_dust_cauldron.vpcf", context )
 		PrecacheResource( "particle", "particles/newplayer_fx/npx_landslide_debris.vpcf", context )
-		
+
 		--Cache particles for traps
 		PrecacheResource( "particle_folder", "particles/units/heroes/hero_dragon_knight", context )
 		PrecacheResource( "particle_folder", "particles/units/heroes/hero_venomancer", context )
@@ -129,7 +129,7 @@ DebugPrint("[IMBA] Performing pre-load precache")
 		PrecacheResource( "soundfile", "soundevents/game_sounds_heroes/game_sounds_dragon_knight.vsndevts", context )
 		PrecacheResource( "soundfile", "soundevents/soundevents_conquest.vsndevts", context )
 	end
---[[
+	--[[
 	PrecacheResource("particle", "particles/econ/items/effigies/status_fx_effigies/gold_effigy_ambient_dire_lvl2.vpcf", context)
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_mirana.vsndevts", context)
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_ember_spirit.vsndevts", context)
