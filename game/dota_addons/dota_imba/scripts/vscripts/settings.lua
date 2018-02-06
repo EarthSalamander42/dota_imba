@@ -326,7 +326,7 @@ MAX_LEVEL["imba_overthrow"] = {50, 50}
 HERO_INITIAL_GOLD = {}
 HERO_INITIAL_GOLD["imba_standard"] = {1200, 1200}
 HERO_INITIAL_GOLD["imba_10v10"] = {1200, 1200}
-HERO_INITIAL_GOLD["imba_frantic_10v10"] = {2000, 5000}
+HERO_INITIAL_GOLD["imba_frantic_10v10"] = {2500, 5000}
 HERO_INITIAL_GOLD["imba_overthrow"] = {1200, 1200}
 
 GOLD_TICK_TIME = {}
