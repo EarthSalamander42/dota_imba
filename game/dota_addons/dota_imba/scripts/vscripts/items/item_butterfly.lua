@@ -1,20 +1,3 @@
--- Copyright (C) 2018  The Dota IMBA Development Team
---
--- Licensed under the Apache License, Version 2.0 (the "License");
--- you may not use this file except in compliance with the License.
--- You may obtain a copy of the License at
---
--- http://www.apache.org/licenses/LICENSE-2.0
---
--- Unless required by applicable law or agreed to in writing, software
--- distributed under the License is distributed on an "AS IS" BASIS,
--- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
--- See the License for the specific language governing permissions and
--- limitations under the License.
---
--- Editors:
---
-
 -- Author: Shush
 -- Date: 13/05/2017
 
@@ -31,13 +14,13 @@ function item_imba_butterfly:GetIntrinsicModifierName()
 end
 
 function item_imba_butterfly:GetAbilityTextureName()
-	return "custom/imba_butterfly"
+   return "custom/imba_butterfly"
 end
 
 function item_imba_butterfly:OnSpellStart()
 	-- Ability properties
 	local caster = self:GetCaster()
-	local ability = self
+	local ability = self	
 	local sound_cast = "DOTA_Item.Butterfly"
 	local modifier_flutter = "modifier_item_imba_butterfly_flutter"
 
@@ -72,21 +55,21 @@ function modifier_item_imba_butterfly:OnCreated()
 	self.bonus_damage = self.ability:GetSpecialValueFor("bonus_damage")
 	self.bonus_evasion = self.ability:GetSpecialValueFor("bonus_evasion")
 	self.wind_song_evasion = self.ability:GetSpecialValueFor("wind_song_evasion")
-	self.bonus_attack_speed = self.ability:GetSpecialValueFor("bonus_attack_speed")
+	self.bonus_attack_speed = self.ability:GetSpecialValueFor("bonus_attack_speed")	
 
 	if IsServer() then
 		-- Add unique modifier if caster doesn't already has it
 		if not self.caster:HasModifier(self.modifier_unique) then
-			self.caster:AddNewModifier(self.caster, self.ability, self.modifier_unique, {})
+			self.caster:AddNewModifier(self.caster, self.ability, self.modifier_unique, {})		
 		end
 	end
 end
 
 function modifier_item_imba_butterfly:DeclareFunctions()
 	local decFuncs = {MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
-		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
-		MODIFIER_PROPERTY_EVASION_CONSTANT,
-		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT}
+				      MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
+				      MODIFIER_PROPERTY_EVASION_CONSTANT,
+				      MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT}
 
 	return decFuncs
 end
@@ -140,7 +123,7 @@ function modifier_item_imba_butterfly_unique:OnCreated()
 	self.modifier_active_song = "modifier_item_imba_butterfly_wind_song_active"
 
 	-- Ability specials
-	self.wind_song_stack_duration = self.ability:GetSpecialValueFor("wind_song_stack_duration")
+	self.wind_song_stack_duration = self.ability:GetSpecialValueFor("wind_song_stack_duration")	
 end
 
 function modifier_item_imba_butterfly_unique:IsHidden() return true end
@@ -163,19 +146,19 @@ function modifier_item_imba_butterfly_unique:OnAttackFail(keys)
 		-- Cannot generate stacks when Wind Song is active
 		if self.caster:HasModifier(self.modifier_active_song) then
 			return nil
-	end
+		end
 
-	-- If the caster don't have the stack modifier, give it to him
-	if not self.caster:HasModifier(self.modifier_stacks) then
-		self.caster:AddNewModifier(self.caster, self.ability, self.modifier_stacks, {duration = self.wind_song_stack_duration})
-	end
+		-- If the caster don't have the stack modifier, give it to him
+		if not self.caster:HasModifier(self.modifier_stacks) then
+			self.caster:AddNewModifier(self.caster, self.ability, self.modifier_stacks, {duration = self.wind_song_stack_duration})
+		end
 
-	-- Either way, grant a stack and refresh the duration
-	local modifier_active_song_handler = self.caster:FindModifierByName(self.modifier_stacks)
-	if modifier_active_song_handler then
-		modifier_active_song_handler:IncrementStackCount()
-		modifier_active_song_handler:ForceRefresh()
-	end
+		-- Either way, grant a stack and refresh the duration
+		local modifier_active_song_handler = self.caster:FindModifierByName(self.modifier_stacks)
+		if modifier_active_song_handler then
+			modifier_active_song_handler:IncrementStackCount()
+			modifier_active_song_handler:ForceRefresh()
+		end
 	end
 end
 
@@ -264,7 +247,7 @@ function modifier_item_imba_butterfly_wind_song_active:OnCreated()
 
 	-- Ability specials
 	self.wind_song_bonus_ms_pct = self.ability:GetSpecialValueFor("wind_song_bonus_ms_pct")
-	self.wind_song_bonus_as = self.ability:GetSpecialValueFor("wind_song_bonus_as")
+	self.wind_song_bonus_as = self.ability:GetSpecialValueFor("wind_song_bonus_as")		
 	self.wind_song_slow_radius = self.ability:GetSpecialValueFor("wind_song_slow_radius")
 
 	if IsServer() then
@@ -286,7 +269,7 @@ function modifier_item_imba_butterfly_wind_song_active:IsDebuff() return false e
 
 function modifier_item_imba_butterfly_wind_song_active:DeclareFunctions()
 	local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT}
+  				      MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT}
 
 	return decFuncs
 end
@@ -303,14 +286,14 @@ function modifier_item_imba_butterfly_wind_song_active:OnIntervalThink()
 	if IsServer() then
 		-- Find nearby enemies not affected with the debuff and slow them for the remaining time
 		local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(),
-			self.caster:GetAbsOrigin(),
-			nil,
-			self.wind_song_slow_radius,
-			DOTA_UNIT_TARGET_TEAM_ENEMY,
-			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-			DOTA_UNIT_TARGET_FLAG_NONE,
-			FIND_ANY_ORDER,
-			false)
+										  self.caster:GetAbsOrigin(),
+										  nil,
+										  self.wind_song_slow_radius,
+										  DOTA_UNIT_TARGET_TEAM_ENEMY,
+										  DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+										  DOTA_UNIT_TARGET_FLAG_NONE,
+										  FIND_ANY_ORDER,
+										  false)
 
 		for _,enemy in pairs(enemies) do
 			if not enemy:HasModifier(self.modifier_slow) then
@@ -332,7 +315,7 @@ function modifier_item_imba_butterfly_wind_song_slow:OnCreated()
 	self.particle_slow = "particles/units/heroes/hero_windrunner/windrunner_windrun_slow.vpcf"
 
 	-- Ability specials
-	self.wind_song_ms_slow_pct = self.ability:GetSpecialValueFor("wind_song_ms_slow_pct")
+	self.wind_song_ms_slow_pct = self.ability:GetSpecialValueFor("wind_song_ms_slow_pct")	
 
 	-- Add slow particle
 	local particle_slow_fx = ParticleManager:CreateParticle(self.particle_slow, PATTACH_ABSORIGIN_FOLLOW, self.parent)

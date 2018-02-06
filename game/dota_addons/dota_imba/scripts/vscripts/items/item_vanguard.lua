@@ -1,20 +1,3 @@
--- Copyright (C) 2018  The Dota IMBA Development Team
---
--- Licensed under the Apache License, Version 2.0 (the "License");
--- you may not use this file except in compliance with the License.
--- You may obtain a copy of the License at
---
--- http://www.apache.org/licenses/LICENSE-2.0
---
--- Unless required by applicable law or agreed to in writing, software
--- distributed under the License is distributed on an "AS IS" BASIS,
--- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
--- See the License for the specific language governing permissions and
--- limitations under the License.
---
--- Editors:
---
-
 --	Author: Firetoad
 --	Date: 			11.10.2015
 --	Last Update:	19.03.2017
@@ -27,7 +10,7 @@ if item_imba_stout_shield == nil then item_imba_stout_shield = class({}) end
 LinkLuaModifier( "modifier_item_imba_stout_shield", "items/item_vanguard.lua", LUA_MODIFIER_MOTION_NONE )	-- Owner's bonus attributes, stackable
 
 function item_imba_stout_shield:GetAbilityTextureName()
-	return "custom/imba_stout_shield"
+   return "custom/imba_stout_shield"
 end
 
 function item_imba_stout_shield:GetIntrinsicModifierName()
@@ -56,7 +39,7 @@ if item_imba_poor_mans_shield == nil then item_imba_poor_mans_shield = class({})
 LinkLuaModifier( "modifier_item_imba_poor_mans_shield", "items/item_vanguard.lua", LUA_MODIFIER_MOTION_NONE )	-- Owner's bonus attributes, stackable
 
 function item_imba_poor_mans_shield:GetAbilityTextureName()
-	return "custom/imba_poor_mans_shield"
+   return "custom/imba_poor_mans_shield"
 end
 
 function item_imba_poor_mans_shield:GetIntrinsicModifierName()
@@ -103,7 +86,7 @@ if item_imba_vanguard == nil then item_imba_vanguard = class({}) end
 LinkLuaModifier( "modifier_item_imba_vanguard", "items/item_vanguard.lua", LUA_MODIFIER_MOTION_NONE )			-- Owner's bonus attributes, stackable
 
 function item_imba_vanguard:GetAbilityTextureName()
-	return "custom/imba_vanguard"
+   return "custom/imba_vanguard"
 end
 
 function item_imba_vanguard:GetIntrinsicModifierName()
@@ -155,7 +138,7 @@ LinkLuaModifier( "modifier_item_imba_crimson_guard", "items/item_vanguard.lua", 
 LinkLuaModifier( "modifier_item_imba_crimson_guard_buff", "items/item_vanguard.lua", LUA_MODIFIER_MOTION_NONE )		-- Active allied buff
 
 function item_imba_crimson_guard:GetAbilityTextureName()
-	return "custom/imba_crimson_guard"
+   return "custom/imba_crimson_guard"
 end
 
 function item_imba_crimson_guard:GetIntrinsicModifierName()
@@ -163,7 +146,7 @@ function item_imba_crimson_guard:GetIntrinsicModifierName()
 
 function item_imba_crimson_guard:OnSpellStart(keys)
 	if IsServer() then
-
+		
 		-- Parameters
 		local caster = self:GetCaster()
 		local caster_loc = caster:GetAbsOrigin()
@@ -185,9 +168,9 @@ function item_imba_crimson_guard:OnSpellStart(keys)
 		-- Apply the active buff to nearby allies
 		local nearby_allies = FindUnitsInRadius(caster:GetTeamNumber(), caster_loc, nil, active_radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
 		for _,ally in pairs(nearby_allies) do
-			if not ally:HasModifier("modifier_item_imba_greatwyrm_plate_buff") then
+			if not ally:HasModifier("modifier_item_imba_greatwyrm_plate_buff") then				
 				if not non_relevant_units[ally:GetUnitName()] then
-					ally:AddNewModifier(caster, self, "modifier_item_imba_crimson_guard_buff", {duration = duration})
+					ally:AddNewModifier(caster, self, "modifier_item_imba_crimson_guard_buff", {duration = duration})		
 				end
 			end
 		end
@@ -319,7 +302,7 @@ LinkLuaModifier( "modifier_item_imba_greatwyrm_plate", "items/item_vanguard.lua"
 LinkLuaModifier( "modifier_item_imba_greatwyrm_plate_buff", "items/item_vanguard.lua", LUA_MODIFIER_MOTION_NONE )		-- Active allied buff
 
 function item_imba_greatwyrm_plate:GetAbilityTextureName()
-	return "custom/imba_greatwyrm_plate"
+   return "custom/imba_greatwyrm_plate"
 end
 
 function item_imba_greatwyrm_plate:GetIntrinsicModifierName()
@@ -327,7 +310,7 @@ function item_imba_greatwyrm_plate:GetIntrinsicModifierName()
 
 function item_imba_greatwyrm_plate:OnSpellStart(keys)
 	if IsServer() then
-
+		
 		-- Parameters
 		local caster = self:GetCaster()
 		local caster_loc = caster:GetAbsOrigin()
@@ -351,7 +334,7 @@ function item_imba_greatwyrm_plate:OnSpellStart(keys)
 		for _,ally in pairs(nearby_allies) do
 			if not non_relevant_units[ally:GetUnitName()] then
 				ally:RemoveModifierByName("modifier_item_imba_crimson_guard_buff")
-				ally:AddNewModifier(caster, self, "modifier_item_imba_greatwyrm_plate_buff", {duration = duration})
+				ally:AddNewModifier(caster, self, "modifier_item_imba_greatwyrm_plate_buff", {duration = duration})		
 			end
 		end
 	end
@@ -375,7 +358,7 @@ function modifier_item_imba_greatwyrm_plate:OnCreated()
 	self.health_regen = self.ability:GetSpecialValueFor("health_regen")
 	self.armor = self.ability:GetSpecialValueFor("armor")
 	self.bonus_stats = self.ability:GetSpecialValueFor("bonus_stats")
-	self.bonus_strength = self.ability:GetSpecialValueFor("bonus_strength")
+	self.bonus_strength = self.ability:GetSpecialValueFor("bonus_strength")	
 end
 
 -- Custom unique damage block property

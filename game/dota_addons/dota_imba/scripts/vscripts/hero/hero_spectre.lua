@@ -1,22 +1,4 @@
--- Copyright (C) 2018  The Dota IMBA Development Team
---
--- Licensed under the Apache License, Version 2.0 (the "License");
--- you may not use this file except in compliance with the License.
--- You may obtain a copy of the License at
---
--- http://www.apache.org/licenses/LICENSE-2.0
---
--- Unless required by applicable law or agreed to in writing, software
--- distributed under the License is distributed on an "AS IS" BASIS,
--- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
--- See the License for the specific language governing permissions and
--- limitations under the License.
---
--- Editors:
---     suthernfriend, 03.02.2018
-
 imba_spectre_haunt = imba_spectre_haunt or class({})
-
 LinkLuaModifier("modifier_imba_spectre_haunt_illusion", "hero/hero_spectre", LUA_MODIFIER_MOTION_NONE)
 
 function imba_spectre_haunt:IsNetherWardStealable() return false end
@@ -53,7 +35,7 @@ function imba_spectre_haunt:OnSpellStart()
 	for _, enemy in pairs(enemies) do
 		if enemy:IsRealHero() and enemy:IsAlive() then
 			local enemy_position = enemy:GetAbsOrigin()
-
+			
 			local spawn_angle = RandomInt(0, 90)
 			local spawn_dx = spawn_distance * math.sin(spawn_angle)
 			local spawn_dy = spawn_distance * math.cos(spawn_angle)
@@ -71,11 +53,11 @@ function imba_spectre_haunt:OnSpellStart()
 				spawn_pos,
 				caster,
 				{
-					additional_modifiers =  additional_modifiers,
-					controllable = 0,
-					force_attack = 1,
-					damagein = ( self:GetSpecialValueFor("illusion_dmg_received") - 100),
-					damageout = ( self:GetSpecialValueFor("illusion_dmg_dealt") - 100 )
+				 additional_modifiers =  additional_modifiers,
+				 controllable = 0,
+				 force_attack = 1,
+				 damagein = ( self:GetSpecialValueFor("illusion_dmg_received") - 100),
+				 damageout = ( self:GetSpecialValueFor("illusion_dmg_dealt") - 100 )
 				},
 				enemy)
 
@@ -243,8 +225,8 @@ function imba_spectre_reality:OnSpellStart()
 			caster:SetAbsOrigin(temp_pos)
 			-- ...also set our attack target to the illusions target, for Quality of Life and less clicking
 			caster:MoveToTargetToAttack(closest_illusion:GetForceAttackTarget())
-		end
+		end	
 	else
-	--print("Haunt ability illusion table not found")
+		--print("Haunt ability illusion table not found")
 	end
 end

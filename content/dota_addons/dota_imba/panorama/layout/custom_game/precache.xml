@@ -1,4 +1,8 @@
 <root>
+	<scripts>
+		<include src="file://{resources}/scripts/custom_game/talent_window.js" />
+	</scripts>
+
 	<Panel style="visibility:collapse;">
 		<Panel id="container" style="visibility:collapse;">
 		<!--

@@ -1,20 +1,3 @@
--- Copyright (C) 2018  The Dota IMBA Development Team
---
--- Licensed under the Apache License, Version 2.0 (the "License");
--- you may not use this file except in compliance with the License.
--- You may obtain a copy of the License at
---
--- http://www.apache.org/licenses/LICENSE-2.0
---
--- Unless required by applicable law or agreed to in writing, software
--- distributed under the License is distributed on an "AS IS" BASIS,
--- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
--- See the License for the specific language governing permissions and
--- limitations under the License.
---
--- Editors:
---
-
 --	Author: Firetoad
 --	Date: 			19.07.2016
 --	Last Update:	26.03.2017
@@ -65,7 +48,7 @@ function modifier_item_imba_maelstrom:GetModifierAttackSpeedBonus_Constant()
 function modifier_item_imba_maelstrom:OnAttackLanded( keys )
 	if IsServer() then
 		local attacker = self:GetParent()
-
+		
 		-- If this attack is irrelevant, do nothing
 		if attacker ~= keys.attacker then
 			return
@@ -83,9 +66,9 @@ function modifier_item_imba_maelstrom:OnAttackLanded( keys )
 
 		-- All conditions met, stack the proc counter up
 		local ability = self:GetAbility()
-
+		
 		-- zap the target's ass
-		local proc_chance = ability:GetSpecialValueFor("proc_chance")
+		local proc_chance = ability:GetSpecialValueFor("proc_chance")		
 		if RollPseudoRandom(proc_chance, ability) then
 			LaunchLightning(attacker, target, ability, ability:GetSpecialValueFor("bounce_damage"), ability:GetSpecialValueFor("bounce_radius"))
 		end
@@ -174,9 +157,9 @@ function modifier_item_imba_mjollnir:OnAttackLanded( keys )
 
 		-- All conditions met, stack the proc counter up
 		local ability = self:GetAbility()
-
+		
 		-- zap the target's ass
-		local proc_chance = ability:GetSpecialValueFor("proc_chance")
+		local proc_chance = ability:GetSpecialValueFor("proc_chance")		
 		if RollPseudoRandom(proc_chance, ability) then
 			LaunchLightning(attacker, target, ability, ability:GetSpecialValueFor("bounce_damage"), ability:GetSpecialValueFor("bounce_radius"))
 		end
@@ -392,11 +375,11 @@ function modifier_item_imba_jarnbjorn:OnAttackLanded( keys )
 		if (not IsHeroOrCreep(target)) then -- or attacker:GetTeam() == target:GetTeam() then
 			return
 		end
-
-
+		
+		
 		-- All conditions met, stack the proc counter up
 		local ability = self:GetAbility()
-
+		
 		-- zap the target's ass
 		local proc_chance = ability:GetSpecialValueFor("proc_chance")
 		if RollPseudoRandom(proc_chance, ability) then
@@ -551,7 +534,7 @@ function LaunchLightning(caster, target, ability, damage, bounce_radius)
 	-- Parameters
 	local targets_hit = { target }
 	local search_sources = { target	}
-
+	
 	-- Play initial sound
 	caster:EmitSound("Item.Maelstrom.Chain_Lightning")
 
@@ -567,9 +550,9 @@ function LaunchLightning(caster, target, ability, damage, bounce_radius)
 		for potential_source_index, potential_source in pairs(search_sources) do
 
 			local nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), potential_source:GetAbsOrigin(), nil, bounce_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)
-
+			
 			for _, potential_target in pairs(nearby_enemies) do
-
+				
 				-- Check if this target was already hit
 				local already_hit = false
 				for _, hit_target in pairs(targets_hit) do
@@ -578,7 +561,7 @@ function LaunchLightning(caster, target, ability, damage, bounce_radius)
 						break
 					end
 				end
-
+				
 				-- If not, zap it from this source, and mark it as a hit target and potential future source
 				if not already_hit then
 					ZapThem(caster, ability, potential_source, potential_target, damage)
@@ -606,6 +589,6 @@ function ZapThem(caster, ability, source, target, damage)
 	ParticleManager:SetParticleControlEnt(bounce_pfx, 1, source, PATTACH_POINT_FOLLOW, "attach_hitloc", source:GetAbsOrigin(), true)
 	ParticleManager:SetParticleControl(bounce_pfx, 2, Vector(1, 1, 1))
 	ParticleManager:ReleaseParticleIndex(bounce_pfx)
-
+	
 	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
 end

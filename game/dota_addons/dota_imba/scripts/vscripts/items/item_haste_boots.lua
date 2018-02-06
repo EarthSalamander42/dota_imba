@@ -1,20 +1,3 @@
--- Copyright (C) 2018  The Dota IMBA Development Team
---
--- Licensed under the Apache License, Version 2.0 (the "License");
--- you may not use this file except in compliance with the License.
--- You may obtain a copy of the License at
---
--- http://www.apache.org/licenses/LICENSE-2.0
---
--- Unless required by applicable law or agreed to in writing, software
--- distributed under the License is distributed on an "AS IS" BASIS,
--- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
--- See the License for the specific language governing permissions and
--- limitations under the License.
---
--- Editors:
---
-
 -- Author: Shush
 -- Date: 16/07/2017
 
@@ -31,7 +14,7 @@ function item_imba_haste_boots:OnSpellStart()
 	-- Ability properties
 	local caster = self:GetCaster()
 	local ability = self
-	local sound_cast = "DOTA_Item.PhaseBoots.Activate"
+	local sound_cast = "DOTA_Item.PhaseBoots.Activate"    
 	local modifier_boost = "modifier_imba_haste_boots_buff"
 
 	-- Ability specials
@@ -66,8 +49,8 @@ function modifier_imba_haste_boots:GetAttributes() return MODIFIER_ATTRIBUTE_MUL
 
 function modifier_imba_haste_boots:DeclareFunctions()
 	local decFuncs = {MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
-		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
-		MODIFIER_PROPERTY_MOVESPEED_BONUS_UNIQUE}
+					  MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
+					  MODIFIER_PROPERTY_MOVESPEED_BONUS_UNIQUE}
 
 	return decFuncs
 end
@@ -92,18 +75,18 @@ function modifier_imba_haste_boots_buff:IsHidden() return false end
 function modifier_imba_haste_boots_buff:IsPurgable() return false end
 function modifier_imba_haste_boots_buff:IsDebuff() return false end
 
-function modifier_imba_haste_boots_buff:OnCreated()
-	-- Ability properties
-	self.caster = self:GetCaster()
-	self.ability = self:GetAbility()
-	self.particle_boost = "particles/item/boots/haste_boots_speed_boost.vpcf"
-	self.particle_drain = "particles/item/boots/haste_boots_drain.vpcf"
+function modifier_imba_haste_boots_buff:OnCreated()    
+		-- Ability properties
+		self.caster = self:GetCaster()
+		self.ability = self:GetAbility()
+		self.particle_boost = "particles/item/boots/haste_boots_speed_boost.vpcf"        
+		self.particle_drain = "particles/item/boots/haste_boots_drain.vpcf"
 
-	-- Ability specials
-	self.phase_ms = self.ability:GetSpecialValueFor("phase_ms")
-	self.ms_limit = self.ability:GetSpecialValueFor("ms_limit")
-	self.drain_damage = self.ability:GetSpecialValueFor("drain_damage")
-	self.drain_radius = self.ability:GetSpecialValueFor("drain_radius")
+		-- Ability specials
+		self.phase_ms = self.ability:GetSpecialValueFor("phase_ms")
+		self.ms_limit = self.ability:GetSpecialValueFor("ms_limit")
+		self.drain_damage = self.ability:GetSpecialValueFor("drain_damage")
+		self.drain_radius = self.ability:GetSpecialValueFor("drain_radius")
 
 	if IsServer() then
 
@@ -124,28 +107,28 @@ function modifier_imba_haste_boots_buff:OnIntervalThink()
 	if IsServer() then
 		-- Look for nearby enemies in drain radius
 		local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(),
-			self.caster:GetAbsOrigin(),
-			nil,
-			self.drain_radius,
-			DOTA_UNIT_TARGET_TEAM_ENEMY,
-			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-			DOTA_UNIT_TARGET_FLAG_NONE,
-			FIND_ANY_ORDER,
-			false)
+										  self.caster:GetAbsOrigin(),
+										  nil,
+										  self.drain_radius,
+										  DOTA_UNIT_TARGET_TEAM_ENEMY,
+										  DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+										  DOTA_UNIT_TARGET_FLAG_NONE,
+										  FIND_ANY_ORDER,
+										  false)
 
 		-- Damage enemies and suck health
 		for _,enemy in ipairs(enemies) do
 			-- If the enemy was already drained, do nothing
-			if not self.drained_units[enemy:entindex()] then
+			if not self.drained_units[enemy:entindex()] then            
 
 				local damageTable = {victim = enemy,
-					damage = self.drain_damage,
-					damage_type = DAMAGE_TYPE_MAGICAL,
-					attacker = self.caster,
-					ability = self.ability
-				}
-
-				local actual_damage = ApplyDamage(damageTable)
+									damage = self.drain_damage,
+									damage_type = DAMAGE_TYPE_MAGICAL,
+									attacker = self.caster,
+									ability = self.ability
+									}
+									
+				local actual_damage = ApplyDamage(damageTable)    
 
 				-- Add drain particle
 				local particle_drain_fx = ParticleManager:CreateParticle(self.particle_drain, PATTACH_ABSORIGIN_FOLLOW, enemy)
@@ -167,7 +150,7 @@ end
 
 function modifier_imba_haste_boots_buff:DeclareFunctions()
 	local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-		MODIFIER_PROPERTY_MOVESPEED_MAX}
+					  MODIFIER_PROPERTY_MOVESPEED_MAX}
 
 	return decFuncs
 end

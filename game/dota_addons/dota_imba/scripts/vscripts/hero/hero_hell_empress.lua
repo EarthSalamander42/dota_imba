@@ -1,20 +1,5 @@
--- Copyright (C) 2018  The Dota IMBA Development Team
---
--- Licensed under the Apache License, Version 2.0 (the "License");
--- you may not use this file except in compliance with the License.
--- You may obtain a copy of the License at
---
--- http://www.apache.org/licenses/LICENSE-2.0
---
--- Unless required by applicable law or agreed to in writing, software
--- distributed under the License is distributed on an "AS IS" BASIS,
--- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
--- See the License for the specific language governing permissions and
--- limitations under the License.
---
--- Editors:
---     Firetoad, 18.09.2017
---     suthernfriend, 03.02.2018
+-- Author: Firetoad
+-- Date: 18/09/2017
 
 --------------------------------------
 --	ELEVEN CURSES
@@ -22,7 +7,7 @@
 imba_empress_eleven_curses = class({})
 LinkLuaModifier("modifier_imba_eleven_curses", "hero/hero_hell_empress.lua", LUA_MODIFIER_MOTION_NONE)
 
-function imba_empress_eleven_curses:GetAOERadius()
+function imba_empress_eleven_curses:GetAOERadius() 
 	return self:GetSpecialValueFor("effect_radius")
 end
 
@@ -170,7 +155,7 @@ end
 imba_empress_royal_wrath = class({})
 LinkLuaModifier("modifier_imba_royal_wrath", "hero/hero_hell_empress.lua", LUA_MODIFIER_MOTION_NONE)
 
-function imba_empress_royal_wrath:GetIntrinsicModifierName()
+function imba_empress_royal_wrath:GetIntrinsicModifierName() 
 	return "modifier_imba_royal_wrath"
 end
 
@@ -204,7 +189,7 @@ function modifier_imba_royal_wrath:OnTakeDamage( keys )
 			local ability = self:GetAbility()
 			local ability_curse = parent:FindAbilityByName("imba_empress_eleven_curses")
 			if attacker:IsRealHero() and attacker:IsAlive() and ability:IsCooldownReady() and ability_curse and ability_curse:GetLevel() > 0 and not parent:PassivesDisabled() and not attacker:IsMagicImmune() then
-
+				
 				-- Trigger the curse ability
 				ability_curse:OnSpellStart(attacker:GetAbsOrigin(), 1)
 
@@ -218,7 +203,7 @@ function modifier_imba_royal_wrath:OnTakeDamage( keys )
 						ability_hellbolt:StartCooldown( hellbolt_cd_remaining - hellbolt_cdr )
 					end
 				end
-
+				
 				-- Trigger the passive's cooldown
 				local cooldown_reduction = parent:GetCooldownReduction() * 0.01
 				ability:StartCooldown(ability:GetCooldown(ability:GetLevel()) * (1 - cooldown_reduction))
@@ -239,7 +224,7 @@ LinkLuaModifier("modifier_imba_hurl_through_hell_silence", "hero/hero_hell_empre
 LinkLuaModifier("modifier_imba_hurl_through_hell_mute", "hero/hero_hell_empress.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_hurl_through_hell_break", "hero/hero_hell_empress.lua", LUA_MODIFIER_MOTION_NONE)
 
-function imba_empress_hurl_through_hell:GetAOERadius()
+function imba_empress_hurl_through_hell:GetAOERadius() 
 	return self:GetSpecialValueFor("hurl_radius")
 end
 
@@ -328,7 +313,7 @@ function modifier_imba_hurl_through_hell:OnDestroy()
 		local parent = self:GetParent()
 		local parent_loc = parent:GetAbsOrigin()
 		local ability = self:GetAbility()
-
+		
 		-- Stop sound loop and play end sound
 		parent:StopSound("Imba.HellEmpressHurlLoop")
 		EmitSoundOn("Imba.HellEmpressHurlEnd", parent)
@@ -339,7 +324,7 @@ function modifier_imba_hurl_through_hell:OnDestroy()
 		-- Destroy particle
 		ParticleManager:DestroyParticle(self.hurl_pfx, false)
 		ParticleManager:ReleaseParticleIndex(self.hurl_pfx)
-
+		
 		-- Apply curse to the target
 		local ability_curse = caster:FindAbilityByName("imba_empress_eleven_curses")
 		if ability_curse and ability_curse:GetLevel() > 0 then

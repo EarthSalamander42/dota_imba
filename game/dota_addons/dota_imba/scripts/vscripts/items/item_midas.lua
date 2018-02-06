@@ -1,20 +1,3 @@
--- Copyright (C) 2018  The Dota IMBA Development Team
---
--- Licensed under the Apache License, Version 2.0 (the "License");
--- you may not use this file except in compliance with the License.
--- You may obtain a copy of the License at
---
--- http://www.apache.org/licenses/LICENSE-2.0
---
--- Unless required by applicable law or agreed to in writing, software
--- distributed under the License is distributed on an "AS IS" BASIS,
--- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
--- See the License for the specific language governing permissions and
--- limitations under the License.
---
--- Editors:
---
-
 --[[	Author: D2Imba, rework by Shush
 		Date:	05.03.2017	]]
 
@@ -22,7 +5,7 @@ item_imba_hand_of_midas = class({})
 LinkLuaModifier("modifier_item_imba_hand_of_midas", "items/item_midas", LUA_MODIFIER_MOTION_NONE)
 
 function item_imba_hand_of_midas:GetAbilityTextureName()
-	return "custom/imba_hand_of_midas"
+   return "custom/imba_hand_of_midas"
 end
 
 function item_imba_hand_of_midas:CastFilterResultTarget(target)
@@ -37,7 +20,7 @@ function item_imba_hand_of_midas:CastFilterResultTarget(target)
 		-- If the target is a hero, deny it
 		if target:IsHero() then
 			return UF_FAIL_HERO
-		end
+		end		
 
 		-- If the target is a ward, deny it
 		if target:IsOther() then
@@ -72,7 +55,7 @@ function item_imba_hand_of_midas:GetCustomCastErrorTarget(target)
 			return "#dota_hud_error_cant_use_on_wards"
 		end
 
-		-- Necronomicon message
+		-- Necronomicon message		
 		if string.find(target:GetUnitName(), "necronomicon") then
 			return "#dota_hud_error_cant_use_on_necrobook"
 		end
@@ -110,13 +93,13 @@ function item_imba_hand_of_midas:OnSpellStart()
 	local caster = self:GetCaster()
 	local target = self:GetCursorTarget()
 	local ability = self
-	local sound_cast = "DOTA_Item.Hand_Of_Midas"
+	local sound_cast = "DOTA_Item.Hand_Of_Midas"	
 
 	-- Parameters and calculations
 	local bonus_gold = ability:GetSpecialValueFor("bonus_gold")
 	local xp_multiplier = ability:GetSpecialValueFor("xp_multiplier")
 	local passive_gold_bonus = ability:GetSpecialValueFor("passive_gold_bonus")
-	local bonus_xp = target:GetDeathXP()
+	local bonus_xp = target:GetDeathXP()	
 
 	-- Adjust for the lobby settings and for midas' own bonuses
 	local custom_xp_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "exp_multiplier")["1"])
@@ -129,7 +112,7 @@ function item_imba_hand_of_midas:OnSpellStart()
 	SendOverheadEventMessage(PlayerResource:GetPlayer(caster:GetPlayerOwnerID()), OVERHEAD_ALERT_GOLD, target, bonus_gold, nil)
 
 	-- Draw the midas gold conversion particle
-	local midas_particle = ParticleManager:CreateParticle("particles/items2_fx/hand_of_midas.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
+	local midas_particle = ParticleManager:CreateParticle("particles/items2_fx/hand_of_midas.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)	
 	ParticleManager:SetParticleControlEnt(midas_particle, 1, caster, PATTACH_POINT_FOLLOW, "attach_hitloc", caster:GetAbsOrigin(), false)
 
 	-- Grant gold and XP only to the caster
@@ -164,7 +147,7 @@ function modifier_item_imba_hand_of_midas:GetModifierAttackSpeedBonus_Constant()
 	local bonus_attack_speed
 	if ability then
 		bonus_attack_speed = ability:GetSpecialValueFor("bonus_attack_speed")
-	end
+	end	
 
 	return bonus_attack_speed
 end

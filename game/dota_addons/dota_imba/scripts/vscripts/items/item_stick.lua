@@ -1,20 +1,3 @@
--- Copyright (C) 2018  The Dota IMBA Development Team
---
--- Licensed under the Apache License, Version 2.0 (the "License");
--- you may not use this file except in compliance with the License.
--- You may obtain a copy of the License at
---
--- http://www.apache.org/licenses/LICENSE-2.0
---
--- Unless required by applicable law or agreed to in writing, software
--- distributed under the License is distributed on an "AS IS" BASIS,
--- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
--- See the License for the specific language governing permissions and
--- limitations under the License.
---
--- Editors:
---
-
 --[[	Author: d2imba
 		Date:	16.08.2015	]]
 
@@ -62,16 +45,16 @@ function MagicStickCharge( keys )
 	local mana_spent = cast_ability:GetManaCost(cast_ability:GetLevel() - 1)
 	local procs_stick = cast_ability:ProcsMagicStick()
 	local caster_visible = caster:CanEntityBeSeenByMyTeam(target)
-	local special_abilities = {"storm_spirit_ball_lightning"}
+    local special_abilities = {"storm_spirit_ball_lightning"}
 	local special_ability_casted = false
-
+	
 	-- If the ability is on the list of forbidden abilities, do nothing
 	for _,special_ability in pairs(special_abilities) do
 		if cast_ability_name == special_ability then
 			return nil
 		end
 	end
-
+	
 	-- If all other conditions are met, increase stick charges
 	if mana_spent > 0 and procs_stick and caster_visible then
 		-- If the stick is not maxed yet, increase the amount of charges

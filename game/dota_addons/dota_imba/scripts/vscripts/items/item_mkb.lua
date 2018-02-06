@@ -1,20 +1,3 @@
--- Copyright (C) 2018  The Dota IMBA Development Team
---
--- Licensed under the Apache License, Version 2.0 (the "License");
--- you may not use this file except in compliance with the License.
--- You may obtain a copy of the License at
---
--- http://www.apache.org/licenses/LICENSE-2.0
---
--- Unless required by applicable law or agreed to in writing, software
--- distributed under the License is distributed on an "AS IS" BASIS,
--- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
--- See the License for the specific language governing permissions and
--- limitations under the License.
---
--- Editors:
---
-
 --	Author: Firetoad
 --	Date: 			20.09.2015
 --	Last Update:	19.03.2017
@@ -28,7 +11,7 @@ LinkLuaModifier( "modifier_item_imba_javelin", "items/item_mkb.lua", LUA_MODIFIE
 LinkLuaModifier( "modifier_item_imba_javelin_unique", "items/item_mkb.lua", LUA_MODIFIER_MOTION_NONE )	-- Pierce and bonus attack range
 
 function item_imba_javelin:GetAbilityTextureName()
-	return "custom/imba_javelin"
+   return "custom/imba_javelin"
 end
 
 function item_imba_javelin:GetIntrinsicModifierName()
@@ -151,7 +134,7 @@ function item_imba_monkey_king_bar:GetIntrinsicModifierName()
 	return "modifier_item_imba_monkey_king_bar" end
 
 function item_imba_monkey_king_bar:GetAbilityTextureName()
-	return "custom/imba_monkey_king_bar"
+   return "custom/imba_monkey_king_bar"
 end
 
 -----------------------------------------------------------------------------------------------------------
@@ -266,7 +249,7 @@ function modifier_item_imba_monkey_king_bar_unique:OnAttackLanded(keys)
 
 				-- Play sound
 				target:EmitSound("DOTA_Item.MKB.Minibash")
-
+				
 				-- If the target is magic immune, do nothing - effect is wasted
 				if target:IsMagicImmune() then
 					return nil

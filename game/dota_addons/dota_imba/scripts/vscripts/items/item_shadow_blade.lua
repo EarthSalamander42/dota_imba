@@ -1,20 +1,3 @@
--- Copyright (C) 2018  The Dota IMBA Development Team
---
--- Licensed under the Apache License, Version 2.0 (the "License");
--- you may not use this file except in compliance with the License.
--- You may obtain a copy of the License at
---
--- http://www.apache.org/licenses/LICENSE-2.0
---
--- Unless required by applicable law or agreed to in writing, software
--- distributed under the License is distributed on an "AS IS" BASIS,
--- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
--- See the License for the specific language governing permissions and
--- limitations under the License.
---
--- Editors:
---
-
 --[[	Author: d2imba
 		Date:	14.08.2015
 		Updated by: Fudge
@@ -44,11 +27,11 @@ function item_imba_shadow_blade:OnSpellStart()
 	-- Wait for the fade time to end, then emit the invisibility effect and apply the invis modifier
 	Timers:CreateTimer(fade_time, function()
 
-			local particle_invis_start_fx = ParticleManager:CreateParticle(particle_invis_start, PATTACH_ABSORIGIN, caster)
-			ParticleManager:SetParticleControl(particle_invis_start_fx, 0, caster:GetAbsOrigin())
-			ParticleManager:ReleaseParticleIndex(particle_invis_start_fx)
+		local particle_invis_start_fx = ParticleManager:CreateParticle(particle_invis_start, PATTACH_ABSORIGIN, caster)
+		ParticleManager:SetParticleControl(particle_invis_start_fx, 0, caster:GetAbsOrigin())
+		ParticleManager:ReleaseParticleIndex(particle_invis_start_fx)
 
-			caster:AddNewModifier(caster, self, "modifier_item_imba_shadow_blade_invis", {duration = duration})
+		caster:AddNewModifier(caster, self, "modifier_item_imba_shadow_blade_invis", {duration = duration})
 	end)
 end
 
@@ -134,7 +117,7 @@ function modifier_item_imba_shadow_blade_invis:OnAttack(params)
 
 			-- Apply turnrate debuff modifier
 			params.target:AddNewModifier(params.attacker, ability, "modifier_item_imba_shadow_blade_invis_turnrate_debuff", {duration = debuff_duration})
-
+			
 			-- Remove the invis on attack
 			self:Destroy()
 		end
@@ -256,7 +239,7 @@ function modifier_item_imba_shadow_blade_invis_turnrate_debuff:IsPurgable() retu
 function modifier_item_imba_shadow_blade_invis_turnrate_debuff:OnCreated()
 	local ability   =   self:GetAbility()
 
-	self.turnrate   =   ability:GetSpecialValueFor("turnrate_slow")
+self.turnrate   =   ability:GetSpecialValueFor("turnrate_slow")
 end
 
 function modifier_item_imba_shadow_blade_invis_turnrate_debuff:DeclareFunctions()
@@ -276,3 +259,8 @@ end
 function modifier_item_imba_shadow_blade_invis_turnrate_debuff:GetEffectAttachType()
 	return PATTACH_ABSORIGIN_FOLLOW
 end
+
+
+
+
+

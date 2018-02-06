@@ -1,28 +1,3 @@
--- Copyright (C) 2018  The Dota IMBA Development Team
--- Copyright (C) 2015  bmddota
---
--- Licensed under the Apache License, Version 2.0 (the "License");
--- you may not use this file except in compliance with the License.
--- You may obtain a copy of the License at
---
--- http://www.apache.org/licenses/LICENSE-2.0
---
--- Unless required by applicable law or agreed to in writing, software
--- distributed under the License is distributed on an "AS IS" BASIS,
--- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
--- See the License for the specific language governing permissions and
--- limitations under the License.
---
--- Editors:
---     Firetoad
---     MouJiaoZi
---     Hewdraw
---     zimberzimer
---     Shush
---     Lindbrum
---     Earth Salamander #42
---     suthernfriend
-
 --[[
  Hero selection module for D2E.
  This file basically just separates the functions related to hero selection from
@@ -57,8 +32,6 @@ function HeroSelection:HeroListPreLoad()
 
 	for hero, attributes in pairs(NPC_HEROES) do
 		if hero == "Version" or hero == "npc_dota_hero_base" or hero == "npc_dota_hero_target_dummy" then
-		elseif HeroIsHotDisabled(hero) then
-			table.insert(HeroSelection.disabled_heroes, hero);
 		else
 			table.insert(HeroSelection.vanilla_heroes, hero)
 			HeroSelection:AddVanillaHeroToList(hero)
@@ -718,20 +691,14 @@ function HeroSelection:AssignHero(player_id, hero_name, dev_command)
 			end
 		end
 
-		-- if getkeyvalue voiceline then add "modifier_hero_voiceline"
-		if hero:GetKeyValue("ShortName") then
-			hero:AddNewModifier(hero, nil, "modifier_hero_voiceline", {})
-		end
-
 		-- Set up player color
 		PlayerResource:SetCustomPlayerColor(player_id, PLAYER_COLORS[player_id][1], PLAYER_COLORS[player_id][2], PLAYER_COLORS[player_id][3])
 
-		Timers:CreateTimer(3.0, function()
-			if not hero:HasModifier("modifier_command_restricted") then
-				PlayerResource:SetCameraTarget(player_id, nil)
-			end
-			UTIL_Remove(wisp)
-		end)
+		-- init override of talent window
+--		InitializeTalentsOverride(hero)
+
+--		PlayerResource:SetCameraTarget(player_id, nil)
+		UTIL_Remove(wisp)
 
 		-- Set initial spawn setup as having been done
 		CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(player_id), "picking_done", {})

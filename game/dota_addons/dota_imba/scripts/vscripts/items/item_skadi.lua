@@ -1,20 +1,3 @@
--- Copyright (C) 2018  The Dota IMBA Development Team
---
--- Licensed under the Apache License, Version 2.0 (the "License");
--- you may not use this file except in compliance with the License.
--- You may obtain a copy of the License at
---
--- http://www.apache.org/licenses/LICENSE-2.0
---
--- Unless required by applicable law or agreed to in writing, software
--- distributed under the License is distributed on an "AS IS" BASIS,
--- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
--- See the License for the specific language governing permissions and
--- limitations under the License.
---
--- Editors:
---
-
 --	Author: Firetoad
 --	Date: 			16.12.2015
 --	Last Update:	25.03.2017
@@ -32,11 +15,11 @@ LinkLuaModifier( "modifier_item_imba_skadi_freeze", "items/item_skadi.lua", LUA_
 
 -- Passive modifier
 function item_imba_skadi:GetIntrinsicModifierName()
-	return "modifier_item_imba_skadi"
+	return "modifier_item_imba_skadi" 
 end
 
 function item_imba_skadi:GetAbilityTextureName()
-	return "custom/imba_skadi"
+   return "custom/imba_skadi"
 end
 
 -- Dynamic cast range
@@ -44,9 +27,9 @@ function item_imba_skadi:GetCastRange()
 	if IsServer() then
 		return
 	end
-	local caster = self:GetCaster()
+	local caster = self:GetCaster()	
 	if caster and caster:HasModifier("modifier_item_imba_skadi") then
-		return caster:GetModifierStackCount("modifier_item_imba_skadi", caster)
+		return caster:GetModifierStackCount("modifier_item_imba_skadi", caster) 
 	else
 		return 0
 	end
@@ -133,7 +116,7 @@ function modifier_item_imba_skadi:OnCreated(keys)
 		if not self.parent:HasModifier("modifier_item_imba_skadi_unique") then
 			self.parent:AddNewModifier(self.parent, self.ability, "modifier_item_imba_skadi_unique", {})
 		end
-
+		
 		-- Set stack count
 		self:UpdateCastRange()
 
@@ -144,7 +127,7 @@ end
 
 -- Removes the unique modifier from the caster if this is the last skadi in its inventory
 function modifier_item_imba_skadi:OnDestroy()
-	if IsServer() then
+	if IsServer() then		
 		if not self.parent:HasModifier("modifier_item_imba_skadi") then
 			self.parent:RemoveModifierByName("modifier_item_imba_skadi_unique")
 		end
@@ -152,18 +135,18 @@ function modifier_item_imba_skadi:OnDestroy()
 end
 
 -- Cast range update thinker
-function modifier_item_imba_skadi:OnIntervalThink()
+function modifier_item_imba_skadi:OnIntervalThink()	
 	self:UpdateCastRange()
 end
 
 function modifier_item_imba_skadi:UpdateCastRange()
-	if IsServer() then
+	if IsServer() then						
 		if self.parent:IsRealHero() then
 			local iradius = self.radius + self.parent:GetStrength() * self.ability:GetSpecialValueFor("radius_per_str")
-		end
+		end		
 
 		self:SetStackCount(( self.radius + self.parent:GetStrength() * self.ability:GetSpecialValueFor("radius_per_str")))
-	end
+	end	
 end
 
 -- Declare modifier events/properties
@@ -252,7 +235,7 @@ function modifier_item_imba_skadi_unique:OnTakeDamage( keys )
 		if target_distance >= self.max_distance then
 			return nil
 		end
-
+		
 		local slow_duration = self.min_duration + (self.max_duration - self.min_duration) * math.max( self.slow_range_cap - target_distance, 0) / self.slow_range_cap
 
 		-- Apply the slow

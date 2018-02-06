@@ -1,20 +1,3 @@
--- Copyright (C) 2018  The Dota IMBA Development Team
---
--- Licensed under the Apache License, Version 2.0 (the "License");
--- you may not use this file except in compliance with the License.
--- You may obtain a copy of the License at
---
--- http://www.apache.org/licenses/LICENSE-2.0
---
--- Unless required by applicable law or agreed to in writing, software
--- distributed under the License is distributed on an "AS IS" BASIS,
--- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
--- See the License for the specific language governing permissions and
--- limitations under the License.
---
--- Editors:
---
-
 --	Author		 -	d2imba
 --	Date Created -	15.08.2015	<-- Shits' ancient yo
 --	Date Updated -	04.03.2017
@@ -28,12 +11,12 @@ LinkLuaModifier( "modifier_imba_octarine_core_basic", "items/item_octarine_core.
 LinkLuaModifier( "modifier_imba_octarine_core_unique", "items/item_octarine_core.lua", LUA_MODIFIER_MOTION_NONE )	-- Lifesteal + magus presence handler
 
 function item_imba_octarine_core:GetAbilityTextureName()
-	return "custom/imba_octarine_core"
+   return "custom/imba_octarine_core"
 end
 
 function item_imba_octarine_core:GetBehavior()
 	return DOTA_ABILITY_BEHAVIOR_IMMEDIATE + DOTA_ABILITY_BEHAVIOR_NO_TARGET + DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL + DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE + DOTA_ABILITY_BEHAVIOR_ITEM end
-
+	
 function item_imba_octarine_core:GetIntrinsicModifierName()
 	return "modifier_imba_octarine_core_basic" end
 
@@ -41,7 +24,7 @@ function item_imba_octarine_core:OnSpellStart()
 	if IsServer() then
 		local uniqueModifier = self:GetCaster():FindModifierByName("modifier_imba_octarine_core_unique")
 		if not uniqueModifier then return end -- If this happens, something is terribly wrong
-
+		
 		-- Get, and toggle state [ 1 = disabled | 2 = enabled ]
 		local state = uniqueModifier:GetStackCount()
 		if state == 2 then
@@ -64,7 +47,7 @@ function item_imba_octarine_core:GetAbilityTextureName()
 		local state = caster:GetModifierStackCount("modifier_imba_octarine_core_unique", caster)
 		if state == 1 then return "custom/imba_octarine_core_off" end
 	end
-
+	
 	return "custom/imba_octarine_core"
 end
 
@@ -80,7 +63,7 @@ function modifier_imba_octarine_core_basic:GetAttributes() return MODIFIER_ATTRI
 
 function modifier_imba_octarine_core_basic:OnCreated()
 	if IsServer() then
-		self.caster = self:GetCaster()
+		self.caster = self:GetCaster()		
 		self.ability = self:GetAbility()
 		self.modifier_self = "modifier_imba_octarine_core_basic"
 		self.uniqueModifier = "modifier_imba_octarine_core_unique"
@@ -95,24 +78,24 @@ function modifier_imba_octarine_core_basic:OnCreated()
 end
 
 function modifier_imba_octarine_core_basic:OnDestroy()
-	if IsServer() then
-		-- Remove the unique modifier if no other cores were found
-		if not self.caster:HasModifier(self.modifier_self) then
+	if IsServer() then		
+		-- Remove the unique modifier if no other cores were found		
+		if not self.caster:HasModifier(self.modifier_self) then			
 			self.caster:RemoveModifierByName(self.uniqueModifier)
-		end
+		end		
 	end
 end
 
 function modifier_imba_octarine_core_basic:DeclareFunctions()
 	local funcs = {	MODIFIER_PROPERTY_MANA_BONUS,
-		MODIFIER_PROPERTY_HEALTH_BONUS,
-		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,	}
+					MODIFIER_PROPERTY_HEALTH_BONUS,	
+					MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,	}
 	return funcs
 end
-
+	
 function modifier_imba_octarine_core_basic:GetModifierManaBonus()
 	return self:GetAbility():GetSpecialValueFor("bonus_mana") end
-
+	
 function modifier_imba_octarine_core_basic:GetModifierHealthBonus()
 	return self:GetAbility():GetSpecialValueFor("bonus_health") end
 
@@ -148,29 +131,29 @@ function modifier_imba_octarine_core_unique:OnSpentMana( keys )
 	if IsServer() then
 		local state = self:GetStackCount()
 		if state == 2 then	-- [ 1 = disabled | 2 = enabled ]
-
+		
 			local ability = self:GetAbility()
 			local parent = self:GetParent()
 
 			local spell = keys.ability
 			local cost = keys.cost
 			local unit = keys.unit
-
+			
 			local blast_radius = ability:GetSpecialValueFor("blast_radius")
 			local blast_damage = ability:GetSpecialValueFor("blast_damage")
-
+			
 			if unit == parent and ability:IsCooldownReady() and cost > 0 then
 
 				-- Trigger ability cooldown
 				ability:StartCooldown(ability:GetCooldown(0) * (1 - parent:GetCooldownReduction() * 0.01))
-
+				
 				-- Blast geometry
 				local blast_duration = 0.75 * 0.75
 				local blast_speed = blast_radius / blast_duration
 
 				-- Calculate damage
 				local damage = cost * blast_damage * 0.01
-
+				
 				-- Fire particle
 				local blast_pfx = ParticleManager:CreateParticle("particles/item/octarine_core/octarine_core_active.vpcf", PATTACH_ABSORIGIN_FOLLOW, parent)
 				ParticleManager:SetParticleControl(blast_pfx, 0, parent:GetAbsOrigin())
@@ -179,21 +162,21 @@ function modifier_imba_octarine_core_unique:OnSpentMana( keys )
 
 				-- Fire sound
 				parent:EmitSound("Hero_Zuus.StaticField")
-
+					
 				-- Find units in the blast radius
 				local blast_targets = FindUnitsInRadius(parent:GetTeamNumber(), parent:GetAbsOrigin(), nil, blast_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 
 				-- Damage units inside the blast radius if they haven't been affected already
 				for _,target in pairs(blast_targets) do
-
+					
 					-- Apply damage
 					ApplyDamage({attacker = parent, victim = target, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
-
+					
 					-- Fire particle
 					local hit_pfx = ParticleManager:CreateParticle("particles/item/octarine_core/octarine_core_hit.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
 					ParticleManager:SetParticleControl(hit_pfx, 0, target:GetAbsOrigin())
 					ParticleManager:ReleaseParticleIndex(hit_pfx)
-
+					
 					-- Print overhead message
 					SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, target, damage, nil)
 				end

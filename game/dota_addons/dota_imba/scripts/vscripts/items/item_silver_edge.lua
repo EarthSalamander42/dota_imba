@@ -1,20 +1,3 @@
--- Copyright (C) 2018  The Dota IMBA Development Team
---
--- Licensed under the Apache License, Version 2.0 (the "License");
--- you may not use this file except in compliance with the License.
--- You may obtain a copy of the License at
---
--- http://www.apache.org/licenses/LICENSE-2.0
---
--- Unless required by applicable law or agreed to in writing, software
--- distributed under the License is distributed on an "AS IS" BASIS,
--- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
--- See the License for the specific language governing permissions and
--- limitations under the License.
---
--- Editors:
---
-
 --[[	Author: d2imba
 		Date:	15.08.2015
 		Updated by: Fudge
@@ -46,11 +29,11 @@ function item_imba_silver_edge:OnSpellStart()
 	-- Wait for the fade time to end, then emit the invisibility effect and apply the invis modifier
 	Timers:CreateTimer(fade_time, function()
 
-			local particle_invis_start_fx = ParticleManager:CreateParticle(particle_invis_start, PATTACH_ABSORIGIN, caster)
-			ParticleManager:SetParticleControl(particle_invis_start_fx, 0, caster:GetAbsOrigin())
-			ParticleManager:ReleaseParticleIndex(particle_invis_start_fx)
+		local particle_invis_start_fx = ParticleManager:CreateParticle(particle_invis_start, PATTACH_ABSORIGIN, caster)
+		ParticleManager:SetParticleControl(particle_invis_start_fx, 0, caster:GetAbsOrigin())
+		ParticleManager:ReleaseParticleIndex(particle_invis_start_fx)
 
-			caster:AddNewModifier(caster, self, "modifier_item_imba_silver_edge_invis", {duration = duration})
+		caster:AddNewModifier(caster, self, "modifier_item_imba_silver_edge_invis", {duration = duration})
 	end)
 end
 
@@ -163,7 +146,7 @@ function modifier_item_imba_silver_edge_invis:OnAttackLanded(params)
 
 				-- Create a particle for the cleave effect for ranged heroes
 				CreateModifierThinker(self.parent, ability, "modifier_item_imba_silver_edge_invis_attack_cleave_particle",
-					{duration =1, direction_x = direction.x, direction_y = direction.y, direction_z = direction.z}, target_pos, self.parent:GetTeamNumber(), false)
+				{duration =1, direction_x = direction.x, direction_y = direction.y, direction_z = direction.z}, target_pos, self.parent:GetTeamNumber(), false)
 				--end
 			else
 				-- Do Cleave particle for melee heroes
@@ -172,27 +155,27 @@ function modifier_item_imba_silver_edge_invis:OnAttackLanded(params)
 				ParticleManager:SetParticleControl(particle_fx, 0, self:GetParent():GetAbsOrigin())
 				ParticleManager:ReleaseParticleIndex(particle_fx)
 			end
-
+			
 			-- Find units hit by the cleave (amazing custom function from funcs.lua)
-
-
+			
+			
 			local enemies = FindUnitsInCone(self.parent:GetTeamNumber(),
-				CalculateDirection(params.target, self.parent),
-				self.parent:GetAbsOrigin(),
-				cleave_radius_start,
-				cleave_radius_end,
-				cleave_distance,
-				nil,
-				DOTA_UNIT_TARGET_TEAM_ENEMY,
-				DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP,
-				0,
-				FIND_ANY_ORDER,
-				false)
-
+											CalculateDirection(params.target, self.parent),
+											self.parent:GetAbsOrigin(),
+											cleave_radius_start,
+											cleave_radius_end,
+											cleave_distance,
+											nil,
+											DOTA_UNIT_TARGET_TEAM_ENEMY,
+											DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP,
+											0,
+											FIND_ANY_ORDER,
+											false)
+			
 			-- Damage each unit hit by the cleave and give them the panic modifier
 			for _,enemy in pairs(enemies) do
 				local damager = self.parent
-
+	
 				local damageTable =({victim = enemy,
 					attacker = damager,
 					ability = ability,
@@ -200,10 +183,10 @@ function modifier_item_imba_silver_edge_invis:OnAttackLanded(params)
 					damage_type = DAMAGE_TYPE_PURE})
 
 				ApplyDamage(damageTable)
-
+				
 				enemy:AddNewModifier(self.parent, ability, "modifier_item_imba_silver_edge_invis_panic_debuff", {duration = panic_duration})
 			end
-
+			
 			-- Give the main target a different, longer modifier
 			params.target:AddNewModifier(self.parent, ability, "modifier_item_imba_silver_edge_invis_break_debuff", {duration = break_duration})
 
@@ -454,3 +437,5 @@ function modifier_item_imba_silver_edge_invis_attack_cleave_particle:OnDestroy()
 		self:GetParent():ForceKill(false)
 	end
 end
+
+

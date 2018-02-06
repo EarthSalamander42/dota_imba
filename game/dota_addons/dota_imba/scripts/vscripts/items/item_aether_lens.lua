@@ -1,20 +1,3 @@
--- Copyright (C) 2018  The Dota IMBA Development Team
---
--- Licensed under the Apache License, Version 2.0 (the "License");
--- you may not use this file except in compliance with the License.
--- You may obtain a copy of the License at
---
--- http://www.apache.org/licenses/LICENSE-2.0
---
--- Unless required by applicable law or agreed to in writing, software
--- distributed under the License is distributed on an "AS IS" BASIS,
--- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
--- See the License for the specific language governing permissions and
--- limitations under the License.
---
--- Editors:
---
-
 --[[
 		By: AtroCty
 		Date: 17.05.2017
@@ -29,11 +12,11 @@ LinkLuaModifier("modifier_imba_aether_lens_passive", "items/item_aether_lens.lua
 item_imba_aether_lens = item_imba_aether_lens or class({})
 -------------------------------------------
 function item_imba_aether_lens:GetIntrinsicModifierName()
-	return "modifier_imba_aether_lens_passive"
+    return "modifier_imba_aether_lens_passive"
 end
 
 function item_imba_aether_lens:GetAbilityTextureName()
-	return "custom/imba_aether_lens"
+   return "custom/imba_aether_lens"
 end
 
 -------------------------------------------
@@ -63,14 +46,14 @@ function modifier_imba_aether_lens_passive:OnCreated()
 end
 
 function modifier_imba_aether_lens_passive:DeclareFunctions()
-	local decFuns =
-		{
-			MODIFIER_PROPERTY_CAST_RANGE_BONUS_STACKING,
-			MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
-			MODIFIER_PROPERTY_MANA_BONUS,
-			MODIFIER_PROPERTY_MANA_REGEN_CONSTANT
-		}
-	return decFuns
+    local decFuns =
+    {
+		MODIFIER_PROPERTY_CAST_RANGE_BONUS_STACKING,
+		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
+		MODIFIER_PROPERTY_MANA_BONUS,
+		MODIFIER_PROPERTY_MANA_REGEN_CONSTANT
+    }
+    return decFuns
 end
 
 function modifier_imba_aether_lens_passive:GetModifierSpellAmplify_Percentage()

@@ -1,21 +1,9 @@
--- Copyright (C) 2018  The Dota IMBA Development Team
---
--- Licensed under the Apache License, Version 2.0 (the "License");
--- you may not use this file except in compliance with the License.
--- You may obtain a copy of the License at
---
--- http://www.apache.org/licenses/LICENSE-2.0
---
--- Unless required by applicable law or agreed to in writing, software
--- distributed under the License is distributed on an "AS IS" BASIS,
--- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
--- See the License for the specific language governing permissions and
--- limitations under the License.
---
--- Editors:
---     Firetoad
---     AtroCty, 23.04.2017
---     suthernfriend, 03.02.2018
+--[[
+		By: AtroCty
+		Prev. Authors: Firetoad
+		Date:  01.10.2015
+		Updated:  23.04.2017
+	]]
 
 CreateEmptyTalents("venomancer")
 
@@ -33,12 +21,12 @@ function imba_venomancer_toxicity:IsNetherWardStealable() return false end
 function imba_venomancer_toxicity:IsInnateAbility() return true end
 
 function imba_venomancer_toxicity:GetAbilityTextureName()
-	return "custom/venomancer_toxicity"
+   return "custom/venomancer_toxicity"
 end
 -------------------------------------------
 
 function imba_venomancer_toxicity:GetIntrinsicModifierName()
-	return "modifier_imba_toxicity"
+    return "modifier_imba_toxicity"
 end
 
 -------------------------------------------
@@ -52,13 +40,13 @@ function modifier_imba_toxicity:RemoveOnDeath() return false end
 -------------------------------------------
 
 function modifier_imba_toxicity:OnCreated()
-	if IsServer() then
+    if IsServer() then
 		self:StartIntervalThink(1)
 	end
 end
 
 function modifier_imba_toxicity:OnIntervalThink()
-	if IsServer() then
+    if IsServer() then
 		local caster = self:GetCaster()
 		local ability = self:GetAbility()
 		local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, 25000, ability:GetAbilityTargetTeam(), ability:GetAbilityTargetType(), ability:GetAbilityTargetFlags(), FIND_ANY_ORDER, false)
@@ -124,16 +112,16 @@ function modifier_imba_toxicity_debuff:OnDeath( params )
 end
 
 function modifier_imba_toxicity_debuff:DeclareFunctions()
-	local decFuns =
-		{
-			MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS,
-			MODIFIER_EVENT_ON_DEATH
-		}
-	return decFuns
+    local decFuns =
+    {
+        MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS,
+		MODIFIER_EVENT_ON_DEATH
+    }
+    return decFuns
 end
 
 function modifier_imba_toxicity_debuff:GetModifierMagicalResistanceBonus()
-	return (self:GetAbility():GetTalentSpecialValueFor("magic_amp_pct") * self:GetStackCount()) * (-1)
+    return (self:GetAbility():GetTalentSpecialValueFor("magic_amp_pct") * self:GetStackCount()) * (-1)
 end
 
 -------------------------------------------
@@ -149,7 +137,7 @@ function imba_venomancer_venomous_gale:IsStealable() return true end
 function imba_venomancer_venomous_gale:IsNetherWardStealable() return true end
 
 function imba_venomancer_venomous_gale:GetAbilityTextureName()
-	return "venomancer_venomous_gale"
+   return "venomancer_venomous_gale"
 end
 -------------------------------------------
 
@@ -183,11 +171,11 @@ function imba_venomancer_venomous_gale:GetCastAnimation()
 end
 
 function imba_venomancer_venomous_gale:OnSpellStart()
-	if IsServer() then
+    if IsServer() then
 		local caster = self:GetCaster()
 		local target_loc = self:GetCursorPosition()
 		local caster_loc
-
+		
 		local mouth_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_venomancer/venomancer_venomous_gale_mouth.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
 		if self.bWardCaster then
 			caster_loc = self.bWardCaster:GetAbsOrigin()
@@ -210,7 +198,7 @@ function imba_venomancer_venomous_gale:OnSpellStart()
 		local tick_interval = self:GetSpecialValueFor("tick_interval")
 		local radius = self:GetSpecialValueFor("radius")
 		local projectile_speed = self:GetSpecialValueFor("speed")
-
+		
 		local direction
 		if target_loc == caster_loc then
 			direction = caster:GetForwardVector()
@@ -219,65 +207,65 @@ function imba_venomancer_venomous_gale:OnSpellStart()
 		end
 		local index = DoUniqueString("index")
 		self[index] = {}
-		local travel_distance
+		local travel_distance 
 		caster:EmitSound("Hero_Venomancer.VenomousGale")
-
+		
 		local projectile_count = 1
 		if caster:HasTalent("special_bonus_imba_venomancer_7") then
 			projectile_count = caster:FindTalentValue("special_bonus_imba_venomancer_7")
 		end
-
+		
 		ParticleManager:SetParticleControlEnt(mouth_pfx, 0, caster, PATTACH_POINT_FOLLOW, "attach_mouth", caster:GetAbsOrigin(), true)
 		ParticleManager:ReleaseParticleIndex(mouth_pfx)
-
+		
 		for i = 1, projectile_count, 1 do
 			local angle = 360 - (360 / projectile_count)*i
 			local velocity = RotateVector2D(direction,angle,true)
 			local projectile
 			if self.bWardCaster then
 				travel_distance = self:GetSpecialValueFor("ward_range") + GetCastRangeIncrease(caster)
-				projectile =
-					{
-						Ability				= self,
-						EffectName			= "particles/units/heroes/hero_venomancer/venomancer_venomous_gale.vpcf",
-						vSpawnOrigin		= self.bWardCaster:GetAbsOrigin(),
-						fDistance			= travel_distance,
-						fStartRadius		= radius,
-						fEndRadius			= radius,
-						Source				= caster,
-						bHasFrontalCone		= true,
-						bReplaceExisting	= false,
-						iUnitTargetTeam		= self:GetAbilityTargetTeam(),
-						iUnitTargetFlags	= self:GetAbilityTargetFlags(),
-						iUnitTargetType		= self:GetAbilityTargetType(),
-						fExpireTime 		= GameRules:GetGameTime() + 10.0,
-						bDeleteOnHit		= true,
-						vVelocity			= Vector(velocity.x,velocity.y,0) * projectile_speed,
-						bProvidesVision		= false,
-						ExtraData			= {index = index, strike_damage = strike_damage, duration = duration, projectile_count = projectile_count}
-					}
+				projectile = 
+				{
+					Ability				= self,
+					EffectName			= "particles/units/heroes/hero_venomancer/venomancer_venomous_gale.vpcf",
+					vSpawnOrigin		= self.bWardCaster:GetAbsOrigin(),
+					fDistance			= travel_distance,
+					fStartRadius		= radius,
+					fEndRadius			= radius,
+					Source				= caster,
+					bHasFrontalCone		= true,
+					bReplaceExisting	= false,
+					iUnitTargetTeam		= self:GetAbilityTargetTeam(),
+					iUnitTargetFlags	= self:GetAbilityTargetFlags(),
+					iUnitTargetType		= self:GetAbilityTargetType(),
+					fExpireTime 		= GameRules:GetGameTime() + 10.0,
+					bDeleteOnHit		= true,
+					vVelocity			= Vector(velocity.x,velocity.y,0) * projectile_speed,
+					bProvidesVision		= false,
+					ExtraData			= {index = index, strike_damage = strike_damage, duration = duration, projectile_count = projectile_count}
+				}
 			else
 				travel_distance = self.BaseClass.GetCastRange(self,target_loc,nil) + GetCastRangeIncrease(caster)
-				projectile =
-					{
-						Ability				= self,
-						EffectName			= "particles/units/heroes/hero_venomancer/venomancer_venomous_gale.vpcf",
-						vSpawnOrigin		= caster:GetAttachmentOrigin(caster:ScriptLookupAttachment("attach_mouth")),
-						fDistance			= travel_distance,
-						fStartRadius		= radius,
-						fEndRadius			= radius,
-						Source				= caster,
-						bHasFrontalCone		= true,
-						bReplaceExisting	= false,
-						iUnitTargetTeam		= self:GetAbilityTargetTeam(),
-						iUnitTargetFlags	= self:GetAbilityTargetFlags(),
-						iUnitTargetType		= self:GetAbilityTargetType(),
-						fExpireTime 		= GameRules:GetGameTime() + 10.0,
-						bDeleteOnHit		= true,
-						vVelocity			= Vector(velocity.x,velocity.y,0) * projectile_speed,
-						bProvidesVision		= false,
-						ExtraData			= {index = index, strike_damage = strike_damage, duration = duration, projectile_count = projectile_count}
-					}
+				projectile = 
+				{
+					Ability				= self,
+					EffectName			= "particles/units/heroes/hero_venomancer/venomancer_venomous_gale.vpcf",
+					vSpawnOrigin		= caster:GetAttachmentOrigin(caster:ScriptLookupAttachment("attach_mouth")),
+					fDistance			= travel_distance,
+					fStartRadius		= radius,
+					fEndRadius			= radius,
+					Source				= caster,
+					bHasFrontalCone		= true,
+					bReplaceExisting	= false,
+					iUnitTargetTeam		= self:GetAbilityTargetTeam(),
+					iUnitTargetFlags	= self:GetAbilityTargetFlags(),
+					iUnitTargetType		= self:GetAbilityTargetType(),
+					fExpireTime 		= GameRules:GetGameTime() + 10.0,
+					bDeleteOnHit		= true,
+					vVelocity			= Vector(velocity.x,velocity.y,0) * projectile_speed,
+					bProvidesVision		= false,
+					ExtraData			= {index = index, strike_damage = strike_damage, duration = duration, projectile_count = projectile_count}
+				}
 			end
 			ProjectileManager:CreateLinearProjectile(projectile)
 		end
@@ -325,11 +313,11 @@ function modifier_imba_venomous_gale:RemoveOnDeath() return true end
 -------------------------------------------
 
 function modifier_imba_venomous_gale:DeclareFunctions()
-	local decFuns =
-		{
-			MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
-		}
-	return decFuns
+    local decFuns =
+    {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
+    }
+    return decFuns
 end
 
 function modifier_imba_venomous_gale:OnCreated()
@@ -383,11 +371,11 @@ function modifier_imba_venomous_gale_wardcast:RemoveOnDeath() return true end
 -------------------------------------------
 
 function modifier_imba_venomous_gale_wardcast:DeclareFunctions()
-	local decFuns =
-		{
-			MODIFIER_PROPERTY_DISABLE_TURNING
-		}
-	return decFuns
+    local decFuns =
+    {
+		MODIFIER_PROPERTY_DISABLE_TURNING
+    }
+    return decFuns
 end
 
 function modifier_imba_venomous_gale_wardcast:GetModifierDisableTurning()
@@ -407,12 +395,12 @@ function imba_venomancer_poison_sting:IsStealable() return false end
 function imba_venomancer_poison_sting:IsNetherWardStealable() return false end
 
 function imba_venomancer_poison_sting:GetAbilityTextureName()
-	return "venomancer_poison_sting"
+   return "venomancer_poison_sting"
 end
 -------------------------------------------
 
 function imba_venomancer_poison_sting:GetIntrinsicModifierName()
-	return "modifier_imba_poison_sting"
+    return "modifier_imba_poison_sting"
 end
 
 -------------------------------------------
@@ -426,12 +414,12 @@ function modifier_imba_poison_sting:RemoveOnDeath() return false end
 -------------------------------------------
 
 function modifier_imba_poison_sting:DeclareFunctions()
-	local decFuns =
-		{
-			MODIFIER_EVENT_ON_ATTACK_LANDED,
-			MODIFIER_EVENT_ON_ATTACK
-		}
-	return decFuns
+    local decFuns =
+    {
+		MODIFIER_EVENT_ON_ATTACK_LANDED,
+		MODIFIER_EVENT_ON_ATTACK
+    }
+    return decFuns
 end
 
 function modifier_imba_poison_sting:OnAttack( params )
@@ -491,11 +479,11 @@ function modifier_imba_poison_sting_debuff:RemoveOnDeath() return true end
 -------------------------------------------
 
 function modifier_imba_poison_sting_debuff:DeclareFunctions()
-	local decFuns =
-		{
-			MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-		}
-	return decFuns
+    local decFuns =
+    {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+    }
+    return decFuns
 end
 
 function modifier_imba_poison_sting_debuff:OnCreated(params)
@@ -512,7 +500,7 @@ function modifier_imba_poison_sting_debuff:OnRefresh(params)
 end
 
 function modifier_imba_poison_sting_debuff:DamageTick(bFirstHit)
-	local damage
+	local damage 
 	if bFirstHit then
 		damage = self.damage + self.stack_damage * self:GetStackCount()
 	else
@@ -558,11 +546,11 @@ function modifier_imba_poison_sting_debuff_ward:RemoveOnDeath() return true end
 -------------------------------------------
 
 function modifier_imba_poison_sting_debuff_ward:DeclareFunctions()
-	local decFuns =
-		{
-			MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-		}
-	return decFuns
+    local decFuns =
+    {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+    }
+    return decFuns
 end
 
 function modifier_imba_poison_sting_debuff_ward:OnCreated(params)
@@ -579,7 +567,7 @@ function modifier_imba_poison_sting_debuff_ward:OnRefresh(params)
 end
 
 function modifier_imba_poison_sting_debuff_ward:DamageTick(bFirstHit)
-	local damage
+	local damage 
 	if bFirstHit then
 		damage = self.damage + self.stack_damage * self:GetStackCount()
 	else
@@ -626,23 +614,23 @@ function imba_venomancer_plague_ward:IsStealable() return true end
 function imba_venomancer_plague_ward:IsNetherWardStealable() return false end
 
 function imba_venomancer_plague_ward:GetAbilityTextureName()
-	return "venomancer_plague_ward"
+   return "venomancer_plague_ward"
 end
 -------------------------------------------
 
 function imba_venomancer_plague_ward:OnSpellStart()
-	if IsServer() then
+    if IsServer() then
 		local caster = self:GetCaster()
 		local target_loc = self:GetCursorPosition()
 		local caster_loc = caster:GetAbsOrigin()
-
+		
 		local direction
 		if target_loc == caster_loc then
 			direction = caster:GetForwardVector()
 		else
 			direction = (target_loc - caster_loc):Normalized()
 		end
-
+		
 		-- Parameters
 		local duration = self:GetSpecialValueFor("duration")
 		local scourge_hp = self:GetSpecialValueFor("scourge_hp")
@@ -653,7 +641,7 @@ function imba_venomancer_plague_ward:OnSpellStart()
 		local plague_hp = self:GetSpecialValueFor("plague_hp")
 		local plague_damage = self:GetSpecialValueFor("plague_damage")
 		local plague_radius = self:GetSpecialValueFor("plague_radius")
-
+		
 		-- Talent #5 %-based additional ward-stats
 		scourge_hp = scourge_hp + (scourge_hp * caster:FindTalentValue("special_bonus_imba_venomancer_5") / 100)
 		scourge_damage = scourge_damage + (scourge_damage * caster:FindTalentValue("special_bonus_imba_venomancer_5") / 100)
@@ -667,16 +655,16 @@ function imba_venomancer_plague_ward:OnSpellStart()
 		ParticleManager:SetParticleControlEnt(spawn_fx, 0, caster, PATTACH_POINT_FOLLOW, "attach_attack1", caster:GetAbsOrigin(), true)
 		ParticleManager:SetParticleControlEnt(spawn_fx, 1, caster, PATTACH_POINT_FOLLOW, "attach_attack2", caster:GetAbsOrigin(), true)
 		ParticleManager:ReleaseParticleIndex(spawn_fx)
-
+		
 		if (math.random(1,100) <= 20) and (caster:GetName() == "npc_dota_hero_venomancer") then
 			caster:EmitSound("venomancer_venm_ability_ward_0"..math.random(1,6))
 		end
-
+		
 		local ability_gale = caster:FindAbilityByName("imba_venomancer_venomous_gale")
 		if ability_gale then
 			scourge_ward:AddRangeIndicator(caster, ability_gale, "ward_range", nil, 183, 247, 33, false, false, true)
 		end
-
+		
 		scourge_ward:SetControllableByPlayer(caster:GetPlayerID(), true)
 		scourge_ward:SetForwardVector(direction)
 		scourge_ward:AddNewModifier(caster, self, "modifier_kill", {duration = duration})
@@ -688,9 +676,9 @@ function imba_venomancer_plague_ward:OnSpellStart()
 		scourge_ward:SetMaximumGoldBounty(scourge_gold)
 		scourge_ward:SetMinimumGoldBounty(scourge_gold)
 		scourge_ward:SetBaseDamageMin(scourge_damage)
-		scourge_ward:SetBaseDamageMax(scourge_damage)
+        scourge_ward:SetBaseDamageMax(scourge_damage)
 		scourge_ward.bIsScourge = true
-
+		
 		if plague_count >= 1 then
 			local start_angle = math.random() * 360
 			local angle = 360 / plague_count
@@ -729,18 +717,18 @@ function modifier_imba_plague_ward:RemoveOnDeath() return true end
 -------------------------------------------
 
 function modifier_imba_plague_ward:DeclareFunctions()
-	local decFuns =
-		{
-			MODIFIER_EVENT_ON_DEATH
-		}
-	return decFuns
+    local decFuns =
+    {
+		MODIFIER_EVENT_ON_DEATH
+    }
+    return decFuns
 end
 
 function modifier_imba_plague_ward:CheckState()
 	local state =
-		{
-			[MODIFIER_STATE_INVULNERABLE] = true
-		}
+	{
+		[MODIFIER_STATE_INVULNERABLE] = true
+	}
 	return state
 end
 
@@ -769,15 +757,15 @@ function imba_venomancer_poison_nova:IsStealable() return true end
 function imba_venomancer_poison_nova:IsNetherWardStealable() return true end
 
 function imba_venomancer_poison_nova:GetAbilityTextureName()
-	return "venomancer_poison_nova"
+   return "venomancer_poison_nova"
 end
 -------------------------------------------
 
 function imba_venomancer_poison_nova:OnSpellStart()
-	if IsServer() then
+    if IsServer() then
 		local caster = self:GetCaster()
 		local caster_loc = caster:GetAbsOrigin()
-
+		
 		-- Parameters
 		local index = 0
 		local radius = self:GetSpecialValueFor("radius")
@@ -794,12 +782,12 @@ function imba_venomancer_poison_nova:OnSpellStart()
 		local health_threshold_pct = self:GetSpecialValueFor("health_threshold_pct") / 100
 		local contagion_radius = self:GetSpecialValueFor("contagion_radius")
 		local contagion_min_duration = self:GetSpecialValueFor("contagion_min_duration")
-
+		
 		-- Make caster briefly visible
 		caster:MakeVisibleToTeam(DOTA_TEAM_GOODGUYS, 1.0)
 		caster:MakeVisibleToTeam(DOTA_TEAM_BADGUYS, 1.0)
-
-
+		
+		
 		local line = math.random(1,21)
 		if line >= 10 then
 			caster:EmitSound("venomancer_venm_ability_nova_"..line)
@@ -817,7 +805,7 @@ function imba_venomancer_poison_nova:OnSpellStart()
 		local nova_caster_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_venomancer/venomancer_poison_nova_cast.vpcf", PATTACH_ABSORIGIN, caster)
 		ParticleManager:SetParticleControl(nova_caster_pfx, 0, caster:GetAbsOrigin())
 		ParticleManager:ReleaseParticleIndex(nova_caster_pfx)
-
+		
 		local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster_loc, nil, radius, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), FIND_ANY_ORDER, false)
 		for _, enemy in pairs(enemies) do
 			local poison = enemy:FindModifierByNameAndCaster("modifier_imba_poison_nova",caster)
@@ -855,7 +843,7 @@ function modifier_imba_poison_nova:RemoveOnDeath() return true end
 -------------------------------------------
 
 function modifier_imba_poison_nova:OnCreated( params )
-	if IsServer() then
+    if IsServer() then
 		self.main_damage = params.main_damage
 		self.damage_pct = params.damage_pct
 		self.health_pct = params.health_pct
@@ -892,14 +880,14 @@ function modifier_imba_poison_nova:DealDamage(bFirst)
 				end
 				if not bAlreadyAffected then
 					enemy:AddNewModifier(caster, self:GetAbility(), "modifier_imba_poison_nova", {
-						duration = math.max(self:GetRemainingTime(),self.contagion_min_duration) + 2*FrameTime(),
-						main_damage = self.main_damage,
-						damage_pct = self.damage_pct,
-						health_pct = self.health_pct,
-						health_threshold_pct = self.health_threshold_pct,
-						contagion_radius = self.contagion_radius,
-						contagion_min_duration = self.contagion_min_duration,
-						index = self.index})
+					duration = math.max(self:GetRemainingTime(),self.contagion_min_duration) + 2*FrameTime(),
+					main_damage = self.main_damage,
+					damage_pct = self.damage_pct,
+					health_pct = self.health_pct,
+					health_threshold_pct = self.health_threshold_pct,
+					contagion_radius = self.contagion_radius,
+					contagion_min_duration = self.contagion_min_duration,
+					index = self.index})
 				end
 			end
 		end

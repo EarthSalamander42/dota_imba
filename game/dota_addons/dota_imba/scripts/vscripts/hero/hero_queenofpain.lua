@@ -1,22 +1,9 @@
--- Copyright (C) 2018  The Dota IMBA Development Team
---
--- Licensed under the Apache License, Version 2.0 (the "License");
--- you may not use this file except in compliance with the License.
--- You may obtain a copy of the License at
---
--- http://www.apache.org/licenses/LICENSE-2.0
---
--- Unless required by applicable law or agreed to in writing, software
--- distributed under the License is distributed on an "AS IS" BASIS,
--- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
--- See the License for the specific language governing permissions and
--- limitations under the License.
---
--- Editors:
---     Firetoad
---     Hewdraw
---     AtroCty, 10.09.2017
---     suthernfriend, 03.02.2018
+--[[
+		By: AtroCty
+		Prev. Authors: Firetoad & Hewdraw
+		Date:  22.06.2015
+		Updated:  10.09.2017
+	]]
 
 CreateEmptyTalents("queenofpain")
 
@@ -34,7 +21,7 @@ function imba_queenofpain_delightful_torment:IsNetherWardStealable() return fals
 function imba_queenofpain_delightful_torment:IsInnateAbility() return true end
 
 function imba_queenofpain_delightful_torment:GetAbilityTextureName()
-	return "custom/queenofpain_delightful_torment"
+   return "custom/queenofpain_delightful_torment"
 end
 -------------------------------------------
 
@@ -54,9 +41,9 @@ function modifier_imba_delightful_torment_thinker:IsStunDebuff() return false en
 
 function modifier_imba_delightful_torment_thinker:DeclareFunctions()
 	local decFuns =
-		{
-			MODIFIER_EVENT_ON_TAKEDAMAGE
-		}
+	{
+		MODIFIER_EVENT_ON_TAKEDAMAGE
+	}
 	return decFuns
 end
 
@@ -66,7 +53,7 @@ function modifier_imba_delightful_torment_thinker:OnTakeDamage( params )
 		if params.unit:IsRealHero() and not parent:PassivesDisabled() then
 			-- Parameters
 			local cooldown_reduction = self:GetAbility():GetSpecialValueFor("cooldown_reduction")
-
+			
 			-- If a hero was damaged, reduce all ability cooldowns
 			for i = 0, 15 do
 				local current_ability = parent:GetAbilityByIndex(i)
@@ -100,9 +87,9 @@ function modifier_imba_delightful_torment_as_bonus:GetAttributes() return MODIFI
 
 function modifier_imba_delightful_torment_as_bonus:DeclareFunctions()
 	local decFuns =
-		{
-			MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT
-		}
+	{
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT
+	}
 	return decFuns
 end
 
@@ -124,7 +111,7 @@ function imba_queenofpain_shadow_strike:IsStealable() return true end
 function imba_queenofpain_shadow_strike:IsNetherWardStealable() return true end
 
 function imba_queenofpain_shadow_strike:GetAbilityTextureName()
-	return "queenofpain_shadow_strike"
+   return "queenofpain_shadow_strike"
 end
 -------------------------------------------
 
@@ -156,26 +143,26 @@ function imba_queenofpain_shadow_strike:OnSpellStart( params )
 		ParticleManager:SetParticleControl(caster_pfx, 3, Vector(projectile_speed, 0, 0))
 		ParticleManager:ReleaseParticleIndex(caster_pfx)
 
-		local projectile =
-			{
-				Target 				= target,
-				Source 				= caster,
-				Ability 			= self,
-				EffectName 			= "particles/units/heroes/hero_queenofpain/queen_shadow_strike.vpcf",
-				iMoveSpeed			= projectile_speed,
-				vSourceLoc 			= caster:GetAbsOrigin(),
-				bDrawsOnMinimap 	= false,
-				bDodgeable 			= true,
-				bIsAttack 			= false,
-				bVisibleToEnemies 	= true,
-				bReplaceExisting 	= false,
-				flExpireTime 		= GameRules:GetGameTime() + 20,
-				bProvidesVision 	= false,
-				--	iSourceAttachment 	= DOTA_PROJECTILE_ATTACHMENT_ATTACK_1,
-				--	iVisionRadius 		= 400,
-				--	iVisionTeamNumber 	= caster:GetTeamNumber()
-				ExtraData			= {init_damage = damage, sec_damage_total = sec_damage_total, damage_interval = damage_interval, duration = duration}
-			}
+		local projectile = 
+		{
+			Target 				= target,
+			Source 				= caster,
+			Ability 			= self,
+			EffectName 			= "particles/units/heroes/hero_queenofpain/queen_shadow_strike.vpcf",
+			iMoveSpeed			= projectile_speed,
+			vSourceLoc 			= caster:GetAbsOrigin(),
+			bDrawsOnMinimap 	= false,
+			bDodgeable 			= true,
+			bIsAttack 			= false,
+			bVisibleToEnemies 	= true,
+			bReplaceExisting 	= false,
+			flExpireTime 		= GameRules:GetGameTime() + 20,
+			bProvidesVision 	= false,
+		--	iSourceAttachment 	= DOTA_PROJECTILE_ATTACHMENT_ATTACK_1,
+		--	iVisionRadius 		= 400,
+		--	iVisionTeamNumber 	= caster:GetTeamNumber()
+			ExtraData			= {init_damage = damage, sec_damage_total = sec_damage_total, damage_interval = damage_interval, duration = duration}
+		}
 		ProjectileManager:CreateTrackingProjectile(projectile)
 	end
 end
@@ -208,7 +195,7 @@ function modifier_imba_shadow_strike_debuff:OnCreated( params )
 	local slow_decay_pct = ability:GetSpecialValueFor("slow_decay_pct")
 	self.slow = ability:GetSpecialValueFor("init_move_slow_pct")
 	self.slow_decrease = self.slow * (slow_decay_pct / 100)
-
+	
 	if IsServer() then
 		if not self.dagger_pfx then
 			self.dagger_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_queenofpain/queen_shadow_strike_debuff.vpcf", PATTACH_POINT_FOLLOW, self:GetCaster())
@@ -231,7 +218,7 @@ end
 
 function modifier_imba_shadow_strike_debuff:OnIntervalThink()
 	self.counter = self.counter + 1
-
+	
 	-- Slow handling
 	if math.mod(self.counter,2) == 0 then
 		if self.slow > self.slow_decrease then
@@ -252,7 +239,7 @@ function modifier_imba_shadow_strike_debuff:OnIntervalThink()
 			local caster = self:GetCaster()
 			if caster:HasAbility("imba_queenofpain_scream_of_pain") and caster:HasTalent("special_bonus_imba_queenofpain_6") and parent:IsHero() then
 				local scream = caster:FindAbilityByName("imba_queenofpain_scream_of_pain")
-				scream:OnSpellStart(caster:FindTalentValue("special_bonus_imba_queenofpain_6", "damage_pct"), parent, 1)
+					scream:OnSpellStart(caster:FindTalentValue("special_bonus_imba_queenofpain_6", "damage_pct"), parent, 1)
 				if scream:GetLevel() >= 1 then
 				end
 			end
@@ -261,13 +248,13 @@ function modifier_imba_shadow_strike_debuff:OnIntervalThink()
 end
 
 function modifier_imba_shadow_strike_debuff:DeclareFunctions()
-	local decFuncs =
-		{
-			MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-			MODIFIER_PROPERTY_PROVIDES_FOW_POSITION,
-			MODIFIER_EVENT_ON_TAKEDAMAGE
-		}
-	return decFuncs
+	local decFuncs = 
+	{	
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		MODIFIER_PROPERTY_PROVIDES_FOW_POSITION,
+		MODIFIER_EVENT_ON_TAKEDAMAGE
+	}
+	return decFuncs	
 end
 
 -- Talent #3 handling
@@ -310,7 +297,7 @@ function imba_queenofpain_blink:IsStealable() return true end
 function imba_queenofpain_blink:IsNetherWardStealable() return false end
 
 function imba_queenofpain_blink:GetAbilityTextureName()
-	return "queenofpain_blink"
+   return "queenofpain_blink"
 end
 -------------------------------------------
 
@@ -319,21 +306,21 @@ function imba_queenofpain_blink:OnSpellStart()
 		local caster = self:GetCaster()
 		local caster_pos = caster:GetAbsOrigin()
 		local target_pos = self:GetCursorPosition()
-
+		
 		-- Parameters
 		local blink_range = self:GetSpecialValueFor("blink_range") + GetCastRangeIncrease(caster)
 		local scream_damage_pct = self:GetSpecialValueFor("scream_damage_pct")
 
 		local distance = (target_pos - caster_pos)
-
+		
 		-- Range-check
 		if distance:Length2D() > blink_range then
 			target_pos = caster_pos + (distance:Normalized() * blink_range)
 		end
-
+		
 		-- Disjointing everything
 		ProjectileManager:ProjectileDodge(caster)
-
+		
 		--[[local enemies = FindUnitsInRadius(caster:GetTeamNumber(), target, nil, 500, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 		for _,enemy in ipairs(enemies) do
 			local shadow_strike = caster:FindAbilityByName("imba_queenofpain_shadow_strike")
@@ -345,19 +332,19 @@ function imba_queenofpain_blink:OnSpellStart()
 		ParticleManager:SetParticleControl(blink_pfx, 0, caster_pos )
 		ParticleManager:SetParticleControl(blink_pfx, 1, target_pos )
 		ParticleManager:ReleaseParticleIndex(blink_pfx)
-
+		
 		-- Place hero
 		FindClearSpaceForUnit(caster, target_pos, true)
-
+		
 		-- Particle & sound OUT
 		caster:EmitSound("Hero_QueenOfPain.Blink_out")
 		local blink_end_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_queenofpain/queen_blink_end.vpcf", PATTACH_ABSORIGIN, caster)
 		ParticleManager:SetParticleControl(blink_end_pfx, 0, target_pos )
 		ParticleManager:SetParticleControlForward(blink_end_pfx, 0, distance:Normalized())
 		ParticleManager:ReleaseParticleIndex(blink_end_pfx)
-
+		
 		caster:StartGesture(ACT_DOTA_CAST_ABILITY_2_END)
-
+		
 		-- Use Scream of Pain if avaible
 		if caster:HasAbility("imba_queenofpain_scream_of_pain") then
 			local scream = caster:FindAbilityByName("imba_queenofpain_scream_of_pain")
@@ -410,7 +397,7 @@ LinkLuaModifier("modifier_imba_scream_of_pain_reflect", "hero/hero_queenofpain",
 imba_queenofpain_scream_of_pain = class({})
 
 function imba_queenofpain_scream_of_pain:GetAbilityTextureName()
-	return "queenofpain_scream_of_pain"
+   return "queenofpain_scream_of_pain"
 end
 
 function imba_queenofpain_scream_of_pain:IsHiddenWhenStolen() return false end
@@ -433,14 +420,14 @@ function imba_queenofpain_scream_of_pain:OnSpellStart(scream_damage_pct, source_
 			scream_source = caster
 			scream_source:EmitSound("Hero_QueenOfPain.ScreamOfPain")
 		end
-
+		
 		-- Prevent reclusive instances of Talent 6 & 8 overlapping with each other
 		if not is_talent then
 			is_talent = 0
 		end
-
+		
 		local scream_loc = scream_source:GetAbsOrigin()
-
+		
 		-- Parameters
 		local damage = self:GetSpecialValueFor("damage")
 		if scream_damage_pct then
@@ -450,34 +437,34 @@ function imba_queenofpain_scream_of_pain:OnSpellStart(scream_damage_pct, source_
 		local projectile_speed = self:GetSpecialValueFor("projectile_speed")
 		local radius = self:GetSpecialValueFor("radius")
 		local pain_reflect_pct = self:GetSpecialValueFor("pain_reflect_pct")
-
+		
 		local scream_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_queenofpain/queen_scream_of_pain_owner.vpcf", PATTACH_ABSORIGIN, scream_source)
 		ParticleManager:SetParticleControl(scream_pfx, 0, scream_loc )
-
+		
 		-- Get Targets & fire projectiles
 		local enemies = FindUnitsInRadius(caster:GetTeamNumber(), scream_loc, nil, radius, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), FIND_ANY_ORDER, false)
 		for _, enemy in pairs(enemies) do
 			if enemy ~= scream_source then
-				local projectile =
-					{
-						Target 				= enemy,
-						Source 				= scream_source,
-						Ability 			= self,
-						EffectName 			= "particles/units/heroes/hero_queenofpain/queen_scream_of_pain.vpcf",
-						iMoveSpeed			= projectile_speed,
-						vSourceLoc 			= scream_loc,
-						bDrawsOnMinimap 	= false,
-						bDodgeable 			= true,
-						bIsAttack 			= false,
-						bVisibleToEnemies 	= true,
-						bReplaceExisting 	= false,
-						flExpireTime 		= GameRules:GetGameTime() + 20,
-						bProvidesVision 	= false,
-						iSourceAttachment 	= DOTA_PROJECTILE_ATTACHMENT_HITLOCATION,
-						--	iVisionRadius 		= 400,
-						--	iVisionTeamNumber 	= caster:GetTeamNumber()
-						ExtraData			= {damage = damage, pain_duration = pain_duration, pain_reflect_pct = pain_reflect_pct, is_talent = is_talent}
-					}
+				local projectile = 
+				{
+					Target 				= enemy,
+					Source 				= scream_source,
+					Ability 			= self,
+					EffectName 			= "particles/units/heroes/hero_queenofpain/queen_scream_of_pain.vpcf",
+					iMoveSpeed			= projectile_speed,
+					vSourceLoc 			= scream_loc,
+					bDrawsOnMinimap 	= false,
+					bDodgeable 			= true,
+					bIsAttack 			= false,
+					bVisibleToEnemies 	= true,
+					bReplaceExisting 	= false,
+					flExpireTime 		= GameRules:GetGameTime() + 20,
+					bProvidesVision 	= false,
+					iSourceAttachment 	= DOTA_PROJECTILE_ATTACHMENT_HITLOCATION,
+				--	iVisionRadius 		= 400,
+				--	iVisionTeamNumber 	= caster:GetTeamNumber()
+					ExtraData			= {damage = damage, pain_duration = pain_duration, pain_reflect_pct = pain_reflect_pct, is_talent = is_talent}
+				}
 				ProjectileManager:CreateTrackingProjectile(projectile)
 			end
 		end
@@ -542,9 +529,9 @@ end
 
 function modifier_imba_scream_of_pain_reflect:DeclareFunctions()
 	local decFuns =
-		{
-			MODIFIER_EVENT_ON_TAKEDAMAGE
-		}
+	{
+		MODIFIER_EVENT_ON_TAKEDAMAGE
+	}
 	return decFuns
 end
 
@@ -575,7 +562,7 @@ LinkLuaModifier("modifier_imba_sonic_wave_daze", "hero/hero_queenofpain", LUA_MO
 imba_queenofpain_sonic_wave = class({})
 
 function imba_queenofpain_sonic_wave:GetAbilityTextureName()
-	return "queenofpain_sonic_wave"
+   return "queenofpain_sonic_wave"
 end
 
 function imba_queenofpain_sonic_wave:IsHiddenWhenStolen() return false end
@@ -588,11 +575,11 @@ function imba_queenofpain_sonic_wave:GetIntrinsicModifierName()
 end
 
 function imba_queenofpain_sonic_wave:OnSpellStart()
-	if IsServer() then
+    if IsServer() then
 		local caster = self:GetCaster()
 		local target_loc = self:GetCursorPosition()
 		local caster_loc = caster:GetAbsOrigin()
-
+		
 		-- Parameters
 		local damage = self:GetSpecialValueFor("damage")
 		local start_radius = self:GetSpecialValueFor("start_radius")
@@ -607,14 +594,14 @@ function imba_queenofpain_sonic_wave:OnSpellStart()
 		end
 
 		travel_distance = travel_distance + GetCastRangeIncrease(caster)
-
+		
 		-- Scepter-damage
 		if caster:HasScepter() then
 			damage = self:GetSpecialValueFor("damage_scepter")
 		end
-
+		
 		caster:EmitSound("Hero_QueenOfPain.SonicWave")
-
+		
 		-- Talent #2 handling
 		local projectiles = 1
 		if caster:HasTalent("special_bonus_imba_queenofpain_2") then
@@ -622,26 +609,26 @@ function imba_queenofpain_sonic_wave:OnSpellStart()
 			damage = damage / projectiles
 		end
 
-		projectile =
-			{
-				Ability				= self,
-				EffectName			= "particles/units/heroes/hero_queenofpain/queen_sonic_wave.vpcf",
-				vSpawnOrigin		= caster_loc,
-				fDistance			= travel_distance,
-				fStartRadius		= start_radius,
-				fEndRadius			= end_radius,
-				Source				= caster,
-				bHasFrontalCone		= true,
-				bReplaceExisting	= false,
-				iUnitTargetTeam		= self:GetAbilityTargetTeam(),
-				iUnitTargetFlags	= self:GetAbilityTargetFlags(),
-				iUnitTargetType		= self:GetAbilityTargetType(),
-				fExpireTime 		= GameRules:GetGameTime() + 10.0,
-				bDeleteOnHit		= true,
-				vVelocity			= Vector(direction.x,direction.y,0) * projectile_speed,
-				bProvidesVision		= false,
-				ExtraData			= {damage = damage}
-			}
+		projectile = 
+		{
+			Ability				= self,
+			EffectName			= "particles/units/heroes/hero_queenofpain/queen_sonic_wave.vpcf",
+			vSpawnOrigin		= caster_loc,
+			fDistance			= travel_distance,
+			fStartRadius		= start_radius,
+			fEndRadius			= end_radius,
+			Source				= caster,
+			bHasFrontalCone		= true,
+			bReplaceExisting	= false,
+			iUnitTargetTeam		= self:GetAbilityTargetTeam(),
+			iUnitTargetFlags	= self:GetAbilityTargetFlags(),
+			iUnitTargetType		= self:GetAbilityTargetType(),
+			fExpireTime 		= GameRules:GetGameTime() + 10.0,
+			bDeleteOnHit		= true,
+			vVelocity			= Vector(direction.x,direction.y,0) * projectile_speed,
+			bProvidesVision		= false,
+			ExtraData			= {damage = damage}
+		}
 
 		ProjectileManager:CreateLinearProjectile(projectile)
 
@@ -706,9 +693,9 @@ function modifier_imba_sonic_wave:IsStunDebuff() return false end
 
 function modifier_imba_sonic_wave:DeclareFunctions()
 	local decFuns =
-		{
-			MODIFIER_EVENT_ON_TAKEDAMAGE
-		}
+	{
+		MODIFIER_EVENT_ON_TAKEDAMAGE
+	}
 	return decFuns
 end
 
@@ -719,7 +706,7 @@ function modifier_imba_sonic_wave:OnTakeDamage( params )
 		if params.attacker == parent and params.inflictor then
 			if params.inflictor == ability then
 				local lifesteal_amount = ability:GetSpecialValueFor("absorb_pct")
-
+				
 				-- Particle effect
 				local lifesteal_pfx = ParticleManager:CreateParticle("particles/hero/queenofpain/lifesteal.vpcf", PATTACH_ABSORIGIN_FOLLOW, parent)
 				ParticleManager:SetParticleControl(lifesteal_pfx, 0, params.unit:GetAbsOrigin())
@@ -727,15 +714,15 @@ function modifier_imba_sonic_wave:OnTakeDamage( params )
 				ParticleManager:SetParticleControl(lifesteal_pfx, 2, params.unit:GetAbsOrigin())
 				ParticleManager:SetParticleControl(lifesteal_pfx, 3, Vector((CalculateDistance(params.unit,parent)/100),0,0))
 				ParticleManager:ReleaseParticleIndex(lifesteal_pfx)
-
+				
 				local self_lifesteal_pfx = ParticleManager:CreateParticle("particles/hero/queenofpain/self_lifesteal.vpcf", PATTACH_ABSORIGIN_FOLLOW, parent)
 				ParticleManager:SetParticleControlEnt(self_lifesteal_pfx, 0, parent, PATTACH_POINT_FOLLOW, "attach_hitloc", parent:GetAbsOrigin(), true)
-
+				
 				-- If the target is a real hero, heal for the full value
 				if params.unit:IsRealHero() then
 					parent:Heal(params.damage * lifesteal_amount * 0.01, parent)
 
-					-- else, heal for half of it
+				-- else, heal for half of it
 				else
 					parent:Heal(params.damage * lifesteal_amount * 0.005, parent)
 				end

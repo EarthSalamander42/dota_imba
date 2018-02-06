@@ -1,20 +1,5 @@
--- Copyright (C) 2018  The Dota IMBA Development Team
---
--- Licensed under the Apache License, Version 2.0 (the "License");
--- you may not use this file except in compliance with the License.
--- You may obtain a copy of the License at
---
--- http://www.apache.org/licenses/LICENSE-2.0
---
--- Unless required by applicable law or agreed to in writing, software
--- distributed under the License is distributed on an "AS IS" BASIS,
--- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
--- See the License for the specific language governing permissions and
--- limitations under the License.
---
--- Editors:
---     EarthSalamander #42, 04.09.2017
---     suthernfriend, 03.02.2018
+-- Author: EarthSalamander #42
+-- Date: 04/09/2017
 
 --  CreateEmptyTalents("chaos_knight")
 
@@ -23,7 +8,7 @@ LinkLuaModifier("modifier_reality_rift_armor_reduction_debuff", "hero/hero_chaos
 imba_chaos_knight_reality_rift = class({})
 
 function imba_chaos_knight_reality_rift:CastFilterResultTarget(target)
-	local caster = self:GetCaster()
+local caster = self:GetCaster()
 
 	if target:IsMagicImmune() then
 		local ability = caster:FindAbilityByName("special_bonus_unique_chaos_knight")
@@ -85,14 +70,14 @@ function imba_chaos_knight_reality_rift:OnAbilityPhaseStart()
 
 		EmitSoundOn("Hero_ChaosKnight.RealityRift", caster)
 	end
-	return true
+   return true
 end
 
 function imba_chaos_knight_reality_rift:OnSpellStart()
-	local caster = self:GetCaster()
-	local hTarget = self:GetCursorTarget()
-	local ability = self
-	local duration = self:GetSpecialValueFor("armor_duration")
+local caster = self:GetCaster()
+local hTarget = self:GetCursorTarget()
+local ability = self
+local duration = self:GetSpecialValueFor("armor_duration")
 
 	if hTarget then
 		if (not hTarget:TriggerSpellAbsorb(self)) then
@@ -112,7 +97,7 @@ function imba_chaos_knight_reality_rift:OnSpellStart()
 			for _,unit in pairs(units) do
 				if unit:GetPlayerOwnerID() == caster:GetPlayerID() then
 					FindClearSpaceForUnit(unit, ability.random_point, true)
-					unit:Stop()
+					unit:Stop() 
 					unit:SetForwardVector(ability.fw * -1)
 					local order = {UnitIndex = unit:entindex(), OrderType = DOTA_UNIT_ORDER_ATTACK_TARGET, TargetIndex = hTarget:entindex(), Queue = true}
 					ExecuteOrderFromTable(order)
@@ -123,7 +108,7 @@ function imba_chaos_knight_reality_rift:OnSpellStart()
 	end
 end
 
-function imba_chaos_knight_reality_rift:DeclareFunctions()
+function imba_chaos_knight_reality_rift:DeclareFunctions()	
 	local decFuncs = {
 		MODIFIER_EVENT_ON_ATTACK_LANDED
 	}
@@ -136,7 +121,7 @@ end
 -- Armor reduction debuff
 modifier_reality_rift_armor_reduction_debuff = class({})
 
-function modifier_reality_rift_armor_reduction_debuff:DeclareFunctions()
+function modifier_reality_rift_armor_reduction_debuff:DeclareFunctions()	
 	local decFuncs = {
 		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS
 	}
@@ -145,13 +130,13 @@ function modifier_reality_rift_armor_reduction_debuff:DeclareFunctions()
 end
 
 function modifier_reality_rift_armor_reduction_debuff:OnCreated()
-	local parent = self:GetParent()
+local parent = self:GetParent()
 
 	parent.ArmorDebuff = ParticleManager:CreateParticle("particles/econ/items/templar_assassin/templar_assassin_focal/templar_meld_focal_overhead_model.vpcf", PATTACH_OVERHEAD_FOLLOW, parent)
 end
 
 function modifier_reality_rift_armor_reduction_debuff:OnDestroy()
-	local parent = self:GetParent()
+local parent = self:GetParent()
 
 	ParticleManager:DestroyParticle(parent.ArmorDebuff, false)
 	ParticleManager:ReleaseParticleIndex(parent.ArmorDebuff)
@@ -223,14 +208,14 @@ function modifier_chaos_knight_phantasm_cast:IsHidden()
 end
 
 function modifier_chaos_knight_phantasm_cast:CheckState()
-	local state =
-		{
-			[MODIFIER_STATE_INVULNERABLE] = true,
-			[MODIFIER_STATE_NO_HEALTH_BAR] = true,
-			[MODIFIER_STATE_STUNNED] = true,
-			[MODIFIER_STATE_OUT_OF_GAME] = true,
-		}
-
+	local state = 
+	{
+		[MODIFIER_STATE_INVULNERABLE] = true,
+		[MODIFIER_STATE_NO_HEALTH_BAR] = true,
+		[MODIFIER_STATE_STUNNED] = true,
+		[MODIFIER_STATE_OUT_OF_GAME] = true,
+	}
+	
 	return state
 end
 
@@ -269,7 +254,7 @@ function modifier_chaos_knight_phantasm_cast:OnDestroy()
 
 	-- Kill the old images
 	for k,v in pairs(caster.phantasm_illusions) do
-		if v and IsValidEntity(v) then
+		if v and IsValidEntity(v) then 
 			v:ForceKill(false)
 		end
 	end

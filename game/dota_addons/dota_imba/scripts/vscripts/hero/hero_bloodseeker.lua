@@ -1,21 +1,5 @@
--- Copyright (C) 2018  The Dota IMBA Development Team
---
--- Licensed under the Apache License, Version 2.0 (the "License");
--- you may not use this file except in compliance with the License.
--- You may obtain a copy of the License at
---
--- http://www.apache.org/licenses/LICENSE-2.0
---
--- Unless required by applicable law or agreed to in writing, software
--- distributed under the License is distributed on an "AS IS" BASIS,
--- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
--- See the License for the specific language governing permissions and
---
--- limitations under the License.
---
--- Editors:
---     Seinken, 05.07.2017
---     suthernfriend, 03.02.2018
+-- Author: yahnich
+-- Updated in: 05/07/2017
 
 CreateEmptyTalents("bloodseeker")
 local LinkedModifiers = {}
@@ -30,7 +14,7 @@ MergeTables(LinkedModifiers,{
 imba_bloodseeker_bloodrage = imba_bloodseeker_bloodrage or class({})
 
 function imba_bloodseeker_bloodrage:GetAbilityTextureName()
-	return "bloodseeker_bloodrage"
+   return "bloodseeker_bloodrage"
 end
 
 function imba_bloodseeker_bloodrage:OnSpellStart()
@@ -65,12 +49,12 @@ if IsServer() then
 	end
 
 	function modifier_imba_bloodrage_buff_stats:IsHidden() return false end
-	function modifier_imba_bloodrage_buff_stats:IsPurgable() return true end
-
+	function modifier_imba_bloodrage_buff_stats:IsPurgable() return true end	
+	
 	function modifier_imba_bloodrage_buff_stats:OnRefresh()
 		self:OnCreated()
 	end
-
+	
 	function modifier_imba_bloodrage_buff_stats:OnIntervalThink()
 		local targets = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.radius, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 0, 0, false)
 		for _,target in pairs(targets) do
@@ -84,7 +68,7 @@ if IsServer() then
 			end
 		end
 	end
-
+	
 	function modifier_imba_bloodrage_buff_stats:DeclareFunctions()
 		local funcs = {
 			MODIFIER_PROPERTY_TOTALDAMAGEOUTGOING_PERCENTAGE ,
@@ -168,7 +152,7 @@ modifier_imba_bloodrage_blood_frenzy = modifier_imba_bloodrage_blood_frenzy or c
 
 function modifier_imba_bloodrage_blood_frenzy:OnCreated()
 	-- Ability properties
-	self.caster = self:GetCaster()
+	self.caster = self:GetCaster() 
 	self.parent = self:GetParent()
 	self.particle_frenzy = "particles/hero/bloodseeker/bloodseeker_blood_frenzy_ring.vpcf"
 
@@ -183,7 +167,7 @@ end
 
 function modifier_imba_bloodrage_blood_frenzy:DeclareFunctions()
 	local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-		MODIFIER_PROPERTY_MOVESPEED_MAX}
+				      MODIFIER_PROPERTY_MOVESPEED_MAX}
 
 	return decFuncs
 end
@@ -211,7 +195,7 @@ MergeTables(LinkedModifiers,{
 imba_bloodseeker_blood_bath = imba_bloodseeker_blood_bath or class({})
 
 function imba_bloodseeker_blood_bath:GetAbilityTextureName()
-	return "bloodseeker_blood_bath"
+   return "bloodseeker_blood_bath"
 end
 
 function imba_bloodseeker_blood_bath:GetAOERadius()
@@ -227,7 +211,7 @@ end
 function imba_bloodseeker_blood_bath:OnSpellStart()
 	local vPos = self:GetCursorPosition()
 	local caster = self:GetCaster()
-
+	
 	-- #5 Talent: Blood Rite casts itself in a form of "glasses"
 	if not caster:HasTalent("special_bonus_imba_bloodseeker_5") then
 		self:FormBloodRiteCircle(caster, vPos)
@@ -242,22 +226,22 @@ function imba_bloodseeker_blood_bath:OnSpellStart()
 		-- Find position in front of the target point
 		local direction = (vPos - caster_pos):Normalized()
 		local front_point = vPos + direction * distance
-		self:FormBloodRiteCircle(caster, front_point)
+		self:FormBloodRiteCircle(caster, front_point)		
 
 		-- Find positions, to the left and right of the target point
-		for i = 1, circles-1 do
+		for i = 1, circles-1 do						
 
 			-- Rotate the direction clockwise or counter-clockwise
 			local vector_direction
 			if i%2 == 0 then
-				vector_direction = Orthogonal(direction, false)
+			  	vector_direction = Orthogonal(direction, false)
 			else
-				vector_direction = Orthogonal(direction, true)
+			  	vector_direction = Orthogonal(direction, true)
 			end
 
 			-- Claim position in the distance of the main target point
 			local final_circle_position = vPos + vector_direction * distance
-			self:FormBloodRiteCircle(caster, final_circle_position)
+			self:FormBloodRiteCircle(caster, final_circle_position)			
 		end
 	end
 end
@@ -268,9 +252,9 @@ function imba_bloodseeker_blood_bath:FormBloodRiteCircle(caster, vPos)
 	EmitSoundOn("Hero_Bloodseeker.BloodRite.Cast", caster)
 	EmitSoundOnLocationWithCaster( vPos, "Hero_Bloodseeker.BloodRite", caster )
 	local bloodriteFX = ParticleManager:CreateParticle("particles/units/heroes/hero_bloodseeker/bloodseeker_bloodritual_ring.vpcf", PATTACH_CUSTOMORIGIN, nil)
-	ParticleManager:SetParticleControl( bloodriteFX, 0, vPos )
-	ParticleManager:SetParticleControl( bloodriteFX, 1, Vector(radius, radius, radius) )
-	ParticleManager:SetParticleControl( bloodriteFX, 3, vPos )
+		ParticleManager:SetParticleControl( bloodriteFX, 0, vPos )
+		ParticleManager:SetParticleControl( bloodriteFX, 1, Vector(radius, radius, radius) )
+		ParticleManager:SetParticleControl( bloodriteFX, 3, vPos )
 	Timers:CreateTimer(self:GetSpecialValueFor("delay"), function()
 		EmitSoundOnLocationWithCaster( vPos, "hero_bloodseeker.bloodRite.silence", caster )
 		ParticleManager:DestroyParticle(bloodriteFX, false)
@@ -285,7 +269,7 @@ function imba_bloodseeker_blood_bath:FormBloodRiteCircle(caster, vPos)
 		if caster:HasTalent("special_bonus_imba_bloodseeker_2") and caster:HasAbility("imba_bloodseeker_rupture") then
 			rupture = caster:FindAbilityByName("imba_bloodseeker_rupture")
 		end
-
+		
 		for _,target in pairs(targets) do
 			local damage = self:GetSpecialValueFor("damage")
 			target:AddNewModifier(caster, self, "modifier_imba_blood_bath_debuff_silence", {duration = self:GetSpecialValueFor("silence_duration")})
@@ -296,16 +280,16 @@ function imba_bloodseeker_blood_bath:FormBloodRiteCircle(caster, vPos)
 				end
 				local distance = radius - (target:GetAbsOrigin() - vPos):Length2D()
 				local knockback =
-					{
-						should_stun = false,
-						knockback_duration = 0.3,
-						duration = 0.3,
-						knockback_distance = distance,
-						knockback_height = 0,
-						center_x = vPos.x,
-						center_y = vPos.y,
-						center_z = vPos.z
-					}
+				{
+					should_stun = false,
+					knockback_duration = 0.3,
+					duration = 0.3,
+					knockback_distance = distance,
+					knockback_height = 0,
+					center_x = vPos.x,
+					center_y = vPos.y,
+					center_z = vPos.z
+				}
 				target:RemoveModifierByName("modifier_knockback")
 				target:AddNewModifier(caster, self, "modifier_knockback", knockback)
 			end
@@ -345,12 +329,12 @@ if IsServer() then
 end
 
 function modifier_imba_blood_bath_debuff_silence:IsHidden() return false end
-function modifier_imba_blood_bath_debuff_silence:IsPurgable()
+function modifier_imba_blood_bath_debuff_silence:IsPurgable() 
 	if self:GetCaster():HasTalent("special_bonus_imba_bloodseeker_4") then
 		return false
 	end
 
-	return true
+	return true 
 end
 function modifier_imba_blood_bath_debuff_silence:IsDebuff() return true end
 
@@ -395,7 +379,7 @@ function modifier_imba_blood_bath_buff_stats:DeclareFunctions()
 	}
 	return funcs
 end
-
+	
 function modifier_imba_blood_bath_buff_stats:OnTakeDamage(params)
 	if params.attacker == self:GetParent() and params.inflictor == self:GetAbility() then
 		local bonusHP = params.damage * self.overheal
@@ -403,7 +387,7 @@ function modifier_imba_blood_bath_buff_stats:OnTakeDamage(params)
 		self:GetParent():CalculateStatBonus()
 		self:GetParent():Heal(bonusHP, self:GetParent())
 	end
-end
+end	
 
 function modifier_imba_blood_bath_buff_stats:GetModifierExtraHealthBonus(params)
 	return self:GetStackCount()
@@ -423,7 +407,7 @@ MergeTables(LinkedModifiers,{
 imba_bloodseeker_thirst = imba_bloodseeker_thirst or class({})
 
 function imba_bloodseeker_thirst:GetAbilityTextureName()
-	return "bloodseeker_thirst"
+   return "bloodseeker_thirst"
 end
 
 function imba_bloodseeker_thirst:GetIntrinsicModifierName()
@@ -436,7 +420,7 @@ function modifier_imba_thirst_passive:IsHidden()
 	return true
 end
 
-function modifier_imba_thirst_passive:OnCreated()
+function modifier_imba_thirst_passive:OnCreated()	
 	self.minhp = self:GetAbility():GetSpecialValueFor("max_threshold_pct")
 	self.maxhp = self:GetAbility():GetSpecialValueFor("visibility_threshold_pct")
 	self.movespeed = self:GetAbility():GetSpecialValueFor("bonus_movement_speed") / (self.minhp - self.maxhp)
@@ -450,27 +434,27 @@ function modifier_imba_thirst_passive:OnRefresh()
 	self.maxhp = self:GetAbility():GetSpecialValueFor("visibility_threshold_pct")
 	self.movespeed = self:GetAbility():GetSpecialValueFor("bonus_movement_speed") / (self.minhp - self.maxhp)
 	self.damage = self:GetAbility():GetSpecialValueFor("bonus_damage") / (self.minhp - self.maxhp)
-	self.deathstick = self:GetAbility():GetSpecialValueFor("stick_time")
+	self.deathstick = self:GetAbility():GetSpecialValueFor("stick_time")	
 end
 
 function modifier_imba_thirst_passive:OnIntervalThink()
-	if IsServer() then
+	if IsServer() then				
 		local enemies = FindUnitsInRadius(self:GetParent():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_DEAD + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, 0, false)
 		local hpDeficit = 0
-		for _,enemy in pairs(enemies) do
-			if self:GetCaster():PassivesDisabled() or not self:GetCaster():IsAlive() then
+		for _,enemy in pairs(enemies) do			
+			if self:GetCaster():PassivesDisabled() or not self:GetCaster():IsAlive() then 
 				enemy:RemoveModifierByName("modifier_imba_thirst_debuff_vision")
 			else
 				if enemy:IsAlive() or (not enemy:IsAlive() and enemy.thirstDeathTimer < self.deathstick) then
 					if enemy:GetHealthPercent() < self.minhp then
 						local enemyHp = (self.minhp - enemy:GetHealthPercent())
-						if enemyHp > (self.minhp - self.maxhp) then
+						if enemyHp > (self.minhp - self.maxhp) then 
 							enemyHp = (self.minhp - self.maxhp)
 							enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_thirst_debuff_vision", {})
 						elseif enemy:HasModifier("modifier_imba_thirst_debuff_vision") then
 							enemy:RemoveModifierByName("modifier_imba_thirst_debuff_vision")
 						end
-						if not enemy:IsAlive() then
+						if not enemy:IsAlive() then 
 							enemy.thirstDeathTimer = enemy.thirstDeathTimer + 0.1
 						else enemy.thirstDeathTimer = 0 end
 						hpDeficit = hpDeficit + enemyHp
@@ -520,7 +504,7 @@ function modifier_imba_thirst_passive:OnTakeDamage(params)
 					if params.attacker == self:GetCaster() then attackerCount = 2 end
 					confirmTheKill = true
 					if modifier:GetStackCount() <= attackerCount then
-						modifier:SetStackCount(attackerCount)
+						modifier:SetStackCount(attackerCount)						
 					end
 					modifier:SetDuration(duration, true)
 					break
@@ -559,7 +543,7 @@ end
 function modifier_imba_thirst_haste:DeclareFunctions()
 	local funcs = {
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
-		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,		
 	}
 	return funcs
 end
@@ -584,11 +568,11 @@ function modifier_imba_thirst_debuff_vision:DeclareFunctions()
 		MODIFIER_PROPERTY_PROVIDES_FOW_POSITION,
 	}
 	return funcs
-
+	
 end
 
 function modifier_imba_thirst_debuff_vision:GetModifierProvidesFOWVision()
-	return 1
+return 1
 end
 
 function modifier_imba_thirst_debuff_vision:CheckState()
@@ -624,16 +608,20 @@ MergeTables(LinkedModifiers,{
 imba_bloodseeker_rupture = imba_bloodseeker_rupture or class({})
 
 function imba_bloodseeker_rupture:GetAbilityTextureName()
-	return "bloodseeker_rupture"
+   return "bloodseeker_rupture"
+end
+
+function imba_bloodseeker_rupture:GetCastAnimation()
+	return ACT_DOTA_CAST_ABILITY_4
 end
 
 function imba_bloodseeker_rupture:GetCooldown( nLevel )
 	-- Scepter grants charges, no cooldown needed
-	if self:GetCaster():HasScepter() then
-		return 0
-	end
+  	if self:GetCaster():HasScepter() then
+      	return 0
+  	end
 
-	return self.BaseClass.GetCooldown( self, nLevel )
+  	return self.BaseClass.GetCooldown( self, nLevel )
 end
 
 function imba_bloodseeker_rupture:GetIntrinsicModifierName()
@@ -657,22 +645,22 @@ function imba_bloodseeker_rupture:OnSpellStart(target)
 			--You're taking one down
 			EmitSoundOn("Imba.BloodseekerBadDay", hTarget)
 			--SING A SAD SONG JUST TO TURN IT AROUND
-		end
+		end	
 	end
 	if hTarget:GetHealthPercent() > self:GetSpecialValueFor("damage_initial_pct") then
 		local hpBurn = hTarget:GetHealthPercent() - self:GetSpecialValueFor("damage_initial_pct")
 		local damage	=	hTarget:GetMaxHealth() * hpBurn * 0.01
-
+		
 		local damage_table	=  {victim = hTarget,
-			attacker = caster,
-			damage = damage,
-			damage_type = DAMAGE_TYPE_PURE,
-			ability = self,
-			damage_flags	=	DOTA_DAMAGE_FLAG_HPLOSS + DOTA_DAMAGE_FLAG_NO_DAMAGE_MULTIPLIERS + DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION
-		}
-
+								attacker = caster,
+								damage = damage,
+								damage_type = DAMAGE_TYPE_PURE,
+								ability = self,
+								damage_flags	=	DOTA_DAMAGE_FLAG_HPLOSS + DOTA_DAMAGE_FLAG_NO_DAMAGE_MULTIPLIERS + DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION
+								}
+								
 		ApplyDamage(damage_table)
-		if self:GetCaster():HasTalent("special_bonus_imba_bloodseeker_3") then
+		if self:GetCaster():HasTalent("special_bonus_imba_bloodseeker_3") then 
 			caster:Heal(damage, caster)
 			local healFX = ParticleManager:CreateParticle("particles/generic_gameplay/generic_lifesteal.vpcf", PATTACH_POINT_FOLLOW, caster)
 			ParticleManager:ReleaseParticleIndex(healFX)
@@ -680,19 +668,20 @@ function imba_bloodseeker_rupture:OnSpellStart(target)
 	end
 
 	-- Scepter effect: Rupture has charges
-	if caster:HasScepter() and not self.from_blood_rite then
-		local modifier_rupture_charges_handler = caster:FindModifierByName(modifier_rupture_charges)
-		if modifier_rupture_charges_handler then
-			modifier_rupture_charges_handler:DecrementStackCount()
-		end
-	end
+    if caster:HasScepter() and not self.from_blood_rite then
+        local modifier_rupture_charges_handler = caster:FindModifierByName(modifier_rupture_charges)
+        if modifier_rupture_charges_handler then
+            modifier_rupture_charges_handler:DecrementStackCount()
+        end
+    end
 	self.from_blood_rite = false
+	
 end
 
 modifier_imba_rupture_debuff_dot = modifier_imba_rupture_debuff_dot or class({})
 -- Rupture is undispellable.
 function modifier_imba_rupture_debuff_dot:IsPurgable()
-	return false
+    return false
 end
 if IsServer() then
 	function modifier_imba_rupture_debuff_dot:OnCreated()
@@ -702,7 +691,7 @@ if IsServer() then
 
 		self.movedamage = self.ability:GetSpecialValueFor("movement_damage_pct") * 0.01
 		self.attackdamage = self.ability:GetSpecialValueFor("attack_damage")
-		self.castdamage = self.ability:GetSpecialValueFor("cast_damage")
+		self.castdamage = self.ability:GetSpecialValueFor("cast_damage")		
 		self.damagecap = self.ability:GetTalentSpecialValueFor("damage_cap_amount")
 		self.prevLoc = self.parent:GetAbsOrigin()
 		self:StartIntervalThink( self:GetAbility():GetSpecialValueFor("damage_cap_interval") )
@@ -711,14 +700,14 @@ if IsServer() then
 	function modifier_imba_rupture_debuff_dot:OnRefresh()
 		self:OnCreated()
 	end
-
+	
 	function modifier_imba_rupture_debuff_dot:OnIntervalThink()
 		if CalculateDistance(self.prevLoc, self.parent) < self.damagecap then
 			local move_damage = CalculateDistance(self.prevLoc, self.parent) * self.movedamage
 			if move_damage > 0 then
 				ApplyDamage({victim = self.parent, attacker = self.caster, damage = move_damage, damage_type = self.ability:GetAbilityDamageType(), ability = self.ability})
-				if self.caster:HasTalent("special_bonus_imba_bloodseeker_3") then
-					self.caster:Heal(move_damage, self.caster)
+				if self.caster:HasTalent("special_bonus_imba_bloodseeker_3") then 
+					self.caster:Heal(move_damage, self.caster) 
 					local healFX = ParticleManager:CreateParticle("particles/generic_gameplay/generic_lifesteal.vpcf", PATTACH_POINT_FOLLOW, self.caster)
 					ParticleManager:ReleaseParticleIndex(healFX)
 				end
@@ -726,38 +715,38 @@ if IsServer() then
 		end
 		self.prevLoc = self:GetParent():GetAbsOrigin()
 	end
-
+	
 	function modifier_imba_rupture_debuff_dot:DeclareFunctions()
-		local funcs = {
-			MODIFIER_EVENT_ON_ABILITY_START,
+        local funcs = {
+            MODIFIER_EVENT_ON_ABILITY_START,
 			MODIFIER_EVENT_ON_ATTACK_START,
-		}
+        }
 
-		return funcs
-	end
-
-	function modifier_imba_rupture_debuff_dot:OnAbilityStart(params)
-		if params.unit == self.parent then
+        return funcs
+    end
+	
+	function modifier_imba_rupture_debuff_dot:OnAbilityFullyCast(params)
+        if params.unit == self.parent then
 			ApplyDamage({victim = self.parent, attacker = self.caster, damage = self.castdamage, damage_type = self.ability:GetAbilityDamageType(), ability = self.ability})
-			if self.caster:HasTalent("special_bonus_imba_bloodseeker_3") then
-				self.caster:Heal(self.castdamage, self.caster)
+			if self.caster:HasTalent("special_bonus_imba_bloodseeker_3") then 
+				self.caster:Heal(self.castdamage, self.caster) 
 				local healFX = ParticleManager:CreateParticle("particles/generic_gameplay/generic_lifesteal.vpcf", PATTACH_POINT_FOLLOW, self.caster)
 				ParticleManager:ReleaseParticleIndex(healFX)
 			end
 		end
-	end
-
+    end
+	
 	function modifier_imba_rupture_debuff_dot:OnAttackStart(params)
-		if params.attacker == self.parent then
+        if params.attacker == self.parent then
 			ApplyDamage({victim = self.parent, attacker = self.caster, damage = self.castdamage, damage_type = self.ability:GetAbilityDamageType(), ability = self.ability})
-			if self.caster:HasTalent("special_bonus_imba_bloodseeker_3") then
-				self.caster:Heal(self.castdamage, self.caster)
+			if self.caster:HasTalent("special_bonus_imba_bloodseeker_3") then 
+				self.caster:Heal(self.castdamage, self.caster) 
 				local healFX = ParticleManager:CreateParticle("particles/generic_gameplay/generic_lifesteal.vpcf", PATTACH_POINT_FOLLOW, self.caster)
 				ParticleManager:ReleaseParticleIndex(healFX)
 			end
 		end
-	end
-
+    end
+	
 	function modifier_imba_rupture_debuff_dot:OnDestroy()
 		--Stop Meme Sounds
 		StopSoundEvent("Imba.BloodseekerBadDay", self.parent)
@@ -775,153 +764,153 @@ end
 -- Rupture charges modifier
 modifier_imba_rupture_charges = modifier_imba_rupture_charges or class({})
 
-function modifier_imba_rupture_charges:IsHidden()
-	if self:GetCaster():HasScepter() then
-		return false
-	end
+function modifier_imba_rupture_charges:IsHidden() 
+    if self:GetCaster():HasScepter() then
+        return false
+    end
 
-	return true
+    return true
 end
 
 function modifier_imba_rupture_charges:IsDebuff() return false end
 function modifier_imba_rupture_charges:IsPurgable() return false end
 function modifier_imba_rupture_charges:RemoveOnDeath() return false end
 
-function modifier_imba_rupture_charges:OnCreated()
-	if IsServer() then
-		-- Ability properties
-		self.caster = self:GetCaster()
-		self.ability = self:GetAbility()
-		self.parent = self:GetParent()
-		self.modifier_charge = "modifier_imba_rupture_charges"
+function modifier_imba_rupture_charges:OnCreated()    
+    if IsServer() then
+        -- Ability properties
+        self.caster = self:GetCaster()
+        self.ability = self:GetAbility()
+        self.parent = self:GetParent()
+        self.modifier_charge = "modifier_imba_rupture_charges"
 
-		-- Ability specials
-		self.max_charge_count = self.ability:GetSpecialValueFor("rupture_charges")
-		self.charge_replenish_rate = self.ability:GetSpecialValueFor("scepter_charge_replenish_rate")
+        -- Ability specials
+        self.max_charge_count = self.ability:GetSpecialValueFor("rupture_charges")
+        self.charge_replenish_rate = self.ability:GetSpecialValueFor("scepter_charge_replenish_rate")
 
-		-- If it the real one, set max charges
-		if self.caster:IsRealHero() then
-			self:SetStackCount(self.max_charge_count)
-		else
-			-- Illusions find their owner and its charges
-			local playerid = self.caster:GetPlayerID()
-			local real_hero = playerid:GetAssignedHero()
+        -- If it the real one, set max charges
+        if self.caster:IsRealHero() then
+            self:SetStackCount(self.max_charge_count)            
+        else
+            -- Illusions find their owner and its charges
+            local playerid = self.caster:GetPlayerID()
+            local real_hero = playerid:GetAssignedHero()
 
-			if hero:HasModifier(self.modifier_charge) then
-				self.modifier_charge_handler = hero:FindModifierByName(self.modifier_charge)
-				if self.modifier_charge_handler then
-					self:SetStackCount(self.modifier_charge_handler:GetStackCount())
-					self:SetDuration(self.modifier_charge_handler:GetRemainingTime(), true)
-				end
-			end
-		end
+            if hero:HasModifier(self.modifier_charge) then
+                self.modifier_charge_handler = hero:FindModifierByName(self.modifier_charge)
+                if self.modifier_charge_handler then
+                    self:SetStackCount(self.modifier_charge_handler:GetStackCount())
+                    self:SetDuration(self.modifier_charge_handler:GetRemainingTime(), true)                            
+                end
+            end
+        end
 
-		-- Start thinking
-		self:StartIntervalThink(0.1)
-	end
+        -- Start thinking
+        self:StartIntervalThink(0.1)
+    end
 end
 
 function modifier_imba_rupture_charges:OnIntervalThink()
-	if IsServer() then
-		-- If the caster doesn't have scepter, do nothing, and turn off if he dropped it.
-		if not self.caster:HasScepter() then
-			self.turned_on = false
-			return nil
-		end
+    if IsServer() then
+        -- If the caster doesn't have scepter, do nothing, and turn off if he dropped it.
+        if not self.caster:HasScepter() then
+            self.turned_on = false
+            return nil            
+        end
 
-		-- If this is the first time the charges are "turned on", set the stack count.
-		if not self.turned_on then
-			self.turned_on = true
-			self:OnCreated()
-		end
+        -- If this is the first time the charges are "turned on", set the stack count.
+        if not self.turned_on then
+            self.turned_on = true            
+            self:OnCreated()     
+        end        
 
-		local stacks = self:GetStackCount()
+        local stacks = self:GetStackCount()
 
-		-- If we have at least one stack, set ability to active, otherwise disable it
-		if stacks > 0 then
-			self.ability:SetActivated(true)
-		else
-			self.ability:SetActivated(false)
-		end
+        -- If we have at least one stack, set ability to active, otherwise disable it
+        if stacks > 0 then
+            self.ability:SetActivated(true)
+        else
+            self.ability:SetActivated(false)
+        end        
 
-		-- If we're at max charges, do nothing else
-		if stacks == self.max_charge_count then
-			return nil
-		end
+        -- If we're at max charges, do nothing else
+        if stacks == self.max_charge_count then            
+            return nil
+        end        
 
-		-- If a charge has finished charging, give a stack
-		if self:GetRemainingTime() < 0 then
-			self:IncrementStackCount()
-		end
-	end
+        -- If a charge has finished charging, give a stack
+        if self:GetRemainingTime() < 0 then                        
+            self:IncrementStackCount()
+        end        
+    end
 end
 
 function modifier_imba_rupture_charges:OnStackCountChanged(old_stack_count)
-	if IsServer() then
-		-- If the caster doesn't have a scepter yet, do nothing
-		if not self.turned_on then
-			return nil
-		end
+    if IsServer() then
+        -- If the caster doesn't have a scepter yet, do nothing
+        if not self.turned_on then
+            return nil
+        end
 
-		-- Current stacks
-		local stacks = self:GetStackCount()
-		local true_replenish_cooldown = self.charge_replenish_rate * (1 - self.caster:GetCooldownReduction() * 0.01)
+        -- Current stacks
+        local stacks = self:GetStackCount() 
+        local true_replenish_cooldown = self.charge_replenish_rate * (1 - self.caster:GetCooldownReduction() * 0.01)
 
-		-- If the stacks are now 0, start the ability's cooldown
-		if stacks == 0 then
-			self.ability:EndCooldown()
-			self.ability:StartCooldown(self:GetRemainingTime())
-		end
+        -- If the stacks are now 0, start the ability's cooldown
+        if stacks == 0 then
+            self.ability:EndCooldown()
+            self.ability:StartCooldown(self:GetRemainingTime())
+        end
 
-		-- If the stack count is now 1, and the skill is still in cooldown because of some cd manipulation, refresh it
-		if stacks == 1 and not self.ability:IsCooldownReady() then
-			self.ability:EndCooldown()
-		end
+        -- If the stack count is now 1, and the skill is still in cooldown because of some cd manipulation, refresh it
+        if stacks == 1 and not self.ability:IsCooldownReady() then            
+            self.ability:EndCooldown()
+        end
 
-		local lost_stack
-		if old_stack_count > stacks then
-			lost_stack = true
-		else
-			lost_stack = false
-		end
+        local lost_stack
+        if old_stack_count > stacks then
+            lost_stack = true
+        else
+            lost_stack = false
+        end
 
-		if not lost_stack then
+        if not lost_stack then
 
-			-- If we're not at the max stacks yet, reset the timer
-			if stacks < self.max_charge_count then
-				self:SetDuration(true_replenish_cooldown, true)
-			else
-				-- Otherwise, stop the timer
-				self:SetDuration(-1, true)
-			end
-		else
-			if old_stack_count == self.max_charge_count then
-				self:SetDuration(true_replenish_cooldown, true)
-			end
-		end
-	end
+            -- If we're not at the max stacks yet, reset the timer   
+            if stacks < self.max_charge_count then
+                self:SetDuration(true_replenish_cooldown, true)
+            else
+                -- Otherwise, stop the timer
+                self:SetDuration(-1, true)
+            end
+        else
+            if old_stack_count == self.max_charge_count then
+                self:SetDuration(true_replenish_cooldown, true)            
+            end
+        end
+    end
 end
 
 function modifier_imba_rupture_charges:DeclareFunctions()
-	local decFuncs = {MODIFIER_EVENT_ON_ABILITY_FULLY_CAST}
+    local decFuncs = {MODIFIER_EVENT_ON_ABILITY_FULLY_CAST}
 
-	return decFuncs
+    return decFuncs
 end
 
 function modifier_imba_rupture_charges:OnAbilityFullyCast(keys)
-	if IsServer() then
-		local ability = keys.ability
-		local unit = keys.unit
+    if IsServer() then
+        local ability = keys.ability
+        local unit = keys.unit
 
-		-- If this was the caster casting Refresher, refresh charges
-		if unit == self.caster and ability:GetName() == "item_refresher" then
-			self:SetStackCount(self.max_charge_count)
-		end
-	end
+        -- If this was the caster casting Refresher, refresh charges
+        if unit == self.caster and ability:GetName() == "item_refresher" then
+            self:SetStackCount(self.max_charge_count)            
+        end
+    end
 end
 
 function modifier_imba_rupture_charges:DestroyOnExpire()
-	return false
+    return false
 end
 
 --------------------------------------------------------------------------------

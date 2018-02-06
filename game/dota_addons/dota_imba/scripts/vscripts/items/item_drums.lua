@@ -1,20 +1,3 @@
--- Copyright (C) 2018  The Dota IMBA Development Team
---
--- Licensed under the Apache License, Version 2.0 (the "License");
--- you may not use this file except in compliance with the License.
--- You may obtain a copy of the License at
---
--- http://www.apache.org/licenses/LICENSE-2.0
---
--- Unless required by applicable law or agreed to in writing, software
--- distributed under the License is distributed on an "AS IS" BASIS,
--- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
--- See the License for the specific language governing permissions and
--- limitations under the License.
---
--- Editors:
---
-
 -- Author: Shush
 -- Date: 16/05/2017
 
@@ -33,7 +16,7 @@ function item_imba_ancient_janggo:GetIntrinsicModifierName()
 end
 
 function item_imba_ancient_janggo:GetAbilityTextureName()
-	return "custom/imba_ancient_janggo"
+   return "custom/imba_ancient_janggo"
 end
 
 function item_imba_ancient_janggo:OnSpellStart()
@@ -44,7 +27,7 @@ function item_imba_ancient_janggo:OnSpellStart()
 	local modifier_active = "modifier_imba_drums_active"
 
 	-- Ability specials
-	local hero_multiplier = ability:GetSpecialValueFor("hero_multiplier")
+	local hero_multiplier = ability:GetSpecialValueFor("hero_multiplier")	
 	local duration = ability:GetSpecialValueFor("duration")
 	local radius = ability:GetSpecialValueFor("radius")
 
@@ -52,15 +35,15 @@ function item_imba_ancient_janggo:OnSpellStart()
 	EmitSoundOn(sound_cast, caster)
 
 	-- Find all nearby allies
-	local allies = FindUnitsInRadius(caster:GetTeamNumber(),
-		caster:GetAbsOrigin(),
-		nil,
-		radius,
-		DOTA_UNIT_TARGET_TEAM_FRIENDLY,
-		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-		DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD,
-		FIND_ANY_ORDER,
-		false)
+	local allies = FindUnitsInRadius(caster:GetTeamNumber(), 
+									 caster:GetAbsOrigin(),
+									 nil,
+									 radius,
+									 DOTA_UNIT_TARGET_TEAM_FRIENDLY,
+									 DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+									 DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD,
+									 FIND_ANY_ORDER,
+									 false)
 
 	-- Decide how many stacks the active should have
 	local stacks = 0
@@ -102,7 +85,7 @@ function modifier_imba_drums_active:OnCreated()
 	self.active_ms_per_ally = self.ability:GetSpecialValueFor("active_ms_per_ally")
 
 	-- Apply particle effects
-	local particle_buff_fx = ParticleManager:CreateParticle(self.particle_buff, PATTACH_ABSORIGIN_FOLLOW, self.parent)
+	local particle_buff_fx = ParticleManager:CreateParticle(self.particle_buff, PATTACH_ABSORIGIN_FOLLOW, self.parent)	
 	ParticleManager:SetParticleControl(particle_buff_fx, 0, self.parent:GetAbsOrigin())
 	ParticleManager:SetParticleControl(particle_buff_fx, 1, Vector(0,0,0))
 	self:AddParticle(particle_buff_fx, false, false, -1, false, false)
@@ -110,7 +93,7 @@ end
 
 function modifier_imba_drums_active:DeclareFunctions()
 	local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT,
-		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT}
+   					  MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT}
 
 	return decFuncs
 end
@@ -156,10 +139,10 @@ function modifier_imba_drums:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE 
 
 function modifier_imba_drums:DeclareFunctions()
 	local decFuncs = {MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
-		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
-		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
-		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
-		MODIFIER_PROPERTY_MANA_REGEN_CONSTANT}
+					  MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
+					  MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
+					  MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
+					  MODIFIER_PROPERTY_MANA_REGEN_CONSTANT}
 
 	return decFuncs
 end
@@ -188,7 +171,7 @@ function modifier_imba_drums:OnDestroy()
 	if IsServer() then
 		-- If it is the last drums in inventory, remove the aura modifier
 		if not self.caster:HasModifier(self.modifier_self) then
-			self.caster:RemoveModifierByName(self.modifier_aura)
+			self.caster:RemoveModifierByName(self.modifier_aura)		
 		end
 	end
 end
@@ -199,13 +182,13 @@ end
 modifier_imba_drums_aura = class({})
 
 function modifier_imba_drums_aura:OnCreated()
-	-- Ability properties
-	self.caster = self:GetCaster()
-	self.ability = self:GetAbility()
-	self.modifier_drum = "modifier_imba_drums_aura_effect"
+    -- Ability properties
+    self.caster = self:GetCaster()
+    self.ability = self:GetAbility()
+    self.modifier_drum = "modifier_imba_drums_aura_effect"
 
-	-- Ability specials
-	self.radius = self.ability:GetSpecialValueFor("radius")
+    -- Ability specials
+    self.radius = self.ability:GetSpecialValueFor("radius")
 end
 
 function modifier_imba_drums_aura:IsDebuff() return false end
@@ -214,27 +197,27 @@ function modifier_imba_drums_aura:IsHidden() return true end
 function modifier_imba_drums_aura:IsPurgable() return false end
 
 function modifier_imba_drums_aura:GetAuraRadius()
-	return self.radius
+    return self.radius
 end
 
 function modifier_imba_drums_aura:GetAuraSearchFlags()
-	return DOTA_UNIT_TARGET_FLAG_NONE
+    return DOTA_UNIT_TARGET_FLAG_NONE 
 end
 
 function modifier_imba_drums_aura:GetAuraSearchTeam()
-	return DOTA_UNIT_TARGET_TEAM_FRIENDLY
+    return DOTA_UNIT_TARGET_TEAM_FRIENDLY
 end
 
 function modifier_imba_drums_aura:GetAuraSearchType()
-	return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
+    return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
 end
 
 function modifier_imba_drums_aura:GetModifierAura()
-	return self.modifier_drum
+    return self.modifier_drum
 end
 
 function modifier_imba_drums_aura:IsAura()
-	return true
+    return true
 end
 
 function modifier_imba_drums_aura:GetAuraEntityReject(target)
@@ -255,7 +238,7 @@ modifier_imba_drums_aura_effect = class({})
 function modifier_imba_drums_aura_effect:OnCreated()
 	-- Ability properties
 	self.caster = self:GetCaster()
-	self.ability = self:GetAbility()
+	self.ability = self:GetAbility()	
 
 	-- Ability specials
 	self.aura_ms = self.ability:GetSpecialValueFor("aura_ms")
@@ -268,15 +251,15 @@ function modifier_imba_drums_aura_effect:IsDebuff() return false end
 
 function modifier_imba_drums_aura_effect:DeclareFunctions()
 	local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT,
-		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT}
+					  MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT}
 
 	return decFuncs
 end
 
 function modifier_imba_drums_aura_effect:GetModifierMoveSpeedBonus_Constant()
-	return self.aura_ms
+	return self.aura_ms	
 end
 
 function modifier_imba_drums_aura_effect:GetModifierAttackSpeedBonus_Constant()
-	return self.aura_as
+	return self.aura_as	
 end

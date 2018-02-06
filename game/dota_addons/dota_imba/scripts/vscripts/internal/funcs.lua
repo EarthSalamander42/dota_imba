@@ -263,16 +263,11 @@ end
 
 -- Check if an unit is near the enemy fountain
 function IsNearEnemyFountain(location, team, distance)
-
-	local fountain_loc
-	if team == DOTA_TEAM_GOODGUYS then
-		fountain_loc = Vector(7472, 6912, 512)
-	else
-		fountain_loc = Vector(-7456, -6938, 528)
-	end
-
-	if (fountain_loc - location):Length2D() <= distance then
-		return true
+	for _, fountain in pairs(Entities:FindAllByClassname("ent_dota_fountain")) do
+		if (fountain:GetAbsOrigin() - location):Length2D() <= distance then
+			print("Near a fountain!")
+			return true
+		end
 	end
 
 	return false

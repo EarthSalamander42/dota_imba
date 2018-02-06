@@ -1,31 +1,14 @@
--- Copyright (C) 2018  The Dota IMBA Development Team
---
--- Licensed under the Apache License, Version 2.0 (the "License");
--- you may not use this file except in compliance with the License.
--- You may obtain a copy of the License at
---
--- http://www.apache.org/licenses/LICENSE-2.0
---
--- Unless required by applicable law or agreed to in writing, software
--- distributed under the License is distributed on an "AS IS" BASIS,
--- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
--- See the License for the specific language governing permissions and
--- limitations under the License.
---
--- Editors:
---
-
 --[[
 		By: AtroCty
 		Date: 11.05.2017
 		Updated:  11.05.2017
 	]]
-
+	
 item_imba_aegis = item_imba_aegis or class({})
 LinkLuaModifier("modifier_item_imba_aegis", "items/item_aegis.lua", LUA_MODIFIER_MOTION_NONE)
 
 function item_imba_aegis:GetAbilityTextureName()
-	return "custom/imba_aegis"
+   return "custom/imba_aegis"
 end
 
 
@@ -44,12 +27,12 @@ function modifier_item_imba_aegis:OnRefresh()
 end
 
 function modifier_item_imba_aegis:DeclareFunctions()
-	local decFuncs =
-		{
-			MODIFIER_PROPERTY_REINCARNATION,
-			MODIFIER_EVENT_ON_DEATH
-		}
-	return decFuncs
+    local decFuncs =
+	{
+		MODIFIER_PROPERTY_REINCARNATION,
+		MODIFIER_EVENT_ON_DEATH
+	}
+    return decFuncs
 end
 
 function modifier_item_imba_aegis:GetTexture()
@@ -99,8 +82,9 @@ function modifier_item_imba_aegis:RemoveOnDeath() return false end
 function modifier_item_imba_aegis:OnDestroy()
 	if IsServer() then
 		local item = self:GetAbility()
-
+		
 		UTIL_Remove(item:GetContainer())
 		UTIL_Remove(item)
 	end
 end
+

@@ -1,20 +1,3 @@
--- Copyright (C) 2018  The Dota IMBA Development Team
---
--- Licensed under the Apache License, Version 2.0 (the "License");
--- you may not use this file except in compliance with the License.
--- You may obtain a copy of the License at
---
--- http://www.apache.org/licenses/LICENSE-2.0
---
--- Unless required by applicable law or agreed to in writing, software
--- distributed under the License is distributed on an "AS IS" BASIS,
--- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
--- See the License for the specific language governing permissions and
--- limitations under the License.
---
--- Editors:
---
-
 item_the_caustic_finale = class({})
 LinkLuaModifier("modifier_item_the_caustic_finale", "items/item_the_caustic_finale", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_sand_king_boss_caustic_finale", "items/item_the_caustic_finale", LUA_MODIFIER_MOTION_NONE)
@@ -60,11 +43,11 @@ end
 
 function modifier_item_the_caustic_finale:DeclareFunctions()
 	local funcs =
-		{
-			MODIFIER_EVENT_ON_ATTACK_LANDED,
-			MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
-			MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
-		}
+	{
+		MODIFIER_EVENT_ON_ATTACK_LANDED,
+		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+	}
 	return funcs
 end
 
@@ -90,7 +73,7 @@ function modifier_item_the_caustic_finale:OnAttackLanded( params )
 			end
 		end
 	end
-	return 0
+	return 0 
 end
 
 -----------------------------------------------------------------------------------------
@@ -116,7 +99,7 @@ end
 -----------------------------------------------------------------------------------------
 
 function modifier_sand_king_boss_caustic_finale:OnCreated( kv )
-	self.caustic_radius = self:GetAbility():GetSpecialValueFor( "caustic_radius" )
+	self.caustic_radius = self:GetAbility():GetSpecialValueFor( "caustic_radius" ) 
 	self.caustic_damage = self:GetAbility():GetSpecialValueFor( "caustic_damage" )
 	self.nArmorReductionPerStack = math.max( math.floor( self:GetAbility():GetSpecialValueFor( "caustic_armor_reduction_pct" ) * self:GetParent():GetPhysicalArmorValue() / 100 ), 1 )
 	if IsServer() then
@@ -128,10 +111,10 @@ end
 
 function modifier_sand_king_boss_caustic_finale:DeclareFunctions()
 	local funcs =
-		{
-			MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
-			MODIFIER_EVENT_ON_DEATH,
-		}
+	{
+		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
+		MODIFIER_EVENT_ON_DEATH,
+	}
 	return funcs
 end
 
@@ -154,14 +137,14 @@ function modifier_sand_king_boss_caustic_finale:OnDeath( params )
 			local enemies = FindUnitsInRadius( self:GetCaster():GetTeamNumber(), self:GetParent():GetOrigin(), nil, self.caustic_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_CLOSEST, false )
 			for _,hEnemy in pairs( enemies ) do
 				if hEnemy ~= nil and hEnemy:IsAlive() and hEnemy:IsInvulnerable() == false then
-					local damageInfo =
-						{
-							victim = hEnemy,
-							attacker = self:GetCaster(),
-							damage = self.caustic_damage,
-							damage_type = DAMAGE_TYPE_MAGICAL,
-							ability = self,
-						}
+					local damageInfo = 
+					{
+						victim = hEnemy,
+						attacker = self:GetCaster(),
+						damage = self.caustic_damage,
+						damage_type = DAMAGE_TYPE_MAGICAL,
+						ability = self,
+					}
 					ApplyDamage( damageInfo )
 
 

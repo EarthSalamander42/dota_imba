@@ -1,22 +1,8 @@
--- Copyright (C) 2018  The Dota IMBA Development Team
---
--- Licensed under the Apache License, Version 2.0 (the "License");
--- you may not use this file except in compliance with the License.
--- You may obtain a copy of the License at
---
--- http://www.apache.org/licenses/LICENSE-2.0
---
--- Unless required by applicable law or agreed to in writing, software
--- distributed under the License is distributed on an "AS IS" BASIS,
--- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
--- See the License for the specific language governing permissions and
--- limitations under the License.
---
--- Editors:
---     Shush, 25.04.2017
---     suthernfriend, 03.02.2018
+-- Author: Shush
+-- Date: 25/04/2017
 
 CreateEmptyTalents("warlock")
+
 
 -----------------------------
 --      FATAL BONDS        --
@@ -25,7 +11,7 @@ imba_warlock_fatal_bonds = class({})
 LinkLuaModifier("modifier_imba_fatal_bonds", "hero/hero_warlock.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_warlock_fatal_bonds:GetAbilityTextureName()
-	return "warlock_fatal_bonds"
+   return "warlock_fatal_bonds"
 end
 
 function imba_warlock_fatal_bonds:IsHiddenWhenStolen()
@@ -36,16 +22,16 @@ function imba_warlock_fatal_bonds:OnSpellStart()
 	-- Ability properties
 	local caster = self:GetCaster()
 	local ability = self
-	local target = self:GetCursorTarget()
-	local sound_cast = "Hero_Warlock.FatalBonds"
+	local target = self:GetCursorTarget()    
+	local sound_cast = "Hero_Warlock.FatalBonds"    
 	local particle_base = "particles/units/heroes/hero_warlock/warlock_fatal_bonds_base.vpcf"
 	local particle_hit = "particles/units/heroes/hero_warlock/warlock_fatal_bonds_hit.vpcf"
-	local modifier_bonds = "modifier_imba_fatal_bonds"
+	local modifier_bonds = "modifier_imba_fatal_bonds"    
 
 	-- Ability specials
 	local max_targets = ability:GetSpecialValueFor("max_targets")
 	local duration = ability:GetSpecialValueFor("duration")
-	local link_search_radius = ability:GetSpecialValueFor("link_search_radius")
+	local link_search_radius = ability:GetSpecialValueFor("link_search_radius")    
 
 	-- Play cast sound
 	EmitSoundOn(sound_cast, caster)
@@ -53,7 +39,7 @@ function imba_warlock_fatal_bonds:OnSpellStart()
 	-- Initialize variables
 	local targets_linked = 0
 	local bond_table = {}
-	local modifier_table = {}
+	local modifier_table = {}    
 
 	-- If target has Linken's Sphere off cooldown, do nothing
 	if target:GetTeam() ~= caster:GetTeam() then
@@ -64,15 +50,15 @@ function imba_warlock_fatal_bonds:OnSpellStart()
 
 	-- Find enemies and apply it on them as well, up to the maximum
 	local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
-		target:GetAbsOrigin(),
-		nil,
-		link_search_radius,
-		DOTA_UNIT_TARGET_TEAM_ENEMY,
-		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-		DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS,
-		FIND_CLOSEST,
-		false)
-
+									  target:GetAbsOrigin(),
+									  nil,
+									  link_search_radius,
+									  DOTA_UNIT_TARGET_TEAM_ENEMY,
+									  DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+									  DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS,
+									  FIND_CLOSEST,
+									  false)    
+	
 
 	-- Apply the debuff to enemies from the closest to the farthest
 	for _,enemy in pairs(enemies) do
@@ -87,16 +73,16 @@ function imba_warlock_fatal_bonds:OnSpellStart()
 			if enemy == target then
 				local particle_hit_fx = ParticleManager:CreateParticle(particle_hit, PATTACH_CUSTOMORIGIN_FOLLOW, caster)
 				ParticleManager:SetParticleControlEnt(particle_hit_fx, 0, caster, PATTACH_POINT_FOLLOW, "attach_attack1", caster:GetAbsOrigin(), true)
-				ParticleManager:SetParticleControlEnt(particle_hit_fx, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
+				ParticleManager:SetParticleControlEnt(particle_hit_fx, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)                    
 				ParticleManager:ReleaseParticleIndex(particle_hit_fx)
 
 			else
 				local particle_hit_fx = ParticleManager:CreateParticle(particle_hit, PATTACH_CUSTOMORIGIN_FOLLOW, caster)
 				ParticleManager:SetParticleControlEnt(particle_hit_fx, 0, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
-				ParticleManager:SetParticleControlEnt(particle_hit_fx, 1, enemy, PATTACH_POINT_FOLLOW, "attach_hitloc", enemy:GetAbsOrigin(), true)
+				ParticleManager:SetParticleControlEnt(particle_hit_fx, 1, enemy, PATTACH_POINT_FOLLOW, "attach_hitloc", enemy:GetAbsOrigin(), true)                    
 				ParticleManager:ReleaseParticleIndex(particle_hit_fx)
 			end
-		end
+		end        
 	end
 
 	-- Put the bond table on all enemies' debuff modifiers
@@ -126,7 +112,7 @@ function modifier_imba_fatal_bonds:OnCreated()
 	-- Ability specials
 	self.link_damage_share_pct = self.ability:GetSpecialValueFor("link_damage_share_pct")
 	self.golem_link_radius = self.ability:GetSpecialValueFor("golem_link_radius")
-	self.golem_link_damage_pct = self.ability:GetSpecialValueFor("golem_link_damage_pct")
+	self.golem_link_damage_pct = self.ability:GetSpecialValueFor("golem_link_damage_pct")    
 
 	-- #3 Talent: Fatal Bonds damage share increase
 	self.link_damage_share_pct = self.link_damage_share_pct + self.caster:FindTalentValue("special_bonus_imba_warlock_3")
@@ -142,7 +128,7 @@ function modifier_imba_fatal_bonds:OnCreated()
 	if IsServer() then
 		-- Find the caster's Shadow Word ability, if feasible
 		if self.caster:HasAbility(self.ability_word) then
-			self.ability_word_handler = self.caster:FindAbilityByName(self.ability_word)
+			self.ability_word_handler = self.caster:FindAbilityByName(self.ability_word)            
 		end
 
 		-- Start thinking
@@ -197,9 +183,9 @@ function modifier_imba_fatal_bonds:OnTakeDamage(keys)
 			-- Calculate damage post reductions, but before any other changes (illusions, borrowed time etc)
 			local damage = original_damage
 			if damage_type == DAMAGE_TYPE_PHYSICAL then
-				damage = damage * (1 - self.parent:GetPhysicalArmorReduction() * 0.01)
+				damage = damage * (1 - self.parent:GetPhysicalArmorReduction() * 0.01)                
 
-			elseif damage_type == DAMAGE_TYPE_MAGICAL then
+			elseif damage_type == DAMAGE_TYPE_MAGICAL then                
 				damage = damage * (1- self.parent:GetMagicalArmorValue() * 0.01)
 			end
 
@@ -207,24 +193,24 @@ function modifier_imba_fatal_bonds:OnTakeDamage(keys)
 			damage = damage * self.link_damage_share_pct * 0.01
 
 			-- Cycle through every other enemy in the table and deal damage
-			for _,bonded_enemy in pairs(self.bond_table) do
+			for _,bonded_enemy in pairs(self.bond_table) do                
 
 				if bonded_enemy ~= self.parent then
 
 					local damageTable = {victim = bonded_enemy,
-						damage = damage,
-						damage_type = damage_type,
-						attacker = self.caster,
-						ability = self.ability,
-						damage_flags = DOTA_DAMAGE_FLAG_REFLECTION
-					}
-
-					ApplyDamage(damageTable)
+										damage = damage,
+										damage_type = damage_type,
+										attacker = self.caster,
+										ability = self.ability,
+										damage_flags = DOTA_DAMAGE_FLAG_REFLECTION
+										}
+								
+					ApplyDamage(damageTable)    
 
 					-- Add particle hit effect
 					local particle_hit_fx = ParticleManager:CreateParticle(self.particle_hit, PATTACH_CUSTOMORIGIN_FOLLOW, self.parent)
 					ParticleManager:SetParticleControlEnt(particle_hit_fx, 0, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)
-					ParticleManager:SetParticleControlEnt(particle_hit_fx, 1, bonded_enemy, PATTACH_POINT_FOLLOW, "attach_hitloc", bonded_enemy:GetAbsOrigin(), true)
+					ParticleManager:SetParticleControlEnt(particle_hit_fx, 1, bonded_enemy, PATTACH_POINT_FOLLOW, "attach_hitloc", bonded_enemy:GetAbsOrigin(), true)                    
 					ParticleManager:ReleaseParticleIndex(particle_hit_fx)
 
 					-- If the parent has Shadow Word but the bonded unit doesn't, apply it on the unit as well
@@ -238,7 +224,7 @@ function modifier_imba_fatal_bonds:OnTakeDamage(keys)
 						-- If the unit is not magic immune, apply the debuff
 						if not bonded_enemy:IsMagicImmune() then
 							local modifier_word_handler = self.parent:FindModifierByName(self.modifier_word)
-							if modifier_word_handler then
+							if modifier_word_handler then                            
 								local duration_remaining = modifier_word_handler:GetRemainingTime()
 								bonded_enemy:AddNewModifier(self.caster, self.ability_word_handler, self.modifier_word, {duration = duration_remaining})
 							end
@@ -249,7 +235,7 @@ function modifier_imba_fatal_bonds:OnTakeDamage(keys)
 		end
 
 		-- Instead, if it was an friendly Chaotic Golem that took damage, check if the debuffed unit is in its range
-		if string.find(unit:GetUnitName(), "npc_imba_warlock_golem") and unit:GetTeamNumber() ~= self.parent:GetTeamNumber() then
+		if string.find(unit:GetUnitName(), "npc_imba_warlock_golem") and unit:GetTeamNumber() ~= self.parent:GetTeamNumber() then            
 
 			-- Calculate distance
 			local distance = (unit:GetAbsOrigin() - self.parent:GetAbsOrigin()):Length2D()
@@ -260,9 +246,9 @@ function modifier_imba_fatal_bonds:OnTakeDamage(keys)
 				-- Adjust damage
 				local damage = original_damage
 				if damage_type == DAMAGE_TYPE_PHYSICAL then
-					damage = damage * (1 - self.parent:GetPhysicalArmorReduction() * 0.01)
+					damage = damage * (1 - self.parent:GetPhysicalArmorReduction() * 0.01)                
 
-				elseif damage_type == DAMAGE_TYPE_MAGICAL then
+				elseif damage_type == DAMAGE_TYPE_MAGICAL then                
 					damage = damage * (1- self.parent:GetMagicalArmorValue() * 0.01)
 				end
 
@@ -271,19 +257,19 @@ function modifier_imba_fatal_bonds:OnTakeDamage(keys)
 
 				-- Apply damage
 				local damageTable = {victim = self.parent,
-					damage = damage,
-					damage_type = damage_type,
-					attacker = self.caster,
-					ability = self.ability,
-					damage_flags = DOTA_DAMAGE_FLAG_REFLECTION
-				}
-
-				ApplyDamage(damageTable)
+									damage = damage,
+									damage_type = damage_type,
+									attacker = self.caster,
+									ability = self.ability,
+									damage_flags = DOTA_DAMAGE_FLAG_REFLECTION
+									}
+								
+				ApplyDamage(damageTable)    
 
 				-- Add particle hit effect
 				local particle_hit_fx = ParticleManager:CreateParticle(self.particle_hit, PATTACH_CUSTOMORIGIN_FOLLOW, self.parent)
 				ParticleManager:SetParticleControlEnt(particle_hit_fx, 0, unit, PATTACH_POINT_FOLLOW, "attach_hitloc", unit:GetAbsOrigin(), true)
-				ParticleManager:SetParticleControlEnt(particle_hit_fx, 1, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)
+				ParticleManager:SetParticleControlEnt(particle_hit_fx, 1, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)                    
 				ParticleManager:ReleaseParticleIndex(particle_hit_fx)
 
 				-- If Shadow Word is not defined on the caster, do nothing
@@ -298,7 +284,7 @@ function modifier_imba_fatal_bonds:OnTakeDamage(keys)
 						if modifier_word_handler then
 							local duration_remaining = modifier_word_handler:GetRemainingTime()
 							self.parent:AddNewModifier(self.caster, self.ability_word_handler, self.modifier_word, {duration = duration_remaining})
-						end
+						end                    
 					end
 				end
 
@@ -325,7 +311,7 @@ imba_warlock_shadow_word = class({})
 LinkLuaModifier("modifier_imba_shadow_word", "hero/hero_warlock.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_warlock_shadow_word:GetAbilityTextureName()
-	return "warlock_shadow_word"
+   return "warlock_shadow_word"
 end
 
 function imba_warlock_shadow_word:GetCastRange()
@@ -348,7 +334,7 @@ function imba_warlock_shadow_word:OnSpellStart()
 	local caster = self:GetCaster()
 	local ability = self
 	local target_point = self:GetCursorPosition()
-	local sound_target = "Hero_Warlock.ShadowWord"
+	local sound_target = "Hero_Warlock.ShadowWord"    
 	local sound_explosion = "Imba.WarlockShadowWordExplosion"
 	local particle_aoe = "particles/hero/warlock/warlock_shadow_word_aoe.vpcf"
 	local modifier_word = "modifier_imba_shadow_word"
@@ -378,16 +364,16 @@ function imba_warlock_shadow_word:OnSpellStart()
 
 	-- Find all enemies and allies in the area of effect
 	local units = FindUnitsInRadius(caster:GetTeamNumber(),
-		target_point,
-		nil,
-		radius,
-		DOTA_UNIT_TARGET_TEAM_BOTH,
-		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-		DOTA_UNIT_TARGET_FLAG_NONE,
-		FIND_ANY_ORDER,
-		false)
+									target_point,
+									nil,
+									radius,
+									DOTA_UNIT_TARGET_TEAM_BOTH,
+									DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+									DOTA_UNIT_TARGET_FLAG_NONE,
+									FIND_ANY_ORDER,
+									false)
 
-	for _,unit in pairs(units) do
+	for _,unit in pairs(units) do        
 		-- Apply Shadow Word modifier
 		unit:AddNewModifier(caster, ability, modifier_word, {duration = duration})
 	end
@@ -405,10 +391,10 @@ modifier_imba_shadow_word = class({})
 function modifier_imba_shadow_word:OnCreated()
 	-- Ability properties
 	self.caster = self:GetCaster()
-	self.ability = self:GetAbility()
+	self.ability = self:GetAbility()    
 	self.parent = self:GetParent()
 	self.sound_good = "Hero_Warlock.ShadowWordCastGood"
-	self.sound_bad = "Hero_Warlock.ShadowWordCastBad"
+	self.sound_bad = "Hero_Warlock.ShadowWordCastBad"    
 	self.particle_good = "particles/units/heroes/hero_warlock/warlock_shadow_word_buff.vpcf"
 	self.particle_bad = "particles/units/heroes/hero_warlock/warlock_shadow_word_debuff.vpcf"
 
@@ -445,7 +431,7 @@ function modifier_imba_shadow_word:OnCreated()
 		if self.good_guy then
 			self.particle_good_fx = ParticleManager:CreateParticle(self.particle_good, PATTACH_ABSORIGIN_FOLLOW, self.parent)
 			ParticleManager:SetParticleControl(self.particle_good_fx, 0, self.parent:GetAbsOrigin())
-			ParticleManager:SetParticleControl(self.particle_good_fx, 2, self.parent:GetAbsOrigin())
+			ParticleManager:SetParticleControl(self.particle_good_fx, 2, self.parent:GetAbsOrigin())            
 			self:AddParticle(self.particle_good_fx, false, false, -1, false, false)
 		else
 			self.particle_bad_fx = ParticleManager:CreateParticle(self.particle_bad, PATTACH_ABSORIGIN_FOLLOW, self.parent)
@@ -462,7 +448,7 @@ end
 function modifier_imba_shadow_word:IsHidden() return false end
 function modifier_imba_shadow_word:IsPurgable() return true end
 
-function modifier_imba_shadow_word:IsDebuff()
+function modifier_imba_shadow_word:IsDebuff() 
 	if self.good_guy then
 		return false
 	end
@@ -480,15 +466,15 @@ function modifier_imba_shadow_word:OnIntervalThink()
 
 		self.parent:Heal(heal, self.caster)
 		SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, self.parent, heal, nil)
-	else
+	else        
 		local damageTable = {victim = self.parent,
-			attacker = self.caster,
-			damage = self.tick_value,
-			damage_type = DAMAGE_TYPE_MAGICAL,
-			ability = self.ability
-		}
-
-		ApplyDamage(damageTable)
+							 attacker = self.caster, 
+							 damage = self.tick_value,
+							 damage_type = DAMAGE_TYPE_MAGICAL,        
+							 ability = self.ability           
+							 }
+					
+		ApplyDamage(damageTable)            
 	end
 end
 
@@ -498,12 +484,12 @@ function modifier_imba_shadow_word:OnDestroy()
 		StopSoundOn(self.sound_good, self.parent)
 	else
 		StopSoundOn(self.sound_bad, self.parent)
-	end
+	end    
 end
 
 function modifier_imba_shadow_word:DeclareFunctions()
 	local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT}
+					  MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT}
 
 	return decFuncs
 end
@@ -539,7 +525,7 @@ LinkLuaModifier("modifier_imba_upheaval_debuff", "hero/hero_warlock.lua", LUA_MO
 LinkLuaModifier("modifier_imba_upheaval_buff", "hero/hero_warlock.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_warlock_upheaval:GetAbilityTextureName()
-	return "warlock_upheaval"
+   return "warlock_upheaval"
 end
 
 function imba_warlock_upheaval:IsHiddenWhenStolen()
@@ -561,14 +547,14 @@ function imba_warlock_upheaval:GetAOERadius()
 	return radius
 end
 
-function imba_warlock_upheaval:OnSpellStart()
+function imba_warlock_upheaval:OnSpellStart()    
 	-- Ability properties
 	local caster = self:GetCaster()
 	local ability = self
-	local target_point = self:GetCursorPosition()
+	local target_point = self:GetCursorPosition()    
 	local cast_response = "warlock_warl_ability_upheav_0"..math.random(1, 4)
 	local sound_loop = "Hero_Warlock.Upheaval"
-	local modifier_upheaval = "modifier_imba_upheaval"
+	local modifier_upheaval = "modifier_imba_upheaval"    
 
 	if not caster:HasTalent("special_bonus_imba_warlock_6") then
 		-- Play cast response
@@ -580,7 +566,7 @@ function imba_warlock_upheaval:OnSpellStart()
 		-- Apply ModifierThinker on target location
 		CreateModifierThinker(caster, ability, modifier_upheaval, {}, target_point, caster:GetTeamNumber(), false)
 	else
-		-- #5 Talent: Upheaval summons a demon to channel it for Warlock
+		-- #5 Talent: Upheaval summons a demon to channel it for Warlock        
 		local playerID = caster:GetPlayerID()
 		local demon = CreateUnitByName("npc_imba_warlock_upheaval_demon", target_point, true, caster, caster, caster:GetTeamNumber())
 		demon:SetControllableByPlayer(playerID, true)
@@ -607,7 +593,7 @@ end
 
 function imba_warlock_upheaval:OnChannelFinish()
 	local caster = self:GetCaster()
-	local sound_loop = "Hero_Warlock.Upheaval"
+	local sound_loop = "Hero_Warlock.Upheaval"    
 	local sound_end = "Hero_Warlock.Upheaval.Stop"
 
 	-- Stop looping sound
@@ -633,7 +619,7 @@ function modifier_imba_upheaval:OnCreated()
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
 	self.parent = self:GetParent()
-	self.particle_upheaval = "particles/units/heroes/hero_warlock/warlock_upheaval.vpcf"
+	self.particle_upheaval = "particles/units/heroes/hero_warlock/warlock_upheaval.vpcf"    
 	self.modifier_debuff = "modifier_imba_upheaval_debuff"
 	self.modifier_golem_buff = "modifier_imba_upheaval_buff"
 
@@ -653,7 +639,7 @@ function modifier_imba_upheaval:OnCreated()
 		ParticleManager:SetParticleControl(self.particle_upheaval_fx, 0, self.parent:GetAbsOrigin())
 		ParticleManager:SetParticleControl(self.particle_upheaval_fx, 1, Vector(self.radius, 1, 1))
 		self:AddParticle(self.particle_upheaval_fx, false, false, -1, false, false)
-
+	
 		-- Start thinking
 		self:StartIntervalThink(self.tick_interval)
 	end
@@ -676,33 +662,33 @@ function modifier_imba_upheaval:OnIntervalThink()
 
 	-- Find all nearby enemies and apply the debuff
 	local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(),
-		self.parent:GetAbsOrigin(),
-		nil,
-		self.radius,
-		DOTA_UNIT_TARGET_TEAM_ENEMY,
-		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-		DOTA_UNIT_TARGET_FLAG_NONE,
-		FIND_ANY_ORDER,
-		false)
+									  self.parent:GetAbsOrigin(),
+									  nil,
+									  self.radius,
+									  DOTA_UNIT_TARGET_TEAM_ENEMY,
+									  DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+									  DOTA_UNIT_TARGET_FLAG_NONE,
+									  FIND_ANY_ORDER,
+									  false)
 
 	for _,enemy in pairs(enemies) do
 		local modifier_debuff_handler = enemy:AddNewModifier(self.caster, self.ability, self.modifier_debuff, {duration = self.linger_duration})
 		-- Insert the amount of slow in the new modifier
-		if modifier_debuff_handler then
+		if modifier_debuff_handler then            
 			modifier_debuff_handler.slow = self.slow
 		end
 	end
 
 	-- Find Golems
 	local units = FindUnitsInRadius(self.caster:GetTeamNumber(),
-		self.parent:GetAbsOrigin(),
-		nil,
-		self.radius,
-		DOTA_UNIT_TARGET_TEAM_FRIENDLY,
-		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-		DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED,
-		FIND_ANY_ORDER,
-		false)
+									self.parent:GetAbsOrigin(),
+									nil,
+									self.radius,
+									DOTA_UNIT_TARGET_TEAM_FRIENDLY,
+									DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+									DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED,
+									FIND_ANY_ORDER,
+									false)
 
 	for _,unit in pairs(units) do
 		if string.find(unit:GetUnitName(), "npc_imba_warlock_golem") then
@@ -721,10 +707,10 @@ modifier_imba_upheaval_debuff = class({})
 function modifier_imba_upheaval_debuff:OnCreated()
 	-- Ability properties
 	self.caster = self:GetCaster()
-	self.ability = self
+	self.ability = self    
 	self.parent = self:GetParent()
 	self.particle_debuff_hero = "particles/units/heroes/hero_warlock/warlock_upheaval_debuff.vpcf"
-	self.particle_debuff_creep = "particles/units/heroes/hero_warlock/warlock_upheaval_debuff_creep.vpcf"
+	self.particle_debuff_creep = "particles/units/heroes/hero_warlock/warlock_upheaval_debuff_creep.vpcf"    
 
 	-- Determine what particle to use, and add it
 	if self.parent:IsHero() then
@@ -762,7 +748,7 @@ end
 
 function modifier_imba_upheaval_debuff:DeclareFunctions()
 	local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT}
+					  MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT}
 
 	return decFuncs
 end
@@ -776,7 +762,7 @@ function modifier_imba_upheaval_debuff:GetModifierAttackSpeedBonus_Constant()
 	-- #2 Talent: Upheaval also reduces attack speed
 	if self.caster:HasTalent("special_bonus_imba_warlock_2") then
 		local stacks = self:GetStackCount()
-		return stacks * (-1)
+		return stacks * (-1)        
 	end
 
 	return nil
@@ -804,7 +790,7 @@ LinkLuaModifier("modifier_imba_rain_of_chaos_golem_ms", "hero/hero_warlock.lua",
 LinkLuaModifier("modifier_imba_rain_of_chaos_demon_link", "hero/hero_warlock.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_warlock_rain_of_chaos:GetAbilityTextureName()
-	return "warlock_rain_of_chaos"
+   return "warlock_rain_of_chaos"
 end
 
 function imba_warlock_rain_of_chaos:IsHiddenWhenStolen()
@@ -861,7 +847,7 @@ function imba_warlock_rain_of_chaos:OnSpellStart()
 	local modifier_demon_link = "modifier_imba_rain_of_chaos_demon_link"
 	local ability_fists = "imba_warlock_flaming_fists"
 	local ability_immolate = "imba_warlock_permanent_immolation"
-	local scepter = caster:HasScepter()
+	local scepter = caster:HasScepter()    
 
 	-- Ability specials
 	local radius = ability:GetSpecialValueFor("radius")
@@ -875,14 +861,14 @@ function imba_warlock_rain_of_chaos:OnSpellStart()
 	local effect_delay = ability:GetSpecialValueFor("effect_delay")
 	local scepter_demon_count = ability:GetSpecialValueFor("scepter_demon_count")
 	local scepter_demon_distance = ability:GetSpecialValueFor("scepter_demon_distance")
-	local scepter_demon_hp = ability:GetSpecialValueFor("scepter_demon_hp")
+	local scepter_demon_hp = ability:GetSpecialValueFor("scepter_demon_hp")    
 
 	-- Roll for rare cast response, otherwise, play normal cast response
 	if RollPercentage(5) then
 		EmitSoundOn(rare_cast_response, caster)
 	else
 		EmitSoundOn(cast_response[math.random(1, #cast_response)], caster)
-	end
+	end    
 
 	-- Play cast sound
 	EmitSoundOn(sound_cast, caster)
@@ -894,14 +880,14 @@ function imba_warlock_rain_of_chaos:OnSpellStart()
 
 	-- Stun nearby enemies, even if they're magic immune
 	local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
-		target_point,
-		nil,
-		radius,
-		DOTA_UNIT_TARGET_TEAM_ENEMY,
-		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-		DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
-		FIND_ANY_ORDER,
-		false)
+									  target_point,
+									  nil,
+									  radius,
+									  DOTA_UNIT_TARGET_TEAM_ENEMY,
+									  DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+									  DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
+									  FIND_ANY_ORDER,
+									  false)
 
 	for _,enemy in pairs(enemies) do
 		enemy:AddNewModifier(caster, ability, modifier_stun, {duration = stun_duration})
@@ -913,119 +899,119 @@ function imba_warlock_rain_of_chaos:OnSpellStart()
 	-- Wait for the effect delay
 	Timers:CreateTimer(effect_delay, function()
 
-			-- Add main particle effect
-			local particle_main_fx = ParticleManager:CreateParticle(particle_main, PATTACH_ABSORIGIN, caster)
-			ParticleManager:SetParticleControl(particle_main_fx, 0, target_point)
-			ParticleManager:SetParticleControl(particle_main_fx, 1, Vector(radius, 0, 0))
-			ParticleManager:ReleaseParticleIndex(particle_main_fx)
+		-- Add main particle effect
+		local particle_main_fx = ParticleManager:CreateParticle(particle_main, PATTACH_ABSORIGIN, caster)
+		ParticleManager:SetParticleControl(particle_main_fx, 0, target_point)
+		ParticleManager:SetParticleControl(particle_main_fx, 1, Vector(radius, 0, 0))
+		ParticleManager:ReleaseParticleIndex(particle_main_fx)
 
-			-- Summon the appropriate Golem unit based on the skill's level at the target point
-			local golem = CreateUnitByName("npc_imba_warlock_golem_"..golem_level, target_point, true, caster, caster, caster:GetTeamNumber())
+		-- Summon the appropriate Golem unit based on the skill's level at the target point
+		local golem = CreateUnitByName("npc_imba_warlock_golem_"..golem_level, target_point, true, caster, caster, caster:GetTeamNumber())
 
-			-- Apply kill modifier on golem to set its duration
-			golem:AddNewModifier(caster, ability, "modifier_kill", {duration = duration})
+		-- Apply kill modifier on golem to set its duration
+		golem:AddNewModifier(caster, ability, "modifier_kill", {duration = duration})
 
-			-- Set the golem to be controllable by Warlock's player
-			golem:SetControllableByPlayer(playerID, true)
+		-- Set the golem to be controllable by Warlock's player
+		golem:SetControllableByPlayer(playerID, true)
 
-			-- Calculate bonus properties based on Warlock's stats
-			local bonus_hp = caster:GetStrength() * bonus_hp_per_str
-			local bonus_damage = caster:GetIntellect() * bonus_damage_per_int
-			local bonus_armor = caster:GetAgility() * bonus_armor_per_agi
-			local bonus_attack_speed = caster:GetAgility() * bonus_aspeed_per_agi
-			local bonus_move_speed = caster:GetMoveSpeedModifier(caster:GetBaseMoveSpeed()) - caster:GetBaseMoveSpeed()
+		-- Calculate bonus properties based on Warlock's stats
+		local bonus_hp = caster:GetStrength() * bonus_hp_per_str
+		local bonus_damage = caster:GetIntellect() * bonus_damage_per_int
+		local bonus_armor = caster:GetAgility() * bonus_armor_per_agi
+		local bonus_attack_speed = caster:GetAgility() * bonus_aspeed_per_agi
+		local bonus_move_speed = caster:GetMoveSpeedModifier(caster:GetBaseMoveSpeed()) - caster:GetBaseMoveSpeed()
+		
+		-- Set Golem's properties according to the bonus properties
+		-- Health:
+		golem:SetBaseMaxHealth(golem:GetBaseMaxHealth() + bonus_hp)
+		golem:SetMaxHealth(golem:GetMaxHealth() + bonus_hp)
+		golem:SetHealth(golem:GetMaxHealth())
 
-			-- Set Golem's properties according to the bonus properties
-			-- Health:
-			golem:SetBaseMaxHealth(golem:GetBaseMaxHealth() + bonus_hp)
-			golem:SetMaxHealth(golem:GetMaxHealth() + bonus_hp)
-			golem:SetHealth(golem:GetMaxHealth())
+		-- Damage:
+		golem:SetBaseDamageMin(golem:GetBaseDamageMin() + bonus_damage)
+		golem:SetBaseDamageMax(golem:GetBaseDamageMax() + bonus_damage)
 
-			-- Damage:
-			golem:SetBaseDamageMin(golem:GetBaseDamageMin() + bonus_damage)
-			golem:SetBaseDamageMax(golem:GetBaseDamageMax() + bonus_damage)
+		-- Armor:
+		golem:SetPhysicalArmorBaseValue(golem:GetPhysicalArmorValue() + bonus_armor)
 
-			-- Armor:
-			golem:SetPhysicalArmorBaseValue(golem:GetPhysicalArmorValue() + bonus_armor)
+		-- #4 Talent: Chaotic Golem armor increase
+		if caster:HasTalent("special_bonus_imba_warlock_4") then
+			golem:SetPhysicalArmorBaseValue(golem:GetPhysicalArmorValue() + caster:FindTalentValue("special_bonus_imba_warlock_4"))
+		end
 
-			-- #4 Talent: Chaotic Golem armor increase
-			if caster:HasTalent("special_bonus_imba_warlock_4") then
-				golem:SetPhysicalArmorBaseValue(golem:GetPhysicalArmorValue() + caster:FindTalentValue("special_bonus_imba_warlock_4"))
-			end
+		-- Attack speed (needs to be done through a modifier):
+		local modifier_attackspeed_handler = golem:AddNewModifier(caster, ability, modifier_attack_speed, {})
+		if modifier_attackspeed_handler then
+			modifier_attackspeed_handler:SetStackCount(bonus_attack_speed)
+		end
 
-			-- Attack speed (needs to be done through a modifier):
-			local modifier_attackspeed_handler = golem:AddNewModifier(caster, ability, modifier_attack_speed, {})
-			if modifier_attackspeed_handler then
-				modifier_attackspeed_handler:SetStackCount(bonus_attack_speed)
-			end
+		-- Move speed (needs to be done through a modifier):
+		local modifier_movespeed_handler = golem:AddNewModifier(caster, ability, modifier_move_speed, {})
+		if modifier_movespeed_handler then            
+			modifier_movespeed_handler:SetStackCount(bonus_move_speed)
+		end
 
-			-- Move speed (needs to be done through a modifier):
-			local modifier_movespeed_handler = golem:AddNewModifier(caster, ability, modifier_move_speed, {})
-			if modifier_movespeed_handler then
-				modifier_movespeed_handler:SetStackCount(bonus_move_speed)
-			end
+		-- #8 Talent: Chaotic Golems are now Spell Immune
+		if caster:HasTalent("special_bonus_imba_warlock_8") then
+			ability_spell_immunity = golem:AddAbility("imba_warlock_golem_spell_immunity")
+			ability_spell_immunity:SetLevel(1)
+		end
 
-			-- #8 Talent: Chaotic Golems are now Spell Immune
-			if caster:HasTalent("special_bonus_imba_warlock_8") then
-				ability_spell_immunity = golem:AddAbility("imba_warlock_golem_spell_immunity")
-				ability_spell_immunity:SetLevel(1)
-			end
+		-- Level the golem's skills to the appropriate level
+		local ability_fists_handler = golem:FindAbilityByName(ability_fists)
+		if ability_fists_handler then
+			ability_fists_handler:SetLevel(golem_level)
+		end
 
-			-- Level the golem's skills to the appropriate level
-			local ability_fists_handler = golem:FindAbilityByName(ability_fists)
-			if ability_fists_handler then
-				ability_fists_handler:SetLevel(golem_level)
-			end
+		local ability_immolate_handler = golem:FindAbilityByName(ability_immolate)
+		if ability_immolate_handler then
+			ability_immolate_handler:SetLevel(golem_level)
+		end
 
-			local ability_immolate_handler = golem:FindAbilityByName(ability_immolate)
-			if ability_immolate_handler then
-				ability_immolate_handler:SetLevel(golem_level)
-			end
+		-- Resolve positions
+		ResolveNPCPositions(target_point, 128)
 
-			-- Resolve positions
-			ResolveNPCPositions(target_point, 128)
+		-- If caster has scepter, summon Demonic Ascension
+		if scepter then
+			-- Assign the golem with the demon link modifier
+			local demon_link_modifier = golem:AddNewModifier(caster, ability, modifier_demon_link, {})
 
-			-- If caster has scepter, summon Demonic Ascension
-			if scepter then
-				-- Assign the golem with the demon link modifier
-				local demon_link_modifier = golem:AddNewModifier(caster, ability, modifier_demon_link, {})
+			-- Decide how to arrange the demons. First one is behind the golem, closest to Warlock's position
+			local angle_per_demon = 360 / scepter_demon_count                        
+			local summon_edge_point = target_point + (target_point - caster:GetAbsOrigin()):Normalized() * scepter_demon_distance
 
-				-- Decide how to arrange the demons. First one is behind the golem, closest to Warlock's position
-				local angle_per_demon = 360 / scepter_demon_count
-				local summon_edge_point = target_point + (target_point - caster:GetAbsOrigin()):Normalized() * scepter_demon_distance
+			for i = 0, (scepter_demon_count -1) do
 
-				for i = 0, (scepter_demon_count -1) do
+				-- Spawning point
+				local qangle = QAngle(0, i * angle_per_demon, 0)                
+				local demon_spawn_point = RotatePosition(target_point, qangle, summon_edge_point)
 
-					-- Spawning point
-					local qangle = QAngle(0, i * angle_per_demon, 0)
-					local demon_spawn_point = RotatePosition(target_point, qangle, summon_edge_point)
+				-- Create demon
+				local demon = CreateUnitByName("npc_imba_warlock_demonic_ascension", demon_spawn_point, true, caster, caster, caster:GetTeamNumber())
+				demon:SetControllableByPlayer(playerID, true)
+				demon:StartGesture(ACT_DOTA_IDLE)       
 
-					-- Create demon
-					local demon = CreateUnitByName("npc_imba_warlock_demonic_ascension", demon_spawn_point, true, caster, caster, caster:GetTeamNumber())
-					demon:SetControllableByPlayer(playerID, true)
-					demon:StartGesture(ACT_DOTA_IDLE)
+				-- Forward vector
+				local direction = (target_point - demon_spawn_point):Normalized()
+				demon:SetForwardVector(direction)
 
-					-- Forward vector
-					local direction = (target_point - demon_spawn_point):Normalized()
-					demon:SetForwardVector(direction)
+				-- Set the demon's health according to level
+				demon:SetMaxHealth(scepter_demon_hp)
+				demon:SetBaseMaxHealth(scepter_demon_hp)
+				demon:SetHealth(scepter_demon_hp)
 
-					-- Set the demon's health according to level
-					demon:SetMaxHealth(scepter_demon_hp)
-					demon:SetBaseMaxHealth(scepter_demon_hp)
-					demon:SetHealth(scepter_demon_hp)
-
-					-- Assign the demons to that golem
-					if demon_link_modifier then
-						if not demon_link_modifier.demon_table then
-							demon_link_modifier.demon_table = {}
-						else
-							table.insert(demon_link_modifier.demon_table, demon)
-						end
+				-- Assign the demons to that golem
+				if demon_link_modifier then
+					if not demon_link_modifier.demon_table then
+						demon_link_modifier.demon_table = {}
+					else
+						table.insert(demon_link_modifier.demon_table, demon)
 					end
 				end
+			end                        
 
-				ResolveNPCPositions(target_point, radius)
-			end
+			ResolveNPCPositions(target_point, radius)
+		end
 	end)
 end
 
@@ -1060,7 +1046,7 @@ function modifier_imba_rain_of_chaos_golem_as:DeclareFunctions()
 	local decFuncs = {MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT}
 
 	return decFuncs
-end
+end 
 
 function modifier_imba_rain_of_chaos_golem_as:GetModifierAttackSpeedBonus_Constant()
 	local stacks = self:GetStackCount()
@@ -1078,7 +1064,7 @@ function modifier_imba_rain_of_chaos_golem_ms:DeclareFunctions()
 	local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT}
 
 	return decFuncs
-end
+end 
 
 function modifier_imba_rain_of_chaos_golem_ms:GetModifierMoveSpeedBonus_Constant()
 	local stacks = self:GetStackCount()
@@ -1120,7 +1106,7 @@ function modifier_imba_rain_of_chaos_demon_link:OnCreated()
 				for i = 1, self.scepter_demon_count do
 					self.particle_table[i] = ParticleManager:CreateParticle(self.particle_link, PATTACH_CUSTOMORIGIN_FOLLOW, self.demon_table[i])
 					ParticleManager:SetParticleControlEnt(self.particle_table[i], 0, self.demon_table[i], PATTACH_POINT_FOLLOW, "attach_hitloc", self.demon_table[i]:GetAbsOrigin(), true)
-					ParticleManager:SetParticleControlEnt(self.particle_table[i], 1, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)
+					ParticleManager:SetParticleControlEnt(self.particle_table[i], 1, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)                
 				end
 
 				-- Set the stack count of the modifier to the amount of demons linked
@@ -1143,9 +1129,9 @@ end
 
 function modifier_imba_rain_of_chaos_demon_link:DeclareFunctions()
 	local decFuncs = {MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
-		MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE,
-		MODIFIER_EVENT_ON_DEATH,
-		MODIFIER_EVENT_ON_TAKEDAMAGE}
+					  MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE,
+					  MODIFIER_EVENT_ON_DEATH,
+					  MODIFIER_EVENT_ON_TAKEDAMAGE}
 
 	return decFuncs
 end
@@ -1160,7 +1146,7 @@ function modifier_imba_rain_of_chaos_demon_link:GetModifierBaseDamageOutgoing_Pe
 end
 
 function modifier_imba_rain_of_chaos_demon_link:OnTakeDamage(keys)
-	if IsServer() then
+	if IsServer() then        
 		local unit = keys.unit
 		local damage = keys.original_damage
 		local attacker = keys.attacker
@@ -1183,23 +1169,23 @@ function modifier_imba_rain_of_chaos_demon_link:OnTakeDamage(keys)
 
 			-- Adjust damage according to armor or magic resist, if damage types match.
 			if damage_type == DAMAGE_TYPE_PHYSICAL then
-				damage = damage * (1 - self.parent:GetPhysicalArmorReduction() * 0.01)
+				damage = damage * (1 - self.parent:GetPhysicalArmorReduction() * 0.01)                
 
-			elseif damage_type == DAMAGE_TYPE_MAGICAL then
+			elseif damage_type == DAMAGE_TYPE_MAGICAL then                
 				damage = damage * (1- self.parent:GetMagicalArmorValue() * 0.01)
 			end
 
 			-- Decrease damage to the demon
-			damage = damage * self.scepter_damage_transfer_pct * 0.01
+			damage = damage * self.scepter_damage_transfer_pct * 0.01            
 
 			-- Deal damage
 			local damageTable = {victim = self.demon_table[chosen_demon],
-				attacker = attacker,
-				damage = damage,
-				damage_type = damage_type,
-			}
-
-			ApplyDamage(damageTable)
+								 attacker = attacker, 
+								 damage = damage,
+								 damage_type = damage_type,                             
+								 }
+			
+			ApplyDamage(damageTable)            
 		end
 	end
 end
@@ -1233,7 +1219,7 @@ function modifier_imba_rain_of_chaos_demon_link:OnDeath(keys)
 end
 
 function modifier_imba_rain_of_chaos_demon_link:OnRemoved()
-	-- Severe all remaining particles and kill all remaining demons
+	-- Severe all remaining particles and kill all remaining demons    
 	for i = 1, #self.demon_table do
 		self.demon_table[i]:Kill(self.ability, self.caster)
 		ParticleManager:DestroyParticle(self.particle_table[i], false)
@@ -1249,7 +1235,7 @@ imba_warlock_flaming_fists = class({})
 LinkLuaModifier("modifier_imba_flaming_fists", "hero/hero_warlock.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_warlock_flaming_fists:GetAbilityTextureName()
-	return "warlock_golem_flaming_fists"
+   return "warlock_golem_flaming_fists"
 end
 
 function imba_warlock_flaming_fists:GetIntrinsicModifierName()
@@ -1276,8 +1262,8 @@ function modifier_imba_flaming_fists:OnRefresh()
 end
 
 function modifier_imba_flaming_fists:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_PROCATTACK_BONUS_DAMAGE_PURE,
-		MODIFIER_EVENT_ON_ATTACK_LANDED}
+	local decFuncs = {MODIFIER_PROPERTY_PROCATTACK_BONUS_DAMAGE_PURE, 
+					  MODIFIER_EVENT_ON_ATTACK_LANDED}
 
 	return decFuncs
 end
@@ -1301,11 +1287,11 @@ end
 function modifier_imba_flaming_fists:OnAttackLanded(keys)
 	if IsServer() then
 		local target = keys.target
-		local attacker = keys.attacker
+		local attacker = keys.attacker    
 
 		-- Only apply if the caster is the one attacking
-		if self.caster == attacker then
-
+		if self.caster == attacker then        
+			
 			-- If the unit is not a hero or a creep, do nothing
 			if not target:IsHero() and not target:IsCreep() then
 				return nil
@@ -1325,37 +1311,37 @@ function modifier_imba_flaming_fists:OnAttackLanded(keys)
 				if modifier_upheaval_handler and modifier_upheaval_handler.radius and modifier_upheaval_handler.center then
 					radius = modifier_upheaval_handler.radius
 
-					-- Add the Upheaval burn particle effect
+					-- Add the Upheaval burn particle effect 
 					self.particle_burn_fx = ParticleManager:CreateParticle(self.particle_burn, PATTACH_WORLDORIGIN, self.caster)
 					ParticleManager:SetParticleControl(self.particle_burn_fx, 0, modifier_upheaval_handler.center)
 					ParticleManager:SetParticleControl(self.particle_burn_fx, 1, Vector(radius, 0, 0))
 					ParticleManager:ReleaseParticleIndex(self.particle_burn_fx)
-				end
+				end                
 			end
 
 			-- Find all nearby enemy units and deal pure damage to all of them
 			local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(),
-				target:GetAbsOrigin(),
-				nil,
-				radius,
-				DOTA_UNIT_TARGET_TEAM_ENEMY,
-				DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-				DOTA_UNIT_TARGET_FLAG_NOT_ATTACK_IMMUNE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
-				FIND_ANY_ORDER,
-				false)
+											  target:GetAbsOrigin(),
+											  nil,
+											  radius,
+											  DOTA_UNIT_TARGET_TEAM_ENEMY,
+											  DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+											  DOTA_UNIT_TARGET_FLAG_NOT_ATTACK_IMMUNE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
+											  FIND_ANY_ORDER,
+											  false)
 
-			-- Do not damage the main target
+			-- Do not damage the main target            
 			for _,enemy in pairs(enemies) do
 				if enemy ~= target then
-
+					
 					local damageTable = {victim = enemy,
-						attacker = self.caster,
-						damage = self.damage,
-						damage_type = DAMAGE_TYPE_PURE,
-						ability = self.ability
-					}
-
-					ApplyDamage(damageTable)
+										 attacker = self.caster, 
+										 damage = self.damage,
+										 damage_type = DAMAGE_TYPE_PURE,        
+										 ability = self.ability                     
+										 }
+					
+					ApplyDamage(damageTable)            
 				end
 			end
 		end
@@ -1381,7 +1367,7 @@ function imba_warlock_permanent_immolation:GetIntrinsicModifierName()
 end
 
 function imba_warlock_permanent_immolation:GetAbilityTextureName()
-	return "warlock_golem_permanent_immolation"
+   return "warlock_golem_permanent_immolation"
 end
 
 -- Permanent immolation aura modifier
@@ -1419,7 +1405,7 @@ function modifier_imba_permanent_immolation_aura:OnIntervalThink()
 				-- Set actual aura radius. Need to dramatically increase the radius of the immolation. This is remedied by rejecting enemies outside the radius
 				self.actual_radius = modifier_upheaval_handler.radius * 2
 
-				-- BURN!!!! effect
+				-- BURN!!!! effect            
 				self.particle_burn_fx = ParticleManager:CreateParticle(self.particle_burn, PATTACH_WORLDORIGIN, self.caster)
 				ParticleManager:SetParticleControl(self.particle_burn_fx, 0, modifier_upheaval_handler.center)
 				ParticleManager:SetParticleControl(self.particle_burn_fx, 1, Vector(modifier_upheaval_handler.radius, 0, 0))
@@ -1431,32 +1417,32 @@ function modifier_imba_permanent_immolation_aura:OnIntervalThink()
 
 		-- Find nearby enemies
 		local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(),
-			self.caster:GetAbsOrigin(),
-			nil,
-			self.actual_radius,
-			DOTA_UNIT_TARGET_TEAM_ENEMY,
-			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-			DOTA_UNIT_TARGET_FLAG_NONE,
-			FIND_ANY_ORDER,
-			false)
+										  self.caster:GetAbsOrigin(),
+										  nil,
+										  self.actual_radius,
+										  DOTA_UNIT_TARGET_TEAM_ENEMY,
+										  DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+										  DOTA_UNIT_TARGET_FLAG_NONE,
+										  FIND_ANY_ORDER,
+										  false)
 
 		for _,enemy in pairs(enemies) do
-			if enemy:HasModifier(self.modifier_burn) then
+			if enemy:HasModifier(self.modifier_burn) then                                
 				-- Damage enemies
 				local damageTable = {victim = enemy,
-					attacker = self.caster,
-					damage = self.damage,
-					damage_type = DAMAGE_TYPE_MAGICAL,
-					ability = self.ability
-				}
-
-				ApplyDamage(damageTable)
+									 attacker = self.caster, 
+									 damage = self.damage,
+									 damage_type = DAMAGE_TYPE_MAGICAL,        
+									 ability = self.ability            
+									 }
+								
+				ApplyDamage(damageTable)                    
 			end
-		end
+		end        
 	end
 end
 
-function modifier_imba_permanent_immolation_aura:GetAuraRadius()
+function modifier_imba_permanent_immolation_aura:GetAuraRadius()    
 	return self.actual_radius
 end
 
@@ -1528,7 +1514,7 @@ imba_warlock_golem_spell_immunity = class({})
 LinkLuaModifier("modifier_imba_golem_spell_immunity", "hero/hero_warlock.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_warlock_golem_spell_immunity:GetAbilityTextureName()
-	return "neutral_spell_immunity"
+   return "neutral_spell_immunity"
 end
 
 function imba_warlock_golem_spell_immunity:GetIntrinsicModifierName()

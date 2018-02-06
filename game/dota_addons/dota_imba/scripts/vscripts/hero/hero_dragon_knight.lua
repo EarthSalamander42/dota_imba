@@ -1,21 +1,6 @@
--- Copyright (C) 2018  The Dota IMBA Development Team
---
--- Licensed under the Apache License, Version 2.0 (the "License");
--- you may not use this file except in compliance with the License.
--- You may obtain a copy of the License at
---
--- http://www.apache.org/licenses/LICENSE-2.0
---
--- Unless required by applicable law or agreed to in writing, software
--- distributed under the License is distributed on an "AS IS" BASIS,
--- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
--- See the License for the specific language governing permissions and
--- limitations under the License.
---
--- Editors:
---     SquawkyArctangent
---     EarthSalamander #42, 29.01.2018
---     suthernfriend, 03.02.2018
+-- Author: EarthSalamander #42
+-- 26/01/2018 // DD/MM/YYYY
+-- Elder Dragon Form based on original author: SquawkyArctangent
 
 ---------------------------
 --		BREATH FIRE  	 --
@@ -26,7 +11,7 @@ LinkLuaModifier("modifier_imba_breathe_fire_debuff", "hero/hero_dragon_knight", 
 imba_dragon_knight_breathe_fire = class({})
 
 function imba_dragon_knight_breathe_fire:GetAbilityTextureName()
-	return "dragon_knight_breathe_fire"
+   return "dragon_knight_breathe_fire"
 end
 
 function imba_dragon_knight_breathe_fire:IsHiddenWhenStolen()
@@ -34,10 +19,10 @@ function imba_dragon_knight_breathe_fire:IsHiddenWhenStolen()
 end
 
 function imba_dragon_knight_breathe_fire:OnSpellStart()
-	local ability = self
-	local target = self:GetCursorTarget()
-	local target_point = self:GetCursorPosition()
-	local speed = self:GetSpecialValueFor("speed")
+local ability = self
+local target = self:GetCursorTarget()
+local target_point = self:GetCursorPosition()
+local speed = self:GetSpecialValueFor("speed")
 
 	EmitSoundOn("Hero_DragonKnight.BreathFire", self:GetCaster())
 
@@ -51,11 +36,11 @@ function imba_dragon_knight_breathe_fire:OnSpellStart()
 		Source = self:GetCaster(),
 		bHasFrontalCone = false,
 		bReplaceExisting = false,
-		iUnitTargetTeam = self:GetAbilityTargetTeam(),
-		iUnitTargetType = self:GetAbilityTargetType(),
+		iUnitTargetTeam = self:GetAbilityTargetTeam(),							
+		iUnitTargetType = self:GetAbilityTargetType(),							
 		bDeleteOnHit = false,
 		vVelocity = (((target_point - self:GetCaster():GetAbsOrigin()) * Vector(1, 1, 0)):Normalized()) * speed,
-		bProvidesVision = false,
+		bProvidesVision = false,							
 	}
 
 	ProjectileManager:CreateLinearProjectile(projectile)
@@ -64,7 +49,7 @@ function imba_dragon_knight_breathe_fire:OnSpellStart()
 		print("Purge hero!")
 		self:GetCaster():Purge(false, true, false, true, true)
 	end
-end
+end 
 
 function imba_dragon_knight_breathe_fire:OnProjectileHit(target, location)
 	if IsServer() then
@@ -87,7 +72,7 @@ function imba_dragon_knight_breathe_fire:OnProjectileHit(target, location)
 		end
 
 		-- Deal damage
-		ApplyDamage({victim = target, damage = damage + health_as_damage, damage_type = damage_type, attacker = self:GetCaster(), ability = self})
+		ApplyDamage({victim = target, damage = damage + health_as_damage, damage_type = damage_type, attacker = self:GetCaster(), ability = self})	
 
 		SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, target, health_as_damage, nil)
 		target:AddNewModifier(self:GetCaster(), self, "modifier_imba_breathe_fire_debuff", {duration = debuff_duration})
@@ -114,7 +99,7 @@ function modifier_imba_breathe_fire_debuff:DeclareFunctions()
 end
 
 function modifier_imba_breathe_fire_debuff:GetModifierBaseDamageOutgoing_Percentage()
-	return self:GetAbility():GetSpecialValueFor("reduction")
+    return self:GetAbility():GetSpecialValueFor("reduction")
 end
 
 function modifier_imba_breathe_fire_debuff:GetModifierBonusStats_Strength()
@@ -125,7 +110,7 @@ function modifier_imba_breathe_fire_debuff:GetEffectName()
 	return "particles/units/heroes/hero_dragon_knight/dragon_knight_breathe_fire_trail.vpcf"
 end
 
-function modifier_imba_breathe_fire_debuff:GetEffectAttachType() return PATTACH_ABSORIGIN_FOLLOW end
+function modifier_imba_breathe_fire_debuff:GetEffectAttachType() return PATTACH_ABSORIGIN_FOLLOW end	
 function modifier_imba_breathe_fire_debuff:IsHidden() return false end
 function modifier_imba_breathe_fire_debuff:IsPurgable() return true end
 function modifier_imba_breathe_fire_debuff:IsDebuff() return true end
@@ -141,7 +126,7 @@ LinkLuaModifier("modifier_imba_dragon_tail_debuff", "hero/hero_dragon_knight.lua
 imba_dragon_knight_dragon_tail = class({})
 
 function imba_dragon_knight_dragon_tail:GetCastRange()
-	self.cast_range = 150
+self.cast_range = 150
 
 	if self:GetCaster() and self:GetCaster().HasModifier and self:GetCaster():HasModifier("modifier_dragon_knight_dragon_form") then
 		self.cast_range = self:GetSpecialValueFor("dragon_cast_range")
@@ -182,14 +167,14 @@ function imba_dragon_knight_dragon_tail:OnSpellStart()
 					enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_dragon_tail_debuff", {duration = self:GetSpecialValueFor("stun_duration") /2})
 				end
 
-				local info =
-					{
-						Target = self.main_target,
-						Source = self:GetCaster(),
-						Ability = self,
-						EffectName = "particles/units/heroes/hero_dragon_knight/dragon_knight_dragon_tail_dragonform_proj.vpcf",
-						iMoveSpeed = speed,
-					}
+				local info = 
+				{
+					Target = self.main_target,
+					Source = self:GetCaster(),
+					Ability = self, 
+					EffectName = "particles/units/heroes/hero_dragon_knight/dragon_knight_dragon_tail_dragonform_proj.vpcf",
+					iMoveSpeed = speed,
+				}
 				ProjectileManager:CreateTrackingProjectile(info)
 			end
 		end
@@ -416,14 +401,14 @@ function imba_dragon_knight_elder_dragon_charge:OnUpgrade()
 end
 
 function imba_dragon_knight_elder_dragon_charge:OnSpellStart()
-	local caster_loc = self:GetCaster():GetAbsOrigin()
-	local direction =  self:GetCaster():GetForwardVector()
-	local initial_radius = self:GetSpecialValueFor("initial_radius")
-	local final_radius = self:GetSpecialValueFor("final_radius")
-	local cone_length = self:GetSpecialValueFor("cone_length")
-	local fire_speed = self:GetSpecialValueFor("fire_speed")
-	local rush_distance = self:GetSpecialValueFor("rush_distance") + GetCastRangeIncrease(self:GetCaster()) + self:GetCaster():FindTalentValue("special_bonus_imba_dragon_knight_2")
-	local rush_speed = rush_distance / self:GetSpecialValueFor("rush_duration")
+local caster_loc = self:GetCaster():GetAbsOrigin()
+local direction =  self:GetCaster():GetForwardVector()
+local initial_radius = self:GetSpecialValueFor("initial_radius")
+local final_radius = self:GetSpecialValueFor("final_radius")
+local cone_length = self:GetSpecialValueFor("cone_length")
+local fire_speed = self:GetSpecialValueFor("fire_speed")
+local rush_distance = self:GetSpecialValueFor("rush_distance") + GetCastRangeIncrease(self:GetCaster()) + self:GetCaster():FindTalentValue("special_bonus_imba_dragon_knight_2")
+local rush_speed = rush_distance / self:GetSpecialValueFor("rush_duration")
 
 	self:GetCaster():EmitSound("Hero_DragonKnight.BreathFire")
 
@@ -492,7 +477,7 @@ function imba_dragon_knight_elder_dragon_charge:OnProjectileHit(target, location
 			dmg_type = DAMAGE_TYPE_PURE
 		end
 
-		ApplyDamage({attacker = self:GetCaster(), victim = target, damage = breathe_fire:GetSpecialValueFor("damage") + health_as_damage, damage_type = dmg_type, ability = breathe_fire})
+		ApplyDamage({attacker = self:GetCaster(), victim = target, damage = breathe_fire:GetSpecialValueFor("damage") + health_as_damage, damage_type = dmg_type, ability = breathe_fire})	
 		ApplyDamage({attacker = self:GetCaster(), victim = target, damage = dragon_tail:GetAbilityDamage(), damage_type = dragon_tail:GetAbilityDamageType(), ability = dragon_tail})
 		SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, target, health_as_damage, nil)
 
@@ -638,8 +623,6 @@ function modifier_imba_elder_dragon_form:RemoveOnDeath() return false end
 
 function modifier_imba_elder_dragon_form:OnCreated( event )
 	self:StartIntervalThink(0.5)
-	self.bonus_ms = self:GetCaster():GetHealth() / 100 * self:GetParent():FindTalentValue("special_bonus_imba_dragon_knight_8")
-	self:SetStackCount(self.bonus_ms)
 
 	-- apply all the edf modifiers on creation if has scepter
 	if self:GetParent():HasScepter() then
@@ -702,6 +685,13 @@ if IsServer() then
 				self:AddElderForm(self:GetParent(), self:GetAbility(), self:GetAbility():GetLevel())
 			end
 		end
+
+		if self:GetParent():HasTalent("special_bonus_imba_dragon_knight_8") and self:GetParent():HasModifier("modifier_dragon_knight_dragon_form") then
+			self.bonus_ms = self:GetCaster():GetHealthPercent() * self:GetParent():FindTalentValue("special_bonus_imba_dragon_knight_8")
+			self:SetStackCount(self.bonus_ms)
+		else
+			self:SetStackCount(0)
+		end
 	end
 
 	function modifier_imba_elder_dragon_form:AddElderForm(hero, ability, level, duration)
@@ -732,11 +722,7 @@ if IsServer() then
 end
 
 function modifier_imba_elder_dragon_form:GetModifierMoveSpeedBonus_Constant()
-	if self:GetParent():HasModifier("modifier_dragon_knight_dragon_form") and self:GetParent():HasTalent("special_bonus_imba_dragon_knight_8") then
-		return self:GetStackCount()
-	else
-		return 0
-	end
+	return self:GetStackCount()
 end
 
 modifier_imba_elder_dragon_form_debuff = class({})
@@ -754,7 +740,7 @@ function modifier_imba_elder_dragon_form_debuff:DeclareFunctions()
 end
 
 function modifier_imba_elder_dragon_form_debuff:GetModifierBaseDamageOutgoing_Percentage()
-	return self:GetCaster():FindTalentValue("special_bonus_imba_dragon_knight_6", "reduction")
+    return self:GetCaster():FindTalentValue("special_bonus_imba_dragon_knight_6", "reduction")
 end
 
 function modifier_imba_elder_dragon_form_debuff:GetEffectName() return "particles/econ/items/windrunner/windrunner_cape_cascade/windrunner_windrun_slow_cascade.vpcf" end

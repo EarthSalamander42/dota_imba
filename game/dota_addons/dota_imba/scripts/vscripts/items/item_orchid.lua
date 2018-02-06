@@ -1,20 +1,3 @@
--- Copyright (C) 2018  The Dota IMBA Development Team
---
--- Licensed under the Apache License, Version 2.0 (the "License");
--- you may not use this file except in compliance with the License.
--- You may obtain a copy of the License at
---
--- http://www.apache.org/licenses/LICENSE-2.0
---
--- Unless required by applicable law or agreed to in writing, software
--- distributed under the License is distributed on an "AS IS" BASIS,
--- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
--- See the License for the specific language governing permissions and
--- limitations under the License.
---
--- Editors:
---
-
 --	Author: Firetoad
 --	Date: 			15.08.2015
 --	Last Update:	18.05.2017
@@ -28,7 +11,7 @@ LinkLuaModifier( "modifier_item_imba_orchid", "items/item_orchid.lua", LUA_MODIF
 LinkLuaModifier( "modifier_item_imba_orchid_debuff", "items/item_orchid.lua", LUA_MODIFIER_MOTION_NONE )	-- Active debuff
 
 function item_imba_orchid:GetAbilityTextureName()
-	return "custom/imba_orchid"
+   return "custom/imba_orchid"
 end
 
 function item_imba_orchid:GetIntrinsicModifierName()
@@ -129,11 +112,11 @@ function modifier_item_imba_orchid_debuff:IsPurgable() return true end
 
 -- Modifier particle
 function modifier_item_imba_orchid_debuff:GetEffectName()
-	return "particles/items2_fx/orchid.vpcf"
+		return "particles/items2_fx/orchid.vpcf"
 end
 
 function modifier_item_imba_orchid_debuff:GetEffectAttachType()
-	return PATTACH_OVERHEAD_FOLLOW
+		return PATTACH_OVERHEAD_FOLLOW
 end
 
 -- Reset damage storage tracking, track debuff parameters to prevent errors if the item is unequipped
@@ -185,7 +168,7 @@ function modifier_item_imba_orchid_debuff:OnDestroy()
 
 		-- If damage was taken, play the effect and damage the owner
 		if owner.orchid_damage_storage > 0 then
-
+			
 			-- Calculate and deal damage
 			local damage = owner.orchid_damage_storage * self.damage_factor * 0.01
 			ApplyDamage({attacker = caster, victim = owner, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
@@ -213,7 +196,7 @@ LinkLuaModifier( "modifier_item_imba_bloodthorn_attacker_crit", "items/item_orch
 LinkLuaModifier( "modifier_item_imba_bloodthorn_debuff", "items/item_orchid.lua", LUA_MODIFIER_MOTION_NONE )	-- Active debuff
 
 function item_imba_bloodthorn:GetAbilityTextureName()
-	return "custom/imba_bloodthorn"
+   return "custom/imba_bloodthorn"
 end
 
 function item_imba_bloodthorn:GetIntrinsicModifierName()
@@ -434,7 +417,7 @@ function modifier_item_imba_bloodthorn_debuff:OnDestroy()
 
 		-- If damage was taken, play the effect and damage the owner
 		if owner.orchid_damage_storage > 0 then
-
+			
 			-- Calculate and deal damage
 			local damage = owner.orchid_damage_storage * damage_factor * 0.01
 			ApplyDamage({attacker = caster, victim = owner, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})

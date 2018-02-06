@@ -1,20 +1,3 @@
--- Copyright (C) 2018  The Dota IMBA Development Team
---
--- Licensed under the Apache License, Version 2.0 (the "License");
--- you may not use this file except in compliance with the License.
--- You may obtain a copy of the License at
---
--- http://www.apache.org/licenses/LICENSE-2.0
---
--- Unless required by applicable law or agreed to in writing, software
--- distributed under the License is distributed on an "AS IS" BASIS,
--- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
--- See the License for the specific language governing permissions and
--- limitations under the License.
---
--- Editors:
---
-
 --[[
 		By: AtroCty
 		Date: 27.05.2017
@@ -32,7 +15,7 @@ function item_imba_shotgun:GetIntrinsicModifierName()
 end
 
 function item_imba_shotgun:GetAbilityTextureName()
-	return "custom/imba_shotgun"
+   return "custom/imba_shotgun"
 end
 
 -------------------------------------------
@@ -70,14 +53,14 @@ function modifier_imba_shotgun_passive:OnCreated()
 end
 
 function modifier_imba_shotgun_passive:DeclareFunctions()
-	local decFuns =
-		{
-			MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
-			MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
-			MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
-			MODIFIER_EVENT_ON_ATTACK
-		}
-	return decFuns
+local decFuns =
+{
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
+		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
+		MODIFIER_EVENT_ON_ATTACK
+}
+return decFuns
 end
 
 function modifier_imba_shotgun_passive:GetModifierAttackSpeedBonus_Constant()
@@ -100,7 +83,7 @@ function modifier_imba_shotgun_passive:OnAttack(params)
 			-- Cooldown check and lookup for Starfury
 			if self.item:IsCooldownReady() and (self:CheckUniqueValue(1,{"modifier_imba_starfury_passive"}) == 1) then
 				-- Parameters
-				local hero = self.parent
+				local hero = self.parent				
 				local damage
 				if hero:IsRangedAttacker() then
 					damage = hero:GetAgility() * self.agility_pct_ranged
@@ -127,59 +110,59 @@ function modifier_imba_shotgun_passive:OnAttack(params)
 					-- Hit counter, stun if hit by all projectiles
 					local hits = 0
 					local last_target
-
+					
 					for i = 1, 3 do
 						local direction = main_direction
 						if i == 1 then
-							direction = RotateVector2D(direction,self.ranged_proj_angle,true)
+							direction = RotateVector2D(direction,self.ranged_proj_angle,true) 
 						elseif i == 2 then
-							direction = RotateVector2D(direction,-self.ranged_proj_angle,true)
+							direction = RotateVector2D(direction,-self.ranged_proj_angle,true) 
 						end
 						local end_loc = hero_pos+direction*self.ranged_proj_range+Vector(0,0,90)
-						local projectile =
-							{
-								EffectName = "particles/item/starfury/starfury_projectile.vpcf",
-								vSpawnOrigin = {unit=hero, attach="attach_attack1", offset=Vector(0,0,90)},
-								fDistance = self.ranged_proj_range,
-								fStartRadius = self.ranged_proj_radius,
-								fEndRadius = self.ranged_proj_radius,
-								Source = hero,
-								fExpireTime = 8.0,
-								vVelocity = direction*self.projectile_speed,
-								UnitBehavior = PROJECTILES_DESTROY,
-								bMultipleHits = false,
-								bIgnoreSource = true,
-								TreeBehavior = PROJECTILES_NOTHING,
-								bCutTrees = false,
-								bTreeFullCollision = false,
-								WallBehavior = PROJECTILES_NOTHING,
-								GroundBehavior = PROJECTILES_NOTHING,
-								fGroundOffset = 80,
-								nChangeMax = 1,
-								bRecreateOnChange = false,
-								bZCheck = false,
-								bGroundLock = true,
-								bProvidesVision = false,
-								bFlyingVision = false,
-								ControlPoints = {[0]=hero_pos+Vector(0,0,90),[1]=end_loc,[2]=Vector(self.projectile_speed,0,0),[3]=end_loc,[4]=vColor,[5]=hero:GetHeroColorSecondary()},
-								UnitTest = function(self, unit) return unit:GetUnitName() ~= "npc_dummy_unit" and unit:GetTeamNumber() ~= hero:GetTeamNumber() end,
-								OnUnitHit = function(self, unit)
-									if last_target == nil then
-										last_target = unit
-									elseif last_target ~= unit then
-										hits = -1
-									end
-									hits = hits + 1
-									if hits == 3 then
-										unit:AddNewModifier(hero, self.item, "modifier_stunned", {duration = stun_duration})
-									end
-									params.damage = damage
-									params.damage_type = damage_type
-									params.hCaster = hero
-									params.hTarget = unit
-									ProjectileHit(params, nil, self)
-								end,
-							}
+						local projectile = 
+						{
+							EffectName = "particles/item/starfury/starfury_projectile.vpcf",
+							vSpawnOrigin = {unit=hero, attach="attach_attack1", offset=Vector(0,0,90)},
+							fDistance = self.ranged_proj_range,
+							fStartRadius = self.ranged_proj_radius,
+							fEndRadius = self.ranged_proj_radius,
+							Source = hero,
+							fExpireTime = 8.0,
+							vVelocity = direction*self.projectile_speed,
+							UnitBehavior = PROJECTILES_DESTROY,
+							bMultipleHits = false,
+							bIgnoreSource = true,
+							TreeBehavior = PROJECTILES_NOTHING,
+							bCutTrees = false,
+							bTreeFullCollision = false,
+							WallBehavior = PROJECTILES_NOTHING,
+							GroundBehavior = PROJECTILES_NOTHING,
+							fGroundOffset = 80,
+							nChangeMax = 1,
+							bRecreateOnChange = false,
+							bZCheck = false,
+							bGroundLock = true,
+							bProvidesVision = false,
+							bFlyingVision = false,
+							ControlPoints = {[0]=hero_pos+Vector(0,0,90),[1]=end_loc,[2]=Vector(self.projectile_speed,0,0),[3]=end_loc,[4]=vColor,[5]=hero:GetHeroColorSecondary()},							
+							UnitTest = function(self, unit) return unit:GetUnitName() ~= "npc_dummy_unit" and unit:GetTeamNumber() ~= hero:GetTeamNumber() end,
+							OnUnitHit = function(self, unit)
+								if last_target == nil then
+									last_target = unit
+								elseif last_target ~= unit then
+									hits = -1
+								end
+								hits = hits + 1
+								if hits == 3 then
+									unit:AddNewModifier(hero, self.item, "modifier_stunned", {duration = stun_duration})
+								end
+								params.damage = damage
+								params.damage_type = damage_type
+								params.hCaster = hero
+								params.hTarget = unit
+								ProjectileHit(params, nil, self)
+							end,
+						}
 						Projectiles:CreateProjectile(projectile)
 					end
 				else
@@ -212,7 +195,7 @@ function item_imba_starfury:GetIntrinsicModifierName()
 end
 
 function item_imba_starfury:GetAbilityTextureName()
-	return "custom/imba_starfury"
+   return "custom/imba_starfury"
 end
 -------------------------------------------
 modifier_imba_starfury_passive = modifier_imba_starfury_passive or class({})
@@ -245,15 +228,15 @@ function modifier_imba_starfury_passive:OnCreated()
 end
 
 function modifier_imba_starfury_passive:DeclareFunctions()
-	local decFuns =
-		{
-			MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
-			MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
-			MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
-			MODIFIER_EVENT_ON_ATTACK_LANDED,
-			MODIFIER_EVENT_ON_ATTACK_FAIL,
-		}
-	return decFuns
+local decFuns =
+{
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
+		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
+		MODIFIER_EVENT_ON_ATTACK_LANDED,
+		MODIFIER_EVENT_ON_ATTACK_FAIL,
+}
+return decFuns
 end
 
 function modifier_imba_starfury_passive:GetModifierAttackSpeedBonus_Constant()
@@ -341,11 +324,11 @@ function modifier_imba_starfury_buff_increase:OnCreated()
 end
 
 function modifier_imba_starfury_buff_increase:DeclareFunctions()
-	local decFuns =
-		{
-			MODIFIER_PROPERTY_STATS_AGILITY_BONUS
-		}
-	return decFuns
+local decFuns =
+{
+		MODIFIER_PROPERTY_STATS_AGILITY_BONUS
+}
+return decFuns
 end
 
 function modifier_imba_starfury_buff_increase:GetModifierBonusStats_Agility()

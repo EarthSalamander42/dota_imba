@@ -1,7 +1,7 @@
 <root>
 	<styles>
 		<include src="s2r://panorama/styles/dotastyles.vcss_c" />
-		<include src="s2r://panorama/styles/hud.vcss_c"/>
+<!--		<include src="s2r://panorama/styles/hud.vcss_c"/> -->
 		<include src="s2r://panorama/styles/hudstyles.vcss_c"/>
 		<include src="s2r://panorama/styles/hud/hud_reborn.vcss_c" />	
 
@@ -77,8 +77,12 @@
 
 							<Panel id="AbilitiesAndStatBranch" hittest="false">
 								<DOTATalentDisplay id="StatBranch"/>
-								<DOTAAbilityList id="abilities" hittest="false"/>
+
+								<DOTAAbilityList id="abilities" hittest="false">
+									<DOTAAbilityPanel id="Ability0"/>
+								</Panel>
 							</Panel>
+
 							<DOTAHUDDeathPanel id="death_panel_buyback" class="">
 								<DOTAHeroImage id="BuybackLifeCost" hittest="false" heroimagestyle="icon" heroid="1" class="LifeLeftIcon" scaling="stretch-to-cover-preserve-aspect" />							
 								<Panel id="ResLabelContainer">

@@ -1,20 +1,3 @@
--- Copyright (C) 2018  The Dota IMBA Development Team
---
--- Licensed under the Apache License, Version 2.0 (the "License");
--- you may not use this file except in compliance with the License.
--- You may obtain a copy of the License at
---
--- http://www.apache.org/licenses/LICENSE-2.0
---
--- Unless required by applicable law or agreed to in writing, software
--- distributed under the License is distributed on an "AS IS" BASIS,
--- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
--- See the License for the specific language governing permissions and
--- limitations under the License.
---
--- Editors:
---
-
 item_imba_hood_of_defiance = item_imba_hood_of_defiance or class({})
 LinkLuaModifier("modifier_imba_hood_of_defiance_passive", "items/item_hood_of_defiance.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_hood_of_defiance_active_shield", "items/item_hood_of_defiance.lua", LUA_MODIFIER_MOTION_NONE)
@@ -96,12 +79,12 @@ function modifier_imba_hood_of_defiance_active_shield:OnCreated( params )
 
 	if IsServer() then
 		self.shield_health = params.shield_health
-
+		
 		if not self.particle then
 			self.particle = ParticleManager:CreateParticle(barrier_particle, PATTACH_OVERHEAD_FOLLOW, self.parent)
-			ParticleManager:SetParticleControl(self.particle, 0, self.parent:GetAbsOrigin())
-			ParticleManager:SetParticleControlEnt(self.particle, 1, self.parent, PATTACH_POINT_FOLLOW, "attach_origin", self.parent:GetAbsOrigin(), true)
-			ParticleManager:SetParticleControl(self.particle, 2, Vector(self.parent:GetModelRadius() * 1.1,0,0))
+				ParticleManager:SetParticleControl(self.particle, 0, self.parent:GetAbsOrigin())
+				ParticleManager:SetParticleControlEnt(self.particle, 1, self.parent, PATTACH_POINT_FOLLOW, "attach_origin", self.parent:GetAbsOrigin(), true)
+				ParticleManager:SetParticleControl(self.particle, 2, Vector(self.parent:GetModelRadius() * 1.1,0,0))
 		end
 	end
 end
@@ -150,11 +133,11 @@ function modifier_imba_hood_of_defiance_active_bonus:IsPurgeException() return f
 function modifier_imba_hood_of_defiance_active_bonus:OnCreated()
 	self.magic_resist_compensation = 0
 	self.precision = 0.5 / 100 -- margin of 0.5% magic resistance. This is to prevent rounding-related errors/recalculations
-	self.parent = self:GetParent()
+	self.parent = self:GetParent()	
 
 	self.unreducable_magic_resist = self:GetAbility():GetSpecialValueFor("unreducable_magic_resist")
 	self.unreducable_magic_resist = self.unreducable_magic_resist / 100
-	self:StartIntervalThink(0.1)
+	self:StartIntervalThink(0.1)	
 end
 
 function modifier_imba_hood_of_defiance_active_bonus:DeclareFunctions()
@@ -177,7 +160,7 @@ function modifier_imba_hood_of_defiance_active_bonus:OnIntervalThink()
 		self.magic_resist_compensation = 0
 		return
 	end
-
+	
 	local current_res = self.parent:GetMagicalArmorValue()
 	-- If we are below the margin, we need to add magic resistance
 	if current_res < ( self.unreducable_magic_resist - self.precision ) then
@@ -190,16 +173,16 @@ function modifier_imba_hood_of_defiance_active_bonus:OnIntervalThink()
 			local compensation = 1 + (self.unreducable_magic_resist - 1) / (1 - current_res)
 			self.magic_resist_compensation = compensation * 100
 		end
-		-- If we already have compensation and are above the margin, decrease it
+	-- If we already have compensation and are above the margin, decrease it
 	elseif self.magic_resist_compensation > 0 and current_res > ( self.unreducable_magic_resist + self.precision ) then
 		-- Serious copy-paste
 		local current_compensation = self.magic_resist_compensation / 100
 		local compensation = (self.unreducable_magic_resist - 1) * ( 1 - current_compensation) / (1 - current_res) + 1
-
+		
 		self.magic_resist_compensation = math.max(compensation * 100, 0)
 	end
 end
 
-function modifier_imba_hood_of_defiance_active_bonus:GetModifierMagicalResistanceBonus()
+function modifier_imba_hood_of_defiance_active_bonus:GetModifierMagicalResistanceBonus()	
 	return self.magic_resist_compensation
 end

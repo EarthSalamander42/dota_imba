@@ -1007,11 +1007,29 @@ local color = hero:GetFittingColor()
 	hero.companion = companion
 
 	if model == "npc_imba_donator_companion_cookies" then
-		companion:AddNewModifier(companion, nil, "modifier_imba_frost_rune_aura", {})
-		companion:SetRenderColor(90, 120 , 200)
-		companion:SetMaterialGroup("1")
+		local particle_name = {}
+		particle_name[0] = "particles/econ/courier/courier_donkey_ti7/courier_donkey_ti7_ambient.vpcf"
+		particle_name[1] = "particles/econ/courier/courier_golden_roshan/golden_roshan_ambient.vpcf"
+		particle_name[2] = "particles/econ/courier/courier_platinum_roshan/platinum_roshan_ambient.vpcf"
+		particle_name[3] = "particles/econ/courier/courier_roshan_darkmoon/courier_roshan_darkmoon.vpcf" -- particles/econ/courier/courier_roshan_darkmoon/courier_roshan_darkmoon_flying.vpcf
+		particle_name[4] = "particles/econ/courier/courier_roshan_desert_sands/baby_roshan_desert_sands_ambient.vpcf"
+		particle_name[5] = "particles/econ/courier/courier_roshan_lava/courier_roshan_lava.vpcf"
+		particle_name[6] = "particles/econ/courier/courier_roshan_frost/courier_roshan_frost_ambient.vpcf"
+		-- also attach eyes effect later
+		local random_int = RandomInt(0, #particle_name)
+
+		local particle = ParticleManager:CreateParticle(particle_name[random_int], PATTACH_ABSORIGIN_FOLLOW, companion)
+		if random_int <= 4 then
+			companion:SetMaterialGroup(tostring(random_int))
+		else
+			companion:SetModel("models/courier/baby_rosh/babyroshan_elemental.vmdl")
+			companion:SetOriginalModel("models/courier/baby_rosh/babyroshan_elemental.vmdl")
+			companion:SetMaterialGroup(tostring(random_int-4))
+		end
 	elseif model == "npc_imba_donator_companion_suthernfriend" then
 		companion:SetMaterialGroup("1")
+	elseif model == "npc_imba_donator_companion_baekho" then
+		local particle = ParticleManager:CreateParticle("particles/econ/courier/courier_baekho/courier_baekho_ambient.vpcf", PATTACH_ABSORIGIN_FOLLOW, companion)
 	end
 
 --	if string.find(model, "flying") then
@@ -1372,4 +1390,33 @@ function CountdownTimer()
 	if t <= 120 then
 		CustomGameEventManager:Send_ServerToAllClients( "time_remaining", broadcast_gametimer )
 	end
+end
+
+function InitializeTalentsOverride(hero)
+	linked_abilities = {}
+	local non_talent_abilities = 0
+	for i = 0, 16 do
+		local ability = hero:GetAbilityByIndex(i)
+
+		if ability then
+			if not string.find(ability:GetAbilityName(), "_bonus_") then
+				non_talent_abilities = non_talent_abilities +1
+			else
+--				print(ability, ability:GetAbilityName())
+				for k, v in pairs(ability:GetAbilityKeyValues()) do
+					if k == "LinkedAbility" then
+						for l, m in pairs(v) do
+--							print(l, m)
+							table.insert(linked_abilities, i - non_talent_abilities + 1, m)
+						end
+						break
+					end
+				end
+			end
+		end
+	end
+
+--	print(linked_abilities)
+--	PrintTable(linked_abilities)
+	CustomGameEventManager:Send_ServerToAllClients("init_talent_window", {linked_abilities})
 end

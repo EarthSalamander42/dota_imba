@@ -1,21 +1,9 @@
--- Copyright (C) 2018  The Dota IMBA Development Team
---
--- Licensed under the Apache License, Version 2.0 (the "License");
--- you may not use this file except in compliance with the License.
--- You may obtain a copy of the License at
---
--- http://www.apache.org/licenses/LICENSE-2.0
---
--- Unless required by applicable law or agreed to in writing, software
--- distributed under the License is distributed on an "AS IS" BASIS,
--- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
--- See the License for the specific language governing permissions and
--- limitations under the License.
---
--- Editors:
---     Firetoad
---     AtroCty, 02.04.2017
---     suthernfriend, 03.02.2018
+--[[
+		By: AtroCty
+		Prev. Authors: Firetoad
+		Date: 27.04.2015
+		Updated:  02.04.2017
+--]]
 
 CreateEmptyTalents("necrolyte")
 
@@ -29,11 +17,11 @@ LinkLuaModifier("modifier_imba_sadist_stack", "hero/hero_necrolyte", LUA_MODIFIE
 imba_necrolyte_sadist = imba_necrolyte_sadist or class({})
 
 function imba_necrolyte_sadist:GetAbilityTextureName()
-	return "custom/necrolyte_sadist"
+   return "custom/necrolyte_sadist"
 end
 
 function imba_necrolyte_sadist:GetIntrinsicModifierName()
-	if self:GetCaster():IsRealHero() then return "modifier_imba_sadist" end
+    if self:GetCaster():IsRealHero() then return "modifier_imba_sadist" end
 	return false
 end
 
@@ -43,31 +31,31 @@ end
 
 modifier_imba_sadist = class({})
 function modifier_imba_sadist:DeclareFunctions()
-	local decFuncs =
-		{
-			MODIFIER_EVENT_ON_DEATH,
-			MODIFIER_EVENT_ON_ATTACK_LANDED
-		}
+	local decFuncs = 
+	{
+		MODIFIER_EVENT_ON_DEATH,
+		MODIFIER_EVENT_ON_ATTACK_LANDED
+	}
 	return decFuncs
 end
 
 function modifier_imba_sadist:OnCreated()
 	-- Ability properties
 	self.caster = self:GetCaster()
-	self.ability = self:GetAbility()
+	self.ability = self:GetAbility()	
 	self.modifier_sadist = "modifier_imba_sadist_stack"
 
 	-- Ability specials
-	self.regen_duration = self.ability:GetSpecialValueFor("regen_duration")
+	self.regen_duration = self.ability:GetSpecialValueFor("regen_duration")	
 	self.hero_multiplier = self.ability:GetSpecialValueFor("hero_multiplier")
 end
 
-function modifier_imba_sadist:IsHidden()
+function modifier_imba_sadist:IsHidden()    
 	return true
 end
 
 function modifier_imba_sadist:OnAttackLanded( params )
-	if IsServer() then
+	if IsServer() then		
 
 		-- If this is an illusion, do nothing
 		if not params.attacker:IsRealHero() then
@@ -78,9 +66,9 @@ function modifier_imba_sadist:OnAttackLanded( params )
 		if params.attacker:PassivesDisabled() then
 			return nil
 		end
-
+		
 		if self.caster:HasTalent("special_bonus_imba_necrolyte_2") then
-			if params.attacker == self.caster and params.target:IsHero() then
+			if params.attacker == self.caster and params.target:IsHero() then				
 
 				-- If the caster doesn't have the modifier, add it
 				if not self.caster:HasModifier(self.modifier_sadist) then
@@ -94,7 +82,7 @@ function modifier_imba_sadist:OnAttackLanded( params )
 					modifier_sadist_handler:ForceRefresh()
 				end
 			end
-		end
+		end		
 	end
 end
 
@@ -112,7 +100,7 @@ function modifier_imba_sadist:OnDeath(params)
 			if params.attacker:PassivesDisabled() then
 				return nil
 			end
-
+			
 			-- Initialize stacks
 			local stacks = 1
 
@@ -120,7 +108,7 @@ function modifier_imba_sadist:OnDeath(params)
 			if unit:IsRealHero() then
 				stacks = self.hero_multiplier
 			end
-
+			
 			-- If the caster doesn't have the modifier, add it
 			if not self.caster:HasModifier(self.modifier_sadist) then
 				self.caster:AddNewModifier(self.caster, self.ability, "modifier_imba_sadist_stack", {duration = self.regen_duration})
@@ -142,60 +130,60 @@ end
 modifier_imba_sadist_stack = modifier_imba_sadist_stack or class({})
 
 function modifier_imba_sadist_stack:OnCreated()
-	if IsServer() then
-		-- Ability properties
-		self.caster = self:GetCaster()
-		self.ability = self:GetAbility()
-		self.parent = self:GetParent()
+    if IsServer() then
+        -- Ability properties
+        self.caster = self:GetCaster()
+        self.ability = self:GetAbility()
+        self.parent = self:GetParent()
 
-		-- Ability specials
-		self.regen_duration = self.ability:GetSpecialValueFor("regen_duration")
-		self.mana_regen = self.ability:GetSpecialValueFor("mana_regen")
-		self.health_regen = self.ability:GetSpecialValueFor("health_regen")
-		self.regen_minimum = self.ability:GetSpecialValueFor("regen_minimum")
+        -- Ability specials
+        self.regen_duration = self.ability:GetSpecialValueFor("regen_duration")        
+        self.mana_regen = self.ability:GetSpecialValueFor("mana_regen")
+        self.health_regen = self.ability:GetSpecialValueFor("health_regen")
+        self.regen_minimum = self.ability:GetSpecialValueFor("regen_minimum")
 
-		-- Initialize table
-		self.stacks_table = {}
+        -- Initialize table
+        self.stacks_table = {}        
 
-		-- Start thinking
-		self:StartIntervalThink(0.1)
-	end
+        -- Start thinking
+        self:StartIntervalThink(0.1)
+    end
 end
 
 function modifier_imba_sadist_stack:OnIntervalThink()
-	if IsServer() then
+    if IsServer() then
 
-		-- Check if there are any stacks left on the table
-		if #self.stacks_table > 0 then
+        -- Check if there are any stacks left on the table
+        if #self.stacks_table > 0 then
 
-			-- For each stack, check if it is past its expiration time. If it is, remove it from the table
-			for i = #self.stacks_table, 1, -1 do
-				if self.stacks_table[i] + self.regen_duration < GameRules:GetGameTime() then
-					table.remove(self.stacks_table, i)
-				end
-			end
+            -- For each stack, check if it is past its expiration time. If it is, remove it from the table
+            for i = #self.stacks_table, 1, -1 do
+                if self.stacks_table[i] + self.regen_duration < GameRules:GetGameTime() then
+                    table.remove(self.stacks_table, i)                          
+                end
+            end
+            
+            -- If after removing the stacks, the table is empty, remove the modifier.
+            if #self.stacks_table == 0 then
+                self:Destroy()
 
-			-- If after removing the stacks, the table is empty, remove the modifier.
-			if #self.stacks_table == 0 then
-				self:Destroy()
+            -- Otherwise, set its stack count
+            else
+                self:SetStackCount(#self.stacks_table)
+            end            
 
-				-- Otherwise, set its stack count
-			else
-				self:SetStackCount(#self.stacks_table)
-			end
-
-			-- If there are no stacks on the table, just remove the modifier.
-		else
-			self:Destroy()
-		end
-	end
+        -- If there are no stacks on the table, just remove the modifier.
+        else
+            self:Destroy()
+        end
+    end
 end
 
 function modifier_imba_sadist_stack:OnRefresh()
-	if IsServer() then
-		-- Insert new stack values
-		table.insert(self.stacks_table, GameRules:GetGameTime())
-	end
+    if IsServer() then
+        -- Insert new stack values
+        table.insert(self.stacks_table, GameRules:GetGameTime())
+    end
 end
 
 function modifier_imba_sadist_stack:IsHidden() return false end
@@ -203,15 +191,15 @@ function modifier_imba_sadist_stack:IsPurgable() return false end
 function modifier_imba_sadist_stack:IsDebuff() return false end
 
 function modifier_imba_sadist_stack:DeclareFunctions()
-	local decFunc = {MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
-		MODIFIER_PROPERTY_MANA_REGEN_CONSTANT}
+    local decFunc = {MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
+					 MODIFIER_PROPERTY_MANA_REGEN_CONSTANT}
 
-	return decFunc
+    return decFunc
 end
 
-function modifier_imba_sadist_stack:GetModifierConstantManaRegen()
-	local mana_regen = self.mana_regen + self.caster:FindTalentValue("special_bonus_imba_necrolyte_6")
-	mana_regen = mana_regen * self:GetStackCount() * self:GetParent():GetMaxMana() * 0.01
+function modifier_imba_sadist_stack:GetModifierConstantManaRegen()	
+	local mana_regen = self.mana_regen + self.caster:FindTalentValue("special_bonus_imba_necrolyte_6")	
+	mana_regen = mana_regen * self:GetStackCount() * self:GetParent():GetMaxMana() * 0.01	
 	local regen_minimum = self.regen_minimum * self:GetStackCount()
 	return math.max(mana_regen, regen_minimum)
 end
@@ -233,7 +221,7 @@ end
 imba_necrolyte_death_pulse = imba_necrolyte_death_pulse or class({})
 
 function imba_necrolyte_death_pulse:GetAbilityTextureName()
-	return "necrolyte_death_pulse"
+   return "necrolyte_death_pulse"
 end
 
 function imba_necrolyte_death_pulse:GetCastRange( location , target)
@@ -244,7 +232,7 @@ function imba_necrolyte_death_pulse:OnSpellStart()
 	if IsServer() then
 		local caster = self:GetCaster()
 		local caster_loc = caster:GetAbsOrigin()
-
+		
 		-- Parameters
 		local radius = self:GetTalentSpecialValueFor("radius")
 		local damage = self:GetSpecialValueFor("damage")
@@ -253,55 +241,55 @@ function imba_necrolyte_death_pulse:OnSpellStart()
 		local sec_heal_pct = self:GetSpecialValueFor("sec_heal_pct")
 		local enemy_speed = self:GetSpecialValueFor("enemy_speed")
 		local ally_speed = self:GetSpecialValueFor("ally_speed")
-
+		
 		-- Cast sound
 		caster:EmitSound("Hero_Necrolyte.DeathPulse")
 		if (math.random(1,100) <= 50) and (caster:GetName() == "npc_dota_hero_necrolyte") then
 			caster:EmitSound("necrolyte_necr_ability_tox_0"..math.random(1,3))
 		end
-
+		
 		local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster_loc, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 		for _,enemy in pairs(enemies) do
 			ApplyDamage({attacker = caster, victim = enemy, ability = self, damage = damage, damage_type = self:GetAbilityDamageType()})
 			-- Enemy projectile
-			local enemy_projectile =
-				{
-					Target = caster,
-					Source = enemy,
-					Ability = self,
-					EffectName = "particles/units/heroes/hero_necrolyte/necrolyte_pulse_enemy.vpcf",
-					bDodgeable = false,
-					bProvidesVision = false,
-					iMoveSpeed = enemy_speed,
-					flExpireTime = GameRules:GetGameTime() + 60,
-					--	iVisionRadius = vision_radius,
-					--	iVisionTeamNumber = caster:GetTeamNumber(),
-					iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_HITLOCATION,
-					ExtraData = {sec_heal_pct = sec_heal_pct, heal_amp = heal_amp, radius = radius, ally_speed = ally_speed}
-				}
+			local enemy_projectile = 
+			{
+				Target = caster,
+				Source = enemy,
+				Ability = self,
+				EffectName = "particles/units/heroes/hero_necrolyte/necrolyte_pulse_enemy.vpcf",
+				bDodgeable = false,
+				bProvidesVision = false,
+				iMoveSpeed = enemy_speed,
+				flExpireTime = GameRules:GetGameTime() + 60,
+			--	iVisionRadius = vision_radius,
+			--	iVisionTeamNumber = caster:GetTeamNumber(),
+				iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_HITLOCATION,
+				ExtraData = {sec_heal_pct = sec_heal_pct, heal_amp = heal_amp, radius = radius, ally_speed = ally_speed}
+			}
 
 			-- Create the projectile
 			ProjectileManager:CreateTrackingProjectile(enemy_projectile)
 		end
-
+		
 		local allies = FindUnitsInRadius(caster:GetTeamNumber(), caster_loc, nil, radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 		for _,ally in pairs(allies) do
 			-- Ally projectile
-			local ally_projectile =
-				{
-					Target = ally,
-					Source = caster,
-					Ability = self,
-					EffectName = "particles/units/heroes/hero_necrolyte/necrolyte_pulse_friend.vpcf",
-					bDodgeable = false,
-					bProvidesVision = false,
-					iMoveSpeed = ally_speed,
-					flExpireTime = GameRules:GetGameTime() + 60,
-					--	iVisionRadius = vision_radius,
-					--	iVisionTeamNumber = caster:GetTeamNumber(),
-					iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_HITLOCATION,
-					ExtraData = {base_heal = base_heal, heal_amp = heal_amp}
-				}
+			local ally_projectile = 
+			{
+				Target = ally,
+				Source = caster,
+				Ability = self,
+				EffectName = "particles/units/heroes/hero_necrolyte/necrolyte_pulse_friend.vpcf",
+				bDodgeable = false,
+				bProvidesVision = false,
+				iMoveSpeed = ally_speed,
+				flExpireTime = GameRules:GetGameTime() + 60,
+			--	iVisionRadius = vision_radius,
+			--	iVisionTeamNumber = caster:GetTeamNumber(),
+				iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_HITLOCATION,
+				ExtraData = {base_heal = base_heal, heal_amp = heal_amp}
+			}
 			-- Create the projectile
 			ProjectileManager:CreateTrackingProjectile(ally_projectile)
 		end
@@ -311,16 +299,16 @@ end
 function imba_necrolyte_death_pulse:OnProjectileHit_ExtraData(target, vLocation, extraData)
 	if IsServer() then
 		local caster = self:GetCaster()
-
+		
 		-- Base Heal
 		if extraData.base_heal then
 			target:Heal((extraData.base_heal * extraData.heal_amp), caster)
 			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, extraData.base_heal * extraData.heal_amp, nil)
 			return nil
 		end
-
+		
 		local caster_loc = caster:GetAbsOrigin()
-
+		
 		if not extraData.radius then
 			local heal = target:GetMaxHealth() * (extraData.sec_heal_pct / 100) * extraData.heal_amp
 			target:Heal(heal, caster)
@@ -331,21 +319,21 @@ function imba_necrolyte_death_pulse:OnProjectileHit_ExtraData(target, vLocation,
 			local allies = FindUnitsInRadius(caster:GetTeamNumber(), caster_loc, nil, extraData.radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 			for _,ally in pairs(allies) do
 				-- Ally projectile
-				local ally_projectile =
-					{
-						Target = ally,
-						Source = caster,
-						Ability = self,
-						EffectName = "particles/units/heroes/hero_necrolyte/necrolyte_pulse_friend.vpcf",
-						bDodgeable = false,
-						bProvidesVision = false,
-						iMoveSpeed = extraData.ally_speed,
-						flExpireTime = GameRules:GetGameTime() + 60,
-						--	iVisionRadius = vision_radius,
-						--	iVisionTeamNumber = caster:GetTeamNumber(),
-						iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_HITLOCATION,
-						ExtraData = {sec_heal_pct = extraData.sec_heal_pct, heal_amp = extraData.heal_amp, ally_speed = extraData.ally_speed}
-					}
+				local ally_projectile = 
+				{
+					Target = ally,
+					Source = caster,
+					Ability = self,
+					EffectName = "particles/units/heroes/hero_necrolyte/necrolyte_pulse_friend.vpcf",
+					bDodgeable = false,
+					bProvidesVision = false,
+					iMoveSpeed = extraData.ally_speed,
+					flExpireTime = GameRules:GetGameTime() + 60,
+				--	iVisionRadius = vision_radius,
+				--	iVisionTeamNumber = caster:GetTeamNumber(),
+					iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_HITLOCATION,
+					ExtraData = {sec_heal_pct = extraData.sec_heal_pct, heal_amp = extraData.heal_amp, ally_speed = extraData.ally_speed}
+				}
 
 				-- Create the projectile
 				ProjectileManager:CreateTrackingProjectile(ally_projectile)
@@ -371,7 +359,7 @@ LinkLuaModifier("modifier_imba_ghost_shroud_buff", "hero/hero_necrolyte", LUA_MO
 LinkLuaModifier("modifier_imba_ghost_shroud_debuff", "hero/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
 
 function imba_necrolyte_ghost_shroud:GetAbilityTextureName()
-	return "necrolyte_sadist"
+   return "necrolyte_sadist"
 end
 
 function imba_necrolyte_ghost_shroud:OnSpellStart()
@@ -383,9 +371,9 @@ function imba_necrolyte_ghost_shroud:OnSpellStart()
 		local radius = self:GetTalentSpecialValueFor("radius")
 		local healing_amp_pct = self:GetSpecialValueFor("healing_amp_pct")
 		local slow_pct = self:GetSpecialValueFor("slow_pct")
-
+		
 		caster:EmitSound("Hero_Necrolyte.SpiritForm.Cast")
-
+		
 		caster:StartGesture(ACT_DOTA_NECRO_GHOST_SHROUD)
 		caster:AddNewModifier(caster, self, "modifier_imba_ghost_shroud_aura", { duration = duration, radius = radius, healing_amp_pct = healing_amp_pct, slow_pct = slow_pct})
 		caster:AddNewModifier(caster, self, "modifier_imba_ghost_shroud_aura_debuff", { duration = duration, radius = radius, healing_amp_pct = healing_amp_pct, slow_pct = slow_pct})
@@ -403,7 +391,7 @@ end
 
 modifier_imba_ghost_shroud_aura_purge = modifier_imba_ghost_shroud_aura_purge or class({})
 function modifier_imba_ghost_shroud_aura_purge:IsPurgable()
-	return true
+    return true
 end
 
 -- Make the aura purgable
@@ -439,7 +427,7 @@ function modifier_imba_ghost_shroud_aura:GetEffectName()
 end
 
 function modifier_imba_ghost_shroud_aura:StatusEffectPriority()
-	return MODIFIER_PRIORITY_ULTRA
+    return MODIFIER_PRIORITY_ULTRA
 end
 
 function modifier_imba_ghost_shroud_aura:GetEffectAttachType()
@@ -447,9 +435,9 @@ function modifier_imba_ghost_shroud_aura:GetEffectAttachType()
 end
 
 function modifier_imba_ghost_shroud_aura:GetAuraEntityReject(target)
-	if IsServer() then
-		return false
-	end
+    if IsServer() then
+        return false
+    end
 end
 
 function modifier_imba_ghost_shroud_aura:GetAuraRadius()
@@ -498,9 +486,9 @@ function modifier_imba_ghost_shroud_aura_debuff:GetEffectAttachType()
 end
 
 function modifier_imba_ghost_shroud_aura_debuff:GetAuraEntityReject(target)
-	if IsServer() then
-		return false
-	end
+    if IsServer() then
+        return false
+    end
 end
 
 function modifier_imba_ghost_shroud_aura_debuff:GetAuraRadius()
@@ -531,12 +519,12 @@ function modifier_imba_ghost_shroud_aura_debuff:DeclareFunctions()
 	return { MODIFIER_PROPERTY_MAGICAL_RESISTANCE_DECREPIFY_UNIQUE, }
 end
 
-function modifier_imba_ghost_shroud_aura_debuff:CheckState()
-	return
-		{
-			[MODIFIER_STATE_DISARMED] = true,
-			[MODIFIER_STATE_ATTACK_IMMUNE] = true,
-		}
+function modifier_imba_ghost_shroud_aura_debuff:CheckState() 
+    return 
+	{
+		[MODIFIER_STATE_DISARMED] = true,
+		[MODIFIER_STATE_ATTACK_IMMUNE] = true,
+	}
 end
 
 function modifier_imba_ghost_shroud_aura_debuff:GetModifierMagicalResistanceDecrepifyUnique( params )
@@ -546,16 +534,16 @@ end
 modifier_imba_ghost_shroud_buff = modifier_imba_ghost_shroud_buff or class({})
 function modifier_imba_ghost_shroud_buff:DeclareFunctions()
 	local decFuncs =
-		{
-			MODIFIER_PROPERTY_HP_REGEN_AMPLIFY_PERCENTAGE,
-			MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL,
-		}
+	{
+		MODIFIER_PROPERTY_HP_REGEN_AMPLIFY_PERCENTAGE,
+		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL,
+	}
 	return decFuncs
 end
 
 function modifier_imba_ghost_shroud_buff:GetModifierHPRegenAmplify_Percentage()
 	local healing_amp_pct = self:GetAbility():GetSpecialValueFor("healing_amp_pct")
-	if self:GetCaster() ~= self:GetParent() then
+	if self:GetCaster() ~= self:GetParent() then 
 		healing_amp_pct = healing_amp_pct / 2
 	end
 	return healing_amp_pct
@@ -589,9 +577,9 @@ end
 
 function modifier_imba_ghost_shroud_debuff:DeclareFunctions()
 	local decFuncs =
-		{
-			MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-		}
+	{
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+	}
 	return decFuncs
 end
 
@@ -624,11 +612,11 @@ LinkLuaModifier("modifier_imba_heartstopper_aura_damage", "hero/hero_necrolyte",
 
 imba_necrolyte_heartstopper_aura = imba_necrolyte_heartstopper_aura or class({})
 function imba_necrolyte_heartstopper_aura:GetIntrinsicModifierName()
-	return "modifier_imba_heartstopper_aura"
+    return "modifier_imba_heartstopper_aura"
 end
 
 function imba_necrolyte_heartstopper_aura:GetAbilityTextureName()
-	return "necrolyte_heartstopper_aura"
+   return "necrolyte_heartstopper_aura"
 end
 
 function imba_necrolyte_heartstopper_aura:GetCastRange( location , target)
@@ -735,9 +723,9 @@ end
 
 function modifier_imba_heartstopper_aura_damage:DeclareFunctions()
 	local decFuncs =
-		{
-			MODIFIER_PROPERTY_HP_REGEN_AMPLIFY_PERCENTAGE,
-		}
+	{
+		MODIFIER_PROPERTY_HP_REGEN_AMPLIFY_PERCENTAGE,
+	}
 	return decFuncs
 end
 
@@ -754,29 +742,29 @@ LinkLuaModifier("modifier_imba_reapers_scythe_debuff", "hero/hero_necrolyte", LU
 LinkLuaModifier("modifier_imba_reapers_scythe_respawn", "hero/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
 
 function imba_necrolyte_reapers_scythe:GetAbilityTextureName()
-	return "necrolyte_reapers_scythe"
+   return "necrolyte_reapers_scythe"
 end
 
 function imba_necrolyte_reapers_scythe:OnSpellStart()
 	if IsServer() then
 		local caster = self:GetCaster()
 		local target = self:GetCursorTarget()
-
+		
 		if target:TriggerSpellAbsorb(self) then
 			return nil
 		end
-
+		
 		-- Cast sound
 		caster:EmitSound("Hero_Necrolyte.ReapersScythe.Cast")
 		target:EmitSound("Hero_Necrolyte.ReapersScythe.Target")
 		if (math.random(1,100) <= 30) and (caster:GetName() == "npc_dota_hero_necrolyte") then
 			caster:EmitSound("necrolyte_necr_ability_reap_0"..math.random(1,3))
 		end
-
+		
 		-- Parameters
 		local damage = self:GetSpecialValueFor("damage")
 		local stun_duration = self:GetSpecialValueFor("stun_duration")
-
+		
 		target:AddNewModifier(caster, self, "modifier_imba_reapers_scythe", {duration = stun_duration+FrameTime()})
 	end
 end
@@ -804,7 +792,7 @@ function modifier_imba_reapers_scythe:OnCreated( params )
 		self:AddParticle(stun_fx,false,false,-1,false,false)
 		local orig_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_necrolyte/necrolyte_scythe_orig.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
 		self:AddParticle(orig_fx,false,false,-1,false,false)
-
+		
 		local scythe_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_necrolyte/necrolyte_scythe_start.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
 		ParticleManager:SetParticleControlEnt(scythe_fx, 0, caster, PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", caster:GetAbsOrigin(), true)
 		ParticleManager:SetParticleControlEnt(scythe_fx, 1, target, PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
@@ -830,11 +818,11 @@ function modifier_imba_reapers_scythe:GetEffectName()
 end
 
 function modifier_imba_reapers_scythe:StatusEffectPriority()
-	return MODIFIER_PRIORITY_ULTRA
+    return MODIFIER_PRIORITY_ULTRA
 end
 
 function modifier_imba_reapers_scythe:GetPriority()
-	return MODIFIER_PRIORITY_ULTRA
+    return MODIFIER_PRIORITY_ULTRA
 end
 
 function modifier_imba_reapers_scythe:GetEffectAttachType()
@@ -842,10 +830,10 @@ function modifier_imba_reapers_scythe:GetEffectAttachType()
 end
 
 function modifier_imba_reapers_scythe:CheckState()
-	local state =
-		{
-			[MODIFIER_STATE_STUNNED] = true
-		}
+	local state = 
+	{
+		[MODIFIER_STATE_STUNNED] = true
+	}
 	return state
 end
 
@@ -855,10 +843,10 @@ function modifier_imba_reapers_scythe:IsPurgeException() return false end
 
 
 function modifier_imba_reapers_scythe:DeclareFunctions()
-	local decFuncs =
-		{
-			MODIFIER_PROPERTY_OVERRIDE_ANIMATION,
-		}
+	local decFuncs = 
+	{
+		MODIFIER_PROPERTY_OVERRIDE_ANIMATION,		
+	}
 	return decFuncs
 end
 
@@ -884,8 +872,8 @@ function modifier_imba_reapers_scythe_respawn:OnCreated()
 			self.respawn_increase = self.ability:GetSpecialValueFor("respawn_increase")
 
 			-- Check if the parent will reincarnate
-			if self:GetParent():WillReincarnate() then
-				self.reincarnate_respawn = true
+			if self:GetParent():WillReincarnate() then				
+				self.reincarnate_respawn = true				
 			end
 		end
 	end
@@ -912,14 +900,14 @@ function modifier_imba_reapers_scythe_respawn:RemoveOnDeath()
 end
 
 function modifier_imba_reapers_scythe_respawn:DeclareFunctions()
-	local decFuncs =
-		{
-			MODIFIER_EVENT_ON_RESPAWN,
-		}
-	return decFuncs
+	local decFuncs = 
+	{
+		MODIFIER_EVENT_ON_RESPAWN,
+	}
+	return decFuncs	
 end
 
-function modifier_imba_reapers_scythe_respawn:OnRespawn( params )
+function modifier_imba_reapers_scythe_respawn:OnRespawn( params )	
 	if IsServer() then
 		if (self:GetParent() == params.unit) then
 			if self.ability and not self.reincarnate_respawn then
@@ -939,12 +927,12 @@ function modifier_imba_reapers_scythe_debuff:GetStatusEffectName()
 end
 
 function modifier_imba_reapers_scythe_debuff:DeclareFunctions()
-	local decFuncs =
-		{
-			MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE,
-			MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE
-		}
-	return decFuncs
+	local decFuncs = 
+	{
+		MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE,
+		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE
+	}
+	return decFuncs	
 end
 
 function modifier_imba_reapers_scythe_debuff:OnCreated( params )

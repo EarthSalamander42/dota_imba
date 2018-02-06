@@ -1,21 +1,4 @@
--- Copyright (C) 2018  The Dota IMBA Development Team
---
--- Licensed under the Apache License, Version 2.0 (the "License");
--- you may not use this file except in compliance with the License.
--- You may obtain a copy of the License at
---
--- http://www.apache.org/licenses/LICENSE-2.0
---
--- Unless required by applicable law or agreed to in writing, software
--- distributed under the License is distributed on an "AS IS" BASIS,
--- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
--- See the License for the specific language governing permissions and
--- limitations under the License.
---
--- Editors:
---     Hewdraw
---     Noobsauce
---     suthernfriend, 03.02.2018
+--[[ Author: Hewdraw, Noobsauce ]]
 
 CreateEmptyTalents("crystal_maiden")
 
@@ -31,7 +14,7 @@ function imba_crystal_maiden_arcane_dynamo:GetIntrinsicModifierName() return "mo
 function imba_crystal_maiden_arcane_dynamo:IsInnateAbility() return true end
 
 function imba_crystal_maiden_arcane_dynamo:GetAbilityTextureName()
-	return "custom/crystal_maiden_arcane_dynamo"
+   return "custom/crystal_maiden_arcane_dynamo"
 end
 
 ---------------------------------
@@ -49,7 +32,7 @@ function modifier_imba_arcane_dynamo:OnCreated()
 	self.ability = self:GetAbility()
 	self.ability_slow_modifier = "modifier_imba_crystal_maiden_ability_slow"
 
-	-- Ability specials
+	-- Ability specials	
 	self.max_stacks = self.ability:GetSpecialValueFor("max_stacks")
 
 	-- Start thinking
@@ -65,7 +48,7 @@ function modifier_imba_arcane_dynamo:OnIntervalThink()
 		end
 
 		local mana_percentage = self.caster:GetMana() / self.caster:GetMaxMana()
-		local stacks = math.ceil(mana_percentage * self.max_stacks)
+		local stacks = math.ceil(mana_percentage * self.max_stacks) 
 
 		-- #4 Talent: Doubles Arcane Dynamo's effects
 		stacks = stacks * math.max(1, (self.caster:FindTalentValue("special_bonus_imba_crystal_maiden_4")))
@@ -76,15 +59,15 @@ end
 
 function modifier_imba_arcane_dynamo:DeclareFunctions()
 	local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
-		--Highjacking the modifier with no remorse
-		MODIFIER_EVENT_ON_TAKEDAMAGE}
-
-	return decFuncs
+					MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
+					--Highjacking the modifier with no remorse
+					MODIFIER_EVENT_ON_TAKEDAMAGE}
+ 	
+ 	return decFuncs
 end
 
 function modifier_imba_arcane_dynamo:GetModifierMoveSpeedBonus_Percentage()
-	-- Does nothing if hero has break
+   -- Does nothing if hero has break
 	if self.caster:PassivesDisabled() then
 		return nil
 	end
@@ -106,7 +89,7 @@ function modifier_imba_arcane_dynamo:GetModifierSpellAmplify_Percentage()
 	if self.caster:IsIllusion() then
 		return nil
 	end
-
+	
 	return self:GetStackCount()
 end
 
@@ -132,8 +115,8 @@ function modifier_imba_crystal_maiden_ability_slow:OnCreated()
 end
 
 function modifier_imba_crystal_maiden_ability_slow:DeclareFunctions()
-	local funcs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT}
+	local funcs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE, 
+				MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT}
 	return funcs
 end
 function modifier_imba_crystal_maiden_ability_slow:GetModifierMoveSpeedBonus_Percentage()
@@ -160,60 +143,60 @@ LinkLuaModifier("modifier_imba_crystal_nova_snowfield_debuff", "hero/hero_crysta
 LinkLuaModifier("modifier_imba_crystal_nova_snowfield_buff", "hero/hero_crystal_maiden.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_crystal_maiden_crystal_nova:GetAbilityTextureName()
-	return "crystal_maiden_crystal_nova"
+   return "crystal_maiden_crystal_nova"
 end
 
-function imba_crystal_maiden_crystal_nova:GetAOERadius()
+function imba_crystal_maiden_crystal_nova:GetAOERadius() 
 	return self:GetSpecialValueFor("nova_radius")
-end
+end	
 
 
-function imba_crystal_maiden_crystal_nova:OnSpellStart()
+function imba_crystal_maiden_crystal_nova:OnSpellStart()	
 	-- Ability properties
 	local caster = self:GetCaster()
 	local ability = self
 	local target_point = self:GetCursorPosition()
 	local particle_nova = "particles/units/heroes/hero_crystalmaiden/maiden_crystal_nova.vpcf"
-	local sound_nova = "soundevents/game_sounds_heroes/game_sounds_crystalmaiden.vsndevts"
+	local sound_nova = "soundevents/game_sounds_heroes/game_sounds_crystalmaiden.vsndevts"	
 	local modifier_nova_debuff = "modifier_imba_crystal_nova_slow"
-	local modifier_thinker_ally = "modifier_imba_crystal_nova_snowfield_ally_aura"
+	local modifier_thinker_ally = "modifier_imba_crystal_nova_snowfield_ally_aura"	
 	local modifier_thinker_enemy = "modifier_imba_crystal_nova_snowfield_enemy_aura"
 
 	-- Ability specials
-	local nova_radius = self:GetSpecialValueFor("nova_radius")
+	local nova_radius = self:GetSpecialValueFor("nova_radius")	
 	local nova_slow_duration = self:GetSpecialValueFor("nova_slow_duration")
-	local nova_damage = self:GetSpecialValueFor("nova_damage")
+	local nova_damage = self:GetSpecialValueFor("nova_damage")	
 	local snowfield_duration = self:GetSpecialValueFor("snowfield_duration")
 	local snowfield_vision_radius = self:GetSpecialValueFor("snowfield_vision_radius")
 
 	-- Play Nova sound
 	EmitSoundOnLocationWithCaster(target_point, "Hero_Crystal.CrystalNova", caster)
-
+	
 	-- Create modifier thinker
 	local thinker = CreateModifierThinker(caster, ability, modifier_thinker_ally, {duration = snowfield_duration}, target_point, caster:GetTeamNumber(), false)
 	thinker:AddNewModifier(caster, ability, modifier_thinker_enemy, {duration = snowfield_duration})
-
+		
 	-- Creates flying vision area
 	self:CreateVisibilityNode(target_point, snowfield_vision_radius, snowfield_duration)
 
 	--Emit Nova particle
-	local nova_pfx = ParticleManager:CreateParticle(particle_nova, PATTACH_CUSTOMORIGIN, thinker)
+	local nova_pfx = ParticleManager:CreateParticle(particle_nova, PATTACH_CUSTOMORIGIN, thinker)	
 	ParticleManager:SetParticleControl(nova_pfx, 0, target_point)
 	ParticleManager:SetParticleControl(nova_pfx, 1, Vector(nova_radius, nova_slow_duration, nova_radius))
 	ParticleManager:SetParticleControl(nova_pfx, 2, target_point)
 	ParticleManager:ReleaseParticleIndex(nova_pfx)
-
+	
 	-- Find all enemies that would be in the nova radius
 	local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
-		target_point,
-		nil,
-		nova_radius,
-		DOTA_UNIT_TARGET_TEAM_ENEMY,
-		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-		DOTA_UNIT_TARGET_FLAG_NONE,
-		FIND_ANY_ORDER,
-		false)
-
+	                                  target_point,
+	                                  nil,
+	                                  nova_radius,
+	                                  DOTA_UNIT_TARGET_TEAM_ENEMY,
+	                                  DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+	                                  DOTA_UNIT_TARGET_FLAG_NONE,
+	                                  FIND_ANY_ORDER,
+	                                  false)
+								  
 	-- Slow and damage all enemies caught in the radius
 	for _,enemy in pairs(enemies) do
 		enemy:AddNewModifier(caster, self, "modifier_imba_crystal_nova_slow", {duration = nova_slow_duration} )
@@ -248,10 +231,10 @@ function modifier_imba_crystal_nova_snowfield_ally_aura:OnCreated()
 	-- Ability specials
 	self.snowfield_radius = self.ability:GetSpecialValueFor("snowfield_radius")
 
-	local snowfield_pfx = ParticleManager:CreateParticle(self.particle_snowfield_snow, PATTACH_CUSTOMORIGIN, self.parent)
+	local snowfield_pfx = ParticleManager:CreateParticle(self.particle_snowfield_snow, PATTACH_CUSTOMORIGIN, self.parent)	
 	ParticleManager:SetParticleControl(snowfield_pfx, 0, self.parent:GetAbsOrigin())
-	ParticleManager:SetParticleControl(snowfield_pfx, 1, Vector(self.snowfield_radius, 0, 0))
-	self:AddParticle(snowfield_pfx, false, false, -1, false, false)
+	ParticleManager:SetParticleControl(snowfield_pfx, 1, Vector(self.snowfield_radius, 0, 0))	
+	self:AddParticle(snowfield_pfx, false, false, -1, false, false)		
 end
 
 function modifier_imba_crystal_nova_snowfield_ally_aura:GetAuraRadius()
@@ -289,13 +272,13 @@ function modifier_imba_crystal_nova_snowfield_enemy_aura:OnCreated()
 	self.particle_snowfield_snow = "particles/units/heroes/hero_crystalmaiden/maiden_freezing_field_snow.vpcf"
 
 	-- Ability specials
-	self.snowfield_radius = self.ability:GetSpecialValueFor("snowfield_radius")
+	self.snowfield_radius = self.ability:GetSpecialValueFor("snowfield_radius")	
 	self.snowfield_damage_per_tick = self.ability:GetSpecialValueFor("snowfield_damage_per_tick")
 	self.snowfield_damage_interval = self.ability:GetSpecialValueFor("snowfield_damage_interval")
 
 	-- Calculate damage
 	self.damage_per_tick = self.snowfield_damage_per_tick * self.snowfield_damage_interval
-
+	
 	if IsServer() then
 		-- Start thinking
 		self:StartIntervalThink(self.snowfield_damage_interval)
@@ -306,14 +289,14 @@ function modifier_imba_crystal_nova_snowfield_enemy_aura:OnIntervalThink()
 	if IsServer() then
 		-- Find enemies, damage them
 		local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(),
-			self.parent:GetAbsOrigin(),
-			nil,
-			self.snowfield_radius,
-			DOTA_UNIT_TARGET_TEAM_ENEMY,
-			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-			DOTA_UNIT_TARGET_FLAG_NONE,
-			FIND_ANY_ORDER,
-			false)
+								 		  self.parent:GetAbsOrigin(),
+								 		  nil,
+								 		  self.snowfield_radius,
+								 		  DOTA_UNIT_TARGET_TEAM_ENEMY,
+								 		  DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+								 		  DOTA_UNIT_TARGET_FLAG_NONE,
+								 		  FIND_ANY_ORDER,
+								 		  false)
 
 		for _,enemy in pairs(enemies) do
 			ApplyDamage({attacker = self.caster, victim = enemy, ability = self.ability, damage = self.damage_per_tick, damage_type = DAMAGE_TYPE_MAGICAL})
@@ -374,8 +357,8 @@ function modifier_imba_crystal_nova_snowfield_buff:IsDebuff() return false end
 
 function modifier_imba_crystal_nova_snowfield_buff:DeclareFunctions()
 	local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
-		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT}
+					MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
+					MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT}
 
 	return decFuncs
 end
@@ -403,7 +386,7 @@ function modifier_imba_crystal_nova_snowfield_debuff:OnCreated()
 	self.ability = self:GetAbility()
 
 	-- Ability specials
-	self.snowfield_enemy_slow = self.ability:GetSpecialValueFor("snowfield_enemy_slow")
+	self.snowfield_enemy_slow = self.ability:GetSpecialValueFor("snowfield_enemy_slow")	
 end
 
 function modifier_imba_crystal_nova_snowfield_debuff:IsHidden() return false end
@@ -436,7 +419,7 @@ LinkLuaModifier("modifier_imba_crystal_maiden_frostbite_ally", "hero/hero_crysta
 imba_crystal_maiden_frostbite = class({})
 
 function imba_crystal_maiden_frostbite:GetAbilityTextureName()
-	return "crystal_maiden_frostbite"
+   return "crystal_maiden_frostbite"
 end
 
 function imba_crystal_maiden_frostbite:GetIntrinsicModifierName() return "modifier_imba_crystal_maiden_frostbite_passive_ready" end
@@ -446,22 +429,22 @@ function imba_crystal_maiden_frostbite:CastFilterResultTarget(target)
 		local caster = self:GetCaster()
 		local casterID = caster:GetPlayerID()
 		local targetID
-		if target:IsHero() then
+		if target:IsHero() then			
 			targetID = target:GetPlayerID()
 		end
-
+			
 		-- Disable help
 		if target ~= nil and targetID and not target:IsOpposingTeam(caster:GetTeamNumber()) and PlayerResource:IsDisableHelpSetForPlayerID(targetID,casterID) then
-			return UF_FAIL_DISABLE_HELP
-		end
+            return UF_FAIL_DISABLE_HELP
+        end
 
 		-- #2 Talent: Frostbite can be cast on allies, regenerating them.
 		if target:GetTeamNumber() == caster:GetTeamNumber() and target:IsHero() and caster:HasTalent("special_bonus_imba_crystal_maiden_2") then
 			return UF_SUCCESS
-		end
+		end		
 
-		local nResult = UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
-		return nResult
+        local nResult = UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
+        return nResult
 	end
 end
 
@@ -471,20 +454,20 @@ function imba_crystal_maiden_frostbite:OnSpellStart()
 		local target = self:GetCursorTarget()
 		local position = self:GetCursorPosition()
 		local duration = self:GetSpecialValueFor("duration")
-
+		
 		local duration_creep = self:GetSpecialValueFor("duration_creep")
 		local duration_stun = self:GetSpecialValueFor("duration_stun")
 		local damage_interval = self:GetSpecialValueFor("damage_interval")
-
+		
 		-- If the target possesses a ready Linken's Sphere, do nothing else
 		if target:GetTeamNumber() ~= caster:GetTeamNumber() then
 			if target:TriggerSpellAbsorb(self) then return nil end
 		end
-
+		
 		-- Applies root and damage to attacking unit according to its type, then triggers the cooldown accordingly
 		if target:GetTeam() ~= caster:GetTeam() then
 			if target:IsHero() or IsRoshan(target) or target:IsAncient() then
-				target:AddNewModifier(caster, self, "modifier_stunned", {duration = duration_stun})
+				target:AddNewModifier(caster, self, "modifier_stunned", {duration = duration_stun})				
 				target:AddNewModifier(caster, self, "modifier_imba_crystal_maiden_frostbite_enemy", { duration = duration })
 			else
 				target:AddNewModifier(caster, self, "modifier_stunned", {duration = duration_stun})
@@ -504,7 +487,7 @@ modifier_imba_crystal_maiden_frostbite_enemy = class({})
 function modifier_imba_crystal_maiden_frostbite_enemy:CheckState() return {[MODIFIER_STATE_ROOTED] = true, [MODIFIER_STATE_DISARMED] = true,} end
 
 function modifier_imba_crystal_maiden_frostbite_enemy:OnCreated( kv )
-	if IsServer() then
+	if IsServer() then 
 		--Define values
 		self.passive_proc = kv.passive_proc or false
 		self.caster = self:GetCaster()
@@ -515,10 +498,10 @@ function modifier_imba_crystal_maiden_frostbite_enemy:OnCreated( kv )
 
 		-- Immediately proc the first damage instance
 		self:OnIntervalThink()
-
+		
 		--Play sound
 		self:GetParent():EmitSound("Hero_Crystal.Frostbite")
-
+		
 		-- Get thinkin
 		self:StartIntervalThink(self.damage_interval)
 	end
@@ -529,7 +512,7 @@ function modifier_imba_crystal_maiden_frostbite_enemy:OnDestroy()
 
 	if self.passive_proc and not self.parent:IsMagicImmune() and self.caster:HasTalent("special_bonus_imba_crystal_maiden_1") then
 		local duration = self.caster:FindTalentValue("special_bonus_imba_crystal_maiden_1", "duration")
-
+		
 		self.parent:AddNewModifier(self.caster, self.ability, icy_touch_slow_modifier, { duration = duration })
 	end
 end
@@ -556,15 +539,15 @@ function modifier_imba_crystal_maiden_frostbite_enemy_talent:OnCreated( kv )
 	self.initial_slow_pct = self.caster:FindTalentValue("special_bonus_imba_crystal_maiden_1", "initial_slow_pct") or 0
 	self.move_slow_pct = self.initial_slow_pct
 	self.move_slow_change_per_update = self.initial_slow_pct * self.speed_update_rate / self:GetDuration()
-
-	self:StartIntervalThink(self.speed_update_rate)
+	
+	self:StartIntervalThink(self.speed_update_rate)	
 end
 
 function modifier_imba_crystal_maiden_frostbite_enemy_talent:OnRefresh( kv )
 	self:OnCreated( kv )
 end
 
-function modifier_imba_crystal_maiden_frostbite_enemy_talent:OnIntervalThink()
+function modifier_imba_crystal_maiden_frostbite_enemy_talent:OnIntervalThink()	
 	self.move_slow_pct = self.move_slow_pct - self.move_slow_change_per_update
 end
 
@@ -572,7 +555,7 @@ function modifier_imba_crystal_maiden_frostbite_enemy_talent:DeclareFunctions()
 	return {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE}
 end
 
-function modifier_imba_crystal_maiden_frostbite_enemy_talent:GetModifierMoveSpeedBonus_Percentage()
+function modifier_imba_crystal_maiden_frostbite_enemy_talent:GetModifierMoveSpeedBonus_Percentage()	
 	return -self.move_slow_pct
 end
 
@@ -617,12 +600,12 @@ modifier_imba_crystal_maiden_frostbite_passive_ready = class({})
 
 function modifier_imba_crystal_maiden_frostbite_passive_ready:OnCreated()
 	-- Ability properties
-	self.caster = self:GetCaster()
-	self.ability = self:GetAbility()
-	self.modifier_recharge = "modifier_imba_crystal_maiden_frostbite_passive_recharging"
+    self.caster = self:GetCaster()
+    self.ability = self:GetAbility()
+    self.modifier_recharge = "modifier_imba_crystal_maiden_frostbite_passive_recharging"
 
 	-- If the caster has modifier recharge, commit sudoku
-	if self.caster:HasModifier(self.modifier_recharge) then self:Destroy() end
+	   if self.caster:HasModifier(self.modifier_recharge) then self:Destroy() end	
 end
 function modifier_imba_crystal_maiden_frostbite_passive_ready:DeclareFunctions() return {MODIFIER_EVENT_ON_TAKEDAMAGE} end
 function modifier_imba_crystal_maiden_frostbite_passive_ready:OnTakeDamage(keys)
@@ -634,10 +617,10 @@ function modifier_imba_crystal_maiden_frostbite_passive_ready:OnTakeDamage(keys)
 				return nil
 			end
 		end
-
+		
 		local attacker = keys.attacker
 		local unit = keys.unit
-
+		
 		local cooldown = self:GetAbility():GetSpecialValueFor("duration_passive_recharge")
 
 		-- Only apply on damage against the caster, and when the attacking unit is an not magic immune enemy hero
@@ -676,7 +659,7 @@ function modifier_imba_crystal_maiden_frostbite_passive_recharging:IsDebuff() re
 function modifier_imba_crystal_maiden_frostbite_passive_recharging:IsPurgable() return false end
 function modifier_imba_crystal_maiden_frostbite_passive_recharging:GetTexture() return "custom/crystal_maiden_frostbite_cooldown" end
 function modifier_imba_crystal_maiden_frostbite_passive_recharging:OnDestroy()
-	if IsServer() then
+    if IsServer() then
 		self.caster:AddNewModifier(self.caster, self.ability, self.modifier_ready, {})
 	end
 end
@@ -687,7 +670,7 @@ end
 imba_crystal_maiden_brilliance_aura = class({})
 
 function imba_crystal_maiden_brilliance_aura:GetAbilityTextureName()
-	return "crystal_maiden_brilliance_aura"
+   return "crystal_maiden_brilliance_aura"
 end
 
 function imba_crystal_maiden_brilliance_aura:GetIntrinsicModifierName() return "modifier_imba_crystal_maiden_brilliance_aura_emitter" end
@@ -713,7 +696,7 @@ function modifier_imba_crystal_maiden_brilliance_aura_emitter:IsAura()
 		return false
 	end
 
-	return true
+	return true 
 end
 
 function modifier_imba_crystal_maiden_brilliance_aura_emitter:IsHidden() return true end
@@ -743,7 +726,7 @@ end
 function modifier_imba_crystal_maiden_brilliance_aura:OnIntervalThink()
 	if IsServer() then
 		-- Only apply if the parent has more than the spellpower threshold
-		if self.parent and self.parent:GetManaPercent() > self.spellpower_threshold_pct then
+		if self.parent and self.parent:GetManaPercent() > self.spellpower_threshold_pct then			
 			if self.parent == self.caster then
 				self:SetStackCount(self:GetAbility():GetSpecialValueFor("bonus_spellpower") * self.bonus_self)
 			else
@@ -761,11 +744,11 @@ end
 
 function modifier_imba_crystal_maiden_brilliance_aura:DeclareFunctions()
 	local funcs = {
-		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
-		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
-		MODIFIER_PROPERTY_MANA_REGEN_CONSTANT
-	}
-	return funcs
+			MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
+			MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
+			MODIFIER_PROPERTY_MANA_REGEN_CONSTANT
+		}
+		return funcs
 end
 
 function modifier_imba_crystal_maiden_brilliance_aura:GetModifierConstantManaRegen()
@@ -775,17 +758,17 @@ function modifier_imba_crystal_maiden_brilliance_aura:GetModifierConstantManaReg
 		return self:GetAbility():GetSpecialValueFor("mana_regen")
 	end
 end
-
-function modifier_imba_crystal_maiden_brilliance_aura:GetModifierBonusStats_Intellect()
+	
+function modifier_imba_crystal_maiden_brilliance_aura:GetModifierBonusStats_Intellect() 
 	if self.parent == self.caster then
-		return self:GetAbility():GetSpecialValueFor("bonus_int")* self.bonus_self
-	else
+		return self:GetAbility():GetSpecialValueFor("bonus_int")* self.bonus_self 
+	else 
 		return self:GetAbility():GetSpecialValueFor("bonus_int")
 	end
 end
 
 function modifier_imba_crystal_maiden_brilliance_aura:GetModifierSpellAmplify_Percentage()
-	return self:GetStackCount()
+	return self:GetStackCount()	
 end
 
 function modifier_imba_crystal_maiden_brilliance_aura:IsHidden() return false end
@@ -801,12 +784,12 @@ LinkLuaModifier("modifier_imba_crystal_maiden_freezing_field_slow", "hero/hero_c
 imba_crystal_maiden_freezing_field = class({})
 
 function imba_crystal_maiden_freezing_field:GetAbilityTextureName()
-	return "crystal_maiden_freezing_field"
+   return "crystal_maiden_freezing_field"
 end
 
 --If caster has scepter, allow for ability to be cast at a point
 function imba_crystal_maiden_freezing_field:GetBehavior()
-	if self:GetCaster():HasScepter() then
+	if self:GetCaster():HasScepter() then 
 		return DOTA_ABILITY_BEHAVIOR_POINT + DOTA_ABILITY_BEHAVIOR_AOE + DOTA_ABILITY_BEHAVIOR_CHANNELLED + DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK
 	else
 		return DOTA_ABILITY_BEHAVIOR_NO_TARGET + DOTA_ABILITY_BEHAVIOR_CHANNELLED + DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK
@@ -817,12 +800,12 @@ function imba_crystal_maiden_freezing_field:GetAOERadius()
 	return self:GetSpecialValueFor("radius")
 end
 
-function imba_crystal_maiden_freezing_field:OnSpellStart()
-	if IsServer() then
+function imba_crystal_maiden_freezing_field:OnSpellStart()  
+	if IsServer() then 
 		-- Ability properties
 		local duration = self:GetSpecialValueFor("duration")
-		local stun_duration = self:GetSpecialValueFor("stun_duration")
-		self.frostbite_duration = self:GetSpecialValueFor("frostbite_duration")
+		local stun_duration = self:GetSpecialValueFor("stun_duration")	 
+		self.frostbite_duration = self:GetSpecialValueFor("frostbite_duration")	
 		self.radius = self:GetSpecialValueFor("radius")
 		self.caster = self:GetCaster()
 		self.frametime = 0
@@ -834,56 +817,56 @@ function imba_crystal_maiden_freezing_field:OnSpellStart()
 			self.shard_damage_mul = self.caster:FindTalentValue("special_bonus_imba_crystal_maiden_7", "shard_damage_mul")
 			self.shard_rate = self.caster:FindTalentValue("special_bonus_imba_crystal_maiden_7", "shard_rate")
 		end
-
-		-- Quadrants 1: NW, 2: NE, 3: SE, 4: SW
+		
+		-- Quadrants 1: NW, 2: NE, 3: SE, 4: SW 
 		self.quadrant= 1
-
+		
 		self.freezing_field_center = self.caster:GetAbsOrigin()
-
+		
 		if self.caster:HasScepter() then
 			self.freezing_field_center = self:GetCursorPosition()
 		end
-
-		self.explosion_interval = self:GetSpecialValueFor("explosion_interval")
+		
+		self.explosion_interval = self:GetSpecialValueFor("explosion_interval")	
 
 		-- Check for talent
 		if self.caster:HasTalent("special_bonus_imba_crystal_maiden_8") then
-			self.explosion_interval = self.explosion_interval * self.caster:FindTalentValue("special_bonus_imba_crystal_maiden_8")
+			self.explosion_interval = self.explosion_interval * self.caster:FindTalentValue("special_bonus_imba_crystal_maiden_8")			
 		end
-
+		
 		-- Plays the channeling animation
 		StartAnimation(self.caster, {activity = ACT_DOTA_CAST_ABILITY_4, rate = 0.7})
-
+		
 		-- Find all enemies that would be in the freezing field
 		local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(),
-			self.freezing_field_center,
-			nil,
-			self.radius,
-			DOTA_UNIT_TARGET_TEAM_ENEMY,
-			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-			DOTA_UNIT_TARGET_FLAG_NONE,
-			FIND_ANY_ORDER,
-			false)
+										  self.freezing_field_center,
+										  nil,
+										  self.radius,
+										  DOTA_UNIT_TARGET_TEAM_ENEMY,
+										  DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+										  DOTA_UNIT_TARGET_FLAG_NONE,
+										  FIND_ANY_ORDER,
+										  false)
 
 		-- Apply a reduced time frostbite to the enemies
 		for _,enemy in pairs(enemies) do
 			enemy:AddNewModifier(enemy, self, "modifier_imba_crystal_maiden_frostbite_enemy", {duration = self.frostbite_duration} )
 		end
-
+	
 		--Slow aura
-		self.freezing_field_aura = CreateModifierThinker(self.caster, self, "modifier_imba_crystal_maiden_freezing_field_aura", {duration = duration}, self.freezing_field_center, self.caster:GetTeamNumber(), false)
+		self.freezing_field_aura = CreateModifierThinker(self.caster, self, "modifier_imba_crystal_maiden_freezing_field_aura", {duration = duration}, self.freezing_field_center, self.caster:GetTeamNumber(), false)	
 		self.freezing_field_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_crystalmaiden/maiden_freezing_field_snow.vpcf", PATTACH_CUSTOMORIGIN, self.freezing_field_aura)
-
+		
 		ParticleManager:SetParticleControl(self.freezing_field_particle, 0, self.freezing_field_center)
 		ParticleManager:SetParticleControl(self.freezing_field_particle, 1, Vector (1000, 0, 0))
 		ParticleManager:SetParticleControl(self.freezing_field_particle, 5, Vector (1000, 0, 0))
-
+		
 		-- Let it go?
 		if USE_MEME_SOUNDS and RollPercentage(10) then
 			--LET IT GO
 			EmitSoundOnLocationWithCaster(self.freezing_field_center , "Hero_Crystal.CrystalNova", self.caster)
 			self:EmitSound("Imba.CrystalMaidenLetItGo0"..RandomInt(1, 3))
-
+			
 			if self.are_we_nuclear then
 				--LET THE TACTICAL NUKE GO
 				self:EmitSound("Imba.CrystalMaidenTacticalNuke")
@@ -920,7 +903,7 @@ function imba_crystal_maiden_freezing_field:OnChannelThink()
 		end
 
 		--Increment quadrant for next think
-		self.quadrant = 4 % (self.quadrant + 1)
+		self.quadrant = 4 % (self.quadrant + 1)			
 
 		-- Loop through units in the shard's AoE
 		local units = FindUnitsInRadius(self.caster:GetTeam(), attackPoint, nil, self.explosion_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 0, 0, false)
@@ -928,7 +911,7 @@ function imba_crystal_maiden_freezing_field:OnChannelThink()
 		for _,v in pairs( units ) do
 			ApplyDamage({victim =  v, attacker = self.caster, damage = self.damage, damage_type = DAMAGE_TYPE_MAGICAL, ability = self})
 		end
-
+		
 		-- Fire effect
 		local fxIndex = ParticleManager:CreateParticle(particle_name, PATTACH_CUSTOMORIGIN, caster)
 		ParticleManager:SetParticleControl(fxIndex, 0, attackPoint)
@@ -938,7 +921,7 @@ function imba_crystal_maiden_freezing_field:OnChannelThink()
 		-- Fire sound at the center position
 		EmitSoundOnLocationWithCaster(attackPoint, "hero_Crystal.freezingField.explosion", self:GetCaster())
 	end
-
+	
 end
 
 function imba_crystal_maiden_freezing_field:OnChannelFinish(bInterrupted)
@@ -962,81 +945,81 @@ function imba_crystal_maiden_freezing_field:OnChannelFinish(bInterrupted)
 			self:StopSound("Imba.CrystalMaidenTacticalNuke")
 			local particle_name =  "particles/hero/crystal_maiden/maiden_freezing_field_explosion.vpcf"
 
-			self.shards = math.floor(self.frametime / self.shard_rate)
-
+			self.shards = math.floor(self.frametime / self.shard_rate)			
+		
 			-- Fire effect
 			local fxIndex = ParticleManager:CreateParticle(particle_name, PATTACH_WORLDORIGIN, nil)
 			ParticleManager:SetParticleControl(fxIndex, 0, self.freezing_field_center)
 			ParticleManager:SetParticleControl(fxIndex, 1, self.freezing_field_center)
 			ParticleManager:ReleaseParticleIndex(fxIndex)
-
+			
 			-- Fire sound at the center position
-			EmitSoundOnLocationForAllies(self.freezing_field_center, "hero_Crystal.freezingField.explosion", self.caster)
+			EmitSoundOnLocationForAllies(self.freezing_field_center, "hero_Crystal.freezingField.explosion", self.caster)						
 
 			local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(),
-				self.freezing_field_center,
-				nil,
-				self.radius,
-				DOTA_UNIT_TARGET_TEAM_ENEMY,
-				DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-				DOTA_UNIT_TARGET_FLAG_NONE,
-				FIND_ANY_ORDER,
-				false)
-
+										  self.freezing_field_center,
+										  nil,
+										  self.radius,
+										  DOTA_UNIT_TARGET_TEAM_ENEMY,
+										  DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+										  DOTA_UNIT_TARGET_FLAG_NONE,
+										  FIND_ANY_ORDER,
+										  false)
+			
 			Timers:CreateTimer(meteor_delay, function()
 
-					if #enemies > 0 then
-						-- Distribute the shard shares aka "It's All Ogre Now, CM Edition"
-						local shards = 0
-						Timers:CreateTimer(function()
-							shards = shards + 1
+				if #enemies > 0 then										
+					-- Distribute the shard shares aka "It's All Ogre Now, CM Edition" 
+					local shards = 0
+					Timers:CreateTimer(function()
+						shards = shards + 1
 
-							-- Decide which enemy is going to become that shard's target
-							local enemy = enemies[math.random(1, #enemies)]
+						-- Decide which enemy is going to become that shard's target
+						local enemy = enemies[math.random(1, #enemies)]
 
-							local extra_data = { damage = self.damage * self.shard_damage_mul}
-							local projectile =
-								{
-									Target 				= enemy,
-									Source 				= self.freezing_field_center,
-									Ability 			= self,
-									EffectName 			= "particles/units/heroes/hero_winter_wyvern/wyvern_splinter_blast.vpcf",
-									iMoveSpeed			= 800,
-									vSourceLoc 			= self.freezing_field_center,
-									bDrawsOnMinimap 	= false,
-									bDodgeable 			= false,
-									bIsAttack 			= false,
-									bVisibleToEnemies 	= true,
-									bReplaceExisting 	= false,
-									flExpireTime 		= GameRules:GetGameTime() + 10,
-									bProvidesVision 	= true,
-									iVisionRadius 		= 400,
-									iVisionTeamNumber 	= self.caster:GetTeamNumber(),
-									ExtraData = extra_data
-								}
-							ProjectileManager:CreateTrackingProjectile(projectile)
+						local extra_data = { damage = self.damage * self.shard_damage_mul}
+						local projectile =
+						{
+							Target 				= enemy,
+							Source 				= self.freezing_field_center,
+							Ability 			= self,
+							EffectName 			= "particles/units/heroes/hero_winter_wyvern/wyvern_splinter_blast.vpcf",
+							iMoveSpeed			= 800,
+							vSourceLoc 			= self.freezing_field_center,
+							bDrawsOnMinimap 	= false,
+							bDodgeable 			= false,
+							bIsAttack 			= false,
+							bVisibleToEnemies 	= true,
+							bReplaceExisting 	= false,
+							flExpireTime 		= GameRules:GetGameTime() + 10,
+							bProvidesVision 	= true,
+							iVisionRadius 		= 400,
+							iVisionTeamNumber 	= self.caster:GetTeamNumber(),
+							ExtraData = extra_data
+						}
+						ProjectileManager:CreateTrackingProjectile(projectile)						
 
-							-- Do we need to fire another shard?
-							if shards < self.shards then
-								return 0.1
-							else
-								-- Reset positions
-								self.freezing_field_center = nil
-								if self.freezing_field_aura and not self.freezing_field_aura:IsNull() then
-									UTIL_Remove(self.freezing_field_aura)
-									self.freezing_field_aura = nil
-								end
-								return nil
-							end
-						end)
-					else
-						-- Reset positions
-						self.freezing_field_center = nil
-						if self.freezing_field_aura and not self.freezing_field_aura:IsNull() then
-							UTIL_Remove(self.freezing_field_aura)
-							self.freezing_field_aura = nil
+						-- Do we need to fire another shard?
+						if shards < self.shards then
+							return 0.1
+						else
+							-- Reset positions
+							self.freezing_field_center = nil
+							if self.freezing_field_aura and not self.freezing_field_aura:IsNull() then
+								UTIL_Remove(self.freezing_field_aura)
+								self.freezing_field_aura = nil
+							end												
+							return nil
 						end
-					end
+					end)
+				else
+					-- Reset positions
+					self.freezing_field_center = nil
+					if self.freezing_field_aura and not self.freezing_field_aura:IsNull() then
+						UTIL_Remove(self.freezing_field_aura)
+						self.freezing_field_aura = nil
+					end					
+				end				
 			end)
 		end
 	end

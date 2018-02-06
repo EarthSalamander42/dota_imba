@@ -1,20 +1,3 @@
--- Copyright (C) 2018  The Dota IMBA Development Team
---
--- Licensed under the Apache License, Version 2.0 (the "License");
--- you may not use this file except in compliance with the License.
--- You may obtain a copy of the License at
---
--- http://www.apache.org/licenses/LICENSE-2.0
---
--- Unless required by applicable law or agreed to in writing, software
--- distributed under the License is distributed on an "AS IS" BASIS,
--- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
--- See the License for the specific language governing permissions and
--- limitations under the License.
---
--- Editors:
---
-
 --	Author		 -	d2imba
 --	DateCreated	 -	24.05.2015	<-- Shits' ancient yo
 --	Date Updated -	05.03.2017
@@ -30,12 +13,12 @@ LinkLuaModifier( "modifier_imba_armlet_unholy_strength", 				"items/item_armlet.
 LinkLuaModifier( "modifier_imba_armlet_toggle_prevention", 				"items/item_armlet.lua", LUA_MODIFIER_MOTION_NONE )	-- Toggle prevention
 
 function item_imba_armlet:GetAbilityTextureName()
-	return "custom/imba_armlet"
+   return "custom/imba_armlet"
 end
 
 function item_imba_armlet:GetBehavior()
 	return DOTA_ABILITY_BEHAVIOR_IMMEDIATE + DOTA_ABILITY_BEHAVIOR_NO_TARGET + DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL + DOTA_ABILITY_BEHAVIOR_ITEM end
-
+	
 function item_imba_armlet:GetIntrinsicModifierName()
 	return "modifier_imba_armlet_basic" end
 
@@ -68,7 +51,7 @@ end
 function item_imba_armlet:GetAbilityTextureName()
 	if self:GetCaster():HasModifier("modifier_imba_armlet_unholy_strength_visual_effect") then
 		return "custom/imba_armlet_active" end
-
+	
 	return "custom/imba_armlet"
 end
 
@@ -83,9 +66,9 @@ function modifier_imba_armlet_basic:GetAttributes() return MODIFIER_ATTRIBUTE_MU
 
 function modifier_imba_armlet_basic:DeclareFunctions()
 	return {	MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
-		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
-		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
-		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,		}
+				MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,	
+				MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+				MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,		}
 end
 
 function modifier_imba_armlet_basic:GetModifierPreAttack_BonusDamage()
@@ -96,7 +79,7 @@ function modifier_imba_armlet_basic:GetModifierAttackSpeedBonus_Constant()
 
 function modifier_imba_armlet_basic:GetModifierPhysicalArmorBonus()
 	return self:GetAbility():GetSpecialValueFor("bonus_armor") end
-
+	
 function modifier_imba_armlet_basic:GetModifierConstantHealthRegen()
 	return self:GetAbility():GetSpecialValueFor("bonus_health_regen") end
 
@@ -125,9 +108,9 @@ function modifier_imba_armlet_unholy_strength:IsPurgable() return false end
 
 function modifier_imba_armlet_unholy_strength:DeclareFunctions()
 	return {	MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
-		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
-		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
-		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,	}
+				MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,	
+				MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
+				MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,	}
 end
 
 function modifier_imba_armlet_unholy_strength:OnCreated()
@@ -168,16 +151,16 @@ function modifier_imba_armlet_unholy_strength:OnIntervalThink()
 			self:Destroy()
 			return
 		end
-
+		
 		-- If this is an illusion, do nothing
 		if not parent:IsRealHero() then return end
-
+		
 		-- Remove health from the owner
 		parent:SetHealth(math.max( parent:GetHealth() - self:GetAbility():GetSpecialValueFor("unholy_health_drain") * 0.1, 1))
-
+		
 		-- Calculate stacks to apply
 		local unholy_stacks = math.floor((parent:GetMaxHealth() - parent:GetHealth()) / self:GetAbility():GetSpecialValueFor("health_per_stack"))
-
+		
 		-- Update stacks
 		self:SetStackCount(unholy_stacks)
 	end

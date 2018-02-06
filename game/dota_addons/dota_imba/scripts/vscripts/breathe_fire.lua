@@ -1,28 +1,3 @@
--- Copyright (C) 2018  The Dota IMBA Development Team
--- Copyright (C) 2015  bmddota
---
--- Licensed under the Apache License, Version 2.0 (the "License");
--- you may not use this file except in compliance with the License.
--- You may obtain a copy of the License at
---
--- http://www.apache.org/licenses/LICENSE-2.0
---
--- Unless required by applicable law or agreed to in writing, software
--- distributed under the License is distributed on an "AS IS" BASIS,
--- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
--- See the License for the specific language governing permissions and
--- limitations under the License.
---
--- Editors:
---     Firetoad
---     MouJiaoZi
---     Hewdraw
---     zimberzimer
---     Shush
---     Lindbrum
---     Earth Salamander #42
---     suthernfriend
-
 breathe_fire = class({})
 
 --------------------------------------------------------------------------------
@@ -32,9 +7,9 @@ function breathe_fire:OnSpellStart()
 	self.end_radius = self:GetSpecialValueFor( "end_radius" )
 	self.range = self:GetSpecialValueFor( "range" )
 	self.speed = self:GetSpecialValueFor( "speed" )
-	self.fire_damage = self:GetSpecialValueFor( "fire_damage" )
+	self.fire_damage = self:GetSpecialValueFor( "fire_damage" ) 
 
-
+	
 
 	local vPos = nil
 	if self:GetCursorTarget() then
@@ -54,7 +29,7 @@ function breathe_fire:OnSpellStart()
 	local info = {
 		EffectName = effect_name,
 		Ability = self,
-		vSpawnOrigin = self:GetCaster():GetOrigin(),
+		vSpawnOrigin = self:GetCaster():GetOrigin(), 
 		fStartRadius = self.start_radius,
 		fEndRadius = self.end_radius,
 		vVelocity = vDirection * self.speed,
@@ -65,7 +40,7 @@ function breathe_fire:OnSpellStart()
 	}
 
 	ProjectileManager:CreateLinearProjectile( info )
-
+	
 	EmitSoundOn( "Conquest.FireTrap.Generic", self:GetCaster() )
 end
 

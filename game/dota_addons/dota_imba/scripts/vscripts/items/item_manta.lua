@@ -1,20 +1,3 @@
--- Copyright (C) 2018  The Dota IMBA Development Team
---
--- Licensed under the Apache License, Version 2.0 (the "License");
--- you may not use this file except in compliance with the License.
--- You may obtain a copy of the License at
---
--- http://www.apache.org/licenses/LICENSE-2.0
---
--- Unless required by applicable law or agreed to in writing, software
--- distributed under the License is distributed on an "AS IS" BASIS,
--- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
--- See the License for the specific language governing permissions and
--- limitations under the License.
---
--- Editors:
---
-
 LinkLuaModifier( "modifier_item_manta_passive", "items/item_manta.lua", LUA_MODIFIER_MOTION_NONE )
 LinkLuaModifier( "modifier_item_imba_manta_stacks", "items/item_manta.lua", LUA_MODIFIER_MOTION_NONE )		-- Stacking attack speed
 LinkLuaModifier( "modifier_manta_invulnerable", "items/item_manta.lua", LUA_MODIFIER_MOTION_NONE )
@@ -26,7 +9,7 @@ function item_imba_manta:GetBehavior()
 end
 
 function item_imba_manta:GetAbilityTextureName()
-	return "item_manta"
+   return "item_manta"
 end
 
 function item_imba_manta:GetIntrinsicModifierName()
@@ -34,24 +17,24 @@ function item_imba_manta:GetIntrinsicModifierName()
 end
 
 function item_imba_manta:OnCreated()
-	self.ability = self:GetAbility()
+self.ability = self:GetAbility()
 
-	--	if not self.ability then
-	--		self:Destroy()
-	--	end
+--	if not self.ability then
+--		self:Destroy()
+--	end
 
 	caster:AddNewModifier(self:GetCaster(), self, "modifier_item_manta_passive", {})
 end
 
 function item_imba_manta:OnSpellStart()
-	local caster = self:GetCaster()
-	local caster_entid = caster:entindex()
-	local duration = self:GetSpecialValueFor("tooltip_illusion_duration")
-	local invulnerability_duration = self:GetSpecialValueFor("invuln_duration")
-	local images_count = self:GetSpecialValueFor("images_count")
-	local cooldown_melee = self:GetSpecialValueFor("cooldown_melee")
-	local outgoingDamage = self:GetSpecialValueFor("images_do_damage_percent_ranged")
-	local incomingDamage = self:GetSpecialValueFor("images_take_damage_percent_ranged")
+local caster = self:GetCaster()
+local caster_entid = caster:entindex()
+local duration = self:GetSpecialValueFor("tooltip_illusion_duration")
+local invulnerability_duration = self:GetSpecialValueFor("invuln_duration")
+local images_count = self:GetSpecialValueFor("images_count")
+local cooldown_melee = self:GetSpecialValueFor("cooldown_melee")
+local outgoingDamage = self:GetSpecialValueFor("images_do_damage_percent_ranged")
+local incomingDamage = self:GetSpecialValueFor("images_take_damage_percent_ranged")
 
 	if not caster:IsRangedAttacker() then  --Manta Style's cooldown is less for melee heroes.
 		self:EndCooldown()
@@ -68,7 +51,7 @@ function item_imba_manta:OnSpellStart()
 	end
 
 	for k,v in pairs(caster.manta) do
-		if v and IsValidEntity(v) then
+		if v and IsValidEntity(v) then 
 			v:ForceKill(false)
 		end
 	end
@@ -108,7 +91,7 @@ function modifier_item_manta_passive:IsPassive() return true end
 function modifier_item_manta_passive:IsHidden() return true end
 function modifier_item_manta_passive:IsPurgable() return false end
 
-function modifier_item_manta_passive:DeclareFunctions()
+function modifier_item_manta_passive:DeclareFunctions()	
 	local decFuncs = {
 		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
 		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
@@ -117,7 +100,7 @@ function modifier_item_manta_passive:DeclareFunctions()
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 		MODIFIER_EVENT_ON_ATTACK_LANDED,
 	}
-	return decFuncs
+	return decFuncs	
 end
 
 function modifier_item_manta_passive:GetModifierMoveSpeedBonus_Percentage()
@@ -145,7 +128,7 @@ function modifier_item_manta_passive:OnAttackLanded( keys )
 	if IsServer() then
 		local owner = self:GetParent()
 		local target = keys.target
-
+		
 		-- If this attack was not performed by the modifier's owner, do nothing
 		if owner ~= keys.attacker then
 			return end
@@ -182,14 +165,14 @@ end
 --------------------------------------------------------------------------------
 
 function modifier_manta_invulnerable:CheckState()
-	local state =
-		{
-			[MODIFIER_STATE_INVULNERABLE] = true,
-			[MODIFIER_STATE_NO_HEALTH_BAR] = true,
-			[MODIFIER_STATE_STUNNED] = true,
-			[MODIFIER_STATE_OUT_OF_GAME] = true,
-		}
-
+	local state = 
+	{
+		[MODIFIER_STATE_INVULNERABLE] = true,
+		[MODIFIER_STATE_NO_HEALTH_BAR] = true,
+		[MODIFIER_STATE_STUNNED] = true,
+		[MODIFIER_STATE_OUT_OF_GAME] = true,
+	}
+	
 	return state
 end
 

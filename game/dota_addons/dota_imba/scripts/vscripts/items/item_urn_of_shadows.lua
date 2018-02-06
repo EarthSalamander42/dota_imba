@@ -1,20 +1,3 @@
--- Copyright (C) 2018  The Dota IMBA Development Team
---
--- Licensed under the Apache License, Version 2.0 (the "License");
--- you may not use this file except in compliance with the License.
--- You may obtain a copy of the License at
---
--- http://www.apache.org/licenses/LICENSE-2.0
---
--- Unless required by applicable law or agreed to in writing, software
--- distributed under the License is distributed on an "AS IS" BASIS,
--- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
--- See the License for the specific language governing permissions and
--- limitations under the License.
---
--- Editors:
---
-
 item_imba_urn_of_shadows = item_imba_urn_of_shadows or class({})
 LinkLuaModifier( "modifier_imba_urn_of_shadows_passive", "items/item_urn_of_shadows.lua", LUA_MODIFIER_MOTION_NONE )
 LinkLuaModifier( "modifier_imba_urn_of_shadows_active_ally", "items/item_urn_of_shadows.lua", LUA_MODIFIER_MOTION_NONE )
@@ -28,7 +11,7 @@ function item_imba_urn_of_shadows:GetIntrinsicModifierName()
 end
 
 function item_imba_urn_of_shadows:GetAbilityTextureName()
-	return "item_urn_of_shadows"
+   return "item_urn_of_shadows"
 end
 
 function item_imba_urn_of_shadows:CastFilterResultTarget(target)
@@ -106,14 +89,14 @@ end
 
 function modifier_imba_urn_of_shadows_passive:DeclareFunctions()
 	local decFuns =
-		{
-			MODIFIER_PROPERTY_MANA_REGEN_CONSTANT,
-			MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
-			MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
-			MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
-			MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
-			MODIFIER_EVENT_ON_HERO_KILLED
-		}
+	{
+		MODIFIER_PROPERTY_MANA_REGEN_CONSTANT,
+		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
+		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
+		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
+		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
+		MODIFIER_EVENT_ON_HERO_KILLED
+	}
 	return decFuns
 end
 
@@ -245,10 +228,10 @@ end
 
 function modifier_imba_urn_of_shadows_active_ally:DeclareFunctions()
 	local decFuns =
-		{
-			MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
-			MODIFIER_EVENT_ON_TAKEDAMAGE
-		}
+	{
+		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
+		MODIFIER_EVENT_ON_TAKEDAMAGE
+	}
 	return decFuns
 end
 
@@ -318,7 +301,7 @@ if IsServer() then
 			damage_flags = DOTA_DAMAGE_FLAG_HPLOSS,
 			ability = self:GetAbility()
 		}
-
+		 
 		ApplyDamage(damageTable)
 	end
 end
