@@ -97,7 +97,7 @@ function Imbattlepass:Init()
 
 	ImbattlepassReward = {}
 
-	if api_preloaded.players == nil then return end
+	if ImbaApiPlayersLoaded() then return end
 
 	for ID = 0, PlayerResource:GetPlayerCount() -1 do
 		ImbattlepassReward[ID] = CustomNetTables:GetTableValue("player_table", tostring(ID)).Lvl

@@ -109,12 +109,12 @@ function GameMode:OnFirstPlayerLoaded()
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: API. Preload
 	-------------------------------------------------------------------------------------------------
-	imba_api_init(function ()
+	ImbaApiFrontendInit(function ()
 		--
 		-- Here API Data is guaranteed to be available !!!
 		--
---		PrintTable(GetTopImrUsers())
-    end)
+		--		PrintTable(GetTopImrUsers())
+		end)
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Roshan and Picking Screen camera initialization
@@ -128,10 +128,10 @@ function GameMode:OnFirstPlayerLoaded()
 		for i = 1, OVERTHROW_CAMP_NUMBER do
 			local campname = "camp"..i.."_path_customspawn"
 			spawncamps[campname] =
-			{
-				NumberToSpawn = RandomInt(3,5),
-				WaypointName = "camp"..i.."_path_wp1"
-			}
+				{
+					NumberToSpawn = RandomInt(3,5),
+					WaypointName = "camp"..i.."_path_wp1"
+				}
 		end
 		GameMode:CustomSpawnCamps()
 	else
@@ -169,7 +169,7 @@ function GameMode:OnFirstPlayerLoaded()
 		"npc_imba_contributor_anees",
 		"npc_imba_contributor_swizard",
 		"npc_imba_contributor_phroureo",
-		"npc_imba_contributor_catchy",		
+		"npc_imba_contributor_catchy",
 		"npc_imba_contributor_matt",
 		"npc_imba_contributor_maxime",
 		"npc_imba_contributor_poly",
@@ -293,16 +293,16 @@ function GameMode:GoldFilter( keys )
 			CustomNetTables:SetTableValue("player_table", tostring(keys.player_id_const), {hero_kill_bounty = keys.gold + hero.kill_hero_bounty})
 		end
 	else
---		print(keys.gold, custom_gold_bonus / 100, 1 + game_time / 25)
+		--		print(keys.gold, custom_gold_bonus / 100, 1 + game_time / 25)
 		keys.gold = (custom_gold_bonus / 100) + (1 + game_time / 25) * keys.gold
---		print(keys.gold)
+		--		print(keys.gold)
 	end
 
 	-- Comeback gold gain
---	local team = PlayerResource:GetTeam(keys.player_id_const)
---	if COMEBACK_BOUNTY_BONUS[team] > 0 then
---		keys.gold = keys.gold * (1 + COMEBACK_BOUNTY_BONUS[team])
---	end
+	--	local team = PlayerResource:GetTeam(keys.player_id_const)
+	--	if COMEBACK_BOUNTY_BONUS[team] > 0 then
+	--		keys.gold = keys.gold * (1 + COMEBACK_BOUNTY_BONUS[team])
+	--	end
 
 	local reliable = false
 	if keys.reason_const == DOTA_ModifyGold_HeroKill or keys.reason_const == DOTA_ModifyGold_RoshanKill or keys.reason_const == DOTA_ModifyGold_CourierKill or keys.reason_const == DOTA_ModifyGold_Building then
@@ -342,15 +342,15 @@ function GameMode:ExperienceFilter( keys )
 	end
 
 	-- Losing team gets huge EXP bonus.
---	if hero and CustomNetTables:GetTableValue("gamerules", "losing_team") then
---		if CustomNetTables:GetTableValue("gamerules", "losing_team").losing_team then
---			local losing_team = CustomNetTables:GetTableValue("gamerules", "losing_team").losing_team
-			
---			if hero:GetTeamNumber() == losing_team then
---				keys.experience = keys.experience * (1 + COMEBACK_EXP_BONUS * 0.01)
---			end
---		end
---	end
+	--	if hero and CustomNetTables:GetTableValue("gamerules", "losing_team") then
+	--		if CustomNetTables:GetTableValue("gamerules", "losing_team").losing_team then
+	--			local losing_team = CustomNetTables:GetTableValue("gamerules", "losing_team").losing_team
+
+	--			if hero:GetTeamNumber() == losing_team then
+	--				keys.experience = keys.experience * (1 + COMEBACK_EXP_BONUS * 0.01)
+	--			end
+	--		end
+	--	end
 
 	return true
 end
@@ -406,11 +406,11 @@ function GameMode:ModifierFilter( keys )
 		-------------------------------------------------------------------------------------------------
 		-- Tenacity debuff duration reduction
 		-------------------------------------------------------------------------------------------------
-		if modifier_owner.GetTenacity and keys.duration > 0 then						
+		if modifier_owner.GetTenacity and keys.duration > 0 then
 			local original_duration = keys.duration
 			local actually_duration = original_duration
 			local tenacity = modifier_owner:GetTenacity()
-			if modifier_owner:GetTeam() ~= modifier_caster:GetTeam() and keys.duration > 0 then --and tenacity ~= 0 then				
+			if modifier_owner:GetTeam() ~= modifier_caster:GetTeam() and keys.duration > 0 then --and tenacity ~= 0 then
 				actually_duration = actually_duration * (100 - tenacity) * 0.01
 				-------------------------------------------------------------------------------------------------
 				-- Frantic mode duration adjustment
@@ -444,7 +444,7 @@ function GameMode:ModifierFilter( keys )
 				end
 
 				if modifier_owner:GetTeam() ~= modifier_caster:GetTeam() and keys.duration > 0 then
-					if IsVanillaSilence(modifier_name) or IsImbaSilence(modifier_name) then						
+					if IsVanillaSilence(modifier_name) or IsImbaSilence(modifier_name) then
 						-- if reduction is 1 (or more), the modifier is completely ignored
 						if silence_reduction_pct >= 1 then
 							SendOverheadEventMessage(nil, OVERHEAD_ALERT_LAST_HIT_MISS, modifier_owner, 0, nil)
@@ -465,24 +465,24 @@ function GameMode:ModifierFilter( keys )
 
 		-------------------------------------------------------------------------------------------------
 		-- Silencer Arcane Supremacy silence duration increase for Silencer's applied silences
-		-------------------------------------------------------------------------------------------------	
+		-------------------------------------------------------------------------------------------------
 		if modifier_caster:HasModifier("modifier_imba_silencer_arcane_supremacy") and not modifier_owner:PassivesDisabled() then
 			if modifier_owner:GetTeam() ~= modifier_caster:GetTeam() and keys.duration > 0 then
 
 				durationIncreasePcnt = modifier_caster:FindTalentValue("special_bonus_imba_silencer_3") * 0.01
 				if durationIncreasePcnt > 0 then
-				
+
 					-- If the modifier is a vanilla one, increase duration directly
 					if IsVanillaSilence(modifier_name) or IsImbaSilence(modifier_name) then
-						keys.duration = keys.duration * (1 + durationIncreasePcnt)						
-					end					
+						keys.duration = keys.duration * (1 + durationIncreasePcnt)
+					end
 				end
 			end
 		end
 
 		-------------------------------------------------------------------------------------------------
 		-- Rune pickup logic
-		-------------------------------------------------------------------------------------------------	
+		-------------------------------------------------------------------------------------------------
 		if modifier_caster == modifier_owner then
 			if modifier_caster:HasModifier("modifier_rune_doubledamage") then
 				local duration = modifier_caster:FindModifierByName("modifier_rune_doubledamage"):GetDuration()
@@ -493,8 +493,8 @@ function GameMode:ModifierFilter( keys )
 				modifier_caster:RemoveModifierByName("modifier_rune_haste")
 				modifier_caster:AddNewModifier(modifier_caster, nil, "modifier_imba_haste_rune", {duration = duration})
 			elseif modifier_caster:HasModifier("modifier_rune_invis") then
---				PickupInvisibleRune(modifier_caster)
---				return false
+			--				PickupInvisibleRune(modifier_caster)
+			--				return false
 			elseif modifier_caster:HasModifier("modifier_rune_regen") then
 				local duration = modifier_caster:FindModifierByName("modifier_rune_regen"):GetDuration()
 				modifier_caster:RemoveModifierByName("modifier_rune_regen")
@@ -502,10 +502,10 @@ function GameMode:ModifierFilter( keys )
 			end
 		end
 
---		if modifier_name == "modifier_courier_shield" then
---			modifier_caster:RemoveModifierByName(modifier_name)
---			modifier_caster:FindAbilityByName("courier_burst"):CastAbility()
---		end
+		--		if modifier_name == "modifier_courier_shield" then
+		--			modifier_caster:RemoveModifierByName(modifier_name)
+		--			modifier_caster:FindAbilityByName("courier_burst"):CastAbility()
+		--		end
 
 		-- disarm immune
 		local jarnbjorn_immunity = {
@@ -522,8 +522,8 @@ function GameMode:ModifierFilter( keys )
 			"modifier_dismember_disarm",
 			"modifier_imba_decrepify",
 
---			"modifier_imba_faceless_void_time_lock_stun",
---			"modifier_bashed",
+		--			"modifier_imba_faceless_void_time_lock_stun",
+		--			"modifier_bashed",
 		}
 
 		-- add particle or sound playing to notify
@@ -581,7 +581,7 @@ function GameMode:ItemAddedFilter( keys )
 
 			-- Destroy the item
 			return false
-		-- If this is not a player, do nothing and drop another Aegis
+				-- If this is not a player, do nothing and drop another Aegis
 		else
 			local drop = CreateItem("item_imba_aegis", nil, nil)
 			CreateItemOnPositionSync(unit:GetAbsOrigin(), drop)
@@ -631,8 +631,8 @@ function GameMode:ItemAddedFilter( keys )
 					rapier_magic_2_amount = rapier_magic_2_amount + 1
 				end
 			end
-			if 	((item_name == "item_imba_rapier") and (rapier_amount == 2)) or 
-				((item_name == "item_imba_rapier_magic") and (rapier_magic_amount == 2)) or 
+			if 	((item_name == "item_imba_rapier") and (rapier_amount == 2)) or
+				((item_name == "item_imba_rapier_magic") and (rapier_magic_amount == 2)) or
 				((item_name == "item_imba_rapier_2") and (rapier_magic_2_amount >= 1)) or
 				((item_name == "item_imba_rapier_magic_2") and (rapier_2_amount >= 1)) then
 				return true
@@ -651,7 +651,7 @@ function GameMode:ItemAddedFilter( keys )
 	-------------------------------------------------------------------------------------------------
 	-- Tempest Double forbidden items
 	-------------------------------------------------------------------------------------------------
-	
+
 	if unit:IsTempestDouble() then
 
 		-- List of items the clone can't carry
@@ -681,7 +681,7 @@ end
 
 -- Order filter function
 function GameMode:OrderFilter( keys )
-	
+
 	--entindex_ability	 ==> 	0
 	--sequence_number_const	 ==> 	20
 	--queue	 ==> 	0
@@ -707,25 +707,25 @@ function GameMode:OrderFilter( keys )
 		return true
 	end
 
---	if keys.order_type == DOTA_UNIT_ORDER_CAST_NO_TARGET then
---		local ability = EntIndexToHScript(keys["entindex_ability"])
---		if unit:IsRealHero() then
---			local companions = FindUnitsInRadius(unit:GetTeamNumber(), Vector(0, 0, 0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
---			for _, companion in pairs(companions) do
---				if companion:GetUnitName() == "npc_imba_donator_companion" and companion:GetOwner() == unit then
---					if ability:GetAbilityName() == "slark_pounce" then
---						local ab = companion:AddAbility(ability:GetAbilityName())
---						ab:SetLevel(1)
---						ab:EndCooldown()
---						companion:CastAbilityNoTarget(ab, -1)
---						Timers:CreateTimer(ab:GetCastPoint() + 0.1, function()
---							companion:RemoveAbility(ab:GetAbilityName())
---						end)
---					end
---				end
---			end
---		end
---	end
+	--	if keys.order_type == DOTA_UNIT_ORDER_CAST_NO_TARGET then
+	--		local ability = EntIndexToHScript(keys["entindex_ability"])
+	--		if unit:IsRealHero() then
+	--			local companions = FindUnitsInRadius(unit:GetTeamNumber(), Vector(0, 0, 0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
+	--			for _, companion in pairs(companions) do
+	--				if companion:GetUnitName() == "npc_imba_donator_companion" and companion:GetOwner() == unit then
+	--					if ability:GetAbilityName() == "slark_pounce" then
+	--						local ab = companion:AddAbility(ability:GetAbilityName())
+	--						ab:SetLevel(1)
+	--						ab:EndCooldown()
+	--						companion:CastAbilityNoTarget(ab, -1)
+	--						Timers:CreateTimer(ab:GetCastPoint() + 0.1, function()
+	--							companion:RemoveAbility(ab:GetAbilityName())
+	--						end)
+	--					end
+	--				end
+	--			end
+	--		end
+	--	end
 
 	if keys.order_type == DOTA_UNIT_ORDER_MOVE_ITEM or keys.order_type == DOTA_UNIT_ORDER_DROP_ITEM then
 		if unit:GetUnitName() == "npc_dota_hero_dragon_knight" and unit:HasScepter() and EntIndexToHScript(keys["entindex_ability"]):GetAbilityName() == "item_ultimate_scepter" then
@@ -822,18 +822,18 @@ function GameMode:OrderFilter( keys )
 
 		-- Change "cast on target" target
 		if keys.order_type == DOTA_UNIT_ORDER_CAST_TARGET then
-			
+
 			local target = EntIndexToHScript(keys["entindex_target"])
 			local ability = EntIndexToHScript(keys["entindex_ability"])
 			local caster_loc = unit:GetAbsOrigin()
 			local target_loc = target:GetAbsOrigin()
 			local target_distance = (target_loc - caster_loc):Length2D()
-			
+
 			local nearby_units = FindUnitsInRadius(unit:GetTeamNumber(), caster_loc, nil, math.max(target_distance,(ability:GetCastRange(caster_loc, unit)) + GetCastRangeIncrease(unit)), ability:GetAbilityTargetTeam(), ability:GetAbilityTargetType(), ability:GetAbilityTargetFlags(), FIND_ANY_ORDER, false)
 			if #nearby_units >= 1 then
 				keys.entindex_target = nearby_units[1]:GetEntityIndex()
 
-			-- If no target was found, change to "cast on position" order
+				-- If no target was found, change to "cast on position" order
 			else
 				keys.position_x = target_loc.x
 				keys.position_y = target_loc.y
@@ -841,7 +841,7 @@ function GameMode:OrderFilter( keys )
 				keys.entindex_target = 0
 				keys.order_type = DOTA_UNIT_ORDER_CAST_POSITION
 			end
-			
+
 			-- Reduce stack-amount
 			if not (keys.queue == 1) then
 				modifier:DecrementStackCount()
@@ -850,10 +850,10 @@ function GameMode:OrderFilter( keys )
 				modifier:Destroy()
 			end
 		end
-		
+
 		if keys.order_type == DOTA_UNIT_ORDER_CAST_TARGET_TREE then
-			-- Still needs some checkup
-			
+		-- Still needs some checkup
+
 		end
 
 		-- Spin positional orders a random angle
@@ -868,7 +868,7 @@ function GameMode:OrderFilter( keys )
 			keys.position_x = new_order_vector.x
 			keys.position_y = new_order_vector.y
 			keys.position_z = new_order_vector.z
-			
+
 			-- Reduce stack-amount
 			if not (keys.queue == 1) then
 				modifier:DecrementStackCount()
@@ -889,17 +889,17 @@ function GameMode:OrderFilter( keys )
 				range = range + ability:GetSpecialValueFor("tide_low_range")
 			end
 			local distance = (unit:GetAbsOrigin() - Vector(keys.position_x,keys.position_y,keys.position_z)):Length2D()
-		
+
 			if ( range >= distance) then
 				unit:AddNewModifier(unit, ability, "modifier_imba_torrent_cast", {duration = 0.41} )
 			end
 		end
-		
+
 		-- Kunkka Tidebringer cast-handling
 		if ability:GetAbilityName() == "imba_kunkka_tidebringer" then
 			ability.manual_cast = true
 		end
-		
+
 	elseif unit:HasModifier("modifier_imba_torrent_cast") and keys.order_type == DOTA_UNIT_ORDER_HOLD_POSITION then
 		unit:RemoveModifierByName("modifier_imba_torrent_cast")
 	end
@@ -907,18 +907,18 @@ function GameMode:OrderFilter( keys )
 	if unit:HasModifier("modifier_imba_tidebringer_manual") then
 		unit:RemoveModifierByName("modifier_imba_tidebringer_manual")
 	end
-	
+
 	-- Culling Blade leap
 	if unit:HasModifier("modifier_imba_axe_culling_blade_leap") then
 		return false
 	end
-	
+
 	if keys.order_type == DOTA_UNIT_ORDER_CAST_POSITION then
-		local ability = EntIndexToHScript(keys.entindex_ability)        
-		
+		local ability = EntIndexToHScript(keys.entindex_ability)
+
 		-- Techies' Focused Detonate cast-handling
-		if ability:GetAbilityName() == "imba_techies_focused_detonate" then                        
-			unit:AddNewModifier(unit, ability, "modifier_imba_focused_detonate", {duration = 0.2})            
+		if ability:GetAbilityName() == "imba_techies_focused_detonate" then
+			unit:AddNewModifier(unit, ability, "modifier_imba_focused_detonate", {duration = 0.2})
 		end
 
 		-- Mirana's Leap talent cast-handling
@@ -935,15 +935,15 @@ function GameMode:OrderFilter( keys )
 		for m = 1, #meepo_table do
 			if keys.order_type == DOTA_UNIT_ORDER_CAST_NO_TARGET then
 				if ability:GetName() == "item_black_king_bar" then
-					local duration = ability:GetLevelSpecialValueFor("duration", ability:GetLevel() -1)					
+					local duration = ability:GetLevelSpecialValueFor("duration", ability:GetLevel() -1)
 					meepo_table[m]:AddNewModifier(meepo_table[m], ability, "modifier_black_king_bar_immune", {duration = duration})
 				elseif ability:GetName() == "item_imba_white_queen_cape" then
-					local duration = ability:GetLevelSpecialValueFor("duration", ability:GetLevel() -1)					
+					local duration = ability:GetLevelSpecialValueFor("duration", ability:GetLevel() -1)
 					meepo_table[m]:AddNewModifier(meepo_table[m], ability, "modifier_black_king_bar_immune", {duration = duration})
 				end
 			elseif keys.order_type == DOTA_UNIT_ORDER_CAST_TARGET then
 				if ability:GetName() == "item_imba_black_queen_cape" then
-					local duration = ability:GetLevelSpecialValueFor("bkb_duration", ability:GetLevel() -1)					
+					local duration = ability:GetLevelSpecialValueFor("bkb_duration", ability:GetLevel() -1)
 					meepo_table[m]:AddNewModifier(meepo_table[m], nil, "modifier_imba_black_queen_cape_active_bkb", {duration = duration})
 				end
 			end
@@ -970,44 +970,44 @@ function GameMode:DamageFilter( keys )
 			return false
 		end
 
-		local damage_type = keys.damagetype_const		
+		local damage_type = keys.damagetype_const
 
 		-- Lack of entities handling
 		if not attacker or not victim then
 			return false
-		end		
-		
-		-- If the attacker is holding an Arcane/Archmage/Cursed Rapier and the distance is over the cap, remove the spellpower bonus from it
-		if attacker:HasModifier("modifier_imba_arcane_rapier") or attacker:HasModifier("modifier_imba_arcane_rapier_2") or attacker:HasModifier("modifier_imba_rapier_cursed") then			
-			local distance = (attacker:GetAbsOrigin() - victim:GetAbsOrigin()):Length2D() 
+		end
 
-			if distance > IMBA_DAMAGE_EFFECTS_DISTANCE_CUTOFF then				
+		-- If the attacker is holding an Arcane/Archmage/Cursed Rapier and the distance is over the cap, remove the spellpower bonus from it
+		if attacker:HasModifier("modifier_imba_arcane_rapier") or attacker:HasModifier("modifier_imba_arcane_rapier_2") or attacker:HasModifier("modifier_imba_rapier_cursed") then
+			local distance = (attacker:GetAbsOrigin() - victim:GetAbsOrigin()):Length2D()
+
+			if distance > IMBA_DAMAGE_EFFECTS_DISTANCE_CUTOFF then
 				local rapier_spellpower = 0
 
 				-- Get all modifiers, gather how much spellpower the target has from rapiers
 				local modifiers = attacker:FindAllModifiers()
 
-				for _,modifier in pairs(modifiers) do					
+				for _,modifier in pairs(modifiers) do
 					-- Increment Cursed Rapier's spellpower
 					if modifier:GetName() == "modifier_imba_rapier_cursed" then
-						rapier_spellpower = rapier_spellpower + modifier:GetAbility():GetSpecialValueFor("spell_power")						
+						rapier_spellpower = rapier_spellpower + modifier:GetAbility():GetSpecialValueFor("spell_power")
 
-					-- Increment Archmage Rapier spellpower
+						-- Increment Archmage Rapier spellpower
 					elseif modifier:GetName() == "modifier_imba_arcane_rapier_2" then
-						rapier_spellpower = rapier_spellpower + modifier:GetAbility():GetSpecialValueFor("spell_power")						
+						rapier_spellpower = rapier_spellpower + modifier:GetAbility():GetSpecialValueFor("spell_power")
 
-					-- Increment Arcane Rapier spellpower
+						-- Increment Arcane Rapier spellpower
 					elseif modifier:GetName() == "modifier_imba_arcane_rapier" then
-						rapier_spellpower = rapier_spellpower + modifier:GetAbility():GetSpecialValueFor("spell_power")						
+						rapier_spellpower = rapier_spellpower + modifier:GetAbility():GetSpecialValueFor("spell_power")
 					end
 				end
 
 				-- If spellpower was accumulated, reduce the damage
-				if rapier_spellpower > 0 then					
+				if rapier_spellpower > 0 then
 					keys.damage = keys.damage / (1 + rapier_spellpower * 0.01)
 				end
 			end
-		end				
+		end
 
 		-- Magic shield damage prevention
 		if victim:HasModifier("modifier_item_imba_initiate_robe_stacks") and victim:GetTeam() ~= attacker:GetTeam() then
@@ -1034,11 +1034,11 @@ function GameMode:DamageFilter( keys )
 			if shield_modifier and shield_modifier.AbsorbDamage then
 				keys.damage = shield_modifier:AbsorbDamage(keys.damage)
 			end
-		end		
+		end
 
 		-- Reaper's Scythe kill credit logic
 		if victim:HasModifier("modifier_imba_reapers_scythe") then
-			
+
 			-- Check if this is the killing blow
 			local victim_health = victim:GetHealth()
 			if keys.damage >= victim_health then
@@ -1054,7 +1054,7 @@ function GameMode:DamageFilter( keys )
 
 					-- Find the Reaper's Scythe ability
 					local ability = scythe_caster:FindAbilityByName("imba_necrolyte_reapers_scythe")
-					if not ability then return nil end					
+					if not ability then return nil end
 					scythe_modifier:Destroy()
 					victim:AddNewModifier(scythe_caster, ability, "modifier_imba_reapers_scythe_respawn", {})
 
@@ -1062,14 +1062,14 @@ function GameMode:DamageFilter( keys )
 					ApplyDamage({attacker = scythe_caster, victim = victim, ability = ability, damage = victim:GetHealth() + 10, damage_type = DAMAGE_TYPE_PURE, damage_flag = DOTA_DAMAGE_FLAG_NO_DAMAGE_MULTIPLIERS + DOTA_DAMAGE_FLAG_BYPASSES_BLOCK})
 				end
 			end
-		end		
+		end
 
 		-- Cheese auto-healing
 		if victim:HasModifier("modifier_imba_cheese_death_prevention") then
 
 			-- Only apply if it was a real hero
 			if victim:IsRealHero() then
-				
+
 				-- Check if death is imminent
 				local victim_health = victim:GetHealth()
 				if keys.damage >= victim_health and not ( victim:HasModifier("modifier_imba_dazzle_shallow_grave") or victim:HasModifier("modifier_imba_dazzle_nothl_protection") ) then
@@ -1080,7 +1080,7 @@ function GameMode:DamageFilter( keys )
 
 					-- Spend a charge of Cheese if the cooldown is ready
 					if item:IsCooldownReady() then
-						
+
 						-- Reduce damage by your remaining amount of health
 						keys.damage = keys.damage - victim_health
 
@@ -1104,18 +1104,18 @@ function GameMode:DamageFilter( keys )
 					end
 				end
 			end
-			
+
 		end
 
 		-- Mirana's Sacred Arrow On The Prowl guaranteed critical
 		if victim:HasModifier("modifier_imba_sacred_arrow_stun") then
-			local modifier_stun_handler = victim:FindModifierByName("modifier_imba_sacred_arrow_stun")			
-			if modifier_stun_handler then				
+			local modifier_stun_handler = victim:FindModifierByName("modifier_imba_sacred_arrow_stun")
+			if modifier_stun_handler then
 
 				-- Get the modifier's ability and caster
 				local stun_ability = modifier_stun_handler:GetAbility()
 				local caster = modifier_stun_handler:GetCaster()
-				if stun_ability and caster then					
+				if stun_ability and caster then
 					local should_crit = false
 
 					-- If the table doesn't exist yet, initialize it
@@ -1126,8 +1126,8 @@ function GameMode:DamageFilter( keys )
 					-- Check for the attacker in the attackers table
 					local attacker_found = false
 
-					if modifier_stun_handler.enemy_attackers[attacker:entindex()] then						
-						attacker_found = true						
+					if modifier_stun_handler.enemy_attackers[attacker:entindex()] then
+						attacker_found = true
 					end
 
 					-- If this attacker haven't attacked the stunned target yet, guarantee a critical
@@ -1136,7 +1136,7 @@ function GameMode:DamageFilter( keys )
 						should_crit = true
 
 						-- Add the attacker to the attackers table
-						modifier_stun_handler.enemy_attackers[attacker:entindex()] = true						
+						modifier_stun_handler.enemy_attackers[attacker:entindex()] = true
 					end
 
 					-- #2 Talent: Sacred Arrows allow allies to trigger On The Prowls' critical as long as there is at least enough seconds remaining to the stun
@@ -1153,7 +1153,7 @@ function GameMode:DamageFilter( keys )
 						end
 					end
 
-					if should_crit then						
+					if should_crit then
 						-- Get the critical damage count
 						local on_prow_crit_damage_pct = stun_ability:GetSpecialValueFor("on_prow_crit_damage_pct")
 
@@ -1197,7 +1197,7 @@ function GameMode:DamageFilter( keys )
 			local tidebringer_modifier = victim:FindModifierByName("modifier_imba_tidebringer_cleave_hit_target")
 			if tidebringer_ability then
 				keys.damage = 0
-				
+
 				local scythe_modifier = victim:FindModifierByName("modifier_imba_reapers_scythe")
 				if scythe_modifier then return nil end
 				victim:RemoveModifierByName("modifier_imba_tidebringer_cleave_hit_target")
@@ -1237,10 +1237,10 @@ function GameMode:OnAllPlayersLoaded()
 
 	-- Find all buildings on the map
 	local buildings = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, Vector(0,0,0), nil, 20000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
-	
+
 	-- Iterate through each one
 	for _, building in pairs(buildings) do
-		
+
 		-- Parameters
 		local building_name = building:GetName()
 
@@ -1266,8 +1266,8 @@ function GameMode:OnAllPlayersLoaded()
 	end
 end
 
-function GameMode:OnHeroInGame(hero)	
-local time_elapsed = 0
+function GameMode:OnHeroInGame(hero)
+	local time_elapsed = 0
 
 	Timers:CreateTimer(function()
 		if not hero:IsNull() then
@@ -1312,18 +1312,18 @@ local time_elapsed = 0
 						hero:AddNewModifier(hero, nil, "modifier_command_restricted", {})
 						hero:AddEffects(EF_NODRAW)
 						hero:SetDayTimeVisionRange(475)
-						hero:SetNightTimeVisionRange(475)				
+						hero:SetNightTimeVisionRange(475)
 						if hero:GetTeamNumber() == DOTA_TEAM_GOODGUYS then
 							PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), GoodCamera)
---							FindClearSpaceForUnit(hero, GoodCamera:GetAbsOrigin(), false)
+							--							FindClearSpaceForUnit(hero, GoodCamera:GetAbsOrigin(), false)
 						else
-							PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), BadCamera)					
---							FindClearSpaceForUnit(hero, BadCamera:GetAbsOrigin(), false)
+							PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), BadCamera)
+							--							FindClearSpaceForUnit(hero, BadCamera:GetAbsOrigin(), false)
 						end
 					end
 					if time_elapsed < 0.9 then
 						time_elapsed = time_elapsed + 0.1
-					else			
+					else
 						return nil
 					end
 					return 0.1
@@ -1362,10 +1362,10 @@ function GameMode:OnGameInProgress()
 
 	-- Find all buildings on the map
 	local buildings = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, Vector(0,0,0), nil, 20000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
-	
+
 	-- Iterate through each one
 	for _, building in pairs(buildings) do
-		
+
 		-- Fetch building name
 		local building_name = building:GetName()
 
@@ -1420,7 +1420,7 @@ function GameMode:OnGameInProgress()
 				else
 					ancient_ability:SetLevel(1)
 				end
-				
+
 			end
 		end
 	end
@@ -1430,8 +1430,8 @@ function GameMode:OnGameInProgress()
 	-------------------------------------------------------------------------------------------------
 
 	if TOWER_ABILITY_MODE then
-		local ability_table = IndexAllTowerAbilities()		
-		local protective_instict = "imba_tower_protective_instinct"		
+		local ability_table = IndexAllTowerAbilities()
+		local protective_instict = "imba_tower_protective_instinct"
 
 		-- Find all towers
 		local towers = Entities:FindAllByClassname("npc_dota_tower")
@@ -1442,8 +1442,8 @@ function GameMode:OnGameInProgress()
 			if radiant_tower:GetTeamNumber() == DOTA_TEAM_GOODGUYS then
 
 				-- Find its dire equivalent
-				local dire_tower_name = string.gsub(radiant_tower:GetUnitName(), "goodguys", "badguys")				
-				local dire_tower				
+				local dire_tower_name = string.gsub(radiant_tower:GetUnitName(), "goodguys", "badguys")
+				local dire_tower
 
 				for _,tower in pairs(towers) do
 					if tower:GetUnitName() == dire_tower_name and not tower.initially_upgraded then
@@ -1464,13 +1464,13 @@ function GameMode:OnGameInProgress()
 					local ability_name = GetRandomTowerAbility(1, ability_table)
 					local ability = radiant_tower:AddAbility(ability_name)
 					ability:SetLevel(1)
-					
+
 					-- Add the same ability to the equivalent tower in dire
 					local ability = dire_tower:AddAbility(ability_name)
 					ability:SetLevel(1)
 
 					-- After the ability has been set, remove it from the table.
-					for j = 1, #ability_table[1] do					
+					for j = 1, #ability_table[1] do
 						if ability_table[1][j] == ability_name then
 							table.remove(ability_table[1], j)
 							break
@@ -1484,13 +1484,13 @@ function GameMode:OnGameInProgress()
 						local ability_name = GetRandomTowerAbility(i, ability_table)
 						local ability = radiant_tower:AddAbility(ability_name)
 						ability:SetLevel(1)
-						
+
 						-- Add the same ability to the equivalent tower in dire
 						local ability = dire_tower:AddAbility(ability_name)
 						ability:SetLevel(1)
 
 						-- After the ability has been set, remove it from the table.
-						for j = 1, #ability_table[i] do					
+						for j = 1, #ability_table[i] do
 							if ability_table[i][j] == ability_name then
 								table.remove(ability_table[i], j)
 								break
@@ -1505,13 +1505,13 @@ function GameMode:OnGameInProgress()
 						local ability_name = GetRandomTowerAbility(i, ability_table)
 						local ability = radiant_tower:AddAbility(ability_name)
 						ability:SetLevel(1)
-						
+
 						-- Add the same ability to the equivalent tower in dire
 						local ability = dire_tower:AddAbility(ability_name)
 						ability:SetLevel(1)
 
 						-- After the ability has been set, remove it from the table.
-						for j = 1, #ability_table[i] do					
+						for j = 1, #ability_table[i] do
 							if ability_table[i][j] == ability_name then
 								table.remove(ability_table[i], j)
 								break
@@ -1526,13 +1526,13 @@ function GameMode:OnGameInProgress()
 						local ability_name = GetRandomTowerAbility(i, ability_table)
 						local ability = radiant_tower:AddAbility(ability_name)
 						ability:SetLevel(1)
-						
+
 						-- Add the same ability to the equivalent tower in dire
 						local ability = dire_tower:AddAbility(ability_name)
 						ability:SetLevel(1)
 
 						-- After the ability has been set, remove it from the table.
-						for j = 1, #ability_table[i] do					
+						for j = 1, #ability_table[i] do
 							if ability_table[i][j] == ability_name then
 								table.remove(ability_table[i], j)
 								break
@@ -1563,7 +1563,7 @@ function GameMode:InitGameMode()
 
 	-- IMBA testbed command
 	Convars:RegisterCommand("imba_test", Dynamic_Wrap(self, 'StartImbaTest'), "Spawns several units to help with testing", FCVAR_CHEAT)
-	Convars:RegisterCommand("particle_table_print", PrintParticleTable, "Prints a huge table of all used particles", FCVAR_CHEAT)	
+	Convars:RegisterCommand("particle_table_print", PrintParticleTable, "Prints a huge table of all used particles", FCVAR_CHEAT)
 
 	CustomGameEventManager:RegisterListener("netgraph_max_level", Dynamic_Wrap(self, "MaxLevel"))
 	CustomGameEventManager:RegisterListener("netgraph_remove_units", Dynamic_Wrap(self, "RemoveUnits"))
@@ -1573,7 +1573,7 @@ function GameMode:InitGameMode()
 
 	-- Panorama event stuff
 	initScoreBoardEvents()
---	InitPlayerHeroImbaTalents();
+	--	InitPlayerHeroImbaTalents();
 
 	if GetMapName() == "imba_overthrow" then
 		GameRules:GetGameModeEntity():SetLoseGoldOnDeath( false )
@@ -1743,38 +1743,38 @@ end
 
 --	function GameMode:RemoveUnits(good, bad, neutral)
 function GameMode:RemoveUnits()
--- local units = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, Vector(0, 0, 0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_CREEP, DOTA_UNIT_TARGET_FLAG_INVULNERABLE , FIND_ANY_ORDER, false )
--- local units2 = FindUnitsInRadius(DOTA_TEAM_BADGUYS, Vector(0, 0, 0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_CREEP, DOTA_UNIT_TARGET_FLAG_INVULNERABLE , FIND_ANY_ORDER, false )
-local units3 = FindUnitsInRadius(DOTA_TEAM_NEUTRALS, Vector(0, 0, 0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_CREEP, DOTA_UNIT_TARGET_FLAG_NONE , FIND_ANY_ORDER, false )
-local count = 0
+	-- local units = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, Vector(0, 0, 0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_CREEP, DOTA_UNIT_TARGET_FLAG_INVULNERABLE , FIND_ANY_ORDER, false )
+	-- local units2 = FindUnitsInRadius(DOTA_TEAM_BADGUYS, Vector(0, 0, 0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_CREEP, DOTA_UNIT_TARGET_FLAG_INVULNERABLE , FIND_ANY_ORDER, false )
+	local units3 = FindUnitsInRadius(DOTA_TEAM_NEUTRALS, Vector(0, 0, 0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_CREEP, DOTA_UNIT_TARGET_FLAG_NONE , FIND_ANY_ORDER, false )
+	local count = 0
 
---	if good == true then
---		for _,v in pairs(units) do
---			if v:HasMovementCapability() and not v:GetUnitName() == "npc_dota_creep_goodguys_melee" then
---				count = count +1
---				v:RemoveSelf()
---			end
---		end
---	end
+	--	if good == true then
+	--		for _,v in pairs(units) do
+	--			if v:HasMovementCapability() and not v:GetUnitName() == "npc_dota_creep_goodguys_melee" then
+	--				count = count +1
+	--				v:RemoveSelf()
+	--			end
+	--		end
+	--	end
 
---	if bad == true then
---		for _,v in pairs(units2) do
---			if v:HasMovementCapability() and not v:GetUnitName() == "npc_dota_creep_badguys_melee" then
---				count = count +1
---				v:RemoveSelf()
---			end
---		end
---	end
+	--	if bad == true then
+	--		for _,v in pairs(units2) do
+	--			if v:HasMovementCapability() and not v:GetUnitName() == "npc_dota_creep_badguys_melee" then
+	--				count = count +1
+	--				v:RemoveSelf()
+	--			end
+	--		end
+	--	end
 
---	if neutral == true then
-		for _,v in pairs(units3) do
-			if v:GetUnitName() == "npc_imba_roshan" then
-			else
-				count = count +1
-				v:RemoveSelf()
-			end
+	--	if neutral == true then
+	for _,v in pairs(units3) do
+		if v:GetUnitName() == "npc_imba_roshan" then
+		else
+			count = count +1
+			v:RemoveSelf()
 		end
---	end
+	end
+	--	end
 
 	if count > 0 then
 		Notifications:TopToAll({text="Critical lags! Developer removed Jungle creeps: "..count, duration=10.0})
@@ -1872,11 +1872,11 @@ function GameMode:UpdateScoreboard()
 		local clr = self:ColorForTeam( t.teamID )
 
 		-- Scaleform UI Scoreboard
-		local score = 
-		{
-			team_id = t.teamID,
-			team_score = t.teamScore
-		}
+		local score =
+			{
+				team_id = t.teamID,
+				team_score = t.teamScore
+			}
 		FireGameEvent( "score_board", score )
 	end
 	-- Leader effects (moved from OnTeamKillCredit)
@@ -1898,8 +1898,8 @@ function GameMode:UpdateScoreboard()
 			if entity:IsAlive() == true then
 				-- Attaching a particle to the leading team heroes
 				local existingParticle = entity:Attribute_GetIntValue( "particleID", -1 )
-       			if existingParticle == -1 then
-       				local particleLeader = ParticleManager:CreateParticle( "particles/leader/leader_overhead.vpcf", PATTACH_OVERHEAD_FOLLOW, entity )
+				if existingParticle == -1 then
+					local particleLeader = ParticleManager:CreateParticle( "particles/leader/leader_overhead.vpcf", PATTACH_OVERHEAD_FOLLOW, entity )
 					ParticleManager:SetParticleControlEnt( particleLeader, PATTACH_OVERHEAD_FOLLOW, entity, PATTACH_OVERHEAD_FOLLOW, "follow_overhead", entity:GetAbsOrigin(), true )
 					entity:Attribute_SetIntValue( "particleID", particleLeader )
 				end
@@ -1924,7 +1924,7 @@ end
 -- Scan the map to see which teams have spawn points
 ---------------------------------------------------------------------------
 function GameMode:GatherAndRegisterValidTeams()
---	print( "GatherValidTeams:" )
+	--	print( "GatherValidTeams:" )
 
 	local foundTeams = {}
 	for _, playerStart in pairs( Entities:FindAllByClassname( "info_player_start_dota" ) ) do
@@ -1932,13 +1932,13 @@ function GameMode:GatherAndRegisterValidTeams()
 	end
 
 	local numTeams = TableCount(foundTeams)
---	print( "GatherValidTeams - Found spawns for a total of " .. numTeams .. " teams" )
-	
+	--	print( "GatherValidTeams - Found spawns for a total of " .. numTeams .. " teams" )
+
 	local foundTeamsList = {}
 	for t, _ in pairs( foundTeams ) do
 		table.insert( foundTeamsList, t )
---		print("Team:", t)
---		AddFOWViewer(t, Entities:FindByName(nil, "@overboss"):GetAbsOrigin(), 900, 99999, false)
+		--		print("Team:", t)
+		--		AddFOWViewer(t, Entities:FindByName(nil, "@overboss"):GetAbsOrigin(), 900, 99999, false)
 	end
 
 	if numTeams == 0 then
@@ -1952,19 +1952,19 @@ function GameMode:GatherAndRegisterValidTeams()
 
 	m_GatheredShuffledTeams = ShuffledList( foundTeamsList )
 
---	print( "Final shuffled team list:" )
---	for _, team in pairs( m_GatheredShuffledTeams ) do
---		print( " - " .. team .. " ( " .. GetTeamName( team ) .. " )" )
---	end
+	--	print( "Final shuffled team list:" )
+	--	for _, team in pairs( m_GatheredShuffledTeams ) do
+	--		print( " - " .. team .. " ( " .. GetTeamName( team ) .. " )" )
+	--	end
 
---	print( "Setting up teams:" )
+	--	print( "Setting up teams:" )
 	for team = 0, (DOTA_TEAM_COUNT-1) do
 		local maxPlayers = 0
 
 		if ( nil ~= TableFindKey( foundTeamsList, team ) ) then
 			maxPlayers = maxPlayersPerValidTeam
 		end
---		print( " - " .. team .. " ( " .. GetTeamName( team ) .. " ) -> max players = " .. tostring(maxPlayers) )
+		--		print( " - " .. team .. " ( " .. GetTeamName( team ) .. " ) -> max players = " .. tostring(maxPlayers) )
 		GameRules:SetCustomGameTeamMaxPlayers( team, maxPlayers )
 	end
 end
@@ -1978,26 +1978,26 @@ end
 function spawnunits(campname)
 	local spawndata = spawncamps[campname]
 	local NumberToSpawn = spawndata.NumberToSpawn --How many to spawn
-    local SpawnLocation = Entities:FindByName( nil, campname )
-    local waypointlocation = Entities:FindByName ( nil, spawndata.WaypointName )
+	local SpawnLocation = Entities:FindByName( nil, campname )
+	local waypointlocation = Entities:FindByName ( nil, spawndata.WaypointName )
 
 	if SpawnLocation == nil then
 		return
 	end
 
-    local randomCreature = 
-    	{
+	local randomCreature =
+		{
 			"basic_zombie",
 			"berserk_zombie"
-	    }
+		}
 	local r = randomCreature[RandomInt(1,#randomCreature)]
 
 	--print(r)
-    for i = 1, NumberToSpawn do
-        local creature = CreateUnitByName( "npc_dota_creature_" ..r , SpawnLocation:GetAbsOrigin() + RandomVector( RandomFloat( 0, 200 ) ), true, nil, nil, DOTA_TEAM_NEUTRALS )
-        --print ("Spawning Camps")
-        creature:SetInitialGoalEntity( waypointlocation )
-    end
+	for i = 1, NumberToSpawn do
+		local creature = CreateUnitByName( "npc_dota_creature_" ..r , SpawnLocation:GetAbsOrigin() + RandomVector( RandomFloat( 0, 200 ) ), true, nil, nil, DOTA_TEAM_NEUTRALS )
+		--print ("Spawning Camps")
+		creature:SetInitialGoalEntity( waypointlocation )
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -2083,7 +2083,7 @@ function GameMode:OnNpcGoalReached( event )
 end
 
 function GameMode:OnThink()
-local newState = GameRules:State_Get()
+	local newState = GameRules:State_Get()
 
 	if newState == DOTA_GAMERULES_STATE_POST_GAME then
 		return nil
@@ -2190,16 +2190,16 @@ function GameMode:DonatorCompanionJS(event)
 end
 
 function GameMode:MaxLevel(event)
-local hero = PlayerResource:GetPlayer(event.ID):GetAssignedHero()
+	local hero = PlayerResource:GetPlayer(event.ID):GetAssignedHero()
 
 	if IsInToolsMode() then
 		hero:AddExperience(500000, DOTA_ModifyXP_Unspecified, false, true)
-		for i = 0, 23 do 
+		for i = 0, 23 do
 			local ability = hero:GetAbilityByIndex(i)
 			if IsValidEntity(ability) then
 				if ability:GetLevel() < ability:GetMaxLevel() then
 					for j = 1, ability:GetMaxLevel() - ability:GetLevel() do
-					hero:UpgradeAbility(ability)
+						hero:UpgradeAbility(ability)
 					end
 				end
 			end
@@ -2210,7 +2210,7 @@ local hero = PlayerResource:GetPlayer(event.ID):GetAssignedHero()
 end
 
 function GameMode:NetgraphGiveItem(event)
-local hero = PlayerResource:GetPlayer(event.ID):GetAssignedHero()
+	local hero = PlayerResource:GetPlayer(event.ID):GetAssignedHero()
 
 	if IsInToolsMode() then
 		hero:AddItemByName("item_"..event.item)

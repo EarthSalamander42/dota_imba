@@ -18,33 +18,45 @@
 require("api/api")
 require("api/json")
 
-api_preloaded = {}
-imba_apifrontend_debug_enabled = false
+ImbaApiFrontendPreloaded = {}
+
+ImbaApiFrontendReady_ = false
+
+ImbaApiFrontendSettings = {
+	debug = false,
+	eventTimer = 1
+}
 
 -- Asyncronous
 -- has to be called in GameMode:OnFirstPlayerLoaded
 -- loads donators / developers and registers the game
--- complete_fun is called once all preload requests are finished 
-function imba_api_init(complete_fun)
+-- complete_fun is called once all preload requests are finished
+function ImbaApiFrontendInit(CompleteFunction)
 
-	imba_apifrontend_print("Initializing API")
+	ImbaApiFrontendPrint("Initializing API")
 
-	local proxy_fun = function () 
-		if api_preloaded.donators ~= nil 
-			and api_preloaded.developers ~= nil 
-			and api_preloaded.players ~= nil
-			and api_preloaded.topxpusers ~= nil 
-			and api_preloaded.topimrusers ~= nil
-			and api_preloaded.hot_disabled_heroes ~= nil
-			and api_preloaded.companions ~= nil
+	local ProxyFunction = function ()
+		if ImbaApiFrontendPreloaded.donators ~= nil
+			and ImbaApiFrontendPreloaded.developers ~= nil
+			and ImbaApiFrontendPreloaded.players ~= nil
+			and ImbaApiFrontendPreloaded.topXpUsers ~= nil
+			and ImbaApiFrontendPreloaded.topImrUsers ~= nil
+			and ImbaApiFrontendPreloaded.hotDisabledHeroes ~= nil
+			and ImbaApiFrontendPreloaded.companions ~= nil
 		then
-			imba_apifrontend_print("Preloading completed")
-			complete_fun()
+			ImbaApiFrontendReady_ = true
+			ImbaApiFrontendPrint("Preloading completed")
+			CompleteFunction()
 		end
 	end
 
-	imba_api_preload(proxy_fun)
-	imba_api_game_register(proxy_fun)
+	ImbaApiFrontendPreload(ProxyFunction)
+	ImbaApiFrontendGameRegister(ProxyFunction)
+	ImbaApiFrontendEventsRun()
+end
+
+function ImbaApiFrontendReady()
+	return ImbaApiFrontendReady_
 end
 
 --
@@ -54,53 +66,64 @@ end
 -- loads donators, developers and top lists
 -- complete_fun is called each time one api request is finished
 --
-function imba_api_preload(complete_fun)
+function ImbaApiFrontendPreload(CompleteFunction)
 
-	imba_apifrontend_print("Preloading API data")
+	ImbaApiFrontendPrint("Preloading API data")
 
-	imba_api():meta_donators(function (donors)
-	   api_preloaded.donators = donors
-	   complete_fun()
+	ImbaApiInstance:MetaDonators(function (donors)
+		ImbaApiFrontendPreloaded.donators = donors
+		CompleteFunction()
 	end)
 
-	imba_api():meta_developers(function (devs)
-		api_preloaded.developers = devs
-		complete_fun()
+	ImbaApiInstance:MetaDevelopers(function (devs)
+		ImbaApiFrontendPreloaded.developers = devs
+		CompleteFunction()
 	end)
 
-	imba_api():meta_topxpusers(function (users)
-		api_preloaded.topxpusers = users
-		complete_fun()
+	ImbaApiInstance:MetaTopXpUsers(function (users)
+		ImbaApiFrontendPreloaded.topXpUsers = users
+		CompleteFunction()
 	end)
 
-	imba_api():meta_topimrusers(function (users)
-		api_preloaded.topimrusers = users
-		complete_fun()
+	ImbaApiInstance:MetaTopImrUsers(function (users)
+		ImbaApiFrontendPreloaded.topImrUsers = users
+		CompleteFunction()
 	end)
 
-	imba_api():meta_hotdisabledheroes(function (heroes)
-		api_preloaded.hot_disabled_heroes = heroes
-		complete_fun()
+	ImbaApiInstance:MetaHotDisabledHeroes(function (heroes)
+		ImbaApiFrontendPreloaded.hotDisabledHeroes = heroes
+		CompleteFunction()
 	end)
-	
-	imba_api():meta_companions(function (heroes)
-		api_preloaded.companions = heroes
-		complete_fun()
+
+	ImbaApiInstance:MetaCompanions(function (heroes)
+		ImbaApiFrontendPreloaded.companions = heroes
+		CompleteFunction()
 	end)
 end
 
+function ImbaApiPlayersLoaded()
+	return ImbaApiFrontendPreloaded.player ~= nil
+end
+
 -- Syncronous
--- returns 
+-- returns array of developers or nil
+-- [ 7666611212312, 78877721371727, 7887272727711, ... ]
+function GetDonators()
+	return ImbaApiFrontendPreloaded.donators
+end
+
+-- Syncronous
+-- returns
 --   a string with the path to the companion model 	 if the player owning the hero is a donator
 -- 	 nil											 if the hero doesnt have a player or is an illusion
 --   false											 if the player is not a donator
 -- WTF: COOKIES: DOCUMENTATION
 function IsDonator(hero)
-	if hero:GetPlayerID() == -1 or hero:IsIllusion() or api_preloaded.donators == nil then return end
-	for i = 1, #api_preloaded.donators do
-		if tostring(PlayerResource:GetSteamID(hero:GetPlayerID())) == api_preloaded.donators[i].steamId64 then
-			return api_preloaded.donators[i].model
-		elseif i == #api_preloaded.donators then
+	if hero:GetPlayerID() == -1 or hero:IsIllusion() or ImbaApiFrontendPreloaded.donators == nil then return end
+	for i = 1, #ImbaApiFrontendPreloaded.donators do
+		if tostring(PlayerResource:GetSteamID(hero:GetPlayerID())) == ImbaApiFrontendPreloaded.donators[i].steamId64 then
+			return ImbaApiFrontendPreloaded.donators[i].model
+		elseif i == #ImbaApiFrontendPreloaded.donators then
 			return false
 		end
 	end
@@ -110,14 +133,14 @@ end
 -- returns array of developers or nil
 -- [ 7666611212312, 78877721371727, 7887272727711, ... ]
 function GetDevelopers()
-	return api_preloaded.developers
+	return ImbaApiFrontendPreloaded.developers
 end
 
 -- Syncronous
 -- Returns true if the player with the given id is a developer, false otherwise
 function IsDeveloper(playerid)
-if GetDevelopers() == nil then return end
-local devs = GetDevelopers()
+	if GetDevelopers() == nil then return end
+	local devs = GetDevelopers()
 
 	for i = 1, #devs do
 		local id = tostring(PlayerResource:GetSteamID(playerid))
@@ -132,22 +155,22 @@ end
 -- Syncronous
 -- Returns a list with all companions
 function GetAllCompanions()
-	return api_preloaded.companions
+	return ImbaApiFrontendPreloaded.companions
 end
 
 -- Asyncronous
 -- Changes the companion model for a user
 -- playerid = ingame id of player p.e. '1'
 -- newcompanion: the file name of the companion p.e. 'npc_imba_donator_companion_demi_doom'
--- callback: the function that is executed when the request is completed 
-function ChangeCompanion(playerid, newcompanion, callback)
+-- callback: the function that is executed when the request is completed
+function ChangeCompanion(playerid, newCompanion, callback)
 	local id = tostring(PlayerResource:GetSteamID(playerid))
-	
-	api_preloaded.meta_companion_change({
+
+	ImbaApiFrontendPreloaded.MetaCompanionChange({
 		steamid = id,
-		model = newcompanion,
+		model = newCompanion,
 	}, callback, callback)
-	
+
 end
 
 
@@ -164,7 +187,7 @@ end
 --    rank: number
 -- }, ... ]
 function GetTopXpUsers()
-	return api_preloaded.topxpusers
+	return ImbaApiFrontendPreloaded.topXpUsers
 end
 
 -- Syncronous
@@ -180,7 +203,7 @@ end
 --    rank: number
 -- }, ... ]
 function GetTopImrUsers()
-	return api_preloaded.topimrusers
+	return ImbaApiFrontendPreloaded.topImrUsers
 end
 
 -- Returns the preloaded xp for player / if available
@@ -193,20 +216,20 @@ end
 -- }
 function GetStatsForPlayer(ID)
 	local steamid = tostring(PlayerResource:GetSteamID(ID))
-	if api_preloaded.players ~= nil and api_preloaded.players[steamid] ~= nil then
-		return api_preloaded.players[steamid];
+	if ImbaApiFrontendPreloaded.players ~= nil and ImbaApiFrontendPreloaded.players[steamid] ~= nil then
+		return ImbaApiFrontendPreloaded.players[steamid];
 	else
 		return nil
 	end
 end
 
 function HeroIsHotDisabled(hero)
-	if api_preloaded.hot_disabled_heroes == nil then
+	if ImbaApiFrontendPreloaded.hotDisabledHeroes == nil then
 		return false
 	end
 
-	for i = 1, #api_preloaded.hot_disabled_heroes do
-		if api_preloaded.hot_disabled_heroes[i] == hero then
+	for i = 1, #ImbaApiFrontendPreloaded.hotDisabledHeroes do
+		if ImbaApiFrontendPreloaded.hotDisabledHeroes[i] == hero then
 			return true
 		end
 	end
@@ -215,7 +238,7 @@ end
 
 -- Returns the gameid
 function GetApiGameId()
-	return api_preloaded.id
+	return ImbaApiFrontendPreloaded.id
 end
 
 -- Saves a print message to server
@@ -223,6 +246,9 @@ function ApiPrint(str)
 	ApiEvent(ApiEventCodes.Log, { str });
 end
 
+--
+-- Event API
+--
 ApiEventCodes = {
 	Log = 1, 					-- (text)
 	PlayerConnected = 2,		-- (steamid)
@@ -234,15 +260,20 @@ ApiEventCodes = {
 	PlayerDisconnected = 8,		-- (steamid)
 	ItemPurchased = 9,			-- (item_name, hero_name, steamid)
 	AbilityLearned = 10,		-- (ability_name, hero_name, steamid)
-	HeroKilled = 11,			-- (killer_unit, killer_steamid, dead_unit, dead_steamid)
-	HeroRespawned = 12,			-- (hero_name, steamid)
+--	HeroKilled = 11,			-- (killer_unit, killer_steamid, dead_unit, dead_steamid)
+--	HeroRespawned = 12,			-- (hero_name, steamid)
 	HeroLevelUp = 13,			-- (hero_name, level, steamid)
-	BuildingKilled = 14,		-- (killed_unit, killed_team, unit_name, steamid)
-	CourierKilled = 15,			-- (courier_team, killer_unit, steamid)
-	RoshanKilled = 16			-- (killer_unit, steamid)
+--	BuildingKilled = 14,		-- (killed_unit, killed_team, unit_name, steamid)
+--	CourierKilled = 15,			-- (courier_team, killer_unit, steamid)
+--	RoshanKilled = 16,			-- (killer_unit, steamid)
+	UnitKilled = 17,			-- (killer_unit, killer_steamid, dead_unit, dead_steamid)
+	AbilityUsed = 18,			-- (hero_name, ability, steamid)
+--	ItemUsed = 19,				-- (hero_name, steamid, item)
+	Timing = 20,				-- ()
+	UnitSpawned = 21			-- (unit_name, steamid)
 }
 
-function imba_api_event_to_string(eventCode)
+function ImbaApiFrontendEventToString(eventCode)
 	for k,v in pairs(ApiEventCodes) do
 		if v == eventCode then
 			return tostring(k)
@@ -251,13 +282,13 @@ function imba_api_event_to_string(eventCode)
 	return tostring(eventCode)
 end
 
-function imba_apifrontend_debug(t)
-	if imba_apifrontend_debug_enabled then
+function ImbaApiFrontendDebug(t)
+	if ImbaApiFrontendSettings.debug then
 		print("[api-frontend-debug] " .. t)
 	end
 end
 
-function imba_apifrontend_print(t)
+function ImbaApiFrontendPrint(t)
 	print("[api-frontend] " .. t)
 end
 
@@ -265,53 +296,86 @@ function trim1(s)
 	return (s:gsub("^%s*(.-)%s*$", "%1"))
 end
 
+-- Event Queue
+ImbaApiFrontendEventQueue = {}
+
+-- Event Queue Loop
+function ImbaApiFrontendEventsRun()
+	Timers:CreateTimer(ImbaApiFrontendSettings.eventTimer, function ()
+		ImbaApiFrontendEventsCycle()
+		return ImbaApiFrontendSettings.eventTimer
+	end)
+end
+
+function ImbaApiFrontendEventsCycle()
+
+	ImbaApiFrontendDebug("Sending events")
+
+	-- copy and empty queue
+	local copy = ImbaApiFrontendEventQueue
+	ImbaApiFrontendEventQueue = {}
+	
+	ImbaApiFrontendDebug(tostring(table.getn(copy)) .. " events")
+
+	ImbaApiInstance:GameEvents({
+		id = ImbaApiFrontendPreloaded.id,
+		events = copy
+	}, function (response)
+		ImbaApiFrontendDebug("Events written")
+	end, function ()
+		ImbaApiFrontendPrint("Error writing game events")
+	end)
+
+end
+
 -- Will write a custom game event to the server
--- event and content mandatory, tag optional 
+-- event and content mandatory, tag optional
 function ApiEvent(event, content)
 
-	imba_apifrontend_debug("Saving game event ")
+	ImbaApiFrontendDebug("Saving game event")
 
 	-- print message
 	local text = ""
 	if content ~= nil then
 		for i = 1, #content do
 			text = text .. content[i] .. " "
-		end 
+		end
 	end
 
 	text = trim1(text)
 
-	imba_apifrontend_print("Sending Event " .. imba_api_event_to_string(event) .. " with content '" .. text .. "'")
-	--
+	ImbaApiFrontendDebug("Sending Event " .. ImbaApiFrontendEventToString(event) .. " with content '" .. text .. "'")
 
-
+	-- enque game event
 	local rcontent = content
 	if content == nil then
 		rcontent = json.null
 	end
 
-	imba_api():game_event({ 
-		id = api_preloaded.id,
+	table.insert(ImbaApiFrontendEventQueue, {
 		event = tonumber(event),
 		content = rcontent,
-	}, function (response) end, function () imba_apifrontend_debug("Error writing game event") end)
+		frames = tonumber(GetFrameCount()),
+		server_system_datetime = tostring(GetSystemDate()) .. " " .. tostring(GetSystemTime()),
+		server_time = tonumber(Time())
+	})
 end
 
 -- returns the match id as integer
-function imba_api_get_match_id() 
+function ImbaApiGetMatchId()
 	return tonumber(tostring(GameRules:GetMatchID()))
 end
 
--- has to be called in GameMode:OnFirstPlayerLoaded 
+-- has to be called in GameMode:OnFirstPlayerLoaded
 -- will be called by imba_api_init()
 -- registers the game in the server and requests an id.
-function imba_api_game_register(complete_fun)
-	
+function ImbaApiFrontendGameRegister(CompleteFunction)
+
 	-- get players
 	local players = {}
 	local leader = nil
-	local match_id = imba_api_get_match_id()
-	
+	local MatchId = ImbaApiGetMatchId()
+
 	-- for each player / get its id
 	for playerID = 0, DOTA_MAX_TEAM_PLAYERS do
 		if PlayerResource:IsValidPlayerID(playerID) then
@@ -334,7 +398,7 @@ function imba_api_game_register(complete_fun)
 
 	-- final object
 	local args = {
-		match_id = tonumber(match_id),
+		match_id = tonumber(MatchId),
 		map = tostring(GetMapName()),
 		leader = leader,
 		dedicated = true,
@@ -342,46 +406,30 @@ function imba_api_game_register(complete_fun)
 	}
 
 	-- perform request
-	imba_api():game_register(args, function (data) 
-		imba_apifrontend_debug("Request good: ID: " .. tostring(data.id))
-		api_preloaded.players = data.players
-		api_preloaded.id = data.id
-		complete_fun()
+	ImbaApiInstance:GameRegister(args, function (data)
+		ImbaApiFrontendDebug("Request good: ID: " .. tostring(data.id))
+		ImbaApiFrontendPreloaded.players = data.players
+		ImbaApiFrontendPreloaded.id = data.id
+		CompleteFunction()
 	end, function (err)
-		imba_apifrontend_debug("Request failed!")
-		api_preloaded.id = 0
+		ImbaApiFrontendPrint("Game Register Request failed!")
+		ImbaApiFrontendPreloaded.id = 0
 	end)
 
 end
--- Copyright (C) 2018  The Dota IMBA Development Team
---
--- Licensed under the Apache License, Version 2.0 (the "License");
--- you may not use this file except in compliance with the License.
--- You may obtain a copy of the License at
---
--- http://www.apache.org/licenses/LICENSE-2.0
---
--- Unless required by applicable law or agreed to in writing, software
--- distributed under the License is distributed on an "AS IS" BASIS,
--- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
--- See the License for the specific language governing permissions and
--- limitations under the License.
---
--- Editors:
---     suthernfriend, 03.02.2018
 
 local MAX_ITEM_SLOT = 14
 
 -- Has to be called in DOTA_GAMERULES_STATE_POST_GAME
 -- Collects stats infos and saves them to the server
 -- Will later be used for IMR and XP changes
--- 
--- complete_fun will get a table as argument: https://hastebin.com/ubopezureh.json        
--- 
-function imba_api_game_complete(complete_fun)
+--
+-- complete_fun will get a table as argument: https://hastebin.com/ubopezureh.json
+--
+function ImbaApiFrontendGameComplete(CompleteFunction)
 
 	local args = {
-		id = api_preloaded.id,
+		id = ImbaApiFrontendPreloaded.id,
 		winner = GAME_WINNER_TEAM,
 		results = {}
 	}
@@ -396,7 +444,7 @@ function imba_api_game_complete(complete_fun)
 			local items = {}
 
 			if hero == nil then
-				imba_apifrontend_print("Hero for player " .. id .. " is nil")
+				ImbaApiFrontendPrint("Hero for player " .. id .. " is nil")
 			else
 				-- get all items
 				-- inventory + backpack
@@ -466,21 +514,21 @@ function imba_api_game_complete(complete_fun)
 	end
 
 	-- perform request
-	imba_api():game_complete(args, function (data)
-		imba_apifrontend_debug("Request good (Game save)")
+	ImbaApiInstance:GameComplete(args, function (data)
+		ImbaApiFrontendDebug("Request good (Game save)")
 
 		-- data contains info about changed xp and changed imr:
-		if complete_fun ~= nil then
-			complete_fun(data.players)
+		if CompleteFunction ~= nil then
+			CompleteFunction(data.players)
 		end
 	end, function (err)
 		if (err == nil) then
-			imba_apifrontend_print("Game complete request failed with nil")
+			ImbaApiFrontendPrint("Game complete request failed with nil")
 		elseif (err.message ~= nil) then
-			imba_apifrontend_print("Game complete request failed :" .. err.message)
+			ImbaApiFrontendPrint("Game complete request failed :" .. err.message)
 		end
-		imba_apifrontend_debug("Request failed!")
+		ImbaApiFrontendDebug("Request failed!")
 	end)
 
-	imba_apifrontend_debug("Saving game to server")
+	ImbaApiFrontendDebug("Saving game to server")
 end
