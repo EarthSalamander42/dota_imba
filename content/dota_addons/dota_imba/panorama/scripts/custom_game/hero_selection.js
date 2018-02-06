@@ -349,10 +349,13 @@ function LoadPlayers() {
 		if (plyData != null) {
 			if (map_info.map_display_name == "imba_standard") {
 				// Dont display IMR if player havent calibrated yet
-				if (plyData.IMR_5v5_calibrating)
+				if (plyData.IMR_5v5_calibrating && playerPanel != undefined)
 					playerPanel.setPlayerMMR("TBD"); // error sometimes
 				else
-					playerPanel.SetPlayerMMR(plyData.IMR_5v5.toFixed([0]));
+					if (plyData.IMR_5v5)
+						playerPanel.SetPlayerMMR(plyData.IMR_5v5.toFixed([0]));
+					else
+						playerPanel.SetPlayerMMR("N/A");
 
 				RadiantLevels = RadiantLevels + plyData.IMR_5v5 / radiantPlayers.length
 				$("#AverageMMRTeamRadiant").text = $.Localize("average_mmr") + RadiantLevels.toFixed([0]);
@@ -398,7 +401,14 @@ function LoadPlayers() {
 		var plyData = CustomNetTables.GetTableValue("player_table", player);
 		if (plyData != null) {
 			if (map_info.map_display_name == "imba_standard") {
-				playerPanel.SetPlayerMMR(plyData.IMR_5v5.toFixed([0]));
+				// Dont display IMR if player havent calibrated yet
+				if (plyData.IMR_5v5_calibrating && playerPanel != undefined)
+					playerPanel.setPlayerMMR("TBD"); // error sometimes
+				else
+					if (plyData.IMR_5v5)
+						playerPanel.SetPlayerMMR(plyData.IMR_5v5.toFixed([0]));
+					else
+						playerPanel.SetPlayerMMR("N/A");
 				DireLevels = DireLevels + plyData.IMR_5v5 / direPlayers.length
 				$("#AverageMMRTeamDire").text = $.Localize("average_mmr") + DireLevels.toFixed([0]);
 			} else {
@@ -426,7 +436,8 @@ function LoadOverthrowPlayers() {
 	var RadiantCount = 0
 	var DireCount = 0
 	var Custom1Count = 0
-	//	var Custom2Count = 0
+	var Custom2Count = 0
+	var Custom3Count = 0
 
 	//	var str = "Cuckies";
 	//	var n = str.search("Cuckies");
@@ -435,7 +446,8 @@ function LoadOverthrowPlayers() {
 	var radiantPlayers = Game.GetPlayerIDsOnTeam(DOTATeam_t.DOTA_TEAM_GOODGUYS);
 	var direPlayers = Game.GetPlayerIDsOnTeam(DOTATeam_t.DOTA_TEAM_BADGUYS);
 	var custom1Players = Game.GetPlayerIDsOnTeam(DOTATeam_t.DOTA_TEAM_CUSTOM_1);
-	//	var custom2Players = Game.GetPlayerIDsOnTeam( DOTATeam_t.DOTA_TEAM_CUSTOM_2 );
+	var custom2Players = Game.GetPlayerIDsOnTeam( DOTATeam_t.DOTA_TEAM_CUSTOM_2 );
+	var custom3Players = Game.GetPlayerIDsOnTeam( DOTATeam_t.DOTA_TEAM_CUSTOM_3 );
 	var map_info = Game.GetMapInfo();
 
 	$("#AverageMMRTeamRadiant").style.visibility = "collapse";
@@ -466,7 +478,7 @@ function LoadOverthrowPlayers() {
 	var ClassOptionPanelRadiant_alt = $.CreatePanel("Panel", $("#LeftPlayers"), "PlayerRow2" + "_good");
 	ClassOptionPanelRadiant_alt.AddClass("PlayerOptionRowV10")
 
-	var TeamLabel = $.CreatePanel("Label", $.GetContextPanel(), "custom1_label");
+	var TeamLabel = $.CreatePanel("Label", ClassOptionPanelRadiant_alt, "custom1_label");
 	TeamLabel.AddClass("TeamLabelText")
 	TeamLabel.text = $.Localize("DOTA_Custom1");
 	TeamLabel.style.color = "#cc00cc";
@@ -479,20 +491,31 @@ function LoadOverthrowPlayers() {
 		playerPanels[player] = playerPanel;
 	});
 
-	//	var ClassOptionPanelDire_alt = $.CreatePanel("Panel", $("#RightPlayers"), "PlayerRow2" + "_bad");
-	//	ClassOptionPanelDire_alt.AddClass("PlayerOptionRowV10")
-	//	$.Each( custom2Players, function( player ) {
-	//		var playerPanel = Modular.Spawn( "picking_player", $("#PlayerRow2" + "_bad") );
-	//		playerPanel.SetPlayerName( player );
-	//
-	//		//Save the panel for later
-	//		playerPanels[player] = playerPanel;
-	//	});
-	//
-	//	var TeamLabel = $.CreatePanel("Label", ClassOptionPanelDire_alt, "custom2_label");
-	//	TeamLabel.AddClass("TeamLabelText")
-	//	TeamLabel.text = $.Localize("DOTA_Custom2");
-	//	TeamLabel.style.color = "#ff4000";
+	var TeamLabel = $.CreatePanel("Label", ClassOptionPanelDire, "custom2_label");
+	TeamLabel.AddClass("TeamLabelText")
+	TeamLabel.text = $.Localize("DOTA_Custom2");
+	TeamLabel.style.color = "#ff4000";
+
+	$.Each( custom2Players, function( player ) {
+		var playerPanel = Modular.Spawn( "picking_player", ClassOptionPanelDire );
+		playerPanel.SetPlayerName( player );
+	
+		//Save the panel for later
+		playerPanels[player] = playerPanel;
+	});
+
+	var TeamLabel = $.CreatePanel("Label", ClassOptionPanelRadiant, "custom3_label");
+	TeamLabel.AddClass("TeamLabelText")
+	TeamLabel.text = $.Localize("DOTA_Custom3");
+	TeamLabel.style.color = "#3465df";
+
+	$.Each( custom3Players, function( player ) {
+		var playerPanel = Modular.Spawn( "picking_player", ClassOptionPanelRadiant );
+		playerPanel.SetPlayerName( player );
+	
+		//Save the panel for later
+		playerPanels[player] = playerPanel;
+	});
 
 	CreateHeroPick()
 }

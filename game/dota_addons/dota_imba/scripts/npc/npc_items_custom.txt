@@ -8553,11 +8553,6 @@
 				"var_type"				"FIELD_INTEGER"
 				"max_hits"				"2"
 			}
-			"10"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"ranged_cooldown"		"6.0"
-			}
 			"11"
 			{
 				"var_type"				"FIELD_INTEGER"
@@ -8674,11 +8669,6 @@
 				"max_hits"				"3"
 			}
 			"10"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"ranged_cooldown"		"6.0"
-			}
-			"11"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"attack_speed_buff"		"720"

@@ -1,28 +1,3 @@
--- Copyright (C) 2018  The Dota IMBA Development Team
--- Copyright (C) 2015  bmddota
---
--- Licensed under the Apache License, Version 2.0 (the "License");
--- you may not use this file except in compliance with the License.
--- You may obtain a copy of the License at
---
--- http://www.apache.org/licenses/LICENSE-2.0
---
--- Unless required by applicable law or agreed to in writing, software
--- distributed under the License is distributed on an "AS IS" BASIS,
--- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
--- See the License for the specific language governing permissions and
--- limitations under the License.
---
--- Editors:
---     Firetoad
---     MouJiaoZi
---     Hewdraw
---     zimberzimer
---     Shush
---     Lindbrum
---     Earth Salamander #42
---     suthernfriend
-
 function GameMode:OnDisconnect(keys)
 	-- GetConnectionState values:
 	-- 0 - no connection
@@ -57,7 +32,7 @@ function GameMode:OnDisconnect(keys)
 
 		-- Start tracking
 		print("started keeping track of player "..player_id.."'s connection state")
-		ApiEvent(ApiEventCodes.PlayerDisconnected, tostring(PlayerResource:GetSteamID(player_id)))
+		ApiEvent(ApiEventCodes.PlayerDisconnected, { tostring(PlayerResource:GetSteamID(player_id)) })
 
 		local disconnect_time = 0
 		Timers:CreateTimer(1, function()
@@ -905,7 +880,6 @@ function GameMode:OnTeamKillCredit(keys)
 			}
 
 		if nKillsRemaining <= 0 then
-			print(m_VictoryMessages[killer_team])
 			GameRules:SetCustomVictoryMessage( m_VictoryMessages[killer_team] )
 			GAME_WINNER_TEAM = killer_team
 			GameRules:SetGameWinner( killer_team )
@@ -1179,12 +1153,15 @@ function GameMode:OnEntityKilled( keys )
 						killed_unit:AddExperience( 50, 0, false, false )
 					end
 
-					local broadcast_team_points =
-						{
-							radiant = GetTeamHeroKills(2),
-							dire = GetTeamHeroKills(3),
-							custom_1 = GetTeamHeroKills(6),
-						}
+					local broadcast_team_points = 
+					{
+						radiant = GetTeamHeroKills(2),
+						dire = GetTeamHeroKills(3),
+						custom_1 = GetTeamHeroKills(6),
+						custom_2 = GetTeamHeroKills(7),
+						custom_3 = GetTeamHeroKills(8),
+					}
+					
 					CustomGameEventManager:Send_ServerToAllClients( "team_points", broadcast_team_points )
 				end
 				--Granting XP to all heroes who assisted

@@ -16957,7 +16957,7 @@
 			"06"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"damage_per_second"	"16 34 52 700"
+				"damage_per_second"	"20 40 60 80"
 			}
 			"07"
 			{
@@ -17854,7 +17854,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_undefined"
+		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"			"pudge_flesh_heap"
 		"MaxLevel"						"4"
@@ -24952,13 +24952,11 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"ScriptFile"					"hero/hero_tinker"
 		"AbilityTextureName"			"tinker_rearm"
 		"FightRecapLevel"				"1"
-		"MaxLevel"						"4"
-		"HasScepterUpgrade"				"1"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -31750,7 +31748,7 @@
 		}
 	}
 
-	// 
+	// +3% MS based on current health
 	"special_bonus_imba_dragon_knight_8"
 	{
 		// General
@@ -42015,7 +42013,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
-			"soundfile"					"soundevents/heroes/game_sounds_nyx_assassin.vsndevts"
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_nyx_assassin.vsndevts"
 //			"particle"					""
 		}
 

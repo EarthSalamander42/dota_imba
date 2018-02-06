@@ -1,19 +1,6 @@
--- Copyright (C) 2018  The Dota IMBA Development Team
+-- 
+-- IMBA API
 --
--- Licensed under the Apache License, Version 2.0 (the "License");
--- you may not use this file except in compliance with the License.
--- You may obtain a copy of the License at
---
--- http://www.apache.org/licenses/LICENSE-2.0
---
--- Unless required by applicable law or agreed to in writing, software
--- distributed under the License is distributed on an "AS IS" BASIS,
--- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
--- See the License for the specific language governing permissions and
--- limitations under the License.
---
--- Editors:
---     suthernfriend, 03.02.2018
 
 require("api/json")
 
@@ -79,7 +66,7 @@ function ImbaApi:perform(robj, endpoint, callback)
 		}
 
 		method = "POST"
-
+	
 		-- encode with json
 		payload = json.encode(baseRequest)
 	end
@@ -89,7 +76,7 @@ function ImbaApi:perform(robj, endpoint, callback)
 	if (method == "POST") then
 		self:debug("Payload " .. payload)
 	end
-
+	
 	-- create request
 	rqH = CreateHTTPRequestScriptVM(method, self.config.endpoint .. endpoint)
 	rqH:SetHTTPRequestAbsoluteTimeoutMS(self.config.timeout)
@@ -104,25 +91,25 @@ function ImbaApi:perform(robj, endpoint, callback)
 	-- send request
 	rqH:Send(function (result)
 
-			-- decode response (we should always get json)
-			-- 500 indi
-			if result.StatusCode == 503 then
-				self:print("Server not available!")
-				callback(true, nil)
-			elseif result.StatusCode ~= 200 then
-				self:print("Request failed with Invalid status: " .. result.StatusCode)
-				callback(true, nil)
+		-- decode response (we should always get json)
+		-- 500 indi
+		if result.StatusCode == 503 then
+			self:print("Server not available!")
+			callback(true, nil)
+		elseif result.StatusCode ~= 200 then
+			self:print("Request failed with Invalid status: " .. result.StatusCode)
+			callback(true, nil)
+		else 
+			rp = json.decode(result.Body)
+			if rp.error then
+				self:print("Request failed with custom error: " .. rp.message)
+				callback(true, rp)
 			else
-				rp = json.decode(result.Body)
-				if rp.error then
-					self:print("Request failed with custom error: " .. rp.message)
-					callback(true, rp)
-				else
-					self:debug("Request succesful")
-					self:debug("Payload: " .. result.Body)
-					callback(false, rp)
-				end
+				self:debug("Request succesful")
+				self:debug("Payload: " .. result.Body)
+				callback(false, rp)
 			end
+		end
 	end)
 end
 
@@ -172,13 +159,14 @@ end
 
 function ImbaApi:MetaHotDisabledHeroes(successCallback, errorCallback)
 	self:SimplePerform(nil, ImbaApiEndpoints.MetaHotDisabledHeroes, successCallback, errorCallback)
+
 end
 
 function ImbaApi:MetaCompanions(successCallback, errorCallback)
 	self:SimplePerform(nil, ImbaApiEndpoints.MetaCompanions, successCallback, errorCallback)
 end
 
-function ImbaApi:MetacompanionChange(data, successCallback, errorCallback)
+function ImbaApi:MetaCompanionChange(data, successCallback, errorCallback)
 	self:SimplePerform(data, ImbaApiEndpoints.MetaCompanionChange, successCallback, errorCallback)
 end
 

@@ -1,5 +1,4 @@
 -- Copyright (C) 2018  The Dota IMBA Development Team
--- Copyright (C) 2015  bmddota
 --
 -- Licensed under the Apache License, Version 2.0 (the "License");
 -- you may not use this file except in compliance with the License.
@@ -13,15 +12,9 @@
 -- See the License for the specific language governing permissions and
 -- limitations under the License.
 --
--- Editors:
---     Firetoad
---     MouJiaoZi
---     Hewdraw
---     zimberzimer
---     Shush
---     Lindbrum
---     Earth Salamander #42
---     suthernfriend
+-- Editors: 
+--     EarthSalamander #42
+--
 
 -- This is the primary barebones gamemode script and should be used to assist in initializing your game mode
 
@@ -726,18 +719,6 @@ function GameMode:OrderFilter( keys )
 	--			end
 	--		end
 	--	end
-
-	if keys.order_type == DOTA_UNIT_ORDER_MOVE_ITEM or keys.order_type == DOTA_UNIT_ORDER_DROP_ITEM then
-		if unit:GetUnitName() == "npc_dota_hero_dragon_knight" and unit:HasScepter() and EntIndexToHScript(keys["entindex_ability"]):GetAbilityName() == "item_ultimate_scepter" then
-			DisplayError(unit:GetPlayerID(),"#dota_hud_error_item_cant_be_dropped")
-			return false
-		end
-	elseif keys.order_type == DOTA_UNIT_ORDER_SELL_ITEM then
-		if unit:GetUnitName() == "npc_dota_hero_dragon_knight" and unit:HasScepter() and EntIndexToHScript(keys["entindex_ability"]):GetAbilityName() == "item_ultimate_scepter" then
-			DisplayError(unit:GetPlayerID(),"#dota_hud_error_cant_sell_item")
-			return false
-		end
-	end
 
 	if keys.order_type == DOTA_UNIT_ORDER_GLYPH then
 		CustomGameEventManager:Send_ServerToAllClients("create_custom_toast", {
@@ -2119,31 +2100,32 @@ function GameMode:OnThink()
 
 		if newState == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
 			-- End the game if one team completely abandoned
-			if not IsInToolsMode() then
+			if IsInToolsMode() then
 				if not TEAM_ABANDON then
-					TEAM_ABANDON = {} -- 15 second to abandon, is_abandoning?, player_count
-					TEAM_ABANDON[2] = {FULL_ABANDON_TIME, false, IMBA_PLAYERS_ON_GAME / 2, 0}
-					TEAM_ABANDON[3] = {FULL_ABANDON_TIME, false, IMBA_PLAYERS_ON_GAME / 2, 0}
+					TEAM_ABANDON = {} -- 15 second to abandon, is_abandoning?, player_count.
+					TEAM_ABANDON[2] = {FULL_ABANDON_TIME, false, 0}
+					TEAM_ABANDON[3] = {FULL_ABANDON_TIME, false, 0}
 				end
 
-				TEAM_ABANDON[2][4] = 0
-				TEAM_ABANDON[3][4] = 0
+				TEAM_ABANDON[2][3] = PlayerResource:GetPlayerCountForTeam(2)
+				TEAM_ABANDON[3][3] = PlayerResource:GetPlayerCountForTeam(3)
 
 				for ID = 0, PlayerResource:GetPlayerCount() -1 do
 					local team = PlayerResource:GetTeam(ID)
-					local player_count = PlayerResource:GetPlayerCountForTeam(team)
 
 					if PlayerResource:GetConnectionState(ID) == 3 then -- if disconnected then
-						TEAM_ABANDON[team][4] = TEAM_ABANDON[team][4] +1
+						TEAM_ABANDON[team][3] = TEAM_ABANDON[team][3] -1
 					end
-
-					TEAM_ABANDON[team][3] = player_count - TEAM_ABANDON[team][4]
 
 					if TEAM_ABANDON[team][3] > 0 then
 						TEAM_ABANDON[team][2] = false
 					else
 						if TEAM_ABANDON[team][2] == false then
-							Notifications:BottomToAll({text = "#imba_team_bad_abandon_message", duration = 15.0, style = {color = "DodgerBlue"} })
+							local abandon_text = "#imba_team_good_abandon_message"
+							if team == 3 then
+								abandon_text = "#imba_team_bad_abandon_message"
+							end
+							Notifications:BottomToAll({text = abandon_text, duration = 15.0, style = {color = "DodgerBlue"} })
 						end
 
 						TEAM_ABANDON[team][2] = true
@@ -2168,7 +2150,7 @@ function GameMode:OnThink()
 	else
 		i = i -1
 		for _, hero in pairs(HeroList:GetAllHeroes()) do
-			if not hero.picked then
+			if not hero.picked and not i == false then -- have to double check false for reasons
 				if i == 30 then
 					EmitAnnouncerSoundForPlayer("announcer_ann_custom_countdown_"..i, hero:GetPlayerID())
 				elseif i == 10 then
