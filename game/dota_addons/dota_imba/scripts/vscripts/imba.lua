@@ -2074,6 +2074,14 @@ function GameMode:OnThink()
 		return 1
 	end
 
+	for _, hero in pairs(HeroList:GetAllHeroes()) do
+		if hero.undying_respawn_timer then
+			if hero.undying_respawn_timer > 0 then
+				hero.undying_respawn_timer = hero.undying_respawn_timer -1
+			end
+		end
+	end
+
 	if GetMapName() == "imba_overthrow" then
 		self:UpdateScoreboard()
 	else

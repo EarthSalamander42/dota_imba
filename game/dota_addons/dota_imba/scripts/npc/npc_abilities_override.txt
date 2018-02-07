@@ -6433,10 +6433,12 @@
 	//=================================================================================================================
 	"invoker_invoke"
 	{
-		"RequiredLevel"						"0"
-		"MaxLevel"							"4"
-		"AbilityCooldown"					"6 4 2 2"
-		"AbilityManaCost"					"60"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"RequiredLevel"					"0"
+		"MaxLevel"						"4"
+		"AbilityCooldown"				"6 4 2 2"
+		"AbilityManaCost"				"60"
+
 		"AbilitySpecial"
 		{
 			"01"

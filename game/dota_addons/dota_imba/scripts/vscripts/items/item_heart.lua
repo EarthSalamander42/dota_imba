@@ -47,19 +47,17 @@ function modifier_item_imba_heart:GetAttributes() return MODIFIER_ATTRIBUTE_MULT
 
 function modifier_item_imba_heart:OnCreated()
 	-- Ability properties
-	self.caster = self:GetCaster()
-	self.ability = self:GetAbility()
 	self.modifier_self = "modifier_item_imba_heart"
 	self.modifier_unique = "modifier_item_imba_heart_unique"
 
 	-- Ability specials
-	self.bonus_strength = self.ability:GetSpecialValueFor("bonus_strength")
-	self.bonus_health = self.ability:GetSpecialValueFor("bonus_health")
+	self.bonus_strength = self:GetAbility():GetSpecialValueFor("bonus_strength")
+	self.bonus_health = self:GetAbility():GetSpecialValueFor("bonus_health")	
 
 	if IsServer() then
 		-- If this is the first heart, add the unique modifier
-		if not self.caster:HasModifier(self.modifier_unique) then
-			self.caster:AddNewModifier(self.caster, self.ability, self.modifier_unique, {})
+		if not self:GetCaster():HasModifier(self.modifier_unique) then
+			self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), self.modifier_unique, {})
 		end
 	end
 end
@@ -67,8 +65,8 @@ end
 function modifier_item_imba_heart:OnDestroy()
 	if IsServer() then
 		-- if this is the last heart, remove the unique modifier
-		if not self.caster:HasModifier(self.modifier_self) then
-			self.caster:RemoveModifierByName(self.modifier_unique)
+		if not self:GetCaster():HasModifier(self.modifier_self) then
+			self:GetCaster():RemoveModifierByName(self.modifier_unique)
 		end
 	end
 end
@@ -97,15 +95,16 @@ function modifier_item_imba_heart_unique:RemoveOnDeath() return false end
 
 function modifier_item_imba_heart_unique:OnCreated()
 	-- Ability properties
-	self.caster = self:GetCaster()
-	self.ability = self:GetAbility()
+	-- Ability specials	
+	self.aura_radius = self:GetAbility():GetSpecialValueFor("aura_radius")
+	self.base_regen = self:GetAbility():GetSpecialValueFor("base_regen")
+	self.noncombat_regen = self:GetAbility():GetSpecialValueFor("noncombat_regen")
 
-	-- Ability specials
-	self.aura_radius = self.ability:GetSpecialValueFor("aura_radius")
-	self.base_regen = self.ability:GetSpecialValueFor("base_regen")
-	self.noncombat_regen = self.ability:GetSpecialValueFor("noncombat_regen")
-	self.regen_cooldown_melee = self.ability:GetSpecialValueFor("regen_cooldown_melee")
-	self.regen_cooldown_ranged = self.ability:GetSpecialValueFor("regen_cooldown_ranged")
+	if self:GetCaster():IsRangedAttacker() then
+		self.cooldown = self:GetSpecialValueFor("regen_cooldown_ranged")
+	else
+		self.cooldown = self:GetAbility():GetSpecialValueFor("regen_cooldown_melee")
+	end
 end
 
 function modifier_item_imba_heart_unique:IsAura() return true end
@@ -123,7 +122,7 @@ function modifier_item_imba_heart_unique:DeclareFunctions()
 end
 
 function modifier_item_imba_heart_unique:GetModifierHealthRegenPercentage()
-	if self.ability:IsCooldownReady() then
+	if self:GetAbility():GetCooldownTimeRemaining() == 0 then
 		return self.noncombat_regen
 	end
 
@@ -136,30 +135,44 @@ function modifier_item_imba_heart_unique:OnTakeDamage(keys)
 		local attacker = keys.attacker
 
 		-- Only apply if the unit taking damage is the caster
-		if unit == self.caster then
-
+		if unit == self:GetCaster() then
 			-- If the attacker wasn't an enemy hero or Roshan, do nothing
 			if attacker:IsHero() or IsRoshan(attacker) then
 				if attacker == unit then
 					-- don't trigger cd with self damage
 					return
 				end
-				self:GetAbility():UseResources(false, false, true)
+				self:GetAbility():StartCooldown(self.cooldown)
 			end
 		end
 	end
 end
 
+--[[
+function modifier_imba_blink_dagger_handler:OnTakeDamage( keys )
+	local ability = self:GetAbility()
+	local blink_damage_cooldown = ability:GetSpecialValueFor("blink_damage_cooldown")
+
+	local parent = self:GetParent()					-- Modifier carrier
+	local unit = keys.unit							-- Who took damage
+
+	if parent == unit then
+		-- Custom function from funcs.lua
+		if IsHeroDamage(keys.attacker, keys.damage) then
+			if ability:GetCooldownTimeRemaining() < blink_damage_cooldown then
+				ability:StartCooldown(blink_damage_cooldown)
+			end
+		end
+	end
+end
+--]]
+
 -- Aura buff
 modifier_item_imba_heart_aura_buff = modifier_item_imba_heart_aura_buff or class({})
 
 function modifier_item_imba_heart_aura_buff:OnCreated()
-	-- Ability properties
-	self.caster = self:GetCaster()
-	self.ability = self:GetAbility()
-
-	-- Ability specials
-	self.aura_str = self.ability:GetSpecialValueFor("aura_str")
+	-- Ability specials	
+	self.aura_str = self:GetAbility():GetSpecialValueFor("aura_str")	
 end
 
 function modifier_item_imba_heart_aura_buff:DeclareFunctions()

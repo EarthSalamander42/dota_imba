@@ -212,7 +212,6 @@ function imba_chaos_knight_phantasm:OnSpellStart()
 		-- Stop any actions of the caster otherwise its obvious which unit is real
 		caster:AddNewModifier(caster, ability, "modifier_chaos_knight_phantasm_cast", {duration=invulnerability_duration})
 		EmitSoundOn("Hero_ChaosKnight.Phantasm", caster)
-
 	end
 end
 
@@ -295,6 +294,7 @@ function modifier_chaos_knight_phantasm_cast:OnDestroy()
 			FindClearSpaceForUnit( caster, casterOrigin, true )
 		end
 	end
+
 	ParticleManager:DestroyParticle(self.phantasm_particle, true)
 	ParticleManager:ReleaseParticleIndex(self.phantasm_particle)
 	self.phantasm_particle = nil
