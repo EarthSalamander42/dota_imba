@@ -950,9 +950,8 @@ function imba_tiny_grow:OnUpgrade()
 		self:GetCaster():StartGesture(ACT_TINY_GROWL)
 		EmitSoundOn("Tiny.Grow", self:GetCaster())
 		local grow = ParticleManager:CreateParticle("particles/units/heroes/hero_tiny/tiny_transform.vpcf", PATTACH_POINT_FOLLOW, self:GetCaster()) 
-			ParticleManager:SetParticleControl(grow, 0, self:GetCaster():GetAbsOrigin())
-			ParticleManager:ReleaseParticleIndex(grow)
-		
+		ParticleManager:SetParticleControl(grow, 0, self:GetCaster():GetAbsOrigin())
+		ParticleManager:ReleaseParticleIndex(grow)
 	end
 end
 
