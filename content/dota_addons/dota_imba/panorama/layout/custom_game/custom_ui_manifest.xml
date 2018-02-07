@@ -5,11 +5,6 @@
 	</scripts>
 
 	<script>
-		GameUI.CustomUIConfig().multiteam_top_scoreboard =
-		{
-			shouldSort: false
-		};
-
 		// Uncomment any of the following lines in order to disable that portion of the default UI
 		//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_TOP_TIMEOFDAY, false );				//Time of day (clock).
 		//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_ACTION_PANEL, false );					//Hero actions UI.
@@ -47,6 +42,15 @@
 		GameUI.CustomUIConfig().team_names = {}
 		var map_info = Game.GetMapInfo();
 		if (map_info.map_display_name == "imba_overthrow") {
+			GameUI.CustomUIConfig().multiteam_top_scoreboard =
+			{
+				reorder_team_scores: true,
+				LeftInjectXMLFile: "file://{resources}/layout/custom_game/overthrow_scoreboard_left.xml",
+				TeamOverlayXMLFile: "file://{resources}/layout/custom_game/overthrow_scoreboard_team_overlay.xml"
+			};
+			GameUI.CustomUIConfig().team_logo_xml = "file://{resources}/layout/custom_game/overthrow_team_icon.xml";
+			GameUI.CustomUIConfig().team_logo_large_xml = "file://{resources}/layout/custom_game/overthrow_team_icon_large.xml";
+
 			GameUI.CustomUIConfig().team_names[DOTATeam_t.DOTA_TEAM_GOODGUYS] = "Teal Tiger";
 			GameUI.CustomUIConfig().team_names[DOTATeam_t.DOTA_TEAM_BADGUYS] = "Dire";
 			GameUI.CustomUIConfig().team_names[DOTATeam_t.DOTA_TEAM_CUSTOM_1] = "Pink Dragon";
@@ -68,6 +72,9 @@
 			GameUI.CustomUIConfig().team_names[DOTATeam_t.DOTA_TEAM_BADGUYS] = "Dire";
 			GameUI.CustomUIConfig().team_colors[DOTATeam_t.DOTA_TEAM_GOODGUYS] = "#08640E;";
 			GameUI.CustomUIConfig().team_colors[DOTATeam_t.DOTA_TEAM_BADGUYS ] = "#640808;";
+			GameUI.CustomUIConfig().team_colors[DOTATeam_t.DOTA_TEAM_CUSTOM_1] = "#c54da8;"; // { 197, 77, 168 }	--		Pink
+			GameUI.CustomUIConfig().team_colors[DOTATeam_t.DOTA_TEAM_CUSTOM_2] = "#FF6C00;"; // { 255, 108, 0 }		--		Orange
+			GameUI.CustomUIConfig().team_colors[DOTATeam_t.DOTA_TEAM_CUSTOM_3] = "#3455FF;"; // { 52, 85, 255 }		--		Blue
 		}
 
 		// These lines set up the panorama colors used by each player on the top scoreboard
@@ -186,12 +193,15 @@
 				tbbg.style.backgroundColor = 'none';
 			}
 		}
+
+		// CUSTOM HUD
+//		hudElements.FindChildTraverse("lower_hud").style.visibility = "collapse"		
 	</script>
 
 	<Panel>
 	<!-- CustomUIElements go here.  They are not provided currently as valve's parser reads commented lines and attempts to link them in.-->
+<!--	<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/hud_main.xml" /> -->
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/overthrow_item_notification.xml" />
-		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/overthrow_scoreboard_left.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/combat_events.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/imba_imr.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/hero_selection.xml" />

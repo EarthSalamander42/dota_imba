@@ -13,15 +13,11 @@
 -- See the License for the specific language governing permissions and
 -- limitations under the License.
 --
--- Editors:
+-- Editors: 
+--     lolle
 --     Firetoad
---     MouJiaoZi
---     Hewdraw
---     zimberzimer
---     Shush
---     Lindbrum
---     Earth Salamander #42
---     suthernfriend
+--     EarthSalamander #42
+--
 
 local PlayerResource = CDOTA_PlayerResource
 PlayerResource.PlayerData = {}

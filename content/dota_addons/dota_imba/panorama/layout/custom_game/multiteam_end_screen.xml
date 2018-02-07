@@ -65,7 +65,7 @@
 					</Panel>
 					<Panel id="es-custom1-players" class="es-players" />
 				</Panel>
-<!--
+
 				<Panel class="es-team" id="es-custom2">
 					<Panel class="es-team-title">
 						<Label class="es-team-name" text="#DOTA_Custom2" />
@@ -81,7 +81,26 @@
 						<Label class="es-legend-xp" text="Imba XP" />
 					</Panel>
 					<Panel id="es-custom2-players" class="es-players" />
-				</Panel> -->
+				</Panel>
+			</Panel>
+
+			<Panel class="es-teams-columns">
+				<Panel class="es-team" id="es-custom3">
+					<Panel class="es-team-title">
+						<Label class="es-team-name" text="#DOTA_Custom3" />
+						<Label id="es-team-score-custom3" class="es-team-score" text="N/A" />
+					</Panel>
+					<Panel class="es-legend">
+						<Label class="es-legend-kdalevel" text="LVL" />
+						<Label class="es-legend-kdalevel" text="K" />
+						<Label class="es-legend-kdalevel" text="D" />
+						<Label class="es-legend-kdalevel" text="A" />
+						<Label class="es-legend-gold" text="Gold" />
+						<Label class="es-legend-imr" text="IMR" />
+						<Label class="es-legend-xp" text="Imba XP" />
+					</Panel>
+					<Panel id="es-custom3-players" class="es-players" />
+				</Panel>
 			</Panel>
 		</Panel>
 		<Panel id="es-buttons">

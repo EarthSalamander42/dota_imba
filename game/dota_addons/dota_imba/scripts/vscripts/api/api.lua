@@ -1,43 +1,32 @@
--- Copyright (C) 2018  The Dota IMBA Development Team
 --
--- Licensed under the Apache License, Version 2.0 (the "License");
--- you may not use this file except in compliance with the License.
--- You may obtain a copy of the License at
+-- IMBA API
 --
--- http://www.apache.org/licenses/LICENSE-2.0
---
--- Unless required by applicable law or agreed to in writing, software
--- distributed under the License is distributed on an "AS IS" BASIS,
--- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
--- See the License for the specific language governing permissions and
--- limitations under the License.
---
--- Editors:
---     suthernfriend, 03.02.2018
 
 require("api/json")
 
 -- Constants
-local IMBA_API_CONFIG = {
+local ImbaApiConfig = {
 	key = "3utx8DehTd42Wxqh65ldAErJjoCdi6XB",
-	endpoint = "http://api.dota2imba.org",
+	--	endpoint = "http://api.dota2imba.org",
+	endpoint = "http://10.1.128.77",
 	agent = "dota_imba-7.04",
 	timeout = 10000,
 	debug = false
 }
 
-local IMBA_API_ENDPOINTS = {
-	meta_news = "/meta/news",
-	meta_donators = "/meta/donators",
-	meta_developers = "/meta/developers",
-	game_register = "/game/register",
-	game_complete = "/game/complete",
-	game_event = "/game/event",
-	meta_topxpusers = "/meta/top-xp-users",
-	meta_topimrusers = "/meta/top-imr-users",
-	meta_hotdisabledheroes = "/meta/hot-disabled-heroes",
-	meta_companions = "/meta/companions",
-	meta_companion_change = "/meta/companion-change",
+local ImbaApiEndpoints = {
+	MetaNews = "/meta/news",
+	MetaDonators = "/meta/donators",
+	MetaDevelopers = "/meta/developers",
+	GameRegister = "/game/register",
+	GameComplete = "/game/complete",
+	GameEvent = "/game/event",
+	GameEvents = "/game/events",
+	MetaTopXpUsers = "/meta/top-xp-users",
+	MetaTopImrUsers = "/meta/top-imr-users",
+	MetaHotDisabledHeroes = "/meta/hot-disabled-heroes",
+	MetaCompanions = "/meta/companions",
+	MetaCompanionChange = "/meta/companion-change",
 }
 
 ImbaApi = {}
@@ -55,7 +44,7 @@ function ImbaApi:print(t)
 end
 
 function ImbaApi:debug(t)
-	if IMBA_API_CONFIG.debug then
+	if ImbaApiConfig.debug then
 		print("[api-debug] " .. t)
 	end
 end
@@ -67,7 +56,7 @@ function ImbaApi:perform(robj, endpoint, callback)
 
 	-- build base request
 	if robj ~= nil then
-		local base_request = {
+		local baseRequest = {
 			agent = self.config.agent,
 			version = 1,
 			frames = tonumber(GetFrameCount()),
@@ -79,7 +68,7 @@ function ImbaApi:perform(robj, endpoint, callback)
 		method = "POST"
 
 		-- encode with json
-		payload = json.encode(base_request)
+		payload = json.encode(baseRequest)
 	end
 
 	self:debug("Performing " .. method .. " @ " .. endpoint)
@@ -124,66 +113,61 @@ function ImbaApi:perform(robj, endpoint, callback)
 	end)
 end
 
-function ImbaApi:simple_perform(data, endpoint, success_cb, error_cb)
+function ImbaApi:SimplePerform(data, endpoint, successCallback, errorCallback)
 	self:perform(data, endpoint, function (err, rs)
 		if (err) then
-			if (error_cb) then error_cb() end
-		else success_cb(rs.data) end
+			if (errorCallback) then errorCallback() end
+		else successCallback(rs.data) end
 	end)
 end
 
-function ImbaApi:meta_news(success_cb, error_cb)
-	self:simple_perform(nil, IMBA_API_ENDPOINTS.meta_news, success_cb, error_cb)
+function ImbaApi:MetaNews(successCallback, errorCallback)
+	self:SimplePerform(nil, ImbaApiEndpoints.MetaNews, successCallback, errorCallback)
 end
 
-function ImbaApi:meta_donators(success_cb, error_cb)
-	self:simple_perform(nil, IMBA_API_ENDPOINTS.meta_donators, success_cb, error_cb)
+function ImbaApi:MetaDonators(successCallback, errorCallback)
+	self:SimplePerform(nil, ImbaApiEndpoints.MetaDonators, successCallback, errorCallback)
 end
 
-function ImbaApi:meta_developers(success_cb, error_cb)
-	self:simple_perform(nil, IMBA_API_ENDPOINTS.meta_developers, success_cb, error_cb)
+function ImbaApi:MetaDevelopers(successCallback, errorCallback)
+	self:SimplePerform(nil, ImbaApiEndpoints.MetaDevelopers, successCallback, errorCallback)
 end
 
-function ImbaApi:game_event(data, success_cb, error_cb)
-	self:simple_perform(data, IMBA_API_ENDPOINTS.game_event, success_cb, error_cb)
+function ImbaApi:GameEvent(data, successCallback, errorCallback)
+	self:SimplePerform(data, ImbaApiEndpoints.GameEvent, successCallback, errorCallback)
 end
 
-function ImbaApi:game_register(data, success_cb, error_cb)
-	self:simple_perform(data, IMBA_API_ENDPOINTS.game_register, success_cb, error_cb)
+function ImbaApi:GameEvents(data, successCallback, errorCallback)
+	self:SimplePerform(data, ImbaApiEndpoints.GameEvents, successCallback, errorCallback)
 end
 
-function ImbaApi:game_complete(data, success_cb, error_cb)
-	self:simple_perform(data, IMBA_API_ENDPOINTS.game_complete, success_cb, error_cb)
+function ImbaApi:GameRegister(data, successCallback, errorCallback)
+	self:SimplePerform(data, ImbaApiEndpoints.GameRegister, successCallback, errorCallback)
 end
 
-function ImbaApi:meta_topxpusers(success_cb, error_cb)
-	self:simple_perform(nil, IMBA_API_ENDPOINTS.meta_topxpusers, success_cb, error_cb)
+function ImbaApi:GameComplete(data, successCallback, errorCallback)
+	self:SimplePerform(data, ImbaApiEndpoints.GameComplete, successCallback, errorCallback)
 end
 
-function ImbaApi:meta_topimrusers(success_cb, error_cb)
-	self:simple_perform(nil, IMBA_API_ENDPOINTS.meta_topimrusers, success_cb, error_cb)
+function ImbaApi:MetaTopXpUsers(successCallback, errorCallback)
+	self:SimplePerform(nil, ImbaApiEndpoints.MetaTopXpUsers, successCallback, errorCallback)
 end
 
-function ImbaApi:meta_hotdisabledheroes(success_cb, error_cb)
-	self:simple_perform(nil, IMBA_API_ENDPOINTS.meta_hotdisabledheroes, success_cb, error_cb)
+function ImbaApi:MetaTopImrUsers(successCallback, errorCallback)
+	self:SimplePerform(nil, ImbaApiEndpoints.MetaTopImrUsers, successCallback, errorCallback)
 end
 
-function ImbaApi:meta_companions(success_cb, error_cb)
-	self:simple_perform(nil, IMBA_API_ENDPOINTS.meta_companions, success_cb, error_cb)
+function ImbaApi:MetaHotDisabledHeroes(successCallback, errorCallback)
+	self:SimplePerform(nil, ImbaApiEndpoints.MetaHotDisabledHeroes, successCallback, errorCallback)
+
 end
 
-function ImbaApi:meta_companion_change(data, success_cb, error_cb)
-	self:simple_perform(data, IMBA_API_ENDPOINTS.meta_companion_change, success_cb, error_cb)
+function ImbaApi:MetaCompanions(successCallback, errorCallback)
+	self:SimplePerform(nil, ImbaApiEndpoints.MetaCompanions, successCallback, errorCallback)
 end
 
--- Internal Vars
-local _api_instance = nil
-
--- functions
-function imba_api()
-	if _api_instance == nil then
-		_api_instance = ImbaApi:new(nil, IMBA_API_CONFIG)
-	end
-
-	return _api_instance
+function ImbaApi:MetaCompanionChange(data, successCallback, errorCallback)
+	self:SimplePerform(data, ImbaApiEndpoints.MetaCompanionChange, successCallback, errorCallback)
 end
+
+ImbaApiInstance = ImbaApi:new(nil, ImbaApiConfig)

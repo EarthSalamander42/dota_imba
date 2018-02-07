@@ -39,7 +39,7 @@ function GetXPLevelByXp(xp)
 end
 
 function GetXpProgressToNextLevel(xp)
-	
+
 	if xp == 0 then return 0 end
 
 	local level = GetXPLevelByXp(xp)
@@ -81,7 +81,7 @@ function GetTitleIXP(level)
 		return "Amphibian "..level-200
 	elseif level <= 399 then
 		return "Icefrog "..level-300
-	else 
+	else
 		return "Firetoad "..level-400
 	end
 end
@@ -112,7 +112,7 @@ function GetTitleColorIXP(title, js)
 			return "#000066"
 		elseif title == "Icefrog" then
 			return "#1456EF"
-		else -- it's Firetoaaaaaaaaaaad! 
+		else -- it's Firetoaaaaaaaaaaad!
 			return "#C75102"
 		end
 	else
@@ -140,17 +140,18 @@ function GetTitleColorIXP(title, js)
 			return {0, 0, 102}
 		elseif title == "Icefrog" then
 			return {20, 86, 239}
-		else -- it's Firetoaaaaaaaaaaad! 
+		else -- it's Firetoaaaaaaaaaaad!
 			return {199, 81, 2}
 		end
 	end
 end
 
 function GetPlayerInfoIXP() -- yet it has too much useless loops, format later
-if api_preloaded.players == nil then return end
-local level = {}
-local current_xp_in_level = {}
-local max_xp = {}
+	if not ImbaApiFrontendReady() then return end
+
+	local level = {}
+	local current_xp_in_level = {}
+	local max_xp = {}
 
 	for ID = 0, PlayerResource:GetPlayerCount() -1 do
 		local global_xp = GetStatsForPlayer(ID).xp
@@ -172,31 +173,32 @@ local max_xp = {}
 		end
 
 		CustomNetTables:SetTableValue("player_table", tostring(ID),
-		{
-			XP = current_xp_in_level[ID],
-			MaxXP = max_xp[ID],
-			Lvl = level[ID], -- add +1 only on the HUD else you are level 0 at the first level
-			title = GetTitleIXP(level[ID]),
-			title_color = GetTitleColorIXP(GetTitleIXP(level[ID]), true),
-			IMR_5v5 = GetStatsForPlayer(ID).imr_5v5,
-			IMR_10v10 = GetStatsForPlayer(ID).imr_10v10,
-			IMR_5v5_calibrating = GetStatsForPlayer(ID).imr_5v5_calibrating,
-			IMR_10v10_calibrating = GetStatsForPlayer(ID).imr_10v10_calibrating,
-			XP_change = 0,
-			IMR_5v5_change = 0,
-		})
+			{
+				XP = current_xp_in_level[ID],
+				MaxXP = max_xp[ID],
+				Lvl = level[ID], -- add +1 only on the HUD else you are level 0 at the first level
+				title = GetTitleIXP(level[ID]),
+				title_color = GetTitleColorIXP(GetTitleIXP(level[ID]), true),
+				IMR_5v5 = GetStatsForPlayer(ID).imr_5v5,
+				IMR_10v10 = GetStatsForPlayer(ID).imr_10v10,
+				IMR_5v5_calibrating = GetStatsForPlayer(ID).imr_5v5_calibrating,
+				IMR_10v10_calibrating = GetStatsForPlayer(ID).imr_10v10_calibrating,
+				XP_change = 0,
+				IMR_5v5_change = 0,
+			})
 	end
 	GetTopPlayersIXP()
 	GetTopPlayersIMR()
 end
 
 function GetTopPlayersIXP()
-if api_preloaded.topxpusers == nil then return end
-local level = {}
-local current_xp_in_level = {}
-local max_xp = {}
+	if not ImbaApiFrontendReady() then return end
 
-	for _, top_user in pairs(api_preloaded.topxpusers) do
+	local level = {}
+	local current_xp_in_level = {}
+	local max_xp = {}
+
+	for _, top_user in pairs(GetTopXpUsers()) do
 		local global_xp = top_user.xp
 		level[top_user.rank] = 0
 
@@ -216,25 +218,26 @@ local max_xp = {}
 		end
 
 		CustomNetTables:SetTableValue("top_xp", tostring(top_user.rank),
-		{
-			SteamID64 = top_user.steamid,
-			XP = current_xp_in_level[top_user.rank],
-			MaxXP = max_xp[top_user.rank],
-			Lvl = level[top_user.rank],
-			title = GetTitleIXP(level[top_user.rank]),
-			title_color = GetTitleColorIXP(GetTitleIXP(level[top_user.rank]), true),
-			IMR_5v5 = top_user.imr_5v5,
-		})
+			{
+				SteamID64 = top_user.steamid,
+				XP = current_xp_in_level[top_user.rank],
+				MaxXP = max_xp[top_user.rank],
+				Lvl = level[top_user.rank],
+				title = GetTitleIXP(level[top_user.rank]),
+				title_color = GetTitleColorIXP(GetTitleIXP(level[top_user.rank]), true),
+				IMR_5v5 = top_user.imr_5v5,
+			})
 	end
 end
 
 function GetTopPlayersIMR()
-if api_preloaded.topimrusers == nil then return end
-local level = {}
-local current_xp_in_level = {}
-local max_xp = {}
+	if not ImbaApiFrontendReady() then return end
 
-	for _, top_user in pairs(api_preloaded.topimrusers) do
+	local level = {}
+	local current_xp_in_level = {}
+	local max_xp = {}
+
+	for _, top_user in pairs(GetTopImrUsers()) do
 		local global_xp = top_user.xp
 		level[top_user.rank] = 0
 
@@ -254,14 +257,14 @@ local max_xp = {}
 		end
 
 		CustomNetTables:SetTableValue("top_imr_5v5", tostring(top_user.rank),
-		{
-			SteamID64 = top_user.steamid,
-			XP = current_xp_in_level[top_user.rank],
-			MaxXP = max_xp[top_user.rank],
-			Lvl = level[top_user.rank],
-			title = GetTitleIXP(level[top_user.rank]),
-			title_color = GetTitleColorIXP(GetTitleIXP(level[top_user.rank]), true),
-			IMR_5v5 = top_user.imr_5v5,
-		})
+			{
+				SteamID64 = top_user.steamid,
+				XP = current_xp_in_level[top_user.rank],
+				MaxXP = max_xp[top_user.rank],
+				Lvl = level[top_user.rank],
+				title = GetTitleIXP(level[top_user.rank]),
+				title_color = GetTitleColorIXP(GetTitleIXP(level[top_user.rank]), true),
+				IMR_5v5 = top_user.imr_5v5,
+			})
 	end
 end

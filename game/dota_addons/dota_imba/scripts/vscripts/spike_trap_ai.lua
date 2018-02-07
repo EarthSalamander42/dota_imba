@@ -13,15 +13,9 @@
 -- See the License for the specific language governing permissions and
 -- limitations under the License.
 --
--- Editors:
---     Firetoad
---     MouJiaoZi
---     Hewdraw
---     zimberzimer
---     Shush
---     Lindbrum
---     Earth Salamander #42
---     suthernfriend
+-- Editors: 
+--     EarthSalamander #42
+--
 
 --[[ spike_trap_ai.lua ]]
 

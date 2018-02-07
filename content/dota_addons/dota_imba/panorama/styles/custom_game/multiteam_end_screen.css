@@ -63,26 +63,40 @@
 
 #es-custom2 {
 	background-color: #802000aa;
+	visibility: collapse;
+}
+
+#es-custom3 {
+	background-color: #3435FFaa;
+	visibility: collapse;
+}
+
+#es-radiant .es-team-name,
+#es-dire .es-team-name,
+#es-custom1 .es-team-name,
+#es-custom2 .es-team-name,
+#es-custom3 .es-team-name, {
+	text-shadow: 0 0 5px 2.0 #111;
 }
 
 #es-radiant .es-team-name {
 	color: #326114;
-	text-shadow: 0 0 5px 2.0 #111;
 }
 
 #es-dire .es-team-name {
 	color: #f03333;
-	text-shadow: 0 0 5px 2.0 #111;
 }
 
 #es-custom1 .es-team-name {
 	color: #cc00cc;
-	text-shadow: 0 0 5px 2.0 #111;
 }
 
 #es-custom2 .es-team-name {
 	color: #ff4000;
-	text-shadow: 0 0 5px 2.0 #111;
+}
+
+#es-custom3 .es-team-name {
+	color: #3465df;
 }
 
 .es-team-title {

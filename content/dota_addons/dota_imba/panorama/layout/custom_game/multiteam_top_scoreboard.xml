@@ -10,31 +10,39 @@
 		<include src="s2r://panorama/scripts/custom_game/multiteam_top_scoreboard.vjs_c" />
 	</scripts>
 	<script>
+		var team_number = 5;
+		var team_tab_size = 100 / team_number;
+
 		var map_info = Game.GetMapInfo();
 		if (map_info.map_display_name == "imba_overthrow") {
 			$( "#MultiteamScoreboard" ).style.width = "86%";
 			$( "#MultiteamScoreboard" ).style.horizontalAlign = "right";
-			$( "#_dynamic_team_2" ).style.width = "33%";
-			$( "#_dynamic_team_3" ).style.width = "33%";
+			$( "#_dynamic_team_2" ).style.width = team_tab_size + "%";
+			$( "#_dynamic_team_3" ).style.width = team_tab_size + "%";
 			$( "#_dynamic_team_3" ).style.horizontalAlign = "left";
-			$( "#_dynamic_team_3" ).style.marginLeft = "33%";
+			$( "#_dynamic_team_3" ).style.marginLeft = team_tab_size + "%";
 
 			$( "#_dynamic_team_6" ).SetAttributeInt( "team_id", 6 );
-			$( "#_dynamic_team_6" ).style.width = "33%";
-			$( "#_dynamic_team_6" ).style.marginLeft = "66%";
-//			$( "#_dynamic_team_7" ).SetAttributeInt( "team_id", 7 );
-//			$( "#_dynamic_team_7" ).style.width = "30%";
-//			$( "#_dynamic_team_7" ).style.marginLeft = "90%";
+			$( "#_dynamic_team_6" ).style.width = team_tab_size + "%";
+			$( "#_dynamic_team_6" ).style.marginLeft = team_tab_size * 2 + "%";
+			$( "#_dynamic_team_7" ).SetAttributeInt( "team_id", 7 );
+			$( "#_dynamic_team_7" ).style.width = team_tab_size + "%";
+			$( "#_dynamic_team_7" ).style.marginLeft = team_tab_size * 3 + "%";
+			$( "#_dynamic_team_8" ).SetAttributeInt( "team_id", 8 );
+			$( "#_dynamic_team_8" ).style.width = team_tab_size + "%";
+			$( "#_dynamic_team_8" ).style.marginLeft = team_tab_size * 4 + "%";
 
 			$( "#ConquestScore_Radiant" ).style.visibility = "visible";
 			$( "#ConquestScore_Dire" ).style.visibility = "visible";
 			$( "#ConquestScore_Custom1" ).style.visibility = "visible";
-//			$( "#ConquestScore_Custom2" ).style.visibility = "visible";
+			$( "#ConquestScore_Custom2" ).style.visibility = "visible";
+			$( "#ConquestScore_Custom3" ).style.visibility = "visible";
 
 			$( "#LogoAndScore2" ).AddClass("OverthrowScore")
 			$( "#LogoAndScore3" ).AddClass("OverthrowScore")
 			$( "#LogoAndScore6" ).AddClass("OverthrowScore")
-//			$( "#LogoAndScore7" ).AddClass("OverthrowScore")
+			$( "#LogoAndScore7" ).AddClass("OverthrowScore")
+			$( "#LogoAndScore8" ).AddClass("OverthrowScore")
 		}
 
 		$( "#_dynamic_team_2" ).SetAttributeInt( "team_id", 2 );
@@ -44,6 +52,9 @@
 	<Panel hittest="false" class="CustomHudRoot">
 		<Panel hittest="false" id="TopBarScoreboard">
 			<Panel hittest="false" id="ScoreboardContainer">
+				<Panel hittest="false" id="LeftInjectXMLFile"/>
+				<Panel hittest="false" id="RightInjectXMLFile"/>
+
 				<Panel hittest="false" id="MultiteamScoreboard">
 					<Panel hittest="false" class="ScoreboardTeamWrapper" id="_dynamic_team_2">
 						<Panel hittest="false" id="ScoreboardTeam">
@@ -74,7 +85,7 @@
 							<Panel hittest="false" id="TeamPadding"/>
 						</Panel>
 					</Panel>
-<!--
+
 					<Panel hittest="false" class="ScoreboardTeamWrapper" id="_dynamic_team_7">
 						<Panel hittest="false" id="ScoreboardTeam">
 							<Panel hittest="false" id="LogoAndScore7" class="ImbaScore">
@@ -83,7 +94,17 @@
 							<Panel hittest="false" id="PlayersContainer"/>
 							<Panel hittest="false" id="TeamPadding"/>
 						</Panel>
-					</Panel> -->
+					</Panel>
+
+					<Panel hittest="false" class="ScoreboardTeamWrapper" id="_dynamic_team_8">
+						<Panel hittest="false" id="ScoreboardTeam">
+							<Panel hittest="false" id="LogoAndScore8" class="ImbaScore">
+								<Label hittest="false" class="ConquestScore MonoNumbersFont" id="ConquestScore_Custom3" text="0"/>
+							</Panel>
+							<Panel hittest="false" id="PlayersContainer"/>
+							<Panel hittest="false" id="TeamPadding"/>
+						</Panel>
+					</Panel>
 				</Panel>
 			</Panel>
 		</Panel>

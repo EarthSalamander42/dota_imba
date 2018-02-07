@@ -1,28 +1,3 @@
--- Copyright (C) 2018  The Dota IMBA Development Team
--- Copyright (C) 2015  bmddota
---
--- Licensed under the Apache License, Version 2.0 (the "License");
--- you may not use this file except in compliance with the License.
--- You may obtain a copy of the License at
---
--- http://www.apache.org/licenses/LICENSE-2.0
---
--- Unless required by applicable law or agreed to in writing, software
--- distributed under the License is distributed on an "AS IS" BASIS,
--- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
--- See the License for the specific language governing permissions and
--- limitations under the License.
---
--- Editors:
---     Firetoad
---     MouJiaoZi
---     Hewdraw
---     zimberzimer
---     Shush
---     Lindbrum
---     Earth Salamander #42
---     suthernfriend
-
 function GameMode:OnDisconnect(keys)
 	-- GetConnectionState values:
 	-- 0 - no connection
@@ -46,7 +21,7 @@ function GameMode:OnDisconnect(keys)
 	-- If the game hasn't started, or has already ended, do nothing
 	if (GameRules:State_Get() >= DOTA_GAMERULES_STATE_POST_GAME) or (GameRules:State_Get() < DOTA_GAMERULES_STATE_PRE_GAME) then
 		return nil
-	-- Else, start tracking player's reconnect/abandon state
+			-- Else, start tracking player's reconnect/abandon state
 	else
 		-- Fetch player's player and hero information
 		local player_id = keys.PlayerID
@@ -57,7 +32,7 @@ function GameMode:OnDisconnect(keys)
 
 		-- Start tracking
 		print("started keeping track of player "..player_id.."'s connection state")
-		ApiEvent(ApiEventCodes.PlayerDisconnected, tostring(PlayerResource:GetSteamID(player_id)))
+		ApiEvent(ApiEventCodes.PlayerDisconnected, { tostring(PlayerResource:GetSteamID(player_id)) })
 
 		local disconnect_time = 0
 		Timers:CreateTimer(1, function()
@@ -77,7 +52,7 @@ function GameMode:OnDisconnect(keys)
 
 				-- Start redistributing this player's gold to its allies
 				PlayerResource:StartAbandonGoldRedistribution(player_id)
-			-- If the player has reconnected, stop tracking connection state every second
+				-- If the player has reconnected, stop tracking connection state every second
 			elseif PlayerResource:GetConnectionState(player_id) == 2 then
 
 			-- Else, keep tracking connection state
@@ -123,9 +98,10 @@ function GameMode:OnGameRulesStateChange(keys)
 		InitRunes()
 
 		local donators_steamid = {}
-		if #api_preloaded.donators then
-			for i = 1, #api_preloaded.donators do
-				table.insert(donators_steamid, api_preloaded.donators[i].steamId64)
+		local donators = GetDonators()
+		if #donators then
+			for i = 1, #donators do
+				table.insert(donators_steamid, donators[i].steamId64)
 			end
 		end
 
@@ -147,11 +123,12 @@ function GameMode:OnGameRulesStateChange(keys)
 				if IsDeveloper(hero:GetPlayerID()) then
 					hero.has_graph = true
 					CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "show_netgraph", {})
---					CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "show_netgraph_heronames", {})
+					--					CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "show_netgraph_heronames", {})
 				end
 
-				for k, v in pairs(api_preloaded.donators) do
-					CustomNetTables:SetTableValue("player_table", tostring(hero:GetPlayerID()), {companion_model = api_preloaded.donators[k].model, companion_enabled = api_preloaded.donators[k].enabled})
+				local donators = GetDonators()
+				for k, v in pairs(donators) do
+					CustomNetTables:SetTableValue("player_table", tostring(hero:GetPlayerID()), {companion_model = donators[k].model, companion_enabled = donators[k].enabled})
 				end
 			end
 		end)
@@ -165,7 +142,7 @@ function GameMode:OnGameRulesStateChange(keys)
 
 		Timers:CreateTimer(60, function()
 			StartGarbageCollector()
---			DefineLosingTeam()
+			--			DefineLosingTeam()
 			return 60
 		end)
 
@@ -206,10 +183,10 @@ function GameMode:OnGameRulesStateChange(keys)
 						return nil
 					else
 						TEAM_KILLS_TO_WIN = leadingTeamScore + 1
-						local broadcast_killcount = 
-						{
-							killcount = TEAM_KILLS_TO_WIN
-						}
+						local broadcast_killcount =
+							{
+								killcount = TEAM_KILLS_TO_WIN
+							}
 						CustomGameEventManager:Send_ServerToAllClients( "overtime_alert", broadcast_killcount )
 					end
 				end
@@ -222,7 +199,7 @@ function GameMode:OnGameRulesStateChange(keys)
 		-- call imba api
 		ApiEvent(ApiEventCodes.EnteredPostGame)
 
-		imba_api_game_complete(function (players)
+		ImbaApiFrontendGameComplete(function (players)
 			ApiPrint("Game complete request successful!")
 
 			-- calculate levels
@@ -230,7 +207,7 @@ function GameMode:OnGameRulesStateChange(keys)
 
 			for k, v in pairs(players) do
 
- 				local level = GetXPLevelByXp(v.xp)
+				local level = GetXPLevelByXp(v.xp)
 				local title = GetTitleIXP(level)
 				local color = GetTitleColorIXP(title, true)
 				local progress = GetXpProgressToNextLevel(v.xp)
@@ -262,13 +239,28 @@ end
 dummy_created_count = 0
 
 function GameMode:OnNPCSpawned(keys)
-GameMode:_OnNPCSpawned(keys)
-local npc = EntIndexToHScript(keys.entindex)
-local normal_xp = npc:GetDeathXP()
-local greeviling = false
+	GameMode:_OnNPCSpawned(keys)
+	local npc = EntIndexToHScript(keys.entindex)
+	local normal_xp = npc:GetDeathXP()
+	local greeviling = false
 
 	if npc then
---		npc:AddNewModifier(npc, nil, "modifier_river", {})
+
+		------------------------------
+		-- UnitSpawned Api Event
+		------------------------------
+
+		local player = "-1"
+		if npc:IsRealHero() and npc:GetPlayerID() then
+			player = PlayerResource:GetSteamID(npc:GetPlayerID())
+		end
+
+		ApiEvent(ApiEventCodes.UnitSpawned, {
+			tostring(npc:GetUnitName()),
+			tostring(player)
+		})
+
+		--		npc:AddNewModifier(npc, nil, "modifier_river", {})
 
 		if greeviling == true and RandomInt(1, 100) > 85 then
 			if string.find(npc:GetUnitName(), "dota_creep") then
@@ -357,30 +349,30 @@ local greeviling = false
 		end
 
 		-- working, but overlapping on overhead particles..
---		if npc:IsRealHero() and npc:GetUnitName() ~= "npc_dota_hero_wisp" or npc.is_real_wisp then
---			local title
---			local rgb = GetTitleColorIXP(title, false)
---			if npc:GetPlayerOwner() then
---				if not npc.first_spawn then
---					npc.first_spawn = true
---					title = CustomNetTables:GetTableValue("player_table", tostring(npc:GetPlayerID())).title
---					if title and rgb then
---						npc:SetCustomHealthLabel(title, rgb[1], rgb[2], rgb[3])
---					end
---				end
---			else
---				if not npc.first_spawn then
---					npc.first_spawn = true
---					Timers:CreateTimer(FrameTime(), function()
---						title = CustomNetTables:GetTableValue("player_table", tostring(npc:GetPlayerOwnerID())).title
---						print(title, rgb)
---						if title and rgb then
---							npc:SetCustomHealthLabel(title, rgb[1], rgb[2], rgb[3])
---						end
---					end)
---				end
---			end
---		end
+		--		if npc:IsRealHero() and npc:GetUnitName() ~= "npc_dota_hero_wisp" or npc.is_real_wisp then
+		--			local title
+		--			local rgb = GetTitleColorIXP(title, false)
+		--			if npc:GetPlayerOwner() then
+		--				if not npc.first_spawn then
+		--					npc.first_spawn = true
+		--					title = CustomNetTables:GetTableValue("player_table", tostring(npc:GetPlayerID())).title
+		--					if title and rgb then
+		--						npc:SetCustomHealthLabel(title, rgb[1], rgb[2], rgb[3])
+		--					end
+		--				end
+		--			else
+		--				if not npc.first_spawn then
+		--					npc.first_spawn = true
+		--					Timers:CreateTimer(FrameTime(), function()
+		--						title = CustomNetTables:GetTableValue("player_table", tostring(npc:GetPlayerOwnerID())).title
+		--						print(title, rgb)
+		--						if title and rgb then
+		--							npc:SetCustomHealthLabel(title, rgb[1], rgb[2], rgb[3])
+		--						end
+		--					end)
+		--				end
+		--			end
+		--		end
 	end
 
 	if npc:GetUnitName() == "npc_dummy_unit" or npc:GetUnitName() == "npc_dummy_unit_perma" then
@@ -389,11 +381,6 @@ local greeviling = false
 
 	if npc:IsRealHero() then
 
-		ApiEvent(ApiEventCodes.HeroRespawned, {
-			tostring(npc:GetUnitName()),
-			tostring(PlayerResource:GetSteamID(npc:GetPlayerID()))
-		})
-	
 		if not npc.first_spawn then
 			if npc:GetUnitName() == "npc_dota_hero_troll_warlord" then
 				npc:SwapAbilities("imba_troll_warlord_whirling_axes_ranged", "imba_troll_warlord_whirling_axes_melee", true, false)
@@ -446,7 +433,7 @@ local greeviling = false
 		Timers:CreateTimer(1, function() -- Silencer fix
 			if npc:HasModifier("modifier_silencer_int_steal") then
 				npc:RemoveModifierByName("modifier_silencer_int_steal")
-			end
+		end
 		end)
 	end
 
@@ -476,18 +463,18 @@ local greeviling = false
 	if npc:HasModifier("modifier_arc_warden_tempest_double") then
 
 		-- List of modifiers which carry over from the main hero to the clone
-		local clone_shared_buffs = {			
+		local clone_shared_buffs = {
 			"modifier_imba_moon_shard_stacks_dummy",
 			"modifier_imba_moon_shard_consume_1",
 			"modifier_imba_moon_shard_consume_2",
 			"modifier_imba_moon_shard_consume_3",
 			"modifier_item_imba_soul_of_truth"
 		}
-		
+
 		-- Iterate through the main hero's potential modifiers
 		local main_hero = npc:GetOwner():GetAssignedHero()
 		for _, shared_buff in pairs(clone_shared_buffs) do
-			
+
 			-- If the main hero has this modifier, copy it to the clone
 			if main_hero:HasModifier(shared_buff) then
 				local shared_buff_modifier = main_hero:FindModifierByName(shared_buff)
@@ -497,7 +484,7 @@ local greeviling = false
 				if shared_buff_ability then
 					shared_buff_ability:ApplyDataDrivenModifier(main_hero, npc, shared_buff, {})
 
-				-- Else, it's a consumable item modifier. Create a dummy item to use the ability from.
+					-- Else, it's a consumable item modifier. Create a dummy item to use the ability from.
 				else
 					-- Moon Shard
 					if string.find(shared_buff, "moon_shard") then
@@ -542,7 +529,7 @@ local greeviling = false
 				end
 			end
 		end
-	end		
+	end
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Buyback penalty removal
@@ -575,11 +562,11 @@ end
 -- An entity somewhere has been hurt.  This event fires very often with many units so don't do too many expensive
 -- operations here
 function GameMode:OnEntityHurt(keys)
-	--local damagebits = keys.damagebits -- This might always be 0 and therefore useless
-	--if keys.entindex_attacker ~= nil and keys.entindex_killed ~= nil then
-	--local entCause = EntIndexToHScript(keys.entindex_attacker)
-	--local entVictim = EntIndexToHScript(keys.entindex_killed)
-	--end
+--local damagebits = keys.damagebits -- This might always be 0 and therefore useless
+--if keys.entindex_attacker ~= nil and keys.entindex_killed ~= nil then
+--local entCause = EntIndexToHScript(keys.entindex_attacker)
+--local entVictim = EntIndexToHScript(keys.entindex_killed)
+--end
 end
 
 -- An item was picked up off the ground
@@ -606,10 +593,10 @@ function GameMode:OnItemPurchased( keys )
 	local plyID = keys.PlayerID
 	if not plyID then return end
 	local hero = PlayerResource:GetSelectedHeroEntity(plyID)
-	local itemName = keys.itemname 
+	local itemName = keys.itemname
 	local itemcost = keys.itemcost
 
-	ApiEvent(ApiEventCodes.ItemPurchased, { 
+	ApiEvent(ApiEventCodes.ItemPurchased, {
 		tostring(keys.itemname),
 		tostring(hero:GetUnitName()),
 		tostring(PlayerResource:GetSteamID(plyID))
@@ -639,12 +626,19 @@ function GameMode:OnAbilityUsed(keys)
 		for m = 1, #meepo_table do
 			if meepo_table[m]:IsClone() then
 				if abilityname == "item_sphere" then
-					local duration = abilityname:GetSpecialValueFor("block_cooldown")		
+					local duration = abilityname:GetSpecialValueFor("block_cooldown")
 					meepo_table[m]:AddNewModifier(meepo_table[m], ability, "modifier_item_sphere_target", {duration = duration})
 				end
 			end
 		end
 	end
+
+	-- API
+	ApiEvent(ApiEventCodes.AbilityUsed, {
+		tostring(hero:GetUnitName()),
+		tostring(abilityname),
+		tostring(PlayerResource:GetSteamID(keys.PlayerID))
+	})
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Remote Mines adjustment
@@ -659,7 +653,7 @@ function GameMode:OnAbilityUsed(keys)
 
 	-- 			-- Only operate on remotes which need setup
 	-- 			if unit.needs_remote_mine_setup then
-	
+
 	-- 				-- Add extra abilities
 	-- 				unit:AddAbility("imba_techies_minefield_teleport")
 	-- 				unit:AddAbility("imba_techies_remote_auto_creep")
@@ -709,7 +703,7 @@ function GameMode:OnPlayerLearnedAbility( keys)
 	local hero = player:GetAssignedHero()
 	local abilityname = keys.abilityname
 
-	-- If it the ability is Homing Missiles, wait a bit and set count to 1	
+	-- If it the ability is Homing Missiles, wait a bit and set count to 1
 	if abilityname == "gyrocopter_homing_missile" then
 		Timers:CreateTimer(1, function()
 			-- Find homing missile modifier
@@ -875,18 +869,17 @@ function GameMode:OnTeamKillCredit(keys)
 	if GetMapName() == "imba_overthrow" then
 		local nKillsRemaining = TEAM_KILLS_TO_WIN - nTeamKills
 		local broadcast_kill_event =
-		{
-			killer_id = keys.killer_userid,
-			team_id = keys.teamnumber,
-			team_kills = nTeamKills,
-			kills_remaining = nKillsRemaining,
-			victory = 0,
-			close_to_victory = 0,
-			very_close_to_victory = 0,
-		}
+			{
+				killer_id = keys.killer_userid,
+				team_id = keys.teamnumber,
+				team_kills = nTeamKills,
+				kills_remaining = nKillsRemaining,
+				victory = 0,
+				close_to_victory = 0,
+				very_close_to_victory = 0,
+			}
 
 		if nKillsRemaining <= 0 then
-			print(m_VictoryMessages[killer_team])
 			GameRules:SetCustomVictoryMessage( m_VictoryMessages[killer_team] )
 			GAME_WINNER_TEAM = killer_team
 			GameRules:SetGameWinner( killer_team )
@@ -904,19 +897,19 @@ function GameMode:OnTeamKillCredit(keys)
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Comeback gold logic
 	-------------------------------------------------------------------------------------------------
---	UpdateComebackBonus(1, killer_team)
+	--	UpdateComebackBonus(1, killer_team)
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Deathstreak logic
-	-------------------------------------------------------------------------------------------------		
+	-------------------------------------------------------------------------------------------------
 	if PlayerResource:IsValidPlayerID(killer_id) and PlayerResource:IsValidPlayerID(victim_id) then
-		PlayerResource:ResetDeathstreak(killer_id)		
+		PlayerResource:ResetDeathstreak(killer_id)
 		PlayerResource:IncrementDeathstreak(victim_id)
 
 		-- Show Deathstreak message
 		local victim_hero_name = PlayerResource:GetPickedHeroName(victim_id)
 		local victim_player_name = PlayerResource:GetPlayerName(victim_id)
-		local victim_death_streak = PlayerResource:GetDeathstreak(victim_id)		
+		local victim_death_streak = PlayerResource:GetDeathstreak(victim_id)
 		local line_duration = 7
 
 		if victim_death_streak then
@@ -959,7 +952,7 @@ function GameMode:OnTeamKillCredit(keys)
 			victim_hero:SetModifierStackCount("modifier_imba_rancor", VENGEFUL_RANCOR_CASTER, current_stacks - math.floor(current_stacks / 2) - 1)
 		end
 	end
-	
+
 	-- Killer stack gain
 	if victim_hero and VENGEFUL_RANCOR and PlayerResource:IsImbaPlayer(killer_id) and killer_team ~= VENGEFUL_RANCOR_TEAM then
 		local eligible_rancor_targets = FindUnitsInRadius(victim_hero:GetTeamNumber(), victim_hero:GetAbsOrigin(), nil, 1500, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_CLOSEST, false)
@@ -1016,6 +1009,35 @@ function GameMode:OnEntityKilled( keys )
 	if keys.entindex_attacker then
 		killer = EntIndexToHScript( keys.entindex_attacker )
 	end
+
+	------------------------------------------------
+	-- Api Event Unit Killed
+	------------------------------------------------
+
+	killedUnitName = tostring(killed_unit:GetUnitName())
+	killedPlayer = "-1"
+
+	if killed_unit:IsRealHero() and killed_unit:GetPlayerID() then
+		killedPlayerId = killed_unit:GetPlayerID()
+		killedPlayer = PlayerResource:GetSteamID(killedPlayerId)
+	end
+
+	killerUnitName = "-1"
+	killerPlayer = "-1"
+	if (killer ~= nil) then
+		killerUnitName = tostring(killer:GetUnitName())
+		if (killer:IsRealHero() and killer:GetPlayerID()) then
+			killerPlayerId = killer:GetPlayerID()
+			killerPlayer = PlayerResource:GetSteamID(killerPlayerId)
+		end
+	end
+
+	ApiEvent(ApiEventCodes.UnitKilled, {
+		tostring(killerUnitName),
+		tostring(killerPlayer),
+		tostring(killedUnitName),
+		tostring(killedPlayer)
+	})
 
 	if killed_unit then
 		-------------------------------------------------------------------------------------------------
@@ -1131,12 +1153,15 @@ function GameMode:OnEntityKilled( keys )
 						killed_unit:AddExperience( 50, 0, false, false )
 					end
 
-					local broadcast_team_points = 
-					{
-						radiant = GetTeamHeroKills(2),
-						dire = GetTeamHeroKills(3),
-						custom_1 = GetTeamHeroKills(6),
-					}
+					local broadcast_team_points =
+						{
+							radiant = GetTeamHeroKills(2),
+							dire = GetTeamHeroKills(3),
+							custom_1 = GetTeamHeroKills(6),
+							custom_2 = GetTeamHeroKills(7),
+							custom_3 = GetTeamHeroKills(8),
+						}
+
 					CustomGameEventManager:Send_ServerToAllClients( "team_points", broadcast_team_points )
 				end
 				--Granting XP to all heroes who assisted
@@ -1165,31 +1190,6 @@ function GameMode:OnEntityKilled( keys )
 
 		-- Check if the dying unit was a player-controlled hero
 		if killed_unit:IsRealHero() and killed_unit:GetPlayerID() then
-			
-			-- API Event for Hero Killed
-			if killer ~= nil then
-				-- get player ids of killer and killed unit
-				local deadPlayerId = killed_unit:GetPlayerID()
-				local deadPlayerSteamId = PlayerResource:GetSteamID(deadPlayerId)
-
-				local killerPlayerId = -1
-				local killerPlayerSteamId = -1
-				if killer:IsRealHero() and killer:GetPlayerID() then 
-					killerPlayerId = killer:GetPlayerID()
-					killerPlayerSteamId = PlayerResource:GetSteamID(killerPlayerId)
-				end
-				
-				local killerUnitName = killer:GetUnitName()
-				local deadUnitName = killed_unit:GetUnitName()
-				
-				ApiEvent(ApiEventCodes.HeroKilled, {
-					tostring(killerUnitName),
-					tostring(killerPlayerSteamId),
-					tostring(deadUnitName),
-					tostring(deadPlayerSteamId)
-				})
-
-			end
 
 			-- Buyback parameters
 			local player_id = killed_unit:GetPlayerID()
@@ -1201,7 +1201,7 @@ function GameMode:OnEntityKilled( keys )
 			if hero_level > 25 then
 				level_based_cost = level_based_cost + BUYBACK_COST_PER_LEVEL_AFTER_25 * (hero_level - 25)
 			end
-			local buyback_cost = BUYBACK_BASE_COST + level_based_cost + game_time * BUYBACK_COST_PER_SECOND		
+			local buyback_cost = BUYBACK_BASE_COST + level_based_cost + game_time * BUYBACK_COST_PER_SECOND
 			local custom_gold_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "bounty_multiplier")["1"])
 			buyback_cost = buyback_cost * (custom_gold_bonus / 100)
 			-- Setup buyback cooldown
@@ -1214,7 +1214,7 @@ function GameMode:OnEntityKilled( keys )
 			-- #7 Talent Vengeful Spirit - Decreased respawn time & cost
 			if killed_unit:HasTalent("special_bonus_imba_vengefulspirit_7") then
 				buyback_cost = buyback_cost * (1 - (killed_unit:FindSpecificTalentValue("special_bonus_imba_vengefulspirit_7", "buyback_cost_pct") * 0.01))
-				buyback_cooldown = buyback_cooldown * (1 - (killed_unit:FindSpecificTalentValue("special_bonus_imba_vengefulspirit_7", "buyback_cooldown_pct") * 0.01))			
+				buyback_cooldown = buyback_cooldown * (1 - (killed_unit:FindSpecificTalentValue("special_bonus_imba_vengefulspirit_7", "buyback_cooldown_pct") * 0.01))
 			end
 
 			-- Update buyback cost
@@ -1236,13 +1236,6 @@ function GameMode:OnEntityKilled( keys )
 					victimUnitName = killed_unit:GetUnitName(),
 					gold = gold_bounty,
 				})
-
-				ApiEvent(ApiEventCodes.BuildingKilled, {
-					tostring(killed_unit:GetUnitName()),
-					tostring(killed_unit:GetTeamNumber()),
-					tostring(killer:GetUnitName()),
-					tostring(PlayerResource:GetSteamID(killer:GetPlayerID()))
-				})
 			else
 				CustomGameEventManager:Send_ServerToAllClients("create_custom_toast", {
 					type = "generic",
@@ -1251,13 +1244,6 @@ function GameMode:OnEntityKilled( keys )
 					teamColor = killer:GetTeam(),
 					team = killer:GetTeam(),
 					gold = gold_bounty,
-				})
-
-				ApiEvent(ApiEventCodes.BuildingKilled, {
-					tostring(killed_unit:GetUnitName()),
-					tostring(killed_unit:GetTeamNumber()),
-					tostring(killer:GetUnitName()),
-					tostring(0)
 				})
 			end
 		elseif killed_unit:IsCourier() then
@@ -1269,14 +1255,6 @@ function GameMode:OnEntityKilled( keys )
 				courier = true,
 			})
 
-			if killer:IsRealHero() then
-				ApiEvent(ApiEventCodes.CourierKilled, {
-					tostring(killed_unit:GetTeamNumber()),
-					tostring(killer:GetUnitName()),
-					tostring(PlayerResource:GetSteamID(killer:GetPlayerID()))
-				})
-			end
-
 		elseif killed_unit:GetUnitName() == "npc_imba_roshan" then
 			CustomGameEventManager:Send_ServerToAllClients("create_custom_toast", {
 				type = "kill",
@@ -1286,14 +1264,6 @@ function GameMode:OnEntityKilled( keys )
 				roshan = true,
 				gold = 150,
 			})
-
-			if killer:IsRealHero() then
-				ApiEvent(ApiEventCodes.RoshanKilled, {
-					tostring(killer:GetUnitName()),
-					tostring(PlayerResource:GetSteamID(killer:GetPlayerID()))
-				})
-			end
-
 		end
 
 		if killer:IsRealHero() then
@@ -1335,7 +1305,7 @@ end
 -- This function is called once when the player fully connects and becomes "Ready" during Loading
 function GameMode:OnConnectFull(keys)
 	GameMode:_OnConnectFull(keys)
-	
+
 	local entIndex = keys.index+1
 	local ply = EntIndexToHScript(entIndex)
 	local player_id = ply:GetPlayerID()
@@ -1346,9 +1316,9 @@ function GameMode:OnConnectFull(keys)
 	-------------------------------------------------------------------------------------------------
 	print("Player has fully connected:", player_id)
 
---	if player.is_dev then
---		CustomGameEventManager:Send_ServerToPlayer(player:GetPlayerOwner(), "show_netgraph", {})
---	end
+	--	if player.is_dev then
+	--		CustomGameEventManager:Send_ServerToPlayer(player:GetPlayerOwner(), "show_netgraph", {})
+	--	end
 
 	CustomGameEventManager:Send_ServerToAllClients("send_news", {})
 
@@ -1373,8 +1343,8 @@ function GameMode:OnItemCombined(keys)
 	local player = PlayerResource:GetPlayer(plyID)
 
 	-- The name of the item purchased
-	local itemName = keys.itemname 
-	
+	local itemName = keys.itemname
+
 	-- The cost of the item purchased
 	local itemcost = keys.itemcost
 end
@@ -1389,42 +1359,42 @@ end
 function GameMode:OnTowerKill(keys)
 	local gold = keys.gold
 	local killerPlayer = PlayerResource:GetPlayer(keys.killer_userid)
-	local tower_team = keys.teamnumber	
+	local tower_team = keys.teamnumber
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Attack of the Ancients tower upgrade logic
 	-------------------------------------------------------------------------------------------------
 
 	-- Always enabled!
---	if TOWER_UPGRADE_MODE then		
-		
-		-- Find all friendly towers on the map
-		local towers = FindUnitsInRadius(tower_team, Vector(0, 0, 0), nil, 25000, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
-		
-		-- Upgrade each tower
-		for _, tower in pairs(towers) do						
-			UpgradeTower(tower)			
-		end		
-		
-		-- Display upgrade message and play ominous sound
-		if tower_team == DOTA_TEAM_GOODGUYS then			
-			Notifications:BottomToAll({text = "#tower_abilities_radiant_upgrade", duration = 7, style = {color = "DodgerBlue"}})
-			EmitGlobalSound("powerup_01")			
-		else			
-			Notifications:BottomToAll({text = "#tower_abilities_dire_upgrade", duration = 7, style = {color = "DodgerBlue"}})
-			EmitGlobalSound("powerup_02")			
-		end
---	end
+	--	if TOWER_UPGRADE_MODE then
+
+	-- Find all friendly towers on the map
+	local towers = FindUnitsInRadius(tower_team, Vector(0, 0, 0), nil, 25000, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
+
+	-- Upgrade each tower
+	for _, tower in pairs(towers) do
+		UpgradeTower(tower)
+	end
+
+	-- Display upgrade message and play ominous sound
+	if tower_team == DOTA_TEAM_GOODGUYS then
+		Notifications:BottomToAll({text = "#tower_abilities_radiant_upgrade", duration = 7, style = {color = "DodgerBlue"}})
+		EmitGlobalSound("powerup_01")
+	else
+		Notifications:BottomToAll({text = "#tower_abilities_dire_upgrade", duration = 7, style = {color = "DodgerBlue"}})
+		EmitGlobalSound("powerup_02")
+	end
+	--	end
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Update comeback gold logic
 	-------------------------------------------------------------------------------------------------
 
---	local team = PlayerResource:GetTeam(keys.killer_userid)
---	UpdateComebackBonus(2, team)
+	--	local team = PlayerResource:GetTeam(keys.killer_userid)
+	--	UpdateComebackBonus(2, team)
 end
 
--- This function is called whenever a player changes there custom team selection during Game Setup 
+-- This function is called whenever a player changes there custom team selection during Game Setup
 function GameMode:OnPlayerSelectedCustomTeam(keys)
 	local player = PlayerResource:GetPlayer(keys.player_id)
 	local success = (keys.success == 1)

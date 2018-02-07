@@ -168,7 +168,7 @@
 {
 	margin: 0px;
 	margin-bottom: 30px;
-	margin-right: 218px;
+	margin-right: 18px;
 }
 
 #inventory
@@ -306,7 +306,7 @@
 {
 	//background-color: black;
 	width: 580px;
-	margin-top: 45px;
+	margin-top: 75px;
 	horizontal-align: center;
 	vertical-align: top;
 }
@@ -347,6 +347,15 @@
 	margin-bottom: 10px;
 }
 
+#abilities {
+	margin-top: 1px;
+}
+
+#Ability0,
+#Ability1 {
+	border-radius: 50%;
+}
+
 .Reborn DOTAHotkey#StatBranchHotkey
 {
 	margin: 0px;
@@ -357,8 +366,7 @@
 
 #StatBranchDrawer
 {
-	margin-left: 32px;
-	margin-bottom: 68px;
+	margin-bottom: 110px;
 }
 
 .FiveAbilities #StatBranchDrawer
