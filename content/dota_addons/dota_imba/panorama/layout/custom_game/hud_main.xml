@@ -80,7 +80,7 @@
 
 								<DOTAAbilityList id="abilities" hittest="false">
 									<DOTAAbilityPanel id="Ability0"/>
-								</Panel>
+								</DOTAAbilityList>
 							</Panel>
 
 							<DOTAHUDDeathPanel id="death_panel_buyback" class="">
