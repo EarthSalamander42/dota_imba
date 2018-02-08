@@ -1282,14 +1282,14 @@
 		"Ability5"					"imba_pudge_light_hook"
 		"Ability6"					"imba_pudge_dismember"
 
-		"Ability10"					"special_bonus_imba_pudge_1" // +10 Power and Swift stacks
+		"Ability10"					"special_bonus_mp_300" // +300 mana
 		"Ability11"					"special_bonus_imba_pudge_4" // +10 Flesh Heap magic resist stack
 		"Ability12"					"special_bonus_imba_pudge_2" // +300 Hook Speed
-		"Ability13"					"special_bonus_imba_pudge_3" // +100 Hook Width
+		"Ability13"					"special_bonus_armor_10" // +10 armor
 		"Ability14"					"special_bonus_imba_pudge_8" // Dismember last 2 more seconds
 		"Ability15"					"special_bonus_imba_pudge_6" // Increase Rot Damage
-		"Ability16"					"special_bonus_imba_pudge_7" // Meat Hook applies Rupture
-		"Ability17"					"special_bonus_imba_pudge_5" // nothing yet
+		"Ability16"					"special_bonus_imba_pudge_7" // move freely after using hook (won't root yourself anymore)
+		"Ability17"					"special_bonus_imba_pudge_5" // +1000 Hook Distance
 	}
 
 	//=================================================================================================================
