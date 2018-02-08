@@ -201,7 +201,6 @@
 
 		//Picking Screen
 		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
-		"IsDisabled"				"3"
 
 		"Ability1"					"beastmaster_wild_axes"
 		"Ability2"					"beastmaster_call_of_the_wild"

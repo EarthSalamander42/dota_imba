@@ -61,7 +61,6 @@ local speed = self:GetSpecialValueFor("speed")
 	ProjectileManager:CreateLinearProjectile(projectile)
 
 	if self:GetCaster():HasTalent("special_bonus_imba_dragon_knight_5") then
-		print("Purge hero!")
 		self:GetCaster():Purge(false, true, false, true, true)
 	end
 end 
@@ -691,7 +690,6 @@ if IsServer() then
 
 		if self:GetParent():HasScepter() then
 			if self:GetParent():PassivesDisabled() then
-				print("Passive Disabled!")
 				self:GetParent():RemoveModifierByName("modifier_dragon_knight_dragon_form")
 				self:GetParent():RemoveModifierByName("modifier_dragon_knight_corrosive_breath")
 				self:GetParent():RemoveModifierByName("modifier_dragon_knight_splash_attack")

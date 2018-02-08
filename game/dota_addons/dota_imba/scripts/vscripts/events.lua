@@ -747,6 +747,13 @@ function GameMode:OnPlayerLevelUp(keys)
 		tostring(PlayerResource:GetSteamID(player:GetPlayerID()))
 	})
 
+	if hero:GetUnitName() == "npc_dota_hero_invoker" then
+		if hero_level == 6 or hero_level == 12 or hero_level == 18 then
+			local ab = hero:FindAbilityByName("invoker_invoke")
+			ab:SetLevel(ab:GetLevel() +1)
+		end
+	end
+
 	if hero_level >= 26 then
 		if not hero:HasModifier("modifier_imba_war_veteran_"..hero:GetPrimaryAttribute()) then
 			hero:AddNewModifier(hero, nil, "modifier_imba_war_veteran_"..hero:GetPrimaryAttribute(), {})
@@ -1056,6 +1063,15 @@ function GameMode:OnEntityKilled( keys )
 		if killed_unit:HasModifier("modifier_imba_reincarnation") then
 			local wk_mod = killed_unit:FindModifierByName("modifier_imba_reincarnation")
 			reincarnation_death = (wk_mod.can_die == false)
+		end
+
+		if killed_unit:HasModifier("modifier_special_bonus_reincarnation") then
+			if not killed_unit.undying_respawn_timer or killed_unit.undying_respawn_timer == 0 then
+				print(killed_unit:FindModifierByName("modifier_special_bonus_reincarnation"):GetDuration())
+				killed_unit:SetTimeUntilRespawn(5)
+				killed_unit.undying_respawn_timer = 200
+				return
+			end
 		end
 
 		if killed_unit:GetUnitName() == "npc_dota_hero_meepo" then
