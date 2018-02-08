@@ -1017,36 +1017,41 @@ function GameMode:OnEntityKilled( keys )
 		killer = EntIndexToHScript( keys.entindex_attacker )
 	end
 
-	------------------------------------------------
-	-- Api Event Unit Killed
-	------------------------------------------------
-
-	killedUnitName = tostring(killed_unit:GetUnitName())
-	killedPlayer = "-1"
-
-	if killed_unit:IsRealHero() and killed_unit:GetPlayerID() then
-		killedPlayerId = killed_unit:GetPlayerID()
-		killedPlayer = PlayerResource:GetSteamID(killedPlayerId)
-	end
-
-	killerUnitName = "-1"
-	killerPlayer = "-1"
-	if (killer ~= nil) then
-		killerUnitName = tostring(killer:GetUnitName())
-		if (killer:IsRealHero() and killer:GetPlayerID()) then
-			killerPlayerId = killer:GetPlayerID()
-			killerPlayer = PlayerResource:GetSteamID(killerPlayerId)
-		end
-	end
-
-	ApiEvent(ApiEventCodes.UnitKilled, {
-		tostring(killerUnitName),
-		tostring(killerPlayer),
-		tostring(killedUnitName),
-		tostring(killedPlayer)
-	})
-
 	if killed_unit then
+
+		------------------------------------------------
+		-- Api Event Unit Killed
+		------------------------------------------------
+
+		killedUnitName = tostring(killed_unit:GetUnitName())
+		if (killedUnitName ~= "") then
+
+			killedPlayer = "-1"
+
+			if killed_unit:IsRealHero() and killed_unit:GetPlayerID() then
+				killedPlayerId = killed_unit:GetPlayerID()
+				killedPlayer = PlayerResource:GetSteamID(killedPlayerId)
+			end
+
+			killerUnitName = "-1"
+			killerPlayer = "-1"
+			if (killer ~= nil) then
+				killerUnitName = tostring(killer:GetUnitName())
+				if (killer:IsRealHero() and killer:GetPlayerID()) then
+					killerPlayerId = killer:GetPlayerID()
+					killerPlayer = PlayerResource:GetSteamID(killerPlayerId)
+				end
+			end
+
+			ApiEvent(ApiEventCodes.UnitKilled, {
+				tostring(killerUnitName),
+				tostring(killerPlayer),
+				tostring(killedUnitName),
+				tostring(killedPlayer)
+			})
+
+		end
+
 		-------------------------------------------------------------------------------------------------
 		-- IMBA: Ancient destruction detection
 		-------------------------------------------------------------------------------------------------
