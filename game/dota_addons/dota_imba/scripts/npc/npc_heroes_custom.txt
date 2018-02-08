@@ -1270,7 +1270,7 @@
 		"ModelScale"				"1.0"
 		"MovementTurnRate"			"1.0"
 		"AttackRange"				"200"
-
+		
 		//Picking Screen
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
@@ -2247,7 +2247,7 @@
 
 		// Armor
 		//-------------------------------------------------------------------------------------------------------------
-		"ArmorPhysical"				"3"									// Physical protection.
+		"ArmorPhysical"				"5"									// Physical protection.
 		"MagicalResistance"			"25"								// Magical protection (percentage).
 
 		// Attack
@@ -2266,12 +2266,12 @@
 		// Attributes
 		//-------------------------------------------------------------------------------------------------------------
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"	// Primary Attribute
-		"AttributeBaseStrength"		"16"
-		"AttributeStrengthGain"		"2.200000"
+		"AttributeBaseStrength"		"20"
+		"AttributeStrengthGain"		"3.000000"
 		"AttributeBaseAgility"		"14"
 		"AttributeAgilityGain"		"1.900000"
-		"AttributeBaseIntelligence"	"16"
-		"AttributeIntelligenceGain"	"4.000000"
+		"AttributeBaseIntelligence"	"20"
+		"AttributeIntelligenceGain"	"5.000000"
 
 		// Bounds
 		//-------------------------------------------------------------------------------------------------------------
@@ -2287,7 +2287,7 @@
 
 		// Status
 		//-------------------------------------------------------------------------------------------------------------
-		"StatusHealth"				"200"									// Base health.
+		"StatusHealth"				"300"									// Base health.
 		"StatusHealthRegen"			"3.0"									// Health regeneration rate.
 		"StatusMana"				"50"									// Base mana.
 		"StatusManaRegen"			"1.0"									// Mana regeneration rate.

@@ -12,7 +12,7 @@
 -- See the License for the specific language governing permissions and
 -- limitations under the License.
 --
--- Editors: 
+-- Editors:
 --     Firetoad
 --     Moujiozi
 --     EarthSalamander #42
@@ -56,8 +56,8 @@ CUSTOM_BUYBACK_COOLDOWN_ENABLED = true		-- Should we use a custom buyback time?
 BUYBACK_ENABLED = true						-- Should we allow people to buyback when they die?
 
 DISABLE_FOG_OF_WAR_ENTIRELY = false			-- Should we disable fog of war entirely for both teams?
-USE_UNSEEN_FOG_OF_WAR = false				-- Should we make unseen and fogged areas of the map completely black until uncovered by each team? 
-											-- Note: DISABLE_FOG_OF_WAR_ENTIRELY must be false for USE_UNSEEN_FOG_OF_WAR to work
+USE_UNSEEN_FOG_OF_WAR = false				-- Should we make unseen and fogged areas of the map completely black until uncovered by each team?
+-- Note: DISABLE_FOG_OF_WAR_ENTIRELY must be false for USE_UNSEEN_FOG_OF_WAR to work
 USE_STANDARD_DOTA_BOT_THINKING = false		-- Should we have bots act like they would in Dota? (This requires 3 lanes, normal items, etc)
 USE_NONSTANDARD_HERO_GOLD_BOUNTY = false	-- Should heroes follow their own gold bounty rules instead of the default DOTA ones?
 USE_NONSTANDARD_HERO_XP_BOUNTY = true		-- Should heroes follow their own XP bounty rules instead of the default DOTA ones?
@@ -120,32 +120,60 @@ COMEBACK_BOUNTY_BONUS[DOTA_TEAM_BADGUYS] = 0
 
 COMEBACK_EXP_BONUS = 100
 
-HERO_RESPAWN_TIME_PER_LEVEL = {}											-- Hero respawn time per level
-HERO_RESPAWN_TIME_PER_LEVEL[1] = 3
-HERO_RESPAWN_TIME_PER_LEVEL[2] = 4
-HERO_RESPAWN_TIME_PER_LEVEL[3] = 5
-HERO_RESPAWN_TIME_PER_LEVEL[4] = 6
-HERO_RESPAWN_TIME_PER_LEVEL[5] = 7
-HERO_RESPAWN_TIME_PER_LEVEL[6] = 8
-HERO_RESPAWN_TIME_PER_LEVEL[7] = 9
-HERO_RESPAWN_TIME_PER_LEVEL[8] = 10
-HERO_RESPAWN_TIME_PER_LEVEL[9] = 11
-HERO_RESPAWN_TIME_PER_LEVEL[10] = 13
-HERO_RESPAWN_TIME_PER_LEVEL[11] = 15
-HERO_RESPAWN_TIME_PER_LEVEL[12] = 17
-HERO_RESPAWN_TIME_PER_LEVEL[13] = 19
-HERO_RESPAWN_TIME_PER_LEVEL[14] = 21
+-- Hero respawn time per leve
+-- Formula: (42/srqt(50)) * (-1*(50-sqrt(lvl))+50)
+
+HERO_RESPAWN_TIME_PER_LEVEL = {}
+HERO_RESPAWN_TIME_PER_LEVEL[1] = 6
+HERO_RESPAWN_TIME_PER_LEVEL[2] = 8
+HERO_RESPAWN_TIME_PER_LEVEL[3] = 10
+HERO_RESPAWN_TIME_PER_LEVEL[4] = 12
+HERO_RESPAWN_TIME_PER_LEVEL[5] = 13
+HERO_RESPAWN_TIME_PER_LEVEL[6] = 15
+HERO_RESPAWN_TIME_PER_LEVEL[7] = 16
+HERO_RESPAWN_TIME_PER_LEVEL[8] = 17
+HERO_RESPAWN_TIME_PER_LEVEL[9] = 18
+HERO_RESPAWN_TIME_PER_LEVEL[10] = 19
+HERO_RESPAWN_TIME_PER_LEVEL[11] = 20
+HERO_RESPAWN_TIME_PER_LEVEL[12] = 21
+HERO_RESPAWN_TIME_PER_LEVEL[13] = 21
+HERO_RESPAWN_TIME_PER_LEVEL[14] = 22
 HERO_RESPAWN_TIME_PER_LEVEL[15] = 23
-HERO_RESPAWN_TIME_PER_LEVEL[16] = 25
-HERO_RESPAWN_TIME_PER_LEVEL[17] = 27
-HERO_RESPAWN_TIME_PER_LEVEL[18] = 29
-HERO_RESPAWN_TIME_PER_LEVEL[19] = 31
-HERO_RESPAWN_TIME_PER_LEVEL[20] = 33
-HERO_RESPAWN_TIME_PER_LEVEL[21] = 36
-HERO_RESPAWN_TIME_PER_LEVEL[22] = 39
-HERO_RESPAWN_TIME_PER_LEVEL[23] = 42
-HERO_RESPAWN_TIME_PER_LEVEL[24] = 45
-HERO_RESPAWN_TIME_PER_LEVEL[25] = 48
+HERO_RESPAWN_TIME_PER_LEVEL[16] = 24
+HERO_RESPAWN_TIME_PER_LEVEL[17] = 24
+HERO_RESPAWN_TIME_PER_LEVEL[18] = 25
+HERO_RESPAWN_TIME_PER_LEVEL[19] = 26
+HERO_RESPAWN_TIME_PER_LEVEL[20] = 27
+HERO_RESPAWN_TIME_PER_LEVEL[21] = 27
+HERO_RESPAWN_TIME_PER_LEVEL[22] = 28
+HERO_RESPAWN_TIME_PER_LEVEL[23] = 28
+HERO_RESPAWN_TIME_PER_LEVEL[24] = 29
+HERO_RESPAWN_TIME_PER_LEVEL[25] = 30
+HERO_RESPAWN_TIME_PER_LEVEL[26] = 30
+HERO_RESPAWN_TIME_PER_LEVEL[27] = 31
+HERO_RESPAWN_TIME_PER_LEVEL[28] = 31
+HERO_RESPAWN_TIME_PER_LEVEL[29] = 32
+HERO_RESPAWN_TIME_PER_LEVEL[30] = 33
+HERO_RESPAWN_TIME_PER_LEVEL[31] = 33
+HERO_RESPAWN_TIME_PER_LEVEL[32] = 34
+HERO_RESPAWN_TIME_PER_LEVEL[33] = 34
+HERO_RESPAWN_TIME_PER_LEVEL[34] = 35
+HERO_RESPAWN_TIME_PER_LEVEL[35] = 35
+HERO_RESPAWN_TIME_PER_LEVEL[36] = 36
+HERO_RESPAWN_TIME_PER_LEVEL[37] = 36
+HERO_RESPAWN_TIME_PER_LEVEL[38] = 37
+HERO_RESPAWN_TIME_PER_LEVEL[39] = 37
+HERO_RESPAWN_TIME_PER_LEVEL[40] = 38
+HERO_RESPAWN_TIME_PER_LEVEL[41] = 38
+HERO_RESPAWN_TIME_PER_LEVEL[42] = 38
+HERO_RESPAWN_TIME_PER_LEVEL[43] = 39
+HERO_RESPAWN_TIME_PER_LEVEL[44] = 39
+HERO_RESPAWN_TIME_PER_LEVEL[45] = 40
+HERO_RESPAWN_TIME_PER_LEVEL[46] = 40
+HERO_RESPAWN_TIME_PER_LEVEL[47] = 41
+HERO_RESPAWN_TIME_PER_LEVEL[48] = 41
+HERO_RESPAWN_TIME_PER_LEVEL[49] = 42
+HERO_RESPAWN_TIME_PER_LEVEL[50] = 42
 
 -------------------------------------------------------------------------------------------------
 -- IMBA: map-based settings
@@ -250,24 +278,24 @@ elseif GetMapName() == "imba_overthrow" then
 	m_VictoryMessages[DOTA_TEAM_CUSTOM_1] = "#VictoryMessage_Custom1"
 	m_VictoryMessages[DOTA_TEAM_CUSTOM_2] = "#VictoryMessage_Custom2"
 	m_VictoryMessages[DOTA_TEAM_CUSTOM_3] = "#VictoryMessage_Custom3"
---	m_VictoryMessages[DOTA_TEAM_CUSTOM_4] = "#VictoryMessage_Custom4"
---	m_VictoryMessages[DOTA_TEAM_CUSTOM_5] = "#VictoryMessage_Custom5"
---	m_VictoryMessages[DOTA_TEAM_CUSTOM_6] = "#VictoryMessage_Custom6"
---	m_VictoryMessages[DOTA_TEAM_CUSTOM_7] = "#VictoryMessage_Custom7"
---	m_VictoryMessages[DOTA_TEAM_CUSTOM_8] = "#VictoryMessage_Custom8"
+	--	m_VictoryMessages[DOTA_TEAM_CUSTOM_4] = "#VictoryMessage_Custom4"
+	--	m_VictoryMessages[DOTA_TEAM_CUSTOM_5] = "#VictoryMessage_Custom5"
+	--	m_VictoryMessages[DOTA_TEAM_CUSTOM_6] = "#VictoryMessage_Custom6"
+	--	m_VictoryMessages[DOTA_TEAM_CUSTOM_7] = "#VictoryMessage_Custom7"
+	--	m_VictoryMessages[DOTA_TEAM_CUSTOM_8] = "#VictoryMessage_Custom8"
 
 	m_GatheredShuffledTeams = {}
 
---	if PlayerResource:GetPlayerCount() > 7 then
-		TEAM_KILLS_TO_WIN = 25
-		nCOUNTDOWNTIMER = 601
---	elseif PlayerResource:GetPlayerCount() > 4 and PlayerResource:GetPlayerCount() <= 7 then
---		TEAM_KILLS_TO_WIN = 20
---		nCOUNTDOWNTIMER = 721
---	else
---		TEAM_KILLS_TO_WIN = 15
---		nCOUNTDOWNTIMER = 601
---	end
+	--	if PlayerResource:GetPlayerCount() > 7 then
+	TEAM_KILLS_TO_WIN = 25
+	nCOUNTDOWNTIMER = 601
+	--	elseif PlayerResource:GetPlayerCount() > 4 and PlayerResource:GetPlayerCount() <= 7 then
+	--		TEAM_KILLS_TO_WIN = 20
+	--		nCOUNTDOWNTIMER = 721
+	--	else
+	--		TEAM_KILLS_TO_WIN = 15
+	--		nCOUNTDOWNTIMER = 601
+	--	end
 	CustomNetTables:SetTableValue( "game_state", "victory_condition", { kills_to_win = TEAM_KILLS_TO_WIN } );
 end
 
@@ -350,7 +378,7 @@ TOWER_UPGRADE_TREE["midlane"]["tier_41"] = {}
 TOWER_UPGRADE_TREE["midlane"]["tier_42"] = {}
 TOWER_UPGRADE_TREE["hardlane"]["tier_1"] = {}
 TOWER_UPGRADE_TREE["hardlane"]["tier_2"] = {}
-TOWER_UPGRADE_TREE["hardlane"]["tier_3"] = {}																		
+TOWER_UPGRADE_TREE["hardlane"]["tier_3"] = {}
 
 MAP_INITIAL_GOLD = 0														-- Gold granted to players at the start of the game on a normal pick
 USE_CUSTOM_HERO_LEVELS = true												-- Should we allow heroes to have custom levels?
@@ -363,7 +391,7 @@ CustomNetTables:SetTableValue("game_options", "frantic_mode", {IMBA_FRANTIC_MODE
 CustomNetTables:SetTableValue("game_options", "gold_tick", {GOLD_TICK_TIME[GetMapName()]})
 CustomNetTables:SetTableValue("game_options", "max_level", {MAX_LEVEL[GetMapName()]})
 
--- XP per level table (only active if custom hero levels are enabled) 
+-- XP per level table (only active if custom hero levels are enabled)
 XP_PER_LEVEL_TABLE = {}
 
 -- Vanilla
