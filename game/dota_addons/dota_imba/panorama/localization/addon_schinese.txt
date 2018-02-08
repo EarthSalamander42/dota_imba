@@ -152,6 +152,7 @@
 	"ChatLinePass"									"<b><font color='{s:color}'>{s:name}</font></b>: <font color='gold'>{s:message}</font>"
 	"ChatRandomed"									"<b><font color='{s:color}'>{s:name}</font></b> 随机选择了 <font color='gold'>{s:hero}</font>"
 
+	"imba_confirm_pick_button"                      "选择此英雄"
 	"imba_hero_name_filler"                         "选中此英雄"
 	"imba_strength_hero_pick_list_title"            "力量"
 	"imba_agility_hero_pick_list_title"             "敏捷"
@@ -283,5 +284,7 @@
 	"overthrow_game_info_tip01"						"第一名的队伍英雄头上有王冠标志，击杀他们会获得额外的金币"
 	"overthrow_game_info_tip02"						"物品可以被共享"
 	"overthrow_game_info_tip03"						"利用其他队伍消灭敌人"
-	"overthrow_game_info_tip04"						"队伍的制胜点数越低，从装备宝箱中获得的装备越好"	
+	"overthrow_game_info_tip04"						"队伍的制胜点数越低，从装备宝箱中获得的装备越好"
+
+	
 }
