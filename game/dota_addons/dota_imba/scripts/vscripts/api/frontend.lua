@@ -289,7 +289,11 @@ function ImbaApiFrontendDebug(t)
 end
 
 function ImbaApiFrontendPrint(t)
-	print("[api-frontend] " .. t)
+	if tostring(PlayerResource:GetSteamID(0)) == "76561198015161808" then
+		return
+	else
+		print("[api-frontend] " .. t)
+	end
 end
 
 function trim1(s)

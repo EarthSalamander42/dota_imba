@@ -36542,55 +36542,47 @@
 				"var_type"				"FIELD_INTEGER"
 				"move_slow"				"-50"
 			}
-
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"dagger_speed"			"1400"
 			}
-
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"slow_duration"			"1 2 3 4"
 			}
-
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"silence_duration"		"0.1"
 			}
-
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_damage"			"65"
+				"LinkedSpecialBonus"	"special_bonus_imba_phantom_assassin_1"
 			}
-
 			"06"
 			{
 				"var_type"				    "FIELD_INTEGER"
 				"damage_reduction"			"75 60 45 30"
 			}
-
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"dagger_vision"			"200 350 500 650"
 			}
-
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"scepter_dagger_count"	"3"
 			}
-
 			"09"
 			{
 				"var_type"				    "FIELD_INTEGER"
 				"scepter_knives_interval"	"0.3"
 			}
-
 			"10"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -36646,42 +36638,39 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"bonus_attack_speed"		"130"
+				"LinkedSpecialBonus"		"special_bonus_imba_phantom_assassin_2"
 			}
-
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"buff_duration"				"4"
 			}
-
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"tooltip_range"				"1000"
 			}
-
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"projectile_speed"			"5000"
 			}
-
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"projectile_width"			"125"
 			}
-
 			"06"
 			{
 				"var_type"					    "FIELD_INTEGER"
 				"bonus_coup_de_grace"			"1 4 7 10"
+				"LinkedSpecialBonus"			"special_bonus_imba_phantom_assassin_4"
 			}
-
 			"07"
 			{
 				"var_type"					    "FIELD_INTEGER"
 				"attacks"						"4"
+				"LinkedSpecialBonus"			"special_bonus_imba_phantom_assassin_6"
 			}
 		}
 	}
@@ -36769,6 +36758,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"crit_bonus"				"230 340 450"
+				"LinkedSpecialBonus"		"special_bonus_imba_phantom_assassin_5"
 			}
 
 			"02"

@@ -55,7 +55,9 @@
 	"DOTA_Tooltip_ability_item_imba_rune_regeneration"		"Boundless Energy"
 	"DOTA_Tooltip_ability_item_imba_rune_frost"				"Greevil Soul"
 
-	"lag_issues"									"Dota 2 IMBA website"
+	"lag_issues"									"Dota 2 IMBA (site web)"
+	"oaa_news_title"								"OAA Anniversary Tournament - 10000$ Prize Pool"
+	"oaa_news_text"									"Du 3 au 4 Mars, Open Angel Arena vont host leur second tournoi avec un Prize Pool de $10 000. Cliquez sur le lien ci-dessous pour en savoir plus sur le tournoi!"
 
 	//Picking Screen
 	"loading_pre_game"				"Chargement du menu, veuillez patientez..."
@@ -83,7 +85,6 @@
 	"imba_hero"						"Imba"
 	"vanilla_hero"					"Lazy"
 	"close_picking_screen"			"Fermer Menu de Sélection"
-
 
 	//Leaderboard
 	"leaderboard"					"Classement"

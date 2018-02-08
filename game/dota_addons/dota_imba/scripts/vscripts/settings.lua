@@ -211,18 +211,15 @@ elseif GetMapName() == "imba_overthrow" then
 	PRE_GAME_TIME = 20.0 + HERO_SELECTION_TIME
 	UNIVERSAL_SHOP_MODE = true
 	FIXED_RESPAWN_TIME = 10
-	MAX_NUMBER_OF_TEAMS = 3
+	MAX_NUMBER_OF_TEAMS = 2
 	IMBA_PLAYERS_ON_GAME = 10
 	USE_CUSTOM_TEAM_COLORS = true						-- Should we use custom team colors?
 	USE_CUSTOM_TEAM_COLORS_FOR_PLAYERS = true			-- Should we use custom team colors to color the players/minimap?
-	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_GOODGUYS] = 5
-	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_BADGUYS]  = 5
-	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_CUSTOM_1]  = 5
---	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_CUSTOM_2]  = 4
 	TEAM_COLORS[DOTA_TEAM_GOODGUYS] = { 61, 210, 150 }	-- Teal
 	TEAM_COLORS[DOTA_TEAM_BADGUYS]  = { 243, 201, 9 }	-- Yellow
 	TEAM_COLORS[DOTA_TEAM_CUSTOM_1]  = { 197, 77, 168 }	-- Pink
---	TEAM_COLORS[DOTA_TEAM_CUSTOM_2]  = { 255, 108, 0 }	-- Orange
+	TEAM_COLORS[DOTA_TEAM_CUSTOM_2]  = { 255, 108, 0 }	-- Orange
+	TEAM_COLORS[DOTA_TEAM_CUSTOM_3] = { 52, 85, 255 }	-- Blue
 
 	m_GoldRadiusMin = 250
 	m_GoldRadiusMax = 550
@@ -262,8 +259,8 @@ elseif GetMapName() == "imba_overthrow" then
 	m_GatheredShuffledTeams = {}
 
 --	if PlayerResource:GetPlayerCount() > 7 then
-		TEAM_KILLS_TO_WIN = 90
-		nCOUNTDOWNTIMER = 961
+		TEAM_KILLS_TO_WIN = 25
+		nCOUNTDOWNTIMER = 601
 --	elseif PlayerResource:GetPlayerCount() > 4 and PlayerResource:GetPlayerCount() <= 7 then
 --		TEAM_KILLS_TO_WIN = 20
 --		nCOUNTDOWNTIMER = 721
