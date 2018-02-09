@@ -142,7 +142,7 @@ function SetGameOptions() {
 	});
 
 	if (CustomNetTables.GetTableValue("game_options", "game_state").state == 2) {
-		$.Schedule(0.5, SetGameOptions)
+		$.Schedule(1.0, SetGameOptions)
 	} else {
 		return;
 	}	

@@ -201,12 +201,6 @@ function OnSetGameMode( eventSourceIndex, args )
 		CustomNetTables:SetTableValue("game_options", "all_random_same_hero", {true})
 	end
 
-	-- Tower upgrade setup
---	if tonumber(mode_info.tower_upgrades) == 1 then
---		TOWER_UPGRADE_MODE = true
---		CustomNetTables:SetTableValue("game_options", "tower_upgrades", {true})
---	end
-
 	-- Frantic mode setup
 --	if tonumber(mode_info.frantic_mode) == 1 then
 --		IMBA_FRANTIC_MODE_ON = true

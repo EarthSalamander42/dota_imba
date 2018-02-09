@@ -5714,7 +5714,9 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"charge_restore_time"	"30 28 26"
+				"charge_restore_time"	"30"
+				"LinkedSpecialBonus"	"special_bonus_unique_ember_spirit_5"
+				"LinkedSpecialBonusOperation"	"SPECIAL_BONUS_SUBTRACT"
 			}
 			"04"
 			{
@@ -5757,6 +5759,8 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"charge_restore_time"	"30"
+				"LinkedSpecialBonus"	"special_bonus_unique_ember_spirit_5"
+				"LinkedSpecialBonusOperation"	"SPECIAL_BONUS_SUBTRACT"
 			}
 			"04"
 			{

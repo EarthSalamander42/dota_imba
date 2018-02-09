@@ -237,9 +237,10 @@
 	height: fit-children;
 	margin-top: 5%;
 	margin-left: 2%;
-	background-color: #000000da;
+	background-color: #0008;
 	flow-children: down;
 	visibility: collapse;
+
 }
 
 #imba-normal-news, #imba-ow-news {
@@ -321,13 +322,13 @@
 	text-shadow: 0 0 2px #000;
 }
 
-#imba-normal-news-link, #imba-ow-news-link {
+#imba-normal-news-link, #imba-ow-news-link, #imba-normal-news-link2, #imba-ow-news-link2 {
 	color: #fff;
 	font-size: 20px;
 	text-shadow: 0 0 2px #000;
 }
 
-#imba-normal-news-link:hover, #imba-ow-news-link:hover {
+#imba-normal-news-link:hover, #imba-ow-news-link:hover,#imba-normal-news-link2:hover, #imba-ow-news-link2:hover {
 	text-decoration: underline;
 }
 
@@ -347,7 +348,7 @@
 #imba-social {
 	margin-left: 2%;
 	vertical-align: bottom;
-	margin-bottom: 80px;
+	margin-bottom: 120px;
 	padding: 10px;
 }
 
@@ -382,39 +383,41 @@
 	width: 178px; 
 }
 
-#imba-social-button-discord-en {
+.imba-social-button {
+	margin-left: 20px;
 	background-size: contain;
+	saturation: 0.9;
+}
+
+.imba-social-button:hover {
+	saturation: 1.0;
+}
+
+#imba-social-button-discord-en {
 	background-image: url("file://{images}/custom_game/loading_screen/community_discord_header.png"); 
 }
-#imba-social-button-discord-en:active { margin-left: 1px; }
 
 #imba-social-button-discord-ru {
-	margin-left: 20px;
-	background-size: contain;
 	background-image: url("file://{images}/custom_game/loading_screen/community_discord_header_ru.png"); 
 }
-#imba-social-button-discord-ru:active { margin-left: 21px; }
 
 #imba-social-button-tencent {
-	margin-left: 20px;
-	background-size: contain;
 	background-image: url("file://{images}/custom_game/loading_screen/community_chinese_blog.png"); 
 }
-#imba-social-button-tencent:active { margin-left: 21px; }
 
 #imba-social-button-reddit {
-	margin-left: 20px;
-	background-size: contain;
 	background-image: url("file://{images}/custom_game/loading_screen/community_reddit_header.png");
 }
-#imba-social-button-reddit:active { margin-left: 21px; }
 
 #imba-social-button-patreon {
-	margin-left: 20px;
 	background-image: url("file://{images}/custom_game/loading_screen/patreon.png");
 	background-size: 200px 65px;
 }
-#imba-social-button-patreon:active { margin-left: 21px; }
+
+#imba-social-button-facebook {
+	background-image: url("file://{images}/custom_game/loading_screen/facebook_banner.jpg");
+	background-size: 200px 65px;
+}
 
 #GameOptionsPanel
 {
