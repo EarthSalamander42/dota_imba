@@ -322,13 +322,13 @@
 	text-shadow: 0 0 2px #000;
 }
 
-#imba-normal-news-link, #imba-ow-news-link {
+#imba-normal-news-link, #imba-ow-news-link, #imba-normal-news-link2, #imba-ow-news-link2 {
 	color: #fff;
 	font-size: 20px;
 	text-shadow: 0 0 2px #000;
 }
 
-#imba-normal-news-link:hover, #imba-ow-news-link:hover {
+#imba-normal-news-link:hover, #imba-ow-news-link:hover,#imba-normal-news-link2:hover, #imba-ow-news-link2:hover {
 	text-decoration: underline;
 }
 

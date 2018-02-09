@@ -1,10 +1,12 @@
 <root>
 	<styles>
-		<include src="file://{resources}/styles/custom_game/multiteam_end_screen.css" />
+		<include
+			src="file://{resources}/styles/custom_game/multiteam_end_screen.css" />
 	</styles>
 
 	<scripts>
-		<include src="file://{resources}/scripts/custom_game/multiteam_end_screen.js" />
+		<include
+			src="file://{resources}/scripts/custom_game/multiteam_end_screen.js" />
 	</scripts>
 
 	<Panel class="es-root">
@@ -16,7 +18,8 @@
 				<Panel class="es-team" id="es-radiant">
 					<Panel class="es-team-title">
 						<Label class="es-team-name" text="Radiant" />
-						<Label id="es-team-score-radiant" class="es-team-score" text="N/A" />
+						<Label id="es-team-score-radiant" class="es-team-score"
+							text="N/A" />
 					</Panel>
 					<Panel class="es-legend">
 						<Label class="es-legend-kdalevel" text="LVL" />
@@ -52,7 +55,8 @@
 				<Panel class="es-team" id="es-custom1">
 					<Panel class="es-team-title">
 						<Label class="es-team-name" text="#DOTA_Custom1" />
-						<Label id="es-team-score-custom1" class="es-team-score" text="N/A" />
+						<Label id="es-team-score-custom1" class="es-team-score"
+							text="N/A" />
 					</Panel>
 					<Panel class="es-legend">
 						<Label class="es-legend-kdalevel" text="LVL" />
@@ -69,7 +73,8 @@
 				<Panel class="es-team" id="es-custom2">
 					<Panel class="es-team-title">
 						<Label class="es-team-name" text="#DOTA_Custom2" />
-						<Label id="es-team-score-custom2" class="es-team-score" text="N/A" />
+						<Label id="es-team-score-custom2" class="es-team-score"
+							text="N/A" />
 					</Panel>
 					<Panel class="es-legend">
 						<Label class="es-legend-kdalevel" text="LVL" />
@@ -88,7 +93,8 @@
 				<Panel class="es-team" id="es-custom3">
 					<Panel class="es-team-title">
 						<Label class="es-team-name" text="#DOTA_Custom3" />
-						<Label id="es-team-score-custom3" class="es-team-score" text="N/A" />
+						<Label id="es-team-score-custom3" class="es-team-score"
+							text="N/A" />
 					</Panel>
 					<Panel class="es-legend">
 						<Label class="es-legend-kdalevel" text="LVL" />
@@ -104,13 +110,15 @@
 			</Panel>
 		</Panel>
 		<Panel id="es-buttons">
-			<Button id="es-buttons-stats">
-				<Label text="See Detailed statistics about this Game" />
+			<!-- <Button id="es-buttons-stats"> <Label text="See Detailed statistics 
+				about this Game" /> </Button> -->
+			<Button id="es-buttons-survey" onactivate="DOTADisplayURL('https://goo.gl/2Z4DBv');">
+				<Label text="Participate in our survey and get an XP Bounty!" />
 			</Button>
 			<Button id="es-buttons-website" onactivate="DOTADisplayURL('http://www.dota2imba.org/');">
 				<Label text="Go to our Official Website" />
 			</Button>
-			<Button id="es-buttons-close"  onactivate="Game.FinishGame();">
+			<Button id="es-buttons-close" onactivate="Game.FinishGame();">
 				<Label text="#CustomEndScreenClose" />
 			</Button>
 		</Panel>
