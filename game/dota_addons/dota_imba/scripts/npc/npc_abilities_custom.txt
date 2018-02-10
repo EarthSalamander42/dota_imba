@@ -36545,7 +36545,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"dagger_speed"			"1400"
+				"dagger_speed"			"800"
 			}
 			"03"
 			{
@@ -36555,7 +36555,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"silence_duration"		"0.1"
+				"silence_duration"		"0.01"
 			}
 			"05"
 			{

@@ -2395,7 +2395,7 @@
 	{
 		"AbilityCastPoint"				"0.1"
 
-		"AbilityCooldown"				"3.0 2.5 2.0 1.5"
+		"AbilityCooldown"				"3.5 2.125 1.875 1.5"
 
 		"AbilityManaCost"				"20"
 
@@ -2412,7 +2412,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"375 400 425 450"
+				"radius"				"400 450 500 600"
 			}
 			"03"
 			{
@@ -2453,7 +2453,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_per_second"		"25 35 45 55"
+				"damage_per_second"		"25 40 65 80"
 			}
 			"02"
 			{
@@ -2465,7 +2465,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"damage_total_tooltip"	"175 245 315 385"
+				"damage_total_tooltip"	"175 280 455 560"
 			}
 			"04"
 			{
@@ -2475,7 +2475,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"collision_radius"		"100"
+				"collision_radius"		"150"
 			}
 			"06"
 			{
@@ -2525,7 +2525,7 @@
 	//=================================================================================================================
 	"batrider_firefly"
 	{
-		"AbilityCooldown"				"40"
+		"AbilityCooldown"				"35"
 
 		"AbilityManaCost"				"125"
 
@@ -2541,7 +2541,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"200"
+				"radius"				"300"
 			}
 			"03"
 			{
@@ -2557,7 +2557,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"tree_radius"			"100"
+				"tree_radius"			"300"
 			}
 		}
 	}
@@ -2599,7 +2599,7 @@
 	{
 		"AbilityCastRange"				"300 375 450"
 		
-		"AbilityCooldown"				"90 60 50"
+		"AbilityCooldown"				"80 50 20"
 
 		"MaxLevel"						"3"
 
