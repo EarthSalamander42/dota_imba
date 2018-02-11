@@ -283,8 +283,8 @@ function EndScoreboard() {
 		$("#es-team-score-custom3").text = new String(scores.custom3);
 
 		// Configure Stats Button
-		$("#es-buttons-stats").SetPanelEvent("onactivate", function () {
-			$.DispatchEvent("DOTADisplayURL", "http://www.dota2imba.org/stats/game/" + serverInfo.gameid);
-		});
+//		$("#es-buttons-stats").SetPanelEvent("onactivate", function () {
+//			$.DispatchEvent("DOTADisplayURL", "http://www.dota2imba.org/stats/game/" + serverInfo.gameid);
+//		});
 	});
 }

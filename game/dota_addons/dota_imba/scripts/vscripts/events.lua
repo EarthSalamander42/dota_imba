@@ -113,7 +113,7 @@ function GameMode:OnGameRulesStateChange(keys)
 		local max_level = tonumber(CustomNetTables:GetTableValue("game_options", "max_level")["1"])
 		if max_level and max_level > 25 then
 			for i = 26, max_level do
-				XP_PER_LEVEL_TABLE[i] = XP_PER_LEVEL_TABLE[i-1] + 2500
+				XP_PER_LEVEL_TABLE[i] = XP_PER_LEVEL_TABLE[i-1] + 3500
 				GameRules:GetGameModeEntity():SetCustomXPRequiredToReachNextLevel( XP_PER_LEVEL_TABLE )
 			end
 		end
@@ -233,6 +233,8 @@ function GameMode:OnGameRulesStateChange(keys)
 
 			ApiPrint("Done sending Event")
 		end)
+
+		CustomNetTables:SetTableValue("game_options", "game_count", {value = 0})
 	end
 end
 

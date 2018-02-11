@@ -425,6 +425,18 @@ function GameMode:ModifierFilter( keys )
 		end
 
 		-------------------------------------------------------------------------------------------------
+		-- Frantic mode duration adjustment
+		-------------------------------------------------------------------------------------------------
+		if modifier_name == "modifier_imba_doom_bringer_doom" then
+			if IMBA_FRANTIC_MODE_ON then
+				local original_duration = keys.duration
+				local actually_duration = original_duration
+				actually_duration = actually_duration * IMBA_FRANTIC_VALUE
+				keys.duration = actually_duration
+			end
+		end
+
+		-------------------------------------------------------------------------------------------------
 		-- Silencer Arcane Supremacy silence duration reduction
 		-------------------------------------------------------------------------------------------------
 		if modifier_owner:HasModifier("modifier_imba_silencer_arcane_supremacy") then
@@ -1527,6 +1539,17 @@ function GameMode:OnGameInProgress()
 			end
 		end
 	end
+
+	-- Find all towers
+	local towers = Entities:FindAllByClassname("npc_dota_tower")
+
+	for _,tower in pairs(towers) do
+		if string.find(tower:GetUnitName(), "tower1") then
+			tower:SetBaseDamageMin(180)
+			tower:SetBaseDamageMax(200)
+			print(tower:GetName())
+		end
+	end
 end
 
 -- This function initializes the game mode and is called before anyone loads into the game
@@ -2074,6 +2097,17 @@ function GameMode:OnThink()
 		return 1
 	end
 
+	if CustomNetTables:GetTableValue("game_options", "game_count").value == 1 then 
+		if Convars:GetBool("sv_cheats") == true or GameRules:IsCheatMode() then
+			if not IsInToolsMode() then
+				print("Cheats have been enabled, game don't count.")
+				CustomNetTables:SetTableValue("game_options", "game_count", {value = 0})
+				CustomGameEventManager:Send_ServerToAllClients("safe_to_leave", {})
+			end
+		end
+	end
+
+	-- Undying talent fix
 	for _, hero in pairs(HeroList:GetAllHeroes()) do
 		if hero.undying_respawn_timer then
 			if hero.undying_respawn_timer > 0 then

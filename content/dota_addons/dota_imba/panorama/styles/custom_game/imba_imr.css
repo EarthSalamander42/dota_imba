@@ -27,7 +27,25 @@
 {
 	margin-top: 4%;
 	align: center top;
-	flow-children: up;
+	flow-children: down;
+}
+
+#SafeToLeave {
+	padding-left: 20px;
+	padding-right: 20px;
+	height: 40px;
+	background-color: green;
+	horizontal-align: center;
+	border-radius: 50px;
+	visibility: collapse;
+}
+
+#SafeToLeave Label {
+	align: center center;
+	color: white;
+	text-transform: uppercase;
+	text-align: center center;
+	font-size: 18px;
 }
 
 #BattlepassButton
@@ -37,6 +55,7 @@
 	padding: 4px 4px 4px 4px;
 	border-radius: 4px;
 	background-color: #000090ba;
+	horizontal-align: center;
 	saturation: 0.7;
 }
 

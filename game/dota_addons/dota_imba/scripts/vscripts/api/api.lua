@@ -162,7 +162,6 @@ end
 
 function ImbaApi:MetaHotDisabledHeroes(successCallback, errorCallback)
 	self:SimplePerform(nil, ImbaApiEndpoints.MetaHotDisabledHeroes, successCallback, errorCallback)
-
 end
 
 function ImbaApi:MetaCompanions(successCallback, errorCallback)

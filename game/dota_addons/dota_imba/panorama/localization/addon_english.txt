@@ -192,6 +192,7 @@
 	//purple
 
 	//Battlepass
+	"imba_safe_to_leave"			"Game is safe to leave"
 	"imba_game_info"				"Imba Game Info"
 	"imba_game_info_close"			"Close"
 	"battlepass"					"Battlepass"

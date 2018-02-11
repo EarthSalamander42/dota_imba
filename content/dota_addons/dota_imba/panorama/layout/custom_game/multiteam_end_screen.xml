@@ -110,8 +110,9 @@
 			</Panel>
 		</Panel>
 		<Panel id="es-buttons">
-			<!-- <Button id="es-buttons-stats"> <Label text="See Detailed statistics 
-				about this Game" /> </Button> -->
+<!--		<Button id="es-buttons-stats">
+				<Label text="See detailed statistics about this Game" />
+			</Button> -->
 			<Button id="es-buttons-survey" onactivate="DOTADisplayURL('https://goo.gl/2Z4DBv');">
 				<Label text="Participate in our survey and get an XP Bounty!" />
 			</Button>

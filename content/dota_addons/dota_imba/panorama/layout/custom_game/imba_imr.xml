@@ -12,6 +12,10 @@
 
 	<Panel class="Battlepass" hittest="false">
 		<Panel id="BattlepassButtonContainer">
+			<Panel id="SafeToLeave">
+				<Label text="imba_safe_to_leave" />
+			</Panel>
+
 			<Button id="BattlepassButton" onactivate="ToggleBattlepass();">
 				<Label text="imba_game_info" />
 			</Button>

@@ -951,7 +951,7 @@
 	{
 		"ItemCost"						"100"
 		"ItemInitialStockTime"			"390.0"
-		"ItemStockTime"					"60.0"
+		"ItemStockTime"					"90.0"
 
 		"AbilitySpecial"
 		{
@@ -7050,7 +7050,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"speed"					"1050 1200 1350 1500"
+				"speed"					"1050 1100 1150 1200"
 			}			
 			"06"
 			{

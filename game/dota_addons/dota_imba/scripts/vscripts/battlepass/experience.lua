@@ -17,7 +17,7 @@
 --     suthernfriend, 03.02.2018
 
 -- Experience System
-CustomNetTables:SetTableValue("game_options", "game_count", {value = 0})
+CustomNetTables:SetTableValue("game_options", "game_count", {value = 1})
 XP_level_table = {0,100,200,300,400,500,700,900,1100,1300,1500,1800,2100,2400,2700,3000,3400,3800,4200,4600,5000}
 --------------    0  1   2   3   4   5   6   7    8    9   10   11   12   13   14   15   16   17   18   19   20
 
