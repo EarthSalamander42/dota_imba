@@ -485,6 +485,10 @@ function ClassBy(type) {
 	HallOfFame(type)
 }
 
+function SafeToLeave() {
+	$("#SafeToLeave").style.visibility = "visible"
+}
+
 (function () {
 	// Update the game options display
 	var bounty_multiplier = CustomNetTables.GetTableValue("game_options", "bounty_multiplier");
@@ -511,4 +515,5 @@ function ClassBy(type) {
 
 	$("#TowerPowerValue").text = $.Localize('#imba_gamemode_settings_power_' + tower_power[1]);
 	GameEvents.Subscribe("hall_of_fame", HallOfFame);
+	GameEvents.Subscribe("safe_to_leave", SafeToLeave);
 })();

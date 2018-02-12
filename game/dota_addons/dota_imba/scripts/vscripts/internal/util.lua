@@ -214,9 +214,7 @@ end
 
 -- Precaches an unit, or, if something else is being precached, enters it into the precache queue
 function PrecacheUnitWithQueue( unit_name )
-	
-	Timers:CreateTimer(0, function()
-
+	Timers:CreateTimer(function()
 		-- If something else is being precached, wait two seconds
 		if UNIT_BEING_PRECACHED then
 			return 2
@@ -232,6 +230,7 @@ function PrecacheUnitWithQueue( unit_name )
 			end)
 		end
 	end)
+	print("Precached", unit_name)
 end
 
 -- Initializes heroes' innate abilities

@@ -107,7 +107,6 @@ FULL_ABANDON_TIME = 15														-- Time for a team to be considered as havin
 GAME_ROSHAN_KILLS = 0														-- Tracks amount of Roshan kills
 ROSHAN_RESPAWN_TIME = RandomInt(2, 4) * 60									-- Roshan respawn timer (in seconds)
 AEGIS_DURATION = 300														-- Aegis expiration timer (in seconds)
-GAME_COUNT_DELAY = 600 -- wait 10 min before being able to earn xp
 
 IMBA_DAMAGE_EFFECTS_DISTANCE_CUTOFF = 2500									-- Range at which most on-damage effects no longer trigger
 

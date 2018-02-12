@@ -237,17 +237,26 @@
 #es-buttons {
 	flow-children: right;
 	horizontal-align: center;
+	flow-children: right;
 }
 
 #es-buttons Button {
 	padding: 7px 25px;
+	margin: 10px;
 	border: 1px solid #333;
-	background-color: #222222ee;
 	box-shadow: #111 0 0 4px 0;
 }
 
-#es-buttons-stats, #es-buttons-website, #es-buttons-survey {
-	margin-right: 20px;
+#es-buttons-stats, #es-buttons-website {
+	background-color: #222222ee;
+}
+
+#es-buttons-survey {
+	background-color: darkred;
+}
+
+#es-buttons-close {
+	background-color: green;
 }
 
 #es-buttons Label {

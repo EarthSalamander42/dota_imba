@@ -12006,7 +12006,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"base_attack_range"		"140"
+				"base_attack_range"		"150"
 			}
 			"06"
 			{
