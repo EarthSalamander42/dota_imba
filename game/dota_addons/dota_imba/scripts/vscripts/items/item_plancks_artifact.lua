@@ -23,12 +23,9 @@ end
 -- Modifiers:
 --   basic: stats, constant mana regen
 --   unique: cooldown reduction, spell lifesteal
---   implosion: active, suicide + damage
---   nuclear: passive mana regen + charges + heal
 
 LinkLuaModifier("modifier_imba_plancks_artifact_basic", "items/item_plancks_artifact.lua", LUA_MODIFIER_MOTION_NONE )
 LinkLuaModifier("modifier_imba_plancks_artifact_unique", "items/item_plancks_artifact.lua", LUA_MODIFIER_MOTION_NONE )
-LinkLuaModifier("modifier_imba_plancks_artifact_implosion", "items/item_plancks_artifact.lua", LUA_MODIFIER_MOTION_NONE)
 
 function item_imba_plancks_artifact:GetAbilityTextureName()
 	return "custom/imba_plancks_artifact"
@@ -110,10 +107,6 @@ end
 
 if modifier_imba_plancks_artifact_unique == nil then
 	modifier_imba_plancks_artifact_unique = class({})
-end
-
-if modifier_imba_plancks_artifact_implosion == nil then
-	modifier_imba_plancks_artifact_implosion = class({})
 end
 
 function modifier_imba_plancks_artifact_basic:IsHidden() return
