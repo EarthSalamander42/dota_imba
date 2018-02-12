@@ -1112,8 +1112,12 @@ function GameMode:OnEntityKilled( keys )
 				respawn_time = respawn_time * killed_unit:GetRespawnTimeModifier_Pct() * 0.01
 				respawn_time = math.max(respawn_time + killed_unit:GetRespawnTimeModifier(),0)
 				-- Fetch decreased respawn timer due to Bloodstone charges
+				
 				if killed_unit.bloodstone_respawn_reduction and (respawn_time > 0) then
-					respawn_time = math.max( respawn_time - killed_unit.bloodstone_respawn_reduction, 0)
+					respawn_time = math.max( respawn_time - killed_unit.bloodstone_respawn_reduction, 1)
+				-- 1 sec minimum respawn time
+				elseif killed_unit.plancks_artifact_respawn_reduction and respawn_time > 0 then
+					respawn_time = math.max(respawn_time - killed_unit.plancks_artifact_respawn_reduction, 1)
 				end
 
 				-- Set up the respawn timer, include meepo fix
