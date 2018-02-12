@@ -27,6 +27,9 @@ START_GAME_AUTOMATICALLY = true				-- Should the game start automatically
 
 ENABLE_HERO_RESPAWN = true					-- Should the heroes automatically respawn on a timer or stay dead until manually respawned
 UNIVERSAL_SHOP_MODE = false					-- Should the main shop contain Secret Shop items as well as regular items
+if IsInToolsMode() then
+	UNIVERSAL_SHOP_MODE = true
+end
 
 HERO_SELECTION_TIME = 30.0 + 5.0		-- How long should we let people select their hero?
 if IsInToolsMode() then HERO_SELECTION_TIME = 15.0 end

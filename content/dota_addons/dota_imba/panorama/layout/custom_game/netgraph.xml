@@ -54,6 +54,10 @@
 				<Label id="UniqueStatsButtonText" class="Event1_Title" text="Toggle Stats"/>
 			</Button>
 
+			<Button id="MaxGold" class="Button" onmouseactivate="MaxGold();" >
+				<Label id="UniqueStatsButtonText" class="Event1_Title" text="Max Gold"/>
+			</Button>
+
 			<Button id="MaxLevel" class="Button" onmouseactivate="MaxLevel();" >
 				<Label id="UniqueStatsButtonText" class="Event1_Title" text="Max Level"/>
 			</Button>

@@ -32,6 +32,10 @@ function ToggleUniqueStats() {
 	}
 }
 
+function MaxGold() {
+	GameEvents.SendCustomGameEventToServer("netgraph_max_gold", {ID: Players.GetLocalPlayer()});
+}
+
 function MaxLevel() {
 	GameEvents.SendCustomGameEventToServer("netgraph_max_level", {ID: Players.GetLocalPlayer()});
 }

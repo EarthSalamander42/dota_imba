@@ -14,12 +14,17 @@ function CreateCustomToast(data) {
 	var gold = data.gold
 
 	if (data.type === 'kill') {
+		if (data.killerPlayer == undefined) {
+			data.killerPlayer = -1
+		}
+
 		var byNeutrals = data.killerPlayer == null && data.neutral != null;
 		var isSelfKill = data.victimPlayer === data.killerPlayer & data.roshan == undefined & data.neutral == undefined;
 		var isAllyKill = !byNeutrals && data.victimPlayer != null && Players.GetTeam(data.victimPlayer) === Players.GetTeam(data.killerPlayer) && data.roshan == undefined;
 		var isVictim = data.victimPlayer === Game.GetLocalPlayerID();
 		var isKiller = data.killerPlayer === Game.GetLocalPlayerID();
 		var isRoshanKill = data.roshan != null
+		var isTowerKill = data.tower != null
 		//		var teamVictim = byNeutrals || Players.GetTeam(data.victimPlayer) === Players.GetTeam(Game.GetLocalPlayerID());
 		var teamKiller = !byNeutrals && Players.GetTeam(data.killerPlayer) === Players.GetTeam(Game.GetLocalPlayerID());
 		row.SetHasClass('AllyEvent', teamKiller);
@@ -62,9 +67,15 @@ function CreateCustomToast(data) {
 				teamVictim = !teamVictim;
 			row.SetHasClass('AllyEvent', teamVictim);
 			row.SetHasClass('EnemyEvent', !teamVictim);
-		} else
+		} else {
 			row.AddClass('AllyEvent');
-		rowText = $.Localize(data.text);
+			rowText = $.Localize(data.text);
+		}
+
+		if (data.tower) {
+			var team = data.teamPlayer == null ? data.teamColor : Players.GetTeam(data.teamPlayer);
+			rowText = '{team_name} {killed_icon} {victim_name}';
+		}
 	}
 
 	// yet nothing different
@@ -103,6 +114,11 @@ function CreateCustomToast(data) {
 	} else {
 		rowText = rowText.replace('{gold}', "");
 	}
+
+	if (data.tower) {
+		rowText = rowText.replace('{team_name}', "<font color='" + GameUI.CustomUIConfig().team_colors[data.team] + "'>" + GameUI.CustomUIConfig().team_names[data.team] + '</font>');
+	}
+
 	if (data.variables)
 		for (var k in data.variables) {
 			//			rowText = rowText.replace(k, $.Localize(data.variables[k]));

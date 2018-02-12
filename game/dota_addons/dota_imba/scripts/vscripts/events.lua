@@ -123,13 +123,19 @@ function GameMode:OnGameRulesStateChange(keys)
 				if IsDeveloper(hero:GetPlayerID()) then
 					hero.has_graph = true
 					CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "show_netgraph", {})
-					--					CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "show_netgraph_heronames", {})
+--					CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "show_netgraph_heronames", {})
 				end
 
 				local donators = GetDonators()
 				for k, v in pairs(donators) do
 					CustomNetTables:SetTableValue("player_table", tostring(hero:GetPlayerID()), {companion_model = donators[k].model, companion_enabled = donators[k].enabled})
 				end
+			end
+
+			if GetMapName() == "imba_overthrow" then
+				CustomGameEventManager:Send_ServerToAllClients("imbathrow_topbar", {imbathrow = true})
+			else
+				CustomGameEventManager:Send_ServerToAllClients("imbathrow_topbar", {imbathrow = false})
 			end
 		end)
 	end
@@ -247,7 +253,6 @@ function GameMode:OnNPCSpawned(keys)
 	local greeviling = false
 
 	if npc then
-
 		------------------------------
 		-- UnitSpawned Api Event
 		------------------------------
@@ -262,7 +267,7 @@ function GameMode:OnNPCSpawned(keys)
 			tostring(player)
 		})
 
-		--		npc:AddNewModifier(npc, nil, "modifier_river", {})
+--		npc:AddNewModifier(npc, nil, "modifier_river", {})
 
 		if greeviling == true and RandomInt(1, 100) > 85 then
 			if string.find(npc:GetUnitName(), "dota_creep") then
@@ -349,32 +354,6 @@ function GameMode:OnNPCSpawned(keys)
 			end
 			npc.first_spawn = true
 		end
-
-		-- working, but overlapping on overhead particles..
-		--		if npc:IsRealHero() and npc:GetUnitName() ~= "npc_dota_hero_wisp" or npc.is_real_wisp then
-		--			local title
-		--			local rgb = GetTitleColorIXP(title, false)
-		--			if npc:GetPlayerOwner() then
-		--				if not npc.first_spawn then
-		--					npc.first_spawn = true
-		--					title = CustomNetTables:GetTableValue("player_table", tostring(npc:GetPlayerID())).title
-		--					if title and rgb then
-		--						npc:SetCustomHealthLabel(title, rgb[1], rgb[2], rgb[3])
-		--					end
-		--				end
-		--			else
-		--				if not npc.first_spawn then
-		--					npc.first_spawn = true
-		--					Timers:CreateTimer(FrameTime(), function()
-		--						title = CustomNetTables:GetTableValue("player_table", tostring(npc:GetPlayerOwnerID())).title
-		--						print(title, rgb)
-		--						if title and rgb then
-		--							npc:SetCustomHealthLabel(title, rgb[1], rgb[2], rgb[3])
-		--						end
-		--					end)
-		--				end
-		--			end
-		--		end
 	end
 
 	if npc:GetUnitName() == "npc_dummy_unit" or npc:GetUnitName() == "npc_dummy_unit_perma" then
@@ -382,7 +361,6 @@ function GameMode:OnNPCSpawned(keys)
 	end
 
 	if npc:IsRealHero() then
-
 		if not npc.first_spawn then
 			if npc:GetUnitName() == "npc_dota_hero_troll_warlord" then
 				npc:SwapAbilities("imba_troll_warlord_whirling_axes_ranged", "imba_troll_warlord_whirling_axes_melee", true, false)
@@ -391,22 +369,24 @@ function GameMode:OnNPCSpawned(keys)
 			end
 
 			if IsDonator(npc) ~= false then
-				if npc:GetUnitName() ~= "npc_dota_hero_wisp" or npc.is_real_wisp then
-					Timers:CreateTimer(2.0, function()
-						if tostring(PlayerResource:GetSteamID(npc:GetPlayerID())) == "76561198015161808" then
-							DonatorCompanion(npc:GetPlayerID(), "npc_imba_donator_companion_cookies")
-						elseif tostring(PlayerResource:GetSteamID(npc:GetPlayerID())) == "76561198003571172" then
-							DonatorCompanion(npc:GetPlayerID(), "npc_imba_donator_companion_baumi")
-						elseif tostring(PlayerResource:GetSteamID(npc:GetPlayerID())) == "76561198014254115" then
-							DonatorCompanion(npc:GetPlayerID(), "npc_imba_donator_companion_icefrog")
-						elseif tostring(PlayerResource:GetSteamID(npc:GetPlayerID())) == "76561198014254115" then
-							DonatorCompanion(npc:GetPlayerID(), "npc_imba_donator_companion_admiral_bulldog")
-						elseif tostring(PlayerResource:GetSteamID(npc:GetPlayerID())) == "76561198021465788" then
-							DonatorCompanion(npc:GetPlayerID(), "npc_imba_donator_companion_suthernfriend")
-						else
-							DonatorCompanion(npc:GetPlayerID(), IsDonator(npc))
-						end
-					end)
+				if HeroSelection.playerPickState[npc:GetPlayerID()] and HeroSelection.playerPickState[npc:GetPlayerID()].pick_state ~= "selecting_hero" then
+					if npc:GetUnitName() ~= "npc_dota_hero_wisp" or npc.is_real_wisp then
+						Timers:CreateTimer(2.0, function()
+							if tostring(PlayerResource:GetSteamID(npc:GetPlayerID())) == "76561198015161808" then
+								DonatorCompanion(npc:GetPlayerID(), "npc_imba_donator_companion_cookies")
+							elseif tostring(PlayerResource:GetSteamID(npc:GetPlayerID())) == "76561198003571172" then
+								DonatorCompanion(npc:GetPlayerID(), "npc_imba_donator_companion_baumi")
+							elseif tostring(PlayerResource:GetSteamID(npc:GetPlayerID())) == "76561198014254115" then
+								DonatorCompanion(npc:GetPlayerID(), "npc_imba_donator_companion_icefrog")
+							elseif tostring(PlayerResource:GetSteamID(npc:GetPlayerID())) == "76561198014254115" then
+								DonatorCompanion(npc:GetPlayerID(), "npc_imba_donator_companion_admiral_bulldog")
+							elseif tostring(PlayerResource:GetSteamID(npc:GetPlayerID())) == "76561198021465788" then
+								DonatorCompanion(npc:GetPlayerID(), "npc_imba_donator_companion_suthernfriend")
+							else
+								DonatorCompanion(npc:GetPlayerID(), IsDonator(npc))
+							end
+						end)
+					end
 				end
 			end
 
@@ -419,6 +399,10 @@ function GameMode:OnNPCSpawned(keys)
 			if npc:GetUnitName() == "npc_dota_hero_storegga" then
 				npc:SetModel("models/creeps/ice_biome/storegga/storegga.vmdl")
 				npc:SetOriginalModel("models/creeps/ice_biome/storegga/storegga.vmdl")
+			end
+
+			if HeroSelection.playerPickState[npc:GetPlayerID()] and HeroSelection.playerPickState[npc:GetPlayerID()].pick_state == "selecting_hero" then
+				RestrictAndHideHero(npc)
 			end
 
 			npc.first_spawn = true
@@ -435,7 +419,7 @@ function GameMode:OnNPCSpawned(keys)
 		Timers:CreateTimer(1, function() -- Silencer fix
 			if npc:HasModifier("modifier_silencer_int_steal") then
 				npc:RemoveModifierByName("modifier_silencer_int_steal")
-		end
+			end
 		end)
 	end
 
@@ -451,15 +435,17 @@ function GameMode:OnNPCSpawned(keys)
 	-- IMBA: Arc Warden clone handling
 	-------------------------------------------------------------------------------------------------
 	if npc:FindAbilityByName("arc_warden_tempest_double") and not npc.first_tempest_double_cast and npc:IsRealHero() then
-		npc.first_tempest_double_cast = true
-		local tempest_double_ability = npc:FindAbilityByName("arc_warden_tempest_double")
-		tempest_double_ability:SetLevel(4)
-		Timers:CreateTimer(0.1, function()
-			if not npc:HasModifier("modifier_arc_warden_tempest_double") then
-				tempest_double_ability:CastAbility()
-				tempest_double_ability:SetLevel(1)
-			end
-		end)
+		if HeroSelection.playerPickState[npc:GetPlayerID()].pick_state ~= "selecting_hero" then
+			npc.first_tempest_double_cast = true
+			local tempest_double_ability = npc:FindAbilityByName("arc_warden_tempest_double")
+			tempest_double_ability:SetLevel(4)
+			Timers:CreateTimer(0.1, function()
+				if not npc:HasModifier("modifier_arc_warden_tempest_double") then
+					tempest_double_ability:CastAbility()
+					tempest_double_ability:SetLevel(1)
+				end
+			end)
+		end
 	end
 
 	if npc:HasModifier("modifier_arc_warden_tempest_double") then
@@ -775,18 +761,7 @@ function GameMode:OnLastHit(keys)
 	local player = PlayerResource:GetPlayer(keys.PlayerID)
 	local killedEnt = EntIndexToHScript(keys.EntKilled)
 
-	local streak = {}
-	streak[3] = "Killing spree"
-	streak[4] = "Dominating"
-	streak[5] = "Mega kill"
-	streak[6] = "Unstoppable"
-	streak[7] = "Wicked sick"
-	streak[8] = "Monster kill"
-	streak[9] = "Godlike"
-	streak[10] = "Beyond Godlike"
-
 	if isFirstBlood then
-
 		player:GetAssignedHero().kill_hero_bounty = 0
 		Timers:CreateTimer(FrameTime() * 2, function()
 			CustomGameEventManager:Send_ServerToAllClients("create_custom_toast", {
@@ -801,19 +776,6 @@ function GameMode:OnLastHit(keys)
 	elseif isHeroKill then
 		if not player:GetAssignedHero().killstreak then player:GetAssignedHero().killstreak = 0 end
 		player:GetAssignedHero().killstreak = player:GetAssignedHero().killstreak +1
-
-		player:GetAssignedHero().kill_hero_bounty = 0
-		Timers:CreateTimer(FrameTime() * 2, function()
-			CustomGameEventManager:Send_ServerToAllClients("create_custom_toast", {
-				type = "kill",
-				killerPlayer = keys.PlayerID,
-				victimPlayer = killedEnt:GetPlayerID(),
-				gold = CustomNetTables:GetTableValue("player_table", tostring(keys.PlayerID)).hero_kill_bounty,
-				variables = {
-					["{kill_streak}"] = streak[math.min(player:GetAssignedHero().killstreak, 10)]
-				}
-			})
-		end)
 	end
 end
 
@@ -1302,6 +1264,43 @@ function GameMode:OnEntityKilled( keys )
 					killerPlayer = killer:GetPlayerID(),
 					victimPlayer = killed_unit:GetPlayerID(),
 					victimUnitName = killed_unit:GetUnitName(),
+				})
+			elseif killed_unit:IsRealHero() and killer:GetTeamNumber() ~= killed_unit:GetTeamNumber() then
+				print("Killers:", killed_unit:GetNumAttackers())
+				PrintTable(killed_unit:GetAttacker(0))
+
+				local streak = {}
+				streak[3] = "Killing spree"
+				streak[4] = "Dominating"
+				streak[5] = "Mega kill"
+				streak[6] = "Unstoppable"
+				streak[7] = "Wicked sick"
+				streak[8] = "Monster kill"
+				streak[9] = "Godlike"
+				streak[10] = "Beyond Godlike"
+
+				killer.kill_hero_bounty = 0
+				Timers:CreateTimer(FrameTime() * 2, function()
+					CustomGameEventManager:Send_ServerToAllClients("create_custom_toast", {
+						type = "kill",
+						killerPlayer = killer:GetPlayerID(),
+						victimPlayer = killed_unit:GetPlayerID(),
+						gold = CustomNetTables:GetTableValue("player_table", tostring(killer:GetPlayerID())).hero_kill_bounty,
+						variables = {
+							["{kill_streak}"] = streak[math.min(killer.killstreak, 10)]
+						}
+					})
+				end)
+			end
+		elseif killer:IsTower() then
+			if killed_unit:IsRealHero() then
+				CustomGameEventManager:Send_ServerToAllClients("create_custom_toast", {
+					type = "generic",
+					text = "#custom_toast_TeamKilled",
+					victimUnitName = killed_unit:GetUnitName(),
+					teamColor = killer:GetTeam(),
+					team = killer:GetTeam(),
+					tower = true,
 				})
 			end
 		end

@@ -305,7 +305,7 @@ function GameMode:GoldFilter( keys )
 	-- Show gold earned message??
 	if hero then
 		hero:ModifyGold(keys.gold, reliable, keys.reason_const)
-		if keys.reason_const == DOTA_ModifyGold_Unspecified then return false end
+		if keys.reason_const == DOTA_ModifyGold_Unspecified then return true end
 		SendOverheadEventMessage(PlayerResource:GetPlayer(keys.player_id_const), OVERHEAD_ALERT_GOLD, hero, keys.gold, nil)
 	end
 
@@ -1301,19 +1301,7 @@ function GameMode:OnHeroInGame(hero)
 		elseif not hero.is_real_wisp then
 			if hero:GetUnitName() == "npc_dota_hero_wisp" and not hero:IsIllusion() then
 				Timers:CreateTimer(function()
-					if not hero:HasModifier("modifier_command_restricted") then
-						hero:AddNewModifier(hero, nil, "modifier_command_restricted", {})
-						hero:AddEffects(EF_NODRAW)
-						hero:SetDayTimeVisionRange(475)
-						hero:SetNightTimeVisionRange(475)
-						if hero:GetTeamNumber() == DOTA_TEAM_GOODGUYS then
-							PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), GoodCamera)
-							--							FindClearSpaceForUnit(hero, GoodCamera:GetAbsOrigin(), false)
-						else
-							PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), BadCamera)
-							--							FindClearSpaceForUnit(hero, BadCamera:GetAbsOrigin(), false)
-						end
-					end
+					RestrictAndHideHero(hero)
 					if time_elapsed < 0.9 then
 						time_elapsed = time_elapsed + 0.1
 					else
@@ -1568,7 +1556,9 @@ function GameMode:InitGameMode()
 	-- IMBA testbed command
 	Convars:RegisterCommand("imba_test", Dynamic_Wrap(self, 'StartImbaTest'), "Spawns several units to help with testing", FCVAR_CHEAT)
 	Convars:RegisterCommand("particle_table_print", PrintParticleTable, "Prints a huge table of all used particles", FCVAR_CHEAT)
+	Convars:RegisterCommand("test_reconnect", ReconnectPlayer, "", FCVAR_CHEAT)
 
+	CustomGameEventManager:RegisterListener("netgraph_max_gold", Dynamic_Wrap(self, "MaxGold"))
 	CustomGameEventManager:RegisterListener("netgraph_max_level", Dynamic_Wrap(self, "MaxLevel"))
 	CustomGameEventManager:RegisterListener("netgraph_remove_units", Dynamic_Wrap(self, "RemoveUnits"))
 	CustomGameEventManager:RegisterListener("netgraph_give_item", Dynamic_Wrap(self, "NetgraphGiveItem"))
@@ -2211,6 +2201,16 @@ end
 
 function GameMode:DonatorCompanionJS(event)
 	DonatorCompanion(event.ID, event.unit)
+end
+
+function GameMode:MaxGold(event)
+	local hero = PlayerResource:GetPlayer(event.ID):GetAssignedHero()
+
+	if IsInToolsMode() then
+		hero:ModifyGold(99999, true, DOTA_ModifyGold_CheatCommand)
+	else
+		AntiDevCheat()
+	end
 end
 
 function GameMode:MaxLevel(event)

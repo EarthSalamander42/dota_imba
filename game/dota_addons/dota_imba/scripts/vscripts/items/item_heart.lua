@@ -99,12 +99,6 @@ function modifier_item_imba_heart_unique:OnCreated()
 	self.aura_radius = self:GetAbility():GetSpecialValueFor("aura_radius")
 	self.base_regen = self:GetAbility():GetSpecialValueFor("base_regen")
 	self.noncombat_regen = self:GetAbility():GetSpecialValueFor("noncombat_regen")
-
-	if self:GetCaster():IsRangedAttacker() then
-		self.cooldown = self:GetSpecialValueFor("regen_cooldown_ranged")
-	else
-		self.cooldown = self:GetAbility():GetSpecialValueFor("regen_cooldown_melee")
-	end
 end
 
 function modifier_item_imba_heart_unique:IsAura() return true end
@@ -142,30 +136,17 @@ function modifier_item_imba_heart_unique:OnTakeDamage(keys)
 					-- don't trigger cd with self damage
 					return
 				end
-				self:GetAbility():StartCooldown(self.cooldown)
+
+				local cooldown = self:GetAbility():GetSpecialValueFor("regen_cooldown_melee")
+				if self:GetCaster():IsRangedAttacker() then
+					cooldown = self:GetAbility():GetSpecialValueFor("regen_cooldown_ranged")
+				end
+
+				self:GetAbility():StartCooldown(cooldown)
 			end
 		end
 	end
 end
-
---[[
-function modifier_imba_blink_dagger_handler:OnTakeDamage( keys )
-	local ability = self:GetAbility()
-	local blink_damage_cooldown = ability:GetSpecialValueFor("blink_damage_cooldown")
-
-	local parent = self:GetParent()					-- Modifier carrier
-	local unit = keys.unit							-- Who took damage
-
-	if parent == unit then
-		-- Custom function from funcs.lua
-		if IsHeroDamage(keys.attacker, keys.damage) then
-			if ability:GetCooldownTimeRemaining() < blink_damage_cooldown then
-				ability:StartCooldown(blink_damage_cooldown)
-			end
-		end
-	end
-end
---]]
 
 -- Aura buff
 modifier_item_imba_heart_aura_buff = modifier_item_imba_heart_aura_buff or class({})

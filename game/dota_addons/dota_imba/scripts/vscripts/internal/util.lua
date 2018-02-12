@@ -928,7 +928,7 @@ function CustomHeroAttachments(hero, illusion)
 		hero.weapon:FollowEntity(hero, true)
 		hero.weapon:SetRenderColor(128, 255, 0)
 	elseif hero_name == "npc_dota_hero_hell_empress" then
-		
+
 	elseif hero_name == "npc_dota_hero_scaldris" then
 		for i = 0, 24 do
 			if hero:GetAbilityByIndex(i) then
@@ -964,6 +964,8 @@ function CustomHeroAttachments(hero, illusion)
 end
 
 function ReconnectPlayer(player_id)
+if not player_id then player_id = 0 end
+
 	print("Player is reconnecting:", player_id)
 	-- Reinitialize the player's pick screen panorama, if necessary
 	if HeroSelection.HorriblyImplementedReconnectDetection then
@@ -985,6 +987,12 @@ function ReconnectPlayer(player_id)
 			else
 				print("Not fully reconnected yet:", player_id)
 				return 0.1
+			end
+
+			if GetMapName() == "imba_overthrow" then
+				CustomGameEventManager:Send_ServerToAllClients("imbathrow_topbar", {imbathrow = true})
+			else
+				CustomGameEventManager:Send_ServerToAllClients("imbathrow_topbar", {imbathrow = false})
 			end
 		end)
 
@@ -1062,7 +1070,7 @@ end
 
 function UpdateRoshanBar(roshan)
 	CustomNetTables:SetTableValue("game_options", "roshan", {
-		level = roshan:GetLevel(),
+		level = GAME_ROSHAN_KILLS +1,
 		HP = roshan:GetHealth(),
 		HP_alt = roshan:GetHealthPercent(),
 		maxHP = roshan:GetMaxHealth()
@@ -1436,4 +1444,21 @@ function InitializeTalentsOverride(hero)
 --	print(linked_abilities)
 --	PrintTable(linked_abilities)
 	CustomGameEventManager:Send_ServerToAllClients("init_talent_window", {linked_abilities})
+end
+
+function RestrictAndHideHero(hero)
+	if not hero:HasModifier("modifier_command_restricted") then
+		hero:AddNewModifier(hero, nil, "modifier_command_restricted", {})
+		hero:AddEffects(EF_NODRAW)
+		hero:SetDayTimeVisionRange(475)
+		hero:SetNightTimeVisionRange(475)
+
+		if hero:GetTeamNumber() == DOTA_TEAM_GOODGUYS then
+			PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), GoodCamera)
+--			FindClearSpaceForUnit(hero, GoodCamera:GetAbsOrigin(), false)
+		else
+			PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), BadCamera)
+--			FindClearSpaceForUnit(hero, BadCamera:GetAbsOrigin(), false)
+		end
+	end
 end

@@ -710,7 +710,10 @@ function HeroSelection:AssignHero(player_id, hero_name, dev_command)
 --		InitializeTalentsOverride(hero)
 
 --		PlayerResource:SetCameraTarget(player_id, nil)
-		UTIL_Remove(wisp)
+		Timers:CreateTimer(1.0, function()
+			hero:RemoveEffects(EF_NODRAW)
+			UTIL_Remove(wisp)
+		end)
 
 		-- Set initial spawn setup as having been done
 		CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(player_id), "picking_done", {})
@@ -724,6 +727,7 @@ end
 
 -- Sends this hero's nonhidden abilities to the client
 function HeroSelection:PickAbilitiesRequested(event)
+--	PlayerResource:ReplaceHeroWith(event.PlayerID, event.HeroName, 0, 0 )
 	CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(event.PlayerID), "pick_abilities", { heroAbilities = HeroSelection:GetPickScreenAbilities(event.HeroName) })
 end
 

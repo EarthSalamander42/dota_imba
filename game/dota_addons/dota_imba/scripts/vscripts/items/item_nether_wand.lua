@@ -24,7 +24,7 @@
 --			NETHER WAND
 -------------------------------------------
 LinkLuaModifier("modifier_imba_item_nether_wand_passive", "items/item_nether_wand.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_item_elder_staff_passive", "items/item_nether_wand.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_item_imba_arcane_nexus_passive", "items/item_nether_wand.lua", LUA_MODIFIER_MOTION_NONE)
 -------------------------------------------
 
 item_imba_nether_wand = item_imba_nether_wand or class({})
@@ -75,30 +75,30 @@ end
 -------------------------------------------
 --			ELDER STAFF
 -------------------------------------------
-item_imba_elder_staff = item_imba_elder_staff or class({})
+item_imba_arcane_nexus = item_imba_arcane_nexus or class({})
 -------------------------------------------
-function item_imba_elder_staff:GetIntrinsicModifierName()
-	return "modifier_imba_item_elder_staff_passive"
+function item_imba_arcane_nexus:GetIntrinsicModifierName()
+	return "modifier_item_imba_arcane_nexus_passive"
 end
 
-function item_imba_elder_staff:GetAbilityTextureName()
+function item_imba_arcane_nexus:GetAbilityTextureName()
 	return "custom/imba_arcane_nexus"
 end
 -------------------------------------------
-modifier_imba_item_elder_staff_passive = modifier_imba_item_elder_staff_passive or class({})
-function modifier_imba_item_elder_staff_passive:IsDebuff() return false end
-function modifier_imba_item_elder_staff_passive:IsHidden() return true end
-function modifier_imba_item_elder_staff_passive:IsPermanent() return true end
-function modifier_imba_item_elder_staff_passive:IsPurgable() return false end
-function modifier_imba_item_elder_staff_passive:IsPurgeException() return false end
-function modifier_imba_item_elder_staff_passive:IsStunDebuff() return false end
-function modifier_imba_item_elder_staff_passive:RemoveOnDeath() return false end
-function modifier_imba_item_elder_staff_passive:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
-function modifier_imba_item_elder_staff_passive:OnDestroy()
+modifier_item_imba_arcane_nexus_passive = modifier_item_imba_arcane_nexus_passive or class({})
+function modifier_item_imba_arcane_nexus_passive:IsDebuff() return false end
+function modifier_item_imba_arcane_nexus_passive:IsHidden() return true end
+function modifier_item_imba_arcane_nexus_passive:IsPermanent() return true end
+function modifier_item_imba_arcane_nexus_passive:IsPurgable() return false end
+function modifier_item_imba_arcane_nexus_passive:IsPurgeException() return false end
+function modifier_item_imba_arcane_nexus_passive:IsStunDebuff() return false end
+function modifier_item_imba_arcane_nexus_passive:RemoveOnDeath() return false end
+function modifier_item_imba_arcane_nexus_passive:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_item_imba_arcane_nexus_passive:OnDestroy()
 	self:CheckUnique(false)
 end
 
-function modifier_imba_item_elder_staff_passive:OnCreated()
+function modifier_item_imba_arcane_nexus_passive:OnCreated()
 	self.item = self:GetAbility()
 	self.parent = self:GetParent()
 	if self.parent:IsHero() and self.item then
@@ -112,7 +112,7 @@ function modifier_imba_item_elder_staff_passive:OnCreated()
 	end
 end
 
-function modifier_imba_item_elder_staff_passive:DeclareFunctions()
+function modifier_item_imba_arcane_nexus_passive:DeclareFunctions()
 	local decFuns =
 		{
 			MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
@@ -125,26 +125,26 @@ function modifier_imba_item_elder_staff_passive:DeclareFunctions()
 	return decFuns
 end
 
-function modifier_imba_item_elder_staff_passive:GetModifierSpellAmplify_Percentage()
+function modifier_item_imba_arcane_nexus_passive:GetModifierSpellAmplify_Percentage()
 	return self.spell_amp
 end
 
-function modifier_imba_item_elder_staff_passive:GetModifierPreAttack_BonusDamage()
+function modifier_item_imba_arcane_nexus_passive:GetModifierPreAttack_BonusDamage()
 	return self.bonus_damage
 end
 
-function modifier_imba_item_elder_staff_passive:GetModifierAttackSpeedBonus_Constant()
+function modifier_item_imba_arcane_nexus_passive:GetModifierAttackSpeedBonus_Constant()
 	return self.bonus_as
 end
 
-function modifier_imba_item_elder_staff_passive:GetModifierBonusStats_Intellect()
+function modifier_item_imba_arcane_nexus_passive:GetModifierBonusStats_Intellect()
 	return self.bonus_intellect
 end
 
-function modifier_imba_item_elder_staff_passive:GetModifierPercentageCooldown()
+function modifier_item_imba_arcane_nexus_passive:GetModifierPercentageCooldown()
 	return self.bonus_cdr
 end
 
-function modifier_imba_item_elder_staff_passive:GetModifierPercentageManacost()
+function modifier_item_imba_arcane_nexus_passive:GetModifierPercentageManacost()
 	return self.bonus_cdr
 end

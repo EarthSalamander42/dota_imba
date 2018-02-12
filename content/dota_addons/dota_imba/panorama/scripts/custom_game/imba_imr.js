@@ -489,6 +489,19 @@ function SafeToLeave() {
 	$("#SafeToLeave").style.visibility = "visible"
 }
 
+function ShowImbathrowBar(args) {
+	var Parent = $.GetContextPanel().GetParent().GetParent().GetParent()
+	var hudElements = Parent.FindChildTraverse("HUDElements");
+	var topbar = hudElements.FindChildTraverse("topbar");
+
+	if (args.imbathrow == true) {
+		topbar.style.visibility = "collapse";
+	} else {
+		Parent.FindChildTraverse("TopBarScoreboard").style.visibility = "collapse";		
+		topbar.style.visibility = "visible";
+	}
+}
+
 (function () {
 	// Update the game options display
 	var bounty_multiplier = CustomNetTables.GetTableValue("game_options", "bounty_multiplier");
@@ -516,4 +529,5 @@ function SafeToLeave() {
 	$("#TowerPowerValue").text = $.Localize('#imba_gamemode_settings_power_' + tower_power[1]);
 	GameEvents.Subscribe("hall_of_fame", HallOfFame);
 	GameEvents.Subscribe("safe_to_leave", SafeToLeave);
+	GameEvents.Subscribe("imbathrow_topbar", ShowImbathrowBar);
 })();

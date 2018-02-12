@@ -1,0 +1,351 @@
+.MainPanel
+{
+	width: 100%;
+	height: 100%;
+}
+
+.HeroBar, .HeroBarLight
+{
+	flow-children: down;
+}
+
+.HeroBar #PlayerNameContainer
+{
+	max-width: 140px;
+	overflow: clip clip;
+	align: center center;
+}
+
+.HeroBar #TopBarContainer
+{
+	margin-bottom: 6px;
+	width: 140px;
+	align: center center;
+}
+
+.HeroBar #StatusEffectContainer
+{
+	flow-children: down;
+	width: 100%;
+	opacity: 0;
+}
+
+.HeroBar.StatusEffect #StatusEffectContainer
+{
+	opacity: 1.0;
+}
+
+.AltPressed .HeroBar.StatusEffect #StatusEffectContainer
+{
+	opacity: 0.0;
+}
+
+.RecastVisible
+{
+	margin-top: -35px;
+}
+
+.HeroBar #PlayerName
+{
+	width: 140px;
+	height: 20px;
+	align: center center;
+	text-align: left;
+	font-family: Radiance, FZLanTingHei-R-GBK, TH Sarabun New, Gulim,MingLiU;
+	font-size: 16px;
+	text-shadow: 0px 0px 5px 2.0 black;
+	font-weight: bold;
+	transition-property: opacity;
+	transition-duration: 0.1s;
+}
+
+.HeroBar #HealthNumber
+{
+	background-color: gradient(linear, 0% 0%, 0% 98%, from(black), to(#23479D));
+	width: 28px;
+	height: 18px;
+	horizontal-align: center;
+	border-radius: 2px;
+	box-shadow: black 0px 0px 8px 0px;
+	transition-property: opacity, box-shadow;
+	transition-duration: 0.1s;
+	opacity: 0.0;
+}
+
+.AltPressed .HeroBar #HealthNumber
+{
+	opacity: 1.0;
+}
+
+.AltPressed .HeroBar #PlayerName, .HeroBar.StatusEffect #PlayerName
+{
+	opacity: 0.0;
+}
+
+.HeroBar #HealthNumber #HealthValue
+{
+	align: center center;
+	text-align: center;
+	color: #8EE72D;
+	font-weight: bold;
+	font-size: 14px;
+	margin-top: 1px;
+	text-shadow: 0px 0px 4px 4.0 black;
+	font-family: Radiance, FZLanTingHei-R-GBK, TH Sarabun New, Gulim,MingLiU;
+}
+
+.HeroBar #BarContainer
+{
+	align: center center;
+	flow-children: down;
+}
+
+#BarTopContainer
+{
+	flow-children: right;
+}
+
+#AttackTimer
+{
+	border-radius: 50%;
+	border: 1px solid black;
+	background-color: #0bff00;
+	margin-left: 6px;
+	width: 10px;
+	height: 10px;
+	transition-property: opacity;
+	transition-duration: 0.2s;
+}
+
+#AttackTimer.TimerHidden
+{
+	opacity: 0;
+}
+
+#AttackTimer.DangerZone
+{
+	background-color: #ffa700;
+}
+
+#AttackTimer.MaxReached
+{
+	background-color: #ff0026;
+}
+
+.HeroBar #HealthBar
+{
+	height: 10px;
+	flow-children: right;
+	box-shadow: black 0px 0px 8px 0px;
+	transition-property: opacity, box-shadow;
+	transition-duration: 0.2s;
+	margin-left: 19px;
+	align: center center;
+}
+
+#HealthBar.Ethereal, .HeroBarLight.Ethereal #HealthBar
+{
+	box-shadow: #8EE72D 0px 0px 8px 0px;
+	opacity: 0.9;
+}
+
+#HealthBar .Health
+{
+	border-right: 1px solid black;
+	background-color: gradient(linear, 0% 0%, 0% 95%, from(#2eb31c), to(#1f721d));
+	height: 100%;
+}
+
+#HealthBar .Shield
+{
+	border-right: 1px solid black;
+	background-color: gradient(linear, 0% 0%, 0% 95%, from(#FFFFFF), to(#898989));
+	height: 100%;
+}
+
+#HealthBar #MissingHealth
+{
+	background-color: gradient(linear, 0% 0%, 0% 95%, from(#0E280B), to(#1B4213));
+	height: 100%;
+}
+
+.HeroBarLight
+{
+	width: 80px;
+	transition-property: opacity;
+	transition-duration: 0.3s;
+}
+
+.HeroBarLight #HealthValue
+{
+	align: center center;
+	text-align: center;
+	color: #ebebeb;
+	font-weight: bold;
+	font-size: 24px;
+	margin-top: 1px;
+	text-shadow: 0px 0px 2px 2.0 black;
+	font-family: Radiance, FZLanTingHei-R-GBK, TH Sarabun New, Gulim,MingLiU;
+	animation-name: HealthAnimation;
+	animation-duration: 3s;
+	animation-timing-function: ease-in-out;
+	animation-iteration-count: infinite;
+	padding-top: 5px;
+}
+
+.HeroBarLight #HealthValue.Low
+{
+	animation-name: HealthAnimationLow;
+	animation-duration: 0.7s;
+	animation-iteration-count: infinite;
+	animation-timing-function: ease-in-out;
+}
+
+.HeroBarLight #HealthBar
+{
+	height: 8px;
+	width: 100%;
+	box-shadow: black 0px 0px 8px 0px;
+	border-radius: 4px;
+	transition-property: opacity, box-shadow;
+	transition-duration: 0.2s;
+}
+
+.HeroBarLight #HealthBar .ProgressBarLeft {
+	background-color: gradient(linear, 0% 0%, 0% 98%, from(#FFFFFF), to(#898989));
+}
+
+.HeroBarLight #HealthBar.WithTransition .ProgressBarLeft {
+	transition-property: width;
+	transition-duration: 0.2s;
+}
+
+.HeroBarLight #HealthBar .ProgressBarRight {
+	background-color: gradient(linear, 0% 0%, 0% 95%, from(#333333), to(#555555));
+}
+
+.HeroBarLight.Expiring
+{
+	opacity: 0.0;
+}
+
+@keyframes 'HealthAnimation'
+{
+	0% {
+		transform: translateY(0);
+	}
+
+	50% {
+		transform: translateY(-6px);
+	}
+
+	100% {
+		transform: translateY(0px);
+	}
+}
+
+@keyframes 'HealthAnimationLow'
+{
+	0% {
+		opacity: 1.0;
+		transform: translateY(0);
+	}
+
+	50% {
+		opacity: 0.3;
+		transform: translateY(-3px);
+	}
+
+	100% {
+		opacity: 1.0;
+		transform: translateY(0px);
+	}
+}
+
+/* Special content */
+#SpecialBar
+{
+	width: 100%;
+	box-shadow: black 0px 0px 4px 0px;
+	transition-property: opacity;
+	transition-duration: 0.1s;
+	height: 4px;
+	margin-top: 1px;
+	margin-left: 18px;
+}
+
+#SpecialBar ProgressBar
+{
+	width: 100%;
+	height: 100%;
+}
+
+#SpecialBar .ProgressBarLeft
+{
+	transition-property: width, background-color;
+	transition-duration: 0.05s;
+}
+
+#UrsaRage
+{
+	background-color: gradient(linear, 0% 0%, 0% 95%, from(#3F1500), to(#632200));
+}
+
+#UrsaRage .ProgressBarLeft.UrsaFrenzy
+{
+	background-color: gradient(linear, 0% 0%, 0% 95%, from(#FF2700), to(#AF1A00));
+}
+
+#UrsaRage .ProgressBarLeft {
+	background-color: gradient(linear, 0% 0%, 0% 98%, from(#FF6A00), to(#BC4B00));
+}
+
+.HeroBar.NotVisible #SpecialBar, .HeroBar.NotVisible #HealthBar
+{
+	opacity: 0.5;
+	box-shadow: none;
+}
+
+#JuggSwordBar
+{
+	height: 4px;
+	margin-top: 1px;
+	flow-children: right;
+}
+
+#JuggSwordBar ProgressBar
+{
+	width: fill-parent-flow(1.0);
+	height: 100%;
+	background-color: black;
+}
+
+#JuggSwordBar ProgressBar#JuggSword0 .ProgressBarLeft
+{
+	background-color: gradient(linear, 0% 0%, 0% 98%, from(rgb(255, 85, 0)), to(rgb(160, 55, 0)));
+}
+
+#JuggSwordBar ProgressBar#JuggSword1 .ProgressBarLeft
+{
+	background-color: gradient(linear, 0% 0%, 0% 98%, from(rgb(170, 85, 255)), to(rgb(93, 67, 160)));
+}
+
+#JuggSwordBar ProgressBar#JuggSword2 .ProgressBarLeft
+{
+	background-color: gradient(linear, 0% 0%, 0% 98%, from(rgb(0, 244, 255)), to(rgb(0, 149, 160)));
+}
+
+#JuggSwordBar ProgressBar#JuggSword3 .ProgressBarLeft
+{
+	background-color: gradient(linear, 0% 0%, 0% 98%, from(rgb(170, 0, 0)), to(rgb(109, 0, 0)));
+}
+
+#UndyingShield
+{
+	background-color: gradient(linear, 0% 0%, 0% 95%, from(#154c13), to(#11350f));
+}
+
+#UndyingShield .ProgressBarLeft
+{
+	background-color: gradient(linear, 0% 0%, 0% 95%, from(#279225), to(#154913));
+}
