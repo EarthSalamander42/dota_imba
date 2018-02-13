@@ -127,7 +127,8 @@
 	"hero_name_filler"				"选择"
 	"team_title_radiant"			"天辉"
 	"team_title_dire"				"夜魇"
-	"average_mmr"					"平均IMBA天梯分"
+	"average_mmr"					"平均IMBA天梯分："
+	"average_ixp"					"平均IMBA等级："
 	"swap_vanilla_to_custom"		"切换至DOTA英雄"
 	"swap_custom_to_vanilla"		"切换至原创英雄"
 	"stats_swap"					"查看游戏强度设置"
@@ -136,6 +137,7 @@
 	"repick_button"					"重新选择（Repick）"
 	"enter_game_button"				"进入游戏！"
 	"welcome_label"					"欢迎来到 Dota IMBA!"
+	"custom_hero"					"原创英雄"
 	"new_hero"						"新英雄"
 	"disabled_hero"					"禁用"
 	"disabled_hero_10v10"			"10v10下禁用"
@@ -152,7 +154,6 @@
 	"ChatLinePass"									"<b><font color='{s:color}'>{s:name}</font></b>: <font color='gold'>{s:message}</font>"
 	"ChatRandomed"									"<b><font color='{s:color}'>{s:name}</font></b> 随机选择了 <font color='gold'>{s:hero}</font>"
 
-	"imba_confirm_pick_button"                      "选择此英雄"
 	"imba_hero_name_filler"                         "选中此英雄"
 	"imba_strength_hero_pick_list_title"            "力量"
 	"imba_agility_hero_pick_list_title"             "敏捷"
@@ -165,11 +166,14 @@
 
 	"imba_radiant_team_title"                       "天辉"
 	"imba_dire_team_title"                          "夜魇"
-	"average_mmr"									"平均IMBA天梯分："
-
+	
 	//Donator Tab
 	"donator_companion"		"当前宠物"
 	"donator_info"			"选择新的宠物"
+	"companion_enabled"		"宠物启用"
+	"companion_disabled"		"宠物禁用"
+//	"companion_enabled"		"Companion enabled. (Click to disable)"
+//	"companion_disabled"	"Companion disabled. (Click to enable)"
 
 	//Leaderboard
 	"leaderboard"					"排行榜"
@@ -186,7 +190,8 @@
 	"coming_soon"					"即将到来，敬请期待！"
 	"battlepass_reward_locked"		"未解锁"
 	"battlepass_refresh"			"刷新"
-
+	
+	
 	"battlepass_level"				"等级："
 	"battlepass_blink"				"亮蓝闪烁"
 	"battlepass_blink2"				"自然闪烁"
@@ -229,6 +234,10 @@
 	"battlepass_bottle2"			"金色魔瓶特效"
 	"battlepass_bottle3"			"赤红魔瓶特效"
 	"battlepass_bottle4"			"紫色魔瓶特效"
+
+	"companion_success"				"已应用新的宠物："
+	"companion_error"					"出错"
+	"companion_not_donator"			"本功能仅对Patreon上的捐助者开放！"
 
 	// Overthrow
 		"PointsToWin"									"+{d:points_to_win} more"
@@ -288,5 +297,4 @@
 	"overthrow_game_info_tip03"						"利用其他队伍消灭敌人"
 	"overthrow_game_info_tip04"						"队伍的制胜点数越低，从装备宝箱中获得的装备越好"
 
-	
 }
