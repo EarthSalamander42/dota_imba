@@ -733,13 +733,7 @@ function GameMode:OrderFilter( keys )
 	--	end
 
 	if keys.order_type == DOTA_UNIT_ORDER_GLYPH then
-		CustomGameEventManager:Send_ServerToAllClients("create_custom_toast", {
-			type = "generic",
-			text = "#custom_toast_GlyphUsed",
-			teamColor = unit:GetTeam(),
-			team = unit:GetTeam(),
-			glyph = true,
-		})
+		CombatEvents("generic", "glyph", unit)
 	end
 
 	------------------------------------------------------------------------------------

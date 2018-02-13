@@ -17576,13 +17576,12 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"	
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
-		
+
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"pudge_meat_hook"
 		"MaxLevel"						"4"
 		"ScriptFile"					"hero/hero_pudge.lua"
 		"HasScepterUpgrade"				"1"
-		
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -17592,14 +17591,9 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"13.0 12.0 11.0 10.0"
 
-		// Damage.
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"					"100 200 300 400"
-
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"110 120 130 140" 
-
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -18094,12 +18088,12 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"stack_speed"				"10"
+				"stack_speed"				"5"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"stack_range"				"10"
+				"stack_range"				"5"
 			}
 			"05"
 			{

@@ -14,18 +14,14 @@ function CreateCustomToast(data) {
 	var gold = data.gold
 
 	if (data.type === 'kill') {
-		if (data.killerPlayer == undefined) {
-			data.killerPlayer = -1
-		}
-
-		var byNeutrals = data.killerPlayer == null && data.neutral != null;
-		var isSelfKill = data.victimPlayer === data.killerPlayer & data.roshan == undefined & data.neutral == undefined;
-		var isAllyKill = !byNeutrals && data.victimPlayer != null && Players.GetTeam(data.victimPlayer) === Players.GetTeam(data.killerPlayer) && data.roshan == undefined;
+		var byNeutrals = data.killerPlayer == undefined && data.neutral == true && data.suicide == false;
+		var isSelfKill = data.suicide == true;
+		var isAllyKill = !byNeutrals && data.victimPlayer == true && Players.GetTeam(data.victimPlayer) === Players.GetTeam(data.killerPlayer) && data.roshan == undefined;
 		var isVictim = data.victimPlayer === Game.GetLocalPlayerID();
 		var isKiller = data.killerPlayer === Game.GetLocalPlayerID();
-		var isRoshanKill = data.roshan != null
-		var isTowerKill = data.tower != null
-		//		var teamVictim = byNeutrals || Players.GetTeam(data.victimPlayer) === Players.GetTeam(Game.GetLocalPlayerID());
+		var isRoshanKill = data.roshan == true
+		var isTowerKill = data.tower == true
+//		var teamVictim = byNeutrals || Players.GetTeam(data.victimPlayer) === Players.GetTeam(Game.GetLocalPlayerID());
 		var teamKiller = !byNeutrals && Players.GetTeam(data.killerPlayer) === Players.GetTeam(Game.GetLocalPlayerID());
 		row.SetHasClass('AllyEvent', teamKiller);
 		row.SetHasClass('EnemyEvent', byNeutrals || !teamKiller);
@@ -33,9 +29,9 @@ function CreateCustomToast(data) {
 		row.SetHasClass('LocalPlayerKiller', isKiller);
 		row.SetHasClass('LocalPlayerVictim', isVictim);
 
-		if (isKiller)
+		if (isKiller) {
 			Game.EmitSound('notification.self.kill');
-		else if (isVictim)
+		} else if (isVictim)
 			Game.EmitSound('notification.self.death');
 		else if (teamKiller)
 			Game.EmitSound('notification.teammate.kill');
@@ -60,8 +56,8 @@ function CreateCustomToast(data) {
 			}
 		}
 	} else if (data.type === 'generic') {
-		if (data.teamPlayer != null || data.teamColor != null) {
-			var team = data.teamPlayer == null ? data.teamColor : Players.GetTeam(data.teamPlayer);
+		if (data.teamPlayer == true || data.teamColor == true) {
+			var team = data.teamPlayer == false ? data.teamColor : Players.GetTeam(data.teamPlayer);
 			var teamVictim = team === Players.GetTeam(Game.GetLocalPlayerID());
 			if (data.teamInverted === 1)
 				teamVictim = !teamVictim;
@@ -73,13 +69,13 @@ function CreateCustomToast(data) {
 		}
 
 		if (data.tower) {
-			var team = data.teamPlayer == null ? data.teamColor : Players.GetTeam(data.teamPlayer);
+			var team = data.teamPlayer == false ? data.teamColor : Players.GetTeam(data.teamPlayer);
 			rowText = '{team_name} {killed_icon} {victim_name}';
 		}
 	}
 
 	// yet nothing different
-	if (data.firstblood != null) {
+	if (data.firstblood == true) {
 		rowText = rowText.replace('{denied_icon}', "<img class='DeniedIcon'/>").replace('{killed_icon}', "<img class='CombatEventKillIcon'/>").replace('{time_dota}', "<font color='lime'>" + secondsToMS(Game.GetDOTATime(false, false), true) + '</font>');
 	} else {
 		rowText = rowText.replace('{denied_icon}', "<img class='DeniedIcon'/>").replace('{killed_icon}', "<img class='CombatEventKillIcon'/>").replace('{time_dota}', "<font color='lime'>" + secondsToMS(Game.GetDOTATime(false, false), true) + '</font>');
@@ -101,9 +97,9 @@ function CreateCustomToast(data) {
 		rowText = rowText.replace('{victim_name}', "<font color='red'>" + $.Localize(data.victimUnitName) + '</font>');
 	if (data.team != null)
 		rowText = rowText.replace('{team_name}', "<font color='" + GameUI.CustomUIConfig().team_colors[data.team] + "'>" + GameUI.CustomUIConfig().team_names[data.team] + '</font>');
-	if (data.glyph != null)
+	if (data.glyph == true)
 		rowText = rowText.replace('{glyph_icon}', "<img class='CombatEventGlyphIcon' />");
-	if (data.courier != null)
+	if (data.courier == true)
 		rowText = rowText.replace('{courier_icon}', "<img class='CombatEventCourierIcon' />");
 	if (data.roshan)
 		rowText = rowText.replace('{roshan_icon}', "<img class='CombatEventRoshanIcon' />");

@@ -117,7 +117,7 @@
 	{
 		"item"		"item_imba_initiate_robe"
 		"item"		"item_glimmer_cape"
-		"item"		"item_cyclone"
+		"item"		"item_imba_cyclone"
 		"item"		"item_imba_force_staff"
 		"item"		"item_imba_aether_lens"
 		"item"		"item_dagon"

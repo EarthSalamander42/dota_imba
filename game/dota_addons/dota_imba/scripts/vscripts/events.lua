@@ -348,13 +348,7 @@ function GameMode:OnNPCSpawned(keys)
 			end
 
 			if npc.first_spawn == true then
-				CustomGameEventManager:Send_ServerToAllClients("create_custom_toast", {
-					type = "generic",
-					text = "#custom_toast_CourierRespawned",
-					teamColor = npc:GetTeam(),
-					team = npc:GetTeam(),
-					courier = true,
-				})
+				CombatEvents("generic", "courier_respawn", npc)
 			end
 			npc.first_spawn = true
 		end
@@ -768,18 +762,25 @@ function GameMode:OnLastHit(keys)
 	if isFirstBlood then
 		player:GetAssignedHero().kill_hero_bounty = 0
 		Timers:CreateTimer(FrameTime() * 2, function()
-			CustomGameEventManager:Send_ServerToAllClients("create_custom_toast", {
-				type = "kill",
-				killerPlayer = keys.PlayerID,
-				victimPlayer = killedEnt:GetPlayerID(),
-				firstblood = true,
-				gold = CustomNetTables:GetTableValue("player_table", tostring(keys.PlayerID)).hero_kill_bounty,
-			})
+			CombatEvents("kill", "first_blood", killedEnt, player:GetAssignedHero())
 		end)
 		return
 	elseif isHeroKill then
 		if not player:GetAssignedHero().killstreak then player:GetAssignedHero().killstreak = 0 end
 		player:GetAssignedHero().killstreak = player:GetAssignedHero().killstreak +1
+
+--		for _,attacker in pairs(HeroList:GetAllHeroes()) do
+--			for i = 0, killedEnt:GetNumAttackers() -1 do
+--				if attacker == killedEnt:GetAttacker(i) then
+--					print(attacker:GetUnitName())
+--				end
+--			end
+--		end
+
+		player:GetAssignedHero().kill_hero_bounty = 0
+		Timers:CreateTimer(FrameTime() * 2, function()
+			CombatEvents("kill", "hero_kill", killedEnt, player:GetAssignedHero())
+		end)
 	end
 end
 
@@ -1211,111 +1212,35 @@ function GameMode:OnEntityKilled( keys )
 			PlayerResource:SetCustomBuybackCooldown(player_id, buyback_cooldown)
 		end
 
-		local gold_bounty = 200
-		if killed_unit:GetUnitName() == "npc_dota_badguys_healers" then
-			gold_bounty = 125
-		end
-
 		-- ready to use
 		if killed_unit:IsBuilding() then
 			if killer:IsRealHero() then
-				CustomGameEventManager:Send_ServerToAllClients("create_custom_toast", {
-					type = "kill",
-					killerPlayer = killer:GetPlayerID(),
-					victimUnitName = killed_unit:GetUnitName(),
-					gold = gold_bounty,
-				})
+				CombatEvents("kill", "hero_kill_tower", killed_unit, killer)
 			else
-				CustomGameEventManager:Send_ServerToAllClients("create_custom_toast", {
-					type = "generic",
-					text = "#custom_toast_TeamKilled",
-					victimUnitName = killed_unit:GetUnitName(),
-					teamColor = killer:GetTeam(),
-					team = killer:GetTeam(),
-					gold = gold_bounty,
-				})
+				CombatEvents("generic", "tower", killed_unit, killer)
 			end
 		elseif killed_unit:IsCourier() then
-			CustomGameEventManager:Send_ServerToAllClients("create_custom_toast", {
-				type = "generic",
-				text = "#custom_toast_CourierKilled",
-				teamColor = killed_unit:GetTeam(),
-				team = killed_unit:GetTeam(),
-				courier = true,
-			})
-
+			CombatEvents("generic", "courier_dead", killed_unit)
 		elseif killed_unit:GetUnitName() == "npc_imba_roshan" then
-			CustomGameEventManager:Send_ServerToAllClients("create_custom_toast", {
-				type = "kill",
-				teamColor = killer:GetTeam(),
-				team = killer:GetTeam(),
-				victimUnitName = killed_unit:GetUnitName(),
-				roshan = true,
-				gold = 150,
-			})
+			CombatEvents("kill", "roshan_dead", killed_unit, killer)
 		end
 
 		if killer:IsRealHero() then
 			if killer == killed_unit then
-				CustomGameEventManager:Send_ServerToAllClients("create_custom_toast", {
-					type = "kill",
-					victimUnitName = killed_unit:GetUnitName(),
-				})
+				CombatEvents("kill", "hero_suicide", killed_unit)
 				return
 			elseif killed_unit:IsRealHero() and killer:GetTeamNumber() == killed_unit:GetTeamNumber() then
-				CustomGameEventManager:Send_ServerToAllClients("create_custom_toast", {
-					type = "kill",
-					killerPlayer = killer:GetPlayerID(),
-					victimPlayer = killed_unit:GetPlayerID(),
-					victimUnitName = killed_unit:GetUnitName(),
-				})
-			elseif killed_unit:IsRealHero() and killer:GetTeamNumber() ~= killed_unit:GetTeamNumber() then
-				print("Killers:", killed_unit:GetNumAttackers())
-				PrintTable(killed_unit:GetAttacker(0))
-
-				local streak = {}
-				streak[3] = "Killing spree"
-				streak[4] = "Dominating"
-				streak[5] = "Mega kill"
-				streak[6] = "Unstoppable"
-				streak[7] = "Wicked sick"
-				streak[8] = "Monster kill"
-				streak[9] = "Godlike"
-				streak[10] = "Beyond Godlike"
-
-				killer.kill_hero_bounty = 0
-				Timers:CreateTimer(FrameTime() * 2, function()
-					CustomGameEventManager:Send_ServerToAllClients("create_custom_toast", {
-						type = "kill",
-						killerPlayer = killer:GetPlayerID(),
-						victimPlayer = killed_unit:GetPlayerID(),
-						gold = CustomNetTables:GetTableValue("player_table", tostring(killer:GetPlayerID())).hero_kill_bounty,
-						variables = {
-							["{kill_streak}"] = streak[math.min(killer.killstreak, 10)]
-						}
-					})
-				end)
+				CombatEvents("kill", "hero_deny_hero", killed_unit, killer)
 			end
 		elseif killer:IsTower() then
 			if killed_unit:IsRealHero() then
-				CustomGameEventManager:Send_ServerToAllClients("create_custom_toast", {
-					type = "generic",
-					text = "#custom_toast_TeamKilled",
-					victimUnitName = killed_unit:GetUnitName(),
-					teamColor = killer:GetTeam(),
-					team = killer:GetTeam(),
-					tower = true,
-				})
+				CombatEvents("generic", "tower_kill_hero", killed_unit, killer)
 			end
 		end
 
 		if killed_unit:IsRealHero() then
 			if killer:GetTeamNumber() == 4 then
-				CustomGameEventManager:Send_ServerToAllClients("create_custom_toast", {
-					type = "kill",
-					victimUnitName = killed_unit:GetUnitName(),
-					neutral = true,
-				})
+				CombatEvents("kill", "neutrals_kill_hero", killed_unit)
 			end
 			-- reset killstreak if not comitted suicide
 			killed_unit.killstreak = 0

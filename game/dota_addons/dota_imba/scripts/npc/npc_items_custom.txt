@@ -3366,7 +3366,9 @@
 		"ID"							"2126"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_bloodstone"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
 		"FightRecapLevel"				"2"
 
 		// Stats
@@ -12545,7 +12547,7 @@
 		
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"650"	
+		"ItemCost"						"100"	
 		"ItemShopTags"					""
 		
 		// Recipe
@@ -12566,7 +12568,7 @@
 		"BaseClass"						"item_lua"
 		"ID"							"2283"
 		"ScriptFile"					"items/item_eul_scepter.lua"
-		"AbilityTextureName"			"item_cyclone"
+		"AbilityTextureName"			"custom/imba_cyclone"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
@@ -12580,7 +12582,7 @@
 
 		// Stats		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"23.0"
+		"AbilityCooldown"				"16.0"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -12591,7 +12593,7 @@
 		"ItemAliases"					"cyclone euls;eul's scepter of divinity"
 		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
 		"ShouldBeSuggested"				"1"
-		
+
 		// Special	
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -12609,7 +12611,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_movement_speed"	"40"
+				"bonus_movement_speed"	"45"
 			}
 			"04"
 			{
@@ -12623,6 +12625,168 @@
 			}
 		}
 	}
-	
-	//next free ID: 2284
+
+	//=================================================================================================================
+	// Recipe: Planck's Artifact
+	//=================================================================================================================
+	"item_recipe_imba_plancks_artifact"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2284"
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"custom/imba_recipe"
+		"Model"							"models/props_gameplay/recipe.mdl"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"1050"
+		"ItemShopTags"					""
+
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"SecretShop"					"1"
+		"ItemResult"					"item_imba_plancks_artifact"
+		"ItemRequirements"
+		{
+			"01"						"item_imba_bloodstone;item_ultimate_orb;item_imba_octarine_core"
+		}
+	}
+
+	//=================================================================================================================
+	// Planck's Artifact
+	//=================================================================================================================
+	"item_imba_plancks_artifact"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2285"
+		"BaseClass"						"item_lua"
+		"ScriptFile"					"items/item_plancks_artifact.lua"
+		"AbilityTextureName" 			"custom/imba_plancks_artifact"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"300"
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"200"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"60"
+		"ItemCost"						"14000"		
+		"ItemShopTags"					"regen_health;regen_mana;mana_pool;health_pool"
+		"ItemQuality"					"epic"
+		"ItemAliases"					"planck;artifact"
+		"ItemInitialCharges"			"16"
+		"ItemDisplayCharges"			"1"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
+				
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_health"				"1400"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_mana"				"1400"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"bonus_mana_regen"			"4.0"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"heal_radius"				"1675"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"heal_on_death_base"		"1000"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"heal_on_death_per_charge"	"50"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"respawn_time_reduction"	"2"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"on_death_loss"				"0.75"
+			}
+			"09"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"on_death_loss_tooltip"		"25"
+			}
+			"10"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"mana_regen_per_charge"		"0.66"
+			}
+			"11"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_strength"			"10"
+			}
+			"12"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_agility"				"10"
+			}
+			"13"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_intelligence"		"50"
+			}
+			"14"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"spell_lifesteal"			"40"
+			}
+			"15"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"bonus_cooldown"			"30"
+			}
+			"16"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"implosion_damage_percent"	"0.7"
+			}
+			"17"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"implosion_damage_percent_tooltip" "70"
+			}
+			"18"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"implosion_radius"			"300"
+			}
+			"19"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"stack_gain_radius"			"1675"
+			}
+		}
+	}
+	//next free ID: 2286
 }

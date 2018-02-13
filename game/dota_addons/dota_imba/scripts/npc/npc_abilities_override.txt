@@ -148,6 +148,8 @@
 	"item_bottle"							"REMOVE"
 //	"item_travel_boots"						"REMOVE"
 //	"item_travel_boots_2"					"REMOVE"
+	"item_cyclone"							"REMOVE"
+	"item_recipe_cyclone"					"REMOVE"
 
 	//Banned items
 	"item_imba_ironleaf_boots"				"REMOVE"
@@ -1156,43 +1158,6 @@
 	{
 		"AbilityTextureName"			"custom/imba_buckler"
 		"ItemCost"						"750"
-	}
-
-	//=================================================================================================================
-	// Recipe: Cyclone
-	//=================================================================================================================
-	"item_recipe_cyclone"
-	{
-		"ItemCost"						"100"	
-	}
-
-	//=================================================================================================================
-	// Cyclone
-	//=================================================================================================================
-	"item_cyclone"
-	{
-		"AbilityCooldown"				"16"
-		"AbilityTextureName"			"custom/imba_cyclone"
-		"ItemCost"						"2200"
-
-		"AbilitySpecial"
-		{
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"bonus_mana_regen"		"2.5"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_movement_speed"	"45"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"tooltip_drop_damage"	"100"
-			}
-		}
 	}
 
 	//=================================================================================================================

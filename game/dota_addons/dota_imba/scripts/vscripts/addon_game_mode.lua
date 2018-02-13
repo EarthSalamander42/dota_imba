@@ -259,6 +259,7 @@ function Precache(context)
 	--PrecacheResource("sound", "sounds/ui/inventory/metalblade_equip_01.vsnd", context)
 
 	PrecacheResource("particle_folder", "particles/hero/scaldris", context) -- Scaldris Hero
+	PrecacheResource("soundfile", "soundevents/game_sounds_legion_commander.vsndevts", context) -- Ancient ability
 	PrecacheResource("soundfile", "soundevents/imba_soundevents.vsndevts", context) -- Various sounds
 	PrecacheResource("soundfile", "soundevents/imba_item_soundevents.vsndevts", context) -- Various Item sounds
 	PrecacheResource("soundfile", "soundevents/diretide_soundevents.vsndevts", context) -- Roshan sounds
