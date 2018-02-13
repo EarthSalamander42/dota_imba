@@ -194,6 +194,7 @@ function modifier_item_imba_gungnir_force_ally:OnCreated()
 	if not IsServer() then return end
 	if self:GetParent():HasModifier("modifier_legion_commander_duel") or self:GetParent():HasModifier("modifier_imba_enigma_black_hole") or self:GetParent():HasModifier("modifier_imba_faceless_void_chronosphere_handler") then
 		self:Destroy()
+		return
 	end
 	self.effect = self:GetCaster().force_staff_effect
 	self.pfx = ParticleManager:CreateParticle(self.effect, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
@@ -608,6 +609,7 @@ function modifier_item_imba_force_staff_active:OnCreated()
 	self.effect = self:GetCaster().force_staff_effect
 	if self:GetParent():HasModifier("modifier_legion_commander_duel") or self:GetParent():HasModifier("modifier_imba_enigma_black_hole") or self:GetParent():HasModifier("modifier_imba_faceless_void_chronosphere_handler") then
 		self:Destroy()
+		return
 	end
 	self.pfx = ParticleManager:CreateParticle(self.effect, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 	self:GetParent():StartGesture(ACT_DOTA_FLAIL)
@@ -770,6 +772,7 @@ function modifier_item_imba_hurricane_pike_force_ally:OnCreated()
 	if not IsServer() then return end
 	if self:GetParent():HasModifier("modifier_legion_commander_duel") or self:GetParent():HasModifier("modifier_imba_enigma_black_hole") or self:GetParent():HasModifier("modifier_imba_faceless_void_chronosphere_handler") then
 		self:Destroy()
+		return
 	end
 	self.effect = self:GetCaster().force_staff_effect
 	self.pfx = ParticleManager:CreateParticle(self.effect, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
