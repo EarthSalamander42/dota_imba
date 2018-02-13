@@ -64,6 +64,11 @@ end
 function item_imba_cyclone:OnSpellStart()
 	local caster = self:GetCaster()
 	local target = self:GetCursorTarget()
+	if caster:GetTeamNumber() ~= target:GetTeamNumber() then
+		target:Purge(true, false, false, false, false)
+	else
+		caster:Purge(false, true, false, false, false)
+	end
 	target:AddNewModifier(caster, self, "modifier_item_imba_cyclone_active", {duration = self:GetSpecialValueFor("cyclone_duration")})
 end
 
