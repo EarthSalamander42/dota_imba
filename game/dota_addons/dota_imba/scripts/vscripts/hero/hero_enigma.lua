@@ -178,83 +178,6 @@ end
 
 
 
--- passive midnight pulse
-function modifier_special_bonus_imba_enigma_6:IsDebuff() return false end
-function modifier_special_bonus_imba_enigma_6:IsHidden() return true end
-function modifier_special_bonus_imba_enigma_6:IsPurgable() return false end
-function modifier_special_bonus_imba_enigma_6:RemoveOnDeath() return false end
-function modifier_special_bonus_imba_enigma_6:IsAura() 					return true end
-function modifier_special_bonus_imba_enigma_6:GetAuraSearchTeam() 		return DOTA_UNIT_TARGET_TEAM_ENEMY end
-function modifier_special_bonus_imba_enigma_6:GetAuraSearchType() 		return DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO end
-function modifier_special_bonus_imba_enigma_6:GetAuraSearchFlags()		return DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES end
-function modifier_special_bonus_imba_enigma_6:GetAuraRadius() 			return self.radius end
-function modifier_special_bonus_imba_enigma_6:GetModifierAura()			return "modifier_imba_enigma_midnight_pulse_aura" end
-
-function modifier_special_bonus_imba_enigma_6:OnCreated()
-	if IsServer() then
-		local caster = self:GetParent()
-		self.ability = self:GetParent():FindAbilityByName("imba_enigma_midnight_pulse")
-		if not self.ability then return end
-		self.radius = self.ability:GetSpecialValueFor("radius")
-
-		self.particle = ParticleManager:CreateParticle("particles/hero/enigma/enigma_midnight_pulse_c.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
-		ParticleManager:SetParticleControlEnt(self.particle,0,self:GetParent(),PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true )
-		ParticleManager:SetParticleControl(self.particle,1,Vector(self.radius,0,0))
-
-		self:StartIntervalThink(1.0)
-	end
-end
-
-function modifier_special_bonus_imba_enigma_6:OnIntervalThink()
-	local caster = self:GetParent()
-	if not caster:IsAlive() then return end
-	if self:GetParent():IsIllusion() then return end
-	local parent = self:GetParent()
-	local ability = self.ability
-	local dmg_pct = ability:GetSpecialValueFor("damage_per_tick") * 0.01
-	local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
-		parent:GetAbsOrigin(),
-		nil,
-		self.radius,
-		DOTA_UNIT_TARGET_TEAM_ENEMY,
-		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-		DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
-		FIND_ANY_ORDER,
-		false)
-	for _, enemy in pairs(enemies) do
-		local dmg = enemy:GetMaxHealth() * dmg_pct
-		local damageTable = {victim = enemy,
-			attacker = caster,
-			damage = dmg,
-			damage_type = DAMAGE_TYPE_PURE,
-			damage_flags = DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION,
-			ability = ability}
-		ApplyDamage(damageTable)
-	end
-	local eidolons = FindUnitsInRadius(caster:GetTeamNumber(),
-		parent:GetAbsOrigin(),
-		nil,
-		self.radius,
-		DOTA_UNIT_TARGET_TEAM_FRIENDLY,
-		DOTA_UNIT_TARGET_BASIC,
-		DOTA_UNIT_TARGET_FLAG_NONE,
-		FIND_ANY_ORDER,
-		false)
-	for _, eidolon in pairs(eidolons) do
-		if eidolon:HasModifier("modifier_imba_enigma_eidolon") then
-			eidolon:Heal(ability:GetSpecialValueFor("eidolon_hp_regen"), nil)
-			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, eidolon, ability:GetSpecialValueFor("eidolon_hp_regen"), nil)
-		end
-	end
-end
-
-function modifier_special_bonus_imba_enigma_6:OnDestroy()
-	if IsServer() then
-		ParticleManager:DestroyParticle(self.particle,true)
-		ParticleManager:ReleaseParticleIndex(self.particle)
-	end
-end
-
 
 --=================================================================================================================
 -- Enigma's Malefice
@@ -347,7 +270,7 @@ function modifier_imba_enigma_malefice:OnIntervalThink()
 	ApplyDamage(damageTable)
 	target:AddNewModifier(caster, ability, "modifier_stunned", {duration = self.stun_duration})
 	EmitSoundOn("Hero_Enigma.MaleficeTick", target)
-	SearchForEngimaThinker(caster, self:GetParent(), ability:GetSpecialValueFor("pull_strength"), caster:HasTalent("special_bonus_imba_enigma_5"))
+	SearchForEngimaThinker(caster, self:GetParent(), ability:GetSpecialValueFor("pull_strength"))
 end
 
 --=================================================================================================================
@@ -385,7 +308,7 @@ function imba_enigma_demonic_conversion:OnSpellStart()
 		target:Kill(ability, caster)
 		target = nil
 	end
-	local eidolon_count = ability:GetSpecialValueFor("eidolon_count")
+	local eidolon_count = ability:GetSpecialValueFor("eidolon_count") + caster:FindTalentValue("special_bonus_imba_enigma_6")
 	if eidolon_count > 0 then
 		for i=1,eidolon_count do
 			ability:CreateEidolon(target, location, 1, ability:GetSpecialValueFor("duration"))
@@ -637,6 +560,11 @@ function imba_enigma_black_hole:IsHiddenWhenStolen() 		return false end
 function imba_enigma_black_hole:IsRefreshable() 			return true end
 function imba_enigma_black_hole:IsStealable() 				return true end
 function imba_enigma_black_hole:IsNetherWardStealable() 	return true end
+
+function imba_enigma_black_hole:GetCastRange(vLocation, hTarget)
+	local range = self:GetSpecialValueFor("cast_range") + self:GetCaster():FindTalentValue("special_bonus_imba_enigma_5")
+	return range
+end
 
 function imba_enigma_black_hole:GetCooldown(nLevel)
 	local charges = self:GetCaster():GetModifierStackCount("modifier_imba_singularity", self:GetCaster())
