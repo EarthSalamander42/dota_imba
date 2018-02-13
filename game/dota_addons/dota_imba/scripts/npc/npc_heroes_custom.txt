@@ -590,14 +590,14 @@
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_enigma_black_hole"
 
-		"Ability10"					"special_bonus_imba_enigma_1" // Each Singularity stack consumed now decreases Black Hole's cooldown by 6 seconds.
-		"Ability11"					"special_bonus_imba_enigma_7" // 1.0 sec Magic immunity on spell cast
-		"Ability12"					"special_bonus_imba_enigma_8" // Cast Eidolons on heroes
-		"Ability13"					"special_bonus_imba_enigma_6" // +3 Eidolons
-		"Ability14"					"special_bonus_imba_enigma_5" // +500 Black Hole cast range
-		"Ability15"					"special_bonus_imba_enigma_3" // Midnight Pulse doubles its AoE over the duration.
-		"Ability16"					"special_bonus_imba_enigma_2" // Malefice 325 AoE Radius
-		"Ability17"					"special_bonus_imba_enigma_4" // Black Hole cast on death
+		"Ability10"					"special_bonus_imba_enigma_1" // Each Singularity stack consumed now decreases Black Hole's cooldown by 2 seconds.
+		"Ability11"					"special_bonus_imba_enigma_2" // Malefice has an AoE Radius
+		"Ability12"					"special_bonus_imba_enigma_3" // Midnight Pulse doubles its AoE over the duration.
+		"Ability13"					"special_bonus_imba_enigma_4" // Black Hole cast on death
+		"Ability14"					"special_bonus_imba_enigma_7" // Magic immunity on spell cast
+		"Ability15"					"special_bonus_imba_enigma_5" // True malefice, instead of stuns little black holes are created
+		"Ability16"					"special_bonus_imba_enigma_6" // Enigma has a constant AoE Midnight pulse around him. Stacks with regular pulse.
+		"Ability17"					"special_bonus_imba_enigma_8" // Cast Eidolons on heroes
 	}
 
 	//=================================================================================================================

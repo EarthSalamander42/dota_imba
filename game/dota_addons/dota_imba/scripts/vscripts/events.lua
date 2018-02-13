@@ -128,7 +128,11 @@ function GameMode:OnGameRulesStateChange(keys)
 
 				local donators = GetDonators()
 				for k, v in pairs(donators) do
-					CustomNetTables:SetTableValue("player_table", tostring(hero:GetPlayerID()), {companion_model = donators[k].model, companion_enabled = donators[k].enabled})
+					CustomNetTables:SetTableValue("player_table", tostring(hero:GetPlayerID()), {
+						companion_model = donators[k].model,
+						companion_enabled = donators[k].enabled,
+						Lvl = CustomNetTables:GetTableValue("player_table", tostring(hero:GetPlayerID())).Lvl,
+					})
 				end
 			end
 

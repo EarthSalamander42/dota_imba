@@ -75,11 +75,20 @@
 			</Panel>
 
 			<Panel id="BattlepassInfoContainer" hittest="false">
+				<Button id="RefreshBattlepassButton" onactivate="RefreshBattlepass();">
+					<Label id="RefreshLabel" text="#battlepass_refresh"/>
+					<Button id="RefreshBattlepass" onactivate="RefreshBattlepass();"/>
+				</Button>
+
 				<Label id="ComingSoon" text="#coming_soon" />
 				<!-- JS Inserts records here -->
 			</Panel>
 
 			<Panel id="DonatorInfoContainer" hittest="false">
+				<Button id="RefreshBattlepassButton" onactivate="RefreshBattlepass();">
+					<Label id="RefreshLabel" text="#battlepass_refresh"/>
+					<Button id="RefreshBattlepass" onactivate="RefreshBattlepass();"/>
+				</Button>
 <!--
 				<Panel id="DonatorOptions" hittest="false">
 					<Button id="DonatorOptionsToggle" onactivate="">

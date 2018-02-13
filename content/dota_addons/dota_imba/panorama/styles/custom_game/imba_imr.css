@@ -16,6 +16,19 @@
 	}
 }
 
+@keyframes 'refresh'
+{
+	0%
+	{
+		transform: rotateZ( 0deg );
+	}
+
+	100%
+	{
+		transform: rotateZ(180deg);
+	}
+}
+
 .Battlepass
 {
 	width: 100%;
@@ -87,8 +100,8 @@
 #BattlepassWindow
 {
 	width: 820px;
-	height: 760px;
-	margin-bottom: 150px;
+	height: 780px;
+	margin-bottom: 100px;
 	background-color: #0008;
 	align: right center;
 	flow-children: down;
@@ -107,7 +120,7 @@
 #InfoContent
 {
 	width: 100%;
-	height: fit-children;
+	height: 200px;
 	flow-children: down;
 }
 
@@ -115,7 +128,7 @@
 #DonatorInfoContainer,
 #LeaderboardInfoContainer, {
 	width: 100%;
-	height: 64%;
+	height: 520px;
 	flow-children: down;
 	padding: 1% 1% 1% 1%;
 }
@@ -266,7 +279,7 @@
 #CloseButton {
 	width: 100%;
 	height: 40px;
-	align: center bottom;
+	align: center center;
 	saturation: 0.9;
 }
 
@@ -770,4 +783,44 @@
 {
 	saturation: 1.0;
 	background-color: #300000ba;
+}
+
+#RefreshBattlepassButton {
+	margin-bottom: 5px;
+	padding: 3px;
+	wash-color: #cccccc;
+	background-color: #707070da;
+	flow-children: right;
+	transition-property: wash-color, pre-transform-scale2d;
+	transition-duration: 0.1s;
+	transition-timing-function: ease-in;
+	border-radius: 5px;
+}
+
+#RefreshBattlepassButton Label{
+	align: center center;
+	color: white;
+	text-align: center center;
+	font-size: 20px;
+}
+
+#RefreshBattlepass {
+	width: 32px;
+	height: 32px;
+	margin-left: 10px;
+	background-image: url("s2r://panorama/images/control_icons/refresh_psd.vtex");
+	background-size: 100% 100%;
+}
+
+#RefreshBattlepassButton:hover {
+	wash-color: white;
+}
+
+#RefreshBattlepass.Active {
+	animation-name: refresh;
+	animation-duration: 0.55s;
+	animation-delay: 0.15s;
+	animation-timing-function: ease-in-out;
+	animation-iteration-count: 1;
+	animation-direction: reverse;
 }

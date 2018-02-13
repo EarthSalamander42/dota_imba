@@ -10,7 +10,7 @@ function ToggleBattlepass() {
 		toggle = true
 		if (first_time == false) {
 			first_time = true
-			//			DiretidePlayersXP()
+//			DiretidePlayersXP()
 			Battlepass()
 			HallOfFame("XP")
 		}
@@ -40,6 +40,29 @@ function ToggleGameOptions() {
 		toggle = false
 		$("#ImbaGameInfo").style.visibility = "collapse"
 	}
+}
+
+function RefreshBattlepass() {
+	if ($("#RefreshBattlepass").BHasClass("Active")) {
+		return;
+	}
+
+	var childrens = $("#BattlepassInfoContainer").FindChildrenWithClassTraverse("BattlepassRow")
+	for (var i = 1 in childrens) {
+		childrens[i].DeleteAsync(0)
+	}
+
+	var donator_childrens = $("#DonatorInfoContainer").FindChildrenWithClassTraverse("DonatorRow")
+	for (var i = 1 in donator_childrens) {
+		donator_childrens[i].DeleteAsync(0)
+	}
+
+	$("#RefreshBattlepass").AddClass("Active")
+
+	$.Schedule(1.0, function () {
+		$("#RefreshBattlepass").RemoveClass("Active")
+		Battlepass()
+	});
 }
 
 function SwitchTab(tab) {

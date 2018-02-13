@@ -109,6 +109,8 @@
 	"coming_soon"					"Bientôt: Pouvoir choisir la récompense"
 	"battlepass_reward_locked"		"Verrouillé!"
 	"battlepass_level"				"Niveau: "
+	"battlepass_refresh"			"Refresh"
+
 	"battlepass_blink"				"Light Blue Blink"
 	"battlepass_blink2"				"Nature Blink"
 	"battlepass_blink3"				"Water Blink"

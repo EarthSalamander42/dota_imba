@@ -9140,6 +9140,7 @@
 		"AbilityChannelTime"				"4.0"
 		"AbilityCastAnimation"				"ACT_DOTA_CAST_ABILITY_4"
 		"AOERadius"							"420"
+		"AbilityCastRange"					"275"
 		"AbilityCastPoint"					"0.3"
 		
 		// Time		
@@ -9205,18 +9206,13 @@
 				"var_type" 										"FIELD_INTEGER"
 				"singularity_stun_radius_increment_per_stack" 	"25"
 			}
-			"10"
-			{
-				"var_type" 										"FIELD_INTEGER"
-				"cast_range" 								 	"275"
-			}
 		}
 	}
 
 	//=================================================================================================================
 	// Enigma Talents
 	//=================================================================================================================
-	"special_bonus_imba_enigma_1"	// Each Singularity stack consumed now decreases Black Hole's cooldown
+	"special_bonus_imba_enigma_1"	// Each Singularity stack consumed now decreases Black Hole's cooldown by 2 seconds.
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -9236,7 +9232,7 @@
 			"01"
 			{
 				"var_type"		"FIELD_FLOAT"
-				"value"			"6"
+				"value"			"10"
 			}
 		}
 	}
@@ -9261,7 +9257,7 @@
 			"01"
 			{
 				"var_type"		"FIELD_INTEGER"
-				"value"			"325"
+				"value"			"225"
 			}
 		}
 	}
@@ -9316,7 +9312,7 @@
 		}
 	}
 
-	"special_bonus_imba_enigma_5"	// +500 Black Hole cast range
+	"special_bonus_imba_enigma_5"	// True malefice, instead of stuns little black holes are created
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -9336,12 +9332,12 @@
 			"01"
 			{
 				"var_type"		"FIELD_INTEGER"
-				"value"			"500"
+				"value"			"150"
 			}
 		}
 	}
 
-	"special_bonus_imba_enigma_6"	// +3 Eidolons
+	"special_bonus_imba_enigma_6"	// Enigma has a constant AoE Midnight pulse around him. Stacks with regular pulse.
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------

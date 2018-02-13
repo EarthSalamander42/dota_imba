@@ -199,6 +199,8 @@
 	"coming_soon"					"Upcoming feature: being able to choose reward"
 	"battlepass_reward_locked"		"Locked!"
 	"battlepass_level"				"Level: "
+	"battlepass_refresh"			"Refresh"
+
 	"battlepass_blink"				"Light Blue Blink"
 	"battlepass_blink2"				"Nature Blink"
 	"battlepass_blink3"				"Water Blink"

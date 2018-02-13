@@ -149,8 +149,8 @@
 									<DOTAAbilityImage id="PickedHeroAbility7" class="PickedHeroAbility" onmouseout="DOTAHideAbilityTooltip()" abilityname="" />
 									<DOTAAbilityImage id="PickedHeroAbility8" class="PickedHeroAbility" onmouseout="DOTAHideAbilityTooltip()" abilityname="" />
 									<DOTAAbilityImage id="PickedHeroAbility9" class="PickedHeroAbility" onmouseout="DOTAHideAbilityTooltip()" abilityname="" />
-									<DOTAItemImage id="PickedHeroAghanim" class="PickedHeroAbility" onmouseout="DOTAHideAbilityTooltip()" itemname="item_ultimate_scepter" />
-<!--								<DOTATalentDisplay id="StatBranch" class="PickedHeroAbility"/> -->
+<!--								<DOTAItemImage id="PickedHeroAghanim" class="PickedHeroAbility" onmouseout="DOTAHideAbilityTooltip()" itemname="item_ultimate_scepter" />
+									<DOTATalentDisplay id="StatBranch" class="PickedHeroAbility"/> -->
 								</Panel>
 							</Panel>
 
