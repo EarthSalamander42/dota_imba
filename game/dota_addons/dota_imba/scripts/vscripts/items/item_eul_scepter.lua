@@ -146,6 +146,7 @@ function modifier_item_imba_cyclone_active:CheckState()
 	local state =
 		{
 			[MODIFIER_STATE_STUNNED] = true,
+			[MODIFIER_STATE_INVULNERABLE] = true,
 		}
 	return state
 end
