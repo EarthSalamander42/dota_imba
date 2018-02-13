@@ -56,6 +56,9 @@ function item_imba_cyclone:CastFilterResultTarget(hTarget)
 	if caster:GetTeamNumber() == hTarget:GetTeamNumber() and caster ~= hTarget then
 		return UF_FAIL_FRIENDLY
 	end
+	if caster ~= hTarget and hTarget:IsMagicImmune() then
+		return UF_FAIL_MAGIC_IMMUNE_ENEMY
+	end
 end
 
 function item_imba_cyclone:OnSpellStart()
