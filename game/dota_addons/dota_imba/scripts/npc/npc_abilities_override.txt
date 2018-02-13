@@ -2360,7 +2360,7 @@
 	{
 		"AbilityCastPoint"				"0.1"
 
-		"AbilityCooldown"				"3.5 2.125 1.875 1.5"
+		"AbilityCooldown"				"2.5 2.125 1.875 1.5"
 
 		"AbilityManaCost"				"20"
 
