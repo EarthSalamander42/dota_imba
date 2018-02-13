@@ -153,7 +153,7 @@ function modifier_item_manta_passive:OnAttackLanded( keys )
 		-- If a higher-priority sword is present, do nothing either
 		local priority_sword_modifiers = {
 			"modifier_item_imba_sange_yasha",
-			"modifier_item_imba_azura_yasha",
+			"modifier_item_imba_kaya_yasha",
 			"modifier_item_imba_triumvirate"
 		}
 		for _, sword_modifier in pairs(priority_sword_modifiers) do
@@ -220,7 +220,7 @@ function modifier_item_imba_manta_stacks:OnCreated()
 		local owner = self:GetParent()
 		local higher_tier_modifiers = {
 			"modifier_item_imba_sange_yasha_stacks",
-			"modifier_item_imba_azura_yasha_stacks",
+			"modifier_item_imba_kaya_yasha_stacks",
 			"modifier_item_imba_triumvirate_stacks_buff"
 		}
 		for _, modifier in pairs(higher_tier_modifiers) do

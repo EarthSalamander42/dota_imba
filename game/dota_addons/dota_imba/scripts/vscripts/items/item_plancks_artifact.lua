@@ -97,6 +97,8 @@ function item_imba_plancks_artifact:OnSpellStart()
 		})
 	end
 
+	local particle = ParticleManager:CreateParticle("particles/econ/items/antimage/antimage_weapon_basher_ti5/antimage_manavoid_ti_5.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
+	ParticleManager:ReleaseParticleIndex(particle)
 	print("PLANCK: done")
 end
 

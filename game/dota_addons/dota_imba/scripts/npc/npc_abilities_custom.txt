@@ -7850,9 +7850,9 @@
 		{
 			"01"
 			{
-				"var_type"			"FIELD_INTEGER"
-				"field_radius"		"340"
-				"LinkedSpecialBonus""special_bonus_imba_disruptor_5"
+				"var_type"				"FIELD_INTEGER"
+				"field_radius"			"340"
+				"LinkedSpecialBonus"	"special_bonus_imba_disruptor_5"
 			}
 
 			"02"
@@ -9207,8 +9207,9 @@
 			}
 			"10"
 			{
-				"var_type" 										"FIELD_INTEGER"
-				"cast_range" 								 	"275"
+				"var_type" 				"FIELD_INTEGER"
+				"cast_range" 			"275"
+				"LinkedSpecialBonus"	"special_bonus_imba_enigma_5"
 			}
 		}
 	}

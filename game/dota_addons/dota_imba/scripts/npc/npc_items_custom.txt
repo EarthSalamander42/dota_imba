@@ -3117,14 +3117,18 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2146"
-		"BaseClass"						"item_datadriven"
+		"BaseClass"						"item_lua"
+		"ScriptFile"					"items/item_shiva.lua"
 		"AbilityTextureName" 			"custom/imba_shiva"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NONE"
 		"FightRecapLevel"				"1"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"30"
+		"AbilityCooldown"				"30.0"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -3203,130 +3207,23 @@
 			}
 		}
 
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"items/item_shiva.lua"
-				"Function"				"ShivaBlast"
+//		"Modifiers"
+//		{
+//			"modifier_item_imba_shivas_aura_slow_stack"
+//			{
+//				"Passive"				"0"
+//				"IsHidden"				"1"
+//				"IsDebuff"				"1"
+//				"IsPurgable"			"0"
 
-				"sound_cast"			"DOTA_Item.ShivasGuard.Activate"
-				"modifier_slow"			"modifier_item_imba_shivas_blast_slow"
-			}
-		}
+//				"Duration"				"%aura_linger_duration"
 
-		"Modifiers"
-		{
-			"modifier_item_imba_shivas"
-			{
-				"Passive"				"1"
-				"IsHidden"				"1"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"%bonus_armor"
-					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"	"%bonus_int"
-				}
-			}
-
-			"modifier_item_imba_shivas_aura"
-			{
-				"Passive"				"1"
-				"IsHidden"				"1"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-
-				"Aura"					"modifier_item_imba_shivas_aura_debuff"
-				"Aura_Radius"			"%aura_radius"
-				"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-				"Aura_Types"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-				"Aura_Flags"			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-				"Aura_ApplyToCaster"	"0"
-			}
-
-			"modifier_item_imba_shivas_aura_debuff"
-			{
-				"Passive"				"0"
-				"IsHidden"				"0"
-				"IsDebuff"				"1"
-				"IsPurgable"			"0"
-
-				"TextureName"			"custom/imba_shivas_guard"
-
-				"ThinkInterval"			"0.5"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"items/item_shiva.lua"
-						"Function"		"ShivaAura"
-
-						"modifier_slow"	"modifier_item_imba_shivas_aura_slow_stack"
-					}
-				}
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"items/item_shiva.lua"
-						"Function"		"ShivaAura"
-
-						"modifier_slow"	"modifier_item_imba_shivas_aura_slow_stack"
-					}
-				}
-			}
-
-			"modifier_item_imba_shivas_aura_slow_stack"
-			{
-				"Passive"				"0"
-				"IsHidden"				"1"
-				"IsDebuff"				"1"
-				"IsPurgable"			"0"
-
-				"Duration"				"%aura_linger_duration"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"-1"
-				}
-			}
-
-			"modifier_item_imba_shivas_blast_slow"
-			{
-				"Passive"				"0"
-				"IsHidden"				"1"
-				"IsDebuff"				"1"
-				"IsPurgable"			"1"
-
-				"EffectName"			"particles/generic_gameplay/generic_slowed_cold.vpcf"
-				"EffectAttachType"		"follow_origin"
-
-				"ThinkInterval"			"1.0"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"items/item_shiva.lua"
-						"Function"		"ShivaBlastSlowDecay"
-
-						"modifier_slow"	"modifier_item_imba_shivas_blast_slow"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%slow_stack"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow_stack"
-				}
-			}
-		}
+//				"Properties"
+//				{
+//					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"-1"
+//				}
+//			}
+//		}
 	}
 
 	//=================================================================================================================

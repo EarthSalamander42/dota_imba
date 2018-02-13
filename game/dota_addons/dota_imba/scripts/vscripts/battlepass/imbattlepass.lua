@@ -14,7 +14,6 @@
 --
 -- Editors:
 --     Earth Salamander #32
---     suthernfriend, 03.02.2018
 
 -- Battlepass
 

@@ -12,17 +12,26 @@
 -- See the License for the specific language governing permissions and
 -- limitations under the License.
 --
--- Editors:
+-- Editors: EarthSalamander #42 (Date: 13.02.2018)
 --
 
 --[[	Author: Firetoad
 		Date:	20.07.2016	]]
 
-function ShivaBlast( keys )
-	local caster = keys.caster
-	local ability = keys.ability
-	local sound_cast = keys.sound_cast
-	local modifier_slow = keys.modifier_slow
+if item_imba_shivas_guard == nil then item_imba_shivas_guard = class({}) end
+LinkLuaModifier("modifier_imba_shiva_handler", "items/item_shiva.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_shiva_aura", "items/item_shiva.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_shiva_debuff", "items/item_shiva.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_item_imba_shivas_aura_slow_stack", "items/item_shiva.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_item_imba_shivas_blast_slow", "items/item_shiva.lua", LUA_MODIFIER_MOTION_NONE)
+
+function item_imba_shivas_guard:GetIntrinsicModifierName()
+	return "modifier_imba_shiva_handler"
+end
+
+function item_imba_shivas_guard:OnSpellStart()
+	local caster = self:GetCaster()
+	local ability = self
 
 	-- Parameters
 	local blast_radius = ability:GetSpecialValueFor("blast_radius")
@@ -33,7 +42,7 @@ function ShivaBlast( keys )
 	local current_loc = caster:GetAbsOrigin()
 
 	-- Play cast sound
-	caster:EmitSound(sound_cast)
+	caster:EmitSound("DOTA_Item.ShivasGuard.Activate")
 
 	-- Play particle
 	local blast_pfx = ParticleManager:CreateParticle(caster.shiva_blast_effect, PATTACH_ABSORIGIN_FOLLOW, caster)
@@ -77,8 +86,8 @@ function ShivaBlast( keys )
 				ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
 
 				-- Apply slow modifier
-				ability:ApplyDataDrivenModifier(caster, enemy, modifier_slow, {})
-				enemy:SetModifierStackCount(modifier_slow, caster, slow_initial_stacks)
+				enemy:AddNewModifier(caster, ability, "modifier_item_imba_shivas_blast_slow", {})
+				enemy:SetModifierStackCount("modifier_item_imba_shivas_blast_slow", caster, slow_initial_stacks)
 
 				-- Add enemy to the targets hit table
 				targets_hit[#targets_hit + 1] = enemy
@@ -92,40 +101,200 @@ function ShivaBlast( keys )
 	end)
 end
 
-function ShivaBlastSlowDecay( keys )
-	local caster = keys.caster
-	local target = keys.target
-	local ability = keys.ability
-	local modifier_slow = keys.modifier_slow
+function item_imba_shivas_guard:GetAbilityTextureName()
+	if not IsClient() then return end
+	local caster = self:GetCaster()
+	if not caster.shiva_icon_client then return "custom/imba_shiva" end
+	return "custom/imba_shiva"..caster.shiva_icon_client
+end
 
-	-- Fetch current stacks
-	local current_stacks = target:GetModifierStackCount(modifier_slow, caster)
+-----------------------------------------------------------------------------------------------------------
+--	Shiva Handler
+-----------------------------------------------------------------------------------------------------------
+if modifier_imba_shiva_handler == nil then modifier_imba_shiva_handler = class({}) end
+function modifier_imba_shiva_handler:IsHidden() return true end
+function modifier_imba_shiva_handler:IsDebuff() return false end
+function modifier_imba_shiva_handler:IsPurgable() return false end
+function modifier_imba_shiva_handler:RemoveOnDeath() return false end
+function modifier_imba_shiva_handler:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
-	-- If this is the last stack, remove the modifier
-	if current_stacks <= 1 then
-		target:RemoveModifierByName(modifier_slow)
+function modifier_imba_shiva_handler:OnCreated()
+	if IsServer() then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_shiva_aura", {})
+	end
+	self:OnIntervalThink()
+	self:StartIntervalThink(1.0)
+end
 
-		-- Else, reduce stack amount by 1
-	else
-		AddStacks(ability, caster, target, modifier_slow, -1, true)
+function modifier_imba_shiva_handler:OnIntervalThink()
+	local caster = self:GetCaster()
+	if caster:IsIllusion() then return end
+	if IsServer() then
+		self:SetStackCount(caster.shiva_icon)
+	end
+
+	if IsClient() then
+		local icon = self:GetStackCount()
+		if icon == 0 then
+			caster.shiva_icon_client = nil
+		else
+			caster.shiva_icon_client = icon
+		end
 	end
 end
 
-function ShivaAura( keys )
-	local caster = keys.caster
-	local target = keys.target
-	local ability = keys.ability
-	local modifier_slow = keys.modifier_slow
+function modifier_imba_shiva_handler:DeclareFunctions()
+	local funcs = {
+		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
+		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
+	}
+	return funcs
+end
+
+function modifier_imba_shiva_handler:GetModifierPhysicalArmorBonus()
+	return self:GetAbility():GetSpecialValueFor("bonus_armor")
+end
+
+function modifier_imba_shiva_handler:GetModifierBonusStats_Intellect()
+	return self:GetAbility():GetSpecialValueFor("bonus_int")
+end
+
+function modifier_imba_shiva_handler:OnDestroy()
+	if IsServer() then
+		if self:GetCaster():HasModifier("modifier_imba_shiva_aura") then
+			self:GetCaster():RemoveModifierByName("modifier_imba_shiva_aura")
+		end
+	end
+end
+
+modifier_imba_shiva_aura = class({})
+
+function modifier_imba_shiva_aura:GetAuraEntityReject(target)
+	if self:GetCaster() == target then
+		return false
+	end
+
+	return true
+end
+
+function modifier_imba_shiva_aura:GetAuraRadius()
+	return self:GetAbility():GetSpecialValueFor("aura_radius")
+end
+
+function modifier_imba_shiva_aura:GetAuraSearchFlags()
+	return self:GetAbility():GetAbilityTargetFlags()
+end
+
+function modifier_imba_shiva_aura:GetAuraSearchTeam()
+	return self:GetAbility():GetAbilityTargetTeam()
+end
+
+function modifier_imba_shiva_aura:GetAuraSearchType()
+	return self:GetAbility():GetAbilityTargetType()
+end
+
+function modifier_imba_shiva_aura:GetModifierAura()
+	return "modifier_imba_shiva_debuff"
+end
+
+function modifier_imba_shiva_aura:IsAura()
+	return true
+end
+
+function modifier_imba_shiva_aura:IsDebuff()
+	return false
+end
+
+function modifier_imba_shiva_aura:IsHidden()
+	return true
+end
+
+function modifier_imba_shiva_aura:IsPurgable()
+	return false
+end
+
+function modifier_imba_shiva_aura:IsPermanent()
+	return true
+end
+
+modifier_imba_shiva_debuff = class({})
+
+function modifier_imba_shiva_debuff:OnCreated()
+	print("Created shiva debuff")
+	self:OnIntervalThink()
+	self:StartIntervalThink(0.5)
+end
+
+function modifier_imba_shiva_debuff:OnIntervalThink()
+	local caster = self:GetCaster()
+	local target = self:GetParent()
+	local ability = self:GetAbility()
+
+	print(target:GetUnitName())
 
 	-- Parameters
 	local aura_as_reduction = ability:GetSpecialValueFor("aura_as_reduction")
 
 	-- Remove the slow modifier in order to properly calculate the target's attack speed
-	target:RemoveModifierByName(modifier_slow)
+	target:RemoveModifierByName("modifier_item_imba_shivas_aura_slow_stack")
 
 	-- Calculate current attack speed and amount of reduction
 	local as_reduction = target:GetAttackSpeed() * aura_as_reduction
 
 	-- Apply stacks
-	AddStacks(ability, caster, target, modifier_slow, as_reduction, true)
+	AddStacks(ability, caster, target, "modifier_item_imba_shivas_aura_slow_stack", as_reduction, true)
+end
+
+modifier_item_imba_shivas_aura_slow_stack = class({}) -- should last 1 sec and reduce -1 as (per stack?)
+
+function modifier_item_imba_shivas_aura_slow_stack:IsDebuff()
+	return true
+end
+
+function modifier_item_imba_shivas_aura_slow_stack:DeclareFunctions()
+	return {MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,}
+end
+
+function modifier_item_imba_shivas_aura_slow_stack:GetModifierAttackSpeedBonus_Constant()
+	return self:GetAbility():GetSpecialValueFor("bonus_attack_speed")
+end
+
+modifier_item_imba_shivas_blast_slow = class({})
+
+function modifier_item_imba_shivas_blast_slow:OnCreated()
+	self:OnIntervalThink()
+	self:StartIntervalThink(1.0)
+end
+
+function modifier_item_imba_shivas_blast_slow:DeclareFunctions()
+	return {
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+	}
+end
+
+function modifier_item_imba_shivas_blast_slow:OnIntervalThink()
+	if IsClient() then return end
+	local caster = self:GetCaster()
+	local target = self:GetParent()
+	local ability = self:GetAbility()
+
+	-- Fetch current stacks
+	local current_stacks = target:GetModifierStackCount("modifier_item_imba_shivas_blast_slow", caster)
+
+	-- If this is the last stack, remove the modifier
+	if current_stacks <= 1 then
+		target:RemoveModifierByName("modifier_item_imba_shivas_blast_slow")
+		-- Else, reduce stack amount by 1
+	else
+		AddStacks(ability, caster, target, "modifier_item_imba_shivas_blast_slow", -1, true)
+	end
+end
+
+function modifier_item_imba_shivas_blast_slow:GetModifierAttackSpeedBonus_Constant()
+	return self:GetAbility():GetSpecialValueFor("slow_stack")
+end
+
+function modifier_item_imba_shivas_blast_slow:GetModifierMoveSpeedBonus_Percentage()
+	return self:GetAbility():GetSpecialValueFor("slow_stack")
 end

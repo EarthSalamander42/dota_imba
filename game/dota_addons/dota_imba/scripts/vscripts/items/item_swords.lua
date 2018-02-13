@@ -391,7 +391,7 @@ function modifier_item_imba_yasha:OnAttackLanded( keys )
 		-- If a higher-priority sword is present, do nothing either
 		local priority_sword_modifiers = {
 			"modifier_item_imba_sange_yasha",
-			"modifier_item_imba_azura_yasha",
+			"modifier_item_imba_kaya_yasha",
 			"modifier_item_imba_triumvirate"
 		}
 		for _, sword_modifier in pairs(priority_sword_modifiers) do
@@ -432,7 +432,7 @@ function modifier_item_imba_yasha_stacks:OnCreated()
 		local owner = self:GetParent()
 		local higher_tier_modifiers = {
 			"modifier_item_imba_sange_yasha_stacks",
-			"modifier_item_imba_azura_yasha_stacks",
+			"modifier_item_imba_kaya_yasha_stacks",
 			"modifier_item_imba_triumvirate_stacks_buff"
 		}
 		for _, modifier in pairs(higher_tier_modifiers) do
@@ -481,7 +481,7 @@ function modifier_item_imba_yasha_proc:OnCreated()
 		local owner = self:GetParent()
 		local higher_tier_modifiers = {
 			"modifier_item_imba_sange_yasha_proc",
-			"modifier_item_imba_azura_yasha_proc",
+			"modifier_item_imba_kaya_yasha_proc",
 			"modifier_item_imba_triumvirate_proc_buff"
 		}
 		for _, modifier in pairs(higher_tier_modifiers) do
@@ -507,29 +507,29 @@ function modifier_item_imba_yasha_proc:GetModifierMoveSpeedBonus_Percentage()
 --	Azura definition
 -----------------------------------------------------------------------------------------------------------
 
-if item_imba_azura == nil then item_imba_azura = class({}) end
-LinkLuaModifier( "modifier_item_imba_azura", "items/item_swords.lua", LUA_MODIFIER_MOTION_NONE )			-- Owner's bonus attributes, stackable
+if item_imba_kaya == nil then item_imba_kaya = class({}) end
+LinkLuaModifier( "modifier_item_imba_kaya", "items/item_swords.lua", LUA_MODIFIER_MOTION_NONE )			-- Owner's bonus attributes, stackable
 
-function item_imba_azura:GetAbilityTextureName()
+function item_imba_kaya:GetAbilityTextureName()
 	return "item_kaya"
 end
 
-function item_imba_azura:GetIntrinsicModifierName()
-	return "modifier_item_imba_azura"
+function item_imba_kaya:GetIntrinsicModifierName()
+	return "modifier_item_imba_kaya"
 end
 
 -----------------------------------------------------------------------------------------------------------
 --	Azura passive modifier (stackable)
 -----------------------------------------------------------------------------------------------------------
 
-if modifier_item_imba_azura == nil then modifier_item_imba_azura = class({}) end
-function modifier_item_imba_azura:IsHidden() return true end
-function modifier_item_imba_azura:IsDebuff() return false end
-function modifier_item_imba_azura:IsPurgable() return false end
-function modifier_item_imba_azura:IsPermanent() return true end
+if modifier_item_imba_kaya == nil then modifier_item_imba_kaya = class({}) end
+function modifier_item_imba_kaya:IsHidden() return true end
+function modifier_item_imba_kaya:IsDebuff() return false end
+function modifier_item_imba_kaya:IsPurgable() return false end
+function modifier_item_imba_kaya:IsPermanent() return true end
 
 -- Declare modifier events/properties
-function modifier_item_imba_azura:DeclareFunctions()
+function modifier_item_imba_kaya:DeclareFunctions()
 	local funcs = {
 		MODIFIER_PROPERTY_MANACOST_PERCENTAGE,
 		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
@@ -538,21 +538,21 @@ function modifier_item_imba_azura:DeclareFunctions()
 	return funcs
 end
 
-function modifier_item_imba_azura:GetModifierBonusStats_Intellect()
+function modifier_item_imba_kaya:GetModifierBonusStats_Intellect()
 	if not self:GetAbility() then return end
 	return self:GetAbility():GetSpecialValueFor("bonus_int")
 end
 
-function modifier_item_imba_azura:GetCustomCooldownReductionStacking()
+function modifier_item_imba_kaya:GetCustomCooldownReductionStacking()
 	return self:GetAbility():GetSpecialValueFor("bonus_cdr")
 end
 
-function modifier_item_imba_azura:GetModifierSpellAmplify_Percentage()
+function modifier_item_imba_kaya:GetModifierSpellAmplify_Percentage()
 	if not self:GetAbility() then return end
 	return self:GetAbility():GetSpecialValueFor("spell_amp")
 end
 
-function modifier_item_imba_azura:GetModifierPercentageManacost()
+function modifier_item_imba_kaya:GetModifierPercentageManacost()
 	if not self:GetAbility() then return end
 	return self:GetAbility():GetSpecialValueFor("bonus_cdr")
 end
@@ -776,7 +776,7 @@ function modifier_item_imba_sange_yasha_stacks:OnCreated()
 		-- Inherit stacks from lower-tier modifiers
 		local lower_tier_modifiers = {
 			"modifier_item_imba_yasha_stacks",
-			"modifier_item_imba_azura_yasha_stacks"
+			"modifier_item_imba_kaya_yasha_stacks"
 		}
 		local stack_count = self:GetStackCount()
 		for _, modifier in pairs(lower_tier_modifiers) do
@@ -838,7 +838,7 @@ function modifier_item_imba_sange_yasha_proc:OnCreated()
 		-- Remove lower-tier modifiers
 		local lower_tier_modifiers = {
 			"modifier_item_imba_yasha_proc",
-			"modifier_item_imba_azura_yasha_proc"
+			"modifier_item_imba_kaya_yasha_proc"
 		}
 		for _, modifier in pairs(lower_tier_modifiers) do
 			owner:RemoveModifierByName(modifier)
@@ -976,7 +976,7 @@ function modifier_item_imba_sange_azura_stacks:OnCreated()
 		local lower_tier_modifiers = {
 			"modifier_item_imba_sange_maim",
 			"modifier_item_imba_sange_yasha_maim",
-			"modifier_item_imba_azura_yasha_amp"
+			"modifier_item_imba_kaya_yasha_amp"
 		}
 		local stack_count = self:GetStackCount()
 		for _, modifier in pairs(lower_tier_modifiers) do
@@ -1043,33 +1043,33 @@ end
 --	Azura and Yasha definition
 -----------------------------------------------------------------------------------------------------------
 
-if item_imba_azura_yasha == nil then item_imba_azura_yasha = class({}) end
-LinkLuaModifier( "modifier_item_imba_azura_yasha", "items/item_swords.lua", LUA_MODIFIER_MOTION_NONE )				-- Owner's bonus attributes, stackable
-LinkLuaModifier( "modifier_item_imba_azura_yasha_amp", "items/item_swords.lua", LUA_MODIFIER_MOTION_NONE )			-- Amp debuff
-LinkLuaModifier( "modifier_item_imba_azura_yasha_silence", "items/item_swords.lua", LUA_MODIFIER_MOTION_NONE )		-- Silence debuff
-LinkLuaModifier( "modifier_item_imba_azura_yasha_stacks", "items/item_swords.lua", LUA_MODIFIER_MOTION_NONE )		-- Stacking attack speed
-LinkLuaModifier( "modifier_item_imba_azura_yasha_proc", "items/item_swords.lua", LUA_MODIFIER_MOTION_NONE )			-- Move speed proc
+if item_imba_kaya_yasha == nil then item_imba_kaya_yasha = class({}) end
+LinkLuaModifier( "modifier_item_imba_kaya_yasha", "items/item_swords.lua", LUA_MODIFIER_MOTION_NONE )				-- Owner's bonus attributes, stackable
+LinkLuaModifier( "modifier_item_imba_kaya_yasha_amp", "items/item_swords.lua", LUA_MODIFIER_MOTION_NONE )			-- Amp debuff
+LinkLuaModifier( "modifier_item_imba_kaya_yasha_silence", "items/item_swords.lua", LUA_MODIFIER_MOTION_NONE )		-- Silence debuff
+LinkLuaModifier( "modifier_item_imba_kaya_yasha_stacks", "items/item_swords.lua", LUA_MODIFIER_MOTION_NONE )		-- Stacking attack speed
+LinkLuaModifier( "modifier_item_imba_kaya_yasha_proc", "items/item_swords.lua", LUA_MODIFIER_MOTION_NONE )			-- Move speed proc
 
-function item_imba_azura_yasha:GetAbilityTextureName()
+function item_imba_kaya_yasha:GetAbilityTextureName()
 	return "custom/imba_azura_and_yasha"
 end
 
-function item_imba_azura_yasha:GetIntrinsicModifierName()
-	return "modifier_item_imba_azura_yasha" end
+function item_imba_kaya_yasha:GetIntrinsicModifierName()
+	return "modifier_item_imba_kaya_yasha" end
 
 -----------------------------------------------------------------------------------------------------------
 --	Azura and Yasha passive modifier (stackable)
 -----------------------------------------------------------------------------------------------------------
 
-if modifier_item_imba_azura_yasha == nil then modifier_item_imba_azura_yasha = class({}) end
-function modifier_item_imba_azura_yasha:IsHidden() return true end
-function modifier_item_imba_azura_yasha:IsDebuff() return false end
-function modifier_item_imba_azura_yasha:IsPurgable() return false end
-function modifier_item_imba_azura_yasha:IsPermanent() return true end
-function modifier_item_imba_azura_yasha:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+if modifier_item_imba_kaya_yasha == nil then modifier_item_imba_kaya_yasha = class({}) end
+function modifier_item_imba_kaya_yasha:IsHidden() return true end
+function modifier_item_imba_kaya_yasha:IsDebuff() return false end
+function modifier_item_imba_kaya_yasha:IsPurgable() return false end
+function modifier_item_imba_kaya_yasha:IsPermanent() return true end
+function modifier_item_imba_kaya_yasha:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 -- Declare modifier events/properties
-function modifier_item_imba_azura_yasha:DeclareFunctions()
+function modifier_item_imba_kaya_yasha:DeclareFunctions()
 	local funcs = {
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE_UNIQUE,
@@ -1080,28 +1080,28 @@ function modifier_item_imba_azura_yasha:DeclareFunctions()
 	return funcs
 end
 
-function modifier_item_imba_azura_yasha:GetCustomCooldownReduction()
+function modifier_item_imba_kaya_yasha:GetCustomCooldownReduction()
 	if not self:GetAbility() then return end
 	return self:GetAbility():GetSpecialValueFor("bonus_cdr") end
 
-function modifier_item_imba_azura_yasha:GetModifierAttackSpeedBonus_Constant()
+function modifier_item_imba_kaya_yasha:GetModifierAttackSpeedBonus_Constant()
 	if not self:GetAbility() then return end
 	return self:GetAbility():GetSpecialValueFor("bonus_attack_speed") end
 
-function modifier_item_imba_azura_yasha:GetModifierMoveSpeedBonus_Percentage_Unique()
+function modifier_item_imba_kaya_yasha:GetModifierMoveSpeedBonus_Percentage_Unique()
 	if not self:GetAbility() then return end
 	return self:GetAbility():GetSpecialValueFor("bonus_ms") end
 
-function modifier_item_imba_azura_yasha:GetModifierBonusStats_Agility()
+function modifier_item_imba_kaya_yasha:GetModifierBonusStats_Agility()
 	if not self:GetAbility() then return end
 	return self:GetAbility():GetSpecialValueFor("bonus_agility") end
 
-function modifier_item_imba_azura_yasha:GetModifierBonusStats_Intellect()
+function modifier_item_imba_kaya_yasha:GetModifierBonusStats_Intellect()
 	if not self:GetAbility() then return end
 	return self:GetAbility():GetSpecialValueFor("bonus_int") end
 
 -- On attack landed, roll for proc and apply stacks
-function modifier_item_imba_azura_yasha:OnAttackLanded( keys )
+function modifier_item_imba_kaya_yasha:OnAttackLanded( keys )
 	if IsServer() then
 		local owner = self:GetParent()
 		local target = keys.target
@@ -1123,7 +1123,7 @@ function modifier_item_imba_azura_yasha:OnAttackLanded( keys )
 		end
 
 		-- All conditions met, perform a Sange and Yasha attack
-		AzuraYashaAttack(owner, keys.target, self:GetAbility(), "modifier_item_imba_azura_yasha_amp", "modifier_item_imba_azura_yasha_stacks", "modifier_item_imba_azura_yasha_silence", "modifier_item_imba_azura_yasha_proc")
+		AzuraYashaAttack(owner, keys.target, self:GetAbility(), "modifier_item_imba_kaya_yasha_amp", "modifier_item_imba_kaya_yasha_stacks", "modifier_item_imba_kaya_yasha_silence", "modifier_item_imba_kaya_yasha_proc")
 	end
 end
 
@@ -1131,22 +1131,22 @@ end
 --	Azura and Yasha magic amp debuff (stackable)
 -----------------------------------------------------------------------------------------------------------
 
-if modifier_item_imba_azura_yasha_amp == nil then modifier_item_imba_azura_yasha_amp = class({}) end
-function modifier_item_imba_azura_yasha_amp:IsHidden() return false end
-function modifier_item_imba_azura_yasha_amp:IsDebuff() return true end
-function modifier_item_imba_azura_yasha_amp:IsPurgable() return true end
+if modifier_item_imba_kaya_yasha_amp == nil then modifier_item_imba_kaya_yasha_amp = class({}) end
+function modifier_item_imba_kaya_yasha_amp:IsHidden() return false end
+function modifier_item_imba_kaya_yasha_amp:IsDebuff() return true end
+function modifier_item_imba_kaya_yasha_amp:IsPurgable() return true end
 
 -- Modifier particle
-function modifier_item_imba_azura_yasha_amp:GetEffectName()
+function modifier_item_imba_kaya_yasha_amp:GetEffectName()
 	return "particles/item/swords/azura_debuff.vpcf"
 end
 
-function modifier_item_imba_azura_yasha_amp:GetEffectAttachType()
+function modifier_item_imba_kaya_yasha_amp:GetEffectAttachType()
 	return PATTACH_ABSORIGIN_FOLLOW
 end
 
 -- Modifier property storage
-function modifier_item_imba_azura_yasha_amp:OnCreated()
+function modifier_item_imba_kaya_yasha_amp:OnCreated()
 	self.amp_stack = self:GetAbility():GetSpecialValueFor("amp_stack")
 
 	-- Remove this if higher tier modifiers are present
@@ -1167,14 +1167,14 @@ function modifier_item_imba_azura_yasha_amp:OnCreated()
 end
 
 -- Declare modifier events/properties
-function modifier_item_imba_azura_yasha_amp:DeclareFunctions()
+function modifier_item_imba_kaya_yasha_amp:DeclareFunctions()
 	local funcs = {
 		MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS,
 	}
 	return funcs
 end
 
-function modifier_item_imba_azura_yasha_amp:GetModifierMagicalResistanceBonus()
+function modifier_item_imba_kaya_yasha_amp:GetModifierMagicalResistanceBonus()
 	if not self:GetAbility() then return end
 	return self.amp_stack * self:GetStackCount() end
 
@@ -1182,22 +1182,22 @@ function modifier_item_imba_azura_yasha_amp:GetModifierMagicalResistanceBonus()
 --	Azura and Yasha silence debuff
 -----------------------------------------------------------------------------------------------------------
 
-if modifier_item_imba_azura_yasha_silence == nil then modifier_item_imba_azura_yasha_silence = class({}) end
-function modifier_item_imba_azura_yasha_silence:IsHidden() return true end
-function modifier_item_imba_azura_yasha_silence:IsDebuff() return true end
-function modifier_item_imba_azura_yasha_silence:IsPurgable() return true end
+if modifier_item_imba_kaya_yasha_silence == nil then modifier_item_imba_kaya_yasha_silence = class({}) end
+function modifier_item_imba_kaya_yasha_silence:IsHidden() return true end
+function modifier_item_imba_kaya_yasha_silence:IsDebuff() return true end
+function modifier_item_imba_kaya_yasha_silence:IsPurgable() return true end
 
 -- Modifier particle
-function modifier_item_imba_azura_yasha_silence:GetEffectName()
+function modifier_item_imba_kaya_yasha_silence:GetEffectName()
 	return "particles/item/swords/azura_proc.vpcf"
 end
 
-function modifier_item_imba_azura_yasha_silence:GetEffectAttachType()
+function modifier_item_imba_kaya_yasha_silence:GetEffectAttachType()
 	return PATTACH_OVERHEAD_FOLLOW
 end
 
 -- Declare modifier states
-function modifier_item_imba_azura_yasha_silence:CheckState()
+function modifier_item_imba_kaya_yasha_silence:CheckState()
 	local states = {
 		[MODIFIER_STATE_SILENCED] = true,
 	}
@@ -1208,22 +1208,22 @@ end
 --	Azura and Yasha attack speed buff (stackable)
 -----------------------------------------------------------------------------------------------------------
 
-if modifier_item_imba_azura_yasha_stacks == nil then modifier_item_imba_azura_yasha_stacks = class({}) end
-function modifier_item_imba_azura_yasha_stacks:IsHidden() return false end
-function modifier_item_imba_azura_yasha_stacks:IsDebuff() return false end
-function modifier_item_imba_azura_yasha_stacks:IsPurgable() return true end
+if modifier_item_imba_kaya_yasha_stacks == nil then modifier_item_imba_kaya_yasha_stacks = class({}) end
+function modifier_item_imba_kaya_yasha_stacks:IsHidden() return false end
+function modifier_item_imba_kaya_yasha_stacks:IsDebuff() return false end
+function modifier_item_imba_kaya_yasha_stacks:IsPurgable() return true end
 
 -- Modifier particle
-function modifier_item_imba_azura_yasha_stacks:GetEffectName()
+function modifier_item_imba_kaya_yasha_stacks:GetEffectName()
 	return "particles/item/swords/yasha_buff.vpcf"
 end
 
-function modifier_item_imba_azura_yasha_stacks:GetEffectAttachType()
+function modifier_item_imba_kaya_yasha_stacks:GetEffectAttachType()
 	return PATTACH_ABSORIGIN_FOLLOW
 end
 
 -- Modifier property storage
-function modifier_item_imba_azura_yasha_stacks:OnCreated()
+function modifier_item_imba_kaya_yasha_stacks:OnCreated()
 	self.as_stack = self:GetAbility():GetSpecialValueFor("as_stack")
 
 	-- Remove this if higher tier modifiers are present
@@ -1256,14 +1256,14 @@ function modifier_item_imba_azura_yasha_stacks:OnCreated()
 end
 
 -- Declare modifier events/properties
-function modifier_item_imba_azura_yasha_stacks:DeclareFunctions()
+function modifier_item_imba_kaya_yasha_stacks:DeclareFunctions()
 	local funcs = {
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 	}
 	return funcs
 end
 
-function modifier_item_imba_azura_yasha_stacks:GetModifierAttackSpeedBonus_Constant()
+function modifier_item_imba_kaya_yasha_stacks:GetModifierAttackSpeedBonus_Constant()
 	if not self:GetAbility() then return end
 	return self.as_stack * self:GetStackCount() end
 
@@ -1271,22 +1271,22 @@ function modifier_item_imba_azura_yasha_stacks:GetModifierAttackSpeedBonus_Const
 --	Azura and Yasha move speed proc
 -----------------------------------------------------------------------------------------------------------
 
-if modifier_item_imba_azura_yasha_proc == nil then modifier_item_imba_azura_yasha_proc = class({}) end
-function modifier_item_imba_azura_yasha_proc:IsHidden() return true end
-function modifier_item_imba_azura_yasha_proc:IsDebuff() return false end
-function modifier_item_imba_azura_yasha_proc:IsPurgable() return true end
+if modifier_item_imba_kaya_yasha_proc == nil then modifier_item_imba_kaya_yasha_proc = class({}) end
+function modifier_item_imba_kaya_yasha_proc:IsHidden() return true end
+function modifier_item_imba_kaya_yasha_proc:IsDebuff() return false end
+function modifier_item_imba_kaya_yasha_proc:IsPurgable() return true end
 
 -- Modifier particle
-function modifier_item_imba_azura_yasha_proc:GetEffectName()
+function modifier_item_imba_kaya_yasha_proc:GetEffectName()
 	return "particles/item/swords/yasha_proc.vpcf"
 end
 
-function modifier_item_imba_azura_yasha_proc:GetEffectAttachType()
+function modifier_item_imba_kaya_yasha_proc:GetEffectAttachType()
 	return PATTACH_ABSORIGIN_FOLLOW
 end
 
 -- Modifier property storage
-function modifier_item_imba_azura_yasha_proc:OnCreated()
+function modifier_item_imba_kaya_yasha_proc:OnCreated()
 	self.proc_ms = self:GetAbility():GetSpecialValueFor("proc_ms")
 
 	-- Remove this if higher tier modifiers are present
@@ -1313,14 +1313,14 @@ function modifier_item_imba_azura_yasha_proc:OnCreated()
 end
 
 -- Declare modifier events/properties
-function modifier_item_imba_azura_yasha_proc:DeclareFunctions()
+function modifier_item_imba_kaya_yasha_proc:DeclareFunctions()
 	local funcs = {
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 	}
 	return funcs
 end
 
-function modifier_item_imba_azura_yasha_proc:GetModifierMoveSpeedBonus_Percentage()
+function modifier_item_imba_kaya_yasha_proc:GetModifierMoveSpeedBonus_Percentage()
 	if not self:GetAbility() then return end
 	return self.proc_ms end
 
@@ -1446,7 +1446,7 @@ function modifier_item_imba_triumvirate_stacks_debuff:OnCreated()
 		local lower_tier_modifiers = {
 			"modifier_item_imba_sange_maim",
 			"modifier_item_imba_sange_yasha_maim",
-			"modifier_item_imba_azura_yasha_amp",
+			"modifier_item_imba_kaya_yasha_amp",
 			"modifier_item_imba_sange_azura_stacks"
 		}
 		local stack_count = self:GetStackCount()
@@ -1537,7 +1537,7 @@ function modifier_item_imba_triumvirate_stacks_buff:OnCreated()
 		local owner = self:GetParent()
 		local lower_tier_modifiers = {
 			"modifier_item_imba_yasha_stacks",
-			"modifier_item_imba_azura_yasha_stacks",
+			"modifier_item_imba_kaya_yasha_stacks",
 			"modifier_item_imba_sange_yasha_stacks"
 		}
 		local stack_count = self:GetStackCount()
@@ -1591,7 +1591,7 @@ function modifier_item_imba_triumvirate_proc_buff:OnCreated()
 		local lower_tier_modifiers = {
 			"modifier_item_imba_yasha_proc",
 			"modifier_item_imba_sange_yasha_proc",
-			"modifier_item_imba_azura_yasha_proc"
+			"modifier_item_imba_kaya_yasha_proc"
 		}
 		for _, modifier in pairs(lower_tier_modifiers) do
 			owner:RemoveModifierByName(modifier)

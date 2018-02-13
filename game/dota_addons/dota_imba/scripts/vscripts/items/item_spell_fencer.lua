@@ -236,7 +236,7 @@ function modifier_item_imba_spell_fencer_passive_silence:OnAttackLanded( keys )
 		-- If a higher-priority sword is present, do zilch
 		local priority_sword_modifiers = {
 			"modifier_item_imba_sange_azura",
-			"modifier_item_imba_azura_yasha",
+			"modifier_item_imba_kaya_yasha",
 			"modifier_item_imba_triumvirate"
 		}
 		for _, sword_modifier in pairs(priority_sword_modifiers) do
@@ -251,7 +251,7 @@ function modifier_item_imba_spell_fencer_passive_silence:OnAttackLanded( keys )
 		end
 
 		-- Stack the magic amp up
-		local modifier_amp = target:AddNewModifier(owner, ability, "modifier_item_imba_azura_amp", {duration = ability:GetSpecialValueFor("stack_duration")})
+		local modifier_amp = target:AddNewModifier(owner, ability, "modifier_item_imba_kaya_amp", {duration = ability:GetSpecialValueFor("stack_duration")})
 		if modifier_amp and modifier_amp:GetStackCount() < ability:GetSpecialValueFor("max_stacks") then
 			modifier_amp:SetStackCount(modifier_amp:GetStackCount() + 1)
 			target:EmitSound("Imba.AzuraStack")
@@ -260,7 +260,7 @@ function modifier_item_imba_spell_fencer_passive_silence:OnAttackLanded( keys )
 		-- If the ability is not on cooldown, roll for a proc
 		if not owner:HasModifier("modifier_item_imba_spell_fencer_cooldown") and RollPercentage(ability:GetSpecialValueFor("proc_chance")) then
 			-- Proc! Apply the silence modifier and put the ability on cooldown
-			target:AddNewModifier(owner, ability, "modifier_item_imba_azura_silence", {duration = ability:GetSpecialValueFor("proc_duration")})
+			target:AddNewModifier(owner, ability, "modifier_item_imba_kaya_silence", {duration = ability:GetSpecialValueFor("proc_duration")})
 			target:EmitSound("Imba.AzuraProc")
 			owner:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_item_imba_spell_fencer_cooldown", {duration = self:GetAbility():GetSpecialValueFor("proc_cooldown")})
 		end
