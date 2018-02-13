@@ -3383,7 +3383,7 @@
 		"ItemShopTags"					"regen_health;regen_mana;mana_pool;health_pool"
 		"ItemQuality"					"epic"
 		"ItemAliases"					"bs;bloodstone"
-		"ItemInitialCharges"			"14"
+		"ItemInitialCharges"			"16"
 		"ItemDisplayCharges"			"1"
 		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
 
@@ -3429,7 +3429,7 @@
 			"08"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"on_death_loss"				"0.67" //33% gone
+				"on_death_loss"				"0.66" //33% gone
 			}
 			"09"
 			{
@@ -12532,7 +12532,7 @@
 			}
 		}
 	}
-		
+
 	//=================================================================================================================
 	// Recipe: Cyclone
 	//=================================================================================================================
@@ -12788,5 +12788,6 @@
 			}
 		}
 	}
+	
 	//next free ID: 2286
 }

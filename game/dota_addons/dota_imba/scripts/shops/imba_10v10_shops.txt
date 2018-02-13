@@ -116,7 +116,7 @@
 	"magics"			
 	{
 		"item"		"item_imba_initiate_robe"
-		"item"		"item_glimmer_cape"
+		"item"		"item_lotus_orb"
 		"item"		"item_imba_cyclone"
 		"item"		"item_imba_force_staff"
 		"item"		"item_imba_aether_lens"
@@ -124,7 +124,7 @@
 		"item"		"item_imba_veil_of_discord"
 		"item"		"item_imba_necronomicon"
 		"item"		"item_rod_of_atos"
-		//"item"		"item_imba_lotus_orb"
+		"item"		"item_imba_lotus_orb"
 		"item"		"item_imba_orchid"
 		"item"		"item_ethereal_blade"
 		"item"		"item_refresher"
@@ -175,7 +175,6 @@
 	// Level 4 - Orange / Orb / Artifacts
 	"artifacts"
 	{
-		"item"		"item_imba_mask_of_madness"
 		"item"		"item_imba_sange"
 		"item"		"item_imba_yasha"
 		"item"		"item_imba_azura"
@@ -189,8 +188,8 @@
 		"item"		"item_imba_mjollnir"
 		"item"		"item_imba_satanic"
 		"item"		"item_imba_skadi"
-		"item"		"item_lotus_orb"
 		"item"		"item_imba_arcane_nexus"
+		"item"		"item_imba_plancks_artifact"
 	}
 
 	"sideshop1"
