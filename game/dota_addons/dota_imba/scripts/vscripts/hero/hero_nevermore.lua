@@ -1045,8 +1045,8 @@ function modifier_imba_necromastery_souls:OnAttackLanded(keys)
             -- Gain a soul and refresh
             AddNecromasterySouls(self.caster, self.hero_attack_soul_count)
 
-            -- If caster is not broken, launch a hero soul to the caster
-            if not self.caster:PassivesDisabled() then
+            -- If caster is not broken and is visible, launch a hero soul to the caster
+            if not self.caster:PassivesDisabled() and not self.caster:IsInvisible() then
                 local soul_projectile = {Target = self.caster,
                                          Source = target,
                                          Ability = self.ability,
@@ -1118,8 +1118,8 @@ function modifier_imba_necromastery_souls:OnDeath(keys)
             -- Increase souls appropriately
             AddNecromasterySouls(self.caster, soul_count)
 
-            -- If caster is not disabled, launch a soul
-            if not self.caster:PassivesDisabled() then
+            -- If caster is not disabled and is visible, launch a soul
+            if not self.caster:PassivesDisabled() and not self.caster:IsInvisible() then
                 if soul_count == self.hero_kill_soul_count then
                     -- Launch a hero soul to the caster
                     local soul_projectile = {Target = self.caster,
@@ -1283,8 +1283,9 @@ function modifier_imba_dark_lord_aura:OnIntervalThink()
             -- Each enemy hero sends a soul. Illusions only fake it instead
             for _,enemy_hero in pairs(enemy_heroes) do
 
-                -- Send a soul
-                local soul_projectile = {Target = self.caster,
+                -- Send a soul if Nevermore is visible
+                if not self.caster:IsInvisible() then
+                	local soul_projectile = {Target = self.caster,
                                          Source = enemy_hero,
                                          Ability = self.ability,
                                          EffectName = self.particle_soul_hero,
@@ -1295,7 +1296,8 @@ function modifier_imba_dark_lord_aura:OnIntervalThink()
                                          }
 
 
-                ProjectileManager:CreateTrackingProjectile(soul_projectile)
+                	ProjectileManager:CreateTrackingProjectile(soul_projectile)
+                end
 
                 -- If it's a real hero, gain a soul
                 if enemy_hero:IsRealHero() then
