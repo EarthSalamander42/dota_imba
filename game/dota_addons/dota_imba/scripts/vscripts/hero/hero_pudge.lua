@@ -138,18 +138,6 @@ function modifier_imba_hook_light_stack:OnIntervalThink()
 	end
 end
 
-function modifier_special_bonus_imba_pudge_1:OnCreated()
-	if not IsServer() then return end
-	local dmg_hook_buff = self:GetParent():FindModifierByName("modifier_imba_hook_sharp_stack")
-	local spd_hook_buff = self:GetParent():FindModifierByName("modifier_imba_hook_light_stack")
-	local stack = self:GetParent():FindTalentValue("special_bonus_imba_pudge_1")
-	if dmg_hook_buff and spd_hook_buff then
-		dmg_hook_buff:SetStackCount(dmg_hook_buff:GetStackCount() + (stack / 2))
-		spd_hook_buff:SetStackCount(spd_hook_buff:GetStackCount() + (stack / 2))
-	end
-end
-
-
 LinkLuaModifier("modifier_imba_pudge_meat_hook_caster_root","hero/hero_pudge", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_hook_target_enemy","hero/hero_pudge", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_hook_target_ally","hero/hero_pudge", LUA_MODIFIER_MOTION_NONE)
@@ -168,6 +156,8 @@ function imba_pudge_meat_hook:OnUpgrade()
 		local caster = self:GetCaster()
 		local dmg_hook_buff = caster:AddNewModifier(caster, self, "modifier_imba_hook_sharp_stack", {})
 		local spd_hook_buff = caster:AddNewModifier(caster, self, "modifier_imba_hook_light_stack", {})
+		dmg_hook_buff:SetStackCount(caster:GetLevel())
+		spd_hook_buff:SetStackCount(caster:GetLevel())
 	end
 end
 
