@@ -535,6 +535,8 @@ function modifier_imba_hook_target_enemy:IsHidden() return false end
 function modifier_imba_hook_target_enemy:IsPurgable() return false end
 function modifier_imba_hook_target_enemy:IsStunDebuff() return false end
 function modifier_imba_hook_target_enemy:RemoveOnDeath() return false end
+function modifier_imba_hook_target_enemy:IsMotionController()  return true end
+function modifier_imba_hook_target_enemy:GetMotionControllerPriority()  return DOTA_MOTION_CONTROLLER_PRIORITY_HIGHEST end
 
 function modifier_imba_hook_target_enemy:CheckState()
 	local state_ally =
@@ -566,6 +568,8 @@ function modifier_imba_hook_target_ally:IsHidden() return false end
 function modifier_imba_hook_target_ally:IsPurgable() return false end
 function modifier_imba_hook_target_ally:IsStunDebuff() return false end
 function modifier_imba_hook_target_ally:RemoveOnDeath() return false end
+function modifier_imba_hook_target_ally:IsMotionController()  return true end
+function modifier_imba_hook_target_ally:GetMotionControllerPriority()  return DOTA_MOTION_CONTROLLER_PRIORITY_HIGHEST end
 
 function modifier_imba_hook_target_ally:CheckState()
 	local state_ally =
