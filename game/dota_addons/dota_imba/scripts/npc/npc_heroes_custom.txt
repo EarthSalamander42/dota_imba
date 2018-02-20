@@ -1397,7 +1397,6 @@
 		"Ability9"					"rubick_hidden2"
 		"Ability10"					"rubick_hidden3"
 
-		"Ability19"					"imba_rubick_spell_steal_controller"
 	}
 
 	//=================================================================================================================
