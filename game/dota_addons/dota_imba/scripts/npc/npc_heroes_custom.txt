@@ -551,7 +551,7 @@
 		"Ability14"					"special_bonus_imba_elder_titan_3" // Ancestral Spirit roots target hit (1 sec)
 		"Ability15"					"special_bonus_imba_elder_titan_6" // +3000 Earth Splitter crack distance
 		"Ability16"					"special_bonus_imba_elder_titan_7" // Echo Stomp no longer require channeling
-		"Ability17"					"special_bonus_imba_elder_titan_8" // Natural Order reduces physical and magical resistance
+		"Ability17"					"special_bonus_lifesteal_100"
 	}
 
 	//=================================================================================================================
@@ -1976,14 +1976,6 @@
 
 		//Picking Screen
 		"IsCustom"					"1"
-
-		// Abilities
-		//-------------------------------------------------------------------------------------------------------------
-		"Ability1"					"ghost_revenant_blackjack"
-		"Ability2"					"ghost_revenant_wraith"
-		"Ability3"					"ghost_revenant_miasma"
-		"Ability4"					"ghost_revenant_ghost_immolation"
-		"Ability5"					"ghost_revenant_exhaustion"
 
 		// Armor
 		//-------------------------------------------------------------------------------------------------------------

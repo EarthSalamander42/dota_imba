@@ -12844,7 +12844,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"					"npc_dota_hero"
+		"BaseClass"					"npc_dota_hero_razor"
 		"HeroID"					"115"
 		"Model"						"models/heroes/razor/razor.vmdl"
 		"ModelScale"				"1.080000"
@@ -12855,21 +12855,33 @@
 		"IsCustom"					"1"
 		"IsNew"						"1"
 
-		// Talents
-		//-------------------------------------------------------------------------------------------------------------
-//		"Ability10"					""		//10 Right
-//		"Ability11"					""		//10 Left
-//		"Ability12"					""		//15 Right
-//		"Ability13"					""		//15 Left
-//		"Ability14"					""		//20 Right    
-//		"Ability15"					""		//20 Left
-//		"Ability16"					""		//25 Right
-//		"Ability17"					""		//25 Left
-
 		// Armor
 		//-------------------------------------------------------------------------------------------------------------
 		"ArmorPhysical"				"-1"									// Physical protection.
 		"MagicalResistance"			"25"									// Magical protection (percentage).
+
+		// Abilities
+		//-------------------------------------------------------------------------------------------------------------
+		"Ability1"					"ghost_revenant_blackjack"
+		"Ability2"					"ghost_revenant_wraith"
+		"Ability3"					"ghost_revenant_miasma"
+		"Ability4"					"ghost_revenant_ghost_immolation"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"ghost_revenant_exhaustion"
+		"Ability7"					"generic_hidden"
+		"Ability8"					"generic_hidden"
+		"Ability9"					"generic_hidden"
+
+		// Talents
+		//-------------------------------------------------------------------------------------------------------------
+		"Ability10"					"special_bonus_magic_resistance_15"
+		"Ability11"					"special_bonus_mp_300"		//10 Left
+		"Ability12"					"generic_hidden"		//15 Right
+		"Ability13"					"special_bonus_imba_ghost_revenant_1" // Increase Blackjack projectile number
+		"Ability14"					"generic_hidden"		//20 Right    
+		"Ability15"					"generic_hidden"		//20 Left
+		"Ability16"					"generic_hidden"		//25 Right
+		"Ability17"					"generic_hidden"		//25 Left
 
 		// Attack
 		//-------------------------------------------------------------------------------------------------------------
@@ -12926,7 +12938,7 @@
 		"HasInventory"				"1"
 
 		//"particle_folder"			"particles/units/heroes/hero_abaddon"
-		"GameSoundsFile"			"soundevents/game_sounds_heroes_custom/game_sounds_hell_empress.vsndevts"
+		"GameSoundsFile"			"soundevents/game_sounds_heroes_custom/game_sounds_razor.vsndevts"
 		//"VoiceFile"				"soundevents/voscripts/game_sounds_vo_abaddon.vsndevts"
 		"RenderablePortrait"
 		{

@@ -12207,7 +12207,6 @@
 		"ID"									"2273"
 		"BaseClass"								"item_datadriven"
 		"Model"									"models/props_gameplay/rune_goldxp.vmdl"
-		"Effect"								"particles/generic_gameplay/rune_bounty.vpcf"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -12229,7 +12228,6 @@
 		"ID"									"2274"
 		"BaseClass"								"item_datadriven"
 		"Model"									"models/props_gameplay/rune_haste01.vmdl"
-		"Effect"								"particles/generic_gameplay/rune_haste.vpcf"
 		"RuneDuration"							"22"
 
 		// Item Info
@@ -12252,7 +12250,6 @@
 		"ID"									"2275"
 		"BaseClass"								"item_datadriven"
 		"Model"									"models/props_gameplay/rune_doubledamage01.vmdl"
-		"Effect"								"particles/generic_gameplay/rune_doubledamage.vpcf"
 		"RuneDuration"							"45"
 
 		// Item Info
@@ -12275,7 +12272,6 @@
 		"ID"									"2276"
 		"BaseClass"								"item_datadriven"
 		"Model"									"models/props_gameplay/rune_regeneration01.vmdl"
-		"Effect"								"particles/generic_gameplay/rune_regeneration.vpcf"
 		"RuneDuration"							"30"
 
 		// Item Info
@@ -12298,7 +12294,6 @@
 		"ID"									"2277"
 		"BaseClass"								"item_datadriven"
 		"Model"									"models/props_gameplay/rune_arcane.vmdl"
-		"Effect"								"particles/generic_gameplay/rune_arcane.vpcf"
 		"RuneDuration"							"50"
 
 		// Item Info
@@ -12321,7 +12316,6 @@
 		"ID"									"2278"
 		"BaseClass"								"item_datadriven"
 		"Model"									"models/props_gameplay/rune_invisibility01.vmdl"
-		"Effect"								"particles/generic_gameplay/rune_invisibility.vpcf"
 		"RuneDuration"							"45"
 
 		// Item Info
@@ -12344,7 +12338,6 @@
 		"ID"									"2279"
 		"BaseClass"								"item_datadriven"
 		"Model"									"models/props_gameplay/rune_illusion01.vmdl"
-		"Effect"								"particles/generic_gameplay/rune_illusion.vpcf"
 		"RuneDuration"							"45"
 
 		// Item Info
@@ -12367,7 +12360,6 @@
 		"ID"									"2280"
 		"BaseClass"								"item_datadriven"
 		"Model"									"models/props_gameplay/rune_frost.vmdl"
-		"Effect"								"particles/econ/items/puck/puck_snowflake/puck_snowflake_ambient.vpcf"
 		"RuneDuration"							"45"
 
 		// Item Info

@@ -8274,7 +8274,6 @@
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"custom/imba_elder_titan_echo_stomp"
 		"ScriptFile"					"hero/hero_elder_titan.lua"
-		"MaxLevel"						"4"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -8308,7 +8307,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"sleep_duration"			"2.0 3.0 4.0 5.0"
+				"sleep_duration"			"2.0 2.75 3.5 4.25"
 			}
 			"04"
 			{
@@ -8340,7 +8339,6 @@
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"custom/imba_elder_titan_echo_stomp"
 		"ScriptFile"					"hero/hero_elder_titan.lua"
-		"MaxLevel"						"4"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -8374,7 +8372,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"sleep_duration"			"2.0 3.0 4.0 5.0"
+				"sleep_duration"			"2.0 2.75 3.5 4.25"
 			}
 			"04"
 			{
@@ -8404,7 +8402,6 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
 		"AbilitySound"					"Hero_ElderTitan.AncestralSpirit.Cast"
-		"MaxLevel"						"4"
 
 		"AbilityCastRange"				"1200"
 		"AbilityCastPoint"				"0.4"
@@ -8445,7 +8442,8 @@
 			"05"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"speed"							"750"
+				"speed"							"600"
+				"LinkedSpecialBonus"			"special_bonus_imba_elder_titan_2"
 			}
 			"06"
 			{
@@ -8487,12 +8485,12 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
+		"AbilityCastPoint"				"0.0"
 		"AbilityCastAnimation"			"ACT_INVALID"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"0.0 0.0 0.0"
+		"AbilityCooldown"				"0.0"
 	}
 
 	//=================================================================================================================
@@ -8510,7 +8508,6 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"AbilityCastAnimation"			"ACT_INVALID"
-		"MaxLevel"						"4"
 
 		"AbilityCastRange"				"350"
 
@@ -8554,7 +8551,6 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
 		"HasScepterUpgrade"				"1"
-		"MaxLevel"						"3"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -8666,7 +8662,7 @@
 			"01"
 			{
 				"var_type"		"FIELD_FLOAT"
-				"value"			"600"
+				"value"			"400"
 			}
 		}
 	}
@@ -40908,6 +40904,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"projectile_amount"			"3"
+				"LinkedSpecialBonus"		"special_bonus_imba_ghost_revenant_1"
 			}
 			"08"
 			{
@@ -41095,6 +41092,34 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"duration"					"7.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ghost Revenant Talents
+	//=================================================================================================================
+	"special_bonus_imba_ghost_revenant_1"	// Increase number of projectiles
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_undefined"                                                        
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"		"ghost_revenant_blackjack"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_FLOAT"
+				"value"			"2"
 			}
 		}
 	}

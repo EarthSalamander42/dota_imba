@@ -394,7 +394,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"hp_regen"				"4.0"
+				"hp_regen"				"2.0"
 			}
 			"02"
 			{
