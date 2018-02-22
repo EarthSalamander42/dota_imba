@@ -2072,158 +2072,6 @@
 	}
 
 	//=================================================================================
-	// Warlock's Chaotic Golem - Level 5
-	//=================================================================================
-	"npc_imba_warlock_golem_5"
-	{
-		// General
-		//----------------------------------------------------------------
-		"BaseClass"                 "npc_dota_lone_druid_bear"
-		"Model"                     "models/heroes/warlock/warlock_demon.vmdl"
-		"SoundSet"                  "Hero_WarlockGolem"
-		"IdleSoundLoop"             "Hero_WarlockGolem.Spawn_Loop"
-		"Level"                     "30"
-		"ModelScale"                "1.2"
-		"IsAncient"                 "1"
-		"ConsideredHero"            "1"
-		"CanBeDominated"            "0"     
-		"UnitLabel"                 "infernal"
-		"VoiceFile"                 "soundevents/voscripts/game_sounds_vo_warlock_golem.vsndevts"
-		
-		// Abilities
-		//----------------------------------------------------------------
-		"Ability1"                  "imba_warlock_flaming_fists"
-		"Ability2"                  "imba_warlock_permanent_immolation"
-
-		// Armor
-		//----------------------------------------------------------------
-		"ArmorPhysical"             "14"
-		"MagicalResistance"         "33"
-
-		// Attack
-		//----------------------------------------------------------------
-		"AttackCapabilities"        "DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackDamageMin"           "170"
-		"AttackDamageMax"           "180"
-		"AttackRate"                "1.2"
-		"AttackAnimationPoint"      "0.26"
-		"AttackAcquisitionRange"    "500"
-		"AttackRange"               "225"
-		"ProjectileModel"           ""
-		"ProjectileSpeed"           "900"
-
-		// Bounds
-		//----------------------------------------------------------------
-		"HealthBarOffset"           "240"
-		"BoundsHullName"            "DOTA_HULL_SIZE_HERO"
-
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyXP"                  "100"
-		"BountyGoldMin"             "250"
-		"BountyGoldMax"             "250"
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"             "380"
-		"MovementTurnRate"          "0.5"
-
-		// Status
-		//----------------------------------------------------------------
-		"StatusHealth"              "2500"
-		"StatusHealthRegen"         "105"        
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"                  "DOTA_TEAM_NEUTRALS"
-		"CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_HERO"
-		"CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_HERO"
-		"UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"        "1800"
-		"VisionNighttimeRange"      "1800"
-	}
-
-	//=================================================================================
-	// Warlock's Chaotic Golem - Level 6
-	//=================================================================================
-	"npc_imba_warlock_golem_6"
-	{
-		// General
-		//----------------------------------------------------------------
-		"BaseClass"                 "npc_dota_lone_druid_bear"
-		"Model"                     "models/heroes/warlock/warlock_demon.vmdl"
-		"SoundSet"                  "Hero_WarlockGolem"
-		"IdleSoundLoop"             "Hero_WarlockGolem.Spawn_Loop"
-		"Level"                     "36"
-		"ModelScale"                "1.25"
-		"IsAncient"                 "1"
-		"ConsideredHero"            "1"
-		"CanBeDominated"            "0"     
-		"UnitLabel"                 "infernal"
-		"VoiceFile"                 "soundevents/voscripts/game_sounds_vo_warlock_golem.vsndevts"
-		
-		// Abilities
-		//----------------------------------------------------------------
-		"Ability1"                  "imba_warlock_flaming_fists"
-		"Ability2"                  "imba_warlock_permanent_immolation"
-
-		// Armor
-		//----------------------------------------------------------------
-		"ArmorPhysical"             "15"
-		"MagicalResistance"         "33"
-
-		// Attack
-		//----------------------------------------------------------------
-		"AttackCapabilities"        "DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackDamageMin"           "190"
-		"AttackDamageMax"           "210"
-		"AttackRate"                "1.2"
-		"AttackAnimationPoint"      "0.26"
-		"AttackAcquisitionRange"    "500"
-		"AttackRange"               "225"
-		"ProjectileModel"           ""
-		"ProjectileSpeed"           "900"
-
-		// Bounds
-		//----------------------------------------------------------------
-		"HealthBarOffset"           "240"
-		"BoundsHullName"            "DOTA_HULL_SIZE_HERO"
-
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyXP"                  "100"
-		"BountyGoldMin"             "275"
-		"BountyGoldMax"             "275"
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"             "390"
-		"MovementTurnRate"          "0.5"
-
-		// Status
-		//----------------------------------------------------------------
-		"StatusHealth"              "2750"
-		"StatusHealthRegen"         "120"        
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"                  "DOTA_TEAM_NEUTRALS"
-		"CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_HERO"
-		"CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_HERO"
-		"UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"        "1800"
-		"VisionNighttimeRange"      "1800"
-	}
-
-	//=================================================================================
 	// Warlock's Demonic Ascension
 	//=================================================================================
 	"npc_imba_warlock_demonic_ascension"
@@ -2401,7 +2249,7 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"1400"		// Base health.
+		"StatusHealth"				"1500"		// Base health.
 		"StatusHealthRegen"			"2"			// Health regeneration rate.
 		"StatusMana"				"300"		// Base mana.
 		"StatusManaRegen"			"0.5"		// Mana regeneration rate.		 
@@ -2476,7 +2324,7 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"2300"		// Base health.
+		"StatusHealth"				"2750"		// Base health.
 		"StatusHealthRegen"			"4"			// Health regeneration rate.
 		"StatusMana"				"300"			// Base mana.
 		"StatusManaRegen"			"0.5"		// Mana regeneration rate.		 
@@ -2551,7 +2399,7 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"3200"		// Base health.
+		"StatusHealth"				"4000"		// Base health.
 		"StatusHealthRegen"			"6"			// Health regeneration rate.
 		"StatusMana"				"300"		// Base mana.
 		"StatusManaRegen"			"0.5"		// Mana regeneration rate.		 
@@ -2626,7 +2474,7 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"4200"		// Base health.
+		"StatusHealth"				"5250"		// Base health.
 		"StatusHealthRegen"			"8"			// Health regeneration rate.
 		"StatusMana"				"300"		// Base mana.
 		"StatusManaRegen"			"0.5"		// Mana regeneration rate.		 
