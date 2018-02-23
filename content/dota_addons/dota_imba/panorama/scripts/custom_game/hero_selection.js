@@ -349,8 +349,9 @@ function LoadPlayers() {
 		if (plyData != null) {
 			if (map_info.map_display_name == "imba_standard") {
 				// Dont display IMR if player havent calibrated yet
-				if (plyData.IMR_5v5_calibrating && playerPanel != undefined)
+				if (plyData.IMR_5v5_calibrating && playerPanel != undefined) {
 					playerPanel.setPlayerMMR("TBD"); // error sometimes
+				}
 				else
 					if (plyData.IMR_5v5)
 						playerPanel.SetPlayerMMR(plyData.IMR_5v5.toFixed([0]));
