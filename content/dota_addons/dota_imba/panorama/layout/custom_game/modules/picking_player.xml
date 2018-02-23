@@ -33,7 +33,6 @@
 			},
 
 			SetPlayerMMR:function( MMR ) {
-				$('#PlayerMMR').style.visibility = "visible";
 				$('#PlayerMMRLabel').text = MMR;
 			},
 
@@ -91,7 +90,7 @@
 		</Panel>
 
 		<Panel id="PlayerMMR">
-			<Label id="PlayerMMRLabel" />
+			<Label id="PlayerMMRLabel" text="TBD" />
 		</Panel>
 	</Panel>
 </root>
