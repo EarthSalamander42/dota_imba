@@ -33,9 +33,6 @@
 			},
 
 			SetPlayerMMR:function( MMR ) {
-				$.Msg($('#PlayerMMR'))
-				$.Msg($('#PlayerMMRLabel'))
-				$.Msg(MMR)
 				$('#PlayerMMR').style.visibility = "visible";
 				$('#PlayerMMRLabel').text = MMR;
 			},

@@ -76,7 +76,7 @@ function _ScoreboardUpdater_UpdatePlayerPanelImr(plyData, playerPanel) {
 		}	
 	}
 	$.Msg(strings);
-	
+
 	// set labels
 
 	_ScoreboardUpdater_SetTextSafe(playerPanel, ids._5v5.teammate, strings._5v5.flyout);
@@ -88,31 +88,34 @@ function _ScoreboardUpdater_UpdatePlayerPanelImr(plyData, playerPanel) {
 function _ScoreboardUpdater_UpdatePlayerPanelXP(plyData, playerPanel, playerId, ImbaXP_Panel) {
 
 	$.Msg("Updating player xp panel");
-	
+
 	var ids = {
 			xpRank:  "ImbaXPRank" + playerId,
 			xp: "ImbaXP" + playerId,
-			xpEarned: "ImbaXPEarned" + playerId
+			xpEarned: "ImbaXPEarned" + playerId,
+			level: "ImbaLvl" + playerId,
+			progress_bar: "XPProgressBar" + playerId,
 	};
-	
+
 	var strings = {
 			xpRank: plyData.title,
 			xp: "0/100",
 			xpEarned: "0",
+			level: "1",
 			color: plyData.title_color,
-			xpEarnedColor: "yellow"
+			xpEarnedColor: "yellow",
 	};
-	
-	$.Msg(strings);
-	
+
+	$.Msg(plyData);
+
 	// setup strings
-	
+
 	if (plyData.XP !== undefined && plyData.MaxXP !== undefined)
 		strings.xp = plyData.XP + "/" + plyData.MaxXP;
-	
+
 	if (plyData.title_color != null)
 		strings.color = plyData.title_color;
-	
+
 	if (plyData.XP_change !== undefined) {
 		if (plyData.XP_change > 0) {
 			strings.xpEarned = "+" + plyData.XP_change.toString();
@@ -122,28 +125,24 @@ function _ScoreboardUpdater_UpdatePlayerPanelXP(plyData, playerPanel, playerId, 
 			strings.xpEarnedColor = "red";
 		}
 	}
-	
-	$.Msg(strings);
 
-	$.Msg("Updating panels");
-	
+	if (plyData.Lvl !== undefined)
+		strings.level = plyData.Lvl;
+
 	// setup panels
-
 	ImbaXP_Panel.BCreateChildren("<Panel id='XPProgressBarContainer" + playerId + "' value='0.0'/>");
 	var Imbar = ImbaXP_Panel.BCreateChildren("<ProgressBar id='XPProgressBar" + playerId + "'/>");
 	ImbaXP_Panel.BCreateChildren("<Label id='ImbaLvl" + playerId + "' text='999'/>");
 	ImbaXP_Panel.BCreateChildren("<Label id='ImbaXPRank" + playerId + "' text='999'/>");
 	ImbaXP_Panel.BCreateChildren("<Label id='ImbaXP" + playerId + "' text='999'/>");
 	ImbaXP_Panel.BCreateChildren("<Label id='ImbaXPEarned" + playerId + "' text='+0'/>");
-	
-	// set labels and colors
 
-	$.Msg("Updating lables and colors");
-	$.Msg(playerPanel)
-	
+	// set labels and colors	
 	_ScoreboardUpdater_SetTextSafe(playerPanel, ids.xpRank, strings.xpRank);
 	_ScoreboardUpdater_SetTextSafe(playerPanel, ids.xp, strings.xp);
 	_ScoreboardUpdater_SetTextSafe(playerPanel, ids.xpEarned, strings.xpEarned);
+	_ScoreboardUpdater_SetTextSafe(playerPanel, ids.level, strings.level);
+	_ScoreboardUpdater_SetValueSafe(playerPanel, ids.progress_bar, plyData.XP / plyData.MaxXP);
 
 	if (plyData.title_color != null)
 		playerPanel.FindChildTraverse(ids.xpRank).style.color = strings.color;
