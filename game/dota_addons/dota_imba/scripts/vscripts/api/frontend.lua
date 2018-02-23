@@ -23,8 +23,8 @@ ImbaApiFrontendPreloaded = {}
 ImbaApiFrontendReady_ = false
 
 ImbaApiFrontendSettings = {
-	debug = true,
-	eventTimer = 100
+	debug = false,
+	eventTimer = 2
 }
 
 -- Asyncronous
@@ -270,7 +270,10 @@ ApiEventCodes = {
 	AbilityUsed = 18,			-- (hero_name, ability, steamid)
 	--	ItemUsed = 19,				-- (hero_name, steamid, item)
 	Timing = 20,				-- ()
-	UnitSpawned = 21			-- (unit_name, steamid)
+	UnitSpawned = 21,			-- (unit_name, steamid)
+	ItemCombined = 22,			-- (item_name, hero_name, steamid)
+	ItemPickedUp = 23			-- (item_name, hero_name, steamid)
+	
 }
 
 function ImbaApiFrontendEventToString(eventCode)

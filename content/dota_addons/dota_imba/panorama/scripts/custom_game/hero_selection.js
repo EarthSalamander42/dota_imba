@@ -359,6 +359,18 @@ function LoadPlayers() {
 
 				RadiantLevels = RadiantLevels + plyData.IMR_5v5 / radiantPlayers.length
 				$("#AverageMMRTeamRadiant").text = $.Localize("average_mmr") + RadiantLevels.toFixed([0]);
+			} else if (map_info.map_display_name == "imba_10v10") {
+					// Dont display IMR if player havent calibrated yet
+					if (plyData.IMR_10v10_calibrating && playerPanel != undefined)
+						playerPanel.setPlayerMMR("TBD"); // error sometimes
+					else
+						if (plyData.IMR_10v10)
+							playerPanel.SetPlayerMMR(plyData.IMR_10v10.toFixed([0]));
+						else
+							playerPanel.SetPlayerMMR("N/A");
+
+					RadiantLevels = RadiantLevels + plyData.IMR_10v10 / radiantPlayers.length
+					$("#AverageMMRTeamRadiant").text = $.Localize("average_mmr") + RadiantLevels.toFixed([0]);
 			} else {
 				//				playerPanel.SetPlayerMMR( plyData.IMR_10v10.toFixed([0]) );
 				//				RadiantLevels = RadiantLevels + plyData.IMR_10v10 / radiantPlayers.length
@@ -411,6 +423,17 @@ function LoadPlayers() {
 						playerPanel.SetPlayerMMR("N/A");
 				DireLevels = DireLevels + plyData.IMR_5v5 / direPlayers.length
 				$("#AverageMMRTeamDire").text = $.Localize("average_mmr") + DireLevels.toFixed([0]);
+			} else if (map_info.map_display_name == "imba_10v10") {
+					// Dont display IMR if player havent calibrated yet
+					if (plyData.IMR_10v10_calibrating && playerPanel != undefined)
+						playerPanel.setPlayerMMR("TBD"); // error sometimes
+					else
+						if (plyData.IMR_10v10)
+							playerPanel.SetPlayerMMR(plyData.IMR_10v10.toFixed([0]));
+						else
+							playerPanel.SetPlayerMMR("N/A");
+					DireLevels = DireLevels + plyData.IMR_10v10 / direPlayers.length
+					$("#AverageMMRTeamDire").text = $.Localize("average_mmr") + DireLevels.toFixed([0]);
 			} else {
 				//				playerPanel.SetPlayerMMR( plyData.IMR_10v10.toFixed([0]) );
 				//				DireLevels = DireLevels + plyData.IMR_10v10 / radiantPlayers.length

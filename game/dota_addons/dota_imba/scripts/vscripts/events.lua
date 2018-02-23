@@ -582,15 +582,26 @@ end
 
 -- An item was picked up off the ground
 function GameMode:OnItemPickedUp(keys)
+	
+	-- The playerID of the hero who is buying something
 	local heroEntity = EntIndexToHScript(keys.HeroEntityIndex)
-	--local itemEntity = EntIndexToHScript(keys.ItemEntityIndex)
-	--local player = PlayerResource:GetPlayer(keys.PlayerID)
-	local itemname = keys.itemname
+	local plyID = keys.PlayerID
+	if not plyID then return end
+	local hero = PlayerResource:GetSelectedHeroEntity(plyID)
+	local itemName = keys.itemname
+	local itemcost = keys.itemcost
 
-	if heroEntity:IsHero() and itemname == "item_bag_of_gold" then
+	if heroEntity:IsHero() and itemName == "item_bag_of_gold" then
 		-- Pick up the gold
 		GoldPickup(keys)
 	end
+	
+	ApiEvent(ApiEventCodes.ItemPickedUp, {
+		tostring(keys.itemname),
+		tostring(hero:GetUnitName()),
+		tostring(PlayerResource:GetSteamID(plyID))
+	})
+	
 end
 
 -- A player has reconnected to the game. This function can be used to repaint Player-based particles or change
@@ -612,6 +623,7 @@ function GameMode:OnItemPurchased( keys )
 		tostring(hero:GetUnitName()),
 		tostring(PlayerResource:GetSteamID(plyID))
 	})
+	
 end
 
 -- An ability was used by a player
@@ -1320,13 +1332,15 @@ function GameMode:OnItemCombined(keys)
 	-- The playerID of the hero who is buying something
 	local plyID = keys.PlayerID
 	if not plyID then return end
-	local player = PlayerResource:GetPlayer(plyID)
-
-	-- The name of the item purchased
+	local hero = PlayerResource:GetSelectedHeroEntity(plyID)
 	local itemName = keys.itemname
-
-	-- The cost of the item purchased
 	local itemcost = keys.itemcost
+
+	ApiEvent(ApiEventCodes.ItemCombined, {
+		tostring(keys.itemname),
+		tostring(hero:GetUnitName()),
+		tostring(PlayerResource:GetSteamID(plyID))
+	})
 end
 
 -- This function is called whenever an ability begins its PhaseStart phase (but before it is actually cast)

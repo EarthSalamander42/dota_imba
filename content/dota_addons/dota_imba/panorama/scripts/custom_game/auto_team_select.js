@@ -76,7 +76,7 @@ var LegacyCompatSetupUI = function() {
 	$("#MapInfo").SetDialogVariable("map_name", map_name);
 	
 	$("#AutoTeamSelectInfo").RemoveClass("invisible");
-	$("#AutoTeamSelectInfoLabel").text = "IMBA AutoTeamAssignment™";
+	$("#AutoTeamSelectInfoLabel").text = "IMBA Matchmaking™";
 	$("#AutoTeamSelectInfoLabel2").text = "Powered by";
 };
 
