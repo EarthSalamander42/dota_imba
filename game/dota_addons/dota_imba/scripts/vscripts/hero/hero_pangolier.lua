@@ -109,9 +109,7 @@ function imba_pangolier_swashbuckle:OnSpellStart()
 	local sound_cast = "Hero_Pangolier.Swashbuckle.Cast"
 	local modifier_movement = "modifier_imba_swashbuckle_dash"
 	local attack_modifier = "modifier_imba_swashbuckle_slashes"
-	local cast_response = {"pangolin_pangolin_ability1_01", "pangolin_pangolin_ability1_02", "pangolin_pangolin_ability1_03", "pangolin_pangolin_ability1_04", "pangolin_pangolin_ability1_05", "pangolin_pangolin_ability1_06",
-		"pangolin_pangolin_ability1_07", "pangolin_pangolin_ability1_08", "pangolin_pangolin_ability1_09", "pangolin_pangolin_ability1_10", "pangolin_pangolin_ability1_11", "pangolin_pangolin_ability1_12", "pangolin_pangolin_ability1_13"}
-
+	
 	-- Ability specials
 	local dash_range = ability:GetSpecialValueFor("dash_range")
 	local range = ability:GetSpecialValueFor("range")
@@ -130,10 +128,7 @@ function imba_pangolier_swashbuckle:OnSpellStart()
 
 	caster:SetForwardVector(direction)
 
-	if not self:IsStolen() then
-		-- Play cast response
-		EmitSoundOnLocationWithCaster(caster:GetAbsOrigin(), cast_response[math.random(1, #cast_response)], caster)
-	end
+	
 	--play animation
 	caster:StartGesture(ACT_DOTA_CAST_ABILITY_1)
 
@@ -590,9 +585,7 @@ function imba_pangolier_shield_crash:OnSpellStart()
 	local gyroshell_ability = caster:FindAbilityByName("imba_pangolier_gyroshell")
 	local modifier_movement = "modifier_imba_shield_crash_jump"
 	local dust_particle = "particles/units/heroes/hero_pangolier/pangolier_tailthump_cast.vpcf"
-	local cast_response = {"pangolin_pangolin_ability2_01", "pangolin_pangolin_ability2_02", "pangolin_pangolin_ability2_03", "pangolin_pangolin_ability2_04", "pangolin_pangolin_ability2_05", "pangolin_pangolin_ability2_06", "pangolin_pangolin_ability2_07",
-		"pangolin_pangolin_ability2_08", "pangolin_pangolin_ability2_09", "pangolin_pangolin_ability2_10", "pangolin_pangolin_ability2_11"}
-
+	
 
 	-- Ability specials
 	local jump_duration = ability:GetSpecialValueFor("jump_duration")
@@ -608,10 +601,6 @@ function imba_pangolier_shield_crash:OnSpellStart()
 	local dust = ParticleManager:CreateParticle(dust_particle, PATTACH_WORLDORIGIN, nil)
 	ParticleManager:SetParticleControl(dust, 0, caster:GetAbsOrigin())
 
-	if not self:IsStolen() then
-		-- Play cast response
-		EmitSoundOnLocationWithCaster(caster:GetAbsOrigin(), cast_response[math.random(1, #cast_response)], caster)
-	end
 
 	-- Play cast sound
 	EmitSoundOnLocationWithCaster(caster:GetAbsOrigin(), sound_cast, caster)
@@ -1308,7 +1297,6 @@ function modifier_imba_heartpiercer_passive:OnCreated()
 	self.proc_sound_creep = "Hero_Pangolier.HeartPiercer.Proc.Creep"
 	self.delayed_debuff = "modifier_imba_heartpiercer_delay"
 	self.procced_debuff = "modifier_imba_heartpiercer_debuff"
-	self.cast_response = {"pangolin_pangolin_ability3_01", "pangolin_pangolin_ability3_02", "pangolin_pangolin_ability3_03", "pangolin_pangolin_ability3_04", "pangolin_pangolin_ability3_05", "pangolin_pangolin_ability3_06"}
 	self.caster.allow_heartpiercer = true --Used for Talent #5 heartpiercer reproc loop prevention
 
 	--Ability specials
@@ -1376,16 +1364,12 @@ function modifier_imba_heartpiercer_passive:OnAttackLanded(kv)
 						--play proc sound effect
 						if target:IsCreep() then
 							EmitSoundOn(self.proc_sound_creep, target)
-					else
-						if not self.ability:IsStolen() then
-							--also plays cast response on heroes
-							EmitSoundOnLocationWithCaster(self.caster:GetAbsOrigin(), self.cast_response[math.random(1, #self.cast_response)], self.caster)
+						else
+
+							EmitSoundOn(self.proc_sound_hero, target)
 						end
 
-						EmitSoundOn(self.proc_sound_hero, target)
-					end
-
-					target:AddNewModifier(self.parent, self.ability, self.delayed_debuff, {duration = self.debuff_delay})
+						target:AddNewModifier(self.parent, self.ability, self.delayed_debuff, {duration = self.debuff_delay})
 					end
 				end
 			end
@@ -1682,8 +1666,6 @@ function imba_pangolier_gyroshell:OnSpellStart()
 	local loop_sound = "Hero_Pangolier.Gyroshell.Loop"
 	local roll_modifier = "modifier_pangolier_gyroshell" --Vanilla
 	--local roll_modifier = "modifier_imba_gyroshell_roll" --Imba
-	local cast_response = {"pangolin_pangolin_ability4_01", "pangolin_pangolin_ability4_02", "pangolin_pangolin_ability4_03", "pangolin_pangolin_ability4_04", "pangolin_pangolin_ability4_05", "pangolin_pangolin_ability4_06",
-		"pangolin_pangolin_ability4_07", "pangolin_pangolin_ability4_08", "pangolin_pangolin_ability4_09", "pangolin_pangolin_ability4_10", "pangolin_pangolin_ability4_11", "pangolin_pangolin_ability4_12"}
 
 	-- Ability specials
 	local tick_interval = ability:GetSpecialValueFor("tick_interval")
@@ -1711,7 +1693,7 @@ function imba_pangolier_gyroshell:OnSpellStart()
 	--Apply a basic purge
 	caster:Purge(false, true, false, false, false)
 
-	-- Prevent Pangolier from blinking while rolling
+	--[[ Prevent Pangolier from blinking while rolling
 	local forbidden_items = {
 		"item_imba_blink",
 		"item_imba_blink_boots"
@@ -1732,7 +1714,7 @@ function imba_pangolier_gyroshell:OnSpellStart()
 		if current_item and should_mute then
 			current_item:SetActivated(false)
 		end
-	end
+	end]]
 
 	--Starts rolling (Vanilla modifier for now)
 	caster:AddNewModifier(caster, ability, roll_modifier, {duration = ability_duration})
@@ -1740,10 +1722,6 @@ function imba_pangolier_gyroshell:OnSpellStart()
 	--starts checking for hero impacts
 	caster:AddNewModifier(caster, ability, "modifier_imba_gyroshell_impact_check", {duration = ability_duration})
 
-	if not self:IsStolen() then
-		-- Play cast response
-		EmitSoundOnLocationWithCaster(caster:GetAbsOrigin(), cast_response[math.random(1, #cast_response)], caster)
-	end
 
 	--Play Loop sound
 	EmitSoundOn(loop_sound, caster)
@@ -1778,8 +1756,6 @@ function modifier_imba_gyroshell_impact_check:OnCreated()
 		--Ability Properties
 		self.caster = self:GetCaster()
 		self.ability = self:GetAbility()
-		self.stop_response = {"pangolin_pangolin_ability_stop_01", "pangolin_pangolin_ability_stop_02", "pangolin_pangolin_ability_stop_03",
-			"pangolin_pangolin_ability_stop_04", "pangolin_pangolin_ability_stop_05", "pangolin_pangolin_ability_stop_06"}
 		self.gyroshell = self.caster:FindModifierByName("modifier_pangolier_gyroshell")
 		self.targets = self.targets or {}
 
@@ -1890,19 +1866,15 @@ end
 function modifier_imba_gyroshell_impact_check:OnRemoved()
 	if IsServer() then
 
-		--renable blink on Pangolier
+		--[[renable blink on Pangolier
 		for i = 0, 5 do
 			local current_item = self.caster:GetItemInSlot(i)
 
 			if current_item then
 				current_item:SetActivated(true)
 			end
-		end
+		end]]
 
-		--Play Rolling Thunder end voice lines
-		if not self.ability:IsStolen() then
-			EmitSoundOnLocationWithCaster(self.caster:GetAbsOrigin(), self.stop_response[math.random(1, #self.stop_response)], self.caster)
-		end
 		--Talent #4: Extra duration on spell immunity after Rolling Thunder end
 		if self.caster:HasTalent("special_bonus_imba_pangolier_4") then
 			self.caster:AddNewModifier(self.caster, self.ability, "modifier_imba_gyroshell_linger", {duration = self.talent_duration})
