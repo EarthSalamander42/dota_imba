@@ -16,6 +16,7 @@
 		<Label id="es-player-a" class="es-player-kdalevel" />
 		<Label id="es-player-gold" />
 		<Label id="es-player-imr" />
+		<Label id="es-player-imr10v10" />
 		<Panel class="es-player-xp">
 			<Panel id="es-player-xp-progress" />
 			<Label id="es-player-xp-level" text="N/A" />

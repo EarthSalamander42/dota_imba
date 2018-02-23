@@ -161,6 +161,7 @@ function EndScoreboard() {
 				deaths: pp.FindChildInLayoutFile("es-player-d"),
 				assists: pp.FindChildInLayoutFile("es-player-a"),
 				imr: pp.FindChildInLayoutFile("es-player-imr"),
+				imr10v10: pp.FindChildInLayoutFile("es-player-imr10v10"),
 				gold: pp.FindChildInLayoutFile("es-player-gold"),
 				level: pp.FindChildInLayoutFile("es-player-level"),
 				xp: {
@@ -188,6 +189,7 @@ function EndScoreboard() {
 
 			// IMR
 			if (player.result != null) {
+								
 				if (player.result.imr_5v5_calibrating)
 					values.imr.text = "TBD";
 				else {
@@ -205,10 +207,30 @@ function EndScoreboard() {
 						values.imr.AddClass("es-text-red");
 					}
 				}
+				
+				if (player.result.imr_10v10_calibrating)
+					values.imr10v10.text = "TBD";
+				else {
+					var imr = Math.floor(player.result.imr_10v10);
+					var diff = Math.floor(player.result.imr_10v10_diff);
+
+					if (diff == 0) {
+						values.imr.text = imr;
+						values.imr.AddClass("es-text-white");
+					} else if (diff > 0) {
+						values.imr.text = imr + " (+" + diff + ")";
+						values.imr.AddClass("es-text-green");
+					} else {
+						values.imr.text = imr + " (" + diff + ")";
+						values.imr.AddClass("es-text-red");
+					}
+				}
+				
 			} else {
+				values.imr10v10.text = "N/A";
 				values.imr.text = "N/A";
 			}
-
+			
 			// XP
 			if (player.result != null) {
 				var xp = Math.floor(player.result.xp);

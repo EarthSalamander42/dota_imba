@@ -29,6 +29,7 @@
 	"scoreboard_tool_tip_disable_help"				"Disable Help"
 	"scoreboard_tool_tip_active_disable_help"		"(DISABLED)"
 	"custom_end_screen_legend_imr"					"IMR"
+	"custom_end_screen_legend_imr10v10"					"IMR 10v10"
 
 	//Combat Events
 	"custom_toast_PlayerDenied"								"{killer_name} {denied_icon} Denied {victim_name}"

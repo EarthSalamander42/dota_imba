@@ -17,6 +17,7 @@
 			<Label class="LegendPanel ScoreCol_HeroLevel" text="LVL"/>
 			<Label class="LegendPanel ScoreCol_ImbaXP" text="Imba XP"/>
 			<Label class="LegendPanel ScoreCol_IMR" text="#custom_end_screen_legend_imr"/>
+			<Label class="LegendPanel ScoreCol_IMR10v10" text="#custom_end_screen_legend_imr10v10"/>
 			<Label class="LegendPanel ScoreCol_Gold" text="#custom_end_screen_legend_gold"/>
 			<Label class="LegendPanel ScoreCol_Kills" text="#custom_end_screen_legend_kills" />
 			<Label class="LegendPanel ScoreCol_Deaths" text="#custom_end_screen_legend_deaths" />

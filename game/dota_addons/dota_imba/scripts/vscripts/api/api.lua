@@ -8,6 +8,7 @@ require("api/json")
 local ImbaApiConfig = {
 	key = "3utx8DehTd42Wxqh65ldAErJjoCdi6XB",
 	endpoint = "http://api.dota2imba.org",
+--	endpoint = "http://10.1.128.77",
 	agent = "dota_imba-7.04",
 	timeout = 10000,
 	debug = false
@@ -21,11 +22,13 @@ local ImbaApiEndpoints = {
 	GameComplete = "/game/complete",
 	GameEvent = "/game/event",
 	GameEvents = "/game/events",
+	GameAutoOrderImr5v5Random = "/game/auto-order/imr5v5-random",
+	GameAutoOrderImr10v10KeepTeams = "/game/auto-order/imr10v10-teams",
 	MetaTopXpUsers = "/meta/top-xp-users",
 	MetaTopImrUsers = "/meta/top-imr-users",
 	MetaHotDisabledHeroes = "/meta/hot-disabled-heroes",
 	MetaCompanions = "/meta/companions",
-	MetaCompanionChange = "/meta/companion-change",
+	MetaCompanionChange = "/meta/companion-change"
 }
 
 ImbaApi = {}
@@ -134,6 +137,14 @@ end
 
 function ImbaApi:MetaDevelopers(successCallback, errorCallback)
 	self:SimplePerform(nil, ImbaApiEndpoints.MetaDevelopers, successCallback, errorCallback)
+end
+
+function ImbaApi:GameAutoOrderImr5v5Random(data, successCallback, errorCallback)
+	self:SimplePerform(data, ImbaApiEndpoints.GameAutoOrderImr5v5Random, successCallback, errorCallback)
+end
+
+function ImbaApi:GameAutoOrderImr10v10KeepTeams(data, successCallback, errorCallback)
+	self:SimplePerform(data, ImbaApiEndpoints.GameAutoOrderImr10v10KeepTeams, successCallback, errorCallback)
 end
 
 function ImbaApi:GameEvent(data, successCallback, errorCallback)

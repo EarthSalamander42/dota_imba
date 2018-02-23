@@ -1,3 +1,18 @@
+-- Copyright (C) 2018  The Dota IMBA Development Team
+--
+-- Licensed under the Apache License, Version 2.0 (the "License");
+-- you may not use this file except in compliance with the License.
+-- You may obtain a copy of the License at
+--
+-- http://www.apache.org/licenses/LICENSE-2.0
+--
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- See the License for the specific language governing permissions and
+-- limitations under the License.
+--
+
 function GameMode:OnDisconnect(keys)
 	-- GetConnectionState values:
 	-- 0 - no connection
@@ -68,9 +83,19 @@ function GameMode:OnGameRulesStateChange(keys)
 	-- This internal handling is used to set up main barebones functions
 	GameMode:_OnGameRulesStateChange(keys)
 
+
 	local new_state = GameRules:State_Get()
 	CustomNetTables:SetTableValue("game_options", "game_state", {state = new_state})
 
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Team selection
+	-------------------------------------------------------------------------------------------------
+	if new_state == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
+		print("events: team selection")
+		InitializeTeamSelection()
+	end
+	
+	
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Pick screen stuff
 	-------------------------------------------------------------------------------------------------
@@ -557,15 +582,26 @@ end
 
 -- An item was picked up off the ground
 function GameMode:OnItemPickedUp(keys)
+	
+	-- The playerID of the hero who is buying something
 	local heroEntity = EntIndexToHScript(keys.HeroEntityIndex)
-	--local itemEntity = EntIndexToHScript(keys.ItemEntityIndex)
-	--local player = PlayerResource:GetPlayer(keys.PlayerID)
-	local itemname = keys.itemname
+	local plyID = keys.PlayerID
+	if not plyID then return end
+	local hero = PlayerResource:GetSelectedHeroEntity(plyID)
+	local itemName = keys.itemname
+	local itemcost = keys.itemcost
 
-	if heroEntity:IsHero() and itemname == "item_bag_of_gold" then
+	if heroEntity:IsHero() and itemName == "item_bag_of_gold" then
 		-- Pick up the gold
 		GoldPickup(keys)
 	end
+	
+	ApiEvent(ApiEventCodes.ItemPickedUp, {
+		tostring(keys.itemname),
+		tostring(hero:GetUnitName()),
+		tostring(PlayerResource:GetSteamID(plyID))
+	})
+	
 end
 
 -- A player has reconnected to the game. This function can be used to repaint Player-based particles or change
@@ -587,6 +623,7 @@ function GameMode:OnItemPurchased( keys )
 		tostring(hero:GetUnitName()),
 		tostring(PlayerResource:GetSteamID(plyID))
 	})
+	
 end
 
 -- An ability was used by a player
@@ -1295,13 +1332,15 @@ function GameMode:OnItemCombined(keys)
 	-- The playerID of the hero who is buying something
 	local plyID = keys.PlayerID
 	if not plyID then return end
-	local player = PlayerResource:GetPlayer(plyID)
-
-	-- The name of the item purchased
+	local hero = PlayerResource:GetSelectedHeroEntity(plyID)
 	local itemName = keys.itemname
-
-	-- The cost of the item purchased
 	local itemcost = keys.itemcost
+
+	ApiEvent(ApiEventCodes.ItemCombined, {
+		tostring(keys.itemname),
+		tostring(hero:GetUnitName()),
+		tostring(PlayerResource:GetSteamID(plyID))
+	})
 end
 
 -- This function is called whenever an ability begins its PhaseStart phase (but before it is actually cast)

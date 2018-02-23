@@ -31,6 +31,9 @@
 			<Panel class="ScoreCol_IMR ScoreboardPanel">
 				<Label id="TeammateIMRAmount" text="N/A" />
 			</Panel>
+			<Panel class="ScoreCol_IMR10v10 ScoreboardPanel">
+				<Label id="TeammateIMR10v10Amount" text="N/A" />
+			</Panel>
 			<Panel class="ScoreCol_Gold ScoreboardPanel">
 				<Label id="TeammateGoldAmount" text="N/A" />
 			</Panel>

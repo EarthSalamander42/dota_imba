@@ -6,15 +6,16 @@
 	margin-top: 60px;
 	flow-children: down;
 	
-	transform: translatex( -1000px );
+	transform: translatex( -1100px );
 	transition-property: transform;
 	transition-duration: 0.10s;
 	
-	box-shadow: #000 0 0 10x 0; 
+	box-shadow: #111 0px 0px 5px; 
 	border: 1px solid #333;
 	border-top-right-radius: 5px;
 	border-bottom-right-radius: 5px;
-	background-color: #000000ba;
+	background-color: #222222f7;
+	padding: 4px 4px 4px 0px;
 }
 
 .ScoreCol_DisplayPic DOTAAvatarImage
@@ -113,6 +114,11 @@
 .ScoreCol_IMR
 {
 	width: 70px;
+}
+
+.ScoreCol_IMR10v10
+{
+	width: 75px;
 }
 
 .ScoreCol_Kills,
@@ -423,6 +429,16 @@
 }
 
 #TeammateIMRAmount
+{
+	margin-bottom: -2px;
+	vertical-align: middle;
+	horizontal-align: center;
+	font-size: 18px;
+	font-weight: bold;
+	color: green;
+}
+
+#TeammateIMR10v10Amount
 {
 	margin-bottom: -2px;
 	vertical-align: middle;
