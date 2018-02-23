@@ -733,7 +733,24 @@ end
 
 -- Returns an array with the hero's non-hidden abilities
 function HeroSelection:GetPickScreenAbilities(hero_name)
-	local hero_abilities = {}
+local hero_abilities = {}
+local custom_hero = false
+
+--	for k, v in pairs(HeroSelection.heroes_custom) do
+--		if v == hero_name then
+--			custom_hero = true
+--			break
+--		end
+--	end
+
+--	if custom_hero == true then
+--		for i = 1, 9 do
+--			if GetKeyValueByUnitName(hero_name, "Ability"..i) ~= nil then
+--				hero_abilities[i] = GetKeyValueByUnitName(hero_name, "Ability"..i)
+--			end
+--		end
+--		return
+--	end
 
 	for i = 1, 9 do
 		if GetKeyValueByHeroName(hero_name, "Ability"..i) ~= nil then

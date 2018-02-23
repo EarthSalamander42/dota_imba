@@ -93,6 +93,7 @@ function CreateCustomToast(data) {
 		rowText = rowText.replace('{gold}', "");
 	}
 
+
 	if (data.victimUnitName)
 		rowText = rowText.replace('{victim_name}', "<font color='red'>" + $.Localize(data.victimUnitName) + '</font>');
 	if (data.team != null)

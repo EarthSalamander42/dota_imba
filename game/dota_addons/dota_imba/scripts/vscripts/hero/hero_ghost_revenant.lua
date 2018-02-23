@@ -120,6 +120,10 @@ function ghost_revenant_blackjack:OnSpellStart()
 	local projectile_amount = self:GetSpecialValueFor("projectile_amount")
 	local projectile_vision = self:GetSpecialValueFor("projectile_vision")
 
+	if caster:HasTalent("special_bonus_imba_ghost_revenant_1") then
+		projectile_amount = projectile_amount + caster:FindTalentValue("special_bonus_imba_ghost_revenant_1")
+	end
+
 	-- Determine projectile geometry
 	local projectile_directions = {}
 	local main_direction = (target_loc - caster_loc):Normalized()
@@ -177,8 +181,17 @@ function ghost_revenant_blackjack:OnProjectileHit(target, target_loc)
 		if target then location = target:GetAbsOrigin() end
 
 		target:EmitSound("Item_Desolator.Target")
-		ApplyDamage({victim = target, attacker = caster, damage = damage, damage_type = damage_type,})
 		target:AddNewModifier(caster, self, "modifier_ghost_revenant_blackjack_debuff", {duration = stun_duration})
+
+		if not target.blackjack_hit or target.blackjack_hit == false then
+			ApplyDamage({victim = target, attacker = caster, damage = damage, damage_type = damage_type,})
+		end
+
+		target.blackjack_hit = true
+
+		Timers:CreateTimer(1.0, function()
+			target.blackjack_hit = false
+		end)
 		return true
 	end
 end

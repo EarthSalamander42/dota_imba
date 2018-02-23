@@ -4347,19 +4347,16 @@
 				"var_type"				"FIELD_INTEGER"
 				"radius"				"250 300 325 350"
 			}
-
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_armor"			"40 60 80 100"
+				"bonus_armor"			"40"
 			}
-
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"duration"				"1.75 2.0 2.5 3.0"
 			}
-
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
@@ -4485,7 +4482,6 @@
 		"SpellImmunityType"             "SPELL_IMMUNITY_ENEMIES_YES"
 		"AbilityUnitDamageType"         "DAMAGE_TYPE_PURE"
 		"AbilityTextureName"            "axe_counter_helix"
-		"MaxLevel"						"4"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -4495,6 +4491,7 @@
 			"particle"									"particles/units/heroes/hero_axe/axe_attack_blur_counterhelix.vpcf"
 			"particle"									"particles/units/heroes/hero_axe/axe_counterhelix.vpcf"
 		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -4527,12 +4524,12 @@
 			"06"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"base_damage"							"75 150 225 300"
+				"base_damage"							"70 120 170 220"
 			}
 			"07"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"taunted_damage_bonus_pct"				"12 18 24 30"
+				"taunted_damage_bonus_pct"				"10 15 20 25"
 			}
 		}
 	}
@@ -8274,7 +8271,6 @@
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"custom/imba_elder_titan_echo_stomp"
 		"ScriptFile"					"hero/hero_elder_titan.lua"
-		"MaxLevel"						"4"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -8308,7 +8304,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"sleep_duration"			"2.0 3.0 4.0 5.0"
+				"sleep_duration"			"2.0 2.75 3.5 4.25"
 			}
 			"04"
 			{
@@ -8340,7 +8336,6 @@
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"custom/imba_elder_titan_echo_stomp"
 		"ScriptFile"					"hero/hero_elder_titan.lua"
-		"MaxLevel"						"4"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -8374,7 +8369,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"sleep_duration"			"2.0 3.0 4.0 5.0"
+				"sleep_duration"			"2.0 2.75 3.5 4.25"
 			}
 			"04"
 			{
@@ -8404,7 +8399,6 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
 		"AbilitySound"					"Hero_ElderTitan.AncestralSpirit.Cast"
-		"MaxLevel"						"4"
 
 		"AbilityCastRange"				"1200"
 		"AbilityCastPoint"				"0.4"
@@ -8445,7 +8439,8 @@
 			"05"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"speed"							"750"
+				"speed"							"600"
+				"LinkedSpecialBonus"			"special_bonus_imba_elder_titan_2"
 			}
 			"06"
 			{
@@ -8487,12 +8482,12 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
+		"AbilityCastPoint"				"0.0"
 		"AbilityCastAnimation"			"ACT_INVALID"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"0.0 0.0 0.0"
+		"AbilityCooldown"				"0.0"
 	}
 
 	//=================================================================================================================
@@ -8510,7 +8505,6 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"AbilityCastAnimation"			"ACT_INVALID"
-		"MaxLevel"						"4"
 
 		"AbilityCastRange"				"350"
 
@@ -8554,7 +8548,6 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
 		"HasScepterUpgrade"				"1"
-		"MaxLevel"						"3"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -8666,7 +8659,7 @@
 			"01"
 			{
 				"var_type"		"FIELD_FLOAT"
-				"value"			"600"
+				"value"			"400"
 			}
 		}
 	}
@@ -17877,7 +17870,7 @@
 			"02"
 			{
 				"var_type"							"FIELD_FLOAT"
-				"stack_str"							"1.6 2.4 3.2 4.0"
+				"stack_str"							"1.5 2.0 2.5 3.0"
 			}
 			"03"
 			{
@@ -18046,7 +18039,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"stack_damage"				"10"
+				"stack_damage"				"5"
 			}
 			"04"
 			{
@@ -40842,7 +40835,6 @@
 	//=================================================================================================================
 	//=================================================================================================================
 
-
 	//=================================================================================================================
 	// Ghost Revenant: Blackjack
 	//=================================================================================================================
@@ -40908,6 +40900,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"projectile_amount"			"3"
+				"LinkedSpecialBonus"		"special_bonus_imba_ghost_revenant_1"
 			}
 			"08"
 			{
@@ -41095,6 +41088,34 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"duration"					"7.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ghost Revenant Talents
+	//=================================================================================================================
+	"special_bonus_imba_ghost_revenant_1"	// Increase number of projectiles
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_undefined"                                                        
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"		"ghost_revenant_blackjack"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_FLOAT"
+				"value"			"2"
 			}
 		}
 	}

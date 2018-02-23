@@ -569,6 +569,7 @@ function GameMode:ItemAddedFilter( keys )
 		item_name = item:GetName()
 	end
 
+	print(item_name)
 	if string.find(item_name, "item_imba_rune_") and unit:IsRealHero() then
 		PickupRune(item_name, unit)
 		return false
@@ -1542,6 +1543,7 @@ end
 -- It can be used to pre-initialize any values/tables that will be needed later
 function GameMode:InitGameMode()
 	GameMode = self
+	local mode = GameRules:GetGameModeEntity()
 
 	-- Call the internal function to set up the rules/behaviors specified in constants.lua
 	-- This also sets up event hooks for all event handlers in events.lua
@@ -1562,19 +1564,27 @@ function GameMode:InitGameMode()
 	CustomGameEventManager:RegisterListener("netgraph_give_item", Dynamic_Wrap(self, "NetgraphGiveItem"))
 	CustomGameEventManager:RegisterListener("change_companion", Dynamic_Wrap(self, "DonatorCompanionJS"))
 
+	--Derived Stats
+	mode:SetCustomAttributeDerivedStatValue(DOTA_ATTRIBUTE_STRENGTH_HP_REGEN_PERCENT, 0.0015) -- 40-45% of vanilla
+--	mode:SetCustomAttributeDerivedStatValue(DOTA_ATTRIBUTE_INTELLIGENCE_MANA_REGEN_PERCENT, 0.010)
+--	mode:SetCustomAttributeDerivedStatValue(DOTA_ATTRIBUTE_INTELLIGENCE_SPELL_AMP_PERCENT, 0.075)
+
+--	mode:SetCustomAttributeDerivedStatValue(DOTA_ATTRIBUTE_STRENGTH_STATUS_RESISTANCE_PERCENT, 0)
+--	mode:SetCustomAttributeDerivedStatValue(DOTA_ATTRIBUTE_AGILITY_MOVE_SPEED_PERCENT, 0)
+--	mode:SetCustomAttributeDerivedStatValue(DOTA_ATTRIBUTE_INTELLIGENCE_MAGIC_RESISTANCE_PERCENT, 0)
 
 	-- Panorama event stuff
 	initScoreBoardEvents()
 	--	InitPlayerHeroImbaTalents();
 
 	if GetMapName() == "imba_overthrow" then
-		GameRules:GetGameModeEntity():SetLoseGoldOnDeath( false )
-		GameRules:GetGameModeEntity():SetFountainPercentageHealthRegen( 0 )
-		GameRules:GetGameModeEntity():SetFountainPercentageManaRegen( 0 )
-		GameRules:GetGameModeEntity():SetFountainConstantManaRegen( 0 )
+		mode:SetLoseGoldOnDeath( false )
+		mode:SetFountainPercentageHealthRegen( 0 )
+		mode:SetFountainPercentageManaRegen( 0 )
+		mode:SetFountainConstantManaRegen( 0 )
 		GameRules:SetHideKillMessageHeaders( true )
-		GameRules:GetGameModeEntity():SetTopBarTeamValuesOverride( true )
-		GameRules:GetGameModeEntity():SetTopBarTeamValuesVisible( false )
+		mode:SetTopBarTeamValuesOverride( true )
+		mode:SetTopBarTeamValuesVisible( false )
 
 		self:SetUpFountains()
 		self:GatherAndRegisterValidTeams()

@@ -9,7 +9,7 @@ function modifier_imba_war_veteran_0:IsPermanent() return true end
 
 function modifier_imba_war_veteran_0:OnCreated()
 	self.hp_regen = 2				-- +50 health regen
-	self.status_resistance = 1		-- +25% tenacity
+	self.status_resistance = 0.5		-- +12.5% tenacity
 end
 
 function modifier_imba_war_veteran_0:GetTexture()
