@@ -350,7 +350,6 @@ function LoadPlayers() {
 			if (map_info.map_display_name == "imba_standard") {
 				// Dont display IMR if player havent calibrated yet
 				if (plyData.IMR_5v5_calibrating && playerPanel != undefined) {
-					playerPanel.setPlayerMMR("TBD"); // error sometimes
 				}
 				else
 					if (plyData.IMR_5v5)
@@ -362,9 +361,8 @@ function LoadPlayers() {
 				$("#AverageMMRTeamRadiant").text = $.Localize("average_mmr") + RadiantLevels.toFixed([0]);
 			} else if (map_info.map_display_name == "imba_10v10") {
 					// Dont display IMR if player havent calibrated yet
-					if (plyData.IMR_10v10_calibrating && playerPanel != undefined)
-						playerPanel.setPlayerMMR("TBD"); // error sometimes
-					else
+					if (plyData.IMR_10v10_calibrating && playerPanel != undefined) {
+					} else
 						if (plyData.IMR_10v10)
 							playerPanel.SetPlayerMMR(plyData.IMR_10v10.toFixed([0]));
 						else
@@ -415,9 +413,8 @@ function LoadPlayers() {
 		if (plyData != null) {
 			if (map_info.map_display_name == "imba_standard") {
 				// Dont display IMR if player havent calibrated yet
-				if (plyData.IMR_5v5_calibrating && playerPanel != undefined)
-					playerPanel.setPlayerMMR("TBD"); // error sometimes
-				else
+				if (plyData.IMR_5v5_calibrating && playerPanel != undefined) {
+				} else
 					if (plyData.IMR_5v5)
 						playerPanel.SetPlayerMMR(plyData.IMR_5v5.toFixed([0]));
 					else
@@ -426,9 +423,8 @@ function LoadPlayers() {
 				$("#AverageMMRTeamDire").text = $.Localize("average_mmr") + DireLevels.toFixed([0]);
 			} else if (map_info.map_display_name == "imba_10v10") {
 					// Dont display IMR if player havent calibrated yet
-					if (plyData.IMR_10v10_calibrating && playerPanel != undefined)
-						playerPanel.setPlayerMMR("TBD"); // error sometimes
-					else
+					if (plyData.IMR_10v10_calibrating && playerPanel != undefined) {
+					} else
 						if (plyData.IMR_10v10)
 							playerPanel.SetPlayerMMR(plyData.IMR_10v10.toFixed([0]));
 						else
