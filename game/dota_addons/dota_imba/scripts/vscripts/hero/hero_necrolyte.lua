@@ -812,19 +812,6 @@ function modifier_imba_reapers_scythe:OnCreated( params )
 	end
 end
 
-function modifier_imba_reapers_scythe:OnDestroy()
-	if IsServer() then
-		local caster = self:GetCaster()
-		local target = self:GetParent()
-		if target:IsAlive() and self.ability then
-			self.damage = self.damage * (target:GetMaxHealth() - target:GetHealth())
-			-- Deals damage
-			local actually_dmg = ApplyDamage({attacker = caster, victim = target, ability = self.ability, damage = self.damage, damage_type = DAMAGE_TYPE_MAGICAL})
-			SendOverheadEventMessage(nil, OVERHEAD_ALERT_DAMAGE, target, actually_dmg, nil)
-		end
-	end
-end
-
 function modifier_imba_reapers_scythe:GetEffectName()
 	return "particles/units/heroes/hero_necrolyte/necrolyte_scythe.vpcf"
 end
@@ -867,10 +854,17 @@ function modifier_imba_reapers_scythe:GetOverrideAnimation()
 end
 
 function modifier_imba_reapers_scythe:OnRemoved()
-	if self.ability then
-		if self.ability.ghost_death then
-			self.ability.ghost_death = nil
-			self:GetParent():AddNewModifier(self:GetCaster(), self.ability, "modifier_imba_reapers_scythe_respawn", {})
+	if IsServer() then
+		local caster = self:GetCaster()
+		local target = self:GetParent()
+		if target:IsAlive() and self.ability then
+			self.damage = self.damage * (target:GetMaxHealth() - target:GetHealth())
+			if (self.damage * 1 + (caster:GetSpellPower() * 0.01) * target:GetMagicalArmorValue()) >= target:GetHealth() then
+				self:GetParent():AddNewModifier(self:GetCaster(), self.ability, "modifier_imba_reapers_scythe_respawn", {})
+			end
+			-- Deals damage
+			local actually_dmg = ApplyDamage({attacker = caster, victim = target, ability = self.ability, damage = self.damage, damage_type = DAMAGE_TYPE_MAGICAL})
+			SendOverheadEventMessage(nil, OVERHEAD_ALERT_DAMAGE, target, actually_dmg, nil)
 		end
 	end
 end

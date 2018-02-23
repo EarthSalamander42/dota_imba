@@ -18785,13 +18785,13 @@
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"break_distance_extend"		"50"
+				"break_distance_extend"		"300"
 			}
 
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"cast_range"				"800 900 1000"
+				"cast_range"				"900"
 			}
 		}
 	}
@@ -18825,7 +18825,7 @@
 		}
 	}
 
-	"special_bonus_imba_pugna_2" // Whenever Nether Ward zaps a target, it becomes briefly decrepified for 1 second. This occurs before zap damage is applied.
+	"special_bonus_imba_pugna_2" // Life Drain cannot be broken by distance for the first 1 seconds of Life Drain.	
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -18851,7 +18851,7 @@
 		}
 	}
 
-	"special_bonus_imba_pugna_3" // Nether Ward zaps triples the mana degeneration effect on a target for 5 seconds. Non-stackable.
+	"special_bonus_imba_pugna_3" // +1 Decrepify duration
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -18862,7 +18862,7 @@
 
 		"LinkedAbility"
 		{
-			"01"	"imba_pugna_nether_ward"
+			"01"	"imba_pugna_decrepify"
 		}
 
 		// Special
@@ -18872,17 +18872,12 @@
 			"01"
 			{
 				"var_type"                  "FIELD_FLOAT"
-				"mutiplier"					"3.0"
-			}
-			"02"
-			{
-				"var_type"                  "FIELD_FLOAT"
-				"duration"					"5.0"
+				"value"						"1.0"
 			}
 		}
 	}
 
-	"special_bonus_imba_pugna_4" // Life Drain deals 3% current health per tick as bonus damage.
+	"special_bonus_imba_pugna_4" //Life Drain cannot be broken by distance for the first 1 seconds of Life Drain.
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -18902,13 +18897,13 @@
 		{
 			"01"
 			{
-				"var_type"                  "FIELD_INTEGER"
-				"hp_pct_dmg"				"3"
+				"var_type"                  "FIELD_FLOAT"
+				"value"						"1.0"
 			}
 		}
 	}
 
-	"special_bonus_imba_pugna_5" // Nether Blast secondary blasts deal 33% of original damage.
+	"special_bonus_imba_pugna_5" // Nether Blast secondary blasts deal 10% of original damage.
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -18929,12 +18924,12 @@
 			"01"
 			{
 				"var_type"                  "FIELD_INTEGER"
-				"dmg_pct"					"33"
+				"value"						"10"
 			}
 		}
 	}
 
-	"special_bonus_imba_pugna_6" // Nether Ward doesn't take damage from casting spells, but has a 2 seconds cooldown between cast.
+	"special_bonus_imba_pugna_6" // Whenever Nether Ward zaps a target, it becomes briefly decrepified for 1 second.
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -18955,12 +18950,12 @@
 			"01"
 			{
 				"var_type"                  "FIELD_FLOAT"
-				"cooldown"					"2.0"
+				"value"						"1.0"
 			}
 		}
 	}
 
-	"special_bonus_imba_pugna_7" // Decrepify decreases the target's Tenacity by 15%.
+	"special_bonus_imba_pugna_7" // +3% Target current health as Life Drain's per sec damage
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -18971,7 +18966,7 @@
 
 		"LinkedAbility"
 		{
-			"01"	"imba_pugna_decrepify"
+			"01"	"imba_pugna_life_drain"
 		}
 
 		// Special
@@ -18981,12 +18976,12 @@
 			"01"
 			{
 				"var_type"                  "FIELD_INTEGER"
-				"tenacity"					"15"
+				"value"						"3"
 			}
 		}
 	}
 
-	"special_bonus_imba_pugna_8" // Nether Blasts' Nether Weakness is not reset when a new blast affects an already affected target. Instead, it refreshes the duration and stacks upon it.
+	"special_bonus_imba_pugna_8" // extra Nether wards
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -18997,7 +18992,7 @@
 
 		"LinkedAbility"
 		{
-			"01"	"imba_pugna_nether_blast"
+			"01"	"imba_pugna_nether_ward"
 		}
 
 		// Special
@@ -19007,7 +19002,12 @@
 			"01"
 			{
 				"var_type"                  "FIELD_INTEGER"
-				"value"						"1"
+				"value"						"2"
+			}
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"duration_reduce_pct"		"66"
 			}
 		}
 	}

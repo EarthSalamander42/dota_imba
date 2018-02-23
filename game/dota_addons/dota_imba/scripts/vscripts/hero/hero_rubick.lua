@@ -41,9 +41,9 @@ function imba_rubick_telekinesis:OnSpellStart( params )
 		-- Parameters
 		local maximum_distance
 		if self.target:GetTeam() == caster:GetTeam() then
-			maximum_distance = self:GetSpecialValueFor("ally_range") + GetCastRangeIncrease(caster)
+			maximum_distance = self:GetSpecialValueFor("ally_range") + GetCastRangeIncrease(caster) + caster:FindTalentValue("special_bonus_unique_rubick")
 		else
-			maximum_distance = self:GetSpecialValueFor("enemy_range") + GetCastRangeIncrease(caster)
+			maximum_distance = self:GetSpecialValueFor("enemy_range") + GetCastRangeIncrease(caster) + caster:FindTalentValue("special_bonus_unique_rubick")
 		end
 
 		if self.telekinesis_marker_pfx then
@@ -262,7 +262,7 @@ function modifier_imba_telekinesis:EndTransition()
 			cooldown = ability.BaseClass.GetCooldown( ability, ability:GetLevel() )
 		end
 
-		cooldown = (cooldown * (1 - caster:GetCooldownReduction() * 0.01)) - self:GetDuration()
+		cooldown = ((cooldown - caster:FindTalentValue("special_bonus_unique_rubick_4")) * (1 - caster:GetCooldownReduction() * 0.01)) - self:GetDuration()
 
 		parent:StopSound("Hero_Rubick.Telekinesis.Target")
 		parent:EmitSound("Hero_Rubick.Telekinesis.Target.Land")
@@ -437,6 +437,7 @@ function modifier_imba_rubick_spell_steal_controller:OnAbilityFullyCast(keys)
 	if keys.unit ~= self:GetParent() then
 		return
 	end
+	local rubick = keys.unit
 	local ability = keys.ability
 	if ability:GetAbilityName() ~= "rubick_spell_steal" then
 		return
@@ -444,17 +445,31 @@ function modifier_imba_rubick_spell_steal_controller:OnAbilityFullyCast(keys)
 	local target = keys.target
 	for _, ex_talent in pairs(self.talent_ability) do
 		if not ex_talent:IsNull() then
-			keys.unit:RemoveAbility(ex_talent:GetAbilityName())
+			rubick:RemoveAbility(ex_talent:GetAbilityName())
 		end
 	end
 	for i=0, 23 do
 		local talent = target:GetAbilityByIndex(i)
 		if talent ~= nil then
 			local name = talent:GetAbilityName()
-			if string.find(name, "special_bonus_") ~= nil then
-				keys.unit:AddAbility(name)
-				keys.unit:FindAbilityByName(name):SetLevel(talent:GetLevel())
-				table.insert(self.talent_ability, keys.unit:FindAbilityByName(name))
+			if string.find(name, "special_bonus_") then
+				if talent:GetLevel() > 0 then
+					rubick:AddAbility(name)
+					table.insert(self.talent_ability, rubick:FindAbilityByName(name))
+				end
+			end
+		end
+	end
+	for i=0, 23 do
+		local talent = rubick:GetAbilityByIndex(i)
+		if talent ~= nil then
+			local name = talent:GetAbilityName()
+			if string.find(name, "special_bonus_") then
+				for _, ex_talent in pairs(self.talent_ability) do
+					if not ex_talent:IsNull() and talent == ex_talent then
+						ex_talent:SetLevel(1)
+					end
+				end
 			end
 		end
 	end
