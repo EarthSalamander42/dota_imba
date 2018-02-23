@@ -58,3 +58,6 @@ game/dota_addons/dota_imba/models/rosh*
 .project
 .settings
 .DS_Store
+
+scripts/node_modules
+scripts/package-lock.json
