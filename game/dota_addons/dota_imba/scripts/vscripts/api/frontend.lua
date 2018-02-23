@@ -23,8 +23,8 @@ ImbaApiFrontendPreloaded = {}
 ImbaApiFrontendReady_ = false
 
 ImbaApiFrontendSettings = {
-	debug = false,
-	eventTimer = 1
+	debug = true,
+	eventTimer = 100
 }
 
 -- Asyncronous
@@ -363,6 +363,30 @@ function ApiEvent(event, content)
 		server_system_datetime = tostring(GetSystemDate()) .. " " .. tostring(GetSystemTime()),
 		server_time = tonumber(Time())
 	})
+end
+
+-- auto order teams
+function ImbaApiAutoOrderImr5v5Random(players, callback)
+	ImbaApiInstance:GameAutoOrderImr5v5Random({
+		players = players,
+		teams = 2
+	}, function (data)
+		callback({ ok = true, data = data })
+	end, function (err)
+		callback({ ok = false, data = data })
+	end)
+end
+
+function ImbaApiAutoOrderImr10v10KeepTeams(players, groupings, callback)
+	ImbaApiInstance:GameAutoOrderImr10v10KeepTeams({
+		players = players,
+		groupings = groupings,
+		teams = 2
+	}, function (data)
+		callback({ ok = true, data = data })
+	end, function (err)
+		callback({ ok = false, data = data })
+	end)
 end
 
 -- returns the match id as integer
