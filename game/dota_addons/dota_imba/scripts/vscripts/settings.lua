@@ -35,7 +35,8 @@ HERO_SELECTION_TIME = 30.0 + 5.0		-- How long should we let people select their 
 if IsInToolsMode() then HERO_SELECTION_TIME = 15.0 end
 
 PRE_GAME_TIME = 90.0 + HERO_SELECTION_TIME	-- How long after people select their heroes should the horn blow and the game start?
-POST_GAME_TIME = 60.0						-- How long should we let people look at the scoreboard before closing the server automatically?
+-- TODO: set to 120
+POST_GAME_TIME = 600.0						-- How long should we let people look at the scoreboard before closing the server automatically?
 AUTO_LAUNCH_DELAY = 5.0					-- How long should we wait for the host to setup the game, after all players have loaded in?
 if GetMapName() == "imba_frantic_10v10" then
 	AUTO_LAUNCH_DELAY = 10.0
@@ -442,6 +443,37 @@ for i = 21, 100 do
 end
 
 USE_MEME_SOUNDS = true														-- Should we use meme/fun sounds on abilities occasionally?
+
+-------------------------------------------------------------------------------------------------
+-- IMBA: Custom Config
+-------------------------------------------------------------------------------------------------
+
+-- API
+
+-- Constants
+ImbaApiConfig = {
+	key = "3utx8DehTd42Wxqh65ldAErJjoCdi6XB",
+	endpoint = "http://api.dota2imba.org",
+--	endpoint = "http://10.1.128.77",
+	agent = "dota_imba-7.04",
+	timeout = 10000,
+	debug = false
+}
+
+ImbaApiFrontendSettings = {
+	debug = false,
+	eventTimer = 2
+}
+
+-- Matchmaking
+
+TeamSelectionSettings = {
+	debug = true,
+	computationIterations = 3
+}
+
+-- Logging
+-- Total Iterations
 
 -------------------------------------------------------------------------------------------------
 -- IMBA: Test mode variables
