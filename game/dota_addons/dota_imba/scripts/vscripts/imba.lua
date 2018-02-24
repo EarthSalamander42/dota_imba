@@ -1355,53 +1355,6 @@ function GameMode:OnGameInProgress()
 			building:AddAbility("imba_tower_buffs")
 			local tower_ability = building:FindAbilityByName("imba_tower_buffs")
 			tower_ability:SetLevel(1)
-
-		elseif string.find(building_name, "fort") then
-
-			-- Add passive buff
-			building:AddAbility("imba_ancient_buffs")
-			local ancient_ability = building:FindAbilityByName("imba_ancient_buffs")
-			ancient_ability:SetLevel(1)
-
-			if TOWER_ABILITY_MODE then
-
-				-- Add Spawn Behemoth ability, if appropriate
-				if SPAWN_ANCIENT_BEHEMOTHS then
-					if string.find(building_name, "goodguys") then
-						building:AddAbility("imba_ancient_radiant_spawn_behemoth")
-						ancient_ability = building:FindAbilityByName("imba_ancient_radiant_spawn_behemoth")
-					elseif string.find(building_name, "badguys") then
-						building:AddAbility("imba_ancient_dire_spawn_behemoth")
-						ancient_ability = building:FindAbilityByName("imba_ancient_dire_spawn_behemoth")
-					end
-					ancient_ability:SetLevel(1)
-				end
-
-				-- Add Stalwart Defense ability
-				building:AddAbility(ancient_ability_2)
-				ancient_ability = building:FindAbilityByName(ancient_ability_2)
-				ancient_ability:SetLevel(1)
-
-				-- Add tier 1 ability
-				building:AddAbility(ancient_ability_3)
-				ancient_ability = building:FindAbilityByName(ancient_ability_3)
-				ancient_ability:SetLevel(1)
-
-				-- Add tier 2 ability
-				building:AddAbility(ancient_ability_4)
-				ancient_ability = building:FindAbilityByName(ancient_ability_4)
-				ancient_ability:SetLevel(1)
-
-				-- Add tier 3 ability
-				building:AddAbility(ancient_ability_5)
-				ancient_ability = building:FindAbilityByName(ancient_ability_5)
-				if ancient_ability:GetAbilityName() == "tidehunter_ravage" then
-					ancient_ability:SetLevel(3)
-				else
-					ancient_ability:SetLevel(1)
-				end
-
-			end
 		end
 	end
 
