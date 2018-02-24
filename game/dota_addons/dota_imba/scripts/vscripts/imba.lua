@@ -2112,6 +2112,11 @@ function GameMode:OnThink()
 				hero.undying_respawn_timer = hero.undying_respawn_timer -1
 			end
 		end
+
+		-- Find hidden modifiers
+--		for i = 0, hero:GetModifierCount() -1 do
+--			print(hero:GetModifierNameByIndex(i))
+--		end
 	end
 
 	if GetMapName() == "imba_overthrow" then

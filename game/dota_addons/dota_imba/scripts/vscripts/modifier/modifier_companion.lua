@@ -27,7 +27,7 @@ end
 
 function modifier_companion:OnCreated()
 	if IsServer() then
-		self:StartIntervalThink(0.5)
+		self:StartIntervalThink(0.25)
 
 		local companion = self:GetParent()
 		if not companion.base_model then
@@ -105,20 +105,13 @@ function modifier_companion:OnIntervalThink()
 
 		local shared_nodraw_modifiers = {
 			"modifier_item_shadow_amulet_fade",
+			"modifier_monkey_king_tree_dance_hidden",
+			"modifier_monkey_king_transform",
+			"modifier_pangolier_gyroshell",
 		}
 
 		if companion:GetIdealSpeed() ~= hero:GetIdealSpeed() - 60 then
 			companion:SetBaseMoveSpeed(hero:GetIdealSpeed() - 60)
-		end
-
-		for _, v in ipairs(shared_nodraw_modifiers) do
-			if hero:HasModifier(v) and not companion.has_nodraw == true then
-				companion.has_nodraw = true
-				companion:AddEffects(EF_NODRAW)
-			elseif not hero:HasModifier(v) and companion.has_nodraw ~= false then
-				companion.has_nodraw = false
-				companion:RemoveEffects(EF_NODRAW)
-			end
 		end
 
 		for _,v in ipairs(shared_modifiers) do
@@ -150,6 +143,15 @@ function modifier_companion:OnIntervalThink()
 			end
 		end
 
-		self:SetStackCount(hero_distance / 4)
+		self:SetStackCount(hero_distance / 3)
+
+		for _, v in ipairs(shared_nodraw_modifiers) do
+			if hero:HasModifier(v) then
+				companion:AddNoDraw()
+				return
+			elseif not hero:HasModifier(v) then
+				companion:RemoveNoDraw()
+			end
+		end
 	end
 end
