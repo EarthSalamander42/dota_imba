@@ -558,16 +558,6 @@ function GameMode:OnNPCSpawned(keys)
 		npc.vengeance_aura_target:RemoveModifierByName("modifier_imba_command_aura_negative_aura")
 		npc.vengeance_aura_target = nil
 	end
-
-	-------------------------------------------------------------------------------------------------
-	-- IMBA: Creep stats adjustment
-	-------------------------------------------------------------------------------------------------
-	if not npc:IsHero() and not npc:IsOwnedByAnyPlayer() and not npc:IsBuilding() and not npc:IsNeutralUnitType() then
-		-- Add passive buff to lane creeps
-		if string.find(npc:GetUnitName(), "dota_creep") then
-			npc:AddNewModifier(npc, nil, "modifier_imba_creep_power", {})
-		end
-	end
 end
 
 -- An entity somewhere has been hurt.  This event fires very often with many units so don't do too many expensive

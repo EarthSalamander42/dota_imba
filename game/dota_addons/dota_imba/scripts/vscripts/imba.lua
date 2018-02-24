@@ -1332,33 +1332,6 @@ function GameMode:OnGameInProgress()
 	if GetMapName() == "imba_overthrow" then return end
 
 	-------------------------------------------------------------------------------------------------
-	-- IMBA: Structure stats setup
-	-------------------------------------------------------------------------------------------------
-	-- Roll the random ancient abilities for this game
-	local ancient_ability_2 = "imba_ancient_stalwart_defense"
-	local ancient_ability_3 = GetAncientAbility(1)
-	local ancient_ability_4 = GetAncientAbility(2)
-	local ancient_ability_5 = GetAncientAbility(3)
-
-	-- Find all buildings on the map
-	local buildings = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, Vector(0,0,0), nil, 20000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
-
-	-- Iterate through each one
-	for _, building in pairs(buildings) do
-
-		-- Fetch building name
-		local building_name = building:GetName()
-
-		-- Identify the building type
-		if string.find(building_name, "tower") then
-
-			building:AddAbility("imba_tower_buffs")
-			local tower_ability = building:FindAbilityByName("imba_tower_buffs")
-			tower_ability:SetLevel(1)
-		end
-	end
-
-	-------------------------------------------------------------------------------------------------
 	-- IMBA: Tower abilities setup
 	-------------------------------------------------------------------------------------------------
 
