@@ -1240,20 +1240,8 @@ function GameMode:OnAllPlayersLoaded()
 		if string.find(building_name, "fountain") then
 
 			-- Add fountain passive abilities
-			building:AddAbility("imba_fountain_buffs")
-			building:AddAbility("imba_fountain_grievous_wounds")
-			building:AddAbility("imba_fountain_relief")
-
-			local fountain_ability = building:FindAbilityByName("imba_fountain_buffs")
-			local swipes_ability = building:FindAbilityByName("imba_fountain_grievous_wounds")
-			local relief_aura_ability = building:FindAbilityByName("imba_fountain_relief")
-
-			fountain_ability:SetLevel(1)
-			swipes_ability:SetLevel(1)
-			relief_aura_ability:SetLevel(1)
-		elseif string.find(building_name, "tower") then
-			building:SetDayTimeVisionRange(1900)
-			building:SetNightTimeVisionRange(800)
+			building:AddAbility("imba_fountain_danger_zone"):SetLevel(1)
+			building:AddAbility("imba_fountain_relief"):SetLevel(1)
 		end
 	end
 end

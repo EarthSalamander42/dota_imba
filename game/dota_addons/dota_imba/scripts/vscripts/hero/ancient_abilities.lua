@@ -151,3 +151,69 @@ end
 function modifier_imba_ancient_last_resort_debuff:GetModifierTotalDamageOutgoing_Percentage()
 	return (-1) * self:GetStackCount()
 end
+
+
+
+-- Fountain Danger Zone ability
+imba_fountain_danger_zone = class({})
+
+LinkLuaModifier("modifier_imba_fountain_danger_zone", "hero/ancient_abilities", LUA_MODIFIER_MOTION_NONE)
+
+function imba_fountain_danger_zone:IsHiddenWhenStolen() return false end
+function imba_fountain_danger_zone:IsRefreshable() return false end
+function imba_fountain_danger_zone:IsStealable() return false end
+function imba_fountain_danger_zone:IsNetherWardStealable() return false end
+
+function imba_fountain_danger_zone:GetAbilityTextureName()
+	return "nevermore_shadowraze3"
+end
+
+function imba_fountain_danger_zone:GetIntrinsicModifierName()
+	return "modifier_imba_fountain_danger_zone"
+end
+
+
+-- Passive modifier
+modifier_imba_fountain_danger_zone = class({})
+function modifier_imba_fountain_danger_zone:IsDebuff() return false end
+function modifier_imba_fountain_danger_zone:IsHidden() return true end
+function modifier_imba_fountain_danger_zone:IsPurgable() return false end
+function modifier_imba_fountain_danger_zone:IsPurgeException() return false end
+function modifier_imba_fountain_danger_zone:IsStunDebuff() return false end
+
+function modifier_imba_fountain_danger_zone:CheckState()
+	local state = {
+		[MODIFIER_STATE_DISARMED] = true
+	}
+
+	return state
+end
+
+function modifier_imba_fountain_danger_zone:OnCreated()
+	if IsServer() then
+		self:StartIntervalThink(0.2)
+	end
+end
+
+function modifier_imba_fountain_danger_zone:OnIntervalThink()
+	if IsServer() then
+		local fountain = self:GetParent()
+		local fountain_pos = fountain:GetAbsOrigin() 
+		local nearby_enemies = FindUnitsInRadius(fountain:GetTeamNumber(), fountain_pos, nil, self:GetAbility():GetSpecialValueFor("kill_radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
+		for _, enemy in pairs(nearby_enemies) do
+			local damage = enemy:GetMaxHealth() * 0.06
+			if enemy:IsInvulnerable() then
+				enemy:SetHealth(math.max(enemy:GetHealth() - damage, 1))
+			else
+				ApplyDamage({attacker = fountain, victim = enemy, damage = damage, damage_type = DAMAGE_TYPE_PURE})
+			end
+			local damage_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_tinker/tinker_laser.vpcf", PATTACH_CUSTOMORIGIN, enemy)
+			ParticleManager:SetParticleControl(damage_pfx, 0, fountain_pos)
+			ParticleManager:SetParticleControlEnt(damage_pfx, 1, enemy, PATTACH_POINT_FOLLOW, "attach_hitloc", enemy:GetAbsOrigin(), true)
+			ParticleManager:SetParticleControl(damage_pfx, 3, fountain_pos)
+			ParticleManager:SetParticleControl(damage_pfx, 9, fountain_pos)
+			ParticleManager:ReleaseParticleIndex(damage_pfx)
+			enemy:AddNewModifier(fountain, self:GetAbility(), "modifier_doom_bringer_doom", {duration = 1.0})
+		end
+	end
+end
