@@ -519,7 +519,7 @@ function GameMode:ModifierFilter( keys )
 		-- disarm immune
 		local jarnbjorn_immunity = {
 			"modifier_item_imba_triumvirate_proc_debuff",
-			"modifier_item_imba_sange_azura_proc",
+			"modifier_item_imba_sange_kaya_proc",
 			"modifier_item_imba_sange_yasha_disarm",
 			"modifier_item_imba_heavens_halberd_active_disarm",
 			"modifier_item_imba_sange_disarm",
@@ -2124,14 +2124,14 @@ function GameMode:OnThink()
 				local reaper_scythe = 36 -- max necro timer addition
 
 				if hero:HasModifier("modifier_imba_reapers_scythe_respawn") then
-					if respawn_time > HERO_RESPAWN_TIME_PER_LEVEL[math.min(hero:GetLevel(), 25)] + reaper_scythe then
-						print("NECROPHOS BUG:", hero:GetUnitName(), "respawn time too high:", respawn_time..". setting to", HERO_RESPAWN_TIME_PER_LEVEL[25])
+					if respawn_time > HERO_RESPAWN_TIME_PER_LEVEL[math.min(hero:GetLevel(), #HERO_RESPAWN_TIME_PER_LEVEL)] + reaper_scythe then
+						print("NECROPHOS BUG:", hero:GetUnitName(), "respawn time too high:", respawn_time..". setting to", HERO_RESPAWN_TIME_PER_LEVEL[#HERO_RESPAWN_TIME_PER_LEVEL])
 						respawn_time = respawn_time + reaper_scythe
 					end
 				else
-					if respawn_time > HERO_RESPAWN_TIME_PER_LEVEL[math.min(hero:GetLevel(), 25)] then
-						print(hero:GetUnitName(), "respawn time too high:", respawn_time..". setting to", HERO_RESPAWN_TIME_PER_LEVEL[25])
-						respawn_time = HERO_RESPAWN_TIME_PER_LEVEL[math.min(hero:GetLevel(), 25)]
+					if respawn_time > HERO_RESPAWN_TIME_PER_LEVEL[math.min(hero:GetLevel(), #HERO_RESPAWN_TIME_PER_LEVEL)] then
+						print(hero:GetUnitName(), "respawn time too high:", respawn_time..". setting to", HERO_RESPAWN_TIME_PER_LEVEL[#HERO_RESPAWN_TIME_PER_LEVEL])
+						respawn_time = HERO_RESPAWN_TIME_PER_LEVEL[math.min(hero:GetLevel(), #HERO_RESPAWN_TIME_PER_LEVEL)]
 					end
 				end
 				hero:SetTimeUntilRespawn(respawn_time)

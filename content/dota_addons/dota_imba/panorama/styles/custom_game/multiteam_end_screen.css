@@ -128,12 +128,13 @@
 	color: #ddd;
 	text-align: center;
 	vertical-align: center;
-	font-size: 17px;
+	font-size: 16px;
 }
 
 .es-legend-kdalevel { width: 40px; }
 .es-legend-gold { width: 70px; }
-.es-legend-imr { width: 100px; }
+.es-legend-imr { width: 70px; }
+.es-legend-imr10v10 { width: 70px; }
 .es-legend-xp { width: 190px; }
 
 .es-player-root {
@@ -152,7 +153,7 @@
 }
 
 #es-player-name {
-	font-size: 20px;
+	font-size: 18px;
 	color: #fff;
 }
 
@@ -177,7 +178,7 @@
 
 .es-player-kdalevel {
 	width: 40px;
-	font-size: 22px;
+	font-size: 20px;
 	vertical-align: center;
 	text-align: center;
 	color: #eee;
@@ -185,15 +186,16 @@
 
 #es-player-gold {
 	width: 70px;
-	font-size: 22px;
+	font-size: 20px;
 	vertical-align: center;
 	text-align: center;
 	color: #ee7;
 }
 
-#es-player-imr {
-	width: 100px;
-	font-size: 22px;
+#es-player-imr,
+#es-player-imr10v10 {
+	width: 70px;
+	font-size: 20px;
 	vertical-align: center;
 	text-align: center;
 	margin-right: 10px;

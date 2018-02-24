@@ -83,7 +83,6 @@ function GameMode:OnGameRulesStateChange(keys)
 	-- This internal handling is used to set up main barebones functions
 	GameMode:_OnGameRulesStateChange(keys)
 
-
 	local new_state = GameRules:State_Get()
 	CustomNetTables:SetTableValue("game_options", "game_state", {state = new_state})
 
@@ -94,8 +93,7 @@ function GameMode:OnGameRulesStateChange(keys)
 		print("events: team selection")
 		InitializeTeamSelection()
 	end
-	
-	
+
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Pick screen stuff
 	-------------------------------------------------------------------------------------------------
@@ -358,11 +356,22 @@ function GameMode:OnNPCSpawned(keys)
 			return
 		end
 
-		-- monkey king fix, do not spawn the 14 monkeys
+		-- meepo fix
+		if npc:GetUnitName() == "npc_dota_hero_meepo" then
+			if TRUE_MEEPO_HAS_SPAWNED then
+				return
+			else
+				npc.is_real_meepo = true
+				TRUE_MEEPO_HAS_SPAWNED = true
+			end
+		end
+
+		-- Monkey King fix
 		if npc:GetUnitName() == "npc_dota_hero_monkey_king" then
 			if TRUE_MK_HAS_SPAWNED then
-				return nil
+				return
 			else
+				npc.is_real_mk = true
 				TRUE_MK_HAS_SPAWNED = true
 			end
 		end
@@ -1112,7 +1121,7 @@ function GameMode:OnEntityKilled( keys )
 		elseif killed_unit:IsRealHero() and killed_unit:GetPlayerID() and (PlayerResource:IsImbaPlayer(killed_unit:GetPlayerID()) or (GameRules:IsCheatMode() == true) ) then
 			if GetMapName() ~= "imba_overthrow" then
 				-- Calculate base respawn timer, capped at 60 seconds
-				local hero_level = math.min(killed_unit:GetLevel(), 25)
+				local hero_level = math.min(killed_unit:GetLevel(), #HERO_RESPAWN_TIME_PER_LEVEL)
 				local respawn_time = HERO_RESPAWN_TIME_PER_LEVEL[hero_level]
 				-- Calculate respawn timer reduction due to talents and modifiers
 				respawn_time = respawn_time * killed_unit:GetRespawnTimeModifier_Pct() * 0.01
@@ -1135,8 +1144,8 @@ function GameMode:OnEntityKilled( keys )
 						print("ignore respawn time limit")
 						print(reaper_scythe)
 						respawn_time = HERO_RESPAWN_TIME_PER_LEVEL[hero_level] + reaper_scythe
-					elseif respawn_time > HERO_RESPAWN_TIME_PER_LEVEL[25] then
-						respawn_time = HERO_RESPAWN_TIME_PER_LEVEL[25]
+					elseif respawn_time > HERO_RESPAWN_TIME_PER_LEVEL[#HERO_RESPAWN_TIME_PER_LEVEL] then
+						respawn_time = HERO_RESPAWN_TIME_PER_LEVEL[#HERO_RESPAWN_TIME_PER_LEVEL]
 					end
 
 					-- divide the respawn time by 2 for frantic mode

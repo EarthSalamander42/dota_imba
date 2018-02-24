@@ -1622,7 +1622,7 @@ function IsImbaSilence(modifier_name)
 		 ["modifier_item_imba_orchid_debuff"] = true,
 		 ["modifier_item_imba_bloodthorn_debuff"] = true,
 		 ["modifier_item_imba_kaya_silence"] = true,
-		 ["modifier_item_imba_sange_azura_proc"] = true,
+		 ["modifier_item_imba_sange_kaya_proc"] = true,
 		 ["modifier_item_imba_kaya_yasha_silence"] = true,
 		 ["modifier_item_imba_triumvirate_proc_debuff"] = true}
 

@@ -5875,7 +5875,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"value"				"6"
+				"value"				"8"
 			}
 		}
 	}
@@ -5919,7 +5919,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"value"					"6"
+				"value"					"8"
 			}
 		}
 	}

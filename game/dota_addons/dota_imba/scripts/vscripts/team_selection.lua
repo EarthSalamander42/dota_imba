@@ -163,7 +163,7 @@ end
 
 local TeamSelectionComputed = {}
 local TeamSelectionComputedCount = 0
-local TeamSelectionComputedTotal = 25
+local TeamSelectionComputedTotal = 3
 
 function KeepTeams10v10TeamSelection()
 

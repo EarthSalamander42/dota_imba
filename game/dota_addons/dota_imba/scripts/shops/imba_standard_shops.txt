@@ -177,7 +177,7 @@
 	{
 		"item"		"item_imba_sange"
 		"item"		"item_imba_yasha"
-		"item"		"item_imba_azura"
+		"item"		"item_imba_kaya"
 		"item"		"item_imba_diffusal_blade"
 		"item"		"item_imba_echo_sabre"
 		"item"		"item_imba_maelstrom"

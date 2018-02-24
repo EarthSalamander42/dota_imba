@@ -1257,14 +1257,16 @@ function PickupRune(rune_name, unit, bActiveByBottle)
 				end
 			end
 
-	--		"particles/generic_gameplay/rune_bounty_owner.vpcf"
-
 			-- If this is the first bounty rune spawn, double the base bounty
 			if bounty_rune_is_initial_bounty_rune then
 				for _, hero in pairs(HeroList:GetAllHeroes()) do
 					if hero:GetTeam() == unit:GetTeam() then
-						hero:ModifyGold(current_bounty, false, DOTA_ModifyGold_Unspecified)
-						SendOverheadEventMessage(PlayerResource:GetPlayer(hero:GetPlayerOwnerID()), OVERHEAD_ALERT_GOLD, hero, current_bounty, nil)
+						if hero:GetUnitName() == "npc_dota_hero_monkey_king" and not hero.is_real_mk then
+						elseif hero:GetUnitName() == "npc_dota_hero_meepo" and not hero.is_real_meepo then
+						else
+							hero:ModifyGold(current_bounty, false, DOTA_ModifyGold_Unspecified)
+							SendOverheadEventMessage(PlayerResource:GetPlayer(hero:GetPlayerOwnerID()), OVERHEAD_ALERT_GOLD, hero, current_bounty, nil)
+						end
 					end
 				end
 			else
