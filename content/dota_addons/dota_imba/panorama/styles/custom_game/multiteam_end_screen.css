@@ -121,7 +121,7 @@
 .es-legend {
 	height: 40px;
 	flow-children: right;
-	padding-left: 310px;
+	padding-left: 284px;
 }
 
 .es-legend Label {
@@ -131,16 +131,15 @@
 	font-size: 16px;
 }
 
-.es-legend-kdalevel { width: 40px; }
 .es-legend-gold { width: 70px; }
-.es-legend-imr { width: 70px; }
-.es-legend-imr10v10 { width: 70px; }
+
 .es-legend-xp { width: 190px; }
 
 .es-player-root {
 	flow-children: right;
 	border-top: 2px solid #333;
 	padding: 3px 10px;
+	background-color: #1c1c1c77;
 }
 
 .es-players {
@@ -149,36 +148,44 @@
 
 .es-player-name-and-desc {
 	flow-children: down;
-	width: 170px;
+	width: 180px;
 }
 
 #es-player-name {
 	font-size: 18px;
 	color: #fff;
+	height: 18px;
+	margin-top: -3px;
 }
 
 #es-player-desc {
-	font-size: 16px;
+	font-size: 12px;
 	color: #ccc;
+}
+
+.es-player-line-text {
+	font-size: 16px;
 }
 
 #es-player-avatar {
 	border: 1px solid #666;
-	height: 40px;
-	width: 40px;
-	margin-right: 10px;
+	height: 30px;
+	width: 30px;
+	margin-right: 5px;
 } 
 
 #es-player-hero {
 	border: 1px solid #999;
-	height: 40px;
-	width: 71px;
-	margin-right: 10px;
+	height: 30px;
+	width: 53px;
+	margin-right: 5px;
+}
+.es-legend-kdalevel {
+	width: 35px;
 }
 
 .es-player-kdalevel {
-	width: 40px;
-	font-size: 20px;
+	width: 35px;
 	vertical-align: center;
 	text-align: center;
 	color: #eee;
@@ -186,27 +193,35 @@
 
 #es-player-gold {
 	width: 70px;
-	font-size: 20px;
 	vertical-align: center;
 	text-align: center;
 	color: #ee7;
 }
 
+.es-legend-imr, .es-legend-imr10v10 {
+	width: 85px; 
+}
+.es-legend-imr10v10 {
+	margin-right: 15px;
+}
+
 #es-player-imr,
 #es-player-imr10v10 {
-	width: 70px;
-	font-size: 20px;
+	width: 85px;
 	vertical-align: center;
 	text-align: center;
-	margin-right: 10px;
+}
+
+#es-player-imr10v10 {
+	margin-right: 15px;
 }
 
 .es-player-xp {
 	flow-children: none;
 	width: 180px;
 	vertical-align: center;
-	border: 3px solid #444;
-	border-radius: 4px;
+	border: 1px solid #444;
+	border-radius: 2px;
 	box-shadow: #000000 0px 0px 10px 0px;
 	margin-right: 10px;
 }
@@ -214,13 +229,13 @@
 #es-player-xp-progress { 
 	background-color: gradient( linear, 0% 0%, 0% 100%, from( #326114 ), color-stop( 0.3, #54BA07 ), color-stop( .5, #54BA07 ), to( #326114 ) );
 	width: 0%;
-	height: 25px;
+	height: 20px;
 }
 
 .es-player-xp Label {
 	color: #fff;
 	width: 100%;
-	font-size: 18px;
+	font-size: 16px;
 	vertical-align: center;
 	padding: 0px 10px;
 }
@@ -231,7 +246,6 @@
 
 #es-player-xp-earned {
 	width: 54px;
-	font-size: 20px;
 	vertical-align: center;
 	text-align: center;
 }

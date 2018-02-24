@@ -28,7 +28,7 @@
 						<Label class="es-legend-kdalevel" text="A" />
 						<Label class="es-legend-gold" text="Gold" />
 						<Label class="es-legend-imr" text="IMR" />
-						<Label class="es-legend-imr10v10" text="IMR10v10" />
+						<Label class="es-legend-imr10v10" text="10v10" />
 						<Label class="es-legend-xp" text="Imba XP" />
 					</Panel>
 					<Panel id="es-radiant-players" class="es-players" />
@@ -46,7 +46,7 @@
 						<Label class="es-legend-kdalevel" text="A" />
 						<Label class="es-legend-gold" text="Gold" />
 						<Label class="es-legend-imr" text="IMR" />
-						<Label class="es-legend-imr10v10" text="IMR10v10" />
+						<Label class="es-legend-imr10v10" text="10v10" />
 						<Label class="es-legend-xp" text="Imba XP" />
 					</Panel>
 					<Panel id="es-dire-players" class="es-players" />
@@ -67,7 +67,7 @@
 						<Label class="es-legend-kdalevel" text="A" />
 						<Label class="es-legend-gold" text="Gold" />
 						<Label class="es-legend-imr" text="IMR" />
-						<Label class="es-legend-imr10v10" text="IMR10v10" />
+						<Label class="es-legend-imr10v10" text="10v10" />
 						<Label class="es-legend-xp" text="Imba XP" />
 					</Panel>
 					<Panel id="es-custom1-players" class="es-players" />
@@ -86,7 +86,7 @@
 						<Label class="es-legend-kdalevel" text="A" />
 						<Label class="es-legend-gold" text="Gold" />
 						<Label class="es-legend-imr" text="IMR" />
-						<Label class="es-legend-imr10v10" text="IMR10v10" />
+						<Label class="es-legend-imr10v10" text="10v10" />
 						<Label class="es-legend-xp" text="Imba XP" />
 					</Panel>
 					<Panel id="es-custom2-players" class="es-players" />
@@ -107,7 +107,7 @@
 						<Label class="es-legend-kdalevel" text="A" />
 						<Label class="es-legend-gold" text="Gold" />
 						<Label class="es-legend-imr" text="IMR" />
-						<Label class="es-legend-imr10v10" text="IMR10v10" />
+						<Label class="es-legend-imr10v10" text="10v10" />
 						<Label class="es-legend-xp" text="Imba XP" />
 					</Panel>
 					<Panel id="es-custom3-players" class="es-players" />

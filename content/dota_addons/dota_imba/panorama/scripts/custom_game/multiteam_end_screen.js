@@ -152,6 +152,8 @@ function EndScoreboard() {
 			pp.AddClass("es-player");
 			pp.BLoadLayout(playerXmlFile, false, false);
 
+			$.Msg(player);
+			
 			var values = {
 				name: pp.FindChildInLayoutFile("es-player-name"),
 				avatar: pp.FindChildInLayoutFile("es-player-avatar"),
@@ -215,14 +217,14 @@ function EndScoreboard() {
 					var diff = Math.floor(player.result.imr_10v10_diff);
 
 					if (diff == 0) {
-						values.imr.text = imr;
-						values.imr.AddClass("es-text-white");
+						values.imr10v10.text = imr;
+						values.imr10v10.AddClass("es-text-white");
 					} else if (diff > 0) {
-						values.imr.text = imr + " (+" + diff + ")";
-						values.imr.AddClass("es-text-green");
+						values.imr10v10.text = imr + " (+" + diff + ")";
+						values.imr10v10.AddClass("es-text-green");
 					} else {
-						values.imr.text = imr + " (" + diff + ")";
-						values.imr.AddClass("es-text-red");
+						values.imr10v10.text = imr + " (" + diff + ")";
+						values.imr10v10.AddClass("es-text-red");
 					}
 				}
 				
