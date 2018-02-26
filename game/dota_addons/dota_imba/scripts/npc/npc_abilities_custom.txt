@@ -76,20 +76,22 @@
 	}
 
 	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-	//	[BUFF]		PASSIVE UPGRADES
+	//	[BUFF]		UNIT BUFFS
 	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 	//=================================================================================================================
-	// Ancient passive buffs
+	// Ancient: Ancient Defense
 	//=================================================================================================================
-	"imba_ancient_buffs"
+	"imba_ancient_defense"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"										"ability_datadriven"
-		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"							"backdoor_protection"
-		"MaxLevel"										"1"
+		"BaseClass"								"ability_lua"
+		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"					"custom/ancient_defense"
+		"MaxLevel"								"1"
+		"ScriptFile"							"hero/ancient_abilities"
+		"AbilityCastRange"						"1200"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -97,263 +99,44 @@
 		{
 			"01"
 			{
-				"var_type"								"FIELD_INTEGER"
-				"bonus_armor"							"5"
+				"var_type"						"FIELD_INTEGER"
+				"aura_radius"					"1200"
 			}
 			"02"
 			{
-				"var_type"								"FIELD_INTEGER"
-				"ancient_health"						"15000"
-			}
-		}
-
-		"OnUpgrade"
-		{
-			"RunScript"
-			{
-				"ScriptFile"							"hero/ancient_abilities.lua"
-				"Function"								"AncientHealth"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_ancient_buffs_base"
-			{
-				"Passive"								"1"
-				"IsHidden"								"1"
-				"IsBuff"								"1"
-				"IsPurgable"							"0"
-
-				"Attributes"							"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
-
-				"ThinkInterval"							"0.5"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"hero/ancient_abilities.lua"
-						"Function"						"AncientThink"
-					}
-				}
-
-				"OnAttacked"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"hero/ancient_abilities.lua"
-						"Function"						"AncientAttacked"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ABILITY_LAYOUT"			"6"
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"%bonus_armor"
-				}
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Super Melee Lane Creep Upgrade
-	//=================================================================================================================
-	"imba_super_creep_melee_bonuses"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"										"ability_lua"
-		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-		"AbilityTextureName"							"rubick_empty1"
-		"MaxLevel"										"1"
-		"ScriptFile"									"hero/npc_upgrades.lua"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"bonus_damage_per_minute"				"6"
-			}
-
-			"02"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"bonus_health_per_minute"				"90"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Super Ranged Lane Creep Upgrade
-	//=================================================================================================================
-	"imba_super_creep_ranged_bonuses"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"										"ability_lua"
-		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-		"AbilityTextureName"							"rubick_empty1"
-		"MaxLevel"										"1"
-		"ScriptFile"									"hero/npc_upgrades.lua"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"bonus_damage_per_minute"				"10"
-			}
-
-			"02"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"bonus_health_per_minute"				"76"
-			}			
-		}		
-	}
-
-	//=================================================================================================================
-	// Mega Melee Lane Creep Upgrade
-	//=================================================================================================================
-	"imba_mega_creep_melee_bonuses"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"										"ability_lua"
-		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-		"AbilityTextureName"							"rubick_empty1"
-		"MaxLevel"										"1"
-		"ScriptFile"									"hero/npc_upgrades.lua"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"bonus_damage_per_minute"				"12"
-			}
-
-			"02"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"bonus_health_per_minute"				"180"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Mega Ranged Lane Creep Upgrade
-	//=================================================================================================================
-	"imba_mega_creep_ranged_bonuses"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"										"ability_lua"
-		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-		"AbilityTextureName"							"rubick_empty1"
-		"MaxLevel"										"1"
-		"ScriptFile"									"hero/npc_upgrades.lua"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"bonus_damage_per_minute"				"20"
-			}
-
-			"02"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"bonus_health_per_minute"				"152"
-			}			
-		}		
-	}
-
-	//=================================================================================================================
-	// Tower passive buffs
-	//=================================================================================================================
-	"imba_tower_buffs"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"										"ability_datadriven"
-		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-		"AbilityTextureName"							"rubick_empty1"
-		"MaxLevel"										"1"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"base_damage_per_tier"					"50"
-			}
-			"02"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"base_armor_per_tier"					"7"
+				"var_type"						"FIELD_INTEGER"
+				"defense_stack"					"-10"
 			}
 			"03"
 			{
-				"var_type"								"FIELD_INTEGER"
-				"base_as_per_tier"						"30"
-			}
-			"04"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"base_health_per_tier"					"500"
+				"var_type"						"FIELD_INTEGER"
+				"max_stacks"					"5"		// 8 in 10v10
 			}
 		}
+	}
 
-		"Modifiers"
+	//=================================================================================================================
+	// Ancient: Last Resort
+	//=================================================================================================================
+	"imba_ancient_last_resort"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"								"ability_lua"
+		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"					"custom/ancient_last_resort"
+		"MaxLevel"								"1"
+		"ScriptFile"							"hero/ancient_abilities"
+		"AbilityCastRange"						"1200"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
 		{
-			"modifier_imba_tower_buffs_base"
+			"01"
 			{
-				"Passive"								"1"
-				"IsHidden"								"1"
-				"IsBuff"								"1"
-				"IsPurgable"							"0"
-
-				"Attributes"							"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"hero/npc_upgrades.lua"
-						"Function"						"TowerUpgrade"
-
-						"modifier_buffs"				"modifier_imba_tower_buffs_stack"
-					}
-				}
-			}
-
-			"modifier_imba_tower_buffs_stack"
-			{
-				"Passive"								"0"
-				"IsHidden"								"1"
-				"IsBuff"								"1"
-				"IsPurgable"							"0"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE"	"%base_damage_per_tier"
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"			"%base_armor_per_tier"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%base_as_per_tier"
-				}
+				"var_type"						"FIELD_INTEGER"
+				"aura_radius"					"1200"
 			}
 		}
 	}
@@ -392,130 +175,25 @@
 	}
 
 	//=================================================================================================================
-	// Fountain buffs
+	// Fountain: Danger Zone
 	//=================================================================================================================
-	"imba_fountain_buffs"
+	"imba_fountain_danger_zone"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"										"ability_datadriven"
-		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-		"AbilityTextureName"							"rubick_empty1"
-		"MaxLevel"										"1"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"as_bonus"								"100"
-			}
-			"02"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"range_bonus"							"200"
-			}
-			"03"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"bash_radius"							"1700"
-			}
-			"04"
-			{
-				"var_type"								"FIELD_FLOAT"
-				"bash_duration"							"0.3"
-			}
-			"05"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"bash_distance"							"200"
-			}
-			"06"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"bash_height"							"50"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_fountain_buffs"
-			{
-				"Passive"								"1"
-				"IsHidden"								"1"
-				"IsBuff"								"1"
-				"IsPurgable"							"0"
-
-				"Attributes"							"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"hero/npc_upgrades.lua"
-						"Function"						"FountainMarker"
-
-						"particle_danger"				"particles/ambient/fountain_danger_circle.vpcf"
-					}
-				}
-
-				"OnAttackLanded"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"hero/npc_upgrades.lua"
-						"Function"						"FountainBash"
-
-						"particle_bash"					"particles/units/heroes/hero_spirit_breaker/spirit_breaker_greater_bash.vpcf"
-						"sound_bash"					"Hero_Spirit_Breaker.GreaterBash.Creep"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"				"%range_bonus"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%as_bonus"
-				}
-
-				"States"
-				{
-					"MODIFIER_STATE_CANNOT_MISS"		"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_FLYING"				"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_ROOTED"				"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-
-			"modifier_imba_fountain_disabled"
-			{
-				"Passive"								"0"
-				"IsHidden"								"0"
-				"IsDebuff"								"1"
-				"IsPurgable"							"0"
-
-				"Attributes"							"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
-
-				"States"
-				{
-					"MODIFIER_STATE_DISARMED"			"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Fountain ability: Grievous Wounds
-	//=================================================================================================================
-	"imba_fountain_grievous_wounds"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"								"ability_datadriven"
+		"BaseClass"								"ability_lua"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"					"ursa_fury_swipes"
-		"MaxLevel"								"3"
-		"AbilitySharedWithTeammates"			"1"
+		"AbilityTextureName"					"nevermore_shadowraze3"
+		"MaxLevel"								"1"
+		"ScriptFile"							"hero/ancient_abilities"
+		"AbilityCastRange"						"1700"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle" 							"particles/units/heroes/hero_tinker/tinker_laser.vpcf"
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -524,46 +202,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"damage_increase"				"10 15 20"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"debuff_duration"				"5"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_fountain_grievous_wounds"
-			{
-				"Passive"						"1"
-				"IsHidden"						"1"
-
-				"OnAttackLanded"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/fountain_abilities.lua"
-						"Function"				"GrievousWounds"
-
-						"modifier_debuff"		"modifier_imba_fountain_grievous_wounds_debuff"
-						"particle_hit"			"particles/units/heroes/hero_ursa/ursa_fury_swipes.vpcf"
-					}
-				}
-			}
-
-			"modifier_imba_fountain_grievous_wounds_debuff"
-			{
-				"Passive"						"0"
-				"IsHidden"						"0"
-				"IsDebuff"						"1"
-				"IsPurgable"					"1"
-
-				"Duration"						"%debuff_duration"
-
-				"EffectName"					"particles/units/heroes/hero_ursa/ursa_fury_swipes_debuff.vpcf"
-				"EffectAttachType"				"follow_overhead"
+				"kill_radius"					"1700"
 			}
 		}
 	}
@@ -621,560 +260,6 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"aura_reject_time"				"10"
-			}
-		}
-	}
-
-	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-	//	[ANCI]		ANCIENT ABILITIES
-	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-	//=================================================================================================================
-	// Ancient ability: Spawn Radiant Behemoth
-	//=================================================================================================================
-	"imba_ancient_radiant_spawn_behemoth"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"								"ability_datadriven"
-		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"					"custom/imba_ancient_radiant_spawn_behemoth"
-		"MaxLevel"								"1"
-		"AbilityCastRange"						"1500"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"base_health"					"1000"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"health_per_minute"				"200"
-			}
-			"03"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"health_per_hero"				"1200"
-			}
-			"04"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"armor_per_minute"				"0.75"
-			}
-			"05"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"regen_per_minute"				"2"
-			}
-			"06"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"radius"						"1500"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_spawn_behemoth"
-			{
-				"Passive"						"1"
-				"IsHidden"						"1"
-				"IsBuff"						"1"
-				"IsPurgable"					"0"
-
-				"Aura"							"modifier_imba_spawn_behemoth_aura"
-				"Aura_Radius"					"%radius"
-				"Aura_Teams"					"DOTA_UNIT_TARGET_TEAM_ENEMY"
-				"Aura_Types"					"DOTA_UNIT_TARGET_HERO"
-				"Aura_Flags"					"DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS | DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-			}
-
-			"modifier_imba_spawn_behemoth_aura"
-			{
-				"Passive"						"0"
-				"IsHidden"						"1"
-				"IsDebuff"						"1"
-				"IsPurgable"					"0"
-
-				"OnDeath"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/ancient_abilities.lua"
-						"Function"				"SpawnRadiantBehemoth"
-
-						"modifier_stack"		"modifier_imba_spawn_behemoth_stacks"
-						"particle_ambient"		"particles/creeps/lane_creeps/creep_radiant_hulk_ambient.vpcf"
-					}
-				}
-			}
-
-			"modifier_imba_spawn_behemoth_stacks"
-			{
-				"Passive"						"0"
-				"IsHidden"						"1"
-				"IsBuff"						"1"
-				"IsPurgable"					"0"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"%regen_per_minute"
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%armor_per_minute"
-				}
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Ancient ability: Spawn Dire Behemoth
-	//=================================================================================================================
-	"imba_ancient_dire_spawn_behemoth"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"								"ability_datadriven"
-		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"					"custom/imba_ancient_dire_spawn_behemoth"
-		"MaxLevel"								"1"
-		"AbilityCastRange"						"1500"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"base_health"					"1000"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"health_per_minute"				"200"
-			}
-			"03"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"health_per_hero"				"1200"
-			}
-			"04"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"armor_per_minute"				"1"
-			}
-			"05"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"regen_per_minute"				"2"
-			}
-			"06"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"radius"						"1500"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_spawn_behemoth"
-			{
-				"Passive"						"1"
-				"IsHidden"						"1"
-				"IsBuff"						"1"
-				"IsPurgable"					"0"
-
-				"Aura"							"modifier_imba_spawn_behemoth_aura"
-				"Aura_Radius"					"%radius"
-				"Aura_Teams"					"DOTA_UNIT_TARGET_TEAM_ENEMY"
-				"Aura_Types"					"DOTA_UNIT_TARGET_HERO"
-				"Aura_Flags"					"DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS | DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-			}
-
-			"modifier_imba_spawn_behemoth_aura"
-			{
-				"Passive"						"0"
-				"IsHidden"						"1"
-				"IsDebuff"						"1"
-				"IsPurgable"					"0"
-
-				"OnDeath"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/ancient_abilities.lua"
-						"Function"				"SpawnDireBehemoth"
-
-						"modifier_stack"		"modifier_imba_spawn_behemoth_stacks"
-						"particle_ambient"		"particles/creeps/lane_creeps/creep_dire_hulk_flames.vpcf"
-					}
-				}
-			}
-
-			"modifier_imba_spawn_behemoth_stacks"
-			{
-				"Passive"						"0"
-				"IsHidden"						"1"
-				"IsBuff"						"1"
-				"IsPurgable"					"0"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"%regen_per_minute"
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%armor_per_minute"
-				}
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Radiant Behemoth aura
-	//=================================================================================================================
-	"imba_behemoth_aura_goodguys"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"								"ability_datadriven"
-		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_AURA"
-		"AbilityUnitTargetTeam"					"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityTextureName"					"imba_ancient_radiant_spawn_behemoth"
-		"MaxLevel"								"5"
-		"AbilityCastRange"						"1200"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"move_speed"					"5.0 7.5 10.0 12.5 15.0"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"attack_speed"					"20 30 40 50 60"
-			}
-			"03"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"damage"						"20 30 40 50 60"
-			}
-			"04"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"armor"							"4 6 8 10 12"
-			}
-			"05"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"hp_regen"						"5 10 15 20 25"
-			}
-			"06"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"damage_reduction"				"-8 -12 -16 -20 -24"
-			}
-			"07"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"damage_reduction_tooltip"		"8 12 16 20 24"
-			}
-			"08"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"aura_radius"					"1200"
-			}
-		}
-
-		// Data driven
-		//-------------------------------------------------------------------------------------------------------------
-		"Modifiers"
-		{
-			"modifier_imba_behemoth_aura"
-			{
-				"Passive"						"1"
-				"IsHidden"						"1"
-
-				"Aura"							"modifier_imba_behemoth_aura_effect_goodguys"
-				"Aura_Radius"					"%aura_radius"
-				"Aura_Teams"					"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-				"Aura_Types"					"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-				"Aura_ApplyToCaster"			"0"
-			}
-
-			"modifier_imba_behemoth_aura_effect_goodguys"
-			{
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%move_speed"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%attack_speed"
-					"MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE"	"%damage"
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"			"%armor"
-					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"			"%hp_regen"
-					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"		"%damage_reduction"
-				}
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Dire Behemoth aura
-	//=================================================================================================================
-	"imba_behemoth_aura_badguys"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"								"ability_datadriven"
-		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_AURA"
-		"AbilityUnitTargetTeam"					"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityTextureName"					"imba_ancient_dire_spawn_behemoth"
-		"MaxLevel"								"5"
-		"AbilityCastRange"						"1200"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"move_speed"					"5.0 7.5 10.0 12.5 15.0"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"attack_speed"					"20 30 40 50 60"
-			}
-			"03"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"damage"						"20 30 40 50 60"
-			}
-			"04"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"armor"							"4 6 8 10 12"
-			}
-			"05"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"hp_regen"						"5 10 15 20 25"
-			}
-			"06"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"damage_reduction"				"-8 -12 -16 -20 -24"
-			}
-			"07"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"damage_reduction_tooltip"		"8 12 16 20 24"
-			}
-			"08"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"aura_radius"					"1200"
-			}
-		}
-
-		// Data driven
-		//-------------------------------------------------------------------------------------------------------------
-		"Modifiers"
-		{
-			"modifier_imba_behemoth_aura"
-			{
-				"Passive"						"1"
-				"IsHidden"						"1"
-
-				"Aura"							"modifier_imba_behemoth_aura_effect_badguys"
-				"Aura_Radius"					"%aura_radius"
-				"Aura_Teams"					"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-				"Aura_Types"					"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-				"Aura_ApplyToCaster"			"0"
-			}
-
-			"modifier_imba_behemoth_aura_effect_badguys"
-			{
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%move_speed"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%attack_speed"
-					"MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE"	"%damage"
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"			"%armor"
-					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"			"%hp_regen"
-					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"		"%damage_reduction"
-				}
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Behemoth dearmor
-	//=================================================================================================================
-	"imba_behemoth_dearmor"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"							"ability_datadriven"
-		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"				"slardar_amplify_damage"
-		"MaxLevel"							"1"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"armor_lost"				"-1"
-			}
-		}
-
-		"Modifiers"
-		{
-
-			"modifier_imba_behemoth_dearmor"
-			{
-				"Passive"					"1"
-				"IsDebuff"					"1"
-				"IsHidden"					"1"
-				"IsPurgable"				"0"
-
-				"OnAttacked"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/ancient_abilities.lua"
-						"Function"			"BehemothAttacked"
-
-						"modifier_stack"	"modifier_imba_behemoth_dearmor_stacks"
-					}
-				}
-			}
-
-			"modifier_imba_behemoth_dearmor_stacks"
-			{
-				"Passive"					"1"
-				"IsDebuff"					"1"
-				"IsHidden"					"1"
-				"IsPurgable"				"0"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"%armor_lost"
-				}
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Ancient ability: Stalwart Defense
-	//=================================================================================================================
-	"imba_ancient_stalwart_defense"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"								"ability_datadriven"
-		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"					"modifier_invulnerable"
-		"MaxLevel"								"1"
-		"AbilityCastRange"						"1500"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"duration"						"3.5"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"hp_regen"						"10"
-			}
-			"03"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"damage_reduction"				"-25"
-			}
-			"04"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"radius"						"1500"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_stalwart_defense"
-			{
-				"Passive"						"1"
-				"IsHidden"						"1"
-				"IsBuff"						"1"
-				"IsPurgable"					"0"
-
-				"Aura"							"modifier_imba_stalwart_defense_aura"
-				"Aura_Radius"					"%radius"
-				"Aura_Teams"					"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-				"Aura_Types"					"DOTA_UNIT_TARGET_HERO"
-				"Aura_Flags"					"DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS"
-			}
-
-			"modifier_imba_stalwart_defense_aura"
-			{
-				"Passive"						"0"
-				"IsHidden"						"1"
-				"IsBuff"						"1"
-				"IsPurgable"					"0"
-
-				"OnDeath"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/ancient_abilities.lua"
-						"Function"				"StalwartDefense"
-
-						"modifier_buff"			"modifier_imba_stalwart_defense_buff"
-						"sound_cast"			"Hero_LegionCommander.PressTheAttack"
-						"particle_hit"			"particles/units/heroes/hero_legion_commander/legion_commander_press.vpcf"
-						"particle_buff"			"particles/units/heroes/hero_legion_commander/legion_commander_press_buff.vpcf"
-					}
-				}
-			}
-
-			"modifier_imba_stalwart_defense_buff"
-			{
-				"Passive"						"0"
-				"IsHidden"						"0"
-				"IsBuff"						"1"
-				"IsPurgable"					"0"
-
-				"Duration"						"%duration"
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/ancient_abilities.lua"
-						"Function"				"StalwartDefenseParticleEnd"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"	"%damage_reduction"
-					"MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE"		"%hp_regen"
-				}
 			}
 		}
 	}

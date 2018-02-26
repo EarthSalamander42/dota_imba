@@ -1240,20 +1240,8 @@ function GameMode:OnAllPlayersLoaded()
 		if string.find(building_name, "fountain") then
 
 			-- Add fountain passive abilities
-			building:AddAbility("imba_fountain_buffs")
-			building:AddAbility("imba_fountain_grievous_wounds")
-			building:AddAbility("imba_fountain_relief")
-
-			local fountain_ability = building:FindAbilityByName("imba_fountain_buffs")
-			local swipes_ability = building:FindAbilityByName("imba_fountain_grievous_wounds")
-			local relief_aura_ability = building:FindAbilityByName("imba_fountain_relief")
-
-			fountain_ability:SetLevel(1)
-			swipes_ability:SetLevel(1)
-			relief_aura_ability:SetLevel(1)
-		elseif string.find(building_name, "tower") then
-			building:SetDayTimeVisionRange(1900)
-			building:SetNightTimeVisionRange(800)
+			building:AddAbility("imba_fountain_danger_zone"):SetLevel(1)
+			building:AddAbility("imba_fountain_relief"):SetLevel(1)
 		end
 	end
 end
@@ -1330,80 +1318,6 @@ function GameMode:OnGameInProgress()
 	GameRules:SetGoldTickTime( GOLD_TICK_TIME[GetMapName()] )
 
 	if GetMapName() == "imba_overthrow" then return end
-
-	-------------------------------------------------------------------------------------------------
-	-- IMBA: Structure stats setup
-	-------------------------------------------------------------------------------------------------
-	-- Roll the random ancient abilities for this game
-	local ancient_ability_2 = "imba_ancient_stalwart_defense"
-	local ancient_ability_3 = GetAncientAbility(1)
-	local ancient_ability_4 = GetAncientAbility(2)
-	local ancient_ability_5 = GetAncientAbility(3)
-
-	-- Find all buildings on the map
-	local buildings = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, Vector(0,0,0), nil, 20000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
-
-	-- Iterate through each one
-	for _, building in pairs(buildings) do
-
-		-- Fetch building name
-		local building_name = building:GetName()
-
-		-- Identify the building type
-		if string.find(building_name, "tower") then
-
-			building:AddAbility("imba_tower_buffs")
-			local tower_ability = building:FindAbilityByName("imba_tower_buffs")
-			tower_ability:SetLevel(1)
-
-		elseif string.find(building_name, "fort") then
-
-			-- Add passive buff
-			building:AddAbility("imba_ancient_buffs")
-			local ancient_ability = building:FindAbilityByName("imba_ancient_buffs")
-			ancient_ability:SetLevel(1)
-
-			if TOWER_ABILITY_MODE then
-
-				-- Add Spawn Behemoth ability, if appropriate
-				if SPAWN_ANCIENT_BEHEMOTHS then
-					if string.find(building_name, "goodguys") then
-						building:AddAbility("imba_ancient_radiant_spawn_behemoth")
-						ancient_ability = building:FindAbilityByName("imba_ancient_radiant_spawn_behemoth")
-					elseif string.find(building_name, "badguys") then
-						building:AddAbility("imba_ancient_dire_spawn_behemoth")
-						ancient_ability = building:FindAbilityByName("imba_ancient_dire_spawn_behemoth")
-					end
-					ancient_ability:SetLevel(1)
-				end
-
-				-- Add Stalwart Defense ability
-				building:AddAbility(ancient_ability_2)
-				ancient_ability = building:FindAbilityByName(ancient_ability_2)
-				ancient_ability:SetLevel(1)
-
-				-- Add tier 1 ability
-				building:AddAbility(ancient_ability_3)
-				ancient_ability = building:FindAbilityByName(ancient_ability_3)
-				ancient_ability:SetLevel(1)
-
-				-- Add tier 2 ability
-				building:AddAbility(ancient_ability_4)
-				ancient_ability = building:FindAbilityByName(ancient_ability_4)
-				ancient_ability:SetLevel(1)
-
-				-- Add tier 3 ability
-				building:AddAbility(ancient_ability_5)
-				ancient_ability = building:FindAbilityByName(ancient_ability_5)
-				if ancient_ability:GetAbilityName() == "tidehunter_ravage" then
-					ancient_ability:SetLevel(3)
-				else
-					ancient_ability:SetLevel(1)
-				end
-
-			end
-		end
-	end
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Tower abilities setup
