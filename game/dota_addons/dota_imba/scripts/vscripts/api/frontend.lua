@@ -22,6 +22,10 @@ ImbaApiFrontendPreloaded = {}
 
 ImbaApiFrontendReady_ = false
 
+ImbaApiFrontendSettings = {
+	debug = false,
+	eventTimer = 2
+}
 
 -- Asyncronous
 -- has to be called in GameMode:OnFirstPlayerLoaded

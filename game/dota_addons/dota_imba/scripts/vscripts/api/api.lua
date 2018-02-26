@@ -4,6 +4,16 @@
 
 require("api/json")
 
+-- Constants
+local ImbaApiConfig = {
+	key = "3utx8DehTd42Wxqh65ldAErJjoCdi6XB",
+	endpoint = "http://api.dota2imba.org",
+--	endpoint = "http://10.1.128.77",
+	agent = "dota_imba-7.04",
+	timeout = 10000,
+	debug = false
+}
+
 local ImbaApiEndpoints = {
 	MetaNews = "/meta/news",
 	MetaDonators = "/meta/donators",

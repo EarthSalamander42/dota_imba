@@ -1,0 +1,56 @@
+.MainPanel
+{
+	width: 25%;
+	height: 85%;
+	align: right top;
+	margin-top: 5%;
+	background-color: #000000aa;
+	flow-children: down;
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+}
+
+#Title {
+	height: 5%;
+	align: center top;
+}
+
+#Players {
+	width: 100%;
+	height: 55%;
+	align: center top;
+	background-color: #000000aa;
+	flow-children: down;
+}
+
+.PlayerRow {
+	width: 75%;
+	height: 10%;
+	background-color: #505050aa;
+	align: center top;
+}
+
+.SteamAvatar {
+	width: 64px;
+	height: 64px;
+}
+
+.UILabel
+{
+	font-size: 19px;
+}
+
+.UILabelLarge
+{
+	font-size: 30px;
+}
+
+.UILabel,
+.UILabelLarge
+{
+	font-family: Goudy Trajan Medium, FZKai-Z03, TH Sarabun New;
+	text-shadow: -1px 1px 2px 2.0 #000000;
+	text-transform: uppercase;
+	text-align: center center;
+	color: #CCB966;
+}

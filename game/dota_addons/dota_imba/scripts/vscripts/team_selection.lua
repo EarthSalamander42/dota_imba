@@ -21,7 +21,7 @@
 -----------------------------------
 
 -- print utility functions
-TeamSelectionDebugEnabled = TeamSelectionSettings.debug
+local TeamSelectionDebugEnabled = true
 
 function tsprint(msg)
 	if TeamSelectionDebugEnabled then
@@ -163,7 +163,7 @@ end
 
 local TeamSelectionComputed = {}
 local TeamSelectionComputedCount = 0
-local TeamSelectionComputedTotal = TeamSelectionSettings.computationIterations
+local TeamSelectionComputedTotal = 3
 
 function KeepTeams10v10TeamSelection()
 

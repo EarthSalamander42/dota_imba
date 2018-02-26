@@ -59,6 +59,7 @@ require('settings')
 -- events.lua is where you can specify the actions to be taken when any event occurs and is one of the core barebones files.
 require('events')
 
+
 require('team_selection')
 
 require('api/api')
@@ -1525,17 +1526,6 @@ function GameMode:OnGameInProgress()
 			end
 		end
 	end
-
-	-- Find all towers
-	local towers = Entities:FindAllByClassname("npc_dota_tower")
-
-	for _,tower in pairs(towers) do
-		if string.find(tower:GetUnitName(), "tower1") then
-			tower:SetBaseDamageMin(180)
-			tower:SetBaseDamageMax(200)
-			print(tower:GetName())
-		end
-	end
 end
 
 -- This function initializes the game mode and is called before anyone loads into the game
@@ -2144,7 +2134,7 @@ function GameMode:OnThink()
 
 		if newState == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
 			-- End the game if one team completely abandoned
-			if IsInToolsMode() then
+			if not IsInToolsMode() then
 				if not TEAM_ABANDON then
 					TEAM_ABANDON = {} -- 15 second to abandon, is_abandoning?, player_count.
 					TEAM_ABANDON[2] = {FULL_ABANDON_TIME, false, 0}

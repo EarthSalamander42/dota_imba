@@ -1121,7 +1121,7 @@
 //"DOTA_Tooltip_Ability_special_bonus_unique_arc_warden"        "+250 Spark Wraith Damage"
 //"DOTA_Tooltip_Ability_special_bonus_unique_meepo"           "-5s Poof Cooldown"
 "DOTA_Tooltip_ability_special_bonus_unique_meepo_2"           "+80 Poof Damage"
-//"DOTA_Tooltip_Ability_special_bonus_unique_monkey_king"       "+100% Boundless Strike Crit"
+"DOTA_Tooltip_Ability_special_bonus_unique_monkey_king"       "+100% Boundless Strike Crit"
 //"DOTA_Tooltip_Ability_special_bonus_unique_monkey_king_2"       "+75 Jingu Mastery damage"
 
 "DOTA_Tooltip_Ability_special_bonus_unique_clockwerk_3"         "+40 Battery Assault damage"

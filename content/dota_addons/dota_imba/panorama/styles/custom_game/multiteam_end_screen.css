@@ -1,8 +1,35 @@
+@keyframes 'fade_in'
+{
+	0%
+	{
+		opacity: 0.0;
+	}
+
+	50%
+	{
+		opacity: 0.0;
+	}
+
+	100%
+	{
+		opacity: 1.0;
+	}
+}
+
 .es-root {
 	width: 100%;
 	height: 100%;
 	background-color: gradient( linear, 0% 0%, 0% 100%, from( #000000FF ), color-stop( 0.12, #000000ff ), color-stop( 0.5, #00000022 ), to( #00000000 ) );
 	flow-children: down;
+}
+
+#es-victory-info,
+#es-teams,
+#es-buttons {
+	animation-name: fade_in;
+	animation-duration: 3.0s;
+	animation-timing-function: ease-in;
+	animation-iteration-count: 1;
 }
 
 .es-text-red { color: #f03333; }

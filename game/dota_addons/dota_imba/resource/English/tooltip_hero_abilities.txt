@@ -3826,12 +3826,12 @@
 ////===============================================================================================================
 "DOTA_Tooltip_ability_special_bonus_imba_pugna_1"          "-1s Nether Blast cooldown"
 "DOTA_Tooltip_ability_special_bonus_imba_pugna_2"          "+0.5 Nether Ward zap damage per mana used"
-"DOTA_Tooltip_ability_special_bonus_imba_pugna_3"          "+125 Nether Blast damage"
-"DOTA_Tooltip_ability_special_bonus_imba_pugna_4"          "+15% From The Nether Reaches heal/damage"
-"DOTA_Tooltip_ability_special_bonus_imba_pugna_5"          "+50% Life Drain heal"
-"DOTA_Tooltip_ability_special_bonus_imba_pugna_6"          "+1s Decrepify duration"
-"DOTA_Tooltip_ability_special_bonus_imba_pugna_7"          "+35% Essence of Life base slow"
-"DOTA_Tooltip_ability_special_bonus_imba_pugna_8"          "+6% Nether Weakness magic resistance per blast"
+"DOTA_Tooltip_ability_special_bonus_imba_pugna_3"          "+1s Decrepify duration"
+"DOTA_Tooltip_ability_special_bonus_imba_pugna_4"          "Life Drain can't be broken by distance for the first 1 second"
+"DOTA_Tooltip_ability_special_bonus_imba_pugna_5"          "+10% Nether Blast secondary damage"
+"DOTA_Tooltip_ability_special_bonus_imba_pugna_6"          "Whenever Nether Ward zaps a target, it becomes briefly decrepified for 1 second"
+"DOTA_Tooltip_ability_special_bonus_imba_pugna_7"          "+3% Target current health as Life Drain's per sec damage"
+"DOTA_Tooltip_ability_special_bonus_imba_pugna_8"          "+2 extra Nether Wards"
 
 ////===============================================================================================================
 // Pugna's summoned unit: Nether Ward

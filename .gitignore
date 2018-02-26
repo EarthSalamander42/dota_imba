@@ -22,8 +22,10 @@ game/dota_addons/*
 *.tmp
 
 # Compiled formats
+*.vagrp_c
 *.vpcf_c
 *.vtex_c
+*.vmdl_c
 *.vsndevts_c
 *.vsnd_c
 *.vmat_c
