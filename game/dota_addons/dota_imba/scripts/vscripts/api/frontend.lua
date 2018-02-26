@@ -272,8 +272,8 @@ ApiEventCodes = {
 	Timing = 20,				-- ()
 	UnitSpawned = 21,			-- (unit_name, steamid)
 	ItemCombined = 22,			-- (item_name, hero_name, steamid)
-	ItemPickedUp = 23			-- (item_name, hero_name, steamid)
-	
+	ItemPickedUp = 23,			-- (item_name, hero_name, steamid)
+	ChatEvent = 24				-- (steamid, text)
 }
 
 function ImbaApiFrontendEventToString(eventCode)

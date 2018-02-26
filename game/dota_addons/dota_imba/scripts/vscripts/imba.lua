@@ -28,6 +28,9 @@ if GameMode == nil then
 	_G.GameMode = class({})
 end
 
+-- settings.lua is where you can specify many different properties for your game mode and is one of the core barebones files.
+require('settings')
+
 require('libraries/timers')
 require('libraries/physics')
 require('libraries/projectiles')
@@ -40,6 +43,11 @@ require('libraries/astar')
 -- Illusion manager, created by Seinken!
 require('libraries/illusionmanager')
 require('libraries/keyvalues')
+
+-- load api before internal/events
+require('api/api')
+require('api/frontend')
+
 -- These internal libraries set up barebones's events and processes.  Feel free to inspect them/change them if you need to.
 require('internal/gamemode')
 require('internal/events')
@@ -53,18 +61,11 @@ require('internal/imba_talent_events')
 -- Meepo Vanilla fix
 require('libraries/meepo/meepo')
 
--- settings.lua is where you can specify many different properties for your game mode and is one of the core barebones files.
-require('settings')
-
 -- events.lua is where you can specify the actions to be taken when any event occurs and is one of the core barebones files.
 require('events')
 
 
 require('team_selection')
-
-require('api/api')
-require('api/frontend')
-
 require('battlepass/experience')
 require('battlepass/imbattlepass')
 
