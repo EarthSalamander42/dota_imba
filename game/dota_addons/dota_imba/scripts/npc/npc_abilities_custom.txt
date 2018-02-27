@@ -104,13 +104,18 @@
 			}
 			"02"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"defense_stack"					"-10"
+				"var_type"						"FIELD_FLOAT"
+				"defense_stack"					"-7"
 			}
 			"03"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"max_stacks"					"5"		// 8 in 10v10
+				"var_type"						"FIELD_FLOAT"
+				"max_stacks"					"3.5"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"max_stacks_10v10"				"7"
 			}
 		}
 	}

@@ -50,7 +50,7 @@ function modifier_imba_ancient_defense:OnCreated()
 	if IsServer() then
 		self.max_stacks = self:GetAbility():GetSpecialValueFor("max_stacks")
 		if GetMapName() == "imba_frantic_10v10" or GetMapName() == "imba_10v10" then
-			self.max_stacks = self.max_stacks + 3
+			self.max_stacks = self:GetAbility():GetSpecialValueFor("max_stacks_10v10")
 		end
 		self:StartIntervalThink(0.5)
 	end
