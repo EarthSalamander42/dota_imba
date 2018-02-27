@@ -8638,12 +8638,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"20"
+				"bonus_intellect"		"16"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"spell_amp"				"20"
+				"spell_amp"				"16"
 			}
 			"03"
 			{
@@ -12152,7 +12152,6 @@
 		// Recipe
 		//-------------------------------------------------------------------------------------------------------------
 		"ItemRecipe"					"1"
-		"SecretShop"					"1"
 		"ItemResult"					"item_imba_plancks_artifact"
 		"ItemRequirements"
 		{
@@ -12230,7 +12229,7 @@
 			"07"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"respawn_time_reduction"	"2"
+				"respawn_time_reduction"	"1.75"
 			}
 			"08"
 			{

@@ -12423,37 +12423,31 @@
 				"var_type"					"FIELD_FLOAT"
 				"transformation_time"		"1.5"
 			}
-
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"night_vision_bonus"		"1000"
 			}
-
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"absolute_speed"			"650"
 			}
-
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"crit_chance"				"40"
 			}
-
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"crit_damage"				"160 200 220"
+				"crit_damage"				"160 180 200"
 			}
-
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"duration"					"18"
 			}
-
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -14465,19 +14459,16 @@
 				"var_type"					"FIELD_INTEGER"
 				"duration"					"40"
 			}
-
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"vision_radius"				"675"
 			}
-
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"enemy_vision_duration"		"3 5 7"
 			}
-
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -16650,7 +16641,7 @@
 			}
 		}
 	}
-	
+
 	//=================================================================================================================
 	// Pudge's Meat Hook
 	//=================================================================================================================
@@ -16699,30 +16690,15 @@
 				"var_type"				"FIELD_INTEGER"
 				"base_speed"			"1450"
 			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"stack_speed"			"15"
-			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"base_range"			"1000 1200 1400 1600"
 			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"stack_range"			"40"
-			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"base_damage"			"100 200 300 400"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"stack_damage"			"15"
 			}
 			"07"
 			{
@@ -16768,6 +16744,11 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"max_targets"			"1"
+			}
+			"16"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"hook_stacks"			"5 15 25 35"
 			}
 		}
 	}
@@ -17138,8 +17119,6 @@
 				"cooldown_cap_scepter"		"3"
 			}
 		}
-
-		
 	}
 
 	//=================================================================================================================
@@ -24039,7 +24018,7 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0.53"
-		"AbilityChannelTime" 			"3.5 2.5 1.5 0.5"
+		"AbilityChannelTime" 			"2.5 1.25 0.5"
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
@@ -24065,7 +24044,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"cooldown_tooltip"		"3.5 2.5 1.5 0.5"
+				"cooldown_tooltip"		"2.5 1.25 0.5"
 			}
 			"02"
 			{

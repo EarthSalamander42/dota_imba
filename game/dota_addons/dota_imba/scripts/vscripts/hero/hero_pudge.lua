@@ -48,13 +48,6 @@ function imba_pudge_sharp_hook:OnToggle()
 	end
 end
 
-function imba_pudge_sharp_hook:OnHeroLevelUp()
-	if self.buff then
-		self.buff:SetStackCount(self.buff:GetStackCount() + self:GetCaster():GetLevel() - self.buff.caster_level)
-		self.buff.caster_level = self:GetCaster():GetLevel()
-	end
-end
-
 function imba_pudge_light_hook:OnToggle()
 	local toggle = self:GetToggleState()
 	local buff = self:GetCaster():FindModifierByName("modifier_imba_hook_light_stack")
@@ -71,14 +64,6 @@ function imba_pudge_light_hook:OnToggle()
 	end
 end
 
-
-function imba_pudge_light_hook:OnHeroLevelUp()
-	if self.buff then
-		self.buff:SetStackCount(self.buff:GetStackCount() + self:GetCaster():GetLevel() - self.buff.caster_level)
-		self.buff.caster_level = self:GetCaster():GetLevel()
-	end
-end
-
 modifier_imba_hook_sharp_stack = modifier_imba_hook_sharp_stack or class({})
 modifier_imba_hook_light_stack = modifier_imba_hook_light_stack or class({})
 
@@ -90,22 +75,18 @@ function modifier_imba_hook_sharp_stack:RemoveOnDeath() return false end
 function modifier_imba_hook_sharp_stack:GetTexture() return "custom/pudge_sharp_hook" end
 
 function modifier_imba_hook_sharp_stack:OnCreated()
-	self.caster = self:GetCaster()
-	self.ability = self:GetAbility()
-	self.ability.buff = self
-	self.caster_level = self.caster:GetLevel()
-	self:SetStackCount(self.caster:GetLevel())
+	self:SetStackCount(self:GetCaster():FindAbilityByName("imba_pudge_meat_hook"):GetSpecialValueFor("hook_stacks"))
 end
 
 function modifier_imba_hook_sharp_stack:OnIntervalThink()
 	if IsServer() then
-		local buff = self.caster:FindModifierByName("modifier_imba_hook_light_stack")
+		local buff = self:GetCaster():FindModifierByName("modifier_imba_hook_light_stack")
 		if not buff then return end
 		if buff:GetStackCount() > 0 then
 			buff:SetStackCount(buff:GetStackCount() - 1)
 			self:SetStackCount(self:GetStackCount() + 1)
 		else
-			self.ability:ToggleAbility()
+			self:GetAbility():ToggleAbility()
 		end
 	end
 end
@@ -118,22 +99,18 @@ function modifier_imba_hook_light_stack:RemoveOnDeath() return false end
 function modifier_imba_hook_light_stack:GetTexture() return "custom/pudge_light_hook" end
 
 function modifier_imba_hook_light_stack:OnCreated()
-	self.caster = self:GetCaster()
-	self.ability = self:GetAbility()
-	self.ability.buff = self
-	self.caster_level = self.caster:GetLevel()
-	self:SetStackCount(self.caster:GetLevel())
+	self:SetStackCount(self:GetCaster():FindAbilityByName("imba_pudge_meat_hook"):GetSpecialValueFor("hook_stacks"))
 end
 
 function modifier_imba_hook_light_stack:OnIntervalThink()
 	if IsServer() then
-		local buff = self.caster:FindModifierByName("modifier_imba_hook_sharp_stack")
+		local buff = self:GetCaster():FindModifierByName("modifier_imba_hook_sharp_stack")
 		if not buff then return end
 		if buff:GetStackCount() > 0 then
 			buff:SetStackCount(buff:GetStackCount() - 1)
 			self:SetStackCount(self:GetStackCount() + 1)
 		else
-			self.ability:ToggleAbility()
+			self:GetAbility():ToggleAbility()
 		end
 	end
 end
@@ -152,19 +129,18 @@ function imba_pudge_meat_hook:OnUpgrade()
 	local ability2 = self:GetCaster():FindAbilityByName("imba_pudge_light_hook")
 	if ability1 then ability1:SetLevel(self:GetLevel()) end
 	if ability2 then ability2:SetLevel(self:GetLevel()) end
-	if self:IsStolen() then
-		local caster = self:GetCaster()
-		local dmg_hook_buff = caster:AddNewModifier(caster, self, "modifier_imba_hook_sharp_stack", {})
-		local spd_hook_buff = caster:AddNewModifier(caster, self, "modifier_imba_hook_light_stack", {})
-		dmg_hook_buff:SetStackCount(caster:GetLevel())
-		spd_hook_buff:SetStackCount(caster:GetLevel())
-	end
+
+	local caster = self:GetCaster()
+	local dmg_hook_buff = caster:AddNewModifier(caster, ability1, "modifier_imba_hook_sharp_stack", {})
+	local spd_hook_buff = caster:AddNewModifier(caster, ability2, "modifier_imba_hook_light_stack", {})
+	dmg_hook_buff:SetStackCount(self:GetCaster():FindAbilityByName("imba_pudge_meat_hook"):GetSpecialValueFor("hook_stacks"))
+	spd_hook_buff:SetStackCount(self:GetCaster():FindAbilityByName("imba_pudge_meat_hook"):GetSpecialValueFor("hook_stacks"))
 end
 
 function imba_pudge_meat_hook:GetCastRange()
 	local caster = self:GetCaster()
 	local charges = self:GetCaster():GetModifierStackCount("modifier_imba_hook_light_stack", self:GetCaster())
-	local hook_range = self:GetSpecialValueFor("base_range") + caster:FindTalentValue("special_bonus_imba_pudge_5") + self:GetSpecialValueFor("stack_range") * charges
+	local hook_range = self:GetSpecialValueFor("base_range") + caster:FindTalentValue("special_bonus_imba_pudge_5") + self:GetCaster():FindAbilityByName("imba_pudge_light_hook"):GetSpecialValueFor("stack_range") * charges
 	return hook_range
 end
 
@@ -222,21 +198,21 @@ function imba_pudge_meat_hook:OnSpellStart()
 
 	local hook_width = self:GetSpecialValueFor("hook_width") + caster:FindTalentValue("special_bonus_imba_pudge_3")
 	local hook_speed = self:GetSpecialValueFor("base_speed") + caster:FindTalentValue("special_bonus_imba_pudge_2")
-	local stack_speed = self:GetSpecialValueFor("stack_speed")
+	local stack_speed = caster:FindAbilityByName("imba_pudge_light_hook"):GetSpecialValueFor("stack_speed")
 	local hook_range = self:GetSpecialValueFor("base_range") + caster:FindTalentValue("special_bonus_imba_pudge_5")
-	local stack_range = self:GetSpecialValueFor("stack_range")
+	local stack_range = caster:FindAbilityByName("imba_pudge_light_hook"):GetSpecialValueFor("stack_range")
 	local hook_dmg = self:GetSpecialValueFor("base_damage")
-	local stack_dmg = self:GetSpecialValueFor("stack_damage")
+	local stack_dmg = caster:FindAbilityByName("imba_pudge_sharp_hook"):GetSpecialValueFor("stack_damage")
 	local stack_dmg_scepter = self:GetSpecialValueFor("damage_scepter")
 	if spd_hook_buff then
 		hook_speed = hook_speed + stack_speed * spd_hook_buff:GetStackCount()
 		hook_range = hook_range + stack_range * spd_hook_buff:GetStackCount()
-		if caster:HasScepter() then
-			hook_dmg = hook_dmg + stack_dmg_scepter * spd_hook_buff:GetStackCount()
-		end
 	end
 	if dmg_hook_buff then
 		hook_dmg = hook_dmg + stack_dmg * dmg_hook_buff:GetStackCount()
+		if caster:HasScepter() then
+			hook_dmg = hook_dmg + stack_dmg_scepter * spd_hook_buff:GetStackCount()
+		end
 	end
 
 	--[[
