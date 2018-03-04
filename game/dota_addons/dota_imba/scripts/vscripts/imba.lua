@@ -137,7 +137,9 @@ function GameMode:OnFirstPlayerLoaded()
 		BadCamera = Entities:FindByName(nil, "dota_badguys_fort")
 		ROSHAN_SPAWN_LOC = Entities:FindByClassname(nil, "npc_dota_roshan_spawner"):GetAbsOrigin()
 		Entities:FindByClassname(nil, "npc_dota_roshan_spawner"):RemoveSelf()
-		local roshan = CreateUnitByName("npc_imba_roshan", ROSHAN_SPAWN_LOC, true, nil, nil, DOTA_TEAM_NEUTRALS)
+		if GetMapName() ~= "imba_1v1" then
+			local roshan = CreateUnitByName("npc_imba_roshan", ROSHAN_SPAWN_LOC, true, nil, nil, DOTA_TEAM_NEUTRALS)
+		end
 	end
 
 	-------------------------------------------------------------------------------------------------
@@ -570,7 +572,6 @@ function GameMode:ItemAddedFilter( keys )
 		item_name = item:GetName()
 	end
 
-	print(item_name)
 	if string.find(item_name, "item_imba_rune_") and unit:IsRealHero() then
 		PickupRune(item_name, unit)
 		return false
@@ -2025,6 +2026,30 @@ function GameMode:OnThink()
 
 	if GetMapName() == "imba_overthrow" then
 		self:UpdateScoreboard()
+		self:ThinkGoldDrop() -- TODO: Enable this
+		self:ThinkSpecialItemDrop()
+		CountdownTimer()
+
+		if nCOUNTDOWNTIMER == 30 then
+			CustomGameEventManager:Send_ServerToAllClients( "timer_alert", {} )
+		end
+
+		if nCOUNTDOWNTIMER <= 0 then
+			--Check to see if there's a tie
+			if isGameTied == false then
+				GameRules:SetCustomVictoryMessage( m_VictoryMessages[leadingTeam] )
+				GameMode:EndGame( leadingTeam )
+				countdownEnabled = false
+				return nil
+			else
+				TEAM_KILLS_TO_WIN = leadingTeamScore + 1
+				local broadcast_killcount =
+					{
+						killcount = TEAM_KILLS_TO_WIN
+					}
+				CustomGameEventManager:Send_ServerToAllClients( "overtime_alert", broadcast_killcount )
+			end
+		end
 	else
 		-- fix for super high respawn time
 		for _, hero in pairs(HeroList:GetAllHeroes()) do

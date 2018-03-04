@@ -809,7 +809,7 @@
 			"13"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"mend_regen"			"0.85"
+				"mend_regen"			"0.7"
 			}
 			"14"
 			{
@@ -8579,7 +8579,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"spell_amp"			"16"
+				"spell_amp"				"12"
 			}
 		}
 	}
@@ -11997,7 +11997,7 @@
 		"BaseClass"						"item_lua"
 		"ID"							"2281"
 		"ScriptFile"					"items/item_bottle.lua"
-		"AbilityTextureName"			"custom/bottle_3"
+		"AbilityTextureName"			"custom/bottle_0_3"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"Model"							"models/props_gameplay/bottle_blue.vmdl"
 

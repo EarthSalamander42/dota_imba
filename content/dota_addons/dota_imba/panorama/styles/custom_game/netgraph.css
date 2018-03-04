@@ -78,12 +78,12 @@
 
 .item-button
 {
-	width: 48px;
+	width: 40px;
 	padding: 4px 4px 4px 4px;
-	height: 35px;
+	height: 30px;
 	margin-top: 1%;
 	border-radius: 4px;
-	background-size: 48px 35px;
+	background-size: 40px 30px;
 	wash-color: white;
 }
 

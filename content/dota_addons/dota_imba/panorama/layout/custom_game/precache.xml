@@ -74,6 +74,8 @@
 			<Image src="file://panorama/images/heroes/icons/npc_dota_hero_storegga.png" hittest="false" />
 
 			<Image src="file://panorama/images/hud/icon_kill_enemy_fb.png" hittest="false" />
+
+			<Image src="file://panorama/images/custom_game/battlepass/battlepass.png" hittest="false" />
 		-->
 		</Panel>
 	</Panel>

@@ -47,14 +47,12 @@ function RefreshBattlepass() {
 		return;
 	}
 
-	var childrens = $("#BattlepassInfoContainer")
-			.FindChildrenWithClassTraverse("BattlepassRow")
+	var childrens = $("#BattlepassInfoContainer").FindChildrenWithClassTraverse("BattlepassRow")
 	childrens.forEach(function(e) {
 		e.DeleteAsync(0)
 	});
 
-	var donator_childrens = $("#DonatorInfoContainer")
-			.FindChildrenWithClassTraverse("DonatorRow")
+	var donator_childrens = $("#DonatorInfoContainer").FindChildrenWithClassTraverse("DonatorRow")
 	donator_childrens.forEach(function(e) {
 		e.DeleteAsync(0)
 	});
@@ -91,6 +89,7 @@ function Battlepass() {
 		timeout : 5000,
 		error : function(err) {
 			$.Msg("Companion Api Error: " + JSON.stringify(err));
+			return;
 		}
 	});
 
@@ -100,451 +99,31 @@ function Battlepass() {
 		$.Schedule(1, Battlepass)
 		return;
 	} else {
-		var radiantPlayers = Game
-				.GetPlayerIDsOnTeam(DOTATeam_t.DOTA_TEAM_GOODGUYS);
-		$
-				.Each(
-						radiantPlayers,
-						function(player) {
-							if (player != Players.GetLocalPlayer()) {
-								return
+		var radiantPlayers = Game.GetPlayerIDsOnTeam(DOTATeam_t.DOTA_TEAM_GOODGUYS);
+		$.Each(radiantPlayers, function(player) {
+			if (player != Players.GetLocalPlayer()) {
+				return
+			}
 
-							}
-							var i_count = 0;
-							var class_option_count = 1;
-							var plyData = CustomNetTables.GetTableValue(
-									"player_table", player);
+			//Battlepass Generator
+			GenerateBattlepassPanel(BattlepassRewards, player)
 
-							var reward_row = $.CreatePanel("Panel",
-									$('#BattlepassInfoContainer'),
-									"BattlepassRow" + class_option_count + "_"
-											+ player);
-							reward_row.AddClass("BattlepassRow")
-
-							// Battlepass Generator
-							for (var i = 1; i <= 200; i++) {
-								if (BattlepassRewards[i] != undefined) {
-
-									i_count = i_count + 1
-
-									if (i_count > 10) {
-										class_option_count = class_option_count + 1
-										var reward_row = $.CreatePanel("Panel",
-												$('#BattlepassInfoContainer'),
-												"BattlepassRow"
-														+ class_option_count
-														+ "_" + player);
-										reward_row.AddClass("BattlepassRow")
-										i_count = 1
-									}
-
-									var reward = $.CreatePanel("Panel",
-											$("#BattlepassRow"
-													+ class_option_count + "_"
-													+ player),
-											BattlepassRewards[i]);
-									reward.AddClass("BattlepassReward")
-
-									// $.Msg(i + " " + BattlepassRewards[i])
-
-									var reward_icon = $.CreatePanel("Panel",
-											reward, BattlepassRewards[i]
-													+ "_icon");
-									reward_icon
-											.AddClass("BattlepassRewardIcon")
-									reward_icon.style.backgroundImage = 'url("file://{images}/custom_game/battlepass/'
-											+ BattlepassRewards[i] + '.png")';
-
-									var reward_label = $.CreatePanel("Label",
-											reward, BattlepassRewards[i]
-													+ "_label");
-									reward_label
-											.AddClass("BattlepassRewardLabel")
-									reward_label.text = $
-											.Localize("battlepass_level")
-											+ i;
-
-									if (plyData != null) {
-										if (i <= plyData.Lvl) {
-											var reward_label_unlocked = $
-													.CreatePanel(
-															"Label",
-															reward_icon,
-															BattlepassRewards[i]
-																	+ "_label");
-											reward_label_unlocked
-													.AddClass("BattlepassRewardLabelUnlocked")
-											reward_label_unlocked.text = $
-													.Localize("#battlepass_"
-															+ BattlepassRewards[i]);
-										} else {
-											reward_icon
-													.AddClass("BattlepassRewardIcon_locked")
-											var reward_label_locked = $
-													.CreatePanel(
-															"Label",
-															reward_icon,
-															BattlepassRewards[i]
-																	+ "_label");
-											reward_label_locked
-													.AddClass("BattlepassRewardLabelLocked")
-											reward_label_locked.text = $
-													.Localize("battlepass_reward_locked");
-										}
-
-										// all tooltips only show the last
-										// created window...
-										// (function () {
-										// reward_icon.SetPanelEvent("onmouseover",
-										// function() {
-										// $.DispatchEvent("DOTAShowTextTooltip",
-										// reward_icon, $.Localize("battlepass_"
-										// + BattlepassRewards[i]));
-										// })
-										// reward_icon.SetPanelEvent("onmouseout",
-										// function() {
-										// $.DispatchEvent(
-										// "DOTAHideTextTooltip", reward_icon);
-										// })
-										// })(reward_icon);
-									} else {
-										reward_icon
-												.AddClass("BattlepassRewardIcon_locked")
-										var reward_label_locked = $
-												.CreatePanel("Label",
-														reward_icon,
-														BattlepassRewards[i]
-																+ "_label");
-										reward_label_locked
-												.AddClass("BattlepassRewardLabelLocked")
-										reward_label_locked.text = $
-												.Localize("battlepass_reward_locked");
-									}
-
-									// onmouseover="UIShowTextTooltip(
-									// imba_gamemode_settings_tower_power_title_tooltip
-									// )"
-									// onmouseout="UIHideTextTooltip()">
-								}
-							}
-
-							class_option_count = 1
-							i_count = 0
-
-							var donator_row = $
-									.CreatePanel("Panel",
-											$('#DonatorInfoContainer'),
-											"DonatorRow" + class_option_count
-													+ "_" + player);
-							donator_row.AddClass("DonatorRow")
-
-							// Companion Generator
-							var plyData = CustomNetTables.GetTableValue(
-									"player_table", Players.GetLocalPlayer());
-							/*
-							 * if (plyData.companion_enabled == 1) { if
-							 * ($("#DonatorOptionsToggle").BHasClass("companion_disabled")) {
-							 * $("#DonatorOptionsToggle").RemoveClass("companion_disabled") }
-							 * $("#DonatorOptionsToggle").AddClass("companion_enabled")
-							 * $("#DonatorOptionsToggleLabel").text =
-							 * $.Localize("#companion_enabled") } else { if
-							 * ($("#DonatorOptionsToggle").BHasClass("companion_enabled")) {
-							 * $("#DonatorOptionsToggle").RemoveClass("companion_enabled") }
-							 * $("#DonatorOptionsToggle").AddClass("companion_disabled")
-							 * $("#DonatorOptionsToggleLabel").text =
-							 * $.Localize("#companion_disabled") }
-							 */
-							var companion_unit = [];
-							var companion_name = [];
-
-							// +1 for unique companion (e.g: cookies, baumi,
-							// bulldog, icefrog)
-							for (var i = 0; i <= companions.length; i++) {
-								var newbie = false
-								var vip = false
-								i_count = i_count + 1
-
-								if (i == companions.length - 1) {
-									newbie = true
-								}
-
-								if (companions[i] != undefined) {
-									companion_unit[i] = companions[i]["file"]
-									companion_name[i] = companions[i]["name"]
-								} else {
-									var steamId = Game.GetLocalPlayerInfo().player_steamid;
-									if (steamId == "76561198015161808") {
-										companion_unit[i] = "npc_imba_donator_companion_cookies"
-										vip = true
-									} else if (steamId == "76561198003571172") {
-										companion_unit[i] = "npc_imba_donator_companion_baumi"
-										vip = true
-									} else if (steamId == "76561198014254115") {
-										companion_unit[i] = "npc_imba_donator_companion_icefrog"
-										vip = true
-									} else if (steamId == "76561198003571172") {
-										companion_unit[i] = "npc_imba_donator_companion_admiral_bulldog"
-										vip = true
-									} else if (steamId == "76561198021465788") {
-										companion_unit[i] = "npc_imba_donator_companion_suthernfriend"
-										vip = true
-									} else {
-										return;
-									}
-
-									companion_name[i] = $
-											.Localize(companion_unit[i])
-								}
-
-								if (i_count > 5) {
-									class_option_count = class_option_count + 1
-									var donator_row = $.CreatePanel("Panel",
-											$('#DonatorInfoContainer'),
-											"DonatorRow" + class_option_count
-													+ "_" + player);
-									donator_row.AddClass("DonatorRow")
-									i_count = 0
-								}
-
-								var companion = $.CreatePanel("Panel",
-										$("#DonatorRow" + class_option_count
-												+ "_" + player),
-										companion_name[i]);
-								companion.AddClass("DonatorReward")
-
-								var companionpreview = $.CreatePanel("Button",
-										companion, "CompanionPreview_" + i);
-								companionpreview.style.width = "100%";
-								companionpreview.style.height = "85%";
-								companionpreview
-										.BLoadLayoutFromString(
-												'<root><Panel><DOTAScenePanel style="width:100%; height:100%;" particleonly="false" unit="'
-														+ companion_unit[i
-																.toString()]
-														+ '"/></Panel></root>',
-												false, false);
-								companionpreview.style.opacityMask = 'url("s2r://panorama/images/masks/hero_model_opacity_mask_png.vtex");'
-
-								if (newbie == true) {
-									companionpreview.AddClass("CompanionNew")
-								}
-								if (vip == true) {
-									companionpreview
-											.AddClass("CompanionUnique")
-								}
-
-								var companion_unit_name = companion_unit[i];
-
-								/*
-								 * This is weird. Seams like panorama v8 has a
-								 * bug here. companion_unit_name should be
-								 * copy-by-value but instead is
-								 * copy-by-reference
-								 */
-								var event = function(ev, name) {
-									return function() {
-										SetCompanion(ev, name);
-									}
-								};
-
-								companionpreview.SetPanelEvent("onactivate",
-										event(companion_unit_name,
-												companion_name[i]));
-
-								var reward_label = $
-										.CreatePanel("Label", companion,
-												companion_name[i] + "_label");
-								reward_label.AddClass("BattlepassRewardLabel")
-								reward_label.text = companion_name[i];
-
-								if (plyData != null) {
-									if (i <= plyData.Lvl) {
-										var reward_label_unlocked = $
-												.CreatePanel("Label",
-														reward_icon,
-														companions[i]
-																+ "_label");
-										reward_label_unlocked
-												.AddClass("BattlepassRewardLabelUnlocked")
-										reward_label_unlocked.text = $
-												.Localize("#battlepass_"
-														+ companions[i]);
-									} else {
-										reward_icon
-												.AddClass("BattlepassRewardIcon_locked")
-										var reward_label_locked = $
-												.CreatePanel("Label",
-														reward_icon,
-														companions[i]
-																+ "_label");
-										reward_label_locked
-												.AddClass("BattlepassRewardLabelLocked")
-										reward_label_locked.text = $
-												.Localize("battlepass_reward_locked");
-									}
-
-									// all tooltips only show the last created
-									// window...
-									// (function () {
-									// reward_icon.SetPanelEvent("onmouseover",
-									// function() {
-									// $.DispatchEvent("DOTAShowTextTooltip",
-									// reward_icon, $.Localize("battlepass_" +
-									// companions[i]));
-									// })
-									// reward_icon.SetPanelEvent("onmouseout",
-									// function() {
-									// $.DispatchEvent( "DOTAHideTextTooltip",
-									// reward_icon);
-									// })
-									// })(reward_icon);
-								} else {
-									reward_icon
-											.AddClass("BattlepassRewardIcon_locked")
-									var reward_label_locked = $.CreatePanel(
-											"Label", reward_icon, companions[i]
-													+ "_label");
-									reward_label_locked
-											.AddClass("BattlepassRewardLabelLocked")
-									reward_label_locked.text = $
-											.Localize("battlepass_reward_locked");
-								}
-
-								// onmouseover="UIShowTextTooltip(
-								// imba_gamemode_settings_tower_power_title_tooltip
-								// )"
-								// onmouseout="UIHideTextTooltip()">
-							}
-						});
+			//Companion Generator
+			GenerateCompanionPanel(companions, player)
+		});
 
 		var direPlayers = Game.GetPlayerIDsOnTeam(DOTATeam_t.DOTA_TEAM_BADGUYS);
-		$
-				.Each(
-						direPlayers,
-						function(player) {
-							if (player != Players.GetLocalPlayer()) {
-								return
+		$.Each(direPlayers, function(player) {
+			if (player != Players.GetLocalPlayer()) {
+				return
+			}
 
-							}
-							var i_count = 0;
-							var class_option_count = 1;
+			//Battlepass Generator
+			GenerateBattlepassPanel(BattlepassRewards, player)
 
-							var reward_row = $.CreatePanel("Panel",
-									$('#BattlepassInfoContainer'),
-									"BattlepassRow" + class_option_count + "_"
-											+ player);
-							reward_row.AddClass("BattlepassRow")
-
-							for (var i = 0; i <= 500; i++) {
-								if (BattlepassRewards[i] != undefined) {
-
-									i_count = i_count + 1
-
-									if (i_count > 10) {
-										$.Msg("Create second panel...")
-										class_option_count = class_option_count + 1
-										var reward_row = $.CreatePanel("Panel",
-												$('#BattlepassInfoContainer'),
-												"BattlepassRow"
-														+ class_option_count
-														+ "_" + player);
-										reward_row.AddClass("BattlepassRow")
-										i_count = 1
-									}
-
-									var reward = $.CreatePanel("Panel",
-											$("#BattlepassRow"
-													+ class_option_count + "_"
-													+ player),
-											BattlepassRewards[i]);
-									reward.AddClass("BattlepassReward")
-
-									// $.Msg(i + " " + BattlepassRewards[i])
-
-									var reward_icon = $.CreatePanel("Panel",
-											reward, BattlepassRewards[i]
-													+ "_icon");
-									reward_icon
-											.AddClass("BattlepassRewardIcon")
-									reward_icon.style.backgroundImage = 'url("file://{images}/custom_game/battlepass/'
-											+ BattlepassRewards[i] + '.png")';
-
-									var reward_label = $.CreatePanel("Label",
-											reward, BattlepassRewards[i]
-													+ "_label");
-									reward_label
-											.AddClass("BattlepassRewardLabel")
-									reward_label.text = $
-											.Localize("battlepass_level")
-											+ i;
-
-									var plyData = CustomNetTables
-											.GetTableValue("player_table",
-													player);
-									if (plyData != null) {
-										if (i <= plyData.Lvl) {
-											var reward_label_unlocked = $
-													.CreatePanel(
-															"Label",
-															reward_icon,
-															BattlepassRewards[i]
-																	+ "_label");
-											reward_label_unlocked
-													.AddClass("BattlepassRewardLabelUnlocked")
-											reward_label_unlocked.text = $
-													.Localize("#battlepass_"
-															+ BattlepassRewards[i]);
-										} else {
-											reward_icon
-													.AddClass("BattlepassRewardIcon_locked")
-											var reward_label_locked = $
-													.CreatePanel(
-															"Label",
-															reward_icon,
-															BattlepassRewards[i]
-																	+ "_label");
-											reward_label_locked
-													.AddClass("BattlepassRewardLabelLocked")
-											reward_label_locked.text = $
-													.Localize("battlepass_reward_locked");
-										}
-
-										// all tooltips only show the last
-										// created window...
-										// (function () {
-										// reward_icon.SetPanelEvent("onmouseover",
-										// function() {
-										// $.DispatchEvent("DOTAShowTextTooltip",
-										// reward_icon, $.Localize("battlepass_"
-										// + BattlepassRewards[i]));
-										// })
-										// reward_icon.SetPanelEvent("onmouseout",
-										// function() {
-										// $.DispatchEvent(
-										// "DOTAHideTextTooltip", reward_icon);
-										// })
-										// })(reward_icon);
-									} else {
-										reward_icon
-												.AddClass("BattlepassRewardIcon_locked")
-										var reward_label_locked = $
-												.CreatePanel("Label",
-														reward_icon,
-														BattlepassRewards[i]
-																+ "_label");
-										reward_label_locked
-												.AddClass("BattlepassRewardLabelLocked")
-										reward_label_locked.text = $
-												.Localize("battlepass_reward_locked");
-									}
-
-									// onmouseover="UIShowTextTooltip(
-									// imba_gamemode_settings_tower_power_title_tooltip
-									// )"
-									// onmouseout="UIHideTextTooltip()">
-								}
-							}
-						});
+			//Companion Generator
+			GenerateCompanionPanel(companions, player)
+		});
 	}
 }
 
@@ -629,11 +208,9 @@ function HallOfFame(type) {
 	current_type = type
 	for (var i = 1; i <= 10; i++) {
 		if (type == "XP") {
-			var top_users = CustomNetTables.GetTableValue("top_xp", i
-					.toString());
+			var top_users = CustomNetTables.GetTableValue("top_xp", i.toString());
 		} else if (type == "IMR") {
-			var top_users = CustomNetTables.GetTableValue("top_imr_5v5", i
-					.toString());
+			var top_users = CustomNetTables.GetTableValue("top_imr_5v5", i.toString());
 		}
 
 		if (top_users == undefined) {
@@ -650,8 +227,7 @@ function HallOfFame(type) {
 		rank.AddClass("LeaderboardRank")
 		rank.text = i
 
-		var steam_id = $.CreatePanel("DOTAAvatarImage", player,
-				"player_steamid_" + i);
+		var steam_id = $.CreatePanel("DOTAAvatarImage", player, "player_steamid_" + i);
 		steam_id.AddClass("LeaderboardAvatar")
 		steam_id.steamid = top_users.SteamID64
 		steam_id.style.width = "15%";
@@ -660,20 +236,17 @@ function HallOfFame(type) {
 		steam_id.style.borderTop = "1px solid white";
 		steam_id.style.borderRight = "1px solid white";
 
-		var imbar_container = $.CreatePanel("Panel", player, "imbar_container_"
-				+ i);
+		var imbar_container = $.CreatePanel("Panel", player, "imbar_container_" + i);
 		imbar_container.AddClass("LeaderboardXP")
 		var imbar = $.CreatePanel("ProgressBar", imbar_container, "imbar_" + i);
 		imbar.AddClass("imbar-progress-bar")
 		imbar.value = top_users.XP / top_users.MaxXP
 
-		var imbar_lvl = $
-				.CreatePanel("Label", imbar_container, "imbar_lvl" + i);
+		var imbar_lvl = $.CreatePanel("Label", imbar_container, "imbar_lvl" + i);
 		imbar_lvl.AddClass("imbar-lvl")
 		imbar_lvl.text = "Level: " + top_users.Lvl
 
-		var imbar_rank = $.CreatePanel("Label", imbar_container, "imbar_rank"
-				+ i);
+		var imbar_rank = $.CreatePanel("Label", imbar_container, "imbar_rank" + i);
 		imbar_rank.AddClass("imbar-rank")
 		imbar_rank.text = top_users.title
 		imbar_rank.style.color = top_users.title_color
@@ -684,7 +257,7 @@ function HallOfFame(type) {
 
 		var imr = $.CreatePanel("Label", player, "rank_" + i);
 		imr.AddClass("LeaderboardIMR")
-		imr.text = top_users.IMR_5v5.toFixed([ 0 ])
+		imr.text = top_users.IMR_5v5.toFixed([0])
 	}
 }
 
@@ -706,6 +279,236 @@ function ShowImbathrowBar(args) {
 	} else {
 		Parent.FindChildTraverse("TopBarScoreboard").style.visibility = "collapse";
 		topbar.style.visibility = "visible";
+	}
+}
+
+function GenerateBattlepassPanel(BattlepassRewards, player) {
+	var i_count = 0;
+	var class_option_count = 1;
+	var plyData = CustomNetTables.GetTableValue("player_table", player);
+
+	var reward_row = $.CreatePanel("Panel", $('#BattlepassInfoContainer'), "BattlepassRow" + class_option_count + "_" + player);
+	reward_row.AddClass("BattlepassRow")
+
+	for (var i = 1; i <= 200; i++) {
+		if (BattlepassRewards[i] != undefined) {
+
+			i_count = i_count + 1
+
+			if (i_count > 10) {
+				class_option_count = class_option_count + 1
+				var reward_row = $.CreatePanel("Panel", $('#BattlepassInfoContainer'), "BattlepassRow" + class_option_count + "_" + player);
+				reward_row.AddClass("BattlepassRow")
+				i_count = 1
+			}
+
+			var reward = $.CreatePanel("Panel", $("#BattlepassRow" + class_option_count + "_" + player), BattlepassRewards[i]);
+			reward.AddClass("BattlepassReward")
+
+			// $.Msg(i + " " + BattlepassRewards[i])
+
+			var reward_icon = $.CreatePanel("Panel", reward, BattlepassRewards[i] + "_icon");
+			reward_icon .AddClass("BattlepassRewardIcon")
+			reward_icon.style.backgroundImage = 'url("file://{images}/custom_game/battlepass/' + BattlepassRewards[i] + '.png")';
+
+			var reward_label = $.CreatePanel("Label", reward, BattlepassRewards[i] + "_label");
+			reward_label.AddClass("BattlepassRewardLabel")
+			reward_label.text = $.Localize("battlepass_level") + i;
+
+			if (plyData != null) {
+				if (i <= plyData.Lvl) {
+					var reward_label_unlocked = $.CreatePanel("Label", reward_icon, BattlepassRewards[i] + "_label");
+					reward_label_unlocked.AddClass("BattlepassRewardLabelUnlocked")
+					reward_label_unlocked.text = $.Localize("#battlepass_" + BattlepassRewards[i]);
+				} else {
+					reward_icon.AddClass("BattlepassRewardIcon_locked")
+					var reward_label_locked = $.CreatePanel("Label", reward_icon, BattlepassRewards[i] + "_label");
+					reward_label_locked.AddClass("BattlepassRewardLabelLocked")
+					reward_label_locked.text = $.Localize("battlepass_reward_locked");
+				}
+
+				// all tooltips only show the last
+				// created window...
+				// (function () {
+				// reward_icon.SetPanelEvent("onmouseover",
+				// function() {
+				// $.DispatchEvent("DOTAShowTextTooltip",
+				// reward_icon, $.Localize("battlepass_"
+				// + BattlepassRewards[i]));
+				// })
+				// reward_icon.SetPanelEvent("onmouseout",
+				// function() {
+				// $.DispatchEvent(
+				// "DOTAHideTextTooltip", reward_icon);
+				// })
+				// })(reward_icon);
+			} else {
+				reward_icon.AddClass("BattlepassRewardIcon_locked")
+				var reward_label_locked = $.CreatePanel("Label", reward_icon, BattlepassRewards[i] + "_label");
+				reward_label_locked.AddClass("BattlepassRewardLabelLocked")
+				reward_label_locked.text = $.Localize("battlepass_reward_locked");
+			}
+
+			// onmouseover="UIShowTextTooltip(
+			// imba_gamemode_settings_tower_power_title_tooltip
+			// )"
+			// onmouseout="UIHideTextTooltip()">
+		}
+	}
+}
+
+function GenerateCompanionPanel(companions, player) {
+	var i_count = 0;
+	var class_option_count = 1;
+
+	var donator_row = $.CreatePanel("Panel", $('#DonatorInfoContainer'), "DonatorRow" + class_option_count + "_" + player);
+	donator_row.AddClass("DonatorRow")
+
+	// Companion Generator
+	var plyData = CustomNetTables.GetTableValue("player_table", Players.GetLocalPlayer());
+
+	/*
+	 * if (plyData.companion_enabled == 1) { if
+	 * ($("#DonatorOptionsToggle").BHasClass("companion_disabled")) {
+	 * $("#DonatorOptionsToggle").RemoveClass("companion_disabled") }
+	 * $("#DonatorOptionsToggle").AddClass("companion_enabled")
+	 * $("#DonatorOptionsToggleLabel").text =
+	 * $.Localize("#companion_enabled") } else { if
+	 * ($("#DonatorOptionsToggle").BHasClass("companion_enabled")) {
+	 * $("#DonatorOptionsToggle").RemoveClass("companion_enabled") }
+	 * $("#DonatorOptionsToggle").AddClass("companion_disabled")
+	 * $("#DonatorOptionsToggleLabel").text =
+	 * $.Localize("#companion_disabled") }
+	 */
+
+	var companion_unit = [];
+	var companion_name = [];
+
+	// +1 for unique companion (e.g: cookies, baumi,
+	// bulldog, icefrog)
+	for (var i = 0; i <= companions.length; i++) {
+		var newbie = false
+		var vip = false
+		i_count = i_count + 1
+
+		if (i == companions.length - 1) {
+			newbie = true
+		}
+
+		if (companions[i] != undefined) {
+			companion_unit[i] = companions[i]["file"]
+			companion_name[i] = companions[i]["name"]
+		} else {
+			var steamId = Game.GetLocalPlayerInfo().player_steamid;
+			if (steamId == "76561198015161808") {
+				companion_unit[i] = "npc_imba_donator_companion_cookies"
+				vip = true
+			} else if (steamId == "76561198003571172") {
+				companion_unit[i] = "npc_imba_donator_companion_baumi"
+				vip = true
+			} else if (steamId == "76561198014254115") {
+				companion_unit[i] = "npc_imba_donator_companion_icefrog"
+				vip = true
+			} else if (steamId == "76561198003571172") {
+				companion_unit[i] = "npc_imba_donator_companion_admiral_bulldog"
+				vip = true
+			} else if (steamId == "76561198021465788") {
+				companion_unit[i] = "npc_imba_donator_companion_suthernfriend"
+				vip = true
+			} else {
+				return;
+			}
+
+			companion_name[i] = $.Localize(companion_unit[i])
+		}
+
+		if (i_count > 5) {
+			class_option_count = class_option_count + 1
+			var donator_row = $.CreatePanel("Panel", $('#DonatorInfoContainer'), "DonatorRow" + class_option_count + "_" + player);
+			donator_row.AddClass("DonatorRow")
+			i_count = 0
+		}
+
+		var companion = $.CreatePanel("Panel", $("#DonatorRow" + class_option_count + "_" + player), companion_name[i]);
+		companion.AddClass("DonatorReward")
+
+		var companionpreview = $.CreatePanel("Button", companion, "CompanionPreview_" + i);
+		companionpreview.style.width = "100%";
+		companionpreview.style.height = "85%";
+		companionpreview.BLoadLayoutFromString('<root><Panel><DOTAScenePanel style="width:100%; height:100%;" particleonly="false" unit="' + companion_unit[i.toString()] + '"/></Panel></root>', false, false);
+		companionpreview.style.opacityMask = 'url("s2r://panorama/images/masks/hero_model_opacity_mask_png.vtex");'
+
+		if (newbie == true) {
+			companionpreview.AddClass("CompanionNew")
+		}
+		if (vip == true) {
+			companionpreview.AddClass("CompanionUnique")
+		}
+
+		var companion_unit_name = companion_unit[i];
+
+		/*
+		 * This is weird. Seams like panorama v8 has a
+		 * bug here. companion_unit_name should be
+		 * copy-by-value but instead is
+		 * copy-by-reference
+		 */
+
+		var event = function(ev, name) {
+			return function() {
+				SetCompanion(ev, name);
+			}
+		};
+
+		companionpreview.SetPanelEvent("onactivate", event(companion_unit_name, companion_name[i]));
+
+		var reward_label = $.CreatePanel("Label", companion, companion_name[i] + "_label");
+		reward_label.AddClass("BattlepassRewardLabel")
+		reward_label.text = companion_name[i];
+/*
+		if (plyData != null) {
+			if (i <= plyData.Lvl) {
+				var reward_label_unlocked = $.CreatePanel("Label", reward_icon, companions[i] + "_label");
+				reward_label_unlocked.AddClass("BattlepassRewardLabelUnlocked")
+				reward_label_unlocked.text = $.Localize("#battlepass_" + companions[i]);
+			} else {
+				reward_icon.AddClass("BattlepassRewardIcon_locked")
+				var reward_label_locked = $.CreatePanel("Label", reward_icon, companions[i] + "_label");
+				reward_label_locked.AddClass("BattlepassRewardLabelLocked")
+				reward_label_locked.text = $.Localize("battlepass_reward_locked");
+			}
+
+			// all tooltips only show the last created
+			// window...
+			// (function () {
+			// reward_icon.SetPanelEvent("onmouseover",
+			// function() {
+			// $.DispatchEvent("DOTAShowTextTooltip",
+			// reward_icon, $.Localize("battlepass_" +
+			// companions[i]));
+			// })
+			// reward_icon.SetPanelEvent("onmouseout",
+			// function() {
+			// $.DispatchEvent( "DOTAHideTextTooltip",
+			// reward_icon);
+			// })
+			// })(reward_icon);
+		} else {
+			reward_icon
+					.AddClass("BattlepassRewardIcon_locked")
+			var reward_label_locked = $.CreatePanel(
+					"Label", reward_icon, companions[i]
+							+ "_label");
+			reward_label_locked
+					.AddClass("BattlepassRewardLabelLocked")
+			reward_label_locked.text = $
+					.Localize("battlepass_reward_locked");
+		}
+*/
+		// onmouseover="UIShowTextTooltip(
+		// imba_gamemode_settings_tower_power_title_tooltip
+		// )"
+		// onmouseout="UIHideTextTooltip()">
 	}
 }
 

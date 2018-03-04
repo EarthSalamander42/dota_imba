@@ -214,16 +214,18 @@ PLAYER_COLORS[23] = { 108, 167, 255 }
 
 USE_AUTOMATIC_PLAYERS_PER_TEAM = false										-- Should we set the number of players to 10 / MAX_NUMBER_OF_TEAMS?
 
-CUSTOM_TEAM_PLAYER_COUNT = {}
-CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_GOODGUYS] = 5
-CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_BADGUYS]  = 5
-
 TEAM_COLORS = {}															-- If USE_CUSTOM_TEAM_COLORS is set, use these colors.
 TEAM_COLORS[DOTA_TEAM_GOODGUYS] = { 61, 210, 150 }							-- Teal
 TEAM_COLORS[DOTA_TEAM_BADGUYS]  = { 243, 201, 9 }							-- Yellow
 
+CUSTOM_TEAM_PLAYER_COUNT = {}
 if GetMapName() == "imba_standard" then
-
+	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_GOODGUYS] = 5
+	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_BADGUYS]  = 5
+elseif GetMapName() == "imba_1v1" then
+	IMBA_PLAYERS_ON_GAME = 2
+	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_GOODGUYS] = 1
+	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_BADGUYS]  = 1
 elseif GetMapName() == "imba_frantic_10v10" then
 	IMBA_PLAYERS_ON_GAME = 20
 	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_GOODGUYS] = 10
@@ -325,6 +327,7 @@ CUSTOM_GOLD_BONUS["imba_standard"] = {150, 150}
 CUSTOM_GOLD_BONUS["imba_10v10"] = {150, 150}
 CUSTOM_GOLD_BONUS["imba_frantic_10v10"] = {250, 250}
 CUSTOM_GOLD_BONUS["imba_overthrow"] = {100, 100}
+CUSTOM_GOLD_BONUS["imba_1v1"] = {100, 100}
 
 -- Global XP earning, values are doubled with Hyper for non-custom maps (right now this is not used anymore, but i'll keep it there just in case)
 CUSTOM_XP_BONUS = {} -- 1 = Normal, 2 = Hyper
@@ -332,6 +335,7 @@ CUSTOM_XP_BONUS["imba_standard"] = {100, 100}
 CUSTOM_XP_BONUS["imba_10v10"] = {100, 100}
 CUSTOM_XP_BONUS["imba_frantic_10v10"] = {200, 200}
 CUSTOM_XP_BONUS["imba_overthrow"] = {100, 100}
+CUSTOM_XP_BONUS["imba_1v1"] = {100, 100}
 
 -- Hero base level, values are doubled with Hyper for non-custom maps
 HERO_STARTING_LEVEL = {} -- 1 = Normal, 2 = Hyper
@@ -339,24 +343,28 @@ HERO_STARTING_LEVEL["imba_standard"] = {1, 1}
 HERO_STARTING_LEVEL["imba_10v10"] = {1, 1}
 HERO_STARTING_LEVEL["imba_frantic_10v10"] = {5, 12}
 HERO_STARTING_LEVEL["imba_overthrow"] = {1, 1}
+HERO_STARTING_LEVEL["imba_1v1"] = {1, 1}
 
 MAX_LEVEL = {}
 MAX_LEVEL["imba_standard"] = {50, 50}
 MAX_LEVEL["imba_10v10"] = {50, 50}
 MAX_LEVEL["imba_frantic_10v10"] = {50, 100}
 MAX_LEVEL["imba_overthrow"] = {50, 50}
+MAX_LEVEL["imba_1v1"] = {50, 50}
 
 HERO_INITIAL_GOLD = {}
 HERO_INITIAL_GOLD["imba_standard"] = {1200, 1200}
 HERO_INITIAL_GOLD["imba_10v10"] = {1200, 1200}
 HERO_INITIAL_GOLD["imba_frantic_10v10"] = {2500, 5000}
 HERO_INITIAL_GOLD["imba_overthrow"] = {1200, 1200}
+HERO_INITIAL_GOLD["imba_1v1"] = {1200, 1200}
 
 GOLD_TICK_TIME = {}
 GOLD_TICK_TIME["imba_standard"] = 0.6
 GOLD_TICK_TIME["imba_10v10"] = 0.4
 GOLD_TICK_TIME["imba_frantic_10v10"] = 0.4
 GOLD_TICK_TIME["imba_overthrow"] = 0.6
+GOLD_TICK_TIME["imba_1v1"] = 0.6
 
 REMAINING_GOODGUYS = 0														-- Remaining players on Radiant
 REMAINING_BADGUYS = 0														-- Remaining players on Dire

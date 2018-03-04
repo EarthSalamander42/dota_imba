@@ -326,11 +326,11 @@
 		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
 
 		"Ability1"					"chaos_knight_chaos_bolt"
-		"Ability2"					"imba_chaos_knight_reality_rift"
+		"Ability2"					"chaos_knight_reality_rift"
 		"Ability3"					"chaos_knight_chaos_strike"
 		"Ability4"					"generic_hidden"
 		"Ability5"					"generic_hidden"
-		"Ability6"					"imba_chaos_knight_phantasm"
+		"Ability6"					"chaos_knight_phantasm"
 	}
 
 	//=================================================================================================================

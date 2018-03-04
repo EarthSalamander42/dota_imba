@@ -149,8 +149,8 @@
 		TimeUntil.style.marginBottom = "0px";
 
 		if (map_info.map_display_name == "imba_overthrow") {
-
-		} else if (map_info.map_display_name == "imba_standard") {
+			topbar.style.visibility = "collapse";
+		} else if (map_info.map_display_name == "imba_standard" || map_info.map_display_name == "imba_1v1") {
 
 		} else {
 			topbar.style.width = "1578px";

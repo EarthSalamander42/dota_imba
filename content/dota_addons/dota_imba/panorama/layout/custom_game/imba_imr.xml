@@ -17,7 +17,7 @@
 			</Panel>
 
 			<Button id="BattlepassButton" onactivate="ToggleBattlepass();">
-				<Label text="imba_game_info" />
+				<Label text="#battlepass" />
 			</Button>
 		</Panel>
 

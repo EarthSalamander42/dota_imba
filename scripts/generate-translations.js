@@ -62,12 +62,12 @@ request.get({
 		encoding: 'ucs2'
 	});
 
-	if (!process.env.TRANSIFEX_USER || !process.env.TRANSIFEX_PASSWORD) {
-		console.log('No TRANSIFEX_USER or TRANSIFEX_PASSWORD, not generating translations (english only)');
-		process.exit(0);
-	} else {
+//	if (!process.env.TRANSIFEX_USER || !process.env.TRANSIFEX_PASSWORD) {
+//		console.log('No TRANSIFEX_USER or TRANSIFEX_PASSWORD, not generating translations (english only)');
+//		process.exit(0);
+//	} else {
 		Object.keys(languageShortNames).map(generateTranslations);
-	}
+//	}
 });
 
 // functions
@@ -100,8 +100,10 @@ function getTranslationsForLanguage (lang, cb) {
 	request.get({
 		url: 'http://www.transifex.com/api/2/project/' + settings.transifex_account + '/resource/addon_english/translation/' + lang + '?mode=onlytranslated',
 		auth: {
-			user: process.env.TRANSIFEX_USER,
-			pass: process.env.TRANSIFEX_PASSWORD
+//			user: process.env.TRANSIFEX_USER,
+//			pass: process.env.TRANSIFEX_PASSWORD
+			user: 'Cookies',
+			pass: 'Mrcookies'
 		},
 		json: true
 	}, function (err, data) {

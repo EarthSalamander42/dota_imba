@@ -149,19 +149,60 @@ function GameMode:OnGameRulesStateChange(keys)
 --					CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "show_netgraph_heronames", {})
 				end
 
-				local donators = GetDonators()
-				for k, v in pairs(donators) do
-					CustomNetTables:SetTableValue("player_table", tostring(hero:GetPlayerID()), {
-						companion_model = donators[k].model,
-						companion_enabled = donators[k].enabled,
-						Lvl = CustomNetTables:GetTableValue("player_table", tostring(hero:GetPlayerID())).Lvl,
-					})
+				if GetMapName() ~= "imba_1v1" then
+					local donators = GetDonators()
+					for k, v in pairs(donators) do
+						CustomNetTables:SetTableValue("player_table", tostring(hero:GetPlayerID()), {
+							companion_model = donators[k].model,
+							companion_enabled = donators[k].enabled,
+							Lvl = CustomNetTables:GetTableValue("player_table", tostring(hero:GetPlayerID())).Lvl,
+						})
+					end
 				end
 			end
 
 			if GetMapName() == "imba_overthrow" then
 				CustomGameEventManager:Send_ServerToAllClients("imbathrow_topbar", {imbathrow = true})
 			else
+				local radiant_courier = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_radiant"):GetAbsOrigin(), true, nil, nil, 2)
+				local dire_courier = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_dire"):GetAbsOrigin(), true, nil, nil, 3)
+
+				for _, hero in pairs(HeroList:GetAllHeroes()) do
+					if hero:GetTeamNumber() == 2 then
+						radiant_courier:SetControllableByPlayer(hero:GetPlayerID(), true)
+					else
+						dire_courier:SetControllableByPlayer(hero:GetPlayerID(), true)
+					end
+				end
+
+				local good_fillers = {
+					"good_filler_1",
+					"good_filler_3",
+					"good_filler_5",
+				}
+
+				local bad_fillers = {
+					"bad_filler_1",
+					"bad_filler_3",
+					"bad_filler_5",
+				}
+
+				for _, ent_name in pairs(good_fillers) do
+					local filler = Entities:FindByName(nil, ent_name)
+					local abs = filler:GetAbsOrigin()
+					filler:RemoveSelf()
+					local shrine = CreateUnitByName("npc_dota_goodguys_healers", abs, true, nil, nil, 2)
+					shrine:SetAbsOrigin(abs)
+				end
+
+				for _, ent_name in pairs(bad_fillers) do
+					local filler = Entities:FindByName(nil, ent_name)
+					local abs = filler:GetAbsOrigin()
+					filler:RemoveSelf()
+					local shrine = CreateUnitByName("npc_dota_badguys_healers", abs, true, nil, nil, 3)
+					shrine:SetAbsOrigin(abs)
+				end
+
 				CustomGameEventManager:Send_ServerToAllClients("imbathrow_topbar", {imbathrow = false})
 			end
 		end)
@@ -175,56 +216,69 @@ function GameMode:OnGameRulesStateChange(keys)
 
 		Timers:CreateTimer(60, function()
 			StartGarbageCollector()
-			--			DefineLosingTeam()
+--			DefineLosingTeam()
 			return 60
 		end)
 
-		if GetMapName() ~= "imba_standard" then
-			if RandomInt(1, 100) > 25 then
-				Timers:CreateTimer(RandomInt(5, 10) * 60, function()
+		if GetMapName() == "imba_frantic_10v10" then
+			if RandomInt(1, 100) > 20 then
+				Timers:CreateTimer((RandomInt(10, 20) * 60) + RandomInt(0, 60), function()
 					local pos = {}
 					pos[1] = Vector(6446, -6979, 1496)
 					pos[2] = Vector(RandomInt(-6000, 0), RandomInt(7150, 7300), 1423)
 					pos[3] = Vector(RandomInt(-1000, 2000), RandomInt(6900, 7200), 1440)
 					pos[4] = Vector(7041, -6263, 1461)
-					local pos = pos[4]
+					local pos = pos[RandomInt(1, 4)]
 
 					GridNav:DestroyTreesAroundPoint(pos, 80, false)
 					local item = CreateItem("item_the_caustic_finale", nil, nil)
 					local drop = CreateItemOnPositionSync(pos, item)
 				end)
 			end
-		end
-
-		if GetMapName() == "imba_overthrow" then
+		elseif GetMapName() == "imba_overthrow" then
 			countdownEnabled = true
 			CustomGameEventManager:Send_ServerToAllClients( "show_timer", {} )
-			DoEntFire( "center_experience_ring_particles", "Start", "0", 0, self, self  )
-			Timers:CreateTimer(function()
-				CountdownTimer()
-				self:ThinkGoldDrop() -- TODO: Enable this
-				self:ThinkSpecialItemDrop()
-				if nCOUNTDOWNTIMER == 30 then
-					CustomGameEventManager:Send_ServerToAllClients( "timer_alert", {} )
-				end
-				if nCOUNTDOWNTIMER <= 0 then
-					--Check to see if there's a tie
-					if isGameTied == false then
-						GameRules:SetCustomVictoryMessage( m_VictoryMessages[leadingTeam] )
-						GameMode:EndGame( leadingTeam )
-						countdownEnabled = false
-						return nil
-					else
-						TEAM_KILLS_TO_WIN = leadingTeamScore + 1
-						local broadcast_killcount =
-							{
-								killcount = TEAM_KILLS_TO_WIN
-							}
-						CustomGameEventManager:Send_ServerToAllClients( "overtime_alert", broadcast_killcount )
-					end
-				end
-				return 1.0
-			end)
+			DoEntFire( "center_experience_ring_particles", "Start", "0", 0, self, self )
+		elseif GetMapName() == "imba_1v1" then
+			local removed_ents = {
+				"lane_top_goodguys_melee_spawner",
+				"lane_bot_goodguys_melee_spawner",
+				"lane_top_badguys_melee_spawner",
+				"lane_bot_badguys_melee_spawner",
+			}
+
+			for _, ent_name in pairs(removed_ents) do
+				local ent = Entities:FindByName(nil, ent_name)
+				ent:RemoveSelf()
+			end
+
+			local blocked_camps = {}
+			blocked_camps[1] = {"neutralcamp_evil_1", Vector(-4170, 3670, 512)}
+			blocked_camps[2] = {"neutralcamp_evil_2", Vector(-3030, 4500, 512)}
+			blocked_camps[3] = {"neutralcamp_evil_3", Vector(-2000, 4220, 384)}
+			blocked_camps[4] = {"neutralcamp_evil_4", Vector(-10, 3300, 512)}
+			blocked_camps[5] = {"neutralcamp_evil_5", Vector(1315, 3520, 512)}
+			blocked_camps[6] = {"neutralcamp_evil_6", Vector(-675, 2280, 1151)}
+			blocked_camps[7] = {"neutralcamp_evil_7", Vector(2400, 360, 520)}
+			blocked_camps[8] = {"neutralcamp_evil_8", Vector(4060, -620, 384)}
+			blocked_camps[9] = {"neutralcamp_evil_9", Vector(4100, 1050, 1288)}
+			blocked_camps[10] = {"neutralcamp_good_1", Vector(3010, -4430, 512)}
+			blocked_camps[11] = {"neutralcamp_good_2", Vector(4810, -4200, 512)}
+			blocked_camps[12] = {"neutralcamp_good_3", Vector(787, -4500, 512)}
+			blocked_camps[13] = {"neutralcamp_good_4", Vector(-430, -3100, 384)}
+			blocked_camps[14] = {"neutralcamp_good_5", Vector(-1500, -4290, 384)}
+			blocked_camps[15] = {"neutralcamp_good_6", Vector(-3040, 100, 512)}
+			blocked_camps[16] = {"neutralcamp_good_7", Vector(-3700, 890, 512)}
+			blocked_camps[17] = {"neutralcamp_good_8", Vector(-4780, -190, 512)}
+			blocked_camps[18] = {"neutralcamp_good_9", Vector(256, -1717, 1280)}
+
+			for i = 1, #blocked_camps do
+				local ent = Entities:FindByName(nil, blocked_camps[i][1])
+				local dummy = CreateUnitByName("npc_dummy_unit_perma", blocked_camps[i][2], true, nil, nil, DOTA_TEAM_NEUTRALS)
+			end
+
+			-- not removing neutral spawners for reasons...
+--			Entities:FindByClassname(nil, "npc_dota_neutral_spawner"):RemoveSelf()
 		end
 	end
 
@@ -239,7 +293,6 @@ function GameMode:OnGameRulesStateChange(keys)
 			local xpInfo = {}
 
 			for k, v in pairs(players) do
-
 				local level = GetXPLevelByXp(v.xp)
 				local title = GetTitleIXP(level)
 				local color = GetTitleColorIXP(title, true)
@@ -260,7 +313,12 @@ function GameMode:OnGameRulesStateChange(keys)
 				xp_info = xpInfo,
 				info = {
 					winner = GAME_WINNER_TEAM,
-					gameid = GetApiGameId()
+					gameid = GetApiGameId(),
+					radiant_score = GetTeamHeroKills(2),
+					dire_score = GetTeamHeroKills(3),
+					custom1_score = GetTeamHeroKills(6),
+					custom2_score = GetTeamHeroKills(7),
+					custom3_score = GetTeamHeroKills(8),
 				}
 			})
 

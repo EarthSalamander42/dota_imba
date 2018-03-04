@@ -105,17 +105,27 @@
 			"02"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"defense_stack"					"-7"
+				"defense_stack"					"-5"
 			}
 			"03"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"max_stacks"					"3.5"
+				"max_stacks"					"5"
 			}
 			"04"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"max_stacks_10v10"				"7"
+				"max_stacks_10v10"				"10"
+			}
+			"05"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"incoming_damage_tooltip"		"25"
+			}
+			"06"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"incoming_damage_10v10_tooltip"	"50"
 			}
 		}
 	}
@@ -142,6 +152,11 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"aura_radius"					"1200"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"max_reduction"					"50"
 			}
 		}
 	}
@@ -27757,7 +27772,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"550 650 800 1000"
+		"AbilityCastRange"				"550 700 850 1000"
 		"AbilityCastPoint"				"0.3"
 
 		// Time		
@@ -27767,7 +27782,7 @@
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"0"	//0 Mana cost allow nice escapes if enemy has mana removal
-		
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -27775,12 +27790,12 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"cast_range"				"550 650 800 1000"
+				"cast_range"				"550 700 850 1000"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"armor_reduction"			"-1 -5 -8 -10"
+				"armor_reduction"			"-2 -5 -8 -11"
 				"LinkedSpecialBonus"		"special_bonus_unique_chaos_knight_2"
 			}		
 			"03"
@@ -27807,7 +27822,7 @@
 		"AbilityTextureName"			"chaos_knight_phantasm"
 		"MaxLevel"						"3"
 		"AbilityCooldown"				"130.0"
-		"AbilityManaCost"				"125 195 265"
+		"AbilityManaCost"				"125 200 275"
 		"AbilityCastPoint"				"0.4"
 
 		// Precache
@@ -41374,7 +41389,7 @@
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"dps"						"10 20 40 70"
+				"dps"						"10 20 30 40"
 			}
 		}
 	}
@@ -41608,7 +41623,7 @@
 			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"dps"						"10 16.6 25 35"
+				"dps"						"10 15 20 25"
 			}
 		}
 	}
@@ -41696,7 +41711,7 @@
 			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"dps"						"10 30 50 70"
+				"dps"						"10 20 30 40"
 			}
 		}
 	}
@@ -41769,7 +41784,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"dps"					"10 15 20 30"
+				"dps"					"10 15 20 25"
 			}
 		}
 	}
@@ -41832,7 +41847,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"dps"						"30 60 100"
+				"dps"						"20 40 60"
 			}
 		}
 	}
@@ -41907,7 +41922,7 @@
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"dps"						"15 30 50"
+				"dps"						"10 25 40"
 			}
 		}
 	}

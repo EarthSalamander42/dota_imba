@@ -38,8 +38,10 @@
 
 #BattlepassButtonContainer
 {
-	margin-top: 4%;
+	margin-top: 3.7%;
 	align: center top;
+	background-image: url("s2r://panorama/images/hud/reborn/bg_timer_psd.vtex");
+	background-size: 100%;
 	flow-children: down;
 }
 
@@ -65,17 +67,13 @@
 {
 	width: 150px;
 	height: 35px;
-	padding: 4px 4px 4px 4px;
-	border-radius: 4px;
-	background-color: #000090ba;
 	horizontal-align: center;
-	saturation: 0.7;
+	saturation: 0.8;
 }
 
 #BattlepassButton:hover
 {
-	border: 1px solid white;
-	saturation: 0.8;
+	saturation: 0.7;
 }
 
 #BattlepassButton:active
@@ -86,7 +84,7 @@
 #BattlepassButton Label
 {
 	align: center center;
-	color: white;
+	color: blue;
 	text-transform: uppercase;
 	text-align: center center;
 	font-size: 18px;
@@ -94,7 +92,7 @@
 
 #BattlepassButton:hover Label
 {
-	color: white;
+	color: darkblue;
 }
 
 #BattlepassWindow
@@ -610,9 +608,8 @@
 }
 
 .BattlepassRewardLabelUnlocked {
-	horizontal-align: left;
-	font-size: 12px;
-	vertical-align: top;
+	width: 100%;
+	font-size: 11px;
 	letter-spacing: 1px;
 	align: center center;
 	text-transform: uppercase;

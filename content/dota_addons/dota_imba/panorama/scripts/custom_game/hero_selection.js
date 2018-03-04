@@ -866,7 +866,7 @@ function ShowHUD(hide) {
 		show = "collapse"
 	}
 	var MainPanel = $.GetContextPanel().GetParent().GetParent().GetParent().GetParent()
-	MainPanel.FindChildTraverse("topbar").style.visibility = show;
+//	MainPanel.FindChildTraverse("topbar").style.visibility = show;
 	MainPanel.FindChildTraverse("minimap_container").style.visibility = show;
 	MainPanel.FindChildTraverse("lower_hud").style.visibility = show;
 	MainPanel.FindChildTraverse("HudChat").style.visibility = show;

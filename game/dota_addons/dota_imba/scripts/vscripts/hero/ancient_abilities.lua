@@ -14,10 +14,7 @@
 --
 -- Editors:
 --     Firetoad, 10.01.2016
---     suthernfriend, 03.02.2018
 --	   Firetoad, 24.02.2018
-
-
 
 -- Ancient Defense ability
 imba_ancient_defense = class({})
@@ -36,7 +33,6 @@ end
 function imba_ancient_defense:GetIntrinsicModifierName()
 	return "modifier_imba_ancient_defense"
 end
-
 
 -- Passive modifier
 modifier_imba_ancient_defense = class({})
@@ -96,7 +92,6 @@ function imba_ancient_last_resort:GetIntrinsicModifierName()
 	return "modifier_imba_ancient_last_resort_aura"
 end
 
-
 -- Passive modifier
 modifier_imba_ancient_last_resort_aura = class({})
 function modifier_imba_ancient_last_resort_aura:IsDebuff() return false end
@@ -114,14 +109,13 @@ end
 function modifier_imba_ancient_last_resort_aura:OnIntervalThink()
 	if IsServer() then
 		local ancient = self:GetParent()
-		local stacks = math.min(1 - ancient:GetHealth() / ancient:GetMaxHealth(), 0.75) * 100
+		local stacks = math.min(100 - ancient:GetHealthPercent(), self:GetAbility():GetSpecialValueFor("max_reduction"))
 		local nearby_enemies = FindUnitsInRadius(ancient:GetTeamNumber(), ancient:GetAbsOrigin(), nil, self:GetAbility():GetSpecialValueFor("aura_radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 		for _, enemy in pairs(nearby_enemies) do
 			enemy:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_ancient_last_resort_debuff", {duration = 2.0}):SetStackCount(stacks)
 		end
 	end
 end
-
 
 -- Enemy debuff
 modifier_imba_ancient_last_resort_debuff = class({})
@@ -151,8 +145,6 @@ end
 function modifier_imba_ancient_last_resort_debuff:GetModifierTotalDamageOutgoing_Percentage()
 	return (-1) * self:GetStackCount()
 end
-
-
 
 -- Fountain Danger Zone ability
 imba_fountain_danger_zone = class({})

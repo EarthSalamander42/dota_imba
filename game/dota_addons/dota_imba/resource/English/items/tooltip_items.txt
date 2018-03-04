@@ -1660,13 +1660,6 @@
 "DOTA_Tooltip_ability_item_imba_black_king_bar_bonus_damage"                "+$damage"
 "DOTA_Tooltip_ability_item_imba_black_king_bar_duration"                    "DURATION:"
 
-"DOTA_Tooltip_ability_item_imba_bottle"                   "Bottle"
-"DOTA_Tooltip_ability_item_imba_bottle_Description"            "Use: Regenerate - Restores HP and Mana over time. Effect is lost if unit is attacked. Empty Bottle refills near town fountain.  You can also store runes in the bottle, to save for later use.  After 2 minutes, stored Runes will be activated automatically. If Bottle does not have full charges and is placed on a courier, the courier will move 30%% slower.\n\nHold Control to use your Bottle on an allied hero.\n<h1><font color='#FF7800'>Passive: Arcane Water</font></h1> Bottle regeneration can not be interrupted."
-"DOTA_Tooltip_ability_item_imba_bottle_Lore"                    "An old bottle that survived the ages, the contents placed inside become enchanted."
-"DOTA_Tooltip_ability_item_imba_bottle_Note0"                  "Bottle is shareable."
-"DOTA_Tooltip_ability_item_imba_bottle_health_restore"          "HEALTH RESTORED:"
-"DOTA_Tooltip_ability_item_imba_bottle_mana_restore"            "MANA RESTORED:"
-"DOTA_Tooltip_ability_item_imba_bottle_restore_time"            "DURATION:"
 "DOTA_Tooltip_ability_item_courier_Lore"                        "Losing the donkey is punishable by death."
 "DOTA_Tooltip_ability_item_imba_sphere_Description"            "Spellblock - Passively blocks most targeted spells once every 10 seconds. Can be cast on an allied unit to temporarily transfer the buff."
 "DOTA_Tooltip_ability_item_imba_lotus_orb_Description"          "Active: Echo Shell - Applies a shield to the target unit which re-casts most targeted spells back to their caster. The shielded unit will still take damage from the spell. Dispels negative buffs when applied."

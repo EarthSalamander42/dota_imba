@@ -65,8 +65,8 @@
 	"imba_gamemode_name_frantic"														"Frantic (10v10)"
 	"imba_gamemode_name_ranked_5v5"                                                     "Ranked (5v5)"
 
-	"imba_random_pick_button"                                                           "RANDOM"
-	"imba_random_imba_pick_button"                                                      "IMBA RANDOM"
+	"imba_random_pick_button"                                                           "RANDOM HERO"
+	"imba_random_imba_pick_button"                                                      "RANDOM IMBA HERO"
 	"imba_repick_button"                                                                "Repick a hero"
 
 	"imba_gamemode_settings_title"                                                      "Vote for the game type:"
@@ -194,7 +194,6 @@
 
 	//Battlepass
 	"imba_safe_to_leave"			"Game is safe to leave"
-	"imba_game_info"				"Imba Game Info"
 	"imba_game_info_close"			"Close"
 	"battlepass"					"Battlepass"
 	"coming_soon"					"Upcoming feature: being able to choose reward"

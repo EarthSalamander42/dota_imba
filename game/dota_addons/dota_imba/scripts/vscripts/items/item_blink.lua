@@ -101,37 +101,6 @@ function modifier_imba_blink_dagger_handler:RemoveOnDeath() return false end
 function modifier_imba_blink_dagger_handler:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_blink_dagger_handler:OnCreated()
-	if IsServer() then
-		local caster = self:GetCaster()
-		if caster:IsRealHero() then
-
-			local carrier_name = caster:GetName()
-			local blinkResponse = {
-				npc_dota_hero_antimage		= "antimage_anti_blink_01",
-				npc_dota_hero_brewmaster	= "brewmaster_brew_blink_02",
-				npc_dota_hero_bristleback	= "bristleback_bristle_blink_02",
-				npc_dota_hero_chen			= "chen_chen_blink_02",
-				npc_dota_hero_clinkz		= "clinkz_clinkz_blink_02",
-				npc_dota_hero_doom_bringer	= "doom_bringer_doom_blink_02",
-				npc_dota_hero_invoker		= "invoker_invo_blink_02",
-				npc_dota_hero_jakiro		= "jakiro_jak_blink_02",
-				npc_dota_hero_leshrac		= "leshrac_lesh_blink_02",
-				npc_dota_hero_lycan			= "lycan_lycan_blink_02",
-				npc_dota_hero_meepo			= "meepo_meepo_blink_02",
-				npc_dota_hero_naga_siren	= "naga_siren_naga_blink_02",
-				npc_dota_hero_nyx_assassin	= "nyx_assassin_nyx_blink_02",
-				npc_dota_hero_silencer		= "silencer_silen_blink_02",
-				npc_dota_hero_bane			= "bane_bane_blink_03",
-				npc_dota_hero_skeleton_king	= "skeleton_king_wraith_blink_02"
-			}
-
-			if blinkResponse[carrier_name] then
-				Timers:CreateTimer(0.2, function()	-- So it comes after the "ka-ching"
-					EmitAnnouncerSoundForPlayer(blinkResponse[carrier_name], caster:GetPlayerID())
-				end)
-			end
-		end
-	end
 	self:OnIntervalThink()
 	self:StartIntervalThink(1.0)
 end

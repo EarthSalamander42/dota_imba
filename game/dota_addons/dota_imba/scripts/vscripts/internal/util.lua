@@ -230,7 +230,8 @@ function PrecacheUnitWithQueue( unit_name )
 			end)
 		end
 	end)
-	print("Precached", unit_name)
+
+--	print("Precached", unit_name)
 end
 
 -- Initializes heroes' innate abilities
@@ -1321,7 +1322,8 @@ function PickupRune(rune_name, unit, bActiveByBottle)
 			type = "generic",
 			text = "#custom_toast_ActivatedRune",
 			player = unit:GetPlayerID(),
-			runeType = rune_name
+			runeType = rune_name,
+			runeFirst = bounty_rune_is_initial_bounty_rune
 		})
 	end
 end

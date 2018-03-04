@@ -15,6 +15,7 @@
 		"item"		"item_ward_sentry"
 		"item"		"item_tome_of_knowledge"
 		"item"		"item_imba_bottle"
+		"item"		"item_imba_soul_of_truth"
 	}
 
 	"attributes"
@@ -32,7 +33,6 @@
 		"item"		"item_blade_of_alacrity"
 		"item"		"item_staff_of_wizardry"
 		"item"		"item_gem"
-		"item"		"item_imba_soul_of_truth"
 	}
 
 	"weapons_armor"
@@ -117,7 +117,7 @@
 	{
 		"item"		"item_imba_initiate_robe"
 		"item"		"item_lotus_orb"
-		"item"		"item_imba_cyclone"
+		"item"		"item_cyclone"
 		"item"		"item_imba_force_staff"
 		"item"		"item_imba_aether_lens"
 		"item"		"item_dagon"
