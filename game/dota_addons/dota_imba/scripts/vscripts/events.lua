@@ -118,7 +118,9 @@ function GameMode:OnGameRulesStateChange(keys)
 		ImbaNetGraph(10.0)
 
 		-- Initialize rune spawners
-		InitRunes()
+		if GetMapName() ~= "imba_1v1" then
+			InitRunes()
+		end
 
 		local donators_steamid = {}
 		local donators = GetDonators()
@@ -149,7 +151,7 @@ function GameMode:OnGameRulesStateChange(keys)
 --					CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "show_netgraph_heronames", {})
 				end
 
-				if GetMapName() ~= "imba_1v1" then
+				if GetMapName() ~= "imba_1v1" then -- error for gaben reasons
 					local donators = GetDonators()
 					for k, v in pairs(donators) do
 						CustomNetTables:SetTableValue("player_table", tostring(hero:GetPlayerID()), {
@@ -161,19 +163,17 @@ function GameMode:OnGameRulesStateChange(keys)
 				end
 			end
 
+			COURIER_TEAM = {}
 			if GetMapName() == "imba_overthrow" then
+				local foundTeams = {}
+				for _, playerStart in pairs(Entities:FindAllByClassname("info_courier_spawn")) do
+					COURIER_TEAM[playerStart:GetTeam()] = CreateUnitByName("npc_dota_courier", playerStart:GetAbsOrigin(), true, nil, nil, playerStart:GetTeam())
+				end
+
 				CustomGameEventManager:Send_ServerToAllClients("imbathrow_topbar", {imbathrow = true})
 			else
-				local radiant_courier = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_radiant"):GetAbsOrigin(), true, nil, nil, 2)
-				local dire_courier = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_dire"):GetAbsOrigin(), true, nil, nil, 3)
-
-				for _, hero in pairs(HeroList:GetAllHeroes()) do
-					if hero:GetTeamNumber() == 2 then
-						radiant_courier:SetControllableByPlayer(hero:GetPlayerID(), true)
-					else
-						dire_courier:SetControllableByPlayer(hero:GetPlayerID(), true)
-					end
-				end
+				COURIER_TEAM[2] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_radiant"):GetAbsOrigin(), true, nil, nil, 2)
+				COURIER_TEAM[3] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_dire"):GetAbsOrigin(), true, nil, nil, 3)
 
 				local good_fillers = {
 					"good_filler_1",
@@ -416,9 +416,17 @@ function GameMode:OnNPCSpawned(keys)
 
 		-- meepo fix
 		if npc:GetUnitName() == "npc_dota_hero_meepo" then
-			if TRUE_MEEPO_HAS_SPAWNED then
-				return
-			else
+			if npc:GetCloneSource() then
+				if npc:GetCloneSource():IsAlive() then
+					npc:RemoveModifierByName("modifier_command_restricted")
+					npc:RemoveModifierByName("modifier_invulnerable")
+				else
+					npc:AddNewModifier(npc, nil, "modifier_command_restricted", {})
+					npc:AddNewModifier(npc, nil, "modifier_invulnerable", {})
+				end
+			end
+
+			if TRUE_MEEPO_HAS_SPAWNED == false then
 				npc.is_real_meepo = true
 				TRUE_MEEPO_HAS_SPAWNED = true
 			end
@@ -658,7 +666,6 @@ function GameMode:OnItemPickedUp(keys)
 		tostring(hero:GetUnitName()),
 		tostring(PlayerResource:GetSteamID(plyID))
 	})
-	
 end
 
 -- A player has reconnected to the game. This function can be used to repaint Player-based particles or change
@@ -962,6 +969,10 @@ function GameMode:OnTeamKillCredit(keys)
 			broadcast_kill_event.close_to_victory = 1
 		end
 		CustomGameEventManager:Send_ServerToAllClients( "kill_event", broadcast_kill_event )
+	elseif GetMapName() == "imba_1v1" then
+		if nTeamKills == IMBA_1V1_SCORE then
+			GameRules:SetGameWinner( killer_team )
+		end
 	end
 
 	-------------------------------------------------------------------------------------------------
@@ -1143,22 +1154,26 @@ function GameMode:OnEntityKilled( keys )
 		end
 
 		if killed_unit:GetUnitName() == "npc_dota_hero_meepo" then
-			if killed_unit:GetCloneSource() and killed_unit:GetCloneSource():HasModifier("modifier_item_imba_aegis") then
-				local meepo_table = Entities:FindAllByName("npc_dota_hero_meepo")
-				if meepo_table then
-					for i = 1, #meepo_table do
-						if meepo_table[i]:IsClone() then
-							meepo_table[i]:SetRespawnsDisabled(true)
-							meepo_table[i]:GetCloneSource():SetTimeUntilRespawn(killed_unit:GetCloneSource():FindModifierByName("modifier_item_imba_aegis").reincarnate_time)
-							meepo_table[i]:GetCloneSource():RemoveModifierByName("modifier_item_imba_aegis")
-						else
-							meepo_table[i]:SetTimeUntilRespawn(killed_unit:FindModifierByName("modifier_item_imba_aegis").reincarnate_time)
-							return
+			if killed_unit:GetCloneSource() then
+				if killed_unit:GetCloneSource():HasModifier("modifier_item_imba_aegis") then
+					local meepo_table = Entities:FindAllByName("npc_dota_hero_meepo")
+					if meepo_table then
+						for i = 1, #meepo_table do
+							if meepo_table[i]:IsClone() then
+								meepo_table[i]:SetRespawnsDisabled(true)
+								meepo_table[i]:GetCloneSource():SetTimeUntilRespawn(killed_unit:GetCloneSource():FindModifierByName("modifier_item_imba_aegis").reincarnate_time)
+								meepo_table[i]:GetCloneSource():RemoveModifierByName("modifier_item_imba_aegis")
+							else
+								meepo_table[i]:SetTimeUntilRespawn(killed_unit:FindModifierByName("modifier_item_imba_aegis").reincarnate_time)
+								return
+							end
 						end
 					end
 				end
-			elseif killed_unit:HasModifier("modifier_item_imba_aegis") then
-				killed_unit:SetTimeUntilRespawn(killed_unit:FindModifierByName("modifier_item_imba_aegis").reincarnate_time)
+			else
+				if killed_unit:HasModifier("modifier_item_imba_aegis") then
+					killed_unit:SetTimeUntilRespawn(killed_unit:FindModifierByName("modifier_item_imba_aegis").reincarnate_time)
+				end
 			end
 		end
 
@@ -1315,6 +1330,10 @@ function GameMode:OnEntityKilled( keys )
 				CombatEvents("kill", "hero_kill_tower", killed_unit, killer)
 			else
 				CombatEvents("generic", "tower", killed_unit, killer)
+			end
+
+			if GetMapName() == "imba_1v1" then
+				GameRules:SetGameWinner(killer:GetTeamNumber())
 			end
 		elseif killed_unit:IsCourier() then
 			CombatEvents("generic", "courier_dead", killed_unit)

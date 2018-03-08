@@ -175,7 +175,8 @@ function modifier_imba_fountain_danger_zone:IsStunDebuff() return false end
 
 function modifier_imba_fountain_danger_zone:CheckState()
 	local state = {
-		[MODIFIER_STATE_DISARMED] = true
+		[MODIFIER_STATE_DISARMED] = true,
+		[MODIFIER_STATE_PASSIVES_DISABLED] = true,
 	}
 
 	return state

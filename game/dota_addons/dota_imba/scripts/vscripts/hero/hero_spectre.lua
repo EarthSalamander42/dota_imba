@@ -147,7 +147,7 @@ function modifier_imba_spectre_haunt_illusion:OnIntervalThink()
 		end
 
 		if self.target and self.target:IsAlive() then
-			if self.target:IsInvisible() then
+			if self.target:IsImbaInvisible() then
 				--print("Moving to invisible unit")
 				self.parent:MoveToNPC(self.target)
 			else

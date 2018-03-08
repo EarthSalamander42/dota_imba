@@ -248,13 +248,6 @@ function GameMode:OnFirstPlayerLoaded()
 		end
 		statue_entity:AddNewModifier(statue_entity, nil, "modifier_imba_contributor_statue", {})
 	end
-
-	-------------------------------------------------------------------------------------------------
-	-- IMBA: Arena mode score initialization
-	-------------------------------------------------------------------------------------------------
-
-	CustomNetTables:SetTableValue("game_options", "radiant", {score = 25})
-	CustomNetTables:SetTableValue("game_options", "dire", {score = 25})
 end
 
 -- Gold gain filter function
@@ -921,7 +914,6 @@ function GameMode:OrderFilter( keys )
 		end
 	end
 
-
 	-- Meepo item handle
 	local meepo_table = Entities:FindAllByName("npc_dota_hero_meepo")
 	local ability = EntIndexToHScript(keys.entindex_ability)
@@ -940,6 +932,29 @@ function GameMode:OrderFilter( keys )
 					local duration = ability:GetLevelSpecialValueFor("bkb_duration", ability:GetLevel() -1)
 					meepo_table[m]:AddNewModifier(meepo_table[m], nil, "modifier_imba_black_queen_cape_active_bkb", {duration = duration})
 				end
+			end
+		end
+	end
+
+	if keys.order_type == DOTA_UNIT_ORDER_PURCHASE_ITEM then
+		local purchaser = EntIndexToHScript(units["0"])
+		local item = keys.entindex_ability
+		if item == nil then return true end
+
+		for _, banned_item in pairs(BANNED_ITEMS[GetMapName()]) do
+			if self.itemIDs[item] == banned_item then
+				DisplayError(unit:GetPlayerID(),"#dota_hud_error_cant_purchase_1v1")
+				return false
+			end
+		end
+	end
+
+	if GetMapName() == "imba_1v1" then
+		if keys.order_type == DOTA_UNIT_ORDER_MOVE_TO_TARGET then
+			local target = EntIndexToHScript(keys["entindex_target"])
+			if target:GetUnitName() == "npc_dota_goodguys_healers" or target:GetUnitName() == "npc_dota_badguys_healers" then
+				DisplayError(unit:GetPlayerID(),"#dota_hud_error_cant_shrine_1v1")
+				return false
 			end
 		end
 	end
@@ -1309,10 +1324,12 @@ end
 	is useful for starting any game logic timers/thinkers, beginning the first round, etc.									]]
 function GameMode:OnGameInProgress()
 
-	Timers:CreateTimer(0, function()
-		SpawnImbaRunes()
-		return RUNE_SPAWN_TIME
-	end)
+	if GetMapName() ~= "imba_1v1" then
+		Timers:CreateTimer(0, function()
+			SpawnImbaRunes()
+			return RUNE_SPAWN_TIME
+		end)
+	end
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Passive gold adjustment
@@ -1468,6 +1485,20 @@ function GameMode:InitGameMode()
 	CustomGameEventManager:RegisterListener("netgraph_remove_units", Dynamic_Wrap(self, "RemoveUnits"))
 	CustomGameEventManager:RegisterListener("netgraph_give_item", Dynamic_Wrap(self, "NetgraphGiveItem"))
 	CustomGameEventManager:RegisterListener("change_companion", Dynamic_Wrap(self, "DonatorCompanionJS"))
+
+	self.itemKV = LoadKeyValues("scripts/npc/items.txt")
+	for k,v in pairs(LoadKeyValues("scripts/npc/npc_items_custom.txt")) do
+		if not self.itemKV[k] then
+			self.itemKV[k] = v
+		end
+	end
+
+	self.itemIDs = {}
+	for k,v in pairs(self.itemKV) do
+		if type(v) == "table" and v.ID then
+			self.itemIDs[v.ID] = k
+		end
+	end
 
 	--Derived Stats
 	mode:SetCustomAttributeDerivedStatValue(DOTA_ATTRIBUTE_STRENGTH_HP_REGEN_PERCENT, 0.0015) -- 40-45% of vanilla

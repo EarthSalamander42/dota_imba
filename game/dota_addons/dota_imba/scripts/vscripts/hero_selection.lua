@@ -246,6 +246,9 @@ end
 
 function HeroSelection:RandomHero(event)
 	local id = event.PlayerID
+	local forced = event.forced
+	print("Forced Random:", forced)
+
 	if PlayerResource:GetConnectionState(id) == 1 then
 		print("Bot, ignoring..")
 	else
@@ -262,7 +265,7 @@ function HeroSelection:RandomHero(event)
 			if random_hero == picked_hero then
 				print("10v10 hero disabled, random again...")
 				HeroSelection:RandomHero({PlayerID = id})
-				break
+				return
 			end
 		end
 		if GetMapName() == "imba_frantic_10v10" then
@@ -270,7 +273,7 @@ function HeroSelection:RandomHero(event)
 				if random_hero == picked_hero then
 					print("10v10 hero disabled, random again...")
 					HeroSelection:RandomHero({PlayerID = id})
-					break
+					return
 				end
 			end
 		end
@@ -280,7 +283,7 @@ function HeroSelection:RandomHero(event)
 		if random_hero == picked_hero then
 			print("Hero disabled, random again...")
 			HeroSelection:RandomHero({PlayerID = id})
-			break
+			return
 		end
 	end
 
@@ -288,7 +291,7 @@ function HeroSelection:RandomHero(event)
 		if random_hero == picked_hero then
 			print("Hero disabled silently, random again...")
 			HeroSelection:RandomHero({PlayerID = id})
-			break
+			return
 		end
 	end
 
@@ -296,7 +299,7 @@ function HeroSelection:RandomHero(event)
 		if random_hero == picked_hero then
 			print("Hero picked, random again...")
 			HeroSelection:RandomHero({PlayerID = id})
-			break
+			return
 		end
 	end
 
@@ -305,7 +308,7 @@ function HeroSelection:RandomHero(event)
 			if random_hero == picked_hero then
 				print("Overthrow hero disabled, random again...")
 				HeroSelection:RandomHero({PlayerID = id})
-				break
+				return
 			end
 		end
 	end
@@ -341,7 +344,7 @@ function HeroSelection:RandomImbaHero(event)
 			if random_hero == picked_hero then
 				print("10v10 hero disabled, random again...")
 				HeroSelection:RandomHero({PlayerID = id})
-				break
+				return
 			end
 		end
 		if GetMapName() == "imba_frantic_10v10" then
@@ -349,7 +352,7 @@ function HeroSelection:RandomImbaHero(event)
 				if random_hero == picked_hero then
 					print("10v10 hero disabled, random again...")
 					HeroSelection:RandomHero({PlayerID = id})
-					break
+					return
 				end
 			end
 		end
@@ -359,7 +362,7 @@ function HeroSelection:RandomImbaHero(event)
 		if random_hero == picked_hero then
 			print("Hero disabled, random again...")
 			HeroSelection:RandomHero({PlayerID = id})
-			break
+			return
 		end
 	end
 
@@ -367,7 +370,7 @@ function HeroSelection:RandomImbaHero(event)
 		if random_hero == picked_hero then
 			print("Hero disabled silently, random again...")
 			HeroSelection:RandomHero({PlayerID = id})
-			break
+			return
 		end
 	end
 
@@ -375,7 +378,7 @@ function HeroSelection:RandomImbaHero(event)
 		if random_hero == picked_hero then
 			print("Hero picked, random again...")
 			HeroSelection:RandomHero({PlayerID = id})
-			break
+			return
 		end
 	end
 
@@ -384,7 +387,7 @@ function HeroSelection:RandomImbaHero(event)
 			if random_hero == picked_hero then
 				print("Overthrow hero disabled, random again...")
 				HeroSelection:RandomHero({PlayerID = id})
-				break
+				return
 			end
 		end
 	end
@@ -704,12 +707,11 @@ function HeroSelection:AssignHero(player_id, hero_name, dev_command)
 		end
 
 		-- Set up player color
-		PlayerResource:SetCustomPlayerColor(player_id, PLAYER_COLORS[player_id][1], PLAYER_COLORS[player_id][2], PLAYER_COLORS[player_id][3])
+--		if player_id > 9 then
+			PlayerResource:SetCustomPlayerColor(player_id, PLAYER_COLORS[player_id][1], PLAYER_COLORS[player_id][2], PLAYER_COLORS[player_id][3])
+--		end
 
-		-- init override of talent window
-		--		InitializeTalentsOverride(hero)
-
-		--		PlayerResource:SetCameraTarget(player_id, nil)
+--		PlayerResource:SetCameraTarget(player_id, nil)
 		Timers:CreateTimer(1.0, function()
 			hero:RemoveEffects(EF_NODRAW)
 			UTIL_Remove(wisp)
@@ -720,6 +722,8 @@ function HeroSelection:AssignHero(player_id, hero_name, dev_command)
 
 		-- TODO: in js, remove the function that gray out a hero when picked, since this function should do it in real time
 		HeroSelection:HeroList(0.1) -- send the picked hero list once a hero is picked
+
+		COURIER_TEAM[hero:GetTeamNumber()]:SetControllableByPlayer(hero:GetPlayerID(), true)
 
 		Imbattlepass:AddItemEffects(hero)
 	end, player_id)

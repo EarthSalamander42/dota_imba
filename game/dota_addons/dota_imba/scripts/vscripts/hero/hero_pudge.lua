@@ -139,8 +139,16 @@ end
 
 function imba_pudge_meat_hook:GetCastRange()
 	local caster = self:GetCaster()
-	local charges = self:GetCaster():GetModifierStackCount("modifier_imba_hook_light_stack", self:GetCaster())
-	local hook_range = self:GetSpecialValueFor("base_range") + caster:FindTalentValue("special_bonus_imba_pudge_5") + self:GetCaster():FindAbilityByName("imba_pudge_light_hook"):GetSpecialValueFor("stack_range") * charges
+	local charges = caster:GetModifierStackCount("modifier_imba_hook_light_stack", caster)
+	local hook_range = self:GetSpecialValueFor("base_range") + caster:FindTalentValue("special_bonus_imba_pudge_5")
+
+	-- volvo?
+	if caster and caster:FindAbilityByName("imba_pudge_light_hook") then
+		hook_range = hook_range + (caster:FindAbilityByName("imba_pudge_light_hook"):GetSpecialValueFor("stack_range") * charges)
+		print(self:GetSpecialValueFor("base_range"), caster:FindTalentValue("special_bonus_imba_pudge_5"), caster:FindAbilityByName("imba_pudge_light_hook"):GetSpecialValueFor("stack_range"), charges)
+	end
+
+	print(hook_range)
 	return hook_range
 end
 

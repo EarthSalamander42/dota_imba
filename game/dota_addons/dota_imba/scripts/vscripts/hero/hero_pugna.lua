@@ -1317,6 +1317,11 @@ function modifier_imba_life_drain:OnIntervalThink()
 			self:Destroy()
 		end
 
+		-- Link breaks if the caster is invisible
+		if self.parent:IsImbaInvisible() then
+			self:Destroy()
+		end
+
 		-- Link breaks if the target's status doesn't allow for it to continue
 		if not self.caster:CanEntityBeSeenByMyTeam(self.parent) or self.parent:IsInvulnerable() then
 			self:Destroy()

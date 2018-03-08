@@ -226,6 +226,8 @@ elseif GetMapName() == "imba_1v1" then
 	IMBA_PLAYERS_ON_GAME = 2
 	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_GOODGUYS] = 1
 	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_BADGUYS]  = 1
+	IMBA_1V1_SCORE = 3
+	PRE_GAME_TIME = 30.0 + HERO_SELECTION_TIME
 elseif GetMapName() == "imba_frantic_10v10" then
 	IMBA_PLAYERS_ON_GAME = 20
 	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_GOODGUYS] = 10
@@ -243,15 +245,14 @@ elseif GetMapName() == "imba_overthrow" then
 	PRE_GAME_TIME = 20.0 + HERO_SELECTION_TIME
 	UNIVERSAL_SHOP_MODE = true
 	FIXED_RESPAWN_TIME = 10
-	MAX_NUMBER_OF_TEAMS = 2
-	IMBA_PLAYERS_ON_GAME = 10
+	MAX_NUMBER_OF_TEAMS = 4
+	IMBA_PLAYERS_ON_GAME = 16
 	USE_CUSTOM_TEAM_COLORS = true						-- Should we use custom team colors?
 	USE_CUSTOM_TEAM_COLORS_FOR_PLAYERS = true			-- Should we use custom team colors to color the players/minimap?
 	TEAM_COLORS[DOTA_TEAM_GOODGUYS] = { 61, 210, 150 }	-- Teal
 	TEAM_COLORS[DOTA_TEAM_BADGUYS]  = { 243, 201, 9 }	-- Yellow
 	TEAM_COLORS[DOTA_TEAM_CUSTOM_1]  = { 197, 77, 168 }	-- Pink
 	TEAM_COLORS[DOTA_TEAM_CUSTOM_2]  = { 255, 108, 0 }	-- Orange
-	TEAM_COLORS[DOTA_TEAM_CUSTOM_3] = { 52, 85, 255 }	-- Blue
 
 	m_GoldRadiusMin = 250
 	m_GoldRadiusMax = 550
@@ -281,18 +282,12 @@ elseif GetMapName() == "imba_overthrow" then
 	m_VictoryMessages[DOTA_TEAM_BADGUYS]  = "#VictoryMessage_BadGuys"
 	m_VictoryMessages[DOTA_TEAM_CUSTOM_1] = "#VictoryMessage_Custom1"
 	m_VictoryMessages[DOTA_TEAM_CUSTOM_2] = "#VictoryMessage_Custom2"
-	m_VictoryMessages[DOTA_TEAM_CUSTOM_3] = "#VictoryMessage_Custom3"
-	--	m_VictoryMessages[DOTA_TEAM_CUSTOM_4] = "#VictoryMessage_Custom4"
-	--	m_VictoryMessages[DOTA_TEAM_CUSTOM_5] = "#VictoryMessage_Custom5"
-	--	m_VictoryMessages[DOTA_TEAM_CUSTOM_6] = "#VictoryMessage_Custom6"
-	--	m_VictoryMessages[DOTA_TEAM_CUSTOM_7] = "#VictoryMessage_Custom7"
-	--	m_VictoryMessages[DOTA_TEAM_CUSTOM_8] = "#VictoryMessage_Custom8"
 
 	m_GatheredShuffledTeams = {}
 
 	--	if PlayerResource:GetPlayerCount() > 7 then
-	TEAM_KILLS_TO_WIN = 25
-	nCOUNTDOWNTIMER = 601
+	TEAM_KILLS_TO_WIN = 50
+	nCOUNTDOWNTIMER = 901
 	--	elseif PlayerResource:GetPlayerCount() > 4 and PlayerResource:GetPlayerCount() <= 7 then
 	--		TEAM_KILLS_TO_WIN = 20
 	--		nCOUNTDOWNTIMER = 721
@@ -365,6 +360,18 @@ GOLD_TICK_TIME["imba_10v10"] = 0.4
 GOLD_TICK_TIME["imba_frantic_10v10"] = 0.4
 GOLD_TICK_TIME["imba_overthrow"] = 0.6
 GOLD_TICK_TIME["imba_1v1"] = 0.6
+
+BANNED_ITEMS = {}
+BANNED_ITEMS["imba_standard"] = {}
+BANNED_ITEMS["imba_10v10"] = {}
+BANNED_ITEMS["imba_frantic_10v10"] = {}
+BANNED_ITEMS["imba_overthrow"] = {}
+BANNED_ITEMS["imba_1v1"] = {
+	"item_imba_bottle",
+	"item_infused_raindrop",
+	"item_soul_ring",
+	"item_tome_of_knowledge",
+}
 
 REMAINING_GOODGUYS = 0														-- Remaining players on Radiant
 REMAINING_BADGUYS = 0														-- Remaining players on Dire
@@ -464,3 +471,21 @@ IMBA_TESTBED_INITIALIZED = false
 TOWER_ABILITIES = LoadKeyValues("scripts/npc/KV/tower_abilities.kv")
 PURGE_BUFF_LIST = LoadKeyValues("scripts/npc/KV/purge_buffs_list.kv")
 DISPELLABLE_DEBUFF_LIST = LoadKeyValues("scripts/npc/KV/dispellable_debuffs_list.kv")
+
+IMBA_INVISIBLE_MODIFIERS = {
+	"modifier_mirana_moonlight_shadow",
+	"modifier_item_imba_shadow_blade_invis",
+	"modifier_imba_vendetta",
+	"modifier_nyx_assassin_burrow",
+	"modifier_item_imba_silver_edge_invis",
+	"modifier_item_glimmer_cape_fade",
+	"modifier_weaver_shukuchi",
+	"modifier_treant_natures_guise_invis",
+	"modifier_templar_assassin_meld",
+	"modifier_imba_skeleton_walk_dummy",
+	"modifier_invoker_ghost_walk_self",
+	"modifier_rune_invis",
+	"modifier_imba_skeleton_walk_invis",
+	"modifier_imba_riki_invisibility",
+	"modifier_imba_shadow_walk_buff_invis",
+}

@@ -5,7 +5,7 @@
 //	0 = Enabled,
 //	1 = 10v10 disabled,
 //	2 = Frantic disabled,
-//	3 = All disabled,
+//	3 = All disabled, (can be replaced by hot hero disable)
 //	4 = Invisible All disabled,
 //	5 = Overthrow disabled.
 
@@ -17,7 +17,6 @@
 		"override_hero"				"npc_dota_hero_arc_warden"
 
 		//Picking Screen
-		"IsDisabled"				"3"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
 
 		"Ability1"					"arc_warden_flux"
@@ -926,7 +925,6 @@
 
 		//Picking Screen
 		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
-		"IsDisabled"				"5"
 
 		"Ability1"					"monkey_king_boundless_strike"
 		"Ability2"					"monkey_king_tree_dance"
@@ -969,7 +967,7 @@
 
 		//Picking Screen
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
-		"IsDisabled"				"1"	// 0 = Enabled, 1 = 10v10 disabled, 2 = fully disabled.
+		"IsDisabled"				"1"
 
 		"AttackDamageMin"			"34"
 		"AttackDamageMax"			"38"
@@ -1220,7 +1218,7 @@
 
 		//Picking Screen
 		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
-		"IsDisabled"				"1"	// 0 = Enabled, 1 = 10v10 disabled, 2 = fully disabled.
+		"IsDisabled"				"1"
 
 		"Ability1"					"phantom_lancer_spirit_lance"
 		"Ability2"					"phantom_lancer_doppelwalk"
@@ -1483,7 +1481,7 @@
 		//Picking Screen
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
-		"IsDisabled"				"1"	// 0 = Enabled, 1 = 10v10 disabled, 2 = fully disabled.
+		"IsDisabled"				"1"
 
 		"Ability1"					"imba_silencer_arcane_curse"
 		"Ability2"					"imba_silencer_glaives_of_wisdom"
@@ -1624,7 +1622,7 @@
 
 		//Picking Screen
 		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
-		"IsDisabled"				"1"	// 0 = Enabled, 1 = 10v10 disabled, 2 = fully disabled.
+		"IsDisabled"				"1"
 
 		"Ability1"					"spectre_spectral_dagger"
 		"Ability2"					"spectre_desolate"
@@ -1786,7 +1784,7 @@
 
 		//Picking Screen
 		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
-		"IsDisabled"				"1"	// 0 = Enabled, 1 = 10v10 disabled, 2 = fully disabled.
+		"IsDisabled"				"1"
 
 		"Ability1"					"undying_decay"
 		"Ability2"					"undying_soul_rip"
@@ -1866,7 +1864,6 @@
 		//Picking Screen
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
-		"IsDisabled"				"3"
 
 		"Ability1"					"imba_venomancer_venomous_gale"
 		"Ability2"					"imba_venomancer_poison_sting"
@@ -2302,7 +2299,7 @@
 		"AttackAcquisitionRange"	"800"							// Range within a target can be acquired.
 		"AttackRange"				"150"							// Range within a target can be attacked.
 		"ProjectileModel"			""								// Particle system model for projectile.
-		"ProjectileSpeed"			"0"							// Speed of projectile.
+		"ProjectileSpeed"			"0"								// Speed of projectile.
 
 		// Attributes
 		//-------------------------------------------------------------------------------------------------------------
@@ -2346,5 +2343,44 @@
 		"VisionNighttimeRange"		"800"									// Range of vision at night time.
 
 		"GameSoundsFile"			"soundevents/game_sounds_heroes_custom/game_sounds_tiny.vsndevts"
+	}
+
+	//=================================================================================================================
+	// HERO: Ronin
+	//=================================================================================================================
+	"npc_dota_hero_sohei"
+	{
+		"BaseClass"					"npc_dota_hero_juggernaut"
+		"HeroID"					"122"
+		"Model"						"models/heroes/juggernaut/juggernaut.vmdl"
+
+		//Picking Screen
+//		"IsCustom"					"1"
+		"IsNew"						"1"
+		"IsDisabled"				"4"
+
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementTurnRate"			"1.5"
+		"MovementSpeed"				"325"
+
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"31"
+		"AttackDamageMax"			"33"
+		"AttackRate"				"1.7"
+
+		"ArmorPhysical"				"5"
+		"StatusHealthRegen"			"3.25"
+
+		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
+		"AttributeBaseStrength"		"23"
+		"AttributeStrengthGain"		"4.0"
+		"AttributeBaseAgility"		"18"
+		"AttributeAgilityGain"		"1.5"
+		"AttributeBaseIntelligence"	"17"
+		"AttributeIntelligenceGain"	"1.5"
+
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_HERO"
 	}
 }

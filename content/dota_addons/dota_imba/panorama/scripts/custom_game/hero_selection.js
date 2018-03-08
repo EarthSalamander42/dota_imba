@@ -212,10 +212,10 @@ function MakeNewHero(heroes) {
 	for (h in heroes) {
 		if (heroes[h] != null) {
 			var hero = $("#PickList").FindChildTraverse(heroes[h])
+			if (hero == null) {return;}
 			if (hero.BHasClass("ClassNormalOption")) {
 				hero.RemoveClass("ClassNormalOption")
 			}
-			hero.RemoveClass("ClassNormalOption")
 			hero.AddClass("ClassNewOption")
 			$("#" + heroes[h] + "_label").DeleteAsync(0);
 			var HeroLabel = $.CreatePanel("Label", hero, heroes[h] + "_label");
@@ -289,7 +289,9 @@ function MakeDisabledHeroes(disabled_10v10, disabled_frantic, disabled_all, disa
 	for (j in disabled_silent) {
 		if (disabled_silent[j] != null) {
 			var hero_panel = $("#PickList").FindChildTraverse(disabled_silent[j])
-			hero_panel.DeleteAsync(0);
+			if (hero_panel) {
+				hero_panel.DeleteAsync(0);
+			}
 		}
 	}
 

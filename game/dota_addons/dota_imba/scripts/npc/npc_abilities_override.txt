@@ -150,7 +150,6 @@
 //	"item_travel_boots_2"					"REMOVE"
 //	"item_cyclone"							"REMOVE"
 //	"item_recipe_cyclone"					"REMOVE"
-	"item_courier"							"REMOVE"
 
 	//Banned items
 	"item_imba_ironleaf_boots"				"REMOVE"
@@ -208,6 +207,11 @@
 	"item_talisman_of_evasion"	{ "AbilityTextureName" "custom/imba_talisman_of_evasion" }
 	"item_ultimate_orb"			{ "AbilityTextureName" "custom/imba_ultimate_orb" }
 	"item_void_stone"			{ "AbilityTextureName" "custom/imba_void_stone" }
+
+	"item_courier"
+	{
+		"ItemPurchasable"					"0"
+	}
 
 	//=================================================================================================================
 	// Recipe: Travel Boots
@@ -1801,21 +1805,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"vision_aoe"			"350"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	//	Ancient Apparition: reduced Ice Vortex cooldown
-	//=================================================================================================================
-	"special_bonus_unique_ancient_apparition_3"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"value"					"1"
 			}
 		}
 	}
@@ -5612,21 +5601,6 @@
 			}
 		}
 	}
-
-	//=================================================================================================================
-	// Enchantress: bonus Untouchable slow
-	//=================================================================================================================
-	"special_bonus_unique_enchantress_3"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"75"
-			}
-		}
-	}
 	
 	//=================================================================================================================
 	// Enchantress: Enchant
@@ -8286,6 +8260,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"tooltip_range"			"500 1000 1500 2000"
+				"LinkedSpecialBonus"	"special_bonus_unique_meepo_4"
 			}
 		}
 	}
@@ -9773,7 +9748,7 @@
 
 		"AbilityCastRange"					"600 700 800 900"
 
-		"AbilityCooldown"					"25 15 9 7"
+		"AbilityCooldown"					"25 20 15 10"
 	}
 
 	//=================================================================================================================
@@ -11337,8 +11312,6 @@
 	//=================================================================================================================
 	"terrorblade_reflection"
 	{
-		"MaxLevel"							"4"
-
 		"AbilityCastRange"					"900"
 
 		"AbilityCooldown"					"22 18 15 13"
@@ -11366,11 +11339,6 @@
 				"move_slow"					"25 28 31 34"
 			}
 			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"attack_slow_tooltip"		"25 28 31 34"
-			}
-			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"range"						"900"
@@ -13195,7 +13163,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"familiar_hp"				"300 600 1300"
+				"familiar_hp"				"300 600 900"
 			}
 			"02"
 			{
@@ -13211,7 +13179,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"familiar_attack_damage"	"20 60 100"
+				"familiar_attack_damage"	"64 128 192"
 			}
 		}
 	}

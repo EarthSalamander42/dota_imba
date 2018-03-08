@@ -128,7 +128,9 @@ function Precache(context)
 		--Cache sounds for traps
 		PrecacheResource( "soundfile", "soundevents/game_sounds_heroes/game_sounds_dragon_knight.vsndevts", context )
 		PrecacheResource( "soundfile", "soundevents/soundevents_conquest.vsndevts", context )
+		PrecacheResource( "soundfile", "soundevents/sohei_soundevents.vsndevts", context )
 	end
+
 	--[[
 	PrecacheResource("particle", "particles/econ/items/effigies/status_fx_effigies/gold_effigy_ambient_dire_lvl2.vpcf", context)
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_mirana.vsndevts", context)
@@ -259,7 +261,6 @@ function Precache(context)
 	--PrecacheResource("sound", "sounds/ui/inventory/metalblade_equip_01.vsnd", context)
 
 	PrecacheResource("particle_folder", "particles/hero/scaldris", context) -- Scaldris Hero
-	PrecacheResource("soundfile", "soundevents/game_sounds_legion_commander.vsndevts", context) -- Ancient ability
 	PrecacheResource("soundfile", "soundevents/imba_soundevents.vsndevts", context) -- Various sounds
 	PrecacheResource("soundfile", "soundevents/imba_item_soundevents.vsndevts", context) -- Various Item sounds
 	PrecacheResource("soundfile", "soundevents/diretide_soundevents.vsndevts", context) -- Roshan sounds

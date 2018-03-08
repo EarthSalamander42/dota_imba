@@ -1148,7 +1148,7 @@ function modifier_imba_kinetic_field_barrier:OnCreated()
 			ApplyDamage(damageTable)
 		end
 		-- reduce ability cooldown everytime a player touch the barrier
-		if not kinetic_recharge then
+		if not kinetic_recharge and target:IsRealHero() then
 			local kinetic_recharge = true
 			local cd_remaining = ability:GetCooldownTimeRemaining()
 			-- Clear cooldown, set it again if cooldown was higher than reduction

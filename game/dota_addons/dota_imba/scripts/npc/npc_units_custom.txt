@@ -6593,7 +6593,7 @@
 		// Armor
 		//----------------------------------------------------------------
 		"ArmorPhysical"				"0"			// Physical protection.
-		"MagicalResistance"				"35"		// Magical protection.
+		"MagicalResistance"			"35"		// Magical protection.
 
 		// Attack
 		//----------------------------------------------------------------
@@ -6677,7 +6677,7 @@
 		// Armor
 		//----------------------------------------------------------------
 		"ArmorPhysical"				"1"			// Physical protection.
-		"MagicalResistance"				"35"		// Magical protection.
+		"MagicalResistance"			"35"		// Magical protection.
 
 		// Attack
 		//----------------------------------------------------------------
@@ -6711,7 +6711,7 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"400"		// Base health.
+		"StatusHealth"				"600"		// Base health.
 		"StatusHealthRegen"			"0.0"		// Health regeneration rate.
 		"StatusMana"				"0"			// Base mana.
 		"StatusManaRegen"			"0.0"		// Mana regeneration rate.
@@ -6760,7 +6760,7 @@
 		// Armor
 		//----------------------------------------------------------------
 		"ArmorPhysical"				"2"			// Physical protection.
-		"MagicalResistance"				"35"		// Magical protection.
+		"MagicalResistance"			"35"		// Magical protection.
 
 		// Attack
 		//----------------------------------------------------------------
@@ -6794,263 +6794,11 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"600"		// Base health.
-		"StatusHealthRegen"			"0.0"		// Health regeneration rate.
-		"StatusMana"				"0"			// Base mana.
-		"StatusManaRegen"			"0.0"		// Mana regeneration rate.
-
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"390"		// Range of vision during day light.
-		"VisionNighttimeRange"		"390"		// Range of vision at night time.
-
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"					"DOTA_TEAM_NEUTRALS"							// Team name.
-		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
-		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
-	
-	}
-
-	"npc_dota_visage_familiar4"
-	{
-		// General
-		//
-		"BaseClass"					"npc_dota_visage_familiar"	// Class of entity of link to.
-		"Model"						"models/heroes/visage/visage_familiar.vmdl"	// Model.
-		"SoundSet"					"Visage_Familiar"					// Name of sound set.
-		"ModelScale"				"0.66"
-		"Level"						"2"
-		"IsSummoned"				"1"
-		"IsAncient"					"1"
-		"UnitLabel"					"visage_familiars"
-		"AutoAttacksByDefault"		"0"
-		"ConsideredHero"			"1"
-		"wearable"					"600"
-
-				
-		// Abilities
-		//----------------------------------------------------------------
-		
-		"Ability1"					"visage_summon_familiars_stone_form"			// Ability 1.
-		"Ability2"					""			// Ability 2.
-		"Ability3"					""			// Ability 3.
-		"Ability4"					""			// Ability 4.
-		"Ability5"					""			// Ability 5.
-		"Ability6"					""			// Ability 6 - Extra.
-		"Ability7"					""			// Ability 7 - Extra.
-		"Ability8"					""			// Ability 8 - Extra.
-
-		// Armor
-		//----------------------------------------------------------------
-		"ArmorPhysical"				"0"			// Physical protection.
-		"MagicalResistance"			"35"		// Magical protection.
-
-		// Attack
-		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
-		"AttackDamageMin"			"216"			// Damage range min.
-		"AttackDamageMax"			"216"			// Damage range max.
-		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
-		"AttackRate"				"0.4"		// Speed of attack.
-		"AttackAnimationPoint"		"0.33"		// Normalized time in animation cycle to attack.
-		"AttackAcquisitionRange"	"250"		// Range within a target can be acquired.
-		"AttackRange"				"160"			// Range within a target can be attacked.
-		"ProjectileModel"			"particles/units/heroes/hero_visage/visage_familiar_base_attack.vpcf" // Particle system model for projectile.
-		"ProjectileSpeed"			"900"		// Speed of projectile.
-
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyXP"					"41"		// Experience earn.
-		"BountyGoldMin"				"100"		// Gold earned min.
-		"BountyGoldMax"				"100"		// Gold earned max.
-
-		// Bounds
-		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_REGULAR"			// Hull type used for navigation/locomotion.
-		"HealthBarOffset"			"130"
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"				"430"		// Speed
-		"MovementTurnRate"			"0.5"		// Turning rate.
-
-		// Status
-		//----------------------------------------------------------------
 		"StatusHealth"				"900"		// Base health.
 		"StatusHealthRegen"			"0.0"		// Health regeneration rate.
 		"StatusMana"				"0"			// Base mana.
 		"StatusManaRegen"			"0.0"		// Mana regeneration rate.
 
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"					"DOTA_TEAM_BADGUYS"			// Team name.
-		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
-		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"390"		// Range of vision during day light.
-		"VisionNighttimeRange"		"390"		// Range of vision at night time.
-	}
-
-	"npc_dota_visage_familiar5"
-	{
-		// General
-		//
-		"BaseClass"					"npc_dota_visage_familiar"	// Class of entity of link to.
-		"Model"						"models/heroes/visage/visage_familiar.vmdl"	// Model.
-		"SoundSet"					"Visage_Familiar"					// Name of sound set.
-		"ModelScale"				"0.66"
-		"Level"						"2"
-		"IsSummoned"				"1"
-		"IsAncient"					"1"
-		"UnitLabel"					"visage_familiars"
-		"AutoAttacksByDefault"		"0"
-		"ConsideredHero"			"1"
-		"wearable"					"600"
-
-				
-		// Abilities
-		//----------------------------------------------------------------
-		
-		"Ability1"					"visage_summon_familiars_stone_form"			// Ability 1.
-		"Ability2"					""			// Ability 2.
-		"Ability3"					""			// Ability 3.
-		"Ability4"					""			// Ability 4.
-		"Ability5"					""			// Ability 5.
-		"Ability6"					""			// Ability 6 - Extra.
-		"Ability7"					""			// Ability 7 - Extra.
-		"Ability8"					""			// Ability 8 - Extra.
-
-		// Armor
-		//----------------------------------------------------------------
-		"ArmorPhysical"				"1"			// Physical protection.
-		"MagicalResistance"				"35"		// Magical protection.
-
-		// Attack
-		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
-		"AttackDamageMin"			"248"			// Damage range min.
-		"AttackDamageMax"			"248"			// Damage range max.
-		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
-		"AttackRate"				"0.4"		// Speed of attack.
-		"AttackAnimationPoint"		"0.33"		// Normalized time in animation cycle to attack.
-		"AttackAcquisitionRange"	"250"		// Range within a target can be acquired.
-		"AttackRange"				"160"			// Range within a target can be attacked.
-		"ProjectileModel"			"particles/units/heroes/hero_visage/visage_familiar_base_attack.vpcf" // Particle system model for projectile.
-		"ProjectileSpeed"			"900"		// Speed of projectile.
-
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyXP"					"41"		// Experience earn.
-		"BountyGoldMin"				"100"		// Gold earned min.
-		"BountyGoldMax"				"100"		// Gold earned max.
-
-		// Bounds
-		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_REGULAR"			// Hull type used for navigation/locomotion.
-		"HealthBarOffset"			"130"
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"				"430"		// Speed
-		"MovementTurnRate"			"0.5"		// Turning rate.
-
-		// Status
-		//----------------------------------------------------------------
-		"StatusHealth"				"1300"		// Base health.
-		"StatusHealthRegen"			"0.0"		// Health regeneration rate.
-		"StatusMana"				"0"			// Base mana.
-		"StatusManaRegen"			"0.0"		// Mana regeneration rate.
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"					"DOTA_TEAM_BADGUYS"			// Team name.
-		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
-		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"390"		// Range of vision during day light.
-		"VisionNighttimeRange"		"390"		// Range of vision at night time.
-	}
-
-	"npc_dota_visage_familiar6"
-	{
-		// General
-		//
-		"BaseClass"					"npc_dota_visage_familiar"	// Class of entity of link to.
-		"Model"						"models/heroes/visage/visage_familiar.vmdl"	// Model.
-		"SoundSet"					"Visage_Familiar"					// Name of sound set.
-		"ModelScale"				"0.66"
-		"Level"						"2"
-		"IsSummoned"				"1"
-		"IsAncient"					"1"
-		"UnitLabel"					"visage_familiars"
-		"AutoAttacksByDefault"		"0"
-		"ConsideredHero"			"1"
-		"wearable"					"600"
-				
-		// Abilities
-		//----------------------------------------------------------------
-		"Ability1"					"visage_summon_familiars_stone_form"			// Ability 1.
-		"Ability2"					""			// Ability 2.
-		"Ability3"					""			// Ability 3.
-		"Ability4"					""			// Ability 4.
-		"Ability5"					""			// Ability 5.
-		"Ability6"					""			// Ability 6 - Extra.
-		"Ability7"					""			// Ability 7 - Extra.
-		"Ability8"					""			// Ability 8 - Extra.
-
-		// Armor
-		//----------------------------------------------------------------
-		"ArmorPhysical"				"2"			// Physical protection.
-		"MagicalResistance"				"35"		// Magical protection.
-
-		// Attack
-		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
-		"AttackDamageMin"			"270"			// Damage range min.
-		"AttackDamageMax"			"270"			// Damage range max.
-		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
-		"AttackRate"				"0.4"		// Speed of attack.
-		"AttackAnimationPoint"		"0.33"		// Normalized time in animation cycle to attack.
-		"AttackAcquisitionRange"	"250"		// Range within a target can be acquired.
-		"AttackRange"				"160"			// Range within a target can be attacked.
-		"ProjectileModel"			"particles/units/heroes/hero_visage/visage_familiar_base_attack.vpcf" // Particle system model for projectile.
-		"ProjectileSpeed"			"900"		// Speed of projectile.
-
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyXP"					"41"		// Experience earn.
-		"BountyGoldMin"				"100"		// Gold earned min.
-		"BountyGoldMax"				"100"		// Gold earned max.
-
-		// Bounds
-		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_REGULAR"			// Hull type used for navigation/locomotion.
-		"HealthBarOffset"			"130"
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"		// Type of locomotion - ground, air
-		"MovementSpeed"				"430"		// Speed
-		"MovementTurnRate"			"0.5"		// Turning rate.
-
-		// Status
-		//----------------------------------------------------------------
-		"StatusHealth"				"2000"		// Base health.
-		"StatusHealthRegen"			"0.0"		// Health regeneration rate.
-		"StatusMana"				"0"			// Base mana.
-		"StatusManaRegen"			"0.0"		// Mana regeneration rate.
-
 		// Vision
 		//----------------------------------------------------------------
 		"VisionDaytimeRange"		"390"		// Range of vision during day light.
@@ -7063,7 +6811,6 @@
 		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
 		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
 		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
-	
 	}
 
 	//=================================================================================
@@ -12302,7 +12049,7 @@
 		"BaseClass"					"npc_dota_base_additive"
 		"Model"						"models/heroes/mario/mario_model.vmdl"        
 		"Level"						"1"
-		"ModelScale"				"1.0"
+		"ModelScale"				"0.5"
 		"UnitLabel"					"donator_companion"        
 
 		// Abilities
@@ -17021,5 +16768,66 @@
 		//----------------------------------------------------------------
 		"VisionDaytimeRange"		"1900"		// Range of vision during day light.
 		"VisionNighttimeRange"		"800"		// Range of vision at night time.
+	}
+
+	//=================================================================================================================
+	// HERO: Sohei (Should be copied into npc_heroes_custom.txt without abilities!)
+	//=================================================================================================================
+	"npc_dota_hero_sohei"
+	{
+		"BaseClass"                 "npc_dota_hero_juggernaut"
+		"HeroID"                    "122"
+		"Model"                     "models/heroes/sohei/sohei.vmdl"
+
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementTurnRate"			"1.5"
+		"MovementSpeed"				"325"
+
+		"AttackCapabilities"        "DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"           "31"
+		"AttackDamageMax"           "33"
+		"AttackRange"               "150"
+		"AttackRate"                "1.7"
+		"AttackAnimationPoint"      "0.30"
+
+		"ArmorPhysical"             "5"
+		"MagicalResistance"         "25"
+
+		"StatusHealthRegen"         "3.25"
+		"StatusHealth"              "200"
+		"StatusManaRegen"           "0.9"
+		"StatusMana"                "75"
+
+		"AttributePrimary"          "DOTA_ATTRIBUTE_STRENGTH"
+		"AttributeBaseStrength"     "23"
+		"AttributeStrengthGain"     "4.0"
+		"AttributeBaseAgility"      "18"
+		"AttributeAgilityGain"      "1.5"
+		"AttributeBaseIntelligence" "17"
+		"AttributeIntelligenceGain" "1.5"
+
+		"Ability1"                  "sohei_dash"
+		"Ability2"                  "sohei_guard"
+		"Ability3"                  "sohei_momentum"
+		"Ability4"                  "sohei_palm_of_life"
+		"Ability5"                  "generic_hidden"
+		"Ability6"                  "sohei_flurry_of_blows"
+
+		"Ability10"                 "special_bonus_sohei_stun"             // Momentum inflicts a brief stun if the target collides with an obstacle
+		"Ability11"                 "special_bonus_cleave_15"
+		"Ability12"                 "special_bonus_strength_20"
+		"Ability13"                 "special_bonus_sohei_guard_knockback"             // Guard also knockbacks enemies until they are 300 units away
+		"Ability14"                 "special_bonus_sohei_momentum_guard_cooldown"             // Momentum hits reduce the cooldown on Guard
+		"Ability15"                 "special_bonus_movement_speed_75"
+		"Ability16"                 "special_bonus_sohei_dash_recharge"             // Dash charges cool down all at once
+		"Ability17"                 "special_bonus_sohei_fob_radius"             // Increases Flurry of Blows' AOE radius
+
+		"CombatClassAttack"     "DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"     "DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationshipClass"   "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_HERO"
+		"HasInventory"        "1" // This KV must be added in units file only
+
+		"VisionDaytimeRange"        "1800"                            // Range of vision during day light.
+		"VisionNighttimeRange"      "800"                             // Range of vision at night time.
 	}
 }

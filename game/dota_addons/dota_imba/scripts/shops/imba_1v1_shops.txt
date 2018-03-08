@@ -13,8 +13,6 @@
 		"item"		"item_courier"
 		"item"		"item_ward_observer"
 		"item"		"item_ward_sentry"
-		"item"		"item_tome_of_knowledge"
-		"item"		"item_imba_bottle"
 		"item"		"item_imba_soul_of_truth"
 	}
 
@@ -39,7 +37,6 @@
 	{
 		"item"		"item_imba_stout_shield"
 		"item"		"item_quelling_blade"
-		"item"		"item_infused_raindrop"
 		"item"		"item_imba_poor_mans_shield"
 		"item"		"item_imba_orb_of_venom"
 		"item"		"item_blades_of_attack"
@@ -79,7 +76,6 @@
 		"item"		"item_null_talisman"
 		"item"		"item_wraith_band"
 		"item"		"item_bracer"
-		"item"		"item_soul_ring"
 		"item"		"item_phase_boots"
 		"item"		"item_power_treads"
 		"item"		"item_oblivion_staff"
@@ -219,7 +215,6 @@
 //		"item"		"item_blades_of_attack"
 		"item"		"item_gloves"
 		"item"		"item_chainmail"
-//		"item"		"item_imba_bottle"
 //		"item"		"item_quarterstaff"
 		"item"		"item_vitality_booster"
 		"item"		"item_broadsword"
@@ -256,7 +251,6 @@
 		"item"		"item_courier"
 		"item"		"item_ward_observer"
 		"item"		"item_ward_sentry"
-		"item"		"item_imba_bottle"
 		"item"		"item_branches"
 		"item"		"item_gauntlets"
 		"item"		"item_slippers"

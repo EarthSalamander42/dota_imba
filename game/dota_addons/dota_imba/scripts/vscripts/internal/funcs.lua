@@ -1809,3 +1809,17 @@ function GetRandomPosition2D(vPosition, fRadius)
 	local newPos = vPosition + Vector(1,0,0) * math.random(0-fRadius, fRadius)
 	return RotatePosition(vPosition, QAngle(0,math.random(-360,360),0), newPos)
 end
+
+function CDOTA_BaseNPC:IsImbaInvisible()
+	if self:IsInvisible() then
+		return true
+	end
+
+	for _, modifier in pairs(IMBA_INVISIBLE_MODIFIERS) do
+		if self:HasModifier(modifier) then
+			return true
+		end
+	end
+
+	return false
+end
