@@ -30,6 +30,8 @@ resource/flash3/images/spellicons/mjollnir_arc.002.png
 *.vjs_c
 *.vxml_c
 *.vcss_c
+*.vmesh_c
+*.vanim_c
 
 # Map files
 *.vpk

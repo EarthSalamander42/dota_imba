@@ -1094,28 +1094,7 @@
 "DOTA_Tooltip_modifier_imba_crystal_maiden_freezing_field_slow"                     "Freezing Field"
 "DOTA_Tooltip_modifier_imba_crystal_maiden_freezing_field_slow_Description"         "Slowed by Freezing Field's icy howling winds."
 
-
-////===============================================================================================================
-// Crystal Maiden's Custom Talents
-////===============================================================================================================
-
-"Dota_Tooltip_Ability_special_bonus_imba_crystal_maiden_1"              "Icy Touch slows enemies. Move speed is slowly regained over 6 seconds"
-"Dota_Tooltip_Ability_special_bonus_imba_crystal_maiden_2"              "Frostbite can be cast on allies to regen health and mana and reduce damage taken."
-"Dota_Tooltip_Ability_special_bonus_imba_crystal_maiden_3"              "Crystal Nova's Snowfield grants 25% damage reduction and 50 health regeneration."
-"Dota_Tooltip_Ability_special_bonus_imba_crystal_maiden_4"              "Double Arcane Dynamo's bonuses."
-"Dota_Tooltip_Ability_special_bonus_imba_crystal_maiden_5"              "Abilities slow movespeed/attackspeed of enemies by 15%/15."
-"Dota_Tooltip_Ability_special_bonus_imba_crystal_maiden_6"              "Freezing Field Frostbites enemies during it every 3 seconds."
-"Dota_Tooltip_Ability_special_bonus_imba_crystal_maiden_7"              "Freezing Field becomes an Ice Meteor."
-"Dota_Tooltip_Ability_special_bonus_imba_crystal_maiden_8"              "+50% Freezing Field explosion rate"
-
-
-
-
-
-
-
-
- // Dazzle / Dazzul
+// Dazzle / Dazzul
 ////===============================================================================================================
 // Dazzle's Poison Touch
 ////===============================================================================================================
