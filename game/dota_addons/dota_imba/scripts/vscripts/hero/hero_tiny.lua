@@ -345,7 +345,8 @@ function imba_tiny_toss:OnSpellStart()
 			vLocX = vLocation.x,
 			vLocY = vLocation.y,
 			vLocZ = vLocation.z,
-			duration = duration
+			duration = duration,
+			damage = self:GetSpecialValueFor("toss_damage")
 		}
 
 	local tossVictims = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, self:GetSpecialValueFor("grab_radius"), DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_CHECK_DISABLE_HELP, 1, false)
@@ -354,6 +355,8 @@ function imba_tiny_toss:OnSpellStart()
 			victim:AddNewModifier(caster, self, "modifier_tiny_toss_movement", kv)
 			if not self:GetCaster():HasTalent("special_bonus_imba_tiny_7") then
 				break
+			else
+				kv.damage = self:GetSpecialValueFor("multitoss_damage")
 			end
 		end
 	end
@@ -438,6 +441,7 @@ function modifier_tiny_toss_movement:OnCreated( kv )
 		self.flCurrentTimeVert = 0.0
 
 		self.vLoc = Vector( kv.vLocX, kv.vLocY, kv.vLocZ )
+		self.damage = kv.damage
 		self.vLastKnownTargetPos = self.vLoc
 
 		local duration = self:GetAbility():GetSpecialValueFor( "duration" )
@@ -500,7 +504,7 @@ function modifier_tiny_toss_movement:TossLand()
 
 		local victims = FindUnitsInRadius(caster:GetTeamNumber(), self.parent:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_BUILDING, 0, 1, false)
 		for _, victim in pairs(victims) do
-			local damage = self.ability:GetSpecialValueFor("toss_damage")
+			local damage = self.damage
 			if victim == self.parent then
 				local damage_multiplier = 1 + self.ability:GetSpecialValueFor("bonus_damage_pct") / 100
 				if rolling_stone_modifier then
