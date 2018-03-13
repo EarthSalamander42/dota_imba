@@ -1,0 +1,32 @@
+"itembuilds/default_sohei.txt"
+{
+	"author"		"Cookies #42"
+	"hero"			"npc_dota_hero_sohei"
+	"Title"			"Recommended items for Sohei"
+
+	"Items"
+	{
+//		"#DOTA_Item_Build_creator_cookies" {}
+		"#DOTA_Item_Build_sohei" {}
+
+		"#DOTA_Item_Build_Starting_Items"
+		{
+			"item"		""
+		}
+
+		"#DOTA_Item_Build_Early_Game"
+		{
+			"item"		""
+		}
+
+		"#DOTA_Item_Build_Core_Items"
+		{
+			"item"		""
+		}
+
+		"#DOTA_Item_Build_Luxury"
+		{
+			"item"		""
+		}
+	}
+}

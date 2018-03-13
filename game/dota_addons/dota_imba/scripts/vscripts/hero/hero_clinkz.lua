@@ -1471,7 +1471,7 @@ function modifier_imba_death_pact_spirit_aura:OnIntervalThink(keys)
 		local modifier_spirit_invis = "modifier_imba_death_pact_spirit_aura_invis"
 		
 		-- IT'S NOT FAIR IF YOU'RE INVISIBLE WHILE I'M NOT!
-		if self.caster:IsInvisible() then
+		if self.caster:IsImbaInvisible() then
 		  self.parent:AddNewModifier(self.caster, self.ability, modifier_spirit_invis, {})
 		else
 		  self.parent:RemoveModifierByName(modifier_spirit_invis)

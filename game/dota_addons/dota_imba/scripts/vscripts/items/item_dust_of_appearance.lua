@@ -42,7 +42,7 @@ function item_imba_dust_of_appearance:OnSpellStart()
 
 	local targets = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, aoe, DOTA_UNIT_TARGET_TEAM_ENEMY , DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO , DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER , false)
 	for _,unit in pairs(targets) do
-		if unit:IsInvisible() then foundInvis = foundInvis + 1 end
+		if unit:IsImbaInvisible() then foundInvis = foundInvis + 1 end
 		unit:AddNewModifier(caster, self, "modifier_imba_dust_of_appearance", {duration = duration})
 	end
 

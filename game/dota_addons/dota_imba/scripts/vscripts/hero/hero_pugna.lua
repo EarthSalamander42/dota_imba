@@ -89,24 +89,9 @@ function imba_pugna_nether_blast:OnSpellStart()
 		if enemy:HasModifier(modifier_magic_res) then
 			local modifier_magic_res_handler = enemy:FindModifierByName(modifier_magic_res)
 			if modifier_magic_res_handler then
-				if caster:HasTalent("special_bonus_imba_pugna_8") then
-					modifier_magic_res_handler:SetDuration(modifier_magic_res_handler:GetDuration(), true)
-				else
-					modifier_magic_res_handler:SetStackCount(0)
-					modifier_magic_res_handler:ForceRefresh()
-				end
+				modifier_magic_res_handler:SetStackCount(0)
+				modifier_magic_res_handler:ForceRefresh()
 			end
-		end
-
-		if caster:HasTalent("special_bonus_imba_pugna_5") then
-			local damageTable = {victim = enemy,
-				damage = damage * caster:FindTalentValue("special_bonus_imba_pugna_5","dmg_pct") * 0.01,
-				damage_type = DAMAGE_TYPE_MAGICAL,
-				attacker = caster,
-				ability = ability
-			}
-
-			ApplyDamage(damageTable)
 		end
 	end
 
@@ -144,6 +129,15 @@ function imba_pugna_nether_blast:OnSpellStart()
 
 		-- Cycle through each enemy
 		for _,enemy in pairs(enemies) do
+			if caster:HasTalent("special_bonus_imba_pugna_5") then
+				local damageTable = {victim = enemy,
+									damage = damage * caster:FindTalentValue("special_bonus_imba_pugna_5") * 0.01,
+									damage_type = DAMAGE_TYPE_MAGICAL,
+									attacker = caster,
+									ability = ability
+									}
+				ApplyDamage(damageTable)
+			end
 
 			-- If the enemy doesn't have the modifier yet, apply it
 			if not enemy:HasModifier(modifier_magic_res) then
@@ -287,7 +281,7 @@ function imba_pugna_decrepify:OnSpellStart()
 	local modifier_decrep = "modifier_imba_decrepify"
 
 	-- Ability specials
-	local duration = ability:GetSpecialValueFor("duration")
+	local duration = ability:GetSpecialValueFor("duration") + caster:FindTalentValue("special_bonus_imba_pugna_3")
 
 	-- Play cast sound
 	EmitSoundOn(sound_cast, caster)
@@ -395,18 +389,6 @@ function modifier_imba_decrepify:GetEffectName()
 	return "particles/units/heroes/hero_pugna/pugna_decrepify.vpcf"
 end
 
-function modifier_imba_decrepify:GetCustomTenacity()
-	if self:GetCaster():GetTeamNumber() == self:GetParent():GetTeamNumber() then
-		return 0
-	else
-		if self:GetCaster():HasTalent("special_bonus_imba_pugna_7") then
-			return 0 - self:GetCaster():FindTalentValue("special_bonus_imba_pugna_7","tenacity")
-		else
-			return 0
-		end
-	end
-end
-
 function modifier_imba_decrepify:GetEffectAttachType()
 	return PATTACH_ABSORIGIN_FOLLOW
 end
@@ -444,7 +426,7 @@ function modifier_imba_decrepify:OnDestroy()
 		local damage = self.damage_stored * self.total_dmg_conversion_pct * 0.01
 
 		-- #4 Talent: Heal/damage increase at the end of Decrepify
-		damage = damage * (1 + self.caster:FindTalentValue("special_bonus_imba_pugna_4") * 0.01)
+		damage = damage * 0.01
 
 		-- Use the damage value as heal
 		local heal = damage
@@ -531,26 +513,31 @@ function imba_pugna_nether_ward:OnSpellStart()
 	-- Ability specials
 	local duration = ability:GetSpecialValueFor("duration")
 
+	local point = {}
+	point[1] = target_point
+	point[2] = RotatePosition(target_point, QAngle(0,90,0), target_point + (target_point - caster:GetAbsOrigin()):Normalized() * 64)
+	point[3] = RotatePosition(target_point, QAngle(0,-90,0), target_point + (target_point - caster:GetAbsOrigin()):Normalized() * 64)
 	-- Play cast sound
 	EmitSoundOn(sound_cast, caster)
+	for i = 1, 1+caster:FindTalentValue("special_bonus_imba_pugna_8") do
+		-- Spawn the Nether Ward
+		local nether_ward = CreateUnitByName("npc_imba_pugna_nether_ward_"..(ability_level), point[i], false, caster, caster, caster:GetTeam())
+		FindClearSpaceForUnit(nether_ward, point[i], true)
+		nether_ward:SetControllableByPlayer(player_id, true)
 
-	-- Spawn the Nether Ward
-	local nether_ward = CreateUnitByName("npc_imba_pugna_nether_ward_"..(ability_level), target_point, false, caster, caster, caster:GetTeam())
-	FindClearSpaceForUnit(nether_ward, target_point, true)
-	nether_ward:SetControllableByPlayer(player_id, true)
+		-- Prevent nearby units from getting stuck
+		Timers:CreateTimer(FrameTime(), function()
+			ResolveNPCPositions(point[i], 128)
+		end)
 
-	-- Prevent nearby units from getting stuck
-	Timers:CreateTimer(FrameTime(), function()
-		ResolveNPCPositions(target_point, 128)
-	end)
+		-- Apply the Nether Ward duration modifier
+		nether_ward:AddNewModifier(caster, ability, "modifier_kill", {duration = duration - duration * caster:FindTalentValue("special_bonus_imba_pugna_8","duration_reduce_pct") * 0.01})
+		nether_ward:AddNewModifier(caster, ability, "modifier_rooted", {})
 
-	-- Apply the Nether Ward duration modifier
-	nether_ward:AddNewModifier(caster, ability, "modifier_kill", {duration = duration})
-	nether_ward:AddNewModifier(caster, ability, "modifier_rooted", {})
-
-	-- Grant the Nether Ward its aura ability
-	local aura_ability = nether_ward:FindAbilityByName(ability_ward)
-	aura_ability:SetLevel(ability_level)
+		-- Grant the Nether Ward its aura ability
+		local aura_ability = nether_ward:FindAbilityByName(ability_ward)
+		aura_ability:SetLevel(ability_level)
+	end
 end
 
 
@@ -560,7 +547,6 @@ end
 imba_pugna_nether_ward_aura = class({})
 LinkLuaModifier("modifier_imba_nether_ward_aura", "hero/hero_pugna.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_nether_ward_degen", "hero/hero_pugna.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_nether_ward_degen_talent_dummy", "hero/hero_pugna.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_pugna_nether_ward_aura:GetAbilityTextureName()
 	return "pugna_nether_ward"
@@ -584,259 +570,8 @@ function modifier_imba_nether_ward_aura:OnCreated()
 	self.radius = self.ability:GetSpecialValueFor("radius")
 	self.hero_damage = self.ability:GetSpecialValueFor("hero_damage")
 	self.creep_damage = self.ability:GetSpecialValueFor("creep_damage")
-	if IsServer() then
-		if self.caster:GetOwner():HasTalent("special_bonus_imba_pugna_6") then
-			self:StartIntervalThink(0.2)
-		end
-	end
 end
 
-function modifier_imba_nether_ward_aura:OnIntervalThink()
-	if not IsServer() then
-		return
-	end
-	local ward = self:GetCaster()
-	ward:SetMana(5000)
-	ward:GiveMana(1000)
-	local pugna = self:GetCaster():GetOwner()
-	self.cooldown = pugna:FindTalentValue("special_bonus_imba_pugna_6","cooldown")
-	local ability = nil
-	for i=0,23 do
-		local iAbility = ward:GetAbilityByIndex(i)
-		if iAbility then
-			if not iAbility:IsPassive() and not iAbility:IsToggle() and iAbility:IsActivated() and iAbility:IsCooldownReady() then
-				ability = iAbility
-				break
-			end
-		end
-	end
-	if not ability then
-		return
-	end
-	if ward:IsSilenced() then
-		return
-	end
-
-	ability:SetHidden(false)
-
-	local caster = ward
-	local ability_range = ability:GetCastRange(ward:GetAbsOrigin(), ward)
-	local targets = FindUnitsInRadius(   caster:GetTeamNumber(),
-		ward:GetAbsOrigin(),
-		nil,
-		99999,
-		DOTA_UNIT_TARGET_TEAM_ENEMY,
-		DOTA_UNIT_TARGET_HERO,
-		DOTA_UNIT_TARGET_FLAG_NONE,
-		FIND_CLOSEST,
-		false)
-	local target = targets[1]
-	local cast_ability_name = ability:GetAbilityName()
-	local target_point = target:GetAbsOrigin()
-	local ward_position = ward:GetAbsOrigin()
-
-	-- Special cases
-
-	-- Dark Ritual: target a random nearby creep
-	if cast_ability_name == "imba_lich_dark_ritual" then
-		local creeps = FindUnitsInRadius(   caster:GetTeamNumber(),
-			ward:GetAbsOrigin(),
-			nil,
-			ability_range,
-			DOTA_UNIT_TARGET_TEAM_BOTH,
-			DOTA_UNIT_TARGET_BASIC,
-			DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO + DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS + DOTA_UNIT_TARGET_FLAG_NOT_SUMMONED,
-			FIND_CLOSEST,
-			false)
-
-		-- If there are no creeps nearby, do nothing (ward also counts as a creep)
-		if #creeps == 1 then
-			return nil
-		end
-
-		-- Find the SECOND closest creep and set it as the target (since the ward counts as a creep)
-		target = creeps[2]
-		target_point = target:GetAbsOrigin()
-		ability_range = ability:GetCastRange(ward:GetAbsOrigin(), target)
-	end
-
-	-- Nether Strike: add greater bash
-	if cast_ability_name == "spirit_breaker_nether_strike" then
-		ward:AddAbility("spirit_breaker_greater_bash")
-		local ability_bash = ward:FindAbilityByName("spirit_breaker_greater_bash")
-		ability_bash:SetLevel(7)
-	end
-
-	-- Repel: Find a target to cast it on
-	if cast_ability_name == "imba_omniknight_repel" then
-		local allies = FindUnitsInRadius(caster:GetTeamNumber(),
-			ward:GetAbsOrigin(),
-			nil,
-			ability_range,
-			DOTA_UNIT_TARGET_TEAM_FRIENDLY,
-			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-			DOTA_UNIT_TARGET_FLAG_INVULNERABLE,
-			FIND_CLOSEST,
-			false)
-
-		-- If there are no allies nearby, cast on self
-		if #allies == 1 then
-			target = allies[1]
-			target_point = target:GetAbsOrigin()
-			ability_range = ability:GetCastRange(ward:GetAbsOrigin(), target)
-		else
-			-- Find the closest ally and set it as the target
-			target = allies[2]
-			target_point = target:GetAbsOrigin()
-			ability_range = ability:GetCastRange(ward:GetAbsOrigin(), target)
-		end
-	end
-
-
-	-- Meat Hook: ignore cast range
-	if cast_ability_name == "imba_pudge_meat_hook" then
-		ability_range = ability:GetLevelSpecialValueFor("base_range", ability:GetLevel() - 1)
-	end
-
-	-- Earth Splitter: ignore cast range
-	if cast_ability_name == "elder_titan_earth_splitter" then
-		ability_range = 25000
-	end
-
-	-- Shadowraze: face the caster
-	if cast_ability_name == "imba_nevermore_shadowraze_close" or cast_ability_name == "imba_nevermore_shadowraze_medium" or cast_ability_name == "imba_nevermore_shadowraze_far" then
-		ward:SetForwardVector((target_point - ward_position):Normalized())
-	end
-
-	-- Reqiuem of Souls: Get target's Necromastery stack count
-	if cast_ability_name == "imba_nevermore_requiem" and not ward:HasModifier("modifier_imba_necromastery_souls") and target:HasAbility("imba_nevermore_necromastery") then
-		local ability_handle = ward:AddAbility("imba_nevermore_necromastery")
-		ability_handle:SetLevel(7)
-
-		-- Find target's modifier and its stacks
-		if target:HasModifier("modifier_imba_necromastery_souls") then
-			local stacks = target:GetModifierStackCount("modifier_imba_necromastery_souls", target)
-
-			-- Set the ward stacks count to be the same as the caster
-			if ward:HasModifier("modifier_imba_necromastery_souls") then
-				local modifier_souls_handler = ward:FindModifierByName("modifier_imba_necromastery_souls")
-				if modifier_souls_handler then
-					modifier_souls_handler:SetStackCount(stacks)
-				end
-			end
-		end
-	end
-
-	-- Storm Bolt: choose another target
-	if cast_ability_name == "imba_sven_storm_bolt" then
-		local enemies = FindUnitsInRadius(caster:GetTeamNumber(), ward_position, nil, ability_range, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
-		if #enemies > 0 then
-			if enemies[1]:FindAbilityByName("imba_sven_storm_bolt") then
-				if #enemies > 1 then
-					target = enemies[2]
-				else
-					return nil
-				end
-			else
-				target = enemies[1]
-			end
-		else
-			return nil
-		end
-	end
-
-	-- Sun Strike: global cast range
-	if cast_ability_name == "invoker_sun_strike" then
-		ability_range = 25000
-	end
-
-	-- Eclipse: add lucent beam before cast
-	if cast_ability_name == "luna_eclipse" then
-		if not ward:FindAbilityByName("luna_lucent_beam") then
-			ward:AddAbility("luna_lucent_beam")
-		end
-		local ability_lucent = ward:FindAbilityByName("luna_lucent_beam")
-		ability_lucent:SetLevel(4)
-	end
-
-	-- Decide which kind of targetting to use
-	local ability_behavior = ability:GetBehavior()
-	local ability_target_team = ability:GetAbilityTargetTeam()
-
-	-- If the ability is hidden, reveal it and remove the hidden binary sum
-	if ability:IsHidden() then
-		ability:SetHidden(false)
-		ability_behavior = ability_behavior - 1
-	end
-
-	-- Memorize if an ability was actually cast
-	local ability_was_used = false
-
-	if ability_behavior == DOTA_ABILITY_BEHAVIOR_NONE then
-	--Do nothing, not suppose to happen
-
-	elseif ability_behavior % DOTA_ABILITY_BEHAVIOR_NO_TARGET == 0 then
-		ExecuteOrderFromTable({ UnitIndex = ward:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_CAST_NO_TARGET, Position = nil, AbilityIndex = ability:GetEntityIndex(), Queue = queue})
-		ability_was_used = true
-
-		-- Toggle ability
-	elseif ability_behavior % DOTA_ABILITY_BEHAVIOR_TOGGLE == 0 then
-		ability:ToggleAbility()
-		ability_was_used = true
-
-		-- Point target ability
-	elseif ability_behavior % DOTA_ABILITY_BEHAVIOR_POINT == 0 then
-
-		-- If the ability targets allies, use it on the ward's vicinity
-		if ability_target_team == DOTA_UNIT_TARGET_TEAM_FRIENDLY then
-			ExecuteOrderFromTable({ UnitIndex = ward:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_CAST_POSITION, Position = ward:GetAbsOrigin(), AbilityIndex = ability:GetEntityIndex(), Queue = queue})
-			ability_was_used = true
-
-			-- Else, use it as close as possible to the enemy
-		else
-
-			-- If target is not in range of the ability, use it on its general direction
-			if ability_range > 0 and (target_point - ward_position):Length2D() > ability_range then
-				target_point = ward_position + (target_point - ward_position):Normalized() * (ability_range - 50)
-			end
-			ExecuteOrderFromTable({ UnitIndex = ward:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_CAST_POSITION, Position = target_point, AbilityIndex = ability:GetEntityIndex(), Queue = queue})
-			ability_was_used = true
-		end
-
-		-- Unit target ability
-	elseif ability_behavior % DOTA_ABILITY_BEHAVIOR_UNIT_TARGET == 0 then
-
-		-- If the ability targets allies, use it on a random nearby ally
-		if ability_target_team == DOTA_UNIT_TARGET_TEAM_FRIENDLY then
-
-			-- Find nearby allies
-			local allies = FindUnitsInRadius(caster:GetTeamNumber(), ward_position, nil, ability_range, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
-
-			-- If there is at least one ally nearby, cast the ability
-			if #allies > 0 then
-				ExecuteOrderFromTable({ UnitIndex = ward:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_CAST_TARGET, TargetIndex = allies[1]:GetEntityIndex(), AbilityIndex = ability:GetEntityIndex(), Queue = queue})
-				ability_was_used = true
-			end
-
-			-- If not, try to use it on the original caster
-		elseif (target_point - ward_position):Length2D() <= ability_range then
-			ExecuteOrderFromTable({ UnitIndex = ward:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_CAST_TARGET, TargetIndex = target:GetEntityIndex(), AbilityIndex = ability:GetEntityIndex(), Queue = queue})
-			ability_was_used = true
-
-			-- If the original caster is too far away, cast the ability on a random nearby enemy
-		else
-
-			-- Find nearby enemies
-			local enemies = FindUnitsInRadius(caster:GetTeamNumber(), ward_position, nil, ability_range, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
-
-			-- If there is at least one ally nearby, cast the ability
-			if #enemies > 0 then
-				ExecuteOrderFromTable({ UnitIndex = ward:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_CAST_TARGET, TargetIndex = enemies[1]:GetEntityIndex(), AbilityIndex = ability:GetEntityIndex(), Queue = queue})
-				ability_was_used = true
-			end
-		end
-	end
-end
 
 function modifier_imba_nether_ward_aura:DeclareFunctions()
 	local decFuncs = {MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
@@ -859,14 +594,6 @@ function modifier_imba_nether_ward_aura:OnAbilityFullyCast(keys)
 	if keys.unit ~= self:GetParent() then
 		return
 	end
-	if not self.caster:GetOwner():HasTalent("special_bonus_imba_pugna_6") then
-		return
-	end
-	local ability = keys.ability
-	ability:EndCooldown()
-	ability:SetActivated(false)
-	ability:SetHidden(true)
-	keys.unit:AddNewModifier(keys.unit, self:GetAbility(), "modifier_silence", {duration = self.cooldown})
 end
 
 function modifier_imba_nether_ward_aura:GetModifierIncomingDamage_Percentage()
@@ -941,31 +668,6 @@ end
 
 -- Degen modifier
 modifier_imba_nether_ward_degen = class({})
-modifier_imba_nether_ward_degen_talent_dummy = class({})
-
-
-function modifier_imba_nether_ward_degen_talent_dummy:IsHidden() return false end
-function modifier_imba_nether_ward_degen_talent_dummy:IsPurgable() return false end
-function modifier_imba_nether_ward_degen_talent_dummy:IsDebuff() return true end
-
-function modifier_imba_nether_ward_degen_talent_dummy:OnCreated()
-	self.ability = self:GetAbility()
-	self.mana_regen_reduction = self.ability:GetSpecialValueFor("mana_regen_reduction") * (self:GetCaster():GetOwner():FindTalentValue("special_bonus_imba_pugna_3","mutiplier") - 1)
-end
-
-function modifier_imba_nether_ward_degen_talent_dummy:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_MANA_REGEN_TOTAL_PERCENTAGE,}
-	return decFuncs
-end
-
-
-function modifier_imba_nether_ward_degen_talent_dummy:GetModifierTotalPercentageManaRegen()
-	if self:GetParent():HasModifier("modifier_imba_nether_ward_degen") then
-		return self.mana_regen_reduction * (-1)
-	else
-		return nil
-	end
-end
 
 
 function modifier_imba_nether_ward_degen:OnCreated()
@@ -1033,19 +735,12 @@ function modifier_imba_nether_ward_degen:OnSpentMana(keys)
 			return nil
 		end
 
-		if self.caster:GetOwner():HasTalent("special_bonus_imba_pugna_2") then
-			local eth_duration = self.caster:GetOwner():FindTalentValue("special_bonus_imba_pugna_2","duration")
-			self.caster:AddNewModifier(self.caster, self.ability, "modifier_item_ethereal_blade_ethereal", {duration = eth_duration})
-		end
-
-		if self.caster:GetOwner():HasTalent("special_bonus_imba_pugna_3") then
-			local mana_expblode_duration = self.caster:GetOwner():FindTalentValue("special_bonus_imba_pugna_3","duration")
-			local buff = self.parent:AddNewModifier(self.caster, self.ability, "modifier_imba_nether_ward_degen_talent_dummy", {duration = mana_expblode_duration})
-		end
-
 		local ward = self.caster
 		local caster = ward:GetOwnerEntity()
 		local ability_zap = self.ability
+		if caster:HasTalent("special_bonus_imba_pugna_6") then
+			ward:AddNewModifier(ward, nil, "modifier_pugna_decrepify", {duration = caster:FindTalentValue("special_bonus_imba_pugna_6")})
+		end
 
 		-- Deal damage
 		ApplyDamage({attacker = ward,
@@ -1194,10 +889,6 @@ function modifier_imba_nether_ward_degen:OnSpentMana(keys)
 
 		-- Level up the ability
 		ability:SetLevel(cast_ability:GetLevel())
-
-		if self.caster:GetOwner():HasTalent("special_bonus_imba_pugna_6") then
-			return
-		end
 
 		-- Refresh the ability
 		ability:EndCooldown()
@@ -1626,6 +1317,11 @@ function modifier_imba_life_drain:OnIntervalThink()
 			self:Destroy()
 		end
 
+		-- Link breaks if the caster is invisible
+		if self.parent:IsImbaInvisible() then
+			self:Destroy()
+		end
+
 		-- Link breaks if the target's status doesn't allow for it to continue
 		if not self.caster:CanEntityBeSeenByMyTeam(self.parent) or self.parent:IsInvulnerable() then
 			self:Destroy()
@@ -1635,17 +1331,15 @@ function modifier_imba_life_drain:OnIntervalThink()
 		local cast_range = self.ability:GetCastRange(self.caster:GetAbsOrigin(), self.parent) + GetCastRangeIncrease(self.caster)
 		local distance = (self.parent:GetAbsOrigin() - self.caster:GetAbsOrigin()):Length2D()
 
-		if self.caster:HasTalent("special_bonus_imba_pugna_1") then
-			local broke_time = self.caster:FindTalentValue("special_bonus_imba_pugna_1","unbroken_time")
-			local on_time = self:GetElapsedTime()
-			if broke_time < on_time then
+		if not self.caster:HasTalent("special_bonus_imba_pugna_4") then
+			if distance > (cast_range + self.break_distance_extend) then
+				self:Destroy()
+			end
+		else
+			if self:GetElapsedTime() > self.caster:FindTalentValue("special_bonus_imba_pugna_4") then
 				if distance > (cast_range + self.break_distance_extend) then
 					self:Destroy()
 				end
-			end
-		else
-			if distance > (cast_range + self.break_distance_extend) then
-				self:Destroy()
 			end
 		end
 
@@ -1655,10 +1349,7 @@ function modifier_imba_life_drain:OnIntervalThink()
 		end
 
 		-- Calculate damage for this instance
-		local damage = self.drain_amount * self.tick_rate
-		if self.caster:HasTalent("special_bonus_imba_pugna_4") then
-			damage = damage + self.parent:GetHealth() * self.caster:FindTalentValue("special_bonus_imba_pugna_4","hp_pct_dmg") * 0.01
-		end
+		local damage = (self.drain_amount + self.caster:FindTalentValue("special_bonus_imba_pugna_7") * 0.01 * self.parent:GetHealth()) * self.tick_rate
 
 		-- The target is an ally: the caster is transferring health to it
 		if self.is_ally then

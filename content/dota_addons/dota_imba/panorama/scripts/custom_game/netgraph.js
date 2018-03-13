@@ -126,6 +126,7 @@ function UpdateNetGraphHeroNames() {
 		"ultimate_scepter",
 		"heart",
 		"rapier",
+		"moon_shard",
 	]
 
 	var i = 0

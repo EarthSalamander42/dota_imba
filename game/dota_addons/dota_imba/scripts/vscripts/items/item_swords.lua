@@ -79,7 +79,7 @@ function modifier_item_imba_sange:OnAttackLanded( keys )
 		local priority_sword_modifiers = {
 			"modifier_item_imba_heavens_halberd",
 			"modifier_item_imba_sange_yasha",
-			"modifier_item_imba_sange_azura",
+			"modifier_item_imba_sange_kaya",
 			"modifier_item_imba_triumvirate"
 		}
 		for _, sword_modifier in pairs(priority_sword_modifiers) do
@@ -120,7 +120,7 @@ function modifier_item_imba_sange_maim:OnCreated()
 		local owner = self:GetParent()
 		local higher_tier_modifiers = {
 			"modifier_item_imba_sange_yasha_maim",
-			"modifier_item_imba_sange_azura_stacks",
+			"modifier_item_imba_sange_kaya_stacks",
 			"modifier_item_imba_triumvirate_stacks_debuff"
 		}
 		for _, modifier in pairs(higher_tier_modifiers) do
@@ -255,7 +255,7 @@ function modifier_item_imba_heavens_halberd:OnAttackLanded( keys )
 		-- If a higher-priority sword is present, do nothing either
 		local priority_sword_modifiers = {
 			"modifier_item_imba_sange_yasha",
-			"modifier_item_imba_sange_azura",
+			"modifier_item_imba_sange_kaya",
 			"modifier_item_imba_triumvirate"
 		}
 		for _, sword_modifier in pairs(priority_sword_modifiers) do
@@ -504,7 +504,7 @@ function modifier_item_imba_yasha_proc:GetModifierMoveSpeedBonus_Percentage()
 	return self.proc_ms end
 
 -----------------------------------------------------------------------------------------------------------
---	Azura definition
+--	kaya definition
 -----------------------------------------------------------------------------------------------------------
 
 if item_imba_kaya == nil then item_imba_kaya = class({}) end
@@ -519,7 +519,7 @@ function item_imba_kaya:GetIntrinsicModifierName()
 end
 
 -----------------------------------------------------------------------------------------------------------
---	Azura passive modifier (stackable)
+--	kaya passive modifier (stackable)
 -----------------------------------------------------------------------------------------------------------
 
 if modifier_item_imba_kaya == nil then modifier_item_imba_kaya = class({}) end
@@ -631,7 +631,7 @@ function modifier_item_imba_sange_yasha:OnAttackLanded( keys )
 
 		-- If a higher-priority sword is present, do nothing either
 		local priority_sword_modifiers = {
-			"modifier_item_imba_sange_azura",
+			"modifier_item_imba_sange_kaya",
 			"modifier_item_imba_triumvirate"
 		}
 		for _, sword_modifier in pairs(priority_sword_modifiers) do
@@ -671,7 +671,7 @@ function modifier_item_imba_sange_yasha_maim:OnCreated()
 	if IsServer() then
 		local owner = self:GetParent()
 		local higher_tier_modifiers = {
-			"modifier_item_imba_sange_azura_stacks",
+			"modifier_item_imba_sange_kaya_stacks",
 			"modifier_item_imba_triumvirate_stacks_debuff"
 		}
 		for _, modifier in pairs(higher_tier_modifiers) do
@@ -859,34 +859,34 @@ function modifier_item_imba_sange_yasha_proc:GetModifierMoveSpeedBonus_Percentag
 	return self.proc_ms end
 
 -----------------------------------------------------------------------------------------------------------
---	Sange and Azura definition
+--	Sange and kaya definition
 -----------------------------------------------------------------------------------------------------------
 
-if item_imba_sange_azura == nil then item_imba_sange_azura = class({}) end
-LinkLuaModifier( "modifier_item_imba_sange_azura", "items/item_swords.lua", LUA_MODIFIER_MOTION_NONE )				-- Owner's bonus attributes, stackable
-LinkLuaModifier( "modifier_item_imba_sange_azura_stacks", "items/item_swords.lua", LUA_MODIFIER_MOTION_NONE )		-- Maim/amp debuff
-LinkLuaModifier( "modifier_item_imba_sange_azura_proc", "items/item_swords.lua", LUA_MODIFIER_MOTION_NONE )			-- Disarm/silence debuff
+if item_imba_sange_kaya == nil then item_imba_sange_kaya = class({}) end
+LinkLuaModifier( "modifier_item_imba_sange_kaya", "items/item_swords.lua", LUA_MODIFIER_MOTION_NONE )				-- Owner's bonus attributes, stackable
+LinkLuaModifier( "modifier_item_imba_sange_kaya_stacks", "items/item_swords.lua", LUA_MODIFIER_MOTION_NONE )		-- Maim/amp debuff
+LinkLuaModifier( "modifier_item_imba_sange_kaya_proc", "items/item_swords.lua", LUA_MODIFIER_MOTION_NONE )			-- Disarm/silence debuff
 
-function item_imba_sange_azura:GetAbilityTextureName()
-	return "custom/imba_sange_and_azura"
+function item_imba_sange_kaya:GetAbilityTextureName()
+	return "custom/imba_sange_and_kaya"
 end
 
-function item_imba_sange_azura:GetIntrinsicModifierName()
-	return "modifier_item_imba_sange_azura" end
+function item_imba_sange_kaya:GetIntrinsicModifierName()
+	return "modifier_item_imba_sange_kaya" end
 
 -----------------------------------------------------------------------------------------------------------
---	Sange and Azura passive modifier (stackable)
+--	Sange and kaya passive modifier (stackable)
 -----------------------------------------------------------------------------------------------------------
 
-if modifier_item_imba_sange_azura == nil then modifier_item_imba_sange_azura = class({}) end
-function modifier_item_imba_sange_azura:IsHidden() return true end
-function modifier_item_imba_sange_azura:IsDebuff() return false end
-function modifier_item_imba_sange_azura:IsPurgable() return false end
-function modifier_item_imba_sange_azura:IsPermanent() return true end
-function modifier_item_imba_sange_azura:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+if modifier_item_imba_sange_kaya == nil then modifier_item_imba_sange_kaya = class({}) end
+function modifier_item_imba_sange_kaya:IsHidden() return true end
+function modifier_item_imba_sange_kaya:IsDebuff() return false end
+function modifier_item_imba_sange_kaya:IsPurgable() return false end
+function modifier_item_imba_sange_kaya:IsPermanent() return true end
+function modifier_item_imba_sange_kaya:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 -- Declare modifier events/properties
-function modifier_item_imba_sange_azura:DeclareFunctions()
+function modifier_item_imba_sange_kaya:DeclareFunctions()
 	local funcs = {
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
 		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
@@ -896,24 +896,24 @@ function modifier_item_imba_sange_azura:DeclareFunctions()
 	return funcs
 end
 
-function modifier_item_imba_sange_azura:GetCustomCooldownReduction()
+function modifier_item_imba_sange_kaya:GetCustomCooldownReduction()
 	if not self:GetAbility() then return end
 	return self:GetAbility():GetSpecialValueFor("bonus_cdr") end
 
-function modifier_item_imba_sange_azura:GetModifierBonusStats_Intellect()
+function modifier_item_imba_sange_kaya:GetModifierBonusStats_Intellect()
 	if not self:GetAbility() then return end
 	return self:GetAbility():GetSpecialValueFor("bonus_int") end
 
-function modifier_item_imba_sange_azura:GetModifierPreAttack_BonusDamage()
+function modifier_item_imba_sange_kaya:GetModifierPreAttack_BonusDamage()
 	if not self:GetAbility() then return end
 	return self:GetAbility():GetSpecialValueFor("bonus_damage") end
 
-function modifier_item_imba_sange_azura:GetModifierBonusStats_Strength()
+function modifier_item_imba_sange_kaya:GetModifierBonusStats_Strength()
 	if not self:GetAbility() then return end
 	return self:GetAbility():GetSpecialValueFor("bonus_strength") end
 
 -- On attack landed, roll for proc and apply stacks
-function modifier_item_imba_sange_azura:OnAttackLanded( keys )
+function modifier_item_imba_sange_kaya:OnAttackLanded( keys )
 	if IsServer() then
 		local owner = self:GetParent()
 		local target = keys.target
@@ -933,30 +933,30 @@ function modifier_item_imba_sange_azura:OnAttackLanded( keys )
 		end
 
 		-- All conditions met, perform a Sange and Yasha attack
-		SangeAzuraAttack(owner, keys.target, self:GetAbility(), "modifier_item_imba_sange_azura_stacks", "modifier_item_imba_sange_azura_proc")
+		SangekayaAttack(owner, keys.target, self:GetAbility(), "modifier_item_imba_sange_kaya_stacks", "modifier_item_imba_sange_kaya_proc")
 	end
 end
 
 -----------------------------------------------------------------------------------------------------------
---	Sange and Azura maim/amp debuff (stackable)
+--	Sange and kaya maim/amp debuff (stackable)
 -----------------------------------------------------------------------------------------------------------
 
-if modifier_item_imba_sange_azura_stacks == nil then modifier_item_imba_sange_azura_stacks = class({}) end
-function modifier_item_imba_sange_azura_stacks:IsHidden() return false end
-function modifier_item_imba_sange_azura_stacks:IsDebuff() return true end
-function modifier_item_imba_sange_azura_stacks:IsPurgable() return true end
+if modifier_item_imba_sange_kaya_stacks == nil then modifier_item_imba_sange_kaya_stacks = class({}) end
+function modifier_item_imba_sange_kaya_stacks:IsHidden() return false end
+function modifier_item_imba_sange_kaya_stacks:IsDebuff() return true end
+function modifier_item_imba_sange_kaya_stacks:IsPurgable() return true end
 
 -- Modifier particle
-function modifier_item_imba_sange_azura_stacks:GetEffectName()
-	return "particles/item/swords/sange_azura_debuff.vpcf"
+function modifier_item_imba_sange_kaya_stacks:GetEffectName()
+	return "particles/item/swords/sange_kaya_debuff.vpcf"
 end
 
-function modifier_item_imba_sange_azura_stacks:GetEffectAttachType()
+function modifier_item_imba_sange_kaya_stacks:GetEffectAttachType()
 	return PATTACH_ABSORIGIN_FOLLOW
 end
 
 -- Modifier property storage
-function modifier_item_imba_sange_azura_stacks:OnCreated()
+function modifier_item_imba_sange_kaya_stacks:OnCreated()
 	self.maim_stack = self:GetAbility():GetSpecialValueFor("maim_stack")
 	self.amp_stack = self:GetAbility():GetSpecialValueFor("amp_stack")
 
@@ -991,7 +991,7 @@ function modifier_item_imba_sange_azura_stacks:OnCreated()
 end
 
 -- Declare modifier events/properties
-function modifier_item_imba_sange_azura_stacks:DeclareFunctions()
+function modifier_item_imba_sange_kaya_stacks:DeclareFunctions()
 	local funcs = {
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
@@ -1000,38 +1000,38 @@ function modifier_item_imba_sange_azura_stacks:DeclareFunctions()
 	return funcs
 end
 
-function modifier_item_imba_sange_azura_stacks:GetModifierMagicalResistanceBonus()
+function modifier_item_imba_sange_kaya_stacks:GetModifierMagicalResistanceBonus()
 	if not self:GetAbility() then return end
 	return self.amp_stack * self:GetStackCount() end
 
-function modifier_item_imba_sange_azura_stacks:GetModifierAttackSpeedBonus_Constant()
+function modifier_item_imba_sange_kaya_stacks:GetModifierAttackSpeedBonus_Constant()
 	if not self:GetAbility() then return end
 	return self.maim_stack * self:GetStackCount() end
 
-function modifier_item_imba_sange_azura_stacks:GetModifierMoveSpeedBonus_Percentage()
+function modifier_item_imba_sange_kaya_stacks:GetModifierMoveSpeedBonus_Percentage()
 	if not self:GetAbility() then return end
 	return self.maim_stack * self:GetStackCount() end
 
 -----------------------------------------------------------------------------------------------------------
---	Sange and Azura silence/disarm debuff
+--	Sange and kaya silence/disarm debuff
 -----------------------------------------------------------------------------------------------------------
 
-if modifier_item_imba_sange_azura_proc == nil then modifier_item_imba_sange_azura_proc = class({}) end
-function modifier_item_imba_sange_azura_proc:IsHidden() return true end
-function modifier_item_imba_sange_azura_proc:IsDebuff() return true end
-function modifier_item_imba_sange_azura_proc:IsPurgable() return true end
+if modifier_item_imba_sange_kaya_proc == nil then modifier_item_imba_sange_kaya_proc = class({}) end
+function modifier_item_imba_sange_kaya_proc:IsHidden() return true end
+function modifier_item_imba_sange_kaya_proc:IsDebuff() return true end
+function modifier_item_imba_sange_kaya_proc:IsPurgable() return true end
 
 -- Modifier particle
-function modifier_item_imba_sange_azura_proc:GetEffectName()
-	return "particles/item/swords/sange_azura_proc.vpcf"
+function modifier_item_imba_sange_kaya_proc:GetEffectName()
+	return "particles/item/swords/sange_kaya_proc.vpcf"
 end
 
-function modifier_item_imba_sange_azura_proc:GetEffectAttachType()
+function modifier_item_imba_sange_kaya_proc:GetEffectAttachType()
 	return PATTACH_OVERHEAD_FOLLOW
 end
 
 -- Declare modifier states
-function modifier_item_imba_sange_azura_proc:CheckState()
+function modifier_item_imba_sange_kaya_proc:CheckState()
 	local states = {
 		[MODIFIER_STATE_DISARMED] = true,
 		[MODIFIER_STATE_SILENCED] = true,
@@ -1040,7 +1040,7 @@ function modifier_item_imba_sange_azura_proc:CheckState()
 end
 
 -----------------------------------------------------------------------------------------------------------
---	Azura and Yasha definition
+--	kaya and Yasha definition
 -----------------------------------------------------------------------------------------------------------
 
 if item_imba_kaya_yasha == nil then item_imba_kaya_yasha = class({}) end
@@ -1051,14 +1051,14 @@ LinkLuaModifier( "modifier_item_imba_kaya_yasha_stacks", "items/item_swords.lua"
 LinkLuaModifier( "modifier_item_imba_kaya_yasha_proc", "items/item_swords.lua", LUA_MODIFIER_MOTION_NONE )			-- Move speed proc
 
 function item_imba_kaya_yasha:GetAbilityTextureName()
-	return "custom/imba_azura_and_yasha"
+	return "custom/imba_kaya_and_yasha"
 end
 
 function item_imba_kaya_yasha:GetIntrinsicModifierName()
 	return "modifier_item_imba_kaya_yasha" end
 
 -----------------------------------------------------------------------------------------------------------
---	Azura and Yasha passive modifier (stackable)
+--	kaya and Yasha passive modifier (stackable)
 -----------------------------------------------------------------------------------------------------------
 
 if modifier_item_imba_kaya_yasha == nil then modifier_item_imba_kaya_yasha = class({}) end
@@ -1113,7 +1113,7 @@ function modifier_item_imba_kaya_yasha:OnAttackLanded( keys )
 		-- If a higher-priority sword is present, do nothing either
 		local priority_sword_modifiers = {
 			"modifier_item_imba_sange_yasha",
-			"modifier_item_imba_sange_azura",
+			"modifier_item_imba_sange_kaya",
 			"modifier_item_imba_triumvirate"
 		}
 		for _, sword_modifier in pairs(priority_sword_modifiers) do
@@ -1123,12 +1123,12 @@ function modifier_item_imba_kaya_yasha:OnAttackLanded( keys )
 		end
 
 		-- All conditions met, perform a Sange and Yasha attack
-		AzuraYashaAttack(owner, keys.target, self:GetAbility(), "modifier_item_imba_kaya_yasha_amp", "modifier_item_imba_kaya_yasha_stacks", "modifier_item_imba_kaya_yasha_silence", "modifier_item_imba_kaya_yasha_proc")
+		kayaYashaAttack(owner, keys.target, self:GetAbility(), "modifier_item_imba_kaya_yasha_amp", "modifier_item_imba_kaya_yasha_stacks", "modifier_item_imba_kaya_yasha_silence", "modifier_item_imba_kaya_yasha_proc")
 	end
 end
 
 -----------------------------------------------------------------------------------------------------------
---	Azura and Yasha magic amp debuff (stackable)
+--	kaya and Yasha magic amp debuff (stackable)
 -----------------------------------------------------------------------------------------------------------
 
 if modifier_item_imba_kaya_yasha_amp == nil then modifier_item_imba_kaya_yasha_amp = class({}) end
@@ -1138,7 +1138,7 @@ function modifier_item_imba_kaya_yasha_amp:IsPurgable() return true end
 
 -- Modifier particle
 function modifier_item_imba_kaya_yasha_amp:GetEffectName()
-	return "particles/item/swords/azura_debuff.vpcf"
+	return "particles/item/swords/kaya_debuff.vpcf"
 end
 
 function modifier_item_imba_kaya_yasha_amp:GetEffectAttachType()
@@ -1153,7 +1153,7 @@ function modifier_item_imba_kaya_yasha_amp:OnCreated()
 	if IsServer() then
 		local owner = self:GetParent()
 		local higher_tier_modifiers = {
-			"modifier_item_imba_sange_azura_stacks",
+			"modifier_item_imba_sange_kaya_stacks",
 			"modifier_item_imba_triumvirate_stacks_debuff"
 		}
 		for _, modifier in pairs(higher_tier_modifiers) do
@@ -1179,7 +1179,7 @@ function modifier_item_imba_kaya_yasha_amp:GetModifierMagicalResistanceBonus()
 	return self.amp_stack * self:GetStackCount() end
 
 -----------------------------------------------------------------------------------------------------------
---	Azura and Yasha silence debuff
+--	kaya and Yasha silence debuff
 -----------------------------------------------------------------------------------------------------------
 
 if modifier_item_imba_kaya_yasha_silence == nil then modifier_item_imba_kaya_yasha_silence = class({}) end
@@ -1189,7 +1189,7 @@ function modifier_item_imba_kaya_yasha_silence:IsPurgable() return true end
 
 -- Modifier particle
 function modifier_item_imba_kaya_yasha_silence:GetEffectName()
-	return "particles/item/swords/azura_proc.vpcf"
+	return "particles/item/swords/kaya_proc.vpcf"
 end
 
 function modifier_item_imba_kaya_yasha_silence:GetEffectAttachType()
@@ -1205,7 +1205,7 @@ function modifier_item_imba_kaya_yasha_silence:CheckState()
 end
 
 -----------------------------------------------------------------------------------------------------------
---	Azura and Yasha attack speed buff (stackable)
+--	kaya and Yasha attack speed buff (stackable)
 -----------------------------------------------------------------------------------------------------------
 
 if modifier_item_imba_kaya_yasha_stacks == nil then modifier_item_imba_kaya_yasha_stacks = class({}) end
@@ -1268,7 +1268,7 @@ function modifier_item_imba_kaya_yasha_stacks:GetModifierAttackSpeedBonus_Consta
 	return self.as_stack * self:GetStackCount() end
 
 -----------------------------------------------------------------------------------------------------------
---	Azura and Yasha move speed proc
+--	kaya and Yasha move speed proc
 -----------------------------------------------------------------------------------------------------------
 
 if modifier_item_imba_kaya_yasha_proc == nil then modifier_item_imba_kaya_yasha_proc = class({}) end
@@ -1336,7 +1336,7 @@ LinkLuaModifier( "modifier_item_imba_triumvirate_stacks_buff", "items/item_sword
 LinkLuaModifier( "modifier_item_imba_triumvirate_proc_buff", "items/item_swords.lua", LUA_MODIFIER_MOTION_NONE )		-- Move speed proc
 
 function item_imba_triumvirate:GetAbilityTextureName()
-	return "custom/imba_sange_and_azura_and_yasha"
+	return "custom/imba_sange_and_kaya_and_yasha"
 end
 
 function item_imba_triumvirate:GetIntrinsicModifierName()
@@ -1421,7 +1421,7 @@ function modifier_item_imba_triumvirate_stacks_debuff:IsPurgable() return true e
 
 -- Modifier particle
 function modifier_item_imba_triumvirate_stacks_debuff:GetEffectName()
-	return "particles/item/swords/sange_azura_debuff.vpcf"
+	return "particles/item/swords/sange_kaya_debuff.vpcf"
 end
 
 function modifier_item_imba_triumvirate_stacks_debuff:GetEffectAttachType()
@@ -1447,7 +1447,7 @@ function modifier_item_imba_triumvirate_stacks_debuff:OnCreated()
 			"modifier_item_imba_sange_maim",
 			"modifier_item_imba_sange_yasha_maim",
 			"modifier_item_imba_kaya_yasha_amp",
-			"modifier_item_imba_sange_azura_stacks"
+			"modifier_item_imba_sange_kaya_stacks"
 		}
 		local stack_count = self:GetStackCount()
 		for _, modifier in pairs(lower_tier_modifiers) do
@@ -1494,7 +1494,7 @@ function modifier_item_imba_triumvirate_proc_debuff:IsPurgable() return true end
 
 -- Modifier particle
 function modifier_item_imba_triumvirate_proc_debuff:GetEffectName()
-	return "particles/item/swords/sange_azura_proc.vpcf"
+	return "particles/item/swords/sange_kaya_proc.vpcf"
 end
 
 function modifier_item_imba_triumvirate_proc_debuff:GetEffectAttachType()
@@ -1665,7 +1665,7 @@ function YashaAttack(attacker, ability, modifier_stacks, modifier_proc)
 	end
 end
 
-function AzuraAttack(attacker, target, ability, modifier_stacks, modifier_proc)
+function kayaAttack(attacker, target, ability, modifier_stacks, modifier_proc)
 
 	-- If this is an illusion, do nothing
 	if attacker:IsIllusion() then
@@ -1679,7 +1679,7 @@ function AzuraAttack(attacker, target, ability, modifier_stacks, modifier_proc)
 	local modifier_amp = target:AddNewModifier(attacker, ability, modifier_stacks, {duration = ability:GetSpecialValueFor("stack_duration")})
 	if modifier_amp and modifier_amp:GetStackCount() < ability:GetSpecialValueFor("max_stacks") then
 		modifier_amp:SetStackCount(modifier_amp:GetStackCount() + 1)
-		target:EmitSound("Imba.AzuraStack")
+		target:EmitSound("Imba.kayaStack")
 	end
 
 	-- If the ability is not on cooldown, roll for a proc
@@ -1687,7 +1687,7 @@ function AzuraAttack(attacker, target, ability, modifier_stacks, modifier_proc)
 
 		-- Proc! Apply the silence modifier and put the ability on cooldown
 		target:AddNewModifier(attacker, ability, modifier_proc, {duration = ability:GetSpecialValueFor("proc_duration_enemy")})
-		target:EmitSound("Imba.AzuraProc")
+		target:EmitSound("Imba.kayaProc")
 		ability:UseResources(false, false, true)
 	end
 end
@@ -1730,7 +1730,7 @@ function SangeYashaAttack(attacker, target, ability, modifier_enemy_stacks, modi
 	end
 end
 
-function SangeAzuraAttack(attacker, target, ability, modifier_stacks, modifier_proc)
+function SangekayaAttack(attacker, target, ability, modifier_stacks, modifier_proc)
 
 	-- If this is an illusion, do nothing
 	if attacker:IsIllusion() then
@@ -1745,7 +1745,7 @@ function SangeAzuraAttack(attacker, target, ability, modifier_stacks, modifier_p
 	if modifier_debuff and modifier_debuff:GetStackCount() < ability:GetSpecialValueFor("max_stacks") then
 		modifier_debuff:SetStackCount(modifier_debuff:GetStackCount() + 1)
 		target:EmitSound("Imba.SangeStack")
-		target:EmitSound("Imba.AzuraStack")
+		target:EmitSound("Imba.kayaStack")
 	end
 
 	-- If the ability is not on cooldown, roll for a proc
@@ -1754,12 +1754,12 @@ function SangeAzuraAttack(attacker, target, ability, modifier_stacks, modifier_p
 		-- Proc! Apply the disarm/silence modifier
 		target:AddNewModifier(attacker, ability, modifier_proc, {duration = ability:GetSpecialValueFor("proc_duration_enemy")})
 		target:EmitSound("Imba.SangeProc")
-		target:EmitSound("Imba.AzuraProc")
+		target:EmitSound("Imba.kayaProc")
 		ability:UseResources(false, false, true)
 	end
 end
 
-function AzuraYashaAttack(attacker, target, ability, modifier_enemy_stacks, modifier_self_stacks, modifier_enemy_proc, modifier_self_proc)
+function kayaYashaAttack(attacker, target, ability, modifier_enemy_stacks, modifier_self_stacks, modifier_enemy_proc, modifier_self_proc)
 
 	-- Stack the attack speed buff up
 	local modifier_as = attacker:AddNewModifier(attacker, ability, modifier_self_stacks, {duration = ability:GetSpecialValueFor("stack_duration")})
@@ -1785,7 +1785,7 @@ function AzuraYashaAttack(attacker, target, ability, modifier_enemy_stacks, modi
 
 		-- Apply the silence modifier and put the ability on cooldown
 		target:AddNewModifier(attacker, ability, modifier_enemy_proc, {duration = ability:GetSpecialValueFor("proc_duration_enemy")})
-		target:EmitSound("Imba.AzuraProc")
+		target:EmitSound("Imba.kayaProc")
 		ability:UseResources(false, false, true)
 	end
 
@@ -1793,7 +1793,7 @@ function AzuraYashaAttack(attacker, target, ability, modifier_enemy_stacks, modi
 	local modifier_amp = target:AddNewModifier(attacker, ability, modifier_enemy_stacks, {duration = ability:GetSpecialValueFor("stack_duration")})
 	if modifier_amp and modifier_amp:GetStackCount() < ability:GetSpecialValueFor("max_stacks") then
 		modifier_amp:SetStackCount(modifier_amp:GetStackCount() + 1)
-		target:EmitSound("Imba.AzuraStack")
+		target:EmitSound("Imba.kayaStack")
 	end
 end
 
@@ -1824,7 +1824,7 @@ function TriumAttack(attacker, target, ability, modifier_enemy_stacks, modifier_
 		-- Apply the silence/disarm modifier and put the ability on cooldown
 		target:AddNewModifier(attacker, ability, modifier_enemy_proc, {duration = ability:GetSpecialValueFor("proc_duration_enemy")})
 		target:EmitSound("Imba.SangeProc")
-		target:EmitSound("Imba.AzuraProc")
+		target:EmitSound("Imba.kayaProc")
 		ability:UseResources(false, false, true)
 	end
 
@@ -1833,6 +1833,6 @@ function TriumAttack(attacker, target, ability, modifier_enemy_stacks, modifier_
 	if modifier_maim and modifier_maim:GetStackCount() < ability:GetSpecialValueFor("max_stacks") then
 		modifier_maim:SetStackCount(modifier_maim:GetStackCount() + 1)
 		target:EmitSound("Imba.SangeStack")
-		target:EmitSound("Imba.AzuraStack")
+		target:EmitSound("Imba.kayaStack")
 	end
 end

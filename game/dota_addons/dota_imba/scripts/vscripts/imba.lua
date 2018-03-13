@@ -28,6 +28,9 @@ if GameMode == nil then
 	_G.GameMode = class({})
 end
 
+-- settings.lua is where you can specify many different properties for your game mode and is one of the core barebones files.
+require('settings')
+
 require('libraries/timers')
 require('libraries/physics')
 require('libraries/projectiles')
@@ -40,6 +43,11 @@ require('libraries/astar')
 -- Illusion manager, created by Seinken!
 require('libraries/illusionmanager')
 require('libraries/keyvalues')
+
+-- load api before internal/events
+require('api/api')
+require('api/frontend')
+
 -- These internal libraries set up barebones's events and processes.  Feel free to inspect them/change them if you need to.
 require('internal/gamemode')
 require('internal/events')
@@ -53,14 +61,11 @@ require('internal/imba_talent_events')
 -- Meepo Vanilla fix
 require('libraries/meepo/meepo')
 
--- settings.lua is where you can specify many different properties for your game mode and is one of the core barebones files.
-require('settings')
 -- events.lua is where you can specify the actions to be taken when any event occurs and is one of the core barebones files.
 require('events')
 
-require('api/api')
-require('api/frontend')
 
+require('team_selection')
 require('battlepass/experience')
 require('battlepass/imbattlepass')
 
@@ -132,7 +137,9 @@ function GameMode:OnFirstPlayerLoaded()
 		BadCamera = Entities:FindByName(nil, "dota_badguys_fort")
 		ROSHAN_SPAWN_LOC = Entities:FindByClassname(nil, "npc_dota_roshan_spawner"):GetAbsOrigin()
 		Entities:FindByClassname(nil, "npc_dota_roshan_spawner"):RemoveSelf()
-		local roshan = CreateUnitByName("npc_imba_roshan", ROSHAN_SPAWN_LOC, true, nil, nil, DOTA_TEAM_NEUTRALS)
+		if GetMapName() ~= "imba_1v1" then
+			local roshan = CreateUnitByName("npc_imba_roshan", ROSHAN_SPAWN_LOC, true, nil, nil, DOTA_TEAM_NEUTRALS)
+		end
 	end
 
 	-------------------------------------------------------------------------------------------------
@@ -241,13 +248,6 @@ function GameMode:OnFirstPlayerLoaded()
 		end
 		statue_entity:AddNewModifier(statue_entity, nil, "modifier_imba_contributor_statue", {})
 	end
-
-	-------------------------------------------------------------------------------------------------
-	-- IMBA: Arena mode score initialization
-	-------------------------------------------------------------------------------------------------
-
-	CustomNetTables:SetTableValue("game_options", "radiant", {score = 25})
-	CustomNetTables:SetTableValue("game_options", "dire", {score = 25})
 end
 
 -- Gold gain filter function
@@ -515,7 +515,7 @@ function GameMode:ModifierFilter( keys )
 		-- disarm immune
 		local jarnbjorn_immunity = {
 			"modifier_item_imba_triumvirate_proc_debuff",
-			"modifier_item_imba_sange_azura_proc",
+			"modifier_item_imba_sange_kaya_proc",
 			"modifier_item_imba_sange_yasha_disarm",
 			"modifier_item_imba_heavens_halberd_active_disarm",
 			"modifier_item_imba_sange_disarm",
@@ -914,7 +914,6 @@ function GameMode:OrderFilter( keys )
 		end
 	end
 
-
 	-- Meepo item handle
 	local meepo_table = Entities:FindAllByName("npc_dota_hero_meepo")
 	local ability = EntIndexToHScript(keys.entindex_ability)
@@ -933,6 +932,29 @@ function GameMode:OrderFilter( keys )
 					local duration = ability:GetLevelSpecialValueFor("bkb_duration", ability:GetLevel() -1)
 					meepo_table[m]:AddNewModifier(meepo_table[m], nil, "modifier_imba_black_queen_cape_active_bkb", {duration = duration})
 				end
+			end
+		end
+	end
+
+	if keys.order_type == DOTA_UNIT_ORDER_PURCHASE_ITEM then
+		local purchaser = EntIndexToHScript(units["0"])
+		local item = keys.entindex_ability
+		if item == nil then return true end
+
+		for _, banned_item in pairs(BANNED_ITEMS[GetMapName()]) do
+			if self.itemIDs[item] == banned_item then
+				DisplayError(unit:GetPlayerID(),"#dota_hud_error_cant_purchase_1v1")
+				return false
+			end
+		end
+	end
+
+	if GetMapName() == "imba_1v1" then
+		if keys.order_type == DOTA_UNIT_ORDER_MOVE_TO_TARGET then
+			local target = EntIndexToHScript(keys["entindex_target"])
+			if target:GetUnitName() == "npc_dota_goodguys_healers" or target:GetUnitName() == "npc_dota_badguys_healers" then
+				DisplayError(unit:GetPlayerID(),"#dota_hud_error_cant_shrine_1v1")
+				return false
 			end
 		end
 	end
@@ -1235,20 +1257,8 @@ function GameMode:OnAllPlayersLoaded()
 		if string.find(building_name, "fountain") then
 
 			-- Add fountain passive abilities
-			building:AddAbility("imba_fountain_buffs")
-			building:AddAbility("imba_fountain_grievous_wounds")
-			building:AddAbility("imba_fountain_relief")
-
-			local fountain_ability = building:FindAbilityByName("imba_fountain_buffs")
-			local swipes_ability = building:FindAbilityByName("imba_fountain_grievous_wounds")
-			local relief_aura_ability = building:FindAbilityByName("imba_fountain_relief")
-
-			fountain_ability:SetLevel(1)
-			swipes_ability:SetLevel(1)
-			relief_aura_ability:SetLevel(1)
-		elseif string.find(building_name, "tower") then
-			building:SetDayTimeVisionRange(1900)
-			building:SetNightTimeVisionRange(800)
+			building:AddAbility("imba_fountain_danger_zone"):SetLevel(1)
+			building:AddAbility("imba_fountain_relief"):SetLevel(1)
 		end
 	end
 end
@@ -1314,10 +1324,12 @@ end
 	is useful for starting any game logic timers/thinkers, beginning the first round, etc.									]]
 function GameMode:OnGameInProgress()
 
-	Timers:CreateTimer(0, function()
-		SpawnImbaRunes()
-		return RUNE_SPAWN_TIME
-	end)
+	if GetMapName() ~= "imba_1v1" then
+		Timers:CreateTimer(0, function()
+			SpawnImbaRunes()
+			return RUNE_SPAWN_TIME
+		end)
+	end
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Passive gold adjustment
@@ -1325,80 +1337,6 @@ function GameMode:OnGameInProgress()
 	GameRules:SetGoldTickTime( GOLD_TICK_TIME[GetMapName()] )
 
 	if GetMapName() == "imba_overthrow" then return end
-
-	-------------------------------------------------------------------------------------------------
-	-- IMBA: Structure stats setup
-	-------------------------------------------------------------------------------------------------
-	-- Roll the random ancient abilities for this game
-	local ancient_ability_2 = "imba_ancient_stalwart_defense"
-	local ancient_ability_3 = GetAncientAbility(1)
-	local ancient_ability_4 = GetAncientAbility(2)
-	local ancient_ability_5 = GetAncientAbility(3)
-
-	-- Find all buildings on the map
-	local buildings = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, Vector(0,0,0), nil, 20000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
-
-	-- Iterate through each one
-	for _, building in pairs(buildings) do
-
-		-- Fetch building name
-		local building_name = building:GetName()
-
-		-- Identify the building type
-		if string.find(building_name, "tower") then
-
-			building:AddAbility("imba_tower_buffs")
-			local tower_ability = building:FindAbilityByName("imba_tower_buffs")
-			tower_ability:SetLevel(1)
-
-		elseif string.find(building_name, "fort") then
-
-			-- Add passive buff
-			building:AddAbility("imba_ancient_buffs")
-			local ancient_ability = building:FindAbilityByName("imba_ancient_buffs")
-			ancient_ability:SetLevel(1)
-
-			if TOWER_ABILITY_MODE then
-
-				-- Add Spawn Behemoth ability, if appropriate
-				if SPAWN_ANCIENT_BEHEMOTHS then
-					if string.find(building_name, "goodguys") then
-						building:AddAbility("imba_ancient_radiant_spawn_behemoth")
-						ancient_ability = building:FindAbilityByName("imba_ancient_radiant_spawn_behemoth")
-					elseif string.find(building_name, "badguys") then
-						building:AddAbility("imba_ancient_dire_spawn_behemoth")
-						ancient_ability = building:FindAbilityByName("imba_ancient_dire_spawn_behemoth")
-					end
-					ancient_ability:SetLevel(1)
-				end
-
-				-- Add Stalwart Defense ability
-				building:AddAbility(ancient_ability_2)
-				ancient_ability = building:FindAbilityByName(ancient_ability_2)
-				ancient_ability:SetLevel(1)
-
-				-- Add tier 1 ability
-				building:AddAbility(ancient_ability_3)
-				ancient_ability = building:FindAbilityByName(ancient_ability_3)
-				ancient_ability:SetLevel(1)
-
-				-- Add tier 2 ability
-				building:AddAbility(ancient_ability_4)
-				ancient_ability = building:FindAbilityByName(ancient_ability_4)
-				ancient_ability:SetLevel(1)
-
-				-- Add tier 3 ability
-				building:AddAbility(ancient_ability_5)
-				ancient_ability = building:FindAbilityByName(ancient_ability_5)
-				if ancient_ability:GetAbilityName() == "tidehunter_ravage" then
-					ancient_ability:SetLevel(3)
-				else
-					ancient_ability:SetLevel(1)
-				end
-
-			end
-		end
-	end
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Tower abilities setup
@@ -1521,23 +1459,13 @@ function GameMode:OnGameInProgress()
 			end
 		end
 	end
-
-	-- Find all towers
-	local towers = Entities:FindAllByClassname("npc_dota_tower")
-
-	for _,tower in pairs(towers) do
-		if string.find(tower:GetUnitName(), "tower1") then
-			tower:SetBaseDamageMin(180)
-			tower:SetBaseDamageMax(200)
-			print(tower:GetName())
-		end
-	end
 end
 
 -- This function initializes the game mode and is called before anyone loads into the game
 -- It can be used to pre-initialize any values/tables that will be needed later
 function GameMode:InitGameMode()
 	GameMode = self
+	local mode = GameRules:GetGameModeEntity()
 
 	-- Call the internal function to set up the rules/behaviors specified in constants.lua
 	-- This also sets up event hooks for all event handlers in events.lua
@@ -1558,19 +1486,41 @@ function GameMode:InitGameMode()
 	CustomGameEventManager:RegisterListener("netgraph_give_item", Dynamic_Wrap(self, "NetgraphGiveItem"))
 	CustomGameEventManager:RegisterListener("change_companion", Dynamic_Wrap(self, "DonatorCompanionJS"))
 
+	self.itemKV = LoadKeyValues("scripts/npc/items.txt")
+	for k,v in pairs(LoadKeyValues("scripts/npc/npc_items_custom.txt")) do
+		if not self.itemKV[k] then
+			self.itemKV[k] = v
+		end
+	end
+
+	self.itemIDs = {}
+	for k,v in pairs(self.itemKV) do
+		if type(v) == "table" and v.ID then
+			self.itemIDs[v.ID] = k
+		end
+	end
+
+	--Derived Stats
+	mode:SetCustomAttributeDerivedStatValue(DOTA_ATTRIBUTE_STRENGTH_HP_REGEN_PERCENT, 0.0015) -- 40-45% of vanilla
+--	mode:SetCustomAttributeDerivedStatValue(DOTA_ATTRIBUTE_INTELLIGENCE_MANA_REGEN_PERCENT, 0.010)
+--	mode:SetCustomAttributeDerivedStatValue(DOTA_ATTRIBUTE_INTELLIGENCE_SPELL_AMP_PERCENT, 0.075)
+
+--	mode:SetCustomAttributeDerivedStatValue(DOTA_ATTRIBUTE_STRENGTH_STATUS_RESISTANCE_PERCENT, 0)
+--	mode:SetCustomAttributeDerivedStatValue(DOTA_ATTRIBUTE_AGILITY_MOVE_SPEED_PERCENT, 0)
+--	mode:SetCustomAttributeDerivedStatValue(DOTA_ATTRIBUTE_INTELLIGENCE_MAGIC_RESISTANCE_PERCENT, 0)
 
 	-- Panorama event stuff
 	initScoreBoardEvents()
 	--	InitPlayerHeroImbaTalents();
 
 	if GetMapName() == "imba_overthrow" then
-		GameRules:GetGameModeEntity():SetLoseGoldOnDeath( false )
-		GameRules:GetGameModeEntity():SetFountainPercentageHealthRegen( 0 )
-		GameRules:GetGameModeEntity():SetFountainPercentageManaRegen( 0 )
-		GameRules:GetGameModeEntity():SetFountainConstantManaRegen( 0 )
+		mode:SetLoseGoldOnDeath( false )
+		mode:SetFountainPercentageHealthRegen( 0 )
+		mode:SetFountainPercentageManaRegen( 0 )
+		mode:SetFountainConstantManaRegen( 0 )
 		GameRules:SetHideKillMessageHeaders( true )
-		GameRules:GetGameModeEntity():SetTopBarTeamValuesOverride( true )
-		GameRules:GetGameModeEntity():SetTopBarTeamValuesVisible( false )
+		mode:SetTopBarTeamValuesOverride( true )
+		mode:SetTopBarTeamValuesVisible( false )
 
 		self:SetUpFountains()
 		self:GatherAndRegisterValidTeams()
@@ -2098,10 +2048,39 @@ function GameMode:OnThink()
 				hero.undying_respawn_timer = hero.undying_respawn_timer -1
 			end
 		end
+
+		-- Find hidden modifiers
+--		for i = 0, hero:GetModifierCount() -1 do
+--			print(hero:GetModifierNameByIndex(i))
+--		end
 	end
 
 	if GetMapName() == "imba_overthrow" then
 		self:UpdateScoreboard()
+		self:ThinkGoldDrop() -- TODO: Enable this
+		self:ThinkSpecialItemDrop()
+		CountdownTimer()
+
+		if nCOUNTDOWNTIMER == 30 then
+			CustomGameEventManager:Send_ServerToAllClients( "timer_alert", {} )
+		end
+
+		if nCOUNTDOWNTIMER <= 0 then
+			--Check to see if there's a tie
+			if isGameTied == false then
+				GameRules:SetCustomVictoryMessage( m_VictoryMessages[leadingTeam] )
+				GameMode:EndGame( leadingTeam )
+				countdownEnabled = false
+				return nil
+			else
+				TEAM_KILLS_TO_WIN = leadingTeamScore + 1
+				local broadcast_killcount =
+					{
+						killcount = TEAM_KILLS_TO_WIN
+					}
+				CustomGameEventManager:Send_ServerToAllClients( "overtime_alert", broadcast_killcount )
+			end
+		end
 	else
 		-- fix for super high respawn time
 		for _, hero in pairs(HeroList:GetAllHeroes()) do
@@ -2110,14 +2089,14 @@ function GameMode:OnThink()
 				local reaper_scythe = 36 -- max necro timer addition
 
 				if hero:HasModifier("modifier_imba_reapers_scythe_respawn") then
-					if respawn_time > HERO_RESPAWN_TIME_PER_LEVEL[math.min(hero:GetLevel(), 25)] + reaper_scythe then
-						print("NECROPHOS BUG:", hero:GetUnitName(), "respawn time too high:", respawn_time..". setting to", HERO_RESPAWN_TIME_PER_LEVEL[25])
+					if respawn_time > HERO_RESPAWN_TIME_PER_LEVEL[math.min(hero:GetLevel(), #HERO_RESPAWN_TIME_PER_LEVEL)] + reaper_scythe then
+						print("NECROPHOS BUG:", hero:GetUnitName(), "respawn time too high:", respawn_time..". setting to", HERO_RESPAWN_TIME_PER_LEVEL[#HERO_RESPAWN_TIME_PER_LEVEL])
 						respawn_time = respawn_time + reaper_scythe
 					end
 				else
-					if respawn_time > HERO_RESPAWN_TIME_PER_LEVEL[math.min(hero:GetLevel(), 25)] then
-						print(hero:GetUnitName(), "respawn time too high:", respawn_time..". setting to", HERO_RESPAWN_TIME_PER_LEVEL[25])
-						respawn_time = HERO_RESPAWN_TIME_PER_LEVEL[math.min(hero:GetLevel(), 25)]
+					if respawn_time > HERO_RESPAWN_TIME_PER_LEVEL[math.min(hero:GetLevel(), #HERO_RESPAWN_TIME_PER_LEVEL)] then
+						print(hero:GetUnitName(), "respawn time too high:", respawn_time..". setting to", HERO_RESPAWN_TIME_PER_LEVEL[#HERO_RESPAWN_TIME_PER_LEVEL])
+						respawn_time = HERO_RESPAWN_TIME_PER_LEVEL[math.min(hero:GetLevel(), #HERO_RESPAWN_TIME_PER_LEVEL)]
 					end
 				end
 				hero:SetTimeUntilRespawn(respawn_time)
@@ -2126,7 +2105,7 @@ function GameMode:OnThink()
 
 		if newState == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
 			-- End the game if one team completely abandoned
-			if IsInToolsMode() then
+			if not IsInToolsMode() then
 				if not TEAM_ABANDON then
 					TEAM_ABANDON = {} -- 15 second to abandon, is_abandoning?, player_count.
 					TEAM_ABANDON[2] = {FULL_ABANDON_TIME, false, 0}

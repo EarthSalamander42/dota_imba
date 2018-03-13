@@ -24,7 +24,7 @@ ImbaApiFrontendReady_ = false
 
 ImbaApiFrontendSettings = {
 	debug = false,
-	eventTimer = 1
+	eventTimer = 2
 }
 
 -- Asyncronous
@@ -270,7 +270,10 @@ ApiEventCodes = {
 	AbilityUsed = 18,			-- (hero_name, ability, steamid)
 	--	ItemUsed = 19,				-- (hero_name, steamid, item)
 	Timing = 20,				-- ()
-	UnitSpawned = 21			-- (unit_name, steamid)
+	UnitSpawned = 21,			-- (unit_name, steamid)
+	ItemCombined = 22,			-- (item_name, hero_name, steamid)
+	ItemPickedUp = 23,			-- (item_name, hero_name, steamid)
+	ChatEvent = 24				-- (steamid, text)
 }
 
 function ImbaApiFrontendEventToString(eventCode)
@@ -363,6 +366,30 @@ function ApiEvent(event, content)
 		server_system_datetime = tostring(GetSystemDate()) .. " " .. tostring(GetSystemTime()),
 		server_time = tonumber(Time())
 	})
+end
+
+-- auto order teams
+function ImbaApiAutoOrderImr5v5Random(players, callback)
+	ImbaApiInstance:GameAutoOrderImr5v5Random({
+		players = players,
+		teams = 2
+	}, function (data)
+		callback({ ok = true, data = data })
+	end, function (err)
+		callback({ ok = false, data = data })
+	end)
+end
+
+function ImbaApiAutoOrderImr10v10KeepTeams(players, groupings, callback)
+	ImbaApiInstance:GameAutoOrderImr10v10KeepTeams({
+		players = players,
+		groupings = groupings,
+		teams = 2
+	}, function (data)
+		callback({ ok = true, data = data })
+	end, function (err)
+		callback({ ok = false, data = data })
+	end)
 end
 
 -- returns the match id as integer

@@ -212,10 +212,10 @@ function MakeNewHero(heroes) {
 	for (h in heroes) {
 		if (heroes[h] != null) {
 			var hero = $("#PickList").FindChildTraverse(heroes[h])
+			if (hero == null) {return;}
 			if (hero.BHasClass("ClassNormalOption")) {
 				hero.RemoveClass("ClassNormalOption")
 			}
-			hero.RemoveClass("ClassNormalOption")
 			hero.AddClass("ClassNewOption")
 			$("#" + heroes[h] + "_label").DeleteAsync(0);
 			var HeroLabel = $.CreatePanel("Label", hero, heroes[h] + "_label");
@@ -289,7 +289,9 @@ function MakeDisabledHeroes(disabled_10v10, disabled_frantic, disabled_all, disa
 	for (j in disabled_silent) {
 		if (disabled_silent[j] != null) {
 			var hero_panel = $("#PickList").FindChildTraverse(disabled_silent[j])
-			hero_panel.DeleteAsync(0);
+			if (hero_panel) {
+				hero_panel.DeleteAsync(0);
+			}
 		}
 	}
 
@@ -349,8 +351,8 @@ function LoadPlayers() {
 		if (plyData != null) {
 			if (map_info.map_display_name == "imba_standard") {
 				// Dont display IMR if player havent calibrated yet
-				if (plyData.IMR_5v5_calibrating && playerPanel != undefined)
-					playerPanel.setPlayerMMR("TBD"); // error sometimes
+				if (plyData.IMR_5v5_calibrating && playerPanel != undefined) {
+				}
 				else
 					if (plyData.IMR_5v5)
 						playerPanel.SetPlayerMMR(plyData.IMR_5v5.toFixed([0]));
@@ -359,6 +361,17 @@ function LoadPlayers() {
 
 				RadiantLevels = RadiantLevels + plyData.IMR_5v5 / radiantPlayers.length
 				$("#AverageMMRTeamRadiant").text = $.Localize("average_mmr") + RadiantLevels.toFixed([0]);
+			} else if (map_info.map_display_name == "imba_10v10") {
+					// Dont display IMR if player havent calibrated yet
+					if (plyData.IMR_10v10_calibrating && playerPanel != undefined) {
+					} else
+						if (plyData.IMR_10v10)
+							playerPanel.SetPlayerMMR(plyData.IMR_10v10.toFixed([0]));
+						else
+							playerPanel.SetPlayerMMR("N/A");
+
+					RadiantLevels = RadiantLevels + plyData.IMR_10v10 / radiantPlayers.length
+					$("#AverageMMRTeamRadiant").text = $.Localize("average_mmr") + RadiantLevels.toFixed([0]);
 			} else {
 				//				playerPanel.SetPlayerMMR( plyData.IMR_10v10.toFixed([0]) );
 				//				RadiantLevels = RadiantLevels + plyData.IMR_10v10 / radiantPlayers.length
@@ -402,15 +415,24 @@ function LoadPlayers() {
 		if (plyData != null) {
 			if (map_info.map_display_name == "imba_standard") {
 				// Dont display IMR if player havent calibrated yet
-				if (plyData.IMR_5v5_calibrating && playerPanel != undefined)
-					playerPanel.setPlayerMMR("TBD"); // error sometimes
-				else
+				if (plyData.IMR_5v5_calibrating && playerPanel != undefined) {
+				} else
 					if (plyData.IMR_5v5)
 						playerPanel.SetPlayerMMR(plyData.IMR_5v5.toFixed([0]));
 					else
 						playerPanel.SetPlayerMMR("N/A");
 				DireLevels = DireLevels + plyData.IMR_5v5 / direPlayers.length
 				$("#AverageMMRTeamDire").text = $.Localize("average_mmr") + DireLevels.toFixed([0]);
+			} else if (map_info.map_display_name == "imba_10v10") {
+					// Dont display IMR if player havent calibrated yet
+					if (plyData.IMR_10v10_calibrating && playerPanel != undefined) {
+					} else
+						if (plyData.IMR_10v10)
+							playerPanel.SetPlayerMMR(plyData.IMR_10v10.toFixed([0]));
+						else
+							playerPanel.SetPlayerMMR("N/A");
+					DireLevels = DireLevels + plyData.IMR_10v10 / direPlayers.length
+					$("#AverageMMRTeamDire").text = $.Localize("average_mmr") + DireLevels.toFixed([0]);
 			} else {
 				//				playerPanel.SetPlayerMMR( plyData.IMR_10v10.toFixed([0]) );
 				//				DireLevels = DireLevels + plyData.IMR_10v10 / radiantPlayers.length
@@ -846,7 +868,7 @@ function ShowHUD(hide) {
 		show = "collapse"
 	}
 	var MainPanel = $.GetContextPanel().GetParent().GetParent().GetParent().GetParent()
-	MainPanel.FindChildTraverse("topbar").style.visibility = show;
+//	MainPanel.FindChildTraverse("topbar").style.visibility = show;
 	MainPanel.FindChildTraverse("minimap_container").style.visibility = show;
 	MainPanel.FindChildTraverse("lower_hud").style.visibility = show;
 	MainPanel.FindChildTraverse("HudChat").style.visibility = show;

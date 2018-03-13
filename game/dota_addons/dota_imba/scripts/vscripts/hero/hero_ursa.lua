@@ -1430,11 +1430,11 @@ end
 
 -- Invis particle handling
 function modifier_terrorital_hunter_fogvision:OnStateChanged()
-	if self:GetParent():IsInvisible() and not self.applied_particle then
+	if self:GetParent():IsImbaInvisible() and not self.applied_particle then
 		self.invis_particle_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_ursa/ursa_fury_swipes_debuff.vpcf", PATTACH_OVERHEAD_FOLLOW, self:GetParent())
 		ParticleManager:SetParticleControlEnt(self.invis_particle_fx, 0, caster, PATTACH_OVERHEAD_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
 		self.applied_particle = true
-	elseif not self:GetParent():IsInvisible() and self.invis_particle_fx then
+	elseif not self:GetParent():IsImbaInvisible() and self.invis_particle_fx then
 		ParticleManager:DestroyParticle(self.invis_particle_fx, false)
 		ParticleManager:ReleaseParticleIndex(self.invis_particle_fx)
 		self.applied_particle = false

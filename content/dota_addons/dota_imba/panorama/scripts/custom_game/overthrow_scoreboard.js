@@ -54,11 +54,6 @@ function OnGameStateChanged(table, key, data) {
 }
 
 (function () {
-	var map_info = Game.GetMapInfo();
-	if (map_info.map_display_name != "imba_overthrow") {
-		$("#OverthrowScoreboard").style.visibility = "collapse";
-	}
-
 	// We use a nettable to communicate victory conditions to make sure we get the value regardless of timing.
 	UpdateKillsToWin();
 	CustomNetTables.SubscribeNetTableListener("game_state", OnGameStateChanged);

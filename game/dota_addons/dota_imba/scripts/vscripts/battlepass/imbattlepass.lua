@@ -172,6 +172,7 @@ function GetBlinkEffect(hero)
 	hero.blink_effect = effect
 	hero.blink_effect_end = effect2
 	hero.blink_icon = icon
+--	CustomNetTables:SetTableValue("player_battlepass", tostring(hero:GetPlayerID()), {blink_icon = icon})
 end
 
 function GetForceStaffEffect(hero) -- still not working yet
@@ -313,16 +314,23 @@ end
 
 function GetBottleEffect(hero)
 	local effect = "particles/items_fx/bottle.vpcf"
+	local icon = 0
 
 	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BOTTLE["bottle4"] then
 		effect = "particles/econ/events/ti4/bottle_ti4.vpcf"
+		icon = 4
 	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BOTTLE["bottle3"] then
 		effect = "particles/econ/events/ti6/bottle_ti6.vpcf"
+		icon = 3
 	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BOTTLE["bottle2"] then
 		effect = "particles/econ/events/ti5/bottle_ti5.vpcf"
+		icon = 2
 	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BOTTLE["bottle"] then
 		effect = "particles/econ/events/ti7/bottle_ti7.vpcf"
+		icon = 1
 	end
 
 	hero.bottle_effect = effect
+	hero.bottle_icon = icon
+--	CustomNetTables:SetTableValue("player_battlepass", tostring(hero:GetPlayerID()), {bottle_icon = icon})
 end

@@ -278,8 +278,8 @@
 .ClassImbaOption,
 .ClassNewOption,
 .ClassCustomOption {
-	width: 84px;
-	height: 46px;
+	width: 90px;
+	height: 48px;
 	margin: 1px 0px 1px 0px;
 	horizontal-align: left;
 	wash-color: #7090B060;
@@ -300,7 +300,7 @@
 	font-family: "Bold";
 	text-transform: uppercase;
 	font-weight: bold;
-	background-color: #000000da;
+	background-color: #000000ba;
 	animation-name: fade_full;
 	animation-duration: load_time;
 	animation-timing-function: ease-in;
@@ -649,8 +649,8 @@
 #PickListSeparator3,
 #PickListSeparator4
 {
-	margin: 0% 0% 1% 0%;
-	width: 82%;
+	margin: 1% 0% 1% 0%;
+	width: 88%;
 	height: 3px;
 	opacity: 0.2;
 	horizontal-align: middle;
@@ -857,7 +857,7 @@
 	horizontal-align: center;
 	vertical-align: bottom;
 	color: #FFFFFF;
-	font-size: 22px;
+	font-size: 18px;
 	font-family: "Bold";
 }
 

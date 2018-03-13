@@ -1,7 +1,7 @@
 "use strict";
 
-//=============================================================================
-//=============================================================================
+// =============================================================================
+// =============================================================================
 function _ScoreboardUpdater_SetTextSafe(panel, childName, textValue) {
 	if (panel === null)
 		return;
@@ -23,8 +23,134 @@ function _ScoreboardUpdater_SetValueSafe(panel, childName, Value) {
 	childPanel.value = Value;
 }
 
-//=============================================================================
-//=============================================================================
+function _ScoreboardUpdater_UpdatePlayerPanelImr(plyData, playerPanel) {
+
+	$.Msg("Updating player imr panel");
+	
+	var map_info = Game.GetMapInfo();
+
+	var ids = {
+		_5v5: {
+			teammate: "TeammateIMRAmount",
+			player: "PlayerIMRAmount"
+		},
+		_10v10: {
+			teammate: "TeammateIMR10v10Amount",
+			player: "PlayerIMR10v10Amount"
+		}
+	};
+	
+	var strings = {
+		_5v5: {
+			flyout: "N/A",
+			endscreen: "N/A"
+		},
+		_10v10: {
+			flyout: "N/A",
+			endscreen: "N/A"
+		}
+	};
+	
+	$.Msg(plyData);
+	$.Msg(strings);
+	
+	// set strings
+	
+	if (plyData.IMR_5v5 !== undefined) {
+		if (plyData.IMR_10v10_calibrating) {
+			strings._5v5.flyout = "TBD";
+			strings._5v5.endscreen = "TBD + 0";
+		} else {
+			strings._5v5.flyout = plyData.IMR_5v5.toFixed(0);
+			strings._5v5.endscreen = plyData.IMR_5v5.toFixed(0);
+		}	
+	}
+
+	if (plyData.IMR_10v10 !== undefined) {
+		if (plyData.IMR_10v10_calibrating) {
+			strings._10v10.flyout = "TBD";
+			strings._10v10.endscreen = "TBD + 0";
+		} else {
+			strings._10v10.flyout = plyData.IMR_10v10.toFixed(0);
+			strings._10v10.endscreen = plyData.IMR_10v10.toFixed(0);
+		}	
+	}
+	$.Msg(strings);
+
+	// set labels
+
+	_ScoreboardUpdater_SetTextSafe(playerPanel, ids._5v5.teammate, strings._5v5.flyout);
+	_ScoreboardUpdater_SetTextSafe(playerPanel, ids._5v5.player, strings._5v5.endscreen);
+	_ScoreboardUpdater_SetTextSafe(playerPanel, ids._10v10.teammate, strings._10v10.flyout);
+	_ScoreboardUpdater_SetTextSafe(playerPanel, ids._10v10.player, strings._10v10.endscreen);	
+}
+
+function _ScoreboardUpdater_UpdatePlayerPanelXP(plyData, playerPanel, playerId, ImbaXP_Panel) {
+
+	$.Msg("Updating player xp panel");
+
+	var ids = {
+			xpRank:  "ImbaXPRank" + playerId,
+			xp: "ImbaXP" + playerId,
+			xpEarned: "ImbaXPEarned" + playerId,
+			level: "ImbaLvl" + playerId,
+			progress_bar: "XPProgressBar" + playerId,
+	};
+
+	var strings = {
+			xpRank: plyData.title,
+			xp: "0/100",
+			xpEarned: "0",
+			level: "1",
+			color: plyData.title_color,
+			xpEarnedColor: "yellow",
+	};
+
+	$.Msg(plyData);
+
+	// setup strings
+
+	if (plyData.XP !== undefined && plyData.MaxXP !== undefined)
+		strings.xp = plyData.XP + "/" + plyData.MaxXP;
+
+	if (plyData.title_color != null)
+		strings.color = plyData.title_color;
+
+	if (plyData.XP_change !== undefined) {
+		if (plyData.XP_change > 0) {
+			strings.xpEarned = "+" + plyData.XP_change.toString();
+			strings.xpEarnedColor = "green";
+		} else if (plyData.XP_change < 0) {
+			strings.xpEarned = plyData.XP_change.toString();
+			strings.xpEarnedColor = "red";
+		}
+	}
+
+	if (plyData.Lvl !== undefined)
+		strings.level = plyData.Lvl;
+
+	// setup panels
+	ImbaXP_Panel.BCreateChildren("<Panel id='XPProgressBarContainer" + playerId + "' value='0.0'/>");
+	var Imbar = ImbaXP_Panel.BCreateChildren("<ProgressBar id='XPProgressBar" + playerId + "'/>");
+	ImbaXP_Panel.BCreateChildren("<Label id='ImbaLvl" + playerId + "' text='999'/>");
+	ImbaXP_Panel.BCreateChildren("<Label id='ImbaXPRank" + playerId + "' text='999'/>");
+	ImbaXP_Panel.BCreateChildren("<Label id='ImbaXP" + playerId + "' text='999'/>");
+	ImbaXP_Panel.BCreateChildren("<Label id='ImbaXPEarned" + playerId + "' text='+0'/>");
+
+	// set labels and colors	
+	_ScoreboardUpdater_SetTextSafe(playerPanel, ids.xpRank, strings.xpRank);
+	_ScoreboardUpdater_SetTextSafe(playerPanel, ids.xp, strings.xp);
+	_ScoreboardUpdater_SetTextSafe(playerPanel, ids.xpEarned, strings.xpEarned);
+	_ScoreboardUpdater_SetTextSafe(playerPanel, ids.level, strings.level);
+	_ScoreboardUpdater_SetValueSafe(playerPanel, ids.progress_bar, plyData.XP / plyData.MaxXP);
+
+	if (plyData.title_color != null)
+		playerPanel.FindChildTraverse(ids.xpRank).style.color = strings.color;
+
+	ImbaXP_Panel.FindChildTraverse(ids.xpEarned).style.color = strings.xpEarnedColor;
+}
+// =============================================================================
+// =============================================================================
 function _ScoreboardUpdater_UpdatePlayerPanel(scoreboardConfig, playersContainer, playerId, localPlayerTeamId) {
 	var playerPanelName = "_dynamic_player_" + playerId;
 	var playerPanel = playersContainer.FindChild(playerPanelName);
@@ -32,92 +158,30 @@ function _ScoreboardUpdater_UpdatePlayerPanel(scoreboardConfig, playersContainer
 		playerPanel = $.CreatePanel("Panel", playersContainer, playerPanelName);
 		playerPanel.SetAttributeInt("player_id", playerId);
 		playerPanel.BLoadLayout(scoreboardConfig.playerXmlName, false, false);
-
+		
+		// setup XP and IMR
 		var ImbaXP_Panel = playerPanel.FindChildInLayoutFile("PanelImbaXP");
+		
 		if (ImbaXP_Panel != null) {
+			
+			// get player data
 			var plyData = CustomNetTables.GetTableValue("player_table", playerId);
+			
 			if (plyData != null) {
-				ImbaXP_Panel.BCreateChildren("<Panel id='XPProgressBarContainer" + playerId + "' value='0.0'/>");
-				var Imbar = ImbaXP_Panel.BCreateChildren("<ProgressBar id='XPProgressBar" + playerId + "'/>");
-				ImbaXP_Panel.BCreateChildren("<Label id='ImbaLvl" + playerId + "' text='999'/>");
-				ImbaXP_Panel.BCreateChildren("<Label id='ImbaXPRank" + playerId + "' text='999'/>");
-				ImbaXP_Panel.BCreateChildren("<Label id='ImbaXP" + playerId + "' text='999'/>");
-				ImbaXP_Panel.BCreateChildren("<Label id='ImbaXPEarned" + playerId + "' text='+0'/>");
-
-				if (plyData.XP == undefined || plyData.MaxXP == undefined)
-					_ScoreboardUpdater_SetValueSafe(playerPanel, "XPProgressBar" + playerId, 0);
-				else
-					_ScoreboardUpdater_SetValueSafe(playerPanel, "XPProgressBar" + playerId, plyData.XP / plyData.MaxXP);
-
-				if (plyData.Lvl == undefined)
-					_ScoreboardUpdater_SetTextSafe(playerPanel, "ImbaLvl" + playerId, "Lvl: 0");
-				else
-					_ScoreboardUpdater_SetTextSafe(playerPanel, "ImbaLvl" + playerId, "Lvl: " + plyData.Lvl);
-
-				_ScoreboardUpdater_SetTextSafe(playerPanel, "ImbaXPRank" + playerId, plyData.title);
-
-				if (plyData.XP == undefined || plyData.MaxXP == undefined) // prevent stupid undefined/undefined
-					_ScoreboardUpdater_SetTextSafe(playerPanel, "ImbaXP" + playerId, "0/100");
-				else
-					_ScoreboardUpdater_SetTextSafe(playerPanel, "ImbaXP" + playerId, plyData.XP + "/" + plyData.MaxXP);
-
-				if (plyData.title_color != null) {
-					playerPanel.FindChildTraverse("ImbaXPRank" + playerId).style.color = plyData.title_color;
-				}
-				if (plyData.XP_change > 0) {
-					$.Msg("Positive change! " + plyData.XP_change)
-					_ScoreboardUpdater_SetTextSafe(playerPanel, "ImbaXPEarned" + playerId, "+" + plyData.XP_change);
-					ImbaXP_Panel.FindChildTraverse("ImbaXPEarned" + playerId).style.color = 'green';
-				} else if (plyData.XP_change == 0) {
-					$.Msg("No change! " + plyData.XP_change)
-					_ScoreboardUpdater_SetTextSafe(playerPanel, "ImbaXPEarned" + playerId, "+" + plyData.XP_change);
-					ImbaXP_Panel.FindChildTraverse("ImbaXPEarned" + playerId).style.color = 'yellow';
-				} else if (plyData.XP_change < 0) {
-					$.Msg("Negative change! " + plyData.XP_change)
-					_ScoreboardUpdater_SetTextSafe(playerPanel, "ImbaXPEarned" + playerId, plyData.XP_change);
-					ImbaXP_Panel.FindChildTraverse("ImbaXPEarned" + playerId).style.color = 'red';
-				}
-
-				var map_info = Game.GetMapInfo();
-
-				// i dont really get this here. but whatever
-				if (map_info.map_display_name == "imba_standard") {
-					if (plyData.IMR_5v5 != undefined) {
-						if (plyData.IMR_5v5_calibrating) {
-							_ScoreboardUpdater_SetTextSafe(playerPanel, "TeammateIMRAmount", "TBD");
-							_ScoreboardUpdater_SetTextSafe(playerPanel, "PlayerIMRAmount", "TBD +0");
-						} else {
-							_ScoreboardUpdater_SetTextSafe(playerPanel, "TeammateIMRAmount", plyData.IMR_5v5.toFixed([0]));
-							_ScoreboardUpdater_SetTextSafe(playerPanel, "PlayerIMRAmount", plyData.IMR_5v5.toFixed([0]) + " +0")
-						}
-					}
-					if (plyData.IMR_5v5_change != undefined) {
-						$.Msg(plyData.IMR_5v5_change)
-						_ScoreboardUpdater_SetTextSafe(playerPanel, "PlayerIMRAmount", plyData.IMR_5v5.toFixed([0]) + " + " + plyData.IMR_5v5_change.toFixed([0]));
-					}
-				} else if (
-					map_info.map_display_name == "imba_10v10" ||
-					map_info.map_display_name == "imba_frantic_10v10" ||
-					map_info.map_display_name == "imba_overthrow"
-				) {
-					$.Msg(plyData.IMR_5v5)
-					if (plyData.IMR_5v5_calibrating && plyData.IMR_5v5) {
-						_ScoreboardUpdater_SetTextSafe(playerPanel, "TeammateIMRAmount", "TBD");
-					} else if (plyData.IMR_5v5 == undefined) {
-						_ScoreboardUpdater_SetTextSafe(playerPanel, "TeammateIMRAmount", "N/A");
-						_ScoreboardUpdater_SetTextSafe(playerPanel, "PlayerIMRAmount", "N/A");
-					} else {
-						_ScoreboardUpdater_SetTextSafe(playerPanel, "TeammateIMRAmount", plyData.IMR_5v5.toFixed([0]));
-						_ScoreboardUpdater_SetTextSafe(playerPanel, "PlayerIMRAmount", "N/A");
-					}
-				}
+				// set xp values
+				_ScoreboardUpdater_UpdatePlayerPanelXP(plyData, playerPanel, playerId, ImbaXP_Panel);
+				
+				// set imr values
+				_ScoreboardUpdater_UpdatePlayerPanelImr(plyData, playerPanel);
+				
 			}
 		}
 	}
 
 	playerPanel.SetHasClass("is_local_player", (playerId == Game.GetLocalPlayerID()));
 
-	var ultStateOrTime = PlayerUltimateStateOrTime_t.PLAYER_ULTIMATE_STATE_HIDDEN; // values > 0 mean on cooldown for that many seconds
+	// values > 0 mean on on cooldown for x seconds
+	var ultStateOrTime = PlayerUltimateStateOrTime_t.PLAYER_ULTIMATE_STATE_HIDDEN;
 	var goldValue = -1;
 	var isTeammate = false;
 	var isSpectator = false;
@@ -135,7 +199,8 @@ function _ScoreboardUpdater_UpdatePlayerPanel(scoreboardConfig, playersContainer
 		playerPanel.SetHasClass("local_player_teammate", isTeammate && (playerId != Game.GetLocalPlayerID()));
 		playerPanel.SetHasClass("spectator_view", isSpectator);
 
-		_ScoreboardUpdater_SetTextSafe(playerPanel, "RespawnTimer", (playerInfo.player_respawn_seconds + 1)); // value is rounded down so just add one for rounded-up
+		// valua is rounded dow so just add one for rounded up
+		_ScoreboardUpdater_SetTextSafe(playerPanel, "RespawnTimer", (playerInfo.player_respawn_seconds + 1));
 		_ScoreboardUpdater_SetTextSafe(playerPanel, "PlayerName", playerInfo.player_name);
 		_ScoreboardUpdater_SetTextSafe(playerPanel, "Level", playerInfo.player_level);
 		_ScoreboardUpdater_SetTextSafe(playerPanel, "Kills", playerInfo.player_kills);
@@ -154,7 +219,7 @@ function _ScoreboardUpdater_UpdatePlayerPanel(scoreboardConfig, playersContainer
 			var btnShareHero = playerPanel.FindChildInLayoutFile("BtnShareHero");
 			var btnDisableHelp = playerPanel.FindChildInLayoutFile("BtnDisableHelp");
 
-			//bitmask; 1 shares heroes, 2 shares units, 4 disables help
+			// bitmask; 1 shares heroes, 2 shares units, 4 disables help
 			if (btnShareUnit) {
 				btnShareUnit.SetHasClass("Activated", ((tableValue[playerId] & 2) > 0));
 			}
@@ -188,7 +253,8 @@ function _ScoreboardUpdater_UpdatePlayerPanel(scoreboardConfig, playersContainer
 			} else {
 				heroNameAndDescription.SetDialogVariable("hero_name", $.Localize("#" + playerInfo.player_selected_hero));
 			}
-			//			heroNameAndDescription.SetDialogVariableInt( "hero_level",  playerInfo.player_level );
+			// heroNameAndDescription.SetDialogVariableInt( "hero_level",
+			// playerInfo.player_level );
 		}
 
 		playerPanel.SetHasClass("player_connection_abandoned", playerInfo.player_connection_state == DOTAConnectionState_t.DOTA_CONNECTION_STATE_ABANDONED);
@@ -211,7 +277,7 @@ function _ScoreboardUpdater_UpdatePlayerPanel(scoreboardConfig, playersContainer
 	if (playerItemsContainer) {
 		var playerItems = Game.GetPlayerItems(playerId);
 		if (playerItems) {
-			//		$.Msg( "playerItems = ", playerItems );
+			// $.Msg( "playerItems = ", playerItems );
 			for (var i = playerItems.inventory_slot_min; i < playerItems.inventory_slot_max; ++i) {
 				var itemPanelName = "_dynamic_item_" + i;
 				var itemPanel = playerItemsContainer.FindChild(itemPanelName);
@@ -219,7 +285,9 @@ function _ScoreboardUpdater_UpdatePlayerPanel(scoreboardConfig, playersContainer
 				var itemInfo = playerItems.inventory[i];
 
 				if (itemPanel === null) {
-					//Needs DOTAItemImage to be able to load from flash3 images (similar to those used for dota shop, hence reusing existing resources)
+					// Needs DOTAItemImage to be able to load from flash3 images
+					// (similar to those used for dota shop, hence reusing
+					// existing resources)
 					itemPanel = $.CreatePanel("DOTAItemImage", playerItemsContainer, itemPanelName);
 					itemPanel.AddClass("PlayerItem");
 				}
@@ -248,19 +316,20 @@ function _ScoreboardUpdater_UpdatePlayerPanel(scoreboardConfig, playersContainer
 	_ScoreboardUpdater_SetTextSafe(playerPanel, "PlayerUltimateCooldown", ultStateOrTime);
 }
 
-//=============================================================================
-//=============================================================================
+// =============================================================================
+// =============================================================================
 function _ScoreboardUpdater_UpdateTeamPanel(scoreboardConfig, containerPanel, teamDetails, teamsInfo) {
 	if (!containerPanel)
 		return;
 
 	var teamId = teamDetails.team_id;
-	//	$.Msg( "_ScoreboardUpdater_UpdateTeamPanel: ", teamId );
+	// $.Msg( "_ScoreboardUpdater_UpdateTeamPanel: ", teamId );
 
 	var teamPanelName = "_dynamic_team_" + teamId;
 	var teamPanel = containerPanel.FindChild(teamPanelName);
 	if (teamPanel === null) {
-		//		$.Msg( "UpdateTeamPanel.Create: ", teamPanelName, " = ", scoreboardConfig.teamXmlName );
+		// $.Msg( "UpdateTeamPanel.Create: ", teamPanelName, " = ",
+		// scoreboardConfig.teamXmlName );
 		teamPanel = $.CreatePanel("Panel", containerPanel, teamPanelName);
 		teamPanel.SetAttributeInt("team_id", teamId);
 		teamPanel.BLoadLayout(scoreboardConfig.teamXmlName, false, false);
@@ -314,7 +383,7 @@ function _ScoreboardUpdater_UpdateTeamPanel(scoreboardConfig, containerPanel, te
 		var teamColor_GradentFromTransparentLeft = teamPanel.FindChildInLayoutFile("TeamColor_GradentFromTransparentLeft");
 		if (teamColor_GradentFromTransparentLeft) {
 			var gradientText = 'gradient( linear, 0% 0%, 800% 0%, from( #00000000 ), to( ' + teamColor + ' ) );';
-			//			$.Msg( gradientText );
+			// $.Msg( gradientText );
 			teamColor_GradentFromTransparentLeft.style.backgroundColor = gradientText;
 		}
 	}
@@ -322,10 +391,10 @@ function _ScoreboardUpdater_UpdateTeamPanel(scoreboardConfig, containerPanel, te
 	return teamPanel;
 }
 
-//=============================================================================
-//=============================================================================
+// =============================================================================
+// =============================================================================
 function _ScoreboardUpdater_ReorderTeam(scoreboardConfig, teamsParent, teamPanel, teamId, newPlace, prevPanel) {
-	//	$.Msg( "UPDATE: ", GameUI.CustomUIConfig().teamsPrevPlace );
+	// $.Msg( "UPDATE: ", GameUI.CustomUIConfig().teamsPrevPlace );
 	var oldPlace = null;
 	if (GameUI.CustomUIConfig().teamsPrevPlace.length > teamId) {
 		oldPlace = GameUI.CustomUIConfig().teamsPrevPlace[teamId];
@@ -333,7 +402,7 @@ function _ScoreboardUpdater_ReorderTeam(scoreboardConfig, teamsParent, teamPanel
 	GameUI.CustomUIConfig().teamsPrevPlace[teamId] = newPlace;
 
 	if (newPlace != oldPlace) {
-		//		$.Msg( "Team ", teamId, " : ", oldPlace, " --> ", newPlace );
+		// $.Msg( "Team ", teamId, " : ", oldPlace, " --> ", newPlace );
 		teamPanel.RemoveClass("team_getting_worse");
 		teamPanel.RemoveClass("team_getting_better");
 		if (newPlace > oldPlace) {
@@ -372,7 +441,7 @@ function stableCompareFunc(a, b) {
 		return 0;
 	}
 
-	//			$.Msg( GameUI.CustomUIConfig().teamsPrevPlace );
+	// $.Msg( GameUI.CustomUIConfig().teamsPrevPlace );
 
 	var a_prev = GameUI.CustomUIConfig().teamsPrevPlace[a.team_id];
 	var b_prev = GameUI.CustomUIConfig().teamsPrevPlace[b.team_id];
@@ -387,10 +456,11 @@ function stableCompareFunc(a, b) {
 	}
 };
 
-//=============================================================================
-//=============================================================================
+// =============================================================================
+// =============================================================================
 function _ScoreboardUpdater_UpdateAllTeamsAndPlayers(scoreboardConfig, teamsContainer) {
-	//	$.Msg( "_ScoreboardUpdater_UpdateAllTeamsAndPlayers: ", scoreboardConfig );
+	// $.Msg( "_ScoreboardUpdater_UpdateAllTeamsAndPlayers: ", scoreboardConfig
+	// );
 
 	var teamsList = [];
 	for (var teamId of Game.GetAllTeamIDs()) {
@@ -410,14 +480,14 @@ function _ScoreboardUpdater_UpdateAllTeamsAndPlayers(scoreboardConfig, teamsCont
 	}
 
 	if (teamsList.length > 1) {
-		//		$.Msg( "panelsByTeam: ", panelsByTeam );
+		// $.Msg( "panelsByTeam: ", panelsByTeam );
 
 		// sort
 		if (scoreboardConfig.shouldSort) {
 			teamsList.sort(stableCompareFunc);
 		}
 
-		//		$.Msg( "POST: ", teamsAndPanels );
+		// $.Msg( "POST: ", teamsAndPanels );
 
 		// reorder the panels based on the sort
 		var prevPanel = panelsByTeam[teamsList[0].team_id];
@@ -427,15 +497,16 @@ function _ScoreboardUpdater_UpdateAllTeamsAndPlayers(scoreboardConfig, teamsCont
 			_ScoreboardUpdater_ReorderTeam(scoreboardConfig, teamsContainer, teamPanel, teamId, i, prevPanel);
 			prevPanel = teamPanel;
 		}
-		//		$.Msg( GameUI.CustomUIConfig().teamsPrevPlace );
+		// $.Msg( GameUI.CustomUIConfig().teamsPrevPlace );
 	}
 
-	//	$.Msg( "END _ScoreboardUpdater_UpdateAllTeamsAndPlayers: ", scoreboardConfig );
+	// $.Msg( "END _ScoreboardUpdater_UpdateAllTeamsAndPlayers: ",
+	// scoreboardConfig );
 }
 
 
-//=============================================================================
-//=============================================================================
+// =============================================================================
+// =============================================================================
 function ScoreboardUpdater_InitializeScoreboard(scoreboardConfig, scoreboardPanel) {
 	GameUI.CustomUIConfig().teamsPrevPlace = [];
 	if (typeof (scoreboardConfig.shouldSort) === 'undefined') {
@@ -450,8 +521,8 @@ function ScoreboardUpdater_InitializeScoreboard(scoreboardConfig, scoreboardPane
 }
 
 
-//=============================================================================
-//=============================================================================
+// =============================================================================
+// =============================================================================
 function ScoreboardUpdater_SetScoreboardActive(scoreboardHandle, isActive) {
 	if (scoreboardHandle.scoreboardConfig === null || scoreboardHandle.scoreboardPanel === null) {
 		return;
@@ -462,8 +533,8 @@ function ScoreboardUpdater_SetScoreboardActive(scoreboardHandle, isActive) {
 	}
 }
 
-//=============================================================================
-//=============================================================================
+// =============================================================================
+// =============================================================================
 function ScoreboardUpdater_GetTeamPanel(scoreboardHandle, teamId) {
 	if (scoreboardHandle.scoreboardPanel === null) {
 		return;
@@ -473,8 +544,8 @@ function ScoreboardUpdater_GetTeamPanel(scoreboardHandle, teamId) {
 	return scoreboardHandle.scoreboardPanel.FindChild(teamPanelName);
 }
 
-//=============================================================================
-//=============================================================================
+// =============================================================================
+// =============================================================================
 function ScoreboardUpdater_GetSortedTeamInfoList(scoreboardHandle) {
 	var teamsList = [];
 	for (var teamId of Game.GetAllTeamIDs()) {

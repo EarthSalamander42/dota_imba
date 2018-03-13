@@ -32,8 +32,7 @@
 				$('#HeroPanel').style.saturation = "1.0";
 			},
 
-			SetPlayerMMR: function( MMR ) {
-				$('#PlayerMMR').style.visibility = "visible";
+			SetPlayerMMR:function( MMR ) {
 				$('#PlayerMMRLabel').text = MMR;
 			},
 
@@ -56,7 +55,6 @@
 				$('#PickingPlayerDT').style.visibility = "visible";
 				$('#HeroPanel').style.visibility = "collapse";
 				$('#PlayerName').style.visibility = "collapse";
-				$.Msg($('#HeroPanelDT').style.backgroundImage);
 			},
 
 			SetPlayerDTInfo: function( playerID, level, hp ) {
@@ -68,7 +66,6 @@
 				var pID = playerID;
 				var playerInfo = Game.GetPlayerInfo( playerID );
 				$('#PlayerAvatarDT').steamid = playerInfo.player_steamid;
-				$.Msg(playerInfo.player_steamid);
 			},
 		});
 	</script>
@@ -93,7 +90,7 @@
 		</Panel>
 
 		<Panel id="PlayerMMR">
-			<Label id="PlayerMMRLabel" />
+			<Label id="PlayerMMRLabel" text="TBD" />
 		</Panel>
 	</Panel>
 </root>

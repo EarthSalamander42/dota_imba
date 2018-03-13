@@ -61,17 +61,17 @@ function EndScoreboard() {
 		var custom2PlayerIds = Game.GetPlayerIDsOnTeam( DOTATeam_t.DOTA_TEAM_CUSTOM_2 );
 		var custom3PlayerIds = Game.GetPlayerIDsOnTeam( DOTATeam_t.DOTA_TEAM_CUSTOM_3 );
 
-		$.Msg({
-			args: args,
-			info: {
-				map: mapInfo,
-				ids1: radiantPlayerIds,
-				ids2: direPlayerIds,
-				ids3: custom1PlayerIds,
-				ids4: custom2PlayerIds,
-				ids5: custom3PlayerIds,
-			}
-		});
+//		$.Msg({
+//			args: args,
+//			info: {
+//				map: mapInfo,
+//				ids1: radiantPlayerIds,
+//				ids2: direPlayerIds,
+//				ids3: custom1PlayerIds,
+//				ids4: custom2PlayerIds,
+//				ids5: custom3PlayerIds,
+//			}
+//		});
 
 		// Victory Info text
 		var victoryMessage = "winning_team_name Victory!";
@@ -152,6 +152,8 @@ function EndScoreboard() {
 			pp.AddClass("es-player");
 			pp.BLoadLayout(playerXmlFile, false, false);
 
+//			$.Msg(player);
+			
 			var values = {
 				name: pp.FindChildInLayoutFile("es-player-name"),
 				avatar: pp.FindChildInLayoutFile("es-player-avatar"),
@@ -161,6 +163,7 @@ function EndScoreboard() {
 				deaths: pp.FindChildInLayoutFile("es-player-d"),
 				assists: pp.FindChildInLayoutFile("es-player-a"),
 				imr: pp.FindChildInLayoutFile("es-player-imr"),
+				imr10v10: pp.FindChildInLayoutFile("es-player-imr10v10"),
 				gold: pp.FindChildInLayoutFile("es-player-gold"),
 				level: pp.FindChildInLayoutFile("es-player-level"),
 				xp: {
@@ -188,6 +191,7 @@ function EndScoreboard() {
 
 			// IMR
 			if (player.result != null) {
+								
 				if (player.result.imr_5v5_calibrating)
 					values.imr.text = "TBD";
 				else {
@@ -205,10 +209,30 @@ function EndScoreboard() {
 						values.imr.AddClass("es-text-red");
 					}
 				}
+				
+				if (player.result.imr_10v10_calibrating)
+					values.imr10v10.text = "TBD";
+				else {
+					var imr = Math.floor(player.result.imr_10v10);
+					var diff = Math.floor(player.result.imr_10v10_diff);
+
+					if (diff == 0) {
+						values.imr10v10.text = imr;
+						values.imr10v10.AddClass("es-text-white");
+					} else if (diff > 0) {
+						values.imr10v10.text = imr + " (+" + diff + ")";
+						values.imr10v10.AddClass("es-text-green");
+					} else {
+						values.imr10v10.text = imr + " (" + diff + ")";
+						values.imr10v10.AddClass("es-text-red");
+					}
+				}
+				
 			} else {
+				values.imr10v10.text = "N/A";
 				values.imr.text = "N/A";
 			}
-
+			
 			// XP
 			if (player.result != null) {
 				var xp = Math.floor(player.result.xp);
@@ -241,46 +265,33 @@ function EndScoreboard() {
 			}
 		};
 
-		var scores = {
-			radiant: 0,
-			dire: 0,
-			custom1: 0,
-			custom2: 0,
-			custom3: 0,
-		};
-
 		// Create the panels for the players
 		$.Each(radiantPlayers, function (player) {
-			scores.radiant = scores.radiant + player.info.player_kills;
 			createPanelForPlayer(player, panels.radiantPlayers);
 		});
 
 		$.Each(direPlayers, function (player) {
-			scores.dire = scores.dire + player.info.player_kills;
 			createPanelForPlayer(player, panels.direPlayers);
 		});
 
 		$.Each(custom1Players, function (player) {
-			scores.custom1 = scores.custom1 + player.info.player_kills;
 			createPanelForPlayer(player, panels.custom1Players);
 		});
 
 		$.Each(custom2Players, function (player) {
-			scores.radiant = player.info.player_kills;
 			createPanelForPlayer(player, panels.custom2Players);
 		});
 
 		$.Each(custom3Players, function (player) {
-			scores.custom3 = scores.custom3 + player.info.player_kills;
 			createPanelForPlayer(player, panels.custom3Players);
 		});
 
 		// Set Team Score
-		$("#es-team-score-radiant").text = new String(scores.radiant);
-		$("#es-team-score-dire").text = new String(scores.dire);
-		$("#es-team-score-custom1").text = new String(scores.custom1);
-		$("#es-team-score-custom2").text = new String(scores.custom2);
-		$("#es-team-score-custom3").text = new String(scores.custom3);
+		$("#es-team-score-radiant").text = new String(serverInfo.radiant_score);
+		$("#es-team-score-dire").text = new String(serverInfo.dire_score);
+		$("#es-team-score-custom1").text = new String(serverInfo.custom1_score);
+		$("#es-team-score-custom2").text = new String(serverInfo.custom2_score);
+		$("#es-team-score-custom3").text = new String(serverInfo.custom3_score);
 
 		// Configure Stats Button
 //		$("#es-buttons-stats").SetPanelEvent("onactivate", function () {

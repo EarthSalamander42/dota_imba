@@ -235,7 +235,7 @@ function modifier_item_imba_spell_fencer_passive_silence:OnAttackLanded( keys )
 
 		-- If a higher-priority sword is present, do zilch
 		local priority_sword_modifiers = {
-			"modifier_item_imba_sange_azura",
+			"modifier_item_imba_sange_kaya",
 			"modifier_item_imba_kaya_yasha",
 			"modifier_item_imba_triumvirate"
 		}

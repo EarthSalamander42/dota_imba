@@ -184,6 +184,7 @@
 	"leaderboard_imr"				"IMBA天梯分"
 
 	//Battlepass
+	"imba_safe_to_leave"			"可以安全离开游戏"
 	"imba_game_info"				"游戏信息"
 	"imba_game_info_close"			"关闭"
 	"battlepass"					"IMBA等级特效奖励"
@@ -261,8 +262,8 @@
 
 	"RecentScore"									"+{d:score}"
 
-	"DOTA_GoodGuys"   								"Teal Tiger"
-	"DOTA_BadGuys"    								"Yellow Monkey"
+//	"DOTA_GoodGuys"   								"Teal Tiger"
+//	"DOTA_BadGuys"    								"Yellow Monkey"
 	"DOTA_Custom1"    								"Pink Dragon"
 	"DOTA_Custom2"    								"Orange Dog"
 	"DOTA_Custom3"    								"Blue Rooster"

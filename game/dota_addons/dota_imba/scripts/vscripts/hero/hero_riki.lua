@@ -940,7 +940,7 @@ function modifier_imba_riki_cloak_and_dagger:OnAttackLanded( keys )
 			if not parent:HasModifier("modifier_imba_riki_tricks_of_the_trade_primary") and not target:IsBuilding() and not parent:PassivesDisabled() then
 
 				-- If the passive is off cooldown, apply invis break bonus to backstab damage
-				if ability:IsCooldownReady() and parent:IsInvisible() then
+				if ability:IsCooldownReady() and parent:IsImbaInvisible() then
 					agility_multiplier = agility_multiplier * agility_multiplier_invis_break
 					agility_multiplier_smoke = agility_multiplier_smoke * agility_multiplier_invis_break
 					agility_multiplier_side = agility_multiplier_side * agility_multiplier_invis_break

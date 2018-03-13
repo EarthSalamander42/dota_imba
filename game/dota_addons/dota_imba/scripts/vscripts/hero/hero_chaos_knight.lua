@@ -158,7 +158,7 @@ function modifier_reality_rift_armor_reduction_debuff:OnDestroy()
 end
 
 function modifier_reality_rift_armor_reduction_debuff:GetModifierPhysicalArmorBonus()
-	return self:GetAbility():GetSpecialValueFor("armor_reduction")
+	return self:GetAbility():GetSpecialValueFor("armor_reduction") + self:GetCaster():FindTalentValue("special_bonus_unique_chaos_knight_2")
 end
 
 function modifier_reality_rift_armor_reduction_debuff:IsDebuff()

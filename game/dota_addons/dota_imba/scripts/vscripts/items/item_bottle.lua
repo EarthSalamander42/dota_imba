@@ -20,14 +20,16 @@
 
 LinkLuaModifier("modifier_item_imba_bottle_heal", "items/item_bottle.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_item_imba_bottle_texture_controller", "items/item_bottle.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_item_imba_bottle_texture_controller_2", "items/item_bottle.lua", LUA_MODIFIER_MOTION_NONE)
 
 item_imba_bottle = class({})
 
-
+--[[ OnCreated() not working on item/ability
 function item_imba_bottle:OnCreated()
 	self:SetCurrentCharges(3)
 	self.RuneStorage = nil
 end
+--]]
 
 function item_imba_bottle:GetIntrinsicModifierName() return "modifier_item_imba_bottle_texture_controller" end
 
@@ -81,7 +83,7 @@ function item_imba_bottle:SetStorageRune(type)
 end
 
 function item_imba_bottle:GetAbilityTextureName()
-	local texture = "custom/bottle_3"
+	local texture = "custom/bottle_0_3"
 	texture = self.texture_name or texture
 	return texture
 end
@@ -93,19 +95,20 @@ function modifier_item_imba_bottle_texture_controller:IsPurgable() return false 
 function modifier_item_imba_bottle_texture_controller:IsDebuff() return false end
 function modifier_item_imba_bottle_texture_controller:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
-
 function modifier_item_imba_bottle_texture_controller:OnCreated()
-	self:OnIntervalThink()
-	self:StartIntervalThink(FrameTime())
+	if IsServer() then
+		self:GetParent():AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_item_imba_bottle_texture_controller_2", {})
+	end
+
+	self:StartIntervalThink(0.1)
 end
 
 function modifier_item_imba_bottle_texture_controller:OnIntervalThink()
-	local bottle = self:GetAbility()
 	local rune_table = {
-		"0",--1
-		"1",--2
-		"2",--3
-		"3",--4
+		tostring(self:GetAbility().bottle_icon).."_0",--1
+		tostring(self:GetAbility().bottle_icon).."_1",--2
+		tostring(self:GetAbility().bottle_icon).."_2",--3
+		tostring(self:GetAbility().bottle_icon).."_3",--4
 		"arcane", --5
 		"double_damage", --6
 		"haste", --7
@@ -115,37 +118,57 @@ function modifier_item_imba_bottle_texture_controller:OnIntervalThink()
 		"frost", --11
 		"bounty", --12
 	}
+
 	if IsServer() then
-		if bottle:IsCooldownReady() and self:GetParent():HasModifier("modifier_fountain_aura_buff") or self:GetParent():HasModifier("modifier_fountain_aura_effect_lua") then
-			bottle:SetCurrentCharges(3)
+		if self:GetAbility():IsCooldownReady() and self:GetParent():HasModifier("modifier_fountain_aura_buff") or self:GetParent():HasModifier("modifier_fountain_aura_effect_lua") then
+			self:GetAbility():SetCurrentCharges(3)
 		end
-		local stack = bottle:GetCurrentCharges() + 1
+		local stack = self:GetAbility():GetCurrentCharges() + 1
 		for i=5,12 do
-			if bottle.RuneStorage == rune_table[i] then
+			if self:GetAbility().RuneStorage == rune_table[i] then
 				stack = i
 				break
 			end
 		end
 		self:SetStackCount(stack)
 	end
-	local client_stack = self:GetStackCount()
-	if client_stack >= 1 and client_stack <= 4 then
-		bottle.texture_name = "custom/bottle_"..rune_table[client_stack]
+
+	if self:GetStackCount() >= 1 and self:GetStackCount() <= 4 then
+		self:GetAbility().texture_name = "custom/bottle_"..rune_table[self:GetStackCount()]
 	else
-		bottle.texture_name = "custom/bottle_rune_"..rune_table[client_stack]
+		self:GetAbility().texture_name = "custom/bottle_rune_"..rune_table[self:GetStackCount()]
+	end
+end
+
+function modifier_item_imba_bottle_texture_controller:OnDestroy()
+	if self:GetParent():HasModifier("modifier_item_imba_bottle_texture_controller_2") then
+		self:GetParent():RemoveModifierByName("modifier_item_imba_bottle_texture_controller_2")
+	end
+end
+
+modifier_item_imba_bottle_texture_controller_2 = modifier_item_imba_bottle_texture_controller_2 or class({})
+
+function modifier_item_imba_bottle_texture_controller_2:IsHidden() return true end
+function modifier_item_imba_bottle_texture_controller_2:IsPurgable() return false end
+function modifier_item_imba_bottle_texture_controller_2:IsDebuff() return false end
+function modifier_item_imba_bottle_texture_controller_2:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_item_imba_bottle_texture_controller_2:OnCreated()
+	if self:GetParent().bottle_icon then
+		self:SetStackCount(self:GetParent().bottle_icon)
+		self:GetAbility().bottle_icon = self:GetStackCount()
+	end
+
+	if IsClient() then
+		self:GetAbility().bottle_icon = self:GetStackCount()
 	end
 end
 
 modifier_item_imba_bottle_heal = class({
-	GetTexture =			function() return "custom/bottle_3" end,
+	GetTexture =			function() return "custom/bottle_0_3" end,
 	IsPurgable =			function() return false end,
 	GetEffectAttachType =	function() return PATTACH_ABSORIGIN_FOLLOW end,
 })
-
-function modifier_item_imba_bottle_heal:OnCreated()
-	self.health_restore = self:GetAbility():GetSpecialValueFor("health_restore") / self:GetAbility():GetSpecialValueFor("restore_time")
-	self.mana_restore = self:GetAbility():GetSpecialValueFor("mana_restore") / self:GetAbility():GetSpecialValueFor("restore_time")
-end
 
 function modifier_item_imba_bottle_heal:DeclareFunctions()
 	return {
@@ -155,11 +178,11 @@ function modifier_item_imba_bottle_heal:DeclareFunctions()
 end
 
 function modifier_item_imba_bottle_heal:GetModifierConstantHealthRegen()
-	return self.health_restore
+	return self:GetAbility():GetSpecialValueFor("health_restore") / self:GetAbility():GetSpecialValueFor("restore_time")
 end
 
 function modifier_item_imba_bottle_heal:GetModifierConstantManaRegen()
-	return self.mana_restore
+	return self:GetAbility():GetSpecialValueFor("mana_restore") / self:GetAbility():GetSpecialValueFor("restore_time")
 end
 
 function modifier_item_imba_bottle_heal:OnCreated()

@@ -1,3 +1,18 @@
+-- Copyright (C) 2018  The Dota IMBA Development Team
+--
+-- Licensed under the Apache License, Version 2.0 (the "License");
+-- you may not use this file except in compliance with the License.
+-- You may obtain a copy of the License at
+--
+-- http://www.apache.org/licenses/LICENSE-2.0
+--
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- See the License for the specific language governing permissions and
+-- limitations under the License.
+--
+
 function GameMode:OnDisconnect(keys)
 	-- GetConnectionState values:
 	-- 0 - no connection
@@ -72,6 +87,14 @@ function GameMode:OnGameRulesStateChange(keys)
 	CustomNetTables:SetTableValue("game_options", "game_state", {state = new_state})
 
 	-------------------------------------------------------------------------------------------------
+	-- IMBA: Team selection
+	-------------------------------------------------------------------------------------------------
+	if new_state == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
+		print("events: team selection")
+		InitializeTeamSelection()
+	end
+
+	-------------------------------------------------------------------------------------------------
 	-- IMBA: Pick screen stuff
 	-------------------------------------------------------------------------------------------------
 	if new_state == DOTA_GAMERULES_STATE_HERO_SELECTION then
@@ -95,7 +118,9 @@ function GameMode:OnGameRulesStateChange(keys)
 		ImbaNetGraph(10.0)
 
 		-- Initialize rune spawners
-		InitRunes()
+		if GetMapName() ~= "imba_1v1" then
+			InitRunes()
+		end
 
 		local donators_steamid = {}
 		local donators = GetDonators()
@@ -126,19 +151,58 @@ function GameMode:OnGameRulesStateChange(keys)
 --					CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "show_netgraph_heronames", {})
 				end
 
-				local donators = GetDonators()
-				for k, v in pairs(donators) do
-					CustomNetTables:SetTableValue("player_table", tostring(hero:GetPlayerID()), {
-						companion_model = donators[k].model,
-						companion_enabled = donators[k].enabled,
-						Lvl = CustomNetTables:GetTableValue("player_table", tostring(hero:GetPlayerID())).Lvl,
-					})
+				if GetMapName() ~= "imba_1v1" then -- error for gaben reasons
+					local donators = GetDonators()
+					for k, v in pairs(donators) do
+						CustomNetTables:SetTableValue("player_table", tostring(hero:GetPlayerID()), {
+							companion_model = donators[k].model,
+							companion_enabled = donators[k].enabled,
+							Lvl = CustomNetTables:GetTableValue("player_table", tostring(hero:GetPlayerID())).Lvl,
+						})
+					end
 				end
 			end
 
+			COURIER_TEAM = {}
 			if GetMapName() == "imba_overthrow" then
+				local foundTeams = {}
+				for _, playerStart in pairs(Entities:FindAllByClassname("info_courier_spawn")) do
+					COURIER_TEAM[playerStart:GetTeam()] = CreateUnitByName("npc_dota_courier", playerStart:GetAbsOrigin(), true, nil, nil, playerStart:GetTeam())
+				end
+
 				CustomGameEventManager:Send_ServerToAllClients("imbathrow_topbar", {imbathrow = true})
 			else
+				COURIER_TEAM[2] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_radiant"):GetAbsOrigin(), true, nil, nil, 2)
+				COURIER_TEAM[3] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_dire"):GetAbsOrigin(), true, nil, nil, 3)
+
+				local good_fillers = {
+					"good_filler_1",
+					"good_filler_3",
+					"good_filler_5",
+				}
+
+				local bad_fillers = {
+					"bad_filler_1",
+					"bad_filler_3",
+					"bad_filler_5",
+				}
+
+				for _, ent_name in pairs(good_fillers) do
+					local filler = Entities:FindByName(nil, ent_name)
+					local abs = filler:GetAbsOrigin()
+					filler:RemoveSelf()
+					local shrine = CreateUnitByName("npc_dota_goodguys_healers", abs, true, nil, nil, 2)
+					shrine:SetAbsOrigin(abs)
+				end
+
+				for _, ent_name in pairs(bad_fillers) do
+					local filler = Entities:FindByName(nil, ent_name)
+					local abs = filler:GetAbsOrigin()
+					filler:RemoveSelf()
+					local shrine = CreateUnitByName("npc_dota_badguys_healers", abs, true, nil, nil, 3)
+					shrine:SetAbsOrigin(abs)
+				end
+
 				CustomGameEventManager:Send_ServerToAllClients("imbathrow_topbar", {imbathrow = false})
 			end
 		end)
@@ -152,56 +216,69 @@ function GameMode:OnGameRulesStateChange(keys)
 
 		Timers:CreateTimer(60, function()
 			StartGarbageCollector()
-			--			DefineLosingTeam()
+--			DefineLosingTeam()
 			return 60
 		end)
 
-		if GetMapName() ~= "imba_standard" then
-			if RandomInt(1, 100) > 25 then
-				Timers:CreateTimer(RandomInt(5, 10) * 60, function()
+		if GetMapName() == "imba_frantic_10v10" then
+			if RandomInt(1, 100) > 20 then
+				Timers:CreateTimer((RandomInt(10, 20) * 60) + RandomInt(0, 60), function()
 					local pos = {}
 					pos[1] = Vector(6446, -6979, 1496)
 					pos[2] = Vector(RandomInt(-6000, 0), RandomInt(7150, 7300), 1423)
 					pos[3] = Vector(RandomInt(-1000, 2000), RandomInt(6900, 7200), 1440)
 					pos[4] = Vector(7041, -6263, 1461)
-					local pos = pos[4]
+					local pos = pos[RandomInt(1, 4)]
 
 					GridNav:DestroyTreesAroundPoint(pos, 80, false)
 					local item = CreateItem("item_the_caustic_finale", nil, nil)
 					local drop = CreateItemOnPositionSync(pos, item)
 				end)
 			end
-		end
-
-		if GetMapName() == "imba_overthrow" then
+		elseif GetMapName() == "imba_overthrow" then
 			countdownEnabled = true
 			CustomGameEventManager:Send_ServerToAllClients( "show_timer", {} )
-			DoEntFire( "center_experience_ring_particles", "Start", "0", 0, self, self  )
-			Timers:CreateTimer(function()
-				CountdownTimer()
-				self:ThinkGoldDrop() -- TODO: Enable this
-				self:ThinkSpecialItemDrop()
-				if nCOUNTDOWNTIMER == 30 then
-					CustomGameEventManager:Send_ServerToAllClients( "timer_alert", {} )
-				end
-				if nCOUNTDOWNTIMER <= 0 then
-					--Check to see if there's a tie
-					if isGameTied == false then
-						GameRules:SetCustomVictoryMessage( m_VictoryMessages[leadingTeam] )
-						GameMode:EndGame( leadingTeam )
-						countdownEnabled = false
-						return nil
-					else
-						TEAM_KILLS_TO_WIN = leadingTeamScore + 1
-						local broadcast_killcount =
-							{
-								killcount = TEAM_KILLS_TO_WIN
-							}
-						CustomGameEventManager:Send_ServerToAllClients( "overtime_alert", broadcast_killcount )
-					end
-				end
-				return 1.0
-			end)
+			DoEntFire( "center_experience_ring_particles", "Start", "0", 0, self, self )
+		elseif GetMapName() == "imba_1v1" then
+			local removed_ents = {
+				"lane_top_goodguys_melee_spawner",
+				"lane_bot_goodguys_melee_spawner",
+				"lane_top_badguys_melee_spawner",
+				"lane_bot_badguys_melee_spawner",
+			}
+
+			for _, ent_name in pairs(removed_ents) do
+				local ent = Entities:FindByName(nil, ent_name)
+				ent:RemoveSelf()
+			end
+
+			local blocked_camps = {}
+			blocked_camps[1] = {"neutralcamp_evil_1", Vector(-4170, 3670, 512)}
+			blocked_camps[2] = {"neutralcamp_evil_2", Vector(-3030, 4500, 512)}
+			blocked_camps[3] = {"neutralcamp_evil_3", Vector(-2000, 4220, 384)}
+			blocked_camps[4] = {"neutralcamp_evil_4", Vector(-10, 3300, 512)}
+			blocked_camps[5] = {"neutralcamp_evil_5", Vector(1315, 3520, 512)}
+			blocked_camps[6] = {"neutralcamp_evil_6", Vector(-675, 2280, 1151)}
+			blocked_camps[7] = {"neutralcamp_evil_7", Vector(2400, 360, 520)}
+			blocked_camps[8] = {"neutralcamp_evil_8", Vector(4060, -620, 384)}
+			blocked_camps[9] = {"neutralcamp_evil_9", Vector(4100, 1050, 1288)}
+			blocked_camps[10] = {"neutralcamp_good_1", Vector(3010, -4430, 512)}
+			blocked_camps[11] = {"neutralcamp_good_2", Vector(4810, -4200, 512)}
+			blocked_camps[12] = {"neutralcamp_good_3", Vector(787, -4500, 512)}
+			blocked_camps[13] = {"neutralcamp_good_4", Vector(-430, -3100, 384)}
+			blocked_camps[14] = {"neutralcamp_good_5", Vector(-1500, -4290, 384)}
+			blocked_camps[15] = {"neutralcamp_good_6", Vector(-3040, 100, 512)}
+			blocked_camps[16] = {"neutralcamp_good_7", Vector(-3700, 890, 512)}
+			blocked_camps[17] = {"neutralcamp_good_8", Vector(-4780, -190, 512)}
+			blocked_camps[18] = {"neutralcamp_good_9", Vector(256, -1717, 1280)}
+
+			for i = 1, #blocked_camps do
+				local ent = Entities:FindByName(nil, blocked_camps[i][1])
+				local dummy = CreateUnitByName("npc_dummy_unit_perma", blocked_camps[i][2], true, nil, nil, DOTA_TEAM_NEUTRALS)
+			end
+
+			-- not removing neutral spawners for reasons...
+--			Entities:FindByClassname(nil, "npc_dota_neutral_spawner"):RemoveSelf()
 		end
 	end
 
@@ -216,7 +293,6 @@ function GameMode:OnGameRulesStateChange(keys)
 			local xpInfo = {}
 
 			for k, v in pairs(players) do
-
 				local level = GetXPLevelByXp(v.xp)
 				local title = GetTitleIXP(level)
 				local color = GetTitleColorIXP(title, true)
@@ -237,7 +313,12 @@ function GameMode:OnGameRulesStateChange(keys)
 				xp_info = xpInfo,
 				info = {
 					winner = GAME_WINNER_TEAM,
-					gameid = GetApiGameId()
+					gameid = GetApiGameId(),
+					radiant_score = GetTeamHeroKills(2),
+					dire_score = GetTeamHeroKills(3),
+					custom1_score = GetTeamHeroKills(6),
+					custom2_score = GetTeamHeroKills(7),
+					custom3_score = GetTeamHeroKills(8),
 				}
 			})
 
@@ -333,11 +414,30 @@ function GameMode:OnNPCSpawned(keys)
 			return
 		end
 
-		-- monkey king fix, do not spawn the 14 monkeys
+		-- meepo fix
+		if npc:GetUnitName() == "npc_dota_hero_meepo" then
+			if npc:GetCloneSource() then
+				if npc:GetCloneSource():IsAlive() then
+					npc:RemoveModifierByName("modifier_command_restricted")
+					npc:RemoveModifierByName("modifier_invulnerable")
+				else
+					npc:AddNewModifier(npc, nil, "modifier_command_restricted", {})
+					npc:AddNewModifier(npc, nil, "modifier_invulnerable", {})
+				end
+			end
+
+			if TRUE_MEEPO_HAS_SPAWNED == false then
+				npc.is_real_meepo = true
+				TRUE_MEEPO_HAS_SPAWNED = true
+			end
+		end
+
+		-- Monkey King fix
 		if npc:GetUnitName() == "npc_dota_hero_monkey_king" then
 			if TRUE_MK_HAS_SPAWNED then
-				return nil
+				return
 			else
+				npc.is_real_mk = true
 				TRUE_MK_HAS_SPAWNED = true
 			end
 		end
@@ -533,16 +633,6 @@ function GameMode:OnNPCSpawned(keys)
 		npc.vengeance_aura_target:RemoveModifierByName("modifier_imba_command_aura_negative_aura")
 		npc.vengeance_aura_target = nil
 	end
-
-	-------------------------------------------------------------------------------------------------
-	-- IMBA: Creep stats adjustment
-	-------------------------------------------------------------------------------------------------
-	if not npc:IsHero() and not npc:IsOwnedByAnyPlayer() and not npc:IsBuilding() and not npc:IsNeutralUnitType() then
-		-- Add passive buff to lane creeps
-		if string.find(npc:GetUnitName(), "dota_creep") then
-			npc:AddNewModifier(npc, nil, "modifier_imba_creep_power", {})
-		end
-	end
 end
 
 -- An entity somewhere has been hurt.  This event fires very often with many units so don't do too many expensive
@@ -557,15 +647,25 @@ end
 
 -- An item was picked up off the ground
 function GameMode:OnItemPickedUp(keys)
+	
+	-- The playerID of the hero who is buying something
 	local heroEntity = EntIndexToHScript(keys.HeroEntityIndex)
-	--local itemEntity = EntIndexToHScript(keys.ItemEntityIndex)
-	--local player = PlayerResource:GetPlayer(keys.PlayerID)
-	local itemname = keys.itemname
+	local plyID = keys.PlayerID
+	if not plyID then return end
+	local hero = PlayerResource:GetSelectedHeroEntity(plyID)
+	local itemName = keys.itemname
+	local itemcost = keys.itemcost
 
-	if heroEntity:IsHero() and itemname == "item_bag_of_gold" then
+	if heroEntity:IsHero() and itemName == "item_bag_of_gold" then
 		-- Pick up the gold
 		GoldPickup(keys)
 	end
+	
+	ApiEvent(ApiEventCodes.ItemPickedUp, {
+		tostring(keys.itemname),
+		tostring(hero:GetUnitName()),
+		tostring(PlayerResource:GetSteamID(plyID))
+	})
 end
 
 -- A player has reconnected to the game. This function can be used to repaint Player-based particles or change
@@ -587,6 +687,7 @@ function GameMode:OnItemPurchased( keys )
 		tostring(hero:GetUnitName()),
 		tostring(PlayerResource:GetSteamID(plyID))
 	})
+	
 end
 
 -- An ability was used by a player
@@ -868,6 +969,10 @@ function GameMode:OnTeamKillCredit(keys)
 			broadcast_kill_event.close_to_victory = 1
 		end
 		CustomGameEventManager:Send_ServerToAllClients( "kill_event", broadcast_kill_event )
+	elseif GetMapName() == "imba_1v1" then
+		if nTeamKills == IMBA_1V1_SCORE then
+			GameRules:SetGameWinner( killer_team )
+		end
 	end
 
 	-------------------------------------------------------------------------------------------------
@@ -1049,22 +1154,26 @@ function GameMode:OnEntityKilled( keys )
 		end
 
 		if killed_unit:GetUnitName() == "npc_dota_hero_meepo" then
-			if killed_unit:GetCloneSource() and killed_unit:GetCloneSource():HasModifier("modifier_item_imba_aegis") then
-				local meepo_table = Entities:FindAllByName("npc_dota_hero_meepo")
-				if meepo_table then
-					for i = 1, #meepo_table do
-						if meepo_table[i]:IsClone() then
-							meepo_table[i]:SetRespawnsDisabled(true)
-							meepo_table[i]:GetCloneSource():SetTimeUntilRespawn(killed_unit:GetCloneSource():FindModifierByName("modifier_item_imba_aegis").reincarnate_time)
-							meepo_table[i]:GetCloneSource():RemoveModifierByName("modifier_item_imba_aegis")
-						else
-							meepo_table[i]:SetTimeUntilRespawn(killed_unit:FindModifierByName("modifier_item_imba_aegis").reincarnate_time)
-							return
+			if killed_unit:GetCloneSource() then
+				if killed_unit:GetCloneSource():HasModifier("modifier_item_imba_aegis") then
+					local meepo_table = Entities:FindAllByName("npc_dota_hero_meepo")
+					if meepo_table then
+						for i = 1, #meepo_table do
+							if meepo_table[i]:IsClone() then
+								meepo_table[i]:SetRespawnsDisabled(true)
+								meepo_table[i]:GetCloneSource():SetTimeUntilRespawn(killed_unit:GetCloneSource():FindModifierByName("modifier_item_imba_aegis").reincarnate_time)
+								meepo_table[i]:GetCloneSource():RemoveModifierByName("modifier_item_imba_aegis")
+							else
+								meepo_table[i]:SetTimeUntilRespawn(killed_unit:FindModifierByName("modifier_item_imba_aegis").reincarnate_time)
+								return
+							end
 						end
 					end
 				end
-			elseif killed_unit:HasModifier("modifier_item_imba_aegis") then
-				killed_unit:SetTimeUntilRespawn(killed_unit:FindModifierByName("modifier_item_imba_aegis").reincarnate_time)
+			else
+				if killed_unit:HasModifier("modifier_item_imba_aegis") then
+					killed_unit:SetTimeUntilRespawn(killed_unit:FindModifierByName("modifier_item_imba_aegis").reincarnate_time)
+				end
 			end
 		end
 
@@ -1075,7 +1184,7 @@ function GameMode:OnEntityKilled( keys )
 		elseif killed_unit:IsRealHero() and killed_unit:GetPlayerID() and (PlayerResource:IsImbaPlayer(killed_unit:GetPlayerID()) or (GameRules:IsCheatMode() == true) ) then
 			if GetMapName() ~= "imba_overthrow" then
 				-- Calculate base respawn timer, capped at 60 seconds
-				local hero_level = math.min(killed_unit:GetLevel(), 25)
+				local hero_level = math.min(killed_unit:GetLevel(), #HERO_RESPAWN_TIME_PER_LEVEL)
 				local respawn_time = HERO_RESPAWN_TIME_PER_LEVEL[hero_level]
 				-- Calculate respawn timer reduction due to talents and modifiers
 				respawn_time = respawn_time * killed_unit:GetRespawnTimeModifier_Pct() * 0.01
@@ -1095,11 +1204,10 @@ function GameMode:OnEntityKilled( keys )
 				else
 					if killed_unit:HasModifier("modifier_imba_reapers_scythe_respawn") then
 						local reaper_scythe = killer:FindAbilityByName("imba_necrolyte_reapers_scythe"):GetSpecialValueFor("respawn_increase")
-						print("ignore respawn time limit")
-						print(reaper_scythe)
 						respawn_time = HERO_RESPAWN_TIME_PER_LEVEL[hero_level] + reaper_scythe
-					elseif respawn_time > HERO_RESPAWN_TIME_PER_LEVEL[25] then
-						respawn_time = HERO_RESPAWN_TIME_PER_LEVEL[25]
+					elseif respawn_time > HERO_RESPAWN_TIME_PER_LEVEL[#HERO_RESPAWN_TIME_PER_LEVEL] then
+						ApiPrint("Respawn Time too high: "..tostring(respawn_time)..". New Respawn Time:"..tostring(HERO_RESPAWN_TIME_PER_LEVEL[#HERO_RESPAWN_TIME_PER_LEVEL]))
+						respawn_time = HERO_RESPAWN_TIME_PER_LEVEL[#HERO_RESPAWN_TIME_PER_LEVEL]
 					end
 
 					-- divide the respawn time by 2 for frantic mode
@@ -1223,6 +1331,10 @@ function GameMode:OnEntityKilled( keys )
 			else
 				CombatEvents("generic", "tower", killed_unit, killer)
 			end
+
+			if GetMapName() == "imba_1v1" then
+				GameRules:SetGameWinner(killer:GetTeamNumber())
+			end
 		elseif killed_unit:IsCourier() then
 			CombatEvents("generic", "courier_dead", killed_unit)
 		elseif killed_unit:GetUnitName() == "npc_imba_roshan" then
@@ -1295,13 +1407,15 @@ function GameMode:OnItemCombined(keys)
 	-- The playerID of the hero who is buying something
 	local plyID = keys.PlayerID
 	if not plyID then return end
-	local player = PlayerResource:GetPlayer(plyID)
-
-	-- The name of the item purchased
+	local hero = PlayerResource:GetSelectedHeroEntity(plyID)
 	local itemName = keys.itemname
-
-	-- The cost of the item purchased
 	local itemcost = keys.itemcost
+
+	ApiEvent(ApiEventCodes.ItemCombined, {
+		tostring(keys.itemname),
+		tostring(hero:GetUnitName()),
+		tostring(PlayerResource:GetSteamID(plyID))
+	})
 end
 
 -- This function is called whenever an ability begins its PhaseStart phase (but before it is actually cast)

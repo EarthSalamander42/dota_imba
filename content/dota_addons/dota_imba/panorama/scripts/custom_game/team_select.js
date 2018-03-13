@@ -3,24 +3,26 @@
 // Global list of panels representing each of the teams
 var g_TeamPanels = [];
 
-// Global list of panels representing each of the players (1 per-player). These are reparented
+// Global list of panels representing each of the players (1 per-player). These
+// are reparented
 // to the appropriate team panel to indicate which team the player is on.
 var g_PlayerPanels = [];
 
 var g_TEAM_SPECATOR = 1;
 
-//--------------------------------------------------------------------------------------------------
-// Handeler for when the unssigned players panel is clicked that causes the player to be reassigned
+// --------------------------------------------------------------------------------------------------
+// Handeler for when the unssigned players panel is clicked that causes the
+// player to be reassigned
 // to the unssigned players team
-//--------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------
 function OnLeaveTeamPressed() {
 	Game.PlayerJoinTeam(DOTATeam_t.DOTA_TEAM_NOTEAM);
 }
 
 
-//--------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------
 // Handler for when the Lock and Start button is pressed
-//--------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------
 function OnLockAndStartPressed() {
 	// Don't allow a forced start if there are unassigned players
 	if (Game.GetUnassignedPlayerIDs().length > 0)
@@ -37,9 +39,9 @@ function OnLockAndStartPressed() {
 }
 
 
-//--------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------
 // Handler for when the Cancel and Unlock button is pressed
-//--------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------
 function OnCancelAndUnlockPressed() {
 	// Unlock the team selection, allowing the players to change teams again
 	Game.SetTeamSelectionLocked(false);
@@ -49,9 +51,9 @@ function OnCancelAndUnlockPressed() {
 }
 
 
-//--------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------
 // Handler for the auto assign button being pressed
-//--------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------
 function OnAutoAssignPressed() {
 	// Assign all of the currently unassigned players to a team, trying
 	// to keep any players that are in a party on the same team.
@@ -59,24 +61,28 @@ function OnAutoAssignPressed() {
 }
 
 
-//--------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------
 // Handler for the shuffle player teams button being pressed
-//--------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------
 function OnShufflePlayersPressed() {
-	// Shuffle the team assignments of any players which are assigned to a team, 
-	// this will not assign any players to a team which are currently unassigned. 
+	// Shuffle the team assignments of any players which are assigned to a team,
+	// this will not assign any players to a team which are currently
+	// unassigned.
 	// This will also not attempt to keep players in a party on the same team.
 	Game.ShufflePlayerTeamAssignments();
 }
 
 
-//--------------------------------------------------------------------------------------------------
-// Find the player panel for the specified player in the global list or create the panel if there 
-// is not already one in the global list. Make the new or existing panel a child panel of the 
+// --------------------------------------------------------------------------------------------------
+// Find the player panel for the specified player in the global list or create
+// the panel if there
+// is not already one in the global list. Make the new or existing panel a child
+// panel of the
 // specified parent panel
-//--------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------
 function FindOrCreatePanelForPlayer(playerId, parent) {
-	// Search the list of player player panels for one witht the specified player id
+	// Search the list of player player panels for one witht the specified
+	// player id
 	for (var i = 0; i < g_PlayerPanels.length; ++i) {
 		var playerPanel = g_PlayerPanels[i];
 
@@ -86,21 +92,23 @@ function FindOrCreatePanelForPlayer(playerId, parent) {
 		}
 	}
 
-	// Create a new player panel for the specified player id if an existing one was not found
+	// Create a new player panel for the specified player id if an existing one
+	// was not found
 	var newPlayerPanel = $.CreatePanel("Panel", parent, "player_root");
 	newPlayerPanel.SetAttributeInt("player_id", playerId);
 	newPlayerPanel.BLoadLayout("file://{resources}/layout/custom_game/team_select_player.xml", false, false);
 
-	// Add the panel to the global list of player planels so that we will find it next time
+	// Add the panel to the global list of player planels so that we will find
+	// it next time
 	g_PlayerPanels.push(newPlayerPanel);
 
 	return newPlayerPanel;
 }
 
 
-//--------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------
 // Find player slot n in the specified team panel
-//--------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------
 function FindPlayerSlotInTeamPanel(teamPanel, playerSlot) {
 	var playerListNode = teamPanel.FindChildInLayoutFile("PlayerList");
 	if (playerListNode == null)
@@ -118,17 +126,18 @@ function FindPlayerSlotInTeamPanel(teamPanel, playerSlot) {
 }
 
 
-//--------------------------------------------------------------------------------------------------
-// Update the specified team panel ensuring that it has all of the players currently assigned to its
+// --------------------------------------------------------------------------------------------------
+// Update the specified team panel ensuring that it has all of the players
+// currently assigned to its
 // team and the the remaining slots are marked as empty
-//--------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------
 function UpdateTeamPanel(teamPanel) {
 	// Get the id of team this panel is displaying
 	var teamId = teamPanel.GetAttributeInt("team_id", -1);
 	if (teamId <= 0)
 		return;
 
-	// Add all of the players currently assigned to the team 
+	// Add all of the players currently assigned to the team
 	var teamPlayers = Game.GetPlayerIDsOnTeam(teamId);
 	for (var i = 0; i < teamPlayers.length; ++i) {
 		var playerSlot = FindPlayerSlotInTeamPanel(teamPanel, i);
@@ -159,10 +168,11 @@ function UpdateTeamPanel(teamPanel) {
 }
 
 
-//--------------------------------------------------------------------------------------------------
-// Update the unassigned players list and all of the team panels whenever a change is made to the
+// --------------------------------------------------------------------------------------------------
+// Update the unassigned players list and all of the team panels whenever a
+// change is made to the
 // player team assignments
-//--------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------
 function OnTeamPlayerListChanged() {
 	var unassignedPlayersContainerNode = $("#UnassignedPlayersContainer");
 	if (unassignedPlayersContainerNode === null)
@@ -174,7 +184,7 @@ function OnTeamPlayerListChanged() {
 		playerPanel.SetParent(unassignedPlayersContainerNode);
 	}
 
-	// Make sure all of the unassigned player have a player panel 
+	// Make sure all of the unassigned player have a player panel
 	// and that panel is a child of the unassigned player panel.
 	var unassignedPlayers = Game.GetUnassignedPlayerIDs();
 	for (var i = 0; i < unassignedPlayers.length; ++i) {
@@ -188,14 +198,15 @@ function OnTeamPlayerListChanged() {
 		UpdateTeamPanel(g_TeamPanels[i])
 	}
 
-	// Set the class on the panel to indicate if there are any unassigned players
+	// Set the class on the panel to indicate if there are any unassigned
+	// players
 	$("#GameAndPlayersRoot").SetHasClass("unassigned_players", unassignedPlayers.length != 0);
 	$("#GameAndPlayersRoot").SetHasClass("no_unassigned_players", unassignedPlayers.length == 0);
 }
 
 
-//--------------------------------------------------------------------------------------------------
-//--------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------
 function OnPlayerSelectedTeam(nPlayerId, nTeamId, bSuccess) {
 	var playerInfo = Game.GetLocalPlayerInfo();
 	if (!playerInfo)
@@ -213,23 +224,24 @@ function OnPlayerSelectedTeam(nPlayerId, nTeamId, bSuccess) {
 }
 
 
-//--------------------------------------------------------------------------------------------------
-// Check to see if the local player has host privileges and set the 'player_has_host_privileges' on
+// --------------------------------------------------------------------------------------------------
+// Check to see if the local player has host privileges and set the
+// 'player_has_host_privileges' on
 // the root panel if so, this allows buttons to only be displayed for the host.
-//--------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------
 function CheckForHostPrivileges() {
 	var playerInfo = Game.GetLocalPlayerInfo();
 	if (!playerInfo)
 		return;
 
-	// Set the "player_has_host_privileges" class on the panel, this can be used 
+	// Set the "player_has_host_privileges" class on the panel, this can be used
 	// to have some sub-panels on display or be enabled for the host player.
 	$.GetContextPanel().SetHasClass("player_has_host_privileges", playerInfo.player_has_host_privileges);
 }
 
-//--------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------
 // Update the state for the transition timer periodically
-//--------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------
 function UpdateTimer() {
 	var gameTime = Game.GetGameTime();
 	var transitionTime = Game.GetStateTransitionTime();
@@ -253,7 +265,8 @@ function UpdateTimer() {
 	$("#StartGameCountdownTimer").SetHasClass("auto_start", autoLaunch);
 	$("#StartGameCountdownTimer").SetHasClass("forced_start", (autoLaunch == false));
 
-	// Allow the ui to update its state based on team selection being locked or unlocked
+	// Allow the ui to update its state based on team selection being locked or
+	// unlocked
 	$.GetContextPanel().SetHasClass("teams_locked", Game.GetTeamSelectionLocked());
 	$.GetContextPanel().SetHasClass("teams_unlocked", Game.GetTeamSelectionLocked() == false);
 
@@ -265,6 +278,7 @@ function UpdateTimer() {
 function OnGameStateUpdated(table_name, key, data) {
 	UpdateGameState();
 }
+
 CustomNetTables.SubscribeNetTableListener("game_options", OnGameStateUpdated)
 
 function UpdateGameState() {
@@ -275,10 +289,22 @@ function UpdateGameState() {
 	}
 }
 
-//--------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------
 // Entry point called when the team select panel is created
-//--------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------
 (function () {
+	
+	// -------------------------
+	// auto_team_select is used on 5v5 and 10v10
+	// -------------------------
+	if (
+		(Game.GetMapInfo().map_display_name == "imba_standard") ||
+		(Game.GetMapInfo().map_display_name == "imba_10v10")
+	) {
+		$.Msg("Skipping legacy team select on map");
+		return;
+	}
+	
 	var bShowSpectatorTeam = false;
 	var bAutoAssignTeams = true;
 
@@ -293,7 +319,9 @@ function UpdateGameState() {
 		}
 	}
 
-	$("#TeamSelectContainer").SetAcceptsFocus(true); // Prevents the chat window from taking focus by default
+	$("#TeamSelectContainer").SetAcceptsFocus(true); // Prevents the chat
+														// window from taking
+														// focus by default
 	var teamsListRootNode = $("#TeamsListRoot");
 
 	// Construct the panels for each team
@@ -309,7 +337,8 @@ function UpdateGameState() {
 		teamNode.SetAttributeInt("team_id", teamId);
 		teamNode.BLoadLayout("file://{resources}/layout/custom_game/team_select_team.xml", false, false);
 
-		// Add the team panel to the global list so we can get to it easily later to update it
+		// Add the team panel to the global list so we can get to it easily
+		// later to update it
 		g_TeamPanels.push(teamNode);
 	}
 
@@ -321,13 +350,16 @@ function UpdateGameState() {
 	// Do an initial update of the player team assignment
 	OnTeamPlayerListChanged();
 
-	// Start updating the timer, this function will schedule itself to be called periodically
+	// Start updating the timer, this function will schedule itself to be called
+	// periodically
 	UpdateTimer();
 
-	// Register a listener for the event which is brodcast when the team assignment of a player is actually assigned
+	// Register a listener for the event which is brodcast when the team
+	// assignment of a player is actually assigned
 	$.RegisterForUnhandledEvent("DOTAGame_TeamPlayerListChanged", OnTeamPlayerListChanged);
 
-	// Register a listener for the event which is broadcast whenever a player attempts to pick a team
+	// Register a listener for the event which is broadcast whenever a player
+	// attempts to pick a team
 	$.RegisterForUnhandledEvent("DOTAGame_PlayerSelectedCustomTeam", OnPlayerSelectedTeam);
 
 })();

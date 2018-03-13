@@ -1622,7 +1622,7 @@ function IsImbaSilence(modifier_name)
 		 ["modifier_item_imba_orchid_debuff"] = true,
 		 ["modifier_item_imba_bloodthorn_debuff"] = true,
 		 ["modifier_item_imba_kaya_silence"] = true,
-		 ["modifier_item_imba_sange_azura_proc"] = true,
+		 ["modifier_item_imba_sange_kaya_proc"] = true,
 		 ["modifier_item_imba_kaya_yasha_silence"] = true,
 		 ["modifier_item_imba_triumvirate_proc_debuff"] = true}
 
@@ -1808,4 +1808,18 @@ end
 function GetRandomPosition2D(vPosition, fRadius)
 	local newPos = vPosition + Vector(1,0,0) * math.random(0-fRadius, fRadius)
 	return RotatePosition(vPosition, QAngle(0,math.random(-360,360),0), newPos)
+end
+
+function CDOTA_BaseNPC:IsImbaInvisible()
+	if self:IsInvisible() then
+		return true
+	end
+
+	for _, modifier in pairs(IMBA_INVISIBLE_MODIFIERS) do
+		if self:HasModifier(modifier) then
+			return true
+		end
+	end
+
+	return false
 end

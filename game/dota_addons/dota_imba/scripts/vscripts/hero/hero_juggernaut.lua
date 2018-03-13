@@ -1031,7 +1031,7 @@ function modifier_imba_juggernaut_blade_dance_empowered_slice:SeekAndDestroyPtTo
 				end
 
 				-- If this enemy is not a valid target, do nothing
-				if enemy:IsInvisible() or enemy:IsOutOfGame() then
+				if enemy:IsImbaInvisible() or enemy:IsOutOfGame() then
 					enemy_hit = true
 				end
 

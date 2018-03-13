@@ -305,7 +305,7 @@ function modifier_imba_starfall_scepter_thinker:OnIntervalThink()
 		end
 
 		-- If caster is invisible, do nothing
-		if self.caster:IsInvisible() then
+		if self.caster:IsImbaInvisible() then
 			return nil
 		end
 
@@ -1436,7 +1436,7 @@ end
 function modifier_imba_moonlight_shadow_talent_starstorm:OnIntervalThink()
 	if IsServer() then
 		-- If the parent is invisible, do nothing
-		if self.parent:IsInvisible() then
+		if self.parent:IsImbaInvisible() then
 			return nil
 		end
 

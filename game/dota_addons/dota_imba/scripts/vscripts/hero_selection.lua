@@ -12,7 +12,7 @@
 -- See the License for the specific language governing permissions and
 -- limitations under the License.
 --
--- Editors: 
+-- Editors:
 --     EarthSalamander #42
 --
 
@@ -179,7 +179,7 @@ function HeroSelection:Start()
 			HeroSelection.playerPickState[pID].pick_state = "selecting_hero"
 			print("Pick State:", pID, HeroSelection.playerPickState[pID].pick_state)
 			HeroSelection.playerPickState[pID].repick_state = false
-			HeroSelection.HorriblyImplementedReconnectDetection[pID] = true			
+			HeroSelection.HorriblyImplementedReconnectDetection[pID] = true
 		end
 	end
 
@@ -200,7 +200,7 @@ function HeroSelection:Start()
 
 	-- Play relevant pick lines
 	if IMBA_PICK_MODE_ALL_RANDOM or IMBA_PICK_MODE_ALL_RANDOM_SAME_HERO then
-		EmitGlobalSound("announcer_announcer_type_all_random")	
+		EmitGlobalSound("announcer_announcer_type_all_random")
 	elseif IMBA_PICK_MODE_ARENA_MODE then
 		EmitGlobalSound("announcer_announcer_type_death_match")
 	else
@@ -213,7 +213,7 @@ function HeroSelection:UiInitialized(event)
 	Timers:CreateTimer(0.04, function()
 		HeroSelection.HorriblyImplementedReconnectDetection[event.PlayerID] = true
 	end)
-end 
+end
 
 --[[
 	Tick
@@ -221,7 +221,7 @@ end
 	Params:
 		- event {table} - A table containing PlayerID and HeroID.
 ]]
-function HeroSelection:Tick() 
+function HeroSelection:Tick()
 	-- Send a time update to all clients
 	if HeroSelection.TimeLeft >= 0 then
 		CustomGameEventManager:Send_ServerToAllClients( "picking_time_update", {time = HeroSelection.TimeLeft} )
@@ -245,14 +245,17 @@ function HeroSelection:Tick()
 end
 
 function HeroSelection:RandomHero(event)
-local id = event.PlayerID
-if PlayerResource:GetConnectionState(id) == 1 then
-	print("Bot, ignoring..")
-else
-	if HeroSelection.playerPickState[id].pick_state ~= "selecting_hero" then
-		return nil
+	local id = event.PlayerID
+	local forced = event.forced
+	print("Forced Random:", forced)
+
+	if PlayerResource:GetConnectionState(id) == 1 then
+		print("Bot, ignoring..")
+	else
+		if HeroSelection.playerPickState[id].pick_state ~= "selecting_hero" then
+			return nil
+		end
 	end
-end
 
 	-- Roll a random hero
 	local random_hero = HeroSelection.random_heroes[RandomInt(1, #HeroSelection.random_heroes)]
@@ -262,7 +265,7 @@ end
 			if random_hero == picked_hero then
 				print("10v10 hero disabled, random again...")
 				HeroSelection:RandomHero({PlayerID = id})
-				break
+				return
 			end
 		end
 		if GetMapName() == "imba_frantic_10v10" then
@@ -270,7 +273,7 @@ end
 				if random_hero == picked_hero then
 					print("10v10 hero disabled, random again...")
 					HeroSelection:RandomHero({PlayerID = id})
-					break
+					return
 				end
 			end
 		end
@@ -280,7 +283,7 @@ end
 		if random_hero == picked_hero then
 			print("Hero disabled, random again...")
 			HeroSelection:RandomHero({PlayerID = id})
-			break
+			return
 		end
 	end
 
@@ -288,7 +291,7 @@ end
 		if random_hero == picked_hero then
 			print("Hero disabled silently, random again...")
 			HeroSelection:RandomHero({PlayerID = id})
-			break
+			return
 		end
 	end
 
@@ -296,7 +299,7 @@ end
 		if random_hero == picked_hero then
 			print("Hero picked, random again...")
 			HeroSelection:RandomHero({PlayerID = id})
-			break
+			return
 		end
 	end
 
@@ -305,7 +308,7 @@ end
 			if random_hero == picked_hero then
 				print("Overthrow hero disabled, random again...")
 				HeroSelection:RandomHero({PlayerID = id})
-				break
+				return
 			end
 		end
 	end
@@ -330,7 +333,7 @@ end
 end
 
 function HeroSelection:RandomImbaHero(event)
-local id = event.PlayerID
+	local id = event.PlayerID
 
 	if HeroSelection.playerPickState[id].pick_state ~= "selecting_hero" then return nil end
 
@@ -341,7 +344,7 @@ local id = event.PlayerID
 			if random_hero == picked_hero then
 				print("10v10 hero disabled, random again...")
 				HeroSelection:RandomHero({PlayerID = id})
-				break
+				return
 			end
 		end
 		if GetMapName() == "imba_frantic_10v10" then
@@ -349,7 +352,7 @@ local id = event.PlayerID
 				if random_hero == picked_hero then
 					print("10v10 hero disabled, random again...")
 					HeroSelection:RandomHero({PlayerID = id})
-					break
+					return
 				end
 			end
 		end
@@ -359,7 +362,7 @@ local id = event.PlayerID
 		if random_hero == picked_hero then
 			print("Hero disabled, random again...")
 			HeroSelection:RandomHero({PlayerID = id})
-			break
+			return
 		end
 	end
 
@@ -367,7 +370,7 @@ local id = event.PlayerID
 		if random_hero == picked_hero then
 			print("Hero disabled silently, random again...")
 			HeroSelection:RandomHero({PlayerID = id})
-			break
+			return
 		end
 	end
 
@@ -375,7 +378,7 @@ local id = event.PlayerID
 		if random_hero == picked_hero then
 			print("Hero picked, random again...")
 			HeroSelection:RandomHero({PlayerID = id})
-			break
+			return
 		end
 	end
 
@@ -384,7 +387,7 @@ local id = event.PlayerID
 			if random_hero == picked_hero then
 				print("Overthrow hero disabled, random again...")
 				HeroSelection:RandomHero({PlayerID = id})
-				break
+				return
 			end
 		end
 	end
@@ -402,7 +405,7 @@ local id = event.PlayerID
 end
 
 function HeroSelection:RandomSameHero()
---	if id ~= -1 and HeroSelection.playerPickState[id].pick_state ~= "selecting_hero" then return end
+	--	if id ~= -1 and HeroSelection.playerPickState[id].pick_state ~= "selecting_hero" then return end
 
 	-- Roll a random hero, and keep it stored
 	local random_hero = HeroSelection.random_heroes[RandomInt(1, #HeroSelection.random_heroes)]
@@ -527,7 +530,7 @@ function HeroSelection:HeroSelect(event)
 			return nil
 		end
 	end
-		
+
 	for _, picked_hero in pairs(HeroSelection.direPicks) do
 		if event.HeroName == picked_hero then
 			return nil
@@ -582,7 +585,7 @@ end
 	to disappear.
 ]]
 function HeroSelection:EndPicking()
-local time = 0.0
+	local time = 0.0
 
 	--Stop listening to events (except picks)
 	CustomGameEventManager:UnregisterListener( self.listener_repick )
@@ -607,8 +610,8 @@ local time = 0.0
 	StopSoundOn("Imba.PickPhaseDrums", HeroSelection.pick_sound_dummy_bad)
 
 	-- Destroy dummy!
-	UTIL_Remove(HeroSelection.pick_sound_dummy_good) 
-	UTIL_Remove(HeroSelection.pick_sound_dummy_bad) 
+	UTIL_Remove(HeroSelection.pick_sound_dummy_good)
+	UTIL_Remove(HeroSelection.pick_sound_dummy_bad)
 end
 
 --[[
@@ -704,10 +707,9 @@ function HeroSelection:AssignHero(player_id, hero_name, dev_command)
 		end
 
 		-- Set up player color
-		PlayerResource:SetCustomPlayerColor(player_id, PLAYER_COLORS[player_id][1], PLAYER_COLORS[player_id][2], PLAYER_COLORS[player_id][3])
-
-		-- init override of talent window
---		InitializeTalentsOverride(hero)
+--		if player_id > 9 then
+			PlayerResource:SetCustomPlayerColor(player_id, PLAYER_COLORS[player_id][1], PLAYER_COLORS[player_id][2], PLAYER_COLORS[player_id][3])
+--		end
 
 --		PlayerResource:SetCameraTarget(player_id, nil)
 		Timers:CreateTimer(1.0, function()
@@ -721,19 +723,38 @@ function HeroSelection:AssignHero(player_id, hero_name, dev_command)
 		-- TODO: in js, remove the function that gray out a hero when picked, since this function should do it in real time
 		HeroSelection:HeroList(0.1) -- send the picked hero list once a hero is picked
 
+		COURIER_TEAM[hero:GetTeamNumber()]:SetControllableByPlayer(hero:GetPlayerID(), true)
+
 		Imbattlepass:AddItemEffects(hero)
 	end, player_id)
 end
 
 -- Sends this hero's nonhidden abilities to the client
 function HeroSelection:PickAbilitiesRequested(event)
---	PlayerResource:ReplaceHeroWith(event.PlayerID, event.HeroName, 0, 0 )
+	--	PlayerResource:ReplaceHeroWith(event.PlayerID, event.HeroName, 0, 0 )
 	CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(event.PlayerID), "pick_abilities", { heroAbilities = HeroSelection:GetPickScreenAbilities(event.HeroName) })
 end
 
 -- Returns an array with the hero's non-hidden abilities
 function HeroSelection:GetPickScreenAbilities(hero_name)
 local hero_abilities = {}
+local custom_hero = false
+
+--	for k, v in pairs(HeroSelection.heroes_custom) do
+--		if v == hero_name then
+--			custom_hero = true
+--			break
+--		end
+--	end
+
+--	if custom_hero == true then
+--		for i = 1, 9 do
+--			if GetKeyValueByUnitName(hero_name, "Ability"..i) ~= nil then
+--				hero_abilities[i] = GetKeyValueByUnitName(hero_name, "Ability"..i)
+--			end
+--		end
+--		return
+--	end
 
 	for i = 1, 9 do
 		if GetKeyValueByHeroName(hero_name, "Ability"..i) ~= nil then

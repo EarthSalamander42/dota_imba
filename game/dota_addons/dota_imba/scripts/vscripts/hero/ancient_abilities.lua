@@ -14,390 +14,199 @@
 --
 -- Editors:
 --     Firetoad, 10.01.2016
---     suthernfriend, 03.02.2018
+--	   Firetoad, 24.02.2018
 
-function AncientHealth( keys )
-	local caster = keys.caster
-	local ability = keys.ability
+-- Ancient Defense ability
+imba_ancient_defense = class({})
 
-	-- Parameters
-	local health = ability:GetLevelSpecialValueFor("ancient_health", 0)
+LinkLuaModifier("modifier_imba_ancient_defense", "hero/ancient_abilities", LUA_MODIFIER_MOTION_NONE)
 
-	-- Update health
-	SetCreatureHealth(caster, health, true)
+function imba_ancient_defense:IsHiddenWhenStolen() return false end
+function imba_ancient_defense:IsRefreshable() return false end
+function imba_ancient_defense:IsStealable() return false end
+function imba_ancient_defense:IsNetherWardStealable() return false end
+
+function imba_ancient_defense:GetAbilityTextureName()
+	return "custom/ancient_defense"
 end
 
-function AncientThink( keys )
-	local caster = keys.caster
-	local ability = keys.ability
+function imba_ancient_defense:GetIntrinsicModifierName()
+	return "modifier_imba_ancient_defense"
+end
 
-	-- If the game is set to end on kills, make the ancient invulnerable
-	if END_GAME_ON_KILLS then
+-- Passive modifier
+modifier_imba_ancient_defense = class({})
+function modifier_imba_ancient_defense:IsDebuff() return false end
+function modifier_imba_ancient_defense:IsHidden() return false end
+function modifier_imba_ancient_defense:IsPurgable() return false end
+function modifier_imba_ancient_defense:IsPurgeException() return false end
+function modifier_imba_ancient_defense:IsStunDebuff() return false end
 
-		-- Make the ancient invulnerable
-		caster:AddNewModifier(caster, ability, "modifier_fountain_glyph", {})
-		caster:AddNewModifier(caster, ability, "modifier_invulnerable", {})
-
-		-- Kill any nearby creeps (prevents lag)
-		local enemy_creeps = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, 700, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
-		for _,enemy in pairs(enemy_creeps) do
-			enemy:Kill(ability, caster)
+function modifier_imba_ancient_defense:OnCreated()
+	if IsServer() then
+		self.max_stacks = self:GetAbility():GetSpecialValueFor("max_stacks")
+		if GetMapName() == "imba_frantic_10v10" or GetMapName() == "imba_10v10" then
+			self.max_stacks = self:GetAbility():GetSpecialValueFor("max_stacks_10v10")
 		end
-		return nil
-	end
-
-	-- Parameters
-	local ancient_health = caster:GetHealth() / caster:GetMaxHealth()
-
-	-- Search for nearby units
-	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, 600, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)
-
-	-- If there are no nearby enemies, do nothing
-	if #enemies == 0 then
-		return nil
-	end
-
-	-- Ancient abilities logic
-	local behemoth_adjustment = 0
-	if SPAWN_ANCIENT_BEHEMOTHS then behemoth_adjustment = 1 end
-	local tier_1_ability = caster:GetAbilityByIndex(3 + behemoth_adjustment)
-	local tier_2_ability = caster:GetAbilityByIndex(4 + behemoth_adjustment)
-	local tier_3_ability = caster:GetAbilityByIndex(5 + behemoth_adjustment)
-
-	-- If health < 40%, refresh abilities once
-	if (( ancient_health < 0.40 and IMBA_PLAYERS_ON_GAME >= 20 ) and not caster.abilities_refreshed ) then
-		caster.tier_1_cast = false
-		caster.tier_3_cast = false
-		tier_1_ability:SetActivated(true)
-		tier_3_ability:SetActivated(true)
-		caster.abilities_refreshed = true
-
-		-- Small delay for tier 2 (defensive) abilities
-		Timers:CreateTimer(2, function()
-			caster.tier_2_cast = false
-			tier_2_ability:SetActivated(true)
-		end)
-	end
-
-	-- If health < 50%, use the tier 3 ability
-	if ancient_health < 0.5 and tier_3_ability and not caster.tier_3_cast then
-		tier_3_ability:OnSpellStart()
-		tier_3_ability:SetActivated(false)
-		caster.tier_3_cast = true
-
-		-- Fix to having people stuck under the ancient
-		if tier_3_ability:GetName() == "phoenix_supernova" then
-			Timers:CreateTimer(6.1, function()
-				local units = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, 600, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
-				for _,unit in pairs(units) do
-					unit:SetUnitOnClearGround()
-				end
-			end)
-		end
-		return nil
-	end
-
-	-- If health < 70%, use the tier 2 ability
-	if ancient_health < 0.7 and tier_2_ability and not caster.tier_2_cast then
-		tier_2_ability:OnSpellStart()
-		tier_2_ability:SetActivated(false)
-		caster.tier_2_cast = true
-		return nil
-	end
-
-	-- If health < 90%, use the tier 1 ability
-	if ancient_health < 0.9 and tier_1_ability and not caster.tier_1_cast then
-		tier_1_ability:OnSpellStart()
-		tier_1_ability:SetActivated(false)
-		caster.tier_1_cast = true
-		return nil
+		self:StartIntervalThink(0.5)
 	end
 end
 
-function AncientAttacked( keys )
-	local caster = keys.caster
-	local ability = keys.ability
-
-	-- Parameters
-	local ancient_health = caster:GetHealth() / caster:GetMaxHealth()
-
-	-- Search for nearby units
-	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, 600, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)
-
-	-- If there are no nearby enemies, do nothing
-	if #enemies == 0 then
-		return nil
-	end
-
-	-- Ancient abilities logic
-	local behemoth_adjustment = 0
-	if SPAWN_ANCIENT_BEHEMOTHS then behemoth_adjustment = 1 end
-	local tier_1_ability = caster:GetAbilityByIndex(3 + behemoth_adjustment)
-	local tier_2_ability = caster:GetAbilityByIndex(4 + behemoth_adjustment)
-	local tier_3_ability = caster:GetAbilityByIndex(5 + behemoth_adjustment)
-
-	-- If health < 40%, refresh abilities once
-	if (( ancient_health < 0.40 and IMBA_PLAYERS_ON_GAME == 20 ) and not caster.abilities_refreshed ) then
-		caster.tier_1_cast = false
-		caster.tier_3_cast = false
-		tier_1_ability:SetActivated(true)
-		tier_3_ability:SetActivated(true)
-		caster.abilities_refreshed = true
-
-		-- Small delay for tier 2 (defensive) abilities
-		Timers:CreateTimer(2, function()
-			caster.tier_2_cast = false
-			tier_2_ability:SetActivated(true)
-		end)
-	end
-
-	-- If health < 50%, use the tier 3 ability
-	if ancient_health < 0.5 and tier_3_ability and not caster.tier_3_cast then
-		tier_3_ability:OnSpellStart()
-		tier_3_ability:SetActivated(false)
-		caster.tier_3_cast = true
-		return nil
-	end
-
-	-- If health < 70%, use the tier 2 ability
-	if ancient_health < 0.7 and tier_2_ability and not caster.tier_2_cast then
-		tier_2_ability:OnSpellStart()
-		tier_2_ability:SetActivated(false)
-		caster.tier_2_cast = true
-		return nil
-	end
-
-	-- If health < 90%, use the tier 1 ability
-	if ancient_health < 0.9 and tier_1_ability and not caster.tier_1_cast then
-		tier_1_ability:OnSpellStart()
-		tier_1_ability:SetActivated(false)
-		caster.tier_1_cast = true
-		return nil
+function modifier_imba_ancient_defense:OnIntervalThink()
+	if IsServer() then
+		local ancient = self:GetParent()
+		local nearby_enemies = FindUnitsInRadius(ancient:GetTeamNumber(), ancient:GetAbsOrigin(), nil, self:GetAbility():GetSpecialValueFor("aura_radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
+		self:SetStackCount(math.max(self.max_stacks - #nearby_enemies, 0))
 	end
 end
 
-function SpawnRadiantBehemoth( keys )
-	local caster = keys.caster
-	local ability = keys.ability
-	local modifier_stack = keys.modifier_stack
-	local particle_ambient = keys.particle_ambient
-
-	-- Prevents the ability from working on hero-creeps
-	if IsHeroCreep(keys.unit) then
-		return nil
-	end
-
-	-- Increase body count by 1
-	if not caster.ancient_recently_dead_enemies then
-		caster.ancient_recently_dead_enemies = 1
-	else
-		caster.ancient_recently_dead_enemies = caster.ancient_recently_dead_enemies + 1
-	end
-
-	-- Keep track of body count
-	local this_call_body_count = caster.ancient_recently_dead_enemies
-
-	-- If no other hero died after 10 seconds, spawn the Behemoth
-	Timers:CreateTimer(12, function()
-
-			-- If body count is a match, this is the right spawn call
-			if caster.ancient_recently_dead_enemies and (this_call_body_count == caster.ancient_recently_dead_enemies) then
-
-				-- Parameters
-				local base_health = ability:GetLevelSpecialValueFor("base_health", ability:GetLevel() - 1)
-				local health_per_minute = ability:GetLevelSpecialValueFor("health_per_minute", ability:GetLevel() - 1)
-				local health_per_hero = ability:GetLevelSpecialValueFor("health_per_hero", ability:GetLevel() - 1)
-				local game_time = GameRules:GetDOTATime(false, false) * 3 / 60
-
-				-- Spawn the Behemoth
-				local spawn_loc = Entities:FindByName(nil, "radiant_reinforcement_spawn_mid"):GetAbsOrigin()
-				local behemoth = CreateUnitByName("npc_imba_goodguys_mega_hulk", spawn_loc, true, caster, caster, caster:GetTeam())
-				FindClearSpaceForUnit(behemoth, spawn_loc, true)
-
-				-- Adjust health
-				SetCreatureHealth(behemoth, base_health + this_call_body_count * health_per_hero + game_time * health_per_minute, true)
-
-				-- Adjust armor & health regeneration
-				AddStacks(ability, caster, behemoth, modifier_stack, game_time, true)
-
-				-- Grant extra abilities
-				behemoth:AddAbility("imba_behemoth_aura_goodguys")
-				local aura_ability = behemoth:FindAbilityByName("imba_behemoth_aura_goodguys")
-				aura_ability:SetLevel(math.min(this_call_body_count, 5))
-				behemoth:AddAbility("imba_behemoth_dearmor")
-				local dearmor_ability = behemoth:FindAbilityByName("imba_behemoth_dearmor")
-				dearmor_ability:SetLevel(1)
-
-				-- Increase Behemoth size according to its power
-				behemoth:SetModelScale(0.85 + 0.06 * this_call_body_count)
-
-				-- Play ambient particle
-				local ambient_pfx = ParticleManager:CreateParticle(particle_ambient, PATTACH_CUSTOMORIGIN, behemoth)
-				ParticleManager:SetParticleControlEnt(ambient_pfx, 0, behemoth, PATTACH_POINT_FOLLOW, "attach_mane1", behemoth:GetAbsOrigin(), true)
-				ParticleManager:ReleaseParticleIndex(ambient_pfx)
-
-				-- Make Behemoth attack-move the opposing ancient
-				local target_loc = Entities:FindByName(nil, "dire_reinforcement_spawn_mid"):GetAbsOrigin()
-				Timers:CreateTimer(0.5, function()
-					behemoth:MoveToPositionAggressive(target_loc)
-				end)
-
-				-- Reset body count
-				caster.ancient_recently_dead_enemies = nil
-			end
-	end)
+function modifier_imba_ancient_defense:DeclareFunctions()
+	local funcs = {
+		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE
+	}
+	return funcs
 end
 
-function SpawnDireBehemoth( keys )
-	local caster = keys.caster
-	local ability = keys.ability
-	local modifier_stack = keys.modifier_stack
-	local particle_ambient = keys.particle_ambient
-
-	-- Prevents the ability from working on hero-creeps
-	if IsHeroCreep(keys.unit) then
-		return nil
-	end
-
-	-- Increase body count by 1
-	if not caster.ancient_recently_dead_enemies then
-		caster.ancient_recently_dead_enemies = 1
-	else
-		caster.ancient_recently_dead_enemies = caster.ancient_recently_dead_enemies + 1
-	end
-
-	-- Keep track of body count
-	local this_call_body_count = caster.ancient_recently_dead_enemies
-
-	-- If no other hero died after 10 seconds, spawn the Behemoth
-	Timers:CreateTimer(12, function()
-
-			-- If body count is a match, this is the right spawn call
-			if caster.ancient_recently_dead_enemies and (this_call_body_count == caster.ancient_recently_dead_enemies) then
-
-				-- Parameters
-				local base_health = ability:GetLevelSpecialValueFor("base_health", ability:GetLevel() - 1)
-				local health_per_minute = ability:GetLevelSpecialValueFor("health_per_minute", ability:GetLevel() - 1)
-				local health_per_hero = ability:GetLevelSpecialValueFor("health_per_hero", ability:GetLevel() - 1)
-				local game_time = GameRules:GetDOTATime(false, false) * 3 / 60
-
-				-- Spawn the Behemoth
-				local spawn_loc = Entities:FindByName(nil, "dire_reinforcement_spawn_mid"):GetAbsOrigin()
-				local behemoth = CreateUnitByName("npc_imba_badguys_mega_hulk", spawn_loc, true, nil, nil, caster:GetTeam())
-				FindClearSpaceForUnit(behemoth, spawn_loc, true)
-
-				-- Adjust health
-				SetCreatureHealth(behemoth, base_health + this_call_body_count * health_per_hero + game_time * health_per_minute, true)
-
-				-- Adjust armor & health regeneration
-				AddStacks(ability, caster, behemoth, modifier_stack, game_time, true)
-
-				-- Grant extra abilities
-				behemoth:AddAbility("imba_behemoth_aura_badguys")
-				local aura_ability = behemoth:FindAbilityByName("imba_behemoth_aura_badguys")
-				aura_ability:SetLevel(math.min(this_call_body_count, 5))
-				behemoth:AddAbility("imba_behemoth_dearmor")
-				local dearmor_ability = behemoth:FindAbilityByName("imba_behemoth_dearmor")
-				dearmor_ability:SetLevel(1)
-
-				-- Increase Behemoth size according to its power
-				behemoth:SetModelScale(0.85 + 0.06 * this_call_body_count)
-
-				-- Play ambient particle
-				local ambient_pfx = ParticleManager:CreateParticle(particle_ambient, PATTACH_CUSTOMORIGIN, behemoth)
-				ParticleManager:SetParticleControlEnt(ambient_pfx, 0, behemoth, PATTACH_POINT_FOLLOW, "attach_mane1", behemoth:GetAbsOrigin(), true)
-				ParticleManager:ReleaseParticleIndex(ambient_pfx)
-
-				-- Make Behemoth move to the opposing ancient
-				local target_loc = Entities:FindByName(nil, "radiant_reinforcement_spawn_mid"):GetAbsOrigin()
-				Timers:CreateTimer(0.5, function()
-					behemoth:MoveToPositionAggressive(target_loc)
-				end)
-
-				-- Reset body count
-				caster.ancient_recently_dead_enemies = nil
-			end
-	end)
+function modifier_imba_ancient_defense:GetModifierIncomingDamage_Percentage()
+	return self:GetAbility():GetSpecialValueFor("defense_stack") * self:GetStackCount()
 end
 
-function BehemothAttacked( keys )
-	local caster = keys.caster
-	local ability = keys.ability
-	local attacker = keys.attacker
-	local modifier_stack = keys.modifier_stack
 
-	-- If the attacker is a hero, reduce the Behemoth's armor
-	if attacker:IsHero() then
-		AddStacks(ability, caster, caster, modifier_stack, 1, true)
+
+-- Ancient Last Resort ability
+imba_ancient_last_resort = class({})
+
+LinkLuaModifier("modifier_imba_ancient_last_resort_aura", "hero/ancient_abilities", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_ancient_last_resort_debuff", "hero/ancient_abilities", LUA_MODIFIER_MOTION_NONE)
+
+function imba_ancient_last_resort:IsHiddenWhenStolen() return false end
+function imba_ancient_last_resort:IsRefreshable() return false end
+function imba_ancient_last_resort:IsStealable() return false end
+function imba_ancient_last_resort:IsNetherWardStealable() return false end
+
+function imba_ancient_last_resort:GetAbilityTextureName()
+	return "custom/ancient_last_resort"
+end
+
+function imba_ancient_last_resort:GetIntrinsicModifierName()
+	return "modifier_imba_ancient_last_resort_aura"
+end
+
+-- Passive modifier
+modifier_imba_ancient_last_resort_aura = class({})
+function modifier_imba_ancient_last_resort_aura:IsDebuff() return false end
+function modifier_imba_ancient_last_resort_aura:IsHidden() return true end
+function modifier_imba_ancient_last_resort_aura:IsPurgable() return false end
+function modifier_imba_ancient_last_resort_aura:IsPurgeException() return false end
+function modifier_imba_ancient_last_resort_aura:IsStunDebuff() return false end
+
+function modifier_imba_ancient_last_resort_aura:OnCreated()
+	if IsServer() then
+		self:StartIntervalThink(0.2)
 	end
 end
 
-function StalwartDefense( keys )
-	local caster = keys.caster
-	local ability = keys.ability
-	local modifier_buff = keys.modifier_buff
-	local sound_cast = keys.sound_cast
-	local particle_hit = keys.particle_hit
-	local particle_buff = keys.particle_buff
-
-	-- Prevents the ability from working on hero-creeps
-	if IsHeroCreep(keys.unit) then
-		return nil
-	end
-
-	-- Parameters
-	local radius = ability:GetLevelSpecialValueFor("radius", ability:GetLevel() - 1)
-	local radius = ability:GetLevelSpecialValueFor("radius", ability:GetLevel() - 1)
-
-	-- Find nearby allied heroes
-	local nearby_heroes = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, FIND_ANY_ORDER, false)
-
-	-- Do nothing if there are no other nearby heroes
-	if #nearby_heroes > 0 then
-
-		-- Play LOUD VUVUZELA SOUNDS
-		caster:EmitSound(sound_cast)
-
-		-- Iterate through nearby allies
-		for _,hero in pairs(nearby_heroes) do
-
-			-- Purge debuffs
-			hero:Purge(false, true, false, true, false)
-
-			-- Apply the modifier
-			ability:ApplyDataDrivenModifier(caster, hero, modifier_buff, {})
-
-			-- Play the light particles
-			if hero.stalwart_defense_light_pfx then
-				ParticleManager:DestroyParticle(hero.stalwart_defense_light_pfx, true)
-			end
-			hero.stalwart_defense_light_pfx = ParticleManager:CreateParticle(particle_hit, PATTACH_ABSORIGIN_FOLLOW, hero)
-			ParticleManager:SetParticleControl(hero.stalwart_defense_light_pfx, 0, hero:GetAbsOrigin())
-			ParticleManager:SetParticleControl(hero.stalwart_defense_light_pfx, 1, caster:GetAbsOrigin())
-
-			-- Play the buff particles
-			if not hero.stalwart_defense_buff_pfx then
-				hero.stalwart_defense_buff_pfx = ParticleManager:CreateParticle(particle_buff, PATTACH_ABSORIGIN_FOLLOW, hero)
-				ParticleManager:SetParticleControlEnt(hero.stalwart_defense_buff_pfx, 0, hero, PATTACH_POINT_FOLLOW, "attach_attack1", hero:GetAbsOrigin(), true)
-			end
+function modifier_imba_ancient_last_resort_aura:OnIntervalThink()
+	if IsServer() then
+		local ancient = self:GetParent()
+		local stacks = math.min(100 - ancient:GetHealthPercent(), self:GetAbility():GetSpecialValueFor("max_reduction"))
+		local nearby_enemies = FindUnitsInRadius(ancient:GetTeamNumber(), ancient:GetAbsOrigin(), nil, self:GetAbility():GetSpecialValueFor("aura_radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
+		for _, enemy in pairs(nearby_enemies) do
+			enemy:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_ancient_last_resort_debuff", {duration = 2.0}):SetStackCount(stacks)
 		end
 	end
 end
 
-function StalwartDefenseParticleEnd( keys )
-	local unit = keys.target
+-- Enemy debuff
+modifier_imba_ancient_last_resort_debuff = class({})
+function modifier_imba_ancient_last_resort_debuff:IsDebuff() return true end
+function modifier_imba_ancient_last_resort_debuff:IsHidden() return false end
+function modifier_imba_ancient_last_resort_debuff:IsPurgable() return false end
+function modifier_imba_ancient_last_resort_debuff:IsPurgeException() return false end
+function modifier_imba_ancient_last_resort_debuff:IsStunDebuff() return false end
 
-	-- Destroy buff particles
-	if unit.stalwart_defense_light_pfx then
-		ParticleManager:DestroyParticle(unit.stalwart_defense_light_pfx, false)
-		ParticleManager:ReleaseParticleIndex(unit.stalwart_defense_light_pfx)
-		unit.stalwart_defense_light_pfx = nil
-	end
-	if unit.stalwart_defense_buff_pfx then
-		ParticleManager:DestroyParticle(unit.stalwart_defense_buff_pfx, false)
-		ParticleManager:ReleaseParticleIndex(unit.stalwart_defense_buff_pfx)
-		unit.stalwart_defense_buff_pfx = nil
-	end
+function modifier_imba_ancient_last_resort_debuff:DeclareFunctions()
+	local funcs = {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+		MODIFIER_PROPERTY_TOTALDAMAGEOUTGOING_PERCENTAGE
+	}
+	return funcs
+end
+
+function modifier_imba_ancient_last_resort_debuff:GetModifierMoveSpeedBonus_Percentage()
+	return (-1) * self:GetStackCount()
+end
+
+function modifier_imba_ancient_last_resort_debuff:GetModifierAttackSpeedBonus_Constant()
+	return (-1) * self:GetStackCount()
+end
+
+function modifier_imba_ancient_last_resort_debuff:GetModifierTotalDamageOutgoing_Percentage()
+	return (-1) * self:GetStackCount()
+end
+
+-- Fountain Danger Zone ability
+imba_fountain_danger_zone = class({})
+
+LinkLuaModifier("modifier_imba_fountain_danger_zone", "hero/ancient_abilities", LUA_MODIFIER_MOTION_NONE)
+
+function imba_fountain_danger_zone:IsHiddenWhenStolen() return false end
+function imba_fountain_danger_zone:IsRefreshable() return false end
+function imba_fountain_danger_zone:IsStealable() return false end
+function imba_fountain_danger_zone:IsNetherWardStealable() return false end
+
+function imba_fountain_danger_zone:GetAbilityTextureName()
+	return "nevermore_shadowraze3"
+end
+
+function imba_fountain_danger_zone:GetIntrinsicModifierName()
+	return "modifier_imba_fountain_danger_zone"
 end
 
 
+-- Passive modifier
+modifier_imba_fountain_danger_zone = class({})
+function modifier_imba_fountain_danger_zone:IsDebuff() return false end
+function modifier_imba_fountain_danger_zone:IsHidden() return true end
+function modifier_imba_fountain_danger_zone:IsPurgable() return false end
+function modifier_imba_fountain_danger_zone:IsPurgeException() return false end
+function modifier_imba_fountain_danger_zone:IsStunDebuff() return false end
+
+function modifier_imba_fountain_danger_zone:CheckState()
+	local state = {
+		[MODIFIER_STATE_DISARMED] = true,
+		[MODIFIER_STATE_PASSIVES_DISABLED] = true,
+	}
+
+	return state
+end
+
+function modifier_imba_fountain_danger_zone:OnCreated()
+	if IsServer() then
+		self:StartIntervalThink(0.2)
+	end
+end
+
+function modifier_imba_fountain_danger_zone:OnIntervalThink()
+	if IsServer() then
+		local fountain = self:GetParent()
+		local fountain_pos = fountain:GetAbsOrigin() 
+		local nearby_enemies = FindUnitsInRadius(fountain:GetTeamNumber(), fountain_pos, nil, self:GetAbility():GetSpecialValueFor("kill_radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
+		for _, enemy in pairs(nearby_enemies) do
+			local damage = enemy:GetMaxHealth() * 0.06
+			if enemy:IsInvulnerable() then
+				enemy:SetHealth(math.max(enemy:GetHealth() - damage, 1))
+			else
+				ApplyDamage({attacker = fountain, victim = enemy, damage = damage, damage_type = DAMAGE_TYPE_PURE})
+			end
+			local damage_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_tinker/tinker_laser.vpcf", PATTACH_CUSTOMORIGIN, enemy)
+			ParticleManager:SetParticleControl(damage_pfx, 0, fountain_pos)
+			ParticleManager:SetParticleControlEnt(damage_pfx, 1, enemy, PATTACH_POINT_FOLLOW, "attach_hitloc", enemy:GetAbsOrigin(), true)
+			ParticleManager:SetParticleControl(damage_pfx, 3, fountain_pos)
+			ParticleManager:SetParticleControl(damage_pfx, 9, fountain_pos)
+			ParticleManager:ReleaseParticleIndex(damage_pfx)
+			enemy:AddNewModifier(fountain, self:GetAbility(), "modifier_doom_bringer_doom", {duration = 1.0})
+		end
+	end
+end

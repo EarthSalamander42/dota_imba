@@ -73,6 +73,14 @@ local text = keys.text
 local caster = PlayerResource:GetSelectedHeroEntity(keys.playerid)
 local caster_heroname = PlayerResource:GetSelectedHeroName(keys.playerid)
 local color = {}
+	
+	-- I dont know exactly where to put this so ill put here
+	local steamid = tostring(PlayerResource:GetSteamID(keys.playerid))
+	local _text = tostring(text)
+	ApiEvent(ApiEventCodes.ChatEvent, {
+		steamid,
+		text
+	})
 
 	-- This Handler is only for commands, ends the function if first character is not "-"
 	if not (string.byte(text) == 45) then

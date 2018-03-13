@@ -27,7 +27,7 @@ end
 
 function modifier_companion:OnCreated()
 	if IsServer() then
-		self:StartIntervalThink(0.5)
+		self:StartIntervalThink(0.25)
 
 		local companion = self:GetParent()
 		if not companion.base_model then
@@ -64,6 +64,7 @@ end
 function modifier_companion:OnIntervalThink()
 	if IsServer() then
 		local companion = self:GetParent()
+		if companion:GetPlayerOwner():GetAssignedHero() == nil then return end
 		local hero = companion:GetPlayerOwner():GetAssignedHero()
 		hero.companion = companion
 		local fountain
@@ -82,46 +83,18 @@ function modifier_companion:OnIntervalThink()
 		local min_distance = 200
 		local blink_distance = 800
 
-		local shared_modifiers = {
-			"modifier_invisible",
-			"modifier_mirana_moonlight_shadow",
-			"modifier_item_imba_shadow_blade_invis",
-			"modifier_imba_vendetta",
-			"modifier_nyx_assassin_burrow",
-			"modifier_item_imba_silver_edge_invis",
-			"modifier_item_glimmer_cape_fade",
-			"modifier_weaver_shukuchi",
-			"modifier_treant_natures_guise_invis",
-			"modifier_templar_assassin_meld",
-			"modifier_imba_skeleton_walk_dummy",
-			"modifier_invoker_ghost_walk_self",
-			"modifier_rune_invis",
-			"modifier_item_imba_silver_edge_invis",
-			"modifier_imba_skeleton_walk_invis",
-			"modifier_imba_riki_invisibility",
-			"modifier_imba_shadow_walk_buff_invis",
-			"modifier_smoke_of_deceit",
-		}
-
 		local shared_nodraw_modifiers = {
 			"modifier_item_shadow_amulet_fade",
+			"modifier_monkey_king_tree_dance_hidden",
+			"modifier_monkey_king_transform",
+			"modifier_pangolier_gyroshell",
 		}
 
 		if companion:GetIdealSpeed() ~= hero:GetIdealSpeed() - 60 then
 			companion:SetBaseMoveSpeed(hero:GetIdealSpeed() - 60)
 		end
 
-		for _, v in ipairs(shared_nodraw_modifiers) do
-			if hero:HasModifier(v) and not companion.has_nodraw == true then
-				companion.has_nodraw = true
-				companion:AddEffects(EF_NODRAW)
-			elseif not hero:HasModifier(v) and companion.has_nodraw ~= false then
-				companion.has_nodraw = false
-				companion:RemoveEffects(EF_NODRAW)
-			end
-		end
-
-		for _,v in ipairs(shared_modifiers) do
+		for _,v in pairs(IMBA_INVISIBLE_MODIFIERS) do
 			if not hero:HasModifier(v) then
 				if companion:HasModifier(v) then
 					companion:RemoveModifierByName(v)
@@ -150,6 +123,15 @@ function modifier_companion:OnIntervalThink()
 			end
 		end
 
-		self:SetStackCount(hero_distance / 4)
+		self:SetStackCount(hero_distance / 3)
+
+		for _, v in ipairs(shared_nodraw_modifiers) do
+			if hero:HasModifier(v) then
+				companion:AddNoDraw()
+				return
+			elseif not hero:HasModifier(v) then
+				companion:RemoveNoDraw()
+			end
+		end
 	end
 end

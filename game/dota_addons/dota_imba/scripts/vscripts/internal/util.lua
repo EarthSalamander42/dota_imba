@@ -230,7 +230,8 @@ function PrecacheUnitWithQueue( unit_name )
 			end)
 		end
 	end)
-	print("Precached", unit_name)
+
+--	print("Precached", unit_name)
 end
 
 -- Initializes heroes' innate abilities
@@ -566,7 +567,7 @@ function Chat:OnSay(args)
 		CustomGameEventManager:Send_ServerToTeam(player:GetTeamNumber(), "custom_chat_say", arguments)
 
 		print(hero, args.message, PLAYER_COLORS[id])
---		Say(hero, args.message, true)
+		Say(player, args.message, true)
 
 --	else -- i leave this here if someday we want to create a whole new chat, and not only a pregame chat
 --		CustomGameEventManager:Send_ServerToAllClients("custom_chat_say", arguments)
@@ -960,6 +961,16 @@ function CustomHeroAttachments(hero, illusion)
 		hero:AddAbility("generic_hidden")
 		hero:AddAbility("generic_hidden")
 		hero:AddAbility("generic_hidden")
+	elseif hero_name == "npc_dota_hero_sohei" then
+---		hero.hand = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/heroes/sohei/so_weapon.vmdl"})
+		hero.hand = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/heroes/sohei/weapon/immortal/thunderlord.vmdl"})
+
+		-- lock to bone
+		hero.hand:FollowEntity(hero, true)
+
+		--hero:AddNewModifier(hero, nil, 'modifier_animation_translate_permanent_string', {translate = 'walk'})
+		--hero:AddNewModifier(hero, nil, 'modifier_animation_translate_permanent_string', {translate = 'odachi'})
+		--hero:AddNewModifier(hero, nil, 'modifier_animation_translate_permanent_string', {translate = 'aggressive'})
 	end
 end
 
@@ -1053,6 +1064,8 @@ local color = hero:GetFittingColor()
 		end
 	elseif model == "npc_imba_donator_companion_suthernfriend" then
 		companion:SetMaterialGroup("1")
+	elseif model == "npc_imba_donator_companion_baumi" then
+		companion:SetMaterialGroup(tostring(RandomInt(0, 2)))
 	elseif model == "npc_imba_donator_companion_baekho" then
 		local particle = ParticleManager:CreateParticle("particles/econ/courier/courier_baekho/courier_baekho_ambient.vpcf", PATTACH_ABSORIGIN_FOLLOW, companion)
 	end
@@ -1095,12 +1108,12 @@ function InitRunes()
 	powerup_rune_spawners = {}
 	powerup_rune_locations = {}
 
-	bounty_rune_spawners = Entities:FindAllByName("bounty_rune_location")
+	bounty_rune_spawners = Entities:FindAllByName("dota_item_rune_spawner_bounty")
 
 	if GetMapName() == "imba_overthrow" then
 		powerup_rune_spawners = Entities:FindAllByName("dota_item_rune_spawner")
 	else
-		powerup_rune_spawners = Entities:FindAllByName("powerup_rune_location")
+		powerup_rune_spawners = Entities:FindAllByClassname("dota_item_rune_spawner_powerup")
 	end
 
 	for i = 1, #powerup_rune_spawners do
@@ -1122,20 +1135,22 @@ bounty_rune_is_initial_bounty_rune = false
 	RemoveRunes()
 
 	-- List of powerup rune types
-	local powerup_rune_types = {
-		"item_imba_rune_arcane",
-		"item_imba_rune_double_damage",
-		"item_imba_rune_haste",
-		"item_imba_rune_regeneration",
-		"item_imba_rune_illusion",
-		"item_imba_rune_invisibility",
-		"item_imba_rune_frost",
-	}
+	local powerup_rune_types = {}
+	powerup_rune_types[1] = {"item_imba_rune_arcane", "particles/generic_gameplay/rune_arcane.vpcf"}
+	powerup_rune_types[2] = {"item_imba_rune_double_damage", "particles/generic_gameplay/rune_doubledamage.vpcf"}
+	powerup_rune_types[3] = {"item_imba_rune_haste", "particles/generic_gameplay/rune_haste.vpcf"}
+	powerup_rune_types[4] = {"item_imba_rune_regeneration", "particles/generic_gameplay/rune_regeneration.vpcf"}
+	powerup_rune_types[5] = {"item_imba_rune_illusion", "particles/generic_gameplay/rune_illusion.vpcf"}
+	powerup_rune_types[6] = {"item_imba_rune_invisibility", "particles/generic_gameplay/rune_invisibility.vpcf"}
+	powerup_rune_types[7] = {"item_imba_rune_frost", "particles/econ/items/puck/puck_snowflake/puck_snowflake_ambient.vpcf"}
 
 	local rune
+	local particle
+	local random_int = RandomInt(1, #powerup_rune_types)
 	for k, v in pairs(powerup_rune_locations) do
-		rune = CreateItemOnPositionForLaunch(powerup_rune_locations[k], CreateItem(powerup_rune_types[RandomInt(1, #powerup_rune_types)], nil, nil))
+		rune = CreateItemOnPositionForLaunch(powerup_rune_locations[k], CreateItem(powerup_rune_types[random_int][1], nil, nil))
 		RegisterRune(rune)
+		SpawnRuneParticle(rune, powerup_rune_types[random_int][2])
 	end
 
 	for k, v in pairs(bounty_rune_locations) do
@@ -1147,11 +1162,23 @@ bounty_rune_is_initial_bounty_rune = false
 		local game_time = GameRules:GetDOTATime(false, false)
 		if game_time < 1 then
 			bounty_rune_is_initial_bounty_rune = true
+			SpawnRuneParticle(rune, "particles/generic_gameplay/rune_bounty_first.vpcf")
+		else
+			bounty_rune_is_initial_bounty_rune = false
+			SpawnRuneParticle(rune, "particles/generic_gameplay/rune_bounty.vpcf")
 		end
 	end
 end
 
+function SpawnRuneParticle(rune, particle)
+	local rune_particle = ParticleManager:CreateParticle(particle, PATTACH_CUSTOMORIGIN, rune)
+	ParticleManager:SetParticleControl(rune_particle, 0, rune:GetAbsOrigin())
+	ParticleManager:ReleaseParticleIndex(rune_particle)
+end
+
 function RegisterRune(rune)
+	AddFOWViewer(2, rune:GetAbsOrigin(), 100, 0.02, false)
+	AddFOWViewer(3, rune:GetAbsOrigin(), 100, 0.02, false)
 
 	-- Initialize table
 	if not rune_spawn_table then
@@ -1199,7 +1226,7 @@ function PickupRune(rune_name, unit, bActiveByBottle)
 		end
 	end
 
-	if not store_in_bottle then
+	if store_in_bottle == false then
 		if rune_name == "bounty" then
 			-- Bounty rune parameters
 			local base_bounty = 100
@@ -1208,11 +1235,6 @@ function PickupRune(rune_name, unit, bActiveByBottle)
 			local game_time = GameRules:GetDOTATime(false, false)
 			local current_bounty = base_bounty + bounty_per_minute * game_time / 60
 			local current_xp = xp_per_minute * game_time / 60
-
-			-- If this is the first bounty rune spawn, double the base bounty
-			if bounty_rune_is_initial_bounty_rune then
-				current_bounty = current_bounty  * 2
-			end
 
 			-- Adjust value for lobby options
 			local custom_gold_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "bounty_multiplier")["1"])
@@ -1248,10 +1270,22 @@ function PickupRune(rune_name, unit, bActiveByBottle)
 				end
 			end
 
-	--		"particles/generic_gameplay/rune_bounty_owner.vpcf"
-
-			unit:ModifyGold(current_bounty, false, DOTA_ModifyGold_Unspecified)
-			SendOverheadEventMessage(PlayerResource:GetPlayer(unit:GetPlayerOwnerID()), OVERHEAD_ALERT_GOLD, unit, current_bounty, nil)
+			-- If this is the first bounty rune spawn, double the base bounty
+			if bounty_rune_is_initial_bounty_rune then
+				for _, hero in pairs(HeroList:GetAllHeroes()) do
+					if hero:GetTeam() == unit:GetTeam() then
+						if hero:GetUnitName() == "npc_dota_hero_monkey_king" and not hero.is_real_mk then
+						elseif hero:GetUnitName() == "npc_dota_hero_meepo" and not hero.is_real_meepo then
+						else
+							hero:ModifyGold(current_bounty, false, DOTA_ModifyGold_Unspecified)
+							SendOverheadEventMessage(PlayerResource:GetPlayer(hero:GetPlayerOwnerID()), OVERHEAD_ALERT_GOLD, hero, current_bounty, nil)
+						end
+					end
+				end
+			else
+				unit:ModifyGold(current_bounty, false, DOTA_ModifyGold_Unspecified)
+				SendOverheadEventMessage(PlayerResource:GetPlayer(unit:GetPlayerOwnerID()), OVERHEAD_ALERT_GOLD, unit, current_bounty, nil)
+			end
 --			EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "General.Coins", unit)
 			EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Bounty", unit)
 		elseif rune_name == "arcane" then
@@ -1300,7 +1334,8 @@ function PickupRune(rune_name, unit, bActiveByBottle)
 			type = "generic",
 			text = "#custom_toast_ActivatedRune",
 			player = unit:GetPlayerID(),
-			runeType = rune_name
+			runeType = rune_name,
+			runeFirst = bounty_rune_is_initial_bounty_rune
 		})
 	end
 end
@@ -1579,5 +1614,127 @@ streak[10] = "Beyond Godlike"
 			neutral = neutral,
 			suicide = suicide,
 		})
+	end
+end
+
+function HeroVoiceLine(hero, event, extra) -- extra can be victim for kill event, or item purchased for purch event
+if not hero:GetKeyValue("ShortName") then return end
+local ID = hero:GetPlayerID()
+local hero_name = string.gsub(hero:GetUnitName(), "npc_dota_hero_", "")
+local short_hero_name = hero:GetKeyValue("ShortName")
+local max_line = 2
+if event == "blink" or event == "firstblood" then
+	max_line = 1
+else
+	print(event)
+	print(max_line)
+	max_line = hero:GetKeyValue(event)
+end
+
+local random_int = RandomInt(1, max_line)
+
+if not VOICELINE_IN_CD then
+	VOICELINE_IN_CD = {} -- move/cast/attack cd, 
+	VOICELINE_IN_CD[ID] = {false, false, false}
+end
+
+	-- NOT ADDED YET:
+	-- notyet
+	-- failure
+	-- anger
+	-- happy
+	-- rare
+	-- nomana
+	-- RIVAL MEETING SYSTEM
+	-- ITEM PURCHASED SYSTEM
+	-- FIRST BLOOD SYSTEM (always 2 voicelines)
+
+	-- Later on, finish this to play specific sounds from the ability
+--	if event == "cast" then
+--		if RandomInt(1, 100) >= 20 then
+--			event = hero:GetKeyValue("OnAbility"..ab.."Used")
+--			print("play specific ab sound")
+--		else
+--			print("play global ab sound")
+--		end
+--	end
+
+	-- prints
+--	if random_int >= 10 then
+--		print(hero_name.."_"..short_hero_name.."_"..event.."_"..random_int)
+--	else
+--		print(hero_name.."_"..short_hero_name.."_"..event.."_0"..random_int)
+--	end
+
+	-- no timer required, play the voicelines everytime
+	if event == "blink" or event == "purch" or event == "battlebegins" or event == "win" or event == "lose" or event == "kill" or event == "death" or event == "level_voiceline" or event == "laugh" or event == "thanks" then
+		if event == "level_voiceline" then event = string.gsub(event, "_voiceline", "") end
+		if event == "purch" and RandomInt(1, 100) <= 50 then return end -- 50% chance to play purchase voice line
+		if random_int >= 10 then
+			EmitAnnouncerSoundForPlayer(hero_name.."_"..short_hero_name.."_"..event.."_"..random_int, ID)
+		else
+			EmitAnnouncerSoundForPlayer(hero_name.."_"..short_hero_name.."_"..event.."_0"..random_int, ID)
+		end
+	return
+	elseif event == "move" or event == "cast" or event == "attack" then
+		if event == "cast" and RandomInt(1, 100) <= 50 then return end -- 50% chance to play purchase voice line
+--		print("Move/Attack/Cast cd:", VOICELINE_IN_CD[ID][1])
+		if VOICELINE_IN_CD[ID][1] == false then
+			if random_int >= 10 then
+				EmitAnnouncerSoundForPlayer(hero_name.."_"..short_hero_name.."_"..event.."_"..random_int, ID)
+			else
+				EmitAnnouncerSoundForPlayer(hero_name.."_"..short_hero_name.."_"..event.."_0"..random_int, ID)
+			end
+
+			VOICELINE_IN_CD[ID][1] = true
+			Timers:CreateTimer(6.0, function()
+				VOICELINE_IN_CD[ID][1] = false
+			end)
+		end
+	return
+	elseif event == "lasthit" or event == "deny" then
+--		print("Last hit/Deny cd:", VOICELINE_IN_CD[ID][2])
+		if VOICELINE_IN_CD[ID][2] == false then
+			if event == "deny" then
+				-- detect if enemy hero in 1000 radius and visible, if not return end
+				return
+			end
+
+			if random_int >= 10 then
+				EmitAnnouncerSoundForPlayer(hero_name.."_"..short_hero_name.."_"..event.."_"..random_int, ID)
+			else
+				EmitAnnouncerSoundForPlayer(hero_name.."_"..short_hero_name.."_"..event.."_0"..random_int, ID)
+			end
+
+			VOICELINE_IN_CD[ID][2] = true
+			Timers:CreateTimer(60.0, function()
+				VOICELINE_IN_CD[ID][2] = false
+			end)
+		end
+	return
+	elseif event == "pain" then
+		if VOICELINE_IN_CD[ID][3] == false then
+			if random_int >= 10 then
+				EmitAnnouncerSoundForPlayer(hero_name.."_"..short_hero_name.."_"..event.."_"..random_int, ID)
+			else
+				EmitAnnouncerSoundForPlayer(hero_name.."_"..short_hero_name.."_"..event.."_0"..random_int, ID)
+			end
+
+			VOICELINE_IN_CD[ID][3] = true
+			Timers:CreateTimer(3.0, function()
+				VOICELINE_IN_CD[ID][3] = false
+			end)
+		end
+	return
+--	elseif event == "notyet" or event == "nomana" then
+--		if VOICELINE_IN_CD[ID][4] == false then
+--			if random_int >= 10 then
+--				EmitAnnouncerSoundForPlayer(hero_name.."_"..short_hero_name.."_"..event.."_"..random_int, ID)
+--			else
+--				EmitAnnouncerSoundForPlayer(hero_name.."_"..short_hero_name.."_"..event.."_0"..random_int, ID)
+--			end
+
+			-- make hero play anger voice lines if he click within 10 seconds
+--		end
 	end
 end

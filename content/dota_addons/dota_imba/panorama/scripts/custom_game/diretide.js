@@ -6,6 +6,11 @@ function OnUIUpdated(table_name, key, data) {
 CustomNetTables.SubscribeNetTableListener("game_options", OnUIUpdated)
 
 function UpdateScoreUI() {
+	var map_info = Game.GetMapInfo();
+	if (map_info.map_display_name == "imba_overthrow" || map_info.map_display_name == "imba_1v1") {
+		return;
+	}
+
 	var RoshanTable = CustomNetTables.GetTableValue("game_options", "roshan");
 	if (RoshanTable !== null) {
 		var RoshanHP = RoshanTable.HP;

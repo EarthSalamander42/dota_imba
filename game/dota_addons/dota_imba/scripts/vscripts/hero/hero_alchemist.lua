@@ -1121,7 +1121,7 @@ end
 function modifier_imba_greevils_greed_handler:OnIntervalThink()
 	if IsServer() then
 		-- If Alchemist is invisible, remove the model
-		if self.owner:IsInvisible() then
+		if self.owner:IsImbaInvisible() then
 			self.caster:AddNoDraw()
 		else
 			self.caster:RemoveNoDraw()

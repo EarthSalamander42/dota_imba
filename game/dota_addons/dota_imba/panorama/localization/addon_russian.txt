@@ -271,8 +271,8 @@
 	"Neutrals"        								"Нейтралы"
 	"NoTeam"          								"Без команды"
 
-	"DOTA_GoodGuys"   								"Морские Тигры"
-	"DOTA_BadGuys"    								"Жёлтые Мартышки"
+//	"DOTA_GoodGuys"   								"Морские Тигры"
+//	"DOTA_BadGuys"    								"Жёлтые Мартышки"
 	"DOTA_Custom1"    								"Розовые Дракончики"
 	"DOTA_Custom2"    								"Оранжевые Псы"
 	"DOTA_Custom3"    								"Голубы Петухи"
