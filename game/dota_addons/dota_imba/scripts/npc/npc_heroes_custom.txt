@@ -1,14 +1,5 @@
 "DOTAHeroes"
 {
-//	LEGEND
-//	"IsDisabled":
-//	0 = Enabled,
-//	1 = 10v10 disabled,
-//	2 = Frantic disabled,
-//	3 = All disabled, (can be replaced by hot hero disable)
-//	4 = Invisible All disabled,
-//	5 = Overthrow disabled.
-
 	//=================================================================================================================
 	// HERO: Arc Warden
 	//=================================================================================================================
@@ -207,6 +198,15 @@
 		"Ability4"					"generic_hidden"
 		"Ability5"					"generic_hidden"
 		"Ability6"					"beastmaster_primal_roar"
+
+		"Ability10"					"special_bonus_exp_boost_25"
+		"Ability11"					"special_bonus_movement_speed_30"
+		"Ability12"					"special_bonus_armor_7"
+		"Ability13"					"special_bonus_unique_beastmaster_2"
+		"Ability14"					"special_bonus_unique_beastmaster"
+		"Ability15"					"special_bonus_hp_500"
+		"Ability16"					"special_bonus_unique_beastmaster_4"
+		"Ability17"					"special_bonus_unique_beastmaster_3"
 	}
 
 	//=================================================================================================================
@@ -280,7 +280,15 @@
 		"Ability4"					"generic_hidden"
 		"Ability5"					"generic_hidden"
 		"Ability6"					"brewmaster_primal_split"
-		"Ability16"					"generic_hidden" // Disable ult cdr
+
+		"Ability10"					"special_bonus_attack_damage_30"
+		"Ability11"					"special_bonus_hp_200"
+		"Ability12"					"special_bonus_unique_brewmaster_3"
+		"Ability13"					"special_bonus_magic_resistance_20"
+		"Ability14"					"special_bonus_unique_brewmaster"
+		"Ability15"					"special_bonus_attack_speed_100"
+		"Ability16"					"special_bonus_unique_brewmaster_2"
+		"Ability17"					"special_bonus_unique_brewmaster_4"
 	}
 
 	//=================================================================================================================
@@ -330,6 +338,15 @@
 		"Ability4"					"generic_hidden"
 		"Ability5"					"generic_hidden"
 		"Ability6"					"chaos_knight_phantasm"
+
+		"Ability10"					"special_bonus_all_stats_5"
+		"Ability11"					"special_bonus_movement_speed_20"
+		"Ability12"					"special_bonus_strength_15"
+		"Ability13"					"special_bonus_cooldown_reduction_12"
+		"Ability14"					"special_bonus_gold_income_25"
+		"Ability15"					"special_bonus_unique_chaos_knight"
+		"Ability16"					"special_bonus_unique_chaos_knight_2"
+		"Ability17"					"special_bonus_unique_chaos_knight_3"
 	}
 
 	//=================================================================================================================
@@ -464,6 +481,15 @@
 		"Ability4"					"doom_bringer_empty1"
 		"Ability5"					"doom_bringer_empty2"
 		"Ability6"					"imba_doom_bringer_doom"
+
+		"Ability10"					"special_bonus_unique_doom_4"
+		"Ability11"					"special_bonus_unique_doom_6"
+		"Ability12"					"special_bonus_evasion_20"
+		"Ability13"					"special_bonus_unique_doom_3"
+		"Ability14"					"special_bonus_unique_doom_5"
+		"Ability15"					"special_bonus_unique_doom_2"
+		"Ability16"					"special_bonus_unique_doom_1"
+		"Ability17"					"special_bonus_cleave_100"
 	}
 
 	//=================================================================================================================
@@ -569,6 +595,15 @@
 		"Ability4"					"ember_spirit_activate_fire_remnant"
 		"Ability5"					"generic_hidden"
 		"Ability6"					"ember_spirit_fire_remnant"
+
+		"Ability10"					"special_bonus_attack_damage_25"
+		"Ability11"					"special_bonus_unique_ember_spirit_1"
+		"Ability12"					"special_bonus_unique_ember_spirit_3"
+		"Ability13"					"special_bonus_unique_ember_spirit_2"
+		"Ability14"					"special_bonus_spell_amplify_10"
+		"Ability15"					"special_bonus_truestrike"
+		"Ability16"					"special_bonus_unique_ember_spirit_4"
+		"Ability17"					"special_bonus_unique_ember_spirit_5"
 	}
 
 	//=================================================================================================================
@@ -643,7 +678,15 @@
 		"Ability4"					"generic_hidden"
 		"Ability5"					"generic_hidden"
 		"Ability6"					"gyrocopter_call_down"
-		"Ability16"					"generic_hidden" // Disable ult cdr
+
+		"Ability10"					"special_bonus_attack_damage_25"
+		"Ability11"					"special_bonus_hp_200"
+		"Ability12"					"special_bonus_unique_gyrocopter_2"
+		"Ability13"					"special_bonus_unique_gyrocopter_3"
+		"Ability14"					"special_bonus_movement_speed_50"
+		"Ability15"					"special_bonus_unique_gyrocopter_4"
+		"Ability16"					"special_bonus_unique_gyrocopter_1"
+		"Ability17"					"special_bonus_unique_gyrocopter_5"
 	}
 
 	//=================================================================================================================
@@ -692,6 +735,15 @@
 		"Ability4"					"generic_hidden"
 		"Ability5"					"generic_hidden"
 		"Ability6"					"juggernaut_omni_slash"
+
+		"Ability10"					"special_bonus_all_stats_5"
+		"Ability11"					"special_bonus_movement_speed_20"
+		"Ability12"					"special_bonus_unique_juggernaut"
+		"Ability13"					"special_bonus_attack_speed_25"
+		"Ability14"					"special_bonus_armor_10"
+		"Ability15"					"special_bonus_unique_juggernaut_3"
+		"Ability16"					"special_bonus_hp_600"
+		"Ability17"					"special_bonus_unique_juggernaut_2"
 	}
 
 	//=================================================================================================================
@@ -845,7 +897,6 @@
 		//Picking Screen
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
-		"IsDisabled"				"1"
 		
 		"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
 		"particle_folder"			"particles/units/heroes/hero_magnataur"
@@ -878,7 +929,6 @@
 
 		//Picking Screen
 		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
-		"IsDisabled"				"5"
 
 		"Ability1"					"meepo_earthbind"
 		"Ability2"					"meepo_poof"
@@ -886,6 +936,15 @@
 		"Ability4"					"generic_hidden"
 		"Ability5"					"generic_hidden"
 		"Ability6"					"meepo_divided_we_stand"
+
+		"Ability10"					"special_bonus_strength_7"
+		"Ability11"					"special_bonus_attack_damage_20"
+		"Ability12"					"special_bonus_lifesteal_10"
+		"Ability13"					"special_bonus_unique_meepo_2"
+		"Ability14"					"special_bonus_unique_meepo_3"
+		"Ability15"					"special_bonus_evasion_15"
+		"Ability16"					"special_bonus_hp_600"
+		"Ability17"					"special_bonus_unique_meepo"
 	}
 
 	//=================================================================================================================
@@ -934,6 +993,15 @@
 		"Ability6"					"monkey_king_wukongs_command"
 		"Ability7"					"monkey_king_primal_spring_early"
 		"Ability8"					"monkey_king_untransform"
+
+		"Ability10"					"special_bonus_unique_monkey_king_5"
+		"Ability11"					"special_bonus_attack_speed_20"
+		"Ability12"					"special_bonus_unique_monkey_king_7"
+		"Ability13"					"special_bonus_unique_monkey_king_2"
+		"Ability14"					"special_bonus_unique_monkey_king"
+		"Ability15"					"special_bonus_unique_monkey_king_3"
+		"Ability16"					"special_bonus_unique_monkey_king_4"
+		"Ability17"					"special_bonus_unique_monkey_king_6"
 	}
 
 	//=================================================================================================================
@@ -955,7 +1023,15 @@
 		"Ability7"					"morphling_morph_replicate"
 		"Ability8"					"morphling_morph"
 
+		"Ability15"					"special_bonus_agility_10"
+		"Ability16"					"special_bonus_unique_morphling_1"
+		"Ability17"					"special_bonus_unique_morphling_8"
+		"Ability18"					"special_bonus_attack_speed_30"
+		"Ability19"					"special_bonus_unique_morphling_5"
+		"Ability20"					"special_bonus_unique_morphling_4"
 		"Ability21"					"generic_hidden"
+//		"Ability21"					"special_bonus_unique_morphling_6"
+		"Ability22"					"special_bonus_unique_morphling_3"
 	}
 
 	//=================================================================================================================
@@ -967,7 +1043,6 @@
 
 		//Picking Screen
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
-		"IsDisabled"				"1"
 
 		"AttackDamageMin"			"34"
 		"AttackDamageMax"			"38"
@@ -979,6 +1054,15 @@
 		"Ability4"					"generic_hidden"
 		"Ability5"					"generic_hidden"
 		"Ability6"					"furion_wrath_of_nature"
+
+		"Ability10"					"special_bonus_attack_damage_30"
+		"Ability11"					"special_bonus_movement_speed_40"
+		"Ability12"					"special_bonus_armor_10"
+		"Ability13"					"special_bonus_unique_furion_2"
+		"Ability14"					"special_bonus_attack_speed_40"
+		"Ability15"					"special_bonus_unique_furion_4"
+		"Ability16"					"special_bonus_unique_furion_3"
+		"Ability17"					"special_bonus_unique_furion"
 	}
 
 	//=================================================================================================================
@@ -1134,7 +1218,6 @@
 		//Picking Screen
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
-		"IsDisabled"				"2"
 
 		"Ability1"					"imba_omniknight_purification"
 		"Ability2"					"imba_omniknight_repel"
@@ -1218,7 +1301,6 @@
 
 		//Picking Screen
 		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
-		"IsDisabled"				"1"
 
 		"Ability1"					"phantom_lancer_spirit_lance"
 		"Ability2"					"phantom_lancer_doppelwalk"
@@ -1226,6 +1308,15 @@
 		"Ability4"					"generic_hidden"
 		"Ability5"					"generic_hidden"
 		"Ability6"					"phantom_lancer_juxtapose"
+
+		"Ability10"					"special_bonus_evasion_10"
+		"Ability11"					"special_bonus_attack_speed_20"
+		"Ability12"					"special_bonus_hp_250"
+		"Ability13"					"special_bonus_unique_phantom_lancer_2"
+		"Ability14"					"special_bonus_unique_phantom_lancer"
+		"Ability15"					"special_bonus_unique_phantom_lancer_3"
+		"Ability16"					"special_bonus_unique_phantom_lancer_4"
+		"Ability17"					"special_bonus_30_crit_2"
 	}
 
 	//=================================================================================================================
@@ -1395,6 +1486,14 @@
 		"Ability9"					"rubick_hidden2"
 		"Ability10"					"rubick_hidden3"
 
+		"Ability11"					"special_bonus_hp_200"
+		"Ability12"					"special_bonus_attack_damage_60"
+		"Ability13"					"special_bonus_cast_range_100"
+		"Ability14"					"special_bonus_unique_rubick_2"
+		"Ability15"					"special_bonus_unique_rubick_3"
+		"Ability16"					"special_bonus_unique_rubick"
+		"Ability17"					"special_bonus_unique_rubick_4"
+		"Ability18"					"special_bonus_unique_rubick_5"
 	}
 
 	//=================================================================================================================
@@ -1481,7 +1580,6 @@
 		//Picking Screen
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
-		"IsDisabled"				"1"
 
 		"Ability1"					"imba_silencer_arcane_curse"
 		"Ability2"					"imba_silencer_glaives_of_wisdom"
@@ -1622,7 +1720,6 @@
 
 		//Picking Screen
 		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
-		"IsDisabled"				"1"
 
 		"Ability1"					"spectre_spectral_dagger"
 		"Ability2"					"spectre_desolate"
@@ -1784,7 +1881,6 @@
 
 		//Picking Screen
 		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
-		"IsDisabled"				"1"
 
 		"Ability1"					"undying_decay"
 		"Ability2"					"undying_soul_rip"
@@ -1946,7 +2042,6 @@
 		"override_hero"				"npc_dota_hero_zuus"
 
 		//Picking Screen
-		"IsDisabled"				"2"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
 
 		"Ability1"					"zuus_arc_lightning"
@@ -2281,7 +2376,6 @@
 		//Picking Screen
 		"IsCustom"					"1"
 		"IsNew"						"1"
-		"IsDisabled"				"4"
 
 		// Armor
 		//-------------------------------------------------------------------------------------------------------------
@@ -2357,7 +2451,6 @@
 		//Picking Screen
 //		"IsCustom"					"1"
 		"IsNew"						"1"
-		"IsDisabled"				"4"
 
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
 		"MovementTurnRate"			"1.5"
@@ -2382,5 +2475,15 @@
 		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
 		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
 		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_HERO"
+	}
+
+	//=================================================================================================================
+	// HERO: Dummy
+	//=================================================================================================================
+	"npc_dota_hero_dummy_dummy"
+	{
+		"BaseClass"			"npc_dota_hero"
+		"HeroID"			"255"
+		"Model"				"models/development/invisiblebox.vmdl"
 	}
 }

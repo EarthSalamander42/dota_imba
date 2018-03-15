@@ -27,7 +27,8 @@ require('internal/util')
 require('internal/funcs')
 require('player_resource')
 require('imba')
-require('hero_selection')
+
+require('hero_selection/hero_selection')
 
 function Precache(context)
 	DebugPrint("[IMBA] Performing pre-load precache")
@@ -268,7 +269,6 @@ function Precache(context)
 	PrecacheUnitByNameAsync("npc_dota_hero_abyssal_underlord", context) -- Hellion (attack sound)
 	PrecacheUnitByNameAsync("npc_dota_hero_invoker", context) -- Roshan
 	PrecacheUnitByNameAsync("npc_dota_hero_weaver", context) -- Sly King (attack sound)
-	PrecacheUnitByNameAsync("npc_dota_hero_wisp", context) -- Dummy Wisp
 end
 
 function Activate()

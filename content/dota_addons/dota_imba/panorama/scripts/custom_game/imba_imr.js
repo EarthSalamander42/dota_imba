@@ -127,9 +127,26 @@ function Battlepass() {
 	}
 }
 
+function IsDonator() {
+	var i = 0
+	var steamId = Game.GetLocalPlayerInfo().player_steamid;
+	var donator = CustomNetTables.GetTableValue("game_options", "donators").donators;
+
+	for (i in donator) {
+		if (donator[i] != undefined) {
+			$.Msg(donator[i])
+			$.Msg(steamId)
+			if (donator[i] == steamId) {
+				return true;
+			}
+		}
+	}
+
+	return false;
+}
+
 var companion_changed = false
 function SetCompanion(companion, name) {
-	var is_donator = false
 	if (companion_changed == true) {
 		$.Msg("SLOW DOWN BUDDY!")
 		return;
@@ -146,21 +163,9 @@ function SetCompanion(companion, name) {
 		steam_id : steamId
 	};
 
-	var i = 0
-	var donator = CustomNetTables.GetTableValue("game_options", "donators").donators;
-
-	for (i in donator) {
-		if (donator[i] != undefined) {
-			if (donator[i] == steamId) {
-				is_donator = true
-			}
-		}
-	}
-
-	if (is_donator == false) {
+	if (IsDonator() == false) {
 		$("#CompanionNotification").AddClass("not_donator")
-		$("#CompanionNotificationLabel").text = $
-				.Localize("companion_not_donator");
+		$("#CompanionNotificationLabel").text = $.Localize("companion_not_donator");
 		return;
 	}
 
@@ -170,9 +175,7 @@ function SetCompanion(companion, name) {
 			companions = d.data;
 			$.Msg("Companion Api Good: " + JSON.stringify(d));
 			$("#CompanionNotification").AddClass("success")
-			$("#CompanionNotificationLabel").text = $
-					.Localize("companion_success")
-					+ $.Localize(name) + "!";
+			$("#CompanionNotificationLabel").text = $.Localize("companion_success") + $.Localize(name) + "!";
 			GameEvents.SendCustomGameEventToServer("change_companion", {
 				ID : Players.GetLocalPlayer(),
 				unit : companion
@@ -186,8 +189,7 @@ function SetCompanion(companion, name) {
 		error : function(err) {
 			$.Msg("Companion Api Error: " + JSON.stringify(err));
 			$("#CompanionNotification").AddClass("failure")
-			$("#CompanionNotificationLabel").text = $
-					.Localize("companion_error");
+			$("#CompanionNotificationLabel").text = $.Localize("companion_error");
 			$.Schedule(6.0, function() {
 				$("#CompanionNotification").RemoveClass("failure");
 				companion_changed = false
@@ -272,13 +274,13 @@ function SafeToLeave() {
 function ShowImbathrowBar(args) {
 	var Parent = $.GetContextPanel().GetParent().GetParent().GetParent()
 	var hudElements = Parent.FindChildTraverse("HUDElements");
-	var topbar = hudElements.FindChildTraverse("topbar");
+//	var topbar = hudElements.FindChildTraverse("topbar");
 
 	if (args.imbathrow == true) {
-		topbar.style.visibility = "collapse";
+//		topbar.style.visibility = "collapse";
 	} else {
 		Parent.FindChildTraverse("TopBarScoreboard").style.visibility = "collapse";
-		topbar.style.visibility = "visible";
+//		topbar.style.visibility = "visible";
 	}
 }
 
@@ -512,21 +514,60 @@ function GenerateCompanionPanel(companions, player) {
 	}
 }
 
+function ToggleCompanion() {
+	if ($("#CompanionNotification").BHasClass("not_donator")) {
+		$("#CompanionNotification").RemoveClass("not_donator");
+	}
+
+	var steamId = Game.GetLocalPlayerInfo().player_steamid;
+	var url = 'http://api.dota2imba.org/meta/set-companion';
+	var data = {
+		companion : companion,
+		steam_id : steamId
+	};
+
+	if (IsDonator() == false) {
+		$("#CompanionNotification").AddClass("not_donator")
+		$("#CompanionNotificationLabel").text = $.Localize("companion_not_donator");
+		return;
+	}
+
+	$.AsyncWebRequest(url, {
+		type : 'POST',
+		success : function(d) {
+			companions = d.data;
+			$.Msg("Companion Api Good: " + JSON.stringify(d));
+			$("#CompanionNotification").AddClass("success")
+			$("#CompanionNotificationLabel").text = $.Localize("companion_success") + $.Localize(name) + "!";
+			GameEvents.SendCustomGameEventToServer("change_companion", {
+				ID : Players.GetLocalPlayer(),
+				unit : companion
+			});
+			$.Schedule(6.0, function() {
+				$("#CompanionNotification").RemoveClass("success");
+			});
+		},
+		data : data,
+		error : function(err) {
+			$.Msg("Companion Api Error: " + JSON.stringify(err));
+			$("#CompanionNotification").AddClass("failure")
+			$("#CompanionNotificationLabel").text = $.Localize("companion_error");
+			$.Schedule(6.0, function() {
+				$("#CompanionNotification").RemoveClass("failure");
+			});
+		}
+	});
+}
+
 (function() {
 	// Update the game options display
-	var bounty_multiplier = CustomNetTables.GetTableValue("game_options",
-			"bounty_multiplier");
-	var exp_multiplier = CustomNetTables.GetTableValue("game_options",
-			"exp_multiplier");
-	var tower_power = CustomNetTables.GetTableValue("game_options",
-			"tower_power");
-	var initial_gold = CustomNetTables.GetTableValue("game_options",
-			"initial_gold");
-	var initial_level = CustomNetTables.GetTableValue("game_options",
-			"initial_level");
+	var bounty_multiplier = CustomNetTables.GetTableValue("game_options", "bounty_multiplier");
+	var exp_multiplier = CustomNetTables.GetTableValue("game_options", "exp_multiplier");
+	var tower_power = CustomNetTables.GetTableValue("game_options", "tower_power");
+	var initial_gold = CustomNetTables.GetTableValue("game_options", "initial_gold");
+	var initial_level = CustomNetTables.GetTableValue("game_options", "initial_level");
 	var max_level = CustomNetTables.GetTableValue("game_options", "max_level");
-	var frantic_mode = CustomNetTables.GetTableValue("game_options",
-			"frantic_mode");
+	var frantic_mode = CustomNetTables.GetTableValue("game_options", "frantic_mode");
 	var gold_tick = CustomNetTables.GetTableValue("game_options", "gold_tick");
 	var frantic = "Disabled";
 
@@ -534,16 +575,15 @@ function GenerateCompanionPanel(companions, player) {
 		frantic = "Enabled"
 	}
 
-	$("#BountyMultiplierValue").text = bounty_multiplier[1] + "%";
-	$("#ExpMultiplierValue").text = exp_multiplier[1] + "%";
-	$("#InitialGoldValue").text = initial_gold[1];
-	$("#InitialLevelValue").text = initial_level[1];
-	$("#MaxLevelValue").text = max_level[1];
-	$("#FranticModeValue").text = frantic;
-	$("#GoldTickValue").text = gold_tick[1].toFixed(1);
+//	$("#BountyMultiplierValue").text = bounty_multiplier[1] + "%";
+//	$("#ExpMultiplierValue").text = exp_multiplier[1] + "%";
+//	$("#InitialGoldValue").text = initial_gold[1];
+//	$("#InitialLevelValue").text = initial_level[1];
+//	$("#MaxLevelValue").text = max_level[1];
+//	$("#FranticModeValue").text = frantic;
+//	$("#GoldTickValue").text = gold_tick[1].toFixed(1);
 
-	$("#TowerPowerValue").text = $.Localize('#imba_gamemode_settings_power_'
-			+ tower_power[1]);
+//	$("#TowerPowerValue").text = $.Localize('#imba_gamemode_settings_power_' + tower_power[1]);
 	GameEvents.Subscribe("hall_of_fame", HallOfFame);
 	GameEvents.Subscribe("safe_to_leave", SafeToLeave);
 	GameEvents.Subscribe("imbathrow_topbar", ShowImbathrowBar);

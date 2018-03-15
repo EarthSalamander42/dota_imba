@@ -7815,7 +7815,7 @@
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"7.0"
+		"AbilityCooldown"				"9.0"
 		"AbilitySharedCooldown"			"blink"
 
 		// Item Info

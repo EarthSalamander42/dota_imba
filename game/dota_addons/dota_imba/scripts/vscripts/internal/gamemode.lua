@@ -7,7 +7,6 @@ function GameMode:_InitGameMode()
 	GameRules:SetHeroRespawnEnabled( ENABLE_HERO_RESPAWN )
 	GameRules:SetUseUniversalShopMode( UNIVERSAL_SHOP_MODE )
 	GameRules:SetSameHeroSelectionEnabled( true ) -- Let server handle hero duplicates
-	GameRules:SetHeroSelectionTime( HERO_SELECTION_TIME )
 	GameRules:SetPreGameTime( PRE_GAME_TIME)
 	GameRules:SetPostGameTime( POST_GAME_TIME )
 	GameRules:SetShowcaseTime( SHOWCASE_TIME )
@@ -115,7 +114,6 @@ function GameMode:_CaptureGameMode()
 		-- Set GameMode parameters
 		mode = GameRules:GetGameModeEntity()
 		mode:SetRecommendedItemsDisabled( RECOMMENDED_BUILDS_DISABLED )
-		mode:SetCameraDistanceOverride( CAMERA_DISTANCE_OVERRIDE )
 		mode:SetCustomBuybackCostEnabled( CUSTOM_BUYBACK_COST_ENABLED )
 		mode:SetCustomBuybackCooldownEnabled( CUSTOM_BUYBACK_COOLDOWN_ENABLED )
 		mode:SetBuybackEnabled( BUYBACK_ENABLED )
@@ -127,7 +125,6 @@ function GameMode:_CaptureGameMode()
 		mode:SetBotThinkingEnabled( USE_STANDARD_DOTA_BOT_THINKING )
 		mode:SetTowerBackdoorProtectionEnabled( ENABLE_TOWER_BACKDOOR_PROTECTION )
 
-		mode:SetFogOfWarDisabled( DISABLE_FOG_OF_WAR_ENTIRELY )
 		mode:SetGoldSoundDisabled( DISABLE_GOLD_SOUNDS )
 		mode:SetRemoveIllusionsOnDeath( REMOVE_ILLUSIONS_ON_DEATH )
 
@@ -141,11 +138,9 @@ function GameMode:_CaptureGameMode()
 		mode:SetFountainPercentageHealthRegen( FOUNTAIN_PERCENTAGE_HEALTH_REGEN )
 		mode:SetFountainPercentageManaRegen( FOUNTAIN_PERCENTAGE_MANA_REGEN )
 		mode:SetLoseGoldOnDeath( LOSE_GOLD_ON_DEATH )
-		mode:SetMaximumAttackSpeed( MAXIMUM_ATTACK_SPEED )
 		mode:SetMinimumAttackSpeed( MINIMUM_ATTACK_SPEED )
+		mode:SetMaximumAttackSpeed( MAXIMUM_ATTACK_SPEED )
 		mode:SetStashPurchasingDisabled ( DISABLE_STASH_PURCHASING )
-
-		mode:SetUnseenFogOfWarEnabled(USE_UNSEEN_FOG_OF_WAR)
 
 		self:OnFirstPlayerLoaded()
 	end 
@@ -159,7 +154,6 @@ function OnSetGameMode( eventSourceIndex, args )
 	local is_host = GameRules:PlayerHasCustomGameHostPrivileges(player)
 	local mode_info = args.modes
 	local game_mode_imba = GameRules:GetGameModeEntity()  
-	local map_name = GetMapName()
 
 	-- If the player who sent the game options is not the host, do nothing
 	if not is_host then
@@ -208,16 +202,16 @@ function OnSetGameMode( eventSourceIndex, args )
 --	end
 
 	-- Bounty multiplier increase
-	CustomNetTables:SetTableValue("game_options", "bounty_multiplier", {CUSTOM_GOLD_BONUS[map_name][mode_info.bounty_multiplier]})
+	CustomNetTables:SetTableValue("game_options", "bounty_multiplier", {CUSTOM_GOLD_BONUS[GetMapName()][mode_info.bounty_multiplier]})
 
 	-- XP multiplier increase
-	CustomNetTables:SetTableValue("game_options", "exp_multiplier", {CUSTOM_XP_BONUS[map_name][mode_info.exp_multiplier]})
+	CustomNetTables:SetTableValue("game_options", "exp_multiplier", {CUSTOM_XP_BONUS[GetMapName()][mode_info.exp_multiplier]})
 
 	-- Tower power increase
 	if mode_info.exp_multiplier == 1 then
 		TOWER_POWER_FACTOR = 1
 	elseif mode_info.tower_power == 2 then
-		if map_name ~= "imba_frantic_10v10" then
+		if IsFranticMap() == false then
 			TOWER_POWER_FACTOR = 2
 		else
 			TOWER_POWER_FACTOR = 3
@@ -226,7 +220,7 @@ function OnSetGameMode( eventSourceIndex, args )
 	CustomNetTables:SetTableValue("game_options", "tower_power", {TOWER_POWER_FACTOR})
 
 	-- Hero power increase
-	CustomNetTables:SetTableValue("game_options", "initial_gold", {HERO_INITIAL_GOLD[map_name][mode_info.hero_power]})
-	CustomNetTables:SetTableValue("game_options", "initial_level", {HERO_STARTING_LEVEL[map_name][mode_info.hero_power]})
-	CustomNetTables:SetTableValue("game_options", "max_level", {MAX_LEVEL[map_name][mode_info.hero_power]})
+	CustomNetTables:SetTableValue("game_options", "initial_gold", {HERO_INITIAL_GOLD[GetMapName()][mode_info.hero_power]})
+	CustomNetTables:SetTableValue("game_options", "initial_level", {HERO_STARTING_LEVEL[GetMapName()][mode_info.hero_power]})
+	CustomNetTables:SetTableValue("game_options", "max_level", {MAX_LEVEL[GetMapName()][mode_info.hero_power]})
 end

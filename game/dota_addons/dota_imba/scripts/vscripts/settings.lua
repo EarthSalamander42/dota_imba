@@ -31,13 +31,17 @@ if IsInToolsMode() then
 	UNIVERSAL_SHOP_MODE = true
 end
 
-HERO_SELECTION_TIME = 30.0 + 5.0		-- How long should we let people select their hero?
-if IsInToolsMode() then HERO_SELECTION_TIME = 15.0 end
+AP_GAME_TIME = 60.0					-- How long should we let people select their hero?
 
-PRE_GAME_TIME = 90.0 + HERO_SELECTION_TIME	-- How long after people select their heroes should the horn blow and the game start?
-POST_GAME_TIME = 60.0						-- How long should we let people look at the scoreboard before closing the server automatically?
+CAPTAINS_MODE_CAPTAIN_TIME = 20           -- how long players have to claim the captain chair
+CAPTAINS_MODE_PICK_BAN_TIME = 30          -- how long you have to do each pick/ban
+CAPTAINS_MODE_HERO_PICK_TIME = 30         -- time to choose which hero you're going to play
+CAPTAINS_MODE_RESERVE_TIME = 130          -- total bonus time that can be used throughout any selection
+
+PRE_GAME_TIME = 90.0 + AP_GAME_TIME	-- How long after people select their heroes should the horn blow and the game start?
+POST_GAME_TIME = 120.0						-- How long should we let people look at the scoreboard before closing the server automatically?
 AUTO_LAUNCH_DELAY = 5.0					-- How long should we wait for the host to setup the game, after all players have loaded in?
-if GetMapName() == "imba_frantic_10v10" then
+if IsFranticMap() then
 	AUTO_LAUNCH_DELAY = 10.0
 end
 TREE_REGROW_TIME = 180.0					-- How long should it take individual trees to respawn after being cut down/destroyed?
@@ -47,7 +51,6 @@ STRATEGY_TIME = 0.0							-- How long should strategy time last?
 GOLD_PER_TICK = 1							-- How much gold should players get per tick?
 
 RECOMMENDED_BUILDS_DISABLED = false			-- Should we disable the recommened builds for heroes
-CAMERA_DISTANCE_OVERRIDE = -1				-- How far out should we allow the camera to go?  1134 is the default in Dota
 
 MINIMAP_ICON_SIZE = 1						-- What icon size should we use for our heroes?
 MINIMAP_CREEP_ICON_SIZE = 1					-- What icon size should we use for creeps?
@@ -58,8 +61,6 @@ CUSTOM_BUYBACK_COST_ENABLED = true			-- Should we use a custom buyback cost sett
 CUSTOM_BUYBACK_COOLDOWN_ENABLED = true		-- Should we use a custom buyback time?
 BUYBACK_ENABLED = true						-- Should we allow people to buyback when they die?
 
-DISABLE_FOG_OF_WAR_ENTIRELY = false			-- Should we disable fog of war entirely for both teams?
-USE_UNSEEN_FOG_OF_WAR = false				-- Should we make unseen and fogged areas of the map completely black until uncovered by each team?
 -- Note: DISABLE_FOG_OF_WAR_ENTIRELY must be false for USE_UNSEEN_FOG_OF_WAR to work
 USE_STANDARD_DOTA_BOT_THINKING = false		-- Should we have bots act like they would in Dota? (This requires 3 lanes, normal items, etc)
 USE_NONSTANDARD_HERO_GOLD_BOUNTY = false	-- Should heroes follow their own gold bounty rules instead of the default DOTA ones?
@@ -85,7 +86,7 @@ FIXED_RESPAWN_TIME = -1						-- What time should we use for a fixed respawn time
 FOUNTAIN_CONSTANT_MANA_REGEN = 14			-- What should we use for the constant fountain mana regen?  Use -1 to keep the default dota behavior.
 FOUNTAIN_PERCENTAGE_MANA_REGEN = 6			-- What should we use for the percentage fountain mana regen?  Use -1 to keep the default dota behavior.
 FOUNTAIN_PERCENTAGE_HEALTH_REGEN = 6		-- What should we use for the percentage fountain health regen?  Use -1 to keep the default dota behavior.
-MAXIMUM_ATTACK_SPEED = 1600					-- What should we use for the maximum attack speed?
+MAXIMUM_ATTACK_SPEED = 1200					-- What should we use for the maximum attack speed?
 MINIMUM_ATTACK_SPEED = 0					-- What should we use for the minimum attack speed?
 DOTA_MAX_PLAYERS = 24						-- Maximum amount of players allowed in a game
 
@@ -219,20 +220,20 @@ TEAM_COLORS[DOTA_TEAM_GOODGUYS] = { 61, 210, 150 }							-- Teal
 TEAM_COLORS[DOTA_TEAM_BADGUYS]  = { 243, 201, 9 }							-- Yellow
 
 CUSTOM_TEAM_PLAYER_COUNT = {}
-if GetMapName() == "imba_standard" then
-	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_GOODGUYS] = 5
-	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_BADGUYS]  = 5
-elseif GetMapName() == "imba_1v1" then
+CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_GOODGUYS] = 5
+CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_BADGUYS]  = 5
+
+if GetMapName() == "imba_1v1" then
 	IMBA_PLAYERS_ON_GAME = 2
 	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_GOODGUYS] = 1
 	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_BADGUYS]  = 1
 	IMBA_1V1_SCORE = 3
-	PRE_GAME_TIME = 30.0 + HERO_SELECTION_TIME
-elseif GetMapName() == "imba_frantic_10v10" then
+	PRE_GAME_TIME = 30.0 + AP_GAME_TIME
+elseif GetMapName() == MapFrantic10v10() then
 	IMBA_PLAYERS_ON_GAME = 20
 	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_GOODGUYS] = 10
 	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_BADGUYS]  = 10
-elseif GetMapName() == "imba_10v10" then
+elseif GetMapName() == MapRanked10v10() then
 	IMBA_PLAYERS_ON_GAME = 20
 	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_GOODGUYS] = 10
 	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_BADGUYS]  = 10
@@ -242,7 +243,7 @@ elseif GetMapName() == "imba_12v12" then
 	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_BADGUYS]  = 12
 elseif GetMapName() == "imba_overthrow" then
 	require("libraries/overthrow/items")
-	PRE_GAME_TIME = 20.0 + HERO_SELECTION_TIME
+	PRE_GAME_TIME = 20.0 + AP_GAME_TIME
 	UNIVERSAL_SHOP_MODE = true
 	FIXED_RESPAWN_TIME = 10
 	MAX_NUMBER_OF_TEAMS = 4
@@ -303,10 +304,10 @@ end
 -------------------------------------------------------------------------------------------------
 GAME_WINNER_TEAM = 0														-- Tracks game winner
 
-if GetMapName() ~= "imba_frantic_10v10" then
-	IMBA_FRANTIC_MODE_ON = false
-else
+if IsFranticMap() then
 	IMBA_FRANTIC_MODE_ON = true
+else
+	IMBA_FRANTIC_MODE_ON = false
 end
 
 IMBA_FRANTIC_VALUE = 0.4													-- 60% CDR
@@ -318,53 +319,60 @@ IMBA_ALL_RANDOM_HERO_SELECTION_TIME = 5.0									-- Time we need to wait before
 
 -- Global Gold earning, values are doubled with Hyper for non-custom maps
 CUSTOM_GOLD_BONUS = {} -- 1 = Normal, 2 = Hyper
-CUSTOM_GOLD_BONUS["imba_standard"] = {150, 150}
-CUSTOM_GOLD_BONUS["imba_10v10"] = {150, 150}
-CUSTOM_GOLD_BONUS["imba_frantic_10v10"] = {250, 250}
+CUSTOM_GOLD_BONUS[MapRanked5v5()] = {150, 150}
+CUSTOM_GOLD_BONUS[MapRanked10v10()] = {150, 150}
+CUSTOM_GOLD_BONUS[MapFrantic5v5()] = {250, 250}
+CUSTOM_GOLD_BONUS[MapFrantic10v10()] = {250, 250}
 CUSTOM_GOLD_BONUS["imba_overthrow"] = {100, 100}
 CUSTOM_GOLD_BONUS["imba_1v1"] = {100, 100}
 
 -- Global XP earning, values are doubled with Hyper for non-custom maps (right now this is not used anymore, but i'll keep it there just in case)
 CUSTOM_XP_BONUS = {} -- 1 = Normal, 2 = Hyper
-CUSTOM_XP_BONUS["imba_standard"] = {100, 100}
-CUSTOM_XP_BONUS["imba_10v10"] = {100, 100}
-CUSTOM_XP_BONUS["imba_frantic_10v10"] = {200, 200}
+CUSTOM_XP_BONUS[MapRanked5v5()] = {100, 100}
+CUSTOM_XP_BONUS[MapRanked10v10()] = {100, 100}
+CUSTOM_XP_BONUS[MapFrantic5v5()] = {200, 200}
+CUSTOM_XP_BONUS[MapFrantic10v10()] = {200, 200}
 CUSTOM_XP_BONUS["imba_overthrow"] = {100, 100}
 CUSTOM_XP_BONUS["imba_1v1"] = {100, 100}
 
 -- Hero base level, values are doubled with Hyper for non-custom maps
 HERO_STARTING_LEVEL = {} -- 1 = Normal, 2 = Hyper
-HERO_STARTING_LEVEL["imba_standard"] = {1, 1}
-HERO_STARTING_LEVEL["imba_10v10"] = {1, 1}
-HERO_STARTING_LEVEL["imba_frantic_10v10"] = {5, 12}
+HERO_STARTING_LEVEL[MapRanked5v5()] = {1, 1}
+HERO_STARTING_LEVEL[MapRanked10v10()] = {1, 1}
+HERO_STARTING_LEVEL[MapFrantic5v5()] = {5, 5}
+HERO_STARTING_LEVEL[MapFrantic10v10()] = {5, 5}
 HERO_STARTING_LEVEL["imba_overthrow"] = {1, 1}
 HERO_STARTING_LEVEL["imba_1v1"] = {1, 1}
 
 MAX_LEVEL = {}
-MAX_LEVEL["imba_standard"] = {50, 50}
-MAX_LEVEL["imba_10v10"] = {50, 50}
-MAX_LEVEL["imba_frantic_10v10"] = {50, 100}
+MAX_LEVEL[MapRanked5v5()] = {50, 50}
+MAX_LEVEL[MapRanked10v10()] = {50, 50}
+MAX_LEVEL[MapFrantic5v5()] = {50, 50}
+MAX_LEVEL[MapFrantic10v10()] = {50, 50}
 MAX_LEVEL["imba_overthrow"] = {50, 50}
 MAX_LEVEL["imba_1v1"] = {50, 50}
 
 HERO_INITIAL_GOLD = {}
-HERO_INITIAL_GOLD["imba_standard"] = {1200, 1200}
-HERO_INITIAL_GOLD["imba_10v10"] = {1200, 1200}
-HERO_INITIAL_GOLD["imba_frantic_10v10"] = {2500, 5000}
+HERO_INITIAL_GOLD[MapRanked5v5()] = {1200, 1200}
+HERO_INITIAL_GOLD[MapRanked10v10()] = {1200, 1200}
+HERO_INITIAL_GOLD[MapFrantic5v5()] = {4000, 4000}
+HERO_INITIAL_GOLD[MapFrantic10v10()] = {4000, 4000}
 HERO_INITIAL_GOLD["imba_overthrow"] = {1200, 1200}
 HERO_INITIAL_GOLD["imba_1v1"] = {1200, 1200}
 
 GOLD_TICK_TIME = {}
-GOLD_TICK_TIME["imba_standard"] = 0.6
-GOLD_TICK_TIME["imba_10v10"] = 0.4
-GOLD_TICK_TIME["imba_frantic_10v10"] = 0.4
+GOLD_TICK_TIME[MapRanked5v5()] = 0.6
+GOLD_TICK_TIME[MapRanked10v10()] = 0.4
+GOLD_TICK_TIME[MapFrantic5v5()] = 0.4
+GOLD_TICK_TIME[MapFrantic10v10()] = 0.4
 GOLD_TICK_TIME["imba_overthrow"] = 0.6
 GOLD_TICK_TIME["imba_1v1"] = 0.6
 
 BANNED_ITEMS = {}
-BANNED_ITEMS["imba_standard"] = {}
-BANNED_ITEMS["imba_10v10"] = {}
-BANNED_ITEMS["imba_frantic_10v10"] = {}
+BANNED_ITEMS[MapRanked5v5()] = {}
+BANNED_ITEMS[MapRanked10v10()] = {}
+BANNED_ITEMS[MapFrantic5v5()] = {}
+BANNED_ITEMS[MapFrantic10v10()] = {}
 BANNED_ITEMS["imba_overthrow"] = {}
 BANNED_ITEMS["imba_1v1"] = {
 	"item_imba_bottle",

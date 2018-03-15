@@ -5,17 +5,17 @@
 
 	<Panel style="visibility:collapse;">
 		<Panel id="container" style="visibility:collapse;">
-		<!--
+			<!--
 			<Image src="file://panorama/images/custom_game/overthrow_background_01.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/overthrow_victory_trophy.psd" hittest="false" />
-			<Image src="file://panorama/images/custom_game/random_button.png" hittest="false" />
-			<Image src="file://panorama/images/custom_game/random_button_IMBA.png" hittest="false" />
+			<Image src="file://panorama/images/custom_game/imba_random.png" hittest="false" />
 
 			<Image src="file://panorama/images/custom_game/game_info/coins.psd" hittest="false" />
 			<Image src="file://panorama/images/custom_game/game_info/items.psd" hittest="false" />
 			<Image src="file://panorama/images/custom_game/game_info/throne.psd" hittest="false" />
 
 			<Image src="file://panorama/images/custom_game/loading_screen/facebook_banner.jpg" hittest="false" />
+			<Image src="file://panorama/images/custom_game/loading_screen/twitter_banner.jpg" hittest="false" />
 
 			<Image src="file://panorama/images/custom_game/runes/rune_frost.png" hittest="false" />
 
@@ -66,6 +66,7 @@
 			<Image src="file://panorama/images/heroes/npc_dota_hero_scaldris.png" hittest="false" />
 			<Image src="file://panorama/images/heroes/npc_dota_hero_sly_king.png" hittest="false" />
 			<Image src="file://panorama/images/heroes/npc_dota_hero_storegga.png" hittest="false" />
+			<Image src="file://panorama/images/heroes/npc_dota_hero_dummy_dummy.png" hittest="false" />
 
 			<Image src="file://panorama/images/heroes/icons/npc_dota_hero_ghost_revenant.png" hittest="false" />
 			<Image src="file://panorama/images/heroes/icons/npc_dota_hero_hell_empress.png" hittest="false" />
@@ -76,6 +77,11 @@
 			<Image src="file://panorama/images/hud/icon_kill_enemy_fb.png" hittest="false" />
 
 			<Image src="file://panorama/images/custom_game/battlepass/battlepass.png" hittest="false" />
+
+			<Image src="file://panorama/images/custom_game/picking_screen/clash_ancients.png" hittest="false" />
+			<Image src="file://panorama/images/custom_game/picking_screen/clash_heroes.png" hittest="false" />
+			<Image src="file://panorama/images/custom_game/picking_screen/radiant.png" hittest="false" />
+			<Image src="file://panorama/images/custom_game/picking_screen/dire.png" hittest="false" />
 		-->
 		</Panel>
 	</Panel>

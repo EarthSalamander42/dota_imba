@@ -7,6 +7,7 @@
 #overthrow-loading {
 	width: 100%;
 	height: 100%;
+	flow-children: down;
 	visibility: collapse;
 }
 
@@ -229,6 +230,7 @@
 	background-position: 65% 0%;
 	background-size: cover;
 	overflow: clip;
+	flow-children: down;
 }
 
 #imba-admin
@@ -240,13 +242,11 @@
 	background-color: #0008;
 	flow-children: down;
 	visibility: collapse;
-
 }
 
 #imba-normal-news, #imba-ow-news {
-	vertical-align: bottom;
-	margin-bottom: 200px;
 	margin-left: 2%;
+	align: left center;
 	width: 50%;
 	background-color: #922c30ee;
 	padding: 20px 40px;
@@ -346,45 +346,46 @@
 } 
 
 #imba-social {
+	flow-children: down;
 	margin-left: 2%;
 	vertical-align: bottom;
-	margin-bottom: 120px;
 	padding: 10px;
 }
 
-#imba-social-buttons {
+.imba-social-buttons {
+	margin-bottom: 20px;
 	flow-children: right;
 }
 
-#imba-social-buttons Button {
+.imba-social-buttons Button {
 	width: 200px;
 	height: 65px;
 	box-shadow: #000 0 0 10px 0; 
 	background-position: center center;
 }
 
-.AspectRatio4x3 #imba-social-buttons Button {
+.AspectRatio4x3 .imba-social-buttons Button {
 	width: 180px;
 	height: 59px;
 	box-shadow: #000 0 0 10px 0; 
 	background-position: center center;
 }
 
-#imba-social-buttons Button:hover {
+.imba-social-buttons Button:hover {
 	box-shadow: #111 0 0 15px 0;
 }
 
-#imba-social-buttons Button:active {
+.imba-social-buttons Button:active {
 	box-shadow: #333 0 0 15px 0;
 	width: 198px; 
 }
 
-.AspectRatio4x3 #imba-social-buttons Button:active {
+.AspectRatio4x3 .imba-social-buttons Button:active {
 	width: 178px; 
 }
 
 .imba-social-button {
-	margin-left: 20px;
+	margin-left: 12px;
 	background-size: contain;
 	saturation: 0.9;
 }
@@ -419,12 +420,18 @@
 	background-size: 200px 65px;
 }
 
+#imba-social-button-twitter {
+	background-image: url("file://{images}/custom_game/loading_screen/twitter_banner.png");
+	background-size: 200px 65px;
+}
+
 #GameOptionsPanel
 {
 	width: 100%;
 	height: fit-children;
 	flow-children: down;
 	padding: 10px;
+	visibility: collapse;
 }
 
 #game_options_game_mode_title
