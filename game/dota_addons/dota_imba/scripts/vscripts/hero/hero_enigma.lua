@@ -618,6 +618,7 @@ function modifier_imba_enigma_black_hole_thinker:GetAuraRadius() 			return self.
 function modifier_imba_enigma_black_hole_thinker:GetModifierAura()			return "modifier_imba_enigma_black_hole" end
 
 function modifier_imba_enigma_black_hole_thinker:OnCreated(keys)
+	self.singularity_cap = self:GetAbility():GetSpecialValueFor("singularity_cap")
 	self.radius = self:GetAbility().radius
 	self.pull_radius = self:GetAbility().pull_radius
 	if not IsServer() then return end
@@ -652,7 +653,17 @@ function modifier_imba_enigma_black_hole_thinker:OnCreated(keys)
 		ParticleManager:SetParticleControl(self.pfx_ulti, 3, self:GetParent():GetAbsOrigin())
 	end
 	local buff = self:GetCaster():FindModifierByName("modifier_imba_singularity")
-	if not keys.talent then buff:SetStackCount(buff:GetStackCount() + #enemies) end
+	local stacks = buff:GetStackCount()
+
+	--Add singularity stacks (capped to a certain value)
+	if not keys.talent then
+		if stacks + #enemies < self.singularity_cap then 
+			buff:SetStackCount(stacks + #enemies) 
+		else
+			buff:SetStackCount(self.singularity_cap)
+		end
+	end
+
 	EmitSoundOn(self.sound, self:GetParent())
 	local dummy = self:GetParent()
 	self:GetParent():SetContextThink("StopBHsound", function()
@@ -694,7 +705,9 @@ function modifier_imba_enigma_black_hole_thinker:OnIntervalThink()
 		FIND_ANY_ORDER,
 		false)
 	for _,enemy in pairs(enemies) do
-		enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_enigma_black_hole_pull", {})
+		if not enemy:IsRoshan() then
+			enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_enigma_black_hole_pull", {})
+		end
 	end
 	-- Damage
 	if self.think_time >= 1.0 then
@@ -709,12 +722,14 @@ function modifier_imba_enigma_black_hole_thinker:OnIntervalThink()
 			FIND_ANY_ORDER,
 			false)
 		for _, enemy in pairs(enemies) do
-			local damageTable = {victim = enemy,
-				attacker = self:GetCaster(),
-				damage = self.dmg,
-				damage_type = DAMAGE_TYPE_PURE,
-				ability = self:GetAbility()}
-			ApplyDamage(damageTable)
+			if not enemy:IsRoshan() then
+				local damageTable = {victim = enemy,
+					attacker = self:GetCaster(),
+					damage = self.dmg,
+					damage_type = DAMAGE_TYPE_PURE,
+					ability = self:GetAbility()}
+				ApplyDamage(damageTable)
+			end
 		end
 	end
 end
@@ -742,18 +757,23 @@ function modifier_imba_enigma_black_hole:IsMotionController()  return true end
 function modifier_imba_enigma_black_hole:GetMotionControllerPriority()  return DOTA_MOTION_CONTROLLER_PRIORITY_HIGHEST end
 
 function modifier_imba_enigma_black_hole:CheckState()
-	local state =
-		{
-			[MODIFIER_STATE_DISARMED] = true,
-			[MODIFIER_STATE_ROOTED] = true,
-			[MODIFIER_STATE_MUTED] = true,
-			[MODIFIER_STATE_STUNNED] = true,
-		}
+	local state = {}
+	--Does not affect Roshan
+	if not self:GetParent():IsRoshan() then
+		state =
+			{
+				[MODIFIER_STATE_DISARMED] = true,
+				[MODIFIER_STATE_ROOTED] = true,
+				[MODIFIER_STATE_MUTED] = true,
+				[MODIFIER_STATE_STUNNED] = true,
+			}
+	end
 	return state
 end
 
 function modifier_imba_enigma_black_hole:OnCreated()
 	if not IsServer() then return end
+	if self:GetParent():IsRoshan() then self:Destroy() end  --Roshan is immune to Black Hole
 	self:StartIntervalThink(FrameTime())
 	local ability = self:GetAbility()
 	self.radius = self:GetAbility().radius
@@ -806,6 +826,7 @@ function modifier_imba_enigma_black_hole_pull:GetMotionControllerPriority()  ret
 
 function modifier_imba_enigma_black_hole_pull:OnCreated()
 	if not IsServer() then return end
+	if self:GetParent():IsRoshan() then self:Destroy() end  --Roshan is immune to Black Hole
 	self:StartIntervalThink(FrameTime())
 	local ability = self:GetAbility()
 	self.pull_radius = self:GetAbility().pull_radius

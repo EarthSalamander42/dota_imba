@@ -421,25 +421,14 @@ function modifier_imba_swashbuckle_slashes:OnIntervalThink()
 				ParticleManager:SetParticleControl(blood_particle, 0, enemy:GetAbsOrigin()) --origin of particle
 				ParticleManager:SetParticleControl(blood_particle, 2, self.direction * 500) --direction and speed of the blood spills
 
-				--Talent #8: Swashbuckle also uses Pangolier attack damage
+				--Talent #8: Swashbuckle also uses half of Pangolier attack damage
+				local extra_damage = 0
 				if self.caster:HasTalent("special_bonus_imba_pangolier_8") then
+					extra_damage = self.caster:GetAverageTrueAttackDamage() / 2
 
 					--Apply the damage from the slash
 					local damageTable = {victim = enemy,
-						damage = self.damage,
-						damage_type = DAMAGE_TYPE_PHYSICAL,
-						damage_flags = DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION,
-						attacker = self.caster,
-						ability = nil
-					}
-					ApplyDamage(damageTable)
-
-					--and also perform a basic attack
-					self.caster:PerformAttack(enemy, true, true, true, true, false, false, true)
-				else --No talent: only perform a fake basic attack for the on-hit effects
-					--Apply the damage from the slash
-					local damageTable = {victim = enemy,
-						damage = self.damage,
+						damage = self.damage + extra_damage,
 						damage_type = DAMAGE_TYPE_PHYSICAL,
 						damage_flags = DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION,
 						attacker = self.caster,
@@ -449,7 +438,6 @@ function modifier_imba_swashbuckle_slashes:OnIntervalThink()
 
 				--Apply on-hit effects
 				self.caster:PerformAttack(enemy, true, true, true, true, false, true, true)
-				end
 			end
 		end
 

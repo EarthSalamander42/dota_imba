@@ -124,6 +124,7 @@ function modifier_imba_breathe_fire_debuff:GetEffectName()
 	return "particles/units/heroes/hero_dragon_knight/dragon_knight_breathe_fire_trail.vpcf"
 end
 
+function modifier_imba_breathe_fire_debuff:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 function modifier_imba_breathe_fire_debuff:GetEffectAttachType() return PATTACH_ABSORIGIN_FOLLOW end	
 function modifier_imba_breathe_fire_debuff:IsHidden() return false end
 function modifier_imba_breathe_fire_debuff:IsPurgable() return true end
