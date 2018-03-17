@@ -529,67 +529,6 @@ function IsDaytime()
 	return true   
 end
 
--- COOKIES: PreGame Chat System, created by Mahou Shoujo
-Chat = Chat or class({})
-
-function Chat:constructor(players, users, teamColors)
-	self.players = players
-	self.teamColors = TEAM_COLORS
-	self.users = users
-
-	CustomGameEventManager:RegisterListener("custom_chat_say", function(id, ...) Dynamic_Wrap(self, "OnSay")(self, ...) end)
-	print("CHAT: constructing...")
-end
-
-function Chat:OnSay(args)
-	local id = args.PlayerID
-	local message = args.message
-	local player = PlayerResource:GetPlayer(id)
-	local hero = player:GetAssignedHero()
-
-	message = message:gsub("^%s*(.-)%s*$", "%1") -- Whitespace trim
-	message = message:gsub("^(.{0,256})", "%1") -- Limit string length
-
-	if message:len() == 0 then
-		return
-	end
-
-	local arguments = {
-		hero = player,
-		color = PLAYER_COLORS[id],
-		player = id,
-		message = args.message,
-		team = args.team,
-		IsDev = IsDeveloper(id)
-	}
-
-	if args.team then
-		CustomGameEventManager:Send_ServerToTeam(player:GetTeamNumber(), "custom_chat_say", arguments)
-
-		print(hero, args.message, PLAYER_COLORS[id])
-		Say(player, args.message, true)
-
---	else -- i leave this here if someday we want to create a whole new chat, and not only a pregame chat
---		CustomGameEventManager:Send_ServerToAllClients("custom_chat_say", arguments)
-	end
-end
-
-function Chat:PlayerRandomed(id, hero, teamLocal, name)
-	local hero = PlayerResource:GetPlayer(id)
-	local shared = {
-		color = PLAYER_COLORS[id],
-		player = id,
-		IsDev = IsDeveloper(id)
-	}
-
-	local localArgs = vlua.clone(shared)
-	localArgs.hero = hero
-	localArgs.team = teamLocal
-	localArgs.name = name
-
-	CustomGameEventManager:Send_ServerToAllClients("custom_randomed_message", localArgs)
-end
-
 function SystemMessage(token, vars)
 	CustomGameEventManager:Send_ServerToAllClients("custom_system_message", { token = token or "", vars = vars or {}})
 end
@@ -898,82 +837,6 @@ function table.deepmerge(t1, t2)
 	return t1
 end
 
-function CustomHeroAttachments(hero, illusion)
-
-	hero_name = hero:GetUnitName()
-
-	for i = 1, 8 do
-		if GetKeyValueByHeroName(hero_name, "Ability"..i) ~= nil then
-			local ab = hero:AddAbility(GetKeyValueByHeroName(hero_name, "Ability"..i))
-			if GetKeyValueByHeroName(hero_name, "Ability"..i) == "ghost_revenant_ghost_immolation" or GetKeyValueByHeroName(hero_name, "Ability"..i) == "hell_empress_ambient_effects" then
-				ab:SetLevel(1)
-			end
-		end
-	end
-
-	if hero_name == "npc_dota_hero_ghost_revenant" then
-		hero:SetRenderColor(128, 255, 0)
-		hero.head = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/razor/apostle_of_the_tempest_head/apostle_of_the_tempest_head.vmdl"})
-		hero.head:FollowEntity(hero, true)
-		hero.head:SetRenderColor(128, 255, 0)
-		hero.arms = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/razor/apostle_of_the_tempest_arms/apostle_of_the_tempest_arms.vmdl"})
-		hero.arms:FollowEntity(hero, true)
-		hero.arms:SetRenderColor(128, 255, 0)
-		hero.body = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/razor/apostle_of_the_tempest_armor/apostle_of_the_tempest_armor.vmdl"})
-		hero.body:FollowEntity(hero, true)
-		hero.body:SetRenderColor(128, 255, 0)
-		hero.belt = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/razor/empire_of_the_lightning_lord_belt/empire_of_the_lightning_lord_belt.vmdl"})
-		hero.belt:FollowEntity(hero, true)
-		hero.belt:SetRenderColor(128, 255, 0)
-		hero.weapon = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/razor/severing_lash/mesh/severing_lash.vmdl"})
-		hero.weapon:FollowEntity(hero, true)
-		hero.weapon:SetRenderColor(128, 255, 0)
-	elseif hero_name == "npc_dota_hero_hell_empress" then
-
-	elseif hero_name == "npc_dota_hero_scaldris" then
-		for i = 0, 24 do
-			if hero:GetAbilityByIndex(i) then
-				hero:RemoveAbility(hero:GetAbilityByIndex(i):GetAbilityName())
-			end
-		end
-		hero:AddAbility("imba_scaldris_heatwave")
-		hero:AddAbility("imba_scaldris_scorch")
-		hero:AddAbility("imba_scaldris_jet_blaze")
-		hero:AddAbility("generic_hidden")
-		local ab = hero:AddAbility("imba_scaldris_antipode")
-		ab:SetLevel(1)
-		hero:AddAbility("imba_scaldris_living_flame")
-		hero:AddAbility("imba_scaldris_cold_front")
-		hero:AddAbility("imba_scaldris_freeze")
-		hero:AddAbility("imba_scaldris_ice_floes")
-		hero:AddAbility("imba_scaldris_absolute_zero")
-		hero:AddAbility("generic_hidden")
-		hero:AddAbility("generic_hidden")
-		hero:AddAbility("generic_hidden")
-		hero:AddAbility("generic_hidden")
-		hero:AddAbility("generic_hidden")
-		hero:AddAbility("generic_hidden")
-		hero:AddAbility("generic_hidden")
-		hero:AddAbility("generic_hidden")
-		hero:AddAbility("generic_hidden")
-		hero:AddAbility("generic_hidden")
-		hero:AddAbility("generic_hidden")
-		hero:AddAbility("generic_hidden")
-		hero:AddAbility("generic_hidden")
-		hero:AddAbility("generic_hidden")
-	elseif hero_name == "npc_dota_hero_sohei" then
----		hero.hand = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/heroes/sohei/so_weapon.vmdl"})
-		hero.hand = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/heroes/sohei/weapon/immortal/thunderlord.vmdl"})
-
-		-- lock to bone
-		hero.hand:FollowEntity(hero, true)
-
-		--hero:AddNewModifier(hero, nil, 'modifier_animation_translate_permanent_string', {translate = 'walk'})
-		--hero:AddNewModifier(hero, nil, 'modifier_animation_translate_permanent_string', {translate = 'odachi'})
-		--hero:AddNewModifier(hero, nil, 'modifier_animation_translate_permanent_string', {translate = 'aggressive'})
-	end
-end
-
 function ReconnectPlayer(player_id)
 if not player_id then player_id = 0 end
 
@@ -1034,7 +897,9 @@ local color = hero:GetFittingColor()
 		hero.companion:ForceKill(false)
 	end
 
-	local companion = CreateUnitByName(model, hero:GetAbsOrigin() + RandomVector(200), true, hero, hero, hero:GetTeamNumber())
+	local companion = CreateUnitByName("npc_imba_donator_companion", hero:GetAbsOrigin() + RandomVector(200), true, hero, hero, hero:GetTeamNumber())
+	companion:SetModel(model)
+	companion:SetOriginalModel(model)
 	companion:SetOwner(hero)
 	companion:SetControllableByPlayer(hero:GetPlayerID(), true)
 
@@ -1042,7 +907,7 @@ local color = hero:GetFittingColor()
 
 	hero.companion = companion
 
-	if model == "npc_imba_donator_companion_cookies" then
+	if model == "models/courier/baby_rosh/babyroshan.vmdl" then
 		local particle_name = {}
 		particle_name[0] = "particles/econ/courier/courier_donkey_ti7/courier_donkey_ti7_ambient.vpcf"
 		particle_name[1] = "particles/econ/courier/courier_golden_roshan/golden_roshan_ambient.vpcf"
@@ -1062,10 +927,13 @@ local color = hero:GetFittingColor()
 			companion:SetOriginalModel("models/courier/baby_rosh/babyroshan_elemental.vmdl")
 			companion:SetMaterialGroup(tostring(random_int-4))
 		end
+
+		companion:SetModelScale(0.7)
 	elseif model == "npc_imba_donator_companion_suthernfriend" then
 		companion:SetMaterialGroup("1")
-	elseif model == "npc_imba_donator_companion_baumi" then
+	elseif model == "models/heroes/mario/mario_model.vmdl" then
 		companion:SetMaterialGroup(tostring(RandomInt(0, 2)))
+		companion:SetModelScale(0.5)
 	elseif model == "npc_imba_donator_companion_baekho" then
 		local particle = ParticleManager:CreateParticle("particles/econ/courier/courier_baekho/courier_baekho_ambient.vpcf", PATTACH_ABSORIGIN_FOLLOW, companion)
 	end
@@ -1626,8 +1494,6 @@ local max_line = 2
 if event == "blink" or event == "firstblood" then
 	max_line = 1
 else
-	print(event)
-	print(max_line)
 	max_line = hero:GetKeyValue(event)
 end
 
@@ -1737,4 +1603,16 @@ end
 			-- make hero play anger voice lines if he click within 10 seconds
 --		end
 	end
+end
+
+GameEvents = GameEvents or {}
+
+function CreateGameEvent (name) --luacheck: ignore CreateGameEvent
+	local event = Event()
+
+	GameEvents[name] = (function (self, fn)
+		return event.listen(fn)
+	end)
+
+	return event.broadcast
 end

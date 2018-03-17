@@ -45,7 +45,7 @@ function modifier_imba_ancient_defense:IsStunDebuff() return false end
 function modifier_imba_ancient_defense:OnCreated()
 	if IsServer() then
 		self.max_stacks = self:GetAbility():GetSpecialValueFor("max_stacks")
-		if GetMapName() == "imba_frantic_10v10" or GetMapName() == "imba_10v10" then
+		if IMBA_PLAYERS_ON_GAME > 10 then
 			self.max_stacks = self:GetAbility():GetSpecialValueFor("max_stacks_10v10")
 		end
 		self:StartIntervalThink(0.5)

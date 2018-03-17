@@ -38,7 +38,6 @@ function EndScoreboard() {
 		if (map_info.map_display_name == "imba_overthrow") {
 			$("#es-custom1").style.visibility = "visible";
 			$("#es-custom2").style.visibility = "visible";
-			$("#es-custom3").style.visibility = "visible";
 		}
 
 		// Hide all other UI
@@ -59,7 +58,6 @@ function EndScoreboard() {
 		var direPlayerIds = Game.GetPlayerIDsOnTeam(DOTATeam_t.DOTA_TEAM_BADGUYS);
 		var custom1PlayerIds = Game.GetPlayerIDsOnTeam(DOTATeam_t.DOTA_TEAM_CUSTOM_1);
 		var custom2PlayerIds = Game.GetPlayerIDsOnTeam( DOTATeam_t.DOTA_TEAM_CUSTOM_2 );
-		var custom3PlayerIds = Game.GetPlayerIDsOnTeam( DOTATeam_t.DOTA_TEAM_CUSTOM_3 );
 
 //		$.Msg({
 //			args: args,
@@ -69,7 +67,6 @@ function EndScoreboard() {
 //				ids2: direPlayerIds,
 //				ids3: custom1PlayerIds,
 //				ids4: custom2PlayerIds,
-//				ids5: custom3PlayerIds,
 //			}
 //		});
 
@@ -96,12 +93,10 @@ function EndScoreboard() {
 			dire: $("#es-dire"),
 			custom1: $("#es-custom1"),
 			custom2: $("#es-custom2"),
-			custom3: $("#es-custom3"),
 			radiantPlayers: $("#es-radiant-players"),
 			direPlayers: $("#es-dire-players"),
 			custom1Players: $("#es-custom1-players"),
 			custom2Players: $("#es-custom2-players"),
-			custom3Players: $("#es-custom3-players"),
 		};
 
 		// the panorama xml file used for the player lines
@@ -137,23 +132,19 @@ function EndScoreboard() {
 		var direPlayers = [];
 		var custom1Players = [];
 		var custom2Players = [];
-		var custom3Players = [];
 
 		$.Each(radiantPlayerIds, function (id) { radiantPlayers.push(loadPlayer(id)); });
 		$.Each(direPlayerIds, function (id) { direPlayers.push(loadPlayer(id)); });
 		$.Each(custom1PlayerIds, function (id) { custom1Players.push(loadPlayer(id)); });
 		$.Each(custom2PlayerIds, function (id) { custom2Players.push(loadPlayer(id)); });
-		$.Each(custom3PlayerIds, function (id) { custom3Players.push(loadPlayer(id)); });
 
 		var createPanelForPlayer = function (player, parent) {
-
 			// Create a new Panel for this player
 			var pp = $.CreatePanel("Panel", parent, "es-player-" + player.id);
 			pp.AddClass("es-player");
 			pp.BLoadLayout(playerXmlFile, false, false);
+			var xp_bar = pp.FindChildrenWithClassTraverse("es-player-xp")
 
-//			$.Msg(player);
-			
 			var values = {
 				name: pp.FindChildInLayoutFile("es-player-name"),
 				avatar: pp.FindChildInLayoutFile("es-player-avatar"),
@@ -167,6 +158,7 @@ function EndScoreboard() {
 				gold: pp.FindChildInLayoutFile("es-player-gold"),
 				level: pp.FindChildInLayoutFile("es-player-level"),
 				xp: {
+					bar: xp_bar,
 					progress: pp.FindChildInLayoutFile("es-player-xp-progress"),
 					level: pp.FindChildInLayoutFile("es-player-xp-level"),
 					rank: pp.FindChildInLayoutFile("es-player-xp-rank"),
@@ -190,8 +182,7 @@ function EndScoreboard() {
 			values.level.text = player.info.player_level;
 
 			// IMR
-			if (player.result != null) {
-								
+			if (player.result != null) {			
 				if (player.result.imr_5v5_calibrating)
 					values.imr.text = "TBD";
 				else {
@@ -227,17 +218,15 @@ function EndScoreboard() {
 						values.imr10v10.AddClass("es-text-red");
 					}
 				}
-				
 			} else {
 				values.imr10v10.text = "N/A";
 				values.imr.text = "N/A";
 			}
-			
+
 			// XP
 			if (player.result != null) {
 				var xp = Math.floor(player.result.xp);
 				var xpDiff = Math.floor(player.result.xp_diff);
-				var oldXp = xp - xpDiff;
 
 				if (xpDiff > 0) {
 					values.xp.earned.text = "+" + xpDiff;
@@ -250,16 +239,40 @@ function EndScoreboard() {
 					values.xp.earned.AddClass("es-text-red");
 				}
 
-				values.xp.level.text = player.xp.level;
-				values.xp.rank.text = player.xp.title;
-				values.xp.rank.style.color = player.xp.color;
+				var diff = player.result.xp_diff
+				var old_xp = player.xp.progress.xp
+				var max_xp = player.xp.progress.max_xp
+				var new_xp = (old_xp + diff)
+				var progress_bar = new_xp / max_xp * 100
 
-				var convertToPercentString = function (f) {
-					var x = Math.floor(Math.abs(f) * 100);
-					return x + "%";
-				};
+				values.xp.level.text = "Level: " + player.xp.level;
 
-				values.xp.progress.style.width = convertToPercentString(player.xp.progress);
+				// if not leveling up
+				if (progress_bar < 100) {
+					values.xp.progress.style.width = progress_bar + "%";
+					values.xp.rank.text = new_xp + diff + "/" + max_xp;
+				// else if leveling up
+				} else {
+					values.xp.rank.text = max_xp + "/" + max_xp;
+					values.xp.progress.style.width = "100%";
+
+					$.Schedule(2.0, function () { // if you want to modify this timer, modify also the width transition time in css
+						if (values.xp.bar[0].BHasClass("level-up")) {
+							values.xp.bar[0].RemoveClass("level-up")
+						}
+						values.xp.bar[0].AddClass("level-up")
+						player.xp.level = player.xp.level + 1
+						values.xp.level.text = "Level up!";
+						values.xp.rank.text = "";
+						progress_bar = progress_bar -100;
+						values.xp.progress.style.width = progress_bar + "%";
+						$.Schedule(2.0, function () {
+							var levelup_xp = new_xp + diff - max_xp
+							values.xp.level.text = "Level: " + player.xp.level;
+							values.xp.rank.text = levelup_xp + "/" + max_xp;
+						});
+					});
+				}
 			} else {
 				values.xp.earned.text = "N/A";
 			}
@@ -282,16 +295,11 @@ function EndScoreboard() {
 			createPanelForPlayer(player, panels.custom2Players);
 		});
 
-		$.Each(custom3Players, function (player) {
-			createPanelForPlayer(player, panels.custom3Players);
-		});
-
 		// Set Team Score
 		$("#es-team-score-radiant").text = new String(serverInfo.radiant_score);
 		$("#es-team-score-dire").text = new String(serverInfo.dire_score);
 		$("#es-team-score-custom1").text = new String(serverInfo.custom1_score);
 		$("#es-team-score-custom2").text = new String(serverInfo.custom2_score);
-		$("#es-team-score-custom3").text = new String(serverInfo.custom3_score);
 
 		// Configure Stats Button
 //		$("#es-buttons-stats").SetPanelEvent("onactivate", function () {

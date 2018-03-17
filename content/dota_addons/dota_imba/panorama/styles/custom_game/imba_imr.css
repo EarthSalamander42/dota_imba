@@ -131,6 +131,11 @@
 	padding: 1% 1% 1% 1%;
 }
 
+#BattlepassButtons {
+	width: 100%;
+	flow-children: right;
+}
+
 #DonatorInfoContainer,
 #LeaderboardInfoContainer {
 	visibility: collapse;
@@ -782,7 +787,9 @@
 	background-color: #300000ba;
 }
 
-#RefreshBattlepassButton {
+.BattlepassButton {
+	height: 40px;
+	margin-right: 10px;
 	margin-bottom: 5px;
 	padding: 3px;
 	wash-color: #cccccc;
@@ -794,7 +801,7 @@
 	border-radius: 5px;
 }
 
-#RefreshBattlepassButton Label{
+.BattlepassButton Label {
 	align: center center;
 	color: white;
 	text-align: center center;
@@ -809,7 +816,7 @@
 	background-size: 100% 100%;
 }
 
-#RefreshBattlepassButton:hover {
+.BattlepassButton:hover {
 	wash-color: white;
 }
 

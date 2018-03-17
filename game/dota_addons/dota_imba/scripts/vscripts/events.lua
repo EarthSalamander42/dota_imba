@@ -99,7 +99,8 @@ function GameMode:OnGameRulesStateChange(keys)
 	-------------------------------------------------------------------------------------------------
 	if new_state == DOTA_GAMERULES_STATE_HERO_SELECTION then
 		ApiEvent(ApiEventCodes.EnteredHeroSelection)
-		HeroSelection:HeroListPreLoad()
+--		HeroSelection:HeroListPreLoad()
+		HeroSelection:Init()
 
 		-- get the IXP of everyone (ignore bot)
 		GetPlayerInfoIXP()
@@ -116,6 +117,16 @@ function GameMode:OnGameRulesStateChange(keys)
 
 		-- Shows various info to devs in pub-game to find lag issues
 		ImbaNetGraph(10.0)
+
+		-- Hide Imbathrow bar for spectators
+		local imbathrow_bar = false
+		for i = 0, PlayerResource:GetPlayerCount() - 1 do
+--			if PlayerResource:GetPlayer(i):GetTeam() ~= DOTA_TEAM_SPECTATOR then
+				if GetMapName() == "imba_overthrow" then
+					imbathrow_bar = true
+				end
+--			end
+		end
 
 		-- Initialize rune spawners
 		if GetMapName() ~= "imba_1v1" then
@@ -145,12 +156,7 @@ function GameMode:OnGameRulesStateChange(keys)
 
 		Timers:CreateTimer(2.0, function()
 			for _, hero in pairs(HeroList:GetAllHeroes()) do
-				if IsDeveloper(hero:GetPlayerID()) then
-					hero.has_graph = true
-					CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "show_netgraph", {})
---					CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "show_netgraph_heronames", {})
-				end
-
+				-- player table runs an error with new picking screen
 				if GetMapName() ~= "imba_1v1" then -- error for gaben reasons
 					local donators = GetDonators()
 					for k, v in pairs(donators) do
@@ -220,7 +226,7 @@ function GameMode:OnGameRulesStateChange(keys)
 			return 60
 		end)
 
-		if GetMapName() == "imba_frantic_10v10" then
+		if IsFranticMap() then
 			if RandomInt(1, 100) > 20 then
 				Timers:CreateTimer((RandomInt(10, 20) * 60) + RandomInt(0, 60), function()
 					local pos = {}
@@ -286,44 +292,7 @@ function GameMode:OnGameRulesStateChange(keys)
 		-- call imba api
 		ApiEvent(ApiEventCodes.EnteredPostGame)
 
-		ImbaApiFrontendGameComplete(function (players)
-			ApiPrint("Game complete request successful!")
-
-			-- calculate levels
-			local xpInfo = {}
-
-			for k, v in pairs(players) do
-				local level = GetXPLevelByXp(v.xp)
-				local title = GetTitleIXP(level)
-				local color = GetTitleColorIXP(title, true)
-				local progress = GetXpProgressToNextLevel(v.xp)
-
-				if level and title and color and progress then
-					xpInfo[k] = {
-						level = level,
-						title = title,
-						color = color,
-						progress = progress
-					}
-				end
-			end
-
-			CustomGameEventManager:Send_ServerToAllClients("end_game", {
-				players = players,
-				xp_info = xpInfo,
-				info = {
-					winner = GAME_WINNER_TEAM,
-					gameid = GetApiGameId(),
-					radiant_score = GetTeamHeroKills(2),
-					dire_score = GetTeamHeroKills(3),
-					custom1_score = GetTeamHeroKills(6),
-					custom2_score = GetTeamHeroKills(7),
-					custom3_score = GetTeamHeroKills(8),
-				}
-			})
-
-			ApiPrint("Done sending Event")
-		end)
+		ImbaApi:EndGame()
 
 		CustomNetTables:SetTableValue("game_options", "game_count", {value = 0})
 	end
@@ -467,24 +436,23 @@ function GameMode:OnNPCSpawned(keys)
 			end
 
 			if IsDonator(npc) ~= false then
-				if HeroSelection.playerPickState[npc:GetPlayerID()] and HeroSelection.playerPickState[npc:GetPlayerID()].pick_state ~= "selecting_hero" then
-					if npc:GetUnitName() ~= "npc_dota_hero_wisp" or npc.is_real_wisp then
-						Timers:CreateTimer(2.0, function()
-							if tostring(PlayerResource:GetSteamID(npc:GetPlayerID())) == "76561198015161808" then
-								DonatorCompanion(npc:GetPlayerID(), "npc_imba_donator_companion_cookies")
-							elseif tostring(PlayerResource:GetSteamID(npc:GetPlayerID())) == "76561198003571172" then
-								DonatorCompanion(npc:GetPlayerID(), "npc_imba_donator_companion_baumi")
-							elseif tostring(PlayerResource:GetSteamID(npc:GetPlayerID())) == "76561198014254115" then
-								DonatorCompanion(npc:GetPlayerID(), "npc_imba_donator_companion_icefrog")
-							elseif tostring(PlayerResource:GetSteamID(npc:GetPlayerID())) == "76561198014254115" then
-								DonatorCompanion(npc:GetPlayerID(), "npc_imba_donator_companion_admiral_bulldog")
-							elseif tostring(PlayerResource:GetSteamID(npc:GetPlayerID())) == "76561198021465788" then
-								DonatorCompanion(npc:GetPlayerID(), "npc_imba_donator_companion_suthernfriend")
-							else
-								DonatorCompanion(npc:GetPlayerID(), IsDonator(npc))
-							end
-						end)
-					end
+				if npc:GetUnitName() ~= "npc_dota_hero_dummy_dummy" then
+					Timers:CreateTimer(2.0, function()
+						local steam_id = tostring(PlayerResource:GetSteamID(npc:GetPlayerID()))
+						if steam_id == "76561198015161808" then
+							DonatorCompanion(npc:GetPlayerID(), "models/heroes/mario/mario_model.vmdl")
+						elseif steam_id == "76561198003571172" then
+							DonatorCompanion(npc:GetPlayerID(), "models/heroes/mario/mario_model.vmdl")
+						elseif steam_id == "76561198014254115" then
+							DonatorCompanion(npc:GetPlayerID(), "npc_imba_donator_companion_icefrog")
+						elseif steam_id == "76561198014254115" then
+							DonatorCompanion(npc:GetPlayerID(), "npc_imba_donator_companion_admiral_bulldog")
+						elseif steam_id == "76561198021465788" then
+							DonatorCompanion(npc:GetPlayerID(), "npc_imba_donator_companion_suthernfriend")
+						else
+							DonatorCompanion(npc:GetPlayerID(), IsDonator(npc))
+						end
+					end)
 				end
 			end
 
@@ -499,9 +467,9 @@ function GameMode:OnNPCSpawned(keys)
 				npc:SetOriginalModel("models/creeps/ice_biome/storegga/storegga.vmdl")
 			end
 
-			if HeroSelection.playerPickState[npc:GetPlayerID()] and HeroSelection.playerPickState[npc:GetPlayerID()].pick_state == "selecting_hero" then
-				RestrictAndHideHero(npc)
-			end
+--			if HeroSelection.playerPickState[npc:GetPlayerID()] and HeroSelection.playerPickState[npc:GetPlayerID()].pick_state == "selecting_hero" then
+--				RestrictAndHideHero(npc)
+--			end
 
 			npc.first_spawn = true
 		end
@@ -670,8 +638,29 @@ end
 
 -- A player has reconnected to the game. This function can be used to repaint Player-based particles or change
 -- state as necessary
+-- not sure it is actually working
 function GameMode:OnPlayerReconnect(keys)
 	PrintTable(keys)
+
+	-- [VScript] [components\duels\duels:64] PlayerID: 1
+	-- [VScript] [components\duels\duels:64] name: Minnakht
+	-- [VScript] [components\duels\duels:64] networkid: [U:1:53917791]
+	-- [VScript] [components\duels\duels:64] reason: 2
+	-- [VScript] [components\duels\duels:64] splitscreenplayer: -1
+	-- [VScript] [components\duels\duels:64] userid: 3
+	-- [VScript] [components\duels\duels:64] xuid: 76561198014183519
+
+	if not lockedHeroes[keys.PlayerID] then
+		-- we don't care if they haven't locked in yet
+		return
+	end
+
+	local hero = PlayerResource:GetSelectedHeroEntity(keys.PlayerID)
+
+	if not hero or hero:GetUnitName() == FORCE_PICKED_HERO and loadedHeroes[lockedHeroes[keys.PlayerID]] then
+		print('Giving player ' .. keys.PlayerID .. ' ' .. lockedHeroes[keys.PlayerID])
+		HeroSelection:GiveStartingHero(keys.PlayerID, lockedHeroes[keys.PlayerID])
+	end
 end
 
 -- An item was purchased by a player

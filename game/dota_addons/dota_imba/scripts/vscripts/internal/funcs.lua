@@ -1823,3 +1823,86 @@ function CDOTA_BaseNPC:IsImbaInvisible()
 
 	return false
 end
+
+function CDOTA_PlayerResource:GetAllTeamPlayerIDs()
+--	local player_id_table = {}
+
+--	for i = 0, self:GetPlayerCount() -1 do
+--		table.insert(player_id_table, i)
+--	end
+
+--	return player_id_table
+
+	-- wait for chris to tell where range is defined
+	return filter(partial(self.IsValidPlayerID, self), range(0, self:GetPlayerCount()))
+end
+
+function CDOTA_PlayerResource:GetConnectedTeamPlayerIDs()
+	return filter(partial(self.IsBotOrPlayerConnected, self), self:GetAllTeamPlayerIDs())
+end
+
+function CDOTA_PlayerResource:GetPlayerIDsForTeam(team)
+	return filter(function(id) return self:GetTeam(id) == team end, range(0, self:GetPlayerCount()))
+end
+
+function CDOTA_PlayerResource:GetConnectedTeamPlayerIDsForTeam(team)
+	return filter(partial(self.IsBotOrPlayerConnected, self), self:GetPlayerIDsForTeam(team))
+end
+
+function CDOTA_PlayerResource:RandomHeroForPlayersWithoutHero()
+	function HasNotSelectedHero(playerID)
+		return not self:HasSelectedHero(playerID)
+	end
+
+	function ForceRandomHero(playerID)
+		self:GetPlayer(playerID):MakeRandomHeroSelection()
+	end
+
+	local playerIDsWithoutHero = filter(HasNotSelectedHero, self:GetConnectedTeamPlayerIDs())
+	foreach(ForceRandomHero, playerIDsWithoutHero)
+end
+
+function CDOTA_PlayerResource:IsBotOrPlayerConnected(id)
+	local connectionState = self:GetConnectionState(id)
+	return connectionState == 2 or connectionState == 1
+end
+
+function MapRanked5v5()
+	local map = "imba_ranked_5v5"
+
+	return map
+end
+
+function MapRanked10v10()
+	local map = "imba_ranked_10v10"
+
+	return map
+end
+
+function MapFrantic5v5()
+	local map = "imba_frantic_5v5"
+
+	return map
+end
+
+function MapFrantic10v10()
+	local map = "imba_frantic_10v10"
+
+	return map
+end
+
+function IsRankedMap()
+	if GetMapName() == MapRanked5v5() or GetMapName() == MapRanked10v10() then
+		return true
+	end
+
+	return false
+end
+
+function IsFranticMap()
+	if GetMapName() == MapFrantic5v5() or GetMapName() == MapFrantic10v10() then
+		return true
+	end
+
+	return false
+end

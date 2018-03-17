@@ -70,9 +70,9 @@ function InitializeTeamSelection()
 	-- 10v10              parties will be kept
 	-- frantic, imbathrow normal manual procedure
 
-	if GetMapName() == "imba_standard" then
+	if GetMapName() == MapRanked5v5() then
 		Random5v5TeamSelection()
-	elseif GetMapName() == "imba_10v10" then
+	elseif GetMapName() == MapRanked10v10() then
 		KeepTeams10v10TeamSelection()
 	else
 		ManualTeamSelection()
@@ -163,7 +163,7 @@ end
 
 local TeamSelectionComputed = {}
 local TeamSelectionComputedCount = 0
-local TeamSelectionComputedTotal = 3
+local TeamSelectionComputedTotal = 4
 
 function KeepTeams10v10TeamSelection()
 

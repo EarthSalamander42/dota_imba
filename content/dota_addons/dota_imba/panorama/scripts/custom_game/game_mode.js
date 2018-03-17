@@ -35,11 +35,11 @@ function InitializeUI() {
 		// Update other elements according to the current map
 		var map_info = Game.GetMapInfo();
 
-		if (map_info.map_display_name == "imba_standard") {
+		if (map_info.map_display_name == "imba_ranked_5v5") {
 			$('#GameOptionsPanel').style.visibility = 'collapse';
-		} else if (map_info.map_display_name == "imba_10v10" || map_info.map_display_name == "imba_12v12") {
+		} else if (map_info.map_display_name == "imba_ranked_10v10" || map_info.map_display_name == "imba_12v12") {
 			$('#GameOptionsPanel').style.visibility = 'collapse';
-		} else if (map_info.map_display_name == "imba_custom" || map_info.map_display_name == "imba_frantic_10v10") {
+		} else if (map_info.map_display_name == "imba_frantic_5v5" || map_info.map_display_name == "imba_frantic_10v10") {
 			$('#GoldOptionsPanel').style.visibility = 'collapse';
 			$('#ExpOptionsPanel').style.visibility = 'collapse';
 			$('#TowerPowerOption1').checked = true;
@@ -53,7 +53,7 @@ function InitializeUI() {
 			$('#overthrow-loading').style.visibility = 'visible';
 		}
 
-		if (map_info.map_display_name != "imba_frantic_10v10" && Game.GetLocalPlayerInfo().player_steamid == "76561198015161808" || Game.GetLocalPlayerInfo().player_steamid == "76561198036748162") {
+		if (map_info.map_display_name != "imba_frantic_5v5" && map_info.map_display_name != "imba_frantic_10v10" && Game.GetLocalPlayerInfo().player_steamid == "76561198015161808" || Game.GetLocalPlayerInfo().player_steamid == "76561198036748162") {
 			$.Msg("Bulldong!")
 			$('#imba-loading').style.visibility = 'visible';
 			$('#GameOptionsPanel').style.visibility = 'visible';
@@ -97,7 +97,7 @@ function SetGameParameters(parameter, value) {
 function SetQuickOptionsNormal() {
 	// Sets everything else to normal options
 	var map_info = Game.GetMapInfo();
-	if (map_info.map_display_name == "imba_standard" || map_info.map_display_name == "imba_10v10" || map_info.map_display_name == "imba_12v12") {
+	if (map_info.map_display_name == "imba_ranked_5v5" || map_info.map_display_name == "imba_ranked_10v10" || map_info.map_display_name == "imba_12v12") {
 		$('#GoldOption1').checked = true;
 		$('#ExpOption1').checked = true;
 		gold = 1
@@ -114,7 +114,7 @@ function SetQuickOptionsNormal() {
 function SetQuickOptionsHigh() {
 	// Sets everything else to high options
 	var map_info = Game.GetMapInfo();
-	if (map_info.map_display_name == "imba_standard" || map_info.map_display_name == "imba_10v10" || map_info.map_display_name == "imba_12v12") {
+	if (map_info.map_display_name == "imba_ranked_5v5" || map_info.map_display_name == "imba_ranked_10v10" || map_info.map_display_name == "imba_12v12") {
 		$('#GoldOption2').checked = true;
 		$('#ExpOption2').checked = true;
 		gold = 2

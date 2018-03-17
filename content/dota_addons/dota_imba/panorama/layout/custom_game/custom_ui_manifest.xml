@@ -150,37 +150,7 @@
 
 		if (map_info.map_display_name == "imba_overthrow") {
 			topbar.style.visibility = "collapse";
-		} else if (map_info.map_display_name == "imba_standard" || map_info.map_display_name == "imba_1v1") {
-
 		} else {
-			topbar.style.width = "1578px";
-
-			//Top Bar Radiant
-			var TopBarRadiantTeam = hudElements.FindChildTraverse("TopBarRadiantTeam");
-			TopBarRadiantTeam.style.width = "710px";
-
-			var topbarRadiantPlayers = hudElements.FindChildTraverse("TopBarRadiantPlayers");
-			topbarRadiantPlayers.style.width = "630px";
-
-			var topbarRadiantPlayersContainer = hudElements.FindChildTraverse("TopBarRadiantPlayersContainer");
-			topbarRadiantPlayersContainer.style.width = "630px";
-
-			var RadiantTeamContainer = hudElements.FindChildTraverse("RadiantTeamContainer");
-			RadiantTeamContainer.style.height = "630px";
-
-			//Top Bar Dire
-			var TopBarDireTeam = hudElements.FindChildTraverse("TopBarDireTeam");
-			TopBarDireTeam.style.width = "710px";
-
-			var topbarDirePlayers = hudElements.FindChildTraverse("TopBarDirePlayers");
-			topbarDirePlayers.style.width = "700px";
-
-			var topbarDirePlayersContainer = hudElements.FindChildTraverse("TopBarDirePlayersContainer");
-			topbarDirePlayersContainer.style.width = "640px";
-
-			var DireTeamContainer = hudElements.FindChildTraverse("DireTeamContainer");
-			DireTeamContainer.style.height = "640px";
-
 			for (var tbg of topbarRadiant.FindChildrenWithClassTraverse("TeamBackground")) {
 				for (var tbbg of tbg.FindChildrenWithClassTraverse("TopBarBackground")) {
 					tbbg.style.backgroundSize = '0%';

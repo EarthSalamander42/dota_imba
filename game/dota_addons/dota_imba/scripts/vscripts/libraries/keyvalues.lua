@@ -72,6 +72,7 @@ function LoadGameKeyValues()
 --	local override = LoadKeyValues(scriptPath.."npc_abilities_override.txt")
 	local files = {
 		AbilityKV = {base="npc_abilities",custom="npc_abilities_custom"},
+		AbilityKV2 = {base="",custom="npc_abilities"},
 		ItemKV = {base="items",custom="npc_items_custom"},
 		UnitKV = {base="npc_units",custom="npc_units"}, -- npc_units_custom
 		HeroKV = {base="npc_heroes",custom="npc_heroes_custom"},
@@ -133,6 +134,16 @@ function LoadGameKeyValues()
 		else
 			if type(KeyValues.All[key]) == "table" then
 --				print("[KeyValues] Warning: Duplicated unit/hero entry for "..key)
+			end
+		end
+	end
+
+	for key,value in pairs(KeyValues.AbilityKV2) do
+		if not KeyValues.AbilityKV[key] then
+			KeyValues.AbilityKV[key] = value
+		else
+			if type(KeyValues.All[key]) == "table" then
+				print("[KeyValues] Warning: Duplicated unit/hero entry for "..key)
 			end
 		end
 	end

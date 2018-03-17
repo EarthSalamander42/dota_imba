@@ -11585,7 +11585,7 @@
 	//=================================================================================
 	// Donator Companion follwing hero
 	//=================================================================================
-	"npc_imba_donator_companion_demi_doom"
+	"npc_imba_donator_companion"
 	{
 		// General
 		//----------------------------------------------------------------
@@ -11650,396 +11650,48 @@
 		"VisionNighttimeRange"      "0"
 	}
 
+	// dummies to show them in JS
+	"npc_imba_donator_companion_demi_doom"
+	{
+		"BaseClass"					"npc_dota_base_additive"
+		"Model"						"models/courier/doom_demihero_courier/doom_demihero_courier.vmdl"
+	}
+
 	"npc_imba_donator_companion_carty"
 	{
-		// General
-		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_base_additive"
-		"Model"						"models/items/courier/carty/carty.vmdl"        
-		"Level"						"1"
-		"ModelScale"				"1.0"
-		"UnitLabel"					"donator_companion"        
-
-		// Abilities
-		//----------------------------------------------------------------
-		"Ability1"					"companion_morph"
-		"Ability2"					"neutral_spell_immunity"
-
-		// Armor
-		//----------------------------------------------------------------
-		"ArmorPhysical"             "0"
-		"MagicalResistance"         "0"
-
-		// Attack
-		//----------------------------------------------------------------
-		"AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
-		"AttackDamageMin"           "0"
-		"AttackDamageMax"           "0"
-		"AttackRate"                "0.0"
-		"AttackRange"               "0"
-
-		// Bounds
-		//----------------------------------------------------------------
-		"HealthBarOffset"           "240"
-		"BoundsHullName"            "DOTA_HULL_SIZE_SMALL"
-
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyXP"                  "0"
-		"BountyGoldMin"             "0"
-		"BountyGoldMax"             "0"
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"             "480"
-		"MovementTurnRate"          "0.5"
-
-		// Status
-		//----------------------------------------------------------------
-		"StatusHealth"				"1"
-		"StatusHealthRegen"			"0.0"
-		"StatusMana"				"0"
-		"StatusManaRegen"			"0.0"
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"                  "DOTA_TEAM_NEUTRALS"
-		"CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_BASIC"
-		"CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_BASIC"
-		"UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
-
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"        "0"
-		"VisionNighttimeRange"      "0"
+		"Model"						"models/items/courier/carty/carty.vmdl"
 	}
 
 	"npc_imba_donator_companion_carty_dire"
 	{
-		// General
-		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_base_additive"
-		"Model"						"models/items/courier/carty_dire/carty_dire_flying.vmdl"        
-		"Level"						"1"
-		"ModelScale"				"1.0"
-		"UnitLabel"					"donator_companion"        
-
-		// Abilities
-		//----------------------------------------------------------------
-		"Ability1"					"companion_morph"
-		"Ability2"					"neutral_spell_immunity"
-
-		// Armor
-		//----------------------------------------------------------------
-		"ArmorPhysical"             "0"
-		"MagicalResistance"         "0"
-
-		// Attack
-		//----------------------------------------------------------------
-		"AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
-		"AttackDamageMin"           "0"
-		"AttackDamageMax"           "0"
-		"AttackRate"                "0.0"
-		"AttackRange"               "0"
-
-		// Bounds
-		//----------------------------------------------------------------
-		"HealthBarOffset"           "240"
-		"BoundsHullName"            "DOTA_HULL_SIZE_SMALL"
-
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyXP"                  "0"
-		"BountyGoldMin"             "0"
-		"BountyGoldMax"             "0"
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"             "480"
-		"MovementTurnRate"          "0.5"
-
-		// Status
-		//----------------------------------------------------------------
-		"StatusHealth"				"1"
-		"StatusHealthRegen"			"0.0"
-		"StatusMana"				"0"
-		"StatusManaRegen"			"0.0"
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"                  "DOTA_TEAM_NEUTRALS"
-		"CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_BASIC"
-		"CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_BASIC"
-		"UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
-
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"        "0"
-		"VisionNighttimeRange"      "0"
+		"Model"						"models/items/courier/carty_dire/carty_dire_flying.vmdl"
 	}
 
 	"npc_imba_donator_companion_llama"
 	{
-		// General
-		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_base_additive"
-		"Model"						"models/items/courier/livery_llama_courier/livery_llama_courier.vmdl"        
-		"Level"						"1"
-		"ModelScale"				"1.0"
-		"UnitLabel"					"donator_companion"        
-
-		// Abilities
-		//----------------------------------------------------------------
-		"Ability1"					"companion_morph"
-		"Ability2"					"neutral_spell_immunity"
-
-		// Armor
-		//----------------------------------------------------------------
-		"ArmorPhysical"             "0"
-		"MagicalResistance"         "0"
-
-		// Attack
-		//----------------------------------------------------------------
-		"AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
-		"AttackDamageMin"           "0"
-		"AttackDamageMax"           "0"
-		"AttackRate"                "0.0"
-		"AttackRange"               "0"
-
-		// Bounds
-		//----------------------------------------------------------------
-		"HealthBarOffset"           "240"
-		"BoundsHullName"            "DOTA_HULL_SIZE_SMALL"
-
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyXP"                  "0"
-		"BountyGoldMin"             "0"
-		"BountyGoldMax"             "0"
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"             "480"
-		"MovementTurnRate"          "0.5"
-
-		// Status
-		//----------------------------------------------------------------
-		"StatusHealth"				"1"
-		"StatusHealthRegen"			"0.0"
-		"StatusMana"				"0"
-		"StatusManaRegen"			"0.0"
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"                  "DOTA_TEAM_NEUTRALS"
-		"CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_BASIC"
-		"CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_BASIC"
-		"UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
-
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"        "0"
-		"VisionNighttimeRange"      "0"
+		"Model"						"models/items/courier/livery_llama_courier/livery_llama_courier.vmdl"
 	}
 
 	"npc_imba_donator_companion_jumo"
 	{
-		// General
-		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_base_additive"
-		"Model"						"models/items/courier/jumo/jumo.vmdl"        
-		"Level"						"1"
-		"ModelScale"				"1.0"
-		"UnitLabel"					"donator_companion"        
-
-		// Abilities
-		//----------------------------------------------------------------
-		"Ability1"					"companion_morph"
-		"Ability2"					"neutral_spell_immunity"
-
-		// Armor
-		//----------------------------------------------------------------
-		"ArmorPhysical"             "0"
-		"MagicalResistance"         "0"
-
-		// Attack
-		//----------------------------------------------------------------
-		"AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
-		"AttackDamageMin"           "0"
-		"AttackDamageMax"           "0"
-		"AttackRate"                "0.0"
-		"AttackRange"               "0"
-
-		// Bounds
-		//----------------------------------------------------------------
-		"HealthBarOffset"           "240"
-		"BoundsHullName"            "DOTA_HULL_SIZE_SMALL"
-
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyXP"                  "0"
-		"BountyGoldMin"             "0"
-		"BountyGoldMax"             "0"
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"             "480"
-		"MovementTurnRate"          "0.5"
-
-		// Status
-		//----------------------------------------------------------------
-		"StatusHealth"				"1"
-		"StatusHealthRegen"			"0.0"
-		"StatusMana"				"0"
-		"StatusManaRegen"			"0.0"
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"                  "DOTA_TEAM_NEUTRALS"
-		"CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_BASIC"
-		"CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_BASIC"
-		"UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
-
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"        "0"
-		"VisionNighttimeRange"      "0"
+		"Model"						"models/items/courier/jumo/jumo.vmdl"
 	}
 
 	"npc_imba_donator_companion_jin"
 	{
-		// General
-		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_base_additive"
-		"Model"						"models/items/courier/jin_yin_white_fox/jin_yin_white_fox.vmdl"        
-		"Level"						"1"
-		"ModelScale"				"1.0"
-		"UnitLabel"					"donator_companion"        
-
-		// Abilities
-		//----------------------------------------------------------------
-		"Ability1"					"companion_morph"
-		"Ability2"					"neutral_spell_immunity"
-
-		// Armor
-		//----------------------------------------------------------------
-		"ArmorPhysical"             "0"
-		"MagicalResistance"         "0"
-
-		// Attack
-		//----------------------------------------------------------------
-		"AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
-		"AttackDamageMin"           "0"
-		"AttackDamageMax"           "0"
-		"AttackRate"                "0.0"
-		"AttackRange"               "0"
-
-		// Bounds
-		//----------------------------------------------------------------
-		"HealthBarOffset"           "240"
-		"BoundsHullName"            "DOTA_HULL_SIZE_SMALL"
-
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyXP"                  "0"
-		"BountyGoldMin"             "0"
-		"BountyGoldMax"             "0"
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"             "480"
-		"MovementTurnRate"          "0.5"
-
-		// Status
-		//----------------------------------------------------------------
-		"StatusHealth"				"1"
-		"StatusHealthRegen"			"0.0"
-		"StatusMana"				"0"
-		"StatusManaRegen"			"0.0"
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"                  "DOTA_TEAM_NEUTRALS"
-		"CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_BASIC"
-		"CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_BASIC"
-		"UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
-
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"        "0"
-		"VisionNighttimeRange"      "0"
+		"Model"						"models/items/courier/jin_yin_white_fox/jin_yin_white_fox.vmdl"
 	}
 
+	// EarthSalamander #42
 	"npc_imba_donator_companion_cookies"
 	{
-		// General
-		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_base_additive"
 		"Model"						"models/courier/baby_rosh/babyroshan.vmdl"
-		"Level"						"1"
-		"ModelScale"				"0.75"
-		"UnitLabel"					"donator_companion"
-		"SoundSet"					"Roshan"
-		"IdleSoundLoop"				"Roshan.Idle"
-
-		// Abilities
-		//----------------------------------------------------------------
-		"Ability1"					"companion_morph"
-		"Ability2"					"neutral_spell_immunity"
-
-		// Armor
-		//----------------------------------------------------------------
-		"ArmorPhysical"             "0"
-		"MagicalResistance"         "0"
-
-		// Attack
-		//----------------------------------------------------------------
-		"AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
-		"AttackDamageMin"           "0"
-		"AttackDamageMax"           "0"
-		"AttackRate"                "0.0"
-		"AttackRange"               "0"
-
-		// Bounds
-		//----------------------------------------------------------------
-		"HealthBarOffset"           "240"
-		"BoundsHullName"            "DOTA_HULL_SIZE_SMALL"
-
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyXP"                  "0"
-		"BountyGoldMin"             "0"
-		"BountyGoldMax"             "0"
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"             "480"
-		"MovementTurnRate"          "0.5"
-
-		// Status
-		//----------------------------------------------------------------
-		"StatusHealth"				"1"
-		"StatusHealthRegen"			"0.0"
-		"StatusMana"				"0"
-		"StatusManaRegen"			"0.0"
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"                  "DOTA_TEAM_NEUTRALS"
-		"CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_BASIC"
-		"CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_BASIC"
-		"UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
-
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"        "0"
-		"VisionNighttimeRange"      "0"
 	}
 
 	"npc_imba_donator_companion_baumi"
@@ -12243,6 +11895,71 @@
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_base_additive"
 		"Model"						"models/items/courier/amaterasu/amaterasu.vmdl"        
+		"Level"						"1"
+		"ModelScale"				"1.0"
+		"UnitLabel"					"donator_companion"        
+
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"companion_morph"
+		"Ability2"					"neutral_spell_immunity"
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"             "0"
+		"MagicalResistance"         "0"
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
+		"AttackDamageMin"           "0"
+		"AttackDamageMax"           "0"
+		"AttackRate"                "0.0"
+		"AttackRange"               "0"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"HealthBarOffset"           "240"
+		"BoundsHullName"            "DOTA_HULL_SIZE_SMALL"
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"                  "0"
+		"BountyGoldMin"             "0"
+		"BountyGoldMax"             "0"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"             "480"
+		"MovementTurnRate"          "0.5"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"1"
+		"StatusHealthRegen"			"0.0"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0.0"
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"                  "DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_BASIC"
+		"UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
+
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"        "0"
+		"VisionNighttimeRange"      "0"
+	}
+
+	"npc_imba_donator_companion_amaterasu"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_base_additive"
+		"Model"						"models/items/courier/boooofus_courier/boooofus_courier.vmdl"        
 		"Level"						"1"
 		"ModelScale"				"1.0"
 		"UnitLabel"					"donator_companion"        

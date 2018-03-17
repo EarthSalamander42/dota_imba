@@ -4,7 +4,6 @@
 	[
 		"talents",
 		"game_options",
-		"arena_capture",
 		"player_table",
 		"gamerules",
 		"shared_unit_control",
@@ -13,6 +12,6 @@
 		"top_xp",
 		"top_imr_5v5",
 		"game_state",
-		"player_battlepass",
+		"hero_selection",
 	]
 }

@@ -25141,6 +25141,12 @@
 				"var_type"					"FIELD_FLOAT"
 				"scepter_bounce_damage_pct"	"20"
 			}
+
+			"12"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"multitoss_damage"			"100"
+			}
 		}
 	}
 

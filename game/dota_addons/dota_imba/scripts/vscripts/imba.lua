@@ -64,7 +64,6 @@ require('libraries/meepo/meepo')
 -- events.lua is where you can specify the actions to be taken when any event occurs and is one of the core barebones files.
 require('events')
 
-
 require('team_selection')
 require('battlepass/experience')
 require('battlepass/imbattlepass')
@@ -147,7 +146,7 @@ function GameMode:OnFirstPlayerLoaded()
 	-------------------------------------------------------------------------------------------------
 	flItemExpireTime = 60.0
 	GameRules:SetSameHeroSelectionEnabled(true)
-	GameRules:GetGameModeEntity():SetCustomGameForceHero("npc_dota_hero_wisp")
+	GameRules:GetGameModeEntity():SetCustomGameForceHero("npc_dota_hero_dummy_dummy")
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Contributor models
@@ -1236,10 +1235,6 @@ function GameMode:OnAllPlayersLoaded()
 	GameRules:GetGameModeEntity():SetItemAddedToInventoryFilter( Dynamic_Wrap(GameMode, "ItemAddedFilter"), self )
 	GameRules:GetGameModeEntity():SetThink( "OnThink", self, 1 )
 
-	-- CHAT
-	chat = Chat(Players, Users, TEAM_COLORS)
-	--	Chat:constructor(players, users, teamColors)
-
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Fountain abilities setup
 	-------------------------------------------------------------------------------------------------
@@ -1266,6 +1261,8 @@ end
 function GameMode:OnHeroInGame(hero)
 	local time_elapsed = 0
 
+	PlayerResource:SetCameraTarget(hero:GetPlayerID(), nil)
+
 	Timers:CreateTimer(function()
 		if not hero:IsNull() then
 			if hero:GetUnitName() == "npc_dota_hero_meepo" then
@@ -1291,30 +1288,33 @@ function GameMode:OnHeroInGame(hero)
 		end)
 	end
 
-	-- Disabling announcer for the player who picked a hero
 	Timers:CreateTimer(0.1, function()
-		if hero:GetUnitName() ~= "npc_dota_hero_wisp" or hero.is_real_wisp then
+		if hero:IsIllusion() then return end
+		if hero:GetUnitName() ~= "npc_dota_hero_dummy_dummy" then
 			hero.picked = true
-		end
-	end)
+			COURIER_TEAM[hero:GetTeamNumber()]:SetControllableByPlayer(hero:GetPlayerID(), true)
+			CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(hero:GetPlayerID()), "dota_hud", {show = true})
 
-	Timers:CreateTimer(0.1, function()
-		if hero.is_real_wisp or hero:GetUnitName() ~= "npc_dota_hero_wisp" and not hero:IsIllusion() then
-			hero.picked = true
-			return
-		elseif not hero.is_real_wisp then
-			if hero:GetUnitName() == "npc_dota_hero_wisp" and not hero:IsIllusion() then
-				Timers:CreateTimer(function()
-					RestrictAndHideHero(hero)
-					if time_elapsed < 0.9 then
-						time_elapsed = time_elapsed + 0.1
-					else
-						return nil
-					end
-					return 0.1
-				end)
+			if IsDeveloper(hero:GetPlayerID()) then
+				hero.has_graph = true
+				CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "show_netgraph", {})
+--				CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "show_netgraph_heronames", {})
 			end
 			return
+		else
+			Timers:CreateTimer(function()
+				RestrictAndHideHero(hero)
+				if time_elapsed < 0.9 then
+					time_elapsed = time_elapsed + 0.1
+				else
+					return nil
+				end
+
+				return 0.1
+			end)
+
+			CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(hero:GetPlayerID()), "imbathrow_topbar", {imbathrow = imbathrow_bar})
+			CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(hero:GetPlayerID()), "dota_hud", {show = false})
 		end
 	end)
 end
@@ -1369,8 +1369,10 @@ function GameMode:OnGameInProgress()
 				local ability = radiant_tower:AddAbility(protective_instict)
 				ability:SetLevel(1)
 
-				local ability = dire_tower:AddAbility(protective_instict)
-				ability:SetLevel(1)
+				if dire_tower then
+					local ability = dire_tower:AddAbility(protective_instict)
+					ability:SetLevel(1)
+				end
 
 				if string.find(radiant_tower:GetUnitName(), "tower1") then
 					-- Tier 1 tower found. Add tier 1 ability
@@ -1378,9 +1380,11 @@ function GameMode:OnGameInProgress()
 					local ability = radiant_tower:AddAbility(ability_name)
 					ability:SetLevel(1)
 
-					-- Add the same ability to the equivalent tower in dire
-					local ability = dire_tower:AddAbility(ability_name)
-					ability:SetLevel(1)
+					if dire_tower then
+						-- Add the same ability to the equivalent tower in dire
+						local ability = dire_tower:AddAbility(ability_name)
+						ability:SetLevel(1)
+					end
 
 					-- After the ability has been set, remove it from the table.
 					for j = 1, #ability_table[1] do
@@ -1398,9 +1402,11 @@ function GameMode:OnGameInProgress()
 						local ability = radiant_tower:AddAbility(ability_name)
 						ability:SetLevel(1)
 
-						-- Add the same ability to the equivalent tower in dire
-						local ability = dire_tower:AddAbility(ability_name)
-						ability:SetLevel(1)
+						if dire_tower then
+							-- Add the same ability to the equivalent tower in dire
+							local ability = dire_tower:AddAbility(ability_name)
+							ability:SetLevel(1)
+						end
 
 						-- After the ability has been set, remove it from the table.
 						for j = 1, #ability_table[i] do
@@ -1419,9 +1425,11 @@ function GameMode:OnGameInProgress()
 						local ability = radiant_tower:AddAbility(ability_name)
 						ability:SetLevel(1)
 
-						-- Add the same ability to the equivalent tower in dire
-						local ability = dire_tower:AddAbility(ability_name)
-						ability:SetLevel(1)
+						if dire_tower then
+							-- Add the same ability to the equivalent tower in dire
+							local ability = dire_tower:AddAbility(ability_name)
+							ability:SetLevel(1)
+						end
 
 						-- After the ability has been set, remove it from the table.
 						for j = 1, #ability_table[i] do
@@ -1440,9 +1448,11 @@ function GameMode:OnGameInProgress()
 						local ability = radiant_tower:AddAbility(ability_name)
 						ability:SetLevel(1)
 
-						-- Add the same ability to the equivalent tower in dire
-						local ability = dire_tower:AddAbility(ability_name)
-						ability:SetLevel(1)
+						if dire_tower then
+							-- Add the same ability to the equivalent tower in dire
+							local ability = dire_tower:AddAbility(ability_name)
+							ability:SetLevel(1)
+						end
 
 						-- After the ability has been set, remove it from the table.
 						for j = 1, #ability_table[i] do
@@ -1452,8 +1462,10 @@ function GameMode:OnGameInProgress()
 							end
 						end
 
-						-- Mark tower as upgraded, so it could identify the other dire tower to upgrade.
-						dire_tower.initially_upgraded = true
+						if dire_tower then
+							-- Mark tower as upgraded, so it could identify the other dire tower to upgrade.
+							dire_tower.initially_upgraded = true
+						end
 					end
 				end
 			end
@@ -2118,7 +2130,7 @@ function GameMode:OnThink()
 				for ID = 0, PlayerResource:GetPlayerCount() -1 do
 					local team = PlayerResource:GetTeam(ID)
 
-					if PlayerResource:GetConnectionState(ID) == 3 then -- if disconnected then
+					if PlayerResource:GetConnectionState(ID) ~= 2 then -- if disconnected then
 						TEAM_ABANDON[team][3] = TEAM_ABANDON[team][3] -1
 					end
 
@@ -2130,7 +2142,7 @@ function GameMode:OnThink()
 							if team == 3 then
 								abandon_text = "#imba_team_bad_abandon_message"
 							end
-							Notifications:BottomToAll({text = abandon_text, duration = 15.0, style = {color = "DodgerBlue"} })
+							Notifications:BottomToAll({text = abandon_text, duration = TEAM_ABANDON[team][1], style = {color = "DodgerBlue"} })
 						end
 
 						TEAM_ABANDON[team][2] = true
@@ -2150,11 +2162,14 @@ function GameMode:OnThink()
 	end
 
 	-- Picking Screen voice alert
-	if i == nil then i = HERO_SELECTION_TIME -1
-	elseif i == false then
+	if i == nil then i = AP_GAME_TIME -1
+	elseif i < 0 then
+		return
 	else
 		i = i -1
+--		print(i)
 		for _, hero in pairs(HeroList:GetAllHeroes()) do
+--			print(hero:GetPlayerID(), hero.picked)
 			if not hero.picked and not i == false then -- have to double check false for reasons
 				if i == 30 then
 					EmitAnnouncerSoundForPlayer("announcer_ann_custom_countdown_"..i, hero:GetPlayerID())
@@ -2162,8 +2177,6 @@ function GameMode:OnThink()
 					EmitAnnouncerSoundForPlayer("announcer_ann_custom_countdown_"..i, hero:GetPlayerID())
 				elseif i <= 10 and i > 0 then
 					EmitAnnouncerSoundForPlayer("announcer_ann_custom_countdown_0"..i, hero:GetPlayerID())
-				elseif i <= 0 then
-					i = false
 				end
 			end
 		end

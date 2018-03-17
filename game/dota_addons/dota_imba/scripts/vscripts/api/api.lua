@@ -184,3 +184,46 @@ function ImbaApi:MetaCompanionChange(data, successCallback, errorCallback)
 end
 
 ImbaApiInstance = ImbaApi:new(nil, ImbaApiConfig)
+
+function ImbaApi:EndGame()
+	ImbaApiFrontendGameComplete(function (players)
+		ApiPrint("Game complete request successful!")
+
+		-- calculate levels
+		local xpInfo = {}
+
+		for k, v in pairs(players) do
+			local level = GetXPLevelByXp(v.xp)
+			local title = GetTitleIXP(level)
+			local color = GetTitleColorIXP(title, true)
+			local progress = GetXpProgressToNextLevel(v.xp)
+
+			if level and title and color and progress then
+				xpInfo[k] = {
+					level = level,
+					title = title,
+					color = color,
+					progress = progress
+				}
+			end
+		end
+
+		Timers:CreateTimer(0.3, function()
+			CustomGameEventManager:Send_ServerToAllClients("end_game", {
+				players = players,
+				xp_info = xpInfo,
+				info = {
+					winner = GAME_WINNER_TEAM,
+					gameid = GetApiGameId(),
+					radiant_score = GetTeamHeroKills(2),
+					dire_score = GetTeamHeroKills(3),
+					custom1_score = GetTeamHeroKills(6),
+					custom2_score = GetTeamHeroKills(7),
+					custom3_score = GetTeamHeroKills(8),
+				}
+			})
+		end)
+
+		ApiPrint("Done sending Event")
+	end)
+end

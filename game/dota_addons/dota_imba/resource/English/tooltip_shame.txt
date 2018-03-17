@@ -172,6 +172,7 @@
 "npc_dota_hero_storegga"                                    "Storegga"
 "npc_dota_hero_sly_king"                              "Sly King"
 "npc_dota_hero_pangolier"                             "Pangolier (IMBA)"
+"npc_dota_hero_dummy_dummy"								"Selecting Hero..."
 
 //=================================================================================================================
 // Dummy units and hero units
