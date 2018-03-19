@@ -127,24 +127,6 @@ function Battlepass() {
 	}
 }
 
-function IsDonator() {
-	var i = 0
-	var steamId = Game.GetLocalPlayerInfo().player_steamid;
-	var donator = CustomNetTables.GetTableValue("game_options", "donators").donators;
-
-	for (i in donator) {
-		if (donator[i] != undefined) {
-			$.Msg(donator[i])
-			$.Msg(steamId)
-			if (donator[i] == steamId) {
-				return true;
-			}
-		}
-	}
-
-	return false;
-}
-
 var companion_changed = false
 function SetCompanion(companion, name) {
 	if (companion_changed == true) {

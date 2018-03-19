@@ -34,7 +34,7 @@
 					<Button id="imba-social-button-reddit" class="imba-social-button"
 						onactivate="DOTADisplayURL('https://www.reddit.com/r/dotaimba/');" />
 					<Button id="imba-social-button-patreon" class="imba-social-button"
-						onactivate="DOTADisplayURL('https://www.patreon.com/dotaimba');" />
+						onactivate="DOTADisplayURL('https://www.patreon.com/xherosiege');" />
 					<Button id="imba-social-button-facebook" class="imba-social-button"
 						onactivate="DOTADisplayURL('https://www.facebook.com/D2IMBA/');" />
 					<Button id="imba-social-button-twitter" class="imba-social-button"
@@ -172,7 +172,7 @@
 					<Button id="imba-social-button-reddit" class="imba-social-button"
 						onactivate="DOTADisplayURL('https://www.reddit.com/r/dotaimba/');" />
 					<Button id="imba-social-button-patreon" class="imba-social-button"
-						onactivate="DOTADisplayURL('https://www.patreon.com/dotaimba');" />
+						onactivate="DOTADisplayURL('https://www.patreon.com/xherosiege');" />
 					<Button id="imba-social-button-facebook" class="imba-social-button"
 						onactivate="DOTADisplayURL('https://www.facebook.com/D2IMBA/');" />
 					<Button id="imba-social-button-twitter" class="imba-social-button"

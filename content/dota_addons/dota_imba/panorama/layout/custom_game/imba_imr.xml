@@ -6,6 +6,7 @@
 	</styles>
 
 	<scripts>
+		<include src="file://{resources}/scripts/custom_game/util.js" />
 		<include src="file://{resources}/scripts/custom_game/imba_imr.js" />
 		<include src="file://{resources}/scripts/custom_game/Modular.js" />
 	</scripts>
@@ -80,10 +81,11 @@
 						<Label id="RefreshLabel" text="#battlepass_refresh"/>
 						<Panel id="RefreshBattlepass" onactivate="RefreshBattlepass();"/>
 					</Button>
-
+<!--
 					<Button class="BattlepassButton" onactivate="ToggleCompanion();">
 						<Label id="ToggleCompanionLabel" text="#toggle_companion"/>
 					</Button>
+-->
 				</Panel>
 
 				<Label id="ComingSoon" text="#coming_soon" />
@@ -91,10 +93,17 @@
 			</Panel>
 
 			<Panel id="DonatorInfoContainer" hittest="false">
-				<Button id="RefreshBattlepassButton" onactivate="RefreshBattlepass();">
-					<Label id="RefreshLabel" text="#battlepass_refresh"/>
-					<Button id="RefreshBattlepass" onactivate="RefreshBattlepass();"/>
-				</Button>
+				<Panel id="BattlepassButtons" hittest="false">
+					<Button class="BattlepassButton" onactivate="RefreshBattlepass();">
+						<Label id="RefreshLabel" text="#battlepass_refresh"/>
+						<Panel id="RefreshBattlepass" onactivate="RefreshBattlepass();"/>
+					</Button>
+<!--
+					<Button class="BattlepassButton" onactivate="ToggleCompanion();">
+						<Label id="ToggleCompanionLabel" text="#toggle_companion"/>
+					</Button>
+-->
+				</Panel>
 <!--
 				<Panel id="DonatorOptions" hittest="false">
 					<Button id="DonatorOptionsToggle" onactivate="">

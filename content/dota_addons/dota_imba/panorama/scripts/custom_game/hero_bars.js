@@ -97,15 +97,13 @@ function CreateBar(entityId, lightBar) {
 	if (!lightBar) {
 		panel.cached = {};
 
-//		var teamColor = colors[Entities.GetTeamNumber(entityId)];
-		var teamColor = [26, 215, 56];
 		var name = panel.FindChildTraverse("PlayerName");
-		name.text = "DONATOR"
-		name.style.color = clr(teamColor);
-
-		name.style.marginLeft = "13px";
-
-		panel.cached.attackTimer = panel.FindChildTraverse("AttackTimer");
+		if (IsDonator()) {
+			name.text = "DONATOR";
+			name.style.color = "gold";
+		} else {
+			name.text = "";
+		}
 	}
 
 	return panel;
@@ -117,6 +115,10 @@ function ValidateAndUpdateOnScreenEntity(entityId, screenX, screenY, lightBar) {
 	if (changedBarTypeAndNeedsRecreation) {
 		return false;
 	}
+
+	// adjust position
+	screenX = screenX + 13
+	screenY = screenY - 11
 
 	if (_.has(heroBars, entityId)) {
 		UpdateBar({ id: entityId, x: screenX, y: screenY, light: lightBar });
@@ -306,25 +308,7 @@ function UpdateHeroBars(){
 }
 
 (function() {
-//	var steamId = Game.GetLocalPlayerInfo().player_steamid;
-//	var url = 'http://api.dota2imba.org/meta/set-companion';
-//	var data = {
-//		steam_id: steamId
-//	};
-//
-//	var i = 0
-//	var donator = CustomNetTables.GetTableValue("game_options", "donators").donators;
-//
-//	for (i in donator) {
-//		if (donator[i] != undefined) {
-//			if (donator[i] == steamId) {
-//				is_donator = true
-//				$.Msg("Donator Bar Good");
-//				UpdateHeroBars();
-//				return;
-//			}
-//		}
-//	}
+	UpdateHeroBars()
 })();
 
 // UTIL FUNCTIONS

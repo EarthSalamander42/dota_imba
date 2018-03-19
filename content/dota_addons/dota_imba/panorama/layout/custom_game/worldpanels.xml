@@ -4,9 +4,10 @@
 	</styles>
 
 	<scripts>
-		<include src="file://{resources}/scripts/custom_game/hero_bars.js" />
-		<include src="file://{resources}/scripts/custom_game/hero_bars_data.js" />
+		<include src="file://{resources}/scripts/custom_game/util.js" />
 		<include src="file://{resources}/scripts/custom_game/underscore.js" />
+		<include src="file://{resources}/scripts/custom_game/hero_bars_data.js" />
+		<include src="file://{resources}/scripts/custom_game/hero_bars.js" />
 	</scripts>
 
 	<snippets>
@@ -16,20 +17,6 @@
 					<Panel id="PlayerNameContainer">
 						<Label id="PlayerName"/>
 					</Panel>
-
-					<Panel id="HealthNumber">
-						<Label id="HealthValue"/>
-					</Panel>
-				</Panel>
-				<Panel id="BarTopContainer">
-					<Panel id="BarContainer">
-						<Panel id="HealthBar">
-							<Panel id="ShieldDelim"/>
-							<Panel id="MissingHealth"/>
-						</Panel>
-						<Panel id="SpecialBar" class="Hidden" hittest="false" hittestchildren="false"/>
-					</Panel>
-					<Panel id="AttackTimer"/>
 				</Panel>
 			</Panel>
 		</snippet>
@@ -44,19 +31,5 @@
 
 	<Panel class="MainPanel" hittest="false">
 		<Panel id="HeroBarsContainer" hittest="false" class="MainPanel"/>
-		<!--
-		<Panel id="MainPanel" class="MainPanel" hittest="false">
-			<Panel id="HeroPanel" hittest="false">
-				<Panel class="BuffPanel" id="BuffPanel">
-				</Panel>
-
-				<Panel class="HealthPanel" id="HealthPanel" hittest="false" hittestchildren="false">
-				</Panel>
-
-				<Panel class="AbilityPanel" hittest="false" id="AbilityPanel">
-				</Panel>
-			</Panel>
-		</Panel>
-		-->
 	</Panel>
 </root>

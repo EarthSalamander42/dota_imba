@@ -1,26 +1,31 @@
 /* global $ */
 'use strict';
+
 /*
 	Author:
 		Angel Arena Blackstar
 	Credits:
 		Angel Arena Blackstar
 */
+
 if (typeof module !== 'undefined' && module.exports) {
 	module.exports.FindDotaHudElement = FindDotaHudElement;
 	module.exports.ColorToHexCode = ColorToHexCode;
 	module.exports.ColoredText = ColoredText;
 	module.exports.LuaTableToArray = LuaTableToArray;
 }
+
 var HudNotFoundException = /** @class */ (function () {
 	function HudNotFoundException (message) {
 		this.message = message;
 	}
 	return HudNotFoundException;
 }());
+
 function FindDotaHudElement (id) {
 	return GetDotaHud().FindChildTraverse(id);
 }
+
 function GetDotaHud () {
 	var p = $.GetContextPanel();
 	while (p !== null && p.id !== 'Hud') {
@@ -32,6 +37,7 @@ function GetDotaHud () {
 		return p;
 	}
 }
+
 /**
  * Takes an array-like table passed from Lua that has stringified indices starting from 1
  * and returns an array of type T containing the elements of the table.
@@ -44,6 +50,7 @@ function LuaTableToArray (table) {
 	}
 	return array;
 }
+
 /**
  * Takes an integer and returns a hex code string of the color represented by the integer
  */
@@ -55,4 +62,27 @@ function ColorToHexCode (color) {
 }
 function ColoredText (colorCode, text) {
 	return '<font color="' + colorCode + '">' + text + '</font>';
+}
+
+/*
+	Author:
+		EarthSalamander #42
+	Credits:
+		EarthSalamander #42
+*/
+
+function IsDonator() {
+	var i = 0
+	var steamId = Game.GetLocalPlayerInfo().player_steamid;
+	var donator = CustomNetTables.GetTableValue("game_options", "donators").donators;
+
+	for (i in donator) {
+		if (donator[i] != undefined) {
+			if (donator[i] == steamId) {
+				return true;
+			}
+		}
+	}
+
+	return false;
 }
