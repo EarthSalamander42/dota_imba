@@ -8310,6 +8310,11 @@
 				"cast_range" 			"275"
 				"LinkedSpecialBonus"	"special_bonus_imba_enigma_5"
 			}
+			"11"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"singularity_cap"		"100"
+			}
 		}
 	}
 

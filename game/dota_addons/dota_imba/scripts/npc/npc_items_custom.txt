@@ -7815,7 +7815,7 @@
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"9.0"
+		"AbilityCooldown"				"8.0"
 		"AbilitySharedCooldown"			"blink"
 
 		// Item Info
@@ -7911,7 +7911,7 @@
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"7.0"
+		"AbilityCooldown"				"8.0"
 		"AbilitySharedCooldown"			"blink"
 
 		// Item Info
@@ -7946,7 +7946,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"max_extra_distance"		"1600"
+				"max_extra_distance"		"1500"
 			}
 			"05"
 			{
@@ -7956,7 +7956,7 @@
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"max_extra_tooltip"			"400"
+				"max_extra_tooltip"			"300"
 			}
 		}
 	}
@@ -12293,6 +12293,49 @@
 			}
 		}
 	}
+
+	//=================================================================================================================
+	// Ember Rune (ember rune)
+	//=================================================================================================================
+	"item_imba_rune_ember"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"									"2286"
+		"BaseClass"								"item_datadriven"
+		"Model"									"models/props_gameplay/rune_ember.vmdl"
+		"RuneDuration"							"45"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"								"0"
+		"ItemQuality"							"artifact"
+		"ItemPurchasable"						"0"
+		"ItemSellable"							"0"
+		"ItemKillable"							"1"
+		"ItemCastOnPickup"						"1"
+	}
 	
-	//next free ID: 2286
+	//=================================================================================================================
+	// Stone Rune (stone rune)
+	//=================================================================================================================
+	"item_imba_rune_stone"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"									"2287"
+		"BaseClass"								"item_datadriven"
+		"Model"									"models/props_gameplay/rune_stone.vmdl"
+		"RuneDuration"							"45"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"								"0"
+		"ItemQuality"							"artifact"
+		"ItemPurchasable"						"0"
+		"ItemSellable"							"0"
+		"ItemKillable"							"1"
+		"ItemCastOnPickup"						"1"
+	}
+	//next free ID: 2288
 }
