@@ -45,9 +45,11 @@ function GetDotaHud () {
  */
 function LuaTableToArray (table) {
 	var array = [];
+
 	for (var i = 1; table[i.toString()] !== undefined; i++) {
 		array.push(table[i.toString()]);
 	}
+
 	return array;
 }
 
@@ -58,8 +60,10 @@ function ColorToHexCode (color) {
 	var red = (color & 0xff).toString(16);
 	var green = ((color & 0xff00) >> 8).toString(16);
 	var blue = ((color & 0xff0000) >> 16).toString(16);
+
 	return '#' + red + green + blue;
 }
+
 function ColoredText (colorCode, text) {
 	return '<font color="' + colorCode + '">' + text + '</font>';
 }
@@ -73,6 +77,10 @@ function ColoredText (colorCode, text) {
 
 function IsDonator() {
 	var i = 0
+	if (CustomNetTables.GetTableValue("game_options", "donators") == undefined) {
+		return;
+	}
+
 	var steamId = Game.GetLocalPlayerInfo().player_steamid;
 	var donator = CustomNetTables.GetTableValue("game_options", "donators").donators;
 

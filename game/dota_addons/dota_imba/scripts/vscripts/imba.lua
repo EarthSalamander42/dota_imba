@@ -484,32 +484,10 @@ function GameMode:ModifierFilter( keys )
 			end
 		end
 
-		-------------------------------------------------------------------------------------------------
-		-- Rune pickup logic
-		-------------------------------------------------------------------------------------------------
-		if modifier_caster == modifier_owner then
-			if modifier_caster:HasModifier("modifier_rune_doubledamage") then
-				local duration = modifier_caster:FindModifierByName("modifier_rune_doubledamage"):GetDuration()
-				modifier_caster:RemoveModifierByName("modifier_rune_doubledamage")
-				modifier_caster:AddNewModifier(modifier_caster, nil, "modifier_imba_double_damage_rune", {duration = duration})
-			elseif modifier_caster:HasModifier("modifier_rune_haste") then
-				local duration = modifier_caster:FindModifierByName("modifier_rune_haste"):GetDuration()
-				modifier_caster:RemoveModifierByName("modifier_rune_haste")
-				modifier_caster:AddNewModifier(modifier_caster, nil, "modifier_imba_haste_rune", {duration = duration})
-			elseif modifier_caster:HasModifier("modifier_rune_invis") then
-			--				PickupInvisibleRune(modifier_caster)
-			--				return false
-			elseif modifier_caster:HasModifier("modifier_rune_regen") then
-				local duration = modifier_caster:FindModifierByName("modifier_rune_regen"):GetDuration()
-				modifier_caster:RemoveModifierByName("modifier_rune_regen")
-				modifier_caster:AddNewModifier(modifier_caster, nil, "modifier_imba_regen_rune", {duration = duration})
-			end
-		end
-
-		--		if modifier_name == "modifier_courier_shield" then
-		--			modifier_caster:RemoveModifierByName(modifier_name)
-		--			modifier_caster:FindAbilityByName("courier_burst"):CastAbility()
-		--		end
+--		if modifier_name == "modifier_courier_shield" then
+--			modifier_caster:RemoveModifierByName(modifier_name)
+--			modifier_caster:FindAbilityByName("courier_burst"):CastAbility()
+--		end
 
 		-- disarm immune
 		local jarnbjorn_immunity = {
@@ -1324,6 +1302,7 @@ end
 	is useful for starting any game logic timers/thinkers, beginning the first round, etc.									]]
 function GameMode:OnGameInProgress()
 
+	print("ON GAME IN PROGRESS")
 	if GetMapName() ~= "imba_1v1" then
 		Timers:CreateTimer(0, function()
 			SpawnImbaRunes()

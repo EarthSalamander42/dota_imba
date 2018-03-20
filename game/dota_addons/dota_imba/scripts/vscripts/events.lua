@@ -375,7 +375,10 @@ function GameMode:OnNPCSpawned(keys)
 		if npc:IsIllusion() and not npc:HasModifier("modifier_illusion_manager_out_of_world") and not npc:HasModifier("modifier_illusion_manager") then
 			if npc.illusion == true then
 				UTIL_Remove(npc)
+				return
 			end
+
+			HeroSelection:Attachments(npc)
 			npc.illusion = true
 			return
 		elseif npc:IsTempestDouble() then
@@ -440,15 +443,15 @@ function GameMode:OnNPCSpawned(keys)
 					Timers:CreateTimer(2.0, function()
 						local steam_id = tostring(PlayerResource:GetSteamID(npc:GetPlayerID()))
 						if steam_id == "76561198015161808" then
-							DonatorCompanion(npc:GetPlayerID(), "models/heroes/mario/mario_model.vmdl")
+							DonatorCompanion(npc:GetPlayerID(), "models/courier/baby_rosh/babyroshan.vmdl")
 						elseif steam_id == "76561198003571172" then
-							DonatorCompanion(npc:GetPlayerID(), "models/heroes/mario/mario_model.vmdl")
+							DonatorCompanion(npc:GetPlayerID(), "models/courier/baby_rosh/babyroshan.vmdl")
 						elseif steam_id == "76561198014254115" then
-							DonatorCompanion(npc:GetPlayerID(), "npc_imba_donator_companion_icefrog")
+							DonatorCompanion(npc:GetPlayerID(), "models/courier/frog/frog.vmdl")
 						elseif steam_id == "76561198014254115" then
-							DonatorCompanion(npc:GetPlayerID(), "npc_imba_donator_companion_admiral_bulldog")
+							DonatorCompanion(npc:GetPlayerID(), "models/items/lone_druid/true_form/elemental_curse_set_elemental_curse_true_form/elemental_curse_set_elemental_curse_true_form.vmdl")
 						elseif steam_id == "76561198021465788" then
-							DonatorCompanion(npc:GetPlayerID(), "npc_imba_donator_companion_suthernfriend")
+							DonatorCompanion(npc:GetPlayerID(), "models/creeps/roshan/roshan.vmdl")
 						else
 							DonatorCompanion(npc:GetPlayerID(), IsDonator(npc))
 						end

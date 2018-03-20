@@ -1011,6 +1011,8 @@ bounty_rune_is_initial_bounty_rune = false
 	powerup_rune_types[5] = {"item_imba_rune_illusion", "particles/generic_gameplay/rune_illusion.vpcf"}
 	powerup_rune_types[6] = {"item_imba_rune_invisibility", "particles/generic_gameplay/rune_invisibility.vpcf"}
 	powerup_rune_types[7] = {"item_imba_rune_frost", "particles/econ/items/puck/puck_snowflake/puck_snowflake_ambient.vpcf"}
+	powerup_rune_types[8] = {"item_imba_rune_ember", "particles/econ/items/shadow_fiend/sf_fire_arcana/sf_fire_arcana_trail.vpcf"}
+	powerup_rune_types[9] = {"item_imba_rune_stone", "particles/econ/items/natures_prophet/natures_prophet_flower_treant/natures_prophet_flower_treant_ambient.vpcf"}
 
 	local rune
 	local particle
@@ -1142,8 +1144,7 @@ function PickupRune(rune_name, unit, bActiveByBottle)
 			if bounty_rune_is_initial_bounty_rune then
 				for _, hero in pairs(HeroList:GetAllHeroes()) do
 					if hero:GetTeam() == unit:GetTeam() then
-						if hero:GetUnitName() == "npc_dota_hero_monkey_king" and not hero.is_real_mk then
-						elseif hero:GetUnitName() == "npc_dota_hero_meepo" and not hero.is_real_meepo then
+						if (hero:GetUnitName() == "npc_dota_hero_monkey_king" and not hero.is_real_mk) or (hero:GetUnitName() == "npc_dota_hero_meepo" and not hero.is_real_meepo) or hero:IsIllusion() then
 						else
 							hero:ModifyGold(current_bounty, false, DOTA_ModifyGold_Unspecified)
 							SendOverheadEventMessage(PlayerResource:GetPlayer(hero:GetPlayerOwnerID()), OVERHEAD_ALERT_GOLD, hero, current_bounty, nil)
@@ -1195,6 +1196,12 @@ function PickupRune(rune_name, unit, bActiveByBottle)
 			EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Regen", unit)
 		elseif rune_name == "frost" then
 			unit:AddNewModifier(unit, nil, "modifier_imba_frost_rune", {duration=duration})
+			EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Frost", unit)
+		elseif rune_name == "ember" then
+			unit:AddNewModifier(unit, nil, "modifier_imba_ember_rune", {duration=duration})
+			EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Frost", unit)
+		elseif rune_name == "stone" then
+			unit:AddNewModifier(unit, nil, "modifier_imba_stone_rune", {duration=duration})
 			EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Frost", unit)
 		end
 

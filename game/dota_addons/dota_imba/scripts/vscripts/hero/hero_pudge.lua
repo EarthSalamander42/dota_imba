@@ -293,13 +293,26 @@ function imba_pudge_meat_hook:OnProjectileThink_ExtraData(vLocation, ExtraData)
 		-- Hook Rune Think
 		local location = vLocation
 		local radius = ExtraData.hook_width
+		local runes = {
+			"models/props_gameplay/rune_goldxp.vmdl",
+			"models/props_gameplay/rune_haste01.vmdl",
+			"models/props_gameplay/rune_doubledamage01.vmdl",
+			"models/props_gameplay/rune_regeneration01.vmdl",
+			"models/props_gameplay/rune_arcane.vmdl",
+			"models/props_gameplay/rune_invisibility01.vmdl",
+			"models/props_gameplay/rune_illusion01.vmdl",
+			"models/props_gameplay/rune_frost.vmdl",
+			"models/props_gameplay/gold_coin001.vmdl",	-- Overthrow coin
+		}
 
 		--check if there are runes to grab
 		for _, ent in pairs(Entities:FindAllInSphere(location, radius)) do
-			if ent:IsRune() then
-				if (location - ent:GetAbsOrigin()):Length2D() < radius then
-					ExtraData.rune = ent:entindex()
-					self:OnProjectileHit_ExtraData(nil, location, ExtraData) --grab the rune
+			for _, model in pairs(runes) do
+				for _, rune in pairs(Entities:FindAllByModel(model)) do
+					if (location - rune:GetAbsOrigin()):Length2D() < radius then
+						ExtraData.rune = rune:entindex()
+						self:OnProjectileHit_ExtraData(nil, location, ExtraData) --grab the rune
+					end
 				end
 			end
 		end

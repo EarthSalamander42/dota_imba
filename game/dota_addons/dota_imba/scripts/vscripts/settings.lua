@@ -345,12 +345,12 @@ HERO_STARTING_LEVEL["imba_overthrow"] = {1, 1}
 HERO_STARTING_LEVEL["imba_1v1"] = {1, 1}
 
 MAX_LEVEL = {}
-MAX_LEVEL[MapRanked5v5()] = {50, 50}
-MAX_LEVEL[MapRanked10v10()] = {50, 50}
-MAX_LEVEL[MapFrantic5v5()] = {50, 50}
-MAX_LEVEL[MapFrantic10v10()] = {50, 50}
-MAX_LEVEL["imba_overthrow"] = {50, 50}
-MAX_LEVEL["imba_1v1"] = {50, 50}
+MAX_LEVEL[MapRanked5v5()] = {42, 42}
+MAX_LEVEL[MapRanked10v10()] = {42, 42}
+MAX_LEVEL[MapFrantic5v5()] = {42, 42}
+MAX_LEVEL[MapFrantic10v10()] = {42, 42}
+MAX_LEVEL["imba_overthrow"] = {42, 42}
+MAX_LEVEL["imba_1v1"] = {42, 42}
 
 HERO_INITIAL_GOLD = {}
 HERO_INITIAL_GOLD[MapRanked5v5()] = {1200, 1200}
@@ -456,11 +456,11 @@ HERO_XP_BOUNTY_PER_LEVEL[5] = 305
 HERO_XP_BOUNTY_PER_LEVEL[6] = 350
 HERO_XP_BOUNTY_PER_LEVEL[7] = 395
 
-for i = 8, 20 do
+for i = 8, 25 do
 	HERO_XP_BOUNTY_PER_LEVEL[i] = HERO_XP_BOUNTY_PER_LEVEL[i-1] + 135
 end
 
-for i = 21, 100 do
+for i = 26, 100 do
 	HERO_XP_BOUNTY_PER_LEVEL[i] = HERO_XP_BOUNTY_PER_LEVEL[i-1] + 135 + i * 3
 end
 

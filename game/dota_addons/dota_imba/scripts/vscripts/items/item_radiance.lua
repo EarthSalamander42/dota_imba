@@ -69,12 +69,11 @@ function modifier_imba_radiance_basic:GetAttributes() return MODIFIER_ATTRIBUTE_
 -- Adds the unique modifier to the owner when created
 function modifier_imba_radiance_basic:OnCreated(keys)
 	if IsServer() then
-		local parent = self:GetParent()
-		if not parent:HasModifier("modifier_imba_radiance_aura") then
-			parent:AddNewModifier(parent, self:GetAbility(), "modifier_imba_radiance_aura", {})
+		if not self:GetParent():HasModifier("modifier_imba_radiance_aura") then
+			self:GetParent():AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_radiance_aura", {})
 		end
 	end
-	self:OnIntervalThink()
+
 	self:StartIntervalThink(1.0)
 end
 
@@ -94,13 +93,11 @@ function modifier_imba_radiance_basic:OnIntervalThink()
 	end
 end
 
-
 -- Removes the unique modifier from the owner if this is the last Radiance in its inventory
 function modifier_imba_radiance_basic:OnDestroy(keys)
 	if IsServer() then
-		local parent = self:GetParent()
-		if not parent:HasModifier("modifier_imba_radiance_basic") then
-			parent:RemoveModifierByName("modifier_imba_radiance_aura")
+		if not self:GetParent():HasModifier("modifier_imba_radiance_basic") then
+			self:GetParent():RemoveModifierByName("modifier_imba_radiance_aura")
 		end
 	end
 end
@@ -139,11 +136,7 @@ end
 -- Create the glow particle and start thinking
 function modifier_imba_radiance_aura:OnCreated()
 	if IsServer() then
-		local parent = self:GetParent()
-
-		self.particle = ParticleManager:CreateParticle(parent.radiance_effect, PATTACH_ABSORIGIN_FOLLOW, parent)
-		ParticleManager:SetParticleControl(self.particle, 2, parent:GetFittingColor())
-		self:StartIntervalThink(0.5)
+		self.particle = ParticleManager:CreateParticle(self:GetParent().radiance_effect_owner, PATTACH_ABSORIGIN_FOLLOW, parent)
 	end
 end
 
@@ -152,13 +145,6 @@ function modifier_imba_radiance_aura:OnDestroy()
 	if IsServer() then
 		ParticleManager:DestroyParticle(self.particle, false)
 		ParticleManager:ReleaseParticleIndex(self.particle)
-	end
-end
-
--- Set color of the radiance glow based on its carrier
-function modifier_imba_radiance_aura:OnIntervalThink()
-	if IsServer() then
-		ParticleManager:SetParticleControl(self.particle, 2, self:GetParent():GetFittingColor())
 	end
 end
 
@@ -177,8 +163,7 @@ function modifier_imba_radiance_burn:OnCreated()
 	if IsServer() then
 
 		-- Particle creation
-		local parent = self:GetParent()
-		self.particle = ParticleManager:CreateParticle("particles/item/radiance/radiance_victim.vpcf", PATTACH_ABSORIGIN_FOLLOW, parent)
+		self.particle = ParticleManager:CreateParticle(self:GetCaster().radiance_effect, PATTACH_ABSORIGIN_FOLLOW, parent)
 
 		-- Start thinking
 		self:StartIntervalThink(self:GetAbility():GetSpecialValueFor("think_interval"))
@@ -204,10 +189,9 @@ function modifier_imba_radiance_burn:OnDestroy()
 		-- Apply afterburn with the appropriate amount of accumulates stacks
 		local stacks = self:GetStackCount()
 		if stacks > 0 then
-			local parent = self:GetParent()
-			local modifier_afterburn = parent:FindModifierByName("modifier_imba_radiance_afterburn")
+			local modifier_afterburn = self:GetParent():FindModifierByName("modifier_imba_radiance_afterburn")
 			if not modifier_afterburn then
-				modifier_afterburn = parent:AddNewModifier(self:GetAbility():GetCaster(), self:GetAbility(), "modifier_imba_radiance_afterburn", {})
+				modifier_afterburn = self:GetParent():AddNewModifier(self:GetAbility():GetCaster(), self:GetAbility(), "modifier_imba_radiance_afterburn", {})
 			end
 
 			if modifier_afterburn then
@@ -222,7 +206,6 @@ function modifier_imba_radiance_burn:OnIntervalThink()
 
 		-- Parameters
 		local ability = self:GetAbility()
-		local parent = self:GetParent()
 		local caster = self:GetCaster()
 		local damage = self.base_damage
 		local real_hero_nearby = false
@@ -231,7 +214,7 @@ function modifier_imba_radiance_burn:OnIntervalThink()
 		if caster:IsRealHero() then
 			real_hero_nearby = true
 		else
-			local real_hero_finder = FindUnitsInRadius(parent:GetTeamNumber(), parent:GetAbsOrigin(), nil, self.aura_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD , FIND_ANY_ORDER , false)
+			local real_hero_finder = FindUnitsInRadius(self:GetParent():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.aura_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD , FIND_ANY_ORDER , false)
 			for _,hero in pairs(real_hero_finder) do
 				if hero:FindModifierByName("modifier_imba_radiance_aura") then
 					real_hero_nearby = true
@@ -242,7 +225,7 @@ function modifier_imba_radiance_burn:OnIntervalThink()
 
 		-- If the real hero is nearby, increase damage and afterburn counter by 1
 		if real_hero_nearby then
-			damage = damage + self.extra_damage * parent:GetHealth() * 0.01
+			damage = damage + self.extra_damage * self:GetParent():GetHealth() * 0.01
 			self.afterburner_counter = self.afterburner_counter + 1
 
 			-- If the afterburner counter has reached its target, reset it and add a stack to this modifier
@@ -253,11 +236,7 @@ function modifier_imba_radiance_burn:OnIntervalThink()
 		end
 
 		-- Apply damage
-		ApplyDamage({victim = parent, attacker = caster, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
-
-		-- Handle particle and color based on Radiance carrier
-		ParticleManager:SetParticleControl(self.particle, 1, caster:GetAbsOrigin())
-		ParticleManager:SetParticleControl(self.particle, 2, caster:GetFittingColor())
+		ApplyDamage({victim = self:GetParent(), attacker = caster, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
 	end
 end
 
@@ -283,8 +262,7 @@ function modifier_imba_radiance_afterburn:OnCreated()
 		self.miss_chance = ability:GetSpecialValueFor("miss_chance")
 
 		-- Particle creation
-		self.particle = ParticleManager:CreateParticle("particles/item/radiance/radiance_victim.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
-		ParticleManager:SetParticleControl(self.particle, 2, ability:GetCaster():GetFittingColor())
+		self.particle = ParticleManager:CreateParticle(self:GetCaster().radiance_effect, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 
 		-- Start thinking
 		self:StartIntervalThink(think_interval)
@@ -300,10 +278,9 @@ end
 
 function modifier_imba_radiance_afterburn:OnIntervalThink()
 	if IsServer() then
-		local parent = self:GetParent()
 
 		-- If the parent has the radiance burn modifier, do nothing
-		if not parent:HasModifier("modifier_imba_radiance_burn") then
+		if not self:GetParent():HasModifier("modifier_imba_radiance_burn") then
 
 			-- If the original item is gone, do nothing and destroy the modifier
 			local ability = self:GetAbility()
@@ -318,14 +295,12 @@ function modifier_imba_radiance_afterburn:OnIntervalThink()
 			local damage = self.base_damage
 
 			-- Calculate and deal damage
-			damage = damage + self.extra_damage * parent:GetHealth() * 0.01
-			ApplyDamage({victim = parent, attacker = caster, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
+			damage = damage + self.extra_damage * self:GetParent():GetHealth() * 0.01
+			ApplyDamage({victim = self:GetParent(), attacker = caster, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
 			self:SetStackCount(self:GetStackCount() - 1)
 			if self:GetStackCount() <= 0 then self:Destroy() return end
 
-			local parent_loc = parent:GetAbsOrigin()
-			ParticleManager:SetParticleControl(self.particle, 1, Vector(parent_loc.x,parent_loc.y, 100)) -- lul orgy -- I'm 12 btw haHAA
-			ParticleManager:SetParticleControl(self.particle, 2, caster:GetFittingColor())
+			local parent_loc = self:GetParent():GetAbsOrigin()
 		end
 	end
 end

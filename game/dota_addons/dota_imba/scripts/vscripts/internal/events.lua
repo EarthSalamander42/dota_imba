@@ -103,18 +103,14 @@ local color = {}
 				if PlayerResource:GetSelectedHeroName(caster:GetPlayerID()) ~= "npc_dota_hero_"..text then
 					if caster.companion then
 						caster.companion:ForceKill(false)
+						caster.companion = nil
 					end
-					HeroSelection:AssignHero(caster:GetPlayerID(), "npc_dota_hero_"..text)
+
+					PrecacheUnitByNameAsync("npc_dota_hero_"..text, function()
+						HeroSelection:GiveStartingHero(caster:GetPlayerID(), "npc_dota_hero_"..text, true)
+					end)
 				end
 			end
-		end
-
-		if str == "-rangeoff" then
-			caster.norange = true
-		end
-
-		if str == "-rangeon" then
-			caster.norange = nil
 		end
 	end
 end

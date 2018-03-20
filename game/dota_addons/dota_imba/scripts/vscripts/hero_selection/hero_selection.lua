@@ -371,18 +371,20 @@ function HeroSelection:SelectHero(playerId, hero)
 	end)
 end
 
-function HeroSelection:GiveStartingHero(playerId, heroName)
-	if self.spawnedPlayers[playerId] then
-		return
+function HeroSelection:GiveStartingHero(playerId, heroName, dev)
+	if not dev then
+		if self.spawnedPlayers[playerId] then
+			return
+		end
 	end
 
-	local startingGold = 0
+--	local startingGold = 0
 --	if self.hasGivenStartingGold then
 --		startingGold = tonumber(CustomNetTables:GetTableValue("game_options", "initial_gold")["1"]) or 1200
 --	end
 
 	local wisp = PlayerResource:GetSelectedHeroEntity(playerId)
-	local hero = PlayerResource:ReplaceHeroWith(playerId, heroName, startingGold, 0)
+	local hero = PlayerResource:ReplaceHeroWith(playerId, heroName, 0, 0)
 
 	if hero and hero:GetUnitName() ~= FORCE_PICKED_HERO then
 		table.insert(self.spawnedHeroes, hero)
@@ -394,11 +396,7 @@ function HeroSelection:GiveStartingHero(playerId, heroName)
 		end)
 	end
 
-	for key, value in pairs(customlist) do
-		if key == hero:GetUnitName() then
-			HeroSelection:Attachments(hero)
-		end
-	end
+	HeroSelection:Attachments(hero)
 
 	-- Set the picked hero for this player
 	PlayerResource:SetPickedHero(playerId, hero)
@@ -462,7 +460,9 @@ function HeroSelection:GiveStartingHero(playerId, heroName)
 	Imbattlepass:AddItemEffects(hero)
 
 	Timers:CreateTimer(1.0, function()
-		UTIL_Remove(wisp)
+		if wisp then
+			UTIL_Remove(wisp)
+		end
 	end)
 end
 
@@ -533,7 +533,7 @@ function HeroSelection:UnsafeRandomHero()
 end
 
 -- start strategy timer
-function HeroSelection:EndStrategyTime ()
+function HeroSelection:EndStrategyTime()
 	HeroSelection.shouldBePaused = false
 	HeroSelection:CheckPause()
 
@@ -543,18 +543,17 @@ function HeroSelection:EndStrategyTime ()
 		PauseGame(true)
 	end
 
-	GameMode:OnGameInProgress()
 --	OnGameInProgressEvent() -- ENABLE BEFORE 7.05
 
-	self.hasGivenStartingGold = true
-	for _,hero in ipairs(self.spawnedHeroes) do
-		PlayerResource:ModifyGold( hero:GetPlayerID(), tonumber(CustomNetTables:GetTableValue("game_options", "initial_gold")["1"]) or 1200, true, 0 )
-	end
+--	self.hasGivenStartingGold = true
+--	for _,hero in ipairs(self.spawnedHeroes) do
+--		PlayerResource:ModifyGold( hero:GetPlayerID(), tonumber(CustomNetTables:GetTableValue("game_options", "initial_gold")["1"]) or 1200, true, 0 )
+--	end
 
 	CustomNetTables:SetTableValue( 'hero_selection', 'time', {time = -1, mode = ""})
 end
 
-function HeroSelection:StrategyTimer (time)
+function HeroSelection:StrategyTimer(time)
 	HeroSelection:CheckPause()
 	if time < 0 then
 		if finishedLoading then
@@ -577,11 +576,11 @@ function HeroSelection:StrategyTimer (time)
 end
 
 -- receive choise from players about their selection
-function HeroSelection:HeroSelected (event)
+function HeroSelection:HeroSelected(event)
 	HeroSelection:UpdateTable(event.PlayerID, event.hero)
 end
 
-function HeroSelection:HeroPreview (event)
+function HeroSelection:HeroPreview(event)
 	local previewTable = CustomNetTables:GetTableValue('hero_selection', 'preview_table') or {}
 	local teamID = tostring(PlayerResource:GetTeam(event.PlayerID))
 	if not previewTable[teamID] then
@@ -592,7 +591,7 @@ function HeroSelection:HeroPreview (event)
 end
 
 -- write new values to table
-function HeroSelection:UpdateTable (playerID, hero)
+function HeroSelection:UpdateTable(playerID, hero)
 	local teamID = PlayerResource:GetTeam(playerID)
 	if hero == "random" then
 		hero = self:RandomHero()
@@ -676,9 +675,9 @@ function HeroSelection:Attachments(hero)
 		LinkLuaModifier( "modifier_animation_translate_permanent_string", "libraries/modifiers/modifier_animation_translate_permanent_string.lua", LUA_MODIFIER_MOTION_NONE )
 	end
 
-	hero = string.gsub(hero:GetUnitName(), "npc_dota_hero_", "")
+	hero_name = string.gsub(hero:GetUnitName(), "npc_dota_hero_", "")
 
-	if hero == "ghost_revenant" then
+	if hero_name == "ghost_revenant" then
 		hero:SetRenderColor(128, 255, 0)
 		hero.head = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/razor/apostle_of_the_tempest_head/apostle_of_the_tempest_head.vmdl"})
 		hero.head:FollowEntity(hero, true)
@@ -695,9 +694,9 @@ function HeroSelection:Attachments(hero)
 		hero.weapon = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/razor/severing_lash/mesh/severing_lash.vmdl"})
 		hero.weapon:FollowEntity(hero, true)
 		hero.weapon:SetRenderColor(128, 255, 0)
-	elseif hero == "hell_empress" then
+	elseif hero_name == "hell_empress" then
 
-	elseif hero == "scaldris" then
+	elseif hero_name == "scaldris" then
 --		for i = 0, 24 do
 --			if hero:GetAbilityByIndex(i) then
 --				hero:RemoveAbility(hero:GetAbilityByIndex(i):GetAbilityName())
@@ -731,7 +730,7 @@ function HeroSelection:Attachments(hero)
 --		hero:AddAbility("generic_hidden")
 --		hero:AddAbility("generic_hidden")
 --		hero:AddAbility("generic_hidden")
-	elseif hero == "sohei" then
+	elseif hero_name == "sohei" then
 ---		hero.hand = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/heroes/sohei/so_weapon.vmdl"})
 		hero.hand = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/heroes/sohei/weapon/immortal/thunderlord.vmdl"})
 

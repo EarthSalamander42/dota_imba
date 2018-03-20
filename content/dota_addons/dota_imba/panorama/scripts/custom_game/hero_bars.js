@@ -117,8 +117,11 @@ function ValidateAndUpdateOnScreenEntity(entityId, screenX, screenY, lightBar) {
 	}
 
 	// adjust position
-	screenX = screenX + 13
-	screenY = screenY - 11
+	var fix_X = 13
+	var fix_Y = 14
+
+	screenX = screenX + fix_X
+	screenY = screenY - fix_Y
 
 	if (_.has(heroBars, entityId)) {
 		UpdateBar({ id: entityId, x: screenX, y: screenY, light: lightBar });

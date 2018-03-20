@@ -44,14 +44,14 @@ function modifier_imba_range_indicator:OnIntervalThink()
 	if IsServer() then
 		local caster = self:GetCaster()
 		if (caster:IsAlive() or (self.bShowAlways == 1)) and self.hAbility then
-			if (self.hAbility:IsCooldownReady() or (self.bShowOnCooldown == 1)) and (not caster.norange) then
+			if (self.hAbility:IsCooldownReady() or (self.bShowOnCooldown == 1)) then
 				self.iRange = self.hAbility:GetSpecialValueFor(self.sAttribute)
 				if self.bWithCastRangeIncrease then self.iRange = self.iRange + GetCastRangeIncrease(caster) end
 				ParticleManager:SetParticleControl(self.range_pfx, 3, Vector(self.iRange, 0, 0))
 			else
 				ParticleManager:SetParticleControl(self.range_pfx, 3, Vector(0, 0, 0))
 			end
-		elseif (caster:IsAlive() or (self.bShowAlways == 1)) and self.iRange and (not caster.norange) and (not self.hAbility) then
+		elseif (caster:IsAlive() or (self.bShowAlways == 1)) and self.iRange and (not self.hAbility) then
 			ParticleManager:SetParticleControl(self.range_pfx, 3, Vector(self.iRange, 0, 0))
 		end
 	end

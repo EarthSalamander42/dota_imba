@@ -6,10 +6,12 @@
 	Contributors: Lindbrum (14th March 2018)
 ]]
 
+LinkLuaModifier("modifier_imba_ember_rune_burn", "modifier/runes/modifier_imba_ember_rune", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_ember_rune_on_hit", "modifier/runes/modifier_imba_ember_rune", LUA_MODIFIER_MOTION_NONE)
+
 ----------------------------------------------------------------
 -- Rune modifier
 ----------------------------------------------------------------
-
 modifier_imba_ember_rune = modifier_imba_ember_rune or class({})
 
 function modifier_imba_ember_rune:IsAura() return true end
@@ -33,11 +35,8 @@ end
 
 function modifier_imba_ember_rune:OnCreated()
 	if not IsServer() then return end
-	self.parent = self:GetParent()
 	self.aura_radius = 700
 	self.burn_duration = 10
-	
-
 end
 
 function modifier_imba_ember_rune:DeclareFunctions()
@@ -49,23 +48,22 @@ end
 function modifier_imba_ember_rune:OnAttackLanded(kv)
 	if not IsServer() then return end
 	--Only proceed if the attacker is the parent
-	if not self.parent == kv.attacker then return end
+	if not self:GetParent() == kv.attacker then return end
 
 	local target = kv.target
 	--Can't affect spell immune enemies and buildings
-	if target:IsSpellImmune() or target:IsBuilding() then return end
+	if target:IsMagicImmune() or target:IsBuilding() then return end
 	--Apply debuff if the target isn't affected already, else add a stack (like Huskar's Burning Spear)
 	if target:HasModifier("modifier_imba_ember_rune_on_hit") then
 		local modifier = target:FindModifierByName("modifier_imba_ember_rune_on_hit")
-		local stacks = modifier:GetStackCount()
-		modifier:SetStackCount(stacks + 1)
-		modifier:SetDuration(self.burn_duration)
+		modifier:SetStackCount(modifier:GetStackCount() + 1)
+		modifier:SetDuration(self.burn_duration, true)
 	else
-		local modifier = target:AddNewModifier(self.parent, nil, "modifier_imba_ember_rune_on_hit", {duration = self.burn_duration})
+		target:AddNewModifier(self:GetParent(), nil, "modifier_imba_ember_rune_on_hit", {duration = self.burn_duration})
+		local modifier = target:FindModifierByName("modifier_imba_ember_rune_on_hit")
 		modifier:SetStackCount(1)
 	end
 end
-
 
 ----------------------------------------------------------------------
 -- Immolation aura debuff
@@ -82,37 +80,30 @@ function modifier_imba_ember_rune_burn:OnCreated()
 	if IsServer() then
 
 		-- Particle creation
-		local parent = self:GetParent()
-		self.particle = ParticleManager:CreateParticle("particles/item/radiance/radiance_victim.vpcf", PATTACH_ABSORIGIN_FOLLOW, parent)
+		self.particle = ParticleManager:CreateParticle(self:GetCaster().radiance_effect, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 
 		-- Start thinking
 		self:StartIntervalThink(1.0)
 
 		-- Parameter storage
-		
 		self.base_damage = 80
 		self.extra_damage = 2.0
-		self.aura_radius = 700
+		self.aura_radius = 600
 		self.miss_chance = 20
-		
 	end
 end
 
 function modifier_imba_ember_rune_burn:OnDestroy()
 	if IsServer() then
-
 		-- Destroy particle
 		ParticleManager:DestroyParticle(self.particle, false)
 		ParticleManager:ReleaseParticleIndex(self.particle)
-
 	end
 end
 
 function modifier_imba_ember_rune_burn:OnIntervalThink()
 	if IsServer() then
-
 		-- Parameters
-		
 		local parent = self:GetParent()
 		local caster = self:GetCaster()
 		local damage = self.base_damage
@@ -134,14 +125,14 @@ function modifier_imba_ember_rune_burn:OnIntervalThink()
 		-- If the real hero is nearby, increase damage
 		if real_hero_nearby then
 			damage = damage + self.extra_damage * parent:GetHealth() * 0.01
-			
 		end
 
 		local damage_table = {victim = parent, 
-								attacker = caster, 
-								ability = nil, 
-								damage = damage, 
-								damage_type = DAMAGE_TYPE_MAGICAL}
+			attacker = caster, 
+			ability = nil, 
+			damage = damage, 
+			damage_type = DAMAGE_TYPE_MAGICAL
+		}
 
 		-- Apply damage
 		ApplyDamage(damage_table)
@@ -168,33 +159,29 @@ function modifier_imba_ember_rune_on_hit:IsPurgable() return true end
 
 function modifier_imba_ember_rune_on_hit:OnCreated()
 	if not IsServer() then return end
-	self.parent = self:GetParent()
-	self.caster = self:GetCaster()
 	self.damage_per_sec = 20
 
 	--Add burning effect
-	self.particle = ParticleManager:CreateParticle("particles/item/radiance/radiance_victim.vpcf", PATTACH_ABSORIGIN_FOLLOW, parent)
-	ParticleManager:AddParticle(self.particle, false, true, 10, true, false)
+	self.particle = ParticleManager:CreateParticle(self:GetParent().radiance_effect, PATTACH_ABSORIGIN_FOLLOW, parent)
+--	ParticleManager:AddParticle(self.particle, false, true, 10, true, false)
 
 	self:OnIntervalThink()
 
 	self:StartIntervalThink(1.0)
-
-
-
 end
 
 function modifier_imba_ember_rune_on_hit:OnIntervalThink()
 	if not IsServer() then return end
-	local stacks = self:GetStackCount()
 
-	--Calculate damage based on stacks
-	local total_damage = self.damage_per_sec * stacks
-	local damage_table = {victim = self.parent,
-						attacker = self.caster, 
-						ability = nil, 
-						damage = total_damage, 
-						damage_type = DAMAGE_TYPE_MAGICAL}
+	-- Calculate damage based on stacks
+	local total_damage = self.damage_per_sec * self:GetStackCount()
+	local damage_table = {
+		victim = self:GetParent(),
+		attacker = self:GetCaster(), 
+		ability = nil, 
+		damage = total_damage, 
+		damage_type = DAMAGE_TYPE_MAGICAL
+	}
 
 	-- Apply damage
 	ApplyDamage(damage_table)

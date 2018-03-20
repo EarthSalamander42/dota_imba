@@ -317,10 +317,15 @@ end
 
 function item_imba_jarnbjorn:OnSpellStart()
 	if IsServer() then
-
-		-- Apply the modifier to the target
 		local target = self:GetCursorTarget()
-		target:AddNewModifier(target, self, "modifier_item_imba_jarnbjorn_static", {duration = self:GetSpecialValueFor("static_duration")})
+		local tree_cooldown = self:GetSpecialValueFor("tree_cooldown")
+
+		if target.GetUnitName == nil then
+			target:CutDown(-1)
+			self:StartCooldown(tree_cooldown)
+		else
+			target:AddNewModifier(target, self, "modifier_item_imba_jarnbjorn_static", {duration = self:GetSpecialValueFor("static_duration")})
+		end
 
 		-- Play cast sound
 		target:EmitSound("DOTA_Item.Mjollnir.Activate")

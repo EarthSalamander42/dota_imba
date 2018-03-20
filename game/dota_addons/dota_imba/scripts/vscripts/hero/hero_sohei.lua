@@ -212,6 +212,7 @@ end
 
 if IsServer() then
 	function modifier_sohei_dash_charges:OnCreated()
+		if self:GetParent():IsIllusion() or self:GetParent():HasModifier("modifier_illusion_manager") then return end
 		self:StartIntervalThink( 0.1 )
 	end
 
@@ -244,6 +245,7 @@ if IsServer() then
 --------------------------------------------------------------------------------
 
 	function modifier_sohei_dash_charges:OnStackCountChanged( oldCount )
+	if self:GetParent():IsIllusion() or self:GetParent():HasModifier("modifier_illusion_manager") then return end
 		local spell = self:GetAbility()
 		local newCount = self:GetStackCount()
 		local maxCount = spell:GetSpecialValueFor( "max_charges" )
@@ -1089,6 +1091,7 @@ end
 --------------------------------------------------------------------------------
 
 function modifier_sohei_momentum_passive:OnCreated( event )
+	if self:GetParent():IsIllusion() or self:GetParent():HasModifier("modifier_illusion_manager") then return end
 	self:GetAbility().intrMod = self
 
 	self.parentOrigin = self:GetParent():GetAbsOrigin()
@@ -1129,6 +1132,7 @@ function modifier_sohei_momentum_passive:DeclareFunctions()
 	local funcs = {
 		MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE,
 		MODIFIER_EVENT_ON_ATTACK_LANDED,
+		MODIFIER_EVENT_ON_ORDER,
 	}
 
 	return funcs
@@ -1137,16 +1141,29 @@ end
 --------------------------------------------------------------------------------
 
 if IsServer() then
+
+	function modifier_sohei_momentum_passive:OnOrder(kv)
+		local order_type = kv.order_type
+		local unit = kv.unit
+		local target = kv.target
+
+		self.force_casting = false
+		if self:GetCaster() == unit then
+			if order_type == DOTA_UNIT_ORDER_CAST_TARGET then
+				self.force_casting = true
+			end
+		end
+	end
+
 	function modifier_sohei_momentum_passive:GetModifierPreAttack_CriticalStrike( event )
-		local spell = self:GetAbility()
-		if self:IsMomentumReady() and ( spell:IsCooldownReady() or self:GetParent():HasModifier( "modifier_sohei_flurry_self" ) ) then
+		if (self.force_casting == true or self:GetAbility():GetAutoCastState() == true) and self:IsMomentumReady() and (self:GetAbility():IsCooldownReady() or self:GetParent():HasModifier( "modifier_sohei_flurry_self" )) then
 
 			-- make sure the target is valid
 			local ufResult = UnitFilter(
 				event.target,
-				spell:GetAbilityTargetTeam(),
-				spell:GetAbilityTargetType(),
-				spell:GetAbilityTargetFlags(),
+				self:GetAbility():GetAbilityTargetTeam(),
+				self:GetAbility():GetAbilityTargetType(),
+				self:GetAbility():GetAbilityTargetFlags(),
 				self:GetParent():GetTeamNumber()
 			)
 
@@ -1156,7 +1173,7 @@ if IsServer() then
 
 			self.attackPrimed = true
 
-			return spell:GetSpecialValueFor( "crit_damage" )
+			return self:GetAbility():GetSpecialValueFor("crit_damage")
 		end
 
 		self.attackPrimed = false

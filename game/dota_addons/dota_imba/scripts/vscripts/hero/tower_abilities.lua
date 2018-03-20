@@ -915,6 +915,10 @@ function modifier_imba_tower_toughness_aura_buff:OnCreated()
 	end
 	self.parent = self:GetParent()
 
+	if self.parent:GetUnitName() == "npc_dota_courier" then
+		return nil
+	end
+
 	-- Ability specials
 	self.bonus_health = self.ability:GetSpecialValueFor("bonus_health")
 	self.health_per_protective = self.ability:GetSpecialValueFor("health_per_protective")

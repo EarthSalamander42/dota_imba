@@ -5987,7 +5987,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"600"
 		"AbilityCastPoint"				"0"
-		"AbilityCooldown"				"4"
+		"AbilityCooldown"				"8.0"
 		"AbilityManaCost"				"0"
 		"AbilitySharedCooldown"			"diffusal"
 		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
@@ -6078,7 +6078,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"600"
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"1.0"
+		"AbilityCooldown"				"7.0"
 		"AbilitySharedCooldown"			"diffusal"
 		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
 
@@ -6180,7 +6180,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"600"
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"1.0"
+		"AbilityCooldown"				"6.0"
 		"AbilitySharedCooldown"			"diffusal"
 		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
 
@@ -11172,7 +11172,7 @@
 		"AbilityTextureName"			"custom/imba_jarnbjorn"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING | DOTA_UNIT_TARGET_TREE"
 		"AbilitySharedCooldown"			"some_viking_shit"
 
 		// Stats
@@ -11272,6 +11272,11 @@
 				"var_type"				"FIELD_FLOAT"
 				"bonus_mana_regen"		"2.25"
 			}
+			"18"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"tree_cooldown"			"2.5"
+			}
 		}
 	}
 
@@ -11317,7 +11322,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_attack_speed"	"35"
+				"bonus_attack_speed"	"42"
 			}
 			"03"
 			{
@@ -11342,7 +11347,7 @@
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"max_stack_count"			"10"
+				"max_stack_count"			"42"
 			}
 		}
 	}
@@ -12303,7 +12308,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"									"2286"
 		"BaseClass"								"item_datadriven"
-		"Model"									"models/props_gameplay/rune_ember.vmdl"
+		"Model"									"models/props_destruction/lava_flow_clump.vmdl"
 		"RuneDuration"							"45"
 
 		// Item Info
@@ -12315,7 +12320,7 @@
 		"ItemKillable"							"1"
 		"ItemCastOnPickup"						"1"
 	}
-	
+
 	//=================================================================================================================
 	// Stone Rune (stone rune)
 	//=================================================================================================================
@@ -12325,7 +12330,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"									"2287"
 		"BaseClass"								"item_datadriven"
-		"Model"									"models/props_gameplay/rune_stone.vmdl"
+		"Model"									"models/items/wards/stonebound_ward/stonebound_ward.vmdl"
 		"RuneDuration"							"45"
 
 		// Item Info

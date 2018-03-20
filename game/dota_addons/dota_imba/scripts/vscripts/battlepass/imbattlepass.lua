@@ -199,18 +199,22 @@ function GetForceStaffEffect(hero) -- still not working yet
 end
 
 function GetRadianceEffect(hero)
-	local effect = "particles/item/radiance/radiance_owner.vpcf"
+	local effect = "particles/items2_fx/radiance_owner.vpcf"
+	local effect2 = "particles/items2_fx/radiance.vpcf"
 	local icon = 0
 
 	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_RADIANCE["radiance2"] then
 		effect = "particles/econ/events/ti6/radiance_owner_ti6.vpcf"
+		effect2 = "particles/econ/events/ti6/radiance_ti6.vpcf"
 		icon = 2
 	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_RADIANCE["radiance"] then
 		effect = "particles/econ/events/ti7/radiance_owner_ti7.vpcf"
+		effect2 = "particles/econ/events/ti7/radiance_ti7.vpcf"
 		icon = 1
 	end
 
-	hero.radiance_effect = effect
+	hero.radiance_effect_owner = effect
+	hero.radiance_effect = effect2
 	hero.radiance_icon = icon
 end
 

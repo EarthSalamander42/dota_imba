@@ -6,6 +6,9 @@
 	Contributors: Lindbrum (14th March 2018)
 ]]
 
+LinkLuaModifier("modifier_imba_stone_rune_debuff", "modifier/runes/modifier_imba_stone_rune", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_stone_rune_debuff_count", "modifier/runes/modifier_imba_stone_rune", LUA_MODIFIER_MOTION_NONE)
+
 ------------------------------------------------------------------------
 -- Rune buff
 ------------------------------------------------------------------------
@@ -33,7 +36,6 @@ function modifier_imba_stone_rune:OnCreated()
 	self.att_threeshold = 7
 	self.count_duration = 5.0
 	self.debuff_duration = 1.0
-
 end
 
 function modifier_imba_stone_rune:DeclareFunctions()
@@ -56,7 +58,7 @@ function modifier_imba_stone_rune:OnAttackLanded(kv)
 		local modifier = target:FindModifierByName("modifier_imba_stone_rune_debuff_count")
 		stacks = modifier:GetStackCount()
 		modifier:SetStackCount(stacks + 1)
-		modifier:SetDuration(self.count_duration)
+		modifier:SetDuration(self.count_duration, true)
 	else
 		local modifier = target:AddNewModifier(self.parent, nil, "modifier_imba_stone_rune_debuff_count", {duration = self.count_duration})
 		modifier:SetStackCount(1)
