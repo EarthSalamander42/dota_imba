@@ -94,3 +94,27 @@ function IsDonator() {
 
 	return false;
 }
+
+function HideIMR(panel) {
+	var map_info = Game.GetMapInfo();
+	var imr_panel = panel.FindChildrenWithClassTraverse("es-legend-imr")
+	var imr_panel_10v10 = panel.FindChildrenWithClassTraverse("es-legend-imr10v10")
+
+	if (map_info.map_display_name == "imba_ranked_5v5") {
+		for (var i in imr_panel_10v10) {
+			imr_panel_10v10[i].style.visibility = "collapse";
+		}
+	} else if (map_info.map_display_name == "imba_ranked_10v10") {
+		for (var i in imr_panel) {
+			imr_panel[i].style.visibility = "collapse";
+		}
+	} else if (map_info.map_display_name == "imba_frantic_5v5" || map_info.map_display_name == "imba_frantic_10v10") {
+		for (var i in imr_panel) {
+			imr_panel[i].style.visibility = "collapse";
+		}
+
+		for (var i in imr_panel_10v10) {
+			imr_panel_10v10[i].style.visibility = "collapse";
+		}
+	}
+}

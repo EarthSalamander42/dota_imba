@@ -98,6 +98,7 @@ function CreateBar(entityId, lightBar) {
 		panel.cached = {};
 
 		var name = panel.FindChildTraverse("PlayerName");
+
 		if (IsDonator()) {
 			name.text = "DONATOR";
 			name.style.color = "gold";
@@ -118,7 +119,7 @@ function ValidateAndUpdateOnScreenEntity(entityId, screenX, screenY, lightBar) {
 
 	// adjust position
 	var fix_X = 13
-	var fix_Y = 14
+	var fix_Y = -31
 
 	screenX = screenX + fix_X
 	screenY = screenY - fix_Y

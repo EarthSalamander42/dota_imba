@@ -103,9 +103,10 @@ var hiddenAbilities = [
 ]
 
 SetupBackgroundImage();
-SetupTopBar();
 if (currentMap == "imba_1v1") {
 	Setup1v1();
+} else if (currentMap == 'imba_ranked_10v10' || currentMap == 'imba_frantic_10v10') {
+	SetupTopBar();
 }
 
 GameEvents.Subscribe("dota_hud", ShowHUD);
@@ -445,10 +446,6 @@ function SetupBackgroundImage() {
 }
 
 function SetupTopBar() {
-	if (currentMap !== 'imba_ranked_10v10' || currentMap !== 'imba_frantic_10v10') {
-		return;
-	}
-
 	$.GetContextPanel().SetHasClass('TenVTen', true);
 	var topbar = FindDotaHudElement('topbar');
 	topbar.style.width = '1550px';

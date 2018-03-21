@@ -1,0 +1,63 @@
+////    Storm Spirit
+
+// Storm Spirit's Static Remnant
+"DOTA_Tooltip_ability_imba_storm_spirit_static_remnant"									"#{DOTA_Tooltip_ability_storm_spirit_static_remnant}"
+"DOTA_Tooltip_ability_imba_storm_spirit_static_remnant_Description"						"#{DOTA_Tooltip_ability_storm_spirit_static_remnant_Description}\n<font color='#FF7800'>Static Vortex:</font> Whenever a Static Remnant detonates on an enemy, it will cast a smaller Electric Vortex on the target."
+"DOTA_Tooltip_ability_imba_storm_spirit_static_remnant_Lore"							"#{DOTA_Tooltip_ability_storm_spirit_static_remnant_Lore}"
+"DOTA_Tooltip_ability_imba_storm_spirit_static_remnant_Note0"							"#{DOTA_Tooltip_ability_storm_spirit_static_remnant_Note0}"
+"DOTA_Tooltip_ability_imba_storm_spirit_static_remnant_Note1"							"#{DOTA_Tooltip_ability_storm_spirit_static_remnant_Note1}"
+"DOTA_Tooltip_ability_imba_storm_spirit_static_remnant_Note2"							"#{DOTA_Tooltip_ability_storm_spirit_static_remnant_Note2}"
+"DOTA_Tooltip_ability_imba_storm_spirit_static_remnant_big_remnant_damage_radius"		"#{DOTA_Tooltip_ability_storm_spirit_static_remnant_static_remnant_damage_radius}"
+"DOTA_Tooltip_ability_imba_storm_spirit_static_remnant_big_remnant_damage"				"#{DOTA_Tooltip_ability_storm_spirit_static_remnant_static_remnant_damage}"
+"DOTA_Tooltip_ability_imba_storm_spirit_static_remnant_remnant_count"					"REMNANT COUNT:"
+
+// Storm Spirit's Electric Vortex
+"DOTA_Tooltip_ability_imba_storm_spirit_electric_vortex"						"#{DOTA_Tooltip_ability_storm_spirit_electric_vortex}"
+"DOTA_Tooltip_ability_imba_storm_spirit_electric_vortex_Description"			"#{DOTA_Tooltip_ability_storm_spirit_electric_vortex_Description}\n<font color='#FF7800'>Sly Vortex:</font> Steals %mana_steal%% mana/second from pulled targets"
+"DOTA_Tooltip_ability_imba_storm_spirit_electric_vortex_Lore"					"#{DOTA_Tooltip_ability_storm_spirit_electric_vortex_Lore}"
+"DOTA_Tooltip_ability_imba_storm_spirit_electric_vortex_pull_duration"			"#{DOTA_Tooltip_ability_storm_spirit_electric_vortex_duration}"
+"DOTA_Tooltip_ability_imba_storm_spirit_electric_vortex_self_slow"				"#{DOTA_Tooltip_ability_storm_spirit_electric_vortex_electric_vortex_self_slow}"
+"DOTA_Tooltip_ability_imba_storm_spirit_electric_vortex_self_slow_duration"		"#{DOTA_Tooltip_ability_storm_spirit_electric_vortex_electric_vortex_self_slow_duration}"
+"DOTA_Tooltip_ability_imba_storm_spirit_electric_vortex_cast_range"				"#{DOTA_Tooltip_ability_tiny_toss_tree_range}"
+"DOTA_Tooltip_ability_imba_storm_spirit_electric_vortex_aghanim_description"	"#{DOTA_Tooltip_ability_storm_spirit_electric_vortex_aghanim_description}"
+
+"DOTA_Tooltip_modifier_imba_vortex_pull"										"#{DOTA_Tooltip_modifier_storm_spirit_electric_vortex_pull}"
+"DOTA_Tooltip_modifier_imba_vortex_pull_Description"							"#{DOTA_Tooltip_modifier_storm_spirit_electric_vortex_pull_Description}"
+
+"DOTA_Tooltip_modifier_imba_vortex_self_slow"									"#{DOTA_Tooltip_modifier_storm_spirit_electric_vortex_self_slow}"
+"DOTA_Tooltip_modifier_imba_vortex_self_slow_Description"						"#{DOTA_Tooltip_modifier_storm_spirit_electric_vortex_self_slow_Description}"
+
+// Storm Spirit's Overload
+"DOTA_Tooltip_ability_imba_storm_spirit_overload"							"#{DOTA_Tooltip_ability_storm_spirit_overload}"
+"DOTA_Tooltip_ability_imba_storm_spirit_overload_Description"				"#{DOTA_Tooltip_ability_storm_spirit_overload_Description}\n<font color='#FF7800'>Item Overload:</font> Overload can be triggered by items."
+"DOTA_Tooltip_ability_imba_storm_spirit_overload_Lore"						"#{DOTA_Tooltip_ability_storm_spirit_overload_Lore}"
+"DOTA_Tooltip_ability_imba_storm_spirit_overload_Note0"						"Can be triggered by items."
+"DOTA_Tooltip_ability_imba_storm_spirit_overload_aoe"						"#{DOTA_Tooltip_ability_storm_spirit_overload_overload_aoe}"
+"DOTA_Tooltip_ability_imba_storm_spirit_overload_move_slow"					"#{DOTA_Tooltip_ability_storm_spirit_overload_overload_move_slow}"
+"DOTA_Tooltip_ability_imba_storm_spirit_overload_attack_slow"				"#{DOTA_Tooltip_ability_storm_spirit_overload_overload_attack_slow}"
+"DOTA_Tooltip_ability_imba_storm_spirit_overload_slow_duration"				"#{DOTA_Tooltip_ability_storm_spirit_overload_tooltip_duration}"
+"DOTA_Tooltip_ability_imba_storm_spirit_overload_damage"					"#{DOTA_Tooltip_ability_storm_spirit_static_remnant_static_remnant_damage}"
+
+"DOTA_Tooltip_modifier_imba_overload_buff"					"#{DOTA_Tooltip_modifier_storm_spirit_overload}"
+"DOTA_Tooltip_modifier_imba_overload_buff_Description"		"#{DOTA_Tooltip_modifier_storm_spirit_overload_Description}"
+"DOTA_Tooltip_modifier_imba_overload_debuff"				"#{DOTA_Tooltip_modifier_storm_spirit_overload_debuff}"
+"DOTA_Tooltip_modifier_imba_overload_debuff_Description"	"#{DOTA_Tooltip_modifier_storm_spirit_overload_debuff_Description}"
+
+// Storm Spirit's Ball Lightning
+"DOTA_Tooltip_ability_imba_storm_spirit_ball_lightning"							"#{DOTA_Tooltip_ability_storm_spirit_ball_lightning}"
+"DOTA_Tooltip_ability_imba_storm_spirit_ball_lightning_Description"				"#{DOTA_Tooltip_ability_storm_spirit_ball_lightning_Description}\n<font color='#FF7800'>???:</font> ???."
+"DOTA_Tooltip_ability_imba_storm_spirit_ball_lightning_Lore"					"#{DOTA_Tooltip_ability_storm_spirit_ball_lightning_Lore}"
+"DOTA_Tooltip_ability_imba_storm_spirit_ball_lightning_Note0"					"#{DOTA_Tooltip_ability_storm_spirit_ball_lightning_Note0}"
+"DOTA_Tooltip_ability_imba_storm_spirit_ball_lightning_Note1"					"#{DOTA_Tooltip_ability_storm_spirit_ball_lightning_Note1}"
+"DOTA_Tooltip_ability_imba_storm_spirit_ball_lightning_Note2"					"#{DOTA_Tooltip_ability_storm_spirit_ball_lightning_Note2}"
+"DOTA_Tooltip_ability_imba_storm_spirit_ball_lightning_ball_speed"				"#{DOTA_Tooltip_ability_storm_spirit_ball_lightning_ball_lightning_move_speed}"
+"DOTA_Tooltip_ability_imba_storm_spirit_ball_lightning_damage_radius"			"#{DOTA_Tooltip_ability_storm_spirit_ball_lightning_ball_lightning_aoe}"
+"DOTA_Tooltip_ability_imba_storm_spirit_ball_lightning_travel_mana_cost_pct"	"#{DOTA_Tooltip_ability_storm_spirit_ball_lightning_ball_lightning_travel_cost_percent}"
+
+"DOTA_Tooltip_modifier_ball_lightning"					"#{DOTA_Tooltip_modifier_storm_spirit_ball_lightning}"
+"DOTA_Tooltip_modifier_ball_lightning_Description"		"#{DOTA_Tooltip_modifier_storm_spirit_ball_lightning_Description}"
+
+// Storm Spirit's Talents
+"DOTA_Tooltip_ability_special_bonus_imba_storm_spirit_1"					"+0.75 Electric Vortex duration"
+"DOTA_Tooltip_ability_special_bonus_imba_storm_spirit_2"					"+300 Electric Vortex range and pull speed"
+"DOTA_Tooltip_ability_special_bonus_imba_storm_spirit_7"					"+3 Remnants for Static Remnant"

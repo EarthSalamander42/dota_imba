@@ -1,12 +1,11 @@
 <root>
 	<styles>
-		<include
-			src="file://{resources}/styles/custom_game/multiteam_end_screen.css" />
+		<include src="file://{resources}/styles/custom_game/multiteam_end_screen.css" />
 	</styles>
 
 	<scripts>
-		<include
-			src="file://{resources}/scripts/custom_game/multiteam_end_screen.js" />
+        <include src="file://{resources}/scripts/custom_game/util.js" />
+		<include src="file://{resources}/scripts/custom_game/multiteam_end_screen.js" />
 	</scripts>
 
 	<Panel class="es-root">
@@ -30,6 +29,7 @@
 						<Label class="es-legend-imr" text="IMR" />
 						<Label class="es-legend-imr10v10" text="10v10" />
 						<Label class="es-legend-xp" text="Imba XP" />
+						<Label class="es-legend-rank" text="Imba Rank" />
 					</Panel>
 					<Panel id="es-radiant-players" class="es-players" />
 				</Panel>
@@ -48,6 +48,7 @@
 						<Label class="es-legend-imr" text="IMR" />
 						<Label class="es-legend-imr10v10" text="10v10" />
 						<Label class="es-legend-xp" text="Imba XP" />
+						<Label class="es-legend-rank" text="Imba Rank" />
 					</Panel>
 					<Panel id="es-dire-players" class="es-players" />
 				</Panel>
@@ -69,6 +70,7 @@
 						<Label class="es-legend-imr" text="IMR" />
 						<Label class="es-legend-imr10v10" text="10v10" />
 						<Label class="es-legend-xp" text="Imba XP" />
+						<Label class="es-legend-rank" text="Imba Rank" />
 					</Panel>
 					<Panel id="es-custom1-players" class="es-players" />
 				</Panel>
@@ -88,6 +90,7 @@
 						<Label class="es-legend-imr" text="IMR" />
 						<Label class="es-legend-imr10v10" text="10v10" />
 						<Label class="es-legend-xp" text="Imba XP" />
+						<Label class="es-legend-rank" text="Imba Rank" />
 					</Panel>
 					<Panel id="es-custom2-players" class="es-players" />
 				</Panel>
@@ -109,6 +112,7 @@
 						<Label class="es-legend-imr" text="IMR" />
 						<Label class="es-legend-imr10v10" text="10v10" />
 						<Label class="es-legend-xp" text="Imba XP" />
+						<Label class="es-legend-rank" text="Imba Rank" />
 					</Panel>
 					<Panel id="es-custom3-players" class="es-players" />
 				</Panel>
