@@ -260,7 +260,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health_regen"			"9.0"
+				"health_regen"			"12.0"
 			}
 		}
 	}
@@ -279,7 +279,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health_regen"			"9.0"
+				"health_regen"			"12.0"
 			}
 		}
 	}

@@ -45,6 +45,7 @@ function Precache(context)
 	LinkLuaModifier("modifier_companion", "modifier/modifier_companion.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_river", "modifier/modifier_river.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_courier_hack", "modifier/modifier_courier_hack.lua", LUA_MODIFIER_MOTION_NONE )
+	LinkLuaModifier("modifier_frantic", "modifier/modifier_frantic.lua", LUA_MODIFIER_MOTION_NONE )
 
 	-- Runes modifiers
 	LinkLuaModifier("modifier_imba_arcane_rune", "modifier/runes/modifier_imba_arcane_rune.lua", LUA_MODIFIER_MOTION_NONE)
@@ -60,6 +61,7 @@ function Precache(context)
 	LinkLuaModifier("modifier_imba_frost_rune_slow", "modifier/runes/modifier_imba_frost_rune", LUA_MODIFIER_MOTION_NONE)
 	LinkLuaModifier("modifier_imba_ember_rune", "modifier/runes/modifier_imba_ember_rune", LUA_MODIFIER_MOTION_NONE)
 	LinkLuaModifier("modifier_imba_stone_rune", "modifier/runes/modifier_imba_stone_rune", LUA_MODIFIER_MOTION_NONE)
+	LinkLuaModifier("modifier_imba_invisibility_rune", "modifier/runes/modifier_imba_invisibility_rune", LUA_MODIFIER_MOTION_NONE)
 
 	-- Fountain Particle
 	LinkLuaModifier("modifier_imba_fountain_particle_control", "modifier/modifier_fountain_particle", LUA_MODIFIER_MOTION_NONE)

@@ -459,6 +459,10 @@ function HeroSelection:GiveStartingHero(playerId, heroName, dev)
 
 	Imbattlepass:AddItemEffects(hero)
 
+	if IMBA_FRANTIC_MODE_ON then
+		hero:AddNewModifier(hero, nil, "modifier_frantic", {})
+	end
+
 	Timers:CreateTimer(1.0, function()
 		if wisp then
 			UTIL_Remove(wisp)

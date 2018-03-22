@@ -14,6 +14,14 @@
 @define TotalLength: 30s;
 @define TimingFunc: linear;
 @define IterationCount: 1;
+@define COLOR_INFO_BACKGROUND: #005580da;
+@define COLOR_INFO_BACKGROUND_DARK: #002233;
+@define COLOR_INFO_TEXT: #00aaff;
+// green background translucent: #004d1ada
+// green background dark translucent: #001a09
+// green text: #00e64d
+// red background translucent: #922c30ee
+// red text: #b67f7f
 
 #GameModeDescription
 {
@@ -221,12 +229,11 @@
 }
 
 /* IMBA */
-
 #imba-loading {
 	width: 100%;
 	height: 100%;
 	background-color: black;
-	background-image: url("file://{images}/custom_game/loading_screen/wild-origins.png");
+	background-image: url("file://{images}/custom_game/loading_screen/three_spirits.jpg");
 	background-position: 65% 0%;
 	background-size: cover;
 	overflow: clip;
@@ -248,11 +255,11 @@
 	margin-left: 2%;
 	align: left center;
 	width: 50%;
-	background-color: #922c30ee;
+	background-color: COLOR_INFO_BACKGROUND;
 	padding: 20px 40px;
 	height: fit-children;
 	flow-children: down;
-	border: 2px solid #481618ee;
+	border: 2px solid COLOR_INFO_BACKGROUND_DARK;
 	box-shadow: 0 0 10px #111;
 }
 
@@ -283,29 +290,31 @@
 
 #oaa-normal-news-title, #oaa-ow-news-title {
 	font-size: 26px;
-	color: #b67f7f;
+	color: COLOR_INFO_TEXT;
 	font-weight: bold;
 	text-shadow: 0 0 5px #000;
 }
 
-#oaa-normal-news-link, #oaa-ow-news-link {
+.oaa-normal-news-link, #oaa-ow-news-link {
 	color: #fff;
 	font-size: 20px;
 }
 
-#oaa-normal-news-link:hover, #oaa-ow-news-link:hover {
+.oaa-normal-news-link:hover, #oaa-ow-news-link:hover {
 	text-decoration: underline;
 }
 
 #oaa-normal-news-image, #oaa-ow-news-image {
+	background-image: url("file://{images}/custom_game/loading_screen/pudge_wars.jpg");
 	background-size: cover;
 	overflow: clip;
-	height: 140px;
+	height: 160px;
+	align: right bottom;
 }
 
 #imba-normal-news-title, #imba-ow-news-title {
 	font-size: 32px;
-	color: #b67f7f;
+	color: COLOR_INFO_TEXT;
 	font-weight: bold;
 	text-shadow: 0 0 5px #000;
 }

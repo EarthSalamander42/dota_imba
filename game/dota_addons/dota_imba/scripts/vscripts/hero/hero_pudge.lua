@@ -75,7 +75,13 @@ function modifier_imba_hook_sharp_stack:RemoveOnDeath() return false end
 function modifier_imba_hook_sharp_stack:GetTexture() return "custom/pudge_sharp_hook" end
 
 function modifier_imba_hook_sharp_stack:OnCreated()
-	self:SetStackCount(self:GetCaster():FindAbilityByName("imba_pudge_meat_hook"):GetSpecialValueFor("hook_stacks"))
+	local stacks = 0
+
+	if self:GetCaster() and self:GetCaster().FindAbilityByName and self:GetCaster():FindAbilityByName("imba_pudge_meat_hook") then
+		stacks = self:GetCaster():FindAbilityByName("imba_pudge_meat_hook"):GetSpecialValueFor("hook_stacks")
+	end
+
+	self:SetStackCount(stacks)
 end
 
 function modifier_imba_hook_sharp_stack:OnIntervalThink()
@@ -99,7 +105,13 @@ function modifier_imba_hook_light_stack:RemoveOnDeath() return false end
 function modifier_imba_hook_light_stack:GetTexture() return "custom/pudge_light_hook" end
 
 function modifier_imba_hook_light_stack:OnCreated()
-	self:SetStackCount(self:GetCaster():FindAbilityByName("imba_pudge_meat_hook"):GetSpecialValueFor("hook_stacks"))
+	local stacks = 0
+
+	if self:GetCaster() and self:GetCaster().FindAbilityByName and self:GetCaster():FindAbilityByName("imba_pudge_meat_hook") then
+		stacks = self:GetCaster():FindAbilityByName("imba_pudge_meat_hook"):GetSpecialValueFor("hook_stacks")
+	end
+
+	self:SetStackCount(stacks)
 end
 
 function modifier_imba_hook_light_stack:OnIntervalThink()
@@ -143,7 +155,7 @@ function imba_pudge_meat_hook:GetCastRange()
 	local hook_range = self:GetSpecialValueFor("base_range") + caster:FindTalentValue("special_bonus_imba_pudge_5")
 
 	-- volvo?
-	if caster and caster:FindAbilityByName("imba_pudge_light_hook") then
+	if caster and caster.FindAbilityByName and caster:FindAbilityByName("imba_pudge_light_hook") then
 		hook_range = hook_range + (caster:FindAbilityByName("imba_pudge_light_hook"):GetSpecialValueFor("stack_range") * charges)
 		print(self:GetSpecialValueFor("base_range"), caster:FindTalentValue("special_bonus_imba_pudge_5"), caster:FindAbilityByName("imba_pudge_light_hook"):GetSpecialValueFor("stack_range"), charges)
 	end
@@ -287,7 +299,9 @@ function imba_pudge_meat_hook:OnSpellStart()
 
 end
 
+local hooked_loc
 function imba_pudge_meat_hook:OnProjectileThink_ExtraData(vLocation, ExtraData)
+
 	if ExtraData.goorback == "go" then
 		ParticleManager:SetParticleControl(ExtraData.pfx_index, 1, vLocation)
 		-- Hook Rune Think
@@ -316,10 +330,12 @@ function imba_pudge_meat_hook:OnProjectileThink_ExtraData(vLocation, ExtraData)
 				end
 			end
 		end
-
 	end
 
-	if ExtraData.goorback == "back" then
+	if ExtraData.goorback ~= "back" then
+		hooked_loc = vLocation
+		print("not back")
+	elseif ExtraData.goorback == "back" then
 		if EntIndexToHScript(ExtraData.rune) then
 			local rune = EntIndexToHScript(ExtraData.rune)
 			ParticleManager:SetParticleControlEnt(ExtraData.pfx_index, 1, rune, PATTACH_POINT_FOLLOW, "attach_hitloc", rune:GetAbsOrigin(), true)
@@ -328,26 +344,51 @@ function imba_pudge_meat_hook:OnProjectileThink_ExtraData(vLocation, ExtraData)
 			local target = EntIndexToHScript(ExtraData.hooked_target)
 			local location = vLocation + (self:GetCaster():GetAbsOrigin() - target:GetAbsOrigin()):Normalized() * (ExtraData.hook_spd / (1 / FrameTime()))
 			target:SetAbsOrigin(GetGroundPosition(vLocation, target))
+
+			--Talent #7: Grabbed units are ruptured
+			if self:GetCaster():GetTeamNumber() ~= target:GetTeamNumber() and not target:IsRune() and self:GetCaster():HasTalent("special_bonus_imba_pudge_7") then
+				local damage_cap = self:GetCaster():FindTalentValue("special_bonus_imba_pudge_7", "damage_cap")
+				local rupture_damage = self:GetCaster():FindTalentValue("special_bonus_imba_pudge_7", "movement_damage_pct")
+				-- vector expected got nil
+				local distance_diff = (hooked_loc - target:GetAbsOrigin()):Length2D()
+
+				if distance_diff < damage_cap then
+					print("Apply Rupture")
+					local move_damage = distance_diff * rupture_damage
+					if move_damage > 0 then
+						if not target.is_ruptured then
+							target.is_ruptured = true
+							self.RuptureFX = ParticleManager:CreateParticle("particles/units/heroes/hero_bloodseeker/bloodseeker_rupture.vpcf", PATTACH_POINT_FOLLOW, target)
+							EmitSoundOn("hero_bloodseeker.rupture.cast", target)
+							EmitSoundOn("hero_bloodseeker.rupture", target)
+
+							Timers:CreateTimer(1.0, function()
+
+							end)
+						end
+						ApplyDamage({victim = target, attacker = self:GetCaster(), damage = move_damage, damage_type = DAMAGE_TYPE_PURE, ability = self:GetCaster():FindAbilityByName("imba_pudge_meat_hook")})
+					end
+				end
+			end
 		end
 	end
-
 end
 
 function imba_pudge_meat_hook:OnProjectileHit_ExtraData(hTarget, vLocation, ExtraData)
-	local caster = self:GetCaster()
 	if hTarget then
 		local buff1 = hTarget:FindModifierByName("modifier_imba_hook_target_enemy")
 		local buff2 = hTarget:FindModifierByName("modifier_imba_hook_target_ally")
 	end
-	if hTarget and caster:GetTeamNumber() ~= hTarget:GetTeamNumber() and IsNearEnemyFountain(hTarget:GetAbsOrigin(), caster:GetTeamNumber(), 1200) then
+
+	if hTarget and self:GetCaster():GetTeamNumber() ~= hTarget:GetTeamNumber() and IsNearEnemyFountain(hTarget:GetAbsOrigin(), self:GetCaster():GetTeamNumber(), 1200) then
 		return false
 	end
 
 	if ExtraData.goorback == "go" then
-		if caster == hTarget or buff1 or buff2 then
+		if self:GetCaster() == hTarget or buff1 or buff2 then
 			return
 		end
-		local root_buff = caster:FindModifierByName("modifier_imba_pudge_meat_hook_caster_root")
+		local root_buff = self:GetCaster():FindModifierByName("modifier_imba_pudge_meat_hook_caster_root")
 		if root_buff then
 			root_buff:Destroy()
 		end
@@ -355,10 +396,13 @@ function imba_pudge_meat_hook:OnProjectileHit_ExtraData(hTarget, vLocation, Extr
 		ParticleManager:SetParticleControl(ExtraData.pfx_index, 5, Vector( 1, 0, 0 ) )
 		local target = hTarget
 		local bVision = false
+
 		if not target then
-			target = CreateUnitByName("npc_dummy_unit", vLocation, false, caster, caster, caster:GetTeamNumber())
+			target = CreateUnitByName("npc_dummy_unit", vLocation, false, self:GetCaster(), self:GetCaster(), self:GetCaster():GetTeamNumber())
 		end
+
 		ParticleManager:SetParticleControlEnt(ExtraData.pfx_index, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin() + Vector(0,0,96), true)
+
 		if hTarget then
 			EmitSoundOnLocationWithCaster(hTarget:GetAbsOrigin(), "Hero_Pudge.AttackHookImpact", hTarget)
 			EmitSoundOnLocationWithCaster(hTarget:GetAbsOrigin(), "Hero_Pudge.AttackHookRetract", hTarget)
@@ -366,11 +410,11 @@ function imba_pudge_meat_hook:OnProjectileHit_ExtraData(hTarget, vLocation, Extr
 			ParticleManager:SetParticleControlEnt(nFXIndex, 0, hTarget, PATTACH_POINT_FOLLOW, "attach_hitloc", hTarget:GetAbsOrigin(), true)
 			ParticleManager:ReleaseParticleIndex(nFXIndex)
 			bVision = true
-			if hTarget:GetTeamNumber() ~= caster:GetTeamNumber() then
+			if hTarget:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then
 				local dmg = ExtraData.hook_dmg
 				local damageTable = {
 					victim = hTarget,
-					attacker = caster,
+					attacker = self:GetCaster(),
 					damage = dmg,
 					damage_type = DAMAGE_TYPE_PURE,
 					damage_flags = DOTA_DAMAGE_FLAG_NONE, --Optional.
@@ -378,13 +422,14 @@ function imba_pudge_meat_hook:OnProjectileHit_ExtraData(hTarget, vLocation, Extr
 				}
 				local actually_dmg = ApplyDamage(damageTable)
 				SendOverheadEventMessage(nil, OVERHEAD_ALERT_DAMAGE, hTarget, actually_dmg, nil)
-				hTarget:AddNewModifier(caster, self, "modifier_imba_hook_target_enemy", {})
+				hTarget:AddNewModifier(self:GetCaster(), self, "modifier_imba_hook_target_enemy", {})
 			else
-				hTarget:AddNewModifier(caster, self, "modifier_imba_hook_target_ally", {})
+				hTarget:AddNewModifier(self:GetCaster(), self, "modifier_imba_hook_target_ally", {})
 			end
 		end
+
 		local projectile_info = {
-			Target = caster,
+			Target = self:GetCaster(),
 			Source = target,
 			Ability = self,
 			EffectName = nil,
@@ -397,7 +442,7 @@ function imba_pudge_meat_hook:OnProjectileHit_ExtraData(hTarget, vLocation, Extr
 			bReplaceExisting = false,
 			bProvidesVision = bVision,
 			iVisionRadius = 400,
-			iVisionTeamNumber = caster:GetTeamNumber(),
+			iVisionTeamNumber = self:GetCaster():GetTeamNumber(),
 			ExtraData = {
 				hooked_target = target:entindex(),
 				hook_spd = ExtraData.hook_spd,
@@ -407,14 +452,13 @@ function imba_pudge_meat_hook:OnProjectileHit_ExtraData(hTarget, vLocation, Extr
 			}
 		}
 		ProjectileManager:CreateTrackingProjectile(projectile_info)
-		if caster:IsAlive() then
-			caster:FadeGesture(ACT_DOTA_OVERRIDE_ABILITY_1)
+		if self:GetCaster():IsAlive() then
+			self:GetCaster():FadeGesture(ACT_DOTA_OVERRIDE_ABILITY_1)
 		end
 		if self.hook_go then
 			ProjectileManager:DestroyLinearProjectile(self.hook_go)
 		end
 		return true
-
 	end
 
 
@@ -425,7 +469,8 @@ function imba_pudge_meat_hook:OnProjectileHit_ExtraData(hTarget, vLocation, Extr
 		local target = EntIndexToHScript(ExtraData.hooked_target)
 		target:SetUnitOnClearGround()
 		EmitSoundOnLocationWithCaster(target:GetAbsOrigin(), "Hero_Pudge.AttackHookRetractStop", target)
-		caster:StopSound("Hero_Pudge.AttackHookExtend")
+		self:GetCaster():StopSound("Hero_Pudge.AttackHookExtend")
+
 		if target:GetUnitName() == "npc_dummy_unit" then
 			target:ForceKill(false)
 		else
@@ -433,22 +478,35 @@ function imba_pudge_meat_hook:OnProjectileHit_ExtraData(hTarget, vLocation, Extr
 			target:StopSound("Hero_Pudge.AttackHookRetract")
 		end
 
-		caster:FadeGesture(ACT_DOTA_CHANNEL_ABILITY_1)
-		if caster and caster:IsHero() then
-			local hHook = caster:GetTogglableWearable( DOTA_LOADOUT_TYPE_WEAPON )
+		self:GetCaster():FadeGesture(ACT_DOTA_CHANNEL_ABILITY_1)
+
+		if self:GetCaster() and self:GetCaster():IsHero() then
+			local hHook = self:GetCaster():GetTogglableWearable( DOTA_LOADOUT_TYPE_WEAPON )
 			if hHook ~= nil then
 				hHook:RemoveEffects( EF_NODRAW )
 			end
-			StopSoundOn( "Hero_Pudge.AttackHookRetract", caster)
-			StopSoundOn( "Hero_Pudge.AttackHookExtend", caster)
-			StopSoundOn( "Hero_Pudge.AttackHookRetractStop", caster)
+
+			if target.is_ruptured then
+				target.is_ruptured = false
+			end
+
+			StopSoundOn( "Hero_Pudge.AttackHookRetract", self:GetCaster())
+			StopSoundOn( "Hero_Pudge.AttackHookExtend", self:GetCaster())
+			StopSoundOn( "Hero_Pudge.AttackHookRetractStop", self:GetCaster())
 		end
+
 		local buff1 = target:FindModifierByName("modifier_imba_hook_target_enemy")
 		local buff2 = target:FindModifierByName("modifier_imba_hook_target_ally")
 		if buff1 then buff1:Destroy() end
 		if buff2 then buff2:Destroy() end
 
 		self.launched = false
+
+		if self.RuptureFX then
+			ParticleManager:DestroyParticle(self.RuptureFX, true)
+			ParticleManager:ReleaseParticleIndex(self.RuptureFX)
+		end
+
 		return true
 	end
 end

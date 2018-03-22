@@ -236,7 +236,6 @@ end
 
 -- Initializes heroes' innate abilities
 function InitializeInnateAbilities( hero )	
-
 	-- Cycle through all of the heroes' abilities, and upgrade the innates ones
 	for i = 0, 15 do		
 		local current_ability = hero:GetAbilityByIndex(i)		
@@ -248,81 +247,15 @@ function InitializeInnateAbilities( hero )
 	end
 end
 
-function IndexAllTowerAbilities()
-	local ability_table = {}
-	local tier_one_abilities = {}
-	local tier_two_abilities = {}
-	local tier_three_abilities = {}
-	local tier_active_abilities = {}
-
-	for _,tier in pairs(TOWER_ABILITIES) do		
-
-		for _,ability in pairs(tier) do
-			if tier == TOWER_ABILITIES.tier_one then
-				table.insert(tier_one_abilities, ability.ability_name)
-			elseif tier == TOWER_ABILITIES.tier_two then
-				table.insert(tier_two_abilities, ability.ability_name)
-			elseif tier == TOWER_ABILITIES.tier_three then
-				table.insert(tier_three_abilities, ability.ability_name)
-			else
-				table.insert(tier_active_abilities, ability.ability_name)
-			end			
-		end
-	end
-
-	table.insert(ability_table, tier_one_abilities)
-	table.insert(ability_table, tier_two_abilities)
-	table.insert(ability_table, tier_three_abilities)
-	table.insert(ability_table, tier_active_abilities)
-
-	return ability_table
-end
-
 -- Upgrades a tower's abilities
 function UpgradeTower(tower)
-	for i = 0, tower:GetAbilityCount()-1 do
+	for i = 0, tower:GetAbilityCount() -1 do
 		local ability = tower:GetAbilityByIndex(i)
 		if ability and ability:GetLevel() < ability:GetMaxLevel() then			
 			ability:SetLevel(ability:GetLevel() + 1)
-			break
 		end
 	end
 end
-
--- Randoms an ability of a certain tier for the Ancient
-function GetAncientAbility( tier )
-
-	-- Tier 1 abilities
-	if tier == 1 then
-		local ability_list = {
-			"venomancer_poison_nova",
-			"juggernaut_blade_fury_ancient"			
-		}
-
-		return ability_list[RandomInt(1, #ability_list)]
-	-- Tier 2 abilities
-	elseif tier == 2 then
-		local ability_list = {
-			"abaddon_borrowed_time",
-			"nyx_assassin_spiked_carapace",
-			"axe_berserkers_call"
-		}
-
-		return ability_list[RandomInt(1, #ability_list)]
-	-- Tier 3 abilities
-	elseif tier == 3 then
-		local ability_list = {
-			"tidehunter_ravage",
-			"magnataur_reverse_polarity",
---			"phoenix_supernova",
-		}
-
-		return ability_list[RandomInt(1, #ability_list)]
-	end
-	
-	return nil
-end
-
 
 -- Initialize Physics library on this target
 function InitializePhysicsParameters(unit)
@@ -1011,8 +944,8 @@ bounty_rune_is_initial_bounty_rune = false
 	powerup_rune_types[5] = {"item_imba_rune_illusion", "particles/generic_gameplay/rune_illusion.vpcf"}
 	powerup_rune_types[6] = {"item_imba_rune_invisibility", "particles/generic_gameplay/rune_invisibility.vpcf"}
 	powerup_rune_types[7] = {"item_imba_rune_frost", "particles/econ/items/puck/puck_snowflake/puck_snowflake_ambient.vpcf"}
-	powerup_rune_types[8] = {"item_imba_rune_ember", "particles/econ/items/shadow_fiend/sf_fire_arcana/sf_fire_arcana_trail.vpcf"}
-	powerup_rune_types[9] = {"item_imba_rune_stone", "particles/econ/items/natures_prophet/natures_prophet_flower_treant/natures_prophet_flower_treant_ambient.vpcf"}
+--	powerup_rune_types[8] = {"item_imba_rune_ember", "particles/econ/items/shadow_fiend/sf_fire_arcana/sf_fire_arcana_trail.vpcf"}
+--	powerup_rune_types[9] = {"item_imba_rune_stone", "particles/econ/items/natures_prophet/natures_prophet_flower_treant/natures_prophet_flower_treant_ambient.vpcf"}
 
 	local rune
 	local particle
@@ -1189,7 +1122,7 @@ function PickupRune(rune_name, unit, bActiveByBottle)
 			end
 			EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Illusion", unit)
 		elseif rune_name == "invisibility" then
-			unit:AddNewModifier(unit, nil, "modifier_rune_invis", {duration=duration})
+			unit:AddNewModifier(unit, nil, "modifier_imba_invisibility_rune", {duration=duration})
 			EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Invis", unit)
 		elseif rune_name == "regeneration" then
 			unit:AddNewModifier(unit, nil, "modifier_imba_regen_rune", {duration=duration})
@@ -1233,6 +1166,7 @@ function CBaseEntity:IsRune()
 			return true
 		end
 	end
+
 	return false
 end
 

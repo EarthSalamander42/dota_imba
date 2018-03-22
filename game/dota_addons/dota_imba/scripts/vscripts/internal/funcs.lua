@@ -725,11 +725,6 @@ function CDOTA_BaseNPC:GetCooldownReduction()
 	-- Calculate actual cooldown reduction
 	cooldown_reduction = 100 - (100 - nonstacking_reduction) * (100 - stacking_reduction) * 0.01
 
-	-- Frantic mode adjustment (70% CDR)
-	if IMBA_FRANTIC_MODE_ON then
-		cooldown_reduction = 100 - (100 - cooldown_reduction) * IMBA_FRANTIC_VALUE
-	end
-
 	-- Return current cooldown reduction
 	return cooldown_reduction
 end

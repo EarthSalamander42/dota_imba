@@ -12151,7 +12151,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"1050"
+		"ItemCost"						"3150"
 		"ItemShopTags"					""
 
 		// Recipe
@@ -12160,7 +12160,7 @@
 		"ItemResult"					"item_imba_plancks_artifact"
 		"ItemRequirements"
 		{
-			"01"						"item_imba_bloodstone;item_ultimate_orb;item_imba_octarine_core"
+			"01"						"item_imba_bloodstone;item_imba_octarine_core"
 		}
 	}
 
@@ -12254,44 +12254,34 @@
 			"11"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_strength"			"10"
+				"bonus_intelligence"		"40"
 			}
 			"12"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"bonus_agility"				"10"
-			}
-			"13"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"bonus_intelligence"		"50"
-			}
-			"14"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"spell_lifesteal"			"40"
 			}
-			"15"
+			"13"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"bonus_cooldown"			"30"
 			}
-			"16"
+			"14"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"implosion_damage_percent"	"0.7"
 			}
-			"17"
+			"15"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"implosion_damage_percent_tooltip" "70"
 			}
-			"18"
+			"16"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"implosion_radius"			"300"
 			}
-			"19"
+			"17"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"stack_gain_radius"			"1675"

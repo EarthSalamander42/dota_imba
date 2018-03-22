@@ -274,17 +274,17 @@ function UpdateHeroBars(){
 			continue
 		}
 
-		var isOnScreen = GameUI.GetScreenWorldPosition(screenX, screenY) != null;
+//		var isOnScreen = GameUI.GetScreenWorldPosition(screenX, screenY) != null;
 
-		if (isOnScreen) {
-			if (!special[entityId] && ValidateAndUpdateOnScreenEntity(entityId, screenX, screenY, lightBar)) {
-				trulyOnScreen.push(entityId);
-			}
-		} else {
-			if (ValidateAndUpdateOffScreenEntity(entityId, screenX, screenY, entityData.isRealHero, special[entityId])) {
-				trulyNotOnScreen.push(entityId);
-			}
-		}
+//		if (isOnScreen) {
+//			if (!special[entityId] && ValidateAndUpdateOnScreenEntity(entityId, screenX, screenY, lightBar)) {
+//				trulyOnScreen.push(entityId);
+//			}
+//		} else {
+//			if (ValidateAndUpdateOffScreenEntity(entityId, screenX, screenY, entityData.isRealHero, special[entityId])) {
+//				trulyNotOnScreen.push(entityId);
+//			}
+//		}
 	}
 
 	// Everything around there is crap code, but this is extra crap, unreadable!

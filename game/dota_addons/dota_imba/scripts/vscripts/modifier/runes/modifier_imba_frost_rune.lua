@@ -21,7 +21,7 @@ end
 
 -- Function declarations
 function modifier_imba_frost_rune:DeclareFunctions()
-	local funcs	=	{
+	local funcs	= {
 		MODIFIER_EVENT_ON_ATTACK_LANDED,
 		MODIFIER_EVENT_ON_TAKEDAMAGE,
 	}

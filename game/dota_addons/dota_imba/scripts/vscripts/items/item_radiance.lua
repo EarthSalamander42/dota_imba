@@ -136,7 +136,7 @@ end
 -- Create the glow particle and start thinking
 function modifier_imba_radiance_aura:OnCreated()
 	if IsServer() then
-		self.particle = ParticleManager:CreateParticle(self:GetParent().radiance_effect_owner, PATTACH_ABSORIGIN_FOLLOW, parent)
+		self.particle = ParticleManager:CreateParticle(self:GetParent().radiance_effect_owner, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 	end
 end
 
@@ -163,7 +163,7 @@ function modifier_imba_radiance_burn:OnCreated()
 	if IsServer() then
 
 		-- Particle creation
-		self.particle = ParticleManager:CreateParticle(self:GetCaster().radiance_effect, PATTACH_ABSORIGIN_FOLLOW, parent)
+		self.particle = ParticleManager:CreateParticle(self:GetCaster().radiance_effect, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 
 		-- Start thinking
 		self:StartIntervalThink(self:GetAbility():GetSpecialValueFor("think_interval"))

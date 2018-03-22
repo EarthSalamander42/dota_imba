@@ -51,8 +51,6 @@
 	"DOTA_Tooltip_ability_item_imba_rune_frost"				"贪婪之魂神符"
 
 	"lag_issues"									"访问IMBA官网"
-	"oaa_news_title"								"天使竞技场周年纪念赛 - 10000美元奖金！"
-	"oaa_news_text"									"3月3日和4日天使竞技场的开发团队将举办第二次OAA比赛，总奖金超过10000美元。点击下方的连接来了解详情。"
 
 	"imba_gamemode_name_all_pick"                                                       "全英雄选择"
 	"imba_gamemode_name_all_pick_tooltip"												"玩家可以任意选择英雄"

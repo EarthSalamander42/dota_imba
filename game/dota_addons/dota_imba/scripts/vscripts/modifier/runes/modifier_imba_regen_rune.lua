@@ -28,14 +28,13 @@ end
 
 -- Parent doesn't benefit from aura, since it has it's own modifier
 function modifier_imba_regen_rune:GetAuraEntityReject(entity)
-	if entity == self.parent then
+	if entity == self:GetParent() then
 		return true
 	end
 	return false
 end
 
 function modifier_imba_regen_rune:OnCreated()
-	self.parent = self:GetParent()
 
 	-- Set the amount of damage instances we can take as stacks
 	self:SetStackCount(25)
@@ -78,7 +77,7 @@ function modifier_imba_regen_rune:OnTakeDamage(params)
 	local attacker = params.attacker
 
 	-- Only damage from hero/roshan units count towards the damage instances
-	if self.parent == victim and IsHeroDamage(attacker, params.damage) then
+	if self:GetCaster() == victim and (IsHeroDamage(attacker, params.damage) or attacker:IsTower()) then
 		local current_stacks = self:GetStackCount()
 
 		-- last stack, remove modifier

@@ -148,6 +148,9 @@
 "DOTA_Tooltip_Ability_imba_tower_tenacity_base_tenacity_pct"            "%BASE TENACITY:"
 "DOTA_Tooltip_Ability_imba_tower_tenacity_tenacity_per_protective"                  "%TENACITY BONUS PER ALLIED HERO:"
 
+"DOTA_Tooltip_modifier_imba_tower_tenacity_aura_buff"					"Tenacity Aura"
+"DOTA_Tooltip_modifier_imba_tower_tenacity_aura_buff_Description"		"Increase the hero's tenacity."
+
 // Mana Burn Tower
 "DOTA_Tooltip_Ability_imba_tower_mana_burn"                            "Mana Burn Aura"
 "DOTA_Tooltip_Ability_imba_tower_mana_burn_Description"                "Burns mana on every attack. Mana burned is a fraction of the tower's attack damage."

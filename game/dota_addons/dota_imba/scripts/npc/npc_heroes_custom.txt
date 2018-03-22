@@ -1737,6 +1737,7 @@
 		"override_hero"				"npc_dota_hero_storm_spirit"
 
 		//Picking Screen
+		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
 
 		"Ability1"					"imba_storm_spirit_static_remnant"
@@ -1745,6 +1746,15 @@
 		"Ability4"					"generic_hidden"
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_storm_spirit_ball_lightning"
+
+		"Ability10"					"special_bonus_imba_storm_spirit_8"
+		"Ability11"					"special_bonus_mp_regen_175"
+		"Ability12"					"special_bonus_unique_storm_spirit_5"
+		"Ability13"					"special_bonus_imba_storm_spirit_2"
+		"Ability14"					"special_bonus_unique_storm_spirit"
+		"Ability15"					"special_bonus_imba_storm_spirit_6"
+		"Ability16"					"special_bonus_imba_storm_spirit_7"
+		"Ability17"					"special_bonus_unique_storm_spirit_4"
 	}
 
 	//=================================================================================================================
