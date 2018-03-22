@@ -233,7 +233,7 @@
 	width: 100%;
 	height: 100%;
 	background-color: black;
-	background-image: url("file://{images}/custom_game/loading_screen/three_spirits.jpg");
+	background-image: url("file://{images}/custom_game/loading_screen/three_spirits_storm.png");
 	background-position: 65% 0%;
 	background-size: cover;
 	overflow: clip;
@@ -245,14 +245,15 @@
 	width: 40%;
 	height: fit-children;
 	margin-top: 5%;
-	margin-left: 2%;
+	margin-left: 4%;
 	background-color: #0008;
 	flow-children: down;
 	visibility: collapse;
 }
 
 #imba-normal-news, #imba-ow-news {
-	margin-left: 2%;
+	margin-top: 3%;
+	margin-left: 4%;
 	align: left center;
 	width: 50%;
 	background-color: COLOR_INFO_BACKGROUND;
@@ -356,7 +357,8 @@
 
 #imba-social {
 	flow-children: down;
-	margin-left: 2%;
+	margin-top: 14%;
+	margin-left: 4%;
 	vertical-align: bottom;
 	padding: 10px;
 }
