@@ -483,4 +483,5 @@ IMBA_INVISIBLE_MODIFIERS = {
 	"modifier_imba_skeleton_walk_invis",
 	"modifier_imba_riki_invisibility",
 	"modifier_imba_shadow_walk_buff_invis",
+	"modifier_imba_invisibility_rune",
 }

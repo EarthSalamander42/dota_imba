@@ -18,6 +18,7 @@
 "DOTA_Tooltip_ability_imba_storm_spirit_electric_vortex_Description"			"#{DOTA_Tooltip_ability_storm_spirit_electric_vortex_Description}\n<font color='#FF7800'>Attached Vortex:</font> Targets are pulled on Storm Spirit."
 "DOTA_Tooltip_ability_imba_storm_spirit_electric_vortex_Lore"					"#{DOTA_Tooltip_ability_storm_spirit_electric_vortex_Lore}"
 "DOTA_Tooltip_ability_imba_storm_spirit_electric_vortex_pull_duration"			"#{DOTA_Tooltip_ability_storm_spirit_electric_vortex_duration}"
+"DOTA_Tooltip_ability_imba_storm_spirit_electric_vortex_pull_units_per_second"	"PULL SPEED:"
 "DOTA_Tooltip_ability_imba_storm_spirit_electric_vortex_self_slow"				"#{DOTA_Tooltip_ability_storm_spirit_electric_vortex_electric_vortex_self_slow}"
 "DOTA_Tooltip_ability_imba_storm_spirit_electric_vortex_self_slow_duration"		"#{DOTA_Tooltip_ability_storm_spirit_electric_vortex_electric_vortex_self_slow_duration}"
 "DOTA_Tooltip_ability_imba_storm_spirit_electric_vortex_cast_range"				"#{DOTA_Tooltip_ability_tiny_toss_tree_range}"
@@ -64,7 +65,8 @@
 
 // Storm Spirit's Talents
 "DOTA_Tooltip_ability_special_bonus_imba_storm_spirit_1"					"+0.75 Electric Vortex duration"
-"DOTA_Tooltip_ability_special_bonus_imba_storm_spirit_2"					"+300 Electric Vortex range and pull speed"
+"DOTA_Tooltip_ability_special_bonus_imba_storm_spirit_2"					"+250 Electric Vortex range and pull speed"
 "DOTA_Tooltip_ability_special_bonus_imba_storm_spirit_6"					"-0.3 Static Remnant activation delay"
-"DOTA_Tooltip_ability_special_bonus_imba_storm_spirit_7"					"+3 Remnants for Static Remnant"
+"DOTA_Tooltip_ability_special_bonus_imba_storm_spirit_7"					"+2 Remnants for Static Remnant"
+"DOTA_Tooltip_ability_special_bonus_imba_storm_spirit_7_Description"		"Spawns 3 remnants in a triangle around Storm Spirit. (north, south-west, south-east)"
 "DOTA_Tooltip_ability_special_bonus_imba_storm_spirit_8"					"+25% movespeed for Electric Vortex"

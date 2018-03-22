@@ -13,13 +13,22 @@ modifier_imba_invisibility_rune_handler = modifier_imba_invisibility_rune_handle
 
 LinkLuaModifier("modifier_imba_invisibility_rune", "modifier/runes/modifier_imba_invisibility_rune", LUA_MODIFIER_MOTION_NONE)
 
+function modifier_imba_invisibility_rune_handler:IsHidden() return true end
 function modifier_imba_invisibility_rune_handler:IsDebuff() return false end
 function modifier_imba_invisibility_rune_handler:IsHidden() return false  end
 function modifier_imba_invisibility_rune_handler:IsPurgable() return false end
 function modifier_imba_invisibility_rune_handler:IsPurgeException() return false end
 
+function modifier_imba_invisibility_rune_handler:OnCreated(keys)
+	if IsServer() then
+		self.rune_duration = keys.rune_duration
+	end
+end
+
 function modifier_imba_invisibility_rune_handler:OnDestroy()
-	self:GetParent():AddNewModifier(self:GetParent(), nil, "modifier_imba_invisibility_rune", {duration=45.0})
+	if IsServer() then
+		self:GetParent():AddNewModifier(self:GetParent(), nil, "modifier_imba_invisibility_rune", {duration=self.rune_duration})
+	end
 end
 
 modifier_imba_invisibility_rune = modifier_imba_invisibility_rune or class({})
@@ -43,7 +52,6 @@ end
 
 function modifier_imba_invisibility_rune:OnCreated()
 	if not IsServer() then return end
-	self.parent = self:GetParent()
 	self.critical_mult = 200
 	self.movespeed_bonus = 20
 
@@ -84,17 +92,19 @@ end
 function modifier_imba_invisibility_rune:OnAttackLanded(kv)
 	if not IsServer() then return end
 	--Proceed only if the attacker is the parent
-	if not self.parent == kv.attacker then return end
-
-	--remove modifier
-	self:Destroy()
+	if self:GetParent() == kv.attacker then
+		print("Attack Landed!")
+		self:Destroy()
+		return
+	end
 end
 
 function modifier_imba_invisibility_rune:OnAbilityStart(kv)
 	if not IsServer() then return end
 	--proceed only if the caster is the parent
-	if not self.parent == kv.attacker then return end
-
-	--remove modifier
-	self:Destroy()
+	if self:GetParent() == kv.attacker then
+		print("Ability Start!")
+		self:Destroy()
+		return
+	end
 end
