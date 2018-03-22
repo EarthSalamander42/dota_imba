@@ -180,7 +180,6 @@ function GetForceStaffEffect(hero) -- still not working yet
 	local icon = 0
 
 	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FORCE_STAFF["force_staff4"] then
-
 		effect = "particles/econ/events/ti6/force_staff_ti6.vpcf"
 		icon = 4
 	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FORCE_STAFF["force_staff3"] then

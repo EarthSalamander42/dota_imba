@@ -27,7 +27,6 @@ function LoadPlayers() {
 }
 
 (function() {
-	
 	LoadPlayers()
 //	GameEvents.Subscribe("imbathrow_topbar", ShowImbathrowBar);
 })();

@@ -51,8 +51,8 @@
 	"DOTA_Tooltip_ability_item_imba_rune_frost"				"Greevil Soul"
 
 	"lag_issues"									"Dota 2 IMBA website"
-	"oaa_news_title"								"OAA Anniversary Tournament - 10000$ Prize Pool"
-	"oaa_news_text"									"On the 3rd and 4th of March, the Open Angel Arena team will host their second tournament with over $10 000 prize pool. Click the link below to check out the game and find additional information about the tournament!"
+	"oaa_news_title"								"Also linked to Dota IMBA:"
+	"oaa_news_text"									"Playing Pudge Wars, X Hero Siege or Hero Line Wars also grants Imba XP! These mods also benefits their own XP system, and will have their own Battlepass soon."
 
 	"imba_gamemode_name_all_pick"                                                       "All Pick"
 	"imba_gamemode_name_all_pick_tooltip"												"Players are free to choose any hero."

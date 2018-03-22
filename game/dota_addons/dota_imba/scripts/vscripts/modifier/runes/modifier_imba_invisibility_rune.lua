@@ -9,6 +9,19 @@
 -----------------------------------------------------------------
 -- Rune buff
 -----------------------------------------------------------------
+modifier_imba_invisibility_rune_handler = modifier_imba_invisibility_rune_handler or class({})
+
+LinkLuaModifier("modifier_imba_invisibility_rune", "modifier/runes/modifier_imba_invisibility_rune", LUA_MODIFIER_MOTION_NONE)
+
+function modifier_imba_invisibility_rune_handler:IsDebuff() return false end
+function modifier_imba_invisibility_rune_handler:IsHidden() return false  end
+function modifier_imba_invisibility_rune_handler:IsPurgable() return false end
+function modifier_imba_invisibility_rune_handler:IsPurgeException() return false end
+
+function modifier_imba_invisibility_rune_handler:OnDestroy()
+	self:GetParent():AddNewModifier(self:GetParent(), nil, "modifier_imba_invisibility_rune", {duration=45.0})
+end
+
 modifier_imba_invisibility_rune = modifier_imba_invisibility_rune or class({})
 
 function modifier_imba_invisibility_rune:IsHidden() return false end
@@ -16,36 +29,51 @@ function modifier_imba_invisibility_rune:IsDebuff() return false end
 function modifier_imba_invisibility_rune:IsPurgable() return true end
 
 function modifier_imba_invisibility_rune:GetTexture()
-	return ""
+	return "custom/imba_rune_invisibility"
 end
 
 function modifier_imba_invisibility_rune:CheckState()
-	local state = {[MODIFIER_STATE_INVISIBILE] = true,
-					[MODIFIER_STATE_NO_UNIT_COLLISION] = true}
+	local state = {
+		[MODIFIER_STATE_INVISIBLE] = true,
+		[MODIFIER_STATE_NO_UNIT_COLLISION] = true
+	}
+
 	return state
 end
 
 function modifier_imba_invisibility_rune:OnCreated()
 	if not IsServer() then return end
 	self.parent = self:GetParent()
-	self.critical_mul = 200
+	self.critical_mult = 200
 	self.movespeed_bonus = 20
+
+	local particle = ParticleManager:CreateParticle("particles/generic_hero_status/status_invisibility_start.vpcf", PATTACH_ABSORIGIN, self:GetParent())
+	ParticleManager:ReleaseParticleIndex(particle)
 end
 
 function modifier_imba_invisibility_rune:DeclareFunctions()
-	local funcs = {MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE,
-					MODIFIER_PROPERTY_MOVESPEED_ BONUS_PERCENTAGE,
-					MODIFIER_EVENT_ON_ATTACK_LANDED,
-					MODIFIER_EVENT_ON_ABILITY_START}
+	local funcs = {
+		MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE,
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		MODIFIER_EVENT_ON_ATTACK_LANDED,
+		MODIFIER_EVENT_ON_ABILITY_START,
+		MODIFIER_PROPERTY_INVISIBILITY_LEVEL,
+	}
 
 	return funcs
+end
+
+function modifier_imba_invisibility_rune:GetModifierInvisibilityLevel()
+	if IsClient() then
+		return 1
+	end
 end
 
 function modifier_imba_invisibility_rune:GetModifierPreAttack_CriticalStrike(kv)
 	--Doesn't work on buildings
 	if kv.target:IsBuilding() then return 0 end
 
-	return self.critical_mul
+	return self.critical_mult
 end
 
 function modifier_imba_invisibility_rune:GetModifierMoveSpeedBonus_Percentage()

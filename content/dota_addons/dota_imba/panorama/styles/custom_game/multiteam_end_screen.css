@@ -178,7 +178,9 @@
 
 .es-legend-gold { width: 70px; }
 
-.es-legend-xp { width: 190px; }
+.es-legend-xp { width: 180px; }
+
+.es-legend-rank { width: 80px; }
 
 .es-player-root {
 	flow-children: right;
@@ -255,6 +257,7 @@
 	width: 85px;
 	vertical-align: center;
 	text-align: center;
+	visibility: collapse;
 }
 
 #es-player-imr10v10 {
@@ -268,7 +271,6 @@
 	border: 1px solid #444;
 	border-radius: 2px;
 	box-shadow: #000000 0px 0px 10px 0px;
-	margin-right: 10px;
 }
 
 .level-up {
@@ -297,6 +299,11 @@
 #es-player-xp-rank { text-align: right; }
 #es-player-xp-level { text-align: left; }
 #es-player-xp-xp { text-align: right; }
+
+#es-player-xp-rank-name {
+	vertical-align: center;
+	text-align: center;
+}
 
 #es-player-xp-earned {
 	width: 54px;

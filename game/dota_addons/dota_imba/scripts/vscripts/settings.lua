@@ -310,7 +310,7 @@ else
 	IMBA_FRANTIC_MODE_ON = false
 end
 
-IMBA_FRANTIC_VALUE = 0.4													-- 60% CDR
+_G.IMBA_FRANTIC_VALUE = 50
 
 IMBA_PICK_MODE_ALL_PICK = true												-- Activates All Pick mode when true
 IMBA_PICK_MODE_ALL_RANDOM = false											-- Activates All Random mode when true
@@ -386,24 +386,12 @@ REMAINING_BADGUYS = 0														-- Remaining players on Dire
 
 ANCIENT_ABILITIES_LIST = {}													-- Initializes the ancients' abilities list
 SPAWN_ANCIENT_BEHEMOTHS = true												-- Should the ancients spawn behemoths?
-TOWER_ABILITY_MODE = true													-- Should towers gain random unique abilities?
-TOWER_UPGRADE_MODE = true													-- Should tower abilities be upgradeable?
-TOWER_POWER_FACTOR = 1														-- Tower durability/damage increase factor (0 = default)
-TOWER_UPGRADE_TREE = {}														-- Stores the tower upgrades for this game if necessary
-TOWER_UPGRADE_TREE["safelane"] = {}
-TOWER_UPGRADE_TREE["midlane"] = {}
-TOWER_UPGRADE_TREE["hardlane"] = {}
-TOWER_UPGRADE_TREE["safelane"]["tier_1"] = {}
-TOWER_UPGRADE_TREE["safelane"]["tier_2"] = {}
-TOWER_UPGRADE_TREE["safelane"]["tier_3"] = {}
-TOWER_UPGRADE_TREE["midlane"]["tier_1"] = {}
-TOWER_UPGRADE_TREE["midlane"]["tier_2"] = {}
-TOWER_UPGRADE_TREE["midlane"]["tier_3"] = {}
-TOWER_UPGRADE_TREE["midlane"]["tier_41"] = {}
-TOWER_UPGRADE_TREE["midlane"]["tier_42"] = {}
-TOWER_UPGRADE_TREE["hardlane"]["tier_1"] = {}
-TOWER_UPGRADE_TREE["hardlane"]["tier_2"] = {}
-TOWER_UPGRADE_TREE["hardlane"]["tier_3"] = {}
+TOWER_ABILITIES = {
+	"imba_tower_healing_tower",
+	"imba_tower_regeneration",
+	"imba_tower_tenacity",
+	"imba_tower_toughness",
+}
 
 MAP_INITIAL_GOLD = 0														-- Gold granted to players at the start of the game on a normal pick
 USE_CUSTOM_HERO_LEVELS = true												-- Should we allow heroes to have custom levels?
@@ -476,7 +464,6 @@ IMBA_TESTBED_INITIALIZED = false
 -- IMBA: Keyvalue tables
 -------------------------------------------------------------------------------------------------
 
-TOWER_ABILITIES = LoadKeyValues("scripts/npc/KV/tower_abilities.kv")
 PURGE_BUFF_LIST = LoadKeyValues("scripts/npc/KV/purge_buffs_list.kv")
 DISPELLABLE_DEBUFF_LIST = LoadKeyValues("scripts/npc/KV/dispellable_debuffs_list.kv")
 

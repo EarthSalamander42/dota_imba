@@ -49,9 +49,7 @@
 	"DOTA_Tooltip_ability_item_imba_rune_regeneration"		"Безграничная энергия"
 	"DOTA_Tooltip_ability_item_imba_rune_frost"				"Душа грявола"
 
-	Веб-сайт Дота ИМБА
-	"oaa_news_title"								"OAA Юбилейный Турнир -  призовой фонд 10000$"
-	"oaa_news_text"									"Третьего и четвёртого марта Open Angel Arena проведёт свой второй турнир с призовым фондом более $10 000. Щёлкайте по ссылке чтобы узнать подробности!"
+	//Веб-сайт Дота ИМБА
 
 	"imba_gamemode_name_all_pick"                                                       "Свободный выбор"
 	"imba_gamemode_name_all_pick_tooltip"												"Игроки могут выбрать любого героя."

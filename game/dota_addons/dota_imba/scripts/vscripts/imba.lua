@@ -244,7 +244,7 @@ function GameMode:OnFirstPlayerLoaded()
 end
 
 -- Gold gain filter function
-function GameMode:GoldFilter( keys )
+function GameMode:GoldFilter(keys)
 	-- reason_const		12
 	-- reliable			1
 	-- player_id_const	0
@@ -380,7 +380,7 @@ function GameMode:ModifierFilter( keys )
 
 			-- Halve the duration of everything else
 			if modifier_caster ~= modifier_owner and keys.duration > 0 then
-				keys.duration = keys.duration * 0.5
+				keys.duration = keys.duration / (100/50)
 			end
 
 			-- Fury swipes capping
@@ -398,11 +398,12 @@ function GameMode:ModifierFilter( keys )
 			local tenacity = modifier_owner:GetTenacity()
 			if modifier_owner:GetTeam() ~= modifier_caster:GetTeam() and keys.duration > 0 then --and tenacity ~= 0 then
 				actually_duration = actually_duration * (100 - tenacity) * 0.01
+
 				-------------------------------------------------------------------------------------------------
 				-- Frantic mode duration adjustment
 				-------------------------------------------------------------------------------------------------
 				if IMBA_FRANTIC_MODE_ON then
-					actually_duration = actually_duration * IMBA_FRANTIC_VALUE
+					actually_duration = actually_duration / (100/IMBA_FRANTIC_VALUE)
 				end
 			end
 
@@ -414,20 +415,21 @@ function GameMode:ModifierFilter( keys )
 					end
 				end
 			end
+
 			keys.duration = actually_duration
 		end
 
 		-------------------------------------------------------------------------------------------------
 		-- Frantic mode duration adjustment
 		-------------------------------------------------------------------------------------------------
-		if modifier_name == "modifier_imba_doom_bringer_doom" then
-			if IMBA_FRANTIC_MODE_ON then
-				local original_duration = keys.duration
-				local actually_duration = original_duration
-				actually_duration = actually_duration * IMBA_FRANTIC_VALUE
-				keys.duration = actually_duration
-			end
-		end
+--		if modifier_name == "modifier_imba_doom_bringer_doom" then
+--			if IMBA_FRANTIC_MODE_ON then
+--				local original_duration = keys.duration
+--				local actually_duration = original_duration
+--				actually_duration = actually_duration / (100/IMBA_FRANTIC_VALUE)
+--				keys.duration = actually_duration
+--			end
+--		end
 
 		-------------------------------------------------------------------------------------------------
 		-- Silencer Arcane Supremacy silence duration reduction
@@ -1295,8 +1297,6 @@ end
 	gold will begin to go up in ticks if configured, creeps will spawn, towers will become damageable etc.  This function
 	is useful for starting any game logic timers/thinkers, beginning the first round, etc.									]]
 function GameMode:OnGameInProgress()
-
-	print("ON GAME IN PROGRESS")
 	if GetMapName() ~= "imba_1v1" then
 		Timers:CreateTimer(0, function()
 			SpawnImbaRunes()
@@ -1304,144 +1304,17 @@ function GameMode:OnGameInProgress()
 		end)
 	end
 
-	-------------------------------------------------------------------------------------------------
 	-- IMBA: Passive gold adjustment
-	-------------------------------------------------------------------------------------------------
-	GameRules:SetGoldTickTime( GOLD_TICK_TIME[GetMapName()] )
+	GameRules:SetGoldTickTime(GOLD_TICK_TIME[GetMapName()])
 
 	if GetMapName() == "imba_overthrow" then return end
 
-	-------------------------------------------------------------------------------------------------
-	-- IMBA: Tower abilities setup
-	-------------------------------------------------------------------------------------------------
+	-- Find all towers
+	local towers = Entities:FindAllByClassname("npc_dota_tower")
 
-	if TOWER_ABILITY_MODE then
-		local ability_table = IndexAllTowerAbilities()
-		local protective_instict = "imba_tower_protective_instinct"
-
-		-- Find all towers
-		local towers = Entities:FindAllByClassname("npc_dota_tower")
-
-		for _,radiant_tower in pairs(towers) do
-
-			-- Check if it is indeed a radiant tower
-			if radiant_tower:GetTeamNumber() == DOTA_TEAM_GOODGUYS then
-
-				-- Find its dire equivalent
-				local dire_tower_name = string.gsub(radiant_tower:GetUnitName(), "goodguys", "badguys")
-				local dire_tower
-
-				for _,tower in pairs(towers) do
-					if tower:GetUnitName() == dire_tower_name and not tower.initially_upgraded then
-						dire_tower = tower
-						break
-					end
-				end
-
-				-- Add protective instincts to both radiant and dire towers
-				local ability = radiant_tower:AddAbility(protective_instict)
-				ability:SetLevel(1)
-
-				if dire_tower then
-					local ability = dire_tower:AddAbility(protective_instict)
-					ability:SetLevel(1)
-				end
-
-				if string.find(radiant_tower:GetUnitName(), "tower1") then
-					-- Tier 1 tower found. Add tier 1 ability
-					local ability_name = GetRandomTowerAbility(1, ability_table)
-					local ability = radiant_tower:AddAbility(ability_name)
-					ability:SetLevel(1)
-
-					if dire_tower then
-						-- Add the same ability to the equivalent tower in dire
-						local ability = dire_tower:AddAbility(ability_name)
-						ability:SetLevel(1)
-					end
-
-					-- After the ability has been set, remove it from the table.
-					for j = 1, #ability_table[1] do
-						if ability_table[1][j] == ability_name then
-							table.remove(ability_table[1], j)
-							break
-						end
-					end
-				end
-
-				if string.find(radiant_tower:GetUnitName(), "tower2") then
-					-- Tier 2 tower found. Add tier 1 and 2 abilities
-					for i = 1, 2 do
-						local ability_name = GetRandomTowerAbility(i, ability_table)
-						local ability = radiant_tower:AddAbility(ability_name)
-						ability:SetLevel(1)
-
-						if dire_tower then
-							-- Add the same ability to the equivalent tower in dire
-							local ability = dire_tower:AddAbility(ability_name)
-							ability:SetLevel(1)
-						end
-
-						-- After the ability has been set, remove it from the table.
-						for j = 1, #ability_table[i] do
-							if ability_table[i][j] == ability_name then
-								table.remove(ability_table[i], j)
-								break
-							end
-						end
-					end
-				end
-
-				if string.find(radiant_tower:GetUnitName(), "tower3") then
-					-- Tier 3 tower found. Add tier 1, 2 and 3 abilities
-					for i = 1, 3 do
-						local ability_name = GetRandomTowerAbility(i, ability_table)
-						local ability = radiant_tower:AddAbility(ability_name)
-						ability:SetLevel(1)
-
-						if dire_tower then
-							-- Add the same ability to the equivalent tower in dire
-							local ability = dire_tower:AddAbility(ability_name)
-							ability:SetLevel(1)
-						end
-
-						-- After the ability has been set, remove it from the table.
-						for j = 1, #ability_table[i] do
-							if ability_table[i][j] == ability_name then
-								table.remove(ability_table[i], j)
-								break
-							end
-						end
-					end
-				end
-
-				if string.find(radiant_tower:GetUnitName(), "tower4") then
-					-- Tier 3 tower found. Add tier 1, 2 and 3 abilities
-					for i = 2, 4 do
-						local ability_name = GetRandomTowerAbility(i, ability_table)
-						local ability = radiant_tower:AddAbility(ability_name)
-						ability:SetLevel(1)
-
-						if dire_tower then
-							-- Add the same ability to the equivalent tower in dire
-							local ability = dire_tower:AddAbility(ability_name)
-							ability:SetLevel(1)
-						end
-
-						-- After the ability has been set, remove it from the table.
-						for j = 1, #ability_table[i] do
-							if ability_table[i][j] == ability_name then
-								table.remove(ability_table[i], j)
-								break
-							end
-						end
-
-						if dire_tower then
-							-- Mark tower as upgraded, so it could identify the other dire tower to upgrade.
-							dire_tower.initially_upgraded = true
-						end
-					end
-				end
-			end
+	for _, tower in pairs(towers) do
+		for _, ability in pairs(TOWER_ABILITIES) do
+			tower:AddAbility(ability):SetLevel(1)
 		end
 	end
 end

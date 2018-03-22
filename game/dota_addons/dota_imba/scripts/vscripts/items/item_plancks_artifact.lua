@@ -51,17 +51,11 @@ end
 
 function item_imba_plancks_artifact:OnSpellStart()
 
-	-- suicide
-	print("PLANCK: suicide")
-
 	if self:GetCaster():HasModifier("modifier_imba_reincarnation") then
 		self:GetCaster():Kill(self, self:GetCaster())
 	else
 		TrueKill(self:GetCaster(), self:GetCaster(), self)
 	end
-
-	-- find units
-	print("PLANCK: find units")
 
 	local units_to_damage = FindUnitsInRadius(
 		self:GetCaster():GetTeamNumber(),
@@ -75,20 +69,9 @@ function item_imba_plancks_artifact:OnSpellStart()
 		false
 	)
 
-	-- calculate damage
-	print("PLANCK: calculate damage")
-
-	local damage =
-		self:GetCaster():GetMana() *
-		self:GetSpecialValueFor("implosion_damage_percent")
-
-	print("PLANCK: " .. tostring(damage))
-
-	-- apply damage
+	local damage = self:GetCaster():GetMana() * self:GetSpecialValueFor("implosion_damage_percent")
 
 	for _,unit in pairs(units_to_damage) do
-		print("PLANCK: unit: " .. tostring(unit:GetName()))
-
 		ApplyDamage({
 			victim = unit,
 			attacker = self:GetCaster(),
@@ -99,7 +82,6 @@ function item_imba_plancks_artifact:OnSpellStart()
 
 	local particle = ParticleManager:CreateParticle("particles/econ/items/antimage/antimage_weapon_basher_ti5/antimage_manavoid_ti_5.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
 	ParticleManager:ReleaseParticleIndex(particle)
-	print("PLANCK: done")
 end
 
 -- Stats
@@ -157,8 +139,6 @@ function modifier_imba_plancks_artifact_basic:DeclareFunctions()
 		MODIFIER_PROPERTY_HEALTH_BONUS,
 		MODIFIER_PROPERTY_MANA_BONUS,
 		MODIFIER_PROPERTY_MANA_REGEN_CONSTANT,
-		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
-		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
 	}
 end
@@ -173,24 +153,13 @@ end
 
 function modifier_imba_plancks_artifact_basic:GetModifierConstantManaRegen()
 
-	local reg = self:GetAbility():GetSpecialValueFor("bonus_mana_regen");
+	local reg = self:GetAbility():GetSpecialValueFor("bonus_mana_regen")
 
 	if IsServer() then
-		reg =
-			reg +
-			self:GetAbility():GetSpecialValueFor("mana_regen_per_charge") *
-			self:GetAbility():GetCurrentCharges()
+		reg = reg + self:GetAbility():GetSpecialValueFor("mana_regen_per_charge") * self:GetAbility():GetCurrentCharges()
 	end
 
 	return reg
-end
-
-function modifier_imba_plancks_artifact_basic:GetModifierBonusStats_Strength()
-	return self:GetAbility():GetSpecialValueFor("bonus_strength")
-end
-
-function modifier_imba_plancks_artifact_basic:GetModifierBonusStats_Agility()
-	return self:GetAbility():GetSpecialValueFor("bonus_agility")
 end
 
 function modifier_imba_plancks_artifact_basic:GetModifierBonusStats_Intellect()

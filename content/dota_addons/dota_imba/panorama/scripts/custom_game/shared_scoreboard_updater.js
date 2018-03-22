@@ -25,7 +25,7 @@ function _ScoreboardUpdater_SetValueSafe(panel, childName, Value) {
 
 function _ScoreboardUpdater_UpdatePlayerPanelImr(plyData, playerPanel) {
 
-	$.Msg("Updating player imr panel");
+//	$.Msg("Updating player imr panel");
 	
 	var map_info = Game.GetMapInfo();
 
@@ -51,8 +51,8 @@ function _ScoreboardUpdater_UpdatePlayerPanelImr(plyData, playerPanel) {
 		}
 	};
 	
-	$.Msg(plyData);
-	$.Msg(strings);
+//	$.Msg(plyData);
+//	$.Msg(strings);
 	
 	// set strings
 	
@@ -75,7 +75,8 @@ function _ScoreboardUpdater_UpdatePlayerPanelImr(plyData, playerPanel) {
 			strings._10v10.endscreen = plyData.IMR_10v10.toFixed(0);
 		}	
 	}
-	$.Msg(strings);
+
+//	$.Msg(strings);
 
 	// set labels
 
@@ -87,7 +88,7 @@ function _ScoreboardUpdater_UpdatePlayerPanelImr(plyData, playerPanel) {
 
 function _ScoreboardUpdater_UpdatePlayerPanelXP(plyData, playerPanel, playerId, ImbaXP_Panel) {
 
-	$.Msg("Updating player xp panel");
+//	$.Msg("Updating player xp panel");
 
 	var ids = {
 			xpRank:  "ImbaXPRank" + playerId,
@@ -106,7 +107,7 @@ function _ScoreboardUpdater_UpdatePlayerPanelXP(plyData, playerPanel, playerId, 
 			xpEarnedColor: "yellow",
 	};
 
-	$.Msg(plyData);
+//	$.Msg(plyData);
 
 	// setup strings
 

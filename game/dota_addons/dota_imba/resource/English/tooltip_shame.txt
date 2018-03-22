@@ -813,3 +813,6 @@
 
 "DOTA_Tooltip_modifier_imba_absolute_zero_dps"            "Absolute Zero"
 "DOTA_Tooltip_modifier_imba_absolute_zero_dps_Description"      "Taking ice damage over time"
+
+"DOTA_Tooltip_modifier_frantic"						"Frantic"
+"DOTA_Tooltip_modifier_frantic_Description"			"All cooldowns and debuffs reduced by %dMODIFIER_PROPERTY_COOLDOWN_PERCENTAGE%%%."

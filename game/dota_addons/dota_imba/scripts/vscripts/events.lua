@@ -157,15 +157,15 @@ function GameMode:OnGameRulesStateChange(keys)
 		Timers:CreateTimer(2.0, function()
 			for _, hero in pairs(HeroList:GetAllHeroes()) do
 				-- player table runs an error with new picking screen
-				if GetMapName() ~= "imba_1v1" then -- error for gaben reasons
-					local donators = api.imba.get_donators()
-					for k, v in pairs(donators) do
-						CustomNetTables:SetTableValue("player_table", tostring(hero:GetPlayerID()), {
-							companion_model = donators[k].model,
-							companion_enabled = donators[k].enabled,
-							Lvl = CustomNetTables:GetTableValue("player_table", tostring(hero:GetPlayerID())).Lvl,
-						})
-					end
+
+				if CustomNetTables:GetTableValue("player_table", tostring(hero:GetPlayerID())) == nil then return end
+				local donators = api.imba.get_donators()
+				for k, v in pairs(donators) do
+					CustomNetTables:SetTableValue("player_table", tostring(hero:GetPlayerID()), {
+						companion_model = donators[k].model,
+						companion_enabled = donators[k].enabled,
+						Lvl = CustomNetTables:GetTableValue("player_table", tostring(hero:GetPlayerID())).Lvl,
+					})
 				end
 			end
 
@@ -1252,10 +1252,10 @@ function GameMode:OnEntityKilled( keys )
 
 					-- divide the respawn time by 2 for frantic mode
 					if IMBA_FRANTIC_MODE_ON then
-						killed_unit:SetTimeUntilRespawn(respawn_time * IMBA_FRANTIC_VALUE)
-					else
-						killed_unit:SetTimeUntilRespawn(respawn_time)
+						respawn_time = respawn_time / (100/_G.IMBA_FRANTIC_VALUE)
 					end
+
+					killed_unit:SetTimeUntilRespawn(respawn_time)
 				end
 			end
 
@@ -1470,17 +1470,8 @@ function GameMode:OnTowerKill(keys)
 	local killerPlayer = PlayerResource:GetPlayer(keys.killer_userid)
 	local tower_team = keys.teamnumber
 
-	-------------------------------------------------------------------------------------------------
-	-- IMBA: Attack of the Ancients tower upgrade logic
-	-------------------------------------------------------------------------------------------------
-
-	-- Always enabled!
-	--	if TOWER_UPGRADE_MODE then
-
-	-- Find all friendly towers on the map
 	local towers = FindUnitsInRadius(tower_team, Vector(0, 0, 0), nil, 25000, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
 
-	-- Upgrade each tower
 	for _, tower in pairs(towers) do
 		UpgradeTower(tower)
 	end
@@ -1493,14 +1484,6 @@ function GameMode:OnTowerKill(keys)
 		Notifications:BottomToAll({text = "#tower_abilities_dire_upgrade", duration = 7, style = {color = "DodgerBlue"}})
 		EmitGlobalSound("powerup_02")
 	end
-	--	end
-
-	-------------------------------------------------------------------------------------------------
-	-- IMBA: Update comeback gold logic
-	-------------------------------------------------------------------------------------------------
-
-	--	local team = PlayerResource:GetTeam(keys.killer_userid)
-	--	UpdateComebackBonus(2, team)
 end
 
 -- This function is called whenever a player changes there custom team selection during Game Setup

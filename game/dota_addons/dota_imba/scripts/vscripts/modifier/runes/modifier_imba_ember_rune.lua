@@ -26,7 +26,7 @@ function modifier_imba_ember_rune:GetTexture()
 end
 
 function modifier_imba_ember_rune:GetEffectName()
-	return "particles/generic_gameplay/rune_doubledamage_owner.vpcf" --replace with radiance
+	return "particles/items2_fx/radiance_owner.vpcf"
 end
 
 function modifier_imba_ember_rune:GetEffectAttachType()
@@ -35,8 +35,16 @@ end
 
 function modifier_imba_ember_rune:OnCreated()
 	if not IsServer() then return end
-	self.aura_radius = 700
-	self.burn_duration = 10
+	self.aura_radius = 600
+	self.burn_duration = 10.0
+end
+
+function modifier_imba_ember_rune:GetAuraEntityReject(target)
+	if self:GetParent() == target then
+		return true
+	end
+
+	return false
 end
 
 function modifier_imba_ember_rune:DeclareFunctions()

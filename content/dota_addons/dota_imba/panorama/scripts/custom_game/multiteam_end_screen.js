@@ -34,6 +34,8 @@
 function EndScoreboard() {
 	GameEvents.Subscribe("end_game", function (args) {
 
+		HideIMR($.GetContextPanel())
+
 		var map_info = Game.GetMapInfo();
 		if (map_info.map_display_name == "imba_overthrow") {
 			$("#es-custom1").style.visibility = "visible";
@@ -162,6 +164,7 @@ function EndScoreboard() {
 					progress: pp.FindChildInLayoutFile("es-player-xp-progress"),
 					level: pp.FindChildInLayoutFile("es-player-xp-level"),
 					rank: pp.FindChildInLayoutFile("es-player-xp-rank"),
+					rank_name: pp.FindChildInLayoutFile("es-player-xp-rank-name"),
 					earned: pp.FindChildInLayoutFile("es-player-xp-earned")
 				}
 			};
@@ -182,45 +185,54 @@ function EndScoreboard() {
 			values.level.text = player.info.player_level;
 
 			// IMR
-			if (player.result != null) {			
-				if (player.result.imr_5v5_calibrating)
-					values.imr.text = "TBD";
-				else {
-					var imr = Math.floor(player.result.imr_5v5);
-					var diff = Math.floor(player.result.imr_5v5_diff);
+			var map_info = Game.GetMapInfo();
+			if (map_info.map_display_name == "imba_ranked_5v5" || map_info.map_display_name == "imba_ranked_10v10") {
+				if (player.result != null) {	
+					if (map_info.map_display_name == "imba_ranked_5v5") {
+						values.imr.style.visibility = "visible";
+						if (player.result.imr_5v5_calibrating)
+							values.imr.text = "TBD";
+						else {
+							var imr = Math.floor(player.result.imr_5v5);
+							var diff = Math.floor(player.result.imr_5v5_diff);
 
-					if (diff == 0) {
-						values.imr.text = imr;
-						values.imr.AddClass("es-text-white");
-					} else if (diff > 0) {
-						values.imr.text = imr + " (+" + diff + ")";
-						values.imr.AddClass("es-text-green");
-					} else {
-						values.imr.text = imr + " (" + diff + ")";
-						values.imr.AddClass("es-text-red");
+							if (diff == 0) {
+								values.imr.text = imr;
+								values.imr.AddClass("es-text-white");
+							} else if (diff > 0) {
+								values.imr.text = imr + " (+" + diff + ")";
+								values.imr.AddClass("es-text-green");
+							} else {
+								values.imr.text = imr + " (" + diff + ")";
+								values.imr.AddClass("es-text-red");
+							}
+						}
 					}
-				}
-				
-				if (player.result.imr_10v10_calibrating)
-					values.imr10v10.text = "TBD";
-				else {
-					var imr = Math.floor(player.result.imr_10v10);
-					var diff = Math.floor(player.result.imr_10v10_diff);
 
-					if (diff == 0) {
-						values.imr10v10.text = imr;
-						values.imr10v10.AddClass("es-text-white");
-					} else if (diff > 0) {
-						values.imr10v10.text = imr + " (+" + diff + ")";
-						values.imr10v10.AddClass("es-text-green");
-					} else {
-						values.imr10v10.text = imr + " (" + diff + ")";
-						values.imr10v10.AddClass("es-text-red");
+					if (map_info.map_display_name == "imba_ranked_10v10") {
+						values.imr10v10.style.visibility = "visible";
+						if (player.result.imr_10v10_calibrating)
+							values.imr10v10.text = "TBD";
+						else {
+							var imr = Math.floor(player.result.imr_10v10);
+							var diff = Math.floor(player.result.imr_10v10_diff);
+
+							if (diff == 0) {
+								values.imr10v10.text = imr;
+								values.imr10v10.AddClass("es-text-white");
+							} else if (diff > 0) {
+								values.imr10v10.text = imr + " (+" + diff + ")";
+								values.imr10v10.AddClass("es-text-green");
+							} else {
+								values.imr10v10.text = imr + " (" + diff + ")";
+								values.imr10v10.AddClass("es-text-red");
+							}
+						}
 					}
+				} else {
+					values.imr10v10.text = "N/A";
+					values.imr.text = "N/A";
 				}
-			} else {
-				values.imr10v10.text = "N/A";
-				values.imr.text = "N/A";
 			}
 
 			// XP
@@ -246,6 +258,8 @@ function EndScoreboard() {
 				var progress_bar = new_xp / max_xp * 100
 
 				values.xp.level.text = "Level: " + player.xp.level;
+				values.xp.rank_name.text = player.xp.title;
+				values.xp.rank_name.style.color = player.xp.color;
 
 				// if not leveling up
 				if (progress_bar < 100) {
