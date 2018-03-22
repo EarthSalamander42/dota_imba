@@ -16081,6 +16081,96 @@
 		"VisionNighttimeRange"		"800"		// Range of vision at night time.
 	}
 
+	//=================================================================================
+	// Ember Spirit: Fire remnant
+	//=================================================================================
+	"npc_imba_ember_spirit_remnant"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/heroes/ember_spirit/ember_spirit.vmdl"
+		"SoundSet"					"Hero_EmberSpirit"
+		"Level"						"1"
+		"ModelScale"				"1.2"
+		"IsSummoned"				"1"
+
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					""
+		"Ability2"					""
+		"Ability3"					""
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"0"
+		"MagicalResistance"			"0"
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+		"AttackDamageMin"			"0"
+		"AttackDamageMax"			"0"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+		"AttackRate"				"1.7"
+		"AttackAnimationPoint"		"0.4"
+		"AttackAcquisitionRange"	"550"
+		"AttackRange"				"450"
+		"ProjectileModel"			""
+		"ProjectileSpeed"			"900"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"HealthBarOffset"			"130"
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"0"
+		"BountyGoldMin"				"0"
+		"BountyGoldMax"				"0"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"100"
+		"MovementTurnRate"			"1.0"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"100"
+		"StatusHealthRegen"			"0.0"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_GOODGUYS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"450"
+		"VisionNighttimeRange"		"450"
+
+		// Cosmetics
+		//----------------------------------------------------------------
+		"Creature"
+		{
+         	"AttachWearables"
+			{
+				"Wearable1"	{	"ItemDef"	"7472"	}	// Rapier (main hand)
+				"Wearable2"	{	"ItemDef"	"7470"	}	// Rapier (off-hand)
+				"Wearable3"	{	"ItemDef"	"8843"	}	// Head
+				"Wearable4"	{	"ItemDef"	"8842"	}	// Pauldrons
+				"Wearable5"	{	"ItemDef"	"8840"	}	// Arms
+				"Wearable6"	{	"ItemDef"	"8880"	}	// Robe
+			}
+		}
+	}
+
 	//=================================================================================================================
 	// HERO: Sohei (Should be copied into npc_heroes_custom.txt without abilities!)
 	//=================================================================================================================
