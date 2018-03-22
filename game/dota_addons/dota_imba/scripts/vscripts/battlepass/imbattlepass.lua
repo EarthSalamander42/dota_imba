@@ -96,7 +96,7 @@ function Imbattlepass:Init()
 
 	ImbattlepassReward = {}
 
-	if ImbaApiPlayersLoaded() then return end
+	if api.imba.ready then return end
 
 	for ID = 0, PlayerResource:GetPlayerCount() -1 do
 		if CustomNetTables:GetTableValue("player_table", tostring(ID)) ~= nil then

@@ -114,7 +114,7 @@ function Random5v5TeamSelectionReady(obj, event)
 	CustomGameEventManager:UnregisterListener(TeamSelectionListeners.hostReady)
 
 	-- Make request
-	ImbaApiAutoOrderImr5v5Random(
+	api.imba.matchmaking.imr_5v5_random(
 		TeamSelectionGetAllPlayers(),
 		Random5v5TeamSelectionFinalize
 	)
@@ -259,7 +259,7 @@ function KeepTeams10v10TeamSelectionDone()
 	CustomGameEventManager:UnregisterListener(TeamSelectionListeners.computeComplete)
 
 	-- perform api request
-	ImbaApiAutoOrderImr10v10KeepTeams(
+	api.imba.matchmaking.imr_10v10_teams(
 		TeamSelectionGetAllPlayers(),
 		TeamSelectionComputed,
 		KeepTeams10v10TeamSelectionFinalize

@@ -12,10 +12,6 @@
 -- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 -- See the License for the specific language governing permissions and
 -- limitations under the License.
---
--- Editors:
---     suthernfriend, 03.02.2018
---
 
 
 local json = { _version = "0.1.0" }

@@ -1,6 +1,6 @@
 LinkLuaModifier("modifier_out_of_duel", "modifiers/modifier_out_of_duel.lua", LUA_MODIFIER_MOTION_NONE)
 
-if HeroSelection == nil then	
+if HeroSelection == nil then
 	require('libraries/event')
 	require('libraries/fun')()
 	require('libraries/functional')
@@ -46,7 +46,7 @@ function HeroSelection:Init()
 	local allheroes = LoadKeyValues("scripts/npc/npc_heroes_custom.txt")
 	for key,value in pairs(LoadKeyValues(herolistFile)) do
 		if allheroes[key] == nil then -- Cookies: If the hero is not in custom file, load vanilla KV's
---			print(key .. " is not in custom file!")
+			--			print(key .. " is not in custom file!")
 			local data = LoadKeyValues("scripts/npc/npc_heroes.txt")
 			if data and data[key] then
 				allheroes[key] = data[key]
@@ -63,7 +63,7 @@ function HeroSelection:Init()
 			customlist[key] = allheroes[key].IsCustom
 		end
 
-		if HeroIsHotDisabled(key) then
+		if api.imba.hero_is_disabled(key) then
 			hotdisabledlist[key] = 1
 		end
 
@@ -85,42 +85,42 @@ function HeroSelection:Init()
 	})
 
 	-- lock down the "pick" hero so that they can't do anything
---	GameEvents:OnHeroInGame(function (npc)
---		local playerId = npc:GetPlayerID()
---		print("An NPC spawned " .. npc:GetUnitName())
---		if npc:GetUnitName() == FORCE_PICKED_HERO then
---			npc:AddNewModifier(nil, nil, "modifier_out_of_duel", nil)
---			npc:AddNoDraw()
---
---			if self.attemptedSpawnPlayers[playerId] then
---				self:GiveStartingHero(playerId, self.attemptedSpawnPlayers[playerId])
---			end
---		end
---	end)
+	--	GameEvents:OnHeroInGame(function (npc)
+	--		local playerId = npc:GetPlayerID()
+	--		print("An NPC spawned " .. npc:GetUnitName())
+	--		if npc:GetUnitName() == FORCE_PICKED_HERO then
+	--			npc:AddNewModifier(nil, nil, "modifier_out_of_duel", nil)
+	--			npc:AddNoDraw()
+	--
+	--			if self.attemptedSpawnPlayers[playerId] then
+	--				self:GiveStartingHero(playerId, self.attemptedSpawnPlayers[playerId])
+	--			end
+	--		end
+	--	end)
 
---	if IsRandomMap() then
---		-- if it's ardm, show strategy screen right away,
---		-- lock in all heroes to initial random heroes
---		HeroSelection:StrategyTimer(3)
---		PlayerResource:GetAllTeamPlayerIDs():each(function(playerID)
---			lockedHeroes[playerID] = ARDMMode:GetRandomHero(PlayerResource:GetTeam(playerID))
---		end)
---		-- once ardm is done precaching, replace all the heroes, then fire off the finished loading event
---		ARDMMode:OnPrecache(function ()
---			print('Precache finished! Woohoo!')
---			PlayerResource:GetAllTeamPlayerIDs():each(function(playerID)
---				print('Giving starting hero ' .. lockedHeroes[playerID])
---				HeroSelection:GiveStartingHero(playerID, lockedHeroes[playerID])
---			end)
---			LoadFinishEvent.broadcast()
---		end)
---	else
-		HeroSelection:StartSelection()
---	end
+	--	if IsRandomMap() then
+	--		-- if it's ardm, show strategy screen right away,
+	--		-- lock in all heroes to initial random heroes
+	--		HeroSelection:StrategyTimer(3)
+	--		PlayerResource:GetAllTeamPlayerIDs():each(function(playerID)
+	--			lockedHeroes[playerID] = ARDMMode:GetRandomHero(PlayerResource:GetTeam(playerID))
+	--		end)
+	--		-- once ardm is done precaching, replace all the heroes, then fire off the finished loading event
+	--		ARDMMode:OnPrecache(function ()
+	--			print('Precache finished! Woohoo!')
+	--			PlayerResource:GetAllTeamPlayerIDs():each(function(playerID)
+	--				print('Giving starting hero ' .. lockedHeroes[playerID])
+	--				HeroSelection:GiveStartingHero(playerID, lockedHeroes[playerID])
+	--			end)
+	--			LoadFinishEvent.broadcast()
+	--		end)
+	--	else
+	HeroSelection:StartSelection()
+	--	end
 
---	if self.isARDM and ARDMMode then
---		ARDMMode:Init(herolist)
---	end
+	--	if self.isARDM and ARDMMode then
+	--		ARDMMode:Init(herolist)
+	--	end
 end
 
 -- set "empty" hero for every player and start picking phase
@@ -138,13 +138,13 @@ function HeroSelection:StartSelection()
 	CustomGameEventManager:RegisterListener('preview_hero', Dynamic_Wrap(HeroSelection, 'HeroPreview'))
 	CustomGameEventManager:RegisterListener("pick_abilities_requested", Dynamic_Wrap(HeroSelection, 'PickAbilitiesRequested'))
 
---	if IsRankedMap() then
---		EmitAnnouncerSound("announcer_announcer_type_capt_mode")
---		HeroSelection:CMManager(nil)
---	else
-		EmitAnnouncerSound("announcer_announcer_type_all_pick")
-		HeroSelection:APTimer(AP_GAME_TIME, "ALL PICK")
---	end
+	--	if IsRankedMap() then
+	--		EmitAnnouncerSound("announcer_announcer_type_capt_mode")
+	--		HeroSelection:CMManager(nil)
+	--	else
+	EmitAnnouncerSound("announcer_announcer_type_all_pick")
+	HeroSelection:APTimer(AP_GAME_TIME, "ALL PICK")
+	--	end
 end
 
 -- start heropick CM timer
@@ -257,7 +257,7 @@ function HeroSelection:CMTimer (time, message, isReserveTime)
 
 	if time <= 0 then
 		if cmpickorder["currentstage"] > 0 then
-		 if cmpickorder["order"][cmpickorder["currentstage"]].side == DOTA_TEAM_BADGUYS and cmpickorder["reservedire"] > 0 then
+			if cmpickorder["order"][cmpickorder["currentstage"]].side == DOTA_TEAM_BADGUYS and cmpickorder["reservedire"] > 0 then
 				-- start using reserve time
 				time = cmpickorder["reservedire"]
 				isReserveTime = true
@@ -316,21 +316,21 @@ function HeroSelection:APTimer (time, message)
 		for key, value in pairs(selectedtable) do
 			if value.selectedhero == "empty" then
 				-- if someone hasnt selected until time end, random for him
---				if IsRankedMap() then
---					HeroSelection:UpdateTable(key, cmpickorder[value.team.."picks"][1])
---				else
-					HeroSelection:UpdateTable(key, HeroSelection:RandomHero())
---				end
+				--				if IsRankedMap() then
+				--					HeroSelection:UpdateTable(key, cmpickorder[value.team.."picks"][1])
+				--				else
+				HeroSelection:UpdateTable(key, HeroSelection:RandomHero())
+				--				end
 			end
 			HeroSelection:SelectHero(key, selectedtable[key].selectedhero)
 		end
 		PlayerResource:GetAllTeamPlayerIDs():each(function (playerId)
 			if not lockedHeroes[playerId] then
---				if IsRankedMap() then
---					HeroSelection:UpdateTable(playerId, cmpickorder[PlayerResource:GetTeam(playerId).."picks"][1])
---				else
-					HeroSelection:UpdateTable(playerId, HeroSelection:RandomHero())
---				end
+				--				if IsRankedMap() then
+				--					HeroSelection:UpdateTable(playerId, cmpickorder[PlayerResource:GetTeam(playerId).."picks"][1])
+				--				else
+				HeroSelection:UpdateTable(playerId, HeroSelection:RandomHero())
+				--				end
 			end
 		end)
 
@@ -378,10 +378,10 @@ function HeroSelection:GiveStartingHero(playerId, heroName, dev)
 		end
 	end
 
---	local startingGold = 0
---	if self.hasGivenStartingGold then
---		startingGold = tonumber(CustomNetTables:GetTableValue("game_options", "initial_gold")["1"]) or 1200
---	end
+	--	local startingGold = 0
+	--	if self.hasGivenStartingGold then
+	--		startingGold = tonumber(CustomNetTables:GetTableValue("game_options", "initial_gold")["1"]) or 1200
+	--	end
 
 	local wisp = PlayerResource:GetSelectedHeroEntity(playerId)
 	local hero = PlayerResource:ReplaceHeroWith(playerId, heroName, 0, 0)
@@ -427,7 +427,7 @@ function HeroSelection:GiveStartingHero(playerId, heroName, dev)
 	-- Set up initial gold
 	-- local has_randomed = PlayerResource:HasRandomed(playerId)
 	-- This randomed variable gets reset when the player chooses to Repick, so you can detect a rerandom
---	local has_randomed = HeroSelection.playerPickState[playerId].random_state
+	--	local has_randomed = HeroSelection.playerPickState[playerId].random_state
 	local has_repicked = PlayerResource:CustomGetHasRepicked(playerId)
 
 	local initial_gold = tonumber(CustomNetTables:GetTableValue("game_options", "initial_gold")["1"]) or 1200
@@ -467,24 +467,25 @@ function HeroSelection:GiveStartingHero(playerId, heroName, dev)
 end
 
 function HeroSelection:IsHeroDisabled(hero)
-	if HeroIsHotDisabled(hero) then
+
+	if hero and api.imba.hero_is_disabled(hero) then
 		return true
 	end
 
---	if IsRankedMap() then
---		for _,data in ipairs(cmpickorder["order"]) do
---			if hero == data.hero then
---				return true
---			end
---		end
---	else
-		for _,data in pairs(selectedtable) do
-			if hero == data.selectedhero then
-				return true
-			end
+	--	if IsRankedMap() then
+	--		for _,data in ipairs(cmpickorder["order"]) do
+	--			if hero == data.hero then
+	--				return true
+	--			end
+	--		end
+	--	else
+	for _,data in pairs(selectedtable) do
+		if hero == data.selectedhero then
+			return true
 		end
---	end
-	
+	end
+	--	end
+
 	return false
 end
 
@@ -511,7 +512,7 @@ function HeroSelection:RandomImbaHero()
 		local choice = HeroSelection:UnsafeRandomHero()
 
 		for key, value in pairs(imbalist) do
---			print(key, choice, self:IsHeroDisabled(choice))
+			--			print(key, choice, self:IsHeroDisabled(choice))
 			if key == choice and not self:IsHeroDisabled(choice) then
 				return choice
 			end
@@ -543,12 +544,12 @@ function HeroSelection:EndStrategyTime()
 		PauseGame(true)
 	end
 
---	OnGameInProgressEvent() -- ENABLE BEFORE 7.05
+	--	OnGameInProgressEvent() -- ENABLE BEFORE 7.05
 
---	self.hasGivenStartingGold = true
---	for _,hero in ipairs(self.spawnedHeroes) do
---		PlayerResource:ModifyGold( hero:GetPlayerID(), tonumber(CustomNetTables:GetTableValue("game_options", "initial_gold")["1"]) or 1200, true, 0 )
---	end
+	--	self.hasGivenStartingGold = true
+	--	for _,hero in ipairs(self.spawnedHeroes) do
+	--		PlayerResource:ModifyGold( hero:GetPlayerID(), tonumber(CustomNetTables:GetTableValue("game_options", "initial_gold")["1"]) or 1200, true, 0 )
+	--	end
 
 	CustomNetTables:SetTableValue( 'hero_selection', 'time', {time = -1, mode = ""})
 end
@@ -613,25 +614,25 @@ function HeroSelection:UpdateTable(playerID, hero)
 		hero = "empty"
 	end
 
---	if IsRankedMap() then
---		if hero ~= "empty" then
---			local cmFound = false
---			for k,v in pairs(cmpickorder[teamID.."picks"])do
---				if v == hero then
---					table.remove(cmpickorder[teamID.."picks"], k)
---					cmFound = true
---				end
---			end
---			if not cmFound then
---				print('Couldnt find that hero in the CM pool ' .. tostring(hero))
---				hero = "empty"
---			end
---		end
---		-- if they've already selected a hero then unselect it
---		if selectedtable[playerID] and selectedtable[playerID].selectedhero ~= "empty" then
---			table.insert(cmpickorder[teamID.."picks"], selectedtable[playerID].selectedhero)
---		end
---	end
+	--	if IsRankedMap() then
+	--		if hero ~= "empty" then
+	--			local cmFound = false
+	--			for k,v in pairs(cmpickorder[teamID.."picks"])do
+	--				if v == hero then
+	--					table.remove(cmpickorder[teamID.."picks"], k)
+	--					cmFound = true
+	--				end
+	--			end
+	--			if not cmFound then
+	--				print('Couldnt find that hero in the CM pool ' .. tostring(hero))
+	--				hero = "empty"
+	--			end
+	--		end
+	--		-- if they've already selected a hero then unselect it
+	--		if selectedtable[playerID] and selectedtable[playerID].selectedhero ~= "empty" then
+	--			table.insert(cmpickorder[teamID.."picks"], selectedtable[playerID].selectedhero)
+	--		end
+	--	end
 
 	selectedtable[playerID] = {selectedhero = hero, team = teamID, steamid = HeroSelection:GetSteamAccountID(playerID)}
 
@@ -641,10 +642,10 @@ function HeroSelection:UpdateTable(playerID, hero)
 	for key, value in pairs(selectedtable) do --pseudocode
 		if GetMapName() ~= "oaa_captains_mode" and value.steamid == "0" then
 			value.selectedhero = HeroSelection:RandomHero()
-		end
-		if value.selectedhero == "empty" then
-			isanyempty = true
-		end
+	end
+	if value.selectedhero == "empty" then
+		isanyempty = true
+	end
 	end
 
 	CustomNetTables:SetTableValue( 'hero_selection', 'APdata', selectedtable)
@@ -697,41 +698,41 @@ function HeroSelection:Attachments(hero)
 	elseif hero_name == "hell_empress" then
 
 	elseif hero_name == "scaldris" then
---		for i = 0, 24 do
---			if hero:GetAbilityByIndex(i) then
---				hero:RemoveAbility(hero:GetAbilityByIndex(i):GetAbilityName())
---			end
---		end
---
---		hero:AddAbility("imba_scaldris_heatwave")
---		hero:AddAbility("imba_scaldris_scorch")
---		hero:AddAbility("imba_scaldris_jet_blaze")
---		hero:AddAbility("generic_hidden")
---
---		local ab = hero:AddAbility("imba_scaldris_antipode")
---		ab:SetLevel(1)
---
---		hero:AddAbility("imba_scaldris_living_flame")
---		hero:AddAbility("imba_scaldris_cold_front")
---		hero:AddAbility("imba_scaldris_freeze")
---		hero:AddAbility("imba_scaldris_ice_floes")
---		hero:AddAbility("imba_scaldris_absolute_zero")
---		hero:AddAbility("generic_hidden")
---		hero:AddAbility("generic_hidden")
---		hero:AddAbility("generic_hidden")
---		hero:AddAbility("generic_hidden")
---		hero:AddAbility("generic_hidden")
---		hero:AddAbility("generic_hidden")
---		hero:AddAbility("generic_hidden")
---		hero:AddAbility("generic_hidden")
---		hero:AddAbility("generic_hidden")
---		hero:AddAbility("generic_hidden")
---		hero:AddAbility("generic_hidden")
---		hero:AddAbility("generic_hidden")
---		hero:AddAbility("generic_hidden")
---		hero:AddAbility("generic_hidden")
+	--		for i = 0, 24 do
+	--			if hero:GetAbilityByIndex(i) then
+	--				hero:RemoveAbility(hero:GetAbilityByIndex(i):GetAbilityName())
+	--			end
+	--		end
+	--
+	--		hero:AddAbility("imba_scaldris_heatwave")
+	--		hero:AddAbility("imba_scaldris_scorch")
+	--		hero:AddAbility("imba_scaldris_jet_blaze")
+	--		hero:AddAbility("generic_hidden")
+	--
+	--		local ab = hero:AddAbility("imba_scaldris_antipode")
+	--		ab:SetLevel(1)
+	--
+	--		hero:AddAbility("imba_scaldris_living_flame")
+	--		hero:AddAbility("imba_scaldris_cold_front")
+	--		hero:AddAbility("imba_scaldris_freeze")
+	--		hero:AddAbility("imba_scaldris_ice_floes")
+	--		hero:AddAbility("imba_scaldris_absolute_zero")
+	--		hero:AddAbility("generic_hidden")
+	--		hero:AddAbility("generic_hidden")
+	--		hero:AddAbility("generic_hidden")
+	--		hero:AddAbility("generic_hidden")
+	--		hero:AddAbility("generic_hidden")
+	--		hero:AddAbility("generic_hidden")
+	--		hero:AddAbility("generic_hidden")
+	--		hero:AddAbility("generic_hidden")
+	--		hero:AddAbility("generic_hidden")
+	--		hero:AddAbility("generic_hidden")
+	--		hero:AddAbility("generic_hidden")
+	--		hero:AddAbility("generic_hidden")
+	--		hero:AddAbility("generic_hidden")
+	--		hero:AddAbility("generic_hidden")
 	elseif hero_name == "sohei" then
----		hero.hand = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/heroes/sohei/so_weapon.vmdl"})
+		---		hero.hand = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/heroes/sohei/so_weapon.vmdl"})
 		hero.hand = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/heroes/sohei/weapon/immortal/thunderlord.vmdl"})
 
 		-- lock to bone
@@ -750,9 +751,9 @@ end
 
 -- Returns an array with the hero's non-hidden abilities
 function HeroSelection:GetPickScreenAbilities(hero_name)
-local hero_abilities = {}
-local custom_hero = false
-local ability
+	local hero_abilities = {}
+	local custom_hero = false
+	local ability
 
 	for key, value in pairs(customlist) do
 		if key == hero_name then
@@ -762,11 +763,11 @@ local ability
 	end
 
 	for i = 1, 24 do
---		if custom_hero == true then
-			ability = GetKeyValue(hero_name, "Ability"..i)
---		else
---			ability = GetKeyValueByHeroName(hero_name, "Ability"..i)
---		end
+		--		if custom_hero == true then
+		ability = GetKeyValue(hero_name, "Ability"..i)
+		--		else
+		--			ability = GetKeyValueByHeroName(hero_name, "Ability"..i)
+		--		end
 
 		if ability then
 			if i ~= 9 then

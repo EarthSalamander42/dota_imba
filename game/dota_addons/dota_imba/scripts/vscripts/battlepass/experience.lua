@@ -134,14 +134,14 @@ function GetTitleColorIXP(title, js)
 end
 
 function GetPlayerInfoIXP() -- yet it has too much useless loops, format later. Need to be loaded in game setup
-	if not ImbaApiFrontendReady() then return end
+	if not api.imba.ready then return end
 
 	local level = {}
 	local current_xp_in_level = {}
 	local max_xp = {}
 
 	for ID = 0, PlayerResource:GetPlayerCount() -1 do
-		local global_xp = GetStatsForPlayer(ID).xp
+		local global_xp = api.imba.get_player_info(PlayerResource:GetSteamID(ID)).xp
 		level[ID] = 0
 
 		for i = 1, #XP_level_table do
@@ -166,10 +166,10 @@ function GetPlayerInfoIXP() -- yet it has too much useless loops, format later. 
 				Lvl = level[ID], -- add +1 only on the HUD else you are level 0 at the first level
 				title = GetTitleIXP(level[ID]),
 				title_color = GetTitleColorIXP(GetTitleIXP(level[ID]), true),
-				IMR_5v5 = GetStatsForPlayer(ID).imr_5v5,
-				IMR_10v10 = GetStatsForPlayer(ID).imr_10v10,
-				IMR_5v5_calibrating = GetStatsForPlayer(ID).imr_5v5_calibrating,
-				IMR_10v10_calibrating = GetStatsForPlayer(ID).imr_10v10_calibrating,
+				IMR_5v5 = api.imba.get_player_info(PlayerResource:GetSteamID(ID)).imr_5v5,
+				IMR_10v10 = api.imba.get_player_info(PlayerResource:GetSteamID(ID)).imr_10v10,
+				IMR_5v5_calibrating = api.imba.get_player_info(PlayerResource:GetSteamID(ID)).imr_5v5_calibrating,
+				IMR_10v10_calibrating = api.imba.get_player_info(PlayerResource:GetSteamID(ID)).imr_10v10_calibrating,
 				XP_change = 0,
 				IMR_5v5_change = 0,
 			})
@@ -179,14 +179,19 @@ function GetPlayerInfoIXP() -- yet it has too much useless loops, format later. 
 end
 
 function GetTopPlayersIXP()
-	if not ImbaApiFrontendReady() then return end
+	if not api.imba.ready then return end
 
 	local level = {}
 	local current_xp_in_level = {}
 	local max_xp = {}
 
-	for _, top_user in pairs(GetTopXpUsers()) do
+	local rankings = api.imba.get_rankings_xp()
+
+	for i = 1, #rankings do
+
+		local top_user = rankings[i]
 		local global_xp = top_user.xp
+
 		level[top_user.rank] = 0
 
 		for i = 1, #XP_level_table do
@@ -218,13 +223,13 @@ function GetTopPlayersIXP()
 end
 
 function GetTopPlayersIMR()
-	if not ImbaApiFrontendReady() then return end
+	if not api.imba.ready then return end
 
 	local level = {}
 	local current_xp_in_level = {}
 	local max_xp = {}
 
-	for _, top_user in pairs(GetTopImrUsers()) do
+	for _, top_user in pairs(api.imba.get_rankings_imr5v5()) do
 		local global_xp = top_user.xp
 		level[top_user.rank] = 0
 
