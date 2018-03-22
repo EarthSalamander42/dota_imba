@@ -246,6 +246,7 @@ function onPlayerStatChange (table, key, data) {
 				newlabel.steamid = data[nkey].steamid;
 
 				DisableHero(data[nkey].selectedhero);
+
 				if (iscm) {
 					if (data[nkey].selectedhero !== 'empty') {
 						FindDotaHudElement('CMStep' + nkey).heroname = data[nkey].selectedhero;
@@ -281,7 +282,10 @@ function onPlayerStatChange (table, key, data) {
 				currentplayer.heroname = data[nkey].selectedhero;
 				currentplayer.RemoveClass('PreviewHero');
 
-				DisableHero(data[nkey].selectedhero);
+				if (currentMap != "imba_1v1") {
+					DisableHero(data[nkey].selectedhero);
+				}
+
 				if (iscm && FindDotaHudElement('CMHeroPickLabel_' + data[nkey].selectedhero)) {
 					if (data[nkey].steamid) {
 						FindDotaHudElement('CMHeroPickLabel_' + data[nkey].selectedhero).steamid = data[nkey].steamid;

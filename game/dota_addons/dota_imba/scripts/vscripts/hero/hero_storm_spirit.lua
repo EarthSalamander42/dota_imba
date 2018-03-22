@@ -39,11 +39,11 @@ function imba_storm_spirit_static_remnant:OnSpellStart()
 
 		EmitSoundOn(cast_sound, caster)
 
+		local far_distance = 250
 		local remnant_pos = {}
-		remnant_pos[1] = Vector(100, 100, 0)		-- North-East
-		remnant_pos[2] = Vector(-100, 100, 0)		-- North-West
-		remnant_pos[3] = Vector(-100, -100, 0)		-- South-West
-		remnant_pos[4] = Vector(100, -100, 0)		-- South-East
+		remnant_pos[1] = Vector(0, far_distance, 0)		-- North
+		remnant_pos[2] = Vector(-far_distance, -far_distance, 0)	-- South-West
+		remnant_pos[3] = Vector(far_distance, -far_distance, 0)	-- South-East
 
 		if remnant_count > 1 then
 			for i = 1, remnant_count do
@@ -463,7 +463,7 @@ function modifier_imba_overload:OnAbilityExecuted( keys )
 				if not parent:PassivesDisabled() then
 					-- Ignore toggles and items
 					if (not keys.ability:IsItem() and not keys.ability:IsToggle()) then
-						if parent:FindModifierByName("modifier_imba_overload_buff") and parent:FindModifierByName("modifier_imba_overload_buff"):GetStackCount() <= self:GetAbility():GetSpecialValueFor("max_stacks") then
+						if parent:FindModifierByName("modifier_imba_overload_buff") and parent:FindModifierByName("modifier_imba_overload_buff"):GetStackCount() < self:GetAbility():GetSpecialValueFor("max_stacks") then
 							parent:FindModifierByName("modifier_imba_overload_buff"):SetStackCount(parent:FindModifierByName("modifier_imba_overload_buff"):GetStackCount() + 1)
 						else
 							parent:AddNewModifier(parent, self:GetAbility(), "modifier_imba_overload_buff",	{})
@@ -624,15 +624,8 @@ end
 imba_storm_spirit_ball_lightning = imba_storm_spirit_ball_lightning or class({})
 LinkLuaModifier("modifier_imba_ball_lightning", "hero/hero_storm_spirit.lua", LUA_MODIFIER_MOTION_NONE)
 
---function imba_storm_spirit_ball_lightning:OnPreStart()
---	StartAnimation(self:GetCaster(), {duration=0.3, activity=ACT_DOTA_CAST_ABILITY_4, rate=1.0})
-
---	return true
---end
-
 function imba_storm_spirit_ball_lightning:OnSpellStart()
 	if IsServer() then
-		StartAnimation(self:GetCaster(), {duration=10.0, activity=ACT_DOTA_OVERRIDE_ABILITY_4, rate=1.0})
 		-- Prevent some stupid shit that happens when you try to zip while already zipping
 		if self:GetCaster():FindModifierByName("modifier_imba_ball_lightning") then
 			self:RefundManaCost()
@@ -702,8 +695,7 @@ function imba_storm_spirit_ball_lightning:OnSpellStart()
 
 		-- Add Motion-Controller Modifier
 		caster:AddNewModifier(caster, self, "modifier_imba_ball_lightning", {})
-
-		caster:AddNewModifier(caster, self, "modifier_item_lotus_orb_active", {})
+		StartAnimation(self:GetCaster(), {duration=10.0, activity=ACT_DOTA_OVERRIDE_ABILITY_4, rate=1.0})
 	end
 end
 
@@ -718,7 +710,8 @@ function imba_storm_spirit_ball_lightning:OnProjectileThink_ExtraData(location, 
 
 		-- Set the caster slightly forwards
 		caster:SetAbsOrigin(Vector(location.x, location.y, GetGroundPosition(location, caster).z))
-		caster:Purge(false, true, true, true, true)
+--		caster:Purge(false, true, true, true, true)
+		caster:AddNewModifier(caster, self, "modifier_item_lotus_orb_active", {duration=FrameTime()})
 
 		-- Calculate the new travel distance
 		self.traveled = self.traveled + ExtraData.speed
@@ -769,13 +762,10 @@ end
 
 function imba_storm_spirit_ball_lightning:OnProjectileHit_ExtraData(target, location, ExtraData)
 	if IsServer() then
-		StartAnimation(self:GetCaster(), {duration=0.3, activity=ACT_DOTA_STORM_ABILITY_4, rate=1.0})
-		self:GetCaster():RemoveModifierByName("modifier_item_lotus_orb_active")
-
 		if target then
-			local caster	=	self:GetCaster()
-			local damage		=	ExtraData.damage * math.floor(self.traveled * 0.01)
-			local damage_flags 	= 	DOTA_DAMAGE_FLAG_NONE
+			local caster = self:GetCaster()
+			local damage = ExtraData.damage * math.floor(self.traveled * 0.01)
+			local damage_flags = DOTA_DAMAGE_FLAG_NONE
 
 			-- Prevent spell amp at large distances
 			if self.traveled > ExtraData.max_spell_amp_range then
@@ -808,6 +798,8 @@ function imba_storm_spirit_ball_lightning:OnProjectileHit_ExtraData(target, loca
 				end
 			end
 		end
+
+		StartAnimation(self:GetCaster(), {duration=0.3, activity=ACT_DOTA_STORM_ABILITY_4, rate=1.0})
 	end
 end
 

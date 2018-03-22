@@ -1120,9 +1120,10 @@ function PickupRune(rune_name, unit, bActiveByBottle)
 				local origin = unit:GetAbsOrigin() + table.remove( vRandomSpawnPos, 1 )
 				local illusion = IllusionManager:CreateIllusion(unit, self, origin, unit, {damagein=incomingDamage, damageout=outcomingDamage, unique=unit:entindex().."_rune_illusion_"..i, duration=duration})
 			end
+
 			EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Illusion", unit)
 		elseif rune_name == "invisibility" then
-			unit:AddNewModifier(unit, nil, "modifier_imba_invisibility_rune", {duration=duration})
+			unit:AddNewModifier(unit, nil, "modifier_imba_invisibility_rune_handler", {duration=2.0, rune_duration=duration})
 			EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Invis", unit)
 		elseif rune_name == "regeneration" then
 			unit:AddNewModifier(unit, nil, "modifier_imba_regen_rune", {duration=duration})

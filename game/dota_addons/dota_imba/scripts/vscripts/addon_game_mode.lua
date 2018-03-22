@@ -61,7 +61,7 @@ function Precache(context)
 	LinkLuaModifier("modifier_imba_frost_rune_slow", "modifier/runes/modifier_imba_frost_rune", LUA_MODIFIER_MOTION_NONE)
 	LinkLuaModifier("modifier_imba_ember_rune", "modifier/runes/modifier_imba_ember_rune", LUA_MODIFIER_MOTION_NONE)
 	LinkLuaModifier("modifier_imba_stone_rune", "modifier/runes/modifier_imba_stone_rune", LUA_MODIFIER_MOTION_NONE)
-	LinkLuaModifier("modifier_imba_invisibility_rune", "modifier/runes/modifier_imba_invisibility_rune", LUA_MODIFIER_MOTION_NONE)
+	LinkLuaModifier("modifier_imba_invisibility_rune_handler", "modifier/runes/modifier_imba_invisibility_rune", LUA_MODIFIER_MOTION_NONE)
 
 	-- Fountain Particle
 	LinkLuaModifier("modifier_imba_fountain_particle_control", "modifier/modifier_fountain_particle", LUA_MODIFIER_MOTION_NONE)

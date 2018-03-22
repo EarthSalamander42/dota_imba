@@ -8,6 +8,8 @@ modifier_frantic = modifier_frantic or class({})
 
 function modifier_frantic:IsDebuff() return false end
 function modifier_frantic:RemoveOnDeath() return false end
+function modifier_frantic:IsPurgable() return false end
+-- function modifier_frantic:IsPurgeException() return false end
 
 function modifier_frantic:GetTextureName()
 	return "custom/imba_rune_arcane"

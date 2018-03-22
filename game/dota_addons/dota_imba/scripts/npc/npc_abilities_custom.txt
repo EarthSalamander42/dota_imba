@@ -2086,7 +2086,7 @@
 		"MaxLevel"								"3"
 		"AbilitySharedWithTeammates"			"1"
 		"AbilityCastRange"						"900"
-		"AbilityCooldown"						"6"
+		"AbilityCooldown"						"8"
 		"ScriptFile"							"hero/tower_abilities"
 
 		// Precache
@@ -2119,12 +2119,12 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"heal_amount"				"200 300 400 500"
+				"heal_amount"				"150 250 350 450"
 			}
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"hp_threshold"				"85"
+				"hp_threshold"				"80"
 			}
 		}
 	}
@@ -8126,7 +8126,6 @@
 		"AbilityTextureName"				"enigma_black_hole"		
 		"MaxLevel"           				"3"
 		"ScriptFile"        				"hero/hero_enigma"
-
 		"HasScepterUpgrade"					"1"
 
 		// Precache
@@ -8152,7 +8151,7 @@
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"					"200 160 150"
+		"AbilityCooldown"					"180 155 130"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -8167,37 +8166,31 @@
 				"var_type"					"FIELD_INTEGER"
 				"radius"					"420"
 			}
-
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"pull_radius"				"1200"
 			}
-
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"stack_pull_distance"		"30"
 			}
-
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"damage_per_tick"			"50 150 200"
-			}			
-
+			}
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"min_pull_power" 			"75"			
-			}		
-
+			}
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"pull_strength" 			"75 105 140"			
 			}
-
 			"07"
 			{
 				"var_type"					"FIELD_FLOAT"
@@ -19548,7 +19541,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"300"
+				"value"						"250"
 			}
 		}
 	}
@@ -19604,7 +19597,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"3"
+				"value"						"2"
 			}
 		}
 	}

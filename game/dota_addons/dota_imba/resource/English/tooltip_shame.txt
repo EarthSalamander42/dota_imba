@@ -398,9 +398,6 @@
 
 "DOTA_Tooltip_ability_slark_dark_pact_Description"                      "After a short delay, Slark sacrifices some of his life blood, purging most negative debuffs and dealing damage to enemy units around him and to himself.  Slark only takes 50%% of the damage.\n<font color='#FF7800'>Burn the fish oil:</font> applies 10/10/10/10/12/14/16 instances of Dispel, over 1/1/1/1/1.2/1.4/1.6 seconds.\n\nDISPEL TYPE: Strong Dispel"
 
-"DOTA_Tooltip_ability_storm_spirit_static_remnant_Description"          "Creates an explosively charged image of Storm Spirit that lasts <font color='#FF7800'>12/12/12/12/28/44/60</font> seconds and will detonate and deal damage if an enemy unit comes near it."
-"DOTA_Tooltip_ability_storm_spirit_electric_vortex_Description"                     "A vortex that pulls an enemy unit to Storm Spirit's location, it also slows the Storm Spirit by <font color='#FF7800'>0%%</font> for 3 seconds.\n\nUpgradable by Aghanim's Scepter."
-
 //    "DOTA_Tooltip_ability_templar_assassin_psionic_trap_Description"                    "Templar Assassin places mystical traps that invisibly monitor enemy movement. When sprung at her command, they exert a slowing influence of 30%% in the area. Traps charge up to slow an additional <font color='#FF7800'>10%%</font> every second, up to <font color='#FF7800'>90%%.</font>"
 
 "DOTA_Tooltip_ability_terrorblade_sunder_Description"                  "Severs the life from both Terrorblade and a target hero, exchanging a percentage of both units' current health. Some health points must remain.\n<font color='#FF7800'>Quicksunder:</font> cast point improves on levels 4 and beyond."
