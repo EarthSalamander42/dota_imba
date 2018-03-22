@@ -44,6 +44,8 @@ function HeroSelection:HeroListPreLoad()
 
 	for hero, attributes in pairs(NPC_HEROES) do
 		if hero == "Version" or hero == "npc_dota_hero_base" or hero == "npc_dota_hero_target_dummy" then
+		elseif api.imba.hero_is_disabled(hero) then
+			table.insert(HeroSelection.disabled_heroes, hero)
 		else
 			table.insert(HeroSelection.vanilla_heroes, hero)
 			HeroSelection:AddVanillaHeroToList(hero)
@@ -53,7 +55,7 @@ function HeroSelection:HeroListPreLoad()
 	for hero, attributes in pairs(NPC_HEROES_CUSTOM) do
 		hero = string.gsub(hero, "imba", "dota")
 		if string.find(hero, "npc_dota_hero_") then
-			if HeroIsHotDisabled(hero) then -- hero hot disable
+			if api.imba.hero_is_disabled(hero) then -- hero hot disable
 				table.insert(HeroSelection.disabled_heroes, hero)
 			elseif GetKeyValueByHeroName(hero, "IsDisabled") == 1 then
 				table.insert(HeroSelection.disabled_10v10_heroes, hero)
@@ -313,7 +315,7 @@ function HeroSelection:RandomHero(event)
 		end
 	end
 
-	if HeroIsHotDisabled(random_hero) then
+	if api.imba.hero_is_disabled(random_hero) then
 		print("Hero is Hot Disabled!")
 		HeroSelection:RandomHero({PlayerID = id})
 		return
@@ -392,7 +394,7 @@ function HeroSelection:RandomImbaHero(event)
 		end
 	end
 
-	if HeroIsHotDisabled(random_hero) then
+	if api.imba.hero_is_disabled(random_hero) then
 		print("Hero is Hot Disabled!")
 		HeroSelection:RandomHero({PlayerID = id})
 		return
@@ -456,7 +458,7 @@ function HeroSelection:RandomSameHero()
 		end
 	end
 
-	if HeroIsHotDisabled(random_hero) then
+	if api.imba.hero_is_disabled(random_hero) then
 		print("Hero is Hot Disabled!")
 		HeroSelection:RandomHero({PlayerID = id})
 		return

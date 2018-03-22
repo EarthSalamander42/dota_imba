@@ -4,10 +4,10 @@ function GameMode:_OnGameRulesStateChange(keys)
 	if newState == DOTA_GAMERULES_STATE_WAIT_FOR_PLAYERS_TO_LOAD then
 		self.bSeenWaitForPlayers = true
 	elseif newState == DOTA_GAMERULES_STATE_INIT then
-		--Timers:RemoveTimer("alljointimer")
+	--Timers:RemoveTimer("alljointimer")
 	elseif newState == DOTA_GAMERULES_STATE_HERO_SELECTION then
 		GameMode:PostLoadPrecache()
-    	GameMode:OnAllPlayersLoaded()
+		GameMode:OnAllPlayersLoaded()
 	elseif newState == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
 		GameMode:OnGameInProgress()
 	end
@@ -18,22 +18,22 @@ function GameMode:_OnNPCSpawned(keys)
 	local npc = EntIndexToHScript(keys.entindex)
 
 	if npc:IsRealHero() then
-        if npc.bFirstSpawned == nil then
-            npc.bFirstSpawned = true
-            if npc:GetUnitName() ~= "npc_dota_hero_dummy_dummy" then
-                PopulateHeroImbaTalents(npc)
-                InitializeInnateAbilities(npc)
-            end
-            GameMode:OnHeroInGame(npc)
-        end
+		if npc.bFirstSpawned == nil then
+			npc.bFirstSpawned = true
+			if npc:GetUnitName() ~= "npc_dota_hero_dummy_dummy" then
+				PopulateHeroImbaTalents(npc)
+				InitializeInnateAbilities(npc)
+			end
+			GameMode:OnHeroInGame(npc)
+		end
 
-        AddMissingGenericTalent(npc)
+		AddMissingGenericTalent(npc)
 	end
 end
 
 -- An entity died
 function GameMode:_OnEntityKilled( keys )
-	
+
 	-- The Unit that was Killed
 	local killedUnit = EntIndexToHScript( keys.entindex_killed )
 	-- The Killing entity
@@ -43,7 +43,7 @@ function GameMode:_OnEntityKilled( keys )
 		killerEntity = EntIndexToHScript( keys.entindex_attacker )
 	end
 
-	if killedUnit:IsRealHero() then 
+	if killedUnit:IsRealHero() then
 		DebugPrint("KILLED, KILLER: " .. killedUnit:GetName() .. " -- " .. killerEntity:GetName())
 		if END_GAME_ON_KILLS and GetTeamHeroKills(killerEntity:GetTeam()) >= KILLS_TO_END_GAME_FOR_TEAM then
 			GameRules:SetSafeToLeave( true )
@@ -61,23 +61,23 @@ end
 -- This function is called once when the player fully connects and becomes "Ready" during Loading
 function GameMode:_OnConnectFull(keys)
 	GameMode:_CaptureGameMode()
-	
+
 	-- Store player's player ID
 	local player_id = keys.PlayerID
-	local player_steam_id_64 = tostring(PlayerResource:GetSteamID(player_id))	
+	local player_steam_id_64 = tostring(PlayerResource:GetSteamID(player_id))
 end
 
 -- This function is called once a player says something on any chat
 function GameMode:OnPlayerChat(keys)
-local text = keys.text
-local caster = PlayerResource:GetSelectedHeroEntity(keys.playerid)
-local caster_heroname = PlayerResource:GetSelectedHeroName(keys.playerid)
-local color = {}
-	
+	local text = keys.text
+	local caster = PlayerResource:GetSelectedHeroEntity(keys.playerid)
+	local caster_heroname = PlayerResource:GetSelectedHeroName(keys.playerid)
+	local color = {}
+
 	-- I dont know exactly where to put this so ill put here
 	local steamid = tostring(PlayerResource:GetSteamID(keys.playerid))
 	local _text = tostring(text)
-	ApiEvent(ApiEventCodes.ChatEvent, {
+	api.imba.event(api.events.chat, {
 		steamid,
 		text
 	})
@@ -88,7 +88,7 @@ local color = {}
 	end
 
 	for str in string.gmatch(text, "%S+") do
-		if IsInToolsMode() or IsDeveloper(caster:GetPlayerID()) then
+		if IsInToolsMode() or api.imba.is_developer(steamid) then
 			if str == "-dev_remove_units" then
 				GameMode:RemoveUnits(true, true, true)
 			end

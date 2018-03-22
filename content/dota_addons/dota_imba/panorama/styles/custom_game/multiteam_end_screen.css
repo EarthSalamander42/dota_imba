@@ -245,22 +245,21 @@
 	color: #ee7;
 }
 
-.es-legend-imr, .es-legend-imr10v10 {
+.es-legend-imr10v10,
+.es-legend-imr,
+.es-legend-rank1v1 {
 	width: 85px; 
-}
-.es-legend-imr10v10 {
 	margin-right: 15px;
+	text-align: center;
 }
 
 #es-player-imr,
-#es-player-imr10v10 {
+#es-player-imr10v10,
+#es-player-rank1v1 {
 	width: 85px;
 	vertical-align: center;
 	text-align: center;
 	visibility: collapse;
-}
-
-#es-player-imr10v10 {
 	margin-right: 15px;
 }
 
@@ -310,6 +309,7 @@
 	vertical-align: center;
 	text-align: center;
 }
+
 
 #es-buttons {
 	flow-children: right;

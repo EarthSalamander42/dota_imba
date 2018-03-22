@@ -47,7 +47,7 @@ function GameMode:OnDisconnect(keys)
 
 		-- Start tracking
 		print("started keeping track of player "..player_id.."'s connection state")
-		ApiEvent(ApiEventCodes.PlayerDisconnected, { tostring(PlayerResource:GetSteamID(player_id)) })
+		api.imba.event(api.events.player_disconnected, { tostring(PlayerResource:GetSteamID(player_id)) })
 
 		local disconnect_time = 0
 		Timers:CreateTimer(1, function()
@@ -63,7 +63,7 @@ function GameMode:OnDisconnect(keys)
 				PlayerResource:SetHasAbandonedDueToLongDisconnect(player_id, true)
 				print("player "..player_id.." has abandoned the game.")
 
-				ApiEvent(ApiEventCodes.PlayerAbandoned, { tostring(PlayerResource:GetSteamID(player_id)) })
+				api.imba.event(api.events.player_abandoned, { tostring(PlayerResource:GetSteamID(player_id)) })
 
 				-- Start redistributing this player's gold to its allies
 				PlayerResource:StartAbandonGoldRedistribution(player_id)
@@ -98,8 +98,8 @@ function GameMode:OnGameRulesStateChange(keys)
 	-- IMBA: Pick screen stuff
 	-------------------------------------------------------------------------------------------------
 	if new_state == DOTA_GAMERULES_STATE_HERO_SELECTION then
-		ApiEvent(ApiEventCodes.EnteredHeroSelection)
---		HeroSelection:HeroListPreLoad()
+		api.imba.event(api.events.entered_hero_selection)
+		--		HeroSelection:HeroListPreLoad()
 		HeroSelection:Init()
 
 		-- get the IXP of everyone (ignore bot)
@@ -110,7 +110,7 @@ function GameMode:OnGameRulesStateChange(keys)
 	-- IMBA: Start-of-pre-game stuff
 	-------------------------------------------------------------------------------------------------
 	if new_state == DOTA_GAMERULES_STATE_PRE_GAME then
-		ApiEvent(ApiEventCodes.EnteredPreGame)
+		api.imba.event(api.events.entered_pre_game)
 
 		-- Initialize Battle Pass
 		Imbattlepass:Init()
@@ -121,11 +121,11 @@ function GameMode:OnGameRulesStateChange(keys)
 		-- Hide Imbathrow bar for spectators
 		local imbathrow_bar = false
 		for i = 0, PlayerResource:GetPlayerCount() - 1 do
---			if PlayerResource:GetPlayer(i):GetTeam() ~= DOTA_TEAM_SPECTATOR then
-				if GetMapName() == "imba_overthrow" then
-					imbathrow_bar = true
-				end
---			end
+			--			if PlayerResource:GetPlayer(i):GetTeam() ~= DOTA_TEAM_SPECTATOR then
+			if GetMapName() == "imba_overthrow" then
+				imbathrow_bar = true
+			end
+			--			end
 		end
 
 		-- Initialize rune spawners
@@ -134,7 +134,7 @@ function GameMode:OnGameRulesStateChange(keys)
 		end
 
 		local donators_steamid = {}
-		local donators = GetDonators()
+		local donators = api.imba.get_donators()
 		if #donators then
 			for i = 1, #donators do
 				table.insert(donators_steamid, donators[i].steamId64)
@@ -157,8 +157,9 @@ function GameMode:OnGameRulesStateChange(keys)
 		Timers:CreateTimer(2.0, function()
 			for _, hero in pairs(HeroList:GetAllHeroes()) do
 				-- player table runs an error with new picking screen
+
 				if CustomNetTables:GetTableValue("player_table", tostring(hero:GetPlayerID())) == nil then return end
-				local donators = GetDonators()
+				local donators = api.imba.get_donators()
 				for k, v in pairs(donators) do
 					CustomNetTables:SetTableValue("player_table", tostring(hero:GetPlayerID()), {
 						companion_model = donators[k].model,
@@ -217,11 +218,11 @@ function GameMode:OnGameRulesStateChange(keys)
 	-- IMBA: Game started (horn sounded)
 	-------------------------------------------------------------------------------------------------
 	if new_state == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
-		ApiEvent(ApiEventCodes.StartedGame)
+		api.imba.event(api.events.started_game)
 
 		Timers:CreateTimer(60, function()
 			StartGarbageCollector()
---			DefineLosingTeam()
+			--			DefineLosingTeam()
 			return 60
 		end)
 
@@ -283,15 +284,63 @@ function GameMode:OnGameRulesStateChange(keys)
 			end
 
 			-- not removing neutral spawners for reasons...
---			Entities:FindByClassname(nil, "npc_dota_neutral_spawner"):RemoveSelf()
+			--			Entities:FindByClassname(nil, "npc_dota_neutral_spawner"):RemoveSelf()
 		end
 	end
 
 	if new_state == DOTA_GAMERULES_STATE_POST_GAME then
 		-- call imba api
-		ApiEvent(ApiEventCodes.EnteredPostGame)
+		api.imba.event(api.events.entered_post_game)
 
-		ImbaApi:EndGame()
+		api.imba.complete(function (error, players)
+
+				if error then
+					-- if we have an error we should display the scoreboard anyways, just with reduced data
+
+					CustomGameEventManager:Send_ServerToAllClients("end_game", {
+						players = {},
+						xp_info = {},
+						info = {
+							winner = GAME_WINNER_TEAM,
+							id = 0
+						},
+						error = true
+					})
+				else
+					-- everything went fine. use the old system for xp
+
+					local xp_info = {}
+
+					for i = 1, #players do
+						local player = players[i]
+
+						local level = GetXPLevelByXp(player.xp)
+						local title = GetTitleIXP(level)
+						local color = GetTitleColorIXP(title, true)
+						local progress = GetXpProgressToNextLevel(player.xp)
+
+						if level and title and color and progress then
+							table.insert(xp_info, {
+								steamid = player.steamid,
+								level = level,
+								title = title,
+								color = color,
+								progress = progress
+							})
+						end
+					end
+
+					CustomGameEventManager:Send_ServerToAllClients("end_game", {
+						players = players,
+						xp_info = xp_info,
+						info = {
+							winner = GAME_WINNER_TEAM,
+							id = api.imba.data.id
+						},
+						error = false
+					})
+				end
+		end)
 
 		CustomNetTables:SetTableValue("game_options", "game_count", {value = 0})
 	end
@@ -315,12 +364,12 @@ function GameMode:OnNPCSpawned(keys)
 			player = PlayerResource:GetSteamID(npc:GetPlayerID())
 		end
 
-		ApiEvent(ApiEventCodes.UnitSpawned, {
+		api.imba.event(api.events.unit_spawned, {
 			tostring(npc:GetUnitName()),
 			tostring(player)
 		})
 
---		npc:AddNewModifier(npc, nil, "modifier_river", {})
+		--		npc:AddNewModifier(npc, nil, "modifier_river", {})
 
 		if greeviling == true and RandomInt(1, 100) > 85 then
 			if string.find(npc:GetUnitName(), "dota_creep") then
@@ -437,7 +486,7 @@ function GameMode:OnNPCSpawned(keys)
 				npc:SwapAbilities("imba_troll_warlord_whirling_axes_ranged", "imba_troll_warlord_whirling_axes_melee", true, false)
 			end
 
-			if IsDonator(npc) ~= false then
+			if api.imba.is_donator(PlayerResource:GetSteamID(npc:GetPlayerID())) then
 				if npc:GetUnitName() ~= "npc_dota_hero_dummy_dummy" then
 					Timers:CreateTimer(2.0, function()
 						local steam_id = tostring(PlayerResource:GetSteamID(npc:GetPlayerID()))
@@ -469,9 +518,9 @@ function GameMode:OnNPCSpawned(keys)
 				npc:SetOriginalModel("models/creeps/ice_biome/storegga/storegga.vmdl")
 			end
 
---			if HeroSelection.playerPickState[npc:GetPlayerID()] and HeroSelection.playerPickState[npc:GetPlayerID()].pick_state == "selecting_hero" then
---				RestrictAndHideHero(npc)
---			end
+			--			if HeroSelection.playerPickState[npc:GetPlayerID()] and HeroSelection.playerPickState[npc:GetPlayerID()].pick_state == "selecting_hero" then
+			--				RestrictAndHideHero(npc)
+			--			end
 
 			npc.first_spawn = true
 		end
@@ -487,7 +536,7 @@ function GameMode:OnNPCSpawned(keys)
 		Timers:CreateTimer(1, function() -- Silencer fix
 			if npc:HasModifier("modifier_silencer_int_steal") then
 				npc:RemoveModifierByName("modifier_silencer_int_steal")
-			end
+		end
 		end)
 	end
 
@@ -617,7 +666,7 @@ end
 
 -- An item was picked up off the ground
 function GameMode:OnItemPickedUp(keys)
-	
+
 	-- The playerID of the hero who is buying something
 	local heroEntity = EntIndexToHScript(keys.HeroEntityIndex)
 	local plyID = keys.PlayerID
@@ -630,8 +679,8 @@ function GameMode:OnItemPickedUp(keys)
 		-- Pick up the gold
 		GoldPickup(keys)
 	end
-	
-	ApiEvent(ApiEventCodes.ItemPickedUp, {
+
+	api.imba.event(api.events.item_picked_up, {
 		tostring(keys.itemname),
 		tostring(hero:GetUnitName()),
 		tostring(PlayerResource:GetSteamID(plyID))
@@ -673,12 +722,12 @@ function GameMode:OnItemPurchased( keys )
 	local itemName = keys.itemname
 	local itemcost = keys.itemcost
 
-	ApiEvent(ApiEventCodes.ItemPurchased, {
+	api.imba.event(api.events.item_purchased, {
 		tostring(keys.itemname),
 		tostring(hero:GetUnitName()),
 		tostring(PlayerResource:GetSteamID(plyID))
 	})
-	
+
 end
 
 -- An ability was used by a player
@@ -712,7 +761,7 @@ function GameMode:OnAbilityUsed(keys)
 	end
 
 	-- API
-	ApiEvent(ApiEventCodes.AbilityUsed, {
+	api.imba.event(api.events.ability_used, {
 		tostring(hero:GetUnitName()),
 		tostring(abilityname),
 		tostring(PlayerResource:GetSteamID(keys.PlayerID))
@@ -794,7 +843,7 @@ function GameMode:OnPlayerLearnedAbility( keys)
 
 	if hero ~= nil then
 
-		ApiEvent(ApiEventCodes.AbilityLearned, {
+		api.imba.event(api.events.ability_learned, {
 			tostring(abilityname),
 			tostring(hero:GetUnitName()),
 			tostring(PlayerResource:GetSteamID(player:GetPlayerID()))
@@ -819,7 +868,7 @@ function GameMode:OnPlayerLevelUp(keys)
 	-------------------------------------------------------------------------------------------------
 	hero:SetCustomDeathXP(HERO_XP_BOUNTY_PER_LEVEL[hero_level])
 
-	ApiEvent(ApiEventCodes.HeroLevelUp, {
+	api.imba.event(api.events.hero_level_up, {
 		tostring(hero:GetUnitName()),
 		tostring(hero_level),
 		tostring(PlayerResource:GetSteamID(player:GetPlayerID()))
@@ -861,13 +910,13 @@ function GameMode:OnLastHit(keys)
 		if not player:GetAssignedHero().killstreak then player:GetAssignedHero().killstreak = 0 end
 		player:GetAssignedHero().killstreak = player:GetAssignedHero().killstreak +1
 
---		for _,attacker in pairs(HeroList:GetAllHeroes()) do
---			for i = 0, killedEnt:GetNumAttackers() -1 do
---				if attacker == killedEnt:GetAttacker(i) then
---					print(attacker:GetUnitName())
---				end
---			end
---		end
+		--		for _,attacker in pairs(HeroList:GetAllHeroes()) do
+		--			for i = 0, killedEnt:GetNumAttackers() -1 do
+		--				if attacker == killedEnt:GetAttacker(i) then
+		--					print(attacker:GetUnitName())
+		--				end
+		--			end
+		--		end
 
 		player:GetAssignedHero().kill_hero_bounty = 0
 		Timers:CreateTimer(FrameTime() * 2, function()
@@ -1108,7 +1157,7 @@ function GameMode:OnEntityKilled( keys )
 				end
 			end
 
-			ApiEvent(ApiEventCodes.UnitKilled, {
+			api.imba.event(api.events.unit_killed, {
 				tostring(killerUnitName),
 				tostring(killerPlayer),
 				tostring(killedUnitName),
@@ -1181,10 +1230,10 @@ function GameMode:OnEntityKilled( keys )
 				respawn_time = respawn_time * killed_unit:GetRespawnTimeModifier_Pct() * 0.01
 				respawn_time = math.max(respawn_time + killed_unit:GetRespawnTimeModifier(),0)
 				-- Fetch decreased respawn timer due to Bloodstone charges
-				
+
 				if killed_unit.bloodstone_respawn_reduction and (respawn_time > 0) then
 					respawn_time = math.max( respawn_time - killed_unit.bloodstone_respawn_reduction, 1)
-				-- 1 sec minimum respawn time
+					-- 1 sec minimum respawn time
 				elseif killed_unit.plancks_artifact_respawn_reduction and respawn_time > 0 then
 					respawn_time = math.max(respawn_time - killed_unit.plancks_artifact_respawn_reduction, 1)
 				end
@@ -1197,7 +1246,7 @@ function GameMode:OnEntityKilled( keys )
 						local reaper_scythe = killer:FindAbilityByName("imba_necrolyte_reapers_scythe"):GetSpecialValueFor("respawn_increase")
 						respawn_time = HERO_RESPAWN_TIME_PER_LEVEL[hero_level] + reaper_scythe
 					elseif respawn_time > HERO_RESPAWN_TIME_PER_LEVEL[#HERO_RESPAWN_TIME_PER_LEVEL] then
-						ApiPrint("Respawn Time too high: "..tostring(respawn_time)..". New Respawn Time:"..tostring(HERO_RESPAWN_TIME_PER_LEVEL[#HERO_RESPAWN_TIME_PER_LEVEL]))
+						api.print("Respawn Time too high: "..tostring(respawn_time)..". New Respawn Time:"..tostring(HERO_RESPAWN_TIME_PER_LEVEL[#HERO_RESPAWN_TIME_PER_LEVEL]))
 						respawn_time = HERO_RESPAWN_TIME_PER_LEVEL[#HERO_RESPAWN_TIME_PER_LEVEL]
 					end
 
@@ -1368,7 +1417,7 @@ function GameMode:OnConnectFull(keys)
 	local ply = EntIndexToHScript(entIndex)
 	local player_id = ply:GetPlayerID()
 
-	ApiEvent(ApiEventCodes.PlayerConnected, { tostring(PlayerResource:GetSteamID(player_id)) })
+	api.imba.event(api.events.player_connected, { tostring(PlayerResource:GetSteamID(player_id)) })
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Player data initialization
 	-------------------------------------------------------------------------------------------------
@@ -1402,7 +1451,7 @@ function GameMode:OnItemCombined(keys)
 	local itemName = keys.itemname
 	local itemcost = keys.itemcost
 
-	ApiEvent(ApiEventCodes.ItemCombined, {
+	api.imba.event(api.events.item_combined, {
 		tostring(keys.itemname),
 		tostring(hero:GetUnitName()),
 		tostring(PlayerResource:GetSteamID(plyID))

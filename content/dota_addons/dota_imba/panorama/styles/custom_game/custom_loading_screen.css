@@ -14,9 +14,12 @@
 @define TotalLength: 30s;
 @define TimingFunc: linear;
 @define IterationCount: 1;
-@define COLOR_INFO_BACKGROUND: #005580da;
+@define COLOR_INFO_BACKGROUND: #224470dd;
+//@define COLOR_INFO_BACKGROUND: #005580da;
 @define COLOR_INFO_BACKGROUND_DARK: #002233;
-@define COLOR_INFO_TEXT: #00aaff;
+@define COLOR_INFO_TEXT: #66aaff;
+//@define COLOR_INFO_TEXT: #00aaff;
+
 // green background translucent: #004d1ada
 // green background dark translucent: #001a09
 // green text: #00e64d
@@ -251,7 +254,7 @@
 	visibility: collapse;
 }
 
-#imba-normal-news, #imba-ow-news {
+#imba-news {
 	margin-top: 3%;
 	margin-left: 4%;
 	align: left center;
@@ -264,48 +267,48 @@
 	box-shadow: 0 0 10px #111;
 }
 
-.AspectRatio4x3 #imba-normal-news, .AspectRatio4x3 #imba-ow-news {
+.AspectRatio4x3 #imba-news {
 	width: 40%;
 	margin-bottom: 220px;
 }
 
-#oaa-normal-news-panel, #oaa-ow-news-panel {
+#additional-news-panel {
 	width: 100%;
 	margin-bottom: 10px;
-	margin-top: 10px;
-	padding-top: 10px;
-	border-top: 2px solid #eee;
+	margin-top: 20px;
+	padding-top: 20px;
+	border-top: 1px solid #99c;
 	flow-children: right;
 }
 
-#oaa-normal-news-text, #oaa-ow-news-text {
+#additional-news-text {
 	width: 600px;
 	flow-children: down;
 }
 
-#oaa-normal-news-article-text, #oaa-ow-news-article-text {
+#additional-news-text {
 	font-size: 18px;
 	color: #ddd;
 	text-shadow: 0 0 2px #000;
 }
 
-#oaa-normal-news-title, #oaa-ow-news-title {
+#additional-news-title {
 	font-size: 26px;
 	color: COLOR_INFO_TEXT;
 	font-weight: bold;
 	text-shadow: 0 0 5px #000;
 }
 
-.oaa-normal-news-link, #oaa-ow-news-link {
+.#additional-news-link {
 	color: #fff;
 	font-size: 20px;
 }
 
-.oaa-normal-news-link:hover, #oaa-ow-news-link:hover {
+.#additional-news-link:hover {
 	text-decoration: underline;
 }
 
-#oaa-normal-news-image, #oaa-ow-news-image {
+#additional-news-image {
 	background-image: url("file://{images}/custom_game/loading_screen/pudge_wars.jpg");
 	background-size: cover;
 	overflow: clip;
@@ -313,32 +316,27 @@
 	align: right bottom;
 }
 
-#imba-normal-news-title, #imba-ow-news-title {
+#imba-news-title {
 	font-size: 32px;
 	color: COLOR_INFO_TEXT;
 	font-weight: bold;
 	text-shadow: 0 0 5px #000;
 }
 
-#imba-normal-news-article-title, #imba-ow-news-article-title {
-	font-size: 24px;
-	color: #fff;
-	text-shadow: 0 0 3px #000;
-}
-
-#imba-normal-news-article-text, #imba-ow-news-article-text {
+#imba-news-text {
 	font-size: 18px;
 	color: #ddd;
 	text-shadow: 0 0 2px #000;
 }
 
-#imba-normal-news-link, #imba-ow-news-link, #imba-normal-news-link2, #imba-ow-news-link2 {
+#imba-news-link {
 	color: #fff;
-	font-size: 20px;
+	font-size: 22px;
 	text-shadow: 0 0 2px #000;
+	margin-top: 10px;
 }
 
-#imba-normal-news-link:hover, #imba-ow-news-link:hover,#imba-normal-news-link2:hover, #imba-ow-news-link2:hover {
+#imba-news-link:hover {
 	text-decoration: underline;
 }
 

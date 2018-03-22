@@ -12,7 +12,7 @@
 -- See the License for the specific language governing permissions and
 -- limitations under the License.
 --
--- Editors: 
+-- Editors:
 --     EarthSalamander #42
 --
 
@@ -45,8 +45,7 @@ require('libraries/illusionmanager')
 require('libraries/keyvalues')
 
 -- load api before internal/events
-require('api/api')
-require('api/frontend')
+require('api/imba')
 
 -- These internal libraries set up barebones's events and processes.  Feel free to inspect them/change them if you need to.
 require('internal/gamemode')
@@ -81,8 +80,8 @@ StoreCurrentDayCycle()
 
 function GameMode:PostLoadPrecache()
 	-- precache companions
-	if GetAllCompanions() ~= nil then
-		for k, v in pairs(GetAllCompanions()) do
+	if api.imba.get_companions() ~= nil then
+		for k, v in pairs(api.imba.get_companions()) do
 			PrecacheUnitWithQueue(v.file)
 		end
 	end
@@ -106,12 +105,7 @@ function GameMode:OnFirstPlayerLoaded()
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: API. Preload
 	-------------------------------------------------------------------------------------------------
-	ImbaApiFrontendInit(function ()
-		--
-		-- Here API Data is guaranteed to be available !!!
-		--
-		--		PrintTable(GetTopImrUsers())
-		end)
+	api.imba.register(function () end)
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Roshan and Picking Screen camera initialization
@@ -486,10 +480,10 @@ function GameMode:ModifierFilter( keys )
 			end
 		end
 
---		if modifier_name == "modifier_courier_shield" then
---			modifier_caster:RemoveModifierByName(modifier_name)
---			modifier_caster:FindAbilityByName("courier_burst"):CastAbility()
---		end
+		--		if modifier_name == "modifier_courier_shield" then
+		--			modifier_caster:RemoveModifierByName(modifier_name)
+		--			modifier_caster:FindAbilityByName("courier_burst"):CastAbility()
+		--		end
 
 		-- disarm immune
 		local jarnbjorn_immunity = {
@@ -1275,10 +1269,10 @@ function GameMode:OnHeroInGame(hero)
 			COURIER_TEAM[hero:GetTeamNumber()]:SetControllableByPlayer(hero:GetPlayerID(), true)
 			CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(hero:GetPlayerID()), "dota_hud", {show = true})
 
-			if IsDeveloper(hero:GetPlayerID()) then
+			if api.imba.is_developer(PlayerResource:GetSteamID(hero:GetPlayerID())) then
 				hero.has_graph = true
 				CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "show_netgraph", {})
---				CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "show_netgraph_heronames", {})
+				--				CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "show_netgraph_heronames", {})
 			end
 			return
 		else
@@ -1366,12 +1360,12 @@ function GameMode:InitGameMode()
 
 	--Derived Stats
 	mode:SetCustomAttributeDerivedStatValue(DOTA_ATTRIBUTE_STRENGTH_HP_REGEN_PERCENT, 0.0015) -- 40-45% of vanilla
---	mode:SetCustomAttributeDerivedStatValue(DOTA_ATTRIBUTE_INTELLIGENCE_MANA_REGEN_PERCENT, 0.010)
---	mode:SetCustomAttributeDerivedStatValue(DOTA_ATTRIBUTE_INTELLIGENCE_SPELL_AMP_PERCENT, 0.075)
+	--	mode:SetCustomAttributeDerivedStatValue(DOTA_ATTRIBUTE_INTELLIGENCE_MANA_REGEN_PERCENT, 0.010)
+	--	mode:SetCustomAttributeDerivedStatValue(DOTA_ATTRIBUTE_INTELLIGENCE_SPELL_AMP_PERCENT, 0.075)
 
---	mode:SetCustomAttributeDerivedStatValue(DOTA_ATTRIBUTE_STRENGTH_STATUS_RESISTANCE_PERCENT, 0)
---	mode:SetCustomAttributeDerivedStatValue(DOTA_ATTRIBUTE_AGILITY_MOVE_SPEED_PERCENT, 0)
---	mode:SetCustomAttributeDerivedStatValue(DOTA_ATTRIBUTE_INTELLIGENCE_MAGIC_RESISTANCE_PERCENT, 0)
+	--	mode:SetCustomAttributeDerivedStatValue(DOTA_ATTRIBUTE_STRENGTH_STATUS_RESISTANCE_PERCENT, 0)
+	--	mode:SetCustomAttributeDerivedStatValue(DOTA_ATTRIBUTE_AGILITY_MOVE_SPEED_PERCENT, 0)
+	--	mode:SetCustomAttributeDerivedStatValue(DOTA_ATTRIBUTE_INTELLIGENCE_MAGIC_RESISTANCE_PERCENT, 0)
 
 	-- Panorama event stuff
 	initScoreBoardEvents()
@@ -1895,7 +1889,7 @@ function GameMode:OnThink()
 		return 1
 	end
 
-	if CustomNetTables:GetTableValue("game_options", "game_count").value == 1 then 
+	if CustomNetTables:GetTableValue("game_options", "game_count").value == 1 then
 		if Convars:GetBool("sv_cheats") == true or GameRules:IsCheatMode() then
 			if not IsInToolsMode() then
 				print("Cheats have been enabled, game don't count.")
@@ -1914,9 +1908,9 @@ function GameMode:OnThink()
 		end
 
 		-- Find hidden modifiers
---		for i = 0, hero:GetModifierCount() -1 do
---			print(hero:GetModifierNameByIndex(i))
---		end
+		--		for i = 0, hero:GetModifierCount() -1 do
+		--			print(hero:GetModifierNameByIndex(i))
+		--		end
 	end
 
 	if GetMapName() == "imba_overthrow" then
@@ -2019,17 +2013,17 @@ function GameMode:OnThink()
 		return
 	else
 		i = i -1
---		print(i)
+		--		print(i)
 		for _, hero in pairs(HeroList:GetAllHeroes()) do
---			print(hero:GetPlayerID(), hero.picked)
+			--			print(hero:GetPlayerID(), hero.picked)
 			if not hero.picked and not i == false then -- have to double check false for reasons
 				if i == 30 then
 					EmitAnnouncerSoundForPlayer("announcer_ann_custom_countdown_"..i, hero:GetPlayerID())
-				elseif i == 10 then
-					EmitAnnouncerSoundForPlayer("announcer_ann_custom_countdown_"..i, hero:GetPlayerID())
-				elseif i <= 10 and i > 0 then
-					EmitAnnouncerSoundForPlayer("announcer_ann_custom_countdown_0"..i, hero:GetPlayerID())
-				end
+			elseif i == 10 then
+				EmitAnnouncerSoundForPlayer("announcer_ann_custom_countdown_"..i, hero:GetPlayerID())
+			elseif i <= 10 and i > 0 then
+				EmitAnnouncerSoundForPlayer("announcer_ann_custom_countdown_0"..i, hero:GetPlayerID())
+			end
 			end
 		end
 	end

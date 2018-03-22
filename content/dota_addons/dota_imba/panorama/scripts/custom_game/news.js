@@ -1,37 +1,40 @@
 "use strict";
 
-(function () {
+(function() {
 
-	var urls = {
-		metaNews: "https://api.dota2imba.org/meta/news"
-	};
+	var newsUrl = "http://api.dota2imba.org/imba/meta/loading-screen-info";
 
 	var ui = {
-		normalTitle: $("#imba-normal-news-title"),
-		normalText: $("#imba-normal-news-article-text"),
-//		owTitle: $("#imba-ow-news-article-title")
-//		owText: $("#imba-ow-news-article-text")
+		title : $("#imba-news-title"),
+		text : $("#imba-news-text"),
+		link : $("#imba-news-link")
 	};
 
-	var initializeNews = function InitializeNews() {
-//		$.Msg("Initialize News");
+	var defaultLanguage = "en";
 
-		$.AsyncWebRequest(urls.metaNews, {
-			type: "GET",
-			dataType: "json",
-			success: function (data) {
-//				$.Msg("News received: " + JSON.stringify(data.data.en.title));
-				ui.normalTitle.text = data.data.en.title;
-				ui.normalText.text = data.data.en.text;
-//				ui.owTitle.text = data.data.en.title;
-//				ui.owText.text = data.data.en.text;
+	var initializeNews = function InitializeNews() {
+
+		$.AsyncWebRequest(newsUrl, {
+			type : "GET",
+			dataType : "json",
+			success : function(data) {
+
+				$.Msg(data.data);
+
+				var lang = data.data.languages[defaultLanguage];
+				ui.title.text = lang.title;
+				ui.text.text = lang.text;
+				ui.link.text = lang.link_text;
+				ui.link.SetPanelEvent("onactivate", function() {
+					$.DispatchEvent("DOTADisplayURL", lang.link_value);
+				});
 			},
-			timeout: 5000,
-			error: function (err) {
+			timeout : 5000,
+			error : function(err) {
 				$.Msg("Error: " + JSON.stringify(err));
 			}
 		});
 	};
 
 	initializeNews();
-})(); 
+})();
