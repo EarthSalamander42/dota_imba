@@ -292,7 +292,7 @@ function GameMode:OnGameRulesStateChange(keys)
 		-- call imba api
 		api.imba.event(api.events.entered_post_game)
 
-		api.imba.game.complete(function (error, players)
+		api.imba.complete(function (error, players)
 
 				if error then
 					-- if we have an error we should display the scoreboard anyways, just with reduced data

@@ -13,68 +13,6 @@
 	</scripts>
 
 	<Panel class="addon-root">
-		<!--
-		<Panel id="overthrow-loading">
-			<Panel id="seq">
-				<Image id="seq_bg" class="SeqBg"
-					src="file://{images}/custom_game/loading_screen/loading_seq_bg.psd" />
-				<Image id="seq_beastmaster_pets" class="SeqImg"
-					src="file://{images}/custom_game/loading_screen/loading_seq_beastmaster_pets.psd" />
-				<Image id="seq_beastmaster" class="SeqImg"
-					src="file://{images}/custom_game/loading_screen/loading_seq_beastmaster.psd" />
-				<Image id="seq_luna" class="SeqImg"
-					src="file://{images}/custom_game/loading_screen/loading_seq_luna.psd" />
-				<Image id="seq_juggernaut" class="SeqImg"
-					src="file://{images}/custom_game/loading_screen/loading_seq_juggernaut.psd" />
-				<Image id="seq_coins" class="SeqImg"
-					src="file://{images}/custom_game/loading_screen/loading_seq_coins.psd" />
-			</Panel>
-
-			<Panel id="imba-social">
-				<Panel class="imba-social-buttons">
-					<Button id="imba-social-button-reddit" class="imba-social-button"
-						onactivate="DOTADisplayURL('https://www.reddit.com/r/dotaimba/');" />
-					<Button id="imba-social-button-patreon" class="imba-social-button"
-						onactivate="DOTADisplayURL('https://www.patreon.com/xherosiege');" />
-					<Button id="imba-social-button-facebook" class="imba-social-button"
-						onactivate="DOTADisplayURL('https://www.facebook.com/D2IMBA/');" />
-					<Button id="imba-social-button-twitter" class="imba-social-button"
-						onactivate="DOTADisplayURL('https://twitter.com/Dota2IMBA42');" />
-				</Panel>
-			</Panel>
-
-			<Panel id="imba-social">
-				<Panel class="imba-social-buttons">
-					<Button id="imba-social-button-discord-en" class="imba-social-button"
-						onactivate="DOTADisplayURL('http://tinyurl.com/imba-discord');" />
-					<Button id="imba-social-button-discord-ru" class="imba-social-button"
-						onactivate="DOTADisplayURL('https://discord.gg/HcybJKt');" />
-					<Button id="imba-social-button-tencent" class="imba-social-button"
-						onactivate="DOTADisplayURL('https://www.bilibiliduang.cn/imbagroup');" />
-				</Panel>
-			</Panel>
-
-			<Panel id="imba-ow-news">
-				<Label id="imba-ow-news-title" text="Dota IMBA 7.04 - Wild Origins" />
-				<Label id="imba-ow-news-article-text" />
-				<Label id="imba-normal-news-link" text="> Read more news on our Official Website"
-					onactivate="DOTADisplayURL('https://preview.dota2imba.org/wild-origins');" />
-				<Label id="imba-normal-news-link2" text="> Click here to participate in our survey and get an XP Bounty!"
-					onactivate="DOTADisplayURL('https://goo.gl/2Z4DBv');" />
-				<Panel id="oaa-normal-news-panel">
-					<Panel id="oaa-normal-news-text">
-						<Label id="oaa-normal-news-title" text="#oaa_news_title" />
-						<Label id="oaa-normal-news-article-text" text="#oaa_news_text" />
-						<Label id="oaa-normal-news-link" text="Tournament Website"
-							onactivate="DOTADisplayURL('https://oaa.gg/tournament');" />
-					</Panel>
-
-					<Image id="oaa-normal-news-image"
-						src="file://{images}/custom_game/loading_screen/oaa.png" />
-				</Panel>
-			</Panel>
-		</Panel>
--->
 		<Panel id="imba-loading">
 			<Panel id="imba-admin">
 				<Panel id="GameOptionsPanel">
@@ -192,23 +130,25 @@
 				</Panel>
 			</Panel>
 
-			<Panel id="imba-normal-news">
-				<Label id="imba-normal-news-title" text="Dota IMBA" />
-				<Label id="imba-normal-news-article-text" />
-				<Label id="imba-normal-news-link" text="> Read more news on our Official Website"
+			<Panel id="imba-news">
+				<Label id="imba-news-title" text="Dota IMBA" />
+				<Label id="imba-news-text" />
+				<Label id="imba-news-link" text="> Read more news on our Official Website"
 					onactivate="DOTADisplayURL('https://preview.dota2imba.org/wild-origins');" />
-				<Label id="imba-normal-news-link2" text="> Click here to participate in our survey and get an XP Bounty!"
-					onactivate="DOTADisplayURL('https://goo.gl/2Z4DBv');" />
-				<Panel id="oaa-normal-news-panel">
-					<Panel id="oaa-normal-news-text">
-						<Label id="oaa-normal-news-title" text="#oaa_news_title" />
-						<Label id="oaa-normal-news-article-text" text="#oaa_news_text" />
-						<Label class="oaa-normal-news-link" text="Pudge Wars Workshop Link" onactivate="DOTADisplayURL('https://steamcommunity.com/sharedfiles/filedetails/?id=296831818');" />
-						<Label class="oaa-normal-news-link" text="X Hero Siege Workshop Link" onactivate="DOTADisplayURL('http://steamcommunity.com/sharedfiles/filedetails/?id=536682348');" />
-						<Label class="oaa-normal-news-link" text="Hero Line Wars Workshop Link" onactivate="DOTADisplayURL('https://steamcommunity.com/sharedfiles/filedetails/?id=492195751');" />
+					
+				<Panel id="additional-news-panel">
+					<Panel id="additional-news-text">
+						<Label id="additional-news-title" text="#oaa_news_title" />
+						<Label id="additional-news-text" text="#oaa_news_text" />
+						<Label class="additional-news-link" text="Pudge Wars Workshop Link"
+							onactivate="DOTADisplayURL('https://steamcommunity.com/sharedfiles/filedetails/?id=296831818');" />
+						<Label class="additional-news-link" text="X Hero Siege Workshop Link"
+							onactivate="DOTADisplayURL('http://steamcommunity.com/sharedfiles/filedetails/?id=536682348');" />
+						<Label class="additional-news-link" text="Hero Line Wars Workshop Link"
+							onactivate="DOTADisplayURL('https://steamcommunity.com/sharedfiles/filedetails/?id=492195751');" />
 					</Panel>
 
-					<Image id="oaa-normal-news-image" />
+					<Image id="additional-news-image" />
 				</Panel>
 			</Panel>
 		</Panel>

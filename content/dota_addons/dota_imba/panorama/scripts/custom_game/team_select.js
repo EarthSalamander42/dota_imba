@@ -304,7 +304,7 @@ function UpdateGameState() {
 		$.Msg("Skipping legacy team select on map");
 		return;
 	}
-	
+		
 	var bShowSpectatorTeam = false;
 	var bAutoAssignTeams = true;
 

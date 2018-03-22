@@ -74,16 +74,18 @@ function api.imba.register(callback)
 				callback(false)
 			end
 			api.imba.ready = true
+
+			-- start events system
+			api.imba.events.initialize()
 		end
 	end)
 
-	api.imba.events.initialize()
 end
 
 function api.imba.event(code, data)
 	api.debug("Queueing event #" .. code)
 
-	local rc = json.null
+	local real_content = json.null
 	if data ~= nil then
 		real_content = data
 	end
@@ -133,8 +135,9 @@ function api.imba.complete(callback)
 				api.debug("Hero for player " .. steamid .. " is nil")
 			else
 				data.hero_name = tostring(data.hero:GetUnitName())
-
-				for slot = 0, MAX_ITEM_SLOT do
+			
+				-- 6 inventory + 3 backpack + 6 stash = 15 total
+				for slot = 0, 14 do 
 					local item = data.hero:GetItemInSlot(slot)
 					if item ~= nil then
 						table.insert(data.items, tostring(item:GetAbilityName()))
@@ -191,7 +194,7 @@ function api.imba.complete(callback)
 				team = tonumber(PlayerResource:GetTeam(id)),
 				valid_player = PlayerResource:IsValidPlayer(id),
 				has_randomed = PlayerResource:HasRandomed(id),
-				has_repicked = PlayerResource:HasRepicked(id),
+				has_repicked = false, -- PlayerResource:HasRepicked(id),
 				valid_team_player = PlayerResource:IsValidTeamPlayer(id),
 				id = id,
 				items = data.items

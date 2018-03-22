@@ -28,13 +28,12 @@ api.debug_levels = {
 
 api.config = {
 	protocol = "http://",
-	server = "himbeere.pirintex.com",
-	--	server = "api.dota2imba.org",
+	server = "api.dota2imba.org",
 	version = "2",
 	game = "imba",
 	agent = "imba_705",
 	timeout = 5000,
-	debug_level = api.debug_levels.trace,
+	debug_level = api.debug_levels.warn,
 }
 
 api.endpoints = {
@@ -88,7 +87,7 @@ api.events = {
 	unit_spawned = 21,			-- (unit_name, steamid)
 	item_combined = 22,			-- (item_name, hero_name, steamid)
 	item_picked_up = 23,		-- (item_name, hero_name, steamid)
-	chat_event = 24	 			-- (steamid, text)
+	chat = 24	 				-- (steamid, text)
 }
 
 api.debug_levels_name = {}

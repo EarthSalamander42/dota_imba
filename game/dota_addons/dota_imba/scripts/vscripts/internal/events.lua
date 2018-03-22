@@ -77,7 +77,7 @@ function GameMode:OnPlayerChat(keys)
 	-- I dont know exactly where to put this so ill put here
 	local steamid = tostring(PlayerResource:GetSteamID(keys.playerid))
 	local _text = tostring(text)
-	api.imba.event(api.imba.events.chat, {
+	api.imba.event(api.events.chat, {
 		steamid,
 		text
 	})
