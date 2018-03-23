@@ -139,7 +139,7 @@ function SetCompanion(companion, name) {
 	}
 
 	var steamId = Game.GetLocalPlayerInfo().player_steamid;
-	var url = 'http://api.dota2imba.org/meta/set-companion';
+	var url = 'http://api.dota2imba.org/imba/meta/modify-donator';
 	var data = {
 		companion : companion,
 		steam_id : steamId
@@ -239,9 +239,9 @@ function HallOfFame(type) {
 		imbar_xp.AddClass("imbar-xp")
 		imbar_xp.text = top_users.XP + "/" + top_users.MaxXP
 
-		var imr = $.CreatePanel("Label", player, "rank_" + i);
-		imr.AddClass("LeaderboardIMR")
-		imr.text = top_users.IMR_5v5.toFixed([0])
+//		var imr = $.CreatePanel("Label", player, "rank_" + i);
+//		imr.AddClass("LeaderboardIMR")
+//		imr.text = top_users.IMR_5v5.toFixed([0])
 	}
 }
 
@@ -425,6 +425,7 @@ function GenerateCompanionPanel(companions, player) {
 		if (newbie == true) {
 			companionpreview.AddClass("CompanionNew")
 		}
+
 		if (vip == true) {
 			companionpreview.AddClass("CompanionUnique")
 		}
@@ -502,7 +503,7 @@ function ToggleCompanion() {
 	}
 
 	var steamId = Game.GetLocalPlayerInfo().player_steamid;
-	var url = 'http://api.dota2imba.org/meta/set-companion';
+	var url = 'http://api.dota2imba.org/imba/meta/modify-donator';
 	var data = {
 		companion : companion,
 		steam_id : steamId

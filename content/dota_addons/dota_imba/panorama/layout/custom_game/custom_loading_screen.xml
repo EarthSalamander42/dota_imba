@@ -14,6 +14,28 @@
 
 	<Panel class="addon-root">
 		<Panel id="imba-loading">
+			<Panel id="imba-news">
+				<Label id="imba-news-title" text="Dota IMBA" />
+				<Label id="imba-news-text" />
+				<Label id="imba-news-link" text="> Read more news on our Official Website"
+					onactivate="DOTADisplayURL('https://preview.dota2imba.org/wild-origins');" />
+					
+				<Panel id="additional-news-panel">
+					<Panel id="additional-news-text">
+						<Label id="additional-news-title" text="#oaa_news_title" />
+						<Label id="additional-news-text" text="#oaa_news_text" />
+						<Label class="additional-news-link" text="Pudge Wars Workshop Link"
+							onactivate="DOTADisplayURL('https://steamcommunity.com/sharedfiles/filedetails/?id=296831818');" />
+						<Label class="additional-news-link" text="X Hero Siege Workshop Link"
+							onactivate="DOTADisplayURL('http://steamcommunity.com/sharedfiles/filedetails/?id=536682348');" />
+						<Label class="additional-news-link" text="Hero Line Wars Workshop Link"
+							onactivate="DOTADisplayURL('https://steamcommunity.com/sharedfiles/filedetails/?id=492195751');" />
+					</Panel>
+
+					<Image id="additional-news-image" />
+				</Panel>
+			</Panel>
+
 			<Panel id="imba-social">
 				<Panel class="imba-social-buttons">
 					<Button id="imba-social-button-reddit" class="imba-social-button"
@@ -35,28 +57,6 @@
 						onactivate="DOTADisplayURL('https://discord.gg/HcybJKt');" />
 					<Button id="imba-social-button-tencent" class="imba-social-button"
 						onactivate="DOTADisplayURL('https://www.bilibiliduang.cn/imbagroup');" />
-				</Panel>
-			</Panel>
-
-			<Panel id="imba-news">
-				<Label id="imba-news-title" text="Dota IMBA" />
-				<Label id="imba-news-text" />
-				<Label id="imba-news-link" text="> Read more news on our Official Website"
-					onactivate="DOTADisplayURL('https://preview.dota2imba.org/wild-origins');" />
-					
-				<Panel id="additional-news-panel">
-					<Panel id="additional-news-text">
-						<Label id="additional-news-title" text="#oaa_news_title" />
-						<Label id="additional-news-text" text="#oaa_news_text" />
-						<Label class="additional-news-link" text="Pudge Wars Workshop Link"
-							onactivate="DOTADisplayURL('https://steamcommunity.com/sharedfiles/filedetails/?id=296831818');" />
-						<Label class="additional-news-link" text="X Hero Siege Workshop Link"
-							onactivate="DOTADisplayURL('http://steamcommunity.com/sharedfiles/filedetails/?id=536682348');" />
-						<Label class="additional-news-link" text="Hero Line Wars Workshop Link"
-							onactivate="DOTADisplayURL('https://steamcommunity.com/sharedfiles/filedetails/?id=492195751');" />
-					</Panel>
-
-					<Image id="additional-news-image" />
 				</Panel>
 			</Panel>
 		</Panel>

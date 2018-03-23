@@ -135,7 +135,7 @@ function GameMode:OnGameRulesStateChange(keys)
 
 		local donators_steamid = {}
 		local donators = api.imba.get_donators()
-		if #donators then
+		if donators and #donators then
 			for i = 1, #donators do
 				table.insert(donators_steamid, donators[i].steamId64)
 			end
@@ -158,14 +158,15 @@ function GameMode:OnGameRulesStateChange(keys)
 			for _, hero in pairs(HeroList:GetAllHeroes()) do
 				-- player table runs an error with new picking screen
 
-				if CustomNetTables:GetTableValue("player_table", tostring(hero:GetPlayerID())) == nil then return end
-				local donators = api.imba.get_donators()
-				for k, v in pairs(donators) do
-					CustomNetTables:SetTableValue("player_table", tostring(hero:GetPlayerID()), {
-						companion_model = donators[k].model,
-						companion_enabled = donators[k].enabled,
-						Lvl = CustomNetTables:GetTableValue("player_table", tostring(hero:GetPlayerID())).Lvl,
-					})
+				if CustomNetTables:GetTableValue("player_table", tostring(hero:GetPlayerID())) ~= nil then
+					local donators = api.imba.get_donators()
+					for k, v in pairs(donators) do
+						CustomNetTables:SetTableValue("player_table", tostring(hero:GetPlayerID()), {
+							companion_model = donators[k].model,
+							companion_enabled = donators[k].enabled,
+							Lvl = CustomNetTables:GetTableValue("player_table", tostring(hero:GetPlayerID())).Lvl,
+						})
+					end
 				end
 			end
 

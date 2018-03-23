@@ -29,16 +29,16 @@ function InitializeUI() {
 		return;
 	} else if (is_host) {
 		// Make the game options panel visible
-		var game_options_panel = $('#imba-admin')
-		game_options_panel.style.visibility = 'visible';
+//		var game_options_panel = $('#imba-admin')
+//		game_options_panel.style.visibility = 'visible';
 
 		// Update other elements according to the current map
 		var map_info = Game.GetMapInfo();
 
 		if (map_info.map_display_name == "imba_ranked_5v5") {
-			$('#GameOptionsPanel').style.visibility = 'collapse';
+//			$('#GameOptionsPanel').style.visibility = 'collapse';
 		} else if (map_info.map_display_name == "imba_ranked_10v10" || map_info.map_display_name == "imba_12v12") {
-			$('#GameOptionsPanel').style.visibility = 'collapse';
+//			$('#GameOptionsPanel').style.visibility = 'collapse';
 		} else if (map_info.map_display_name == "imba_frantic_5v5" || map_info.map_display_name == "imba_frantic_10v10") {
 			$('#GoldOptionsPanel').style.visibility = 'collapse';
 			$('#ExpOptionsPanel').style.visibility = 'collapse';
@@ -48,7 +48,7 @@ function InitializeUI() {
 			gold = 2
 			exp = 2
 		} else if (map_info.map_display_name == "imba_overthrow") {
-			$('#GameOptionsPanel').style.visibility = 'collapse';
+//			$('#GameOptionsPanel').style.visibility = 'collapse';
 			$('#imba-loading').style.visibility = 'collapse';
 			$('#overthrow-loading').style.visibility = 'visible';
 		}
@@ -56,14 +56,14 @@ function InitializeUI() {
 		if (map_info.map_display_name != "imba_frantic_5v5" && map_info.map_display_name != "imba_frantic_10v10" && Game.GetLocalPlayerInfo().player_steamid == "76561198015161808" || Game.GetLocalPlayerInfo().player_steamid == "76561198036748162") {
 			$.Msg("Bulldong!")
 			$('#imba-loading').style.visibility = 'visible';
-			$('#GameOptionsPanel').style.visibility = 'visible';
-			$('#GoldOptionsPanel').style.visibility = 'collapse';
-			$('#ExpOptionsPanel').style.visibility = 'collapse';
-			$('#TowerPowerOptionsPanel').style.visibility = 'collapse';
-			$('#HeroPowerOptionsPanel').style.visibility = 'collapse';
-			$('#FranticInfo').style.visibility = 'collapse';
-			$('#QuickOptionsPanel').style.visibility = 'collapse';
-			$('#game_options_game_mode_title').text = "Bulldong Game Options Panel";
+//			$('#GameOptionsPanel').style.visibility = 'visible';
+//			$('#GoldOptionsPanel').style.visibility = 'collapse';
+//			$('#ExpOptionsPanel').style.visibility = 'collapse';
+//			$('#TowerPowerOptionsPanel').style.visibility = 'collapse';
+//			$('#HeroPowerOptionsPanel').style.visibility = 'collapse';
+//			$('#FranticInfo').style.visibility = 'collapse';
+//			$('#QuickOptionsPanel').style.visibility = 'collapse';
+//			$('#game_options_game_mode_title').text = "Bulldong Game Options Panel";
 		}
 	}
 
@@ -131,9 +131,9 @@ function SetGameOptions() {
 	GameEvents.SendCustomGameEventToServer("set_game_mode", {
 		"is_host": CheckForHostPrivileges(),
 		"modes": {
-			"all_pick": $('#AllPickToggle').checked,
-			"all_random": $('#AllRandomToggle').checked,
-			"all_random_same_hero": $('#AllRandomSameHeroToggle').checked,
+//			"all_pick": $('#AllPickToggle').checked,
+//			"all_random": $('#AllRandomToggle').checked,
+//			"all_random_same_hero": $('#AllRandomSameHeroToggle').checked,
 			"bounty_multiplier": gold,
 			"exp_multiplier": exp,
 			"tower_power": tower,
