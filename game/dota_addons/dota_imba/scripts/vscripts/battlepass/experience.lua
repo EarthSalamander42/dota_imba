@@ -166,10 +166,10 @@ function GetPlayerInfoIXP() -- yet it has too much useless loops, format later. 
 				Lvl = level[ID], -- add +1 only on the HUD else you are level 0 at the first level
 				title = GetTitleIXP(level[ID]),
 				title_color = GetTitleColorIXP(GetTitleIXP(level[ID]), true),
-				IMR_5v5 = api.imba.get_player_info(PlayerResource:GetSteamID(ID)).imr_5v5,
-				IMR_10v10 = api.imba.get_player_info(PlayerResource:GetSteamID(ID)).imr_10v10,
-				IMR_5v5_calibrating = api.imba.get_player_info(PlayerResource:GetSteamID(ID)).imr_5v5_calibrating,
-				IMR_10v10_calibrating = api.imba.get_player_info(PlayerResource:GetSteamID(ID)).imr_10v10_calibrating,
+				IMR_5v5 = api.imba.get_player_info(PlayerResource:GetSteamID(ID)).imr5v5,
+				IMR_10v10 = api.imba.get_player_info(PlayerResource:GetSteamID(ID)).imr10v10,
+				IMR_5v5_calibrating = api.imba.get_player_info(PlayerResource:GetSteamID(ID)).imr5v5_calibrating,
+				IMR_10v10_calibrating = api.imba.get_player_info(PlayerResource:GetSteamID(ID)).imr10v10_calibrating,
 				XP_change = 0,
 				IMR_5v5_change = 0,
 			})
@@ -217,7 +217,7 @@ function GetTopPlayersIXP()
 				Lvl = level[top_user.rank],
 				title = GetTitleIXP(level[top_user.rank]),
 				title_color = GetTitleColorIXP(GetTitleIXP(level[top_user.rank]), true),
-				IMR_5v5 = top_user.imr_5v5,
+				IMR_5v5 = top_user.imr5v5,
 			})
 	end
 end
@@ -248,15 +248,15 @@ function GetTopPlayersIMR()
 			end
 		end
 
-		CustomNetTables:SetTableValue("top_imr_5v5", tostring(top_user.rank),
-			{
-				SteamID64 = top_user.steamid,
-				XP = current_xp_in_level[top_user.rank],
-				MaxXP = max_xp[top_user.rank],
-				Lvl = level[top_user.rank],
-				title = GetTitleIXP(level[top_user.rank]),
-				title_color = GetTitleColorIXP(GetTitleIXP(level[top_user.rank]), true),
-				IMR_5v5 = top_user.imr_5v5,
-			})
+		CustomNetTables:SetTableValue("top_imr5v5", tostring(top_user.rank),
+		{
+			SteamID64 = top_user.steamid,
+			XP = current_xp_in_level[top_user.rank],
+			MaxXP = max_xp[top_user.rank],
+			Lvl = level[top_user.rank],
+			title = GetTitleIXP(level[top_user.rank]),
+			title_color = GetTitleColorIXP(GetTitleIXP(level[top_user.rank]), true),
+			IMR_5v5 = top_user.imr5v5,
+		})
 	end
 end

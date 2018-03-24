@@ -324,7 +324,9 @@ function GameMode:ExperienceFilter( keys )
 	if keys.reason_const == DOTA_ModifyXP_HeroKill then
 		keys.experience = keys.experience * (custom_xp_bonus / 100)
 	else
-		keys.experience = keys.experience * (custom_xp_bonus / 100) * (1 + game_time / 200)
+		if GetMapName() ~= "imba_1v1" then
+			keys.experience = keys.experience * (custom_xp_bonus / 100) * (1 + game_time / 200)
+		end
 	end
 
 	-- Losing team gets huge EXP bonus.

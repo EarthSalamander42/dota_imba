@@ -129,9 +129,7 @@ function GameMode:OnGameRulesStateChange(keys)
 		end
 
 		-- Initialize rune spawners
-		if GetMapName() ~= "imba_1v1" then
-			InitRunes()
-		end
+		InitRunes()
 
 		local donators_steamid = {}
 		local donators = api.imba.get_donators()
@@ -1012,6 +1010,7 @@ function GameMode:OnTeamKillCredit(keys)
 		CustomGameEventManager:Send_ServerToAllClients( "kill_event", broadcast_kill_event )
 	elseif GetMapName() == "imba_1v1" then
 		if nTeamKills == IMBA_1V1_SCORE then
+			GAME_WINNER_TEAM = killer_team
 			GameRules:SetGameWinner( killer_team )
 		end
 	end
@@ -1374,6 +1373,7 @@ function GameMode:OnEntityKilled( keys )
 			end
 
 			if GetMapName() == "imba_1v1" then
+				GAME_WINNER_TEAM = killer:GetTeamNumber()
 				GameRules:SetGameWinner(killer:GetTeamNumber())
 			end
 		elseif killed_unit:IsCourier() then

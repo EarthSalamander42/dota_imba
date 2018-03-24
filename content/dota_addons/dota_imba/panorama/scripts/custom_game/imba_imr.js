@@ -79,22 +79,23 @@ function Battlepass() {
 	var BattlepassRewards = CustomNetTables.GetTableValue("game_options",
 			"battlepass").battlepass;
 
-	$.AsyncWebRequest('http://api.dota2imba.org/meta/companions', {
-		type : 'GET',
-		dataType : 'json',
-		success : function(d) {
-			companions = d.data
-		},
+//	$.AsyncWebRequest('http://api.dota2imba.org/meta/companions', {
+//		type : 'GET',
+//		dataType : 'json',
+//		success : function(d) {
+//			companions = d.data
+//		},
 
-		timeout : 5000,
-		error : function(err) {
-			$.Msg("Companion Api Error: " + JSON.stringify(err));
-			return;
-		}
-	});
+//		timeout : 5000,
+//		error : function(err) {
+//			$.Msg("Companion Api Error: " + JSON.stringify(err));
+//			return;
+//		}
+//	});
 
 	// BattlepassRewards.sort();
-	if (BattlepassRewards === undefined || companions == null) {
+//	if (BattlepassRewards === undefined || companions == null) {
+	if (BattlepassRewards === undefined) {
 		$.Msg("Battlepass or Companions undefined..")
 		$.Schedule(1, Battlepass)
 		return;
@@ -109,7 +110,7 @@ function Battlepass() {
 			GenerateBattlepassPanel(BattlepassRewards, player)
 
 			//Companion Generator
-			GenerateCompanionPanel(companions, player)
+//			GenerateCompanionPanel(companions, player)
 		});
 
 		var direPlayers = Game.GetPlayerIDsOnTeam(DOTATeam_t.DOTA_TEAM_BADGUYS);
@@ -122,7 +123,7 @@ function Battlepass() {
 			GenerateBattlepassPanel(BattlepassRewards, player)
 
 			//Companion Generator
-			GenerateCompanionPanel(companions, player)
+//			GenerateCompanionPanel(companions, player)
 		});
 	}
 }
@@ -194,7 +195,7 @@ function HallOfFame(type) {
 		if (type == "XP") {
 			var top_users = CustomNetTables.GetTableValue("top_xp", i.toString());
 		} else if (type == "IMR") {
-			var top_users = CustomNetTables.GetTableValue("top_imr_5v5", i.toString());
+			var top_users = CustomNetTables.GetTableValue("top_imr5v5", i.toString());
 		}
 
 		if (top_users == undefined) {
@@ -239,9 +240,9 @@ function HallOfFame(type) {
 		imbar_xp.AddClass("imbar-xp")
 		imbar_xp.text = top_users.XP + "/" + top_users.MaxXP
 
-//		var imr = $.CreatePanel("Label", player, "rank_" + i);
-//		imr.AddClass("LeaderboardIMR")
-//		imr.text = top_users.IMR_5v5.toFixed([0])
+		var imr = $.CreatePanel("Label", player, "rank_" + i);
+		imr.AddClass("LeaderboardIMR")
+		imr.text = top_users.IMR_5v5.toFixed([0])
 	}
 }
 
@@ -569,5 +570,5 @@ function ToggleCompanion() {
 //	$("#TowerPowerValue").text = $.Localize('#imba_gamemode_settings_power_' + tower_power[1]);
 	GameEvents.Subscribe("hall_of_fame", HallOfFame);
 	GameEvents.Subscribe("safe_to_leave", SafeToLeave);
-	GameEvents.Subscribe("imbathrow_topbar", ShowImbathrowBar);
+//	GameEvents.Subscribe("imbathrow_topbar", ShowImbathrowBar);
 })();

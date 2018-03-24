@@ -229,11 +229,11 @@ if GetMapName() == "imba_1v1" then
 	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_BADGUYS]  = 1
 	IMBA_1V1_SCORE = 3
 	PRE_GAME_TIME = 30.0 + AP_GAME_TIME
-elseif GetMapName() == MapFrantic10v10() then
+elseif GetMapName() == "imba_frantic_10v10" then
 	IMBA_PLAYERS_ON_GAME = 20
 	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_GOODGUYS] = 10
 	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_BADGUYS]  = 10
-elseif GetMapName() == MapRanked10v10() then
+elseif GetMapName() == "imba_ranked_10v10" then
 	IMBA_PLAYERS_ON_GAME = 20
 	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_GOODGUYS] = 10
 	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_BADGUYS]  = 10
@@ -319,60 +319,60 @@ IMBA_ALL_RANDOM_HERO_SELECTION_TIME = 5.0									-- Time we need to wait before
 
 -- Global Gold earning, values are doubled with Hyper for non-custom maps
 CUSTOM_GOLD_BONUS = {} -- 1 = Normal, 2 = Hyper
-CUSTOM_GOLD_BONUS[MapRanked5v5()] = {150, 150}
-CUSTOM_GOLD_BONUS[MapRanked10v10()] = {150, 150}
-CUSTOM_GOLD_BONUS[MapFrantic5v5()] = {250, 250}
-CUSTOM_GOLD_BONUS[MapFrantic10v10()] = {250, 250}
+CUSTOM_GOLD_BONUS["imba_ranked_5v5"] = {150, 150}
+CUSTOM_GOLD_BONUS["imba_ranked_10v10"] = {150, 150}
+CUSTOM_GOLD_BONUS["imba_frantic_5v5"] = {250, 250}
+CUSTOM_GOLD_BONUS["imba_frantic_10v10"] = {250, 250}
 CUSTOM_GOLD_BONUS["imba_overthrow"] = {100, 100}
 CUSTOM_GOLD_BONUS["imba_1v1"] = {100, 100}
 
 -- Global XP earning, values are doubled with Hyper for non-custom maps (right now this is not used anymore, but i'll keep it there just in case)
 CUSTOM_XP_BONUS = {} -- 1 = Normal, 2 = Hyper
-CUSTOM_XP_BONUS[MapRanked5v5()] = {100, 100}
-CUSTOM_XP_BONUS[MapRanked10v10()] = {100, 100}
-CUSTOM_XP_BONUS[MapFrantic5v5()] = {200, 200}
-CUSTOM_XP_BONUS[MapFrantic10v10()] = {200, 200}
+CUSTOM_XP_BONUS["imba_ranked_5v5"] = {100, 100}
+CUSTOM_XP_BONUS["imba_ranked_10v10"] = {100, 100}
+CUSTOM_XP_BONUS["imba_frantic_5v5"] = {200, 200}
+CUSTOM_XP_BONUS["imba_frantic_10v10"] = {200, 200}
 CUSTOM_XP_BONUS["imba_overthrow"] = {100, 100}
 CUSTOM_XP_BONUS["imba_1v1"] = {100, 100}
 
 -- Hero base level, values are doubled with Hyper for non-custom maps
 HERO_STARTING_LEVEL = {} -- 1 = Normal, 2 = Hyper
-HERO_STARTING_LEVEL[MapRanked5v5()] = {1, 1}
-HERO_STARTING_LEVEL[MapRanked10v10()] = {1, 1}
-HERO_STARTING_LEVEL[MapFrantic5v5()] = {5, 5}
-HERO_STARTING_LEVEL[MapFrantic10v10()] = {5, 5}
+HERO_STARTING_LEVEL["imba_ranked_5v5"] = {1, 1}
+HERO_STARTING_LEVEL["imba_ranked_10v10"] = {1, 1}
+HERO_STARTING_LEVEL["imba_frantic_5v5"] = {5, 5}
+HERO_STARTING_LEVEL["imba_frantic_10v10"] = {5, 5}
 HERO_STARTING_LEVEL["imba_overthrow"] = {1, 1}
 HERO_STARTING_LEVEL["imba_1v1"] = {1, 1}
 
 MAX_LEVEL = {}
-MAX_LEVEL[MapRanked5v5()] = {42, 42}
-MAX_LEVEL[MapRanked10v10()] = {42, 42}
-MAX_LEVEL[MapFrantic5v5()] = {42, 42}
-MAX_LEVEL[MapFrantic10v10()] = {42, 42}
+MAX_LEVEL["imba_ranked_5v5"] = {42, 42}
+MAX_LEVEL["imba_ranked_10v10"] = {42, 42}
+MAX_LEVEL["imba_frantic_5v5"] = {42, 42}
+MAX_LEVEL["imba_frantic_10v10"] = {42, 42}
 MAX_LEVEL["imba_overthrow"] = {42, 42}
 MAX_LEVEL["imba_1v1"] = {42, 42}
 
 HERO_INITIAL_GOLD = {}
-HERO_INITIAL_GOLD[MapRanked5v5()] = {1200, 1200}
-HERO_INITIAL_GOLD[MapRanked10v10()] = {1200, 1200}
-HERO_INITIAL_GOLD[MapFrantic5v5()] = {4000, 4000}
-HERO_INITIAL_GOLD[MapFrantic10v10()] = {4000, 4000}
+HERO_INITIAL_GOLD["imba_ranked_5v5"] = {1200, 1200}
+HERO_INITIAL_GOLD["imba_ranked_10v10"] = {1200, 1200}
+HERO_INITIAL_GOLD["imba_frantic_5v5"] = {4000, 4000}
+HERO_INITIAL_GOLD["imba_frantic_10v10"] = {4000, 4000}
 HERO_INITIAL_GOLD["imba_overthrow"] = {1200, 1200}
 HERO_INITIAL_GOLD["imba_1v1"] = {1200, 1200}
 
 GOLD_TICK_TIME = {}
-GOLD_TICK_TIME[MapRanked5v5()] = 0.6
-GOLD_TICK_TIME[MapRanked10v10()] = 0.4
-GOLD_TICK_TIME[MapFrantic5v5()] = 0.4
-GOLD_TICK_TIME[MapFrantic10v10()] = 0.4
+GOLD_TICK_TIME["imba_ranked_5v5"] = 0.6
+GOLD_TICK_TIME["imba_ranked_10v10"] = 0.4
+GOLD_TICK_TIME["imba_frantic_5v5"] = 0.4
+GOLD_TICK_TIME["imba_frantic_10v10"] = 0.4
 GOLD_TICK_TIME["imba_overthrow"] = 0.6
 GOLD_TICK_TIME["imba_1v1"] = 0.6
 
 BANNED_ITEMS = {}
-BANNED_ITEMS[MapRanked5v5()] = {}
-BANNED_ITEMS[MapRanked10v10()] = {}
-BANNED_ITEMS[MapFrantic5v5()] = {}
-BANNED_ITEMS[MapFrantic10v10()] = {}
+BANNED_ITEMS["imba_ranked_5v5"] = {}
+BANNED_ITEMS["imba_ranked_10v10"] = {}
+BANNED_ITEMS["imba_frantic_5v5"] = {}
+BANNED_ITEMS["imba_frantic_10v10"] = {}
 BANNED_ITEMS["imba_overthrow"] = {}
 BANNED_ITEMS["imba_1v1"] = {
 	"item_imba_bottle",

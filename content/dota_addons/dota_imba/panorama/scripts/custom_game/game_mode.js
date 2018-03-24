@@ -40,11 +40,11 @@ function InitializeUI() {
 		} else if (map_info.map_display_name == "imba_ranked_10v10" || map_info.map_display_name == "imba_12v12") {
 //			$('#GameOptionsPanel').style.visibility = 'collapse';
 		} else if (map_info.map_display_name == "imba_frantic_5v5" || map_info.map_display_name == "imba_frantic_10v10") {
-			$('#GoldOptionsPanel').style.visibility = 'collapse';
-			$('#ExpOptionsPanel').style.visibility = 'collapse';
-			$('#TowerPowerOption1').checked = true;
-			$('#HeroPower1').checked = true;
-			$('#AllPickToggle').checked = true;
+//			$('#GoldOptionsPanel').style.visibility = 'collapse';
+//			$('#ExpOptionsPanel').style.visibility = 'collapse';
+//			$('#TowerPowerOption1').checked = true;
+//			$('#HeroPower1').checked = true;
+//			$('#AllPickToggle').checked = true;
 			gold = 2
 			exp = 2
 		} else if (map_info.map_display_name == "imba_overthrow") {

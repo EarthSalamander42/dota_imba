@@ -4465,7 +4465,6 @@ function modifier_tower_healing_think:OnIntervalThink()
 
 		-- Find at least one hero that needs healing, and heal him
 		for _, hero in pairs(heroes) do
-
 			local hero_hp_percent = hero:GetHealthPercent()
 			if hero_hp_percent <= self.hp_threshold then
 				current_healed_hero = hero
@@ -4482,42 +4481,43 @@ function modifier_tower_healing_think:OnIntervalThink()
 
 		-- Start bouncing with bounce delay
 		Timers:CreateTimer(self.bounce_delay, function()
+			-- Still don't know if other heroes need healing, assumes doesn't unless found
+			local heroes_need_healing = false
 
-				-- Still don't know if other heroes need healing, assumes doesn't unless found
-				local heroes_need_healing = false
+			-- Look for other heroes nearby, regardless of if they need healing
+			heroes = FindUnitsInRadius(
+				self.caster:GetTeamNumber(),
+				current_healed_hero:GetAbsOrigin(),
+				nil,
+				self.bounce_radius,
+				DOTA_UNIT_TARGET_TEAM_FRIENDLY,
+				DOTA_UNIT_TARGET_HERO,
+				DOTA_UNIT_TARGET_FLAG_NONE,
+				FIND_ANY_ORDER,
+				false
+			)
 
-				-- Look for other heroes nearby, regardless of if they need healing
-				heroes = FindUnitsInRadius(self.caster:GetTeamNumber(),
-					current_healed_hero:GetAbsOrigin(),
-					nil,
-					self.bounce_radius,
-					DOTA_UNIT_TARGET_TEAM_FRIENDLY,
-					DOTA_UNIT_TARGET_HERO,
-					DOTA_UNIT_TARGET_FLAG_NONE,
-					FIND_ANY_ORDER,
-					false)
-
-				-- Search for a hero
-				for _, hero in pairs(heroes) do
-					if not hero.healed_by_healing_wave then
-						heroes_need_healing = true
-						HealingWaveBounce(self.caster, current_healed_hero, self.ability, hero)
-						current_healed_hero = hero
-						break
-					end
+			-- Search for a hero
+			for _, hero in pairs(heroes) do
+				if not hero.healed_by_healing_wave and current_healed_hero ~= hero then
+					heroes_need_healing = true
+					HealingWaveBounce(self.caster, current_healed_hero, self.ability, hero)
+					current_healed_hero = hero
+					break
 				end
+			end
 
-				-- If a hero was found, there might be more: repeat operation
-				if heroes_need_healing then
-					return bounce_delay
-				else
-					return nil
-				end
+			-- If a hero was found, there might be more: repeat operation
+			if heroes_need_healing then
+				return bounce_delay
+			else
+				return nil
+			end
 		end)
 	end
 end
 
-function HealingWaveBounce (caster, source, ability, hero)
+function HealingWaveBounce(caster, source, ability, hero)
 	local sound_cast = "Greevil.Shadow_Wave"
 	local particle_heal = "particles/hero/tower/tower_healing_wave.vpcf"
 	local heal_amount = ability:GetSpecialValueFor("heal_amount")
@@ -4540,7 +4540,6 @@ function HealingWaveBounce (caster, source, ability, hero)
 	hero:Heal(heal_amount, caster)
 end
 
-
 function modifier_tower_healing_think:IsHidden()
 	return true
 end
@@ -4548,7 +4547,6 @@ end
 function modifier_tower_healing_think:IsPurgable()
 	return false
 end
-
 
 ---------------------------------------------------
 ---------------------------------------------------

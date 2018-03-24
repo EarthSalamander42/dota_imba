@@ -120,7 +120,7 @@ function api.imba.complete(callback)
 
 	-- results
 	for id = 0, DOTA_MAX_TEAM_PLAYERS do
-		if PlayerResource:IsValidPlayerID(id) then
+		if PlayerResource:IsValidPlayerID(id) and PlayerResource:GetConnectionState(id) ~= 1 then
 
 			local data = {
 				player = PlayerResource:GetPlayer(id),
@@ -146,7 +146,6 @@ function api.imba.complete(callback)
 			end
 
 			-- final result
-
 			table.insert(complete_data.results, {
 				steamid = data.steamid,
 				hero = data.hero_name,
