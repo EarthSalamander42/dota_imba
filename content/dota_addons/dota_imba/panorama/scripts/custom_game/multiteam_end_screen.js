@@ -145,7 +145,7 @@ function EndScoreboard() {
 					
 					values.imr.style.visibility = "visible";
 					
-					if (player.result.imr_5v5_calibrating)
+					if (player.result.imr5v5_calibrating)
 						values.imr.text = "TBD";
 					else {
 						var imr = Math.floor(player.result.imr5v5);
@@ -167,7 +167,7 @@ function EndScoreboard() {
 					
 					values.imr10v10.style.visibility = "visible";
 					
-					if (player.result.imr_10v10_calibrating)
+					if (player.result.imr10v10_calibrating)
 						values.imr10v10.text = "TBD";
 					else {
 						var imr = Math.floor(player.result.imr10v10);
