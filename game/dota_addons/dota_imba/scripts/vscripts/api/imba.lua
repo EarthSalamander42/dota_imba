@@ -17,7 +17,7 @@ api.imba = {
 }
 
 function api.imba.events.initialize()
-	api.debug("Initializing events system")
+	log.info("Initializing events system")
 	Timers:CreateTimer(api.imba.config.event_timer_interval, function ()
 		api.imba.events.cycle()
 		return api.imba.config.event_timer_interval
@@ -25,22 +25,22 @@ function api.imba.events.initialize()
 end
 
 function api.imba.events.cycle()
-	api.debug("Flushing event queue")
+	log.debug("Flushing event queue")
 
 	-- copy and clear queue
 	local queue = api.imba.events.queue
 	api.imba.events.queue = {}
 
-	api.debug("Sending " .. tostring(table.getn(queue)) .. " events")
+	log.debug("Sending " .. tostring(table.getn(queue)) .. " events")
 
 	api.request(api.endpoints.imba.game.events, {
 		id = api.imba.data.id,
 		events = queue
 	}, function (error, data)
 		if not error then
-			api.debug("Events successfully saved")
+			log.debug("Events successfully saved")
 		else
-			api.debug("Saving events failed", api.debug_levels.warn)
+			log.warn("Saving events failed")
 		end
 	end)
 
@@ -48,7 +48,7 @@ end
 
 function api.imba.register(callback)
 
-	api.debug("Initializing IMBA Api", api.debug_levels.info)
+	log.info("Initializing IMBA Api")
 
 	-- register data
 	local register_data = {
@@ -62,14 +62,14 @@ function api.imba.register(callback)
 	-- register game
 	api.request(api.endpoints.imba.game.register, register_data, function (error, data)
 		if error then
-			api.debug("Critical API error: Cannot register game!", api.debug_levels.error)
+			log.error("Critical API error: Cannot register game!")
 			if callback ~= nil then
 				callback(true)
 			end
 		else
 			api.imba.data = data
 
-			api.debug("Register with server successful, Game ID: #" .. tostring(api.imba.data.id))
+			log.debug("Register with server successful, Game ID: #" .. tostring(api.imba.data.id))
 			if callback ~= nil then
 				callback(false)
 			end
@@ -83,7 +83,7 @@ function api.imba.register(callback)
 end
 
 function api.imba.event(code, data)
-	api.debug("Queueing event #" .. code)
+	log.debug("Queueing event #" .. code)
 
 	local real_content = json.null
 	if data ~= nil then
@@ -107,7 +107,7 @@ end
 function api.imba.complete(callback)
 
 	if not api.imba.ready then
-		api.debug("Cannot complete game which is not registered correctly", api.debug_levels.error)
+		log.error("Cannot complete game which is not registered correctly")
 		callback(true)
 	end
 
@@ -132,12 +132,12 @@ function api.imba.complete(callback)
 
 			-- hero entity and items
 			if data.hero == nil then
-				api.debug("Hero for player " .. steamid .. " is nil")
+				log.debug("Hero for player " .. steamid .. " is nil")
 			else
 				data.hero_name = tostring(data.hero:GetUnitName())
-			
+
 				-- 6 inventory + 3 backpack + 6 stash = 15 total
-				for slot = 0, 14 do 
+				for slot = 0, 14 do
 					local item = data.hero:GetItemInSlot(slot)
 					if item ~= nil then
 						table.insert(data.items, tostring(item:GetAbilityName()))
@@ -206,10 +206,10 @@ function api.imba.complete(callback)
 	api.debug("Completing game " .. tostring(api.imba.data.id))
 	api.request(api.endpoints.imba.game.complete, complete_data, function (error, data)
 		if error then
-			api.debug("Game cannot be completed!", api.debug_levels.error)
+			log.error("Game cannot be completed!")
 			callback(true)
 		else
-			api.debug("Game successfully completed", api.debug_levels.info)
+			log.info("Game successfully completed")
 			callback(false, data.players)
 		end
 	end)
@@ -232,7 +232,7 @@ end
 
 function api.imba.is_donator(steamid)
 	if api.imba.data.donators == nil then
-		api.debug("is_donator called but donators are not available. yet?", api.debug_levels.warn)
+		log.warn("is_donator called but donators are not available. yet?")
 		return false
 	end
 
@@ -245,7 +245,7 @@ end
 
 function api.imba.is_developer(steamid)
 	if api.imba.data.developers == nil then
-		api.debug("is_developer called but developers are not available. yet?", api.debug_levels.warn)
+		log.warn("is_developer called but developers are not available. yet?")
 		return false
 	end
 
@@ -258,7 +258,7 @@ end
 
 function api.imba.get_player_info(steamid)
 	if api.imba.data.players == nil then
-		api.debug("get_player_info called but players are not available. yet?", api.debug_levels.warn)
+		log.warn("get_player_info called but players are not available. yet?")
 		return nil
 	end
 
@@ -273,7 +273,7 @@ end
 
 function api.imba.hero_is_disabled(entity)
 	if api.imba.data.disabled_heroes == nil then
-		api.debug("hero_is_disabled called but disabled_heroes are not available. yet?", api.debug_levels.warn)
+		log.warn("hero_is_disabled called but disabled_heroes are not available. yet?")
 		return false
 	end
 
@@ -288,7 +288,7 @@ end
 
 function api.imba.get_rankings_xp()
 	if api.imba.data.rankings == nil then
-		api.debug("get_rankings_xp called but rankings are not available. yet?", api.debug_levels.warn)
+		log.warn("get_rankings_xp called but rankings are not available. yet?")
 		return nil
 	end
 
@@ -297,7 +297,7 @@ end
 
 function api.imba.get_rankings_imr5v5()
 	if api.imba.data.rankings == nil then
-		api.debug("get_rankings_imr5v5 called but rankings are not available. yet?", api.debug_levels.warn)
+		log.warn("get_rankings_imr5v5 called but rankings are not available. yet?")
 		return nil
 	end
 
@@ -306,7 +306,7 @@ end
 
 function api.imba.get_rankings_imr10v10()
 	if api.imba.data.rankings == nil then
-		api.debug("get_rankings_imr10v10 called but rankings are not available. yet?", api.debug_levels.warn)
+		log.warn("get_rankings_imr10v10 called but rankings are not available. yet?")
 		return nil
 	end
 
@@ -315,7 +315,7 @@ end
 
 function api.imba.get_rankings_level1v1()
 	if api.imba.data.rankings == nil then
-		api.debug("get_rankings_level1v1 called but rankings are not available. yet?", api.debug_levels.warn)
+		log.warn("get_rankings_level1v1 called but rankings are not available. yet?")
 		return nil
 	end
 
@@ -324,7 +324,7 @@ end
 
 function api.imba.get_companions()
 	if api.imba.data.companions == nil then
-		api.debug("get_companions called but companions are not available. yet?", api.debug_levels.warn)
+		log.warn("get_companions called but companions are not available. yet?")
 	end
 
 	return api.imba.data.companions
@@ -338,16 +338,16 @@ function api.imba.matchmaking.imr_5v5_random(players, callback)
 		players = players
 	}
 
-	api.debug("Sending Matchmaking Request for 5v5 Random", api.debug_levels.info)
+	log.info("Sending Matchmaking Request for 5v5 Random")
 	api.request(api.endpoints.imba.matchmaking.imr_5v5_random, data, function (error, data)
 		if error then
-			api.debug("Matchmaking Request failed", api.debug_levels.error)
+			log.error("Matchmaking Request failed")
 			callback({
 				ok = false,
 				data = data
 			})
 		else
-			api.debug("Matchmaking Request for 5v5 Random successful", api.debug_levels.info)
+			log.info("Matchmaking Request for 5v5 Random successful")
 			callback({
 				ok = true,
 				data = data
@@ -365,13 +365,13 @@ function api.imba.matchmaking.imr_10v10_teams(players, combinations, callback)
 
 	api.request(api.endpoints.imba.matchmaking.imr_10v10_teams, data, function (error, data)
 		if error then
-			api.debug("Matchmaking Request failed", api.debug_levels.error)
+			log.error("Matchmaking Request failed")
 			callback({
 				ok = false,
 				data = data
 			})
 		else
-			api.debug("Matchmaking Request for 10v10 Teams successful", api.debug_levels.info)
+			log.info("Matchmaking Request for 10v10 Teams successful")
 			callback({
 				ok = true,
 				data = data

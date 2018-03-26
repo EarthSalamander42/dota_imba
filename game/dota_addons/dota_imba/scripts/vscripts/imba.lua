@@ -31,6 +31,8 @@ end
 -- settings.lua is where you can specify many different properties for your game mode and is one of the core barebones files.
 require('settings')
 
+require('libraries/log')
+
 require('libraries/timers')
 require('libraries/physics')
 require('libraries/projectiles')

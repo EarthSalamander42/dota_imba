@@ -1,18 +1,5 @@
 -- Copyright (C) 2018  The Dota IMBA Development Team
---
--- Licensed under the Apache License, Version 2.0 (the "License");
--- you may not use this file except in compliance with the License.
--- You may obtain a copy of the License at
---
--- http://www.apache.org/licenses/LICENSE-2.0
---
--- Unless required by applicable law or agreed to in writing, software
--- distributed under the License is distributed on an "AS IS" BASIS,
--- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
--- See the License for the specific language governing permissions and
--- limitations under the License.
-
--- Api interface for several game modes
+-- Api
 
 require("api/json")
 
@@ -32,8 +19,7 @@ api.config = {
 	version = "2",
 	game = "imba",
 	agent = "imba_705",
-	timeout = 5000,
-	debug_level = api.debug_levels.warn,
+	timeout = 5000
 }
 
 api.endpoints = {
@@ -90,24 +76,6 @@ api.events = {
 	chat = 24	 				-- (steamid, text)
 }
 
-api.debug_levels_name = {}
-api.debug_levels_name[1] = "error"
-api.debug_levels_name[2] = "warn "
-api.debug_levels_name[3] = "info "
-api.debug_levels_name[4] = "debug"
-api.debug_levels_name[5] = "trace"
-
-function api.debug(obj, level)
-	local real_level = level
-	if real_level == nil then
-		real_level = api.debug_levels.trace
-	end
-
-	if real_level <= api.config.debug_level then
-		print("[api][" .. api.debug_levels_name[real_level] .. "] " .. tostring(obj))
-	end
-end
-
 function api.request(endpoint, data, callback)
 
 	local url = api.config.protocol .. api.config.server .. endpoint
@@ -117,9 +85,9 @@ function api.request(endpoint, data, callback)
 	if callback == nil then
 		callback = (function (error, data)
 			if (error) then
-				api.debug("Error during request to " .. endpoint .. " (" .. data .. ")", api.debug_levels.error)
+				log.error("Error during request to " .. endpoint .. " (" .. data .. ")")
 			else
-				api.debug("Request to " .. endpoint .. " successful", api.debug_levels.info)
+				log.info("Request to " .. endpoint .. " successful")
 			end
 		end)
 	end
@@ -147,11 +115,11 @@ function api.request(endpoint, data, callback)
 		request:SetHTTPRequestRawPostBody("application/json", payload)
 	end
 
-	api.debug("Performing request to " .. endpoint, api.debug_levels.info)
-	api.debug("Method: " .. method, api.debug_levels.debug)
+	log.info("Performing request to " .. endpoint)
+	log.debug("Method: " .. method)
 
 	if payload ~= nil then
-		api.debug("Payload: " .. payload, api.debug_levels.debug)
+		log.debug("Payload: " .. payload)
 	end
 
 	request:Send(function (raw_result)
@@ -163,7 +131,7 @@ function api.request(endpoint, data, callback)
 
 			if result.body ~= nil then
 				local decoded = json.decode(result.body)
-				
+
 				if decoded ~= nil then
 					result.data = decoded.data
 					result.error = decoded.error
@@ -171,32 +139,32 @@ function api.request(endpoint, data, callback)
 					result.version = decoded.version
 					result.message = decoded.message
 				else
-					api.debug("Failed decoding JSON", api.debug_levels.error)
+					log.error("Failed decoding JSON")
 				end
 			end
 
 			if result.code == 503 then
-				api.debug("Server unavailable", api.debug_levels.error)
+				log.error("Server unavailable")
 				callback(true, "Server unavailable")
 			elseif result.code == 500 then
 				if result.message ~= nil then
-					api.debug("Internal Server Error: " .. tostring(result.message), api.debug_levels.error)
+					log.error("Internal Server Error: " .. tostring(result.message))
 					callback(true, "Internal Server Error: " .. tostring(result.message))
 				else
-					api.debug("Internal Server Error", api.debug_levels.error)
+					log.error("Internal Server Error")
 					callback(true, "Internal Server Error")
 				end
 			elseif result.code == 405 then
-				api.debug("Used invalid method on endpoint" .. endpoint, api.debug_levels.error)
+				log.error("Used invalid method on endpoint" .. endpoint)
 				callback(true, "Used invalid method on endpoint" .. endpoint)
 			elseif result.code == 404 then
-				api.debug("Tried to access unknown endpoint " .. endpoint, api.debug_levels.error)
+				log.error("Tried to access unknown endpoint " .. endpoint)
 				callback(true, "Tried to access unknown endpoint " .. endpoint)
 			elseif result.code ~= 200 then
-				api.debug("Unknown Error: " .. tostring(result.code), api.debug_levels.error)
+				log.error("Unknown Error: " .. tostring(result.code))
 				callback(true, "Unknown Error: " .. tostring(result.code))
 			else
-				api.debug("Request to " .. endpoint .. " successful", api.debug_levels.debug)
+				log.debug("Request to " .. endpoint .. " successful")
 				callback(false, result.data)
 			end
 
