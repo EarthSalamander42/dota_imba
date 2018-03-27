@@ -587,52 +587,25 @@
 		"override_hero"				"npc_dota_hero_ember_spirit"		
 
 		//Picking Screen
+		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
 
-		"Ability1"					"ember_spirit_searing_chains"
-		"Ability2"					"ember_spirit_sleight_of_fist"
-		"Ability3"					"ember_spirit_flame_guard"
-		"Ability4"					"ember_spirit_activate_fire_remnant"
+		"Ability1"					"imba_ember_spirit_searing_chains"
+		"Ability2"					"imba_ember_spirit_sleight_of_fist"
+		"Ability3"					"imba_ember_spirit_flame_guard"
+		"Ability4"					"imba_ember_spirit_activate_fire_remnant"
 		"Ability5"					"generic_hidden"
-		"Ability6"					"ember_spirit_fire_remnant"
+		"Ability6"					"imba_ember_spirit_fire_remnant"
 
-		"Ability10"					"special_bonus_attack_damage_25"
-		"Ability11"					"special_bonus_unique_ember_spirit_1"
-		"Ability12"					"special_bonus_unique_ember_spirit_3"
-		"Ability13"					"special_bonus_unique_ember_spirit_2"
-		"Ability14"					"special_bonus_spell_amplify_10"
-		"Ability15"					"special_bonus_truestrike"
-		"Ability16"					"special_bonus_unique_ember_spirit_4"
-		"Ability17"					"special_bonus_unique_ember_spirit_5"
+		"Ability10"					"special_bonus_ember_chains_on_attack"
+		"Ability11"					"special_bonus_truestrike"
+		"Ability12"					"special_bonus_ember_chains_duration"
+		"Ability13"					"special_bonus_ember_guard_damage"
+		"Ability14"					"special_bonus_attack_damage_90"
+		"Ability15"					"special_bonus_ember_sleight_extra_targets"
+		"Ability16"					"special_bonus_ember_permanent_guard"
+		"Ability17"					"special_bonus_ember_remnant_charges"
 	}
-
-	//=================================================================================================================
-	// HERO: Ember Spirit
-	//=================================================================================================================
-//	"npc_dota_hero_ember_spirit"
-//	{
-//		"override_hero"				"npc_dota_hero_ember_spirit"		
-
-//		//Picking Screen
-//		"IsImba"					"1"
-//		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
-
-//		"Ability1"					"imba_ember_spirit_searing_chains"
-//		"Ability2"					"imba_ember_spirit_sleight_of_fist"
-//		"Ability3"					"imba_ember_spirit_flame_guard"
-//		"Ability4"					"imba_ember_spirit_activate_fire_remnant"
-//		"Ability5"					"generic_hidden"
-//		"Ability6"					"imba_ember_spirit_fire_remnant"
-
-//		"Ability10"					"special_bonus_ember_chains_on_attack"
-//		"Ability11"					"special_bonus_truestrike"
-//		"Ability12"					"special_bonus_ember_chains_duration"
-//		"Ability13"					"special_bonus_ember_guard_damage"
-//		"Ability14"					"special_bonus_attack_damage_90"
-//		"Ability15"					"special_bonus_ember_triple_sleight"
-//		"Ability16"					"special_bonus_ember_permanent_guard"
-//		"Ability17"					"special_bonus_ember_remnant_charges"
-//	}
 
 	//=================================================================================================================
 	// HERO: Enigma

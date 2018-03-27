@@ -1,6 +1,11 @@
 --	IMBA Ember Spirit
 -- 	by Firetoad, 22.03.2018
 
+LinkLuaModifier( "modifier_imba_flame_guard_aura", "hero/hero_ember.lua", LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier( "modifier_imba_flame_guard_talent", "hero/hero_ember.lua", LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier( "modifier_imba_flame_guard_passive", "hero/hero_ember.lua", LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier( "modifier_imba_sleight_of_fist_caster", "hero/hero_ember.lua", LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier( "modifier_imba_sleight_of_fist_marker", "hero/hero_ember.lua", LUA_MODIFIER_MOTION_NONE )
 LinkLuaModifier( "modifier_imba_searing_chains_attack", "hero/hero_ember.lua", LUA_MODIFIER_MOTION_NONE )
 LinkLuaModifier( "modifier_imba_searing_chains_debuff", "hero/hero_ember.lua", LUA_MODIFIER_MOTION_NONE )
 LinkLuaModifier( "modifier_imba_fire_remnant_state", "hero/hero_ember.lua", LUA_MODIFIER_MOTION_NONE )
@@ -14,7 +19,7 @@ LinkLuaModifier( "modifier_imba_fire_remnant_dash", "hero/hero_ember.lua", LUA_M
 function FindActiveRemnants(caster)
 	local remnants = Entities:FindAllByModel("models/heroes/ember_spirit/ember_spirit.vmdl")
 	for key, remnant in pairs(remnants) do
-		if caster == remnant or caster ~= remnant:GetOwner() then
+		if caster == remnant or caster ~= remnant:GetOwner() or (not remnant:IsAlive()) then
 			table.remove(remnants, key)
 		end
 	end
@@ -27,7 +32,7 @@ end
 
 --------------------------------------------------------------------------------
 
--- Applies Searing Chains debuff
+-- Apply Searing Chains debuff
 function ApplySearingChains(caster, source, target, ability, duration)
 	target:EmitSound("Hero_EmberSpirit.SearingChains.Target")
 	target:AddNewModifier(caster, ability, "modifier_imba_searing_chains_debuff", {damage = ability:GetSpecialValueFor("damage_per_tick"), tick_interval = ability:GetSpecialValueFor("tick_interval"), duration = duration})
@@ -35,6 +40,238 @@ function ApplySearingChains(caster, source, target, ability, duration)
 	ParticleManager:SetParticleControl(impact_pfx, 0, source:GetAbsOrigin())
 	ParticleManager:SetParticleControl(impact_pfx, 1, target:GetAbsOrigin())
 	ParticleManager:ReleaseParticleIndex(impact_pfx)
+end
+
+--------------------------------------------------------------------------------
+
+-- Flame Guard talent checker
+modifier_imba_flame_guard_talent = modifier_imba_flame_guard_talent or class ({})
+
+function modifier_imba_flame_guard_talent:IsDebuff() return false end
+function modifier_imba_flame_guard_talent:IsHidden() return true end
+function modifier_imba_flame_guard_talent:IsPurgable() return false end
+
+function modifier_imba_flame_guard_talent:GetAttributes()
+	return MODIFIER_ATTRIBUTE_PERMANENT
+end
+
+function modifier_imba_flame_guard_talent:OnCreated(keys)
+	if IsServer() then
+		self.learned_guard_talent = false
+		self:StartIntervalThink(0.2)
+	end
+end
+
+function modifier_imba_flame_guard_talent:OnIntervalThink()
+	if IsServer() then
+		if not self.learned_guard_talent then
+			local talent = self:GetParent():FindAbilityByName("special_bonus_ember_permanent_guard")
+			if talent and talent:GetLevel() > 0 then
+				self:GetParent():RemoveModifierByName("modifier_imba_flame_guard_aura")
+				self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_flame_guard_passive", {})
+				self:GetParent():EmitSound("Hero_EmberSpirit.FlameGuard.Loop")
+				self:GetAbility():SetActivated(false)
+				self.learned_guard_talent = true
+			end
+		end
+	end
+end
+
+--------------------------------------------------------------------------------
+
+-- Flame Guard passive
+modifier_imba_flame_guard_passive = modifier_imba_flame_guard_passive or class ({})
+
+function modifier_imba_flame_guard_passive:IsDebuff() return false end
+function modifier_imba_flame_guard_passive:IsHidden() return false end
+function modifier_imba_flame_guard_passive:IsPurgable() return false end
+
+function modifier_imba_flame_guard_passive:GetAttributes()
+	return MODIFIER_ATTRIBUTE_PERMANENT + MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE
+end
+
+function modifier_imba_flame_guard_passive:GetEffectName()
+	return "particles/units/heroes/hero_ember_spirit/ember_spirit_flameguard.vpcf"
+end
+
+function modifier_imba_flame_guard_passive:GetEffectAttachType()
+	return PATTACH_ABSORIGIN_FOLLOW
+end
+
+function modifier_imba_flame_guard_passive:OnCreated(keys)
+	if IsServer() then
+		self:StartIntervalThink(self:GetAbility():GetSpecialValueFor("tick_interval"))
+	end
+end
+
+function modifier_imba_flame_guard_passive:OnIntervalThink()
+	if IsServer() then
+		local caster = self:GetCaster()
+		local ability = self:GetAbility()
+		local damage = ability:GetSpecialValueFor("damage_per_second")
+		if caster:FindAbilityByName("special_bonus_ember_guard_damage") and caster:FindAbilityByName("special_bonus_ember_guard_damage"):GetLevel() > 0 then
+			damage = damage + caster:FindAbilityByName("special_bonus_ember_guard_damage"):GetSpecialValueFor("value")
+		end
+		damage = damage * ability:GetSpecialValueFor("tick_interval")
+		local nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, ability:GetSpecialValueFor("effect_radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+		for _, enemy in pairs(nearby_enemies) do
+			ApplyDamage({victim = enemy, attacker = caster, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
+		end
+	end
+end
+
+function modifier_imba_flame_guard_passive:DeclareFunctions()
+	local funcs = {
+		MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS
+	}
+	return funcs
+end
+
+function modifier_imba_flame_guard_passive:GetModifierMagicalResistanceBonus()
+	return self:GetAbility():GetSpecialValueFor("absorb_amount")
+end
+
+--------------------------------------------------------------------------------
+
+-- Flame Guard fire aura
+modifier_imba_flame_guard_aura = modifier_imba_flame_guard_aura or class ({})
+
+function modifier_imba_flame_guard_aura:IsDebuff() return false end
+function modifier_imba_flame_guard_aura:IsHidden() return false end
+function modifier_imba_flame_guard_aura:IsPurgable() return true end
+
+function modifier_imba_flame_guard_aura:GetEffectName()
+	return "particles/units/heroes/hero_ember_spirit/ember_spirit_flameguard.vpcf"
+end
+
+function modifier_imba_flame_guard_aura:GetEffectAttachType()
+	return PATTACH_ABSORIGIN_FOLLOW
+end
+
+function modifier_imba_flame_guard_aura:OnCreated(keys)
+	if IsServer() then
+		self.tick_interval = keys.tick_interval
+		self.damage = keys.damage * self.tick_interval
+		self.effect_radius = keys.effect_radius
+		self.remaining_health = keys.remaining_health
+		self:StartIntervalThink(self.tick_interval)
+	end
+end
+
+function modifier_imba_flame_guard_aura:OnDestroy()
+	if IsServer() then
+		self:GetParent():StopSound("Hero_EmberSpirit.FlameGuard.Loop")
+	end
+end
+
+function modifier_imba_flame_guard_aura:OnIntervalThink()
+	if IsServer() then
+		if self.remaining_health <= 0 then
+			self:GetParent():RemoveModifierByName("modifier_imba_flame_guard_aura")
+		else
+			local nearby_enemies = FindUnitsInRadius(self:GetParent():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.effect_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+			for _, enemy in pairs(nearby_enemies) do
+				ApplyDamage({victim = enemy, attacker = self:GetCaster(), ability = self:GetAbility(), damage = self.damage, damage_type = DAMAGE_TYPE_MAGICAL})
+			end
+		end
+	end
+end
+
+function modifier_imba_flame_guard_aura:DeclareFunctions()
+	local funcs = {
+		MODIFIER_PROPERTY_AVOID_DAMAGE
+	}
+	return funcs
+end
+
+function modifier_imba_flame_guard_aura:GetModifierAvoidDamage(keys)
+	if IsServer() then
+		if keys.damage_type == DAMAGE_TYPE_MAGICAL then
+			self.remaining_health = self.remaining_health - keys.original_damage
+			return 1
+		else
+			return 0
+		end
+	end
+end
+
+--------------------------------------------------------------------------------
+
+-- Sleight of Fist caster modifier
+modifier_imba_sleight_of_fist_caster = modifier_imba_sleight_of_fist_caster or class ({})
+
+function modifier_imba_sleight_of_fist_caster:IsDebuff() return false end
+function modifier_imba_sleight_of_fist_caster:IsHidden() return true end
+function modifier_imba_sleight_of_fist_caster:IsPurgable() return false end
+
+function modifier_imba_sleight_of_fist_caster:OnCreated()
+	if IsServer() then
+		self:GetParent():AddNoDraw()
+	end
+end
+
+function modifier_imba_sleight_of_fist_caster:OnDestroy()
+	if IsServer() then
+		self:GetParent():RemoveNoDraw()
+	end
+end
+
+function modifier_imba_sleight_of_fist_caster:CheckState()
+	if IsServer() then
+		local state = {
+			[MODIFIER_STATE_NO_UNIT_COLLISION] = true,
+			[MODIFIER_STATE_INVULNERABLE] = true,
+			[MODIFIER_STATE_NO_HEALTH_BAR] = true,
+			[MODIFIER_STATE_MAGIC_IMMUNE] = true,
+			[MODIFIER_STATE_ROOTED] = true,
+			[MODIFIER_STATE_UNSELECTABLE] = true,
+			[MODIFIER_STATE_DISARMED] = true
+		}
+
+		return state
+	end
+end
+
+function modifier_imba_sleight_of_fist_caster:DeclareFunctions()
+	local funcs = {
+		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
+		MODIFIER_EVENT_ON_ATTACK_LANDED
+	}
+
+	return funcs
+end
+
+function modifier_imba_sleight_of_fist_caster:GetModifierPreAttack_BonusDamage()
+	return self:GetAbility():GetSpecialValueFor("bonus_damage")
+end
+
+function modifier_imba_sleight_of_fist_caster:OnAttackLanded(keys)
+	if IsServer() then
+		if keys.attacker == self:GetParent() then
+			if keys.target:IsRealHero() then
+				keys.attacker:Heal(keys.damage * self:GetAbility():GetSpecialValueFor("hero_lifesteal") * 0.01, keys.attacker)
+			else
+				keys.attacker:Heal(keys.damage * self:GetAbility():GetSpecialValueFor("creep_lifesteal") * 0.01, keys.attacker)
+			end
+		end
+	end
+end
+
+--------------------------------------------------------------------------------
+
+-- Sleight of Fist target marker
+modifier_imba_sleight_of_fist_marker = modifier_imba_sleight_of_fist_marker or class ({})
+
+function modifier_imba_sleight_of_fist_marker:IsDebuff() return true end
+function modifier_imba_sleight_of_fist_marker:IsHidden() return true end
+function modifier_imba_sleight_of_fist_marker:IsPurgable() return false end
+
+function modifier_imba_sleight_of_fist_marker:GetEffectName()
+	return "particles/units/heroes/hero_ember_spirit/ember_spirit_sleight_of_fist_targetted_marker.vpcf"
+end
+
+function modifier_imba_sleight_of_fist_marker:GetEffectAttachType()
+	return PATTACH_OVERHEAD_FOLLOW
 end
 
 --------------------------------------------------------------------------------
@@ -348,6 +585,115 @@ end
 
 --------------------------------------------------------------------------------
 
+-- Sleight of Fist ability
+imba_ember_spirit_sleight_of_fist = imba_ember_spirit_sleight_of_fist or class ({})
+
+function imba_ember_spirit_sleight_of_fist:GetAOERadius()
+	return self:GetSpecialValueFor("effect_radius")
+end
+
+function imba_ember_spirit_sleight_of_fist:OnSpellStart()
+	if IsServer() then
+		local caster = self:GetCaster()
+		local target_loc = self:GetCursorPosition()
+		local caster_loc = caster:GetAbsOrigin()
+		local original_direction = (caster:GetAbsOrigin() - target_loc):Normalized()
+		local effect_radius = self:GetSpecialValueFor("effect_radius")
+		local attack_interval = self:GetSpecialValueFor("attack_interval")
+		local sleight_targets = {}
+
+		-- Play primary cast sound/particle
+		caster:EmitSound("Hero_EmberSpirit.SleightOfFist.Cast")
+		local cast_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_ember_spirit/ember_spirit_sleight_of_fist_cast.vpcf", PATTACH_CUSTOMORIGIN, nil)
+		ParticleManager:SetParticleControl(cast_pfx, 0, target_loc)
+		ParticleManager:SetParticleControl(cast_pfx, 1, Vector(effect_radius, 1, 1))
+		ParticleManager:ReleaseParticleIndex(cast_pfx)
+
+		-- Mark targets to hit
+		local nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), target_loc, nil, effect_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ATTACK_IMMUNE + DOTA_UNIT_TARGET_FLAG_NO_INVIS, FIND_ANY_ORDER, false)
+		for _, enemy in pairs(nearby_enemies) do
+			sleight_targets[#sleight_targets + 1] = enemy:GetEntityIndex()
+			enemy:AddNewModifier(caster, self, "modifier_imba_sleight_of_fist_marker", {duration = (#sleight_targets - 1) * attack_interval})
+		end
+
+		-- More targets to hit, from any active remnants
+		local active_remnants = FindActiveRemnants(caster)
+		if active_remnants then
+			for _, remnant in pairs(active_remnants) do
+				nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), remnant:GetAbsOrigin(), nil, effect_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ATTACK_IMMUNE + DOTA_UNIT_TARGET_FLAG_NO_INVIS, FIND_ANY_ORDER, false)
+				for _, enemy in pairs(nearby_enemies) do
+					sleight_targets[#sleight_targets + 1] = enemy:GetEntityIndex()
+					enemy:AddNewModifier(caster, self, "modifier_imba_sleight_of_fist_marker", {duration = (#sleight_targets - 1) * attack_interval})
+				end
+
+				-- Secondary cast sound/particles
+				remnant:EmitSound("Hero_EmberSpirit.SleightOfFist.Cast")
+				local remnant_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_ember_spirit/ember_spirit_sleight_of_fist_cast.vpcf", PATTACH_CUSTOMORIGIN, nil)
+				ParticleManager:SetParticleControl(remnant_pfx, 0, remnant:GetAbsOrigin())
+				ParticleManager:SetParticleControl(remnant_pfx, 1, Vector(effect_radius, 1, 1))
+				ParticleManager:ReleaseParticleIndex(remnant_pfx)
+			end
+		end
+
+		-- If the appropriate talent is learned, hit some extra random enemies
+		if caster:FindAbilityByName("special_bonus_ember_sleight_extra_targets") and caster:FindAbilityByName("special_bonus_ember_sleight_extra_targets"):GetLevel() > 0 then
+			for i = 1, caster:FindAbilityByName("special_bonus_ember_sleight_extra_targets"):GetSpecialValueFor("bonus_targets") do
+				if sleight_targets[i] then
+					sleight_targets[#sleight_targets + 1] = sleight_targets[i]
+				end
+			end
+		end
+
+		-- If there's at least one target to hit, perform the spell
+		if #sleight_targets >= 1 then
+			local previous_position = caster:GetAbsOrigin()
+			local current_count = 1
+			local current_target = EntIndexToHScript(sleight_targets[current_count])
+			caster:AddNewModifier(caster, self, "modifier_imba_sleight_of_fist_caster", {})
+			ProjectileManager:ProjectileDodge(caster)
+			Timers:CreateTimer(0.2, function()
+
+				-- Particles and sound
+				caster:EmitSound("Hero_EmberSpirit.SleightOfFist.Damage")
+				local slash_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_ember_spirit/ember_spirit_sleightoffist_tgt.vpcf", PATTACH_ABSORIGIN_FOLLOW, current_target)
+				ParticleManager:SetParticleControl(slash_pfx, 0, current_target:GetAbsOrigin())
+				ParticleManager:ReleaseParticleIndex(slash_pfx)
+
+				local trail_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_ember_spirit/ember_spirit_sleightoffist_trail.vpcf", PATTACH_CUSTOMORIGIN, nil)
+				ParticleManager:SetParticleControl(trail_pfx, 0, current_target:GetAbsOrigin())
+				ParticleManager:SetParticleControl(trail_pfx, 1, previous_position)
+				ParticleManager:ReleaseParticleIndex(trail_pfx)
+
+				-- Perform the attack
+				if caster:HasModifier("modifier_imba_sleight_of_fist_caster") then
+					caster:SetAbsOrigin(current_target:GetAbsOrigin() + original_direction * 64)
+					caster:PerformAttack(current_target, true, true, true, false, false, false, false)
+				end
+
+				-- Check if the loop continues
+				current_count = current_count + 1
+				if #sleight_targets >= current_count and caster:HasModifier("modifier_imba_sleight_of_fist_caster") then
+					previous_position = current_target:GetAbsOrigin()
+					current_target = EntIndexToHScript(sleight_targets[current_count])
+					return attack_interval
+
+				-- If not, stop everything
+				else
+					if caster:HasModifier("modifier_imba_sleight_of_fist_caster") then
+						FindClearSpaceForUnit(caster, caster_loc, true)
+					end
+					caster:RemoveModifierByName("modifier_imba_sleight_of_fist_caster")
+					for _, target in pairs(sleight_targets) do
+						target:RemoveModifierByName("modifier_imba_sleight_of_fist_marker")
+					end
+				end
+			end)
+		end
+	end
+end
+
+--------------------------------------------------------------------------------
+
 -- Fire Remnant ability
 imba_ember_spirit_fire_remnant = imba_ember_spirit_fire_remnant or class ({})
 
@@ -394,7 +740,66 @@ function imba_ember_spirit_fire_remnant:OnSpellStart()
 			if charges_modifier:GetStackCount() <= 0 then
 				self:SetActivated(false)
 			end
+
+			-- Remnant Flame Guard logic
+			local ability_flame_guard = caster:FindAbilityByName("imba_ember_spirit_flame_guard")
+			if ability_flame_guard then
+				local effect_radius = ability_flame_guard:GetSpecialValueFor("effect_radius")
+				local damage = ability_flame_guard:GetSpecialValueFor("damage_per_second")
+				local tick_interval = ability_flame_guard:GetSpecialValueFor("tick_interval")
+				if caster:FindAbilityByName("special_bonus_ember_guard_damage") and caster:FindAbilityByName("special_bonus_ember_guard_damage"):GetLevel() > 0 then
+					damage = damage + caster:FindAbilityByName("special_bonus_ember_guard_damage"):GetSpecialValueFor("value")
+				end
+				if caster:HasModifier("modifier_imba_flame_guard_aura") then
+					remnant:EmitSound("Hero_EmberSpirit.FlameGuard.Loop")
+					remnant:AddNewModifier(caster, ability_flame_guard, "modifier_imba_flame_guard_aura", {damage = damage * 0.5, tick_interval = tick_interval, effect_radius = effect_radius, remaining_health = 1000, duration = caster:FindModifierByName("modifier_imba_flame_guard_aura"):GetRemainingTime()})
+				elseif caster:FindAbilityByName("special_bonus_ember_permanent_guard") and caster:FindAbilityByName("special_bonus_ember_permanent_guard"):GetLevel() > 0 then
+					remnant:EmitSound("Hero_EmberSpirit.FlameGuard.Loop")
+					remnant:AddNewModifier(caster, ability_flame_guard, "modifier_imba_flame_guard_aura", {damage = damage * 0.5, tick_interval = tick_interval, effect_radius = effect_radius, remaining_health = 1000})
+				end
+			end
 		end
+	end
+end
+
+--------------------------------------------------------------------------------
+
+-- Flame Guard ability
+imba_ember_spirit_flame_guard = imba_ember_spirit_flame_guard or class ({})
+
+function imba_ember_spirit_flame_guard:GetIntrinsicModifierName()
+	return "modifier_imba_flame_guard_talent"
+end
+
+function imba_ember_spirit_flame_guard:OnSpellStart()
+	if IsServer() then
+		local caster = self:GetCaster()
+		local effect_radius = self:GetSpecialValueFor("effect_radius")
+		local duration = self:GetSpecialValueFor("duration")
+		local damage = self:GetSpecialValueFor("damage_per_second")
+		local tick_interval = self:GetSpecialValueFor("tick_interval")
+		local absorb_amount = self:GetSpecialValueFor("absorb_amount") * caster:GetMaxHealth() * 0.01
+
+		-- Increase damage if the appropriate talent is learned
+		if caster:FindAbilityByName("special_bonus_ember_guard_damage") and caster:FindAbilityByName("special_bonus_ember_guard_damage"):GetLevel() > 0 then
+			damage = damage + caster:FindAbilityByName("special_bonus_ember_guard_damage"):GetSpecialValueFor("value")
+		end
+
+		-- Remnant versions
+		local active_remnants = FindActiveRemnants(caster)
+		if active_remnants then
+			for _, remnant in pairs(active_remnants) do
+				remnant:EmitSound("Hero_EmberSpirit.FlameGuard.Cast")
+				remnant:EmitSound("Hero_EmberSpirit.FlameGuard.Loop")
+				remnant:AddNewModifier(caster, self, "modifier_imba_flame_guard_aura", {damage = damage * 0.5, tick_interval = tick_interval, effect_radius = effect_radius, remaining_health = absorb_amount, duration = duration})
+			end
+		end
+
+		-- Caster version
+		caster:EmitSound("Hero_EmberSpirit.FlameGuard.Cast")
+		caster:EmitSound("Hero_EmberSpirit.FlameGuard.Loop")
+		caster:RemoveModifierByName("modifier_imba_flame_guard_aura")
+		caster:AddNewModifier(caster, self, "modifier_imba_flame_guard_aura", {damage = damage, tick_interval = tick_interval, effect_radius = effect_radius, remaining_health = absorb_amount, duration = duration})
 	end
 end
 
@@ -433,6 +838,7 @@ function imba_ember_spirit_activate_fire_remnant:OnSpellStart()
 				remnant:RemoveModifierByName("modifier_imba_fire_remnant_state")
 			end
 			ProjectileManager:ProjectileDodge(caster)
+			caster:RemoveModifierByName("modifier_imba_sleight_of_fist_caster")
 			FindClearSpaceForUnit(caster, closest_remnant_position, true)
 			GridNav:DestroyTreesAroundPoint(closest_remnant_position, self:GetSpecialValueFor("effect_radius"), false)
 			caster:EmitSound("Hero_EmberSpirit.FireRemnant.Stop")
