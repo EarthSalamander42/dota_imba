@@ -155,56 +155,52 @@ function api.request(endpoint, data, callback)
 	end
 
 	request:Send(function (raw_result)
+		local result = {
+			code = raw_result.StatusCode,
+			body = raw_result.Body,
+		}
 
-			local result = {
-				code = raw_result.StatusCode,
-				body = raw_result.Body,
-			}
-
-			if result.body ~= nil then
-				local decoded = json.decode(result.body)
-				
-				if decoded ~= nil then
-					result.data = decoded.data
-					result.error = decoded.error
-					result.server = decoded.server
-					result.version = decoded.version
-					result.message = decoded.message
-				else
-					api.debug("Failed decoding JSON", api.debug_levels.error)
-				end
-			end
-
-			if result.code == 503 then
-				api.debug("Server unavailable", api.debug_levels.error)
-				callback(true, "Server unavailable")
-			elseif result.code == 500 then
-				if result.message ~= nil then
-					api.debug("Internal Server Error: " .. tostring(result.message), api.debug_levels.error)
-					callback(true, "Internal Server Error: " .. tostring(result.message))
-				else
-					api.debug("Internal Server Error", api.debug_levels.error)
-					callback(true, "Internal Server Error")
-				end
-			elseif result.code == 405 then
-				api.debug("Used invalid method on endpoint" .. endpoint, api.debug_levels.error)
-				callback(true, "Used invalid method on endpoint" .. endpoint)
-			elseif result.code == 404 then
-				api.debug("Tried to access unknown endpoint " .. endpoint, api.debug_levels.error)
-				callback(true, "Tried to access unknown endpoint " .. endpoint)
-			elseif result.code ~= 200 then
-				api.debug("Unknown Error: " .. tostring(result.code), api.debug_levels.error)
-				callback(true, "Unknown Error: " .. tostring(result.code))
+		if result.body ~= nil then
+			local decoded = json.decode(result.body)
+			
+			if decoded ~= nil then
+				result.data = decoded.data
+				result.error = decoded.error
+				result.server = decoded.server
+				result.version = decoded.version
+				result.message = decoded.message
 			else
-				api.debug("Request to " .. endpoint .. " successful", api.debug_levels.debug)
-				callback(false, result.data)
+				api.debug("Failed decoding JSON", api.debug_levels.error)
 			end
+		end
 
+		if result.code == 503 then
+			api.debug("Server unavailable", api.debug_levels.error)
+			callback(true, "Server unavailable")
+		elseif result.code == 500 then
+			if result.message ~= nil then
+				api.debug("Internal Server Error: " .. tostring(result.message), api.debug_levels.error)
+				callback(true, "Internal Server Error: " .. tostring(result.message))
+			else
+				api.debug("Internal Server Error", api.debug_levels.error)
+				callback(true, "Internal Server Error")
+			end
+		elseif result.code == 405 then
+			api.debug("Used invalid method on endpoint" .. endpoint, api.debug_levels.error)
+			callback(true, "Used invalid method on endpoint" .. endpoint)
+		elseif result.code == 404 then
+			api.debug("Tried to access unknown endpoint " .. endpoint, api.debug_levels.error)
+			callback(true, "Tried to access unknown endpoint " .. endpoint)
+		elseif result.code ~= 200 then
+			api.debug("Unknown Error: " .. tostring(result.code), api.debug_levels.error)
+			callback(true, "Unknown Error: " .. tostring(result.code))
+		else
+			api.debug("Request to " .. endpoint .. " successful", api.debug_levels.debug)
+			callback(false, result.data)
+		end
 	end)
-
 end
 
 function api.print(object)
 
 end
-

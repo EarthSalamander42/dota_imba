@@ -192,14 +192,18 @@ function modifier_imba_fountain_danger_zone:OnIntervalThink()
 	if IsServer() then
 		local fountain = self:GetParent()
 		local fountain_pos = fountain:GetAbsOrigin() 
-		local nearby_enemies = FindUnitsInRadius(fountain:GetTeamNumber(), fountain_pos, nil, self:GetAbility():GetSpecialValueFor("kill_radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
+		local nearby_enemies = FindUnitsInRadius(fountain:GetTeamNumber(), fountain_pos, nil, self:GetAbility():GetSpecialValueFor("kill_radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
 		for _, enemy in pairs(nearby_enemies) do
-			local damage = enemy:GetMaxHealth() * 0.06
-			if enemy:IsInvulnerable() then
-				enemy:SetHealth(math.max(enemy:GetHealth() - damage, 1))
-			else
-				ApplyDamage({attacker = fountain, victim = enemy, damage = damage, damage_type = DAMAGE_TYPE_PURE})
+			if enemy:GetUnitName() == "ent_dota_halloffame" then return end
+
+			for _, unit_name in pairs(RESTRICT_FOUNTAIN_UNITS) do
+				print(unit_name, enemy:GetUnitName())
+				if unit_name == enemy:GetUnitName() then
+					enemy:ForceKill(false)
+					return
+				end
 			end
+
 			local damage_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_tinker/tinker_laser.vpcf", PATTACH_CUSTOMORIGIN, enemy)
 			ParticleManager:SetParticleControl(damage_pfx, 0, fountain_pos)
 			ParticleManager:SetParticleControlEnt(damage_pfx, 1, enemy, PATTACH_POINT_FOLLOW, "attach_hitloc", enemy:GetAbsOrigin(), true)
@@ -207,6 +211,14 @@ function modifier_imba_fountain_danger_zone:OnIntervalThink()
 			ParticleManager:SetParticleControl(damage_pfx, 9, fountain_pos)
 			ParticleManager:ReleaseParticleIndex(damage_pfx)
 			enemy:AddNewModifier(fountain, self:GetAbility(), "modifier_doom_bringer_doom", {duration = 1.0})
+
+			local damage = enemy:GetMaxHealth() * 0.06
+
+			if enemy:IsInvulnerable() then
+				enemy:SetHealth(math.max(enemy:GetHealth() - damage, 1))
+			else
+				ApplyDamage({attacker = fountain, victim = enemy, damage = damage, damage_type = DAMAGE_TYPE_PURE})
+			end
 		end
 	end
 end

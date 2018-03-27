@@ -95,12 +95,13 @@ function modifier_imba_static_remnant:OnIntervalThink()
 	if IsServer() then
 
 		--Ability properties
-		local remnant_location 	=	self.dummy:GetAbsOrigin()
+		local remnant_location = self.dummy:GetAbsOrigin()
 		--Ability paramaters
-		local activation_range	=	self.ability:GetSpecialValueFor("big_remnant_activation_radius")
+		local activation_range = self.ability:GetSpecialValueFor("big_remnant_activation_radius")
 
 		--Find nearby enemies
-		local nearby_enemies	=	FindUnitsInRadius(	self:GetCaster():GetTeamNumber(),
+		local nearby_enemies = FindUnitsInRadius(
+			self:GetCaster():GetTeamNumber(),
 			remnant_location,
 			nil,
 			activation_range,
@@ -108,7 +109,9 @@ function modifier_imba_static_remnant:OnIntervalThink()
 			self.ability:GetAbilityTargetType(),
 			DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
 			FIND_ANY_ORDER,
-			false)
+			false
+		)
+
 		--Blow up if there are nearby enemies
 		if #nearby_enemies > 0 then
 			self:Destroy()
@@ -167,7 +170,7 @@ function modifier_imba_static_remnant:OnDestroy()
 
 				-- cast shorter Electric Vortex
 				if pull_duration ~= 0 then
-					enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_vortex_pull", {duration = pull_duration, speed = speed})
+					enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_vortex_root", {duration = pull_duration, speed = speed})
 				end
 			end
 		end
@@ -217,6 +220,7 @@ end
 --------------------------------------
 imba_storm_spirit_electric_vortex = storm_spirit_electric_vortex or class({})
 LinkLuaModifier("modifier_imba_vortex_pull", "hero/hero_storm_spirit.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_vortex_root", "hero/hero_storm_spirit.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_vortex_self_slow", "hero/hero_storm_spirit.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_storm_spirit_electric_vortex:OnSpellStart()
@@ -293,6 +297,7 @@ function imba_storm_spirit_electric_vortex:GetBehavior()
 		return DOTA_ABILITY_BEHAVIOR_NO_TARGET
 	end
 end
+
 --- PULL MODIFIER
 modifier_imba_vortex_pull = modifier_imba_vortex_pull or class({})
 
@@ -391,7 +396,106 @@ function modifier_imba_vortex_pull:OnDestroy()
 
 		-- Find a clear space to stand on
 		self:GetParent():SetUnitOnClearGround()
+	end
+end
 
+--- PULL MODIFIER (root only)
+modifier_imba_vortex_root = modifier_imba_vortex_root or class({})
+
+-- Modifier properties
+function modifier_imba_vortex_root:IsHidden() 		  return false end
+function modifier_imba_vortex_root:IsPurgable() 	  return false end
+function modifier_imba_vortex_root:IsPurgeException() return true end
+function modifier_imba_vortex_root:IsDebuff() 		  return true end
+function modifier_imba_vortex_root:IsStunDebuff() 	  return true end
+function modifier_imba_vortex_root:IsMotionController() return true end
+function modifier_imba_vortex_root:GetMotionControllerPriority() return DOTA_MOTION_CONTROLLER_PRIORITY_LOW end
+
+function modifier_imba_vortex_root:OnCreated( params )
+	if IsServer() then
+		-- Ability properties
+		local parent = self:GetParent()
+		local vortex_particle = "particles/units/heroes/hero_stormspirit/stormspirit_electric_vortex_root.vpcf"
+
+		self.vortex_loc	=	self:GetCaster():GetAbsOrigin()
+		-- Apply vortex particle on location
+		self.vortex_particle_fx = ParticleManager:CreateParticle(vortex_particle, PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
+--		ParticleManager:SetParticleControl(self.vortex_particle_fx, 0, self:GetCaster():GetAbsOrigin())
+		-- Apply vortex particle on target
+		ParticleManager:SetParticleControlEnt(self.vortex_particle_fx, 1, parent, PATTACH_POINT_FOLLOW, "attach_hitloc", parent:GetAbsOrigin(), true)
+
+		-- Motion controller (moves the target)
+		self.speed = params.speed * FrameTime()
+
+		self.frametime = FrameTime()
+		self:StartIntervalThink(self.frametime)
+	end
+end
+
+function modifier_imba_vortex_root:OnIntervalThink()
+	-- Check for motion controllers
+	if not self:CheckMotionControllers() then
+		return nil
+	end
+
+	-- Horizontal motion
+	self:HorizontalMotion(self:GetParent(), self.frametime)
+end
+
+function modifier_imba_vortex_root:OnDestroy()
+	if IsServer() then
+		-- Find a clear space to stand on
+		self:GetCaster():SetUnitOnClearGround()
+	end
+end
+
+function modifier_imba_vortex_root:GetMotionControllerPriority()
+	return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM
+end
+
+function modifier_imba_vortex_root:CheckState()
+	local state =
+		{
+			[MODIFIER_STATE_ROOTED] = true,
+			[MODIFIER_STATE_NO_UNIT_COLLISION] = true
+		}
+	return state
+end
+
+function modifier_imba_vortex_root:HorizontalMotion( unit, time )
+	if IsServer() then
+		-- Move the target
+		local set_point = unit:GetAbsOrigin() + (self:GetCaster():GetAbsOrigin() - unit:GetAbsOrigin()):Normalized() * self.speed
+		-- Stop moving when the vortex has been reached
+--		if (unit:GetAbsOrigin() - self.vortex_loc):Length2D() > 50 then
+			unit:SetAbsOrigin(Vector(set_point.x, set_point.y, GetGroundPosition(set_point, unit).z))
+--		end
+	end
+end
+
+
+function modifier_imba_vortex_root:DeclareFunctions()
+	local decFuncs =
+		{
+			MODIFIER_PROPERTY_OVERRIDE_ANIMATION,
+		}
+	return decFuncs
+end
+
+function modifier_imba_vortex_root:GetOverrideAnimation()
+	return ACT_DOTA_FLAIL
+end
+
+function modifier_imba_vortex_root:OnDestroy()
+	if IsServer() then
+		-- Remove the vortex particle
+		ParticleManager:DestroyParticle(self.vortex_particle_fx, false)
+		ParticleManager:ReleaseParticleIndex(self.vortex_particle_fx)
+		-- Stop making that noise
+		StopSoundOn("Hero_StormSpirit.ElectricVortex", self:GetParent())
+
+		-- Find a clear space to stand on
+		self:GetParent():SetUnitOnClearGround()
 	end
 end
 
@@ -399,9 +503,9 @@ end
 modifier_imba_vortex_self_slow = modifier_imba_vortex_self_slow or class({})
 
 -- Modifier properties
-function modifier_imba_vortex_pull:IsHidden() return false end
-function modifier_imba_vortex_pull:IsPurgable() return true end
-function modifier_imba_vortex_pull:IsDebuff() return true end
+function modifier_imba_vortex_self_slow:IsHidden() return false end
+function modifier_imba_vortex_self_slow:IsPurgable() return true end
+function modifier_imba_vortex_self_slow:IsDebuff() return true end
 
 function modifier_imba_vortex_self_slow:DeclareFunctions()
 	local funcs ={
@@ -710,7 +814,7 @@ function imba_storm_spirit_ball_lightning:OnProjectileThink_ExtraData(location, 
 
 		-- Set the caster slightly forwards
 		caster:SetAbsOrigin(Vector(location.x, location.y, GetGroundPosition(location, caster).z))
---		caster:Purge(false, true, true, true, true)
+		caster:Purge(false, true, true, true, true)
 		caster:AddNewModifier(caster, self, "modifier_item_lotus_orb_active", {duration=FrameTime()})
 
 		-- Calculate the new travel distance

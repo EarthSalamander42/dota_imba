@@ -1421,6 +1421,7 @@ streak[10] = "Beyond Godlike"
 			gold = gold,
 			tower = tower,
 			variables = variables,
+			roshan = roshan,
 			neutral = neutral,
 			suicide = suicide,
 		})

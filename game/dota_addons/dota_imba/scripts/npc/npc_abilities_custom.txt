@@ -43003,7 +43003,7 @@
 			"01"
 			{
 				"var_type"		"FIELD_INTEGER"
-				"chance"		"25"	// proc chance
+				"chance"		"17"	// proc chance
 			}
 			"02"
 			{

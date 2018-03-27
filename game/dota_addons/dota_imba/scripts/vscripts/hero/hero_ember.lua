@@ -154,6 +154,7 @@ function modifier_imba_flame_guard_aura:OnCreated(keys)
 		self.damage = keys.damage * self.tick_interval
 		self.effect_radius = keys.effect_radius
 		self.remaining_health = keys.remaining_health
+		self:SetStackCount(self.remaining_health)
 		self:StartIntervalThink(self.tick_interval)
 	end
 end
@@ -188,6 +189,7 @@ function modifier_imba_flame_guard_aura:GetModifierAvoidDamage(keys)
 	if IsServer() then
 		if keys.damage_type == DAMAGE_TYPE_MAGICAL then
 			self.remaining_health = self.remaining_health - keys.original_damage
+			self:SetStackCount(self.remaining_health)
 			return 1
 		else
 			return 0
@@ -651,8 +653,7 @@ function imba_ember_spirit_sleight_of_fist:OnSpellStart()
 			local current_target = EntIndexToHScript(sleight_targets[current_count])
 			caster:AddNewModifier(caster, self, "modifier_imba_sleight_of_fist_caster", {})
 			ProjectileManager:ProjectileDodge(caster)
-			Timers:CreateTimer(0.2, function()
-
+			Timers:CreateTimer(FrameTime(), function()
 				-- Particles and sound
 				caster:EmitSound("Hero_EmberSpirit.SleightOfFist.Damage")
 				local slash_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_ember_spirit/ember_spirit_sleightoffist_tgt.vpcf", PATTACH_ABSORIGIN_FOLLOW, current_target)
@@ -676,7 +677,6 @@ function imba_ember_spirit_sleight_of_fist:OnSpellStart()
 					previous_position = current_target:GetAbsOrigin()
 					current_target = EntIndexToHScript(sleight_targets[current_count])
 					return attack_interval
-
 				-- If not, stop everything
 				else
 					if caster:HasModifier("modifier_imba_sleight_of_fist_caster") then
@@ -684,7 +684,7 @@ function imba_ember_spirit_sleight_of_fist:OnSpellStart()
 					end
 					caster:RemoveModifierByName("modifier_imba_sleight_of_fist_caster")
 					for _, target in pairs(sleight_targets) do
-						target:RemoveModifierByName("modifier_imba_sleight_of_fist_marker")
+						EntIndexToHScript(target):RemoveModifierByName("modifier_imba_sleight_of_fist_marker")
 					end
 				end
 			end)
