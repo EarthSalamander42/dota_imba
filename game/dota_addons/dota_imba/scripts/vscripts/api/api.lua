@@ -15,11 +15,12 @@ api.debug_levels = {
 
 api.config = {
 	protocol = "http://",
-	server = "api.dota2imba.org",
+--	server = "api.dota2imba.org",
+	server = "himbeere.pirintex.com",
 	version = "2",
 	game = "imba",
 	agent = "imba_705",
-	timeout = 5000
+	timeout = 15000
 }
 
 api.endpoints = {
@@ -130,6 +131,9 @@ function api.request(endpoint, data, callback)
 			}
 
 			if result.body ~= nil then
+				
+				log.info(result.body)
+			
 				local decoded = json.decode(result.body)
 
 				if decoded ~= nil then

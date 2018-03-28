@@ -152,11 +152,24 @@ function Log:_PrintTable(node)
 	return output_str
 end
 
+function Log:_IsFiltered(level, file, fun)
+	return level < Log.Levels.TRACE
+end
+
 -- Print function
 function Log:Print(obj, level)
 
 	-- prepare stack trace
-	local trace = self:_LinesSplit(debug.traceback(nil, 3));
+	local traceback = debug.traceback();
+
+	if (traceback == nil) then
+		print("traceback not available")
+	end
+
+	local trace = self:_LinesSplit(traceback);
+	-- remove the first 3 lines from the stack trace
+	table.remove(trace, 1)
+	table.remove(trace, 1)
 	table.remove(trace, 1)
 
 	-- prepare level
@@ -179,6 +192,12 @@ function Log:Print(obj, level)
 	if fun[1] ~= nil then
 		context = self:_Trim(table.concat(fun, ":"))
 	end
+
+	-- apply filter
+	if self:_IsFiltered(level, file, fun) then
+		return
+	end
+
 
 	local prefix = "[" .. levelString .. "][" .. file .. ":" .. line .. "][" .. context .. "] "
 

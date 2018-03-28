@@ -203,7 +203,7 @@ function api.imba.complete(callback)
 
 
 	-- complete game
-	api.debug("Completing game " .. tostring(api.imba.data.id))
+	log.info("Completing game " .. tostring(api.imba.data.id))
 	api.request(api.endpoints.imba.game.complete, complete_data, function (error, data)
 		if error then
 			log.error("Game cannot be completed!")
