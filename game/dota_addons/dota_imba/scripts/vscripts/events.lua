@@ -1132,12 +1132,12 @@ function GameMode:OnEntityKilled( keys )
 	end
 
 	if killed_unit then
-
 		------------------------------------------------
 		-- Api Event Unit Killed
 		------------------------------------------------
 
 		killedUnitName = tostring(killed_unit:GetUnitName())
+
 		if (killedUnitName ~= "") then
 
 			killedPlayer = "-1"
@@ -1163,7 +1163,6 @@ function GameMode:OnEntityKilled( keys )
 				tostring(killedUnitName),
 				tostring(killedPlayer)
 			})
-
 		end
 
 		-------------------------------------------------------------------------------------------------
@@ -1389,7 +1388,7 @@ function GameMode:OnEntityKilled( keys )
 			elseif killed_unit:IsRealHero() and killer:GetTeamNumber() == killed_unit:GetTeamNumber() then
 				CombatEvents("kill", "hero_deny_hero", killed_unit, killer)
 			end
-		elseif killer:IsTower() then
+		elseif killer:IsBuilding() then
 			if killed_unit:IsRealHero() then
 				CombatEvents("generic", "tower_kill_hero", killed_unit, killer)
 			end

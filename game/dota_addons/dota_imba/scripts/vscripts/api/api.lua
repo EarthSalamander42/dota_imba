@@ -5,14 +5,6 @@ require("api/json")
 
 api = {}
 
-api.debug_levels = {
-	error = 1,
-	warn = 2,
-	info = 3,
-	debug = 4,
-	trace = 5
-}
-
 api.config = {
 	protocol = "http://",
 --	server = "api.dota2imba.org",
@@ -124,7 +116,6 @@ function api.request(endpoint, data, callback)
 	end
 
 	request:Send(function (raw_result)
-
 			local result = {
 				code = raw_result.StatusCode,
 				body = raw_result.Body,
@@ -170,13 +161,11 @@ function api.request(endpoint, data, callback)
 			else
 				log.debug("Request to " .. endpoint .. " successful")
 				callback(false, result.data)
-			end
 
+		end
 	end)
-
 end
 
 function api.print(object)
 
 end
-

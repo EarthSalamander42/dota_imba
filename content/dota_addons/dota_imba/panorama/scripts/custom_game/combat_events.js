@@ -19,8 +19,8 @@ function CreateCustomToast(data) {
 		var isAllyKill = !byNeutrals && data.victimPlayer == true && Players.GetTeam(data.victimPlayer) === Players.GetTeam(data.killerPlayer) && data.roshan == undefined;
 		var isVictim = data.victimPlayer === Game.GetLocalPlayerID();
 		var isKiller = data.killerPlayer === Game.GetLocalPlayerID();
-		var isRoshanKill = data.roshan == true
-		var isTowerKill = data.tower == true
+		var isRoshanKill = data.roshan == true;
+		var isTowerKill = data.tower == true;
 //		var teamVictim = byNeutrals || Players.GetTeam(data.victimPlayer) === Players.GetTeam(Game.GetLocalPlayerID());
 		var teamKiller = !byNeutrals && Players.GetTeam(data.killerPlayer) === Players.GetTeam(Game.GetLocalPlayerID());
 		row.SetHasClass('AllyEvent', teamKiller);
@@ -28,6 +28,8 @@ function CreateCustomToast(data) {
 		row.SetHasClass('LocalPlayerInvolved', isVictim || isKiller);
 		row.SetHasClass('LocalPlayerKiller', isKiller);
 		row.SetHasClass('LocalPlayerVictim', isVictim);
+
+		$.Msg(isKiller)
 
 		if (isKiller) {
 			Game.EmitSound('notification.self.kill');
@@ -45,13 +47,15 @@ function CreateCustomToast(data) {
 		} else if (isRoshanKill) {
 			rowText = '{team_name} {killed_icon} {roshan_icon} Roshan {gold}';
 		} else {
+			$.Msg("Others")
 			if (byNeutrals) {
 				rowText = $.Localize('#npc_dota_neutral_creep');
 			} else {
+				$.Msg("Not neutrals")
 				rowText = '{killer_name}';
 			}
 
-			if (data.roshan == undefined) {
+			if (data.roshan != true) {
 				rowText = rowText + ' {killed_icon} {victim_name} {gold}';
 			}
 		}
@@ -70,8 +74,6 @@ function CreateCustomToast(data) {
 
 		if (data.tower) {
 			var team = data.teamPlayer == false ? data.teamColor : Players.GetTeam(data.teamPlayer);
-			$.Msg(data.teamPlayer)
-			$.Msg(data.teamColor)
 			rowText = '{team_name} {killed_icon} {victim_name}';
 		}
 	}

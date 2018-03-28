@@ -42876,6 +42876,8 @@
 		{
 			"particle"				"particles/units/heroes/hero_ember_spirit/ember_spirit_sleight_of_fist_cast.vpcf"
 			"particle"				"particles/units/heroes/hero_ember_spirit/ember_spirit_sleight_of_fist_targetted_marker.vpcf"
+			"particle"				"particles/units/heroes/hero_ember_spirit/ember_spirit_sleightoffist_tgt.vpcf"
+			"particle"				"particles/units/heroes/hero_ember_spirit/ember_spirit_sleightoffist_trail.vpcf"
 			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_ember_spirit.vsndevts"
 		}
 
@@ -42896,18 +42898,17 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_lifesteal"			"10"	// double vs heroes
+				"creep_lifesteal"			"10"
 			}
 			"04"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"attack_interval"			"0.2"
+				"var_type"					"FIELD_INTEGER"
+				"hero_lifesteal"			"20"
 			}
 			"05"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"bonus_targets"				"1"
-				"LinkedSpecialBonus"		"special_bonus_ember_guard_damage"
+				"var_type"					"FIELD_FLOAT"
+				"attack_interval"			"0.2"
 			}
 		}
 	}
@@ -42933,7 +42934,7 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"			"0.0"
-		"AbilityCastRange"			"450"
+		"AbilityCastRange"			"400"
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
@@ -42958,12 +42959,12 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"effect_radius"				"450"
+				"effect_radius"				"400"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"duration"					"20"
+				"duration"					"14 16 18 20"
 			}
 			"03"
 			{
@@ -43002,7 +43003,7 @@
 			"01"
 			{
 				"var_type"		"FIELD_INTEGER"
-				"chance"		"25"	// proc chance
+				"chance"		"17"	// proc chance
 			}
 			"02"
 			{
@@ -43082,9 +43083,9 @@
 	}
 
 	//=================================================================================================================
-	// Ember talent 5: Sleight of Fist hits a random target 3 times (instead of two)
+	// Ember talent 5: Sleight of Fist hits bonus random targets
 	//=================================================================================================================
-	"special_bonus_ember_triple_sleight"
+	"special_bonus_ember_sleight_extra_targets"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -43099,7 +43100,7 @@
 			"01"
 			{
 				"var_type"		"FIELD_INTEGER"
-				"value"			"3"		// hits on the lucky target
+				"bonus_targets"	"3"		// max random targets to hit
 			}
 		}
 	}
@@ -43254,7 +43255,7 @@
 			"06"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"attack_cd_scepter"			"1.5"
+				"attack_cd_scepter"			"2.0"
 			}
 		}
 	}

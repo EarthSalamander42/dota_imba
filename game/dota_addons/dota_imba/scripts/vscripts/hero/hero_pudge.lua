@@ -890,20 +890,39 @@ function imba_pudge_dismember:OnSpellStart()
 	end
 
 	self.target = target
-	target:AddNewModifier(caster, self, "modifier_dismember", {duration=self.channelTime})
+	target:AddNewModifier(caster, self, "modifier_dismember", {})
 	caster:AddNewModifier(caster, self, "modifier_imba_pudge_dismember_buff", {})
 	self.pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_pudge/pudge_dismember.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
 end
 
-function imba_pudge_dismember:OnChannelFinish()
+function imba_pudge_dismember:OnChannelFinish(bInterrupted)
 	local caster = self:GetCaster()
-	local target = self.target
-	local target_buff = target:FindModifierByNameAndCaster("modifier_dismember", caster)
+
+	if self.target then
+		local target_buff = self.target:FindModifierByNameAndCaster("modifier_dismember", caster)
+
+		if bInterrupted then
+			self.target:RemoveModifierByName("modifier_dismember")
+		end
+	end
+
 	local caster_buff = caster:FindModifierByNameAndCaster("modifier_imba_pudge_dismember_buff", caster)
+
+	--anti mage Spell Shield handle
+	local caster_debuff = caster:FindModifierByName("modifier_imba_pudge_dismember")
+
+	if caster_debuff then
+		print("set caster debuff time")
+		caster_debuff:SetDuration(self.channelTime, true)
+	end
+
 	if target_buff then target_buff:Destroy() end
 	if caster_buff then caster_buff:Destroy() end
-	ParticleManager:DestroyParticle(self.pfx, true)
-	ParticleManager:ReleaseParticleIndex(self.pfx)
+
+	if self.pfx then
+		ParticleManager:DestroyParticle(self.pfx, true)
+		ParticleManager:ReleaseParticleIndex(self.pfx)
+	end
 end
 
 modifier_dismember = class({})
@@ -918,8 +937,16 @@ function modifier_dismember:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE e
 function modifier_dismember:OnCreated()
 	self:StartIntervalThink(1.0)
 	self:OnIntervalThink()
+
 	if IsServer() then
 		self:GetParent():StartGesture(ACT_DOTA_DISABLED)
+
+		local duration = self:GetCaster():FindAbilityByName("imba_pudge_dismember"):GetSpecialValueFor("hero_duration")
+		if not self:GetParent():IsRealHero() then
+			duration = self:GetCaster():FindAbilityByName("imba_pudge_dismember"):GetSpecialValueFor("creep_duration")
+		end
+
+		self:SetDuration(duration, true)
 	end
 end
 

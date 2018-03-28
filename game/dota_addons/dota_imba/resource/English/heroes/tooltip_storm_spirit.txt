@@ -2,7 +2,7 @@
 
 // Storm Spirit's Static Remnant
 "DOTA_Tooltip_ability_imba_storm_spirit_static_remnant"									"#{DOTA_Tooltip_ability_storm_spirit_static_remnant}"
-"DOTA_Tooltip_ability_imba_storm_spirit_static_remnant_Description"						"#{DOTA_Tooltip_ability_storm_spirit_static_remnant_Description}\n<font color='#FF7800'>Static Vortex:</font> Whenever a Static Remnant detonates on an enemy, cast a %vortex_time_pct%%  shorter Electric Vortex on the target."
+"DOTA_Tooltip_ability_imba_storm_spirit_static_remnant_Description"						"#{DOTA_Tooltip_ability_storm_spirit_static_remnant_Description}\n<font color='#FF7800'>Static Vortex:</font> Whenever a Static Remnant detonates on an enemy, cast a %vortex_time_pct%%  shorter Electric Vortex on the target (root only)."
 "DOTA_Tooltip_ability_imba_storm_spirit_static_remnant_Lore"							"#{DOTA_Tooltip_ability_storm_spirit_static_remnant_Lore}"
 "DOTA_Tooltip_ability_imba_storm_spirit_static_remnant_Note0"							"#{DOTA_Tooltip_ability_storm_spirit_static_remnant_Note0}"
 "DOTA_Tooltip_ability_imba_storm_spirit_static_remnant_Note1"							"#{DOTA_Tooltip_ability_storm_spirit_static_remnant_Note1}"
@@ -11,7 +11,7 @@
 "DOTA_Tooltip_ability_imba_storm_spirit_static_remnant_big_remnant_damage"				"#{DOTA_Tooltip_ability_storm_spirit_static_remnant_static_remnant_damage}"
 "DOTA_Tooltip_ability_imba_storm_spirit_static_remnant_remnant_count"					"REMNANT COUNT:"
 "DOTA_Tooltip_ability_imba_storm_spirit_static_remnant_big_remnant_activation_delay"	"ACTIVATION DELAY:"
-"DOTA_Tooltip_ability_imba_storm_spirit_static_remnant_vortex_time_pct"					"%STATIC VORTEX TIME:"
+"DOTA_Tooltip_ability_imba_storm_spirit_static_remnant_vortex_time_pct"					"%ELECTRIC VORTEX TIME:"
 
 // Storm Spirit's Electric Vortex
 "DOTA_Tooltip_ability_imba_storm_spirit_electric_vortex"						"#{DOTA_Tooltip_ability_storm_spirit_electric_vortex}"
@@ -26,6 +26,9 @@
 
 "DOTA_Tooltip_modifier_imba_vortex_pull"										"#{DOTA_Tooltip_modifier_storm_spirit_electric_vortex_pull}"
 "DOTA_Tooltip_modifier_imba_vortex_pull_Description"							"#{DOTA_Tooltip_modifier_storm_spirit_electric_vortex_pull_Description}"
+
+"DOTA_Tooltip_modifier_imba_vortex_root"										"#{DOTA_Tooltip_modifier_storm_spirit_electric_vortex_pull}"
+"DOTA_Tooltip_modifier_imba_vortex_root_Description"							"#{DOTA_Tooltip_modifier_storm_spirit_electric_vortex_pull_Description} (root only)"
 
 "DOTA_Tooltip_modifier_imba_vortex_self_slow"									"#{DOTA_Tooltip_modifier_storm_spirit_electric_vortex_self_slow}"
 "DOTA_Tooltip_modifier_imba_vortex_self_slow_Description"						"#{DOTA_Tooltip_modifier_storm_spirit_electric_vortex_self_slow_Description}"

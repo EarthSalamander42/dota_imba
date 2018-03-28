@@ -284,7 +284,6 @@ end
 function IsNearEnemyFountain(location, team, distance)
 	for _, fountain in pairs(Entities:FindAllByClassname("ent_dota_fountain")) do
 		if (fountain:GetAbsOrigin() - location):Length2D() <= distance then
-			print("Near a fountain!")
 			return true
 		end
 	end
