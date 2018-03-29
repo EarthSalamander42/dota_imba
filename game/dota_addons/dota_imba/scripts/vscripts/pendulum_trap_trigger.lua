@@ -6,7 +6,7 @@ local triggerCounter = 0
 local triggerHeroList = {}
 
 function OnStartTouch(trigger)
-	print( "pendulum TRIGGER" )
+	log.debug( "pendulum TRIGGER" )
 	triggerCounter = triggerCounter + 1
   	local triggerName = thisEntity:GetName()
 	local team = trigger.activator:GetTeam()
@@ -15,7 +15,7 @@ function OnStartTouch(trigger)
 	local heroHandle = EntIndexToHScript(heroIndex)
 	table.insert( triggerHeroList, heroHandle )
 	if not triggerActive then
-		print( "pendulum SKIP" )
+		log.debug( "pendulum SKIP" )
 		return
 	end
 	triggerActive = false
@@ -35,7 +35,7 @@ end
 
 function EnablePendulum( triggerName, heroHandle )
 	if isPendulumReady == true then
-		--print("Enabling Pendulum")
+		--log.debug("Enabling Pendulum")
 		isPendulumReady = false
 		EmitGlobalSound("Conquest.Pendulum.Trigger")
 		EmitGlobalSound("tutorial_rockslide")
@@ -58,10 +58,10 @@ function EnablePendulum( triggerName, heroHandle )
 end
 
 function DisablePendulum( triggerName, heroHandle )
-	--print( "Disabling Pendulum" )
+	--log.debug( "Disabling Pendulum" )
 	isPendulumReady = true
 	if triggerCounter > 0 then
-		--print("Reactivate the trap")
+		--log.debug("Reactivate the trap")
 		local trapName = triggerName .. "_npc"
 		local npc = Entities:FindByName( nil, trapName )
 		npc.KillerToCredit = triggerHeroList[1]
@@ -79,10 +79,10 @@ function OnEndTouch(trigger)
 			table.remove( triggerHeroList, i )
 		end
 	end
-	--print("Trap Button Trigger Exited")
+	--log.debug("Trap Button Trigger Exited")
 end
 
 function ResetTrapModel()
-	print( "pendulum RESET" )
+	log.debug( "pendulum RESET" )
 	triggerActive = true
 end

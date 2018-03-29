@@ -284,9 +284,9 @@ function GameMode:GoldFilter(keys)
 			CustomNetTables:SetTableValue("player_table", tostring(keys.player_id_const), {hero_kill_bounty = keys.gold + hero.kill_hero_bounty})
 		end
 	else
-		--		print(keys.gold, custom_gold_bonus / 100, 1 + game_time / 25)
+		--		log.debug(keys.gold, custom_gold_bonus / 100, 1 + game_time / 25)
 		keys.gold = (custom_gold_bonus / 100) + (1 + game_time / 25) * keys.gold
-		--		print(keys.gold)
+		--		log.debug(keys.gold)
 	end
 
 	-- Comeback gold gain
@@ -1740,7 +1740,7 @@ function GameMode:GatherAndRegisterValidTeams()
 	local foundTeamsList = {}
 	for t, _ in pairs( foundTeams ) do
 		table.insert( foundTeamsList, t )
-		--		print("Team:", t)
+		--		log.debug("Team:", t)
 		--		AddFOWViewer(t, Entities:FindByName(nil, "@overboss"):GetAbsOrigin(), 900, 99999, false)
 	end
 
@@ -1755,19 +1755,19 @@ function GameMode:GatherAndRegisterValidTeams()
 
 	m_GatheredShuffledTeams = ShuffledList( foundTeamsList )
 
-	--	print( "Final shuffled team list:" )
+	--	log.debug( "Final shuffled team list:" )
 	--	for _, team in pairs( m_GatheredShuffledTeams ) do
-	--		print( " - " .. team .. " ( " .. GetTeamName( team ) .. " )" )
+	--		log.debug( " - " .. team .. " ( " .. GetTeamName( team ) .. " )" )
 	--	end
 
-	--	print( "Setting up teams:" )
+	--	log.debug( "Setting up teams:" )
 	for team = 0, (DOTA_TEAM_COUNT-1) do
 		local maxPlayers = 0
 
 		if ( nil ~= TableFindKey( foundTeamsList, team ) ) then
 			maxPlayers = maxPlayersPerValidTeam
 		end
-		--		print( " - " .. team .. " ( " .. GetTeamName( team ) .. " ) -> max players = " .. tostring(maxPlayers) )
+		--		log.debug( " - " .. team .. " ( " .. GetTeamName( team ) .. " ) -> max players = " .. tostring(maxPlayers) )
 		GameRules:SetCustomGameTeamMaxPlayers( team, maxPlayers )
 	end
 end
@@ -1795,7 +1795,7 @@ function spawnunits(campname)
 		}
 	local r = randomCreature[RandomInt(1,#randomCreature)]
 
-	--print(r)
+	--log.debug(r)
 	for i = 1, NumberToSpawn do
 		local creature = CreateUnitByName( "npc_dota_creature_" ..r , SpawnLocation:GetAbsOrigin() + RandomVector( RandomFloat( 0, 200 ) ), true, nil, nil, DOTA_TEAM_NEUTRALS )
 		log.debug("Spawning Camps")
@@ -1809,7 +1809,7 @@ end
 function GameMode:ExecuteOrderFilter( filterTable )
 	--[[
 	for k, v in pairs( filterTable ) do
-		print("EO: " .. k .. " " .. tostring(v) )
+		log.debug("EO: " .. k .. " " .. tostring(v) )
 	end
 	]]
 
@@ -1826,7 +1826,7 @@ function GameMode:ExecuteOrderFilter( filterTable )
 
 		local pickedItem = item:GetContainedItem()
 
-		--print(pickedItem:GetAbilityName())
+		--log.debug(pickedItem:GetAbilityName())
 		if pickedItem == nil then
 			return true
 		end
@@ -1835,10 +1835,10 @@ function GameMode:ExecuteOrderFilter( filterTable )
 			local player = PlayerResource:GetPlayer(filterTable["issuer_player_id_const"])
 			local hero = player:GetAssignedHero()
 			if hero:GetNumItemsInInventory() < 6 then
-				--print("inventory has space")
+				--log.debug("inventory has space")
 				return true
 			else
-				--print("Moving to target instead")
+				--log.debug("Moving to target instead")
 				local position = item:GetAbsOrigin()
 				filterTable["position_x"] = position.x
 				filterTable["position_y"] = position.y
@@ -1916,7 +1916,7 @@ function GameMode:OnThink()
 
 		-- Find hidden modifiers
 		--		for i = 0, hero:GetModifierCount() -1 do
-		--			print(hero:GetModifierNameByIndex(i))
+		--			log.debug(hero:GetModifierNameByIndex(i))
 		--		end
 	end
 
@@ -2020,9 +2020,9 @@ function GameMode:OnThink()
 		return
 	else
 		i = i -1
-		--		print(i)
+		--		log.debug(i)
 		for _, hero in pairs(HeroList:GetAllHeroes()) do
-			--			print(hero:GetPlayerID(), hero.picked)
+			--			log.debug(hero:GetPlayerID(), hero.picked)
 			if not hero.picked and not i == false then -- have to double check false for reasons
 				if i == 30 then
 					EmitAnnouncerSoundForPlayer("announcer_ann_custom_countdown_"..i, hero:GetPlayerID())

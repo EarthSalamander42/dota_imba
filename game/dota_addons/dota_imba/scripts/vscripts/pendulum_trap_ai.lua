@@ -4,24 +4,12 @@
 -- AI for the Pendulum Trap
 ---------------------------------------------------------------------------
 
-function PrintTable( t, indent )
-	if type(t) ~= "table" then return end
-
-	for k,v in pairs( t ) do
-		if type( v ) == "table" then
-			if ( v ~= t ) then
-				print( indent .. tostring( k ) .. ":\n" .. indent .. "{" )
-				PrintTable( v, indent .. "  " )
-				print( indent .. "}" )
-			end
-		else
-		print( indent .. tostring( k ) .. ":" .. tostring(v) )
-		end
-	end
+function PrintTable(t)
+	log.debug(t)
 end
 
 function Fire(trigger)
-	print("Pendulum has hit a hero!")
+	log.debug("Pendulum has hit a hero!")
 	local triggerName = thisEntity:GetName()
 	local target = Entities:FindByName( nil, triggerName .. "_target" )
 	local level = trigger.activator:GetLevel()
@@ -29,11 +17,11 @@ function Fire(trigger)
 	local heroIndex = trigger.activator:GetEntityIndex()
 	local heroHandle = EntIndexToHScript(heroIndex)
 	if heroHandle:IsOutOfGame() == true then
-		--print("Phase Shift")
+		--log.debug("Phase Shift")
 		return
 	end
 	if heroHandle ~= nil then
-		--print("Pendulum should do 10000 damage")
+		--log.debug("Pendulum should do 10000 damage")
 		local pendulumTrap = thisEntity:FindAbilityByName("pendulum_trap")
 		--thisEntity:CastAbilityOnTarget(heroHandle, pendulumTrap, -1 )
 		-- Using Kill() instead of ability

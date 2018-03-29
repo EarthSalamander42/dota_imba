@@ -74,7 +74,7 @@ function breathe_poison:OnProjectileHit( hTarget, vLocation )
 	local poisonDamage = self.poison_damage
 	if self.targetLevel ~= nil and self.targetLevel > 3 then
 		poisonDamage = poisonDamage * ( self.targetLevel / 3 )
-		print("Increased Damage")
+		log.debug("Increased Damage")
 	end
 	if hTarget ~= nil and ( not hTarget:IsMagicImmune() ) and ( not hTarget:IsInvulnerable() ) then
 
