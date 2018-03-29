@@ -31,7 +31,7 @@ require('imba')
 require('hero_selection/hero_selection')
 
 function Precache(context)
-	DebugPrint("[IMBA] Performing pre-load precache")
+	log.debug("Performing pre-load precache")
 
 	-- Lua modifiers activation
 	LinkLuaModifier("modifier_imba_speed_limit_break", "modifier/modifier_imba_speed_limit_break.lua", LUA_MODIFIER_MOTION_NONE )

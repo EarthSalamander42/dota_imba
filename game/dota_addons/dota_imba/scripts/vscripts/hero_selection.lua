@@ -179,7 +179,7 @@ function HeroSelection:Start()
 			HeroSelection.numPickers = self.numPickers + 1
 			HeroSelection.playerPickState[pID] = {}
 			HeroSelection.playerPickState[pID].pick_state = "selecting_hero"
-			print("Pick State:", pID, HeroSelection.playerPickState[pID].pick_state)
+			log.debug("Pick State:", pID, HeroSelection.playerPickState[pID].pick_state)
 			HeroSelection.playerPickState[pID].repick_state = false
 			HeroSelection.HorriblyImplementedReconnectDetection[pID] = true
 		end
@@ -249,10 +249,10 @@ end
 function HeroSelection:RandomHero(event)
 	local id = event.PlayerID
 	local forced = event.forced
-	print("Forced Random:", forced)
+	log.debug("Forced Random:", forced)
 
 	if PlayerResource:GetConnectionState(id) == 1 then
-		print("Bot, ignoring..")
+		log.debug("Bot, ignoring..")
 	else
 		if HeroSelection.playerPickState[id].pick_state ~= "selecting_hero" then
 			return nil
@@ -265,7 +265,7 @@ function HeroSelection:RandomHero(event)
 	if GetMapName() == "imba_10v10" or GetMapName() == "imba_frantic_10v10" then
 		for _, picked_hero in pairs(HeroSelection.disabled_10v10_heroes) do
 			if random_hero == picked_hero then
-				print("10v10 hero disabled, random again...")
+				log.debug("10v10 hero disabled, random again...")
 				HeroSelection:RandomHero({PlayerID = id})
 				return
 			end
@@ -273,7 +273,7 @@ function HeroSelection:RandomHero(event)
 		if GetMapName() == "imba_frantic_10v10" then
 			for _, picked_hero in pairs(HeroSelection.disabled_frantic_heroes) do
 				if random_hero == picked_hero then
-					print("10v10 hero disabled, random again...")
+					log.debug("10v10 hero disabled, random again...")
 					HeroSelection:RandomHero({PlayerID = id})
 					return
 				end
@@ -283,7 +283,7 @@ function HeroSelection:RandomHero(event)
 
 	for _, picked_hero in pairs(HeroSelection.disabled_heroes) do
 		if random_hero == picked_hero then
-			print("Hero disabled, random again...")
+			log.debug("Hero disabled, random again...")
 			HeroSelection:RandomHero({PlayerID = id})
 			return
 		end
@@ -291,7 +291,7 @@ function HeroSelection:RandomHero(event)
 
 	for _, picked_hero in pairs(HeroSelection.disabled_silent_heroes) do
 		if random_hero == picked_hero then
-			print("Hero disabled silently, random again...")
+			log.debug("Hero disabled silently, random again...")
 			HeroSelection:RandomHero({PlayerID = id})
 			return
 		end
@@ -299,7 +299,7 @@ function HeroSelection:RandomHero(event)
 
 	for _, picked_hero in pairs(HeroSelection.picked_heroes) do
 		if random_hero == picked_hero then
-			print("Hero picked, random again...")
+			log.debug("Hero picked, random again...")
 			HeroSelection:RandomHero({PlayerID = id})
 			return
 		end
@@ -308,7 +308,7 @@ function HeroSelection:RandomHero(event)
 	if GetMapName() == "imba_overthrow" then
 		for _, picked_hero in pairs(HeroSelection.disabled_overthrow_heroes) do
 			if random_hero == picked_hero then
-				print("Overthrow hero disabled, random again...")
+				log.debug("Overthrow hero disabled, random again...")
 				HeroSelection:RandomHero({PlayerID = id})
 				return
 			end
@@ -316,7 +316,7 @@ function HeroSelection:RandomHero(event)
 	end
 
 	if api.imba.hero_is_disabled(random_hero) then
-		print("Hero is Hot Disabled!")
+		log.debug("Hero is Hot Disabled!")
 		HeroSelection:RandomHero({PlayerID = id})
 		return
 	end
@@ -344,7 +344,7 @@ function HeroSelection:RandomImbaHero(event)
 	if GetMapName() == "imba_10v10" or GetMapName() == "imba_frantic_10v10" then
 		for _, picked_hero in pairs(HeroSelection.disabled_10v10_heroes) do
 			if random_hero == picked_hero then
-				print("10v10 hero disabled, random again...")
+				log.debug("10v10 hero disabled, random again...")
 				HeroSelection:RandomHero({PlayerID = id})
 				return
 			end
@@ -352,7 +352,7 @@ function HeroSelection:RandomImbaHero(event)
 		if GetMapName() == "imba_frantic_10v10" then
 			for _, picked_hero in pairs(HeroSelection.disabled_frantic_heroes) do
 				if random_hero == picked_hero then
-					print("10v10 hero disabled, random again...")
+					log.debug("10v10 hero disabled, random again...")
 					HeroSelection:RandomHero({PlayerID = id})
 					return
 				end
@@ -362,7 +362,7 @@ function HeroSelection:RandomImbaHero(event)
 
 	for _, picked_hero in pairs(HeroSelection.disabled_heroes) do
 		if random_hero == picked_hero then
-			print("Hero disabled, random again...")
+			log.debug("Hero disabled, random again...")
 			HeroSelection:RandomHero({PlayerID = id})
 			return
 		end
@@ -370,7 +370,7 @@ function HeroSelection:RandomImbaHero(event)
 
 	for _, picked_hero in pairs(HeroSelection.disabled_silent_heroes) do
 		if random_hero == picked_hero then
-			print("Hero disabled silently, random again...")
+			log.debug("Hero disabled silently, random again...")
 			HeroSelection:RandomHero({PlayerID = id})
 			return
 		end
@@ -378,7 +378,7 @@ function HeroSelection:RandomImbaHero(event)
 
 	for _, picked_hero in pairs(HeroSelection.picked_heroes) do
 		if random_hero == picked_hero then
-			print("Hero picked, random again...")
+			log.debug("Hero picked, random again...")
 			HeroSelection:RandomHero({PlayerID = id})
 			return
 		end
@@ -387,7 +387,7 @@ function HeroSelection:RandomImbaHero(event)
 	if GetMapName() == "imba_overthrow" then
 		for _, picked_hero in pairs(HeroSelection.disabled_overthrow_heroes) do
 			if random_hero == picked_hero then
-				print("Overthrow hero disabled, random again...")
+				log.debug("Overthrow hero disabled, random again...")
 				HeroSelection:RandomHero({PlayerID = id})
 				return
 			end
@@ -395,7 +395,7 @@ function HeroSelection:RandomImbaHero(event)
 	end
 
 	if api.imba.hero_is_disabled(random_hero) then
-		print("Hero is Hot Disabled!")
+		log.debug("Hero is Hot Disabled!")
 		HeroSelection:RandomHero({PlayerID = id})
 		return
 	end
@@ -415,7 +415,7 @@ function HeroSelection:RandomSameHero()
 	if GetMapName() == "imba_10v10" or GetMapName() == "imba_frantic_10v10" then
 		for _, picked_hero in pairs(HeroSelection.disabled_10v10_heroes) do
 			if random_hero == picked_hero then
-				print("10v10 hero disabled, random again...")
+				log.debug("10v10 hero disabled, random again...")
 				HeroSelection:RandomHero({PlayerID = id})
 				break
 			end
@@ -424,7 +424,7 @@ function HeroSelection:RandomSameHero()
 		if GetMapName() == "imba_frantic_10v10" then
 			for _, picked_hero in pairs(HeroSelection.disabled_frantic_heroes) do
 				if random_hero == picked_hero then
-					print("10v10 hero disabled, random again...")
+					log.debug("10v10 hero disabled, random again...")
 					HeroSelection:RandomHero({PlayerID = id})
 					break
 				end
@@ -434,7 +434,7 @@ function HeroSelection:RandomSameHero()
 
 	for _, picked_hero in pairs(HeroSelection.disabled_heroes) do
 		if random_hero == picked_hero then
-			print("Hero disabled, random again...")
+			log.debug("Hero disabled, random again...")
 			HeroSelection:RandomHero({PlayerID = id})
 			break
 		end
@@ -442,7 +442,7 @@ function HeroSelection:RandomSameHero()
 
 	for _, picked_hero in pairs(HeroSelection.disabled_silent_heroes) do
 		if random_hero == picked_hero then
-			print("Hero disabled silently, random again...")
+			log.debug("Hero disabled silently, random again...")
 			HeroSelection:RandomHero({PlayerID = id})
 			break
 		end
@@ -451,7 +451,7 @@ function HeroSelection:RandomSameHero()
 	if GetMapName() == "imba_overthrow" then
 		for _, picked_hero in pairs(HeroSelection.disabled_overthrow_heroes) do
 			if random_hero == picked_hero then
-				print("Overthrow hero disabled, random again...")
+				log.debug("Overthrow hero disabled, random again...")
 				HeroSelection:RandomHero({PlayerID = id})
 				break
 			end
@@ -459,7 +459,7 @@ function HeroSelection:RandomSameHero()
 	end
 
 	if api.imba.hero_is_disabled(random_hero) then
-		print("Hero is Hot Disabled!")
+		log.debug("Hero is Hot Disabled!")
 		HeroSelection:RandomHero({PlayerID = id})
 		return
 	end
@@ -497,7 +497,7 @@ function HeroSelection:HeroSelect(event)
 				HeroSelection.direPicks[#HeroSelection.direPicks + 1] = event.HeroName
 			end
 
-			print("Added "..event.HeroName.." to the picked heroes list.")
+			log.debug("Added "..event.HeroName.." to the picked heroes list.")
 			table.insert(HeroSelection.picked_heroes, event.HeroName)
 
 			-- Send a pick event to all clients
@@ -506,14 +506,14 @@ function HeroSelection:HeroSelect(event)
 			CustomGameEventManager:Send_ServerToAllClients("hero_picked", {PlayerID = event.PlayerID, HeroName = event.HeroName, Team = PlayerResource:GetTeam(event.PlayerID), HasRandomed = has_randomed})
 			if PlayerResource:GetConnectionState(event.PlayerID) ~= 1 then
 				HeroSelection.playerPickState[event.PlayerID].pick_state = "selected_hero"
-				print("Pick State:", event.PlayerID, HeroSelection.playerPickState[event.PlayerID].pick_state)
+				log.debug("Pick State:", event.PlayerID, HeroSelection.playerPickState[event.PlayerID].pick_state)
 			end
 
 			-- Assign the hero if picking is over
 			if HeroSelection.TimeLeft <= 0 and HeroSelection.playerPickState[event.PlayerID].pick_state ~= "in_game" then
 				HeroSelection:AssignHero( event.PlayerID, event.HeroName )
 				HeroSelection.playerPickState[event.PlayerID].pick_state = "in_game"
-				print("Pick State:", event.PlayerID, HeroSelection.playerPickState[event.PlayerID].pick_state)
+				log.debug("Pick State:", event.PlayerID, HeroSelection.playerPickState[event.PlayerID].pick_state)
 				CustomGameEventManager:Send_ServerToAllClients("hero_loading_done", {} )
 			end
 
@@ -572,7 +572,7 @@ function HeroSelection:HeroRepicked( event )
 	-- Flag the player as having repicked
 	PlayerResource:CustomSetHasRepicked(player_id, true)
 	HeroSelection.playerPickState[player_id].pick_state = "selecting_hero"
-	print("Pick State:", player_id, HeroSelection.playerPickState[player_id].pick_state)
+	log.debug("Pick State:", player_id, HeroSelection.playerPickState[player_id].pick_state)
 	HeroSelection.playerPickState[player_id].repick_state = true
 	HeroSelection.playerPickState[player_id].random_state = false
 
@@ -600,7 +600,7 @@ function HeroSelection:EndPicking()
 		if HeroSelection.playerPicks[player_id] and HeroSelection.playerPickState[player_id].pick_state ~= "in_game" then
 			HeroSelection:AssignHero(player_id, HeroSelection.playerPicks[player_id])
 			HeroSelection.playerPickState[player_id].pick_state = "in_game"
-			print("Pick State:", player_id, HeroSelection.playerPickState[player_id].pick_state)
+			log.debug("Pick State:", player_id, HeroSelection.playerPickState[player_id].pick_state)
 		end
 	end
 

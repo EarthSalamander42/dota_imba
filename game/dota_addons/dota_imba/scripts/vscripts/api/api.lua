@@ -7,18 +7,18 @@ api = {}
 
 api.config = {
 	protocol = "http://",
---	server = "api.dota2imba.org",
-	server = "himbeere.pirintex.com",
+	server = "api.dota2imba.org",
 	version = "2",
 	game = "imba",
 	agent = "imba_705",
-	timeout = 15000
+	timeout = 10000
 }
 
 api.endpoints = {
 	imba = {
 		meta = {
 			loading_screen_info = "/imba/meta/loading-screen-info",
+			logging_configuration = "/imba/meta/logging-configuration",
 			modify_donator = "/imba/meta/modify-donator",
 			rankings_imr_5v5 = "/imba/meta/rankings/imr-5v5",
 			rankings_imr_10v10 = "/imba/meta/rankings/imr-10v10",
@@ -32,7 +32,7 @@ api.endpoints = {
 		game = {
 			register = "/imba/game/register",
 			complete = "/imba/game/complete",
-			events = "/imba/game/events",
+			events = "/imba/game/events"
 		}
 	},
 	pudge_wars = {
@@ -112,19 +112,20 @@ function api.request(endpoint, data, callback)
 	log.debug("Method: " .. method)
 
 	if payload ~= nil then
-		log.debug("Payload: " .. payload)
+		log.debug("Payload: " .. payload:sub(1, 20))
 	end
 
 	request:Send(function (raw_result)
+
 			local result = {
 				code = raw_result.StatusCode,
 				body = raw_result.Body,
 			}
 
 			if result.body ~= nil then
-				
-				log.info(result.body)
-			
+
+				log.debug(result.body)
+
 				local decoded = json.decode(result.body)
 
 				if decoded ~= nil then
@@ -134,38 +135,33 @@ function api.request(endpoint, data, callback)
 					result.version = decoded.version
 					result.message = decoded.message
 				else
-					log.error("Failed decoding JSON")
+					log.error("Failed decoding JSON: Status Code: " .. tostring(result.code))
+				end
+
+				if result.code == 503 then
+					log.error("Server unavailable")
+					callback(true, "Server unavailable")
+				elseif result.code == 500 then
+					if result.message ~= nil then
+						log.error("Internal Server Error: " .. tostring(result.message))
+						callback(true, "Internal Server Error: " .. tostring(result.message))
+					else
+						log.error("Internal Server Error")
+						callback(true, "Internal Server Error")
+					end
+				elseif result.code == 405 then
+					log.error("Used invalid method on endpoint" .. endpoint)
+					callback(true, "Used invalid method on endpoint" .. endpoint)
+				elseif result.code == 404 then
+					log.error("Tried to access unknown endpoint " .. endpoint)
+					callback(true, "Tried to access unknown endpoint " .. endpoint)
+				elseif result.code ~= 200 then
+					log.error("Unknown Error: " .. tostring(result.code))
+					callback(true, "Unknown Error: " .. tostring(result.code))
+				else
+					log.debug("Request to " .. endpoint .. " successful")
+					callback(false, result.data)
 				end
 			end
-
-			if result.code == 503 then
-				log.error("Server unavailable")
-				callback(true, "Server unavailable")
-			elseif result.code == 500 then
-				if result.message ~= nil then
-					log.error("Internal Server Error: " .. tostring(result.message))
-					callback(true, "Internal Server Error: " .. tostring(result.message))
-				else
-					log.error("Internal Server Error")
-					callback(true, "Internal Server Error")
-				end
-			elseif result.code == 405 then
-				log.error("Used invalid method on endpoint" .. endpoint)
-				callback(true, "Used invalid method on endpoint" .. endpoint)
-			elseif result.code == 404 then
-				log.error("Tried to access unknown endpoint " .. endpoint)
-				callback(true, "Tried to access unknown endpoint " .. endpoint)
-			elseif result.code ~= 200 then
-				log.error("Unknown Error: " .. tostring(result.code))
-				callback(true, "Unknown Error: " .. tostring(result.code))
-			else
-				log.debug("Request to " .. endpoint .. " successful")
-				callback(false, result.data)
-
-		end
 	end)
-end
-
-function api.print(object)
-
 end

@@ -23,12 +23,6 @@
 -- print utility functions
 local TeamSelectionDebugEnabled = true
 
-function tsprint(msg)
-	if TeamSelectionDebugEnabled then
-		print("[team-select] " .. msg)
-	end
-end
-
 -- list of names of the events
 local TeamSelectionEvents = {
 	hostReady = "imba_teamselect_host_ready",
@@ -64,7 +58,7 @@ end
 -- Called in DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP
 function InitializeTeamSelection()
 
-	tsprint("Initializing team selection")
+	log.info("Initializing team selection")
 
 	-- 5v5                will use complete random
 	-- 10v10              parties will be kept
@@ -84,8 +78,8 @@ end
 -----------------------------------
 
 function ManualTeamSelection()
-	tsprint("Initializing manual team selection")
-	tsprint("Skipping. Manual Team Selection is performed by legacy code")
+	log.info("Initializing manual team selection")
+	log.info("Skipping. Manual Team Selection is performed by legacy code")
 end
 
 -----------------------------------
@@ -97,7 +91,7 @@ local TeamSelectionListeners = {}
 
 function Random5v5TeamSelection()
 
-	tsprint("Initializing 5v5 random team selection")
+	log.info("Initializing 5v5 random team selection")
 
 	-- wait until the player with host privileges notifies us that he is ready
 	-- register the host-ready event
@@ -122,11 +116,11 @@ end
 
 function Random5v5TeamSelectionFinalize(response)
 
-	tsprint("recieved response from server")
+	log.info("recieved response from server")
 
 	-- catch errors
 	if not response.ok then
-		tsprint("error")
+		log.error("error")
 		TeamSelectionFallbackAssignment()
 		return
 	end
@@ -167,7 +161,7 @@ local TeamSelectionComputedTotal = 4
 
 function KeepTeams10v10TeamSelection()
 
-	tsprint("Initializing keep-teams 10v10 team selection")
+	log.info("Initializing keep-teams 10v10 team selection")
 
 	-- wait until the player with host privileges notifies us that he is ready
 	-- register the host-ready event
@@ -179,7 +173,7 @@ function KeepTeams10v10TeamSelection()
 end
 
 function KeepTeams10v10TeamSelectionReady(obj, event)
-	tsprint("We got notification from host")
+	log.info("We got notification from host")
 
 	-- save the playerid of the privileged client / volvos function is unreliable
 	PlayerWithHostPrivileges = event.PlayerID
@@ -227,7 +221,7 @@ end
 
 function KeepTeams10v10TeamSelectionComputeRound(obj, event)
 
-	tsprint("Compute complete")
+	log.info("Compute complete")
 
 	-- gather team composition by creating a snapshot
 	local comp = KeepTeams10v10TeamSelectionGetTeamComposition();
@@ -253,7 +247,7 @@ end
 
 function KeepTeams10v10TeamSelectionDone()
 
-	tsprint("Team selection complete")
+	log.info("Team selection complete")
 
 	-- unregister listener and send complete event
 	CustomGameEventManager:UnregisterListener(TeamSelectionListeners.computeComplete)
@@ -269,21 +263,21 @@ end
 function TeamSelectionFallbackAssignment()
 
 	-- unassign teams
-	tsprint("Unassigning teams")
+	log.info("Unassigning teams")
 	TeamSelectionUnassignTeams()
 
 	-- send failure event
-	tsprint("Sending failure event to clients")
+	log.info("Sending failure event to clients")
 	CustomGameEventManager:Send_ServerToAllClients(TeamSelectionEvents.failure, nil)
 end
 
 function KeepTeams10v10TeamSelectionFinalize(response)
 
-	tsprint("recieved response from server")
+	log.info("recieved response from server")
 
 	-- catch errors
 	if not response.ok then
-		tsprint("error")
+		log.error("error")
 		TeamSelectionFallbackAssignment()
 		return
 	end

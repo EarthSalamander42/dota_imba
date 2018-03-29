@@ -82,8 +82,10 @@ function api.imba.register(callback)
 
 end
 
-function api.imba.event(code, data)
-	log.debug("Queueing event #" .. code)
+function api.imba.event(code, data, quiet)
+	if quiet == nil then
+		log.debug("Queueing event #" .. code)
+	end
 
 	local real_content = json.null
 	if data ~= nil then
@@ -215,6 +217,14 @@ function api.imba.complete(callback)
 	end)
 end
 
+function api.imba.load_logging_configuration(callback) 
+	api.request(api.endpoints.imba.meta.logging_configuration, nil, function (error, data) 
+		-- only update logging configuraiton when the request was successful
+		if not error then
+			callback(data)
+		end
+	end)
+end
 
 function api.imba.internals.get_all_valid_players()
 	local players = {}

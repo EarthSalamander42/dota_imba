@@ -6,29 +6,47 @@ log = {
 
 
 if Log == nil then
+
 	Log = {
 		Levels = {
-			TRACE = 1,
-			DEBUG = 2,
-			INFO = 3,
-			WARN = 4,
-			CRITICAL = 5,
-			ERROR = 6,
-			FATAL = 7
+			DEBUG = 1,
+			INFO = 2,
+			WARN = 3,
+			CRITICAL = 4,
+			ERROR = 5
+		},
+		targets = {}
+	}
+
+	Log.config = {
+		{
+			matcher = ".*",
+			level = Log.Levels.WARN,
+			targets = {
+				"api",
+				"console"
+			}
+		}, {
+			matcher = ".*",
+			level = Log.Levels.INFO,
+			targets = {
+				"console"
+			}
 		}
 	}
+
 end
 
+---------------------------------------------
 -- Utility
+---------------------------------------------
 function Log:_LevelToString(lvl)
-	if lvl == 1 then return "trace"
-	elseif lvl == 2 then return "debug"
-	elseif lvl == 3 then return "info "
-	elseif lvl == 4 then return "warn "
-	elseif lvl == 5 then return "crit "
-	elseif lvl == 6 then return "error"
-	elseif lvl == 7 then return "fatal"
-	else return "invld" end
+	if lvl == 1 then return "debug"
+	elseif lvl == 2 then return "info"
+	elseif lvl == 3 then return "warn"
+	elseif lvl == 4 then return "critical"
+	elseif lvl == 5 then return "error"
+	else return "invalid" end
 end
 
 function Log:_LinesSplit(str)
@@ -69,7 +87,7 @@ function Log:_PrintTable(node)
 	local function tab(amt)
 		local str = ""
 		for i=1,amt do
-			str = str .. "  "
+			str = str .. "\t"
 		end
 		return str
 	end
@@ -147,91 +165,136 @@ function Log:_PrintTable(node)
 
 	-- This is necessary for working with HUGE tables otherwise we run out of memory using concat on huge strings
 	table.insert(output,output_str)
-	output_str = table.concat(output)
-
-	return output_str
+	return table.concat(output)
 end
 
-function Log:_IsFiltered(level, file, fun)
-	return level < Log.Levels.TRACE
-end
+function Log:_IsFiltered(target, level, file)
 
--- Print function
-function Log:Print(obj, level)
+	-- go over each rule
+	for i = 1, #self.config do
+		local rule = self.config[i]
 
-	-- prepare stack trace
-	local traceback = debug.traceback();
+		-- check if matcher matches
+		if string.match(file, rule.matcher) then
 
-	if (traceback == nil) then
-		print("traceback not available")
+			-- check if level is high enough for rule
+			if level >= rule.level then
+
+				-- see if the rule defines this target
+				for j = 1, #rule.targets do
+					if rule.targets[j] == target then
+						return false
+					end
+				end
+			end
+		end
 	end
 
-	local trace = self:_LinesSplit(traceback);
-	-- remove the first 3 lines from the stack trace
-	table.remove(trace, 1)
-	table.remove(trace, 1)
-	table.remove(trace, 1)
+	return true
+end
+
+function Log:_GetStackTrace(ptr)
+
+	local trace = {}
+
+	-- gather info
+	while true do
+		local i = debug.getinfo(ptr, "nSl")
+		if i == nil or ptr > 20 then
+			break
+		end
+		table.insert(trace, i)
+		ptr = ptr + 1
+	end
+
+	return trace
+end
+
+function Log:_GetFileFromTrace(trace)
+	if #trace < 1 then
+		return ""
+	else
+		return trace[1]["short_src"]
+	end
+end
+
+---------------------------------------------
+-- Print function
+-- which actually just prepares data and passes them to the configured targets
+---------------------------------------------
+function Log:Print(obj, level)
 
 	-- prepare level
 	local levelString = self:_LevelToString(level)
 
+	local content = ""
 
-	local fun = self:_StringSplit(trace[1], ":")
-	local file = "??"
-	local line = "??"
-	local context = "??"
-	if fun[1] ~= nil then
-		file = self:_Trim(fun[1])
-		table.remove(fun, 1)
-	end
-	if fun[1] ~= nil then
-		line = self:_Trim(fun[1])
-		table.remove(fun, 1)
+	if type(obj) == table then
+		content = self:_PrintTable(obj)
+	else
+		content = tostring(obj)
 	end
 
-	if fun[1] ~= nil then
-		context = self:_Trim(table.concat(fun, ":"))
-	end
+	local trace = self:_GetStackTrace(4);
+	local file = self:_GetFileFromTrace(trace)
 
-	-- apply filter
-	if self:_IsFiltered(level, file, fun) then
-		return
-	end
-
-
-	local prefix = "[" .. levelString .. "][" .. file .. ":" .. line .. "][" .. context .. "] "
-
-	-- show
-	if (type(obj) == "table") then
-		local table = self:_LinesSplit(self:_PrintTable(obj));
-		for _, v in pairs(table) do
-			print(prefix .. v)
+	for i = 1, #self.targets do
+		if not self:_IsFiltered(self.targets[i].name, level, file) then
+			self.targets[i]:print(levelString, content, trace)
 		end
-	elseif (type(obj) == "string") then
-		print(prefix .. obj)
-	elseif (type(obj) == "number") then
-		print(prefix .. tostring(obj))
 	end
 
-	--print(self:_PrintTable(trace))
 end
 
+---------------------------------------------
+-- Runs code in safe context: Catches exceptions
+-- and logs errors
+---------------------------------------------
 function Log:ExecuteInSafeContext(fun)
 	local status, err = xpcall(fun, function (err)
-		if err == nil then
-			err = "Unknown Error"
-		end
-		self:Print("Error occured while executing in safe context: " .. err, Log.Levels.ERROR)
+
+			if err == nil then
+				err = "Unknown Error"
+			end
+
+			-- dont filter errors
+			local levelString = self:_LevelToString(Log.Levels.ERROR)
+
+			for i = 1, #self.targets do
+				self.targets[i]:print(levelString, "Error occured while executing in safe context: " .. err, self:_GetStackTrace(4))
+			end
 	end)
 
 	return status
 end
 
+---------------------------------------------
+-- Configure the logger with a given config
+---------------------------------------------
 function Log:Configure(config)
 	self.config = config;
 end
 
-function log.trace(obj) Log:Print(obj, Log.Levels.TRACE) end
+---------------------------------------------
+-- Load the logger config from api
+---------------------------------------------
+function Log:ConfigureFromApi()
+	api.imba.load_logging_configuration(function (data)
+		log.info("Loaded new Logging configuration from server")
+		self.config = data.rules
+	end)
+end
+
+---------------------------------------------
+-- Add a logging target
+---------------------------------------------
+function Log:AddTarget(target)
+	table.insert(self.targets, target)
+end
+
+---------------------------------------------
+-- General purpose log shortcut functions
+---------------------------------------------
 function log.debug(obj) Log:Print(obj, Log.Levels.DEBUG) end
 function log.info(obj) Log:Print(obj, Log.Levels.INFO) end
 function log.warn(obj) Log:Print(obj, Log.Levels.WARN) end
@@ -239,9 +302,51 @@ function log.warning(obj) Log:Print(obj, Log.Levels.WARN) end
 function log.critical(obj) Log:Print(obj, Log.Levels.CRITICAL) end
 function log.crit(obj) Log:Print(obj, Log.Levels.CRITICAL) end
 function log.error(obj) Log:Print(obj, Log.Levels.ERROR) end
-function log.fatal(obj) Log:Print(obj, Log.Levels.FATAL) end
 
+---------------------------------------------
+-- Safe shortcut
+---------------------------------------------
 function safe(fun)
 	return Log:ExecuteInSafeContext(fun)
 end
+
+---------------------------------------------
+-- Logger Targets
+---------------------------------------------
+
+ApiLogTarget = {
+	name = "api"
+}
+
+function ApiLogTarget:print(level, content, trace)
+
+	local data = {}
+	table.insert(data, level)
+	table.insert(data, content)
+	for i = 1, #trace do
+		table.insert(data, json.encode(trace[i]))
+	end
+
+	-- prepare api request
+	api.imba.event(api.events.log, data, true)
+end
+
+ConsoleLogTarget = {
+	name = "console"
+}
+
+function ConsoleLogTarget:print(level, content, trace)
+	local name = ""
+	if trace[1]["name"] ~= nil then
+		name = "|" .. trace[1]["name"]
+	end
+	print("[" .. level .. "][" .. trace[1]["short_src"] .. ":" .. trace[1]["currentline"] .. name .. "] " .. content)
+end
+
+---------------------------------------------
+-- Initialization
+---------------------------------------------
+Log:AddTarget(ApiLogTarget)
+Log:AddTarget(ConsoleLogTarget)
+
 
