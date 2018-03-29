@@ -31,6 +31,8 @@ end
 -- settings.lua is where you can specify many different properties for your game mode and is one of the core barebones files.
 require('settings')
 
+require('libraries/log')
+
 require('libraries/timers')
 require('libraries/physics')
 require('libraries/projectiles')
@@ -105,7 +107,10 @@ function GameMode:OnFirstPlayerLoaded()
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: API. Preload
 	-------------------------------------------------------------------------------------------------
-	api.imba.register(function () end)
+	api.imba.register(function ()
+		-- configure log from api
+		Log:ConfigureFromApi()
+	end)
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Roshan and Picking Screen camera initialization
@@ -424,14 +429,14 @@ function GameMode:ModifierFilter( keys )
 		-------------------------------------------------------------------------------------------------
 		-- Frantic mode duration adjustment
 		-------------------------------------------------------------------------------------------------
---		if modifier_name == "modifier_imba_doom_bringer_doom" then
---			if IMBA_FRANTIC_MODE_ON then
---				local original_duration = keys.duration
---				local actually_duration = original_duration
---				actually_duration = actually_duration / (100/IMBA_FRANTIC_VALUE)
---				keys.duration = actually_duration
---			end
---		end
+		--		if modifier_name == "modifier_imba_doom_bringer_doom" then
+		--			if IMBA_FRANTIC_MODE_ON then
+		--				local original_duration = keys.duration
+		--				local actually_duration = original_duration
+		--				actually_duration = actually_duration / (100/IMBA_FRANTIC_VALUE)
+		--				keys.duration = actually_duration
+		--			end
+		--		end
 
 		-------------------------------------------------------------------------------------------------
 		-- Silencer Arcane Supremacy silence duration reduction
@@ -1258,7 +1263,7 @@ function GameMode:OnHeroInGame(hero)
 		Timers:CreateTimer(3.0, function()
 			if arsm == nil then
 				arsm = true
-				print("ARSM")
+				log.info("ARSM")
 				HeroSelection:RandomSameHero()
 			end
 		end)
@@ -1392,13 +1397,13 @@ function GameMode:StartImbaTest()
 
 	-- If not in tools mode, do nothing
 	if not IsInToolsMode() then
-		print("IMBA testbed is only available in tools mode.")
+		log.info("IMBA testbed is only available in tools mode.")
 		return nil
 	end
 
 	-- If the testbed was already initialized, do nothing
 	if IMBA_TESTBED_INITIALIZED then
-		print("Testbed already initialized.")
+		log.info("Testbed already initialized.")
 		return nil
 	end
 
@@ -1679,7 +1684,7 @@ function GameMode:UpdateScoreboard()
 	end
 	-- Leader effects (moved from OnTeamKillCredit)
 	local leader = sortedTeams[1].teamID
-	--print("Leader = " .. leader)
+	log.debug("Leader = " .. leader)
 	leadingTeam = leader
 	GAME_WINNER_TEAM = leadingTeam
 	runnerupTeam = sortedTeams[2].teamID
@@ -1722,7 +1727,7 @@ end
 -- Scan the map to see which teams have spawn points
 ---------------------------------------------------------------------------
 function GameMode:GatherAndRegisterValidTeams()
-	--	print( "GatherValidTeams:" )
+	log.debug( "GatherValidTeams:" )
 
 	local foundTeams = {}
 	for _, playerStart in pairs( Entities:FindAllByClassname( "info_player_start_dota" ) ) do
@@ -1730,7 +1735,7 @@ function GameMode:GatherAndRegisterValidTeams()
 	end
 
 	local numTeams = TableCount(foundTeams)
-	--	print( "GatherValidTeams - Found spawns for a total of " .. numTeams .. " teams" )
+	log.debug( "GatherValidTeams - Found spawns for a total of " .. numTeams .. " teams" )
 
 	local foundTeamsList = {}
 	for t, _ in pairs( foundTeams ) do
@@ -1740,7 +1745,7 @@ function GameMode:GatherAndRegisterValidTeams()
 	end
 
 	if numTeams == 0 then
-		print( "GatherValidTeams - NO team spawns detected, defaulting to GOOD/BAD" )
+		log.info( "GatherValidTeams - NO team spawns detected, defaulting to GOOD/BAD" )
 		table.insert( foundTeamsList, DOTA_TEAM_GOODGUYS )
 		table.insert( foundTeamsList, DOTA_TEAM_BADGUYS )
 		numTeams = 2
@@ -1793,7 +1798,7 @@ function spawnunits(campname)
 	--print(r)
 	for i = 1, NumberToSpawn do
 		local creature = CreateUnitByName( "npc_dota_creature_" ..r , SpawnLocation:GetAbsOrigin() + RandomVector( RandomFloat( 0, 200 ) ), true, nil, nil, DOTA_TEAM_NEUTRALS )
-		--print ("Spawning Camps")
+		log.debug("Spawning Camps")
 		creature:SetInitialGoalEntity( waypointlocation )
 	end
 end
@@ -1860,12 +1865,12 @@ function GameMode:OnItemPickUp( event )
 	r = RandomInt(300, 450)
 
 	if event.itemname == "item_bag_of_gold" then
-		--print("Bag of gold picked up")
+		log.debug("Bag of gold picked up")
 		PlayerResource:ModifyGold( owner:GetPlayerID(), r, true, 0 )
 		SendOverheadEventMessage( owner, OVERHEAD_ALERT_GOLD, owner, r, nil )
 		UTIL_Remove( item ) -- otherwise it pollutes the player inventory
 	elseif event.itemname == "item_treasure_chest" then
-		--print("Special Item Picked Up")
+		log.debug("Special Item Picked Up")
 		DoEntFire( "item_spawn_particle_" .. itemSpawnIndex, "Stop", "0", 0, self, self )
 		GameMode:SpecialItemAdd( event )
 		UTIL_Remove( item ) -- otherwise it pollutes the player inventory
@@ -1894,7 +1899,7 @@ function GameMode:OnThink()
 	if CustomNetTables:GetTableValue("game_options", "game_count").value == 1 then
 		if Convars:GetBool("sv_cheats") == true or GameRules:IsCheatMode() then
 			if not IsInToolsMode() then
-				print("Cheats have been enabled, game don't count.")
+				log.info("Cheats have been enabled, game don't count.")
 				CustomNetTables:SetTableValue("game_options", "game_count", {value = 0})
 				CustomGameEventManager:Send_ServerToAllClients("safe_to_leave", {})
 			end
@@ -1950,12 +1955,12 @@ function GameMode:OnThink()
 
 				if hero:HasModifier("modifier_imba_reapers_scythe_respawn") then
 					if respawn_time > HERO_RESPAWN_TIME_PER_LEVEL[math.min(hero:GetLevel(), #HERO_RESPAWN_TIME_PER_LEVEL)] + reaper_scythe then
-						print("NECROPHOS BUG:", hero:GetUnitName(), "respawn time too high:", respawn_time..". setting to", HERO_RESPAWN_TIME_PER_LEVEL[#HERO_RESPAWN_TIME_PER_LEVEL])
+						log.warn("NECROPHOS BUG:", hero:GetUnitName(), "respawn time too high:", respawn_time..". setting to", HERO_RESPAWN_TIME_PER_LEVEL[#HERO_RESPAWN_TIME_PER_LEVEL])
 						respawn_time = respawn_time + reaper_scythe
 					end
 				else
 					if respawn_time > HERO_RESPAWN_TIME_PER_LEVEL[math.min(hero:GetLevel(), #HERO_RESPAWN_TIME_PER_LEVEL)] then
-						print(hero:GetUnitName(), "respawn time too high:", respawn_time..". setting to", HERO_RESPAWN_TIME_PER_LEVEL[#HERO_RESPAWN_TIME_PER_LEVEL])
+						log.warn(hero:GetUnitName(), "respawn time too high:", respawn_time..". setting to", HERO_RESPAWN_TIME_PER_LEVEL[#HERO_RESPAWN_TIME_PER_LEVEL])
 						respawn_time = HERO_RESPAWN_TIME_PER_LEVEL[math.min(hero:GetLevel(), #HERO_RESPAWN_TIME_PER_LEVEL)]
 					end
 				end

@@ -13,7 +13,7 @@ function Event ()
 
 	local function listen (fn)
 		if api.debug then
-			DebugPrint('Adding listener')
+			log.debug('Adding listener')
 		end
 		local handler = {
 			fn = fn,
@@ -36,7 +36,7 @@ function Event ()
 
 	local function broadcast ( ... )
 		if api.debug then
-			DebugPrint('Triggering ' .. #state.listeners .. ' listener')
+			log.debug('Triggering ' .. #state.listeners .. ' listener')
 		end
 		if #state.listeners == 0 then
 			return
@@ -52,7 +52,7 @@ function Event ()
 					handler.fn(unpack(data))
 				end)
 				if err then
-					print(err)
+					log.info(err)
 					table.insert(errors, err)
 				end
 			end
