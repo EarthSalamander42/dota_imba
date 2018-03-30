@@ -122,6 +122,12 @@ function api.request(endpoint, data, callback)
 				body = raw_result.Body,
 			}
 
+			if result.code == 0 then
+				log.error("Request to " .. endpoint .. " timed out")
+				callback(true, "Request to " .. endpoint .. " timed out")
+				return
+			end
+
 			if result.body ~= nil then
 
 				log.debug(result.body)
@@ -135,7 +141,7 @@ function api.request(endpoint, data, callback)
 					result.version = decoded.version
 					result.message = decoded.message
 				else
-					log.error("Failed decoding JSON: Status Code: " .. tostring(result.code))
+					log.error("Failed decoding JSON of Request: Status Code: " .. tostring(result.code) .. ", Payload: " .. payload)
 				end
 
 				if result.code == 503 then
@@ -162,6 +168,8 @@ function api.request(endpoint, data, callback)
 					log.debug("Request to " .. endpoint .. " successful")
 					callback(false, result.data)
 				end
+			else
+				log.error("Warning: Recieved response for request " .. endpoint .. " without body!")
 			end
 	end)
 end

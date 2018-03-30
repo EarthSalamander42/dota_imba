@@ -153,7 +153,7 @@ end
 
 function IllusionManager:CreateIllusion(tEntity,tSkill,vSpawnLocation,tIllusionBase,tSpecialKeys,hAttackTarget)
 	if not IsServer() then return end
-	if not tIllusionBase then print('No unit specified!'); return end
+	if not tIllusionBase then log.warn('No unit specified!'); return end
 	local illusion_name = tIllusionBase:GetUnitName()
 	if not tEntity.illusions then tEntity.illusions = {} end 		 																		 -- create a table that will hold all of our named illusions by key on the original caster
 	for k,v in ipairs(tEntity.illusions) do 										 																		 -- iterate through requested illus with the required commands
@@ -253,7 +253,7 @@ function IllusionManager:ResetIllusion(tEntity,tIllusion)  -- Wipe AND re-add sk
 				illusionAbility:SetLevel(abilityLevel) 
 			else
 				if abilityName == "imba_sniper_headshot" then -- For reasons i could've find yet, this ability causes server to crash on an illusion
-					print("Found sniper's headshot! ignoring..")
+					log.debug("Found sniper's headshot! ignoring..")
 				else
 					local newability = tIllusion:AddAbility(abilityName)
 					newability:SetLevel(abilityLevel)

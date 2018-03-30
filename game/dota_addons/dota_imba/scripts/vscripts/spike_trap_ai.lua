@@ -27,13 +27,13 @@ local triggerActive = true
 
 function Fire(trigger)
 	local triggerName = thisEntity:GetName()
-	--print(tostring(triggerName))
+	--log.debug(tostring(triggerName))
 	local level = trigger.activator:GetLevel()
 	local target = Entities:FindByName( nil, triggerName .. "_target" )
 	local spikes = triggerName .. "_model"
 	local dust = triggerName .. "_particle"
 	local fx = triggerName .. "_fx"
-	--print(spikes)
+	--log.debug(spikes)
 	if target ~= nil and triggerActive == true then
 		local spikeTrap = thisEntity:FindAbilityByName("spike_trap")
 		thisEntity:CastAbilityOnPosition(target:GetOrigin(), spikeTrap, -1 )

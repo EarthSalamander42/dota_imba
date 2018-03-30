@@ -29,7 +29,7 @@ function PlayerResource:InitPlayerData(player_id)
 	self.PlayerData[player_id]["has_abandoned_due_to_long_disconnect"] = false
 	self.PlayerData[player_id]["distribute_gold_to_allies"] = false
 	self.PlayerData[player_id]["has_repicked"] = false
-	print("player data set up for player with ID "..player_id)
+	log.debug("player data set up for player with ID "..player_id)
 end
 
 -- Verifies if this player ID already has player data assigned to it
@@ -46,7 +46,7 @@ function PlayerResource:SetPickedHero(player_id, hero_entity)
 	if self:IsImbaPlayer(player_id) then
 		self.PlayerData[player_id].hero = hero_entity
 		self.PlayerData[player_id].hero_name = hero_entity:GetUnitName()
-		print("assigned "..self.PlayerData[player_id].hero_name.." to player with ID "..player_id)
+		log.debug("assigned "..self.PlayerData[player_id].hero_name.." to player with ID "..player_id)
 	end
 end
 
@@ -86,7 +86,7 @@ end
 function PlayerResource:SetHasAbandonedDueToLongDisconnect(player_id, state)
 	if self:IsImbaPlayer(player_id) then
 		self.PlayerData[player_id]["has_abandoned_due_to_long_disconnect"] = state
-		print("Set player "..player_id.." 's abandon due to long disconnect state as "..tostring(state))
+		log.debug("Set player "..player_id.." 's abandon due to long disconnect state as "..tostring(state))
 	end
 end
 
@@ -103,7 +103,7 @@ end
 function PlayerResource:IncrementDeathstreak(player_id)
 	if self:IsImbaPlayer(player_id) then
 		self.PlayerData[player_id]["current_deathstreak"] = self.PlayerData[player_id]["current_deathstreak"] + 1
-		print("Current deathstreak for player "..player_id..": "..self.PlayerData[player_id]["current_deathstreak"])
+		log.debug("Current deathstreak for player "..player_id..": "..self.PlayerData[player_id]["current_deathstreak"])
 	end
 end
 
@@ -111,7 +111,7 @@ end
 function PlayerResource:ResetDeathstreak(player_id)
 	if self:IsImbaPlayer(player_id) then
 		self.PlayerData[player_id]["current_deathstreak"] = 0
-		print("Current deathstreak for player "..player_id.." reset to zero.")
+		log.debug("Current deathstreak for player "..player_id.." reset to zero.")
 	end
 end
 
@@ -128,7 +128,7 @@ function PlayerResource:StartAbandonGoldRedistribution(player_id)
 
 	-- Set redistribution as active
 	self.PlayerData[player_id]["distribute_gold_to_allies"] = true
-	print("player "..player_id.." is now redistributing gold to its allies.")
+	log.debug("player "..player_id.." is now redistributing gold to its allies.")
 
 	-- Fetch this player's team
 	local player_team = self:GetTeam(player_id)
@@ -153,7 +153,7 @@ function PlayerResource:StartAbandonGoldRedistribution(player_id)
 		for _,ally_id in pairs(current_allies) do
 			self:ModifyGold(ally_id, gold_per_ally, false, DOTA_ModifyGold_AbandonedRedistribute)
 		end
-		print("distributed "..gold_to_share.." gold initially ("..gold_per_ally.." per ally)")
+		log.debug("distributed "..gold_to_share.." gold initially ("..gold_per_ally.." per ally)")
 	end
 
 	-- Update the variables to start the cycle
@@ -182,7 +182,7 @@ function PlayerResource:StartAbandonGoldRedistribution(player_id)
 			for _,ally_id in pairs(current_allies) do
 				self:ModifyGold(ally_id, gold_per_ally, false, DOTA_ModifyGold_AbandonedRedistribute)
 			end
-			print("distributed "..gold_to_share.." gold ("..gold_per_ally.." per ally)")
+			log.debug("distributed "..gold_to_share.." gold ("..gold_per_ally.." per ally)")
 		end
 
 		-- Update variables
@@ -201,5 +201,5 @@ end
 function PlayerResource:StopAbandonGoldRedistribution(player_id)
 	self.PlayerData[player_id]["distribute_gold_to_allies"] = false
 	self:ModifyGold(player_id, -self:GetGold(player_id), false, DOTA_ModifyGold_AbandonedRedistribute)
-	print("player "..player_id.." is no longer redistributing gold to its allies.")
+	log.debug("player "..player_id.." is no longer redistributing gold to its allies.")
 end

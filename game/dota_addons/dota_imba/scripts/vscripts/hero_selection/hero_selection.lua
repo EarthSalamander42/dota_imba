@@ -46,7 +46,7 @@ function HeroSelection:Init()
 	local allheroes = LoadKeyValues("scripts/npc/npc_heroes_custom.txt")
 	for key,value in pairs(LoadKeyValues(herolistFile)) do
 		if allheroes[key] == nil then -- Cookies: If the hero is not in custom file, load vanilla KV's
-			--			print(key .. " is not in custom file!")
+			log.debug(key .. " is not in custom file!")
 			local data = LoadKeyValues("scripts/npc/npc_heroes.txt")
 			if data and data[key] then
 				allheroes[key] = data[key]
@@ -187,7 +187,7 @@ function HeroSelection:CMManager(event)
 
 		elseif cmpickorder["currentstage"] <= cmpickorder["totalstages"] then
 			--random if not selected
-			PrintTable(event)
+			log.debug(event)
 			if event.hero == "random" then
 				event.hero = HeroSelection:RandomHero()
 			elseif HeroSelection:IsHeroDisabled(event.hero) then
@@ -203,7 +203,7 @@ function HeroSelection:CMManager(event)
 				end
 			end
 
-			print('Got a CM pick ' .. cmpickorder["order"][cmpickorder["currentstage"]].side)
+			log.info('Got a CM pick ' .. cmpickorder["order"][cmpickorder["currentstage"]].side)
 
 			Timers:RemoveTimer(cmtimer)
 
@@ -214,8 +214,8 @@ function HeroSelection:CMManager(event)
 			CustomNetTables:SetTableValue( 'hero_selection', 'CMdata', cmpickorder)
 			cmpickorder["currentstage"] = cmpickorder["currentstage"] + 1
 
-			print('--')
-			PrintTable(event)
+			log.info('--')
+			log.debug(event)
 
 			if cmpickorder["currentstage"] <= cmpickorder["totalstages"] then
 				HeroSelection:CMTimer(CAPTAINS_MODE_PICK_BAN_TIME, "CAPTAINS MODE")
@@ -292,8 +292,8 @@ end
 
 -- become a captain, go to next stage, if both captains are selected
 function HeroSelection:CMBecomeCaptain (event)
-	print("Selecting captain")
-	PrintTable(event)
+	log.debug("Selecting captain")
+	log.debug(event)
 	if PlayerResource:GetTeam(event.PlayerID) == 2 then
 		cmpickorder["captainradiant"] = event.PlayerID
 		CustomNetTables:SetTableValue( 'hero_selection', 'CMdata', cmpickorder)
@@ -367,7 +367,7 @@ function HeroSelection:SelectHero(playerId, hero)
 			return
 		end
 		self:GiveStartingHero(playerId, hero)
-		print('Giving player ' .. playerId .. ' ' .. hero)
+		log.debug('Giving player ' .. playerId .. ' ' .. hero)
 	end)
 end
 
@@ -516,7 +516,7 @@ function HeroSelection:RandomImbaHero()
 		local choice = HeroSelection:UnsafeRandomHero()
 
 		for key, value in pairs(imbalist) do
-			--			print(key, choice, self:IsHeroDisabled(choice))
+			--			log.debug(key, choice, self:IsHeroDisabled(choice))
 			if key == choice and not self:IsHeroDisabled(choice) then
 				return choice
 			end
@@ -609,12 +609,12 @@ function HeroSelection:UpdateTable(playerID, hero)
 	end
 
 	if selectedtable[playerID] and selectedtable[playerID].selectedhero == hero then
-		print('Player re-selected their hero again ' .. hero)
+		log.info('Player re-selected their hero again ' .. hero)
 		return
 	end
 
 	if self:IsHeroChosen(hero) then
-		print('That hero is already disabled ' .. hero)
+		log.info('That hero is already disabled ' .. hero)
 		hero = "empty"
 	end
 
@@ -628,7 +628,7 @@ function HeroSelection:UpdateTable(playerID, hero)
 	--				end
 	--			end
 	--			if not cmFound then
-	--				print('Couldnt find that hero in the CM pool ' .. tostring(hero))
+	--				log.info('Couldnt find that hero in the CM pool ' .. tostring(hero))
 	--				hero = "empty"
 	--			end
 	--		end

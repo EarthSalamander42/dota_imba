@@ -919,7 +919,7 @@ function GameMode:OnLastHit(keys)
 		--		for _,attacker in pairs(HeroList:GetAllHeroes()) do
 		--			for i = 0, killedEnt:GetNumAttackers() -1 do
 		--				if attacker == killedEnt:GetAttacker(i) then
-		--					print(attacker:GetUnitName())
+		--					log.debug(attacker:GetUnitName())
 		--				end
 		--			end
 		--		end

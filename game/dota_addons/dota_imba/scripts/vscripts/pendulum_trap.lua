@@ -4,9 +4,9 @@ LinkLuaModifier( "modifier_pendulum_trap_lua", LUA_MODIFIER_MOTION_NONE )
 --------------------------------------------------------------------------------
 
 function pendulum_trap:CastFilterResultTarget( hTarget )
-	--print("Cast Filter")
+	--log.debug("Cast Filter")
 	if IsServer() then
-		--print("Is Server")
+		--log.debug("Is Server")
 
 		local nResult = UnitFilter( hTarget, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
 		return nResult
@@ -18,19 +18,19 @@ end
 --------------------------------------------------------------------------------
 
 function pendulum_trap:GetCastRange( vLocation, hTarget )
-	--print("Getting Cast Range")
+	--log.debug("Getting Cast Range")
 	return self.BaseClass.GetCastRange( self, vLocation, hTarget )
 end
 
 --------------------------------------------------------------------------------
 
 function pendulum_trap:OnSpellStart()
-	--print("Starting Spell")
+	--log.debug("Starting Spell")
 	local hTarget = self:GetCursorTarget()
 	if hTarget ~= nil then
-		--print("Target is valid")
+		--log.debug("Target is valid")
 		if ( not hTarget:TriggerSpellAbsorb( self ) ) then
-			--print("Calling modifier")
+			--log.debug("Calling modifier")
 			local damage_delay = self:GetSpecialValueFor( "damage_delay" )
 			hTarget:AddNewModifier( self:GetCaster(), self, "modifier_pendulum_trap_lua", { duration = damage_delay } )
 			--EmitSoundOn( "Conquest.Pendulum.Target", hTarget )
