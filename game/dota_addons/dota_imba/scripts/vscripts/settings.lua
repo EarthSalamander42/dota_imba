@@ -486,6 +486,10 @@ IMBA_INVISIBLE_MODIFIERS = {
 	"modifier_imba_invisibility_rune",
 }
 
+IGNORE_FOUNTAIN_UNITS = {
+	"npc_dota_elder_titan_ancestral_spirit",
+}
+
 RESTRICT_FOUNTAIN_UNITS = {
 	"npc_dota_unit_tombstone1",
 	"npc_dota_unit_tombstone2",
@@ -493,4 +497,7 @@ RESTRICT_FOUNTAIN_UNITS = {
 	"npc_dota_unit_tombstone4",
 	"npc_dota_unit_undying_zombie",
 	"npc_dota_unit_undying_zombie_torso",
+	"npc_imba_ember_spirit_remnant",
+	"npc_imba_dota_stormspirit_remnant",
+	"npc_dota_earth_spirit_stone",
 }

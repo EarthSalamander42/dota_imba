@@ -14,17 +14,19 @@
 @define TotalLength: 30s;
 @define TimingFunc: linear;
 @define IterationCount: 1;
-@define COLOR_INFO_BACKGROUND: #224470dd;
-//@define COLOR_INFO_BACKGROUND: #005580da;
-@define COLOR_INFO_BACKGROUND_DARK: #002233;
-@define COLOR_INFO_TEXT: #66aaff;
-//@define COLOR_INFO_TEXT: #00aaff;
+@define COLOR_INFO_BACKGROUND: #922c30ee;
+@define COLOR_INFO_BACKGROUND_DARK: #4f1719;
+@define COLOR_INFO_TEXT: #b67f7f;
 
 // green background translucent: #004d1ada
 // green background dark translucent: #001a09
 // green text: #00e64d
 // red background translucent: #922c30ee
+// red background dark translucent: #4f1719
 // red text: #b67f7f
+// blue background translucent: #224470dd
+// blue background dark translucent: #002233
+// blue text: #66aaff
 
 #GameModeDescription
 {

@@ -3,15 +3,13 @@
 (function () {
 
 function EndScoreboard() {
-	
 	GameEvents.Subscribe("end_game", function (args) {
+//		$.Msg(args);
 
-		$.Msg(args);
-		
 		HideIMR($.GetContextPanel())
 
 		var map_info = Game.GetMapInfo();
-		
+
 		// Hide all other UI
 		var MainPanel = $.GetContextPanel().GetParent().GetParent().GetParent().GetParent()
 		MainPanel.FindChildTraverse("topbar").style.visibility = "collapse";
@@ -29,7 +27,6 @@ function EndScoreboard() {
 		var radiantPlayerIds = Game.GetPlayerIDsOnTeam(DOTATeam_t.DOTA_TEAM_GOODGUYS);
 		var direPlayerIds = Game.GetPlayerIDsOnTeam(DOTATeam_t.DOTA_TEAM_BADGUYS);
 
-		
 		// Victory Info text
 		var victoryMessage = "winning_team_name Victory!";
 		var victoryMessageLabel = $("#es-victory-info-text");
@@ -55,7 +52,6 @@ function EndScoreboard() {
 
 		// sort a player by merging results from server and using getplayerinfo  
 		var loadPlayer = function (id) {
-
 			var playerInfo = Game.GetPlayerInfo(id);
 			var resultInfo = null;
 			var xp = null;
@@ -65,10 +61,10 @@ function EndScoreboard() {
 					resultInfo = playerResults[i];
 			}
 
-			$.Msg(xpInfo);
+//			$.Msg(xpInfo);
 			for (var i in xpInfo) {
 				
-				$.Msg(xpInfo[i]);
+//				$.Msg(xpInfo[i]);
 				
 				if (playerInfo.player_steamid == xpInfo[i].steamid)
 					xp = xpInfo[i];
@@ -136,15 +132,13 @@ function EndScoreboard() {
 
 			// IMR
 			var map_info = Game.GetMapInfo();
-			
-			$.Msg(player);
-			
+
+//			$.Msg(player);
+
 			if (player.result != null) {
-				
 				if (map_info.map_display_name == "imba_ranked_5v5") {
-					
 					values.imr.style.visibility = "visible";
-					
+
 					if (player.result.imr5v5_calibrating)
 						values.imr.text = "TBD";
 					else {

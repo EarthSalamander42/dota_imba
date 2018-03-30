@@ -43,7 +43,6 @@ function api.imba.events.cycle()
 			log.warn("Saving events failed")
 		end
 	end)
-
 end
 
 function api.imba.register(callback)
@@ -56,7 +55,7 @@ function api.imba.register(callback)
 		map = GetMapName(),
 		dedicated = IsDedicatedServer(),
 		players = api.imba.internals.get_all_valid_players(),
-		cheat_mode = GameRules:IsCheatMode()
+		cheat_mode = CheatDetector()
 	}
 
 	-- register game
@@ -104,7 +103,6 @@ function api.imba.event(code, data, quiet)
 		}
 	})
 end
-
 
 function api.imba.complete(callback)
 

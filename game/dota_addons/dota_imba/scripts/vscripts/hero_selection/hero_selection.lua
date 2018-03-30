@@ -652,7 +652,7 @@ function HeroSelection:UpdateTable(playerID, hero)
 	end
 	end
 
-	CustomNetTables:SetTableValue( 'hero_selection', 'APdata', selectedtable)
+	CustomNetTables:SetTableValue('hero_selection', 'APdata', selectedtable)
 
 	if isanyempty == false then
 		forcestop = true

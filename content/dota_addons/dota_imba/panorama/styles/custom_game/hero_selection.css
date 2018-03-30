@@ -213,6 +213,22 @@ Label {
 	horizontal-align: middle;
 }
 
+.PlayerInfo {
+	height: 30%;
+	width: 100%;
+	background-color: #2B344570;
+	vertical-align: top;
+	horizontal-align: middle;
+
+	font-family: Bold;
+	font-weight: normal;
+	font-size: 15px;
+	width: 100%;
+	padding: 0 2px 0 2px;
+	color: darkred;
+	text-align: center;
+}
+
 .PlayerLabel Label {
 	font-family: Radiance,FZLanTingHei-R-GBK,TH Sarabun New,YDYGO 540,Gulim,MingLiU;
 	font-weight: normal;

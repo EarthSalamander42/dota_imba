@@ -108,7 +108,7 @@ function api.request(endpoint, data, callback)
 		request:SetHTTPRequestRawPostBody("application/json", payload)
 	end
 
-	log.info("Performing request to " .. endpoint)
+	log.debug("Performing request to " .. endpoint)
 	log.debug("Method: " .. method)
 
 	if payload ~= nil then

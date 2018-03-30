@@ -1906,12 +1906,24 @@ function GameMode:OnThink()
 		end
 	end
 
-	-- Undying talent fix
 	for _, hero in pairs(HeroList:GetAllHeroes()) do
+		-- Undying talent fix
 		if hero.undying_respawn_timer then
 			if hero.undying_respawn_timer > 0 then
 				hero.undying_respawn_timer = hero.undying_respawn_timer -1
 			end
+
+			return
+		end
+
+		-- Morphling fixes
+		if hero:GetUnitName() == "npc_dota_hero_morphling" then
+			if not hero:HasAbility("imba_riki_cloak_and_dagger") and hero:HasModifier("modifier_imba_riki_invisibility") then
+				print("Remove riki perma invis on morph..")
+				hero:RemoveModifierByName("modifier_imba_riki_invisibility")
+			end
+
+			return
 		end
 
 		-- Find hidden modifiers
@@ -2048,7 +2060,7 @@ function GameMode:MaxGold(event)
 	if IsInToolsMode() then
 		hero:ModifyGold(99999, true, DOTA_ModifyGold_CheatCommand)
 	else
-		AntiDevCheat()
+		AntiDevCheat(event.ID)
 	end
 end
 
@@ -2068,7 +2080,7 @@ function GameMode:MaxLevel(event)
 			end
 		end
 	else
-		AntiDevCheat()
+		AntiDevCheat(event.ID)
 	end
 end
 
@@ -2079,12 +2091,6 @@ function GameMode:NetgraphGiveItem(event)
 		hero:AddItemByName("item_"..event.item)
 		hero:AddItemByName("item_imba_"..event.item)
 	else
-		AntiDevCheat()
+		AntiDevCheat(event.ID)
 	end
-end
-
-function AntiDevCheat()
-	Notifications:BottomToAll({hero = hero:GetName(), duration = 10.0})
-	Notifications:BottomToAll({text = PlayerResource:GetPlayerName(event.ID).." ", duration = 5.0, continue = true})
-	Notifications:BottomToAll({text = "is trying to cheat using dev tool! GET HIM!", duration = 5.0, style = {color = "Red"}, continue = true})
 end

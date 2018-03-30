@@ -188,30 +188,6 @@ function GetKillstreakGold( hero )
 	return gold
 end
 
--- Picks a legal non-ultimate ability in Random OMG mode
-function GetRandomNormalAbility()
-
-	local ability = RandomFromTable(RANDOM_OMG_ABILITIES)
-	
-	return ability.ability_name, ability.owner_hero
-end
-
--- Picks a legal ultimate ability in Random OMG mode
-function GetRandomUltimateAbility()
-
-	local ability = RandomFromTable(RANDOM_OMG_ULTIMATES)
-
-	return ability.ability_name, ability.owner_hero
-end
-
--- Picks a random tower ability of level in the interval [level - 1, level]
-function GetRandomTowerAbility(tier, ability_table)
-
-	local ability = RandomFromTable(ability_table[tier])	
-
-	return ability
-end
-
 -- Precaches an unit, or, if something else is being precached, enters it into the precache queue
 function PrecacheUnitWithQueue( unit_name )
 	Timers:CreateTimer(function()
@@ -390,12 +366,6 @@ end
 
 function findtarget(source) -- simple list return function for finding a players current target entity
 	local t = source:GetCursorTarget()
-	local c = source:GetCaster()
-	if t and c then return t,c end
-end
-
-function findgroundtarget(source) -- simple list return function for finding a players current target entity
-	local t = source:GetCursorPosition()
 	local c = source:GetCaster()
 	if t and c then return t,c end
 end
@@ -1434,6 +1404,8 @@ local ID = hero:GetPlayerID()
 local hero_name = string.gsub(hero:GetUnitName(), "npc_dota_hero_", "")
 local short_hero_name = hero:GetKeyValue("ShortName")
 local max_line = 2
+local voice_line
+
 if event == "blink" or event == "firstblood" then
 	max_line = 1
 else
@@ -1468,32 +1440,25 @@ end
 --		end
 --	end
 
-	-- prints
---	if random_int >= 10 then
+	if random_int >= 10 then
+		voice_line = hero_name.."_"..short_hero_name.."_"..event.."_"..random_int
 --		print(hero_name.."_"..short_hero_name.."_"..event.."_"..random_int)
---	else
+	else
+		voice_line = hero_name.."_"..short_hero_name.."_"..event.."_0"..random_int
 --		print(hero_name.."_"..short_hero_name.."_"..event.."_0"..random_int)
---	end
+	end
+
+	EmitAnnouncerSoundForPlayer(voice_line, ID)
 
 	-- no timer required, play the voicelines everytime
 	if event == "blink" or event == "purch" or event == "battlebegins" or event == "win" or event == "lose" or event == "kill" or event == "death" or event == "level_voiceline" or event == "laugh" or event == "thanks" then
 		if event == "level_voiceline" then event = string.gsub(event, "_voiceline", "") end
 		if event == "purch" and RandomInt(1, 100) <= 50 then return end -- 50% chance to play purchase voice line
-		if random_int >= 10 then
-			EmitAnnouncerSoundForPlayer(hero_name.."_"..short_hero_name.."_"..event.."_"..random_int, ID)
-		else
-			EmitAnnouncerSoundForPlayer(hero_name.."_"..short_hero_name.."_"..event.."_0"..random_int, ID)
-		end
 	return
 	elseif event == "move" or event == "cast" or event == "attack" then
 		if event == "cast" and RandomInt(1, 100) <= 50 then return end -- 50% chance to play purchase voice line
 --		print("Move/Attack/Cast cd:", VOICELINE_IN_CD[ID][1])
 		if VOICELINE_IN_CD[ID][1] == false then
-			if random_int >= 10 then
-				EmitAnnouncerSoundForPlayer(hero_name.."_"..short_hero_name.."_"..event.."_"..random_int, ID)
-			else
-				EmitAnnouncerSoundForPlayer(hero_name.."_"..short_hero_name.."_"..event.."_0"..random_int, ID)
-			end
 
 			VOICELINE_IN_CD[ID][1] = true
 			Timers:CreateTimer(6.0, function()
@@ -1509,11 +1474,6 @@ end
 				return
 			end
 
-			if random_int >= 10 then
-				EmitAnnouncerSoundForPlayer(hero_name.."_"..short_hero_name.."_"..event.."_"..random_int, ID)
-			else
-				EmitAnnouncerSoundForPlayer(hero_name.."_"..short_hero_name.."_"..event.."_0"..random_int, ID)
-			end
 
 			VOICELINE_IN_CD[ID][2] = true
 			Timers:CreateTimer(60.0, function()
@@ -1523,11 +1483,6 @@ end
 	return
 	elseif event == "pain" then
 		if VOICELINE_IN_CD[ID][3] == false then
-			if random_int >= 10 then
-				EmitAnnouncerSoundForPlayer(hero_name.."_"..short_hero_name.."_"..event.."_"..random_int, ID)
-			else
-				EmitAnnouncerSoundForPlayer(hero_name.."_"..short_hero_name.."_"..event.."_0"..random_int, ID)
-			end
 
 			VOICELINE_IN_CD[ID][3] = true
 			Timers:CreateTimer(3.0, function()
@@ -1537,11 +1492,6 @@ end
 	return
 --	elseif event == "notyet" or event == "nomana" then
 --		if VOICELINE_IN_CD[ID][4] == false then
---			if random_int >= 10 then
---				EmitAnnouncerSoundForPlayer(hero_name.."_"..short_hero_name.."_"..event.."_"..random_int, ID)
---			else
---				EmitAnnouncerSoundForPlayer(hero_name.."_"..short_hero_name.."_"..event.."_0"..random_int, ID)
---			end
 
 			-- make hero play anger voice lines if he click within 10 seconds
 --		end
@@ -1550,7 +1500,7 @@ end
 
 GameEvents = GameEvents or {}
 
-function CreateGameEvent (name) --luacheck: ignore CreateGameEvent
+function CreateGameEvent(name) --luacheck: ignore CreateGameEvent
 	local event = Event()
 
 	GameEvents[name] = (function (self, fn)
@@ -1558,4 +1508,25 @@ function CreateGameEvent (name) --luacheck: ignore CreateGameEvent
 	end)
 
 	return event.broadcast
+end
+
+function CheatDetector()
+	if CustomNetTables:GetTableValue("game_options", "game_count").value == 1 then
+		if Convars:GetBool("sv_cheats") == true or GameRules:IsCheatMode() then
+			if not IsInToolsMode() then
+				print("Cheats have been enabled, game don't count.")
+				CustomNetTables:SetTableValue("game_options", "game_count", {value = 0})
+				CustomGameEventManager:Send_ServerToAllClients("safe_to_leave", {})
+				return true
+			end
+		end
+	else
+		return false
+	end
+end
+
+function AntiDevCheat(ID)
+	Notifications:BottomToAll({hero = hero:GetName(), duration = 10.0})
+	Notifications:BottomToAll({text = PlayerResource:GetPlayerName(ID).." ", duration = 5.0, continue = true})
+	Notifications:BottomToAll({text = "is trying to cheat using dev tool! GET HIM!", duration = 5.0, style = {color = "Red"}, continue = true})
 end
