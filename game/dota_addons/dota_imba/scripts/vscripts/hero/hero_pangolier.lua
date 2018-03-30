@@ -143,14 +143,13 @@ modifier_imba_swashbuckle_dash = modifier_imba_swashbuckle_dash or class({})
 
 function modifier_imba_swashbuckle_dash:OnCreated()
 	--Ability properties
-	self.ability = self:GetAbility()
 	self.attack_modifier = "modifier_imba_swashbuckle_slashes"
 	self.dash_particle = "particles/units/heroes/hero_pangolier/pangolier_swashbuckler_dash.vpcf"
 	self.hit_sound = "Hero_Pangolier.Swashbuckle.Damage"
 
 	--Ability specials
-	self.dash_speed = self.ability:GetSpecialValueFor("dash_speed")
-	self.range = self.ability:GetSpecialValueFor("range")
+	self.dash_speed = self:GetAbility():GetSpecialValueFor("dash_speed")
+	self.range = self:GetAbility():GetSpecialValueFor("range")
 	self.talent_radius = self:GetCaster():FindTalentValue("special_bonus_imba_pangolier_1", "radius")
 
 	if IsServer() then
@@ -310,7 +309,7 @@ function modifier_imba_swashbuckle_dash:OnRemoved()
 
 		--Add the attack modifier on Pangolier that will handle the slashes
 
-		local attack_modifier_handler = self:GetCaster():AddNewModifier(self:GetCaster(), self.ability, self.attack_modifier, {})
+		local attack_modifier_handler = self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), self.attack_modifier, {})
 
 		--pass the target
 		attack_modifier_handler.target = target_unit
@@ -322,7 +321,6 @@ modifier_imba_swashbuckle_slashes = modifier_imba_swashbuckle_slashes or class({
 
 function modifier_imba_swashbuckle_slashes:OnCreated()
 	--Ability properties
-	self.ability = self:GetAbility()
 	self.buff = "modifier_imba_swashbuckle_buff"
 	self.particle = "particles/units/heroes/hero_pangolier/pangolier_swashbuckler.vpcf"
 	self.hit_particle = "particles/generic_gameplay/generic_hit_blood.vpcf"
@@ -330,13 +328,13 @@ function modifier_imba_swashbuckle_slashes:OnCreated()
 	self.hit_sound= "Hero_Pangolier.Swashbuckle.Damage"
 	self.slash_particle = {}
 	--Ability specials
-	self.range = self.ability:GetSpecialValueFor("range")
-	self.damage = self.ability:GetSpecialValueFor("damage")
-	self.start_radius = self.ability:GetSpecialValueFor("start_radius")
-	self.end_radius = self.ability:GetSpecialValueFor("end_radius")
-	self.strikes = self.ability:GetSpecialValueFor("strikes")
-	self.attack_interval = self.ability:GetSpecialValueFor("attack_interval")
-	self.buff_duration = self.ability:GetSpecialValueFor("buff_duration")
+	self.range = self:GetAbility():GetSpecialValueFor("range")
+	self.damage = self:GetAbility():GetSpecialValueFor("damage")
+	self.start_radius = self:GetAbility():GetSpecialValueFor("start_radius")
+	self.end_radius = self:GetAbility():GetSpecialValueFor("end_radius")
+	self.strikes = self:GetAbility():GetSpecialValueFor("strikes")
+	self.attack_interval = self:GetAbility():GetSpecialValueFor("attack_interval")
+	self.buff_duration = self:GetAbility():GetSpecialValueFor("buff_duration")
 
 	if IsServer() then
 		--variables
@@ -450,7 +448,7 @@ function modifier_imba_swashbuckle_slashes:OnRemoved()
 		end
 
 		--Apply the attack speed buff
-		self:GetCaster():AddNewModifier(self:GetCaster(), self.ability, self.buff, {duration = self.buff_duration})
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), self.buff, {duration = self.buff_duration})
 	end
 end
 
@@ -471,14 +469,14 @@ function modifier_imba_swashbuckle_buff:IsDebuff() return false end
 function modifier_imba_swashbuckle_buff:OnCreated()
 	if IsServer() then
 		--Ability properties
-		self.ability = self:GetAbility()
+
 
 		--Ability specials
-		self.bonus_as = self.ability:GetSpecialValueFor("bonus_attackspeed")
-		self.max_attacks = self.ability:GetSpecialValueFor("max_attacks")
+		self.bonus_as = self:GetAbility():GetSpecialValueFor("bonus_attackspeed")
+		self.max_attacks = self:GetAbility():GetSpecialValueFor("max_attacks")
 
 		--Set stacks to the max attacks
-		self:GetCaster():SetModifierStackCount("modifier_imba_swashbuckle_buff", self:GetCaster(), self.max_attacks)
+		self:SetStackCount(self.max_attacks)
 
 		self.attacks = 0
 	end
@@ -502,7 +500,7 @@ function modifier_imba_swashbuckle_buff:OnAttack(keys)
 			--increase the attack count
 			self.attacks = self.attacks + 1
 			--decrease stacks on modifier
-			self:GetCaster():SetModifierStackCount("modifier_imba_swashbuckle_buff", self:GetCaster(), self:GetCaster():GetModifierStackCount("modifier_imba_swashbuckle_buff", self:GetCaster()) -1)
+			self:SetStackCount(self:GetStackCount() - 1)
 
 			--Remove the buff after the max attacks have been performed
 			if self.attacks >= self.max_attacks then
@@ -576,17 +574,14 @@ function imba_pangolier_shield_crash:OnSpellStart()
 	local jump_height_gyroshell = ability:GetSpecialValueFor("jump_height_gyroshell")
 	local jump_horizontal_distance = ability:GetSpecialValueFor("jump_horizontal_distance")
 
-
 	-- Play animation and dust particle
 	caster:StartGesture(ACT_DOTA_CAST_ABILITY_2)
 
 	local dust = ParticleManager:CreateParticle(dust_particle, PATTACH_WORLDORIGIN, nil)
 	ParticleManager:SetParticleControl(dust, 0, caster:GetAbsOrigin())
 
-
 	-- Play cast sound
 	EmitSoundOnLocationWithCaster(caster:GetAbsOrigin(), sound_cast, caster)
-
 
 	--jump in the faced direction
 	local modifier_movement_handler = caster:AddNewModifier(caster, ability, modifier_movement, {})
@@ -600,11 +595,9 @@ function imba_pangolier_shield_crash:OnSpellStart()
 			modifier_movement_handler.target_point = caster:GetAbsOrigin() + caster:GetForwardVector():Normalized() * jump_horizontal_distance
 			modifier_movement_handler.jump_height = jump_height
 			modifier_movement_handler.jump_duration = jump_duration
-
 		else
 
 			local gyroshell_horizontal_distance = jump_duration_gyroshell * gyroshell_ability:GetSpecialValueFor("forward_move_speed")
-
 
 			--if Pangolier is rolling, the jump will be longer
 			if caster:HasModifier("modifier_pangolier_gyroshell") then
@@ -618,16 +611,12 @@ function imba_pangolier_shield_crash:OnSpellStart()
 			end
 		end
 	end
-
 end
-
-
 
 --Shield Crash damage reduction modifier
 modifier_imba_shield_crash_buff = modifier_imba_shield_crash_buff or class ({})
 function modifier_imba_shield_crash_buff:OnCreated(kv)
 	-- Ability properties
-	self.ability = self:GetAbility()
 	self.stacks = kv.stacks
 	self.particle_1 = "particles/units/heroes/hero_pangolier/pangolier_tailthump_buff.vpcf"
 	self.particle_2 = "particles/units/heroes/hero_pangolier/pangolier_tailthump_buff_egg.vpcf"
@@ -635,14 +624,13 @@ function modifier_imba_shield_crash_buff:OnCreated(kv)
 	self.sound = "Hero_Pangolier.TailThump.Shield"
 	self.buff_particles = {}
 
-
 	-- Ability specials
-	self.damage_reduction_pct = self.ability:GetSpecialValueFor("hero_stacks")
+	self.damage_reduction_pct = self:GetAbility():GetSpecialValueFor("hero_stacks")
 
 
 	if IsServer() then
 		--set the stacks to the total % of mitigation for readability
-		self:GetCaster():SetModifierStackCount("modifier_imba_shield_crash_buff", self:GetCaster(), self.damage_reduction_pct * self.stacks)
+		self:SetStackCount(self.damage_reduction_pct * self.stacks)
 
 		--Play buff sound effect
 		EmitSoundOnLocationWithCaster(self:GetCaster():GetAbsOrigin(), self.sound, self:GetCaster())
@@ -700,7 +688,6 @@ modifier_imba_shield_crash_jump = modifier_imba_shield_crash_jump or class({})
 
 function modifier_imba_shield_crash_jump:OnCreated()
 	-- Ability properties
-	self.ability = self:GetAbility()
 	self.buff_modifier = "modifier_imba_shield_crash_buff"
 	self.smash_particle = "particles/units/heroes/hero_pangolier/pangolier_tailthump.vpcf"
 	self.smash_sound = "Hero_Pangolier.TailThump"
@@ -709,10 +696,10 @@ function modifier_imba_shield_crash_jump:OnCreated()
 
 	-- Ability specials
 	-- self.jump_height passed by the ability
-	self.damage = self.ability:GetSpecialValueFor("damage")
-	self.duration = self.ability:GetSpecialValueFor("duration")
-	self.radius = self.ability:GetSpecialValueFor("radius")
-	self.hero_stacks = self.ability:GetSpecialValueFor("hero_stacks")
+	self.damage = self:GetAbility():GetSpecialValueFor("damage")
+	self.duration = self:GetAbility():GetSpecialValueFor("duration")
+	self.radius = self:GetAbility():GetSpecialValueFor("radius")
+	self.hero_stacks = self:GetAbility():GetSpecialValueFor("hero_stacks")
 
 	if IsServer() then
 
@@ -823,19 +810,15 @@ function modifier_imba_shield_crash_jump:OnRemoved()
 		self:GetCaster():SetUnitOnClearGround()
 
 		--play the smash particle
-
 		local smash = ParticleManager:CreateParticle(self.smash_particle, PATTACH_WORLDORIGIN, nil)
 		ParticleManager:SetParticleControl(smash, 0, self:GetCaster():GetAbsOrigin())
-
-
 
 		-- Play smash sound
 		EmitSoundOnLocationWithCaster(self:GetCaster():GetAbsOrigin(), self.smash_sound, self:GetCaster())
 
-
-
 		-- Find heroes in AoE and track how many will be damaged
-		local enemy_heroes = FindUnitsInRadius(self:GetCaster():GetTeamNumber(),
+		local enemy_heroes = FindUnitsInRadius(
+			self:GetCaster():GetTeamNumber(),
 			self:GetCaster():GetAbsOrigin(),
 			nil,
 			self.radius,
@@ -843,18 +826,17 @@ function modifier_imba_shield_crash_jump:OnRemoved()
 			DOTA_UNIT_TARGET_HERO,
 			DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS,
 			FIND_ANY_ORDER,
-			false)
-
+			false
+		)
 
 		local damaged_heroes = #enemy_heroes
 
-
 		--Talent: extra damage for each enemy hero damaged (REMOVED)
-
 		--local total_damage = self.damage + (damaged_heroes * self.talent_damage)
 
 		-- Find all enemies in AoE
-		local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(),
+		local enemies = FindUnitsInRadius(
+			self:GetCaster():GetTeamNumber(),
 			self:GetCaster():GetAbsOrigin(),
 			nil,
 			self.radius,
@@ -862,25 +844,23 @@ function modifier_imba_shield_crash_jump:OnRemoved()
 			DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO,
 			DOTA_UNIT_TARGET_FLAG_NONE,
 			FIND_ANY_ORDER,
-			false)
-
-
+			false
+		)
 
 		-- Deal damage to each enemy
 		for _,enemy in pairs(enemies) do
 			if not enemy:IsMagicImmune() then
-				damage_table = ({victim = enemy,
+				damage_table = ({
+					victim = enemy,
 					attacker = self:GetCaster(),
-					ability = self.ability,
+					ability = self:GetAbility(),
 					damage = self.damage,
-					damage_type = DAMAGE_TYPE_MAGICAL})
+					damage_type = DAMAGE_TYPE_MAGICAL
+				})
 
 				ApplyDamage(damage_table)
-
-
 			end
 		end
-
 
 		--Create the damage reduction modifier. If it already exist,
 		--upgrade its stacks if the new count is higher and refresh
@@ -909,13 +889,12 @@ function modifier_imba_shield_crash_jump:OnRemoved()
 				self:GetCaster():RemoveModifierByName(self.buff_modifier)
 
 				if damaged_heroes > old_stacks / self.hero_stacks then
-					self:GetCaster():AddNewModifier(self:GetCaster(), self.ability, self.buff_modifier, {duration = self.duration, stacks = damaged_heroes})
+					self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), self.buff_modifier, {duration = self.duration, stacks = damaged_heroes})
 				else
-					self:GetCaster():AddNewModifier(self:GetCaster(), self.ability, self.buff_modifier, {duration = self.duration, stacks = old_stacks / self.hero_stacks})
+					self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), self.buff_modifier, {duration = self.duration, stacks = old_stacks / self.hero_stacks})
 				end
-
 			else
-				self:GetCaster():AddNewModifier(self:GetCaster(), self.ability, self.buff_modifier, {duration = self.duration, stacks = damaged_heroes})
+				self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), self.buff_modifier, {duration = self.duration, stacks = damaged_heroes})
 			end
 		end
 
@@ -923,13 +902,11 @@ function modifier_imba_shield_crash_jump:OnRemoved()
 		ParticleManager:DestroyParticle(self.dust_particle, false)
 		ParticleManager:ReleaseParticleIndex(self.dust_particle)
 		ParticleManager:ReleaseParticleIndex(smash)
-
 	end
 end
 
 --Needed for imba Rolling Thunder modifier
 --[[function modifier_imba_shield_crash_jump:OnDestroy()
-
 	if IsServer() then
 		--boost rolling thunder turn rate
 		local gyroshell_handler = self:GetCaster():FindModifierByName(self.gyroshell)
@@ -941,7 +918,6 @@ end
 			gyroshell_handler:GetModifierTurnRate_Percentage()
 		end
 	end
-
 end]]
 
 --Talent #3 modifier: each stack will block an attack directed to Pangolier from an enemy hero and start a counterattack (1 Swashbuckle slash)
@@ -957,7 +933,7 @@ function modifier_imba_shield_crash_block:IsDebuff() return false end
 function modifier_imba_shield_crash_block:OnCreated()
 	if IsServer() then
 		--Ability Properties
-		self.ability = self:GetAbility()
+
 		self.swashbuckle = self:GetCaster():FindAbilityByName("imba_pangolier_swashbuckle")
 		self.particle = "particles/units/heroes/hero_pangolier/pangolier_swashbuckler.vpcf"
 		self.slashing_sound = "Hero_Pangolier.Swashbuckle"
@@ -973,12 +949,12 @@ function modifier_imba_shield_crash_block:OnCreated()
 		self.end_radius = self.swashbuckle:GetSpecialValueFor("end_radius")
 
 		--SORRY RUBICK!
-		if self.ability:IsStolen() then
+		if self:GetAbility():IsStolen() then
 			self:Destroy()
 		end
 
 		--initialize stack count
-		self:GetCaster():SetModifierStackCount("modifier_imba_shield_crash_block", self:GetCaster(), 0)
+		self:SetStackCount(0)
 	end
 end
 
@@ -1032,10 +1008,10 @@ function modifier_imba_shield_crash_block:OnAttackStart(keys)
 			end
 
 			--Makes Pangolier dodge the next hero attack
-			--self:GetCaster():AddNewModifier(self:GetCaster(), self.ability, "modifier_imba_shield_crash_block_parry", {})
+			--self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_shield_crash_block_parry", {})
 
 			--Makes the attacking hero ignore true strike
-			attacker:AddNewModifier(self:GetCaster(), self.ability, "modifier_imba_shield_crash_block_miss", {})
+			attacker:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_shield_crash_block_miss", {})
 
 
 			--Register the attacker
@@ -1151,14 +1127,14 @@ function modifier_imba_shield_crash_block:OnAttack(keys)
 								ability = nil
 							}
 
+							ApplyDamage(damageTable)
 
-
-						ApplyDamage(damageTable)
-						--Apply on-hit effects
-						self:GetCaster():PerformAttack(enemy, true, true, true, true, false, true, true)
+							--Apply on-hit effects
+							self:GetCaster():PerformAttack(enemy, true, true, true, true, false, true, true)
 						end
 					end
 				end
+
 				--Decrease parry stacks
 				self:GetCaster():SetModifierStackCount("modifier_imba_shield_crash_block", self:GetCaster(), stacks - 1)
 				self:GetCaster():SetModifierStackCount("modifier_special_bonus_imba_pangolier_3", self:GetCaster(), stacks - 1)
@@ -1173,11 +1149,8 @@ function modifier_imba_shield_crash_block:OnAttack(keys)
 
 					--Turn pangolier back to his previous direction
 					self:GetCaster():SetForwardVector(old_direction)
-
 				end)
-
 			end
-
 		end
 	end
 end
@@ -1254,20 +1227,17 @@ function imba_pangolier_heartpiercer:OnUpgrade()
 
 	caster:RemoveModifierByName("modifier_imba_heartpiercer_passive")
 	caster:AddNewModifier(caster, self, "modifier_imba_heartpiercer_passive", {})
-
 end
 
 
 function imba_pangolier_heartpiercer:IsStealable() return false end
 function imba_pangolier_heartpiercer:IsNetherWardStealable() return false end
 
-
 --HEARTPIERCER PASSIVE MODIFIER (the one that let Pangolier apply the debuff)
 modifier_imba_heartpiercer_passive = modifier_imba_heartpiercer_passive or class ({})
 
 function modifier_imba_heartpiercer_passive:OnCreated()
 	--Ability properties
-	self.ability = self:GetAbility()
 	self.proc_sound_hero = "Hero_Pangolier.HeartPiercer.Proc"
 	self.proc_sound_creep = "Hero_Pangolier.HeartPiercer.Proc.Creep"
 	self.delayed_debuff = "modifier_imba_heartpiercer_delay"
@@ -1275,9 +1245,9 @@ function modifier_imba_heartpiercer_passive:OnCreated()
 	self:GetCaster().allow_heartpiercer = true --Used for Talent #5 heartpiercer reproc loop prevention
 
 	--Ability specials
-	self.chance_pct = self.ability:GetSpecialValueFor("chance_pct")
-	self.duration = self.ability:GetSpecialValueFor("duration")
-	self.debuff_delay = self.ability:GetSpecialValueFor("debuff_delay")
+	self.chance_pct = self:GetAbility():GetSpecialValueFor("chance_pct")
+	self.duration = self:GetAbility():GetSpecialValueFor("duration")
+	self.debuff_delay = self:GetAbility():GetSpecialValueFor("debuff_delay")
 end
 
 function modifier_imba_heartpiercer_passive:DeclareFunctions()
@@ -1317,7 +1287,7 @@ function modifier_imba_heartpiercer_passive:OnAttackLanded(kv)
 
 				if target:HasModifier(self.procced_debuff) then
 					target:RemoveModifierByName(self.procced_debuff)
-					target:AddNewModifier(self:GetCaster(), self.ability, self.procced_debuff, {duration = self.duration})
+					target:AddNewModifier(self:GetCaster(), self:GetAbility(), self.procced_debuff, {duration = self.duration})
 					return
 				else
 
@@ -1330,7 +1300,7 @@ function modifier_imba_heartpiercer_passive:OnAttackLanded(kv)
 							EmitSoundOn(self.proc_sound_hero, target)
 						end
 
-						target:AddNewModifier(self:GetParent(), self.ability, self.delayed_debuff, {duration = self.debuff_delay})
+						target:AddNewModifier(self:GetParent(), self:GetAbility(), self.delayed_debuff, {duration = self.debuff_delay})
 					end
 				end
 			end
@@ -1350,13 +1320,12 @@ modifier_imba_heartpiercer_delay = modifier_imba_heartpiercer_delay or class({})
 
 function modifier_imba_heartpiercer_delay:OnCreated()
 	--Ability properties
-	self.ability = self:GetAbility()
 	self.debuff = "modifier_imba_heartpiercer_debuff"
 	self.icon = "particles/units/heroes/hero_pangolier/pangolier_heartpiercer_delay.vpcf"
 
 	--Ability specials
-	self.duration = self.ability:GetSpecialValueFor("duration")
-	self.slow_pct = self.ability:GetSpecialValueFor("slow_pct")
+	self.duration = self:GetAbility():GetSpecialValueFor("duration")
+	self.slow_pct = self:GetAbility():GetSpecialValueFor("slow_pct")
 
 	--add overhead particle
 	local icon_particle = ParticleManager:CreateParticle(self.icon, PATTACH_OVERHEAD_FOLLOW, self:GetParent())
@@ -1366,7 +1335,7 @@ end
 function modifier_imba_heartpiercer_delay:OnRemoved()
 	if IsServer() then
 		--apply the debuff
-		local modifier_handler = self:GetParent():AddNewModifier(self:GetCaster(), self.ability, self.debuff, {duration = self.duration})
+		local modifier_handler = self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), self.debuff, {duration = self.duration})
 	end
 end
 
@@ -1375,26 +1344,25 @@ function modifier_imba_heartpiercer_delay:IsPurgable() return true end
 function modifier_imba_heartpiercer_delay:IsPermanent() return false end
 function modifier_imba_heartpiercer_delay:IsDebuff() return true end
 
-
 --Heartpiercer debuff modifier
 modifier_imba_heartpiercer_debuff = modifier_imba_heartpiercer_debuff or class ({})
 
 function modifier_imba_heartpiercer_debuff:OnCreated()
 	--Ability properties
-	self.ability = self:GetAbility()
 	self.icon = "particles/units/heroes/hero_pangolier/pangolier_heartpiercer_debuff.vpcf"
-	self.parent_armor = self:GetParent():GetPhysicalArmorValue()
 	self.debuff_sound_creep = "Hero_Pangolier.HeartPiercer.Creep"
 	self.debuff_sound_hero = "Hero_Pangolier.HeartPiercer"
 
 	--Ability specials
-	self.slow_pct = self.ability:GetSpecialValueFor("slow_pct")
+	print("Armor reduction:", -self:GetParent():GetPhysicalArmorValue())
+	self:SetStackCount(-self:GetParent():GetPhysicalArmorValue())
+--	local armor = self:GetParent():GetPhysicalArmorValue() or 0
+	self.slow_pct = self:GetAbility():GetSpecialValueFor("slow_pct")
 	self.talent_interval = self:GetCaster():FindTalentValue("special_bonus_imba_pangolier_5", "tick_interval")
 	self.damage_per_second = self:GetCaster():FindTalentValue("special_bonus_imba_pangolier_5", "damage_per_second")
 	self.talent_tenacity_pct = self:GetCaster():FindTalentValue("special_bonus_imba_pangolier_6")
 
 	if IsServer() then
-
 		--play debuff sound
 		if self:GetParent():IsCreep() then
 			EmitSoundOnLocationWithCaster(self:GetParent():GetAbsOrigin(), self.debuff_sound_creep, self:GetParent())
@@ -1409,30 +1377,23 @@ function modifier_imba_heartpiercer_debuff:OnCreated()
 		--Talent #5: Victim will take damage over time and proc on-hit effects for Pangolier at each tick.
 		-- The effect itself is coded internally to Heartpiercer base debuff, however we add a fake debuff to inform the target.
 		if self:GetCaster():HasTalent("special_bonus_imba_pangolier_5") then
-			self:GetParent():AddNewModifier(self:GetCaster(), self.ability, "modifier_imba_heartpiercer_talent_debuff", {})
+			self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_heartpiercer_talent_debuff", {})
 		end
 
 		--Talent #6: Victim will have decreased tenacity during Heartpiercer.
 		-- The effect itself is coded internally to Heartpiercer base debuff, however we add a fake debuff to inform the target.
 		if self:GetCaster():HasTalent("special_bonus_imba_pangolier_6") then
-			self:GetParent():AddNewModifier(self:GetCaster(), self.ability, "modifier_imba_heartpiercer_talent_debuff_2", {})
+			self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_heartpiercer_talent_debuff_2", {})
 		end
 	end
 
+	if self.talent_interval == 0 then self.talent_interval = 0.1 end
+
 	--start thinking
-	if self.talent_interval > 0 then
-		self:StartIntervalThink(self.talent_interval)
-	else
-		self:StartIntervalThink(0.1)
-	end
+	self:StartIntervalThink(self.talent_interval)
 end
 
 function modifier_imba_heartpiercer_debuff:OnIntervalThink()
-	--client side: will reflect the armor denied in the UI
-	if IsClient() then
-		self.parent_armor = self:GetParent():GetModifierStackCount("modifier_imba_heartpiercer_debuff", self:GetCaster())
-	end
-
 	if IsServer() then
 		--Talent #5: Heartpiercer deals damage over time and applies on-hit effects at each tick (except Heartpiercer)
 		if self:GetCaster():HasTalent("special_bonus_imba_pangolier_5") then
@@ -1443,7 +1404,7 @@ function modifier_imba_heartpiercer_debuff:OnIntervalThink()
 				damage_type = DAMAGE_TYPE_PHYSICAL,
 				damage_flags = DOTA_DAMAGE_FLAG_NONE,
 				attacker = self:GetCaster(),
-				ability = self.ability
+				ability = self:GetAbility()
 			}
 
 			ApplyDamage(damageTable)
@@ -1481,8 +1442,10 @@ function modifier_imba_heartpiercer_debuff:CheckState()
 end
 
 function modifier_imba_heartpiercer_debuff:DeclareFunctions()
-	local declfuncs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS}
+	local declfuncs = {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
+	}
 
 	return declfuncs
 end
@@ -1496,28 +1459,21 @@ function modifier_imba_heartpiercer_debuff:GetCustomTenacity()
 	return 0
 end
 
-
 function modifier_imba_heartpiercer_debuff:GetModifierMoveSpeedBonus_Percentage()
 	return self.slow_pct
 end
 
 function modifier_imba_heartpiercer_debuff:GetModifierPhysicalArmorBonus()
-
-	local armor = self.parent_armor or 0  --self.parent_armor may be nil on first iteration
 	--set stacks to denied armor (needed to display it correctly on UI)
-	if IsServer() then
-		self:GetParent():SetModifierStackCount("modifier_imba_heartpiercer_debuff", self:GetCaster(), armor)
-	end
 
-
-	return armor * (-1)
+	print("Reducing armor:", self:GetStackCount())
+	return self:GetStackCount()
 end
 
 function modifier_imba_heartpiercer_debuff:IsHidden() return false end
 function modifier_imba_heartpiercer_debuff:IsPurgable() return true end
 function modifier_imba_heartpiercer_debuff:IsPermanent() return false end
 function modifier_imba_heartpiercer_debuff:IsDebuff() return true end
-
 
 --Talent #5 fake modifier: It's just visual for the victim
 modifier_imba_heartpiercer_talent_debuff = modifier_imba_heartpiercer_talent_debuff or class({})
@@ -1688,14 +1644,13 @@ function modifier_imba_gyroshell_impact_check:IsDebuff() return false end
 function modifier_imba_gyroshell_impact_check:OnCreated()
 	if IsServer() then
 		--Ability Properties
-		self.ability = self:GetAbility()
 		self.gyroshell = self:GetCaster():FindModifierByName("modifier_pangolier_gyroshell")
 		self.targets = self.targets or {}
 
 
 		--Ability Specials
-		self.duration_extend = self.ability:GetSpecialValueFor("duration_extend")
-		self.hit_radius = self.ability:GetSpecialValueFor("hit_radius")
+		self.duration_extend = self:GetAbility():GetSpecialValueFor("duration_extend")
+		self.hit_radius = self:GetAbility():GetSpecialValueFor("hit_radius")
 		self.talent_duration = self:GetCaster():FindTalentValue("special_bonus_imba_pangolier_4")
 
 		self:StartIntervalThink(FrameTime())
@@ -1747,7 +1702,7 @@ function modifier_imba_gyroshell_impact_check:OnIntervalThink()
 							--Check how many times this target was damaged already
 							local times_hit = enemy.hit_times
 							--print(times_hit)
-							local extra_damage = self.ability:GetSpecialValueFor("damage")
+							local extra_damage = self:GetAbility():GetSpecialValueFor("damage")
 
 							--Multiplies the damage by 2 for each previous impact
 							if times_hit > 1 then
@@ -1764,7 +1719,7 @@ function modifier_imba_gyroshell_impact_check:OnIntervalThink()
 								damage_type = DAMAGE_TYPE_MAGICAL,
 								damage_flags = DOTA_DAMAGE_FLAG_NONE,
 								attacker = self:GetCaster(),
-								ability = self.ability
+								ability = self:GetAbility()
 							}
 
 
@@ -1790,8 +1745,8 @@ function modifier_imba_gyroshell_impact_check:OnIntervalThink()
 			local time_remaining = self.gyroshell:GetRemainingTime()
 			local new_duration = time_remaining + enemies_hit * self.duration_extend
 
-			self:GetCaster():AddNewModifier(self:GetCaster(), self.ability, "modifier_pangolier_gyroshell", {duration = new_duration})
-			self:GetCaster():AddNewModifier(self:GetCaster(), self.ability, "modifier_imba_gyroshell_impact_check", {duration = new_duration})
+			self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_pangolier_gyroshell", {duration = new_duration})
+			self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_gyroshell_impact_check", {duration = new_duration})
 		end
 	end
 end
@@ -1810,7 +1765,7 @@ function modifier_imba_gyroshell_impact_check:OnRemoved()
 
 		--Talent #4: Extra duration on spell immunity after Rolling Thunder end
 		if self:GetCaster():HasTalent("special_bonus_imba_pangolier_4") then
-			self:GetCaster():AddNewModifier(self:GetCaster(), self.ability, "modifier_imba_gyroshell_linger", {duration = self.talent_duration})
+			self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_gyroshell_linger", {duration = self.talent_duration})
 		end
 	end
 end
@@ -1844,7 +1799,6 @@ modifier_imba_gyroshell_roll = modifier_imba_gyroshell_roll or class({})
 
 function modifier_imba_gyroshell_roll:OnCreated()
 	-- Ability properties
-	self.ability = self:GetAbility()
 	self.stun_modifier = "modifier_imba_gyroshell_stun"
 	self.collision_modifier = "modifier_imba_gyroshell_ricochet"
 	self.shield_crash = "modifier_imba_shield_crash_jump"
@@ -1852,18 +1806,18 @@ function modifier_imba_gyroshell_roll:OnCreated()
 	self.sprinting_effect = "particles/units/heroes/hero_pangolier/pangolier_gyroshell.vpcf"
 
 	-- Ability specials
-	self.tick_interval = self.ability:GetSpecialValueFor("tick_interval")
-	self.forward_move_speed = self.ability:GetSpecialValueFor("forward_move_speed")
-	self.turn_rate_boosted = self.ability:GetSpecialValueFor("turn_rate_boosted")
-	self.boost_duration = self.ability:GetSpecialValueFor("turn_rate_boost_duration")
-	self.turn_rate = self.ability:GetSpecialValueFor("turn_rate")
-	self.radius = self.ability:GetSpecialValueFor("radius")
-	self.hit_radius = self.ability:GetSpecialValueFor("hit_radius")
-	self.bounce_duration = self.ability:GetSpecialValueFor("bounce_duration")
-	self.stun_duration = self.ability:GetSpecialValueFor("stun_duration")
-	self.knockback_radius = self.ability:GetSpecialValueFor("knockback_radius")
-	self.jump_recover_time = self.ability:GetSpecialValueFor("jump_recover_time")
-	self.pause_duration = self.ability:GetSpecialValueFor("pause_duration")
+	self.tick_interval = self:GetAbility():GetSpecialValueFor("tick_interval")
+	self.forward_move_speed = self:GetAbility():GetSpecialValueFor("forward_move_speed")
+	self.turn_rate_boosted = self:GetAbility():GetSpecialValueFor("turn_rate_boosted")
+	self.boost_duration = self:GetAbility():GetSpecialValueFor("turn_rate_boost_duration")
+	self.turn_rate = self:GetAbility():GetSpecialValueFor("turn_rate")
+	self.radius = self:GetAbility():GetSpecialValueFor("radius")
+	self.hit_radius = self:GetAbility():GetSpecialValueFor("hit_radius")
+	self.bounce_duration = self:GetAbility():GetSpecialValueFor("bounce_duration")
+	self.stun_duration = self:GetAbility():GetSpecialValueFor("stun_duration")
+	self.knockback_radius = self:GetAbility():GetSpecialValueFor("knockback_radius")
+	self.jump_recover_time = self:GetAbility():GetSpecialValueFor("jump_recover_time")
+	self.pause_duration = self:GetAbility():GetSpecialValueFor("pause_duration")
 
 	if IsServer() then
 
@@ -1965,7 +1919,7 @@ function modifier_imba_gyroshell_roll:HorizontalMotion(me, dt)
 			else --Pangolier collide, reverse his direction and pause him slitghly
 				
 				self:GetCaster():SetForwardVector(self:GetCaster():GetForwardVector() * (-1))
-				self:GetCaster():AddNewModifier(self:GetCaster(), self.ability, self.collision_modifier, {duration = self.pause_duration})
+				self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), self.collision_modifier, {duration = self.pause_duration})
 			end
 
 	end 
@@ -2064,7 +2018,6 @@ modifier_imba_gyroshell_ricochet = modifier_imba_gyroshell_ricochet or class({})
 function modifier_imba_gyroshell_ricochet:OnCreated()
 
 	--Ability properties
-	self.ability = self:GetAbility()
 	self.gyroshell = "modifier_imba_gyroshell_roll"
 	self.bounce_sound = "Hero_Pangolier.Gyroshell.Carom"
 

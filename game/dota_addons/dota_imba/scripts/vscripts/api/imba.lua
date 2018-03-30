@@ -43,7 +43,6 @@ function api.imba.events.cycle()
 			log.warn("Saving events failed")
 		end
 	end)
-
 end
 
 function api.imba.register(callback)
@@ -56,7 +55,7 @@ function api.imba.register(callback)
 		map = GetMapName(),
 		dedicated = IsDedicatedServer(),
 		players = api.imba.internals.get_all_valid_players(),
-		cheat_mode = GameRules:IsCheatMode()
+		cheat_mode = CheatDetector()
 	}
 
 	-- register game
@@ -105,7 +104,6 @@ function api.imba.event(code, data, quiet)
 	})
 end
 
-
 function api.imba.complete(callback)
 
 	if not api.imba.ready then
@@ -134,7 +132,7 @@ function api.imba.complete(callback)
 
 			-- hero entity and items
 			if data.hero == nil then
-				log.debug("Hero for player " .. steamid .. " is nil")
+				log.debug("Hero for player " .. data.steamid .. " is nil")
 			else
 				data.hero_name = tostring(data.hero:GetUnitName())
 

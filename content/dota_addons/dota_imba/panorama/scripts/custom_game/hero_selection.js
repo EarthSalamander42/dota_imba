@@ -241,6 +241,20 @@ function onPlayerStatChange (table, key, data) {
 				newimage.hittest = false;
 				newimage.AddClass('PlayerImage');
 				newimage.heroname = data[nkey].selectedhero;
+
+				var newinfo = $.CreatePanel('Label', newelement, '');
+				newinfo.AddClass('PlayerInfo');
+
+				var player_table = CustomNetTables.GetTableValue("player_table", Game.GetLocalPlayerID().toString());
+				if (currentMap == "imba_ranked_5v5") {
+					newinfo.text = "IMR: " + player_table.IMR_5v5.toFixed(0)
+				} else if (currentMap == "imba_ranked_10v10") {
+					newinfo.text = player_table.IMR_10v10.toFixed(0)
+				} else {
+					newinfo.text = player_table.Lvl.toFixed(0)
+					newinfo.color = player_table.title_color
+				}
+
 				var newlabel = $.CreatePanel('DOTAUserName', newelement, '');
 				newlabel.AddClass('PlayerLabel');
 				newlabel.steamid = data[nkey].steamid;
@@ -498,7 +512,7 @@ function ShowHUD(args) {
 	MainPanel.FindChildTraverse("quickstats").style.visibility = boolean;
 }
 
-function FillTopBarPlayer (TeamContainer) {
+function FillTopBarPlayer(TeamContainer) {
 	// Fill players top bar in case on partial lobbies
 	var playerCount = TeamContainer.GetChildCount();
 	for (var i = playerCount + 1; i <= 10; i++) {
@@ -563,7 +577,7 @@ function UpdatePreviews (data) {
 	});
 }
 
-function ReloadCMStatus (data) {
+function ReloadCMStatus(data) {
 	if (!data) {
 		return;
 	}
@@ -649,7 +663,7 @@ function IsHeroDisabled (name) {
 	return false;
 }
 
-function PreviewHero (name) {
+function PreviewHero(name) {
 	var lockButton = null;
 	if (iscm) {
 		lockButton = FindDotaHudElement('CaptainLockIn');

@@ -87,271 +87,268 @@ function GameMode:OnGameRulesStateChange(keys)
 	-- Run this in safe context
 	safe(function ()
 
-			local new_state = GameRules:State_Get()
-			CustomNetTables:SetTableValue("game_options", "game_state", {state = new_state})
+		local new_state = GameRules:State_Get()
+		CustomNetTables:SetTableValue("game_options", "game_state", {state = new_state})
 
-			-------------------------------------------------------------------------------------------------
-			-- IMBA: Team selection
-			-------------------------------------------------------------------------------------------------
-			if new_state == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
-				log.info("events: team selection")
-				InitializeTeamSelection()
+		-------------------------------------------------------------------------------------------------
+		-- IMBA: Team selection
+		-------------------------------------------------------------------------------------------------
+		if new_state == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
+			log.info("events: team selection")
+			InitializeTeamSelection()
+		end
+
+		-------------------------------------------------------------------------------------------------
+		-- IMBA: Pick screen stuff
+		-------------------------------------------------------------------------------------------------
+		if new_state == DOTA_GAMERULES_STATE_HERO_SELECTION then
+			api.imba.event(api.events.entered_hero_selection)
+
+			-- get the IXP of everyone (ignore bot)
+			GetPlayerInfoIXP()
+
+			--		HeroSelection:HeroListPreLoad()
+			HeroSelection:Init()
+		end
+
+		-------------------------------------------------------------------------------------------------
+		-- IMBA: Start-of-pre-game stuff
+		-------------------------------------------------------------------------------------------------
+		if new_state == DOTA_GAMERULES_STATE_PRE_GAME then
+			api.imba.event(api.events.entered_pre_game)
+
+			-- Initialize Battle Pass
+			Imbattlepass:Init()
+
+			-- Shows various info to devs in pub-game to find lag issues
+			ImbaNetGraph(10.0)
+
+			-- Hide Imbathrow bar for spectators
+			local imbathrow_bar = false
+			for i = 0, PlayerResource:GetPlayerCount() - 1 do
+				--			if PlayerResource:GetPlayer(i):GetTeam() ~= DOTA_TEAM_SPECTATOR then
+				if GetMapName() == "imba_overthrow" then
+					imbathrow_bar = true
+				end
+				--			end
 			end
 
-			-------------------------------------------------------------------------------------------------
-			-- IMBA: Pick screen stuff
-			-------------------------------------------------------------------------------------------------
-			if new_state == DOTA_GAMERULES_STATE_HERO_SELECTION then
+			-- Initialize rune spawners
+			InitRunes()
 
-				api.imba.event(api.events.entered_hero_selection)
-				--		HeroSelection:HeroListPreLoad()
-				HeroSelection:Init()
-
-				-- get the IXP of everyone (ignore bot)
-				GetPlayerInfoIXP()
+			local donators_steamid = {}
+			local donators = api.imba.get_donators()
+			if donators and #donators then
+				for i = 1, #donators do
+					table.insert(donators_steamid, donators[i].steamId64)
+				end
 			end
 
+			CustomNetTables:SetTableValue("game_options", "donators", {donators = donators_steamid})
+
 			-------------------------------------------------------------------------------------------------
-			-- IMBA: Start-of-pre-game stuff
+			-- IMBA: Custom maximum level EXP tables adjustment
 			-------------------------------------------------------------------------------------------------
-			if new_state == DOTA_GAMERULES_STATE_PRE_GAME then
-				api.imba.event(api.events.entered_pre_game)
-
-				-- Initialize Battle Pass
-				Imbattlepass:Init()
-
-				-- Shows various info to devs in pub-game to find lag issues
-				ImbaNetGraph(10.0)
-
-				-- Hide Imbathrow bar for spectators
-				local imbathrow_bar = false
-				for i = 0, PlayerResource:GetPlayerCount() - 1 do
-					--			if PlayerResource:GetPlayer(i):GetTeam() ~= DOTA_TEAM_SPECTATOR then
-					if GetMapName() == "imba_overthrow" then
-						imbathrow_bar = true
-					end
-					--			end
+			local max_level = tonumber(CustomNetTables:GetTableValue("game_options", "max_level")["1"])
+			if max_level and max_level > 25 then
+				for i = 26, max_level do
+					XP_PER_LEVEL_TABLE[i] = XP_PER_LEVEL_TABLE[i-1] + 3500
+					GameRules:GetGameModeEntity():SetCustomXPRequiredToReachNextLevel( XP_PER_LEVEL_TABLE )
 				end
+			end
 
-				-- Initialize rune spawners
-				InitRunes()
+			Timers:CreateTimer(2.0, function()
+				for _, hero in pairs(HeroList:GetAllHeroes()) do
+					-- player table runs an error with new picking screen
 
-				local donators_steamid = {}
-				local donators = api.imba.get_donators()
-				if donators and #donators then
-					for i = 1, #donators do
-						table.insert(donators_steamid, donators[i].steamId64)
+					if CustomNetTables:GetTableValue("player_table", tostring(hero:GetPlayerID())) ~= nil then
+						local donators = api.imba.get_donators()
+						for k, v in pairs(donators) do
+							CustomNetTables:SetTableValue("player_table", tostring(hero:GetPlayerID()), {
+								companion_model = donators[k].model,
+								companion_enabled = donators[k].enabled,
+								Lvl = CustomNetTables:GetTableValue("player_table", tostring(hero:GetPlayerID())).Lvl,
+							})
+						end
 					end
 				end
 
-				CustomNetTables:SetTableValue("game_options", "donators", {donators = donators_steamid})
-
-				-------------------------------------------------------------------------------------------------
-				-- IMBA: Custom maximum level EXP tables adjustment
-				-------------------------------------------------------------------------------------------------
-				local max_level = tonumber(CustomNetTables:GetTableValue("game_options", "max_level")["1"])
-				if max_level and max_level > 25 then
-					for i = 26, max_level do
-						XP_PER_LEVEL_TABLE[i] = XP_PER_LEVEL_TABLE[i-1] + 3500
-						GameRules:GetGameModeEntity():SetCustomXPRequiredToReachNextLevel( XP_PER_LEVEL_TABLE )
+				COURIER_TEAM = {}
+				if GetMapName() == "imba_overthrow" then
+					local foundTeams = {}
+					for _, playerStart in pairs(Entities:FindAllByClassname("info_courier_spawn")) do
+						COURIER_TEAM[playerStart:GetTeam()] = CreateUnitByName("npc_dota_courier", playerStart:GetAbsOrigin(), true, nil, nil, playerStart:GetTeam())
 					end
+
+					CustomGameEventManager:Send_ServerToAllClients("imbathrow_topbar", {imbathrow = true})
+				else
+					COURIER_TEAM[2] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_radiant"):GetAbsOrigin(), true, nil, nil, 2)
+					COURIER_TEAM[3] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_dire"):GetAbsOrigin(), true, nil, nil, 3)
+
+					local good_fillers = {
+						"good_filler_1",
+						"good_filler_3",
+						"good_filler_5",
+					}
+
+					local bad_fillers = {
+						"bad_filler_1",
+						"bad_filler_3",
+						"bad_filler_5",
+					}
+
+					for _, ent_name in pairs(good_fillers) do
+						local filler = Entities:FindByName(nil, ent_name)
+						local abs = filler:GetAbsOrigin()
+						filler:RemoveSelf()
+						local shrine = CreateUnitByName("npc_dota_goodguys_healers", abs, true, nil, nil, 2)
+						shrine:SetAbsOrigin(abs)
+					end
+
+					for _, ent_name in pairs(bad_fillers) do
+						local filler = Entities:FindByName(nil, ent_name)
+						local abs = filler:GetAbsOrigin()
+						filler:RemoveSelf()
+						local shrine = CreateUnitByName("npc_dota_badguys_healers", abs, true, nil, nil, 3)
+						shrine:SetAbsOrigin(abs)
+					end
+
+					CustomGameEventManager:Send_ServerToAllClients("imbathrow_topbar", {imbathrow = false})
+				end
+			end)
+		end
+
+		-------------------------------------------------------------------------------------------------
+		-- IMBA: Game started (horn sounded)
+		-------------------------------------------------------------------------------------------------
+		if new_state == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
+			api.imba.event(api.events.started_game)
+
+			Timers:CreateTimer(60, function()
+				StartGarbageCollector()
+				--			DefineLosingTeam()
+				return 60
+			end)
+
+			if IsFranticMap() then
+				if RandomInt(1, 100) > 20 then
+					Timers:CreateTimer((RandomInt(10, 20) * 60) + RandomInt(0, 60), function()
+						local pos = {}
+						pos[1] = Vector(6446, -6979, 1496)
+						pos[2] = Vector(RandomInt(-6000, 0), RandomInt(7150, 7300), 1423)
+						pos[3] = Vector(RandomInt(-1000, 2000), RandomInt(6900, 7200), 1440)
+						pos[4] = Vector(7041, -6263, 1461)
+						local pos = pos[RandomInt(1, 4)]
+
+						GridNav:DestroyTreesAroundPoint(pos, 80, false)
+						local item = CreateItem("item_the_caustic_finale", nil, nil)
+						local drop = CreateItemOnPositionSync(pos, item)
+					end)
+				end
+			elseif GetMapName() == "imba_overthrow" then
+				countdownEnabled = true
+				CustomGameEventManager:Send_ServerToAllClients( "show_timer", {} )
+				DoEntFire( "center_experience_ring_particles", "Start", "0", 0, self, self )
+			elseif GetMapName() == "imba_1v1" then
+				local removed_ents = {
+					"lane_top_goodguys_melee_spawner",
+					"lane_bot_goodguys_melee_spawner",
+					"lane_top_badguys_melee_spawner",
+					"lane_bot_badguys_melee_spawner",
+				}
+
+				for _, ent_name in pairs(removed_ents) do
+					local ent = Entities:FindByName(nil, ent_name)
+					ent:RemoveSelf()
 				end
 
-				Timers:CreateTimer(2.0, function()
-					for _, hero in pairs(HeroList:GetAllHeroes()) do
-						-- player table runs an error with new picking screen
+				local blocked_camps = {}
+				blocked_camps[1] = {"neutralcamp_evil_1", Vector(-4170, 3670, 512)}
+				blocked_camps[2] = {"neutralcamp_evil_2", Vector(-3030, 4500, 512)}
+				blocked_camps[3] = {"neutralcamp_evil_3", Vector(-2000, 4220, 384)}
+				blocked_camps[4] = {"neutralcamp_evil_4", Vector(-10, 3300, 512)}
+				blocked_camps[5] = {"neutralcamp_evil_5", Vector(1315, 3520, 512)}
+				blocked_camps[6] = {"neutralcamp_evil_6", Vector(-675, 2280, 1151)}
+				blocked_camps[7] = {"neutralcamp_evil_7", Vector(2400, 360, 520)}
+				blocked_camps[8] = {"neutralcamp_evil_8", Vector(4060, -620, 384)}
+				blocked_camps[9] = {"neutralcamp_evil_9", Vector(4100, 1050, 1288)}
+				blocked_camps[10] = {"neutralcamp_good_1", Vector(3010, -4430, 512)}
+				blocked_camps[11] = {"neutralcamp_good_2", Vector(4810, -4200, 512)}
+				blocked_camps[12] = {"neutralcamp_good_3", Vector(787, -4500, 512)}
+				blocked_camps[13] = {"neutralcamp_good_4", Vector(-430, -3100, 384)}
+				blocked_camps[14] = {"neutralcamp_good_5", Vector(-1500, -4290, 384)}
+				blocked_camps[15] = {"neutralcamp_good_6", Vector(-3040, 100, 512)}
+				blocked_camps[16] = {"neutralcamp_good_7", Vector(-3700, 890, 512)}
+				blocked_camps[17] = {"neutralcamp_good_8", Vector(-4780, -190, 512)}
+				blocked_camps[18] = {"neutralcamp_good_9", Vector(256, -1717, 1280)}
 
-						if CustomNetTables:GetTableValue("player_table", tostring(hero:GetPlayerID())) ~= nil then
-							local donators = api.imba.get_donators()
-							for k, v in pairs(donators) do
-								CustomNetTables:SetTableValue("player_table", tostring(hero:GetPlayerID()), {
-									companion_model = donators[k].model,
-									companion_enabled = donators[k].enabled,
-									Lvl = CustomNetTables:GetTableValue("player_table", tostring(hero:GetPlayerID())).Lvl,
+				for i = 1, #blocked_camps do
+					local ent = Entities:FindByName(nil, blocked_camps[i][1])
+					local dummy = CreateUnitByName("npc_dummy_unit_perma", blocked_camps[i][2], true, nil, nil, DOTA_TEAM_NEUTRALS)
+				end
+
+				-- not removing neutral spawners for reasons...
+				--			Entities:FindByClassname(nil, "npc_dota_neutral_spawner"):RemoveSelf()
+			end
+		end
+
+		if new_state == DOTA_GAMERULES_STATE_POST_GAME then
+			-- call imba api
+			api.imba.event(api.events.entered_post_game)
+
+			api.imba.complete(function (error, players)
+				safe(function ()
+					if error then
+						-- if we have an error we should display the scoreboard anyways, just with reduced data
+
+						CustomGameEventManager:Send_ServerToAllClients("end_game", {
+							players = {},
+							xp_info = {},
+							info = {
+								winner = GAME_WINNER_TEAM,
+								id = 0
+							},
+							error = true
+						})
+					else
+						-- everything went fine. use the old system for xp
+
+						local xp_info = {}
+
+						for i = 1, #players do
+							local player = players[i]
+
+							local level = GetXPLevelByXp(player.xp)
+							local title = GetTitleIXP(level)
+							local color = GetTitleColorIXP(title, true)
+							local progress = GetXpProgressToNextLevel(player.xp)
+
+							if level and title and color and progress then
+								table.insert(xp_info, {
+									steamid = player.steamid,
+									level = level,
+									title = title,
+									color = color,
+									progress = progress
 								})
 							end
 						end
-					end
 
-					COURIER_TEAM = {}
-					if GetMapName() == "imba_overthrow" then
-						local foundTeams = {}
-						for _, playerStart in pairs(Entities:FindAllByClassname("info_courier_spawn")) do
-							COURIER_TEAM[playerStart:GetTeam()] = CreateUnitByName("npc_dota_courier", playerStart:GetAbsOrigin(), true, nil, nil, playerStart:GetTeam())
-						end
-
-						CustomGameEventManager:Send_ServerToAllClients("imbathrow_topbar", {imbathrow = true})
-					else
-						COURIER_TEAM[2] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_radiant"):GetAbsOrigin(), true, nil, nil, 2)
-						COURIER_TEAM[3] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_dire"):GetAbsOrigin(), true, nil, nil, 3)
-
-						local good_fillers = {
-							"good_filler_1",
-							"good_filler_3",
-							"good_filler_5",
-						}
-
-						local bad_fillers = {
-							"bad_filler_1",
-							"bad_filler_3",
-							"bad_filler_5",
-						}
-
-						for _, ent_name in pairs(good_fillers) do
-							local filler = Entities:FindByName(nil, ent_name)
-							local abs = filler:GetAbsOrigin()
-							filler:RemoveSelf()
-							local shrine = CreateUnitByName("npc_dota_goodguys_healers", abs, true, nil, nil, 2)
-							shrine:SetAbsOrigin(abs)
-						end
-
-						for _, ent_name in pairs(bad_fillers) do
-							local filler = Entities:FindByName(nil, ent_name)
-							local abs = filler:GetAbsOrigin()
-							filler:RemoveSelf()
-							local shrine = CreateUnitByName("npc_dota_badguys_healers", abs, true, nil, nil, 3)
-							shrine:SetAbsOrigin(abs)
-						end
-
-						CustomGameEventManager:Send_ServerToAllClients("imbathrow_topbar", {imbathrow = false})
+						CustomGameEventManager:Send_ServerToAllClients("end_game", {
+							players = players,
+							xp_info = xp_info,
+							info = {
+								winner = GAME_WINNER_TEAM,
+								id = api.imba.data.id
+							},
+							error = false
+						})
 					end
 				end)
-			end
+			end)
 
-			-------------------------------------------------------------------------------------------------
-			-- IMBA: Game started (horn sounded)
-			-------------------------------------------------------------------------------------------------
-			if new_state == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
-				api.imba.event(api.events.started_game)
-
-				Timers:CreateTimer(60, function()
-					StartGarbageCollector()
-					--			DefineLosingTeam()
-					return 60
-				end)
-
-				if IsFranticMap() then
-					if RandomInt(1, 100) > 20 then
-						Timers:CreateTimer((RandomInt(10, 20) * 60) + RandomInt(0, 60), function()
-							local pos = {}
-							pos[1] = Vector(6446, -6979, 1496)
-							pos[2] = Vector(RandomInt(-6000, 0), RandomInt(7150, 7300), 1423)
-							pos[3] = Vector(RandomInt(-1000, 2000), RandomInt(6900, 7200), 1440)
-							pos[4] = Vector(7041, -6263, 1461)
-							local pos = pos[RandomInt(1, 4)]
-
-							GridNav:DestroyTreesAroundPoint(pos, 80, false)
-							local item = CreateItem("item_the_caustic_finale", nil, nil)
-							local drop = CreateItemOnPositionSync(pos, item)
-						end)
-					end
-				elseif GetMapName() == "imba_overthrow" then
-					countdownEnabled = true
-					CustomGameEventManager:Send_ServerToAllClients( "show_timer", {} )
-					DoEntFire( "center_experience_ring_particles", "Start", "0", 0, self, self )
-				elseif GetMapName() == "imba_1v1" then
-					local removed_ents = {
-						"lane_top_goodguys_melee_spawner",
-						"lane_bot_goodguys_melee_spawner",
-						"lane_top_badguys_melee_spawner",
-						"lane_bot_badguys_melee_spawner",
-					}
-
-					for _, ent_name in pairs(removed_ents) do
-						local ent = Entities:FindByName(nil, ent_name)
-						ent:RemoveSelf()
-					end
-
-					local blocked_camps = {}
-					blocked_camps[1] = {"neutralcamp_evil_1", Vector(-4170, 3670, 512)}
-					blocked_camps[2] = {"neutralcamp_evil_2", Vector(-3030, 4500, 512)}
-					blocked_camps[3] = {"neutralcamp_evil_3", Vector(-2000, 4220, 384)}
-					blocked_camps[4] = {"neutralcamp_evil_4", Vector(-10, 3300, 512)}
-					blocked_camps[5] = {"neutralcamp_evil_5", Vector(1315, 3520, 512)}
-					blocked_camps[6] = {"neutralcamp_evil_6", Vector(-675, 2280, 1151)}
-					blocked_camps[7] = {"neutralcamp_evil_7", Vector(2400, 360, 520)}
-					blocked_camps[8] = {"neutralcamp_evil_8", Vector(4060, -620, 384)}
-					blocked_camps[9] = {"neutralcamp_evil_9", Vector(4100, 1050, 1288)}
-					blocked_camps[10] = {"neutralcamp_good_1", Vector(3010, -4430, 512)}
-					blocked_camps[11] = {"neutralcamp_good_2", Vector(4810, -4200, 512)}
-					blocked_camps[12] = {"neutralcamp_good_3", Vector(787, -4500, 512)}
-					blocked_camps[13] = {"neutralcamp_good_4", Vector(-430, -3100, 384)}
-					blocked_camps[14] = {"neutralcamp_good_5", Vector(-1500, -4290, 384)}
-					blocked_camps[15] = {"neutralcamp_good_6", Vector(-3040, 100, 512)}
-					blocked_camps[16] = {"neutralcamp_good_7", Vector(-3700, 890, 512)}
-					blocked_camps[17] = {"neutralcamp_good_8", Vector(-4780, -190, 512)}
-					blocked_camps[18] = {"neutralcamp_good_9", Vector(256, -1717, 1280)}
-
-					for i = 1, #blocked_camps do
-						local ent = Entities:FindByName(nil, blocked_camps[i][1])
-						local dummy = CreateUnitByName("npc_dummy_unit_perma", blocked_camps[i][2], true, nil, nil, DOTA_TEAM_NEUTRALS)
-					end
-
-					-- not removing neutral spawners for reasons...
-					--			Entities:FindByClassname(nil, "npc_dota_neutral_spawner"):RemoveSelf()
-				end
-			end
-
-			if new_state == DOTA_GAMERULES_STATE_POST_GAME then
-				-- call imba api
-				api.imba.event(api.events.entered_post_game)
-
-				api.imba.complete(function (error, players)
-
-						safe(function ()
-
-								if error then
-									-- if we have an error we should display the scoreboard anyways, just with reduced data
-
-									CustomGameEventManager:Send_ServerToAllClients("end_game", {
-										players = {},
-										xp_info = {},
-										info = {
-											winner = GAME_WINNER_TEAM,
-											id = 0
-										},
-										error = true
-									})
-								else
-									-- everything went fine. use the old system for xp
-
-									local xp_info = {}
-
-									for i = 1, #players do
-										local player = players[i]
-
-										local level = GetXPLevelByXp(player.xp)
-										local title = GetTitleIXP(level)
-										local color = GetTitleColorIXP(title, true)
-										local progress = GetXpProgressToNextLevel(player.xp)
-
-										if level and title and color and progress then
-											table.insert(xp_info, {
-												steamid = player.steamid,
-												level = level,
-												title = title,
-												color = color,
-												progress = progress
-											})
-										end
-									end
-
-									CustomGameEventManager:Send_ServerToAllClients("end_game", {
-										players = players,
-										xp_info = xp_info,
-										info = {
-											winner = GAME_WINNER_TEAM,
-											id = api.imba.data.id
-										},
-										error = false
-									})
-								end
-						end)
-				end)
-
-				CustomNetTables:SetTableValue("game_options", "game_count", {value = 0})
-			end
-
+			CustomNetTables:SetTableValue("game_options", "game_count", {value = 0})
+		end
 	end)
 end
 
