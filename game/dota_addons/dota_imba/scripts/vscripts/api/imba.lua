@@ -120,6 +120,11 @@ function api.imba.complete(callback)
 		results = {}
 	}
 
+    -- print a stack trace if we dont have a winner
+    if complete_data.winner == 0 then
+        log.error("Winner is 0")
+    end
+    
 	-- results
 	for id = 0, DOTA_MAX_TEAM_PLAYERS do
 		if PlayerResource:IsValidPlayerID(id) and PlayerResource:GetConnectionState(id) ~= 1 then
@@ -134,7 +139,7 @@ function api.imba.complete(callback)
 
 			-- hero entity and items
 			if data.hero == nil then
-				log.debug("Hero for player " .. steamid .. " is nil")
+				log.warn("Hero for player " .. data.steamid .. " is nil")
 			else
 				data.hero_name = tostring(data.hero:GetUnitName())
 
