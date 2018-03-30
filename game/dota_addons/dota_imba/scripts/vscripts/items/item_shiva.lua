@@ -220,7 +220,7 @@ end
 modifier_imba_shiva_debuff = class({})
 
 function modifier_imba_shiva_debuff:OnCreated()
-	print("Created shiva debuff")
+	log.debug("Created shiva debuff")
 	self:OnIntervalThink()
 	self:StartIntervalThink(0.5)
 end
@@ -230,7 +230,7 @@ function modifier_imba_shiva_debuff:OnIntervalThink()
 	local target = self:GetParent()
 	local ability = self:GetAbility()
 
-	print(target:GetUnitName())
+	log.debug(target:GetUnitName())
 
 	-- Parameters
 	local aura_as_reduction = ability:GetSpecialValueFor("aura_as_reduction")

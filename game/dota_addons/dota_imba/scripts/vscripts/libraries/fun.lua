@@ -1045,9 +1045,9 @@ setmetatable(exports, {
 				local msg = 'function ' .. k .. ' already exists in global scope.'
 				if override then
 					_G[k] = v
-					print('WARNING: ' .. msg .. ' Overwritten.')
+					log.warn(msg .. ' Overwritten.')
 				else
-					print('NOTICE: ' .. msg .. ' Skipped.')
+					log.info(msg .. ' Skipped.')
 				end
 			else
 				_G[k] = v

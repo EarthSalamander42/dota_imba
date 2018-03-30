@@ -44,7 +44,7 @@ function GameMode:_OnEntityKilled( keys )
 	end
 
 	if killedUnit:IsRealHero() then
-		DebugPrint("KILLED, KILLER: " .. killedUnit:GetName() .. " -- " .. killerEntity:GetName())
+		log.debug("KILLED, KILLER: " .. killedUnit:GetName() .. " -- " .. killerEntity:GetName())
 		if END_GAME_ON_KILLS and GetTeamHeroKills(killerEntity:GetTeam()) >= KILLS_TO_END_GAME_FOR_TEAM then
 			GameRules:SetSafeToLeave( true )
 			GameRules:SetGameWinner( killerEntity:GetTeam() )

@@ -392,7 +392,7 @@ function ChangeAttackProjectileImba(unit)
 
 	-- Else, default to the base ranged projectile
 	else
-		print(unit:GetKeyValue("ProjectileModel"))
+		log.debug(unit:GetKeyValue("ProjectileModel"))
 		unit:SetRangedProjectileName(unit:GetKeyValue("ProjectileModel"))
 	end
 end
@@ -919,7 +919,7 @@ function RollPseudoRandom(base_chance, entity)
 	end
 
 	if not prngBase then
-		print("The chance was not found! Make sure to add it to the table or change the value.")
+		log.warn("The chance was not found! Make sure to add it to the table or change the value.")
 		return false
 	end
 	
@@ -1139,7 +1139,7 @@ function CDOTA_BaseNPC_Hero:CopyTalents(hEntity, flags) --type 1(generic only), 
                     newModifier:SetStackCount(modifier:GetStackCount())
                     newModifier:ForceRefresh()
                 else
-                    print("failed to attach generic talent: "..modifierName)
+                    log.warn("failed to attach generic talent: "..modifierName)
                 end
             end
         end
@@ -1157,7 +1157,7 @@ function CDOTA_BaseNPC_Hero:CopyTalents(hEntity, flags) --type 1(generic only), 
                     if newAbility then
                         newAbility:SetLevel(ability:GetLevel())
                     else
-                        print("failed to attach unique talent: "..abilityName)
+                        log.warn("failed to attach unique talent: "..abilityName)
                     end
                 end
             end

@@ -56,7 +56,7 @@ local function PopulateHeroTalentList(hero)
 
 			if not areImbaTalents then
 				-- Copy table
-				for k,v in pairs(IMBA_HERO_TALENTS_LIST[heroName]) do 
+				for k,v in pairs(IMBA_HERO_TALENTS_LIST[heroName]) do
 					inner_value[k] = v
 				end
 			end
@@ -175,10 +175,10 @@ end
 
 function PopulateHeroImbaTalents(hero)
 	if HasNotPopulatedValues(hero:entindex()) then
---		PopulateHeroTalentChoice(hero)
---		PopulateHeroTalentList(hero)
+		--		PopulateHeroTalentChoice(hero)
+		--		PopulateHeroTalentList(hero)
 		PopulateHeroTalentLinkedAbilities(hero)
---		RemoveTalents(hero)
+		--		RemoveTalents(hero)
 	end
 end
 
@@ -188,7 +188,7 @@ function HandlePlayerUpgradeImbaTalent(unused, kv)
 	local level = kv.level
 	local index = kv.index
 
-	print("Level Up Imba Talent")
+	log.info("Level Up Imba Talent")
 
 	--Convert heroID to hero entity
 	local hero = EntIndexToHScript(heroID)
@@ -222,7 +222,7 @@ function HandlePlayerUpgradeImbaTalent(unused, kv)
 						local modifier = hero:FindModifierByName(modifier_talent_name)
 						if modifier ~= nil then
 							-- Do not allow learning of the same type of ability again
-							print("Talent: Taken before")
+							log.info("Talent: Taken before")
 							return
 						else
 							modifier = hero:AddNewModifier(hero, nil, modifier_talent_name, {})
@@ -245,7 +245,7 @@ function HandlePlayerUpgradeImbaTalent(unused, kv)
 						-- Ability talent (upgrade ability level)
 						local ability = hero:FindAbilityByName(talent_name)
 						if ability then
-							print("Talent: talent name not suppose to exist")
+							log.info("Talent: talent name not suppose to exist")
 							return
 						else
 							ability = hero:AddAbility(talent_name)
@@ -261,19 +261,19 @@ function HandlePlayerUpgradeImbaTalent(unused, kv)
 					--Update table choice
 					CustomNetTables:SetTableValue( "imba_talent_manager", "hero_talent_choice_"..heroID, hero_talent_choices )
 				else
-					print("Talent: Invalid link")
+					log.info("Talent: Invalid link")
 				end
 			else
-				print("Talent: Invalid Choice")
+				log.info("Talent: Invalid Choice")
 			end
 		else
-			print("Talent: Invalid hero ownership")
-			print("ownerPlayerID :"..ownerPlayerID)
-			print("thisPlayerID :"..thisPlayerID)
-			print("mask: "..PlayerResource:GetUnitShareMaskForPlayer(ownerPlayerID, thisPlayerID))
+			log.info("Talent: Invalid hero ownership")
+			log.debug("ownerPlayerID :"..ownerPlayerID)
+			log.debug("thisPlayerID :"..thisPlayerID)
+			log.debug("mask: "..PlayerResource:GetUnitShareMaskForPlayer(ownerPlayerID, thisPlayerID))
 		end
 	else
-		print("Talent: Invalid hero index")
+		log.warn("Talent: Invalid hero index")
 	end
 end
 
@@ -282,7 +282,7 @@ function InitPlayerHeroImbaTalents()
 	PopulateGenericImbaTalentTableValues()
 
 	-- Register for event when user select a talent to upgrade
-	print("Setup Hero Imba Talents")
+	log.info("Setup Hero Imba Talents")
 	CustomGameEventManager:RegisterListener("upgrade_imba_talent", HandlePlayerUpgradeImbaTalent)
 end
 

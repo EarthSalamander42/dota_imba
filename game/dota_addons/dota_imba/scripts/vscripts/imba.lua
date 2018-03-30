@@ -1202,7 +1202,7 @@ end
 ]]
 
 function GameMode:OnAllPlayersLoaded()
-	DebugPrint("[IMBA] All Players have loaded into the game")
+	log.info("All Players have loaded into the game")
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Game filters setup
@@ -1919,7 +1919,7 @@ function GameMode:OnThink()
 		-- Morphling fixes
 		if hero:GetUnitName() == "npc_dota_hero_morphling" then
 			if not hero:HasAbility("imba_riki_cloak_and_dagger") and hero:HasModifier("modifier_imba_riki_invisibility") then
-				print("Remove riki perma invis on morph..")
+				log.debug("Remove riki perma invis on morph..")
 				hero:RemoveModifierByName("modifier_imba_riki_invisibility")
 			end
 

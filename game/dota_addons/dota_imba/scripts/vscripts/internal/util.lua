@@ -39,9 +39,7 @@ function DebugPrintTable(...)
 end
 
 function PrintAll(t)
-	for k,v in pairs(t) do
-		print(k,v)
-	end
+	log.debug(t)
 end
 
 function MergeTables( t1, t2 )
@@ -449,10 +447,10 @@ function StartGarbageCollector()
 		if dummy:GetUnitName() == "npc_dummy_unit" then			
 			local dummy_creation_time = dummy:GetCreationTime()
 			if gametime - dummy_creation_time > 60 then
-				print("NUKING A LOST DUMMY!")
+				log.warn("NUKING A LOST DUMMY!")
 				UTIL_Remove(dummy)
 			else
-				print("dummy is still kinda new. Not removing it!")
+				log.warn("dummy is still kinda new. Not removing it!")
 			end
 		end
 	end
@@ -743,7 +741,7 @@ end
 function ReconnectPlayer(player_id)
 if not player_id then player_id = 0 end
 
-	print("Player is reconnecting:", player_id)
+	log.info("Player is reconnecting:", player_id)
 	-- Reinitialize the player's pick screen panorama, if necessary
 	if HeroSelection.HorriblyImplementedReconnectDetection then
 		HeroSelection.HorriblyImplementedReconnectDetection[player_id] = false
@@ -762,7 +760,7 @@ if not player_id then player_id = 0 end
 				PrintTable(HeroSelection.picked_heroes)
 				CustomGameEventManager:Send_ServerToAllClients("player_reconnected", {PlayerID = player_id, PickedHeroes = HeroSelection.picked_heroes, pickState = pick_state, repickState = repick_state})
 			else
-				print("Not fully reconnected yet:", player_id)
+				log.info("Not fully reconnected yet:", player_id)
 				return 0.1
 			end
 
@@ -787,7 +785,7 @@ if not player_id then player_id = 0 end
 			PlayerResource:StopAbandonGoldRedistribution(player_id)
 		end
 	else
-		print("Player "..player_id.." has not fully connected before this time")
+		log.info("Player "..player_id.." has not fully connected before this time")
 	end
 end
 

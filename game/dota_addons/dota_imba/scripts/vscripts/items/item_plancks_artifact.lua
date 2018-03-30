@@ -38,12 +38,12 @@ end
 function item_imba_plancks_artifact:set_respawn_time(reset)
 	if reset ~= nil then
 		self:GetCaster().plancks_artifact_respawn_reduction = nil
-		print("PLANCK: resetting respawn time")
+		log.debug("PLANCK: resetting respawn time")
 	else
 		self:GetCaster().plancks_artifact_respawn_reduction =
 			self:GetSpecialValueFor("respawn_time_reduction") *
 			self:GetCurrentCharges()
-		print("PLANCK: setting respawn reduction time to " .. tostring(self:GetCaster().plancks_artifact_respawn_reduction))
+		log.debug("PLANCK: setting respawn reduction time to " .. tostring(self:GetCaster().plancks_artifact_respawn_reduction))
 	end
 end
 
