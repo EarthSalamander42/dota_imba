@@ -70,7 +70,6 @@ api.events = {
 }
 
 function api.request(endpoint, data, callback)
-
 	local url = api.config.protocol .. api.config.server .. endpoint
 	local method = "GET"
 	local payload = nil
@@ -116,7 +115,6 @@ function api.request(endpoint, data, callback)
 	end
 
 	request:Send(function (raw_result)
-
 			local result = {
 				code = raw_result.StatusCode,
 				body = raw_result.Body,

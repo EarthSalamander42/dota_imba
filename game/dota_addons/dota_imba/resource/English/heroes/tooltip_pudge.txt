@@ -86,5 +86,6 @@
 "DOTA_Tooltip_ability_special_bonus_imba_pudge_4_Description"	"+10 max limit for 'He's a big guy (for you)' max stacks (Flesh Heap Magic Resist)"
 "DOTA_Tooltip_Ability_special_bonus_imba_pudge_5"				"+1000 Hook Range"
 "DOTA_Tooltip_Ability_special_bonus_imba_pudge_6"				"+75 Rot Damage"
-"DOTA_Tooltip_ability_special_bonus_imba_pudge_7"				"Meat Hook applies Rupture"
+"DOTA_Tooltip_ability_special_bonus_imba_pudge_7"				"Rupture Hook"
+"DOTA_Tooltip_ability_special_bonus_imba_pudge_7_Description"	"Meat Hook applies Rupture, dealing %movement_damage_pct% damage per distance unit, %damage_cap% distance cap."
 "DOTA_Tooltip_ability_special_bonus_imba_pudge_8"				"+2 sec Dismember Duration"

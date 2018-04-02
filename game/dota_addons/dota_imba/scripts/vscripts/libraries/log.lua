@@ -348,5 +348,3 @@ end
 ---------------------------------------------
 Log:AddTarget(ApiLogTarget)
 Log:AddTarget(ConsoleLogTarget)
-
-

@@ -31,6 +31,9 @@ end
 -- settings.lua is where you can specify many different properties for your game mode and is one of the core barebones files.
 require('settings')
 
+-- load api before internal/events
+require('api/imba')
+
 require('libraries/log')
 
 require('libraries/timers')
@@ -45,9 +48,6 @@ require('libraries/astar')
 -- Illusion manager, created by Seinken!
 require('libraries/illusionmanager')
 require('libraries/keyvalues')
-
--- load api before internal/events
-require('api/imba')
 
 -- These internal libraries set up barebones's events and processes.  Feel free to inspect them/change them if you need to.
 require('internal/gamemode')
@@ -1913,23 +1913,24 @@ function GameMode:OnThink()
 				hero.undying_respawn_timer = hero.undying_respawn_timer -1
 			end
 
-			return
+			break
 		end
 
 		-- Morphling fixes
 		if hero:GetUnitName() == "npc_dota_hero_morphling" then
+			print("Morphling detected:", hero:HasAbility("imba_riki_cloak_and_dagger"), hero:HasModifier("modifier_imba_riki_invisibility"))
 			if not hero:HasAbility("imba_riki_cloak_and_dagger") and hero:HasModifier("modifier_imba_riki_invisibility") then
 				log.debug("Remove riki perma invis on morph..")
 				hero:RemoveModifierByName("modifier_imba_riki_invisibility")
 			end
 
-			return
+			break
 		end
 
 		-- Find hidden modifiers
-		--		for i = 0, hero:GetModifierCount() -1 do
-		--			log.debug(hero:GetModifierNameByIndex(i))
-		--		end
+--		for i = 0, hero:GetModifierCount() -1 do
+--			log.debug(hero:GetModifierNameByIndex(i))
+--		end
 	end
 
 	if GetMapName() == "imba_overthrow" then
@@ -2029,20 +2030,20 @@ function GameMode:OnThink()
 	-- Picking Screen voice alert
 	if i == nil then i = AP_GAME_TIME -1
 	elseif i < 0 then
-		return
+		return 1
 	else
 		i = i -1
 		--		log.debug(i)
 		for _, hero in pairs(HeroList:GetAllHeroes()) do
-			--			log.debug(hero:GetPlayerID(), hero.picked)
+--			log.debug(hero:GetPlayerID(), hero.picked)
 			if not hero.picked and not i == false then -- have to double check false for reasons
 				if i == 30 then
 					EmitAnnouncerSoundForPlayer("announcer_ann_custom_countdown_"..i, hero:GetPlayerID())
-			elseif i == 10 then
-				EmitAnnouncerSoundForPlayer("announcer_ann_custom_countdown_"..i, hero:GetPlayerID())
-			elseif i <= 10 and i > 0 then
-				EmitAnnouncerSoundForPlayer("announcer_ann_custom_countdown_0"..i, hero:GetPlayerID())
-			end
+				elseif i == 10 then
+					EmitAnnouncerSoundForPlayer("announcer_ann_custom_countdown_"..i, hero:GetPlayerID())
+				elseif i <= 10 and i > 0 then
+					EmitAnnouncerSoundForPlayer("announcer_ann_custom_countdown_0"..i, hero:GetPlayerID())
+				end
 			end
 		end
 	end

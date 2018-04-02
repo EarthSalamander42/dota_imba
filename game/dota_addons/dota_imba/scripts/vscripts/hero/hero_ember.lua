@@ -1,28 +1,30 @@
 --	IMBA Ember Spirit
 -- 	by Firetoad, 22.03.2018
 
-LinkLuaModifier( "modifier_imba_flame_guard_aura", "hero/hero_ember.lua", LUA_MODIFIER_MOTION_NONE )
-LinkLuaModifier( "modifier_imba_flame_guard_talent", "hero/hero_ember.lua", LUA_MODIFIER_MOTION_NONE )
-LinkLuaModifier( "modifier_imba_flame_guard_passive", "hero/hero_ember.lua", LUA_MODIFIER_MOTION_NONE )
-LinkLuaModifier( "modifier_imba_sleight_of_fist_caster", "hero/hero_ember.lua", LUA_MODIFIER_MOTION_NONE )
-LinkLuaModifier( "modifier_imba_sleight_of_fist_marker", "hero/hero_ember.lua", LUA_MODIFIER_MOTION_NONE )
-LinkLuaModifier( "modifier_imba_searing_chains_attack", "hero/hero_ember.lua", LUA_MODIFIER_MOTION_NONE )
-LinkLuaModifier( "modifier_imba_searing_chains_debuff", "hero/hero_ember.lua", LUA_MODIFIER_MOTION_NONE )
-LinkLuaModifier( "modifier_imba_fire_remnant_state", "hero/hero_ember.lua", LUA_MODIFIER_MOTION_NONE )
-LinkLuaModifier( "modifier_imba_fire_remnant_charges", "hero/hero_ember.lua", LUA_MODIFIER_MOTION_NONE )
-LinkLuaModifier( "modifier_imba_fire_remnant_cooldown", "hero/hero_ember.lua", LUA_MODIFIER_MOTION_NONE )
-LinkLuaModifier( "modifier_imba_fire_remnant_dash", "hero/hero_ember.lua", LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier("modifier_imba_flame_guard_aura", "hero/hero_ember.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_flame_guard_talent", "hero/hero_ember.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_flame_guard_passive", "hero/hero_ember.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_sleight_of_fist_caster", "hero/hero_ember.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_sleight_of_fist_marker", "hero/hero_ember.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_searing_chains_attack", "hero/hero_ember.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_searing_chains_debuff", "hero/hero_ember.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_fire_remnant_state", "hero/hero_ember.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_fire_remnant_charges", "hero/hero_ember.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_fire_remnant_cooldown", "hero/hero_ember.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_fire_remnant_dash", "hero/hero_ember.lua", LUA_MODIFIER_MOTION_NONE)
 
 --------------------------------------------------------------------------------
 
 -- Finds all remnants in the map
 function FindActiveRemnants(caster)
 	local remnants = Entities:FindAllByModel("models/heroes/ember_spirit/ember_spirit.vmdl")
+
 	for key, remnant in pairs(remnants) do
 		if caster == remnant or caster ~= remnant:GetOwner() or (not remnant:IsAlive()) then
 			table.remove(remnants, key)
 		end
 	end
+
 	if #remnants > 0 then
 		return remnants
 	else
@@ -65,8 +67,7 @@ end
 function modifier_imba_flame_guard_talent:OnIntervalThink()
 	if IsServer() then
 		if not self.learned_guard_talent then
-			local talent = self:GetParent():FindAbilityByName("special_bonus_ember_permanent_guard")
-			if talent and talent:GetLevel() > 0 then
+			if self:GetParent():IsAlive() and self:GetParent():HasTalent("special_bonus_ember_permanent_guard") then
 				self:GetParent():RemoveModifierByName("modifier_imba_flame_guard_aura")
 				self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_flame_guard_passive", {})
 				self:GetParent():EmitSound("Hero_EmberSpirit.FlameGuard.Loop")
@@ -454,14 +455,14 @@ function modifier_imba_fire_remnant_state:OnIntervalThink()
 			local rand = RandomInt(1, 10)
 			if rand == 1 then
 				self:GetParent():StartGestureWithPlaybackRate(ACT_DOTA_CAST_ABILITY_4 , 1)
-			elseif rand == 2 then
-				self:GetParent():StartGestureWithPlaybackRate(ACT_DOTA_CAST_STATUE , 1)
+--			elseif rand == 2 then
+--				self:GetParent():StartGestureWithPlaybackRate(ACT_DOTA_CAST_STATUE , 1)
 			elseif rand == 3 then
 				self:GetParent():StartGestureWithPlaybackRate(ACT_DOTA_VICTORY_START , 1)
 			elseif rand == 4 then
 				self:GetParent():StartGestureWithPlaybackRate(ACT_DOTA_VERSUS , 3)
-			elseif rand > 4 and rand < 7 then
-				self:GetParent():StartGestureWithPlaybackRate(ACT_DOTA_REMNANT_STATUE , 1)
+--			elseif rand > 4 and rand < 7 then
+--				self:GetParent():StartGestureWithPlaybackRate(ACT_DOTA_REMNANT_STATUE , 1)
 			end
 		end
 	end
@@ -469,7 +470,7 @@ end
 
 function modifier_imba_fire_remnant_state:OnDestroy()
 	if IsServer() then
-		self:GetParent():RemoveModifierByName("modifier_kill")
+		UTIL_Remove(self:GetParent())
 		self:GetAbility():CollectRemnant()
 	end
 end

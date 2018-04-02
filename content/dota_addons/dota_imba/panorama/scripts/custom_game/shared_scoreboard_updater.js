@@ -57,7 +57,7 @@ function _ScoreboardUpdater_UpdatePlayerPanelImr(plyData, playerPanel) {
 	// set strings
 	
 	if (plyData.IMR_5v5 !== undefined) {
-		if (plyData.IMR_10v10_calibrating) {
+		if (plyData.IMR_5v5_calibrating) {
 			strings._5v5.flyout = "TBD";
 			strings._5v5.endscreen = "TBD + 0";
 		} else {

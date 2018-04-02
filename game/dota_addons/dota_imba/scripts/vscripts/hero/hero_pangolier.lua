@@ -1354,8 +1354,8 @@ function modifier_imba_heartpiercer_debuff:OnCreated()
 	self.debuff_sound_hero = "Hero_Pangolier.HeartPiercer"
 
 	--Ability specials
-	print("Armor reduction:", -self:GetParent():GetPhysicalArmorValue())
-	self:SetStackCount(-self:GetParent():GetPhysicalArmorValue())
+	print("Armor reduction:", self:GetParent():GetPhysicalArmorValue() * (-1))
+	self:SetStackCount(self:GetParent():GetPhysicalArmorValue() * (-1))
 --	local armor = self:GetParent():GetPhysicalArmorValue() or 0
 	self.slow_pct = self:GetAbility():GetSpecialValueFor("slow_pct")
 	self.talent_interval = self:GetCaster():FindTalentValue("special_bonus_imba_pangolier_5", "tick_interval")

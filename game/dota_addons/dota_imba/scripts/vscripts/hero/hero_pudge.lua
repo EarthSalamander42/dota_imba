@@ -157,10 +157,8 @@ function imba_pudge_meat_hook:GetCastRange()
 	-- volvo?
 	if caster and caster.FindAbilityByName and caster:FindAbilityByName("imba_pudge_light_hook") then
 		hook_range = hook_range + (caster:FindAbilityByName("imba_pudge_light_hook"):GetSpecialValueFor("stack_range") * charges)
-		print(self:GetSpecialValueFor("base_range"), caster:FindTalentValue("special_bonus_imba_pudge_5"), caster:FindAbilityByName("imba_pudge_light_hook"):GetSpecialValueFor("stack_range"), charges)
 	end
 
-	print(hook_range)
 	return hook_range
 end
 
@@ -334,7 +332,6 @@ function imba_pudge_meat_hook:OnProjectileThink_ExtraData(vLocation, ExtraData)
 
 	if ExtraData.goorback ~= "back" then
 		hooked_loc = vLocation
-		print("not back")
 	elseif ExtraData.goorback == "back" then
 		if EntIndexToHScript(ExtraData.rune) then
 			local rune = EntIndexToHScript(ExtraData.rune)
@@ -352,20 +349,18 @@ function imba_pudge_meat_hook:OnProjectileThink_ExtraData(vLocation, ExtraData)
 				-- vector expected got nil
 				local distance_diff = (hooked_loc - target:GetAbsOrigin()):Length2D()
 
+--				print(distance_diff)
 				if distance_diff < damage_cap then
-					print("Apply Rupture")
 					local move_damage = distance_diff * rupture_damage
+--					print(move_damage)
 					if move_damage > 0 then
 						if not target.is_ruptured then
 							target.is_ruptured = true
 							self.RuptureFX = ParticleManager:CreateParticle("particles/units/heroes/hero_bloodseeker/bloodseeker_rupture.vpcf", PATTACH_POINT_FOLLOW, target)
 							EmitSoundOn("hero_bloodseeker.rupture.cast", target)
 							EmitSoundOn("hero_bloodseeker.rupture", target)
-
-							Timers:CreateTimer(1.0, function()
-
-							end)
 						end
+
 						ApplyDamage({victim = target, attacker = self:GetCaster(), damage = move_damage, damage_type = DAMAGE_TYPE_PURE, ability = self:GetCaster():FindAbilityByName("imba_pudge_meat_hook")})
 					end
 				end

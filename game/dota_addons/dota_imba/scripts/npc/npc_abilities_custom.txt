@@ -17167,7 +17167,7 @@
 		{
 			"01"
 			{
-				"var_type"					"FIELD_INTEGER"
+				"var_type"					"FIELD_FLOAT"
 				"movement_damage_pct"		"0.05"
 			}
 			"02"
