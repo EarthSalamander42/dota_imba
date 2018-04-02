@@ -1918,9 +1918,7 @@ function GameMode:OnThink()
 
 		-- Morphling fixes
 		if hero:GetUnitName() == "npc_dota_hero_morphling" then
-			print("Morphling detected:", hero:HasAbility("imba_riki_cloak_and_dagger"), hero:HasModifier("modifier_imba_riki_invisibility"))
 			if not hero:HasAbility("imba_riki_cloak_and_dagger") and hero:HasModifier("modifier_imba_riki_invisibility") then
-				log.debug("Remove riki perma invis on morph..")
 				hero:RemoveModifierByName("modifier_imba_riki_invisibility")
 			end
 
@@ -1953,9 +1951,10 @@ function GameMode:OnThink()
 			else
 				TEAM_KILLS_TO_WIN = leadingTeamScore + 1
 				local broadcast_killcount =
-					{
-						killcount = TEAM_KILLS_TO_WIN
-					}
+				{
+					killcount = TEAM_KILLS_TO_WIN
+				}
+
 				CustomGameEventManager:Send_ServerToAllClients( "overtime_alert", broadcast_killcount )
 			end
 		end

@@ -8936,8 +8936,6 @@
 	//=================================================================================================================
 	"ogre_magi_multicast"
 	{
-		"MaxLevel"						"3"
-
 		"AbilitySpecial"
 		{
 			"01"
@@ -8958,44 +8956,39 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"fireblast_mana_cost"	"20 30 40"
+				"fireblast_cooldown"	"1 2 3"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"fireblast_cooldown"	"1 2 3"
+				"ignite_aoe"			"150 450 550"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"ignite_aoe"			"150 450 550"
+				"ignite_cast_range"		"150 450 550"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"ignite_cast_range"		"150 450 550"
+				"bloodlust_aoe"			"900"
 			}
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bloodlust_aoe"			"900"
-			}
-			"09"
-			{
-				"var_type"				"FIELD_INTEGER"
 				"bloodlust_cooldown"	"5 15 17"
 			}
-			"10"
+			"09"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"multicast_2_times_tooltip"		"50 75 100"
 			}
-			"11"
+			"10"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"multicast_3_times_tooltip"		"20 40 80"
 			}
-			"12"
+			"11"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"multicast_4_times_tooltip"		"0 20 40"
@@ -9955,46 +9948,33 @@
 	//=================================================================================================================
 	"shadow_demon_demonic_purge"
 	{
-		"MaxLevel"						"3"
-
 		"AbilityCooldown"				"50 40 30"
-
 		"AbilityDuration"				"5 6 7"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"slow_rate"				"5 2 1.5"
-			}
-			"02"
-			{
 				"var_type"				"FIELD_INTEGER"
 				"purge_damage"			"225 425 475"
 				"LinkedSpecialBonus"	"special_bonus_unique_shadow_demon_1"
 			}
-			"03"
+			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"tooltip_duration"		"5 6 7"
 			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"creep_root_duration"	"7"
-			}
-			"05"
+			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"max_charges"			"3"
 			}
-			"06"
+			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"charge_restore_time"	"30"
 			}
-			"07"
+			"05"
 			{
 				"var_type"								"FIELD_INTEGER"
 				"charge_restore_time_tooltip_scepter"	"30"
@@ -12241,8 +12221,6 @@
 	//=================================================================================================================
 	"undying_tombstone_zombie_deathstrike"
 	{
-		"MaxLevel"						"4"
-
 		"AbilitySpecial"
 		{
 			"01"
@@ -12268,9 +12246,14 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_speed"			"100"
+				"bonus_move_speed"		"50"
 			}
 			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_attack_speed"	"100"
+			}
+			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"radius"				"1400"
@@ -13365,14 +13348,9 @@
 	//=================================================================================================================
 	"wisp_tether"
 	{
-		"MaxLevel"						"4"
-
 		"AbilityCooldown"				"3"
-
 		"AbilityDuration"				"60"
-
 		"AbilityManaCost"				"0"
-
 		"AbilityCastRange"				"1800"
 
 		"AbilitySpecial"
@@ -13399,25 +13377,20 @@
 			}
 			"05"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"tether_duration"			"60"
-			}
-			"06"
-			{
 				"var_type"					"FIELD_FLOAT"
 				"tether_heal_amp"			"1.5"
 			}
-			"07"
+			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"slow"						"-100"
 			}
-			"08"
+			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"attackslow_tooltip"		"-100"
 			}
-			"09"
+			"08"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"stun_duration"				"0.75 1.25 1.75 2.25"

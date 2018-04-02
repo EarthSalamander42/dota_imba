@@ -278,5 +278,4 @@ function EndScoreboard() {
 }
 	
 EndScoreboard()
-	
 })();

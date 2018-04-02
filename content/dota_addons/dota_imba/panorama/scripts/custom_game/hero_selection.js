@@ -245,14 +245,17 @@ function onPlayerStatChange (table, key, data) {
 				var newinfo = $.CreatePanel('Label', newelement, '');
 				newinfo.AddClass('PlayerInfo');
 
-				var player_table = CustomNetTables.GetTableValue("player_table", Game.GetLocalPlayerID().toString());
-				if (currentMap == "imba_ranked_5v5") {
-					newinfo.text = "IMR: " + player_table.IMR_5v5.toFixed(0)
-				} else if (currentMap == "imba_ranked_10v10") {
-					newinfo.text = player_table.IMR_10v10.toFixed(0)
-				} else {
-					newinfo.text = player_table.Lvl.toFixed(0)
-					newinfo.color = player_table.title_color
+				if (data[nkey].id) {
+					var player_table = CustomNetTables.GetTableValue("player_table", data[nkey].id.toString());
+
+					if (currentMap == "imba_ranked_5v5") {
+						newinfo.text = "IMR: " + player_table.IMR_5v5.toFixed(0)
+					} else if (currentMap == "imba_ranked_10v10") {
+						newinfo.text = player_table.IMR_10v10.toFixed(0)
+					} else {
+						newinfo.text = player_table.Lvl.toFixed(0)
+						newinfo.color = player_table.title_color
+					}
 				}
 
 				var newlabel = $.CreatePanel('DOTAUserName', newelement, '');

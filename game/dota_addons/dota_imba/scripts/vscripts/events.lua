@@ -339,7 +339,9 @@ function GameMode:OnGameRulesStateChange(keys)
 							xp_info = xp_info,
 							info = {
 								winner = GAME_WINNER_TEAM,
-								id = api.imba.data.id
+								id = api.imba.data.id,
+								radiant_score = GetTeamHeroKills(2),
+								dire_score = GetTeamHeroKills(3),
 							},
 							error = false
 						})
@@ -492,7 +494,7 @@ function GameMode:OnNPCSpawned(keys)
 				npc:SwapAbilities("imba_troll_warlord_whirling_axes_ranged", "imba_troll_warlord_whirling_axes_melee", true, false)
 			end
 
-			if api.imba.is_donator(PlayerResource:GetSteamID(npc:GetPlayerID())) then
+			if api.imba.is_donator(PlayerResource:GetSteamID(npc:GetPlayerID())) and PlayerResource:GetConnectionState(npc:GetPlayerID()) ~= 1 then
 				if npc:GetUnitName() ~= "npc_dota_hero_dummy_dummy" then
 					Timers:CreateTimer(2.0, function()
 						local steam_id = tostring(PlayerResource:GetSteamID(npc:GetPlayerID()))
@@ -714,8 +716,9 @@ function GameMode:OnPlayerReconnect(keys)
 
 	local hero = PlayerResource:GetSelectedHeroEntity(keys.PlayerID)
 
+	log.info('Reconnecting... ' .. hero .. ' ' .. loadedHeroes[lockedHeroes[keys.PlayerID]])
 	if not hero or hero:GetUnitName() == FORCE_PICKED_HERO and loadedHeroes[lockedHeroes[keys.PlayerID]] then
-		log.info('Giving player ' .. keys.PlayerID .. ' ' .. lockedHeroes[keys.PlayerID])
+		log.info('Giving player ' .. keys.PlayerID .. ' ' .. lockedHeroes[keys.PlayerID] .. '(reconnected)')
 		HeroSelection:GiveStartingHero(keys.PlayerID, lockedHeroes[keys.PlayerID])
 	end
 end
@@ -1382,8 +1385,14 @@ function GameMode:OnEntityKilled( keys )
 			end
 
 			if GetMapName() == "imba_1v1" then
-				GAME_WINNER_TEAM = killer:GetTeamNumber()
-				GameRules:SetGameWinner(killer:GetTeamNumber())
+				local winner = 2
+
+				if killed_unit:GetTeamNumber() == 2 then
+					winner = 3
+				end
+
+				GAME_WINNER_TEAM = winner
+				GameRules:SetGameWinner(winner)
 			end
 		elseif killed_unit:IsCourier() then
 			CombatEvents("generic", "courier_dead", killed_unit)

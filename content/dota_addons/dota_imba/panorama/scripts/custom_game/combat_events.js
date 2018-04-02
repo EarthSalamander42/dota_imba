@@ -29,8 +29,6 @@ function CreateCustomToast(data) {
 		row.SetHasClass('LocalPlayerKiller', isKiller);
 		row.SetHasClass('LocalPlayerVictim', isVictim);
 
-		$.Msg(isKiller)
-
 		if (isKiller) {
 			Game.EmitSound('notification.self.kill');
 		} else if (isVictim)
@@ -47,11 +45,9 @@ function CreateCustomToast(data) {
 		} else if (isRoshanKill) {
 			rowText = '{team_name} {killed_icon} {roshan_icon} Roshan {gold}';
 		} else {
-			$.Msg("Others")
 			if (byNeutrals) {
 				rowText = $.Localize('#npc_dota_neutral_creep');
 			} else {
-				$.Msg("Not neutrals")
 				rowText = '{killer_name}';
 			}
 

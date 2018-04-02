@@ -224,8 +224,8 @@ function HeroSelection:CMManager(event)
 				HeroSelection:APTimer(CAPTAINS_MODE_HERO_PICK_TIME, "CHOOSE HERO")
 			end
 		end
-		forcestop = false
 
+		forcestop = false
 	end
 end
 
@@ -322,7 +322,10 @@ function HeroSelection:APTimer (time, message)
 				HeroSelection:UpdateTable(key, HeroSelection:RandomHero())
 				--				end
 			end
+
 			HeroSelection:SelectHero(key, selectedtable[key].selectedhero)
+			print("PAUSE GAME!")
+--			PauseGame(true)
 		end
 		PlayerResource:GetAllTeamPlayerIDs():each(function (playerId)
 			if not lockedHeroes[playerId] then
@@ -361,11 +364,16 @@ function HeroSelection:SelectHero(playerId, hero)
 		loadingHeroes = loadingHeroes - 1
 		if loadingHeroes == 0 then
 			LoadFinishEvent.broadcast()
+			print("UNPAUSE GAME!")
+--			PauseGame(false)
 		end
+
 		local player = PlayerResource:GetPlayer(playerId)
+
 		if player == nil then -- disconnected! don't give em a hero yet...
 			return
 		end
+
 		self:GiveStartingHero(playerId, hero)
 		log.debug('Giving player ' .. playerId .. ' ' .. hero)
 	end)
@@ -516,7 +524,7 @@ function HeroSelection:RandomImbaHero()
 		local choice = HeroSelection:UnsafeRandomHero()
 
 		for key, value in pairs(imbalist) do
-			--			log.debug(key, choice, self:IsHeroDisabled(choice))
+--			log.debug(key, choice, self:IsHeroDisabled(choice))
 			if key == choice and not self:IsHeroDisabled(choice) then
 				return choice
 			end
@@ -638,7 +646,7 @@ function HeroSelection:UpdateTable(playerID, hero)
 	--		end
 	--	end
 
-	selectedtable[playerID] = {selectedhero = hero, team = teamID, steamid = HeroSelection:GetSteamAccountID(playerID)}
+	selectedtable[playerID] = {id = playerID, selectedhero = hero, team = teamID, steamid = HeroSelection:GetSteamAccountID(playerID)}
 
 	-- PrintTable(selectedtable)
 	-- if everyone has picked, stop
@@ -646,10 +654,11 @@ function HeroSelection:UpdateTable(playerID, hero)
 	for key, value in pairs(selectedtable) do --pseudocode
 		if GetMapName() ~= "oaa_captains_mode" and value.steamid == "0" then
 			value.selectedhero = HeroSelection:RandomHero()
-	end
-	if value.selectedhero == "empty" then
-		isanyempty = true
-	end
+		end
+
+		if value.selectedhero == "empty" then
+			isanyempty = true
+		end
 	end
 
 	CustomNetTables:SetTableValue('hero_selection', 'APdata', selectedtable)
