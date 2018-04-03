@@ -136,15 +136,7 @@ function GameMode:OnGameRulesStateChange(keys)
 			-- Initialize rune spawners
 			InitRunes()
 
-			local donators_steamid = {}
-			local donators = api.imba.get_donators()
-			if donators and #donators then
-				for i = 1, #donators do
-					table.insert(donators_steamid, donators[i].steamId64)
-				end
-			end
-
-			CustomNetTables:SetTableValue("game_options", "donators", {donators = donators_steamid})
+			CustomNetTables:SetTableValue("game_options", "donators", api.imba.get_donators())
 
 			-------------------------------------------------------------------------------------------------
 			-- IMBA: Custom maximum level EXP tables adjustment

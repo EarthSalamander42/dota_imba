@@ -76,18 +76,16 @@ function ColoredText(colorCode, text) {
 function IsDonator() {
 	var i = 0
 	if (CustomNetTables.GetTableValue("game_options", "donators") == undefined) {
-		return;
+		return false;
 	}
 
-	var steamId = Game.GetLocalPlayerInfo().player_steamid;
-	var donator = CustomNetTables.GetTableValue("game_options", "donators").donators;
-
-	for (i in donator) {
-		if (donator[i] != undefined) {
-			if (donator[i] == steamId) {
-				return true;
-			}
-		}
+	var local_steamid = Game.GetLocalPlayerInfo().player_steamid;
+	var donators = CustomNetTables.GetTableValue("game_options", "donators");
+		
+	for (var key in donators) {
+		var steamid = donators[key];
+		if (local_steamid === steamid)
+			return true;
 	}
 
 	return false;
