@@ -4,8 +4,7 @@ var toggle = false;
 var first_time = false;
 
 var api = {
-	// base = "http://api.dota2imba.org",
-	base : "http://himbeere.pirintex.com",
+	base : "http://api.dota2imba.org",
 	urls : {
 		companions : "/imba/meta/companions",
 		modifyDonator : "/imba/meta/modify-donator",
