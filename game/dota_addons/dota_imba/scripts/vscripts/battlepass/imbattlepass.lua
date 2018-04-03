@@ -61,6 +61,8 @@ IMBATTLEPASS_LEVEL_REWARD[120]	= "sheepstick2"
 IMBATTLEPASS_LEVEL_REWARD[121]	= "fountain14"
 IMBATTLEPASS_LEVEL_REWARD[130]	= "fountain15"
 IMBATTLEPASS_LEVEL_REWARD[200]	= "shiva2"
+IMBATTLEPASS_LEVEL_REWARD[300]	= "pudge_arcana"
+IMBATTLEPASS_LEVEL_REWARD[400]	= "pudge_arcana2"
 
 CustomNetTables:SetTableValue("game_options", "battlepass", {battlepass = IMBATTLEPASS_LEVEL_REWARD})
 
@@ -73,6 +75,7 @@ function Imbattlepass:Init()
 	IMBATTLEPASS_RADIANCE = {}
 	IMBATTLEPASS_SHEEPSTICK = {}
 	IMBATTLEPASS_SHIVA = {}
+	IMBATTLEPASS_PUDGE = {}
 
 	for k, v in pairs(IMBATTLEPASS_LEVEL_REWARD) do
 		if string.find(v, "fountain") then
@@ -91,16 +94,8 @@ function Imbattlepass:Init()
 			IMBATTLEPASS_SHEEPSTICK[v] = k
 		elseif string.find(v, "shiva") then
 			IMBATTLEPASS_SHIVA[v] = k
-		end
-	end
-
-	ImbattlepassReward = {}
-
-	if api.imba.ready then return end
-
-	for ID = 0, PlayerResource:GetPlayerCount() -1 do
-		if CustomNetTables:GetTableValue("player_table", tostring(ID)) ~= nil then
-			ImbattlepassReward[ID] = CustomNetTables:GetTableValue("player_table", tostring(ID)).Lvl
+		elseif string.find(v, "pudge_arcana") then
+			IMBATTLEPASS_PUDGE[v] = k
 		end
 	end
 end
@@ -117,9 +112,11 @@ function Imbattlepass:AddItemEffects(hero)
 end
 
 function Imbattlepass:GetRewardUnlocked(ID)
-	local level = 0
-	if ImbattlepassReward[ID] ~= nil then level = ImbattlepassReward[ID] end
-	return level
+	if CustomNetTables:GetTableValue("player_table", tostring(ID)) then
+		return CustomNetTables:GetTableValue("player_table", tostring(ID)).Lvl
+	end
+
+	return 1
 end
 
 function GetBlinkEffect(hero)
@@ -336,4 +333,33 @@ function GetBottleEffect(hero)
 	hero.bottle_effect = effect
 	hero.bottle_icon = icon
 --	CustomNetTables:SetTableValue("player_battlepass", tostring(hero:GetPlayerID()), {bottle_icon = icon})
+end
+
+function GetPudgeArcanaEffect(hero)
+	local green_arcana = false
+
+	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_PUDGE["pudge_arcana2"] then
+		hero:SetModel("models/items/pudge/arcana/pudge_arcana_base.vmdl")
+		hero:SetOriginalModel("models/items/pudge/arcana/pudge_arcana_base.vmdl")
+		hero:SetMaterialGroup("1")
+		green_arcana = true
+	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_PUDGE["pudge_arcana"] then
+		hero:SetModel("models/items/pudge/arcana/pudge_arcana_base.vmdl")
+		hero:SetOriginalModel("models/items/pudge/arcana/pudge_arcana_base.vmdl")
+	else
+		return nil
+	end
+
+	local wearable = hero:GetTogglableWearable(DOTA_LOADOUT_TYPE_BACK)
+
+	if wearable then
+		wearable:AddEffects(EF_NODRAW)
+	end
+
+	hero.back = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/pudge/arcana/pudge_arcana_back.vmdl"})
+	hero.back:FollowEntity(hero, true)
+
+	if green_arcana then
+		hero.back:SetMaterialGroup("1")
+	end
 end

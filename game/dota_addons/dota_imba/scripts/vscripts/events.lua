@@ -377,7 +377,7 @@ function GameMode:OnNPCSpawned(keys)
 			tostring(player)
 		})
 
-		--		npc:AddNewModifier(npc, nil, "modifier_river", {})
+--		npc:AddNewModifier(npc, nil, "modifier_river", {})
 
 		if greeviling == true and RandomInt(1, 100) > 85 then
 			if string.find(npc:GetUnitName(), "dota_creep") then
@@ -488,12 +488,6 @@ function GameMode:OnNPCSpawned(keys)
 
 	if npc:IsRealHero() then
 		if not npc.first_spawn then
-			if npc:GetUnitName() == "npc_dota_hero_troll_warlord" then
-				npc:SwapAbilities("imba_troll_warlord_whirling_axes_ranged", "imba_troll_warlord_whirling_axes_melee", true, false)
-				npc:SwapAbilities("imba_troll_warlord_whirling_axes_ranged", "imba_troll_warlord_whirling_axes_melee", false, true)
-				npc:SwapAbilities("imba_troll_warlord_whirling_axes_ranged", "imba_troll_warlord_whirling_axes_melee", true, false)
-			end
-
 			if api.imba.is_donator(PlayerResource:GetSteamID(npc:GetPlayerID())) and PlayerResource:GetConnectionState(npc:GetPlayerID()) ~= 1 then
 				if npc:GetUnitName() ~= "npc_dota_hero_dummy_dummy" then
 					Timers:CreateTimer(2.0, function()
@@ -521,14 +515,20 @@ function GameMode:OnNPCSpawned(keys)
 				npc:DeleteAttribute( "effectsID" )
 			end
 
+			if npc:GetUnitName() == "npc_dota_hero_pudge" then
+				GetPudgeArcanaEffect(npc)
+			end
+
 			if npc:GetUnitName() == "npc_dota_hero_storegga" then
 				npc:SetModel("models/creeps/ice_biome/storegga/storegga.vmdl")
 				npc:SetOriginalModel("models/creeps/ice_biome/storegga/storegga.vmdl")
 			end
 
-			--			if HeroSelection.playerPickState[npc:GetPlayerID()] and HeroSelection.playerPickState[npc:GetPlayerID()].pick_state == "selecting_hero" then
-			--				RestrictAndHideHero(npc)
-			--			end
+			if npc:GetUnitName() == "npc_dota_hero_troll_warlord" then
+				npc:SwapAbilities("imba_troll_warlord_whirling_axes_ranged", "imba_troll_warlord_whirling_axes_melee", true, false)
+				npc:SwapAbilities("imba_troll_warlord_whirling_axes_ranged", "imba_troll_warlord_whirling_axes_melee", false, true)
+				npc:SwapAbilities("imba_troll_warlord_whirling_axes_ranged", "imba_troll_warlord_whirling_axes_melee", true, false)
+			end
 
 			npc.first_spawn = true
 		end
