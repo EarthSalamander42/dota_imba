@@ -224,6 +224,11 @@
 				"var_type"						"FIELD_INTEGER"
 				"kill_radius"					"1700"
 			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"damage_pct"					"15"
+			}
 		}
 	}
 
@@ -16485,7 +16490,6 @@
 
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"pudge_meat_hook"
-		"MaxLevel"						"4"
 		"ScriptFile"					"hero/hero_pudge.lua"
 		"HasScepterUpgrade"				"1"
 
@@ -16579,7 +16583,7 @@
 			"16"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"hook_stacks"			"5 15 25 35"
+				"hook_stacks"			"5 20 35 50"
 			}
 		}
 	}
@@ -16661,93 +16665,16 @@
 	}
 
 	//=================================================================================================================
-	// Pudge's Dismember
-	//=================================================================================================================
-	"imba_pudge_dismember"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"							"ability_lua"
-		"ScriptFile"						"hero/hero_pudge.lua"
-		"AbilityType"						"DOTA_ABILITY_TYPE_ULTIMATE"
-		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
-		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitTargetFlags"			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_YES"
-		"AbilityUnitDamageType"				"DAMAGE_TYPE_MAGICAL"
-		"FightRecapLevel"					"2"
-		"AbilityTextureName"				"pudge_dismember"
-		"MaxLevel"							"3"
-
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_pudge.vsndevts"
-			"particle"						"particles/units/heroes/hero_pudge/pudge_dismember.vpcf"
-		}
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"					"160"
-		"AbilityCastPoint"					"0.3"
-		"AbilityCastAnimation"				"ACT_DOTA_CHANNEL_ABILITY_4"
-
-		// Time
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"					"30 25 20"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"					"100 170 190"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"dismember_damage"			"60 120 140"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"strength_damage"			"30 60 100"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"hero_duration"				"2.95"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"creep_duration"			"5.95"
-			}
-			"05"
-			{
-				"var_type" 					"FIELD_FLOAT"
-				"tick_rate"					"1"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"spell_lifesteal"			"100 133 166"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Pudge's Flesh Heap (DATADRIVEN)
+	// Pudge's Flesh Heap
 	//=================================================================================================================
 	"imba_pudge_flesh_heap"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_pudge.lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"			"pudge_flesh_heap"
-		"MaxLevel"						"4"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -16791,118 +16718,80 @@
 				"max_stacks"						"25"
 			}
 		}
+	}
 
-		"OnUpgrade"
+	//=================================================================================================================
+	// Pudge's Dismember
+	//=================================================================================================================
+	"imba_pudge_dismember"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"							"ability_lua"
+		"ScriptFile"						"hero/hero_pudge.lua"
+		"AbilityType"						"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetFlags"			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_YES"
+		"AbilityUnitDamageType"				"DAMAGE_TYPE_MAGICAL"
+		"FightRecapLevel"					"2"
+		"AbilityTextureName"				"pudge_dismember"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
 		{
-			"RunScript"
-			{
-				"ScriptFile"						"hero/hero_pudge.lua"
-				"Function"							"FleshHeapUpgrade"
-
-				"modifier_resist"					"modifier_imba_flesh_heap_resist"
-				"modifier_stacks"					"modifier_imba_flesh_heap_stacks"
-			}
+			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_pudge.vsndevts"
+			"particle"						"particles/units/heroes/hero_pudge/pudge_dismember.vpcf"
 		}
 
-		"Modifiers"
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"					"160"
+		"AbilityCastPoint"					"0.3"
+		"AbilityCastAnimation"				"ACT_DOTA_CHANNEL_ABILITY_4"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"					"30 25 20"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"					"100 170 190"
+
+		"AbilitySpecial"
 		{
-			"modifier_imba_flesh_heap_aura"
+			"01"
 			{
-				"Passive"				"1"
-				"IsBuff"				"1"
-				"IsHidden"				"1"
-				"IsPurgable"			"0"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"%base_magic_resist"
-				}
-
-				"Aura" 								"modifier_imba_flesh_heap_death_detector"
-				"Aura_ApplyToCaster"				"0"
-				"Aura_Radius" 						"%range"
-				"Aura_Teams" 						"DOTA_UNIT_TARGET_TEAM_ENEMY"
-				"Aura_Types" 						"DOTA_UNIT_TARGET_HERO"
-				"Aura_Flags"						"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS"
-
-//				"OnCreated"
-//				{
-//					"RunScript"
-//					{
-//						"ScriptFile"				"internal/util.lua"
-//						"Function"					"IllusionPassiveRemover"
-//
-//						"modifier"					"modifier_imba_flesh_heap_aura"
-//					}
-//				}
-
-				"ThinkInterval"  					"0.5"
-				
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"				"hero/hero_pudge.lua"
-						"Function"					"HeapUpdater"
-
-						"modifier_resist"			"modifier_imba_flesh_heap_resist"
-						"modifier_stacks"			"modifier_imba_flesh_heap_stacks"
-					}
-				}
+				"var_type"					"FIELD_INTEGER"
+				"dismember_damage"			"60 120 140"
 			}
-
-			"modifier_imba_flesh_heap_resist"
+			"02"
 			{
-				"Passive"				"0"
-				"IsHidden"				"1"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"%stack_magic_resist"
-				}
+				"var_type"					"FIELD_INTEGER"
+				"strength_damage"			"30 60 100"
 			}
-
-			"modifier_imba_flesh_heap_stacks"
+			"03"
 			{
-				"Passive"				"0"
-				"IsHidden"				"0"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-
-				"Attributes"			"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%stack_str"
-				}
+				"var_type"					"FIELD_FLOAT"
+				"hero_duration"				"3.0"
 			}
-
-			"modifier_imba_flesh_heap_death_detector"
+			"04"
 			{
-				"Passive"				"0"
-				"IsHidden"				"1"
-				"IsDebuff"				"1"
-				"IsPurgable"			"0"
-
-				"OnDeath"
-				{
-					"RunScript"
-					{
-						"ScriptFile"				"hero/hero_pudge.lua"
-						"Function"					"FleshHeap"
-					}
-
-					"FireEffect"
-					{
-						"EffectName"				"particles/units/heroes/hero_pudge/pudge_fleshheap_count.vpcf"
-						"EffectAttachType"			"follow_overhead"
-						"Target"					"CASTER"
-					}
-				}
+				"var_type"					"FIELD_FLOAT"
+				"creep_duration"			"6.0"
+			}
+			"05"
+			{
+				"var_type" 					"FIELD_FLOAT"
+				"tick_rate"					"1"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"spell_lifesteal"			"100 133 166"
 			}
 		}
 	}
@@ -16937,7 +16826,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"stack_damage"				"5"
+				"stack_damage"				"7"
 			}
 			"04"
 			{
@@ -16982,12 +16871,12 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"stack_speed"				"5"
+				"stack_speed"				"7"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"stack_range"				"5"
+				"stack_range"				"7"
 			}
 			"05"
 			{

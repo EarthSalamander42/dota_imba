@@ -13,7 +13,7 @@
 -- limitations under the License.
 --
 -- Editors:
---     Earth Salamander #32
+--     Earth Salamander #42
 
 -- Battlepass
 
@@ -48,6 +48,7 @@ IMBATTLEPASS_LEVEL_REWARD[70]	= "mekansm2"
 IMBATTLEPASS_LEVEL_REWARD[72]	= "blink8"
 IMBATTLEPASS_LEVEL_REWARD[74]	= "bottle3"
 IMBATTLEPASS_LEVEL_REWARD[76]	= "fountain9"
+IMBATTLEPASS_LEVEL_REWARD[80]	= "pudge_arcana"
 IMBATTLEPASS_LEVEL_REWARD[81]	= "blink9"
 IMBATTLEPASS_LEVEL_REWARD[85]	= "fountain10"
 IMBATTLEPASS_LEVEL_REWARD[88]	= "radiance2"
@@ -56,13 +57,12 @@ IMBATTLEPASS_LEVEL_REWARD[94]	= "fountain11"
 IMBATTLEPASS_LEVEL_REWARD[98]	= "bottle4"
 IMBATTLEPASS_LEVEL_REWARD[100]	= "shiva"
 IMBATTLEPASS_LEVEL_REWARD[103]	= "fountain12"
+IMBATTLEPASS_LEVEL_REWARD[105]	= "pudge_arcana2"
 IMBATTLEPASS_LEVEL_REWARD[112]	= "fountain13"
 IMBATTLEPASS_LEVEL_REWARD[120]	= "sheepstick2"
 IMBATTLEPASS_LEVEL_REWARD[121]	= "fountain14"
 IMBATTLEPASS_LEVEL_REWARD[130]	= "fountain15"
-IMBATTLEPASS_LEVEL_REWARD[200]	= "shiva2"
-IMBATTLEPASS_LEVEL_REWARD[300]	= "pudge_arcana"
-IMBATTLEPASS_LEVEL_REWARD[400]	= "pudge_arcana2"
+IMBATTLEPASS_LEVEL_REWARD[150]	= "shiva2"
 
 CustomNetTables:SetTableValue("game_options", "battlepass", {battlepass = IMBATTLEPASS_LEVEL_REWARD})
 
@@ -336,30 +336,44 @@ function GetBottleEffect(hero)
 end
 
 function GetPudgeArcanaEffect(hero)
-	local green_arcana = false
+	if HasPudgeArcana(hero) then
+		hero:SetModel("models/items/pudge/arcana/pudge_arcana_base.vmdl")
+		hero:SetOriginalModel("models/items/pudge/arcana/pudge_arcana_base.vmdl")
+		hero:SetMaterialGroup(tostring(HasPudgeArcana(hero)))
+		hero.pudge_arcana = HasPudgeArcana(hero)
 
+		local wearable = hero:GetTogglableWearable(DOTA_LOADOUT_TYPE_BACK)
+
+		if wearable then
+			wearable:AddEffects(EF_NODRAW)
+		end
+
+		hero.back = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/pudge/arcana/pudge_arcana_back.vmdl"})
+		hero.back:FollowEntity(hero, true)
+--		hero.back:SetParent(hero, "")
+		hero.back:SetMaterialGroup(tostring(HasPudgeArcana(hero)))
+
+		local particle = "particles/econ/items/pudge/pudge_arcana/pudge_arcana_red_back_ambient.vpcf"	
+		local particle2 = "particles/econ/items/pudge/pudge_arcana/pudge_arcana_red_back_ambient_beam.vpcf"
+		if HasPudgeArcana(hero) == 1 then
+			particle = "particles/econ/items/pudge/pudge_arcana/pudge_arcana_back_ambient.vpcf"
+			particle2 = "particles/econ/items/pudge/pudge_arcana/pudge_arcana_back_ambient_beam.vpcf"
+		end
+
+		ParticleManager:CreateParticle(particle, PATTACH_ABSORIGIN_FOLLOW, hero.back)
+		ParticleManager:CreateParticle(particle2, PATTACH_ABSORIGIN_FOLLOW, hero.back)
+		ParticleManager:CreateParticle("particles/econ/items/pudge/pudge_arcana/pudge_arcana_ambient_flies.vpcf", PATTACH_ABSORIGIN_FOLLOW, hero)
+
+		CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "override_hero_image", {arcana = HasPudgeArcana(hero), panel_type = "topbar", hero_name = string.gsub(hero:GetUnitName(), "npc_dota_hero_", "")})
+	end
+end
+
+function HasPudgeArcana(hero)
 	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_PUDGE["pudge_arcana2"] then
-		hero:SetModel("models/items/pudge/arcana/pudge_arcana_base.vmdl")
-		hero:SetOriginalModel("models/items/pudge/arcana/pudge_arcana_base.vmdl")
-		hero:SetMaterialGroup("1")
-		green_arcana = true
+		return 1
 	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_PUDGE["pudge_arcana"] then
-		hero:SetModel("models/items/pudge/arcana/pudge_arcana_base.vmdl")
-		hero:SetOriginalModel("models/items/pudge/arcana/pudge_arcana_base.vmdl")
+		return 0
 	else
 		return nil
-	end
-
-	local wearable = hero:GetTogglableWearable(DOTA_LOADOUT_TYPE_BACK)
-
-	if wearable then
-		wearable:AddEffects(EF_NODRAW)
-	end
-
-	hero.back = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/pudge/arcana/pudge_arcana_back.vmdl"})
-	hero.back:FollowEntity(hero, true)
-
-	if green_arcana then
-		hero.back:SetMaterialGroup("1")
 	end
 end

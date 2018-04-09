@@ -35,6 +35,7 @@
 "DOTA_Tooltip_Ability_imba_fountain_danger_zone_description"			"Dooms enemies near the Fountain, dealing extreme damage per second while they stay there."
 //"DOTA_Tooltip_Ability_imba_fountain_danger_zone_Note0"				""
 //"DOTA_Tooltip_Ability_imba_fountain_danger_zone_Lore"					""
+"DOTA_Tooltip_Ability_imba_fountain_danger_zone_damage_pct"				"%DAMAGE:"
 "DOTA_Tooltip_Ability_imba_fountain_danger_zone_kill_radius"			"KILL RADIUS:"
 
 //=================================================================================================================

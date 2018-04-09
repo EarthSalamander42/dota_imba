@@ -45,7 +45,7 @@ function modifier_imba_ancient_defense:IsStunDebuff() return false end
 function modifier_imba_ancient_defense:OnCreated()
 	if IsServer() then
 		self.max_stacks = self:GetAbility():GetSpecialValueFor("max_stacks")
-		if IMBA_PLAYERS_ON_GAME > 10 then
+		if PlayerResource:GetPlayerCount() > 10 then
 			self.max_stacks = self:GetAbility():GetSpecialValueFor("max_stacks_10v10")
 		end
 		self:StartIntervalThink(0.5)
@@ -70,8 +70,6 @@ end
 function modifier_imba_ancient_defense:GetModifierIncomingDamage_Percentage()
 	return self:GetAbility():GetSpecialValueFor("defense_stack") * self:GetStackCount()
 end
-
-
 
 -- Ancient Last Resort ability
 imba_ancient_last_resort = class({})
@@ -127,19 +125,9 @@ function modifier_imba_ancient_last_resort_debuff:IsStunDebuff() return false en
 
 function modifier_imba_ancient_last_resort_debuff:DeclareFunctions()
 	local funcs = {
-		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 		MODIFIER_PROPERTY_TOTALDAMAGEOUTGOING_PERCENTAGE
 	}
 	return funcs
-end
-
-function modifier_imba_ancient_last_resort_debuff:GetModifierMoveSpeedBonus_Percentage()
-	return (-1) * self:GetStackCount()
-end
-
-function modifier_imba_ancient_last_resort_debuff:GetModifierAttackSpeedBonus_Constant()
-	return (-1) * self:GetStackCount()
 end
 
 function modifier_imba_ancient_last_resort_debuff:GetModifierTotalDamageOutgoing_Percentage()
@@ -196,9 +184,10 @@ function modifier_imba_fountain_danger_zone:OnIntervalThink()
 		for _, enemy in pairs(nearby_enemies) do
 			if enemy:GetUnitName() == "ent_dota_halloffame" then return end
 
+			if enemy:IsIllusion() or enemy:HasModifier("modifier_illusion_manager_out_of_world") or enemy:HasModifier("modifier_illusion_manager") then enemy:ForceKill(false) return end
+
 			for _, unit_name in pairs(IGNORE_FOUNTAIN_UNITS) do
-				if string.find(unit_name, "donator") or unit_name == enemy:GetUnitName() then
-					enemy.ingore = true
+				if unit_name == enemy:GetUnitName() then
 					return
 				end
 			end
@@ -210,23 +199,22 @@ function modifier_imba_fountain_danger_zone:OnIntervalThink()
 				end
 			end
 
-			if not enemy.ignore then
-				local damage_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_tinker/tinker_laser.vpcf", PATTACH_CUSTOMORIGIN, enemy)
-				ParticleManager:SetParticleControl(damage_pfx, 0, fountain_pos)
-				ParticleManager:SetParticleControlEnt(damage_pfx, 1, enemy, PATTACH_POINT_FOLLOW, "attach_hitloc", enemy:GetAbsOrigin(), true)
-				ParticleManager:SetParticleControl(damage_pfx, 3, fountain_pos)
-				ParticleManager:SetParticleControl(damage_pfx, 9, fountain_pos)
-				ParticleManager:ReleaseParticleIndex(damage_pfx)
-				enemy:AddNewModifier(fountain, self:GetAbility(), "modifier_doom_bringer_doom", {duration = 1.0})
+			local damage = enemy:GetMaxHealth() / 100 * self:GetAbility():GetSpecialValueFor("damage_pct")
+--			print("Damage:", damage)
 
-				local damage = enemy:GetMaxHealth() * 0.06
-
-				if enemy:IsInvulnerable() then
-					enemy:SetHealth(math.max(enemy:GetHealth() - damage, 1))
-				else
-					ApplyDamage({attacker = fountain, victim = enemy, damage = damage, damage_type = DAMAGE_TYPE_PURE})
-				end
+			if enemy:IsInvulnerable() then
+				enemy:SetHealth(math.max(enemy:GetHealth() - damage, 1))
+			else
+				ApplyDamage({attacker = fountain, victim = enemy, damage = damage, damage_type = DAMAGE_TYPE_PURE})
 			end
+
+			local damage_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_tinker/tinker_laser.vpcf", PATTACH_CUSTOMORIGIN, enemy)
+			ParticleManager:SetParticleControl(damage_pfx, 0, fountain_pos)
+			ParticleManager:SetParticleControlEnt(damage_pfx, 1, enemy, PATTACH_POINT_FOLLOW, "attach_hitloc", enemy:GetAbsOrigin(), true)
+			ParticleManager:SetParticleControl(damage_pfx, 3, fountain_pos)
+			ParticleManager:SetParticleControl(damage_pfx, 9, fountain_pos)
+			ParticleManager:ReleaseParticleIndex(damage_pfx)
+			enemy:AddNewModifier(fountain, self:GetAbility(), "modifier_doom_bringer_doom", {duration = 1.0})
 		end
 	end
 end

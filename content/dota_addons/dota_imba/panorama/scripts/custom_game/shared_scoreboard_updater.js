@@ -91,20 +91,20 @@ function _ScoreboardUpdater_UpdatePlayerPanelXP(plyData, playerPanel, playerId, 
 //	$.Msg("Updating player xp panel");
 
 	var ids = {
-			xpRank:  "ImbaXPRank" + playerId,
-			xp: "ImbaXP" + playerId,
-			xpEarned: "ImbaXPEarned" + playerId,
-			level: "ImbaLvl" + playerId,
-			progress_bar: "XPProgressBar" + playerId,
+		xpRank:  "ImbaXPRank" + playerId,
+		xp: "ImbaXP" + playerId,
+		xpEarned: "ImbaXPEarned" + playerId,
+		level: "ImbaLvl" + playerId,
+		progress_bar: "XPProgressBar" + playerId,
 	};
 
 	var strings = {
-			xpRank: plyData.title,
-			xp: "0/100",
-			xpEarned: "0",
-			level: "1",
-			color: plyData.title_color,
-			xpEarnedColor: "yellow",
+		xpRank: plyData.title,
+		xp: "0/100",
+		xpEarned: "0",
+		level: "1",
+		color: plyData.title_color,
+		xpEarnedColor: "yellow",
 	};
 
 //	$.Msg(plyData);
@@ -112,6 +112,7 @@ function _ScoreboardUpdater_UpdatePlayerPanelXP(plyData, playerPanel, playerId, 
 	// setup strings
 
 	if (plyData.XP !== undefined && plyData.MaxXP !== undefined)
+		$.Msg(plyData.XP)
 		strings.xp = plyData.XP + "/" + plyData.MaxXP;
 
 	if (plyData.title_color != null)
@@ -159,27 +160,35 @@ function _ScoreboardUpdater_UpdatePlayerPanel(scoreboardConfig, playersContainer
 		playerPanel = $.CreatePanel("Panel", playersContainer, playerPanelName);
 		playerPanel.SetAttributeInt("player_id", playerId);
 		playerPanel.BLoadLayout(scoreboardConfig.playerXmlName, false, false);
-		
+
 		// setup XP and IMR
 		var ImbaXP_Panel = playerPanel.FindChildInLayoutFile("PanelImbaXP");
-		
+
 		if (ImbaXP_Panel != null) {
-			
 			// get player data
 			var plyData = CustomNetTables.GetTableValue("player_table", playerId);
-			
+
 			if (plyData != null) {
 				// set xp values
 				_ScoreboardUpdater_UpdatePlayerPanelXP(plyData, playerPanel, playerId, ImbaXP_Panel);
-				
+
 				// set imr values
 				_ScoreboardUpdater_UpdatePlayerPanelImr(plyData, playerPanel);
-				
 			}
 		}
 	}
 
 	playerPanel.SetHasClass("is_local_player", (playerId == Game.GetLocalPlayerID()));
+
+	if (IsDeveloper(playerId)) {
+		$.Msg("Developer!")
+		playerPanel.AddClass("is_developer");
+	}
+
+	if (IsDonator(playerId) && !playerPanel.BHasClass("is_developer")) {
+		$.Msg("Donator!")
+		playerPanel.AddClass("is_donator");
+	}
 
 	// values > 0 mean on on cooldown for x seconds
 	var ultStateOrTime = PlayerUltimateStateOrTime_t.PLAYER_ULTIMATE_STATE_HIDDEN;

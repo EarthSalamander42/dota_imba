@@ -789,10 +789,16 @@ if not player_id then player_id = 0 end
 	end
 end
 
-function DonatorCompanion(ID, model)
-if model == nil then return end
+function GetDonatorCompanion()
+
+end
+
+function DonatorCompanion(ID, unit_name)
+if unit_name == nil then return end
 local hero = PlayerResource:GetPlayer(ID):GetAssignedHero()
 local color = hero:GetFittingColor()
+local model = GetKeyValueByHeroName(unit_name, "Model")
+local model_scale = GetKeyValueByHeroName(unit_name, "ModelScale")
 
 	if hero.companion then
 		hero.companion:ForceKill(false)
@@ -828,20 +834,20 @@ local color = hero:GetFittingColor()
 			companion:SetOriginalModel("models/courier/baby_rosh/babyroshan_elemental.vmdl")
 			companion:SetMaterialGroup(tostring(random_int-4))
 		end
-
-		companion:SetModelScale(0.7)
-	elseif model == "npc_imba_donator_companion_suthernfriend" then
+	elseif unit_name == "npc_imba_donator_companion_suthernfriend" then
 		companion:SetMaterialGroup("1")
 	elseif model == "models/heroes/mario/mario_model.vmdl" then
 		companion:SetMaterialGroup(tostring(RandomInt(0, 2)))
 		companion:SetModelScale(0.5)
-	elseif model == "npc_imba_donator_companion_baekho" then
+	elseif unit_name == "npc_imba_donator_companion_baekho" then
 		local particle = ParticleManager:CreateParticle("particles/econ/courier/courier_baekho/courier_baekho_ambient.vpcf", PATTACH_ABSORIGIN_FOLLOW, companion)
 	end
 
---	if string.find(model, "flying") then
---		companion:SetMoveCapability(DOTA_UNIT_CAP_MOVE_FLY)
---	end
+	companion:SetModelScale(model_scale)
+
+	if string.find(model, "flying") then
+		companion:SetMoveCapability(DOTA_UNIT_CAP_MOVE_FLY)
+	end
 
 --	if super_donator then
 --		local ab = companion:FindAbilityByName("companion_morph")
@@ -1527,4 +1533,63 @@ function AntiDevCheat(ID)
 	Notifications:BottomToAll({hero = hero:GetName(), duration = 10.0})
 	Notifications:BottomToAll({text = PlayerResource:GetPlayerName(ID).." ", duration = 5.0, continue = true})
 	Notifications:BottomToAll({text = "is trying to cheat using dev tool! GET HIM!", duration = 5.0, style = {color = "Red"}, continue = true})
+end
+
+function GetHeroType(hero)
+	-- default, electric, ethereal, fire, goo, ice, motor, stone, wood
+	local hero_name = string.gsub(hero:GetUnitName(), "npc_dota_hero_", "")
+	local effect_type = "default"
+	local hero_effects = {}
+	hero_effects[1] = {"ethereal", "abaddon"}
+	hero_effects[2] = {"ethereal", "arc_warden"}
+	hero_effects[3] = {"ethereal", "bane"}
+	hero_effects[4] = {"ethereal", "chaos_knight"}
+	hero_effects[5] = {"ethereal", "death_prophet"}
+	hero_effects[6] = {"ethereal", "enigma"}
+	hero_effects[7] = {"ethereal", "wisp"}
+	hero_effects[8] = {"ethereal", "morphling"}
+	hero_effects[9] = {"ethereal", "necrolyte"}
+	hero_effects[10] = {"ethereal", "obsidian_destroyer"}
+	hero_effects[11] = {"ethereal", "shadow_demon"}
+	hero_effects[12] = {"ethereal", "nevermore"}
+	hero_effects[13] = {"ethereal", "spectre"}
+	hero_effects[14] = {"ethereal", "spirit_breaker"}
+	hero_effects[15] = {"ethereal", "terrorblade"}
+	hero_effects[16] = {"ethereal", "vengeful_spirit"}
+	hero_effects[17] = {"ethereal", "visage"}
+	hero_effects[18] = {"ethereal", "skeleton_king"}
+	hero_effects[19] = {"goo", "bristleback"}
+	hero_effects[20] = {"goo", "broodmother"}
+	hero_effects[21] = {"goo", "nyx_assassin"}
+	hero_effects[22] = {"goo", "undying"}
+	hero_effects[23] = {"goo", "venomancer"}
+	hero_effects[24] = {"goo", "viper"}
+	hero_effects[25] = {"goo", "weaver"}
+	hero_effects[26] = {"motor", "clockwerk"}
+	hero_effects[27] = {"motor", "gyrocopter"}
+	hero_effects[28] = {"motor", "shredder"}
+	hero_effects[29] = {"motor", "tinker"}
+	hero_effects[30] = {"ice", "ancient_apparition"}
+	hero_effects[31] = {"ice", "crystal_maiden"}
+	hero_effects[32] = {"ice", "lich"}
+	hero_effects[33] = {"ice", "winter_wyvern"}
+	hero_effects[34] = {"fire", "ember_spirit"}
+	hero_effects[35] = {"fire", "lina"}
+	hero_effects[36] = {"fire", "phoenix"}
+	hero_effects[37] = {"electric", "razor"}
+	hero_effects[38] = {"electric", "storm_spirit"}
+	hero_effects[39] = {"electric", "zuus"}
+	hero_effects[40] = {"wood", "furion"}
+	hero_effects[41] = {"wood", "treant"}
+	hero_effects[42] = {"stone", "earth_spirit"}
+	hero_effects[43] = {"stone", "tiny"}
+
+	for _, effect in pairs(hero_effects) do
+--		print(hero_name, effect[2], effect[1])
+		if effect[2] == hero_name then
+			effect_type =  effect[1]
+		end
+	end
+
+	return effect_type
 end

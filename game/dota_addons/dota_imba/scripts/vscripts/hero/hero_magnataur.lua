@@ -189,14 +189,6 @@ function modifier_imba_magnetize_debuff:IsHidden()
 	return false
 end
 
-function modifier_imba_magnetize_debuff:RemoveOnDeath()
-	return false
-end
-
-function modifier_imba_magnetize_debuff:DestroyOnExpire()
-	return false
-end
-
 function modifier_imba_magnetize_debuff:GetTexture()
 	return "custom/magnus_magnetize"
 end
@@ -222,10 +214,6 @@ end
 
 function modifier_imba_magnetize_debuff_stack:IsHidden()
 	return true
-end
-
-function modifier_imba_magnetize_debuff_stack:RemoveOnDeath()
-	return false
 end
 
 function modifier_imba_magnetize_debuff_stack:GetAttributes()

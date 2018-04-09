@@ -1,3 +1,21 @@
+@keyframes 'fade_full'
+{
+	0%
+	{
+		opacity: 0.0;
+	}
+
+	50%
+	{
+		opacity: 0.8;
+	}
+
+	100%
+	{
+		opacity: 1.0;
+	}
+}
+
 .HeroSelection {
 	width: 100%;
 	height: 100%;
@@ -1124,4 +1142,20 @@ DOTAScenePanel {
 	margin-left: 62.5%;
 	margin-top: 10%;
 	transition-delay: 7s;
+}
+
+.Arcana {
+	width: 100%;
+	height: 40%;
+	font-size: 17px;
+	text-align: center;
+	align: center bottom;
+	color: lightgreen;
+	background-color: #1a6600aa;
+
+	animation-name: fade_full;
+	animation-duration: 3.0s;
+	animation-timing-function: ease-in;
+	animation-direction: alternate;
+	animation-iteration-count: infinite;
 }

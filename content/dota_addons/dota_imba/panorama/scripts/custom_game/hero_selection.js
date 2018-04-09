@@ -102,27 +102,38 @@ var hiddenAbilities = [
 	"" // Leave it alone, he's useful
 ]
 
-SetupBackgroundImage();
+var localTeam = Players.GetTeam(Players.GetLocalPlayer())
+if (localTeam != 2 && localTeam != 3 || Game.GetPlayerInfo(Game.GetLocalPlayerID()).player_selected_hero != "npc_dota_hero_dummy_dummy") {
+	HidePickingScreen()
+} else {
+	SetupBackgroundImage();
+	CustomNetTables.SubscribeNetTableListener('hero_selection', onPlayerStatChange);
+
+	GameEvents.Subscribe("dota_hud", ShowHUD);
+	GameEvents.Subscribe("pick_abilities", OnReceiveAbilities);
+
+	onPlayerStatChange(null, 'herolist', CustomNetTables.GetTableValue('hero_selection', 'herolist'));
+	onPlayerStatChange(null, 'APdata', CustomNetTables.GetTableValue('hero_selection', 'APdata'));
+	onPlayerStatChange(null, 'CMdata', CustomNetTables.GetTableValue('hero_selection', 'CMdata'));
+	onPlayerStatChange(null, 'time', CustomNetTables.GetTableValue('hero_selection', 'time'));
+	onPlayerStatChange(null, 'preview_table', CustomNetTables.GetTableValue('hero_selection', 'preview_table'));
+	ReloadCMStatus(CustomNetTables.GetTableValue('hero_selection', 'CMdata'));
+	UpdatePreviews(CustomNetTables.GetTableValue('hero_selection', 'preview_table'));
+	changeHilariousLoadingText();
+}
+
 if (currentMap == "imba_1v1") {
 	Setup1v1();
 } else if (currentMap == 'imba_ranked_10v10' || currentMap == 'imba_frantic_10v10') {
 	SetupTopBar();
 }
 
-GameEvents.Subscribe("dota_hud", ShowHUD);
-GameEvents.Subscribe("pick_abilities", OnReceiveAbilities);
-
-CustomNetTables.SubscribeNetTableListener('hero_selection', onPlayerStatChange);
-onPlayerStatChange(null, 'herolist', CustomNetTables.GetTableValue('hero_selection', 'herolist'));
-onPlayerStatChange(null, 'APdata', CustomNetTables.GetTableValue('hero_selection', 'APdata'));
-onPlayerStatChange(null, 'CMdata', CustomNetTables.GetTableValue('hero_selection', 'CMdata'));
-onPlayerStatChange(null, 'time', CustomNetTables.GetTableValue('hero_selection', 'time'));
-onPlayerStatChange(null, 'preview_table', CustomNetTables.GetTableValue('hero_selection', 'preview_table'));
-ReloadCMStatus(CustomNetTables.GetTableValue('hero_selection', 'CMdata'));
-UpdatePreviews(CustomNetTables.GetTableValue('hero_selection', 'preview_table'));
-changeHilariousLoadingText();
-
 $('#ARDMLoading').style.opacity = 0;
+
+function HidePickingScreen() {
+	$.GetContextPanel().style.visibility = "collapse";
+	$.Schedule(2.0, HidePickingScreen)
+}
 
 function changeHilariousLoadingText () {
 	var incredibleWit = hilariousLoadingPhrases[~~(Math.random() * hilariousLoadingPhrases.length)];
@@ -248,13 +259,15 @@ function onPlayerStatChange (table, key, data) {
 				if (data[nkey].id) {
 					var player_table = CustomNetTables.GetTableValue("player_table", data[nkey].id.toString());
 
-					if (currentMap == "imba_ranked_5v5") {
-						newinfo.text = "IMR: " + player_table.IMR_5v5.toFixed(0)
-					} else if (currentMap == "imba_ranked_10v10") {
-						newinfo.text = player_table.IMR_10v10.toFixed(0)
-					} else {
-						newinfo.text = player_table.Lvl.toFixed(0)
-						newinfo.color = player_table.title_color
+					if (player_table) {
+						if (currentMap == "imba_ranked_5v5") {
+							newinfo.text = "IMR: " + player_table.IMR_5v5.toFixed(0)
+						} else if (currentMap == "imba_ranked_10v10") {
+							newinfo.text = player_table.IMR_10v10.toFixed(0)
+						} else {
+							newinfo.text = player_table.Lvl.toFixed(0)
+							newinfo.color = player_table.title_color
+						}
 					}
 				}
 

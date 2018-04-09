@@ -137,6 +137,7 @@ function GameMode:OnGameRulesStateChange(keys)
 			InitRunes()
 
 			CustomNetTables:SetTableValue("game_options", "donators", api.imba.get_donators())
+			CustomNetTables:SetTableValue("game_options", "developers", api.imba.get_developers())
 
 			-------------------------------------------------------------------------------------------------
 			-- IMBA: Custom maximum level EXP tables adjustment
@@ -509,6 +510,7 @@ function GameMode:OnNPCSpawned(keys)
 
 			if npc:GetUnitName() == "npc_dota_hero_pudge" then
 				GetPudgeArcanaEffect(npc)
+				npc:AddNewModifier(npc, nil, "modifier_imba_pudge_flesh_heap_handle", {})
 			end
 
 			if npc:GetUnitName() == "npc_dota_hero_storegga" then

@@ -15,7 +15,7 @@ function EndScoreboard() {
 		MainPanel.FindChildTraverse("topbar").style.visibility = "collapse";
 		MainPanel.FindChildTraverse("minimap_container").style.visibility = "collapse";
 		MainPanel.FindChildTraverse("lower_hud").style.visibility = "collapse";
-		MainPanel.FindChildTraverse("HudChat").style.visibility = "collapse";
+//		MainPanel.FindChildTraverse("HudChat").style.visibility = "collapse";
 		MainPanel.FindChildTraverse("NetGraph").style.visibility = "collapse";
 		MainPanel.FindChildTraverse("quickstats").style.visibility = "collapse";
 
@@ -203,7 +203,6 @@ function EndScoreboard() {
 				values.imr.text = "N/A";
 				values.rank1v1.text = "N/A";
 			}
-			
 
 			// XP
 			if (player.result != null) {
@@ -221,42 +220,74 @@ function EndScoreboard() {
 					values.xp.earned.AddClass("es-text-red");
 				}
 
+//				var diff = 101; // test value
 				var diff = player.result.xp_difference;
 				var old_xp = player.xp.progress.xp;
+				if (old_xp == undefined) {
+					$.Msg("XP undefined")
+					old_xp = 0
+				} else if (old_xp < 0) {
+					$.Msg("XP below 0")
+					old_xp = 0
+				}
 				var max_xp = player.xp.progress.max_xp;
 				var new_xp = (old_xp + diff);
 				var progress_bar = new_xp / max_xp * 100;
 
-				values.xp.level.text = "Level: " + player.xp.level;
-				values.xp.rank_name.text = player.xp.title;
-				values.xp.rank_name.style.color = player.xp.color;
+				$.Schedule(0.8, function () {
+					values.xp.level.text = $.Localize("#battlepass_level") + player.xp.level;
+					values.xp.rank_name.text = player.xp.title;
+					values.xp.rank_name.style.color = player.xp.color;
 
-				// if not leveling up
-				if (progress_bar < 100) {
-					values.xp.progress.style.width = progress_bar + "%";
-					values.xp.rank.text = new_xp + diff + "/" + max_xp;
-				// else if leveling up
-				} else {
-					values.xp.rank.text = max_xp + "/" + max_xp;
-					values.xp.progress.style.width = "100%";
+					// if max level
+					if (player.xp.level == 500) {
+						values.xp.progress.style.width = "100%";
+						values.xp.rank.text = "#42";
+					}
+					// if not leveling up
+					else if (progress_bar >= 0 && progress_bar < 100) {
+						values.xp.progress.style.width = progress_bar + "%";
+						values.xp.rank.text = progress_bar * 100 / max_xp + "/" + max_xp;
+					// else if leveling down
+					} else if (progress_bar < 0) {
+						values.xp.rank.text = max_xp + "/" + max_xp;
+						values.xp.progress.style.width = "100%";
 
-					$.Schedule(2.0, function () { // if you want to modify this timer, modify also the width transition time in css
+						if (values.xp.bar[0].BHasClass("level-down")) {
+							values.xp.bar[0].RemoveClass("level-down")
+						}
+						values.xp.bar[0].AddClass("level-down")
+						values.xp.level.text = "Level down..";
+						values.xp.rank.text = "";
+						progress_bar = progress_bar + 100;
+						values.xp.progress.style.width = progress_bar + "%";
+						$.Schedule(2.0, function() {
+							var levelup_level = player.xp.level - 1
+							var levelup_xp = progress_bar * 100 / max_xp // BUG: max_xp should be the max xp of previous level.
+							values.xp.level.text = $.Localize("#battlepass_level") + levelup_level;
+							values.xp.rank.text = levelup_xp + "/" + max_xp; // BUG: max_xp should be the max xp of previous level.
+						});
+					// else if leveling up
+					} else {
+						values.xp.rank.text = max_xp + "/" + max_xp;
+						values.xp.progress.style.width = "100%";
+
 						if (values.xp.bar[0].BHasClass("level-up")) {
 							values.xp.bar[0].RemoveClass("level-up")
 						}
 						values.xp.bar[0].AddClass("level-up")
-						player.xp.level = player.xp.level + 1
 						values.xp.level.text = "Level up!";
 						values.xp.rank.text = "";
 						progress_bar = progress_bar -100;
 						values.xp.progress.style.width = progress_bar + "%";
-						$.Schedule(2.0, function () {
-							var levelup_xp = new_xp + diff - max_xp
-							values.xp.level.text = "Level: " + player.xp.level;
-							values.xp.rank.text = levelup_xp + "/" + max_xp;
+						$.Schedule(2.0, function() {
+							var levelup_level = player.xp.level + 1
+							var levelup_xp = old_xp + diff - max_xp // BUG: max_xp should be the max xp of previous level.
+							values.xp.level.text = $.Localize("#battlepass_level") + levelup_level;
+							values.xp.rank.text = levelup_xp + "/" + max_xp; // BUG: max_xp should be the max xp of previous level.
 						});
-					});
-				}
+					}
+				});
 			} else {
 				values.xp.earned.text = "N/A";
 			}

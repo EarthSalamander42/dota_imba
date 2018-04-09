@@ -9385,7 +9385,6 @@
 	{
 		"MaxLevel"							"4"
 		"AbilityCooldown"					"16 14 12 10"
-		"AbilityDamage"						"100 220 310 370"
 
 		"AbilitySpecial"
 		{
@@ -9398,6 +9397,12 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"silence_duration"			"1.5 2.0 2.5 3.0"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage"					"100 220 310 370"
+				"LinkedSpecialBonus"		"special_bonus_unique_puck_4"
 			}
 		}
 	}

@@ -7,13 +7,20 @@
 		<include src="file://{resources}/scripts/custom_game/gg.js" /> 
 	</scripts>
 
-	<Panel class="MainPanel">
-		<Panel id="Title">
-			<Label class="UILabelLarge" html="true" text="GG Panel" />
-		</Panel>
+	<Panel class="Root">
+		<Button id="MainButton" onmouseactivate="TogglePanel();">
+			<Label class="GG_button_label" text="GG"/>
+		</Button>
 
-		<Panel id="Players">
-			<!-- JS Insert Elements Here! -->
+		<Panel class="MainPanel">
+			<Panel id="Title">
+				<Label class="UILabelLarge" html="true" text="#gg_panel" />
+				<Label id="gg_count" class="UILabel" html="true" text="#gg_count" />
+			</Panel>
+
+			<Panel id="Players">
+				<!-- JS Insert Elements Here! -->
+			</Panel>
 		</Panel>
 	</Panel>
 </root>

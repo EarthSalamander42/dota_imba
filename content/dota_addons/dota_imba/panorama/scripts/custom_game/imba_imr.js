@@ -1,5 +1,15 @@
 var playerPanels = {};
 
+var localTeam = Players.GetTeam(Players.GetLocalPlayer())
+if (localTeam != 2 && localTeam != 3) {
+	HideBattlepass()
+}
+
+function HideBattlepass() {
+	$.GetContextPanel().style.visibility = "collapse";
+	$.Schedule(2.0, HideBattlepass)
+}
+
 var toggle = false;
 var first_time = false;
 
@@ -150,7 +160,7 @@ function SetCompanion(companion, name, id) {
 		$("#CompanionNotification").RemoveClass("not_donator");
 	}
 
-	if (IsDonator() === false) {
+	if (IsDonator(Game.GetLocalPlayerID()) === false) {
 		$("#CompanionNotification").AddClass("not_donator");
 		$("#CompanionNotificationLabel").text = $.Localize("companion_not_donator");
 		return;
@@ -190,7 +200,9 @@ function HallOfFame(type) {
 		$.Msg("Bro don't reload you're fine!");
 		return;
 	}
+
 	current_type = type;
+
 	for (var i = 1; i <= 10; i++) {
 		if (type == "XP") {
 			var top_users = CustomNetTables.GetTableValue("top_xp", i.toString());
@@ -350,8 +362,7 @@ function GenerateCompanionPanel(companions, player) {
 	var i_count = 0;
 	var class_option_count = 1;
 
-	var donator_row = $.CreatePanel("Panel", $('#DonatorInfoContainer'), "DonatorRow" + class_option_count + "_"
-			+ player);
+	var donator_row = $.CreatePanel("Panel", $('#DonatorInfoContainer'), "DonatorRow" + class_option_count + "_" + player);
 	donator_row.AddClass("DonatorRow");
 
 	// Companion Generator
@@ -426,9 +437,7 @@ function GenerateCompanionPanel(companions, player) {
 		var companionpreview = $.CreatePanel("Button", companion, "CompanionPreview_" + i);
 		companionpreview.style.width = "100%";
 		companionpreview.style.height = "85%";
-		companionpreview.BLoadLayoutFromString(
-				'<root><Panel><DOTAScenePanel style="width:100%; height:100%;" particleonly="false" unit="'
-						+ companion_unit[i.toString()] + '"/></Panel></root>', false, false);
+		companionpreview.BLoadLayoutFromString('<root><Panel><DOTAScenePanel style="width:100%; height:100%;" particleonly="false" unit="' + companion_unit[i.toString()] + '"/></Panel></root>', false, false);
 		companionpreview.style.opacityMask = 'url("s2r://panorama/images/masks/hero_model_opacity_mask_png.vtex");'
 
 		if (newbie == true) {
@@ -467,7 +476,7 @@ function ToggleCompanion() {
 	}
 
 	// check if player is donator; otherwise show advertisement
-	if (IsDonator() == false) {
+	if (IsDonator(Game.GetLocalPlayerID()) == false) {
 		$("#CompanionNotification").AddClass("not_donator");
 		$("#CompanionNotificationLabel").text = $.Localize("companion_not_donator");
 		return;

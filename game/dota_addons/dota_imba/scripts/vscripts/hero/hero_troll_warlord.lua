@@ -718,7 +718,7 @@ function imba_troll_warlord_battle_trance:OnSpellStart()
 		local sound = "troll_warlord_troll_battletrance_0"..math.random(1,6)
 		if (math.random(1,100) <= 30) then
 			local heroes = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, 3000, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, FIND_ANY_ORDER, false)
-			if #heroes >= IMBA_PLAYERS_ON_GAME * 0.6666 then
+			if #heroes >= PlayerResource:GetPlayerCount() * 0.6666 then
 				sound = "Imba.TrollAK47"
 			end
 		end

@@ -2368,7 +2368,7 @@
 		"VisionDaytimeRange"		"1800"									// Range of vision during day light.
 		"VisionNighttimeRange"		"800"									// Range of vision at night time.
 
-		"GameSoundsFile"			"soundevents/game_sounds_heroes_custom/game_sounds_invoker.vsndevts"
+		"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_invoker.vsndevts"
 	}
 
 	//=================================================================================================================
@@ -2457,11 +2457,11 @@
 	{
 		"BaseClass"					"npc_dota_hero_juggernaut"
 		"HeroID"					"122"
-		"Model"						"models/heroes/juggernaut/juggernaut.vmdl"
+		"Model"						"models/heroes/sohei/sohei.vmdl"
 
 		//Picking Screen
-//		"IsCustom"					"1"
-		"IsNew"						"1"
+		"IsCustom"					"1"
+//		"IsNew"						"1"
 
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
 		"MovementTurnRate"			"1.5"

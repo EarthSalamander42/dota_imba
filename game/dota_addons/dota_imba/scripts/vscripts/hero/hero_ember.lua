@@ -359,13 +359,11 @@ modifier_imba_fire_remnant_charges = modifier_imba_fire_remnant_charges or class
 function modifier_imba_fire_remnant_charges:IsDebuff() return false end
 function modifier_imba_fire_remnant_charges:IsHidden() return false end
 function modifier_imba_fire_remnant_charges:IsPurgable() return false end
-
-function modifier_imba_fire_remnant_charges:GetAttributes()
-	return MODIFIER_ATTRIBUTE_PERMANENT
-end
+function modifier_imba_fire_remnant_charges:RemoveOnDeath() return false end
 
 function modifier_imba_fire_remnant_charges:OnCreated(keys)
 	if IsServer() then
+		self:GetCaster().spirit_charges = 0
 		self:SetStackCount(self:GetAbility():GetSpecialValueFor("max_charges"))
 		self.learned_charges_talent = false
 		self:StartIntervalThink(0.2)
@@ -381,6 +379,12 @@ function modifier_imba_fire_remnant_charges:OnIntervalThink()
 				self.learned_charges_talent = true
 			end
 		end
+
+		if self:GetParent():IsAlive() and self:GetCaster().spirit_charges > 0 then
+			self:SetStackCount(self:GetStackCount() + self:GetCaster().spirit_charges)
+			self:GetCaster().spirit_charges = 0
+			self:GetAbility():SetActivated(true)
+		end
 	end
 end
 
@@ -390,8 +394,9 @@ end
 modifier_imba_fire_remnant_state = modifier_imba_fire_remnant_state or class ({})
 
 function modifier_imba_fire_remnant_state:IsDebuff() return false end
-function modifier_imba_fire_remnant_state:IsHidden() return true end
+function modifier_imba_fire_remnant_state:IsHidden() return false end
 function modifier_imba_fire_remnant_state:IsPurgable() return false end
+function modifier_imba_fire_remnant_state:RemoveOnDeath() return false end
 
 function modifier_imba_fire_remnant_state:GetEffectName()
 	return "particles/units/heroes/hero_ember_spirit/ember_spirit_fire_remnant.vpcf"
@@ -483,6 +488,7 @@ modifier_imba_fire_remnant_cooldown = modifier_imba_fire_remnant_cooldown or cla
 function modifier_imba_fire_remnant_cooldown:IsDebuff() return true end
 function modifier_imba_fire_remnant_cooldown:IsHidden() return false end
 function modifier_imba_fire_remnant_cooldown:IsPurgable() return false end
+function modifier_imba_fire_remnant_cooldown:RemoveOnDeath() return false end
 
 function modifier_imba_fire_remnant_cooldown:GetAttributes()
 	return MODIFIER_ATTRIBUTE_MULTIPLE
@@ -491,9 +497,8 @@ end
 function modifier_imba_fire_remnant_cooldown:OnDestroy()
 	if IsServer() then
 		local charges_modifier = self:GetParent():FindModifierByName("modifier_imba_fire_remnant_charges")
-		if charges_modifier then
-			charges_modifier:SetStackCount(charges_modifier:GetStackCount() + 1)
-		end
+		charges_modifier:SetStackCount(charges_modifier:GetStackCount() + 1)
+
 		self:GetAbility():SetActivated(true)
 	end
 end
@@ -700,7 +705,13 @@ imba_ember_spirit_fire_remnant = imba_ember_spirit_fire_remnant or class ({})
 
 function imba_ember_spirit_fire_remnant:CollectRemnant()
 	if IsServer() then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_fire_remnant_cooldown", {duration = self:GetSpecialValueFor("remnant_recharge")})
+		-- ember spirit bug: this modifier is not added
+		if self:GetCaster():IsAlive() then
+			self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_fire_remnant_cooldown", {duration = self:GetSpecialValueFor("remnant_recharge")})
+		else
+			self:GetCaster().spirit_charges = self:GetCaster().spirit_charges + 1
+		end
+
 		if FindActiveRemnants(self:GetCaster()) then
 			self:GetCaster():FindAbilityByName("imba_ember_spirit_activate_fire_remnant"):SetActivated(false)
 		end

@@ -46,6 +46,7 @@ function Precache(context)
 	LinkLuaModifier("modifier_river", "modifier/modifier_river.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_courier_hack", "modifier/modifier_courier_hack.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_frantic", "modifier/modifier_frantic.lua", LUA_MODIFIER_MOTION_NONE )
+	LinkLuaModifier("modifier_imba_pudge_flesh_heap_handle", "modifier/modifier_imba_pudge_flesh_heap_handle.lua", LUA_MODIFIER_MOTION_NONE )
 
 	-- Runes modifiers
 	LinkLuaModifier("modifier_imba_arcane_rune", "modifier/runes/modifier_imba_arcane_rune.lua", LUA_MODIFIER_MOTION_NONE)
@@ -264,6 +265,10 @@ function Precache(context)
 	--PrecacheResource("sound", "sounds/vo/announcer_dlc_pflax/announcer_divine_rapier_two.vsnd", context)
 	--PrecacheResource("sound", "sounds/physics/items/weapon_drop_common_02.vsnd", context)
 	--PrecacheResource("sound", "sounds/ui/inventory/metalblade_equip_01.vsnd", context)
+
+	-- Battlepass
+	PrecacheResource("model_folder", "models/items/pudge/arcana", context)
+	PrecacheResource("particle_folder", "particles/econ/items/pudge/pudge_arcana", context)
 
 	PrecacheResource("particle_folder", "particles/hero/scaldris", context) -- Scaldris Hero
 	PrecacheResource("soundfile", "soundevents/imba_soundevents.vsndevts", context) -- Various sounds

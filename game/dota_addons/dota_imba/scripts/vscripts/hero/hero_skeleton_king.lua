@@ -1025,7 +1025,7 @@ function imba_wraith_king_reincarnation:TheWillOfTheKing( OnDeathKeys, BuffInfo 
                                                      FIND_ANY_ORDER,
                                                      false)
 
-                    if USE_MEME_SOUNDS and #heroes >= IMBA_PLAYERS_ON_GAME * 0.35 then
+                    if USE_MEME_SOUNDS and #heroes >= PlayerResource:GetPlayerCount() * 0.35 then
                         BuffInfo.caster:EmitSound(BuffInfo.sound_be_back)
                     else
                         BuffInfo.caster:EmitSound(BuffInfo.sound_death)

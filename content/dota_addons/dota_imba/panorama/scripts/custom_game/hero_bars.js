@@ -99,7 +99,7 @@ function CreateBar(entityId, lightBar) {
 
 		var name = panel.FindChildTraverse("PlayerName");
 
-		if (IsDonator()) {
+		if (IsDonator(Game.GetLocalPlayerID())) {
 			name.text = "DONATOR";
 			name.style.color = "gold";
 		} else {

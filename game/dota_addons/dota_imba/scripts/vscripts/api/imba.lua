@@ -256,6 +256,15 @@ function api.imba.is_donator(steamid)
 	end
 end
 
+function api.imba.get_developers()
+	if api.imba.data.developers == nil then
+		log.warn("is_developer called but developers are not available. yet?")
+		return false
+	end
+
+	return api.imba.data.developers
+end
+
 function api.imba.is_developer(steamid)
 	if api.imba.data.developers == nil then
 		log.warn("is_developer called but developers are not available. yet?")

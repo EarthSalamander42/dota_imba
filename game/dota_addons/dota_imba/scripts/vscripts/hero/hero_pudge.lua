@@ -27,7 +27,9 @@ imba_pudge_sharp_hook = imba_pudge_sharp_hook or class({})
 imba_pudge_light_hook = imba_pudge_light_hook or class({})
 
 LinkLuaModifier("modifier_imba_hook_sharp_stack","hero/hero_pudge", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_pudge_sharp_hook_handler","hero/hero_pudge", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_hook_light_stack","hero/hero_pudge", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_pudge_light_hook_handler","hero/hero_pudge", LUA_MODIFIER_MOTION_NONE)
 
 function imba_pudge_sharp_hook:GetIntrinsicModifierName() return "modifier_imba_hook_sharp_stack" end
 function imba_pudge_light_hook:GetIntrinsicModifierName() return "modifier_imba_hook_light_stack" end
@@ -64,6 +66,18 @@ function imba_pudge_light_hook:OnToggle()
 	end
 end
 
+function imba_pudge_sharp_hook:GetAbilityTextureName()
+	if not IsClient() then return end
+	if not self:GetCaster().sharp_hook_icon then return "custom/pudge_sharp_hook" end
+	return "custom/pudge_sharp_hook_arcana_style"..self:GetCaster().sharp_hook_icon
+end
+
+function imba_pudge_light_hook:GetAbilityTextureName()
+	if not IsClient() then return end
+	if not self:GetCaster().light_hook_icon then return "custom/pudge_light_hook" end
+	return "custom/pudge_light_hook_arcana_style"..self:GetCaster().light_hook_icon
+end
+
 modifier_imba_hook_sharp_stack = modifier_imba_hook_sharp_stack or class({})
 modifier_imba_hook_light_stack = modifier_imba_hook_light_stack or class({})
 
@@ -72,13 +86,16 @@ function modifier_imba_hook_sharp_stack:IsHidden() return false end
 function modifier_imba_hook_sharp_stack:IsPurgable() return false end
 function modifier_imba_hook_sharp_stack:IsStunDebuff() return false end
 function modifier_imba_hook_sharp_stack:RemoveOnDeath() return false end
-function modifier_imba_hook_sharp_stack:GetTexture() return "custom/pudge_sharp_hook" end
 
 function modifier_imba_hook_sharp_stack:OnCreated()
 	local stacks = 0
 
 	if self:GetCaster() and self:GetCaster().FindAbilityByName and self:GetCaster():FindAbilityByName("imba_pudge_meat_hook") then
 		stacks = self:GetCaster():FindAbilityByName("imba_pudge_meat_hook"):GetSpecialValueFor("hook_stacks")
+	end
+
+	if IsServer() then
+		self:GetCaster():AddNewModifier(self:GetCaster(), nil, "modifier_imba_pudge_sharp_hook_handler", {})
 	end
 
 	self:SetStackCount(stacks)
@@ -97,18 +114,40 @@ function modifier_imba_hook_sharp_stack:OnIntervalThink()
 	end
 end
 
+if modifier_imba_pudge_sharp_hook_handler == nil then modifier_imba_pudge_sharp_hook_handler = class({}) end
+
+function modifier_imba_pudge_sharp_hook_handler:IsHidden() return true end
+function modifier_imba_pudge_sharp_hook_handler:RemoveOnDeath() return false end
+
+function modifier_imba_pudge_sharp_hook_handler:OnCreated()
+	if self:GetCaster():IsIllusion() then self:Destroy() return end
+
+	if IsServer() then
+		if self:GetCaster().pudge_arcana == nil then self:Destroy() return end
+		self:SetStackCount(self:GetCaster().pudge_arcana + 1)
+	end
+
+	if IsClient() then
+		if self:GetStackCount() == 0 then self:Destroy() return end
+		self:GetCaster().sharp_hook_icon = self:GetStackCount() - 1
+	end
+end
+
 function modifier_imba_hook_light_stack:IsDebuff() return false end
 function modifier_imba_hook_light_stack:IsHidden() return false end
 function modifier_imba_hook_light_stack:IsPurgable() return false end
 function modifier_imba_hook_light_stack:IsStunDebuff() return false end
 function modifier_imba_hook_light_stack:RemoveOnDeath() return false end
-function modifier_imba_hook_light_stack:GetTexture() return "custom/pudge_light_hook" end
 
 function modifier_imba_hook_light_stack:OnCreated()
 	local stacks = 0
 
 	if self:GetCaster() and self:GetCaster().FindAbilityByName and self:GetCaster():FindAbilityByName("imba_pudge_meat_hook") then
 		stacks = self:GetCaster():FindAbilityByName("imba_pudge_meat_hook"):GetSpecialValueFor("hook_stacks")
+	end
+
+	if IsServer() then
+		self:GetCaster():AddNewModifier(self:GetCaster(), nil, "modifier_imba_pudge_light_hook_handler", {})
 	end
 
 	self:SetStackCount(stacks)
@@ -127,9 +166,28 @@ function modifier_imba_hook_light_stack:OnIntervalThink()
 	end
 end
 
+if modifier_imba_pudge_light_hook_handler == nil then modifier_imba_pudge_light_hook_handler = class({}) end
+
+function modifier_imba_pudge_light_hook_handler:IsHidden() return true end
+
+function modifier_imba_pudge_light_hook_handler:OnCreated()
+	if self:GetCaster():IsIllusion() then self:Destroy() return end
+
+	if IsServer() then
+		if self:GetCaster().pudge_arcana == nil then self:Destroy() return end
+		self:SetStackCount(self:GetCaster().pudge_arcana + 1)
+	end
+
+	if IsClient() then
+		if self:GetStackCount() == 0 then self:Destroy() return end
+		self:GetCaster().light_hook_icon = self:GetStackCount() - 1
+	end
+end
+
 LinkLuaModifier("modifier_imba_pudge_meat_hook_caster_root","hero/hero_pudge", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_hook_target_enemy","hero/hero_pudge", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_hook_target_ally","hero/hero_pudge", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_pudge_meat_hook_handler","hero/hero_pudge", LUA_MODIFIER_MOTION_NONE)
 
 function imba_pudge_meat_hook:IsHiddenWhenStolen() return false end
 function imba_pudge_meat_hook:IsRefreshable() 			return true  end
@@ -141,22 +199,21 @@ function imba_pudge_meat_hook:OnUpgrade()
 	local ability2 = self:GetCaster():FindAbilityByName("imba_pudge_light_hook")
 	if ability1 then ability1:SetLevel(self:GetLevel()) end
 	if ability2 then ability2:SetLevel(self:GetLevel()) end
+	if not self:GetCaster().successful_hooks then self:GetCaster().successful_hooks = 0 end
 
-	local caster = self:GetCaster()
-	local dmg_hook_buff = caster:AddNewModifier(caster, ability1, "modifier_imba_hook_sharp_stack", {})
-	local spd_hook_buff = caster:AddNewModifier(caster, ability2, "modifier_imba_hook_light_stack", {})
+	local dmg_hook_buff = self:GetCaster():AddNewModifier(self:GetCaster(), ability1, "modifier_imba_hook_sharp_stack", {})
+	local spd_hook_buff = self:GetCaster():AddNewModifier(self:GetCaster(), ability2, "modifier_imba_hook_light_stack", {})
 	dmg_hook_buff:SetStackCount(self:GetCaster():FindAbilityByName("imba_pudge_meat_hook"):GetSpecialValueFor("hook_stacks"))
 	spd_hook_buff:SetStackCount(self:GetCaster():FindAbilityByName("imba_pudge_meat_hook"):GetSpecialValueFor("hook_stacks"))
 end
 
 function imba_pudge_meat_hook:GetCastRange()
-	local caster = self:GetCaster()
-	local charges = caster:GetModifierStackCount("modifier_imba_hook_light_stack", caster)
-	local hook_range = self:GetSpecialValueFor("base_range") + caster:FindTalentValue("special_bonus_imba_pudge_5")
+	local charges = self:GetCaster():GetModifierStackCount("modifier_imba_hook_light_stack", self:GetCaster())
+	local hook_range = self:GetSpecialValueFor("base_range") + self:GetCaster():FindTalentValue("special_bonus_imba_pudge_5")
 
 	-- volvo?
-	if caster and caster.FindAbilityByName and caster:FindAbilityByName("imba_pudge_light_hook") then
-		hook_range = hook_range + (caster:FindAbilityByName("imba_pudge_light_hook"):GetSpecialValueFor("stack_range") * charges)
+	if self:GetCaster() and self:GetCaster().FindAbilityByName and self:GetCaster():FindAbilityByName("imba_pudge_light_hook") then
+		hook_range = hook_range + (self:GetCaster():FindAbilityByName("imba_pudge_light_hook"):GetSpecialValueFor("stack_range") * charges)
 	end
 
 	return hook_range
@@ -183,7 +240,6 @@ function imba_pudge_meat_hook:OnAbilityPhaseStart()
 	return true
 end
 
-
 function imba_pudge_meat_hook:OnAbilityPhaseInterrupted()
 	local caster = self:GetCaster()
 	caster:RemoveGesture( ACT_DOTA_OVERRIDE_ABILITY_1 )
@@ -192,35 +248,32 @@ function imba_pudge_meat_hook:OnAbilityPhaseInterrupted()
 end
 
 function imba_pudge_meat_hook:OnOwnerDied()
-	local caster = self:GetCaster()
-	caster:RemoveGesture( ACT_DOTA_OVERRIDE_ABILITY_1 );
-	caster:RemoveGesture( ACT_DOTA_CHANNEL_ABILITY_1 );
+	self:GetCaster():RemoveGesture( ACT_DOTA_OVERRIDE_ABILITY_1 );
+	self:GetCaster():RemoveGesture( ACT_DOTA_CHANNEL_ABILITY_1 );
 
 	-- Allow again to launch meat hook
 	self.launched = false
 end
 
 function imba_pudge_meat_hook:OnSpellStart()
-
 	self.launched = true
 
-	local caster = self:GetCaster()
-	if not caster:HasTalent("special_bonus_imba_pudge_7") then
-		caster:AddNewModifier(caster, self, "modifier_imba_pudge_meat_hook_caster_root", {})
+	if not self:GetCaster():HasTalent("special_bonus_imba_pudge_7") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_pudge_meat_hook_caster_root", {})
 	end
 	local vHookOffset = Vector( 0, 0, 96 )
 	local target_position = self:GetCursorPosition() + vHookOffset
 
-	local dmg_hook_buff = caster:FindModifierByName("modifier_imba_hook_sharp_stack")
-	local spd_hook_buff = caster:FindModifierByName("modifier_imba_hook_light_stack")
+	local dmg_hook_buff = self:GetCaster():FindModifierByName("modifier_imba_hook_sharp_stack")
+	local spd_hook_buff = self:GetCaster():FindModifierByName("modifier_imba_hook_light_stack")
 
-	local hook_width = self:GetSpecialValueFor("hook_width") + caster:FindTalentValue("special_bonus_imba_pudge_3")
-	local hook_speed = self:GetSpecialValueFor("base_speed") + caster:FindTalentValue("special_bonus_imba_pudge_2")
-	local stack_speed = caster:FindAbilityByName("imba_pudge_light_hook"):GetSpecialValueFor("stack_speed")
-	local hook_range = self:GetSpecialValueFor("base_range") + caster:FindTalentValue("special_bonus_imba_pudge_5")
-	local stack_range = caster:FindAbilityByName("imba_pudge_light_hook"):GetSpecialValueFor("stack_range")
+	local hook_width = self:GetSpecialValueFor("hook_width") + self:GetCaster():FindTalentValue("special_bonus_imba_pudge_3")
+	local hook_speed = self:GetSpecialValueFor("base_speed") + self:GetCaster():FindTalentValue("special_bonus_imba_pudge_2")
+	local stack_speed = self:GetCaster():FindAbilityByName("imba_pudge_light_hook"):GetSpecialValueFor("stack_speed")
+	local hook_range = self:GetSpecialValueFor("base_range") + self:GetCaster():FindTalentValue("special_bonus_imba_pudge_5")
+	local stack_range = self:GetCaster():FindAbilityByName("imba_pudge_light_hook"):GetSpecialValueFor("stack_range")
 	local hook_dmg = self:GetSpecialValueFor("base_damage")
-	local stack_dmg = caster:FindAbilityByName("imba_pudge_sharp_hook"):GetSpecialValueFor("stack_damage")
+	local stack_dmg = self:GetCaster():FindAbilityByName("imba_pudge_sharp_hook"):GetSpecialValueFor("stack_damage")
 	local stack_dmg_scepter = self:GetSpecialValueFor("damage_scepter")
 	if spd_hook_buff then
 		hook_speed = hook_speed + stack_speed * spd_hook_buff:GetStackCount()
@@ -228,7 +281,7 @@ function imba_pudge_meat_hook:OnSpellStart()
 	end
 	if dmg_hook_buff then
 		hook_dmg = hook_dmg + stack_dmg * dmg_hook_buff:GetStackCount()
-		if caster:HasScepter() then
+		if self:GetCaster():HasScepter() then
 			hook_dmg = hook_dmg + stack_dmg_scepter * spd_hook_buff:GetStackCount()
 		end
 	end
@@ -251,29 +304,35 @@ function imba_pudge_meat_hook:OnSpellStart()
 
 	local vKillswitch = Vector(((hook_range / hook_speed) * 2) + 10, 0, 0)
 	local pfx_name = "particles/units/heroes/hero_pudge/pudge_meathook.vpcf"
+
+	if self:GetCaster().pudge_dragonclaw then
+		pfx_name = "particles/econ/items/pudge/pudge_dragonclaw/pudge_meathook_dragonclaw.vpcf"
+	end
+
 	local hook_pfx = ParticleManager:CreateParticle(pfx_name, PATTACH_CUSTOMORIGIN, nil)
 	ParticleManager:SetParticleAlwaysSimulate(hook_pfx)
-	ParticleManager:SetParticleControlEnt(hook_pfx, 0, caster, PATTACH_POINT_FOLLOW, "attach_weapon_chain_rt", caster:GetAbsOrigin() + vHookOffset, true)
+	ParticleManager:SetParticleControlEnt(hook_pfx, 0, self:GetCaster(), PATTACH_POINT_FOLLOW, "attach_weapon_chain_rt", self:GetCaster():GetAbsOrigin() + vHookOffset, true)
 	ParticleManager:SetParticleControl(hook_pfx, 2, Vector(hook_speed, hook_range, hook_width))
 	ParticleManager:SetParticleControl(hook_pfx, 3, vKillswitch)
 	ParticleManager:SetParticleControl(hook_pfx, 4, Vector( 1, 0, 0 ) )
 	ParticleManager:SetParticleControl(hook_pfx, 5, Vector( 0, 0, 0 ) )
+	ParticleManager:SetParticleControlEnt(hook_pfx, 7, self:GetCaster(), PATTACH_CUSTOMORIGIN, nil, self:GetCaster():GetOrigin(), true )
 
 	local projectile_info = {
 		Ability = self,
 		EffectName = nil,
-		vSpawnOrigin = caster:GetAbsOrigin(),
+		vSpawnOrigin = self:GetCaster():GetAbsOrigin(),
 		fDistance = hook_range,
 		fStartRadius = hook_width,
 		fEndRadius = hook_width,
-		Source = caster,
+		Source = self:GetCaster(),
 		bHasFrontalCone = false,
 		bReplaceExisting = false,
 		iUnitTargetTeam = DOTA_UNIT_TARGET_TEAM_BOTH,
 		iUnitTargetFlags = DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS,
 		iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
 		fExpireTime = GameRules:GetGameTime() + ((hook_range / hook_speed)),
-		vVelocity = (target_position - caster:GetAbsOrigin()):Normalized() * hook_speed,
+		vVelocity = (target_position - self:GetCaster():GetAbsOrigin()):Normalized() * hook_speed,
 		bProvidesVision = false,
 		bDeleteOnHit = true,
 		ExtraData = {
@@ -287,14 +346,14 @@ function imba_pudge_meat_hook:OnSpellStart()
 	}
 	self.hook_go = ProjectileManager:CreateLinearProjectile(projectile_info)
 
-	if caster and caster:IsHero() then
-		local hHook = caster:GetTogglableWearable( DOTA_LOADOUT_TYPE_WEAPON )
+	if self:GetCaster() and self:GetCaster():IsHero() then
+		local hHook = self:GetCaster():GetTogglableWearable( DOTA_LOADOUT_TYPE_WEAPON )
 		if hHook ~= nil then
 			hHook:AddEffects( EF_NODRAW )
 		end
 	end
-	EmitSoundOnLocationWithCaster(caster:GetAbsOrigin(), "Hero_Pudge.AttackHookExtend", caster)
 
+	EmitSoundOnLocationWithCaster(self:GetCaster():GetAbsOrigin(), "Hero_Pudge.AttackHookExtend", caster)
 end
 
 local hooked_loc
@@ -335,7 +394,7 @@ function imba_pudge_meat_hook:OnProjectileThink_ExtraData(vLocation, ExtraData)
 	elseif ExtraData.goorback == "back" then
 		if EntIndexToHScript(ExtraData.rune) then
 			local rune = EntIndexToHScript(ExtraData.rune)
-			ParticleManager:SetParticleControlEnt(ExtraData.pfx_index, 1, rune, PATTACH_POINT_FOLLOW, "attach_hitloc", rune:GetAbsOrigin(), true)
+			ParticleManager:SetParticleControlEnt(ExtraData.pfx_index, 1, rune, PATTACH_POINT_FOLLOW, "attach_hitloc", rune:GetAbsOrigin() + Vector( 0, 0, 96 ), true)
 			rune:SetAbsOrigin(GetGroundPosition(vLocation, self:GetCaster()))
 		else
 			local target = EntIndexToHScript(ExtraData.hooked_target)
@@ -402,7 +461,7 @@ function imba_pudge_meat_hook:OnProjectileHit_ExtraData(hTarget, vLocation, Extr
 			EmitSoundOnLocationWithCaster(hTarget:GetAbsOrigin(), "Hero_Pudge.AttackHookImpact", hTarget)
 			EmitSoundOnLocationWithCaster(hTarget:GetAbsOrigin(), "Hero_Pudge.AttackHookRetract", hTarget)
 			local nFXIndex = ParticleManager:CreateParticle( "particles/units/heroes/hero_pudge/pudge_meathook_impact.vpcf", PATTACH_CUSTOMORIGIN, hTarget)
-			ParticleManager:SetParticleControlEnt(nFXIndex, 0, hTarget, PATTACH_POINT_FOLLOW, "attach_hitloc", hTarget:GetAbsOrigin(), true)
+			ParticleManager:SetParticleControlEnt(nFXIndex, 0, hTarget, PATTACH_POINT_FOLLOW, "attach_hitloc", hTarget:GetAbsOrigin() + Vector( 0, 0, 96 ), true)
 			ParticleManager:ReleaseParticleIndex(nFXIndex)
 			bVision = true
 			if hTarget:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then
@@ -418,9 +477,29 @@ function imba_pudge_meat_hook:OnProjectileHit_ExtraData(hTarget, vLocation, Extr
 				local actually_dmg = ApplyDamage(damageTable)
 				SendOverheadEventMessage(nil, OVERHEAD_ALERT_DAMAGE, hTarget, actually_dmg, nil)
 				hTarget:AddNewModifier(self:GetCaster(), self, "modifier_imba_hook_target_enemy", {})
-			else
+				if hTarget:IsRealHero() then
+					self:GetCaster().successful_hooks = self:GetCaster().successful_hooks + 1
+				else
+					self:GetCaster().successful_hooks = 0
+				end
+				if self:GetCaster().successful_hooks >= 2 then
+					EmitSoundOnLocationWithCaster(self:GetCaster():GetAbsOrigin(), "Hero_Pudge.HookDrag.Arcana", self:GetCaster())
+					local pfx = "particles/econ/items/pudge/pudge_arcana/pudge_arcana_red_hook_streak.vpcf"
+					if self:GetCaster().pudge_arcana == 1 then
+						pfx = "particles/econ/items/pudge/pudge_arcana/pudge_arcana_hook_streak.vpcf"
+					end
+					local hook_counter = ParticleManager:CreateParticle(pfx, PATTACH_OVERHEAD_FOLLOW, self:GetCaster())
+					local stack_10 = math.floor(self:GetCaster().successful_hooks / 10)
+					ParticleManager:SetParticleControl(hook_counter, 2, Vector(stack_10, self:GetCaster().successful_hooks - stack_10 * 10, self:GetCaster().successful_hooks))
+					ParticleManager:ReleaseParticleIndex(nFXIndex)
+				end
+			elseif hTarget:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then
 				hTarget:AddNewModifier(self:GetCaster(), self, "modifier_imba_hook_target_ally", {})
+			else
+				self:GetCaster().successful_hooks = 0
 			end
+		else
+			self:GetCaster().successful_hooks = 0
 		end
 
 		local projectile_info = {
@@ -503,6 +582,62 @@ function imba_pudge_meat_hook:OnProjectileHit_ExtraData(hTarget, vLocation, Extr
 		end
 
 		return true
+	end
+end
+
+function imba_pudge_meat_hook:GetIntrinsicModifierName()
+	return "modifier_imba_pudge_meat_hook_handler"
+end
+
+function imba_pudge_meat_hook:GetAbilityTextureName()
+	if not IsClient() then return end
+	if self:GetCaster().meat_hook_icon then
+		return "custom/pudge_meat_hook_arcana_style"..self:GetCaster().meat_hook_icon
+	else
+		return "pudge_meat_hook"
+	end
+end
+
+if modifier_imba_pudge_meat_hook_handler == nil then modifier_imba_pudge_meat_hook_handler = class({}) end
+
+function modifier_imba_pudge_meat_hook_handler:IsHidden() return true end
+function modifier_imba_pudge_meat_hook_handler:RemoveOnDeath() return false end
+
+function modifier_imba_pudge_meat_hook_handler:DeclareFunctions()
+	local funcs = {
+		MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS
+	}
+
+	return funcs
+end
+
+function modifier_imba_pudge_meat_hook_handler:OnCreated()
+	if self:GetCaster():IsIllusion() then self:Destroy() return end
+
+	if IsServer() then
+		if self:GetCaster().pudge_arcana == nil then self:Destroy() return end
+		self:SetStackCount(self:GetCaster().pudge_arcana + 1)
+	end
+
+	if IsClient() then
+		if self:GetStackCount() == 0 then self:Destroy() return end
+		self:GetCaster().meat_hook_icon = self:GetStackCount() - 1
+	end
+end
+
+function modifier_imba_pudge_meat_hook_handler:GetActivityTranslationModifiers()
+--	print(self:GetCaster().successful_hooks)
+	if self:GetCaster().successful_hooks == nil then self:GetCaster().successful_hooks = 0 end
+
+	if self:GetCaster().successful_hooks >= 1 and self:GetCaster().successful_hooks < 3 then
+--		print("Small Streak!")
+		return "hook_streak_small"
+	elseif self:GetCaster().successful_hooks >= 3 and self:GetCaster().successful_hooks < 5 then
+--		print("Medium Streak!")
+		return "hook_streak_medium"
+	elseif self:GetCaster().successful_hooks >= 5 then
+--		print("Large Streak!")
+		return "hook_streak_large"
 	end
 end
 
@@ -622,6 +757,7 @@ imba_pudge_rot = imba_pudge_rot or class({})
 
 LinkLuaModifier("imba_pudge_rot_active","hero/hero_pudge", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_rot_slow","hero/hero_pudge", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_pudge_rot_handler","hero/hero_pudge", LUA_MODIFIER_MOTION_NONE)
 
 function imba_pudge_rot:IsHiddenWhenStolen() 	return false end
 function imba_pudge_rot:IsRefreshable() 		return true  end
@@ -655,6 +791,34 @@ function imba_pudge_rot:OnToggle()
 	end
 end
 
+function imba_pudge_rot:GetIntrinsicModifierName()
+	return "modifier_imba_pudge_rot_handler"
+end
+
+function imba_pudge_rot:GetAbilityTextureName()
+	if not IsClient() then return end
+	if not self:GetCaster().rot_icon then return "pudge_rot" end
+	return "custom/pudge_rot_arcana_style"..self:GetCaster().rot_icon
+end
+
+if modifier_imba_pudge_rot_handler == nil then modifier_imba_pudge_rot_handler = class({}) end
+
+function modifier_imba_pudge_rot_handler:IsHidden() return true end
+
+function modifier_imba_pudge_rot_handler:OnCreated()
+	if self:GetCaster():IsIllusion() then self:Destroy() return end
+
+	if IsServer() then
+		if self:GetCaster().pudge_arcana == nil then self:Destroy() return end
+		self:SetStackCount(self:GetCaster().pudge_arcana + 1)
+	end
+
+	if IsClient() then
+		if self:GetStackCount() == 0 then self:Destroy() return end
+		self:GetCaster().rot_icon = self:GetStackCount() - 1
+	end
+end
+
 imba_pudge_rot_active = imba_pudge_rot_active or class({})
 
 function imba_pudge_rot_active:IsDebuff()				return false end
@@ -662,7 +826,6 @@ function imba_pudge_rot_active:IsHidden() 				return true end
 function imba_pudge_rot_active:IsPurgable() 			return false end
 function imba_pudge_rot_active:IsPurgeException() 		return false end
 function imba_pudge_rot_active:IsStunDebuff() 			return false end
-function imba_pudge_rot_active:RemoveOnDeath() 			return true end
 
 function imba_pudge_rot_active:OnCreated()
 	if IsServer() then
@@ -755,51 +918,37 @@ function modifier_imba_rot_slow:GetModifierMoveSpeedBonus_Percentage() return se
 --// Pudge's Flesh Heap
 --//=================================================================================================================
 
-imba_pudge_flesh_heap_handle = imba_pudge_flesh_heap_handle or class({})
-
-LinkLuaModifier("modifier_imba_pudge_flesh_heap_handle","hero/hero_pudge", LUA_MODIFIER_MOTION_NONE)
-
-function imba_pudge_flesh_heap_handle:IsInnateAbility() return true end
-
-function imba_pudge_flesh_heap_handle:GetIntrinsicModifierName()
-	return "modifier_imba_pudge_flesh_heap_handle"
-end
-
-modifier_imba_pudge_flesh_heap_handle = modifier_imba_pudge_flesh_heap_handle or class({})
-
-function modifier_imba_pudge_flesh_heap_handle:IsDebuff() return false end
-function modifier_imba_pudge_flesh_heap_handle:IsHidden() return true end
-function modifier_imba_pudge_flesh_heap_handle:IsPurgable() return false end
-function modifier_imba_pudge_flesh_heap_handle:IsStunDebuff() return false end
-function modifier_imba_pudge_flesh_heap_handle:RemoveOnDeath() return false end
-
-function modifier_imba_pudge_flesh_heap_handle:DeclareFunctions()
-	local funcs = {MODIFIER_EVENT_ON_DEATH}
-	return funcs
-end
-
-function modifier_imba_pudge_flesh_heap_handle:OnDeath(keys)
-	local unit = keys.unit
-	local caster = self:GetCaster()
-	local ability = caster:FindAbilityByName("imba_pudge_flesh_heap")
-	if not ability then return end
-	local distance = ability:GetLevelSpecialValueFor("range", 1)
-	if unit:IsRealHero() and unit:GetTeamNumber() ~= caster:GetTeamNumber() and CalcDistanceBetweenEntityOBB(unit, caster) <= distance then
-		self:SetStackCount(self:GetStackCount() + 1)
-		if IsServer() then
-			local pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_pudge/pudge_fleshheap_count.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
-			ParticleManager:ReleaseParticleIndex(pfx)
-		end
-	end
-end
-
---[[
 imba_pudge_flesh_heap = imba_pudge_flesh_heap or class({})
 
 LinkLuaModifier("modifier_imba_flesh_heap_stacks","hero/hero_pudge", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_pudge_flesh_heap_handler","hero/hero_pudge", LUA_MODIFIER_MOTION_NONE)
 
 function imba_pudge_flesh_heap:GetIntrinsicModifierName()
 	return "modifier_imba_flesh_heap_stacks"
+end
+
+function imba_pudge_flesh_heap:GetAbilityTextureName()
+	if not IsClient() then return end
+	if not self:GetCaster().flesh_heap_icon then return "pudge_flesh_heap" end
+	return "custom/pudge_flesh_heap_arcana_style"..self:GetCaster().flesh_heap_icon
+end
+
+if modifier_imba_pudge_flesh_heap_handler == nil then modifier_imba_pudge_flesh_heap_handler = class({}) end
+
+function modifier_imba_pudge_flesh_heap_handler:IsHidden() return true end
+
+function modifier_imba_pudge_flesh_heap_handler:OnCreated()
+	if self:GetCaster():IsIllusion() then self:Destroy() return end
+
+	if IsServer() then
+		if self:GetCaster().pudge_arcana == nil then self:Destroy() return end
+		self:SetStackCount(self:GetCaster().pudge_arcana + 1)
+	end
+
+	if IsClient() then
+		if self:GetStackCount() == 0 then self:Destroy() return end
+		self:GetCaster().flesh_heap_icon = self:GetStackCount() - 1
+	end
 end
 
 modifier_imba_flesh_heap_stacks = modifier_imba_flesh_heap_stacks or class({})
@@ -811,6 +960,10 @@ function modifier_imba_flesh_heap_stacks:IsStunDebuff() return false end
 function modifier_imba_flesh_heap_stacks:RemoveOnDeath() return false end
 
 function modifier_imba_flesh_heap_stacks:OnCreated()
+	if IsServer() then
+		self:GetCaster():AddNewModifier(self:GetCaster(), nil, "modifier_imba_pudge_flesh_heap_handler", {})
+	end
+
 	self:StartIntervalThink(0.1)
 end
 
@@ -823,10 +976,11 @@ end
 
 function modifier_imba_flesh_heap_stacks:DeclareFunctions()
 	local funcs = {
-					MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS,
-					MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
-					MODIFIER_PROPERTY_MODEL_SCALE,
-					}
+		MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS,
+		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
+		MODIFIER_PROPERTY_MODEL_SCALE,
+	}
+
 	return funcs
 end
 
@@ -851,7 +1005,7 @@ function modifier_imba_flesh_heap_stacks:GetModifierModelScale()
 	if stacks > max_stack then stacks = max_stack end
 	return stacks * 3
 end
---]]
+
 --=================================================================================================================
 -- Pudge's Dismember
 --=================================================================================================================
@@ -860,6 +1014,7 @@ imba_pudge_dismember = imba_pudge_dismember or class({})
 
 LinkLuaModifier("modifier_dismember","hero/hero_pudge", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_pudge_dismember_buff","hero/hero_pudge", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_pudge_dismember_handler","hero/hero_pudge", LUA_MODIFIER_MOTION_NONE)
 
 function imba_pudge_dismember:GetChannelTime()
 	return self.channelTime
@@ -871,43 +1026,48 @@ function imba_pudge_dismember:OnAbilityPhaseStart()
 	else
 		self.channelTime = self:GetSpecialValueFor("creep_duration") + self:GetCaster():FindTalentValue("special_bonus_imba_pudge_8")
 	end
+
 	return true
 end
 
 function imba_pudge_dismember:OnSpellStart()
-	local caster = self:GetCaster()
 	local target = self:GetCursorTarget()
 
-	if caster:GetTeamNumber() ~= target:GetTeamNumber() then
+	if self:GetCaster():GetTeamNumber() ~= target:GetTeamNumber() then
 		if target:TriggerSpellAbsorb(self) then
 			return nil
 		end
 	end
 
 	self.target = target
-	target:AddNewModifier(caster, self, "modifier_dismember", {})
-	caster:AddNewModifier(caster, self, "modifier_imba_pudge_dismember_buff", {})
-	self.pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_pudge/pudge_dismember.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+	target:AddNewModifier(self:GetCaster(), self, "modifier_dismember", {duration = self.channelTime})
+	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_pudge_dismember_buff", {})
+
+	if self:GetCaster().pudge_arcana then
+		self.pfx = ParticleManager:CreateParticle("particles/econ/items/pudge/pudge_arcana/pudge_arcana_dismember_"..GetHeroType(target)..".vpcf", PATTACH_ABSORIGIN, target)
+		ParticleManager:SetParticleControl(self.pfx, 1, target:GetAbsOrigin())
+		ParticleManager:SetParticleControl(self.pfx, 8, Vector(1, 1, 1))
+		ParticleManager:SetParticleControl(self.pfx, 15, target:GetFittingColor())
+	else
+		self.pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_pudge/pudge_dismember.vpcf", PATTACH_ABSORIGIN, target)
+	end
 end
 
 function imba_pudge_dismember:OnChannelFinish(bInterrupted)
-	local caster = self:GetCaster()
-
 	if self.target then
-		local target_buff = self.target:FindModifierByNameAndCaster("modifier_dismember", caster)
+		local target_buff = self.target:FindModifierByNameAndCaster("modifier_dismember", self:GetCaster())
 
 		if bInterrupted then
 			self.target:RemoveModifierByName("modifier_dismember")
 		end
 	end
 
-	local caster_buff = caster:FindModifierByNameAndCaster("modifier_imba_pudge_dismember_buff", caster)
+	local caster_buff = self:GetCaster():FindModifierByNameAndCaster("modifier_imba_pudge_dismember_buff", self:GetCaster())
 
 	--anti mage Spell Shield handle
-	local caster_debuff = caster:FindModifierByName("modifier_imba_pudge_dismember")
+	local caster_debuff = self:GetCaster():FindModifierByName("modifier_dismember")
 
 	if caster_debuff then
-		print("set caster debuff time")
 		caster_debuff:SetDuration(self.channelTime, true)
 	end
 
@@ -920,13 +1080,40 @@ function imba_pudge_dismember:OnChannelFinish(bInterrupted)
 	end
 end
 
+function imba_pudge_dismember:GetIntrinsicModifierName()
+	return "modifier_imba_pudge_dismember_handler"
+end
+
+function imba_pudge_dismember:GetAbilityTextureName()
+	if not IsClient() then return end
+	if not self:GetCaster().dismember_icon then return "pudge_dismember" end
+	return "custom/pudge_dismember_arcana_style"..self:GetCaster().dismember_icon
+end
+
+if modifier_imba_pudge_dismember_handler == nil then modifier_imba_pudge_dismember_handler = class({}) end
+
+function modifier_imba_pudge_dismember_handler:IsHidden() return true end
+
+function modifier_imba_pudge_dismember_handler:OnCreated()
+	if self:GetCaster():IsIllusion() then self:Destroy() return end
+
+	if IsServer() then
+		if self:GetCaster().pudge_arcana == nil then self:Destroy() return end
+		self:SetStackCount(self:GetCaster().pudge_arcana + 1)
+	end
+
+	if IsClient() then
+		if self:GetStackCount() == 0 then self:Destroy() return end
+		self:GetCaster().dismember_icon = self:GetStackCount() - 1
+	end
+end
+
 modifier_dismember = class({})
 
 function modifier_dismember:IsDebuff() return true end
 function modifier_dismember:IsHidden() return false end
 function modifier_dismember:IsPurgable() return false end
 function modifier_dismember:IsStunDebuff() return false end
-function modifier_dismember:RemoveOnDeath() return true end
 function modifier_dismember:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_dismember:OnCreated()
@@ -935,13 +1122,6 @@ function modifier_dismember:OnCreated()
 
 	if IsServer() then
 		self:GetParent():StartGesture(ACT_DOTA_DISABLED)
-
-		local duration = self:GetCaster():FindAbilityByName("imba_pudge_dismember"):GetSpecialValueFor("hero_duration")
-		if not self:GetParent():IsRealHero() then
-			duration = self:GetCaster():FindAbilityByName("imba_pudge_dismember"):GetSpecialValueFor("creep_duration")
-		end
-
-		self:SetDuration(duration, true)
 	end
 end
 
@@ -980,126 +1160,4 @@ function modifier_imba_pudge_dismember_buff:IsStunDebuff() return false end
 
 function modifier_imba_pudge_dismember_buff:GetModifierSpellLifesteal()
 	return self:GetAbility():GetSpecialValueFor("spell_lifesteal")
-end
-
-function FleshHeapUpgrade( keys )
-	local caster = keys.caster
-	local ability = keys.ability
-	local ability_level = ability:GetLevel() - 1
-	local modifier_resist = keys.modifier_resist
-	local modifier_stacks = keys.modifier_stacks
-
-	-- Parameters
-	local stack_scale_up = ability:GetLevelSpecialValueFor("stack_scale_up", ability_level)
-	local max_stacks = ability:GetLevelSpecialValueFor("max_stacks", ability_level)
-	local stack_amount
-	local resist_amount
-
-	if caster:HasTalent("special_bonus_imba_pudge_4") then
-		max_stacks = max_stacks + caster:FindTalentValue("special_bonus_imba_pudge_4", "max_stacks")
-	end
-
-	-- If Heap is already learned, fetch the current amount of stacks
-	if caster.heap_stacks then
-		stack_amount = caster.heap_stacks
-		resist_amount = caster.heap_resist_stacks
-		-- Else, fetch kills/assists up to this point of the game (lazy way to make Heap retroactive)
-	else
-		local assists = caster:GetAssists()
-		local kills = caster:GetKills()
-		stack_amount = kills + assists
-		resist_amount = math.min(stack_amount, max_stacks)
-
-		-- Define the global variables which keep track of heap stacks
-		caster.heap_stacks = stack_amount
-		caster.heap_resist_stacks = resist_amount
-	end
-
-	-- Remove both modifiers in order to update their bonuses
-	caster:RemoveModifierByName(modifier_stacks)
-	while caster:HasModifier(modifier_resist) do
-		caster:RemoveModifierByName(modifier_resist)
-	end
-
-	-- Add stacks of the capped (magic resist) modifier
-	for i = 1, resist_amount do
-		ability:ApplyDataDrivenModifier(caster, caster, modifier_resist, {})
-	end
-
-	-- Add stacks of the uncapped modifier
-	AddStacks(ability, caster, caster, modifier_stacks, stack_amount, true)
-
-	-- Update stats
-	caster:CalculateStatBonus()
-
-	-- Make pudge GROW
-	caster:SetModelScale( math.min( 1 + stack_scale_up * stack_amount / 100, 2.0) )
-end
-
-function FleshHeap( keys )
-	local caster = keys.caster
-	local target = keys.unit
-	local ability = keys.ability
-	local ability_level = ability:GetLevel() - 1
-
-	-- If this isnt a real hero, do nothing.
-	if ( not target:IsRealHero() ) or target:HasModifier("modifier_arc_warden_tempest_double") then
-		return nil
-	end
-
-	-- Parameters
-	local max_stacks = ability:GetLevelSpecialValueFor("max_stacks", ability_level)
-
-	if caster:HasTalent("special_bonus_imba_pudge_4") then
-		max_stacks = max_stacks + caster:FindTalentValue("special_bonus_imba_pudge_4", "max_stacks")
-	end
-
-	-- Prevent resist stacks from resetting if the skill is unlearned
-	if ability_level == 0 then
-		max_stacks = caster.heap_resist_stacks + 1
-	end
-
-	-- Update the global heap stacks variable
-	caster.heap_stacks = caster.heap_stacks + 1
-	caster.heap_resist_stacks = math.min(caster.heap_resist_stacks + 1, max_stacks)
-
-	-- Play pudge's voice reaction
-	caster:EmitSound("pudge_pud_ability_heap_0"..RandomInt(1,2))
-end
-
-function HeapUpdater( keys )
-	local caster = keys.caster
-	local ability = keys.ability
-	local ability_level = ability:GetLevel() - 1
-	local modifier_resist = keys.modifier_resist
-	local modifier_stacks = keys.modifier_stacks
-
-	-- Parameters
-	local stack_scale_up = ability:GetLevelSpecialValueFor("stack_scale_up", ability_level)
-	local stack_amount = caster:GetModifierStackCount(modifier_stacks, caster)
-	local resist_amount = caster:FindAllModifiersByName(modifier_resist)
-
-	-- If the amount of strength stacks has increased, update it
-	--	if caster.heap_stacks > stack_amount and caster:IsAlive() then
-	local stacks_missing = caster.heap_stacks - stack_amount
-
-	-- Add the appropriate amount of strength stacks
-	caster:SetModifierStackCount(modifier_stacks, ability, caster.heap_stacks)
-
-	-- Update stats
-	caster:CalculateStatBonus()
-
-	-- Make pudge GROW
-	caster:SetModelScale( math.min( 1 + stack_scale_up * stack_amount / 100, 2.0) )
-	--	end
-
-	-- If the amount of resist stacks has increased, update it
-	if caster.heap_resist_stacks > #resist_amount and caster:IsAlive() then
-		local stacks_missing = caster.heap_resist_stacks - #resist_amount
-
-		-- Add the appropriate amount of resist stacks
-		for i = 1, stacks_missing do
-			ability:ApplyDataDrivenModifier(caster, caster, modifier_resist, {})
-		end
-	end
 end

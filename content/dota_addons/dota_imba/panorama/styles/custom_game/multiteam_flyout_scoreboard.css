@@ -196,7 +196,17 @@
 
 .is_local_player #PlayerRowContainer
 {
-	background-color: #111111bb;
+	background-color: #111111aa;
+}
+
+.is_developer #PlayerRowContainer
+{
+	background-color: #800000aa;
+}
+
+.is_donator #PlayerRowContainer
+{
+	background-color: #806600aa;
 }
 
 #PlayerRowContainer

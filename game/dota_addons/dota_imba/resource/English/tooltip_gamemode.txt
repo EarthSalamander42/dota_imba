@@ -24,6 +24,9 @@
 "imba_team_good_abandon_message"                            "The cowardly Radiant have fled the battle! Game will end in 15 seconds if no player reconnects."
 "imba_team_bad_abandon_message"                            "The cowardly Dire have fled the battle! Game will end in 15 seconds if no player reconnects."
 
+"imba_team_good_gg_message"									"Radiant have GG! Game will end in 5 seconds..."
+"imba_team_bad_gg_message"									"Dire have GG! Game will end in 5 seconds..."
+
 "imba_player_aegis_message"                                " has picked up the <font color='#FF7800'>Aegis of the Immortal!</font>"
 "imba_player_rapier_pickup_01"                              " has picked up a level "
 "imba_player_rapier_pickup_02"                              " <font color='#FF7800'> Divine Rapier!</font>"

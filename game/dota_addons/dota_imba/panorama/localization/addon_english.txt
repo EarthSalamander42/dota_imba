@@ -29,7 +29,7 @@
 	"scoreboard_tool_tip_disable_help"				"Disable Help"
 	"scoreboard_tool_tip_active_disable_help"		"(DISABLED)"
 	"custom_end_screen_legend_imr"					"IMR"
-	"custom_end_screen_legend_imr10v10"					"IMR 10v10"
+	"custom_end_screen_legend_imr10v10"				"IMR 10v10"
 
 	//Combat Events
 	"custom_toast_PlayerDenied"								"{killer_name} {denied_icon} Denied {victim_name}"
@@ -242,6 +242,8 @@
 	"battlepass_bottle2"			"Gold Bottle"
 	"battlepass_bottle3"			"Red Bottle"
 	"battlepass_bottle4"			"Purple Bottle"
+	"battlepass_pudge_arcana"		"Pudge Arcana (red)"
+	"battlepass_pudge_arcana2"		"Pudge Arcana (green)"
 
 	"companion_success"				"Companion changed with: "
 	"companion_error"				"Oops! Something went wrong."
@@ -258,10 +260,10 @@
 	"InstructionsObjectiveText"						"Slay your enemies! Be the first to earn the goal number of kills, or the team with the most kills when the round ends, and you will be victorious."
 	"InstructionsHowToPlay"							"HOW TO PLAY"
 	"InstructionsLines"								"-Approach the Midas Throne to earn bonus gold and experience.<br>
-													-Snatch up any giant coins the Over Boss tosses to earn even more gold.<br>
-													-Keep an eye out for item deliveries. An icon will appear on your map where an item will appear.<br>
-													-The fewer kills your team has, the better the item you will receive from a delivery.<br>
-													-Slay anyone who isn't on your team."
+	-Snatch up any giant coins the Over Boss tosses to earn even more gold.<br>
+	-Keep an eye out for item deliveries. An icon will appear on your map where an item will appear.<br>
+	-The fewer kills your team has, the better the item you will receive from a delivery.<br>
+	-Slay anyone who isn't on your team."
 
 	"Chest"											"ITEM"
 	"ItemWillSpawn"									"IS ABOUT TO BE DELIVERED!"
@@ -298,7 +300,7 @@
 	"KillMessageText"								"HAS KILLED THE LEADER"
 	"KillMessageBounty"								"FOR 500 BONUS GOLD!"
 	
-	"addonname"										"Overthrow"
+//	"addonname"										"Overthrow"
 	"overthrow_game_info_header_objective"			"Objective:"
 	"overthrow_brief_description"					"Slay your enemies! First team to hit the kill limit wins!"
 	"overthrow_game_info_header_how_to_play"		"How To Play:"
@@ -310,4 +312,9 @@
 	"overthrow_game_info_tip02"						"Items can be given to teammates or sold at your base."
 	"overthrow_game_info_tip03"						"You may need to coordinate with an opposing team to take out a strong opponent."
 	"overthrow_game_info_tip04"						"The fewer kills your team has, the stronger items you will recieve from a delivery."
+
+	// GG Panel
+	"gg_panel"					"GG Panel"
+	"gg_count"					"GG player count: "
+	"gg_call"					"GG player count: "
 }

@@ -170,7 +170,7 @@ function modifier_imba_static_remnant:OnDestroy()
 
 				-- cast shorter Electric Vortex
 				if pull_duration ~= 0 then
-					enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_vortex_root", {duration = pull_duration, speed = speed})
+					enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_vortex_root", {duration = pull_duration, speed = speed, pos_x = remnant_location.x, pos_y = remnant_location.y, pos_z = remnant_location.z})
 				end
 			end
 		end
@@ -326,8 +326,7 @@ function modifier_imba_vortex_pull:OnCreated( params )
 		-- Motion controller (moves the target)
 		self.speed = params.speed * FrameTime()
 
-		self.frametime = FrameTime()
-		self:StartIntervalThink(self.frametime)
+		self:StartIntervalThink(FrameTime())
 	end
 end
 
@@ -338,7 +337,7 @@ function modifier_imba_vortex_pull:OnIntervalThink()
 	end
 
 	-- Horizontal motion
-	self:HorizontalMotion(self:GetParent(), self.frametime)
+	self:HorizontalMotion(self:GetParent(), FrameTime())
 end
 
 function modifier_imba_vortex_pull:OnDestroy()
@@ -414,21 +413,21 @@ function modifier_imba_vortex_root:GetMotionControllerPriority() return DOTA_MOT
 function modifier_imba_vortex_root:OnCreated( params )
 	if IsServer() then
 		-- Ability properties
-		local parent = self:GetParent()
 		local vortex_particle = "particles/units/heroes/hero_stormspirit/stormspirit_electric_vortex_root.vpcf"
 
-		self.vortex_loc	=	self:GetCaster():GetAbsOrigin()
+--		print(params.pos_x, params.pos_y, params.pos_z)
+		self.vortex_loc	= Vector(params.pos_x, params.pos_y, params.pos_z)
+--		print(self.vortex_loc)
 		-- Apply vortex particle on location
-		self.vortex_particle_fx = ParticleManager:CreateParticle(vortex_particle, PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
---		ParticleManager:SetParticleControl(self.vortex_particle_fx, 0, self:GetCaster():GetAbsOrigin())
+		self.vortex_particle_fx = ParticleManager:CreateParticle(vortex_particle, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+--		ParticleManager:SetParticleControl(self.vortex_particle_fx, 0, self.vortex_loc)
 		-- Apply vortex particle on target
-		ParticleManager:SetParticleControlEnt(self.vortex_particle_fx, 1, parent, PATTACH_POINT_FOLLOW, "attach_hitloc", parent:GetAbsOrigin(), true)
+		ParticleManager:SetParticleControlEnt(self.vortex_particle_fx, 1, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_hitloc", self.vortex_loc, true)
 
 		-- Motion controller (moves the target)
 		self.speed = params.speed * FrameTime()
 
-		self.frametime = FrameTime()
-		self:StartIntervalThink(self.frametime)
+		self:StartIntervalThink(FrameTime())
 	end
 end
 
@@ -439,7 +438,7 @@ function modifier_imba_vortex_root:OnIntervalThink()
 	end
 
 	-- Horizontal motion
-	self:HorizontalMotion(self:GetParent(), self.frametime)
+	self:HorizontalMotion(self:GetParent(), FrameTime())
 end
 
 function modifier_imba_vortex_root:OnDestroy()
@@ -465,7 +464,7 @@ end
 function modifier_imba_vortex_root:HorizontalMotion( unit, time )
 	if IsServer() then
 		-- Move the target
-		local set_point = unit:GetAbsOrigin() + (self:GetCaster():GetAbsOrigin() - unit:GetAbsOrigin()):Normalized() * self.speed
+		local set_point = unit:GetAbsOrigin() + (self.vortex_loc - unit:GetAbsOrigin()):Normalized() * self.speed
 		-- Stop moving when the vortex has been reached
 --		if (unit:GetAbsOrigin() - self.vortex_loc):Length2D() > 50 then
 			unit:SetAbsOrigin(Vector(set_point.x, set_point.y, GetGroundPosition(set_point, unit).z))

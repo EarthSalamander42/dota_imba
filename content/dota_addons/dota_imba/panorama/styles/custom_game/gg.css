@@ -1,23 +1,49 @@
+.Root
+{
+	width: 600px;
+	height: 600px;
+	align: left top;
+	margin-top: 10%;
+	transition-property: transform;
+	transition-duration: 0.5s;
+	transition-delay: 0.0s;
+	transition-timing-function: ease-in-out;
+	transform: translateX(0px);
+}
+
 .MainPanel
 {
-	width: 25%;
-	height: 85%;
-	align: right top;
-	margin-top: 5%;
+	width: 90%;
+	height: 100%;
+	horizontal-align: left;
 	background-color: #000000aa;
+	border-bottom-right-radius: 5px;
 	flow-children: down;
-	border-top-left-radius: 5px;
-	border-bottom-left-radius: 5px;
+}
+
+.Root.translate {
+	transform: translateX(-540px);
+}
+
+#MainButton {
+	width: 10%;
+	height: 10%;
+	horizontal-align: right;
+	border-top-right-radius: 10px;
+	border-bottom-right-radius: 10px;
+	background-color: #000000aa;
 }
 
 #Title {
-	height: 5%;
+	height: 11%;
+	margin-top: 2%;
 	align: center top;
+	flow-children: down;
 }
 
 #Players {
 	width: 100%;
-	height: 55%;
+	height: 100%;
 	align: center top;
 	background-color: #000000aa;
 	flow-children: down;
@@ -28,6 +54,7 @@
 	height: 10%;
 	background-color: #505050aa;
 	align: center top;
+	flow-children: right;
 }
 
 .SteamAvatar {
@@ -48,6 +75,78 @@
 .UILabel,
 .UILabelLarge
 {
+	font-family: Goudy Trajan Medium, FZKai-Z03, TH Sarabun New;
+	text-shadow: -1px 1px 2px 2.0 #000000;
+	text-transform: uppercase;
+	text-align: center center;
+	color: #CCB966;
+}
+
+.GG {
+	width: 25%;
+	height: 80%;
+	margin-right: 5%;
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #4c5561 ), to( #6c7d88 ) );
+	wash-color: #74EAFE66;
+	align: right center;
+	border: 1px solid;
+	border-top-color: #aaaaaa77;
+	border-left-color: #aaaaaa77;
+	border-bottom-color: #333333;
+	border-right-color: #404040;
+
+	transition-property: wash-color;
+	transition-duration: 0.12s;
+	transition-delay: 0.0s;
+	transition-timing-function: ease-in-out;
+}
+
+.GG:hover {
+	wash-color: #FFFFFF;
+}
+
+.not_GG {
+	width: 25%;
+	height: 80%;
+	margin-right: 5%;
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( red ), to( darkred ) );
+	wash-color: #74EAFE66;
+	align: right center;
+	border: 1px solid;
+	border-top-color: #aaaaaa77;
+	border-left-color: #aaaaaa77;
+	border-bottom-color: #333333;
+	border-right-color: #404040;
+}
+
+.GG_label {
+	width: 100%;
+	margin-top: 7px;
+	font-size: 16px;
+	font-family: Goudy Trajan Medium, FZKai-Z03, TH Sarabun New;
+	text-shadow: -1px 1px 2px 2.0 #000000;
+	text-transform: uppercase;
+	text-align: center center;
+	color: #FFF;
+}
+
+.GG_player_name {
+	width: 55%;
+}
+
+.voted {
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #009933 ), to( #6c7d88 ) );
+}
+
+.GG_button_label {
+	width: 100%;
+	margin-top: 7px;
+	font-size: 30px;
+	font-family: Goudy Trajan Medium, FZKai-Z03, TH Sarabun New;
+	text-shadow: -1px 1px 2px 2.0 #000000;
+	text-transform: uppercase;
+	text-align: center center;
+	color: #FFF;
 	font-family: Goudy Trajan Medium, FZKai-Z03, TH Sarabun New;
 	text-shadow: -1px 1px 2px 2.0 #000000;
 	text-transform: uppercase;

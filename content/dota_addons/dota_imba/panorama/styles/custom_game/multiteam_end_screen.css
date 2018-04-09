@@ -34,6 +34,24 @@
 	}
 }
 
+@keyframes 'level_down'
+{
+	0%
+	{
+		border: 0px solid red;
+	}
+
+	50%
+	{
+		border: 2px solid red;
+	}
+
+	100%
+	{
+		border: 0px solid red;
+	}
+}
+
 .es-root {
 	width: 100%;
 	height: 100%;
@@ -45,7 +63,7 @@
 #es-teams,
 #es-buttons {
 	animation-name: fade_in;
-	animation-duration: 3.0s;
+	animation-duration: 1.25s;
 	animation-timing-function: ease-in;
 	animation-iteration-count: 1;
 }
@@ -279,6 +297,13 @@
 	animation-iteration-count: 1;
 }
 
+.level-down {
+	animation-name: level_down;
+	animation-duration: 2.0s;
+	animation-timing-function: ease-in;
+	animation-iteration-count: 1;
+}
+
 #es-player-xp-progress { 
 	background-color: gradient( linear, 0% 0%, 0% 100%, from( #326114 ), color-stop( 0.3, #54BA07 ), color-stop( .5, #54BA07 ), to( #326114 ) );
 	width: 0%;
@@ -292,7 +317,7 @@
 	width: 100%;
 	font-size: 16px;
 	vertical-align: center;
-	padding: 0px 10px;
+	padding: 0px 5px;
 }
 
 #es-player-xp-rank { text-align: right; }
@@ -329,7 +354,7 @@
 }
 
 #es-buttons-survey {
-	background-color: darkred;
+	background-color: darkorange;
 }
 
 #es-buttons-close {
