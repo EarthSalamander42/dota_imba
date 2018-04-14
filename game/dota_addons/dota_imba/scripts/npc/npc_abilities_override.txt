@@ -11101,28 +11101,13 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"stat_loss_pct"				"15 20 25 30"
+				"stat_loss_pct"				"15 17 19 21"
 				"LinkedSpecialBonus"		"special_bonus_unique_timbersaw"
 			}
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"duration"					"16"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	//	Timbersaw: bonus Whirling Death attribute reduction
-	//=================================================================================================================
-	"special_bonus_unique_timbersaw"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"6"
 			}
 		}
 	}
@@ -15847,6 +15832,222 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"lifetime"					"360"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Venomancer: Venomous Gale
+	//=================================================================================================================
+	"venomancer_venomous_gale"
+	{
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"800"
+		"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"21 20 19 18"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"125"
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"15.0 15.0 15.0 15.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"strike_damage"			"25 50 75 100"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tick_damage"			"10 40 70 100"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"tick_interval"			"3.0 3.0 3.0 3.0"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"movement_slow"			"-50 -50 -50 -50"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"125"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"speed"					"1200 1200 1200 1200"
+			}
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
+	}
+
+	//=================================================================================================================
+	// Venomancer: Poison Sting
+	//=================================================================================================================
+	"venomancer_poison_sting"
+	{
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"6.0 9.0 12.0 15.0"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage"					"6 14 22 30"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"movement_speed"			"-11 -12 -13 -14"
+				"LinkedSpecialBonus"		"special_bonus_unique_venomancer_2"
+			}			
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+	}
+
+	//=================================================================================================================
+	// Venomancer: Plague Ward
+	//=================================================================================================================
+	"venomancer_plague_ward"
+	{
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"850"
+		"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"5.0"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"20 20 20 20"
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"40.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"ward_hp_tooltip"		"75 200 325 450"
+				"LinkedSpecialBonus"	"special_bonus_unique_venomancer"
+				"LinkedSpecialBonusOperation"	"SPECIAL_BONUS_MULTIPLY"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"ward_damage_tooltip"	"13 22 31 40"
+				"LinkedSpecialBonus"	"special_bonus_unique_venomancer"
+				"LinkedSpecialBonusOperation"	"SPECIAL_BONUS_MULTIPLY"
+			}
+			"04" // For special bonus at level 25
+			{
+				"var_type"				"FIELD_INTEGER"
+				"ward_hp"		"150 400 650 900"
+			}
+			"05" // For special bonus at level 25
+			{
+				"var_type"				"FIELD_INTEGER"
+				"ward_damage"	"26 44 62 80"
+			}
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_3"
+	}
+	
+	//=================================================================================================================
+	// Venomancer: Poison Nova
+	//=================================================================================================================
+	"venomancer_poison_nova"
+	{
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.0 0.0 0.0"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"140.0 120.0 100.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"200 300 400"		
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityModifierSupportValue"	"0.0"	// just does damage
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"830"
+				"LinkedSpecialBonus"		"special_bonus_unique_venomancer_6"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"start_radius"				"255 255 255"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"16"
+				"LinkedSpecialBonus"		"special_bonus_unique_venomancer_4"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage"					"30 55 80"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"cooldown_scepter"			"140.0 120.0 60.0"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration_scepter"			"16"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage_scepter"			"60 85 110"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"speed"						"500"
 			}
 		}
 	}

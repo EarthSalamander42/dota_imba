@@ -1963,31 +1963,31 @@
 	//=================================================================================================================
 	// HERO: Venomancer
 	//=================================================================================================================
-	"npc_dota_hero_venomancer"
-	{
-		"override_hero"				"npc_dota_hero_venomancer"
-		"AttackRange"				"500"
+//	"npc_dota_hero_venomancer"
+//	{
+//		"override_hero"				"npc_dota_hero_venomancer"
+//		"AttackRange"				"500"
 
 		//Picking Screen
-		"IsImba"					"1"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
+//		"IsImba"					"1"
+//		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
 
-		"Ability1"					"imba_venomancer_venomous_gale"
-		"Ability2"					"imba_venomancer_poison_sting"
-		"Ability3"					"imba_venomancer_plague_ward"
-		"Ability4"					"imba_venomancer_toxicity"
-		"Ability5"					"generic_hidden"
-		"Ability6"					"imba_venomancer_poison_nova"
+//		"Ability1"					"imba_venomancer_venomous_gale"
+//		"Ability2"					"imba_venomancer_poison_sting"
+//		"Ability3"					"imba_venomancer_plague_ward"
+//		"Ability4"					"imba_venomancer_toxicity"
+//		"Ability5"					"generic_hidden"
+//		"Ability6"					"imba_venomancer_poison_nova"
 
-		"Ability10"					"special_bonus_imba_venomancer_1"
-		"Ability11"					"special_bonus_imba_venomancer_2"
-		"Ability12"					"special_bonus_imba_venomancer_3"
-		"Ability13"					"special_bonus_imba_venomancer_4"
-		"Ability14"					"special_bonus_imba_venomancer_5"
-		"Ability15"					"special_bonus_imba_venomancer_6"
-		"Ability16"					"special_bonus_imba_venomancer_7"
-		"Ability17"					"special_bonus_imba_venomancer_8"
-	}
+//		"Ability10"					"special_bonus_imba_venomancer_1"
+//		"Ability11"					"special_bonus_imba_venomancer_2"
+//		"Ability12"					"special_bonus_imba_venomancer_3"
+//		"Ability13"					"special_bonus_imba_venomancer_4"
+//		"Ability14"					"special_bonus_imba_venomancer_5"
+//		"Ability15"					"special_bonus_imba_venomancer_6"
+//		"Ability16"					"special_bonus_imba_venomancer_7"
+//		"Ability17"					"special_bonus_imba_venomancer_8"
+//	}
 
 	//=================================================================================================================
 	// HERO: Warlock

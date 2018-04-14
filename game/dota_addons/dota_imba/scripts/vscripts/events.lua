@@ -125,9 +125,12 @@ function GameMode:OnGameRulesStateChange(keys)
 			Timers:CreateTimer(1.5, function()
 				local hero_name
 				for _, hero in pairs(HeroList:GetAllHeroes()) do
+					if HasJuggernautArcana(hero) then
+						hero_name = "juggernaut"
+						CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "override_hero_image", {arcana = HasJuggernautArcana(hero), panel_type = "pick_screen", hero_name = hero_name})
+					end
 					if HasPudgeArcana(hero) then
 						hero_name = "pudge"
-						print("override!")
 						CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "override_hero_image", {arcana = HasPudgeArcana(hero), panel_type = "pick_screen", hero_name = hero_name})
 					end
 				end
@@ -510,6 +513,10 @@ function GameMode:OnNPCSpawned(keys)
 			if deathEffects ~= -1 then
 				ParticleManager:DestroyParticle( deathEffects, true )
 				npc:DeleteAttribute( "effectsID" )
+			end
+
+			if npc:GetUnitName() == "npc_dota_hero_juggernaut" then
+				GetJuggernautArcanaEffect(npc)
 			end
 
 			if npc:GetUnitName() == "npc_dota_hero_pudge" then

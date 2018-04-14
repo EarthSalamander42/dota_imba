@@ -10298,8 +10298,8 @@
 	}
 
 	//=================================================================================
-// Creeps: Good Guys Melee Rax TOP
-//=================================================================================
+	// Creeps: Good Guys Melee Rax TOP
+	//=================================================================================
 	"npc_dota_goodguys_melee_rax_top"
 	{
 		// General
@@ -10369,7 +10369,7 @@
 		// Status
 		//----------------------------------------------------------------
 		"StatusHealth"              "4000"      // Base health.
-		"StatusHealthRegen"         "20"     // Health regeneration rate.
+		"StatusHealthRegen"         "10"     // Health regeneration rate.
 		"StatusMana"                "0"         // Base mana.
 		"StatusManaRegen"           "0"         // Mana regeneration rate.
 
@@ -10386,9 +10386,9 @@
 		"VisionNighttimeRange"      "600"       // Range of vision at night time.
 	}   
 
-//=================================================================================
-// Creeps: Good Guys Melee Rax MID
-//=================================================================================
+	//=================================================================================
+	// Creeps: Good Guys Melee Rax MID
+	//=================================================================================
 	"npc_dota_goodguys_melee_rax_mid"
 	{
 		// General
@@ -10458,7 +10458,7 @@
 		// Status
 		//----------------------------------------------------------------
 		"StatusHealth"              "4000"      // Base health.
-		"StatusHealthRegen"         "20"     // Health regeneration rate.
+		"StatusHealthRegen"         "10"     // Health regeneration rate.
 		"StatusMana"                "0"         // Base mana.
 		"StatusManaRegen"           "0"         // Mana regeneration rate.
 
@@ -10475,9 +10475,9 @@
 		"VisionNighttimeRange"      "600"       // Range of vision at night time.
 	}   
 
-//=================================================================================
-// Creeps: Good Guys Melee Rax BOT
-//=================================================================================
+	//=================================================================================
+	// Creeps: Good Guys Melee Rax BOT
+	//=================================================================================
 	"npc_dota_goodguys_melee_rax_bot"
 	{
 		// General
@@ -10547,7 +10547,7 @@
 		// Status
 		//----------------------------------------------------------------
 		"StatusHealth"              "4000"      // Base health.
-		"StatusHealthRegen"         "20"     // Health regeneration rate.
+		"StatusHealthRegen"         "10"     // Health regeneration rate.
 		"StatusMana"                "0"         // Base mana.
 		"StatusManaRegen"           "0"         // Mana regeneration rate.
 
@@ -10564,9 +10564,9 @@
 		"VisionNighttimeRange"      "600"       // Range of vision at night time.
 	}   
 
-//=================================================================================
-// Creeps: Good Guys Range Rax TOP
-//=================================================================================
+	//=================================================================================
+	// Creeps: Good Guys Range Rax TOP
+	//=================================================================================
 	"npc_dota_goodguys_range_rax_top"
 	{
 		// General
@@ -10591,8 +10591,8 @@
 
 		// Armor
 		//----------------------------------------------------------------
-		"ArmorPhysical"             "30"            // Physical protection.
-		"MagicalResistance"         "0"         // Magical protection.
+		"ArmorPhysical"             "20"		// Physical protection.
+		"MagicalResistance"         "0"			// Magical protection.
 
 		// Attack
 		//----------------------------------------------------------------
@@ -10636,7 +10636,7 @@
 		// Status
 		//----------------------------------------------------------------
 		"StatusHealth"              "3200"      // Base health.
-		"StatusHealthRegen"         "10"     // Health regeneration rate.
+		"StatusHealthRegen"         "2"     // Health regeneration rate.
 		"StatusMana"                "0"         // Base mana.
 		"StatusManaRegen"           "0"         // Mana regeneration rate.
 
@@ -10653,9 +10653,9 @@
 		"VisionNighttimeRange"      "600"       // Range of vision at night time.
 	}   
 
-//=================================================================================
-// Creeps: Good Guys Range Rax MID
-//=================================================================================
+	//=================================================================================
+	// Creeps: Good Guys Range Rax MID
+	//=================================================================================
 	"npc_dota_goodguys_range_rax_mid"
 	{
 		// General
@@ -10681,7 +10681,7 @@
 
 		// Armor
 		//----------------------------------------------------------------
-		"ArmorPhysical"             "30"            // Physical protection.
+		"ArmorPhysical"             "20"            // Physical protection.
 		"MagicalResistance"         "0"         // Magical protection.
 
 		// Attack
@@ -10726,7 +10726,7 @@
 		// Status
 		//----------------------------------------------------------------
 		"StatusHealth"              "3200"      // Base health.
-		"StatusHealthRegen"         "10"     // Health regeneration rate.
+		"StatusHealthRegen"         "2"     // Health regeneration rate.
 		"StatusMana"                "0"         // Base mana.
 		"StatusManaRegen"           "0"         // Mana regeneration rate.
 
@@ -10743,13 +10743,13 @@
 		"VisionNighttimeRange"      "600"       // Range of vision at night time.
 	}   
 
-//=================================================================================
-// Creeps: Good Guys Range Rax BOT
-//=================================================================================
+	//=================================================================================
+	// Creeps: Good Guys Range Rax BOT
+	//=================================================================================
 	"npc_dota_goodguys_range_rax_bot"
 	{
 		// General
-		//
+		//----------------------------------------------------------------
 		"BaseClass"                 "npc_dota_building" // Class of entity of link to.
 		"Model"                     "models/props_structures/radiant_ranged_barracks001.vmdl"   // Model.
 		"SoundSet"                  "Creep_Good_Melee"                  // Name of sound set.
@@ -10770,7 +10770,7 @@
 
 		// Armor
 		//----------------------------------------------------------------
-		"ArmorPhysical"             "30"            // Physical protection.
+		"ArmorPhysical"             "20"            // Physical protection.
 		"MagicalResistance"         "0"         // Magical protection.
 
 		// Attack
@@ -10815,7 +10815,7 @@
 		// Status
 		//----------------------------------------------------------------
 		"StatusHealth"              "3200"      // Base health.
-		"StatusHealthRegen"         "10"     // Health regeneration rate.
+		"StatusHealthRegen"         "2"     // Health regeneration rate.
 		"StatusMana"                "0"         // Base mana.
 		"StatusManaRegen"           "0"         // Mana regeneration rate.
 
@@ -10832,9 +10832,9 @@
 		"VisionNighttimeRange"      "600"       // Range of vision at night time.
 	}   
 
-//=================================================================================
-// Creeps: Bad Guys Melee Rax TOP
-//=================================================================================
+	//=================================================================================
+	// Creeps: Bad Guys Melee Rax TOP
+	//=================================================================================
 	"npc_dota_badguys_melee_rax_top"
 	{
 		// General
@@ -10904,7 +10904,7 @@
 		// Status
 		//----------------------------------------------------------------
 		"StatusHealth"              "4000"      // Base health.
-		"StatusHealthRegen"         "20"     // Health regeneration rate.
+		"StatusHealthRegen"         "10"     // Health regeneration rate.
 		"StatusMana"                "0"         // Base mana.
 		"StatusManaRegen"           "0"         // Mana regeneration rate.
 
@@ -10922,9 +10922,9 @@
 	}   
 	
 
-//=================================================================================
-// Creeps: Bad Guys Melee Rax MID
-//=================================================================================
+	//=================================================================================
+	// Creeps: Bad Guys Melee Rax MID
+	//=================================================================================
 	"npc_dota_badguys_melee_rax_mid"
 	{
 		// General
@@ -10994,7 +10994,7 @@
 		// Status
 		//----------------------------------------------------------------
 		"StatusHealth"              "4000"      // Base health.
-		"StatusHealthRegen"         "20"     // Health regeneration rate.
+		"StatusHealthRegen"         "10"     // Health regeneration rate.
 		"StatusMana"                "0"         // Base mana.
 		"StatusManaRegen"           "0"         // Mana regeneration rate.
 
@@ -11010,9 +11010,9 @@
 		"VisionDaytimeRange"        "900"       // Range of vision during day light.
 		"VisionNighttimeRange"      "600"       // Range of vision at night time.
 	}   
-//=================================================================================
-// Creeps: Bad Guys Melee Rax BOT
-//=================================================================================
+	//=================================================================================
+	// Creeps: Bad Guys Melee Rax BOT
+	//=================================================================================
 	"npc_dota_badguys_melee_rax_bot"
 	{
 		// General
@@ -11082,7 +11082,7 @@
 		// Status
 		//----------------------------------------------------------------
 		"StatusHealth"              "4000"      // Base health.
-		"StatusHealthRegen"         "20"     // Health regeneration rate.
+		"StatusHealthRegen"         "10"     // Health regeneration rate.
 		"StatusMana"                "0"         // Base mana.
 		"StatusManaRegen"           "0"         // Mana regeneration rate.
 
@@ -11099,9 +11099,9 @@
 		"VisionNighttimeRange"      "600"       // Range of vision at night time.
 	}   
 
-//=================================================================================
-// Creeps: Bad Guys Range Rax TOP
-//=================================================================================
+	//=================================================================================
+	// Creeps: Bad Guys Range Rax TOP
+	//=================================================================================
 	"npc_dota_badguys_range_rax_top"
 	{
 		// General
@@ -11126,7 +11126,7 @@
 
 		// Armor
 		//----------------------------------------------------------------
-		"ArmorPhysical"             "30"            // Physical protection.
+		"ArmorPhysical"             "20"            // Physical protection.
 		"MagicalResistance"         "0"         // Magical protection.
 
 		// Attack
@@ -11171,7 +11171,7 @@
 		// Status
 		//----------------------------------------------------------------
 		"StatusHealth"              "3200"      // Base health.
-		"StatusHealthRegen"         "10"     // Health regeneration rate.
+		"StatusHealthRegen"         "2"     // Health regeneration rate.
 		"StatusMana"                "0"         // Base mana.
 		"StatusManaRegen"           "0"         // Mana regeneration rate.
 
@@ -11188,9 +11188,9 @@
 		"VisionNighttimeRange"      "600"       // Range of vision at night time.
 	}   
 
-//=================================================================================
-// Creeps: Bad Guys Range Rax MID
-//=================================================================================
+	//=================================================================================
+	// Creeps: Bad Guys Range Rax MID
+	//=================================================================================
 	"npc_dota_badguys_range_rax_mid"
 	{
 		// General
@@ -11215,7 +11215,7 @@
 
 		// Armor
 		//----------------------------------------------------------------
-		"ArmorPhysical"             "30"            // Physical protection.
+		"ArmorPhysical"             "20"            // Physical protection.
 		"MagicalResistance"         "0"         // Magical protection.
 
 		// Attack
@@ -11260,7 +11260,7 @@
 		// Status
 		//----------------------------------------------------------------
 		"StatusHealth"              "3200"      // Base health.
-		"StatusHealthRegen"         "10"       // Health regeneration rate.
+		"StatusHealthRegen"         "2"       // Health regeneration rate.
 		"StatusMana"                "0"         // Base mana.
 		"StatusManaRegen"           "0"         // Mana regeneration rate.
 
@@ -11304,8 +11304,8 @@
 
 		// Armor
 		//----------------------------------------------------------------
-		"ArmorPhysical"             "20"            // Physical protection.
-		"MagicalResistance"             "0"         // Magical protection.
+		"ArmorPhysical"				"20"            // Physical protection.
+		"MagicalResistance"			"0"         // Magical protection.
 
 		// Attack
 		//----------------------------------------------------------------
@@ -11349,7 +11349,7 @@
 		// Status
 		//----------------------------------------------------------------
 		"StatusHealth"              "3200"      // Base health.
-		"StatusHealthRegen"         "10"     // Health regeneration rate.
+		"StatusHealthRegen"         "2"     // Health regeneration rate.
 		"StatusMana"                "0"         // Base mana.
 		"StatusManaRegen"           "0"         // Mana regeneration rate.
 

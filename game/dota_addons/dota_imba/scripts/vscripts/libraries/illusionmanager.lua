@@ -185,7 +185,9 @@ function IllusionManager:CreateIllusion(tEntity,tSkill,vSpawnLocation,tIllusionB
 		end																																		 -- 
 		return tIllusion -- this will returns execution with a 'completed' unit, should be ready to receive commands now
 	end																																				 -- xxxxxxxxxxxxxxxxxxxxxxxxxx
+
 	local illusion = CreateUnitByNameAsync(illusion_name, vSpawnLocation, true, tEntity, nil, tEntity:GetTeamNumber(),illucallback) -- Use an async operation to allow the game to perform other ops while we're waiting for this
+--	local illusion = CreateUnitByName(illusion_name, vSpawnLocation, true, tEntity, nil, tEntity:GetTeamNumber())
 	-- TODO: Seems obvious, no?
 --	for int, unit in pairs(HeroSelection.heroes_custom) do
 --		if unit == illusion_name then

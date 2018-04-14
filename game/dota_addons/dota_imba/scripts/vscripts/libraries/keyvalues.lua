@@ -74,7 +74,7 @@ function LoadGameKeyValues()
 		AbilityKV = {base="npc_abilities",custom="npc_abilities_custom"},
 		AbilityKV2 = {base="",custom="npc_abilities"},
 		ItemKV = {base="items",custom="npc_items_custom"},
-		UnitKV = {base="npc_units",custom="npc_units"}, -- npc_units_custom
+		UnitKV = {base="npc_units",custom="npc_units_custom"}, -- npc_units_custom
 		HeroKV = {base="npc_heroes",custom="npc_heroes_custom"},
 		HeroKV2 = {base="",custom="npc_heroes"}
 	}

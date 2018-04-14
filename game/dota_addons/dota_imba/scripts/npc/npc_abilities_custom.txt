@@ -35897,7 +35897,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"turn_rate_slow_pct"	"60"
+				"turn_rate_slow_pct"	"30"
 			}
 			"04"
 			{
@@ -35981,7 +35981,7 @@
 			"04"
 			{
 				"var_type"							"FIELD_FLOAT"
-				"agility_damage_multiplier_smoke"	"0.25 0.4 0.55 0.7"
+				"agility_damage_multiplier_smoke"	"0.2 0.3 0.4 0.5"
 			}
 
 			"05"
@@ -35993,7 +35993,7 @@
 			"06"
 			{
 				"var_type"							"FIELD_FLOAT"
-				"agility_damage_multiplier_side"	"0.25 0.4 0.55 0.7"
+				"agility_damage_multiplier_side"	"0.2 0.3 0.4 0.5"
 			}
 
 		}

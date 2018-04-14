@@ -329,11 +329,11 @@ function HeroSelection:APTimer (time, message)
 		end
 		PlayerResource:GetAllTeamPlayerIDs():each(function (playerId)
 			if not lockedHeroes[playerId] then
-				--				if IsRankedMap() then
-				--					HeroSelection:UpdateTable(playerId, cmpickorder[PlayerResource:GetTeam(playerId).."picks"][1])
-				--				else
-				HeroSelection:UpdateTable(playerId, HeroSelection:RandomHero())
-				--				end
+--				if IsRankedMap() then
+--					HeroSelection:UpdateTable(playerId, cmpickorder[PlayerResource:GetTeam(playerId).."picks"][1])
+--				else
+					HeroSelection:UpdateTable(playerId, HeroSelection:RandomHero())
+--				end
 			end
 		end)
 
@@ -480,8 +480,10 @@ end
 
 function HeroSelection:IsHeroDisabled(hero)
 
-	if hero and api.imba.hero_is_disabled(hero) then
-		return true
+	if hero then
+		if api.imba.hero_is_disabled(hero) then
+			return true
+		end
 	end
 
 	--	if IsRankedMap() then

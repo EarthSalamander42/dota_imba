@@ -319,6 +319,7 @@ function item_imba_jarnbjorn:OnSpellStart()
 	if IsServer() then
 		local target = self:GetCursorTarget()
 		local tree_cooldown = self:GetSpecialValueFor("tree_cooldown")
+		print(tree_cooldown)
 
 		if target.GetUnitName == nil then
 			target:CutDown(-1)

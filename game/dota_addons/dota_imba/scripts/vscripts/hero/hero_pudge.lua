@@ -269,11 +269,18 @@ function imba_pudge_meat_hook:OnSpellStart()
 
 	local hook_width = self:GetSpecialValueFor("hook_width") + self:GetCaster():FindTalentValue("special_bonus_imba_pudge_3")
 	local hook_speed = self:GetSpecialValueFor("base_speed") + self:GetCaster():FindTalentValue("special_bonus_imba_pudge_2")
-	local stack_speed = self:GetCaster():FindAbilityByName("imba_pudge_light_hook"):GetSpecialValueFor("stack_speed")
 	local hook_range = self:GetSpecialValueFor("base_range") + self:GetCaster():FindTalentValue("special_bonus_imba_pudge_5")
-	local stack_range = self:GetCaster():FindAbilityByName("imba_pudge_light_hook"):GetSpecialValueFor("stack_range")
+	local stack_speed = 0
+	local stack_range = 0
+	if self:GetCaster():HasAbility("imba_pudge_light_hook") then
+		stack_speed = self:GetCaster():FindAbilityByName("imba_pudge_light_hook"):GetSpecialValueFor("stack_speed")
+		stack_range = self:GetCaster():FindAbilityByName("imba_pudge_light_hook"):GetSpecialValueFor("stack_range")
+	end
 	local hook_dmg = self:GetSpecialValueFor("base_damage")
-	local stack_dmg = self:GetCaster():FindAbilityByName("imba_pudge_sharp_hook"):GetSpecialValueFor("stack_damage")
+	local stack_dmg = 0
+	if self:GetCaster():HasAbility("imba_pudge_light_hook") then
+		stack_dmg = self:GetCaster():FindAbilityByName("imba_pudge_sharp_hook"):GetSpecialValueFor("stack_damage")
+	end
 	local stack_dmg_scepter = self:GetSpecialValueFor("damage_scepter")
 	if spd_hook_buff then
 		hook_speed = hook_speed + stack_speed * spd_hook_buff:GetStackCount()
@@ -477,29 +484,37 @@ function imba_pudge_meat_hook:OnProjectileHit_ExtraData(hTarget, vLocation, Extr
 				local actually_dmg = ApplyDamage(damageTable)
 				SendOverheadEventMessage(nil, OVERHEAD_ALERT_DAMAGE, hTarget, actually_dmg, nil)
 				hTarget:AddNewModifier(self:GetCaster(), self, "modifier_imba_hook_target_enemy", {})
-				if hTarget:IsRealHero() then
-					self:GetCaster().successful_hooks = self:GetCaster().successful_hooks + 1
-				else
-					self:GetCaster().successful_hooks = 0
-				end
-				if self:GetCaster().successful_hooks >= 2 then
-					EmitSoundOnLocationWithCaster(self:GetCaster():GetAbsOrigin(), "Hero_Pudge.HookDrag.Arcana", self:GetCaster())
-					local pfx = "particles/econ/items/pudge/pudge_arcana/pudge_arcana_red_hook_streak.vpcf"
-					if self:GetCaster().pudge_arcana == 1 then
-						pfx = "particles/econ/items/pudge/pudge_arcana/pudge_arcana_hook_streak.vpcf"
+
+--				if HasPudgeArcana(self:GetCaster()) then -- error for reasons, maybe because target is dead
+					if hTarget:IsRealHero() then
+						self:GetCaster().successful_hooks = self:GetCaster().successful_hooks + 1
+					else
+						self:GetCaster().successful_hooks = 0
 					end
-					local hook_counter = ParticleManager:CreateParticle(pfx, PATTACH_OVERHEAD_FOLLOW, self:GetCaster())
-					local stack_10 = math.floor(self:GetCaster().successful_hooks / 10)
-					ParticleManager:SetParticleControl(hook_counter, 2, Vector(stack_10, self:GetCaster().successful_hooks - stack_10 * 10, self:GetCaster().successful_hooks))
-					ParticleManager:ReleaseParticleIndex(nFXIndex)
-				end
+
+					if self:GetCaster().successful_hooks >= 2 then
+						EmitSoundOnLocationWithCaster(self:GetCaster():GetAbsOrigin(), "Hero_Pudge.HookDrag.Arcana", self:GetCaster())
+						local pfx = "particles/econ/items/pudge/pudge_arcana/pudge_arcana_red_hook_streak.vpcf"
+						if self:GetCaster().pudge_arcana == 1 then
+							pfx = "particles/econ/items/pudge/pudge_arcana/pudge_arcana_hook_streak.vpcf"
+						end
+						local hook_counter = ParticleManager:CreateParticle(pfx, PATTACH_OVERHEAD_FOLLOW, self:GetCaster())
+						local stack_10 = math.floor(self:GetCaster().successful_hooks / 10)
+						ParticleManager:SetParticleControl(hook_counter, 2, Vector(stack_10, self:GetCaster().successful_hooks - stack_10 * 10, self:GetCaster().successful_hooks))
+						ParticleManager:ReleaseParticleIndex(hook_counter)
+					end
+--				end
 			elseif hTarget:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then
 				hTarget:AddNewModifier(self:GetCaster(), self, "modifier_imba_hook_target_ally", {})
 			else
-				self:GetCaster().successful_hooks = 0
+--				if HasPudgeArcana(self:GetCaster()) then
+					self:GetCaster().successful_hooks = 0
+--				end
 			end
 		else
-			self:GetCaster().successful_hooks = 0
+--			if HasPudgeArcana(self:GetCaster()) then
+				self:GetCaster().successful_hooks = 0
+--			end
 		end
 
 		local projectile_info = {

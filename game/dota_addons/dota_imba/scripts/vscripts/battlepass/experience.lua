@@ -10,13 +10,14 @@ for i = 21 +1, 500 do
 end
 
 function GetXPLevelByXp(xp)
-	if xp <= 0 then return 0 end
+	if xp <= 0 then return 1 end
 
 	for k, v in pairs(XP_level_table) do
 		if v > xp then
 			return k - 1
 		end
 	end
+
 	return 500
 end
 

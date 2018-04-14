@@ -821,8 +821,8 @@ function imba_kunkka_tidebringer:OnUpgrade()
 		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_tidebringer", {})
 
 		-- Toggles the autocast when first leveled
-		caster_tidebringer = self:GetCaster():FindAbilityByName("imba_kunkka_tidebringer")
-		if caster_tidebringer:GetLevel() == 1 then
+		local caster_tidebringer = self:GetCaster():FindAbilityByName("imba_kunkka_tidebringer")
+		if caster_tidebringer and caster_tidebringer:GetLevel() == 1 then
 			caster_tidebringer:ToggleAutoCast()
 		end
 	end

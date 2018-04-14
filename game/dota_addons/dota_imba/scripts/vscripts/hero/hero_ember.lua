@@ -660,25 +660,28 @@ function imba_ember_spirit_sleight_of_fist:OnSpellStart()
 			caster:AddNewModifier(caster, self, "modifier_imba_sleight_of_fist_caster", {})
 			ProjectileManager:ProjectileDodge(caster)
 			Timers:CreateTimer(FrameTime(), function()
-				-- Particles and sound
-				caster:EmitSound("Hero_EmberSpirit.SleightOfFist.Damage")
-				local slash_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_ember_spirit/ember_spirit_sleightoffist_tgt.vpcf", PATTACH_ABSORIGIN_FOLLOW, current_target)
-				ParticleManager:SetParticleControl(slash_pfx, 0, current_target:GetAbsOrigin())
-				ParticleManager:ReleaseParticleIndex(slash_pfx)
+				if current_target:IsAlive() then
+					-- Particles and sound
+					caster:EmitSound("Hero_EmberSpirit.SleightOfFist.Damage")
+					local slash_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_ember_spirit/ember_spirit_sleightoffist_tgt.vpcf", PATTACH_ABSORIGIN_FOLLOW, current_target)
+					ParticleManager:SetParticleControl(slash_pfx, 0, current_target:GetAbsOrigin())
+					ParticleManager:ReleaseParticleIndex(slash_pfx)
 
-				local trail_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_ember_spirit/ember_spirit_sleightoffist_trail.vpcf", PATTACH_CUSTOMORIGIN, nil)
-				ParticleManager:SetParticleControl(trail_pfx, 0, current_target:GetAbsOrigin())
-				ParticleManager:SetParticleControl(trail_pfx, 1, previous_position)
-				ParticleManager:ReleaseParticleIndex(trail_pfx)
+					local trail_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_ember_spirit/ember_spirit_sleightoffist_trail.vpcf", PATTACH_CUSTOMORIGIN, nil)
+					ParticleManager:SetParticleControl(trail_pfx, 0, current_target:GetAbsOrigin())
+					ParticleManager:SetParticleControl(trail_pfx, 1, previous_position)
+					ParticleManager:ReleaseParticleIndex(trail_pfx)
 
-				-- Perform the attack
-				if caster:HasModifier("modifier_imba_sleight_of_fist_caster") then
-					caster:SetAbsOrigin(current_target:GetAbsOrigin() + original_direction * 64)
-					caster:PerformAttack(current_target, true, true, true, false, false, false, false)
+					-- Perform the attack
+					if caster:HasModifier("modifier_imba_sleight_of_fist_caster") then
+						caster:SetAbsOrigin(current_target:GetAbsOrigin() + original_direction * 64)
+						caster:PerformAttack(current_target, true, true, true, false, false, false, false)
+					end
 				end
 
 				-- Check if the loop continues
 				current_count = current_count + 1
+
 				if #sleight_targets >= current_count and caster:HasModifier("modifier_imba_sleight_of_fist_caster") then
 					previous_position = current_target:GetAbsOrigin()
 					current_target = EntIndexToHScript(sleight_targets[current_count])

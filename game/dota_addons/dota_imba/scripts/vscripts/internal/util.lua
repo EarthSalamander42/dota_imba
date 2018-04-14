@@ -1593,3 +1593,22 @@ function GetHeroType(hero)
 
 	return effect_type
 end
+
+function HideWearable(hero, item)
+	Timers:CreateTimer(function()
+--		print("Check for cosmetic to hide...")
+--		for i = 0, 44 do
+--			if hero:GetTogglableWearable(i) then
+--				print("WEARABLE:", i)
+--			end
+--		end
+
+		local wearable = hero:GetTogglableWearable(item)
+		if wearable then
+			wearable:AddEffects(EF_NODRAW)
+--			print("Hide default wearable!")
+		end
+
+		return 2.0
+	end)
+end

@@ -1332,7 +1332,7 @@ function GameMode:OnGameInProgress()
 	-- IMBA: Passive gold adjustment
 	GameRules:SetGoldTickTime(GOLD_TICK_TIME[GetMapName()])
 
-	if GetMapName() == "imba_overthrow" then return end
+	if GetMapName() == "imba_overthrow" or GetMapName() == "imba_1v1" then return end
 
 	-- Find all towers
 	local towers = Entities:FindAllByClassname("npc_dota_tower")
@@ -1937,11 +1937,11 @@ function GameMode:OnThink()
 
 		-- Morphling fixes
 		if hero:GetUnitName() == "npc_dota_hero_morphling" then
-			if not hero:HasAbility("imba_riki_cloak_and_dagger") and hero:HasModifier("modifier_imba_riki_invisibility") then
-				hero:RemoveModifierByName("modifier_imba_riki_invisibility")
+			for _, modifier in pairs(MORPHLING_RESTRICTED_MODIFIERS) do
+				if hero:GetModelName() == "models/heroes/morphling/morphling.vmdl" and hero:HasModifier(modifier) then
+					hero:RemoveModifierByName(modifier)
+				end
 			end
-
-			break
 		end
 
 		-- Find hidden modifiers
@@ -2001,7 +2001,7 @@ function GameMode:OnThink()
 
 		if newState == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
 			-- End the game if one team completely abandoned
-			if not IsInToolsMode() then
+			if not IsInToolsMode() or not GameRules:IsCheatMode() then
 				if not TEAM_ABANDON then
 					TEAM_ABANDON = {} -- 15 second to abandon, is_abandoning?, player_count.
 					TEAM_ABANDON[2] = {FULL_ABANDON_TIME, false, 0}
