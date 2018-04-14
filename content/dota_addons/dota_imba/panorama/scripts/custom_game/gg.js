@@ -15,12 +15,6 @@ function LoadPlayers() {
 
 function GenerateGGPanel(team) {
 	if (Game.GetPlayerInfo(Game.GetLocalPlayerID()).player_team_id == team) {
-		if (team == 2) {
-			radiant_player_count = radiant_player_count + 1
-		} else if (team == 3) {
-			dire_player_count = dire_player_count + 1
-		}
-
 		var ids = Game.GetPlayerIDsOnTeam(team);
 		$.Each(ids, function(player) {
 			var PlayerPanel = $("#Players")
@@ -45,7 +39,7 @@ function GenerateGGPanel(team) {
 			if (player == Game.GetLocalPlayerID()) {
 				var button = $.CreatePanel('Button', player_row, "GG" + player);
 				button.AddClass("GG")
-				button.SetPanelEvent('onactivate', function () { VoteGG(player, button, true); });
+				button.SetPanelEvent('onactivate', function () { VoteGG(player, button, team, true); });
 
 				var label = $.CreatePanel('Label', button, "GG" + player + "_label");
 				label.AddClass("GG_label")
@@ -59,6 +53,12 @@ function GenerateGGPanel(team) {
 				label.AddClass("GG_label")
 				label.text = "Not GG"
 			}
+
+			if (team == 2) {
+				radiant_player_count = radiant_player_count + 1
+			} else if (team == 3) {
+				dire_player_count = dire_player_count + 1
+			}
 		});
 
 		if (Game.GetPlayerInfo(Game.GetLocalPlayerID()).player_team_id == 2) {
@@ -69,15 +69,15 @@ function GenerateGGPanel(team) {
 	}
 }
 
-function VoteGG(ID, panel, Vote) {
+function VoteGG(ID, panel, team, Vote) {
 	if (panel.BHasClass("voted")) {
 		return;
 	}
 
-	if (Game.GetPlayerInfo(Game.GetLocalPlayerID()).player_team_id == 2) {
+	if (team == 2) {
 		radiant_vote_count = radiant_vote_count + 1
 		$("#gg_count").text = $.Localize("#gg_count") + radiant_vote_count + "/" + radiant_player_count
-	} else if (Game.GetPlayerInfo(Game.GetLocalPlayerID()).player_team_id == 3) {
+	} else if (team == 3) {
 		dire_vote_count = dire_vote_count + 1
 		$("#gg_count").text = $.Localize("#gg_count") + dire_vote_count + "/" + dire_player_count
 	}

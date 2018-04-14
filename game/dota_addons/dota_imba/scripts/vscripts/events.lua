@@ -85,8 +85,7 @@ function GameMode:OnGameRulesStateChange(keys)
 	GameMode:_OnGameRulesStateChange(keys)
 
 	-- Run this in safe context
-	safe(function ()
-
+--	safe(function()
 		local new_state = GameRules:State_Get()
 		CustomNetTables:SetTableValue("game_options", "game_state", {state = new_state})
 
@@ -107,8 +106,11 @@ function GameMode:OnGameRulesStateChange(keys)
 			-- get the IXP of everyone (ignore bot)
 			GetPlayerInfoIXP()
 
-			--		HeroSelection:HeroListPreLoad()
+--			HeroSelection:HeroListPreLoad()
 			HeroSelection:Init()
+
+--			local steam_id = tostring(PlayerResource:GetSteamID(0))
+--			PrintTable(api.imba.get_player_info(steam_id))
 		end
 
 		-------------------------------------------------------------------------------------------------
@@ -120,18 +122,19 @@ function GameMode:OnGameRulesStateChange(keys)
 			-- Initialize Battle Pass
 			Imbattlepass:Init()
 
+			Timers:CreateTimer(1.5, function()
+				local hero_name
+				for _, hero in pairs(HeroList:GetAllHeroes()) do
+					if HasPudgeArcana(hero) then
+						hero_name = "pudge"
+						print("override!")
+						CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "override_hero_image", {arcana = HasPudgeArcana(hero), panel_type = "pick_screen", hero_name = hero_name})
+					end
+				end
+			end)
+
 			-- Shows various info to devs in pub-game to find lag issues
 			ImbaNetGraph(10.0)
-
-			-- Hide Imbathrow bar for spectators
-			local imbathrow_bar = false
-			for i = 0, PlayerResource:GetPlayerCount() - 1 do
-				--			if PlayerResource:GetPlayer(i):GetTeam() ~= DOTA_TEAM_SPECTATOR then
-				if GetMapName() == "imba_overthrow" then
-					imbathrow_bar = true
-				end
-				--			end
-			end
 
 			-- Initialize rune spawners
 			InitRunes()
@@ -173,7 +176,7 @@ function GameMode:OnGameRulesStateChange(keys)
 						COURIER_TEAM[playerStart:GetTeam()] = CreateUnitByName("npc_dota_courier", playerStart:GetAbsOrigin(), true, nil, nil, playerStart:GetTeam())
 					end
 
-					CustomGameEventManager:Send_ServerToAllClients("imbathrow_topbar", {imbathrow = true})
+--					CustomGameEventManager:Send_ServerToAllClients("imbathrow_topbar", {imbathrow = true})
 				else
 					COURIER_TEAM[2] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_radiant"):GetAbsOrigin(), true, nil, nil, 2)
 					COURIER_TEAM[3] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_dire"):GetAbsOrigin(), true, nil, nil, 3)
@@ -206,7 +209,7 @@ function GameMode:OnGameRulesStateChange(keys)
 						shrine:SetAbsOrigin(abs)
 					end
 
-					CustomGameEventManager:Send_ServerToAllClients("imbathrow_topbar", {imbathrow = false})
+--					CustomGameEventManager:Send_ServerToAllClients("imbathrow_topbar", {imbathrow = false})
 				end
 			end)
 		end
@@ -290,20 +293,20 @@ function GameMode:OnGameRulesStateChange(keys)
 			api.imba.event(api.events.entered_post_game)
 
 			api.imba.complete(function (error, players)
-				safe(function ()
-					if error then
+--				safe(function ()
+--					if error then
 						-- if we have an error we should display the scoreboard anyways, just with reduced data
 
-						CustomGameEventManager:Send_ServerToAllClients("end_game", {
-							players = {},
-							xp_info = {},
-							info = {
-								winner = GAME_WINNER_TEAM,
-								id = 0
-							},
-							error = true
-						})
-					else
+--						CustomGameEventManager:Send_ServerToAllClients("end_game", {
+--							players = {},
+--							xp_info = {},
+--							info = {
+--								winner = GAME_WINNER_TEAM,
+--								id = 0
+--							},
+--							error = true
+--						})
+--					else
 						-- everything went fine. use the old system for xp
 
 						local xp_info = {}
@@ -336,15 +339,15 @@ function GameMode:OnGameRulesStateChange(keys)
 								radiant_score = GetTeamHeroKills(2),
 								dire_score = GetTeamHeroKills(3),
 							},
-							error = false
+--							error = false
 						})
-					end
-				end)
+--					end
+--				end)
 			end)
 
 			CustomNetTables:SetTableValue("game_options", "game_count", {value = 0})
 		end
-	end)
+--	end)
 end
 
 dummy_created_count = 0
@@ -471,12 +474,13 @@ function GameMode:OnNPCSpawned(keys)
 			if npc.first_spawn == true then
 				CombatEvents("generic", "courier_respawn", npc)
 			end
+
 			npc.first_spawn = true
 		end
 	end
 
 	if npc:GetUnitName() == "npc_dummy_unit" or npc:GetUnitName() == "npc_dummy_unit_perma" then
-		dummy_created_count = dummy_created_count +1
+		dummy_created_count = dummy_created_count + 1
 	end
 
 	if npc:IsRealHero() then
@@ -486,17 +490,17 @@ function GameMode:OnNPCSpawned(keys)
 					Timers:CreateTimer(2.0, function()
 						local steam_id = tostring(PlayerResource:GetSteamID(npc:GetPlayerID()))
 						if steam_id == "76561198015161808" then
-							DonatorCompanion(npc:GetPlayerID(), "models/courier/baby_rosh/babyroshan.vmdl")
+							DonatorCompanion(npc:GetPlayerID(), "npc_imba_donator_companion_cookies")
 						elseif steam_id == "76561198003571172" then
-							DonatorCompanion(npc:GetPlayerID(), "models/courier/baby_rosh/babyroshan.vmdl")
+							DonatorCompanion(npc:GetPlayerID(), "npc_imba_donator_companion_baumi")
 						elseif steam_id == "76561198014254115" then
-							DonatorCompanion(npc:GetPlayerID(), "models/courier/frog/frog.vmdl")
+							DonatorCompanion(npc:GetPlayerID(), "npc_imba_donator_companion_icefrog")
 						elseif steam_id == "76561198014254115" then
-							DonatorCompanion(npc:GetPlayerID(), "models/items/lone_druid/true_form/elemental_curse_set_elemental_curse_true_form/elemental_curse_set_elemental_curse_true_form.vmdl")
+							DonatorCompanion(npc:GetPlayerID(), "npc_imba_donator_companion_admiral_bulldog")
 						elseif steam_id == "76561198021465788" then
-							DonatorCompanion(npc:GetPlayerID(), "models/creeps/roshan/roshan.vmdl")
+							DonatorCompanion(npc:GetPlayerID(), "npc_imba_donator_companion_suthernfriend")
 						else
-							DonatorCompanion(npc:GetPlayerID(), IsDonator(npc))
+							DonatorCompanion(npc:GetPlayerID(), api.imba.get_player_info(steam_id).companion_file)
 						end
 					end)
 				end
@@ -524,6 +528,10 @@ function GameMode:OnNPCSpawned(keys)
 				npc:SwapAbilities("imba_troll_warlord_whirling_axes_ranged", "imba_troll_warlord_whirling_axes_melee", true, false)
 			end
 
+			Timers:CreateTimer(1.0, function()
+
+			end)
+
 			npc.first_spawn = true
 		end
 
@@ -535,10 +543,10 @@ function GameMode:OnNPCSpawned(keys)
 			end)
 		end
 
-		Timers:CreateTimer(1, function() -- Silencer fix
+		Timers:CreateTimer(1.0, function() -- Silencer fix
 			if npc:HasModifier("modifier_silencer_int_steal") then
 				npc:RemoveModifierByName("modifier_silencer_int_steal")
-		end
+			end
 		end)
 	end
 

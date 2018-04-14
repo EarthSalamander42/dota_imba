@@ -181,12 +181,12 @@ function _ScoreboardUpdater_UpdatePlayerPanel(scoreboardConfig, playersContainer
 	playerPanel.SetHasClass("is_local_player", (playerId == Game.GetLocalPlayerID()));
 
 	if (IsDeveloper(playerId)) {
-		$.Msg("Developer!")
+//		$.Msg("Developer!")
 		playerPanel.AddClass("is_developer");
 	}
 
 	if (IsDonator(playerId) && !playerPanel.BHasClass("is_developer")) {
-		$.Msg("Donator!")
+//		$.Msg("Donator!")
 		playerPanel.AddClass("is_donator");
 	}
 

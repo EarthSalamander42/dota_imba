@@ -47,7 +47,9 @@ require('libraries/attachments')
 require('libraries/astar')
 -- Illusion manager, created by Seinken!
 require('libraries/illusionmanager')
+
 require('libraries/keyvalues')
+require('libraries/rgb_to_hex')
 
 -- These internal libraries set up barebones's events and processes.  Feel free to inspect them/change them if you need to.
 require('internal/gamemode')
@@ -1231,7 +1233,6 @@ function GameMode:OnAllPlayersLoaded()
 
 		-- Identify the fountains
 		if string.find(building_name, "fountain") then
-
 			-- Add fountain passive abilities
 			building:AddAbility("imba_fountain_danger_zone"):SetLevel(1)
 			building:AddAbility("imba_fountain_relief"):SetLevel(1)
@@ -1270,17 +1271,34 @@ function GameMode:OnHeroInGame(hero)
 	end
 
 	Timers:CreateTimer(0.1, function()
-		if hero:IsIllusion() then return end
+		if hero:IsIllusion() or hero:HasModifier("modifier_illusion_manager_out_of_world") or hero:HasModifier("modifier_illusion_manager") then return end
 		if hero:GetUnitName() ~= "npc_dota_hero_dummy_dummy" then
 			hero.picked = true
-			COURIER_TEAM[hero:GetTeamNumber()]:SetControllableByPlayer(hero:GetPlayerID(), true)
+
+			if COURIER_TEAM then
+				COURIER_TEAM[hero:GetTeamNumber()]:SetControllableByPlayer(hero:GetPlayerID(), true)
+			end
+
 			CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(hero:GetPlayerID()), "dota_hud", {show = true})
+--			CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(hero:GetPlayerID()), "override_top_bar_colors", {color = rgbToHex(PLAYER_COLORS[hero:GetPlayerID()])})
 
 			if api.imba.is_developer(PlayerResource:GetSteamID(hero:GetPlayerID())) then
 				hero.has_graph = true
 				CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "show_netgraph", {})
-				--				CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "show_netgraph_heronames", {})
+--				CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "show_netgraph_heronames", {})
 			end
+
+			local steam_id = tostring(PlayerResource:GetSteamID(hero:GetPlayerID()))
+			if api.imba.is_developer(steam_id) then
+				hero:SetCustomHealthLabel("IMBA Developer", 200, 45, 45)
+--			elseif api.imba.is_donator(steam_id) == 4 then
+--				hero:SetCustomHealthLabel("IMBA Ember Donator", 200, 45, 45)
+--			elseif api.imba.is_donator(steam_id) == 5 then
+--				hero:SetCustomHealthLabel("IMBA Golden Donator", 218, 165, 32)
+			elseif api.imba.is_donator(steam_id) then
+				hero:SetCustomHealthLabel("IMBA Donator", 45, 200, 45)
+			end
+
 			return
 		else
 			Timers:CreateTimer(function()
@@ -1294,7 +1312,7 @@ function GameMode:OnHeroInGame(hero)
 				return 0.1
 			end)
 
-			CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(hero:GetPlayerID()), "imbathrow_topbar", {imbathrow = imbathrow_bar})
+--			CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(hero:GetPlayerID()), "imbathrow_topbar", {imbathrow = imbathrow_bar})
 			CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(hero:GetPlayerID()), "dota_hud", {show = false})
 		end
 	end)
@@ -1350,6 +1368,7 @@ function GameMode:InitGameMode()
 	CustomGameEventManager:RegisterListener("netgraph_remove_units", Dynamic_Wrap(self, "RemoveUnits"))
 	CustomGameEventManager:RegisterListener("netgraph_give_item", Dynamic_Wrap(self, "NetgraphGiveItem"))
 	CustomGameEventManager:RegisterListener("change_companion", Dynamic_Wrap(self, "DonatorCompanionJS"))
+	CustomGameEventManager:RegisterListener("send_gg_vote", Dynamic_Wrap(self, 'GG'))
 
 	self.itemKV = LoadKeyValues("scripts/npc/items.txt")
 	for k,v in pairs(LoadKeyValues("scripts/npc/npc_items_custom.txt")) do
@@ -1751,7 +1770,7 @@ function GameMode:GatherAndRegisterValidTeams()
 		numTeams = 2
 	end
 
-	local maxPlayersPerValidTeam = math.floor( IMBA_PLAYERS_ON_GAME / numTeams )
+	local maxPlayersPerValidTeam = math.floor( PlayerResource:GetPlayerCount() / numTeams )
 
 	m_GatheredShuffledTeams = ShuffledList( foundTeamsList )
 
@@ -2014,11 +2033,11 @@ function GameMode:OnThink()
 						TEAM_ABANDON[team][1] = TEAM_ABANDON[team][1] -1
 
 						if TEAM_ABANDON[2][1] <= 0 then
-							GameRules:SetGameWinner(3)
 							GAME_WINNER_TEAM = 3
+							GameRules:SetGameWinner(3)
 						elseif TEAM_ABANDON[3][1] <= 0 then
-							GameRules:SetGameWinner(2)
 							GAME_WINNER_TEAM = 2
+							GameRules:SetGameWinner(2)
 						end
 					end
 				end
@@ -2092,5 +2111,63 @@ function GameMode:NetgraphGiveItem(event)
 		hero:AddItemByName("item_imba_"..event.item)
 	else
 		AntiDevCheat(event.ID)
+	end
+end
+
+function GameMode:GG(event)
+if GameRules:State_Get() == DOTA_GAMERULES_STATE_POST_GAME then return end
+
+	local GG_TEAM = {}
+	GG_TEAM[2] = 0
+	GG_TEAM[3] = 0
+
+--	print(event.ID, event.Vote)
+
+	-- init
+	for i = 0, PlayerResource:GetPlayerCount() do
+		if not GG_TABLE then
+			GG_TABLE = {}
+			GG_TABLE[i] = false
+		end
+	end
+
+	GG_TABLE[event.ID] = 1
+--	PrintTable(GG_TABLE)
+
+	for i = 0, PlayerResource:GetPlayerCount() - 1 do
+		if (GG_TABLE[i] == 1 or PlayerResource:GetConnectionState(i) ~= 2) and GG_TEAM[PlayerResource:GetTeam(i)] ~= true then
+			GG_TEAM[PlayerResource:GetTeam(event.ID)] = GG_TEAM[PlayerResource:GetTeam(event.ID)] + 1
+--			print(GG_TEAM[PlayerResource:GetTeam(event.ID)], PlayerResource:GetPlayerCountForTeam(PlayerResource:GetTeam(event.ID)))
+			if GG_TEAM[PlayerResource:GetTeam(event.ID)] >= PlayerResource:GetPlayerCountForTeam(PlayerResource:GetTeam(event.ID)) then
+				GG_TEAM[PlayerResource:GetTeam(event.ID)] = true
+				break
+			end
+		end
+	end
+
+--	print(GG_TEAM[2], GG_TEAM[3])
+--	print(PlayerResource:GetPlayerCountForTeam(2), PlayerResource:GetPlayerCountForTeam(3))
+
+	for i = 2, 3 do
+		if GG_TEAM[i] == true then
+--			print("GG")
+			local text = {}
+			text[2] = "#imba_team_good_gg_message"
+			text[3] = "#imba_team_bad_gg_message"
+			Notifications:BottomToAll({text = text[i], duration = 15.0, style = {color = "DodgerBlue"} })
+			GG_TEAM[i] = true
+
+			Timers:CreateTimer(5.0, function()
+				if i == 2 then
+					GAME_WINNER_TEAM = 3
+					GameRules:SetGameWinner(3)
+				elseif i == 3 then
+					GAME_WINNER_TEAM = 2
+					GameRules:SetGameWinner(2)
+				end
+			end)
+
+			break
+		end
 	end
 end

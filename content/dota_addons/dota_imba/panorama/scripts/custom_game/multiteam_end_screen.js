@@ -156,7 +156,6 @@ function EndScoreboard() {
 							values.imr.AddClass("es-text-red");
 						}
 					}
-					
 				} else if (map_info.map_display_name == "imba_ranked_10v10") {
 					
 					values.imr10v10.style.visibility = "visible";
@@ -197,7 +196,6 @@ function EndScoreboard() {
 						values.rank1v1.AddClass("es-text-red");
 					}
 				}
-				
 			} else {
 				values.imr10v10.text = "N/A";
 				values.imr.text = "N/A";
@@ -220,7 +218,7 @@ function EndScoreboard() {
 					values.xp.earned.AddClass("es-text-red");
 				}
 
-//				var diff = 101; // test value
+//				var diff = -11000; // test value
 				var diff = player.result.xp_difference;
 				var old_xp = player.xp.progress.xp;
 				if (old_xp == undefined) {
@@ -233,6 +231,8 @@ function EndScoreboard() {
 				var max_xp = player.xp.progress.max_xp;
 				var new_xp = (old_xp + diff);
 				var progress_bar = new_xp / max_xp * 100;
+				var progress_bar_100 = progress_bar * 100
+				$.Msg(progress_bar * 100 / max_xp + "/" + max_xp)
 
 				$.Schedule(0.8, function () {
 					values.xp.level.text = $.Localize("#battlepass_level") + player.xp.level;
@@ -247,7 +247,7 @@ function EndScoreboard() {
 					// if not leveling up
 					else if (progress_bar >= 0 && progress_bar < 100) {
 						values.xp.progress.style.width = progress_bar + "%";
-						values.xp.rank.text = progress_bar * 100 / max_xp + "/" + max_xp;
+						values.xp.rank.text = new_xp + "/" + max_xp;
 					// else if leveling down
 					} else if (progress_bar < 0) {
 						values.xp.rank.text = max_xp + "/" + max_xp;
@@ -263,9 +263,11 @@ function EndScoreboard() {
 						values.xp.progress.style.width = progress_bar + "%";
 						$.Schedule(2.0, function() {
 							var levelup_level = player.xp.level - 1
-							var levelup_xp = progress_bar * 100 / max_xp // BUG: max_xp should be the max xp of previous level.
+							var levelup_xp = progress_bar * max_xp / 100 // BUG: max_xp should be the max xp of previous level.
 							values.xp.level.text = $.Localize("#battlepass_level") + levelup_level;
-							values.xp.rank.text = levelup_xp + "/" + max_xp; // BUG: max_xp should be the max xp of previous level.
+							$.Msg(progress_bar * max_xp / 100)
+							$.Msg(levelup_xp.toFixed(0))
+							values.xp.rank.text = levelup_xp.toFixed(0) + "/" + max_xp; // BUG: max_xp should be the max xp of previous level.
 						});
 					// else if leveling up
 					} else {
@@ -284,10 +286,11 @@ function EndScoreboard() {
 							var levelup_level = player.xp.level + 1
 							var levelup_xp = old_xp + diff - max_xp // BUG: max_xp should be the max xp of previous level.
 							values.xp.level.text = $.Localize("#battlepass_level") + levelup_level;
-							values.xp.rank.text = levelup_xp + "/" + max_xp; // BUG: max_xp should be the max xp of previous level.
+							values.xp.rank.text = levelup_xp.toFixed(0) + "/" + max_xp; // BUG: max_xp should be the max xp of previous level.
 						});
 					}
 				});
+
 			} else {
 				values.xp.earned.text = "N/A";
 			}

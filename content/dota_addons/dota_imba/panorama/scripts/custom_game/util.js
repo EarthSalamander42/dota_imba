@@ -144,18 +144,21 @@ function OverrideTopBarHeroImage(args) {
 	if (args.panel_type == "topbar") {
 		var panel = FindDotaHudElement(team + "Player" + Players.GetLocalPlayer()).FindChildTraverse("HeroImage")
 	} else if (args.panel_type == "pick_screen") {
-		var panel = FindDotaHudElement("npc_dota_hero_pudge")
+		var panel = FindDotaHudElement("npc_dota_hero_" + args.hero_name)
 	}
 
 	if (panel) {OverrideHeroImage(arcana_level, panel, args.hero_name, args.panel_type)}
 }
+GameEvents.Subscribe("override_hero_image", OverrideTopBarHeroImage);
+
 /*
-if (FindDotaHudElement("npc_dota_hero_pudge")) {
-	var panel = FindDotaHudElement("npc_dota_hero_pudge")
+if (FindDotaHudElement("RadiantPlayer" + Players.GetLocalPlayer()).FindChildTraverse("HeroImage")) {
+	var panel =  FindDotaHudElement("RadiantPlayer" + Players.GetLocalPlayer()).FindChildTraverse("HeroImage")
 	$.Msg(panel)
-	OverrideHeroImage("1", panel, "pudge", "pick_screen")
+	OverrideHeroImage("2", panel, "pudge", "topbar")
 }
 */
+
 function OverrideHeroImage(arcana_level, panel, hero_name, panel_type) {
 	if (arcana_level != false) {
 		if (arcana_level > 2) {arcana_level = 2}
