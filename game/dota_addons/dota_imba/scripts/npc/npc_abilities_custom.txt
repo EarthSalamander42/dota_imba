@@ -14233,8 +14233,9 @@
 		"BaseClass"						"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"			"night_stalker_hunter_in_the_night"
-		"MaxLevel"						"4"
 		"ScriptFile"					"hero/hero_night_stalker.lua"
+//		"AbilityManaCost"				"80"
+		"AbilityCooldown"				"30 26 22 18"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -14255,29 +14256,35 @@
 				"var_type"			"FIELD_INTEGER"
 				"base_bonus_ms_pct"	"20 25 30 35"
 			}
-
 			"02"
 			{
 				"var_type"			"FIELD_INTEGER"
 				"base_bonus_as"		"40 60 80 100"
 			}
-
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"night_vision_bonus"	"100 200 300 400"
 			}
-
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"ms_increase_per_stack"	"3"
 			}
-
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"as_increase_per_stack"	"10"
+			}
+//			"06"
+//			{
+//				"var_type"				"FIELD_INTEGER"
+//				"flying_duration"		"3"
+//			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"flying_vision"			"1000"
 			}
 		}
 	}
@@ -16937,7 +16944,7 @@
 		}
 	}
 
-	"special_bonus_imba_pudge_3" // +100 Hook Width
+	"special_bonus_imba_pudge_3" // Increase Hook Width
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -16957,7 +16964,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"100"
+				"value"						"75"
 			}
 		}
 	}
@@ -17067,7 +17074,7 @@
 		}
 	}
 
-	"special_bonus_imba_pudge_8" // Dismember last 2 more seconds
+	"special_bonus_imba_pudge_8" // Dismember last x more seconds
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -17087,7 +17094,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"value"					"2"
+				"value"					"3"
 			}
 		}
 	}
@@ -21775,14 +21782,13 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_tooltip"		"60 140 180"
+				"damage_tooltip"		"60 120 180"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"ward_hp_tooltip"		"2 2 3"
 				"LinkedSpecialBonus"	"special_bonus_imba_shadow_shaman_2"
-				
 			}
 			"04"
 			{
@@ -26771,49 +26777,41 @@
 				"var_type"				"FIELD_INTEGER"
 				"radius"				"900"
 			}
-
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"ms_slow_pct"			"75"
 			}
-
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"as_slow"				"75"
 			}
-
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"slow_duration"			"3"
 			}
-
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"stun_duration"			"0.75"
 			}
-
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"damage"				"100"
 			}
-
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"wraiths_attacks"		"3"
 			}
-
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"max_hp_as_damage_pct"	"14"
 			}
-
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
@@ -27810,7 +27808,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"10"
+		"AbilityCooldown"				"20.0 16.0 12.0 8.0"
 		"AbilityCastPoint"				"0.0"
 
 		// Precache
@@ -28310,17 +28308,17 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"120 160 200 240"
+				"damage"					"150 200 250 300"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"delay"						"2.6"
+				"delay"						"2.2"
 			}
 			"05"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"delay_plus_castpoint_tooltip"	"3"
+				"delay_plus_castpoint_tooltip"	"2.5"
 			}
 			"06"
 			{
@@ -28478,56 +28476,47 @@
 				"var_type"					"FIELD_INTEGER"
 				"duration"					"12"
 			}
-
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"movement_damage_pct"		"30 45 60"
+				"movement_damage_pct"		"30 50 70"
 			}
-
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"damage_cap_amount"			"1300"
 				"LinkedSpecialBonus"		"special_bonus_imba_bloodseeker_6"
 			}
-
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"damage_cap_interval"		"0.25"
 			}
-
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"cast_range_tooltip"		"1000"
 			}
-
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"damage_initial_pct"		"75"
 			}
-
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"attack_damage"				"20 35 50"
 			}
-
 			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"cast_damage"				"40 70 100"
 			}
-
 			"09"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"rupture_charges"			"2"
 			}
-
 			"10"
 			{
 				"var_type"						"FIELD_INTEGER"
@@ -28535,8 +28524,6 @@
 			}
 		}
 	}
-
-	
 
 	//=================================================================================================================
 	// Bloodseeker Talents
@@ -43170,5 +43157,86 @@
 				"value"			"2"	// bonus charges
 			}
 		}
+	}
+
+	//=================================================================================================================
+	// Earth Spirit: Rolling Boulder
+	//=================================================================================================================
+	"imba_earth_spirit_rolling_boulder"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_earth_spirit.lua"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilitySound"					"Hero_EarthSpirit.RollingBoulder.Cast"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"3000"
+		"AbilityCastPoint"				"0.01"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"16.0 12.0 8.0 4.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"50"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"150"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"speed"					"800 900 1000 1100"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"rock_speed"			"1600 1800 2000 2200"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"distance"				"800 900 1000 1100"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"rock_distance"			"1600 1800 2000 2200"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"delay"					"0.6 0.5 0.4 0.3"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"100 160 210 250"
+				"LinkedSpecialBonus"	"special_bonus_unique_earth_spirit"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"move_slow"				"80"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"slow_duration"			"2.25 2.75 3.25 3.75"
+			}
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 	}
 }

@@ -378,7 +378,29 @@ REMAINING_BADGUYS = 0														-- Remaining players on Dire
 
 ANCIENT_ABILITIES_LIST = {}													-- Initializes the ancients' abilities list
 SPAWN_ANCIENT_BEHEMOTHS = true												-- Should the ancients spawn behemoths?
-TOWER_ABILITIES = {
+
+TOWER_ABILITIES = {}
+
+TOWER_ABILITIES["tower1"] = {
+	"imba_tower_healing_tower",
+	"imba_tower_tenacity",
+}
+
+TOWER_ABILITIES["tower2"] = {
+	"imba_tower_healing_tower",
+	"imba_tower_regeneration",
+	"imba_tower_tenacity",
+	"imba_tower_toughness",
+}
+
+TOWER_ABILITIES["tower3"] = {
+	"imba_tower_healing_tower",
+	"imba_tower_regeneration",
+	"imba_tower_tenacity",
+	"imba_tower_toughness",
+}
+
+TOWER_ABILITIES["tower4"] = {
 	"imba_tower_healing_tower",
 	"imba_tower_regeneration",
 	"imba_tower_tenacity",
@@ -493,6 +515,10 @@ RESTRICT_FOUNTAIN_UNITS = {
 	"npc_imba_ember_spirit_remnant",
 	"npc_imba_dota_stormspirit_remnant",
 	"npc_dota_earth_spirit_stone",
+	"npc_dota_tusk_frozen_sigil1",
+	"npc_dota_tusk_frozen_sigil2",
+	"npc_dota_tusk_frozen_sigil3",
+	"npc_dota_tusk_frozen_sigil4",
 }
 
 MORPHLING_RESTRICTED_MODIFIERS = {

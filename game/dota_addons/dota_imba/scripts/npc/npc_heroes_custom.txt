@@ -551,6 +551,36 @@
 	}
 
 	//=================================================================================================================
+	// HERO: Earth Spirit
+	//=================================================================================================================
+	"npc_dota_hero_earth_spirit"
+	{
+		"override_hero"				"npc_dota_hero_earth_spirit"
+
+		//Picking Screen
+		"IsImba"					"1"
+		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
+
+		"Ability1"					"earth_spirit_boulder_smash"
+		"Ability2"					"earth_spirit_rolling_boulder"
+		"Ability3"					"earth_spirit_geomagnetic_grip"
+		"Ability4"					"earth_spirit_stone_caller"
+		"Ability5"					"earth_spirit_petrify"
+		"Ability6"					"earth_spirit_magnetize"
+
+		"Ability8"					"imba_earth_spirit_rolling_boulder"
+
+		"Ability10"					"special_bonus_intelligence_10"
+		"Ability11"					"special_bonus_attack_damage_40"
+		"Ability12"					"special_bonus_armor_7"
+		"Ability13"					"special_bonus_unique_earth_spirit"
+		"Ability14"					"special_bonus_spell_amplify_15"
+		"Ability15"					"special_bonus_gold_income_25"
+		"Ability16"					"special_bonus_unique_earth_spirit_2"
+		"Ability17"					"special_bonus_unique_earth_spirit_3"
+	}
+
+	//=================================================================================================================
 	// HERO: Elder Titan
 	//=================================================================================================================
 	"npc_dota_hero_elder_titan"
@@ -601,8 +631,8 @@
 		"Ability11"					"special_bonus_truestrike"
 		"Ability12"					"special_bonus_ember_chains_duration"
 		"Ability13"					"special_bonus_ember_guard_damage"
-		"Ability14"					"special_bonus_attack_damage_90"
-		"Ability15"					"special_bonus_ember_sleight_extra_targets"
+		"Ability14"					"special_bonus_attack_damage_50"
+		"Ability15"					"special_bonus_all_stats_15"
 		"Ability16"					"special_bonus_ember_permanent_guard"
 		"Ability17"					"special_bonus_ember_remnant_charges"
 	}
@@ -1064,6 +1094,36 @@
 		"Ability15"					"special_bonus_unique_furion_4"
 		"Ability16"					"special_bonus_unique_furion_3"
 		"Ability17"					"special_bonus_unique_furion"
+	}
+
+	//=================================================================================================================
+	// HERO: Lifestealer
+	//=================================================================================================================
+	"npc_dota_hero_life_stealer"
+	{
+		"override_hero"				"npc_dota_hero_life_stealer"
+
+		//Picking Screen
+		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
+
+		"Ability1"		"life_stealer_rage"
+		"Ability2"		"life_stealer_feast"
+		"Ability3"		"life_stealer_open_wounds"
+		"Ability4"		"life_stealer_assimilate"
+		"Ability5"		"generic_hidden"
+		"Ability6"		"life_stealer_infest"
+		"Ability7"		"life_stealer_control"
+		"Ability8"		"life_stealer_consume"
+		"Ability9"		"life_stealer_assimilate_eject"
+
+		"Ability10"		"special_bonus_hp_200"
+		"Ability11"		"special_bonus_attack_speed_30"
+		"Ability12"		"special_bonus_attack_damage_30"
+		"Ability13"		"special_bonus_movement_speed_35"
+		"Ability14"		"special_bonus_evasion_20"
+		"Ability15"		"special_bonus_unique_lifestealer_2"
+		"Ability16"		"special_bonus_unique_lifestealer_3"
+		"Ability17"		"special_bonus_unique_lifestealer"
 	}
 
 	//=================================================================================================================
@@ -1569,6 +1629,8 @@
 		"Ability4"					"generic_hidden"
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_shadow_shaman_mass_serpent_ward"
+
+		"Ability15"					"special_bonus_imba_shadow_shaman_2"
 	}
 
 	//=================================================================================================================

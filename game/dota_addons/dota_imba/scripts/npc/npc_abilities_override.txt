@@ -4552,23 +4552,23 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"fissure_range"				"1400 1600 1800 2000"
+				"fissure_range"				"1400 1800 2200 2600"
 				"LinkedSpecialBonus"		"special_bonus_unique_earthshaker_3"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"fissure_duration"			"10.0"
+				"fissure_duration"			"12.0"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"fissure_radius"			"225 250 275 300"
+				"fissure_radius"			"250 300 350 400"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"stun_duration"				"1.0 1.66 2.33 3."
+				"stun_duration"				"1.11 1.77 2.33 3.10"
 			}
 		}
 	}
@@ -4602,7 +4602,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"totem_damage_percentage"	"100 300 500 700"
+				"totem_damage_percentage"	"150 350 550 750"
 			}
 			"02"
 			{
@@ -4612,12 +4612,12 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"distance_scepter"			"1200"
+				"distance_scepter"			"2000"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"duration"					"0.75"
+				"duration"					"0.50"
 			}
 			"05"
 			{
@@ -4636,8 +4636,8 @@
 		{
 			"01"
 			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"2"
+				"var_type"			"FIELD_FLOAT"
+				"value"				"1.75"
 			}
 		}
 	}
@@ -4650,14 +4650,13 @@
 		"AbilityCastRange"				"300 350 400 600"
 		"AbilityDuration"				"0.6 1.2 1.6 2.0"
 		"AbilityDamage"					"100 150 200 250"
-		"MaxLevel"						"4"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aftershock_range"		"300 350 400 600"
+				"aftershock_range"		"375 450 525 600"
 			}
 			"02"
 			{
@@ -4666,16 +4665,13 @@
 			}
 		}
 	}
-	
+
 	//=================================================================================================================
 	//	Earthshaker: Echo Slam
 	//=================================================================================================================
 	"earthshaker_echo_slam"
 	{
 		"AbilityCastRange"				"600 700 800"
-		"AbilityDamage"					"150 250 350"
-
-		"MaxLevel"						"3"
 
 		"AbilitySpecial"
 		{
@@ -4697,7 +4693,7 @@
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"echo_slam_echo_damage"			"50 100 200"
+				"echo_slam_echo_damage"			"75 150 225"
 				"LinkedSpecialBonus"			"special_bonus_unique_earthshaker_2"
 			}
 		}
@@ -4713,7 +4709,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"value"				"100"
+				"value"				"200"
 			}
 		}
 	}
@@ -4974,10 +4970,7 @@
 	"earth_spirit_magnetize"
 	{
 		"AbilityCastRange"				"500"
-
 		"AbilityCooldown"				"100 80 70"
-
-		"MaxLevel"						"3"
 
 		"AbilitySpecial"
 		{
@@ -5094,7 +5087,7 @@
 			}
 		}
 	}
-	
+
 	//=================================================================================================================
 	// Enchantress: Enchant
 	//=================================================================================================================
@@ -5187,7 +5180,7 @@
 			}
 		}
 	}
-	
+
 	//=================================================================================================================
 	// Enchantress: Impetus
 	//=================================================================================================================
@@ -5537,7 +5530,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"value"							"5"
+				"value"							"10"
 			}
 		}
 	}
@@ -5594,7 +5587,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"charge_speed"				"1000"
+				"charge_speed"				"1400"
 			}
 			"05"
 			{
@@ -5605,7 +5598,7 @@
 			{
 				"var_type"							"FIELD_INTEGER"
 				"tooltip_health_cost_percent"		"35"
-				"CalculateSpellDamageTooltip"		"0"
+				"CalculateSpellDamageTooltip"		"1"
 			}
 			"07"
 			{
@@ -6952,21 +6945,6 @@
 			}
 		}
 	}
-
-	//=================================================================================================================
-	//	Lifestealer: bonus Rage duration
-	//=================================================================================================================
-	"special_bonus_unique_lifestealer"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_FLOAT"
-				"value"				"1.5"
-			}
-		}
-	}
 	
 	//=================================================================================================================
 	// Lifestealer: Feast
@@ -6990,7 +6968,7 @@
 	"life_stealer_open_wounds"
 	{
 		"AbilityCastRange"				"225 350 475 600"
-			
+
 		"AbilitySpecial"
 		{
 			"01"
@@ -7022,15 +7000,8 @@
 	//=================================================================================================================
 	"life_stealer_infest"
 	{
-		"AbilityCooldown"				"100 75 50"
-
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"700"
-			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
@@ -7053,9 +7024,6 @@
 	//=================================================================================================================
 	"lone_druid_spirit_bear"
 	{
-		"AbilityCooldown"				"120.0"
-		"AbilityManaCost"				"75"
-
 		"AbilitySpecial"
 		{
 			"01"
@@ -7066,7 +7034,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bear_regen_tooltip"		"2 4 6 8"
+				"bear_regen_tooltip"		"4 6 8 10"
 			}
 			"03"
 			{
@@ -7097,20 +7065,6 @@
 	//=================================================================================================================
 	"lone_druid_rabid"
 	{
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.5"
-
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"35.0"
-	
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"50"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
 			"01"
@@ -7161,7 +7115,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_speed"			"20"
+				"bonus_speed"			"30"
 			}
 			"03"
 			{
@@ -7176,20 +7130,6 @@
 	//=================================================================================================================
 	"lone_druid_savage_roar_bear"
 	{		
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.1"
-
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"30 25 20 15"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"50"
-			
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
 			"01"
@@ -7200,7 +7140,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_speed"			"20"
+				"bonus_speed"			"30"
 			}
 			"03"
 			{
@@ -7215,20 +7155,6 @@
 	//=================================================================================================================
 	"lone_druid_true_form"
 	{
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"0.0"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"25"		
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
 			"01"
@@ -7264,19 +7190,6 @@
 	//=================================================================================================================
 	"lone_druid_true_form_druid"
 	{
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0"
-
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"0"
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"25"		
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
 			"01"
@@ -7292,8 +7205,6 @@
 	//=================================================================================================================
 	"lone_druid_true_form_battle_cry"
 	{		
-		
-		"AbilityCooldown"				"60 55 50"
 		"AbilityManaCost"				"50"
 
 		// Special
@@ -7303,12 +7214,12 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"bonus_damage"		"70 130 160"		
+				"bonus_damage"		"70 130 190"		
 			}
 			"02"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"bonus_armor"		"10 15 20"
+				"bonus_armor"		"10 20 30"
 			}
 			"03"
 			{
@@ -7323,50 +7234,13 @@
 		}
 	}
 
-	
-	//=================================================================================================================
-	// Lone Druid: Spirit Bear Return
-	//=================================================================================================================
-	"lone_druid_spirit_bear_return"
-	{		
-		"AbilityCooldown"				"5.0"	
-		
-		"AbilityManaCost"				"0"
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"return_damage_cooldown"		"3"		
-			}
-		}
-	}
-
 	//=================================================================================================================
 	// Lone Druid: Spirit Bear Entangling Claws
 	//=================================================================================================================
 	"lone_druid_spirit_bear_entangle"
 	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"5419"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
-		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
-		"AbilitySound"					"LoneDruid_SpiritBear.Entangle"
-
-		// Damage.
-		//-------------------------------------------------------------------------------------------------------------
 		"AbilityDamage"					"90"
 
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"5.0"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
 			"01"
@@ -7387,6 +7261,7 @@
 //				"LinkedSpecialBonus"	"special_bonus_unique_lone_druid_3"
 			}
 		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 	}
 
 	//=================================================================================================================
@@ -7394,13 +7269,6 @@
 	//=================================================================================================================
 	"lone_druid_spirit_bear_demolish"
 	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"5420"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
 			"01"
@@ -7411,7 +7279,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_building_damage"		"40"
+				"bonus_building_damage"	"50"
 			}
 		}
 	}
@@ -7492,8 +7360,6 @@
 	//=================================================================================================================
 	"luna_lunar_blessing"
 	{
-		"MaxLevel"							"4"
-
 		"AbilitySpecial"
 		{
 			"01"
@@ -7520,7 +7386,6 @@
 	//=================================================================================================================
 	"luna_eclipse"
 	{
-		"MaxLevel"							"3"
 		"AbilityCooldown"					"140 120 100"
 
 		"AbilitySpecial"
@@ -7528,12 +7393,12 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"beams"						"6 12 16"
+				"beams"						"6 10 14"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"hit_count"					"6"
+				"hit_count"					"5"
 			}
 			"03"
 			{
@@ -7548,7 +7413,7 @@
 			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"duration_tooltip"			"3.6 6.0 6.4"
+				"duration_tooltip"			"4.8"
 			}
 			"06"
 			{
@@ -7558,17 +7423,17 @@
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"beams_scepter"				"7 21 27"
+				"beams_scepter"				"7 14 21"
 			}
 			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"hit_count_scepter"			"7 21 27"
+				"hit_count_scepter"			"7 14 21"
 			}
 			"09"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"duration_tooltip_scepter"	"2.1 5.25 5.4"
+				"duration_tooltip_scepter"	"2.1 3.5 4.2"
 			}
 			"10"
 			{
@@ -7583,8 +7448,6 @@
 	//=================================================================================================================
 	"medusa_split_shot"
 	{
-		"MaxLevel"							"4"
-
 		"AbilitySpecial"
 		{
 			"01"
@@ -7858,7 +7721,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"movespeed"					"350"
+				"movespeed"					"375"
 			}
 			"02"
 			{
@@ -9696,7 +9559,6 @@
 	//=================================================================================================================
 	"rubick_fade_bolt"
 	{
-		"MaxLevel"						"4"
 		"AbilityCooldown"				"16 12 9 7"
 
 		"AbilitySpecial"
@@ -9704,7 +9566,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"damage"						"100 260 360 400"
+				"damage"						"150 300 450 600"
 			}
 			"02"
 			{
@@ -9715,14 +9577,14 @@
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"hero_attack_damage_reduction"	"25 35 60 100"
+				"hero_attack_damage_reduction"	"25 40 55 70"
 				"LinkedSpecialBonus"			"special_bonus_unique_rubick_2"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"creep_attack_damage_reduction"	"12 18 30 48"
+				"creep_attack_damage_reduction"	"15 25 35 45"
 				"CalculateSpellDamageTooltip"	"0"
 			}			
 			"05"
@@ -9748,22 +9610,20 @@
 	//=================================================================================================================
 	"rubick_null_field"
 	{
-		"MaxLevel"						"4"
-
-		"AbilityCastRange"				"900 1400 2500 7200"
+		"AbilityCastRange"				"1200"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"magic_damage_reduction_pct"	"10 18 23 25"
+				"magic_damage_reduction_pct"	"15 25 35 45"
 				"LinkedSpecialBonus"			"special_bonus_unique_rubick_3"
 			}
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"radius"						"900"
+				"radius"						"1200"
 			}
 		}
 	}
@@ -10002,14 +9862,11 @@
 		}
 	}
 
-
 	//=================================================================================================================
 	// Shadow Shaman: Ether Shock
 	//=================================================================================================================
 	"shadow_shaman_ether_shock"
-	{
-		"MaxLevel"						"4"				
-		
+	{		
 		"AbilityCastRange"				"600 675 850 1000"
 		"AbilityCastPoint"				"0.2"		
 		"AbilityCooldown"				"8.0"
@@ -10121,12 +9978,8 @@
 	//=================================================================================================================
 	"slark_dark_pact"
 	{
-		"MaxLevel"						"4"
-
 		"AbilityCastRange"				"325 350 375 400"
-
-		"AbilityCooldown"				"9 8 7 6"
-
+		"AbilityCooldown"				"9.0 8.0 7.0 6.0"
 		"AbilityManaCost"				"55 45 35 25"
 
 		"AbilitySpecial"
@@ -10150,8 +10003,6 @@
 	//=================================================================================================================
 	"slark_pounce"
 	{
-		"MaxLevel"						"4"
-
 		"AbilityCooldown"				"20 16 12 8"
 
 		"AbilitySpecial"
@@ -10179,7 +10030,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"pounce_damage"			"60 140 200 240"
+				"pounce_damage"			"60 140 220 300"
 			}
 			"06"
 			{
@@ -10215,8 +10066,6 @@
 	//=================================================================================================================
 	"slark_essence_shift"
 	{
-		"MaxLevel"						"4"
-
 		"AbilitySpecial"
 		{
 			"01"
@@ -10227,12 +10076,12 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"stat_loss"				"1"
+				"stat_loss"				"2"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"duration"				"15 60 140 180"
+				"duration"				"15 30 60 120"
 				"LinkedSpecialBonus"	"special_bonus_unique_slark_4"
 			}
 		}
@@ -10243,7 +10092,6 @@
 	//=================================================================================================================
 	"slark_shadow_dance"
 	{
-		"MaxLevel"							"3"
 		"AbilityCooldown"					"60 50 40"
 
 		"AbilitySpecial"
@@ -10267,7 +10115,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_regen_pct"			"3 7 9"
+				"bonus_regen_pct"			"3 6 9"
 			}
 			"05"
 			{
@@ -10580,10 +10428,7 @@
 	//=================================================================================================================
 	"templar_assassin_meld"
 	{
-		"MaxLevel"							"4"
-
 		"AbilityCooldown"					"6 5.5 5.0 4.5"
-
 		"AbilityDuration"					"10"
 
 		"AbilitySpecial"
@@ -10596,7 +10441,7 @@
 			"02"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"bonus_armor"							"-3 -5 -7 -9 -10 -11 -12"
+				"bonus_armor"							"-4 -7 -10 -13"
 				"LinkedSpecialBonus"					"special_bonus_unique_templar_assassin_2"
 			}
 			"03"
@@ -15670,34 +15515,37 @@
 	//=================================================================================================================
 	"techies_land_mines"
 	{
-		"MaxLevel"						"4"
-
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"				"400"
+				"radius"					"300"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"proximity_threshold"		"1.6"
+				"proximity_threshold"		"0.9"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"200 600 900 1100"
+				"damage"					"300 600 900 1200"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"burn_duration"				"5"
 			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"building_damage_pct"		"40"
+			}
 			"06"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"activation_delay"			"1.5"
+				"activation_delay"			"1.0"
 			}
 		}
 	}
@@ -15708,7 +15556,6 @@
 	"techies_stasis_trap"
 	{
 		"AbilityCooldown"				"20.0 16.0 13.0 10.0"
-		"MaxLevel"						"4"
 
 		"AbilitySpecial"
 		{		
@@ -15720,12 +15567,22 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"stun_radius"				"800"
+				"stun_radius"				"1000"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"stun_duration"				"2 4 5.5 6.5"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"activation_time"			"1.0"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"fade_time"					"1.0"
 			}
 		}
 	}
@@ -15735,20 +15592,18 @@
 	//=================================================================================================================
 	"techies_suicide"
 	{
-		"MaxLevel"						"4"
-
 		"AbilitySpecial"
 		{
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"333 666 1000 2000"
+				"damage"					"300 700 1100 1500"
 				"LinkedSpecialBonus"		"special_bonus_unique_techies"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"silence_duration"			"4 6 7.5 8.5"
+				"silence_duration"			"4 5 6 7"
 			} 
 			"04"
 			{

@@ -125,7 +125,8 @@ function imba_tinker_rearm:OnChannelFinish( bInterrupted )
 				"item_imba_necronomicon_4",
 				"item_imba_necronomicon_5",
 				"item_imba_skadi",
-				"item_imba_sphere"
+				"item_imba_sphere",
+				"item_imba_plancks_artifact",
 			}
 
 			for i = 0, caster:GetAbilityCount() do

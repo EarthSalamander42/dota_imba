@@ -59,14 +59,13 @@ function imba_shadow_shaman_mass_serpent_ward:OnSpellStart()
 		-- Talent vectors
 		Vector(-192, 64 ,0),																										Vector(192, 64 ,0),
 		Vector(-128, -64 ,0),															 Vector(128, -64 ,0),
-
 	}
 
 	local find_clear_space = true
 	local npc_owner = caster
 	local unit_owner = caster
 
-	for i=1, ward_count do
+	for i = 1, ward_count do
 		local ward = CreateUnitByName(ward_name..ward_level, target_point + formation_vectors[i], find_clear_space, npc_owner, unit_owner, caster:GetTeamNumber())
 		ward:SetForwardVector(caster:GetForwardVector())
 		ward:AddNewModifier(caster, self, "modifier_imba_mass_serpent_ward", {})
@@ -97,10 +96,12 @@ function modifier_imba_mass_serpent_ward:OnCreated()
 	if caster:HasTalent("special_bonus_imba_shadow_shaman_2") then
 		local bonus_hp = caster:FindTalentValue("special_bonus_imba_shadow_shaman_2")
 		local new_hp   = parent:GetHealth() + bonus_hp
+
 		parent:SetBaseMaxHealth(new_hp)
 		parent:SetMaxHealth(new_hp)
 		parent:SetHealth(new_hp)
 	end
+
 	-- Prevent some recursion with the scepter effect
 	self.main_attack    =   true
 end
@@ -135,7 +136,7 @@ function modifier_imba_mass_serpent_ward:OnAttackLanded(params) -- health handli
 				self:GetParent():Kill(nil, params.attacker)
 			end
 		end
-end
+	end
 end
 
 function modifier_imba_mass_serpent_ward:OnAttack(params)
@@ -200,6 +201,7 @@ function modifier_imba_mass_serpent_ward:OnTakeDamage(params)
 					attacker = self:GetCaster(),
 					ability = self:GetAbility()
 				}
+
 				ApplyDamage(damageTable)
 			end
 		end

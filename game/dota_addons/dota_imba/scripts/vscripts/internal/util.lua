@@ -1517,16 +1517,13 @@ end
 function CheatDetector()
 	if CustomNetTables:GetTableValue("game_options", "game_count").value == 1 then
 		if Convars:GetBool("sv_cheats") == true or GameRules:IsCheatMode() then
-			if not IsInToolsMode() then
+--			if not IsInToolsMode() then
 				log.info("Cheats have been enabled, game don't count.")
 				CustomNetTables:SetTableValue("game_options", "game_count", {value = 0})
 				CustomGameEventManager:Send_ServerToAllClients("safe_to_leave", {})
-				return true
-			end
+--			end
 		end
 	end
-
-	return false
 end
 
 function AntiDevCheat(ID)

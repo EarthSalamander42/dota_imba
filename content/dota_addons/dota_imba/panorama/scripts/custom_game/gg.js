@@ -6,8 +6,8 @@ var radiant_player_count = 0
 var dire_player_count = 0
 
 function LoadPlayers() {
-	var radiantPlayers = DOTATeam_t.DOTA_TEAM_GOODGUYS
-	var direPlayers = DOTATeam_t.DOTA_TEAM_BADDGUYS
+	var radiantPlayers = 2
+	var direPlayers = 3
 
 	GenerateGGPanel(radiantPlayers)
 	GenerateGGPanel(direPlayers)

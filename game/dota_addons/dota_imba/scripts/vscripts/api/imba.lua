@@ -49,13 +49,18 @@ function api.imba.register(callback)
 
 	log.info("Initializing IMBA Api")
 
+	local cheat_enabled = false
+	if CustomNetTables:GetTableValue("game_options", "game_count").value == 0 then
+		cheat_enabled = true
+	end
+
 	-- register data
 	local register_data = {
 		match_id = tonumber(tostring(GameRules:GetMatchID())),
 		map = GetMapName(),
 		dedicated = IsDedicatedServer(),
 		players = api.imba.internals.get_all_valid_players(),
-		cheat_mode = CheatDetector()
+		cheat_mode = cheat_enabled
 	}
 
 	-- register game

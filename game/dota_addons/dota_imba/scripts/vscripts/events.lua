@@ -1387,6 +1387,21 @@ function GameMode:OnEntityKilled( keys )
 
 		-- ready to use
 		if killed_unit:IsBuilding() then
+			if string.find(killed_unit:GetUnitName(), "tower3") then
+				local unit_name = "npc_dota_goodguys_healers"
+				if killed_unit:GetTeamNumber() == 3 then
+					unit_name = "npc_dota_badguys_healers"
+				end
+				local units = FindUnitsInRadius(killed_unit:GetTeamNumber(), Vector(0, 0, 0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
+				for _, building in pairs(units) do
+					if building:GetUnitName() == unit_name then
+						if building:HasModifier("modifier_invulnerable") then
+							building:RemoveModifierByName("modifier_invulnerable")
+						end
+					end
+				end
+			end
+
 			if killer:IsRealHero() then
 				CombatEvents("kill", "hero_kill_tower", killed_unit, killer)
 			else

@@ -396,7 +396,6 @@ modifier_imba_fire_remnant_state = modifier_imba_fire_remnant_state or class ({}
 function modifier_imba_fire_remnant_state:IsDebuff() return false end
 function modifier_imba_fire_remnant_state:IsHidden() return false end
 function modifier_imba_fire_remnant_state:IsPurgable() return false end
-function modifier_imba_fire_remnant_state:RemoveOnDeath() return false end
 
 function modifier_imba_fire_remnant_state:GetEffectName()
 	return "particles/units/heroes/hero_ember_spirit/ember_spirit_fire_remnant.vpcf"
@@ -836,6 +835,7 @@ function imba_ember_spirit_activate_fire_remnant:OnSpellStart()
 		local caster = self:GetCaster()
 		local target_loc = self:GetCursorPosition()
 		local active_remnants = FindActiveRemnants(caster)
+
 		if active_remnants then
 			local closest_remnant_position = active_remnants[1]:GetAbsOrigin()
 			local closest_distance = (closest_remnant_position - target_loc):Length2D()
@@ -850,8 +850,9 @@ function imba_ember_spirit_activate_fire_remnant:OnSpellStart()
 					ApplyDamage({victim = enemy, attacker = caster, damage = self:GetSpecialValueFor("damage"), damage_type = DAMAGE_TYPE_MAGICAL, ability = self})
 				end
 				remnant:EmitSound("Hero_EmberSpirit.FireRemnant.Explode")
-				remnant:RemoveModifierByName("modifier_imba_fire_remnant_state")
+				remnant:ForceKill(false)
 			end
+
 			ProjectileManager:ProjectileDodge(caster)
 			caster:RemoveModifierByName("modifier_imba_sleight_of_fist_caster")
 			FindClearSpaceForUnit(caster, closest_remnant_position, true)

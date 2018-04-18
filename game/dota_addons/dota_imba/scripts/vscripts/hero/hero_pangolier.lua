@@ -1290,7 +1290,6 @@ function modifier_imba_heartpiercer_passive:OnAttackLanded(kv)
 					target:AddNewModifier(self:GetCaster(), self:GetAbility(), self.procced_debuff, {duration = self.duration})
 					return
 				else
-
 					if not target:HasModifier(self.delayed_debuff) and not target:HasModifier(self.procced_debuff) then --heartpiercer wasn't already in effect: apply the delay if it's not already in effect
 						--play proc sound effect
 						if target:IsCreep() then
@@ -1320,7 +1319,6 @@ modifier_imba_heartpiercer_delay = modifier_imba_heartpiercer_delay or class({})
 
 function modifier_imba_heartpiercer_delay:OnCreated()
 	--Ability properties
-	self.debuff = "modifier_imba_heartpiercer_debuff"
 	self.icon = "particles/units/heroes/hero_pangolier/pangolier_heartpiercer_delay.vpcf"
 
 	--Ability specials
@@ -1335,7 +1333,7 @@ end
 function modifier_imba_heartpiercer_delay:OnRemoved()
 	if IsServer() then
 		--apply the debuff
-		local modifier_handler = self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), self.debuff, {duration = self.duration})
+		local modifier_handler = self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_heartpiercer_debuff", {duration = self.duration})
 	end
 end
 
@@ -1354,9 +1352,7 @@ function modifier_imba_heartpiercer_debuff:OnCreated()
 	self.debuff_sound_hero = "Hero_Pangolier.HeartPiercer"
 
 	--Ability specials
-	print("Armor reduction:", self:GetParent():GetPhysicalArmorValue() * (-1))
-	self:SetStackCount(self:GetParent():GetPhysicalArmorValue() * (-1))
---	local armor = self:GetParent():GetPhysicalArmorValue() or 0
+	self.armor = self:GetParent():GetPhysicalArmorValue() * (-1)
 	self.slow_pct = self:GetAbility():GetSpecialValueFor("slow_pct")
 	self.talent_interval = self:GetCaster():FindTalentValue("special_bonus_imba_pangolier_5", "tick_interval")
 	self.damage_per_second = self:GetCaster():FindTalentValue("special_bonus_imba_pangolier_5", "damage_per_second")
@@ -1464,10 +1460,7 @@ function modifier_imba_heartpiercer_debuff:GetModifierMoveSpeedBonus_Percentage(
 end
 
 function modifier_imba_heartpiercer_debuff:GetModifierPhysicalArmorBonus()
-	--set stacks to denied armor (needed to display it correctly on UI)
-
-	print("Reducing armor:", self:GetStackCount())
-	return self:GetStackCount()
+	return self.armor
 end
 
 function modifier_imba_heartpiercer_debuff:IsHidden() return false end
