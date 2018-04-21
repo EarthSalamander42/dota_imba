@@ -25,7 +25,10 @@
 		<Panel id="BattlepassWindow" hittest="false">
 			<Panel id="InfoContent" hittest="false">
 				<Panel id="InfoHeader" hittest="false">
-					<Label id="HoFTitle" class="HoldoutLabelSmall" hittest="false" text="#imba_game_info" />
+					<Button id="CloseButton" onactivate="ToggleBattlepass();">
+						<Label id="CloseButtonImage" />
+					</Button>
+					<Label id="HoFTitle" class="HoldoutLabelSmall" hittest="false" text="imba game info" />
 				</Panel>
 
 				<Panel class="GameModeValues">
@@ -59,27 +62,35 @@
 						<Label id="GoldTickValue" class="ImbaGameInfoLabel" text="0" />
 					</Panel>
 				</Panel>
+				<Panel id="TabsButtonWrapper" hittest="false">
+					<Panel id="TabButtonContainer" hittest="false">
+						<Button class="color_animation" id="BattlepassTabButton" onactivate="SwitchTab('BattlepassInfoContainer');">
+							<Label class="image"></Label>
+							<Label class="text" text="#battlepass" />
+						</Button>
 
-				<Panel id="TabButtonContainer" hittest="false">
-					<Button id="BattlepassTabButton" onactivate="SwitchTab('BattlepassInfoContainer');">
-						<Label text="#battlepass" />
-					</Button>
+						<Button class="color_animation" id="DonatorTabButton" onactivate="SwitchTab('DonatorInfoContainer');">
+							<Label class="image"></Label>
+							<Label class="text" text="#donator" />
+						</Button>
 
-					<Button id="DonatorTabButton" onactivate="SwitchTab('DonatorInfoContainer');">
-						<Label text="#donator" />
-					</Button>
-
-					<Button id="LeaderboardTabButton" onactivate="SwitchTab('LeaderboardInfoContainer');">
-						<Label id="LoadingWarning" text="#leaderboard" />
-					</Button>
+						<Button class="color_animation" id="LeaderboardTabButton" onactivate="SwitchTab('LeaderboardInfoContainer');">
+							<Label class="image"></Label>
+							<Label class="text" id="LoadingWarning" text="#leaderboard" />
+						</Button>
+					</Panel>
 				</Panel>
+				
 			</Panel>
 
 			<Panel id="BattlepassInfoContainer" hittest="false">
+				<Panel id="ComingSoonPanel">
+					<Label id="ComingSoon" text="#coming_soon" />
+				</Panel>
 				<Panel id="BattlepassButtons" hittest="false">
 					<Button class="BattlepassButton" onactivate="RefreshBattlepass();">
-						<Label id="RefreshLabel" text="#battlepass_refresh"/>
 						<Panel id="RefreshBattlepass" onactivate="RefreshBattlepass();"/>
+						<Label id="RefreshLabel" text="#battlepass_refresh"/>
 					</Button>
 <!--
 					<Button class="BattlepassButton" onactivate="ToggleCompanion();">
@@ -88,15 +99,20 @@
 -->
 				</Panel>
 
-				<Label id="ComingSoon" text="#coming_soon" />
+				
 				<!-- JS Inserts records here -->
 			</Panel>
 
 			<Panel id="DonatorInfoContainer" hittest="false">
+				<Panel id="TabTitlePanel">
+					<Label class="DonatorTabLabel" text="#donator_info" />
+				</Panel>
+
+				
 				<Panel id="BattlepassButtons" hittest="false">
 					<Button class="BattlepassButton" onactivate="RefreshBattlepass();">
-						<Label id="RefreshLabel" text="#battlepass_refresh"/>
 						<Panel id="RefreshBattlepass" onactivate="RefreshBattlepass();"/>
+						<Label id="RefreshLabel" text="#battlepass_refresh"/>
 					</Button>
 <!--
 					<Button class="BattlepassButton" onactivate="ToggleCompanion();">
@@ -115,7 +131,6 @@
 					<Label id="CompanionNotificationLabel"/>
 				</Button>
 	
-				<Label class="DonatorTabLabel" text="#donator_info" />
 				<!-- JS Inserts records here -->
 			</Panel>
 
@@ -135,10 +150,6 @@
 					<!-- JS Inserts records here -->
 				</Panel>
 			</Panel>
-
-			<Button id="CloseButton" onactivate="ToggleBattlepass();">
-				<Label text="#imba_game_info_close" />
-			</Button>
 		</Panel>
 	</Panel>
 </root>

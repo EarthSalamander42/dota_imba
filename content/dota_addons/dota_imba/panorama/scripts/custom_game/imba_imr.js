@@ -435,10 +435,10 @@ function GenerateCompanionPanel(companions, player) {
 		companion.AddClass("DonatorReward");
 
 		var companionpreview = $.CreatePanel("Button", companion, "CompanionPreview_" + i);
-		companionpreview.style.width = "100%";
-		companionpreview.style.height = "85%";
-		companionpreview.BLoadLayoutFromString('<root><Panel><DOTAScenePanel style="width:100%; height:100%;" particleonly="false" unit="' + companion_unit[i.toString()] + '"/></Panel></root>', false, false);
-		companionpreview.style.opacityMask = 'url("s2r://panorama/images/masks/hero_model_opacity_mask_png.vtex");'
+		companionpreview.style.width = "132px";
+		companionpreview.style.height = "135px";
+		companionpreview.BLoadLayoutFromString('<root><Panel><DOTAScenePanel style="width:100%; height:153px; margin-top: -45px;" particleonly="false" unit="' + companion_unit[i.toString()] + '"/></Panel></root>', false, false);
+		// companionpreview.style.opacityMask = 'url("s2r://panorama/images/masks/hero_model_opacity_mask_png.vtex");'
 
 		if (newbie == true) {
 			companionpreview.AddClass("CompanionNew");
