@@ -1874,7 +1874,8 @@ function MapFrantic10v10()
 end
 
 function IsRankedMap()
-	if GetMapName() == MapRanked5v5() or GetMapName() == MapRanked10v10() then
+--	if GetMapName() == MapRanked5v5() or GetMapName() == MapRanked10v10() then
+	if GetMapName() == "imba_tournament" then
 		return true
 	end
 

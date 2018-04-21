@@ -317,6 +317,7 @@ CUSTOM_GOLD_BONUS["imba_frantic_5v5"] = {250, 250}
 CUSTOM_GOLD_BONUS["imba_frantic_10v10"] = {250, 250}
 CUSTOM_GOLD_BONUS["imba_overthrow"] = {100, 100}
 CUSTOM_GOLD_BONUS["imba_1v1"] = {100, 100}
+CUSTOM_GOLD_BONUS["imba_tournament"] = {150, 150}
 
 -- Global XP earning, values are doubled with Hyper for non-custom maps (right now this is not used anymore, but i'll keep it there just in case)
 CUSTOM_XP_BONUS = {} -- 1 = Normal, 2 = Hyper
@@ -326,6 +327,7 @@ CUSTOM_XP_BONUS["imba_frantic_5v5"] = {200, 200}
 CUSTOM_XP_BONUS["imba_frantic_10v10"] = {200, 200}
 CUSTOM_XP_BONUS["imba_overthrow"] = {100, 100}
 CUSTOM_XP_BONUS["imba_1v1"] = {100, 100}
+CUSTOM_XP_BONUS["imba_tournament"] = {100, 100}
 
 -- Hero base level, values are doubled with Hyper for non-custom maps
 HERO_STARTING_LEVEL = {} -- 1 = Normal, 2 = Hyper
@@ -335,6 +337,7 @@ HERO_STARTING_LEVEL["imba_frantic_5v5"] = {5, 5}
 HERO_STARTING_LEVEL["imba_frantic_10v10"] = {5, 5}
 HERO_STARTING_LEVEL["imba_overthrow"] = {1, 1}
 HERO_STARTING_LEVEL["imba_1v1"] = {1, 1}
+HERO_STARTING_LEVEL["imba_tournament"] = {1, 1}
 
 MAX_LEVEL = {}
 MAX_LEVEL["imba_ranked_5v5"] = {42, 42}
@@ -343,6 +346,7 @@ MAX_LEVEL["imba_frantic_5v5"] = {42, 42}
 MAX_LEVEL["imba_frantic_10v10"] = {42, 42}
 MAX_LEVEL["imba_overthrow"] = {42, 42}
 MAX_LEVEL["imba_1v1"] = {42, 42}
+MAX_LEVEL["imba_tournament"] = {42, 42}
 
 HERO_INITIAL_GOLD = {}
 HERO_INITIAL_GOLD["imba_ranked_5v5"] = {1200, 1200}
@@ -351,6 +355,7 @@ HERO_INITIAL_GOLD["imba_frantic_5v5"] = {4000, 4000}
 HERO_INITIAL_GOLD["imba_frantic_10v10"] = {4000, 4000}
 HERO_INITIAL_GOLD["imba_overthrow"] = {1200, 1200}
 HERO_INITIAL_GOLD["imba_1v1"] = {1200, 1200}
+HERO_INITIAL_GOLD["imba_tournament"] = {1200, 1200}
 
 GOLD_TICK_TIME = {}
 GOLD_TICK_TIME["imba_ranked_5v5"] = 0.6
@@ -359,6 +364,7 @@ GOLD_TICK_TIME["imba_frantic_5v5"] = 0.4
 GOLD_TICK_TIME["imba_frantic_10v10"] = 0.4
 GOLD_TICK_TIME["imba_overthrow"] = 0.6
 GOLD_TICK_TIME["imba_1v1"] = 0.6
+GOLD_TICK_TIME["imba_tournament"] = 0.6
 
 BANNED_ITEMS = {}
 BANNED_ITEMS["imba_ranked_5v5"] = {}
@@ -366,6 +372,7 @@ BANNED_ITEMS["imba_ranked_10v10"] = {}
 BANNED_ITEMS["imba_frantic_5v5"] = {}
 BANNED_ITEMS["imba_frantic_10v10"] = {}
 BANNED_ITEMS["imba_overthrow"] = {}
+BANNED_ITEMS["imba_tournament"] = {}
 BANNED_ITEMS["imba_1v1"] = {
 	"item_imba_bottle",
 	"item_infused_raindrop",

@@ -138,13 +138,13 @@ function HeroSelection:StartSelection()
 	CustomGameEventManager:RegisterListener('preview_hero', Dynamic_Wrap(HeroSelection, 'HeroPreview'))
 	CustomGameEventManager:RegisterListener("pick_abilities_requested", Dynamic_Wrap(HeroSelection, 'PickAbilitiesRequested'))
 
-	--	if IsRankedMap() then
-	--		EmitAnnouncerSound("announcer_announcer_type_capt_mode")
-	--		HeroSelection:CMManager(nil)
-	--	else
-	EmitAnnouncerSound("announcer_announcer_type_all_pick")
-	HeroSelection:APTimer(AP_GAME_TIME, "ALL PICK")
-	--	end
+	if IsRankedMap() then
+		EmitAnnouncerSound("announcer_announcer_type_capt_mode")
+		HeroSelection:CMManager(nil)
+	else
+		EmitAnnouncerSound("announcer_announcer_type_all_pick")
+		HeroSelection:APTimer(AP_GAME_TIME, "ALL PICK")
+	end
 end
 
 -- start heropick CM timer
@@ -316,11 +316,11 @@ function HeroSelection:APTimer (time, message)
 		for key, value in pairs(selectedtable) do
 			if value.selectedhero == "empty" then
 				-- if someone hasnt selected until time end, random for him
-				--				if IsRankedMap() then
-				--					HeroSelection:UpdateTable(key, cmpickorder[value.team.."picks"][1])
-				--				else
-				HeroSelection:UpdateTable(key, HeroSelection:RandomHero())
-				--				end
+				if IsRankedMap() then
+					HeroSelection:UpdateTable(key, cmpickorder[value.team.."picks"][1])
+				else
+					HeroSelection:UpdateTable(key, HeroSelection:RandomHero())
+				end
 			end
 
 			HeroSelection:SelectHero(key, selectedtable[key].selectedhero)
@@ -329,11 +329,11 @@ function HeroSelection:APTimer (time, message)
 		end
 		PlayerResource:GetAllTeamPlayerIDs():each(function (playerId)
 			if not lockedHeroes[playerId] then
---				if IsRankedMap() then
---					HeroSelection:UpdateTable(playerId, cmpickorder[PlayerResource:GetTeam(playerId).."picks"][1])
---				else
+				if IsRankedMap() then
+					HeroSelection:UpdateTable(playerId, cmpickorder[PlayerResource:GetTeam(playerId).."picks"][1])
+				else
 					HeroSelection:UpdateTable(playerId, HeroSelection:RandomHero())
---				end
+				end
 			end
 		end)
 
@@ -486,19 +486,19 @@ function HeroSelection:IsHeroDisabled(hero)
 		end
 	end
 
-	--	if IsRankedMap() then
-	--		for _,data in ipairs(cmpickorder["order"]) do
-	--			if hero == data.hero then
-	--				return true
-	--			end
-	--		end
-	--	else
-	for _,data in pairs(selectedtable) do
-		if hero == data.selectedhero then
-			return true
+	if IsRankedMap() then
+		for _,data in ipairs(cmpickorder["order"]) do
+			if hero == data.hero then
+				return true
+			end
+		end
+	else
+		for _,data in pairs(selectedtable) do
+			if hero == data.selectedhero then
+				return true
+			end
 		end
 	end
-	--	end
 
 	return false
 end
@@ -628,25 +628,25 @@ function HeroSelection:UpdateTable(playerID, hero)
 		hero = "empty"
 	end
 
-	--	if IsRankedMap() then
-	--		if hero ~= "empty" then
-	--			local cmFound = false
-	--			for k,v in pairs(cmpickorder[teamID.."picks"])do
-	--				if v == hero then
-	--					table.remove(cmpickorder[teamID.."picks"], k)
-	--					cmFound = true
-	--				end
-	--			end
-	--			if not cmFound then
-	--				log.info('Couldnt find that hero in the CM pool ' .. tostring(hero))
-	--				hero = "empty"
-	--			end
-	--		end
-	--		-- if they've already selected a hero then unselect it
-	--		if selectedtable[playerID] and selectedtable[playerID].selectedhero ~= "empty" then
-	--			table.insert(cmpickorder[teamID.."picks"], selectedtable[playerID].selectedhero)
-	--		end
-	--	end
+	if IsRankedMap() then
+		if hero ~= "empty" then
+			local cmFound = false
+			for k,v in pairs(cmpickorder[teamID.."picks"])do
+				if v == hero then
+					table.remove(cmpickorder[teamID.."picks"], k)
+					cmFound = true
+				end
+			end
+			if not cmFound then
+				log.info('Couldnt find that hero in the CM pool ' .. tostring(hero))
+				hero = "empty"
+			end
+		end
+		-- if they've already selected a hero then unselect it
+		if selectedtable[playerID] and selectedtable[playerID].selectedhero ~= "empty" then
+			table.insert(cmpickorder[teamID.."picks"], selectedtable[playerID].selectedhero)
+		end
+	end
 
 	selectedtable[playerID] = {id = playerID, selectedhero = hero, team = teamID, steamid = HeroSelection:GetSteamAccountID(playerID)}
 
@@ -654,7 +654,7 @@ function HeroSelection:UpdateTable(playerID, hero)
 	-- if everyone has picked, stop
 	local isanyempty = false
 	for key, value in pairs(selectedtable) do --pseudocode
-		if GetMapName() ~= "oaa_captains_mode" and value.steamid == "0" then
+		if GetMapName() ~= "imba_tournament" and value.steamid == "0" then
 			value.selectedhero = HeroSelection:RandomHero()
 		end
 
@@ -713,49 +713,49 @@ function HeroSelection:Attachments(hero)
 	elseif hero_name == "hell_empress" then
 
 	elseif hero_name == "scaldris" then
-	--		for i = 0, 24 do
-	--			if hero:GetAbilityByIndex(i) then
-	--				hero:RemoveAbility(hero:GetAbilityByIndex(i):GetAbilityName())
-	--			end
-	--		end
-	--
-	--		hero:AddAbility("imba_scaldris_heatwave")
-	--		hero:AddAbility("imba_scaldris_scorch")
-	--		hero:AddAbility("imba_scaldris_jet_blaze")
-	--		hero:AddAbility("generic_hidden")
-	--
-	--		local ab = hero:AddAbility("imba_scaldris_antipode")
-	--		ab:SetLevel(1)
-	--
-	--		hero:AddAbility("imba_scaldris_living_flame")
-	--		hero:AddAbility("imba_scaldris_cold_front")
-	--		hero:AddAbility("imba_scaldris_freeze")
-	--		hero:AddAbility("imba_scaldris_ice_floes")
-	--		hero:AddAbility("imba_scaldris_absolute_zero")
-	--		hero:AddAbility("generic_hidden")
-	--		hero:AddAbility("generic_hidden")
-	--		hero:AddAbility("generic_hidden")
-	--		hero:AddAbility("generic_hidden")
-	--		hero:AddAbility("generic_hidden")
-	--		hero:AddAbility("generic_hidden")
-	--		hero:AddAbility("generic_hidden")
-	--		hero:AddAbility("generic_hidden")
-	--		hero:AddAbility("generic_hidden")
-	--		hero:AddAbility("generic_hidden")
-	--		hero:AddAbility("generic_hidden")
-	--		hero:AddAbility("generic_hidden")
-	--		hero:AddAbility("generic_hidden")
-	--		hero:AddAbility("generic_hidden")
+		-- for i = 0, 24 do
+		-- 	if hero:GetAbilityByIndex(i) then
+		-- 		hero:RemoveAbility(hero:GetAbilityByIndex(i):GetAbilityName())
+		-- 	end
+		-- end
+		--
+		-- hero:AddAbility("imba_scaldris_heatwave")
+		-- hero:AddAbility("imba_scaldris_scorch")
+		-- hero:AddAbility("imba_scaldris_jet_blaze")
+		-- hero:AddAbility("generic_hidden")
+		--
+		-- local ab = hero:AddAbility("imba_scaldris_antipode")
+		-- ab:SetLevel(1)
+		--
+		-- hero:AddAbility("imba_scaldris_living_flame")
+		-- hero:AddAbility("imba_scaldris_cold_front")
+		-- hero:AddAbility("imba_scaldris_freeze")
+		-- hero:AddAbility("imba_scaldris_ice_floes")
+		-- hero:AddAbility("imba_scaldris_absolute_zero")
+		-- hero:AddAbility("generic_hidden")
+		-- hero:AddAbility("generic_hidden")
+		-- hero:AddAbility("generic_hidden")
+		-- hero:AddAbility("generic_hidden")
+		-- hero:AddAbility("generic_hidden")
+		-- hero:AddAbility("generic_hidden")
+		-- hero:AddAbility("generic_hidden")
+		-- hero:AddAbility("generic_hidden")
+		-- hero:AddAbility("generic_hidden")
+		-- hero:AddAbility("generic_hidden")
+		-- hero:AddAbility("generic_hidden")
+		-- hero:AddAbility("generic_hidden")
+		-- hero:AddAbility("generic_hidden")
+		-- hero:AddAbility("generic_hidden")
 	elseif hero_name == "sohei" then
-		---		hero.hand = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/heroes/sohei/so_weapon.vmdl"})
+		-- hero.hand = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/heroes/sohei/so_weapon.vmdl"})
 		hero.hand = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/heroes/sohei/weapon/immortal/thunderlord.vmdl"})
 
 		-- lock to bone
 		hero.hand:FollowEntity(hero, true)
 
-		--hero:AddNewModifier(hero, nil, 'modifier_animation_translate_permanent_string', {translate = 'walk'})
-		--hero:AddNewModifier(hero, nil, 'modifier_animation_translate_permanent_string', {translate = 'odachi'})
-		--hero:AddNewModifier(hero, nil, 'modifier_animation_translate_permanent_string', {translate = 'aggressive'})
+		-- hero:AddNewModifier(hero, nil, 'modifier_animation_translate_permanent_string', {translate = 'walk'})
+		-- hero:AddNewModifier(hero, nil, 'modifier_animation_translate_permanent_string', {translate = 'odachi'})
+		-- hero:AddNewModifier(hero, nil, 'modifier_animation_translate_permanent_string', {translate = 'aggressive'})
 	end
 end
 
@@ -778,11 +778,11 @@ function HeroSelection:GetPickScreenAbilities(hero_name)
 	end
 
 	for i = 1, 24 do
-		--		if custom_hero == true then
-		ability = GetKeyValue(hero_name, "Ability"..i)
-		--		else
-		--			ability = GetKeyValueByHeroName(hero_name, "Ability"..i)
-		--		end
+		if custom_hero == true then
+			ability = GetKeyValue(hero_name, "Ability"..i)
+		else
+			ability = GetKeyValueByHeroName(hero_name, "Ability"..i)
+		end
 
 		if ability then
 			if i ~= 9 then

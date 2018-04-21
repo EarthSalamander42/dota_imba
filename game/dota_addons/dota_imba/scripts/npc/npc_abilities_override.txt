@@ -4538,14 +4538,9 @@
 
 		"AbilityCooldown"				"18 16 12 7"
 		"AbilityCastRange"				"1400 1575 1750 1925"
-
 		"AbilityDuration"				"1.0 1.66 2.33 3.0"
-
 		"AbilityDamage"					"110 210 290 400"
-
 		"AbilityManaCost"				"100 120 140 160"
-
-		"MaxLevel"						"4"
 
 		"AbilitySpecial"
 		{
@@ -4594,8 +4589,6 @@
 	"earthshaker_enchant_totem"
 	{
 		"AbilityManaCost"				"20"
-
-		"MaxLevel"						"4"
 
 		"AbilitySpecial"
 		{
