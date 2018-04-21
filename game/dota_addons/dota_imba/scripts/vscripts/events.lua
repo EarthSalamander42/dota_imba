@@ -542,6 +542,10 @@ function GameMode:OnNPCSpawned(keys)
 			npc.first_spawn = true
 		end
 
+		if api.imba.is_donator(PlayerResource:GetSteamID(npc:GetPlayerID())) then
+			npc:AddNewModifier(npc, nil, "modifier_imba_donator", {})
+		end
+
 		-- fix for killed with Ghost Revenant immolation
 		if npc:HasModifier("modifier_ghost_revenant_ghost_immolation_debuff") then
 			npc:RemoveModifierByName("modifier_ghost_revenant_ghost_immolation_debuff")

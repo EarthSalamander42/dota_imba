@@ -2059,12 +2059,14 @@ function GameMode:OnThink()
 	end
 
 	-- Picking Screen voice alert
+	if GetMapName() == "imba_tournament" then return end
+
 	if i == nil then i = AP_GAME_TIME -1
 	elseif i < 0 then
 		return 1
 	else
 		i = i -1
-		--		log.debug(i)
+--		log.debug(i)
 		for _, hero in pairs(HeroList:GetAllHeroes()) do
 --			log.debug(hero:GetPlayerID(), hero.picked)
 			if not hero.picked and not i == false then -- have to double check false for reasons

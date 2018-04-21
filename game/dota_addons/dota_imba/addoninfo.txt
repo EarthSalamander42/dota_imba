@@ -14,6 +14,8 @@
 	"PenaltiesEnabled"				"1"
 
 	"maps"							"imba_1v1 imba_ranked_5v5 imba_ranked_10v10 imba_frantic_5v5 imba_frantic_10v10"
+//	"maps"							"imba_tournament"
+
 	"IsPlayable"					"1"
 
 	"imba_overthrow"
@@ -44,6 +46,11 @@
 	"imba_frantic_10v10"
 	{
 		"MaxPlayers"				"20"
+	}
+
+	"imba_tournament"
+	{
+		"MaxPlayers"				"10"
 	}
 
 //	"imba_12v12"
