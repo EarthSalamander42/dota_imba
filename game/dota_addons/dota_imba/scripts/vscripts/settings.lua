@@ -80,7 +80,7 @@ LOSE_GOLD_ON_DEATH = true					-- Should we have players lose the normal amount o
 SHOW_ONLY_PLAYER_INVENTORY = false			-- Should we only allow players to see their own inventory even when selecting other units?
 DISABLE_STASH_PURCHASING = false			-- Should we prevent players from being able to buy items into their stash when not at a shop?
 DISABLE_ANNOUNCER = false					-- Should we disable the announcer from working in the game?
-FORCE_PICKED_HERO = nil						-- What hero should we force all players to spawn as? (e.g. "npc_dota_hero_axe").  Use nil to allow players to pick their own hero.
+FORCE_PICKED_HERO = "npc_dota_hero_dummy_dummy"						-- What hero should we force all players to spawn as? (e.g. "npc_dota_hero_axe").  Use nil to allow players to pick their own hero.
 
 FIXED_RESPAWN_TIME = -1						-- What time should we use for a fixed respawn timer?  Use -1 to keep the default dota behavior.
 FOUNTAIN_CONSTANT_MANA_REGEN = 14			-- What should we use for the constant fountain mana regen?  Use -1 to keep the default dota behavior.
@@ -278,16 +278,17 @@ elseif GetMapName() == "imba_overthrow" then
 
 	m_GatheredShuffledTeams = {}
 
-	--	if PlayerResource:GetPlayerCount() > 7 then
+--	if PlayerResource:GetPlayerCount() > 7 then
 	TEAM_KILLS_TO_WIN = 50
 	nCOUNTDOWNTIMER = 901
-	--	elseif PlayerResource:GetPlayerCount() > 4 and PlayerResource:GetPlayerCount() <= 7 then
-	--		TEAM_KILLS_TO_WIN = 20
-	--		nCOUNTDOWNTIMER = 721
-	--	else
-	--		TEAM_KILLS_TO_WIN = 15
-	--		nCOUNTDOWNTIMER = 601
-	--	end
+--	elseif PlayerResource:GetPlayerCount() > 4 and PlayerResource:GetPlayerCount() <= 7 then
+--		TEAM_KILLS_TO_WIN = 20
+--		nCOUNTDOWNTIMER = 721
+--	else
+--		TEAM_KILLS_TO_WIN = 15
+--		nCOUNTDOWNTIMER = 601
+--	end
+
 	CustomNetTables:SetTableValue( "game_state", "victory_condition", { kills_to_win = TEAM_KILLS_TO_WIN } );
 end
 
@@ -295,6 +296,9 @@ end
 -- IMBA: game mode globals
 -------------------------------------------------------------------------------------------------
 GAME_WINNER_TEAM = 0														-- Tracks game winner
+GG_TEAM = {}
+GG_TEAM[2] = 0
+GG_TEAM[3] = 0
 
 if IsFranticMap() then
 	IMBA_FRANTIC_MODE_ON = true
@@ -510,6 +514,8 @@ IMBA_INVISIBLE_MODIFIERS = {
 IGNORE_FOUNTAIN_UNITS = {
 	"npc_dota_elder_titan_ancestral_spirit",
 	"npc_dummy_unit",
+	"npc_dota_hero_dummy_dummy",
+	"npc_imba_donator_companion",
 }
 
 RESTRICT_FOUNTAIN_UNITS = {

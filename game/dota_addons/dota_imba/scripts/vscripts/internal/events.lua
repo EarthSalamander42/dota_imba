@@ -20,7 +20,7 @@ function GameMode:_OnNPCSpawned(keys)
 	if npc:IsRealHero() then
 		if npc.bFirstSpawned == nil then
 			npc.bFirstSpawned = true
-			if npc:GetUnitName() ~= "npc_dota_hero_dummy_dummy" then
+			if npc:GetUnitName() ~= FORCE_PICKED_HERO then
 				PopulateHeroImbaTalents(npc)
 				InitializeInnateAbilities(npc)
 			end

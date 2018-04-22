@@ -1012,7 +1012,7 @@ function imba_silencer_arcane_supremacy:IsInnateAbility() return true end
 function modifier_imba_silencer_arcane_supremacy:AllowIllusionDuplicate() return false end
 function modifier_imba_silencer_arcane_supremacy:RemoveOnDeath() return false end
 function modifier_imba_silencer_arcane_supremacy:IsPermanent() return true end
-function modifier_imba_silencer_arcane_supremacy:IsPurgeable() return false end
+function modifier_imba_silencer_arcane_supremacy:IsPurgable() return false end
 
 function imba_silencer_arcane_supremacy:GetIntrinsicModifierName()
 	return "modifier_imba_silencer_arcane_supremacy" end

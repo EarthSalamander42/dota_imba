@@ -147,7 +147,7 @@ function GameMode:OnFirstPlayerLoaded()
 	-------------------------------------------------------------------------------------------------
 	flItemExpireTime = 60.0
 	GameRules:SetSameHeroSelectionEnabled(true)
-	GameRules:GetGameModeEntity():SetCustomGameForceHero("npc_dota_hero_dummy_dummy")
+	GameRules:GetGameModeEntity():SetCustomGameForceHero(FORCE_PICKED_HERO)
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Contributor models
@@ -1273,7 +1273,7 @@ function GameMode:OnHeroInGame(hero)
 
 	Timers:CreateTimer(0.1, function()
 		if hero:IsIllusion() or hero:HasModifier("modifier_illusion_manager_out_of_world") or hero:HasModifier("modifier_illusion_manager") then return end
-		if hero:GetUnitName() ~= "npc_dota_hero_dummy_dummy" then
+		if hero:GetUnitName() ~= FORCE_PICKED_HERO then
 			hero.picked = true
 
 			if COURIER_TEAM then
@@ -2059,7 +2059,7 @@ function GameMode:OnThink()
 	end
 
 	-- Picking Screen voice alert
-	if GetMapName() == "imba_tournament" then return end
+	if GetMapName() == "imba_tournament" then return 1 end
 
 	if i == nil then i = AP_GAME_TIME -1
 	elseif i < 0 then
@@ -2132,45 +2132,51 @@ end
 function GameMode:GG(event)
 if GameRules:State_Get() == DOTA_GAMERULES_STATE_POST_GAME then return end
 
-	local GG_TEAM = {}
-	GG_TEAM[2] = 0
-	GG_TEAM[3] = 0
-
 --	print(event.ID, event.Vote)
 
+	GG_TEAM[2] = {0, PlayerResource:GetPlayerCountForTeam(2)}
+	GG_TEAM[3] = {0, PlayerResource:GetPlayerCountForTeam(3)}
+
 	-- init
-	for i = 0, PlayerResource:GetPlayerCount() do
-		if not GG_TABLE then
-			GG_TABLE = {}
-			GG_TABLE[i] = false
+	if not GG_TABLE then
+		GG_TABLE = {} -- has pressed gg button?, has disconnected?
+		for i = 0, PlayerResource:GetPlayerCount() - 1 do
+			GG_TABLE[i] = {false, false}
 		end
 	end
 
-	GG_TABLE[event.ID] = 1
---	PrintTable(GG_TABLE)
+--	print("Vote:", event.Vote)
+	if event.Vote == 1 then
+		GG_TABLE[event.ID][1] = true
+	end
+
+--	print("Disconnect:", event.disconnect)
+	if event.disconnect == 1 then
+		GG_TABLE[event.ID][2] = true
+	else
+		Notifications:BottomToTeam(PlayerResource:GetTeam(event.ID), {text = PlayerResource:GetPlayerName(event.ID).." called GG through the GG Panel!", duration = 4.0, style = {color = "DodgerBlue"} })
+		GG_TABLE[event.ID][2] = false
+	end
 
 	for i = 0, PlayerResource:GetPlayerCount() - 1 do
-		if (GG_TABLE[i] == 1 or PlayerResource:GetConnectionState(i) ~= 2) and GG_TEAM[PlayerResource:GetTeam(i)] ~= true then
-			GG_TEAM[PlayerResource:GetTeam(event.ID)] = GG_TEAM[PlayerResource:GetTeam(event.ID)] + 1
---			print(GG_TEAM[PlayerResource:GetTeam(event.ID)], PlayerResource:GetPlayerCountForTeam(PlayerResource:GetTeam(event.ID)))
-			if GG_TEAM[PlayerResource:GetTeam(event.ID)] >= PlayerResource:GetPlayerCountForTeam(PlayerResource:GetTeam(event.ID)) then
-				GG_TEAM[PlayerResource:GetTeam(event.ID)] = true
-				break
-			end
+		if (GG_TABLE[i][1] or GG_TABLE[i][2]) and GG_TEAM[PlayerResource:GetTeam(event.ID)][1] < GG_TEAM[PlayerResource:GetTeam(event.ID)][2] then
+			GG_TEAM[PlayerResource:GetTeam(event.ID)][1] = GG_TEAM[PlayerResource:GetTeam(event.ID)][1] + 1
 		end
 	end
 
 --	print(GG_TEAM[2], GG_TEAM[3])
---	print(PlayerResource:GetPlayerCountForTeam(2), PlayerResource:GetPlayerCountForTeam(3))
+--	print(GG_TEAM[2][2], GG_TEAM[3][2])
+--	PrintTable(GG_TABLE)
+
+	CustomGameEventManager:Send_ServerToAllClients("gg_called", {ID = event.ID, team = event.team, radiant_count = GG_TEAM[2], dire_count = GG_TEAM[3], gg_table = GG_TABLE})
 
 	for i = 2, 3 do
-		if GG_TEAM[i] == true then
+		if GG_TEAM[i][1] > 0 and GG_TEAM[i][1] >= GG_TEAM[i][2] then
 --			print("GG")
 			local text = {}
 			text[2] = "#imba_team_good_gg_message"
 			text[3] = "#imba_team_bad_gg_message"
-			Notifications:BottomToAll({text = text[i], duration = 15.0, style = {color = "DodgerBlue"} })
-			GG_TEAM[i] = true
+			Notifications:BottomToAll({text = text[i], duration = 5.0, style = {color = "DodgerBlue"} })
 
 			Timers:CreateTimer(5.0, function()
 				if i == 2 then

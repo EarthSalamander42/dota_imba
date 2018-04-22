@@ -68,7 +68,24 @@ function ColoredText(colorCode, text) {
 }
 
 /*
- * Author: EarthSalamander #42 Credits: EarthSalamander #42
+ * Credits: Gafu Ji (not working atm needs to be fixed)
+ */
+
+/*
+function IsDonator(ID) {
+	if (var donators = CustomNetTables.GetTableValue("game_options", "donators")) {
+		var local_steamid = Game.GetPlayerInfo(ID).player_steamid;
+		// Assuming donators is an array
+		if (donators.indexOf(local_steamid) > -1) {
+			return true;
+		}
+	}
+	return false;
+}
+*/
+
+/*
+ * Credits: EarthSalamander #42
  */
 
 function IsDonator(ID) {

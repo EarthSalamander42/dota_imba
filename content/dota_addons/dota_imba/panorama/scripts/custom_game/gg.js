@@ -1,7 +1,5 @@
 "use strict";
 
-var radiant_vote_count = 0
-var dire_vote_count = 0
 var radiant_player_count = 0
 var dire_player_count = 0
 
@@ -14,6 +12,12 @@ function LoadPlayers() {
 }
 
 function GenerateGGPanel(team) {
+//	if ($("#Players").FindChildrenWithClassTraverse("PlayerRow")) {
+//		$("#Players").FindChildrenWithClassTraverse("PlayerRow").forEach(function (panel) {
+//			panel.DeleteAsync(0);
+//		});
+//	}
+
 	if (Game.GetPlayerInfo(Game.GetLocalPlayerID()).player_team_id == team) {
 		var ids = Game.GetPlayerIDsOnTeam(team);
 		$.Each(ids, function(player) {
@@ -74,20 +78,32 @@ function VoteGG(ID, panel, team, Vote) {
 		return;
 	}
 
-	if (team == 2) {
-		radiant_vote_count = radiant_vote_count + 1
-		$("#gg_count").text = $.Localize("#gg_count") + radiant_vote_count + "/" + radiant_player_count
-	} else if (team == 3) {
-		dire_vote_count = dire_vote_count + 1
-		$("#gg_count").text = $.Localize("#gg_count") + dire_vote_count + "/" + dire_player_count
-	}
-
-	panel.AddClass("voted")
-	panel.FindChildTraverse("GG" + ID + "_label").text = "Has GG!"
-
 	GameEvents.SendCustomGameEventToServer("send_gg_vote", {
 		ID: ID,
-		Vote: Vote
+		Vote: Vote,
+		team: team,
+	});
+}
+
+function GGCalled(event) {
+	var ids = Game.GetPlayerIDsOnTeam(event.team);
+	$.Each(ids, function(player) {
+		if (event.gg_table[player][1] == 1) {
+			$("#Players").FindChildTraverse("GG" + player + "_label").text = "Has GG!";
+			$("#Players").FindChildTraverse("GG" + player).AddClass("voted")
+		} else if (event.gg_table[player][2] == 1) {
+			$("#Players").FindChildTraverse("GG" + player + "_label").text = "Disconnected";
+			$("#Players").FindChildTraverse("GG" + player).AddClass("disconnected")
+		} else if (event.gg_table[player][2] == 2) {
+			$("#Players").FindChildTraverse("GG" + player + "_label").text = "Not GG";
+			$("#Players").FindChildTraverse("GG" + player).AddClass("disconnected")
+		}
+
+		if (event.team == 2) {
+			$("#gg_count").text = $.Localize("#gg_count") + event.radiant_count[1] + "/" + radiant_player_count
+		} else if (event.team == 3) {
+			$("#gg_count").text = $.Localize("#gg_count") + event.dire_count[1] + "/" + dire_player_count
+		}
 	});
 }
 
@@ -100,6 +116,7 @@ function TogglePanel() {
 }
 
 (function() {
-	LoadPlayers()
-	TogglePanel()
+	LoadPlayers();
+	TogglePanel();
+	GameEvents.Subscribe("gg_called", GGCalled);
 })();

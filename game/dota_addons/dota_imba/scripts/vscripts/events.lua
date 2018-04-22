@@ -76,6 +76,14 @@ function GameMode:OnDisconnect(keys)
 				return 1
 			end
 		end)
+
+		print("Increase GG amount!")
+		local table = {
+			ID = player_id,
+			team = PlayerResource:GetTeam(player_id),
+			disconnect = 1
+		}
+		GameMode:GG(table)
 	end
 end
 
@@ -489,7 +497,7 @@ function GameMode:OnNPCSpawned(keys)
 	if npc:IsRealHero() then
 		if not npc.first_spawn then
 			if api.imba.is_donator(PlayerResource:GetSteamID(npc:GetPlayerID())) and PlayerResource:GetConnectionState(npc:GetPlayerID()) ~= 1 then
-				if npc:GetUnitName() ~= "npc_dota_hero_dummy_dummy" then
+				if npc:GetUnitName() ~= FORCE_PICKED_HERO then
 					Timers:CreateTimer(2.0, function()
 						local steam_id = tostring(PlayerResource:GetSteamID(npc:GetPlayerID()))
 						if steam_id == "76561198015161808" then
@@ -734,6 +742,14 @@ function GameMode:OnPlayerReconnect(keys)
 		log.info('Giving player ' .. keys.PlayerID .. ' ' .. lockedHeroes[keys.PlayerID] .. '(reconnected)')
 		HeroSelection:GiveStartingHero(keys.PlayerID, lockedHeroes[keys.PlayerID])
 	end
+
+	local table = {
+		ID = keys.PlayerID,
+		team = PlayerResource:GetTeam(keys.PlayerID),
+		disconnect = 2,
+	}
+	print("Decrease GG Amount!")
+	GameMode:GG(table)
 end
 
 -- An item was purchased by a player
@@ -749,7 +765,6 @@ function GameMode:OnItemPurchased( keys )
 		tostring(hero:GetUnitName()),
 		tostring(PlayerResource:GetSteamID(plyID))
 	})
-
 end
 
 -- An ability was used by a player

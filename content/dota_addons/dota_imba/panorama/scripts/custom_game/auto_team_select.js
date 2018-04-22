@@ -83,8 +83,7 @@ var LegacyCompatSetupUI = function() {
 (function() {
 
 	// only operate on 5v5 and 10v10
-	if ((Game.GetMapInfo().map_display_name == "imba_ranked_5v5")
-			|| (Game.GetMapInfo().map_display_name == "imba_ranked_10v10")) {
+	if ((Game.GetMapInfo().map_display_name == "imba_ranked_5v5") || (Game.GetMapInfo().map_display_name == "imba_ranked_10v10")) {
 		LegacyCompatSetupUI();
 		if (Game.GetLocalPlayerInfo().player_has_host_privileges) {
 			Game.SetAutoLaunchEnabled(false);
@@ -93,6 +92,10 @@ var LegacyCompatSetupUI = function() {
 			GameEvents.Subscribe(events.failure, OnFailure);
 			GameEvents.SendCustomGameEventToServer(events.hostReady, {});
 		}
+	} else if ((Game.GetMapInfo().map_display_name == "imba_frantic_5v5") || (Game.GetMapInfo().map_display_name == "imba_frantic_10v10")) {
+		$("#LockAndStartButton").visible = false;
+		$("#CancelAndUnlockButton").visible = false;
+		$("#ShuffleTeamAssignmentButton").visible = false;
 	}
 
 })();

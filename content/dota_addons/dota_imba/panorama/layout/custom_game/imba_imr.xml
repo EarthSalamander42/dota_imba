@@ -65,6 +65,7 @@
 				<Panel id="TabsButtonWrapper" hittest="false">
 					<Panel id="TabButtonContainer" hittest="false">
 						<Button class="color_animation" id="BattlepassTabButton" onactivate="SwitchTab('BattlepassInfoContainer');">
+<!--						<DOTAScenePanel id="BattlepassBurner" class="SceneLoaded" hittest="false" map="scenes/hud/healthbarburner" camera="camera_1" /> -->
 							<Label class="image"></Label>
 							<Label class="text" text="#battlepass" />
 						</Button>
@@ -127,7 +128,7 @@
 					</Button>
 				</Panel>
 -->
-				<Button id="CompanionNotification" onactivate="DOTADisplayURL('https://www.patreon.com/dotaimba');">
+				<Button id="CompanionNotification" onactivate="DOTADisplayURL('https://www.patreon.com/xherosiege');">
 					<Label id="CompanionNotificationLabel"/>
 				</Button>
 	
