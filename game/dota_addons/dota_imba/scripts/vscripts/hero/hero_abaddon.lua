@@ -618,6 +618,7 @@ function imba_abaddon_curse_of_avernus:GetBehavior()
 	if self:GetCaster():HasTalent("special_bonus_imba_abaddon_4") then
 		return DOTA_ABILITY_BEHAVIOR_UNIT_TARGET + DOTA_ABILITY_BEHAVIOR_AUTOCAST + DOTA_ABILITY_BEHAVIOR_IMMEDIATE
 	end
+
 	return DOTA_ABILITY_BEHAVIOR_PASSIVE
 end
 
@@ -625,6 +626,7 @@ function imba_abaddon_curse_of_avernus:GetCooldown()
 	if self:GetBehavior() ~= DOTA_ABILITY_BEHAVIOR_PASSIVE then
 		return self:GetCaster():FindTalentValue("special_bonus_imba_abaddon_4", "active_cooldown")
 	end
+
 	return 0
 end
 

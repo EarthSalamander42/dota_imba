@@ -294,23 +294,13 @@ end
 ---------------------------------------------
 -- General purpose log shortcut functions
 ---------------------------------------------
-if IsInToolsMode() then
-	function log.debug(obj) end
-	function log.info(obj) end
-	function log.warn(obj) end
-	function log.warning(obj) end
-	function log.critical(obj) end
-	function log.crit(obj) end
-	function log.error(obj) end
-else
-	function log.debug(obj) Log:Print(obj, Log.Levels.DEBUG) end
-	function log.info(obj) Log:Print(obj, Log.Levels.INFO) end
-	function log.warn(obj) Log:Print(obj, Log.Levels.WARN) end
-	function log.warning(obj) Log:Print(obj, Log.Levels.WARN) end
-	function log.critical(obj) Log:Print(obj, Log.Levels.CRITICAL) end
-	function log.crit(obj) Log:Print(obj, Log.Levels.CRITICAL) end
-	function log.error(obj) Log:Print(obj, Log.Levels.ERROR) end
-end
+function log.debug(obj) Log:Print(obj, Log.Levels.DEBUG) end
+function log.info(obj) Log:Print(obj, Log.Levels.INFO) end
+function log.warn(obj) Log:Print(obj, Log.Levels.WARN) end
+function log.warning(obj) Log:Print(obj, Log.Levels.WARN) end
+function log.critical(obj) Log:Print(obj, Log.Levels.CRITICAL) end
+function log.crit(obj) Log:Print(obj, Log.Levels.CRITICAL) end
+function log.error(obj) Log:Print(obj, Log.Levels.ERROR) end
 
 ---------------------------------------------
 -- Safe shortcut

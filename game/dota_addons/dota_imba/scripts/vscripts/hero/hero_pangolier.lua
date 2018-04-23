@@ -597,7 +597,10 @@ function imba_pangolier_shield_crash:OnSpellStart()
 			modifier_movement_handler.jump_duration = jump_duration
 		else
 
-			local gyroshell_horizontal_distance = jump_duration_gyroshell * gyroshell_ability:GetSpecialValueFor("forward_move_speed")
+			local gyroshell_horizontal_distance
+			if gyroshell_ability then
+				gyroshell_horizontal_distance = jump_duration_gyroshell * gyroshell_ability:GetSpecialValueFor("forward_move_speed")
+			end
 
 			--if Pangolier is rolling, the jump will be longer
 			if caster:HasModifier("modifier_pangolier_gyroshell") then

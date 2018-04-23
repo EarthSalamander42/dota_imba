@@ -103,6 +103,7 @@ function GameMode:OnGameRulesStateChange(keys)
 		if new_state == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
 			log.info("events: team selection")
 			InitializeTeamSelection()
+			GameRules:SetSafeToLeave(true)
 		end
 
 		-------------------------------------------------------------------------------------------------
@@ -129,6 +130,17 @@ function GameMode:OnGameRulesStateChange(keys)
 
 			-- Initialize Battle Pass
 			Imbattlepass:Init()
+
+			local good_ancient = Entities:FindByName(nil, "dota_goodguys_fort")
+			local bad_ancient = Entities:FindByName(nil, "dota_badguys_fort")
+
+			if bad_ancient then
+				print("Setup bad ancient health bar!")
+				GameRules:SetOverlayHealthBarUnit(bad_ancient, 1)
+			elseif good_ancient then
+				print("Setup good ancient health bar!")
+				GameRules:SetOverlayHealthBarUnit(good_ancient, 1)
+			end
 
 			Timers:CreateTimer(1.5, function()
 				local hero_name
@@ -181,6 +193,7 @@ function GameMode:OnGameRulesStateChange(keys)
 				end
 
 				COURIER_TEAM = {}
+
 				if GetMapName() == "imba_overthrow" then
 					local foundTeams = {}
 					for _, playerStart in pairs(Entities:FindAllByClassname("info_courier_spawn")) do
@@ -229,6 +242,7 @@ function GameMode:OnGameRulesStateChange(keys)
 		-- IMBA: Game started (horn sounded)
 		-------------------------------------------------------------------------------------------------
 		if new_state == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
+			GameRules:SetSafeToLeave(false)
 			api.imba.event(api.events.started_game)
 
 			Timers:CreateTimer(60, function()

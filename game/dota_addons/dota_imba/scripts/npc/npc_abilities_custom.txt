@@ -26751,7 +26751,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
@@ -26954,12 +26954,7 @@
 			"01"
 			{
 				"var_type"                  "FIELD_INTEGER"
-				"talent_trained"	        "1"
-			}
-			"02"
-			{
-				"var_type"                  "FIELD_INTEGER"
-				"dmg_drain_pct"	        	"10"
+				"value"	       			 	"10"
 			}
 		}
 	}
@@ -26984,12 +26979,7 @@
 			"01"
 			{
 				"var_type"                  "FIELD_INTEGER"
-				"talent_trained"	        "1"
-			}
-			"02"
-			{
-				"var_type"                  "FIELD_INTEGER"
-				"cooldown"	        		"100"
+				"value"	        			"100"
 			}
 		}
 	}
@@ -27014,24 +27004,19 @@
 			"01"
 			{
 				"var_type"                  "FIELD_INTEGER"
-				"talent_trained"	        "1"
+				"base_damge_per_sec"	    "80"
 			}
 			"02"
 			{
 				"var_type"                  "FIELD_INTEGER"
-				"base_damge_per_sec"	    "80"
+				"add_target_dmg"	        "40"
 			}
 			"03"
 			{
 				"var_type"                  "FIELD_INTEGER"
-				"add_target_dmg"	        "40"
-			}
-			"04"
-			{
-				"var_type"                  "FIELD_INTEGER"
 				"radius"	        		"600"
 			}
-			"05"
+			"04"
 			{
 				"var_type"                  "FIELD_FLOAT"
 				"duration"	        		"4"
@@ -27090,12 +27075,7 @@
 			"01"
 			{
 				"var_type"                  "FIELD_INTEGER"
-				"talent_trained"			"1"
-			}
-			"02"
-			{
-				"var_type"                  "FIELD_INTEGER"
-				"radius"					"900"
+				"value"						"900"
 			}
 		}
 	}
@@ -27120,7 +27100,7 @@
 			"01"
 			{
 				"var_type"                  "FIELD_INTEGER"
-				"value"			            "160"
+				"value"			            "0"
 			}
 		}
 	}

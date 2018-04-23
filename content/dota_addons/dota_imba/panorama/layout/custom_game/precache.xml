@@ -81,7 +81,10 @@
 			<Image src="file://panorama/images/custom_game/picking_screen/clash_ancients.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/picking_screen/clash_heroes.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/picking_screen/radiant.png" hittest="false" />
+			<Image src="file://panorama/images/custom_game/picking_screen/radiant2.png" hittest="false" />
+			<Image src="file://panorama/images/custom_game/picking_screen/radiant3.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/picking_screen/dire.png" hittest="false" />
+			<Image src="file://panorama/images/custom_game/picking_screen/dire2.png" hittest="false" />
 		-->
 		</Panel>
 	</Panel>

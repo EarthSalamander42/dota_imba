@@ -126,15 +126,18 @@ function GameMode:OnFirstPlayerLoaded()
 		for i = 1, OVERTHROW_CAMP_NUMBER do
 			local campname = "camp"..i.."_path_customspawn"
 			spawncamps[campname] =
-				{
-					NumberToSpawn = RandomInt(3,5),
-					WaypointName = "camp"..i.."_path_wp1"
-				}
+			{
+				NumberToSpawn = RandomInt(3,5),
+				WaypointName = "camp"..i.."_path_wp1"
+			}
 		end
 		GameMode:CustomSpawnCamps()
 	else
 		GoodCamera = Entities:FindByName(nil, "dota_goodguys_fort")
 		BadCamera = Entities:FindByName(nil, "dota_badguys_fort")
+--		GoodCamera = Entities:FindByName(nil, "good_healer_6")
+--		BadCamera = Entities:FindByName(nil, "bad_healer_6")
+
 		ROSHAN_SPAWN_LOC = Entities:FindByClassname(nil, "npc_dota_roshan_spawner"):GetAbsOrigin()
 		Entities:FindByClassname(nil, "npc_dota_roshan_spawner"):RemoveSelf()
 		if GetMapName() ~= "imba_1v1" then
@@ -148,6 +151,7 @@ function GameMode:OnFirstPlayerLoaded()
 	flItemExpireTime = 60.0
 	GameRules:SetSameHeroSelectionEnabled(true)
 	GameRules:GetGameModeEntity():SetCustomGameForceHero(FORCE_PICKED_HERO)
+	GameRules:GetGameModeEntity():SetCameraDistanceOverride(500) -- default: 1134
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Contributor models
@@ -1228,7 +1232,6 @@ function GameMode:OnAllPlayersLoaded()
 
 	-- Iterate through each one
 	for _, building in pairs(buildings) do
-
 		-- Parameters
 		local building_name = building:GetName()
 
@@ -1377,7 +1380,7 @@ function GameMode:InitGameMode()
 	self:_InitGameMode()
 
 	GameRules.HeroKV = LoadKeyValues("scripts/npc/npc_heroes_custom.txt")
-	GameRules.UnitKV = LoadKeyValues("scripts/npc/npc_units_custom.txt")
+--	GameRules.UnitKV = LoadKeyValues("scripts/npc/npc_units_custom.txt")
 
 	-- IMBA testbed command
 	Convars:RegisterCommand("imba_test", Dynamic_Wrap(self, 'StartImbaTest'), "Spawns several units to help with testing", FCVAR_CHEAT)
@@ -1407,16 +1410,16 @@ function GameMode:InitGameMode()
 
 	--Derived Stats
 	mode:SetCustomAttributeDerivedStatValue(DOTA_ATTRIBUTE_STRENGTH_HP_REGEN_PERCENT, 0.0015) -- 40-45% of vanilla
-	--	mode:SetCustomAttributeDerivedStatValue(DOTA_ATTRIBUTE_INTELLIGENCE_MANA_REGEN_PERCENT, 0.010)
-	--	mode:SetCustomAttributeDerivedStatValue(DOTA_ATTRIBUTE_INTELLIGENCE_SPELL_AMP_PERCENT, 0.075)
+--	mode:SetCustomAttributeDerivedStatValue(DOTA_ATTRIBUTE_INTELLIGENCE_MANA_REGEN_PERCENT, 0.010)
+--	mode:SetCustomAttributeDerivedStatValue(DOTA_ATTRIBUTE_INTELLIGENCE_SPELL_AMP_PERCENT, 0.075)
 
-	--	mode:SetCustomAttributeDerivedStatValue(DOTA_ATTRIBUTE_STRENGTH_STATUS_RESISTANCE_PERCENT, 0)
-	--	mode:SetCustomAttributeDerivedStatValue(DOTA_ATTRIBUTE_AGILITY_MOVE_SPEED_PERCENT, 0)
-	--	mode:SetCustomAttributeDerivedStatValue(DOTA_ATTRIBUTE_INTELLIGENCE_MAGIC_RESISTANCE_PERCENT, 0)
+--	mode:SetCustomAttributeDerivedStatValue(DOTA_ATTRIBUTE_STRENGTH_STATUS_RESISTANCE_PERCENT, 0)
+--	mode:SetCustomAttributeDerivedStatValue(DOTA_ATTRIBUTE_AGILITY_MOVE_SPEED_PERCENT, 0)
+--	mode:SetCustomAttributeDerivedStatValue(DOTA_ATTRIBUTE_INTELLIGENCE_MAGIC_RESISTANCE_PERCENT, 0)
 
 	-- Panorama event stuff
 	initScoreBoardEvents()
-	--	InitPlayerHeroImbaTalents();
+--	InitPlayerHeroImbaTalents();
 
 	if GetMapName() == "imba_overthrow" then
 		mode:SetLoseGoldOnDeath( false )
@@ -1926,15 +1929,8 @@ function GameMode:OnNpcGoalReached( event )
 end
 
 function GameMode:OnThink()
-	local newState = GameRules:State_Get()
-
-	if newState == DOTA_GAMERULES_STATE_POST_GAME then
-		return nil
-	end
-
-	if GameRules:IsGamePaused() == true then
-		return 1
-	end
+	if GameRules:State_Get() == DOTA_GAMERULES_STATE_POST_GAME then return nil end
+	if GameRules:IsGamePaused() then return 1 end
 
 	CheatDetector()
 
@@ -1959,7 +1955,7 @@ function GameMode:OnThink()
 
 		-- Find hidden modifiers
 --		for i = 0, hero:GetModifierCount() -1 do
---			log.debug(hero:GetModifierNameByIndex(i))
+--			print(hero:GetModifierNameByIndex(i))
 --		end
 	end
 
@@ -2012,7 +2008,7 @@ function GameMode:OnThink()
 			end
 		end
 
-		if newState == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
+		if GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
 			-- End the game if one team completely abandoned
 			if CustomNetTables:GetTableValue("game_options", "game_count").value == 1 then
 				if not TEAM_ABANDON then

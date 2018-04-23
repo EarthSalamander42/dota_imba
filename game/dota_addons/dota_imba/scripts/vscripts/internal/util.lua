@@ -1268,16 +1268,19 @@ end
 function RestrictAndHideHero(hero)
 	if not hero:HasModifier("modifier_command_restricted") then
 		hero:AddNewModifier(hero, nil, "modifier_command_restricted", {})
+		hero:AddNewModifier(hero, nil, "modifier_phased", {})
 		hero:AddEffects(EF_NODRAW)
-		hero:SetDayTimeVisionRange(475)
-		hero:SetNightTimeVisionRange(475)
+		hero:SetDayTimeVisionRange(0)
+		hero:SetNightTimeVisionRange(0)
 
 		if hero:GetTeamNumber() == DOTA_TEAM_GOODGUYS then
 			PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), GoodCamera)
---			FindClearSpaceForUnit(hero, GoodCamera:GetAbsOrigin(), false)
+--			PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), hero)
+--			FindClearSpaceForUnit(hero, GoodCamera:GetAbsOrigin() + Vector(0, 150, 0), false)
 		else
 			PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), BadCamera)
---			FindClearSpaceForUnit(hero, BadCamera:GetAbsOrigin(), false)
+--			PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), hero)
+--			FindClearSpaceForUnit(hero, BadCamera:GetAbsOrigin() + Vector(0, 150, 0), false)
 		end
 	end
 end

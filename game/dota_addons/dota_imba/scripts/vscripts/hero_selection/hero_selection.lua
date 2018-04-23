@@ -43,24 +43,23 @@ function HeroSelection:Init()
 
 	local herolistFile = "scripts/npc/herolist/"..GetMapName()..".txt"
 
-	local allheroes = LoadKeyValues("scripts/npc/npc_heroes_custom.txt")
 	for key,value in pairs(LoadKeyValues(herolistFile)) do
-		if allheroes[key] == nil then -- Cookies: If the hero is not in custom file, load vanilla KV's
+		if GameRules.HeroKV[key] == nil then -- Cookies: If the hero is not in custom file, load vanilla KV's
 			log.debug(key .. " is not in custom file!")
 			local data = LoadKeyValues("scripts/npc/npc_heroes.txt")
 			if data and data[key] then
-				allheroes[key] = data[key]
+				GameRules.HeroKV[key] = data[key]
 			end
 		end
 
-		herolist[key] = allheroes[key].AttributePrimary
+		herolist[key] = GameRules.HeroKV[key].AttributePrimary
 
-		if allheroes[key].IsImba == 1 then
-			imbalist[key] = allheroes[key].IsImba
-		elseif allheroes[key].IsNew == 1 then
-			newlist[key] = allheroes[key].IsNew
-		elseif allheroes[key].IsCustom == 1 then
-			customlist[key] = allheroes[key].IsCustom
+		if GameRules.HeroKV[key].IsImba == 1 then
+			imbalist[key] = GameRules.HeroKV[key].IsImba
+		elseif GameRules.HeroKV[key].IsNew == 1 then
+			newlist[key] = GameRules.HeroKV[key].IsNew
+		elseif GameRules.HeroKV[key].IsCustom == 1 then
+			customlist[key] = GameRules.HeroKV[key].IsCustom
 		end
 
 		if api.imba.hero_is_disabled(key) then
@@ -310,7 +309,7 @@ function HeroSelection:CMBecomeCaptain (event)
 end
 
 -- start heropick AP timer
-function HeroSelection:APTimer (time, message)
+function HeroSelection:APTimer(time, message)
 	HeroSelection:CheckPause()
 	if forcestop == true or time < 0 then
 		for key, value in pairs(selectedtable) do
@@ -327,6 +326,7 @@ function HeroSelection:APTimer (time, message)
 			print("PAUSE GAME!")
 --			PauseGame(true)
 		end
+
 		PlayerResource:GetAllTeamPlayerIDs():each(function (playerId)
 			if not lockedHeroes[playerId] then
 				if IsRankedMap() then
@@ -366,6 +366,7 @@ function HeroSelection:SelectHero(playerId, hero)
 			LoadFinishEvent.broadcast()
 			print("UNPAUSE GAME!")
 --			PauseGame(false)
+			GameRules:GetGameModeEntity():SetCameraDistanceOverride(1134) -- default: 1134
 		end
 
 		local player = PlayerResource:GetPlayer(playerId)
@@ -593,6 +594,7 @@ end
 -- receive choise from players about their selection
 function HeroSelection:HeroSelected(event)
 	HeroSelection:UpdateTable(event.PlayerID, event.hero)
+	PrecacheUnitByNameAsync(event.hero, function(...) end)
 end
 
 function HeroSelection:HeroPreview(event)

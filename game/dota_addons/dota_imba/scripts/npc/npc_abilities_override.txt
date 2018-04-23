@@ -8000,8 +8000,8 @@
 			}
 			"03"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"charge_restore_time"	"11"
+				"var_type"					"FIELD_INTEGER"
+				"charge_restore_time"		"11"
 			}
 		}
 	}

@@ -36,6 +36,7 @@ var hilariousLoadingPhrases = [
 	'Tooltip Missing!',
 	'Herding more llama',
 	'Developing Artifact Imba',
+	'Buffing Pudge'
 ];
 
 var abilityPanels = [
@@ -460,19 +461,27 @@ function Setup1v1() {
 }
 
 function SetupBackgroundImage() {
+
 	if (Players.GetTeam(Game.GetLocalPlayerID()) == 2) {
-		image = "radiant"
+		var background_image = [
+			"radiant",
+			"radiant2",
+			"radiant3",
+		]
 	} else if (Players.GetTeam(Game.GetLocalPlayerID()) == 3) {
-		image = "dire"
+		var background_image = [
+			"dire",
+			"dire2",
+		]
 	} else {
 		var background_image = [
 			"clash_ancients",
 			"clash_heroes",
 		]
-
-		var random_int = Math.floor(Math.random() * (background_image.length - 0) ) + 0;
-		var image = background_image[random_int]
 	}
+
+	var random_int = Math.floor(Math.random() * (background_image.length - 0) ) + 0;
+	var image = background_image[random_int]
 
 	var background = $("#ImageBG");
 	background.style.backgroundImage = 'url("file://{images}/custom_game/picking_screen/' + image + '.png")';

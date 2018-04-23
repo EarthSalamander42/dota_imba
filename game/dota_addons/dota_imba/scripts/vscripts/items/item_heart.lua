@@ -116,6 +116,8 @@ function modifier_item_imba_heart_unique:DeclareFunctions()
 end
 
 function modifier_item_imba_heart_unique:GetModifierHealthRegenPercentage()
+	if IsClient() then return end
+
 	if self:GetAbility():GetCooldownTimeRemaining() == 0 then
 		return self.noncombat_regen
 	end
