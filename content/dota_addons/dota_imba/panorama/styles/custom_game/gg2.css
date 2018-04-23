@@ -1,44 +1,41 @@
 .Root {
-	width: 500px;
-	height: 300px;
+	width: 530px;
+	height: 330px;
 	margin-top: 100px;
 	margin-right: 30px;
 	align:  right top;
-	border-bottom: 1px solid #2a0302;
-	border-right: 1px solid #2a0302;
-	border-top: 1px solid #300404;
-	border-left: 1px solid #300404;
-	box-shadow: 0px 0px 25px 0px #6f0b0bec;
-	border-radius: 6px;
+	box-shadow: 0px 0px 10px 0px #000000a8;
 	background-image: url("file://panorama/images/custom_game/gg/gg_background.png");
-	font-family: Goudy Trajan Medium, FZKai-Z03, TH Sarabun New;
-
+	font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
+	background-size: cover;
 	flow-children:  down;
 }
 #Title {
 	align: center top;
-	padding: 20px 35px 15px;
+	padding: 25px 35px 15px;
 }
 .UILabelLarge {
 	color: #d4c588;
-	font-size:  22px;
+	font-size:  26px;
+	letter-spacing: 1.5px;
 	line-height: 35px;
 	text-align: center;
-	text-shadow: 1px 1px 3px 2.0 #4d400dee;
+	text-shadow: 1px 1px 3px 2.0 #000000ee;
+	text-transform: uppercase;
 }
 #Timer {	
 	align: center center;
-	margin-bottom: 10px;
+	margin-bottom: 0px;
 }
 .GGTimer {
 	color: #fef4cb;
-	font-size: 78px;
-	text-shadow: 1px 1px 6px 2.0 #4d400dee;
+	font-size: 85px;
+	text-shadow: 1px 1px 6px 2.0 #000000ee;
 
 }
 #MainButton {
 	height: 50px;
-	width: 250px;
+	width: 270px;
 	margin-bottom: 5px;
 	align:  center center;
 	padding: 5px 20px;
