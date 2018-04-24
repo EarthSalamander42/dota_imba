@@ -5942,30 +5942,6 @@
 		}
 	}
 
-	"item_recipe_imba_diffusal_blade_3"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"2200"
-		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
-
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"1100"
-		"ItemShopTags"					""
-
-		// Recipe
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemRecipe"					"1"
-		"ItemResult"					"item_imba_diffusal_blade_3"
-		"ItemRequirements"
-		{
-			"01"						"item_imba_diffusal_blade_2;item_blade_of_alacrity;item_robe"
-			"02"						"item_imba_diffusal_blade_3"
-		}
-	}
-
 	//=================================================================================================================
 	// Diffusal Blade
 	//=================================================================================================================
@@ -6155,104 +6131,6 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"dispel_burn"				"100"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Diffusal Blade III
-	//=================================================================================================================
-	"item_imba_diffusal_blade_3"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"2203"
-		"BaseClass"						"item_lua"
-		"AbilityTextureName" 			"custom/imba_diffusal_blade_3"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"ScriptFile"					"items/item_diffusal"
-
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"600"
-		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"6.0"
-		"AbilitySharedCooldown"			"diffusal"
-		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
-
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"0"
-		"ItemCost"						"7050"
-		"ItemShopTags"					"agi;int;unique;hard_to_tag"
-		"ItemQuality"					"artifact"
-		"ItemAliases"					"diffusal blade 3;witchblade"
-		"MaxUpgradeLevel"				"3"
-		"ItemBaseLevel"					"3"
-		"ItemPermanent"					"1"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"bonus_agi"					"60"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"bonus_int"					"25"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"mana_burn"					"100"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"slow_degrade_pct"			"20"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"starting_slow_pct"			"100"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"stack_loss_time"			"0.8"
-			}
-			"07"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"total_slow_duration"		"4"
-			}
-			"08"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"illusion_mana_burn"		"32"
-			}
-			"09"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"root_duration"				"3"
-			}
-			"10"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"steal_chance_pct"			"25"
-			}
-			"11"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"steal_burn"				"130"
 			}
 		}
 	}
@@ -7815,7 +7693,7 @@
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"8.0"
+		"AbilityCooldown"				"9.0"
 		"AbilitySharedCooldown"			"blink"
 
 		// Item Info
@@ -7941,7 +7819,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_movement_speed"		"110"
+				"bonus_movement_speed"		"80"
 			}
 			"04"
 			{
@@ -10524,49 +10402,41 @@
 				"var_type"						"FIELD_INTEGER"
 				"bonus_damage"					"10"
 			}
-
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"bonus_strength"				"10"
 			}
-
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"bonus_range_melee"				"65"
 			}
-
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"bash_chance_melee"				"25"
 			}
-
 			"05"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"bash_chance_ranged"			"10"
 			}
-
 			"06"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"stun_duration"					"1.4"
+				"stun_duration"					"1.2"
 			}
-
 			"07"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"bash_damage"					"100"
 			}
-
 			"08"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"skull_break_duration"			"5"
 			}
-
 			"09"
 			{
 				"var_type"						"FIELD_INTEGER"
@@ -10640,85 +10510,71 @@
 				"var_type"						"FIELD_INTEGER"
 				"bonus_damage"					"10"
 			}
-
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"bonus_strength"				"10"
 			}
-
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"bonus_range_melee"				"80"
 			}
-
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"bash_chance_melee"				"25"
 			}
-
 			"05"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"bash_chance_ranged"			"10"
 			}
-
 			"06"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"stun_duration"					"1.4"
+				"stun_duration"					"1.2"
 			}
-
 			"07"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"bash_damage"					"120"
 			}
-
 			"08"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"skull_break_duration"			"5"
 			}
-
 			"09"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"bonus_hp_regen"				"16"
 			}
-
 			"10"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"bonus_health"					"350"
 			}
-
 			"11"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"insta_skull_break_chance_pct"	"40"
 			}
-
 			"12"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"damage_block"					"45"
 			}
-
 			"13"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"internal_bash_cd"				"2"
 			}
-
 			"14"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"active_stun_duration"			"2"
 			}
-
 			"15"
 			{
 				"var_type"						"FIELD_INTEGER"
@@ -10989,148 +10845,6 @@
 			}
 		}
 	}
-	
-	//=================================================================================================================
-	// Recipe: Gungnir
-	//=================================================================================================================
-	"item_recipe_imba_gungnir"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"2259"
-		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
-
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"1250"
-		"ItemShopTags"					""
-
-		// Recipe
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemRecipe"					"1"
-		"ItemResult"					"item_imba_gungnir"
-		"ItemRequirements"
-		{
-			"01"						"item_imba_monkey_king_bar;item_imba_hurricane_pike"
-		}
-	}
-
-	//=================================================================================================================
-	// Gungnir
-	//=================================================================================================================
-	"item_imba_gungnir"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"2260"
-		"BaseClass"						"item_lua"
-		"ScriptFile"					"items/item_gungnir.lua"
-		"AbilityTextureName" 			"custom/imba_gungnir"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
-
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"10900"
-		"ItemShopTags"					"damage;hard_to_tag"
-		"ItemQuality"					"rare"
-		"ItemAliases"					"gungnir"
-
-		"AbilitySharedCooldown"			"force"
-		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"15.0"
-		"AbilityManaCost"				"75"
-		"AbilityCastRange"				"850"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"77"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"13"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"bonus_health_regen"	"7"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_agility"			"20"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_strength"		"15"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bash_chance"			"35"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bash_damage"			"100"
-			}
-			"08"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"ally_distance"			"750"
-			}
-			"09"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"enemy_distance_ranged"	"450"
-			}
-			"10"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"enemy_distance_melee"	"400"
-			}
-			"11"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"0.4"
-			}
-			"12"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_attack_speed"	"400"
-			}
-			"13"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"max_attacks"			"4"
-			}
-			"14"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"melee_bonus_ar"		"100"
-			}
-			"15"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"ranged_bonus_ar"		"150"
-			}
-			"16"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"range_duration"		"5"
-			}
-		}
-	}
 
 	//=================================================================================================================
 	// Recipe: Jarnbjorn
@@ -11385,7 +11099,7 @@
 	"item_imba_force_staff"
 	{
 		"BaseClass"						"item_lua"
-		"ScriptFile"					"items/item_gungnir"
+		"ScriptFile"					"items/item_force_staff"
 		"AbilityTextureName"			"custom/imba_force_staff"
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -11472,7 +11186,7 @@
 	"item_imba_hurricane_pike"
 	{
 		"BaseClass"						"item_lua"
-		"ScriptFile"						"items/item_gungnir"
+		"ScriptFile"						"items/item_force_staff"
 		"AbilityTextureName"				"item_hurricane_pike"
 		// General
 		//-------------------------------------------------------------------------------------------------------------

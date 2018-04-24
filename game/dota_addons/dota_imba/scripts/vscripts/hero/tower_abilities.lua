@@ -906,6 +906,7 @@ end
 modifier_imba_tower_toughness_aura_buff = modifier_imba_tower_toughness_aura_buff or class({})
 
 function modifier_imba_tower_toughness_aura_buff:OnCreated()
+	if string.find(self:GetParent():GetUnitName(), "npc_dota_lone_druid_bear") then return end
 	-- Ability properties
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()

@@ -110,7 +110,11 @@ function imba_elder_titan_echo_stomp:OnAbilityPhaseStart()
 	if astral_spirit == nil then
 	else
 		if astral_spirit.is_returning == true then return true end
-		astral_spirit:CastAbilityNoTarget(astral_spirit:FindAbilityByName("imba_elder_titan_echo_stomp_spirit"), astral_spirit:GetPlayerOwnerID())
+		local ab = astral_spirit:FindAbilityByName("imba_elder_titan_echo_stomp_spirit")
+		if not ab:IsInAbilityPhase() then
+			astral_spirit:CastAbilityNoTarget(ab, self:GetCaster():GetOwner():GetPlayerID())
+		end
+		astral_spirit:CastAbilityNoTarget(ab, astral_spirit:GetPlayerOwnerID())
 	end
 
 	EmitSoundOn("Hero_ElderTitan.EchoStomp.Channel.ti7_layer", self:GetCaster())
@@ -317,8 +321,6 @@ function modifier_imba_elder_titan_ancestral_spirit_self:OnCreated()
 end
 
 function modifier_imba_elder_titan_ancestral_spirit_self:OnIntervalThink()
-	--	print(self:GetAbility():GetSpecialValueFor("radius"))
-
 	local duration = self:GetAbility():GetCaster():FindTalentValue("special_bonus_imba_elder_titan_3")
 	local nearby_enemies = FindUnitsInRadius(self:GetParent():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 
@@ -597,6 +599,18 @@ function imba_elder_titan_echo_stomp_spirit:GetCastRange(location, target)
 	return base_range
 end
 
+function imba_elder_titan_echo_stomp_spirit:OnAbilityPhaseStart()
+	if self:GetCaster():GetOwner() then
+		local ab = self:GetCaster():GetOwner():FindAbilityByName("imba_elder_titan_echo_stomp")
+		if not self:GetCaster():GetOwner():IsChanneling() then
+			self:GetCaster():GetOwner():CastAbilityNoTarget(ab, self:GetCaster():GetOwner():GetPlayerID())
+		end
+	end
+
+	EmitSoundOn("Hero_ElderTitan.EchoStomp.Channel.ti7_layer", self:GetCaster())
+	return true
+end
+
 function imba_elder_titan_echo_stomp_spirit:OnSpellStart()
 	if IsServer() then
 		-- Ability properties
@@ -645,10 +659,6 @@ LinkLuaModifier("modifier_imba_earth_splitter", "hero/hero_elder_titan.lua", LUA
 
 function imba_elder_titan_earth_splitter:GetAbilityTextureName()
 	return "elder_titan_earth_splitter"
-end
-
-function imba_elder_titan_ancestral_spirit:GetIntrinsicModifierName()
-	return "modifier_imba_earth_splitter"
 end
 
 function imba_elder_titan_earth_splitter:IsHiddenWhenStolen()

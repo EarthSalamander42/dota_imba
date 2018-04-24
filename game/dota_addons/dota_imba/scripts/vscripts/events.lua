@@ -93,7 +93,7 @@ function GameMode:OnGameRulesStateChange(keys)
 	GameMode:_OnGameRulesStateChange(keys)
 
 	-- Run this in safe context
---	safe(function()
+	safe(function()
 		local new_state = GameRules:State_Get()
 		CustomNetTables:SetTableValue("game_options", "game_state", {state = new_state})
 
@@ -372,7 +372,7 @@ function GameMode:OnGameRulesStateChange(keys)
 
 			CustomNetTables:SetTableValue("game_options", "game_count", {value = 0})
 		end
---	end)
+	end)
 end
 
 dummy_created_count = 0
@@ -695,6 +695,15 @@ function GameMode:OnNPCSpawned(keys)
 		npc.vengeance_aura_target:RemoveModifierByName("modifier_imba_command_aura_negative_aura")
 		npc.vengeance_aura_target = nil
 	end
+
+	if string.find(npc:GetUnitName(), "npc_dota_lone_druid_bear") then
+		for i = 0, 23 do
+			local ability = npc:GetAbilityByIndex(i)
+			if IsValidEntity(ability) then
+				ability:SetLevel(npc:GetLevel())
+			end
+		end
+	end
 end
 
 -- An entity somewhere has been hurt.  This event fires very often with many units so don't do too many expensive
@@ -875,7 +884,6 @@ function GameMode:OnPlayerChangedName(keys)
 	local oldName = keys.oldName
 end
 
--- A player leveled up an ability
 function GameMode:OnPlayerLearnedAbility( keys)
 	local player = EntIndexToHScript(keys.player)
 	local hero = player:GetAssignedHero()
@@ -892,8 +900,11 @@ function GameMode:OnPlayerLearnedAbility( keys)
 		end)
 	end
 
-	if hero ~= nil then
+	if abilityname == "lone_druid_savage_roar" and not hero.savage_roar then
+		hero.savage_roar = true
+	end
 
+	if hero then
 		api.imba.event(api.events.ability_learned, {
 			tostring(abilityname),
 			tostring(hero:GetUnitName()),
@@ -902,13 +913,11 @@ function GameMode:OnPlayerLearnedAbility( keys)
 	end
 end
 
--- A channelled ability finished by either completing or being interrupted
 function GameMode:OnAbilityChannelFinished(keys)
 	local abilityname = keys.abilityname
 	local interrupted = keys.interrupted == 1
 end
 
--- A player leveled up
 function GameMode:OnPlayerLevelUp(keys)
 	local player = EntIndexToHScript(keys.player)
 	local hero = player:GetAssignedHero()

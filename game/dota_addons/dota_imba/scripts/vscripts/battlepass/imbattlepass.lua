@@ -327,13 +327,13 @@ function GetBottleEffect(hero)
 	local icon = 0
 
 	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BOTTLE["bottle4"] then
-		effect = "particles/econ/events/ti4/bottle_ti5.vpcf"
+		effect = "particles/econ/events/ti5/bottle_ti5.vpcf"
 		icon = 4
 	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BOTTLE["bottle3"] then
 		effect = "particles/econ/events/ti6/bottle_ti6.vpcf"
 		icon = 3
 	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BOTTLE["bottle2"] then
-		effect = "particles/econ/events/ti5/bottle_ti4.vpcf"
+		effect = "particles/econ/events/ti4/bottle_ti4.vpcf"
 		icon = 2
 	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BOTTLE["bottle"] then
 		effect = "particles/econ/events/ti7/bottle_ti7.vpcf"

@@ -494,10 +494,10 @@ function GameMode:ModifierFilter( keys )
 			end
 		end
 
-		--		if modifier_name == "modifier_courier_shield" then
-		--			modifier_caster:RemoveModifierByName(modifier_name)
-		--			modifier_caster:FindAbilityByName("courier_burst"):CastAbility()
-		--		end
+--		if modifier_name == "modifier_courier_shield" then
+--			modifier_caster:RemoveModifierByName(modifier_name)
+--			modifier_caster:FindAbilityByName("courier_burst"):CastAbility()
+--		end
 
 		-- disarm immune
 		local jarnbjorn_immunity = {
@@ -514,8 +514,8 @@ function GameMode:ModifierFilter( keys )
 			"modifier_dismember_disarm",
 			"modifier_imba_decrepify",
 
-		--			"modifier_imba_faceless_void_time_lock_stun",
-		--			"modifier_bashed",
+--			"modifier_imba_faceless_void_time_lock_stun",
+--			"modifier_bashed",
 		}
 
 		-- add particle or sound playing to notify
@@ -530,6 +530,12 @@ function GameMode:ModifierFilter( keys )
 
 		if modifier_name == "modifier_fountain_aura_buff" then
 			modifier_owner:AddNewModifier(modifier_owner, nil, "modifier_imba_fountain_particle_control", {})
+		end
+
+		if modifier_name == "modifier_tusk_snowball_movement" then
+			if modifier_owner:FindAbilityByName("tusk_snowball") then
+				modifier_owner:FindAbilityByName("tusk_snowball"):SetActivated(false)
+			end
 		end
 
 		return true
@@ -1483,7 +1489,7 @@ function GameMode:StartImbaTest()
 		-- Add specific items to each dummy hero
 		if i == 1 then
 			dummy_hero:AddItemByName("item_imba_manta")
-			dummy_hero:AddItemByName("item_imba_diffusal_blade_3")
+			dummy_hero:AddItemByName("item_imba_diffusal_blade_2")
 		elseif i == 2 then
 			dummy_hero:AddItemByName("item_imba_silver_edge")
 			dummy_hero:AddItemByName("item_imba_necronomicon_5")
@@ -1504,7 +1510,7 @@ function GameMode:StartImbaTest()
 		-- Add specific items to each dummy hero
 		if i == 1 then
 			dummy_hero:AddItemByName("item_imba_manta")
-			dummy_hero:AddItemByName("item_imba_diffusal_blade_3")
+			dummy_hero:AddItemByName("item_imba_diffusal_blade_2")
 		elseif i == 2 then
 			dummy_hero:AddItemByName("item_imba_silver_edge")
 			dummy_hero:AddItemByName("item_imba_necronomicon_5")
@@ -1944,18 +1950,39 @@ function GameMode:OnThink()
 			break
 		end
 
+		-- Lone Druid fixes
+		if hero:GetUnitName() == "npc_dota_hero_lone_druid" and hero.savage_roar then
+			local Bears = FindUnitsInRadius(hero:GetTeam(), Vector(0, 0, 0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, 0, false)
+			for _, Bear in pairs(Bears) do
+				if Bear and string.find(Bear:GetUnitName(), "npc_dota_lone_druid_bear") and Bear:FindAbilityByName("lone_druid_savage_roar_bear") and Bear:FindAbilityByName("lone_druid_savage_roar_bear"):IsHidden() then
+					Bear:FindAbilityByName("lone_druid_savage_roar_bear"):SetHidden(false)
+				end
+			end
+		end
+
 		-- Morphling fixes
-		if hero:GetUnitName() == "npc_dota_hero_morphling" then
+		if hero:GetUnitName() == "npc_dota_hero_morphling" and hero:GetModelName() == "models/heroes/morphling/morphling.vmdl" then
 			for _, modifier in pairs(MORPHLING_RESTRICTED_MODIFIERS) do
-				if hero:GetModelName() == "models/heroes/morphling/morphling.vmdl" and hero:HasModifier(modifier) then
+				if hero:HasModifier(modifier) then
 					hero:RemoveModifierByName(modifier)
 				end
 			end
 		end
 
+		-- Tusk fixes
+		if hero:FindModifierByName("modifier_tusk_snowball_movement") then
+			if hero:FindAbilityByName("tusk_snowball") then
+				hero:FindAbilityByName("tusk_snowball"):SetActivated(false)
+			end
+		else
+			if hero:FindAbilityByName("tusk_snowball") then
+				hero:FindAbilityByName("tusk_snowball"):SetActivated(true)
+			end
+		end
+
 		-- Find hidden modifiers
 --		for i = 0, hero:GetModifierCount() -1 do
---			print(hero:GetModifierNameByIndex(i))
+--			print(hero:GetUnitName(), hero:GetModifierNameByIndex(i))
 --		end
 	end
 

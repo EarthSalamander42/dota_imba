@@ -108,7 +108,7 @@
 "DOTA_Tooltip_ability_imba_summoned_wolf_invisibility_fade_time"                    "FADE TIME:"
 
 "DOTA_Tooltip_ability_special_bonus_imba_lycan_1"				"+1 Wolves power level"
-"DOTA_Tooltip_ability_special_bonus_imba_lycan_2"				"Wolves gain 15% of Lycan's damage"
+"DOTA_Tooltip_ability_special_bonus_imba_lycan_2"				"Wolves gain %value%% of Lycan's damage"
 "DOTA_Tooltip_ability_special_bonus_imba_lycan_3"				"Summon wolves summons an Alpha Wolf"
 "DOTA_Tooltip_ability_special_bonus_imba_lycan_4"				"Howl gives flying movement"
 "DOTA_Tooltip_ability_special_bonus_imba_lycan_4_Description"	"Howl gives 8 seconds of flying movement to Lycan and wolves"

@@ -2201,7 +2201,7 @@
 		"Model"						"models/heroes/lone_druid/spirit_bear.vmdl"	// Model.
 		"BaseClass"					"npc_dota_lone_druid_bear"
 		"SoundSet"					"LoneDruid_SpiritBear"
-		"Level"						"7"
+		"Level"						"1"
 		"ModelScale" 				".65"
 		"ConsideredHero"			"1"
 		"UnitLabel"					"spirit_bear"
@@ -2211,7 +2211,7 @@
 		"Ability1"					"bear_empty"			// Ability 1
 		"Ability2"					"bear_empty"			// Ability 2
 		"Ability3"					"lone_druid_savage_roar_bear"			// Ability 3
-		"Ability4"					""			// Ability 4
+		"Ability4"					"bear_empty"			// Ability 4
 
 		// Armor
 		//----------------------------------------------------------------
@@ -2276,7 +2276,7 @@
 		"Model"						"models/heroes/lone_druid/spirit_bear.vmdl"	// Model.
 		"BaseClass"					"npc_dota_lone_druid_bear"
 		"SoundSet"					"LoneDruid_SpiritBear"
-		"Level"						"7"
+		"Level"						"2"
 		"ModelScale" 				".78"
 		"ConsideredHero"			"1"
 		"UnitLabel"			"spirit_bear"
@@ -2286,7 +2286,7 @@
 		"Ability1"					"lone_druid_spirit_bear_return"			// Ability 1
 		"Ability2"					"lone_druid_spirit_bear_entangle"			// Ability 2
 		"Ability3"					"lone_druid_savage_roar_bear"			// Ability 3
-		"Ability4"					""			// Ability 4
+		"Ability4"					"bear_empty"			// Ability 4
 
 		// Armor
 		//----------------------------------------------------------------
@@ -2351,7 +2351,7 @@
 		"Model"						"models/heroes/lone_druid/spirit_bear.vmdl"	// Model.
 		"BaseClass"					"npc_dota_lone_druid_bear"
 		"SoundSet"					"LoneDruid_SpiritBear"
-		"Level"						"7"
+		"Level"						"3"
 		"ModelScale" 				".92"
 		"ConsideredHero"			"1"
 		"UnitLabel"					"spirit_bear"
@@ -2361,7 +2361,7 @@
 		"Ability1"					"lone_druid_spirit_bear_return"			// Ability 1
 		"Ability2"					"lone_druid_spirit_bear_entangle"			// Ability 2
 		"Ability3"					"lone_druid_savage_roar_bear"			// Ability 3
-		"Ability4"					"lone_druid_spirit_bear_demolish"			// Ability 4
+		"Ability4"					"bear_empty"			// Ability 4
 
 		// Armor
 		//----------------------------------------------------------------
@@ -2426,7 +2426,7 @@
 		"Model"						"models/heroes/lone_druid/spirit_bear.vmdl"	// Model.
 		"BaseClass"					"npc_dota_lone_druid_bear"
 		"SoundSet"					"LoneDruid_SpiritBear"
-		"Level"						"7"
+		"Level"						"4"
 		"ModelScale" 				"1.06"
 		"ConsideredHero"			"1"
 		"UnitLabel"					"spirit_bear"
@@ -3369,7 +3369,7 @@
 		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
 		"AttackDamageMin"			"15"
 		"AttackDamageMax"			"20"
-		"AttackRate"				"1.2"
+		"AttackRate"				"1.25"
 		"AttackAnimationPoint"		"0.33"
 		"AttackAcquisitionRange"	"500"
 		"AttackRange"				"90"
@@ -3449,7 +3449,7 @@
 		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
 		"AttackDamageMin"			"25"
 		"AttackDamageMax"			"30"
-		"AttackRate"				"1.1"
+		"AttackRate"				"1.2"
 		"AttackAnimationPoint"		"0.33"
 		"AttackAcquisitionRange"	"500"
 		"AttackRange"				"90"
@@ -3529,7 +3529,7 @@
 		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
 		"AttackDamageMin"			"33"
 		"AttackDamageMax"			"39"
-		"AttackRate"				"1.0"
+		"AttackRate"				"1.15"
 		"AttackAnimationPoint"		"0.33"
 		"AttackAcquisitionRange"	"500"
 		"AttackRange"				"90"
@@ -3610,7 +3610,7 @@
 		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
 		"AttackDamageMin"			"42"
 		"AttackDamageMax"			"48"
-		"AttackRate"				"0.9"
+		"AttackRate"				"1.1"
 		"AttackAnimationPoint"		"0.33"
 		"AttackAcquisitionRange"	"500"
 		"AttackRange"				"90"

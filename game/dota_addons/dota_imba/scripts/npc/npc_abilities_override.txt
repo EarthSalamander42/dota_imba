@@ -235,6 +235,15 @@
 		"AbilityCooldown"				"40.0"
 		"AbilityChannelTime"			"3.0"
 		"AbilityManaCost"				"25"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_movement_speed"	"110"
+			}
+		}
 	}
 
 	//=================================================================================================================
@@ -246,6 +255,15 @@
 		"AbilityChannelTime"			"3.0"
 		"AbilityManaCost"				"25"
 		"ItemCost"						"4350"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_movement_speed"	"110"
+			}
+		}
 	}
 
 	//=================================================================================================================
@@ -2599,9 +2617,8 @@
 	//=================================================================================================================
 	"brewmaster_thunder_clap"
 	{
-		"MaxLevel"						"4"		
 		"AbilityCooldown"				"13 12 11 10"
-		"AbilityCastPoint"				"0.4"
+		"AbilityCastPoint"				"0.35"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -2615,7 +2632,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"100 250 350 450"
+				"damage"					"150 260 370 480"
 			}
 			"03"
 			{
@@ -2671,7 +2688,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"movement_slow"				"10 30 45 55"
+				"movement_slow"				"15 30 45 60"
 			}
 			"03"
 			{
@@ -2697,18 +2714,18 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"crit_chance"				"0 20 30 40"
+				"crit_chance"				"10 20 30 40"
 				"LinkedSpecialBonus"		"special_bonus_unique_brewmaster_4"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"crit_multiplier"			"230 240 250 260"
+				"crit_multiplier"			"230 250 270 290"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"last_proc"					"13 11 9.5 8.5"
+				"last_proc"					"12 10 8 6"
 				"LinkedSpecialBonus"		"special_bonus_unique_brewmaster_4"
 			}
 		}
@@ -2745,7 +2762,6 @@
 	//=================================================================================================================
 	"brewmaster_earth_hurl_boulder"
 	{
-		"MaxLevel"						"4"
 		"AbilityCastRange"				"800 850 900 950"
 
 		// Time		
@@ -2764,27 +2780,19 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"50 150 250"
+				"damage"					"150 300 450"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"duration"					"2.0 2.0 2.0 2.0"
+				"duration"					"2.0"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"speed"						"800 800 800 800"
+				"speed"						"800"
 			}
 		}
-	}
-
-	//=================================================================================================================
-	// Brewmaster Earth: Spell Immunity
-	//=================================================================================================================
-	"brewmaster_earth_spell_immunity"
-	{
-		"MaxLevel"						"3"		
 	}
 
 	//=================================================================================================================
@@ -2792,10 +2800,6 @@
 	//=================================================================================================================
 	"brewmaster_earth_pulverize"
 	{
-		"MaxLevel"						"3"		
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
 			"01"
@@ -2811,21 +2815,11 @@
 	//=================================================================================================================
 	"brewmaster_storm_dispel_magic"
 	{
-		"MaxLevel"						"3"				
-
 		"AbilityCastRange"				"500 600 700 800"
-
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"4"
 		"AbilityCastPoint"				"0.4"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"75 75 75 75"		
 
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
 			"01"
@@ -2881,18 +2875,9 @@
 	//=================================================================================================================
 	"brewmaster_storm_wind_walk"
 	{
-		"MaxLevel"						"3"								
-
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"5"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"75"		
 
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
 			"01"
@@ -2923,10 +2908,6 @@
 	//=================================================================================================================
 	"brewmaster_fire_permanent_immolation"
 	{
-		"MaxLevel"						"3"								
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
 			"01"
@@ -3573,8 +3554,8 @@
 	//=================================================================================================================
 	"chen_test_of_faith"
 	{
-		"AbilityCooldown"				"16 14 12 10"
-		"MaxLevel"						"4"
+		"AbilityCooldown"				"16 13 10 7"
+		"AbilityCastRange"				"1200"
 
 		"AbilitySpecial"
 		{
@@ -3601,7 +3582,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"value"				"7"
+				"value"				"10"
 			}
 		}
 	}
@@ -3630,8 +3611,7 @@
 	"chen_holy_persuasion"
 	{
 		"AbilityCooldown"				"0.5"
-
-		"MaxLevel"						"4"
+		"AbilityCastRange"				"1500"
 
 		"AbilitySpecial"
 		{
@@ -3685,15 +3665,14 @@
 	//=================================================================================================================
 	"chen_hand_of_god"
 	{
-		"AbilityCooldown"					"160 120 80"
-		"MaxLevel"							"3"
+		"AbilityCooldown"					"120 80 40"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"heal_amount"				"400 700 1100"
+				"heal_amount"				"500 1500 2500"
 				"LinkedSpecialBonus"		"special_bonus_unique_chen_2"
 			}
 			"02"
@@ -7122,7 +7101,7 @@
 	// Lone Druid: Savage Roar Bear
 	//=================================================================================================================
 	"lone_druid_savage_roar_bear"
-	{		
+	{
 		"AbilitySpecial"
 		{
 			"01"
@@ -10794,7 +10773,6 @@
 	//=================================================================================================================
 	"tidehunter_gush"
 	{
-		"MaxLevel"						"4"
 		"AbilityCooldown"				"12 11 10 9"
 
 		"AbilitySpecial"
@@ -10802,7 +10780,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gush_damage"			"115 225 300 340"
+				"gush_damage"			"120 230 340 450"
 				"LinkedSpecialBonus"	"special_bonus_unique_tidehunter_2"
 			}
 			"02"
@@ -10854,14 +10832,12 @@
 	//=================================================================================================================
 	"tidehunter_kraken_shell"
 	{
-		"MaxLevel"						"4"
-
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_reduction"		"18 42 60 72"
+				"damage_reduction"		"20 40 60 80"
 				"LinkedSpecialBonus"	"special_bonus_unique_tidehunter_4"
 			}
 			"02"
@@ -10882,7 +10858,6 @@
 	//=================================================================================================================
 	"tidehunter_anchor_smash"
 	{
-		"MaxLevel"						"4"
 		"AbilityCastRange"				"375 410 445 480"
 		"AbilityCooldown"				"7 6 5 4"
 		"AbilityDamage"					"100 200 275 325"
@@ -10913,10 +10888,7 @@
 	//=================================================================================================================
 	"shredder_whirling_death"
 	{
-		"MaxLevel"							"4"
-
 		"AbilityCastRange"					"300 350 400 400"
-
 		"AbilityCooldown"					"6 5.33 4.66 4"
 
 		"AbilitySpecial"
@@ -11440,7 +11412,6 @@
 	//=================================================================================================================
 	"tusk_ice_shards"
 	{
-		"MaxLevel"						"4"
 		"AbilityCooldown"				"19 16 13 10"
 		
 		"AbilitySpecial"
@@ -11468,7 +11439,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"shard_duration"		"7 9 12 16"
+				"shard_duration"		"7"
 			}
 			"06"
 			{
@@ -11519,7 +11490,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"stun_duration"				"0.8 1.1 1.35 1.55"
+				"stun_duration"				"0.9 1.1 1.3 1.5"
 			}
 			"05"
 			{
@@ -11574,8 +11545,6 @@
 	//=================================================================================================================
 	"tusk_frozen_sigil"
 	{
-		"MaxLevel"							"4"
-
 		"AbilityCooldown"					"50 45 40 35"
 
 		"AbilitySpecial"
@@ -11598,7 +11567,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"attack_slow"				"35 65 100 140"
+				"attack_slow"				"35 70 105 140"
 			}
 		}
 	}
@@ -11608,15 +11577,14 @@
 	//=================================================================================================================
 	"tusk_walrus_punch"
 	{
-		"MaxLevel"							"3"
-		"AbilityCooldown"					"36 12 10"
+		"AbilityCooldown"					"28 20 12"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"crit_multiplier"			"400 600 700"
+				"crit_multiplier"			"400 500 600"
 				"LinkedSpecialBonus"		"special_bonus_unique_tusk"
 			}
 			"02"
@@ -11652,7 +11620,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"value"				"150"
+				"value"				"100"
 			}
 		}
 	}
@@ -11769,7 +11737,6 @@
 	//=================================================================================================================
 	"abyssal_underlord_pit_of_malice"
 	{
-		"MaxLevel"							"4"
 		"AbilityCooldown"					"32 24 18 14"
 
 		"AbilitySpecial"
@@ -11777,7 +11744,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"375 415 455 495"
+				"radius"					"400 450 500 550"
 			}
 			"02"
 			{
@@ -11797,7 +11764,7 @@
 			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"ensnare_duration"			"0.9 1.5 1.9 2.1"
+				"ensnare_duration"			"1.1 1.4 1.7 2.0"
 				"LinkedSpecialBonus"		"special_bonus_unique_underlord"
 			}
 		}
@@ -11813,7 +11780,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"value"						"0.4"
+				"value"						"0.8"
 			}
 		}
 	}
@@ -11823,8 +11790,6 @@
 	//=================================================================================================================
 	"abyssal_underlord_atrophy_aura"
 	{
-		"MaxLevel"								"4"
-
 		"AbilityCastRange"						"900 1000 1100 1200"
 
 		"AbilitySpecial"
@@ -11842,7 +11807,7 @@
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"bonus_damage_from_creep"		"6 8 11 15"
+				"bonus_damage_from_creep"		"8 14 20 26"
 			}
 			"04"
 			{
@@ -11868,8 +11833,7 @@
 	//=================================================================================================================
 	"abyssal_underlord_dark_rift"
 	{
-		"MaxLevel"						"3"
-		"AbilityCooldown"				"130 110 90"
+		"AbilityCooldown"				"120 100 80"
 
 		"AbilitySpecial"
 		{
@@ -11881,7 +11845,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"teleport_delay"		"6.0 4.0 2.5"
+				"teleport_delay"		"6.0 4.25 2.5"
 			}
 		}
 	}
@@ -11891,7 +11855,6 @@
 	//=================================================================================================================
 	"undying_decay"
 	{
-		"MaxLevel"							"4"
 		"AbilityCooldown"					"10 8 6 4"
 		"AbilityDuration"					"45"
 
@@ -11900,7 +11863,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"decay_damage"				"40 120 180 220"
+				"decay_damage"				"40 100 160 220"
 			}
 			"02"
 			{
@@ -11926,7 +11889,7 @@
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"str_steal_scepter"			"14 16 18 20"
+				"str_steal_scepter"			"10 12 14 16"
 			}
 		}
 	}
@@ -11936,7 +11899,6 @@
 	//=================================================================================================================
 	"undying_soul_rip"
 	{
-		"MaxLevel"						"4"
 		"AbilityCooldown"				"24 12 5 3"
 
 		"AbilitySpecial"
@@ -11944,7 +11906,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_per_unit"		"18 26 35 45"
+				"damage_per_unit"		"15 25 35 45"
 			}			
 			"02"
 			{
@@ -11968,9 +11930,7 @@
 	// Undying: Tombstone
 	//=================================================================================================================
 	"undying_tombstone"
-	{		
-		"MaxLevel"							"4"
-
+	{
 		"AbilitySpecial"
 		{
 			"01"
@@ -11981,23 +11941,23 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"hits_to_destroy_tooltip"	"5 7 10 14"
+				"hits_to_destroy_tooltip"	"5 7 9 12"
 				"LinkedSpecialBonus"		"special_bonus_unique_undying_5"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"duration"					"15 35 50 60"
+				"duration"					"30"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"725 1175 1600 2000"
+				"radius"					"1250 1500 1750 2000"
 			}
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"health_threshold"			"250 450 625 775"
+				"health_threshold"			"250 350 450 550"
 			}
 			"06"
 			{
@@ -12007,7 +11967,7 @@
 			"07"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"zombie_interval"			"3.0 2.5 2.1 1.8"
+				"zombie_interval"			"4.5 4.0 3.5 3.0"
 			}
 		}
 	}
@@ -12029,12 +11989,12 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health_threshold"		"250 450 625 775"
+				"health_threshold"		"250 350 450 550"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"zombie_interval"		"3.0 2.5 2.1 1.8"
+				"zombie_interval"		"4.5 4.0 3.5 3.0"
 			}
 			"04"
 			{
@@ -12059,7 +12019,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health_threshold"		"250 450 625 775"
+				"health_threshold"		"250 350 450 550"
 			}
 			"03"
 			{
@@ -12094,8 +12054,6 @@
 	//=================================================================================================================
 	"undying_flesh_golem"
 	{
-		"MaxLevel"							"3"
-
 		"AbilityCooldown"					"75 65 55"
 
 		"AbilitySpecial"
@@ -12153,8 +12111,6 @@
 	//=================================================================================================================
 	"viper_poison_attack"
 	{
-		"MaxLevel"								"4"
-
 		"AbilityManaCost"						"40 30 20 10"
 		"AbilityCooldown"						"3 2 1 0"
 
@@ -12168,7 +12124,7 @@
 			"02"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"damage"						"0.25 0.5 0.75 1.0"
+				"damage"						"0.5 1.0 1.5 2.0"
 			}
 			"03"
 			{
@@ -12203,14 +12159,17 @@
 	//=================================================================================================================
 	"viper_nethertoxin"
 	{
-		"MaxLevel"								"4"
-
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"damage"					"20 40 55 65"
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"20 40 60 80"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"300 400 500 600"
 			}
 		}
 	}
@@ -12220,8 +12179,6 @@
 	//=================================================================================================================
 	"viper_corrosive_skin"
 	{
-		"MaxLevel"							"4"
-
 		"AbilitySpecial"
 		{
 			"01"
@@ -12244,7 +12201,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"8 24 36 44"
+				"damage"					"10 25 40 55"
 				"LinkedSpecialBonus"		"special_bonus_unique_viper_1"
 			}
 			"05"
@@ -12260,8 +12217,7 @@
 	//=================================================================================================================
 	"viper_viper_strike"
 	{
-		"MaxLevel"						"3"
-		"AbilityCooldown"				"60 30 15"
+		"AbilityCooldown"				"50 40 30"
 		
 		"AbilitySpecial"
 		{
@@ -12309,7 +12265,6 @@
 	//=================================================================================================================
 	"visage_grave_chill"
 	{
-		"MaxLevel"						"4"
 		"AbilityCooldown"				"16 12 9 7"
 		"AbilityManaCost"				"100 80 60 40"
 		"AbilityCastRange"				"650 700 750 800"
@@ -12933,10 +12888,7 @@
 	//=================================================================================================================
 	"winter_wyvern_arctic_burn"
 	{
-		"MaxLevel"						"4"
-
-		"AbilityCooldown"				"50 30 18 14"
-
+		"AbilityCooldown"				"32 26 20 14"
 		"AbilityManaCost"				"120 100 80 60"
 
 		"AbilitySpecial"
@@ -12944,17 +12896,17 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"duration"				"6.0 6.5 7.0 7.5"
+				"duration"				"8.0"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"attack_range_bonus"	"275 475 575 675"
+				"attack_range_bonus"	"400 550 700 850"
 			}			
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"percent_damage"		"8 8 9 10"
+				"percent_damage"		"8 9 10 11"
 			}
 			"04"
 			{
@@ -12969,7 +12921,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"move_slow"				"19 26 33 40"
+				"move_slow"				"24 30 36 42"
 				"LinkedSpecialBonus"	"special_bonus_unique_winter_wyvern_1"
 			}
 			"07"
@@ -13026,12 +12978,8 @@
 	"winter_wyvern_splinter_blast"
 	{
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
-
-		"MaxLevel"						"4"
-
 		"AbilityCooldown"				"7.0 6.5 5.0 5.5"
-
-		"AbilityDamage"					"110 270 375 425"
+		"AbilityDamage"					"150 300 450 600"
 
 		"AbilitySpecial"
 		{
@@ -13093,9 +13041,7 @@
 	//=================================================================================================================
 	"winter_wyvern_cold_embrace"
 	{
-		"MaxLevel"						"4"
-
-		"AbilityCooldown"				"24 18 14 12"
+		"AbilityCooldown"				"24 19 14 9"
 
 		"AbilitySpecial"
 		{
@@ -13113,7 +13059,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"heal_percentage"		"3.0 5.0 6.5 7.5"
+				"heal_percentage"		"3 5 7 9"
 			}
 		}
 	}
@@ -13138,8 +13084,6 @@
 	//=================================================================================================================
 	"winter_wyvern_winters_curse"
 	{
-		"MaxLevel"						"3"
-
 		"AbilitySpecial"
 		{
 			"01"
@@ -13160,7 +13104,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_attack_speed"	"75 125 175"
+				"bonus_attack_speed"	"100 150 200"
 			}
 			"05"
 			{
@@ -15585,12 +15529,14 @@
 	//=================================================================================================================
 	"techies_suicide"
 	{
+		"AbilityCastRange"				"2000"
+
 		"AbilitySpecial"
 		{
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"300 700 1100 1500"
+				"damage"					"300 800 1300 1800"
 				"LinkedSpecialBonus"		"special_bonus_unique_techies"
 			}
 			"03"
@@ -15693,23 +15639,15 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"800"
 		"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
-
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"21 20 19 18"
-		
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"20 17 14 11"
 		"AbilityManaCost"				"125"
 		
-		// Special	
-		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"duration"				"15.0 15.0 15.0 15.0"
+				"duration"				"15.0"
 			}
 			"02"
 			{
@@ -15724,7 +15662,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"tick_interval"			"3.0 3.0 3.0 3.0"
+				"tick_interval"			"3.0"
 			}
 			"05"
 			{
@@ -15734,12 +15672,12 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"125"
+				"radius"				"125 150 175 200"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"speed"					"1200 1200 1200 1200"
+				"speed"					"1600"
 			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
@@ -15779,21 +15717,11 @@
 	//=================================================================================================================
 	"venomancer_plague_ward"
 	{
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"850"
-		"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
-
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1250"
+		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"5.0"
+		"AbilityManaCost"				"20"
 		
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"20 20 20 20"
-		
-		// Special	
-		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
 			"01"
@@ -15841,7 +15769,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"140.0 120.0 100.0"
+		"AbilityCooldown"				"120.0 90.0 60.0"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -15858,7 +15786,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"830"
+				"radius"					"1000 1500 2000"
 				"LinkedSpecialBonus"		"special_bonus_unique_venomancer_6"
 			}
 			"02"
@@ -15880,7 +15808,7 @@
 			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"cooldown_scepter"			"140.0 120.0 60.0"
+				"cooldown_scepter"			"100.0 70.0 40.0"
 			}
 			"06"
 			{
@@ -15895,7 +15823,7 @@
 			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"speed"						"500"
+				"speed"						"750"
 			}
 		}
 	}

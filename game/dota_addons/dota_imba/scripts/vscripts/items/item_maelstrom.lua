@@ -388,17 +388,11 @@ function modifier_item_imba_jarnbjorn:OnAttackLanded( keys )
 			return
 		end
 
-		-- If this a ranged hero, do nothing either
-		if attacker:IsRangedAttacker() then
-			return
-		end
-
 		-- If the target is invalid, still do nothing
 		local target = keys.target
 		if (not IsHeroOrCreep(target)) then -- or attacker:GetTeam() == target:GetTeam() then
 			return
 		end
-
 
 		-- All conditions met, stack the proc counter up
 		local ability = self:GetAbility()
@@ -407,6 +401,11 @@ function modifier_item_imba_jarnbjorn:OnAttackLanded( keys )
 		local proc_chance = ability:GetSpecialValueFor("proc_chance")
 		if RollPseudoRandom(proc_chance, ability) then
 			LaunchLightning(attacker, target, ability, ability:GetSpecialValueFor("bounce_damage"), ability:GetSpecialValueFor("bounce_radius"))
+		end
+
+		-- If this a ranged hero, do not cleave
+		if attacker:IsRangedAttacker() then
+			return
 		end
 
 		-- Only apply if the attacker is the parent of the buff, and the victim is on the opposing team.

@@ -8645,7 +8645,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"					"1200"
+		"AbilityCastRange"					"2000"
 		"AbilityCastPoint"					"0.5"
 		"AbilityCastAnimation"				"ACT_DOTA_CAST_ABILITY_2"
 
@@ -8710,7 +8710,7 @@
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"range"					"1200"
+				"range"					"2000"
 			}
 			"09"
 			{
@@ -8868,12 +8868,12 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"range"						"1400"
+				"range"						"1500"
 			}
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"range_scepter"				"1800"
+				"range_scepter"				"2500"
 			}
 			"06"
 			{
@@ -11616,6 +11616,7 @@
 		"BaseClass"              	"ability_lua"
 		"AbilityBehavior"        	"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AbilityType"				"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityCastAnimation"	 	"ACT_DOTA_CAST_ABILITY_4"
 		"AbilityUnitTargetTeam"	 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"  	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetFlags" 	"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
@@ -11991,11 +11992,10 @@
 				"var_type"						"FIELD_INTEGER"
 				"distance"						"120"
 			}
-
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"wolves_count"					"2 2 3 4"
+				"wolves_count"					"2 2 2 3"
 			}
 			"03"
 			{
@@ -12031,7 +12031,7 @@
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"max_charges"					"2 3 4 5"
+				"max_charges"					"2 2 2 3"
 			}
 			"05"
 			{
@@ -12503,7 +12503,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"value"					"15"
+				"value"					"10"
 			}
 		}
 	}
@@ -24562,7 +24562,7 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"150 325 375"
+		"AbilityManaCost"				"150 225 300"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -24580,17 +24580,17 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"radius"			"1025 1025 1400"
+				"radius"			"1200 1600 2000"
 			}
 			"02"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"damage"			"200 380 500"
+				"damage"			"200 400 600"
 			}
 			"04"
 			{	
 				"var_type"			"FIELD_FLOAT"
-				"duration"			"2.4 2.8 3.0"
+				"duration"			"2.5 3.25 4.0"
 			}
 		}
 	}
@@ -37741,7 +37741,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"disarm_duration"		"2.0 2.5 3 3.5"				
+				"disarm_duration"		"1.6 2.0 2.4 2.8"				
   			}
 		}
 	}
@@ -37960,7 +37960,6 @@
                 "var_type"                  "FIELD_FLOAT"
                 "damage_reset"      "3"
             }
-
             "04"
             {
                 "var_type"                  "FIELD_FLOAT"
@@ -38159,8 +38158,8 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"value"					"4"
+				"var_type"				"FIELD_FLOAT"
+				"value"					"3.5"
 			}
 		}
 	}

@@ -224,6 +224,10 @@ end
 ---------------------------------------------
 function Log:Print(obj, level)
 
+	if IsInToolsMode() then
+		return
+	end
+
 	-- prepare level
 	local levelString = self:_LevelToString(level)
 
@@ -345,5 +349,7 @@ end
 ---------------------------------------------
 -- Initialization
 ---------------------------------------------
-Log:AddTarget(ApiLogTarget)
-Log:AddTarget(ConsoleLogTarget)
+if not IsInToolsMode() then
+	Log:AddTarget(ApiLogTarget)
+	Log:AddTarget(ConsoleLogTarget)
+end

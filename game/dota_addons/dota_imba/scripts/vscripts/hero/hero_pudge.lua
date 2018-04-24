@@ -1000,6 +1000,7 @@ function modifier_imba_flesh_heap_stacks:DeclareFunctions()
 end
 
 function modifier_imba_flesh_heap_stacks:GetModifierMagicalResistanceBonus()
+	if self:GetCaster():PassivesDisabled() then return end
 	local base = self:GetAbility():GetSpecialValueFor("base_magic_resist")
 	local stack_magic_resist = self:GetAbility():GetSpecialValueFor("stack_magic_resist")
 	local stacks = self:GetStackCount()
@@ -1009,12 +1010,14 @@ function modifier_imba_flesh_heap_stacks:GetModifierMagicalResistanceBonus()
 end
 
 function modifier_imba_flesh_heap_stacks:GetModifierBonusStats_Strength()
+	if self:GetCaster():PassivesDisabled() then return end
 	local stacks = self:GetStackCount()
 	local bonusStr = self:GetAbility():GetSpecialValueFor("stack_str")
 	return stacks * bonusStr
 end
 
 function modifier_imba_flesh_heap_stacks:GetModifierModelScale()
+	if self:GetCaster():PassivesDisabled() then return end
 	local stacks = self:GetStackCount()
 	local max_stack = self:GetAbility():GetSpecialValueFor("max_stacks") + self:GetCaster():FindTalentValue("special_bonus_imba_pudge_4")
 	if stacks > max_stack then stacks = max_stack end
