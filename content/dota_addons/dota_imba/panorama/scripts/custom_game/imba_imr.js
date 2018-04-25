@@ -318,7 +318,10 @@ function GenerateBattlepassPanel(BattlepassRewards, player) {
 
 			if (plyData != null) {
 				if (i <= plyData.Lvl) {
-					var reward_label_unlocked = $.CreatePanel("Label", reward_icon, BattlepassRewards[i] + "_label");
+					var reward_panel_unlocked = $.CreatePanel("Panel", reward_icon, BattlepassRewards[i] + "_panel_unlock");
+					reward_panel_unlocked.AddClass("BattlepassRewardPanelUnlocked");
+
+					var reward_label_unlocked = $.CreatePanel("Label", reward_panel_unlocked, BattlepassRewards[i] + "_label");
 					reward_label_unlocked.AddClass("BattlepassRewardLabelUnlocked");
 					reward_label_unlocked.text = $.Localize("#battlepass_" + BattlepassRewards[i]);
 				} else {

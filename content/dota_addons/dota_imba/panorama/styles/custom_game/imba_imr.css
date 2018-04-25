@@ -653,7 +653,7 @@
 	wash-color: #000000a0;
 	brightness: 0.6;
 }
-.BattlepassReward:hover .BattlepassRewardLabelUnlocked {
+.BattlepassReward:hover .BattlepassRewardPanelUnlocked {
 	opacity: 1;
 }
 .BattlepassRewardLabel {
@@ -692,25 +692,24 @@
 	/* brightness:  1.5; */
 }
 
-.BattlepassRewardLabelUnlocked {
+.BattlepassRewardPanelUnlocked {
 	opacity: 0;
 	width: 100%;
 	height: 100%;
+	background-color: #000000db;
+}
+
+.BattlepassRewardLabelUnlocked {
 	font-size: 11px;
 	letter-spacing: 1px;
+	padding: 0 5px;
 	align: center center;
 	text-transform: uppercase;
 	text-align: center center;
-	text-shadow: 0px 0px 4px 4 #000000;
-	color: #A3B5D0cc;
-	font-family: "Bold";
-	font-weight: bold;
-	background-color: #000000da;
-	/* animation-name: fade_full;
-	animation-duration: 4.0s;
-	animation-timing-function: ease-in;
-	animation-direction: alternate;
-	animation-iteration-count: infinite; */
+	text-shadow: 0px 0px 4px 4 #000000a5;
+	color: #b8c5ca;
+	align: center center;
+	line-height: 14px;
 }
 
 
