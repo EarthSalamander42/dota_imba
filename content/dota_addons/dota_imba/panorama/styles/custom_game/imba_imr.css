@@ -625,7 +625,7 @@
 	width: 100%;
 	height: 85px;
 	margin-top: 5px;
-	background-color: #000000ba;
+	/* background-color: #000000ba; */
 	horizontal-align: left;
 	flow-children: right;
 /*	overflow: noclip scroll; */
@@ -633,7 +633,7 @@
 
 .BattlepassReward {
 	width: 74px;
-	height: 76px;
+	height: 84px;
 	margin-left: 2px;
 	margin-right: 2px;
 	flow-children: down;
@@ -641,17 +641,21 @@
 
 .BattlepassRewardIcon {
 	width: 74px;
-	height: 60px;
+	height: 64px;
+	border: 1px solid #38424b;
+	box-shadow: 0px 2px 6px 0px #000000a5;
 	vertical-align: top;
 	background-position: 0px 0px;
-//	background-size: 74px 60px;
+//	background-size: 74px 64px;
 }
 
 .BattlepassRewardIcon_locked {
-	wash-color: darkgrey;
-	saturation: 0.8;
+	wash-color: #000000a0;
+	brightness: 0.6;
 }
-
+.BattlepassReward:hover .BattlepassRewardLabelUnlocked {
+	opacity: 1;
+}
 .BattlepassRewardLabel {
 	horizontal-align: left;
 	font-size: 12px;
@@ -660,9 +664,18 @@
 	align: center center;
 	text-transform: uppercase;
 	text-align: center center;
-	text-shadow: 0px 0px 4px 4 #000000;
-	color: #A3B5D0cc;
-	margin-top:  5px;
+	border: 1px solid #38424b;
+	border-top: 0;
+	text-shadow: 0px 0px 3px 3 #00000070;
+	color: #99a8ad;
+	margin-top:  -2px;
+	background-color: #2a3440;
+	box-shadow: 0px 1px 8px 0px #000000a2;
+	width: 100%;
+}
+.BattlepassRewardLabel.locked {
+	background-color: #282a2d;
+	border-color: #1c2328;
 }
 
 .BattlepassRewardLabelLocked {
@@ -673,12 +686,16 @@
 	align: center center;
 	text-transform: uppercase;
 	text-align: center center;
-	text-shadow: 0px 0px 4px 4 #000000;
-	color: red;
+	text-shadow: 0px 0px 3px 3 #000000a5;
+	color: #fff;
+	brightness:  1.5;
+	/* brightness:  1.5; */
 }
 
 .BattlepassRewardLabelUnlocked {
+	opacity: 0;
 	width: 100%;
+	height: 100%;
 	font-size: 11px;
 	letter-spacing: 1px;
 	align: center center;
@@ -689,11 +706,11 @@
 	font-family: "Bold";
 	font-weight: bold;
 	background-color: #000000da;
-	animation-name: fade_full;
+	/* animation-name: fade_full;
 	animation-duration: 4.0s;
 	animation-timing-function: ease-in;
 	animation-direction: alternate;
-	animation-iteration-count: infinite;
+	animation-iteration-count: infinite; */
 }
 
 
@@ -709,7 +726,7 @@
 
 .DonatorReward {
 	width: 153px;
-	height: 95%;
+	height: 100%;
 	margin-left: 2px;
 	margin-right: 2px;
 	flow-children: down;
@@ -906,9 +923,4 @@
 	animation-timing-function: ease-in-out;
 	animation-iteration-count: 1;
 	animation-direction: reverse;
-}
-
-#BattlepassBurner {
-	width: 100%;
-	height: 100%;
 }
