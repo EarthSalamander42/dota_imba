@@ -55,7 +55,7 @@ function GGLocal () {
 	gg_state = true;
 	GGInitCountDown();
 	$.GetContextPanel().AddClass("visible");
-	$.Schedule(8, function() {
+	$.Schedule(9, function() {
 		if (gg_state) {
 			GameEvents.SendCustomGameEventToServer("send_gg_vote", {
 				ID: Game.GetLocalPlayerID(),
