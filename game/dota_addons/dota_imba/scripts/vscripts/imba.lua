@@ -1298,16 +1298,15 @@ function GameMode:OnHeroInGame(hero)
 --				CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "show_netgraph_heronames", {})
 			end
 
-			print("IsDonator?", api.imba.is_donator(steam_id))
 			local steam_id = tostring(PlayerResource:GetSteamID(hero:GetPlayerID()))
-			if api.imba.is_developer(steam_id) then
-				hero:SetCustomHealthLabel("Developer", 200, 45, 45)
---			elseif api.imba.is_donator(steam_id) == 4 then
---				hero:SetCustomHealthLabel("Ember Donator", 200, 45, 45)
---			elseif api.imba.is_donator(steam_id) == 5 then
---				hero:SetCustomHealthLabel("Golden Donator", 218, 165, 32)
---			elseif api.imba.is_donator(steam_id) == 6 then
---				hero:SetCustomHealthLabel("Salamander Donator", 218, 165, 32)
+			if api.imba.is_donator(steam_id) == 1 then
+				hero:SetCustomHealthLabel("IMBA Dev", 160, 20, 20)
+			elseif api.imba.is_donator(steam_id) == 4 then
+				hero:SetCustomHealthLabel("Ember Donator", 240, 50, 50)
+			elseif api.imba.is_donator(steam_id) == 5 then
+				hero:SetCustomHealthLabel("Golden Donator", 218, 165, 32)
+			elseif api.imba.is_donator(steam_id) == 7 then
+				hero:SetCustomHealthLabel("Salamander Donator", 47, 91, 151)
 			elseif api.imba.is_donator(steam_id) then
 				hero:SetCustomHealthLabel("Donator", 45, 200, 45)
 			end

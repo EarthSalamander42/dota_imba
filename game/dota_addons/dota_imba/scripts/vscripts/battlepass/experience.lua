@@ -146,7 +146,7 @@ function GetPlayerInfoIXP() -- yet it has too much useless loops, format later. 
 
 		for i = 1, #XP_level_table do
 			if global_xp > XP_level_table[i] then
-				if global_xp > XP_level_table[#XP_level_table] then -- if max level
+				if global_xp >= XP_level_table[#XP_level_table] then -- if max level
 					level[ID] = #XP_level_table
 					current_xp_in_level[ID] = XP_level_table[level[ID]] - XP_level_table[level[ID]-1]
 					max_xp[ID] = XP_level_table[level[ID]] - XP_level_table[level[ID]-1]

@@ -267,20 +267,32 @@ end
 function GetMekansmEffect(hero)
 	local effect = "particles/items2_fx/mekanism.vpcf"
 	local effect2 = "particles/items2_fx/mekanism_recipient.vpcf"
+	local effect3 = "particles/items3_fx/warmage.vpcf"
+	local effect4 = "particles/items3_fx/warmage_recipient.vpcf"
+	local effect5 = "particles/items3_fx/warmage_mana_nonhero.vpcf"
 	local icon = 0
 
 	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_MEKANSM["mekansm2"] then
 		effect = "particles/econ/events/ti6/mekanism_ti6.vpcf"
 		effect2 = "particles/econ/events/ti6/mekanism_recipient_ti6.vpcf"
+		effect3 = "particles/items3_fx/warmage2.vpcf"
+		effect4 = "particles/items3_fx/warmage2_recipient.vpcf"
+		effect5 = "particles/items3_fx/warmage2_mana_nonhero.vpcf"
 		icon = 2
 	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_MEKANSM["mekansm"] then
 		effect = "particles/econ/events/ti7/mekanism_ti7.vpcf"
 		effect2 = "particles/econ/events/ti7/mekanism_recipient_ti7.vpcf"
+		effect3 = "particles/items3_fx/warmage1.vpcf"
+		effect4 = "particles/items3_fx/warmage1_recipient.vpcf"
+		effect5 = "particles/items3_fx/warmage1_mana_nonhero.vpcf"
 		icon = 1
 	end
 
 	hero.mekansm_effect = effect
 	hero.mekansm_hit_effect = effect2
+	hero.guardian_greaves_effect = effect3
+	hero.guardian_greaves_hit_effect = effect4
+	hero.guardian_greaves_hit_alt_effect = effect5
 	hero.mekansm_icon = icon
 end
 

@@ -583,7 +583,7 @@ function GreavesActivate(caster, ability, heal_amount, mana_amount, heal_radius,
 
 	-- Play activation sound and particle
 	caster:EmitSound("Item.GuardianGreaves.Activate")
-	local cast_pfx = ParticleManager:CreateParticle("particles/items3_fx/warmage.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+	local cast_pfx = ParticleManager:CreateParticle(caster.guardian_greaves_effect, PATTACH_ABSORIGIN_FOLLOW, caster)
 	ParticleManager:ReleaseParticleIndex(cast_pfx)
 
 	-- Iterate through nearby allies
@@ -602,9 +602,9 @@ function GreavesActivate(caster, ability, heal_amount, mana_amount, heal_radius,
 		ally:EmitSound("Item.GuardianGreaves.Target")
 
 		-- Choose target particle
-		local particle_target = "particles/items3_fx/warmage_recipient_nonhero.vpcf"
+		local particle_target = caster.guardian_greaves_hit_alt_effect
 		if ally:IsHero() then
-			particle_target = "particles/items3_fx/warmage_recipient.vpcf"
+			particle_target = caster.guardian_greaves_hit_effect
 		end
 
 		-- Play target particle
