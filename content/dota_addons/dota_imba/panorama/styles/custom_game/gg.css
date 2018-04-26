@@ -1,11 +1,11 @@
 .MainGG {
 	align:  right top;	
+	margin-top: 100px;
+	margin-right: 30px;
 }
 .Root {
 	width: 530px;
 	height: 330px;
-	margin-top: 100px;
-	margin-right: 30px;
 	align:  right top;
 	box-shadow: 0px 0px 10px 0px #000000a8;
 	background-image: url("file://panorama/images/custom_game/gg/gg_background.png");
