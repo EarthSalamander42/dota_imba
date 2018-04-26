@@ -228,10 +228,8 @@ function HallOfFame(type) {
 		steam_id.AddClass("LeaderboardAvatar");
 		steam_id.steamid = top_users.SteamID64;
 		steam_id.style.width = "15%";
-		steam_id.style.height = "100%";
-		steam_id.style.borderLeft = "1px solid white";
-		steam_id.style.borderTop = "1px solid white";
-		steam_id.style.borderRight = "1px solid white";
+		steam_id.style.height = "80%";
+		steam_id.style.align = "center center";
 
 		var imbar_container = $.CreatePanel("Panel", player, "imbar_container_" + i);
 		imbar_container.AddClass("LeaderboardXP");
@@ -243,10 +241,16 @@ function HallOfFame(type) {
 		imbar_lvl.AddClass("imbar-lvl");
 		imbar_lvl.text = "Level: " + top_users.Lvl;
 
-		var imbar_rank = $.CreatePanel("Label", imbar_container, "imbar_rank" + i);
+		var imbar_rank_wrapper = $.CreatePanel("Panel", imbar_container, "imbar_rank" + i);
+		imbar_rank_wrapper.AddClass("imbar-rank-wrapper");
+
+		var imbar_rank_circle = $.CreatePanel("Panel", imbar_rank_wrapper, "");
+		imbar_rank_circle.AddClass("imbar-rank-cicle");
+		imbar_rank_circle.style.backgroundColor = top_users.title_color;
+
+		var imbar_rank = $.CreatePanel("Label", imbar_rank_wrapper, "");
 		imbar_rank.AddClass("imbar-rank");
 		imbar_rank.text = top_users.title;
-		imbar_rank.style.color = top_users.title_color;
 
 		var imbar_xp = $.CreatePanel("Label", imbar_container, "imbar_xp" + i);
 		imbar_xp.AddClass("imbar-xp");
