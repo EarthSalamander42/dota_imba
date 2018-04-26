@@ -1,157 +1,67 @@
-.Root
-{
-	width: 600px;
-	height: 600px;
-	align: left top;
-	margin-top: 10%;
-	transition-property: transform;
-	transition-duration: 0.5s;
-	transition-delay: 0.0s;
-	transition-timing-function: ease-in-out;
-	transform: translateX(0px);
+.Root {
+	width: 530px;
+	height: 330px;
+	margin-top: 100px;
+	margin-right: 30px;
+	align:  right top;
+	box-shadow: 0px 0px 10px 0px #000000a8;
+	background-image: url("file://panorama/images/custom_game/gg/gg_background.png");
+	font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
+	background-size: cover;
+	flow-children:  down;
+	visibility:  collapse;
 }
-
-.MainPanel
-{
-	width: 90%;
-	height: 100%;
-	horizontal-align: left;
-	background-color: #000000aa;
-	border-bottom-right-radius: 5px;
-	flow-children: down;
+.Root.visible {
+	visibility: visible;
 }
-
-.Root.translate {
-	transform: translateX(-540px);
-}
-
-#MainButton {
-	width: 10%;
-	height: 10%;
-	horizontal-align: right;
-	border-top-right-radius: 10px;
-	border-bottom-right-radius: 10px;
-	background-color: #000000aa;
-}
-
 #Title {
-	height: 11%;
-	margin-top: 2%;
 	align: center top;
-	flow-children: down;
+	padding: 25px 35px 15px;
 }
-
-#Players {
-	width: 100%;
-	height: 100%;
-	align: center top;
-	background-color: #000000aa;
-	flow-children: down;
-}
-
-.PlayerRow {
-	width: 75%;
-	height: 10%;
-	background-color: #505050aa;
-	align: center top;
-	flow-children: right;
-}
-
-.SteamAvatar {
-	width: 64px;
-	height: 64px;
-}
-
-.UILabel
-{
-	font-size: 19px;
-}
-
-.UILabelLarge
-{
-	font-size: 30px;
-}
-
-.UILabel,
-.UILabelLarge
-{
-	font-family: Goudy Trajan Medium, FZKai-Z03, TH Sarabun New;
-	text-shadow: -1px 1px 2px 2.0 #000000;
+.UILabelLarge {
+	color: #d4c588;
+	font-size:  26px;
+	letter-spacing: 1.5px;
+	line-height: 35px;
+	text-align: center;
+	text-shadow: 1px 1px 3px 2.0 #000000ee;
 	text-transform: uppercase;
-	text-align: center center;
-	color: #CCB966;
 }
-
-.GG {
-	width: 30%;
-	height: 80%;
-	margin-right: 5%;
-	background-color: gradient( linear, 0% 0%, 0% 100%, from( #4c5561 ), to( #6c7d88 ) );
-	wash-color: #74EAFE66;
-	align: right center;
-	border: 1px solid;
-	border-top-color: #aaaaaa77;
-	border-left-color: #aaaaaa77;
-	border-bottom-color: #333333;
-	border-right-color: #404040;
-
-	transition-property: wash-color;
-	transition-duration: 0.12s;
-	transition-delay: 0.0s;
-	transition-timing-function: ease-in-out;
+#Timer {	
+	align: center center;
+	margin-bottom: 0px;
 }
+.GGTimer {
+	color: #fef4cb;
+	font-size: 85px;
+	text-shadow: 1px 1px 6px 2.0 #000000ee;
 
-.GG:hover {
-	wash-color: #FFFFFF;
 }
-
-.not_GG {
-	width: 30%;
-	height: 80%;
-	margin-right: 5%;
-	background-color: gradient( linear, 0% 0%, 0% 100%, from( #4c5561 ), to( #6c7d88 ) );
-	wash-color: #74EAFE66;
-	align: right center;
-	border: 1px solid;
-	border-top-color: #aaaaaa77;
-	border-left-color: #aaaaaa77;
-	border-bottom-color: #333333;
-	border-right-color: #404040;
+#MainButton {
+	height: 50px;
+	width: 270px;
+	margin-bottom: 5px;
+	align:  center center;
+	padding: 5px 20px;
+	background-color:  gradient( linear, 0% 0, 0 100%, from( #b98d4a ),  to( #d9ca81 ) );
+	background-image: url("s2r://panorama/images/backgrounds/background_play_button_2x_png.vtex");
+	background-size: 328px 50px;
+	border-bottom: 1px solid #00000088;
+	border-top: 1px solid #ffffff05;
+	border-right: 1px solid #00000088;
+	border-left: 1px solid #ffffff05;
+	margin-bottom: 10px;
 }
-
-.GG_label {
-	width: 100%;
-	margin-top: 10px;
-	font-size: 14px;
-	font-family: Goudy Trajan Medium, FZKai-Z03, TH Sarabun New;
-	text-shadow: -1px 1px 2px 2.0 #000000;
-	text-align: center center;
-	color: #FFF;
+#MainButton:hover {
+	brightness: 1.5;
 }
-
-.GG_player_name {
-	width: 55%;
-}
-
-.voted {
-	background-color: gradient( linear, 0% 0%, 0% 100%, from( #009933 ), to( #6c7d88 ) );
-}
-
-.disconnected {
-	background-color: gradient( linear, 0% 0%, 0% 100%, from( red ), to( darkred ) );
-}
-
 .GG_button_label {
-	width: 100%;
-	margin-top: 7px;
-	font-size: 30px;
-	font-family: Goudy Trajan Medium, FZKai-Z03, TH Sarabun New;
-	text-shadow: -1px 1px 2px 2.0 #000000;
+	align: center center;
+	color: #fff;
+	font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
 	text-transform: uppercase;
-	text-align: center center;
-	color: #FFF;
-	font-family: Goudy Trajan Medium, FZKai-Z03, TH Sarabun New;
-	text-shadow: -1px 1px 2px 2.0 #000000;
-	text-align: center center;
-	color: #CCB966;
+	font-size: 21px;
+	text-shadow: 1px 1px 3px 2.0 #4d400dac;
+	letter-spacing: 2px;
+	font-weight: bold;
 }
