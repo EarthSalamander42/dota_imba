@@ -744,35 +744,6 @@ end
 -- not sure it is actually working
 function GameMode:OnPlayerReconnect(keys)
 	log.debug(keys)
-
-	-- [VScript] [components\duels\duels:64] PlayerID: 1
-	-- [VScript] [components\duels\duels:64] name: Minnakht
-	-- [VScript] [components\duels\duels:64] networkid: [U:1:53917791]
-	-- [VScript] [components\duels\duels:64] reason: 2
-	-- [VScript] [components\duels\duels:64] splitscreenplayer: -1
-	-- [VScript] [components\duels\duels:64] userid: 3
-	-- [VScript] [components\duels\duels:64] xuid: 76561198014183519
-
-	if not lockedHeroes[keys.PlayerID] then
-		-- we don't care if they haven't locked in yet
-		return
-	end
-
-	local hero = PlayerResource:GetSelectedHeroEntity(keys.PlayerID)
-
-	log.info('Reconnecting... ' .. hero .. ' ' .. loadedHeroes[lockedHeroes[keys.PlayerID]])
-	if not hero or hero:GetUnitName() == FORCE_PICKED_HERO and loadedHeroes[lockedHeroes[keys.PlayerID]] then
-		log.info('Giving player ' .. keys.PlayerID .. ' ' .. lockedHeroes[keys.PlayerID] .. '(reconnected)')
-		HeroSelection:GiveStartingHero(keys.PlayerID, lockedHeroes[keys.PlayerID])
-	end
-
-	local table = {
-		ID = keys.PlayerID,
-		team = PlayerResource:GetTeam(keys.PlayerID),
-		disconnect = 2,
-	}
-	print("Decrease GG Amount!")
-	GameMode:GG(table)
 end
 
 -- An item was purchased by a player

@@ -262,9 +262,13 @@ function onPlayerStatChange (table, key, data) {
 
 					if (player_table) {
 						if (currentMap == "imba_ranked_5v5") {
-							newinfo.text = "IMR: " + player_table.IMR_5v5.toFixed(0)
+							if (player_table.IMR_5v5) {
+								newinfo.text = "IMR: " + player_table.IMR_5v5.toFixed(0)
+							}
 						} else if (currentMap == "imba_ranked_10v10") {
-							newinfo.text = player_table.IMR_10v10.toFixed(0)
+							if (player_table.IMR_5v5) {
+								newinfo.text = player_table.IMR_10v10.toFixed(0)
+							}
 						} else {
 							newinfo.text = player_table.Lvl.toFixed(0)
 							newinfo.color = player_table.title_color
@@ -466,7 +470,6 @@ function SetupBackgroundImage() {
 		var background_image = [
 			"radiant",
 			"radiant2",
-			"radiant3",
 		]
 	} else if (Players.GetTeam(Game.GetLocalPlayerID()) == 3) {
 		var background_image = [

@@ -740,52 +740,97 @@ end
 
 function ReconnectPlayer(player_id)
 if not player_id then player_id = 0 end
+if player_id == "test_reconnect" then player_id = 0 end
 
-	log.info("Player is reconnecting:", player_id)
+	print("Player is reconnecting:", player_id)
+
 	-- Reinitialize the player's pick screen panorama, if necessary
-	if HeroSelection.HorriblyImplementedReconnectDetection then
-		HeroSelection.HorriblyImplementedReconnectDetection[player_id] = false
-		Timers:CreateTimer(1.0, function()
-			if HeroSelection.HorriblyImplementedReconnectDetection[player_id] then
-				local pick_state = HeroSelection.playerPickState[player_id].pick_state
-				local repick_state = HeroSelection.playerPickState[player_id].repick_state
+	Timers:CreateTimer(1.0, function()
+--		print(PlayerResource:GetSelectedHeroEntity(player_id))
+		if PlayerResource:GetSelectedHeroEntity(player_id) then
+			CustomGameEventManager:Send_ServerToAllClients("player_reconnected", {PlayerID = player_id, PickedHeroes = HeroSelection.picked_heroes, pickState = pick_state, repickState = repick_state})
 
-				local data = {
-					PlayerID = player_id,
-					PickedHeroes = HeroSelection.picked_heroes,
-					pickState = pick_state,
-					repickState = repick_state
-				}
+--			local table = {
+--				ID = player_id,
+--				team = PlayerResource:GetTeam(player_id),
+--				disconnect = 2,
+--			}
 
-				PrintTable(HeroSelection.picked_heroes)
-				CustomGameEventManager:Send_ServerToAllClients("player_reconnected", {PlayerID = player_id, PickedHeroes = HeroSelection.picked_heroes, pickState = pick_state, repickState = repick_state})
-			else
-				log.info("Not fully reconnected yet:", player_id)
-				return 0.1
+--			print("Decrease GG Amount!")
+--			GameMode:GG(table)
+
+			local hero = PlayerResource:GetSelectedHeroEntity(player_id)
+
+--			print(hero:GetUnitName())
+
+--			if GameRules:IsCheatMode() then
+--				Notifications:TopToAll({text = "Player "..player_id.. " has reconnected with hero: "..hero:GetUnitName(), duration = 10.0, style = {color = "DodgerBlue"}})
+--			end
+
+			print(PICKING_SCREEN_OVER)
+--			if GameRules:IsCheatMode() then
+--				if PICKING_SCREEN_OVER then
+--					Notifications:TopToAll({text = "Pick Screen is over!", duration = 10.0, style = {color = "DodgerBlue"}})
+--				else
+--					Notifications:TopToAll({text = "Pick Screen is not over yet!", duration = 10.0, style = {color = "DodgerBlue"}})
+--				end
+--			end
+
+			if PICKING_SCREEN_OVER == true then
+				if hero:GetUnitName() == "npc_dota_hero_dummy_dummy" then
+--				if not lockedHeroes[player_id] or hero:GetUnitName() == "npc_dota_hero_dummy_dummy" then
+					-- we don't care if they haven't locked in yet
+--					if GameRules:IsCheatMode() then
+--						Notifications:TopToAll({text = "Player "..player_id.. ": NO HERO LOCKED IN, RANDOM A HERO!", duration = 10.0, style = {color = "DodgerBlue"}})
+--					end
+
+					print('Giving player ' .. player_id .. ' a random hero! (reconnected)')
+--					if GameRules:IsCheatMode() then
+--						Notifications:TopToAll({text = 'Giving player ' .. player_id .. ' a random hero: '..HeroSelection:RandomHero()..' (reconnected)', duration = 10.0, style = {color = "DodgerBlue"}})
+--					end
+
+					local random_hero = HeroSelection:RandomHero()
+					print("Random Hero:", random_hero)
+					HeroSelection:GiveStartingHero(player_id, random_hero, true)
+				else
+--					print('Reconnecting... ' .. hero .. ' ' .. loadedHeroes[lockedHeroes[player_id]])
+--					print(loadedHeroes)
+--					if GameRules:IsCheatMode() then
+--						Notifications:TopToAll({text = 'Reconnecting... ' .. hero .. ' ' .. loadedHeroes[lockedHeroes[player_id]], duration = 10.0, style = {color = "DodgerBlue"}})
+--					end
+--					if not hero or hero:GetUnitName() == FORCE_PICKED_HERO and loadedHeroes[lockedHeroes[player_id]] then
+--						if GameRules:IsCheatMode() then
+--							Notifications:TopToAll({text = 'Giving player ' .. player_id .. ' ' .. lockedHeroes[player_id] .. '(reconnected)', duration = 10.0, style = {color = "DodgerBlue"}})
+--						end
+--						print('Giving player ' .. player_id .. ' ' .. lockedHeroes[player_id] .. '(reconnected)')
+--						HeroSelection:GiveStartingHero(player_id, lockedHeroes[player_id])
+--					end
+				end
 			end
-
-			if GetMapName() == "imba_overthrow" then
-				CustomGameEventManager:Send_ServerToAllClients("imbathrow_topbar", {imbathrow = true})
-			else
-				CustomGameEventManager:Send_ServerToAllClients("imbathrow_topbar", {imbathrow = false})
-			end
-		end)
-
-		-- If this is a reconnect from abandonment due to a long disconnect, remove the abandon state
-		if PlayerResource:GetHasAbandonedDueToLongDisconnect(player_id) then
-			local player_name = keys.name
-			local hero = PlayerResource:GetPickedHero(player_id)
-			local hero_name = PlayerResource:GetPickedHeroName(player_id)
-			local line_duration = 7
-			Notifications:BottomToAll({hero = hero_name, duration = line_duration})
-			Notifications:BottomToAll({text = player_name.." ", duration = line_duration, continue = true})
-			Notifications:BottomToAll({text = "#imba_player_reconnect_message", duration = line_duration, style = {color = "DodgerBlue"}, continue = true})
-
-			-- Stop redistributing gold to allies, if applicable
-			PlayerResource:StopAbandonGoldRedistribution(player_id)
+		else
+--			print("Not fully reconnected yet:", player_id)
+			return 0.1
 		end
-	else
-		log.info("Player "..player_id.." has not fully connected before this time")
+
+		if GetMapName() == "imba_overthrow" then
+			CustomGameEventManager:Send_ServerToAllClients("imbathrow_topbar", {imbathrow = true})
+		else
+			CustomGameEventManager:Send_ServerToAllClients("imbathrow_topbar", {imbathrow = false})
+		end
+	end)
+
+	-- If this is a reconnect from abandonment due to a long disconnect, remove the abandon state
+	if PlayerResource:GetHasAbandonedDueToLongDisconnect(player_id) then
+		local player_name = keys.name
+		local hero = PlayerResource:GetPickedHero(player_id)
+		local hero_name = PlayerResource:GetPickedHeroName(player_id)
+		local line_duration = 7
+		Notifications:BottomToAll({hero = hero_name, duration = line_duration})
+		Notifications:BottomToAll({text = player_name.." ", duration = line_duration, continue = true})
+		Notifications:BottomToAll({text = "#imba_player_reconnect_message", duration = line_duration, style = {color = "DodgerBlue"}, continue = true})
+
+		-- Stop redistributing gold to allies, if applicable
+		PlayerResource:StopAbandonGoldRedistribution(player_id)
 	end
 end
 
@@ -1611,4 +1656,8 @@ function HideWearable(hero, item)
 
 		return 2.0
 	end)
+end
+
+function PreventCommand()
+	print("Do not use this command!")
 end

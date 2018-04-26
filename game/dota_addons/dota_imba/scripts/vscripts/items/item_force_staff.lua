@@ -22,8 +22,8 @@
 --		item_imba_force_staff
 ---------------------------------------------
 item_imba_force_staff = item_imba_force_staff or class({})
-LinkLuaModifier("modifier_item_imba_force_staff", "items/item_gungnir", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_item_imba_force_staff_active", "items/item_gungnir", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_item_imba_force_staff", "items/item_force_staff", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_item_imba_force_staff_active", "items/item_force_staff", LUA_MODIFIER_MOTION_NONE)
 
 function item_imba_force_staff:GetIntrinsicModifierName()
 	return "modifier_item_imba_force_staff"
@@ -31,12 +31,12 @@ end
 
 function item_imba_force_staff:CastFilterResultTarget(target)
 	if IsServer() then
-		local caster = self:GetCaster()
-		if caster:GetTeam() == target:GetTeam() and caster ~= target and target:IsMagicImmune() then
+		if self:GetCaster():GetTeam() == target:GetTeam() and self:GetCaster() ~= target and target:IsMagicImmune() then
 			return UF_FAIL_MAGIC_IMMUNE_ALLY
-		elseif caster:GetTeam() ~= target:GetTeam() and target:IsMagicImmune() then
+		elseif self:GetCaster():GetTeam() ~= target:GetTeam() and target:IsMagicImmune() then
 			return UF_FAIL_MAGIC_IMMUNE_ENEMY
 		end
+
 		return UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
 	end
 end
@@ -44,17 +44,17 @@ end
 function item_imba_force_staff:OnSpellStart()
 	if not IsServer() then return end
 	local ability = self
-	local caster = self:GetCaster()
 	local target = self:GetCursorTarget()
+
 	EmitSoundOn("DOTA_Item.ForceStaff.Activate", target)
-	target:AddNewModifier(caster, ability, "modifier_item_imba_force_staff_active", {duration = ability:GetSpecialValueFor("duration")})
+	target:AddNewModifier(self:GetCaster(), ability, "modifier_item_imba_force_staff_active", {duration = ability:GetSpecialValueFor("duration")})
 end
 
 function item_imba_force_staff:GetAbilityTextureName()
 	if not IsClient() then return end
-	local caster = self:GetCaster()
-	if not caster.force_staff_icon_client then return "custom/imba_force_staff" end
-	return "custom/imba_force_staff"..caster.force_staff_icon_client
+	if not self:GetCaster().force_staff_icon_client then return "custom/imba_force_staff" end
+
+	return "custom/imba_force_staff"..self:GetCaster().force_staff_icon_client
 end
 
 -------------------------------------
@@ -75,25 +75,28 @@ function modifier_item_imba_force_staff:OnCreated()
 end
 
 function modifier_item_imba_force_staff:OnIntervalThink()
-	local caster = self:GetCaster()
-	if caster:IsIllusion() then return end
+	if self:GetCaster():IsIllusion() then return end
+
 	if IsServer() then
-		self:SetStackCount(caster.force_staff_icon)
+		self:SetStackCount(self:GetCaster().force_staff_icon)
 	end
+
 	if IsClient() then
 		local icon = self:GetStackCount()
 		if icon == 0 then
-			caster.force_staff_icon_client = nil
+			self:GetCaster().force_staff_icon_client = nil
 		else
-			caster.force_staff_icon_client = icon
+			self:GetCaster().force_staff_icon_client = icon
 		end
 	end
 end
 
 function modifier_item_imba_force_staff:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
+	local decFuncs = {
+		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
 	}
+
 	return decFuncs
 end
 
@@ -163,13 +166,18 @@ end
 ---------------------------------------------
 item_imba_hurricane_pike = item_imba_hurricane_pike or class({})
 
-LinkLuaModifier("modifier_item_imba_hurricane_pike", "items/item_gungnir", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_item_imba_hurricane_pike_unique", "items/item_gungnir", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_item_imba_hurricane_pike_force_ally", "items/item_gungnir", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_item_imba_hurricane_pike_force_enemy", "items/item_gungnir", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_item_imba_hurricane_pike_force_self", "items/item_gungnir", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_item_imba_hurricane_pike_attack_speed", "items/item_gungnir", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_item_imba_hurricane_pike", "items/item_force_staff", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_item_imba_hurricane_pike_unique", "items/item_force_staff", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_item_imba_hurricane_pike_force_ally", "items/item_force_staff", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_item_imba_hurricane_pike_force_enemy", "items/item_force_staff", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_item_imba_hurricane_pike_force_self", "items/item_force_staff", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_item_imba_hurricane_pike_attack_speed", "items/item_force_staff", LUA_MODIFIER_MOTION_NONE)
 
+function item_imba_hurricane_pike:GetAbilityTextureName()
+	if not IsClient() then return end
+	if not self:GetCaster().force_staff_icon_client then return "custom/imba_hurricane_pike" end
+	return "custom/imba_hurricane_pike"..self:GetCaster().force_staff_icon_client
+end
 
 function item_imba_hurricane_pike:GetIntrinsicModifierName()
 	return "modifier_item_imba_hurricane_pike"
@@ -178,28 +186,27 @@ end
 function item_imba_hurricane_pike:OnSpellStart()
 	if not IsServer() then return end
 	local ability = self
-	local caster = self:GetCaster()
 	local target = self:GetCursorTarget()
 	local duration = 0.4
-	if caster:GetTeamNumber() == target:GetTeamNumber() then
+
+	if self:GetCaster():GetTeamNumber() == target:GetTeamNumber() then
 		EmitSoundOn("DOTA_Item.ForceStaff.Activate", target)
-		target:AddNewModifier(caster, ability, "modifier_item_imba_hurricane_pike_force_ally", {duration = duration })
+		target:AddNewModifier(self:GetCaster(), ability, "modifier_item_imba_hurricane_pike_force_ally", {duration = duration })
 	else
-		target:AddNewModifier(caster, ability, "modifier_item_imba_hurricane_pike_force_enemy", {duration = duration})
-		caster:AddNewModifier(target, ability, "modifier_item_imba_hurricane_pike_force_self", {duration = duration})
-		local buff = caster:AddNewModifier(caster, ability, "modifier_item_imba_hurricane_pike_attack_speed", {duration = ability:GetSpecialValueFor("range_duration")})
+		target:AddNewModifier(self:GetCaster(), ability, "modifier_item_imba_hurricane_pike_force_enemy", {duration = duration})
+		self:GetCaster():AddNewModifier(target, ability, "modifier_item_imba_hurricane_pike_force_self", {duration = duration})
+		local buff = self:GetCaster():AddNewModifier(self:GetCaster(), ability, "modifier_item_imba_hurricane_pike_attack_speed", {duration = ability:GetSpecialValueFor("range_duration")})
 		buff.target = target
 		buff:SetStackCount(ability:GetSpecialValueFor("max_attacks"))
 		EmitSoundOn("DOTA_Item.ForceStaff.Activate", target)
-		EmitSoundOn("DOTA_Item.ForceStaff.Activate", caster)
+		EmitSoundOn("DOTA_Item.ForceStaff.Activate", self:GetCaster())
 		local startAttack = {
-			UnitIndex = caster:entindex(),
+			UnitIndex = self:GetCaster():entindex(),
 			OrderType = DOTA_UNIT_ORDER_ATTACK_TARGET,
 			TargetIndex = target:entindex(),}
 		ExecuteOrderFromTable(startAttack)
 	end
 end
-
 
 modifier_item_imba_hurricane_pike = modifier_item_imba_hurricane_pike or class({})
 
@@ -214,6 +221,25 @@ function modifier_item_imba_hurricane_pike:OnCreated()
 		local parent = self:GetParent()
 		if not parent:HasModifier("modifier_item_imba_hurricane_pike_unique") then
 			parent:AddNewModifier(parent, self:GetAbility(), "modifier_item_imba_hurricane_pike_unique", {})
+		end
+	end
+
+	self:StartIntervalThink(1.0)
+end
+
+function modifier_item_imba_hurricane_pike:OnIntervalThink()
+	if self:GetCaster():IsIllusion() then return end
+
+	if IsServer() then
+		self:SetStackCount(self:GetCaster().force_staff_icon)
+	end
+
+	if IsClient() then
+		local icon = self:GetStackCount()
+		if icon == 0 then
+			self:GetCaster().force_staff_icon_client = nil
+		else
+			self:GetCaster().force_staff_icon_client = icon
 		end
 	end
 end

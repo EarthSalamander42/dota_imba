@@ -37,19 +37,17 @@ function item_imba_arcane_boots:GetIntrinsicModifierName()
 
 function item_imba_arcane_boots:OnSpellStart()
 	if IsServer() then
-
 		-- Parameters
-		local caster = self:GetCaster()
-		local replenish_mana = self:GetSpecialValueFor("base_replenish_mana") + self:GetSpecialValueFor("replenish_mana_pct") * caster:GetMaxMana() * 0.01
+		local replenish_mana = self:GetSpecialValueFor("base_replenish_mana") + self:GetSpecialValueFor("replenish_mana_pct") * self:GetCaster():GetMaxMana() * 0.01
 		local replenish_radius = self:GetSpecialValueFor("replenish_radius")
 
 		-- Play activation sound and particle
-		caster:EmitSound("DOTA_Item.ArcaneBoots.Activate")
-		local arcane_pfx = ParticleManager:CreateParticle("particles/items_fx/arcane_boots.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+		self:GetCaster():EmitSound("DOTA_Item.ArcaneBoots.Activate")
+		local arcane_pfx = ParticleManager:CreateParticle("particles/items_fx/arcane_boots.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
 		ParticleManager:ReleaseParticleIndex(arcane_pfx)
 
 		-- Iterate through nearby allies
-		local nearby_allies = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, replenish_radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MANA_ONLY, FIND_ANY_ORDER, false)
+		local nearby_allies = FindUnitsInRadius(self:GetCaster():GetTeam(), self:GetCaster():GetAbsOrigin(), nil, replenish_radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MANA_ONLY, FIND_ANY_ORDER, false)
 		for _, ally in pairs(nearby_allies) do
 
 			-- Grant the ally mana
@@ -106,42 +104,41 @@ function item_imba_mekansm:GetIntrinsicModifierName()
 
 function item_imba_mekansm:GetAbilityTextureName()
 	if not IsClient() then return end
-	local caster = self:GetCaster()
-	if not caster.mekansm_icon_client then return "custom/imba_mekansm" end
-	return "custom/imba_mekansm"..caster.mekansm_icon_client
+	if not self:GetCaster().mekansm_icon_client then return "custom/imba_mekansm" end
+
+	return "custom/imba_mekansm"..self:GetCaster().mekansm_icon_client
 end
 
 function item_imba_mekansm:OnSpellStart()
 	if IsServer() then
 		-- Parameters
-		local caster = self:GetCaster()
-		local heal_amount = self:GetSpecialValueFor("heal_amount") * (1 + caster:GetSpellPower() * 0.01)
+		local heal_amount = self:GetSpecialValueFor("heal_amount") * (1 + self:GetCaster():GetSpellPower() * 0.01)
 		local heal_radius = self:GetSpecialValueFor("heal_radius")
 		local heal_duration = self:GetSpecialValueFor("heal_duration")
 
 		-- Play activation sound and particle
-		caster:EmitSound("DOTA_Item.Mekansm.Activate")
-		local mekansm_pfx = ParticleManager:CreateParticle(caster.mekansm_effect, PATTACH_ABSORIGIN_FOLLOW, caster)
+		self:GetCaster():EmitSound("DOTA_Item.Mekansm.Activate")
+		local mekansm_pfx = ParticleManager:CreateParticle(self:GetCaster().mekansm_effect, PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
 		ParticleManager:ReleaseParticleIndex(mekansm_pfx)
 
 		-- Iterate through nearby allies
-		local caster_loc = caster:GetAbsOrigin()
-		local nearby_allies = FindUnitsInRadius(caster:GetTeam(), caster_loc, nil, heal_radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+		local caster_loc = self:GetCaster():GetAbsOrigin()
+		local nearby_allies = FindUnitsInRadius(self:GetCaster():GetTeam(), caster_loc, nil, heal_radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 		for _, ally in pairs(nearby_allies) do
 
 			-- Heal the ally
-			ally:Heal(heal_amount, caster)
+			ally:Heal(heal_amount, self:GetCaster())
 			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, ally, heal_amount, nil)
 
 			-- Play healing sound & particle
 			ally:EmitSound("DOTA_Item.Mekansm.Target")
-			local mekansm_target_pfx = ParticleManager:CreateParticle(caster.mekansm_hit_effect, PATTACH_ABSORIGIN_FOLLOW, ally)
+			local mekansm_target_pfx = ParticleManager:CreateParticle(self:GetCaster().mekansm_hit_effect, PATTACH_ABSORIGIN_FOLLOW, ally)
 			ParticleManager:SetParticleControl(mekansm_target_pfx, 0, caster_loc)
 			ParticleManager:SetParticleControl(mekansm_target_pfx, 1, ally:GetAbsOrigin())
 			ParticleManager:ReleaseParticleIndex(mekansm_target_pfx)
 
 			-- Apply armor & heal over time buff
-			ally:AddNewModifier(caster, self, "modifier_item_imba_mekansm_heal", {duration = heal_duration})
+			ally:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_mekansm_heal", {duration = heal_duration})
 		end
 	end
 end
@@ -165,22 +162,22 @@ function modifier_item_imba_mekansm:OnCreated(keys)
 			parent:AddNewModifier(parent, self:GetAbility(), "modifier_item_imba_mekansm_aura_emitter", {})
 		end
 	end
+
 	self:OnIntervalThink()
 	self:StartIntervalThink(1.0)
 end
 
 function modifier_item_imba_mekansm:OnIntervalThink()
-	local caster = self:GetCaster()
-	if caster:IsIllusion() then return end
+	if self:GetCaster():IsIllusion() then return end
 	if IsServer() then
-		self:SetStackCount(caster.mekansm_icon)
+		self:SetStackCount(self:GetCaster().mekansm_icon)
 	end
 	if IsClient() then
 		local icon = self:GetStackCount()
 		if icon == 0 then
-			caster.mekansm_icon_client = nil
+			self:GetCaster().mekansm_icon_client = nil
 		else
-			caster.mekansm_icon_client = icon
+			self:GetCaster().mekansm_icon_client = icon
 		end
 	end
 end
@@ -323,7 +320,10 @@ LinkLuaModifier( "modifier_item_imba_guardian_greaves_aura", "items/item_mekansm
 LinkLuaModifier( "modifier_item_imba_guardian_greaves_heal", "items/item_mekansm.lua", LUA_MODIFIER_MOTION_NONE )			-- Heal buff
 
 function item_imba_guardian_greaves:GetAbilityTextureName()
-	return "custom/imba_guardian_greaves"
+	if not IsClient() then return end
+	if not self:GetCaster().mekansm_icon_client then return "custom/imba_guardian_greaves" end
+
+	return "custom/imba_guardian_greaves"..self:GetCaster().mekansm_icon_client
 end
 
 function item_imba_guardian_greaves:GetIntrinsicModifierName()
@@ -333,14 +333,13 @@ function item_imba_guardian_greaves:OnSpellStart()
 	if IsServer() then
 
 		-- Parameters
-		local caster = self:GetCaster()
-		local heal_amount = self:GetSpecialValueFor("mend_base_health") * (1 + caster:GetSpellPower() * 0.01)
-		local mana_amount = self:GetSpecialValueFor("mend_base_mana") + self:GetSpecialValueFor("mend_mana_pct") * caster:GetMaxMana() * 0.01
+		local heal_amount = self:GetSpecialValueFor("mend_base_health") * (1 + self:GetCaster():GetSpellPower() * 0.01)
+		local mana_amount = self:GetSpecialValueFor("mend_base_mana") + self:GetSpecialValueFor("mend_mana_pct") * self:GetCaster():GetMaxMana() * 0.01
 		local heal_radius = self:GetSpecialValueFor("aura_radius")
 		local heal_duration = self:GetSpecialValueFor("mend_duration")
 
 		-- Cast Mend
-		GreavesActivate(caster, self, heal_amount, mana_amount, heal_radius, heal_duration)
+		GreavesActivate(self:GetCaster(), self, heal_amount, mana_amount, heal_radius, heal_duration)
 	end
 end
 
@@ -361,6 +360,24 @@ function modifier_item_imba_guardian_greaves:OnCreated(keys)
 		local parent = self:GetParent()
 		if not parent:HasModifier("modifier_item_imba_guardian_greaves_aura_emitter") then
 			parent:AddNewModifier(parent, self:GetAbility(), "modifier_item_imba_guardian_greaves_aura_emitter", {})
+		end
+	end
+
+	self:OnIntervalThink()
+	self:StartIntervalThink(1.0)
+end
+
+function modifier_item_imba_guardian_greaves:OnIntervalThink()
+	if self:GetCaster():IsIllusion() then return end
+	if IsServer() then
+		self:SetStackCount(self:GetCaster().mekansm_icon)
+	end
+	if IsClient() then
+		local icon = self:GetStackCount()
+		if icon == 0 then
+			self:GetCaster().mekansm_icon_client = nil
+		else
+			self:GetCaster().mekansm_icon_client = icon
 		end
 	end
 end

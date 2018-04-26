@@ -16590,7 +16590,7 @@
 			"16"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"hook_stacks"			"5 20 35 50"
+				"hook_stacks"			"8 16 24 32"
 			}
 		}
 	}

@@ -1298,15 +1298,18 @@ function GameMode:OnHeroInGame(hero)
 --				CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "show_netgraph_heronames", {})
 			end
 
+			print("IsDonator?", api.imba.is_donator(steam_id))
 			local steam_id = tostring(PlayerResource:GetSteamID(hero:GetPlayerID()))
 			if api.imba.is_developer(steam_id) then
-				hero:SetCustomHealthLabel("IMBA Developer", 200, 45, 45)
+				hero:SetCustomHealthLabel("Developer", 200, 45, 45)
 --			elseif api.imba.is_donator(steam_id) == 4 then
---				hero:SetCustomHealthLabel("IMBA Ember Donator", 200, 45, 45)
+--				hero:SetCustomHealthLabel("Ember Donator", 200, 45, 45)
 --			elseif api.imba.is_donator(steam_id) == 5 then
---				hero:SetCustomHealthLabel("IMBA Golden Donator", 218, 165, 32)
+--				hero:SetCustomHealthLabel("Golden Donator", 218, 165, 32)
+--			elseif api.imba.is_donator(steam_id) == 6 then
+--				hero:SetCustomHealthLabel("Salamander Donator", 218, 165, 32)
 			elseif api.imba.is_donator(steam_id) then
-				hero:SetCustomHealthLabel("IMBA Donator", 45, 200, 45)
+				hero:SetCustomHealthLabel("Donator", 45, 200, 45)
 			end
 
 			return
@@ -1392,6 +1395,11 @@ function GameMode:InitGameMode()
 	Convars:RegisterCommand("imba_test", Dynamic_Wrap(self, 'StartImbaTest'), "Spawns several units to help with testing", FCVAR_CHEAT)
 	Convars:RegisterCommand("particle_table_print", PrintParticleTable, "Prints a huge table of all used particles", FCVAR_CHEAT)
 	Convars:RegisterCommand("test_reconnect", ReconnectPlayer, "", FCVAR_CHEAT)
+
+	Convars:RegisterCommand("customgamesetup_shuffle_players_2", function()
+		local me = Convars:GetCommandClient():GetAssignedHero()
+		print(me:GetUnitName())
+	end, "Fuck", 0)
 
 	CustomGameEventManager:RegisterListener("netgraph_max_gold", Dynamic_Wrap(self, "MaxGold"))
 	CustomGameEventManager:RegisterListener("netgraph_max_level", Dynamic_Wrap(self, "MaxLevel"))
@@ -2086,6 +2094,9 @@ function GameMode:OnThink()
 
 	if i == nil then i = AP_GAME_TIME -1
 	elseif i < 0 then
+		if PICKING_SCREEN_OVER == false then
+			PICKING_SCREEN_OVER = true
+		end
 		return 1
 	else
 		i = i -1

@@ -257,6 +257,7 @@ function api.imba.is_donator(steamid)
 	for i = 1, #api.imba.data.donators do
 		if tostring(steamid) == api.imba.data.donators[i] then
 			return true
+--			return api.imba.data.donators[i].status
 		end
 	end
 end

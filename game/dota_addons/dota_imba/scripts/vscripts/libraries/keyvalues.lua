@@ -1,3 +1,4 @@
+-- IMBA Key Values version
 KEYVALUES_VERSION = "1.01"
 
  -- Change to false to skip loading the base files
@@ -99,7 +100,7 @@ function LoadGameKeyValues()
 				file[k] = v
 			end
 		else
-			log.error("[KeyValues] Critical Error on "..v.custom..".txt")
+--			log.error("[KeyValues] Critical Error on "..v.custom..".txt")
 			return
 		end
 		
@@ -123,7 +124,7 @@ function LoadGameKeyValues()
 			KeyValues.UnitKV[key] = value
 		else
 			if type(KeyValues.All[key]) == "table" then
-				log.error("[KeyValues] Warning: Duplicated unit/hero entry for "..key)
+--				log.error("[KeyValues] Warning: Duplicated unit/hero entry for "..key)
 			end
 		end
 	end
@@ -143,7 +144,7 @@ function LoadGameKeyValues()
 			KeyValues.AbilityKV[key] = value
 		else
 			if type(KeyValues.All[key]) == "table" then
-				log.error("[KeyValues] Warning: Duplicated unit/hero entry for "..key)
+--				log.error("[KeyValues] Warning: Duplicated unit/hero entry for "..key)
 			end
 		end
 	end

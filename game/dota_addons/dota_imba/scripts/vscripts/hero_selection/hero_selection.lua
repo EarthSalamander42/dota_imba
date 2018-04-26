@@ -17,8 +17,8 @@ local imbalist = {}
 local newlist = {}
 local customlist = {}
 local hotdisabledlist = {}
-local lockedHeroes = {}
-local loadedHeroes = {}
+lockedHeroes = {} -- hotfix pick screen, format later
+loadedHeroes = {}
 local totalheroes = 0
 
 local cmtimer = nil
@@ -573,6 +573,8 @@ function HeroSelection:StrategyTimer(time)
 	HeroSelection:CheckPause()
 	if time < 0 then
 		if finishedLoading then
+			print("PICK SCREEN IS OVER!")
+			PICKING_SCREEN_OVER = true
 			HeroSelection:EndStrategyTime()
 		else
 			LoadFinishEvent.listen(function()
@@ -609,26 +611,31 @@ end
 
 -- write new values to table
 function HeroSelection:UpdateTable(playerID, hero)
+-- function HeroSelection:UpdateTable(playerID, hero, force)
+	print("Update Table!")
 	local teamID = PlayerResource:GetTeam(playerID)
 	if hero == "random" then
+		print("Random!")
 		hero = self:RandomHero()
 	elseif hero == "imbarandom" then
 		hero = self:RandomImbaHero()
 	end
 
-	if lockedHeroes[playerID] then
-		hero = lockedHeroes[playerID]
-	end
+--	if force then
+		if lockedHeroes[playerID] then
+			hero = lockedHeroes[playerID]
+		end
 
-	if selectedtable[playerID] and selectedtable[playerID].selectedhero == hero then
-		log.info('Player re-selected their hero again ' .. hero)
-		return
-	end
+		if selectedtable[playerID] and selectedtable[playerID].selectedhero == hero then
+			log.info('Player re-selected their hero again ' .. hero)
+			return
+		end
 
-	if self:IsHeroChosen(hero) then
-		log.info('That hero is already disabled ' .. hero)
-		hero = "empty"
-	end
+		if self:IsHeroChosen(hero) then
+			log.info('That hero is already disabled ' .. hero)
+			hero = "empty"
+		end
+--	end
 
 	if IsRankedMap() then
 		if hero ~= "empty" then

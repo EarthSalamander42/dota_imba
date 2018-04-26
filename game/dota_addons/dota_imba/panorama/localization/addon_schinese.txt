@@ -230,9 +230,9 @@
 	"battlepass_fountain14"			"赤红泉水回复特效3"
 	"battlepass_fountain15"			"紫色泉水回复特效"
 	"battlepass_bottle"				"深海魔瓶特效"
-	"battlepass_bottle2"			"金色魔瓶特效"
+	"battlepass_bottle2"			"紫色魔瓶特效"
 	"battlepass_bottle3"			"赤红魔瓶特效"
-	"battlepass_bottle4"			"紫色魔瓶特效"
+	"battlepass_bottle4"			"金色魔瓶特效"
 
 	"companion_success"				"已应用新的宠物："
 	"companion_error"					"出错"
