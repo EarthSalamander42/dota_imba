@@ -112,5 +112,10 @@ function GameMode:OnPlayerChat(keys)
 				end
 			end
 		end
+
+		if str == "-gg" then
+			print("Player has GG!")
+			CustomGameEventManager:Send_ServerToPlayer(caster:GetPlayerOwner(), "gg_init_by_local", {})
+		end
 	end
 end

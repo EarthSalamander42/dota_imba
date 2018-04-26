@@ -11,10 +11,14 @@ function GenerateGGTopBar(player, team) {
 	} else if (team == 3) {
 		team_string ="Dire";
 	}
-	var TopBarHud = FindDotaHudElement(team_string + 'Player' + player).FindChildTraverse('SlantedContainerPanel');
-			
-	if (!TopBarHud.FindChildTraverse("GGBar-" + player)) {
 
+	$.Msg(team_string + 'Player' + player)
+	$.Msg(FindDotaHudElement(team_string + 'Player' + player))
+
+	// ERROR: find traverse of null
+	var TopBarHud = FindDotaHudElement(team_string + 'Player' + player).FindChildTraverse('SlantedContainerPanel');
+
+	if (!TopBarHud.FindChildTraverse("GGBar-" + player)) {
 		var gg_row = $.CreatePanel("Panel", TopBarHud, "GGBar-" + player);
 		gg_row.AddClass("GG_Row");
 		gg_row.style.backgroundColor = "gradient(linear,0  100%, 0% 0%, from(#800314b6),color-stop( 0.9, #0a1722ae ), to(#0a1722ae))";
@@ -32,7 +36,6 @@ function GenerateGGTopBar(player, team) {
 		gg_left_line.style.align = "left bottom";
 		gg_left_line.style.margin = "0 0 7px 8px";
 
-
 		var gg_label = $.CreatePanel('Label', gg_row, "");
 		gg_label.text = "GG";
 		gg_label.style.fontSize = "14px";
@@ -47,20 +50,22 @@ function GenerateGGTopBar(player, team) {
 		gg_right_line.style.backgroundColor = "gradient( linear, 0 0, 100%  0%, from( #f26600 ), color-stop( 0.4, #f26600 ), to( #f2001300 ) )";
 		gg_right_line.style.align = "right bottom";
 		gg_right_line.style.margin = "0 5px 7px 0";
-
 	}
 }
 
-function GGLocal () {
+function GGLocal() {
+	$.Msg("GG!")
 	gg_state = true;
 	GGInitCountDown();
 	$.GetContextPanel().AddClass("visible");
+
 	$.Schedule(9, function() {
 		if (gg_state) {
 			GameEvents.SendCustomGameEventToServer("send_gg_vote", {
 				ID: Game.GetLocalPlayerID(),
 				Vote: true
 			});
+
 			$.GetContextPanel().RemoveClass("visible");
 		};		
 	});
@@ -78,7 +83,7 @@ function GGInitCountDown() {
 }
 
 function GGCalled(event) {
-	GenerateGGTopBar(event.player_id, event.team);
+	GenerateGGTopBar(event.ID, event.team);
 }
 
 function CancelGG() {
@@ -90,4 +95,3 @@ function CancelGG() {
 	GameEvents.Subscribe("gg_called", GGCalled);
 	GameEvents.Subscribe("gg_init_by_local", GGLocal);
 })();
-

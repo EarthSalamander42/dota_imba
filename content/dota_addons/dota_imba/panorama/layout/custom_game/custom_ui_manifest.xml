@@ -173,7 +173,7 @@
 	<Panel>
 	<!-- CustomUIElements go here.  They are not provided currently as valve's parser reads commented lines and attempts to link them in.-->
 <!--	<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/hud_main.xml" /> -->
-<!--		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/gg.xml" /> -->
+		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/gg.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/worldpanels.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/overthrow_item_notification.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/combat_events.xml" />

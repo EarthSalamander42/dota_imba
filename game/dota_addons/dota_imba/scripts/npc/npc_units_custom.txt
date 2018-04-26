@@ -11268,7 +11268,7 @@
 	// EarthSalamander #42
 	"npc_imba_donator_companion_cookies"
 	{
-		"BaseClass"					"npc_imba_donator_companion"
+		"BaseClass"					"npc_dota_roshan"
 		"Model"						"models/courier/baby_rosh/babyroshan.vmdl"
 		"ModelScale"				"0.6"
 	}
@@ -11326,13 +11326,20 @@
 	{
 		"BaseClass"					"npc_imba_donator_companion"
 		"Model"						"models/creeps/roshan/roshan.vmdl"        
-		"ModelScale"				"0.5"
+		"ModelScale"				"0.45"
 	}
 
 	"npc_imba_donator_companion_baekho"
 	{
 		"BaseClass"					"npc_imba_donator_companion"
 		"Model"						"models/items/courier/baekho/baekho.vmdl"        
+		"ModelScale"				"1.0"
+	}
+
+	"npc_imba_donator_companion_devourling"
+	{
+		"BaseClass"					"npc_imba_donator_companion"
+		"Model"						"models/items/courier/devourling/devourling.vmdl"        
 		"ModelScale"				"1.0"
 	}
 

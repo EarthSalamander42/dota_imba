@@ -834,10 +834,6 @@ if player_id == "test_reconnect" then player_id = 0 end
 	end
 end
 
-function GetDonatorCompanion()
-
-end
-
 function DonatorCompanion(ID, unit_name)
 if unit_name == nil then return end
 local hero = PlayerResource:GetPlayer(ID):GetAssignedHero()
@@ -881,11 +877,12 @@ local model_scale = GetKeyValueByHeroName(unit_name, "ModelScale")
 		end
 	elseif unit_name == "npc_imba_donator_companion_suthernfriend" then
 		companion:SetMaterialGroup("1")
-	elseif model == "models/heroes/mario/mario_model.vmdl" then
-		companion:SetMaterialGroup(tostring(RandomInt(0, 2)))
-		companion:SetModelScale(0.5)
+	elseif model == "models/items/courier/devourling/devourling.vmdl" then
+		local particle = ParticleManager:CreateParticle("particles/econ/courier/courier_devourling/courier_devourling_ambient.vpcf", PATTACH_ABSORIGIN_FOLLOW, companion)
+		ParticleManager:ReleaseParticleIndex(particle)
 	elseif unit_name == "npc_imba_donator_companion_baekho" then
 		local particle = ParticleManager:CreateParticle("particles/econ/courier/courier_baekho/courier_baekho_ambient.vpcf", PATTACH_ABSORIGIN_FOLLOW, companion)
+		ParticleManager:ReleaseParticleIndex(particle)
 	end
 
 	companion:SetModelScale(model_scale)
