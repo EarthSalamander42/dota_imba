@@ -664,18 +664,21 @@
 	align: center center;
 	text-transform: uppercase;
 	text-align: center center;
-	border: 1px solid #38424b;
-	border-top: 0;
 	text-shadow: 0px 0px 3px 3 #00000070;
 	color: #99a8ad;
-	margin-top:  -2px;
-	background-color: #2a3440;
 	box-shadow: 0px 1px 8px 0px #000000a2;
 	width: 100%;
+}
+.BattlepassRewardLabel.unlocked {
+	background-color: #2a3440;
+	border: 1px solid #1c2328;
+	border-top: 0;
+	margin-top:  -2px;
 }
 .BattlepassRewardLabel.locked {
 	background-color: #282a2d;
 	border-color: #1c2328;
+	margin-top:  -2px;
 }
 
 .BattlepassRewardLabelLocked {
@@ -712,6 +715,12 @@
 	line-height: 14px;
 }
 
+#DonatorTableWrapper {
+	overflow: squish scroll;
+	flow-children: down;
+	height: 470px;
+	width: 100%;
+}
 
 .DonatorRow {
 	width: 100%;

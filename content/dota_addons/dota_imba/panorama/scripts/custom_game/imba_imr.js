@@ -109,7 +109,7 @@ function RefreshBattlepass() {
 		e.DeleteAsync(0);
 	});
 
-	var donator_childrens = $("#DonatorInfoContainer").FindChildrenWithClassTraverse("DonatorRow");
+	var donator_childrens = $("#DonatorTableWrapper").FindChildrenWithClassTraverse("DonatorRow");
 	donator_childrens.forEach(function(e) {
 		e.DeleteAsync(0);
 	});
@@ -320,6 +320,7 @@ function GenerateBattlepassPanel(BattlepassRewards, player) {
 				if (i <= plyData.Lvl) {
 					var reward_panel_unlocked = $.CreatePanel("Panel", reward_icon, BattlepassRewards[i] + "_panel_unlock");
 					reward_panel_unlocked.AddClass("BattlepassRewardPanelUnlocked");
+					reward_label.AddClass("unlocked");
 
 					var reward_label_unlocked = $.CreatePanel("Label", reward_panel_unlocked, BattlepassRewards[i] + "_label");
 					reward_label_unlocked.AddClass("BattlepassRewardLabelUnlocked");
@@ -366,7 +367,7 @@ function GenerateCompanionPanel(companions, player) {
 	var i_count = 0;
 	var class_option_count = 1;
 
-	var donator_row = $.CreatePanel("Panel", $('#DonatorInfoContainer'), "DonatorRow" + class_option_count + "_" + player);
+	var donator_row = $.CreatePanel("Panel", $('#DonatorTableWrapper'), "DonatorRow" + class_option_count + "_" + player);
 	donator_row.AddClass("DonatorRow");
 
 	// Companion Generator
@@ -429,7 +430,7 @@ function GenerateCompanionPanel(companions, player) {
 
 		if (i_count > 5) {
 			class_option_count = class_option_count + 1;
-			var donator_row = $.CreatePanel("Panel", $('#DonatorInfoContainer'), "DonatorRow" + class_option_count
+			var donator_row = $.CreatePanel("Panel", $('#DonatorTableWrapper'), "DonatorRow" + class_option_count
 					+ "_" + player);
 			donator_row.AddClass("DonatorRow");
 			i_count = 0;

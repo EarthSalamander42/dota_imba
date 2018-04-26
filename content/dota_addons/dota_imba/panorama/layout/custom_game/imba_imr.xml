@@ -132,7 +132,11 @@
 					<Label id="CompanionNotificationLabel"/>
 				</Button>
 	
-				<!-- JS Inserts records here -->
+				
+				<Panel id="DonatorTableWrapper" hittest="false">
+					<!-- JS Inserts records here -->
+				</Panel>
+				
 			</Panel>
 
 			<Panel id="LeaderboardInfoContainer" hittest="false">
