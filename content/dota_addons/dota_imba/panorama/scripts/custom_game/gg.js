@@ -57,7 +57,7 @@ function GGLocal() {
 	$.Msg("GG!")
 	gg_state = true;
 	GGInitCountDown();
-	$.GetContextPanel().AddClass("visible");
+	$.GetContextPanel().FindChildTraverse('Root').AddClass("visible");
 
 	$.Schedule(9, function() {
 		if (gg_state) {
@@ -66,7 +66,7 @@ function GGLocal() {
 				Vote: true
 			});
 
-			$.GetContextPanel().RemoveClass("visible");
+			$.GetContextPanel().FindChildTraverse('Root').RemoveClass("visible");
 		};		
 	});
 }
@@ -88,10 +88,11 @@ function GGCalled(event) {
 
 function CancelGG() {
 	gg_state = false;
-	$.GetContextPanel().RemoveClass("visible");
+	$.GetContextPanel().FindChildTraverse('Root').RemoveClass("visible");
 }
 
 (function() {
 	GameEvents.Subscribe("gg_called", GGCalled);
 	GameEvents.Subscribe("gg_init_by_local", GGLocal);
 })();
+
