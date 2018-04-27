@@ -1,0 +1,18 @@
+// Donator companions
+"npc_imba_donator_companion_cookies"					"Coook-shan"
+"npc_imba_donator_companion_admiral_bulldog"			"Bulldong"
+"npc_imba_donator_companion_baumi"						"Baumini's"
+"npc_imba_donator_companion_icefrog"					"About that cat.."
+"npc_imba_donator_companion_amaterasu"					"Amaterasu"
+"npc_imba_donator_companion_suthernfriend"				"Suthern-shan"
+"npc_imba_donator_companion_devourling"					"Devourling"
+
+// Donator statues
+"npc_imba_donator_statue_brewmaster_earth_spirit"		"Earth Spirit (Brewmaster)"
+"npc_imba_donator_statue_brewmaster_ember_spirit"		"Fire Spirit (Brewmaster)"
+"npc_imba_donator_statue_brewmaster_storm_spirit"		"Storm Spirit (Brewmaster)"
+"npc_imba_donator_statue_cookies"						"EarthSalamander's Chocobo"
+"npc_imba_donator_statue_suthernfriend"					"suthernfriend's Dog"
+"npc_imba_donator_statue_acalia"						"Acalia"
+"npc_imba_donator_statue_lily"							"NyanToast"
+"npc_imba_donator_statue_exzas"							"Exzas"

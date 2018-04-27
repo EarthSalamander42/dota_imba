@@ -17,11 +17,13 @@ var api = {
 	base : "http://api.dota2imba.org",
 	urls : {
 		companions : "/imba/meta/companions",
-		modifyDonator : "/imba/meta/modify-donator",
-		rankingsImr5v5 : "/imba/meta/rankings/imr-5v5",
-		rankingsImr10v10 : "/imba/meta/rankings/imr-10v10",
-		rankingsXp : "/imba/meta/rankings/xp",
-		rankingsLevel1v1 : "/imba/meta/rankings/level-1v1"
+		statues : "/imba/meta/ingame-statues",
+		modifyCompanion : "/imba/meta/modify-companion",
+		modifyStatue : "/imba/meta/modify-ingame-statue",
+//		rankingsImr5v5 : "/imba/meta/rankings/imr-5v5",
+//		rankingsImr10v10 : "/imba/meta/rankings/imr-10v10",
+//		rankingsXp : "/imba/meta/rankings/xp",
+//		rankingsLevel1v1 : "/imba/meta/rankings/level-1v1"
 	},
 	loadCompanions : function(callback) {
 		$.AsyncWebRequest(api.base + api.urls.companions, {
@@ -42,7 +44,7 @@ var api = {
 		});
 	},
 	updateCompanion : function(data, success_callback, error_callback) {
-		$.AsyncWebRequest(api.base + api.urls.modifyDonator, {
+		$.AsyncWebRequest(api.base + api.urls.modifyCompanion, {
 			type : "POST",
 			data : data,
 			timeout : 5000,
@@ -57,6 +59,44 @@ var api = {
 			},
 			error : function(err) {
 				$.Msg("Error updating companion" + JSON.stringify(err));
+				error_callback();
+			}
+		});
+	},
+	loadStatues : function(callback) {
+		$.AsyncWebRequest(api.base + api.urls.statues, {
+			type : "GET",
+			dataType : "json",
+			timeout : 5000,
+			success : function(obj) {
+				if (obj.error || !obj.data || !obj.data.ingame_statues)
+					$.Msg("Error Loading Statues! " + JSON.stringify(obj.message));
+				else {
+					$.Msg("Loaded " + obj.data.ingame_statues.length + " statues.");
+					callback(obj.data.ingame_statues);
+				}
+			},
+			error : function(err) {
+				$.Msg("Error Loading Statues! " + JSON.stringify(err));
+			}
+		});
+	},
+	updateStatue : function(data, success_callback, error_callback) {
+		$.AsyncWebRequest(api.base + api.urls.modifyStatue, {
+			type : "POST",
+			data : data,
+			timeout : 5000,
+			success : function(obj) {
+				if (obj.error) {
+					$.Msg("Error updating statue");
+					error_callback();
+				} else {
+					$.Msg("Updated statue");
+					success_callback();
+				}
+			},
+			error : function(err) {
+				$.Msg("Error updating statue " + JSON.stringify(err));
 				error_callback();
 			}
 		});
@@ -109,7 +149,7 @@ function RefreshBattlepass() {
 		e.DeleteAsync(0);
 	});
 
-	var donator_childrens = $("#DonatorTableWrapper").FindChildrenWithClassTraverse("DonatorRow");
+	var donator_childrens = $("#CompanionTableWrapper").FindChildrenWithClassTraverse("DonatorRow");
 	donator_childrens.forEach(function(e) {
 		e.DeleteAsync(0);
 	});
@@ -130,6 +170,22 @@ function SwitchTab(tab) {
 	$("#" + tab).style.visibility = "visible";
 }
 
+
+var current_sub_tab = ""
+function SwitchDonatorWrapper(type) {
+	if (current_sub_tab == type) {
+		$.Msg("Bro don't reload you're fine!");
+		return;
+	}
+
+	current_sub_tab = type;
+
+	$("#CompanionTableWrapper").style.visibility = "collapse";
+	$("#StatueTableWrapper").style.visibility = "collapse";
+
+	$("#" + type + "TableWrapper").style.visibility = "visible";
+}
+
 var companions = null;
 
 function Battlepass() {
@@ -137,14 +193,19 @@ function Battlepass() {
 
 	api.loadCompanions(function(companions) {
 		if (BattlepassRewards === undefined) {
-			$.Msg("Battlepass or Companions undefined..");
+			$.Msg("Battlepass undefined..");
 			$.Schedule(1, Battlepass);
 			return;
 		} else {
 			$.Msg("Companions and Battlepass information available");
 			GenerateBattlepassPanel(BattlepassRewards, Players.GetLocalPlayer());
-			GenerateCompanionPanel(companions, Players.GetLocalPlayer());
+			GenerateCompanionPanel(companions, Players.GetLocalPlayer(), "Companion");
 		}
+	});
+
+	api.loadStatues(function(statues) {
+		$.Msg("Statues and Battlepass information available");
+		GenerateCompanionPanel(statues, Players.GetLocalPlayer(), "Statue");
 	});
 }
 
@@ -193,9 +254,52 @@ function SetCompanion(companion, name, id) {
 	companion_changed = true;
 }
 
-var current_type = "";
+function SetStatue(statue, name, id) {
+	if (companion_changed === true) {
+		$.Msg("SLOW DOWN BUDDY!");
+		return;
+	}
 
+	if ($("#CompanionNotification").BHasClass("not_donator")) {
+		$("#CompanionNotification").RemoveClass("not_donator");
+	}
+
+	if (IsDonator(Game.GetLocalPlayerID()) === false) {
+		$("#CompanionNotification").AddClass("not_donator");
+		$("#CompanionNotificationLabel").text = $.Localize("companion_not_donator");
+		return;
+	}
+
+	api.updateStatue({
+		ingame_statue_id : id,
+		steamid : Game.GetLocalPlayerInfo().player_steamid,
+		ingame_statue_enabled : true
+	}, function() {
+		$("#CompanionNotification").AddClass("success");
+		$("#CompanionNotificationLabel").text = $.Localize("statue_success") + $.Localize(name) + "!";
+		GameEvents.SendCustomGameEventToServer("change_statue", {
+			ID : Players.GetLocalPlayer(),
+			unit : statue
+		});
+		$.Schedule(6.0, function() {
+			$("#CompanionNotification").RemoveClass("success");
+			companion_changed = false;
+		});
+	}, function() {
+		$("#CompanionNotification").AddClass("failure");
+		$("#CompanionNotificationLabel").text = $.Localize("companion_error");
+		$.Schedule(6.0, function() {
+			$("#CompanionNotification").RemoveClass("failure");
+			companion_changed = false;
+		});
+	});
+
+	companion_changed = true;
+}
+
+var current_type = "";
 function HallOfFame(type) {
+
 	if (current_type == type) {
 		$.Msg("Bro don't reload you're fine!");
 		return;
@@ -203,7 +307,7 @@ function HallOfFame(type) {
 
 	current_type = type;
 
-	for (var i = 1; i <= 10; i++) {
+	for (var i = 1; i <= 25; i++) {
 		if (type == "XP") {
 			var top_users = CustomNetTables.GetTableValue("top_xp", i.toString());
 		} else if (type == "IMR") {
@@ -258,29 +362,12 @@ function HallOfFame(type) {
 
 		var imr = $.CreatePanel("Label", player, "rank_" + i);
 		imr.AddClass("LeaderboardIMR");
-		imr.text = top_users.IMR_5v5.toFixed([ 0 ]);
+		imr.text = top_users.IMR_5v5.toFixed([0]);
 	}
-}
-
-function ClassBy(type) {
-	HallOfFame(type);
 }
 
 function SafeToLeave() {
 	$("#SafeToLeave").style.visibility = "visible";
-}
-
-function ShowImbathrowBar(args) {
-	var Parent = $.GetContextPanel().GetParent().GetParent().GetParent()
-	var hudElements = Parent.FindChildTraverse("HUDElements");
-	// var topbar = hudElements.FindChildTraverse("topbar");
-
-	if (args.imbathrow == true) {
-		// topbar.style.visibility = "collapse";
-	} else {
-		Parent.FindChildTraverse("TopBarScoreboard").style.visibility = "collapse";
-		// topbar.style.visibility = "visible";
-	}
 }
 
 function GenerateBattlepassPanel(BattlepassRewards, player) {
@@ -305,16 +392,12 @@ function GenerateBattlepassPanel(BattlepassRewards, player) {
 				i_count = 1;
 			}
 
-			var reward = $.CreatePanel("Panel", $("#BattlepassRow" + class_option_count + "_" + player),
-					BattlepassRewards[i]);
+			var reward = $.CreatePanel("Panel", $("#BattlepassRow" + class_option_count + "_" + player), BattlepassRewards[i]);
 			reward.AddClass("BattlepassReward");
-
-			// $.Msg(i + " " + BattlepassRewards[i])
 
 			var reward_icon = $.CreatePanel("Panel", reward, BattlepassRewards[i] + "_icon");
 			reward_icon.AddClass("BattlepassRewardIcon");
-			reward_icon.style.backgroundImage = 'url("file://{images}/custom_game/battlepass/' + BattlepassRewards[i]
-					+ '.png")';
+			reward_icon.style.backgroundImage = 'url("file://{images}/custom_game/battlepass/' + BattlepassRewards[i] + '.png")';
 
 			var reward_label = $.CreatePanel("Label", reward, BattlepassRewards[i] + "_label");
 			reward_label.AddClass("BattlepassRewardLabel");
@@ -336,42 +419,21 @@ function GenerateBattlepassPanel(BattlepassRewards, player) {
 					reward_label_locked.AddClass("BattlepassRewardLabelLocked");
 					reward_label_locked.text = $.Localize("battlepass_reward_locked");
 				}
-
-				// all tooltips only show the last
-				// created window...
-				// (function () {
-				// reward_icon.SetPanelEvent("onmouseover",
-				// function() {
-				// $.DispatchEvent("DOTAShowTextTooltip",
-				// reward_icon, $.Localize("battlepass_"
-				// + BattlepassRewards[i]));
-				// })
-				// reward_icon.SetPanelEvent("onmouseout",
-				// function() {
-				// $.DispatchEvent(
-				// "DOTAHideTextTooltip", reward_icon);
-				// })
-				// })(reward_icon);
 			} else {
 				reward_icon.AddClass("BattlepassRewardIcon_locked")
 				var reward_label_locked = $.CreatePanel("Label", reward_icon, BattlepassRewards[i] + "_label");
 				reward_label_locked.AddClass("BattlepassRewardLabelLocked");
 				reward_label_locked.text = $.Localize("battlepass_reward_locked");
 			}
-
-			// onmouseover="UIShowTextTooltip(
-			// imba_gamemode_settings_tower_power_title_tooltip
-			// )"
-			// onmouseout="UIHideTextTooltip()">
 		}
 	}
 }
 
-function GenerateCompanionPanel(companions, player) {
+function GenerateCompanionPanel(companions, player, panel) {
 	var i_count = 0;
 	var class_option_count = 1;
 
-	var donator_row = $.CreatePanel("Panel", $('#DonatorTableWrapper'), "DonatorRow" + class_option_count + "_" + player);
+	var donator_row = $.CreatePanel("Panel", $('#' + panel + 'TableWrapper'), "DonatorRow" + class_option_count + "_" + player);
 	donator_row.AddClass("DonatorRow");
 
 	// Companion Generator
@@ -434,13 +496,12 @@ function GenerateCompanionPanel(companions, player) {
 
 		if (i_count > 5) {
 			class_option_count = class_option_count + 1;
-			var donator_row = $.CreatePanel("Panel", $('#DonatorTableWrapper'), "DonatorRow" + class_option_count
-					+ "_" + player);
+			var donator_row = $.CreatePanel("Panel", $('#' + panel + 'TableWrapper'), panel + "Row" + class_option_count + "_" + player);
 			donator_row.AddClass("DonatorRow");
 			i_count = 0;
 		}
 
-		var companion = $.CreatePanel("Panel", $("#DonatorRow" + class_option_count + "_" + player), companion_name[i]);
+		var companion = $.CreatePanel("Panel", donator_row, companion_name[i]);
 		companion.AddClass("DonatorReward");
 
 		var companionpreview = $.CreatePanel("Button", companion, "CompanionPreview_" + i);
@@ -465,11 +526,19 @@ function GenerateCompanionPanel(companions, player) {
 		 * copy-by-reference
 		 */
 
-		var event = function(ev, name, id) {
-			return function() {
-				SetCompanion(ev, name, id);
-			}
-		};
+		if (panel == "Companion") {
+			var event = function(ev, name, id) {
+				return function() {
+					SetCompanion(ev, name, id);
+				}
+			};
+		} else if (panel == "Statue") {
+			var event = function(ev, name, id) {
+				return function() {
+					SetStatue(ev, name, id);
+				}
+			};
+		}
 
 		companionpreview.SetPanelEvent("onactivate", event(companion_unit_name, companion_name[i], companion_id[i]));
 
@@ -534,18 +603,15 @@ function ToggleCompanion() {
 		frantic = "Enabled";
 	}
 
-	// $("#BountyMultiplierValue").text = bounty_multiplier[1] + "%";
-	// $("#ExpMultiplierValue").text = exp_multiplier[1] + "%";
-	// $("#InitialGoldValue").text = initial_gold[1];
-	// $("#InitialLevelValue").text = initial_level[1];
-	// $("#MaxLevelValue").text = max_level[1];
-	// $("#FranticModeValue").text = frantic;
-	// $("#GoldTickValue").text = gold_tick[1].toFixed(1);
+	$("#BountyMultiplierValue").text = bounty_multiplier[1] + "%";
+	$("#ExpMultiplierValue").text = exp_multiplier[1] + "%";
+	$("#InitialGoldValue").text = initial_gold[1];
+	$("#InitialLevelValue").text = initial_level[1];
+	$("#MaxLevelValue").text = max_level[1];
+	$("#FranticModeValue").text = frantic;
+	$("#GoldTickValue").text = gold_tick[1].toFixed(1);
+	$("#TowerPowerValue").text = tower_power[1];
 
-	// $("#TowerPowerValue").text = $.Localize('#imba_gamemode_settings_power_'
-	// +
-	// tower_power[1]);
 	GameEvents.Subscribe("hall_of_fame", HallOfFame);
 	GameEvents.Subscribe("safe_to_leave", SafeToLeave);
-	// GameEvents.Subscribe("imbathrow_topbar", ShowImbathrowBar);
 })();

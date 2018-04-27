@@ -492,9 +492,7 @@ function GameMode:OnNPCSpawned(keys)
 		end
 
 		if npc:IsCourier() then
-			if not npc:HasModifier("modifier_courier_hack") then
-				npc:AddNewModifier(courier, nil, "modifier_courier_hack", {})
-			end
+			npc:AddAbility("courier_movespeed"):SetLevel(1)
 
 			if npc.first_spawn == true then
 				CombatEvents("generic", "courier_respawn", npc)
@@ -579,6 +577,15 @@ function GameMode:OnNPCSpawned(keys)
 		Timers:CreateTimer(1.0, function() -- Silencer fix
 			if npc:HasModifier("modifier_silencer_int_steal") then
 				npc:RemoveModifierByName("modifier_silencer_int_steal")
+			end
+		end)
+	else
+		Timers:CreateTimer(FrameTime(), function()
+			if UNIT_EQUIPMENT[npc:GetModelName()] then
+				for _, wearable in pairs(UNIT_EQUIPMENT[npc:GetModelName()]) do
+					local wearable = SpawnEntityFromTableSynchronous("prop_dynamic", {model = wearable})
+					wearable:FollowEntity(npc, true)
+				end
 			end
 		end)
 	end
@@ -1405,9 +1412,9 @@ function GameMode:OnEntityKilled( keys )
 				if killed_unit:GetTeamNumber() == 3 then
 					unit_name = "npc_dota_badguys_healers"
 				end
-				local units = FindUnitsInRadius(killed_unit:GetTeamNumber(), Vector(0, 0, 0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
+				local units = FindUnitsInRadius(killed_unit:GetTeamNumber(), Vector(0, 0, 0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
 				for _, building in pairs(units) do
-					if building:GetUnitName() == unit_name then
+					if building:GetUnitName() == unit_name or string.find(building:GetUnitName(), "npc_imba_donator_statue_") then
 						if building:HasModifier("modifier_invulnerable") then
 							building:RemoveModifierByName("modifier_invulnerable")
 						end
@@ -1456,6 +1463,10 @@ function GameMode:OnEntityKilled( keys )
 			end
 			-- reset killstreak if not comitted suicide
 			killed_unit.killstreak = 0
+		end
+
+		if killed_unit.pedestal then
+			killed_unit.pedestal:ForceKill(false)
 		end
 	end
 end

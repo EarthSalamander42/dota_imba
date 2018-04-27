@@ -997,10 +997,12 @@ function imba_faceless_void_chronosphere:OnSpellStart( mini_chrono, target_locat
 	-- Create flying vision node
 	AddFOWViewer(caster:GetTeamNumber(), chrono_center, total_radius, duration, false)
 
+	local enemies_count = 0
 	if not mini_chrono then
 		-- Decide which cast sound to play
 		local enemies = FindUnitsInRadius(caster:GetTeamNumber(), chrono_center, nil, total_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, FIND_ANY_ORDER, false)
-		if #enemies >= PlayerResource:GetPlayerCount() * 0.35 then
+		enemies_count = #enemies
+		if enemies_count >= PlayerResource:GetPlayerCount() * 0.35 then
 			if self:IsStolen() then
 				caster:EmitSound("Imba.StolenZaWarudo")		-- If stolen, Star Platinum ZA WARUDO
 			else
@@ -1011,18 +1013,22 @@ function imba_faceless_void_chronosphere:OnSpellStart( mini_chrono, target_locat
 		end
 	end
 
-	local cdIncrease = self:GetSpecialValueFor("cd_increase_per_enemy") * #enemies
-	-- Increase cooldowns
-	for _,enemy in pairs(enemies) do
-		-- Iterate through all victims abilities
-		for i = 0, 23 do
-			local targetAbility = enemy:GetAbilityByIndex(i)
+	local cdIncrease = 0
+	if enemies then
+		cdIncrease = self:GetSpecialValueFor("cd_increase_per_enemy") * enemies_count
 
-			-- If there is an ability, it's learned, not a passive, not a talent/attribute bonus, and on cooldown, apply cooldown increase
-			if targetAbility and targetAbility:GetLevel() > 0 and not targetAbility:IsPassive() and not targetAbility:IsAttributeBonus() and not targetAbility:IsCooldownReady() then
-				local newCooldown = targetAbility:GetCooldownTimeRemaining() + cdIncrease
-				targetAbility:EndCooldown()
-				targetAbility:StartCooldown(newCooldown)
+		-- Increase cooldowns
+		for _,enemy in pairs(enemies) do
+			-- Iterate through all victims abilities
+			for i = 0, 23 do
+				local targetAbility = enemy:GetAbilityByIndex(i)
+
+				-- If there is an ability, it's learned, not a passive, not a talent/attribute bonus, and on cooldown, apply cooldown increase
+				if targetAbility and targetAbility:GetLevel() > 0 and not targetAbility:IsPassive() and not targetAbility:IsAttributeBonus() and not targetAbility:IsCooldownReady() then
+					local newCooldown = targetAbility:GetCooldownTimeRemaining() + cdIncrease
+					targetAbility:EndCooldown()
+					targetAbility:StartCooldown(newCooldown)
+				end
 			end
 		end
 	end
@@ -1035,9 +1041,8 @@ function imba_faceless_void_chronosphere:OnSpellStart( mini_chrono, target_locat
 		{duration = duration},
 		chrono_center,
 		caster:GetTeamNumber(),
-		false)
-
-
+		false
+	)
 end
 
 ---------------------------------

@@ -65,7 +65,6 @@
 				<Panel id="TabsButtonWrapper" hittest="false">
 					<Panel id="TabButtonContainer" hittest="false">
 						<Button class="color_animation" id="BattlepassTabButton" onactivate="SwitchTab('BattlepassInfoContainer');">
-<!--						<DOTAScenePanel id="BattlepassBurner" class="SceneLoaded" hittest="false" map="scenes/hud/healthbarburner" camera="camera_1" /> -->
 							<Label class="image"></Label>
 							<Label class="text" text="#battlepass" />
 						</Button>
@@ -78,6 +77,18 @@
 						<Button class="color_animation" id="LeaderboardTabButton" onactivate="SwitchTab('LeaderboardInfoContainer');">
 							<Label class="image"></Label>
 							<Label class="text" id="LoadingWarning" text="#leaderboard" />
+						</Button>
+					</Panel>
+
+					<Panel id="MiniTabButtonContainer" hittest="false">
+						<Button class="color_animation" id="CompanionTabButton" onactivate="SwitchDonatorWrapper('Companion');">
+							<Label class="image"></Label>
+							<Label class="text" text="#donator_companion" />
+						</Button>
+
+						<Button class="color_animation" id="StatueTabButton" onactivate="SwitchDonatorWrapper('Statue');">
+							<Label class="image"></Label>
+							<Label class="text" text="#donator_statue" />
 						</Button>
 					</Panel>
 				</Panel>
@@ -96,11 +107,8 @@
 <!--
 					<Button class="BattlepassButton" onactivate="ToggleCompanion();">
 						<Label id="ToggleCompanionLabel" text="#toggle_companion"/>
-					</Button>
--->
-				</Panel>
-
-				
+					</Button> -->
+				</Panel>				
 				<!-- JS Inserts records here -->
 			</Panel>
 
@@ -109,7 +117,6 @@
 					<Label class="DonatorTabLabel" text="#donator_info" />
 				</Panel>
 
-				
 				<Panel id="BattlepassButtons" hittest="false">
 					<Button class="BattlepassButton" onactivate="RefreshBattlepass();">
 						<Panel id="RefreshBattlepass" onactivate="RefreshBattlepass();"/>
@@ -118,8 +125,7 @@
 <!--
 					<Button class="BattlepassButton" onactivate="ToggleCompanion();">
 						<Label id="ToggleCompanionLabel" text="#toggle_companion"/>
-					</Button>
--->
+					</Button> -->
 				</Panel>
 <!--
 				<Panel id="DonatorOptions" hittest="false">
@@ -133,21 +139,24 @@
 				</Button>
 	
 				
-				<Panel id="DonatorTableWrapper" hittest="false">
+				<Panel id="CompanionTableWrapper" hittest="false">
 					<!-- JS Inserts records here -->
 				</Panel>
-				
+
+				<Panel id="StatueTableWrapper" hittest="false">
+					<!-- JS Inserts records here -->
+				</Panel>
 			</Panel>
 
 			<Panel id="LeaderboardInfoContainer" hittest="false">
 				<Panel id="Legend" class="LeaderboardLegend" hittest="false">
 					<Label id="Rank" class="LeaderboardRank" text="#leaderboard_rank" />
 					<Label id="SteamAvatar" class="LeaderboardAvatar" text="#leaderboard_steam_avatar" />
-					<Button id="XP" class="LeaderboardXP" onactivate="ClassBy('XP');">
+					<Button id="XP" class="LeaderboardXP" onactivate="HallOfFame('XP');">
 						<Label class="LeaderboardButtonLabel" text="#leaderboard_xp" />
 					</Button>
-					<Button id="IMR" class="LeaderboardIMR" onactivate="ClassBy('IMR');">
-						<Label class="LeaderboardButtonLabel" text="#leaderboard_imr" />
+					<Button id="IMR" class="LeaderboardIMR" onactivate="HallOfFame('IMR');">
+						<Label class="LeaderboardButtonLabel" text="#custom_end_screen_legend_imr" />
 					</Button>
 				</Panel>
 

@@ -1089,32 +1089,37 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"attack_speed"			"10"
+				"attack_speed_aura"		"10"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"attack_speed_aura"		"10"
+				"hp_regen_aura"			"12"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"hp_regen_aura"			"12"
+				"aura_radius"			"900"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_radius"			"900"
+				"health_min"			"2500"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health_min"			"2500"
+				"speed_base"			"425"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"speed_base"			"425"
+				"tooltip_range"			"700"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tooltip_bounty"		"200"
 			}
 		}
 	}
@@ -8719,10 +8724,7 @@
 	//=================================================================================================================
 	"ogre_magi_bloodlust"
 	{
-		"MaxLevel"						"4"
-
 		"AbilityCastRange"				"600 700 800 900"
-
 		"AbilityCooldown"				"20"
 
 		"AbilitySpecial"
@@ -8744,6 +8746,12 @@
 				"LinkedSpecialBonus"	"special_bonus_unique_ogre_magi"
 			}
 			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"self_bonus"			"30 50 70 90"
+				"LinkedSpecialBonus"	"special_bonus_unique_ogre_magi"
+			}
+			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"duration"				"60"
@@ -13190,62 +13198,63 @@
 	//=================================================================================================================
 	"wisp_spirits"
 	{
-		"MaxLevel"						"4"
-
 		"AbilityCooldown"				"20 16 13 11"
-
 		"AbilityDuration"				"19"
-
 		"AbilityManaCost"				"120 140 155 165"
 
 		"AbilitySpecial"
 		{
-			"02"
+			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"creep_damage"				"9 21 33 45"
 			}
-			"03"
+			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"hero_damage"				"35 85 120 140"
 				"LinkedSpecialBonus"		"special_bonus_unique_wisp"
 			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"slow"						"20 40 60 80"
+			}
 			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"slow_duration"				"0.3"
+			}
+			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"revolution_time"			"2.5"
 			}
-			"05"
+			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"min_range"					"100"
 			}
-			"06"
+			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"max_range"					"875"
 				"LinkedSpecialBonus"		"special_bonus_unique_wisp_3"
 			}
-			"07"
+			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"hero_hit_radius"			"70"
 			}
-			"08"
+			"09"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"explode_radius"			"300 350 400 450"
 			}
-			"09"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"hit_radius"				"150"
-			}
 			"10"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"default_radius"			"150"
+				"hit_radius"				"150"
 			}
 			"11"
 			{

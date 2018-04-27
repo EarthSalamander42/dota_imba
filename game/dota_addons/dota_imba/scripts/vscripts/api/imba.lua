@@ -241,6 +241,7 @@ function api.imba.internals.get_all_valid_players()
 			table.insert(players, tostring(PlayerResource:GetSteamID(id)))
 		end
 	end
+
 	return players
 end
 
@@ -260,8 +261,9 @@ function api.imba.is_donator(steamid)
 			local status
 			local xp_mult
 			if player then
-				print("Donator Status:", player.donator_status)
-				print("Donator XP Boosters:", player.xp_multiplier)
+--				PrintTable(player)
+--				print("Donator Status:", player.donator_status)
+--				print("Donator XP Boosters:", player.xp_multiplier)
 				status =  player.donator_status
 				xp_mult = player.xp_multiplier
 			end

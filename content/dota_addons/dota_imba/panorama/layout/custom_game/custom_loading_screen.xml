@@ -14,6 +14,30 @@
 
 	<Panel class="addon-root">
 		<Panel id="imba-loading">
+			<Panel id="imba-social">
+				<Panel class="imba-social-buttons">
+					<Button id="imba-social-button-facebook" class="imba-social-button"
+						onactivate="DOTADisplayURL('https://www.facebook.com/D2IMBA/');" />
+					<Button id="imba-social-button-twitter" class="imba-social-button"
+						onactivate="DOTADisplayURL('https://twitter.com/Dota2IMBA42');" />
+					<Button id="imba-social-button-reddit" class="imba-social-button"
+						onactivate="DOTADisplayURL('https://www.reddit.com/r/dotaimba/');" />
+					<Button id="imba-social-button-patreon" class="imba-social-button"
+						onactivate="DOTADisplayURL('https://www.patreon.com/xherosiege');" />
+				</Panel>
+			</Panel>
+
+			<Panel id="imba-social">
+				<Panel class="imba-social-buttons">
+					<Button id="imba-social-button-discord-en" class="imba-social-button"
+						onactivate="DOTADisplayURL('http://tinyurl.com/imba-discord');" />
+					<Button id="imba-social-button-discord-ru" class="imba-social-button"
+						onactivate="DOTADisplayURL('https://discord.gg/HcybJKt');" />
+					<Button id="imba-social-button-tencent" class="imba-social-button"
+						onactivate="DOTADisplayURL('https://www.bilibiliduang.cn/imbagroup');" />
+				</Panel>
+			</Panel>
+
 			<Panel id="imba-news">
 				<Label id="imba-news-title" text="Dota IMBA" />
 				<Label id="imba-news-text" />
@@ -33,30 +57,6 @@
 					</Panel>
 
 					<Image id="additional-news-image" />
-				</Panel>
-			</Panel>
-
-			<Panel id="imba-social">
-				<Panel class="imba-social-buttons">
-					<Button id="imba-social-button-reddit" class="imba-social-button"
-						onactivate="DOTADisplayURL('https://www.reddit.com/r/dotaimba/');" />
-					<Button id="imba-social-button-patreon" class="imba-social-button"
-						onactivate="DOTADisplayURL('https://www.patreon.com/xherosiege');" />
-					<Button id="imba-social-button-facebook" class="imba-social-button"
-						onactivate="DOTADisplayURL('https://www.facebook.com/D2IMBA/');" />
-					<Button id="imba-social-button-twitter" class="imba-social-button"
-						onactivate="DOTADisplayURL('https://twitter.com/Dota2IMBA42');" />
-				</Panel>
-			</Panel>
-
-			<Panel id="imba-social">
-				<Panel class="imba-social-buttons">
-					<Button id="imba-social-button-discord-en" class="imba-social-button"
-						onactivate="DOTADisplayURL('http://tinyurl.com/imba-discord');" />
-					<Button id="imba-social-button-discord-ru" class="imba-social-button"
-						onactivate="DOTADisplayURL('https://discord.gg/HcybJKt');" />
-					<Button id="imba-social-button-tencent" class="imba-social-button"
-						onactivate="DOTADisplayURL('https://www.bilibiliduang.cn/imbagroup');" />
 				</Panel>
 			</Panel>
 		</Panel>

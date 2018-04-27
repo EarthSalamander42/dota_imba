@@ -355,13 +355,6 @@
 "npc_imba_contributor_poly"                                "Poly"
 "npc_imba_contributor_firstlady"                            "1StLady"
 "npc_imba_contributor_wally_chan"                          "Wally Chan"
-"npc_imba_donator_companion_cookies"                        "Coook-shan"
-"npc_imba_donator_companion_admiral_bulldog"                    "Bulldong"
-"npc_imba_donator_companion_baumi"                          "Baumini's"
-"npc_imba_donator_companion_icefrog"                        "About that cat.."
-"npc_imba_donator_companion_amaterasu"                        "Amaterasu"
-"npc_imba_donator_companion_suthernfriend"                      "Suthern-shan"
-"npc_imba_donator_companion_devourling"						"Devourling"
 
 //=================================================================================================================
 //=================================================================================================================

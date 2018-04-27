@@ -11,7 +11,6 @@ function modifier_imba_contributor_statue:CheckState()
 		[MODIFIER_STATE_NOT_ON_MINIMAP] = true,
 		[MODIFIER_STATE_NO_HEALTH_BAR] = true,
 		[MODIFIER_STATE_NO_UNIT_COLLISION] = true,
-		[MODIFIER_STATE_OUT_OF_GAME] = true
 	}
 
 	return state

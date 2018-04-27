@@ -36,6 +36,7 @@
 	"scoreboard_tool_tip_disable_help"				"Désactivé l'aide"
 	"scoreboard_tool_tip_active_disable_help"		"(DISABLED)"
 	"custom_end_screen_legend_imr"					"IMR"
+	"custom_end_screen_legend_imr10v10"				"IMR 10v10"
 
 	"custom_toast_PlayerDeniedSelf"							"{victim_name} {denied_icon} Denied"
 	"custom_toast_CourierKilled"							"{courier_icon} {team_name} Coursier a été tué"
@@ -90,7 +91,6 @@
 	"leaderboard_rank"				"Rang"
 	"leaderboard_steam_avatar"		"Steam"
 	"leaderboard_xp"				"Experience (cliquez pour réorganiser)"
-	"leaderboard_imr"				"Imba Match Rank"
 
 	//blue
 	//nature

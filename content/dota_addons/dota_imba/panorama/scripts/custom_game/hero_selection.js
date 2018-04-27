@@ -677,17 +677,18 @@ function ReloadCMStatus(data) {
 	}
 }
 
-function DisableHero (name) {
+function DisableHero(name) {
 	if (FindDotaHudElement(name) != null) {
 		FindDotaHudElement(name).AddClass('Disabled');
 		disabledheroes.push(name);
 	}
 }
 
-function IsHeroDisabled (name) {
+function IsHeroDisabled(name) {
 	if (disabledheroes.indexOf(name) !== -1) {
 		return true;
 	}
+
 	return false;
 }
 

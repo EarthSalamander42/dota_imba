@@ -28,6 +28,7 @@
 	"scoreboard_tool_tip_disable_help"				"Hilfe deaktivieren"
 	"scoreboard_tool_tip_active_disable_help"		"(DEAKTIVIERT)"
 	"custom_end_screen_legend_imr"					"IMR"
+	"custom_end_screen_legend_imr10v10"				"IMR 10v10"
 
 	"custom_toast_CourierKilled"							"{courier_icon} {team_name} Kurier ist tot"
 	"custom_toast_CourierRespawned"							"{courier_icon} {team_name} Kurier ist wieder am Leben"
@@ -82,7 +83,6 @@
 	"leaderboard_rank"				"Rang"
 	"leaderboard_steam_avatar"		"Steam"
 	"leaderboard_xp"				"Erfahrung (Klicke zum Sortieren)"
-	"leaderboard_imr"				"Imba Match Rank"
 
 	//blue
 	//nature

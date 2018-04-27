@@ -169,7 +169,8 @@
 	"average_mmr"									"Average MMR: "
 
 	//Donator Tab
-	"donator_companion"				"Selected Companion"
+	"donator_companion"				"Companion"
+	"donator_statue"				"Statue"
 	"donator_info"					"Select a Companion"
 	"companion_enabled"				"Companion enabled."
 	"companion_disabled"			"Companion disabled."
@@ -179,13 +180,14 @@
 	"companion_error"				"Oops! Something went wrong."
 	"companion_not_donator"			"This feature is only for Patreon donators. Click here to pledge!"
 
+	"statue_success"				"Statue changed with: "
+
 	//Leaderboard
 	"leaderboard"					"Leaderboard"
 	"leaderboard_loading"			"Loading leaderboard, please wait"
 	"leaderboard_rank"				"Rank"
 	"leaderboard_steam_avatar"		"Steam"
 	"leaderboard_xp"				"Experience (click to sort)"
-	"leaderboard_imr"				"Imba Match Rank"
 
 	//blue
 	//nature

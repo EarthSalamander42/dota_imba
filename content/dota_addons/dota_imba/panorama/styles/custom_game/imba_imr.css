@@ -315,19 +315,25 @@
 
 #TabsButtonWrapper {
 	border-top:  1px solid #29353b;
-	padding-top:  15px;	
+	padding-top:  10px;
+	padding-bottom:  10px;
 	width: 100%;
-	flow-children: right;
+	flow-children: down;
 	background-color:  gradient( linear, 0% 0, 0 100%, from( #414f6245 ), color-stop( 0.9, #13161a00 ), to( #13161a00 ) );
 	/* background-color: #414f62; */
 }
 
-#TabButtonContainer {
+#MiniTabButtonContainer {
 	flow-children: right;
-	margin-bottom: 20px;
 	margin-left:  10px;
 	margin-right:  10px;
-	align:  center center;
+	align:  center top;
+}
+#TabButtonContainer {
+	flow-children: right;
+	margin-left:  10px;
+	margin-right:  10px;
+	align:  center top;
 }
 #CloseButton {
 	width: 90px;
@@ -360,8 +366,18 @@
 	align: left center;
 	margin-right: -18px;
 }
+#CompanionTabButton,
+#StatueTabButton {	
+	width: 230px;
+	height: 47px;
+	padding-left: 30px;
+	align: left center;
+	margin-right: -18px;
+}
 #BattlepassTabButton .text,
 #DonatorTabButton .text,
+#CompanionTabButton .text,
+#StatueTabButton .text,
 #LeaderboardTabButton .text {
 	font-size: 19px;
 	letter-spacing: 1px;
@@ -372,6 +388,8 @@
 }
 #BattlepassTabButton .image,
 #DonatorTabButton .image,
+#CompanionTabButton .image,
+#StatueTabButton .image,
 #LeaderboardTabButton .image {
 	width: 14px;
 	height: 18px;
@@ -384,6 +402,8 @@
 
 #BattlepassTabButton:hover, #BattlepassTabButton:active,
 #DonatorTabButton:hover, #DonatorTabButton:active,
+#CompanionTabButton:hover, #CompanionTabButton:active,
+#StatueTabButton:hover, #StatueTabButton:active,
 #LeaderboardTabButton:hover, #LeaderboardTabButton:active {
 	brightness:  2;
 	animation-name:  none;
@@ -415,7 +435,26 @@
 #LeaderboardTabButton .image {
 	background-image: url("file://panorama/images/custom_game/battlepass/assets/btn_leaderboard_icon.png");
 }
-
+#CompanionTabButton {
+	background-image: url("file://panorama/images/custom_game/battlepass/assets/btn_donator.png");
+}
+#CompanionTabButton .text {
+	color: #faf3e4;
+	text-shadow: 1px 1px 2px 2.0 #5b4618a2;
+}
+#CompanionTabButton .image {
+	background-image: url("file://panorama/images/custom_game/battlepass/assets/btn_donator_icon.png");
+}
+#StatueTabButton {
+	background-image: url("file://panorama/images/custom_game/battlepass/assets/btn_donator.png");
+}
+#StatueTabButton .text {
+	color: #faf3e4;
+	text-shadow: 1px 1px 2px 2.0 #5b4618a2;
+}
+#StatueTabButton .image {
+	background-image: url("file://panorama/images/custom_game/battlepass/assets/btn_donator_icon.png");
+}
 
 
 .ButtonClass:hover {
@@ -731,11 +770,19 @@
 	line-height: 14px;
 }
 
-#DonatorTableWrapper {
+#CompanionTableWrapper {
 	overflow: squish scroll;
 	flow-children: down;
 	height: 470px;
 	width: 100%;
+}
+
+#StatueTableWrapper {
+	overflow: squish scroll;
+	flow-children: down;
+	height: 470px;
+	width: 100%;
+	visibility: collapse;
 }
 
 .DonatorRow {

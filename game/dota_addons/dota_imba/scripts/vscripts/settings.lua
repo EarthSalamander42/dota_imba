@@ -515,6 +515,7 @@ IGNORE_FOUNTAIN_UNITS = {
 	"npc_dummy_unit",
 	"npc_dota_hero_dummy_dummy",
 	"npc_imba_donator_companion",
+	"npc_dota_wisp_spirit",
 }
 
 RESTRICT_FOUNTAIN_UNITS = {
@@ -547,4 +548,43 @@ MORPHLING_RESTRICTED_MODIFIERS = {
 	"modifier_imba_tidebringer_manual",
 	"modifier_imba_tidebringer_slow",
 	"modifier_imba_tidebringer_cleave_hit_target",
+}
+
+IMBA_DONATOR_COMPANION = {}
+IMBA_DONATOR_COMPANION["76561198015161808"] = {0.8, "npc_imba_donator_companion_cookies"}
+-- IMBA_DONATOR_COMPANION["76561193714760494"] = {0.81, "npc_imba_donator_companion_acalia"}
+-- IMBA_DONATOR_COMPANION["76561193684594183"] = {0.9, "npc_imba_donator_companion_lily"}
+
+IMBA_DONATOR_STATUE = {}
+IMBA_DONATOR_STATUE["76561198015161808"] = {1.75, "npc_imba_donator_statue_cookies"}
+IMBA_DONATOR_STATUE["76561193714760494"] = {0.81, "npc_imba_donator_statue_acalia"}
+IMBA_DONATOR_STATUE["76561193684594183"] = {0.9, "npc_imba_donator_statue_lily"}
+IMBA_DONATOR_STATUE["76561198021465788"] = {0.6, "npc_imba_donator_statue_suthernfriend"}
+IMBA_DONATOR_STATUE["76561193687456266"] = {0.9, "npc_imba_donator_statue_exzas"}
+
+-- IMBA_DONATOR_STATUE[""] = {0.8, "models/creeps/neutral_creeps/n_creep_satyr_spawn_a/n_creep_satyr_spawn_a.vmdl"}
+
+UNIT_EQUIPMENT = {}
+UNIT_EQUIPMENT["models/heroes/crystal_maiden/crystal_maiden.vmdl"] = {
+	"models/heroes/crystal_maiden/crystal_maiden_staff.vmdl",
+	"models/heroes/crystal_maiden/crystal_maiden_cuffs.vmdl",
+	"models/heroes/crystal_maiden/crystal_maiden_cape.vmdl",
+	"models/heroes/crystal_maiden/head_item.vmdl",
+	"models/heroes/crystal_maiden/crystal_maiden_shoulders.vmdl",
+}
+UNIT_EQUIPMENT["models/heroes/crystal_maiden/crystal_maiden_arcana.vmdl"] = {
+	"models/heroes/crystal_maiden/crystal_maiden_staff.vmdl",
+	"models/heroes/crystal_maiden/crystal_maiden_cuffs.vmdl",
+	"models/heroes/crystal_maiden/crystal_maiden_arcana_back.vmdl",
+	"models/heroes/crystal_maiden/head_item.vmdl",
+	"models/heroes/crystal_maiden/crystal_maiden_shoulders.vmdl",
+}
+UNIT_EQUIPMENT["models/heroes/shredder/shredder.vmdl"] = {
+	"models/heroes/shredder/shredder_armor.vmdl",
+	"models/heroes/shredder/shredder_blade.vmdl",
+	"models/heroes/shredder/shredder_body.vmdl",
+	"models/heroes/shredder/shredder_chainsaw.vmdl",
+	"models/heroes/shredder/shredder_driver_hat.vmdl",
+	"models/heroes/shredder/shredder_hook.vmdl",
+	"models/heroes/shredder/shredder_shoulders.vmdl",
 }

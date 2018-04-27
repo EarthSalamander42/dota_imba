@@ -68,6 +68,7 @@ require('libraries/meepo/meepo')
 require('events')
 
 require('team_selection')
+require('battlepass/donator')
 require('battlepass/experience')
 require('battlepass/imbattlepass')
 
@@ -178,7 +179,7 @@ function GameMode:OnFirstPlayerLoaded()
 		"npc_imba_contributor_maxime",
 		"npc_imba_contributor_poly",
 		"npc_imba_contributor_firstlady",
-		"npc_imba_contributor_wally_chan"
+		"npc_imba_contributor_wally_chan",
 	}
 
 	-- Add 6 random contributor statues
@@ -189,60 +190,17 @@ function GameMode:OnFirstPlayerLoaded()
 	current_location[4] = Vector(6900, 5000, 384)
 	current_location[5] = Vector(6900, 4700, 384)
 	current_location[6] = Vector(6900, 4400, 384)
+	current_location[7] = Vector(-5800, -6300, 384)
+	current_location[8] = Vector(-5500, -6300, 384)
+	current_location[9] = Vector(-5200, -6300, 384)
+	current_location[10] = Vector(5800, 6300, 384)
+	current_location[11] = Vector(5500, 6300, 384)
+	current_location[12] = Vector(5200, 6300, 384)
 
 	local current_statue
 	local statue_entity
-	for i = 1, 6 do
+	for i = 1, 12 do
 		current_statue = table.remove(contributor_statues, RandomInt(1, #contributor_statues))
-		if i <= 3 then
-			statue_entity = CreateUnitByName(current_statue, current_location[i], true, nil, nil, DOTA_TEAM_GOODGUYS)
-			statue_entity:SetForwardVector(Vector(1, 1, 0):Normalized())
-		else
-			statue_entity = CreateUnitByName(current_statue, current_location[i], true, nil, nil, DOTA_TEAM_BADGUYS)
-			statue_entity:SetForwardVector(Vector(-1, -1, 0):Normalized())
-		end
-		statue_entity:AddNewModifier(statue_entity, nil, "modifier_imba_contributor_statue", {})
-	end
-
-	-------------------------------------------------------------------------------------------------
-	-- IMBA: developer models
-	-------------------------------------------------------------------------------------------------
-
-	-- Developer statue list
-	local developer_statues = {
-		"npc_imba_developer_shush",
-		"npc_imba_developer_firetoad",
-		"npc_imba_developer_xthedark",
-		"npc_imba_developer_zimber",
-		"npc_imba_developer_hewdraw",
-		"npc_imba_developer_iaminnocent",
-		"npc_imba_developer_noobsauce",
-		"npc_imba_developer_seinken",
-		"npc_imba_developer_mouji",
-		"npc_imba_developer_atrocty",
-		"npc_imba_developer_broccoli",
-		"npc_imba_developer_cookies",
-		"npc_imba_developer_dewouter",
-		"npc_imba_developer_suthernfriend",
-		"npc_imba_developer_fudge",
-		"npc_imba_developer_lindbrum",
-		"npc_imba_developer_sercankd",
-		"npc_imba_developer_yahnich",
-	}
-
-	-- Add 6 random developer statues
-	local current_location = {}
-	current_location[1] = Vector(-5800, -6300, 384)
-	current_location[2] = Vector(-5500, -6300, 384)
-	current_location[3] = Vector(-5200, -6300, 384)
-	current_location[4] = Vector(5800, 6300, 384)
-	current_location[5] = Vector(5500, 6300, 384)
-	current_location[6] = Vector(5200, 6300, 384)
-
-	local current_statue
-	local statue_entity
-	for i = 1, 6 do
-		current_statue = table.remove(developer_statues, RandomInt(1, #developer_statues))
 		if i <= 3 then
 			statue_entity = CreateUnitByName(current_statue, current_location[i], true, nil, nil, DOTA_TEAM_GOODGUYS)
 			statue_entity:SetForwardVector(Vector(1, 1, 0):Normalized())
@@ -1299,16 +1257,27 @@ function GameMode:OnHeroInGame(hero)
 			end
 
 			local steam_id = tostring(PlayerResource:GetSteamID(hero:GetPlayerID()))
-			if api.imba.is_donator(steam_id) == 1 then
-				hero:SetCustomHealthLabel("IMBA Dev", 160, 20, 20)
-			elseif api.imba.is_donator(steam_id) == 4 then
-				hero:SetCustomHealthLabel("Ember Donator", 240, 50, 50)
-			elseif api.imba.is_donator(steam_id) == 5 then
-				hero:SetCustomHealthLabel("Golden Donator", 218, 165, 32)
-			elseif api.imba.is_donator(steam_id) == 7 then
-				hero:SetCustomHealthLabel("Salamander Donator", 47, 91, 151)
-			elseif api.imba.is_donator(steam_id) then
-				hero:SetCustomHealthLabel("Donator", 45, 200, 45)
+			if api.imba.is_donator(steam_id) then
+				if api.imba.is_donator(steam_id) == 1 then
+					hero:SetCustomHealthLabel("IMBA Dev", 160, 20, 20)
+--				elseif api.imba.is_donator(steam_id) == 2 then
+--					hero:SetCustomHealthLabel("Baumi", 160, 20, 20)
+				elseif api.imba.is_donator(steam_id) == 3 then
+					hero:SetCustomHealthLabel("Administrator", 160, 20, 20)
+				elseif api.imba.is_donator(steam_id) == 4 then
+					hero:SetCustomHealthLabel("Ember Donator", 240, 50, 50)
+				elseif api.imba.is_donator(steam_id) == 5 then
+					hero:SetCustomHealthLabel("Golden Donator", 218, 165, 32)
+				elseif api.imba.is_donator(steam_id) == 7 then
+					hero:SetCustomHealthLabel("Salamander Donator", 47, 91, 151)
+				elseif api.imba.is_donator(steam_id) == 8 then
+					hero:SetCustomHealthLabel("Icefrog Donator", 153, 51, 153)
+				else
+					hero:SetCustomHealthLabel("Donator", 45, 200, 45)
+				end
+
+				local table = {api.imba.get_player_info(steam_id).ingame_statue_scale, api.imba.get_player_info(steam_id).ingame_statue_file}
+				DonatorStatue(hero:GetPlayerID(), table)
 			end
 
 			return
@@ -1405,6 +1374,7 @@ function GameMode:InitGameMode()
 	CustomGameEventManager:RegisterListener("netgraph_remove_units", Dynamic_Wrap(self, "RemoveUnits"))
 	CustomGameEventManager:RegisterListener("netgraph_give_item", Dynamic_Wrap(self, "NetgraphGiveItem"))
 	CustomGameEventManager:RegisterListener("change_companion", Dynamic_Wrap(self, "DonatorCompanionJS"))
+	CustomGameEventManager:RegisterListener("change_statue", Dynamic_Wrap(self, "DonatorStatueJS"))
 	CustomGameEventManager:RegisterListener("send_gg_vote", Dynamic_Wrap(self, 'GG'))
 
 	self.itemKV = LoadKeyValues("scripts/npc/items.txt")
@@ -2119,6 +2089,11 @@ end
 
 function GameMode:DonatorCompanionJS(event)
 	DonatorCompanion(event.ID, event.unit)
+end
+
+function GameMode:DonatorStatueJS(event)
+--	local table = {api.imba.get_player_info(steam_id).ingame_statue_scale, event.unit}
+--	DonatorStatue(event.ID, table)
 end
 
 function GameMode:MaxGold(event)
