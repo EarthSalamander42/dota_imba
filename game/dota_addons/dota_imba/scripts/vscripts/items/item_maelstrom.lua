@@ -319,10 +319,10 @@ function item_imba_jarnbjorn:OnSpellStart()
 	if IsServer() then
 		local target = self:GetCursorTarget()
 		local tree_cooldown = self:GetSpecialValueFor("tree_cooldown")
-		print(tree_cooldown)
 
 		if target.GetUnitName == nil then
 			target:CutDown(-1)
+			self:EndCooldown()
 			self:StartCooldown(tree_cooldown)
 		else
 			target:AddNewModifier(target, self, "modifier_item_imba_jarnbjorn_static", {duration = self:GetSpecialValueFor("static_duration")})

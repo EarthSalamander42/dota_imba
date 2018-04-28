@@ -134,7 +134,13 @@ function GetTitleColorIXP(title, js)
 end
 
 function GetPlayerInfoIXP() -- yet it has too much useless loops, format later. Need to be loaded in game setup
-	if not api.imba.ready then return end
+	if not api.imba.ready then
+		Timers:CreateTimer(1.0, function()
+			GetPlayerInfoIXP()
+		end)
+
+		return
+	end
 
 	local level = {}
 	local current_xp_in_level = {}
@@ -177,6 +183,9 @@ function GetPlayerInfoIXP() -- yet it has too much useless loops, format later. 
 
 	GetTopPlayersIXP()
 	GetTopPlayersIMR()
+
+	-- Initialize Battle Pass
+	Imbattlepass:Init()
 end
 
 function GetTopPlayersIXP()

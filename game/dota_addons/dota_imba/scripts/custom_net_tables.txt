@@ -13,5 +13,6 @@
 		"top_imr5v5",
 		"game_state",
 		"hero_selection",
+		"battlepass",
 	]
 }

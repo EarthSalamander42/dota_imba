@@ -178,7 +178,7 @@ function OverrideHeroImage(arcana_level, panel, hero_name) {
 		var newheroimage = $.CreatePanel('Panel', panel, '');
 		newheroimage.style.width = "100%";
 		newheroimage.style.height = "100%";
-		newheroimage.style.backgroundImage = 'url("file://{images}/heroes/npc_dota_hero_' + hero_name + '_alt' + arcana_level + '.png")';
+		newheroimage.style.backgroundImage = 'url("file://{images}/heroes/' + hero_name + '_alt' + arcana_level + '.png")';
 		newheroimage.style.backgroundSize = "cover";
 
 		panel.style.border = "1px solid #99ff33";

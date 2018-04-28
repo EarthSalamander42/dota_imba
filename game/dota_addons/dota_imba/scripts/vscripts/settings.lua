@@ -67,7 +67,6 @@ USE_NONSTANDARD_HERO_XP_BOUNTY = true		-- Should heroes follow their own XP boun
 
 USE_CUSTOM_TOP_BAR_VALUES = false			-- Should we do customized top bar values or use the default kill count per team?
 TOP_BAR_VISIBLE = true						-- Should we display the top bar score/count at all?
-SHOW_KILLS_ON_TOPBAR = true					-- Should we display kills only on the top bar? (No denies, suicides, kills by neutrals)  Requires USE_CUSTOM_TOP_BAR_VALUES
 
 ENABLE_TOWER_BACKDOOR_PROTECTION = true		-- Should we enable backdoor protection for our towers?
 REMOVE_ILLUSIONS_ON_DEATH = false			-- Should we remove all illusions if the main hero dies?
@@ -76,16 +75,13 @@ DISABLE_GOLD_SOUNDS = false					-- Should we disable the gold sound when players
 ENABLE_FIRST_BLOOD = true					-- Should we enable first blood for the first kill in this game?
 HIDE_KILL_BANNERS = false					-- Should we hide the kill banners that show when a player is killed?
 LOSE_GOLD_ON_DEATH = true					-- Should we have players lose the normal amount of dota gold on death?
-SHOW_ONLY_PLAYER_INVENTORY = false			-- Should we only allow players to see their own inventory even when selecting other units?
-DISABLE_STASH_PURCHASING = false			-- Should we prevent players from being able to buy items into their stash when not at a shop?
-DISABLE_ANNOUNCER = false					-- Should we disable the announcer from working in the game?
 FORCE_PICKED_HERO = "npc_dota_hero_dummy_dummy"						-- What hero should we force all players to spawn as? (e.g. "npc_dota_hero_axe").  Use nil to allow players to pick their own hero.
 
 FIXED_RESPAWN_TIME = -1						-- What time should we use for a fixed respawn timer?  Use -1 to keep the default dota behavior.
 FOUNTAIN_CONSTANT_MANA_REGEN = 14			-- What should we use for the constant fountain mana regen?  Use -1 to keep the default dota behavior.
 FOUNTAIN_PERCENTAGE_MANA_REGEN = 6			-- What should we use for the percentage fountain mana regen?  Use -1 to keep the default dota behavior.
 FOUNTAIN_PERCENTAGE_HEALTH_REGEN = 6		-- What should we use for the percentage fountain health regen?  Use -1 to keep the default dota behavior.
-MAXIMUM_ATTACK_SPEED = 1200					-- What should we use for the maximum attack speed?
+MAXIMUM_ATTACK_SPEED = 400					-- What should we use for the maximum attack speed?
 MINIMUM_ATTACK_SPEED = 0					-- What should we use for the minimum attack speed?
 DOTA_MAX_PLAYERS = 24						-- Maximum amount of players allowed in a game
 
@@ -492,7 +488,7 @@ PURGE_BUFF_LIST = LoadKeyValues("scripts/npc/KV/purge_buffs_list.kv")
 DISPELLABLE_DEBUFF_LIST = LoadKeyValues("scripts/npc/KV/dispellable_debuffs_list.kv")
 
 IMBA_INVISIBLE_MODIFIERS = {
-	"modifier_mirana_moonlight_shadow",
+	"modifier_imba_moonlight_shadow_invis",
 	"modifier_item_imba_shadow_blade_invis",
 	"modifier_imba_vendetta",
 	"modifier_nyx_assassin_burrow",
@@ -551,18 +547,26 @@ MORPHLING_RESTRICTED_MODIFIERS = {
 }
 
 IMBA_DONATOR_COMPANION = {}
-IMBA_DONATOR_COMPANION["76561198015161808"] = {0.8, "npc_imba_donator_companion_cookies"}
--- IMBA_DONATOR_COMPANION["76561193714760494"] = {0.81, "npc_imba_donator_companion_acalia"}
--- IMBA_DONATOR_COMPANION["76561193684594183"] = {0.9, "npc_imba_donator_companion_lily"}
+IMBA_DONATOR_COMPANION["76561198015161808"] = "npc_imba_donator_companion_cookies"
+IMBA_DONATOR_COMPANION["76561198094835750"] = "npc_imba_donator_companion_zonnoz"
+IMBA_DONATOR_COMPANION["76561198003571172"] = "npc_imba_donator_companion_baumi"
+IMBA_DONATOR_COMPANION["76561198014254115"] = "npc_imba_donator_companion_icefrog"
+IMBA_DONATOR_COMPANION["76561198014254115"] = "npc_imba_donator_companion_admiral_bulldog"
+IMBA_DONATOR_COMPANION["76561198021465788"] = "npc_imba_donator_companion_suthernfriend"
+
+-- Terdic:
+-- models/items/courier/shagbark/shagbark.vmdl
+-- particles/econ/courier/courier_shagbark/courier_shagbark_ambient.vpcf
 
 IMBA_DONATOR_STATUE = {}
-IMBA_DONATOR_STATUE["76561198015161808"] = {1.75, "npc_imba_donator_statue_cookies"}
+IMBA_DONATOR_STATUE["76561198015161808"] = {1.6, "npc_imba_donator_statue_cookies"}
 IMBA_DONATOR_STATUE["76561193714760494"] = {0.81, "npc_imba_donator_statue_acalia"}
 IMBA_DONATOR_STATUE["76561193684594183"] = {0.9, "npc_imba_donator_statue_lily"}
 IMBA_DONATOR_STATUE["76561198021465788"] = {0.6, "npc_imba_donator_statue_suthernfriend"}
 IMBA_DONATOR_STATUE["76561193687456266"] = {0.9, "npc_imba_donator_statue_exzas"}
-
--- IMBA_DONATOR_STATUE[""] = {0.8, "models/creeps/neutral_creeps/n_creep_satyr_spawn_a/n_creep_satyr_spawn_a.vmdl"}
+IMBA_DONATOR_STATUE["76561198094835750"] = {1.1, "npc_imba_donator_statue_zonnoz"}
+-- IMBA_DONATOR_STATUE["76561198043254407"] = {1.1, "npc_imba_donator_statue_tabisama"}
+IMBA_DONATOR_STATUE["76561197980558838"] = {0.85, "npc_imba_donator_statue_january0000"}
 
 UNIT_EQUIPMENT = {}
 UNIT_EQUIPMENT["models/heroes/crystal_maiden/crystal_maiden.vmdl"] = {
@@ -587,4 +591,20 @@ UNIT_EQUIPMENT["models/heroes/shredder/shredder.vmdl"] = {
 	"models/heroes/shredder/shredder_driver_hat.vmdl",
 	"models/heroes/shredder/shredder_hook.vmdl",
 	"models/heroes/shredder/shredder_shoulders.vmdl",
+}
+UNIT_EQUIPMENT["models/items/pudge/arcana/pudge_arcana_base.vmdl"] = {
+	"models/items/pudge/blackdeath_offhand/blackdeath_offhand.vmdl",
+	"models/items/pudge/blackdeath_head_s3/blackdeath_head_s3.vmdl",
+	"models/items/pudge/immortal_arm/immortal_arm.vmdl",
+	"models/items/pudge/scorching_talon/scorching_talon.vmdl",
+	"models/items/pudge/doomsday_ripper_belt/doomsday_ripper_belt.vmdl",
+	"models/items/pudge/pudge_deep_sea_abomination_arms/pudge_deep_sea_abomination_arms.vmdl",
+	"models/items/pudge/arcana/pudge_arcana_back.vmdl",
+}
+
+IMBA_DISABLED_SKULL_BASHER = {
+	"npc_dota_hero_faceless_void",
+	"npc_dota_hero_slardar",
+	"npc_dota_hero_spirit_breaker",
+	"npc_dota_hero_troll_warlord",
 }

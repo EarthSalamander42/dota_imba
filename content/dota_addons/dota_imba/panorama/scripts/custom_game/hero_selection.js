@@ -194,23 +194,22 @@ function onPlayerStatChange(table, key, data) {
 					break;
 			}
 
-			var image_name = heroName
-
-			if (ply_battlepass) {
-				var short_name = heroName.replace('npc_dota_hero_', "");
-				if (ply_battlepass.arcana[short_name]) {
-					image_name = heroName + ply_battlepass.arcana[short_name]
-					$.Msg(image_name)
-				}
-			}
-
 			var newhero = $.CreatePanel('RadioButton', currentstat, heroName);
 			newhero.group = 'HeroChoises';
 			newhero.SetPanelEvent('onactivate', function () { PreviewHero(heroName); });
 
 			var newheroimage = $.CreatePanel('DOTAHeroImage', newhero, '');
 			newheroimage.hittest = false;
-			newheroimage.heroname = image_name;
+			newheroimage.heroname = heroName;
+
+			var image_name = heroName
+
+			if (ply_battlepass) {
+				if (ply_battlepass.arcana[heroName]) {
+					image_name = heroName + "_arcana" + ply_battlepass.arcana[heroName]
+					OverrideHeroImage(ply_battlepass.arcana[heroName] + 1, newheroimage, heroName)
+				}
+			}
 
 			switch (data.herolist[heroName]) {
 				case 1:

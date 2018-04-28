@@ -67,6 +67,8 @@
 			<Image src="file://panorama/images/heroes/npc_dota_hero_sly_king.png" hittest="false" />
 			<Image src="file://panorama/images/heroes/npc_dota_hero_storegga.png" hittest="false" />
 			<Image src="file://panorama/images/heroes/npc_dota_hero_dummy_dummy.png" hittest="false" />
+			<Image src="file://panorama/images/heroes/npc_dota_hero_pudge_arcana0.png" hittest="false" />
+			<Image src="file://panorama/images/heroes/npc_dota_hero_pudge_arcana1.png" hittest="false" />
 
 			<Image src="file://panorama/images/heroes/icons/npc_dota_hero_ghost_revenant.png" hittest="false" />
 			<Image src="file://panorama/images/heroes/icons/npc_dota_hero_hell_empress.png" hittest="false" />

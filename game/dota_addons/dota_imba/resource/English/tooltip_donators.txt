@@ -18,5 +18,3 @@
 "npc_imba_donator_statue_lily"							"NyanToast"
 "npc_imba_donator_statue_exzas"							"Exzas"
 "npc_imba_donator_statue_zonnoz"						"Zonnoz guard dog"
-"npc_imba_donator_statue_tabisama"						"Tabisama's effigy"
-"npc_imba_donator_statue_january000"					"January0000's effigy"

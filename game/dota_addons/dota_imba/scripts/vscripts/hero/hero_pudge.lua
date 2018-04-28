@@ -1021,7 +1021,7 @@ function modifier_imba_flesh_heap_stacks:GetModifierModelScale()
 	local stacks = self:GetStackCount()
 	local max_stack = self:GetAbility():GetSpecialValueFor("max_stacks") + self:GetCaster():FindTalentValue("special_bonus_imba_pudge_4")
 	if stacks > max_stack then stacks = max_stack end
-	return stacks * 3
+	return stacks * 2
 end
 
 --=================================================================================================================

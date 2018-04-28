@@ -108,17 +108,19 @@ function Imbattlepass:Init()
 			IMBATTLEPASS_JUGGERNAUT[v] = k
 		end
 	end
+
+	Imbattlepass:BattlepassCheckArcana()
 end
 
 function Imbattlepass:AddItemEffects(hero)
-	GetBlinkEffect(hero)
-	GetForceStaffEffect(hero)
-	GetRadianceEffect(hero)
-	GetSheepstickEffect(hero)
-	GetShivaEffect(hero)
-	GetMekansmEffect(hero)
-	GetFountainEffect(hero)
-	GetBottleEffect(hero)
+	Imbattlepass:GetBlinkEffect(hero)
+	Imbattlepass:GetForceStaffEffect(hero)
+	Imbattlepass:GetRadianceEffect(hero)
+	Imbattlepass:GetSheepstickEffect(hero)
+	Imbattlepass:GetShivaEffect(hero)
+	Imbattlepass:GetMekansmEffect(hero)
+	Imbattlepass:GetFountainEffect(hero)
+	Imbattlepass:GetBottleEffect(hero)
 end
 
 function Imbattlepass:GetRewardUnlocked(ID)
@@ -129,7 +131,7 @@ function Imbattlepass:GetRewardUnlocked(ID)
 	return 1
 end
 
-function GetBlinkEffect(hero)
+function Imbattlepass:GetBlinkEffect(hero)
 	local effect = "particles/items_fx/blink_dagger_start.vpcf"
 	local effect2 = "particles/items_fx/blink_dagger_end.vpcf"
 	local icon = 0
@@ -182,7 +184,7 @@ function GetBlinkEffect(hero)
 --	CustomNetTables:SetTableValue("player_battlepass", tostring(hero:GetPlayerID()), {blink_icon = icon})
 end
 
-function GetForceStaffEffect(hero) -- still not working yet
+function Imbattlepass:GetForceStaffEffect(hero) -- still not working yet
 	local effect = "particles/items_fx/force_staff.vpcf"
 	local icon = 0
 
@@ -204,7 +206,7 @@ function GetForceStaffEffect(hero) -- still not working yet
 	hero.force_staff_icon = icon
 end
 
-function GetRadianceEffect(hero)
+function Imbattlepass:GetRadianceEffect(hero)
 	local effect = "particles/items2_fx/radiance_owner.vpcf"
 	local effect2 = "particles/items2_fx/radiance.vpcf"
 	local icon = 0
@@ -224,7 +226,7 @@ function GetRadianceEffect(hero)
 	hero.radiance_icon = icon
 end
 
-function GetSheepstickEffect(hero)
+function Imbattlepass:GetSheepstickEffect(hero)
 	local effect = "particles/items_fx/item_sheepstick.vpcf"
 	local model = "models/props_gameplay/pig.vmdl"
 	local icon = 0
@@ -244,7 +246,7 @@ function GetSheepstickEffect(hero)
 	hero.sheepstick_icon = icon
 end
 
-function GetShivaEffect(hero)
+function Imbattlepass:GetShivaEffect(hero)
 	local effect = "particles/items2_fx/shivas_guard_active.vpcf"
 	local effect2 = "particles/items2_fx/shivas_guard_impact.vpcf"
 	local icon = 0
@@ -264,7 +266,7 @@ function GetShivaEffect(hero)
 	hero.shiva_icon = icon
 end
 
-function GetMekansmEffect(hero)
+function Imbattlepass:GetMekansmEffect(hero)
 	local effect = "particles/items2_fx/mekanism.vpcf"
 	local effect2 = "particles/items2_fx/mekanism_recipient.vpcf"
 	local effect3 = "particles/items3_fx/warmage.vpcf"
@@ -296,7 +298,7 @@ function GetMekansmEffect(hero)
 	hero.mekansm_icon = icon
 end
 
-function GetFountainEffect(hero)
+function Imbattlepass:GetFountainEffect(hero)
 	local effect = ""
 
 	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FOUNTAIN["fountain15"] then
@@ -334,7 +336,7 @@ function GetFountainEffect(hero)
 	hero.fountain_effect = effect
 end
 
-function GetBottleEffect(hero)
+function Imbattlepass:GetBottleEffect(hero)
 	local effect = "particles/items_fx/bottle.vpcf"
 	local icon = 0
 
@@ -357,21 +359,31 @@ function GetBottleEffect(hero)
 --	CustomNetTables:SetTableValue("player_battlepass", tostring(hero:GetPlayerID()), {bottle_icon = icon})
 end
 
-function GetPudgeArcanaEffect(hero)
-	if HasPudgeArcana(hero) then
+function Imbattlepass:GetPudgeArcanaEffect(ID)
+	local hero = PlayerResource:GetSelectedHeroEntity(ID)
+
+	if hero == nil then
+		Timers:CreateTimer(0.1, function()
+			Imbattlepass:GetPudgeArcanaEffect(ID)
+		end)
+
+		return
+	end
+
+	if HasPudgeArcana(ID) then
 		hero:SetModel("models/items/pudge/arcana/pudge_arcana_base.vmdl")
 		hero:SetOriginalModel("models/items/pudge/arcana/pudge_arcana_base.vmdl")
-		hero:SetMaterialGroup(tostring(HasPudgeArcana(hero)))
-		hero.pudge_arcana = HasPudgeArcana(hero)
+		hero:SetMaterialGroup(tostring(HasPudgeArcana(ID)))
+		hero.pudge_arcana = HasPudgeArcana(ID)
 
 		hero.back = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/pudge/arcana/pudge_arcana_back.vmdl"})
 		hero.back:FollowEntity(hero, true)
 --		hero.back:SetParent(hero, "")
-		hero.back:SetMaterialGroup(tostring(HasPudgeArcana(hero)))
+		hero.back:SetMaterialGroup(tostring(HasPudgeArcana(ID)))
 
 		local particle = "particles/econ/items/pudge/pudge_arcana/pudge_arcana_red_back_ambient.vpcf"	
 		local particle2 = "particles/econ/items/pudge/pudge_arcana/pudge_arcana_red_back_ambient_beam.vpcf"
-		if HasPudgeArcana(hero) == 1 then
+		if HasPudgeArcana(ID) == 1 then
 			particle = "particles/econ/items/pudge/pudge_arcana/pudge_arcana_back_ambient.vpcf"
 			particle2 = "particles/econ/items/pudge/pudge_arcana/pudge_arcana_back_ambient_beam.vpcf"
 		end
@@ -380,35 +392,45 @@ function GetPudgeArcanaEffect(hero)
 		ParticleManager:CreateParticle(particle2, PATTACH_ABSORIGIN_FOLLOW, hero.back)
 		ParticleManager:CreateParticle("particles/econ/items/pudge/pudge_arcana/pudge_arcana_ambient_flies.vpcf", PATTACH_ABSORIGIN_FOLLOW, hero)
 
-		CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "override_hero_image", {arcana = HasPudgeArcana(hero), panel_type = "topbar", hero_name = string.gsub(hero:GetUnitName(), "npc_dota_hero_", "")})
+		CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "override_hero_image", {arcana = HasPudgeArcana(ID), hero_name = string.gsub(hero:GetUnitName(), "npc_dota_hero_", "")})
 	end
 end
 
-function HasPudgeArcana(hero)
-	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_PUDGE["pudge_arcana2"] then
+function HasPudgeArcana(ID)
+	if Imbattlepass:GetRewardUnlocked(ID) >= IMBATTLEPASS_PUDGE["pudge_arcana2"] then
 		return 1
-	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_PUDGE["pudge_arcana"] then
+	elseif Imbattlepass:GetRewardUnlocked(ID) >= IMBATTLEPASS_PUDGE["pudge_arcana"] then
 		return 0
 	else
 		return nil
 	end
 end
 
-function GetJuggernautArcanaEffect(hero)
-	if HasJuggernautArcana(hero) and next_reward_shown then
+function Imbattlepass:GetJuggernautArcanaEffect(ID)
+	local hero = PlayerResource:GetSelectedHeroEntity(ID)
+
+	if hero == nil then
+		Timers:CreateTimer(0.1, function()
+			Imbattlepass:GetJuggernautArcanaEffect(ID)
+		end)
+
+		return
+	end
+
+	if HasJuggernautArcana(ID) and next_reward_shown then
 		hero:SetModel("models/heroes/juggernaut/juggernaut_arcana.vmdl")
 		hero:SetOriginalModel("models/heroes/juggernaut/juggernaut_arcana.vmdl")
-		hero:SetMaterialGroup(tostring(HasJuggernautArcana(hero)))
-		hero.juggernaut_arcana = HasJuggernautArcana(hero)
+		hero:SetMaterialGroup(tostring(HasJuggernautArcana(ID)))
+		hero.juggernaut_arcana = HasJuggernautArcana(ID)
 
 		hero.back = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/juggernaut/arcana/juggernaut_arcana_mask.vmdl"})
 		hero.back:FollowEntity(hero, true)
 --		hero.back:SetParent(hero, "")
-		hero.back:SetMaterialGroup(tostring(HasJuggernautArcana(hero)))
+		hero.back:SetMaterialGroup(tostring(HasJuggernautArcana(ID)))
 
 --		local particle = "particles/econ/items/pudge/pudge_arcana/pudge_arcana_red_back_ambient.vpcf"	
 --		local particle2 = "particles/econ/items/pudge/pudge_arcana/pudge_arcana_red_back_ambient_beam.vpcf"
---		if HasJuggernautArcana(hero) == 1 then
+--		if HasJuggernautArcana(ID) == 1 then
 --			particle = "particles/econ/items/pudge/pudge_arcana/pudge_arcana_back_ambient.vpcf"
 --			particle2 = "particles/econ/items/pudge/pudge_arcana/pudge_arcana_back_ambient_beam.vpcf"
 --		end
@@ -417,18 +439,28 @@ function GetJuggernautArcanaEffect(hero)
 --		ParticleManager:CreateParticle(particle2, PATTACH_ABSORIGIN_FOLLOW, hero.back)
 --		ParticleManager:CreateParticle("particles/econ/items/pudge/pudge_arcana/pudge_arcana_ambient_flies.vpcf", PATTACH_ABSORIGIN_FOLLOW, hero)
 
-		CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "override_hero_image", {arcana = HasJuggernautArcana(hero), panel_type = "topbar", hero_name = string.gsub(hero:GetUnitName(), "npc_dota_hero_", "")})
+		CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "override_hero_image", {arcana = HasJuggernautArcana(ID), hero_name = string.gsub(hero:GetUnitName(), "npc_dota_hero_", "")})
 	end
 end
 
-function HasJuggernautArcana(hero)
+function HasJuggernautArcana(ID)
 if next_reward_shown == false then return nil end
 
-	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_JUGGERNAUT["juggernaut_arcana2"] then
+	if Imbattlepass:GetRewardUnlocked(ID) >= IMBATTLEPASS_JUGGERNAUT["juggernaut_arcana2"] then
 		return 1
-	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_JUGGERNAUT["juggernaut_arcana"] then
+	elseif Imbattlepass:GetRewardUnlocked(ID) >= IMBATTLEPASS_JUGGERNAUT["juggernaut_arcana"] then
 		return 0
 	else
 		return nil
+	end
+end
+
+function Imbattlepass:BattlepassCheckArcana()
+	for i = 0, PlayerResource:GetPlayerCount() - 1 do
+		local arcana = {}
+		arcana["npc_dota_hero_juggernaut"] = HasJuggernautArcana(i)
+		arcana["npc_dota_hero_pudge"] = HasPudgeArcana(i)
+
+		CustomNetTables:SetTableValue("battlepass", tostring(i), {arcana = arcana})
 	end
 end

@@ -1225,8 +1225,6 @@ function modifier_imba_moonlight_shadow:OnDestroy()
 	end
 end
 
-
-
 -- Invisibility modifier (hidden)
 modifier_imba_moonlight_shadow_invis = class({})
 
@@ -1242,12 +1240,15 @@ function modifier_imba_moonlight_shadow_invis:OnCreated()
 	self.parent = self:GetParent()
 	self.modifier_dummy_name = "modifier_imba_moonlight_shadow_invis_dummy"
 
-	-- Ability specials
-	self.fade_delay = self.ability:GetSpecialValueFor("fade_delay")
-	self.truesight_immunity_radius = self.ability:GetSpecialValueFor("truesight_immunity_radius")
+	if self.ability then
+		self.fade_delay = self.ability:GetSpecialValueFor("fade_delay")
+		self.truesight_immunity_radius = self.ability:GetSpecialValueFor("truesight_immunity_radius")
+	else
+		self.fade_delay = 0
+		self.truesight_immunity_radius = 1
+	end
 
 	if IsServer() then
-
 		self.modifier_dummy = self.parent:FindModifierByName("modifier_imba_moonlight_shadow_invis_dummy")
 
 		-- Set stack count to level 2

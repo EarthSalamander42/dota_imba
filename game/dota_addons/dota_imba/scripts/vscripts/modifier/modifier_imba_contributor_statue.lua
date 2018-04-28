@@ -17,7 +17,7 @@ function modifier_imba_contributor_statue:CheckState()
 end
 
 function modifier_imba_contributor_statue:GetStatusEffectName()
-	return "particles/ambient/contributor_effigy_fx.vpcf"
+--	return "particles/ambient/contributor_effigy_fx.vpcf"
 end
 
 function modifier_imba_contributor_statue:IsHidden()

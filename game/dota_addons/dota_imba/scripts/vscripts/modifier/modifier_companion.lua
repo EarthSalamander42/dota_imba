@@ -80,14 +80,15 @@ function modifier_companion:OnIntervalThink()
 		local hero_origin = hero:GetAbsOrigin()
 		local hero_distance = (hero_origin - companion:GetAbsOrigin()):Length()
 		local fountain_distance = (fountain:GetAbsOrigin() - companion:GetAbsOrigin()):Length()
-		local min_distance = 200
-		local blink_distance = 800
+		local min_distance = 250
+		local blink_distance = 750
 
 		local shared_nodraw_modifiers = {
 			"modifier_item_shadow_amulet_fade",
 			"modifier_monkey_king_tree_dance_hidden",
 			"modifier_monkey_king_transform",
 			"modifier_pangolier_gyroshell",
+			"modifier_smoke_of_deceit",
 		}
 
 		if companion:GetIdealSpeed() ~= hero:GetIdealSpeed() - 60 then

@@ -16,28 +16,6 @@
 --     EarthSalamander #42
 --
 
-function DebugPrint(...)
-	--local spew = Convars:GetInt('barebones_spew') or -1
-	--if spew == -1 and BAREBONES_DEBUG_SPEW then
-	--spew = 1
-	--end
-
-	--if spew == 1 then
-	--print(...)
-	--end
-end
-
-function DebugPrintTable(...)
-	--local spew = Convars:GetInt('barebones_spew') or -1
-	--if spew == -1 and BAREBONES_DEBUG_SPEW then
-	--spew = 1
-	--end
-
-	--if spew == 1 then
-	--PrintTable(...)
-	--end
-end
-
 function PrintAll(t)
 	log.debug(t)
 end
@@ -750,14 +728,16 @@ if player_id == "test_reconnect" then player_id = 0 end
 		if PlayerResource:GetSelectedHeroEntity(player_id) then
 			CustomGameEventManager:Send_ServerToAllClients("player_reconnected", {PlayerID = player_id, PickedHeroes = HeroSelection.picked_heroes, pickState = pick_state, repickState = repick_state})
 
---			local table = {
---				ID = player_id,
---				team = PlayerResource:GetTeam(player_id),
---				disconnect = 2,
---			}
+			Timers:CreateTimer(3.0, function()
+				local table = {
+					ID = player_id,
+					team = PlayerResource:GetTeam(player_id),
+					disconnect = 2,
+				}
 
---			print("Decrease GG Amount!")
---			GameMode:GG(table)
+				print("Decrease GG Amount!")
+				GameMode:GG(table)
+			end)
 
 			local hero = PlayerResource:GetSelectedHeroEntity(player_id)
 

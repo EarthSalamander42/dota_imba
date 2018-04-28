@@ -16,15 +16,7 @@
 --     EarthSalamander #42
 --
 
--- This is the primary barebones gamemode script and should be used to assist in initializing your game mode
-
--- Set this to true if you want to see a complete debug output of all events/processes done by barebones
--- You can also change the cvar 'barebones_spew' at any time to 1 or 0 for output/no output
-
-BAREBONES_DEBUG_SPEW = false
-
 if GameMode == nil then
-	DebugPrint( '[IMBA] creating game mode' )
 	_G.GameMode = class({})
 end
 
@@ -65,7 +57,10 @@ require('internal/imba_talent_events')
 require('libraries/meepo/meepo')
 
 -- events.lua is where you can specify the actions to be taken when any event occurs and is one of the core barebones files.
-require('events')
+require('events/events')
+require('events/npc_spawned/on_hero_spawned')
+require('events/npc_spawned/on_unit_spawned')
+require('events/player_disconnect/on_disconnect')
 
 require('team_selection')
 require('battlepass/donator')
@@ -210,6 +205,8 @@ function GameMode:OnFirstPlayerLoaded()
 		end
 		statue_entity:AddNewModifier(statue_entity, nil, "modifier_imba_contributor_statue", {})
 	end
+
+	CheatDetector()
 end
 
 -- Gold gain filter function
@@ -330,13 +327,20 @@ function GameMode:ModifierFilter( keys )
 			return true
 		end
 
+		-- overthrow has it's own fountain modifier
 		if GetMapName() == "imba_overthrow" then
 			if modifier_name == "modifier_fountain_aura_buff" then
 				return false
 			end
 		end
 
+		-- volvo bugfix
 		if modifier_name == "modifier_datadriven" then
+			return false
+		end
+
+		-- don't add buyback penalty
+		if modifier_name == "modifier_buyback_gold_penalty" then
 			return false
 		end
 
@@ -493,6 +497,11 @@ function GameMode:ModifierFilter( keys )
 		if modifier_name == "modifier_tusk_snowball_movement" then
 			if modifier_owner:FindAbilityByName("tusk_snowball") then
 				modifier_owner:FindAbilityByName("tusk_snowball"):SetActivated(false)
+				Timers:CreateTimer(15.0, function()
+					if not hero:FindModifierByName("modifier_tusk_snowball_movement") then
+						hero:FindAbilityByName("tusk_snowball"):SetActivated(true)
+					end
+				end)
 			end
 		end
 
@@ -1209,20 +1218,7 @@ function GameMode:OnAllPlayersLoaded()
 end
 
 function GameMode:OnHeroInGame(hero)
-	local time_elapsed = 0
-
 	PlayerResource:SetCameraTarget(hero:GetPlayerID(), nil)
-
-	Timers:CreateTimer(function()
-		if not hero:IsNull() then
-			if hero:GetUnitName() == "npc_dota_hero_meepo" then
-				if not hero:IsClone() then
-					TrackMeepos()
-				end
-			end
-		end
-		return 0.5
-	end)
 
 	if IMBA_PICK_MODE_ALL_RANDOM then
 		Timers:CreateTimer(3.0, function()
@@ -1237,66 +1233,6 @@ function GameMode:OnHeroInGame(hero)
 			end
 		end)
 	end
-
-	Timers:CreateTimer(0.1, function()
-		if hero:IsIllusion() or hero:HasModifier("modifier_illusion_manager_out_of_world") or hero:HasModifier("modifier_illusion_manager") then return end
-		if hero:GetUnitName() ~= FORCE_PICKED_HERO then
-			hero.picked = true
-
-			if COURIER_TEAM then
-				COURIER_TEAM[hero:GetTeamNumber()]:SetControllableByPlayer(hero:GetPlayerID(), true)
-			end
-
-			CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(hero:GetPlayerID()), "dota_hud", {show = true})
---			CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(hero:GetPlayerID()), "override_top_bar_colors", {color = rgbToHex(PLAYER_COLORS[hero:GetPlayerID()])})
-
-			if api.imba.is_developer(PlayerResource:GetSteamID(hero:GetPlayerID())) then
-				hero.has_graph = true
-				CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "show_netgraph", {})
---				CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "show_netgraph_heronames", {})
-			end
-
-			local steam_id = tostring(PlayerResource:GetSteamID(hero:GetPlayerID()))
-			if api.imba.is_donator(steam_id) then
-				if api.imba.is_donator(steam_id) == 1 then
-					hero:SetCustomHealthLabel("IMBA Dev", 160, 20, 20)
---				elseif api.imba.is_donator(steam_id) == 2 then
---					hero:SetCustomHealthLabel("Baumi", 160, 20, 20)
-				elseif api.imba.is_donator(steam_id) == 3 then
-					hero:SetCustomHealthLabel("Administrator", 160, 20, 20)
-				elseif api.imba.is_donator(steam_id) == 4 then
-					hero:SetCustomHealthLabel("Ember Donator", 240, 50, 50)
-				elseif api.imba.is_donator(steam_id) == 5 then
-					hero:SetCustomHealthLabel("Golden Donator", 218, 165, 32)
-				elseif api.imba.is_donator(steam_id) == 7 then
-					hero:SetCustomHealthLabel("Salamander Donator", 47, 91, 151)
-				elseif api.imba.is_donator(steam_id) == 8 then
-					hero:SetCustomHealthLabel("Icefrog Donator", 153, 51, 153)
-				else
-					hero:SetCustomHealthLabel("Donator", 45, 200, 45)
-				end
-
-				local table = {api.imba.get_player_info(steam_id).ingame_statue_scale, api.imba.get_player_info(steam_id).ingame_statue_file}
-				DonatorStatue(hero:GetPlayerID(), table)
-			end
-
-			return
-		else
-			Timers:CreateTimer(function()
-				RestrictAndHideHero(hero)
-				if time_elapsed < 0.9 then
-					time_elapsed = time_elapsed + 0.1
-				else
-					return nil
-				end
-
-				return 0.1
-			end)
-
---			CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(hero:GetPlayerID()), "imbathrow_topbar", {imbathrow = imbathrow_bar})
-			CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(hero:GetPlayerID()), "dota_hud", {show = false})
-		end
-	end)
 end
 
 --[[	This function is called once and only once when the game completely begins (about 0:00 on the clock).  At this point,
@@ -1363,11 +1299,6 @@ function GameMode:InitGameMode()
 	Convars:RegisterCommand("imba_test", Dynamic_Wrap(self, 'StartImbaTest'), "Spawns several units to help with testing", FCVAR_CHEAT)
 	Convars:RegisterCommand("particle_table_print", PrintParticleTable, "Prints a huge table of all used particles", FCVAR_CHEAT)
 	Convars:RegisterCommand("test_reconnect", ReconnectPlayer, "", FCVAR_CHEAT)
-
-	Convars:RegisterCommand("customgamesetup_shuffle_players_2", function()
-		local me = Convars:GetCommandClient():GetAssignedHero()
-		print(me:GetUnitName())
-	end, "Fuck", 0)
 
 	CustomGameEventManager:RegisterListener("netgraph_max_gold", Dynamic_Wrap(self, "MaxGold"))
 	CustomGameEventManager:RegisterListener("netgraph_max_level", Dynamic_Wrap(self, "MaxLevel"))
@@ -1884,25 +1815,6 @@ function GameMode:CustomSpawnCamps()
 	end
 end
 
-function GameMode:OnItemPickUp( event )
-	local item = EntIndexToHScript( event.ItemEntityIndex )
-	local owner = EntIndexToHScript( event.HeroEntityIndex )
-
-	r = RandomInt(300, 450)
-
-	if event.itemname == "item_bag_of_gold" then
-		log.debug("Bag of gold picked up")
-		PlayerResource:ModifyGold( owner:GetPlayerID(), r, true, 0 )
-		SendOverheadEventMessage( owner, OVERHEAD_ALERT_GOLD, owner, r, nil )
-		UTIL_Remove( item ) -- otherwise it pollutes the player inventory
-	elseif event.itemname == "item_treasure_chest" then
-		log.debug("Special Item Picked Up")
-		DoEntFire( "item_spawn_particle_" .. itemSpawnIndex, "Stop", "0", 0, self, self )
-		GameMode:SpecialItemAdd( event )
-		UTIL_Remove( item ) -- otherwise it pollutes the player inventory
-	end
-end
-
 function GameMode:OnNpcGoalReached( event )
 	local npc = EntIndexToHScript( event.npc_entindex )
 
@@ -2148,7 +2060,11 @@ if GameRules:State_Get() == DOTA_GAMERULES_STATE_POST_GAME then return end
 	-- init
 	if not GG_TABLE then
 		GG_TABLE = {} -- has pressed gg button?, has disconnected?
-		for i = 0, PlayerResource:GetPlayerCount() - 1 do
+		local count = PlayerResource:GetPlayerCount()
+		if IsInToolsMode() then
+			count = 20
+		end
+		for i = 0, count - 1 do
 			GG_TABLE[i] = {false, false}
 		end
 	end
@@ -2159,9 +2075,11 @@ if GameRules:State_Get() == DOTA_GAMERULES_STATE_POST_GAME then return end
 	end
 
 --	print("Disconnect:", event.disconnect)
-	if event.disconnect == 1 then
+	if event.disconnect == 1 then -- disconnect
 		GG_TABLE[event.ID][2] = true
-	else
+	elseif event.disconnect == 2 then -- reconnect
+
+	else -- call '-gg' chat command
 		Notifications:BottomToTeam(PlayerResource:GetTeam(event.ID), {text = PlayerResource:GetPlayerName(event.ID).." called GG through the GG Panel!", duration = 4.0, style = {color = "DodgerBlue"} })
 		GG_TABLE[event.ID][2] = false
 	end
@@ -2172,13 +2090,14 @@ if GameRules:State_Get() == DOTA_GAMERULES_STATE_POST_GAME then return end
 		end
 	end
 
---	print(GG_TEAM[2], GG_TEAM[3])
---	print(GG_TEAM[2][2], GG_TEAM[3][2])
 --	PrintTable(GG_TABLE)
+--	print("---------------")
+--	PrintTable(GG_TEAM)
 
 	CustomGameEventManager:Send_ServerToAllClients("gg_called", {ID = event.ID, team = event.team, radiant_count = GG_TEAM[2], dire_count = GG_TEAM[3], gg_table = GG_TABLE})
 
 	for i = 2, 3 do
+--		print(i, GG_TEAM[i][1], GG_TEAM[i][2])
 		if GG_TEAM[i][1] > 0 and GG_TEAM[i][1] >= GG_TEAM[i][2] then
 --			print("GG")
 			local text = {}

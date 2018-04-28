@@ -49,12 +49,6 @@ function GameMode:_OnEntityKilled( keys )
 			GameRules:SetSafeToLeave( true )
 			GameRules:SetGameWinner( killerEntity:GetTeam() )
 		end
-
-		--PlayerResource:GetTeamKills
-		if SHOW_KILLS_ON_TOPBAR then
-			GameRules:GetGameModeEntity():SetTopBarTeamValue(DOTA_TEAM_BADGUYS, GetTeamHeroKills(DOTA_TEAM_BADGUYS))
-			GameRules:GetGameModeEntity():SetTopBarTeamValue(DOTA_TEAM_GOODGUYS, GetTeamHeroKills(DOTA_TEAM_GOODGUYS))
-		end
 	end
 end
 

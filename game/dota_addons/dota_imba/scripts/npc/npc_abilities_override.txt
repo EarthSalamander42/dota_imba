@@ -13326,16 +13326,14 @@
 	//=================================================================================================================
 	"wisp_relocate"
 	{
-		"MaxLevel"							"3"
-
-		"AbilityCooldown"					"100 75 50"
+		"AbilityCooldown"					"100 95 90"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"cast_delay"				"2.7 2.0 1.0"
+				"cast_delay"				"2.7 1.85 1.0"
 			}
 			"02"
 			{

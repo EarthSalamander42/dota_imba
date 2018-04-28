@@ -182,13 +182,10 @@ function modifier_imba_skull_basher_unique:OnAttackLanded(keys)
 		local target = keys.target
 
 		-- If the attacker is one of the forbidden heroes, do nothing
-		local forbidden_heroes = {npc_dota_hero_slardar = true,
-			npc_dota_hero_faceless_void = true,
-			npc_dota_hero_spirit_breaker = true,
-			npc_dota_hero_troll_warlord = true}
-
-		if forbidden_heroes[self.caster:GetUnitName()] then
-			return nil
+		for _, restricted_hero in pairs(IMBA_DISABLED_SKULL_BASHER) do
+			if restricted_hero == attacker:GetUnitName() then
+				return nil
+			end
 		end
 
 		-- Only apply if the caster is the attacker

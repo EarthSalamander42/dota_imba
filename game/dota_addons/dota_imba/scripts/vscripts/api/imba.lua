@@ -77,6 +77,7 @@ function api.imba.register(callback)
 			if callback ~= nil then
 				callback(false)
 			end
+
 			api.imba.ready = true
 
 			-- start events system

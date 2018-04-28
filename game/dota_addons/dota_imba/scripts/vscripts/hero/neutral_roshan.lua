@@ -142,6 +142,7 @@ local nearbyHeroes = FindUnitsInRadius(self.roshan:GetTeamNumber(), self.roshan:
 	else
 		if GameRules:GetGameTime() - self.last_movement >= 3.0 then
 --			print("Roshan is sleeping...")
+			self.roshan:Purge(false, true, true, true, false)
 			self.returningToLeash = true
 		else
 --			print("Activating brain!")
@@ -277,6 +278,8 @@ if not self.leashPoint then self.leashPoint = ROSHAN_SPAWN_LOC end
 	elseif self.returningToLeash and distanceFromLeash < 100 then
 		roshan:Interrupt()
 		self.returningToLeash = false
+		self.roshan:Purge(false, true, true, true, false)
+
 		if not roshan:HasModifier("modifier_command_restricted") then
 			roshan:AddNewModifier(roshan, nil, "modifier_command_restricted", {})
 		end
