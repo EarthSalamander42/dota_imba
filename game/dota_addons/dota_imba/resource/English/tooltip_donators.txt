@@ -6,6 +6,7 @@
 "npc_imba_donator_companion_amaterasu"					"Amaterasu"
 "npc_imba_donator_companion_suthernfriend"				"Suthern-shan"
 "npc_imba_donator_companion_devourling"					"Devourling"
+"npc_imba_donator_companion_zonnoz"						"Pudgling"
 
 // Donator statues
 "npc_imba_donator_statue_brewmaster_earth_spirit"		"Earth Spirit (Brewmaster)"
@@ -16,3 +17,6 @@
 "npc_imba_donator_statue_acalia"						"Acalia"
 "npc_imba_donator_statue_lily"							"NyanToast"
 "npc_imba_donator_statue_exzas"							"Exzas"
+"npc_imba_donator_statue_zonnoz"						"Zonnoz guard dog"
+"npc_imba_donator_statue_tabisama"						"Tabisama's effigy"
+"npc_imba_donator_statue_january000"					"January0000's effigy"

@@ -164,17 +164,22 @@ function changeHilariousLoadingText () {
 	}
 }
 
-function onPlayerStatChange (table, key, data) {
+function onPlayerStatChange(table, key, data) {
 	var teamID = Players.GetTeam(Game.GetLocalPlayerID());
 	var newimage = null;
+
 	if (key === 'herolist' && data != null) {
 		// do not move chat for ardm
 		if (currentMap !== 'ardm') {
 			MoveChatWindow();
 		}
+
 		var strengthholder = FindDotaHudElement('StrengthHeroes');
 		var agilityholder = FindDotaHudElement('AgilityHeroes');
 		var intelligenceholder = FindDotaHudElement('IntelligenceHeroes');
+
+		var ply_battlepass = CustomNetTables.GetTableValue("battlepass", Game.GetLocalPlayerID());
+
 		Object.keys(data.herolist).sort().forEach(function (heroName) {
 			var currentstat = null;
 			switch (data.herolist[heroName]) {
@@ -189,13 +194,23 @@ function onPlayerStatChange (table, key, data) {
 					break;
 			}
 
+			var image_name = heroName
+
+			if (ply_battlepass) {
+				var short_name = heroName.replace('npc_dota_hero_', "");
+				if (ply_battlepass.arcana[short_name]) {
+					image_name = heroName + ply_battlepass.arcana[short_name]
+					$.Msg(image_name)
+				}
+			}
+
 			var newhero = $.CreatePanel('RadioButton', currentstat, heroName);
 			newhero.group = 'HeroChoises';
 			newhero.SetPanelEvent('onactivate', function () { PreviewHero(heroName); });
 
 			var newheroimage = $.CreatePanel('DOTAHeroImage', newhero, '');
 			newheroimage.hittest = false;
-			newheroimage.heroname = heroName;
+			newheroimage.heroname = image_name;
 
 			switch (data.herolist[heroName]) {
 				case 1:

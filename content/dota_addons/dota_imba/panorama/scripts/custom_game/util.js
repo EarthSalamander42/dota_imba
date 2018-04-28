@@ -158,13 +158,8 @@ function OverrideTopBarHeroImage(args) {
 		team = "Dire"
 	}
 
-	if (args.panel_type == "topbar") {
-		var panel = FindDotaHudElement(team + "Player" + Players.GetLocalPlayer()).FindChildTraverse("HeroImage")
-	} else if (args.panel_type == "pick_screen") {
-		var panel = FindDotaHudElement("npc_dota_hero_" + args.hero_name)
-	}
-
-	if (panel) {OverrideHeroImage(arcana_level, panel, args.hero_name, args.panel_type)}
+	var panel = FindDotaHudElement(team + "Player" + Players.GetLocalPlayer()).FindChildTraverse("HeroImage")
+	if (panel) {OverrideHeroImage(arcana_level, panel, args.hero_name)}
 }
 GameEvents.Subscribe("override_hero_image", OverrideTopBarHeroImage);
 
@@ -176,7 +171,7 @@ if (FindDotaHudElement("RadiantPlayer" + Players.GetLocalPlayer()).FindChildTrav
 }
 */
 
-function OverrideHeroImage(arcana_level, panel, hero_name, panel_type) {
+function OverrideHeroImage(arcana_level, panel, hero_name) {
 	if (arcana_level != false) {
 		if (arcana_level > 2) {arcana_level = 2}
 		// list of heroes wich have arcana implented in imbattlepass
@@ -186,13 +181,11 @@ function OverrideHeroImage(arcana_level, panel, hero_name, panel_type) {
 		newheroimage.style.backgroundImage = 'url("file://{images}/heroes/npc_dota_hero_' + hero_name + '_alt' + arcana_level + '.png")';
 		newheroimage.style.backgroundSize = "cover";
 
-		if (panel_type == "pick_screen") {
-			panel.style.border = "1px solid #99ff33";
-			panel.style.boxShadow = "fill lightgreen -4px -4px 8px 8px";
-			var newherolabel = $.CreatePanel('Label', panel, '');
-			newherolabel.AddClass("Arcana")
-			newherolabel.text = "Arcana!"
-		}
+		panel.style.border = "1px solid #99ff33";
+		panel.style.boxShadow = "fill lightgreen -4px -4px 8px 8px";
+		var newherolabel = $.CreatePanel('Label', panel, '');
+		newherolabel.AddClass("Arcana")
+		newherolabel.text = "Arcana!"
 	}
 }
 

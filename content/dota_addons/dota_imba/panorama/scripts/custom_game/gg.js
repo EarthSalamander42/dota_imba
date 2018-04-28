@@ -2,7 +2,7 @@
 
 var gg_state = true;
 
-function GenerateGGTopBar(player, team) {
+function GenerateGGTopBar(player, team, has_gg, has_dc) {
 	// Don't need the following line anymore if event is sending team id
 	// var team = Game.GetPlayerInfo(player).player_team_id;
 	var team_string;
@@ -12,13 +12,10 @@ function GenerateGGTopBar(player, team) {
 		team_string ="Dire";
 	}
 
-	$.Msg(team_string + 'Player' + player)
-	$.Msg(FindDotaHudElement(team_string + 'Player' + player))
-
-	// ERROR: find traverse of null
+	// ERROR: find traverse of null when full team has gg
 	var TopBarHud = FindDotaHudElement(team_string + 'Player' + player).FindChildTraverse('SlantedContainerPanel');
 
-	if (!TopBarHud.FindChildTraverse("GGBar-" + player)) {
+	if (!TopBarHud.FindChildTraverse("GGBar-" + player) && has_gg == 1) {
 		var gg_row = $.CreatePanel("Panel", TopBarHud, "GGBar-" + player);
 		gg_row.AddClass("GG_Row");
 		gg_row.style.backgroundColor = "gradient(linear,0  100%, 0% 0%, from(#800314b6),color-stop( 0.9, #0a1722ae ), to(#0a1722ae))";
@@ -50,6 +47,8 @@ function GenerateGGTopBar(player, team) {
 		gg_right_line.style.backgroundColor = "gradient( linear, 0 0, 100%  0%, from( #f26600 ), color-stop( 0.4, #f26600 ), to( #f2001300 ) )";
 		gg_right_line.style.align = "right bottom";
 		gg_right_line.style.margin = "0 5px 7px 0";
+	} else if (TopBarHud.FindChildTraverse("GGBar-" + player) && has_gg == 0) {
+		TopBarHud.FindChildTraverse("GGBar-" + player).DeleteAsync(0)
 	}
 }
 
@@ -83,7 +82,9 @@ function GGInitCountDown() {
 }
 
 function GGCalled(event) {
-	GenerateGGTopBar(event.ID, event.team);
+	$.Msg("GG Called...")
+
+	GenerateGGTopBar(event.ID, event.team, event.gg_table[Game.GetLocalPlayerID()]["1"], event.gg_table[Game.GetLocalPlayerID()]["2"]);
 }
 
 function CancelGG() {
@@ -95,4 +96,3 @@ function CancelGG() {
 	GameEvents.Subscribe("gg_called", GGCalled);
 	GameEvents.Subscribe("gg_init_by_local", GGLocal);
 })();
-

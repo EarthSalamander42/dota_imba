@@ -14,9 +14,9 @@
 @define TotalLength: 30s;
 @define TimingFunc: linear;
 @define IterationCount: 1;
-@define COLOR_INFO_BACKGROUND: #922c30ee;
-@define COLOR_INFO_BACKGROUND_DARK: #4f1719;
-@define COLOR_INFO_TEXT: #b67f7f;
+@define COLOR_INFO_BACKGROUND: #4d4d4dda;
+@define COLOR_INFO_BACKGROUND_DARK: #404040;
+@define COLOR_INFO_TEXT: #bfbfbf;
 
 // green background translucent: #004d1ada
 // green background dark translucent: #001a09
@@ -278,7 +278,7 @@
 	margin-bottom: 10px;
 	margin-top: 20px;
 	padding-top: 20px;
-	border-top: 1px solid #99c;
+	border-top: 1px solid COLOR_INFO_BACKGROUND_DARK;
 	flow-children: right;
 }
 
