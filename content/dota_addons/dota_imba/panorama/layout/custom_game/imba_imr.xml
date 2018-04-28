@@ -81,13 +81,15 @@
 					</Panel>
 
 					<Panel id="MiniTabButtonContainer" hittest="false">
-						<Button class="color_animation" id="CompanionTabButton" onactivate="SwitchDonatorWrapper('Companion');">
-							<Label class="image"></Label>
+						<Button class="sub_nav_tab" id="CompanionTabButton" onactivate="SwitchDonatorWrapper('Companion');">
 							<Label class="text" text="#donator_companion" />
 						</Button>
 
-						<Button class="color_animation" id="StatueTabButton" onactivate="SwitchDonatorWrapper('Statue');">
-							<Label class="image"></Label>
+						<Panel hittest="false" class="tab_separator">
+							<Label text="/" />
+						</Panel>
+
+						<Button class="sub_nav_tab" id="StatueTabButton" onactivate="SwitchDonatorWrapper('Statue');">
 							<Label class="text" text="#donator_statue" />
 						</Button>
 					</Panel>
@@ -114,7 +116,7 @@
 
 			<Panel id="DonatorInfoContainer" hittest="false">
 				<Panel id="TabTitlePanel">
-					<Label class="DonatorTabLabel" text="#donator_info" />
+					<Label id="DonatorTabTitle" class="DonatorTabLabel" text="#donator_info" />
 				</Panel>
 
 				<Panel id="BattlepassButtons" hittest="false">
@@ -142,7 +144,6 @@
 				<Panel id="CompanionTableWrapper" hittest="false">
 					<!-- JS Inserts records here -->
 				</Panel>
-
 				<Panel id="StatueTableWrapper" hittest="false">
 					<!-- JS Inserts records here -->
 				</Panel>

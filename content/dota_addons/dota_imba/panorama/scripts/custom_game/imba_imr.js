@@ -139,6 +139,8 @@ function ToggleGameOptions() {
 	}
 }
 
+var current_sub_tab = "";
+
 function RefreshBattlepass() {
 	if ($("#RefreshBattlepass").BHasClass("Active")) {
 		return;
@@ -154,11 +156,24 @@ function RefreshBattlepass() {
 		e.DeleteAsync(0);
 	});
 
+	var donator_childrens = $("#StatueTableWrapper").FindChildrenWithClassTraverse("DonatorRow");
+	donator_childrens.forEach(function(e) {
+		e.DeleteAsync(0);
+	});
+
+
+
+	
+
 	$("#RefreshBattlepass").AddClass("Active");
 
 	$.Schedule(1.0, function() {
 		$("#RefreshBattlepass").RemoveClass("Active");
-		Battlepass();
+		if (current_sub_tab != "") {
+			Battlepass(true);
+		} else {
+			Battlepass();
+		}		
 	});
 }
 
@@ -168,10 +183,15 @@ function SwitchTab(tab) {
 	$("#LeaderboardInfoContainer").style.visibility = "collapse";
 
 	$("#" + tab).style.visibility = "visible";
+
+	if (tab == 'DonatorInfoContainer') {
+		$('#MiniTabButtonContainer').style.visibility = "visible";
+	} else {
+		$('#MiniTabButtonContainer').style.visibility = "collapse";
+	}
 }
 
 
-var current_sub_tab = ""
 function SwitchDonatorWrapper(type) {
 	if (current_sub_tab == type) {
 		$.Msg("Bro don't reload you're fine!");
@@ -182,14 +202,25 @@ function SwitchDonatorWrapper(type) {
 
 	$("#CompanionTableWrapper").style.visibility = "collapse";
 	$("#StatueTableWrapper").style.visibility = "collapse";
+	$("#CompanionTabButton").RemoveClass('active');
+	$("#StatueTabButton").RemoveClass('active');
 
 	$("#" + type + "TableWrapper").style.visibility = "visible";
+	$("#" + type + "TabButton").AddClass('active');
+
+	$('#DonatorTabTitle').text = "SELECT A " + type.toUpperCase();
 }
 
 var companions = null;
 
-function Battlepass() {
+function Battlepass(retainSubTab) {
+	if (typeof retainSubTab == "undefined") {retainSubTab = false;};
 	var BattlepassRewards = CustomNetTables.GetTableValue("game_options", "battlepass").battlepass;
+
+	api.loadStatues(function(statues) {
+		$.Msg("Statues and Battlepass information available");
+		GenerateCompanionPanel(statues, Players.GetLocalPlayer(), "Statue", retainSubTab);
+	});
 
 	api.loadCompanions(function(companions) {
 		if (BattlepassRewards === undefined) {
@@ -199,14 +230,11 @@ function Battlepass() {
 		} else {
 			$.Msg("Companions and Battlepass information available");
 			GenerateBattlepassPanel(BattlepassRewards, Players.GetLocalPlayer());
-			GenerateCompanionPanel(companions, Players.GetLocalPlayer(), "Companion");
+			GenerateCompanionPanel(companions, Players.GetLocalPlayer(), "Companion", retainSubTab);
 		}
 	});
 
-	api.loadStatues(function(statues) {
-		$.Msg("Statues and Battlepass information available");
-		GenerateCompanionPanel(statues, Players.GetLocalPlayer(), "Statue");
-	});
+	
 }
 
 var companion_changed = false;
@@ -427,7 +455,7 @@ function GenerateBattlepassPanel(BattlepassRewards, player) {
 	}
 }
 
-function GenerateCompanionPanel(companions, player, panel) {
+function GenerateCompanionPanel(companions, player, panel, retainSubTab) {
 	var i_count = 0;
 	var class_option_count = 1;
 
@@ -543,6 +571,11 @@ function GenerateCompanionPanel(companions, player, panel) {
 		var reward_label = $.CreatePanel("Label", companion, companion_name[i] + "_label");
 		reward_label.AddClass("BattlepassRewardLabel");
 		reward_label.text = companion_name[i];
+
+		if (!retainSubTab) {
+			SwitchDonatorWrapper(panel);
+		}
+		
 	}
 }
 
