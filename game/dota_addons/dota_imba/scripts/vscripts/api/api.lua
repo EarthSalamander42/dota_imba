@@ -11,7 +11,7 @@ api.config = {
 	version = "2",
 	game = "imba",
 	agent = "imba_705",
-	timeout = 10000
+	timeout = 15000
 }
 
 api.endpoints = {
@@ -77,7 +77,7 @@ function api.request(endpoint, data, callback)
 	if callback == nil then
 		callback = (function (error, data)
 			if (error) then
-				log.error("Error during request to " .. endpoint .. " (" .. data .. ")")
+				log.error("Error during request to " .. endpoint)
 			else
 				log.info("Request to " .. endpoint .. " successful")
 			end
@@ -138,7 +138,7 @@ function api.request(endpoint, data, callback)
 				result.version = decoded.version
 				result.message = decoded.message
 			else
-				log.error("Failed decoding JSON of Request: Status Code: " .. tostring(result.code) .. ", Payload: " .. payload)
+				log.error("Request failed with status code: " .. tostring(result.code))
 			end
 
 			if result.code == 503 then

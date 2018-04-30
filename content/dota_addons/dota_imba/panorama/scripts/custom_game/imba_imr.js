@@ -149,8 +149,13 @@ function RefreshBattlepass() {
 		e.DeleteAsync(0);
 	});
 
-	var donator_childrens = $("#CompanionTableWrapper").FindChildrenWithClassTraverse("DonatorRow");
-	donator_childrens.forEach(function(e) {
+	var companion_childrens = $("#CompanionTableWrapper").FindChildrenWithClassTraverse("DonatorRow");
+	companion_childrens.forEach(function(e) {
+		e.DeleteAsync(0);
+	});
+
+	var statue_childrens = $("#StatueTableWrapper").FindChildrenWithClassTraverse("DonatorRow");
+	statue_childrens.forEach(function(e) {
 		e.DeleteAsync(0);
 	});
 
@@ -236,7 +241,8 @@ function SetCompanion(companion, name, id) {
 		$("#CompanionNotificationLabel").text = $.Localize("companion_success") + $.Localize(name) + "!";
 		GameEvents.SendCustomGameEventToServer("change_companion", {
 			ID : Players.GetLocalPlayer(),
-			unit : companion
+			unit : companion,
+			js : true
 		});
 		$.Schedule(6.0, function() {
 			$("#CompanionNotification").RemoveClass("success");

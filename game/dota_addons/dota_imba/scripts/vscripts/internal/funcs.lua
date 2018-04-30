@@ -326,7 +326,7 @@ function IsGinger(unit)
 	return false
 end
 
-function RemoveWearables( hero )
+function RemoveWearables(hero)
 
 	-- Setup variables
 	Timers:CreateTimer(0.1, function()

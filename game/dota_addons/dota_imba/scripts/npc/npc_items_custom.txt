@@ -315,7 +315,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"max_charges"			"20"
+				"max_charges"			"30"
 			}
 			"02"
 			{
@@ -674,7 +674,7 @@
 			"08"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"heal_percentage"		"0.75"
+				"heal_percentage"		"0.5"
 			}
 			"09"
 			{
@@ -809,7 +809,7 @@
 			"13"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"mend_regen"			"0.7"
+				"mend_regen"			"0.6"
 			}
 			"14"
 			{
@@ -1519,7 +1519,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"180"
+		"AbilityManaCost"				"200"
 		"ItemCost"						"8815"
 		"ItemShopTags"					"damage;int;str;agi;hard_to_tag"
 		"ItemQuality"					"rare"
@@ -1633,7 +1633,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"180"
+		"AbilityManaCost"				"200"
 		"ItemCost"						"10065"
 		"ItemShopTags"					"damage;int;str;agi;hard_to_tag"
 		"ItemQuality"					"rare"
@@ -1747,7 +1747,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"180"
+		"AbilityManaCost"				"200"
 		"ItemCost"						"11315"
 		"ItemShopTags"					"damage;int;str;agi;hard_to_tag"
 		"ItemQuality"					"rare"
@@ -1861,7 +1861,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"180"
+		"AbilityManaCost"				"200"
 		"ItemCost"						"12565"
 		"ItemShopTags"					"damage;int;str;agi;hard_to_tag"
 		"ItemQuality"					"rare"
@@ -1975,7 +1975,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"180"
+		"AbilityManaCost"				"200"
 		"ItemCost"						"13815"
 		"ItemShopTags"					"damage;int;str;agi;hard_to_tag"
 		"ItemQuality"					"rare"
@@ -2240,12 +2240,12 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"warrior_health"		"1000"
+				"warrior_health"		"600"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"archer_health"			"1000"
+				"archer_health"			"600"
 			}
 		}
 
@@ -2347,12 +2347,12 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"warrior_health"		"1400"
+				"warrior_health"		"900"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"archer_health"			"1400"
+				"archer_health"			"900"
 			}
 		}
 
@@ -2454,12 +2454,12 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"warrior_health"		"1800"
+				"warrior_health"		"1200"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"archer_health"			"1800"
+				"archer_health"			"1200"
 			}
 		}
 
@@ -2561,12 +2561,12 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"warrior_health"		"2200"
+				"warrior_health"		"1500"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"archer_health"			"2200"
+				"archer_health"			"1500"
 			}
 		}
 
@@ -2665,12 +2665,12 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"warrior_health"		"2600"
+				"warrior_health"		"1800"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"archer_health"			"2600"
+				"archer_health"			"1800"
 			}
 		}
 
@@ -3952,7 +3952,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"pierce_damage"			"95"
+				"pierce_damage"			"125"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 		}
@@ -4644,9 +4644,9 @@
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"ItemCost"							"5150"
-		"ItemShopTags"						"damage;attack_speed;movespeed;strength;hard_to_tag"
+		"ItemShopTags"						"damage;attack_speed;movespeed;strength;break;hard_to_tag"
 		"ItemQuality"						"epic"
-		"ItemAliases"						"sb;invis;shadow blade"
+		"ItemAliases"						"sb;invis;shadow blade;break"
 		"ItemDisassembleRule"				"DOTA_ITEM_DISASSEMBLE_ALWAYS"
 		"ItemDeclarations"					"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
 
@@ -4829,7 +4829,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"1"
+		"ItemCost"						"0"
 		"ItemShopTags"					""
 
 		// Recipe
@@ -4952,7 +4952,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"proc_ms"				"15"
+				"proc_ms"				"16"
 			}
 			"04"
 			{
@@ -4972,7 +4972,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_attack_speed"	"15"
+				"bonus_attack_speed"	"16"
 			}
 			"08"
 			{
@@ -5103,28 +5103,28 @@
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"16"
+				"bonus_damage"			"20"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"10"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_strength"		"16"
+				"bonus_strength"		"20"
 			}
 			"11"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_attack_speed"	"16"
+				"bonus_attack_speed"	"20"
 			}
 			"12"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_agility"			"16"
+				"bonus_agility"			"20"
 			}
 			"13"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_ms"				"16"
+				"bonus_ms"				"20"
 			}
 		}
 	}
@@ -5420,7 +5420,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"700"
+		"ItemCost"						"0"
 		"ItemShopTags"					""
 
 		// Recipe
@@ -5429,7 +5429,7 @@
 		"ItemResult"					"item_imba_maelstrom"
 		"ItemRequirements"
 		{
-			"01"						"item_gloves;item_mithril_hammer"
+			"01"						"item_imba_javelin;item_mithril_hammer"
 		}
 	}
 
@@ -5461,13 +5461,13 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"24"
+				"bonus_damage"			"34"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_as"				"25"
+				"bonus_as"				"0"
 			}
 			"03"
 			{
@@ -5477,7 +5477,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bounce_damage"			"145"
+				"bounce_damage"			"190"
 				"CalculateSpellDamageTooltip"	"1"
 			}
 			"05"
@@ -5553,13 +5553,13 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"24"
+				"bonus_damage"			"34"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_as"				"80"
+				"bonus_as"				"60"
 			}
 			"03"
 			{
@@ -5569,7 +5569,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bounce_damage"			"200"
+				"bounce_damage"			"230"
 				"CalculateSpellDamageTooltip"	"1"
 			}
 			"05"
@@ -5590,7 +5590,7 @@
 			"10"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"static_damage"			"200"
+				"static_damage"			"230"
 				"CalculateSpellDamageTooltip"	"1"
 			}
 			"11"
@@ -7456,46 +7456,39 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_movement_speed"	"75"
+				"bonus_movement_speed"	"65"
 			}
-
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_damage"			"45"
 				"CalculateSpellDamageTooltip"	"0"
 			}
-
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"phase_ms"				"34"
+				"phase_ms"				"30"
 			}
-
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"phase_duration"		"4"
+				"phase_duration"		"3"
 			}
-
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"ms_limit"				"700"
 			}
-
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_strength"		"8"
 			}
-
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"drain_damage"			"120"
 			}
-
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
@@ -10508,7 +10501,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"bonus_damage"					"10"
+				"bonus_damage"					"25"
 			}
 			"02"
 			{
@@ -10598,7 +10591,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"900"	
+		"ItemCost"						"500"	
 		"ItemShopTags"					""
 
 		// Recipe
@@ -10911,7 +10904,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"79"
+				"bonus_damage"			"90"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"02"
@@ -11080,7 +11073,7 @@
 		
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"400"	
+		"ItemCost"						"950"	
 		"ItemShopTags"					""
 		
 		// Recipe
@@ -11089,7 +11082,7 @@
 		"ItemResult"					"item_imba_force_staff"
 		"ItemRequirements"
 		{
-			"01"						"item_staff_of_wizardry;item_ring_of_health"
+			"01"						"item_staff_of_wizardry;item_ring_of_regen"
 		}
 	}
 	
@@ -11118,7 +11111,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"25"
+		"AbilityManaCost"				"50"
 		"ItemCost"						"2250"
 		"ItemShopTags"					"int;damage;attack_speed;hard_to_tag"
 		"ItemQuality"					"rare"
@@ -11138,7 +11131,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"bonus_health_regen"	"7"
+				"bonus_health_regen"	"4"
 			}
 			"03"
 			{
@@ -11186,8 +11179,8 @@
 	"item_imba_hurricane_pike"
 	{
 		"BaseClass"						"item_lua"
-		"ScriptFile"						"items/item_force_staff"
-		"AbilityTextureName"				"item_hurricane_pike"
+		"ScriptFile"					"items/item_force_staff"
+		"AbilityTextureName"			"item_hurricane_pike"
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2267"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
@@ -11205,7 +11198,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"25"
+		"AbilityManaCost"				"50"
 		"ItemCost"						"4615"
 		"ItemShopTags"					"int;damage;attack_speed;hard_to_tag"
 		"ItemQuality"					"epic"
@@ -11225,7 +11218,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"bonus_health_regen"	"5.5"
+				"bonus_health_regen"	"5.0"
 			}
 			"03"
 			{

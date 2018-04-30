@@ -23977,6 +23977,8 @@
 		"PortraitDesaturateHero"		"1"
 	}
 
+	// Dota IMBA
+
 	"models/heroes/slyli/model_weaver.vmdl"
 	{
 		"PortraitLightPosition"		"202.70 -23.15 308.17"

@@ -197,7 +197,6 @@ function modifier_imba_assault_cuirass_aura_negative:OnCreated()
 	-- Ability properties
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
-	self.modifier_siege = "modifier_imba_assault_cuirass_aura_negative_effect"
 
 	-- Ability specials
 	self.radius = self.ability:GetSpecialValueFor("radius")
@@ -234,7 +233,7 @@ function modifier_imba_assault_cuirass_aura_negative:GetAuraSearchType()
 end
 
 function modifier_imba_assault_cuirass_aura_negative:GetModifierAura()
-	return self.modifier_siege
+	return "modifier_imba_assault_cuirass_aura_negative_effect"
 end
 
 function modifier_imba_assault_cuirass_aura_negative:IsAura()

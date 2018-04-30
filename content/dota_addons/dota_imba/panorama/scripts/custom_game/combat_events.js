@@ -69,6 +69,7 @@ function CreateCustomToast(data) {
 		}
 
 		if (data.tower) {
+			$.Msg(data.teamPlayer)
 			var team = data.teamPlayer == false ? data.teamColor : Players.GetTeam(data.teamPlayer);
 			rowText = '{team_name} {killed_icon} {victim_name}';
 		}

@@ -35,10 +35,6 @@ function GameMode:OnHeroFirstSpawn(hero)
 	if hero:GetUnitName() ~= FORCE_PICKED_HERO then
 		hero.picked = true
 
-		if COURIER_TEAM then
-			COURIER_TEAM[hero:GetTeamNumber()]:SetControllableByPlayer(hero:GetPlayerID(), true)
-		end
-
 		CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(hero:GetPlayerID()), "dota_hud", {show = true})
 --		CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(hero:GetPlayerID()), "override_top_bar_colors", {color = rgbToHex(PLAYER_COLORS[hero:GetPlayerID()])})
 
@@ -62,12 +58,15 @@ function GameMode:OnHeroFirstSpawn(hero)
 
 		if api.imba.is_donator(steam_id) ~= false then
 			local info = donator_status[api.imba.is_donator(steam_id)]
-			hero:SetCustomHealthLabel(info[1], info[2], info[3], info[4])
+			if info then
+				hero:SetCustomHealthLabel(info[1], info[2], info[3], info[4])
+			end
 
 			-- needs a timer else GetSelectedHeroEntity is nil
-			Timers:CreateTimer(0.1, function()
-				local table = {api.imba.get_player_info(steam_id).ingame_statue_scale, api.imba.get_player_info(steam_id).ingame_statue_file}
-				DonatorStatue(hero:GetPlayerID(), table)
+			Timers:CreateTimer(0.3, function()
+				if api.imba.get_player_info(steam_id) then
+					DonatorStatue(hero:GetPlayerID(), api.imba.get_player_info(steam_id).ingame_statue_file)
+				end
 			end)
 		end
 	end
@@ -194,26 +193,6 @@ end
 
 -- everytime a real hero respawn
 function GameMode:OnHeroSpawned(hero)
-	-- Valve Illusion bug to prevent respawning
-	if hero:IsIllusion() and not hero:HasModifier("modifier_illusion_manager_out_of_world") and not hero:HasModifier("modifier_illusion_manager") then
-		if hero.illusion == true then
-			UTIL_Remove(hero)
-			return
-		end
-
-		HeroSelection:Attachments(hero)
-		hero.illusion = true
-
-		return
-	elseif hero:IsTempestDouble() then
-		UTIL_Remove(hero)
-		return
-	end
-
-	if api.imba.is_donator(PlayerResource:GetSteamID(hero:GetPlayerID())) then
-		hero:AddNewModifier(hero, nil, "modifier_imba_donator", {})
-	end
-
 	-- fix for killed with Ghost Revenant immolation
 	if hero:HasModifier("modifier_ghost_revenant_ghost_immolation_debuff") then
 		hero:RemoveModifierByName("modifier_ghost_revenant_ghost_immolation_debuff")

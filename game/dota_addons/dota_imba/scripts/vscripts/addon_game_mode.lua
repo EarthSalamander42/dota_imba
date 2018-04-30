@@ -246,7 +246,7 @@ function Precache(context)
 	-- Companions
 	PrecacheResource("model_folder", "models/courier/doom_demihero_courier", context)
 	PrecacheResource("model_folder", "models/items/courier/livery_llama_courier", context)
-	PrecacheResource("model_folder", "models/items/courier/carty/carty.vmdl", context)
+	PrecacheResource("model", "models/items/courier/carty/carty.vmdl", context)
 
 	-- Sounds can precached here like anything else
 	PrecacheResource("soundfile", "sounds/weapons/creep/roshan/slam.vsnd", context)
@@ -270,6 +270,16 @@ function Precache(context)
 	-- Battlepass
 	PrecacheResource("model_folder", "models/items/pudge/arcana", context)
 	PrecacheResource("particle_folder", "particles/econ/items/pudge/pudge_arcana", context)
+	PrecacheResource("model_folder", "models/items/juggernaut/arcana", context)
+	PrecacheResource("particle_folder", "particles/econ/items/juggernaut/jugg_arcana", context)
+
+	-- Cosmetics Companions
+	PrecacheResource("model", "models/items/pudge/blackdeath_offhand/blackdeath_offhand.vmdl", context)
+	PrecacheResource("model", "models/items/pudge/blackdeath_head_s3/blackdeath_head_s3.vmdl", context)
+	PrecacheResource("model", "models/items/pudge/immortal_arm/immortal_arm.vmdl", context)
+	PrecacheResource("model", "models/items/pudge/scorching_talon/scorching_talon.vmdl", context)
+	PrecacheResource("model", "models/items/pudge/doomsday_ripper_belt/doomsday_ripper_belt.vmdl", context)
+	PrecacheResource("model", "models/items/pudge/pudge_deep_sea_abomination_arms/pudge_deep_sea_abomination_arms.vmdl", context)
 
 	PrecacheResource("particle_folder", "particles/hero/scaldris", context) -- Scaldris Hero
 	PrecacheResource("soundfile", "soundevents/imba_soundevents.vsndevts", context) -- Various sounds

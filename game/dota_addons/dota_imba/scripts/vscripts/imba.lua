@@ -1830,6 +1830,13 @@ function GameMode:OnThink()
 	CheatDetector()
 
 	for _, hero in pairs(HeroList:GetAllHeroes()) do
+		-- Make courier controllable, repeat every second to avoid uncontrollable issues
+		if COURIER_TEAM then
+			if COURIER_TEAM[hero:GetTeamNumber()] and not COURIER_TEAM[hero:GetTeamNumber()]:IsControllableByAnyPlayer() then
+				COURIER_TEAM[hero:GetTeamNumber()]:SetControllableByPlayer(hero:GetPlayerID(), true)
+			end
+		end
+
 		-- Undying talent fix
 		if hero.undying_respawn_timer then
 			if hero.undying_respawn_timer > 0 then
@@ -2000,12 +2007,11 @@ function GameMode:OnThink()
 end
 
 function GameMode:DonatorCompanionJS(event)
-	DonatorCompanion(event.ID, event.unit)
+	DonatorCompanion(event.ID, event.unit, event.js)
 end
 
 function GameMode:DonatorStatueJS(event)
---	local table = {api.imba.get_player_info(steam_id).ingame_statue_scale, event.unit}
---	DonatorStatue(event.ID, table)
+	DonatorStatue(event.ID, event.unit)
 end
 
 function GameMode:MaxGold(event)

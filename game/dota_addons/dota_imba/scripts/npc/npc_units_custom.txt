@@ -3970,8 +3970,8 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"1000"
-		"StatusHealthRegen"			"5"
+		"StatusHealth"				"600"
+		"StatusHealthRegen"			"5.0"
 		"StatusMana"				"0"
 		"StatusManaRegen"			"0"
 
@@ -4061,8 +4061,8 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"1400"
-		"StatusHealthRegen"			"7"
+		"StatusHealth"				"900"
+		"StatusHealthRegen"			"7.0"
 		"StatusMana"				"0"
 		"StatusManaRegen"			"0"
 
@@ -4153,7 +4153,7 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"1800"
+		"StatusHealth"				"1200"
 		"StatusHealthRegen"			"9"
 		"StatusMana"				"0"
 		"StatusManaRegen"			"0"
@@ -4248,7 +4248,7 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"2200"
+		"StatusHealth"				"1500"
 		"StatusHealthRegen"			"12"
 		"StatusMana"				"0"
 		"StatusManaRegen"			"0"
@@ -4344,7 +4344,7 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"2600"
+		"StatusHealth"				"1800"
 		"StatusHealthRegen"			"15"
 		"StatusMana"				"0"
 		"StatusManaRegen"			"0"
@@ -4434,8 +4434,8 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"1000"
-		"StatusHealthRegen"			"5"
+		"StatusHealth"				"600"
+		"StatusHealthRegen"			"5.0"
 		"StatusMana"				"0"
 		"StatusManaRegen"			"0"
 
@@ -4524,8 +4524,8 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"1400"
-		"StatusHealthRegen"			"6"
+		"StatusHealth"				"900"
+		"StatusHealthRegen"			"6.0"
 		"StatusMana"				"0"
 		"StatusManaRegen"			"0"
 
@@ -4615,8 +4615,8 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"1800"
-		"StatusHealthRegen"			"7"
+		"StatusHealth"				"1200"
+		"StatusHealthRegen"			"7.0"
 		"StatusMana"				"0"
 		"StatusManaRegen"			"0"
 
@@ -4708,8 +4708,8 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"2200"
-		"StatusHealthRegen"			"8"
+		"StatusHealth"				"1500"
+		"StatusHealthRegen"			"8.0"
 		"StatusMana"				"0"
 		"StatusManaRegen"			"0"
 
@@ -4802,8 +4802,8 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"2600"
-		"StatusHealthRegen"			"10"
+		"StatusHealth"				"1800"
+		"StatusHealthRegen"			"10.0"
 		"StatusMana"				"0"
 		"StatusManaRegen"			"0"
 
@@ -10157,8 +10157,8 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"              "4000"      // Base health.
-		"StatusHealthRegen"         "10"     // Health regeneration rate.
+		"StatusHealth"              "3250"      // Base health.
+		"StatusHealthRegen"         "8.0"     // Health regeneration rate.
 		"StatusMana"                "0"         // Base mana.
 		"StatusManaRegen"           "0"         // Mana regeneration rate.
 
@@ -10246,8 +10246,8 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"              "4000"      // Base health.
-		"StatusHealthRegen"         "10"     // Health regeneration rate.
+		"StatusHealth"              "3250"      // Base health.
+		"StatusHealthRegen"         "8.0"     // Health regeneration rate.
 		"StatusMana"                "0"         // Base mana.
 		"StatusManaRegen"           "0"         // Mana regeneration rate.
 
@@ -10335,8 +10335,8 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"              "4000"      // Base health.
-		"StatusHealthRegen"         "10"     // Health regeneration rate.
+		"StatusHealth"              "3250"      // Base health.
+		"StatusHealthRegen"         "8.0"     // Health regeneration rate.
 		"StatusMana"                "0"         // Base mana.
 		"StatusManaRegen"           "0"         // Mana regeneration rate.
 
@@ -10424,7 +10424,7 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"              "3200"      // Base health.
+		"StatusHealth"              "2500"      // Base health.
 		"StatusHealthRegen"         "2"     // Health regeneration rate.
 		"StatusMana"                "0"         // Base mana.
 		"StatusManaRegen"           "0"         // Mana regeneration rate.
@@ -10514,7 +10514,7 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"              "3200"      // Base health.
+		"StatusHealth"              "2500"      // Base health.
 		"StatusHealthRegen"         "2"     // Health regeneration rate.
 		"StatusMana"                "0"         // Base mana.
 		"StatusManaRegen"           "0"         // Mana regeneration rate.
@@ -10603,7 +10603,7 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"              "3200"      // Base health.
+		"StatusHealth"              "2500"      // Base health.
 		"StatusHealthRegen"         "2"     // Health regeneration rate.
 		"StatusMana"                "0"         // Base mana.
 		"StatusManaRegen"           "0"         // Mana regeneration rate.
@@ -10692,8 +10692,8 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"              "4000"      // Base health.
-		"StatusHealthRegen"         "10"     // Health regeneration rate.
+		"StatusHealth"              "3250"      // Base health.
+		"StatusHealthRegen"         "8.0"     // Health regeneration rate.
 		"StatusMana"                "0"         // Base mana.
 		"StatusManaRegen"           "0"         // Mana regeneration rate.
 
@@ -10782,8 +10782,8 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"              "4000"      // Base health.
-		"StatusHealthRegen"         "10"     // Health regeneration rate.
+		"StatusHealth"              "3250"      // Base health.
+		"StatusHealthRegen"         "8.0"     // Health regeneration rate.
 		"StatusMana"                "0"         // Base mana.
 		"StatusManaRegen"           "0"         // Mana regeneration rate.
 
@@ -10870,8 +10870,8 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"              "4000"      // Base health.
-		"StatusHealthRegen"         "10"     // Health regeneration rate.
+		"StatusHealth"              "3250"      // Base health.
+		"StatusHealthRegen"         "8.0"     // Health regeneration rate.
 		"StatusMana"                "0"         // Base mana.
 		"StatusManaRegen"           "0"         // Mana regeneration rate.
 
@@ -10959,7 +10959,7 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"              "3200"      // Base health.
+		"StatusHealth"              "2500"      // Base health.
 		"StatusHealthRegen"         "2"     // Health regeneration rate.
 		"StatusMana"                "0"         // Base mana.
 		"StatusManaRegen"           "0"         // Mana regeneration rate.
@@ -11048,7 +11048,7 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"              "3200"      // Base health.
+		"StatusHealth"              "2500"      // Base health.
 		"StatusHealthRegen"         "2"       // Health regeneration rate.
 		"StatusMana"                "0"         // Base mana.
 		"StatusManaRegen"           "0"         // Mana regeneration rate.
@@ -11137,7 +11137,7 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"              "3200"      // Base health.
+		"StatusHealth"              "2500"      // Base health.
 		"StatusHealthRegen"         "2"     // Health regeneration rate.
 		"StatusMana"                "0"         // Base mana.
 		"StatusManaRegen"           "0"         // Mana regeneration rate.
@@ -11521,12 +11521,101 @@
 		"VisionNighttimeRange"		"600"		// Range of vision at night time.
 	}
 
+	"npc_imba_donator_statue_grillhound"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_base_additive"
+		"Model"						"models/items/courier/starladder_grillhound/starladder_grillhound.vmdl"
+		"ModelScale"				"1.5"
+		"SoundSet"					"Creep_Good_Melee"					// Name of sound set.
+		"MinimapIcon"				"minimap_miscbuilding"
+
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"backdoor_protection_in_base"			// Ability 1.
+		"Ability2"					""			// Ability 2.
+		"Ability3"					""			// Ability 3.
+		"Ability4"					""			// Ability 4.
+		"Ability5"					""			// Ability 5.
+		"Ability6"					""			// Ability 6 - Extra.
+		"Ability7"					""			// Ability 7 - Extra.
+		"Ability8"					""			// Ability 8 - Extra.
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"14"			// Physical protection.
+		"MagicalResistance"			"0"			// Magical protection.
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+		"AttackDamageMin"			"0"			// Damage range min.
+		"AttackDamageMax"			"0"			// Damage range max.
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+		"AttackRate"				"0"			// Speed of attack.
+		"AttackAnimationPoint"		"0"			// Normalized time in animation cycle to attack.
+		"AttackAcquisitionRange"	"0"			// Range within a target can be acquired.
+		"AttackRange"				"0"			// Range within a target can be attacked.
+		"ProjectileModel"			""			// Particle system model for projectile.
+		"ProjectileSpeed"			"0"			// Speed of projectile.
+
+		// Attributes
+		//----------------------------------------------------------------
+		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
+		"AttributeBaseStrength"		"0"			// Base strength
+		"AttributeStrengthGain"		"0"			// Strength bonus per level.
+		"AttributeBaseIntelligence"	"0"			// Base intelligence
+		"AttributeIntelligenceGain"	"0"			// Intelligence bonus per level.
+		"AttributeBaseAgility"		"0"			// Base agility
+		"AttributeAgilityGain"		"0"			// Agility bonus per level.
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"				"75"		// Gold earned min.
+		"BountyGoldMax"				"75"		// Gold earned max.
+
+		// Bounds
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_FILLER"			// Hull type used for navigation/locomotion.
+		"RingRadius"				"100"
+		"HealthBarOffset"			"260"
+		"MinimapIconSize"			"200"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"			// Type of locomotion - ground, air
+		"MovementSpeed"				"0"			// Speed
+		"MovementTurnRate"			"0"			// Turning rate.
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"1000"		// Base health.
+		"StatusHealthRegen"			"0"			// Health regeneration rate.
+		"StatusMana"				"0"			// Base mana.
+		"StatusManaRegen"			"0"			// Mana regeneration rate.
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_GOODGUYS"			// Team name.
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_SIEGE"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BUILDING"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"900"		// Range of vision during day light.
+		"VisionNighttimeRange"		"600"		// Range of vision at night time.
+	}
+
+	// Unique Effigies
 	"npc_imba_donator_statue_cookies"
 	{
 		// General
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_base_additive"
 		"Model"						"models/items/courier/chocobo/chocobo.vmdl"
+		"ModelScale"				"1.5"
 		"SoundSet"					"Creep_Good_Melee"					// Name of sound set.
 		"MinimapIcon"				"minimap_miscbuilding"
 		
@@ -11613,6 +11702,7 @@
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_base_additive"
 		"Model"						"models/heroes/crystal_maiden/crystal_maiden_arcana.vmdl"
+		"ModelScale"				"0.81"
 		"SoundSet"					"Creep_Good_Melee"					// Name of sound set.
 		"MinimapIcon"				"minimap_miscbuilding"
 
@@ -11699,6 +11789,7 @@
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_base_additive"
 		"Model"						"models/items/undying/flesh_golem/deathmatch_dominator_golem/deathmatch_dominator_golem.vmdl"
+		"ModelScale"				"0.9"
 		"SoundSet"					"Creep_Good_Melee"					// Name of sound set.
 		"MinimapIcon"				"minimap_miscbuilding"
 		
@@ -11785,6 +11876,7 @@
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_base_additive"
 		"Model"						"models/creeps/roshan/roshan.vmdl"
+		"ModelScale"				"0.6"
 		"SoundSet"					"Creep_Good_Melee"					// Name of sound set.
 		"MinimapIcon"				"minimap_miscbuilding"
 		
@@ -11871,6 +11963,7 @@
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_base_additive"
 		"Model"						"models/heroes/shredder/shredder.vmdl"
+		"ModelScale"				"0.9"
 		"SoundSet"					"Creep_Good_Melee"					// Name of sound set.
 		"MinimapIcon"				"minimap_miscbuilding"
 
@@ -11957,6 +12050,7 @@
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_base_additive"
 		"Model"						"models/items/courier/butch_pudge_dog/butch_pudge_dog.vmdl"
+		"ModelScale"				"1.1"
 		"SoundSet"					"Creep_Good_Melee"					// Name of sound set.
 		"MinimapIcon"				"minimap_miscbuilding"
 
@@ -12043,6 +12137,7 @@
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_base_additive"
 		"Model"						"models/vr_env/vr_avatars/avatar_antimage_model.vmdl"
+		"ModelScale"				"1.0"
 		"SoundSet"					"Creep_Good_Melee"					// Name of sound set.
 		"MinimapIcon"				"minimap_miscbuilding"
 
@@ -12129,6 +12224,7 @@
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_base_additive"
 		"Model"						"models/creeps/neutral_creeps/n_creep_satyr_spawn_a/n_creep_satyr_spawn_a.vmdl"
+		"ModelScale"				"0.85"
 		"SoundSet"					"Creep_Good_Melee"					// Name of sound set.
 		"MinimapIcon"				"minimap_miscbuilding"
 
@@ -12147,6 +12243,180 @@
 		//----------------------------------------------------------------
 		"ArmorPhysical"				"14"			// Physical protection.
 		"MagicalResistance"				"0"			// Magical protection.
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+		"AttackDamageMin"			"0"			// Damage range min.
+		"AttackDamageMax"			"0"			// Damage range max.
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+		"AttackRate"				"0"			// Speed of attack.
+		"AttackAnimationPoint"		"0"			// Normalized time in animation cycle to attack.
+		"AttackAcquisitionRange"	"0"			// Range within a target can be acquired.
+		"AttackRange"				"0"			// Range within a target can be attacked.
+		"ProjectileModel"			""			// Particle system model for projectile.
+		"ProjectileSpeed"			"0"			// Speed of projectile.
+
+		// Attributes
+		//----------------------------------------------------------------
+		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
+		"AttributeBaseStrength"		"0"			// Base strength
+		"AttributeStrengthGain"		"0"			// Strength bonus per level.
+		"AttributeBaseIntelligence"	"0"			// Base intelligence
+		"AttributeIntelligenceGain"	"0"			// Intelligence bonus per level.
+		"AttributeBaseAgility"		"0"			// Base agility
+		"AttributeAgilityGain"		"0"			// Agility bonus per level.
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"				"75"		// Gold earned min.
+		"BountyGoldMax"				"75"		// Gold earned max.
+
+		// Bounds
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_FILLER"			// Hull type used for navigation/locomotion.
+		"RingRadius"				"100"
+		"HealthBarOffset"			"260"
+		"MinimapIconSize"			"200"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"			// Type of locomotion - ground, air
+		"MovementSpeed"				"0"			// Speed
+		"MovementTurnRate"			"0"			// Turning rate.
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"1000"		// Base health.
+		"StatusHealthRegen"			"0"			// Health regeneration rate.
+		"StatusMana"				"0"			// Base mana.
+		"StatusManaRegen"			"0"			// Mana regeneration rate.
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_GOODGUYS"			// Team name.
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_SIEGE"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BUILDING"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"900"		// Range of vision during day light.
+		"VisionNighttimeRange"		"600"		// Range of vision at night time.
+	}
+
+	"npc_imba_donator_statue_terdic"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_base_additive"
+		"Model"						"models/items/courier/captain_bamboo/captain_bamboo.vmdl"
+		"ModelScale"				"1.6"
+		"SoundSet"					"Creep_Good_Melee"					// Name of sound set.
+		"MinimapIcon"				"minimap_miscbuilding"
+
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"backdoor_protection_in_base"			// Ability 1.
+		"Ability2"					""			// Ability 2.
+		"Ability3"					""			// Ability 3.
+		"Ability4"					""			// Ability 4.
+		"Ability5"					""			// Ability 5.
+		"Ability6"					""			// Ability 6 - Extra.
+		"Ability7"					""			// Ability 7 - Extra.
+		"Ability8"					""			// Ability 8 - Extra.
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"14"			// Physical protection.
+		"MagicalResistance"				"0"			// Magical protection.
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+		"AttackDamageMin"			"0"			// Damage range min.
+		"AttackDamageMax"			"0"			// Damage range max.
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+		"AttackRate"				"0"			// Speed of attack.
+		"AttackAnimationPoint"		"0"			// Normalized time in animation cycle to attack.
+		"AttackAcquisitionRange"	"0"			// Range within a target can be acquired.
+		"AttackRange"				"0"			// Range within a target can be attacked.
+		"ProjectileModel"			""			// Particle system model for projectile.
+		"ProjectileSpeed"			"0"			// Speed of projectile.
+
+		// Attributes
+		//----------------------------------------------------------------
+		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
+		"AttributeBaseStrength"		"0"			// Base strength
+		"AttributeStrengthGain"		"0"			// Strength bonus per level.
+		"AttributeBaseIntelligence"	"0"			// Base intelligence
+		"AttributeIntelligenceGain"	"0"			// Intelligence bonus per level.
+		"AttributeBaseAgility"		"0"			// Base agility
+		"AttributeAgilityGain"		"0"			// Agility bonus per level.
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"				"75"		// Gold earned min.
+		"BountyGoldMax"				"75"		// Gold earned max.
+
+		// Bounds
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_FILLER"			// Hull type used for navigation/locomotion.
+		"RingRadius"				"100"
+		"HealthBarOffset"			"260"
+		"MinimapIconSize"			"200"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"			// Type of locomotion - ground, air
+		"MovementSpeed"				"0"			// Speed
+		"MovementTurnRate"			"0"			// Turning rate.
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"1000"		// Base health.
+		"StatusHealthRegen"			"0"			// Health regeneration rate.
+		"StatusMana"				"0"			// Base mana.
+		"StatusManaRegen"			"0"			// Mana regeneration rate.
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_GOODGUYS"			// Team name.
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_SIEGE"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BUILDING"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"900"		// Range of vision during day light.
+		"VisionNighttimeRange"		"600"		// Range of vision at night time.
+	}
+
+	"npc_imba_donator_statue_toc"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_base_additive"
+		"Model"						"models/heroes/huskar/huskar.vmdl"
+		"ModelScale"				"1.0"
+		"SoundSet"					"Creep_Good_Melee"					// Name of sound set.
+		"MinimapIcon"				"minimap_miscbuilding"
+
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"backdoor_protection_in_base"			// Ability 1.
+		"Ability2"					""			// Ability 2.
+		"Ability3"					""			// Ability 3.
+		"Ability4"					""			// Ability 4.
+		"Ability5"					""			// Ability 5.
+		"Ability6"					""			// Ability 6 - Extra.
+		"Ability7"					""			// Ability 7 - Extra.
+		"Ability8"					""			// Ability 8 - Extra.
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"14"			// Physical protection.
+		"MagicalResistance"			"0"			// Magical protection.
 
 		// Attack
 		//----------------------------------------------------------------
@@ -12281,42 +12551,42 @@
 	{
 		"BaseClass"					"npc_imba_donator_companion"
 		"Model"						"models/courier/doom_demihero_courier/doom_demihero_courier.vmdl"
-		"ModelScale"				"1.0"
+		"ModelScale"				"0.9"
 	}
 
 	"npc_imba_donator_companion_carty"
 	{
 		"BaseClass"					"npc_imba_donator_companion"
 		"Model"						"models/items/courier/carty/carty.vmdl"
-		"ModelScale"				"1.0"
+		"ModelScale"				"0.9"
 	}
 
 	"npc_imba_donator_companion_carty_dire"
 	{
 		"BaseClass"					"npc_imba_donator_companion"
 		"Model"						"models/items/courier/carty_dire/carty_dire_flying.vmdl"
-		"ModelScale"				"1.0"
+		"ModelScale"				"0.9"
 	}
 
 	"npc_imba_donator_companion_llama"
 	{
 		"BaseClass"					"npc_imba_donator_companion"
 		"Model"						"models/items/courier/livery_llama_courier/livery_llama_courier.vmdl"
-		"ModelScale"				"1.0"
+		"ModelScale"				"0.9"
 	}
 
 	"npc_imba_donator_companion_jumo"
 	{
 		"BaseClass"					"npc_imba_donator_companion"
 		"Model"						"models/items/courier/jumo/jumo.vmdl"
-		"ModelScale"				"1.0"
+		"ModelScale"				"0.9"
 	}
 
 	"npc_imba_donator_companion_jin"
 	{
 		"BaseClass"					"npc_imba_donator_companion"
 		"Model"						"models/items/courier/jin_yin_white_fox/jin_yin_white_fox.vmdl"
-		"ModelScale"				"1.0"
+		"ModelScale"				"0.9"
 	}
 
 	// EarthSalamander #42
@@ -12324,7 +12594,7 @@
 	{
 		"BaseClass"					"npc_dota_roshan"
 		"Model"						"models/courier/baby_rosh/babyroshan.vmdl"
-		"ModelScale"				"0.6"
+		"ModelScale"				"0.65"
 	}
 
 	"npc_imba_donator_companion_baumi"
@@ -12338,7 +12608,7 @@
 	{
 		"BaseClass"					"npc_imba_donator_companion"
 		"Model"						"models/courier/frog/frog.vmdl"        
-		"ModelScale"				"1.0"
+		"ModelScale"				"0.9"
 	}
 
 	"npc_imba_donator_companion_admiral_bulldog"
@@ -12352,28 +12622,28 @@
 	{
 		"BaseClass"					"npc_imba_donator_companion"
 		"Model"						"models/items/courier/amaterasu/amaterasu.vmdl"        
-		"ModelScale"				"1.0"
+		"ModelScale"				"0.9"
 	}
 
 	"npc_imba_donator_companion_boooofus"
 	{
 		"BaseClass"					"npc_imba_donator_companion"
 		"Model"						"models/items/courier/boooofus_courier/boooofus_courier.vmdl"        
-		"ModelScale"				"1.0"
+		"ModelScale"				"0.9"
 	}
 
 	"npc_imba_donator_companion_duskie"
 	{
 		"BaseClass"					"npc_imba_donator_companion"
 		"Model"						"models/items/courier/duskie/duskie.vmdl"        
-		"ModelScale"				"1.0"
+		"ModelScale"				"0.9"
 	}
 
 	"npc_imba_donator_companion_hakobi_and_tenneko"
 	{
 		"BaseClass"					"npc_imba_donator_companion"
 		"Model"						"models/items/courier/shibe_dog_cat/shibe_dog_cat.vmdl"        
-		"ModelScale"				"1.0"
+		"ModelScale"				"0.9"
 	}
 
 	"npc_imba_donator_companion_suthernfriend"
@@ -12387,14 +12657,14 @@
 	{
 		"BaseClass"					"npc_imba_donator_companion"
 		"Model"						"models/items/courier/baekho/baekho.vmdl"        
-		"ModelScale"				"1.0"
+		"ModelScale"				"0.9"
 	}
 
 	"npc_imba_donator_companion_devourling"
 	{
 		"BaseClass"					"npc_imba_donator_companion"
 		"Model"						"models/items/courier/devourling/devourling.vmdl"        
-		"ModelScale"				"1.0"
+		"ModelScale"				"0.9"
 	}
 
 	"npc_imba_donator_companion_zonnoz"
@@ -12402,6 +12672,20 @@
 		"BaseClass"					"npc_imba_donator_companion"
 		"Model"						"models/items/pudge/arcana/pudge_arcana_base.vmdl"
 		"ModelScale"				"0.5"
+	}
+
+	"npc_imba_donator_companion_terdic"
+	{
+		"BaseClass"					"npc_imba_donator_companion"
+		"Model"						"models/items/courier/shagbark/shagbark.vmdl"
+		"ModelScale"				"0.9"
+	}
+
+	"npc_imba_donator_companion_vaal"
+	{
+		"BaseClass"					"npc_imba_donator_companion"
+		"Model"						"models/items/courier/vaal_the_animated_constructradiant/vaal_the_animated_constructradiant.vmdl"
+		"ModelScale"				"0.9"
 	}
 
 	//=================================================================================================================
@@ -14405,7 +14689,7 @@
 
 		// Armor
 		//----------------------------------------------------------------
-		"ArmorPhysical"				"24"			// Physical protection.
+		"ArmorPhysical"				"35"			// Physical protection.
 		"MagicalResistance"			"0"			// Magical protection.
 
 		// Attack
@@ -14451,7 +14735,7 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"5000"		// Base health.
+		"StatusHealth"				"4000"		// Base health.
 		"StatusHealthRegen"			"0.5"		// Health regeneration rate.
 		"StatusMana"				"0"			// Base mana.
 		"StatusManaRegen"			"0"			// Mana regeneration rate.
@@ -14587,7 +14871,7 @@
 
 		// Armor
 		//----------------------------------------------------------------
-		"ArmorPhysical"				"16"			// Physical protection.
+		"ArmorPhysical"				"24"			// Physical protection.
 		"MagicalResistance"			"0"			// Magical protection.
 
 		// Attack
@@ -14633,7 +14917,7 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"3000"		// Base health.
+		"StatusHealth"				"2500"		// Base health.
 		"StatusHealthRegen"			"2"			// Health regeneration rate.
 		"StatusMana"				"1000"		// Base mana.
 		"StatusManaRegen"			"0.75"		// Mana regeneration rate.
@@ -14754,11 +15038,11 @@
 		"BaseClass"					"npc_dota_creep_siege"	// Class of entity of link to.
 		"Model"						"models/creeps/lane_creeps/creep_good_siege/creep_good_siege.vmdl"	// Model.
 		"SoundSet"					"Creep_Good_Engine"					// Name of sound set.
-		"MinimapIcon"					"minimap_siege"
-		"MinimapIconSize"				"350"
-		"ModelScale" 					".65"
+		"MinimapIcon"				"minimap_siege"
+		"MinimapIconSize"			"350"
+		"ModelScale" 				".65"
 		"Level"						"4"
-		"CanBeDominated"				"1"
+		"CanBeDominated"			"1"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -14780,8 +15064,8 @@
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
-		"AttackDamageMin"			"475"		// Damage range min.
-		"AttackDamageMax"			"485"		// Damage range max.
+		"AttackDamageMin"			"715"		// Damage range min.
+		"AttackDamageMax"			"725"		// Damage range max.
 		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"2.7"		// Speed of attack.
 		"AttackAnimationPoint"		"0.7"		// Normalized time in animation cycle to attack.
@@ -14956,7 +15240,7 @@
 
 		// Armor
 		//----------------------------------------------------------------
-		"ArmorPhysical"				"24"			// Physical protection.
+		"ArmorPhysical"				"35"		// Physical protection.
 		"MagicalResistance"			"0"			// Magical protection.
 
 		// Attack
@@ -15002,7 +15286,7 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"5000"		// Base health.
+		"StatusHealth"				"4000"		// Base health.
 		"StatusHealthRegen"			"0.5"		// Health regeneration rate.
 		"StatusMana"				"0"			// Base mana.
 		"StatusManaRegen"			"0"			// Mana regeneration rate.

@@ -19,6 +19,9 @@
 
 if Imbattlepass == nil then Imbattlepass = class({}) end
 local next_reward_shown = false
+if IsInToolsMode() then
+	next_reward_shown = true
+end
 
 IMBATTLEPASS_LEVEL_REWARD = {}
 IMBATTLEPASS_LEVEL_REWARD[4]	= "fountain"
@@ -378,7 +381,6 @@ function Imbattlepass:GetPudgeArcanaEffect(ID)
 
 		hero.back = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/pudge/arcana/pudge_arcana_back.vmdl"})
 		hero.back:FollowEntity(hero, true)
---		hero.back:SetParent(hero, "")
 		hero.back:SetMaterialGroup(tostring(HasPudgeArcana(ID)))
 
 		local particle = "particles/econ/items/pudge/pudge_arcana/pudge_arcana_red_back_ambient.vpcf"	
@@ -423,10 +425,18 @@ function Imbattlepass:GetJuggernautArcanaEffect(ID)
 		hero:SetMaterialGroup(tostring(HasJuggernautArcana(ID)))
 		hero.juggernaut_arcana = HasJuggernautArcana(ID)
 
-		hero.back = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/juggernaut/arcana/juggernaut_arcana_mask.vmdl"})
+		hero.head = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/juggernaut/arcana/juggernaut_arcana_mask.vmdl"})
+		hero.head:FollowEntity(hero, true)
+		hero.head:SetMaterialGroup(tostring(HasJuggernautArcana(ID)))
+
+		hero.back = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/heroes/juggernaut/jugg_cape.vmdl"})
 		hero.back:FollowEntity(hero, true)
---		hero.back:SetParent(hero, "")
-		hero.back:SetMaterialGroup(tostring(HasJuggernautArcana(ID)))
+
+		hero.arms = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/heroes/juggernaut/jugg_bracers.vmdl"})
+		hero.arms:FollowEntity(hero, true)
+
+		hero.legs = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/heroes/juggernaut/juggernaut_pants.vmdl"})
+		hero.legs:FollowEntity(hero, true)
 
 --		local particle = "particles/econ/items/pudge/pudge_arcana/pudge_arcana_red_back_ambient.vpcf"	
 --		local particle2 = "particles/econ/items/pudge/pudge_arcana/pudge_arcana_red_back_ambient_beam.vpcf"

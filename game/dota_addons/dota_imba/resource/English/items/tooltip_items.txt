@@ -717,7 +717,7 @@
 "DOTA_Tooltip_ability_item_imba_maelstrom_Lore"                "A hammer forged for the gods themselves, Maelstrom allows its user to harness the power of lightning."
 "DOTA_Tooltip_ability_item_imba_maelstrom_bounce_damage"                    "CHAIN LIGHTNING DAMAGE:"
 "DOTA_Tooltip_ability_item_imba_maelstrom_bonus_damage"                     "+$damage"
-"DOTA_Tooltip_ability_item_imba_maelstrom_bonus_as"            "+$attack"
+// "DOTA_Tooltip_ability_item_imba_maelstrom_bonus_as"            "+$attack"
 
 // Magic Stick
 "DOTA_Tooltip_Ability_item_imba_magic_stick"                    "Magic Stick"

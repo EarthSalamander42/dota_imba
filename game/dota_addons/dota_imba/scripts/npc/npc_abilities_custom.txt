@@ -258,6 +258,11 @@
 				"var_type"						"FIELD_INTEGER"
 				"damage_pct"					"15"
 			}
+			"03"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"aura_linger"					"1.0"
+			}
 		}
 	}
 
@@ -16116,7 +16121,8 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO | DOTA_UNIT_TARGET_FLAG_CHECK_DISABLE_HELP"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO"
+//		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO | DOTA_UNIT_TARGET_FLAG_CHECK_DISABLE_HELP"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
@@ -19369,12 +19375,12 @@
 			"02"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"initial_mana_cost_pct"					"5"		
+				"initial_mana_cost_pct"					"8"		
 			}
 			"03"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"travel_mana_cost_base"					"12"		
+				"travel_mana_cost_base"					"30"		
 			}
 			"04"
 			{
@@ -19389,12 +19395,12 @@
 			"06"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"damage_radius"							"125 275 400"		
+				"damage_radius"							"200"		
 			}
 			"07"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"damage_per_100_units"					"8 16 24"
+				"damage_per_100_units"					"12 16 20"
 			}
 			"08"
 			{
@@ -24781,7 +24787,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_CHECK_DISABLE_HELP"
+//		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_CHECK_DISABLE_HELP"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"AbilityTextureName"			"tiny_toss"
 		"MaxLevel"						"4"

@@ -81,7 +81,7 @@ FIXED_RESPAWN_TIME = -1						-- What time should we use for a fixed respawn time
 FOUNTAIN_CONSTANT_MANA_REGEN = 14			-- What should we use for the constant fountain mana regen?  Use -1 to keep the default dota behavior.
 FOUNTAIN_PERCENTAGE_MANA_REGEN = 6			-- What should we use for the percentage fountain mana regen?  Use -1 to keep the default dota behavior.
 FOUNTAIN_PERCENTAGE_HEALTH_REGEN = 6		-- What should we use for the percentage fountain health regen?  Use -1 to keep the default dota behavior.
-MAXIMUM_ATTACK_SPEED = 400					-- What should we use for the maximum attack speed?
+MAXIMUM_ATTACK_SPEED = 1000					-- What should we use for the maximum attack speed?
 MINIMUM_ATTACK_SPEED = 0					-- What should we use for the minimum attack speed?
 DOTA_MAX_PLAYERS = 24						-- Maximum amount of players allowed in a game
 
@@ -547,26 +547,25 @@ MORPHLING_RESTRICTED_MODIFIERS = {
 }
 
 IMBA_DONATOR_COMPANION = {}
-IMBA_DONATOR_COMPANION["76561198015161808"] = "npc_imba_donator_companion_cookies"
+-- IMBA_DONATOR_COMPANION["76561198015161808"] = "npc_imba_donator_companion_cookies"
 IMBA_DONATOR_COMPANION["76561198094835750"] = "npc_imba_donator_companion_zonnoz"
 IMBA_DONATOR_COMPANION["76561198003571172"] = "npc_imba_donator_companion_baumi"
 IMBA_DONATOR_COMPANION["76561198014254115"] = "npc_imba_donator_companion_icefrog"
 IMBA_DONATOR_COMPANION["76561198014254115"] = "npc_imba_donator_companion_admiral_bulldog"
 IMBA_DONATOR_COMPANION["76561198021465788"] = "npc_imba_donator_companion_suthernfriend"
-
--- Terdic:
--- models/items/courier/shagbark/shagbark.vmdl
--- particles/econ/courier/courier_shagbark/courier_shagbark_ambient.vpcf
+IMBA_DONATOR_COMPANION["76561198073163389"] = "npc_imba_donator_companion_terdic"
 
 IMBA_DONATOR_STATUE = {}
-IMBA_DONATOR_STATUE["76561198015161808"] = {1.6, "npc_imba_donator_statue_cookies"}
-IMBA_DONATOR_STATUE["76561193714760494"] = {0.81, "npc_imba_donator_statue_acalia"}
-IMBA_DONATOR_STATUE["76561193684594183"] = {0.9, "npc_imba_donator_statue_lily"}
-IMBA_DONATOR_STATUE["76561198021465788"] = {0.6, "npc_imba_donator_statue_suthernfriend"}
-IMBA_DONATOR_STATUE["76561193687456266"] = {0.9, "npc_imba_donator_statue_exzas"}
-IMBA_DONATOR_STATUE["76561198094835750"] = {1.1, "npc_imba_donator_statue_zonnoz"}
--- IMBA_DONATOR_STATUE["76561198043254407"] = {1.1, "npc_imba_donator_statue_tabisama"}
-IMBA_DONATOR_STATUE["76561197980558838"] = {0.85, "npc_imba_donator_statue_january0000"}
+-- IMBA_DONATOR_STATUE["76561198015161808"] = "npc_imba_donator_statue_cookies"
+IMBA_DONATOR_STATUE["76561193714760494"] = "npc_imba_donator_statue_acalia"
+IMBA_DONATOR_STATUE["76561193684594183"] = "npc_imba_donator_statue_lily"
+IMBA_DONATOR_STATUE["76561198021465788"] = "npc_imba_donator_statue_suthernfriend"
+IMBA_DONATOR_STATUE["76561193687456266"] = "npc_imba_donator_statue_exzas"
+IMBA_DONATOR_STATUE["76561198094835750"] = "npc_imba_donator_statue_zonnoz"
+-- IMBA_DONATOR_STATUE["76561198043254407"] = "npc_imba_donator_statue_tabisama"
+IMBA_DONATOR_STATUE["76561197980558838"] = "npc_imba_donator_statue_january0000"
+IMBA_DONATOR_STATUE["76561198073163389"] = "npc_imba_donator_statue_terdic"
+IMBA_DONATOR_STATUE["76561198077187165"] = "npc_imba_donator_statue_toc"
 
 UNIT_EQUIPMENT = {}
 UNIT_EQUIPMENT["models/heroes/crystal_maiden/crystal_maiden.vmdl"] = {
@@ -600,6 +599,14 @@ UNIT_EQUIPMENT["models/items/pudge/arcana/pudge_arcana_base.vmdl"] = {
 	"models/items/pudge/doomsday_ripper_belt/doomsday_ripper_belt.vmdl",
 	"models/items/pudge/pudge_deep_sea_abomination_arms/pudge_deep_sea_abomination_arms.vmdl",
 	"models/items/pudge/arcana/pudge_arcana_back.vmdl",
+}
+
+UNIT_EQUIPMENT["models/heroes/huskar/huskar.vmdl"] = {
+	"models/items/huskar/searing_dominator/searing_dominator.vmdl",
+	"models/heroes/huskar/huskar_bracer.vmdl",
+	"models/heroes/huskar/huskar_dagger.vmdl",
+	"models/heroes/huskar/huskar_shoulder.vmdl",
+	"models/heroes/huskar/huskar_spear.vmdl",
 }
 
 IMBA_DISABLED_SKULL_BASHER = {

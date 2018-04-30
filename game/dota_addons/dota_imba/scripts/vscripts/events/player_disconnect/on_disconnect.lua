@@ -77,12 +77,12 @@ function GameMode:OnDisconnect(keys)
 			end
 		end)
 
-		print("Increase GG amount!")
-		local table = {
-			ID = player_id,
-			team = PlayerResource:GetTeam(player_id),
-			disconnect = 1
-		}
-		GameMode:GG(table)
+--		print("Increase GG amount!")
+--		local table = {
+--			ID = player_id,
+--			team = PlayerResource:GetTeam(player_id),
+--			disconnect = 1
+--		}
+--		GameMode:GG(table)
 	end
 end

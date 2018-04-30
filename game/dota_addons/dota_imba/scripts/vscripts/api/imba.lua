@@ -9,7 +9,7 @@ api.imba = {
 	data = {},
 	ready = false,
 	config = {
-		event_timer_interval = 2
+		event_timer_interval = 5
 	},
 	events = {
 		queue = {}

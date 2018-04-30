@@ -110,23 +110,26 @@ function imba_tinker_rearm:OnChannelFinish( bInterrupted )
 			-- List of unrefreshable items
 			local forbidden_items = 
 			{
-				"item_imba_bloodstone",
+				"item_aeon_disk",
 				"item_imba_arcane_boots",
-				"item_imba_mekansm",
-				"item_imba_mekansm_2",
-				"item_imba_guardian_greaves",
-				"item_imba_hand_of_midas",
-				"item_imba_white_queen_cape",
 				"item_black_king_bar",
-				"item_imba_refresher",
+				"item_imba_bloodstone",
+--				"item_imba_guardian_greaves",
+				"item_imba_hand_of_midas",
+				"item_imba_mekansm",
+				"item_meteor_hammer",
 				"item_imba_necronomicon",
 				"item_imba_necronomicon_2",
 				"item_imba_necronomicon_3",
 				"item_imba_necronomicon_4",
 				"item_imba_necronomicon_5",
+				"item_imba_pipe",
+				"item_refresher",
+				"item_refresher_shard",
 				"item_imba_skadi",
-				"item_imba_sphere",
+				"item_sphere",
 				"item_imba_plancks_artifact",
+				"item_imba_white_queen_cape",
 			}
 
 			for i = 0, caster:GetAbilityCount() do

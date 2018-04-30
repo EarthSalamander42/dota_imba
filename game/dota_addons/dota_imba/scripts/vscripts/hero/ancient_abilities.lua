@@ -20,6 +20,7 @@
 imba_ancient_defense = class({})
 
 LinkLuaModifier("modifier_imba_ancient_defense", "hero/ancient_abilities", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_fountain_danger_zone", "hero/ancient_abilities", LUA_MODIFIER_MOTION_NONE)
 
 function imba_ancient_defense:IsHiddenWhenStolen() return false end
 function imba_ancient_defense:IsRefreshable() return false end
@@ -138,6 +139,7 @@ end
 imba_fountain_danger_zone = class({})
 
 LinkLuaModifier("modifier_imba_fountain_danger_zone", "hero/ancient_abilities", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_fountain_danger_zone_debuff", "hero/ancient_abilities", LUA_MODIFIER_MOTION_NONE)
 
 function imba_fountain_danger_zone:IsHiddenWhenStolen() return false end
 function imba_fountain_danger_zone:IsRefreshable() return false end
@@ -152,7 +154,6 @@ function imba_fountain_danger_zone:GetIntrinsicModifierName()
 	return "modifier_imba_fountain_danger_zone"
 end
 
-
 -- Passive modifier
 modifier_imba_fountain_danger_zone = class({})
 function modifier_imba_fountain_danger_zone:IsDebuff() return false end
@@ -164,7 +165,6 @@ function modifier_imba_fountain_danger_zone:IsStunDebuff() return false end
 function modifier_imba_fountain_danger_zone:CheckState()
 	local state = {
 		[MODIFIER_STATE_DISARMED] = true,
-		[MODIFIER_STATE_PASSIVES_DISABLED] = true
 	}
 
 	return state
@@ -200,6 +200,7 @@ function modifier_imba_fountain_danger_zone:OnIntervalThink()
 			end
 
 			local damage = enemy:GetMaxHealth() / 100 * self:GetAbility():GetSpecialValueFor("damage_pct")
+			local aura_linger = self:GetAbility():GetSpecialValueFor("aura_linger")
 --			print("Damage:", damage)
 
 			if enemy:IsInvulnerable() then
@@ -214,7 +215,24 @@ function modifier_imba_fountain_danger_zone:OnIntervalThink()
 			ParticleManager:SetParticleControl(damage_pfx, 3, fountain_pos)
 			ParticleManager:SetParticleControl(damage_pfx, 9, fountain_pos)
 			ParticleManager:ReleaseParticleIndex(damage_pfx)
-			enemy:AddNewModifier(fountain, self:GetAbility(), "modifier_doom_bringer_doom", {duration = 1.0})
+			enemy:AddNewModifier(fountain, self:GetAbility(), "modifier_doom_bringer_doom", {duration = aura_linger})
+			enemy:AddNewModifier(fountain, self:GetAbility(), "modifier_imba_fountain_danger_zone_debuff", {duration = aura_linger})
 		end
 	end
+end
+
+modifier_imba_fountain_danger_zone_debuff = class({})
+function modifier_imba_fountain_danger_zone_debuff:IsDebuff() return false end
+function modifier_imba_fountain_danger_zone_debuff:IsHidden() return true end
+function modifier_imba_fountain_danger_zone_debuff:IsPurgable() return false end
+function modifier_imba_fountain_danger_zone_debuff:IsPurgeException() return false end
+function modifier_imba_fountain_danger_zone_debuff:IsStunDebuff() return false end
+
+function modifier_imba_fountain_danger_zone_debuff:CheckState()
+	local state = {
+		[MODIFIER_STATE_DISARMED] = true,
+		[MODIFIER_STATE_PASSIVES_DISABLED] = true
+	}
+
+	return state
 end

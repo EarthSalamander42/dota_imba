@@ -152,7 +152,7 @@ function HideIMR(panel) {
 }
 
 function OverrideTopBarHeroImage(args) {
-	var arcana_level = args.arcana + 1
+	var arcana_level = args.arcana
 	var team = "Radiant"
 	if (Players.GetTeam(Players.GetLocalPlayer()) == 3) {
 		team = "Dire"
@@ -173,19 +173,20 @@ if (FindDotaHudElement("RadiantPlayer" + Players.GetLocalPlayer()).FindChildTrav
 
 function OverrideHeroImage(arcana_level, panel, hero_name) {
 	if (arcana_level != false) {
-		if (arcana_level > 2) {arcana_level = 2}
+		if (arcana_level > 1) {arcana_level = 1}
 		// list of heroes wich have arcana implented in imbattlepass
 		var newheroimage = $.CreatePanel('Panel', panel, '');
 		newheroimage.style.width = "100%";
 		newheroimage.style.height = "100%";
-		newheroimage.style.backgroundImage = 'url("file://{images}/heroes/' + hero_name + '_alt' + arcana_level + '.png")';
+		newheroimage.style.backgroundImage = 'url("file://{images}/heroes/npc_dota_hero_' + hero_name + '_arcana' + arcana_level + '.png")';
 		newheroimage.style.backgroundSize = "cover";
 
-		panel.style.border = "1px solid #99ff33";
-		panel.style.boxShadow = "fill lightgreen -4px -4px 8px 8px";
-		var newherolabel = $.CreatePanel('Label', panel, '');
-		newherolabel.AddClass("Arcana")
-		newherolabel.text = "Arcana!"
+//		panel.style.border = "1px solid #99ff33";
+//		panel.style.boxShadow = "fill lightgreen -4px -4px 8px 8px";
+
+//		var newherolabel = $.CreatePanel('Label', panel, '');
+//		newherolabel.AddClass("Arcana")
+//		newherolabel.text = "Arcana!"
 	}
 }
 

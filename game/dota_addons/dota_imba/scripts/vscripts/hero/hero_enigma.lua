@@ -774,7 +774,7 @@ end
 
 function modifier_imba_enigma_black_hole:OnCreated()
 	if not IsServer() then return end
-	if IsRoshan(self:GetParent()) then self:Destroy() end  --Roshan is immune to Black Hole
+	if self:GetParent() and IsRoshan(self:GetParent()) then self:Destroy() end  --Roshan is immune to Black Hole
 	self:StartIntervalThink(FrameTime())
 	local ability = self:GetAbility()
 	self.radius = self:GetAbility().radius

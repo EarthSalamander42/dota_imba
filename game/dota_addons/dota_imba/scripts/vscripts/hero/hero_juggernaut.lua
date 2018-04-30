@@ -14,7 +14,6 @@
 --
 -- Editors:
 --     Yahnich, 28.03.2017
---     suthernfriend, 03.02.2018
 
 CreateEmptyTalents('juggernaut')
 
@@ -42,6 +41,7 @@ end
 function imba_juggernaut_blade_fury:OnSpellStart()
 	local caster = self:GetCaster()
 	caster:Purge(false, true, false, false, false)
+
 	-- Fix the infinite radius in custom, but benefits the use of Refresher
 	if caster:HasModifier("modifier_imba_juggernaut_blade_fury") then
 		local buff = caster:FindModifierByName("modifier_imba_juggernaut_blade_fury")
@@ -49,6 +49,7 @@ function imba_juggernaut_blade_fury:OnSpellStart()
 			buff.radius = self:GetTalentSpecialValueFor("effect_radius")
 		end
 	end
+
 	caster:AddNewModifier(caster, self, "modifier_imba_juggernaut_blade_fury", {duration = self:GetSpecialValueFor("duration")})
 
 	-- Play cast lines
@@ -58,12 +59,9 @@ function imba_juggernaut_blade_fury:OnSpellStart()
 	elseif rand >= 10 and rand <= 18 then
 		caster:EmitSound("Imba.JuggernautBladeFury"..rand)
 	end
-
 end
 
 LinkLuaModifier("modifier_imba_juggernaut_blade_fury", "hero/hero_juggernaut", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_juggernaut_blade_fury_deflect_buff", "hero/hero_juggernaut", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_juggernaut_blade_fury_deflect_on_kill_credit", "hero/hero_juggernaut", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_juggernaut_blade_fury_succ", "hero/hero_juggernaut", LUA_MODIFIER_MOTION_NONE)
 modifier_imba_juggernaut_blade_fury = modifier_imba_juggernaut_blade_fury or class({})
 
@@ -74,6 +72,7 @@ function modifier_imba_juggernaut_blade_fury:IsAura()
 		return false
 	end
 end
+
 function modifier_imba_juggernaut_blade_fury:GetAuraSearchTeam() 		return DOTA_UNIT_TARGET_TEAM_ENEMY end
 function modifier_imba_juggernaut_blade_fury:GetAuraSearchType() 		return DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO end
 function modifier_imba_juggernaut_blade_fury:GetAuraRadius() 			return self.radius + 200 end
@@ -239,186 +238,34 @@ end
 
 function modifier_imba_juggernaut_blade_fury:DeclareFunctions()
 	local funcs = {
-		MODIFIER_EVENT_ON_ATTACK_LANDED,
-		MODIFIER_EVENT_ON_TAKEDAMAGE
+		MODIFIER_EVENT_ON_TAKEDAMAGE,
 	}
 	return funcs
-end
-
--- Mi o sutete mo, myōri wa sutezu.
-function modifier_imba_juggernaut_blade_fury:OnAttackLanded(keys)
-	if IsServer() then
-
-		-- If it's the first instance, or deflect procs, Deflect it!
-		if self.deflect or RollPercentage(self.deflect_chance) then
-
-			local target = keys.target
-			local attacker = keys.attacker
-			self.caster = self:GetCaster()
-			self.ability = self:GetAbility()
-			check_attack_capability = attacker:GetAttackCapability()
-
-			attacker_projectile_particle = attacker:GetRangedProjectileName()
-			attacker_projectile_speed = attacker:GetProjectileSpeed()
-
-			-- Check if the attacker is a ranged attacker.
-			if target == self.caster and check_attack_capability == 2 then
-
-				-- Sets the confirmed deflect to false
-				self.deflect = false
-
-				-- Nullifies the attack, FrameTime() does not help.
-				self.caster:AddNewModifier(self.caster, self.ability, "modifier_imba_juggernaut_blade_fury_deflect_buff", {duration = 0.01})
-
-				-- Play hit sound
-				self.caster:EmitSound("Hero_Juggernaut.BladeFury.Impact")
-
-				-- Play hit particle
-				local slash_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_juggernaut/juggernaut_blade_fury_tgt.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.caster)
-				ParticleManager:SetParticleControl(slash_pfx, 0, self.caster:GetAbsOrigin())
-				ParticleManager:ReleaseParticleIndex(slash_pfx)
-
-				local enemy = FindUnitsInRadius(self.caster:GetTeamNumber(),
-					self.caster:GetAbsOrigin(),
-					nil,
-					self.ability:GetSpecialValueFor("deflect_radius"),
-					DOTA_UNIT_TARGET_TEAM_ENEMY,
-					DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-					DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
-					FIND_ANY_ORDER,
-					false)
-
-				if enemy[1] then
-					deflected_target = enemy[1]
-
-					local projectile_deflected
-					projectile_deflected = {
-						hTarget = deflected_target,
-						hCaster = self.caster,
-						Ability = self.ability,
-						EffectName = attacker_projectile_particle,
-						iMoveSpeed = attacker_projectile_speed,
-						vSourceLoc = self.caster:GetAbsOrigin(),
-						-- TreeBehavior = PROJECTILES_NOTHING,
-						bDodgeable = true,
-						flRadius = 1,
-						bVisibleToEnemies = true,
-						bDestroyOnDodge = true,
-						bReplaceExisting = false,
-						bProvidesVision = false,
-						OnProjectileHitUnit = function(params,projectileID)
-							ProjectileHit(params, projectileID, self.ability, attacker, deflected_target, self.caster)
-						end,
-					}
-
-					TrackingProjectiles:Projectile(projectile_deflected)
-					-- ProjectileManager:CreateTrackingProjectile(projectile_deflected)
-
-				end
-			end
-		end
-	end
-end
-
-function ProjectileHit(params, projectileID, modifier, attacker, target, deflector)
-
-	if target:HasModifier("modifier_imba_juggernaut_blade_fury_deflect_on_kill_credit") or (not target:IsAlive()) then
-	else
-		target:AddNewModifier(deflector,modifier,"modifier_imba_juggernaut_blade_fury_deflect_on_kill_credit",{duration = 0.01})
-	end
-
-	-- Perform an instant attack on hit enemy
-	attacker:PerformAttack(target, false, true, true, false, false, false, false)
-	-- target:RemoveModifierByName("modifier_imba_juggernaut_blade_fury_deflect_on_kill_credit") --Injected into imba.lua
-	-- On behalf of deflecting projectiles, list of items that changed to nullify on hit effects and have their modifier applied on attacking allied, in alphabetical order:
-	-- Abyssal Blade Family, Butterfly, Crit Family, Diffusal, Echo Sabre, Mjollnir Family, MKB, Nether Wand Family, Silver Edge Family, Spellfencer, Starfury and Triumverate Family
-end
-
--- Deflected kill credited to the caster.
-modifier_imba_juggernaut_blade_fury_deflect_on_kill_credit = modifier_imba_juggernaut_blade_fury_deflect_on_kill_credit or class({})
-
-function modifier_imba_juggernaut_blade_fury_deflect_on_kill_credit:IsHidden() return false end
-function modifier_imba_juggernaut_blade_fury_deflect_on_kill_credit:IsPurgable() return false end
-function modifier_imba_juggernaut_blade_fury_deflect_on_kill_credit:IsDebuff() return false end
-
-function modifier_imba_juggernaut_blade_fury_deflect_on_kill_credit:DeclareFunctions()
-	local decFuncs =
-		{
-			MODIFIER_EVENT_ON_TAKEDAMAGE
-		}
-	return decFuncs
-end
-
-function modifier_imba_juggernaut_blade_fury_deflect_on_kill_credit:OnTakeDamage(keys)
-	if IsServer() then
-		self.caster = self:GetCaster()
-		self.parent = self:GetParent()
-		self.ability = self:GetAbility()
-		local damage = keys.damage
-		local target = keys.target
-		local attacker = keys.attacker
-
-		-- Calculates damage
-		parent_health = self.parent:GetHealth()
-		if keys.damage > parent_health and target == self.parent then
-			-- Deals damage, crediting to the caster
-			ApplyDamage({attacker = self.caster, victim = self.parent, ability = self.ability, damage = target_health + 10, damage_type = DAMAGE_TYPE_PURE, damage_flag = DOTA_DAMAGE_FLAG_NO_DAMAGE_MULTIPLIERS + DOTA_DAMAGE_FLAG_BYPASSES_BLOCK})
-		end
-	end
-end
-
-function modifier_imba_juggernaut_blade_fury_deflect_on_kill_credit:StatusEffectPriority()
-	return MODIFIER_PRIORITY_ULTRA
-end
-
-function modifier_imba_juggernaut_blade_fury_deflect_on_kill_credit:GetPriority()
-	return MODIFIER_PRIORITY_ULTRA
-end
-
-function modifier_imba_juggernaut_blade_fury_deflect_on_kill_credit:GetAttributes()
-	return MODIFIER_ATTRIBUTE_MULTIPLE
 end
 
 function modifier_imba_juggernaut_blade_fury:OnRemoved()
 	if IsServer() then
 		self.caster:StopSound("Hero_Juggernaut.BladeFuryStart")
 		self.caster:EmitSound("Hero_Juggernaut.BladeFuryStop")
+
 		if self.caster:HasModifier("modifier_imba_omni_slash_caster") then
 			StartAnimation(self.caster, {activity = ACT_DOTA_OVERRIDE_ABILITY_4, rate = 1.0})
 		else
 			EndAnimation(self.caster)
 		end
+
 		if self.blade_fury_spin_pfx then
 			ParticleManager:DestroyParticle(self.blade_fury_spin_pfx, false)
 			ParticleManager:ReleaseParticleIndex(self.blade_fury_spin_pfx)
 			self.blade_fury_spin_pfx = nil
 		end
+
 		if self.blade_fury_spin_pfx_2 then
 			ParticleManager:DestroyParticle(self.blade_fury_spin_pfx_2, false)
 			ParticleManager:ReleaseParticleIndex(self.blade_fury_spin_pfx_2)
 			self.blade_fury_spin_pfx_2 = nil
 		end
 	end
-end
-
-modifier_imba_juggernaut_blade_fury_deflect_buff = modifier_imba_juggernaut_blade_fury_deflect_buff or class({})
-
-function modifier_imba_juggernaut_blade_fury_deflect_buff:IsHidden() return true end
-function modifier_imba_juggernaut_blade_fury_deflect_buff:IsPurgable() return false end
-function modifier_imba_juggernaut_blade_fury_deflect_buff:IsDebuff() return false end
-
-function modifier_imba_juggernaut_blade_fury_deflect_buff:OnCreated()
-	self.caster = self:GetCaster()
-end
-
-function modifier_imba_juggernaut_blade_fury_deflect_buff:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE}
-	return decFuncs
-end
-
-function modifier_imba_juggernaut_blade_fury_deflect_buff:GetModifierIncomingDamage_Percentage(params)
-	SendOverheadEventMessage(nil, OVERHEAD_ALERT_BLOCK, self.caster, params.damage, nil)
-	return -100
 end
 
 -- HEALING WARD --

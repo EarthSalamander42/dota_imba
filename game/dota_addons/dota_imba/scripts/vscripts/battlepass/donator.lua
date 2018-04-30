@@ -1,15 +1,16 @@
-function DonatorStatue(ID, statue_info)
+function DonatorStatue(ID, statue_unit)
 	if IMBA_DONATOR_STATUE[tostring(PlayerResource:GetSteamID(ID))] then 
-		statue_info = IMBA_DONATOR_STATUE[tostring(PlayerResource:GetSteamID(ID))]
+		statue_unit = IMBA_DONATOR_STATUE[tostring(PlayerResource:GetSteamID(ID))]
 	end
 
 	local pedestal_name = "npc_imba_donator_pedestal"
 	local hero = PlayerResource:GetSelectedHeroEntity(ID)
+
 --	if hero.donator_statue then
 --		hero.donator_statue:ForceKill(false)
 
---		local unit = CreateUnitByName(statue_info[2], abs, true, nil, nil, PlayerResource:GetPlayer(ID):GetTeam())
---		unit:SetModelScale(statue_info[1])
+--		local unit = CreateUnitByName(statue_unit[2], abs, true, nil, nil, PlayerResource:GetPlayer(ID):GetTeam())
+--		unit:SetModelScale(statue_unit[1])
 --		unit:SetAbsOrigin(abs + Vector(0, 0, 17))
 --		unit:AddNewModifier(unit, nil, "modifier_imba_contributor_statue", {})
 --		hero.donator_statue = unit
@@ -37,8 +38,7 @@ function DonatorStatue(ID, statue_info)
 
 			filler:RemoveSelf()
 
-			local unit = CreateUnitByName(statue_info[2], abs, true, nil, nil, PlayerResource:GetPlayer(ID):GetTeam())
-			unit:SetModelScale(statue_info[1])
+			local unit = CreateUnitByName(statue_unit, abs, true, nil, nil, PlayerResource:GetPlayer(ID):GetTeam())
 			unit:SetAbsOrigin(abs + Vector(0, 0, 45))
 			unit:AddNewModifier(unit, nil, "modifier_imba_donator_statue", {})
 			unit:AddNewModifier(unit, nil, "modifier_invulnerable", {})
@@ -71,23 +71,22 @@ function DonatorStatue(ID, statue_info)
 				unit:SetCustomHealthLabel(name, 45, 200, 45)
 			end
 
-			if statue_info[2] == "npc_imba_donator_statue_suthernfriend" then
+			if statue_unit == "npc_imba_donator_statue_suthernfriend" then
 				unit:SetMaterialGroup("1")
-			elseif statue_info[2] == "npc_imba_donator_statue_tabisama" then
+			elseif statue_unit == "npc_imba_donator_statue_tabisama" then
 				unit:SetAbsOrigin(unit:GetAbsOrigin() + Vector(0, 0, 40))
 			end
 
-			if statue_info[2] == "npc_imba_donator_statue_zonnoz" then
+			if statue_unit == "npc_imba_donator_statue_zonnoz" then
 				pedestal_name = "npc_imba_donator_pedestal_pudge_arcana"
 			end
 
 			local pedestal = CreateUnitByName(pedestal_name, abs, true, nil, nil, PlayerResource:GetPlayer(ID):GetTeam())
 			pedestal:AddNewModifier(pedestal, nil, "modifier_imba_contributor_statue", {})
---			pedestal:SetModelScale(statue_info[1])
 			pedestal:SetAbsOrigin(abs + Vector(0, 0, 45))
 			unit.pedestal = pedestal
 
-			if statue_info[2] == "npc_imba_donator_statue_zonnoz" then
+			if statue_unit == "npc_imba_donator_statue_zonnoz" then
 				pedestal:SetMaterialGroup("1")
 			end
 
@@ -96,8 +95,8 @@ function DonatorStatue(ID, statue_info)
 	end
 end
 
-function DonatorCompanion(ID, unit_name)
-if IMBA_DONATOR_COMPANION[tostring(PlayerResource:GetSteamID(ID))] then 
+function DonatorCompanion(ID, unit_name, js)
+if IMBA_DONATOR_COMPANION[tostring(PlayerResource:GetSteamID(ID))] and not js then 
 	unit_name = IMBA_DONATOR_COMPANION[tostring(PlayerResource:GetSteamID(ID))]
 end
 
@@ -150,6 +149,9 @@ local model_scale = GetKeyValueByHeroName(unit_name, "ModelScale")
 		ParticleManager:ReleaseParticleIndex(particle)
 	elseif unit_name == "npc_imba_donator_companion_baekho" then
 		local particle = ParticleManager:CreateParticle("particles/econ/courier/courier_baekho/courier_baekho_ambient.vpcf", PATTACH_ABSORIGIN_FOLLOW, companion)
+		ParticleManager:ReleaseParticleIndex(particle)
+	elseif unit_name == "npc_imba_donator_companion_terdic" then
+		local particle = ParticleManager:CreateParticle("particles/econ/courier/courier_shagbark/courier_shagbark_ambient.vpcf", PATTACH_ABSORIGIN_FOLLOW, companion)
 		ParticleManager:ReleaseParticleIndex(particle)
 	end
 

@@ -249,6 +249,8 @@
 	"battlepass_bottle4"			"Gold Bottle"
 	"battlepass_pudge_arcana"		"Pudge Arcana (red)"
 	"battlepass_pudge_arcana2"		"Pudge Arcana (green)"
+	"battlepass_juggernaut_arcana"	"Juggernaut Arcana (blue)"
+	"battlepass_juggernaut_arcana2"	"Juggernaut Arcana (red)"
 
 	// Overthrow
 		"PointsToWin"									"+{d:points_to_win} more"

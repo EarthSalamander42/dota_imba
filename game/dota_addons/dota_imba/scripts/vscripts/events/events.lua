@@ -300,24 +300,33 @@ function GameMode:OnNPCSpawned(keys)
 				npc:AddAbility("courier_movespeed"):SetLevel(1)
 				npc.first_spawn = true
 			end
-		return
+		
+			return
 		elseif npc:IsRealHero() then
+			if api.imba.is_donator(PlayerResource:GetSteamID(npc:GetPlayerID())) then
+				npc:AddNewModifier(npc, nil, "modifier_imba_donator", {})
+			end
+
 			if npc.first_spawn ~= true then
 				npc.first_spawn = true
 				GameMode:OnHeroFirstSpawn(npc)
+
 				return
 			end
 
 			GameMode:OnHeroSpawned(npc)
+
 			return
 		else
 			if npc.first_spawn ~= true then
 				npc.first_spawn = true
 				GameMode:OnUnitFirstSpawn(npc)
+
 				return
 			end
 
 			GameMode:OnUnitSpawned(npc)
+
 			return
 		end
 	end

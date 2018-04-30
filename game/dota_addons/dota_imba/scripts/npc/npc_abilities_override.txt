@@ -187,7 +187,6 @@
 	"item_hyperstone"			{ "AbilityTextureName" "custom/imba_hyperstone" }
 	"item_mantle"				{ "AbilityTextureName" "custom/imba_mantle" }
 	"item_medallion_of_courage"	{ "AbilityTextureName" "custom/imba_medallion_of_courage" }
-	"item_mithril_hammer"		{ "AbilityTextureName" "custom/imba_mithril_hammer" }
 	"item_mystic_staff"			{ "AbilityTextureName" "custom/imba_mystic_staff" }
 	"item_oblivion_staff"		{ "AbilityTextureName" "custom/imba_oblivion_staff" }
 	"item_ogre_axe"				{ "AbilityTextureName" "custom/imba_ogre_axe" }
@@ -211,6 +210,23 @@
 	"item_courier"
 	{
 		"ItemPurchasable"					"0"
+	}
+
+	//=================================================================================================================
+	// Mithril Hammer
+	//=================================================================================================================
+	"item_mithril_hammer"
+	{
+		"AbilityTextureName"			"custom/imba_mithril_hammer"
+
+		"AbilitySpecial"
+		{
+//			"01"
+//			{
+//				"var_type"				"FIELD_INTEGER"
+//				"bonus_damage"			"24"
+//			}
+		}
 	}
 
 	//=================================================================================================================
@@ -418,7 +434,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"hp_regen"				"2.0"
+				"hp_regen"				"2.5"
 			}
 			"02"
 			{
@@ -1079,17 +1095,18 @@
 	"item_helm_of_the_dominator"
 	{
 		"AbilityTextureName"			"custom/imba_helm_of_the_dominator"
+
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_stats"			"2"
+				"bonus_stats"			"5"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"attack_speed_aura"		"10"
+				"attack_speed_aura"		"20"
 			}
 			"03"
 			{
@@ -1186,6 +1203,7 @@
 		"AbilityCastRange"				"600"
 		"AbilityCooldown"				"35"
 		"MaxUpgradeLevel"				"10"
+		"AbilityManaCost"				"120"		
 		"ItemCost"						"2565"
 		"UpgradesItems"					"item_dagon;item_dagon_2;item_dagon_3;item_dagon_4;item_dagon_5;item_imba_dagon_6;item_imba_dagon_7;item_imba_dagon_8;item_imba_dagon_9"
 
@@ -1219,7 +1237,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"mana_cost_tooltip"		"180"
+				"mana_cost_tooltip"		"120"
 			}
 		}
 	}
@@ -1230,6 +1248,7 @@
 		"AbilityCastRange"				"650"
 		"AbilityCooldown"				"30"
 		"MaxUpgradeLevel"				"10"
+		"AbilityManaCost"				"140"
 		"ItemCost"						"3815"
 		"UpgradesItems"					"item_dagon_2;item_dagon_3;item_dagon_4;item_dagon_5;item_imba_dagon_6;item_imba_dagon_7;item_imba_dagon_8;item_imba_dagon_9"
 
@@ -1263,7 +1282,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"mana_cost_tooltip"		"180"
+				"mana_cost_tooltip"		"140"
 			}
 		}
 	}
@@ -1274,6 +1293,7 @@
 		"AbilityCastRange"				"700"
 		"AbilityCooldown"				"25"
 		"MaxUpgradeLevel"				"10"
+		"AbilityManaCost"				"160"
 		"ItemCost"						"5065"
 		"UpgradesItems"					"item_dagon_3;item_dagon_4;item_dagon_5;item_imba_dagon_6;item_imba_dagon_7;item_imba_dagon_8;item_imba_dagon_9"
 
@@ -1307,7 +1327,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"mana_cost_tooltip"		"180"
+				"mana_cost_tooltip"		"160"
 			}
 		}
 	}
@@ -1318,6 +1338,7 @@
 		"AbilityCastRange"				"750"
 		"AbilityCooldown"				"20"
 		"MaxUpgradeLevel"				"10"
+		"AbilityManaCost"				"180"
 		"ItemCost"						"6315"
 		"UpgradesItems"					"item_dagon_4;item_dagon_5;item_imba_dagon_6;item_imba_dagon_7;item_imba_dagon_8;item_imba_dagon_9"
 
@@ -1362,6 +1383,7 @@
 		"AbilityCastRange"				"800"
 		"AbilityCooldown"				"15"
 		"MaxUpgradeLevel"				"10"
+		"AbilityManaCost"				"200"
 		"ItemCost"						"7565"
 		"UpgradesItems"					"item_dagon_5;item_imba_dagon_6;item_imba_dagon_7;item_imba_dagon_8;item_imba_dagon_9"
 
@@ -1395,7 +1417,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"mana_cost_tooltip"		"180"
+				"mana_cost_tooltip"		"200"
 			}
 		}
 	}
@@ -1619,7 +1641,7 @@
 	//=================================================================================================================
 	"juggernaut_blade_fury"
 	{
-		"AbilityCooldown"				"40 30 20 10"
+		"AbilityCooldown"				"30 25 20 15"
 		"AbilityManaCost"				"120 110 100 90"		
 
 		// Special
@@ -1634,12 +1656,12 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"blade_fury_radius"			"275"
+				"blade_fury_radius"			"270 280 290 300"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"blade_fury_damage"			"90 120 150 180"
+				"blade_fury_damage"			"110 140 170 200"
 				"LinkedSpecialBonus"		"special_bonus_unique_juggernaut_3"
 			}
 			"04"
@@ -1697,11 +1719,6 @@
 	//=================================================================================================================
 	"juggernaut_omni_slash"
 	{
-		"AbilityCastRange"				"350"
-		"AbilityCooldown"				"130.0 120.0 110.0"
-		"AbilityManaCost"				"200 275 350"
-		"MaxLevel"						"3"
-
 		"AbilitySpecial"
 		{
 			"01"
@@ -1746,8 +1763,6 @@
 	{
 		"AbilityCastRange"				"700 900 1050 1150"
 		"AbilityManaCost"				"120"
-
-		"MaxLevel"						"4"
 
 		"AbilitySpecial"
 		{
@@ -7107,6 +7122,8 @@
 	//=================================================================================================================
 	"lone_druid_savage_roar_bear"
 	{
+		"AbilityCooldown"				"30 25 20 15"
+
 		"AbilitySpecial"
 		{
 			"01"
@@ -9270,16 +9287,15 @@
 	//=================================================================================================================
 	"puck_phase_shift"
 	{
-		"MaxLevel"							"4"
-
-		"AbilityChannelTime"				"1.0 2.5 3.5 4.0"
+		"AbilityChannelTime"				"1.0 1.75 2.5 3.25"
+		"AbilityCooldown"					"8.0"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"duration"					"1.0 2.5 3.5 4.0"
+				"duration"					"1.0 1.75 2.5 3.25"
 			}
 		}
 	}
@@ -12148,7 +12164,7 @@
 	}
 
 	//=================================================================================================================
-	//	Viper: Poison Attack ability to affect towers
+	//	Viper: Poison Attack ability to affect towers-
 	//=================================================================================================================
 	"special_bonus_unique_viper_1"
 	{
@@ -12157,7 +12173,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"value"				"0"
+				"value"				"6"
 			}
 		}
 	}
@@ -12197,7 +12213,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_attack_speed"		"-20 -40 -60 -80"
+				"bonus_attack_speed"		"20 40 60 80"
 				"LinkedSpecialBonus"		"special_bonus_unique_viper_1"
 			}
 			"03"
