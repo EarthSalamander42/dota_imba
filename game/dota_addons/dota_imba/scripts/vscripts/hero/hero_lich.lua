@@ -1396,95 +1396,93 @@ function imba_lich_chain_frost:OnProjectileHit_ExtraData(target, location, extra
 
 	-- Check if this is a main chain frost (not talent mini frosts)
 	if extradata.main_chain_frost == 1 then
-
 		-- Start a timer and bounce again!
 		Timers:CreateTimer(projectile_delay, function()
+			-- If there are no more bounces remaining, do nothing
+			if extradata.bounces_left <= 0 then
+				return nil
+			end
 
-				-- If there are no more bounces remaining, do nothing
-				if extradata.bounces_left <= 0 then
-					return nil
+			-- Find enemies in bounce range
+			local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
+				target:GetAbsOrigin(),
+				nil,
+				bounce_range,
+				DOTA_UNIT_TARGET_TEAM_ENEMY,
+				DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+				DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
+				FIND_ANY_ORDER,
+				false)
+
+			-- Remove the current enemy target from the table of possible targets
+			for i = 1, #enemies do
+				if target == enemies[i] then
+					table.remove(enemies, i)
+					break
 				end
+			end
 
-				-- Find enemies in bounce range
-				local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
-					target:GetAbsOrigin(),
-					nil,
-					bounce_range,
-					DOTA_UNIT_TARGET_TEAM_ENEMY,
-					DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-					DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
-					FIND_ANY_ORDER,
-					false)
+			-- If there are no enemies, do nothing
+			if #enemies <= 0 then
+				return nil
+			end
 
-				-- Remove the current enemy target from the table of possible targets
-				for i = 1, #enemies do
-					if target == enemies[i] then
-						table.remove(enemies, i)
-						break
+			-- Increase bounce speed
+			local projectile_speed = extradata.current_projectile_speed + speed_increase_per_bounce
+
+			-- Reduce bounce count
+			local bounces_left = extradata.bounces_left - 1
+
+			-- Bounce to a random enemy
+			local bounce_target = enemies[1]
+
+			local chain_frost_projectile
+			chain_frost_projectile = {Target = bounce_target,
+				Source = target,
+				Ability = ability,
+				EffectName = particle_projectile,
+				iMoveSpeed = projectile_speed,
+				bDodgeable = false,
+				bVisibleToEnemies = true,
+				bReplaceExisting = false,
+				bProvidesVision = true,
+				iVisionRadius = projectile_vision,
+				iVisionTeamNumber = caster:GetTeamNumber(),
+				ExtraData = {bounces_left = bounces_left, current_projectile_speed = projectile_speed, main_chain_frost = true}
+			}
+
+			ProjectileManager:CreateTrackingProjectile(chain_frost_projectile)
+
+			-- If there is more than one enemy and the caster has #7 Talent, throw smaller chain frosts at them
+			if caster:HasTalent("special_bonus_imba_lich_7") then
+				local projectiles_launched = 0
+
+				for i = 2, #enemies do
+					-- Check if there are still more projectiles that should be launched
+					if projectiles_launched < bonus_projectiles then
+
+						-- Define and launch a smaller frost
+						chain_frost_projectile = {Target = enemies[i],
+							Source = target,
+							Ability = ability,
+							EffectName = particle_mini_frost_projectile,
+							iMoveSpeed = projectile_speed,
+							bDodgeable = false,
+							bVisibleToEnemies = true,
+							bReplaceExisting = false,
+							bProvidesVision = true,
+							iVisionRadius = projectile_vision,
+							iVisionTeamNumber = caster:GetTeamNumber(),
+							ExtraData = {main_chain_frost = false}
+						}
+
+						ProjectileManager:CreateTrackingProjectile(chain_frost_projectile)
+
+						-- Increment counter
+						projectiles_launched = projectiles_launched + 1
 					end
 				end
-
-				-- If there are no enemies, do nothing
-				if #enemies <= 0 then
-					return nil
-				end
-
-				-- Increase bounce speed
-				local projectile_speed = extradata.current_projectile_speed + speed_increase_per_bounce
-
-				-- Reduce bounce count
-				local bounces_left = extradata.bounces_left - 1
-
-				-- Bounce to a random enemy
-				local bounce_target = enemies[1]
-
-				local chain_frost_projectile
-				chain_frost_projectile = {Target = bounce_target,
-					Source = target,
-					Ability = ability,
-					EffectName = particle_projectile,
-					iMoveSpeed = projectile_speed,
-					bDodgeable = false,
-					bVisibleToEnemies = true,
-					bReplaceExisting = false,
-					bProvidesVision = true,
-					iVisionRadius = projectile_vision,
-					iVisionTeamNumber = caster:GetTeamNumber(),
-					ExtraData = {bounces_left = bounces_left, current_projectile_speed = projectile_speed, main_chain_frost = true}
-				}
-
-				ProjectileManager:CreateTrackingProjectile(chain_frost_projectile)
-
-				-- If there is more than one enemy and the caster has #7 Talent, throw smaller chain frosts at them
-				if caster:HasTalent("special_bonus_imba_lich_7") then
-					local projectiles_launched = 0
-
-					for i = 2, #enemies do
-						-- Check if there are still more projectiles that should be launched
-						if projectiles_launched < bonus_projectiles then
-
-							-- Define and launch a smaller frost
-							chain_frost_projectile = {Target = enemies[i],
-								Source = target,
-								Ability = ability,
-								EffectName = particle_mini_frost_projectile,
-								iMoveSpeed = projectile_speed,
-								bDodgeable = false,
-								bVisibleToEnemies = true,
-								bReplaceExisting = false,
-								bProvidesVision = true,
-								iVisionRadius = projectile_vision,
-								iVisionTeamNumber = caster:GetTeamNumber(),
-								ExtraData = {main_chain_frost = false}
-							}
-
-							ProjectileManager:CreateTrackingProjectile(chain_frost_projectile)
-
-							-- Increment counter
-							projectiles_launched = projectiles_launched + 1
-						end
-					end
-				end
+			end
 		end)
 	else
 		-- Talent mini ball! Adjust damage
@@ -1520,7 +1518,6 @@ function imba_lich_chain_frost:OnProjectileHit_ExtraData(target, location, extra
 	IncreaseStacksColdFront(caster, target, cold_front_stacks)
 end
 
-
 -- Slow modifier
 modifier_imba_chain_frost_slow = class({})
 
@@ -1552,7 +1549,6 @@ end
 function modifier_imba_chain_frost_slow:GetModifierAttackSpeedBonus_Constant()
 	return self.as_slow * (-1)
 end
-
 
 -- #6 Talent: Chain Frost can be cast on allies to give them a orb that spins around them. Taking damage from an enemy hero causes the Chain Frost to bounce to the attacker.
 modifier_imba_chain_frost_talent_buff = modifier_imba_chain_frost_talent_buff or class({})

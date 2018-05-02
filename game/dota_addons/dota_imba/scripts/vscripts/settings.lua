@@ -547,7 +547,7 @@ MORPHLING_RESTRICTED_MODIFIERS = {
 }
 
 IMBA_DONATOR_COMPANION = {}
--- IMBA_DONATOR_COMPANION["76561198015161808"] = "npc_imba_donator_companion_cookies"
+IMBA_DONATOR_COMPANION["76561198015161808"] = "npc_imba_donator_companion_cookies"
 IMBA_DONATOR_COMPANION["76561198094835750"] = "npc_imba_donator_companion_zonnoz"
 IMBA_DONATOR_COMPANION["76561198003571172"] = "npc_imba_donator_companion_baumi"
 IMBA_DONATOR_COMPANION["76561198014254115"] = "npc_imba_donator_companion_icefrog"
@@ -556,7 +556,7 @@ IMBA_DONATOR_COMPANION["76561198021465788"] = "npc_imba_donator_companion_suther
 IMBA_DONATOR_COMPANION["76561198073163389"] = "npc_imba_donator_companion_terdic"
 
 IMBA_DONATOR_STATUE = {}
--- IMBA_DONATOR_STATUE["76561198015161808"] = "npc_imba_donator_statue_cookies"
+IMBA_DONATOR_STATUE["76561198015161808"] = "npc_imba_donator_statue_cookies"
 IMBA_DONATOR_STATUE["76561193714760494"] = "npc_imba_donator_statue_acalia"
 IMBA_DONATOR_STATUE["76561193684594183"] = "npc_imba_donator_statue_lily"
 IMBA_DONATOR_STATUE["76561198021465788"] = "npc_imba_donator_statue_suthernfriend"
@@ -566,6 +566,7 @@ IMBA_DONATOR_STATUE["76561198094835750"] = "npc_imba_donator_statue_zonnoz"
 IMBA_DONATOR_STATUE["76561197980558838"] = "npc_imba_donator_statue_january0000"
 IMBA_DONATOR_STATUE["76561198073163389"] = "npc_imba_donator_statue_terdic"
 IMBA_DONATOR_STATUE["76561198077187165"] = "npc_imba_donator_statue_toc"
+IMBA_DONATOR_STATUE["76561198187809623"] = "npc_imba_donator_statue_oviakin"
 
 UNIT_EQUIPMENT = {}
 UNIT_EQUIPMENT["models/heroes/crystal_maiden/crystal_maiden.vmdl"] = {
@@ -600,13 +601,19 @@ UNIT_EQUIPMENT["models/items/pudge/arcana/pudge_arcana_base.vmdl"] = {
 	"models/items/pudge/pudge_deep_sea_abomination_arms/pudge_deep_sea_abomination_arms.vmdl",
 	"models/items/pudge/arcana/pudge_arcana_back.vmdl",
 }
-
 UNIT_EQUIPMENT["models/heroes/huskar/huskar.vmdl"] = {
 	"models/items/huskar/searing_dominator/searing_dominator.vmdl",
 	"models/heroes/huskar/huskar_bracer.vmdl",
 	"models/heroes/huskar/huskar_dagger.vmdl",
 	"models/heroes/huskar/huskar_shoulder.vmdl",
 	"models/heroes/huskar/huskar_spear.vmdl",
+}
+UNIT_EQUIPMENT["models/heroes/rubick/rubick.vmdl"] = {
+	"models/items/rubick/force_staff/force_staff.vmdl",
+	"models/items/rubick/kuroky_rubick_back/kuroky_rubick_back.vmdl",
+	"models/items/rubick/kuroky_rubick_shoulders/kuroky_rubick_shoulders.vmdl",
+	"models/items/rubick/kuroky_rubick_weapon/kuroky_rubick_weapon.vmdl",
+	"models/items/rubick/rubick_kuroky_head/rubick_kuroky_head.vmdl",
 }
 
 IMBA_DISABLED_SKULL_BASHER = {

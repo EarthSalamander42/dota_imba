@@ -31951,23 +31951,14 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
 		"ScriptFile"					"hero/hero_juggernaut.lua"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"			"juggernaut_blade_dance"		
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"75"
-
-		// Time
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"7"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_juggernaut.vsndevts"
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_earthshaker.vsndevts"
 			"particle"					"particles/econ/items/juggernaut/bladekeeper_omnislash/dc_juggernaut_omni_slash_rope.vpcf"
 			"particle"					"particles/units/heroes/hero_juggernaut/jugg_crit_blur.vpcf"
 		}

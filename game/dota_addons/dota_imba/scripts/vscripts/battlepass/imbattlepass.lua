@@ -18,8 +18,9 @@
 -- Battlepass
 
 if Imbattlepass == nil then Imbattlepass = class({}) end
+local next_reward = false
 local next_reward_shown = false
-if IsInToolsMode() then
+if IsInToolsMode() and next_reward == true then
 	next_reward_shown = true
 end
 
@@ -429,23 +430,35 @@ function Imbattlepass:GetJuggernautArcanaEffect(ID)
 		hero.head:FollowEntity(hero, true)
 		hero.head:SetMaterialGroup(tostring(HasJuggernautArcana(ID)))
 
-		hero.back = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/heroes/juggernaut/jugg_cape.vmdl"})
+		hero.back = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/juggernaut/armor_for_the_favorite_back/armor_for_the_favorite_back.vmdl"})
 		hero.back:FollowEntity(hero, true)
 
-		hero.arms = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/heroes/juggernaut/jugg_bracers.vmdl"})
+		hero.arms = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/juggernaut/armor_for_the_favorite_arms/armor_for_the_favorite_arms.vmdl"})
 		hero.arms:FollowEntity(hero, true)
 
-		hero.legs = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/heroes/juggernaut/juggernaut_pants.vmdl"})
+		hero.legs = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/juggernaut/armor_for_the_favorite_legs/armor_for_the_favorite_legs.vmdl"})
 		hero.legs:FollowEntity(hero, true)
 
---		local particle = "particles/econ/items/pudge/pudge_arcana/pudge_arcana_red_back_ambient.vpcf"	
---		local particle2 = "particles/econ/items/pudge/pudge_arcana/pudge_arcana_red_back_ambient_beam.vpcf"
---		if HasJuggernautArcana(ID) == 1 then
---			particle = "particles/econ/items/pudge/pudge_arcana/pudge_arcana_back_ambient.vpcf"
---			particle2 = "particles/econ/items/pudge/pudge_arcana/pudge_arcana_back_ambient_beam.vpcf"
---		end
+		hero.weapon = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/juggernaut/thousand_faces_katana/thousand_faces_katana.vmdl"})
+		hero.weapon:FollowEntity(hero, true)
 
---		ParticleManager:CreateParticle(particle, PATTACH_ABSORIGIN_FOLLOW, hero.back)
+		hero.blade_fury_effect = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_blade_fury.vpcf"
+
+		local kill_sounds = {
+			"Hero_Juggernaut.ArcanaTrigger",
+			""
+		}
+
+		local particle = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_ambient.vpcf"	
+--		local particle2 = "particles/econ/items/pudge/pudge_arcana/pudge_arcana_red_back_ambient_beam.vpcf"
+		if HasJuggernautArcana(ID) == 1 then
+			hero.blade_fury_effect = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_v2_blade_fury.vpcf"
+
+			particle = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_v2_ambient.vpcf"
+--			particle2 = "particles/econ/items/pudge/pudge_arcana/pudge_arcana_back_ambient_beam.vpcf"
+		end
+
+		ParticleManager:CreateParticle(particle, PATTACH_ABSORIGIN_FOLLOW, hero.head)
 --		ParticleManager:CreateParticle(particle2, PATTACH_ABSORIGIN_FOLLOW, hero.back)
 --		ParticleManager:CreateParticle("particles/econ/items/pudge/pudge_arcana/pudge_arcana_ambient_flies.vpcf", PATTACH_ABSORIGIN_FOLLOW, hero)
 

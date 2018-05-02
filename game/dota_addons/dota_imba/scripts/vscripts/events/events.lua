@@ -450,10 +450,9 @@ function GameMode:OnAbilityUsed(keys)
 	-- 		end
 	-- 	end)
 	-- end
-
 end
 
-function GameMode:OnPlayerLearnedAbility( keys)
+function GameMode:OnPlayerLearnedAbility(keys)
 	local player = EntIndexToHScript(keys.player)
 	local hero = player:GetAssignedHero()
 	local abilityname = keys.abilityname
@@ -467,6 +466,9 @@ function GameMode:OnPlayerLearnedAbility( keys)
 				modifier_charges:SetStackCount(3)
 			end
 		end)
+	elseif abilityname == "special_bonus_imba_mirana_5" then -- fix for mirana stand still talent not working
+		hero:AddNewModifier(hero, nil, "modifier_imba_mirana_silence_stance", {})
+		hero:AddNewModifier(hero, nil, "modifier_imba_mirana_silence_stance_visible", {})
 	end
 
 	if abilityname == "lone_druid_savage_roar" and not hero.savage_roar then

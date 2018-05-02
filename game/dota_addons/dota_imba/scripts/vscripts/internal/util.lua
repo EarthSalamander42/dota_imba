@@ -728,16 +728,16 @@ if player_id == "test_reconnect" then player_id = 0 end
 		if PlayerResource:GetSelectedHeroEntity(player_id) then
 			CustomGameEventManager:Send_ServerToAllClients("player_reconnected", {PlayerID = player_id, PickedHeroes = HeroSelection.picked_heroes, pickState = pick_state, repickState = repick_state})
 
-			Timers:CreateTimer(3.0, function()
-				local table = {
-					ID = player_id,
-					team = PlayerResource:GetTeam(player_id),
-					disconnect = 2,
-				}
+--			Timers:CreateTimer(3.0, function()
+--				local table = {
+--					ID = player_id,
+--					team = PlayerResource:GetTeam(player_id),
+--					disconnect = 2,
+--				}
 
-				print("Decrease GG Amount!")
-				GameMode:GG(table)
-			end)
+--				print("Decrease GG Amount!")
+--				GameMode:GG(table)
+--			end)
 
 			local hero = PlayerResource:GetSelectedHeroEntity(player_id)
 
@@ -1554,12 +1554,12 @@ end
 
 function HideWearable(hero, item)
 	Timers:CreateTimer(function()
---		print("Check for cosmetic to hide...")
---		for i = 0, 44 do
---			if hero:GetTogglableWearable(i) then
---				print("WEARABLE:", i)
---			end
---		end
+		print("Check for cosmetic to hide...")
+		for i = 0, 44 do
+			if hero:GetTogglableWearable(i) then
+				print("WEARABLE:", i)
+			end
+		end
 
 		local wearable = hero:GetTogglableWearable(item)
 		if wearable then

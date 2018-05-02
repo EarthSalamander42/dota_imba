@@ -798,7 +798,7 @@ function imba_storm_spirit_ball_lightning:OnSpellStart()
 
 		-- Add Motion-Controller Modifier
 		caster:AddNewModifier(caster, self, "modifier_imba_ball_lightning", {})
-		StartAnimation(self:GetCaster(), {duration=10.0, activity=ACT_DOTA_OVERRIDE_ABILITY_4, rate=1.0})
+--		StartAnimation(self:GetCaster(), {duration=10.0, activity=ACT_DOTA_OVERRIDE_ABILITY_4, rate=1.0})
 	end
 end
 
@@ -902,7 +902,7 @@ function imba_storm_spirit_ball_lightning:OnProjectileHit_ExtraData(target, loca
 			end
 		end
 
-		StartAnimation(self:GetCaster(), {duration=0.3, activity=ACT_DOTA_STORM_ABILITY_4, rate=1.0})
+--		StartAnimation(self:GetCaster(), {duration=0.3, activity=ACT_DOTA_STORM_ABILITY_4, rate=1.0})
 	end
 end
 

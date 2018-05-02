@@ -39,18 +39,16 @@ function imba_mirana_starfall:IsHiddenWhenStolen()
 end
 
 function imba_mirana_starfall:OnUnStolen()
-	local caster = self:GetCaster()
 	local modifier_agh_starfall = "modifier_imba_starfall_scepter_thinker"
 
 	-- Remove modifier from Rubick when he loses the spell
-	if caster:HasModifier(modifier_agh_starfall) then
-		caster:RemoveModifierByName(modifier_agh_starfall)
+	if self:GetCaster():HasModifier(modifier_agh_starfall) then
+		self:GetCaster():RemoveModifierByName(modifier_agh_starfall)
 	end
 end
 
 function imba_mirana_starfall:OnSpellStart()
 	-- Ability properties
-	local caster = self:GetCaster()
 	local ability = self
 	local particle_circle = "particles/units/heroes/hero_mirana/mirana_starfall_circle.vpcf"
 	local particle_moon = "particles/units/heroes/hero_mirana/mirana_moonlight_owner.vpcf"
@@ -68,18 +66,18 @@ function imba_mirana_starfall:OnSpellStart()
 	-- Roll cast response for "longer" line
 	if RollPercentage(10) then
 		cast_response = cast_response..3
-		EmitSoundOn(cast_response, caster)
+		EmitSoundOn(cast_response, self:GetCaster())
 
 	elseif RollPercentage(75) then -- If it failed, roll for normal cast response
 		cast_response = cast_response..math.random(1,2)
-		EmitSoundOn(cast_response, caster)
+		EmitSoundOn(cast_response, self:GetCaster())
 	end
 
 	-- Play cast sound
-	EmitSoundOn(sound_cast, caster)
+	EmitSoundOn(sound_cast, self:GetCaster())
 
 	-- Assign caster's location on cast, since the waves do not move with Mirana
-	local caster_position = caster:GetAbsOrigin()
+	local caster_position = self:GetCaster():GetAbsOrigin()
 
 	-- Add circle particle, repeat it every second until all waves came down
 	local repeats = additional_waves_count * additional_waves_interval
@@ -87,7 +85,7 @@ function imba_mirana_starfall:OnSpellStart()
 
 	-- Start repeating
 	Timers:CreateTimer(function()
-		local particle_circle_fx = ParticleManager:CreateParticle(particle_circle, PATTACH_ABSORIGIN, caster)
+		local particle_circle_fx = ParticleManager:CreateParticle(particle_circle, PATTACH_ABSORIGIN, self:GetCaster())
 		ParticleManager:SetParticleControl(particle_circle_fx, 0, caster_position)
 		ParticleManager:ReleaseParticleIndex(particle_circle_fx)
 
@@ -102,7 +100,7 @@ function imba_mirana_starfall:OnSpellStart()
 	end)
 
 	-- Add moon particle
-	local particle_moon_fx = ParticleManager:CreateParticle(particle_moon, PATTACH_ABSORIGIN, caster)
+	local particle_moon_fx = ParticleManager:CreateParticle(particle_moon, PATTACH_ABSORIGIN, self:GetCaster())
 	ParticleManager:SetParticleControl(particle_moon_fx, 0, Vector(caster_position.x, caster_position.y, caster_position.z + 400))
 
 	-- Remove moon particle after the duration elapsed
@@ -112,11 +110,11 @@ function imba_mirana_starfall:OnSpellStart()
 	end)
 
 	-- First Starfall wave
-	StarfallWave(caster, ability, caster_position, radius, damage)
+	StarfallWave(self:GetCaster(), ability, caster_position, radius, damage)
 
 	-- Secondary Starfall
 	local secondary_wave_damage = damage * (secondary_damage_pct * 0.01)
-	SecondaryStarfall(caster, ability, caster_position, radius, secondary_wave_damage)
+	SecondaryStarfall(self:GetCaster(), ability, caster_position, radius, secondary_wave_damage)
 
 	-- Additional waves
 	local current_wave = 1
@@ -125,8 +123,8 @@ function imba_mirana_starfall:OnSpellStart()
 
 	Timers:CreateTimer(additional_waves_interval, function()
 		-- Commence Starfalls
-		StarfallWave(caster, ability, caster_position, radius, additional_wave_damage)
-		SecondaryStarfall(caster, ability, caster_position, radius, additional_secondary_damage)
+		StarfallWave(self:GetCaster(), ability, caster_position, radius, additional_wave_damage)
+		SecondaryStarfall(self:GetCaster(), ability, caster_position, radius, additional_secondary_damage)
 
 		current_wave = current_wave + 1
 
@@ -168,28 +166,27 @@ function StarfallWave(caster, ability, caster_position, radius, damage)
 
 			-- Wait for the star to get to the target
 			Timers:CreateTimer(hit_delay, function()
+				-- Deal damage if the target did not become magic immune
+				if not enemy:IsMagicImmune() then
 
-					-- Deal damage if the target did not become magic immune
-					if not enemy:IsMagicImmune() then
+					-- Play impact sound
+					EmitSoundOn(sound_impact, enemy)
 
-						-- Play impact sound
-						EmitSoundOn(sound_impact, enemy)
+					local damageTable = {victim = enemy,
+						damage = damage,
+						damage_type = DAMAGE_TYPE_MAGICAL,
+						attacker = caster,
+						ability = ability
+					}
 
-						local damageTable = {victim = enemy,
-							damage = damage,
-							damage_type = DAMAGE_TYPE_MAGICAL,
-							attacker = caster,
-							ability = ability
-						}
+					ApplyDamage(damageTable)
 
-						ApplyDamage(damageTable)
-
-						-- #8 Talent: Each Starstorm wave marks the target. If Mirana lands an attack on the target, she drops an additional secondary star on it.
-						if caster:HasTalent("special_bonus_imba_mirana_8") then
-							local seed_duration = caster:FindTalentValue("special_bonus_imba_mirana_8")
-							enemy:AddNewModifier(caster, ability, "modifier_imba_starfall_talent_seed_debuff", {duration = seed_duration})
-						end
+					-- #8 Talent: Each Starstorm wave marks the target. If Mirana lands an attack on the target, she drops an additional secondary star on it.
+					if caster:HasTalent("special_bonus_imba_mirana_8") then
+						local seed_duration = caster:FindTalentValue("special_bonus_imba_mirana_8")
+						enemy:AddNewModifier(caster, ability, "modifier_imba_starfall_talent_seed_debuff", {duration = seed_duration})
 					end
+				end
 			end)
 		end
 	end
@@ -232,22 +229,21 @@ function SecondaryStarfallTarget(caster, ability, target, damage)
 
 	-- Wait for the star to get to the target
 	Timers:CreateTimer(hit_delay, function()
+		-- Deal damage if the target did not become magic immune
+		if not target:IsMagicImmune() then
 
-			-- Deal damage if the target did not become magic immune
-			if not target:IsMagicImmune() then
+			-- Play impact sound
+			EmitSoundOn(sound_impact, target)
 
-				-- Play impact sound
-				EmitSoundOn(sound_impact, target)
+			local damageTable = {victim = target,
+				damage = damage,
+				damage_type = DAMAGE_TYPE_MAGICAL,
+				attacker = caster,
+				ability = ability
+			}
 
-				local damageTable = {victim = target,
-					damage = damage,
-					damage_type = DAMAGE_TYPE_MAGICAL,
-					attacker = caster,
-					ability = ability
-				}
-
-				ApplyDamage(damageTable)
-			end
+			ApplyDamage(damageTable)
+		end
 	end)
 end
 
@@ -947,7 +943,7 @@ end
 
 function modifier_imba_leap_movement:CheckState()
 	local state
-	-- #7 Talent: Leap can now be cast without needing to turn. Makes Mirana invisible for the duration of the jump, causing her to dodge projectiles.
+	-- #7 Talent: Makes Mirana invisible for the duration of the jump, causing her to dodge projectiles.
 	-- Check if the caster should get invisibility
 	if self.caster:HasTalent("special_bonus_imba_mirana_7") then
 		state = {[MODIFIER_STATE_INVISIBLE] = true}
@@ -1469,19 +1465,6 @@ function modifier_imba_moonlight_shadow_talent_starstorm:OnIntervalThink()
 	end
 end
 
-
-
-
-
--- #5 Talent: Standing in the same spot for a few seconds grants Mirana invisibility until she moves or attack. Casting spells does not break the invisibility.
-function modifier_special_bonus_imba_mirana_5:OnCreated()
-	if IsServer() then
-		self:GetParent():AddNewModifier(self:GetParent(), nil, "modifier_imba_mirana_silence_stance", {})
-		self:GetParent():AddNewModifier(self:GetParent(), nil, "modifier_imba_mirana_silence_stance_visible", {})
-	end
-end
-
-
 modifier_imba_mirana_silence_stance = modifier_imba_mirana_silence_stance or class({})
 
 function modifier_imba_mirana_silence_stance:IsHidden() return true end
@@ -1515,7 +1498,6 @@ end
 
 function modifier_imba_mirana_silence_stance:OnIntervalThink()
 	if IsServer() then
-
 		-- Check if this is a day. If so, Mirana cannot hide, and the stance does nothing
 		if GameRules:IsDaytime() then
 			self:SetStackCount(0)

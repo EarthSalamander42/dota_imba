@@ -105,6 +105,22 @@ function modifier_item_the_caustic_finale:GetModifierAttackSpeedBonus_Constant( 
 	return self.bonus_attack_speed
 end
 
+function modifier_item_the_caustic_finale:GetEffectName()
+	return "particles/item/rapier/rapier_trail_arcane.vpcf"
+end
+
+function modifier_item_the_caustic_finale:GetEffectAttachType()
+	return PATTACH_ABSORIGIN_FOLLOW
+end
+
+function modifier_item_the_caustic_finale:GetModifierProvidesFOWVision()
+	return 1
+end
+
+function modifier_item_the_caustic_finale:GetForceDrawOnMinimap()
+	return 1
+end
+
 modifier_sand_king_boss_caustic_finale = class({})
 
 -----------------------------------------------------------------------------------------
@@ -155,16 +171,15 @@ function modifier_sand_king_boss_caustic_finale:OnDeath( params )
 			for _,hEnemy in pairs( enemies ) do
 				if hEnemy ~= nil and hEnemy:IsAlive() and hEnemy:IsInvulnerable() == false then
 					local damageInfo =
-						{
-							victim = hEnemy,
-							attacker = self:GetCaster(),
-							damage = self.caustic_damage,
-							damage_type = DAMAGE_TYPE_MAGICAL,
-							ability = self,
-						}
+					{
+						victim = hEnemy,
+						attacker = self:GetCaster(),
+						damage = self.caustic_damage,
+						damage_type = DAMAGE_TYPE_MAGICAL,
+						ability = self,
+					}
+
 					ApplyDamage( damageInfo )
-
-
 				end
 			end
 		end
