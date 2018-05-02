@@ -24,3 +24,4 @@
 "npc_imba_donator_statue_january0000"					"January0000"
 "npc_imba_donator_statue_terdic"						"Terdic"
 "npc_imba_donator_statue_toc"							"Toc"
+"npc_imba_donator_statue_oviakin"						"Binore"
