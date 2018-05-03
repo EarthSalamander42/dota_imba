@@ -1,7 +1,8 @@
 -- Author: https://gist.github.com/marceloCodget (https://gist.github.com/marceloCodget/3862929)
 
 function rgbToHex(rgb)
-	local hexadecimal = '0X'
+--	local hexadecimal = '0X'
+	local hexadecimal = '#'
 
 	for key, value in pairs(rgb) do
 		local hex = ''

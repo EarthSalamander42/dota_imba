@@ -73,63 +73,33 @@ function GetTitleIXP(level)
 	end
 end
 
-function GetTitleColorIXP(title, js)
-	if js == true then
-		if title == "Rookie" then
-			return "#FFFFFF"
-		elseif title == "Amateur" then
-			return "#66CC00"
-		elseif title == "Captain" then
-			return "#4C8BCA"
-		elseif title == "Warrior" then
-			return "#004C99"
-		elseif title == "Commander" then
-			return "#985FD1"
-		elseif title == "General" then
-			return "#460587"
-		elseif title == "Master" then
-			return "#FA5353"
-		elseif title == "Epic" then
-			return "#8E0C0C"
-		elseif title == "Legendary" then
-			return "#EFBC14"
-		elseif title == "Ancient" then
-			return "#BF950D"
-		elseif title == "Amphibian" then
-			return "#000066"
-		elseif title == "Icefrog" then
-			return "#1456EF"
-		else -- it's Firetoaaaaaaaaaaad!
-			return "#C75102"
-		end
-	else
-		if title == "Rookie" then
-			return {255, 255, 255}
-		elseif title == "Amateur" then
-			return {102, 204, 0}
-		elseif title == "Captain" then
-			return {76, 139, 202}
-		elseif title == "Warrior" then
-			return {0, 76, 153}
-		elseif title == "Commander" then
-			return {152, 95, 209}
-		elseif title == "General" then
-			return {70, 5, 135}
-		elseif title == "Master" then
-			return {250, 83, 83}
-		elseif title == "Epic" then
-			return {142, 12, 12}
-		elseif title == "Legendary" then
-			return {239, 188, 20}
-		elseif title == "Ancient" then
-			return {191, 149, 13}
-		elseif title == "Amphibian" then
-			return {0, 0, 102}
-		elseif title == "Icefrog" then
-			return {20, 86, 239}
-		else -- it's Firetoaaaaaaaaaaad!
-			return {199, 81, 2}
-		end
+function GetTitleColorIXP(title)
+	if title == "Rookie" then
+		return {255, 255, 255}
+	elseif title == "Amateur" then
+		return {102, 204, 0}
+	elseif title == "Captain" then
+		return {76, 139, 202}
+	elseif title == "Warrior" then
+		return {0, 76, 153}
+	elseif title == "Commander" then
+		return {152, 95, 209}
+	elseif title == "General" then
+		return {70, 5, 135}
+	elseif title == "Master" then
+		return {250, 83, 83}
+	elseif title == "Epic" then
+		return {142, 12, 12}
+	elseif title == "Legendary" then
+		return {239, 188, 20}
+	elseif title == "Ancient" then
+		return {191, 149, 13}
+	elseif title == "Amphibian" then
+		return {0, 0, 102}
+	elseif title == "Icefrog" then
+		return {20, 86, 239}
+	else -- it's Firetoaaaaaaaaaaad!
+		return {199, 81, 2}
 	end
 end
 
@@ -171,7 +141,7 @@ function GetPlayerInfoIXP() -- yet it has too much useless loops, format later. 
 			MaxXP = max_xp[ID],
 			Lvl = level[ID], -- add +1 only on the HUD else you are level 0 at the first level
 			title = GetTitleIXP(level[ID]),
-			title_color = GetTitleColorIXP(GetTitleIXP(level[ID]), true),
+			title_color = rgbToHex(GetTitleColorIXP(GetTitleIXP(level[ID]))),
 			IMR_5v5 = api.imba.get_player_info(PlayerResource:GetSteamID(ID)).imr5v5,
 			IMR_10v10 = api.imba.get_player_info(PlayerResource:GetSteamID(ID)).imr10v10,
 			IMR_5v5_calibrating = api.imba.get_player_info(PlayerResource:GetSteamID(ID)).imr5v5_calibrating,
@@ -222,7 +192,7 @@ function GetTopPlayersIXP()
 			MaxXP = max_xp[top_user.rank],
 			Lvl = level[top_user.rank],
 			title = GetTitleIXP(level[top_user.rank]),
-			title_color = GetTitleColorIXP(GetTitleIXP(level[top_user.rank]), true),
+			title_color = rgbToHex(GetTitleColorIXP(level[top_user.rank])),
 			IMR_5v5 = top_user.imr5v5,
 		})
 	end
@@ -262,7 +232,7 @@ function GetTopPlayersIMR()
 			MaxXP = max_xp[top_user.rank],
 			Lvl = level[top_user.rank],
 			title = GetTitleIXP(level[top_user.rank]),
-			title_color = GetTitleColorIXP(GetTitleIXP(level[top_user.rank]), true),
+			title_color = rgbToHex(GetTitleColorIXP(GetTitleIXP(level[top_user.rank]))),
 			IMR_5v5 = top_user.imr5v5,
 		})
 	end

@@ -194,7 +194,7 @@
 	font-size: 16px;
 }
 
-.es-legend-gold { width: 70px; }
+.es-legend-gold { width: 60px; }
 
 .es-legend-xp { width: 180px; }
 
@@ -208,6 +208,7 @@
 }
 
 .es-players {
+	width: 100%;
 	flow-children: down;
 }
 
@@ -257,7 +258,7 @@
 }
 
 #es-player-gold {
-	width: 70px;
+	width: 60px;
 	vertical-align: center;
 	text-align: center;
 	color: #ee7;
@@ -266,7 +267,7 @@
 .es-legend-imr10v10,
 .es-legend-imr,
 .es-legend-rank1v1 {
-	width: 85px; 
+	width: 80px; 
 	margin-right: 15px;
 	text-align: center;
 }
@@ -274,7 +275,7 @@
 #es-player-imr,
 #es-player-imr10v10,
 #es-player-rank1v1 {
-	width: 85px;
+	width: 80px;
 	vertical-align: center;
 	text-align: center;
 	visibility: collapse;
@@ -330,7 +331,7 @@
 }
 
 #es-player-xp-earned {
-	width: 54px;
+	width: 100px;
 	vertical-align: center;
 	text-align: center;
 }

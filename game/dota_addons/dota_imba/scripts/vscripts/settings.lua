@@ -487,6 +487,26 @@ IMBA_TESTBED_INITIALIZED = false
 PURGE_BUFF_LIST = LoadKeyValues("scripts/npc/KV/purge_buffs_list.kv")
 DISPELLABLE_DEBUFF_LIST = LoadKeyValues("scripts/npc/KV/dispellable_debuffs_list.kv")
 
+DONATOR_STATUS = {}
+DONATOR_STATUS[1] = "IMBA Dev"
+DONATOR_STATUS[2] = "PRO DEVCUCK"
+DONATOR_STATUS[3] = "Administrator"
+DONATOR_STATUS[4] = "Ember Donator"
+DONATOR_STATUS[5] = "Golden Donator"
+DONATOR_STATUS[6] = "Donator"
+DONATOR_STATUS[7] = "Salamander Donator"
+DONATOR_STATUS[8] = "Icefrog Donator"
+
+DONATOR_COLOR = {}
+DONATOR_COLOR[1] = {160, 20, 20}
+DONATOR_COLOR[2] = {0, 204, 255}
+DONATOR_COLOR[3] = {160, 20, 20}
+DONATOR_COLOR[4] = {240, 50, 50}
+DONATOR_COLOR[5] = {218, 165, 32}
+DONATOR_COLOR[6] = {45, 200, 45}
+DONATOR_COLOR[7] = {47, 91, 151}
+DONATOR_COLOR[8] = {153, 51, 153}
+
 IMBA_INVISIBLE_MODIFIERS = {
 	"modifier_imba_moonlight_shadow_invis",
 	"modifier_item_imba_shadow_blade_invis",

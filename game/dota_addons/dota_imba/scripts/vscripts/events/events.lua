@@ -237,10 +237,16 @@ function GameMode:OnGameRulesStateChange(keys)
 						for i = 1, #players do
 							local player = players[i]
 
+							PrintTable(player)
+
 							local level = GetXPLevelByXp(player.xp)
 							local title = GetTitleIXP(level)
-							local color = GetTitleColorIXP(title, true)
+							local color = rgbToHex(GetTitleColorIXP(title))
 							local progress = GetXpProgressToNextLevel(player.xp)
+							local donator_color
+							if donator_status ~= false and DONATOR_COLOR[player.donator_status] then
+								donator_color = rgbToHex(DONATOR_COLOR[player.donator_status])
+							end
 
 							if level and title and color and progress then
 								table.insert(xp_info, {
@@ -248,7 +254,10 @@ function GameMode:OnGameRulesStateChange(keys)
 									level = level,
 									title = title,
 									color = color,
-									progress = progress
+									progress = progress,
+									booster = player.xp_multiplier,
+									donator_status = player.donator_status,
+									donator_color = donator_color,
 								})
 							end
 						end

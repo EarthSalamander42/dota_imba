@@ -31771,40 +31771,22 @@
 				"var_type"				"FIELD_INTEGER"
 				"effect_radius"			"250 275 300 325"
 			}
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"deflect_radius"		"800"
-			}
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"deflect_chance"		"22 28 34 40"
-			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"damage_per_sec"		"80 105 130 155"
+				"LinkedSpecialBonus"	"special_bonus_unique_juggernaut_3"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"damage_tick"			"0.2"
 			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"succ_tick"				"0.2"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"evasion"				"10 20 30 40"
-			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"duration"				"5"
+				"LinkedSpecialBonus"	"special_bonus_unique_juggernaut"
 			}
 		}
 	}
@@ -31924,21 +31906,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"health"				"3 6 6 9"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"heal_radius_totem"		"600 650 700 750"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"heal_per_sec_totem"	"4 5 6 7"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"health_totem"			"9 12 15 18"
 			}
 		}
 	}
@@ -32073,43 +32040,38 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_damage_att"		"35"
-				"LinkedSpecialBonus"	"special_bonus_imba_juggernaut_8"
 			}
-
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"jump_amount"			"3 6 9"
+				"LinkedSpecialBonus"	"special_bonus_unique_juggernaut_2"
 			}
-
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bounce_range"			"425"
 			}
-
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"bounce_delay"			"0.4"
 			}
-
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"cdr_per_attack"		"0.5 0.75 1.0"
 			}
-
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"scepter_bounce_range"	"700"
+				"scepter_cooldown"		"60"
 			}
-
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"scepter_jump_amt"  	"6 9 12"
+				"LinkedSpecialBonus"	"special_bonus_unique_juggernaut_2"
 			}
 			"08"
 			{

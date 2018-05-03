@@ -44,23 +44,10 @@ function GameMode:OnHeroFirstSpawn(hero)
 --			CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "show_netgraph_heronames", {})
 		end
 
-		local donator_status = {}
-		donator_status[1] = {"IMBA Dev", 160, 20, 20}
-		donator_status[2] = {"PRO DEVCUCK", 0, 204, 255}
-		donator_status[3] = {"Administrator", 160, 20, 20}
-		donator_status[4] = {"Ember Donator", 240, 50, 50}
-		donator_status[5] = {"Golden Donator", 218, 165, 32}
-		donator_status[6] = {"Donator", 45, 200, 45}
-		donator_status[7] = {"Salamander Donator", 47, 91, 151}
-		donator_status[8] = {"Icefrog Donator", 153, 51, 153}
-
 		local steam_id = tostring(PlayerResource:GetSteamID(hero:GetPlayerID()))
 
 		if api.imba.is_donator(steam_id) ~= false then
-			local info = donator_status[api.imba.is_donator(steam_id)]
-			if info then
-				hero:SetCustomHealthLabel(info[1], info[2], info[3], info[4])
-			end
+			hero:SetCustomHealthLabel(DONATOR_STATUS[api.imba.is_donator(steam_id)], DONATOR_COLOR[api.imba.is_donator(steam_id)][1], DONATOR_COLOR[api.imba.is_donator(steam_id)][2], DONATOR_COLOR[api.imba.is_donator(steam_id)][3])
 
 			-- needs a timer else GetSelectedHeroEntity is nil
 			Timers:CreateTimer(0.3, function()

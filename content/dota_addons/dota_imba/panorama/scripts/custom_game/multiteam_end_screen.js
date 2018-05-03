@@ -1,6 +1,53 @@
 "use strict";
 
+
 (function () {
+
+var placeholder = false
+
+if (placeholder == true) {
+	// PLACEHOLDERS: testing purpose only
+	var args = {
+		players: {
+			0: {
+				steamid: 76561198015161808,
+				imr5v5_calibrating: false,
+				imr5v5: 4500,
+				imr5v5_difference: 12,
+				xp: 5000,
+				xp_difference: 100,
+				xp_booster: 10.0, // already includes donator allies 20% share
+				donator_status: 10.0,
+				// GetPlayer lua thing
+			}
+		},
+
+		xp_info: {
+			0: {
+				level: 12,
+				title: 'Legend',
+				earned: 17,
+				steamid: 76561198015161808,
+			},
+
+			1: {
+				level: 12,
+				title: 'Legend',
+				earned: 17,
+				steamid: 76561198015161808,
+			},
+		},
+
+		info: {
+			radiant_score: 100,
+			dire_score: 99,
+			winner: 2,
+
+			ids1: [0],
+			ids2: [1]
+		}
+	};
+}
 
 function EndScoreboard() {
 	GameEvents.Subscribe("end_game", function (args) {
@@ -133,8 +180,6 @@ function EndScoreboard() {
 			// IMR
 			var map_info = Game.GetMapInfo();
 
-//			$.Msg(player);
-
 			if (player.result != null) {
 				if (map_info.map_display_name == "imba_ranked_5v5") {
 					values.imr.style.visibility = "visible";
@@ -157,7 +202,6 @@ function EndScoreboard() {
 						}
 					}
 				} else if (map_info.map_display_name == "imba_ranked_10v10") {
-					
 					values.imr10v10.style.visibility = "visible";
 					
 					if (player.result.imr10v10_calibrating)
@@ -178,7 +222,6 @@ function EndScoreboard() {
 						}
 					}
 				} else if (map_info.map_display_name == "imba_1v1") {
-					
 					// display columns
 					values.rank1v1.style.visibility = "visible";
 					
@@ -203,9 +246,19 @@ function EndScoreboard() {
 			}
 
 			// XP
+			var booster = player.xp.booster * 100
+			var donator_color = player.xp.donator_color
+			$.Msg(booster)
+			$.Msg(donator_color)
+			var diff = player.result.xp_difference;
+
+			if (placeholder == true) {
+				diff = 500; // test value
+			}
+
 			if (player.result != null) {
 				var xp = Math.floor(player.result.xp);
-				var xpDiff = Math.floor(player.result.xp_difference);
+				var xpDiff = Math.floor(diff);
 
 				if (xpDiff > 0) {
 					values.xp.earned.text = "+" + xpDiff;
@@ -218,9 +271,23 @@ function EndScoreboard() {
 					values.xp.earned.AddClass("es-text-red");
 				}
 
-//				var diff = -11000; // test value
-				var diff = player.result.xp_difference;
+				values.xp.earned.text = values.xp.earned.text + " (" + booster + "%)";
+				values.xp.earned.style.color = donator_color;
+
 				var old_xp = player.xp.progress.xp;
+				var ply_color = player.xp.color;
+				var ply_title = player.xp.title;
+				var max_xp = player.xp.progress.max_xp;
+
+				$.Msg(player.xp)
+
+				if (placeholder == true) {
+					old_xp = xp
+					ply_color = "#1456EF";
+					ply_title = "Icefrog";
+					max_xp = 6000;
+				}
+
 				if (old_xp == undefined) {
 					$.Msg("XP undefined")
 					old_xp = 0
@@ -228,16 +295,18 @@ function EndScoreboard() {
 					$.Msg("XP below 0")
 					old_xp = 0
 				}
-				var max_xp = player.xp.progress.max_xp;
+
 				var new_xp = (old_xp + diff);
 				var progress_bar = new_xp / max_xp * 100;
+				$.Msg(progress_bar)
 				var progress_bar_100 = progress_bar * 100
 				$.Msg(progress_bar * 100 / max_xp + "/" + max_xp)
 
 				$.Schedule(0.8, function () {
 					values.xp.level.text = $.Localize("#battlepass_level") + player.xp.level;
-					values.xp.rank_name.text = player.xp.title;
-					values.xp.rank_name.style.color = player.xp.color;
+					$.Msg(ply_title)
+					values.xp.rank_name.text = ply_title;
+					values.xp.rank_name.style.color = ply_color;
 
 					// if max level
 					if (player.xp.level == 500) {

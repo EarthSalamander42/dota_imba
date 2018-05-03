@@ -207,7 +207,7 @@ function onPlayerStatChange(table, key, data) {
 			if (ply_battlepass) {
 				if (ply_battlepass.arcana[heroName]) {
 					image_name = heroName + "_arcana" + ply_battlepass.arcana[heroName]
-					OverrideHeroImage(ply_battlepass.arcana[heroName] + 1, newheroimage, heroName)
+					OverrideHeroImage(ply_battlepass.arcana[heroName] + 1, newheroimage, image_name)
 				}
 			}
 
