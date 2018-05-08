@@ -24907,7 +24907,7 @@
 		"ScriptFile"					"hero/hero_tiny"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityTextureName"			"tiny_craggy_exterior"
+		"AbilityTextureName"			"custom/tiny_craggy_exterior"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"MaxLevel"						"4"
 
@@ -37209,11 +37209,11 @@
 				"switch_lose_pct"			"100 80 60 40"
 				"LinkedSpecialBonus"		"special_bonus_imba_troll_warlord_3"
 			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"max_stacks"				"14"
-			}
+//			"03"
+//			{
+//				"var_type"					"FIELD_INTEGER"
+//				"max_stacks"				"14"
+//			}
 		}
 	}
 

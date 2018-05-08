@@ -111,13 +111,16 @@ function imba_elder_titan_echo_stomp:OnAbilityPhaseStart()
 	else
 		if astral_spirit.is_returning == true then return true end
 		local ab = astral_spirit:FindAbilityByName("imba_elder_titan_echo_stomp_spirit")
-		if not ab:IsInAbilityPhase() then
+
+		if ab:IsInAbilityPhase() == false then
 			astral_spirit:CastAbilityNoTarget(ab, self:GetCaster():GetOwner():GetPlayerID())
 		end
+
 		astral_spirit:CastAbilityNoTarget(ab, astral_spirit:GetPlayerOwnerID())
 	end
 
 	EmitSoundOn("Hero_ElderTitan.EchoStomp.Channel.ti7_layer", self:GetCaster())
+
 	return true
 end
 
@@ -125,6 +128,7 @@ function imba_elder_titan_echo_stomp:OnAbilityPhaseInterrupted()
 	if astral_spirit then
 		astral_spirit:Interrupt()
 	end
+
 	StopSoundOn("Hero_ElderTitan.EchoStomp.Channel.ti7_layer", self:GetCaster())
 end
 
@@ -188,6 +192,7 @@ end
 
 function imba_elder_titan_ancestral_spirit:OnAbilityPhaseStart()
 	StartAnimation(self:GetCaster(), {duration=self.BaseClass.GetCastPoint(self), activity=ACT_DOTA_ANCESTRAL_SPIRIT, rate=1.0})
+
 	return true
 end
 
@@ -550,7 +555,7 @@ function modifier_imba_elder_titan_natural_order:GetModifierMagicalResistanceBon
 			return 0
 		end
 	else
-		return self.magic_resist_reduction
+		return 0
 	end
 end
 
@@ -602,12 +607,19 @@ end
 function imba_elder_titan_echo_stomp_spirit:OnAbilityPhaseStart()
 	if self:GetCaster():GetOwner() then
 		local ab = self:GetCaster():GetOwner():FindAbilityByName("imba_elder_titan_echo_stomp")
-		if not self:GetCaster():GetOwner():IsChanneling() then
-			self:GetCaster():GetOwner():CastAbilityNoTarget(ab, self:GetCaster():GetOwner():GetPlayerID())
+		if self:GetCaster():GetOwner():HasTalent("special_bonus_imba_elder_titan_7") then
+			if ab:IsInAbilityPhase() == false then
+				self:GetCaster():GetOwner():CastAbilityNoTarget(ab, self:GetCaster():GetOwner():GetPlayerID())
+			end
+		else
+			if self:GetCaster():GetOwner():IsChanneling() == false then
+				self:GetCaster():GetOwner():CastAbilityNoTarget(ab, self:GetCaster():GetOwner():GetPlayerID())
+			end
 		end
 	end
 
 	EmitSoundOn("Hero_ElderTitan.EchoStomp.Channel.ti7_layer", self:GetCaster())
+
 	return true
 end
 

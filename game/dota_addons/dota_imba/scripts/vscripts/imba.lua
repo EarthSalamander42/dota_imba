@@ -1853,6 +1853,8 @@ function GameMode:OnThink()
 				if Bear and string.find(Bear:GetUnitName(), "npc_dota_lone_druid_bear") and Bear:FindAbilityByName("lone_druid_savage_roar_bear") and Bear:FindAbilityByName("lone_druid_savage_roar_bear"):IsHidden() then
 					Bear:FindAbilityByName("lone_druid_savage_roar_bear"):SetHidden(false)
 				end
+
+				break
 			end
 		end
 

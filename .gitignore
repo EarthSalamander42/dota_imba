@@ -7,7 +7,6 @@ content/*
 !content/dota_addons/
 content/dota_addons/*
 !content/dota_addons/dota_imba/
-!scripts/
 
 !game/
 game/*
@@ -62,6 +61,3 @@ game/dota_addons/dota_imba/models/rosh*
 .project
 .settings
 .DS_Store
-
-scripts/node_modules
-scripts/package-lock.json

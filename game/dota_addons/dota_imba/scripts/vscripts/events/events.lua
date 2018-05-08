@@ -29,7 +29,7 @@ function GameMode:OnGameRulesStateChange(keys)
 		if new_state == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
 			log.info("events: team selection")
 			InitializeTeamSelection()
-			GameRules:SetSafeToLeave(true)
+			GameRules:SetSafeToLeave(true) -- seems to be useless for leaver penalties
 
 			-- get the IXP of everyone (ignore bot)
 			GetPlayerInfoIXP()
@@ -512,7 +512,7 @@ function GameMode:OnPlayerLevelUp(keys)
 	if hero:GetUnitName() == "npc_dota_hero_invoker" then
 		if hero_level == 6 or hero_level == 12 or hero_level == 18 then
 			local ab = hero:FindAbilityByName("invoker_invoke")
-			ab:SetLevel(ab:GetLevel() +1)
+			ab:SetLevel(ab:GetLevel() + 1)
 		end
 	end
 
@@ -1121,3 +1121,27 @@ function GameMode:OnItemPickUp( event )
 		UTIL_Remove( item ) -- otherwise it pollutes the player inventory
 	end
 end
+--[[
+function GameMode:OnPlayerTeam(keys)
+	local id = keys.userid -1
+	local team = keys.team
+	local old_team = keys.oldteam
+	local hero = PlayerResource:GetSelectedHeroEntity(id)
+
+--	PrintTable(keys)
+
+	print(id, PLAYER_TEAM[id], old_team, team)
+	if PLAYER_TEAM[id] and old_team ~= team then
+		if hero and team ~= PLAYER_TEAM[id] and team ~= 5 then
+			print("Player should stay in team "..old_team.." (attempt to be in team "..team..")")
+
+			hero:SetTeam(PLAYER_TEAM[id])
+			if hero:GetPlayerOwner() then
+				hero:GetPlayerOwner():SetTeam(PLAYER_TEAM[id])
+			end
+			PlayerResource:UpdateTeamSlot(id, PLAYER_TEAM[id], 0)
+			PlayerResource:SetCustomTeamAssignment(id, PLAYER_TEAM[id]) -- LIA don't use this line
+		end
+	end
+end
+--]]

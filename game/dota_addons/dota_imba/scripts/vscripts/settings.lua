@@ -487,6 +487,8 @@ IMBA_TESTBED_INITIALIZED = false
 PURGE_BUFF_LIST = LoadKeyValues("scripts/npc/KV/purge_buffs_list.kv")
 DISPELLABLE_DEBUFF_LIST = LoadKeyValues("scripts/npc/KV/dispellable_debuffs_list.kv")
 
+PLAYER_TEAM = {}
+
 DONATOR_STATUS = {}
 DONATOR_STATUS[1] = "IMBA Dev"
 DONATOR_STATUS[2] = "PRO DEVCUCK"
@@ -587,6 +589,7 @@ IMBA_DONATOR_STATUE["76561197980558838"] = "npc_imba_donator_statue_january0000"
 IMBA_DONATOR_STATUE["76561198073163389"] = "npc_imba_donator_statue_terdic"
 IMBA_DONATOR_STATUE["76561198077187165"] = "npc_imba_donator_statue_toc"
 IMBA_DONATOR_STATUE["76561198187809623"] = "npc_imba_donator_statue_oviakin"
+IMBA_DONATOR_STATUE["76561197970766309"] = "npc_imba_donator_statue_hamahe"
 
 UNIT_EQUIPMENT = {}
 UNIT_EQUIPMENT["models/heroes/crystal_maiden/crystal_maiden.vmdl"] = {
