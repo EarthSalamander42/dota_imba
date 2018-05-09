@@ -1570,7 +1570,3 @@ function HideWearable(hero, item)
 		return 2.0
 	end)
 end
-
-function PreventCommand()
-	print("Do not use this command!")
-end

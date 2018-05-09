@@ -145,8 +145,6 @@ function GameMode:OnHeroFirstSpawn(hero)
 				end
 			end
 		end
-	elseif hero:GetUnitName() == "npc_dota_hero_juggernaut" then
-		Imbattlepass:GetJuggernautArcanaEffect(hero:GetPlayerID())
 	elseif hero:GetUnitName() == "npc_dota_hero_meepo" then
 		if not hero:IsClone() then
 			hero.is_real_meepo = true
@@ -159,7 +157,6 @@ function GameMode:OnHeroFirstSpawn(hero)
 			TRUE_MK_HAS_SPAWNED = true
 		end
 	elseif hero:GetUnitName() == "npc_dota_hero_pudge" then
-		Imbattlepass:GetPudgeArcanaEffect(hero:GetPlayerID())
 		hero:AddNewModifier(hero, nil, "modifier_imba_pudge_flesh_heap_handle", {})
 	elseif hero:GetUnitName() == "npc_dota_hero_troll_warlord" then -- troll warlord weird fix needed
 		hero:SwapAbilities("imba_troll_warlord_whirling_axes_ranged", "imba_troll_warlord_whirling_axes_melee", true, false)

@@ -60,6 +60,7 @@
 			<Image src="file://panorama/images/custom_game/battlepass/sheepstick2.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/shiva.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/shiva2.png" hittest="false" />
+			<Image src="file://panorama/images/custom_game/battlepass/shiva3.png" hittest="false" />
 
 			<Image src="file://panorama/images/heroes/npc_dota_hero_ghost_revenant.png" hittest="false" />
 			<Image src="file://panorama/images/heroes/npc_dota_hero_hell_empress.png" hittest="false" />

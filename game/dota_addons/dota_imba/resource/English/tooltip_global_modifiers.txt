@@ -2,17 +2,20 @@
 // IMBA Global Modifiers
 //=================================================================================================================
 
-"DOTA_Tooltip_modifier_imba_war_veteran_0"                      "War Veteran (Strength)"
-"DOTA_Tooltip_modifier_imba_war_veteran_0_Description"                "<font color='#FF0000'>Strength Heroes</font>: health regen/tenacity increased by 2/1% every level beyond 25."
+"DOTA_Tooltip_modifier_imba_war_veteran_0"						"War Veteran (Strength)"
+"DOTA_Tooltip_modifier_imba_war_veteran_0_Description"			"<font color='#FF0000'>Strength Heroes</font>: health regen/tenacity increased by 2/1% every level beyond 25."
 
-"DOTA_Tooltip_modifier_imba_war_veteran_1"                      "War Veteran (Agility)"
-"DOTA_Tooltip_modifier_imba_war_veteran_1_Description"                "<font color='#00FF00'>Agility Heroes</font>: attack speed/move speed increased by 3/1% every level beyond 25."
+"DOTA_Tooltip_modifier_imba_war_veteran_1"						"War Veteran (Agility)"
+"DOTA_Tooltip_modifier_imba_war_veteran_1_Description"			"<font color='#00FF00'>Agility Heroes</font>: attack speed/move speed increased by 3/1% every level beyond 25."
 
-"DOTA_Tooltip_modifier_imba_war_veteran_2"                      "War Veteran (Intellect)"
-"DOTA_Tooltip_modifier_imba_war_veteran_2_Description"                "<font color='#4060FF'>Intelligence Heroes</font>: spell amp/magic resistance increased by 2%/1% every level beyond 25."
+"DOTA_Tooltip_modifier_imba_war_veteran_2"						"War Veteran (Intellect)"
+"DOTA_Tooltip_modifier_imba_war_veteran_2_Description"			"<font color='#4060FF'>Intelligence Heroes</font>: spell amp/magic resistance increased by 2%/1% every level beyond 25."
 
-"DOTA_Tooltip_modifier_buyback_gold_penalty"                            "Buyback Penalty"
-"DOTA_Tooltip_modifier_buyback_gold_penalty_Description"                "Gold earnings reduced by 60%%, further buybacks will have increased cost"
+"DOTA_Tooltip_modifier_buyback_gold_penalty"					"Buyback Penalty"
+"DOTA_Tooltip_modifier_buyback_gold_penalty_Description"		"Gold earnings reduced by 60%%, further buybacks will have increased cost"
 
-"DOTA_Tooltip_modifier_charges"                            "Ability charges"
-"DOTA_Tooltip_modifier_charges_Description"                            "Can cast the ability as long as charges remain"
+"DOTA_Tooltip_modifier_charges"									"Ability charges"
+"DOTA_Tooltip_modifier_charges_Description"						"Can cast the ability as long as charges remain"
+
+"DOTA_Tooltip_modifier_fountain_aura_effect_lua"				"#{DOTA_Tooltip_modifier_fountain_aura_buff}"
+"DOTA_Tooltip_modifier_fountain_aura_effect_lua_Description"	"#{DOTA_Tooltip_modifier_fountain_aura_buff_Description}"

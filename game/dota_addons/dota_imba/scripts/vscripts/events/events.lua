@@ -3,7 +3,7 @@
 -- Licensed under the Apache License, Version 2.0 (the "License");
 -- you may not use this file except in compliance with the License.
 -- You may obtain a copy of the License at
---
+--$
 -- http://www.apache.org/licenses/LICENSE-2.0
 --
 -- Unless required by applicable law or agreed to in writing, software
@@ -1121,8 +1121,9 @@ function GameMode:OnItemPickUp( event )
 		UTIL_Remove( item ) -- otherwise it pollutes the player inventory
 	end
 end
---[[
+
 function GameMode:OnPlayerTeam(keys)
+--[[
 	local id = keys.userid -1
 	local team = keys.team
 	local old_team = keys.oldteam
@@ -1143,5 +1144,5 @@ function GameMode:OnPlayerTeam(keys)
 			PlayerResource:SetCustomTeamAssignment(id, PLAYER_TEAM[id]) -- LIA don't use this line
 		end
 	end
-end
 --]]
+end

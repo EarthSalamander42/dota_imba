@@ -120,16 +120,19 @@ function modifier_item_imba_bottle_texture_controller:OnIntervalThink()
 	}
 
 	if IsServer() then
-		if self:GetAbility():IsCooldownReady() and self:GetParent():HasModifier("modifier_fountain_aura_buff") or self:GetParent():HasModifier("modifier_fountain_aura_effect_lua") then
+		if self:GetAbility():IsCooldownReady() and self:GetParent():HasModifier("modifier_fountain_aura_effect_lua") then
 			self:GetAbility():SetCurrentCharges(3)
 		end
+
 		local stack = self:GetAbility():GetCurrentCharges() + 1
-		for i=5,12 do
+
+		for i = 5, 12 do
 			if self:GetAbility().RuneStorage == rune_table[i] then
 				stack = i
 				break
 			end
 		end
+
 		self:SetStackCount(stack)
 	end
 

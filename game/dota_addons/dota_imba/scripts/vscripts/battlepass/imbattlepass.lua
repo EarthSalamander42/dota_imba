@@ -17,6 +17,11 @@
 
 -- Battlepass
 
+-- to add soon:
+-- Maelstrom (particles/econ/events/ti8/maelstorm_ti8.vpcf)
+-- Mjollnir shield (particles/econ/events/ti8/mjollnir_shield_ti8.vpcf)
+-- Phase Boots (particles/econ/events/ti8/phase_boots_ti8.vpcf)
+
 if Imbattlepass == nil then Imbattlepass = class({}) end
 local next_reward = false
 local next_reward_shown = false
@@ -66,14 +71,29 @@ if next_reward_shown then
 	IMBATTLEPASS_LEVEL_REWARD[95]	= "juggernaut_arcana2"
 end
 IMBATTLEPASS_LEVEL_REWARD[98]	= "bottle4"
+if next_reward_shown then
+	IMBATTLEPASS_LEVEL_REWARD[99]	= "blink11"
+end
 IMBATTLEPASS_LEVEL_REWARD[100]	= "shiva"
 IMBATTLEPASS_LEVEL_REWARD[103]	= "fountain12"
-IMBATTLEPASS_LEVEL_REWARD[105]	= "pudge_arcana2"
+IMBATTLEPASS_LEVEL_REWARD[105]	= "pudge_arcana2" -- mekansm3, needs new design
+if next_reward_shown then
+	IMBATTLEPASS_LEVEL_REWARD[108]	= "blink12"
+end
 IMBATTLEPASS_LEVEL_REWARD[112]	= "fountain13"
 IMBATTLEPASS_LEVEL_REWARD[120]	= "sheepstick2"
 IMBATTLEPASS_LEVEL_REWARD[121]	= "fountain14"
 IMBATTLEPASS_LEVEL_REWARD[130]	= "fountain15"
+if next_reward_shown then
+	IMBATTLEPASS_LEVEL_REWARD[132]	= "radiance3"
+	IMBATTLEPASS_LEVEL_REWARD[139]	= "fountain16"
+	IMBATTLEPASS_LEVEL_REWARD[148]	= "fountain17"
+end
 IMBATTLEPASS_LEVEL_REWARD[150]	= "shiva2"
+if next_reward_shown then
+	IMBATTLEPASS_LEVEL_REWARD[157]	= "fountain18"
+	IMBATTLEPASS_LEVEL_REWARD[200]	= "shiva3"
+end
 
 CustomNetTables:SetTableValue("game_options", "battlepass", {battlepass = IMBATTLEPASS_LEVEL_REWARD})
 
@@ -88,6 +108,7 @@ function Imbattlepass:Init()
 	IMBATTLEPASS_SHIVA = {}
 	IMBATTLEPASS_PUDGE = {}
 	IMBATTLEPASS_JUGGERNAUT = {}
+	IMBATTLEPASS_ANCIENT_APPARITION = {}
 
 	for k, v in pairs(IMBATTLEPASS_LEVEL_REWARD) do
 		if string.find(v, "fountain") then
@@ -106,10 +127,12 @@ function Imbattlepass:Init()
 			IMBATTLEPASS_SHEEPSTICK[v] = k
 		elseif string.find(v, "shiva") then
 			IMBATTLEPASS_SHIVA[v] = k
-		elseif string.find(v, "pudge_arcana") then
+		elseif string.find(v, "pudge") then
 			IMBATTLEPASS_PUDGE[v] = k
-		elseif string.find(v, "juggernaut_arcana") then
+		elseif string.find(v, "juggernaut") then
 			IMBATTLEPASS_JUGGERNAUT[v] = k
+		elseif string.find(v, "ancient_apparition") then
+			IMBATTLEPASS_ANCIENT_APPARITION[v] = k
 		end
 	end
 
@@ -125,6 +148,7 @@ function Imbattlepass:AddItemEffects(hero)
 	Imbattlepass:GetMekansmEffect(hero)
 	Imbattlepass:GetFountainEffect(hero)
 	Imbattlepass:GetBottleEffect(hero)
+	Imbattlepass:GetHeroEffect(hero)
 end
 
 function Imbattlepass:GetRewardUnlocked(ID)
@@ -140,9 +164,18 @@ function Imbattlepass:GetBlinkEffect(hero)
 	local effect2 = "particles/items_fx/blink_dagger_end.vpcf"
 	local icon = 0
 
+--	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BLINK["blink12"] then
+--		effect = "particles/econ/events/ti8/blink_dagger_ti8_start_lvl2.vpcf"
+--		effect2 = "particles/econ/events/ti8/blink_dagger_ti8_end_lvl2.vpcf"
+--		icon = 12
+--	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BLINK["blink11"] then
+--		effect = "particles/econ/events/ti8/blink_dagger_ti8_start.vpcf"
+--		effect2 = "particles/econ/events/ti8/blink_dagger_ti8_end.vpcf"
+--		icon = 11
+--	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BLINK["blink10"] then
 	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BLINK["blink10"] then
 		effect = "particles/econ/events/ti5/blink_dagger_start_lvl2_ti5.vpcf"
-		effect = "particles/econ/events/ti5/blink_dagger_end_lvl2_ti5.vpcf"
+		effect2 = "particles/econ/events/ti5/blink_dagger_end_lvl2_ti5.vpcf"
 		icon = 10
 	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BLINK["blink9"] then
 		effect = "particles/econ/events/ti5/blink_dagger_start_ti5.vpcf"
@@ -192,6 +225,10 @@ function Imbattlepass:GetForceStaffEffect(hero) -- still not working yet
 	local effect = "particles/items_fx/force_staff.vpcf"
 	local icon = 0
 
+--	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FORCE_STAFF["force_staff5"] then
+--		effect = "particles/econ/events/ti8/force_staff_ti8.vpcf"
+--		icon = 5
+--	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FORCE_STAFF["force_staff4"] then
 	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FORCE_STAFF["force_staff4"] then
 		effect = "particles/econ/events/ti6/force_staff_ti6.vpcf"
 		icon = 4
@@ -215,6 +252,11 @@ function Imbattlepass:GetRadianceEffect(hero)
 	local effect2 = "particles/items2_fx/radiance.vpcf"
 	local icon = 0
 
+--	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_RADIANCE["radiance3"] then
+--		effect = "particles/econ/events/ti8/radiance_owner_ti8.vpcf"
+--		effect2 = "particles/econ/events/ti8/radiance_ti8.vpcf"
+--		icon = 3
+--	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_RADIANCE["radiance2"] then
 	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_RADIANCE["radiance2"] then
 		effect = "particles/econ/events/ti6/radiance_owner_ti6.vpcf"
 		effect2 = "particles/econ/events/ti6/radiance_ti6.vpcf"
@@ -255,6 +297,11 @@ function Imbattlepass:GetShivaEffect(hero)
 	local effect2 = "particles/items2_fx/shivas_guard_impact.vpcf"
 	local icon = 0
 
+--	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_SHIVA["shiva3"] then
+--		effect = "particles/econ/events/ti8/shivas_guard_ti8_active.vpcf"
+--		effect2 = "particles/econ/events/ti8/shivas_guard_ti8_impact.vpcf"
+--		icon = 3
+--	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_SHIVA["shiva2"] then
 	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_SHIVA["shiva2"] then
 		effect = "particles/econ/events/newbloom_2015/shivas_guard_active_nian2015.vpcf"
 		effect2 = "particles/econ/events/newbloom_2015/shivas_guard_impact_nian2015.vpcf"
@@ -278,6 +325,14 @@ function Imbattlepass:GetMekansmEffect(hero)
 	local effect5 = "particles/items3_fx/warmage_mana_nonhero.vpcf"
 	local icon = 0
 
+--	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_MEKANSM["mekansm3"] then
+--		effect = "particles/econ/events/ti8/mekanism_ti8.vpcf"
+--		effect2 = "particles/econ/events/ti8/mekanism_recipient_ti8.vpcf"
+--		effect3 = ""
+--		effect4 = ""
+--		effect5 = ""
+--		icon = 3
+--	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_MEKANSM["mekansm2"] then
 	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_MEKANSM["mekansm2"] then
 		effect = "particles/econ/events/ti6/mekanism_ti6.vpcf"
 		effect2 = "particles/econ/events/ti6/mekanism_recipient_ti6.vpcf"
@@ -305,6 +360,13 @@ end
 function Imbattlepass:GetFountainEffect(hero)
 	local effect = ""
 
+--	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FOUNTAIN["fountain18"] then
+--		effect = "particles/econ/events/ti8/fountain_regen_ti8_lvl3.vpcf"
+--	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FOUNTAIN["fountain17"] then
+--		effect = "particles/econ/events/ti8/fountain_regen_ti8_lvl2.vpcf"
+--	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FOUNTAIN["fountain16"] then
+--		effect = "particles/econ/events/ti8/fountain_regen_ti8.vpcf"
+--	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FOUNTAIN["fountain15"] then
 	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FOUNTAIN["fountain15"] then
 		effect = "particles/econ/events/ti5/radiant_fountain_regen_lvl2_ti5.vpcf"
 	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FOUNTAIN["fountain14"] then
@@ -344,6 +406,10 @@ function Imbattlepass:GetBottleEffect(hero)
 	local effect = "particles/items_fx/bottle.vpcf"
 	local icon = 0
 
+--	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BOTTLE["bottle5"] then
+--		effect = "particles/econ/events/ti8/bottle_ti8.vpcf"
+--		icon = 5
+--	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BOTTLE["bottle4"] then
 	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BOTTLE["bottle4"] then
 		effect = "particles/econ/events/ti5/bottle_ti5.vpcf"
 		icon = 4
@@ -363,30 +429,42 @@ function Imbattlepass:GetBottleEffect(hero)
 --	CustomNetTables:SetTableValue("player_battlepass", tostring(hero:GetPlayerID()), {bottle_icon = icon})
 end
 
-function Imbattlepass:GetPudgeArcanaEffect(ID)
-	local hero = PlayerResource:GetSelectedHeroEntity(ID)
+function Imbattlepass:GetHeroEffect(hero)
+	if hero:GetUnitName() == "npc_dota_hero_juggernaut" then
+		if next_reward == true and Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_JUGGERNAUT["juggernaut_arcana"] then
+			Imbattlepass:GetJuggernautArcanaEffect(hero:GetPlayerID(), HasJuggernautArcana(hero:GetPlayerID()))
+		end
+	elseif hero:GetUnitName() == "npc_dota_hero_pudge" then
+		if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_PUDGE["pudge_arcana"] then
+			Imbattlepass:GetPudgeArcanaEffect(hero:GetPlayerID(), HasPudgeArcana(hero:GetPlayerID()))
+		end
+	end
+end
 
-	if hero == nil then
+function Imbattlepass:GetPudgeArcanaEffect(ID, arcana_type)
+	if PlayerResource:GetSelectedHeroEntity(ID) == nil then
 		Timers:CreateTimer(0.1, function()
-			Imbattlepass:GetPudgeArcanaEffect(ID)
+			Imbattlepass:GetPudgeArcanaEffect(ID, arcana_type)
 		end)
 
 		return
 	end
 
-	if HasPudgeArcana(ID) then
+	local hero = PlayerResource:GetSelectedHeroEntity(ID)
+
+	if arcana_type then
 		hero:SetModel("models/items/pudge/arcana/pudge_arcana_base.vmdl")
 		hero:SetOriginalModel("models/items/pudge/arcana/pudge_arcana_base.vmdl")
-		hero:SetMaterialGroup(tostring(HasPudgeArcana(ID)))
-		hero.pudge_arcana = HasPudgeArcana(ID)
+		hero:SetMaterialGroup(tostring(arcana_type))
+		hero.pudge_arcana = arcana_type
 
 		hero.back = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/pudge/arcana/pudge_arcana_back.vmdl"})
 		hero.back:FollowEntity(hero, true)
-		hero.back:SetMaterialGroup(tostring(HasPudgeArcana(ID)))
+		hero.back:SetMaterialGroup(tostring(arcana_type))
 
 		local particle = "particles/econ/items/pudge/pudge_arcana/pudge_arcana_red_back_ambient.vpcf"	
 		local particle2 = "particles/econ/items/pudge/pudge_arcana/pudge_arcana_red_back_ambient_beam.vpcf"
-		if HasPudgeArcana(ID) == 1 then
+		if arcana_type == 1 then
 			particle = "particles/econ/items/pudge/pudge_arcana/pudge_arcana_back_ambient.vpcf"
 			particle2 = "particles/econ/items/pudge/pudge_arcana/pudge_arcana_back_ambient_beam.vpcf"
 		end
@@ -395,7 +473,7 @@ function Imbattlepass:GetPudgeArcanaEffect(ID)
 		ParticleManager:CreateParticle(particle2, PATTACH_ABSORIGIN_FOLLOW, hero.back)
 		ParticleManager:CreateParticle("particles/econ/items/pudge/pudge_arcana/pudge_arcana_ambient_flies.vpcf", PATTACH_ABSORIGIN_FOLLOW, hero)
 
-		CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "override_hero_image", {arcana = HasPudgeArcana(ID), hero_name = string.gsub(hero:GetUnitName(), "npc_dota_hero_", "")})
+		CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "override_hero_image", {arcana = arcana_type, hero_name = string.gsub(hero:GetUnitName(), "npc_dota_hero_", "")})
 	end
 end
 
@@ -409,26 +487,26 @@ function HasPudgeArcana(ID)
 	end
 end
 
-function Imbattlepass:GetJuggernautArcanaEffect(ID)
+function Imbattlepass:GetJuggernautArcanaEffect(ID, arcana_type)
 	local hero = PlayerResource:GetSelectedHeroEntity(ID)
 
 	if hero == nil then
 		Timers:CreateTimer(0.1, function()
-			Imbattlepass:GetJuggernautArcanaEffect(ID)
+			Imbattlepass:GetJuggernautArcanaEffect(ID, arcana_type)
 		end)
 
 		return
 	end
 
-	if HasJuggernautArcana(ID) and next_reward_shown then
+	if arcana_type and next_reward_shown then
 		hero:SetModel("models/heroes/juggernaut/juggernaut_arcana.vmdl")
 		hero:SetOriginalModel("models/heroes/juggernaut/juggernaut_arcana.vmdl")
-		hero:SetMaterialGroup(tostring(HasJuggernautArcana(ID)))
-		hero.juggernaut_arcana = HasJuggernautArcana(ID)
+		hero:SetMaterialGroup(tostring(arcana_type))
+		hero.juggernaut_arcana = arcana_type
 
 		hero.head = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/juggernaut/arcana/juggernaut_arcana_mask.vmdl"})
 		hero.head:FollowEntity(hero, true)
-		hero.head:SetMaterialGroup(tostring(HasJuggernautArcana(ID)))
+		hero.head:SetMaterialGroup(tostring(arcana_type))
 
 		hero.back = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/juggernaut/armor_for_the_favorite_back/armor_for_the_favorite_back.vmdl"})
 		hero.back:FollowEntity(hero, true)
@@ -444,14 +522,9 @@ function Imbattlepass:GetJuggernautArcanaEffect(ID)
 
 		hero.blade_fury_effect = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_blade_fury.vpcf"
 
-		local kill_sounds = {
-			"Hero_Juggernaut.ArcanaTrigger",
-			""
-		}
-
 		local particle = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_ambient.vpcf"	
 --		local particle2 = "particles/econ/items/pudge/pudge_arcana/pudge_arcana_red_back_ambient_beam.vpcf"
-		if HasJuggernautArcana(ID) == 1 then
+		if arcana_type == 1 then
 			hero.blade_fury_effect = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_v2_blade_fury.vpcf"
 
 			particle = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_v2_ambient.vpcf"
@@ -462,7 +535,7 @@ function Imbattlepass:GetJuggernautArcanaEffect(ID)
 --		ParticleManager:CreateParticle(particle2, PATTACH_ABSORIGIN_FOLLOW, hero.back)
 --		ParticleManager:CreateParticle("particles/econ/items/pudge/pudge_arcana/pudge_arcana_ambient_flies.vpcf", PATTACH_ABSORIGIN_FOLLOW, hero)
 
-		CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "override_hero_image", {arcana = HasJuggernautArcana(ID), hero_name = string.gsub(hero:GetUnitName(), "npc_dota_hero_", "")})
+		CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "override_hero_image", {arcana = arcana_type, hero_name = string.gsub(hero:GetUnitName(), "npc_dota_hero_", "")})
 	end
 end
 

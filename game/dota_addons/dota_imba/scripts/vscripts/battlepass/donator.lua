@@ -129,18 +129,20 @@ local model_scale = GetKeyValueByHeroName(unit_name, "ModelScale")
 		particle_name[2] = "particles/econ/courier/courier_platinum_roshan/platinum_roshan_ambient.vpcf"
 		particle_name[3] = "particles/econ/courier/courier_roshan_darkmoon/courier_roshan_darkmoon.vpcf" -- particles/econ/courier/courier_roshan_darkmoon/courier_roshan_darkmoon_flying.vpcf
 		particle_name[4] = "particles/econ/courier/courier_roshan_desert_sands/baby_roshan_desert_sands_ambient.vpcf"
-		particle_name[5] = "particles/econ/courier/courier_roshan_lava/courier_roshan_lava.vpcf"
-		particle_name[6] = "particles/econ/courier/courier_roshan_frost/courier_roshan_frost_ambient.vpcf"
+		particle_name[5] = "particles/econ/courier/courier_roshan_ti8/courier_roshan_ti8.vpcf"
+		particle_name[6] = "particles/econ/courier/courier_roshan_lava/courier_roshan_lava.vpcf"
+		particle_name[7] = "particles/econ/courier/courier_roshan_frost/courier_roshan_frost_ambient.vpcf"
+
 		-- also attach eyes effect later
 		local random_int = RandomInt(0, #particle_name)
 
 		local particle = ParticleManager:CreateParticle(particle_name[random_int], PATTACH_ABSORIGIN_FOLLOW, companion)
-		if random_int <= 4 then
+		if random_int <= 5 then
 			companion:SetMaterialGroup(tostring(random_int))
 		else
 			companion:SetModel("models/courier/baby_rosh/babyroshan_elemental.vmdl")
 			companion:SetOriginalModel("models/courier/baby_rosh/babyroshan_elemental.vmdl")
-			companion:SetMaterialGroup(tostring(random_int-4))
+			companion:SetMaterialGroup(tostring(random_int - 5))
 		end
 	elseif unit_name == "npc_imba_donator_companion_suthernfriend" then
 		companion:SetMaterialGroup("1")

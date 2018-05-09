@@ -327,13 +327,6 @@ function GameMode:ModifierFilter( keys )
 			return true
 		end
 
-		-- overthrow has it's own fountain modifier
-		if GetMapName() == "imba_overthrow" then
-			if modifier_name == "modifier_fountain_aura_buff" then
-				return false
-			end
-		end
-
 		-- volvo bugfix
 		if modifier_name == "modifier_datadriven" then
 			return false
@@ -488,10 +481,6 @@ function GameMode:ModifierFilter( keys )
 					return false
 				end
 			end
-		end
-
-		if modifier_name == "modifier_fountain_aura_buff" then
-			modifier_owner:AddNewModifier(modifier_owner, nil, "modifier_imba_fountain_particle_control", {})
 		end
 
 		if modifier_name == "modifier_tusk_snowball_movement" then
@@ -1213,6 +1202,12 @@ function GameMode:OnAllPlayersLoaded()
 			-- Add fountain passive abilities
 			building:AddAbility("imba_fountain_danger_zone"):SetLevel(1)
 			building:AddAbility("imba_fountain_relief"):SetLevel(1)
+
+			-- remove vanilla fountain healing
+			if building:HasModifier("modifier_fountain_aura") then
+				building:RemoveModifierByName("modifier_fountain_aura")
+				building:AddNewModifier(building, nil, "modifier_fountain_aura_lua", {})
+			end
 		end
 	end
 end
