@@ -767,7 +767,6 @@ end
 function modifier_imba_rolling_boulder:HorizontalMotion(dt)
 	if IsServer() then
 		if self.hitRemnant then
-			print("Traveled distance (remnant):", self.traveled, self.remnantDistance)
 			if self.traveled < self.remnantDistance then
 				self.caster:SetAbsOrigin(self.caster:GetAbsOrigin() + self.direction * self.remnantVelocity * dt)
 				self.traveled = self.traveled + self.remnantVelocity * dt
@@ -779,7 +778,6 @@ function modifier_imba_rolling_boulder:HorizontalMotion(dt)
 				self:Destroy()
 			end
 		else
-			print("Traveled distance:", self.traveled, self.normalDistance)
 			if self.traveled < self.normalDistance then
 				self.caster:SetAbsOrigin(self.caster:GetAbsOrigin() + self.direction * self.normalVelocity * dt)
 				self.traveled = self.traveled + self.normalVelocity * dt

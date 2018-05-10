@@ -56,6 +56,7 @@ MINIMAP_CREEP_ICON_SIZE = 1					-- What icon size should we use for creeps?
 MINIMAP_RUNE_ICON_SIZE = 1					-- What icon size should we use for runes?
 
 RUNE_SPAWN_TIME = 120						-- How long in seconds should we wait between rune spawns?
+BOUNTY_RUNE_SPAWN_TIME = 300
 CUSTOM_BUYBACK_COST_ENABLED = true			-- Should we use a custom buyback cost setting?
 CUSTOM_BUYBACK_COOLDOWN_ENABLED = true		-- Should we use a custom buyback time?
 BUYBACK_ENABLED = true						-- Should we allow people to buyback when they die?

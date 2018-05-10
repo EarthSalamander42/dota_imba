@@ -161,6 +161,10 @@
 	padding: 5px;
 }
 
+#BattlepassInfoContainer {
+	overflow:  squish scroll;
+}
+
 #LeaderboardInfoContainer {
 	background-color: #040c1850;
 	height: fit-children;

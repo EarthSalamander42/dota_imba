@@ -3177,7 +3177,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"400"
+				"damage"				"500"
 				"CalculateSpellDamageTooltip"	"1"
 			}
 			"08"
@@ -11731,7 +11731,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health_restore"		"100"
+				"health_restore"		"120"
 			}
 			"02"
 			{

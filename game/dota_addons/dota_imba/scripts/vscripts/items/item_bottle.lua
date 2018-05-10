@@ -1,20 +1,3 @@
--- Copyright (C) 2018  The Dota IMBA Development Team
---
--- Licensed under the Apache License, Version 2.0 (the "License");
--- you may not use this file except in compliance with the License.
--- You may obtain a copy of the License at
---
--- http://www.apache.org/licenses/LICENSE-2.0
---
--- Unless required by applicable law or agreed to in writing, software
--- distributed under the License is distributed on an "AS IS" BASIS,
--- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
--- See the License for the specific language governing permissions and
--- limitations under the License.
---
--- Editors:
---
-
 -- Author: Ported from Angel Arena Black Star's Github
 -- https://github.com/ark120202/aabs/blob/1faaadbc3cbf9f9d9bf2cbb8c1e2463141c17d2e/game/scripts/vscripts/items/item_bottle.lua
 
@@ -23,13 +6,6 @@ LinkLuaModifier("modifier_item_imba_bottle_texture_controller", "items/item_bott
 LinkLuaModifier("modifier_item_imba_bottle_texture_controller_2", "items/item_bottle.lua", LUA_MODIFIER_MOTION_NONE)
 
 item_imba_bottle = class({})
-
---[[ OnCreated() not working on item/ability
-function item_imba_bottle:OnCreated()
-	self:SetCurrentCharges(3)
-	self.RuneStorage = nil
-end
---]]
 
 function item_imba_bottle:GetIntrinsicModifierName() return "modifier_item_imba_bottle_texture_controller" end
 
@@ -40,14 +16,11 @@ end
 function item_imba_bottle:OnSpellStart()
 	if self.RuneStorage then
 		PickupRune(self.RuneStorage, self:GetCaster(), true)
-		if self.RuneStorage == "bounty" and self:GetCurrentCharges() < 3 then
-			self:SetCurrentCharges(2)
-		else
-			self:SetCurrentCharges(3)
-		end
+		self:SetCurrentCharges(3)
 		self.RuneStorage = nil
 	else
 		local charges = self:GetCurrentCharges()
+
 		if charges > 0 then
 			self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_item_imba_bottle_heal", {duration = self:GetSpecialValueFor("restore_time")})
 			self:SetCurrentCharges(charges - 1)
@@ -66,19 +39,9 @@ function item_imba_bottle:SetStorageRune(type)
 			runeType = type
 		})
 	end
-	self.RuneStorage = type
-	if self.RuneStorage == "bounty" then
-		if self:GetCurrentCharges() < 3 then
-			self:SetCurrentCharges(2)
-		else
-			PickupRune(self.RuneStorage, self:GetCaster(), true)
-			self.RuneStorage = nil
-			return
-		end
-	else
-		self:SetCurrentCharges(3)
-	end
 
+	self.RuneStorage = type
+	self:SetCurrentCharges(3)
 	self:GetCaster():EmitSound("Bottle.Cork")
 end
 

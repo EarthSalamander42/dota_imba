@@ -862,10 +862,6 @@ end
 
 -- Spawns runes on the map
 function SpawnImbaRunes()
-bounty_rune_is_initial_bounty_rune = false
-
-	-- Remove any existing runes, if any
-	RemoveRunes()
 
 	-- List of powerup rune types
 	local powerup_rune_types = {}
@@ -879,30 +875,33 @@ bounty_rune_is_initial_bounty_rune = false
 --	powerup_rune_types[8] = {"item_imba_rune_ember", "particles/econ/items/shadow_fiend/sf_fire_arcana/sf_fire_arcana_trail.vpcf"}
 --	powerup_rune_types[9] = {"item_imba_rune_stone", "particles/econ/items/natures_prophet/natures_prophet_flower_treant/natures_prophet_flower_treant_ambient.vpcf"}
 
-	local rune
 	local particle
 	local random_int = RandomInt(1, #powerup_rune_types)
-	for k, v in pairs(powerup_rune_locations) do
-		rune = CreateItemOnPositionForLaunch(powerup_rune_locations[k], CreateItem(powerup_rune_types[random_int][1], nil, nil))
-		RegisterRune(rune)
-		SpawnRuneParticle(rune, powerup_rune_types[random_int][2])
-	end
 
-	for k, v in pairs(bounty_rune_locations) do
-		local bounty_rune = CreateItem("item_imba_rune_bounty", nil, nil)
-		rune = CreateItemOnPositionForLaunch(bounty_rune_locations[k], bounty_rune)		
-		RegisterRune(rune)
+	Timers:CreateTimer(function()
+		RemoveRunes(1)
 
-		-- If these are the 00:00 runes, double their worth
-		local game_time = GameRules:GetDOTATime(false, false)
-		if game_time < 1 then
-			bounty_rune_is_initial_bounty_rune = true
-			SpawnRuneParticle(rune, "particles/generic_gameplay/rune_bounty_first.vpcf")
-		else
-			bounty_rune_is_initial_bounty_rune = false
-			SpawnRuneParticle(rune, "particles/generic_gameplay/rune_bounty.vpcf")
+		for k, v in pairs(powerup_rune_locations) do
+			local rune = CreateItemOnPositionForLaunch(powerup_rune_locations[k], CreateItem(powerup_rune_types[random_int][1], nil, nil))
+			RegisterRune(rune, 1)
+			SpawnRuneParticle(rune, powerup_rune_types[random_int][2])
 		end
-	end
+
+		return RUNE_SPAWN_TIME
+	end)
+
+	Timers:CreateTimer(function()
+		RemoveRunes(2)
+
+		for k, v in pairs(bounty_rune_locations) do
+			local bounty_rune = CreateItem("item_imba_rune_bounty", nil, nil)
+			local rune = CreateItemOnPositionForLaunch(bounty_rune_locations[k], bounty_rune)		
+			RegisterRune(rune, 2)
+			SpawnRuneParticle(rune, "particles/generic_gameplay/rune_bounty_first.vpcf")
+		end
+
+		return BOUNTY_RUNE_SPAWN_TIME
+	end)
 end
 
 function SpawnRuneParticle(rune, particle)
@@ -911,7 +910,7 @@ function SpawnRuneParticle(rune, particle)
 	ParticleManager:ReleaseParticleIndex(rune_particle)
 end
 
-function RegisterRune(rune)
+function RegisterRune(rune, rune_type)
 	AddFOWViewer(2, rune:GetAbsOrigin(), 100, 0.02, false)
 	AddFOWViewer(3, rune:GetAbsOrigin(), 100, 0.02, false)
 
@@ -920,15 +919,30 @@ function RegisterRune(rune)
 		rune_spawn_table = {}
 	end
 
+	if not bounty_rune_spawn_table then
+		bounty_rune_spawn_table = {}
+	end
+
 	-- Register rune into table
-	table.insert(rune_spawn_table, rune)
+	if rune_type == 1 then
+		table.insert(rune_spawn_table, rune)
+	elseif rune_type == 2 then
+		table.insert(bounty_rune_spawn_table, rune)
+	end
 end
 
-function RemoveRunes()
-	if rune_spawn_table then
+function RemoveRunes(rune_type)
+	local rune_table
 
+	if rune_type == 1 then
+		rune_table = rune_spawn_table
+	elseif rune_type == 2 then
+		rune_table = bounty_rune_spawn_table
+	end
+
+	if rune_table then
 		-- Remove existing runes
-		for _,rune in pairs(rune_spawn_table) do
+		for _, rune in pairs(rune_table) do
 			if not rune:IsNull() then								
 				local item = rune:GetContainedItem()
 				UTIL_Remove(item)
@@ -937,7 +951,7 @@ function RemoveRunes()
 		end
 
 		-- Clear the table
-		rune_spawn_table = {}
+		rune_table = {}
 	end
 end
 
@@ -1005,21 +1019,17 @@ function PickupRune(rune_name, unit, bActiveByBottle)
 				end
 			end
 
-			-- If this is the first bounty rune spawn, double the base bounty
-			if bounty_rune_is_initial_bounty_rune then
-				for _, hero in pairs(HeroList:GetAllHeroes()) do
-					if hero:GetTeam() == unit:GetTeam() then
-						if (hero:GetUnitName() == "npc_dota_hero_monkey_king" and not hero.is_real_mk) or (hero:GetUnitName() == "npc_dota_hero_meepo" and not hero.is_real_meepo) or hero:IsIllusion() then
-						else
-							hero:ModifyGold(current_bounty, false, DOTA_ModifyGold_Unspecified)
-							SendOverheadEventMessage(PlayerResource:GetPlayer(hero:GetPlayerOwnerID()), OVERHEAD_ALERT_GOLD, hero, current_bounty, nil)
-						end
+			-- global bounty rune
+			for _, hero in pairs(HeroList:GetAllHeroes()) do
+				if hero:GetTeam() == unit:GetTeam() then
+					if (hero:GetUnitName() == "npc_dota_hero_monkey_king" and not hero.is_real_mk) or (hero:GetUnitName() == "npc_dota_hero_meepo" and not hero.is_real_meepo) or hero:IsIllusion() then
+					else
+						hero:ModifyGold(current_bounty, false, DOTA_ModifyGold_Unspecified)
+						SendOverheadEventMessage(PlayerResource:GetPlayer(hero:GetPlayerOwnerID()), OVERHEAD_ALERT_GOLD, hero, current_bounty, nil)
 					end
 				end
-			else
-				unit:ModifyGold(current_bounty, false, DOTA_ModifyGold_Unspecified)
-				SendOverheadEventMessage(PlayerResource:GetPlayer(unit:GetPlayerOwnerID()), OVERHEAD_ALERT_GOLD, unit, current_bounty, nil)
 			end
+
 --			EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "General.Coins", unit)
 			EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Bounty", unit)
 		elseif rune_name == "arcane" then

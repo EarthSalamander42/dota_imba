@@ -1235,10 +1235,7 @@ end
 	is useful for starting any game logic timers/thinkers, beginning the first round, etc.									]]
 function GameMode:OnGameInProgress()
 	if GetMapName() ~= "imba_1v1" then
-		Timers:CreateTimer(0, function()
-			SpawnImbaRunes()
-			return RUNE_SPAWN_TIME
-		end)
+		SpawnImbaRunes(RUNE_SPAWN_TIME, BOUNTY_RUNE_SPAWN_TIME)
 	end
 
 	-- IMBA: Passive gold adjustment

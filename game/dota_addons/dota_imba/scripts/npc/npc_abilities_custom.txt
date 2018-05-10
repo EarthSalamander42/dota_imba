@@ -43168,9 +43168,10 @@
 			}
 			"02"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"charge_cooldown"		"30"	
-				"LinkedSpecialBonus"	"special_bonus_imba_earth_spirit_5"			
+				"var_type"						"FIELD_INTEGER"
+				"charge_cooldown"				"30"	
+				"LinkedSpecialBonus"			"special_bonus_imba_earth_spirit_5"			
+				"LinkedSpecialBonusOperation"	"SPECIAL_BONUS_SUBTRACT"
 			}
 			"03"
 			{
