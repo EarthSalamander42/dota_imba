@@ -20,9 +20,6 @@
 -- Utility and configuration
 -----------------------------------
 
--- print utility functions
-local TeamSelectionDebugEnabled = true
-
 -- list of names of the events
 local TeamSelectionEvents = {
 	hostReady = "imba_teamselect_host_ready",

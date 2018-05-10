@@ -553,12 +553,39 @@
 	//=================================================================================================================
 	// HERO: Earth Spirit
 	//=================================================================================================================
+//	"npc_dota_hero_earth_spirit"
+//	{
+//		"override_hero"				"npc_dota_hero_earth_spirit"
+
+//		//Picking Screen
+//		"IsImba"					"1"
+//		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
+//		
+//		"Ability1"					"imba_earth_spirit_boulder_smash"
+//		"Ability2"					"imba_earth_spirit_rolling_boulder"
+//		"Ability3"					"imba_earth_spirit_geomagnetic_grip"
+//		"Ability4"					"imba_earth_spirit_stone_remnant"
+//		"Ability5"					"imba_earth_spirit_petrify"
+//		"Ability6"					"imba_earth_spirit_magnetize"
+//		
+//		"Ability10"					"special_bonus_imba_earth_spirit_1"
+//		"Ability11"					"special_bonus_imba_earth_spirit_2"
+//		"Ability12"					"special_bonus_imba_earth_spirit_3"
+//		"Ability13"					"special_bonus_imba_earth_spirit_4"
+//		"Ability14"					"special_bonus_imba_earth_spirit_5"
+//		"Ability15"					"special_bonus_imba_earth_spirit_6"
+//		"Ability16"					"special_bonus_imba_earth_spirit_7"
+//		"Ability17"					"special_bonus_imba_earth_spirit_8"
+//	}
+
+	//=================================================================================================================
+	// HERO: Earth Spirit
+	//=================================================================================================================
 	"npc_dota_hero_earth_spirit"
 	{
 		"override_hero"				"npc_dota_hero_earth_spirit"
 
 		//Picking Screen
-		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
 
 		"Ability1"					"earth_spirit_boulder_smash"
@@ -567,8 +594,6 @@
 		"Ability4"					"earth_spirit_stone_caller"
 		"Ability5"					"earth_spirit_petrify"
 		"Ability6"					"earth_spirit_magnetize"
-
-//		"Ability8"					"imba_earth_spirit_rolling_boulder"
 
 		"Ability10"					"special_bonus_intelligence_10"
 		"Ability11"					"special_bonus_attack_damage_40"

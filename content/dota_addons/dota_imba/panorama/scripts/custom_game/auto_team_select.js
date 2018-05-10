@@ -40,7 +40,7 @@ var OnComplete = function(data) {
 	// we are finally done
 	if (Game.GetLocalPlayerInfo().player_has_host_privileges) {
 		$.Msg("Team selection completed");
-		Game.SetAutoLaunchEnabled(false);
+//		Game.SetAutoLaunchEnabled(false);
 		// start game in 5 secs
 		$.Msg("Starting game in 5 seconds")
 		Game.SetRemainingSetupTime(5);
@@ -82,11 +82,14 @@ var LegacyCompatSetupUI = function() {
 
 (function() {
 
+	// temporary fix
+	Game.SetRemainingSetupTime(5)
+
 	// only operate on 5v5 and 10v10
 	if ((Game.GetMapInfo().map_display_name == "imba_ranked_5v5") || (Game.GetMapInfo().map_display_name == "imba_ranked_10v10")) {
 		LegacyCompatSetupUI();
 		if (Game.GetLocalPlayerInfo().player_has_host_privileges) {
-			Game.SetAutoLaunchEnabled(false);
+//			Game.SetAutoLaunchEnabled(false);
 			GameEvents.Subscribe(events.compute, OnCompute);
 			GameEvents.Subscribe(events.complete, OnComplete);
 			GameEvents.Subscribe(events.failure, OnFailure);
@@ -97,5 +100,4 @@ var LegacyCompatSetupUI = function() {
 		$("#CancelAndUnlockButton").visible = false;
 		$("#ShuffleTeamAssignmentButton").visible = false;
 	}
-
 })();

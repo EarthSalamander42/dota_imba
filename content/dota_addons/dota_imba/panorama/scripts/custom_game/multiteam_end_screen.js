@@ -248,8 +248,13 @@ function EndScoreboard() {
 			// XP
 			var booster = player.xp.booster * 100
 			var donator_color = player.xp.donator_color
+			if (donator_color == undefined) {
+				donator_color = "white";
+			}
+
 			$.Msg(booster)
 			$.Msg(donator_color)
+
 			var diff = player.result.xp_difference;
 
 			if (placeholder == true) {

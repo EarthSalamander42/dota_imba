@@ -75,6 +75,9 @@ if next_reward_shown then
 	IMBATTLEPASS_LEVEL_REWARD[99]	= "blink11"
 end
 IMBATTLEPASS_LEVEL_REWARD[100]	= "shiva"
+if next_reward_shown then
+	IMBATTLEPASS_LEVEL_REWARD[101]	= "vengefulspirit_immortal"
+end
 IMBATTLEPASS_LEVEL_REWARD[103]	= "fountain12"
 IMBATTLEPASS_LEVEL_REWARD[105]	= "pudge_arcana2" -- mekansm3, needs new design
 if next_reward_shown then
@@ -109,6 +112,7 @@ function Imbattlepass:Init()
 	IMBATTLEPASS_PUDGE = {}
 	IMBATTLEPASS_JUGGERNAUT = {}
 	IMBATTLEPASS_ANCIENT_APPARITION = {}
+	IMBATTLEPASS_VENGEFULSPIRIT = {}
 
 	for k, v in pairs(IMBATTLEPASS_LEVEL_REWARD) do
 		if string.find(v, "fountain") then
@@ -133,6 +137,8 @@ function Imbattlepass:Init()
 			IMBATTLEPASS_JUGGERNAUT[v] = k
 		elseif string.find(v, "ancient_apparition") then
 			IMBATTLEPASS_ANCIENT_APPARITION[v] = k
+		elseif string.find(v, "vengefulspirit") then
+			IMBATTLEPASS_VENGEFULSPIRIT[v] = k
 		end
 	end
 
@@ -438,7 +444,31 @@ function Imbattlepass:GetHeroEffect(hero)
 		if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_PUDGE["pudge_arcana"] then
 			Imbattlepass:GetPudgeArcanaEffect(hero:GetPlayerID(), HasPudgeArcana(hero:GetPlayerID()))
 		end
+	elseif hero:GetUnitName() == "npc_dota_hero_vengefulspirit" then
+		if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_VENGEFULSPIRIT["vengefulspirit_immortal"] then
+			Imbattlepass:GetVengefulspiritEffect(hero:GetPlayerID())
+		end
 	end
+end
+
+function Imbattlepass:GetVengefulspiritEffect(ID)
+	if PlayerResource:GetSelectedHeroEntity(ID) == nil then
+		Timers:CreateTimer(0.1, function()
+			Imbattlepass:GetVengefulspiritEffect(ID)
+		end)
+
+		return
+	end
+
+	local hero = PlayerResource:GetSelectedHeroEntity(ID)
+
+	hero.back = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/vengefulspirit/vs_ti8_immortal_shoulder/vs_ti8_immortal_shoulder.vmdl"})
+	hero.back:FollowEntity(hero, true)
+
+	hero.magic_missile_effect = "particles/econ/items/vengeful/vs_ti8_immortal_shoulder/vs_ti8_immortal_magic_missle.vpcf"
+
+	local particle = "vs_ti8_immortal_shoulder_ambient"	
+	ParticleManager:CreateParticle(particle, PATTACH_ABSORIGIN_FOLLOW, hero.back)
 end
 
 function Imbattlepass:GetPudgeArcanaEffect(ID, arcana_type)
@@ -551,6 +581,7 @@ if next_reward_shown == false then return nil end
 	end
 end
 
+-- override pick screen and top bar image
 function Imbattlepass:BattlepassCheckArcana()
 	for i = 0, PlayerResource:GetPlayerCount() - 1 do
 		local arcana = {}

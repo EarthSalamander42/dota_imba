@@ -1107,7 +1107,7 @@ function GameMode:OnItemPickUp( event )
 	local item = EntIndexToHScript( event.ItemEntityIndex )
 	local owner = EntIndexToHScript( event.HeroEntityIndex )
 
-	r = RandomInt(300, 450)
+	local r = RandomInt(300, 450)
 
 	if event.itemname == "item_bag_of_gold" then
 		log.debug("Bag of gold picked up")
@@ -1122,8 +1122,8 @@ function GameMode:OnItemPickUp( event )
 	end
 end
 
-function GameMode:OnPlayerTeam(keys)
 --[[
+function GameMode:OnPlayerTeam(keys)
 	local id = keys.userid -1
 	local team = keys.team
 	local old_team = keys.oldteam
@@ -1144,5 +1144,5 @@ function GameMode:OnPlayerTeam(keys)
 			PlayerResource:SetCustomTeamAssignment(id, PLAYER_TEAM[id]) -- LIA don't use this line
 		end
 	end
---]]
 end
+--]]

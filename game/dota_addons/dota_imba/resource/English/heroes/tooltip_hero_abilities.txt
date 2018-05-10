@@ -262,7 +262,7 @@
 "Dota_Tooltip_Ability_special_bonus_imba_axe_2"             "One Man Army"
 "Dota_Tooltip_Ability_special_bonus_imba_axe_2_Description"             "Increases Axe's armor by 1 for every hit taken during Berseker's Call. The bonus armor lasts 3 additional seconds after Berserker Call has ended."
 "Dota_Tooltip_Ability_special_bonus_imba_axe_3"             "Berserker's Rage"
-"Dota_Tooltip_Ability_special_bonus_imba_axe_3_Description"             "Self casting Battle Hunger applies it to all targets under effect of Berserker's Call.<br>Can only be self-cast during Berserker's Call."
+"Dota_Tooltip_Ability_special_bonus_imba_axe_3_Description"             "Self casting Battle Hunger applies it to all targets under effect of Berserker's Call. Can only be self-cast during Berserker's Call."
 "Dota_Tooltip_Ability_special_bonus_imba_axe_4"             "Death Helix"
 "Dota_Tooltip_Ability_special_bonus_imba_axe_4_Description"             "Adds 30% of Axe's current strength to Counter Helix' damage."
 "Dota_Tooltip_Ability_special_bonus_imba_axe_5"             "Tail Spin"

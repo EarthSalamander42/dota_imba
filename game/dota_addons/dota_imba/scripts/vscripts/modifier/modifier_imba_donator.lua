@@ -14,8 +14,10 @@ end
 function modifier_imba_donator:GetEffectName()
 	if self:GetStackCount() == 1 then
 		return "particles/econ/events/ti7/ti7_hero_effect_2.vpcf"
-	elseif self:GetStackCount() == 4 or self:GetStackCount() == 7 or self:GetStackCount() == 8 then
+	elseif self:GetStackCount() == 4 then
 		return "particles/econ/events/ti7/ti7_hero_effect.vpcf"
+	elseif self:GetStackCount() == 7 or self:GetStackCount() == 8 then
+		return "particles/econ/events/ti8/ti8_hero_effect.vpcf"
 	else
 		return ""
 	end

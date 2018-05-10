@@ -265,6 +265,11 @@ function imba_vengefulspirit_magic_missile:OnSpellStart( params , reduce_pct, ta
 			end
 		end
 
+		local particle = "particles/units/heroes/hero_vengeful/vengeful_magic_missle.vpcf"
+		if hero.magic_missile_effect then
+			particle = hero.magic_missile_effect
+		end
+
 		local projectile
 		if params then
 			projectile =
@@ -272,7 +277,7 @@ function imba_vengefulspirit_magic_missile:OnSpellStart( params , reduce_pct, ta
 					Target 				= target,
 					Source 				= target_loc,
 					Ability 			= self,
-					EffectName 			= "particles/units/heroes/hero_vengeful/vengeful_magic_missle.vpcf",
+					EffectName 			= particle,
 					iMoveSpeed			= projectile_speed,
 					bDrawsOnMinimap 	= false,
 					bDodgeable 			= true,
