@@ -35,8 +35,8 @@ function CreateCustomToast(data) {
 			Game.EmitSound('notification.self.death');
 		else if (teamKiller)
 			Game.EmitSound('notification.teammate.kill');
-		//		else if (teamVictim)
-		//			Game.EmitSound('notification.teammate.death');
+//		else if (teamVictim)
+//			Game.EmitSound('notification.teammate.death');
 		if (isSelfKill) {
 			Game.EmitSound('notification.self.kill');
 			rowText = $.Localize('custom_toast_PlayerDeniedSelf');
@@ -69,7 +69,6 @@ function CreateCustomToast(data) {
 		}
 
 		if (data.tower) {
-			$.Msg(data.teamPlayer)
 			var team = data.teamPlayer == false ? data.teamColor : Players.GetTeam(data.teamPlayer);
 			rowText = '{team_name} {killed_icon} {victim_name}';
 		}

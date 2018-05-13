@@ -980,15 +980,15 @@
 	"item_tome_of_knowledge"
 	{
 		"ItemCost"						"100"
-		"ItemInitialStockTime"			"390.0"
-		"ItemStockTime"					"90.0"
+		"ItemInitialStockTime"			"540.0"
+		"ItemStockTime"					"120.0"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"xp_bonus"				"250"
+				"xp_bonus"				"300"
 			}
 			"02"
 			{

@@ -206,7 +206,8 @@ function onPlayerStatChange(table, key, data) {
 
 			if (ply_battlepass) {
 				if (ply_battlepass.arcana[heroName]) {
-					image_name = heroName + "_arcana" + ply_battlepass.arcana[heroName]
+					image_name = heroName.replace("npc_dota_hero_", "");
+					$.Msg(image_name)
 					OverrideHeroImage(ply_battlepass.arcana[heroName] + 1, newheroimage, image_name)
 				}
 			}

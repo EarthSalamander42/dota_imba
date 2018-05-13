@@ -79,12 +79,12 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"ground_movespeed"				"1000"
+				"ground_movespeed"				"900"
 			}
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"flying_movespeed"				"2500"
+				"flying_movespeed"				"20000"
 			}
 		}
 	}
@@ -8604,52 +8604,44 @@
 				"var_type"					"FIELD_INTEGER"
 				"path_radius"				"225"
 			}
-
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"spill_radius"				"225"
 			}
-
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"speed"						"600 650 700 750"
 				"LinkedSpecialBonus"		"special_bonus_imba_jakiro_6"
 			}
-
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"damage"					"10 20 30 40"
 			}
-
 			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"damage_interval"			"0.5"
 			}
-
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"move_slow"					"28 36 42 48"
 				"LinkedSpecialBonus"		"special_bonus_imba_jakiro_2"
 			}
-
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"attack_slow"				"28 36 42 48"
 				"LinkedSpecialBonus"		"special_bonus_imba_jakiro_2"
 			}
-
 			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"duration"					"5"
 			}
-
 			"09"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -8718,7 +8710,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"stun_duration"			"1.0 1.5 2.0 2.5"
+				"stun_duration"			"1.5 2.0 2.5 3.0"
 				"LinkedSpecialBonus"	"special_bonus_imba_jakiro_5"
 			}
 			"04"
@@ -8729,7 +8721,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"50"
+				"damage"				"100 150 200 250"
 			}
 			"06"
 			{
@@ -43169,7 +43161,7 @@
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"charge_cooldown"				"30"	
+				"charge_cooldown"				"25"	
 				"LinkedSpecialBonus"			"special_bonus_imba_earth_spirit_5"			
 				"LinkedSpecialBonusOperation"	"SPECIAL_BONUS_SUBTRACT"
 			}
@@ -43181,7 +43173,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"earths_mark_duration"	"5"
+				"earths_mark_duration"	"10.0"
 			}
 			"05"
 			{
@@ -43242,32 +43234,32 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"50 100 150 200"				
+				"damage"				"75 150 225 300"				
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"speed"					"900"				
+				"speed"					"900 1000 1100 1200"				
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"unit_distance"			"480 600 680 800"				
+				"unit_distance"			"500 600 700 800"				
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"remnant_distance"		"2000"				
+				"remnant_distance"		"2500"				
 			}
 			"07"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"stun_duration"			"0.5 1 1.5 2"				
+				"stun_duration"			"1.0 1.5 2.0 2.5"				
 			}
 			"08"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"earths_mark_duration"	"5"
+				"earths_mark_duration"	"10.0"
 			}
 			"9"
 			{
@@ -43316,12 +43308,12 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"roll_distance"			"800"				
+				"roll_distance"			"800 850 900 950"				
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"remnant_roll_distance"	"1600"				
+				"remnant_roll_distance"	"1800"				
 			}
 			"05"
 			{
@@ -43336,17 +43328,17 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"speed"					"800"				
+				"speed"					"800 850 900 950"				
 			}
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"remnant_speed"			"1600"				
+				"remnant_speed"			"1800"				
 			}
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"100"				
+				"damage"				"100 150 200 250"				
 			}
 			"10"
 			{
@@ -43356,12 +43348,12 @@
 			"1"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"earths_mark_duration"			"5"
+				"earths_mark_duration"			"10.0"
 			}
 			"12"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"disarm_duration_per_mark"		"0.25"
+				"disarm_duration_per_mark"		"0.3"
 			}
 		}
 	}
@@ -43384,7 +43376,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1100"
+		"AbilityCastRange"				"1500"
 		"AbilityCastPoint"				"0.01"
 		"AbilityCooldown"				"13"
 		"AbilityManaCost"				"100"
@@ -43409,17 +43401,17 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"50 100 150 200"				
+				"damage"				"75 150 225 300"				
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"speed"					"600"				
+				"speed"					"800 850 900 950"				
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"remnant_speed"			"1000"				
+				"remnant_speed"			"1400"				
 			}
 			"05"
 			{
@@ -43434,12 +43426,12 @@
 			"07"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"earths_mark_duration"	"5"
+				"earths_mark_duration"	"10.0"
 			}
 			"08"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"root_time_per_mark"	"0.25"
+				"root_time_per_mark"	"0.3"
 			}
 		}
 	}
@@ -43455,13 +43447,13 @@
 		"ScriptFile"					"hero/hero_earth_spirit.lua"
 		"AbilityTextureName"			"earth_spirit_magnetize"
 		"HasScepterUpgrade"				"1"
-		
+
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-	//	"AbilityBehavior"				Defined in the Lua script
+//		"AbilityBehavior"				Defined in the Lua script
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_NONE"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		
+
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"300"
@@ -43473,8 +43465,8 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
-	//		"soundfile"					"soundevents/game_sounds_heroes/game_sounds_riki.vsndevts"
-	//		"particle"					""particles/units/heroes/hero_earth_spirit/espirit_magnet_arclightning.vpcf""
+//			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_riki.vsndevts"
+//			"particle"					"particles/units/heroes/hero_earth_spirit/espirit_magnet_arclightning.vpcf"
 		}
 
 		// Special
@@ -43489,7 +43481,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"remnant_search_radius"		"400"
+				"remnant_search_radius"		"500"
 			}
 			"03"
 			{
@@ -43499,7 +43491,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_per_sec"			"50 75 100"				
+				"damage_per_sec"			"70 110 150"				
 			}
 			"05"
 			{
@@ -43519,7 +43511,7 @@
 			"08"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"earths_mark_duration"		"5"
+				"earths_mark_duration"		"10.0"
 			}
 			"09"
 			{
@@ -43533,7 +43525,7 @@
 			}
 		}
 	}
-	
+
 	//=================================================================================================================
 	// Earth Spirit Enchant Remnant
 	//=================================================================================================================
@@ -43543,9 +43535,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
 		"ScriptFile"					"hero/hero_earth_spirit.lua"
-		
 		"AbilityTextureName"			"earth_spirit_petrify"
-		
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
@@ -43555,10 +43545,10 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"125"
 		"AbilityCastPoint"				"0.2"
-		"AbilityCooldown"				"45"
+		"AbilityCooldown"				"40.0"
 		"AbilityManaCost"				"150"
 		"MaxLevel"						"1"
-		
+
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
@@ -43589,7 +43579,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"earths_mark_duration"	"5"
+				"earths_mark_duration"	"10.0"
 			}
 		}
 	}

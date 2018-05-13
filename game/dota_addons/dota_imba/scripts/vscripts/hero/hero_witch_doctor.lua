@@ -230,9 +230,8 @@ end
 function modifier_special_bonus_imba_witch_doctor_6:OnCreated()
 	if IsServer() then
 		local ability = self:GetParent():FindAbilityByName("imba_witch_doctor_voodoo_restoration")
-		local caster = self:GetParent()
 		if not ability then return end
-		caster:SetContextThink( DoUniqueString("checkforvoodoo"), function ( )
+		self:GetParent():SetContextThink( DoUniqueString("checkforvoodoo"), function ( )
 			if ability:GetLevel() > 0 then
 				self:GetParent():AddNewModifier(self:GetParent(), ability, "modifier_imba_voodoo_restoration", {})
 				return nil
@@ -265,15 +264,11 @@ function imba_witch_doctor_voodoo_restoration:GetManaCost( hTarget )
 end
 
 function imba_witch_doctor_voodoo_restoration:OnUpgrade()
-	print("Voodoo upgraded!")
-
 	if self:GetCaster():HasTalent("special_bonus_imba_witch_doctor_6") then
 		if self:GetCaster():HasModifier("modifier_imba_voodoo_restoration") then
-			print("Voodoo removed...")
 			self:GetCaster():RemoveModifierByName("modifier_imba_voodoo_restoration")
 		end
 
-		print("Voodoo added back...")
 		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_voodoo_restoration", {})
 	end
 end
@@ -283,6 +278,7 @@ function imba_witch_doctor_voodoo_restoration:OnToggle()
 		EmitSoundOn("Hero_WitchDoctor.Voodoo_Restoration", self:GetCaster())
 		EmitSoundOn("Hero_WitchDoctor.Voodoo_Restoration.Loop", self:GetCaster())
 		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_voodoo_restoration", {})
+
 		if (not _G.VOODOO) and (self:GetCaster():GetName() == "npc_dota_hero_witch_doctor") then
 			_G.VOODOO = true
 			self:GetCaster():EmitSound("witchdoctor_wdoc_ability_voodoo_0"..math.random(1,5))
@@ -331,7 +327,6 @@ function imba_witch_doctor_voodoo_restoration:OnToggle()
 				end
 			end
 		end
-
 	else
 		EmitSoundOn("Hero_WitchDoctor.Voodoo_Restoration.Off", self:GetCaster())
 		StopSoundEvent("Hero_WitchDoctor.Voodoo_Restoration.Loop", self:GetCaster())
@@ -392,6 +387,7 @@ function modifier_imba_voodoo_restoration:OnIntervalThink()
 			end
 		end
 	end
+
 	-- #6 TALENT: Voodo restoration doesn't cost mana to maintain.
 	if not self:GetCaster():HasTalent("special_bonus_imba_witch_doctor_6") then
 		if self:GetCaster():GetMana() >= hAbility:GetManaCost(-1) then

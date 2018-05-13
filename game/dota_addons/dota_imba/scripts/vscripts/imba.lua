@@ -1823,9 +1823,10 @@ function GameMode:OnThink()
 
 	for _, hero in pairs(HeroList:GetAllHeroes()) do
 		-- Make courier controllable, repeat every second to avoid uncontrollable issues
-		if COURIER_TEAM then
-			if COURIER_TEAM[hero:GetTeamNumber()] and not COURIER_TEAM[hero:GetTeamNumber()]:IsControllableByAnyPlayer() then
-				COURIER_TEAM[hero:GetTeamNumber()]:SetControllableByPlayer(hero:GetPlayerID(), true)
+		if COURIER_PLAYER then
+			if COURIER_PLAYER[hero:GetPlayerID()] and not COURIER_PLAYER[hero:GetPlayerID()]:IsControllableByAnyPlayer() then
+				COURIER_PLAYER[hero:GetPlayerID()]:SetControllableByPlayer(hero:GetPlayerID(), true)
+				COURIER_PLAYER[hero:GetPlayerID()].owner_id = hero:GetPlayerID()
 			end
 		end
 
@@ -1855,6 +1856,14 @@ function GameMode:OnThink()
 			for _, modifier in pairs(MORPHLING_RESTRICTED_MODIFIERS) do
 				if hero:HasModifier(modifier) then
 					hero:RemoveModifierByName(modifier)
+				end
+			end
+		end
+
+		if hero:GetUnitName() == "npc_dota_hero_witch_doctor" then
+			if hero:HasTalent("special_bonus_imba_witch_doctor_6") then
+				if not hero:HasModifier("modifier_imba_voodoo_restoration") then
+					hero:AddNewModifier(hero, self, "modifier_imba_voodoo_restoration", {})
 				end
 			end
 		end

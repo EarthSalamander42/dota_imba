@@ -33,8 +33,8 @@
 
 	//Combat Events
 	"custom_toast_PlayerDenied"								"{killer_name} {denied_icon} добил(а) {victim_name}"
-	"custom_toast_CourierKilled"							"{courier_icon} курьер сил  {team_name} погиб"
-	"custom_toast_CourierRespawned"							"{courier_icon} курьер сил {team_name} возродился"
+	"custom_toast_CourierKilled"							"{courier_icon} курьер сил  {victim_name} погиб"
+	"custom_toast_CourierRespawned"							"{courier_icon} курьер сил {victim_name} возродился"
 	"custom_toast_GlyphUsed"								"{glyph_icon} строения сил {team_name} укреплены"
 	"custom_toast_TeamKilled"								"{team_name} {killed_icon} {victim_name}"
 	"custom_toast_KillStreak"								"{player_name} {kill_streak}"

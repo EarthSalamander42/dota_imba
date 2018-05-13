@@ -875,10 +875,9 @@ function SpawnImbaRunes()
 --	powerup_rune_types[8] = {"item_imba_rune_ember", "particles/econ/items/shadow_fiend/sf_fire_arcana/sf_fire_arcana_trail.vpcf"}
 --	powerup_rune_types[9] = {"item_imba_rune_stone", "particles/econ/items/natures_prophet/natures_prophet_flower_treant/natures_prophet_flower_treant_ambient.vpcf"}
 
-	local particle
-	local random_int = RandomInt(1, #powerup_rune_types)
-
 	Timers:CreateTimer(function()
+		local random_int = RandomInt(1, #powerup_rune_types)
+
 		RemoveRunes(1)
 
 		for k, v in pairs(powerup_rune_locations) do
@@ -1086,7 +1085,7 @@ function PickupRune(rune_name, unit, bActiveByBottle)
 			text = "#custom_toast_ActivatedRune",
 			player = unit:GetPlayerID(),
 			runeType = rune_name,
-			runeFirst = bounty_rune_is_initial_bounty_rune
+			runeFirst = true, -- every bounty runes are global now
 		})
 	end
 end
@@ -1290,10 +1289,12 @@ streak[10] = "Beyond Godlike"
 		if reason == "courier_respawn" then
 			text = "#custom_toast_CourierRespawned"
 			team = victim:GetTeam()
+			victim_id = victim.owner_id
 			courier = true
 		elseif reason == "courier_dead" then
 			text = "#custom_toast_CourierKilled"
 			team = victim:GetTeam()
+			victim_id = victim.owner_id
 			courier = true
 		elseif reason == "tower_kill_hero" then
 			text = "#custom_toast_TeamKilled"
@@ -1320,6 +1321,7 @@ streak[10] = "Beyond Godlike"
 			gold = gold,
 			tower = tower,
 			glyph = glyph,
+			victimPlayer = victim_id,			
 		})
 	elseif event_type == "kill" then
 		if reason == "first_blood" then
@@ -1565,6 +1567,7 @@ end
 function HideWearable(hero, item)
 	Timers:CreateTimer(function()
 		print("Check for cosmetic to hide...")
+
 		for i = 0, 44 do
 			if hero:GetTogglableWearable(i) then
 				print("WEARABLE:", i)
@@ -1578,5 +1581,32 @@ function HideWearable(hero, item)
 		end
 
 		return 2.0
+	end)
+end
+
+--[[Author: Noya
+	Editor: EarthSalamander #42
+	Date: 09.08.2015.
+	Hides all dem hats
+]]
+function HideWearables(hero, number)
+	local model = hero:FirstMoveChild()
+	local i = 0
+
+	hero.hiddenWearables = {} -- Keep every wearable handle in a table to show them later
+
+	Timers:CreateTimer(3.0, function()
+		while model do
+			print("model count/classname:", i, model:GetClassname())
+			if model:GetClassname() == "dota_item_wearable" then
+--			if model:GetClassname() == "dota_item_wearable" and i == number then
+				print("Model has been hidden:", model:GetClassname())
+				model:AddEffects(EF_NODRAW) -- Set model hidden
+				table.insert(hero.hiddenWearables, model)
+			end
+
+			i = i + 1
+			model = model:NextMovePeer()
+		end
 	end)
 end

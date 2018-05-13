@@ -52,15 +52,20 @@
 			<Image src="file://panorama/images/custom_game/battlepass/fountain13.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/fountain14.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/fountain15.png" hittest="false" />
+			<Image src="file://panorama/images/custom_game/battlepass/fountain16.png" hittest="false" />
+			<Image src="file://panorama/images/custom_game/battlepass/fountain17.png" hittest="false" />
+			<Image src="file://panorama/images/custom_game/battlepass/fountain18.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/mekansm.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/mekansm2.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/radiance.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/radiance2.png" hittest="false" />
+			<Image src="file://panorama/images/custom_game/battlepass/radiance3.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/sheepstick.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/sheepstick2.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/shiva.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/shiva2.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/shiva3.png" hittest="false" />
+			<Image src="file://panorama/images/custom_game/battlepass/vengefulspirit_immortal.png" hittest="false" />
 
 			<Image src="file://panorama/images/heroes/npc_dota_hero_ghost_revenant.png" hittest="false" />
 			<Image src="file://panorama/images/heroes/npc_dota_hero_hell_empress.png" hittest="false" />

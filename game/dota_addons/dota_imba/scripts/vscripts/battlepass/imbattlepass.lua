@@ -82,6 +82,7 @@ end
 IMBATTLEPASS_LEVEL_REWARD[103]	= "fountain12"
 IMBATTLEPASS_LEVEL_REWARD[105]	= "mekansm3"
 if next_reward_shown then
+	IMBATTLEPASS_LEVEL_REWARD[106]	= "fountain16"
 	IMBATTLEPASS_LEVEL_REWARD[108]	= "blink12"
 end
 IMBATTLEPASS_LEVEL_REWARD[110]	= "pudge_arcana2"
@@ -90,16 +91,15 @@ IMBATTLEPASS_LEVEL_REWARD[120]	= "sheepstick2"
 IMBATTLEPASS_LEVEL_REWARD[121]	= "fountain14"
 if next_reward_shown then
 	IMBATTLEPASS_LEVEL_REWARD[122]	= "bottle5"
+	IMBATTLEPASS_LEVEL_REWARD[126]	= "fountain17"
 end
 IMBATTLEPASS_LEVEL_REWARD[130]	= "fountain15"
 if next_reward_shown then
 	IMBATTLEPASS_LEVEL_REWARD[132]	= "radiance3"
-	IMBATTLEPASS_LEVEL_REWARD[139]	= "fountain16"
-	IMBATTLEPASS_LEVEL_REWARD[148]	= "fountain17"
+	IMBATTLEPASS_LEVEL_REWARD[146]	= "fountain18"
 end
 IMBATTLEPASS_LEVEL_REWARD[150]	= "shiva2"
 if next_reward_shown then
-	IMBATTLEPASS_LEVEL_REWARD[157]	= "fountain18"
 	IMBATTLEPASS_LEVEL_REWARD[200]	= "shiva3"
 end
 
@@ -444,6 +444,7 @@ function Imbattlepass:GetHeroEffect(hero)
 		end
 	elseif hero:GetUnitName() == "npc_dota_hero_vengefulspirit" then
 		if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_VENGEFULSPIRIT["vengefulspirit_immortal"] then
+			HideWearables(hero, 28)
 			Imbattlepass:GetVengefulspiritEffect(hero:GetPlayerID())
 		end
 	end

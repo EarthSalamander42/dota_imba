@@ -71,25 +71,24 @@
 "DOTA_Tooltip_Ability_imba_earth_spirit_petrify_damage"								"DAMAGE:"
 "DOTA_Tooltip_Ability_imba_earth_spirit_petrify_damage_radius"						"DAMAGE RADIUS:"
 
-"DOTA_Tooltip_Ability_special_bonus_imba_earth_spirit_1"		"Stone Remnant vision radius is reduced to 200, but it now follows the Remnant."
+"DOTA_Tooltip_Ability_special_bonus_imba_earth_spirit_1"                    "Eyes of the Mountain"
+"DOTA_Tooltip_Ability_special_bonus_imba_earth_spirit_1_Description"		"Stone Remnant vision radius is reduced to 200, but it now follows the Remnant."
 
-"DOTA_Tooltip_Ability_special_bonus_imba_earth_spirit_2"		"Rolling boulders disjoint projectiles and makes you invulneruable"
+"DOTA_Tooltip_Ability_special_bonus_imba_earth_spirit_2"                    "Can't Stop The Rock"
+"DOTA_Tooltip_Ability_special_bonus_imba_earth_spirit_2_Description"		"Rolling boulders disjoint projectiles and makes you invulneruable"
 
-"DOTA_Tooltip_Ability_special_bonus_imba_earth_spirit_3"		"Magnetized enemies heal you for (5 * Earth Marks) every damage tick"
+"DOTA_Tooltip_Ability_special_bonus_imba_earth_spirit_3"                    "Mineral Healing"
+"DOTA_Tooltip_Ability_special_bonus_imba_earth_spirit_3_Description"		"Magnetized enemies heal you for (5 * Earth Marks) every damage tick"
 
-"DOTA_Tooltip_Ability_special_bonus_imba_earth_spirit_4"		"Earth's Mark reduces magic resistance by 5% per stack"
+"DOTA_Tooltip_Ability_special_bonus_imba_earth_spirit_4"					"Earth's Mark reduces magic resistance by 5% per stack"
 
-"DOTA_Tooltip_Ability_special_bonus_imba_earth_spirit_5"		"-10 seconds Stone Remnant recharge time"
+"DOTA_Tooltip_Ability_special_bonus_imba_earth_spirit_5"					"-10 seconds Stone Remnant recharge time"
 
-"DOTA_Tooltip_Ability_special_bonus_imba_earth_spirit_6"		"Heroe deaths in a 1000 unit radius grant a Stone Remnant charge, up to 10"
+"DOTA_Tooltip_Ability_special_bonus_imba_earth_spirit_6"                    "Ashes to Ashes"
+"DOTA_Tooltip_Ability_special_bonus_imba_earth_spirit_6_Description"		"Heroes deaths in a 1000 unit radius grant a Stone Remnant charge, up to 10"
 
-"DOTA_Tooltip_Ability_special_bonus_imba_earth_spirit_7"		"Earth's Mark is unpurgeable, and its duration is frozen while the target is spell immune"
+"DOTA_Tooltip_Ability_special_bonus_imba_earth_spirit_7"                    "Eternal Mark"
+"DOTA_Tooltip_Ability_special_bonus_imba_earth_spirit_7_Description"		"Earth's Mark is unpurgeable, and its duration is frozen while the target is spell immune"
 
-"DOTA_Tooltip_Ability_special_bonus_imba_earth_spirit_8"		"Skills don't refresh Earth's Mark, but stacks decay one by one instead of all at once"
-
-// "DOTA_Tooltip_Ability_special_bonus_imba_earth_spirit_1"                    "Eyes of the Mountain"
-// "DOTA_Tooltip_Ability_special_bonus_imba_earth_spirit_2"                    "Can't Stop The Rock"
-// "DOTA_Tooltip_Ability_special_bonus_imba_earth_spirit_3"                    "Mineral Healing"
-// "DOTA_Tooltip_Ability_special_bonus_imba_earth_spirit_6"                    "Ashes to Ashes"
-// "DOTA_Tooltip_Ability_special_bonus_imba_earth_spirit_7"                    "Eternal Mark"
-// "DOTA_Tooltip_Ability_special_bonus_imba_earth_spirit_8"                    "Unrelenting Mark"
+"DOTA_Tooltip_Ability_special_bonus_imba_earth_spirit_8"                    "Unrelenting Mark"
+"DOTA_Tooltip_Ability_special_bonus_imba_earth_spirit_8_Description"		"Skills don't refresh Earth's Mark, but stacks decay one by one instead of all at once"

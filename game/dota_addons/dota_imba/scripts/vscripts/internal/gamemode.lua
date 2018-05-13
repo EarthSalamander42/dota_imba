@@ -175,10 +175,10 @@ function OnSetGameMode( eventSourceIndex, args )
 --	end
 
 	-- Bounty multiplier increase
-	CustomNetTables:SetTableValue("game_options", "bounty_multiplier", {CUSTOM_GOLD_BONUS[GetMapName()][1]})
+	CustomNetTables:SetTableValue("game_options", "bounty_multiplier", {CUSTOM_GOLD_BONUS[GetMapName()]})
 
 	-- XP multiplier increase
-	CustomNetTables:SetTableValue("game_options", "exp_multiplier", {CUSTOM_XP_BONUS[GetMapName()][1]})
+	CustomNetTables:SetTableValue("game_options", "exp_multiplier", {CUSTOM_XP_BONUS[GetMapName()]})
 
 	-- Tower power increase
 	if mode_info.exp_multiplier == 1 then
@@ -193,7 +193,7 @@ function OnSetGameMode( eventSourceIndex, args )
 	CustomNetTables:SetTableValue("game_options", "tower_power", {TOWER_POWER_FACTOR})
 
 	-- Hero power increase
-	CustomNetTables:SetTableValue("game_options", "initial_gold", {HERO_INITIAL_GOLD[GetMapName()][1]})
-	CustomNetTables:SetTableValue("game_options", "initial_level", {HERO_STARTING_LEVEL[GetMapName()][1]})
-	CustomNetTables:SetTableValue("game_options", "max_level", {MAX_LEVEL[GetMapName()][1]})
+	CustomNetTables:SetTableValue("game_options", "initial_gold", {HERO_INITIAL_GOLD[GetMapName()]})
+	CustomNetTables:SetTableValue("game_options", "initial_level", {HERO_STARTING_LEVEL[GetMapName()]})
+	CustomNetTables:SetTableValue("game_options", "max_level", {MAX_LEVEL[GetMapName()]})
 end

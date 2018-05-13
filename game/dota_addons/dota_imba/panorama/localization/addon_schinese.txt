@@ -34,8 +34,8 @@
 	//Combat Events
 	"custom_toast_PlayerDenied"								"{killer_name} {denied_icon} 反补了 {victim_name}"
     "custom_toast_PlayerDeniedSelf"                            "{victim_name} {denied_icon}自杀了"
-	"custom_toast_CourierKilled"							"{courier_icon} {team_name}信使已被击杀"
-	"custom_toast_CourierRespawned"							"{courier_icon} {team_name}信使已经重生"
+	"custom_toast_CourierKilled"							"{courier_icon} {victim_name}信使已被击杀"
+	"custom_toast_CourierRespawned"							"{courier_icon} {victim_name}信使已经重生"
 	"custom_toast_GlyphUsed"								"{glyph_icon} {team_name}建筑全面加固"
 	"custom_toast_TeamKilled"								"{team_name} {killed_icon} {victim_name}"
 	"custom_toast_KillStreak"								"{player_name} 正在 {kill_streak}"

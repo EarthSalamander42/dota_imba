@@ -84,7 +84,7 @@
 "npc_dota_hero_dragon_knight"                              "Dragon Knight"
 "npc_dota_hero_drow_ranger"                                "Drow Ranger (IMBA)"
 "npc_dota_hero_earthshaker"                                "Earthshaker"
-"npc_dota_hero_earth_spirit"                                "Earth Spirit"
+"npc_dota_hero_earth_spirit"                                "Earth Spirit (IMBA)"
 "npc_dota_hero_elder_titan"                                "Elder Titan (IMBA)"
 "npc_dota_hero_enchantress"                                "Enchantress"
 "npc_dota_hero_enigma"                                      "Enigma (IMBA)"

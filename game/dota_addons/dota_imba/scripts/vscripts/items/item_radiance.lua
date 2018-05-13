@@ -36,11 +36,10 @@ function item_imba_radiance:GetIntrinsicModifierName()
 
 function item_imba_radiance:OnSpellStart()
 	if IsServer() then
-		local caster = self:GetCaster()
-		if caster:HasModifier("modifier_imba_radiance_aura") then
-			caster:RemoveModifierByName("modifier_imba_radiance_aura")
+		if self:GetCaster():HasModifier("modifier_imba_radiance_aura") then
+			self:GetCaster():RemoveModifierByName("modifier_imba_radiance_aura")
 		else
-			caster:AddNewModifier(caster, self, "modifier_imba_radiance_aura", {})
+			self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_radiance_aura", {})
 		end
 	end
 end
@@ -48,12 +47,13 @@ end
 function item_imba_radiance:GetAbilityTextureName()
 	if self:GetCaster():HasModifier("modifier_imba_radiance_aura") then
 		if not IsClient() then return end
-		local caster = self:GetCaster()
-		if not caster.radiance_icon_client then return "custom/imba_radiance" end
-		return "custom/imba_radiance"..caster.radiance_icon_client
-	end
+		if not self:GetCaster().radiance_icon_client then return "custom/imba_radiance" end
 
-	return "custom/imba_radiance_inactive"
+		return "custom/imba_radiance"..self:GetCaster().radiance_icon_client
+	else
+		if not self:GetCaster().radiance_icon_client then return "custom/imba_radiance_inactive" end
+		return "custom/imba_radiance"..self:GetCaster().radiance_icon_client.."_inactive"
+	end
 end
 
 -----------------------------------------------------------------------------------------------------------
@@ -78,17 +78,18 @@ function modifier_imba_radiance_basic:OnCreated(keys)
 end
 
 function modifier_imba_radiance_basic:OnIntervalThink()
-	local caster = self:GetCaster()
-	if caster:IsIllusion() then return end
+	if self:GetCaster():IsIllusion() then return end
+
 	if IsServer() then
-		self:SetStackCount(caster.radiance_icon)
+		self:SetStackCount(self:GetCaster().radiance_icon)
 	end
+
 	if IsClient() then
 		local icon = self:GetStackCount()
 		if icon == 0 then
-			caster.radiance_icon_client = nil
+			self:GetCaster().radiance_icon_client = nil
 		else
-			caster.radiance_icon_client = icon
+			self:GetCaster().radiance_icon_client = icon
 		end
 	end
 end

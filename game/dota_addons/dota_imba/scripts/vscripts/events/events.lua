@@ -90,18 +90,27 @@ function GameMode:OnGameRulesStateChange(keys)
 					end
 				end
 
-				COURIER_TEAM = {}
+				COURIER_PLAYER = {}
 
 				if GetMapName() == "imba_overthrow" then
 					local foundTeams = {}
 					for _, playerStart in pairs(Entities:FindAllByClassname("info_courier_spawn")) do
-						COURIER_TEAM[playerStart:GetTeam()] = CreateUnitByName("npc_dota_courier", playerStart:GetAbsOrigin(), true, nil, nil, playerStart:GetTeam())
+						COURIER_PLAYER[playerStart:GetTeam()] = CreateUnitByName("npc_dota_courier", playerStart:GetAbsOrigin(), true, nil, nil, playerStart:GetTeam())
 					end
 
---					CustomGameEventManager:Send_ServerToAllClients("imbathrow_topbar", {imbathrow = true})
+					for _, hero in pairs(HeroList:GetAllHeroes()) do
+						if Entities:FindAllByClassname("info_courier_spawn"):GetTeam() == hero:GetTeam() then
+							COURIER_PLAYER[hero:GetPlayerID()] = CreateUnitByName("npc_dota_courier", Entities:FindAllByClassname("info_courier_spawn"):GetAbsOrigin(), true, nil, nil, hero:GetTeam())
+						end
+					end
 				else
-					COURIER_TEAM[2] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_radiant"):GetAbsOrigin(), true, nil, nil, 2)
-					COURIER_TEAM[3] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_dire"):GetAbsOrigin(), true, nil, nil, 3)
+					for _, hero in pairs(HeroList:GetAllHeroes()) do
+						if hero:GetTeamNumber() == 2 then
+							COURIER_PLAYER[hero:GetPlayerID()] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_radiant"):GetAbsOrigin(), true, nil, nil, hero:GetTeam())
+						elseif hero:GetTeamNumber() == 3 then
+							COURIER_PLAYER[hero:GetPlayerID()] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_dire"):GetAbsOrigin(), true, nil, nil, hero:GetTeam())
+						end
+					end
 
 					local good_fillers = {
 						"good_filler_1",

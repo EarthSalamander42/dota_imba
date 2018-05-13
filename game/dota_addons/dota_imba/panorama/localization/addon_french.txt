@@ -39,8 +39,8 @@
 	"custom_end_screen_legend_imr10v10"				"IMR 10v10"
 
 	"custom_toast_PlayerDeniedSelf"							"{victim_name} {denied_icon} Denied"
-	"custom_toast_CourierKilled"							"{courier_icon} {team_name} Coursier a été tué"
-	"custom_toast_CourierRespawned"							"{courier_icon} {team_name} Coursier a réapparu"
+	"custom_toast_CourierKilled"							"{courier_icon} {victim_name} Coursier a été tué"
+	"custom_toast_CourierRespawned"							"{courier_icon} {victim_name} Coursier a réapparu"
 	"custom_toast_GlyphUsed"								"{glyph_icon} {team_name} batiments fortifiés"
 	"custom_toast_TeamKilled"								"{team_name} {killed_icon} {victim_name}"
 	"custom_toast_KillStreak"								"{player_name} est {kill_streak}"

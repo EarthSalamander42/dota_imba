@@ -387,7 +387,8 @@ function modifier_imba_earth_spirit_layout_fix:GetModifierAbilityLayout()
 -------------------------	Boulder Smash	-------------------------
 ---------------------------------------------------------------------
 imba_earth_spirit_boulder_smash = imba_earth_spirit_boulder_smash or class({})
-LinkLuaModifier("modifier_imba_boulder_smash_push", "hero/hero_earth_spirit.lua", LUA_MODIFIER_MOTION_NONE)	-- Movement modifier
+LinkLuaModifier("modifier_imba_boulder_smash_push", "hero/hero_earth_spirit.lua", LUA_MODIFIER_MOTION_NONE)			-- Movement modifier
+LinkLuaModifier("modifier_imba_boulder_smash_cast_thinker", "hero/hero_earth_spirit.lua", LUA_MODIFIER_MOTION_NONE)	-- Used when the target is outside of unit cast range 
 
 function imba_earth_spirit_boulder_smash:GetAssociatedSecondaryAbilities()
 	return "imba_earth_spirit_stone_remnant" end
@@ -441,11 +442,17 @@ function imba_earth_spirit_boulder_smash:OnAbilityPhaseStart()
 		local caster = self:GetCaster()
 		local searchRadius = self:GetSpecialValueFor("max_distance_for_push") + GetCastRangeIncrease(caster)
 		
+		caster:RemoveModifierByName("modifier_imba_boulder_smash_cast_thinker")
+				
 		if target then
 			if CalcDistanceBetweenEntityOBB(caster, target) <= searchRadius then
 				target:RemoveModifierByName("modifier_imba_boulder_smash_push")
 				target:RemoveModifierByName("modifier_imba_geomagnetic_grip_pull")
 				target:AddNewModifier(caster, self, "modifier_imba_boulder_smash_push", {})
+				
+				if caster:GetTeamNumber() ~= target:GetTeamNumber() then
+					ApplyDamage({victim = target, attacker = caster, damage = self:GetSpecialValueFor("damage"), damage_type = DAMAGE_TYPE_MAGICAL})
+				end
 				
 				local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_earth_spirit/espirit_bouldersmash_caster.vpcf", PATTACH_ABSORIGIN, caster)
 				ParticleManager:SetParticleControl(particle, 1, caster:GetAbsOrigin())
@@ -453,19 +460,31 @@ function imba_earth_spirit_boulder_smash:OnAbilityPhaseStart()
 				
 				EmitSoundOn("Hero_EarthSpirit.BoulderSmash.Target", target)
 				return true
+			else
+				local orderTbl = {
+					UnitIndex = caster:entindex(), 
+					OrderType = DOTA_UNIT_ORDER_MOVE_TO_TARGET,
+					TargetIndex = target:entindex()
+				}
+		
+				ExecuteOrderFromTable(orderTbl)
+				
+				Timers:CreateTimer(FrameTime(), function()
+					local castMod = caster:AddNewModifier(caster, self, "modifier_imba_boulder_smash_cast_thinker", {})
+					castMod:PassTarget(target, "unit")
+				end)
+				
+				return false
 			end
-			return false
 		else
-			local RemnantFinder = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, searchRadius, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_CLOSEST, false)
-			for _, r in ipairs(RemnantFinder) do
+			local RemnantAroundCaster = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, searchRadius+1, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_CLOSEST, false)
+			for _, r in ipairs(RemnantAroundCaster) do
 				if r:HasModifier("modifier_imba_stone_remnant") then
 					r:RemoveModifierByName("modifier_imba_boulder_smash_push")
 					r:RemoveModifierByName("modifier_imba_geomagnetic_grip_pull")
 					
-					if r:GetUnitName() == "npc_imba_dota_earth_spirit_stone" then
-						local mod = r:AddNewModifier(r, self, "modifier_imba_boulder_smash_push", {})
-						mod:SetRealCaster(caster)
-					end
+					local mod = r:AddNewModifier(r, self, "modifier_imba_boulder_smash_push", {})
+					mod:SetRealCaster(caster)
 					
 					local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_earth_spirit/espirit_bouldersmash_caster.vpcf", PATTACH_ABSORIGIN, caster)
 					ParticleManager:SetParticleControl(particle, 1, caster:GetAbsOrigin())
@@ -473,6 +492,26 @@ function imba_earth_spirit_boulder_smash:OnAbilityPhaseStart()
 					
 					EmitSoundOn("Hero_EarthSpirit.BoulderSmash.Target", r)
 					return true
+				end
+			end
+			
+			local RemnantAroundCursor = FindUnitsInRadius(caster:GetTeamNumber(), pointTarget, nil, searchRadius+1, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_CLOSEST, false)
+			for _, r in ipairs(RemnantAroundCursor) do
+				if r:HasModifier("modifier_imba_stone_remnant") then
+					local orderTbl = {
+						UnitIndex = caster:entindex(), 
+						OrderType = DOTA_UNIT_ORDER_MOVE_TO_POSITION,
+						Position = r:GetAbsOrigin()
+					}
+			
+					ExecuteOrderFromTable(orderTbl)
+					
+					Timers:CreateTimer(FrameTime(), function()
+						local castMod = caster:AddNewModifier(caster, self, "modifier_imba_boulder_smash_cast_thinker", {})
+						castMod:PassTarget(r, "remnant")
+					end)
+					
+					return false
 				end
 			end
 		end
@@ -554,7 +593,8 @@ function modifier_imba_boulder_smash_push:OnIntervalThink()
 		for _, target in ipairs(targets) do
 			if not self.hitTargets[target:GetEntityIndex()] then
 				self.hitTargets[target:GetEntityIndex()] = true
-				ApplyDamage({victim = target, attacker = self.caster, damage = self.damage, damage_type = DAMAGE_TYPE_MAGICAL})
+				
+				local damage = self.damage
 				EmitSoundOn("Hero_EarthSpirit.BoulderSmash.Damage", target)
 				
 				-- checking for modifier instead of isRemnant because enchant remnant retains movement qualities after expiring, but doesnt stun anymore
@@ -565,12 +605,14 @@ function modifier_imba_boulder_smash_push:OnIntervalThink()
 					-- Earths mark effect
 					local mark = target:FindModifierByName("modifier_imba_earths_mark")
 					if mark then
-						ApplyDamage({victim = target, attacker = self.caster, damage = self.markStackDamage * mark:GetStackCount(), damage_type = DAMAGE_TYPE_MAGICAL})
+						damage = damage + self.markStackDamage * mark:GetStackCount()
 						mark:IncrementStackCount()
 					else
 						target:AddNewModifier(self.caster, self.ability, "modifier_imba_earths_mark", {duration = self.earthsMarkDuration})
 					end
 				end
+				
+				ApplyDamage({victim = target, attacker = self.caster, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
 			end
 		end
 	end
@@ -589,6 +631,93 @@ function modifier_imba_boulder_smash_push:HorizontalMotion(dt)
 			end
 			
 			self:Destroy()
+		end
+	end
+end
+
+-----	Cast thinker
+modifier_imba_boulder_smash_cast_thinker = modifier_imba_boulder_smash_cast_thinker or class({})
+function modifier_imba_boulder_smash_cast_thinker:IsHidden() return true end
+function modifier_imba_boulder_smash_cast_thinker:IsDebuff() return false end
+function modifier_imba_boulder_smash_cast_thinker:IsPurgable() return false end
+function modifier_imba_boulder_smash_cast_thinker:IsPurgeException() return false end
+
+function modifier_imba_boulder_smash_cast_thinker:DeclareFunctions()
+	return {MODIFIER_EVENT_ON_ORDER} end
+
+function modifier_imba_boulder_smash_cast_thinker:OnCreated()
+	if IsServer() then
+		self.ignoredOrders = {}
+		self.ignoredOrders[DOTA_UNIT_ORDER_CAST_TOGGLE] = true
+		self.ignoredOrders[DOTA_UNIT_ORDER_TRAIN_ABILITY] = true
+		self.ignoredOrders[DOTA_UNIT_ORDER_SELL_ITEM] = true
+		self.ignoredOrders[DOTA_UNIT_ORDER_DISASSEMBLE_ITEM] = true
+		self.ignoredOrders[DOTA_UNIT_ORDER_MOVE_ITEM] = true
+		self.ignoredOrders[DOTA_UNIT_ORDER_CAST_TOGGLE_AUTO] = true
+		self.ignoredOrders[DOTA_UNIT_ORDER_GLYPH] = true
+		
+		self.caster = self:GetParent()
+		self.castRange = self:GetAbility():GetSpecialValueFor("max_distance_for_push") + GetCastRangeIncrease(self.caster) - 20
+		
+		Timers:CreateTimer(FrameTime(), function()
+			if not self:IsNull() then
+				self:StartIntervalThink(FrameTime() * 3)
+			end
+		end)
+	end
+end
+
+function modifier_imba_boulder_smash_cast_thinker:OnIntervalThink()
+	if IsServer() then
+		if self.target then
+			if self.targetType == "remnant" then
+				if CalcDistanceBetweenEntityOBB(self.caster, self.target) <= self.castRange then
+					self.caster:Interrupt()
+					
+					if self.target:HasModifier("modifier_imba_stone_remnant") then
+						self.caster:CastAbilityOnPosition(self.caster:GetAbsOrigin() + self.caster:GetForwardVector() * 10, self:GetAbility(), self.caster:GetPlayerOwnerID())
+					else
+						self.caster:CastAbilityOnTarget(self.target, self:GetAbility(), self.caster:GetPlayerOwnerID())
+					end
+					
+					self:Destroy()
+				end
+			elseif self.targetType == "unit" then
+				if CalcDistanceBetweenEntityOBB(self.caster, self.target) <= self.castRange then
+					self.caster:Interrupt()
+					
+					if self.target:HasModifier("modifier_imba_stone_remnant") then
+						self.caster:CastAbilityOnPosition(self.caster:GetAbsOrigin() + self.caster:GetForwardVector() * 10, self:GetAbility(), self.caster:GetPlayerOwnerID())
+					else
+						self.caster:CastAbilityOnTarget(self.target, self:GetAbility(), self.caster:GetPlayerOwnerID())
+					end
+					
+					self:Destroy()
+				end
+			else
+				self:Destroy()
+				return
+			end
+		else
+			self:Destroy()
+			return
+		end
+	end
+end
+
+function modifier_imba_boulder_smash_cast_thinker:PassTarget(target, type)
+	if IsServer() then
+		self.target = target
+		self.targetType = type or "none"
+	end
+end
+
+function modifier_imba_boulder_smash_cast_thinker:OnOrder(kv)
+	if IsServer() then
+		if kv.unit == self.caster then
+			if not self.ignoredOrders[kv.order_type] then
+				self:Destroy()
+			end
 		end
 	end
 end
@@ -648,29 +777,32 @@ end
 
 function modifier_imba_rolling_boulder:OnCreated()
 	if IsServer() then
+		
+		self.ability = self:GetAbility()
 		self.caster = self:GetCaster()
 		self.casterTeam = self.caster:GetTeamNumber()
-
+		
 		-- ability params
-		self.delay = self:GetAbility():GetSpecialValueFor("launch_delay")
-		self.hitRadius = self:GetAbility():GetSpecialValueFor("collision_radius")
-		self.damage = self:GetAbility():GetSpecialValueFor("damage")
-		self.slowDuration = self:GetAbility():GetSpecialValueFor("remnant_slow_duration")
-		self.normalDistance = self:GetAbility():GetSpecialValueFor("roll_distance")
-		self.normalVelocity = self:GetAbility():GetSpecialValueFor("speed")
-		self.remnantDistance = self:GetAbility():GetSpecialValueFor("remnant_roll_distance")
-		self.remnantVelocity = self:GetAbility():GetSpecialValueFor("remnant_speed")
-		self.distanceOppositeToTarget = self:GetAbility():GetSpecialValueFor("opposite_to_enemy_distance")
-
-		self.earthsMarkDuration = self:GetAbility():GetSpecialValueFor("earths_mark_duration")
-		self.disarmDurationPerMark = self:GetAbility():GetSpecialValueFor("disarm_duration_per_mark")
-
+		self.delay = self.ability:GetSpecialValueFor("launch_delay")
+		self.hitRadius = self.ability:GetSpecialValueFor("collision_radius")
+		self.damage = self.ability:GetSpecialValueFor("damage")
+		self.slowDuration = self.ability:GetSpecialValueFor("remnant_slow_duration")
+		self.normalDistance = self.ability:GetSpecialValueFor("roll_distance")
+		self.normalVelocity = self.ability:GetSpecialValueFor("speed")
+		self.remnantDistance = self.ability:GetSpecialValueFor("remnant_roll_distance")
+		self.remnantVelocity = self.ability:GetSpecialValueFor("remnant_speed")
+		self.distanceOppositeToTarget = self.ability:GetSpecialValueFor("opposite_to_enemy_distance")
+		
+		self.earthsMarkDuration = self.ability:GetSpecialValueFor("earths_mark_duration")
+		self.disarmDurationPerMark = self.ability:GetSpecialValueFor("disarm_duration_per_mark")
+		
 		-- extra handlers
 		self.hitRemnant = false
 		self.traveled = 0
 		self.direction = (self.caster:GetCursorPosition() - self.caster:GetAbsOrigin()):Normalized()
+		
 		self.hitEnemies = {}
-
+		
 		self.caster:EmitSound("Hero_EarthSpirit.RollingBoulder.Loop")
 		self.caster:StartGesture(ACT_DOTA_CAST_ABILITY_2_ES_ROLL_START)
 		Timers:CreateTimer(self.delay, function()
@@ -680,10 +812,10 @@ function modifier_imba_rolling_boulder:OnCreated()
 				ProjectileManager:ProjectileDodge(self.caster)
 			end
 		end)
-
+		
 		-- Disable ability
-		self:GetAbility():SetActivated(false)
-
+		self.ability:SetActivated(false)
+		
 		-- start thinking
 		self:StartIntervalThink(FrameTime())
 	end
@@ -730,18 +862,18 @@ function modifier_imba_rolling_boulder:OnIntervalThink()
 				local mark = hero:FindModifierByName("modifier_imba_earths_mark")
 				if mark then
 					mark:IncrementStackCount()
-					hero:AddNewModifier(self.caster, self:GetAbility(), "modifier_imba_rolling_boulder_disarm", {duration = mark:GetStackCount() * self.disarmDurationPerMark})
+					hero:AddNewModifier(self.caster, self.ability, "modifier_imba_rolling_boulder_disarm", {duration = mark:GetStackCount() * self.disarmDurationPerMark})
 				else
-					hero:AddNewModifier(self.caster, self:GetAbility(), "modifier_imba_earths_mark", {duration = self.earthsMarkDuration})
+					hero:AddNewModifier(self.caster, self.ability, "modifier_imba_earths_mark", {duration = self.earthsMarkDuration})
 				end
 				
 				if self.hitRemnant then
-					hero:AddNewModifier(self.caster, self:GetAbility(), "modifier_imba_rolling_boulder_slow", {duration = self.slowDuration})
+					hero:AddNewModifier(self.caster, self.ability, "modifier_imba_rolling_boulder_slow", {duration = self.slowDuration})
 					
 					local magnetizedFinder = FindUnitsInRadius(self.casterTeam, Vector(0,0,0), nil, 25000, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
 					for _, unit in ipairs(magnetizedFinder) do
 						if unit:FindModifierByNameAndCaster("modifier_imba_magnetize", self.caster) then
-							unit:AddNewModifier(self.caster, self:GetAbility(), "modifier_imba_rolling_boulder_slow", {duration = self.slowDuration})
+							unit:AddNewModifier(self.caster, self.ability, "modifier_imba_rolling_boulder_slow", {duration = self.slowDuration})
 						end
 					end
 				end
@@ -800,7 +932,7 @@ function modifier_imba_rolling_boulder:OnDestroy()
 		self.caster:StartGesture(ACT_DOTA_CAST_ABILITY_2_ES_ROLL_END)
 		
 		-- Reenable ability
-		self:GetAbility():SetActivated(true)
+		self.ability:SetActivated(true)
 		
 		Timers:CreateTimer(0.6, function()
 			self.caster:RemoveGesture(ACT_DOTA_CAST_ABILITY_2_ES_ROLL_END)
@@ -905,10 +1037,8 @@ function imba_earth_spirit_geomagnetic_grip:OnAbilityPhaseStart()
 					r:RemoveModifierByName("modifier_imba_boulder_smash_push")
 					r:RemoveModifierByName("modifier_imba_geomagnetic_grip_pull")
 					
-					if r:GetUnitName() == "npc_imba_dota_earth_spirit_stone" then
-						local mod = r:AddNewModifier(r, self, "modifier_imba_geomagnetic_grip_pull", {})
-						mod:SetRealCaster(caster)
-					end
+					local mod = r:AddNewModifier(r, self, "modifier_imba_geomagnetic_grip_pull", {})
+					mod:SetRealCaster(caster)
 					
 					EmitSoundOn("Hero_EarthSpirit.GeomagneticGrip.Cast", caster)
 					EmitSoundOn("Hero_EarthSpirit.GeomagneticGrip.Target", r)
