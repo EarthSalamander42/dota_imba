@@ -24,7 +24,6 @@ function modifier_special_bonus_imba_pangolier_3:OnCreated()
 		self.shield_crash = self:GetCaster():FindAbilityByName("imba_pangolier_shield_crash")
 		self.en_guarde = "modifier_imba_shield_crash_block"
 
-
 		self:GetCaster():AddNewModifier(self:GetCaster(), self.shield_crash, self.en_guarde, {})
 	end
 end
@@ -413,9 +412,9 @@ function modifier_imba_swashbuckle_slashes:OnIntervalThink()
 				ParticleManager:SetParticleControl(blood_particle, 0, enemy:GetAbsOrigin()) --origin of particle
 				ParticleManager:SetParticleControl(blood_particle, 2, self.direction * 500) --direction and speed of the blood spills
 
-				--Talent #8: Swashbuckle also uses half of Pangolier attack damage
+				--Talent #8: Swashbuckle also uses a % of Pangolier attack damage
 				if self:GetCaster():HasTalent("special_bonus_imba_pangolier_8") then
-					self.damage = self.damage + self:GetCaster():GetAverageTrueAttackDamage(self:GetCaster()) / (100/self:GetCaster():FindTalentValue("special_bonus_imba_pangolier_8"))
+					self.damage = self:GetCaster():GetAverageTrueAttackDamage(self:GetCaster()) / (100 / self:GetCaster():FindTalentValue("special_bonus_imba_pangolier_8"))
 				end
 
 				--Apply the damage from the slash
@@ -426,8 +425,9 @@ function modifier_imba_swashbuckle_slashes:OnIntervalThink()
 					attacker = self:GetCaster(),
 					ability = nil
 				}
-				
+
 				ApplyDamage(damageTable)
+				SendOverheadEventMessage(self:GetCaster(), OVERHEAD_ALERT_DAMAGE, enemy, self.damage, nil)
 
 				--Apply on-hit effects
 				self:GetCaster():PerformAttack(enemy, true, true, true, true, false, true, true)

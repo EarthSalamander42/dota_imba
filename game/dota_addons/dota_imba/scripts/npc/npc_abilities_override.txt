@@ -3985,19 +3985,18 @@
 	"dark_seer_ion_shell"
 	{
 		"AbilityCooldown"				"9"
-		"MaxLevel"						"4"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"250 250 275 325"
+				"radius"				"250 275 300 325"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_per_second"		"30 70 100 120"
+				"damage_per_second"		"30 60 90 120"
 				"LinkedSpecialBonus"	"special_bonus_unique_dark_seer"
 			}
 			"03"
@@ -4029,7 +4028,6 @@
 	"dark_seer_surge"
 	{
 		"AbilityCooldown"				"15 13 11 9"
-		"MaxLevel"						"4"
 
 		"AbilitySpecial"
 		{
@@ -4047,7 +4045,6 @@
 	"dark_seer_wall_of_replica"
 	{
 		"AbilityCastRange"					"500 900 1300"
-		"MaxLevel"							"3"
 
 		"AbilitySpecial"
 		{
@@ -4059,12 +4056,12 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"replica_damage_outgoing"	"-40 -10 10"
+				"replica_damage_outgoing"	"-40 -10 20"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"tooltip_outgoing"			"60 90 110"
+				"tooltip_outgoing"			"60 90 120"
 			}
 			"04"
 			{
@@ -4121,8 +4118,6 @@
 	//=================================================================================================================
 	"death_prophet_carrion_swarm"
 	{
-		"MaxLevel"						"4"
-
 		"AbilityCastRange"				"1000"
 		"AbilityCooldown"				"8 6 5 4"
 		"AbilityDamage"					"100 250 340 370"
@@ -4172,10 +4167,7 @@
 	//=================================================================================================================
 	"death_prophet_silence"
 	{
-		"MaxLevel"						"4"
-
 		"AbilityCooldown"				"15 13 11 9"
-
 		"AbilityDuration"				"3.0 4.0 5.0 6.0"
 
 		"AbilitySpecial"
@@ -4198,7 +4190,6 @@
 	//=================================================================================================================
 	"death_prophet_spirit_siphon"
 	{
-		"MaxLevel"						"4"
 		"AbilityManaCost"				"70 60 50 40"
 
 		"AbilitySpecial"
@@ -4247,8 +4238,6 @@
 	//=================================================================================================================
 	"death_prophet_exorcism"
 	{
-		"MaxLevel"						"3"
-
 		"AbilityCooldown"				"145 135 105"
 		"AbilityDuration"				"35"
 
@@ -4545,7 +4534,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"fissure_range"				"1400 1800 2200 2600"
+				"fissure_range"				"1400 1600 1800 2000"
 				"LinkedSpecialBonus"		"special_bonus_unique_earthshaker_3"
 			}
 			"02"
@@ -4603,7 +4592,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"distance_scepter"			"2000"
+				"distance_scepter"			"1400"
 			}
 			"04"
 			{
@@ -8860,16 +8849,14 @@
 	//=================================================================================================================
 	"oracle_fortunes_end"
 	{
-		"MaxLevel"						"4"
-
-		"AbilityCooldown"				"12 8 5.5 4.5"
+		"AbilityCooldown"				"12 10 8 6"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"100 180 240 280"
+				"damage"					"100 180 260 340"
 			}
 			"02"
 			{
@@ -8884,7 +8871,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"maximum_purge_duration"	"2.5"
+				"maximum_purge_duration"	"3.0"
 				"LinkedSpecialBonus"		"special_bonus_unique_oracle_2"
 			}
 			"05"
@@ -8920,10 +8907,7 @@
 	//=================================================================================================================
 	"oracle_fates_edict"
 	{
-		"MaxLevel"						"4"
-
 		"AbilityCastRange"				"500 700 900 1100"
-
 		"AbilityCooldown"				"16 10 6 4"
 
 		"AbilitySpecial"
@@ -8931,7 +8915,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"duration"				"3.0 4.0 4.75 5.25"
+				"duration"				"3.0 3.75 4.5 5.25"
 			}
 			"02"
 			{
@@ -8946,7 +8930,6 @@
 	//=================================================================================================================
 	"oracle_purifying_flames"
 	{
-		"MaxLevel"						"4"
 		"AbilityCooldown"				"2.25 2.25 2.0 1.5"
 
 		"AbilitySpecial"
@@ -8954,17 +8937,17 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"120 300 420 480"
+				"damage"				"120 240 360 480"
 			}			
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"heal_per_second"		"15 35 50 60"
+				"heal_per_second"		"15 30 45 60"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"total_heal_tooltip"	"150 350 500 600"
+				"total_heal_tooltip"	"150 300 450 600"
 			}
 			"04"
 			{
@@ -8993,9 +8976,7 @@
 	// Oracle: False Promise
 	//=================================================================================================================
 	"oracle_false_promise"
-	{
-		"MaxLevel"						"3"
-		
+	{		
 		"AbilityCooldown"				"70 50 30"
 
 		"AbilitySpecial"
@@ -9034,7 +9015,6 @@
 	//=================================================================================================================
 	"phantom_lancer_spirit_lance"
 	{
-		"MaxLevel"						"4"
 		"AbilityCooldown"				"7"
 		"AbilityDamage"					"100 200 275 325"
 
@@ -10919,12 +10899,12 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"whirling_radius"			"300 366 433 500"
+				"whirling_radius"			"300 325 350 375"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"whirling_damage"			"100 233 366 500"
+				"whirling_damage"			"100 175 250 325"
 			}
 			"03"
 			{
@@ -10940,7 +10920,7 @@
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"duration"					"16"
+				"duration"					"14"
 			}
 		}
 	}
@@ -11002,12 +10982,12 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"bonus_hp_regen"		"1.0 1.66 2.66 4.0"
+				"bonus_hp_regen"		"1.0 1.5 2.0 2.5"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"stack_limit"			"20 23 26 30"
+				"stack_limit"			"7 12 17 22"
 				"LinkedSpecialBonus"	"special_bonus_unique_timbersaw_2"
 			}
 			"04"
@@ -11023,7 +11003,6 @@
 	//=================================================================================================================
 	"shredder_chakram"
 	{
-		"MaxLevel"						"3"
 		"AbilityCastRange"				"1200 1300 1400"
 		"AbilityCooldown"				"8 6 4"
 
@@ -11052,7 +11031,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"slow"					"5 6 8"
+				"slow"					"5 6 7"
 			}
 			"06"
 			{
@@ -11082,9 +11061,8 @@
 	//=================================================================================================================
 	"shredder_chakram_2"
 	{
-		"MaxLevel"						"3"
 		"AbilityCastRange"				"1200 1300 1400"
-		"AbilityCooldown"				"8 7 5"
+		"AbilityCooldown"				"8 6 4"
 
 		"AbilitySpecial"
 		{
@@ -11111,7 +11089,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"slow"					"5 6 8"
+				"slow"					"5 6 7"
 			}
 			"06"
 			{

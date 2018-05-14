@@ -323,9 +323,9 @@ CUSTOM_GOLD_BONUS["imba_frantic_10v10"] = 300
 CUSTOM_XP_BONUS = {} -- 1 = Normal, 2 = Hyper
 CUSTOM_XP_BONUS["imba_1v1"] = 100
 CUSTOM_XP_BONUS["imba_overthrow"] = 100
-CUSTOM_XP_BONUS["imba_ranked_5v5"] = 125
-CUSTOM_XP_BONUS["imba_ranked_10v10"] = 125
-CUSTOM_XP_BONUS["imba_tournament"] = 125
+CUSTOM_XP_BONUS["imba_ranked_5v5"] = 150
+CUSTOM_XP_BONUS["imba_ranked_10v10"] = 150
+CUSTOM_XP_BONUS["imba_tournament"] = 150
 CUSTOM_XP_BONUS["imba_frantic_5v5"] = 225
 CUSTOM_XP_BONUS["imba_frantic_10v10"] = 225
 
@@ -578,6 +578,7 @@ IMBA_DONATOR_COMPANION["76561198014254115"] = "npc_imba_donator_companion_icefro
 IMBA_DONATOR_COMPANION["76561198014254115"] = "npc_imba_donator_companion_admiral_bulldog"
 IMBA_DONATOR_COMPANION["76561198021465788"] = "npc_imba_donator_companion_suthernfriend"
 IMBA_DONATOR_COMPANION["76561198073163389"] = "npc_imba_donator_companion_terdic"
+IMBA_DONATOR_COMPANION["76561197970766309"] = "npc_imba_donator_companion_hamahe"
 
 IMBA_DONATOR_STATUE = {}
 IMBA_DONATOR_STATUE["76561198015161808"] = "npc_imba_donator_statue_cookies"

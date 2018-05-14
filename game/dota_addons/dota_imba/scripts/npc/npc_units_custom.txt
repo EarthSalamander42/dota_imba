@@ -12813,7 +12813,7 @@
 		"ModelScale"				"0.9"
 	}
 
-	"npc_imba_donator_companion_hakobi_and_tenneko"
+	"npc_imba_donator_companion_hamahe"
 	{
 		"BaseClass"					"npc_imba_donator_companion"
 		"Model"						"models/items/courier/shibe_dog_cat/shibe_dog_cat.vmdl"        
@@ -14637,7 +14637,7 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"9000"		// Base health.
+		"StatusHealth"				"8000"		// Base health.
 		"StatusHealthRegen"			"12.0"		// Health regeneration rate.
 		"StatusMana"				"0"			// Base mana.
 		"StatusManaRegen"			"0.0"			// Mana regeneration rate.
@@ -14727,7 +14727,7 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"9000"		// Base health.
+		"StatusHealth"				"8000"		// Base health.
 		"StatusHealthRegen"			"12.0"		// Health regeneration rate.
 		"StatusMana"				"0"			// Base mana.
 		"StatusManaRegen"			"0.0"		// Mana regeneration rate.

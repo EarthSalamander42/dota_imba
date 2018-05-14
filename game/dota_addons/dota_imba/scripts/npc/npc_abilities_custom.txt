@@ -84,7 +84,7 @@
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"flying_movespeed"				"20000"
+				"flying_movespeed"				"2000"
 			}
 		}
 	}
@@ -35093,7 +35093,7 @@
 			"01"
 			{
 				"var_type"                  "FIELD_INTEGER"
-				"value"						"50"
+				"value"						"40"
 			}
 		}
 	}
@@ -43131,7 +43131,6 @@
 		"AbilityTextureName"			"earth_spirit_stone_caller"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_CANCEL_MOVEMENT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_DONT_CANCEL_CHANNEL"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_NONE"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_NONE"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -43282,7 +43281,6 @@
 		
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_NONE"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_NONE"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		
 		// Casting
@@ -43451,7 +43449,6 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 //		"AbilityBehavior"				Defined in the Lua script
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_NONE"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 
 		// Casting

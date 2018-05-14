@@ -72,36 +72,24 @@ if next_reward_shown then
 	IMBATTLEPASS_LEVEL_REWARD[95]	= "juggernaut_arcana2"
 end
 IMBATTLEPASS_LEVEL_REWARD[98]	= "bottle4"
-if next_reward_shown then
-	IMBATTLEPASS_LEVEL_REWARD[99]	= "blink11"
-end
+IMBATTLEPASS_LEVEL_REWARD[99]	= "blink11"
 IMBATTLEPASS_LEVEL_REWARD[100]	= "shiva"
-if next_reward_shown then
-	IMBATTLEPASS_LEVEL_REWARD[101]	= "vengefulspirit_immortal"
-end
+IMBATTLEPASS_LEVEL_REWARD[101]	= "vengefulspirit_immortal"
 IMBATTLEPASS_LEVEL_REWARD[103]	= "fountain12"
 IMBATTLEPASS_LEVEL_REWARD[105]	= "mekansm3"
-if next_reward_shown then
-	IMBATTLEPASS_LEVEL_REWARD[106]	= "fountain16"
-	IMBATTLEPASS_LEVEL_REWARD[108]	= "blink12"
-end
+IMBATTLEPASS_LEVEL_REWARD[106]	= "fountain16"
+IMBATTLEPASS_LEVEL_REWARD[108]	= "blink12"
 IMBATTLEPASS_LEVEL_REWARD[110]	= "pudge_arcana2"
 IMBATTLEPASS_LEVEL_REWARD[112]	= "fountain13"
 IMBATTLEPASS_LEVEL_REWARD[120]	= "sheepstick2"
 IMBATTLEPASS_LEVEL_REWARD[121]	= "fountain14"
-if next_reward_shown then
-	IMBATTLEPASS_LEVEL_REWARD[122]	= "bottle5"
-	IMBATTLEPASS_LEVEL_REWARD[126]	= "fountain17"
-end
+IMBATTLEPASS_LEVEL_REWARD[122]	= "bottle5"
+IMBATTLEPASS_LEVEL_REWARD[126]	= "fountain17"
 IMBATTLEPASS_LEVEL_REWARD[130]	= "fountain15"
-if next_reward_shown then
-	IMBATTLEPASS_LEVEL_REWARD[132]	= "radiance3"
-	IMBATTLEPASS_LEVEL_REWARD[146]	= "fountain18"
-end
+IMBATTLEPASS_LEVEL_REWARD[132]	= "radiance3"
+IMBATTLEPASS_LEVEL_REWARD[146]	= "fountain18"
 IMBATTLEPASS_LEVEL_REWARD[150]	= "shiva2"
-if next_reward_shown then
-	IMBATTLEPASS_LEVEL_REWARD[200]	= "shiva3"
-end
+IMBATTLEPASS_LEVEL_REWARD[200]	= "shiva3"
 
 CustomNetTables:SetTableValue("game_options", "battlepass", {battlepass = IMBATTLEPASS_LEVEL_REWARD})
 
@@ -335,9 +323,9 @@ function Imbattlepass:GetMekansmEffect(hero)
 	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_MEKANSM["mekansm3"] then
 		effect = "particles/econ/events/ti8/mekanism_ti8.vpcf"
 		effect2 = "particles/econ/events/ti8/mekanism_recipient_ti8.vpcf"
-		effect3 = ""
-		effect4 = ""
-		effect5 = ""
+		effect3 = "particles/items3_fx/warmage2.vpcf" -- make new effect, placeholder
+		effect4 = "particles/items3_fx/warmage2_recipient.vpcf" -- make new effect, placeholder
+		effect5 = "particles/items3_fx/warmage2_mana_nonhero.vpcf" -- make new effect, placeholder
 		icon = 3
 	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_MEKANSM["mekansm2"] then
 		effect = "particles/econ/events/ti6/mekanism_ti6.vpcf"
@@ -465,6 +453,9 @@ function Imbattlepass:GetVengefulspiritEffect(ID)
 	hero.back:FollowEntity(hero, true)
 
 	hero.magic_missile_effect = "particles/econ/items/vengeful/vs_ti8_immortal_shoulder/vs_ti8_immortal_magic_missle.vpcf"
+	hero.magic_missile_icon = 1
+	hero.magic_missile_sound = "Hero_VengefulSpirit.MagicMissile.TI8"
+	hero.magic_missile_sound_hit = "Hero_VengefulSpirit.MagicMissileImpact.TI8"
 
 	local particle = "vs_ti8_immortal_shoulder_ambient"	
 	ParticleManager:CreateParticle(particle, PATTACH_ABSORIGIN_FOLLOW, hero.back)

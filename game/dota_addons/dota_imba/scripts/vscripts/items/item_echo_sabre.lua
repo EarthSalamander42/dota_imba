@@ -108,7 +108,7 @@ function modifier_imba_echo_sabre_passive:OnAttackStart(keys)
 	local parent = self:GetParent()
 	if parent:IsRangedAttacker() then return nil end
 	if item then
-		if (keys.attacker == parent) and (parent:IsRealHero() or parent:IsClone()) then
+		if (keys.attacker == parent) then
 			if item:IsCooldownReady() then
 				if self:CheckUniqueValue(1,{"modifier_imba_reverb_rapier_passive"}) == 1 then
 
@@ -203,7 +203,7 @@ function modifier_imba_reverb_rapier_passive:OnAttackStart(keys)
 	local parent = self:GetParent()
 	if parent:IsRangedAttacker() then return nil end
 	if item then
-		if (keys.attacker == parent) and (parent:IsRealHero() or parent:IsClone()) then
+		if (keys.attacker == parent) then
 			if item:IsCooldownReady() then
 				if self:CheckUniqueValue(1,nil) == 1 then
 					parent:AddNewModifier(parent, item, "modifier_imba_echo_rapier_haste", {})

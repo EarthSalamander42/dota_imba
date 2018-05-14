@@ -1,8 +1,4 @@
 <root>
-	<scripts>
-		<include src="file://{resources}/scripts/custom_game/talent_window.js" />
-	</scripts>
-
 	<Panel style="visibility:collapse;">
 		<Panel id="container" style="visibility:collapse;">
 			<!--
@@ -29,14 +25,18 @@
 			<Image src="file://panorama/images/custom_game/battlepass/blink8.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/blink9.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/blink10.png" hittest="false" />
+			<Image src="file://panorama/images/custom_game/battlepass/blink11.png" hittest="false" />
+			<Image src="file://panorama/images/custom_game/battlepass/blink12.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/bottle.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/bottle2.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/bottle3.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/bottle4.png" hittest="false" />
+			<Image src="file://panorama/images/custom_game/battlepass/bottle5.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/force_staff.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/force_staff2.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/force_staff3.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/force_staff4.png" hittest="false" />
+			<Image src="file://panorama/images/custom_game/battlepass/force_staff5.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/fountain.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/fountain2.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/fountain3.png" hittest="false" />
@@ -57,6 +57,7 @@
 			<Image src="file://panorama/images/custom_game/battlepass/fountain18.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/mekansm.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/mekansm2.png" hittest="false" />
+			<Image src="file://panorama/images/custom_game/battlepass/mekansm3.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/radiance.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/radiance2.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/radiance3.png" hittest="false" />
@@ -66,6 +67,11 @@
 			<Image src="file://panorama/images/custom_game/battlepass/shiva2.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/shiva3.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/vengefulspirit_immortal.png" hittest="false" />
+			<Image src="file://panorama/images/custom_game/battlepass/hurricane_pike.png" hittest="false" />
+			<Image src="file://panorama/images/custom_game/battlepass/hurricane_pike2.png" hittest="false" />
+			<Image src="file://panorama/images/custom_game/battlepass/hurricane_pike3.png" hittest="false" />
+			<Image src="file://panorama/images/custom_game/battlepass/hurricane_pike4.png" hittest="false" />
+			<Image src="file://panorama/images/custom_game/battlepass/hurricane_pike5.png" hittest="false" />
 
 			<Image src="file://panorama/images/heroes/npc_dota_hero_ghost_revenant.png" hittest="false" />
 			<Image src="file://panorama/images/heroes/npc_dota_hero_hell_empress.png" hittest="false" />

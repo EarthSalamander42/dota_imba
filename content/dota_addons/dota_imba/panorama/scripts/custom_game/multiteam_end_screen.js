@@ -287,7 +287,7 @@ function EndScoreboard() {
 				var ply_title = player.xp.title;
 				var max_xp = player.xp.progress.max_xp;
 
-				$.Msg(player.xp)
+//				$.Msg(player.xp)
 
 				if (placeholder == true) {
 					old_xp = xp
@@ -306,13 +306,13 @@ function EndScoreboard() {
 
 				var new_xp = (old_xp + diff);
 				var progress_bar = new_xp / max_xp * 100;
-				$.Msg(progress_bar)
+//				$.Msg(progress_bar)
 				var progress_bar_100 = progress_bar * 100
-				$.Msg(progress_bar * 100 / max_xp + "/" + max_xp)
+//				$.Msg(progress_bar * 100 / max_xp + "/" + max_xp)
 
 				$.Schedule(0.8, function () {
 					values.xp.level.text = $.Localize("#battlepass_level") + player.xp.level;
-					$.Msg(ply_title)
+//					$.Msg(ply_title)
 					values.xp.rank_name.text = ply_title;
 					values.xp.rank_name.style.color = ply_color;
 
@@ -342,8 +342,8 @@ function EndScoreboard() {
 							var levelup_level = player.xp.level - 1
 							var levelup_xp = progress_bar * max_xp / 100 // BUG: max_xp should be the max xp of previous level.
 							values.xp.level.text = $.Localize("#battlepass_level") + levelup_level;
-							$.Msg(progress_bar * max_xp / 100)
-							$.Msg(levelup_xp.toFixed(0))
+//							$.Msg(progress_bar * max_xp / 100)
+//							$.Msg(levelup_xp.toFixed(0))
 							values.xp.rank.text = levelup_xp.toFixed(0) + "/" + max_xp; // BUG: max_xp should be the max xp of previous level.
 						});
 					// else if leveling up
