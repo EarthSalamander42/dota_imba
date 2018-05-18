@@ -2164,6 +2164,30 @@
 		"AttributeBaseAgility"		"21"						// Base agility
 		"AttributeAgilityGain"		"2.4"						// Agility bonus per level.
 
+		// Abilities
+		//-------------------------------------------------------------------------------------------------------------
+		"Ability1"					"ghost_revenant_blackjack"
+		"Ability2"					"ghost_revenant_wraith"
+		"Ability3"					"ghost_revenant_miasma"
+		"Ability4"					"ghost_revenant_ghost_immolation"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"ghost_revenant_exhaustion"
+		"Ability7"					"generic_hidden"
+		"Ability8"					"generic_hidden"
+		"Ability9"					"generic_hidden"
+
+		// Talents
+		//-------------------------------------------------------------------------------------------------------------
+		"Ability10"					"special_bonus_magic_resistance_15"
+		"Ability11"					"special_bonus_exp_boost_10"
+		"Ability12"					"special_bonus_attack_damage_40"
+//		"Ability13"					"special_bonus_imba_ghost_revenant_1" // Increase Blackjack projectile number
+		"Ability13"					"special_bonus_mp_300"
+		"Ability14"					"special_bonus_cast_range_150" 
+		"Ability15"					"special_bonus_spell_amplify_10"
+		"Ability16"					"special_bonus_cooldown_reduction_15"
+		"Ability17"					"special_bonus_gold_income_50"
+
 		// Bounds
 		//-------------------------------------------------------------------------------------------------------------
 		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
@@ -2240,6 +2264,26 @@
 		"AttributeBaseAgility"		"29"						// Base agility
 		"AttributeAgilityGain"		"2.6"						// Agility bonus per level.
 
+		// Abilities
+		//-------------------------------------------------------------------------------------------------------------
+		"Ability1"					"imba_empress_eleven_curses"		// Ability 1
+		"Ability2"					"imba_empress_hellbolt"				// Ability 2
+		"Ability3"					"imba_empress_royal_wrath"			// Ability 3
+		"Ability4"					"imba_empress_ambient_effects"		// Ability 4
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_empress_hurl_through_hell"	// Ability 6
+
+		// Talents
+		//-------------------------------------------------------------------------------------------------------------
+		"Ability10"					"special_bonus_magic_resistance_15"
+		"Ability11"					"special_bonus_exp_boost_10"
+		"Ability12"					"special_bonus_attack_damage_40"
+		"Ability13"					"special_bonus_mp_300"
+		"Ability14"					"special_bonus_cast_range_150" 
+		"Ability15"					"special_bonus_spell_amplify_10"
+		"Ability16"					"special_bonus_cooldown_reduction_15"
+		"Ability17"					"special_bonus_gold_income_50"
+
 		// Bounds
 		//-------------------------------------------------------------------------------------------------------------
 		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
@@ -2315,6 +2359,26 @@
 		"AttributeIntelligenceGain"	"4.1"						// Intelligence bonus per level.
 		"AttributeBaseAgility"		"26"						// Base agility
 		"AttributeAgilityGain"		"2.3"						// Agility bonus per level.
+
+		// Abilities
+		//-------------------------------------------------------------------------------------------------------------
+		"Ability1"					"imba_sly_king_burrow_blast"
+		"Ability2"					"imba_sly_king_frost_gale"
+		"Ability3"					"imba_sly_king_frozen_skin"
+		"Ability4"					"generic_hidden"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_sly_king_winterbringer"
+
+		// Talents
+		//-------------------------------------------------------------------------------------------------------------
+		"Ability10"					"special_bonus_magic_resistance_15"
+		"Ability11"					"special_bonus_exp_boost_10"
+		"Ability12"					"special_bonus_attack_damage_40"
+		"Ability13"					"special_bonus_mp_300"
+		"Ability14"					"special_bonus_cast_range_150" 
+		"Ability15"					"special_bonus_spell_amplify_10"
+		"Ability16"					"special_bonus_cooldown_reduction_15"
+		"Ability17"					"special_bonus_gold_income_50"
 
 		// Bounds
 		//-------------------------------------------------------------------------------------------------------------
@@ -2396,6 +2460,30 @@
 		"AttributeBaseIntelligence"	"20"
 		"AttributeIntelligenceGain"	"5.000000"
 
+		// Abilities
+		//-------------------------------------------------------------------------------------------------------------
+		"Ability1"			"imba_scaldris_heatwave"
+		"Ability2"			"imba_scaldris_scorch"
+		"Ability3"			"imba_scaldris_jet_blaze"
+		"Ability4"			"generic_hidden"
+		"Ability5"			"imba_scaldris_antipode"
+		"Ability6"			"imba_scaldris_living_flame"
+		"Ability7"			"imba_scaldris_cold_front"
+		"Ability8"			"imba_scaldris_freeze"
+		"Ability9"			"imba_scaldris_ice_floes"
+		"Ability18"			"imba_scaldris_absolute_zero"
+
+		// Talents
+		//-------------------------------------------------------------------------------------------------------------
+		"Ability10"					"special_bonus_magic_resistance_15"
+		"Ability11"					"special_bonus_exp_boost_10"
+		"Ability12"					"special_bonus_attack_damage_40"
+		"Ability13"					"special_bonus_mp_300"
+		"Ability14"					"special_bonus_cast_range_150" 
+		"Ability15"					"special_bonus_spell_amplify_10"
+		"Ability16"					"special_bonus_cooldown_reduction_15"
+		"Ability17"					"special_bonus_gold_income_50"
+
 		// Bounds
 		//-------------------------------------------------------------------------------------------------------------
 		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
@@ -2475,6 +2563,26 @@
 		"AttributeBaseIntelligence"	"16"
 		"AttributeIntelligenceGain"	"2.600000"
 
+		// Abilities
+		//-------------------------------------------------------------------------------------------------------------
+		"Ability1"			"storegga_arm_slam"
+		"Ability2"			"storegga_grab"
+		"Ability3"			"storegga_grab_throw"
+		"Ability4"			"generic_hidden"
+		"Ability5"			"generic_hidden"
+		"Ability6"			"storegga_avalanche"
+
+		// Talents
+		//-------------------------------------------------------------------------------------------------------------
+		"Ability10"					"special_bonus_magic_resistance_15"
+		"Ability11"					"special_bonus_exp_boost_10"
+		"Ability12"					"special_bonus_attack_damage_40"
+		"Ability13"					"special_bonus_mp_300"
+		"Ability14"					"special_bonus_cast_range_150" 
+		"Ability15"					"special_bonus_spell_amplify_10"
+		"Ability16"					"special_bonus_cooldown_reduction_15"
+		"Ability17"					"special_bonus_gold_income_50"
+
 		// Bounds
 		//-------------------------------------------------------------------------------------------------------------
 		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
@@ -2541,6 +2649,23 @@
 		"AttributeAgilityGain"		"1.5"
 		"AttributeBaseIntelligence"	"17"
 		"AttributeIntelligenceGain"	"1.5"
+
+		"Ability1"                  "sohei_dash"
+		"Ability2"                  "sohei_guard"
+		"Ability3"                  "sohei_momentum"
+		"Ability4"                  "sohei_palm_of_life"
+		"Ability5"                  "generic_hidden"
+		"Ability6"                  "sohei_flurry_of_blows"
+
+		"Ability10"                 "special_bonus_sohei_stun"             // Momentum inflicts a brief stun if the target collides with an obstacle
+		"Ability11"                 "special_bonus_cleave_15"
+		"Ability12"                 "special_bonus_strength_20"
+		"Ability13"                 "special_bonus_sohei_guard_knockback"             // Guard also knockbacks enemies until they are 300 units away
+		"Ability14"                 "special_bonus_sohei_momentum_guard_cooldown"             // Momentum hits reduce the cooldown on Guard
+		"Ability15"                 "special_bonus_movement_speed_75"
+		"Ability16"                 "special_bonus_sohei_dash_recharge"             // Dash charges cool down all at once
+		"Ability17"                 "special_bonus_sohei_fob_radius"             // Increases Flurry of Blows' AOE radius
+
 
 		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
 		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"

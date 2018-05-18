@@ -20355,94 +20355,79 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"explosion_delay"			"1.6"
+				"explosion_delay"			"0.4"
 			}
-
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"mine_damage"				"150 350 550 750"
+				"mine_damage"				"500 1000 1500 2000"
 			}
-
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"explosion_range"			"400 500 600 700"
+				"explosion_range"			"400"
 			}
-
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"trigger_range"				"400"
 			}
-
 			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"activation_delay"			"1.75"
-			}			
-
+			}
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"building_damage_pct"		"25"
 			}
-
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"building_magic_resistance"	"90"
 			}
-
 			"08"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"buidling_damage_duration"  "0.1"
 			}
-
 			"09"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"tick_interval"  			"0.1"
 			}
-
 			"10"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"fow_radius"				"300"
 			}
-
 			"11"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"fow_duration"				"1"
 			}
-
 			"12"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"big_boom_mine_bonus_dmg"	"150"
+				"big_boom_mine_bonus_dmg"	"300"
 			}
-
 			"13"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"big_boom_shrapnel_aoe"		"1000"
 			}
-
 			"14"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"big_boom_shrapnel_duration"	"3"
 			}
-
-			"14"
+			"15"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"big_boom_shrapnel_damage"		"125"
 			}
-
-			"18"
+			"16"
 			{
 				"var_type"						"FIELD_FLOAT"
 				"big_boom_shrapnel_interval"	"0.25"
@@ -29055,43 +29040,36 @@
 				"var_type"				"FIELD_INTEGER"
 				"projectile_speed"		"900"
 			}
-
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"ms_bonus_allies_pct"	"16 18 20"
 			}
-
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"duration"				"30"				
 			}
-
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_gold_self"		"150 250 350"
 			}
-
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_gold_allies"		"40 80 120"
 			}
-
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"haste_radius"			"900"
 			}
-
 			"07"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"haste_linger"			"0.5"
 			}
-
 		}
 	}
 
@@ -43129,8 +43107,8 @@
 		"ScriptFile"					"hero/hero_earth_spirit.lua"
 		
 		"AbilityTextureName"			"earth_spirit_stone_caller"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_CANCEL_MOVEMENT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_DONT_CANCEL_CHANNEL"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_NONE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -43144,8 +43122,11 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
-	//		"soundfile"					"soundevents/game_sounds_heroes/game_sounds_riki.vsndevts"
-	//		"particle"					"particles/units/heroes/hero_riki/riki_tricks_cast.vpcf"
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_earth_spirit.vsndevts"
+			"particle"					"particles/units/heroes/hero_earth_spirit/espirit_stoneremnant.vpcf"
+			"particle"					"particles/status_fx/status_effect_earth_spirit_petrify.vpcf"
+			"particle"					"particles/units/heroes/hero_earth_spirit/espirit_stoneismagnetized_xpld.vpcf"
+			"particle"					"particles/hero/earth_spirit/earth_mark.vpcf"
 		}
 
 		// Special
@@ -43159,10 +43140,9 @@
 			}
 			"02"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"charge_cooldown"				"25"	
-				"LinkedSpecialBonus"			"special_bonus_imba_earth_spirit_5"			
-				"LinkedSpecialBonusOperation"	"SPECIAL_BONUS_SUBTRACT"
+				"var_type"				"FIELD_INTEGER"
+				"charge_cooldown"		"30"	
+				"LinkedSpecialBonus"	"special_bonus_imba_earth_spirit_5"			
 			}
 			"03"
 			{
@@ -43172,7 +43152,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"earths_mark_duration"	"10.0"
+				"earths_mark_duration"	"5"
 			}
 			"05"
 			{
@@ -43212,8 +43192,10 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
-	//		"soundfile"					"soundevents/game_sounds_heroes/game_sounds_riki.vsndevts"
-	//		"particle"					"particles/units/heroes/hero_riki/riki_tricks_cast.vpcf"
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_earth_spirit.vsndevts"
+			"particle"					"particles/units/heroes/hero_earth_spirit/espirit_bouldersmash_caster.vpcf"
+			"particle"					"particles/units/heroes/hero_earth_spirit/espirit_bouldersmash_target.vpcf"
+			"particle"					"particles/hero/earth_spirit/earth_mark.vpcf"
 		}
 
 		// Special
@@ -43233,32 +43215,32 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"75 150 225 300"				
+				"damage"				"50 100 150 200"				
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"speed"					"900 1000 1100 1200"				
+				"speed"					"900"				
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"unit_distance"			"500 600 700 800"				
+				"unit_distance"			"480 600 680 800"				
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"remnant_distance"		"2500"				
+				"remnant_distance"		"2000"				
 			}
 			"07"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"stun_duration"			"1.0 1.5 2.0 2.5"				
+				"stun_duration"			"0.5 1 1.5 2"				
 			}
 			"08"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"earths_mark_duration"	"10.0"
+				"earths_mark_duration"	"5"
 			}
 			"9"
 			{
@@ -43281,6 +43263,7 @@
 		
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_NONE"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_NONE"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		
 		// Casting
@@ -43288,7 +43271,18 @@
 		"AbilityCastPoint"				"0.01"
 		"AbilityCooldown"				"16 12 8 4"
 		"AbilityManaCost"				"50"
-
+		
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_earth_spirit.vsndevts"
+			"particle"					"particles/units/heroes/hero_earth_spirit/espirit_rollingboulder.vpcf"
+			"particle"					"particles/status_fx/status_effect_earth_spirit_boulderslow.vpcf"
+			"particle"					"particles/generic_gameplay/generic_disarm.vpcf"
+			"particle"					"particles/hero/earth_spirit/earth_mark.vpcf"
+		}
+		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -43306,12 +43300,12 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"roll_distance"			"800 850 900 950"				
+				"roll_distance"			"800"				
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"remnant_roll_distance"	"1800"				
+				"remnant_roll_distance"	"1600"				
 			}
 			"05"
 			{
@@ -43326,17 +43320,17 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"speed"					"800 850 900 950"				
+				"speed"					"800"				
 			}
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"remnant_speed"			"1800"				
+				"remnant_speed"			"1600"				
 			}
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"100 150 200 250"				
+				"damage"				"100"				
 			}
 			"10"
 			{
@@ -43346,12 +43340,12 @@
 			"1"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"earths_mark_duration"			"10.0"
+				"earths_mark_duration"			"5"
 			}
 			"12"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"disarm_duration_per_mark"		"0.3"
+				"disarm_duration_per_mark"		"0.25"
 			}
 		}
 	}
@@ -43368,13 +43362,12 @@
 		"AbilityTextureName"			"earth_spirit_geomagnetic_grip"
 		
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_OPTIONAL_POINT"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1500"
+		"AbilityCastRange"				"1100"
 		"AbilityCastPoint"				"0.01"
 		"AbilityCooldown"				"13"
 		"AbilityManaCost"				"100"
@@ -43383,8 +43376,10 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
-	//		"soundfile"					"soundevents/game_sounds_heroes/game_sounds_riki.vsndevts"
-	//		"particle"					"particles/units/heroes/hero_riki/riki_tricks_cast.vpcf"
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_earth_spirit.vsndevts"
+			"particle"					"particles/units/heroes/hero_earth_spirit/espirit_geomagentic_grip_target.vpcf"
+			"particle"					"particles/units/heroes/hero_lone_druid/lone_druid_bear_entangle_body.vpcf"
+			"particle"					"particles/hero/earth_spirit/earth_mark.vpcf"
 		}
 
 		// Special
@@ -43399,17 +43394,17 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"75 150 225 300"				
+				"damage"				"50 100 150 200"				
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"speed"					"800 850 900 950"				
+				"speed"					"600"				
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"remnant_speed"			"1400"				
+				"remnant_speed"			"1000"				
 			}
 			"05"
 			{
@@ -43424,12 +43419,12 @@
 			"07"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"earths_mark_duration"	"10.0"
+				"earths_mark_duration"	"5"
 			}
 			"08"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"root_time_per_mark"	"0.3"
+				"root_time_per_mark"	"0.25"
 			}
 		}
 	}
@@ -43445,12 +43440,13 @@
 		"ScriptFile"					"hero/hero_earth_spirit.lua"
 		"AbilityTextureName"			"earth_spirit_magnetize"
 		"HasScepterUpgrade"				"1"
-
+		
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-//		"AbilityBehavior"				Defined in the Lua script
+	//	"AbilityBehavior"				Defined in the Lua script
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_NONE"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-
+		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"300"
@@ -43462,8 +43458,10 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
-//			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_riki.vsndevts"
-//			"particle"					"particles/units/heroes/hero_earth_spirit/espirit_magnet_arclightning.vpcf"
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_earth_spirit.vsndevts"
+			"particle"					"particles/units/heroes/hero_earth_spirit/espirit_magnetize_target.vpcf"
+			"particle"					"particles/units/heroes/hero_earth_spirit/espirit_magnet_arclightning.vpcf"
+			"particle"					"particles/hero/earth_spirit/earth_mark.vpcf"
 		}
 
 		// Special
@@ -43478,7 +43476,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"remnant_search_radius"		"500"
+				"remnant_search_radius"		"400"
 			}
 			"03"
 			{
@@ -43488,7 +43486,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_per_sec"			"70 110 150"				
+				"damage_per_sec"			"50 75 100"				
 			}
 			"05"
 			{
@@ -43508,7 +43506,7 @@
 			"08"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"earths_mark_duration"		"10.0"
+				"earths_mark_duration"		"5"
 			}
 			"09"
 			{
@@ -43522,7 +43520,7 @@
 			}
 		}
 	}
-
+	
 	//=================================================================================================================
 	// Earth Spirit Enchant Remnant
 	//=================================================================================================================
@@ -43532,7 +43530,9 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
 		"ScriptFile"					"hero/hero_earth_spirit.lua"
+		
 		"AbilityTextureName"			"earth_spirit_petrify"
+		
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
@@ -43542,16 +43542,15 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"125"
 		"AbilityCastPoint"				"0.2"
-		"AbilityCooldown"				"40.0"
+		"AbilityCooldown"				"45"
 		"AbilityManaCost"				"150"
 		"MaxLevel"						"1"
-
+		
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
-	//		"soundfile"					"soundevents/game_sounds_heroes/game_sounds_riki.vsndevts"
-	//		"particle"					"particles/units/heroes/hero_riki/riki_tricks_cast.vpcf"
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_riki.vsndevts"
 		}
 
 		// Special
@@ -43576,7 +43575,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"earths_mark_duration"	"10.0"
+				"earths_mark_duration"	"5"
 			}
 		}
 	}

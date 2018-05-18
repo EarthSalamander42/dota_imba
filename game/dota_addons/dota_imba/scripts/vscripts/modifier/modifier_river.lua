@@ -1,4 +1,3 @@
---[[
 modifier_river = class({})
 
 function modifier_river:IsHidden() return true end
@@ -36,8 +35,8 @@ function modifier_river:IsInRiver()
 		return false
 	end
 end
---]]
 
+--[[
 modifier_river = class({})
 
 function modifier_river:IsHidden() return true end
@@ -111,3 +110,4 @@ local correctPoint
 	print(correctPoint, GridNav:IsTraversable(forwardPoint))
 	return correctPoint
 end
+--]]

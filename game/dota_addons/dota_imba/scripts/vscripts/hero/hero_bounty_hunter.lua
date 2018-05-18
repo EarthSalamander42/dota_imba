@@ -1326,7 +1326,6 @@ function modifier_imba_track_buff_ms:OnCreated()
 
 	-- Ability specials
 	self.ms_bonus_allies_pct = self.ability:GetSpecialValueFor("ms_bonus_allies_pct")
-	self.bonus_gold_allies = self.ability:GetSpecialValueFor("bonus_gold_allies")
 
 	if IsServer() then
 		-- Create haste particle

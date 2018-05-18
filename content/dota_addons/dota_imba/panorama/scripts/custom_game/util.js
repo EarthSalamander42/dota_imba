@@ -144,7 +144,7 @@ function HideIMR(panel) {
 	} else if (map_info.map_display_name == "imba_1v1") {
 		hide(imr_panel_10v10);
 		hide(imr_panel);
-	} else if (map_info.map_display_name == "imba_frantic_5v5" || map_info.map_display_name == "imba_frantic_10v10") {
+	} else if (map_info.map_display_name == "imba_frantic_5v5" || map_info.map_display_name == "imba_frantic_10v10" || map_info.map_display_name == "imba_mutation_5v5" || map_info.map_display_name == "imba_mutation_10v10") {
 		hide(imr_panel_10v10);
 		hide(imr_panel);
 		hide(rank1v1_panel);

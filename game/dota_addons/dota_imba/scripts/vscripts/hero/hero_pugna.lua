@@ -163,42 +163,41 @@ function imba_pugna_nether_blast:OnSpellStart()
 
 	-- Create a timer to delay the main blast
 	Timers:CreateTimer(blast_delay, function()
+		-- Blow up! Add particle effect
+		local particle_blast_fx = ParticleManager:CreateParticle(particle_blast, PATTACH_ABSORIGIN, caster)
+		ParticleManager:SetParticleControl(particle_blast_fx, 0, target_point)
+		ParticleManager:SetParticleControl(particle_blast_fx, 1, Vector(main_blast_radius, 0, 0))
+		ParticleManager:ReleaseParticleIndex(particle_blast_fx)
 
-			-- Blow up! Add particle effect
-			local particle_blast_fx = ParticleManager:CreateParticle(particle_blast, PATTACH_ABSORIGIN, caster)
-			ParticleManager:SetParticleControl(particle_blast_fx, 0, target_point)
-			ParticleManager:SetParticleControl(particle_blast_fx, 1, Vector(main_blast_radius, 0, 0))
-			ParticleManager:ReleaseParticleIndex(particle_blast_fx)
+		-- Find all enemies, including buildings
+		local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
+			target_point,
+			nil,
+			main_blast_radius,
+			DOTA_UNIT_TARGET_TEAM_ENEMY,
+			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_BUILDING,
+			DOTA_UNIT_TARGET_FLAG_NONE,
+			FIND_ANY_ORDER,
+			false)
 
-			-- Find all enemies, including buildings
-			local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
-				target_point,
-				nil,
-				main_blast_radius,
-				DOTA_UNIT_TARGET_TEAM_ENEMY,
-				DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_BUILDING,
-				DOTA_UNIT_TARGET_FLAG_NONE,
-				FIND_ANY_ORDER,
-				false)
+		for _,enemy in pairs(enemies) do
+			local blast_damage = damage
 
-			for _,enemy in pairs(enemies) do
-				local blast_damage = damage
-
-				-- If the enemy is a building, adjust damage.
-				if enemy:IsBuilding() then
-					blast_damage = blast_damage * damage_buildings_pct * 0.01
-				end
-
-				-- Deal damage
-				local damageTable = {victim = enemy,
-					damage = blast_damage,
-					damage_type = DAMAGE_TYPE_MAGICAL,
-					attacker = caster,
-					ability = ability
-				}
-
-				ApplyDamage(damageTable)
+			-- If the enemy is a building, adjust damage.
+			if enemy:IsBuilding() then
+				blast_damage = blast_damage * damage_buildings_pct * 0.01
 			end
+
+			-- Deal damage
+			local damageTable = {victim = enemy,
+				damage = blast_damage,
+				damage_type = DAMAGE_TYPE_MAGICAL,
+				attacker = caster,
+				ability = ability
+			}
+
+			ApplyDamage(damageTable)
+		end
 	end)
 end
 

@@ -8,7 +8,7 @@ function modifier_fountain_aura_lua:GetAuraSearchTeam()
 end
 
 function modifier_fountain_aura_lua:GetAuraSearchType()
-	return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP
+	return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP + DOTA_UNIT_TARGET_COURIER
 end
 
 function modifier_fountain_aura_lua:GetModifierAura()

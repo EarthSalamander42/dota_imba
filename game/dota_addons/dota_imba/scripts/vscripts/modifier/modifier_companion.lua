@@ -27,7 +27,7 @@ end
 
 function modifier_companion:OnCreated()
 	if IsServer() then
-		self:StartIntervalThink(0.25)
+		self:StartIntervalThink(0.2)
 
 		local companion = self:GetParent()
 		if not companion.base_model then
@@ -83,14 +83,6 @@ function modifier_companion:OnIntervalThink()
 		local min_distance = 250
 		local blink_distance = 750
 
-		local shared_nodraw_modifiers = {
-			"modifier_item_shadow_amulet_fade",
-			"modifier_monkey_king_tree_dance_hidden",
-			"modifier_monkey_king_transform",
-			"modifier_pangolier_gyroshell",
-			"modifier_smoke_of_deceit",
-		}
-
 		if companion:GetIdealSpeed() ~= hero:GetIdealSpeed() - 60 then
 			companion:SetBaseMoveSpeed(hero:GetIdealSpeed() - 60)
 		end
@@ -126,13 +118,25 @@ function modifier_companion:OnIntervalThink()
 
 		self:SetStackCount(hero_distance / 3)
 
-		for _, v in ipairs(shared_nodraw_modifiers) do
-			if hero:HasModifier(v) then
+		for _, v in ipairs(SHARED_NODRAW_MODIFIERS) do
+			if hero:HasModifier(v) or self:IsOnMountain() then
 				companion:AddNoDraw()
 				return
 			elseif not hero:HasModifier(v) then
 				companion:RemoveNoDraw()
 			end
 		end
+	end
+end
+
+function modifier_companion:IsOnMountain()
+	local hero = self:GetParent():GetPlayerOwner():GetAssignedHero()
+	local origin = hero:GetAbsOrigin()
+
+--	print("cliff:", origin.z, 512)
+	if origin.z > 512 then
+		return true
+	else
+		return false
 	end
 end

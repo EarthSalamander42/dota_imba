@@ -638,6 +638,7 @@ end
 function modifier_imba_silencer_glaives_int_damage:OnStackCountChanged(old_stack_count)
 	if IsServer() then
 		local target = self:GetParent()
+		if target:GetIntellect() == nil then return end
 		local target_intelligence = target:GetIntellect()
 		if target_intelligence > 1 then
 			local int_to_steal = math.max(1, math.floor(target_intelligence * self.int_reduction_pct / 100))

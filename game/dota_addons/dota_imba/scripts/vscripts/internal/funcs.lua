@@ -1873,6 +1873,18 @@ function MapFrantic10v10()
 	return map
 end
 
+function MapMutation5v5()
+	local map = "imba_mutation_5v5"
+
+	return map
+end
+
+function MapMutation10v10()
+	local map = "imba_mutation_10v10"
+
+	return map
+end
+
 function IsRankedMap()
 --	if GetMapName() == MapRanked5v5() or GetMapName() == MapRanked10v10() then
 	if GetMapName() == "imba_tournament" then
@@ -1884,6 +1896,14 @@ end
 
 function IsFranticMap()
 	if GetMapName() == MapFrantic5v5() or GetMapName() == MapFrantic10v10() then
+		return true
+	end
+
+	return false
+end
+
+function IsMutationMap()
+	if GetMapName() == MapMutation5v5() or GetMapName() == MapMutation10v10() then
 		return true
 	end
 

@@ -30,10 +30,18 @@ function imba_earth_spirit_stone_remnant:IsNetherWardStealable() return false en
 function imba_earth_spirit_stone_remnant:IsInnateAbility() return true end
 function imba_earth_spirit_stone_remnant:IsStealable() return false end
 
+function imba_earth_spirit_stone_remnant:GetBehavior()
+	if IsServer() then
+		return DOTA_ABILITY_BEHAVIOR_UNIT_TARGET + DOTA_ABILITY_BEHAVIOR_OPTIONAL_POINT
+	else
+		return DOTA_ABILITY_BEHAVIOR_POINT + DOTA_ABILITY_BEHAVIOR_OPTIONAL_UNIT_TARGET
+	end
+end
+
 function imba_earth_spirit_stone_remnant:OnAbilityPhaseStart()
 	if IsServer() then
 		if not self.remnantModifier then
-			self.remnantModifier = caster:FindModifierByName("modifier_imba_earth_spirit_remnant_charges")
+			self.remnantModifier = self:GetCaster():FindModifierByName("modifier_imba_earth_spirit_remnant_charges")
 		end
 		
 		if self.remnantModifier:GetStackCount() > 0 then
@@ -57,11 +65,17 @@ function imba_earth_spirit_stone_remnant:OnSpellStart()
 		
 		if self.remnantModifier:GetStackCount() > 0 then
 			local target = self:GetCursorPosition()
+			local unit = self:GetCursorTarget()
 			local remnantDuration = self:GetSpecialValueFor("remnant_duration")
 			local effectRadius = self:GetSpecialValueFor("effect_radius")
 			local visionDuration = self:GetSpecialValueFor("vision_duration")
 			
 			self.remnantModifier:DecrementStackCount()
+			
+			-- self casting sets the target as caster target + 100 units forward
+			if unit == caster then
+				target = caster:GetAbsOrigin() + caster:GetForwardVector() * 100
+			end
 			
 			local dummy = CreateUnitByName("npc_imba_dota_earth_spirit_stone", target, false, caster, nil, caster:GetTeamNumber())
 			dummy:AddNewModifier(caster, self, "modifier_imba_stone_remnant", {duration = remnantDuration})
@@ -146,7 +160,6 @@ function modifier_imba_earth_spirit_remnant_charges:OnStackCountChanged(oldStack
 		
 		if stacks < oldStacks then
 			if self:GetRemainingTime() <= 0 then
-				
 				if self:GetParent():HasTalent("special_bonus_imba_earth_spirit_5") then
 					self:StartIntervalThink(self.rechargeTime - self:GetParent():FindTalentValue("special_bonus_imba_earth_spirit_5"))
 					self:SetDuration(self.rechargeTime - self:GetParent():FindTalentValue("special_bonus_imba_earth_spirit_5"), true)
@@ -178,9 +191,8 @@ function modifier_imba_earth_spirit_remnant_charges:OnDeath(keys)
 	if IsServer() then
 		local parent = self:GetParent()
 		if parent:HasTalent("special_bonus_imba_earth_spirit_6") then
-			if keys.unit:IsRealHero() then
+			if keys.unit:IsRealHero() and keys.unit:GetTeamNumber() == parent:GetTeamNumber() then
 				if CalcDistanceBetweenEntityOBB(keys.victim, parent) <= parent:FindTalentValue("special_bonus_imba_earth_spirit_6", "radius") then
-			
 					if self:GetStackCount() < parent:FindTalentValue("special_bonus_imba_earth_spirit_6", "max_remnants") then
 						self:IncrementStackCount()
 					end
@@ -442,10 +454,32 @@ function imba_earth_spirit_boulder_smash:OnAbilityPhaseStart()
 		local caster = self:GetCaster()
 		local searchRadius = self:GetSpecialValueFor("max_distance_for_push") + GetCastRangeIncrease(caster)
 		
+		-- remove thinker modifier for when casting outside of unit/remnant search range
 		caster:RemoveModifierByName("modifier_imba_boulder_smash_cast_thinker")
-				
+		
 		if target then
 			if CalcDistanceBetweenEntityOBB(caster, target) <= searchRadius then
+				
+				-- Find remnants first				
+				local RemnantAroundCaster = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, searchRadius+1, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_CLOSEST, false)
+				for _, r in ipairs(RemnantAroundCaster) do
+					if r:HasModifier("modifier_imba_stone_remnant") then
+						r:RemoveModifierByName("modifier_imba_boulder_smash_push")
+						r:RemoveModifierByName("modifier_imba_geomagnetic_grip_pull")
+						
+						local mod = r:AddNewModifier(r, self, "modifier_imba_boulder_smash_push", {})
+						local dir = (self:GetCursorPosition() - caster:GetAbsOrigin()):Normalized()
+						mod:PassData(caster, dir)
+						
+						local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_earth_spirit/espirit_bouldersmash_caster.vpcf", PATTACH_ABSORIGIN, caster)
+						ParticleManager:SetParticleControl(particle, 1, caster:GetAbsOrigin())
+						ParticleManager:ReleaseParticleIndex(particle)
+						
+						EmitSoundOn("Hero_EarthSpirit.BoulderSmash.Target", r)
+						return true
+					end
+				end
+				
 				target:RemoveModifierByName("modifier_imba_boulder_smash_push")
 				target:RemoveModifierByName("modifier_imba_geomagnetic_grip_pull")
 				target:AddNewModifier(caster, self, "modifier_imba_boulder_smash_push", {})
@@ -461,6 +495,26 @@ function imba_earth_spirit_boulder_smash:OnAbilityPhaseStart()
 				EmitSoundOn("Hero_EarthSpirit.BoulderSmash.Target", target)
 				return true
 			else
+				-- Find remnants around caster first				
+				local RemnantAroundCaster = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, searchRadius+1, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_CLOSEST, false)
+				for _, r in ipairs(RemnantAroundCaster) do
+					if r:HasModifier("modifier_imba_stone_remnant") then
+						r:RemoveModifierByName("modifier_imba_boulder_smash_push")
+						r:RemoveModifierByName("modifier_imba_geomagnetic_grip_pull")
+						
+						local mod = r:AddNewModifier(r, self, "modifier_imba_boulder_smash_push", {})
+						local dir = (self:GetCursorPosition() - caster:GetAbsOrigin()):Normalized()
+						mod:PassData(caster, dir)
+						
+						local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_earth_spirit/espirit_bouldersmash_caster.vpcf", PATTACH_ABSORIGIN, caster)
+						ParticleManager:SetParticleControl(particle, 1, caster:GetAbsOrigin())
+						ParticleManager:ReleaseParticleIndex(particle)
+						
+						EmitSoundOn("Hero_EarthSpirit.BoulderSmash.Target", r)
+						return true
+					end
+				end
+				
 				local orderTbl = {
 					UnitIndex = caster:entindex(), 
 					OrderType = DOTA_UNIT_ORDER_MOVE_TO_TARGET,
@@ -484,7 +538,8 @@ function imba_earth_spirit_boulder_smash:OnAbilityPhaseStart()
 					r:RemoveModifierByName("modifier_imba_geomagnetic_grip_pull")
 					
 					local mod = r:AddNewModifier(r, self, "modifier_imba_boulder_smash_push", {})
-					mod:SetRealCaster(caster)
+					local dir = (self:GetCursorPosition() - caster:GetAbsOrigin()):Normalized()
+					mod:PassData(caster, dir)
 					
 					local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_earth_spirit/espirit_bouldersmash_caster.vpcf", PATTACH_ABSORIGIN, caster)
 					ParticleManager:SetParticleControl(particle, 1, caster:GetAbsOrigin())
@@ -529,6 +584,7 @@ function modifier_imba_boulder_smash_push:IsPurgeException() return false end
 function modifier_imba_boulder_smash_push:IgnoreTenacity() return true end
 function modifier_imba_boulder_smash_push:IsMotionController() return true end
 function modifier_imba_boulder_smash_push:GetMotionControllerPriority() return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
+function modifier_imba_boulder_smash_push:GetAttributes() return MODIFIER_ATTRIBUTE_PERMANENT end
 
 function modifier_imba_boulder_smash_push:GetEffectName()
 	return "particles/units/heroes/hero_earth_spirit/espirit_bouldersmash_target.vpcf" end
@@ -542,9 +598,10 @@ function modifier_imba_boulder_smash_push:CheckState()
 end
 
 -- workaround to some bullshit (modifier not applying only to invuln enemies)
-function modifier_imba_boulder_smash_push:SetRealCaster(rc)
+function modifier_imba_boulder_smash_push:PassData(rc, dir)
 	if IsServer() then
 		self.caster = rc
+		self.direction = dir
 	end
 end
 
@@ -572,7 +629,7 @@ function modifier_imba_boulder_smash_push:OnCreated()
 			
 			-- extra handlers
 			self.distance = (self.parent:HasModifier("modifier_imba_stone_remnant") and remnantDistance) or unitDistance
-			self.direction = (self.caster:GetCursorPosition() - self.caster:GetAbsOrigin()):Normalized()
+			self.direction = self.direction or (self.ability:GetCursorPosition() - self.caster:GetAbsOrigin()):Normalized()
 			self.traveled = 0
 			
 			self.hitTargets = {}
@@ -993,18 +1050,6 @@ function imba_earth_spirit_geomagnetic_grip:CastFilterResultTarget(target)
 		return UF_FAIL_BUILDING
 	elseif target:IsInvulnerable() then
 		return UF_FAIL_INVULNERABLE
-	
-	-- Can't target allies who disabled helps
-	else
-		if caster:GetTeamNumber() == target:GetTeamNumber() then
-			if target:IsPlayer() and PlayerResource:IsDisableHelpSetForPlayerID(target:GetPlayerOwnerID(), caster:GetPlayerOwnerID()) then
-				return UF_FAIL_DISABLE_HELP
-			end
-	
-		-- Can't target enemies
-		else
-			return UF_FAIL_ENEMY
-		end
 	end
 	
 	return UF_SUCCESS
@@ -1023,28 +1068,29 @@ function imba_earth_spirit_geomagnetic_grip:OnAbilityPhaseStart()
 		local pointTarget = self:GetCursorPosition()
 		local caster = self:GetCaster()
 		
-		if target and target:GetTeamNumber() == caster:GetTeamNumber() then
+		-- Find remnants first
+		local RemnantFinder = FindUnitsInRadius(caster:GetTeamNumber(), pointTarget, nil, remnantSearchRadius, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_CLOSEST, false)
+		for _, r in ipairs(RemnantFinder) do
+			if r:HasModifier("modifier_imba_stone_remnant") then
+				r:RemoveModifierByName("modifier_imba_boulder_smash_push")
+				r:RemoveModifierByName("modifier_imba_geomagnetic_grip_pull")
+				
+				local mod = r:AddNewModifier(r, self, "modifier_imba_geomagnetic_grip_pull", {})
+				mod:SetRealCaster(caster)
+				
+				EmitSoundOn("Hero_EarthSpirit.GeomagneticGrip.Cast", caster)
+				EmitSoundOn("Hero_EarthSpirit.GeomagneticGrip.Target", r)
+				return true
+			end
+		end
+		
+		if target and target:GetTeamNumber() == caster:GetTeamNumber() and not target:IsBuilding() and not target:IsInvulnerable() and not (target:IsPlayer() and PlayerResource:IsDisableHelpSetForPlayerID(target:GetPlayerOwnerID(), caster:GetPlayerOwnerID())) then
 			target:RemoveModifierByName("modifier_imba_boulder_smash_push")
 			target:AddNewModifier(caster, self, "modifier_imba_geomagnetic_grip_pull", {})
 			
 			EmitSoundOn("Hero_EarthSpirit.GeomagneticGrip.Cast", caster)
 			EmitSoundOn("Hero_EarthSpirit.GeomagneticGrip.Target", target)
 			return true
-		else
-			local RemnantFinder = FindUnitsInRadius(caster:GetTeamNumber(), pointTarget, nil, remnantSearchRadius, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_CLOSEST, false)
-			for _, r in ipairs(RemnantFinder) do
-				if r:HasModifier("modifier_imba_stone_remnant") then
-					r:RemoveModifierByName("modifier_imba_boulder_smash_push")
-					r:RemoveModifierByName("modifier_imba_geomagnetic_grip_pull")
-					
-					local mod = r:AddNewModifier(r, self, "modifier_imba_geomagnetic_grip_pull", {})
-					mod:SetRealCaster(caster)
-					
-					EmitSoundOn("Hero_EarthSpirit.GeomagneticGrip.Cast", caster)
-					EmitSoundOn("Hero_EarthSpirit.GeomagneticGrip.Target", r)
-					return true
-				end
-			end
 		end
 	end
 	
@@ -1060,6 +1106,7 @@ function modifier_imba_geomagnetic_grip_pull:IsStunDebuff() return true end
 function modifier_imba_geomagnetic_grip_pull:IgnoreTenacity() return true end
 function modifier_imba_geomagnetic_grip_pull:IsMotionController() return true end
 function modifier_imba_geomagnetic_grip_pull:GetMotionControllerPriority() return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
+function modifier_imba_geomagnetic_grip_pull:GetAttributes() return MODIFIER_ATTRIBUTE_PERMANENT end
 
 function modifier_imba_geomagnetic_grip_pull:GetEffectName()
 	return "particles/units/heroes/hero_earth_spirit/espirit_geomagentic_grip_target.vpcf" end
@@ -1074,10 +1121,7 @@ end
 
 -- workaround to some bullshit (modifier not applying only to invuln enemies)
 function modifier_imba_geomagnetic_grip_pull:SetRealCaster(rc)
-	if IsServer() then
-		self.caster = rc
-	end
-end
+	if IsServer() then self.caster = rc end end
 
 function modifier_imba_geomagnetic_grip_pull:OnCreated()
 	if IsServer() then

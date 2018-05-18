@@ -209,7 +209,6 @@ function modifier_imba_acid_spray_handler:OnDeath(params)
 			end
 
 			if caster:HasTalent("special_bonus_imba_alchemist_4") and caster:HasModifier("modifier_imba_goblins_greed_passive") then
-
 				-- Ability paramaters
 				local greed_stacks		=	caster:FindModifierByName("modifier_imba_goblins_greed_passive"):GetStackCount()
 				local stacks_to_gold 	=	caster:FindTalentValue("special_bonus_imba_alchemist_4", "stacks_to_gold_percentage" ) * 0.01

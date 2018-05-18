@@ -659,16 +659,17 @@ function imba_bloodseeker_rupture:OnSpellStart(target)
 			--SING A SAD SONG JUST TO TURN IT AROUND
 		end
 	end
+
 	if hTarget:GetHealthPercent() > self:GetSpecialValueFor("damage_initial_pct") then
 		local hpBurn = hTarget:GetHealthPercent() - self:GetSpecialValueFor("damage_initial_pct")
-		local damage	=	hTarget:GetMaxHealth() * hpBurn * 0.01
+		local damage = hTarget:GetMaxHealth() * hpBurn * 0.01
 
 		local damage_table	=  {victim = hTarget,
 			attacker = caster,
 			damage = damage,
 			damage_type = DAMAGE_TYPE_PURE,
 			ability = self,
-			damage_flags	=	DOTA_DAMAGE_FLAG_HPLOSS + DOTA_DAMAGE_FLAG_NO_DAMAGE_MULTIPLIERS + DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION
+			damage_flags = DOTA_DAMAGE_FLAG_HPLOSS + DOTA_DAMAGE_FLAG_NO_DAMAGE_MULTIPLIERS + DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION
 		}
 
 		ApplyDamage(damage_table)
@@ -686,6 +687,7 @@ function imba_bloodseeker_rupture:OnSpellStart(target)
 			modifier_rupture_charges_handler:DecrementStackCount()
 		end
 	end
+
 	self.from_blood_rite = false
 end
 
@@ -767,10 +769,6 @@ end
 function modifier_imba_rupture_debuff_dot:GetEffectName()
 	return "particles/units/heroes/hero_bloodseeker/bloodseeker_rupture.vpcf"
 end
-
-
-
-
 
 -- Rupture charges modifier
 modifier_imba_rupture_charges = modifier_imba_rupture_charges or class({})

@@ -18,6 +18,10 @@ function GameMode:OnGameRulesStateChange(keys)
 	-- This internal handling is used to set up main barebones functions
 	GameMode:_OnGameRulesStateChange(keys)
 
+	if IsMutationMap() then
+		Mutation:OnGameRulesStateChange(keys)
+	end
+
 	-- Run this in safe context
 	safe(function()
 		local new_state = GameRules:State_Get()
@@ -90,27 +94,33 @@ function GameMode:OnGameRulesStateChange(keys)
 					end
 				end
 
-				COURIER_PLAYER = {}
+				COURIER_TEAM = {}
+--				COURIER_PLAYER = {}
 
 				if GetMapName() == "imba_overthrow" then
 					local foundTeams = {}
 					for _, playerStart in pairs(Entities:FindAllByClassname("info_courier_spawn")) do
-						COURIER_PLAYER[playerStart:GetTeam()] = CreateUnitByName("npc_dota_courier", playerStart:GetAbsOrigin(), true, nil, nil, playerStart:GetTeam())
+						COURIER_TEAM[playerStart:GetTeam()] = CreateUnitByName("npc_dota_courier", playerStart:GetAbsOrigin(), true, nil, nil, playerStart:GetTeam())
+--						COURIER_PLAYER[playerStart:GetTeam()] = CreateUnitByName("npc_dota_courier", playerStart:GetAbsOrigin(), true, nil, nil, playerStart:GetTeam())
 					end
 
 					for _, hero in pairs(HeroList:GetAllHeroes()) do
 						if Entities:FindAllByClassname("info_courier_spawn"):GetTeam() == hero:GetTeam() then
-							COURIER_PLAYER[hero:GetPlayerID()] = CreateUnitByName("npc_dota_courier", Entities:FindAllByClassname("info_courier_spawn"):GetAbsOrigin(), true, nil, nil, hero:GetTeam())
+							COURIER_TEAM[hero:GetPlayerID()] = CreateUnitByName("npc_dota_courier", Entities:FindAllByClassname("info_courier_spawn"):GetAbsOrigin(), true, nil, nil, hero:GetTeam())
+--							COURIER_PLAYER[hero:GetPlayerID()] = CreateUnitByName("npc_dota_courier", Entities:FindAllByClassname("info_courier_spawn"):GetAbsOrigin(), true, nil, nil, hero:GetTeam())
 						end
 					end
 				else
-					for _, hero in pairs(HeroList:GetAllHeroes()) do
-						if hero:GetTeamNumber() == 2 then
-							COURIER_PLAYER[hero:GetPlayerID()] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_radiant"):GetAbsOrigin(), true, nil, nil, hero:GetTeam())
-						elseif hero:GetTeamNumber() == 3 then
-							COURIER_PLAYER[hero:GetPlayerID()] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_dire"):GetAbsOrigin(), true, nil, nil, hero:GetTeam())
-						end
-					end
+--					for _, hero in pairs(HeroList:GetAllHeroes()) do
+--						if hero:GetTeamNumber() == 2 then
+--							COURIER_PLAYER[hero:GetPlayerID()] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_radiant"):GetAbsOrigin(), true, nil, nil, hero:GetTeam())
+--						elseif hero:GetTeamNumber() == 3 then
+--							COURIER_PLAYER[hero:GetPlayerID()] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_dire"):GetAbsOrigin(), true, nil, nil, hero:GetTeam())
+--						end
+--					end
+
+					COURIER_TEAM[2] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_radiant"):GetAbsOrigin(), true, nil, nil, 2)
+					COURIER_TEAM[3] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_dire"):GetAbsOrigin(), true, nil, nil, 3)
 
 					local good_fillers = {
 						"good_filler_1",
@@ -309,8 +319,6 @@ function GameMode:OnNPCSpawned(keys)
 			tostring(player)
 		})
 
---		npc:AddNewModifier(npc, nil, "modifier_river", {})
-
 		if npc:IsCourier() then
 			if npc.first_spawn == true then
 				CombatEvents("generic", "courier_respawn", npc)
@@ -318,15 +326,28 @@ function GameMode:OnNPCSpawned(keys)
 				npc:AddAbility("courier_movespeed"):SetLevel(1)
 				npc.first_spawn = true
 			end
-		
+
 			return
 		elseif npc:IsRealHero() then
 			if api.imba.is_donator(PlayerResource:GetSteamID(npc:GetPlayerID())) then
 				npc:AddNewModifier(npc, nil, "modifier_imba_donator", {})
 			end
 
+			if IsMutationMap() then
+				if npc:GetUnitName() ~= FORCE_PICKED_HERO then
+					Mutation:OnHeroSpawn(npc)
+				end
+			end
+
 			if npc.first_spawn ~= true then
 				npc.first_spawn = true
+
+				if IsMutationMap() then
+					if npc:GetUnitName() ~= FORCE_PICKED_HERO then
+						Mutation:OnHeroFirstSpawn(npc)
+					end
+				end
+
 				GameMode:OnHeroFirstSpawn(npc)
 
 				return
@@ -505,6 +526,7 @@ end
 function GameMode:OnPlayerLevelUp(keys)
 	local player = EntIndexToHScript(keys.player)
 	local hero = player:GetAssignedHero()
+	if hero == nil then return end
 	local hero_level = hero:GetLevel()
 
 	-------------------------------------------------------------------------------------------------
@@ -938,7 +960,6 @@ function GameMode:OnEntityKilled( keys )
 
 		-- Check if the dying unit was a player-controlled hero
 		if killed_unit:IsRealHero() and killed_unit:GetPlayerID() then
-
 			-- Buyback parameters
 			local player_id = killed_unit:GetPlayerID()
 			local hero_level = killed_unit:GetLevel()
@@ -968,6 +989,10 @@ function GameMode:OnEntityKilled( keys )
 			-- Update buyback cost
 			PlayerResource:SetCustomBuybackCost(player_id, buyback_cost)
 			PlayerResource:SetCustomBuybackCooldown(player_id, buyback_cooldown)
+
+			if IsMutationMap() then
+				Mutation:OnHeroDeath(killed_unit)
+			end
 		end
 
 		-- ready to use
@@ -1142,13 +1167,14 @@ function GameMode:OnPlayerTeam(keys)
 
 	print(id, PLAYER_TEAM[id], old_team, team)
 	if PLAYER_TEAM[id] and old_team ~= team then
-		if hero and team ~= PLAYER_TEAM[id] and team ~= 5 then
+		if hero and team ~= PLAYER_TEAM[id] and team == 5 then
 			print("Player should stay in team "..old_team.." (attempt to be in team "..team..")")
 
 			hero:SetTeam(PLAYER_TEAM[id])
 			if hero:GetPlayerOwner() then
 				hero:GetPlayerOwner():SetTeam(PLAYER_TEAM[id])
 			end
+
 			PlayerResource:UpdateTeamSlot(id, PLAYER_TEAM[id], 0)
 			PlayerResource:SetCustomTeamAssignment(id, PLAYER_TEAM[id]) -- LIA don't use this line
 		end

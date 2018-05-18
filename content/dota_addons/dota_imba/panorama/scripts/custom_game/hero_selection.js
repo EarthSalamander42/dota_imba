@@ -460,6 +460,12 @@ function onPlayerStatChange(table, key, data) {
 		} else if (data['time'] > -1) {
 			FindDotaHudElement('TimeLeft').text = data['time'];
 			FindDotaHudElement('GameMode').text = $.Localize(data['mode']);
+//			if (data['time'] == 10 || data['time'] == 30) {
+			if (data['time'] == 10) {
+				Game.EmitSound("announcer_ann_custom_countdown_" + data['time']);
+			} else if (data['time'] < 10 && data['time'] > 0) {
+				Game.EmitSound("announcer_ann_custom_countdown_0" + data['time']);
+			}
 		} else {
 			// CM Hides the chat on last pick, before selecting plyer hero
 			// ARDM don't have pick screen chat

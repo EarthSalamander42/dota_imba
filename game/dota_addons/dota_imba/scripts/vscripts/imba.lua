@@ -62,13 +62,18 @@ require('events/npc_spawned/on_hero_spawned')
 require('events/npc_spawned/on_unit_spawned')
 require('events/player_disconnect/on_disconnect')
 
-require('team_selection')
-require('battlepass/donator')
-require('battlepass/experience')
-require('battlepass/imbattlepass')
+require('components/team_selection')
+require('components/battlepass/donator')
+require('components/battlepass/experience')
+require('components/battlepass/imbattlepass')
 
 -- clientside KV loading
 require('addon_init')
+
+if IsMutationMap() then
+	require('components/mutation/mutation_list')
+	require('components/mutation/mutation')
+end
 
 ApplyAllTalentModifiers()
 StoreCurrentDayCycle()
@@ -245,9 +250,9 @@ function GameMode:GoldFilter(keys)
 			CustomNetTables:SetTableValue("player_table", tostring(keys.player_id_const), {hero_kill_bounty = keys.gold + hero.kill_hero_bounty})
 		end
 	else
-		--		log.debug(keys.gold, custom_gold_bonus / 100, 1 + game_time / 25)
+--		log.debug(keys.gold, custom_gold_bonus / 100, 1 + game_time / 25)
 		keys.gold = (custom_gold_bonus / 100) + (1 + game_time / 25) * keys.gold
-		--		log.debug(keys.gold)
+--		log.debug(keys.gold)
 	end
 
 	-- Comeback gold gain
@@ -321,8 +326,13 @@ function GameMode:ModifierFilter( keys )
 		local modifier_owner = EntIndexToHScript(keys.entindex_parent_const)
 		local modifier_name = keys.name_const
 		local modifier_caster
+
 		if keys.entindex_caster_const then
 			modifier_caster = EntIndexToHScript(keys.entindex_caster_const)
+
+			if IsMutationMap() then
+				Mutation:ModifierFilter(keys)
+			end
 		else
 			return true
 		end
@@ -1821,12 +1831,24 @@ function GameMode:OnThink()
 
 	CheatDetector()
 
+	if GameRules:State_Get() == DOTA_GAMERULES_STATE_PRE_GAME or GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
+		if IsMutationMap() then
+			Mutation:OnThink()
+		end
+	end
+
 	for _, hero in pairs(HeroList:GetAllHeroes()) do
 		-- Make courier controllable, repeat every second to avoid uncontrollable issues
-		if COURIER_PLAYER then
-			if COURIER_PLAYER[hero:GetPlayerID()] and not COURIER_PLAYER[hero:GetPlayerID()]:IsControllableByAnyPlayer() then
-				COURIER_PLAYER[hero:GetPlayerID()]:SetControllableByPlayer(hero:GetPlayerID(), true)
-				COURIER_PLAYER[hero:GetPlayerID()].owner_id = hero:GetPlayerID()
+--		if COURIER_PLAYER then
+--			if COURIER_PLAYER[hero:GetPlayerID()] and not COURIER_PLAYER[hero:GetPlayerID()]:IsControllableByAnyPlayer() then
+--				COURIER_PLAYER[hero:GetPlayerID()]:SetControllableByPlayer(hero:GetPlayerID(), true)
+--				COURIER_PLAYER[hero:GetPlayerID()].owner_id = hero:GetPlayerID()
+--			end
+--		end
+
+		if COURIER_TEAM then
+			if COURIER_TEAM[hero:GetTeamNumber()] and not COURIER_TEAM[hero:GetTeamNumber()]:IsControllableByAnyPlayer() then
+				COURIER_TEAM[hero:GetTeamNumber()]:SetControllableByPlayer(hero:GetPlayerID(), true)
 			end
 		end
 
@@ -1961,7 +1983,7 @@ function GameMode:OnThink()
 							if team == 3 then
 								abandon_text = "#imba_team_bad_abandon_message"
 							end
-							Notifications:BottomToAll({text = abandon_text, duration = TEAM_ABANDON[team][1], style = {color = "DodgerBlue"} })
+							Notifications:BottomToAll({text = abandon_text.." ("..tostring(TEAM_ABANDON[team][1])..")", duration = 1.0, style = {color = "DodgerBlue"} })
 						end
 
 						TEAM_ABANDON[team][2] = true
@@ -1988,22 +2010,8 @@ function GameMode:OnThink()
 		if PICKING_SCREEN_OVER == false then
 			PICKING_SCREEN_OVER = true
 		end
+
 		return 1
-	else
-		i = i -1
---		log.debug(i)
-		for _, hero in pairs(HeroList:GetAllHeroes()) do
---			log.debug(hero:GetPlayerID(), hero.picked)
-			if not hero.picked and not i == false then -- have to double check false for reasons
-				if i == 30 then
-					EmitAnnouncerSoundForPlayer("announcer_ann_custom_countdown_"..i, hero:GetPlayerID())
-				elseif i == 10 then
-					EmitAnnouncerSoundForPlayer("announcer_ann_custom_countdown_"..i, hero:GetPlayerID())
-				elseif i <= 10 and i > 0 then
-					EmitAnnouncerSoundForPlayer("announcer_ann_custom_countdown_0"..i, hero:GetPlayerID())
-				end
-			end
-		end
 	end
 
 	return 1

@@ -313,9 +313,11 @@ IMBA_ALL_RANDOM_HERO_SELECTION_TIME = 5.0									-- Time we need to wait before
 CUSTOM_GOLD_BONUS = {} -- 1 = Normal, 2 = Hyper
 CUSTOM_GOLD_BONUS["imba_1v1"] = 100
 CUSTOM_GOLD_BONUS["imba_overthrow"] = 100
-CUSTOM_GOLD_BONUS["imba_ranked_5v5"] = 200
-CUSTOM_GOLD_BONUS["imba_ranked_10v10"] = 200
-CUSTOM_GOLD_BONUS["imba_tournament"] = 200
+CUSTOM_GOLD_BONUS["imba_ranked_5v5"] = 300
+CUSTOM_GOLD_BONUS["imba_ranked_10v10"] = 300
+CUSTOM_GOLD_BONUS["imba_tournament"] = 300
+CUSTOM_GOLD_BONUS["imba_mutation_5v5"] = 300
+CUSTOM_GOLD_BONUS["imba_mutation_10v10"] = 300
 CUSTOM_GOLD_BONUS["imba_frantic_5v5"] = 300
 CUSTOM_GOLD_BONUS["imba_frantic_10v10"] = 300
 
@@ -323,9 +325,11 @@ CUSTOM_GOLD_BONUS["imba_frantic_10v10"] = 300
 CUSTOM_XP_BONUS = {} -- 1 = Normal, 2 = Hyper
 CUSTOM_XP_BONUS["imba_1v1"] = 100
 CUSTOM_XP_BONUS["imba_overthrow"] = 100
-CUSTOM_XP_BONUS["imba_ranked_5v5"] = 150
-CUSTOM_XP_BONUS["imba_ranked_10v10"] = 150
-CUSTOM_XP_BONUS["imba_tournament"] = 150
+CUSTOM_XP_BONUS["imba_ranked_5v5"] = 225
+CUSTOM_XP_BONUS["imba_ranked_10v10"] = 225
+CUSTOM_XP_BONUS["imba_tournament"] = 225
+CUSTOM_XP_BONUS["imba_mutation_5v5"] = 225
+CUSTOM_XP_BONUS["imba_mutation_10v10"] = 225
 CUSTOM_XP_BONUS["imba_frantic_5v5"] = 225
 CUSTOM_XP_BONUS["imba_frantic_10v10"] = 225
 
@@ -336,6 +340,8 @@ HERO_STARTING_LEVEL["imba_overthrow"] = 1
 HERO_STARTING_LEVEL["imba_ranked_5v5"] = 1
 HERO_STARTING_LEVEL["imba_ranked_10v10"] = 1
 HERO_STARTING_LEVEL["imba_tournament"] = 1
+HERO_STARTING_LEVEL["imba_mutation_5v5"] = 1
+HERO_STARTING_LEVEL["imba_mutation_10v10"] = 1
 HERO_STARTING_LEVEL["imba_frantic_5v5"] = 5
 HERO_STARTING_LEVEL["imba_frantic_10v10"] = 5
 
@@ -345,6 +351,8 @@ MAX_LEVEL["imba_overthrow"] = 42
 MAX_LEVEL["imba_ranked_5v5"] = 42
 MAX_LEVEL["imba_ranked_10v10"] = 42
 MAX_LEVEL["imba_tournament"] = 42
+MAX_LEVEL["imba_mutation_5v5"] = 42
+MAX_LEVEL["imba_mutation_10v10"] = 42
 MAX_LEVEL["imba_frantic_5v5"] = 42
 MAX_LEVEL["imba_frantic_10v10"] = 42
 
@@ -354,6 +362,8 @@ HERO_INITIAL_GOLD["imba_overthrow"] = 1200
 HERO_INITIAL_GOLD["imba_ranked_5v5"] = 1200
 HERO_INITIAL_GOLD["imba_ranked_10v10"] = 1200
 HERO_INITIAL_GOLD["imba_tournament"] = 1200
+HERO_INITIAL_GOLD["imba_mutation_5v5"] = 1200
+HERO_INITIAL_GOLD["imba_mutation_10v10"] = 1200
 HERO_INITIAL_GOLD["imba_frantic_5v5"] = 4000
 HERO_INITIAL_GOLD["imba_frantic_10v10"] = 4000
 
@@ -363,6 +373,8 @@ GOLD_TICK_TIME["imba_overthrow"] = 0.6
 GOLD_TICK_TIME["imba_ranked_5v5"] = 0.6
 GOLD_TICK_TIME["imba_ranked_10v10"] = 0.4
 GOLD_TICK_TIME["imba_tournament"] = 0.6
+GOLD_TICK_TIME["imba_mutation_5v5"] = 0.6
+GOLD_TICK_TIME["imba_mutation_10v10"] = 0.4
 GOLD_TICK_TIME["imba_frantic_5v5"] = 0.4
 GOLD_TICK_TIME["imba_frantic_10v10"] = 0.4
 
@@ -377,6 +389,8 @@ BANNED_ITEMS["imba_overthrow"] = {}
 BANNED_ITEMS["imba_ranked_5v5"] = {}
 BANNED_ITEMS["imba_ranked_10v10"] = {}
 BANNED_ITEMS["imba_tournament"] = {}
+BANNED_ITEMS["imba_mutation_5v5"] = {}
+BANNED_ITEMS["imba_mutation_10v10"] = {}
 BANNED_ITEMS["imba_frantic_5v5"] = {}
 BANNED_ITEMS["imba_frantic_10v10"] = {}
 
@@ -568,6 +582,14 @@ MORPHLING_RESTRICTED_MODIFIERS = {
 	"modifier_imba_tidebringer_manual",
 	"modifier_imba_tidebringer_slow",
 	"modifier_imba_tidebringer_cleave_hit_target",
+}
+
+SHARED_NODRAW_MODIFIERS = {
+	"modifier_item_shadow_amulet_fade",
+	"modifier_monkey_king_tree_dance_hidden",
+	"modifier_monkey_king_transform",
+	"modifier_pangolier_gyroshell",
+	"modifier_smoke_of_deceit",
 }
 
 IMBA_DONATOR_COMPANION = {}

@@ -225,6 +225,7 @@ function GoldPickup(event)
 		local item = EntIndexToHScript( event.ItemEntityIndex )
 		local owner = EntIndexToHScript( event.HeroEntityIndex )
 		local gold_per_bag = item:GetCurrentCharges()
+
 		PlayerResource:ModifyGold( owner:GetPlayerID(), gold_per_bag, true, 0 )
 		SendOverheadEventMessage( owner, OVERHEAD_ALERT_GOLD, owner, gold_per_bag, nil )
 		UTIL_Remove( item ) -- otherwise it pollutes the player inventory
@@ -1315,6 +1316,7 @@ streak[10] = "Beyond Godlike"
 			type = "generic",
 			text = text,
 			teamColor = team,
+			teamPlayer = team,
 			team = team,
 			victimUnitName = victim_name,
 			courier = courier,
@@ -1610,3 +1612,89 @@ function HideWearables(hero, number)
 		end
 	end)
 end
+
+function SwapWearable( unit, target_model, new_model )
+    local wearable = unit:FirstMoveChild()
+    while wearable ~= nil do
+        if wearable:GetClassname() == "dota_item_wearable" then
+            if wearable:GetModelName() == target_model then
+                wearable:SetModel( new_model )
+                return
+            end
+        end
+        wearable = wearable:NextMovePeer()
+    end
+end
+
+-- Returns a wearable handle if its the passed target_model
+function GetWearable( unit, target_model )
+    local wearable = unit:FirstMoveChild()
+    while wearable ~= nil do
+        if wearable:GetClassname() == "dota_item_wearable" then
+            if wearable:GetModelName() == target_model then
+                return wearable
+            end
+        end
+        wearable = wearable:NextMovePeer()
+    end
+    return false
+end
+
+function HideWearable( unit, target_model )
+    local wearable = unit:FirstMoveChild()
+    while wearable ~= nil do
+        if wearable:GetClassname() == "dota_item_wearable" then
+            if wearable:GetModelName() == target_model then
+                wearable:AddEffects(EF_NODRAW)
+                return
+            end
+        end
+        wearable = wearable:NextMovePeer()
+    end
+end
+
+function ShowWearable( unit, target_model )
+    local wearable = unit:FirstMoveChild()
+    while wearable ~= nil do
+        if wearable:GetClassname() == "dota_item_wearable" then
+            if wearable:GetModelName() == target_model then
+                wearable:RemoveEffects(EF_NODRAW)
+                return
+            end
+        end
+        wearable = wearable:NextMovePeer()
+    end
+end
+
+--[[
+function PrintWearables( unit )
+    print("---------------------")
+    print("Wearable List of "..unit:GetUnitName())
+    print("Main Model: "..unit:GetModelName())
+    local wearable = unit:FirstMoveChild()
+    while wearable ~= nil do
+        if wearable:GetClassname() == "dota_item_wearable" then
+            local model_name = wearable:GetModelName()
+            if model_name ~= "" then print(model_name) end
+        end
+        wearable = wearable:NextMovePeer()
+    end
+end
+
+function PrecacheWearables( context )
+    local hats = LoadKeyValues("scripts/kv/wearables.kv")
+    for k1,unit_table in pairs(hats) do
+        for k2,sub_table in pairs(unit_table) do
+            for k3,wearables in pairs(sub_table) do
+                for k4,v in pairs (wearables) do
+                    if type(v) == "string" and v ~= "" then
+                        PrecacheResource("particle", v, context)
+                    else
+                        PrecacheModel(model, context)
+                    end
+                end
+            end
+        end
+    end
+end
+--]]

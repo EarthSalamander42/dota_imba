@@ -19,3 +19,18 @@
 
 "DOTA_Tooltip_modifier_fountain_aura_effect_lua"				"#{DOTA_Tooltip_modifier_fountain_aura_buff}"
 "DOTA_Tooltip_modifier_fountain_aura_effect_lua_Description"	"#{DOTA_Tooltip_modifier_fountain_aura_buff_Description}"
+
+"DOTA_Tooltip_modifier_river_slide"								"Sleepy River"
+"DOTA_Tooltip_modifier_river_slide_Description"					"Sliding on the ice!"
+
+"DOTA_Tooltip_modifier_mutation_death_explosion"				"Death Explosion"
+"DOTA_Tooltip_modifier_mutation_death_explosion_Description"	"Deal 1000 damage in a 500 radius on death afer a 0.9 seconds delay."
+
+"DOTA_Tooltip_modifier_mutation_kill_streak_power"				"#{DOTA_Tooltip_modifier_mutation_killstreak_power}"
+"DOTA_Tooltip_modifier_mutation_kill_streak_power_Description"	"#{DOTA_Tooltip_modifier_mutation_killstreak_power_Description}"
+
+"DOTA_Tooltip_modifier_mutation_track"							"Track"
+"DOTA_Tooltip_modifier_mutation_track_Description"				"Unable to go invisible, and granting vision to the enemy team."
+
+"DOTA_Tooltip_modifier_mutation_shadow_dance_buff"					"Shadow Dance"
+"DOTA_Tooltip_modifier_mutation_shadow_dance_buff_Description"		"Regenerate health and mana slightly faster when not in vision of the enemy."

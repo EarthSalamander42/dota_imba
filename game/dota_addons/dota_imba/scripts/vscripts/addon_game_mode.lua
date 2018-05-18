@@ -25,10 +25,10 @@
 
 require('internal/util')
 require('internal/funcs')
-require('player_resource')
+require('libraries/player_resource')
 require('imba')
 
-require('hero_selection/hero_selection')
+require('components/hero_selection/hero_selection')
 
 function Precache(context)
 	log.debug("Performing pre-load precache")
@@ -132,7 +132,16 @@ function Precache(context)
 		--Cache sounds for traps
 		PrecacheResource( "soundfile", "soundevents/game_sounds_heroes/game_sounds_dragon_knight.vsndevts", context )
 		PrecacheResource( "soundfile", "soundevents/soundevents_conquest.vsndevts", context )
-		PrecacheResource( "soundfile", "soundevents/sohei_soundevents.vsndevts", context )
+
+		PrecacheResource( "soundfile", "soundevents/game_sounds_heroes_custom/game_sounds_sohei.vsndevts", context )
+	elseif IsMutationMap() then
+		PrecacheItemByNameSync( "item_bag_of_gold", context )
+		PrecacheResource( "particle", "particles/items2_fx/veil_of_discord.vpcf", context )
+
+		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_pugna.vsndevts", context)
+		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_techies.vsndevts", context)
+		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_zuus.vsndevts", context)
+		PrecacheResource("particle", "particles/hw_fx/candy_carrying_stack.vpcf", context)
 	end
 
 	--[[
@@ -140,25 +149,10 @@ function Precache(context)
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_mirana.vsndevts", context)
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_ember_spirit.vsndevts", context)
 
-	-- Ghost Revenant
-	PrecacheResource("particle", "particles/econ/items/windrunner/windrunner_cape_cascade/windrunner_windrun_slow_cascade.vpcf", context)
-	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_bloodseeker.vsndevts", context)
-	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_juggernaut.vsndevts", context)
-	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_pugna.vsndevts", context)
-	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_visage.vsndevts", context)
-	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_warlock.vsndevts", context)
-
 	-- Hell Empress
 	PrecacheResource("particle", "particles/econ/items/shadow_fiend/sf_fire_arcana/sf_fire_arcana_ambient.vpcf", context)
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes_custom/game_sounds_hell_empress.vsndevts", context)
 
-	-- Roshan
-	PrecacheResource("particle", "particles/neutral_fx/roshan_slam.vpcf", context)
-
-	-- Fountain
-	PrecacheResource("particle", "particles/units/heroes/hero_ursa/ursa_fury_swipes.vpcf", context)
-	PrecacheResource("particle", "particles/units/heroes/hero_ursa/ursa_fury_swipes_debuff.vpcf", context)
-	PrecacheResource("particle", "particles/units/heroes/hero_spirit_breaker/spirit_breaker_greater_bash.vpcf", context)
 	PrecacheResource("particle", "particles/ambient/fountain_danger_circle.vpcf", context)
 
 	-- Towers

@@ -177,7 +177,6 @@ function modifier_item_imba_diffusal_unique:GetModifierProcAttack_BonusDamage_Ph
 
 		-- Only apply if the attacker is the caster
 		if attacker == self.caster then
-
 			-- If the attacker has higher level diffusal blades, do nothing
 			if self.caster:HasModifier("modifier_item_imba_diffusal_2_unique") then
 				return nil
@@ -200,6 +199,10 @@ function modifier_item_imba_diffusal_unique:GetModifierProcAttack_BonusDamage_Ph
 
 			-- Don't apply on spell immune targets
 			if target:IsMagicImmune() then
+				return nil
+			end
+
+			if attacker:IsIllusion() then
 				return nil
 			end
 
@@ -530,6 +533,10 @@ function modifier_item_imba_diffusal_2_unique:GetModifierProcAttack_BonusDamage_
 
 			-- Don't apply on spell immune targets
 			if target:IsMagicImmune() then
+				return nil
+			end
+
+			if attacker:IsIllusion() then
 				return nil
 			end
 
