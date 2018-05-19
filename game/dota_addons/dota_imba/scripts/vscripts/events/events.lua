@@ -3,7 +3,7 @@
 -- Licensed under the Apache License, Version 2.0 (the "License");
 -- you may not use this file except in compliance with the License.
 -- You may obtain a copy of the License at
---$
+--
 -- http://www.apache.org/licenses/LICENSE-2.0
 --
 -- Unless required by applicable law or agreed to in writing, software
@@ -14,7 +14,6 @@
 --
 
 function GameMode:OnGameRulesStateChange(keys)
-
 	-- This internal handling is used to set up main barebones functions
 	GameMode:_OnGameRulesStateChange(keys)
 
@@ -169,20 +168,7 @@ function GameMode:OnGameRulesStateChange(keys)
 			end)
 
 			if IsFranticMap() then
-				if RandomInt(1, 100) > 20 then
-					Timers:CreateTimer((RandomInt(10, 20) * 60) + RandomInt(0, 60), function()
-						local pos = {}
-						pos[1] = Vector(6446, -6979, 1496)
-						pos[2] = Vector(RandomInt(-6000, 0), RandomInt(7150, 7300), 1423)
-						pos[3] = Vector(RandomInt(-1000, 2000), RandomInt(6900, 7200), 1440)
-						pos[4] = Vector(7041, -6263, 1461)
-						local pos = pos[RandomInt(1, 4)]
-
-						GridNav:DestroyTreesAroundPoint(pos, 80, false)
-						local item = CreateItem("item_the_caustic_finale", nil, nil)
-						local drop = CreateItemOnPositionSync(pos, item)
-					end)
-				end
+				SpawnEasterEgg()
 			elseif GetMapName() == "imba_overthrow" then
 				countdownEnabled = true
 				CustomGameEventManager:Send_ServerToAllClients( "show_timer", {} )
@@ -200,33 +186,7 @@ function GameMode:OnGameRulesStateChange(keys)
 					ent:RemoveSelf()
 				end
 
-				local blocked_camps = {}
-				blocked_camps[1] = {"neutralcamp_evil_1", Vector(-4170, 3670, 512)}
-				blocked_camps[2] = {"neutralcamp_evil_2", Vector(-3030, 4500, 512)}
-				blocked_camps[3] = {"neutralcamp_evil_3", Vector(-2000, 4220, 384)}
-				blocked_camps[4] = {"neutralcamp_evil_4", Vector(-10, 3300, 512)}
-				blocked_camps[5] = {"neutralcamp_evil_5", Vector(1315, 3520, 512)}
-				blocked_camps[6] = {"neutralcamp_evil_6", Vector(-675, 2280, 1151)}
-				blocked_camps[7] = {"neutralcamp_evil_7", Vector(2400, 360, 520)}
-				blocked_camps[8] = {"neutralcamp_evil_8", Vector(4060, -620, 384)}
-				blocked_camps[9] = {"neutralcamp_evil_9", Vector(4100, 1050, 1288)}
-				blocked_camps[10] = {"neutralcamp_good_1", Vector(3010, -4430, 512)}
-				blocked_camps[11] = {"neutralcamp_good_2", Vector(4810, -4200, 512)}
-				blocked_camps[12] = {"neutralcamp_good_3", Vector(787, -4500, 512)}
-				blocked_camps[13] = {"neutralcamp_good_4", Vector(-430, -3100, 384)}
-				blocked_camps[14] = {"neutralcamp_good_5", Vector(-1500, -4290, 384)}
-				blocked_camps[15] = {"neutralcamp_good_6", Vector(-3040, 100, 512)}
-				blocked_camps[16] = {"neutralcamp_good_7", Vector(-3700, 890, 512)}
-				blocked_camps[17] = {"neutralcamp_good_8", Vector(-4780, -190, 512)}
-				blocked_camps[18] = {"neutralcamp_good_9", Vector(256, -1717, 1280)}
-
-				for i = 1, #blocked_camps do
-					local ent = Entities:FindByName(nil, blocked_camps[i][1])
-					local dummy = CreateUnitByName("npc_dummy_unit_perma", blocked_camps[i][2], true, nil, nil, DOTA_TEAM_NEUTRALS)
-				end
-
-				-- not removing neutral spawners for reasons...
-				--			Entities:FindByClassname(nil, "npc_dota_neutral_spawner"):RemoveSelf()
+				BlockJungleCamps()
 			end
 		end
 
@@ -310,6 +270,7 @@ function GameMode:OnNPCSpawned(keys)
 	if npc then
 		-- UnitSpawned Api Event
 		local player = "-1"
+
 		if npc:IsRealHero() and npc:GetPlayerID() then
 			player = PlayerResource:GetSteamID(npc:GetPlayerID())
 		end
@@ -373,18 +334,22 @@ end
 
 -- An item was picked up off the ground
 function GameMode:OnItemPickedUp(keys)
-
-	-- The playerID of the hero who is buying something
 	local heroEntity = EntIndexToHScript(keys.HeroEntityIndex)
 	local plyID = keys.PlayerID
 	if not plyID then return end
 	local hero = PlayerResource:GetSelectedHeroEntity(plyID)
-	local itemName = keys.itemname
 	local itemcost = keys.itemcost
 
-	if heroEntity:IsHero() and itemName == "item_bag_of_gold" then
-		-- Pick up the gold
-		GoldPickup(keys)
+	if heroEntity:IsHero() then
+		if keys.itemname == "item_bag_of_gold" then
+			-- Pick up the gold
+			GoldPickup(keys)
+		elseif keys.itemname == "item_treasure_chest" then
+			log.debug("Special Item Picked Up")
+			DoEntFire( "item_spawn_particle_" .. itemSpawnIndex, "Stop", "0", 0, self, self )
+			GameMode:SpecialItemAdd( event )
+			UTIL_Remove( item ) -- otherwise it pollutes the player inventory
+		end
 	end
 
 	api.imba.event(api.events.item_picked_up, {
@@ -417,7 +382,6 @@ function GameMode:OnAbilityUsed(keys)
 
 	local hero = PlayerResource:GetSelectedHeroEntity(player)
 	if not hero then return end
-
 
 	local abilityUsed = hero:FindAbilityByName(abilityname)
 	if not abilityUsed then return end
@@ -576,13 +540,13 @@ function GameMode:OnLastHit(keys)
 		if not player:GetAssignedHero().killstreak then player:GetAssignedHero().killstreak = 0 end
 		player:GetAssignedHero().killstreak = player:GetAssignedHero().killstreak +1
 
-		--		for _,attacker in pairs(HeroList:GetAllHeroes()) do
-		--			for i = 0, killedEnt:GetNumAttackers() -1 do
-		--				if attacker == killedEnt:GetAttacker(i) then
-		--					log.debug(attacker:GetUnitName())
-		--				end
-		--			end
-		--		end
+--		for _,attacker in pairs(HeroList:GetAllHeroes()) do
+--			for i = 0, killedEnt:GetNumAttackers() -1 do
+--				if attacker == killedEnt:GetAttacker(i) then
+--					log.debug(attacker:GetUnitName())
+--				end
+--			end
+--		end
 
 		player:GetAssignedHero().kill_hero_bounty = 0
 		Timers:CreateTimer(FrameTime() * 2, function()
@@ -1061,11 +1025,6 @@ function GameMode:OnEntityKilled( keys )
 	end
 end
 
--- This function is called 1 to 2 times as the player connects initially but before they have completely connected
-function GameMode:PlayerConnect(keys)
-
-end
-
 -- This function is called once when the player fully connects and becomes "Ready" during Loading
 function GameMode:OnConnectFull(keys)
 	GameMode:_OnConnectFull(keys)
@@ -1092,11 +1051,6 @@ function GameMode:OnConnectFull(keys)
 	ReconnectPlayer(player_id)
 
 	PlayerResource:InitPlayerData(player_id)
-end
-
--- This function is called whenever illusions are created and tells you which was/is the original entity
-function GameMode:OnIllusionsCreated(keys)
-	local originalEntity = EntIndexToHScript(keys.original_entindex)
 end
 
 -- This function is called whenever an item is combined to create a new item
@@ -1134,25 +1088,6 @@ function GameMode:OnTowerKill(keys)
 	else
 		Notifications:BottomToAll({text = "#tower_abilities_dire_upgrade", duration = 7, style = {color = "DodgerBlue"}})
 		EmitGlobalSound("powerup_02")
-	end
-end
-
-function GameMode:OnItemPickUp( event )
-	local item = EntIndexToHScript( event.ItemEntityIndex )
-	local owner = EntIndexToHScript( event.HeroEntityIndex )
-
-	local r = RandomInt(300, 450)
-
-	if event.itemname == "item_bag_of_gold" then
-		log.debug("Bag of gold picked up")
-		PlayerResource:ModifyGold( owner:GetPlayerID(), r, true, 0 )
-		SendOverheadEventMessage( owner, OVERHEAD_ALERT_GOLD, owner, r, nil )
-		UTIL_Remove( item ) -- otherwise it pollutes the player inventory
-	elseif event.itemname == "item_treasure_chest" then
-		log.debug("Special Item Picked Up")
-		DoEntFire( "item_spawn_particle_" .. itemSpawnIndex, "Stop", "0", 0, self, self )
-		GameMode:SpecialItemAdd( event )
-		UTIL_Remove( item ) -- otherwise it pollutes the player inventory
 	end
 end
 

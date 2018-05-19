@@ -374,9 +374,6 @@
 	"mutation_stay_frosty"						"Stay Frosty"
 	"mutation_stay_frosty_Description"			"Health regeneration is disabled."
 
-	"mutation_no_minimap"						"Houston, we've got a problem!"
-	"mutation_no_minimap_Description"			"No Minimap"
-
 	"mutation_monkey_business"					"Monkey Business"
 	"mutation_monkey_business_Description"		"Every heroes gets mischief ability passively when not attacking or being attacked for 5 seconds."
 

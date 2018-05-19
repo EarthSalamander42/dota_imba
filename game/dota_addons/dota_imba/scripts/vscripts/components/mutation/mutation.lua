@@ -24,7 +24,7 @@ function Mutation:Init()
 --	Mutation:ChooseMutation("terrain", TERRAIN_MUTATION_LIST, 11 - 1)
 
 	Mutation:ChooseMutation("positive", POSITIVE_MUTATION_LIST, 5 - 1) -- -1 because index is 0
-	Mutation:ChooseMutation("negative", NEGATIVE_MUTATION_LIST, 6 - 1)
+	Mutation:ChooseMutation("negative", NEGATIVE_MUTATION_LIST, 5 - 1)
 	Mutation:ChooseMutation("terrain", TERRAIN_MUTATION_LIST, 5 - 1)
 
 	IMBA_MUTATION_PERIODIC_SPELLS = {}
@@ -189,6 +189,8 @@ function Mutation:OnHeroFirstSpawn(hero)
 		hero:AddNewModifier(hero, nil, "modifier_no_health_bar", {})
 	elseif IMBA_MUTATION["negative"] == "defense_of_the_ants" then
 		hero:AddNewModifier(hero, nil, "modifier_mutation_ants", {})
+	elseif IMBA_MUTATION["negative"] == "stay_frosty" then
+		hero:AddNewModifier(hero, nil, "modifier_disable_healing", {})
 	end
 end
 
@@ -271,26 +273,29 @@ function Mutation:SpawnRandomItem()
 
 	for k, v in pairs(ITEMS_KV) do
 		if random_int == i then
---			print("Map max bounds:", MAP_SIZE / 2.1)
+			print("Map max bounds:", MAP_SIZE / 2.3)
 			print(random_int, k, v["ItemCost"])
 
 			if v["ItemCost"] < 1000 or string.find(k, "recipe") then
 				return Mutation:SpawnRandomItem()
 			end
 
-			print("Item Name:", k)
-			local item = CreateItem(k, nil, nil)
-			local pos = Vector(RandomInt(1000, MAP_SIZE / 2.1), RandomInt(1000, MAP_SIZE / 2.1), 0)
-			print(pos)
-			GridNav:DestroyTreesAroundPoint(pos, 80, false)
-			local drop = CreateItemOnPositionSync(pos, item)
---			EmitSoundOn("Dungeon.TreasureItemDrop", hero)
-
-			AddFOWViewer(2, pos, 250, 10.0, false)
-			AddFOWViewer(3, pos, 250, 10.0, false)
+			AddFOWViewer(2, pos, 250, 20.0, false)
+			AddFOWViewer(3, pos, 250, 20.0, false)
 
 			CustomGameEventManager:Send_ServerToAllClients("item_will_spawn", {spawn_location = pos})
 			EmitGlobalSound("powerup_03")
+
+			Timers:CreateTimer(10.0, function()
+				print("Item Name:", k)
+				local item = CreateItem(k, nil, nil)
+				local pos = Vector(RandomInt(1000, MAP_SIZE / 2.3), RandomInt(1000, MAP_SIZE / 2.3), 0)
+				print(pos)
+
+				GridNav:DestroyTreesAroundPoint(pos, 80, false)
+				local drop = CreateItemOnPositionSync(pos, item)
+--				EmitSoundOn("Dungeon.TreasureItemDrop", hero)
+			end)
 
 			return
 		end

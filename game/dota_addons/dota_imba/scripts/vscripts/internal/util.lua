@@ -1698,3 +1698,47 @@ function PrecacheWearables( context )
     end
 end
 --]]
+
+function SpawnEasterEgg()
+	if RandomInt(1, 100) > 20 then
+		Timers:CreateTimer((RandomInt(10, 20) * 60) + RandomInt(0, 60), function()
+			local pos = {}
+			pos[1] = Vector(6446, -6979, 1496)
+			pos[2] = Vector(RandomInt(-6000, 0), RandomInt(7150, 7300), 1423)
+			pos[3] = Vector(RandomInt(-1000, 2000), RandomInt(6900, 7200), 1440)
+			pos[4] = Vector(7041, -6263, 1461)
+			local pos = pos[RandomInt(1, 4)]
+
+			GridNav:DestroyTreesAroundPoint(pos, 80, false)
+			local item = CreateItem("item_the_caustic_finale", nil, nil)
+			local drop = CreateItemOnPositionSync(pos, item)
+		end)
+	end
+end
+
+function BlockJungleCamps()
+	local blocked_camps = {}
+	blocked_camps[1] = {"neutralcamp_evil_1", Vector(-4170, 3670, 512)}
+	blocked_camps[2] = {"neutralcamp_evil_2", Vector(-3030, 4500, 512)}
+	blocked_camps[3] = {"neutralcamp_evil_3", Vector(-2000, 4220, 384)}
+	blocked_camps[4] = {"neutralcamp_evil_4", Vector(-10, 3300, 512)}
+	blocked_camps[5] = {"neutralcamp_evil_5", Vector(1315, 3520, 512)}
+	blocked_camps[6] = {"neutralcamp_evil_6", Vector(-675, 2280, 1151)}
+	blocked_camps[7] = {"neutralcamp_evil_7", Vector(2400, 360, 520)}
+	blocked_camps[8] = {"neutralcamp_evil_8", Vector(4060, -620, 384)}
+	blocked_camps[9] = {"neutralcamp_evil_9", Vector(4100, 1050, 1288)}
+	blocked_camps[10] = {"neutralcamp_good_1", Vector(3010, -4430, 512)}
+	blocked_camps[11] = {"neutralcamp_good_2", Vector(4810, -4200, 512)}
+	blocked_camps[12] = {"neutralcamp_good_3", Vector(787, -4500, 512)}
+	blocked_camps[13] = {"neutralcamp_good_4", Vector(-430, -3100, 384)}
+	blocked_camps[14] = {"neutralcamp_good_5", Vector(-1500, -4290, 384)}
+	blocked_camps[15] = {"neutralcamp_good_6", Vector(-3040, 100, 512)}
+	blocked_camps[16] = {"neutralcamp_good_7", Vector(-3700, 890, 512)}
+	blocked_camps[17] = {"neutralcamp_good_8", Vector(-4780, -190, 512)}
+	blocked_camps[18] = {"neutralcamp_good_9", Vector(256, -1717, 1280)}
+
+	for i = 1, #blocked_camps do
+		local ent = Entities:FindByName(nil, blocked_camps[i][1])
+		local dummy = CreateUnitByName("npc_dummy_unit_perma", blocked_camps[i][2], true, nil, nil, DOTA_TEAM_NEUTRALS)
+	end
+end

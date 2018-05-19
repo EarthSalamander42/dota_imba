@@ -32,13 +32,12 @@ NEGATIVE_MUTATION_LIST = {}
 -- VANILLA
 NEGATIVE_MUTATION_LIST["death_explosion"] = false
 NEGATIVE_MUTATION_LIST["death_gold_drop"] = false
-NEGATIVE_MUTATION_LIST["no_health_bar"] = false
+-- NEGATIVE_MUTATION_LIST["no_health_bar"] = false
 NEGATIVE_MUTATION_LIST["periodic_spellcast"] = false -- in progress
 
 -- IMBA
 NEGATIVE_MUTATION_LIST["defense_of_the_ants"] = false
 NEGATIVE_MUTATION_LIST["stay_frosty"] = false
--- NEGATIVE_MUTATION_LIST["no_minimap"] = false
 -- NEGATIVE_MUTATION_LIST["monkey_business"] = false
 -- NEGATIVE_MUTATION_LIST["the_walking_dead"] = false
 -- NEGATIVE_MUTATION_LIST["alien_incubation"] = false
