@@ -190,36 +190,14 @@ function OverrideHeroImage(arcana_level, panel, hero_name) {
 	}
 }
 
-//	function OverrideTopBarColor(args) {
-//		var team = "Radiant"
-//		if (Players.GetTeam(Players.GetLocalPlayer()) == 3) {
-//			team = "Dire"
-//		}
-//	
-//		var panel = FindDotaHudElement(team + "Player" + Players.GetLocalPlayer())
-//		var picked_hero = Game.GetLocalPlayerInfo().player_selected_hero
-//	
-//		picked_hero = picked_hero.replace('npc_dota_hero_', "")
-//	
-//		var color = args.color.replace('0X', '#')
-//	
-//		if (panel.FindChildTraverse("HeroImage").heroname == picked_hero) {
-//			if (panel.FindChildTraverse("PlayerNewColor")) {
-//				return;
-//			} else {
-//				var color_panel = $.CreatePanel('Panel', panel.FindChildTraverse("PlayerColor"), 'PlayerNewColor');
-//				color_panel.style.width = "100%";
-//				color_panel.style.height = "4px";
-//				color_panel.style.backgroundColor = color;
-//				color_panel.style.backgroundImage = 'url("s2r://panorama/images/hud/reborn/topbar_playerslot_vignette_psd.vtex")';
-//				color_panel.style.backgroundSize = '92% 100%';
-//				color_panel.style.backgroundRepeat = 'no-repeat';
-//	
-//	//			$.Msg("---------------")
-//	//			$.Msg(color_panel.style.backgroundColor)
-//	//			$.Msg(color)
-//			}
-//		}
-//	}
+	function OverrideTopBarColor(args) {
+		var team = "Radiant"
+		if (Players.GetTeam(args.id) == 3) {
+			team = "Dire"
+		}
+		var panel = FindDotaHudElement(team + "Player" + args.id)
+		panel.FindChildTraverse('PlayerColor').style.backgroundColor = args.color;
 
-//	GameEvents.Subscribe("override_top_bar_colors", OverrideTopBarColor);
+	}
+
+	GameEvents.Subscribe("override_top_bar_colors", OverrideTopBarColor);

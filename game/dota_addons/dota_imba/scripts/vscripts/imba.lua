@@ -2111,7 +2111,7 @@ if GameRules:State_Get() == DOTA_GAMERULES_STATE_POST_GAME then return end
 --	print("---------------")
 --	PrintTable(GG_TEAM)
 
-	CustomGameEventManager:Send_ServerToAllClients("gg_called", {ID = event.ID, team = event.team, radiant_count = GG_TEAM[2], dire_count = GG_TEAM[3], gg_table = GG_TABLE})
+	CustomGameEventManager:Send_ServerToAllClients("gg_called", {ID = event.ID, team = PlayerResource:GetTeam(event.ID), radiant_count = GG_TEAM[2], dire_count = GG_TEAM[3], gg_table = GG_TABLE})
 
 	for i = 2, 3 do
 --		print(i, GG_TEAM[i][1], GG_TEAM[i][2])

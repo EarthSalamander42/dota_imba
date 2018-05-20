@@ -149,7 +149,7 @@ Label {
 .TeamStatus {
 	horizontal-align: center;
 	width: 90%;
-	height: 10%;
+	height: 15%;
 	flow-children: right;
 }
 
@@ -162,41 +162,44 @@ Label {
 	flow-children: right;
 	width: 45%;
 	height: 65%;
-	background-color: #171A2590;
+	/* background-color: #171A2590; */
 }
 
 #Clock {
 	width: 10%;
-	height: 80%;
-	background-color: #171A2590;
+	height: 60%;
+	/* background-color: #171A2590; */
 }
 
 #Clock #TimeLeft {
 	width: 100%;
-	height: 60%;
+	/* height: 50%; */
 	text-align: center;
-	font-size: 50px;
+	font-size: 65px;
 }
 
 #Clock #GameMode {
 	width: 100%;
-	height: 35%;
+	/* height: 35%; */
 	text-align: center;
-	font-size: 24px;
+	font-size: 21px;
 	vertical-align: bottom;
+	color: #f1f9ff;
+	text-shadow: 1px 1px 6px 2.0 #abc6dc15;
 }
 
 #TeamDire {
 	flow-children: left;
 	width: 45%;
 	height: 65%;
-	background-color: #171A2590;
+	/* background-color: #171A2590; */
 }
 
 .Player {
 	margin: 0 3px 5px 3px;
 	width: 18%;
 	height: 100%;
+
 }
 
 .TenVTen .Player {
@@ -208,15 +211,25 @@ Label {
 	height: 60%;
 }
 
+#TeamRadiant .Player {
+	opacity-mask: url("s2r://panorama/images/masks/topbar_heroslant_left_psd.vtex");
+}
+#TeamDire .Player {
+	opacity-mask: url("s2r://panorama/images/masks/topbar_heroslant_right_psd.vtex");
+}
 .PlayerImage {
 	width: 100%;
-	height: 100%;
+	height: 62%;
 	background-color: gradient( linear, 0% 0%, 0% 100%, from( #37425ddd ), to( #2B3445dd ) );
+	box-shadow: 0px 0px 8px 2px #000000d5;
 }
 
 .PlayerImage.PreviewHero {
-	blur: gaussian(2);
-	brightness: 0.10;
+	/* blur: gaussian(2); */
+	/* brightness: 0.80; */
+	saturation:  0;
+
+	wash-color: #365379cc;
 }
 
 #TeamDire .PlayerImage {
@@ -224,37 +237,59 @@ Label {
 }
 
 .PlayerLabel {
-	height: 30%;
+	/* height: 30%; */
 	width: 100%;
-	background-color: #2B344570;
+	/* background-color: #2B344570; */
 	vertical-align: bottom;
 	horizontal-align: middle;
 }
 
 .PlayerInfo {
-	height: 30%;
+	height: 22px;
 	width: 100%;
-	background-color: #2B344570;
-	vertical-align: top;
+	background-color: #2B3445;
+	background-color:  gradient( linear, 100% 0, 0 0, from( #0d1012ba ), color-stop( 0.3, #263441cd ), color-stop( 0.7, #263441cd ), to( #0d1012ba ) );
+	vertical-align: bottom;
 	horizontal-align: middle;
-
 	font-family: Bold;
 	font-weight: normal;
 	font-size: 15px;
 	width: 100%;
-	padding: 0 2px 0 2px;
+	padding: 2px 2px 0 2px;
 	color: darkred;
+	color:  #8f9dae;
 	text-align: center;
+	margin-bottom: 30%;
+	text-shadow: 1px 1px 2px 1.0 #000000ee;
+	z-index: 2;
 }
-
+.PlayerOverlay {
+	background-color:  gradient( linear, 0 100%,0 0, from( #000000dd ), color-stop( 0.4, #0000004a ),  to( #00000000) );
+	width:  100%;
+	height: 70%;
+}
+.PlayerColorBar {
+	height: 5px;
+	width:  100%;
+	align: center bottom;
+	margin-bottom:  25%;
+	box-shadow: 0px 0px 6px 2px #000000d5;
+}
+.PlayerColorBarOverlay {
+	width:  100%;
+	height: 100%;
+	background-color:  gradient( linear,  100% 0,0 0, from( #000000c2 ), color-stop( 0.5, #00000000 ),  to( #000000c2) );
+}
 .PlayerLabel Label {
 	font-family: Radiance,FZLanTingHei-R-GBK,TH Sarabun New,YDYGO 540,Gulim,MingLiU;
 	font-weight: normal;
 	font-size: 16px;
 	width: 100%;
 	padding: 0 2px 0 2px;
-	color: #cccccc;
+	color: #9bacbe;
 	text-align: center;
+	text-shadow: 1px 1px 2px 1.0 #000000ee;
+	margin-bottom:  0px;
 }
 
 #MainContent {
@@ -604,7 +639,7 @@ RadioButton.Disabled:selected {
 }
 
 #HeroSelector {
-	width: 40%;
+	width: 45%;
 	height: fill-parent-flow(1.0);
 	flow-children: right;
 	horizontal-align: middle;
@@ -864,7 +899,7 @@ DOTAScenePanel {
 	height: fill-parent-flow(1.0);
 }
 #HeroPickContainer {
-	width: 180px;
+	width: 210px;
 	height: fill-parent-flow(1.0);
 	flow-children: down;
 	margin: 12px;
@@ -875,7 +910,7 @@ DOTAScenePanel {
 .HeroPickerButton {
 	height: 60px;
 	width: fill-parent-flow(1.0);
-	background-position: 10px center;
+	background-position: 20px center;
 	background-repeat: no-repeat;
 	background-size: auto 32px;
 
@@ -938,6 +973,7 @@ DOTAScenePanel {
 }
 
 #HeroImbaRandom {
+	background-position: 0px center;
 	background-image: url("s2r://panorama/images/custom_game/imba_random.png");
 	background-color: gradient( linear, 0% 0%, 0% 100%, from( #650606 ), to( #3d1010 ) );
 }
