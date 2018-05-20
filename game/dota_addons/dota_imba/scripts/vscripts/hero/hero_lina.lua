@@ -676,8 +676,9 @@ function modifier_imba_fiery_soul:IsPurgable()
 	return false
 end
 
--- ClientSide dosent have the function needed to check "GetCaster():HasTalent" so we need a workaround. 
--- i.e We create a permanent modifier and check GetCaster():HasModifier() to determine if we have talent selected. // naowin
+-- ClientSide fails the check on "GetCaster():HasTalent" so we need a workaround. 
+-- instead i created a permanent modifier and used check GetCaster():HasModifier() 
+-- to determine if we have talent selected. // naowin
 modifier_imba_fiery_soul_talent = class({})
 function modifier_imba_fiery_soul_talent:IsPassive() return true end
 function modifier_imba_fiery_soul_talent:IsPermanent() return true end
