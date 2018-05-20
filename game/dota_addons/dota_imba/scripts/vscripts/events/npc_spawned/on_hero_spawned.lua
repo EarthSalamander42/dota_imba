@@ -36,7 +36,6 @@ function GameMode:OnHeroFirstSpawn(hero)
 		hero.picked = true
 
 		CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(hero:GetPlayerID()), "dota_hud", {show = true})
---		CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(hero:GetPlayerID()), "override_top_bar_colors", {color = rgbToHex(PLAYER_COLORS[hero:GetPlayerID()])})
 
 		if api.imba.is_developer(PlayerResource:GetSteamID(hero:GetPlayerID())) then
 			hero.has_graph = true

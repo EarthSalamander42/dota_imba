@@ -190,14 +190,21 @@ function OverrideHeroImage(arcana_level, panel, hero_name) {
 	}
 }
 
-	function OverrideTopBarColor(args) {
+function OverrideTopBarColor() {
+	var colors = CustomNetTables.GetTableValue("game_options", "player_colors")
+
+	for (var id in colors) {
+		if (!Players.GetTeam(parseInt(id))) {return $.Msg("No player for this ID, stop loop.")};
 		var team = "Radiant"
-		if (Players.GetTeam(args.id) == 3) {
+
+		if (Players.GetTeam(parseInt(id)) == 3) {
 			team = "Dire"
 		}
-		var panel = FindDotaHudElement(team + "Player" + args.id)
-		panel.FindChildTraverse('PlayerColor').style.backgroundColor = args.color;
 
-	}
+		var panel = FindDotaHudElement(team + "Player" + id)
+		$.Msg(id)
+		panel.FindChildTraverse('PlayerColor').style.backgroundColor = colors[id];
+	}    
+}
 
-	GameEvents.Subscribe("override_top_bar_colors", OverrideTopBarColor);
+GameEvents.Subscribe("override_top_bar_colors", OverrideTopBarColor);

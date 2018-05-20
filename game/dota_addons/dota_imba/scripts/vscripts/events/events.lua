@@ -36,6 +36,13 @@ function GameMode:OnGameRulesStateChange(keys)
 
 			-- get the IXP of everyone (ignore bot)
 			GetPlayerInfoIXP()
+
+			local hex_colors = {}
+			for i = 0, 23 do
+				table.insert(hex_colors, i, rgbToHex(PLAYER_COLORS[i]))
+			end
+
+			CustomNetTables:SetTableValue("game_options", "player_colors", hex_colors)
 		end
 
 		-------------------------------------------------------------------------------------------------
@@ -65,10 +72,6 @@ function GameMode:OnGameRulesStateChange(keys)
 
 			CustomNetTables:SetTableValue("game_options", "donators", api.imba.get_donators())
 			CustomNetTables:SetTableValue("game_options", "developers", api.imba.get_developers())
-
-			for i = 0, PlayerResource:GetPlayerCount() - 1 do
-				CustomGameEventManager:Send_ServerToAllClients("override_top_bar_colors", {id = i, color = rgbToHex(PLAYER_COLORS[i])})
-			end
 
 			-------------------------------------------------------------------------------------------------
 			-- IMBA: Custom maximum level EXP tables adjustment
@@ -153,7 +156,7 @@ function GameMode:OnGameRulesStateChange(keys)
 						shrine:SetAbsOrigin(abs)
 					end
 
---					CustomGameEventManager:Send_ServerToAllClients("imbathrow_topbar", {imbathrow = false})
+					CustomGameEventManager:Send_ServerToAllClients("override_top_bar_colors", {})
 				end
 			end)
 		end
