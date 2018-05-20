@@ -16,6 +16,7 @@
 --     Firetoad
 --     AtroCty, 23.03.2017
 --     suthernfriend, 03.02.2018
+--     naowin, 20.05.2018
 
 CreateEmptyTalents("lina")
 
@@ -524,6 +525,8 @@ imba_lina_fiery_soul = class({})
 LinkLuaModifier("modifier_imba_fiery_soul", "hero/hero_lina", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_fiery_soul_counter", "hero/hero_lina", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_fiery_soul_blaze_burn", "hero/hero_lina", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_fiery_soul_talent", "hero/hero_lina", LUA_MODIFIER_MOTION_NONE)
+
 
 function imba_lina_fiery_soul:GetIntrinsicModifierName()
 	return "modifier_imba_fiery_soul"
@@ -673,6 +676,12 @@ function modifier_imba_fiery_soul:IsPurgable()
 	return false
 end
 
+-- ClientSide fails the check on "GetCaster():HasTalent" so we need a workaround. 
+-- instead i created a permanent modifier and used check GetCaster():HasModifier() 
+-- to determine if we have talent selected. // naowin
+modifier_imba_fiery_soul_talent = class({})
+function modifier_imba_fiery_soul_talent:IsPassive() return true end
+function modifier_imba_fiery_soul_talent:IsPermanent() return true end
 
 modifier_imba_fiery_soul_counter = class({})
 
@@ -685,31 +694,43 @@ function modifier_imba_fiery_soul_counter:OnCreated()
 		ParticleManager:SetParticleControlEnt(self.particle, 1, caster, PATTACH_POINT_FOLLOW, nil, caster:GetAbsOrigin(), true)
 		ParticleManager:SetParticleControl(self.particle, 3, Vector(1,0,0))
 		ParticleManager:SetParticleControl(self.particle, 4, Vector(1,0,0))
+
+		if caster:HasTalent("special_bonus_imba_lina_3") then 
+			caster:AddNewModifier(caster , self:GetAbility(), "modifier_imba_fiery_soul_talent", {})
+		end
 	end
 end
 
 -- Credits: yannich
 -- #3 Talent: Reaching 3 Fiery Soul stacks allows Lina to unleash a blast of hot shockwave.
 function modifier_imba_fiery_soul_counter:OnRefresh()
-	local serverCheck = 0
-	local ability = self:GetAbility()
-	local stacks = self:GetStackCount()
-	local max_stacks = ability:GetTalentSpecialValueFor("max_stacks")
+	local caster 		= self:GetCaster()
+	local ability 		= self:GetAbility()
+	local stacks 		= self:GetStackCount()
+	local max_stacks 	= ability:GetTalentSpecialValueFor("max_stacks")
 	if IsServer() then
 		if stacks < max_stacks then
 			self:SetStackCount(stacks+1)
 			ParticleManager:SetParticleControl(self.particle, 3, Vector(stacks,0,0))
 			ParticleManager:SetParticleControl(self.particle, 4, Vector(stacks,0,3 ))
 		end
-		serverCheck = 1 -- why ? ? ? ? ? ?
+
+		if caster:HasTalent("special_bonus_imba_lina_3") then 
+			caster:AddNewModifier(caster, ability, "modifier_imba_fiery_soul_talent", {})
+		end
 	end
 
-	if self:GetCaster():HasTalent("special_bonus_imba_lina_3") then
-		if stacks + serverCheck == max_stacks then -- inject function calls clientside and serverside
+	local stacks = self:GetStackCount()
+	if caster:HasModifier("modifier_imba_fiery_soul_talent") then
+		if stacks == max_stacks  then -- inject function calls clientside and serverside (but this is not run on clientside?)
 			-- Change behavior
-			ability.GetBehavior = function() return DOTA_ABILITY_BEHAVIOR_NO_TARGET + DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING end
+			ability.GetBehavior = function() return DOTA_ABILITY_BEHAVIOR_NO_TARGET + DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING + DOTA_ABILITY_BEHAVIOR_IMMEDIATE end
 			ability:GetBehavior()
 			ability:GetCooldown()
+
+			if IsClient() then
+				ability:GetBehavior()
+			end
 		elseif stacks < max_stacks then
 			ability.GetBehavior = function() return DOTA_ABILITY_BEHAVIOR_PASSIVE end
 			ability:GetBehavior()
