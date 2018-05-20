@@ -66,6 +66,10 @@ function GameMode:OnGameRulesStateChange(keys)
 			CustomNetTables:SetTableValue("game_options", "donators", api.imba.get_donators())
 			CustomNetTables:SetTableValue("game_options", "developers", api.imba.get_developers())
 
+			for i = 0, PlayerResource:GetPlayerCount() - 1 do
+				CustomGameEventManager:Send_ServerToAllClients("override_top_bar_colors", {id = i, color = rgbToHex(PLAYER_COLORS[i])})
+			end
+
 			-------------------------------------------------------------------------------------------------
 			-- IMBA: Custom maximum level EXP tables adjustment
 			-------------------------------------------------------------------------------------------------

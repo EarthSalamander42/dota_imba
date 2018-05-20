@@ -236,6 +236,7 @@ function modifier_special_bonus_imba_witch_doctor_6:OnCreated()
 				self:GetParent():AddNewModifier(self:GetParent(), ability, "modifier_imba_voodoo_restoration", {})
 				return nil
 			end
+
 			return 1.0
 		end, 0 )
 	end

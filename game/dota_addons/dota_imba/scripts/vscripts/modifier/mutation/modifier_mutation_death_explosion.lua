@@ -16,8 +16,7 @@ end
 function modifier_mutation_death_explosion:OnCreated()
 	self.delay = 0.9
 	self.radius = 400
-	local game_time = math.min(GameRules:GetDOTATime(false, false) / 60, 30)
-	self.damage = 600 + (100 * game_time)
+	self.damage = 600
 	self.damage_buildings_pct = 0.5
 end
 
@@ -29,6 +28,10 @@ function modifier_mutation_death_explosion:OnDeath(keys)
 		ParticleManager:SetParticleControl(particle_pre_blast_fx, 0, self:GetParent():GetAbsOrigin())
 		ParticleManager:SetParticleControl(particle_pre_blast_fx, 1, Vector(self.radius, self.delay, 1))
 		ParticleManager:ReleaseParticleIndex(particle_pre_blast_fx)
+
+		local game_time = math.min(GameRules:GetDOTATime(false, false) / 60, 30)
+		self.damage = 600 + (100 * game_time)
+		print("Damage dealt:", self.damage)
 
 		Timers:CreateTimer(self.delay, function()
 			EmitSoundOn("Hero_Pugna.NetherBlastPreCast", self:GetParent())

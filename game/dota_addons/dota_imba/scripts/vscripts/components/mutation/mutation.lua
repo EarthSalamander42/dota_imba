@@ -11,13 +11,14 @@ function Mutation:Init()
 	LinkLuaModifier("modifier_mutation_kill_streak_power", "modifier/mutation/modifier_mutation_kill_streak_power.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_frantic", "modifier/modifier_frantic.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_no_health_bar", "modifier/mutation/modifier_no_health_bar.lua", LUA_MODIFIER_MOTION_NONE )
+	LinkLuaModifier("modifier_mutation_shadow_dance", "modifier/mutation/modifier_mutation_shadow_dance.lua", LUA_MODIFIER_MOTION_NONE )
+	LinkLuaModifier("modifier_mutation_ants", "modifier/mutation/modifier_mutation_ants.lua", LUA_MODIFIER_MOTION_NONE )
+	LinkLuaModifier("modifier_disable_healing", "modifier/mutation/modifier_disable_healing.lua", LUA_MODIFIER_MOTION_NONE )
 
 	LinkLuaModifier("modifier_mutation_sun_strike", "modifier/mutation/periodic_spellcast/modifier_mutation_sun_strike.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_mutation_thundergods_wrath", "modifier/mutation/periodic_spellcast/modifier_mutation_thundergods_wrath.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_mutation_track", "modifier/mutation/periodic_spellcast/modifier_mutation_track.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_mutation_rupture", "modifier/mutation/periodic_spellcast/modifier_mutation_rupture.lua", LUA_MODIFIER_MOTION_NONE )
-	LinkLuaModifier("modifier_mutation_shadow_dance", "modifier/mutation/modifier_mutation_shadow_dance.lua", LUA_MODIFIER_MOTION_NONE )
-	LinkLuaModifier("modifier_mutation_ants", "modifier/mutation/modifier_mutation_ants.lua", LUA_MODIFIER_MOTION_NONE )
 
 --	Mutation:ChooseMutation("positive", POSITIVE_MUTATION_LIST, 15 - 1) -- -1 because index is 0
 --	Mutation:ChooseMutation("negative", NEGATIVE_MUTATION_LIST, 10 - 1)
@@ -203,10 +204,6 @@ function Mutation:OnHeroSpawn(hero)
 		hero:AddNewModifier(hero, nil, "modifier_mutation_shadow_dance", {})
 	end
 
-	if IMBA_MUTATION["negative"] == "stay_frosty" then
-		hero:AddNewModifier(hero, nil, "modifier_ice_blast", {})
-	end
-
 	if IMBA_MUTATION["terrain"] == "sleepy_river" then
 		hero:AddNewModifier(hero, nil, "modifier_river", {})
 	end
@@ -276,26 +273,28 @@ function Mutation:SpawnRandomItem()
 			print("Map max bounds:", MAP_SIZE / 2.3)
 			print(random_int, k, v["ItemCost"])
 
-			if v["ItemCost"] < 1000 or string.find(k, "recipe") then
+			if v["ItemCost"] then
+				if v["ItemCost"] < 1000 or string.find(k, "recipe") then
+					return Mutation:SpawnRandomItem()
+				end
+			else
 				return Mutation:SpawnRandomItem()
 			end
+
+			print("Item Name:", k)
+			local item = CreateItem(k, nil, nil)
+			local pos = Vector(RandomInt(1000, MAP_SIZE / 2.3), RandomInt(1000, MAP_SIZE / 2.3), 0)
+			print(pos)
+
+			GridNav:DestroyTreesAroundPoint(pos, 80, false)
+			local drop = CreateItemOnPositionSync(pos, item)
+--			EmitSoundOn("Dungeon.TreasureItemDrop", hero)
 
 			AddFOWViewer(2, pos, 250, 20.0, false)
 			AddFOWViewer(3, pos, 250, 20.0, false)
 
 			CustomGameEventManager:Send_ServerToAllClients("item_will_spawn", {spawn_location = pos})
 			EmitGlobalSound("powerup_03")
-
-			Timers:CreateTimer(10.0, function()
-				print("Item Name:", k)
-				local item = CreateItem(k, nil, nil)
-				local pos = Vector(RandomInt(1000, MAP_SIZE / 2.3), RandomInt(1000, MAP_SIZE / 2.3), 0)
-				print(pos)
-
-				GridNav:DestroyTreesAroundPoint(pos, 80, false)
-				local drop = CreateItemOnPositionSync(pos, item)
---				EmitSoundOn("Dungeon.TreasureItemDrop", hero)
-			end)
 
 			return
 		end

@@ -1871,21 +1871,21 @@ function GameMode:OnThink()
 
 				break
 			end
-		end
-
-		-- Morphling fixes
-		if hero:GetUnitName() == "npc_dota_hero_morphling" and hero:GetModelName() == "models/heroes/morphling/morphling.vmdl" then
+		elseif hero:GetUnitName() == "npc_dota_hero_morphling" and hero:GetModelName() == "models/heroes/morphling/morphling.vmdl" then
 			for _, modifier in pairs(MORPHLING_RESTRICTED_MODIFIERS) do
 				if hero:HasModifier(modifier) then
 					hero:RemoveModifierByName(modifier)
 				end
 			end
-		end
-
-		if hero:GetUnitName() == "npc_dota_hero_witch_doctor" then
+		elseif hero:GetUnitName() == "npc_dota_hero_pudge" then
+			if not hero:HasModifier("modifier_imba_pudge_flesh_heap_handle") then
+				hero:AddNewModifier(hero, nil, "modifier_imba_pudge_flesh_heap_handle", {})
+			end
+		elseif hero:GetUnitName() == "npc_dota_hero_witch_doctor" then
 			if hero:HasTalent("special_bonus_imba_witch_doctor_6") then
 				if not hero:HasModifier("modifier_imba_voodoo_restoration") then
-					hero:AddNewModifier(hero, self, "modifier_imba_voodoo_restoration", {})
+					local ability = hero:FindAbilityByName("imba_witch_doctor_voodoo_restoration")
+					hero:AddNewModifier(hero, ability, "modifier_imba_voodoo_restoration", {})
 				end
 			end
 		end

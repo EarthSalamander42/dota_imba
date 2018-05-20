@@ -33,6 +33,7 @@ function C_DOTA_BaseNPC:HasTalent(talentName)
 	if self:HasModifier("modifier_"..talentName) then
 		return true 
 	end
+
 	return false
 end
 
