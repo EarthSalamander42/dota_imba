@@ -200,14 +200,14 @@
 
 .es-legend-rank { width: 80px; }
 
-.es-legend-xp-diff { width: 80px; }
+.es-legend-xp-diff { width: 70px; }
 
-.es-legend-xp-booster { width: 80px; }
+.es-legend-xp-booster { width: 70px; }
 
 .es-player-root {
 	flow-children: right;
 	border-top: 2px solid #333;
-	padding: 3px 10px;
+	padding: 3px 5px;
 	background-color: #1c1c1c77;
 }
 
@@ -336,7 +336,7 @@
 
 #es-player-xp-earned,
 #es-player-xp-booster {
-	width: 80px;
+	width: 70px;
 	vertical-align: center;
 	text-align: center;
 }
