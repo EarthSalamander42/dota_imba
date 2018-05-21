@@ -396,6 +396,8 @@
 
 "DOTA_Tooltip_ability_terrorblade_sunder_Description"                  "Severs the life from both Terrorblade and a target hero, exchanging a percentage of both units' current health. Some health points must remain.\n<font color='#FF7800'>Quicksunder:</font> cast point improves on levels 4 and beyond."
 
+"DOTA_Tooltip_ability_special_bonus_unique_terrorblade"					"-%value%s Sounder Cooldown"
+
 "DOTA_Tooltip_ability_tusk_ice_shards_Description"                      "Tusk compresses shards of ice into a ball of frozen energy that damages all enemies it comes in contact with. When the ball reaches its target destination the shards are released, creating a barrier that lasts for %shard_duration% seconds.\n<font color='#FF7800'>Flash Freeze:</font> shard travel speed increases dramatically after level 4."
 
 "DOTA_Tooltip_ability_weaver_time_lapse_aghanim_description"            "Reduces cooldown, and allows Weaver to cast Time Lapse on allies <font color='#FF7800'>and enemies</font>."
