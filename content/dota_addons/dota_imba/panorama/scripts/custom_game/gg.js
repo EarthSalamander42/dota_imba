@@ -30,23 +30,23 @@ function GenerateGGTopBar(player, team, has_gg, has_dc) {
 		gg_left_line.style.width = "12px";
 		gg_left_line.style.height = "2px";
 		gg_left_line.style.backgroundColor = "gradient( linear, 100% 0, 0% 0%, from( #f26600 ), color-stop( 0.4, #f26600 ), to( #f2001300 ) )";
-		gg_left_line.style.align = "left bottom";
-		gg_left_line.style.margin = "0 0 7px 8px";
+		gg_left_line.style.align = "left center";
+		gg_left_line.style.margin = "0 0 0 8px";
 
 		var gg_label = $.CreatePanel('Label', gg_row, "");
 		gg_label.text = "GG";
 		gg_label.style.fontSize = "14px";
-		gg_label.style.align = "center bottom";
+		gg_label.style.align = "center center";
 		gg_label.style.color = "#f26600";
 		gg_label.style.textShadow = "1px 1px 3px 2.0 #000000aa";
-		gg_label.style.margin = "0 0 -2px 6px";
+		gg_label.style.margin = "2px 0 -2px 6px";
 
 		var gg_right_line = $.CreatePanel('Panel', gg_row, "");
 		gg_right_line.style.width = "12px";
 		gg_right_line.style.height = "2px";
 		gg_right_line.style.backgroundColor = "gradient( linear, 0 0, 100%  0%, from( #f26600 ), color-stop( 0.4, #f26600 ), to( #f2001300 ) )";
-		gg_right_line.style.align = "right bottom";
-		gg_right_line.style.margin = "0 5px 7px 0";
+		gg_right_line.style.align = "right center";
+		gg_right_line.style.margin = "0 5px 0 0";
 	} else if (TopBarHud.FindChildTraverse("GGBar-" + player) && has_gg == 0) {
 		TopBarHud.FindChildTraverse("GGBar-" + player).DeleteAsync(0)
 	}
