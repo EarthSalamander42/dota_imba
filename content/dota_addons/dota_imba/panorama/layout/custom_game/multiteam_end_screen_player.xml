@@ -25,5 +25,6 @@
 		</Panel> 
 		<Label id="es-player-xp-rank-name" class="es-player-line-text es-legend-rank" text="Icefrog" /> 
 		<Label id="es-player-xp-earned" class="es-player-line-text" text="+200" /> 
+		<Label id="es-player-xp-booster" class="es-player-line-text" text=" (100%)" /> 
 	</Panel>
 </root>

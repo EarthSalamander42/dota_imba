@@ -92,7 +92,7 @@
 	flow-children: down;
 	horizontal-align: center;
 	width: 100%;
-	padding: 10px;
+	padding: 10px 5px 10px 5px;
 }
 
 .es-teams-columns {
@@ -194,11 +194,15 @@
 	font-size: 16px;
 }
 
-.es-legend-gold { width: 60px; }
+.es-legend-gold { width: 50px; }
 
 .es-legend-xp { width: 180px; }
 
 .es-legend-rank { width: 80px; }
+
+.es-legend-xp-diff { width: 80px; }
+
+.es-legend-xp-booster { width: 80px; }
 
 .es-player-root {
 	flow-children: right;
@@ -247,18 +251,18 @@
 	margin-right: 5px;
 }
 .es-legend-kdalevel {
-	width: 35px;
+	width: 30px;
 }
 
 .es-player-kdalevel {
-	width: 35px;
+	width: 30px;
 	vertical-align: center;
 	text-align: center;
 	color: #eee;
 }
 
 #es-player-gold {
-	width: 60px;
+	width: 50px;
 	vertical-align: center;
 	text-align: center;
 	color: #ee7;
@@ -267,7 +271,7 @@
 .es-legend-imr10v10,
 .es-legend-imr,
 .es-legend-rank1v1 {
-	width: 80px; 
+	width: 60px; 
 	margin-right: 15px;
 	text-align: center;
 }
@@ -275,7 +279,7 @@
 #es-player-imr,
 #es-player-imr10v10,
 #es-player-rank1v1 {
-	width: 80px;
+	width: 60px;
 	vertical-align: center;
 	text-align: center;
 	visibility: collapse;
@@ -330,12 +334,12 @@
 	text-align: center;
 }
 
-#es-player-xp-earned {
-	width: 100px;
+#es-player-xp-earned,
+#es-player-xp-booster {
+	width: 80px;
 	vertical-align: center;
 	text-align: center;
 }
-
 
 #es-buttons {
 	flow-children: right;

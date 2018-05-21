@@ -158,7 +158,8 @@ function EndScoreboard() {
 					level: pp.FindChildInLayoutFile("es-player-xp-level"),
 					rank: pp.FindChildInLayoutFile("es-player-xp-rank"),
 					rank_name: pp.FindChildInLayoutFile("es-player-xp-rank-name"),
-					earned: pp.FindChildInLayoutFile("es-player-xp-earned")
+					earned: pp.FindChildInLayoutFile("es-player-xp-earned"),
+					booster: pp.FindChildInLayoutFile("es-player-xp-booster")
 				}
 			};
 
@@ -279,8 +280,8 @@ function EndScoreboard() {
 					values.xp.earned.AddClass("es-text-red");
 				}
 
-				values.xp.earned.text = values.xp.earned.text + " (" + booster + "%)";
-				values.xp.earned.style.color = donator_color;
+				values.xp.booster.text = " (" + booster.toFixed(0) + "%)";
+				values.xp.booster.style.color = donator_color;
 
 				var old_xp = player.xp.progress.xp;
 				var ply_color = player.xp.color;
