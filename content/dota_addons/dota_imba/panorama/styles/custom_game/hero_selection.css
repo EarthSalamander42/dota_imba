@@ -286,12 +286,12 @@ Label {
 	height: 62%;
 }
 .TenVTen .PlayerColorBar {
-	margin-bottom: 33%;
+	margin-bottom: 34%;
 }
 .PlayerColorBarOverlay {
 	width:  100%;
 	height: 100%;
-	background-color:  gradient( linear,  100% 0,0 0, from( #000000c2 ), color-stop( 0.5, #00000000 ),  to( #000000c2) );
+	background-color:  gradient( linear,  100% 0,0 0, from( #000000a0 ), color-stop( 0.5, #00000000 ),  to( #000000a0) );
 }
 .PlayerLabel Label {
 	font-family: Radiance,FZLanTingHei-R-GBK,TH Sarabun New,YDYGO 540,Gulim,MingLiU;
@@ -300,9 +300,14 @@ Label {
 	width: 100%;
 	padding: 0 2px 0 2px;
 	color: #9bacbe;
-	text-align: center;
+	text-align: center bottom;
 	text-shadow: 1px 1px 2px 1.0 #000000ee;
 	margin-bottom:  0px;
+}
+.TenVTen .PlayerLabel Label {
+	height: 20px;
+	vertical-align: bottom;
+	margin-bottom: 0px;
 }
 
 #MainContent {
