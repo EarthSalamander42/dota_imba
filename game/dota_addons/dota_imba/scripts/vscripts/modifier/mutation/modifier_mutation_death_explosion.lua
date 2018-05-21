@@ -30,7 +30,7 @@ function modifier_mutation_death_explosion:OnDeath(keys)
 		ParticleManager:ReleaseParticleIndex(particle_pre_blast_fx)
 
 		local game_time = math.min(GameRules:GetDOTATime(false, false) / 60, 30)
-		self.damage = 600 + (100 * game_time)
+		self.damage = 600 + (125 * game_time)
 		print("Damage dealt:", self.damage)
 
 		Timers:CreateTimer(self.delay, function()

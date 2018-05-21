@@ -125,7 +125,7 @@ if (localTeam != 2 && localTeam != 3 || Game.GetPlayerInfo(Game.GetLocalPlayerID
 
 if (currentMap == "imba_1v1") {
 	Setup1v1();
-} else if (currentMap == 'imba_ranked_10v10' || currentMap == 'imba_frantic_10v10') {
+} else if (currentMap == 'imba_ranked_10v10' || currentMap == 'imba_frantic_10v10' || currentMap == 'imba_mutation_10v10') {
 	SetupTopBar();
 }
 
@@ -483,6 +483,7 @@ function onPlayerStatChange(table, key, data) {
 //			if (currentMap === 'imba_ranked_5v5' || currentMap === 'imba_ranked_10v10') {
 				ReturnChatWindow();
 //			}
+
 			HideStrategy();
 		}
 	}

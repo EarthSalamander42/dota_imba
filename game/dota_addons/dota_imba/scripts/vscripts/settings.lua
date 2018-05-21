@@ -217,11 +217,7 @@ if GetMapName() == "imba_1v1" then
 	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_BADGUYS]  = 1
 	IMBA_1V1_SCORE = 3
 	PRE_GAME_TIME = 30.0 + AP_GAME_TIME
-elseif GetMapName() == "imba_frantic_10v10" then
-	IMBA_PLAYERS_ON_GAME = 20
-	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_GOODGUYS] = 10
-	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_BADGUYS]  = 10
-elseif GetMapName() == "imba_ranked_10v10" then
+elseif GetMapName() == "imba_ranked_10v10" or GetMapName() == "imba_frantic_10v10"  or GetMapName() == "imba_mutation_10v10" then
 	IMBA_PLAYERS_ON_GAME = 20
 	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_GOODGUYS] = 10
 	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_BADGUYS]  = 10

@@ -956,13 +956,17 @@ function modifier_imba_pudge_flesh_heap_handler:OnCreated()
 	if self:GetCaster():IsIllusion() then self:Destroy() return end
 
 	if IsServer() then
-		if self:GetCaster().pudge_arcana == nil then self:Destroy() return end
-		self:SetStackCount(self:GetCaster().pudge_arcana + 1)
+		if self:GetCaster().pudge_arcana == nil then
+			self:SetStackCount(0)
+		else
+			self:SetStackCount(self:GetCaster().pudge_arcana + 1)
+		end
 	end
 
 	if IsClient() then
-		if self:GetStackCount() == 0 then self:Destroy() return end
-		self:GetCaster().flesh_heap_icon = self:GetStackCount() - 1
+		if self:GetStackCount() ~= 0 then
+			self:GetCaster().flesh_heap_icon = self:GetStackCount() - 1
+		end
 	end
 end
 

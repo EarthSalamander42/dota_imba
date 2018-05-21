@@ -23,7 +23,7 @@ end
 
 function modifier_mutation_kill_streak_power:OnCreated()
 	self.damage_increase = 20 -- %
-	self.maximum_size = 100
+	self.maximum_size = 75
 
 	if IsServer() then
 		self.particle = ParticleManager:CreateParticle("particles/hw_fx/candy_carrying_stack.vpcf", PATTACH_OVERHEAD_FOLLOW, self:GetParent())

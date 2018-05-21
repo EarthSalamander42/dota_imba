@@ -1877,10 +1877,6 @@ function GameMode:OnThink()
 					hero:RemoveModifierByName(modifier)
 				end
 			end
-		elseif hero:GetUnitName() == "npc_dota_hero_pudge" then
-			if not hero:HasModifier("modifier_imba_pudge_flesh_heap_handle") then
-				hero:AddNewModifier(hero, nil, "modifier_imba_pudge_flesh_heap_handle", {})
-			end
 		elseif hero:GetUnitName() == "npc_dota_hero_witch_doctor" then
 			if hero:HasTalent("special_bonus_imba_witch_doctor_6") then
 				if not hero:HasModifier("modifier_imba_voodoo_restoration") then

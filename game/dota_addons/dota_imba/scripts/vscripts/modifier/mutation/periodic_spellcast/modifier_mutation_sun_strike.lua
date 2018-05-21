@@ -9,7 +9,7 @@ function modifier_mutation_sun_strike:OnCreated()
 	self.delay = 1.7
 	self.radius = 175
 	local game_time = math.min(GameRules:GetDOTATime(false, false) / 60, 30)
-	self.damage = 800 + (100 * game_time)
+	self.damage = 800 + (200 * game_time)
 	self.pos = self:GetParent():GetAbsOrigin()
 
 	EmitSoundOn("Hero_Invoker.SunStrike.Charge", self:GetParent())
