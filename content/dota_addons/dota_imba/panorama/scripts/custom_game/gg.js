@@ -84,7 +84,7 @@ function GGInitCountDown() {
 function GGCalled(event) {
 	$.Msg("GG Called...")
 
-	GenerateGGTopBar(event.ID, event.team, event.gg_table[Game.GetLocalPlayerID()]["1"], event.gg_table[Game.GetLocalPlayerID()]["2"]);
+	GenerateGGTopBar(event.ID, event.team, event.gg_table[event.ID]["1"], event.gg_table[event.ID]["2"]);
 }
 
 function CancelGG() {
