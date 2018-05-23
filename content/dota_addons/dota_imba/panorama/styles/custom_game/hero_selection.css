@@ -42,26 +42,29 @@
 }
 
 #ChatPlaceholder {
-	width: 600px;
+	width: 500px;
 	height: 400px;
 	vertical-align: bottom;
-	horizontal-align: left;
+	horizontal-align: right;
 	margin-bottom: 20px;
 }
 
 #MinimapPlaceHolder {
-	width: 400px;
-	height: 400px;
+	width: 300px;
+	height: 300px;
 	vertical-align: bottom;
-	horizontal-align: right;
+	horizontal-align: left;
 	margin-right: 80px;
-	margin-bottom: 20px;
+	margin-bottom: 30px;
+	margin-left: 35px;
 	background-color: #000000ea;
+	border:	1px solid #0f2425aa;
+	border-radius: 	5px;
 }
 
 .AspectRatio16x10 #MinimapPlaceHolder {
-	width: 350px;
-	height: 350px;
+	width: 300px;
+	height: 300px;
 }
 
 .AspectRatio4x3 #MinimapPlaceHolder {
@@ -74,7 +77,7 @@
 	background-size: contain;
 	overflow: clip;
 	align: left center;
-	border-radius: 5px;
+	/* border-radius: 5px; */
 }
 
 /*
@@ -331,7 +334,7 @@ Label {
 }
 
 .MiddleColumn {
-	padding: 0 20px;
+	padding: 0 50px;
 	width: 100%;
 	height: 100%;
 	flow-children: down;
@@ -370,13 +373,28 @@ DOTAMinimap {
 	width: 33.3%;
 }
 
+.HeroInnerWrapper {
+	width: 475px;
+	horizontal-align: center;
+	flow-children: down;
+}
 .AttrHolder {
 	/*width: 100%;*/
-	flow-children: right;
+	flow-children: down;
+	width:  465px;
+	margin-bottom: 22px;
+}
+.AttrHolder .Border {
+	width:  100%;
+	border-bottom: 1px solid #ffffff30;
+}
+.AttrHolder Label {
+	font-size:  21px;
+	letter-spacing: 3px;
 }
 
 #HeroPanel {
-	margin-left: 15px;
+	margin-top: 30px;
 	width: 100%;
 	flow-children: right;
 }
@@ -569,6 +587,36 @@ DOTAMinimap {
 }
 
 #StrHolder {
+	background-color: #ec3d06;
+	align: left bottom;
+	height: 3px;
+	width:  50px;
+	margin-top: 12px;
+	margin-bottom: -1px;
+	z-index: 2;
+}
+
+#AgiHolder {
+	background-color: #26e030;
+	align: left bottom;
+	height: 3px;
+	width:  50px;
+	margin-top: 12px;
+	margin-bottom: -1px;
+	z-index: 2;
+}
+
+#IntHolder {
+	background-color: #00d9ec;
+	align: left bottom;
+	height: 3px;
+	width:  50px;
+	margin-top: 12px;
+	margin-bottom: -1px;
+	z-index: 2;
+}
+
+/* #StrHolder {
 	background-image: url("s2r://panorama/images/primary_attribute_icons/primary_attribute_icon_strength_psd.vtex");
 	background-repeat: no-repeat;
 	background-size: contain;
@@ -594,7 +642,7 @@ DOTAMinimap {
 	width: height-percentage( 100% );
 	margin-right: 10px;
 }
-
+ */
 .HeroHolder {
 	margin: 0 0 10px 0;
 	width: 100%;
@@ -602,18 +650,21 @@ DOTAMinimap {
 }
 
 RadioButton {
-	margin: 3px;
-	width: 80px;
-	height: 45px;
-	box-shadow: #000000ff -2px -2px 4px 4px;
+	margin: 0 10px 10px 0;
+	width: 85px;
+	height: 50px;
+	box-shadow: #000000ba -2px -2px 2px 2px;
+	border: 1px solid #6f7074;
+	border-radius: 3px;
 }
 
 RadioButton:hover {
-	box-shadow: #999999ff -2px -2px 4px 4px;
+	border-color: #fff;
 }
 
 RadioButton:selected {
-	box-shadow: #ffffffff -2px -2px 4px 4px;
+	border-color: #aedbe6;
+	box-shadow: #26c8f0a0 0 0 5px 0;
 }
 
 RadioButton.Disabled {
@@ -629,37 +680,37 @@ RadioButton.Disabled:selected {
 }
 
 .HeroCard {
-	height: 100%;
-	width: 100%;
+	/* height: 100%; */
+	/* width: 100%; */
 	border: 1px solid grey;
-	box-shadow: fill grey -1px -1px 2px 2px;
+	/* box-shadow: fill grey -1px -1px 2px 2px; */
 }
 
 .ImbaCard {
-	height: 100%;
-	width: 100%;
+	/* height: 100%; */
+	/* width: 100%; */
 	border: 1px solid darkorange;
-	box-shadow: fill darkorange -1px -1px 2px 2px;
+	box-shadow: inset #663700 0 0 4px 0;
 }
 
 .NewCard {
-	height: 100%;
-	width: 100%;
+	/* height: 100%; */
+	/* width: 100%; */
 	border: 1px solid skyblue;
-	box-shadow: fill skyblue -1px -1px 2px 2px;
+	/* box-shadow: fill skyblue -1px -1px 2px 2px; */
 }
 
 .CustomCard {
-	height: 100%;
-	width: 100%;
+	/* height: 100%; */
+	/* width: 100%; */
 	border: 1px solid purple;
-	box-shadow: fill purple -1px -1px 2px 2px;
+	/* box-shadow: fill purple -1px -1px 2px 2px; */
 }
 
 #HeroSelector {
 	width: 45%;
 	height: fill-parent-flow(1.0);
-	flow-children: right;
+	flow-children: down;
 	horizontal-align: middle;
 }
 
@@ -701,7 +752,7 @@ RadioButton.Disabled:selected {
 
 #AbilitiesPreview {
 	width: 80%;
-	height: 12%;
+	height: 50%;
 	margin-top: 50px;
 	align: center top;
 	flow-children: right;
@@ -720,19 +771,19 @@ RadioButton.Disabled:selected {
 }
 
 .PickedHeroAbility {
-	margin-left: 1px;
-	margin-right: 1px;
+	margin-left: 8px;
+	margin-right: 8px;
 	border-radius: 0px;
 	vertical-align: middle;
 	visibility: collapse;
 }
 
 #AghanimPreview {
-	height: 65px;
+	height: 50%;
 	background-image: url("s2r://panorama/images/spellicons/aghsicon_psd.vtex");
 	background-repeat: no-repeat;
-	background-position: center;
-	background-size: 100% 85%;
+	background-position: left center;
+	background-size: contain;
 	visibility: collapse;
 }
 
@@ -914,47 +965,42 @@ DOTAScenePanel {
 
 #HeroPreviewContainer {
 	width: fill-parent-flow(1.0);
-	height: fill-parent-flow(1.0);
+	height: fill-parent-flow(2.0);
 }
 #HeroPickContainer {
-	width: 210px;
-	height: fill-parent-flow(1.0);
-	flow-children: down;
-	margin: 12px;
+	/* height: fill-parent-flow(1.0); */
+	flow-children: right;
 	vertical-align: bottom;
 	horizontal-align: middle;
 }
 
 .HeroPickerButton {
-	height: 60px;
-	width: fill-parent-flow(1.0);
-	background-position: 20px center;
-	background-repeat: no-repeat;
-	background-size: auto 32px;
-
-	background-color: gradient( linear, 0% 0%, 0% 100%, from( #404D65dd ), to( #2B3445dd ) );
-	box-shadow: #0000008f -6px -6px 12px 12px;
+	height: 70px;
+	width: 210px;
+	min-width: 215px;
+	text-align: center center;
+	box-shadow: #00000040 -3px -3px 6px 6px;
 	transition-property: brightness;
 	transition-duration: 0.2s;
-	margin-bottom: 20px;
-	padding-left: 70px;
+	margin-right: 20px;
 }
 .HeroPickerButton Label {
 	margin-top: 5px;
-	vertical-align: center;
+	align:  center center;
 	text-transform: uppercase;
-	font-size: 16px;
+	font-size: 20px;
+	letter-spacing: 1px;
 }
 
 .HeroPickerButton:hover {
-	brightness: 2.0;
-	box-shadow: #999999ff -2px -2px 4px 4px;
+	brightness: 1.4;
 }
 
 #HeroLockIn {
 	visibility: collapse;
-	background-image: url("s2r://panorama/images/control_icons/lock_medium_png.vtex");
-	background-color: gradient( linear, 0% 0%, 0% 100%, from( #066319 ), to( #103F19 ) );
+	width:  340px;
+	background-color: gradient( radial, 50% 50%, 0% 0%,60% 60%, from( #1f754d ),  to( #17583a ) );
+	border-top: 1px solid #1b6542cc;			  
 }
 
 #HeroLockIn.Activated {
@@ -982,7 +1028,6 @@ DOTAScenePanel {
 }
 
 #HeroRandom {
-	background-image: url("s2r://panorama/images/control_icons/random_dice_psd.vtex");
 	background-color: gradient( linear, 0% 0%, 0% 100%, from( #651e06 ), to( #3c1b10 ) );
 }
 
@@ -992,7 +1037,6 @@ DOTAScenePanel {
 
 #HeroImbaRandom {
 	background-position: 0px center;
-	background-image: url("s2r://panorama/images/custom_game/imba_random.png");
 	background-color: gradient( linear, 0% 0%, 0% 100%, from( #650606 ), to( #3d1010 ) );
 }
 
