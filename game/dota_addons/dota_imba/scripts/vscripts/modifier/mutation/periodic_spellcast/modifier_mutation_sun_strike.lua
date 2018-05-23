@@ -9,7 +9,7 @@ function modifier_mutation_sun_strike:OnCreated()
 	self.delay = 1.7
 	self.radius = 175
 	local game_time = math.min(GameRules:GetDOTATime(false, false) / 60, 30)
-	self.damage = 800 + (200 * game_time)
+	self.damage = 1000 + (250 * game_time)
 	self.pos = self:GetParent():GetAbsOrigin()
 
 	EmitSoundOn("Hero_Invoker.SunStrike.Charge", self:GetParent())
@@ -20,7 +20,7 @@ function modifier_mutation_sun_strike:OnCreated()
 	ParticleManager:ReleaseParticleIndex(particle)
 
 	Timers:CreateTimer(self.delay, function()
-		EmitSoundOn("Hero_Invoker.SunStrike.Ignite", self:GetParent())
+		EmitSoundOnLocationWithCaster(self.pos, "Hero_Invoker.SunStrike.Ignite", self:GetParent())
 
 		local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_invoker/invoker_sun_strike.vpcf", PATTACH_WORLDORIGIN, self:GetParent())
 		ParticleManager:SetParticleControl(particle, 0, self.pos)
@@ -34,11 +34,12 @@ function modifier_mutation_sun_strike:OnCreated()
 			-- Deal damage
 			local damageTable = {
 				victim = enemy,
-				damage = self.damage,
+				damage = self.damage / #enemies,
 				damage_type = DAMAGE_TYPE_MAGICAL,
 				attacker = self:GetCaster(),
 			}
 
+			SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, enemy, self.damage / #enemies, nil)
 			ApplyDamage(damageTable)
 		end
 	end)

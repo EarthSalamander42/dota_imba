@@ -497,8 +497,8 @@ function GameMode:ModifierFilter( keys )
 			if modifier_owner:FindAbilityByName("tusk_snowball") then
 				modifier_owner:FindAbilityByName("tusk_snowball"):SetActivated(false)
 				Timers:CreateTimer(15.0, function()
-					if not hero:FindModifierByName("modifier_tusk_snowball_movement") then
-						hero:FindAbilityByName("tusk_snowball"):SetActivated(true)
+					if not modifier_owner:FindModifierByName("modifier_tusk_snowball_movement") then
+						modifier_owner:FindAbilityByName("tusk_snowball"):SetActivated(true)
 					end
 				end)
 			end

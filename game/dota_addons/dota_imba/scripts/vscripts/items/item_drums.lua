@@ -92,18 +92,15 @@ modifier_imba_drums_active = class({})
 
 function modifier_imba_drums_active:OnCreated()
 	-- Ability properties
-	self.caster = self:GetCaster()
-	self.ability = self:GetAbility()
-	self.parent = self:GetParent()
 	self.particle_buff = "particles/items_fx/drum_of_endurance_buff.vpcf"
 
 	-- Ability specials
-	self.active_as_per_ally = self.ability:GetSpecialValueFor("active_as_per_ally")
-	self.active_ms_per_ally = self.ability:GetSpecialValueFor("active_ms_per_ally")
+	self.active_as_per_ally = self:GetAbility():GetSpecialValueFor("active_as_per_ally")
+	self.active_ms_per_ally = self:GetAbility():GetSpecialValueFor("active_ms_per_ally")
 
 	-- Apply particle effects
-	local particle_buff_fx = ParticleManager:CreateParticle(self.particle_buff, PATTACH_ABSORIGIN_FOLLOW, self.parent)
-	ParticleManager:SetParticleControl(particle_buff_fx, 0, self.parent:GetAbsOrigin())
+	local particle_buff_fx = ParticleManager:CreateParticle(self.particle_buff, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+	ParticleManager:SetParticleControl(particle_buff_fx, 0, self:GetParent():GetAbsOrigin())
 	ParticleManager:SetParticleControl(particle_buff_fx, 1, Vector(0,0,0))
 	self:AddParticle(particle_buff_fx, false, false, -1, false, false)
 end
@@ -128,23 +125,17 @@ end
 modifier_imba_drums = class({})
 
 function modifier_imba_drums:OnCreated()
-	-- Ability properties
-	self.caster = self:GetCaster()
-	self.ability = self:GetAbility()
-	self.modifier_self = "modifier_imba_drums"
-	self.modifier_aura = "modifier_imba_drums_aura"
-
 	-- Ability specials
-	self.bonus_int = self.ability:GetSpecialValueFor("bonus_int")
-	self.bonus_str = self.ability:GetSpecialValueFor("bonus_str")
-	self.bonus_agi = self.ability:GetSpecialValueFor("bonus_agi")
-	self.bonus_damage = self.ability:GetSpecialValueFor("bonus_damage")
-	self.bonus_mana_regen = self.ability:GetSpecialValueFor("bonus_mana_regen")
+	self.bonus_int = self:GetAbility():GetSpecialValueFor("bonus_int")
+	self.bonus_str = self:GetAbility():GetSpecialValueFor("bonus_str")
+	self.bonus_agi = self:GetAbility():GetSpecialValueFor("bonus_agi")
+	self.bonus_damage = self:GetAbility():GetSpecialValueFor("bonus_damage")
+	self.bonus_mana_regen = self:GetAbility():GetSpecialValueFor("bonus_mana_regen")
 
 	if IsServer() then
 		-- If it is the first drums in inventory, add the aura modifier
-		if not self.caster:HasModifier(self.modifier_aura) then
-			self.caster:AddNewModifier(self.caster, self.ability, self.modifier_aura, {})
+		if not self:GetCaster():HasModifier("modifier_imba_drums_aura") then
+			self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_drums_aura", {})
 		end
 	end
 end
@@ -187,25 +178,19 @@ end
 function modifier_imba_drums:OnDestroy()
 	if IsServer() then
 		-- If it is the last drums in inventory, remove the aura modifier
-		if not self.caster:HasModifier(self.modifier_self) then
-			self.caster:RemoveModifierByName(self.modifier_aura)
+		if not self:GetCaster():HasModifier("modifier_imba_drums") then
+			self:GetCaster():RemoveModifierByName("modifier_imba_drums_aura")
 		end
 	end
 end
-
 
 
 -- Drums aura modifier
 modifier_imba_drums_aura = class({})
 
 function modifier_imba_drums_aura:OnCreated()
-	-- Ability properties
-	self.caster = self:GetCaster()
-	self.ability = self:GetAbility()
-	self.modifier_drum = "modifier_imba_drums_aura_effect"
-
 	-- Ability specials
-	self.radius = self.ability:GetSpecialValueFor("radius")
+	self.radius = self:GetAbility():GetSpecialValueFor("radius")
 end
 
 function modifier_imba_drums_aura:IsDebuff() return false end
@@ -230,7 +215,7 @@ function modifier_imba_drums_aura:GetAuraSearchType()
 end
 
 function modifier_imba_drums_aura:GetModifierAura()
-	return self.modifier_drum
+	return "modifier_imba_drums_aura_effect"
 end
 
 function modifier_imba_drums_aura:IsAura()
@@ -253,13 +238,9 @@ end
 modifier_imba_drums_aura_effect = class({})
 
 function modifier_imba_drums_aura_effect:OnCreated()
-	-- Ability properties
-	self.caster = self:GetCaster()
-	self.ability = self:GetAbility()
-
 	-- Ability specials
-	self.aura_ms = self.ability:GetSpecialValueFor("aura_ms")
-	self.aura_as = self.ability:GetSpecialValueFor("aura_as")
+	self.aura_ms = self:GetAbility():GetSpecialValueFor("aura_ms")
+	self.aura_as = self:GetAbility():GetSpecialValueFor("aura_as")
 end
 
 function modifier_imba_drums_aura_effect:IsHidden() return false end

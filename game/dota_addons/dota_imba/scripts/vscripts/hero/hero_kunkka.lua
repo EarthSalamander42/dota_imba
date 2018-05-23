@@ -378,128 +378,127 @@ function imba_kunkka_torrent:OnSpellStart()
 			local delay = first_delay + (torrent_count * 2)
 			-- Start after the delay
 			Timers:CreateTimer(delay, function()
+				-- Parameters for secoundary Torrents
+				if torrent_count > 0 then
+					damage_tick = sec_torrent_damage / tick_count
+					stun_duration = sec_torrent_stun
+					torrent_height = torrent_height / 1.5
+					radius = self:GetSpecialValueFor("sec_torrent_radius")
+				end
 
-					-- Parameters for secoundary Torrents
-					if torrent_count > 0 then
-						damage_tick = sec_torrent_damage / tick_count
-						stun_duration = sec_torrent_stun
-						torrent_height = torrent_height / 1.5
-						radius = self:GetSpecialValueFor("sec_torrent_radius")
+				-- Destroy initial bubble-particle & create secoundary visible for both teams
+				if torrent_count == 0 then
+					ParticleManager:DestroyParticle(bubbles_pfx, false)
+					ParticleManager:ReleaseParticleIndex(bubbles_pfx)
+					bubbles_sec_pfc = ParticleManager:CreateParticleForTeam("particles/hero/kunkka/torrent_bubbles.vpcf", PATTACH_ABSORIGIN, caster, caster:GetTeam())
+					ParticleManager:SetParticleControl(bubbles_sec_pfc, 0, target)
+					ParticleManager:SetParticleControl(bubbles_sec_pfc, 1, Vector(radius,0,0))
+				end
+
+				-- Destroy bubbles if it was the last torrent
+				if torrent_count == sec_torrent_count then
+					ParticleManager:DestroyParticle(bubbles_sec_pfc, false)
+					ParticleManager:ReleaseParticleIndex(bubbles_sec_pfc)
+				end
+
+				-- Finds affected enemies
+				local enemies = FindUnitsInRadius(caster:GetTeam(), target, nil, radius, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), 0, false)
+
+				-- Torrent response if an enemy was hit 30%
+				if (#enemies > 0) and (caster:GetName() == "npc_dota_hero_kunkka") then
+					if math.random(1,10) < 3 then
+						caster:EmitSound("kunkka_kunk_ability_torrent_0"..math.random(1,4))
+					end
+				end
+				-- Iterate through affected enemies
+				for _,enemy in pairs(enemies) do
+
+					-- Deals the initial damage
+					ApplyDamage({victim = enemy, attacker = caster, ability = self, damage = damage_tick, damage_type = self:GetAbilityDamageType()})
+					local current_ticks = 0
+					local randomness_x = 0
+					local randomness_y = 0
+
+					-- Calculates the knockback position (for Tsunami)
+					local torrent_border = ( enemy:GetAbsOrigin() - target ):Normalized() * ( radius + 100 )
+					local distance_from_center = ( enemy:GetAbsOrigin() - target ):Length2D()
+					if not ( tsunami and torrent_count == 0 ) then
+						distance_from_center = 0
+					else
+						-- Some randomness to tsunami-torrent for smoother animation
+						randomness_x = math.random() * math.random(-30,30)
+						randomness_y = math.random() * math.random(-30,30)
 					end
 
-					-- Destroy initial bubble-particle & create secoundary visible for both teams
+					-- Knocks the target up
+					local knockback =
+						{
+							should_stun = 1,
+							knockback_duration = stun_duration,
+							duration = stun_duration,
+							knockback_distance = distance_from_center,
+							knockback_height = torrent_height,
+							center_x = (target + torrent_border).x + randomness_x,
+							center_y = (target + torrent_border).y + randomness_y,
+							center_z = (target + torrent_border).z
+						}
+
+					-- Apply knockback on enemies hit
+					enemy:RemoveModifierByName("modifier_knockback")
+					enemy:AddNewModifier(caster, self, "modifier_knockback", knockback)
+					enemy:AddNewModifier(caster, self, "modifier_imba_torrent_phase", {duration = stun_duration})
+
+					-- Deals tick damage tick_count times
+					Timers:CreateTimer(function()
+						if current_ticks < tick_count then
+							ApplyDamage({victim = enemy, attacker = caster, ability = self, damage = damage_tick, damage_type = self:GetAbilityDamageType()})
+							current_ticks = current_ticks + 1
+							return tick_interval
+						end
+					end)
+
+					-- Applies the slow
 					if torrent_count == 0 then
-						ParticleManager:DestroyParticle(bubbles_pfx, false)
-						ParticleManager:ReleaseParticleIndex(bubbles_pfx)
-						bubbles_sec_pfc = ParticleManager:CreateParticleForTeam("particles/hero/kunkka/torrent_bubbles.vpcf", PATTACH_ABSORIGIN, caster, caster:GetTeam())
-						ParticleManager:SetParticleControl(bubbles_sec_pfc, 0, target)
-						ParticleManager:SetParticleControl(bubbles_sec_pfc, 1, Vector(radius,0,0))
-					end
-
-					-- Destroy bubbles if it was the last torrent
-					if torrent_count == sec_torrent_count then
-						ParticleManager:DestroyParticle(bubbles_sec_pfc, false)
-						ParticleManager:ReleaseParticleIndex(bubbles_sec_pfc)
-					end
-
-					-- Finds affected enemies
-					local enemies = FindUnitsInRadius(caster:GetTeam(), target, nil, radius, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), 0, false)
-
-					-- Torrent response if an enemy was hit 30%
-					if (#enemies > 0) and (caster:GetName() == "npc_dota_hero_kunkka") then
-						if math.random(1,10) < 3 then
-							caster:EmitSound("kunkka_kunk_ability_torrent_0"..math.random(1,4))
+						enemy:AddNewModifier(caster, self, "modifier_imba_torrent_slow", {duration = slow_duration})
+						if extra_slow then
+							enemy:AddNewModifier(caster, self, "modifier_imba_torrent_slow_tide", {duration = slow_duration})
 						end
+					else
+						enemy:AddNewModifier(caster, self, "modifier_imba_sec_torrent_slow", {duration = sec_torrent_slow_duration})
 					end
-					-- Iterate through affected enemies
-					for _,enemy in pairs(enemies) do
+				end
 
-						-- Deals the initial damage
-						ApplyDamage({victim = enemy, attacker = caster, ability = self, damage = damage_tick, damage_type = self:GetAbilityDamageType()})
-						local current_ticks = 0
-						local randomness_x = 0
-						local randomness_y = 0
+				-- Creates the post-ability sound effect
+				EmitSoundOnLocationWithCaster(target, "Ability.Torrent", caster)
 
-						-- Calculates the knockback position (for Tsunami)
-						local torrent_border = ( enemy:GetAbsOrigin() - target ):Normalized() * ( radius + 100 )
-						local distance_from_center = ( enemy:GetAbsOrigin() - target ):Length2D()
-						if not ( tsunami and torrent_count == 0 ) then
-							distance_from_center = 0
-						else
-							-- Some randomness to tsunami-torrent for smoother animation
-							randomness_x = math.random() * math.random(-30,30)
-							randomness_y = math.random() * math.random(-30,30)
-						end
+				-- Draws the particle
+				local particle = "particles/hero/kunkka/torrent_splash.vpcf"
+				local torrent_fx = ParticleManager:CreateParticle(particle, PATTACH_CUSTOMORIGIN, caster)
+				ParticleManager:SetParticleControl(torrent_fx, 0, target)
+				ParticleManager:SetParticleControl(torrent_fx, 1, Vector(radius,0,0))
+				ParticleManager:ReleaseParticleIndex(torrent_fx)
 
-						-- Knocks the target up
-						local knockback =
-							{
-								should_stun = 1,
-								knockback_duration = stun_duration,
-								duration = stun_duration,
-								knockback_distance = distance_from_center,
-								knockback_height = torrent_height,
-								center_x = (target + torrent_border).x + randomness_x,
-								center_y = (target + torrent_border).y + randomness_y,
-								center_z = (target + torrent_border).z
-							}
+				-- SUPER DUPER HYPER torrent animation if tsunami
+				if torrent_count == 0 and tsunami then
+					local torrent_tsunami_fx = ParticleManager:CreateParticle("particles/econ/items/kunkka/kunkka_weapon_whaleblade/kunkka_spell_torrent_whaleblade_tail.vpcf", PATTACH_CUSTOMORIGIN, caster)
+					ParticleManager:SetParticleControl(torrent_tsunami_fx, 0, target)
+					ParticleManager:ReleaseParticleIndex(torrent_tsunami_fx)
 
-						-- Apply knockback on enemies hit
-						enemy:RemoveModifierByName("modifier_knockback")
-						enemy:AddNewModifier(caster, self, "modifier_knockback", knockback)
-						enemy:AddNewModifier(caster, self, "modifier_imba_torrent_phase", {duration = stun_duration})
-
-						-- Deals tick damage tick_count times
-						Timers:CreateTimer(function()
-							if current_ticks < tick_count then
-								ApplyDamage({victim = enemy, attacker = caster, ability = self, damage = damage_tick, damage_type = self:GetAbilityDamageType()})
-								current_ticks = current_ticks + 1
-								return tick_interval
-							end
+					local count_mini = math.floor(radius / 35)
+					for i = 0, count_mini, 1
+					do
+						Timers:CreateTimer(math.random(80)*0.01, function()
+							local radius_mini = math.random(50)+15
+							local angle = (360 / count_mini) * i
+							local border = radius - radius_mini
+							local mini_target = target + Vector( math.cos(angle) * border , math.sin(angle) * border , 0 )
+							local torrent_fx_mini = ParticleManager:CreateParticle(particle, PATTACH_CUSTOMORIGIN, caster)
+							ParticleManager:SetParticleControl(torrent_fx_mini, 0, mini_target)
+							ParticleManager:SetParticleControl(torrent_fx_mini, 1, Vector(radius_mini,0,0))
+							ParticleManager:ReleaseParticleIndex(torrent_fx_mini)
 						end)
-
-						-- Applies the slow
-						if torrent_count == 0 then
-							enemy:AddNewModifier(caster, self, "modifier_imba_torrent_slow", {duration = slow_duration})
-							if extra_slow then
-								enemy:AddNewModifier(caster, self, "modifier_imba_torrent_slow_tide", {duration = slow_duration})
-							end
-						else
-							enemy:AddNewModifier(caster, self, "modifier_imba_sec_torrent_slow", {duration = sec_torrent_slow_duration})
-						end
 					end
-
-					-- Creates the post-ability sound effect
-					EmitSoundOnLocationWithCaster(target, "Ability.Torrent", caster)
-
-					-- Draws the particle
-					local particle = "particles/hero/kunkka/torrent_splash.vpcf"
-					local torrent_fx = ParticleManager:CreateParticle(particle, PATTACH_CUSTOMORIGIN, caster)
-					ParticleManager:SetParticleControl(torrent_fx, 0, target)
-					ParticleManager:SetParticleControl(torrent_fx, 1, Vector(radius,0,0))
-					ParticleManager:ReleaseParticleIndex(torrent_fx)
-
-					-- SUPER DUPER HYPER torrent animation if tsunami
-					if torrent_count == 0 and tsunami then
-						local torrent_tsunami_fx = ParticleManager:CreateParticle("particles/econ/items/kunkka/kunkka_weapon_whaleblade/kunkka_spell_torrent_whaleblade_tail.vpcf", PATTACH_CUSTOMORIGIN, caster)
-						ParticleManager:SetParticleControl(torrent_tsunami_fx, 0, target)
-						ParticleManager:ReleaseParticleIndex(torrent_tsunami_fx)
-
-						local count_mini = math.floor(radius / 35)
-						for i = 0, count_mini, 1
-						do
-							Timers:CreateTimer(math.random(80)*0.01, function()
-								local radius_mini = math.random(50)+15
-								local angle = (360 / count_mini) * i
-								local border = radius - radius_mini
-								local mini_target = target + Vector( math.cos(angle) * border , math.sin(angle) * border , 0 )
-								local torrent_fx_mini = ParticleManager:CreateParticle(particle, PATTACH_CUSTOMORIGIN, caster)
-								ParticleManager:SetParticleControl(torrent_fx_mini, 0, mini_target)
-								ParticleManager:SetParticleControl(torrent_fx_mini, 1, Vector(radius_mini,0,0))
-								ParticleManager:ReleaseParticleIndex(torrent_fx_mini)
-							end)
-						end
-					end
+				end
 			end)
 		end
 	end

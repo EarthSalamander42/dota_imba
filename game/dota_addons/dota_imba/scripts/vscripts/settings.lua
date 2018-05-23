@@ -307,8 +307,8 @@ IMBA_ALL_RANDOM_HERO_SELECTION_TIME = 5.0									-- Time we need to wait before
 
 -- Global Gold earning, values are doubled with Hyper for non-custom maps
 CUSTOM_GOLD_BONUS = {} -- 1 = Normal, 2 = Hyper
-CUSTOM_GOLD_BONUS["imba_1v1"] = 100
-CUSTOM_GOLD_BONUS["imba_overthrow"] = 100
+CUSTOM_GOLD_BONUS["imba_1v1"] = 300
+CUSTOM_GOLD_BONUS["imba_overthrow"] = 300
 CUSTOM_GOLD_BONUS["imba_ranked_5v5"] = 300
 CUSTOM_GOLD_BONUS["imba_ranked_10v10"] = 300
 CUSTOM_GOLD_BONUS["imba_tournament"] = 300
@@ -319,8 +319,8 @@ CUSTOM_GOLD_BONUS["imba_frantic_10v10"] = 300
 
 -- Global XP earning, values are doubled with Hyper for non-custom maps (right now this is not used anymore, but i'll keep it there just in case)
 CUSTOM_XP_BONUS = {} -- 1 = Normal, 2 = Hyper
-CUSTOM_XP_BONUS["imba_1v1"] = 100
-CUSTOM_XP_BONUS["imba_overthrow"] = 100
+CUSTOM_XP_BONUS["imba_1v1"] = 225
+CUSTOM_XP_BONUS["imba_overthrow"] = 225
 CUSTOM_XP_BONUS["imba_ranked_5v5"] = 225
 CUSTOM_XP_BONUS["imba_ranked_10v10"] = 225
 CUSTOM_XP_BONUS["imba_tournament"] = 225
@@ -597,6 +597,7 @@ IMBA_DONATOR_COMPANION["76561198014254115"] = "npc_imba_donator_companion_admira
 IMBA_DONATOR_COMPANION["76561198021465788"] = "npc_imba_donator_companion_suthernfriend"
 IMBA_DONATOR_COMPANION["76561198073163389"] = "npc_imba_donator_companion_terdic"
 IMBA_DONATOR_COMPANION["76561197970766309"] = "npc_imba_donator_companion_hamahe"
+IMBA_DONATOR_COMPANION["76561193687456266"] = "npc_imba_donator_companion_exzas"
 
 IMBA_DONATOR_STATUE = {}
 IMBA_DONATOR_STATUE["76561198015161808"] = "npc_imba_donator_statue_cookies"

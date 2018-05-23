@@ -82,7 +82,7 @@ function GameMode:OnPlayerChat(keys)
 	end
 
 	for str in string.gmatch(text, "%S+") do
-		if IsInToolsMode() or api.imba.is_developer(steamid) then
+		if IsInToolsMode() or GameRules:IsCheatMode() or api.imba.is_developer(steamid) then
 			if str == "-dev_remove_units" then
 				GameMode:RemoveUnits(true, true, true)
 			end

@@ -7,9 +7,8 @@ function modifier_mutation_thundergods_wrath:IsPurgable() return false end
 function modifier_mutation_thundergods_wrath:OnCreated()
 	if IsClient() then return end
 	self.delay = 1.7
-	self.radius = 175
 	local game_time = math.min(GameRules:GetDOTATime(false, false) / 60, 30)
-	self.damage = 300 + (50 * game_time)
+	self.damage = 400 + (100 * game_time)
 
 	EmitSoundOn("Hero_Zuus.GodsWrath", self:GetParent())
 
@@ -24,5 +23,6 @@ function modifier_mutation_thundergods_wrath:OnCreated()
 		attacker = self:GetCaster(),
 	}
 
+	SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, self:GetParent(), self.damage, nil)
 	ApplyDamage(damageTable)
 end

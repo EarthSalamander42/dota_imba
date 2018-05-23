@@ -158,7 +158,7 @@
 "npc_dota_hero_ursa"                                        "Ursa (IMBA)"
 "npc_dota_hero_viper"                                      "Viper"
 "npc_dota_hero_vengefulspirit"                              "Vengeful Spirit (IMBA)"
-"npc_dota_hero_venomancer"                                  "Venomancer (IMBA)"
+"npc_dota_hero_venomancer"                                  "Venomancer"
 "npc_dota_hero_visage"                                      "Visage"
 "npc_dota_hero_warlock"                                    "Warlock (IMBA)"
 "npc_dota_hero_weaver"                                      "Weaver"
@@ -180,11 +180,6 @@
 "npc_dummy_unit"                                "Dummy Unit"
 "npc_dummy_blank"                              "Dummy Blank"
 
-//Lone Druid
-"npc_dota_lone_druid_bear5"                             "Spirit Bear"
-"npc_dota_lone_druid_bear6"                             "Spirit Bear"
-"npc_dota_lone_druid_bear7"                             "Spirit Bear"
-
 //Lycan
 "npc_lycan_wolf1"                              "Wolf Pup"
 "npc_lycan_wolf2"                              "Wolf"
@@ -193,11 +188,6 @@
 "npc_lycan_wolf5"                              "Shadow Wolf"
 "npc_lycan_wolf6"                              "Nightclaw"
 "npc_lycan_summoned_wolf_talent"                            "Alpha Wolf"
-
-//Tusk
-"npc_dota_tusk_frozen_sigil5"                           "Frozen Sigil"
-"npc_dota_tusk_frozen_sigil6"                           "Frozen Sigil"
-"npc_dota_tusk_frozen_sigil7"                           "Frozen Sigil"
 
 //=================================================================================================================
 // Courier
@@ -379,30 +369,15 @@
 "DOTA_Tooltip_ability_invoker_invoke_spell_lifesteal"                  "%SPELL LIFESTEAL:"
 "DOTA_Tooltip_ability_invoker_invoke_cooldown_reduction_pct"            "%COOLDOWN REDUCTION:"
 
-"DOTA_Tooltip_ability_huskar_inner_vitality_Description"                "Unlocks the regenerative power of a friendly unit, with healing based upon its primary attribute. If the target is below <font color='#FF7800'>35/35/35/35/40/45/50%%</font>, it will heal faster. Lasts 16 seconds."
-"DOTA_Tooltip_ability_huskar_burning_spear_Description"                "Huskar sets his spears aflame, dealing damage over time with his regular attack.  Multiple attacks will stack additional damage.  Each attack drains some of Huskar's health.  Lasts <font color='#FF7800'>8/8/8/8/9/10/11</font> seconds."
-
-"DOTA_Tooltip_ability_naga_siren_mirror_image_Description"              "Creates <font color='#FF7800'>2/2/2/3/3/3/4</font> images of Naga Siren under her control."
-
-"DOTA_Tooltip_ability_ogre_magi_unrefined_fireblast_Description"                    "Blasts an enemy unit with a wave of fire, dealing damage and stunning the target. Its mana cost is 35%% of Ogre Magi's current mana."
-
-"DOTA_Tooltip_ability_phantom_lancer_doppelwalk_Description"            "Phantom Lancer briefly vanishes from the battlefield. After %delay% seconds, Phantom Lancer and any of his nearby illusions reappear at a random position within the targeted location, along with two additional doppelgangers. The two added doppelgangers have different properties: one takes normal damage and deals none, while the other takes <font color='#FF7800'>600/600/600/600/400/200/100%%</font> damage and deals <font color='#FF7800'>10/30/50/70/80/90/100%%</font> damage.\n\nDISPEL TYPE: Basic Dispel"
-
-"DOTA_Tooltip_ability_shadow_demon_shadow_poison_Description"          "Deals damage in a line, and afflicts enemy units with a poison effect. The poison deals 1/2/4/8/16 times the stack damage based on the number of stacks on the target, up to 5 stacks. Additional stacks cause <font color='#FF7800'>200</font> damage each. This deferred damage is dealt when Shadow Poison's duration is expired, or the Release sub-ability is used."
-
 "DOTA_Tooltip_ability_slark_dark_pact_Description"                      "After a short delay, Slark sacrifices some of his life blood, purging most negative debuffs and dealing damage to enemy units around him and to himself.  Slark only takes 50%% of the damage.\n<font color='#FF7800'>Burn the fish oil:</font> applies 10/10/10/10/12/14/16 instances of Dispel, over 1/1/1/1/1.2/1.4/1.6 seconds.\n\nDISPEL TYPE: Strong Dispel"
 
 //    "DOTA_Tooltip_ability_templar_assassin_psionic_trap_Description"                    "Templar Assassin places mystical traps that invisibly monitor enemy movement. When sprung at her command, they exert a slowing influence of 30%% in the area. Traps charge up to slow an additional <font color='#FF7800'>10%%</font> every second, up to <font color='#FF7800'>90%%.</font>"
-
-"DOTA_Tooltip_ability_terrorblade_sunder_Description"                  "Severs the life from both Terrorblade and a target hero, exchanging a percentage of both units' current health. Some health points must remain.\n<font color='#FF7800'>Quicksunder:</font> cast point improves on levels 4 and beyond."
-
-"DOTA_Tooltip_ability_tusk_ice_shards_Description"                      "Tusk compresses shards of ice into a ball of frozen energy that damages all enemies it comes in contact with. When the ball reaches its target destination the shards are released, creating a barrier that lasts for %shard_duration% seconds.\n<font color='#FF7800'>Flash Freeze:</font> shard travel speed increases dramatically after level 4."
 
 "DOTA_Tooltip_ability_weaver_time_lapse_aghanim_description"            "Reduces cooldown, and allows Weaver to cast Time Lapse on allies <font color='#FF7800'>and enemies</font>."
 
 "DOTA_Tooltip_ability_winter_wyvern_splinter_blast_Description"                     "Launches a ball of brittle ice toward an enemy <font color='#FF7800'>or ally</font>. The ice shatters on impact, leaving the primary target completely unaffected, while hurling damaging splinters into nearby enemies in a %split_radius% radius. Enemies struck by these splinters are slowed by %movespeed_slow_tooltip%%%."
 
-"DOTA_Tooltip_ability_zuus_lightning_bolt_Description"                  "Calls down a bolt of lightning to strike an enemy unit, causing damage and a mini-stun. When cast, Lightning Bolt briefly provides unobstructed vision and True Sight around the target in a <font color='#FF7800'>1200</font> radius. Can be cast on the ground, affecting the closest enemy hero in %spread_aoe% range.\n<font color='#FF7800'>Cast range increases by 100 with each level in this ability.</font>"
+"DOTA_Tooltip_ability_zuus_lightning_bolt_Description"                  "Calls down a bolt of lightning to strike an enemy unit, causing damage and a mini-stun. When cast, Lightning Bolt briefly provides unobstructed vision and True Sight around the target in a <font color='#FF7800'> %true_sight_radius% </font> radius. Can be cast on the ground, affecting the closest enemy hero in %spread_aoe% range.\n<font color='#FF7800'>Cast range increases by 100 with each level in this ability.</font>"
 
 "DOTA_Tooltip_ability_item_tango_Lore"                      "Treant Protector glares sternly at your lack of respect for the forest."
 "DOTA_Tooltip_ability_item_tango_single_Lore"                          "Treant Protector glares sternly at your lack of respect for the forest."
