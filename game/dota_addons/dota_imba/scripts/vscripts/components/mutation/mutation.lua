@@ -19,6 +19,7 @@ function Mutation:Init()
 	LinkLuaModifier("modifier_mutation_thundergods_wrath", "modifier/mutation/periodic_spellcast/modifier_mutation_thundergods_wrath.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_mutation_track", "modifier/mutation/periodic_spellcast/modifier_mutation_track.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_mutation_rupture", "modifier/mutation/periodic_spellcast/modifier_mutation_rupture.lua", LUA_MODIFIER_MOTION_NONE )
+	LinkLuaModifier("modifier_mutation_torrent", "modifier/mutation/periodic_spellcast/modifier_mutation_torrent.lua", LUA_MODIFIER_MOTION_NONE )
 
 --	Mutation:ChooseMutation("positive", POSITIVE_MUTATION_LIST, 15 - 1) -- -1 because index is 0
 --	Mutation:ChooseMutation("negative", NEGATIVE_MUTATION_LIST, 10 - 1)
@@ -26,13 +27,14 @@ function Mutation:Init()
 
 	Mutation:ChooseMutation("positive", POSITIVE_MUTATION_LIST, 5 - 1) -- -1 because index is 0
 	Mutation:ChooseMutation("negative", NEGATIVE_MUTATION_LIST, 5 - 1)
-	Mutation:ChooseMutation("terrain", TERRAIN_MUTATION_LIST, 5 - 1)
+	Mutation:ChooseMutation("terrain", TERRAIN_MUTATION_LIST, 4 - 1)
 
 	IMBA_MUTATION_PERIODIC_SPELLS = {}
 	IMBA_MUTATION_PERIODIC_SPELLS[1] = {"sun_strike", "Sunstrike", "Red"}
 	IMBA_MUTATION_PERIODIC_SPELLS[2] = {"thundergods_wrath", "Thundergod's Wrath", "Red"}
 	IMBA_MUTATION_PERIODIC_SPELLS[3] = {"track", "Track", "Red"}
 	IMBA_MUTATION_PERIODIC_SPELLS[4] = {"rupture", "Rupture", "Red"}
+	IMBA_MUTATION_PERIODIC_SPELLS[5] = {"torrent", "Torrent", "Red"}
 
 --	"cold_feet",
 --	"telekinesis",
@@ -59,9 +61,9 @@ function Mutation:ChooseMutation(type, table, count)
 			table[mutation] = true
 
 			if IsInToolsMode() then
-				IMBA_MUTATION["positive"] = "killstreak_power"
-				IMBA_MUTATION["negative"] = "stay_frosty"
-				IMBA_MUTATION["terrain"] = "gift_exchange"
+--				IMBA_MUTATION["positive"] = "killstreak_power"
+				IMBA_MUTATION["negative"] = "periodic_spellcast"
+--				IMBA_MUTATION["terrain"] = "gift_exchange"
 			end
 
 			return
@@ -95,7 +97,7 @@ function Mutation:OnGameRulesStateChange(keys)
 	elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
 		if IMBA_MUTATION["negative"] == "periodic_spellcast" then
 			local random_int = RandomInt(1, #IMBA_MUTATION_PERIODIC_SPELLS)
-			local caster = Entities:FindByName(nil, "dota_goodguys_fort")
+			local caster = Entities:FindByName(nil, "dota_badguys_fort")
 
 			Timers:CreateTimer(55.0, function()
 				random_int = RandomInt(1, #IMBA_MUTATION_PERIODIC_SPELLS)
@@ -107,17 +109,19 @@ function Mutation:OnGameRulesStateChange(keys)
 			Timers:CreateTimer(function()
 				for _, hero in pairs(HeroList:GetAllHeroes()) do
 					if hero:GetTeamNumber() == 3 then
-						caster = Entities:FindByName(nil, "dota_badguys_fort")
+						caster = Entities:FindByName(nil, "dota_goodguys_fort")
 					end
 
 					if IMBA_MUTATION_PERIODIC_SPELLS[random_int][1] == "sun_strike" then
-						hero:AddNewModifier(caster, nil, "modifier_mutation_sun_strike", {duration=3.0})
+						hero:AddNewModifier(caster, nil, "modifier_mutation_sun_strike", {duration=20.0})
 					elseif IMBA_MUTATION_PERIODIC_SPELLS[random_int][1] == "thundergods_wrath" then
-						hero:AddNewModifier(caster, nil, "modifier_mutation_thundergods_wrath", {duration=1.0})
+						hero:AddNewModifier(caster, nil, "modifier_mutation_thundergods_wrath", {duration=2.0})
 					elseif IMBA_MUTATION_PERIODIC_SPELLS[random_int][1] == "track" then
 						hero:AddNewModifier(caster, nil, "modifier_mutation_track", {duration=20.0})
 					elseif IMBA_MUTATION_PERIODIC_SPELLS[random_int][1] == "rupture" then
 						hero:AddNewModifier(caster, nil, "modifier_mutation_rupture", {duration=10.0})
+					elseif IMBA_MUTATION_PERIODIC_SPELLS[random_int][1] == "torrent" then
+						hero:AddNewModifier(caster, nil, "modifier_mutation_torrent", {duration=50.0})
 					end
 				end
 
@@ -265,12 +269,12 @@ end
 
 function Mutation:SpawnRandomItem()
 	local item_name
-	local random_int = RandomInt(1, 190)
+	local random_int = RandomInt(1, 300)
 	local i = 1
 
 	for k, v in pairs(ITEMS_KV) do
 		if random_int == i then
-			print("Map max bounds:", MAP_SIZE / 2.3)
+--			print("Map max bounds:", MAP_SIZE / 2.3)
 			print(random_int, k, v["ItemCost"])
 
 			if v["ItemCost"] then
@@ -281,10 +285,10 @@ function Mutation:SpawnRandomItem()
 				return Mutation:SpawnRandomItem()
 			end
 
-			print("Item Name:", k)
 			local item = CreateItem(k, nil, nil)
+			item:SetSellable(false)
 			local pos = Vector(RandomInt(1000, MAP_SIZE / 2.3), RandomInt(1000, MAP_SIZE / 2.3), 0)
-			print(pos)
+			print("Item Name:", k, pos)
 
 			GridNav:DestroyTreesAroundPoint(pos, 80, false)
 			local drop = CreateItemOnPositionSync(pos, item)

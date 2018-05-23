@@ -485,7 +485,7 @@ function imba_pudge_meat_hook:OnProjectileHit_ExtraData(hTarget, vLocation, Extr
 				SendOverheadEventMessage(nil, OVERHEAD_ALERT_DAMAGE, hTarget, actually_dmg, nil)
 				hTarget:AddNewModifier(self:GetCaster(), self, "modifier_imba_hook_target_enemy", {})
 
---				if HasPudgeArcana(self:GetCaster()) then -- error for reasons, maybe because target is dead
+				if HasPudgeArcana(self:GetCaster()) then -- error for reasons, maybe because target is dead
 					if hTarget:IsRealHero() then
 						self:GetCaster().successful_hooks = self:GetCaster().successful_hooks + 1
 					else
@@ -498,23 +498,24 @@ function imba_pudge_meat_hook:OnProjectileHit_ExtraData(hTarget, vLocation, Extr
 						if self:GetCaster().pudge_arcana == 1 then
 							pfx = "particles/econ/items/pudge/pudge_arcana/pudge_arcana_hook_streak.vpcf"
 						end
+
 						local hook_counter = ParticleManager:CreateParticle(pfx, PATTACH_OVERHEAD_FOLLOW, self:GetCaster())
 						local stack_10 = math.floor(self:GetCaster().successful_hooks / 10)
 						ParticleManager:SetParticleControl(hook_counter, 2, Vector(stack_10, self:GetCaster().successful_hooks - stack_10 * 10, self:GetCaster().successful_hooks))
 						ParticleManager:ReleaseParticleIndex(hook_counter)
 					end
---				end
+				end
 			elseif hTarget:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then
 				hTarget:AddNewModifier(self:GetCaster(), self, "modifier_imba_hook_target_ally", {})
 			else
---				if HasPudgeArcana(self:GetCaster()) then
+				if HasPudgeArcana(self:GetCaster()) then
 					self:GetCaster().successful_hooks = 0
---				end
+				end
 			end
 		else
---			if HasPudgeArcana(self:GetCaster()) then
+			if HasPudgeArcana(self:GetCaster()) then
 				self:GetCaster().successful_hooks = 0
---			end
+			end
 		end
 
 		local projectile_info = {

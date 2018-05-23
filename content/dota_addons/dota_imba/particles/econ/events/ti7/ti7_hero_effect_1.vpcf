@@ -27,9 +27,6 @@
 	m_Children = 
 	[
 		{
-			m_ChildRef = resource:"particles/econ/events/ti7/ti7_hero_effect_1_ring_puddle.vpcf"
-		},
-		{
 			m_ChildRef = resource:"particles/econ/events/ti7/ti7_hero_effect_1_ground_dark.vpcf"
 		},
 		{
@@ -51,13 +48,7 @@
 			m_ChildRef = resource:"particles/econ/events/ti7/ti7_hero_effect_1_aegis_top.vpcf"
 		},
 		{
-			m_ChildRef = resource:"particles/econ/events/ti7/ti7_hero_effect_1_caustic.vpcf"
-		},
-		{
 			m_ChildRef = resource:"particles/econ/events/ti7/ti7_hero_effect_1_splash.vpcf"
-		},
-		{
-			m_ChildRef = resource:"particles/econ/events/ti7/ti7_hero_effect_1_core.vpcf"
 		},
 		{
 			m_ChildRef = resource:"particles/econ/events/ti7/ti7_hero_effect_1_smoke.vpcf"

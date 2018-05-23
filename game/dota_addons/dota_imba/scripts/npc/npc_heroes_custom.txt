@@ -1490,7 +1490,7 @@
 		"Ability11"					"special_bonus_imba_queenofpain_2"
 		"Ability12"					"special_bonus_imba_queenofpain_3"
 		"Ability13"					"special_bonus_imba_queenofpain_4"
-		"Ability14"					"special_bonus_imba_queenofpain_5"
+		"Ability14"					"special_bonus_spell_amplify_25"
 		"Ability15"					"special_bonus_imba_queenofpain_6"
 		"Ability16"					"special_bonus_imba_queenofpain_7"
 		"Ability17"					"special_bonus_imba_queenofpain_8"
@@ -1711,7 +1711,7 @@
 		"Ability13"					"special_bonus_imba_skywrath_mage_4"
 		"Ability14"					"special_bonus_imba_skywrath_mage_5"
 		"Ability15"					"special_bonus_imba_skywrath_mage_6"
-		"Ability16"					"special_bonus_imba_skywrath_mage_7"
+		"Ability16"					"special_bonus_intelligence_35"
 		"Ability17"					"special_bonus_imba_skywrath_mage_8"
 	}
 

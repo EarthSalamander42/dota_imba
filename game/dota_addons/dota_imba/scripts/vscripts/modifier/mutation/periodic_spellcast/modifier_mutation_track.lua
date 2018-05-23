@@ -2,6 +2,8 @@ LinkLuaModifier("modifier_mutation_track_buff_ms", "modifiers/periodic_spellcast
 
 modifier_mutation_track = class({})
 
+function modifier_mutation_track:IsPurgable() return false end
+
 function modifier_mutation_track:OnCreated()
 	-- Ability properties
 	self.particle_shield = "particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_shield.vpcf"
@@ -28,10 +30,8 @@ function modifier_mutation_track:OnCreated()
 		ParticleManager:SetParticleControl(self.particle_trail_fx, 8, Vector(1,0,0))
 		self:AddParticle(self.particle_trail_fx, false, false, -1, false, false)
 
-		-- If Bounty has the talent, start thinking
-		if self.has_talent_2 then
-			self:StartIntervalThink(FrameTime())
-		end
+		-- Play cast sound for the player's team only
+		EmitSoundOnLocationForAllies(self:GetParent():GetAbsOrigin(), "Hero_BountyHunter.Target", self:GetParent())
 	end
 end
 
@@ -164,11 +164,6 @@ function modifier_mutation_track:OnHeroKilled(keys)
 end
 
 function modifier_mutation_track:GetModifierProvidesFOWVision()
-	-- If the caster has #2 Talent, fogvision is disabled.
-	if self.has_talent_2 then
-		return nil
-	end
-
 	return 1
 end
 

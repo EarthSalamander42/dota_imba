@@ -10,21 +10,26 @@ end
 if IsServer() then
 	function modifier_mutation_rupture:OnCreated()
 		self.caster = self:GetCaster()
-		self.parent = self:GetParent()
 
 		self.movedamage = 50 * 0.01
 		self.attackdamage = 50
 		self.castdamage = 100
 		self.damagecap = 1300
-		self.prevLoc = self.parent:GetAbsOrigin()
+		self.prevLoc = self:GetParent():GetAbsOrigin()
 		self:StartIntervalThink(0.25)
+		EmitSoundOn("hero_bloodseeker.rupture", self:GetParent())
 	end
 
 	function modifier_mutation_rupture:OnIntervalThink()
-		if CalculateDistance(self.prevLoc, self.parent) < self.damagecap then
-			local move_damage = CalculateDistance(self.prevLoc, self.parent) * self.movedamage
+		local game_time = math.min(GameRules:GetDOTATime(false, false) / 60, 30)
+		self.castdamage = 50 + (game_time * 10)
+		self.movedamage = (50 + (game_time * 10)) * 0.01
+		self.attackdamage = 50 + (game_time * 10)
+
+		if CalculateDistance(self.prevLoc, self:GetParent()) < self.damagecap then
+			local move_damage = CalculateDistance(self.prevLoc, self:GetParent()) * self.movedamage
 			if move_damage > 0 then
-				ApplyDamage({victim = self.parent, attacker = self.caster, damage = move_damage, damage_type = DAMAGE_TYPE_PURE})
+				ApplyDamage({victim = self:GetParent(), attacker = self.caster, damage = move_damage, damage_type = DAMAGE_TYPE_PURE})
 			end
 		end
 
@@ -41,14 +46,14 @@ if IsServer() then
 	end
 
 	function modifier_mutation_rupture:OnAbilityStart(params)
-		if params.unit == self.parent then
-			ApplyDamage({victim = self.parent, attacker = self.caster, damage = self.castdamage, damage_type = DAMAGE_TYPE_PURE})
+		if params.unit == self:GetParent() then
+			ApplyDamage({victim = self:GetParent(), attacker = self.caster, damage = self.castdamage, damage_type = DAMAGE_TYPE_PURE})
 		end
 	end
 
 	function modifier_mutation_rupture:OnAttackStart(params)
-		if params.attacker == self.parent then
-			ApplyDamage({victim = self.parent, attacker = self.caster, damage = self.castdamage, damage_type = DAMAGE_TYPE_PURE})
+		if params.attacker == self:GetParent() then
+			ApplyDamage({victim = self:GetParent(), attacker = self.caster, damage = self.castdamage, damage_type = DAMAGE_TYPE_PURE})
 		end
 	end
 

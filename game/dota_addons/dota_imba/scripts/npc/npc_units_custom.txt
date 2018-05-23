@@ -6381,8 +6381,8 @@
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
-		"AttackDamageMin"			"64"			// Damage range min.
-		"AttackDamageMax"			"64"			// Damage range max.
+		"AttackDamageMin"			"48"			// Damage range min.
+		"AttackDamageMax"			"48"			// Damage range max.
 		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"0.4"		// Speed of attack.
 		"AttackAnimationPoint"		"0.33"		// Normalized time in animation cycle to attack.
@@ -6465,8 +6465,8 @@
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
-		"AttackDamageMin"			"128"			// Damage range min.
-		"AttackDamageMax"			"128"			// Damage range max.
+		"AttackDamageMin"			"96"			// Damage range min.
+		"AttackDamageMax"			"96"			// Damage range max.
 		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"0.4"		// Speed of attack.
 		"AttackAnimationPoint"		"0.33"		// Normalized time in animation cycle to attack.
@@ -6527,10 +6527,9 @@
 		"AutoAttacksByDefault"		"0"
 		"ConsideredHero"			"1"
 		"wearable"					"600"
-				
+
 		// Abilities
 		//----------------------------------------------------------------
-		
 		"Ability1"					"visage_summon_familiars_stone_form"			// Ability 1.
 		"Ability2"					""			// Ability 2.
 		"Ability3"					""			// Ability 3.
@@ -6548,8 +6547,8 @@
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
-		"AttackDamageMin"			"192"			// Damage range min.
-		"AttackDamageMax"			"192"			// Damage range max.
+		"AttackDamageMin"			"144"			// Damage range min.
+		"AttackDamageMax"			"144"			// Damage range max.
 		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"0.4"		// Speed of attack.
 		"AttackAnimationPoint"		"0.33"		// Normalized time in animation cycle to attack.
@@ -12862,6 +12861,13 @@
 		"ModelScale"				"0.9"
 	}
 
+	"npc_imba_donator_companion_exzas"
+	{
+		"BaseClass"					"npc_imba_donator_companion"
+		"Model"						"models/items/io/io_ti7/io_ti7.vmdl"        
+		"ModelScale"				"0.5"
+	}
+
 	//=================================================================================================================
 	// HERO: Ghost Revenant // Need to be duplicated in npc_units_custom.txt
 	//=================================================================================================================
@@ -14756,7 +14762,7 @@
 
 		// Armor
 		//----------------------------------------------------------------
-		"ArmorPhysical"				"12"		// Physical protection.
+		"ArmorPhysical"				"16"		// Physical protection.
 		"MagicalResistance"			"0"			// Magical protection.
 
 		// Attack
@@ -14819,7 +14825,7 @@
 		"VisionDaytimeRange"		"750"		// Range of vision during day light.
 		"VisionNighttimeRange"		"750"		// Range of vision at night time.
 	}
-	
+
 	//=================================================================================
 	// Radiant mega melee
 	//=================================================================================
@@ -14833,7 +14839,7 @@
 		"ModelScale"				"1.12"
 		"Level"						"1"
 		
-			// Abilities
+		// Abilities
 		//----------------------------------------------------------------
 		
 		"Ability1"					""			// Ability 1.
@@ -14938,7 +14944,7 @@
 
 		// Armor
 		//----------------------------------------------------------------
-		"ArmorPhysical"				"8"			// Physical protection.
+		"ArmorPhysical"				"12"			// Physical protection.
 		"MagicalResistance"			"0"			// Magical protection.
 
 		// Attack
@@ -15122,7 +15128,7 @@
 
 		// Armor
 		//----------------------------------------------------------------
-		"ArmorPhysical"				"3"			// Physical protection.
+		"ArmorPhysical"				"6"			// Physical protection.
 		"MagicalResistance"			"80"			// Magical protection.
 
 		// Attack
@@ -15307,7 +15313,7 @@
 
 		// Armor
 		//----------------------------------------------------------------
-		"ArmorPhysical"				"12"			// Physical protection.
+		"ArmorPhysical"				"16"			// Physical protection.
 		"MagicalResistance"			"0"			// Magical protection.
 
 		// Attack
@@ -15489,7 +15495,7 @@
 
 		// Armor
 		//----------------------------------------------------------------
-		"ArmorPhysical"				"8"			// Physical protection.
+		"ArmorPhysical"				"12"			// Physical protection.
 		"MagicalResistance"			"0"			// Magical protection.
 
 		// Attack
@@ -15673,7 +15679,7 @@
 
 		// Armor
 		//----------------------------------------------------------------
-		"ArmorPhysical"				"3"			// Physical protection.
+		"ArmorPhysical"				"6"			// Physical protection.
 		"MagicalResistance"			"80"			// Magical protection.
 
 		// Attack

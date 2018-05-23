@@ -44,11 +44,11 @@ function item_imba_shadow_blade:OnSpellStart()
 	-- Wait for the fade time to end, then emit the invisibility effect and apply the invis modifier
 	Timers:CreateTimer(fade_time, function()
 
-			local particle_invis_start_fx = ParticleManager:CreateParticle(particle_invis_start, PATTACH_ABSORIGIN, caster)
-			ParticleManager:SetParticleControl(particle_invis_start_fx, 0, caster:GetAbsOrigin())
-			ParticleManager:ReleaseParticleIndex(particle_invis_start_fx)
+		local particle_invis_start_fx = ParticleManager:CreateParticle(particle_invis_start, PATTACH_ABSORIGIN, caster)
+		ParticleManager:SetParticleControl(particle_invis_start_fx, 0, caster:GetAbsOrigin())
+		ParticleManager:ReleaseParticleIndex(particle_invis_start_fx)
 
-			caster:AddNewModifier(caster, self, "modifier_item_imba_shadow_blade_invis", {duration = duration})
+		caster:AddNewModifier(caster, self, "modifier_item_imba_shadow_blade_invis", {duration = duration})
 	end)
 end
 
@@ -67,18 +67,15 @@ function modifier_item_imba_shadow_blade_invis:IsHidden() return false end
 function modifier_item_imba_shadow_blade_invis:IsPurgable() return false end
 
 function modifier_item_imba_shadow_blade_invis:OnCreated()
-	self.parent     =   self:GetParent()
-	local ability   =   self:GetAbility()
-
-	if not self.parent:IsCreature() then
-		self.bonus_movespeed        =   ability:GetSpecialValueFor("invis_ms_pct")
-		self.bonus_attack_damage    =   ability:GetSpecialValueFor("invis_damage")
+	if not self:GetParent():IsCreature() then
+		self.bonus_movespeed = self:GetAbility():GetSpecialValueFor("invis_ms_pct")
+		self.bonus_attack_damage = self:GetAbility():GetSpecialValueFor("invis_damage")
 	end
 
 	-- Start flying if has not taken damage recently
 	if IsServer() then
-		if not self.parent:FindModifierByName("modifier_item_imba_shadow_blade_invis_flying_disabled") then
-			self.parent:SetMoveCapability(DOTA_UNIT_CAP_MOVE_FLY)
+		if not self:GetParent():FindModifierByName("modifier_item_imba_shadow_blade_invis_flying_disabled") then
+			self:GetParent():SetMoveCapability(DOTA_UNIT_CAP_MOVE_FLY)
 		end
 	end
 end
@@ -127,7 +124,7 @@ end
 
 function modifier_item_imba_shadow_blade_invis:OnAttack(params)
 	if IsServer() then
-		if params.attacker == self.parent then
+		if params.attacker == self:GetParent() then
 
 			local ability          =   self:GetAbility()
 			local debuff_duration  =   ability:GetSpecialValueFor("turnrate_slow_duration")
@@ -153,7 +150,7 @@ end
 
 function modifier_item_imba_shadow_blade_invis:OnDestroy()
 	if IsServer() then
-		if not self.parent:FindModifierByName("modifier_shadow_blade_invis_flying_disabled") then
+		if not self:GetParent():FindModifierByName("modifier_shadow_blade_invis_flying_disabled") then
 			-- Remove flying movement
 			self:GetParent():SetMoveCapability(DOTA_UNIT_CAP_MOVE_GROUND)
 			-- Destroy trees to not get stuck
@@ -224,22 +221,21 @@ function modifier_item_imba_shadow_blade_invis_flying_disabled:IsPurgable() retu
 
 function modifier_item_imba_shadow_blade_invis_flying_disabled:OnCreated()
 	if IsServer() then
-		self.parent =   self:GetParent()
 		-- flying disabled
-		self.parent:SetMoveCapability(DOTA_UNIT_CAP_MOVE_GROUND)
+		self:GetParent():SetMoveCapability(DOTA_UNIT_CAP_MOVE_GROUND)
 
 		-- Destroy trees to not get stuck
-		GridNav:DestroyTreesAroundPoint(self.parent:GetAbsOrigin(), 175, false)
+		GridNav:DestroyTreesAroundPoint(self:GetParent():GetAbsOrigin(), 175, false)
 		-- Find a clear space to stand on
-		self.parent:SetUnitOnClearGround()
+		self:GetParent():SetUnitOnClearGround()
 	end
 end
 
 function modifier_item_imba_shadow_blade_invis_flying_disabled:OnDestroy()
 	if IsServer() then
 		-- flying enabled
-		if self.parent:FindModifierByName("modifier_item_imba_shadow_blade_invis") then
-			self.parent:SetMoveCapability(DOTA_UNIT_CAP_MOVE_FLY)
+		if self:GetParent():FindModifierByName("modifier_item_imba_shadow_blade_invis") then
+			self:GetParent():SetMoveCapability(DOTA_UNIT_CAP_MOVE_FLY)
 		end
 	end
 end

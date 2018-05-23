@@ -8396,7 +8396,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"600"
+		"ItemCost"						"200"
 		"ItemShopTags"					""
 
 		// Recipe
@@ -8405,7 +8405,7 @@
 		"ItemResult"					"item_imba_aether_lens"
 		"ItemRequirements"
 		{
-			"01"						"item_energy_booster;item_void_stone"
+			"01"						"item_energy_booster;item_imba_nether_wand"
 		}
 	}
 
@@ -8436,7 +8436,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_mana"			"325"
+				"bonus_mana"			"450"
 			}
 			"02"
 			{
@@ -8446,7 +8446,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"cast_range_bonus"		"220"
+				"cast_range_bonus"		"250"
 			}
 			"04"
 			{
@@ -8471,7 +8471,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"2500"
+		"ItemCost"						"1250"
 		"ItemShopTags"					"int;damage;attack_speed;attack_damage;hard_to_tag"
 		"ItemQuality"					"rare"
 		"ItemAliases"					"wand;nether wand"
@@ -8483,7 +8483,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"spell_amp"				"12"
+				"spell_amp"				"7"
 			}
 		}
 	}
@@ -8510,7 +8510,7 @@
 		"ItemResult"					"item_imba_arcane_nexus"
 		"ItemRequirements"
 		{
-			"01"						"item_imba_nether_wand;item_imba_kaya"
+			"01"						"item_imba_nether_wand;item_imba_nether_wand;item_imba_kaya"
 		}
 	}
 

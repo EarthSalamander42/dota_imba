@@ -155,6 +155,9 @@ local model_scale = GetKeyValueByHeroName(unit_name, "ModelScale")
 	elseif unit_name == "npc_imba_donator_companion_terdic" then
 		local particle = ParticleManager:CreateParticle("particles/econ/courier/courier_shagbark/courier_shagbark_ambient.vpcf", PATTACH_ABSORIGIN_FOLLOW, companion)
 		ParticleManager:ReleaseParticleIndex(particle)
+	elseif model == "models/items/io/io_ti7/io_ti7.vmdl" then
+		local particle = ParticleManager:CreateParticle("particles/econ/items/wisp/wisp_ambient_ti7.vpcf", PATTACH_ABSORIGIN_FOLLOW, companion)
+		ParticleManager:ReleaseParticleIndex(particle)
 	end
 
 	companion:SetModelScale(model_scale)

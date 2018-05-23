@@ -1483,7 +1483,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_health_regen"	"7"
+				"bonus_health_regen"	"8"
 			}
 		}
 	}
@@ -4592,7 +4592,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"distance_scepter"			"1400"
+				"distance_scepter"			"1200"
 			}
 			"04"
 			{
@@ -10262,21 +10262,6 @@
 	}
 
 	//=================================================================================================================
-	//	Spirit Breaker: Greater Bash proc chance increase
-	//=================================================================================================================
-	"special_bonus_unique_spirit_breaker_1"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"17"
-			}
-		}
-	}
-
-	//=================================================================================================================
 	//	Spirit Breaker: bonus Greater Bash damage
 	//=================================================================================================================
 	"special_bonus_unique_spirit_breaker_3"
@@ -12435,7 +12420,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"familiar_attack_damage"	"64 128 192"
+				"familiar_attack_damage"	"48 96 144"
 			}
 		}
 	}
