@@ -42,7 +42,7 @@
 }
 
 #ChatPlaceholder {
-	width: 420px;
+	width: 520px;
 	height: 400px;
 	vertical-align: bottom;
 	horizontal-align: right;
@@ -330,7 +330,7 @@ Label {
 }
 
 .MiddleColumn {
-	padding: 0 50px;
+	padding: 0 20px;
 	width: 100%;
 	height: 100%;
 	flow-children: down;
@@ -641,14 +641,14 @@ DOTAMinimap {
  */
 .HeroHolder {
 	margin: 0 0 10px 0;
-	width: 100%;
+	align: center center;
 	flow-children: right-wrap;
 }
 
 RadioButton {
-	margin: 0 10px 10px 0;
-	width: 85px;
-	height: 50px;
+	margin: 0 8px 5px 0;
+	width: 80px;
+	height: 44px;
 	box-shadow: #000000ba -2px -2px 2px 2px;
 	border: 1px solid #6f7074;
 	border-radius: 3px;
@@ -705,13 +705,14 @@ RadioButton.Disabled:selected {
 
 #HeroSelector {
 	/* width: 45%; */
+	margin-top: 50px;
 	height: fill-parent-flow(1.0);
 	flow-children: down;
 	horizontal-align: middle;
 }
 
 #PreviewPanel {
-	margin-top: 20px;
+	margin-top: 0px;
 	width: fill-parent-flow(1.0);
 	height: fill-parent-flow(1.0);
 	horizontal-align: center;
