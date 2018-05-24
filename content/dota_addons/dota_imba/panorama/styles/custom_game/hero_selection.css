@@ -302,6 +302,10 @@ Label {
 	text-align: center bottom;
 	text-shadow: 1px 1px 2px 1.0 #000000ee;
 	margin-bottom:  0px;
+	text-overflow: shrink;
+	margin-left: 2px;
+	align: center bottom;
+	height: 20px;
 }
 .TenVTen .PlayerLabel Label {
 	height: 20px;

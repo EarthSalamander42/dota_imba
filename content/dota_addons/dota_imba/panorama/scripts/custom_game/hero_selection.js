@@ -607,7 +607,7 @@ function ReturnChatWindow() {
 		vanillaChat.style.y = '-240px';
 		vanillaChat.hittest = false;
 		vanillaChat.style.visibility = "visible";
-		vanillaChat.style.width = "420px";
+		vanillaChat.style.width = "700px";
 		vanillaChat.SetHasClass('ChatExpanded', false);
 		vanillaChat.SetHasClass('Active', false);
 	}
