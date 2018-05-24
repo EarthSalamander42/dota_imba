@@ -169,19 +169,31 @@
 								<Label id="pickLabel" text="#DOTA_Hero_Selection_PickTitle" />
 								<Label id="banLabel" text="#DOTA_Hero_Selection_BanTitle" />
 							</Button>
-							<Button class="HeroPickerButton" id="HeroLockIn" onactivate="SelectHero()">
-								<Label text="#DOTA_Hero_Selection_LOCKIN" />
-							</Button>
 							<Button class="HeroPickerButton" id="HeroRandom" onactivate="RandomHero('random')">
-								<Label text="#imba_random_pick_button" />
+								<Panel class="border-top"></Panel>						
+								<Panel id="HeroPickWrapper">
+									<Label text="#DOTA_Hero_Selection_LOCKIN" />
+									<Label class="SectionTitle" text="#imba_random_pick_button" />
+								</Panel>
+							</Button>
+							<Button class="HeroPickerButton" id="HeroLockIn" onactivate="SelectHero()">
+								<Panel class="border-top"></Panel>
+								<Panel id="HeroPickWrapper">
+									<Label text="#DOTA_Hero_Selection_LOCKIN" />
+									<Label class="SectionTitle" id="SectionTitle" text=""></Label>
+								</Panel>
+								<Panel id="CurrentHero"></Panel>
 							</Button>
 							<Button class="HeroPickerButton" id="HeroImbaRandom" onactivate="RandomHero('imbarandom')">
-								<Label text="#imba_random_imba_pick_button" />
+								<Panel class="border-top"></Panel>								
+								<Panel id="HeroPickWrapper">
+									<Label text="#DOTA_Hero_Selection_LOCKIN" />
+									<Label class="SectionTitle" text="#imba_random_imba_pick_button" />						
+								</Panel>
 							</Button>
 						</Panel>
 						
 						<Panel id="HeroPreviewContainer">
-							<Label id="SectionTitle" text=""/>
 							<Panel id="AbilitiesPreview">
 								<DOTAAbilityImage id="PickedHeroAbility1" class="PickedHeroAbility" onmouseout="DOTAHideAbilityTooltip()" abilityname=""/>
 								<DOTAAbilityImage id="PickedHeroAbility2" class="PickedHeroAbility" onmouseout="DOTAHideAbilityTooltip()" abilityname="" />
