@@ -214,25 +214,25 @@ function onPlayerStatChange(table, key, data) {
 
 			switch (data.herolist[heroName]) {
 				case 1:
-					newheroimage.AddClass("HeroCard")
+					newhero.AddClass("HeroCard")
 					break;
 			}
 
 			switch (data.imbalist[heroName]) {
 				case 1:
-					newheroimage.AddClass("ImbaCard")
+					newhero.AddClass("ImbaCard")
 					break;
 			}
 
 			switch (data.newlist[heroName]) {
 				case 1:
-					newheroimage.AddClass("NewCard")
+					newhero.AddClass("NewCard")
 					break;
 			}
 
 			switch (data.customlist[heroName]) {
 				case 1:
-					newheroimage.AddClass("CustomCard")
+					newhero.AddClass("CustomCard")
 					break;
 			}
 
@@ -275,6 +275,7 @@ function onPlayerStatChange(table, key, data) {
 
 				var player_color = "#DDDDDD";
 				if (typeof data[nkey].id != 'undefined') {
+					// $('#MyEntry').SetFocus();
 					player_color = GameUI.CustomUIConfig().player_colors[(data[nkey].id)];
 					var player_table = CustomNetTables.GetTableValue("player_table", data[nkey].id.toString());
 					if (player_table) {
@@ -452,7 +453,7 @@ function onPlayerStatChange(table, key, data) {
 			FindDotaHudElement('HeroLockIn').style.visibility = 'collapse';
 			FindDotaHudElement('HeroRandom').style.visibility = 'collapse';
 			FindDotaHudElement('HeroImbaRandom').style.visibility = 'collapse';
-			FindDotaHudElement('HeroPreview').style.visibility = 'collapse';
+			// FindDotaHudElement('HeroPreview').style.visibility = 'collapse';
 			FindDotaHudElement('BecomeCaptain').style.visibility = 'collapse';
 			FindDotaHudElement('CaptainLockIn').style.visibility = 'collapse';
 			DisableHero(data['order'][data['currentstage']].hero);
@@ -520,8 +521,9 @@ function SetupBackgroundImage() {
 	var image = background_image[random_int]
 
 	var background = $("#ImageBG");
-	background.style.backgroundImage = 'url("file://{images}/custom_game/picking_screen/' + image + '.png")';
-	background.style.backgroundSize = '100% 100%';
+	// background.style.backgroundImage = 'url("file://{images}/custom_game/picking_screen/' + image + '.png")';
+	background.style.backgroundImage = 'url("file://{images}/custom_game/pick_bg.png")';
+	background.style.backgroundSize = 'cover';
 }
 
 function SetupTopBar() {
@@ -591,6 +593,7 @@ function MoveChatWindow() {
 	vanillaChat.SetHasClass('Active', true);
 	vanillaChat.style.y = '0px';
 	vanillaChat.hittest = true;
+	vanillaChat.style.width = "420px";
 	vanillaChat.SetParent(FindDotaHudElement('ChatPlaceholder'));
 }
 
@@ -605,6 +608,7 @@ function ReturnChatWindow() {
 		vanillaChat.style.y = '-240px';
 		vanillaChat.hittest = false;
 		vanillaChat.style.visibility = "visible";
+		vanillaChat.style.width = "420px";
 		vanillaChat.SetHasClass('ChatExpanded', false);
 		vanillaChat.SetHasClass('Active', false);
 	}
@@ -742,12 +746,28 @@ function PreviewHero(name) {
 	}
 
 	if (!herolocked || iscm) {
-		var preview = FindDotaHudElement('HeroPreview');
+		// var preview = FindDotaHudElement('HeroPreview');
 		if (name !== 'random' && currentHeroPreview !== name) {
 			currentHeroPreview = name;
-			preview.RemoveAndDeleteChildren();
-			CreateHeroPanel(preview, name);
+			// preview.RemoveAndDeleteChildren();
+			// CreateHeroPanel(preview, name);
 			$('#SectionTitle').text = $.Localize('#' + name, $('#SectionTitle'));
+			$('#SectionTitle').text = $('#SectionTitle').text.toUpperCase();
+			var current_hero_image = $('#CurrentHero');
+			var ply_battlepass = CustomNetTables.GetTableValue("battlepass", Game.GetLocalPlayerID());
+			var newheroimage = $.CreatePanel('DOTAHeroImage', current_hero_image, '');
+			newheroimage.hittest = false;
+			newheroimage.heroname = name;
+
+			var image_name = name
+
+			if (ply_battlepass) {
+				if (ply_battlepass.arcana[name]) {
+					image_name = name.replace("npc_dota_hero_", "");
+					$.Msg(image_name)
+					OverrideHeroImage(ply_battlepass.arcana[name] + 1, newheroimage, image_name)
+				}
+			}
 		}
 		selectedhero = name;
 		selectedherocm = name;
@@ -784,16 +804,16 @@ function SelectHero(hero) {
 		var newhero = 'empty';
 		if (iscm && selectedherocm !== 'empty') {
 			newhero = selectedherocm;
-			FindDotaHudElement('HeroLockIn').style.brightness = 0.5;
-			FindDotaHudElement('HeroRandom').style.brightness = 0.5;
-			FindDotaHudElement('HeroImbaRandom').style.brightness = 0.5;
+			FindDotaHudElement('HeroLockIn').style.saturation = 0;
+			FindDotaHudElement('HeroRandom').style.saturation = 0;
+			FindDotaHudElement('HeroImbaRandom').style.saturation = 0;
 		} else if (!iscm && selectedhero !== 'empty' && !IsHeroDisabled(selectedhero)) {
 			herolocked = true;
 			isPicking = false;
 			newhero = selectedhero;
-			FindDotaHudElement('HeroLockIn').style.brightness = 0.5;
-			FindDotaHudElement('HeroRandom').style.brightness = 0.5;
-			FindDotaHudElement('HeroImbaRandom').style.brightness = 0.5;
+			FindDotaHudElement('HeroLockIn').style.saturation = 0;
+			FindDotaHudElement('HeroRandom').style.saturation = 0;
+			FindDotaHudElement('HeroImbaRandom').style.saturation = 0;
 		}
 //		$.Msg('Selecting ' + newhero);
 		GameEvents.SendCustomGameEventToServer('hero_selected', {
@@ -987,3 +1007,4 @@ function TopBarColor(args) {
 }
 
 GameEvents.Subscribe("top_bar_colors", TopBarColor);
+
