@@ -12,6 +12,8 @@ function modifier_mutation_torrent:OnCreated()
 	self.damage = 250 + (50 * game_time)
 	self.pos = self:GetParent():GetAbsOrigin()
 	self.tick_count = 10
+	self.height = 400
+	self.stun_duration = 1.6
 
 	EmitSoundOn("Ability.pre.Torrent", self:GetParent())
 
@@ -49,10 +51,10 @@ function modifier_mutation_torrent:OnCreated()
 			local knockback =
 			{
 				should_stun = 1,
-				knockback_duration = stun_duration,
-				duration = stun_duration,
+				knockback_duration = self.stun_duration,
+				duration = self.stun_duration,
 				knockback_distance = distance_from_center,
-				knockback_height = torrent_height,
+				knockback_height = self.height,
 				center_x = (self.pos + torrent_border).x + randomness_x,
 				center_y = (self.pos + torrent_border).y + randomness_y,
 				center_z = (self.pos + torrent_border).z
@@ -61,7 +63,7 @@ function modifier_mutation_torrent:OnCreated()
 			-- Apply knockback on enemies hit
 			enemy:RemoveModifierByName("modifier_knockback")
 			enemy:AddNewModifier(caster, self, "modifier_knockback", knockback)
-			enemy:AddNewModifier(caster, self, "modifier_phased", {duration = stun_duration})
+			enemy:AddNewModifier(caster, self, "modifier_phased", {duration = self.stun_duration})
 
 			-- Deals tick damage tick_count times
 			Timers:CreateTimer(function()

@@ -21,20 +21,17 @@ function Mutation:Init()
 	LinkLuaModifier("modifier_mutation_rupture", "modifier/mutation/periodic_spellcast/modifier_mutation_rupture.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_mutation_torrent", "modifier/mutation/periodic_spellcast/modifier_mutation_torrent.lua", LUA_MODIFIER_MOTION_NONE )
 
---	Mutation:ChooseMutation("positive", POSITIVE_MUTATION_LIST, 15 - 1) -- -1 because index is 0
---	Mutation:ChooseMutation("negative", NEGATIVE_MUTATION_LIST, 10 - 1)
---	Mutation:ChooseMutation("terrain", TERRAIN_MUTATION_LIST, 11 - 1)
-
 	Mutation:ChooseMutation("positive", POSITIVE_MUTATION_LIST, 5 - 1) -- -1 because index is 0
-	Mutation:ChooseMutation("negative", NEGATIVE_MUTATION_LIST, 5 - 1)
+	Mutation:ChooseMutation("negative", NEGATIVE_MUTATION_LIST, 4 - 1)
 	Mutation:ChooseMutation("terrain", TERRAIN_MUTATION_LIST, 4 - 1)
 
 	IMBA_MUTATION_PERIODIC_SPELLS = {}
-	IMBA_MUTATION_PERIODIC_SPELLS[1] = {"sun_strike", "Sunstrike", "Red"}
-	IMBA_MUTATION_PERIODIC_SPELLS[2] = {"thundergods_wrath", "Thundergod's Wrath", "Red"}
-	IMBA_MUTATION_PERIODIC_SPELLS[3] = {"track", "Track", "Red"}
-	IMBA_MUTATION_PERIODIC_SPELLS[4] = {"rupture", "Rupture", "Red"}
-	IMBA_MUTATION_PERIODIC_SPELLS[5] = {"torrent", "Torrent", "Red"}
+	IMBA_MUTATION_PERIODIC_SPELLS[1] = {"sun_strike", "Sunstrike", "Red", -1}
+	IMBA_MUTATION_PERIODIC_SPELLS[2] = {"thundergods_wrath", "Thundergod's Wrath", "Red", -1}
+	IMBA_MUTATION_PERIODIC_SPELLS[3] = {"track", "Track", "Red", 20.0}
+	IMBA_MUTATION_PERIODIC_SPELLS[4] = {"rupture", "Rupture", "Red", 10.0}
+	IMBA_MUTATION_PERIODIC_SPELLS[5] = {"torrent", "Torrent", "Red", -1}
+	IMBA_MUTATION_PERIODIC_SPELLS[6] = {"cold_feet", "Cold Feet", "Red", -1}
 
 --	"cold_feet",
 --	"telekinesis",
@@ -101,7 +98,7 @@ function Mutation:OnGameRulesStateChange(keys)
 
 			Timers:CreateTimer(55.0, function()
 				random_int = RandomInt(1, #IMBA_MUTATION_PERIODIC_SPELLS)
-				Notifications:TopToAll({text = IMBA_MUTATION_PERIODIC_SPELLS[random_int][2].." Mutation in 5 seconds...", duration = 5.0, {color = IMBA_MUTATION_PERIODIC_SPELLS[random_int][3]}})
+				Notifications:TopToAll({text = IMBA_MUTATION_PERIODIC_SPELLS[random_int][2].." Mutation in 5 seconds...", duration = 5.0, style = {color = IMBA_MUTATION_PERIODIC_SPELLS[random_int][3]}})
 
 				return 60.0
 			end)
@@ -112,17 +109,7 @@ function Mutation:OnGameRulesStateChange(keys)
 						caster = Entities:FindByName(nil, "dota_goodguys_fort")
 					end
 
-					if IMBA_MUTATION_PERIODIC_SPELLS[random_int][1] == "sun_strike" then
-						hero:AddNewModifier(caster, nil, "modifier_mutation_sun_strike", {duration=20.0})
-					elseif IMBA_MUTATION_PERIODIC_SPELLS[random_int][1] == "thundergods_wrath" then
-						hero:AddNewModifier(caster, nil, "modifier_mutation_thundergods_wrath", {duration=2.0})
-					elseif IMBA_MUTATION_PERIODIC_SPELLS[random_int][1] == "track" then
-						hero:AddNewModifier(caster, nil, "modifier_mutation_track", {duration=20.0})
-					elseif IMBA_MUTATION_PERIODIC_SPELLS[random_int][1] == "rupture" then
-						hero:AddNewModifier(caster, nil, "modifier_mutation_rupture", {duration=10.0})
-					elseif IMBA_MUTATION_PERIODIC_SPELLS[random_int][1] == "torrent" then
-						hero:AddNewModifier(caster, nil, "modifier_mutation_torrent", {duration=50.0})
-					end
+					hero:AddNewModifier(caster, nil, "modifier_mutation_"..IMBA_MUTATION_PERIODIC_SPELLS[random_int][1], {duration=IMBA_MUTATION_PERIODIC_SPELLS[random_int][4]})
 				end
 
 				return 60.0

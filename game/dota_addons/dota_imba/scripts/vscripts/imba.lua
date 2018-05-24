@@ -545,7 +545,7 @@ function GameMode:ItemAddedFilter( keys )
 
 			-- Destroy the item
 			return false
-				-- If this is not a player, do nothing and drop another Aegis
+		-- If this is not a player, do nothing and drop another Aegis
 		else
 			local drop = CreateItem("item_imba_aegis", nil, nil)
 			CreateItemOnPositionSync(unit:GetAbsOrigin(), drop)

@@ -367,6 +367,10 @@ function HeroSelection:SelectHero(playerId, hero)
 			print("UNPAUSE GAME!")
 --			PauseGame(false)
 			GameRules:GetGameModeEntity():SetCameraDistanceOverride(1134) -- default: 1134
+			if BOTS_ENABLED == true then
+				SendToServerConsole('sm_gmode 1')
+				SendToServerConsole('dota_bot_populate')
+			end
 		end
 
 		local player = PlayerResource:GetPlayer(playerId)

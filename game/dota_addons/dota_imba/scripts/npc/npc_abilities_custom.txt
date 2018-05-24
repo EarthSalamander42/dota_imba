@@ -1,13 +1,16 @@
 ﻿// Dota Abilities Override File
 // DataDriven Ability Guide: https://moddota.com/forums/discussion/14/datadriven-ability-breakdown-documentation
 
+#base heroes/wisp/abilities.txt
+#base heroes/wisp/hero.txt
+
 "DOTAAbilities"
 {
 	"Version"		"1"
 
-//-------------------
-// Dummy stuff
-//-------------------
+	//-------------------
+	// Dummy stuff
+	//-------------------
 
 	"dummy_unit_state"
 	{

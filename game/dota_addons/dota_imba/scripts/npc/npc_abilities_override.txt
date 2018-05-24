@@ -13106,8 +13106,7 @@
 	//=================================================================================================================
 	"wisp_tether"
 	{
-		"AbilityCooldown"				"3"
-		"AbilityDuration"				"60"
+		"AbilityCooldown"				"5.0"
 		"AbilityManaCost"				"0"
 		"AbilityCastRange"				"1800"
 

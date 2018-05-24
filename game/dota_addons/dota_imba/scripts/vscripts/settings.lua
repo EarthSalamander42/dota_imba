@@ -484,6 +484,7 @@ for i = 26, 100 do
 end
 
 USE_MEME_SOUNDS = true														-- Should we use meme/fun sounds on abilities occasionally?
+BOTS_ENABLED = false
 
 -------------------------------------------------------------------------------------------------
 -- IMBA: Test mode variables
