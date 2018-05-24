@@ -734,6 +734,10 @@ RadioButton.Disabled:selected {
 	/*height: 80%;*/
 }
 
+DOTAChat#HudChat .ChatLine {
+	width:  420px;
+	max-width: 420px;
+}
 #ChatLinesOverlay {
 	background-color: transparent;
 }
