@@ -907,6 +907,7 @@ modifier_imba_tower_toughness_aura_buff = modifier_imba_tower_toughness_aura_buf
 
 function modifier_imba_tower_toughness_aura_buff:OnCreated()
 	if string.find(self:GetParent():GetUnitName(), "npc_dota_lone_druid_bear") then return end
+	if not self:GetParent():IsRealHero() then self:Destroy() return end
 	-- Ability properties
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
@@ -914,9 +915,8 @@ function modifier_imba_tower_toughness_aura_buff:OnCreated()
 		self:Destroy()
 		return nil
 	end
-	self.parent = self:GetParent()
 
-	if self.parent:GetUnitName() == "npc_dota_courier" then
+	if self:GetParent():GetUnitName() == "npc_dota_courier" then
 		return nil
 	end
 
@@ -932,8 +932,8 @@ end
 
 function modifier_imba_tower_toughness_aura_buff:OnIntervalThink()
 	if IsServer() then
-		if not self.parent:IsNull() then
-			self.parent:CalculateStatBonus()
+		if not self:GetParent():IsNull() then
+			self:GetParent():CalculateStatBonus()
 		end
 	end
 end

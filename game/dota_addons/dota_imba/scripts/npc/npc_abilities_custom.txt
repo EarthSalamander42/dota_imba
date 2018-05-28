@@ -2,7 +2,6 @@
 // DataDriven Ability Guide: https://moddota.com/forums/discussion/14/datadriven-ability-breakdown-documentation
 
 #base heroes/wisp/abilities.txt
-#base heroes/wisp/hero.txt
 
 "DOTAAbilities"
 {
@@ -3043,7 +3042,7 @@
 			"10"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bounty_multiplier"			"150"
+				"bounty_multiplier"			"350"
 				"LinkedSpecialBonus"		"special_bonus_imba_alchemist_7"
 			}
 		}
@@ -4774,7 +4773,7 @@
 		"AbilityCastPoint"				"0.5"
 		"AbilityCastRange"				"315"
 		"AbilityCooldown"				"13"
-		"AbilityManaCost"				"130"
+		"AbilityManaCost"				"115 120 125 130"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -8166,7 +8165,6 @@
 		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_YES"
 		"FightRecapLevel"					"2"
 		"AbilityTextureName"				"enigma_black_hole"		
-		"MaxLevel"           				"3"
 		"ScriptFile"        				"hero/hero_enigma"
 		"HasScepterUpgrade"					"1"
 
@@ -8257,7 +8255,7 @@
 			"11"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"singularity_cap"		"100"
+				"singularity_cap"		"50"
 			}
 		}
 	}
@@ -10389,67 +10387,57 @@
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
-		{           
+		{
 			"01"
 			{
 				"var_type"                  "FIELD_INTEGER"
 				"ms_slow_pct"               "40"
 			}
-
 			"02"
 			{
 				"var_type"                  "FIELD_INTEGER"
 				"as_slow"                   "60"
 			}
-
 			"03"
 			{
 				"var_type"                  "FIELD_FLOAT"
 				"slow_duration"             "2.5"
 			}
-
 			"04"
 			{
 				"var_type"                  "FIELD_INTEGER"
 				"bounce_range"              "600 700 800"               
 			}
-
 			"05"
 			{
 				"var_type"                  "FIELD_INTEGER"
-				"damage"                    "280 440 600"
+				"damage"                    "350 550 750"
 			}
-
 			"06"
 			{
 				"var_type"                  "FIELD_INTEGER"
 				"num_bounces"               "16"
 			}
-
 			"07"
 			{
 				"var_type"                  "FIELD_INTEGER"
 				"projectile_base_speed"     "1400"
 			}
-
 			"08"
 			{
 				"var_type"                  "FIELD_INTEGER"
 				"speed_increase_per_bounce" "20 30 40"
 			}
-
 			"09"
 			{
 				"var_type"                  "FIELD_FLOAT"
 				"projectile_delay"          "0.2"
 			}
-
 			"10"
 			{
 				"var_type"                  "FIELD_INTEGER"
 				"projectile_vision"         "800"
 			}           
-
 			"11"
 			{
 				"var_type"                  "FIELD_INTEGER"
@@ -12309,8 +12297,6 @@
 		"AbilityBehavior"        	"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"FightRecapLevel"			"2"
 		"AbilityTextureName"     	"lycan_shapeshift"
-		"MaxLevel"					"3"
-		"LevelsBetweenUpgrades"		"6"
 		"AbilityType"				"DOTA_ABILITY_TYPE_ULTIMATE"
 
 		// Casting
@@ -12362,7 +12348,7 @@
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"crit_damage"				"160 180 200"
+				"crit_damage"				"150 175 200"
 			}
 			"06"
 			{
@@ -12946,17 +12932,17 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"cleave_radius_end"		"240"
+				"cleave_radius_end"		"330"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"cleave_distance"		"460"
+				"cleave_distance"		"625"
 			}
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"splash_radius"			"240"
+				"splash_radius"			"330"
 			}
 			"09"
 			{
@@ -12981,17 +12967,17 @@
 			"13"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"super_cleave_end"		"320"
+				"super_cleave_end"		"400"
 			}
 			"14"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"super_cleave_distance"	"620"
+				"super_cleave_distance"	"700"
 			}
 			"15"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"super_splash_radius"	"360"
+				"super_splash_radius"	"400"
 			}
 			"16"
 			{
@@ -15771,7 +15757,6 @@
 		"FightRecapLevel"			"1"
 		"AbilitySound"				"Hero_Phoenix.FireSpirits.Cast"
 
-		"MaxLevel"					"4"
 		"FightRecapLevel"			"1"
 
 		"AbilityCastRange"			"1400"
@@ -16536,7 +16521,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"13.0 12.0 11.0 10.0"
+		"AbilityCooldown"				"14.0 13.0 12.0 11.0"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -16570,12 +16555,13 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"base_damage"			"100 200 300 400"
+				"base_damage"			"150 240 330 420"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"hook_width"			"100"
+				"LinkedSpecialBonus"	"special_bonus_imba_pudge_3"
 			}
 			"08"
 			{
@@ -16589,38 +16575,33 @@
 			}
 			"10"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_scepter"		"10"
+				"var_type"				"FIELD_FLOAT"
+				"cooldown_cap_scepter"	"3.0"
 			}
 			"11"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"cooldown_scepter"		"0.1"
-			}
-			"12"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"cooldown_cap_scepter"	"3.0"
-			}
-			"13"
-			{
-				"var_type"				"FIELD_FLOAT"
 				"enemy_disable_linger"	"0.2"
 			}
-			"14"
+			"12"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"number_of_hooks"		"1"
 			}
-			"15"
+			"13"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"max_targets"			"1"
 			}
-			"16"
+			"14"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"hook_stacks"			"8 16 24 32"
+			}
+			"15"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"scepter_hook_stacks"	"7 9 11 13" // gives 30/50/70/90 max stacks
 			}
 		}
 	}
@@ -16651,7 +16632,6 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------		
-		"AbilityCastAnimation"			"ACT_DOTA_CHANNEL_ABILITY_2"
 		"AbilityCastPoint"				"250"
 
 		// Special
@@ -16676,7 +16656,8 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"rot_damage"			"30 60 100 150"
+				"rot_damage"			"30 60 90 120"
+				"LinkedSpecialBonus"	"special_bonus_imba_pudge_6"
 			}
 			"05"
 			{
@@ -16726,33 +16707,34 @@
 		{
 			"01"
 			{
-				"var_type"							"FIELD_INTEGER"
-				"base_magic_resist"					"6 8 10 12"
+				"var_type"				"FIELD_INTEGER"
+				"base_magic_resist"		"6 8 10 12"
 			}
 			"02"
 			{
-				"var_type"							"FIELD_FLOAT"
-				"stack_str"							"1.5 2.0 2.5 3.0"
+				"var_type"				"FIELD_FLOAT"
+				"stack_str"				"1.5 2.0 2.5 3.0"
 			}
 			"03"
 			{
-				"var_type"							"FIELD_INTEGER"
-				"range"								"1500"
+				"var_type"				"FIELD_INTEGER"
+				"range"					"1500"
 			}
 			"04"
 			{
-				"var_type"							"FIELD_INTEGER"
-				"stack_magic_resist"				"2"
+				"var_type"				"FIELD_INTEGER"
+				"stack_magic_resist"	"2"
 			}
 			"05"
 			{
-				"var_type"							"FIELD_FLOAT"
-				"stack_scale_up"					"2.0"
+				"var_type"				"FIELD_FLOAT"
+				"stack_scale_up"		"1.0"
 			}
 			"06"
 			{
-				"var_type"							"FIELD_INTEGER"
-				"max_stacks"						"25"
+				"var_type"				"FIELD_INTEGER"
+				"max_stacks"			"25"
+				"LinkedSpecialBonus"	"special_bonus_imba_pudge_4"
 			}
 		}
 	}
@@ -16814,11 +16796,13 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"hero_duration"				"3.0"
+				"LinkedSpecialBonus"		"special_bonus_imba_pudge_8"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"creep_duration"			"6.0"
+				"LinkedSpecialBonus"		"special_bonus_imba_pudge_8"
 			}
 			"05"
 			{
@@ -16864,16 +16848,6 @@
 				"var_type"					"FIELD_INTEGER"
 				"stack_damage"				"7"
 			}
-			"04"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"cooldown_scepter"			"0.1"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"cooldown_cap_scepter"		"3"
-			}
 		}
 	}
 
@@ -16914,15 +16888,10 @@
 				"var_type"					"FIELD_INTEGER"
 				"stack_range"				"7"
 			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"damage_scepter"			"10"
-			}
 		}
 	}
 
-	"special_bonus_imba_pudge_1" // Meat Hook gains 10 stacks for sharp and light
+	"special_bonus_imba_pudge_1" // Meat Hook gains stacks for sharp and light
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -16948,7 +16917,7 @@
 		}
 	}
 
-	"special_bonus_imba_pudge_2" // Zoom Hook: +300 Hook Speed
+	"special_bonus_imba_pudge_2" // Zoom Hook: Increase Hook Speed
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -16993,12 +16962,12 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"75"
+				"value"						"60"
 			}
 		}
 	}
 
-	"special_bonus_imba_pudge_4" // Increase Flesh Heap max stacks (+10)
+	"special_bonus_imba_pudge_4" // Increase Flesh Heap max stacks
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -17385,7 +17354,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"mana_multiplier"		"1 1.3 1.6 1.9"
+				"mana_multiplier"		"1.3 1.6 1.9 2.2"
 			}
 
 			"03"
@@ -18546,8 +18515,6 @@
 
 		"AbilityTextureName"					"silencer_curse_of_the_silent"		
 
-		"MaxLevel"								"4"
-
 		// Precache
 		//---------------------------------------------
 		"precache"
@@ -18580,37 +18547,31 @@
 				"var_type"			"FIELD_INTEGER"
 				"damage_per_second"	"12 24 36 48"
 			}
-			
 			"02"
 			{
 				"var_type"			"FIELD_INTEGER"
 				"radius"			"425"
 			}
-
 			"03"
 			{
 				"var_type"			"FIELD_INTEGER"
 				"base_duration"		"6"
 			}
-
 			"04"
 			{
 				"var_type"			"FIELD_INTEGER"
 				"penalty_duration"	"4"
 			}
-
 			"05"
 			{
 				"var_type"			"FIELD_INTEGER"
 				"curse_slow"		"10 15 20 25"
 			}
-
 			"06"
 			{
 				"var_type"			"FIELD_FLOAT"
 				"tick_rate"			"1.0"
 			}
-
 			"07"
 			{
 				"var_type"			"FIELD_INTEGER"
@@ -18722,8 +18683,6 @@
 		"AbilityTextureName"					"silencer_last_word"
 		"SpellImmunityType"						"SPELL_IMMUNITY_ENEMIES_NO"
 
-		"MaxLevel"								"4"
-
 		// Precache
 		//---------------------------------------------
 		"precache"
@@ -18745,8 +18704,8 @@
 
 		// Time
 		//---------------------------------------------
-		"AbilityCooldown"				"30 24 18 12"
-		"AbilityDuration"				"4"
+		"AbilityCooldown"				"21 18 15 12"
+		"AbilityDuration"				"4.0"
 
 		// Cost
 		//---------------------------------------------
@@ -20219,116 +20178,97 @@
 				"var_type"					"FIELD_INTEGER"
 				"initial_mines"				"1"
 			}
-
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"mine_distance"				"225"
-			}			
-
+			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"trigger_range"				"400"				
 			}
-
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"activation_delay"			"1.75"
 			}
-
 			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"explosion_delay"			"1.6"
 			}
-
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"mine_damage"				"150 350 550 750"
 			}
-
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"explosion_range"			"400 500 600 700"
 				"LinkedSpecialBonus"		"special_bonus_imba_techies_1"
 			}
-
 			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"building_damage_pct"		"25"
 			}
-
 			"9"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"building_magic_resistance"	"90"
 			}
-
 			"10"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"buidling_damage_duration"  "0.1"
 			}
-
 			"11"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"charge_replenish_duration" "20 17 14 11"
 			}
-
 			"12"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"max_charges"				"4"
 			}
-
 			"13"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"mana_increase_per_stack"	"30"
 			}
-
 			"14"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"big_boom_mine_hits"		"4"
 			}
-
 			"15"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"big_boom_mine_bonus_dmg"	"150"
 			}
-
 			"16"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"big_boom_shrapnel_aoe"		"1000"
 			}
-
 			"17"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"big_boom_shrapnel_duration"	"3"
 			}
-
 			"18"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"big_boom_shrapnel_damage"		"125"
 			}
-
 			"19"
 			{
 				"var_type"						"FIELD_FLOAT"
 				"big_boom_shrapnel_interval"	"0.25"
 			}
-
 			"20"
 			{
 				"var_type"						"FIELD_INTEGER"
@@ -22752,32 +22692,27 @@
 				"var_type"				"FIELD_INTEGER"
 				"bash_chance_pct"		"10 15 20 25"
 			}
-
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bash_damage"			"60 100 130 150"
+				"bash_damage"			"80 120 160 200"
 			}
-
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"hero_stun_duration"	"1"
 			}
-
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"creep_duration_mult"	"2"
 			}
-
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"extend_duration"		"1"
 				"LinkedSpecialBonus"	"special_bonus_imba_slardar_3"
 			}
-
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
@@ -30191,7 +30126,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_movement_speed"		"25 25 25"
+				"bonus_movement_speed"		"30"
 			}
 			"03"
 			{
@@ -35777,8 +35712,9 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"		
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"		
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"riki_blink_strike"
@@ -35892,37 +35828,31 @@
 				"var_type"							"FIELD_INTEGER"
 				"fade_time"							"6 5 4 3"
 			}
-
 			"02"
 			{
 				"var_type"							"FIELD_INTEGER"
 				"backstab_angle"					"120"
 			}
-
 			"03"
 			{
 				"var_type"							"FIELD_FLOAT"
 				"agility_damage_multiplier"			"0.55 0.7 0.85 1.0"
 			}
-
 			"04"
 			{
 				"var_type"							"FIELD_FLOAT"
 				"agility_damage_multiplier_smoke"	"0.2 0.3 0.4 0.5"
 			}
-
 			"05"
 			{
 				"var_type"							"FIELD_FLOAT"
 				"invis_break_agility_multiplier"	"2"
 			}
-
 			"06"
 			{
 				"var_type"							"FIELD_FLOAT"
 				"agility_damage_multiplier_side"	"0.2 0.3 0.4 0.5"
 			}
-
 		}
 	}
 
@@ -35951,7 +35881,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"40 35 30"
+		"AbilityCooldown"				"50 45 40"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -38152,7 +38082,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"13 12 11 10"
+		"AbilityCooldown"				"10"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -38236,7 +38166,7 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"40"
+		"AbilityManaCost"				"25 30 35 40"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -43750,5 +43680,66 @@
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial" { }
+	}
+
+	//=================================================================================================================
+	// Wisp: Tether
+	//=================================================================================================================
+	"imba_wisp_tether"
+	{
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_wisp.lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_CUSTOM"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_YES"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
+		"AbilityCooldown"				"5.0"
+		"AbilityManaCost"				"0"
+		"AbilityCastRange"				"1800"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"900 1000 1100 1200"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"movespeed"					"13 15 18 22"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"latch_distance"			"700"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"latch_speed"				"1000"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"tether_heal_amp"			"1.5"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"slow"						"-100"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"attackslow_tooltip"		"-100"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"stun_duration"				"0.75 1.25 1.75 2.25"
+			}
+		}
 	}
 }

@@ -13,22 +13,23 @@
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
 
-		"Ability1"					"imba_wisp_tether"
+		"Ability1"					"wisp_tether"
 		"Ability2"					"wisp_spirits"
-		"Ability3"					"wisp_overcharge"
-		"Ability4"					"wisp_tether"
+		"Ability3"					"wisp_overcharge"		
+		"Ability4"					"generic_hidden"
 		"Ability5"					"generic_hidden"
 		"Ability6"					"wisp_relocate"
 		"Ability7"					"wisp_tether_break"
 		"Ability8"					"wisp_spirits_in"
+		"Ability9"					"imba_wisp_tether"
 
 		"Ability10"					"special_bonus_exp_boost_25"
 		"Ability11"					"special_bonus_attack_damage_60"
 		"Ability12"					"special_bonus_unique_wisp"
 		"Ability13"					"special_bonus_unique_wisp_5"
 		"Ability14"					"special_bonus_gold_income_25"
-		"Ability15"					"special_bonus_unique_wisp_4"
+		"Ability15"					"special_bonus_hp_regen_20"
 		"Ability16"					"special_bonus_unique_wisp_6"
-		"Ability17"					"special_bonus_hp_regen_50"
+		"Ability17"					"special_bonus_unique_wisp_4"
 	}
 }

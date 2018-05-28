@@ -846,7 +846,7 @@ function GameMode:OnEntityKilled( keys )
 					end
 
 					-- divide the respawn time by 2 for frantic mode
-					if IMBA_FRANTIC_MODE_ON then
+					if killed_unit:HasModifier("modifier_frantic") then
 						respawn_time = respawn_time / (100/_G.IMBA_FRANTIC_VALUE)
 					end
 

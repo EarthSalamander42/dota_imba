@@ -124,13 +124,13 @@ function api.imba.complete(callback)
 		results = {}
 	}
 
-    -- print a stack trace if we dont have a winner
-    if complete_data.winner == 0 then
-        log.error("Winner is 0")
-    end
-    
+	-- print a stack trace if we dont have a winner
+	if complete_data.winner == 0 then
+		log.error("Winner is 0")
+	end
+
 	-- results
-	for id = 0, DOTA_MAX_TEAM_PLAYERS do
+	for id = 0, PlayerResource:GetPlayerCount() - 1 do
 		if PlayerResource:IsValidPlayerID(id) and PlayerResource:GetConnectionState(id) ~= 1 then
 
 			local data = {

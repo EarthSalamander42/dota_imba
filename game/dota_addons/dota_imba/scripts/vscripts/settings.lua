@@ -599,6 +599,7 @@ IMBA_DONATOR_COMPANION["76561198021465788"] = "npc_imba_donator_companion_suther
 IMBA_DONATOR_COMPANION["76561198073163389"] = "npc_imba_donator_companion_terdic"
 IMBA_DONATOR_COMPANION["76561197970766309"] = "npc_imba_donator_companion_hamahe"
 IMBA_DONATOR_COMPANION["76561193687456266"] = "npc_imba_donator_companion_exzas"
+-- IMBA_DONATOR_COMPANION["76561198330946475"] = "npc_imba_donator_companion_deadknight"
 
 IMBA_DONATOR_STATUE = {}
 IMBA_DONATOR_STATUE["76561198015161808"] = "npc_imba_donator_statue_cookies"
@@ -613,6 +614,7 @@ IMBA_DONATOR_STATUE["76561198073163389"] = "npc_imba_donator_statue_terdic"
 IMBA_DONATOR_STATUE["76561198077187165"] = "npc_imba_donator_statue_toc"
 IMBA_DONATOR_STATUE["76561198187809623"] = "npc_imba_donator_statue_oviakin"
 IMBA_DONATOR_STATUE["76561197970766309"] = "npc_imba_donator_statue_hamahe"
+-- IMBA_DONATOR_STATUE["76561198330946475"] = "npc_imba_donator_statue_deadknight"
 
 UNIT_EQUIPMENT = {}
 UNIT_EQUIPMENT["models/heroes/crystal_maiden/crystal_maiden.vmdl"] = {

@@ -32,5 +32,8 @@
 "DOTA_Tooltip_modifier_mutation_track"							"Track"
 "DOTA_Tooltip_modifier_mutation_track_Description"				"Unable to go invisible, and granting vision to the enemy team."
 
-"DOTA_Tooltip_modifier_mutation_shadow_dance_buff"					"Shadow Dance"
-"DOTA_Tooltip_modifier_mutation_shadow_dance_buff_Description"		"Regenerate health and mana slightly faster when not in vision of the enemy."
+"DOTA_Tooltip_modifier_mutation_shadow_dance_buff"				"Shadow Dance"
+"DOTA_Tooltip_modifier_mutation_shadow_dance_buff_Description"	"Regenerate health and mana slightly faster when not in vision of the enemy."
+
+"DOTA_Tooltip_modifier_frantic"									"Frantic"
+"DOTA_Tooltip_modifier_frantic_Description"						"50% Cooldown Reduction, Respawn Time and Status Resistance, 100% Mana Regen."

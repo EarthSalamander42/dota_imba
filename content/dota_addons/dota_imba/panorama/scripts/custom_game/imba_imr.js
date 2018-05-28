@@ -634,18 +634,12 @@ function ToggleCompanion() {
 	var max_level = CustomNetTables.GetTableValue("game_options", "max_level");
 	var frantic_mode = CustomNetTables.GetTableValue("game_options", "frantic_mode");
 	var gold_tick = CustomNetTables.GetTableValue("game_options", "gold_tick");
-	var frantic = "Disabled";
-
-	if (frantic_mode[1] == 1) {
-		frantic = "Enabled";
-	}
 
 	$("#BountyMultiplierValue").text = bounty_multiplier[1] + "%";
 	$("#ExpMultiplierValue").text = exp_multiplier[1] + "%";
 	$("#InitialGoldValue").text = initial_gold[1];
 	$("#InitialLevelValue").text = initial_level[1];
 	$("#MaxLevelValue").text = max_level[1];
-	$("#FranticModeValue").text = frantic;
 	$("#GoldTickValue").text = gold_tick[1].toFixed(1);
 	$("#TowerPowerValue").text = tower_power[1];
 

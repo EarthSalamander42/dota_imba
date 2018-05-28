@@ -3,6 +3,7 @@ modifier_mutation_sun_strike = class({})
 function modifier_mutation_sun_strike:IsHidden() return true end
 function modifier_mutation_sun_strike:IsDebuff() return true end
 function modifier_mutation_sun_strike:IsPurgable() return false end
+function modifier_mutation_sun_strike:RemoveOnDeath() return false end
 
 function modifier_mutation_sun_strike:OnCreated()
 	if IsClient() then return end
@@ -42,5 +43,7 @@ function modifier_mutation_sun_strike:OnCreated()
 			SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, enemy, self.damage / #enemies, nil)
 			ApplyDamage(damageTable)
 		end
+
+		self:GetParent():RemoveModifierByName("modifier_mutation_sun_strike")
 	end)
 end

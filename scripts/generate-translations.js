@@ -15,7 +15,22 @@ const languageShortNames = {
 	czech: 'cs',
 	polish: 'pl',
 	dutch: 'nl',
-	hungarian: 'hu'
+	hungarian: 'hu',
+	vietnamese: 'vi',
+	finnish: 'fi',
+	bulgarian: 'bg',
+	greek: 'el',
+	hungarian: 'hu',
+	japanese: 'ja',
+	korean: 'ko',
+	norwegian: 'no',
+	polish: 'pl',
+	portuguese: 'pt',
+	romanian: 'ro',
+	swedish: 'sv',
+	thai: 'th',
+	turkish: 'tr',
+	ukrainian: 'uk',
 };
 
 let englishData = null;

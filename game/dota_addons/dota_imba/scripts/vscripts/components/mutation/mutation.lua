@@ -94,7 +94,6 @@ function Mutation:OnGameRulesStateChange(keys)
 	elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
 		if IMBA_MUTATION["negative"] == "periodic_spellcast" then
 			local random_int = RandomInt(1, #IMBA_MUTATION_PERIODIC_SPELLS)
-			local caster = Entities:FindByName(nil, "dota_badguys_fort")
 
 			Timers:CreateTimer(55.0, function()
 				random_int = RandomInt(1, #IMBA_MUTATION_PERIODIC_SPELLS)
@@ -105,6 +104,8 @@ function Mutation:OnGameRulesStateChange(keys)
 
 			Timers:CreateTimer(function()
 				for _, hero in pairs(HeroList:GetAllHeroes()) do
+					local caster = Entities:FindByName(nil, "dota_badguys_fort")
+
 					if hero:GetTeamNumber() == 3 then
 						caster = Entities:FindByName(nil, "dota_goodguys_fort")
 					end

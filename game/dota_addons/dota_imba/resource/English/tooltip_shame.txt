@@ -497,7 +497,7 @@
 //"DOTA_Tooltip_Ability_special_bonus_unique_lone_druid_2"        "+7 Spirit Bear Armor"
 //"DOTA_Tooltip_Ability_special_bonus_unique_lone_druid_3"        "+1.5s Entangle Duration"
 //"DOTA_Tooltip_Ability_special_bonus_unique_lone_druid_4"        "-10s Savage Roar Cooldown"
-//"DOTA_Tooltip_Ability_special_bonus_unique_wisp"            "+190 Spirits impact damage"
+"DOTA_Tooltip_Ability_special_bonus_unique_wisp"					"+135 Spirits impact damage"
 //"DOTA_Tooltip_Ability_special_bonus_unique_wisp_2"          "Tether stuns"
 //"DOTA_Tooltip_Ability_special_bonus_unique_arc_warden"        "+250 Spark Wraith Damage"
 //"DOTA_Tooltip_Ability_special_bonus_unique_meepo"           "-5s Poof Cooldown"

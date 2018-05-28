@@ -1,8 +1,9 @@
 modifier_mutation_torrent = class({})
 
-function modifier_mutation_torrent:IsHidden() return true end
+function modifier_mutation_torrent:IsHidden() return false end
 function modifier_mutation_torrent:IsDebuff() return true end
 function modifier_mutation_torrent:IsPurgable() return false end
+function modifier_mutation_torrent:RemoveOnDeath() return false end
 
 function modifier_mutation_torrent:OnCreated()
 	if IsClient() then return end
@@ -17,15 +18,12 @@ function modifier_mutation_torrent:OnCreated()
 
 	EmitSoundOn("Ability.pre.Torrent", self:GetParent())
 
-	local particle = ParticleManager:CreateParticleForTeam("particles/hero/kunkka/torrent_bubbles.vpcf", PATTACH_ABSORIGIN, self:GetParent(), self:GetParent():GetTeamNumber())
-	ParticleManager:SetParticleControl(particle, 0, self.pos)
-	ParticleManager:SetParticleControl(particle, 1, Vector(self.radius, 0, 0))
-	ParticleManager:ReleaseParticleIndex(particle)
+	self.team_pfx = ParticleManager:CreateParticleForTeam("particles/hero/kunkka/torrent_bubbles.vpcf", PATTACH_ABSORIGIN, self:GetParent(), self:GetParent():GetTeamNumber())
+	ParticleManager:SetParticleControl(self.team_pfx, 0, self.pos)
+	ParticleManager:SetParticleControl(self.team_pfx, 1, Vector(self.radius, 0, 0))
+	ParticleManager:ReleaseParticleIndex(self.team_pfx)
 
 	Timers:CreateTimer(self.delay, function()
-		ParticleManager:DestroyParticle(particle, false)
-		ParticleManager:ReleaseParticleIndex(particle)
-
 		-- Finds affected enemies
 		local enemies = FindUnitsInRadius(self:GetParent():GetTeamNumber(), self.pos, nil, self.radius, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 
@@ -68,6 +66,8 @@ function modifier_mutation_torrent:OnCreated()
 			-- Deals tick damage tick_count times
 			Timers:CreateTimer(function()
 				if current_ticks < self.tick_count then
+					print(current_ticks, self.tick_count)
+					print(enemy, self:GetCaster(), self.damage / self.tick_count)
 					ApplyDamage({victim = enemy, attacker = self:GetCaster(), damage = self.damage / self.tick_count, damage_type = DAMAGE_TYPE_MAGICAL})
 					current_ticks = current_ticks + 1
 					return 1.0
@@ -82,33 +82,23 @@ function modifier_mutation_torrent:OnCreated()
 
 		-- Draws the particle
 		local particle = "particles/hero/kunkka/torrent_splash.vpcf"
-		local torrent_fx = ParticleManager:CreateParticle(particle, PATTACH_CUSTOMORIGIN, caster)
-		ParticleManager:SetParticleControl(torrent_fx, 0, self.pos)
-		ParticleManager:SetParticleControl(torrent_fx, 1, Vector(self.radius, 0, 0))
-		ParticleManager:ReleaseParticleIndex(torrent_fx)
-
-		-- SUPER DUPER HYPER torrent animation if tsunami
---		if torrent_count == 0 and tsunami then
---			local torrent_tsunami_fx = ParticleManager:CreateParticle("particles/econ/items/kunkka/kunkka_weapon_whaleblade/kunkka_spell_torrent_whaleblade_tail.vpcf", PATTACH_CUSTOMORIGIN, caster)
---			ParticleManager:SetParticleControl(torrent_tsunami_fx, 0, self.pos)
---			ParticleManager:ReleaseParticleIndex(torrent_tsunami_fx)
-
---			local count_mini = math.floor(radius / 35)
---			for i = 0, count_mini, 1
---			do
---				Timers:CreateTimer(math.random(80)*0.01, function()
---					local radius_mini = math.random(50)+15
---					local angle = (360 / count_mini) * i
---					local border = radius - radius_mini
---					local mini_target = self.pos + Vector( math.cos(angle) * border , math.sin(angle) * border , 0 )
---					local torrent_fx_mini = ParticleManager:CreateParticle(particle, PATTACH_CUSTOMORIGIN, caster)
---					ParticleManager:SetParticleControl(torrent_fx_mini, 0, mini_target)
---					ParticleManager:SetParticleControl(torrent_fx_mini, 1, Vector(radius_mini,0,0))
---					ParticleManager:ReleaseParticleIndex(torrent_fx_mini)
---				end)
---			end
---		end
+		self.particle = ParticleManager:CreateParticle(particle, PATTACH_CUSTOMORIGIN, caster)
+		ParticleManager:SetParticleControl(self.particle, 0, self.pos)
+		ParticleManager:SetParticleControl(self.particle, 1, Vector(self.radius, 0, 0))
+		ParticleManager:ReleaseParticleIndex(self.particle)
 	end)
+end
+
+function modifier_mutation_torrent:OnRemoved()
+	if IsServer() then
+		if self.particle then
+			ParticleManager:DestroyParticle(self.particle, true)
+		end
+
+		if self.team_pfx then
+			ParticleManager:DestroyParticle(self.team_pfx, true)
+		end
+	end
 end
 
 LinkLuaModifier("modifier_mutation_torrent_slow", "modifier/mutation/periodic_spellcast/modifier_mutation_torrent.lua", LUA_MODIFIER_MOTION_NONE )
@@ -130,6 +120,14 @@ end
 
 function modifier_mutation_torrent_slow:OnCreated()
 	self.slow = 20
+end
+
+function modifier_mutation_torrent_slow:OnRemoved()
+	if IsServer() then
+		if self:GetParent():HasModifier("modifier_mutation_torrent") then
+			self:GetParent():RemoveModifierByName("modifier_mutation_torrent")
+		end
+	end
 end
 
 function modifier_mutation_torrent_slow:GetModifierMoveSpeedBonus_Percentage( )

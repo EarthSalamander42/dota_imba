@@ -163,12 +163,6 @@ function OnSetGameMode( eventSourceIndex, args )
 		CustomNetTables:SetTableValue("game_options", "all_random_same_hero", {true})
 	end
 
-	-- Frantic mode setup
---	if tonumber(mode_info.frantic_mode) == 1 then
---		IMBA_FRANTIC_MODE_ON = true
---		CustomNetTables:SetTableValue("game_options", "frantic_mode", {true})
---	end
-
 	-- Bounty multiplier increase
 	CustomNetTables:SetTableValue("game_options", "bounty_multiplier", {CUSTOM_GOLD_BONUS[GetMapName()]})
 

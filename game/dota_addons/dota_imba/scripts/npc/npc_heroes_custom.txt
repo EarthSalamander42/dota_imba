@@ -1,3 +1,5 @@
+#base heroes/wisp/hero.txt
+
 "DOTAHeroes"
 {
 	//=================================================================================================================
@@ -1492,7 +1494,7 @@
 		"Ability13"					"special_bonus_imba_queenofpain_4"
 		"Ability14"					"special_bonus_spell_amplify_25"
 		"Ability15"					"special_bonus_imba_queenofpain_6"
-		"Ability16"					"special_bonus_imba_queenofpain_7"
+		"Ability16"					"special_bonus_spell_block_15"
 		"Ability17"					"special_bonus_imba_queenofpain_8"
 	}
 

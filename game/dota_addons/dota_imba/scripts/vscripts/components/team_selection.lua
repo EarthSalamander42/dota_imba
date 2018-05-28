@@ -59,7 +59,7 @@ function InitializeTeamSelection()
 
 	-- 5v5                will use complete random
 	-- 10v10              parties will be kept
-	-- frantic, imbathrow normal manual procedure
+	-- mutation, imbathrow normal manual procedure
 
 	if GetMapName() == MapRanked5v5() then
 		Random5v5TeamSelection()

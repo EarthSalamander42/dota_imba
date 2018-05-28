@@ -593,7 +593,7 @@ function MoveChatWindow() {
 	vanillaChat.SetHasClass('Active', true);
 	vanillaChat.style.y = '0px';
 	vanillaChat.hittest = true;
-	vanillaChat.style.width = "420px";
+//	vanillaChat.style.width = "420px";
 	vanillaChat.SetParent(FindDotaHudElement('ChatPlaceholder'));
 }
 
@@ -608,7 +608,7 @@ function ReturnChatWindow() {
 		vanillaChat.style.y = '-240px';
 		vanillaChat.hittest = false;
 		vanillaChat.style.visibility = "visible";
-		vanillaChat.style.width = "420px";
+//		vanillaChat.style.width = "420px";
 		vanillaChat.SetHasClass('ChatExpanded', false);
 		vanillaChat.SetHasClass('Active', false);
 	}

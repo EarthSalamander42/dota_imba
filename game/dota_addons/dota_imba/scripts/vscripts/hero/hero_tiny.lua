@@ -149,6 +149,7 @@ end
 function imba_tiny_avalanche:GetAOERadius()
 	return self:GetSpecialValueFor("radius")
 end
+
 if IsServer() then
 	function imba_tiny_avalanche:OnSpellStart()
 		local vPos = self:GetCursorPosition()
@@ -238,7 +239,6 @@ function imba_tiny_avalanche:GetIntrinsicModifierName()
 	return "modifier_imba_tiny_avalanche_passive"
 end
 
-
 LinkLuaModifier("modifier_imba_tiny_avalanche_passive", "hero/hero_tiny", LUA_MODIFIER_MOTION_NONE)
 modifier_imba_tiny_avalanche_passive = class({})
 function modifier_imba_tiny_avalanche_passive:OnCreated()
@@ -316,6 +316,18 @@ end
 
 function imba_tiny_toss:IsNetherWardStealable()
 	return false
+end
+
+function imba_tiny_toss:CastFilterResultTarget( hTarget )
+	if IsServer() then
+		print(PlayerResource:IsDisableHelpSetForPlayerID(hTarget:GetPlayerOwnerID(), self:GetCaster():GetPlayerOwnerID()))
+		print(PlayerResource:IsDisableHelpSetForPlayerID(self:GetCaster():GetPlayerOwnerID(), hTarget:GetPlayerOwnerID()))
+		if hTarget:IsOpposingTeam(self:GetCaster():GetTeamNumber()) and PlayerResource:IsDisableHelpSetForPlayerID(hTarget:GetPlayerOwnerID(), self:GetCaster():GetPlayerOwnerID()) then 	
+			return UF_FAIL_DISABLE_HELP
+		end
+	end
+
+	return UnitFilter(hTarget, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), DOTA_UNIT_TARGET_FLAG_CHECK_DISABLE_HELP, self:GetCaster():GetTeamNumber() )
 end
 
 function imba_tiny_toss:OnSpellStart()

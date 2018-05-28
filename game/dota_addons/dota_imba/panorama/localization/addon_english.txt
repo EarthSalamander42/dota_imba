@@ -60,10 +60,12 @@
 	"imba_gamemode_name_all_random_tooltip"                                             "Players will be forced to random, receiving bonus gold."
 	"imba_gamemode_name_all_random_same_hero"											"All Random Same Hero"
 	"imba_gamemode_name_all_random_same_hero_tooltip"									"Players will be forced to random the same hero, receiving bonus gold."
-	"imba_gamemode_name_10v10"                                                          "All Pick (10v10)"        
-	"imba_gamemode_name_arena_mode"                                                     "ARENA MODE"
-	"imba_gamemode_name_frantic"														"Frantic (10v10)"
-	"imba_gamemode_name_ranked_5v5"                                                     "Ranked (5v5)"
+	"imba_gamemode_name_imba_ranked_5v5"												"Ranked (5v5)"        
+	"imba_gamemode_name_imba_ranked_10v10"												"Ranked (10v10)"        
+	"imba_gamemode_name_imba_mutation_5v5"												"Mutation (5v5)"
+	"imba_gamemode_name_imba_mutation_10v10"											"Mutation (10v10)"
+	"imba_gamemode_name_imba_1v1"														"Ranked (1v1)"
+	"imba_gamemode_name_imba_overthrow"													"Imbathrow"
 
 	"imba_random_pick_button"                                                           "RANDOM HERO"
 	"imba_random_imba_pick_button"                                                      "RANDOM IMBA HERO"
@@ -113,11 +115,6 @@
 	"imba_gamemode_settings_hero_pick_team_unique"                                      "Mirror"
 	"imba_gamemode_settings_hero_pick_no_unique"                                        "Free"
 
-	"imba_gamemode_game_options_frantic"                                                "FRANTIC mode"
-	"imba_gamemode_game_options_frantic_enabled"                                        "On"
-	"imba_gamemode_game_options_frantic_disabled"                                       "Off"
-	"imba_gamemode_game_options_frantic_tooltip"                                        "All hero cooldowns, mana costs, respawn time, and disable durations reduced by 60%."
-
 	//Picking Screen
 	"loading_pre_game"				"Loading heroes, please wait..."
 	"hero_list_title_strength"		"Strength"
@@ -141,7 +138,7 @@
 	"new_hero"						"New!"
 	"disabled_hero"					"Disabled"
 	"disabled_hero_10v10"			"10v10 Disabled"
-	"disabled_hero_frantic"			"Frantic Disabled"
+	"disabled_hero_mutation"		"Mutation Disabled"
 	"disabled_hero_overthrow"		"Overthrow Disabled"
 	"picked_hero"					"Picked"
 	"imba_hero"						"Imba"
@@ -345,12 +342,8 @@
 	"mutation_greedisgood"							"Greed Is Good"
 	"mutation_greedisgood_Description"				"{gold} gold for everyone each {minutes} minutes."
 
-	"mutation_angel_arena"							"Angel Arena"
-	"mutation_angel_arena_Description"				"Every 5 minutes, duels will occur. Winner team gets 2000 extra gold."
-	"mutation_slark_mode_author"					"76561198015161808"
-
 	"mutation_gift_exchange"						"Airdrop"
-	"mutation_gift_exchange_Description"			"Gifts are periodically deployed around the map. If you don't claim them, Roshan will!"
+	"mutation_gift_exchange_Description"			"Gifts are periodically deployed around the map."
 
 	"mutation_speed_freaks"							"Speed Freaks"
 	"mutation_speed_freaks_Description"				"Enemy units have double their normal movement speed."
@@ -362,11 +355,11 @@
 	"mutation_battle_hunger_Description"			"Everytime you kill an enemy's hero your team get troll ult."
 
 	"mutation_frantic"								"Frantic"
-	"mutation_frantic_Description"					"50% Cooldown Reduction and Status Resistance, 100% Mana Regen."
+	"mutation_frantic_Description"					"50% Cooldown Reduction, Respawn Time and Status Resistance, 100% Mana Regen."
 
 	// Negative
 	"mutation_death_explosion"					"Death Explosion"
-	"mutation_death_explosion_Description"		"Deal 600 + (100 * minutes) damage in a 400 radius on death afer a 0.9 seconds delay."
+	"mutation_death_explosion_Description"		"Deal 600 + (100 * minutes) damage up to 3600 max in a 400 radius on death afer a 0.9 seconds delay."
 
 	"mutation_death_gold_drop"					"Death Gold Drop"
 	"mutation_death_gold_drop_Description"		"Whenever a hero is killed, they drop a gold sack."
@@ -378,10 +371,14 @@
 	"mutation_monkey_business_Description"		"Every heroes gets mischief ability passively when not attacking or being attacked for 5 seconds."
 
 	"mutation_defense_of_the_ants"				"Defense of the Ants"
-	"mutation_defense_of_the_ants_Description"	"Everytime you die, you respawn smaller."
+	"mutation_defense_of_the_ants_Description"	"Everytime you die, you respawn 5% smaller. Minimum size being 25%."
 
 	"mutation_the_walking_dead"					"The Walking Dead"
 	"mutation_the_walking_dead_Description"		"During night, zombies spawns in Jungle and attack the closest hero."
+
+	"mutation_angel_arena"						"Angel Arena"
+	"mutation_angel_arena_Description"			"Every 5 minutes, duels will occur. Winner team gets 2000 extra gold."
+	"mutation_slark_mode_author"				"76561198015161808"
 
 	"mutation_alien_incubation"					"Alien Incubation"
 	"mutation_alien_incubation_Description"		"Every units spawn uncontrollable Broodlings upon death."
@@ -418,7 +415,7 @@
 	"mutation_void_path_Description"			""
 
 	"mutation_danger_zone"						"Danger Zone"
-	"mutation_danger_zone_Description"			""
+	"mutation_danger_zone_Description"			"Gyrocopter Call Down is casted on random positions all over the map."
 
 	"mutation_reality_rift"						"Reality Rift"
 	"mutation_reality_rift_Description"			""

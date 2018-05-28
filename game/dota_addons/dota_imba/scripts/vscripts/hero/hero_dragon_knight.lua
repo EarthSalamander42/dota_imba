@@ -140,6 +140,8 @@ LinkLuaModifier("modifier_imba_dragon_tail_debuff", "hero/hero_dragon_knight.lua
 
 imba_dragon_knight_dragon_tail = class({})
 
+function imba_dragon_knight_dragon_tail:GetAssociatedPrimaryAbilities() return "imba_dragon_knight_elder_dragon_charge" end
+
 function imba_dragon_knight_dragon_tail:GetCastRange()
 self.cast_range = 150
 
@@ -407,9 +409,8 @@ LinkLuaModifier( "modifier_imba_elder_dragon_charge", "hero/hero_dragon_knight.l
 
 imba_dragon_knight_elder_dragon_charge = class({})
 
-function imba_dragon_knight_elder_dragon_charge:IsInnateAbility()
-	return true
-end
+function imba_dragon_knight_elder_dragon_charge:IsInnateAbility() return true end
+function imba_dragon_knight_dragon_tail:GetAssociatedPrimaryAbilities() return "imba_dragon_knight_elder_dragon_form" end
 
 function imba_dragon_knight_elder_dragon_charge:OnUpgrade()
 	self:SetActivated(false)
@@ -481,20 +482,29 @@ function imba_dragon_knight_elder_dragon_charge:OnProjectileHit(target, location
 	if IsServer() then
 		local breathe_fire = self:GetCaster():FindAbilityByName("imba_dragon_knight_breathe_fire")
 		local dragon_tail = self:GetCaster():FindAbilityByName("imba_dragon_knight_dragon_tail")
-		local health_as_damage = self:GetCaster():GetHealth() / 100 * breathe_fire:GetSpecialValueFor("health_as_damage")
-		local dmg_type = DAMAGE_TYPE_MAGICAL
-
-		if self:GetCaster():HasTalent("special_bonus_imba_dragon_knight_1") then
-			health_as_damage = self:GetCaster():GetMaxHealth() / 100 * breathe_fire:GetSpecialValueFor("health_as_damage")
+		local health_as_damage = self:GetCaster():GetHealth() / 100
+		if breathe_fire then
+			health_as_damage = health_as_damage * breathe_fire:GetSpecialValueFor("health_as_damage")
 		end
+
+		local dmg_type = DAMAGE_TYPE_MAGICAL
 
 		if self:GetCaster():HasTalent("special_bonus_imba_dragon_knight_4") then
 			dmg_type = DAMAGE_TYPE_PURE
 		end
 
-		ApplyDamage({attacker = self:GetCaster(), victim = target, damage = breathe_fire:GetSpecialValueFor("damage") + health_as_damage, damage_type = dmg_type, ability = breathe_fire})	
-		ApplyDamage({attacker = self:GetCaster(), victim = target, damage = dragon_tail:GetAbilityDamage(), damage_type = dragon_tail:GetAbilityDamageType(), ability = dragon_tail})
-		SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, target, health_as_damage, nil)
+		if self:GetCaster():HasTalent("special_bonus_imba_dragon_knight_1") then
+			health_as_damage = self:GetCaster():GetMaxHealth() / 100 * breathe_fire:GetSpecialValueFor("health_as_damage")
+			ApplyDamage({attacker = self:GetCaster(), victim = target, damage = breathe_fire:GetSpecialValueFor("damage") + health_as_damage, damage_type = dmg_type, ability = breathe_fire})	
+			SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, target, health_as_damage, nil)
+			target:AddNewModifier(self:GetCaster(), breathe_fire, "modifier_imba_breathe_fire_debuff", {duration = breathe_fire:GetSpecialValueFor("duration")})
+		end
+
+		if dragon_tail then
+			ApplyDamage({attacker = self:GetCaster(), victim = target, damage = dragon_tail:GetAbilityDamage(), damage_type = dragon_tail:GetAbilityDamageType(), ability = dragon_tail})
+			self:GetCaster():AddNewModifier(self:GetCaster(), dragon_tail, "modifier_imba_dragon_tail", {duration = dragon_tail:GetSpecialValueFor("duration_instances")})
+			target:AddNewModifier(self:GetCaster(), dragon_tail, "modifier_imba_dragon_tail_debuff", {duration = dragon_tail:GetSpecialValueFor("stun_duration")})
+		end
 
 		target:EmitSound("Hero_DragonKnight.DragonTail.Target")
 		ParticleManager:CreateParticle("particles/units/heroes/hero_dragon_knight/dragon_knight_dragon_tail.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
@@ -502,10 +512,6 @@ function imba_dragon_knight_elder_dragon_charge:OnProjectileHit(target, location
 		if self:GetCaster():HasTalent("special_bonus_imba_dragon_knight_5") then
 			self:GetCaster():Purge(false, true, false, true, true)
 		end
-
-		self:GetCaster():AddNewModifier(self:GetCaster(), dragon_tail, "modifier_imba_dragon_tail", {duration = dragon_tail:GetSpecialValueFor("duration_instances")})
-		target:AddNewModifier(self:GetCaster(), breathe_fire, "modifier_imba_breathe_fire_debuff", {duration = breathe_fire:GetSpecialValueFor("duration")})
-		target:AddNewModifier(self:GetCaster(), dragon_tail, "modifier_imba_dragon_tail_debuff", {duration = dragon_tail:GetSpecialValueFor("stun_duration")})
 	end
 end
 
@@ -673,9 +679,13 @@ if IsServer() then
 
 	function modifier_imba_elder_dragon_form:OnIntervalThink()
 		if self:GetParent().HasModifier and self:GetParent():HasModifier("modifier_dragon_knight_dragon_form") then
-			self:GetParent():FindAbilityByName("imba_dragon_knight_elder_dragon_charge"):SetActivated(true)
+			if self:GetParent():HasAbility("imba_dragon_knight_elder_dragon_charge") then
+				self:GetParent():FindAbilityByName("imba_dragon_knight_elder_dragon_charge"):SetActivated(true)
+			end
 		else
-			self:GetParent():FindAbilityByName("imba_dragon_knight_elder_dragon_charge"):SetActivated(false)
+			if self:GetParent():HasAbility("imba_dragon_knight_elder_dragon_charge") then
+				self:GetParent():FindAbilityByName("imba_dragon_knight_elder_dragon_charge"):SetActivated(false)
+			end
 		end
 
 		if self:GetParent():HasTalent("special_bonus_imba_dragon_knight_6") and self:GetParent():HasModifier("modifier_dragon_knight_dragon_form") then

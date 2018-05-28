@@ -15,6 +15,8 @@ POSITIVE_MUTATION_LIST = {}
 POSITIVE_MUTATION_LIST["killstreak_power"] = false
 POSITIVE_MUTATION_LIST["jump_start"] = false
 POSITIVE_MUTATION_LIST["teammate_resurrection"] = false
+
+-- Not coded/approved yet
 -- POSITIVE_MUTATION_LIST["damage_reduction"] = false
 -- POSITIVE_MUTATION_LIST["team_runes"] = false
 -- POSITIVE_MUTATION_LIST["stationary_damage_reduction"] = false
@@ -24,6 +26,8 @@ POSITIVE_MUTATION_LIST["teammate_resurrection"] = false
 -- IMBA
 POSITIVE_MUTATION_LIST["frantic"] = false
 POSITIVE_MUTATION_LIST["slark_mode"] = false
+
+-- Not coded/approved yet
 -- POSITIVE_MUTATION_LIST["greedisgood"] = false
 -- POSITIVE_MUTATION_LIST["angel_arena"] = false
 -- POSITIVE_MUTATION_LIST["speed_freaks"] = false
@@ -37,22 +41,30 @@ NEGATIVE_MUTATION_LIST["periodic_spellcast"] = false -- in progress
 
 -- IMBA
 NEGATIVE_MUTATION_LIST["defense_of_the_ants"] = false
+
+-- Disabled
 -- NEGATIVE_MUTATION_LIST["stay_frosty"] = false
+
+-- Not coded/approved yet
 -- NEGATIVE_MUTATION_LIST["monkey_business"] = false
 -- NEGATIVE_MUTATION_LIST["the_walking_dead"] = false
 -- NEGATIVE_MUTATION_LIST["alien_incubation"] = false
 
 TERRAIN_MUTATION_LIST = {}
--- TERRAIN_MUTATION_LIST["no_trees"] = false
 TERRAIN_MUTATION_LIST["sleepy_river"] = false
--- TERRAIN_MUTATION_LIST["omni_vision"] = false
 TERRAIN_MUTATION_LIST["fast_runes"] = false
 TERRAIN_MUTATION_LIST["minefield"] = false
 TERRAIN_MUTATION_LIST["gift_exchange"] = false
+
+-- Disabled
+-- TERRAIN_MUTATION_LIST["no_trees"] = false
+-- TERRAIN_MUTATION_LIST["omni_vision"] = false
+
+-- Not coded/approved yet
+-- TERRAIN_MUTATION_LIST["danger_zone"] = false -- add archer's music danger zone
 -- TERRAIN_MUTATION_LIST["river_fag"] = false
 -- TERRAIN_MUTATION_LIST["diretide"] = false
 -- TERRAIN_MUTATION_LIST["void_path"] = false
--- TERRAIN_MUTATION_LIST["danger_zone"] = false -- add archer's music danger zone
 -- TERRAIN_MUTATION_LIST["reality_rift"] = false
 -- TERRAIN_MUTATION_LIST["blizzard"] = false
 -- TERRAIN_MUTATION_LIST["twister"] = false

@@ -792,9 +792,7 @@
 	"item_ward_sentry"
 	{
 		"AbilityCastRange"				"800"
-
 		"ItemCost"						"75"
-
 		"ItemInitialCharges"			"1"
 
 		"AbilitySpecial"
@@ -802,7 +800,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"lifetime"					"240"
+				"lifetime"					"360"
 			}
 			"02"
 			{
@@ -822,7 +820,7 @@
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"duration_minutes_tooltip"	"4"
+				"duration_minutes_tooltip"	"6"
 			}
 			"06"
 			{
@@ -2024,9 +2022,7 @@
 	//=================================================================================================================
 	"arc_warden_magnetic_field"
 	{
-		"AbilityCooldown"				"35 25 15 10"
-
-		"MaxLevel"						"4"
+		"AbilityCooldown"				"35 26 17 8"
 
 		"AbilitySpecial"
 		{
@@ -3049,8 +3045,6 @@
 	//=================================================================================================================
 	"bristleback_bristleback"
 	{
-		"MaxLevel"								"4"
-
 		"AbilitySpecial"
 		{
 			"01"
@@ -3085,9 +3079,7 @@
 	// Bristleback: Warpath
 	//=================================================================================================================
 	"bristleback_warpath"
-	{
-		"MaxLevel"								"3"
-				
+	{				
 		"AbilitySpecial"
 		{
 			"01"
@@ -4398,7 +4390,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_movement_speed_pct"	"15 20 25 30"
+				"bonus_movement_speed_pct"	"12 14 16 18"
 			}
 			"05"
 			{
@@ -5678,7 +5670,7 @@
 		"RequiredLevel"					"0"
 		"MaxLevel"						"4"
 		"AbilityCooldown"				"6 4 2 2"
-		"AbilityManaCost"				"60"
+		"AbilityManaCost"				"0"
 
 		"AbilitySpecial"
 		{
@@ -7897,10 +7889,7 @@
 	//=================================================================================================================
 	"monkey_king_wukongs_command"
 	{
-		"MaxLevel"								"3"
-
 		"AbilityCastPoint"						"1.2 1.0 0.8"
-
 		"AbilityCooldown"						"100 85 70"
 
 		"AbilitySpecial"
@@ -7933,7 +7922,7 @@
 			"06"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"bonus_armor"					"8 20 32"
+				"bonus_armor"					"12 24 36"
 				"LinkedSpecialBonus"			"special_bonus_unique_monkey_king_4"
 			}
 			"07"
@@ -8789,7 +8778,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"multicast_2_times"		"0.5 0.75 1.0"
+				"multicast_2_times"		"0.6 0.8 1.0"
 			}
 			"02"
 			{
@@ -11285,9 +11274,7 @@
 	//=================================================================================================================
 	"treant_living_armor"
 	{
-		"MaxLevel"						"4"
-
-		"AbilityCooldown"				"30 18 11 9"
+		"AbilityCooldown"				"22 18 14 10"
 
 		"AbilitySpecial"
 		{
@@ -11885,7 +11872,7 @@
 	//=================================================================================================================
 	"undying_soul_rip"
 	{
-		"AbilityCooldown"				"24 12 5 3"
+		"AbilityCooldown"				"24 18 12 6"
 
 		"AbilitySpecial"
 		{
@@ -12563,10 +12550,7 @@
 	//=================================================================================================================
 	"weaver_shukuchi"
 	{
-		"MaxLevel"						"4"
-
 		"AbilityCooldown"				"12 8 5 3"
-
 		"AbilityManaCost"				"60 50 40 30"
 
 		"AbilitySpecial"
@@ -12574,7 +12558,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"80 140 185 215"
+				"damage"				"100 140 180 220"
 				"LinkedSpecialBonus"	"special_bonus_unique_weaver_1"
 			}
 			"02"
@@ -12987,12 +12971,12 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_movespeed"		"-25"
+				"bonus_movespeed"		"-40"
 			}
 			"05"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"movespeed_slow_tooltip"		"25"
+				"movespeed_slow_tooltip"		"40"
 			}
 			"06"
 			{
@@ -13325,7 +13309,6 @@
 	//=================================================================================================================
 	"zuus_arc_lightning"
 	{
-		"MaxLevel"						"4"
 		"AbilityCastRange"				"850 900 950 1000"
 		"AbilityCastPoint"				"0.2 0.16 0.13 0.1"
 		"AbilityManaCost"				"65"
@@ -13335,7 +13318,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"arc_damage"			"90 130 160 180"
+				"arc_damage"			"90 120 150 180"
 				"LinkedSpecialBonus"	"special_bonus_unique_zeus_2"
 			}
 			"02"
@@ -13346,7 +13329,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"jump_count"			"5 9 20 30"
+				"jump_count"			"5 10 15 20"
 			}
 			"04"
 			{
@@ -13376,10 +13359,8 @@
 	//=================================================================================================================
 	"zuus_lightning_bolt"
 	{
-		"MaxLevel"						"4"
-
 		"AbilityCastRange"				"700 800 900 1000"
-		"AbilityDamage"					"125 275 375 425"
+		"AbilityDamage"					"125 200 275 350"
 		"AbilityCooldown"				"6.0 5.5 5.0 4.5"
 
 		"AbilitySpecial"
@@ -15847,5 +15828,64 @@
 			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
+	}
+
+	//=================================================================================================================
+	// Nullifier
+	//=================================================================================================================
+	"item_nullifier"
+	{
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+		"FightRecapLevel"				"1"
+		"AbilityCooldown"				"13.0"
+		"AbilityCastRange"				"600"
+		"AbilityManaCost"				"75"
+		"ItemCost"						"4700"
+		"ItemQuality"					"epic"
+		"ItemAliases"					"nlf;nullifier"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+		"ShouldBeSuggested"				"1"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"65"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_armor"			"9"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_regen"			"5"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"mute_duration"			"5.0"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"projectile_speed"		"900"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"slow_pct"				"100"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"slow_interval_duration"	"0.4"
+			}
+		}
 	}
 }

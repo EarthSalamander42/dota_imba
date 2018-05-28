@@ -399,18 +399,6 @@ function GameMode:ModifierFilter( keys )
 		end
 
 		-------------------------------------------------------------------------------------------------
-		-- Frantic mode duration adjustment
-		-------------------------------------------------------------------------------------------------
-		--		if modifier_name == "modifier_imba_doom_bringer_doom" then
-		--			if IMBA_FRANTIC_MODE_ON then
-		--				local original_duration = keys.duration
-		--				local actually_duration = original_duration
-		--				actually_duration = actually_duration / (100/IMBA_FRANTIC_VALUE)
-		--				keys.duration = actually_duration
-		--			end
-		--		end
-
-		-------------------------------------------------------------------------------------------------
 		-- Silencer Arcane Supremacy silence duration reduction
 		-------------------------------------------------------------------------------------------------
 		if modifier_owner:HasModifier("modifier_imba_silencer_arcane_supremacy") then

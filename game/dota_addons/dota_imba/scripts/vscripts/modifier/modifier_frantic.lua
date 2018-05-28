@@ -15,19 +15,19 @@ function modifier_frantic:GetTexture()
 	return "custom/imba_rune_arcane"
 end
 
---	function modifier_frantic:GetEffectName()
---		return "particles/generic_gameplay/rune_arcane_owner.vpcf"
---	end
+function modifier_frantic:GetEffectName()
+	return "particles/generic_gameplay/rune_arcane_owner.vpcf"
+end
 
---	function modifier_frantic:GetEffectAttachType()
---		return PATTACH_ABSORIGIN_FOLLOW
---	end
+function modifier_frantic:GetEffectAttachType()
+	return PATTACH_ABSORIGIN_FOLLOW
+end
 
 function modifier_frantic:DeclareFunctions()
 	local funcs = {
 		MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE,
---		MODIFIER_PROPERTY_STATUS_RESISTANCE,
---		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING,
+		MODIFIER_PROPERTY_STATUS_RESISTANCE,
+		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING,
 	}
 
 	return funcs
@@ -42,12 +42,12 @@ function modifier_frantic:GetModifierPercentageCooldown()
 	return self:GetStackCount()
 end
 
--- function modifier_frantic:GetModifierStatusResistanceStacking()
--- 	print("Status Resistance:", self:GetStackCount())
--- 	return self:GetStackCount()
--- end
+function modifier_frantic:GetModifierStatusResistanceStacking()
+	print("Status Resistance:", self:GetStackCount())
+	return self:GetStackCount()
+end
 
--- function modifier_frantic:GetModifierStatusResistance()
--- 	print("Status Resistance:", self:GetStackCount())
--- 	return self:GetStackCount()
--- end
+function modifier_frantic:GetModifierStatusResistance()
+	print("Status Resistance:", self:GetStackCount())
+	return self:GetStackCount()
+end

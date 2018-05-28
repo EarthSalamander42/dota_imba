@@ -66,6 +66,28 @@ function imba_pudge_light_hook:OnToggle()
 	end
 end
 
+function imba_pudge_sharp_hook:OnInventoryContentsChanged()
+	if IsClient() then return end
+
+	if self:GetCaster():HasModifier("modifier_imba_hook_sharp_stack") then
+		print(self:GetCaster():FindModifierByName("modifier_imba_hook_sharp_stack"):GetStackCount() + self:GetCaster():FindModifierByName("modifier_imba_hook_light_stack"):GetStackCount(), UpdateHookStacks(self:GetCaster()) * 2)
+		if self:GetCaster():FindModifierByName("modifier_imba_hook_sharp_stack"):GetStackCount() + self:GetCaster():FindModifierByName("modifier_imba_hook_light_stack"):GetStackCount() ~= UpdateHookStacks(self:GetCaster()) * 2 then
+			self:GetCaster():FindModifierByName("modifier_imba_hook_sharp_stack"):SetStackCount(UpdateHookStacks(self:GetCaster()))
+		end
+	end
+end
+
+function imba_pudge_light_hook:OnInventoryContentsChanged()
+	if IsClient() then return end
+
+	if self:GetCaster():HasModifier("modifier_imba_hook_light_stack") then
+		print(self:GetCaster():FindModifierByName("modifier_imba_hook_sharp_stack"):GetStackCount() + self:GetCaster():FindModifierByName("modifier_imba_hook_light_stack"):GetStackCount(), UpdateHookStacks(self:GetCaster()) * 2)
+		if self:GetCaster():FindModifierByName("modifier_imba_hook_sharp_stack"):GetStackCount() + self:GetCaster():FindModifierByName("modifier_imba_hook_light_stack"):GetStackCount() ~= UpdateHookStacks(self:GetCaster()) * 2 then
+			self:GetCaster():FindModifierByName("modifier_imba_hook_light_stack"):SetStackCount(UpdateHookStacks(self:GetCaster()))
+		end
+	end
+end
+
 function imba_pudge_sharp_hook:GetAbilityTextureName()
 	if not IsClient() then return end
 	if not self:GetCaster().sharp_hook_icon then return "custom/pudge_sharp_hook" end
@@ -88,17 +110,17 @@ function modifier_imba_hook_sharp_stack:IsStunDebuff() return false end
 function modifier_imba_hook_sharp_stack:RemoveOnDeath() return false end
 
 function modifier_imba_hook_sharp_stack:OnCreated()
-	local stacks = 0
+	if IsClient() then return end
 
 	if self:GetCaster() and self:GetCaster().FindAbilityByName and self:GetCaster():FindAbilityByName("imba_pudge_meat_hook") then
-		stacks = self:GetCaster():FindAbilityByName("imba_pudge_meat_hook"):GetSpecialValueFor("hook_stacks")
+		self:SetStackCount(UpdateHookStacks(self:GetCaster()))
 	end
 
 	if IsServer() then
-		self:GetCaster():AddNewModifier(self:GetCaster(), nil, "modifier_imba_pudge_sharp_hook_handler", {})
+		if not self:GetCaster():HasModifier("modifier_imba_pudge_sharp_hook_handler") then
+			self:GetCaster():AddNewModifier(self:GetCaster(), nil, "modifier_imba_pudge_sharp_hook_handler", {})
+		end
 	end
-
-	self:SetStackCount(stacks)
 end
 
 function modifier_imba_hook_sharp_stack:OnIntervalThink()
@@ -140,17 +162,17 @@ function modifier_imba_hook_light_stack:IsStunDebuff() return false end
 function modifier_imba_hook_light_stack:RemoveOnDeath() return false end
 
 function modifier_imba_hook_light_stack:OnCreated()
-	local stacks = 0
+	if IsClient() then return end
 
 	if self:GetCaster() and self:GetCaster().FindAbilityByName and self:GetCaster():FindAbilityByName("imba_pudge_meat_hook") then
-		stacks = self:GetCaster():FindAbilityByName("imba_pudge_meat_hook"):GetSpecialValueFor("hook_stacks")
+		self:SetStackCount(UpdateHookStacks(self:GetCaster()))
 	end
 
 	if IsServer() then
-		self:GetCaster():AddNewModifier(self:GetCaster(), nil, "modifier_imba_pudge_light_hook_handler", {})
+		if not self:GetCaster():HasModifier("modifier_imba_pudge_light_hook_handler") then
+			self:GetCaster():AddNewModifier(self:GetCaster(), nil, "modifier_imba_pudge_light_hook_handler", {})
+		end
 	end
-
-	self:SetStackCount(stacks)
 end
 
 function modifier_imba_hook_light_stack:OnIntervalThink()
@@ -203,8 +225,9 @@ function imba_pudge_meat_hook:OnUpgrade()
 
 	local dmg_hook_buff = self:GetCaster():AddNewModifier(self:GetCaster(), ability1, "modifier_imba_hook_sharp_stack", {})
 	local spd_hook_buff = self:GetCaster():AddNewModifier(self:GetCaster(), ability2, "modifier_imba_hook_light_stack", {})
-	dmg_hook_buff:SetStackCount(self:GetCaster():FindAbilityByName("imba_pudge_meat_hook"):GetSpecialValueFor("hook_stacks"))
-	spd_hook_buff:SetStackCount(self:GetCaster():FindAbilityByName("imba_pudge_meat_hook"):GetSpecialValueFor("hook_stacks"))
+
+	dmg_hook_buff:SetStackCount(UpdateHookStacks(self:GetCaster()))
+	spd_hook_buff:SetStackCount(UpdateHookStacks(self:GetCaster()))
 end
 
 function imba_pudge_meat_hook:GetCastRange()
@@ -217,19 +240,6 @@ function imba_pudge_meat_hook:GetCastRange()
 	end
 
 	return hook_range
-end
-
-function imba_pudge_meat_hook:GetCooldown(nLevel)
-	local charges = self:GetCaster():GetModifierStackCount("modifier_imba_hook_sharp_stack", self:GetCaster())
-	local cd = self.BaseClass.GetCooldown( self, nLevel )
-	if self:GetCaster():HasScepter() then
-		cd = self.BaseClass.GetCooldown( self, nLevel ) - charges * self:GetSpecialValueFor("cooldown_scepter")
-	end
-	local cd_min = self:GetSpecialValueFor("cooldown_cap_scepter")
-	if cd < cd_min then
-		cd = cd_min
-	end
-	return cd
 end
 
 function imba_pudge_meat_hook:OnAbilityPhaseStart()
@@ -278,19 +288,18 @@ function imba_pudge_meat_hook:OnSpellStart()
 	end
 	local hook_dmg = self:GetSpecialValueFor("base_damage")
 	local stack_dmg = 0
+
 	if self:GetCaster():HasAbility("imba_pudge_light_hook") then
 		stack_dmg = self:GetCaster():FindAbilityByName("imba_pudge_sharp_hook"):GetSpecialValueFor("stack_damage")
 	end
-	local stack_dmg_scepter = self:GetSpecialValueFor("damage_scepter")
+
 	if spd_hook_buff then
 		hook_speed = hook_speed + stack_speed * spd_hook_buff:GetStackCount()
 		hook_range = hook_range + stack_range * spd_hook_buff:GetStackCount()
 	end
+
 	if dmg_hook_buff then
 		hook_dmg = hook_dmg + stack_dmg * dmg_hook_buff:GetStackCount()
-		if self:GetCaster():HasScepter() then
-			hook_dmg = hook_dmg + stack_dmg_scepter * spd_hook_buff:GetStackCount()
-		end
 	end
 
 	--[[
@@ -849,15 +858,20 @@ function imba_pudge_rot_active:OnCreated()
 		local caster = self:GetCaster()
 		local buff = caster:FindModifierByName("modifier_imba_flesh_heap_stacks")
 		self.radius = ability:GetSpecialValueFor("base_radius")
+		print("Rot radius:", self.radius)
+
 		if buff then
 			local stack_radius = ability:GetSpecialValueFor("stack_radius")
 			self.radius = self.radius + buff:GetStackCount() * stack_radius
 		end
+
 		if self.radius > ability:GetSpecialValueFor("max_radius_tooltip") then
 			self.radius = ability:GetSpecialValueFor("max_radius_tooltip")
 		end
+
 		self:OnIntervalThink()
 		self:StartIntervalThink(ability:GetSpecialValueFor("rot_tick"))
+		self:GetParent():StartGesture(ACT_DOTA_CHANNEL_ABILITY_2)
 		EmitSoundOn("Hero_Pudge.Rot", caster)
 
 		local pfx_name = "particles/units/heroes/hero_pudge/pudge_rot.vpcf"
@@ -907,7 +921,10 @@ end
 function imba_pudge_rot_active:OnDestroy()
 	local caster = self:GetCaster()
 	StopSoundOn("Hero_Pudge.Rot", caster)
+
 	if IsServer() then
+		self:GetParent():FadeGesture(ACT_DOTA_CHANNEL_ABILITY_2)
+
 		ParticleManager:DestroyParticle(self.pfx, false)
 		ParticleManager:ReleaseParticleIndex(self.pfx)
 	end
@@ -1063,8 +1080,8 @@ function imba_pudge_dismember:OnSpellStart()
 	end
 
 	self.target = target
-	target:AddNewModifier(self:GetCaster(), self, "modifier_dismember", {duration = self.channelTime})
 	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_pudge_dismember_buff", {})
+	target:AddNewModifier(self:GetCaster(), self, "modifier_dismember", {duration = self.channelTime})
 
 	if self:GetCaster().pudge_arcana then
 		self.pfx = ParticleManager:CreateParticle("particles/econ/items/pudge/pudge_arcana/pudge_arcana_dismember_"..GetHeroType(target)..".vpcf", PATTACH_ABSORIGIN, target)
@@ -1137,10 +1154,10 @@ function modifier_dismember:IsDebuff() return true end
 function modifier_dismember:IsHidden() return false end
 function modifier_dismember:IsPurgable() return false end
 function modifier_dismember:IsStunDebuff() return false end
-function modifier_dismember:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_dismember:OnCreated()
 	self:StartIntervalThink(1.0)
+
 	self:OnIntervalThink()
 
 	if IsServer() then
@@ -1183,4 +1200,16 @@ function modifier_imba_pudge_dismember_buff:IsStunDebuff() return false end
 
 function modifier_imba_pudge_dismember_buff:GetModifierSpellLifesteal()
 	return self:GetAbility():GetSpecialValueFor("spell_lifesteal")
+end
+
+-- util
+
+function UpdateHookStacks(caster)
+	local stacks = caster:FindAbilityByName("imba_pudge_meat_hook"):GetSpecialValueFor("hook_stacks")
+
+	if caster:HasScepter() then
+		stacks = caster:FindAbilityByName("imba_pudge_meat_hook"):GetSpecialValueFor("hook_stacks") + caster:FindAbilityByName("imba_pudge_meat_hook"):GetSpecialValueFor("scepter_hook_stacks")
+	end
+
+	return stacks
 end

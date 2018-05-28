@@ -482,7 +482,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"600"
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"100.0"
+		"AbilityCooldown"				"90.0"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -969,7 +969,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"mana_regen_aura"		"0.8"
+				"mana_regen_aura"		"1.0"
 			}
 			"06"
 			{
@@ -6664,14 +6664,14 @@
 		"ItemInitialCharges"			"1"
 		"IsTempestDoubleClonable"		"1"
 
-		// Special  Warning:If you want to change te consume values, you have to change the lua file's "CDOTAIMBA_ITEM_MOON_SHARD_abc" too
+		// Special Warning: If you want to change te consume values, you have to change the lua file's "CDOTAIMBA_ITEM_MOON_SHARD_abc" too
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_attack_speed"	"140"
+				"bonus_attack_speed"	"160"
 			}
 			"02"
 			{
@@ -6681,7 +6681,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"consume_as_1"			"70"
+				"consume_as_1"			"80"
 			}
 			"04"
 			{
