@@ -186,7 +186,7 @@ function Mutation:OnHeroFirstSpawn(hero)
 		hero:AddNewModifier(hero, nil, "modifier_frantic", {})
 	elseif IMBA_MUTATION["positive"] == "jump_start" then
 		hero:AddExperience(XP_PER_LEVEL_TABLE[6], DOTA_ModifyXP_CreepKill, false, true)
-	elseif IMBA_MUTATION["positive"] ~= "super_blink" then
+	elseif IMBA_MUTATION["positive"] == "super_blink" then
 		hero:AddItemByName("item_imba_blink")
 	end
 
