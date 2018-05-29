@@ -563,6 +563,9 @@ RESTRICT_FOUNTAIN_UNITS = {
 	"npc_dota_tusk_frozen_sigil3",
 	"npc_dota_tusk_frozen_sigil4",
 	"imba_witch_doctor_death_ward",
+	"npc_imba_techies_proximity_mine",
+	"npc_imba_techies_proximity_mine_big_boom",
+	"npc_imba_techies_stasis_trap",
 }
 
 MORPHLING_RESTRICTED_MODIFIERS = {

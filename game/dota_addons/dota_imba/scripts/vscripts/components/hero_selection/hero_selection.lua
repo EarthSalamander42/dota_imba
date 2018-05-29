@@ -432,7 +432,8 @@ function HeroSelection:GiveStartingHero(playerId, heroName, dev)
 	hero.killstreak = 0
 
 	-- Set up initial level
-	local starting_level = tonumber(CustomNetTables:GetTableValue("game_options", "initial_level")["1"]) or 1
+	local starting_level = tonumber(CustomNetTables:GetTableValue("game_options", "initial_level")["1"])
+	if starting_level == nil then starting_level = 1 end
 	if starting_level and starting_level > 1 then
 		hero:AddExperience(XP_PER_LEVEL_TABLE[starting_level], DOTA_ModifyXP_CreepKill, false, true)
 	end

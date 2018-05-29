@@ -24701,7 +24701,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-//		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_CHECK_DISABLE_HELP"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"AbilityTextureName"			"tiny_toss"
 		"MaxLevel"						"4"
@@ -43680,66 +43680,5 @@
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial" { }
-	}
-
-	//=================================================================================================================
-	// Wisp: Tether
-	//=================================================================================================================
-	"imba_wisp_tether"
-	{
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"hero/hero_wisp.lua"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_CUSTOM"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_YES"
-		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
-		"AbilityCooldown"				"5.0"
-		"AbilityManaCost"				"0"
-		"AbilityCastRange"				"1800"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"900 1000 1100 1200"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"movespeed"					"13 15 18 22"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"latch_distance"			"700"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"latch_speed"				"1000"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"tether_heal_amp"			"1.5"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"slow"						"-100"
-			}
-			"07"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"attackslow_tooltip"		"-100"
-			}
-			"08"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"stun_duration"				"0.75 1.25 1.75 2.25"
-			}
-		}
 	}
 }

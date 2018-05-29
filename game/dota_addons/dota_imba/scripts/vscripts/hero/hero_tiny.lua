@@ -327,7 +327,7 @@ function imba_tiny_toss:CastFilterResultTarget( hTarget )
 		end
 	end
 
-	return UnitFilter(hTarget, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), DOTA_UNIT_TARGET_FLAG_CHECK_DISABLE_HELP, self:GetCaster():GetTeamNumber() )
+	return UnitFilter(hTarget, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
 end
 
 function imba_tiny_toss:OnSpellStart()
