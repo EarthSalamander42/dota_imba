@@ -32,7 +32,7 @@ function imba_wisp_tether:GetCustomCastErrorTarget(target)
 	end
 end
 
-function imba_lion_mana_drain:CastFilterResultTarget(target)
+function imba_wisp_tether:CastFilterResultTarget(target)
 	if IsServer() then
 		if target == self:GetCaster() then
 			return UF_FAIL_CUSTOM
