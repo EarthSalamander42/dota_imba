@@ -4526,7 +4526,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"fissure_range"				"1400 1600 1800 2000"
+				"fissure_range"				"1400"
 				"LinkedSpecialBonus"		"special_bonus_unique_earthshaker_3"
 			}
 			"02"
@@ -4557,7 +4557,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"value"					"500"
+				"value"					"400"
 			}
 		}
 	}
@@ -4567,14 +4567,15 @@
 	//=================================================================================================================
 	"earthshaker_enchant_totem"
 	{
-		"AbilityManaCost"				"20"
+		"AbilityManaCost"				"25 30 35 40"
+		"AbilityCastRange"				"300 350 400 450"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"totem_damage_percentage"	"150 350 550 750"
+				"totem_damage_percentage"	"160 340 520 700"
 			}
 			"02"
 			{
@@ -4594,7 +4595,7 @@
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"aftershock_range"			"300 350 400 600"
+				"aftershock_range"			"300 350 400 450"
 			}
 		}
 	}
@@ -4608,8 +4609,8 @@
 		{
 			"01"
 			{
-				"var_type"			"FIELD_FLOAT"
-				"value"				"1.75"
+				"var_type"			"FIELD_INTEGER"
+				"value"				"2"
 			}
 		}
 	}
@@ -4619,7 +4620,7 @@
 	//=================================================================================================================
 	"earthshaker_aftershock"
 	{
-		"AbilityCastRange"				"300 350 400 600"
+		"AbilityCastRange"				"300 350 400 450"
 		"AbilityDuration"				"0.6 1.2 1.6 2.0"
 		"AbilityDamage"					"100 150 200 250"
 
@@ -4628,7 +4629,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aftershock_range"		"375 450 525 600"
+				"aftershock_range"		"300 350 400 450"
 			}
 			"02"
 			{
