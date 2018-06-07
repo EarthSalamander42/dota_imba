@@ -78,11 +78,12 @@ request.get({
 	});
 
 //	if (!process.env.TRANSIFEX_USER || !process.env.TRANSIFEX_PASSWORD) {
-//		console.log('No TRANSIFEX_USER or TRANSIFEX_PASSWORD, not generating translations (english only)');
-//		process.exit(0);
-//	} else {
+	if (!process.env.TRANSIFEX_PASSWORD) {
+		console.log('No TRANSIFEX_USER or TRANSIFEX_PASSWORD, not generating translations (english only)');
+		process.exit(0);
+	} else {
 		Object.keys(languageShortNames).map(generateTranslations);
-//	}
+	}
 });
 
 // functions
@@ -117,8 +118,9 @@ function getTranslationsForLanguage (lang, cb) {
 		auth: {
 //			user: process.env.TRANSIFEX_USER,
 //			pass: process.env.TRANSIFEX_PASSWORD
+
 			user: 'Cookies',
-			pass: 'Mrcookies'
+			pass: process.env.TRANSIFEX_PASSWORD
 		},
 		json: true
 	}, function (err, data) {
