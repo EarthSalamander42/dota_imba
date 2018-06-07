@@ -31,25 +31,24 @@ modifier_imba_stalker_in_the_night = class({})
 function modifier_imba_stalker_in_the_night:OnCreated()
 	-- Ability properties
 	self.caster = self:GetCaster()
-	self.ability = self:GetAbility()
 	self.modifier_stalker = "modifier_imba_stalker_in_the_night"
 
 	-- Ability specials
-	self.vision_day_loss = self.ability:GetSpecialValueFor("vision_day_loss")
-	self.vision_night_gain = self.ability:GetSpecialValueFor("vision_night_gain")
+	self.vision_day_loss = self:GetAbility():GetSpecialValueFor("vision_day_loss")
+	self.vision_night_gain = self:GetAbility():GetSpecialValueFor("vision_night_gain")
 
 	if IsServer() then
 		-- If it is an illusion, look for the owner
 		if self.caster:IsIllusion() then
-			local heroes = FindUnitsInRadius(self.caster:GetTeamNumber(),
-													 self.caster:GetAbsOrigin(),
-													 nil,
-													 25000, -- global
-													 DOTA_UNIT_TARGET_TEAM_FRIENDLY,
-													 DOTA_UNIT_TARGET_HERO,
-													 DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_DEAD + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD,
-													 FIND_CLOSEST,
-													 false) 
+			local heroes = FindUnitsInRadius(	self.caster:GetTeamNumber(),
+												self.caster:GetAbsOrigin(),
+												nil,
+												25000, -- global
+												DOTA_UNIT_TARGET_TEAM_FRIENDLY,
+												DOTA_UNIT_TARGET_HERO,
+												DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_DEAD + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD,
+												FIND_CLOSEST,
+												false) 
 			for _,hero in pairs(heroes) do
 				-- Find a real Night Stalker in your team
 				if hero:IsRealHero() and hero:GetUnitName() == self.caster:GetUnitName() then
@@ -101,12 +100,7 @@ function modifier_imba_stalker_in_the_night:IsDebuff() return false end
 function modifier_imba_stalker_in_the_night:IsPermanent() return true end
 
 function modifier_imba_stalker_in_the_night:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_BONUS_DAY_VISION,
-					  MODIFIER_PROPERTY_BONUS_NIGHT_VISION,
-					  MODIFIER_EVENT_ON_ABILITY_FULLY_CAST}
-
-	return decFuncs
-end
+	return {MODIFIER_PROPERTY_BONUS_DAY_VISION, MODIFIER_PROPERTY_BONUS_NIGHT_VISION, MODIFIER_EVENT_ON_ABILITY_FULLY_CAST} end
 
 function modifier_imba_stalker_in_the_night:OnAbilityFullyCast(keys)
 	if IsServer() then
@@ -116,9 +110,7 @@ function modifier_imba_stalker_in_the_night:OnAbilityFullyCast(keys)
 		local night_spell_used = false
 
 		-- If it is a day, do nothing
-		if GameRules:IsDaytime() then
-			return nil
-		end
+		if GameRules:IsDaytime() then return nil end
 
 		-- Check if a night inducing spell was used
 		for _,spell_name in pairs(night_inducing_spells) do
@@ -136,18 +128,13 @@ end
 
 function modifier_imba_stalker_in_the_night:GetBonusDayVision()
 	-- If the caster is afflicted with Break, do nothing
-	if self.caster:PassivesDisabled() then
-		return nil
-	end
-
+	if self.caster:PassivesDisabled() then return 0 end
 	return self.vision_day_loss * (-1)
 end
 
 function modifier_imba_stalker_in_the_night:GetBonusNightVision()
 	-- If the caster is afflicted with Break, do nothing
-	if self.caster:PassivesDisabled() then
-		return nil
-	end
+	if self.caster:PassivesDisabled() then return 0 end
 
 	-- #5 Talent: Stalker in the Night night vision bonus
 	local vision_night_gain = self.vision_night_gain + self.caster:FindTalentValue("special_bonus_imba_night_stalker_5")
@@ -554,17 +541,15 @@ LinkLuaModifier("modifier_imba_hunter_in_the_night", "hero/hero_night_stalker", 
 LinkLuaModifier("modifier_imba_hunter_in_the_night_flying", "hero/hero_night_stalker", LUA_MODIFIER_MOTION_NONE)
 
 function imba_night_stalker_hunter_in_the_night:GetAbilityTextureName()
-   return "night_stalker_hunter_in_the_night"
-end
+   return "night_stalker_hunter_in_the_night" end
 
 function imba_night_stalker_hunter_in_the_night:GetIntrinsicModifierName()
-	return "modifier_imba_hunter_in_the_night_thinker"    
-end
+	return "modifier_imba_hunter_in_the_night_thinker" end
 
 function imba_night_stalker_hunter_in_the_night:OnUpgrade()
 	local caster = self:GetCaster()
 	local modifier_hunter = "modifier_imba_hunter_in_the_night"
-
+	
 	-- If the caster has HitN while leveling the ability up, refresh the modifier
 	if caster:HasModifier(modifier_hunter) then
 		local modifier_hunter_handler = caster:FindModifierByName(modifier_hunter)
@@ -572,29 +557,23 @@ function imba_night_stalker_hunter_in_the_night:OnUpgrade()
 			modifier_hunter_handler:ForceRefresh()
 		end
 	end
-
---	Timers:CreateTimer(function()
---		self.daytime = self:GetCaster():HasModifier("modifier_imba_hunter_in_the_night")
---		print(self.daytime)
---		return 1.0
---	end)
 end
 
---	function imba_night_stalker_hunter_in_the_night:GetBehavior()
---		if self.daytime then
---			return DOTA_ABILITY_BEHAVIOR_PASSIVE
---		else
---			return DOTA_ABILITY_BEHAVIOR_NO_TARGET + DOTA_ABILITY_BEHAVIOR_IMMEDIATE
---		end
---	end
+function imba_night_stalker_hunter_in_the_night:GetBehavior()
+	if self.nightTime then
+		return DOTA_ABILITY_BEHAVIOR_NO_TARGET + DOTA_ABILITY_BEHAVIOR_IMMEDIATE
+	else
+		return DOTA_ABILITY_BEHAVIOR_PASSIVE
+	end
+end
 
---	function imba_night_stalker_hunter_in_the_night:GetManaCost(level)
---		if self.daytime then
---			return 0
---		else
---			return self.BaseClass.GetManaCost(self, level)
---		end
---	end
+function imba_night_stalker_hunter_in_the_night:GetManaCost(level)
+	if self.nightTime then
+		return self.BaseClass.GetManaCost(self, level)
+	else
+		return 0
+	end
+end
 
 function imba_night_stalker_hunter_in_the_night:OnSpellStart()
 	if IsServer() then
@@ -602,27 +581,19 @@ function imba_night_stalker_hunter_in_the_night:OnSpellStart()
 	end
 end
 
-modifier_imba_hunter_in_the_night_flying = class({})
-
-function modifier_imba_hunter_in_the_night_flying:CheckState()
-	local state
-
-	state = {[MODIFIER_STATE_FLYING] = true}
-
-	return state
-end
-
-function modifier_imba_hunter_in_the_night_flying:IsHidden() return true end
-function modifier_imba_hunter_in_the_night_flying:IsPurgable() return false end
-function modifier_imba_hunter_in_the_night_flying:IsDebuff() return false end
-
 -- Thinker modifier
-modifier_imba_hunter_in_the_night_thinker = class({})
+modifier_imba_hunter_in_the_night_thinker = modifier_imba_hunter_in_the_night_thinker or class({})
+function modifier_imba_hunter_in_the_night_thinker:IsHidden() return true end
+function modifier_imba_hunter_in_the_night_thinker:IsPurgable() return false end
+function modifier_imba_hunter_in_the_night_thinker:IsDebuff() return false end
 
-function modifier_imba_hunter_in_the_night_thinker:OnCreated()    
+function modifier_imba_hunter_in_the_night_thinker:OnCreated()
+	self.ability = self:GetAbility()
+	self.ability.nightTime = false
+	
+	if IsServer() then 
 		-- Ability properties
 		self.caster = self:GetCaster()
-		self.ability = self:GetAbility()
 		self.modifier_hunter = "modifier_imba_hunter_in_the_night"
 		self.modifier_day = "modifier_imba_hunter_in_the_night_day_model"
 		self.night_transform_response = {"night_stalker_nstalk_ability_dark_01", "night_stalker_nstalk_ability_dark_02", "night_stalker_nstalk_ability_dark_04", "night_stalker_nstalk_ability_dark_05", "night_stalker_nstalk_ability_dark_06"}
@@ -632,18 +603,23 @@ function modifier_imba_hunter_in_the_night_thinker:OnCreated()
 		self.day_rare_transform_response = "night_stalker_nstalk_dayrise_05"
 		self.day_rarest_transform_response = "night_stalker_nstalk_dayrise_04"                      
 
-	if IsServer() then
 		-- Start thinking
 		self:StartIntervalThink(1)
 	end
 end
 
+function modifier_imba_hunter_in_the_night_thinker:OnStackCountChanged(oldStacks)
+	if self:GetStackCount() == 1 then
+		self.ability.nightTime = false
+	else
+		self.ability.nightTime = true
+	end
+end
+
 function modifier_imba_hunter_in_the_night_thinker:OnIntervalThink()
 	if IsServer() then
-		local current_daycycle = GameRules:IsDaytime()        
-
 		-- If the daycycle is a night and Nightstalker doesn't have the buff yet, give it to him
-		if (not current_daycycle) and (not self.caster:HasModifier(self.modifier_hunter)) and self.caster:IsAlive() then
+		if (not GameRules:IsDaytime()) and (not self.caster:HasModifier(self.modifier_hunter)) and self.caster:IsAlive() then
 
 			-- Night transform responses
 			-- Roll for rarest transform response
@@ -660,11 +636,14 @@ function modifier_imba_hunter_in_the_night_thinker:OnIntervalThink()
 			end
 
 			-- Grant night buff
-			self.caster:AddNewModifier(self.caster, self.ability, self.modifier_hunter, {})                        
+			self.caster:AddNewModifier(self.caster, self.ability, self.modifier_hunter, {})
+
+			-- Set stack count to 2, used to tell the ability its night time
+			self:SetStackCount(2)
 		end
 
 		-- If the daycycle is a morning and Nightstalker has the buff, remove it from him
-		if current_daycycle and self.caster:HasModifier(self.modifier_hunter) and self.caster:IsAlive() then
+		if GameRules:IsDaytime() and self.caster:HasModifier(self.modifier_hunter) and self.caster:IsAlive() then
 
 			-- Day transformation responses
 			-- Roll for rarest transform response
@@ -681,14 +660,14 @@ function modifier_imba_hunter_in_the_night_thinker:OnIntervalThink()
 			end
 
 			-- Remove night buff
-			self.caster:RemoveModifierByName(self.modifier_hunter)                       
+			self.caster:RemoveModifierByName(self.modifier_hunter)
+
+			-- Set stack count to 1, used to tell the ability its day time
+			self:SetStackCount(1)			
 		end
 	end
 end
 
-function modifier_imba_hunter_in_the_night_thinker:IsHidden() return true end
-function modifier_imba_hunter_in_the_night_thinker:IsPurgable() return false end
-function modifier_imba_hunter_in_the_night_thinker:IsDebuff() return false end
 
 -- Night buff
 modifier_imba_hunter_in_the_night = modifier_imba_hunter_in_the_night or class({})
@@ -812,7 +791,41 @@ function modifier_imba_hunter_in_the_night:OnDestroy()
 end
 
 
+--	Flight Modifier
+modifier_imba_hunter_in_the_night_flying = modifier_imba_hunter_in_the_night_flying or class({})
 
+function modifier_imba_hunter_in_the_night_flying:IsHidden() return false end
+function modifier_imba_hunter_in_the_night_flying:IsPurgable() return false end
+function modifier_imba_hunter_in_the_night_flying:IsDebuff() return false end
+
+function modifier_imba_hunter_in_the_night_flying:DeclareFunctions()
+	return { MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS } end
+
+function modifier_imba_hunter_in_the_night_flying:CheckState()
+	return {[MODIFIER_STATE_FLYING] = true} end
+
+function modifier_imba_hunter_in_the_night_flying:OnCreated()
+	if IsServer() then
+		self.scepter = self:GetParent():HasScepter()
+		self.parent = self:GetParent()
+		self:StartIntervalThink(FrameTime() * 3)
+	end
+end
+
+function modifier_imba_hunter_in_the_night_flying:OnIntervalThink()
+	AddFOWViewer(self.parent:GetTeamNumber(), self.parent:GetAbsOrigin(), self.parent:GetCurrentVisionRange(), FrameTime()*4, false)
+end
+
+function modifier_imba_hunter_in_the_night_flying:OnDestroy()
+	if IsServer() then
+		GridNav:DestroyTreesAroundPoint(self.parent:GetAbsOrigin(), 200, false)
+		FindClearSpaceForUnit(self.parent, self.parent:GetAbsOrigin(), false)
+		GridNav:DestroyTreesAroundPoint(self.parent:GetAbsOrigin(), 200, false) -- Destroy trees again to prevent odd cases
+	end
+end
+
+function modifier_imba_hunter_in_the_night_flying:GetActivityTranslationModifiers()
+	return "hunter_night" end
 
 ----------------------------------
 --           Darkness           --
@@ -974,6 +987,9 @@ end
 
 -- Darkness vision reduction modifier
 modifier_imba_darkness_vision = class({})
+function modifier_imba_darkness_vision:IsHidden() return false end
+function modifier_imba_darkness_vision:IsPurgable() return false end
+function modifier_imba_darkness_vision:IsDebuff() return true end
 
 function modifier_imba_darkness_vision:OnCreated()
 	if IsServer() then
@@ -1001,10 +1017,6 @@ function modifier_imba_darkness_vision:OnCreated()
 		self.parent:SetNightTimeVisionRange(self.vision_radius)
 	end
 end
-
-function modifier_imba_darkness_vision:IsHidden() return false end
-function modifier_imba_darkness_vision:IsPurgable() return false end
-function modifier_imba_darkness_vision:IsDebuff() return true end
 
 function modifier_imba_darkness_vision:OnDestroy()
 	if IsServer() then

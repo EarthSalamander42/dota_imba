@@ -13,8 +13,9 @@
 -- limitations under the License.
 --
 -- Editors:
---     sercankd, 15.04.2017
---     suthernfriend, 03.02.2018
+--		15.04.2017 - sercankd 
+--		03.02.2018 - suthernfriend 
+--		01.06.2018 - zimberzimber
 
 CreateEmptyTalents("phantom_assassin")
 
@@ -571,6 +572,7 @@ LinkLuaModifier("modifier_imba_blur", "hero/hero_phantom_assassin", LUA_MODIFIER
 LinkLuaModifier("modifier_imba_blur_blur", "hero/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE) --wat
 LinkLuaModifier("modifier_imba_blur_speed", "hero/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_blur_opacity", "hero/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_blur_invuln", "hero/hero_phantom_assassin", LUA_MODIFIER_MOTION_VERTICAL)
 
 function imba_phantom_assassin_blur:GetAbilityTextureName()
 	return "phantom_assassin_blur"
@@ -578,6 +580,13 @@ end
 
 function imba_phantom_assassin_blur:GetIntrinsicModifierName()
 	return "modifier_imba_blur"
+end
+
+function imba_phantom_assassin_blur:OnSpellStart()
+	if IsServer() then
+		ProjectileManager:ProjectileDodge(self:GetCaster())
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_blur_invuln", { duration = self:GetSpecialValueFor("jump_duration")})
+	end
 end
 
 -------------------------------------------
@@ -663,8 +672,8 @@ end
 
 function modifier_imba_blur:OnAttackFail(keys)
 	if IsServer() then
-
 		if keys.target == self:GetParent() then
+			
 			-- If the caster doesn't have the evasion speed modifier yet, give it to him
 			if not self.caster:HasModifier(self.modifier_speed) then
 				self.caster:AddNewModifier(self.caster, self.ability, self.modifier_speed, {duration = self.ms_duration})
@@ -680,9 +689,9 @@ function modifier_imba_blur:OnAttackFail(keys)
 	end
 end
 
-function modifier_imba_blur:IsHidden()	  return true end
-function modifier_imba_blur:IsBuff()			return true end
-function modifier_imba_blur:IsPurgable()  return false end
+function modifier_imba_blur:IsHidden() return true end
+function modifier_imba_blur:IsBuff() return true end
+function modifier_imba_blur:IsPurgable() return false end
 
 
 -- Evasion speed buff modifier
@@ -792,9 +801,9 @@ function modifier_imba_blur_blur:OnDestroy()
 	ParticleManager:ReleaseParticleIndex(self.blur_particle)
 end
 
-function modifier_imba_blur_blur:IsHidden()	   return true end
-function modifier_imba_blur_blur:IsDebuff()	 return false end
-function modifier_imba_blur_blur:IsPurgable()  return false end
+function modifier_imba_blur_blur:IsHidden() return true end
+function modifier_imba_blur_blur:IsDebuff() return false end
+function modifier_imba_blur_blur:IsPurgable() return false end
 
 -------------------------------------------
 -- Blur opacity modifier
@@ -816,6 +825,80 @@ end
 
 function modifier_imba_blur_opacity:IsHidden()
 	return true
+end
+
+-------------------------------------------
+-- Blur invuln modifier
+-------------------------------------------
+
+modifier_imba_blur_invuln = class({})
+function modifier_imba_blur_invuln:IsHidden()	return false end
+function modifier_imba_blur_invuln:IsDebuff()	return false end
+function modifier_imba_blur_invuln:IsPurgable() return false end
+function modifier_imba_blur_invuln:GetCustomTenacityUnique() return 100 end
+	
+function modifier_imba_blur_invuln:CheckState()
+	return { [MODIFIER_STATE_NO_HEALTH_BAR] = true,
+			 [MODIFIER_STATE_STUNNED] = true,
+			 [MODIFIER_STATE_ATTACK_IMMUNE] = true,
+			 [MODIFIER_STATE_LOW_ATTACK_PRIORITY] = true,
+			 [MODIFIER_STATE_NO_UNIT_COLLISION] = true,
+			 [MODIFIER_STATE_INVULNERABLE] = true}
+end
+
+function modifier_imba_blur_invuln:OnCreated()
+	if IsServer() then
+		local duration = self:GetDuration() - FrameTime()
+		local height = self:GetAbility():GetSpecialValueFor("jump_height")
+		
+		self.airTime = duration * 0.5
+		self.origAirTime = self.airTime
+		self.durationUp = (duration - self.airTime) * 0.33
+		self.durationDown = (duration - self.airTime) * 0.67
+		self.speedUp = (height / self.durationUp) * FrameTime()
+		self.speedDown = (height / self.durationDown) * FrameTime()
+		
+		self:StartIntervalThink(FrameTime())
+		self:GetParent():StartGestureWithPlaybackRate(ACT_DOTA_SPAWN, self:GetAbility():GetSpecialValueFor("jump_anim_playback_rate"))
+	end
+end
+
+function modifier_imba_blur_invuln:OnIntervalThink()
+	self:UpdateVerticalMotion(self:GetParent(), FrameTime())
+end
+
+function modifier_imba_blur_invuln:UpdateVerticalMotion(parent, dt)
+	if IsServer() then
+		if self.durationUp > 0 then
+			parent:SetAbsOrigin(parent:GetAbsOrigin() + Vector(0,0,self.speedUp))
+			self.durationUp = self.durationUp - dt
+			if self.durationUp <= 0 then self:UpdateVerticalMotion(parent, dt) end
+			
+		elseif self.airTime > 0 then
+			if self.airTime >= self.origAirTime * 0.5 then
+				parent:SetAbsOrigin(parent:GetAbsOrigin() + Vector(0,0, (self.speedDown + self.speedUp) * 0.5 * 0.25))
+			else
+				parent:SetAbsOrigin(parent:GetAbsOrigin() - Vector(0,0, (self.speedDown + self.speedUp) * 0.5 * 0.25))
+			end
+			
+			self.airTime = self.airTime - dt
+			if self.airTime <= 0 then self:UpdateVerticalMotion(parent, dt) end
+		elseif self.durationDown > 0 then
+			parent:SetAbsOrigin(parent:GetAbsOrigin() - Vector(0, 0, self.speedDown))
+			self.durationDown = self.durationDown - dt
+		end
+	end
+end
+
+function modifier_imba_blur_invuln:OnDestroy()
+	if IsServer() then
+		local parent = self:GetParent()
+		local pos = parent:GetAbsOrigin()
+		parent:SetAbsOrigin(Vector(pos.x, pos.y, GetGroundHeight(pos, parent)))
+		FindClearSpaceForUnit(self:GetParent(), self:GetParent():GetAbsOrigin(), false)
+		
+		self:GetParent():RemoveGesture(ACT_DOTA_SPAWN)
+	end
 end
 
 ----------------------------------------------------------------------------------------------------------------------------------

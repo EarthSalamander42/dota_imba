@@ -307,27 +307,27 @@ IMBA_ALL_RANDOM_HERO_SELECTION_TIME = 5.0									-- Time we need to wait before
 
 -- Global Gold earning, values are doubled with Hyper for non-custom maps
 CUSTOM_GOLD_BONUS = {} -- 1 = Normal, 2 = Hyper
-CUSTOM_GOLD_BONUS["imba_1v1"] = 300
-CUSTOM_GOLD_BONUS["imba_overthrow"] = 300
-CUSTOM_GOLD_BONUS["imba_ranked_5v5"] = 300
-CUSTOM_GOLD_BONUS["imba_ranked_10v10"] = 300
-CUSTOM_GOLD_BONUS["imba_tournament"] = 300
-CUSTOM_GOLD_BONUS["imba_mutation_5v5"] = 300
-CUSTOM_GOLD_BONUS["imba_mutation_10v10"] = 300
-CUSTOM_GOLD_BONUS["imba_frantic_5v5"] = 300
-CUSTOM_GOLD_BONUS["imba_frantic_10v10"] = 300
+CUSTOM_GOLD_BONUS["imba_1v1"] = 250
+CUSTOM_GOLD_BONUS["imba_overthrow"] = 250
+CUSTOM_GOLD_BONUS["imba_ranked_5v5"] = 250
+CUSTOM_GOLD_BONUS["imba_ranked_10v10"] = 250
+CUSTOM_GOLD_BONUS["imba_tournament"] = 250
+CUSTOM_GOLD_BONUS["imba_mutation_5v5"] = 250
+CUSTOM_GOLD_BONUS["imba_mutation_10v10"] = 250
+CUSTOM_GOLD_BONUS["imba_frantic_5v5"] = 250
+CUSTOM_GOLD_BONUS["imba_frantic_10v10"] = 250
 
 -- Global XP earning, values are doubled with Hyper for non-custom maps (right now this is not used anymore, but i'll keep it there just in case)
 CUSTOM_XP_BONUS = {} -- 1 = Normal, 2 = Hyper
-CUSTOM_XP_BONUS["imba_1v1"] = 225
-CUSTOM_XP_BONUS["imba_overthrow"] = 225
-CUSTOM_XP_BONUS["imba_ranked_5v5"] = 225
-CUSTOM_XP_BONUS["imba_ranked_10v10"] = 225
-CUSTOM_XP_BONUS["imba_tournament"] = 225
-CUSTOM_XP_BONUS["imba_mutation_5v5"] = 225
-CUSTOM_XP_BONUS["imba_mutation_10v10"] = 225
-CUSTOM_XP_BONUS["imba_frantic_5v5"] = 225
-CUSTOM_XP_BONUS["imba_frantic_10v10"] = 225
+CUSTOM_XP_BONUS["imba_1v1"] = 200
+CUSTOM_XP_BONUS["imba_overthrow"] = 200
+CUSTOM_XP_BONUS["imba_ranked_5v5"] = 200
+CUSTOM_XP_BONUS["imba_ranked_10v10"] = 200
+CUSTOM_XP_BONUS["imba_tournament"] = 200
+CUSTOM_XP_BONUS["imba_mutation_5v5"] = 200
+CUSTOM_XP_BONUS["imba_mutation_10v10"] = 200
+CUSTOM_XP_BONUS["imba_frantic_5v5"] = 200
+CUSTOM_XP_BONUS["imba_frantic_10v10"] = 200
 
 -- Hero base level, values are doubled with Hyper for non-custom maps
 HERO_STARTING_LEVEL = {} -- 1 = Normal, 2 = Hyper
