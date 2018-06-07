@@ -67,7 +67,7 @@ function modifier_mutation_torrent:OnCreated()
 			Timers:CreateTimer(function()
 				if current_ticks < self.tick_count then
 					print(current_ticks, self.tick_count)
-					print(enemy, self:GetCaster(), self.damage / self.tick_count)
+					print("Caster:", self:GetCaster())
 					ApplyDamage({victim = enemy, attacker = self:GetCaster(), damage = self.damage / self.tick_count, damage_type = DAMAGE_TYPE_MAGICAL})
 					current_ticks = current_ticks + 1
 					return 1.0
@@ -91,6 +91,7 @@ end
 
 function modifier_mutation_torrent:OnRemoved()
 	if IsServer() then
+		print("Destroy Torrent modifier!")
 		if self.particle then
 			ParticleManager:DestroyParticle(self.particle, true)
 		end

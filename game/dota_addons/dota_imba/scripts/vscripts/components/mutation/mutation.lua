@@ -110,7 +110,7 @@ function Mutation:OnGameRulesStateChange(keys)
 						caster = Entities:FindByName(nil, "dota_goodguys_fort")
 					end
 
-					hero:AddNewModifier(caster, nil, "modifier_mutation_"..IMBA_MUTATION_PERIODIC_SPELLS[random_int][1], {duration=IMBA_MUTATION_PERIODIC_SPELLS[random_int][4]})
+					hero:AddNewModifier(caster, caster, "modifier_mutation_"..IMBA_MUTATION_PERIODIC_SPELLS[random_int][1], {duration=IMBA_MUTATION_PERIODIC_SPELLS[random_int][4]})
 				end
 
 				return 60.0
