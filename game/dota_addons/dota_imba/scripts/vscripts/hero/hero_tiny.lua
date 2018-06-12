@@ -16,8 +16,398 @@
 -- Editors:
 --     yahnich, 09.06.2017
 --     suthernfriend, 03.02.2018
+--     naowin, 28.05.2018
 
 CreateEmptyTalents("tiny")
+
+---------------------------------------
+--          Tree Grab                --
+---------------------------------------
+imba_tiny_tree_grab = imba_tiny_tree_grab or class({})
+LinkLuaModifier("imba_tiny_tree_modifier", "hero/hero_tiny", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("imba_tiny_tree_damage_modifier", "hero/hero_tiny", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("imba_tiny_tree_building_modifier", "hero/hero_tiny", LUA_MODIFIER_MOTION_NONE)
+function imba_tiny_tree_grab:OnSpellStart()
+	if IsServer() then 
+		local caster = self:GetCaster()
+		local target_point = self:GetCursorPosition()
+
+		-- Destroy targeted tree
+		GridNav:DestroyTreesAroundPoint(target_point, 1, false)
+
+		local damage_modifier = caster:AddNewModifier(caster, self, "imba_tiny_tree_damage_modifier", {})
+		damage_modifier:SetStackCount(self:GetSpecialValueFor("bonus_damage"))
+		local tree_modifier = caster:AddNewModifier(caster, self, "imba_tiny_tree_modifier", {})
+		tree_modifier:SetStackCount(5)
+
+		local ability_slot3 = caster:GetAbilityByIndex(2)
+		local ability_slot4 = caster:GetAbilityByIndex(3)
+		ability_slot4:SetLevel(ability_slot3:GetLevel())
+
+		caster:SwapAbilities(ability_slot3:GetAbilityName(), ability_slot4:GetAbilityName(), false, true)
+	end
+end
+
+---------------------------------------
+--        Tree Grabb modifier        --
+---------------------------------------
+imba_tiny_tree_modifier = imba_tiny_tree_modifier or class({})
+function imba_tiny_tree_modifier:IsBuff() return true end
+function imba_tiny_tree_modifier:IsPurgable() return false end
+function imba_tiny_tree_modifier:DeclareFunctions()
+	local funcs = {
+		MODIFIER_PROPERTY_ATTACK_RANGE_BONUS,
+	}
+	return funcs
+end
+
+function imba_tiny_tree_modifier:DeclareFunctions()
+	local funcs = {
+		MODIFIER_EVENT_ON_ATTACK_START,
+		MODIFIER_EVENT_ON_ATTACK,
+	}
+	return funcs
+end
+
+function imba_tiny_tree_modifier:GetModifierAttackRangeBonus()
+	return self.attack_range
+end
+
+function imba_tiny_tree_modifier:OnCreated()
+	local caster = self:GetCaster()
+	if caster ~= nil then 
+		local attack_range = self:GetAbility():GetSpecialValueFor("attack_range");
+		local caster_range = caster:GetAttackRange()
+		-- Override cast_range. it should be fixed when holding a tree
+		if caster_range > attack_range then
+			self.attack_range = (caster_range - attack_range)
+		else
+			self.attack_range = (attack_range - caster_range)
+		end
+		
+	end
+end
+
+function imba_tiny_tree_modifier:OnAttackStart(keys)
+	-- Add extra dps vs buildings
+	if keys.attacker == self:GetCaster() then 
+		if keys.target ~= nil and keys.target:IsBuilding() then
+			local caster = self:GetCaster()
+			local building_damage_modifier = caster:AddNewModifier(caster, self, "imba_tiny_tree_building_modifier", {})
+			building_damage_modifier:SetStackCount(self:GetAbility():GetSpecialValueFor("bonus_damage_buildings"))
+		end
+	end
+end
+
+function imba_tiny_tree_modifier:OnAttack(keys)
+	local caster = self:GetCaster()
+	if IsServer() then 
+		if caster == keys.attacker then
+			if caster:HasModifier("imba_tiny_tree_building_modifier") then
+				caster:RemoveModifierByName("imba_tiny_tree_building_modifier")
+			end
+
+			if keys.target ~= nil then
+				-- Splash is centered around a point abit intfron of tiny, tweeked by "splash_distance"
+				local splash_distance = caster:GetForwardVector() * self:GetAbility():GetSpecialValueFor("splash_distance")
+				local splash_radius = self:GetAbility():GetSpecialValueFor("splash_radius")
+				local splash_damage = self:GetAbility():GetSpecialValueFor("splash_damage")
+				splash_distance.z = 0
+
+				-- Initiate splash damage_table
+				local damage_table = {}
+				damage_table.attacker = caster
+				damage_table.damage_type = DAMAGE_TYPE_PHYSICAL
+				damage_table.damage = caster:GetAttackDamage() * (splash_damage / 100)
+
+				local enemies = FindUnitsInRadius(
+					caster:GetTeam(), 
+					caster:GetAbsOrigin() + splash_distance, 
+					nil, 
+					splash_radius,
+					DOTA_UNIT_TARGET_TEAM_ENEMY, 
+					DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+					0,
+					0,
+					false) 
+
+				for _,enemy in pairs(enemies) do
+					-- Dont deal damage to main target twice
+					if enemy ~= keys.target then
+						damage_table.victim = enemy
+						ApplyDamage(damage_table)
+					end
+				end
+			end
+
+			-- Check if we ran out of stacks...
+			if caster:HasModifier("imba_tiny_tree_modifier") then
+				local modifier = caster:FindModifierByName("imba_tiny_tree_modifier")
+				local stacks = modifier:GetStackCount() -1 
+				if stacks > 0 then
+					modifier:SetStackCount(stacks)
+				else
+					caster:RemoveModifierByName("imba_tiny_tree_modifier")
+				end
+			end
+		end
+	end
+end
+
+function imba_tiny_tree_modifier:OnRemoved()
+	if IsServer() then
+		local caster = self:GetCaster()
+		local ability_slot3 = caster:GetAbilityByIndex(2)
+		local ability_slot4 = caster:GetAbilityByIndex(3)
+		caster:SwapAbilities(ability_slot3:GetAbilityName(), ability_slot4:GetAbilityName(), false, true)
+		-- Trigger cd when last stack is used up
+		print("end Cooldown")
+		self:GetAbility():UseResources(false, false, true)
+		if caster:HasTalent("special_bonus_imba_tiny_4") then
+			local ability = self:GetAbility()
+			local cooldown_reduction = self:GetParent():FindTalentValue("special_bonus_imba_tiny_4")
+			local current_cooldown = ability:GetCooldownTime()
+			local new_cooldown = current_cooldown - self:GetParent():FindTalentValue("special_bonus_imba_tiny_4")
+			print(new_cooldown)
+			ability:EndCooldown()
+			self:GetAbility():StartCooldown(new_cooldown)
+		end
+
+		if caster:HasModifier("imba_tiny_tree_damage_modifier") then
+			caster:RemoveModifierByName("imba_tiny_tree_damage_modifier")
+		end
+	end
+end
+
+---------------------------------------
+--       Tree Damage modifier        --
+---------------------------------------
+imba_tiny_tree_damage_modifier = imba_tiny_tree_damage_modifier or class({})
+function imba_tiny_tree_damage_modifier:IsHidden() return true end
+function imba_tiny_tree_damage_modifier:IsBuff() return true end
+function imba_tiny_tree_damage_modifier:IsPurgable() return false end
+function imba_tiny_tree_damage_modifier:DeclareFunctions()
+	local funcs = {
+		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
+	}
+	return funcs
+end
+
+function imba_tiny_tree_damage_modifier:GetModifierPreAttack_BonusDamage()
+	return self:GetStackCount()
+end
+
+---------------------------------------
+-- Tree Damage vs budilding modifier --
+---------------------------------------
+imba_tiny_tree_building_modifier = imba_tiny_tree_building_modifier or class({})
+function imba_tiny_tree_building_modifier:IsHidden() return true end
+function imba_tiny_tree_building_modifier:IsBuff() return true end
+function imba_tiny_tree_building_modifier:IsPurgable() return false end
+function imba_tiny_tree_building_modifier:DeclareFunctions()
+	local funcs = {
+		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
+	}
+	return funcs
+end
+
+function imba_tiny_tree_building_modifier:GetModifierPreAttack_BonusDamage()
+	return self:GetStackCount()
+end
+
+---------------------------------------
+--          Tree Throw               --
+---------------------------------------
+imba_tiny_tree_throw = imba_tiny_tree_throw or class({})
+LinkLuaModifier("modifier_imba_tree_throw", "hero/hero_tiny", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tiny_tree_throw_knockback", "hero/hero_tiny", LUA_MODIFIER_MOTION_NONE)
+function imba_tiny_tree_throw:OnSpellStart()
+	if IsServer() then
+		local target_point 		= self:GetCursorPosition()
+		local target 			= self:GetCursorTarget() 
+		local caster 			= self:GetCaster()
+		local caster_position 	= caster:GetAbsOrigin()
+		local ability 			= caster:FindAbilityByName("imba_tiny_tree_throw")
+
+		local travel_speed 		= ability:GetSpecialValueFor("travel_speed")
+		local travel_distance	= ability:GetSpecialValueFor("travel_distance")
+		local collision_radius	= ability:GetSpecialValueFor("collision_radius")
+		local vision_distance	= ability:GetSpecialValueFor("vision_distance")
+
+		local bonus_damage 		= ability:GetSpecialValueFor("bonus_damage")
+		local splash_radius 	= ability:GetSpecialValueFor("splash_radius")
+		local splash_damage 	= ability:GetSpecialValueFor("splash_damage")
+
+		local distance 			= (target_point - caster_position):Length2D()
+		local direction 		= (target_point - caster_position):Normalized()
+		local velocity 			= direction * travel_speed
+
+		-- Create linear projectile if we have no target
+		if target == nil then 
+			local projectile =  
+			{
+				EffectName 			= "particles/units/heroes/hero_tiny/tiny_tree_linear_proj.vpcf",
+				Ability 			= self,
+				vSpawnOrigin 		= caster_position,
+				fDistance 			= distance,
+				fStartRadius 		= collision_radius,
+				fEndRadius 			= collision_radius,
+				Source 				= caster,
+				bHasFrontalCone 	= true,
+				bReplaceExisting 	= false,
+				bProvidesVision 	= true,
+				iVisionTeamNumber 	= caster:GetTeam(),
+				iVisionRadius 		= vision_distance,
+				bDrawsOnMinimap 	= false,
+				bVisibleToEnemies 	= true, 
+				bDeleteOnHit		= true,
+				iUnitTargetTeam 	= DOTA_UNIT_TARGET_TEAM_ENEMY,
+				iUnitTargetFlags 	= DOTA_UNIT_TARGET_FLAG_NONE,
+				iUnitTargetType 	= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+				vVelocity 			= Vector(velocity.x,velocity.y,0),
+				fExpireTime 		= GameRules:GetGameTime() + 10,
+				ExtraData 			= 
+				{
+					splash_radius 	= splash_radius,
+					splash_damage 	= splash_damage
+				}
+			}				
+
+			ProjectileManager:CreateLinearProjectile(projectile)
+
+		else
+			-- Create tracking projectile if we have target
+			local projectile =  
+			{
+				EffectName 			= "particles/units/heroes/hero_tiny/tiny_tree_proj.vpcf",
+				Ability 			= self,
+				fDistance 			= distance,
+				fStartRadius 		= collision_radius,
+				fEndRadius 			= collision_radius,
+				Source 				= caster,
+				Target 				= target,
+				iMoveSpeed 			= travel_speed,
+				bHasFrontalCone 	= true,
+				bReplaceExisting 	= false,
+				bProvidesVision 	= true,
+				iVisionTeamNumber 	= caster:GetTeam(),
+				iVisionRadius 		= vision_distance,
+				bDrawsOnMinimap 	= false,
+				bVisibleToEnemies 	= true, 
+				bDeleteOnHit		= true,
+				bDodgeable 			= true,
+				fExpireTime 		= GameRules:GetGameTime() + 10,
+				ExtraData 			= 
+				{
+					splash_radius 	= splash_radius,
+					splash_damage 	= splash_damage
+				}
+			}				
+			ProjectileManager:CreateTrackingProjectile(projectile)
+		end
+
+		caster:RemoveModifierByName("imba_tiny_tree_modifier")
+	end
+end
+
+function imba_tiny_tree_throw:OnProjectileHit_ExtraData(target, location, ExtraData)
+	if IsServer() then
+		if not target then
+			return nil
+		end
+		
+		local hit_location = target:GetAbsOrigin()
+		local caster = self:GetCaster()
+
+		-- Add tree toss bonus modifier
+		caster:AddNewModifier(caster, self, "modifier_imba_tree_throw", {})
+
+		-- Initializing the spalsh damage table
+		local damage_table = {}
+		damage_table.attacker = caster
+		damage_table.damage_type = DAMAGE_TYPE_PHYSICAL
+		damage_table.damage = caster:GetAttackDamage() * (ExtraData.splash_damage / 100)
+
+		local enemies = FindUnitsInRadius(
+			caster:GetTeam(), 
+			hit_location, 
+			nil, 
+			ExtraData.splash_radius,
+			DOTA_UNIT_TARGET_TEAM_ENEMY, 
+			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+			0,
+			0,
+			false) 
+
+		for _,enemy in pairs(enemies) do
+			-- Dont deal damage to main target twice
+			if enemy ~= target then
+				damage_table.victim = enemy
+				ApplyDamage(damage_table)
+				imba_tiny_tree_throw:KnockBack(caster, enemy, location)
+			else
+				imba_tiny_tree_throw:KnockBack(caster, enemy, caster:GetAbsOrigin())
+			end
+		end
+
+		-- Do a normal attack, will apply orb effects, cannot miss
+		caster:PerformAttack(target, true, true, true, true, true, false, true)
+		-- Remove tree toss bonus modifier
+		caster:RemoveModifierByName("modifier_imba_tree_throw")
+		return true
+	end
+end
+
+function imba_tiny_tree_throw:KnockBack(caster, target,knockback_center)
+	if caster:HasTalent("special_bonus_imba_tiny_5") then
+		local knockback_direction 	= (target:GetAbsOrigin() - knockback_center):Normalized() 
+		--local knockback_duration 	= caster:GetTalentSpecialValueFor("special_bonus_imba_tiny_5")
+		local knockback_talent 	= caster:FindAbilityByName("special_bonus_imba_tiny_5")
+		local knockback_duration = knockback_talent:GetSpecialValueFor("knockback_duration")
+		local knockback_distance = knockback_talent:GetSpecialValueFor("knockback_distance")
+
+		target:AddNewModifier(caster, self, "modifier_knockback", {
+			center_x 			= knockback_center.x, 
+			center_y 			= knockback_center.y, 
+			center_z 			= knockback_center.z, 
+			duration 			= knockback_duration,
+			knockback_duration 	= knockback_duration,
+	        knockback_distance 	= knockback_distance,
+	        knockback_height 	= 0
+		})
+	end
+end
+
+modifier_imba_tiny_tree_throw_knockback = class({})
+function modifier_imba_tiny_tree_throw_knockback:IsHidden() return false end
+function modifier_imba_tiny_tree_throw_knockback:IsDebuff() return true end
+function modifier_imba_tiny_tree_throw_knockback:IsPurgable() return false end
+function modifier_imba_tiny_tree_throw_knockback:CheckState()
+local state = {
+		[MODIFIER_STATE_COMMAND_RESTRICTED] = true,
+	}
+	return state
+end
+
+function modifier_imba_tiny_tree_throw_knockback:GetOverrideAnimation()
+  	return ACT_DOTA_DISABLED
+end
+
+modifier_imba_tree_throw = modifier_imba_tree_throw or class({})
+function modifier_imba_tree_throw:IsHidden() return true end
+function modifier_imba_tree_throw:IsBuff() return true end
+function modifier_imba_tree_throw:IsPurgable() return false end
+function modifier_imba_tree_throw:DeclareFunctions()
+	local funcs = {
+		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
+	}
+	return funcs
+end
+
+function modifier_imba_tree_throw:GetModifierPreAttack_BonusDamage()
+	local ability = self:GetAbility()
+	return ability:GetSpecialValueFor("bonus_damage");
+end
 
 ---------------------------------------
 --          ROLLING STONE            --

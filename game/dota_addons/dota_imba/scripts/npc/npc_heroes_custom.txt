@@ -1899,9 +1899,9 @@
 
 		"Ability1"					"imba_tiny_avalanche"
 		"Ability2"					"imba_tiny_toss"
-		"Ability3"					"imba_tiny_craggy_exterior"
-		"Ability4"					"imba_tiny_rolling_stone"
-		"Ability5"					"generic_hidden"
+		"Ability3"					"imba_tiny_tree_grab"
+		"Ability4"					"imba_tiny_tree_throw"
+		"Ability5"					"imba_tiny_rolling_stone"
 		"Ability6"					"imba_tiny_grow"
 
 		"Ability10"					"special_bonus_imba_tiny_1"
