@@ -342,9 +342,6 @@
 	"mutation_greedisgood"							"Greed Is Good"
 	"mutation_greedisgood_Description"				"{gold} gold for everyone each {minutes} minutes."
 
-	"mutation_gift_exchange"						"Airdrop"
-	"mutation_gift_exchange_Description"			"Gifts are periodically deployed around the map."
-
 	"mutation_speed_freaks"							"Speed Freaks"
 	"mutation_speed_freaks_Description"				"Enemy units have double their normal movement speed."
 
@@ -355,7 +352,7 @@
 	"mutation_battle_hunger_Description"			"Everytime you kill an enemy's hero your team get troll ult."
 
 	"mutation_frantic"								"Frantic"
-	"mutation_frantic_Description"					"50% Cooldown Reduction, Respawn Time and Status Resistance, 100% Mana Regen."
+	"mutation_frantic_Description"					"50% Cooldown Reduction, Mana Cost, Respawn Time and Status Resistance."
 
 	// Negative
 	"mutation_death_explosion"					"Death Explosion"
@@ -390,19 +387,18 @@
 	"mutation_periodic_spellcast_Description"	"Every minute, a random spell will be cast on everyone."
 
 	// Terrain
+	"mutation_gift_exchange"					"Airdrop"
+	"mutation_gift_exchange_Description"		"Gifts are periodically deployed around the map."
+
 	"mutation_no_trees"							"No Trees"
 	"mutation_no_trees_Description"				"All trees are cut and do not respawn."
 
 	"mutation_river_fag"						"River Fag"
 	"mutation_river_fag_Description"			"makes the river impassable without forced movement for heroes."
 
-	"mutation_sleepy_river"						"Sleepy River"
+	"mutation_sleepy_river"						"Slippery River"
 	"mutation_sleepy_river_Description"			"the river is icy, you can drift on it."
 	"mutation_sleepy_river_author"				"76561198015161808"
-
-	"mutation_omni_vision"						"Omni-Vision"
-	"mutation_omni_vision_Description"			"The whole map is revealed."
-	"mutation_omni_vision_author"				"76561198015161808"
 
 	"mutation_fast_runes"						"Fast Runes"
 	"mutation_fast_runes_Description"			"Powerup Runes spawn every 30 seconds. Bounty Runes spawn every 60 seconds."

@@ -6676,7 +6676,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_night_vision"	"400"
+				"bonus_night_vision"	"500"
 			}
 			"03"
 			{

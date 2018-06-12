@@ -581,3 +581,86 @@ function Imbattlepass:BattlepassCheckArcana()
 		CustomNetTables:SetTableValue("battlepass", tostring(i), {arcana = arcana})
 	end
 end
+
+function Imbattlepass:InitializeTowers()
+	local radiant_level = 0
+	local dire_level = 0
+
+	for ID = 0, PlayerResource:GetPlayerCount() - 1 do
+		if PlayerResource:GetPlayer(ID):GetTeamNumber() == 2 then
+			radiant_level = radiant_level + Imbattlepass:GetRewardUnlocked(ID)
+		else
+			dire_level = dire_level + Imbattlepass:GetRewardUnlocked(ID)
+		end
+	end
+
+	print("Team Battlepass Levels:", radiant_level, dire_level)
+
+	local towers = Entities:FindAllByClassname("npc_dota_tower")
+
+	for _, tower in pairs(towers) do
+		local level = dire_level
+		local particle = "particles/world_tower/tower_upgrade/ti7_dire_tower_orb.vpcf"
+		local team = "dire"
+--		local max_particle = "particles/world_tower/tower_upgrade/ti7_radiant_tower_lvl11_orb.vpcf"
+
+		if tower:GetTeamNumber() == 2 then
+			level = radiant_level
+			particle = "particles/world_tower/tower_upgrade/ti7_radiant_tower_orb.vpcf"
+			team = "radiant"
+		end
+
+		tower:SetModel("models/props_structures/tower_upgrade/tower_upgrade.vmdl")
+		tower:SetOriginalModel("models/props_structures/tower_upgrade/tower_upgrade.vmdl")
+		tower:SetMaterialGroup(team.."_level"..Imbattlepass:CheckBattlepassTowerLevel(level).mg)
+		ParticleManager:CreateParticle(particle, PATTACH_ABSORIGIN_FOLLOW, tower)
+		StartAnimation(tower, {duration=9999, activity=ACT_DOTA_CAPTURE, rate=1.0, translate = 'level'..Imbattlepass:CheckBattlepassTowerLevel(level).anim})
+	end
+end
+
+function Imbattlepass:CheckBattlepassTowerLevel(level)
+	local animation
+	local material_group
+
+	if level < 25 then
+		material_group = "1"
+		animation = "1"
+	elseif level >= 25 then
+		material_group = "2"
+		animation = "1"
+	elseif level >= 50 then
+		material_group = "2"
+		animation = "2"
+	elseif level >= 75 then
+		material_group = "3"
+		animation = "2"
+	elseif level >= 100 then
+		material_group = "3"
+		animation = "3"
+	elseif level >= 150 then
+		material_group = "4"
+		animation = "3"
+	elseif level >= 200 then
+		material_group = "4"
+		animation = "4"
+	elseif level >= 300 then
+		material_group = "5"
+		animation = "4"
+	elseif level >= 500 then
+		material_group = "5"
+		animation = "5"
+	elseif level >= 1000 then
+		material_group = "6"
+		animation = "5"
+	elseif level >= 2000 then
+		material_group = "6"
+		animation = "6"
+	end
+
+	local params = {
+		anim = animation,
+		mg = material_group
+	}
+
+	return params
+end

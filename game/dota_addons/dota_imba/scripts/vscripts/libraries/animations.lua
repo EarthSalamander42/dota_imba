@@ -398,6 +398,13 @@ local _ANIMATION_TRANSLATE_TO_CODE = {
 	wolfhound= 266,
 	wraith_spin= 33,
 	wrath= 212,
+	level1=348,
+    level2=349,
+    level3=350,
+    level4=351,
+    level5=352,
+    level6=353,
+    showcase=354,
 }
 
 local DoAnimation = function()

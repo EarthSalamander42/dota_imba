@@ -21,7 +21,6 @@ function modifier_mutation_torrent:OnCreated()
 	self.team_pfx = ParticleManager:CreateParticleForTeam("particles/hero/kunkka/torrent_bubbles.vpcf", PATTACH_ABSORIGIN, self:GetParent(), self:GetParent():GetTeamNumber())
 	ParticleManager:SetParticleControl(self.team_pfx, 0, self.pos)
 	ParticleManager:SetParticleControl(self.team_pfx, 1, Vector(self.radius, 0, 0))
-	ParticleManager:ReleaseParticleIndex(self.team_pfx)
 
 	Timers:CreateTimer(self.delay, function()
 		-- Finds affected enemies
@@ -32,7 +31,7 @@ function modifier_mutation_torrent:OnCreated()
 			-- Deals the initial damage
 			ApplyDamage({victim = enemy, attacker = self:GetCaster(), damage = self.damage, damage_type = DAMAGE_TYPE_MAGICAL})
 
-			local current_ticks = 0
+			local current_ticks = 1
 			local randomness_x = 0
 			local randomness_y = 0
 
@@ -91,7 +90,6 @@ end
 
 function modifier_mutation_torrent:OnRemoved()
 	if IsServer() then
-		print("Destroy Torrent modifier!")
 		if self.particle then
 			ParticleManager:DestroyParticle(self.particle, true)
 		end

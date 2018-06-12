@@ -251,7 +251,7 @@
 		// Status
 		//----------------------------------------------------------------
 		"StatusHealth"				"180"
-		"StatusHealthRegen"			"0.25"
+		"StatusHealthRegen"			"0.4"
 		"StatusMana"				"0"
 		"StatusManaRegen"			"0"
 
@@ -329,7 +329,7 @@
 		// Status
 		//----------------------------------------------------------------
 		"StatusHealth"				"210"
-		"StatusHealthRegen"			"0.25"
+		"StatusHealthRegen"			"0.4"
 		"StatusMana"				"0"
 		"StatusManaRegen"			"0"
 
@@ -407,7 +407,7 @@
 		// Status
 		//----------------------------------------------------------------
 		"StatusHealth"				"240"
-		"StatusHealthRegen"			"0.25"
+		"StatusHealthRegen"			"0.4"
 		"StatusMana"				"0"
 		"StatusManaRegen"			"0"
 
@@ -485,7 +485,7 @@
 		// Status
 		//----------------------------------------------------------------
 		"StatusHealth"				"270"
-		"StatusHealthRegen"			"0.25"
+		"StatusHealthRegen"			"0.4"
 		"StatusMana"				"0"
 		"StatusManaRegen"			"0"
 

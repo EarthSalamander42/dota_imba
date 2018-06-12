@@ -2856,8 +2856,6 @@
 	//=================================================================================================================
 	"brewmaster_storm_cyclone"
 	{
-		"MaxLevel"						"3"						
-
 		"AbilityCastRange"				"600"
 
 		// Time		
@@ -2964,30 +2962,35 @@
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"armor_per_stack"		"1.0 1.8 2.2 2.4"
+				"base_armor"			"2"
 			}
 			"04"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"base_move_slow"		"20"
+				"var_type"				"FIELD_FLOAT"
+				"armor_per_stack"		"1.0 1.8 2.2 2.4"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"move_slow_per_stack"	"3 9 12 13"
+				"base_move_slow"		"20"
 			}
 			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"move_slow_per_stack"	"3 9 12 13"
+			}
+			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"stack_limit"			"4 5 5 6"
 				"LinkedSpecialBonus"	"special_bonus_unique_bristleback"
 			}
-			"07"
+			"08"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"goo_duration_creep"	"10.0"
 			}
-			"08"
+			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"radius_scepter"		"800"
@@ -4644,7 +4647,7 @@
 	//=================================================================================================================
 	"earthshaker_echo_slam"
 	{
-		"AbilityCastRange"				"600 700 800"
+		"AbilityCastRange"				"600 800 1000"
 
 		"AbilitySpecial"
 		{
@@ -4668,6 +4671,11 @@
 				"var_type"						"FIELD_INTEGER"
 				"echo_slam_echo_damage"			"75 150 225"
 				"LinkedSpecialBonus"			"special_bonus_unique_earthshaker_2"
+			}
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"echo_slam_initial_damage"		"100"
 			}
 		}
 	}
@@ -5084,7 +5092,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"tooltip_duration"		"2.25 3.5 4.75 6.0"
+				"tooltip_duration"		"3.75 4.5 5.25 6.0"
 			}
 		}
 	}
@@ -12143,7 +12151,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"300 400 500 600"
+				"radius"				"300 350 400 450"
 			}
 		}
 	}

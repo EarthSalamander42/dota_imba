@@ -49,8 +49,8 @@ function InitializeUI() {
 			exp = 2
 		} else if (map_info.map_display_name == "imba_overthrow") {
 //			$('#GameOptionsPanel').style.visibility = 'collapse';
-			$('#imba-loading').style.visibility = 'collapse';
-			$('#overthrow-loading').style.visibility = 'visible';
+//			$('#imba-loading').style.visibility = 'collapse';
+//			$('#overthrow-loading').style.visibility = 'visible';
 		}
 
 		if (map_info.map_display_name != "imba_frantic_5v5" && map_info.map_display_name != "imba_frantic_10v10" && Game.GetLocalPlayerInfo().player_steamid == "76561198015161808" || Game.GetLocalPlayerInfo().player_steamid == "76561198036748162") {

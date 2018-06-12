@@ -1074,6 +1074,9 @@ function modifier_imba_enrage_buff:GetModifierIncomingDamage_Percentage()
 	return damage_reduction * (-1)
 end
 
+function modifier_imba_enrage_buff:GetCustomTenacityUnique()
+	return self:GetAbility():GetSpecialValueFor("damage_reduction")
+end
 
 -- #7 Talent: Increases Ursa's damage as a portion of his current health
 modifier_imba_enrage_talent_buff = modifier_imba_enrage_talent_buff or class({})

@@ -5313,7 +5313,7 @@
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"						"12 11 10 9"
+		"AbilityCooldown"						"11 10 9 8"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -7992,7 +7992,7 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"170"
+		"AbilityManaCost"				"140 150 160 170"
 		"AbilityCastRange"				"700"
 		"AbilityCastPoint"				"0.3"
 
@@ -28801,14 +28801,12 @@
 			{
 				"var_type"                  "FIELD_INTEGER"
 				"as_bonus"                  "130 160 190 220"
-
 			}
 			"02"
 			{
 				"var_type"                  "FIELD_INTEGER"
 				"duration"                  "4 6 8 10"
 			}
-
 			"03"
 			{
 				"var_type"                  "FIELD_INTEGER"
@@ -37199,37 +37197,31 @@
 				"var_type"				"FIELD_INTEGER"
 				"duration"				"4"
 			}
-
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"scepter_cooldown"		"30 24 18"
 			}
-
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"damage_reduction"		"80"
 			}
-
 			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"fury_swipes_multiplier"	"1.5 1.75 2.0"
 			}
-
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_radius_skills"	"100 120 140"				
   			}
-
 			"07"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"reduce_cd_interval"	"0.5"
 			}
-
 			"08"
 			{
 				"var_type"				"FIELD_FLOAT"

@@ -70,6 +70,11 @@ function GameMode:OnGameRulesStateChange(keys)
 			-- Initialize rune spawners
 			InitRunes()
 
+			if GetMapName() ~= "imba_overthrow" then
+				-- Initialize battlepass towers
+				Imbattlepass:InitializeTowers()
+			end
+
 			CustomNetTables:SetTableValue("game_options", "donators", api.imba.get_donators())
 			CustomNetTables:SetTableValue("game_options", "developers", api.imba.get_developers())
 

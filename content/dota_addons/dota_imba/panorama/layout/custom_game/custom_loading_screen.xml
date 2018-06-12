@@ -40,7 +40,7 @@
 				<Label id="imba-news-title" text="Dota IMBA" />
 				<Label id="imba-news-text" />
 				<Label id="imba-news-link" text="> Read more news on our Official Website"
-					onactivate="DOTADisplayURL('https://preview.dota2imba.org/wild-origins');" />
+					onactivate="DOTADisplayURL('https://www.dota2imba.org/home');" />
 					
 				<Panel id="additional-news-panel">
 					<Panel id="additional-news-text">

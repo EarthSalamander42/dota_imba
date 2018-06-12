@@ -415,7 +415,7 @@ end
 
 function imba_earth_spirit_boulder_smash:CastFilterResultTarget(target)
 	local caster = self:GetCaster()
-	
+
 	-- Can't target self, buildings, and invuln units
 	if caster == target then
 		return UF_FAIL_CUSTOM
@@ -425,18 +425,18 @@ function imba_earth_spirit_boulder_smash:CastFilterResultTarget(target)
 		return UF_FAIL_INVULNERABLE
 	elseif target:IsAncient() then
 		return UF_FAIL_ANCIENT
-	
+
 	-- Can't target allies who disabled helps
 	elseif caster:GetTeamNumber() == target:GetTeamNumber() then
 		if target:GetPlayerOwnerID() and PlayerResource:IsDisableHelpSetForPlayerID(target:GetPlayerOwnerID(), caster:GetPlayerOwnerID()) then
 			return UF_FAIL_DISABLE_HELP
 		end
-	
+
 	-- Can't target spell immune enemies
 	elseif target:IsMagicImmune() then
 		return UF_FAIL_MAGIC_IMMUNE_ENEMY 
 	end
-	
+
 	return UF_SUCCESS
 end
 
@@ -565,13 +565,13 @@ function imba_earth_spirit_boulder_smash:OnAbilityPhaseStart()
 						local castMod = caster:AddNewModifier(caster, self, "modifier_imba_boulder_smash_cast_thinker", {})
 						castMod:PassTarget(r, "remnant")
 					end)
-					
+
 					return false
 				end
 			end
 		end
 	end
-	
+
 	return false
 end
 
@@ -668,7 +668,7 @@ function modifier_imba_boulder_smash_push:OnIntervalThink()
 						target:AddNewModifier(self.caster, self.ability, "modifier_imba_earths_mark", {duration = self.earthsMarkDuration})
 					end
 				end
-				
+
 				ApplyDamage({victim = target, attacker = self.caster, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
 			end
 		end
@@ -680,7 +680,7 @@ function modifier_imba_boulder_smash_push:HorizontalMotion(dt)
 		if self.traveled < self.distance then
 			self.parent:SetAbsOrigin(self.parent:GetAbsOrigin() + self.direction * self.velocity * dt)
 			self.traveled = self.traveled + self.velocity * dt
-			
+
 			self.parent:SetAbsOrigin(Vector(self.parent:GetAbsOrigin().x, self.parent:GetAbsOrigin().y, GetGroundHeight(self.parent:GetAbsOrigin(), self.parent)))
 		else
 			if not self.parent:HasModifier("modifier_imba_stone_remnant") then
