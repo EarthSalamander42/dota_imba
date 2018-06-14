@@ -681,3 +681,20 @@ DOTAAvatarImage
 	background-position: 50% 50%;
 }
 
+#auto_team_select_container {
+	margin-top: 60px;
+	horizontal-align: right;
+	width: 30%;
+	flow-children: down;
+	padding: 30px 50px;
+	background-color:  gradient( linear, 0 0, 100% 100%, from( #10406033 ), to( #20608033) );
+}
+
+#auto_team_select_label {
+	font-size: 28px;
+	margin-bottom: 10px;
+}
+
+#auto_team_select_time {
+	font-size: 20px;
+}
