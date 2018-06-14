@@ -154,7 +154,7 @@ end
 
 local TeamSelectionComputed = {}
 local TeamSelectionComputedCount = 0
-local TeamSelectionComputedTotal = 4
+local TeamSelectionComputedTotal = 10
 
 function KeepTeams10v10TeamSelection()
 
@@ -216,6 +216,43 @@ function KeepTeams10v10TeamSelectionGetTeamComposition()
 	return composition
 end
 
+PreAssignPlayersSchema = {
+	{ radiant = 0, dire = 10 },
+	{ radiant = 14, dire = 6 },
+	{ radiant = 2, dire = 8 },
+	{ radiant = 11, dire = 18 },
+	{ radiant = 6, dire = 0 },
+	
+	{ radiant = 19, dire = 2 },
+	{ radiant = 4, dire = 12 },
+	{ radiant = 14, dire = 18 },
+	{ radiant = 3, dire = 19 },
+	{ radiant = 9, dire = 15 }
+}
+
+function PreAssignPlayers(iteration)
+	
+	local radiantPlayerId = PreAssignPlayersSchema[iteration + 1].radiant
+	local direPlayerId = PreAssignPlayersSchema[iteration + 1].dire
+	
+	log.debug("Pre assigning players: radiant id is: " .. radiantPlayerId .. ", dire id is: " .. direPlayerId)
+	log.debug("Player count is: " .. tostring(PlayerResource:GetPlayerCount()))
+	
+	-- skip if the player ids are stupid
+	if (radiantPlayerId > PlayerResource:GetPlayerCount() or direPlayerId > PlayerResource:GetPlayerCount()) then
+		log.debug("Skipping team pre assignment cause player count is too low")
+		return
+	end
+	
+	local radiantPlayer = PlayerResource:GetPlayer(radiantPlayerId)
+	local direPlayer = PlayerResource:GetPlayer(direPlayerId)
+	
+	-- set team to radiant and dire
+	radiantPlayer:SetTeam(DOTA_TEAM_GOODGUYS)
+	direPlayer:SetTeam(DOTA_TEAM_BADGUYS)
+	
+end
+
 function KeepTeams10v10TeamSelectionComputeRound(obj, event)
 
 	log.info("Compute complete")
@@ -223,9 +260,6 @@ function KeepTeams10v10TeamSelectionComputeRound(obj, event)
 	-- gather team composition by creating a snapshot
 	local comp = KeepTeams10v10TeamSelectionGetTeamComposition();
 	table.insert(TeamSelectionComputed, comp)
-
-	-- increment our count
-	TeamSelectionComputedCount = TeamSelectionComputedCount + 1
 
 	-- unassign the teams
 	TeamSelectionUnassignTeams()
@@ -235,7 +269,16 @@ function KeepTeams10v10TeamSelectionComputeRound(obj, event)
 
 		-- send another compute request to the privileged client
 		local player = PlayerResource:GetPlayer(PlayerWithHostPrivileges)
+		
+		PreAssignPlayers(TeamSelectionComputedCount);
+		
+		-- this does nothing else then to run Game.AutoAssignPlayersToTeams() on the host
+		-- damn volvo doesn't give us this function on servers
 		CustomGameEventManager:Send_ServerToPlayer(player, TeamSelectionEvents.compute, nil)
+	
+		-- increment our count
+		TeamSelectionComputedCount = TeamSelectionComputedCount + 1
+
 	else
 		-- we are done and dont need more computations
 		KeepTeams10v10TeamSelectionDone()

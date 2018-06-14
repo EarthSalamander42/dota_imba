@@ -1,62 +1,25 @@
 <root>
 	<styles>
-		<include
-			src="file://{resources}/styles/custom_game/custom_loading_screen.css" />
-		<include src="file://{resources}/styles/dotastyles.vcss_c" />
+		<include src="file://{resources}/styles/dotastyles.vcss_c"/>
+		<include src="file://{resources}/styles/custom_game/loading_screen.css"/>
 	</styles>
 
 	<scripts>
-		<include src="file://{resources}/scripts/custom_game/game_mode.js" />
-		<include src="file://{resources}/scripts/custom_game/news.js" />
+		<include src="file://{resources}/scripts/custom_game/api.js"/>
+		<include src="file://{resources}/scripts/custom_game/loading_screen.js"/>
 	</scripts>
 
 	<Panel class="addon-root">
 		<Panel id="imba-loading">
-			<Panel id="imba-social">
-				<Panel class="imba-social-buttons">
-					<Button id="imba-social-button-facebook" class="imba-social-button"
-						onactivate="DOTADisplayURL('https://www.facebook.com/D2IMBA/');" />
-					<Button id="imba-social-button-twitter" class="imba-social-button"
-						onactivate="DOTADisplayURL('https://twitter.com/Dota2IMBA42');" />
-					<Button id="imba-social-button-reddit" class="imba-social-button"
-						onactivate="DOTADisplayURL('https://www.reddit.com/r/dotaimba/');" />
-					<Button id="imba-social-button-patreon" class="imba-social-button"
-						onactivate="DOTADisplayURL('https://www.patreon.com/xherosiege');" />
-				</Panel>
-			</Panel>
-
-			<Panel id="imba-social">
-				<Panel class="imba-social-buttons">
-					<Button id="imba-social-button-discord-en" class="imba-social-button"
-						onactivate="DOTADisplayURL('http://tinyurl.com/imba-discord');" />
-					<Button id="imba-social-button-discord-ru" class="imba-social-button"
-						onactivate="DOTADisplayURL('https://discord.gg/HcybJKt');" />
-					<Button id="imba-social-button-tencent" class="imba-social-button"
-						onactivate="DOTADisplayURL('https://www.bilibiliduang.cn/imbagroup');" />
-				</Panel>
-			</Panel>
-
-			<Panel id="imba-news">
-				<Label id="imba-news-title" text="Dota IMBA" />
-				<Label id="imba-news-text" />
-				<Label id="imba-news-link" text="> Read more news on our Official Website"
-					onactivate="DOTADisplayURL('https://www.dota2imba.org/home');" />
-					
-				<Panel id="additional-news-panel">
-					<Panel id="additional-news-text">
-						<Label id="additional-news-title" text="#oaa_news_title" />
-						<Label id="additional-news-text" text="#oaa_news_text" />
-						<Label class="additional-news-link" text="Pudge Wars Workshop Link"
-							onactivate="DOTADisplayURL('https://steamcommunity.com/sharedfiles/filedetails/?id=296831818');" />
-						<Label class="additional-news-link" text="X Hero Siege Workshop Link"
-							onactivate="DOTADisplayURL('http://steamcommunity.com/sharedfiles/filedetails/?id=536682348');" />
-						<Label class="additional-news-link" text="Hero Line Wars Workshop Link"
-							onactivate="DOTADisplayURL('https://steamcommunity.com/sharedfiles/filedetails/?id=492195751');" />
-					</Panel>
-
-					<Image id="additional-news-image" />
+			<Panel id="imba-loading-title">
+				<Image id="imba-loading-title-logo" src="file://{images}/custom_game/imba-blue.png"/>
+				<Panel class="down">
+					<Label id="imba-loading-title-text" text="Dota IMBA 7.06 - The Fundamental Awakening"/>
+					<Label id="imba-loading-content-text" html="true" text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet," />
 				</Panel>
 			</Panel>
 		</Panel>
 	</Panel>
 </root>
+  
+  
