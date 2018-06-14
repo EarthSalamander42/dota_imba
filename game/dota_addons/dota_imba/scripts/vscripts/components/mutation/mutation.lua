@@ -267,7 +267,7 @@ function Mutation:SpawnRandomItem()
 			print(random_int, k, v["ItemCost"])
 
 			if v["ItemCost"] then
-				if v["ItemCost"] < 1000 or string.find(k, "recipe") then
+				if v["ItemCost"] < 1000 or string.find(k, "recipe") or string.find("ironleaf") then
 					return Mutation:SpawnRandomItem()
 				end
 			else

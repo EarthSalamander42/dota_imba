@@ -100,6 +100,7 @@ var hiddenAbilities = [
 	"rubick_hidden2",
 	"zuus_cloud",
 	"imba_rubick_spell_steal_controller",
+	"imba_tiny_tree_throw",
 	"" // Leave it alone, he's useful
 ]
 

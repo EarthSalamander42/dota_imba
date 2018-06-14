@@ -15,7 +15,6 @@
 --
 -- Editors:
 --     yahnich, 09.06.2017
---     suthernfriend, 03.02.2018
 --     naowin, 28.05.2018
 
 CreateEmptyTalents("tiny")
@@ -1439,8 +1438,6 @@ function modifier_imba_tiny_grow_passive:GetModifierTotalDamageOutgoing_Percenta
 		end
 	end
 end
-
-
 
 function modifier_imba_tiny_grow_passive:OnAttackLanded( params )
 	if IsServer() then

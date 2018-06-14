@@ -23,6 +23,7 @@
 -- Barebones basics
 -------------------------------------------------------------------------------------------------
 
+USE_TEAM_COURIER = false
 PICKING_SCREEN_OVER = false
 ENABLE_HERO_RESPAWN = true					-- Should the heroes automatically respawn on a timer or stay dead until manually respawned
 UNIVERSAL_SHOP_MODE = false					-- Should the main shop contain Secret Shop items as well as regular items
@@ -502,24 +503,26 @@ DISPELLABLE_DEBUFF_LIST = LoadKeyValues("scripts/npc/KV/dispellable_debuffs_list
 PLAYER_TEAM = {}
 
 DONATOR_STATUS = {}
-DONATOR_STATUS[1] = "IMBA Dev"
-DONATOR_STATUS[2] = "PRO DEVCUCK"
+DONATOR_STATUS[1] = "IMBA Lead-dev"
+DONATOR_STATUS[2] = "IMBA Dev"
 DONATOR_STATUS[3] = "Administrator"
 DONATOR_STATUS[4] = "Ember Donator"
 DONATOR_STATUS[5] = "Golden Donator"
 DONATOR_STATUS[6] = "Donator"
 DONATOR_STATUS[7] = "Salamander Donator"
 DONATOR_STATUS[8] = "Icefrog Donator"
+DONATOR_STATUS[9] = "Gaben Donator"
 
 DONATOR_COLOR = {}
 DONATOR_COLOR[1] = {160, 20, 20}
-DONATOR_COLOR[2] = {0, 204, 255}
-DONATOR_COLOR[3] = {160, 20, 20}
+DONATOR_COLOR[2] = {100, 20, 20}
+DONATOR_COLOR[3] = {0, 102, 255}
 DONATOR_COLOR[4] = {240, 50, 50}
 DONATOR_COLOR[5] = {218, 165, 32}
 DONATOR_COLOR[6] = {45, 200, 45}
 DONATOR_COLOR[7] = {47, 91, 151}
 DONATOR_COLOR[8] = {153, 51, 153}
+DONATOR_COLOR[9] = {255, 135, 42}
 
 IMBA_INVISIBLE_MODIFIERS = {
 	"modifier_imba_moonlight_shadow_invis",

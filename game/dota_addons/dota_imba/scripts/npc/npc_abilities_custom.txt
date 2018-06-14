@@ -6915,55 +6915,46 @@
 				"field_radius"			"340"
 				"LinkedSpecialBonus"	"special_bonus_imba_disruptor_5"
 			}
-
 			"02"
 			{
 				"var_type"			"FIELD_FLOAT"
 				"formation_delay"	"1.2"
 			}
-
 			"03"
 			{
 				"var_type"			"FIELD_FLOAT"
 				"duration"			"3.0 3.5 4.0 5.0"
 			}
-
 			"04"
 			{
 				"var_type"			"FIELD_INTEGER"
 				"vision_aoe"		"325"
 			}
-
 			"05"
 			{
 				"var_type"			"FIELD_INTEGER"
 				"edge_damage_hero"	"25 75 125 175"
 			}
-
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"edge_damage_creep"		"20 40 70 110"
 			}
-
 			"07"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"knockback_duration"	"0.5"
 			}
-
 			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"knockback_distance"		"25"
+				"knockback_distance"		"150"
 			}
-
 			"09"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"cooldown_reduction"	"0.5"
 			}
-
 			"10"
 			{
 				"var_type"					"FIELD_INTEGER"

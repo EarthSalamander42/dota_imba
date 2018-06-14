@@ -47,26 +47,26 @@ function PrintTable(t, indent, done)
 
 	table.sort(l)
 	for k, v in ipairs(l) do
-	-- Ignore FDesc
-	if v ~= 'FDesc' then
-		local value = t[v]
+		-- Ignore FDesc
+		if v ~= 'FDesc' then
+			local value = t[v]
 
-		if type(value) == "table" and not done[value] then
-		done [value] = true
-		print(string.rep ("\t", indent)..tostring(v)..":")
-		PrintTable (value, indent + 2, done)
-		elseif type(value) == "userdata" and not done[value] then
-		done [value] = true
-		print(string.rep ("\t", indent)..tostring(v)..": "..tostring(value))
-		PrintTable ((getmetatable(value) and getmetatable(value).__index) or getmetatable(value), indent + 2, done)
-		else
-		if t.FDesc and t.FDesc[v] then
-			print(string.rep ("\t", indent)..tostring(t.FDesc[v]))
-		else
-			print(string.rep ("\t", indent)..tostring(v)..": "..tostring(value))
+			if type(value) == "table" and not done[value] then
+				done [value] = true
+				print(string.rep ("\t", indent)..tostring(v)..":")
+				PrintTable (value, indent + 2, done)
+			elseif type(value) == "userdata" and not done[value] then
+				done [value] = true
+				print(string.rep ("\t", indent)..tostring(v)..": "..tostring(value))
+				PrintTable ((getmetatable(value) and getmetatable(value).__index) or getmetatable(value), indent + 2, done)
+			else
+				if t.FDesc and t.FDesc[v] then
+					print(string.rep ("\t", indent)..tostring(t.FDesc[v]))
+				else
+					print(string.rep ("\t", indent)..tostring(v)..": "..tostring(value))
+				end
+			end
 		end
-		end
-	end
 	end
 end
 

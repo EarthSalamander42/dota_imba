@@ -1013,26 +1013,6 @@ function imba_faceless_void_chronosphere:OnSpellStart( mini_chrono, target_locat
 		end
 	end
 
-	local cdIncrease = 0
-	if enemies then
-		cdIncrease = self:GetSpecialValueFor("cd_increase_per_enemy") * enemies_count
-
-		-- Increase cooldowns
-		for _,enemy in pairs(enemies) do
-			-- Iterate through all victims abilities
-			for i = 0, 23 do
-				local targetAbility = enemy:GetAbilityByIndex(i)
-
-				-- If there is an ability, it's learned, not a passive, not a talent/attribute bonus, and on cooldown, apply cooldown increase
-				if targetAbility and targetAbility:GetLevel() > 0 and not targetAbility:IsPassive() and not targetAbility:IsAttributeBonus() and not targetAbility:IsCooldownReady() then
-					local newCooldown = targetAbility:GetCooldownTimeRemaining() + cdIncrease
-					targetAbility:EndCooldown()
-					targetAbility:StartCooldown(newCooldown)
-				end
-			end
-		end
-	end
-
 	self.mini_chrono = mini_chrono
 	-- Create the dummy and give it the chronosphere aura
 	local mod = CreateModifierThinker(caster,

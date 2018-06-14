@@ -807,7 +807,6 @@ function imba_storm_spirit_ball_lightning:OnProjectileThink_ExtraData(location, 
 	local caster = self:GetCaster()
 
 	if (self.traveled + ExtraData.speed < self.distance) and caster:IsAlive() and (caster:GetMana() > ExtraData.total_mana_cost * 0.01 ) then
-
 		-- Destroy the trees in the way
 		GridNav:DestroyTreesAroundPoint(location, ExtraData.tree_radius, false)
 
@@ -941,7 +940,7 @@ end
 
 function modifier_imba_ball_lightning:DeclareFunctions()
 	local funcs	=	{
-		MODIFIER_PROPERTY_OVERRIDE_ANIMATION,
+--		MODIFIER_PROPERTY_OVERRIDE_ANIMATION,
 		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL,
 		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_MAGICAL,
 		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE,
@@ -949,9 +948,9 @@ function modifier_imba_ball_lightning:DeclareFunctions()
 	return funcs
 end
 
-function modifier_imba_ball_lightning:GetOverrideAnimation()
-	return ACT_DOTA_OVERRIDE_ABILITY_4
-end
+--	function modifier_imba_ball_lightning:GetOverrideAnimation()
+--		return ACT_DOTA_OVERRIDE_ABILITY_4
+--	end
 
 function modifier_imba_ball_lightning:GetAbsoluteNoDamagePhysical()
 	return 1

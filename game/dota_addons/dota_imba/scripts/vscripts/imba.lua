@@ -1245,27 +1245,11 @@ function GameMode:OnGameInProgress()
 	local towers = Entities:FindAllByClassname("npc_dota_tower")
 
 	for _, tower in pairs(towers) do
-		for _, ability in pairs(TOWER_ABILITIES["tower1"]) do
-			if string.find(tower:GetUnitName(), "tower1") then
-				tower:AddAbility(ability):SetLevel(1)
-			end
-		end
-
-		for _, ability in pairs(TOWER_ABILITIES["tower2"]) do
-			if string.find(tower:GetUnitName(), "tower2") then
-				tower:AddAbility(ability):SetLevel(1)
-			end
-		end
-
-		for _, ability in pairs(TOWER_ABILITIES["tower3"]) do
-			if string.find(tower:GetUnitName(), "tower3") then
-				tower:AddAbility(ability):SetLevel(1)
-			end
-		end
-
-		for _, ability in pairs(TOWER_ABILITIES["tower4"]) do
-			if string.find(tower:GetUnitName(), "tower4") then
-				tower:AddAbility(ability):SetLevel(1)
+		for i = 1, 4 do
+			for _, ability in pairs(TOWER_ABILITIES["tower"..i]) do
+				if string.find(tower:GetUnitName(), "tower"..i) then
+					tower:AddAbility(ability):SetLevel(1)
+				end
 			end
 		end
 	end
@@ -1826,17 +1810,20 @@ function GameMode:OnThink()
 	end
 
 	for _, hero in pairs(HeroList:GetAllHeroes()) do
-		-- Make courier controllable, repeat every second to avoid uncontrollable issues
---		if COURIER_PLAYER then
---			if COURIER_PLAYER[hero:GetPlayerID()] and not COURIER_PLAYER[hero:GetPlayerID()]:IsControllableByAnyPlayer() then
---				COURIER_PLAYER[hero:GetPlayerID()]:SetControllableByPlayer(hero:GetPlayerID(), true)
---				COURIER_PLAYER[hero:GetPlayerID()].owner_id = hero:GetPlayerID()
---			end
---		end
 
-		if COURIER_TEAM then
-			if COURIER_TEAM[hero:GetTeamNumber()] and not COURIER_TEAM[hero:GetTeamNumber()]:IsControllableByAnyPlayer() then
-				COURIER_TEAM[hero:GetTeamNumber()]:SetControllableByPlayer(hero:GetPlayerID(), true)
+		-- Make courier controllable, repeat every second to avoid uncontrollable issues
+		if USE_TEAM_COURIER then
+			if COURIER_TEAM then
+				if COURIER_TEAM[hero:GetTeamNumber()] and not COURIER_TEAM[hero:GetTeamNumber()]:IsControllableByAnyPlayer() then
+					COURIER_TEAM[hero:GetTeamNumber()]:SetControllableByPlayer(hero:GetPlayerID(), true)
+				end
+			end
+		else
+			if COURIER_PLAYER then
+				if COURIER_PLAYER[hero:GetPlayerID()] and not COURIER_PLAYER[hero:GetPlayerID()]:IsControllableByAnyPlayer() then
+					COURIER_PLAYER[hero:GetPlayerID()]:SetControllableByPlayer(hero:GetPlayerID(), true)
+					COURIER_PLAYER[hero:GetPlayerID()].owner_id = hero:GetPlayerID()
+				end
 			end
 		end
 

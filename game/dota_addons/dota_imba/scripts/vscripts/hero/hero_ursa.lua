@@ -1400,7 +1400,6 @@ function modifier_terrorital_hunter_aura:GetVisualZDelta()
 	return 350
 end
 
-
 -- Territorial Hunter debuff
 modifier_terrorital_hunter_fogvision = class({})
 

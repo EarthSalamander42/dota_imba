@@ -106,8 +106,9 @@ function GameMode:OnGameRulesStateChange(keys)
 				end
 
 				COURIER_TEAM = {}
---				COURIER_PLAYER = {}
+				COURIER_PLAYER = {}
 
+				
 				if GetMapName() == "imba_overthrow" then
 					local foundTeams = {}
 					for _, playerStart in pairs(Entities:FindAllByClassname("info_courier_spawn")) do
@@ -122,16 +123,31 @@ function GameMode:OnGameRulesStateChange(keys)
 						end
 					end
 				else
---					for _, hero in pairs(HeroList:GetAllHeroes()) do
---						if hero:GetTeamNumber() == 2 then
---							COURIER_PLAYER[hero:GetPlayerID()] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_radiant"):GetAbsOrigin(), true, nil, nil, hero:GetTeam())
---						elseif hero:GetTeamNumber() == 3 then
---							COURIER_PLAYER[hero:GetPlayerID()] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_dire"):GetAbsOrigin(), true, nil, nil, hero:GetTeam())
---						end
---					end
-
-					COURIER_TEAM[2] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_radiant"):GetAbsOrigin(), true, nil, nil, 2)
-					COURIER_TEAM[3] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_dire"):GetAbsOrigin(), true, nil, nil, 3)
+					safe(function()
+						if error then
+							log.info("An error occured with courier script, swap to original team couriers.")
+							for _, hero in pairs(HeroList:GetAllHeroes()) do
+								if hero:GetTeamNumber() == 2 then
+									COURIER_PLAYER[hero:GetPlayerID()] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_radiant"):GetAbsOrigin(), true, nil, nil, hero:GetTeam())
+								elseif hero:GetTeamNumber() == 3 then
+									COURIER_PLAYER[hero:GetPlayerID()] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_dire"):GetAbsOrigin(), true, nil, nil, hero:GetTeam())
+								end
+							end
+						else
+							if USE_TEAM_COURIER then
+								COURIER_TEAM[2] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_radiant"):GetAbsOrigin(), true, nil, nil, 2)
+								COURIER_TEAM[3] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_dire"):GetAbsOrigin(), true, nil, nil, 3)
+							else
+								for _, hero in pairs(HeroList:GetAllHeroes()) do
+									if hero:GetTeamNumber() == 2 then
+										COURIER_PLAYER[hero:GetPlayerID()] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_radiant"):GetAbsOrigin(), true, nil, nil, hero:GetTeam())
+									elseif hero:GetTeamNumber() == 3 then
+										COURIER_PLAYER[hero:GetPlayerID()] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_dire"):GetAbsOrigin(), true, nil, nil, hero:GetTeam())
+									end
+								end
+							end
+						end
+					end)
 
 					local good_fillers = {
 						"good_filler_1",

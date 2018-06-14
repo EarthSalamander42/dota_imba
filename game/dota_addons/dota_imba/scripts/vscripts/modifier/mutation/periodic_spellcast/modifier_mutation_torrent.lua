@@ -1,6 +1,6 @@
 modifier_mutation_torrent = class({})
 
-function modifier_mutation_torrent:IsHidden() return false end
+function modifier_mutation_torrent:IsHidden() return true end
 function modifier_mutation_torrent:IsDebuff() return true end
 function modifier_mutation_torrent:IsPurgable() return false end
 function modifier_mutation_torrent:RemoveOnDeath() return false end
