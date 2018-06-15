@@ -498,6 +498,11 @@ function GameMode:OnPlayerLearnedAbility(keys)
 		hero:AddNewModifier(hero, nil, "modifier_imba_mirana_silence_stance_visible", {})
 	end
 
+	-- initiate talent!
+	if abilityname:find("special_bonus_imba_") == 1 then
+		hero:AddNewModifier(hero, nil, "modifier_"..abilityname, {})
+	end
+
 	if abilityname == "lone_druid_savage_roar" and not hero.savage_roar then
 		hero.savage_roar = true
 	end
