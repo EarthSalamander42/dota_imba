@@ -20,6 +20,9 @@
 "DOTA_Tooltip_modifier_imba_wisp_tether"					"TETHERED"
 "DOTA_Tooltip_modifier_imba_wisp_tether_description"		"Movement speed increased by %% and given regen to tethered target"
 
+"DOTA_Tooltip_modifier_imba_wisp_tether_slow"				"SLOWED"
+"DOTA_Tooltip_modifier_imba_wisp_tether_slow_description"	"Movement speed reduced while touched by tether! Effect lingers after exposure."
+
 ////===============================================================================================================
 // Wisp's Tether Break
 ////===============================================================================================================

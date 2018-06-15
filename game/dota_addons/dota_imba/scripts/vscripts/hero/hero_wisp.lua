@@ -378,13 +378,13 @@ end
 modifier_imba_wisp_tether_slow = class({})
 function modifier_imba_wisp_tether_slow:DeclareFunctions()
 	local funcs = {
-		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT,
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT
 	}	
 	return funcs
 end
 
-function modifier_imba_wisp_tether_slow:GetModifierMoveSpeedBonus_Percentage()
+function modifier_imba_wisp_tether_slow:GetModifierMoveSpeedBonus_Constant()
 	return self:GetStackCount()
 end
 
