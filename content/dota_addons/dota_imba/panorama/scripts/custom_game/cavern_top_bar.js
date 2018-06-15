@@ -186,9 +186,13 @@ function UpdateTopBarEnemies()
 	}
 }
 
+var MainPanel = $.GetContextPanel().GetParent().GetParent().GetParent().GetParent()
 if (Game.GetMapInfo().map_display_name == "cavern") {
+	MainPanel.FindChildTraverse("topbar").style.visibility = "collapse";
 	$.Schedule( 1.0, UpdateTopBar );
-} else {
-	// .CavernTopBar
-	$.GetContextPanel().style.visibility = "collapse";
+	$.Schedule( 1.0, HideTopBar );
+}
+
+function HideTopBar() {
+	$.GetContextPanel().visible = false;
 }

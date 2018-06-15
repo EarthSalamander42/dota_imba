@@ -9,7 +9,7 @@
 	background-size: contain;
 	background-repeat: no-repeat;
 	margin-top: -12px;
-	
+	visibility: collapse;
 }
 
 #MovingOverlay

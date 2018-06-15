@@ -568,8 +568,18 @@ function ShowHUD(args) {
 	}
 
 	var MainPanel = $.GetContextPanel().GetParent().GetParent().GetParent().GetParent()
-	if (currentMap != "cavern" && currentMap != "imba_overthrow") {
+	if (currentMap == "cavern" || currentMap == "imba_overthrow") {
+	} else {
 		MainPanel.FindChildTraverse("topbar").style.visibility = boolean;
+	}
+
+	if (args.show == true) {
+		if (currentMap == "cavern") {
+			$.Msg(args.show)
+			$.Msg(MainPanel)
+			$.Msg(MainPanel.FindChildrenWithClassTraverse("CavernTopBar"))
+			MainPanel.FindChildrenWithClassTraverse("CavernTopBar").visible = boolean;
+		}
 	}
 
 	MainPanel.FindChildTraverse("minimap_container").style.visibility = boolean;

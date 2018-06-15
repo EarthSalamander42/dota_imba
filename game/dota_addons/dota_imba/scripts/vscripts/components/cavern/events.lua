@@ -719,16 +719,20 @@ function CCavern:OnBattlePointsEarned( nTeamNumber, nBattlePoints, szReason )
 
 			EmitSoundOnClient( "Plus.shards_tick", Hero:GetPlayerOwner() )
 
-			self.PlayerPointsData[nPlayerID]["points_earned"] = self.PlayerPointsData[nPlayerID]["points_earned"] + nBattlePoints
-			self.EventMetaData[nPlayerID]["battle_points"] = self.PlayerPointsData[nPlayerID]["points_earned"]
-			if self.EventMetaData[nPlayerID][szReason] == nil then
-				self.EventMetaData[nPlayerID][szReason] = 0
-			end
-			self.EventMetaData[nPlayerID][szReason] = self.EventMetaData[nPlayerID][szReason] + 1
+			-- COOKIES
+--			self.PlayerPointsData[nPlayerID]["points_earned"] = self.PlayerPointsData[nPlayerID]["points_earned"] + nBattlePoints
+--			self.EventMetaData[nPlayerID]["battle_points"] = self.PlayerPointsData[nPlayerID]["points_earned"]
 
-			local netTable = {}
-			netTable["earned_points"] = self.PlayerPointsData[nPlayerID]["points_earned"]
+--			if self.EventMetaData[nPlayerID][szReason] == nil then
+--				self.EventMetaData[nPlayerID][szReason] = 0
+--			end
+
+--			self.EventMetaData[nPlayerID][szReason] = self.EventMetaData[nPlayerID][szReason] + 1
+
+--			local netTable = {}
+--			netTable["earned_points"] = self.PlayerPointsData[nPlayerID]["points_earned"]
 --			CustomNetTables:SetTableValue( "bp_tracker", string.format( "%d", nPlayerID ), netTable )
+
 			if szReason ~= nil then
 				print( "Player " .. nPlayerID .. " just earned " .. nBattlePoints .. " battle points for " .. szReason )
 			end

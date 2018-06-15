@@ -1805,20 +1805,17 @@ function GameMode:OnThink()
 	if GameRules:State_Get() == DOTA_GAMERULES_STATE_POST_GAME then return nil end
 	if GameRules:IsGamePaused() then return 1 end
 
-	if GetMapName() == "cavern" then
-		CCavern:OnThink()
-	end
-
 	CheatDetector()
 
 	if GameRules:State_Get() == DOTA_GAMERULES_STATE_PRE_GAME or GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
 		if IsMutationMap() then
 			Mutation:OnThink()
+		elseif GetMapName() == "cavern" then
+			CCavern:OnThink()
 		end
 	end
 
 	for _, hero in pairs(HeroList:GetAllHeroes()) do
-
 		-- Make courier controllable, repeat every second to avoid uncontrollable issues
 		if USE_TEAM_COURIER then
 			if COURIER_TEAM then

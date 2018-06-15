@@ -38,3 +38,7 @@ function SetFlyoutScoreboardVisible(bVisible) {
 
 	$.RegisterEventHandler("DOTACustomUI_SetFlyoutScoreboardVisible", $.GetContextPanel(), SetFlyoutScoreboardVisible);
 })();
+
+if (Game.GetMapInfo().map_display_name == "cavern") {
+	$.GetContextPanel().style.visibility = "collapse";
+}

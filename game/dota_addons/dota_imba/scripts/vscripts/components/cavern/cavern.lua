@@ -304,7 +304,7 @@ function CCavern:SetupRooms()
 
 	
 
-	self:PrintRoomDebugGrid()
+	--self:PrintRoomDebugGrid()
 	--self:PrintRoomAccessibility()
 end
 
@@ -785,7 +785,6 @@ function CCavern:CheckForDefeat()
 	self.LivingTeams = {}
 	self.Heroes = {}
 	self.LivingHeroes = {}
-
 	
 	for nCurTeam = DOTA_TEAM_CUSTOM_1, (DOTA_TEAM_CUSTOM_1 + CAVERN_TEAMS_PER_GAME) do
 		local nTeamNetWorth = 0
@@ -852,7 +851,7 @@ function CCavern:CheckForDefeat()
 					bActive = true
 				end
 			end
-			if bActive == false and nTeam ~= 1 and self.DevExpressMode == false and PlayerHero.bEliminated == false then
+			if bActive == false and nTeam ~= 1 and PlayerHero.bEliminated == false then
 				self:OnHeroDefeated( PlayerHero )
 				UTIL_Remove( PlayerHero.Tombstone )
 			end
@@ -860,18 +859,24 @@ function CCavern:CheckForDefeat()
 	end
 
 	-- if you're competing against others, then it's last team standing
+--	Notifications:TopToAll({text = "Teams alive: "..TableLength( self.Teams ), duration = 1.0})
+
 	if TableLength( self.Teams ) > 1 then
 		--printf("checking multiplayer victory condition: Teams %d, LivingTeams: %d", TableLength(self.Teams), TableLength(self.LivingTeams) )
 		if TableLength( self.LivingTeams) < 2 then
 			for TeamID,TeamData in pairs( self.LivingTeams ) do
-				for _,Hero in pairs ( self.HeroesByTeam[TeamID] ) do
-					self.EventMetaData[Hero:GetPlayerOwnerID()]["team_position"] = 1
-				end
+--				Notifications:BottomToAll({text = "All teams are dead! Winner team is: "..TeamID, duration = 10.0})
+
+--				for _,Hero in pairs ( self.HeroesByTeam[TeamID] ) do
+--					self.EventMetaData[Hero:GetPlayerOwnerID()]["team_position"] = 1
+--				end
+
 				self:OnBattlePointsEarned( TeamID, CAVERN_BP_REWARD_WIN, "points_game_winner" )
 				self:OnGameFinished()
-				
+
 				GameRules:SetCustomVictoryMessageDuration( 10 )
 				GameRules:SetCustomVictoryMessage( VICTORY_MESSAGES[TeamID] )
+				GAME_WINNER_TEAM = TeamID
 				GameRules:SetGameWinner( TeamID )
 
 				self:PlayVictoryStinger()
@@ -883,7 +888,7 @@ function CCavern:CheckForDefeat()
 	-- if there's only one team then it's basically a PvE only
 	else
 		--printf("checking single player victory condition: Teams %d, LivingTeams: %d, GameOver %s", TableLength(self.Teams), TableLength(self.LivingTeams), self.GameOver )
-		if TableLength( self.LivingTeams ) < 1 and self.DevExpressMode == false then
+		if TableLength( self.LivingTeams ) < 1 then
 			for TeamID,TeamData in pairs( self.Teams ) do
 				self:OnGameFinished()
 				GameRules:MakeTeamLose( TeamID )
@@ -1327,14 +1332,14 @@ function CCavern:cavern_scratch( cmdName, nPlayerID )
 end
 
 function CCavern:OnThink()
+--	Notifications:TopToAll({text = "OnThink: Running...", duration = 1.0})
+
 	for nPlayerID = 0, ( DOTA_MAX_TEAM_PLAYERS - 1 ) do
 		self:UpdatePlayerColor( nPlayerID )
 	end
-	
+
 	if GameRules:State_Get() >= DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then	
-		if not self.DevDisableRosh then
-			self.Roshan:RoshanThink()
-		end
+		self.Roshan:RoshanThink()
 
 		if self.bFillWithBots == true then
 			for nPlayerID = 0, ( DOTA_MAX_TEAM_PLAYERS - 1 ) do
@@ -1350,6 +1355,7 @@ function CCavern:OnThink()
 				end
 			end
 		end
+
 		self:CheckForDefeat()
 	end
 end
@@ -1384,14 +1390,6 @@ function CCavern:SetupCavernRules()
 
 		for nCurTeam = DOTA_TEAM_CUSTOM_1,( DOTA_TEAM_CUSTOM_1 + CAVERN_TEAMS_PER_GAME - 1 ) do
 			GameRules:SetCustomGameTeamMaxPlayers( nCurTeam, CAVERN_PLAYERS_PER_TEAM )
-		end
-
-		if self.DevExpressMode then
-			GameRules:SetCustomGameSetupTimeout( 1 )
-			GameRules:SetCustomGameSetupAutoLaunchDelay( 1 )
-			GameRules:SetHeroSelectionTime( 5.0 )
-			GameRules:SetPreGameTime( 5.0 )
-			GameRules:SetPostGameTime( 10.0 )
 		end
 
 		GameRules:GetGameModeEntity():SetRemoveIllusionsOnDeath( true )
@@ -1472,30 +1470,14 @@ function CCavern:InitCavern()
 	self.PlayerPointsData = {}
 	self.SignOutTable = {}
 
-	self.DevExpressMode = false
-	if GameRules:GetGameSessionConfigValue("DevExpressMode", "0") == "1" then
-		self.DevExpressMode = true
-	end
-
-	self.DevDisableRosh = false
-	if GameRules:GetGameSessionConfigValue("DevDisableRosh", "0") == "1" then
-		self.DevDisableRosh = true
-	end
-
 	self.SpawnGroups = {}
 	self.Encounters = {}
 	self.Roshan = nil
 	self.TrapsPerDepth = CAVERN_TRAPS_PER_DEPTH
-
-	self.bUseTeamSelect = true
-
 	self.bBigCheeseDropped = false
 
+	self.bUseTeamSelect = true
 	self.bFillWithBots = false
-
-	if self.DevExpressMode == true then
-		self.bFillWithBots = false
-	end
 
 	self.GameMode = GameRules:GetGameModeEntity()
 	self:SetupAchievements()

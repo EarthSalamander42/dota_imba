@@ -13,10 +13,10 @@
 	"HeroGuidesSupported"			"1"
 	"PenaltiesEnabled"				"1"
 
-	"maps"							"imba_ranked_5v5 imba_ranked_10v10 imba_frantic_5v5 imba_frantic_10v10 imba_1v1"
+//	"maps"							"imba_ranked_5v5 imba_ranked_10v10 imba_frantic_5v5 imba_frantic_10v10 imba_1v1"
 
 	// IMBASHAKA
-//	"maps"							"cavern imba_ranked_5v5 imba_ranked_10v10 imba_mutation_5v5 imba_mutation_10v10 imba_tournament"
+	"maps"							"cavern imba_ranked_5v5 imba_ranked_10v10 imba_mutation_5v5 imba_mutation_10v10"
 
 	"IsPlayable"					"1"
 
