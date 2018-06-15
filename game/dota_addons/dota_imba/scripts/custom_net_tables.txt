@@ -2,7 +2,6 @@
 {
 	custom_net_tables =
 	[
-		"talents",
 		"game_options",
 		"player_table",
 		"gamerules",
@@ -14,5 +13,6 @@
 		"game_state",
 		"hero_selection",
 		"battlepass",
+		"rosh_tracker",
 	]
 }

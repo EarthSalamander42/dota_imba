@@ -1,0 +1,157 @@
+#PartyPortraits
+{
+    margin-top: 58px;
+    margin-left: 16px;
+//    width: 1000px;
+	flow-children: right;
+}
+
+.PartyPortraitContainer
+{
+    opacity-mask: url("s2r://panorama/images/masks/topbar_heroslant_left_psd.vtex");
+
+}
+
+.PartyPortraitHealthBar
+{
+    height: 10px;
+    width:  77px;
+    border-radius: 0px;
+    border: 0px solid black;
+}
+
+
+.PartyPortraitHealthBar .ProgressBarLeft
+{
+    background-color: gradient( linear, 0% 0%, 0% 100%, from( #00ff00 ), to( #004c00 ) );
+
+    border-radius: 2px;
+
+    transition-property: width;
+    transition-duration: 1.0s;
+    transition-timing-function: linear;
+}
+
+.PartyPortraitManaBar
+{
+    height: 6px;
+
+    width:  77px;
+    border-radius: 0px;
+    border: 0px solid black;
+}
+
+
+.PartyPortraitManaBar .ProgressBarLeft
+{
+    background-color: gradient( linear, 0% 0%, 0% 100%, from( #2b4287 ), color-stop(0.2, #4165ce ), color-stop(.5, #4a73ea), to(#2b4287) );
+
+    border-radius: 2px;
+
+    transition-property: width;
+    transition-duration: 1.0s;
+    transition-timing-function: linear;
+}
+
+
+.PartyPortraitImage,
+.VIPPortraitImage
+{
+    width: 77px;
+    height: 43px;
+
+	
+	background-color: black;
+}
+
+.Disconnected #HeroIconContainer
+{
+	saturation: .3;
+	wash-color: #f00;
+}
+
+.VIPPortraitImage,
+.VIP .PartyPortraitImage
+{
+    visibility: collapse;
+	border-color: #FFC000;
+}
+
+#PartyPortrait4
+{
+
+}
+
+.VIP .VIPPortraitImage
+{
+    visibility: visible;
+}
+
+.PartyPortraitName
+{
+    color: white;
+    width: 86px;
+    text-align: center;
+    text-shadow: 1px 1px 0px 2.0 #000; 
+	text-overflow: shrink;
+	height: 24px;
+    visibility: collapse;
+	
+}
+
+.Disconnected DOTAHeroImage
+{
+    opacity: 0.5;
+}
+
+#DisconnectIcon
+{
+    width: 67px;
+    height: 20px;
+    vertical-align: middle;
+    background-image: url("s2r://panorama/images/hud/reborn/icon_disconnect_png.vtex");
+    background-repeat: no-repeat;
+    background-size: 100%;
+	horizontal-align: center;
+    z-index: 5;
+	box-shadow: fill -6px -6px 12px 12px #000c;
+	border-radius: 16px;
+	visibility: collapse;
+}
+
+#RespawnTimer
+{
+    z-index: 6;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+}
+
+.Dead #RespawnTimer
+{
+    opacity: 1;
+}
+
+#RespawnTimer Label
+{
+    margin-top: 5px;
+    width: 100%;
+    color: white;
+    font-size: 48px;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px 2.0 #00000011;
+    font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
+    text-overflow: shrink;
+    text-align: center;
+}
+
+#HeroIconContainer
+{
+	width: fit-children;
+}
+
+.Disconnected #DisconnectIcon
+{
+	visibility: visible;
+}
+

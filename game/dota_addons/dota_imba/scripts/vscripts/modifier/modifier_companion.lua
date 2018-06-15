@@ -27,11 +27,15 @@ end
 
 function modifier_companion:OnCreated()
 	if IsServer() then
-		self:StartIntervalThink(0.2)
+		if GetMapName() == "cavern" then
+			self:GetParent():ForceKill(false)
+			return
+		else
+			self:StartIntervalThink(0.2)
+		end
 
-		local companion = self:GetParent()
-		if not companion.base_model then
-			companion.base_model = companion:GetModelName()
+		if not self:GetParent().base_model then
+			self:GetParent().base_model = self:GetParent():GetModelName()
 		end
 
 		self:SetStackCount(0)
@@ -68,13 +72,15 @@ function modifier_companion:OnIntervalThink()
 		local hero = companion:GetPlayerOwner():GetAssignedHero()
 		hero.companion = companion
 		local fountain
-		if hero:GetTeamNumber() == 2 then
-			fountain = GoodCamera
-		elseif hero:GetTeamNumber() == 3 then
-			fountain = BadCamera
-		end
+
 		if GetMapName() == "imba_overthrow" then
 			fountain = Entities:FindByName(nil, "@overboss")
+		else
+			if hero:GetTeamNumber() == 2 then
+				fountain = GoodCamera
+			elseif hero:GetTeamNumber() == 3 then
+				fountain = BadCamera
+			end
 		end
 
 		local hero_origin = hero:GetAbsOrigin()

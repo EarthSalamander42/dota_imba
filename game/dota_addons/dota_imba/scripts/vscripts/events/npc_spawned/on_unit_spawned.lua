@@ -19,6 +19,7 @@ function GameMode:OnUnitFirstSpawn(unit)
 		HeroSelection:Attachments(unit)
 		return
 	else
+		if GetMapName() == "cavern" then return end
 		Timers:CreateTimer(FrameTime(), function()
 			if UNIT_EQUIPMENT[unit:GetModelName()] then
 				for _, wearable in pairs(UNIT_EQUIPMENT[unit:GetModelName()]) do

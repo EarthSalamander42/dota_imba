@@ -1,0 +1,391 @@
+.FlyoutScoreboardRoot
+{
+    transform: translatex( -800px );
+    transition-property: transform;
+    transition-duration: 0.1s;
+    height: 1000px;
+    flow-children: down;
+	horizontal-align: left;
+	margin-top: 75px;
+}
+
+.FlyoutScoreboardRoot.flyout_scoreboard_visible,
+{
+    transform: translatey( 0px );
+}
+
+#OverlayMapContainer
+{
+	horizontal-align: left;
+	vertical-align: middle;
+
+	width: 60px;
+    height: 60px;
+	margin-bottom: 0px;
+
+	
+	opacity: 1;
+	background-color: #000d;
+	background-color: gradient( radial, 50% 50%, 0% 0%, 300px 300px, from( #000d ), color-stop( .5, #000d ), to( #000d ) );
+	
+	transition-property: width, height, opacity, transform, pre-transform-scale2d, wash-color, background-color, opacity-mask, border-radius;
+	transition-duration: 0.2s;
+	transition-timing-function: ease-in-out;	
+}
+
+.DOTA_GAMEMODE_EVENT #OverlayMapContainer
+{
+	transform: translateX(640px) translateY(-310px);
+}
+
+#OverlayMap
+{
+	width: 100%;
+	height: 100%;
+	opacity: 1;
+	border: 0px solid black;
+}
+
+.HUDFlipped #OverlayMapContainer
+{
+	horizontal-align: right;
+	margin-left: 0px;
+}
+
+
+#OverlayMapContainer.ShopOpen
+{
+	visibility: collapse;
+}
+
+#RadarAOE
+{
+	border-radius: 50%;
+	border: 2px solid #0004;
+	horizontal-align: center;
+	vertical-align: middle;
+	width: 324px;
+	height: 324px;
+	transition-property: opacity;
+	transition-duration: 0.34s;
+	transition-timing-function: ease-in-out;		
+	opacity: 0;
+}
+
+.MinimapImage
+{
+    width: 5px;
+    height: 5px;
+	background-image: url("s2r://panorama/images/interface/minimap_creep_icon_psd.vtex");	
+	background-position: center;
+	background-size: contain;	
+	wash-color: #0f0;
+	z-index: 0;
+}
+
+.MinimapImage.Enemy
+{
+	wash-color: red;
+}
+
+
+.MinimapImage.npc_dota_creature_ogre_tank
+{
+	width: 8px;
+	height: 8px;
+}
+
+.MinimapImage.npc_dota_cavern_roshan
+{
+	height: 48px;
+	width: 48px;
+	background-image: url("s2r://panorama/images/interface/roshan_timer_roshan_psd.vtex");	
+	background-repeat: no-repeat;
+	wash-color: none;
+	z-index: 500;
+}
+
+.Direction0 .MinimapImage.npc_dota_cavern_roshan
+{
+	height: 128px;
+	width: 128px;
+	background-image: url("s2r://panorama/images/interface/roshan_north_psd.vtex");	
+	background-repeat: no-repeat;
+	wash-color: none;
+}
+
+
+.Direction1 .MinimapImage.npc_dota_cavern_roshan
+{
+	height: 128px;
+	width: 128px;
+	background-image: url("s2r://panorama/images/interface/roshan_south_psd.vtex");	
+	background-repeat: no-repeat;
+	wash-color: none;
+}
+
+
+.Direction2 .MinimapImage.npc_dota_cavern_roshan
+{
+	height: 128px;
+	width: 128px;
+	background-image: url("s2r://panorama/images/interface/roshan_east_psd.vtex");	
+	background-repeat: no-repeat;
+	wash-color: none;
+}
+
+.Direction3 .MinimapImage.npc_dota_cavern_roshan
+{
+	height: 128px;
+	width: 128px;
+	background-image: url("s2r://panorama/images/interface/roshan_west_psd.vtex");	
+	background-repeat: no-repeat;
+	wash-color: none;
+}
+
+.MinimapImage.npc_dota_cavern_cheese
+{
+	height: 48px;
+	width: 48px;
+	background-image: url("s2r://panorama/images/interface/cheese_psd.vtex");	
+	background-repeat: no-repeat;
+	wash-color: none;
+}
+
+
+.MinimapImage.npc_dota_cavern_gate_destructible,
+.MinimapImage.npc_dota_cavern_gate_blocked
+{
+	height: 12px;
+	width: 12px;
+	background-image: url("s2r://panorama/images/cavern/icon_challenge_available_far_png.vtex");	
+	wash-color: #0f0;
+}
+
+.MinimapImage.npc_dota_cavern_gate_blocked
+{
+	wash-color: grey;
+}
+
+
+.MinimapImage.Enemy.Shop
+{
+	wash-color: #0f0;
+}
+
+.MinimapImage.Boss
+{
+    width: 24px;
+    height: 24px;
+	background-image: url("s2r://panorama/images/interface/minimap_boss_icon_png.vtex");		
+	background-position: center;
+	background-size: contain;	
+    //background-color: red;
+	z-index: 1;
+}
+
+.MinimapImage.npc_dota_room_destroyed_dummy1
+{
+	height: 50px;
+	width: 70px;
+	border-radius: 0;
+	background-image: url("s2r://panorama/images/interface/cavern_minimap_destroyed_room1_png.vtex");		
+	background-size: contain;	
+	background-repeat: no-repeat;
+	border: 0px;
+	wash-color: none;
+}
+
+.MinimapImage.npc_dota_room_destroyed_dummy2
+{
+	height: 50px;
+	width: 70px;
+	border-radius: 0;
+	background-image: url("s2r://panorama/images/interface/cavern_minimap_destroyed_room2_png.vtex");		
+	background-size: contain;	
+	background-repeat: no-repeat;
+	border: 0px;
+	wash-color: none;
+}
+
+.MinimapImage.npc_dota_room_destroyed_dummy3
+{
+	height: 50px;
+	width: 70px;
+	border-radius: 0;
+	background-image: url("s2r://panorama/images/interface/cavern_minimap_destroyed_room3_png.vtex");		
+	
+	background-size: contain;	
+	background-repeat: no-repeat;
+	border: 0px;
+	wash-color: none;
+}
+
+
+#OverlayMap DOTAHeroImage
+{
+	width: 20px;
+	height: 20px;
+	opacity: 1.0;
+	z-index: 2;
+}
+
+#TeamsContainer
+{
+	width: 375px;
+	height: 790px;
+	background-color: black;
+	horizontal-align: left;
+	flow-children: down;
+}
+
+#TeamColumn1,
+{
+	width: 100%;
+	height: 100%;
+	
+}
+
+.HeaderLabel
+{
+   	color: white;
+   	font-weight: bold;
+	font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
+    font-size: 16px;
+    letter-spacing: 2px;
+    text-align: center;
+    vertical-align: center;
+    text-transform: uppercase;
+}
+
+.PlayerHeader
+{
+	margin-left: 45px;
+}
+
+.KillsHeader
+{
+	margin-left: 105px;
+}
+
+.EliminationsHeader
+{
+	margin-left: 5px;
+}
+
+.MuteHeader
+{
+	margin-left: 40px;
+}
+
+.TeamContainerHeader
+{
+	flow-children: right;
+}
+
+.TeamContainer
+{
+	height: 96px;
+	width: 100%;
+	//background-image: url("s2r://panorama/images/hud/reborn/ability_bg_psd.vtex");
+	background-color: #282f37;
+	opacity: 1;
+	flow-children: down;
+}
+
+.TeamContainer.Odd
+{
+	background-color: #1c232b;
+}
+
+.PlayerHeroIcon
+{
+	height: 24px;
+	width: 24px;
+	margin: 5px;
+	wash-color: grey;
+	saturation: 0.01;
+}
+
+.Alive .PlayerHeroIcon
+{
+	wash-color: none;
+	saturation: 1.0;
+}
+
+.Eliminated .PlayerHeroIcon
+{
+	wash-color: #880000;
+}
+
+.PlayerRow
+{
+	flow-children: right;
+	
+	width: 100%;
+	height: 31px;
+}
+
+.PlayerMuteButton
+{
+	horizontal-align: right;
+	margin-right:35px;
+	vertical-align: center;
+	width: 32px;
+	height: 32px;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-image: url("s2r://panorama/images/custom_game/button_audio_on_psd.vtex");
+	visibility: visible;
+	opacity: 0.8;
+}
+
+.PlayerMuteButton:hover
+{
+	opacity: 1;
+}
+
+.player_muted .PlayerMuteButton
+{
+    background-image: url("s2r://panorama/images/custom_game/button_audio_off_psd.vtex");
+}
+
+.local_player .PlayerMuteButton
+{
+	visibility: collapse;
+}
+
+.PlayerName,
+.PlayerStatNumber
+{
+    font-weight: bold;
+	font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
+    font-size: 18px;
+    letter-spacing: 2px;
+    text-align: center;
+    vertical-align: center;
+    margin-left: 5px;
+}
+
+.PlayerName
+{
+	color: white;
+	width: 170px;
+	text-align: left;
+	text-shadow: 1px 1px 2px 2.0 #00000011;
+	text-overflow: clip;
+}
+
+.PlayerStatNumber
+{
+	color: white;
+}
+
+#TeamColorBand
+{
+	height: 100%;
+	width: 5px;
+	opacity: 0.4;
+}
+

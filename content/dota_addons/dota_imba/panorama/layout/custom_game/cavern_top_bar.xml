@@ -1,0 +1,94 @@
+<root>
+	 <styles>
+	 	<include src="s2r://panorama/styles/custom_game/cavern_top_bar.vcss_c" />
+	 </styles>
+	 <scripts>
+	 	<include src="s2r://panorama/scripts/custom_game/cavern_top_bar.vjs_c" />
+	 	<include src="s2r://panorama/scripts/custom_game/party_health_bars.vjs_c" />
+	 </scripts>
+
+  	<Panel hittest="false" class="CavernTopBar">
+
+  		<Panel hittest="false" id="MovingOverlay"/>
+  		<DOTAScenePanel id="RoshMovingFX" hittest="false" map="rosh_moving_fx" camera="shot_camera"/>
+  		<Panel id="PlayersBlock" class="LeftRightFlow">
+  			<Panel hittest="false" id="PartyPortraits" class="LeftRightFlow"/>
+  			<Panel hittest="false" class="ScoreContainer">
+  				
+	  			 <Panel id="EarnedBPContainer" class="LeftRightFlow" hittest="false">
+			        <Panel id="BPIcon" hittest="false"/>
+			        <Label id="EarnedBP" text="#DOTA_EventUI_BP" hittest="false"/>
+			        <Label id="EarnedBPAmount" text="{d:earned_points}/{d:remaining_points}" hittest="false"/>
+			     </Panel>
+  			</Panel>      
+  		</Panel>
+  		<Panel id="RoshContainer">
+  			<Label id="GameTimer" text="00:00"/>
+			<Label id="RoshText" text="00"/>
+
+		</Panel>
+  	
+  		<Panel id="EnemyContainer" class="LeftRightFlow">
+  			<Panel class="TeamRow">
+  				<Panel id="Team6" class="TeamContainer">
+	  				<DOTAHeroImage hittest="false" class="EnemyRemainingImage" heroimagestyle="icon" scaling="stretch-to-cover-preserve-aspect" />
+	  				<DOTAHeroImage hittest="false" class="EnemyRemainingImage" heroimagestyle="icon" scaling="stretch-to-cover-preserve-aspect" />
+	  				<DOTAHeroImage hittest="false" class="EnemyRemainingImage" heroimagestyle="icon" scaling="stretch-to-cover-preserve-aspect" />
+	  			</Panel>
+	  			<Panel id="Team7" class="TeamContainer">
+	  				<DOTAHeroImage hittest="false" class="EnemyRemainingImage" heroimagestyle="icon" scaling="stretch-to-cover-preserve-aspect" />
+	  				<DOTAHeroImage hittest="false" class="EnemyRemainingImage" heroimagestyle="icon" scaling="stretch-to-cover-preserve-aspect" />
+	  				<DOTAHeroImage hittest="false" class="EnemyRemainingImage" heroimagestyle="icon" scaling="stretch-to-cover-preserve-aspect" />
+	  			</Panel>
+	  			<Panel id="Team8" class="TeamContainer">
+	  				<DOTAHeroImage hittest="false" class="EnemyRemainingImage" heroimagestyle="icon" scaling="stretch-to-cover-preserve-aspect" />
+	  				<DOTAHeroImage hittest="false" class="EnemyRemainingImage" heroimagestyle="icon" scaling="stretch-to-cover-preserve-aspect" />
+	  				<DOTAHeroImage hittest="false" class="EnemyRemainingImage" heroimagestyle="icon" scaling="stretch-to-cover-preserve-aspect" />
+	  			</Panel>
+	  			<Panel id="Team9" class="TeamContainer">
+	  				<DOTAHeroImage hittest="false" class="EnemyRemainingImage" heroimagestyle="icon" scaling="stretch-to-cover-preserve-aspect" />
+	  				<DOTAHeroImage hittest="false" class="EnemyRemainingImage" heroimagestyle="icon" scaling="stretch-to-cover-preserve-aspect" />
+	  				<DOTAHeroImage hittest="false" class="EnemyRemainingImage" heroimagestyle="icon" scaling="stretch-to-cover-preserve-aspect" />
+	  			</Panel>
+  			</Panel>
+  			<Panel class="TeamRow">
+  				<Panel id="Team10" class="TeamContainer">
+	  				<DOTAHeroImage hittest="false" class="EnemyRemainingImage" heroimagestyle="icon" scaling="stretch-to-cover-preserve-aspect" />
+	  				<DOTAHeroImage hittest="false" class="EnemyRemainingImage" heroimagestyle="icon" scaling="stretch-to-cover-preserve-aspect" />
+	  				<DOTAHeroImage hittest="false" class="EnemyRemainingImage" heroimagestyle="icon" scaling="stretch-to-cover-preserve-aspect" />
+	  			</Panel>
+	  			<Panel id="Team11" class="TeamContainer">
+	  				<DOTAHeroImage hittest="false" class="EnemyRemainingImage" heroimagestyle="icon" scaling="stretch-to-cover-preserve-aspect" />
+	  				<DOTAHeroImage hittest="false" class="EnemyRemainingImage" heroimagestyle="icon" scaling="stretch-to-cover-preserve-aspect" />
+	  				<DOTAHeroImage hittest="false" class="EnemyRemainingImage" heroimagestyle="icon" scaling="stretch-to-cover-preserve-aspect" />
+	  			</Panel>
+	  			<Panel id="Team12" class="TeamContainer">
+	  				<DOTAHeroImage hittest="false" class="EnemyRemainingImage" heroimagestyle="icon" scaling="stretch-to-cover-preserve-aspect" />
+	  				<DOTAHeroImage hittest="false" class="EnemyRemainingImage" heroimagestyle="icon" scaling="stretch-to-cover-preserve-aspect" />
+	  				<DOTAHeroImage hittest="false" class="EnemyRemainingImage" heroimagestyle="icon" scaling="stretch-to-cover-preserve-aspect" />
+	  			</Panel>
+	  			<Panel id="Team13" class="TeamContainer">
+	  				<DOTAHeroImage hittest="false" class="EnemyRemainingImage" heroimagestyle="icon" scaling="stretch-to-cover-preserve-aspect" />
+	  				<DOTAHeroImage hittest="false" class="EnemyRemainingImage" heroimagestyle="icon" scaling="stretch-to-cover-preserve-aspect" />
+	  				<DOTAHeroImage hittest="false" class="EnemyRemainingImage" heroimagestyle="icon" scaling="stretch-to-cover-preserve-aspect" />
+	  			</Panel>
+  			</Panel>
+  		</Panel>
+  		
+  		<Panel id="RoomInfo" class="TopBottomFlow">
+  			<Panel id="TitleContainer" class="LeftRightFlow">
+  				<Label id="RoomTitle" text="ROOM TITLE"/>
+  				<Panel id="DifficultyContainer" class="LeftRightFlow">		
+	  				<Panel id="Difficulty5" class="RoomDifficultyIcon"/>
+	  				<Panel id="Difficulty4" class="RoomDifficultyIcon"/>			
+	  				<Panel id="Difficulty3" class="RoomDifficultyIcon"/>
+	  				<Panel id="Difficulty2" class="RoomDifficultyIcon"/>
+	  				<Panel id="Difficulty1" class="RoomDifficultyIcon"/>
+  				</Panel>
+  				
+  			</Panel>
+  			
+  			<Label id="RoomInstructions" text="kill all the things and get the treasure"/>
+  		</Panel>
+  	</Panel>
+</root>

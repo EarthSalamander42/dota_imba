@@ -1,0 +1,566 @@
+@import url("file://{resources}styles/battle_pass/international2018/bp_international2018_shared.css");
+
+
+.CustomHudRoot
+{
+    width: 100%;
+    height: 100%;
+}
+
+
+.CustomHudContents
+{
+    width: 100%;
+    height: 100%;
+}
+
+
+#RoomDiscoverPanel
+{
+	height: 260px;
+	width: 800px;
+
+	horizontal-align: middle;
+	vertical-align: top;
+
+	margin-top: 60px;
+}
+
+#RoomDiscoverLabels
+{
+	width: 100%;
+	height: 100%;
+	flow-children: down;
+	margin-left: 180px;
+	text-transform: uppercase;
+}
+
+#RoomDiscoverStrip
+{
+	width: 0px;
+	horizontal-align: center;
+	vertical-align: middle;
+	
+	margin-top: 40px;
+    padding: 10px 0 4px 0;
+	pre-transform-scale2d: 0.8;
+	background-color: gradient( linear, 0% 0%, 100% 0%, from( #00000000 ), color-stop(0.2, #00000090), color-stop(0.4, #000000EF), color-stop(0.6, #000000EF), color-stop(0.8, #00000090), to( #00000000 ) );	
+	
+	transition-property: width, pre-transform-scale2d, opacity;
+	transition-duration: .32s;
+	transition-timing-function: ease-in-out;
+}
+
+.RoomText
+{
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.RoomDifficulty
+{
+    margin-top: 10px;
+    horizontal-align: center;
+}
+
+#RoomDiscoverPanel.Visible #RoomDiscoverStrip
+{
+	width: 500px;
+	pre-transform-scale2d: 1;
+	transition-delay: .12s;
+}
+
+#RoomDiscoverPanel.Visible
+{
+	visibility: visible;
+}
+
+#RoomDiscoverLabel,
+#EncounterNameLabel
+{
+	text-transform: uppercase;
+	horizontal-align: left;
+	vertical-align: center;
+	text-align: center;
+	
+	transition-property: pre-transform-scale2d, opacity, color, transform;
+	transition-duration: .22s;
+	transition-delay: .12s;
+	transition-timing-function: ease-out;	
+}
+
+.EncounterLabelHeader
+{
+	text-shadow: 0px 6px 0px 2.0 #000000;
+    text-transform: uppercase;
+}
+
+#RoomDiscoverPanel.Visible #RoomDiscoverLabel
+{
+	opacity: 1;
+	pre-transform-scale2d: 1;
+	transition-delay: 0s;
+}
+
+#EncounterNameLabel
+{
+	text-transform: uppercase;
+}
+
+#RoomDiscoverPanel.Visible #RoomDiscoverLabel
+{
+	opacity: 1;
+	color: white;
+	transform: translateX( 0px );
+	transition-delay: 0s;
+}
+
+#EncounterArt
+{
+    background-size: cover;
+	width: 256px;
+	height: 64px;
+	margin-top: 175px;
+	margin-left: 0px;
+	opacity: 0;
+	pre-transform-scale2d: .2;
+	horizontal-align: center;
+	
+	transition-property: width, pre-transform-scale2d, opacity;
+	transition-duration: .32s;
+	transition-timing-function: ease-in-out;	
+}
+
+#RoomDiscoverPanel.Visible #EncounterArt
+{
+	opacity: 1;
+	pre-transform-scale2d: 1;
+}
+
+#RoomDiscoverPanel.Difficulty1 #EncounterArt
+{ 
+	background-image: url("s2r://panorama/images/interface/room_difficulty_1_png.vtex");	
+}
+
+#RoomDiscoverPanel.Difficulty2 #EncounterArt
+{ 
+	background-image: url("s2r://panorama/images/interface/room_difficulty_2_png.vtex");	
+}
+
+#RoomDiscoverPanel.Difficulty3 #EncounterArt
+{ 
+	background-image: url("s2r://panorama/images/interface/room_difficulty_3_png.vtex");	
+}
+
+#RoomDiscoverPanel.Difficulty4 #EncounterArt
+{ 
+	background-image: url("s2r://panorama/images/interface/room_difficulty_4_png.vtex");	
+}
+
+.EncounterLabelHeader
+{
+	width: 100%;
+
+    text-align: center;
+    text-shadow: 1px 1px 2px 2.0 #00000011;
+    color: gradient( linear, 0% 0%, 0% 100%, from( #706981 ), to( #c3b3d1 ) );	
+  	text-transform: uppercase;
+   	font-size: 30px;
+}
+
+#GameInfoPopup
+{
+	width: 1100px;
+	height: 660px;
+    background-color: gradient( linear, 0% 0%, 0% 100%, from( #020404 ), to( #090f0e ) );
+	box-shadow: 0px 0px 40px #020404EF;
+	vertical-align: center;
+	horizontal-align: center;
+	opacity: 0;
+
+	pre-transform-scale2d: .2;
+	transition-property: width, pre-transform-scale2d, opacity;
+	transition-duration: .32s;
+	transition-timing-function: ease-in-out;	
+    border: 1px solid #5fa39d30;
+	margin-bottom: 50px;
+}
+
+#GameInfoPopup.Visible
+{
+	opacity: 1;
+	pre-transform-scale2d: 1;
+}
+
+.GameInfoContents
+{
+	flow-children: down;
+	padding: 40px;
+	height: 100%;
+}
+
+.Button
+{
+	height: 50px;
+	width: 150px;
+	
+	horizontal-align: center;
+	vertical-align: bottom;
+	margin-bottom: 20px;
+
+}
+
+.GameOverHeader
+{
+	height: 40px;
+	vertical-align: top;
+	margin-top: 5px;
+	width: 100%;
+}
+
+#GameOverBlur
+{
+    width: 100%;
+    height: 100%;
+    blur: gaussian(5);
+    visibility: collapse;
+}
+
+#GameOverPanel
+{
+	height: 700px;
+	width: 1000px;
+	background-image: url("s2r://panorama/images/hud/reborn/bg_hud_inspect_psd.vtex");
+    background-repeat: no-repeat;
+    background-size: cover;
+	visibility: collapse;
+	horizontal-align: center;
+	vertical-align: center;
+	flow-children: down;
+	border: 1px solid #70698130;
+	padding: 25px;
+    visibility: collapse;
+}
+
+.GameOverPanelLabel
+{
+	horizontal-align: center;
+}
+
+#GameOverPanel.Visible,
+#GameOverBlur.visible
+{
+	visibility: visible;
+}
+
+#FinishPosition,
+#DefeatedHeader
+{
+	text-transform: uppercase;
+	horizontal-align: right;
+	font-size: 30px;
+    font-weight: bold;
+    letter-spacing: 2px;
+	margin-left: 10px;
+	margin-right: 10px;
+	color: gradient( linear, 0% 0%, 0% 100%, from( #706981 ), to( #c3b3d1 ) );	
+    text-shadow: 0px 0px 6px #000;
+}
+
+#FinishPosition
+{
+    color: #666;
+    font-weight: normal;
+    text-transform: none;
+    letter-spacing: 0px;
+}
+
+#DefeatedHeader
+{
+	horizontal-align: left;
+}
+
+#HeroesContainer
+{
+    margin-top: 20px;
+    margin-bottom: 20px;
+	width: 100%;
+	height: 250px;
+	
+	horizontal-align: center;
+	flow-children: right;
+}
+
+.HeroContainer
+{
+	height: 100%;
+	width: 30%;
+	margin-left: 20px;
+	margin-right: 20px;
+	flow-children: down;
+}
+
+.GameOverHero
+{
+	height: 200px;
+	width: 100%;
+}
+
+.PlayerLabel
+{
+	width: 100%;
+	height: 60px;
+	background-color: gradient( linear, 0% 0%, 100% 0%, from( #00000000 ), color-stop(0.2, #00000070), color-stop(0.4, #00000090), color-stop(0.6, #00000090), color-stop(0.8, #00000070), to( #00000000 ) );
+}
+
+.PlayerLabel Label
+{
+	vertical-align: center;
+	horizontal-align: center;
+	text-align: center;
+	font-size: 24px;
+	color: white;
+}
+
+#RewardsContainer
+{
+	width: 100%;
+	horizontal-align: center;
+	flow-children: down;
+}
+
+#EarnedPointsContainer
+{
+	
+	vertical-align: bottom;
+	horizontal-align: center;
+	flow-children: right;
+	
+}
+
+.BattlePointsTextLarge
+{
+	font-size: 24px;
+	color: accentColor;
+	
+}
+
+.BattlePointsText
+{
+	font-size: 20px;
+	color: accentColor;
+	
+}
+
+.BattlePointsTextSmall
+{
+	font-size: 12px;
+	color: textColoredDarkColor;
+	vertical-align: bottom;
+	horizontal-align: center;
+}
+
+
+
+#SmallCheeseIcon
+{
+	background-image: url("s2r://panorama/images/compendium/international2018/underhollow_small_cheese_psd.vtex");
+    
+	background-size: contain;
+	background-repeat: no-repeat;
+}
+
+
+#BigCheeseIcon
+{
+	background-image: url("s2r://panorama/images/compendium/international2018/underhollow_big_cheese_psd.vtex");
+   
+	background-size: contain;
+	background-repeat: no-repeat;
+}
+
+
+
+#RewardsLine
+{
+	height: 150px;
+	width: 320px;
+	flow-children: right;
+	horizontal-align: center;
+    
+}
+
+
+.ButtonsContainer
+{
+	horizontal-align: center;
+	flow-children: right;
+}
+
+.PopupButton
+{
+    padding: 8px 60px;
+}
+
+#PointMultiplierSection Label,#PointMultiplierSection Label
+{
+
+	text-align: center;
+	
+	letter-spacing: 2px;
+	font-size: 16px;
+	text-transform: uppercase;
+	horizontal-align: center;
+	margin-top: 5px;
+}
+
+#BattlePointsMultiplierValue
+{
+	color: accentColor;
+}
+
+.BattlePointsTextLarge
+{
+	font-size: 24px;
+	color: accentColor;
+	
+}
+
+.BattlePointsText
+{
+	font-size: 18px;
+	color: accentColor;
+	
+}
+
+.BattlePointsTextWhite
+{
+	font-size: 18px;
+	color: white;
+}
+
+.BattlePointsTextWhiteLarge
+{
+	font-size: 24px;
+	color: white;
+}
+
+.BattlePointsTextSmall
+{
+	font-size: 12px;
+	color: textColoredDarkColor;
+	vertical-align: bottom;
+	horizontal-align: center;
+}
+
+
+.RewardLineIcon
+{
+	height:  80px;
+	width: 80px;
+	
+	horizontal-align: center;
+}
+
+.None .RewardLineIcon
+{
+	saturation: 0.05;
+	opacity:  0.1;
+}
+
+#SmallCheeseIcon
+{
+	background-image: url("s2r://panorama/images/compendium/international2018/underhollow_small_cheese_psd.vtex");
+	
+	background-size: contain;
+	background-repeat: no-repeat;
+}
+
+
+#BigCheeseIcon
+{
+	background-image: url("s2r://panorama/images/compendium/international2018/underhollow_big_cheese_psd.vtex");
+	
+	background-size: contain;
+	background-repeat: no-repeat;
+}
+
+#EliminationsIcon
+{
+	background-image: url("s2r://panorama/images/compendium/international2018/underhollow_tombstone_psd.vtex");
+	
+	background-size: 90%;
+	background-repeat: no-repeat;
+	margin-left: 10px;
+}
+
+#EliminationsContainer .PointsXContainer
+{
+	
+}
+
+#WinIcon
+{
+	background-image: url("s2r://panorama/images/compendium/international2018/underhollow_win_psd.vtex");
+	
+	background-size: contain;
+	background-repeat: no-repeat;
+}
+
+
+.RewardLineItem
+{
+	height: 120px;
+	width: 85px;
+	margin: 10px;
+	
+	flow-children: down;
+}
+
+.PointsXContainer
+{
+	width: 100%;
+	height: 20px;
+	horizontal-align: center;
+	flow-children: right;
+}
+
+.PointsXContainer Label
+{
+	horizontal-align: center;
+	text-align: center;
+}
+
+#EarnedPointsContainer
+{
+	flow-children: right;
+	vertical-align: bottom;
+	horizontal-align: center;
+	margin-bottom: 10px;
+}
+
+#PointsBeforeCap
+{
+	width: 175px;
+	
+	horizontal-align: center;
+	vertical-align: center;
+}
+
+#PointsBeforeCap .BattlePointsText
+{
+	text-align: center;
+	width: 100%;
+	height: 25px;
+}
+
+#PointsBeforeCap .BattlePointsTextWhiteLarge
+{
+	text-align: center;
+	width: 100%;
+	height: 25px;
+	margin-top: -4px;
+	margin-bottom: 8px;
+}

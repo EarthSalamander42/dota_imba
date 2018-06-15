@@ -24,9 +24,6 @@ function GameMode:_InitGameMode()
 	GameRules:SetStartingGold( MAP_INITIAL_GOLD )
 	GameRules:LockCustomGameSetupTeamAssignment(true)
 
-	-- Register a listener for the game mode configuration
-	CustomGameEventManager:RegisterListener("set_game_mode", OnSetGameMode)
-
 	-- This is multiteam configuration stuff
 	local count = 0
 	for team,number in pairs(CUSTOM_TEAM_PLAYER_COUNT) do
@@ -35,6 +32,7 @@ function GameMode:_InitGameMode()
 		else
 			GameRules:SetCustomGameTeamMaxPlayers(team, number)
 		end
+
 		count = count + 1
 	end
 
@@ -100,8 +98,10 @@ function GameMode:_CaptureGameMode()
 		mode:SetRemoveIllusionsOnDeath( REMOVE_ILLUSIONS_ON_DEATH )
 
 		if FORCE_PICKED_HERO ~= nil then
+			print("Force picked:", FORCE_PICKED_HERO)
 			mode:SetCustomGameForceHero( FORCE_PICKED_HERO )
 		end
+
 		mode:SetFixedRespawnTime( FIXED_RESPAWN_TIME ) 
 		mode:SetFountainConstantManaRegen( FOUNTAIN_CONSTANT_MANA_REGEN )
 		mode:SetFountainPercentageHealthRegen( FOUNTAIN_PERCENTAGE_HEALTH_REGEN )
@@ -115,54 +115,7 @@ function GameMode:_CaptureGameMode()
 end
 
 -- This function captures the game mode options when they are set
-function OnSetGameMode( eventSourceIndex, args )
-
-	local player_id = args.PlayerID
-	local player = PlayerResource:GetPlayer(player_id)
-	local is_host = GameRules:PlayerHasCustomGameHostPrivileges(player)
-	local mode_info = args.modes
-	local game_mode_imba = GameRules:GetGameModeEntity()  
-
-	-- If the player who sent the game options is not the host, do nothing
-	if not is_host then
-		return nil
-	end
-
-	-- If nothing was captured from the game options, do nothing
-	if not mode_info then
-		return nil
-	end
-
-	-- If the game options were already chosen, do nothing
-	if GAME_OPTIONS_SET then
-		return nil
-	end
-
-	-------------------------------------------------------------------------------------------------
-	-- IMBA: Mode selection data setup
-	-------------------------------------------------------------------------------------------------
-
-	-- All random setup
-	if tonumber(mode_info.all_pick) == 1 then
-		IMBA_PICK_MODE_ALL_PICK = true
-		CustomNetTables:SetTableValue("game_options", "all_pick", {true})
-	end
-
-	-- All random setup
-	if tonumber(mode_info.all_random) == 1 then
-		IMBA_PICK_MODE_ALL_RANDOM = true
-		HERO_SELECTION_TIME = IMBA_ALL_RANDOM_HERO_SELECTION_TIME
-		CustomNetTables:SetTableValue("game_options", "all_random", {true})
-	end
-
-	-- All random setup
-	if tonumber(mode_info.all_random_same_hero) == 1 then
-		log.info("ARDM:", mode_info.all_random_same_hero)
-		IMBA_PICK_MODE_ALL_RANDOM_SAME_HERO = true
-		HERO_SELECTION_TIME = IMBA_ALL_RANDOM_HERO_SELECTION_TIME
-		CustomNetTables:SetTableValue("game_options", "all_random_same_hero", {true})
-	end
-
+function OnSetGameMode()
 	-- Bounty multiplier increase
 	CustomNetTables:SetTableValue("game_options", "bounty_multiplier", {CUSTOM_GOLD_BONUS[GetMapName()]})
 
@@ -170,18 +123,18 @@ function OnSetGameMode( eventSourceIndex, args )
 	CustomNetTables:SetTableValue("game_options", "exp_multiplier", {CUSTOM_XP_BONUS[GetMapName()]})
 
 	-- Tower power increase
-	if mode_info.exp_multiplier == 1 then
+--	if mode_info.exp_multiplier == 1 then
 		TOWER_POWER_FACTOR = 1
-	elseif mode_info.tower_power == 2 then
-		if IsFranticMap() == false then
-			TOWER_POWER_FACTOR = 2
-		else
-			TOWER_POWER_FACTOR = 3
-		end
-	end
+--	elseif mode_info.tower_power == 2 then
+--		if IsFranticMap() == false then
+--			TOWER_POWER_FACTOR = 2
+--		else
+--			TOWER_POWER_FACTOR = 3
+--		end
+--	end
+
 	CustomNetTables:SetTableValue("game_options", "tower_power", {TOWER_POWER_FACTOR})
 
-	-- Hero power increase
 	CustomNetTables:SetTableValue("game_options", "initial_gold", {HERO_INITIAL_GOLD[GetMapName()]})
 	CustomNetTables:SetTableValue("game_options", "initial_level", {HERO_STARTING_LEVEL[GetMapName()]})
 	CustomNetTables:SetTableValue("game_options", "max_level", {MAX_LEVEL[GetMapName()]})

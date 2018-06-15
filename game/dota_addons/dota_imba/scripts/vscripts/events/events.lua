@@ -22,7 +22,7 @@ function GameMode:OnGameRulesStateChange(keys)
 	end
 
 	-- Run this in safe context
-	safe(function()
+--	safe(function()
 		local new_state = GameRules:State_Get()
 		CustomNetTables:SetTableValue("game_options", "game_state", {state = new_state})
 
@@ -31,6 +31,7 @@ function GameMode:OnGameRulesStateChange(keys)
 		-------------------------------------------------------------------------------------------------
 		if new_state == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
 			log.info("events: team selection")
+			OnSetGameMode() -- setup gamemode rules
 			InitializeTeamSelection()
 			GameRules:SetSafeToLeave(true) -- seems to be useless for leaver penalties
 
@@ -107,8 +108,7 @@ function GameMode:OnGameRulesStateChange(keys)
 
 				COURIER_TEAM = {}
 				COURIER_PLAYER = {}
-
-				
+	
 				if GetMapName() == "imba_overthrow" then
 					local foundTeams = {}
 					for _, playerStart in pairs(Entities:FindAllByClassname("info_courier_spawn")) do
@@ -122,32 +122,33 @@ function GameMode:OnGameRulesStateChange(keys)
 --							COURIER_PLAYER[hero:GetPlayerID()] = CreateUnitByName("npc_dota_courier", Entities:FindAllByClassname("info_courier_spawn"):GetAbsOrigin(), true, nil, nil, hero:GetTeam())
 						end
 					end
+				elseif GetMapName() == "cavern" then
 				else
-					safe(function()
-						if error then
-							log.info("An error occured with courier script, swap to original team couriers.")
-							for _, hero in pairs(HeroList:GetAllHeroes()) do
-								if hero:GetTeamNumber() == 2 then
-									COURIER_PLAYER[hero:GetPlayerID()] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_radiant"):GetAbsOrigin(), true, nil, nil, hero:GetTeam())
-								elseif hero:GetTeamNumber() == 3 then
-									COURIER_PLAYER[hero:GetPlayerID()] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_dire"):GetAbsOrigin(), true, nil, nil, hero:GetTeam())
-								end
-							end
-						else
-							if USE_TEAM_COURIER then
-								COURIER_TEAM[2] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_radiant"):GetAbsOrigin(), true, nil, nil, 2)
-								COURIER_TEAM[3] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_dire"):GetAbsOrigin(), true, nil, nil, 3)
-							else
-								for _, hero in pairs(HeroList:GetAllHeroes()) do
-									if hero:GetTeamNumber() == 2 then
-										COURIER_PLAYER[hero:GetPlayerID()] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_radiant"):GetAbsOrigin(), true, nil, nil, hero:GetTeam())
-									elseif hero:GetTeamNumber() == 3 then
-										COURIER_PLAYER[hero:GetPlayerID()] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_dire"):GetAbsOrigin(), true, nil, nil, hero:GetTeam())
-									end
-								end
-							end
-						end
-					end)
+--					safe(function()
+--						if error then
+--							log.info("An error occured with courier script, swap to original team couriers.")
+
+							COURIER_TEAM[2] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_radiant"):GetAbsOrigin(), true, nil, nil, 2)
+							COURIER_TEAM[3] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_dire"):GetAbsOrigin(), true, nil, nil, 3)
+
+--							error = true
+--						else
+--							if USE_TEAM_COURIER then
+--								COURIER_TEAM[2] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_radiant"):GetAbsOrigin(), true, nil, nil, 2)
+--								COURIER_TEAM[3] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_dire"):GetAbsOrigin(), true, nil, nil, 3)
+--							else
+--								for _, hero in pairs(HeroList:GetAllHeroes()) do
+--									if hero:GetTeamNumber() == 2 then
+--										COURIER_PLAYER[hero:GetPlayerID()] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_radiant"):GetAbsOrigin(), true, nil, nil, hero:GetTeam())
+--									elseif hero:GetTeamNumber() == 3 then
+--										COURIER_PLAYER[hero:GetPlayerID()] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_dire"):GetAbsOrigin(), true, nil, nil, hero:GetTeam())
+--									end
+--								end
+--							end
+--						end
+
+--						error = false
+--					end)
 
 					local good_fillers = {
 						"good_filler_1",
@@ -286,7 +287,7 @@ function GameMode:OnGameRulesStateChange(keys)
 
 			CustomNetTables:SetTableValue("game_options", "game_count", {value = 0})
 		end
-	end)
+--	end)
 end
 
 dummy_created_count = 0

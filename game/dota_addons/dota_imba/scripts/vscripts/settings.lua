@@ -283,6 +283,16 @@ elseif GetMapName() == "imba_overthrow" then
 --	end
 
 	CustomNetTables:SetTableValue( "game_state", "victory_condition", { kills_to_win = TEAM_KILLS_TO_WIN } );
+elseif GetMapName() == "cavern" then
+	IMBA_PLAYERS_ON_GAME = 24
+	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_GOODGUYS] = 3
+	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_BADGUYS]  = 3
+	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_CUSTOM_1]  = 3
+	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_CUSTOM_2]  = 3
+	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_CUSTOM_3]  = 3
+	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_CUSTOM_4]  = 3
+	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_CUSTOM_5]  = 3
+	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_CUSTOM_6]  = 3
 end
 
 -------------------------------------------------------------------------------------------------
@@ -317,6 +327,7 @@ CUSTOM_GOLD_BONUS["imba_mutation_5v5"] = 250
 CUSTOM_GOLD_BONUS["imba_mutation_10v10"] = 250
 CUSTOM_GOLD_BONUS["imba_frantic_5v5"] = 250
 CUSTOM_GOLD_BONUS["imba_frantic_10v10"] = 250
+CUSTOM_GOLD_BONUS["cavern"] = 100
 
 -- Global XP earning, values are doubled with Hyper for non-custom maps (right now this is not used anymore, but i'll keep it there just in case)
 CUSTOM_XP_BONUS = {} -- 1 = Normal, 2 = Hyper
@@ -329,6 +340,7 @@ CUSTOM_XP_BONUS["imba_mutation_5v5"] = 200
 CUSTOM_XP_BONUS["imba_mutation_10v10"] = 200
 CUSTOM_XP_BONUS["imba_frantic_5v5"] = 200
 CUSTOM_XP_BONUS["imba_frantic_10v10"] = 200
+CUSTOM_XP_BONUS["cavern"] = 100
 
 -- Hero base level, values are doubled with Hyper for non-custom maps
 HERO_STARTING_LEVEL = {} -- 1 = Normal, 2 = Hyper
@@ -341,6 +353,7 @@ HERO_STARTING_LEVEL["imba_mutation_5v5"] = 1
 HERO_STARTING_LEVEL["imba_mutation_10v10"] = 1
 HERO_STARTING_LEVEL["imba_frantic_5v5"] = 5
 HERO_STARTING_LEVEL["imba_frantic_10v10"] = 5
+HERO_STARTING_LEVEL["cavern"] = 1
 
 MAX_LEVEL = {}
 MAX_LEVEL["imba_1v1"] = 42
@@ -352,6 +365,7 @@ MAX_LEVEL["imba_mutation_5v5"] = 42
 MAX_LEVEL["imba_mutation_10v10"] = 42
 MAX_LEVEL["imba_frantic_5v5"] = 42
 MAX_LEVEL["imba_frantic_10v10"] = 42
+MAX_LEVEL["cavern"] = 42
 
 HERO_INITIAL_GOLD = {}
 HERO_INITIAL_GOLD["imba_1v1"] = 1200
@@ -363,6 +377,7 @@ HERO_INITIAL_GOLD["imba_mutation_5v5"] = 1200
 HERO_INITIAL_GOLD["imba_mutation_10v10"] = 1200
 HERO_INITIAL_GOLD["imba_frantic_5v5"] = 4000
 HERO_INITIAL_GOLD["imba_frantic_10v10"] = 4000
+HERO_INITIAL_GOLD["cavern"] = 650
 
 GOLD_TICK_TIME = {}
 GOLD_TICK_TIME["imba_1v1"] = 0.6
@@ -374,6 +389,7 @@ GOLD_TICK_TIME["imba_mutation_5v5"] = 0.6
 GOLD_TICK_TIME["imba_mutation_10v10"] = 0.4
 GOLD_TICK_TIME["imba_frantic_5v5"] = 0.4
 GOLD_TICK_TIME["imba_frantic_10v10"] = 0.4
+GOLD_TICK_TIME["cavern"] = 9999.0
 
 BANNED_ITEMS = {}
 BANNED_ITEMS["imba_1v1"] = {
@@ -390,6 +406,9 @@ BANNED_ITEMS["imba_mutation_5v5"] = {}
 BANNED_ITEMS["imba_mutation_10v10"] = {}
 BANNED_ITEMS["imba_frantic_5v5"] = {}
 BANNED_ITEMS["imba_frantic_10v10"] = {}
+BANNED_ITEMS["cavern"] = {
+	"item_imba_heart",
+}
 
 REMAINING_GOODGUYS = 0														-- Remaining players on Radiant
 REMAINING_BADGUYS = 0														-- Remaining players on Dire

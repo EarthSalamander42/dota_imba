@@ -147,6 +147,37 @@ function Precache(context)
 		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_techies.vsndevts", context)
 		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_zuus.vsndevts", context)
 		PrecacheResource("particle", "particles/hw_fx/candy_carrying_stack.vpcf", context)
+	elseif GetMapName() == "cavern" then
+		require( "components/cavern/cavern" )
+		print( "Preaching Cavern assets..." )
+
+		for _,Item in pairs( g_ItemPrecache ) do
+			PrecacheItemByNameSync( Item, context )
+		end
+
+		for _,Unit in pairs( g_UnitPrecache ) do
+			PrecacheUnitByNameAsync( Unit, function( unit ) end )
+		end
+
+		for _,Model in pairs( g_ModelPrecache ) do
+			PrecacheResource( "model", Model, context )
+		end
+
+		for _,Model in pairs( CavernTreeModelNames ) do
+			PrecacheResource( "model", Model, context )
+		end
+
+		for _,Particle in pairs( g_ParticlePrecache ) do
+			PrecacheResource( "particle", Particle, context )
+		end
+
+		for _,ParticleFolder in pairs( g_ParticleFolderPrecache ) do
+			PrecacheResource( "particle_folder", ParticleFolder, context )
+		end
+
+		for _,Sound in pairs( g_SoundPrecache ) do
+			PrecacheResource( "soundfile", Sound, context )
+		end
 	end
 
 	--[[

@@ -1,0 +1,29 @@
+<root>
+	<styles>
+		<include src="s2r://panorama/styles/custom_game/cavern_scoreboard.vcss_c" />
+		<include src="s2r://panorama/styles/custom_game/cavern_top_bar.vcss_c" />
+	</styles>
+	<script>
+		function ToggleMute()
+		{
+
+			var nPlayerID = $.GetContextPanel().GetAttributeInt( "player_id", -1 );
+			if ( nPlayerID !== -1 )
+			{
+				$.Msg( "Player ID: " + nPlayerID );
+				var newIsMuted = !Game.IsPlayerMuted( nPlayerID );
+				Game.SetPlayerMuted( nPlayerID, newIsMuted );
+				$.GetContextPanel().SetHasClass( "player_muted", newIsMuted );
+			}
+		}
+	</script>
+
+	<Panel class="PlayerRow LeftRightFlow">
+		<Panel id="TeamColorBand"/>
+		<DOTAHeroImage heroid="22" id="PlayerHeroIcon" hittest="false" class="PlayerHeroIcon" heroimagestyle="icon" scaling="stretch-to-cover-preserve-aspect" />
+		<Label id="Name" class="PlayerName" text="{s:player_name}"/>
+		<Label class="PlayerStatNumber" text="{d:kills}"/>
+		<Label class="PlayerStatNumber" text="{d:eliminations}"/>
+		<Button id="PlayerMuteButton" class="PlayerMuteButton" onactivate="ToggleMute();" />
+	</Panel>
+</root>

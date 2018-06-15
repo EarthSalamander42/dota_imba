@@ -754,14 +754,13 @@ function modifier_imba_mortal_strike:OnAttackLanded(keys)
 
 		-- Only apply on attacks of the caster
 		if attacker == self.caster then            
-
 			-- If this attack was not a crit, do nothing
 			if not self.mortal_critical_strike then
 				return nil
 			end
 
 			-- Remove crit mark
-			self.mortal_critical_strike = false            
+			self.mortal_critical_strike = false
 
 			-- #5 Talent: Mortal Strike bonus health per damage
 			local bonus_health_pct = self.bonus_health_pct
@@ -802,10 +801,21 @@ function modifier_imba_mortal_strike:OnAttackLanded(keys)
 					end
 				end
 			end
+
+			if not target:IsHero() then
+				local damageTable = {
+					victim = target,
+					attacker = attacker,
+					damage = target:GetHealth() * (1 + 0.05 * math.abs(target:GetPhysicalArmorValue())) + 1,
+					damage_type = DAMAGE_TYPE_PURE,
+					ability = self:GetAbility()
+				}
+
+				ApplyDamage(damageTable)
+			end
 		end
 	end
 end
-
 
 -- Bonus health modifier
 modifier_imba_mortal_strike_buff = class({})
@@ -1419,9 +1429,11 @@ function modifier_imba_reincarnation_wraith_form:OnDestroy()
 	if IsServer() then
 		-- Force kill the unit
 		TrueKill(self.original_killer, self.parent, self.ability_killer)
+
 		if self.parent:IsAlive() then
 			self.parent:Kill(self.ability_killer, self.original_killer)
 		end
+
 		if self.parent:IsAlive() then
 			local damageTable = {
 			victim = self.parent,

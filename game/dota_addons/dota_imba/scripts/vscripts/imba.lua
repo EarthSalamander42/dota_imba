@@ -133,6 +133,7 @@ function GameMode:OnFirstPlayerLoaded()
 			}
 		end
 		GameMode:CustomSpawnCamps()
+	elseif GetMapName() == "cavern" then
 	else
 		GoodCamera = Entities:FindByName(nil, "dota_goodguys_fort")
 		BadCamera = Entities:FindByName(nil, "dota_badguys_fort")
@@ -149,10 +150,25 @@ function GameMode:OnFirstPlayerLoaded()
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Pre-pick forced hero selection
 	-------------------------------------------------------------------------------------------------
-	flItemExpireTime = 60.0
-	GameRules:SetSameHeroSelectionEnabled(true)
-	GameRules:GetGameModeEntity():SetCustomGameForceHero(FORCE_PICKED_HERO)
-	GameRules:GetGameModeEntity():SetCameraDistanceOverride(500) -- default: 1134
+	if GetMapName() == "cavern" then
+		GameRules:GetGameModeEntity():SetRemoveIllusionsOnDeath( true )
+		GameRules:GetGameModeEntity():SetDaynightCycleDisabled( true )
+		GameRules:GetGameModeEntity():SetStashPurchasingDisabled( true )
+		GameRules:GetGameModeEntity():SetBuybackEnabled( false )
+		GameRules:GetGameModeEntity():SetLoseGoldOnDeath( false )
+		GameRules:GetGameModeEntity():SetSelectionGoldPenaltyEnabled( false )
+		GameRules:GetGameModeEntity():SetUnseenFogOfWarEnabled( true )
+		GameRules:GetGameModeEntity():SetHudCombatEventsDisabled( true )
+		GameRules:GetGameModeEntity():SetKillableTombstones( true )
+		GameRules:GetGameModeEntity():SetCustomScanCooldown( CAVERN_SCAN_COOLDOWN )
+		GameRules:GetGameModeEntity():SetTowerBackdoorProtectionEnabled( false )
+		GameRules:GetGameModeEntity():SetPauseEnabled( false )
+		GameRules:GetGameModeEntity():SetItemAddedToInventoryFilter( Dynamic_Wrap( CCavern, "ItemAddedToInventoryFilter" ), self )
+	else
+		flItemExpireTime = 60.0
+		GameRules:SetSameHeroSelectionEnabled(true)
+		GameRules:GetGameModeEntity():SetCameraDistanceOverride(500) -- default: 1134
+	end
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Contributor models
@@ -1800,6 +1816,10 @@ end
 function GameMode:OnThink()
 	if GameRules:State_Get() == DOTA_GAMERULES_STATE_POST_GAME then return nil end
 	if GameRules:IsGamePaused() then return 1 end
+
+	if GetMapName() == "cavern" then
+		CCavern:OnThink()
+	end
 
 	CheatDetector()
 
