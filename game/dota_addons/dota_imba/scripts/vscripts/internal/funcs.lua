@@ -933,9 +933,9 @@ function RollPseudoRandom(base_chance, entity)
 end
 
 function IsDaytime()
-	if CustomNetTables:GetTableValue("gamerules", "isdaytime") then
-		if CustomNetTables:GetTableValue("gamerules", "isdaytime").is_day then  
-			local is_day = CustomNetTables:GetTableValue("gamerules", "isdaytime").is_day  
+	if CustomNetTables:GetTableValue("game_options", "isdaytime") then
+		if CustomNetTables:GetTableValue("game_options", "isdaytime").is_day then  
+			local is_day = CustomNetTables:GetTableValue("game_options", "isdaytime").is_day  
 
 			if is_day == 1 then
 				return true

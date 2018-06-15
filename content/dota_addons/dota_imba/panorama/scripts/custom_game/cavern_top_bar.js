@@ -132,7 +132,6 @@ function UpdateBattlePoints()
 
 	}
 }
-
 	
 
 function UpdateTopBarEnemies()
@@ -186,5 +185,10 @@ function UpdateTopBarEnemies()
 		}
 	}
 }
-	
-$.Schedule( 1.0, UpdateTopBar );
+
+if (Game.GetMapInfo().map_display_name == "cavern") {
+	$.Schedule( 1.0, UpdateTopBar );
+} else {
+	// .CavernTopBar
+	$.GetContextPanel().style.visibility = "collapse";
+}

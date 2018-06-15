@@ -38,7 +38,11 @@ CAPTAINS_MODE_PICK_BAN_TIME = 30          -- how long you have to do each pick/b
 CAPTAINS_MODE_HERO_PICK_TIME = 30         -- time to choose which hero you're going to play
 CAPTAINS_MODE_RESERVE_TIME = 130          -- total bonus time that can be used throughout any selection
 
-PRE_GAME_TIME = 90.0 + AP_GAME_TIME	-- How long after people select their heroes should the horn blow and the game start?
+PRE_GAME_TIME = 90.0
+if GetMapName() == "cavern" then
+	PRE_GAME_TIME = 30.0
+end
+PRE_GAME_TIME = PRE_GAME_TIME + AP_GAME_TIME	-- How long after people select their heroes should the horn blow and the game start?
 POST_GAME_TIME = 120.0						-- How long should we let people look at the scoreboard before closing the server automatically?
 AUTO_LAUNCH_DELAY = 5.0					-- How long should we wait for the host to setup the game, after all players have loaded in?
 if IsFranticMap() then

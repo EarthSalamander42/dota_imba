@@ -141,7 +141,7 @@ function SetGameOptions() {
 		}
 	});
 
-	if (CustomNetTables.GetTableValue("game_options", "game_state").state == 2) {
+	if (Game.GameStateIsBefore(DOTA_GameState.DOTA_GAMERULES_STATE_PRE_GAME)) {
 		$.Schedule(1.0, SetGameOptions)
 	} else {
 		return;

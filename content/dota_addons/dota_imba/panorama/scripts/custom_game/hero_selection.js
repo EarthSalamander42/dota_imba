@@ -103,9 +103,8 @@ var hiddenAbilities = [
 	"imba_tiny_tree_throw",
 	"" // Leave it alone, he's useful
 ]
-
 var localTeam = Players.GetTeam(Players.GetLocalPlayer())
-if (localTeam != 2 && localTeam != 3 || Game.GetPlayerInfo(Game.GetLocalPlayerID()).player_selected_hero != "npc_dota_hero_dummy_dummy") {
+if (localTeam == 1 || Game.GetPlayerInfo(Game.GetLocalPlayerID()).player_selected_hero != "npc_dota_hero_dummy_dummy") {
 	HidePickingScreen()
 } else {
 	SetupBackgroundImage();

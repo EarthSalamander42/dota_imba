@@ -24,7 +24,6 @@ function GameMode:OnGameRulesStateChange(keys)
 	-- Run this in safe context
 --	safe(function()
 		local new_state = GameRules:State_Get()
-		CustomNetTables:SetTableValue("game_options", "game_state", {state = new_state})
 
 		-------------------------------------------------------------------------------------------------
 		-- IMBA: Team selection
@@ -52,11 +51,7 @@ function GameMode:OnGameRulesStateChange(keys)
 		if new_state == DOTA_GAMERULES_STATE_HERO_SELECTION then
 			api.imba.event(api.events.entered_hero_selection)
 
---			HeroSelection:HeroListPreLoad()
 			HeroSelection:Init()
-
---			local steam_id = tostring(PlayerResource:GetSteamID(0))
---			PrintTable(api.imba.get_player_info(steam_id))
 		end
 
 		-------------------------------------------------------------------------------------------------

@@ -1,4 +1,4 @@
-LinkLuaModifier("modifier_out_of_duel", "modifiers/modifier_out_of_duel.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_out_of_duel", "components/cavern/modifiers/modifier_out_of_duel.lua", LUA_MODIFIER_MOTION_NONE)
 
 if HeroSelection == nil then
 	require('libraries/event')
@@ -148,7 +148,6 @@ end
 
 -- start heropick CM timer
 function HeroSelection:CMManager(event)
-
 	if forcestop == false then
 		forcestop = true
 

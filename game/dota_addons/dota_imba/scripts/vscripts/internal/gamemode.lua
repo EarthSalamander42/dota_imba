@@ -98,7 +98,7 @@ function GameMode:_CaptureGameMode()
 		mode:SetRemoveIllusionsOnDeath( REMOVE_ILLUSIONS_ON_DEATH )
 
 		if FORCE_PICKED_HERO ~= nil then
-			print("Force picked:", FORCE_PICKED_HERO)
+			print("Force picked hero:", FORCE_PICKED_HERO)
 			mode:SetCustomGameForceHero( FORCE_PICKED_HERO )
 		end
 

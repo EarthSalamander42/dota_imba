@@ -386,7 +386,7 @@ function StoreCurrentDayCycle()
 		local is_day = GameRules:IsDaytime()		
 
 		-- Set in the table
-		CustomNetTables:SetTableValue("gamerules", "isdaytime", {is_day = is_day} )		
+		CustomNetTables:SetTableValue("game_options", "isdaytime", {is_day = is_day} )		
 
 	-- Repeat
 	return 0.5
@@ -394,9 +394,9 @@ function StoreCurrentDayCycle()
 end
 
 function IsDaytime()
-	if CustomNetTables:GetTableValue("gamerules", "isdaytime") then
-		if CustomNetTables:GetTableValue("gamerules", "isdaytime").is_day then  
-			local is_day = CustomNetTables:GetTableValue("gamerules", "isdaytime").is_day  
+	if CustomNetTables:GetTableValue("game_options", "isdaytime") then
+		if CustomNetTables:GetTableValue("game_options", "isdaytime").is_day then  
+			local is_day = CustomNetTables:GetTableValue("game_options", "isdaytime").is_day  
 
 			if is_day == 1 then
 				return true
@@ -510,14 +510,14 @@ local dire_levels = 0
 	-- Check for the losing team. A team must be behind in both levels and networth.
 	if (radiant_networth < dire_networth) and (radiant_levels < dire_levels) then
 		-- Radiant is losing		
-		CustomNetTables:SetTableValue("gamerules", "losing_team", {losing_team = DOTA_TEAM_GOODGUYS})
+		CustomNetTables:SetTableValue("game_options", "losing_team", {losing_team = DOTA_TEAM_GOODGUYS})
 
 	elseif (radiant_networth > dire_networth) and (radiant_levels > dire_levels) then
 		-- Dire is losing		
-		CustomNetTables:SetTableValue("gamerules", "losing_team", {losing_team = DOTA_TEAM_BADGUYS})
+		CustomNetTables:SetTableValue("game_options", "losing_team", {losing_team = DOTA_TEAM_BADGUYS})
 
 	else -- No team is losing - one of the team is better on levels, the other on gold. No experience bonus in this case		
-		CustomNetTables:SetTableValue("gamerules", "losing_team", {losing_team = 0})		
+		CustomNetTables:SetTableValue("game_options", "losing_team", {losing_team = 0})		
 	end
 end
 --]]
@@ -758,8 +758,8 @@ if player_id == "test_reconnect" then player_id = 0 end
 --			end
 
 			if PICKING_SCREEN_OVER == true then
-				if hero:GetUnitName() == "npc_dota_hero_dummy_dummy" then
---				if not lockedHeroes[player_id] or hero:GetUnitName() == "npc_dota_hero_dummy_dummy" then
+				if hero:GetUnitName() == FORCE_PICKED_HERO then
+--				if not lockedHeroes[player_id] or hero:GetUnitName() == FORCE_PICKED_HERO then
 					-- we don't care if they haven't locked in yet
 --					if GameRules:IsCheatMode() then
 --						Notifications:TopToAll({text = "Player "..player_id.. ": NO HERO LOCKED IN, RANDOM A HERO!", duration = 10.0, style = {color = "DodgerBlue"}})

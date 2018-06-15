@@ -28,6 +28,7 @@ function fetch() {
 	});
 
 	var player_info = Game.GetPlayerInfo(Game.GetLocalPlayerID());
+	$.Msg(player_info.player_steamid)
 	
 	api.player_info(player_info.player_steamid).then(function (data) {
 

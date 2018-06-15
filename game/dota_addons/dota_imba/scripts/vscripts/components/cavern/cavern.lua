@@ -56,50 +56,6 @@ end
 
 --------------------------------------------------------------------------------
 
-function CCavern:SetupGameRules()
-	print( "CCavern:SetupGameRules()" )
-	if self.bUseTeamSelect == true then
-		GameRules:SetCustomGameSetupTimeout( 30 )
-		GameRules:SetCustomGameSetupAutoLaunchDelay( 30 )
-	else
-		GameRules:SetCustomGameSetupTimeout( 0 )
-		GameRules:SetCustomGameSetupAutoLaunchDelay( 0 )
-	end
-	
-	GameRules:SetHeroRespawnEnabled( false )	
---	GameRules:SetHeroSelectionTime( 60.0 )
---	GameRules:SetStrategyTime( 0.0 )
---	GameRules:SetShowcaseTime( 0.0 )
---	GameRules:SetPreGameTime( 30.0 )
---	GameRules:SetPostGameTime( 45.0 )
---	GameRules:SetTreeRegrowTime( 300.0 )
---	GameRules:SetStartingGold( CAVERN_STARTING_GOLD )
---	GameRules:SetGoldTickTime( 999999.0 )
---	GameRules:SetGoldPerTick( 0 )
-	GameRules:SetSafeToLeave( true )
---	GameRules:SetSameHeroSelectionEnabled( false )
-	GameRules:SetUseUniversalShopMode( true )
-	GameRules:SetHeroMinimapIconScale( 0.75 )
-	GameRules:SetCustomGameAllowHeroPickMusic( false )
-	
-	GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_GOODGUYS, 0 )
-	GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_BADGUYS, 0 )
-
-	for nCurTeam = DOTA_TEAM_CUSTOM_1,( DOTA_TEAM_CUSTOM_1 + CAVERN_TEAMS_PER_GAME - 1 ) do
-		GameRules:SetCustomGameTeamMaxPlayers( nCurTeam, CAVERN_PLAYERS_PER_TEAM )
-	end
-
-	if self.DevExpressMode then
-		GameRules:SetCustomGameSetupTimeout( 1 )
-		GameRules:SetCustomGameSetupAutoLaunchDelay( 1 )
-		GameRules:SetHeroSelectionTime( 5.0 )
-		GameRules:SetPreGameTime( 5.0 )
-		GameRules:SetPostGameTime( 10.0 )
-	end
-end
-
---------------------------------------------------------------------------------
-
 function CCavern:SetupGameEventListeners()
 	print( "CCavern:SetupGameEventListeners()" )
 	ListenToGameEvent( "game_rules_state_change", Dynamic_Wrap( CCavern, 'OnGameRulesStateChange' ), self )
@@ -1488,7 +1444,6 @@ function CCavern:InitCavern()
 
 	self.GameMode = GameRules:GetGameModeEntity()
 	self:SetupAchievements()
-	self:SetupGameRules()
 	self:SetupGameEventListeners()
 
 	self:RegisterConCommands()

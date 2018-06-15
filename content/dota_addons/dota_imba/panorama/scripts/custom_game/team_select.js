@@ -282,7 +282,7 @@ function OnGameStateUpdated(table_name, key, data) {
 CustomNetTables.SubscribeNetTableListener("game_options", OnGameStateUpdated)
 
 function UpdateGameState() {
-	if (CustomNetTables.GetTableValue("game_options", "game_state").state == 2) {
+	if (Game.GameStateIsBefore(DOTA_GameState.DOTA_GAMERULES_STATE_PRE_GAME)) {
 		$("#TeamSelectContainer").SetHasClass("invisible", false);
 	} else {
 		$("#TeamSelectContainer").SetHasClass("invisible", true);

@@ -50,9 +50,9 @@ function SniperThink()
 		local nRandomInt = RandomInt( 0, 10 )
 		-- Bit wonky that we're calling these inside a Think
 		if nRandomInt == 9 then
-			GameRules.Cavern:FireLaugh( thisEntity )
+			CCavern:FireLaugh( thisEntity )
 		elseif nRandomInt == 10 then
-			GameRules.Cavern:FireTaunt( thisEntity )
+			CCavern:FireTaunt( thisEntity )
 		end
 	end
 

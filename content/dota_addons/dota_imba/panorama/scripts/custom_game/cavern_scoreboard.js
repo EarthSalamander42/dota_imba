@@ -135,3 +135,10 @@ function UpdateScoreboard()
 	}
 
 }
+
+if (Game.GetMapInfo().map_display_name == "cavern") {
+	
+} else {
+	// .CavernTopBar
+	$.GetContextPanel().style.visibility = "collapse";
+}

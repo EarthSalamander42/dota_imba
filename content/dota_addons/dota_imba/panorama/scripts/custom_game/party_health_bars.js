@@ -45,23 +45,23 @@ function intToARGB(i)
 		var colorInt = Players.GetPlayerColor( playerID );
 		var colorString = "#" + intToARGB( colorInt );
 
-	
-
 		var heroImage = playerPanel.FindChildInLayoutFile( "HeroImage" );
-		heroImage.heroname = Players.GetPlayerSelectedHero( playerID );
-		var heroIconContainer = playerPanel.FindChildInLayoutFile( "HeroIconContainer" );
-		heroIconContainer.SetAttributeInt( "ent_index", entIndex );
+//		$.Msg(heroImage)
+		// COOKIES
+//		heroImage.heroname = Players.GetPlayerSelectedHero( playerID );
+//		var heroIconContainer = playerPanel.FindChildInLayoutFile( "HeroIconContainer" );
+//		heroIconContainer.SetAttributeInt( "ent_index", entIndex );
 
-		var healthBar = playerPanel.FindChildInLayoutFile( "HealthBar" );
-		healthBar.value = Entities.GetHealthPercent( entIndex );
-		var manaBar = playerPanel.FindChildInLayoutFile( "ManaBar" );
-		manaBar.value = 100.0 * (Entities.GetMana( entIndex ) / Entities.GetMaxMana( entIndex ) );
-		var heroImage = playerPanel.FindChildInLayoutFile( "HeroImage" );
+//		var healthBar = playerPanel.FindChildInLayoutFile( "HealthBar" );
+//		healthBar.value = Entities.GetHealthPercent( entIndex );
+//		var manaBar = playerPanel.FindChildInLayoutFile( "ManaBar" );
+//		manaBar.value = 100.0 * (Entities.GetMana( entIndex ) / Entities.GetMaxMana( entIndex ) );
+//		var heroImage = playerPanel.FindChildInLayoutFile( "HeroImage" );
 
 		var bDead = !Entities.IsAlive( entIndex );
-		heroIconContainer.SetHasClass( "Dead", bDead );
+//		heroIconContainer.SetHasClass( "Dead", bDead );
 	//	heroIconContainer.SetDialogVariableInt( "respawn_seconds", Players.GetRespawnSeconds( playerID ) );
-		heroImage.style.washColor = bDead ? "#990000" : "#FFFFFF";	
+//		heroImage.style.washColor = bDead ? "#990000" : "#FFFFFF";	
 
 		var bDisconnected = playerInfo.player_connection_state === DOTAConnectionState_t.DOTA_CONNECTION_STATE_DISCONNECTED || playerInfo.player_connection_state === DOTAConnectionState_t.DOTA_CONNECTION_STATE_DISCONNECTED;
 		playerPanel.SetHasClass( "Disconnected", bDisconnected )
