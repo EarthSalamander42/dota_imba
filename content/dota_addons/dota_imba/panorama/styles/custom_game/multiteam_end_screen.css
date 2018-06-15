@@ -85,7 +85,7 @@
 	color: #fff;
 	horizontal-align: center;
 	text-transform: uppercase;
-	text-shadow: 0 0 4px 2.0 #777;
+	text-shadow: 0px 0px 5px 5 #000;
 }
 
 #es-teams {
@@ -104,33 +104,33 @@
 .es-team {
 	flow-children: down;
 	horizontal-align: center;
-	width: 50%;
-	border: 2px solid #44444499;
-	background-color: #222222cc;
+	border-top:  1px solid #3a363a;	
+	border-left:  1px solid #3a363a;
+	border-bottom: 1px solid #1d2126;	
+	border-right: 1px solid #1d2126;
 	padding: 20px 0px;
-	box-shadow: #111 0 0 4px 0;
+	box-shadow: 0px 0px 12px 0px #000000a5;
+	background-color: gradient( linear, 100% 0, 0 0, from( #13161aee ), color-stop( 0.4, #13161a ), to( #2b3139 ) );
 }
 
 #es-radiant {
-	background-color: #042204bb;
+	margin-left: 10px;
+	margin-right: 10px;
 }
 
 #es-dire {
-	background-color: #220404bb;
+	margin-right: 10px;
 }
 
 #es-custom1 {
-	background-color: #660066aa;
 	visibility: collapse;
 }
 
 #es-custom2 {
-	background-color: #802000aa;
 	visibility: collapse;
 }
 
 #es-custom3 {
-	background-color: #3435FFaa;
 	visibility: collapse;
 }
 
@@ -177,7 +177,6 @@
 	font-size: 30px;
 	margin-right: 20px;
 	color: #fff;
-	text-transform: uppercase;
 	horizontal-align: right;
 }
 
@@ -196,7 +195,7 @@
 
 .es-legend-gold { width: 50px; }
 
-.es-legend-xp { width: 180px; }
+.es-legend-xp { width: 250px; }
 
 .es-legend-rank { width: 80px; }
 
@@ -287,8 +286,8 @@
 }
 
 .es-player-xp {
-	flow-children: none;
-	width: 180px;
+	flow-children: none; 
+	width: 250px;
 	vertical-align: center;
 	border: 1px solid #444;
 	border-radius: 2px;

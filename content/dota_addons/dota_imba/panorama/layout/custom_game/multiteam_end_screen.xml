@@ -28,9 +28,7 @@
 						<Label class="es-legend-gold" text="Gold" />
 						<Label class="es-legend-imr" text="IMR" />
 						<Label class="es-legend-imr10v10" text="10v10" />
-						<Label class="es-legend-rank1v1" text="Imba Rank" />
 						<Label class="es-legend-xp" text="Imba XP" />
-						<Label class="es-legend-rank" text="Rank" />
 						<Label class="es-legend-xp-diff" text="Difference" />
 						<Label class="es-legend-xp-booster" text="Booster" />
 					</Panel>
@@ -50,8 +48,9 @@
 						<Label class="es-legend-gold" text="Gold" />
 						<Label class="es-legend-imr" text="IMR" />
 						<Label class="es-legend-imr10v10" text="10v10" />
-						<Label class="es-legend-rank1v1" text="Imba Rank" />
 						<Label class="es-legend-xp" text="Imba XP" />
+						<Label class="es-legend-xp-diff" text="Difference" />
+						<Label class="es-legend-xp-booster" text="Booster" />
 					</Panel>
 					<Panel id="es-dire-players" class="es-players" />
 				</Panel>

@@ -20,10 +20,10 @@
 		<Label id="es-player-rank1v1" class="es-player-line-text" text="442 (+1)" />
 		<Panel class="es-player-xp">
 			<Panel id="es-player-xp-progress" />
-			<Label id="es-player-xp-level" text="N/A" />
-			<Label id="es-player-xp-rank" text="N/A" /> 
+			<Label id="es-player-xp-rank-name" class="es-player-line-text es-legend-rank" text="Icefrog" /> 
+			<Label id="es-player-xp-level" text="129" />
+			<Label id="es-player-xp-rank" text="1227 / 3000" /> 
 		</Panel> 
-		<Label id="es-player-xp-rank-name" class="es-player-line-text es-legend-rank" text="Icefrog" /> 
 		<Label id="es-player-xp-earned" class="es-player-line-text" text="+200" /> 
 		<Label id="es-player-xp-booster" class="es-player-line-text" text=" (100%)" /> 
 	</Panel>

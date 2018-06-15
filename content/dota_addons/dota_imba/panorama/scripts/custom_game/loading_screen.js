@@ -11,15 +11,30 @@ function ucwords (str) {
 	});
 }
 
+function info_already_available() {
+	return Game.GetMapInfo().map_name != "";
+}
+
 function fetch() {
 
 	view.title.text = "Dota IMBA 7.06 - The Fundamental Awakening";
 
+	// if data is not available yet, reschedule
+	if (!info_already_available()) {
+		$.Schedule(0.1, fetch);
+		return;
+	}
+
+	$.Msg("Fetching and setting loading screen data");
+	
 	var mapInfo = Game.GetMapInfo();
 	var map_name = ucwords(mapInfo.map_display_name.replace('_', " "));
 
+	$.Msg(mapInfo);
+
 	api.resolve_map_name(mapInfo.map_display_name).then(function (data) {
 		$.Msg(data);
+		$.Msg("hello!");
 		view.map.text = data;
 	}).catch(function (err) {
 		$.Msg("Failed to resolve map name: " + err.message);

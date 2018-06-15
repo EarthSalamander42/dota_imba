@@ -201,20 +201,17 @@
 
 .is_local_player #PlayerRowContainer
 {
-	background-color: gradient( linear, 100% 0, 0 0, from( #600000 ), color-stop( 0.4, #701010 ), to( #802020 ) );
-	/*	background-color: #111111aa;*/
+	background-color: gradient( linear, 100% 0, 0 0, from( #13161a ), color-stop( 0.4, #13161a ), to( #2b3139ee ) );
 }
 
 .is_developer #PlayerRowContainer
 {
-	background-color: gradient( linear, 100% 0, 0 0, from( #13161a ), color-stop( 0.4, #13161a ), to( #2b3139ee ) );
-	background-color: gradient( linear, 100% 0, 0 0, from( #705000 ), color-stop( 0.4, #806010 ), to( #907020ee ) );
-	/*	background-color: #800000aa;*/
+	background-color: gradient( linear, 100% 0, 0 0, from( #600000 ), color-stop( 0.4, #701010 ), to( #802020 ) );
 }
 
 .is_donator #PlayerRowContainer
 {
-	background-color: #806600aa;
+	background-color: gradient( linear, 100% 0, 0 0, from( #705000 ), color-stop( 0.4, #806010 ), to( #907020ee ) );
 }
 
 #PlayerRowContainer
