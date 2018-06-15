@@ -13,7 +13,7 @@ function SetFlyoutScoreboardVisible(bVisible) {
 	$.GetContextPanel().SetHasClass("flyout_scoreboard_visible", bVisible);
 	if (bVisible) {
 		UpdateFlyoutScoreboard();
-	} else {
+	} else { 
 		ScoreboardUpdater_SetScoreboardActive(g_ScoreboardHandle, false);
 		if (g_flyoutUpdateTimer) {
 			$.CancelScheduled(g_flyoutUpdateTimer);

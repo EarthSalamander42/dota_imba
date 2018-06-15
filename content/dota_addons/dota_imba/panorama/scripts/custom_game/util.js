@@ -126,9 +126,9 @@ function IsDeveloper(ID) {
 
 function HideIMR(panel) {
 	var map_info = Game.GetMapInfo();
-	var imr_panel = panel.FindChildrenWithClassTraverse("es-legend-imr");
-	var imr_panel_10v10 = panel.FindChildrenWithClassTraverse("es-legend-imr10v10");
-	var rank1v1_panel = panel.FindChildrenWithClassTraverse("es-legend-rank1v1");
+	var imr_panel = panel.FindChildrenWithClassTraverse("ScoreCol_ImbaImr5v5");
+	var imr_panel_10v10 = panel.FindChildrenWithClassTraverse("ScoreCol_ImbaImr10v10");
+	var rank1v1_panel = panel.FindChildrenWithClassTraverse("ScoreCol_ImbaRank1v1");
 
 	var hide = function(panels) {
 		for ( var i in panels)

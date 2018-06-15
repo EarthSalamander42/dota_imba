@@ -3,18 +3,19 @@
 {
 	horizontal-align: left;
 	vertical-align: top;
-	margin-top: 60px;
+	margin-top: 90px;
 	flow-children: down;
 	
-	transform: translatex( -1100px );
 	transition-property: transform;
 	transition-duration: 0.10s;
 	
-	box-shadow: #111 0px 0px 5px; 
-	border: 1px solid #333;
-	border-top-right-radius: 5px;
-	border-bottom-right-radius: 5px;
-	background-color: #000000aa;
+	transform: translate3d( -100%, 0, 0px );
+	background-color: gradient( linear, 100% 0, 0 0, from( #13161aee ), color-stop( 0.4, #13161a ), to( #2b3139 ) );
+	border-top:  1px solid #3a363a;	
+	border-left:  1px solid #3a363a;
+	border-bottom: 1px solid #1d2126;	
+	border-right: 1px solid #1d2126;
+	box-shadow: 0px 0px 12px 0px #000000a5;
 	padding: 4px 4px 4px 0px;
 }
 
@@ -46,10 +47,11 @@
 
 .Legend Label
 {
+	text-shadow: 0 0 3px 2.0 #000;	
 	text-transform: uppercase;
 	font-size: 16px;
 	font-weight: bold;
-	color: #afd2e3;
+	color: #ccc;
 	padding-top: 8px;
 	height: 32px;
 	text-align: center;
@@ -111,7 +113,7 @@
 	width: 70px;
 }
 
-.es-legend-imr
+.ScoreCol_ImbaImr5v5
 {
 	width: 70px;
 }
@@ -156,6 +158,7 @@
 	margin-top: -30px;
 	flow-children: right;
 	height: 50px;
+	padding-left: 10px;
 }
 
 .FlyoutPlayer
@@ -167,41 +170,46 @@
 {
 	flow-children: down;
 	padding-bottom: 30px;
-//	background-color: #262c36bb;
 }
 
 #TeamScore,
 #TeamName
 {
-	color: #ffffff;
+	color: #ccc;
 	font-size: 18px;
-	padding: 5px 0px 10px;
+	padding: 5px 0px;
 	text-transform: uppercase;
 	font-weight: bold;
-	text-shadow: 0 0 4px 2.0 #777;
+	text-shadow: 0 0 3px 2.0 #000;	
 	letter-spacing: 2px;
 }
 
 #TeamScore,
 {
+	color: #eee;
 	horizontal-align: center;
 }
 
 .PlayerRow
 {
-	height: 32px;
+	box-shadow: 0px 0px 10px 0px #000000a5 inset;
+	border: 1px solid #222222a5;
+	height: 36px;
 	margin-bottom: 2px;
 	background-color: #21272fbb;
 }
 
 .is_local_player #PlayerRowContainer
 {
-	background-color: #111111aa;
+	background-color: gradient( linear, 100% 0, 0 0, from( #600000 ), color-stop( 0.4, #701010 ), to( #802020 ) );
+	/*	background-color: #111111aa;*/
 }
 
 .is_developer #PlayerRowContainer
 {
-	background-color: #800000aa;
+	background-color: gradient( linear, 100% 0, 0 0, from( #13161a ), color-stop( 0.4, #13161a ), to( #2b3139ee ) );
+	background-color: gradient( linear, 100% 0, 0 0, from( #705000 ), color-stop( 0.4, #806010 ), to( #907020ee ) );
+	/*	background-color: #800000aa;*/
 }
 
 .is_donator #PlayerRowContainer
@@ -263,8 +271,9 @@
 	vertical-align: center;
 	horizontal-align: center;
 	color: #acacac;
+	text-shadow: 0 0 5px 2.0 #000;
 	font-weight: bold;
-	font-size: 26px;
+	font-size: 22px;
 }
 
 #Kills,
@@ -276,6 +285,7 @@
 	margin-top: 3px;
 	width: 100%;
 	color: #acacac;
+	text-shadow: 0 0 5px 2.0 #000;
 }
 
 #ImbaXPRank0,
@@ -307,8 +317,8 @@
 	font-size: 16px;
 	font-weight: bold;
 	color: white;
+	text-shadow: 0 0 3px #000000cc;
 	align: center center;
-	opacity: 0.75;
 }
 
 #ImbaXP0,
@@ -423,7 +433,7 @@
 
 #HeroNameAndDescription
 {
-	color: #898b8c;
+	color: #eee;
 	font-size: 13px;
 }
 
@@ -435,6 +445,7 @@
 	font-size: 18px;
 	font-weight: bold;
 	color: #ffcc33;
+	text-shadow: 0 0 5px 2.0 #000;
 	visibility: collapse;
 }
 
@@ -548,6 +559,7 @@
 .is_local_player #Level,
 .is_local_player #HeroName
 {
+	text-shadow: 0 0 5px 2.0 #000;
 	color: white;
 }
 
@@ -577,13 +589,11 @@
 #XPProgressBar23
 {
 	width: 100%;
-	border-radius: 4px;
-	border: 3px solid #444;
 	background-color: black;
 	height: 24px;
 	vertical-align: middle;
 	horizontal-align: right;
-	box-shadow: fill #000 -3px -3px 6px 6px;
+	box-shadow: 0 0 5px 0 #00000022 inset;
 	flow-children: right;
 }
 
@@ -612,37 +622,8 @@
 #XPProgressBar22_Left,
 #XPProgressBar23_Left
 {
-	background-color: gradient( linear, 0% 0%, 0% 100%, from( #326114 ), color-stop( 0.3, #54BA07 ), color-stop( .5, #54BA07 ), to( #326114 ) );
-	box-shadow: inset #000 1px 1px 3px 3px;	
-	border-radius: 2px;
-}
-
-#XPProgressBar0_Left,
-#XPProgressBar1_Left,
-#XPProgressBar2_Left,
-#XPProgressBar3_Left,
-#XPProgressBar4_Left,
-#XPProgressBar5_Left,
-#XPProgressBar6_Left,
-#XPProgressBar7_Left,
-#XPProgressBar8_Left,
-#XPProgressBar9_Left,
-#XPProgressBar10_Left,
-#XPProgressBar11_Left,
-#XPProgressBar12_Left,
-#XPProgressBar13_Left,
-#XPProgressBar14_Left,
-#XPProgressBar15_Left,
-#XPProgressBar16_Left,
-#XPProgressBar17_Left,
-#XPProgressBar18_Left,
-#XPProgressBar19_Left,
-#XPProgressBar20_Left,
-#XPProgressBar21_Left,
-#XPProgressBar22_Left,
-#XPProgressBar23_Left
-{
-	background-color: gradient( linear, 0% 0%, 0% 100%, from( #326114 ), color-stop( 0.3, #18BE23 ), color-stop( .5, #18BE23 ), to( #01410E ) );
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #006E2E ),  to( #00540E ) );
+	border-radius: 1px;
 }
 
 #XPProgressBar0_Right,
