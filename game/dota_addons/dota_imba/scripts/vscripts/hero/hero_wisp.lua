@@ -29,7 +29,6 @@ LinkLuaModifier("modifier_imba_wisp_tether_latch", "hero/hero_wisp.lua", LUA_MOD
 LinkLuaModifier("modifier_imba_wisp_tether_slow", "hero/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_wisp_tether_slow_immune", "hero/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_wisp_tether_ally_attack", "hero/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
-
 function imba_wisp_tether:GetCustomCastErrorTarget(target)
 	if target == self:GetCaster() then
 		return "dota_hud_error_cant_cast_on_self"
@@ -42,7 +41,7 @@ function imba_wisp_tether:CastFilterResultTarget(target)
 			return UF_FAIL_CUSTOM
 		end
 
-		local nResult = UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
+		local nResult = UnitFilter(target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber())
 		return nResult
 	end
 end
@@ -50,40 +49,41 @@ end
 function imba_wisp_tether:OnSpellStart()
 	local ability 			= self:GetCaster():FindAbilityByName("imba_wisp_tether")
 	local ability_level 	= ability:GetLevel() -1
+	local caster 			= self:GetCaster()
 	ability.slow_duration 	= ability:GetLevelSpecialValueFor("stun_duration", ability_level)
 	ability.slow 	    	= ability:GetSpecialValueFor("slow")
 
-	self.caster_origin = self:GetCaster():GetAbsOrigin()
-	self.target_origin = self:GetCursorTarget():GetAbsOrigin()
-	self.tether_ally = self:GetCursorTarget()
+	self.caster_origin 		= self:GetCaster():GetAbsOrigin()
+	self.target_origin 		= self:GetCursorTarget():GetAbsOrigin()
+	self.tether_ally 		= self:GetCursorTarget()
 	self.tether_slowedUnits = {}
 
-	self:GetCaster().tether_lastHealth = self:GetCaster():GetHealth()
-	self:GetCaster().tether_lastMana = self:GetCaster():GetMana()
+	caster.tether_lastHealth 	= caster:GetHealth()
+	caster.tether_lastMana 	= caster:GetMana()
 
 	self.target = self:GetCursorTarget()
-	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_wisp_tether", {})
+	caster:AddNewModifier(self:GetCaster(), self, "modifier_imba_wisp_tether", {})
 	self:GetCursorTarget():AddNewModifier(self:GetCaster(), ability, "modifier_imba_wisp_tether_ally", {})
 
-	if self:GetCaster():HasModifier("modifier_imba_wisp_overcharge") then
+	if caster:HasModifier("modifier_imba_wisp_overcharge") then
 		imba_wisp_overcharge:AddOvercharge(self:GetCaster(), self.target)
 	end
 
-	if self:GetCaster():HasTalent("special_bonus_imba_wisp_4") then
+	if caster:HasTalent("special_bonus_imba_wisp_4") then
 		self.tether_ally:SetStolenScepter(true)
 	end
 
-	if self:GetCaster():HasTalent("special_bonus_imba_wisp_6") then
+	if caster:HasTalent("special_bonus_imba_wisp_6") then
 		self.target:AddNewModifier(self:GetCaster(), ability, "modifier_imba_wisp_tether_ally_attack", {})
 	end
 
-	local distToAlly = (self:GetCursorTarget():GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Length2D()
+	local distToAlly = (self:GetCursorTarget():GetAbsOrigin() - caster:GetAbsOrigin()):Length2D()
 	if distToAlly >= self:GetSpecialValueFor("latch_distance") then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_wisp_tether_latch", {})
+		caster:AddNewModifier(caster, self, "modifier_imba_wisp_tether_latch", {})
 	end
 
-	self:GetCaster():SwapAbilities("imba_wisp_tether", "imba_wisp_tether_break", false, true)
-	self:GetCaster():FindAbilityByName("imba_wisp_tether_break"):SetLevel(1)
+	caster:SwapAbilities("imba_wisp_tether", "imba_wisp_tether_break", false, true)
+	caster:FindAbilityByName("imba_wisp_tether_break"):SetLevel(1)
 end
 
 modifier_imba_wisp_tether = class({})
@@ -92,9 +92,9 @@ function modifier_imba_wisp_tether:IsPurgable() return false end
 
 function modifier_imba_wisp_tether:OnCreated(params)
 	if IsServer() then 
-		self.target = self:GetAbility().target
-		self.tether_heal_amp = self:GetAbility():GetSpecialValueFor("tether_heal_amp")
-		self.radius = self:GetAbility():GetSpecialValueFor("radius")
+		self.target 			= self:GetAbility().target
+		self.radius 			= self:GetAbility():GetSpecialValueFor("radius")
+		self.tether_heal_amp 	= self:GetAbility():GetSpecialValueFor("tether_heal_amp")
 		EmitSoundOn("Hero_Wisp.Tether", self:GetParent())
 		self:StartIntervalThink(FrameTime())
 	end
@@ -114,8 +114,6 @@ end
 function modifier_imba_wisp_tether:OnIntervalThink()
 	if IsServer() then
 		self:GetParent().tether_lastHealth = self:GetParent():GetHealth()
-	--	print("Ally ms:", self:GetAbility().tether_ally:GetIdealSpeed())
-		--self:SetStackCount(self:GetAbility().tether_ally:GetIdealSpeed())
 
 		CustomNetTables:SetTableValue(
 		"player_table", 
@@ -201,8 +199,11 @@ function modifier_imba_wisp_tether:OnRemoved()
 	end
 end
 
-modifier_imba_wisp_tether_ally = class({})
 
+------------------------------
+--	 TETHER AllY modifier	--
+------------------------------
+modifier_imba_wisp_tether_ally = class({})
 function modifier_imba_wisp_tether_ally:IsHidden() return false end
 function modifier_imba_wisp_tether_ally:IsPurgable() return false end
 
@@ -283,9 +284,9 @@ end
 function imba_wisp_tether:OnProjectileHit_ExtraData(target, location, ExtraData)
 	if target ~= nil then
 		-- Variables
-		local caster	= self:GetCaster()
+		local caster		= self:GetCaster()
+		local slow 			= ExtraData.slow
 		local slow_duration = ExtraData.slow_duration
-		local slow = ExtraData.slow
 
 		-- Already got slowed
 		--if self:GetAbility().tether_slowedUnits[target] then
@@ -318,6 +319,9 @@ function modifier_imba_wisp_tether_ally:OnDestroy()
 	end
 end
 
+--------------------------------------
+--	 TETHER Track attack modifier	--
+--------------------------------------
 modifier_imba_wisp_tether_ally_attack = class({})
 function modifier_imba_wisp_tether_ally_attack:IsHidden() return false end
 function modifier_imba_wisp_tether_ally_attack:DeclareFunctions()
@@ -336,6 +340,9 @@ function modifier_imba_wisp_tether_ally_attack:OnAttack(params)
 	end
 end
 
+--------------------------------------
+--	 TETHER slow immune modifier	--
+--------------------------------------
 modifier_imba_wisp_tether_slow_immune = class({})
 function modifier_imba_wisp_tether_slow_immune:IsHidden() return true end
 function modifier_imba_wisp_tether_slow_immune:DeclareFunctions()
@@ -365,6 +372,9 @@ function modifier_imba_wisp_tether_slow_immune:GetModifierMoveSpeed_Limit()
 	return self.limit
 end
 
+------------------------------
+--	 TETHER slow modifier	--
+------------------------------
 modifier_imba_wisp_tether_slow = class({})
 function modifier_imba_wisp_tether_slow:DeclareFunctions()
 	local funcs = {
@@ -386,8 +396,10 @@ function modifier_imba_wisp_tether_slow:OnCreated()
 end
 
 
+------------------------------
+--	 TETHER latch modifier	--
+------------------------------
 modifier_imba_wisp_tether_latch = class({})
-
 function modifier_imba_wisp_tether_latch:OnCreated()
 	if IsServer() then
 		self.target = self:GetAbility().target
@@ -420,8 +432,10 @@ function modifier_imba_wisp_tether_latch:OnIntervalThink()
 	end
 end
 
+------------------------------
+--		 BREAK TETHER 		--
+------------------------------
 imba_wisp_tether_break = class({})
-
 function imba_wisp_tether_break:IsInnateAbility() return true end
 
 function imba_wisp_tether_break:OnSpellStart()
@@ -507,6 +521,9 @@ function imba_wisp_spirits:OnSpellStart()
 	end
 end
 
+------------------------------
+--		SPIRITS	modifier	--
+------------------------------
 modifier_imba_wisp_spirits = class({})
 function modifier_imba_wisp_spirits:OnCreated(params)
 	if IsServer() then
@@ -822,8 +839,8 @@ end
 imba_wisp_spirits_toggle = class({})
 function imba_wisp_spirits_toggle:OnSpellStart()
 	if IsServer() then
-		local caster = self:GetCaster()
-		local ability = caster:FindAbilityByName("imba_wisp_spirits")
+		local caster 	= self:GetCaster()
+		local ability 	= caster:FindAbilityByName("imba_wisp_spirits")
 		local spirits_movementFactor = ability.spirits_movementFactor
 
 		if spirits_movementFactor == 1 then
@@ -919,15 +936,7 @@ function imba_wisp_overcharge:OnToggle()
 				drain_pct = drain_pct + additional_drain
 			end
 
-			caster:AddNewModifier(
-				caster,
-			 	ability, 
-			 	"modifier_imba_wisp_overcharge_drain", 
-			 	{
-			 		duration = -1,
-			 		drain_interval 			= drain_interval,
-					drain_pct 				= drain_pct
-			 	})
+			caster:AddNewModifier( caster, ability, "modifier_imba_wisp_overcharge_drain", { duration = -1, drain_interval = drain_interval, drain_pct = drain_pct })
 			
 		else
 			caster:StopSound("Hero_Wisp.Overcharge")
@@ -941,6 +950,9 @@ function imba_wisp_overcharge:OnToggle()
 	end
 end
 
+----------------------------------
+--	Overchargge buff modifier	--
+----------------------------------
 modifier_imba_wisp_overcharge = class({})
 function modifier_imba_wisp_overcharge:IsBuff() return true end
 function modifier_imba_wisp_overcharge:DeclareFunctions()
@@ -1011,6 +1023,10 @@ function modifier_imba_wisp_overcharge:GetModifierConstantHealthRegen()
 	return self.bonus_regen
 end
 
+
+----------------------------------------------
+--	Overchargge health/mana-drain modifier	--
+----------------------------------------------
 modifier_imba_wisp_overcharge_drain = class({})
 function modifier_imba_wisp_overcharge_drain:IsHidden() return true end
 function modifier_imba_wisp_overcharge_drain:OnCreated(params)
@@ -1042,8 +1058,17 @@ end
 imba_wisp_relocate = class({})
 LinkLuaModifier("modifier_imba_wisp_relocate", "hero/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_wisp_relocate_cast_delay", "hero/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
+function imba_wisp_relocate:GetBehavior()
+	if IsServer() then
+		return DOTA_ABILITY_BEHAVIOR_UNIT_TARGET + DOTA_ABILITY_BEHAVIOR_OPTIONAL_POINT
+	else
+		return DOTA_ABILITY_BEHAVIOR_POINT + DOTA_ABILITY_BEHAVIOR_OPTIONAL_UNIT_TARGET
+	end
+end
+
 function imba_wisp_relocate:OnSpellStart()
 	if IsServer() then
+		local unit 					= self:GetCursorTarget()
 		local caster 				= self:GetCaster()
 		local ability 				= caster:FindAbilityByName("imba_wisp_relocate")
 		local tether_ability 		= caster:FindAbilityByName("imba_wisp_tether")
@@ -1054,6 +1079,16 @@ function imba_wisp_relocate:OnSpellStart()
 		local return_time 			= ability:GetLevelSpecialValueFor("return_time", ability_level)
 		local destroy_tree_radius	= ability:GetSpecialValueFor("destroy_tree_radius")
 	
+		if unit == caster then
+			if caster:GetTeam() == DOTA_TEAM_GOODGUYS then
+				-- radiant fountain location
+				target_point = Vector(-7168, -6646, 528)
+			else
+				-- dire fountain location
+				target_point = Vector(7037, 6458, 512)
+			end
+		end
+
 		-- remember where too return
 		ability.relocate_target_point = target_point
 
@@ -1081,19 +1116,12 @@ function imba_wisp_relocate:OnSpellStart()
 				if not imba_wisp_relocate:InterruptRelocate(caster, ability) then
 					ability.origin = caster:GetAbsOrigin()
 
-					if caster:HasModifier("modifier_imba_wisp_tether") and imba_wisp_relocate:IsRelocatableUnit(tether_ability.target) then
+					if caster:HasModifier("modifier_imba_wisp_tether") and tether_ability.target:IsHero() then
 						ability.ally_origin = tether_ability.target:GetAbsOrigin()
 						ability.ally 		= tether_ability.target 
 					end
 
-					caster:AddNewModifier(
-						caster, 
-						ability, 
-						"modifier_imba_wisp_relocate", 
-						{ 
-							duration 		= return_time,
-							return_time 	= return_time
-						})
+					caster:AddNewModifier( caster, ability, "modifier_imba_wisp_relocate", { duration = return_time, return_time = return_time })
 				end
 			end
 		})
@@ -1108,16 +1136,15 @@ function imba_wisp_relocate:InterruptRelocate(caster, ability)
 	return false
 end
 
-function imba_wisp_relocate:IsRelocatableUnit(unit)
-	if unit:IsHero() then 
-		return true 
-	end
-
-	return false
-end
-
+----------------------
+--	Relocate timer	--
+----------------------
 modifier_imba_wisp_relocate_cast_delay = class({})
 
+
+--------------------------
+--	Relocate modifier	--
+--------------------------
 modifier_imba_wisp_relocate = class({})
 function modifier_imba_wisp_relocate:OnCreated(params)
 	if IsServer() then
@@ -1196,28 +1223,27 @@ function imba_wisp_relocate_break:OnSpellStart()
 end
 
 ------------------------------
---		IO AOE ATTACK		--
+--	IO AOE ATTACK TALENT	--
 ------------------------------
-modifier_special_bonus_imba_wisp_5 = class({})
+modifier_special_bonus_imba_wisp_5 = class({
+	IsHidden      = function(self) return true  end,
+	RemoveOnDeath = function(self) return false end })
+
 function modifier_special_bonus_imba_wisp_5:DeclareFunctions()
 	local decFuncs = {
 		MODIFIER_EVENT_ON_ATTACK_LANDED
 	}
-	return decFuncs
-end
 
-function modifier_special_bonus_imba_wisp_5:OnCreated()
-	print("talent created!")
+	return decFuncs
 end
 
 function modifier_special_bonus_imba_wisp_5:OnAttackLanded( params )
 	if IsServer() then
-		print("attacking with splash?")
-
 		local parent = self:GetParent()
 		local target = params.target
 		if parent == params.attacker and target:GetTeamNumber() ~= parent:GetTeamNumber() then
-			local splash_radius = parent:FindTalentValue("modifier_special_bonus_imba_wisp_5", "splash_radius")
+			local splash_radius 	= parent:FindTalentValue("special_bonus_imba_wisp_5", "splash_radius")
+			local splash_damage_pct = parent:FindTalentValue("special_bonus_imba_wisp_5", "splash_damage_pct")
 
 			local nearby_enemy_units = FindUnitsInRadius(	
 				parent:GetTeam(), 
@@ -1230,14 +1256,20 @@ function modifier_special_bonus_imba_wisp_5:OnAttackLanded( params )
 				FIND_ANY_ORDER, 
 				false)
 
+				local damage_table 			= {}
+				damage_table.attacker 		= parent
+				--damage_table.ability 		= nil
+				damage_table.damage_type 	= DAMAGE_TYPE_PHYSICAL 
+				damage_table.damage 		= parent:GetAttackDamage() * (splash_damage_pct / 100)
+
 			if nearby_enemy_units ~= nil then
 			for _,enemy in pairs(nearby_enemy_units) do
-				if enemy ~= parent then
-						parent:PerformAttack(enemy, true, true, true, false, true, false, false)
+				if enemy ~= parent and enemy ~= target then
+						damage_table.victim = enemy
+						ApplyDamage(damage_table)
 					end
 				end
 			end
-
 		end
 	end
 end
