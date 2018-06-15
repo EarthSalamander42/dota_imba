@@ -37,11 +37,18 @@ end
 
 function imba_wisp_tether:CastFilterResultTarget(target)
 	if IsServer() then
-		if target == self:GetCaster() then
+		local caster = self:GetCaster()
+		local casterID = caster:GetPlayerOwnerID()
+		local targetID = target:GetPlayerOwnerID()
+		if target == caster then
 			return UF_FAIL_CUSTOM
 		end
 
-		local nResult = UnitFilter(target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber())
+		if target ~= nil and not target:IsOpposingTeam(caster:GetTeamNumber()) and PlayerResource:IsDisableHelpSetForPlayerID(targetID,casterID) then
+			return UF_FAIL_DISABLE_HELP
+		end
+
+		local nResult = UnitFilter(target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), caster:GetTeamNumber())
 		return nResult
 	end
 end
@@ -103,7 +110,7 @@ end
 function modifier_imba_wisp_tether:DeclareFunctions()
 	local decFuncs = {
 		MODIFIER_EVENT_ON_TAKEDAMAGE,
-		MODIFIER_EVENT_ON_HEAL_RECEIVED,
+		MODIFIER_EVENT_ON_HEALTH_GAINED,
 		MODIFIER_EVENT_ON_MANA_GAINED,
 		MODIFIER_PROPERTY_MOVESPEED_BASE_OVERRIDE,
 	}
@@ -142,7 +149,7 @@ function modifier_imba_wisp_tether:OnTakeDamage(keys)
 	end
 end
 
-function modifier_imba_wisp_tether:OnHealReceived(keys)
+function modifier_imba_wisp_tether:OnHealthGained(keys)
 	if keys.unit == self:GetParent() then
 		local healthGained = self:GetCaster():GetHealth() - self:GetCaster().tether_lastHealth
 
@@ -150,7 +157,7 @@ function modifier_imba_wisp_tether:OnHealReceived(keys)
 			return
 		end
 
---		print("Health gained:", healthGained, self:GetAbility():GetCaster().tether_lastHealth)
+		--print("Health gained:", healthGained, self:GetAbility():GetCaster().tether_lastHealth)
 
 		self.target:Heal(healthGained * self.tether_heal_amp, self:GetAbility())
 		self:GetCaster().tether_lastHealth = self:GetCaster():GetHealth()
@@ -166,7 +173,7 @@ function modifier_imba_wisp_tether:OnManaGained(keys)
 			return
 		end
 
---		print(manaGained, self:GetCaster().tether_lastMana)
+		--print(manaGained, self:GetCaster().tether_lastMana)
 
 		self.target:GiveMana(manaGained * self.tether_heal_amp)
 		self:GetCaster().tether_lastMana = self:GetCaster():GetMana()
@@ -308,11 +315,7 @@ function modifier_imba_wisp_tether_ally:OnRemoved()
 		self:GetParent():RemoveModifierByName("modifier_imba_wisp_tether_slow_immune")
 		self:GetCaster():RemoveModifierByName("modifier_imba_wisp_tether_slow_immune")
 		self:GetParent():RemoveModifierByName("modifier_imba_wisp_tether_ally_attack")
-	end
-end
-
-function modifier_imba_wisp_tether_ally:OnDestroy()
-	if IsServer() then
+		self:GetCaster():RemoveModifierByName("modifier_imba_wisp_tether")
 		self:GetParent():StopSound("Hero_Wisp.Tether.Target")
 		ParticleManager:DestroyParticle(self.pfx, false)
 		ParticleManager:ReleaseParticleIndex(self.pfx)
@@ -655,6 +658,8 @@ function modifier_imba_wisp_spirits:OnIntervalThink()
 			-- All spirits have been exploded.
 			caster:RemoveModifierByName("modifier_imba_wisp_spirits")
 			return
+		else
+			self.numSpiritsAlive = numSpiritsAlive
 		end
 	end
 end
@@ -690,6 +695,9 @@ function modifier_imba_wisp_spirits:OnHit(caster, spirit, enemies_hit, creep_dam
 end
 
 function modifier_imba_wisp_spirits:Explode(caster, spirit, explosion_radius, explosion_damage, ability)
+	EmitSoundOn("Hero_Wisp.Spirits.Target", spirit)
+	ParticleManager:CreateParticle("particles/units/heroes/hero_wisp/wisp_guardian_explosion.vpcf", PATTACH_ABSORIGIN_FOLLOW, spirit)
+
 	-- Check if we hit stuff
 	local nearby_enemy_units = FindUnitsInRadius(
 		caster:GetTeam(),
@@ -719,11 +727,12 @@ end
 function modifier_imba_wisp_spirits:OnRemoved()
 	if IsServer() then
 		self:GetCaster():SwapAbilities("imba_wisp_spirits_toggle", "imba_wisp_spirits", false, true )
-
-		local ability = self:GetAbility()
-		for k,v in pairs( ability.spirits_spiritsSpawned ) do
-			if not v:IsNull() then
-				v:RemoveModifierByName("modifier_imba_wisp_spirit_handler")
+		local ability 	= self:GetAbility()
+		local caster 	= self:GetCaster()
+		for k,spirit in pairs( ability.spirits_spiritsSpawned ) do
+			if not spirit:IsNull() then
+				modifier_imba_wisp_spirits:Explode(caster, spirit, self.explosion_radius, self.explosion_damage, ability)
+				spirit:RemoveModifierByName("modifier_imba_wisp_spirit_handler")
 			end
 		end
 
@@ -759,19 +768,10 @@ function modifier_imba_wisp_spirits_hero_hit:IsHidden() return true end
 function modifier_imba_wisp_spirits_hero_hit:OnCreated(params) 
 	if IsServer() then
 		local target = self:GetParent()
-		EmitSoundOn("Hero_Wisp.Spirits.Target", target)
-		self.pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_wisp/wisp_guardian_explosion.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
 		local slow_modifier = target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_wisp_spirits_slow", {duration = params.slow_duration})
 		slow_modifier:SetStackCount(params.slow)
 	end
 end
-
-function modifier_imba_wisp_spirits_hero_hit:OnRemoved()
-	if IsServer() then
-		ParticleManager:DestroyParticle(self.pfx, false)
-	end
-end
-
 
 ----------------------------------------------------------------------
 --		SPIRITS	on hero hit slow modifier							--
@@ -1151,6 +1151,7 @@ function modifier_imba_wisp_relocate:OnCreated(params)
 		local caster 		= self:GetCaster()
 		local ability 		= self:GetAbility()
 		local ally 			= ability.ally
+
 		self.return_time	= params.return_time
 
 		-- Create marker at origin
@@ -1204,6 +1205,11 @@ function modifier_imba_wisp_relocate:OnRemoved()
 			local tether_ability 	= caster:FindAbilityByName("imba_wisp_tether")
 			self.ally_teleport_pfx 	= ParticleManager:CreateParticle("particles/units/heroes/hero_wisp/wisp_relocate_teleport.vpcf", PATTACH_CUSTOMORIGIN, tether_ability.target)
 			ParticleManager:SetParticleControlEnt(self.ally_teleport_pfx, 0, tether_ability.target, PATTACH_POINT, "attach_hitloc", tether_ability.target:GetAbsOrigin(), true)
+
+			if ability.ally_origin == nil then
+				ability.ally_origin = ability.origin + Vector( 0, 100, 0 ) 
+				print(ability.ally_origin)
+			end
 			tether_ability.target:SetAbsOrigin(ability.ally_origin)
 		end
 
