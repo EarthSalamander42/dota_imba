@@ -59,7 +59,7 @@
 			}
 			"07"
 			{
-				"var_type"					"FIELD_INTEGER"
+				"var_type"					"FIELD_FLOAT"
 				"attackslow_tooltip"		"-100"
 			}
 			"08"
@@ -84,6 +84,7 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
 		"AbilitySound"					"Hero_Wisp.Spirits.Cast"
+		"AbilityTextureName"			"wisp_spirits"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -99,6 +100,15 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"120 130 140 150"
 		
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_wisp.vsndevts"
+			"particle"					"particles/units/heroes/hero_wisp/wisp_guardian_.vpcf"
+			"particle"					"particles/units/heroes/hero_wisp/wisp_guardian_explosion.vpcf"
+			"particle"					"particles/units/heroes/hero_wisp/wisp_guardian_explosion_small.vpcf"
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -106,28 +116,27 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"creep_damage"				"10 18 26 34"
+				"creep_damage"				"2 4 6 10"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"hero_damage"				"25 50 75 100"
-				"LinkedSpecialBonus"		"special_bonus_unique_wisp"
+				"hero_damage"				"20 35 50 75"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"slow"						"20 40 60 80"
+				"explosion_damage"			"35 60 85 110"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"slow_duration"				"0.3"
+				"slow"						"-20 -40 -60 -80"
 			}
 			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"revolution_time"			"5.0 5.0 5.0 5.0"
+				"slow_duration"				"1.0"
 			}
 			"06"
 			{
@@ -138,12 +147,11 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"max_range"					"700"
-				"LinkedSpecialBonus"		"special_bonus_unique_wisp_3"
 			}
 			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"hero_hit_radius"			"110"
+				"collision_radius"			"110"
 			}
 			"09"
 			{
@@ -153,17 +161,32 @@
 			"10"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"hit_radius"				"150 150 150 150"
+				"spirit_movement_rate"		"250 250 250 250"
 			}
 			"11"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"spirit_movement_rate"		"250 250 250 250"
+				"var_type"					"FIELD_FLOAT"
+				"spirit_duration"			"19.0 19.0 19.0 19.0"
 			}
 			"12"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"spirit_duration"			"19.0 19.0 19.0 19.0"
+				"spirit_summon_interval" 	"0.7"
+			}
+			"13"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"num_spirits"				"7"
+			}
+			"14"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"spirit_turn_rate"			"150"
+			}
+			"15"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"vision_duration"			"3.0"
 			}
 		}
 	}	
@@ -179,6 +202,7 @@
 		"ScriptFile"					"hero/hero_wisp.lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
+		"AbilityTextureName"			"wisp_overcharge"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -188,6 +212,14 @@
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"2.0"
+
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_wisp.vsndevts"
+			"particle"					"particles/units/heroes/hero_wisp/wisp_overcharge.vpcf"
+		}
+
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -201,23 +233,39 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_damage_pct"			"-5 -10 -15 -20"
+				"bonus_missile_speed"		"40 50 60 70"
 			}
 			"03"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"drain_interval"			"0.2 0.2 0.2 0.2"
+				"var_type"					"FIELD_INTEGER"
+				"bonus_cast_speed"		"40 50 60 70"
 			}
 			"04"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"drain_pct"					"0.06"
+				"var_type"					"FIELD_INTEGER"
+				"bonus_attack_range"		"10 25 50 75"
 			}
 			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"drain_pct_tooltip"			"6.0"
+				"bonus_damage_pct"			"-5 -10 -15 -20"
 			}
+			"06"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"drain_interval"			"0.2 0.2 0.2 0.2"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"drain_pct"					"4.5 5.0 5.5 6.0"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"tooltip_drain_pct"			"-4.5 -5.0 -5.5 -6.0"
+			}
+
 		}
 	}	
 
@@ -231,15 +279,16 @@
 		"BaseClass"						"ability_lua"
 		"ScriptFile"					"hero/hero_wisp.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"FightRecapLevel"				"1"
 		"AbilitySound"					"Hero_Wisp.Relocate"
+		"AbilityTextureName"			"wisp_relocate"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0 0 0"
- 		"AbilityCastAnimation"			"ACT_INVALID"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -249,6 +298,18 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"100 100 100"
 		
+		
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_wisp.vsndevts"
+			"particle"					"particles/units/heroes/hero_wisp/wisp_relocate_channel.vpcf"
+			"particle"					"particles/units/heroes/hero_wisp/wisp_relocate_marker.vpcf"
+			"particle"					"particles/units/heroes/hero_wisp/wisp_relocate_marker_endpoint.vpcf"
+			"particle"					"particles/units/heroes/hero_wisp/wisp_relocate_teleport.vpcf"
+			"particle"					"particles/units/heroes/hero_wisp/wisp_relocate_timer.vpcf"
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -261,9 +322,47 @@
 			"02"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"return_time"				"12.0 12.0 12.0"
+				"return_time"				"10.0 12.5 15.0"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"destroy_tree_radius"		"350"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"vision_radius"				"64"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"extra_tether_duration"		"2.0"
 			}
 		}
+	}
+
+	//=================================================================================================================
+	// Wisp: Break Relocate
+	//=================================================================================================================
+	"imba_wisp_relocate_break"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_wisp.lua"
+		"AbilityTextureName"			"wisp_tether_break"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"MaxLevel"						"1"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0 0 0 0"
+ 		"AbilityCastAnimation"			"ACT_INVALID"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0"
 	}
 
 	//=================================================================================================================
@@ -290,9 +389,9 @@
 	}
 
 	//=================================================================================================================
-	// Wisp: Spirits In
+	// Wisp: Toggle Spirits
 	//=================================================================================================================
-	"imba_wisp_spirits_in"
+	"imba_wisp_spirits_toggle"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -300,6 +399,7 @@
 		"ScriptFile"					"hero/hero_wisp.lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
 		"MaxLevel"						"1"
+		"AbilityTextureName"			"wisp_spirits_in"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -309,5 +409,239 @@
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"1.5"
+	}
+
+	//=================================================================================================================
+	// Wisp Talent 1 (Level 10): Adds additional spirits
+	//=================================================================================================================
+	"special_bonus_imba_wisp_1"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_wisp_spirits"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_spirits"				"2"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Wisp Talent 2 (Level 10): Spirits + explosion dmg + 50%
+	//=================================================================================================================
+	"special_bonus_imba_wisp_2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_wisp_spirits"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"bonus_explosion_damage_pct"	"1.5"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"tooltip_value"					"50"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Wisp Talent 3 (Level 15): Overcharge buff + 50%
+	//=================================================================================================================
+	"special_bonus_imba_wisp_3"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_wisp_overcharge"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"bonus_effect"				"1.5"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"tooltip_value"				"50"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Wisp Talent 4 (Level 15): Tether Aghanim Sceptre
+	//=================================================================================================================
+	"special_bonus_imba_wisp_4"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_wisp_tether"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"1"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Wisp Talent 5 (Level 20): Io Aoe Splash
+	//=================================================================================================================
+	"special_bonus_imba_wisp_5"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"splash_radius"			"250"
+			}
+			"02"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"splash_damage_pct"	"75"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Wisp Talent 6 (Level 20): Io attack tethered units target
+	//=================================================================================================================
+	"special_bonus_imba_wisp_6"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_wisp_tether"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"1"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Wisp Talent 8 (Level 25): Imba overcharge
+	//=================================================================================================================
+	"special_bonus_imba_wisp_7"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_wisp_overcharge"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"bonus_regen"	"5"
+			}
+			"02"
+			{
+				"var_type"		"FIELD_FLOAT"
+				"bonus_drain"	"4.5"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Wisp Talent 8 (Level 25): Imba Tether
+	//=================================================================================================================
+	"special_bonus_imba_wisp_8"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"movement_speed_cap"	"1500"
+			}
+		}
 	}
 }
