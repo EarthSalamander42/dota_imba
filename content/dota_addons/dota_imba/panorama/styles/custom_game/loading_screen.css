@@ -11,6 +11,7 @@
 }
 
 #imba-loading {
+	flow-children: down;
 	width: 100%;
 	height: 100%;
 	background-color: black;
@@ -24,7 +25,6 @@
 	flow-children: right;
 	width: 70%;
 }
-
 @keyframes 'logo_animation' 
 {
 	0% {
@@ -51,7 +51,7 @@
 }
 
 #imba-loading-title-text {
-	margin: 25px 40px;
+	margin: 25px 40px 10px;
 	font-size: 36px;
 	color: #367498;
 }
@@ -59,4 +59,9 @@
 #imba-loading-content-text {
 	margin: 0px 40px 25px ;
 	width: 100%;
+}
+
+#imba-loading-map-text {
+	margin: 0px 40px 30px;
+	font-size: 24px;
 }

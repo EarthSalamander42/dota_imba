@@ -5,6 +5,7 @@
     </styles>
 
     <scripts>
+		<include src="file://{resources}/scripts/custom_game/api.js" />
         <include src="file://{resources}/scripts/custom_game/util.js" />
         <include src="file://{resources}/scripts/custom_game/shared_scoreboard_updater.js" />
         <include src="file://{resources}/scripts/custom_game/multiteam_flyout_scoreboard.js" />

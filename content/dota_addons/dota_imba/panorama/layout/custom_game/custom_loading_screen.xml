@@ -15,8 +15,36 @@
 				<Image id="imba-loading-title-logo" src="file://{images}/custom_game/imba-blue.png"/>
 				<Panel class="down">
 					<Label id="imba-loading-title-text" text="Dota IMBA 7.06 - The Fundamental Awakening"/>
+					<Label id="imba-loading-map-text" text="Loading ..."/>
 					<Label id="imba-loading-content-text" html="true" text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet," />
 				</Panel>
+			</Panel>
+			<Panel id="imba-loading-social">
+<!--				<Button onactivate="DOTADisplayURL('https://preview.dota2imba.org/statistics/rankings');">
+					<Label text="Official Website" />
+				</Button>
+				<Button onactivate="DOTADisplayURL('https://www.facebook.com/D2IMBA/');">
+					<Label text="Facebook" />
+				</Button>
+				<Button onactivate="DOTADisplayURL('https://twitter.com/Dota2IMBA42');">
+					<Label text="Twitter" />
+				</Button>
+				<Button onactivate="DOTADisplayURL('https://www.patreon.com/xherosiege');">
+					<Label text="Patreon" />
+				</Button>
+				<Button onactivate="DOTADisplayURL('http://tinyurl.com/imba-discord');">
+					<Label text="Discord EN" />
+				</Button>
+				<Button onactivate="DOTADisplayURL('https://discord.gg/HcybJKt');">
+					<Label text="Discord RU" />
+				</Button>
+				<Button onactivate="DOTADisplayURL('https://www.bilibiliduang.cn/imbagroup');">
+					<Label text="Tencent" />
+				</Button>
+-->
+			</Panel>
+			<Panel id="imba-status">
+
 			</Panel>
 		</Panel>
 	</Panel>
