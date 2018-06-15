@@ -568,7 +568,10 @@ function ShowHUD(args) {
 	}
 
 	var MainPanel = $.GetContextPanel().GetParent().GetParent().GetParent().GetParent()
-	MainPanel.FindChildTraverse("topbar").style.visibility = boolean;
+	if (currentMap != "cavern" && currentMap != "imba_overthrow") {
+		MainPanel.FindChildTraverse("topbar").style.visibility = boolean;
+	}
+
 	MainPanel.FindChildTraverse("minimap_container").style.visibility = boolean;
 	MainPanel.FindChildTraverse("lower_hud").style.visibility = boolean;
 	MainPanel.FindChildTraverse("NetGraph").style.visibility = boolean;

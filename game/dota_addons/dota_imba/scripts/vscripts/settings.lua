@@ -411,7 +411,14 @@ BANNED_ITEMS["imba_mutation_10v10"] = {}
 BANNED_ITEMS["imba_frantic_5v5"] = {}
 BANNED_ITEMS["imba_frantic_10v10"] = {}
 BANNED_ITEMS["cavern"] = {
+	"item_imba_aegis",
+	"item_imba_bottle",
+	"item_imba_hand_of_midas",
 	"item_imba_heart",
+	"item_helm_of_the_dominator",
+	"item_smoke_of_deceit",
+	"item_tome_of_knowledge",
+	"item_tpscroll",
 }
 
 REMAINING_GOODGUYS = 0														-- Remaining players on Radiant
@@ -524,17 +531,6 @@ PURGE_BUFF_LIST = LoadKeyValues("scripts/npc/KV/purge_buffs_list.kv")
 DISPELLABLE_DEBUFF_LIST = LoadKeyValues("scripts/npc/KV/dispellable_debuffs_list.kv")
 
 PLAYER_TEAM = {}
-
-DONATOR_STATUS = {}
-DONATOR_STATUS[1] = "IMBA Lead-dev"
-DONATOR_STATUS[2] = "IMBA Dev"
-DONATOR_STATUS[3] = "Administrator"
-DONATOR_STATUS[4] = "Ember Donator"
-DONATOR_STATUS[5] = "Golden Donator"
-DONATOR_STATUS[6] = "Donator"
-DONATOR_STATUS[7] = "Salamander Donator"
-DONATOR_STATUS[8] = "Icefrog Donator"
-DONATOR_STATUS[9] = "Gaben Donator"
 
 DONATOR_COLOR = {}
 DONATOR_COLOR[1] = {160, 20, 20}

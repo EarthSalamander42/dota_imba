@@ -1,3 +1,14 @@
+// Donator Status
+"imba_donator_label_1"		"IMBA Lead-dev"
+"imba_donator_label_2"		"IMBA Dev"
+"imba_donator_label_3"		"Administrator"
+"imba_donator_label_4"		"Ember Donator"
+"imba_donator_label_5"		"Golden Donator"
+"imba_donator_label_6"		"Donator"
+"imba_donator_label_7"		"Salamander Donator"
+"imba_donator_label_8"		"Icefrog Donator"
+"imba_donator_label_9"		"Gaben Donator"
+
 // Donator companions
 "npc_imba_donator_companion_cookies"					"Coook-shan"
 "npc_imba_donator_companion_admiral_bulldog"			"Bulldong"

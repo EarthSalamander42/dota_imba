@@ -151,58 +151,7 @@ function GameMode:OnFirstPlayerLoaded()
 	-- IMBA: Pre-pick forced hero selection
 	-------------------------------------------------------------------------------------------------
 	if GetMapName() == "cavern" then
-		print("Setup cavern gamerules...")
-		if self.bUseTeamSelect == true then
-			GameRules:SetCustomGameSetupTimeout( 30 )
-			GameRules:SetCustomGameSetupAutoLaunchDelay( 30 )
-		else
-			GameRules:SetCustomGameSetupTimeout( 0 )
-			GameRules:SetCustomGameSetupAutoLaunchDelay( 0 )
-		end
-	
-		GameRules:SetHeroRespawnEnabled( false )	
-		GameRules:SetHeroSelectionTime( 0.0 )
---		GameRules:SetHeroSelectionTime( 60.0 )
---		GameRules:SetPreGameTime( 30.0 )
---		GameRules:SetPostGameTime( 45.0 )
---		GameRules:SetTreeRegrowTime( 300.0 )
---		GameRules:SetStartingGold( CAVERN_STARTING_GOLD )
---		GameRules:SetGoldTickTime( 999999.0 )
---		GameRules:SetGoldPerTick( 0 )
-		GameRules:SetSafeToLeave( true )
---		GameRules:SetSameHeroSelectionEnabled( false )
-		GameRules:SetUseUniversalShopMode( true )
-		GameRules:SetHeroMinimapIconScale( 0.75 )
-		GameRules:SetCustomGameAllowHeroPickMusic( false )
-
-		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_GOODGUYS, 0 )
-		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_BADGUYS, 0 )
-
-		for nCurTeam = DOTA_TEAM_CUSTOM_1,( DOTA_TEAM_CUSTOM_1 + CAVERN_TEAMS_PER_GAME - 1 ) do
-			GameRules:SetCustomGameTeamMaxPlayers( nCurTeam, CAVERN_PLAYERS_PER_TEAM )
-		end
-
-		if self.DevExpressMode then
-			GameRules:SetCustomGameSetupTimeout( 1 )
-			GameRules:SetCustomGameSetupAutoLaunchDelay( 1 )
-			GameRules:SetHeroSelectionTime( 5.0 )
-			GameRules:SetPreGameTime( 5.0 )
-			GameRules:SetPostGameTime( 10.0 )
-		end
-
-		GameRules:GetGameModeEntity():SetRemoveIllusionsOnDeath( true )
-		GameRules:GetGameModeEntity():SetDaynightCycleDisabled( true )
-		GameRules:GetGameModeEntity():SetStashPurchasingDisabled( true )
-		GameRules:GetGameModeEntity():SetBuybackEnabled( false )
-		GameRules:GetGameModeEntity():SetLoseGoldOnDeath( false )
-		GameRules:GetGameModeEntity():SetSelectionGoldPenaltyEnabled( false )
-		GameRules:GetGameModeEntity():SetUnseenFogOfWarEnabled( true )
-		GameRules:GetGameModeEntity():SetHudCombatEventsDisabled( true )
-		GameRules:GetGameModeEntity():SetKillableTombstones( true )
-		GameRules:GetGameModeEntity():SetCustomScanCooldown( CAVERN_SCAN_COOLDOWN )
-		GameRules:GetGameModeEntity():SetTowerBackdoorProtectionEnabled( false )
-		GameRules:GetGameModeEntity():SetPauseEnabled( false )
-		GameRules:GetGameModeEntity():SetItemAddedToInventoryFilter( Dynamic_Wrap( CCavern, "ItemAddedToInventoryFilter" ), self )
+		CCavern:SetupCavernRules()
 	else
 		flItemExpireTime = 60.0
 		GameRules:SetSameHeroSelectionEnabled(true)

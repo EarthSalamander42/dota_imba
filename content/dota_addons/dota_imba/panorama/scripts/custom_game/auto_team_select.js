@@ -105,7 +105,12 @@ var LegacyCompatSetupUI = function() {
 		
 		}
 	} else {
-		$("#LockAndStartButton").visible = false;
+		if (Game.GetMapInfo().map_display_name == "cavern") {
+			$("#LockAndStartButton").visible = true;
+		} else {
+			$("#LockAndStartButton").visible = false;
+		}
+
 		$("#CancelAndUnlockButton").visible = false;
 		$("#ShuffleTeamAssignmentButton").visible = false;
 	}

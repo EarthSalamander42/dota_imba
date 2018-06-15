@@ -1,4 +1,4 @@
-require( "event_queue" )
+require( "components/cavern/event_queue" )
 
 modifier_creature_wraith_king_reincarnation = class({})
 

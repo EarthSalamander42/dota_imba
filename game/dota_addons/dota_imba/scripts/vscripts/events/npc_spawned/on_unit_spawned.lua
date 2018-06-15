@@ -20,11 +20,19 @@ function GameMode:OnUnitFirstSpawn(unit)
 		return
 	else
 		if GetMapName() == "cavern" then
---			unit:SetMinimumGoldBounty(unit:GetGoldBounty() * 0.75)
---			unit:SetMaximumGoldBounty(unit:GetGoldBounty() * 0.75)
---			unit:SetDeathXP(unit:GetDeathXP() * 0.75)
-			unit:SetBaseDamageMin(unit:GetBaseDamageMin() * 1.25)
-			unit:SetBaseDamageMax(unit:GetBaseDamageMax() * 1.25)
+			local gold_value = 0.8
+			local xp_value = 0.9
+			local damage_value = 1.5
+
+			if unit:GetUnitName() == "npc_dota_ranged_creep_linear" then
+				damage_value = 3.0
+			end
+
+			unit:SetMinimumGoldBounty(unit:GetGoldBounty() * gold_value)
+			unit:SetMaximumGoldBounty(unit:GetGoldBounty() * gold_value)
+			unit:SetDeathXP(unit:GetDeathXP() * xp_value)
+			unit:SetBaseDamageMin(unit:GetBaseDamageMin() * damage_value)
+			unit:SetBaseDamageMax(unit:GetBaseDamageMax() * damage_value)
 		else
 			Timers:CreateTimer(FrameTime(), function()
 				if UNIT_EQUIPMENT[unit:GetModelName()] then
