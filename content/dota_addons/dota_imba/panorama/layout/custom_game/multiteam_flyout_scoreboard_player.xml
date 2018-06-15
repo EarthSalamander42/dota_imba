@@ -28,10 +28,10 @@
 			</Panel>
 			<Panel id="PanelImbaXP" class="ScoreCol_ImbaXP ScoreboardPanel">
 			</Panel>
-			<Panel class="es-legend-imr ScoreboardPanel">
+			<Panel class="ScoreCol_ImbaImr5v5 ScoreboardPanel">
 				<Label id="TeammateIMRAmount" text="N/A" />
 			</Panel>
-			<Panel class="es-legend-imr10v10 ScoreboardPanel">
+			<Panel class="ScoreCol_ImbaImr10v10 ScoreboardPanel">
 				<Label id="TeammateIMR10v10Amount" text="N/A" />
 			</Panel>
 			<Panel class="ScoreCol_Gold ScoreboardPanel">

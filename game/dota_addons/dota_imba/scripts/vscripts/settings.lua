@@ -43,7 +43,7 @@ if GetMapName() == "cavern" then
 	PRE_GAME_TIME = 30.0
 end
 PRE_GAME_TIME = PRE_GAME_TIME + AP_GAME_TIME	-- How long after people select their heroes should the horn blow and the game start?
-POST_GAME_TIME = 120.0						-- How long should we let people look at the scoreboard before closing the server automatically?
+POST_GAME_TIME = 600.0						-- How long should we let people look at the scoreboard before closing the server automatically?
 AUTO_LAUNCH_DELAY = 5.0					-- How long should we wait for the host to setup the game, after all players have loaded in?
 if IsFranticMap() then
 	AUTO_LAUNCH_DELAY = 10.0

@@ -9,13 +9,6 @@ function GetLocalPlayerId() {
 	if (typeof (localPlayerInfo) !== "undefined") {
 		localPlayerId = localPlayerInfo.player_id;
 	}
-
-	/*	if(Players.IsLocalPlayerInPerspectiveCamera())
-		{
-			//get local player info for selected portrait unit
-			localPlayerId = Players.GetPerspectivePlayerId();
-		}
-	*/
 	return localPlayerId;
 }
 

@@ -243,6 +243,7 @@ function CheckForHostPrivileges() {
 // Update the state for the transition timer periodically
 // --------------------------------------------------------------------------------------------------
 function UpdateTimer() {
+
 	var gameTime = Game.GetGameTime();
 	var transitionTime = Game.GetStateTransitionTime();
 	var mapInfo = Game.GetMapInfo();

@@ -23,7 +23,7 @@ function _ScoreboardUpdater_SetValueSafe(panel, childName, Value) {
 	childPanel.value = Value;
 }
 
-function _ScoreboardUpdater_UpdatePlayerPanelImr(plyData, playerPanel) {
+function _ScoreboardUpdater_UpdatePlayerPanelImr(playerId, playerPanel) {
 
 //	$.Msg("Updating player imr panel");
 	
@@ -39,54 +39,36 @@ function _ScoreboardUpdater_UpdatePlayerPanelImr(plyData, playerPanel) {
 			player: "PlayerIMR10v10Amount"
 		}
 	};
-	
-	var strings = {
-		_5v5: {
-			flyout: "N/A",
-			endscreen: "N/A"
-		},
-		_10v10: {
-			flyout: "N/A",
-			endscreen: "N/A"
-		}
-	};
-	
-//	$.Msg(plyData);
-//	$.Msg(strings);
-	
-	// set strings
-	
-	if (plyData.IMR_5v5 !== undefined) {
-		if (plyData.IMR_5v5_calibrating) {
-			strings._5v5.flyout = "TBD";
-			strings._5v5.endscreen = "TBD + 0";
-		} else {
-			strings._5v5.flyout = plyData.IMR_5v5.toFixed(0);
-			strings._5v5.endscreen = plyData.IMR_5v5.toFixed(0);
-		}	
-	}
-
-	if (plyData.IMR_10v10 !== undefined) {
-		if (plyData.IMR_10v10_calibrating) {
-			strings._10v10.flyout = "TBD";
-			strings._10v10.endscreen = "TBD + 0";
-		} else {
-			strings._10v10.flyout = plyData.IMR_10v10.toFixed(0);
-			strings._10v10.endscreen = plyData.IMR_10v10.toFixed(0);
-		}	
-	}
-
-//	$.Msg(strings);
 
 	// set labels
 
-	_ScoreboardUpdater_SetTextSafe(playerPanel, ids._5v5.teammate, strings._5v5.flyout);
-	_ScoreboardUpdater_SetTextSafe(playerPanel, ids._5v5.player, strings._5v5.endscreen);
-	_ScoreboardUpdater_SetTextSafe(playerPanel, ids._10v10.teammate, strings._10v10.flyout);
-	_ScoreboardUpdater_SetTextSafe(playerPanel, ids._10v10.player, strings._10v10.endscreen);	
+	var steamid = Game.GetPlayerInfo(playerId).player_steamid;
+	
+	LoadPlayerInfo(function (playerInfo) {
+
+		var thisPlayerInfo = null;
+		playerInfo.forEach(function (i) {
+			if (i.username == steamid)
+				thisPlayerInfo = i;
+		});
+
+		if (thisPlayerInfo == null) // wtf
+			return;
+
+		var imr5v5 = "TBD";
+		var imr10v10 = "TBD";
+		if (!thisPlayerInfo.imr5v5_callibrating)
+			imr5v5 = Math.floor(thisPlayerInfo.imr5v5);
+		if (!thisPlayerInfo.imr10v10_callibrating)
+			imr10v10 = Math.floor(thisPlayerInfo.imr10v10)
+
+		_ScoreboardUpdater_SetTextSafe(playerPanel, ids._5v5.teammate, imr5v5);
+		_ScoreboardUpdater_SetTextSafe(playerPanel, ids._10v10.teammate, imr10v10);
+		
+	});
 }
 
-function _ScoreboardUpdater_UpdatePlayerPanelXP(plyData, playerPanel, playerId, ImbaXP_Panel) {
+function _ScoreboardUpdater_UpdatePlayerPanelXP(playerId, playerPanel, ImbaXP_Panel) {
 
 //	$.Msg("Updating player xp panel");
 
@@ -98,39 +80,6 @@ function _ScoreboardUpdater_UpdatePlayerPanelXP(plyData, playerPanel, playerId, 
 		progress_bar: "XPProgressBar" + playerId,
 	};
 
-	var strings = {
-		xpRank: plyData.title,
-		xp: "0/100",
-		xpEarned: "0",
-		level: "1",
-		color: plyData.title_color,
-		xpEarnedColor: "yellow",
-	};
-
-//	$.Msg(plyData);
-
-	// setup strings
-
-	if (plyData.XP !== undefined && plyData.MaxXP !== undefined)
-		$.Msg(plyData.XP)
-		strings.xp = plyData.XP + "/" + plyData.MaxXP;
-
-	if (plyData.title_color != null)
-		strings.color = plyData.title_color;
-
-	if (plyData.XP_change !== undefined) {
-		if (plyData.XP_change > 0) {
-			strings.xpEarned = "+" + plyData.XP_change.toString();
-			strings.xpEarnedColor = "green";
-		} else if (plyData.XP_change < 0) {
-			strings.xpEarned = plyData.XP_change.toString();
-			strings.xpEarnedColor = "red";
-		}
-	}
-
-	if (plyData.Lvl !== undefined)
-		strings.level = plyData.Lvl;
-
 	// setup panels
 	ImbaXP_Panel.BCreateChildren("<Panel id='XPProgressBarContainer" + playerId + "' value='0.0'/>");
 	var Imbar = ImbaXP_Panel.BCreateChildren("<ProgressBar id='XPProgressBar" + playerId + "'/>");
@@ -139,17 +88,26 @@ function _ScoreboardUpdater_UpdatePlayerPanelXP(plyData, playerPanel, playerId, 
 	ImbaXP_Panel.BCreateChildren("<Label id='ImbaXP" + playerId + "' text='999'/>");
 	ImbaXP_Panel.BCreateChildren("<Label id='ImbaXPEarned" + playerId + "' text='+0'/>");
 
-	// set labels and colors	
-	_ScoreboardUpdater_SetTextSafe(playerPanel, ids.xpRank, strings.xpRank);
-	_ScoreboardUpdater_SetTextSafe(playerPanel, ids.xp, strings.xp);
-	_ScoreboardUpdater_SetTextSafe(playerPanel, ids.xpEarned, strings.xpEarned);
-	_ScoreboardUpdater_SetTextSafe(playerPanel, ids.level, strings.level);
-	_ScoreboardUpdater_SetValueSafe(playerPanel, ids.progress_bar, plyData.XP / plyData.MaxXP);
+	var steamid = Game.GetPlayerInfo(playerId).player_steamid;
 
-	if (plyData.title_color != null)
-		playerPanel.FindChildTraverse(ids.xpRank).style.color = strings.color;
+	// load player data from api
+	LoadPlayerInfo(function (data) {
+		var thisPlayerInfo = null;
+		playerInfo.forEach(function (i) {
+			if (i.username == steamid)
+				thisPlayerInfo = i;
+		});
 
-	ImbaXP_Panel.FindChildTraverse(ids.xpEarned).style.color = strings.xpEarnedColor;
+		if (thisPlayerInfo == null) // wtf
+			return;
+		
+		_ScoreboardUpdater_SetTextSafe(playerPanel, ids.xpRank, thisPlayerInfo.xp_rank_title);
+		_ScoreboardUpdater_SetTextSafe(playerPanel, ids.xp, thisPlayerInfo.xp_in_current_level + "/" + thisPlayerInfo.total_xp_for_current_level);
+		_ScoreboardUpdater_SetTextSafe(playerPanel, ids.level, thisPlayerInfo.xp_level);
+		_ScoreboardUpdater_SetValueSafe(playerPanel, ids.progress_bar, thisPlayerInfo.xp_in_current_level / thisPlayerInfo.total_xp_for_current_level);
+		playerPanel.FindChildTraverse(ids.xpRank).style.color = "#" + thisPlayerInfo.xp_rank_color;
+
+	});
 }
 // =============================================================================
 // =============================================================================
@@ -170,10 +128,10 @@ function _ScoreboardUpdater_UpdatePlayerPanel(scoreboardConfig, playersContainer
 
 			if (plyData != null) {
 				// set xp values
-				_ScoreboardUpdater_UpdatePlayerPanelXP(plyData, playerPanel, playerId, ImbaXP_Panel);
+				_ScoreboardUpdater_UpdatePlayerPanelXP(playerId, playerPanel, ImbaXP_Panel);
 
 				// set imr values
-				_ScoreboardUpdater_UpdatePlayerPanelImr(plyData, playerPanel);
+				_ScoreboardUpdater_UpdatePlayerPanelImr(playerId, playerPanel);
 			}
 		}
 	}
@@ -567,4 +525,28 @@ function ScoreboardUpdater_GetSortedTeamInfoList(scoreboardHandle) {
 	}
 
 	return teamsList;
+}
+
+var playerInfo = null;
+
+// returns true if available
+function LoadPlayerInfo(cb) {
+	
+	$.Msg("Loading player info");
+
+	if (playerInfo !== null)
+		cb(playerInfo);
+
+	// get all player ids
+	var steamids = [];
+	Game.GetAllPlayerIDs().forEach(function (i) {
+		steamids.push(Game.GetPlayerInfo(i).player_steamid);
+	});
+
+	api.multi_player_info(steamids).then(function (data) {
+		playerInfo = data;
+		cb(playerInfo);
+	}).catch(function (err) {
+		$.Msg("Cannot load player info: " + err.message);
+	});
 }
