@@ -658,8 +658,6 @@ function modifier_imba_wisp_spirits:OnIntervalThink()
 			-- All spirits have been exploded.
 			caster:RemoveModifierByName("modifier_imba_wisp_spirits")
 			return
-		else
-			self.numSpiritsAlive = numSpiritsAlive
 		end
 	end
 end
