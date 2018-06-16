@@ -56,7 +56,7 @@ end
 --------------------------------------------------------------------------------
 
 function Charge( hUnit )
-	--print( "Casting charge on " .. hUnit:GetUnitName() )
+	--log.debug( "Casting charge on " .. hUnit:GetUnitName() )
 
 	thisEntity.hChargedTarget = hUnit
 

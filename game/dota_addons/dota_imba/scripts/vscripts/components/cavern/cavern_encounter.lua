@@ -23,7 +23,7 @@ end
 
 function CCavernEncounter:constructor( hRoom )
 	if hRoom == nil then
-		--print( "CCavernEncounter:constructor - ERROR - hRoom is nil" )
+		--log.debug( "CCavernEncounter:constructor - ERROR - hRoom is nil" )
 		return
 	end
 
@@ -91,10 +91,10 @@ function CCavernEncounter:Start()
 	self.nTreasureXPForEncounter = CAVERN_TREASURE_XP_PER_ENCOUNTER_LEVEL[ self.hRoom:GetRoomLevel() ]
 
 	--if self.nGoldForEncounter == nil then
-	--	print( "ERROR - Encounter " .. self:GetEncounterName() .. " cannot find gold values for level " .. self.hRoom:GetRoomLevel() )
+	--	log.debug( "ERROR - Encounter " .. self:GetEncounterName() .. " cannot find gold values for level " .. self.hRoom:GetRoomLevel() )
 	--end
 	--if self.nXPForEncounter == nil then
-	--	print( "ERROR - Encounter " .. self:GetEncounterName() .. " cannot find XP values for level " .. self.hRoom:GetRoomLevel() )
+	--	log.debug( "ERROR - Encounter " .. self:GetEncounterName() .. " cannot find XP values for level " .. self.hRoom:GetRoomLevel() )
 	--end
 
 	self.bTreasureHasSpawned = false
@@ -168,7 +168,7 @@ end
 function CCavernEncounter:OnStartComplete()
 	
 	if self:GetEncounterType() == CAVERN_ROOM_TYPE_MOB and self.nNumUnitsToSpawn == nil then
-		print( "ERROR - Encounter " .. self:GetEncounterName() .. " has not stated how many units it will spawn, it won't correctly reward XP/Gold!")
+		log.debug( "ERROR - Encounter " .. self:GetEncounterName() .. " has not stated how many units it will spawn, it won't correctly reward XP/Gold!")
 		return
 	end
 
@@ -219,7 +219,7 @@ function CCavernEncounter:Cleanup()
 	self.hUnits = {}
 	self.hCreeps = {}
 	self.bActive = false
-	print( "Stopping encounter " .. self:GetEncounterName() .. " in room " .. self.hRoom:GetRoomID() )
+	log.debug( "Stopping encounter " .. self:GetEncounterName() .. " in room " .. self.hRoom:GetRoomID() )
 end
 
 
@@ -229,7 +229,7 @@ function CCavernEncounter:SpawnCreepByName(...)
 	local args = {...}
 
 	if self.nNumUnitsToSpawn == nil then
-		print( "ERROR - Attempting to spawn creep " .. args[1] .. " before setting self.nNumUnitsToSpawn" )
+		log.debug( "ERROR - Attempting to spawn creep " .. args[1] .. " before setting self.nNumUnitsToSpawn" )
 		return nil
 	end
 
@@ -284,10 +284,10 @@ function CCavernEncounter:SpawnNonCreepByName(...)
 	local hUnit = CreateUnitByName(...)
 
 	if hUnit == nil then
-		print( "CCavernEncounter:SpawnNonCreepByName - ERROR - Failed to spawn unit." )
+		log.debug( "CCavernEncounter:SpawnNonCreepByName - ERROR - Failed to spawn unit." )
 		return
 	else
-		--print( "Spawned unit named " .. hUnit:GetUnitName() .. " in room # " .. self.hRoom.nRoomID )
+		--log.debug( "Spawned unit named " .. hUnit:GetUnitName() .. " in room # " .. self.hRoom.nRoomID )
 	end
 
 	hUnit.hEncounter = self
@@ -309,7 +309,7 @@ function CCavernEncounter:SpawnTempTreeWithModel( ... )
 	local hTree = CreateTempTreeWithModel( ... )
 
 	if hTree == nil then
-		print( "CCavernEncounter:SpawnNonCreepByName - ERROR - Failed to spawn tree." )
+		log.debug( "CCavernEncounter:SpawnNonCreepByName - ERROR - Failed to spawn tree." )
 		return
 	end
 
@@ -401,7 +401,7 @@ end
 
 function CCavernEncounter:SpawnForestInRoom( SpawnedDoodadPositions )
 	if self.hRoom == nil then
-		print( "CCavernEncounter:SpawnForestInRoom -- ERROR: self.hRoom is nil" )
+		log.debug( "CCavernEncounter:SpawnForestInRoom -- ERROR: self.hRoom is nil" )
 		return
 	end
 
@@ -440,7 +440,7 @@ function CCavernEncounter:SpawnForestInRoom( SpawnedDoodadPositions )
 		end
 	end
 
-	--print( string.format( "CCavernEncounter:SpawnForestInRoom -- Tree spawns attempted: %d, tree spawns failed: %d", nTreeCount, nFailedSpawns ) )
+	--log.debug( string.format( "CCavernEncounter:SpawnForestInRoom -- Tree spawns attempted: %d, tree spawns failed: %d", nTreeCount, nFailedSpawns ) )
 
 	return true
 end
@@ -449,7 +449,7 @@ end
 
 function CCavernEncounter:IsGoodTreePosition( PositionsTable, vCheckPos )
 	if self.hRoom == nil then
-		print( "IsGoodTreePosition -- ERROR: self.hRoom is nil" )
+		log.debug( "IsGoodTreePosition -- ERROR: self.hRoom is nil" )
 		return
 	end
 
@@ -459,7 +459,7 @@ function CCavernEncounter:IsGoodTreePosition( PositionsTable, vCheckPos )
 
 	-- Check whether this spot is pathable (is there a better way to check this?)
 	if not GridNav:CanFindPath( vCheckPos, vCheckPos ) then
-		--print( "IsGoodTreePosition -- This position isn't pathable" )
+		--log.debug( "IsGoodTreePosition -- This position isn't pathable" )
 		return false
 	end
 
@@ -469,13 +469,13 @@ function CCavernEncounter:IsGoodTreePosition( PositionsTable, vCheckPos )
 
 		-- Is this position too close to any other?
 		if fDistance < 80 then
-			--print( "IsGoodTreePosition -- This position is too close to a stored tree position" )
+			--log.debug( "IsGoodTreePosition -- This position is too close to a stored tree position" )
 			return false
 		end
 
 		-- Would this position block pathing in a way that isn't visually clear?
 		if ( 136 < fDistance ) and ( fDistance < 196 ) then
-			--print( "IsGoodTreePosition -- This position would create a tree wall with another tree while looking like you can path through" )
+			--log.debug( "IsGoodTreePosition -- This position would create a tree wall with another tree while looking like you can path through" )
 			return false
 		end
 	end
@@ -497,7 +497,7 @@ function CCavernEncounter:IsGoodTreePosition( PositionsTable, vCheckPos )
 	for _, vPos in pairs( RoomEntrancePositions ) do
 		local fDistance = ( vCheckPos - vPos ):Length2D()
 		if fDistance < 300 then
-			--print( "IsGoodTreePosition -- This position is too close to one of its four room entrance positions" )
+			--log.debug( "IsGoodTreePosition -- This position is too close to one of its four room entrance positions" )
 			return false
 		end
 	end
@@ -509,7 +509,7 @@ function CCavernEncounter:IsGoodTreePosition( PositionsTable, vCheckPos )
 		local vPos = GetGroundPosition( self.hRoom:GetRoomCenter() + vOffset, hRoomVolume )
 		local fDistance = ( vCheckPos - vPos ):Length2D()
 		if fDistance < 110 then
-			--print( "IsGoodTreePosition -- This position is too close to a signage position" )
+			--log.debug( "IsGoodTreePosition -- This position is too close to a signage position" )
 			return false
 		end
 	end

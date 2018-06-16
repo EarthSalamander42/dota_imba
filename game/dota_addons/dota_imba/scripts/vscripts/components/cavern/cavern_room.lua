@@ -10,7 +10,7 @@ require( "components/cavern/tables/cavern_tree_model_names" )
 
 function CCavernRoom:constructor( nRoomID, nRoomType, hRoomVolume )
 	if hRoomVolume == nil then
-		print( "CCavernRoom:constructor - ERROR - hRoomVolume is nil" )
+		log.debug( "CCavernRoom:constructor - ERROR - hRoomVolume is nil" )
 		return
 	end
 
@@ -22,15 +22,15 @@ function CCavernRoom:constructor( nRoomID, nRoomType, hRoomVolume )
 	self.hAntechamberVolume = nil
 	self.vAntechamberCenter = nil
 	self.AntechamberGate = nil
-	--print( "Generating Paths for Room " .. nRoomID )
+	--log.debug( "Generating Paths for Room " .. nRoomID )
 	self.nRoomX = nRoomID % CAVERN_GRID_WIDTH
 	if self.nRoomX == 0 then
 		self.nRoomX = CAVERN_GRID_WIDTH
 	end
 	self.nRoomY = math.ceil( nRoomID / CAVERN_GRID_HEIGHT )
-	--print( "( " .. self.nRoomX .. ", " .. self.nRoomY .. " )" )	
+	--log.debug( "( " .. self.nRoomX .. ", " .. self.nRoomY .. " )" )	
 
-	--print( string.format( "nRoomID: %d, self.vRoomCenter: %s", nRoomID, self.vRoomCenter ) )
+	--log.debug( string.format( "nRoomID: %d, self.vRoomCenter: %s", nRoomID, self.vRoomCenter ) )
 
 	self.bPathsGenerated = false
 
@@ -170,7 +170,7 @@ end
 --------------------------------------------------------------------
 
 function CCavernRoom:SetupRoshanPreview()
-	--print( "SetupRoshanPreview" )
+	--log.debug( "SetupRoshanPreview" )
 	self:CreateWarningParticle()
 	self.hWarnDummy = CreateUnitByName(  tostring( "npc_dota_room_destroyed_dummy" .. RandomInt( 1, 3 ) ), self:GetRoomCenter(), false, nil, nil, DOTA_TEAM_BADGUYS )
 	if self.hWarnDummy ~= nil then
@@ -358,7 +358,7 @@ function CCavernRoom:SetEncounter( szEncounterName, nLevel )
 		self.szSelectedEncounterName = szEncounterName
 
 		self.ActiveEncounter = _G[self.szSelectedEncounterName](self)
-		--print( "SetEncounter completed" )
+		--log.debug( "SetEncounter completed" )
 		return
 	end
 end
@@ -506,22 +506,22 @@ end
 
 function CCavernRoom:SetPath( nDirection, nPathType )
 	if nDirection == CAVERN_PATH_DIR_NORTH then
-		--print( "Room " .. self:GetRoomID() .. ": Setting North Path to type " .. GameRules.Cavern:GetStringForRoomDebugPathType( nPathType ) )
+		--log.debug( "Room " .. self:GetRoomID() .. ": Setting North Path to type " .. GameRules.Cavern:GetStringForRoomDebugPathType( nPathType ) )
 		self.NorthPath = nPathType
 		self.NorthGate:SetPath( self, self.NorthNeighbor, self.NorthPath )
 	end
 	if nDirection == CAVERN_PATH_DIR_SOUTH then
-		--print( "Room " .. self:GetRoomID() .. ": Setting South Path to type " .. GameRules.Cavern:GetStringForRoomDebugPathType( nPathType ) )
+		--log.debug( "Room " .. self:GetRoomID() .. ": Setting South Path to type " .. GameRules.Cavern:GetStringForRoomDebugPathType( nPathType ) )
 		self.SouthPath = nPathType
 		self.SouthGate:SetPath( self, self.SouthNeighbor, self.SouthPath )
 	end
 	if nDirection == CAVERN_PATH_DIR_EAST then
-		--print( "Room " .. self:GetRoomID() .. ": Setting East Path to type " .. GameRules.Cavern:GetStringForRoomDebugPathType( nPathType ) )
+		--log.debug( "Room " .. self:GetRoomID() .. ": Setting East Path to type " .. GameRules.Cavern:GetStringForRoomDebugPathType( nPathType ) )
 		self.EastPath = nPathType
 		self.EastGate:SetPath ( self, self.EastNeighbor,  self.EastPath )
 	end
 	if nDirection == CAVERN_PATH_DIR_WEST then
-		--print( "Room " .. self:GetRoomID() .. ": Setting West Path to type " .. GameRules.Cavern:GetStringForRoomDebugPathType( nPathType ) )
+		--log.debug( "Room " .. self:GetRoomID() .. ": Setting West Path to type " .. GameRules.Cavern:GetStringForRoomDebugPathType( nPathType ) )
 		self.WestPath = nPathType
 		self.WestGate:SetPath ( self, self.WestNeighbor,  self.WestPath )
 	end
@@ -591,7 +591,7 @@ function CCavernRoom:StartEncountersInNeighboringRooms()
 			local bSpawnEncounter = true
 			if CAVERN_ENCOUNTER_SPAWN_MODE == CAVERN_ENCOUNTER_SPAWN_PATHABILITY and self:GetPath( nDir ) ~= CAVERN_PATH_TYPE_OPEN then
 				bSpawnEncounter = false
-				--print( "not spawning encounter" )
+				--log.debug( "not spawning encounter" )
 			end
 			if bSpawnEncounter == true then
 				Neighbor:StartEncounter()
@@ -603,7 +603,7 @@ end
 --------------------------------------------------------------------
 
 function CCavernRoom:StopEncountersInNeighboringRooms()
---	print( "Stopping encounters for neighbors of room " .. self:GetRoomID() )
+--	log.debug( "Stopping encounters for neighbors of room " .. self:GetRoomID() )
 	local InitialNeighboringRooms = { self.NorthNeighbor, self.SouthNeighbor, self.WestNeighbor, self.EastNeighbor }
 	for _,InitialNeighbor in pairs( InitialNeighboringRooms ) do
 		local bStopEncounter = true
@@ -611,17 +611,17 @@ function CCavernRoom:StopEncountersInNeighboringRooms()
 			local SecondaryNeighboringRooms = { InitialNeighbor.NorthNeighbor, InitialNeighbor.SouthNeighbor, InitialNeighbor.WestNeighbor, InitialNeighbor.EastNeighbor }
 			for _,SecondNeighbor in pairs( SecondaryNeighboringRooms ) do
 				if SecondNeighbor ~= nil then 
-				--	print( "Room " .. SecondNeighbor:GetRoomID() .. " has " .. #SecondNeighbor.PlayerHeroesPresent .. " heroes present" )
+				--	log.debug( "Room " .. SecondNeighbor:GetRoomID() .. " has " .. #SecondNeighbor.PlayerHeroesPresent .. " heroes present" )
 					if #SecondNeighbor.PlayerHeroesPresent > 0 then
 						bStopEncounter = false
-					--	print( "Room " .. SecondNeighbor:GetRoomID() .. " is not empty" )
+					--	log.debug( "Room " .. SecondNeighbor:GetRoomID() .. " is not empty" )
 					end
 					
 				end
 			end
 			if bStopEncounter and InitialNeighbor.ActiveEncounter ~= nil then
 				if InitialNeighbor.ActiveEncounter:IsCleared() == false then
-					--print( "All neighbors have no players, stopping encounter in room " .. InitialNeighbor:GetRoomID()  )
+					--log.debug( "All neighbors have no players, stopping encounter in room " .. InitialNeighbor:GetRoomID()  )
 					InitialNeighbor.ActiveEncounter:Cleanup()
 					InitialNeighbor.ActiveEncounter = nil
 				end

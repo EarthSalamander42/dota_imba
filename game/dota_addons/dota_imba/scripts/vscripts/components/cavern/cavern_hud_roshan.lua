@@ -26,10 +26,10 @@ function CCavernHUDRoshan:SetNextMove()
 	if self.nCurDepth == 5 then
 		return
 	end
-	--print( "set next move to destroy rooms of depth " .. self.nCurDepth )
+	--log.debug( "set next move to destroy rooms of depth " .. self.nCurDepth )
 	for _,Room in pairs( CCavern.Rooms ) do
 		if Room:GetDepth() == self.nCurDepth then
-			--print( "Adding room to destroy " .. Room:GetRoomID() )
+			--log.debug( "Adding room to destroy " .. Room:GetRoomID() )
 			table.insert( self.RoomsToDestroy, Room )
 		end
 	end
@@ -38,7 +38,7 @@ end
 --------------------------------------------------------------------
 
 function CCavernHUDRoshan:WarnOfImpendingMove()
-	--print( "WarnOfImpendingMove" )
+	--log.debug( "WarnOfImpendingMove" )
 	if self.bImpendingWarningForDepth == false then
 		local gameEvent = {}
 		gameEvent["int_value"] = CAVERN_ROSHAN_HUD_RING_DESTROY_IMPENDING_WARNING_TIME
@@ -64,7 +64,7 @@ end
 --------------------------------------------------------------------
 
 function CCavernHUDRoshan:WarnOfImminentMove()
-	--print( "WarnOfImpendingMove" )
+	--log.debug( "WarnOfImpendingMove" )
 	if self.bImminentWarningForDepth == false then
 		local gameEvent = {}
 		gameEvent["int_value"] = CAVERN_ROSHAN_HUD_RING_DESTROY_IMMINENT_WARNING_TIME
@@ -89,7 +89,7 @@ end
 --------------------------------------------------------------------
 
 function CCavernHUDRoshan:DestroyRooms()
-	--print( "DestroyRooms" )
+	--log.debug( "DestroyRooms" )
 
 	local gameEvent = {}
 	gameEvent["teamnumber"] = -1

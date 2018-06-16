@@ -201,7 +201,7 @@ function ReturnToSpawnPos( hUnit , bRoomEmpty)
 	local flDelay = 1
 
 	if not hUnit.vSpawnPos then
-		print( "ai_cavern_shared/ReturnToSpawnPos - No valid vSpawnPos, stopping instead" )
+		log.debug( "ai_cavern_shared/ReturnToSpawnPos - No valid vSpawnPos, stopping instead" )
 		StopOrder( hUnit )
 		return flDelay
 	end
@@ -315,7 +315,7 @@ end
 
 --------------------------------------------------------------------------------
 
-function CastSprint( hCaster )
+function CastSlog.debug( hCaster )
 	local hAbility = hCaster.abilities.hSprint
 	ExecuteOrderFromTable({
 		UnitIndex = hCaster:entindex(),

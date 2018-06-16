@@ -9,7 +9,7 @@ function CCavernRoshan:constructor( Room )
 	self.CurrentRoom = Room
 	self.hRoshan = nil
 
-	print( "Roshan will spawn in Room: " .. Room:GetRoomID() )
+	log.debug( "Roshan will spawn in Room: " .. Room:GetRoomID() )
 
 	self.nNextMoveDir = nil
 	self.flNextMoveTime = CAVERN_ROSHAN_SPAWN_DELAY + CAVERN_ROSHAN_ROW_DESTROY_MAX_TIME
@@ -59,7 +59,7 @@ function CCavernRoshan:SetNextMove()
 	gameEvent["message"] = "#Cavern_RoshanMoving"
 	FireGameEvent( "dota_combat_event_message", gameEvent )
 	
-	--print( "In " .. self.flNextMoveTime - GameRules:GetGameTime() .. " seconds, Roshan will move " .. GameRules.Cavern:GetStringForDirection( self.nNextMoveDir )  )
+	--log.debug( "In " .. self.flNextMoveTime - GameRules:GetGameTime() .. " seconds, Roshan will move " .. GameRules.Cavern:GetStringForDirection( self.nNextMoveDir )  )
 
 	self.flCurrMoveInterval = math.max( CAVERN_ROSHAN_ROW_DESTROY_MIN_TIME, self.flCurrMoveInterval - CAVERN_ROSHAN_ROW_DESTROY_INTERVAL_REDUCTION )
 	self.RoomsToDestroy = {}
@@ -90,7 +90,7 @@ function CCavernRoshan:SetNextMove()
 	
 	self.nNextWarnRoomIdx = 1
 	self.TargetRoom = self.RoomsToDestroy[1]
-	--print( "TargetRoomID = " .. self.TargetRoom:GetRoomID() )
+	--log.debug( "TargetRoomID = " .. self.TargetRoom:GetRoomID() )
 	self.hRoshan:FaceTowards( self.TargetRoom:GetRoomCenter() )
 end
 
@@ -125,7 +125,7 @@ end
 --------------------------------------------------------------------
 
 function CCavernRoshan:BeginMove()
-	--print( "Roshan move is beginning" )
+	--log.debug( "Roshan move is beginning" )
 	self.bMoveInProgress = true
 	local gameEvent = {}
 	gameEvent["teamnumber"] = -1
@@ -150,7 +150,7 @@ end
 function CCavernRoshan:CollectRoomsToDestroyInDirection( Room, nDir ) 
 	local TestRoom = Room:GetNeighboringRoom( nDir )
 	while TestRoom ~= nil and TestRoom:IsDestroyedByRoshan() == false do
-		--print( "Testing room to destroy: " .. TestRoom:GetRoomID() )
+		--log.debug( "Testing room to destroy: " .. TestRoom:GetRoomID() )
 		local bFound = false
 		for _,Room in pairs ( self.RoomsToDestroy ) do
 			if Room == TestRoom then
@@ -158,7 +158,7 @@ function CCavernRoshan:CollectRoomsToDestroyInDirection( Room, nDir )
 			end
 		end
 		if not bFound then
-			--print( "Adding room to destroy: " .. TestRoom:GetRoomID() )
+			--log.debug( "Adding room to destroy: " .. TestRoom:GetRoomID() )
 			table.insert( self.RoomsToDestroy, TestRoom )
 		end
 		TestRoom = TestRoom:GetNeighboringRoom( nDir )
@@ -202,8 +202,8 @@ function CCavernRoshan:MoveIntoNextRoom()
 		if #self.RoomsToDestroy > 1 then
 			self:DestroyRoom( OldRoom )
 			self.TargetRoom = self.RoomsToDestroy[1]
-			--print( "Updating target room to Room ID: " .. self.TargetRoom:GetRoomID() )
-			--print( "There are " .. #self.RoomsToDestroy .. " rooms remaining to destroy this move." )
+			--log.debug( "Updating target room to Room ID: " .. self.TargetRoom:GetRoomID() )
+			--log.debug( "There are " .. #self.RoomsToDestroy .. " rooms remaining to destroy this move." )
 			for nDir=CAVERN_PATH_DIR_NORTH,CAVERN_PATH_DIR_WEST do
 				local NeighborRoom = self.CurrentRoom:GetNeighboringRoom( nDir )
 				if NeighborRoom ~= nil and NeighborRoom == self.TargetRoom then
@@ -253,7 +253,7 @@ function CCavernRoshan:RoshanThink()
 	local nMoveDir = self.nNextMoveDir
 	if self.bInAnteChamber and self.TargetRoom ~= nil then
 		nMoveDir = CAVERN_PATH_OPPOSITES[ self.TargetRoom:GetAntechamberPathDirection() ]
-	--	print( nMoveDir )
+	--	log.debug( nMoveDir )
 	end
 	netTable["rosh_next_move_time"] = math.max( 0, tonumber( self.flNextMoveTime - GameRules:GetGameTime() ) )
 	netTable["rosh_next_move_direction"] = nMoveDir
@@ -303,7 +303,7 @@ function CCavernRoshan:RoshanThink()
 			end
 			local flDist = ( self.hRoshan:GetAbsOrigin() - vPos ):Length2D()
 			if flDist > 600 then
-				--print( "Roshan ordered to move, no move in progress." )
+				--log.debug( "Roshan ordered to move, no move in progress." )
 				self.hRoshan:MoveToPosition( vPos )
 			end
 		end	

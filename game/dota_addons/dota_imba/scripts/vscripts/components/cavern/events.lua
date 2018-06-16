@@ -31,9 +31,9 @@ end
 
 function CCavern:OnGameFinished()
 	self:AddResultToSignOut()
-	print( "Metadata Table:" )
+	log.debug( "Metadata Table:" )
 	PrintTable( self.EventMetaData, " " )
-	print( "Signout Table:" )
+	log.debug( "Signout Table:" )
 	PrintTable( self.SignOutTable, " " )
 	GameRules:SetEventMetadataCustomTable( self.EventMetaData )
 	GameRules:SetEventSignoutCustomTable( self.SignOutTable )
@@ -140,7 +140,7 @@ function CCavern:OnHeroFinishSpawn( event )
 			hPlayerHero.bFirstSpawnComplete = true
 			for _,Room in pairs( self.Rooms ) do
 				if Room:GetTeamSpawnInRoom() == hPlayerHero:GetTeamNumber() then
-					--print( "Moving hero to Room " .. Room:GetRoomID() )
+					--log.debug( "Moving hero to Room " .. Room:GetRoomID() )
 					FindClearSpaceForUnit( hPlayerHero, Room:GetAntechamberCenter() + RandomVector( 150 ), true )
 					hPlayerHero:AddNewModifier( hPlayerHero, nil, "modifier_antechamber_start", {} )
 					local hTP = hPlayerHero:FindItemInInventory( "item_tpscroll" )
@@ -266,7 +266,7 @@ function CCavern:OnEntityKilled_PlayerHero( event )
 
 		local hTombstoneVisionDummy = CreateUnitByName( "npc_dota_tombstone_vision_dummy", killedHero:GetAbsOrigin(), false, killedHero, killedHero, killedHero:GetTeamNumber() )
 		if hTombstoneVisionDummy == nil then
-			print( "ERROR: OnEntityKilled_PlayerHero -- hTombstoneVisionDummy is nil (failed to create unit)" )
+			log.debug( "ERROR: OnEntityKilled_PlayerHero -- hTombstoneVisionDummy is nil (failed to create unit)" )
 			return
 		else
 			killedHero.hTombstoneVisionDummy = hTombstoneVisionDummy
@@ -334,7 +334,7 @@ function CCavern:OnHeroDefeated( Hero )
 
 	local nGoldCarried = PlayerResource:GetGold( Hero:GetPlayerID() )
 	if nGoldCarried > 0 then
-		--print( killedHero:GetUnitName() .. " just dropped " .. nGoldCarried .. " gold!" )
+		--log.debug( killedHero:GetUnitName() .. " just dropped " .. nGoldCarried .. " gold!" )
 		LaunchGoldBag( nGoldCarried/2, Hero:GetAbsOrigin() )
 
 		PlayerResource:SetGold( Hero:GetPlayerID(), 0, true )
@@ -353,7 +353,7 @@ end
 ---------------------------------------------------------
 
 function CCavern:OnTeamDefeated( nTeam )
-	--print( "OnTeamDefeated" )
+	--log.debug( "OnTeamDefeated" )
 	local nBattlePoints = 0
 	local data = {}
 	for _,Hero in pairs ( self.HeroesByTeam[nTeam] ) do
@@ -364,10 +364,10 @@ function CCavern:OnTeamDefeated( nTeam )
 		data["big_cheese"] = self.EventMetaData[Hero:GetPlayerOwnerID()]["points_big_cheese"] or 0
 		data["small_cheese"] = self.EventMetaData[Hero:GetPlayerOwnerID()]["points_small_cheese"] or 0
 		data["eliminations"] = self.EventMetaData[Hero:GetPlayerOwnerID()]["points_elimination"] or 0
-	--	print( "Player " .. Hero:GetPlayerOwnerID() .. " Networth: " .. PlayerResource:GetNetWorth( Hero:GetPlayerOwnerID() ) )
+	--	log.debug( "Player " .. Hero:GetPlayerOwnerID() .. " Networth: " .. PlayerResource:GetNetWorth( Hero:GetPlayerOwnerID() ) )
 	--	PlayerResource:SetCustomTeamAssignment( Hero:GetPlayerOwnerID(), 1 ) --Spectator
 	end
-	print( "Team " .. nTeam .. " has finished in position " .. self.nNextTeamFinishPosition .. " and earned " .. nBattlePoints )
+	log.debug( "Team " .. nTeam .. " has finished in position " .. self.nNextTeamFinishPosition .. " and earned " .. nBattlePoints )
 	
 	
 	data["finish_position"] = self.nNextTeamFinishPosition
@@ -390,7 +390,7 @@ function CCavern:OnEntityKilled_EnemyCreature( event )
 		ParticleManager:ReleaseParticleIndex( ParticleManager:CreateParticleForPlayer( "particles/darkmoon_last_hit_effect.vpcf", PATTACH_ABSORIGIN_FOLLOW, hDeadCreature, hKillerUnit:GetPlayerOwner() ) )
 	
 		if hDeadCreature.nDeathXP == nil then
-			print( "CCavern:OnEntityKilled_EnemyCreature - ERROR: Death XP not set for " .. hDeadCreature:GetUnitName() )
+			log.debug( "CCavern:OnEntityKilled_EnemyCreature - ERROR: Death XP not set for " .. hDeadCreature:GetUnitName() )
 			return
 		end
 
@@ -574,14 +574,14 @@ function CCavern:OnPlayerOwnedNPCEnteredRoom( Room, NPC )
 			local HeroInOldRoom = OldRoom.PlayerHeroesPresent[i]
 			if HeroInOldRoom == NPC then
 				table.remove( OldRoom.PlayerHeroesPresent, i )
-			--	print( "old room heroes: " .. #OldRoom.PlayerHeroesPresent )
+			--	log.debug( "old room heroes: " .. #OldRoom.PlayerHeroesPresent )
 			end
 		end
 	end
 
 	NPC.hRoom = Room
 	table.insert( Room.PlayerHeroesPresent, NPC )
-	--print( "new room heroes: " .. #Room.PlayerHeroesPresent)
+	--log.debug( "new room heroes: " .. #Room.PlayerHeroesPresent)
 	
 	for nDir=CAVERN_PATH_DIR_NORTH,CAVERN_PATH_DIR_WEST do
 		local Neighbor = Room:GetNeighboringRoom( nDir )
@@ -596,7 +596,7 @@ function CCavern:OnPlayerOwnedNPCEnteredRoom( Room, NPC )
 	end
 
 	if CAVERN_ENCOUNTER_SPAWN_MODE == CAVERN_ENCOUNTER_SPAWN_ADJACENT or CAVERN_ENCOUNTER_SPAWN_MODE == CAVERN_ENCOUNTER_SPAWN_PATHABILITY then
-	--	print( "StartEncountersInNeighboringRooms" )
+	--	log.debug( "StartEncountersInNeighboringRooms" )
 		Room:StartEncountersInNeighboringRooms()
 	end
 end
@@ -662,7 +662,7 @@ function CCavern:OnTriggerStartTouch( triggerName, activator_entindex, caller_en
 --		local szAntechamberRoomNumber = string.sub( szRoomString, n+1, string.len( szRoomString ) ) 
 --		local Room = self.Rooms[tonumber(szAntechamberRoomNumber)]
 --		if Room ~= nil and Room:GetAntechamberVolume() == TriggerEntity then
-		--	print( "Entered antechamber")
+		--	log.debug( "Entered antechamber")
 --			self:OnNPCEnteredRoom( Room, NPC )	
 --			return
 --		end
@@ -679,7 +679,7 @@ function CCavern:OnTriggerEndTouch( triggerName, activator_entindex, caller_enti
 		local szRoomNumber = string.sub( triggerName, j+1, string.len( triggerName ) )
 		local Room = self.Rooms[tonumber(szRoomNumber)]
 		if Room ~= nil and Room:GetRoomVolume() == TriggerEntity then
-			--print( playerHero:GetUnitName() .. " just left room " .. Room:GetRoomID() )
+			--log.debug( playerHero:GetUnitName() .. " just left room " .. Room:GetRoomID() )
 			self:OnNPCLeftRoom( Room, NPC )
 		end
 	end
@@ -734,7 +734,7 @@ function CCavern:OnBattlePointsEarned( nTeamNumber, nBattlePoints, szReason )
 --			CustomNetTables:SetTableValue( "bp_tracker", string.format( "%d", nPlayerID ), netTable )
 
 			if szReason ~= nil then
-				print( "Player " .. nPlayerID .. " just earned " .. nBattlePoints .. " battle points for " .. szReason )
+				log.debug( "Player " .. nPlayerID .. " just earned " .. nBattlePoints .. " battle points for " .. szReason )
 			end
 		end
 	end
@@ -752,7 +752,7 @@ function CCavern:OnEncounterCleared( nTeamNumber )
 			EncounterCleared["player_id"] = nPlayerID
 			EncounterCleared["steam_id"] = PlayerResource:GetSteamID( nPlayerID )
 			table.insert( self.SignOutTable["encounters_cleared"], EncounterCleared )
-			print( "PlayerID " .. nPlayerID .. " just got credit for clearing an encounter" )
+			log.debug( "PlayerID " .. nPlayerID .. " just got credit for clearing an encounter" )
 		end
 	end
 end
@@ -767,7 +767,7 @@ function CCavern:OnChickenTreasureDiscovered( nTeamNumber )
 			ChickenDiscovered["player_id"] = nPlayerID
 			ChickenDiscovered["steam_id"] = PlayerResource:GetSteamID( nPlayerID )
 			table.insert( self.SignOutTable["chickens_found"], ChickenDiscovered )
-			print( "PlayerID " .. nPlayerID .. " just got credit for discovering chickens." )
+			log.debug( "PlayerID " .. nPlayerID .. " just got credit for discovering chickens." )
 		end
 	end
 end
@@ -782,7 +782,7 @@ function CCavern:OnBigCheeseTaken( nTeamNumber )
 			BigCheeseTaken["player_id"] = nPlayerID
 			BigCheeseTaken["steam_id"] = PlayerResource:GetSteamID( nPlayerID )
 			table.insert( self.SignOutTable["big_cheese"], BigCheeseTaken )
-			print( "PlayerID " .. nPlayerID .. " just got credit for taking the big cheese." )
+			log.debug( "PlayerID " .. nPlayerID .. " just got credit for taking the big cheese." )
 		end
 	end
 end

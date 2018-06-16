@@ -49,7 +49,7 @@ end
 function CCavernGate:SetObstructions( bEnable )
 	local hObstructionEnts = Entities:FindAllByNameWithin( "gate_obstruction", self:GetPositionOfGate(), 500 )
 	if #hObstructionEnts ~= 10 then
-		print( string.format( "CCavernGate:SetObstructions - ERROR: Found wrong count of gate_obstruction entities (%d) at position %s", #hObstructionEnts, self:GetPositionOfGate() ) )
+		log.debug( string.format( "CCavernGate:SetObstructions - ERROR: Found wrong count of gate_obstruction entities (%d) at position %s", #hObstructionEnts, self:GetPositionOfGate() ) )
 		return
 	end
 
@@ -115,7 +115,7 @@ function CCavernGate:SetPath( hOriginRoom, hNeighborRoom, nPathType )
 		self.Blocker:AddNewModifier( self.Blocker, nil, "modifier_blocked_gate", {} )
 	elseif nPathType == CAVERN_PATH_TYPE_OPEN then
 		if self.Blocker ~= nil then
-			--print( "Kill" )
+			--log.debug( "Kill" )
 			self.Blocker:ForceKill( false )
 			self.Blocker = nil
 		end

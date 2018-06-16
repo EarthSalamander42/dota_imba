@@ -25,7 +25,7 @@ function PendulumTrapThink()
 
 		local enemies = GetEnemyHeroesInRoom( thisEntity )
 		if not enemies or #enemies == 0 then
-			--print( "no enemies" )
+			--log.debug( "no enemies" )
 			thisEntity:InterruptChannel()
 			return RandomFloat( 0.1, 1.0 )
 		end

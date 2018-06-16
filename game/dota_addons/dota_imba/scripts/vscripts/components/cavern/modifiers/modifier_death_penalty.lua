@@ -53,7 +53,7 @@ end
 -----------------------------------------------------------------------
 
 function modifier_death_penalty:GetModifierConstantRespawnTime( params )
-	--print("constant respawn time " .. self:GetParent().nDeaths)
+	--log.debug("constant respawn time " .. self:GetParent().nDeaths)
 	local nDeaths = self:GetParent().nDeaths
 	if nDeaths == nil then
 		nDeaths = 0

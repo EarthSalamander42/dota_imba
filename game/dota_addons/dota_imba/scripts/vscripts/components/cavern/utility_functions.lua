@@ -5,7 +5,7 @@
 -- Broadcast messages to screen
 ---------------------------------------------------------------------------
 function printf(...)
- print(string.format(...))
+ log.debug(string.format(...))
 end
 
 ---------------------------------------------------------------------------
@@ -81,7 +81,7 @@ end
 -- Table functions
 ---------------------------------------------------------------------------
 function PrintTable( t, indent )
-	--print( "PrintTable( t, indent ): " )
+	--log.debug( "PrintTable( t, indent ): " )
 
 	if type(t) ~= "table" then return end
 	
@@ -92,12 +92,12 @@ function PrintTable( t, indent )
 	for k,v in pairs( t ) do
 		if type( v ) == "table" then
 			if ( v ~= t ) then
-				print( indent .. tostring( k ) .. ":\n" .. indent .. "{" )
+				log.debug( indent .. tostring( k ) .. ":\n" .. indent .. "{" )
 				PrintTable( v, indent .. "  " )
-				print( indent .. "}" )
+				log.debug( indent .. "}" )
 			end
 		else
-		print( indent .. tostring( k ) .. ":" .. tostring(v) )
+		log.debug( indent .. tostring( k ) .. ":" .. tostring(v) )
 		end
 	end
 end
@@ -115,7 +115,7 @@ end
 
 function TableFindKey( table, val )
 	if table == nil then
-		print( "nil" )
+		log.debug( "nil" )
 		return nil
 	end
 
@@ -181,7 +181,7 @@ end
 ---------------------------------------------------------------------------
 
 function SetAggroRange( hUnit, fRange )
-	--print( string.format( "Set search radius and acquisition range (%.2f) for unit %s", fRange, hUnit:GetUnitName() ) )
+	--log.debug( string.format( "Set search radius and acquisition range (%.2f) for unit %s", fRange, hUnit:GetUnitName() ) )
 	hUnit.fSearchRadius = fRange
 	hUnit:SetAcquisitionRange( fRange )
 	hUnit.bAcqRangeModified = true

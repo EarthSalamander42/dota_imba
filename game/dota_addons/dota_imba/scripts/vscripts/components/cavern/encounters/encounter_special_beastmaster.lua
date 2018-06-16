@@ -27,7 +27,7 @@ function encounter_special_beastmaster:Start()
 	local szUnitName = "npc_dota_statue_beastmaster"
 	local hUnit = self:SpawnNonCreepByName( szUnitName, vStatueSpawnPoint, true, nil, nil, DOTA_TEAM_BADGUYS )
 	if hUnit == nil then
-		print( string.format( "encounter_special_beastmaster -- ERROR: Failed to spawn unit \"%s\"", szUnitName ) )
+		log.debug( string.format( "encounter_special_beastmaster -- ERROR: Failed to spawn unit \"%s\"", szUnitName ) )
 		return
 	end
 
