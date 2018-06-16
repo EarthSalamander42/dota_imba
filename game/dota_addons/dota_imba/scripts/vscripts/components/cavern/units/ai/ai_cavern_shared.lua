@@ -314,7 +314,7 @@ function SprintIsReady( hCaster )
 end
 
 --------------------------------------------------------------------------------
-
+--[[
 function CastSlog.debug( hCaster )
 	local hAbility = hCaster.abilities.hSprint
 	ExecuteOrderFromTable({
@@ -326,7 +326,7 @@ function CastSlog.debug( hCaster )
 
 	return 5.0
 end
-
+--]]
 --------------------------------------------------------------------------------
 
 function TailIsReady( hCaster )

@@ -17,7 +17,7 @@
   				
 	  			 <Panel id="EarnedBPContainer" class="LeftRightFlow" hittest="false">
 			        <Panel id="BPIcon" hittest="false"/>
-			        <Label id="EarnedBP" text="#DOTA_EventUI_BP" hittest="false"/>
+			        <Label id="EarnedBP" text="IMBA BP:" hittest="false"/>
 			        <Label id="EarnedBPAmount" text="{d:earned_points}/{d:remaining_points}" hittest="false"/>
 			     </Panel>
   			</Panel>      

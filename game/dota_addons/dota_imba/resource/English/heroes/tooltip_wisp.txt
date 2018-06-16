@@ -10,7 +10,7 @@
 "DOTA_Tooltip_ability_imba_wisp_tether_radius"            		"MAX TETHER DISTANCE:"
 "DOTA_Tooltip_ability_imba_wisp_tether_movespeed"               "MOVEMENT SPEED BONUS:"
 "DOTA_Tooltip_ability_imba_wisp_tether_heal_amp"         		"HP/MANA AMP:"
-"DOTA_Tooltip_ability_imba_wisp_tether_attackslow_tooltip"          			"SLOW:"
+"DOTA_Tooltip_ability_imba_wisp_tether_attackslow_tooltip"		"SLOW:"
 "DOTA_Tooltip_ability_imba_wisp_tether_stun_duration" 			"SLOW DURATION:"
 
 "DOTA_Tooltip_modifier_imba_wisp_tether_ally"					"TETHERED"
@@ -42,6 +42,7 @@
 "DOTA_Tooltip_ability_imba_wisp_spirits_explode_radius"         "EXPLOSION RADIUS:"
 "DOTA_Tooltip_ability_imba_wisp_spirits_explosion_damage"       "EXPLOSION DAMAGE:"
 "DOTA_Tooltip_ability_imba_wisp_spirits_spirit_duration"      	"DURATION:"
+"DOTA_Tooltip_ability_imba_wisp_spirits_num_spririts"			"SPIRIT COUNT:"
 
 ////===============================================================================================================
 // Wisp's Spirit Toggle

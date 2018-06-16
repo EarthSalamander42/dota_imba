@@ -18,7 +18,7 @@
 	// IMBASHAKA
 //	"maps"							"cavern imba_ranked_5v5 imba_ranked_10v10 imba_mutation_5v5 imba_mutation_10v10"
 
-	"maps"							"imba_mutation_5v5 imba_mutation_10v10"
+	"maps"							"cavern imba_mutation_5v5 imba_mutation_10v10"
 
 	"IsPlayable"					"1"
 

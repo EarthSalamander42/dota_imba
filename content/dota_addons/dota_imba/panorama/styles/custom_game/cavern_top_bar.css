@@ -8,7 +8,7 @@
 	
 	background-size: contain;
 	background-repeat: no-repeat;
-	margin-top: -12px;
+	margin-top: -5px;
 	visibility: collapse;
 }
 
@@ -64,8 +64,8 @@
 
 #PlayersBlock
 {
-	margin-top: 12px;
-	margin-left: 70px;
+	margin-top: 0px;
+	margin-left: 100px;
 	width: 500px;
 	
 	flow-children: right;
@@ -304,12 +304,13 @@
 #EarnedBP,
 #EarnedBPAmount
 {
-	margin-left:2px;
+	margin-left: 2px;
+	margin-bottom: 3px;
 	color: #2faf69;
     font-weight: bold;
     text-shadow: 1px 1px 2px 2.0 #00000011;
     font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
-    font-size: 17px;
+    font-size: 15px;
     letter-spacing: 2px;
 	vertical-align: middle;
 }

@@ -1910,6 +1910,7 @@ function GameMode:OnThink()
 				CustomGameEventManager:Send_ServerToAllClients( "overtime_alert", broadcast_killcount )
 			end
 		end
+	elseif GetMapName() == "cavern" then
 	else
 		-- fix for super high respawn time
 		for _, hero in pairs(HeroList:GetAllHeroes()) do

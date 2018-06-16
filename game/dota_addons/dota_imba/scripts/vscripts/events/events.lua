@@ -273,6 +273,14 @@ function GameMode:OnGameRulesStateChange(keys)
 								id = api.imba.data.id,
 								radiant_score = GetTeamHeroKills(2),
 								dire_score = GetTeamHeroKills(3),
+								custom1_score = GetTeamHeroKills(6),
+								custom2_score = GetTeamHeroKills(7),
+								custom3_score = GetTeamHeroKills(8),
+								custom4_score = GetTeamHeroKills(9),
+								custom5_score = GetTeamHeroKills(10),
+								custom6_score = GetTeamHeroKills(11),
+								custom7_score = GetTeamHeroKills(12),
+								custom8_score = GetTeamHeroKills(13),
 							},
 --							error = false
 						})

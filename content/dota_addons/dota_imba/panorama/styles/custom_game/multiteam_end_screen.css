@@ -89,10 +89,12 @@
 }
 
 #es-teams {
+	height: 700px;
 	flow-children: down;
 	horizontal-align: center;
 	width: 100%;
 	padding: 10px 5px 10px 5px;
+	overflow:  squish scroll;
 }
 
 .es-teams-columns {
@@ -113,24 +115,14 @@
 	background-color: gradient( linear, 100% 0, 0 0, from( #13161aee ), color-stop( 0.4, #13161a ), to( #2b3139 ) );
 }
 
-#es-radiant {
-	margin-left: 10px;
-	margin-right: 10px;
-}
-
-#es-dire {
-	margin-right: 10px;
-}
-
-#es-custom1 {
-	visibility: collapse;
-}
-
-#es-custom2 {
-	visibility: collapse;
-}
-
-#es-custom3 {
+#es-custom1,
+#es-custom2,
+#es-custom3,
+#es-custom4,
+#es-custom5,
+#es-custom6,
+#es-custom7,
+#es-custom8 {
 	visibility: collapse;
 }
 
@@ -151,15 +143,35 @@
 }
 
 #es-custom1 .es-team-name {
-	color: #cc00cc;
+	color: #f3c909;
 }
 
 #es-custom2 .es-team-name {
-	color: #ff4000;
+	color: #FF6C00;
 }
 
 #es-custom3 .es-team-name {
-	color: #3465df;
+	color: #3455FF;
+}
+
+#es-custom4 .es-team-name {
+	color: #65d413;
+}
+
+#es-custom5 .es-team-name {
+	color: #815336;
+}
+
+#es-custom6 .es-team-name {
+	color: #1bc0d8;
+}
+
+#es-custom7 .es-team-name {
+	color: #c7e40d;
+}
+
+#es-custom8 .es-team-name {
+	color: #8c2af4;
 }
 
 .es-team-title {
