@@ -191,7 +191,7 @@ function GameMode:OnGameRulesStateChange(keys)
 				return 60
 			end)
 
-			if IsFranticMap() then
+			if IsMutationMap() then
 				SpawnEasterEgg()
 			elseif GetMapName() == "imba_overthrow" then
 				countdownEnabled = true
