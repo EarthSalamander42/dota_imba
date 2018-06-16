@@ -289,6 +289,7 @@ LinkLuaModifier( "modifier_imba_dazzle_shallow_grave", "hero/hero_dazzle.lua", L
 LinkLuaModifier( "modifier_imba_dazzle_nothl_protection", "hero/hero_dazzle.lua", LUA_MODIFIER_MOTION_NONE )			-- Passive self-cast
 LinkLuaModifier( "modifier_imba_dazzle_post_shallow_grave_buff", "hero/hero_dazzle.lua", LUA_MODIFIER_MOTION_NONE )		-- Post-grave buff
 LinkLuaModifier( "modifier_imba_dazzle_nothl_protection_aura_talent", "hero/hero_dazzle.lua", LUA_MODIFIER_MOTION_NONE )-- Talent aura Nothl Protection
+LinkLuaModifier( "modifier_imba_dazzle_nothl_protection_particle", "hero/hero_dazzle.lua", LUA_MODIFIER_MOTION_NONE )-- Talent aura Nothl Protection
 
 function imba_dazzle_shallow_grave:GetAbilityTextureName()
 	return "dazzle_shallow_grave"
@@ -329,9 +330,6 @@ function modifier_imba_dazzle_shallow_grave:IsPurgable() return false end
 function modifier_imba_dazzle_shallow_grave:IsHidden() return false end
 function modifier_imba_dazzle_shallow_grave:IsDebuff() return false end
 
-function modifier_imba_dazzle_shallow_grave:GetEffectName()
-	return "particles/econ/items/dazzle/dazzle_dark_light_weapon/dazzle_dark_shallow_grave.vpcf" end
-
 function modifier_imba_dazzle_shallow_grave:GetEffectAttachType()
 	return PATTACH_ABSORIGIN_FOLLOW end
 
@@ -347,13 +345,16 @@ function modifier_imba_dazzle_shallow_grave:GetMinHealth()
 function modifier_imba_dazzle_shallow_grave:OnCreated()
 	if IsServer() then
 		self.shallowDamage = 0
-		self.shallowDamageInstances = 0
+		self.shallowDamageInstances = 0		
+		self.shallow_grave_particle = ParticleManager:CreateParticle("particles/econ/items/dazzle/dazzle_dark_light_weapon/dazzle_dark_shallow_grave.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 	end
 end
 
 function modifier_imba_dazzle_shallow_grave:OnDestroy()
 	if IsServer() then
 		local parent = self:GetParent()
+
+		ParticleManager:DestroyParticle(self.shallow_grave_particle, true)
 
 		-- Checking if alive for cases of death that don't care for Shallow Grave
 		if parent:IsAlive() and self.shallowDamage > 0 then
@@ -564,13 +565,13 @@ function modifier_imba_dazzle_nothl_protection:OnTakeDamage( keys )
 					self.shallowDamageInstances = self.shallowDamageInstances + 1
 					self.isActive = true
 
-					local particle = ParticleManager:CreateParticle("particles/hero/dazzle/dazzle_shallow_grave_self.vpcf", PATTACH_ABSORIGIN_FOLLOW , parent)
-
+					parent:AddNewModifier(caster, nil , "modifier_imba_dazzle_nothl_protection_particle", { duration = nothl_duration})
+					
 					local nothl_duration = ability:GetSpecialValueFor("nothl_protection_duration")
 					Timers:CreateTimer(nothl_duration, function()
 
 							-- Checking if alive for cases of death that don't care for Nothl Protection
-							if parent:IsAlive() and self.shallowDamage > 0 then
+							if self:GetParent():IsAlive() and self.shallowDamage > 0 and self:GetParent():HasModifier("modifier_imba_dazzle_nothl_protection_particle") then
 								if self.shallowDamageInstances > 0 then
 									local modifier = parent:AddNewModifier(parent, ability, "modifier_imba_dazzle_post_shallow_grave_buff", {duration = ability:GetSpecialValueFor("post_grave_duration")})
 									modifier:SetStackCount(self.shallowDamageInstances)
@@ -589,9 +590,7 @@ function modifier_imba_dazzle_nothl_protection:OnTakeDamage( keys )
 							self.shallowDamage = 0
 							self.shallowDamageInstances = 0
 
-							ParticleManager:DestroyParticle(particle, true)
-							ParticleManager:ReleaseParticleIndex(particle)
-
+							parent:RemoveModifierByName("modifier_imba_dazzle_nothl_protection_particle")
 							local nothl_cooldown = ability:GetSpecialValueFor("nothl_protection_cooldown")
 
 							self:SetStackCount(math.floor(nothl_cooldown))
@@ -666,6 +665,12 @@ function modifier_imba_dazzle_nothl_protection:OnIntervalThink()
 		else
 			self.auraTalentCooldowns = {}
 		end
+	end
+end
+
+function modifier_imba_dazzle_nothl_protection:OnRemoved()
+	if IsServer() then
+		ParticleManager:DestroyParticle(self.nothl_protection_particle, true)
 	end
 end
 
@@ -775,6 +780,20 @@ function modifier_imba_dazzle_nothl_protection:TalentAuraTimeUpdater(id)
 	if self.auraTalentCooldowns[id] == 0 then self.auraTalentCooldowns[id] = 30 end -- fail safe just in case
 end
 
+
+modifier_imba_dazzle_nothl_protection_particle = class({})
+function modifier_imba_dazzle_nothl_protection_particle:OnCreated()
+	if IsServer() then
+		self.particles = ParticleManager:CreateParticle("particles/hero/dazzle/dazzle_shallow_grave_self.vpcf", PATTACH_ABSORIGIN_FOLLOW , self:GetParent())
+	end
+end
+
+function modifier_imba_dazzle_nothl_protection_particle:OnRemoved()
+	if IsServer() then
+		ParticleManager:DestroyParticle(self.particles, true)
+	end
+end
+
 ---------------------------------------
 -----	Post-Shallow Grave buff	  -----
 ---------------------------------------
@@ -797,6 +816,15 @@ function modifier_imba_dazzle_post_shallow_grave_buff:OnCreated()
 	local ability = self:GetAbility()
 	self.armor = ability:GetSpecialValueFor("post_grave_armor_per_hit")
 	self.resist = ability:GetSpecialValueFor("post_grave_resist_per_hit")
+	if IsServer() then
+		self.post_shallow_grave_particle = ParticleManager:CreateParticle("particles/hero/dazzle/dazzle_post_grave.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+	end
+end
+
+function modifier_imba_dazzle_post_shallow_grave_buff:OnRemoved()
+	if IsServer() then
+		ParticleManager:DestroyParticle(self.post_shallow_grave_particle, true)
+	end
 end
 
 function modifier_imba_dazzle_post_shallow_grave_buff:DeclareFunctions()
