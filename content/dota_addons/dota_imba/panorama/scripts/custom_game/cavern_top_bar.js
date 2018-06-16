@@ -189,10 +189,13 @@ function UpdateTopBarEnemies()
 var MainPanel = $.GetContextPanel().GetParent().GetParent().GetParent().GetParent()
 if (Game.GetMapInfo().map_display_name == "cavern") {
 	MainPanel.FindChildTraverse("topbar").style.visibility = "collapse";
+	$.GetContextPanel().FindChildTraverse("EarnedBPAmount").text = "Coming Soon!";
 	$.Schedule( 1.0, UpdateTopBar );
-	$.Schedule( 1.0, HideTopBar );
 }
+
+$.Schedule( 1.0, HideTopBar );
 
 function HideTopBar() {
 	$.GetContextPanel().visible = false;
+	$.Schedule( 1.0, HideTopBar );
 }

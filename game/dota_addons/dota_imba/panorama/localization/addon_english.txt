@@ -273,7 +273,7 @@
 	-Slay anyone who isn't on your team."
 
 	"Chest"											"ITEM"
-	"ItemWillSpawn"									"IS ABOUT TO BE DELIVERED!"
+	"ItemWillSpawn"									"IS ABOUT TO BE DELIVERED IN 10 SECONDS!"
 	"ItemHasSpawned"								"IS ON ITS WAY!"
 
 	"RecentScore"									"+{d:score}"
@@ -367,8 +367,8 @@
 	"mutation_monkey_business"					"Monkey Business"
 	"mutation_monkey_business_Description"		"Every heroes gets mischief ability passively when not attacking or being attacked for 5 seconds."
 
-	"mutation_defense_of_the_ants"				"Defense of the Ants"
-	"mutation_defense_of_the_ants_Description"	"Everytime you die, you respawn 5% smaller. Minimum size being 25%."
+	"mutation_defense_of_the_ants"				"Defense of the Feeders"
+	"mutation_defense_of_the_ants_Description"	"Everytime you kill a hero or die, you respawn 5% bigger/smaller. Min/Max size being -75%/75%."
 
 	"mutation_the_walking_dead"					"The Walking Dead"
 	"mutation_the_walking_dead_Description"		"During night, zombies spawns in Jungle and attack the closest hero."
@@ -388,7 +388,7 @@
 
 	// Terrain
 	"mutation_gift_exchange"					"Airdrop"
-	"mutation_gift_exchange_Description"		"Gifts are periodically deployed around the map."
+	"mutation_gift_exchange_Description"		"Gifts are periodically deployed around the map every 2 minutes."
 
 	"mutation_no_trees"							"No Trees"
 	"mutation_no_trees_Description"				"All trees are cut and do not respawn."

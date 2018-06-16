@@ -18,7 +18,6 @@ POSITIVE_MUTATION_LIST["teammate_resurrection"] = false
 
 -- Not coded/approved yet
 -- POSITIVE_MUTATION_LIST["damage_reduction"] = false
--- POSITIVE_MUTATION_LIST["team_runes"] = false
 -- POSITIVE_MUTATION_LIST["stationary_damage_reduction"] = false
 -- POSITIVE_MUTATION_LIST["super_runes"] = false
 -- POSITIVE_MUTATION_LIST["super_blink"] = false
@@ -37,7 +36,7 @@ NEGATIVE_MUTATION_LIST = {}
 NEGATIVE_MUTATION_LIST["death_explosion"] = false
 NEGATIVE_MUTATION_LIST["death_gold_drop"] = false
 -- NEGATIVE_MUTATION_LIST["no_health_bar"] = false
-NEGATIVE_MUTATION_LIST["periodic_spellcast"] = false -- in progress
+NEGATIVE_MUTATION_LIST["periodic_spellcast"] = false
 
 -- IMBA
 NEGATIVE_MUTATION_LIST["defense_of_the_ants"] = false

@@ -259,7 +259,7 @@ function CCavern:OnEntityKilled_PlayerHero( event )
 		FindClearSpaceForUnit( tombstone, killedHero:GetAbsOrigin(), true )
 		killedHero.Tombstone = tombstone
 		killedHero.vDeathPos = killedHero:GetAbsOrigin()
-		
+
 		killedHero:AddNewModifier( killedHero, nil, "modifier_hide_on_minimap", { EnemiesOnly=true } )
 
 		self:RemoveTombstoneVisionDummy( killedHero )

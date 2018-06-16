@@ -4,7 +4,7 @@ CustomNetTables.SubscribeNetTableListener( "rosh_tracker", UpdateRoshIcon );
 
 function SetFlyoutScoreboardVisible( bVisible )
 {
-	$.Msg("setting scoreboard visible "+bVisible);
+//	$.Msg("setting scoreboard visible " + bVisible);
 	$.GetContextPanel().SetHasClass( "flyout_scoreboard_visible", bVisible );
 }
 
@@ -133,12 +133,17 @@ function UpdateScoreboard()
 			PlayerRow.SetHasClass( "Alive", Players.GetRespawnSeconds( PlayerIDs[i] ) == -1 );
 		}
 	}
-
 }
 
-if (Game.GetMapInfo().map_display_name == "cavern") {
+$.Schedule(1.0, HideScoreboard)
+
+function HideScoreboard() {
+	if (Game.GetMapInfo().map_display_name == "cavern") {
 	
-} else {
-	// .CavernTopBar
-	$.GetContextPanel().style.visibility = "collapse";
+	} else {
+		// .CavernTopBar
+		$.GetContextPanel().style.visibility = "collapse";
+	}
+
+	$.Schedule(1.0, HideScoreboard)
 }

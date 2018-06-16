@@ -10920,7 +10920,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bounce_damage"			"200"
+				"bounce_damage"			"260"
 				"CalculateSpellDamageTooltip"	"1"
 			}
 			"05"

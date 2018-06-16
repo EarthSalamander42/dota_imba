@@ -365,7 +365,12 @@ function HeroSelection:SelectHero(playerId, hero)
 			LoadFinishEvent.broadcast()
 			print("UNPAUSE GAME!")
 --			PauseGame(false)
+			if GetMapName() ~= "cavern" then
+				GameRules:GetGameModeEntity():SetPauseEnabled( true )
+				CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(playerId), "send_mutations", IMBA_MUTATION)
+			end
 			GameRules:GetGameModeEntity():SetCameraDistanceOverride(1134) -- default: 1134
+
 			if BOTS_ENABLED == true then
 				SendToServerConsole('sm_gmode 1')
 				SendToServerConsole('dota_bot_populate')

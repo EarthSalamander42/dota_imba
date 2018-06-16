@@ -23,6 +23,11 @@ function SetFlyoutScoreboardVisible(bVisible) {
 }
 
 (function () {
+	if (Game.GetMapInfo().map_display_name == "cavern") {
+		$.GetContextPanel().style.visibility = "collapse";
+		return;
+	}
+
 	if (ScoreboardUpdater_InitializeScoreboard === null) {
 		$.Msg("WARNING: This file requires shared_scoreboard_updater.js to be included.");
 	}
@@ -40,7 +45,3 @@ function SetFlyoutScoreboardVisible(bVisible) {
 
 	$.RegisterEventHandler("DOTACustomUI_SetFlyoutScoreboardVisible", $.GetContextPanel(), SetFlyoutScoreboardVisible);
 })();
-
-if (Game.GetMapInfo().map_display_name == "cavern") {
-	$.GetContextPanel().style.visibility = "collapse";
-}

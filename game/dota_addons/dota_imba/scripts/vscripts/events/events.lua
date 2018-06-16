@@ -61,15 +61,15 @@ function GameMode:OnGameRulesStateChange(keys)
 			api.imba.event(api.events.entered_pre_game)
 
 			-- Shows various info to devs in pub-game to find lag issues
-			ImbaNetGraph(10.0)
+--			ImbaNetGraph(10.0)
 
 			-- Initialize rune spawners
 			InitRunes()
 
-			if GetMapName() ~= "imba_overthrow" then
+--			if GetMapName() ~= "imba_overthrow" then
 				-- Initialize battlepass towers
-				Imbattlepass:InitializeTowers()
-			end
+--				Imbattlepass:InitializeTowers()
+--			end
 
 			CustomNetTables:SetTableValue("game_options", "donators", api.imba.get_donators())
 			CustomNetTables:SetTableValue("game_options", "developers", api.imba.get_developers())
@@ -101,11 +101,9 @@ function GameMode:OnGameRulesStateChange(keys)
 					end
 				end
 
-				COURIER_TEAM = {}
-				COURIER_PLAYER = {}
-	
 				if GetMapName() == "imba_overthrow" then
 					local foundTeams = {}
+					COURIER_TEAM = {}
 					for _, playerStart in pairs(Entities:FindAllByClassname("info_courier_spawn")) do
 						COURIER_TEAM[playerStart:GetTeam()] = CreateUnitByName("npc_dota_courier", playerStart:GetAbsOrigin(), true, nil, nil, playerStart:GetTeam())
 --						COURIER_PLAYER[playerStart:GetTeam()] = CreateUnitByName("npc_dota_courier", playerStart:GetAbsOrigin(), true, nil, nil, playerStart:GetTeam())
@@ -119,31 +117,33 @@ function GameMode:OnGameRulesStateChange(keys)
 					end
 				elseif GetMapName() == "cavern" then
 				else
---					safe(function()
---						if error then
---							log.info("An error occured with courier script, swap to original team couriers.")
+					safe(function()
+						if error then
+							log.info("An error occured with courier script, swap to original team couriers.")
 
+							COURIER_TEAM = {}
 							COURIER_TEAM[2] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_radiant"):GetAbsOrigin(), true, nil, nil, 2)
 							COURIER_TEAM[3] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_dire"):GetAbsOrigin(), true, nil, nil, 3)
 
---							error = true
---						else
---							if USE_TEAM_COURIER then
---								COURIER_TEAM[2] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_radiant"):GetAbsOrigin(), true, nil, nil, 2)
---								COURIER_TEAM[3] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_dire"):GetAbsOrigin(), true, nil, nil, 3)
---							else
---								for _, hero in pairs(HeroList:GetAllHeroes()) do
---									if hero:GetTeamNumber() == 2 then
---										COURIER_PLAYER[hero:GetPlayerID()] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_radiant"):GetAbsOrigin(), true, nil, nil, hero:GetTeam())
---									elseif hero:GetTeamNumber() == 3 then
---										COURIER_PLAYER[hero:GetPlayerID()] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_dire"):GetAbsOrigin(), true, nil, nil, hero:GetTeam())
---									end
---								end
---							end
---						end
+							error = true
+						else
+							if USE_TEAM_COURIER then
+								COURIER_TEAM[2] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_radiant"):GetAbsOrigin(), true, nil, nil, 2)
+								COURIER_TEAM[3] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_dire"):GetAbsOrigin(), true, nil, nil, 3)
+							else
+								for _, hero in pairs(HeroList:GetAllHeroes()) do
+									COURIER_PLAYER = {}
+									if hero:GetTeamNumber() == 2 then
+										COURIER_PLAYER[hero:GetPlayerID()] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_radiant"):GetAbsOrigin(), true, nil, nil, hero:GetTeam())
+									elseif hero:GetTeamNumber() == 3 then
+										COURIER_PLAYER[hero:GetPlayerID()] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_dire"):GetAbsOrigin(), true, nil, nil, hero:GetTeam())
+									end
+								end
+							end
+						end
 
---						error = false
---					end)
+						error = false
+					end)
 
 					local good_fillers = {
 						"good_filler_1",

@@ -402,18 +402,35 @@ BANNED_ITEMS["imba_1v1"] = {
 	"item_soul_ring",
 	"item_tome_of_knowledge",
 }
-BANNED_ITEMS["imba_overthrow"] = {}
-BANNED_ITEMS["imba_ranked_5v5"] = {}
-BANNED_ITEMS["imba_ranked_10v10"] = {}
-BANNED_ITEMS["imba_tournament"] = {}
-BANNED_ITEMS["imba_mutation_5v5"] = {}
-BANNED_ITEMS["imba_mutation_10v10"] = {}
-BANNED_ITEMS["imba_frantic_5v5"] = {}
-BANNED_ITEMS["imba_frantic_10v10"] = {}
+BANNED_ITEMS["imba_overthrow"] = {
+	"item_cavern_dynamite",
+}
+BANNED_ITEMS["imba_ranked_5v5"] = {
+	"item_cavern_dynamite",
+}
+BANNED_ITEMS["imba_ranked_10v10"] = {
+	"item_cavern_dynamite",
+}
+BANNED_ITEMS["imba_tournament"] = {
+	"item_cavern_dynamite",
+}
+BANNED_ITEMS["imba_mutation_5v5"] = {
+	"item_cavern_dynamite",
+}
+BANNED_ITEMS["imba_mutation_10v10"] = {
+	"item_cavern_dynamite",
+}
+BANNED_ITEMS["imba_frantic_5v5"] = {
+	"item_cavern_dynamite",
+}
+BANNED_ITEMS["imba_frantic_10v10"] = {
+	"item_cavern_dynamite",
+}
 BANNED_ITEMS["cavern"] = {
 	"item_imba_aegis",
 	"item_imba_bottle",
 	"item_imba_hand_of_midas",
+	"item_recipe_imba_hand_of_midas",
 	"item_imba_heart",
 	"item_helm_of_the_dominator",
 	"item_smoke_of_deceit",

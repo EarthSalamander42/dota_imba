@@ -787,6 +787,8 @@ if player_id == "test_reconnect" then player_id = 0 end
 --						HeroSelection:GiveStartingHero(player_id, lockedHeroes[player_id])
 --					end
 				end
+
+				CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(player_id), "send_mutations", IMBA_MUTATION)
 			end
 		else
 --			print("Not fully reconnected yet:", player_id)

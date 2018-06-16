@@ -24,7 +24,7 @@
 "DOTA_Tooltip_modifier_river_slide_Description"					"Sliding on the ice!"
 
 "DOTA_Tooltip_modifier_mutation_death_explosion"				"Death Explosion"
-"DOTA_Tooltip_modifier_mutation_death_explosion_Description"	"Deal 1000 damage in a 500 radius on death afer a 0.9 seconds delay."
+"DOTA_Tooltip_modifier_mutation_death_explosion_Description"	"Deal 600 + (100 * minutes) damage up to 3600 max in a 400 radius on death afer a 0.9 seconds delay."
 
 "DOTA_Tooltip_modifier_mutation_kill_streak_power"				"#{DOTA_Tooltip_modifier_mutation_killstreak_power}"
 "DOTA_Tooltip_modifier_mutation_kill_streak_power_Description"	"#{DOTA_Tooltip_modifier_mutation_killstreak_power_Description}"

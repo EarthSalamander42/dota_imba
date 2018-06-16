@@ -3,10 +3,10 @@ var mutation = [];
 function Mutation(args) {
 	$("#Mutations").style.visibility = "visible";
 
-	$.Msg("Mutation JS:")
-	$.Msg(args["positive"])
-	$.Msg(args["negative"])
-	$.Msg(args["terrain"])
+//	$.Msg("Mutation JS:")
+//	$.Msg(args["positive"])
+//	$.Msg(args["negative"])
+//	$.Msg(args["terrain"])
 
 	mutation[1] = args["positive"]
 	mutation[2] = args["negative"]

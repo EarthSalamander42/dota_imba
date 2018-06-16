@@ -4520,7 +4520,7 @@
 
 		"AbilityCooldown"				"18 16 12 7"
 		"AbilityCastRange"				"1400 1575 1750 1925"
-		"AbilityDuration"				"1.0 1.66 2.33 3.0"
+		"AbilityDuration"				"1.0 1.5 2.0 2.5"
 		"AbilityDamage"					"110 210 290 400"
 		"AbilityManaCost"				"100 120 140 160"
 
@@ -4540,12 +4540,12 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"fissure_radius"			"250 300 350 400"
+				"fissure_radius"			"250 275 300 325"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"stun_duration"				"1.11 1.77 2.33 3.10"
+				"stun_duration"				"1.0 1.5 2.0 2.5"
 			}
 		}
 	}
@@ -5242,7 +5242,7 @@
 	{
 		"AbilityCooldown"				"20 17 14 11"
 		"AbilityManaCost"				"120 130 140 150"
-		"AbilityDamage"					"225 350 475 600"
+		"AbilityDamage"					"150 225 300 475"
 
 		"AbilitySpecial"
 		{
@@ -5450,7 +5450,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"heal"					"12 20 28 36"
+				"heal"					"12 16 20 24"
 			}
 			"02"
 			{
@@ -7078,7 +7078,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"30 25 20 15"
+		"AbilityCooldown"				"35 30 25 20"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -7111,7 +7111,7 @@
 	//=================================================================================================================
 	"lone_druid_savage_roar_bear"
 	{
-		"AbilityCooldown"				"30 25 20 15"
+		"AbilityCooldown"				"35 30 25 20"
 
 		"AbilitySpecial"
 		{
@@ -8186,7 +8186,6 @@
 	//=================================================================================================================
 	"naga_siren_mirror_image"
 	{
-		"MaxLevel"						"4"
 		"AbilityCooldown"				"40"
 
 		"AbilitySpecial"
@@ -8221,7 +8220,7 @@
 			"06"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"images_count"							"2 2 3 4"
+				"images_count"							"3 3 4 5"
 				"LinkedSpecialBonus"					"special_bonus_unique_naga_siren"
 			}
 			"07"
@@ -8252,7 +8251,6 @@
 	//=================================================================================================================
 	"naga_siren_ensnare"
 	{
-		"MaxLevel"						"4"
 		"AbilityCastPoint"				"0.65 0.65 0.55 0.35"
 		"AbilityCooldown"				"12 11 10 9"		
 		"AbilityCastRange"				"650 750 850 950"
@@ -8297,7 +8295,6 @@
 	//=================================================================================================================
 	"naga_siren_rip_tide"
 	{
-		"MaxLevel"						"4"
 		"AbilityCooldown"				"10 9 8 7"
 		"AbilityDamage"					"120 200 260 300"
 		"AbilityCastRange"				"320 320 350 410"
@@ -8328,20 +8325,16 @@
 	//=================================================================================================================
 	"naga_siren_song_of_the_siren"
 	{
-		"MaxLevel"						"3"
-
 		"AbilityCastPoint"				"0.8 0.65 0.5"
-		
 		"AbilityCastRange"				"1250"
-
-		"AbilityCooldown"				"180 60 50"
+		"AbilityCooldown"				"140 100 60"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"radius"						"1250"
+				"radius"						"1250 1500 1750"
 			}
 			"02"
 			{
@@ -8906,7 +8899,7 @@
 	"oracle_fates_edict"
 	{
 		"AbilityCastRange"				"500 700 900 1100"
-		"AbilityCooldown"				"16 10 6 4"
+		"AbilityCooldown"				"16 13 10 7"
 
 		"AbilitySpecial"
 		{
@@ -9539,7 +9532,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"damage"						"150 300 450 600"
+				"damage"						"120 240 360 480"
 			}
 			"02"
 			{
@@ -13330,7 +13323,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"arc_damage"			"90 120 150 180"
+				"arc_damage"			"85 110 135 160"
 				"LinkedSpecialBonus"	"special_bonus_unique_zeus_2"
 			}
 			"02"
@@ -13439,7 +13432,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"damage_health_pct"			"4.5 8.5 11 12.0"
+				"damage_health_pct"			"4 6 8 10"
 				"LinkedSpecialBonus"		"special_bonus_unique_zeus"
 			}
 		}
@@ -13510,11 +13503,10 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"250 450 510"
+				"damage"				"250 350 450"
 			}
 		}
 	}
-
 	
 	//=================================================================================================================
 	// Zuus: +% damage to Static Field Talent
@@ -13579,19 +13571,6 @@
 			}
 		}
 	}
-	
-
-	
-
-
-
-	
-
-	
-
-	
-
-
 
 	//=================================================================================================================
 	//-----------------------------------------------------------------------------------------------------------------
@@ -13621,7 +13600,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"regen_rate"			"500"
+				"regen_rate"			"750"
 			}
 		}
 	}

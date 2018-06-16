@@ -158,6 +158,8 @@ function GameMode:OnFirstPlayerLoaded()
 		GameRules:GetGameModeEntity():SetCameraDistanceOverride(500) -- default: 1134
 	end
 
+	GameRules:GetGameModeEntity():SetPauseEnabled( false )
+
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Contributor models
 	-------------------------------------------------------------------------------------------------
@@ -1817,18 +1819,16 @@ function GameMode:OnThink()
 
 	for _, hero in pairs(HeroList:GetAllHeroes()) do
 		-- Make courier controllable, repeat every second to avoid uncontrollable issues
-		if USE_TEAM_COURIER then
-			if COURIER_TEAM then
-				if COURIER_TEAM[hero:GetTeamNumber()] and not COURIER_TEAM[hero:GetTeamNumber()]:IsControllableByAnyPlayer() then
-					COURIER_TEAM[hero:GetTeamNumber()]:SetControllableByPlayer(hero:GetPlayerID(), true)
-				end
+		if COURIER_TEAM then
+			if COURIER_TEAM[hero:GetTeamNumber()] and not COURIER_TEAM[hero:GetTeamNumber()]:IsControllableByAnyPlayer() then
+				COURIER_TEAM[hero:GetTeamNumber()]:SetControllableByPlayer(hero:GetPlayerID(), true)
 			end
-		else
-			if COURIER_PLAYER then
-				if COURIER_PLAYER[hero:GetPlayerID()] and not COURIER_PLAYER[hero:GetPlayerID()]:IsControllableByAnyPlayer() then
-					COURIER_PLAYER[hero:GetPlayerID()]:SetControllableByPlayer(hero:GetPlayerID(), true)
-					COURIER_PLAYER[hero:GetPlayerID()].owner_id = hero:GetPlayerID()
-				end
+		end
+
+		if COURIER_PLAYER then
+			if COURIER_PLAYER[hero:GetPlayerID()] and not COURIER_PLAYER[hero:GetPlayerID()]:IsControllableByAnyPlayer() then
+				COURIER_PLAYER[hero:GetPlayerID()]:SetControllableByPlayer(hero:GetPlayerID(), true)
+				COURIER_PLAYER[hero:GetPlayerID()].owner_id = hero:GetPlayerID()
 			end
 		end
 
