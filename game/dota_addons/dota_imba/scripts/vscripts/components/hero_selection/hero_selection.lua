@@ -365,7 +365,7 @@ function HeroSelection:SelectHero(playerId, hero)
 			LoadFinishEvent.broadcast()
 			print("UNPAUSE GAME!")
 --			PauseGame(false)
-			if GetMapName() ~= "cavern" then
+			if IsMutationMap() then
 				GameRules:GetGameModeEntity():SetPauseEnabled( true )
 --				CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(playerId), "send_mutations", IMBA_MUTATION) -- doesn't work for some players
 				CustomGameEventManager:Send_ServerToAllClients("send_mutations", IMBA_MUTATION)
