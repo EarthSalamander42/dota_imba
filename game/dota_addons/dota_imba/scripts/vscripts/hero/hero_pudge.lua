@@ -966,14 +966,33 @@ function imba_pudge_flesh_heap:GetAbilityTextureName()
 	return "custom/pudge_flesh_heap_arcana_style"..self:GetCaster().flesh_heap_icon
 end
 
-if modifier_imba_pudge_flesh_heap_handler == nil then modifier_imba_pudge_flesh_heap_handler = class({}) end
-
+modifier_imba_pudge_flesh_heap_handler = class({})
 function modifier_imba_pudge_flesh_heap_handler:IsHidden() return true end
+function modifier_imba_pudge_flesh_heap_handler:DeclareFunctions()
+	local decfuncs = {
+		MODIFIER_EVENT_ON_HERO_KILLED
+	}
+
+	return decfuncs
+end
+
+function modifier_imba_pudge_flesh_heap_handler:OnHeroKilled(params)
+	if IsServer() then
+		-- is it pudge who kills?
+		if params.unit:IsRealHero() and params.unit == self:GetCaster() and params.unit:GetTeam() == self:GetCaster():GetTeam() then
+			local current_stacks = self:GetStackCount()
+			if current_stacks < self.max_stacks then
+				self:SetStackCount(current_stacks + 1)
+			end
+		end
+	end
+end
 
 function modifier_imba_pudge_flesh_heap_handler:OnCreated()
 	if self:GetCaster():IsIllusion() then self:Destroy() return end
 
 	if IsServer() then
+		self.max_stacks = self:GetAbility():GetSpecialValueFor("max_stacks")
 		if self:GetCaster().pudge_arcana == nil then
 			self:SetStackCount(0)
 		else
@@ -998,7 +1017,8 @@ function modifier_imba_flesh_heap_stacks:RemoveOnDeath() return false end
 
 function modifier_imba_flesh_heap_stacks:OnCreated()
 	if IsServer() then
-		self:GetCaster():AddNewModifier(self:GetCaster(), nil, "modifier_imba_pudge_flesh_heap_handler", {})
+		local ability = self:GetCaster():FindAbilityByName("imba_pudge_flesh_heap") 
+		self:GetCaster():AddNewModifier(self:GetCaster(), ability, "modifier_imba_pudge_flesh_heap_handler", {})
 	end
 
 	self:StartIntervalThink(0.1)
@@ -1006,7 +1026,7 @@ end
 
 function modifier_imba_flesh_heap_stacks:OnIntervalThink()
 	if not IsServer() then return end
-	local buff = self:GetCaster():FindModifierByName("modifier_imba_pudge_flesh_heap_handle")
+	local buff = self:GetCaster():FindModifierByName("modifier_imba_pudge_flesh_heap_handler")
 	if not buff then return end
 	self:SetStackCount(buff:GetStackCount())
 end
