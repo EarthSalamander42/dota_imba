@@ -190,7 +190,7 @@ end
 
 function modifier_treasure_chest:ChooseTreasureRewards( hPlayerHero, hTreasureEnt )
 	if self.hRoom == nil then
-		print( "ChooseTreasureRewards - ERROR: self.hRoom is nil" )
+		log.debug( "ChooseTreasureRewards - ERROR: self.hRoom is nil" )
 		return
 	end
 
@@ -296,12 +296,12 @@ end
 function modifier_treasure_chest:CreateChickenDrop( nTreasureLevel, hPlayerHero, hTreasureEnt, nTotalGold )
 
 	if hTreasureEnt == nil then
-		print( "modifier_treasure_chest:CreateChickenDrop - ERROR: hTreasureEnt is nil" )
+		log.debug( "modifier_treasure_chest:CreateChickenDrop - ERROR: hTreasureEnt is nil" )
 		return
 	end
 
 	if hTreasureEnt:IsNull() then
-		print( "modifier_treasure_chest:CreateChickenDrop - ERROR: hTreasureEnt is null (deleted)" )
+		log.debug( "modifier_treasure_chest:CreateChickenDrop - ERROR: hTreasureEnt is null (deleted)" )
 		return
 	end
 
@@ -339,12 +339,12 @@ function modifier_treasure_chest:CreateTreasureItemDrop( nTreasureLevel, hPlayer
 	self.EventQueue:AddEvent( self.flSpawnTime, 
 	function(self, nTreasureLevel, hPlayerHero, hTreasureEnt, szItemName)
 		if hTreasureEnt == nil then
-			print( "modifier_treasure_chest:CreateTreasureItemDrop - ERROR: hTreasureEnt is nil" )
+			log.debug( "modifier_treasure_chest:CreateTreasureItemDrop - ERROR: hTreasureEnt is nil" )
 			return
 		end
 
 		if hTreasureEnt:IsNull() then
-			print( "modifier_treasure_chest:CreateTreasureItemDrop - ERROR: hTreasureEnt is null (deleted)" )
+			log.debug( "modifier_treasure_chest:CreateTreasureItemDrop - ERROR: hTreasureEnt is null (deleted)" )
 			return
 		end
 

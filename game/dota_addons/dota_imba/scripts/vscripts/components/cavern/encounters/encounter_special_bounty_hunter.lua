@@ -28,7 +28,7 @@ function encounter_special_bounty_hunter:Start()
 	local szUnitName = "npc_dota_statue_bounty_hunter"
 	local hUnit = self:SpawnNonCreepByName( szUnitName, vSpawnPoint, true, nil, nil, DOTA_TEAM_BADGUYS )
 	if hUnit == nil then
-		print( string.format( "encounter_special_shrine -- ERROR: Failed to spawn unit \"%s\"", szUnitName ) )
+		log.debug( string.format( "encounter_special_shrine -- ERROR: Failed to spawn unit \"%s\"", szUnitName ) )
 		return
 	end
 

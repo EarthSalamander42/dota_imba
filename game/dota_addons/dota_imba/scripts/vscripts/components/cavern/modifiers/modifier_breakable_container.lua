@@ -25,7 +25,7 @@ function modifier_breakable_container:OnCreated( kv )
 		self.hEncounter = self:GetParent().hEncounter -- unit was given this prior to modifier being added
 
 		if not self.hEncounter then
-			print( "modifier_breakable_container - ERROR: self.hEncounter is nil" )
+			log.debug( "modifier_breakable_container - ERROR: self.hEncounter is nil" )
 			self:Destroy()
 			return
 		end
@@ -33,7 +33,7 @@ function modifier_breakable_container:OnCreated( kv )
 		self.hRoom = self.hEncounter.hRoom
 
 		if not self.hRoom then
-			print( "modifier_breakable_container - ERROR: self.hRoom is nil" )
+			log.debug( "modifier_breakable_container - ERROR: self.hRoom is nil" )
 			self:Destroy()
 			return
 		end
@@ -211,33 +211,33 @@ function modifier_breakable_container:ChooseBreakableSurprise( hAttacker )
 	local fRandRoll = RandomFloat( 0, 1 )
 
 	--[[
-	print( "----------------------------------------" )
-	print( string.format( "fRandRoll: %.2f", fRandRoll ) )
-	print( string.format( "fCommonItemThreshold: %.2f", fCommonItemThreshold ) )
-	print( string.format( "fRareItemThreshold: %.2f", fRareItemThreshold ) )
-	print( string.format( "fGoldThreshold: %.2f", fGoldThreshold ) )
-	print( string.format( "fEnemyThreshold: %.2f", fEnemyThreshold ) )
+	log.debug( "----------------------------------------" )
+	log.debug( string.format( "fRandRoll: %.2f", fRandRoll ) )
+	log.debug( string.format( "fCommonItemThreshold: %.2f", fCommonItemThreshold ) )
+	log.debug( string.format( "fRareItemThreshold: %.2f", fRareItemThreshold ) )
+	log.debug( string.format( "fGoldThreshold: %.2f", fGoldThreshold ) )
+	log.debug( string.format( "fEnemyThreshold: %.2f", fEnemyThreshold ) )
 	]]
 
 	if fRandRoll >= fCommonItemThreshold then
 		self:CreateBreakableContainerCommonItemDrop( hAttacker )
-		--print( string.format( "fRandRoll (%.2f) >= fCommonItemThreshold (%.2f)", fRandRoll, fCommonItemThreshold ) )
+		--log.debug( string.format( "fRandRoll (%.2f) >= fCommonItemThreshold (%.2f)", fRandRoll, fCommonItemThreshold ) )
 		return
 	elseif fRandRoll >= fRareItemThreshold then
 		self:CreateBreakableContainerRareItemDrop( hAttacker )
-		--print( string.format( "fRandRoll (%.2f) >= fRareItemThreshold (%.2f)", fRandRoll, fRareItemThreshold ) )
+		--log.debug( string.format( "fRandRoll (%.2f) >= fRareItemThreshold (%.2f)", fRandRoll, fRareItemThreshold ) )
 		return
 	elseif fRandRoll >= fGoldThreshold then
-		--print( string.format( "fRandRoll (%.2f) >= fGoldThreshold (%.2f)", fRandRoll, fGoldThreshold ) )
+		--log.debug( string.format( "fRandRoll (%.2f) >= fGoldThreshold (%.2f)", fRandRoll, fGoldThreshold ) )
 		self:CreateBreakableContainerGoldDrop( hAttacker )
 		return
 	elseif fRandRoll >= fEnemyThreshold then
-		--print( string.format( "fRandRoll (%.2f) >= fEnemyThreshold (%.2f)", fRandRoll, fEnemyThreshold ) )
+		--log.debug( string.format( "fRandRoll (%.2f) >= fEnemyThreshold (%.2f)", fRandRoll, fEnemyThreshold ) )
 		self:CreateBreakableContainerEnemy( hAttacker )
 		return
 	else
 		-- Create nothing
-		--print( string.format( "breakable container didn't create anything, fRandRoll was %.2f", fRandRoll ) )
+		--log.debug( string.format( "breakable container didn't create anything, fRandRoll was %.2f", fRandRoll ) )
 	end
 end
 

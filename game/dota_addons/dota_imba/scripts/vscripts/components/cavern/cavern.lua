@@ -1,7 +1,7 @@
 
 --------------------------------------------------------------------------------
 
-print( "Cavern addon is booting up..." )
+log.debug( "Cavern addon is booting up..." )
 
 if CCavern == nil then
 	CCavern = class({})
@@ -57,7 +57,7 @@ end
 --------------------------------------------------------------------------------
 
 function CCavern:SetupGameEventListeners()
-	print( "CCavern:SetupGameEventListeners()" )
+	log.debug( "CCavern:SetupGameEventListeners()" )
 	ListenToGameEvent( "game_rules_state_change", Dynamic_Wrap( CCavern, 'OnGameRulesStateChange' ), self )
 	ListenToGameEvent( "dota_player_reconnected", Dynamic_Wrap( CCavern, 'OnPlayerReconnected' ), self )
 	ListenToGameEvent( "npc_spawned", Dynamic_Wrap( CCavern, "OnNPCSpawned" ), self )
@@ -75,7 +75,7 @@ end
 --------------------------------------------------------------------------------
 
 function CCavern:SetupEncounters()
-	print( "CCavern:SetupEncounters()" )
+	log.debug( "CCavern:SetupEncounters()" )
 	for _,Encounter in pairs ( g_Encounters ) do
 		require( string.format( "components/cavern/encounters.%s", Encounter ) )
 		local newEncounter = _G[Encounter]
@@ -95,7 +95,7 @@ end
 --------------------------------------------------------------------------------
 
 function CCavern:SetupRooms()
-	print( "CCavern:SetupRooms()" )
+	log.debug( "CCavern:SetupRooms()" )
 
 	-- clear out the gate array
 	CCavernGate.Reset()
@@ -111,7 +111,7 @@ function CCavern:SetupRooms()
 	for j=1,nRoomCount do
 		local hRoomVolume = Entities:FindByName( nil, "room_" .. j )
 		if hRoomVolume == nil then
-			print( "CCavern:SetupRooms - ERROR - No room volume found for room # " .. j )
+			log.debug( "CCavern:SetupRooms - ERROR - No room volume found for room # " .. j )
 			return
 		end
 
@@ -122,10 +122,10 @@ function CCavern:SetupRooms()
 	for _,Room in pairs( self.Rooms ) do
 		local hAntechamberVolume = Entities:FindByName( nil, "room_" .. Room:GetRoomID() .. "_ante" )
 		if hAntechamberVolume == nil then
-			--print( "CCavern:SetupRooms - ERROR - No antechamber volume found for room # " .. Room:GetRoomID() )
+			--log.debug( "CCavern:SetupRooms - ERROR - No antechamber volume found for room # " .. Room:GetRoomID() )
 		else
 			Room:SetAntechamberVolume( hAntechamberVolume )
-		--	print( "Assigning antechamber volume for room " .. Room:GetRoomID() )
+		--	log.debug( "Assigning antechamber volume for room " .. Room:GetRoomID() )
 		end
 		if Room:IsValidSpawnRoom() then
 			table.insert( ValidSpawnRooms, Room )
@@ -153,7 +153,7 @@ function CCavern:SetupRooms()
 		local nFirstSpawnTeamIdx = RandomInt( 1, #TeamsToSpawn )
 		
 		FirstSpawnRoom:SetTeamSpawnInRoom( TeamsToSpawn[nFirstSpawnTeamIdx] )
-		print( "Team " .. TeamsToSpawn[nFirstSpawnTeamIdx] .. " is set to spawn in room " .. FirstSpawnRoom:GetRoomID() )
+		log.debug( "Team " .. TeamsToSpawn[nFirstSpawnTeamIdx] .. " is set to spawn in room " .. FirstSpawnRoom:GetRoomID() )
 		table.remove( TeamsToSpawn, nFirstSpawnTeamIdx )
 	 --	self:BlockNeighborPathsBetweenSpawns( FirstSpawnRoom )
 	
@@ -167,8 +167,8 @@ function CCavern:SetupRooms()
 			nNextX = nNextXMax
 		end
 
-		--print( "Next X: " .. nNextX )
-		--print( "Next Y: " .. nNextY )
+		--log.debug( "Next X: " .. nNextX )
+		--log.debug( "Next Y: " .. nNextY )
 
 		local SecondSpawnRoom = nil
 		for _,TestSecondRoom in pairs ( self.Rooms ) do
@@ -179,7 +179,7 @@ function CCavern:SetupRooms()
 
 		local nSecondSpawnTeamIdx = RandomInt( 1, #TeamsToSpawn )
 		SecondSpawnRoom:SetTeamSpawnInRoom( TeamsToSpawn[nSecondSpawnTeamIdx] )
-		print( "Team " .. TeamsToSpawn[nSecondSpawnTeamIdx] .. " is set to spawn in room " .. SecondSpawnRoom:GetRoomID() )
+		log.debug( "Team " .. TeamsToSpawn[nSecondSpawnTeamIdx] .. " is set to spawn in room " .. SecondSpawnRoom:GetRoomID() )
 		table.remove( TeamsToSpawn, nSecondSpawnTeamIdx )
 	--	self:BlockNeighborPathsBetweenSpawns( SecondSpawnRoom )
 
@@ -210,7 +210,7 @@ function CCavern:SetupRooms()
 			SpawnRoom:SetTeamSpawnInRoom( nTeamID )
 			table.remove( RemainingSpawnRoomXs, nRandomRoomIdx )
 			table.remove( RemainingSpawnRoomYs, nRandomRoomIdx )
-			print( "Team " .. nTeamID .. " is set to spawn in room " .. SpawnRoom:GetRoomID() )
+			log.debug( "Team " .. nTeamID .. " is set to spawn in room " .. SpawnRoom:GetRoomID() )
 		--	self:BlockNeighborPathsBetweenSpawns( SpawnRoom )
 		end
 	else
@@ -221,12 +221,12 @@ function CCavern:SetupRooms()
 
 			for i = #ValidSpawnRooms,1,-1 do
 				if SpawnRoom == ValidSpawnRooms[i] then
-				--	print( "Team Spawn: Removing spawn room " .. SpawnRoom:GetRoomID() )
+				--	log.debug( "Team Spawn: Removing spawn room " .. SpawnRoom:GetRoomID() )
 					table.remove( ValidSpawnRooms, i )
 				end
 			end
 
-			print( "Team " .. nTeam .. " is set to spawn in room " .. SpawnRoom:GetRoomID() )
+			log.debug( "Team " .. nTeam .. " is set to spawn in room " .. SpawnRoom:GetRoomID() )
 			nTeamsSpawnPlacementRemaining = nTeamsSpawnPlacementRemaining - 1
 			
 			for nDir = CAVERN_PATH_DIR_NORTH,CAVERN_PATH_DIR_WEST do
@@ -234,7 +234,7 @@ function CCavern:SetupRooms()
 				if SpawnRoomNeighbor ~= nil then
 					for j = #ValidSpawnRooms,1,-1 do
 						if SpawnRoomNeighbor == ValidSpawnRooms[j] and #ValidSpawnRooms > nTeamsSpawnPlacementRemaining then
-						--	print( "Neighbor: Removing spawn room " .. SpawnRoomNeighbor:GetRoomID() )
+						--	log.debug( "Neighbor: Removing spawn room " .. SpawnRoomNeighbor:GetRoomID() )
 							table.remove( ValidSpawnRooms, j )
 						end
 					end
@@ -243,7 +243,7 @@ function CCavern:SetupRooms()
 						if SpawnRoomSecondNeighbor ~= nil then
 							for k = #ValidSpawnRooms,1,-1 do
 								if SpawnRoomSecondNeighbor == ValidSpawnRooms[k] and RandomInt( 0, 4 ) ~= 0 and #ValidSpawnRooms > nTeamsSpawnPlacementRemaining then
-								--	print( "Second Neighbor: Removing spawn room " .. SpawnRoomSecondNeighbor:GetRoomID() )
+								--	log.debug( "Second Neighbor: Removing spawn room " .. SpawnRoomSecondNeighbor:GetRoomID() )
 									SpawnRoomNeighbor:SetPath( nDir2, CAVERN_PATH_TYPE_DESTRUCTIBLE )
 									SpawnRoomSecondNeighbor:SetPath( CAVERN_PATH_OPPOSITES[nDir2], CAVERN_PATH_TYPE_DESTRUCTIBLE )
 									table.remove( ValidSpawnRooms, k )
@@ -396,7 +396,7 @@ function CCavern:GenerateRoomTypes( Room )
 		end
 	else
 		local RoomType = CAVERN_ROOM_TYPE_MOB
-		--print( "there are " .. self.TrapsPerDepth[Room:GetDepth()]  .. " traps remaining at depth " .. Room:GetDepth() )
+		--log.debug( "there are " .. self.TrapsPerDepth[Room:GetDepth()]  .. " traps remaining at depth " .. Room:GetDepth() )
 		if self.TrapsPerDepth[Room:GetDepth()] > 0 then
 			local nRoll = RandomInt( 0, 4 )
 			if nRoll == 0 then
@@ -448,14 +448,14 @@ end
 
 function CCavern:GeneratePaths( Room )
 	local nRoomID = Room:GetRoomID()
-	--print( "Generating Paths for Room " .. nRoomID )
+	--log.debug( "Generating Paths for Room " .. nRoomID )
 	local nRoomHorizontalPos = nRoomID % CAVERN_GRID_WIDTH
 	if nRoomHorizontalPos == 0 then
 		nRoomHorizontalPos = CAVERN_GRID_WIDTH
 	end
 	local nRoomVerticalPos = math.ceil( nRoomID / CAVERN_GRID_HEIGHT )
 	Room:SetRoomXY( nRoomHorizontalPos, nRoomVerticalPos )
-	--print( "( " .. nRoomHorizontalPos .. ", " .. nRoomVerticalPos .. " )" )
+	--log.debug( "( " .. nRoomHorizontalPos .. ", " .. nRoomVerticalPos .. " )" )
 
 	local nCavernHallOpenWeightBonus = 0
 	if Room.nRoomType == CAVERN_ROOM_TYPE_TRAP then
@@ -499,28 +499,28 @@ function CCavern:GeneratePaths( Room )
 	local NorthRoom = self.Rooms[nRoomID - CAVERN_GRID_WIDTH]
 	if NorthRoom ~= nil then
 		if NorthRoom:ArePathsGenerated() and Room:GetPath( CAVERN_PATH_DIR_NORTH ) == CAVERN_PATH_TYPE_INVALID then
-			--print( "Inheriting north path from north neighbor" )
+			--log.debug( "Inheriting north path from north neighbor" )
 			Room:SetPath( CAVERN_PATH_DIR_NORTH, NorthRoom:GetPath( CAVERN_PATH_DIR_SOUTH ) )
 		end
 	end
 	local SouthRoom = self.Rooms[nRoomID + CAVERN_GRID_WIDTH]
 	if SouthRoom ~= nil then
 		if SouthRoom:ArePathsGenerated() and Room:GetPath( CAVERN_PATH_DIR_SOUTH ) == CAVERN_PATH_TYPE_INVALID then	
-			--print( "Inheriting south path from south neighbor" )	
+			--log.debug( "Inheriting south path from south neighbor" )	
 			Room:SetPath( CAVERN_PATH_DIR_SOUTH, SouthRoom:GetPath( CAVERN_PATH_DIR_NORTH ) )
 		end
 	end
 	local WestRoom = self.Rooms[nRoomID - 1]
 	if WestRoom ~= nil and nRoomHorizontalPos ~= 1 then
 		if WestRoom:ArePathsGenerated() and Room:GetPath( CAVERN_PATH_DIR_WEST ) == CAVERN_PATH_TYPE_INVALID then
-			--print( "Inheriting west path from west neighbor" )			
+			--log.debug( "Inheriting west path from west neighbor" )			
 			Room:SetPath( CAVERN_PATH_DIR_WEST, WestRoom:GetPath( CAVERN_PATH_DIR_EAST ) )
 		end
 	end
 	local EastRoom = self.Rooms[nRoomID + 1]
 	if EastRoom ~= nil  and nRoomHorizontalPos ~= CAVERN_GRID_WIDTH  then
 		if EastRoom:ArePathsGenerated() and Room:GetPath( CAVERN_PATH_DIR_EAST ) == CAVERN_PATH_TYPE_INVALID then
-			--print( "Inheriting east path from east neighbor" )				
+			--log.debug( "Inheriting east path from east neighbor" )				
 			Room:SetPath( CAVERN_PATH_DIR_EAST, EastRoom:GetPath( CAVERN_PATH_DIR_WEST ) )
 		end
 	end
@@ -565,7 +565,7 @@ function CCavern:GeneratePaths( Room )
 	end 
 
 	if bRoomPassable == false then
-		print( "WARNING: An impassable room has been generated!" )
+		log.debug( "WARNING: An impassable room has been generated!" )
 	end
 	Room:SetPathsGenerated( true )
 end
@@ -646,7 +646,7 @@ end
 
 function CCavern:GenerateEncounters( Room )
 	if Room:GetRoomLevel() == CAVERN_ROOM_DIFFICULTY_INVALID then
-		print( "ERROR - Room has invalid difficulty!" )
+		log.debug( "ERROR - Room has invalid difficulty!" )
 		self:PrintRoomDebug( "", Room:GetRoomID() )
 	end
 
@@ -724,7 +724,7 @@ end
 --------------------------------------------------------------------------------
 
 function CCavern:AssignTeams()
-	print( "Assigning teams.. " )
+	log.debug( "Assigning teams.. " )
 
 	if PlayerResource:HaveAllPlayersJoined() then	
 
@@ -739,7 +739,7 @@ function CCavern:AssignTeams()
 				-- In the future, we'll receive our team assignments before hand from the GC, so parties who entered together will be on the same team.
 				local nTeamPlayerCount = PlayerResource:GetPlayerCountForTeam( nCurTeam )
 				if not bAssigned and nTeamPlayerCount < CAVERN_PLAYERS_PER_TEAM  then
-					print( PlayerResource:GetPlayerName( nPlayerID )  .. " (" .. nPlayerID .. ") is being assigned to team ID " .. nCurTeam )
+					log.debug( PlayerResource:GetPlayerName( nPlayerID )  .. " (" .. nPlayerID .. ") is being assigned to team ID " .. nCurTeam )
 					PlayerResource:SetCustomTeamAssignment( nPlayerID, nCurTeam )
 					bAssigned = true
 					nTeamPlayerCount = nTeamPlayerCount + 1
@@ -750,7 +750,7 @@ function CCavern:AssignTeams()
 			end
 
 			if not bAssigned then
-				print( "Something went horribly wrong in assigning " .. PlayerResource:GetPlayerName( nPlayerID ) .. ", playerID " .. nPlayerID .. " !" )
+				log.debug( "Something went horribly wrong in assigning " .. PlayerResource:GetPlayerName( nPlayerID ) .. ", playerID " .. nPlayerID .. " !" )
 			end
 		end
 	end
@@ -958,7 +958,7 @@ end
 --------------------------------------------------------------------------------
 
 function CCavern:PrintGameReport()
-	print( TableLength(self.LivingHeroes) .. " players alive on " .. TableLength(self.LivingTeams) .. " teams." )
+	log.debug( TableLength(self.LivingHeroes) .. " players alive on " .. TableLength(self.LivingTeams) .. " teams." )
 	for _,Team in pairs( self.LivingTeams ) do 
 		PrintTable( Team, " " )
 	end
@@ -967,19 +967,19 @@ end
 --------------------------------------------------------------------------------
 
 function CCavern:PrintRoomDebugGrid()
-	print( "\n" )
-	print( "===========================================================================")
-	print( "Map of " .. #self.Rooms .. " rooms" )
+	log.debug( "\n" )
+	log.debug( "===========================================================================")
+	log.debug( "Map of " .. #self.Rooms .. " rooms" )
 	self:PrintRoomReport()
-	print( "Legend:" )
-	print( "Mobs: " .. self:GetStringForDebugGridRoomType( CAVERN_ROOM_TYPE_MOB ) )
-	print( "Trap: " .. self:GetStringForDebugGridRoomType( CAVERN_ROOM_TYPE_TRAP ) )
-	print( "Treasure: " .. self:GetStringForDebugGridRoomType( CAVERN_ROOM_TYPE_TREASURE ) )
-	print( "Team Spawn: " .. self:GetStringForDebugGridRoomType( CAVERN_ROOM_TYPE_TEAM_SPAWN ) )
-	print( "Special: " .. self:GetStringForDebugGridRoomType( CAVERN_ROOM_TYPE_SPECIAL ) )
-	print( "Roshan:"  .. self:GetStringForDebugGridRoomType( CAVERN_ROOM_TYPE_ROSHAN ) )
-	print( "Destroyed: " ..  self:GetStringForDebugGridRoomType( CAVERN_ROOM_TYPE_DESTROYED ) )
-	print( "Destructible hallway: " .. self:GetStringForDebugGridPathType( CAVERN_PATH_DIR_EAST, CAVERN_PATH_TYPE_DESTRUCTIBLE ) .. " or " .. self:GetStringForDebugGridPathType( CAVERN_PATH_DIR_NORTH, CAVERN_PATH_TYPE_DESTRUCTIBLE ) )
+	log.debug( "Legend:" )
+	log.debug( "Mobs: " .. self:GetStringForDebugGridRoomType( CAVERN_ROOM_TYPE_MOB ) )
+	log.debug( "Trap: " .. self:GetStringForDebugGridRoomType( CAVERN_ROOM_TYPE_TRAP ) )
+	log.debug( "Treasure: " .. self:GetStringForDebugGridRoomType( CAVERN_ROOM_TYPE_TREASURE ) )
+	log.debug( "Team Spawn: " .. self:GetStringForDebugGridRoomType( CAVERN_ROOM_TYPE_TEAM_SPAWN ) )
+	log.debug( "Special: " .. self:GetStringForDebugGridRoomType( CAVERN_ROOM_TYPE_SPECIAL ) )
+	log.debug( "Roshan:"  .. self:GetStringForDebugGridRoomType( CAVERN_ROOM_TYPE_ROSHAN ) )
+	log.debug( "Destroyed: " ..  self:GetStringForDebugGridRoomType( CAVERN_ROOM_TYPE_DESTROYED ) )
+	log.debug( "Destructible hallway: " .. self:GetStringForDebugGridPathType( CAVERN_PATH_DIR_EAST, CAVERN_PATH_TYPE_DESTRUCTIBLE ) .. " or " .. self:GetStringForDebugGridPathType( CAVERN_PATH_DIR_NORTH, CAVERN_PATH_TYPE_DESTRUCTIBLE ) )
 
 	local nCurRoom = 1
 	local nCurRow = 0
@@ -1015,7 +1015,7 @@ function CCavern:PrintRoomDebugGrid()
 
 		nRoomPhase = nRoomPhase + 1
 		
-		print( table.concat( str_table ) )
+		log.debug( table.concat( str_table ) )
 		str_table = {}
 		if nRoomPhase > 7 then
 			nRoomPhase = 1	
@@ -1024,7 +1024,7 @@ function CCavern:PrintRoomDebugGrid()
 	end
 
 
-	print( table.concat( str_table ) )
+	log.debug( table.concat( str_table ) )
 end
 
 --------------------------------------------------------------------------------
@@ -1163,7 +1163,7 @@ function CCavern:PrintRoomReport()
 				nCount = nCount + 1
 			end
 		end
-		print( self:GetStringForRoomDebugRoomType( i ) .. ": " .. nCount )
+		log.debug( self:GetStringForRoomDebugRoomType( i ) .. ": " .. nCount )
 	end 
 end
 
@@ -1176,38 +1176,38 @@ function CCavern:PrintRoomDebug( cmdName, nRoomID )
 		return
 	end
 
-	print( "RoomID: " .. Room:GetRoomID() )
-	print( "Room Type: " .. self:GetStringForRoomDebugRoomType( Room:GetRoomType() ) )
-	print( "North Path: " .. self:GetStringForRoomDebugPathType( Room:GetPath( CAVERN_PATH_DIR_NORTH ) ) )
+	log.debug( "RoomID: " .. Room:GetRoomID() )
+	log.debug( "Room Type: " .. self:GetStringForRoomDebugRoomType( Room:GetRoomType() ) )
+	log.debug( "North Path: " .. self:GetStringForRoomDebugPathType( Room:GetPath( CAVERN_PATH_DIR_NORTH ) ) )
 	NorthRoom = Room:GetNeighboringRoom( CAVERN_PATH_DIR_NORTH )
 	if NorthRoom == nil then
-		print( "North Neighbor: none" )
+		log.debug( "North Neighbor: none" )
 	else
-		print( "North Neighbor: " .. NorthRoom:GetRoomID() )
+		log.debug( "North Neighbor: " .. NorthRoom:GetRoomID() )
 	end
 	
-	print( "South Path: " .. self:GetStringForRoomDebugPathType( Room:GetPath( CAVERN_PATH_DIR_SOUTH ) ) )
+	log.debug( "South Path: " .. self:GetStringForRoomDebugPathType( Room:GetPath( CAVERN_PATH_DIR_SOUTH ) ) )
 	SouthRoom = Room:GetNeighboringRoom( CAVERN_PATH_DIR_SOUTH )
 	if SouthRoom == nil then
-		print( "South Neighbor: none" )
+		log.debug( "South Neighbor: none" )
 	else
-		print( "South Neighbor: " .. SouthRoom:GetRoomID() )
+		log.debug( "South Neighbor: " .. SouthRoom:GetRoomID() )
 	end
 	
-	print( "East Path: " .. self:GetStringForRoomDebugPathType( Room:GetPath( CAVERN_PATH_DIR_EAST ) ) )
+	log.debug( "East Path: " .. self:GetStringForRoomDebugPathType( Room:GetPath( CAVERN_PATH_DIR_EAST ) ) )
 	EastRoom = Room:GetNeighboringRoom( CAVERN_PATH_DIR_EAST )
 	if EastRoom == nil then
-		print( "East Neighbor: none" )
+		log.debug( "East Neighbor: none" )
 	else
-		print( "East Neighbor: " .. EastRoom:GetRoomID() )
+		log.debug( "East Neighbor: " .. EastRoom:GetRoomID() )
 	end
 	
-	print( "West Path: " .. self:GetStringForRoomDebugPathType( Room:GetPath( CAVERN_PATH_DIR_WEST ) ) )
+	log.debug( "West Path: " .. self:GetStringForRoomDebugPathType( Room:GetPath( CAVERN_PATH_DIR_WEST ) ) )
 	WestRoom = Room:GetNeighboringRoom( CAVERN_PATH_DIR_WEST )
 	if WestRoom == nil then
-		print( "West Neighbor: none" )
+		log.debug( "West Neighbor: none" )
 	else
-		print( "West Neighbor: " .. WestRoom:GetRoomID() )
+		log.debug( "West Neighbor: " .. WestRoom:GetRoomID() )
 	end
 	
 end
@@ -1297,7 +1297,7 @@ function CCavern:cavern_teleport_to_room( cmdName, szRoomNumber )
 	-- find the trigger volume
 	local hRoomVolume = Entities:FindByName( nil, "room_" .. szRoomNumber )
 	if hRoomVolume == nil then
-		print( "CCavern:TeleportToRoom - ERROR - No room volume found for room # " .. szRoomNumber )
+		log.debug( "CCavern:TeleportToRoom - ERROR - No room volume found for room # " .. szRoomNumber )
 		return
 	end
 
@@ -1404,7 +1404,7 @@ end
 -- End Con Commands
 
 function CCavern:InitCavern()
-	print( "CCavern:InitGameMode()" )
+	log.debug( "CCavern:InitGameMode()" )
 
 	self.m_TeamColors = {}
 	self.m_TeamColors[DOTA_TEAM_CUSTOM_1] = { 243, 201, 9 }		--		Yellow
@@ -1483,5 +1483,5 @@ end
 
 --------------------------------------------------------------------------------
 
-print( "Activating Cavern game mode..." )
+log.debug( "Activating Cavern game mode..." )
 CCavern:InitCavern()

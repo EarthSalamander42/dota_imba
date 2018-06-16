@@ -106,7 +106,7 @@ end
 
 function modifier_creature_bonus_chicken:TeleportOut()
 
-	--print("chicken teleporting out!")
+	--log.debug("chicken teleporting out!")
 	self:GetParent():ForceKill( false )
 
 	--[[

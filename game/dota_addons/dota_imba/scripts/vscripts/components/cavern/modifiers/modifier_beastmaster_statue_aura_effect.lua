@@ -61,7 +61,7 @@ function modifier_beastmaster_statue_aura_effect:CreateAlliedUnitForPlayerHero( 
 		local szRandomCompanion = CompanionAnimals[ RandomInt( 1, #CompanionAnimals ) ]
 		local hUnit = CreateUnitByName( szRandomCompanion, hPlayerHero:GetAbsOrigin(), true, nil, nil, hPlayerHero:GetTeamNumber() )
 		if hUnit == nil then
-			print( string.format( "modifier_beastmaster_statue_aura_effect -- ERROR: Failed to spawn unit named \"%s\"", szRandomCompanion ) )
+			log.debug( string.format( "modifier_beastmaster_statue_aura_effect -- ERROR: Failed to spawn unit named \"%s\"", szRandomCompanion ) )
 			return
 		end
 
