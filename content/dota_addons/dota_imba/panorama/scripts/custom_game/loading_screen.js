@@ -3,8 +3,13 @@
 var view = {
 	title: $("#imba-loading-title-text"),
 	text: $("#imba-loading-content-text"),
-	map: $("#imba-loading-map-text")
+	map: $("#imba-loading-map-text"),
+	link: $("#imba-loading-link"),
+	link_text:  $("#imba-loading-link-text")
 };
+
+var link_targets = "";
+
 function ucwords (str) {
 	return (str + '').replace(/^(.)|\s+(.)/g, function ($1) {
 		return $1.toUpperCase();
@@ -29,9 +34,7 @@ function fetch() {
 	
 	var mapInfo = Game.GetMapInfo();
 	var map_name = ucwords(mapInfo.map_display_name.replace('_', " "));
-
-	$.Msg(mapInfo);
-
+ 
 	api.resolve_map_name(mapInfo.map_display_name).then(function (data) {
 		$.Msg(data);
 		$.Msg("hello!");
@@ -44,16 +47,21 @@ function fetch() {
 	view.map.text = map_name;
 
 	api.loading_screen().then(function (data) {
+		
 		var lang = $.Language();
 		var rdata = data.languages["en"];
+
 		if (data.languages[lang] !== undefined)
 			rdata = data.languages["en"];
 
 		view.title.text = rdata.title;
 		view.text.text = rdata.text;
-		
-		$.Msg(rdata);
+		view.link_text.text = rdata.link_text;
 
+		view.link.SetPanelEvent("onactivate", function() {
+			$.DispatchEvent("DOTADisplayURL", rdata.link_value || "");
+		});
+		
 	}).catch(function (reason) {
 		$.Msg("Loading Loading screen information failed");
 		$.Msg(reason);
@@ -62,10 +70,9 @@ function fetch() {
 	});
 
 	var player_info = Game.GetPlayerInfo(Game.GetLocalPlayerID());
-	$.Msg(player_info.player_steamid);
 	
 	api.player_info(player_info.player_steamid).then(function (data) {
-		$.Msg(data);
+		// TODO: do sth with the data
 	}).catch(function (reason) {
 		$.Msg("Loading player info for loading screen failed!")
 		$.Msg(reason);
