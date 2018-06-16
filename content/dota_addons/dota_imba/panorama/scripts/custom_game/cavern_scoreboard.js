@@ -139,7 +139,7 @@ $.Schedule(1.0, HideScoreboard)
 
 function HideScoreboard() {
 	if (Game.GetMapInfo().map_display_name == "cavern") {
-	
+		return;
 	} else {
 		// .CavernTopBar
 		$.GetContextPanel().style.visibility = "collapse";

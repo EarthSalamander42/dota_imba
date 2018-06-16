@@ -232,7 +232,7 @@
 
 #TeamsContainer
 {
-	width: 375px;
+	width: 405px;
 	height: 790px;
 	background-color: black;
 	horizontal-align: left;
@@ -265,7 +265,7 @@
 
 .KillsHeader
 {
-	margin-left: 105px;
+	margin-left: 155px;
 }
 
 .EliminationsHeader
@@ -371,7 +371,7 @@
 .PlayerName
 {
 	color: white;
-	width: 170px;
+	width: 223px;
 	text-align: left;
 	text-shadow: 1px 1px 2px 2.0 #00000011;
 	text-overflow: clip;

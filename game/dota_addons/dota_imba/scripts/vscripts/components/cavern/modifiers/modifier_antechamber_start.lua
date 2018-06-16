@@ -3,8 +3,8 @@ modifier_antechamber_start = class({})
 
 --------------------------------------------------------------------------------
 
-function modifier_antechamber_start:GetAbilityTextureName()
-	return "silencer_last_word" -- doesn't work
+function modifier_antechamber_start:GetTexture()
+	return "silencer_last_word"
 end
 
 --------------------------------------------------------------------------------

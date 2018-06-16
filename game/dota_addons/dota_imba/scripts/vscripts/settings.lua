@@ -436,6 +436,8 @@ BANNED_ITEMS["cavern"] = {
 	"item_smoke_of_deceit",
 	"item_tome_of_knowledge",
 	"item_tpscroll",
+	"item_imba_blink",
+	"item_imba_blink_boots",
 }
 
 REMAINING_GOODGUYS = 0														-- Remaining players on Radiant

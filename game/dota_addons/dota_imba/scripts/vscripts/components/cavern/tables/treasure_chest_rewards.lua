@@ -74,7 +74,6 @@ _G.TreasureChestItemRewards =
 		"item_imba_aether_lens",
 		"item_glimmer_cape",
 		"item_imba_ancient_janggo",
-		"item_imba_blink",
 		"item_imba_force_staff",
 		"item_imba_hood_of_defiance",
 		"item_imba_mask_of_madness",

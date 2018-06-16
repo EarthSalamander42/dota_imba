@@ -243,8 +243,11 @@ end
 function CCavernRoshan:RoshanThink()
 	local now = GameRules:GetGameTime()
 	if now < CAVERN_ROSHAN_UNKNOWN_EARLY_GAME_TIME then
+		Notifications:TopToAll({text = "ROSHAN STOP THINK!!!", duration = 1.0})
 		return
 	end
+	
+	log.debug("RoshanThink: 1")
 
 	local netTable = {}
 	local nMoveDir = self.nNextMoveDir
@@ -261,6 +264,8 @@ function CCavernRoshan:RoshanThink()
 	end
 	CustomNetTables:SetTableValue( "rosh_tracker", string.format( "%d", 0 ), netTable )
 
+	log.debug("RoshanThink: 2")
+	
 	if now > CAVERN_ROSHAN_SPAWN_DELAY and self.hRoshan == nil then
 		self:CreateRoshan()
 	end
@@ -269,6 +274,7 @@ function CCavernRoshan:RoshanThink()
 		return
 	end
 
+	log.debug("RoshanThink: 3")
 
 	if self.bMoveInProgress then
 		if self.TargetRoom ~= nil then
@@ -302,13 +308,19 @@ function CCavernRoshan:RoshanThink()
 			end
 		end	
 	end
+	
+	log.debug("RoshanThink: 4")
 
 	local flTimeLeft = self.flNextMoveTime - now 
 	if flTimeLeft < 31 and self.bMoveWarned == false then
 		self:WarnOfImpendingMove()
 	end
+	
+	log.debug("RoshanThink: 5")
 
 	if now >= self.flNextMoveTime then
 		self:BeginMove()		
 	end
+	
+	log.debug("RoshanThink: 6")
 end

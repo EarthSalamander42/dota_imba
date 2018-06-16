@@ -753,10 +753,6 @@ function CCavern:AssignTeams()
 				print( "Something went horribly wrong in assigning " .. PlayerResource:GetPlayerName( nPlayerID ) .. ", playerID " .. nPlayerID .. " !" )
 			end
 		end
-
-		if self.bFillWithBots == true then
-			GameRules:BotPopulate()
-		end
 	end
 end
 
@@ -774,7 +770,7 @@ end
 --------------------------------------------------------------------------------
 
 function CCavern:CheckForDefeat()
-
+	log.debug("CheckForDefeat: 1")
 	if self.GameOver == true then
 		return
 	end
@@ -809,6 +805,8 @@ function CCavern:CheckForDefeat()
 			end
 		end
 
+		log.debug("CheckForDefeat: 2")
+
 		-- To add: Rooms explored, encounters (and type) completed
 		if nTeamHeroes > 0 then
 			local TeamData = {}
@@ -826,10 +824,14 @@ function CCavern:CheckForDefeat()
 		end
 	end
 
+	log.debug("CheckForDefeat: 3")
+
 	for TeamID,TeamData in pairs(self.Teams) do
 		TeamData["HeroesRemaining"] = TableLength(self.LivingHeroes)
 		TeamData["EnemyHeroesRemaining"] = TableLength(self.LivingHeroes) - TeamData["TeamHeroesAlive"]
 	end
+
+	log.debug("CheckForDefeat: 4")
 
 	for PlayerID,Hero in pairs(self.Heroes) do
 		if not Hero:HasOwnerAbandoned() then
@@ -839,6 +841,8 @@ function CCavern:CheckForDefeat()
 			end
 		end
 	end
+
+	log.debug("CheckForDefeat: 5")
 
 	for nPlayerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
 		local PlayerHero = PlayerResource:GetSelectedHeroEntity( nPlayerID ) 
@@ -858,8 +862,10 @@ function CCavern:CheckForDefeat()
 		end
 	end
 
+	log.debug("CheckForDefeat: 6")
+
 	-- if you're competing against others, then it's last team standing
---	Notifications:TopToAll({text = "Teams alive: "..TableLength( self.Teams ), duration = 1.0})
+	Notifications:TopToAll({text = "Teams alive: "..TableLength( self.Teams ), duration = 1.0})
 
 	if TableLength( self.Teams ) > 1 then
 		--printf("checking multiplayer victory condition: Teams %d, LivingTeams: %d", TableLength(self.Teams), TableLength(self.LivingTeams) )
@@ -898,11 +904,15 @@ function CCavern:CheckForDefeat()
 		end
 	end
 
+	log.debug("CheckForDefeat: 7")
+
 	--CustomNetTables:SetTableValue
 	if GameRules:GetGameTime() > self.flNextGameReportTime then
 		self.flNextGameReportTime = GameRules:GetGameTime() + CAVERN_GAME_REPORT_INTERVAL
 		--self:PrintGameReport()
 	end
+
+	log.debug("CheckForDefeat: 8")
 end
 
 --------------------------------------------------------------------------------
@@ -1332,30 +1342,14 @@ function CCavern:cavern_scratch( cmdName, nPlayerID )
 end
 
 function CCavern:OnThink()
---	Notifications:TopToAll({text = "OnThink: Running...", duration = 1.0})
+	Notifications:TopToAll({text = "OnThink: Running...", duration = 1.0})
 
 	for nPlayerID = 0, ( DOTA_MAX_TEAM_PLAYERS - 1 ) do
 		self:UpdatePlayerColor( nPlayerID )
 	end
 
-	if GameRules:State_Get() >= DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then	
+	if GameRules:State_Get() >= DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
 		self.Roshan:RoshanThink()
-
-		if self.bFillWithBots == true then
-			for nPlayerID = 0, ( DOTA_MAX_TEAM_PLAYERS - 1 ) do
-				if PlayerResource:IsFakeClient( nPlayerID ) then
-					local hHero = PlayerResource:GetSelectedHeroEntity( nPlayerID )
-					if hHero ~= nil then
-						ExecuteOrderFromTable({
-							UnitIndex = hHero:entindex(),
-							OrderType = DOTA_UNIT_ORDER_ATTACK_MOVE,
-							Position = Vector( 0, 0, 0 )
-						})
-					end
-				end
-			end
-		end
-
 		self:CheckForDefeat()
 	end
 end

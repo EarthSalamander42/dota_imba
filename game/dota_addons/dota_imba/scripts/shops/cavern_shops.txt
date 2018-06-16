@@ -68,7 +68,6 @@
 		"item"		"item_imba_morbid_mask"
 		"item"		"item_shadow_amulet"
 		"item"		"item_ghost"
-		"item"		"item_imba_blink"
 		"item"		"item_imba_shotgun"
 	}
 	
@@ -88,7 +87,6 @@
 		"item"		"item_travel_boots"
 		"item"		"item_imba_nether_wand"
 		"item"		"item_ultimate_scepter"
-		"item"		"item_imba_blink_boots"
 	}
 
 	// Level 2 - Blue Recipes
@@ -205,7 +203,6 @@
 		"item"		"item_imba_morbid_mask"
 		"item"		"item_helm_of_iron_will"
 		"item"		"item_energy_booster"
-		"item"		"item_imba_blink"
 	}
 
 	"sideshop2"
