@@ -29,6 +29,8 @@ LinkLuaModifier("modifier_imba_wisp_tether_latch", "hero/hero_wisp.lua", LUA_MOD
 LinkLuaModifier("modifier_imba_wisp_tether_slow", "hero/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_wisp_tether_slow_immune", "hero/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_wisp_tether_ally_attack", "hero/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_wisp_swap_spirits", "hero/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
+
 function imba_wisp_tether:GetCustomCastErrorTarget(target)
 	if target == self:GetCaster() then
 		return "dota_hud_error_cant_cast_on_self"
@@ -169,15 +171,13 @@ function modifier_imba_wisp_tether:OnManaGained(keys)
 	if keys.unit == self:GetParent() then
 		local manaGained = self:GetCaster():GetMana() - self:GetCaster().tether_lastMana
 
-		if manaGained < 0 then
-			return
+		if manaGained > 0 then
+			--print(manaGained, self:GetCaster().tether_lastMana)
+
+			self.target:GiveMana(manaGained * self.tether_heal_amp)
+			self:GetCaster().tether_lastMana = self:GetCaster():GetMana()
+			SendOverheadEventMessage(nil, OVERHEAD_ALERT_MANA_ADD, self.target, manaGained * self.tether_heal_amp, nil)
 		end
-
-		--print(manaGained, self:GetCaster().tether_lastMana)
-
-		self.target:GiveMana(manaGained * self.tether_heal_amp)
-		self:GetCaster().tether_lastMana = self:GetCaster():GetMana()
-		SendOverheadEventMessage(nil, OVERHEAD_ALERT_MANA_ADD, self.target, manaGained * self.tether_heal_amp, nil)
 	end
 end
 
@@ -213,6 +213,14 @@ end
 modifier_imba_wisp_tether_ally = class({})
 function modifier_imba_wisp_tether_ally:IsHidden() return false end
 function modifier_imba_wisp_tether_ally:IsPurgable() return false end
+
+function modifier_imba_wisp_tether_ally:DeclareFunctions()
+	local decFuncs = {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
+	}
+
+	return decFuncs
+end
 
 function modifier_imba_wisp_tether_ally:OnCreated()
 	if IsServer() then
@@ -308,6 +316,10 @@ function imba_wisp_tether:OnProjectileHit_ExtraData(target, location, ExtraData)
 		-- We store the enemy unit to the hashset, so we can check whether the unit has got debuff already later on.
 		--self:GetAbility().tether_slowedUnits[target] = true
 	end
+end
+
+function modifier_imba_wisp_tether_ally:GetModifierMoveSpeedBonus_Percentage()
+	return self:GetAbility():GetSpecialValueFor("movespeed")
 end
 
 function modifier_imba_wisp_tether_ally:OnRemoved() 
@@ -549,6 +561,15 @@ function modifier_imba_wisp_spirits:OnCreated(params)
 		self.slow_duration				= params.slow_duration
 		self.slow 						= params.slow
 
+		local swap_spirits = self:GetAbility():GetCaster():FindAbilityByName("imba_wisp_swap_spirits")
+		if swap_spirits:GetToggleState() == true then
+			self.particle = "particles/units/heroes/hero_wisp/wisp_guardian_disarm.vpcf"
+			self:GetAbility():GetCaster().spirit_debuff = 1
+		else
+			self.particle = "particles/units/heroes/hero_wisp/wisp_guardian_silence.vpcf"
+			self:GetAbility():GetCaster().spirit_debuff = 0
+		end
+
 		EmitSoundOn("Hero_Wisp.Spirits.Loop", self:GetCaster())	
 
 		self:StartIntervalThink(0.03)
@@ -576,7 +597,7 @@ function modifier_imba_wisp_spirits:OnIntervalThink()
 			end
 
 			-- Create particle FX
-			local pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_wisp/wisp_guardian_.vpcf", PATTACH_ABSORIGIN_FOLLOW, newSpirit)
+			local pfx = ParticleManager:CreateParticle(self.particle, PATTACH_ABSORIGIN_FOLLOW, newSpirit)
 			newSpirit.spirit_pfx = pfx
 
 			-- Update the state
@@ -682,6 +703,13 @@ function modifier_imba_wisp_spirits:OnHit(caster, spirit, enemies_hit, creep_dam
 		if enemy:IsHero() then
 			enemy:AddNewModifier(caster, ability, "modifier_imba_wisp_spirits_hero_hit", {duration = 0.03, slow_duration = slow_duration, slow = slow})
 			damage_table.damage	= hero_damage
+
+			if caster.spirit_debuff == 1 then
+				enemy:AddNewModifier(caster, ability, "modifier_disarmed", {duration=ability:GetSpecialValueFor("spirit_debuff_duration")})
+			else
+				enemy:AddNewModifier(caster, ability, "modifier_silence", {duration=ability:GetSpecialValueFor("spirit_debuff_duration")})
+			end
+
 			hit_hero = true
 		else
 			enemy:AddNewModifier(caster, ability, "modifier_imba_wisp_spirits_creep_hit", {duration = 0.03})
@@ -1288,3 +1316,35 @@ function modifier_special_bonus_imba_wisp_5:OnAttackLanded( params )
 		end
 	end
 end
+
+imba_wisp_swap_spirits = class({})
+
+function imba_wisp_swap_spirits:IsInnateAbility()
+	return true
+end
+
+function imba_wisp_swap_spirits:GetIntrinsicModifierName()
+	return "modifier_imba_wisp_swap_spirits"
+end
+
+function imba_wisp_swap_spirits:GetAbilityTextureName()
+	if self:GetCaster():HasModifier("modifier_imba_wisp_swap_spirits") then
+		return "custom/kunnka_tide_high"
+	else
+		return "custom/kunnka_tide_red"
+	end
+end
+
+function imba_wisp_swap_spirits:OnSpellStart()
+	if self:GetCaster():HasModifier("modifier_imba_wisp_swap_spirits") then
+		self:GetCaster():RemoveModifierByName("modifier_imba_wisp_swap_spirits")
+	else
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_wisp_swap_spirits", {})
+	end
+end
+
+modifier_imba_wisp_swap_spirits = class({})
+
+function modifier_imba_wisp_swap_spirits:IsHidden() return true end
+function modifier_imba_wisp_swap_spirits:IsPurgable() return false end
+function modifier_imba_wisp_swap_spirits:RemoveOnDeath() return false end

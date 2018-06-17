@@ -104,7 +104,8 @@
 		"precache"
 		{
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_wisp.vsndevts"
-			"particle"					"particles/units/heroes/hero_wisp/wisp_guardian_.vpcf"
+			"particle"					"particles/units/heroes/hero_wisp/wisp_guardian_disarm.vpcf"
+			"particle"					"particles/units/heroes/hero_wisp/wisp_guardian_silence.vpcf"
 			"particle"					"particles/units/heroes/hero_wisp/wisp_guardian_explosion.vpcf"
 			"particle"					"particles/units/heroes/hero_wisp/wisp_guardian_explosion_small.vpcf"
 		}
@@ -189,6 +190,11 @@
 				"var_type"					"FIELD_FLOAT"
 				"vision_duration"			"3.0"
 			}
+			"16"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"spirit_debuff_duration"	"2.0"
+			}
 		}
 	}	
 
@@ -266,9 +272,32 @@
 				"var_type"					"FIELD_FLOAT"
 				"tooltip_drain_pct"			"-4.5 -5.0 -5.5 -6.0"
 			}
-
 		}
-	}	
+	}
+
+	//=================================================================================================================
+	// Wisp: Swap Spirits
+	//=================================================================================================================
+	"imba_wisp_swap_spirits"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                     "ability_lua" 
+		"ScriptFile"					"hero/hero_wisp.lua"
+		"AbilityTextureName"			"custom/kunnka_tide_high"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"MaxLevel"						"1"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"              "FIELD_INTEGER"
+				"spirit_debuff_duration"  "3"
+			}
+		}
+	}
 
 	//=================================================================================================================
 	// Wisp: Relocate

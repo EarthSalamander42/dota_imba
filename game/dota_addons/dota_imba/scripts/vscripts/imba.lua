@@ -460,6 +460,7 @@ function GameMode:ModifierFilter( keys )
 
 		-- disarm immune
 		local jarnbjorn_immunity = {
+			"modifier_disarmed",
 			"modifier_item_imba_triumvirate_proc_debuff",
 			"modifier_item_imba_sange_kaya_proc",
 			"modifier_item_imba_sange_yasha_disarm",

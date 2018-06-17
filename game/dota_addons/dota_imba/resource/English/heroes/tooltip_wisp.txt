@@ -4,7 +4,7 @@
 ////===============================================================================================================
 
 "DOTA_Tooltip_ability_imba_wisp_tether"                          "TETHER"
-"DOTA_Tooltip_ability_imba_wisp_tether_description"              "Tethers Io to an allied unit, granting bonus movement speed to both. When Io restores health or mana, tethered units target gains a larger portion of that amount. The tether breaks when the allied unit moves too far away, or Io cancels the tether.\n<font color='#FF7800'>Entwine</font color='#FF7800'>: Enemies hit by tether have their movement and attack speed slowed."
+"DOTA_Tooltip_ability_imba_wisp_tether_description"              "Tethers Io to an allied unit, granting bonus movement speed to both. When Io restores health or mana, tethered units target gains a larger portion of that amount. The tether breaks when the allied unit moves too far away, or Io cancels the tether. \n<font color='#FF7800'>Entwine</font color='#FF7800'>: Enemies hit by tether have their movement and attack speed slowed."
 "DOTA_Tooltip_ability_imba_wisp_tether_Note0"                   "If you try to tether a unit that is 1800 distance or futher away from Io, he will latch on and pull himself close to the tethered unit (to a distance of 700). The tethered unit will heal faster."
 "DOTA_Tooltip_ability_imba_wisp_tether_Note1"                   "Pierces ally magic immunity."
 "DOTA_Tooltip_ability_imba_wisp_tether_lore"                    "The benevolent touch of Io brings strength from between the planes."
@@ -34,7 +34,7 @@
 // Wisp's Spirits
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_wisp_spirits"						"SPIRITS"
-"DOTA_Tooltip_ability_imba_wisp_spirits_description"			"Summon seven particle spirits that dance in a circle around Io. If a particle collides with an enemy hero, it explodes, damaging and slowing all enemy units in an area around it. Creeps take minor damage from touching a particle spirit, but do not cause them to explode. When its duration ends, any remaining Spirits explode."
+"DOTA_Tooltip_ability_imba_wisp_spirits_description"			"Summon seven particle spirits that dance in a circle around Io. If a particle collides with an enemy hero, it explodes, damaging and slowing all enemy units in an area around it. Creeps take minor damage from touching a particle spirit, but do not cause them to explode. When its duration ends, any remaining Spirits explode. \n<font color='#FF7800'>Synergy</font color='#FF7800'>: Spirits disarm or silence on hit, toggle Swap Spirits ability to change the effect."
 "DOTA_Tooltip_ability_imba_wisp_spirits_lore" 					"Io twists the particles of the universe with his unimaginable capabilities."
 "DOTA_Tooltip_ability_imba_wisp_spirits_creep_damage"          	"CREEP DAMAGE:"
 "DOTA_Tooltip_ability_imba_wisp_spirits_hero_damage"          	"HERO DAMAGE:"
@@ -44,6 +44,8 @@
 "DOTA_Tooltip_ability_imba_wisp_spirits_explosion_damage"       "EXPLOSION DAMAGE:"
 "DOTA_Tooltip_ability_imba_wisp_spirits_spirit_duration"      	"DURATION:"
 "DOTA_Tooltip_ability_imba_wisp_spirits_num_spririts"			"SPIRIT COUNT:"
+"DOTA_Tooltip_ability_imba_wisp_spirits_spirit_debuff_duration"	"DISARM/SILENCE DURATION:"
+"DOTA_Tooltip_ability_imba_wisp_spirits_aghanim_description"	"Living Spirits: Gives %aghanim_spirits_vision_range% flying vision radius to Spirits."
 
 ////===============================================================================================================
 // Wisp's Spirit Toggle
@@ -90,6 +92,14 @@
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_wisp_relocate_break"          		"BREAK RELOCATE"
 "DOTA_Tooltip_ability_imba_wisp_relocate_break_description" 	"Ends Relocation, returning both Io and any tethered ally."
+
+////===============================================================================================================
+// Wisp's Relocate Break
+////===============================================================================================================
+"DOTA_Tooltip_ability_imba_wisp_swap_spirits"							"SWAP SPIRITS"
+"DOTA_Tooltip_ability_imba_wisp_swap_spirits_description"				"When toggled on, spirits will disarm heroes on hit. When toggled off, spirits will silence heroes on it."
+"DOTA_Tooltip_ability_imba_wisp_swap_spirits_spirit_debuff_duration"	"DISARM/SILENCE DURATION:"
+
 
 ////===============================================================================================================
 // Wisp's Talents

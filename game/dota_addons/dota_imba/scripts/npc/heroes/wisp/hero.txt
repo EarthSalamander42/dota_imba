@@ -16,7 +16,7 @@
 		"Ability1"					"imba_wisp_tether"
 		"Ability2"					"imba_wisp_spirits"
 		"Ability3"					"imba_wisp_overcharge"		
-		"Ability4"					"generic_hidden"
+		"Ability4"					"imba_wisp_swap_spirits"
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_wisp_relocate"
 		"Ability7"					"imba_wisp_spirits_toggle"
