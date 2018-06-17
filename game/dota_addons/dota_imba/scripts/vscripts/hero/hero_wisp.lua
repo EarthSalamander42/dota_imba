@@ -59,6 +59,7 @@ function imba_wisp_tether:OnSpellStart()
 	local ability 			= self:GetCaster():FindAbilityByName("imba_wisp_tether")
 	local ability_level 	= ability:GetLevel() -1
 	local caster 			= self:GetCaster()
+	local movespeed 		= ability:GetLevelSpecialValueFor("movespeed", ability_level)
 	ability.slow_duration 	= ability:GetLevelSpecialValueFor("stun_duration", ability_level)
 	ability.slow 	    	= ability:GetSpecialValueFor("slow")
 
@@ -72,7 +73,8 @@ function imba_wisp_tether:OnSpellStart()
 
 	self.target = self:GetCursorTarget()
 	caster:AddNewModifier(self:GetCaster(), self, "modifier_imba_wisp_tether", {})
-	self:GetCursorTarget():AddNewModifier(self:GetCaster(), ability, "modifier_imba_wisp_tether_ally", {})
+	local tether_modifier = self:GetCursorTarget():AddNewModifier(self:GetCaster(), ability, "modifier_imba_wisp_tether_ally", {})
+	tether_modifier:SetStackCount(movespeed)
 
 	if caster:HasModifier("modifier_imba_wisp_overcharge") then
 		imba_wisp_overcharge:AddOvercharge(self:GetCaster(), self.target)
@@ -220,6 +222,13 @@ end
 modifier_imba_wisp_tether_ally = class({})
 function modifier_imba_wisp_tether_ally:IsHidden() return false end
 function modifier_imba_wisp_tether_ally:IsPurgable() return false end
+function modifier_imba_wisp_tether_ally:DeclareFunctions()
+	local decFuncs = {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
+	}
+
+	return decFuncs
+end
 
 function modifier_imba_wisp_tether_ally:DeclareFunctions()
 	local decFuncs = {
@@ -301,6 +310,10 @@ function modifier_imba_wisp_tether_ally:OnIntervalThink()
 
 		ProjectileManager:CreateLinearProjectile(projectile)
 	end
+end
+
+function modifier_imba_wisp_tether_ally:GetModifierMoveSpeedBonus_Percentage()
+	return self:GetStackCount()
 end
 
 function imba_wisp_tether:OnProjectileHit_ExtraData(target, location, ExtraData)
