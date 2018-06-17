@@ -114,6 +114,7 @@ function modifier_imba_wisp_tether:DeclareFunctions()
 		MODIFIER_EVENT_ON_TAKEDAMAGE,
 		MODIFIER_EVENT_ON_HEALTH_GAINED,
 		MODIFIER_EVENT_ON_MANA_GAINED,
+		MODIFIER_EVENT_ON_SPENT_MANA,
 		MODIFIER_PROPERTY_MOVESPEED_BASE_OVERRIDE,
 	}
 
@@ -148,6 +149,12 @@ end
 function modifier_imba_wisp_tether:OnTakeDamage(keys)
 	if keys.unit == self:GetParent() then
 		self:GetCaster().tether_lastHealth = self:GetCaster():GetHealth()
+	end
+end
+
+function modifier_imba_wisp_tether:OnSpentMana(keys)
+	if keys.unit == self:GetParent() then
+		self:GetCaster().tether_lastMana = self:GetCaster():GetMana()
 	end
 end
 
