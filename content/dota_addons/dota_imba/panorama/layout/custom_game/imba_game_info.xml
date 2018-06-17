@@ -20,7 +20,7 @@
 				<Label id="Heroes02" html="true" text="#imba_tutorial_heroes_02" />
 				<Label id="Heroes03" html="true" text="#imba_tutorial_heroes_03" />
 			</Panel>
-			<Image id="HeroesImage" src="file://{images}/custom_game/tutorial/Tutorial01.png" />
+			<Image id="HeroesImage" src="file://{images}/custom_game/imba-blue.png" />
 		</Panel>
 
 		<Image id="AbilitiesImage" src="file://{images}/custom_game/tutorial/Tutorial02.png" />
@@ -33,7 +33,7 @@
 			</Panel>
 		</Panel>
 
-		<Image id="ItemsImage" src="file://{images}/custom_game/tutorial/Tutorial03.png" />
+		<Image id="ItemsImage" src="file://{images}/custom_game/imba-blue/Tutorial03.png" />
 
 		<Panel id="Creeps" class="InfoBox">
 			<Panel id="CreepsTextBox">

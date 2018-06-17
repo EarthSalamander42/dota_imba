@@ -15,13 +15,24 @@
 		<Panel class="FillWidth">
 			<Button class="DashboardButton" onactivate="DOTAHUDShowDashboard();"/>
 		</Panel>
-		<Panel class="TeamStatus">
+		<Panel id="TeamRow1" class="TeamStatus">
 			<Panel id="TeamRadiant"/>
+			<Panel id="TeamCustom1"/>
+			<Panel id="TeamCustom2"/>
 			<Panel id="Clock">
 				<Label id="TimeLeft" text="WAIT"/>
 				<Label id="GameMode" text="WAIT"/>
 			</Panel>
+			<Panel id="TeamCustom3"/>
+			<Panel id="TeamCustom4"/>
 			<Panel id="TeamDire"/>
+		</Panel>
+		<Panel id="TeamRow2" class="TeamStatus">
+			<Panel id="TeamCustom5"/>
+			<Panel id="TeamCustom6"/>
+			<Panel id="DummyClock"/>
+			<Panel id="TeamCustom7"/>
+			<Panel id="TeamCustom8"/>
 		</Panel>
 		<Panel id="MainContent">
 			<Panel class="MiddleColumn">

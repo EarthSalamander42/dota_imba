@@ -5,6 +5,7 @@ var g_nClientPointCapUsed = -1;
 var g_nRewardLineTier1 = -1;
 var g_nRewardLineTier2 = -1;
 var g_nNumRewardRequests = 0;
+var SHOW_TUTORIAL = false
 
 function OnNewRoomDiscovered( roomData )
 {
@@ -133,7 +134,26 @@ function ShowTeamDefeatedPanel()
 function OnTeamDefeated( data )
 {
 	g_TeamDefeatedData = data;
-	$.Schedule( 5.0, ShowTeamDefeatedPanel ); 
+	$.Schedule( 5.0, ShowTeamDefeatedPanel );
+}
+
+// useless yet because somehow a script make it visible already
+function ShowTutorial() {
+	SHOW_TUTORIAL = true
+	$.GetContextPanel().style.visibility = "visible";
+}
+
+$.Schedule(1.0, HideTutorial)
+
+function HideTutorial() {
+	if (SHOW_TUTORIAL == true) {
+		return;
+	} else {
+		$.GetContextPanel().style.visibility = "collapse";
+	}
+
+	$.Schedule(1.0, HideTutorial)
 }
 
 GameEvents.Subscribe( "on_team_defeated", OnTeamDefeated );
+GameEvents.Subscribe("show_cavern_tutorial", ShowTutorial);

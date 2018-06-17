@@ -135,10 +135,10 @@ function GameMode:OnFirstPlayerLoaded()
 		GameMode:CustomSpawnCamps()
 	elseif GetMapName() == "cavern" then
 	else
-		GoodCamera = Entities:FindByName(nil, "dota_goodguys_fort")
-		BadCamera = Entities:FindByName(nil, "dota_badguys_fort")
---		GoodCamera = Entities:FindByName(nil, "good_healer_6")
---		BadCamera = Entities:FindByName(nil, "bad_healer_6")
+--		GoodCamera = Entities:FindByName(nil, "dota_goodguys_fort")
+--		BadCamera = Entities:FindByName(nil, "dota_badguys_fort")
+		GoodCamera = Entities:FindByName(nil, "good_healer_6")
+		BadCamera = Entities:FindByName(nil, "bad_healer_6")
 
 		ROSHAN_SPAWN_LOC = Entities:FindByClassname(nil, "npc_dota_roshan_spawner"):GetAbsOrigin()
 		Entities:FindByClassname(nil, "npc_dota_roshan_spawner"):RemoveSelf()

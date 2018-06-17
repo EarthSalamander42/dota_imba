@@ -430,6 +430,7 @@ function modifier_imba_wisp_tether_latch:OnIntervalThink()
 
 		if distToAlly <= self:GetAbility():GetSpecialValueFor("latch_distance") then
 			-- We've reached, so finish latching
+			ResolveNPCPositions(self:GetCaster():GetAbsOrigin(), 128)
 			self:GetCaster():RemoveModifierByName("modifier_imba_wisp_tether_latch")
 		end
 	end
@@ -542,12 +543,12 @@ function modifier_imba_wisp_spirits:OnCreated(params)
 		self.spirit_turn_rate			= params.spirit_turn_rate
 		self.vision_radius				= params.vision_radius
 		self.vision_duration			= params.vision_duration
-		self.creep_damage 				= params.creep_damage
+		self.creep_damage 				= params.creep_damage * FrameTime()
 		self.hero_damage				= params.hero_damage
 		self.explosion_damage			= params.explosion_damage
 		self.slow_duration				= params.slow_duration
 		self.slow 						= params.slow
-		
+
 		EmitSoundOn("Hero_Wisp.Spirits.Loop", self:GetCaster())	
 
 		self:StartIntervalThink(0.03)
@@ -568,6 +569,11 @@ function modifier_imba_wisp_spirits:OnIntervalThink()
 
 			-- Spawn a new spirit
 			local newSpirit = CreateUnitByName("npc_dota_wisp_spirit", caster_position, false, caster, caster, caster:GetTeam())
+
+			if caster:HasScepter() then
+				newSpirit:SetDayTimeVisionRange(300)
+				newSpirit:SetNightTimeVisionRange(300)
+			end
 
 			-- Create particle FX
 			local pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_wisp/wisp_guardian_.vpcf", PATTACH_ABSORIGIN_FOLLOW, newSpirit)
@@ -806,6 +812,11 @@ function modifier_imba_wisp_spirit_handler:CheckState()
 		[MODIFIER_STATE_UNSELECTABLE] 		= true,
 		[MODIFIER_STATE_NO_HEALTH_BAR] 		= true,
 	}
+
+	if self:GetCaster():HasScepter() then
+		state[MODIFIER_STATE_FLYING] = true
+	end
+
 	return state
 end
 

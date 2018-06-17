@@ -1,5 +1,3 @@
-LinkLuaModifier("modifier_out_of_duel", "components/cavern/modifiers/modifier_out_of_duel.lua", LUA_MODIFIER_MOTION_NONE)
-
 if HeroSelection == nil then
 	require('libraries/event')
 	require('libraries/fun')()
@@ -369,6 +367,8 @@ function HeroSelection:SelectHero(playerId, hero)
 				GameRules:GetGameModeEntity():SetPauseEnabled( true )
 --				CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(playerId), "send_mutations", IMBA_MUTATION) -- doesn't work for some players
 				CustomGameEventManager:Send_ServerToAllClients("send_mutations", IMBA_MUTATION)
+			elseif GetMapName() == "cavern" then
+				CustomGameEventManager:Send_ServerToAllClients("show_cavern_tutorial", {})
 			end
 			GameRules:GetGameModeEntity():SetCameraDistanceOverride(1134) -- default: 1134
 

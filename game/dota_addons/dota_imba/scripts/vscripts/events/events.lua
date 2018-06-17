@@ -117,16 +117,16 @@ function GameMode:OnGameRulesStateChange(keys)
 					end
 				elseif GetMapName() == "cavern" then
 				else
-					safe(function()
-						if error then
-							log.info("An error occured with courier script, swap to original team couriers.")
+--					safe(function()
+--						if error then
+--							log.info("An error occured with courier script, swap to original team couriers.")
 
-							COURIER_TEAM = {}
-							COURIER_TEAM[2] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_radiant"):GetAbsOrigin(), true, nil, nil, 2)
-							COURIER_TEAM[3] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_dire"):GetAbsOrigin(), true, nil, nil, 3)
+--							COURIER_TEAM = {}
+--							COURIER_TEAM[2] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_radiant"):GetAbsOrigin(), true, nil, nil, 2)
+--							COURIER_TEAM[3] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_dire"):GetAbsOrigin(), true, nil, nil, 3)
 
-							error = true
-						else
+--							error = true
+--						else
 							if USE_TEAM_COURIER then
 								COURIER_TEAM[2] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_radiant"):GetAbsOrigin(), true, nil, nil, 2)
 								COURIER_TEAM[3] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_dire"):GetAbsOrigin(), true, nil, nil, 3)
@@ -140,10 +140,10 @@ function GameMode:OnGameRulesStateChange(keys)
 									end
 								end
 							end
-						end
+--						end
 
-						error = false
-					end)
+--						error = false
+--					end)
 
 					local good_fillers = {
 						"good_filler_1",
@@ -586,7 +586,7 @@ function GameMode:OnLastHit(keys)
 --		end
 
 		player:GetAssignedHero().kill_hero_bounty = 0
-		Timers:CreateTimer(FrameTime() * 2, function()
+		Timers:CreateTimer(0.1, function()
 			CombatEvents("kill", "hero_kill", killedEnt, player:GetAssignedHero())
 		end)
 	end

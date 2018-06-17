@@ -127,6 +127,9 @@ if (currentMap == "imba_1v1") {
 	Setup1v1();
 } else if (currentMap == 'imba_ranked_10v10' || currentMap == 'imba_frantic_10v10' || currentMap == 'imba_mutation_10v10') {
 	SetupTopBar();
+} else if (currentMap == 'cavern') {
+	$.Msg("Cavern class!")
+	$.GetContextPanel().SetHasClass('Cavern', true);
 }
 
 $('#ARDMLoading').style.opacity = 0;
@@ -249,9 +252,30 @@ function onPlayerStatChange(table, key, data) {
 		if (panelscreated !== length) {
 			var teamdire = FindDotaHudElement('TeamDire');
 			var teamradiant = FindDotaHudElement('TeamRadiant');
+			var teamcustom1 = FindDotaHudElement('TeamCustom1');
+			var teamcustom2 = FindDotaHudElement('TeamCustom2');
+			var teamcustom3 = FindDotaHudElement('TeamCustom3');
+			var teamcustom4 = FindDotaHudElement('TeamCustom4');
+			var teamcustom5 = FindDotaHudElement('TeamCustom5');
+			var teamcustom6 = FindDotaHudElement('TeamCustom6');
+			var teamcustom7 = FindDotaHudElement('TeamCustom7');
+			var teamcustom8 = FindDotaHudElement('TeamCustom8');
 			panelscreated = length;
 			teamdire.RemoveAndDeleteChildren();
 			teamradiant.RemoveAndDeleteChildren();
+			if (currentMap == "cavern") {
+				teamdire.DeleteAsync(0)
+				teamradiant.DeleteAsync(0)
+			} else {
+				teamcustom1.DeleteAsync(0)
+				teamcustom2.DeleteAsync(0)
+				teamcustom3.DeleteAsync(0)
+				teamcustom4.DeleteAsync(0)
+				teamcustom5.DeleteAsync(0)
+				teamcustom6.DeleteAsync(0)
+				teamcustom7.DeleteAsync(0)
+				teamcustom8.DeleteAsync(0)
+			}
 
 			Object.keys(data).forEach(function (nkey) {
 				var currentteam = null;
@@ -261,6 +285,30 @@ function onPlayerStatChange(table, key, data) {
 						break;
 					case 3:
 						currentteam = teamdire;
+						break;
+					case 6:
+						currentteam = teamcustom1;
+						break;
+					case 7:
+						currentteam = teamcustom2;
+						break;
+					case 8:
+						currentteam = teamcustom3;
+						break;
+					case 9:
+						currentteam = teamcustom4;
+						break;
+					case 10:
+						currentteam = teamcustom5;
+						break;
+					case 11:
+						currentteam = teamcustom6;
+						break;
+					case 12:
+						currentteam = teamcustom7;
+						break;
+					case 13:
+						currentteam = teamcustom8;
 						break;
 				}
 				var newelement = $.CreatePanel('Panel', currentteam, '');

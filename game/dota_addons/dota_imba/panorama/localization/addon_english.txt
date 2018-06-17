@@ -307,16 +307,17 @@
 	"KillMessageText"								"HAS KILLED THE LEADER"
 	"KillMessageBounty"								"FOR 500 BONUS GOLD!"
 	
-//	"addonname"										"Overthrow"
-	"overthrow_game_info_header_objective"			"Objective:"
-	"overthrow_brief_description"					"Slay your enemies! First team to hit the kill limit wins!"
-	"overthrow_game_info_header_how_to_play"		"How To Play:"
-	"overthrow_game_info_throne"					"Approach the <span class='midas_throne'>Midas Throne</span> to earn bonus <span class='gold'>gold</span> and <span class='xp'>experience</span>."
-	"overthrow_game_info_coins"						"Snatch up coins the <span class='overboss'>Overboss</span> tosses to earn more <span class='gold'>gold</span>."
-	"overthrow_game_info_items"						"Keep an eye out for <span class='treasure'>treasure</span> deliveries. An icon will appear on your map where an <span class='items'>item</span> will appear."
-	"overthrow_game_info_tips_header"				"Tips:"
-	"overthrow_game_info_tip01"						"The current leader has a gold crown, and you will get extra gold for killing them."
-	"overthrow_game_info_tip02"						"Items can be given to teammates or sold at your base."
+	"imba_tutorial_intro_02"						"Welcome to IMBA Mutation mode! Dota 2's mutation mode, but crazier!"
+
+	"imba_tutorial_heroes_title"					"Mutation Info:"
+	"imba_tutorial_heroes_01"						"3 mutations will be randomly chosen on each games, 1 positive, 1 negative and 1 terrain mutator."
+	"imba_tutorial_heroes_02"						"Positive mutator grants a buff to every heroes while Negative mutator grants a debuff."
+	"imba_tutorial_heroes_03"						"Terrain mutator changes the map in a specific way."
+
+	"imba_tutorial_items_title"						"Tips:"
+	"imba_tutorial_items_01"						"add some text"
+	"imba_tutorial_items_02"						"add more text"
+
 	"overthrow_game_info_tip03"						"You may need to coordinate with an opposing team to take out a strong opponent."
 	"overthrow_game_info_tip04"						"The fewer kills your team has, the stronger items you will recieve from a delivery."
 
