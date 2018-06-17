@@ -10,6 +10,22 @@
 	width: 100%;
 }
 
+.large {
+	font-size: 28px;
+}
+
+.huge {
+	font-size: 36px;
+}
+
+.normal {
+	font-size: 20px;
+}
+
+.small {
+	font-size: 12px;
+}
+
 #imba-loading {
 	flow-children: down;
 	width: 100%;
@@ -57,11 +73,24 @@
 }
 
 #imba-loading-content-text {
-	margin: 0px 40px 25px ;
+	margin: 0px 40px;
+	font-size: 20px;
 	width: 100%;
 }
 
 #imba-loading-map-text {
-	margin: 0px 40px 30px;
+	margin: 0px 40px 40px;
 	font-size: 24px;
+}
+
+#imba-loading-link {
+	margin: 0px 40px;
+}
+
+#imba-loading-link-text {
+	font-size: 24px;
+}
+
+#imba-loading-link-text:hover {
+	text-decoration: underline;
 }
