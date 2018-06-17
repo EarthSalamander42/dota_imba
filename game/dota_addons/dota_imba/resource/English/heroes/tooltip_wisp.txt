@@ -4,7 +4,7 @@
 ////===============================================================================================================
 
 "DOTA_Tooltip_ability_imba_wisp_tether"                          "TETHER"
-"DOTA_Tooltip_ability_imba_wisp_tether_description"              "Tethers Io to an allied unit, granting bonus movement speed to both. When Io restores health or mana, tethered units target gains a larger portion of that amount. The tether breaks when the allied unit moves too far away, or Io cancels the tether.\n<font color='#FF7800'>Tether</font color='#FF7800'>: Enemies hit by tether have their movement and attack speed slowed."
+"DOTA_Tooltip_ability_imba_wisp_tether_description"              "Tethers Io to an allied unit, granting bonus movement speed to both. When Io restores health or mana, tethered units target gains a larger portion of that amount. The tether breaks when the allied unit moves too far away, or Io cancels the tether.\n<font color='#FF7800'>Entwine</font color='#FF7800'>: Enemies hit by tether have their movement and attack speed slowed."
 "DOTA_Tooltip_ability_imba_wisp_tether_Note0"                   "If you try to tether a unit that is 1800 distance or futher away from Io, he will latch on and pull himself close to the tethered unit (to a distance of 700). The tethered unit will heal faster."
 "DOTA_Tooltip_ability_imba_wisp_tether_Note1"                   "Pierces ally magic immunity."
 "DOTA_Tooltip_ability_imba_wisp_tether_lore"                    "The benevolent touch of Io brings strength from between the planes."
@@ -109,8 +109,8 @@
 ////===============================================================================================================
 "DOTA_Tooltip_Ability_special_bonus_imba_wisp_1"												"+2 Additional Spirits"
 "DOTA_Tooltip_Ability_special_bonus_imba_wisp_2"												"+50% Spirit Impact Damage"
-"DOTA_Tooltip_Ability_special_bonus_imba_wisp_3"												"Overcharge Buffs are 50% stronger"
-"DOTA_Tooltip_Ability_special_bonus_imba_wisp_3_description"									"Buffs given to attack speed, attack range, missile speed, cast speed and damage reduction are 50% stronger."
+"DOTA_Tooltip_Ability_special_bonus_imba_wisp_3"												"Overcharge Bonuses are 50% Stronger"
+"DOTA_Tooltip_Ability_special_bonus_imba_wisp_3_description"									"Bonuses given to attack speed, attack range, missile speed, cast speed and damage reduction are 50% stronger."
 "DOTA_Tooltip_Ability_special_bonus_imba_wisp_4"												"Tether Grants Aghanim's Scepter Bonus"
 "DOTA_Tooltip_Ability_special_bonus_imba_wisp_5"												"Attacks Splash on Hit"
 "DOTA_Tooltip_Ability_special_bonus_imba_wisp_6"												"Attack Tethered Ally's Target"
