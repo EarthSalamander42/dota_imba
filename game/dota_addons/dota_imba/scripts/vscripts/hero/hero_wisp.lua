@@ -608,7 +608,7 @@ function modifier_imba_wisp_spirits:OnIntervalThink()
 			end
 
 			-- Create particle FX
-			local pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_wisp/wisp_guardian_.vpcf", PATTACH_ABSORIGIN_FOLLOW, newSpirit)
+			local pfx = ParticleManager:CreateParticle(self.particle, PATTACH_ABSORIGIN_FOLLOW, newSpirit)
 			newSpirit.spirit_pfx = pfx
 
 			-- Update the state
@@ -717,12 +717,9 @@ function modifier_imba_wisp_spirits:OnHit(caster, spirit, enemies_hit, creep_dam
 				enemy:AddNewModifier(caster, ability, "modifier_imba_wisp_spirits_hero_hit", {duration = 0.03, slow_duration = slow_duration, slow = slow})
 				damage_table.damage	= hero_damage
 
-		local swap_spirits = self:GetAbility()
 				if caster.spirit_debuff == 1 then
-					self.onhit_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_wisp/wisp_guardian_disarm.vpcf", PATTACH_ABSORIGIN_FOLLOW, enemy)
 					enemy:AddNewModifier(caster, ability, "modifier_disarmed", {duration=ability:GetSpecialValueFor("spirit_debuff_duration")})
 				else
-					self.onhit_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_wisp/wisp_guardian_silence.vpcf", PATTACH_ABSORIGIN_FOLLOW, enemy)
 					enemy:AddNewModifier(caster, ability, "modifier_silence", {duration=ability:GetSpecialValueFor("spirit_debuff_duration")})
 				end
 
@@ -793,8 +790,6 @@ function modifier_imba_wisp_spirits:OnRemoved()
 		end
 
 		self:GetCaster():StopSound("Hero_Wisp.Spirits.Loop")
-
-		ParticleManager:DestroyParticle(self.onhit_pfx, false)
 	end
 end
 
