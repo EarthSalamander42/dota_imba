@@ -22,8 +22,8 @@ function Mutation:Init()
 	LinkLuaModifier("modifier_mutation_torrent", "components/mutation/modifiers/periodic_spellcast/modifier_mutation_torrent.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_mutation_cold_feet", "components/mutation/modifiers/periodic_spellcast/modifier_mutation_cold_feet.lua", LUA_MODIFIER_MOTION_NONE )
 
-	Mutation:ChooseMutation("positive", POSITIVE_MUTATION_LIST, 5 - 1) -- -1 because index is 0
-	Mutation:ChooseMutation("negative", NEGATIVE_MUTATION_LIST, 4 - 1)
+	Mutation:ChooseMutation("positive", POSITIVE_MUTATION_LIST, 6 - 1) -- -1 because index is 0
+	Mutation:ChooseMutation("negative", NEGATIVE_MUTATION_LIST, 3 - 1)
 	Mutation:ChooseMutation("terrain", TERRAIN_MUTATION_LIST, 4 - 1)
 
 	IMBA_MUTATION_PERIODIC_SPELLS = {}
@@ -75,9 +75,9 @@ function Mutation:ChooseMutation(type, table, count)
 			table[mutation] = true
 
 			if IsInToolsMode() then
-				IMBA_MUTATION["positive"] = "slark_mode"
-				IMBA_MUTATION["negative"] = "periodic_spellcast"
-				IMBA_MUTATION["terrain"] = "fast_runes"
+				IMBA_MUTATION["positive"] = "teammate_resurrection"
+				IMBA_MUTATION["negative"] = "death_explosion"
+				IMBA_MUTATION["gift_exchange"] = "fast_runes"
 			end
 
 			return
@@ -185,8 +185,12 @@ function Mutation:OnHeroFirstSpawn(hero)
 		hero:AddNewModifier(hero, nil, "modifier_mutation_kill_streak_power", {})
 	elseif IMBA_MUTATION["positive"] == "frantic" then
 		hero:AddNewModifier(hero, nil, "modifier_frantic", {})
-	elseif IMBA_MUTATION["positive"] == "jump_start" then
-		hero:AddExperience(XP_PER_LEVEL_TABLE[6], DOTA_ModifyXP_CreepKill, false, true)
+--	elseif IMBA_MUTATION["positive"] == "jump_start" then
+--		hero:AddExperience(XP_PER_LEVEL_TABLE[6], DOTA_ModifyXP_CreepKill, false, true)
+	elseif IMBA_MUTATION["positive"] == "super_blink" then
+		hero:AddItemByName("item_imba_blink")
+	elseif IMBA_MUTATION["positive"] == "pocket_tower" then
+		hero:AddItemByName("item_pocket_tower")
 	end
 
 	if IMBA_MUTATION["negative"] == "death_explosion" then
@@ -236,19 +240,18 @@ function Mutation:OnHeroDeath(hero)
 		hero.tombstone_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_abaddon/holdout_borrowed_time_"..hero:GetTeamNumber()..".vpcf", PATTACH_ABSORIGIN_FOLLOW, tombstone)
 	end
 
-	if IMBA_MUTATION["negative"] == "death_gold_drop" then
-		local game_time = math.min(GameRules:GetDOTATime(false, false) / 60, 30)
-		local random_int = RandomInt(30, 60)
-		local newItem = CreateItem("item_bag_of_gold", nil, nil)
-		newItem:SetPurchaseTime(0)
-		print(game_time, random_int)
-		newItem:SetCurrentCharges(random_int * game_time)
+--	if IMBA_MUTATION["negative"] == "death_gold_drop" then
+--		local game_time = math.min(GameRules:GetDOTATime(false, false) / 60, 30)
+--		local random_int = RandomInt(30, 60)
+--		local newItem = CreateItem("item_bag_of_gold", nil, nil)
+--		newItem:SetPurchaseTime(0)
+--		newItem:SetCurrentCharges(random_int * game_time)
 
-		local drop = CreateItemOnPositionSync(hero:GetAbsOrigin(), newItem)
-		local dropTarget = hero:GetAbsOrigin() + RandomVector(RandomFloat( 50, 150 ))
-		newItem:LaunchLoot(true, 300, 0.75, dropTarget)
-		EmitSoundOn("Dungeon.TreasureItemDrop", hero)
-	end
+--		local drop = CreateItemOnPositionSync(hero:GetAbsOrigin(), newItem)
+--		local dropTarget = hero:GetAbsOrigin() + RandomVector(RandomFloat( 50, 150 ))
+--		newItem:LaunchLoot(true, 300, 0.75, dropTarget)
+--		EmitSoundOn("Dungeon.TreasureItemDrop", hero)
+--	end
 end
 
 function Mutation:ModifierFilter(keys)

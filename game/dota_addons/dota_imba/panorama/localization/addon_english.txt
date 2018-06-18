@@ -310,9 +310,9 @@
 	"imba_tutorial_intro_02"						"Welcome to IMBA Mutation mode! Dota 2's mutation mode, but crazier!"
 
 	"imba_tutorial_heroes_title"					"Mutation Info:"
-	"imba_tutorial_heroes_01"						"3 mutations will be randomly chosen on each games, 1 positive, 1 negative and 1 terrain mutator."
-	"imba_tutorial_heroes_02"						"Positive mutator grants a buff to every heroes while Negative mutator grants a debuff."
-	"imba_tutorial_heroes_03"						"Terrain mutator changes the map in a specific way."
+	"imba_tutorial_heroes_01"						"Mutation is a mod where 3 mutators will take place in a regular match, 1 positive, 1 negative and 1 terrain-based."
+	"imba_tutorial_heroes_02"						"The 3 mutators are chosen randomly on each games! Mutation replace Frantic maps, but Frantic is in the Mutator list."
+	"imba_tutorial_heroes_03"						"Some mutators can be added/removed at anytime, we will keep a list of the active mutators on Dota IMBA's website. (Wiki section)"
 
 	"imba_tutorial_items_title"						"Tips:"
 	"imba_tutorial_items_01"						"add some text"
@@ -354,6 +354,12 @@
 
 	"mutation_frantic"								"Frantic"
 	"mutation_frantic_Description"					"50% Cooldown Reduction, Mana Cost, Respawn Time and Status Resistance."
+
+	"mutation_super_blink"							"Super Blink"
+	"mutation_super_blink_Description"				"All players have a Blink Dagger that is not disabled on damage."
+
+	"mutation_pocket_tower"							"Pocket Tower"
+	"mutation_pocket_tower_Description"				"All heroes start with a consumable that will spawn a tower."
 
 	// Negative
 	"mutation_death_explosion"					"Death Explosion"

@@ -190,15 +190,19 @@ var MainPanel = $.GetContextPanel().GetParent().GetParent().GetParent().GetParen
 if (Game.GetMapInfo().map_display_name == "cavern") {
 	MainPanel.FindChildTraverse("topbar").style.visibility = "collapse";
 	$.GetContextPanel().FindChildTraverse("EarnedBPAmount").text = "Coming Soon!";
-	$.Schedule( 1.0, UpdateTopBar );
 }
 
 $.Schedule( 1.0, HideTopBar );
+$.Schedule( 2.0, HideTopBar );
+$.Schedule( 3.0, HideTopBar );
 
 function HideTopBar() {
-	$.GetContextPanel().visible = false;
+	if ($.GetContextPanel()) {
+		$.GetContextPanel().visible = false;
 
-	if (Game.GetMapInfo().map_display_name != "cavern") {
-		$.Schedule( 1.0, HideTopBar );
+		if (Game.GetMapInfo().map_display_name != "cavern") {
+			$.GetContextPanel().DeleteAsync(0)
+			return;
+		}
 	}
 }

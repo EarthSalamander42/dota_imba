@@ -109,8 +109,11 @@ function modifier_imba_blink_dagger_handler:OnIntervalThink()
 	local caster = self:GetCaster()
 	if caster:IsIllusion() then return end
 	if IsServer() then
-		self:SetStackCount(caster.blink_icon)
+		if caster.blink_icon then
+			self:SetStackCount(caster.blink_icon)
+		end
 	end
+
 	if IsClient() then
 		local icon = self:GetStackCount()
 		if icon == 0 then
@@ -136,7 +139,7 @@ function modifier_imba_blink_dagger_handler:OnTakeDamage( keys )
 	if parent == unit then
 		-- Custom function from funcs.lua
 		if IsHeroDamage(keys.attacker, keys.damage) then
-			if ability:GetCooldownTimeRemaining() < blink_damage_cooldown then
+			if ability:GetCooldownTimeRemaining() < blink_damage_cooldown and IMBA_MUTATION["positive"] ~= "super_blink" then
 				ability:StartCooldown(blink_damage_cooldown)
 			end
 		end
@@ -239,7 +242,7 @@ function modifier_imba_blink_boots_handler:OnTakeDamage( keys )
 	if parent == unit then
 		-- Custom function from funcs.lua
 		if IsHeroDamage(keys.attacker, keys.damage) then
-			if ability:GetCooldownTimeRemaining() < blink_damage_cooldown then
+			if ability:GetCooldownTimeRemaining() < blink_damage_cooldown and IMBA_MUTATION["positive"] ~= "super_blink" then
 				ability:StartCooldown(blink_damage_cooldown)
 			end
 		end

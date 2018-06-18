@@ -101,10 +101,13 @@ var hiddenAbilities = [
 	"zuus_cloud",
 	"imba_rubick_spell_steal_controller",
 	"imba_tiny_tree_throw",
+	"imba_wisp_tether_break",
+	"imba_wisp_relocate_break",
 	"" // Leave it alone, he's useful
 ]
+
 var localTeam = Players.GetTeam(Players.GetLocalPlayer())
-if (localTeam == 1 || Game.GetPlayerInfo(Game.GetLocalPlayerID()).player_selected_hero != "npc_dota_hero_dummy_dummy") {
+if (localTeam != 2 && localTeam != 3 && localTeam != 6 && localTeam != 7 && localTeam != 8 && localTeam != 9 && localTeam != 10 && localTeam != 11 && localTeam != 12 && localTeam != 13 || Game.GetPlayerInfo(Game.GetLocalPlayerID()).player_selected_hero != "npc_dota_hero_dummy_dummy") {
 	HidePickingScreen()
 } else {
 	SetupBackgroundImage();
@@ -128,15 +131,13 @@ if (currentMap == "imba_1v1") {
 } else if (currentMap == 'imba_ranked_10v10' || currentMap == 'imba_frantic_10v10' || currentMap == 'imba_mutation_10v10') {
 	SetupTopBar();
 } else if (currentMap == 'cavern') {
-	$.Msg("Cavern class!")
 	$.GetContextPanel().SetHasClass('Cavern', true);
 }
 
 $('#ARDMLoading').style.opacity = 0;
 
 function HidePickingScreen() {
-	$.GetContextPanel().style.visibility = "collapse";
-	$.Schedule(2.0, HidePickingScreen)
+	$.GetContextPanel().DeleteAsync(0)
 }
 
 function changeHilariousLoadingText () {
@@ -1066,4 +1067,3 @@ function TopBarColor(args) {
 }
 
 GameEvents.Subscribe("top_bar_colors", TopBarColor);
-
