@@ -377,15 +377,15 @@ function CCavern:OnTeamDefeated( nTeam )
 
 --	log.debug( "Team " .. nTeam .. " has finished in position " .. self.nNextTeamFinishPosition .. " and earned " .. nBattlePoints )
 
-	AddFOWViewer(nTeam, Vector(-6200, 6200, 0), 25000, 9999.9, false)
-	AddFOWViewer(nTeam, Vector(0, 6200, 0), 25000, 9999.9, false)
-	AddFOWViewer(nTeam, Vector(6200, 6200, 0), 25000, 9999.9, false)
-	AddFOWViewer(nTeam, Vector(-6200, 0, 0), 25000, 9999.9, false)
+	AddFOWViewer(nTeam, Vector(-6100, 6100, 0), 25000, 9999.9, false)
+	AddFOWViewer(nTeam, Vector(0, 6100, 0), 25000, 9999.9, false)
+	AddFOWViewer(nTeam, Vector(6100, 6100, 0), 25000, 9999.9, false)
+	AddFOWViewer(nTeam, Vector(-6100, 0, 0), 25000, 9999.9, false)
 	AddFOWViewer(nTeam, Vector(0, 0, 0), 25000, 9999.9, false)
-	AddFOWViewer(nTeam, Vector(6200, 0, 0), 25000, 9999.9, false)
-	AddFOWViewer(nTeam, Vector(-6200, -6200, 0), 25000, 9999.9, false)
-	AddFOWViewer(nTeam, Vector(0, -6200, 0), 25000, 9999.9, false)
-	AddFOWViewer(nTeam, Vector(6200, -6200, 0), 25000, 9999.9, false)
+	AddFOWViewer(nTeam, Vector(6100, 0, 0), 25000, 9999.9, false)
+	AddFOWViewer(nTeam, Vector(-6100, -6100, 0), 25000, 9999.9, false)
+	AddFOWViewer(nTeam, Vector(0, -6100, 0), 25000, 9999.9, false)
+	AddFOWViewer(nTeam, Vector(6100, -6100, 0), 25000, 9999.9, false)
 
 --	data["finish_position"] = self.nNextTeamFinishPosition
 	CustomGameEventManager:Send_ServerToTeam( nTeam, "on_team_defeated", data ) 
@@ -735,7 +735,6 @@ function CCavern:OnBattlePointsEarned( nTeamNumber, nBattlePoints, szReason )
 			ParticleManager:ReleaseParticleIndex( nFXIndex2 )
 
 			EmitSoundOnClient( "Plus.shards_tick", Hero:GetPlayerOwner() )
-
 
 			api.imba.event(api.events.cavern_xp, {
 				tostring(PlayerResource:GetSteamID(nPlayerID)),

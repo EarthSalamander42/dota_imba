@@ -54,20 +54,15 @@
 			}
 			"06"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"tooltip_heal_amp"			"50"
-			}
-			"07"
-			{
 				"var_type"					"FIELD_INTEGER"
 				"slow"						"-100"
 			}
-			"08"
+			"07"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"attackslow_tooltip"		"-100"
 			}
-			"09"
+			"08"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"stun_duration"				"0.75 1.25 1.75 2.25"

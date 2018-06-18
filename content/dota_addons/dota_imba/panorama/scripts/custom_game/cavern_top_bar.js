@@ -195,6 +195,7 @@ if (Game.GetMapInfo().map_display_name == "cavern") {
 $.Schedule( 1.0, HideTopBar );
 $.Schedule( 2.0, HideTopBar );
 $.Schedule( 3.0, HideTopBar );
+$.Schedule( 4.0, HideTopBar );
 
 function HideTopBar() {
 	if ($.GetContextPanel()) {

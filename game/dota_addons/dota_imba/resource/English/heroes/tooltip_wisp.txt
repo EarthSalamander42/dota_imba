@@ -4,14 +4,14 @@
 ////===============================================================================================================
 
 "DOTA_Tooltip_ability_imba_wisp_tether"                          "TETHER"
-"DOTA_Tooltip_ability_imba_wisp_tether_description"              "Tethers Io to an allied unit, granting bonus movement speed to both. When Io restores health or mana, tethered units target gains a larger portion of that amount. The tether breaks when the allied unit moves too far away, or Io cancels the tether.\n<font color='#FF7800'>Entwine</font color='#FF7800'>: Enemies hit by tether have their movement and attack speed slowed."
+"DOTA_Tooltip_ability_imba_wisp_tether_description"              "Tethers Io to an allied unit, granting bonus movement speed to both. When Io restores health or mana, tethered units target gains a larger portion of that amount. The tether breaks when the allied unit moves too far away, or Io cancels the tether. \n<font color='#FF7800'>Entwine</font color='#FF7800'>: Enemies hit by tether have their movement and attack speed slowed."
 "DOTA_Tooltip_ability_imba_wisp_tether_Note0"                   "If you try to tether a unit that is 1800 distance or futher away from Io, he will latch on and pull himself close to the tethered unit (to a distance of 700). The tethered unit will heal faster."
 "DOTA_Tooltip_ability_imba_wisp_tether_Note1"                   "Pierces ally magic immunity."
 "DOTA_Tooltip_ability_imba_wisp_tether_lore"                    "The benevolent touch of Io brings strength from between the planes."
 "DOTA_Tooltip_ability_imba_wisp_tether_radius"            		"MAX TETHER DISTANCE:"
 "DOTA_Tooltip_ability_imba_wisp_tether_movespeed"               "%MOVEMENT SPEED BONUS:"
-"DOTA_Tooltip_ability_imba_wisp_tether_tooltip_heal_amp"         		"%HP/MANA AMP:"
-"DOTA_Tooltip_ability_imba_wisp_tether_attackslow_tooltip"          			"%TETHER SLOW:"
+"DOTA_Tooltip_ability_imba_wisp_tether_heal_amp"         		"HP/MANA AMP:"
+"DOTA_Tooltip_ability_imba_wisp_tether_attackslow_tooltip"		"SLOW:"
 "DOTA_Tooltip_ability_imba_wisp_tether_stun_duration" 			"SLOW DURATION:"
 
 "DOTA_Tooltip_modifier_imba_wisp_tether_ally"					"TETHERED"
@@ -46,9 +46,6 @@
 "DOTA_Tooltip_ability_imba_wisp_spirits_num_spririts"			"SPIRIT COUNT:"
 "DOTA_Tooltip_ability_imba_wisp_spirits_spirit_debuff_duration"	"DISARM/SILENCE DURATION:"
 "DOTA_Tooltip_ability_imba_wisp_spirits_aghanim_description"	"Living Spirits: Gives %aghanim_spirits_vision_range% flying vision radius to Spirits."
-
-"DOTA_Tooltip_modifier_imba_wisp_spirits"						"SPIRITS"
-"DOTA_Tooltip_modifier_imba_wisp_spirits_description"			"Surrounded by friendly <font color='#FF7800'>Spirits</font color='#FF7800'>."
 
 ////===============================================================================================================
 // Wisp's Spirit Toggle
@@ -109,12 +106,12 @@
 ////===============================================================================================================
 "DOTA_Tooltip_Ability_special_bonus_imba_wisp_1"												"+2 Additional Spirits"
 "DOTA_Tooltip_Ability_special_bonus_imba_wisp_2"												"+50% Spirit Impact Damage"
-"DOTA_Tooltip_Ability_special_bonus_imba_wisp_3"												"Overcharge Bonuses are 50% Stronger"
-"DOTA_Tooltip_Ability_special_bonus_imba_wisp_3_description"									"Bonuses given to attack speed, attack range, missile speed, cast speed and damage reduction are 50% stronger."
+"DOTA_Tooltip_Ability_special_bonus_imba_wisp_3"												"+50% Overcharge Bonus"
+"DOTA_Tooltip_Ability_special_bonus_imba_wisp_3_description"									"Overcharge grants +50% additional attack speed, attack range, missile speed, cast speed and damage reduction."
 "DOTA_Tooltip_Ability_special_bonus_imba_wisp_4"												"Tether Grants Aghanim's Scepter Bonus"
 "DOTA_Tooltip_Ability_special_bonus_imba_wisp_5"												"Attacks Splash on Hit"
 "DOTA_Tooltip_Ability_special_bonus_imba_wisp_6"												"Attack Tethered Ally's Target"
 "DOTA_Tooltip_Ability_special_bonus_imba_wisp_7"												"Imba Overcharge"
-"DOTA_Tooltip_Ability_special_bonus_imba_wisp_7_description"									"Overcharge grants +5% health/mana regen.\nOvercharge health/mana drain is increased by 5%"
+"DOTA_Tooltip_Ability_special_bonus_imba_wisp_7_description"									"Overcharge grants +5% health/mana regen. \nOvercharge health/mana drain is increased by 5%"
 "DOTA_Tooltip_Ability_special_bonus_imba_wisp_8"												"Imba Tether"
-"DOTA_Tooltip_Ability_special_bonus_imba_wisp_8_description"									"Io and Tethered ally cannot be slowed.\nMovement speed nolonger capped!"
+"DOTA_Tooltip_Ability_special_bonus_imba_wisp_8_description"									"Io and Tethered ally cannot be slowed. \nMovement speed no longer capped!"
