@@ -75,7 +75,7 @@ function Mutation:ChooseMutation(type, table, count)
 			table[mutation] = true
 
 			if IsInToolsMode() then
-				IMBA_MUTATION["positive"] = "teammate_resurrection"
+				IMBA_MUTATION["positive"] = "super_blink"
 				IMBA_MUTATION["negative"] = "death_explosion"
 				IMBA_MUTATION["gift_exchange"] = "fast_runes"
 			end
