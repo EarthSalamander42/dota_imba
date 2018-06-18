@@ -736,6 +736,12 @@ function CCavern:OnBattlePointsEarned( nTeamNumber, nBattlePoints, szReason )
 
 			EmitSoundOnClient( "Plus.shards_tick", Hero:GetPlayerOwner() )
 
+
+			api.imba.event(api.events.cavern_xp, {
+				tostring(PlayerResource:GetSteamID(nPlayerID)),
+				tonumber(nBattlePoints)
+			})
+
 			-- COOKIES
 --			self.PlayerPointsData[nPlayerID]["points_earned"] = self.PlayerPointsData[nPlayerID]["points_earned"] + nBattlePoints
 --			self.EventMetaData[nPlayerID]["battle_points"] = self.PlayerPointsData[nPlayerID]["points_earned"]

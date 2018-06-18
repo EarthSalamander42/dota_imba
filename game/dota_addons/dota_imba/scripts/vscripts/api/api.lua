@@ -66,7 +66,8 @@ api.events = {
 	unit_spawned = 21,			-- (unit_name, steamid)
 	item_combined = 22,			-- (item_name, hero_name, steamid)
 	item_picked_up = 23,		-- (item_name, hero_name, steamid)
-	chat = 24	 				-- (steamid, text)
+	chat = 24,	 				-- (steamid, text)
+	cavern_xp = 25				-- (steamid, xp)
 }
 
 function api.request(endpoint, data, callback)
