@@ -128,6 +128,7 @@ function GameMode:OnGameRulesStateChange(keys)
 --							error = true
 --						else
 							if USE_TEAM_COURIER then
+								COURIER_TEAM = {}
 								COURIER_TEAM[2] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_radiant"):GetAbsOrigin(), true, nil, nil, 2)
 								COURIER_TEAM[3] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_dire"):GetAbsOrigin(), true, nil, nil, 3)
 							else

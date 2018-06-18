@@ -1343,6 +1343,7 @@ function CCavern:SetupCavernRules()
 	else
 		GameRules:SetCustomGameSetupTimeout( 0 )
 		GameRules:SetCustomGameSetupAutoLaunchDelay( 0 )
+--		GameRules:LockCustomGameSetupTeamAssignment(true)
 	end
 
 	GameRules:SetHeroRespawnEnabled( false )	
@@ -1450,8 +1451,15 @@ function CCavern:InitCavern()
 	self.TrapsPerDepth = CAVERN_TRAPS_PER_DEPTH
 	self.bBigCheeseDropped = false
 
-	self.bUseTeamSelect = true
-	self.bFillWithBots = false
+	self.bUseTeamSelect = false
+	if IsInToolsMode() then
+		self.bUseTeamSelect = true
+	end
+
+	self.bInvulnerable = false
+	if IsInToolsMode() then
+		self.bInvulnerable = true
+	end
 
 	self.GameMode = GameRules:GetGameModeEntity()
 	self:SetupAchievements()

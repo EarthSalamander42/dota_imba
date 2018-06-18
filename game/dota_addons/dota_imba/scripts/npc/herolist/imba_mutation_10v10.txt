@@ -12,7 +12,7 @@
 	"npc_dota_hero_bloodseeker" 		"1"
 	"npc_dota_hero_chen" 				"1"
 	"npc_dota_hero_crystal_maiden" 		"1"
-	"npc_dota_hero_dark_seer" 			"0"
+	"npc_dota_hero_dark_seer" 			"0" // 10v10 lag (ult)
 	"npc_dota_hero_dazzle"				"1"
 	"npc_dota_hero_dragon_knight" 		"1"
 	"npc_dota_hero_doom_bringer" 		"1"
@@ -21,7 +21,7 @@
 	"npc_dota_hero_enchantress" 		"1"
 	"npc_dota_hero_enigma" 				"1"
 	"npc_dota_hero_faceless_void" 		"1"
-	"npc_dota_hero_furion" 				"0"
+	"npc_dota_hero_furion" 				"0" // 10v10 lag
 	"npc_dota_hero_juggernaut" 			"1"
 	"npc_dota_hero_kunkka" 				"1"
 	"npc_dota_hero_leshrac" 			"1"
@@ -45,7 +45,7 @@
 	"npc_dota_hero_shadow_shaman" 		"1"
 	"npc_dota_hero_slardar" 			"1"
 	"npc_dota_hero_sniper" 				"1"
-	"npc_dota_hero_spectre" 			"0"
+	"npc_dota_hero_spectre" 			"0" // 10v10 lag (ult)
 	"npc_dota_hero_storm_spirit" 		"1"
 	"npc_dota_hero_sven" 				"1"
 	"npc_dota_hero_tidehunter" 			"1"
@@ -57,7 +57,7 @@
 	"npc_dota_hero_weaver" 				"1"
 	"npc_dota_hero_windrunner" 			"1"
 	"npc_dota_hero_witch_doctor" 		"1"
-	"npc_dota_hero_zuus" 				"0"
+	"npc_dota_hero_zuus" 				"1"
 	"npc_dota_hero_broodmother" 		"1"
 	"npc_dota_hero_skeleton_king" 		"1"
 	"npc_dota_hero_queenofpain" 		"1"
@@ -68,7 +68,7 @@
 	"npc_dota_hero_death_prophet" 		"1"
 	"npc_dota_hero_ursa" 				"1"
 	"npc_dota_hero_bounty_hunter" 		"1"
-	"npc_dota_hero_silencer" 			"0"
+	"npc_dota_hero_silencer" 			"1"
 	"npc_dota_hero_spirit_breaker" 		"1"
 	"npc_dota_hero_invoker" 			"1"
 	"npc_dota_hero_clinkz" 				"1"
@@ -77,7 +77,7 @@
 	"npc_dota_hero_lycan" 				"1"
 	"npc_dota_hero_lone_druid" 			"1"
 	"npc_dota_hero_brewmaster" 			"1"
-	"npc_dota_hero_phantom_lancer" 		"0"
+	"npc_dota_hero_phantom_lancer" 		"0" // 10v10 lag
 	"npc_dota_hero_treant" 				"1"
 	"npc_dota_hero_ogre_magi" 			"1"
 	"npc_dota_hero_chaos_knight" 		"1"
@@ -94,7 +94,7 @@
 	"npc_dota_hero_keeper_of_the_light" "1"
 	"npc_dota_hero_visage" 				"1"
 	"npc_dota_hero_meepo" 				"1"
-	"npc_dota_hero_magnataur" 			"0"
+	"npc_dota_hero_magnataur" 			"0" // 10v10 lag
 	"npc_dota_hero_centaur" 			"1"
 	"npc_dota_hero_slark" 				"1"
 	"npc_dota_hero_shredder" 			"1"

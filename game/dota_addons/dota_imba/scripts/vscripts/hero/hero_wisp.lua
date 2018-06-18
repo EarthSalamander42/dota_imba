@@ -29,7 +29,6 @@ LinkLuaModifier("modifier_imba_wisp_tether_latch", "hero/hero_wisp.lua", LUA_MOD
 LinkLuaModifier("modifier_imba_wisp_tether_slow", "hero/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_wisp_tether_slow_immune", "hero/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_wisp_tether_ally_attack", "hero/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_wisp_swap_spirits", "hero/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_wisp_tether:GetCustomCastErrorTarget(target)
 	if target == self:GetCaster() then
@@ -581,11 +580,10 @@ function modifier_imba_wisp_spirits:OnCreated(params)
 		self.slow_duration				= params.slow_duration
 		self.slow 						= params.slow
 
-		local swap_spirits = self:GetAbility():GetCaster():FindAbilityByName("imba_wisp_swap_spirits")
-		if swap_spirits:GetToggleState() == true then
+		if self:GetCaster():HasModifier("modifier_imba_wisp_swap_spirits_disarm") then
 			self.particle = "particles/units/heroes/hero_wisp/wisp_guardian_disarm.vpcf"
 			self:GetAbility():GetCaster().spirit_debuff = 1
-		else
+		elseif self:GetCaster():HasModifier("modifier_imba_wisp_swap_spirits_silence") then
 			self.particle = "particles/units/heroes/hero_wisp/wisp_guardian_silence.vpcf"
 			self:GetAbility():GetCaster().spirit_debuff = 0
 		end
@@ -1337,6 +1335,9 @@ function modifier_special_bonus_imba_wisp_5:OnAttackLanded( params )
 	end
 end
 
+LinkLuaModifier("modifier_imba_wisp_swap_spirits_disarm", "hero/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_wisp_swap_spirits_silence", "hero/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
+
 imba_wisp_swap_spirits = class({})
 
 function imba_wisp_swap_spirits:IsInnateAbility()
@@ -1344,27 +1345,35 @@ function imba_wisp_swap_spirits:IsInnateAbility()
 end
 
 function imba_wisp_swap_spirits:GetIntrinsicModifierName()
-	return "modifier_imba_wisp_swap_spirits"
+	return "modifier_imba_wisp_swap_spirits_silence"
 end
 
 function imba_wisp_swap_spirits:GetAbilityTextureName()
-	if self:GetCaster():HasModifier("modifier_imba_wisp_swap_spirits") then
+	if self:GetCaster():HasModifier("modifier_imba_wisp_swap_spirits_silence") then
 		return "custom/kunnka_tide_high"
-	else
+	elseif self:GetCaster():HasModifier("modifier_imba_wisp_swap_spirits_disarm") then
 		return "custom/kunnka_tide_red"
 	end
 end
 
 function imba_wisp_swap_spirits:OnSpellStart()
-	if self:GetCaster():HasModifier("modifier_imba_wisp_swap_spirits") then
-		self:GetCaster():RemoveModifierByName("modifier_imba_wisp_swap_spirits")
-	else
-		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_wisp_swap_spirits", {})
+	if self:GetCaster():HasModifier("modifier_imba_wisp_swap_spirits_disarm") then
+		self:GetCaster():RemoveModifierByName("modifier_imba_wisp_swap_spirits_disarm")
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_wisp_swap_spirits_silence", {})
+	elseif self:GetCaster():HasModifier("modifier_imba_wisp_swap_spirits_silence") then
+		self:GetCaster():RemoveModifierByName("modifier_imba_wisp_swap_spirits_silence")
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_wisp_swap_spirits_disarm", {})
 	end
 end
 
-modifier_imba_wisp_swap_spirits = class({})
+modifier_imba_wisp_swap_spirits_disarm = class({})
 
-function modifier_imba_wisp_swap_spirits:IsHidden() return true end
-function modifier_imba_wisp_swap_spirits:IsPurgable() return false end
-function modifier_imba_wisp_swap_spirits:RemoveOnDeath() return false end
+function modifier_imba_wisp_swap_spirits_disarm:IsHidden() return true end
+function modifier_imba_wisp_swap_spirits_disarm:IsPurgable() return false end
+function modifier_imba_wisp_swap_spirits_disarm:RemoveOnDeath() return false end
+
+modifier_imba_wisp_swap_spirits_silence = class({})
+
+function modifier_imba_wisp_swap_spirits_silence:IsHidden() return true end
+function modifier_imba_wisp_swap_spirits_silence:IsPurgable() return false end
+function modifier_imba_wisp_swap_spirits_silence:RemoveOnDeath() return false end

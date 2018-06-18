@@ -37,13 +37,13 @@
 "DOTA_Tooltip_ability_imba_pudge_flesh_heap_range"					"RANGE:"
 
 "DOTA_Tooltip_ability_imba_pudge_sharp_hook"							"Power Hook"
-"DOTA_Tooltip_ability_imba_pudge_sharp_hook_Description"				"Activate to make Meat Hook lose range and speed, but deal more damage.\nEach time Pudge levels up, he gains another stack of Power Hook.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> Causes Power Hook to also decrease Meat Hook's cooldown by %cooldown_scepter% seconds per stack, up to a minimum of %cooldown_cap_scepter% seconds."
+"DOTA_Tooltip_ability_imba_pudge_sharp_hook_Description"				"Activate to make Meat Hook lose range and speed, but deal more damage.\nEach time Pudge levels up, he gains another stack of Power Hook."
 "DOTA_Tooltip_ability_imba_pudge_sharp_hook_Lore"						"Pudge's heavy-duty 'Fat Man' hook possesses unbelievable destructive force."
 "DOTA_Tooltip_ability_imba_pudge_sharp_hook_tooltip_stacks_per_second"	"STACKS CONVERTED PER SECOND:"
 "DOTA_Tooltip_ability_imba_pudge_sharp_hook_stack_damage"				"BONUS DAMAGE PER STACK:"
 
 "DOTA_Tooltip_ability_imba_pudge_light_hook"							"Swift Hook"
-"DOTA_Tooltip_ability_imba_pudge_light_hook_Description"				"Activate to make Meat Hook deal less damage, but travel farther and faster.\nEach time Pudge levels up, he gains another stack of Swift Hook.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> Causes Swift Hook to also increase Meat Hook's damage by %damage_scepter% per stack."
+"DOTA_Tooltip_ability_imba_pudge_light_hook_Description"				"Activate to make Meat Hook deal less damage, but travel farther and faster.\nEach time Pudge levels up, he gains another stack of Swift Hook."
 "DOTA_Tooltip_ability_imba_pudge_light_hook_Lore"						"Pudge's lightweight 'fishing' hook can reach incredible distances."
 "DOTA_Tooltip_ability_imba_pudge_light_hook_tooltip_stacks_per_second"	"STACKS CONVERTED PER SECOND:"
 "DOTA_Tooltip_ability_imba_pudge_light_hook_stack_speed"				"BONUS SPEED PER STACK:"

@@ -42861,8 +42861,8 @@
 		"AbilityTextureName"			"earth_spirit_rolling_boulder"
 		
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_NONE"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_NONE"
+//		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_NONE"
+//		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_NONE"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		
 		// Casting
@@ -43043,7 +43043,7 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 	//	"AbilityBehavior"				Defined in the Lua script
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_NONE"
+//		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_NONE"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		
 		// Casting
@@ -43500,7 +43500,7 @@
 		"BaseClass"                     "ability_lua"
 		"AbilityTextureName"            "terrorblade_reflection"
 		"ScriptFile"                    "components/cavern/abilities/building_remove_invuln"
-		
+
 		"IsOnCastBar"                   "0"
 
 		"MaxLevel"                      "1"

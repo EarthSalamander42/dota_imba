@@ -34,8 +34,8 @@ function modifier_mutation_death_explosion:OnDeath(keys)
 		ParticleManager:ReleaseParticleIndex(particle_pre_blast_fx)
 
 		local game_time = math.min(GameRules:GetDOTATime(false, false) / 60, 30)
-		self.damage = self.damage + (100 * game_time)
-		print("Damage dealt:", self.damage)
+		game_time = game_time * 100
+		self.damage = self.damage + game_time
 
 		Timers:CreateTimer(self.delay, function()
 			EmitSoundOn("Hero_Pugna.NetherBlastPreCast", self:GetParent())
@@ -49,17 +49,15 @@ function modifier_mutation_death_explosion:OnDeath(keys)
 			local enemies = FindUnitsInRadius(self:GetParent():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 
 			for _, enemy in pairs(enemies) do
-				local blast_damage = self.damage
-
 				-- If the enemy is a building, adjust damage.
 				if enemy:IsBuilding() then
-					blast_damage = blast_damage * self.damage_buildings_pct * 0.01
+					self.damage = self.damage * self.damage_buildings_pct * 0.01
 				end
 
 				-- Deal damage
 				local damageTable = {
 					victim = enemy,
-					damage = blast_damage,
+					damage = self.damage,
 					damage_type = DAMAGE_TYPE_MAGICAL,
 					attacker = self:GetParent(),
 				}
@@ -67,5 +65,7 @@ function modifier_mutation_death_explosion:OnDeath(keys)
 				ApplyDamage(damageTable)
 			end
 		end)
+
+		self.damage = 600
 	end
 end

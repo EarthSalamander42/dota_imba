@@ -13,14 +13,15 @@ end
 POSITIVE_MUTATION_LIST = {}
 -- VANILLA
 POSITIVE_MUTATION_LIST["killstreak_power"] = false
-POSITIVE_MUTATION_LIST["jump_start"] = false
+-- POSITIVE_MUTATION_LIST["jump_start"] = false
 POSITIVE_MUTATION_LIST["teammate_resurrection"] = false
+POSITIVE_MUTATION_LIST["super_blink"] = false
+POSITIVE_MUTATION_LIST["pocket_tower"] = false
 
 -- Not coded/approved yet
 -- POSITIVE_MUTATION_LIST["damage_reduction"] = false
 -- POSITIVE_MUTATION_LIST["stationary_damage_reduction"] = false
 -- POSITIVE_MUTATION_LIST["super_runes"] = false
--- POSITIVE_MUTATION_LIST["super_blink"] = false
 
 -- IMBA
 POSITIVE_MUTATION_LIST["frantic"] = false
@@ -34,7 +35,7 @@ POSITIVE_MUTATION_LIST["slark_mode"] = false
 NEGATIVE_MUTATION_LIST = {}
 -- VANILLA
 NEGATIVE_MUTATION_LIST["death_explosion"] = false
-NEGATIVE_MUTATION_LIST["death_gold_drop"] = false
+-- NEGATIVE_MUTATION_LIST["death_gold_drop"] = false
 -- NEGATIVE_MUTATION_LIST["no_health_bar"] = false
 NEGATIVE_MUTATION_LIST["periodic_spellcast"] = false
 

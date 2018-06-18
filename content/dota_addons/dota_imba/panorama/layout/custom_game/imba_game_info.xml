@@ -4,8 +4,11 @@
 		<include src="file://{resources}/styles/custom_game/imba_game_info.css" />
 	</styles>
 
-	<Panel class="OverthrowGameInfo">
+	<scripts>
+		<include src="file://{resources}/scripts/custom_game/imba_game_info.js" />
+	</scripts>
 
+	<Panel class="ImbaGameInfo">
 		<Panel id="Title">
 			<Image id="ImbaTitle" class="SeqImg" src="file://{images}/custom_game/tutorial/imba.png" />
 		</Panel>
@@ -22,7 +25,7 @@
 			</Panel>
 			<Image id="HeroesImage" src="file://{images}/custom_game/imba-blue.png" />
 		</Panel>
-
+<!--
 		<Image id="AbilitiesImage" src="file://{images}/custom_game/tutorial/Tutorial02.png" />
 
 		<Panel id="Items" class="InfoBox">
@@ -68,7 +71,6 @@
 		</Panel>
 
 		<Label id="End" class="Header" html="true" text="#imba_tutorial_end" />
-
+	-->
 	</Panel>
 </root>
-

@@ -64,21 +64,19 @@ function GameMode:OnHeroFirstSpawn(hero)
 		CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(hero:GetPlayerID()), "dota_hud", {show = false})
 	elseif hero:GetUnitName() == "npc_dota_hero_arc_warden" then
 		-- Arc Warden clone handling
-		if npc:FindAbilityByName("arc_warden_tempest_double") and not npc.first_tempest_double_cast and npc:IsRealHero() then
-			if HeroSelection.playerPickState[npc:GetPlayerID()].pick_state ~= "selecting_hero" then
-				npc.first_tempest_double_cast = true
-				local tempest_double_ability = npc:FindAbilityByName("arc_warden_tempest_double")
-				tempest_double_ability:SetLevel(4)
-				Timers:CreateTimer(0.1, function()
-					if not npc:HasModifier("modifier_arc_warden_tempest_double") then
-						tempest_double_ability:CastAbility()
-						tempest_double_ability:SetLevel(1)
-					end
-				end)
-			end
+		if hero:FindAbilityByName("arc_warden_tempest_double") and not hero.first_tempest_double_cast and hero:IsRealHero() then
+			hero.first_tempest_double_cast = true
+			local tempest_double_ability = hero:FindAbilityByName("arc_warden_tempest_double")
+			tempest_double_ability:SetLevel(4)
+			Timers:CreateTimer(0.1, function()
+				if not hero:HasModifier("modifier_arc_warden_tempest_double") then
+					tempest_double_ability:CastAbility()
+					tempest_double_ability:SetLevel(1)
+				end
+			end)
 		end
 
-		if npc:HasModifier("modifier_arc_warden_tempest_double") then
+		if hero:HasModifier("modifier_arc_warden_tempest_double") then
 			-- List of modifiers which carry over from the main hero to the clone
 			local clone_shared_buffs = {
 				"modifier_imba_moon_shard_stacks_dummy",
@@ -89,7 +87,7 @@ function GameMode:OnHeroFirstSpawn(hero)
 			}
 
 			-- Iterate through the main hero's potential modifiers
-			local main_hero = npc:GetOwner():GetAssignedHero()
+			local main_hero = hero:GetOwner():GetAssignedHero()
 			for _, shared_buff in pairs(clone_shared_buffs) do
 				-- If the main hero has this modifier, copy it to the clone
 				if main_hero:HasModifier(shared_buff) then
@@ -98,21 +96,21 @@ function GameMode:OnHeroFirstSpawn(hero)
 
 					-- If a source ability was found, use it
 					if shared_buff_ability then
-						shared_buff_ability:ApplyDataDrivenModifier(main_hero, npc, shared_buff, {})
+						shared_buff_ability:ApplyDataDrivenModifier(main_hero, hero, shared_buff, {})
 
 						-- Else, it's a consumable item modifier. Create a dummy item to use the ability from.
 					else
 						-- Moon Shard
 						if string.find(shared_buff, "moon_shard") then
 							-- Create dummy item
-							local dummy_item = CreateItem("item_imba_moon_shard", npc, npc)
+							local dummy_item = CreateItem("item_imba_moon_shard", hero, hero)
 							main_hero:AddItem(dummy_item)
 
 							-- Fetch dummy item's ability handle
 							for i = 0, 11 do
 								local current_item = main_hero:GetItemInSlot(i)
 								if current_item and current_item:GetName() == "item_imba_moon_shard" then
-									current_item:ApplyDataDrivenModifier(main_hero, npc, shared_buff, {})
+									current_item:ApplyDataDrivenModifier(main_hero, hero, shared_buff, {})
 									break
 								end
 							end
@@ -122,14 +120,14 @@ function GameMode:OnHeroFirstSpawn(hero)
 						-- Soul of Truth
 						if shared_buff == "modifier_item_imba_soul_of_truth" then
 							-- Create dummy item
-							local dummy_item = CreateItem("item_imba_soul_of_truth", npc, npc)
+							local dummy_item = CreateItem("item_imba_soul_of_truth", hero, hero)
 							main_hero:AddItem(dummy_item)
 
 							-- Fetch dummy item's ability handle
 							for i = 0, 11 do
 								local current_item = main_hero:GetItemInSlot(i)
 								if current_item and current_item:GetName() == "item_imba_soul_of_truth" then
-									current_item:ApplyDataDrivenModifier(main_hero, npc, shared_buff, {})
+									current_item:ApplyDataDrivenModifier(main_hero, hero, shared_buff, {})
 									break
 								end
 							end
@@ -139,7 +137,7 @@ function GameMode:OnHeroFirstSpawn(hero)
 
 					-- Apply any stacks if relevant
 					if main_hero:GetModifierStackCount(shared_buff, nil) > 0 then
-						npc:SetModifierStackCount(shared_buff, main_hero, main_hero:GetModifierStackCount(shared_buff, nil))
+						hero:SetModifierStackCount(shared_buff, main_hero, main_hero:GetModifierStackCount(shared_buff, nil))
 					end
 				end
 			end

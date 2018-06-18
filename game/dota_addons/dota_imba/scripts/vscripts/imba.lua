@@ -1980,9 +1980,6 @@ function GameMode:OnThink()
 		end
 	end
 
-	-- Picking Screen voice alert
-	if GetMapName() == "imba_tournament" then return 1 end
-
 	if i == nil then i = AP_GAME_TIME -1
 	elseif i < 0 then
 		if PICKING_SCREEN_OVER == false then
@@ -1990,7 +1987,11 @@ function GameMode:OnThink()
 		end
 
 		return 1
+	else
+		i = i - 1
 	end
+
+--	print("i = "..i)
 
 	return 1
 end

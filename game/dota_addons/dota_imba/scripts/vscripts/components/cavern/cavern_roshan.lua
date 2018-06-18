@@ -19,6 +19,13 @@ function CCavernRoshan:constructor( Room )
 	self.nNextWarnRoomIdx = nil
 	self.bMoveInProgress = false
 	self.bInAnteChamber = true
+
+	self.doors = {
+		"npc_dota_cavern_gate_destructible_tier1",
+		"npc_dota_cavern_gate_destructible_tier2",
+		"npc_dota_cavern_gate_destructible_tier3",
+		"npc_dota_cavern_gate_blocked",
+	}
 end
 
 --------------------------------------------------------------------
@@ -267,6 +274,13 @@ function CCavernRoshan:RoshanThink()
 
 	if self.hRoshan == nil then
 		return
+	end
+
+	for _, door in pairs(self.doors) do
+		local Units = FindUnitsInRadius( DOTA_TEAM_BADGUYS, self.hRoshan:GetAbsOrigin(), nil, 400, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP + DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false )
+		for _, unit in pairs(Units) do
+			unit:ForceKill(false)
+		end
 	end
 
 	if self.bMoveInProgress then

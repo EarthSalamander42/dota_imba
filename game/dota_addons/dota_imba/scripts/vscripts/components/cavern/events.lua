@@ -115,6 +115,10 @@ function CCavern:OnNPCSpawned_PlayerHero( event )
 		if hPlayerHero.bFirstSpawnComplete == true and hPlayerHero:IsRealHero() and hPlayerHero:IsTempestDouble() == false then
 			FindClearSpaceForUnit( hPlayerHero, hPlayerHero.vDeathPos, true )
 		end
+
+		if self.bInvulnerable then
+			hPlayerHero:AddNewModifier(hPlayerHero, nil, "modifier_invulnerable", {duration=30.0})
+		end
 	end
 end
 
@@ -249,7 +253,6 @@ function CCavern:OnEntityKilled_PlayerHero( event )
 			end
 		end
 
-
 		local newItem = CreateItem( "item_tombstone", killedHero , killedHero )
 		newItem:SetPurchaseTime( 0 )
 		newItem:SetPurchaser( killedHero )
@@ -293,7 +296,6 @@ function CCavern:OnHeroDefeated( Hero )
 		return
 	end
 
-
 	Hero.bEliminated = true
 
 	local netTable = {}
@@ -322,12 +324,17 @@ function CCavern:OnHeroDefeated( Hero )
 		FireGameEvent( "dota_combat_event_message", gameEvent )
 	end
 
-	local bDefeatTeam = true
+	local bDefeatTeam = false
 	for _,HeroInTable in pairs ( self.HeroesByTeam[Hero:GetTeamNumber()] ) do
-		if HeroInTable and HeroInTable.bEliminated == false then
-			bDefeatTeam = false
+		if HeroInTable then
+			if HeroInTable.bEliminated == false then
+				bDefeatTeam = false
+			else
+				bDefeatTeam = true
+			end
 		end
 	end
+
 	if bDefeatTeam then
 		self:OnTeamDefeated( Hero:GetTeamNumber() )
 	end
@@ -354,25 +361,35 @@ end
 
 function CCavern:OnTeamDefeated( nTeam )
 	--log.debug( "OnTeamDefeated" )
-	local nBattlePoints = 0
-	local data = {}
-	for _,Hero in pairs ( self.HeroesByTeam[nTeam] ) do
-		self.EventMetaData[Hero:GetPlayerOwnerID()]["team_position"] = self.nNextTeamFinishPosition
-		self.EventMetaData[Hero:GetPlayerOwnerID()]["team_id"] = nTeam
-		self.EventMetaData[Hero:GetPlayerOwnerID()]["level"] = PlayerResource:GetLevel( Hero:GetPlayerOwnerID() )
-		self.EventMetaData[Hero:GetPlayerOwnerID()]["net_worth"] = PlayerResource:GetNetWorth( Hero:GetPlayerOwnerID() )
-		data["big_cheese"] = self.EventMetaData[Hero:GetPlayerOwnerID()]["points_big_cheese"] or 0
-		data["small_cheese"] = self.EventMetaData[Hero:GetPlayerOwnerID()]["points_small_cheese"] or 0
-		data["eliminations"] = self.EventMetaData[Hero:GetPlayerOwnerID()]["points_elimination"] or 0
+--	local nBattlePoints = 0
+--	local data = {}
+--	for _,Hero in pairs ( self.HeroesByTeam[nTeam] ) do
+--		self.EventMetaData[Hero:GetPlayerOwnerID()]["team_position"] = self.nNextTeamFinishPosition
+--		self.EventMetaData[Hero:GetPlayerOwnerID()]["team_id"] = nTeam
+--		self.EventMetaData[Hero:GetPlayerOwnerID()]["level"] = PlayerResource:GetLevel( Hero:GetPlayerOwnerID() )
+--		self.EventMetaData[Hero:GetPlayerOwnerID()]["net_worth"] = PlayerResource:GetNetWorth( Hero:GetPlayerOwnerID() )
+--		data["big_cheese"] = self.EventMetaData[Hero:GetPlayerOwnerID()]["points_big_cheese"] or 0
+--		data["small_cheese"] = self.EventMetaData[Hero:GetPlayerOwnerID()]["points_small_cheese"] or 0
+--		data["eliminations"] = self.EventMetaData[Hero:GetPlayerOwnerID()]["points_elimination"] or 0
 	--	log.debug( "Player " .. Hero:GetPlayerOwnerID() .. " Networth: " .. PlayerResource:GetNetWorth( Hero:GetPlayerOwnerID() ) )
 	--	PlayerResource:SetCustomTeamAssignment( Hero:GetPlayerOwnerID(), 1 ) --Spectator
-	end
-	log.debug( "Team " .. nTeam .. " has finished in position " .. self.nNextTeamFinishPosition .. " and earned " .. nBattlePoints )
-	
-	
-	data["finish_position"] = self.nNextTeamFinishPosition
+--	end
+
+--	log.debug( "Team " .. nTeam .. " has finished in position " .. self.nNextTeamFinishPosition .. " and earned " .. nBattlePoints )
+
+	AddFOWViewer(nTeam, Vector(-6200, 6200, 0), 25000, 9999.9, false)
+	AddFOWViewer(nTeam, Vector(0, 6200, 0), 25000, 9999.9, false)
+	AddFOWViewer(nTeam, Vector(6200, 6200, 0), 25000, 9999.9, false)
+	AddFOWViewer(nTeam, Vector(-6200, 0, 0), 25000, 9999.9, false)
+	AddFOWViewer(nTeam, Vector(0, 0, 0), 25000, 9999.9, false)
+	AddFOWViewer(nTeam, Vector(6200, 0, 0), 25000, 9999.9, false)
+	AddFOWViewer(nTeam, Vector(-6200, -6200, 0), 25000, 9999.9, false)
+	AddFOWViewer(nTeam, Vector(0, -6200, 0), 25000, 9999.9, false)
+	AddFOWViewer(nTeam, Vector(6200, -6200, 0), 25000, 9999.9, false)
+
+--	data["finish_position"] = self.nNextTeamFinishPosition
 	CustomGameEventManager:Send_ServerToTeam( nTeam, "on_team_defeated", data ) 
-	self.nNextTeamFinishPosition = self.nNextTeamFinishPosition - 1
+--	self.nNextTeamFinishPosition = self.nNextTeamFinishPosition - 1
 end
 
 ---------------------------------------------------------
