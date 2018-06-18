@@ -567,7 +567,7 @@ function modifier_imba_wisp_spirits:OnCreated(params)
 		self.spirit_turn_rate			= params.spirit_turn_rate
 		self.vision_radius				= params.vision_radius
 		self.vision_duration			= params.vision_duration
-		self.creep_damage 				= params.creep_damage
+		self.creep_damage 				= params.creep_damage * FrameTime()
 		self.hero_damage				= params.hero_damage
 		self.explosion_damage			= params.explosion_damage
 		self.slow_duration				= params.slow_duration
