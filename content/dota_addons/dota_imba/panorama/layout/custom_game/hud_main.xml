@@ -5,14 +5,15 @@
   	<include src="s2r://panorama/styles/hudstyles.vcss_c"/>
   	<include src="s2r://panorama/styles/hud/hud_reborn.vcss_c" />	
   	  
-  	<include src="s2r://panorama/styles/custom_game/hud_main.vcss_c" />
-    <include src="s2r://panorama/styles/custom_game/cavern_game_info.vcss_c" />  
+  	<include src="s2r://panorama/styles/custom_game/hud_main.css" />
+    <include src="s2r://panorama/styles/custom_game/cavern_game_info.css" />  
   </styles>
 
   <scripts>
-  	<include src="s2r://panorama/scripts/custom_game/hud_main.vjs_c" />
+  	<include src="s2r://panorama/scripts/custom_game/hud_main.js" />
   	<include src="s2r://panorama/scripts/util.vjs_c" />
     <include src="s2r://panorama/scripts/sequence_actions.vjs_c" />
+    <include src="file://{resources}/scripts/custom_game/util.js" />
   </scripts>
 
   <Panel hittest="false" class="CustomHudRoot">

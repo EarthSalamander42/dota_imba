@@ -134,6 +134,7 @@ function ShowTeamDefeatedPanel()
 function OnTeamDefeated( data )
 {
 	g_TeamDefeatedData = data;
+	FindDotaHudElement('HudChat').DeleteAsync(0);
 	$.Schedule( 5.0, ShowTeamDefeatedPanel );
 }
 
@@ -146,6 +147,13 @@ function ShowTutorial() {
 $.Schedule(1.0, HideTutorial)
 
 function HideTutorial() {
+	if ($.GetContextPanel()) {
+		if (Game.GetMapInfo().map_display_name != "cavern") {
+			$.GetContextPanel().DeleteAsync(0)
+			return;
+		}
+	}
+
 	if (SHOW_TUTORIAL == true) {
 		return;
 	} else {

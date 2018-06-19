@@ -219,7 +219,8 @@ function CCavernEncounter:Cleanup()
 	self.hUnits = {}
 	self.hCreeps = {}
 	self.bActive = false
-	log.debug( "Stopping encounter " .. self:GetEncounterName() .. " in room " .. self.hRoom:GetRoomID() )
+
+--	log.debug( "Stopping encounter " .. self:GetEncounterName() .. " in room " .. self.hRoom:GetRoomID() )
 end
 
 

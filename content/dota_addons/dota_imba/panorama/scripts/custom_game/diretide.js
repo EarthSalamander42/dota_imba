@@ -36,4 +36,10 @@ function HideRoshanBar(args) {
 	GameEvents.Subscribe("update_score", UpdateScoreUI);
 	GameEvents.Subscribe("show_roshan_hp", ShowRoshanBar);
 	GameEvents.Subscribe("hide_roshan_hp", HideRoshanBar);
+
+	if (Game.GetMapInfo().map_display_name != "cavern" && Game.GetMapInfo().map_display_name != "imba_overthrow") {
+		return;
+	} else {
+		$.GetContextPanel().DeleteAsync(0)
+	}
 })();

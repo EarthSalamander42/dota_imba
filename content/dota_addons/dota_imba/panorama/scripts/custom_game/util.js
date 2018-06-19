@@ -194,7 +194,8 @@ function OverrideTopBarColor() {
 	var colors = CustomNetTables.GetTableValue("game_options", "player_colors")
 
 	for (var id in colors) {
-		if (!Players.GetTeam(parseInt(id))) {return $.Msg("No player for this ID, stop loop.")};
+//		if (!Players.GetTeam(parseInt(id))) {return $.Msg("No player for this ID, stop loop.")};
+		if (!Players.GetTeam(parseInt(id))) {return};
 		var team = "Radiant"
 
 		if (Players.GetTeam(parseInt(id)) == 3) {
@@ -202,7 +203,7 @@ function OverrideTopBarColor() {
 		}
 
 		var panel = FindDotaHudElement(team + "Player" + id)
-		$.Msg(id)
+//		$.Msg(id)
 		panel.FindChildTraverse('PlayerColor').style.backgroundColor = colors[id];
 	}    
 }

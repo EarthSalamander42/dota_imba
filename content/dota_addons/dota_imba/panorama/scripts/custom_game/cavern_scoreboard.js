@@ -142,8 +142,6 @@ function HideScoreboard() {
 		return;
 	} else {
 		// .CavernTopBar
-		$.GetContextPanel().style.visibility = "collapse";
+		$.GetContextPanel().DeleteAsync(0)
 	}
-
-	$.Schedule(1.0, HideScoreboard)
 }

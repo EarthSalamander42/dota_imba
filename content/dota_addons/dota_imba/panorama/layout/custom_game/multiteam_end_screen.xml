@@ -225,7 +225,7 @@
 			</Panel>
 		</Panel>
 		<Panel id="es-buttons">
-			<Button id="es-buttons-survey" onactivate="DOTADisplayURL('https://goo.gl/2Z4DBv');">
+			<Button id="es-buttons-survey" onactivate="DOTADisplayURL('https://www.patreon.com/xherosiege');">
 				<Label text="Support us on Patreon!" />
 			</Button>
 			<Button id="es-buttons-website" onactivate="DOTADisplayURL('https://preview.dota2imba.org/statistics/rankings');">
