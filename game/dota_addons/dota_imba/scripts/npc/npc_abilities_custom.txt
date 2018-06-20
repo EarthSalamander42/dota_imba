@@ -42784,7 +42784,7 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0.01"
-		"AbilityCooldown"				"22 18 14 10"
+		"AbilityCooldown"				"16 13 10 7"
 		"AbilityManaCost"				"100"
 
 		// Precache
@@ -42814,7 +42814,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"50 100 150 200"				
+				"damage"				"60 120 180 240"				
 			}
 			"04"
 			{
@@ -42839,7 +42839,7 @@
 			"08"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"earths_mark_duration"	"5"
+				"earths_mark_duration"	"10"
 			}
 			"9"
 			{
@@ -42929,7 +42929,7 @@
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"100"				
+				"damage"				"100 150 200 250"				
 			}
 			"10"
 			{
@@ -42939,12 +42939,12 @@
 			"1"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"earths_mark_duration"			"5"
+				"earths_mark_duration"			"10"
 			}
 			"12"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"disarm_duration_per_mark"		"0.25"
+				"disarm_duration_per_mark"		"0.5"
 			}
 		}
 	}
@@ -43018,7 +43018,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"earths_mark_duration"	"5"
+				"earths_mark_duration"	"10"
 			}
 			"08"
 			{
@@ -43085,7 +43085,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_per_sec"			"50 75 100"				
+				"damage_per_sec"			"75 150 225"				
 			}
 			"05"
 			{
@@ -43105,7 +43105,7 @@
 			"08"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"earths_mark_duration"		"5"
+				"earths_mark_duration"		"10"
 			}
 			"09"
 			{
@@ -43174,11 +43174,11 @@
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"earths_mark_duration"	"5"
+				"earths_mark_duration"	"10"
 			}
 		}
 	}
-	
+
 	//=================================================================================================================
 	// Earth talent 1: Remnants provide smaller vision instead of the skill making area visible
 	//=================================================================================================================
@@ -45976,7 +45976,7 @@
 			"03"
 			{
 				"var_type"              "FIELD_FLOAT"
-				"damage"                "200 350 500 650"
+				"damage"                "400 700 1000 1300"
 				"levelkey"              "exortlevel"
 			}
 			"04"

@@ -40,7 +40,7 @@ CAPTAINS_MODE_RESERVE_TIME = 130          -- total bonus time that can be used t
 
 PRE_GAME_TIME = 90.0
 if GetMapName() == "cavern" then
-	PRE_GAME_TIME = 30.0
+	PRE_GAME_TIME = 45.0
 end
 PRE_GAME_TIME = PRE_GAME_TIME + AP_GAME_TIME	-- How long after people select their heroes should the horn blow and the game start?
 POST_GAME_TIME = 600.0						-- How long should we let people look at the scoreboard before closing the server automatically?
@@ -607,6 +607,7 @@ RESTRICT_FOUNTAIN_UNITS = {
 	"npc_imba_techies_proximity_mine",
 	"npc_imba_techies_proximity_mine_big_boom",
 	"npc_imba_techies_stasis_trap",
+	"npc_dota_zeus_cloud",
 }
 
 MORPHLING_RESTRICTED_MODIFIERS = {
