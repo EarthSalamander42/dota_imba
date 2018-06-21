@@ -552,12 +552,17 @@ function onPlayerStatChange(table, key, data) {
 }
 
 function SetupIMRAverage() {
+	var radiant_count = 0
+	var dire_count = 0
+
 	$.Each( radiantPlayers, function( player ) {
 		var plyData = CustomNetTables.GetTableValue("player_table", player)
 		if (currentMap == "imba_ranked_5v5") {
 			radiant_imr = radiant_imr + plyData.IMR_5v5
+			radiant_count = radiant_count + 1
 		} else {
 			radiant_imr = radiant_imr + plyData.IMR_10v10
+			radiant_count = radiant_count + 1
 		}
 	})
 
@@ -565,15 +570,17 @@ function SetupIMRAverage() {
 		var plyData = CustomNetTables.GetTableValue("player_table", player)
 		if (currentMap == "imba_ranked_5v5") {
 			dire_imr = dire_imr + plyData.IMR_5v5
+			dire_count = dire_count + 1
 		} else {
 			dire_imr = dire_imr + plyData.IMR_10v10
+			dire_count = dire_count + 1
 		}
 	})
 
 	$("#RadiantIMR").style.visibility = "visible";
 	$("#DireIMR").style.visibility = "visible";
-	$("#RadiantIMR_label").text = "Average IMR: " + radiant_imr.toFixed(0);
-	$("#DireIMR_label").text = "Average IMR: " + dire_imr.toFixed(0);
+	$("#RadiantIMR_label").text = "Average IMR: " + radiant_imr.toFixed(0) / radiant_count;
+	$("#DireIMR_label").text = "Average IMR: " + dire_imr.toFixed(0) / dire_count;
 }
 
 function Setup1v1() {
