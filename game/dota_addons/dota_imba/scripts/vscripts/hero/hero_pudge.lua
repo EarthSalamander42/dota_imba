@@ -939,9 +939,10 @@ function modifier_imba_rot_slow:IsStunDebuff() return false end
 
 function modifier_imba_rot_slow:DeclareFunctions()
 	local funcs =
-		{
-			MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-		}
+	{
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+	}
+
 	return funcs
 end
 
@@ -968,31 +969,13 @@ end
 
 modifier_imba_pudge_flesh_heap_handler = class({})
 function modifier_imba_pudge_flesh_heap_handler:IsHidden() return true end
-function modifier_imba_pudge_flesh_heap_handler:DeclareFunctions()
-	local decfuncs = {
-		MODIFIER_EVENT_ON_HERO_KILLED
-	}
-
-	return decfuncs
-end
-
-function modifier_imba_pudge_flesh_heap_handler:OnHeroKilled(params)
-	if IsServer() then
-		-- is it pudge who kills?
-		if params.unit:IsRealHero() and params.unit == self:GetCaster() and params.unit:GetTeam() == self:GetCaster():GetTeam() then
-			local current_stacks = self:GetStackCount()
-			if current_stacks < self.max_stacks then
-				self:SetStackCount(current_stacks + 1)
-			end
-		end
-	end
-end
 
 function modifier_imba_pudge_flesh_heap_handler:OnCreated()
 	if self:GetCaster():IsIllusion() then self:Destroy() return end
 
 	if IsServer() then
 		self.max_stacks = self:GetAbility():GetSpecialValueFor("max_stacks")
+		print("Hook icon:", self:GetCaster().pudge_arcana)
 		if self:GetCaster().pudge_arcana == nil then
 			self:SetStackCount(0)
 		else
@@ -1003,6 +986,7 @@ function modifier_imba_pudge_flesh_heap_handler:OnCreated()
 	if IsClient() then
 		if self:GetStackCount() ~= 0 then
 			self:GetCaster().flesh_heap_icon = self:GetStackCount() - 1
+			self:SetStackCount(0)
 		end
 	end
 end
@@ -1026,7 +1010,7 @@ end
 
 function modifier_imba_flesh_heap_stacks:OnIntervalThink()
 	if not IsServer() then return end
-	local buff = self:GetCaster():FindModifierByName("modifier_imba_pudge_flesh_heap_handler")
+	local buff = self:GetCaster():FindModifierByName("modifier_imba_pudge_flesh_heap_handle")
 	if not buff then return end
 	self:SetStackCount(buff:GetStackCount())
 end
@@ -1063,7 +1047,7 @@ function modifier_imba_flesh_heap_stacks:GetModifierModelScale()
 	local stacks = self:GetStackCount()
 	local max_stack = self:GetAbility():GetSpecialValueFor("max_stacks") + self:GetCaster():FindTalentValue("special_bonus_imba_pudge_4")
 	if stacks > max_stack then stacks = max_stack end
-	return stacks * 2
+	return stacks * 1.75
 end
 
 --=================================================================================================================
