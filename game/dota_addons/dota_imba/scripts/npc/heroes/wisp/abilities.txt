@@ -200,6 +200,11 @@
 				"var_type"					"FIELD_FLOAT"
 				"spirit_debuff_duration"	"2.0"
 			}
+			"17"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"damage_interval"			"0.45"
+			}
 		}
 	}	
 
