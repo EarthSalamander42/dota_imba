@@ -57,12 +57,11 @@ end
 
 function imba_wisp_tether:OnSpellStart()
 	local ability 				= self:GetCaster():FindAbilityByName("imba_wisp_tether")
-	local ability_level 		= ability:GetLevel() -1
 	local caster 				= self:GetCaster()
 	local destroy_tree_radius 	= ability:GetSpecialValueFor("destroy_tree_radius")
-	local movespeed 			= ability:GetLevelSpecialValueFor("movespeed", ability_level)
+	local movespeed 			= ability:GetSpecialValueFor("movespeed")
 	-- needed to be accessed globaly
-	ability.slow_duration 		= ability:GetLevelSpecialValueFor("stun_duration", ability_level)
+	ability.slow_duration 		= ability:GetSpecialValueFor("stun_duration")
 	ability.slow 	    		= ability:GetSpecialValueFor("slow")
 
 	self.caster_origin 			= self:GetCaster():GetAbsOrigin()
@@ -477,22 +476,21 @@ LinkLuaModifier("modifier_imba_wisp_spirit_handler", "hero/hero_wisp.lua", LUA_M
 LinkLuaModifier("modifier_imba_wisp_spirits_hero_hit", "hero/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_wisp_spirits_creep_hit", "hero/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_wisp_spirits_slow", "hero/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_wisp_spirit_cooldown_handler", "hero/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_wisp_spirit_damage_handler", "hero/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
 function imba_wisp_spirits:OnSpellStart()
 	if IsServer() then
 		self.caster 					= self:GetCaster()
 		self.ability 					= self.caster:FindAbilityByName("imba_wisp_spirits")
 		self.start_time 				= GameRules:GetGameTime()
 		self.spirits_num_spirits		= 0
-		local ability_level 			= self.ability:GetLevel() - 1
-		local spirit_min_radius 		= self.ability:GetLevelSpecialValueFor("min_range", ability_level)
-		local spirit_max_radius 		= self.ability:GetLevelSpecialValueFor("max_range", ability_level)
-		local spirit_movement_rate		= self.ability:GetLevelSpecialValueFor("spirit_movement_rate", ability_level)
-		local creep_damage				= self.ability:GetLevelSpecialValueFor("creep_damage", ability_level)
-		local hero_damage				= self.ability:GetLevelSpecialValueFor("hero_damage", ability_level)
-		local explosion_damage			= self.ability:GetLevelSpecialValueFor("explosion_damage", ability_level)
-		local slow						= self.ability:GetLevelSpecialValueFor("slow", ability_level)
-		local spirit_duration 			= self.ability:GetLevelSpecialValueFor("spirit_duration", ability_level)
+		local spirit_min_radius 		= self.ability:GetSpecialValueFor("min_range")
+		local spirit_max_radius 		= self.ability:GetSpecialValueFor("max_range")
+		local spirit_movement_rate		= self.ability:GetSpecialValueFor("spirit_movement_rate")
+		local creep_damage				= self.ability:GetSpecialValueFor("creep_damage")
+		local hero_damage				= self.ability:GetSpecialValueFor("hero_damage")
+		local explosion_damage			= self.ability:GetSpecialValueFor("explosion_damage")
+		local slow						= self.ability:GetSpecialValueFor("slow")
+		local spirit_duration 			= self.ability:GetSpecialValueFor("spirit_duration")
 		local spirit_summon_interval	= self.ability:GetSpecialValueFor("spirit_summon_interval")
 		local max_spirits 				= self.ability:GetSpecialValueFor("num_spirits")
 		local collision_radius			= self.ability:GetSpecialValueFor("collision_radius")
@@ -501,6 +499,7 @@ function imba_wisp_spirits:OnSpellStart()
 		local vision_radius				= self.ability:GetSpecialValueFor("explode_radius")
 		local vision_duration 			= self.ability:GetSpecialValueFor("vision_duration")
 		local slow_duration 			= self.ability:GetSpecialValueFor("slow_duration")
+		local damage_interval			= self.ability:GetSpecialValueFor("damage_interval")
 
 		if self.caster:HasTalent("special_bonus_imba_wisp_1") then
 			local additional_spirits = self.caster:FindTalentValue("special_bonus_imba_wisp_1", "bonus_spirits")
@@ -543,23 +542,23 @@ function imba_wisp_spirits:OnSpellStart()
 				slow 					= slow
 			}) 
 
-		self.caster:AddNewModifier(self.caster, self.ability, "modifier_imba_wisp_spirit_cooldown_handler", {})
+		self.caster:AddNewModifier(self.caster, self.ability, "modifier_imba_wisp_spirit_damage_handler", {duration = -1, damage_interval = damage_interval})
 	end
 end
 
-modifier_imba_wisp_spirit_cooldown_handler = class({})
-function modifier_imba_wisp_spirit_cooldown_handler:IsHidden() return true end
-function modifier_imba_wisp_spirit_cooldown_handler:IsPurgable() return false end
-function modifier_imba_wisp_spirit_cooldown_handler:OnCreated()
+modifier_imba_wisp_spirit_damage_handler = class({})
+function modifier_imba_wisp_spirit_damage_handler:IsHidden() return true end
+function modifier_imba_wisp_spirit_damage_handler:IsPurgable() return false end
+function modifier_imba_wisp_spirit_damage_handler:OnCreated(params)
 	if IsServer() then 
 		self.caster = self:GetCaster()
 		self.ability = self:GetAbility()
 
-		self:StartIntervalThink(0.45)
+		self:StartIntervalThink(params.damage_interval)
 	end
 end
 
-function modifier_imba_wisp_spirit_cooldown_handler:OnIntervalThink()
+function modifier_imba_wisp_spirit_damage_handler:OnIntervalThink()
 	if IsServer() then 
 		self.ability.hit_table = {}
 	end
@@ -1027,12 +1026,11 @@ function imba_wisp_overcharge:AddOvercharge(caster, target)
 		local ability 			= caster:FindAbilityByName("imba_wisp_overcharge")
 		local tether_ability 	= caster:FindAbilityByName("imba_wisp_tether")
 
-		local ability_level 		= ability:GetLevel() - 1
-		local bonus_attack_speed	= ability:GetLevelSpecialValueFor("bonus_attack_speed", ability_level)
-		local bonus_cast_speed		= ability:GetLevelSpecialValueFor("bonus_cast_speed", ability_level)
-		local bonus_missile_speed 	= ability:GetLevelSpecialValueFor("bonus_missile_speed", ability_level)
-		local bonus_damage_pct 		= ability:GetLevelSpecialValueFor("bonus_damage_pct", ability_level)
-		local bonus_attack_range 	= ability:GetLevelSpecialValueFor("bonus_attack_range", ability_level)
+		local bonus_attack_speed	= ability:GetSpecialValueFor("bonus_attack_speed")
+		local bonus_cast_speed		= ability:GetSpecialValueFor("bonus_cast_speed")
+		local bonus_missile_speed 	= ability:GetSpecialValueFor("bonus_missile_speed")
+		local bonus_damage_pct 		= ability:GetSpecialValueFor("bonus_damage_pct")
+		local bonus_attack_range 	= ability:GetSpecialValueFor("bonus_attack_range")
 		local bonus_regen 			= 0
 
 		if caster:HasTalent("special_bonus_imba_wisp_3") then 
@@ -1086,9 +1084,8 @@ function imba_wisp_overcharge:OnToggle()
 
 			EmitSoundOn("Hero_Wisp.Overcharge", caster)
 
-			local ability_level 		= ability:GetLevel() - 1
-			local drain_interval 		= ability:GetLevelSpecialValueFor("drain_interval", ability_level)
-			local drain_pct 			= ability:GetLevelSpecialValueFor("drain_pct", ability_level)
+			local drain_interval 		= ability:GetSpecialValueFor("drain_interval")
+			local drain_pct 			= ability:GetSpecialValueFor("drain_pct")
 
 			imba_wisp_overcharge:AddOvercharge(caster, caster)
 
@@ -1239,11 +1236,10 @@ function imba_wisp_relocate:OnSpellStart()
 		local caster 				= self:GetCaster()
 		local ability 				= caster:FindAbilityByName("imba_wisp_relocate")
 		local tether_ability 		= caster:FindAbilityByName("imba_wisp_tether")
-		local ability_level 		= ability:GetLevel()
 		local target_point 			= self:GetCursorPosition()
-		local vision_radius 		= ability:GetLevelSpecialValueFor("vision_radius", ability_level)
-		local cast_delay 			= ability:GetLevelSpecialValueFor("cast_delay", ability_level)
-		local return_time 			= ability:GetLevelSpecialValueFor("return_time", ability_level)
+		local vision_radius 		= ability:GetSpecialValueFor("vision_radius")
+		local cast_delay 			= ability:GetSpecialValueFor("cast_delay")
+		local return_time 			= ability:GetSpecialValueFor("return_time")
 		local destroy_tree_radius	= ability:GetSpecialValueFor("destroy_tree_radius")
 	
 		if unit == caster then
