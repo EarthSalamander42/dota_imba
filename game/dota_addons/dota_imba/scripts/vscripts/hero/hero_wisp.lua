@@ -1270,7 +1270,7 @@ function imba_wisp_relocate:OnSpellStart()
 			endTime = cast_delay,
 			callback = function()
 				ParticleManager:DestroyParticle(pfx, false)
-				if not imba_wisp_relocate:InterruptRelocate(caster, ability) then
+				if not imba_wisp_relocate:InterruptRelocate(caster, ability, tether_ability) then
 					GridNav:DestroyTreesAroundPoint(target_point, destroy_tree_radius, false)
 
 					caster:SwapAbilities("imba_wisp_relocate", "imba_wisp_relocate_break", false, true)
@@ -1294,7 +1294,7 @@ function imba_wisp_relocate:OnSpellStart()
 	end
 end
 
-function imba_wisp_relocate:InterruptRelocate(caster, ability)
+function imba_wisp_relocate:InterruptRelocate(caster, ability, tether_ability)
 	if not caster:IsAlive() or caster:IsStunned() or caster:IsHexed() or caster:IsNightmared() or caster:IsOutOfGame() then
 		return true
 	end
@@ -1331,7 +1331,7 @@ function modifier_imba_wisp_relocate:OnCreated(params)
 		-- Move units
 		FindClearSpaceForUnit(caster, ability.relocate_target_point, true)
 
-		if caster:HasModifier("modifier_imba_wisp_tether") then
+		if caster:HasModifier("modifier_imba_wisp_tether") and ally ~= nil and ally:IsHero() then
 			self.ally_teleport_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_wisp/wisp_relocate_teleport.vpcf", PATTACH_CUSTOMORIGIN, ally)
 			ParticleManager:SetParticleControlEnt(self.ally_teleport_pfx, 0, ally, PATTACH_POINT, "attach_hitloc", ally:GetAbsOrigin(), true)
 			FindClearSpaceForUnit(ally, ability.relocate_target_point + Vector( 0, 100, 0 ), true)
@@ -1368,8 +1368,8 @@ function modifier_imba_wisp_relocate:OnRemoved()
 
 		self:GetCaster():SetAbsOrigin(ability.origin)
 
-		if caster:HasModifier("modifier_imba_wisp_tether") and caster:IsAlive() then
-			local tether_ability 	= caster:FindAbilityByName("imba_wisp_tether")
+		local tether_ability 	= caster:FindAbilityByName("imba_wisp_tether")
+		if caster:HasModifier("modifier_imba_wisp_tether") and tether_ability.target ~= nil and tether_ability.target:IsHero() and caster:IsAlive() then
 			self.ally_teleport_pfx 	= ParticleManager:CreateParticle("particles/units/heroes/hero_wisp/wisp_relocate_teleport.vpcf", PATTACH_CUSTOMORIGIN, tether_ability.target)
 			ParticleManager:SetParticleControlEnt(self.ally_teleport_pfx, 0, tether_ability.target, PATTACH_POINT, "attach_hitloc", tether_ability.target:GetAbsOrigin(), true)
 
