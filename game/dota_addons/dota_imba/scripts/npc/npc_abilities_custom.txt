@@ -1,6 +1,7 @@
 ﻿// Dota Abilities Override File
 // DataDriven Ability Guide: https://moddota.com/forums/discussion/14/datadriven-ability-breakdown-documentation
 
+#base heroes/earth_spirit/abilities.txt
 #base heroes/night_stalker/abilities.txt
 #base heroes/wisp/abilities.txt
 
