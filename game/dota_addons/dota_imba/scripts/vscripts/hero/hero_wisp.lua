@@ -593,8 +593,7 @@ function modifier_imba_wisp_spirits:OnCreated(params)
 		self.time_to_update  			= 0.5
 
 		EmitSoundOn("Hero_Wisp.Spirits.Loop", self:GetCaster())	
-		
-		self:GetAbility().particle = "particles/units/heroes/hero_wisp/wisp_guardian_disarm.vpcf"
+
 		self:StartIntervalThink(0.03)
 	end
 end
@@ -606,9 +605,12 @@ function modifier_imba_wisp_spirits:OnIntervalThink()
 		local ability 					= self:GetAbility()
 		local elapsedTime 				= GameRules:GetGameTime() - self.start_time
 		local idealNumSpiritsSpawned 	= elapsedTime / self.spirit_summon_interval
-		ability.update_timer = ability.update_timer + FrameTime()
 
-		idealNumSpiritsSpawned 			= math.min(idealNumSpiritsSpawned, self.max_spirits)
+		-- add time to update timer
+		ability.update_timer 	= ability.update_timer + FrameTime()
+
+
+		idealNumSpiritsSpawned 	= math.min(idealNumSpiritsSpawned, self.max_spirits)
 
 		if ability.spirits_num_spirits < idealNumSpiritsSpawned then
 
@@ -619,12 +621,13 @@ function modifier_imba_wisp_spirits:OnIntervalThink()
 				newSpirit:SetNightTimeVisionRange(300)
 			end
 
+
 			-- Create particle FX
 			local pfx = ParticleManager:CreateParticle(particle, PATTACH_ABSORIGIN_FOLLOW, newSpirit)
-			if ability.spirits_movementFactor == 1 then
+			if caster:HasModifier("modifier_imba_wisp_swap_spirits_disarm") then
 				local pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_wisp/wisp_guardian_disarm_a.vpcf", PATTACH_ABSORIGIN_FOLLOW, newSpirit)
 				newSpirit.spirit_pfx_disarm = pfx
-			else
+			elseif caster:HasModifier("modifier_imba_wisp_swap_spirits_silence") then
 				local pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_wisp/wisp_guardian_silence_a.vpcf", PATTACH_ABSORIGIN_FOLLOW, newSpirit)
 				newSpirit.spirit_pfx_silence = pfx
 			end
@@ -687,11 +690,11 @@ function modifier_imba_wisp_spirits:OnIntervalThink()
 				-- Update particle... switch particle depending on currently active effect. 
 				-- the dealy is needed since it takes 0.3s for spirits to fade in.
 				if ability.update_timer > self.time_to_update then 
-					if ability.spirits_movementFactor == 1 then
+					if caster:HasModifier("modifier_imba_wisp_swap_spirits_disarm") then
 						if spirit.spirit_pfx_silence ~= nil then
 							ParticleManager:DestroyParticle(spirit.spirit_pfx_silence, true)
 						end
-					else
+					elseif caster:HasModifier("modifier_imba_wisp_swap_spirits_silence") then
 						if spirit.spirit_pfx_disarm ~= nil then
 							ParticleManager:DestroyParticle(spirit.spirit_pfx_disarm, true)
 						end
@@ -977,40 +980,104 @@ function modifier_imba_wisp_spirit_handler:OnRemoved()
 	end
 end
 
-------------------------------
---		SPIRITS	TOGGLE		--
-------------------------------
+--------------------------------------
+--		SPIRITS	TOGGLE	Near/Far	--
+--------------------------------------
 imba_wisp_spirits_toggle = class({})
 function imba_wisp_spirits_toggle:OnSpellStart()
 	if IsServer() then
 		local caster 					= self:GetCaster()
 		local ability 					= caster:FindAbilityByName("imba_wisp_spirits")
 		local spirits_movementFactor 	= ability.spirits_movementFactor
-		local particle 					= nil
 
-		if spirits_movementFactor == 1 then
+		if ability.spirits_movementFactor == 1 then
 			ability.spirits_movementFactor = -1			
-			particle = "particles/units/heroes/hero_wisp/wisp_guardian_silence_a.vpcf"
 		else
 			ability.spirits_movementFactor = 1
+		end
+	end
+end
+
+------------------------------------------
+--		SPIRITS	Swap silence/disarm		--
+------------------------------------------
+LinkLuaModifier("modifier_imba_wisp_swap_spirits_disarm", "hero/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_wisp_swap_spirits_silence", "hero/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
+imba_wisp_swap_spirits = class({})
+function imba_wisp_swap_spirits:IsInnateAbility()
+	return true
+end
+
+function imba_wisp_swap_spirits:GetIntrinsicModifierName()
+	return "modifier_imba_wisp_swap_spirits_silence"
+end
+
+function imba_wisp_swap_spirits:GetAbilityTextureName()
+	if self:GetCaster():HasModifier("modifier_imba_wisp_swap_spirits_silence") then
+		return "custom/kunnka_tide_high"
+	elseif self:GetCaster():HasModifier("modifier_imba_wisp_swap_spirits_disarm") then
+		return "custom/kunnka_tide_red"
+	end
+end
+
+function imba_wisp_swap_spirits:OnSpellStart()
+	if IsServer() then
+
+		local caster 					= self:GetCaster()
+		local ability 					= caster:FindAbilityByName("imba_wisp_spirits")
+		local spirits_movementFactor 	= ability.spirits_movementFactor
+		local particle 					= nil
+
+		if caster:HasModifier("modifier_imba_wisp_swap_spirits_disarm") then
+			caster:RemoveModifierByName("modifier_imba_wisp_swap_spirits_disarm")
+			caster:AddNewModifier(self:GetCaster(), self, "modifier_imba_wisp_swap_spirits_silence", {})
+		elseif caster:HasModifier("modifier_imba_wisp_swap_spirits_silence") then
+			caster:RemoveModifierByName("modifier_imba_wisp_swap_spirits_silence")
+			caster:AddNewModifier(self:GetCaster(), self, "modifier_imba_wisp_swap_spirits_disarm", {})
+		end
+
+		local caster 					= self:GetCaster()
+		local ability 					= caster:FindAbilityByName("imba_wisp_spirits")
+		local spirits_movementFactor 	= ability.spirits_movementFactor
+		local particle 					= nil
+		local silence 					= false
+		local disarm 					= false
+
+		if caster:HasModifier("modifier_imba_wisp_swap_spirits_silence") then
+			particle = "particles/units/heroes/hero_wisp/wisp_guardian_silence_a.vpcf"
+			silence  = true
+			disarm 	 = false
+		elseif caster:HasModifier("modifier_imba_wisp_swap_spirits_disarm") then
 			particle = "particles/units/heroes/hero_wisp/wisp_guardian_disarm_a.vpcf"
+			silence  = false
+			disarm 	 = true
 		end
 
 		for k,spirit in pairs( ability.spirits_spiritsSpawned ) do
 			if not spirit:IsNull() then
 				local pfx = ParticleManager:CreateParticle(particle, PATTACH_ABSORIGIN_FOLLOW, spirit)
-				if spirits_movementFactor == 1 then
+				if silence then
 					spirit.spirit_pfx_silence = pfx
-				else 
+				elseif disarm then
 					spirit.spirit_pfx_disarm = pfx
 				end
 			end
 		end		
-
-		-- reset update_timer for spirit FX
-		ability.update_timer = 0
-	end
+	end 
 end
+
+modifier_imba_wisp_swap_spirits_disarm = class({})
+
+function modifier_imba_wisp_swap_spirits_disarm:IsHidden() return true end
+function modifier_imba_wisp_swap_spirits_disarm:IsPurgable() return false end
+function modifier_imba_wisp_swap_spirits_disarm:RemoveOnDeath() return false end
+
+modifier_imba_wisp_swap_spirits_silence = class({})
+
+function modifier_imba_wisp_swap_spirits_silence:IsHidden() return true end
+function modifier_imba_wisp_swap_spirits_silence:IsPurgable() return false end
+function modifier_imba_wisp_swap_spirits_silence:RemoveOnDeath() return false end
+
 
 ------------------------------
 --		OVERCHARGE		--
