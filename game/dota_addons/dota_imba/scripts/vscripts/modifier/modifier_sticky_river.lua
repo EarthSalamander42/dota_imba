@@ -7,7 +7,6 @@ function modifier_sticky_river:IsPurgable() return false end
 
 function modifier_sticky_river:OnCreated()
 	if IsServer() then
-		print("Sticky River Created")
 		self:StartIntervalThink(0.1)
 	end
 end
