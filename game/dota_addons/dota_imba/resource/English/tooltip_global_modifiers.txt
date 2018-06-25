@@ -22,6 +22,9 @@
 
 "DOTA_Tooltip_modifier_river_slide"								"Sleepy River"
 "DOTA_Tooltip_modifier_river_slide_Description"					"Sliding on the ice!"
+	
+"DOTA_Tooltip_modifier_sticky_river_slow"						"Sticky River"
+"DOTA_Tooltip_modifier_sticky_river_slow_Description"			"You are slowed while wading through water."
 
 "DOTA_Tooltip_modifier_mutation_death_explosion"				"Death Explosion"
 "DOTA_Tooltip_modifier_mutation_death_explosion_Description"	"Deal 600 + (150 * minutes) damage in a 400 radius on death afer a 0.9 seconds delay."
