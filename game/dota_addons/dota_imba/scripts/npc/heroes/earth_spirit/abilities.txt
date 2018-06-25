@@ -100,7 +100,7 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0.01"
-		"AbilityCooldown"				"22 18 14 10"
+		"AbilityCooldown"				"20 16 12 8"
 		"AbilityManaCost"				"100"
 
 		// Precache
@@ -130,7 +130,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"50 100 150 200"				
+				"damage"				"75 150 225 400"				
 			}
 			"04"
 			{
@@ -140,7 +140,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"unit_distance"			"480 600 680 800"				
+				"unit_distance"			"450 600 750 900"				
 			}
 			"06"
 			{
@@ -150,7 +150,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"stun_duration"			"0.5 1 1.5 2"				
+				"stun_duration"			"0.75 1.5 2.25 3"				
 			}
 			"08"
 			{
@@ -185,7 +185,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0.01"
 		"AbilityCooldown"				"16 12 8 4"
-		"AbilityManaCost"				"50"
+		"AbilityManaCost"				"60 40 20 0"
 		
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -215,12 +215,12 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"roll_distance"			"800"				
+				"roll_distance"			"1000"				
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"remnant_roll_distance"	"1600"				
+				"remnant_roll_distance"	"1800"				
 			}
 			"05"
 			{
@@ -230,7 +230,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"remnant_slow_duration"	"0.8 1.2 1.6 2"				
+				"remnant_slow_duration"	"1.0 1.5 2.0 2.5"				
 			}
 			"07"
 			{
@@ -245,7 +245,7 @@
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"100"				
+				"damage"				"150 200 250 300"				
 			}
 			"10"
 			{
@@ -339,7 +339,7 @@
 			"08"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"root_time_per_mark"	"0.25"
+				"root_time_per_mark"	"0.5"
 			}
 		}
 	}
@@ -366,8 +366,8 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"300"
 		"AbilityCastPoint"				"0.01"
-		"AbilityCooldown"				"100 90 80"
-		"AbilityManaCost"				"100"
+		"AbilityCooldown"				"100 80 60"
+		"AbilityManaCost"				"80"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -401,7 +401,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_per_sec"			"50 75 100"				
+				"damage_per_sec"			"50 150 250"				
 			}
 			"05"
 			{
@@ -426,7 +426,7 @@
 			"09"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"mark_damage_per_sec_per_stack"	"30"
+				"mark_damage_per_sec_per_stack"	"50"
 			}
 			"10"
 			{
