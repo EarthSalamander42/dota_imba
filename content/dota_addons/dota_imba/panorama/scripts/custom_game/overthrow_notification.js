@@ -18,6 +18,7 @@ function OnItemHasSpawned(msg) {
 	//	$.Msg( "OnItemHasSpawned: ", msg );
 	$.GetContextPanel().SetHasClass("item_will_spawn", false);
 	$.GetContextPanel().SetHasClass("item_has_spawned", true);
+	GameUI.PingMinimapAtLocation(msg.spawn_location);
 	$("#AlertMessage_Chest").html = true;
 	$("#AlertMessage_Delivery").html = true;
 	$("#AlertMessage_Chest").text = $.Localize("#Chest");
@@ -38,24 +39,6 @@ function OnItemDrop(msg) {
 	//	$.Msg( "recent_item_drop: ", msg );
 	//	$.Msg( msg.hero_id )
 	$.GetContextPanel().SetHasClass("recent_item_drop", true);
-
-	if (msg.hero_id == "npc_dota_hero_silencer") {
-		$("#PickupMessage_Hero_Text").SetDialogVariable("hero_id", $.Localize("#npc_dota_hero_silencer_notification"));
-	} else if (msg.hero_id == "npc_dota_hero_necrolyte") {
-		$("#PickupMessage_Hero_Text").SetDialogVariable("hero_id", $.Localize("#npc_dota_hero_necrolyte_notification"));
-	} else if (msg.hero_id == "npc_dota_hero_zuus") {
-		$("#PickupMessage_Hero_Text").SetDialogVariable("hero_id", $.Localize("#npc_dota_hero_zuus_notification"));
-	} else if (msg.hero_id == "npc_dota_hero_riki") {
-		$("#PickupMessage_Hero_Text").SetDialogVariable("hero_id", $.Localize("#npc_dota_hero_riki_notification"));
-	} else if (msg.hero_id == "npc_dota_hero_bounty_hunter") {
-		$("#PickupMessage_Hero_Text").SetDialogVariable("hero_id", $.Localize("#npc_dota_hero_bounty_hunter_notification"));
-	} else if (msg.hero_id == "npc_dota_hero_broodmother") {
-		$("#PickupMessage_Hero_Text").SetDialogVariable("hero_id", $.Localize("#npc_dota_hero_broodmother_notification"));
-	} else if (msg.hero_id == "npc_dota_hero_pudge") {
-		$("#PickupMessage_Hero_Text").SetDialogVariable("hero_id", $.Localize("#npc_dota_hero_pudge_notification"));
-	} else {
-		$("#PickupMessage_Hero_Text").SetDialogVariable("hero_id", $.Localize("#" + msg.hero_id));
-	}
 
 	$("#PickupMessage_Item_Text").SetDialogVariable("item_id", $.Localize("#DOTA_Tooltip_Ability_" + msg.dropped_item));
 
