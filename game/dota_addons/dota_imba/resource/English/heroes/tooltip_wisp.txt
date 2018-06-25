@@ -60,7 +60,7 @@
 "DOTA_Tooltip_ability_imba_wisp_overcharge_description" 			"Io gains bonus attack speed and damage reduction, at the cost of draining a percentage of its current health and mana per second. If Io is tethered to an ally, that unit also gains the bonuses.\n<font color='#FF7800'>Fundamental Shift</font color='#FF7800'>: Also grants increased: missile speed, cast speed, and attack range."
 "DOTA_Tooltip_ability_imba_wisp_overcharge_lore"					"Drawing on the energy of matter from all worlds, Io begins the unravelling of time."
 "DOTA_Tooltip_ability_imba_wisp_overcharge_bonus_attack_speed"      "ATTACK SPEED:"
-"DOTA_Tooltip_ability_imba_wisp_overcharge_bonus_cast_speed"        "CAST SPEED:"
+"DOTA_Tooltip_ability_imba_wisp_overcharge_bonus_cast_speed"        "%CAST SPEED:"
 "DOTA_Tooltip_ability_imba_wisp_overcharge_bonus_missile_speed"     "MISSILE SPEED:"
 "DOTA_Tooltip_ability_imba_wisp_overcharge_bonus_attack_range"      "ATTACK RANGE:"
 "DOTA_Tooltip_ability_imba_wisp_overcharge_bonus_damage_pct"        "%INCOMING DAMAGE REDUCTION:"
