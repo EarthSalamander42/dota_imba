@@ -22,6 +22,9 @@
 
 "DOTA_Tooltip_modifier_river_slide"								"Sleepy River"
 "DOTA_Tooltip_modifier_river_slide_Description"					"Sliding on the ice!"
+	
+"DOTA_Tooltip_modifier_sticky_river_slow"						"Sticky River"
+"DOTA_Tooltip_modifier_sticky_river_slow_Description"			"You are slowed while wading through water."
 
 "DOTA_Tooltip_modifier_river_flows_movementspeed"				"River Flows"
 "DOTA_Tooltip_modifier_river_flows_movementspeed_Description"	"Movement speed increased."

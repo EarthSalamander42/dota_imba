@@ -155,8 +155,6 @@ function modifier_item_imba_shadow_blade_invis:OnDestroy()
 			self:GetParent():SetMoveCapability(DOTA_UNIT_CAP_MOVE_GROUND)
 			-- Destroy trees to not get stuck
 			GridNav:DestroyTreesAroundPoint(self:GetParent():GetAbsOrigin(), 175, false)
-			-- Find a clear space to stand on
-			self:GetParent():SetUnitOnClearGround()
 		end
 	end
 end

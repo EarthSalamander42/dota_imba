@@ -29,6 +29,7 @@ LinkLuaModifier("modifier_imba_wisp_tether_latch", "hero/hero_wisp.lua", LUA_MOD
 LinkLuaModifier("modifier_imba_wisp_tether_slow", "hero/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_wisp_tether_slow_immune", "hero/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_wisp_tether_ally_attack", "hero/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_wisp_swap_spirits", "hero/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_wisp_tether:GetCustomCastErrorTarget(target)
 	if target == self:GetCaster() then
@@ -55,22 +56,20 @@ function imba_wisp_tether:CastFilterResultTarget(target)
 end
 
 function imba_wisp_tether:OnSpellStart()
-	local ability 			= self:GetCaster():FindAbilityByName("imba_wisp_tether")
-	local ability_level 	= ability:GetLevel() -1
-	local caster 			= self:GetCaster()
-	local movespeed 		= ability:GetLevelSpecialValueFor("movespeed", ability_level)
-	ability.slow_duration 	= ability:GetLevelSpecialValueFor("stun_duration", ability_level)
-	ability.slow 	    	= ability:GetSpecialValueFor("slow")
+	local ability 				= self:GetCaster():FindAbilityByName("imba_wisp_tether")
+	local caster 				= self:GetCaster()
+	local destroy_tree_radius 	= ability:GetSpecialValueFor("destroy_tree_radius")
+	local movespeed 			= ability:GetSpecialValueFor("movespeed")
+	-- needed to be accessed globaly
+	ability.slow_duration 		= ability:GetSpecialValueFor("stun_duration")
+	ability.slow 	    		= ability:GetSpecialValueFor("slow")
 
-	self.caster_origin 		= self:GetCaster():GetAbsOrigin()
-	self.target_origin 		= self:GetCursorTarget():GetAbsOrigin()
-	self.tether_ally 		= self:GetCursorTarget()
-	self.tether_slowedUnits = {}
+	self.caster_origin 			= self:GetCaster():GetAbsOrigin()
+	self.target_origin 			= self:GetCursorTarget():GetAbsOrigin()
+	self.tether_ally 			= self:GetCursorTarget()
+	self.tether_slowedUnits 	= {}
+	self.target 				= self:GetCursorTarget()
 
-	caster.tether_lastHealth 	= caster:GetHealth()
-	caster.tether_lastMana 		= caster:GetMana()
-
-	self.target = self:GetCursorTarget()
 	caster:AddNewModifier(self:GetCaster(), self, "modifier_imba_wisp_tether", {})
 	local tether_modifier = self:GetCursorTarget():AddNewModifier(self:GetCaster(), ability, "modifier_imba_wisp_tether_ally", {})
 	tether_modifier:SetStackCount(movespeed)
@@ -89,7 +88,7 @@ function imba_wisp_tether:OnSpellStart()
 
 	local distToAlly = (self:GetCursorTarget():GetAbsOrigin() - caster:GetAbsOrigin()):Length2D()
 	if distToAlly >= self:GetSpecialValueFor("latch_distance") then
-		caster:AddNewModifier(caster, self, "modifier_imba_wisp_tether_latch", {})
+		caster:AddNewModifier(caster, self, "modifier_imba_wisp_tether_latch", { destroy_tree_radius =  destroy_tree_radius})
 	end
 
 	caster:SwapAbilities("imba_wisp_tether", "imba_wisp_tether_break", false, true)
@@ -105,17 +104,23 @@ function modifier_imba_wisp_tether:OnCreated(params)
 		self.target 			= self:GetAbility().target
 		self.radius 			= self:GetAbility():GetSpecialValueFor("radius")
 		self.tether_heal_amp 	= self:GetAbility():GetSpecialValueFor("tether_heal_amp")
+		
+		-- used to count total health/mana gained during 1sec
+		self.total_gained_mana 		= 0
+		self.total_gained_health 	= 0
+		self.update_timer 			= 0
+		self.time_to_send 			= 1
+
 		EmitSoundOn("Hero_Wisp.Tether", self:GetParent())
+
 		self:StartIntervalThink(FrameTime())
 	end
 end
 
 function modifier_imba_wisp_tether:DeclareFunctions()
 	local decFuncs = {
-		MODIFIER_EVENT_ON_TAKEDAMAGE,
 		MODIFIER_EVENT_ON_HEALTH_GAINED,
 		MODIFIER_EVENT_ON_MANA_GAINED,
-		MODIFIER_EVENT_ON_SPENT_MANA,
 		MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE_MIN,
 	}
 
@@ -124,14 +129,28 @@ end
 
 function modifier_imba_wisp_tether:OnIntervalThink()
 	if IsServer() then
-		self:GetParent().tether_lastHealth = self:GetParent():GetHealth()
-
+		self.update_timer = self.update_timer + FrameTime()
+	
 		CustomNetTables:SetTableValue(
 		"player_table", 
 		tostring(self:GetCaster():GetPlayerOwnerID()), 
 		{ 	
 			tether_movement_speed = self:GetAbility().tether_ally:GetIdealSpeed()
 		})
+
+		-- handle health and mana
+		if self.update_timer > self.time_to_send then 
+			
+			self.target:Heal(self.total_gained_health * self.tether_heal_amp, self:GetAbility())
+			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, self.target, self.total_gained_health * self.tether_heal_amp, nil)	
+
+			self.target:GiveMana(self.total_gained_mana * self.tether_heal_amp)
+			SendOverheadEventMessage(nil, OVERHEAD_ALERT_MANA_ADD, self.target, self.total_gained_mana * self.tether_heal_amp, nil)
+
+			self.total_gained_mana 		= 0
+			self.total_gained_health 	= 0
+			self.update_timer 			= 0
+		end
 
 		if self:GetParent():HasModifier("modifier_imba_wisp_tether_latch") then
 			return
@@ -147,44 +166,17 @@ function modifier_imba_wisp_tether:OnIntervalThink()
 	end
 end
 
-function modifier_imba_wisp_tether:OnTakeDamage(keys)
-	if keys.unit == self:GetParent() then
-		self:GetCaster().tether_lastHealth = self:GetCaster():GetHealth()
-	end
-end
-
-function modifier_imba_wisp_tether:OnSpentMana(keys)
-	if keys.unit == self:GetParent() then
-		self:GetCaster().tether_lastMana = self:GetCaster():GetMana()
-	end
-end
-
 function modifier_imba_wisp_tether:OnHealthGained(keys)
 	if keys.unit == self:GetParent() then
-		local healthGained = self:GetCaster():GetHealth() - self:GetCaster().tether_lastHealth
-
-		if healthGained > 0 then
-			--print("Health gained:", healthGained, self:GetAbility():GetCaster().tether_lastHealth)
-
-			self.target:Heal(healthGained * self.tether_heal_amp, self:GetAbility())
-			self:GetCaster().tether_lastHealth = self:GetCaster():GetHealth()
-			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, self.target, healthGained * self.tether_heal_amp, nil)
-				
-		end
+		-- in order to avoid spam in "OnGained" we group it up in total_gained. Value is sent and reset each 1s
+		self.total_gained_health = self.total_gained_health + keys.gain
 	end
 end
 
 function modifier_imba_wisp_tether:OnManaGained(keys)
 	if keys.unit == self:GetParent() then
-		local manaGained = self:GetCaster():GetMana() - self:GetCaster().tether_lastMana
-
-		if manaGained > 0 then
-			--print(manaGained, self:GetCaster().tether_lastMana)
-
-			self.target:GiveMana(manaGained * self.tether_heal_amp)
-			self:GetCaster().tether_lastMana = self:GetCaster():GetMana()
-			SendOverheadEventMessage(nil, OVERHEAD_ALERT_MANA_ADD, self.target, manaGained * self.tether_heal_amp, nil)
-		end
+		-- in order to avoid spam in "OnGained" we group it up in total_gained. Value is sent and reset each 1s
+		self.total_gained_mana = self.total_gained_mana + keys.gain
 	end
 end
 
@@ -235,7 +227,6 @@ function modifier_imba_wisp_tether_ally:OnCreated()
 		ParticleManager:SetParticleControlEnt(self.pfx, 0, self:GetCaster(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetCaster():GetAbsOrigin(), true)
 		ParticleManager:SetParticleControlEnt(self.pfx, 1, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
 
-		self:StartIntervalThink(FrameTime())
 		EmitSoundOn("Hero_Wisp.Tether.Target", self:GetParent())
 
 		if self:GetCaster():HasTalent("special_bonus_imba_wisp_8") then
@@ -249,6 +240,7 @@ function modifier_imba_wisp_tether_ally:OnCreated()
 				tether_minimum_speed 	= self:GetParent():GetIdealSpeed(),
 			})
 
+			-- modify absolute movement speed to never go down
 			self:GetParent():AddNewModifier(
 				self:GetCaster(), 
 				self, 
@@ -258,6 +250,7 @@ function modifier_imba_wisp_tether_ally:OnCreated()
 					minimum_speed 	= self:GetParent():GetIdealSpeed()
 				})
 
+			-- modify absolute movement speed to never go down
 			self:GetCaster():AddNewModifier(
 				self:GetCaster(), 
 				self, 
@@ -267,6 +260,8 @@ function modifier_imba_wisp_tether_ally:OnCreated()
 					minimum_speed 	= self:GetParent():GetIdealSpeed()
 				})
 		end
+		
+		self:StartIntervalThink(FrameTime())
 	end
 end
 
@@ -314,10 +309,7 @@ function imba_wisp_tether:OnProjectileHit_ExtraData(target, location, ExtraData)
 		local slow 			= ExtraData.slow
 		local slow_duration = ExtraData.slow_duration
 
-		-- Already got slowed
-		--if self:GetAbility().tether_slowedUnits[target] then
-		--	return
-		--end
+		-- Acalia wants more stuff here...
 
 		-- Apply slow debuff
 		local slow_ref = target:AddNewModifier(caster, self, "modifier_imba_wisp_tether_slow", { duration = slow_duration })
@@ -426,9 +418,10 @@ end
 --	 TETHER latch modifier	--
 ------------------------------
 modifier_imba_wisp_tether_latch = class({})
-function modifier_imba_wisp_tether_latch:OnCreated()
+function modifier_imba_wisp_tether_latch:OnCreated(params)
 	if IsServer() then
-		self.target = self:GetAbility().target
+		self.target 				= self:GetAbility().target
+		self.destroy_tree_radius 	= params.destroy_tree_radius
 		self:StartIntervalThink(FrameTime())
 	end
 end
@@ -453,6 +446,7 @@ function modifier_imba_wisp_tether_latch:OnIntervalThink()
 
 		if distToAlly <= self:GetAbility():GetSpecialValueFor("latch_distance") then
 			-- We've reached, so finish latching
+			GridNav:DestroyTreesAroundPoint(self:GetCaster():GetAbsOrigin(), self.destroy_tree_radius, false)
 			ResolveNPCPositions(self:GetCaster():GetAbsOrigin(), 128)
 			self:GetCaster():RemoveModifierByName("modifier_imba_wisp_tether_latch")
 		end
@@ -482,21 +476,21 @@ LinkLuaModifier("modifier_imba_wisp_spirit_handler", "hero/hero_wisp.lua", LUA_M
 LinkLuaModifier("modifier_imba_wisp_spirits_hero_hit", "hero/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_wisp_spirits_creep_hit", "hero/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_wisp_spirits_slow", "hero/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_wisp_spirit_damage_handler", "hero/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
 function imba_wisp_spirits:OnSpellStart()
 	if IsServer() then
 		self.caster 					= self:GetCaster()
 		self.ability 					= self.caster:FindAbilityByName("imba_wisp_spirits")
 		self.start_time 				= GameRules:GetGameTime()
 		self.spirits_num_spirits		= 0
-		local ability_level 			= self.ability:GetLevel() - 1
-		local spirit_min_radius 		= self.ability:GetLevelSpecialValueFor("min_range", ability_level)
-		local spirit_max_radius 		= self.ability:GetLevelSpecialValueFor("max_range", ability_level)
-		local spirit_movement_rate		= self.ability:GetLevelSpecialValueFor("spirit_movement_rate", ability_level)
-		local creep_damage				= self.ability:GetLevelSpecialValueFor("creep_damage", ability_level)
-		local hero_damage				= self.ability:GetLevelSpecialValueFor("hero_damage", ability_level)
-		local explosion_damage			= self.ability:GetLevelSpecialValueFor("explosion_damage", ability_level)
-		local slow						= self.ability:GetLevelSpecialValueFor("slow", ability_level)
-		local spirit_duration 			= self.ability:GetLevelSpecialValueFor("spirit_duration", ability_level)
+		local spirit_min_radius 		= self.ability:GetSpecialValueFor("min_range")
+		local spirit_max_radius 		= self.ability:GetSpecialValueFor("max_range")
+		local spirit_movement_rate		= self.ability:GetSpecialValueFor("spirit_movement_rate")
+		local creep_damage				= self.ability:GetSpecialValueFor("creep_damage")
+		local hero_damage				= self.ability:GetSpecialValueFor("hero_damage")
+		local explosion_damage			= self.ability:GetSpecialValueFor("explosion_damage")
+		local slow						= self.ability:GetSpecialValueFor("slow")
+		local spirit_duration 			= self.ability:GetSpecialValueFor("spirit_duration")
 		local spirit_summon_interval	= self.ability:GetSpecialValueFor("spirit_summon_interval")
 		local max_spirits 				= self.ability:GetSpecialValueFor("num_spirits")
 		local collision_radius			= self.ability:GetSpecialValueFor("collision_radius")
@@ -505,6 +499,7 @@ function imba_wisp_spirits:OnSpellStart()
 		local vision_radius				= self.ability:GetSpecialValueFor("explode_radius")
 		local vision_duration 			= self.ability:GetSpecialValueFor("vision_duration")
 		local slow_duration 			= self.ability:GetSpecialValueFor("slow_duration")
+		local damage_interval			= self.ability:GetSpecialValueFor("damage_interval")
 
 		if self.caster:HasTalent("special_bonus_imba_wisp_1") then
 			local additional_spirits = self.caster:FindTalentValue("special_bonus_imba_wisp_1", "bonus_spirits")
@@ -546,6 +541,26 @@ function imba_wisp_spirits:OnSpellStart()
 				slow_duration 			= slow_duration,
 				slow 					= slow
 			}) 
+
+		self.caster:AddNewModifier(self.caster, self.ability, "modifier_imba_wisp_spirit_damage_handler", {duration = -1, damage_interval = damage_interval})
+	end
+end
+
+modifier_imba_wisp_spirit_damage_handler = class({})
+function modifier_imba_wisp_spirit_damage_handler:IsHidden() return true end
+function modifier_imba_wisp_spirit_damage_handler:IsPurgable() return false end
+function modifier_imba_wisp_spirit_damage_handler:OnCreated(params)
+	if IsServer() then 
+		self.caster = self:GetCaster()
+		self.ability = self:GetAbility()
+
+		self:StartIntervalThink(params.damage_interval)
+	end
+end
+
+function modifier_imba_wisp_spirit_damage_handler:OnIntervalThink()
+	if IsServer() then 
+		self.ability.hit_table = {}
 	end
 end
 
@@ -567,19 +582,15 @@ function modifier_imba_wisp_spirits:OnCreated(params)
 		self.spirit_turn_rate			= params.spirit_turn_rate
 		self.vision_radius				= params.vision_radius
 		self.vision_duration			= params.vision_duration
-		self.creep_damage 				= params.creep_damage * FrameTime()
+		self.creep_damage 				= params.creep_damage
 		self.hero_damage				= params.hero_damage
 		self.explosion_damage			= params.explosion_damage
 		self.slow_duration				= params.slow_duration
 		self.slow 						= params.slow
 
-		if self:GetCaster():HasModifier("modifier_imba_wisp_swap_spirits_disarm") then
-			self.particle = "particles/units/heroes/hero_wisp/wisp_guardian_disarm.vpcf"
-			self:GetAbility():GetCaster().spirit_debuff = 1
-		elseif self:GetCaster():HasModifier("modifier_imba_wisp_swap_spirits_silence") then
-			self.particle = "particles/units/heroes/hero_wisp/wisp_guardian_silence.vpcf"
-			self:GetAbility():GetCaster().spirit_debuff = 0
-		end
+		-- timers for tracking update of FX
+		self:GetAbility().update_timer 	= 0
+		self.time_to_update  			= 0.5
 
 		EmitSoundOn("Hero_Wisp.Spirits.Loop", self:GetCaster())	
 
@@ -595,22 +606,32 @@ function modifier_imba_wisp_spirits:OnIntervalThink()
 		local elapsedTime 				= GameRules:GetGameTime() - self.start_time
 		local idealNumSpiritsSpawned 	= elapsedTime / self.spirit_summon_interval
 
-		idealNumSpiritsSpawned 			= math.min(idealNumSpiritsSpawned, self.max_spirits)
+		-- add time to update timer
+		ability.update_timer 	= ability.update_timer + FrameTime()
+
+
+		idealNumSpiritsSpawned 	= math.min(idealNumSpiritsSpawned, self.max_spirits)
 
 		if ability.spirits_num_spirits < idealNumSpiritsSpawned then
 
 			-- Spawn a new spirit
 			local newSpirit = CreateUnitByName("npc_dota_wisp_spirit", caster_position, false, caster, caster, caster:GetTeam())
-
 			if caster:HasScepter() then
 				newSpirit:SetDayTimeVisionRange(300)
 				newSpirit:SetNightTimeVisionRange(300)
 			end
 
-			-- Create particle FX
-			local pfx = ParticleManager:CreateParticle(self.particle, PATTACH_ABSORIGIN_FOLLOW, newSpirit)
-			newSpirit.spirit_pfx = pfx
 
+			-- Create particle FX
+			local pfx = ParticleManager:CreateParticle(particle, PATTACH_ABSORIGIN_FOLLOW, newSpirit)
+			if caster:HasModifier("modifier_imba_wisp_swap_spirits_disarm") then
+				local pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_wisp/wisp_guardian_disarm_a.vpcf", PATTACH_ABSORIGIN_FOLLOW, newSpirit)
+				newSpirit.spirit_pfx_disarm = pfx
+			elseif caster:HasModifier("modifier_imba_wisp_swap_spirits_silence") then
+				local pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_wisp/wisp_guardian_silence_a.vpcf", PATTACH_ABSORIGIN_FOLLOW, newSpirit)
+				newSpirit.spirit_pfx_silence = pfx
+			end
+			
 			-- Update the state
 			local spiritIndex = ability.spirits_num_spirits + 1
 			newSpirit.spirit_index = spiritIndex
@@ -625,72 +646,76 @@ function modifier_imba_wisp_spirits:OnIntervalThink()
 				{ 
 					duraiton 			= -1,
 					vision_radius 		= self.vision_radius,
-					vision_duration 	= self.vision_duration
+					vision_duration 	= self.vision_duration,
+					tinkerval 			= 360 / self.spirit_turn_rate / self.max_spirits,
+					collision_radius 	= self.collision_radius,
+					explosion_radius 	= self.explosion_radius,
+					creep_damage 		= self.creep_damage,
+					hero_damage 		= self.hero_damage,
+					explosion_damage 	= self.explosion_damage,
+					slow_duration 		= self.slow_duration,
+					slow 				= self.slow	
 				}
 			)
 		end
-
+		
 		--------------------------------------------------------------------------------
 		-- Update the radius
-		--
+		--------------------------------------------------------------------------------
 		local currentRadius	= self.spirit_radius
-		local deltaRadius = ability.spirits_movementFactor * self.spirit_movement_rate * 0.03
-		currentRadius = currentRadius + deltaRadius
-		currentRadius = math.min( math.max( currentRadius, self.spirit_min_radius ), self.spirit_max_radius )
-
-		self.spirit_radius = currentRadius
+		local deltaRadius 	= ability.spirits_movementFactor * self.spirit_movement_rate * 0.03
+		currentRadius 		= currentRadius + deltaRadius
+		currentRadius 		= math.min( math.max( currentRadius, self.spirit_min_radius ), self.spirit_max_radius )
+		self.spirit_radius 	= currentRadius
 
 		--------------------------------------------------------------------------------
 		-- Update the spirits' positions
-		--
+		--------------------------------------------------------------------------------
 		local currentRotationAngle	= elapsedTime * self.spirit_turn_rate
 		local rotationAngleOffset	= 360 / self.max_spirits
-
-		local numSpiritsAlive = 0
-		local updated_spirit_array = {}
+		local numSpiritsAlive 		= 0
 
 		for k,spirit in pairs( ability.spirits_spiritsSpawned ) do
-			numSpiritsAlive = numSpiritsAlive + 1
-			local add_spirit = true
+			if not spirit:IsNull() then
+				numSpiritsAlive = numSpiritsAlive + 1
 
-			-- Rotate
-			local rotationAngle = currentRotationAngle - rotationAngleOffset * (k - 1)
-			local relPos = Vector(0, currentRadius, 0)
-			relPos = RotatePosition(Vector(0,0,0), QAngle( 0, -rotationAngle, 0 ), relPos)
-			local absPos = GetGroundPosition( relPos + caster_position, spirit)
+				-- Rotate
+				local rotationAngle = currentRotationAngle - rotationAngleOffset * (k - 1)
+				local relPos 		= Vector(0, currentRadius, 0)
+				relPos 				= RotatePosition(Vector(0,0,0), QAngle( 0, -rotationAngle, 0 ), relPos)
+				local absPos 		= GetGroundPosition( relPos + caster_position, spirit)
 
-			spirit:SetAbsOrigin(absPos)
+				spirit:SetAbsOrigin(absPos)
 
-			-- Update particle
-			ParticleManager:SetParticleControl(spirit.spirit_pfx, 1, Vector(currentRadius, 0, 0))
-
-			-- Check if we hit stuff
-			local nearby_enemy_units = FindUnitsInRadius(
-				caster:GetTeam(),
-				absPos, 
-				nil, 
-				self.collision_radius, 
-				DOTA_UNIT_TARGET_TEAM_ENEMY,
-				DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
-				DOTA_UNIT_TARGET_FLAG_NONE, 
-				FIND_ANY_ORDER, 
-				false
-			)
-
-			if nearby_enemy_units ~= nil and #nearby_enemy_units > 0 then
-				if modifier_imba_wisp_spirits:OnHit(caster, spirit, nearby_enemy_units, self.creep_damage, self.hero_damage, ability, self.slow_duration, self.slow) then 
-					modifier_imba_wisp_spirits:Explode(caster, spirit, self.explosion_radius, self.explosion_damage, ability)
-					spirit:RemoveModifierByName("modifier_imba_wisp_spirit_handler")
-					add_spirit = false
+				-- Update particle... switch particle depending on currently active effect. 
+				-- the dealy is needed since it takes 0.3s for spirits to fade in.
+				if ability.update_timer > self.time_to_update then 
+					if caster:HasModifier("modifier_imba_wisp_swap_spirits_disarm") then
+						if spirit.spirit_pfx_silence ~= nil then
+							ParticleManager:DestroyParticle(spirit.spirit_pfx_silence, true)
+						end
+					elseif caster:HasModifier("modifier_imba_wisp_swap_spirits_silence") then
+						if spirit.spirit_pfx_disarm ~= nil then
+							ParticleManager:DestroyParticle(spirit.spirit_pfx_disarm, true)
+						end
+					end
 				end
-			end
+				
+				if spirit.spirit_pfx_silence ~= nil then
+					spirit.currentRadius = Vector(currentRadius, 0, 0)
+					ParticleManager:SetParticleControl(spirit.spirit_pfx_silence, 1, Vector(currentRadius, 0, 0))
+				end
 
-			if add_spirit then
-				updated_spirit_array[spirit.spirit_index] = spirit
+				if spirit.spirit_pfx_disarm ~= nil then 
+					spirit.currentRadius = Vector(currentRadius, 0, 0)
+					ParticleManager:SetParticleControl(spirit.spirit_pfx_disarm, 1, Vector(currentRadius, 0, 0))
+				end
 			end
 		end
 
-		ability.spirits_spiritsSpawned = updated_spirit_array
+		if ability.update_timer > self.time_to_update then 
+			ability.update_timer = 0
+		end
 
 		if ability.spirits_num_spirits == self.max_spirits and numSpiritsAlive == 0 then
 			-- All spirits have been exploded.
@@ -700,80 +725,41 @@ function modifier_imba_wisp_spirits:OnIntervalThink()
 	end
 end
 
-function modifier_imba_wisp_spirits:OnHit(caster, spirit, enemies_hit, creep_damage, hero_damage, ability, slow_duration, slow) 
-	local hit_hero = false
-
-	-- Deal damage to each enemy hero
-	for _,enemy in pairs(enemies_hit) do
-		-- cant dmg ded stuff
-		if enemy:IsAlive() then 
-			-- Initialize damage table
-			local damage_table 			= {}
-			damage_table.attacker 		= caster
-			damage_table.ability 		= ability
-			damage_table.damage_type 	= ability:GetAbilityDamageType() 
-			damage_table.victim = enemy
-			if enemy:IsHero() then
-				enemy:AddNewModifier(caster, ability, "modifier_imba_wisp_spirits_hero_hit", {duration = 0.03, slow_duration = slow_duration, slow = slow})
-				damage_table.damage	= hero_damage
-
-				if caster.spirit_debuff == 1 then
-					enemy:AddNewModifier(caster, ability, "modifier_disarmed", {duration=ability:GetSpecialValueFor("spirit_debuff_duration")})
-				else
-					enemy:AddNewModifier(caster, ability, "modifier_silence", {duration=ability:GetSpecialValueFor("spirit_debuff_duration")})
-				end
-
-				hit_hero = true
-			else
-				enemy:AddNewModifier(caster, ability, "modifier_imba_wisp_spirits_creep_hit", {duration = 0.03})
-				damage_table.damage	= creep_damage
-			end
-
-			if caster == nil or spirit == nil or damage_table.attacker == nil or damage_table.ability == nil or damage_table.damage_type == nil or damage_table.damage == nil then
-				for x,y in pairs(damage_table) do
-					print(x)
-					print(y)
-				end
-			end
-
-			ApplyDamage(damage_table)
-		end
-	end
-
-	if hit_hero then 
-		return true
-	else
-		return false
-	end
-end
-
 function modifier_imba_wisp_spirits:Explode(caster, spirit, explosion_radius, explosion_damage, ability)
-	EmitSoundOn("Hero_Wisp.Spirits.Target", spirit)
-	ParticleManager:CreateParticle("particles/units/heroes/hero_wisp/wisp_guardian_explosion.vpcf", PATTACH_ABSORIGIN_FOLLOW, spirit)
+	if IsServer() then
+		EmitSoundOn("Hero_Wisp.Spirits.Target", spirit)
+		ParticleManager:CreateParticle("particles/units/heroes/hero_wisp/wisp_guardian_explosion.vpcf", PATTACH_ABSORIGIN_FOLLOW, spirit)
 
-	-- Check if we hit stuff
-	local nearby_enemy_units = FindUnitsInRadius(
-		caster:GetTeam(),
-		spirit:GetAbsOrigin(), 
-		nil, 
-		explosion_radius, 
-		DOTA_UNIT_TARGET_TEAM_ENEMY,
-		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
-		DOTA_UNIT_TARGET_FLAG_NONE, 
-		FIND_ANY_ORDER, 
-		false
-	)
+		-- Check if we hit stuff
+		local nearby_enemy_units = FindUnitsInRadius(
+			caster:GetTeam(),
+			spirit:GetAbsOrigin(), 
+			nil, 
+			explosion_radius, 
+			DOTA_UNIT_TARGET_TEAM_ENEMY,
+			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
+			DOTA_UNIT_TARGET_FLAG_NONE, 
+			FIND_ANY_ORDER, 
+			false
+		)
 
-	local damage_table 			= {}
-	damage_table.attacker 		= caster
-	damage_table.ability 		= ability
-	damage_table.damage_type 	= ability:GetAbilityDamageType() 
-	damage_table.damage			= explosion_damage
+		local damage_table 			= {}
+		damage_table.attacker 		= caster
+		damage_table.ability 		= ability
+		damage_table.damage_type 	= ability:GetAbilityDamageType() 
+		damage_table.damage			= explosion_damage
 
-	-- Deal damage to each enemy hero
-	for _,enemy in pairs(nearby_enemy_units) do
-		damage_table.victim = enemy
-		ApplyDamage(damage_table)
+		-- Deal damage to each enemy hero
+		for _,enemy in pairs(nearby_enemy_units) do
+			if enemy ~= nil then
+				damage_table.victim = enemy
+
+				-- getting random lua errors here... not sure whats up
+				ApplyDamage(damage_table)
+			end
+		end
+
+		ability.spirits_spiritsSpawned[spirit.spirit_index] = nil
 	end
 end
 
@@ -784,12 +770,19 @@ function modifier_imba_wisp_spirits:OnRemoved()
 		local caster 	= self:GetCaster()
 		for k,spirit in pairs( ability.spirits_spiritsSpawned ) do
 			if not spirit:IsNull() then
-				modifier_imba_wisp_spirits:Explode(caster, spirit, self.explosion_radius, self.explosion_damage, ability)
 				spirit:RemoveModifierByName("modifier_imba_wisp_spirit_handler")
 			end
 		end
 
 		self:GetCaster():StopSound("Hero_Wisp.Spirits.Loop")
+	end
+end
+
+function modifier_imba_wisp_spirits:GetAbilityTextureName()
+	if self:GetAbility().spirits_movementFactor == 1 then
+		return "custom/kunnka_tide_red"
+	else
+		return "custom/kunnka_tide_high"
 	end
 end
 
@@ -871,17 +864,113 @@ end
 
 function modifier_imba_wisp_spirit_handler:OnCreated(params)
 	if IsServer() then
+		self.caster 			= self:GetCaster()
+		self.ability 			= self:GetAbility()
 		self.vision_radius 		= params.vision_radius
 		self.vision_duration	= params.vision_duration
+		self.tinkerval 			= params.tinkerval
+		self.collision_radius 	= params.collision_radius
+		self.explosion_radius 	= params.explosion_radius
+		self.creep_damage 		= params.creep_damage
+		self.hero_damage 		= params.hero_damage
+		self.explosion_damage 	= params.explosion_damage
+		self.slow_duration 		= params.slow_duration
+		self.slow 				= params.slow	
+
+		-- dmg timer and hittable
+		self.damage_interval 	= 0.10
+		self.damage_timer 		= 0
+		self.ability.hit_table	= {}
+
+		self:StartIntervalThink(self.damage_interval)
 	end
 end
 
-function modifier_imba_wisp_spirit_handler:OnDestroy()
+function modifier_imba_wisp_spirit_handler:OnIntervalThink()
+	if IsServer() then 
+		local spirit = self:GetParent()
+		-- Check if we hit stuff
+		local nearby_enemy_units = FindUnitsInRadius(
+			self.caster:GetTeam(),
+			spirit:GetAbsOrigin(), 
+			nil, 
+			self.collision_radius, 
+			DOTA_UNIT_TARGET_TEAM_ENEMY,
+			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
+			DOTA_UNIT_TARGET_FLAG_NONE, 
+			FIND_ANY_ORDER, 
+			false
+		)
+
+		spirit.hit_table = self.ability.hit_table
+		if nearby_enemy_units ~= nil and #nearby_enemy_units > 0 then
+			modifier_imba_wisp_spirit_handler:OnHit(self.caster, spirit, nearby_enemy_units, self.creep_damage, self.hero_damage, self.ability, self.slow_duration, self.slow)
+		end
+	end
+end
+
+function modifier_imba_wisp_spirit_handler:OnHit(caster, spirit, enemies_hit, creep_damage, hero_damage, ability, slow_duration, slow) 
+	local hit_hero = false
+	-- Initialize damage table
+	local damage_table 			= {}
+	damage_table.attacker 		= caster
+	damage_table.ability 		= ability
+	damage_table.damage_type 	= ability:GetAbilityDamageType() 
+
+	-- Deal damage to each enemy hero
+	for _,enemy in pairs(enemies_hit) do
+		-- cant dmg ded stuff + cant dmg if ded
+		if enemy:IsAlive() and not spirit:IsNull() then 
+			local hit = false
+
+			damage_table.victim = enemy
+
+			if enemy:IsHero() then
+				enemy:AddNewModifier(caster, ability, "modifier_imba_wisp_spirits_hero_hit", {duration = 0.03, slow_duration = slow_duration, slow = slow})
+				damage_table.damage	= hero_damage
+
+				if ability.spirits_movementFactor == 1 then
+					enemy:AddNewModifier(caster, ability, "modifier_disarmed", {duration=ability:GetSpecialValueFor("spirit_debuff_duration")})
+				else
+					enemy:AddNewModifier(caster, ability, "modifier_silence", {duration=ability:GetSpecialValueFor("spirit_debuff_duration")})
+				end
+
+				hit_hero = true
+				hit = true
+			else
+				if spirit.hit_table[enemy] == nil then
+					spirit.hit_table[enemy] = true
+					enemy:AddNewModifier(caster, ability, "modifier_imba_wisp_spirits_creep_hit", {duration = 0.03})
+					damage_table.damage	= creep_damage
+					hit = true
+				end
+			end
+
+			if hit then
+				ApplyDamage(damage_table)
+			end
+		end
+	end
+
+	if hit_hero then 
+		spirit:RemoveModifierByName("modifier_imba_wisp_spirit_handler")
+	end
+end
+
+function modifier_imba_wisp_spirit_handler:OnRemoved()
 	if IsServer() then
 		local spirit	= self:GetParent()
 		local ability	= self:GetAbility()
-
-		ParticleManager:DestroyParticle(spirit.spirit_pfx, false)
+		
+		modifier_imba_wisp_spirits:Explode(self.caster, spirit, self.explosion_radius, self.explosion_damage, ability)
+		
+		if spirit.spirit_pfx_silence ~= nil then
+			ParticleManager:DestroyParticle(spirit.spirit_pfx_silence, true)
+		end
+		
+		if spirit.spirit_pfx_disarm ~= nil then
+			ParticleManager:DestroyParticle(spirit.spirit_pfx_disarm, true)
+		end
 
 		-- Create vision
 		ability:CreateVisibilityNode(spirit:GetAbsOrigin(), self.vision_radius, self.vision_duration)
@@ -891,23 +980,104 @@ function modifier_imba_wisp_spirit_handler:OnDestroy()
 	end
 end
 
-------------------------------
---		SPIRITS	TOGGLE		--
-------------------------------
+--------------------------------------
+--		SPIRITS	TOGGLE	Near/Far	--
+--------------------------------------
 imba_wisp_spirits_toggle = class({})
 function imba_wisp_spirits_toggle:OnSpellStart()
 	if IsServer() then
-		local caster 	= self:GetCaster()
-		local ability 	= caster:FindAbilityByName("imba_wisp_spirits")
-		local spirits_movementFactor = ability.spirits_movementFactor
+		local caster 					= self:GetCaster()
+		local ability 					= caster:FindAbilityByName("imba_wisp_spirits")
+		local spirits_movementFactor 	= ability.spirits_movementFactor
 
-		if spirits_movementFactor == 1 then
+		if ability.spirits_movementFactor == 1 then
 			ability.spirits_movementFactor = -1			
 		else
 			ability.spirits_movementFactor = 1
 		end
 	end
 end
+
+------------------------------------------
+--		SPIRITS	Swap silence/disarm		--
+------------------------------------------
+LinkLuaModifier("modifier_imba_wisp_swap_spirits_disarm", "hero/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_wisp_swap_spirits_silence", "hero/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
+imba_wisp_swap_spirits = class({})
+function imba_wisp_swap_spirits:IsInnateAbility()
+	return true
+end
+
+function imba_wisp_swap_spirits:GetIntrinsicModifierName()
+	return "modifier_imba_wisp_swap_spirits_silence"
+end
+
+function imba_wisp_swap_spirits:GetAbilityTextureName()
+	if self:GetCaster():HasModifier("modifier_imba_wisp_swap_spirits_silence") then
+		return "custom/kunnka_tide_high"
+	elseif self:GetCaster():HasModifier("modifier_imba_wisp_swap_spirits_disarm") then
+		return "custom/kunnka_tide_red"
+	end
+end
+
+function imba_wisp_swap_spirits:OnSpellStart()
+	if IsServer() then
+
+		local caster 					= self:GetCaster()
+		local ability 					= caster:FindAbilityByName("imba_wisp_spirits")
+		local spirits_movementFactor 	= ability.spirits_movementFactor
+		local particle 					= nil
+
+		if caster:HasModifier("modifier_imba_wisp_swap_spirits_disarm") then
+			caster:RemoveModifierByName("modifier_imba_wisp_swap_spirits_disarm")
+			caster:AddNewModifier(self:GetCaster(), self, "modifier_imba_wisp_swap_spirits_silence", {})
+		elseif caster:HasModifier("modifier_imba_wisp_swap_spirits_silence") then
+			caster:RemoveModifierByName("modifier_imba_wisp_swap_spirits_silence")
+			caster:AddNewModifier(self:GetCaster(), self, "modifier_imba_wisp_swap_spirits_disarm", {})
+		end
+
+		local caster 					= self:GetCaster()
+		local ability 					= caster:FindAbilityByName("imba_wisp_spirits")
+		local spirits_movementFactor 	= ability.spirits_movementFactor
+		local particle 					= nil
+		local silence 					= false
+		local disarm 					= false
+
+		if caster:HasModifier("modifier_imba_wisp_swap_spirits_silence") then
+			particle = "particles/units/heroes/hero_wisp/wisp_guardian_silence_a.vpcf"
+			silence  = true
+			disarm 	 = false
+		elseif caster:HasModifier("modifier_imba_wisp_swap_spirits_disarm") then
+			particle = "particles/units/heroes/hero_wisp/wisp_guardian_disarm_a.vpcf"
+			silence  = false
+			disarm 	 = true
+		end
+
+		for k,spirit in pairs( ability.spirits_spiritsSpawned ) do
+			if not spirit:IsNull() then
+				local pfx = ParticleManager:CreateParticle(particle, PATTACH_ABSORIGIN_FOLLOW, spirit)
+				if silence then
+					spirit.spirit_pfx_silence = pfx
+				elseif disarm then
+					spirit.spirit_pfx_disarm = pfx
+				end
+			end
+		end		
+	end 
+end
+
+modifier_imba_wisp_swap_spirits_disarm = class({})
+
+function modifier_imba_wisp_swap_spirits_disarm:IsHidden() return true end
+function modifier_imba_wisp_swap_spirits_disarm:IsPurgable() return false end
+function modifier_imba_wisp_swap_spirits_disarm:RemoveOnDeath() return false end
+
+modifier_imba_wisp_swap_spirits_silence = class({})
+
+function modifier_imba_wisp_swap_spirits_silence:IsHidden() return true end
+function modifier_imba_wisp_swap_spirits_silence:IsPurgable() return false end
+function modifier_imba_wisp_swap_spirits_silence:RemoveOnDeath() return false end
+
 
 ------------------------------
 --		OVERCHARGE		--
@@ -923,13 +1093,12 @@ function imba_wisp_overcharge:AddOvercharge(caster, target)
 		local ability 			= caster:FindAbilityByName("imba_wisp_overcharge")
 		local tether_ability 	= caster:FindAbilityByName("imba_wisp_tether")
 
-		local ability_level 		= ability:GetLevel() - 1
-		local bonus_attack_speed	= ability:GetLevelSpecialValueFor("bonus_attack_speed", ability_level)
-		local bonus_cast_speed		= ability:GetLevelSpecialValueFor("bonus_cast_speed", ability_level)
-		local bonus_missile_speed 	= ability:GetLevelSpecialValueFor("bonus_missile_speed", ability_level)
-		local bonus_damage_pct 		= ability:GetLevelSpecialValueFor("bonus_damage_pct", ability_level)
-		local bonus_attack_range 	= ability:GetLevelSpecialValueFor("bonus_attack_range", ability_level)
-		local bonus_regen 		 	= 0
+		local bonus_attack_speed	= ability:GetSpecialValueFor("bonus_attack_speed")
+		local bonus_cast_speed		= ability:GetSpecialValueFor("bonus_cast_speed")
+		local bonus_missile_speed 	= ability:GetSpecialValueFor("bonus_missile_speed")
+		local bonus_damage_pct 		= ability:GetSpecialValueFor("bonus_damage_pct")
+		local bonus_attack_range 	= ability:GetSpecialValueFor("bonus_attack_range")
+		local bonus_regen 			= 0
 
 		if caster:HasTalent("special_bonus_imba_wisp_3") then 
 			local bonus_pct 		= caster:FindTalentValue("special_bonus_imba_wisp_3", "bonus_effect")
@@ -982,10 +1151,8 @@ function imba_wisp_overcharge:OnToggle()
 
 			EmitSoundOn("Hero_Wisp.Overcharge", caster)
 
-			local ability_level 		= ability:GetLevel() - 1
-			local drain_interval 		= ability:GetLevelSpecialValueFor("drain_interval", ability_level)
-			local drain_pct 			= ability:GetLevelSpecialValueFor("drain_pct", ability_level)
-			drain_pct 					= drain_pct / 100
+			local drain_interval 		= ability:GetSpecialValueFor("drain_interval")
+			local drain_pct 			= ability:GetSpecialValueFor("drain_pct")
 
 			imba_wisp_overcharge:AddOvercharge(caster, caster)
 
@@ -993,11 +1160,11 @@ function imba_wisp_overcharge:OnToggle()
 				imba_wisp_overcharge:AddOvercharge(caster, tether_ability.target)
 			end
 
-			if caster:HasTalent("special_bonus_imba_wisp_7") then 
-				local additional_drain = caster:FindTalentValue("special_bonus_imba_wisp_3", "bonus_drain")
+			if caster:HasTalent("special_bonus_imba_wisp_7") then
+				local additional_drain = caster:FindTalentValue("special_bonus_imba_wisp_7", "bonus_drain")
 				drain_pct = drain_pct + additional_drain
 			end
-
+			drain_pct = drain_pct / 100
 			caster:AddNewModifier( caster, ability, "modifier_imba_wisp_overcharge_drain", { duration = -1, drain_interval = drain_interval, drain_pct = drain_pct })
 			
 		else
@@ -1017,6 +1184,8 @@ end
 ----------------------------------
 modifier_imba_wisp_overcharge = class({})
 function modifier_imba_wisp_overcharge:IsBuff() return true end
+function modifier_imba_wisp_overcharge:IsPurgable() return false end
+function modifier_imba_wisp_overcharge:IsNetherWardStealable() return false end
 function modifier_imba_wisp_overcharge:DeclareFunctions()
 	local funcs = {
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
@@ -1093,6 +1262,7 @@ end
 ----------------------------------------------
 modifier_imba_wisp_overcharge_drain = class({})
 function modifier_imba_wisp_overcharge_drain:IsHidden() return true end
+function modifier_imba_wisp_overcharge_drain:IsPurgable() return false end
 function modifier_imba_wisp_overcharge_drain:OnCreated(params)
 	if IsServer() then
 		self.caster 		= self:GetCaster()
@@ -1105,15 +1275,12 @@ function modifier_imba_wisp_overcharge_drain:OnCreated(params)
 end
 
 function modifier_imba_wisp_overcharge_drain:OnIntervalThink()
+	-- hp removal instead of self dmg... this wont break urn or salve
+	local current_health 	= self.caster:GetHealth() 
+	local health_drain 		= current_health * self.deltaDrainPct
+	self.caster:ModifyHealth(current_health - health_drain, self.ability, true, 0)
 
-	ApplyDamage( {
-		victim = self.caster,
-		attacker = self.caster,
-		damage = self.caster:GetHealth() * self.deltaDrainPct,
-		damage_type = DAMAGE_TYPE_PURE,
-	} )
-
-	self.caster:SpendMana( self.caster:GetMana() * self.deltaDrainPct, self.ability )
+	self.caster:SpendMana(self.caster:GetMana() * self.deltaDrainPct, self.ability)
 end
 
 ------------------------------
@@ -1136,11 +1303,10 @@ function imba_wisp_relocate:OnSpellStart()
 		local caster 				= self:GetCaster()
 		local ability 				= caster:FindAbilityByName("imba_wisp_relocate")
 		local tether_ability 		= caster:FindAbilityByName("imba_wisp_tether")
-		local ability_level 		= ability:GetLevel()
 		local target_point 			= self:GetCursorPosition()
-		local vision_radius 		= ability:GetLevelSpecialValueFor("vision_radius", ability_level)
-		local cast_delay 			= ability:GetLevelSpecialValueFor("cast_delay", ability_level)
-		local return_time 			= ability:GetLevelSpecialValueFor("return_time", ability_level)
+		local vision_radius 		= ability:GetSpecialValueFor("vision_radius")
+		local cast_delay 			= ability:GetSpecialValueFor("cast_delay")
+		local return_time 			= ability:GetSpecialValueFor("return_time")
 		local destroy_tree_radius	= ability:GetSpecialValueFor("destroy_tree_radius")
 	
 		if unit == caster then
@@ -1171,7 +1337,7 @@ function imba_wisp_relocate:OnSpellStart()
 			endTime = cast_delay,
 			callback = function()
 				ParticleManager:DestroyParticle(pfx, false)
-				if not imba_wisp_relocate:InterruptRelocate(caster, ability) then
+				if not imba_wisp_relocate:InterruptRelocate(caster, ability, tether_ability) then
 					GridNav:DestroyTreesAroundPoint(target_point, destroy_tree_radius, false)
 
 					caster:SwapAbilities("imba_wisp_relocate", "imba_wisp_relocate_break", false, true)
@@ -1195,7 +1361,7 @@ function imba_wisp_relocate:OnSpellStart()
 	end
 end
 
-function imba_wisp_relocate:InterruptRelocate(caster, ability)
+function imba_wisp_relocate:InterruptRelocate(caster, ability, tether_ability)
 	if not caster:IsAlive() or caster:IsStunned() or caster:IsHexed() or caster:IsNightmared() or caster:IsOutOfGame() then
 		return true
 	end
@@ -1230,12 +1396,12 @@ function modifier_imba_wisp_relocate:OnCreated(params)
 		ParticleManager:SetParticleControlEnt(self.caster_teleport_pfx, 0, caster, PATTACH_POINT, "attach_hitloc", caster:GetAbsOrigin(), true)
 
 		-- Move units
-		caster:SetAbsOrigin(ability.relocate_target_point)
+		FindClearSpaceForUnit(caster, ability.relocate_target_point, true)
 
-		if caster:HasModifier("modifier_imba_wisp_tether") then
+		if caster:HasModifier("modifier_imba_wisp_tether") and ally ~= nil and ally:IsHero() then
 			self.ally_teleport_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_wisp/wisp_relocate_teleport.vpcf", PATTACH_CUSTOMORIGIN, ally)
 			ParticleManager:SetParticleControlEnt(self.ally_teleport_pfx, 0, ally, PATTACH_POINT, "attach_hitloc", ally:GetAbsOrigin(), true)
-			ally:SetAbsOrigin(ability.relocate_target_point + Vector( 0, 100, 0 ))
+			FindClearSpaceForUnit(ally, ability.relocate_target_point + Vector( 0, 100, 0 ), true)
 		end
 
 		self.relocate_timerPfx = ParticleManager:CreateParticle("particles/units/heroes/hero_wisp/wisp_relocate_timer.vpcf", PATTACH_OVERHEAD_FOLLOW, caster)
@@ -1263,13 +1429,14 @@ function modifier_imba_wisp_relocate:OnRemoved()
 		self.caster_teleport_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_wisp/wisp_relocate_teleport.vpcf", PATTACH_CUSTOMORIGIN, caster)
 		ParticleManager:SetParticleControlEnt(self.caster_teleport_pfx, 0, caster, PATTACH_POINT, "attach_hitloc", caster:GetAbsOrigin(), true)
 
+		-- remove origin marker + delay timer
 		ParticleManager:DestroyParticle(self.relocate_timerPfx, false)
 		ParticleManager:DestroyParticle(self.caster_origin_pfx, false)
 
 		self:GetCaster():SetAbsOrigin(ability.origin)
 
-		if caster:HasModifier("modifier_imba_wisp_tether") and caster:IsAlive() then
-			local tether_ability 	= caster:FindAbilityByName("imba_wisp_tether")
+		local tether_ability 	= caster:FindAbilityByName("imba_wisp_tether")
+		if caster:HasModifier("modifier_imba_wisp_tether") and tether_ability.target ~= nil and tether_ability.target:IsHero() and caster:IsAlive() then
 			self.ally_teleport_pfx 	= ParticleManager:CreateParticle("particles/units/heroes/hero_wisp/wisp_relocate_teleport.vpcf", PATTACH_CUSTOMORIGIN, tether_ability.target)
 			ParticleManager:SetParticleControlEnt(self.ally_teleport_pfx, 0, tether_ability.target, PATTACH_POINT, "attach_hitloc", tether_ability.target:GetAbsOrigin(), true)
 
@@ -1330,7 +1497,7 @@ function modifier_special_bonus_imba_wisp_5:OnAttackLanded( params )
 
 				local damage_table 			= {}
 				damage_table.attacker 		= parent
-				--damage_table.ability 		= nil
+				damage_table.ability 		= nil
 				damage_table.damage_type 	= DAMAGE_TYPE_PHYSICAL 
 				damage_table.damage 		= parent:GetAttackDamage() * (splash_damage_pct / 100)
 
@@ -1346,45 +1513,26 @@ function modifier_special_bonus_imba_wisp_5:OnAttackLanded( params )
 	end
 end
 
-LinkLuaModifier("modifier_imba_wisp_swap_spirits_disarm", "hero/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_wisp_swap_spirits_silence", "hero/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
+------------------------------
+--	IO Overcharge Talent	--
+------------------------------
+modifier_special_bonus_imba_wisp_7 = class({
+	IsHidden      = function(self) return true  end,
+	RemoveOnDeath = function(self) return false end })
 
-imba_wisp_swap_spirits = class({})
+function modifier_special_bonus_imba_wisp_7:DeclareFunctions()
+	local decFuncs = {
+		MODIFIER_PROPERTY_MANA_REGEN_TOTAL_PERCENTAGE,
+		MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE
+	}
 
-function imba_wisp_swap_spirits:IsInnateAbility()
-	return true
+	return decFuncs
 end
 
-function imba_wisp_swap_spirits:GetIntrinsicModifierName()
-	return "modifier_imba_wisp_swap_spirits_silence"
+function modifier_special_bonus_imba_wisp_7:GetModifierTotalPercentageManaRegen()
+	return self:GetParent():FindTalentValue("special_bonus_imba_wisp_7", "bonus_regen")
 end
 
-function imba_wisp_swap_spirits:GetAbilityTextureName()
-	if self:GetCaster():HasModifier("modifier_imba_wisp_swap_spirits_silence") then
-		return "custom/kunnka_tide_high"
-	elseif self:GetCaster():HasModifier("modifier_imba_wisp_swap_spirits_disarm") then
-		return "custom/kunnka_tide_red"
-	end
+function modifier_special_bonus_imba_wisp_7:GetModifierHealthRegenPercentage()
+	return self:GetParent():FindTalentValue("special_bonus_imba_wisp_7", "bonus_regen")
 end
-
-function imba_wisp_swap_spirits:OnSpellStart()
-	if self:GetCaster():HasModifier("modifier_imba_wisp_swap_spirits_disarm") then
-		self:GetCaster():RemoveModifierByName("modifier_imba_wisp_swap_spirits_disarm")
-		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_wisp_swap_spirits_silence", {})
-	elseif self:GetCaster():HasModifier("modifier_imba_wisp_swap_spirits_silence") then
-		self:GetCaster():RemoveModifierByName("modifier_imba_wisp_swap_spirits_silence")
-		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_wisp_swap_spirits_disarm", {})
-	end
-end
-
-modifier_imba_wisp_swap_spirits_disarm = class({})
-
-function modifier_imba_wisp_swap_spirits_disarm:IsHidden() return true end
-function modifier_imba_wisp_swap_spirits_disarm:IsPurgable() return false end
-function modifier_imba_wisp_swap_spirits_disarm:RemoveOnDeath() return false end
-
-modifier_imba_wisp_swap_spirits_silence = class({})
-
-function modifier_imba_wisp_swap_spirits_silence:IsHidden() return true end
-function modifier_imba_wisp_swap_spirits_silence:IsPurgable() return false end
-function modifier_imba_wisp_swap_spirits_silence:RemoveOnDeath() return false end
