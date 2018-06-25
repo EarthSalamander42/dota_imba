@@ -103,7 +103,7 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"120 130 140 150"
+		"AbilityManaCost"				"100 150 200 250"
 		
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
@@ -127,12 +127,12 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"hero_damage"				"35 60 85 110"
+				"hero_damage"				"30 50 70 90"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"explosion_damage"			"35 60 85 110"
+				"explosion_damage"			"30 50 70 90"
 			}
 			"04"
 			{
@@ -198,7 +198,7 @@
 			"16"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"spirit_debuff_duration"	"2.0"
+				"spirit_debuff_duration"	"1.5"
 			}
 			"17"
 			{

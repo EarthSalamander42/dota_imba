@@ -4773,7 +4773,7 @@
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0.5"
-		"AbilityCastRange"				"315"
+		"AbilityCastRange"				"350"
 		"AbilityCooldown"				"13"
 		"AbilityManaCost"				"115 120 125 130"
 
@@ -4794,12 +4794,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"315"				
+				"radius"				"350"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"stun_duration"			"2.0 2.25 2.5 2.75"				
+				"stun_duration"			"2.25 2.5 2.75 3.0"
 			}
 			"03"
 			{
@@ -4809,7 +4809,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"pit_duration"			"4.75"
+				"pit_duration"			"5.5"
 			}
 			"05"
 			{
@@ -4845,7 +4845,7 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"5 4.5 4 3.5"
-		"AbilityCastRange"				"150"
+		"AbilityCastRange"				"250"
 		"AbilityCastPoint"				"0.5"
 
 		// Precache
@@ -4869,7 +4869,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"190"
+				"radius"				"250"
 			}
 			"03"
 			{
@@ -4913,12 +4913,12 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"str_pct_as_damage"		"30 50 80 90"
+				"str_pct_as_damage"		"40 60 80 100"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_block"			"3 6 9 12"				
+				"damage_block"			"3 6 9 12"
 			}
 			"04"
 			{
@@ -4954,7 +4954,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"90 75 60"
+		"AbilityCooldown"				"80 60 40"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -14129,6 +14129,7 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------		
 		"AbilityCastPoint"				"0.25"
+		"AbilityCastRange"				"300 600 900 1200"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -14177,7 +14178,7 @@
 			"07"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"cast_range"					"200 300 400 500"
+				"cast_range"					"300 600 900 1200"
 			}
 		}
 	}
@@ -14275,7 +14276,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"						"700"
+		"AbilityCastRange"						"700 1000 1300"
 		"AbilityCastPoint"						"0.25"
 
 		// Precache
@@ -14304,13 +14305,13 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"radius"						"375 575 625"
+				"radius"						"400 700 1000"
 			}
 
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"int_multiplier"				"8 10 12"
+				"int_multiplier"				"10 13 16"
 			}
 
 			"03"
@@ -15421,12 +15422,12 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"base_heal"					"7.5 12.5 17.5 22.5"
+				"base_heal"					"8 12 16 20"
 			}
 			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"hp_perc_heal"				"2.0 3.0 4.0 5.0"
+				"hp_perc_heal"				"1.0 2.0 3.0 4.0"
 			}			
 			"06"
 			{
@@ -15446,7 +15447,7 @@
 			"09"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"beam_range"				"1300 1500 1700 1900"
+				"beam_range"				"1200 1400 1600 1800"
 			}
 			"10"
 			{
@@ -16161,7 +16162,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"range"					"1500"
+				"range"					"1750"
 			}
 			"04"
 			{
@@ -16255,7 +16256,7 @@
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"spell_lifesteal"			"100 133 166"
+				"spell_lifesteal"			"100 130 160"
 			}
 		}
 	}
@@ -23972,12 +23973,12 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"radius"			"1200 1600 2000"
+				"radius"			"1400 2000 2600"
 			}
 			"02"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"damage"			"200 400 600"
+				"damage"			"200 500 800"
 			}
 			"04"
 			{	
@@ -24008,7 +24009,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_damage"				"3"
+				"bonus_damage"				"4"
 			}
 			"02"
 			{
@@ -24157,7 +24158,7 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"90 100 110 120"
+		"AbilityManaCost"				"105 110 115 120"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -24206,13 +24207,13 @@
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"toss_damage"				"75 225 325 375"
+				"toss_damage"				"110 240 370 500"
 			}
 
 			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"distance_cap"				"2308"
+				"distance_cap"				"2300"
 			}
 
 			"09"
@@ -39009,7 +39010,7 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"90 110 130 150"
+		"AbilityManaCost"				"80 100 120 140"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -39018,7 +39019,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"stun_duration"				"1.5 2.5 3.0 3.33"
+				"stun_duration"				"2.0 2.5 3.0 3.5"
 			}
 			"02"
 			{
@@ -39195,7 +39196,7 @@
 			"03"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"hp_loss_pct"		"2"
+				"hp_loss_pct"		"3"
 			}
 		}
 	}
@@ -41682,7 +41683,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"       "8"
+		"AbilityCooldown"       "7"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -41723,7 +41724,7 @@
 			"05"
 			{
 				"var_type"            "FIELD_INTEGER"
-				"charge_restore_time" "8"
+				"charge_restore_time" "7"
 				"LinkedSpecialBonus"      "special_bonus_sohei_dash_recharge"
 				"LinkedSpecialBonusOperation" "SPECIAL_BONUS_SUBTRACT"
 			}
@@ -41790,17 +41791,17 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"max_attacks"				"4 8 12 16 20"
+				"max_attacks"				"4 10 16"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"max_duration"				"4.0 6.0 8.0 10.0 12.0"
+				"max_duration"				"4.0 7.0 10.0"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"attack_interval"			"0.6"
+				"attack_interval"			"0.5"
 			}
 		}
 	}
@@ -41854,7 +41855,7 @@
 			"02"
 			{
 				"var_type"          "FIELD_FLOAT"
-				"guard_duration"      "2.0"
+				"guard_duration"      "1.5 2.0 2.5 3.0"
 			}
 			"03"
 			{
