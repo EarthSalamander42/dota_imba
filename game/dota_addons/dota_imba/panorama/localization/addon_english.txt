@@ -385,9 +385,15 @@
 	"mutation_river_fag"						"River Fag"
 	"mutation_river_fag_Description"			"makes the river impassable without forced movement for heroes."
 
+	"modifier_sticky_river"						"Sticky River"
+	"modifier_sticky_river_Description"			"the river is sticky, you are slowed while wading through water."
+
 	"mutation_sleepy_river"						"Slippery River"
 	"mutation_sleepy_river_Description"			"the river is icy, you can drift on it."
 	"mutation_sleepy_river_author"				"76561198015161808"
+
+	"modifier_river_flows"						"River Flows"
+	"modifier_river_flows_Description"			"the river flows, movement speed increased."
 
 	"mutation_fast_runes"						"Fast Runes"
 	"mutation_fast_runes_Description"			"Powerup Runes spawn every 30 seconds. Bounty Runes spawn every 60 seconds."

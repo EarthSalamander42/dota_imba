@@ -475,7 +475,7 @@ function modifier_item_imba_guardian_greaves_aura_emitter:OnTakeDamage( keys )
 
 		-- If the owner's health is below the threshold, and Mend is off cooldown, activate it
 		local ability = self:GetAbility()
-		if owner:GetHealthPercent() <= ability:GetSpecialValueFor("min_health_threshold") and ability:IsCooldownReady() then
+		if owner:GetHealthPercent() <= ability:GetSpecialValueFor("min_health_threshold") and owner:GetHealthPercent() > 0 and ability:IsCooldownReady() then
 			local heal_amount = ability:GetSpecialValueFor("mend_base_health") * (1 + owner:GetSpellPower() * 0.01)
 			local mana_amount = ability:GetSpecialValueFor("mend_base_mana") + ability:GetSpecialValueFor("mend_mana_pct") * owner:GetMaxMana() * 0.01
 			local heal_radius = ability:GetSpecialValueFor("aura_radius")
