@@ -385,6 +385,9 @@
 	"mutation_river_fag"						"River Fag"
 	"mutation_river_fag_Description"			"makes the river impassable without forced movement for heroes."
 
+	"modifier_sticky_river"						"Sticky River"
+	"modifier_sticky_river_Description"			"the river is sticky, you are slowed while wading through water."
+
 	"mutation_sleepy_river"						"Slippery River"
 	"mutation_sleepy_river_Description"			"the river is icy, you can drift on it."
 	"mutation_sleepy_river_author"				"76561198015161808"
