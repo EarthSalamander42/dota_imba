@@ -21,6 +21,7 @@ function modifier_mutation_death_explosion:OnCreated()
 	self.delay = 0.9
 	self.radius = 400
 	self.damage = 600
+	self.damage_per_min = 150
 	self.damage_buildings_pct = 0.5
 end
 
@@ -34,7 +35,7 @@ function modifier_mutation_death_explosion:OnDeath(keys)
 		ParticleManager:ReleaseParticleIndex(particle_pre_blast_fx)
 
 		local game_time = math.min(GameRules:GetDOTATime(false, false) / 60, 30)
-		game_time = game_time * 100
+		game_time = game_time * self.damage_per_min
 		self.damage = self.damage + game_time
 
 		Timers:CreateTimer(self.delay, function()

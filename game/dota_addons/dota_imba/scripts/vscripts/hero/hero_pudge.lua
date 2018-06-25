@@ -1011,8 +1011,9 @@ end
 function modifier_imba_flesh_heap_stacks:OnIntervalThink()
 	if not IsServer() then return end
 	local buff = self:GetCaster():FindModifierByName("modifier_imba_pudge_flesh_heap_handle")
-	if not buff then return end
-	self:SetStackCount(buff:GetStackCount())
+	if buff then
+		self:SetStackCount(buff:GetStackCount())
+	end
 end
 
 function modifier_imba_flesh_heap_stacks:DeclareFunctions()

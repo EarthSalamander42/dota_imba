@@ -5,6 +5,7 @@
 modifier_mutation_kill_streak_power = class({})
 
 function modifier_mutation_kill_streak_power:IsHidden() return false end
+function modifier_mutation_kill_streak_power:IsPurgable() return false end
 function modifier_mutation_kill_streak_power:RemoveOnDeath() return false end
 
 function modifier_mutation_kill_streak_power:GetTexture()

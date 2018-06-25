@@ -3,6 +3,7 @@
 
 local ITEMS_KV = LoadKeyValues("scripts/npc/npc_items_custom.txt")
 local MAP_SIZE = 15000
+local MAP_SIZE_AIRDROP = 10000
 
 function Mutation:Init()
 --	print("Mutation: Initialize...")
@@ -77,7 +78,7 @@ function Mutation:ChooseMutation(type, table, count)
 			if IsInToolsMode() then
 				IMBA_MUTATION["positive"] = "super_blink"
 				IMBA_MUTATION["negative"] = "death_explosion"
-				IMBA_MUTATION["gift_exchange"] = "fast_runes"
+				IMBA_MUTATION["terrain"] = "gift_exchange"
 			end
 
 			return
@@ -281,29 +282,32 @@ end
 
 function Mutation:SpawnRandomItem()
 	local item_name
-	local random_int = RandomInt(1, 300)
+	local random_int = RandomInt(1, 224) -- number of items
 	local i = 1
 
 	for k, v in pairs(ITEMS_KV) do
 		if random_int == i then
 --			print("Map max bounds:", MAP_SIZE / 2.3)
-			print(random_int, k, v["ItemCost"])
+--			print(random_int, k, v["ItemCost"])
 
 			for _, item in pairs(self.restricted_items) do
 				if k == item then
+					print("Item is forbidden! Re-roll...")
 					return Mutation:SpawnRandomItem()
 				end
 			end
 
 			if v["ItemCost"] then
 				if v["ItemCost"] < 1000 or v["ItemCost"] == 99999 or string.find(k, "recipe") then
+					print("Cost too low/high or recipe! Re-roll...")
 					return Mutation:SpawnRandomItem()
 				end
 			else
+				print("No item cost! Re-roll...")
 				return Mutation:SpawnRandomItem()
 			end
 
-			local pos = Vector(RandomInt(-(MAP_SIZE / 3.75),  MAP_SIZE / 3.75), RandomInt(-(MAP_SIZE / 3.75),  MAP_SIZE / 3.75), 0)
+			local pos = Vector(0, 0, 0) + RandomVector(RandomInt(1000, MAP_SIZE_AIRDROP))
 			AddFOWViewer(2, pos, self.item_spawn_radius, self.item_spawn_delay + self.item_spawn_vision_linger, false)
 			AddFOWViewer(3, pos, self.item_spawn_radius, self.item_spawn_delay + self.item_spawn_vision_linger, false)
 			GridNav:DestroyTreesAroundPoint(pos, self.item_spawn_radius, false)
@@ -320,11 +324,14 @@ function Mutation:SpawnRandomItem()
 
 			Timers:CreateTimer(self.item_spawn_delay, function()
 				local item = CreateItem(k, nil, nil)
-				item:SetSellable(false)
+				item.airdrop = true
+				item:SetSellable(true)
 				print("Item Name:", k, pos)
 
 				local drop = CreateItemOnPositionSync(pos, item)
---				EmitSoundOn("Dungeon.TreasureItemDrop", hero)
+
+				CustomGameEventManager:Send_ServerToAllClients("item_has_spawned", {spawn_location = pos})
+				EmitGlobalSound( "powerup_05" )
 
 				ParticleManager:DestroyParticle(particle_arena_fx, false)
 				ParticleManager:ReleaseParticleIndex(particle_arena_fx)

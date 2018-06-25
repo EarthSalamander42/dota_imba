@@ -345,7 +345,7 @@
 
 	// Negative
 	"mutation_death_explosion"					"Death Explosion"
-	"mutation_death_explosion_Description"		"Deal 600 + (100 * minutes) damage up to 3600 max in a 400 radius on death afer a 0.9 seconds delay."
+	"mutation_death_explosion_Description"		"Deal 600 + (150 * minutes) damage in a 400 radius on death afer a 0.9 seconds delay."
 
 	"mutation_death_gold_drop"					"Death Gold Drop"
 	"mutation_death_gold_drop_Description"		"Whenever a hero is killed, they drop a gold sack."
