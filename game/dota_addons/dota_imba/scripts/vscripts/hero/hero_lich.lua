@@ -15,6 +15,7 @@
 -- Editors:
 --     Shush, 22.03.2017
 --     suthernfriend, 03.02.2018
+--     naowin, 25.06.2018
 
 CreateEmptyTalents("lich")
 
@@ -600,7 +601,8 @@ end
 
 -- #5 Talent: Frost Armor adds a portion of the Lich's intelligence to the armor bonus
 modifier_special_bonus_imba_lich_5 = modifier_special_bonus_imba_lich_5 or class({})
-
+function modifier_special_bonus_imba_lich_5:IsPurgable() return false end
+function modifier_special_bonus_imba_lich_5:RemoveOnDeath() return false end
 function modifier_special_bonus_imba_lich_5:OnCreated()
 	if IsServer() then
 		self:StartIntervalThink(1)
