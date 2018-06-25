@@ -303,7 +303,7 @@ function Mutation:SpawnRandomItem()
 				return Mutation:SpawnRandomItem()
 			end
 
-			local pos = Vector(RandomInt(1000, MAP_SIZE / 2.3), RandomInt(1000, MAP_SIZE / 2.3), 0)
+			local pos = Vector(RandomInt(-(MAP_SIZE / 3.75),  MAP_SIZE / 3.75), RandomInt(-(MAP_SIZE / 3.75),  MAP_SIZE / 3.75), 0)
 			AddFOWViewer(2, pos, self.item_spawn_radius, self.item_spawn_delay + self.item_spawn_vision_linger, false)
 			AddFOWViewer(3, pos, self.item_spawn_radius, self.item_spawn_delay + self.item_spawn_vision_linger, false)
 			GridNav:DestroyTreesAroundPoint(pos, self.item_spawn_radius, false)
