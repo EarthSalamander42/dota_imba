@@ -928,10 +928,10 @@ function modifier_imba_wisp_spirit_handler:OnHit(caster, spirit, enemies_hit, cr
 			if enemy:IsHero() then
 				enemy:AddNewModifier(caster, ability, "modifier_imba_wisp_spirits_hero_hit", {duration = 0.03, slow_duration = slow_duration, slow = slow})
 				damage_table.damage	= hero_damage
-
-				if ability.spirits_movementFactor == 1 then
+				
+				if caster:HasModifier("modifier_imba_wisp_swap_spirits_disarm") then
 					enemy:AddNewModifier(caster, ability, "modifier_disarmed", {duration=ability:GetSpecialValueFor("spirit_debuff_duration")})
-				else
+				elseif caster:HasModifier("modifier_imba_wisp_swap_spirits_silence") then
 					enemy:AddNewModifier(caster, ability, "modifier_silence", {duration=ability:GetSpecialValueFor("spirit_debuff_duration")})
 				end
 
