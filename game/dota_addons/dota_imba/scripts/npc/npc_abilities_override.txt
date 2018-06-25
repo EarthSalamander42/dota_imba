@@ -2643,7 +2643,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"400 475 550 625"
+				"radius"					"400 500 600 700"
 			}
 			"02"
 			{
@@ -2653,12 +2653,12 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"movement_slow"				"25 35 45 55"
+				"movement_slow"				"25 40 55 70"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"attack_speed_slow"			"25 35 45 55"
+				"attack_speed_slow"			"25 40 55 70"
 			}			
 			"05"
 			{
@@ -2724,19 +2724,19 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"dodge_chance"				"10 20 30 40"
+				"dodge_chance"				"10 25 40 55"
 				"LinkedSpecialBonus"		"special_bonus_unique_brewmaster_4"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"crit_chance"				"10 20 30 40"
+				"crit_chance"				"10 25 40 55"
 				"LinkedSpecialBonus"		"special_bonus_unique_brewmaster_4"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"crit_multiplier"			"230 250 270 290"
+				"crit_multiplier"			"250 300 350 400"
 			}
 			"04"
 			{
@@ -2752,8 +2752,9 @@
 	//=================================================================================================================
 	"brewmaster_primal_split"
 	{
-		"AbilityCooldown"				"140 120 100"
+		"AbilityCooldown"				"100"
 		"AbilityCastPoint"				"0.65"
+		"AbilityManaCost"				"100 125 150"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -4624,7 +4625,7 @@
 	"earthshaker_aftershock"
 	{
 		"AbilityCastRange"				"300 350 400 450"
-		"AbilityDuration"				"0.6 1.2 1.6 2.0"
+		"AbilityDuration"				"0.5 1.0 1.5 2.0"
 		"AbilityDamage"					"100 150 200 250"
 
 		"AbilitySpecial"
@@ -4637,7 +4638,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"tooltip_duration"		"0.6 1.2 1.6 2.0"
+				"tooltip_duration"		"0.5 1.0 1.5 2.0"
 			}
 		}
 	}
@@ -9151,8 +9152,8 @@
 		"AbilityCooldown"					"14 12 10 8"
 
 		"AbilityCastRange"					"4000"
-
-		"AbilityDamage"						"90 230 330 390"
+		"AbilityManaCost"					"50 75 100 125"
+		"AbilityDamage"						"100 200 300 400"
 
 		"AbilitySpecial"
 		{
@@ -9258,15 +9259,15 @@
 	//=================================================================================================================
 	"puck_phase_shift"
 	{
-		"AbilityChannelTime"				"1.0 1.75 2.5 3.25"
-		"AbilityCooldown"					"8.0"
+		"AbilityChannelTime"				"1.0 2.0 3.0 4.0"
+		"AbilityCooldown"					"10.0"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"duration"					"1.0 1.75 2.5 3.25"
+				"duration"					"1.0 2.0 3.0 4.0"
 			}
 		}
 	}
@@ -9333,7 +9334,7 @@
 	//=================================================================================================================
 	"razor_plasma_field"
 	{
-		"AbilityCooldown"				"14 13 12 11"
+		"AbilityCooldown"				"13 12 11 10"
 
 		"AbilitySpecial"
 		{
@@ -9382,7 +9383,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"drain_rate"			"12 28 42 54"
+				"drain_rate"			"10 30 50 70"
 				"LinkedSpecialBonus"	"special_bonus_unique_razor"
 			}
 			"04"
@@ -9504,7 +9505,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"strike_interval"			"0.7 0.5 0.43"
+				"strike_interval"			"0.70 0.55 0.40"
 				"LinkedSpecialBonus"		"special_bonus_unique_razor_2"
 			}
 			"05"
@@ -9515,7 +9516,7 @@
 			"06"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"strike_interval_scepter"	"0.6 0.4 0.33"
+				"strike_interval_scepter"	"0.60 0.45 0.30"
 				"LinkedSpecialBonus"		"special_bonus_unique_razor_2"	
 			}
 		}
@@ -10817,7 +10818,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_reduction"		"20 40 60 80"
+				"damage_reduction"		"40 60 80 100"
 				"LinkedSpecialBonus"	"special_bonus_unique_tidehunter_4"
 			}
 			"02"
@@ -11687,7 +11688,7 @@
 			"06"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"burn_damage"					"0.75 2.25 3.25 3.75"
+				"burn_damage"					"1 2.25 3.5 4.75"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"07"
@@ -11794,12 +11795,12 @@
 			"05"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"bonus_damage_duration"			"30 50 70 90"
+				"bonus_damage_duration"			"20 40 60 80"
 			}
 			"06"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"bonus_damage_duration_scepter"	"70 90 110 130"
+				"bonus_damage_duration_scepter"	"60 80 100 120"
 			}
 		}
 	}
@@ -11865,7 +11866,7 @@
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"str_steal_scepter"			"10 12 14 16"
+				"str_steal_scepter"			"10 11 12 13"
 			}
 		}
 	}
@@ -12135,7 +12136,7 @@
 	//=================================================================================================================
 	"viper_nethertoxin"
 	{
-		"AbilityCooldown"				"10.0"
+		"AbilityCooldown"				"12.0"
 		"AbilityManaCost"				"75 100 125 150"
 
 		"AbilitySpecial"

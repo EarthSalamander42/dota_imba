@@ -21,7 +21,7 @@ CreateEmptyTalents("earth_spirit")
 -------------------------	Stone Remnant	-------------------------
 ---------------------------------------------------------------------
 imba_earth_spirit_stone_remnant = imba_earth_spirit_stone_remnant or class({})
-LinkLuaModifier("modifier_imba_earth_spirit_remnant_charges", "hero/hero_earth_spirit.lua", LUA_MODIFIER_MOTION_NONE)	-- Remnant Charges
+LinkLuaModifier("modifier_imba_earth_spirit_remnant_handler", "hero/hero_earth_spirit.lua", LUA_MODIFIER_MOTION_NONE)	-- Remnant Handler + Earths Mark on attack
 LinkLuaModifier("modifier_imba_stone_remnant", "hero/hero_earth_spirit.lua", LUA_MODIFIER_MOTION_NONE)					-- Remnant Modifier
 LinkLuaModifier("modifier_imba_earths_mark", "hero/hero_earth_spirit.lua", LUA_MODIFIER_MOTION_NONE)					-- Earths Mark
 LinkLuaModifier("modifier_imba_earth_spirit_layout_fix", "hero/hero_earth_spirit.lua", LUA_MODIFIER_MOTION_NONE)		-- 6 slot layout fix
@@ -29,6 +29,10 @@ LinkLuaModifier("modifier_imba_earth_spirit_layout_fix", "hero/hero_earth_spirit
 function imba_earth_spirit_stone_remnant:IsNetherWardStealable() return false end
 function imba_earth_spirit_stone_remnant:IsInnateAbility() return true end
 function imba_earth_spirit_stone_remnant:IsStealable() return false end
+
+function imba_earth_spirit_stone_remnant:GetManaCost()
+	return self:GetSpecialValueFor("overdraw_base_cost") * ((self:GetCaster():GetModifierStackCount("modifier_imba_earth_spirit_remnant_handler", self:GetCaster()) - 1) ^ self:GetSpecialValueFor("overdraw_cost_multiplier"))
+end
 
 function imba_earth_spirit_stone_remnant:GetBehavior()
 	if IsServer() then
@@ -40,62 +44,55 @@ end
 
 function imba_earth_spirit_stone_remnant:OnAbilityPhaseStart()
 	if IsServer() then
-		if not self.remnantModifier then
-			self.remnantModifier = self:GetCaster():FindModifierByName("modifier_imba_earth_spirit_remnant_charges")
+		if not self.handler then
+			self.handler = self:GetCaster():FindModifierByName("modifier_imba_earth_spirit_remnant_handler")
 		end
-		
-		if self.remnantModifier:GetStackCount() > 0 then
-			return true
-		else
-			return false
-		end
+		return true
 	end
 end
 
 function imba_earth_spirit_stone_remnant:GetIntrinsicModifierName()
-	return "modifier_imba_earth_spirit_remnant_charges" end
+	return "modifier_imba_earth_spirit_remnant_handler" end
 
 function imba_earth_spirit_stone_remnant:OnSpellStart()
 	if IsServer() then
-		local caster = self:GetCaster()
-		
-		if not self.remnantModifier then
-			self.remnantModifier = caster:FindModifierByName("modifier_imba_earth_spirit_remnant_charges")
+		if self.handler then
+			self.handler:OnCreated()
+		else
+			self.handler = caster:FindModifierByName("modifier_imba_earth_spirit_remnant_handler")
 		end
 		
-		if self.remnantModifier:GetStackCount() > 0 then
-			local target = self:GetCursorPosition()
-			local unit = self:GetCursorTarget()
-			local remnantDuration = self:GetSpecialValueFor("remnant_duration")
-			local effectRadius = self:GetSpecialValueFor("effect_radius")
-			local visionDuration = self:GetSpecialValueFor("vision_duration")
-			
-			self.remnantModifier:DecrementStackCount()
-			
-			-- self casting sets the target as caster target + 100 units forward
-			if unit == caster then
-				target = caster:GetAbsOrigin() + caster:GetForwardVector() * 100
-			end
-			
-			local dummy = CreateUnitByName("npc_imba_dota_earth_spirit_stone", target, false, caster, nil, caster:GetTeamNumber())
-			dummy:AddNewModifier(caster, self, "modifier_imba_stone_remnant", {duration = remnantDuration})
-			EmitSoundOn("Hero_EarthSpirit.StoneRemnant.Impact", dummy)
-			
-			if caster:HasTalent("special_bonus_imba_earth_spirit_1") then
-				dummy:SetDayTimeVisionRange(caster:FindTalentValue("special_bonus_imba_earth_spirit_1"))
-				dummy:SetNightTimeVisionRange(caster:FindTalentValue("special_bonus_imba_earth_spirit_1"))
+		local caster = self:GetCaster()
+		local target = self:GetCursorPosition()
+		local unit = self:GetCursorTarget()
+		local remnantDuration = self:GetSpecialValueFor("remnant_duration")
+		local effectRadius = self:GetSpecialValueFor("effect_radius")
+		local visionDuration = self:GetSpecialValueFor("vision_duration")
+		
+		-- self casting sets the target as caster target + 100 units forward
+		if unit == caster then
+			target = caster:GetAbsOrigin() + caster:GetForwardVector() * 100
+		end
+		
+		local dummy = CreateUnitByName("npc_imba_dota_earth_spirit_stone", target, false, caster, nil, caster:GetTeamNumber())
+		dummy:AddNewModifier(caster, self, "modifier_imba_stone_remnant", {duration = remnantDuration})
+		EmitSoundOn("Hero_EarthSpirit.StoneRemnant.Impact", dummy)
+		self.handler:NewRemnant(dummy:GetEntityIndex())
+		
+		if caster:HasTalent("special_bonus_imba_earth_spirit_1") then
+			dummy:SetDayTimeVisionRange(caster:FindTalentValue("special_bonus_imba_earth_spirit_1"))
+			dummy:SetNightTimeVisionRange(caster:FindTalentValue("special_bonus_imba_earth_spirit_1"))
+		else
+			self:CreateVisibilityNode(target, effectRadius, visionDuration)
+		end
+		
+		local enemies = FindUnitsInRadius(caster:GetTeamNumber(), target, nil, effectRadius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
+		for _, enemy in ipairs(enemies) do
+			local mark = enemy:FindModifierByName("modifier_imba_earths_mark")
+			if mark then
+				mark:IncrementStackCount()
 			else
-				self:CreateVisibilityNode(target, effectRadius, visionDuration)
-			end
-			
-			local enemies = FindUnitsInRadius(caster:GetTeamNumber(), target, nil, effectRadius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
-			for _, enemy in ipairs(enemies) do
-				local mark = enemy:FindModifierByName("modifier_imba_earths_mark")
-				if mark then
-					mark:IncrementStackCount()
-				else
-					enemy:AddNewModifier(caster, self, "modifier_imba_earths_mark", {duration = self:GetSpecialValueFor("earths_mark_duration")})
-				end
+				enemy:AddNewModifier(caster, self, "modifier_imba_earths_mark", {duration = self:GetSpecialValueFor("earths_mark_duration")})
 			end
 		end
 	end
@@ -123,80 +120,106 @@ function imba_earth_spirit_stone_remnant:CheckScepter()
 	end
 end
 
+function imba_earth_spirit_stone_remnant:KillRemnant(remnantID)
+	if IsServer() then
+		self.handler:KillRemnant(remnantID)
+	end
+end
+
 -----	Stone Remnant recharge modifier
-modifier_imba_earth_spirit_remnant_charges = modifier_imba_earth_spirit_remnant_charges or class({})
-function modifier_imba_earth_spirit_remnant_charges:RemoveOnDeath() return false end
-function modifier_imba_earth_spirit_remnant_charges:DestroyOnExpire() return false end
+modifier_imba_earth_spirit_remnant_handler = modifier_imba_earth_spirit_remnant_handler or class({})
+function modifier_imba_earth_spirit_remnant_handler:RemoveOnDeath() return false end
+function modifier_imba_earth_spirit_remnant_handler:DestroyOnExpire() return false end
+function modifier_imba_earth_spirit_remnant_handler:IsDebuff() return true end
+function modifier_imba_earth_spirit_remnant_handler:IsHidden()
+	if self:GetStackCount() > 1 then return false end
+	return true
+end
 
-function modifier_imba_earth_spirit_remnant_charges:DeclareFunctions()
-	return { MODIFIER_EVENT_ON_DEATH } end
+function modifier_imba_earth_spirit_remnant_handler:DeclareFunctions()
+	return { MODIFIER_EVENT_ON_ATTACK_LANDED } end
 
-function modifier_imba_earth_spirit_remnant_charges:OnCreated()
+function modifier_imba_earth_spirit_remnant_handler:OnCreated()
 	if IsServer() then
-		self.maxCharges = self:GetAbility():GetSpecialValueFor("max_charges")
-		self.rechargeTime = self:GetAbility():GetSpecialValueFor("charge_cooldown")
-		self:SetStackCount(self.maxCharges)
+		self.overdrawCooldown = self:GetAbility():GetSpecialValueFor("overdraw_cooldown")
+		self.noCostRemnants = self:GetAbility():GetSpecialValueFor("no_cost_remnants")
+		self.overdrawCooldown = self:GetAbility():GetSpecialValueFor("overdraw_cooldown")
+		self.parent = self:GetParent()
+		self.overdrawTimer = self.overdrawTimer or 0
+		self.remnants = self.remnants or {}
+		self:StartIntervalThink(FrameTime()*3)
+		
+		if self:GetParent():HasTalent("special_bonus_imba_earth_spirit_5") then
+			self.overdrawCooldown = self.overdrawCooldown + self:GetCaster():FindTalentValue("special_bonus_imba_earth_spirit_5")
+		end
+		
+		if self:GetParent():HasTalent("special_bonus_imba_earth_spirit_6") then
+			self.noCostRemnants = self.noCostRemnants + self:GetCaster():FindTalentValue("special_bonus_imba_earth_spirit_6")
+		end
 	end
 end
 
-function modifier_imba_earth_spirit_remnant_charges:OnIntervalThink()
+function modifier_imba_earth_spirit_remnant_handler:OnIntervalThink()
 	if IsServer() then
-		self:IncrementStackCount()
+		if self.overdrawTimer > 0 then
+			self.overdrawTimer = self.overdrawTimer - FrameTime()*3
+		end
 		
-		if self:GetStackCount() < self.maxCharges then
-			if self:GetParent():HasTalent("special_bonus_imba_earth_spirit_5") then
-				self:SetDuration(self.rechargeTime - self:GetParent():FindTalentValue("special_bonus_imba_earth_spirit_5"), true)
-			else
-				self:SetDuration(self.rechargeTime, true)
+		local length = #self.remnants
+		for i = 1, length do
+			if self.remnants[length - i + 1] then
+				if not EntIndexToHScript(self.remnants[length - i + 1]) then
+					table.remove(self.remnants, length - i + 1)
+				end
+			end
+		end
+		
+		if #self.remnants <= self.noCostRemnants and self.overdrawTimer <= 0 then
+			self:SetStackCount(1)
+		end
+	end
+end
+
+function modifier_imba_earth_spirit_remnant_handler:NewRemnant(remnantID)
+	if IsServer() then
+		if #self.remnants >= self.noCostRemnants then
+			self.overdrawTimer = self.overdrawCooldown
+			self:SetDuration(self.overdrawCooldown, true)
+			self:IncrementStackCount()
+			self:KillRemnant(self.remnants[1])
+		elseif self.overdrawTimer > 0 then
+			self.overdrawTimer = self.overdrawCooldown
+			self:SetDuration(self.overdrawCooldown, true)
+		end
+		table.insert(self.remnants, remnantID)
+	end
+end
+
+function modifier_imba_earth_spirit_remnant_handler:KillRemnant(remnantID)
+	if IsServer() then
+		for i, id in ipairs(self.remnants) do
+			if id == remnantID then
+				table.remove(self.remnants, i)
+				
+				local remnant = EntIndexToHScript(id)
+				if remnant then
+					local remnantModifier = remnant:FindModifierByName("modifier_imba_stone_remnant")
+					if remnantModifier then remnantModifier:Destroy() end
+				end
+				return
 			end
 		end
 	end
 end
 
-function modifier_imba_earth_spirit_remnant_charges:OnStackCountChanged(oldStacks)
+function modifier_imba_earth_spirit_remnant_handler:OnAttackLanded(keys)
 	if IsServer() then
-		local stacks = self:GetStackCount()
-		if oldStacks == stacks then return end -- Stack overflow prevention (haha, get it? STACK overflow? no? ok...)
-		
-		if stacks < oldStacks then
-			if self:GetRemainingTime() <= 0 then
-				if self:GetParent():HasTalent("special_bonus_imba_earth_spirit_5") then
-					self:StartIntervalThink(self.rechargeTime - self:GetParent():FindTalentValue("special_bonus_imba_earth_spirit_5"))
-					self:SetDuration(self.rechargeTime - self:GetParent():FindTalentValue("special_bonus_imba_earth_spirit_5"), true)
-				else
-					self:StartIntervalThink(self.rechargeTime)
-					self:SetDuration(self.rechargeTime, true)
-				end
-			end
-			
-			if stacks == 0 then
-				self:GetAbility():StartCooldown(self:GetRemainingTime())
-			end
-		elseif stacks > oldStacks then
-			if stacks >= self.maxCharges then
-				self:StartIntervalThink(-1)
-			end
-			
-			-- Make sure charges don't exceed max
-			if self:GetParent():HasTalent("special_bonus_imba_earth_spirit_6") then
-				self:SetStackCount(math.min(stacks, math.max(self.maxCharges, self:GetParent():FindTalentValue("special_bonus_imba_earth_spirit_6", "max_remnants"))))
+		if keys.attacker == self.parent and keys.target:GetTeamNumber() ~= self.parent:GetTeamNumber() then
+			local mark = keys.target:FindModifierByName("modifier_imba_earths_mark")
+			if mark then
+				mark:IncrementStackCount()
 			else
-				self:SetStackCount(math.min(stacks, self.maxCharges))
-			end
-		end
-	end
-end
-
-function modifier_imba_earth_spirit_remnant_charges:OnDeath(keys)
-	if IsServer() then
-		local parent = self:GetParent()
-		if parent:HasTalent("special_bonus_imba_earth_spirit_6") then
-			if keys.unit:IsRealHero() and keys.unit:GetTeamNumber() == parent:GetTeamNumber() then
-				if CalcDistanceBetweenEntityOBB(keys.victim, parent) <= parent:FindTalentValue("special_bonus_imba_earth_spirit_6", "radius") then
-					if self:GetStackCount() < parent:FindTalentValue("special_bonus_imba_earth_spirit_6", "max_remnants") then
-						self:IncrementStackCount()
-					end
-				end
+				keys.target:AddNewModifier(self.parent, self:GetAbility(), "modifier_imba_earths_mark", {duration = self:GetAbility():GetSpecialValueFor("earths_mark_duration")})
 			end
 		end
 	end
@@ -251,6 +274,7 @@ function modifier_imba_stone_remnant:OnDestroy()
 			ParticleManager:DestroyParticle(self.remnantParticle, false)
 			ParticleManager:ReleaseParticleIndex(self.remnantParticle)
 			UTIL_Remove(self:GetParent())
+			self:GetAbility():KillRemnant(self:GetParent():GetEntityIndex())
 		else
 			FindClearSpaceForUnit(self:GetParent(), self:GetParent():GetAbsOrigin(), false)
 			
