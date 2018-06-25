@@ -2,7 +2,7 @@
 --General Game Mode Config
 _G.CAVERN_PLAYERS_PER_TEAM 					= 3
 if IsInToolsMode() then
-	_G.CAVERN_PLAYERS_PER_TEAM 					= 4
+	_G.CAVERN_PLAYERS_PER_TEAM 				= 4
 end
 _G.CAVERN_TEAMS_PER_GAME 					= 8
 _G.CAVERN_STARTING_GOLD 					= 1200

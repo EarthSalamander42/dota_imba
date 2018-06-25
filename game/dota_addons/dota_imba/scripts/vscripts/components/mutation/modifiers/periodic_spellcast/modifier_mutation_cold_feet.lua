@@ -38,11 +38,6 @@ end
 
 function modifier_mutation_cold_feet:OnRemoved()
 	if IsServer() then
-		if self.particle then
-			ParticleManager:DestroyParticle(self.particle, false)
-			ParticleManager:ReleaseParticleIndex(self.particle)
-		end
-
 		if self.ground_particle then
 			ParticleManager:DestroyParticle(self.ground_particle, false)
 			ParticleManager:ReleaseParticleIndex(self.ground_particle)

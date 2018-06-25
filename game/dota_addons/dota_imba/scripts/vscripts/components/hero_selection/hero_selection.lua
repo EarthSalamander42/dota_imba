@@ -376,6 +376,32 @@ function HeroSelection:SelectHero(playerId, hero)
 				SendToServerConsole('sm_gmode 1')
 				SendToServerConsole('dota_bot_populate')
 			end
+
+			Timers:CreateTimer(3.0, function()
+				for id = 0, PlayerResource:GetPlayerCount() - 1 do
+					for i = 1, 25 do
+						local top_imr_string = nil
+						if GetMapName() == "imba_ranked_5v5" then
+							top_imr_string = "top_imr5v5"
+						elseif GetMapName() == "imba_ranked_10v10" then
+							top_imr_string = "top_imr10v10"
+						end
+
+						if top_imr_string then
+							local top_imr = CustomNetTables:GetTableValue("top_imr5v5", tostring(i))
+							print(top_imr.SteamID64)
+							if tostring(PlayerResource:GetSteamID(id)) == top_imr.SteamID64 then
+								print("Found a top leaderboard!")
+								if GetMapName() == "imba_ranked_5v5" then
+									Say(nil, PlayerResource:GetPlayerName(id).." is top "..i.." IMR! ("..math.floor(top_imr.IMR_5v5)..")", false)
+								elseif GetMapName() == "imba_ranked_10v10" then
+									Say(nil, PlayerResource:GetPlayerName(id).." is top "..i.." IMR! ("..math.floor(top_imr.IMR_10v10)..")", false)
+								end
+							end
+						end
+					end
+				end
+			end)
 		end
 
 		local player = PlayerResource:GetPlayer(playerId)

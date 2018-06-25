@@ -149,7 +149,7 @@ Label {
 	horizontal-align: center;
 	width: 90%;
 	height: 15%;
-	flow-children: right;
+	flow-children: down;
 }
 
 #TeamRow2 {
@@ -164,7 +164,7 @@ Label {
 #TeamRadiant {
 	flow-children: right;
 	width: 45%;
-	height: 65%;
+	height: 100%;
 	/* background-color: #171A2590; */
 }
 
@@ -174,14 +174,14 @@ Label {
 #TeamCustom4 {
 	flow-children: right;
 	width: 22.5%;
-	height: 65%;
+	height: 100%;
 	/* background-color: #171A2590; */
 }
 
 #Clock,
 #DummyClock {
 	width: 10%;
-	height: 60%;
+	height: 100%;
 	/* background-color: #171A2590; */
 }
 
@@ -205,7 +205,7 @@ Label {
 #TeamDire {
 	flow-children: left;
 	width: 45%;
-	height: 65%;
+	height: 100%;
 	/* background-color: #171A2590; */
 }
 
@@ -215,7 +215,7 @@ Label {
 #TeamCustom8 {
 	flow-children: left;
 	width: 22.5%;
-	height: 65%;
+	height: 100%;
 	/* background-color: #171A2590; */
 }
 
@@ -228,7 +228,7 @@ Label {
 
 .TenVTen .Player {
 	width: 9%;
-	height: 65%;
+	height: 100%;
 }
 
 .Cavern .Player {
@@ -1390,4 +1390,47 @@ Label.SectionTitle {
 	animation-timing-function: ease-in;
 	animation-direction: alternate;
 	animation-iteration-count: infinite;
+}
+
+.AverageIMR {
+	width: 10%;
+	height: 60%;
+	margin-left: 20%;
+	margin-right: 20%;
+}
+
+.IMRInfo {
+	height: 22px;
+	width: 100%;
+	background-color: #2B3445;
+	background-color:  gradient( linear, 100% 0, 0 0, from( #0d1012ba ), color-stop( 0.3, #263441cd ), color-stop( 0.7, #263441cd ), to( #0d1012ba ) );
+	vertical-align: bottom;
+	horizontal-align: middle;
+	font-family: Bold;
+	font-weight: normal;
+	font-size: 15px;
+	padding: 2px 2px 0 2px;
+	color: darkred;
+	color:  #8f9dae;
+	text-align: center;
+	margin-bottom: 30%;
+	text-shadow: 1px 1px 2px 1.0 #000000ee;
+	z-index: 2;
+}
+
+#TeamRow_sub {
+	width: 100%;
+	height: 65%;
+	flow-children: right;
+}
+
+#TeamRow_imr {
+	width: 100%;
+	height: 35%;
+	flow-children: right;
+}
+
+#RadiantIMR,
+#DireIMR {
+	visibility: collapse;
 }

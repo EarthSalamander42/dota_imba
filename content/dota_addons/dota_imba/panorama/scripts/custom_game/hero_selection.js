@@ -23,6 +23,11 @@ var iscm = false;
 var selectedherocm = 'empty';
 var isPicking = true;
 var currentHeroPreview = '';
+var radiantPlayers = Game.GetPlayerIDsOnTeam( DOTATeam_t.DOTA_TEAM_GOODGUYS );
+var direPlayers = Game.GetPlayerIDsOnTeam( DOTATeam_t.DOTA_TEAM_BADGUYS );
+var radiant_imr = 0
+var dire_imr = 0
+
 var stepsCompleted = {
 	2: 0,
 	3: 0
@@ -132,6 +137,10 @@ if (currentMap == "imba_1v1") {
 	SetupTopBar();
 } else if (currentMap == 'cavern') {
 	$.GetContextPanel().SetHasClass('Cavern', true);
+}
+
+if (currentMap == "imba_ranked_5v5" || currentMap == "imba_ranked_10v10") {
+	SetupIMRAverage()
 }
 
 $('#ARDMLoading').style.opacity = 0;
@@ -261,6 +270,7 @@ function onPlayerStatChange(table, key, data) {
 			var teamcustom6 = FindDotaHudElement('TeamCustom6');
 			var teamcustom7 = FindDotaHudElement('TeamCustom7');
 			var teamcustom8 = FindDotaHudElement('TeamCustom8');
+			var dummyClock = FindDotaHudElement('DummyClock');
 			panelscreated = length;
 			teamdire.RemoveAndDeleteChildren();
 			teamradiant.RemoveAndDeleteChildren();
@@ -276,6 +286,7 @@ function onPlayerStatChange(table, key, data) {
 				teamcustom6.DeleteAsync(0)
 				teamcustom7.DeleteAsync(0)
 				teamcustom8.DeleteAsync(0)
+				dummyClock.DeleteAsync(0)
 			}
 
 			Object.keys(data).forEach(function (nkey) {
@@ -327,6 +338,7 @@ function onPlayerStatChange(table, key, data) {
 					// $('#MyEntry').SetFocus();
 					player_color = GameUI.CustomUIConfig().player_colors[(data[nkey].id)];
 					var player_table = CustomNetTables.GetTableValue("player_table", data[nkey].id.toString());
+
 					if (player_table) {
 						if (currentMap == "imba_ranked_5v5") {
 							if (player_table.IMR_5v5) {
@@ -537,6 +549,38 @@ function onPlayerStatChange(table, key, data) {
 			HideStrategy();
 		}
 	}
+}
+
+function SetupIMRAverage() {
+	var radiant_count = 0
+	var dire_count = 0
+
+	$.Each( radiantPlayers, function( player ) {
+		var plyData = CustomNetTables.GetTableValue("player_table", player)
+		if (currentMap == "imba_ranked_5v5") {
+			radiant_imr = radiant_imr + plyData.IMR_5v5
+			radiant_count = radiant_count + 1
+		} else {
+			radiant_imr = radiant_imr + plyData.IMR_10v10
+			radiant_count = radiant_count + 1
+		}
+	})
+
+	$.Each( direPlayers, function( player ) {
+		var plyData = CustomNetTables.GetTableValue("player_table", player)
+		if (currentMap == "imba_ranked_5v5") {
+			dire_imr = dire_imr + plyData.IMR_5v5
+			dire_count = dire_count + 1
+		} else {
+			dire_imr = dire_imr + plyData.IMR_10v10
+			dire_count = dire_count + 1
+		}
+	})
+
+	$("#RadiantIMR").style.visibility = "visible";
+	$("#DireIMR").style.visibility = "visible";
+	$("#RadiantIMR_label").text = "Average IMR: " + radiant_imr.toFixed(0) / radiant_count;
+	$("#DireIMR_label").text = "Average IMR: " + dire_imr.toFixed(0) / dire_count;
 }
 
 function Setup1v1() {

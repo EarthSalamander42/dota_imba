@@ -246,8 +246,12 @@ function modifier_imba_blink_boots_handler:OnTakeDamage( keys )
 	if parent == unit then
 		-- Custom function from funcs.lua
 		if IsHeroDamage(keys.attacker, keys.damage) then
-			if ability:GetCooldownTimeRemaining() < blink_damage_cooldown and IMBA_MUTATION["positive"] ~= "super_blink" then
+			if ability:GetCooldownTimeRemaining() < blink_damage_cooldown then
 				ability:StartCooldown(blink_damage_cooldown)
+
+				if IMBA_MUTATION and IMBA_MUTATION["positive"] == "super_blink" then
+					return
+				end
 			end
 		end
 	end
