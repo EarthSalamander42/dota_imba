@@ -23,6 +23,7 @@ function Mutation:Init()
 	LinkLuaModifier("modifier_mutation_torrent", "components/mutation/modifiers/periodic_spellcast/modifier_mutation_torrent.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_mutation_cold_feet", "components/mutation/modifiers/periodic_spellcast/modifier_mutation_cold_feet.lua", LUA_MODIFIER_MOTION_NONE )
 
+	LinkLuaModifier("modifier_river_flows", "modifier/mutation/modifier_river_flows.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_sticky_river", "modifier/mutation/modifier_sticky_river.lua", LUA_MODIFIER_MOTION_NONE )
 
 	Mutation:ChooseMutation("positive", POSITIVE_MUTATION_LIST, 6 - 1) -- -1 because index is 0
@@ -219,6 +220,10 @@ function Mutation:OnHeroSpawn(hero)
 	if IMBA_MUTATION["terrain"] == "sleepy_river" then
 		hero:AddNewModifier(hero, nil, "modifier_river", {})
 	end
+
+	if IMBA_MUTATION["terrain"] == "river_flows" then
+		hero:AddNewModifier(hero, nil, "modifier_river_flows", {})
+    end
 
 	if IMBA_MUTATION["terrain"] == "sticky_river" then
 		hero:AddNewModifier(hero, nil, "modifier_sticky_river", {})

@@ -59,6 +59,7 @@ TERRAIN_MUTATION_LIST["gift_exchange"] = false
 -- Disabled
 -- TERRAIN_MUTATION_LIST["no_trees"] = false
 -- TERRAIN_MUTATION_LIST["omni_vision"] = false
+-- TERRAIN_MUTATION_LIST["river_flows"] = false
 -- TERRAIN_MUTATION_LIST["sticky_river"] = false
 
 -- Not coded/approved yet
