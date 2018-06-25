@@ -51,7 +51,6 @@ NEGATIVE_MUTATION_LIST["defense_of_the_ants"] = false
 -- NEGATIVE_MUTATION_LIST["alien_incubation"] = false
 
 TERRAIN_MUTATION_LIST = {}
-TERRAIN_MUTATION_LIST["river_flows"] = false
 TERRAIN_MUTATION_LIST["sleepy_river"] = false
 TERRAIN_MUTATION_LIST["fast_runes"] = false
 TERRAIN_MUTATION_LIST["minefield"] = false
@@ -60,6 +59,7 @@ TERRAIN_MUTATION_LIST["gift_exchange"] = false
 -- Disabled
 -- TERRAIN_MUTATION_LIST["no_trees"] = false
 -- TERRAIN_MUTATION_LIST["omni_vision"] = false
+-- TERRAIN_MUTATION_LIST["river_flows"] = false
 
 -- Not coded/approved yet
 -- TERRAIN_MUTATION_LIST["danger_zone"] = false -- add archer's music danger zone
