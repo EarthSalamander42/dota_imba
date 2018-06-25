@@ -67,6 +67,11 @@
 				"var_type"					"FIELD_FLOAT"
 				"stun_duration"				"0.75 1.25 1.75 2.25"
 			}
+			"10"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"destroy_tree_radius"		"350"
+			}
 		}
 	}
 
@@ -194,6 +199,11 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"spirit_debuff_duration"	"2.0"
+			}
+			"17"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"damage_interval"			"0.45"
 			}
 		}
 	}	
