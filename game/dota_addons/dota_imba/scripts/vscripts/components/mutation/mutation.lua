@@ -2,8 +2,7 @@
 --     Earth Salamander #42
 
 local ITEMS_KV = LoadKeyValues("scripts/npc/npc_items_custom.txt")
-local MAP_SIZE = 15000
-local MAP_SIZE_AIRDROP = 10000
+local MAP_SIZE = 7000
 
 function Mutation:Init()
 --	print("Mutation: Initialize...")
@@ -152,7 +151,7 @@ function Mutation:OnGameRulesStateChange(keys)
 			Timers:CreateTimer(function()
 				local units = FindUnitsInRadius(DOTA_TEAM_NEUTRALS, Vector(0,0,0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)		
 				local mine_count = 0
-				local max_mine_count = 90
+				local max_mine_count = 75
 
 				for _, unit in pairs(units) do
 					if unit:GetUnitName() == "npc_imba_techies_proximity_mine" or unit:GetUnitName() == "npc_imba_techies_proximity_mine_big_boom" or unit:GetUnitName() == "npc_imba_techies_stasis_trap" then			
@@ -170,7 +169,7 @@ function Mutation:OnGameRulesStateChange(keys)
 
 				if mine_count < max_mine_count then
 					for i = 1, 10 do
-						local mine = CreateUnitByName(mines[RandomInt(1, #mines)], Vector(0, 0, 0) + RandomVector(RandomInt(1000, MAP_SIZE)), true, nil, nil, DOTA_TEAM_NEUTRALS)
+						local mine = CreateUnitByName(mines[RandomInt(1, #mines)], Vector(0, 0, 0) + RandomVector(MAP_SIZE), true, nil, nil, DOTA_TEAM_NEUTRALS)
 						mine:AddNewModifier(mine, nil, "modifier_invulnerable", {})
 					end
 				end
@@ -318,7 +317,7 @@ function Mutation:SpawnRandomItem()
 				return Mutation:SpawnRandomItem()
 			end
 
-			local pos = Vector(0, 0, 0) + RandomVector(RandomInt(1000, MAP_SIZE_AIRDROP))
+			local pos = Vector(0, 0, 0) + RandomVector(MAP_SIZE)
 			AddFOWViewer(2, pos, self.item_spawn_radius, self.item_spawn_delay + self.item_spawn_vision_linger, false)
 			AddFOWViewer(3, pos, self.item_spawn_radius, self.item_spawn_delay + self.item_spawn_vision_linger, false)
 			GridNav:DestroyTreesAroundPoint(pos, self.item_spawn_radius, false)

@@ -174,7 +174,7 @@
     horizontal-align: center;
     opacity: 0;
     transform: scaleX(2) scaleY(2);
-    margin-top: 64px;
+    margin-top: 90px;
     transition-property: transform, opacity;
     transition-duration: 0.3s;
     visibility: collapse;
@@ -218,7 +218,7 @@
 	flow-children: down;
 
     horizontal-align: center;
-    margin-top: 64px;
+    margin-top: 90px;
     opacity: 0;
     transform: scaleX(2) scaleY(2);
     visibility: collapse;
@@ -302,7 +302,7 @@
     color: white;
     horizontal-align: center;
     margin: 0px;
-    margin-top: 64px;
+    margin-top: 90px;
     
     font-size: 96px;
     font-weight: bold;
@@ -348,7 +348,7 @@
     color: white;
     horizontal-align: center;
     margin: 0px;
-    margin-top: 64px;
+    margin-top: 90px;
     
     font-size: 96px;
     font-weight: bold;
@@ -395,7 +395,7 @@
     horizontal-align: center;
     opacity: 0;
     transform: scaleX(2) scaleY(2);
-    margin-top: 64px;
+    margin-top: 90px;
     transition-property: transform, opacity;
     transition-duration: 0.3s;
     visibility: collapse;

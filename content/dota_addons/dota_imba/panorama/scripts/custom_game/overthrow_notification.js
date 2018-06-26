@@ -40,6 +40,7 @@ function OnItemDrop(msg) {
 	//	$.Msg( msg.hero_id )
 	$.GetContextPanel().SetHasClass("recent_item_drop", true);
 
+	$("#PickupMessage_Hero_Text").SetDialogVariable("hero_id", $.Localize("#" + msg.hero_id));
 	$("#PickupMessage_Item_Text").SetDialogVariable("item_id", $.Localize("#DOTA_Tooltip_Ability_" + msg.dropped_item));
 
 	var hero_image_name = "file://{images}/heroes/" + msg.hero_id + ".png";
