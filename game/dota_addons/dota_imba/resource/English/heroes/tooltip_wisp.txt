@@ -51,7 +51,7 @@
 // Wisp's Spirit Toggle
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_wisp_spirits_toggle"          		"SPIRITS MOVMENT"
-"DOTA_Tooltip_ability_imba_wisp_spirits_toggle_description"     "Calls the spirits in and out.\n<font color='#FF7800'>Spirits</font color='#FF7800'>: <font color='#FF0000'>Disarms</font color='#FF7800'> on hit while out.\n<font color='#FF7800'>Spirits</font color='#FF7800'>: <font color='#FF00FF'>Silences</font color='#FF7800'> on hit while in."
+"DOTA_Tooltip_ability_imba_wisp_spirits_toggle_description"     "Calls the spirits in and out."
 
 ////===============================================================================================================
 // Wisp's Overcharge
@@ -60,7 +60,7 @@
 "DOTA_Tooltip_ability_imba_wisp_overcharge_description" 			"Io gains bonus attack speed and damage reduction, at the cost of draining a percentage of its current health and mana per second. If Io is tethered to an ally, that unit also gains the bonuses.\n<font color='#FF7800'>Fundamental Shift</font color='#FF7800'>: Also grants increased: missile speed, cast speed, and attack range."
 "DOTA_Tooltip_ability_imba_wisp_overcharge_lore"					"Drawing on the energy of matter from all worlds, Io begins the unravelling of time."
 "DOTA_Tooltip_ability_imba_wisp_overcharge_bonus_attack_speed"      "ATTACK SPEED:"
-"DOTA_Tooltip_ability_imba_wisp_overcharge_bonus_cast_speed"        "%CAST SPEED:"
+"DOTA_Tooltip_ability_imba_wisp_overcharge_bonus_cast_speed"        "CAST SPEED:"
 "DOTA_Tooltip_ability_imba_wisp_overcharge_bonus_missile_speed"     "MISSILE SPEED:"
 "DOTA_Tooltip_ability_imba_wisp_overcharge_bonus_attack_range"      "ATTACK RANGE:"
 "DOTA_Tooltip_ability_imba_wisp_overcharge_bonus_damage_pct"        "%INCOMING DAMAGE REDUCTION:"
@@ -106,12 +106,12 @@
 ////===============================================================================================================
 "DOTA_Tooltip_Ability_special_bonus_imba_wisp_1"												"+2 Additional Spirits"
 "DOTA_Tooltip_Ability_special_bonus_imba_wisp_2"												"+50% Spirit Impact Damage"
-"DOTA_Tooltip_Ability_special_bonus_imba_wisp_3"												"50% stronger Overcharge Buffs"
-"DOTA_Tooltip_Ability_special_bonus_imba_wisp_3_description"									"Buffs given to attack speed, attack range, missile speed, cast speed and damage reduction are 50% stronger."
+"DOTA_Tooltip_Ability_special_bonus_imba_wisp_3"												"+50% Overcharge Bonus"
+"DOTA_Tooltip_Ability_special_bonus_imba_wisp_3_description"									"Overcharge grants +50% additional attack speed, attack range, missile speed, cast speed and damage reduction."
 "DOTA_Tooltip_Ability_special_bonus_imba_wisp_4"												"Tether Grants Aghanim's Scepter Bonus"
-"DOTA_Tooltip_Ability_special_bonus_imba_wisp_5"												"Attacks splash for 75% Damage in a 350 AoE""
+"DOTA_Tooltip_Ability_special_bonus_imba_wisp_5"												"Attacks Splash on Hit"
 "DOTA_Tooltip_Ability_special_bonus_imba_wisp_6"												"Attack Tethered Ally's Target"
 "DOTA_Tooltip_Ability_special_bonus_imba_wisp_7"												"Imba Overcharge"
-"DOTA_Tooltip_Ability_special_bonus_imba_wisp_7_description"									"Overcharge grants +5% health/mana regen. \nOvercharge health/mana drain is increased by 5%"
+"DOTA_Tooltip_Ability_special_bonus_imba_wisp_7_description"									"Overcharge grants +5% health/mana regen. \\nOvercharge health/mana drain is increased by 5%."
 "DOTA_Tooltip_Ability_special_bonus_imba_wisp_8"												"Imba Tether"
-"DOTA_Tooltip_Ability_special_bonus_imba_wisp_8_description"									"Io and Tethered ally cannot be slowed. \nMovement speed no longer capped!"
+"DOTA_Tooltip_Ability_special_bonus_imba_wisp_8_description"									"Io and Tethered ally cannot be slowed. \\nMovement speed no longer capped!"
