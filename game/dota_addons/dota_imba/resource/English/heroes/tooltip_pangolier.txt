@@ -80,4 +80,4 @@
 "DOTA_Tooltip_ability_special_bonus_imba_pangolier_6_Description"	"-25% Tenacity on enemies affected by Heartpiercer."
 "DOTA_Tooltip_ability_special_bonus_imba_pangolier_7"				"Rolling Thunder Double Damage"
 "DOTA_Tooltip_ability_special_bonus_imba_pangolier_7_Description"	"Rolling Thunder damage on the same target doubles on each impact."
-"DOTA_Tooltip_ability_special_bonus_imba_pangolier_8"				"40% of Pangolier's attack damage for Swashbuckle."
+"DOTA_Tooltip_ability_special_bonus_imba_pangolier_8"				"Swashbuckle now uses 40% of Pangolier's attack damage"
