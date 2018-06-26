@@ -114,8 +114,8 @@
 "DOTA_Tooltip_ability_special_bonus_imba_lycan_4_Description"	"Howl gives 8 seconds of flying movement to Lycan and wolves"
 "DOTA_Tooltip_ability_special_bonus_imba_lycan_5"				"6 Wicked Crunch stacks gives vision of the target"
 "DOTA_Tooltip_ability_special_bonus_imba_lycan_6"				"x2 Wicked Crunch on-hit stacks/max stacks"
-"DOTA_Tooltip_ability_special_bonus_imba_lycan_7"				"Shapeshift give 1200 movespeed"
-"DOTA_Tooltip_ability_special_bonus_imba_lycan_7_Description"	"Shapeshift increases maximum movespeed to 1200"
+"DOTA_Tooltip_ability_special_bonus_imba_lycan_7"				"Shapeshift Move Speed Cap Increase"
+"DOTA_Tooltip_ability_special_bonus_imba_lycan_7_Description"	"Shapeshift increases maximum move speed to 1200."
 "DOTA_Tooltip_ability_special_bonus_imba_lycan_8"				"Wolfsbane stack buffs attack/movespeed and damage"
 "DOTA_Tooltip_ability_special_bonus_imba_lycan_8_Description"	"Gaining a Wolfsbane stack gives Lycan and his units +20% movespeed/+20% damage/+75 attackspeed for 30 seconds."
 
