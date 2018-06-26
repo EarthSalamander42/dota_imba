@@ -16,7 +16,7 @@
 ////===============================================================================================================
 
 "DOTA_Tooltip_ability_imba_lina_light_strike_array"                    "Light Strike Array"
-"DOTA_Tooltip_ability_imba_lina_light_strike_array_Description"                     "Summons a column of flames that damages and stuns enemies.\n<font color='#FF7800'>Spontaneous Destruction:</font> Summons %array_count_tooltip% instances of extra pillars in a circle %rings_delay% seconds after the first explosion occurs, each with a %cast_delay% seconds interval.\n<font color='#FF7800'>Blast Matrix Designation:</font> Spontaneous Destruction summons %array_rings_count% pillars with %rings_radius% radius to the original explosion, with each time being further from the previous explosion."
+"DOTA_Tooltip_ability_imba_lina_light_strike_array_Description"         "Summons a column of flames that damages and stuns enemies.\n<font color='#FF7800'>Spontaneous Destruction:</font> Summons %array_count_tooltip% instances of extra pillars in a circle %rings_delay% seconds after the first explosion occurs, each with a %cast_delay% seconds interval.\n<font color='#FF7800'>Blast Matrix Designation:</font> Spontaneous Destruction summons %array_rings_count% pillars with %rings_radius% radius to the original explosion, with each time being further from the previous explosion."
 "DOTA_Tooltip_ability_imba_lina_light_strike_array_Lore"                "Lina's essence allows her to focus the sun's energies, causing air to combust at will."
 "DOTA_Tooltip_ability_imba_lina_light_strike_array_aoe_radius"          "RADIUS:"
 "DOTA_Tooltip_ability_imba_lina_light_strike_array_cast_delay"          "CAST DELAY:"
@@ -53,15 +53,20 @@
 // Lina's Custom Talents
 ////===============================================================================================================
 
-"DOTA_Tooltip_ability_special_bonus_imba_lina_1"            "+2 secondary Dragon Slaves"
-"DOTA_Tooltip_ability_special_bonus_imba_lina_2"            "Spawns a Main Dragon Slave at the end of the secondary Dragon Slave"
-"DOTA_Tooltip_ability_special_bonus_imba_lina_3"            "Fiery Soul can be activated when reaching 3 stacks, releasing a hot shockwave"
-"DOTA_Tooltip_ability_special_bonus_imba_lina_4"            "Light Strike Arrays cause magma to erupt from the ground"
-"DOTA_Tooltip_ability_special_bonus_imba_lina_5"            "Lina's spells applies damage over time on her enemies"
-"DOTA_Tooltip_ability_special_bonus_imba_lina_6"            "Laguna Blade stuns targets for 0.75 seconds"
-"DOTA_Tooltip_ability_special_bonus_imba_lina_7"            "Light Strike Array's main explosion is repeated 2 times, each time with a bigger radius but lower stun duration"
-"DOTA_Tooltip_ability_special_bonus_imba_lina_8"            "Blazing Fire"
-"DOTA_Tooltip_ability_special_bonus_imba_lina_8_description"            "Attacks apply Bazling Fire dealing 10% of linas int as damage per second.\nLinas spells will consume the debuff, instantly dealing remaing damage"
+"DOTA_Tooltip_ability_special_bonus_imba_lina_1"            	"+2 secondary Dragon Slaves"
+"DOTA_Tooltip_ability_special_bonus_imba_lina_2"            	"Additional Main Dragon Slave"
+"DOTA_Tooltip_ability_special_bonus_imba_lina_2_Description"	"Spawns a Main Dragon Slave at the end of the secondary Dragon Slave"
+"DOTA_Tooltip_ability_special_bonus_imba_lina_3"            	"Fiery Shockwave"
+"DOTA_Tooltip_ability_special_bonus_imba_lina_3_Description"	"Fiery Soul can be activated when reaching 3 stacks, releasing a 800 radius shockwave around Lina. Enemies closer to Lina take more damage."
+"DOTA_Tooltip_ability_special_bonus_imba_lina_4"            	"Magma Array"
+"DOTA_Tooltip_ability_special_bonus_imba_lina_4_Description"	"Light Strike Arrays cause magma to erupt from the ground, dealing minor damage for duration of the stun."
+"DOTA_Tooltip_ability_special_bonus_imba_lina_5"            	"Lina's spells apply damage over time"
+"DOTA_Tooltip_ability_special_bonus_imba_lina_5_Description" 	"Enemies hit by Lina's spells take (40 * # of Fiery Soul Stacks) damage per second for 5 seconds."
+"DOTA_Tooltip_ability_special_bonus_imba_lina_6"            	"Laguna Blade stuns targets for 0.75 seconds"
+"DOTA_Tooltip_ability_special_bonus_imba_lina_7"				"Reverb Array"
+"DOTA_Tooltip_ability_special_bonus_imba_lina_7_Description"    "Light Strike Array's main explosion is repeated twice, each time with a bigger radius but lower stun duration."
+"DOTA_Tooltip_ability_special_bonus_imba_lina_8"            	"Blazing Fire"
+"DOTA_Tooltip_ability_special_bonus_imba_lina_8_Description"	"Attacks apply Blazing Fire, dealing 10% of Lina's intelligence as damage per second.\\nLina's spells will consume the debuff, instantly dealing remaing damage."
 
 
 "DOTA_Tooltip_modifier_imba_blazing_strike"                	"Blazing Fire"
