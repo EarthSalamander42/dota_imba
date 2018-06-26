@@ -60,19 +60,19 @@
 
 // Witch Doctor's Custom Talents
 "DOTA_Tooltip_Ability_special_bonus_imba_witch_doctor_1"                "Maledict Blast (AoE)"
-"DOTA_Tooltip_Ability_special_bonus_imba_witch_doctor_1_Description"	"Maledict blast damage is dealt to enemies 400 units around the target"
+"DOTA_Tooltip_Ability_special_bonus_imba_witch_doctor_1_Description"	"Maledict blast damage is dealt to enemies 400 units around the target."
 "DOTA_Tooltip_Ability_special_bonus_imba_witch_doctor_2"                "Voodo Restoration dispel occurs immediately"
 "DOTA_Tooltip_Ability_special_bonus_imba_witch_doctor_3"                "Voodo Restoration dispel is a hard dispel"
 "DOTA_Tooltip_Ability_special_bonus_imba_witch_doctor_4"                "Contagious Maledict"
-"DOTA_Tooltip_Ability_special_bonus_imba_witch_doctor_4_Description"	"Paralyzing Cask applies Maledict if it bounces from Maledict targets"
+"DOTA_Tooltip_Ability_special_bonus_imba_witch_doctor_4_Description"	"Paralyzing Cask applies Maledict if it bounces from Maledict targets."
 "DOTA_Tooltip_Ability_special_bonus_imba_witch_doctor_5"                "Death's Party"
-"DOTA_Tooltip_Ability_special_bonus_imba_witch_doctor_5_Description"	"Dying to Death Ward summons another, weaker death ward"
+"DOTA_Tooltip_Ability_special_bonus_imba_witch_doctor_5_Description"	"Dying to Death Ward summons another, weaker death ward."
 "DOTA_Tooltip_Ability_special_bonus_imba_witch_doctor_6"                "Voodoo Aura"
-"DOTA_Tooltip_Ability_special_bonus_imba_witch_doctor_6_Description"	"Voodoo Restoration no longer costs mana"
+"DOTA_Tooltip_Ability_special_bonus_imba_witch_doctor_6_Description"	"Voodoo Restoration no longer costs mana."
 "DOTA_Tooltip_Ability_special_bonus_imba_witch_doctor_7"                "FeelsSadMan"
-"DOTA_Tooltip_Ability_special_bonus_imba_witch_doctor_7_Description"	"Maledict disables health regen for 1 second after each tick"
+"DOTA_Tooltip_Ability_special_bonus_imba_witch_doctor_7_Description"	"Maledict disables health regen for 1 second after each tick."
 "DOTA_Tooltip_Ability_special_bonus_imba_witch_doctor_8"                "Death Zone"
-"DOTA_Tooltip_Ability_special_bonus_imba_witch_doctor_8_Description"	"Now spawns two Death Wards. If channeling is broken, only one of them disappears"
+"DOTA_Tooltip_Ability_special_bonus_imba_witch_doctor_8_Description"	"Now spawns two Death Wards. If channeling is broken, only one of them disappears."
 
 // Witch Doctor's summoned unit: Death Ward
 "imba_witch_doctor_death_ward"                              "Death Ward"
