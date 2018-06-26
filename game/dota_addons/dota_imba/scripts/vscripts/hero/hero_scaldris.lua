@@ -173,6 +173,12 @@ function imba_scaldris_heatwave:OnSpellStart()
 		local caster = self:GetCaster()
 		local caster_loc = caster:GetAbsOrigin()
 		local target_loc = self:GetCursorPosition()
+
+		-- Cursorcast fix
+		if target_loc == caster_loc then
+			target_loc = caster_loc + caster:GetForwardVector() * 100
+		end
+
 		local direction = (target_loc - caster_loc):Normalized()
 		local wave_radius = self:GetSpecialValueFor("wave_radius")
 		local wave_speed = self:GetSpecialValueFor("wave_speed")
@@ -295,6 +301,12 @@ function imba_scaldris_cold_front:OnSpellStart()
 		local caster = self:GetCaster()
 		local caster_loc = caster:GetAbsOrigin()
 		local target_loc = self:GetCursorPosition()
+
+		-- Cursorcast fix
+		if target_loc == caster_loc then
+			target_loc = caster_loc + caster:GetForwardVector() * 100
+		end
+
 		local direction = (target_loc - caster_loc):Normalized()
 		local distance = (target_loc - caster_loc):Length2D()
 		local projectile_speed = self:GetSpecialValueFor("projectile_speed")
@@ -585,6 +597,12 @@ function imba_scaldris_freeze:OnSpellStart()
 		local caster = self:GetCaster()
 		local caster_loc = caster:GetAbsOrigin()
 		local target_loc = self:GetCursorPosition()
+
+		-- Cursorcast fix
+		if target_loc == caster_loc then
+			target_loc = caster_loc + caster:GetForwardVector() * 100
+		end
+
 		local direction = (target_loc - caster_loc):Normalized()
 		local initial_radius = self:GetSpecialValueFor("initial_radius")
 		local final_radius = self:GetSpecialValueFor("final_radius")
@@ -907,6 +925,12 @@ function imba_scaldris_ice_floes:OnSpellStart()
 		local caster = self:GetCaster()
 		local caster_loc = caster:GetAbsOrigin()
 		local target_loc = self:GetCursorPosition()
+
+		-- Cursorcast fix
+		if target_loc == caster_loc then
+			target_loc = caster_loc + caster:GetForwardVector() * 100
+		end
+		
 		local direction = (target_loc - caster_loc):Normalized()
 		local distance = (target_loc - caster_loc):Length2D()
 		local projectile_speed = self:GetSpecialValueFor("projectile_speed")
