@@ -83,7 +83,7 @@
 "DOTA_Tooltip_ability_special_bonus_imba_pudge_2"				"+300 Meat Hook speed"
 "DOTA_Tooltip_ability_special_bonus_imba_pudge_3"				"+60 Meat Hook width"
 "DOTA_Tooltip_ability_special_bonus_imba_pudge_4"				"+10 max stacks for Fat Boy"
-"DOTA_Tooltip_ability_special_bonus_imba_pudge_4_Description"	"+%value% max limit for 'Fat Boy' max stacks (Flesh Heap Magic Resist)"
+"DOTA_Tooltip_ability_special_bonus_imba_pudge_4_Description"	"+%value% max limit for 'Fat Boy' max stacks (Flesh Heap Magic Resist)."
 "DOTA_Tooltip_Ability_special_bonus_imba_pudge_5"				"+1000 Hook Range"
 "DOTA_Tooltip_Ability_special_bonus_imba_pudge_6"				"+75 Rot Damage"
 "DOTA_Tooltip_ability_special_bonus_imba_pudge_7"				"Rupture Hook"
