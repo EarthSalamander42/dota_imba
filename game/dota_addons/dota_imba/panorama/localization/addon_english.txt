@@ -338,7 +338,7 @@
 	"mutation_frantic_Description"					"50% Cooldown Reduction, Mana Cost, Respawn Time and Status Resistance."
 
 	"mutation_super_blink"							"Super Blink"
-	"mutation_super_blink_Description"				"All players have a Blink Dagger that is not disabled on damage."
+	"mutation_super_blink_Description"				"All players start with a Blink Dagger that is not disabled on damage."
 
 	"mutation_pocket_tower"							"Pocket Tower"
 	"mutation_pocket_tower_Description"				"All heroes start with a consumable that will spawn a tower."
@@ -354,10 +354,10 @@
 	"mutation_stay_frosty_Description"			"Health regeneration is disabled."
 
 	"mutation_monkey_business"					"Monkey Business"
-	"mutation_monkey_business_Description"		"Every heroes gets mischief ability passively when not attacking or being attacked for 5 seconds."
+	"mutation_monkey_business_Description"		"Every hero gets the mischief ability passively when not attacking or being attacked for 5 seconds."
 
 	"mutation_defense_of_the_ants"				"Defense of the Feeders"
-	"mutation_defense_of_the_ants_Description"	"Everytime you kill a hero or die, you respawn 5% bigger/smaller. Min/Max size being -75%/75%."
+	"mutation_defense_of_the_ants_Description"	"Every time you kill a hero or die, you become 5% smaller/bigger. Min/Max size caps at -75%/75%."
 
 	"mutation_the_walking_dead"					"The Walking Dead"
 	"mutation_the_walking_dead_Description"		"During night, zombies spawns in Jungle and attack the closest hero."
