@@ -989,9 +989,10 @@ function modifier_imba_pudge_flesh_heap_handler:OnDeath(params)
 	if target:IsRealHero() and caster:GetTeamNumber() ~= target:GetTeamNumber() then
 			
 		-- Check to make sure death is within range of Pudge
-		if (self:GetAbility():GetCaster():GetAbsOrigin() - target:GetAbsOrigin()):Length2D() <= self:GetAbility():GetSpecialValueFor("range")
-		then
+		if (self:GetAbility():GetCaster():GetAbsOrigin() - target:GetAbsOrigin()):Length2D() <= self:GetAbility():GetSpecialValueFor("range") then
 			self:SetStackCount(self:GetStackCount() + 1)
+			local pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_pudge/pudge_fleshheap_count.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
+			ParticleManager:ReleaseParticleIndex(pfx)
 		end
 	end
 end
