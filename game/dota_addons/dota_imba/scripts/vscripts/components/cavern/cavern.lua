@@ -797,7 +797,7 @@ function CCavern:CheckForDefeat()
 				nTeamDeaths = nTeamDeaths + PlayerResource:GetDeaths( Hero:GetPlayerOwnerID() )
 				nTeamNetWorth = nTeamNetWorth + PlayerResource:GetNetWorth( Hero:GetPlayerOwnerID() )
 				self.Heroes[Hero:GetPlayerOwnerID()] = Hero
-				if ( Hero:IsAlive() or Hero:IsReincarnating() ) and not Hero:HasOwnerAbandoned() then
+				if ( Hero:IsAlive() or Hero:IsImbaReincarnating() ) and not Hero:HasOwnerAbandoned() then
 					nTeamHeroesAlive = nTeamHeroesAlive + 1
 					self.LivingHeroes[Hero:GetPlayerOwnerID()] = Hero
 				end

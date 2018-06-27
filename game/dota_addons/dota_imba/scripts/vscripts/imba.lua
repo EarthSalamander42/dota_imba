@@ -73,6 +73,8 @@ require('addon_init')
 if IsMutationMap() then
 	require('components/mutation/mutation_list')
 	require('components/mutation/mutation')
+elseif GetMapName() == "imba_overthrow" then
+	require('overthrow/events.lua')
 end
 
 ApplyAllTalentModifiers()
@@ -704,7 +706,7 @@ function GameMode:OrderFilter( keys )
 	-- Prevent Buyback during reincarnation
 	------------------------------------------------------------------------------------
 	if keys.order_type == DOTA_UNIT_ORDER_BUYBACK then
-		if unit:IsReincarnating() then
+		if unit:IsImbaReincarnating() then
 			return false
 		end
 	end

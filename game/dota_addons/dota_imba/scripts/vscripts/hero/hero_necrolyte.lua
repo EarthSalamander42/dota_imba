@@ -885,10 +885,6 @@ function modifier_imba_reapers_scythe_respawn:OnCreated()
 	end
 end
 
-function modifier_imba_reapers_scythe_respawn:RespawnTimeStacking()
-	return self.respawn_increase
-end
-
 function modifier_imba_reapers_scythe_respawn:IsHidden()
 	return true
 end

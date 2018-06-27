@@ -3,6 +3,7 @@
 
 local ITEMS_KV = LoadKeyValues("scripts/npc/npc_items_custom.txt")
 local MAP_SIZE = 7000
+local MAP_SIZE_AIRDROP = 5000
 
 function Mutation:Init()
 --	print("Mutation: Initialize...")
@@ -169,7 +170,7 @@ function Mutation:OnGameRulesStateChange(keys)
 
 				if mine_count < max_mine_count then
 					for i = 1, 10 do
-						local mine = CreateUnitByName(mines[RandomInt(1, #mines)], Vector(0, 0, 0) + RandomVector(MAP_SIZE), true, nil, nil, DOTA_TEAM_NEUTRALS)
+						local mine = CreateUnitByName(mines[RandomInt(1, #mines)], RandomVector(MAP_SIZE), true, nil, nil, DOTA_TEAM_NEUTRALS)
 						mine:AddNewModifier(mine, nil, "modifier_invulnerable", {})
 					end
 				end
@@ -317,7 +318,7 @@ function Mutation:SpawnRandomItem()
 				return Mutation:SpawnRandomItem()
 			end
 
-			local pos = Vector(0, 0, 0) + RandomVector(MAP_SIZE)
+			local pos = RandomVector(MAP_SIZE_AIRDROP)
 			AddFOWViewer(2, pos, self.item_spawn_radius, self.item_spawn_delay + self.item_spawn_vision_linger, false)
 			AddFOWViewer(3, pos, self.item_spawn_radius, self.item_spawn_delay + self.item_spawn_vision_linger, false)
 			GridNav:DestroyTreesAroundPoint(pos, self.item_spawn_radius, false)
@@ -335,7 +336,7 @@ function Mutation:SpawnRandomItem()
 			Timers:CreateTimer(self.item_spawn_delay, function()
 				local item = CreateItem(k, nil, nil)
 				item.airdrop = true
-				item:SetSellable(true)
+--				item:SetSellable(true)
 				print("Item Name:", k, pos)
 
 				local drop = CreateItemOnPositionSync(pos, item)

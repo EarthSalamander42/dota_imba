@@ -1174,14 +1174,6 @@ function modifier_imba_reincarnation:ReincarnateTime()
 	end
 end
 
-function modifier_imba_reincarnation:RespawnTimeStacking()
-	if self:GetParent() == self.caster then
-		return self.passive_respawn_haste * (-1)
-	else
-		return nil
-	end
-end
-
 function modifier_imba_reincarnation:GetActivityTranslationModifiers()
 	if self.reincarnation_death then
 		return "reincarnate"
