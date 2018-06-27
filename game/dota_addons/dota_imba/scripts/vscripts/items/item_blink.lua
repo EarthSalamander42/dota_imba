@@ -125,8 +125,8 @@ function modifier_imba_blink_dagger_handler:OnIntervalThink()
 end
 
 function modifier_imba_blink_dagger_handler:DeclareFunctions()
-	local funcs = {	MODIFIER_EVENT_ON_TAKEDAMAGE,}
-	return funcs
+	if IMBA_MUTATION and IMBA_MUTATION["positive"] == "super_blink" then return {} end
+	return { MODIFIER_EVENT_ON_TAKEDAMAGE }
 end
 
 function modifier_imba_blink_dagger_handler:OnTakeDamage( keys )
@@ -140,10 +140,6 @@ function modifier_imba_blink_dagger_handler:OnTakeDamage( keys )
 		-- Custom function from funcs.lua
 		if IsHeroDamage(keys.attacker, keys.damage) then
 			if ability:GetCooldownTimeRemaining() < blink_damage_cooldown then
-				if IMBA_MUTATION and IMBA_MUTATION["positive"] == "super_blink" then
-					return
-				end
-
 				ability:StartCooldown(blink_damage_cooldown)
 			end
 		end
@@ -225,9 +221,8 @@ function modifier_imba_blink_boots_handler:IsPurgable() return false end
 function modifier_imba_blink_boots_handler:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_blink_boots_handler:DeclareFunctions()
-	local funcs = {	MODIFIER_EVENT_ON_TAKEDAMAGE,
-		MODIFIER_PROPERTY_MOVESPEED_BONUS_UNIQUE, }
-	return funcs
+	if IMBA_MUTATION and IMBA_MUTATION["positive"] == "super_blink" then return {} end
+	return { MODIFIER_EVENT_ON_TAKEDAMAGE }
 end
 
 function modifier_imba_blink_boots_handler:GetModifierMoveSpeedBonus_Special_Boots()
@@ -248,10 +243,6 @@ function modifier_imba_blink_boots_handler:OnTakeDamage( keys )
 		if IsHeroDamage(keys.attacker, keys.damage) then
 			if ability:GetCooldownTimeRemaining() < blink_damage_cooldown then
 				ability:StartCooldown(blink_damage_cooldown)
-
-				if IMBA_MUTATION and IMBA_MUTATION["positive"] == "super_blink" then
-					return
-				end
 			end
 		end
 	end
