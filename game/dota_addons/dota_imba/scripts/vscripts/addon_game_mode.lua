@@ -46,7 +46,6 @@ function Precache(context)
 	LinkLuaModifier("modifier_companion", "modifier/modifier_companion.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_river", "modifier/modifier_river.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_frantic", "modifier/modifier_frantic.lua", LUA_MODIFIER_MOTION_NONE )
-	LinkLuaModifier("modifier_imba_pudge_flesh_heap_handle", "modifier/modifier_imba_pudge_flesh_heap_handle.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_imba_donator", "modifier/modifier_imba_donator.lua", LUA_MODIFIER_MOTION_NONE )
 
 	-- Runes modifiers
