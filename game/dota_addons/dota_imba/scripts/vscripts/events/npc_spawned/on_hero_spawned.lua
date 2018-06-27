@@ -153,8 +153,6 @@ function GameMode:OnHeroFirstSpawn(hero)
 			hero.is_real_mk = true
 			TRUE_MK_HAS_SPAWNED = true
 		end
-	elseif hero:GetUnitName() == "npc_dota_hero_pudge" then
-		hero:AddNewModifier(hero, nil, "modifier_imba_pudge_flesh_heap_handle", {})
 	elseif hero:GetUnitName() == "npc_dota_hero_troll_warlord" then -- troll warlord weird fix needed
 		hero:SwapAbilities("imba_troll_warlord_whirling_axes_ranged", "imba_troll_warlord_whirling_axes_melee", true, false)
 		hero:SwapAbilities("imba_troll_warlord_whirling_axes_ranged", "imba_troll_warlord_whirling_axes_melee", false, true)
