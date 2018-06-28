@@ -330,7 +330,7 @@ CUSTOM_GOLD_BONUS["imba_mutation_5v5"] = 400
 CUSTOM_GOLD_BONUS["imba_mutation_10v10"] = 400
 CUSTOM_GOLD_BONUS["imba_frantic_5v5"] = 400
 CUSTOM_GOLD_BONUS["imba_frantic_10v10"] = 400
-CUSTOM_GOLD_BONUS["cavern"] = 200
+CUSTOM_GOLD_BONUS["cavern"] = 100
 
 -- Global XP earning, values are doubled with Hyper for non-custom maps (right now this is not used anymore, but i'll keep it there just in case)
 CUSTOM_XP_BONUS = {} -- 1 = Normal, 2 = Hyper

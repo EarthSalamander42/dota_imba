@@ -60,6 +60,7 @@ require('libraries/meepo/meepo')
 require('events/events')
 require('events/npc_spawned/on_hero_spawned')
 require('events/npc_spawned/on_unit_spawned')
+require('events/on_entity_killed/on_hero_killed')
 require('events/player_disconnect/on_disconnect')
 
 require('components/team_selection')
@@ -229,6 +230,8 @@ function GameMode:GoldFilter(keys)
 	-- player_id_const	0
 	-- gold				141
 
+	if GetMapName() == "cavern" then return true end
+
 	-- Gold from abandoning players does not get multiplied
 	if keys.reason_const == DOTA_ModifyGold_AbandonedRedistribute or keys.reason_const == DOTA_ModifyGold_GameTick then
 		return true
@@ -291,6 +294,8 @@ function GameMode:ExperienceFilter( keys )
 	-- player_id_const	0
 
 	local hero = PlayerResource:GetPickedHero(keys.player_id_const)
+
+	if GetMapName() == "cavern" then return true end
 
 	-- Ignore negative experience values
 	if keys.experience < 0 then

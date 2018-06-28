@@ -298,9 +298,6 @@ function Mutation:SpawnRandomItem()
 
 	for k, v in pairs(ITEMS_KV) do
 		if random_int == i then
---			print("Map max bounds:", MAP_SIZE / 2.3)
---			print(random_int, k, v["ItemCost"])
-
 			for _, item in pairs(self.restricted_items) do
 				if k == item then
 					print("Item is forbidden! Re-roll...")
@@ -336,7 +333,6 @@ function Mutation:SpawnRandomItem()
 			Timers:CreateTimer(self.item_spawn_delay, function()
 				local item = CreateItem(k, nil, nil)
 				item.airdrop = true
---				item:SetSellable(true)
 				print("Item Name:", k, pos)
 
 				local drop = CreateItemOnPositionSync(pos, item)

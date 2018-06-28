@@ -809,7 +809,7 @@ function GameMode:OnEntityKilled( keys )
 			elseif GetMapName() == "imba_overthrow" then
 				Overthrow:OnEntityKilled(killer, killed_unit)
 			else
-				GameMode:OnHeroKilled(killed_unit)
+				GameMode:OnHeroKilled(killer, killed_unit)
 
 				if IsMutationMap() then
 					Mutation:OnHeroDeath(killed_unit)

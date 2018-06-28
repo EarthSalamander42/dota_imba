@@ -406,10 +406,10 @@ function CCavern:OnEntityKilled_EnemyCreature( event )
 		EmitSoundOnClient( "Dungeon.LastHit", hKillerUnit:GetPlayerOwner() )
 		ParticleManager:ReleaseParticleIndex( ParticleManager:CreateParticleForPlayer( "particles/darkmoon_last_hit_effect.vpcf", PATTACH_ABSORIGIN_FOLLOW, hDeadCreature, hKillerUnit:GetPlayerOwner() ) )
 	
-		if hDeadCreature.nDeathXP == nil then
-			log.debug( "CCavern:OnEntityKilled_EnemyCreature - ERROR: Death XP not set for " .. hDeadCreature:GetUnitName() )
-			return
-		end
+--		if hDeadCreature.nDeathXP == nil then
+--			log.debug( "CCavern:OnEntityKilled_EnemyCreature - ERROR: Death XP not set for " .. hDeadCreature:GetUnitName() )
+--			return
+--		end
 
 		local HeroesToReward = {}
 		local nRewardTeam = hKillerUnit:GetTeamNumber()
@@ -755,9 +755,9 @@ function CCavern:OnBattlePointsEarned( nTeamNumber, nBattlePoints, szReason )
 --			netTable["earned_points"] = self.PlayerPointsData[nPlayerID]["points_earned"]
 --			CustomNetTables:SetTableValue( "bp_tracker", string.format( "%d", nPlayerID ), netTable )
 
-			if szReason ~= nil then
-				log.debug( "Player " .. nPlayerID .. " just earned " .. nBattlePoints .. " battle points for " .. szReason )
-			end
+--			if szReason ~= nil then
+--				log.debug( "Player " .. nPlayerID .. " just earned " .. nBattlePoints .. " battle points for " .. szReason )
+--			end
 		end
 	end
 	
