@@ -2575,7 +2575,7 @@
 "DOTA_Tooltip_ability_special_bonus_imba_pugna_5"          "+10% Nether Blast secondary damage"
 "DOTA_Tooltip_ability_special_bonus_imba_pugna_6"          "Nether Ward casts decrepify self for 1 second"
 "DOTA_Tooltip_ability_special_bonus_imba_pugna_7"          "+3% Target current health as Life Drain's per sec damage"
-"DOTA_Tooltip_ability_special_bonus_imba_pugna_8"          "+2 extra Nether Wards"
+"DOTA_Tooltip_ability_special_bonus_imba_pugna_8"          "+2 extra Nether Wards, duration reduced by 66%"
 
 ////===============================================================================================================
 // Pugna's summoned unit: Nether Ward
