@@ -779,12 +779,12 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_max_regen_bonus"	"25"
+				"aura_max_regen_bonus"	"20"
 			}
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_max_armor_bonus"	"25"
+				"aura_max_armor_bonus"	"20"
 			}
 			"09"
 			{
@@ -6503,7 +6503,7 @@
 			"10"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"disarm_range_duration"		"5.5"
+				"disarm_range_duration"		"5.0"
 			}
 			"11"
 			{
@@ -9038,7 +9038,7 @@
 			"04"
 			{
 				"var_type"              "FIELD_FLOAT"
-				"duration"              "7.0"
+				"duration"              "6.0"
 			}
 			"05"
 			{

@@ -4539,6 +4539,9 @@ function HealingWaveBounce(caster, source, ability, hero)
 
 	-- Heal target
 	hero:Heal(heal_amount, caster)
+
+	-- dispel
+	hero:Purge(false, true, false, true, false)
 end
 
 function modifier_tower_healing_think:IsHidden()

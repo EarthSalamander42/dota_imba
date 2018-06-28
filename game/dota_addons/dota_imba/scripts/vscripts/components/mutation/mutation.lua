@@ -192,6 +192,7 @@ function Mutation:OnHeroFirstSpawn(hero)
 --	elseif IMBA_MUTATION["positive"] == "jump_start" then
 --		hero:AddExperience(XP_PER_LEVEL_TABLE[6], DOTA_ModifyXP_CreepKill, false, true)
 	elseif IMBA_MUTATION["positive"] == "super_blink" then
+		if hero:IsIllusion() then return end
 		hero:AddItemByName("item_imba_blink")
 	elseif IMBA_MUTATION["positive"] == "pocket_tower" then
 		hero:AddItemByName("item_pocket_tower")

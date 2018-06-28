@@ -1062,7 +1062,8 @@ function PickupRune(rune_name, unit, bActiveByBottle)
 
 			for i = 1, images_count do
 				local origin = unit:GetAbsOrigin() + table.remove( vRandomSpawnPos, 1 )
-				local illusion = IllusionManager:CreateIllusion(unit, self, origin, unit, {damagein=incomingDamage, damageout=outcomingDamage, unique=unit:entindex().."_rune_illusion_"..i, duration=duration})
+--				local illusion = IllusionManager:CreateIllusion(unit, self, origin, unit, {damagein=incomingDamage, damageout=outcomingDamage, unique=unit:entindex().."_rune_illusion_"..i, duration=duration})
+				CreateImbaIllusion(unit, origin, nil, duration, -75, -400, {}, true)
 			end
 
 			EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Illusion", unit)
@@ -1742,5 +1743,94 @@ function BlockJungleCamps()
 	for i = 1, #blocked_camps do
 		local ent = Entities:FindByName(nil, blocked_camps[i][1])
 		local dummy = CreateUnitByName("npc_dummy_unit_perma", blocked_camps[i][2], true, nil, nil, DOTA_TEAM_NEUTRALS)
+	end
+end
+
+function CreateImbaIllusion(hero, pos, ability, duration, out_damage, in_damage, special_modifiers, swap)
+	local position = pos
+
+	if position == nil then
+		position = hero:GetAbsOrigin()
+	end
+
+	local illusion = CreateUnitByName(hero:GetUnitName(), pos, true, hero, hero, hero:GetTeamNumber())
+
+	-- Turn into an illusion with the correct properties
+	illusion:AddNewModifier(hero, ability, "modifier_illusion", {duration = duration, outgoing_damage = outgoing_damage, incoming_damage = in_damage})
+	illusion:MakeIllusion()
+	illusion:SetRespawnsDisabled(true)
+
+	-- Set the illusion as controllable by the player
+	illusion:SetControllableByPlayer(hero:GetPlayerID(), false)
+	illusion:SetPlayerID(hero:GetPlayerID())
+
+	-- Set the illusion's level to the parent's
+	for i = 1, hero:GetLevel() - 1 do
+		illusion:HeroLevelUp(false)
+	end
+
+	-- Set the skill points to 0 and learn the skills of the caster
+	illusion:SetAbilityPoints(0)
+
+	for abilitySlot=0,15 do
+		local ability = hero:GetAbilityByIndex(abilitySlot)
+		if ability then
+			local abilityLevel = ability:GetLevel()
+			local abilityName = ability:GetAbilityName()
+			local illusionAbility = illusion:FindAbilityByName(abilityName)
+			illusionAbility:SetLevel(abilityLevel)
+		end
+	end
+
+	-- Recreate the items of the caster
+	for itemSlot=0,5 do
+		local item = hero:GetItemInSlot(itemSlot)
+		if item then
+			local itemName = item:GetName()
+			local newItem = CreateItem(itemName, illusion, illusion)
+			illusion:AddItem(newItem)
+		end
+	end
+
+	-- Set Forward Vector the same as the player
+	illusion:SetForwardVector(hero:GetForwardVector())
+
+	if swap then
+		-- Roll a chance to swap positions with the illusion
+		local swap_change = math.random(1,2)
+		if swap_change == 2 then
+			local parent_loc = hero:GetAbsOrigin()
+			local illusion_loc = illusion:GetAbsOrigin()
+			hero:SetAbsOrigin(illusion_loc)
+			illusion:SetAbsOrigin(parent_loc)
+		end
+	end
+
+	-- Set Custom label if there's one
+	local steam_id = tostring(PlayerResource:GetSteamID(hero:GetPlayerID()))
+	illusion:SetCustomHealthLabel("#imba_donator_label_"..api.imba.is_donator(steam_id), DONATOR_COLOR[api.imba.is_donator(steam_id)][1], DONATOR_COLOR[api.imba.is_donator(steam_id)][2], DONATOR_COLOR[api.imba.is_donator(steam_id)][3])
+
+	-- Stop the attacker, since it still auto attacks the original (will force it to attack the closest target)
+	hero:Stop()
+
+	-- Stop the illusion, since it automatically attacks everything, then decide the next step
+	illusion:Stop()
+
+	-- Imitate target attack location
+	if hero:IsAttacking() then
+		local attack_target = hero:GetAttackTarget()
+		illusion:MoveToTargetToAttack(attack_target)
+	end
+
+	if hero:IsChanneling() then
+		local current_ability = hero:GetCurrentActiveAbility()
+		local ability_name = current_ability:GetName()
+		StartChannelingAnimation(hero, illusion, ability_name) -- custom function
+	end
+
+	if special_modifiers then
+		for _, modifier in pairs(special_modifiers) do
+			illusion:AddNewModifier(hero, ability, modifier, {})
+		end
 	end
 end

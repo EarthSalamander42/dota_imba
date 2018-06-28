@@ -27,6 +27,7 @@ end
 
 function modifier_mutation_death_explosion:OnDeath(keys)
 	if keys.unit == self:GetParent() then
+	if self:GetParent():IsIllusion() then return end
 		EmitSoundOn("Hero_Pugna.NetherBlastPreCast", self:GetParent())
 
 		local particle_pre_blast_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_pugna/pugna_netherblast_pre.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())

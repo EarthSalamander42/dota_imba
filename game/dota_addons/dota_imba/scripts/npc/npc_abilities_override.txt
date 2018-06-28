@@ -1644,7 +1644,7 @@
 	//=================================================================================================================
 	"juggernaut_blade_fury"
 	{
-		"AbilityCooldown"				"30 25 20 15"
+		"AbilityCooldown"				"24 20 16 12"
 		"AbilityManaCost"				"120 110 100 90"		
 
 		// Special
@@ -1664,7 +1664,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"blade_fury_damage"			"110 140 170 200"
+				"blade_fury_damage"			"140 170 200 230"
 				"LinkedSpecialBonus"		"special_bonus_unique_juggernaut_3"
 			}
 			"04"
@@ -1686,7 +1686,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"healing_ward_heal_amount"	"2 3.5 5 6.5"
+				"healing_ward_heal_amount"	"7"
 			}
 			"02"
 			{
@@ -1821,7 +1821,6 @@
 		"AbilityCooldown"				"4.0"
 		"AbilityDuration"				"16 20 24 28"
 		"AbilityManaCost"				"80 70 60 50"
-		"MaxLevel"						"4"
 
 		"AbilitySpecial"
 		{

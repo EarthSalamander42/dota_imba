@@ -27284,13 +27284,13 @@
 			"01"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"damage_per_burn"				"0.6"
+				"damage_per_burn"				"0.5"
 				"CalculateSpellDamageTooltip"   "0"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"base_mana_burn"			"30 45 60 75"				
+				"base_mana_burn"			"30 40 50 60"				
 			}
 			"03"
 			{
@@ -27437,7 +27437,6 @@
 			}
 		}
 	}
-
 
 	//=================================================================================================================
 	// Antimage Mana Void
