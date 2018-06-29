@@ -664,10 +664,18 @@ function modifier_imba_enigma_black_hole_thinker:OnCreated(keys)
 		return nil
 	end, 4.0)
 	
+	-- Break trees. Because fuck trees.
+	GridNav:DestroyTreesAroundPoint(self:GetParent():GetAbsOrigin(), self.pull_radius, false)
+	
 	-- Create an FoW viewer for all teams so everyone sees it
 	for i = DOTA_TEAM_FIRST, DOTA_TEAM_CUSTOM_MAX do
-		AddFOWViewer(i, self:GetParent():GetAbsOrigin(), 10, FrameTime()*2, false)
+		if i == self:GetParent():GetTeamNumber() then
+			AddFOWViewer(i, self:GetParent():GetAbsOrigin(), self.pull_radius, FrameTime()*2, false)
+		else
+			AddFOWViewer(i, self:GetParent():GetAbsOrigin(), 10, FrameTime()*2, false)
+		end
 	end
+	
 	self.particle = ParticleManager:CreateParticle(pfx_name, PATTACH_WORLDORIGIN, nil)
 	ParticleManager:SetParticleControl(self.particle, 0, Vector(self:GetParent():GetAbsOrigin().x,self:GetParent():GetAbsOrigin().y,self:GetParent():GetAbsOrigin().z+64))
 	ParticleManager:SetParticleControl(self.particle, 10, Vector(self.radius, self.pull_radius, 0))
@@ -678,61 +686,53 @@ function modifier_imba_enigma_black_hole_thinker:OnCreated(keys)
 
 	--Scepter stuff
 	if self:GetCaster():HasScepter() then
-		local midnight = self:GetCaster():FindAbilityByName("imba_enigma_midnight_pulse")
-		if not midnight or midnight:GetLevel() < 1 then return end
-		local duration = midnight:GetSpecialValueFor("duration")
-		CreateModifierThinker(self:GetCaster(), midnight, "modifier_imba_enigma_midnight_pulse_thinker", {duration = duration}, self:GetParent():GetAbsOrigin(), self:GetCaster():GetTeamNumber(), false)
-		if midnight:IsCooldownReady() and not keys.talent then
-			CreateModifierThinker(self:GetCaster(), midnight, "modifier_imba_enigma_midnight_pulse_thinker", {duration = duration}, self:GetParent():GetAbsOrigin(), self:GetCaster():GetTeamNumber(), false)
-			midnight:UseResources(false, false, true)
-		end
+		self.scepter = true
 	end
 end
 
 function modifier_imba_enigma_black_hole_thinker:OnIntervalThink()
 	self.think_time = self.think_time + FrameTime()
+	
+	-- Create an FoW viewer for all teams so everyone sees it
+	for i = DOTA_TEAM_FIRST, DOTA_TEAM_CUSTOM_MAX do
+		if i == self:GetParent():GetTeamNumber() then
+			AddFOWViewer(i, self:GetParent():GetAbsOrigin(), self.pull_radius, FrameTime()*2, false)
+		else
+			AddFOWViewer(i, self:GetParent():GetAbsOrigin(), 10, FrameTime()*2, false)
+		end
+	end
+	
 	-- Pull effect
-	local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(),
-		self:GetParent():GetAbsOrigin(),
-		nil,
-		self.pull_radius,
-		DOTA_UNIT_TARGET_TEAM_ENEMY,
-		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-		DOTA_UNIT_TARGET_FLAG_NONE,
-		FIND_ANY_ORDER,
-		false)
+	local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.pull_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 	for _,enemy in pairs(enemies) do
 		if not IsRoshan(enemy) then
 			enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_enigma_black_hole_pull", {})
 		end
 	end
 	
-	-- Create an FoW viewer for all teams so everyone sees it
-	for i = DOTA_TEAM_FIRST, DOTA_TEAM_CUSTOM_MAX do
-		AddFOWViewer(i, self:GetParent():GetAbsOrigin(), 10, FrameTime()*2, false)
-	end
-	
 	-- Damage
 	if self.think_time >= 1.0 then
 		
+		-- Break trees. Because fuck trees.
+		GridNav:DestroyTreesAroundPoint(self:GetParent():GetAbsOrigin(), self.pull_radius, false)
+		
 		self.think_time = self.think_time - 1.0
-		local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(),
-			self:GetParent():GetAbsOrigin(),
-			nil,
-			self.radius,
-			DOTA_UNIT_TARGET_TEAM_ENEMY,
-			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-			DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
-			FIND_ANY_ORDER,
-			false)
+		local midnightDamagePcnt = 0
+		if self.scepter then
+			local midnight = self:GetCaster():FindAbilityByName("imba_enigma_midnight_pulse")
+			if midnight and midnight:GetLevel() > 0 then
+				midnightDamagePcnt = midnight:GetSpecialValueFor("damage_per_tick") * 0.01
+			end
+		end
+		
+		local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 		for _, enemy in pairs(enemies) do
 			if not IsRoshan(enemy) then
-				local damageTable = {victim = enemy,
-					attacker = self:GetCaster(),
-					damage = self.dmg,
-					damage_type = DAMAGE_TYPE_PURE,
-					ability = self:GetAbility()}
-				ApplyDamage(damageTable)
+				ApplyDamage({victim = enemy, attacker = self:GetCaster(), damage = self.dmg, damage_type = DAMAGE_TYPE_PURE, ability = self:GetAbility()})
+				
+				if self.scepter then
+					ApplyDamage({victim = enemy, attacker = self:GetCaster(), damage = enemy:GetMaxHealth() * midnightDamagePcnt, damage_type = DAMAGE_TYPE_PURE, ability = self:GetAbility()})
+				end
 			end
 		end
 	end
