@@ -15,6 +15,7 @@ function Mutation:Init()
 	LinkLuaModifier("modifier_mutation_shadow_dance", "components/mutation/modifiers/modifier_mutation_shadow_dance.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_mutation_ants", "components/mutation/modifiers/modifier_mutation_ants.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_disable_healing", "components/mutation/modifiers/modifier_disable_healing.lua", LUA_MODIFIER_MOTION_NONE )
+	LinkLuaModifier("modifier_mutation_stampede", "components/mutation/modifiers/periodic_spellcast/modifier_mutation_stampede.lua", LUA_MODIFIER_MOTION_NONE )
 
 	LinkLuaModifier("modifier_mutation_sun_strike", "components/mutation/modifiers/periodic_spellcast/modifier_mutation_sun_strike.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_mutation_thundergods_wrath", "components/mutation/modifiers/periodic_spellcast/modifier_mutation_thundergods_wrath.lua", LUA_MODIFIER_MOTION_NONE )
@@ -37,6 +38,7 @@ function Mutation:Init()
 	IMBA_MUTATION_PERIODIC_SPELLS[4] = {"rupture", "Rupture", "Red", 10.0}
 	IMBA_MUTATION_PERIODIC_SPELLS[5] = {"torrent", "Torrent", "Red", -1}
 	IMBA_MUTATION_PERIODIC_SPELLS[6] = {"cold_feet", "Cold Feet", "Red", 4.0}
+	IMBA_MUTATION_PERIODIC_SPELLS[7] = {"stampede", "Stampede", "Green", 5.0}
 
 	self.restricted_items = {
 		"item_imba_ironleaf_boots",
@@ -143,10 +145,10 @@ function Mutation:OnGameRulesStateChange(keys)
 				for _, hero in pairs(HeroList:GetAllHeroes()) do
 					local caster = Entities:FindByName(nil, "dota_badguys_fort")
 
-					if hero:GetTeamNumber() == 3 then
+					if (hero:GetTeamNumber() == 3 and IMBA_MUTATION_PERIODIC_SPELLS[random_int][3] == "Red") or (hero:GetTeamNumber() == 2 and IMBA_MUTATION_PERIODIC_SPELLS[random_int][3] == "Green") then
 						caster = Entities:FindByName(nil, "dota_goodguys_fort")
 					end
-
+					
 					hero:AddNewModifier(caster, caster, "modifier_mutation_"..IMBA_MUTATION_PERIODIC_SPELLS[random_int][1], {duration=IMBA_MUTATION_PERIODIC_SPELLS[random_int][4]})
 				end
 
