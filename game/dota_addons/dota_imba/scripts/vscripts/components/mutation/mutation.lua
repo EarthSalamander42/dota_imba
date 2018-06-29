@@ -65,6 +65,26 @@ function Mutation:Init()
 --	"bloodlust",
 end
 
+function Mutation:Precache(context)
+	-- Death Gold Drop
+--	PrecacheItemByNameSync("item_bag_of_gold", context)
+
+	-- Killstreak Power
+	PrecacheResource("particle", "particles/hw_fx/candy_carrying_stack.vpcf", context)
+
+	-- Periodic Spellcast
+	PrecacheResource("particle", "particles/econ/items/zeus/arcana_chariot/zeus_arcana_thundergods_wrath_start_bolt_parent.vpcf", context)
+
+	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_ancient_apparition.vsndevts", context)
+	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_bloodseeker.vsndevts", context)
+	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_bounty_hunter.vsndevts", context)
+	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_centaur.vsndevts", context)
+	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_kunkka.vsndevts", context)
+	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_pugna.vsndevts", context)
+	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_techies.vsndevts", context)
+	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_zuus.vsndevts", context)
+end
+
 function Mutation:ChooseMutation(type, table, count)
 	local i = 0
 --	local random_int = RandomInt(0, #table) -- dunno why it doesn't get table length
@@ -79,9 +99,9 @@ function Mutation:ChooseMutation(type, table, count)
 			table[mutation] = true
 
 			if IsInToolsMode() then
-				IMBA_MUTATION["positive"] = "super_blink"
-				IMBA_MUTATION["negative"] = "death_explosion"
-				IMBA_MUTATION["terrain"] = "gift_exchange"
+--				IMBA_MUTATION["positive"] = "super_blink"
+				IMBA_MUTATION["negative"] = "periodic_spellcast"
+--				IMBA_MUTATION["terrain"] = "gift_exchange"
 			end
 
 			return
