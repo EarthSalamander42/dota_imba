@@ -5982,7 +5982,6 @@
 		"SpellImmunityType"								"SPELL_IMMUNITY_ENEMIES_NO"		
 		"AbilityCastPoint"								"0.3"
 		"AbilityManaCost"								"70"
-		"MaxLevel"										"4"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -5993,73 +5992,61 @@
 				"var_type"								"FIELD_INTEGER"
 				"cooldown"								"15 13 11 7"
 			}
-
 			"02"
 			{
 				"var_type"								"FIELD_INTEGER"
 				"set_in_time"							"3"
 			}
-
 			"03"
 			{
 				"var_type"								"FIELD_INTEGER"
 				"minimum_slow"							"33"
 			}
-
 			"04"
 			{
 				"var_type"								"FIELD_INTEGER"
 				"maximum_slow"							"66"
 			}
-
 			"05"
 			{
 				"var_type"								"FIELD_INTEGER"
 				"poison_duration"						"7"
 			}
-
 			"06"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"poison_base_damage"					"16 24 32 40"
+				"poison_base_damage"					"18 30 42 54"
 			}
-
 			"07"
 			{
 				"var_type"								"FIELD_FLOAT"
 				"poison_stack_damage"					"1.0 3.0 5.0 7.0"
 			}
-
 			"08"
 			{
 				"var_type"								"FIELD_FLOAT"
 				"stack_armor_reduction"					"1.0"
 			}
-
 			"09"
 			{
 				"var_type"								"FIELD_INTEGER"
 				"projectile_speed"						"1300"
 			}
-
 			"10"
 			{
 				"var_type"								"FIELD_INTEGER"
 				"cast_range"							"600 700 800 900"
 			}
-			
 			"11"
 			{
 				"var_type"								"FIELD_INTEGER"
 				"talent_slow_per_damage"				"3"
 			}
-			
 			"12"
 			{
 				"var_type"								"FIELD_INTEGER"
 				"talent_slow_max"						"80"
 			}
-			
 			"13"
 			{
 				"var_type"								"FIELD_INTEGER"
@@ -8076,7 +8063,6 @@
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"enigma_midnight_pulse"		
 		"ScriptFile" 					"hero/hero_enigma"
-		"MaxLevel"  					"4"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -8093,13 +8079,13 @@
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"35"
+		"AbilityCooldown"				"35.0"
 		"AbilityCastRange"				"700"
 		"AbilityCastPoint"				"0.0"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"95 125 145 155"
+		"AbilityManaCost"				"75 95 115 135"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -8109,21 +8095,18 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"radius"					"550"
-			}			
-
+			}
 			"02"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"damage_per_tick"			"3.0 4.0 5.0 6.0"
 				"CalculateSpellDamageTooltip"	"0"
 			}
-
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"duration"					"11"
-			}			
-
+				"duration"					"10 11 12 13"
+			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -10251,7 +10234,7 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"               "25"
+		"AbilityManaCost"               "0"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -10357,7 +10340,7 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"              "900 1000 1110"
-		"AbilityCastPoint"              "0.4 0.35 0.3"
+		"AbilityCastPoint"              "0.3 0.25 0.2"
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
@@ -13544,7 +13527,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"80 160 220 260"
+				"damage"				"100 160 220 280"
 			}
 			"03"
 			{
@@ -16152,7 +16135,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"base_magic_resist"		"6 8 10 12"
+				"base_magic_resist"		"8 10 12 14"
 			}
 			"02"
 			{
@@ -16162,7 +16145,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"range"					"1750"
+				"range"					"2000"
 			}
 			"04"
 			{
@@ -19066,7 +19049,6 @@
 		"SpellDispellableType"				"SPELL_DISPELLABLE_NO"
 		"FightRecapLevel"					"1"
 		"AbilityTextureName"				"sven_great_cleave"
-		"MaxLevel"							"4"
 		"LevelsBetweenUpgrades"				"2"		
 
 		// Time
@@ -19107,7 +19089,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"great_cleave_damage"		"30 45 60 75"
+				"great_cleave_damage"		"40 50 60 70"
 			}
 			"05"
 			{
@@ -20566,12 +20548,11 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"sandking_burrowstrike"
-		"MaxLevel"						"4"
 		"ScriptFile"					"hero/hero_sand_king.lua"		
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"11"
+		"AbilityCooldown"				"14 13 12 11"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -21166,7 +21147,7 @@
 			"particle"					"particles/units/heroes/hero_shadowshaman/shadowshaman_ward_death.vpcf"
 			"particle"					"particles/units/heroes/hero_shadowshaman/shadowshaman_ward_spawn.vpcf"
 		}
-		
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -21283,7 +21264,6 @@
 		"SpellImmunityType" 	 	"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"			"1"
 		"AbilityTextureName"		"skywrath_mage_arcane_bolt"
-		"MaxLevel"					"4"
 		"ScriptFile" 				"hero/hero_skywrath_mage.lua"
 		"HasScepterUpgrade"			"1"
 
@@ -21307,7 +21287,7 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"			"70"
+		"AbilityManaCost"			"90"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -24310,7 +24290,6 @@
 			}
 		}
 	}
-
 	
 	//=================================================================================================================
 	// Tiny: Tree Grab
@@ -24365,7 +24344,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_damage_buildings"	"90 120 150 180"
+				"bonus_damage_buildings"	"250"
 			}
 			"04"
 			{
@@ -24375,7 +24354,7 @@
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"splash_distance"				"200"
+				"splash_distance"			"260"
 			}
 			"06"
 			{
@@ -26262,25 +26241,21 @@
 				"var_type"				"FIELD_INTEGER"
 				"radius"				"900"
 			}
-
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lifesteal_pct"			"15 20 25 30"
+				"lifesteal_pct"			"18 22 26 30"
 			}
-
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"spellsteal_pct"		"5 10 15 20"
 			}
-
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"caster_heal"			"20 30 40 50"
 			}
-
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
@@ -35315,7 +35290,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"11"
+		"AbilityCooldown"				"17 15 13 11"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -35340,31 +35315,26 @@
 				"var_type"					"FIELD_INTEGER"
 				"duration"					"6"
 			}
-
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"area_of_effect"			"250 275 300 325"
+				"area_of_effect"			"325"
 			}
-
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"miss_chance"				"40 50 60 70"
 			}
-
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"slow"						"10 15 20 25"
 			}
-
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"turn_rate_slow"			"15"
 			}
-
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -35395,7 +35365,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"800"
+		"AbilityCastRange"				"500 600 700 800"
 		"AbilityCastPoint"				"0.3"		
 
 		// Time
@@ -35424,7 +35394,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"55 70 85 100"
+				"damage"				"100"
 			}
 			"02"
 			{
@@ -37283,29 +37253,25 @@
 				"var_type"				"FIELD_INTEGER"
 				"attack_speed_bonus"	"400"
 			}
-
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"attacks_num"			"3 4 5 6"				
+				"attacks_num"			"4 5 6 7"				
   			}
-
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"aspd_duration"			"15"
 			}
-
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"disarm_radius"			"325"
 			}
-
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"disarm_duration"		"1.6 2.0 2.4 2.8"				
+				"disarm_duration"		"0.8 1.2 1.6 2.0"				
   			}
 		}
 	}
@@ -37778,7 +37744,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"stun_duration"			"1.2 1.4 1.6 1.8"
+				"stun_duration"			"1.5 1.6 1.7 1.8"
 			}
 			"03"
 			{
@@ -37852,7 +37818,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"45 70 95 120"
+				"damage"				"60 80 100 120"
 			}
 			"02"
 			{

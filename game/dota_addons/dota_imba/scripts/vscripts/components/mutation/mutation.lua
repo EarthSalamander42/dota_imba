@@ -51,6 +51,19 @@ function Mutation:Init()
 		"item_book_of_agility",
 		"item_book_of_strength",
 		"item_deployable_shop",
+
+		-- Removed items!
+		"item_imba_triumvirate",
+		"item_imba_sange_azura",
+		"item_imba_azura_yasha",
+		"item_imba_travel_boots",
+		"item_imba_travel_boots_2",
+		"item_imba_cyclone",
+		"item_imba_recipe_cyclone",
+		"item_imba_plancks_artifact",
+		"item_recipe_imba_plancks_artifact",
+		"item_nokrash_blade",
+		"item_recipe_nokrash_blade",
 	}
 
 	self.item_spawn_delay = 10
@@ -215,7 +228,7 @@ function Mutation:OnHeroFirstSpawn(hero)
 --		hero:AddExperience(XP_PER_LEVEL_TABLE[6], DOTA_ModifyXP_CreepKill, false, true)
 	elseif IMBA_MUTATION["positive"] == "super_blink" then
 		if hero:IsIllusion() then return end
-		hero:AddItemByName("item_imba_blink")
+		hero:AddItemByName("item_imba_blink"):SetSellable(false)
 	elseif IMBA_MUTATION["positive"] == "pocket_tower" then
 		hero:AddItemByName("item_pocket_tower")
 	end
@@ -316,7 +329,7 @@ end
 
 function Mutation:SpawnRandomItem()
 	local item_name
-	local random_int = RandomInt(1, 224) -- number of items
+	local random_int = RandomInt(1, 226) -- number of items
 	local i = 1
 
 	for k, v in pairs(ITEMS_KV) do

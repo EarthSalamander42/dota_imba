@@ -162,6 +162,10 @@
 	"item_imba_travel_boots_2"				"REMOVE"
 	"item_imba_cyclone"						"REMOVE"
 	"item_imba_recipe_cyclone"				"REMOVE"
+	"item_imba_plancks_artifact"			"REMOVE"
+	"item_recipe_imba_plancks_artifact"		"REMOVE"
+	"item_nokrash_blade"					"REMOVE"
+	"item_recipe_nokrash_blade"				"REMOVE"
 
 	//=================================================================================================================
 	//-----------------------------------------------------------------------------------------------------------------
@@ -4565,7 +4569,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"totem_damage_percentage"	"160 340 520 700"
+				"totem_damage_percentage"	"200 340 480 620"
 			}
 			"02"
 			{
@@ -5162,7 +5166,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"distance_damage_pct"			"15 20 25"
+				"distance_damage_pct"			"16 21 26"
 				"LinkedSpecialBonus"			"special_bonus_unique_enchantress_4"
 			}
 			"02"
@@ -10868,7 +10872,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"whirling_damage"			"100 175 250 325"
+				"whirling_damage"			"100 160 220 280"
 			}
 			"03"
 			{
@@ -10878,7 +10882,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"stat_loss_pct"				"15 17 19 21"
+				"stat_loss_pct"				"13 15 17 19"
 				"LinkedSpecialBonus"		"special_bonus_unique_timbersaw"
 			}
 			"05"
@@ -12543,7 +12547,7 @@
 	//=================================================================================================================
 	"weaver_shukuchi"
 	{
-		"AbilityCooldown"				"12 8 5 3"
+		"AbilityCooldown"				"10 8 6 4"
 		"AbilityManaCost"				"60 50 40 30"
 
 		"AbilitySpecial"

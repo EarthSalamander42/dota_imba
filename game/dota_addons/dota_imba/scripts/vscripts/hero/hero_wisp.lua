@@ -42,8 +42,13 @@ function imba_wisp_tether:CastFilterResultTarget(target)
 		local caster = self:GetCaster()
 		local casterID = caster:GetPlayerOwnerID()
 		local targetID = target:GetPlayerOwnerID()
+
 		if target == caster then
 			return UF_FAIL_CUSTOM
+		end
+
+		if target:IsCourier() then
+			return UF_FAIL_COURIER
 		end
 
 		if target ~= nil and not target:IsOpposingTeam(caster:GetTeamNumber()) and PlayerResource:IsDisableHelpSetForPlayerID(targetID,casterID) then

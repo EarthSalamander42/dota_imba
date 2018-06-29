@@ -3,10 +3,6 @@
 
 -- This Periodic Spellcast version of Stampede allows terrain bypass, destroys trees, and gives damage reduction and tenacity.
 
--- Current Issues:
--- 1. Stampede sound(s) won't play unless Centaur is actually in the game.
--- 2. Tooltip modifiers are blank. I don't think I have control over that but I'm not exactly sure what lines to add or change regardless.
-
 LinkLuaModifier("modifier_mutation_stampede_slow", "components/mutation/modifiers/periodic_spellcast/modifier_mutation_stampede.lua", LUA_MODIFIER_MOTION_NONE )
 
 --[[Stampede Buff]]--
@@ -14,13 +10,13 @@ LinkLuaModifier("modifier_mutation_stampede_slow", "components/mutation/modifier
 modifier_mutation_stampede = class({})
 
 function modifier_mutation_stampede:IsPurgable() return false end
-function modifier_mutation_stampede:RemoveOnDeath() return true end
+function modifier_mutation_stampede:GetTexture() return "centaur_stampede" end
 
 function modifier_mutation_stampede:OnCreated()
 	-- Ability properties (particles)
 	self.particle = "particles/units/heroes/hero_centaur/centaur_stampede_overhead.vpcf"
 	self.particle2 = "particles/units/heroes/hero_centaur/centaur_stampede.vpcf"
-	
+
 	-- Ability values
 	self.strength_damage = 250 -- % of strength as damage stampede will do on impact
 	self.radius = 105 -- area of stampede effect around unit
@@ -30,21 +26,21 @@ function modifier_mutation_stampede:OnCreated()
 	self.tree_radius = 200 -- area of tree destruction effect around unit
 	self.modifier_trample_slow = "modifier_mutation_stampede_slow" -- Modifier added to enemies when trampled
 	self.tenacity = 75 -- % of status resistance
-	
+
 	if IsServer() then
 		self.trample_damage = self:GetParent():GetStrength() * (self.strength_damage * 0.01)
-		
-		EmitGlobalSound("Hero_Centaur.Stampede.Cast")
-		EmitGlobalSound("Hero_Centaur.Stampede.Movement")
-	
+
+		EmitSoundOn("Hero_Centaur.Stampede.Cast", self:GetParent())
+		EmitSoundOn("Hero_Centaur.Stampede.Movement", self:GetParent())
+
 		self.particle_stampede_fx = ParticleManager:CreateParticle(self.particle, PATTACH_OVERHEAD_FOLLOW, self:GetParent())
 		ParticleManager:SetParticleControl(self.particle_stampede_fx, 0, self:GetParent():GetAbsOrigin())
 		self:AddParticle(self.particle_stampede_fx, false, false, -1, false, true)
-		
+
 		self.particle_stampede_fx2 = ParticleManager:CreateParticle(self.particle2, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 		ParticleManager:SetParticleControl(self.particle_stampede_fx2, 0, self:GetParent():GetAbsOrigin())
 		self:AddParticle(self.particle_stampede_fx2, false, false, -1, false, false)
-		
+
 		-- Find all enemies and clear trample marks from them
 		local enemies = FindUnitsInRadius(self:GetParent():GetTeamNumber(),
 			self:GetParent():GetAbsOrigin(),
@@ -59,7 +55,7 @@ function modifier_mutation_stampede:OnCreated()
 		for _,enemy in pairs(enemies) do
 			enemy.trampled_in_stampede = nil
 		end
-		
+
 		self:StartIntervalThink(0.1)
 	end
 end
@@ -86,7 +82,7 @@ function modifier_mutation_stampede:OnIntervalThink()
 		DOTA_UNIT_TARGET_FLAG_NONE,
 		FIND_ANY_ORDER,
 		false)
-		
+
 		-- Destroy trees around stampeding unit
 		GridNav:DestroyTreesAroundPoint(self:GetParent():GetAbsOrigin(), self.tree_radius, true)
 		
@@ -126,7 +122,7 @@ end
 function modifier_mutation_stampede:GetModifierIncomingDamage_Percentage()
 	return self.damage_reduction * (-1)
 end
-	
+
 function modifier_mutation_stampede:CheckState()
 	return {[MODIFIER_STATE_NO_UNIT_COLLISION] = true, [MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY] = true}
 end
@@ -138,6 +134,8 @@ end
 --[[Stampede Slow Debuff]]--
 
 modifier_mutation_stampede_slow = class({})
+
+function modifier_mutation_stampede_slow:GetTexture() return "centaur_stampede" end
 
 function modifier_mutation_stampede_slow:OnCreated()
 	self.slow_pct = 80 -- % of movement speed slow if trampled (more for creeps)

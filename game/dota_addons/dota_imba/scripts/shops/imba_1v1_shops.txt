@@ -184,7 +184,7 @@
 		"item"		"item_imba_satanic"
 		"item"		"item_imba_skadi"
 		"item"		"item_imba_arcane_nexus"
-		"item"		"item_imba_plancks_artifact"
+		"item"		"item_nokrash_blade"
 	}
 
 	"sideshop1"
