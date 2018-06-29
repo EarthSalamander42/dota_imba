@@ -562,24 +562,18 @@ function imba_enigma_black_hole:IsStealable() 				return true end
 function imba_enigma_black_hole:IsNetherWardStealable() 	return true end
 
 function imba_enigma_black_hole:GetCastRange(vLocation, hTarget)
-	local range = self:GetSpecialValueFor("cast_range") + self:GetCaster():FindTalentValue("special_bonus_imba_enigma_5")
-	return range
-end
+	return self:GetSpecialValueFor("cast_range") + self:GetCaster():FindTalentValue("special_bonus_imba_enigma_5") end
 
 function imba_enigma_black_hole:GetCooldown(nLevel)
 	local charges = self:GetCaster():GetModifierStackCount("modifier_imba_singularity", self:GetCaster())
-	local cd = self.BaseClass.GetCooldown( self, nLevel ) - charges * self:GetCaster():FindTalentValue("special_bonus_imba_enigma_1")
-	if cd < 30 then
-		cd = 30
-	end
-	return cd
+	return math.max(30, self.BaseClass.GetCooldown( self, nLevel ) - charges * self:GetCaster():FindTalentValue("special_bonus_imba_enigma_1"))
 end
 
 function imba_enigma_black_hole:GetIntrinsicModifierName()
-	return "modifier_imba_singularity"
-end
+	return "modifier_imba_singularity" end
 
-function imba_enigma_black_hole:GetAOERadius()	 return self:GetSpecialValueFor("radius") end
+function imba_enigma_black_hole:GetAOERadius()
+	return self:GetSpecialValueFor("radius") + self:GetCaster():GetModifierStackCount("modifier_imba_singularity", self:GetCaster()) * self:GetSpecialValueFor("singularity_stun_radius_increment_per_stack") end
 
 function imba_enigma_black_hole:OnSpellStart()
 	local caster = self:GetCaster()
@@ -596,14 +590,12 @@ function imba_enigma_black_hole:OnSpellStart()
 end
 
 function imba_enigma_black_hole:OnChannelFinish( bInterrupted )
-	if bInterrupted then
-		self.thinker:FindModifierByName("modifier_imba_enigma_black_hole_thinker"):Destroy()
-		local caster = self:GetCaster()
-		local buff = caster:FindModifierByName("modifier_imba_singularity")
-		buff:SetStackCount(0)
-	end
 	StopSoundOn("Hero_Enigma.Black_Hole", self.thinker)
 	StopSoundOn("Imba.EnigmaBlackHoleTi5", self.thinker)
+	if bInterrupted then
+		self.thinker:FindModifierByName("modifier_imba_enigma_black_hole_thinker"):Destroy()
+		self:GetCaster():FindModifierByName("modifier_imba_singularity"):SetStackCount(0)
+	end
 end
 
 modifier_imba_enigma_black_hole_thinker = modifier_imba_enigma_black_hole_thinker or class({})
@@ -622,7 +614,7 @@ function modifier_imba_enigma_black_hole_thinker:OnCreated(keys)
 	self.radius = self:GetAbility().radius
 	self.pull_radius = self:GetAbility().pull_radius
 	if not IsServer() then return end
-	local pfx_name = "particles/units/heroes/hero_enigma/enigma_blackhole.vpcf"
+	local pfx_name = "particles/hero/enigma/enigma_blackhole_scaleable.vpcf"
 	self.sound = "Hero_Enigma.Black_Hole"
 	local total = FindUnitsInRadius(self:GetCaster():GetTeamNumber(),
 		self:GetParent():GetAbsOrigin(),
@@ -643,7 +635,7 @@ function modifier_imba_enigma_black_hole_thinker:OnCreated(keys)
 		FIND_ANY_ORDER,
 		false)
 	if #enemies >= #total/2 then
-		pfx_name = "particles/econ/items/enigma/enigma_world_chasm/enigma_blackhole_ti5.vpcf"
+		pfx_name = "particles/hero/enigma/enigma_blackhole_ti5_scaleable.vpcf"
 		self.sound = "Imba.EnigmaBlackHoleTi5"
 		EmitSoundOn("Imba.EnigmaBlackHoleTobi0"..math.random(1,5), self:GetParent())
 
@@ -671,10 +663,14 @@ function modifier_imba_enigma_black_hole_thinker:OnCreated(keys)
 		StopSoundOn("Imba.EnigmaBlackHoleTi5", dummy)
 		return nil
 	end, 4.0)
-
+	
+	-- Create an FoW viewer for all teams so everyone sees it
+	for i = DOTA_TEAM_FIRST, DOTA_TEAM_CUSTOM_MAX do
+		AddFOWViewer(i, self:GetParent():GetAbsOrigin(), 10, FrameTime()*2, false)
+	end
 	self.particle = ParticleManager:CreateParticle(pfx_name, PATTACH_WORLDORIGIN, nil)
 	ParticleManager:SetParticleControl(self.particle, 0, Vector(self:GetParent():GetAbsOrigin().x,self:GetParent():GetAbsOrigin().y,self:GetParent():GetAbsOrigin().z+64))
-	ParticleManager:SetParticleControl(self.particle, 6, Vector(self.radius, self.radius ,self.radius))
+	ParticleManager:SetParticleControl(self.particle, 10, Vector(self.radius, self.pull_radius, 0))
 
 	self.think_time = 0
 	self.dmg = self:GetAbility():GetSpecialValueFor("damage_per_tick")
@@ -710,8 +706,15 @@ function modifier_imba_enigma_black_hole_thinker:OnIntervalThink()
 			enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_enigma_black_hole_pull", {})
 		end
 	end
+	
+	-- Create an FoW viewer for all teams so everyone sees it
+	for i = DOTA_TEAM_FIRST, DOTA_TEAM_CUSTOM_MAX do
+		AddFOWViewer(i, self:GetParent():GetAbsOrigin(), 10, FrameTime()*2, false)
+	end
+	
 	-- Damage
 	if self.think_time >= 1.0 then
+		
 		self.think_time = self.think_time - 1.0
 		local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(),
 			self:GetParent():GetAbsOrigin(),
@@ -799,7 +802,7 @@ end
 function modifier_imba_enigma_black_hole:HorizontalMotion(unit, time)
 	local thinker = self:GetAbility().thinker
 	local pos = unit:GetAbsOrigin()
-	if thinker and self:GetAbility():IsChanneling() then
+	if thinker and not thinker:IsNull() and self:GetAbility():IsChanneling() then
 		local thinker_pos = thinker:GetAbsOrigin()
 		local next_pos = GetGroundPosition(RotatePosition(thinker_pos, QAngle(0,0.5,0), pos), unit)
 		local distance = CalcDistanceBetweenEntityOBB(unit, thinker)
@@ -853,7 +856,7 @@ function modifier_imba_enigma_black_hole_pull:HorizontalMotion(unit, time)
 	self.pull_distance =  CalculatePullLength(self:GetCaster(), self:GetParent(), self.base_pull_distance) / (1.0 / FrameTime())
 	local thinker = self:GetAbility().thinker
 	local pos = unit:GetAbsOrigin()
-	if thinker and self:GetAbility():IsChanneling() and not self:GetParent():HasModifier("modifier_imba_enigma_black_hole") then
+	if thinker and not thinker:IsNull() and self:GetAbility():IsChanneling() and not self:GetParent():HasModifier("modifier_imba_enigma_black_hole") then
 		local thinker_pos = thinker:GetAbsOrigin()
 		local next_pos = GetGroundPosition((pos + (thinker_pos - pos):Normalized() * self.pull_distance), unit)
 		unit:SetAbsOrigin(next_pos)
@@ -875,26 +878,18 @@ function modifier_imba_singularity:IsPurgeException() return false end
 function modifier_imba_singularity:RemoveOnDeath()	return false end
 
 function modifier_imba_singularity:DeclareFunctions()
-	return {MODIFIER_EVENT_ON_DEATH}
-end
+	return {MODIFIER_EVENT_ON_DEATH} end
 
 function modifier_imba_singularity:OnDeath(keys)
-	if not IsServer() then return end
-	if keys.unit ~= self:GetParent() then return end
-
-	if not self:GetParent():HasTalent("special_bonus_imba_enigma_4") then return end
-
-	if self:GetParent():IsIllusion() then return end
-
-	local ability = self:GetAbility()
-	local duration = ability:GetSpecialValueFor("duration") / self:GetParent():FindTalentValue("special_bonus_imba_enigma_4")
-	local caster = self:GetParent()
-	local pos = caster:GetAbsOrigin()
-	local base_radius = ability:GetSpecialValueFor("radius")
-	local extar_radius = ability:GetSpecialValueFor("singularity_stun_radius_increment_per_stack")
-	local base_pull_radius = ability:GetSpecialValueFor("pull_radius")
-	local extra_pull_radius = ability:GetSpecialValueFor("singularity_pull_radius_increment_per_stack")
-	ability.radius = base_radius + extar_radius * caster:FindModifierByName("modifier_imba_singularity"):GetStackCount()
-	ability.pull_radius = base_pull_radius + extra_pull_radius * caster:FindModifierByName("modifier_imba_singularity"):GetStackCount()
-	ability.thinker = CreateModifierThinker(caster, ability, "modifier_imba_enigma_black_hole_thinker", {duration = duration, talent = 1}, pos, caster:GetTeamNumber(), false)
+	if IsServer() and keys.unit == self:GetParent() and self:GetParent():HasTalent("special_bonus_imba_enigma_4") and self:GetParent():IsRealHero() then
+		local ability = self:GetAbility()
+		local duration = ability:GetSpecialValueFor("duration") / self:GetParent():FindTalentValue("special_bonus_imba_enigma_4")
+		local base_radius = ability:GetSpecialValueFor("radius")
+		local extar_radius = ability:GetSpecialValueFor("singularity_stun_radius_increment_per_stack")
+		local base_pull_radius = ability:GetSpecialValueFor("pull_radius")
+		local extra_pull_radius = ability:GetSpecialValueFor("singularity_pull_radius_increment_per_stack")
+		ability.radius = base_radius + extar_radius * keys.unit:FindModifierByName("modifier_imba_singularity"):GetStackCount()
+		ability.pull_radius = base_pull_radius + extra_pull_radius * keys.unit:FindModifierByName("modifier_imba_singularity"):GetStackCount()
+		ability.thinker = CreateModifierThinker(keys.unit, ability, "modifier_imba_enigma_black_hole_thinker", {duration = duration, talent = 1}, keys.unit:GetAbsOrigin(), keys.unit:GetTeamNumber(), false)
+	end
 end
