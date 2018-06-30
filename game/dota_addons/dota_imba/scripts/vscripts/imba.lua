@@ -12,9 +12,6 @@
 -- See the License for the specific language governing permissions and
 -- limitations under the License.
 --
--- Editors:
---     EarthSalamander #42
---
 
 if GameMode == nil then
 	_G.GameMode = class({})
@@ -60,6 +57,7 @@ require('libraries/meepo/meepo')
 require('events/events')
 require('events/npc_spawned/on_hero_spawned')
 require('events/npc_spawned/on_unit_spawned')
+require('events/on_entity_killed/on_hero_killed')
 require('events/player_disconnect/on_disconnect')
 
 require('components/team_selection')
@@ -73,6 +71,8 @@ require('addon_init')
 if IsMutationMap() then
 	require('components/mutation/mutation_list')
 	require('components/mutation/mutation')
+elseif GetMapName() == "imba_overthrow" then
+	require('overthrow/events.lua')
 end
 
 ApplyAllTalentModifiers()
@@ -227,6 +227,8 @@ function GameMode:GoldFilter(keys)
 	-- player_id_const	0
 	-- gold				141
 
+	if GetMapName() == "cavern" then return true end
+
 	-- Gold from abandoning players does not get multiplied
 	if keys.reason_const == DOTA_ModifyGold_AbandonedRedistribute or keys.reason_const == DOTA_ModifyGold_GameTick then
 		return true
@@ -289,6 +291,8 @@ function GameMode:ExperienceFilter( keys )
 	-- player_id_const	0
 
 	local hero = PlayerResource:GetPickedHero(keys.player_id_const)
+
+	if GetMapName() == "cavern" then return true end
 
 	-- Ignore negative experience values
 	if keys.experience < 0 then
@@ -704,7 +708,7 @@ function GameMode:OrderFilter( keys )
 	-- Prevent Buyback during reincarnation
 	------------------------------------------------------------------------------------
 	if keys.order_type == DOTA_UNIT_ORDER_BUYBACK then
-		if unit:IsReincarnating() then
+		if unit:IsImbaReincarnating() then
 			return false
 		end
 	end

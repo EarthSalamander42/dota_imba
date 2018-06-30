@@ -27,7 +27,7 @@ end
 
 function item_the_caustic_finale:OnOwnerDied(params)
 	local hOwner = self:GetOwner()
-	if hOwner.IsReincarnating and hOwner:IsReincarnating() then
+	if hOwner.IsImbaReincarnating and hOwner:IsImbaReincarnating() then
 		return nil
 	end
 	hOwner:DropItemAtPositionImmediate(self, hOwner:GetAbsOrigin())

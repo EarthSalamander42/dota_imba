@@ -162,6 +162,10 @@
 	"item_imba_travel_boots_2"				"REMOVE"
 	"item_imba_cyclone"						"REMOVE"
 	"item_imba_recipe_cyclone"				"REMOVE"
+	"item_imba_plancks_artifact"			"REMOVE"
+	"item_recipe_imba_plancks_artifact"		"REMOVE"
+	"item_nokrash_blade"					"REMOVE"
+	"item_recipe_nokrash_blade"				"REMOVE"
 
 	//=================================================================================================================
 	//-----------------------------------------------------------------------------------------------------------------
@@ -1607,19 +1611,24 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"poison_damage"			"8.0"
+				"poison_damage_melee"	"8.0"
 			}
 			"02"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"poison_movement_speed_melee"		"-16"
+				"var_type"				"FIELD_FLOAT"
+				"poison_damage_range"	"5.0"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"poison_movement_speed_range"		"-6"
+				"poison_movement_speed_melee"		"-16"
 			}
 			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"poison_movement_speed_range"		"-6"
+			}
+			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"poison_duration"		"4.0"
@@ -1639,7 +1648,7 @@
 	//=================================================================================================================
 	"juggernaut_blade_fury"
 	{
-		"AbilityCooldown"				"30 25 20 15"
+		"AbilityCooldown"				"24 20 16 12"
 		"AbilityManaCost"				"120 110 100 90"		
 
 		// Special
@@ -1659,7 +1668,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"blade_fury_damage"			"110 140 170 200"
+				"blade_fury_damage"			"140 170 200 230"
 				"LinkedSpecialBonus"		"special_bonus_unique_juggernaut_3"
 			}
 			"04"
@@ -1681,7 +1690,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"healing_ward_heal_amount"	"2 3.5 5 6.5"
+				"healing_ward_heal_amount"	"7"
 			}
 			"02"
 			{
@@ -1816,7 +1825,6 @@
 		"AbilityCooldown"				"4.0"
 		"AbilityDuration"				"16 20 24 28"
 		"AbilityManaCost"				"80 70 60 50"
-		"MaxLevel"						"4"
 
 		"AbilitySpecial"
 		{
@@ -1922,8 +1930,7 @@
 	//=================================================================================================================
 	"ancient_apparition_ice_blast"
 	{
-		"AbilityDamage"					"250 450 550"
-		"MaxLevel"						"3"
+		"AbilityDamage"					"250 450 650"
 
 		"AbilitySpecial"
 		{
@@ -1979,7 +1986,6 @@
 		"AbilityCastRange"				"500 700 900 1100"
 		"AbilityCooldown"				"18 16 14 12"
 		"AbilityManaCost"				"75"
-		"MaxLevel"						"4"
 
 		"AbilitySpecial"
 		{
@@ -2382,12 +2388,7 @@
 	"beastmaster_wild_axes"
 	{
 		"AbilityCastRange"				"1500 1650 1800 1950"
-
 		"AbilityCooldown"				"13 11 9 7"
-
-		"AbilityManaCost"				"105 95 85 75"
-
-		"MaxLevel"						"4"
 
 		"AbilitySpecial"
 		{
@@ -2541,8 +2542,6 @@
 	//=================================================================================================================
 	"beastmaster_inner_beast"
 	{
-		"MaxLevel"						"4"
-
 		"AbilitySpecial"
 		{
 			"01"
@@ -2566,7 +2565,6 @@
 	{
 		"AbilityCooldown"					"80 60 40"
 		"AbilityCastRange"					"600 750 900"
-		"MaxLevel"							"3"
 
 		"AbilitySpecial"
 		{
@@ -2578,12 +2576,12 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"150 300 400"
+				"damage"					"150 300 450"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"side_damage"				"150 300 400"
+				"side_damage"				"150 300 450"
 			}
 			"04"
 			{
@@ -3630,13 +3628,7 @@
 
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"max_units"				"1 2 3 4"
-				"LinkedSpecialBonus"	"special_bonus_unique_chen_1"
-			}
-			"02"
+			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"health_min"			"1000 2000 3000 4000"
@@ -3780,8 +3772,6 @@
 	"rattletrap_power_cogs"
 	{
 		"AbilityCooldown"				"15 14 13 12"
-
-		"MaxLevel"						"4"
 		
 		"AbilitySpecial"
 		{
@@ -4579,7 +4569,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"totem_damage_percentage"	"160 340 520 700"
+				"totem_damage_percentage"	"200 340 480 620"
 			}
 			"02"
 			{
@@ -5059,7 +5049,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"slow_attack_speed"		"-60 -100 -140 -180"
+				"slow_attack_speed"		"-60 -90 -120 -150"
 				"LinkedSpecialBonus"	"special_bonus_unique_enchantress_3"
 			}
 			"02"
@@ -5176,7 +5166,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"distance_damage_pct"			"15 20 25"
+				"distance_damage_pct"			"16 21 26"
 				"LinkedSpecialBonus"			"special_bonus_unique_enchantress_4"
 			}
 			"02"
@@ -6415,7 +6405,7 @@
 	"keeper_of_the_light_mana_leak"
 	{
 		"AbilityCooldown"				"16 14 12 10"
-		"AbilityCastRange"				"550 700 850 1000"
+		"AbilityCastRange"				"500 600 700 800"
 
 		"AbilitySpecial"
 		{
@@ -10882,7 +10872,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"whirling_damage"			"100 175 250 325"
+				"whirling_damage"			"100 160 220 280"
 			}
 			"03"
 			{
@@ -10892,7 +10882,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"stat_loss_pct"				"15 17 19 21"
+				"stat_loss_pct"				"13 15 17 19"
 				"LinkedSpecialBonus"		"special_bonus_unique_timbersaw"
 			}
 			"05"
@@ -12557,7 +12547,7 @@
 	//=================================================================================================================
 	"weaver_shukuchi"
 	{
-		"AbilityCooldown"				"12 8 5 3"
+		"AbilityCooldown"				"10 8 6 4"
 		"AbilityManaCost"				"60 50 40 30"
 
 		"AbilitySpecial"
@@ -13368,31 +13358,35 @@
 	{
 		"AbilityCastRange"				"700 800 900 1000"
 		"AbilityDamage"					"125 200 275 350"
-		"AbilityCooldown"				"6.0 5.5 5.0 4.5"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"true_sight_radius"		"750"
+				"cast_range_tooltip"	"700 800 900 1000"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"sight_radius_day"		"750"
+				"true_sight_radius"		"750"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"sight_radius_night"	"750"
+				"sight_radius_day"		"750"
 			}
 			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"sight_radius_night"	"750"
+			}
+			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"sight_duration"		"5.0"
 			}
-			"05"
+			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"spread_aoe"			"325 375 425 475"
@@ -14992,7 +14986,7 @@
 			"06"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"latch_damage"		"100 200 300 400"
+				"latch_damage"		"150 240 330 420"
 			}
 		}
 	}
@@ -15053,105 +15047,6 @@
 	"dark_willow_terrorize"
 	{
 		"AbilityCooldown"				"100 75 50"
-	}
-
-	//=================================================================================================================
-	// Pangolier: Swashbuckle
-	//=================================================================================================================
-	"pangolier_swashbuckle"
-	{
-		"AbilityCooldown"				"20 12 7.5 6.5"
-		"MaxLevel"						"4"
-
-		"AbilitySpecial"
-		{
-			"05"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"damage"						"30 70 110 150"
-				"LinkedSpecialBonus"			"special_bonus_unique_pangolier_3"
-				"CalculateSpellDamageTooltip"	"0"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Pangolier: Shield Crash
-	//=================================================================================================================
-	"pangolier_shield_crash"
-	{
-		"AbilityManaCost"				"90 100 110 120"
-		"MaxLevel"						"4"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"80 240 380 500"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"hero_stacks"			"8 12 15 17"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Pangolier: Heartpiercer
-	//=================================================================================================================
-	"pangolier_heartpiercer"
-	{
-		"MaxLevel"						"4"
-
-		"AbilitySpecial"
-		{
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"2 4 5.5 6.5"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"slow_pct"				"-35 -45 -52 -56"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Pangolier: Gyroshell
-	//=================================================================================================================
-	"pangolier_gyroshell"
-	{
-		"AbilityCooldown"				"50 40 36"
-		"AbilityDamage"					"200 350 450"
-		"MaxLevel"						"3"
-
-		"AbilitySpecial"
-		{
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"forward_move_speed"	"550 600 650"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"turn_rate"				"105 115 125"
-			}
-			"09"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"stun_duration"			"1.0 1.5 1.8"
-			}			
-			"11"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"6.0 8.0 9.0"
-			}
-		}
 	}
 
 	//=================================================================================================================

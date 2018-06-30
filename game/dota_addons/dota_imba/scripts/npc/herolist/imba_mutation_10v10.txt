@@ -58,7 +58,7 @@
 	"npc_dota_hero_windrunner" 			"1"
 	"npc_dota_hero_witch_doctor" 		"1"
 	"npc_dota_hero_zuus" 				"0"
-	"npc_dota_hero_broodmother" 		"1"
+	"npc_dota_hero_broodmother" 		"0"
 	"npc_dota_hero_skeleton_king" 		"1"
 	"npc_dota_hero_queenofpain" 		"1"
 	"npc_dota_hero_huskar" 				"1"

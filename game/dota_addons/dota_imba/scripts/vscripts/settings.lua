@@ -65,6 +65,7 @@ BOUNTY_RUNE_SPAWN_TIME = 300
 CUSTOM_BUYBACK_COST_ENABLED = true			-- Should we use a custom buyback cost setting?
 CUSTOM_BUYBACK_COOLDOWN_ENABLED = true		-- Should we use a custom buyback time?
 BUYBACK_ENABLED = true						-- Should we allow people to buyback when they die?
+IMBA_REINCARNATION_TIME = 3.0
 
 -- Note: DISABLE_FOG_OF_WAR_ENTIRELY must be false for USE_UNSEEN_FOG_OF_WAR to work
 USE_STANDARD_DOTA_BOT_THINKING = false		-- Should we have bots act like they would in Dota? (This requires 3 lanes, normal items, etc)
@@ -102,9 +103,7 @@ BUYBACK_COST_PER_LEVEL = 1.25												-- Level-based buyback cost
 BUYBACK_COST_PER_LEVEL_AFTER_25 = 20										-- Level-based buyback cost growth after level 25
 BUYBACK_COST_PER_SECOND = 0.25												-- Time-based buyback cost
 
-BUYBACK_COOLDOWN_START_POINT = 600											-- Game time (in seconds) after which buyback cooldown is activated
-BUYBACK_COOLDOWN_GROW_FACTOR = 0.167										-- Buyback cooldown increase per second
-BUYBACK_COOLDOWN_MAXIMUM = 360												-- Maximum buyback cooldown
+BUYBACK_COOLDOWN_MAXIMUM = 90												-- Maximum buyback cooldown
 
 ABANDON_TIME = 180															-- Time for a player to be considered as having abandoned the game (in seconds)
 FULL_ABANDON_TIME = 15														-- Time for a team to be considered as having abandoned the game (in seconds)
@@ -243,6 +242,7 @@ elseif GetMapName() == "imba_overthrow" then
 	TEAM_COLORS[DOTA_TEAM_BADGUYS]  = { 243, 201, 9 }	-- Yellow
 	TEAM_COLORS[DOTA_TEAM_CUSTOM_1]  = { 197, 77, 168 }	-- Pink
 	TEAM_COLORS[DOTA_TEAM_CUSTOM_2]  = { 255, 108, 0 }	-- Orange
+	OVERTHROW_EXTRA_TIME_NECRO_KILL = 20.0
 
 	m_GoldRadiusMin = 250
 	m_GoldRadiusMax = 550
@@ -256,7 +256,6 @@ elseif GetMapName() == "imba_overthrow" then
 	CLOSE_TO_VICTORY_THRESHOLD = 5
 
 	hasWarnedSpawn = false
-	allSpawned = false
 	countdownEnabled = false
 	isGameTied = false
 
@@ -331,7 +330,7 @@ CUSTOM_GOLD_BONUS["imba_mutation_5v5"] = 400
 CUSTOM_GOLD_BONUS["imba_mutation_10v10"] = 400
 CUSTOM_GOLD_BONUS["imba_frantic_5v5"] = 400
 CUSTOM_GOLD_BONUS["imba_frantic_10v10"] = 400
-CUSTOM_GOLD_BONUS["cavern"] = 200
+CUSTOM_GOLD_BONUS["cavern"] = 100
 
 -- Global XP earning, values are doubled with Hyper for non-custom maps (right now this is not used anymore, but i'll keep it there just in case)
 CUSTOM_XP_BONUS = {} -- 1 = Normal, 2 = Hyper
@@ -579,6 +578,11 @@ IMBA_INVISIBLE_MODIFIERS = {
 	"modifier_imba_riki_invisibility",
 	"modifier_imba_shadow_walk_buff_invis",
 	"modifier_imba_invisibility_rune",
+}
+
+IMBA_REINCARNATION_MODIFIERS = {
+	"modifier_imba_reincarnation",
+	"modifier_item_imba_aegis",
 }
 
 IGNORE_FOUNTAIN_UNITS = {

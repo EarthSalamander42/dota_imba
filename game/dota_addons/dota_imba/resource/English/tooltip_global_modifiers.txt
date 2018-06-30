@@ -38,6 +38,12 @@
 "DOTA_Tooltip_modifier_mutation_track"							"Track"
 "DOTA_Tooltip_modifier_mutation_track_Description"				"Unable to go invisible, and granting vision to the enemy team."
 
+"DOTA_Tooltip_modifier_mutation_stampede"						"Stampede"
+"DOTA_Tooltip_modifier_mutation_stampede_Description"			"Moving at maximum speed, increasing tenacity and damage reduction, bypassing terrain, and trampling nearby enemies."
+
+"DOTA_Tooltip_modifier_mutation_stampede_slow"					"Stampede"
+"DOTA_Tooltip_modifier_mutation_stampede_slow_Description"		"Trampled, slowed movement speed."
+
 "DOTA_Tooltip_modifier_mutation_shadow_dance_buff"				"Shadow Dance"
 "DOTA_Tooltip_modifier_mutation_shadow_dance_buff_Description"	"Regenerate health and mana slightly faster when not in vision of the enemy."
 

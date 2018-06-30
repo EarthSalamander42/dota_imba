@@ -118,6 +118,8 @@ _G.TreasureChestItemRewards =
 		"item_imba_heavens_halberd",
 		"item_black_king_bar",
 		"item_bfury",
+		"item_imba_rapier",
+		"item_imba_rapier_magic",
 	},
 
 	-- ~Value range: 4000+
@@ -141,7 +143,8 @@ _G.TreasureChestItemRewards =
 		"item_imba_satanic",
 		"item_imba_abyssal_blade",
 		"item_imba_bloodthorn",
-		"item_imba_rapier",
+		"item_imba_rapier_2",
+		"item_imba_rapier_magic_2",
 		"item_the_caustic_finale",
 	},
 }

@@ -35,7 +35,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"movespeed"					"13 15 18 22"
+				"movespeed"					"35 40 45 50"
 			}
 			"03"
 			{
@@ -54,23 +54,33 @@
 			}
 			"06"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"slow"						"-100"
+				"var_type"					"FIELD_FLOAT"
+				"tooltip_heal_amp"			"50"
 			}
 			"07"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"attackslow_tooltip"		"-100"
+				"var_type"					"FIELD_INTEGER"
+				"slow"						"-100"
 			}
 			"08"
 			{
 				"var_type"					"FIELD_FLOAT"
+				"attackslow_tooltip"		"-100"
+			}
+			"09"
+			{
+				"var_type"					"FIELD_FLOAT"
 				"stun_duration"				"0.75 1.25 1.75 2.25"
+			}
+			"09"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"destroy_tree_radius"		"350"
 			}
 			"10"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"destroy_tree_radius"		"350"
+				"tether_bonus_regen"		"35"
 			}
 		}
 	}
@@ -109,8 +119,9 @@
 		"precache"
 		{
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_wisp.vsndevts"
-			"particle"					"particles/units/heroes/hero_wisp/wisp_guardian_disarm.vpcf"
-			"particle"					"particles/units/heroes/hero_wisp/wisp_guardian_silence.vpcf"
+			"particle"					"particles/units/heroes/hero_wisp/wisp_guardian_.vpcf"
+			"particle"                  "particles/units/heroes/hero_wisp/wisp_guardian_disarm.vpcf"
+			"particle"                  "particles/units/heroes/hero_wisp/wisp_guardian_silence.vpcf"
 			"particle"					"particles/units/heroes/hero_wisp/wisp_guardian_explosion.vpcf"
 			"particle"					"particles/units/heroes/hero_wisp/wisp_guardian_explosion_small.vpcf"
 		}
@@ -127,12 +138,12 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"hero_damage"				"30 50 70 90"
+				"hero_damage"				"0 0 0 0"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"explosion_damage"			"30 50 70 90"
+				"explosion_damage"			"35 60 85 110"
 			}
 			"04"
 			{
@@ -147,7 +158,7 @@
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"min_range"					"100"
+				"min_range"					"100 100 100 100"
 			}
 			"07"
 			{
@@ -157,7 +168,7 @@
 			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"collision_radius"			"110"
+				"collision_radius"			"120"
 			}
 			"09"
 			{
@@ -167,12 +178,12 @@
 			"10"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"spirit_movement_rate"		"250"
+				"spirit_movement_rate"		"250 250 250 250"
 			}
 			"11"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"spirit_duration"			"19.0"
+				"spirit_duration"			"19.0 19.0 19.0 19.0"
 			}
 			"12"
 			{
@@ -183,12 +194,11 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"num_spirits"				"7"
-				"LinkedSpecialBonus"		"special_bonus_imba_wisp_1"
 			}
 			"14"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"spirit_turn_rate"			"150"
+				"spirit_turn_rate"			"100"
 			}
 			"15"
 			{
@@ -237,6 +247,7 @@
 			"particle"					"particles/units/heroes/hero_wisp/wisp_overcharge.vpcf"
 		}
 
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -249,7 +260,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_missile_speed"		"40 50 60 70"
+				"bonus_missile_speed"		"150 300 450 650"
 			}
 			"03"
 			{
@@ -259,7 +270,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_attack_range"		"10 25 50 75"
+				"bonus_attack_range"		"30 50 70 100"
 			}
 			"05"
 			{
@@ -281,8 +292,18 @@
 				"var_type"					"FIELD_FLOAT"
 				"tooltip_drain_pct"			"-4.5 -5.0 -5.5 -6.0"
 			}
+			"09"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"sceptre_radius"			"900"
+			}
+			"10"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"sceptre_efficiency"		"0.25"
+			}
 		}
-	}
+	}	
 
 	//=================================================================================================================
 	// Wisp: Swap Spirits
@@ -448,74 +469,13 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"1.5"
+		"AbilityCooldown"				"1.0"
 	}
 
 	//=================================================================================================================
-	// Wisp Talent 1 (Level 10): Adds additional spirits
+	// Wisp Talent 1 (Level 10): Overcharge bonus + 150
 	//=================================================================================================================
 	"special_bonus_imba_wisp_1"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_undefined"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_wisp_spirits"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"bonus_spirits"				"2"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Wisp Talent 2 (Level 10): Spirits + explosion dmg + 50%
-	//=================================================================================================================
-	"special_bonus_imba_wisp_2"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_undefined"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_wisp_spirits"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"bonus_explosion_damage_pct"	"1.5"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"tooltip_value"					"50"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Wisp Talent 3 (Level 15): Overcharge buff + 50%
-	//=================================================================================================================
-	"special_bonus_imba_wisp_3"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -535,20 +495,15 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"bonus_effect"				"1.5"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"tooltip_value"				"50"
+				"bonus_effect"				"150"
 			}
 		}
 	}
 
 	//=================================================================================================================
-	// Wisp Talent 4 (Level 15): Tether Aghanim Sceptre
+	// Wisp Talent 2 (Level 10): Tether Aghanim Sceptre
 	//=================================================================================================================
-	"special_bonus_imba_wisp_4"
+	"special_bonus_imba_wisp_2"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -574,7 +529,63 @@
 	}
 
 	//=================================================================================================================
-	// Wisp Talent 5 (Level 20): Io Aoe Splash
+	// Wisp Talent 3 (Level 15): Spirits grant vision in 300 radius and have true sight.
+	//=================================================================================================================
+	"special_bonus_imba_wisp_3"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_wisp_spirits"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"true_sight_radius"			"300"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Wisp Talent 4 (Level 15): Overcharge Damage Reduction
+	//=================================================================================================================
+	"special_bonus_imba_wisp_4"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_wisp_overcharge"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage_reduction"			"15"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Wisp Talent 5 (Level 20): +500 Tether cast range, and max distance
 	//=================================================================================================================
 	"special_bonus_imba_wisp_5"
 	{
@@ -584,6 +595,11 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01" 	"imba_wisp_tether"
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -591,12 +607,7 @@
 			"01"
 			{
 				"var_type"		"FIELD_INTEGER"
-				"splash_radius"			"250"
-			}
-			"02"
-			{
-				"var_type"		"FIELD_INTEGER"
-				"splash_damage_pct"	"75"
+				"bonus_range"			"500"
 			}
 		}
 	}
@@ -630,7 +641,7 @@
 	}
 
 	//=================================================================================================================
-	// Wisp Talent 8 (Level 25): Imba overcharge
+	// Wisp Talent 7 (Level 25): Relocate grants spell immunity for 5s to Io and Tethered ally
 	//=================================================================================================================
 	"special_bonus_imba_wisp_7"
 	{
@@ -642,7 +653,7 @@
 
 		"LinkedAbility"
 		{
-			"01" 	"imba_wisp_overcharge"
+			"01" 	"imba_wisp_relocate"
 		}
 
 		// Special
@@ -652,18 +663,13 @@
 			"01"
 			{
 				"var_type"		"FIELD_INTEGER"
-				"bonus_regen"	"5"
-			}
-			"02"
-			{
-				"var_type"		"FIELD_FLOAT"
-				"bonus_drain"	"4.5"
+				"duration"		"5"
 			}
 		}
 	}
 
 	//=================================================================================================================
-	// Wisp Talent 8 (Level 25): Imba Tether
+	// Wisp Talent 8 (Level 25): Overcharge regen 5% max health and mana per second
 	//=================================================================================================================
 	"special_bonus_imba_wisp_8"
 	{
@@ -672,6 +678,11 @@
 		"BaseClass"						"special_bonus_undefined"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"LinkedAbility"
+		{
+			"01" 	"imba_wisp_overcharge"
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -679,8 +690,8 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"movement_speed_cap"	"1500"
+				"var_type"				"FIELD_FLOAT"
+				"bonus_regen"			"5.0"
 			}
 		}
 	}

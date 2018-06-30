@@ -43,7 +43,7 @@ rapier_base_class = class({})
 
 function rapier_base_class:OnOwnerDied(params)
 	local hOwner = self:GetOwner()
-	if hOwner.IsReincarnating and hOwner:IsReincarnating() then
+	if hOwner.IsImbaReincarnating and hOwner:IsImbaReincarnating() then
 		return nil
 	end
 	hOwner:DropRapier(self, true)

@@ -802,7 +802,7 @@ function modifier_imba_nether_ward_degen:OnSpentMana(keys)
 			"templar_assassin_refraction",
 			"templar_assassin_meld",
 			"naga_siren_mirror_image",
-			"ember_spirit_activate_fire_remnant",
+			"imba_ember_spirit_activate_fire_remnant",
 			"legion_commander_duel",
 			"phoenix_fire_spirits",
 			"terrorblade_conjure_image",

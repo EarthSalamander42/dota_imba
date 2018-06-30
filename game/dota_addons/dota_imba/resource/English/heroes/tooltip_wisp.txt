@@ -75,7 +75,7 @@
 // Wisp's Relocate
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_wisp_relocate"          				"RELOCATE"
-"DOTA_Tooltip_ability_imba_wisp_relocate_description"          	"Teleports Io and any tethered ally to any location. After the spell expires Io and any tethered ally will return to their original location. Double-click to teleport to your team's base fountain.\n<font color='#FF7800'>Castling</font color='#FF7800'>: Io can choose to break Relocate at any given moment. When breaking relocate both Io and any tethered ally will return to their original location."
+"DOTA_Tooltip_ability_imba_wisp_relocate_description"          	"Teleports Io and any tethered ally to any location. After the spell expires Io and any tethered ally will return to their original location. Double-click to teleport to your team's base fountain.\n<font color='#FF7800'>Castling</font color='#FF7800'>: Io can choose to break Relocate at any given moment. When breaking relocate both Io and any tethered ally will return to their original location.\n<font color='#FF7800'>Fundamental Strength</font color='#FF7800'>: Relocate have a cast time instead of channel time."
 "DOTA_Tooltip_ability_imba_wisp_relocate_Note0"					"Enemies receive a visual indicator in the world and on the minimap of the target location during the cast delay. If Io is disabled during the cast delay, Relocate is cancelled. If an allied  hero is Tethered, that hero will teleport along with you. You can break the tether at any time to prevent that hero from teleporting back with you. You can abort the Relocation at any time."
 "DOTA_Tooltip_ability_imba_wisp_relocate_lore"					"Io is the embodiment of the mystery of the universe."
 "DOTA_Tooltip_ability_imba_wisp_relocate_cast_delay"			"CAST DELAY:"	
@@ -104,14 +104,11 @@
 ////===============================================================================================================
 // Wisp's Talents
 ////===============================================================================================================
-"DOTA_Tooltip_Ability_special_bonus_imba_wisp_1"												"+2 Additional Spirits"
-"DOTA_Tooltip_Ability_special_bonus_imba_wisp_2"												"+50% Spirit Impact Damage"
-"DOTA_Tooltip_Ability_special_bonus_imba_wisp_3"												"+50% Overcharge Bonus"
-"DOTA_Tooltip_Ability_special_bonus_imba_wisp_3_description"									"Overcharge grants +50% additional attack speed, attack range, missile speed, cast speed and damage reduction."
-"DOTA_Tooltip_Ability_special_bonus_imba_wisp_4"												"Tether Grants Aghanim's Scepter Bonus"
-"DOTA_Tooltip_Ability_special_bonus_imba_wisp_5"												"Attacks Splash on Hit"
-"DOTA_Tooltip_Ability_special_bonus_imba_wisp_6"												"Attack Tethered Ally's Target"
-"DOTA_Tooltip_Ability_special_bonus_imba_wisp_7"												"Imba Overcharge"
-"DOTA_Tooltip_Ability_special_bonus_imba_wisp_7_description"									"Overcharge grants +5% health/mana regen. \\nOvercharge health/mana drain is increased by 5%."
-"DOTA_Tooltip_Ability_special_bonus_imba_wisp_8"												"Imba Tether"
-"DOTA_Tooltip_Ability_special_bonus_imba_wisp_8_description"									"Io and Tethered ally cannot be slowed. \\nMovement speed no longer capped!"
+"DOTA_Tooltip_Ability_special_bonus_imba_wisp_1"						"+120 Overcharge attack speed, attack range, and missile speed"
+"DOTA_Tooltip_Ability_special_bonus_imba_wisp_2"						"Tether Grants Scepter Bonus"
+"DOTA_Tooltip_Ability_special_bonus_imba_wisp_3"						"Spirits grant truesight in 300 AOE radius."
+"DOTA_Tooltip_Ability_special_bonus_imba_wisp_4"						"+15% Overcharge Damage Reduction"
+"DOTA_Tooltip_Ability_special_bonus_imba_wisp_5"						"+500 Tether cast range, and max distance"
+"DOTA_Tooltip_Ability_special_bonus_imba_wisp_6"						"Attack Tethered Ally's Target"
+"DOTA_Tooltip_Ability_special_bonus_imba_wisp_7"						"Relocate grants spell immunity for 5s to Io and Tethered ally"
+"DOTA_Tooltip_Ability_special_bonus_imba_wisp_8"						"Overcharge regen 5% max health and mana per second"

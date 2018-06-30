@@ -111,9 +111,14 @@ function modifier_imba_echo_sabre_passive:OnAttackStart(keys)
 		if (keys.attacker == parent) then
 			if item:IsCooldownReady() then
 				if self:CheckUniqueValue(1,{"modifier_imba_reverb_rapier_passive"}) == 1 then
-
-					parent:AddNewModifier(parent, item, "modifier_imba_echo_rapier_haste", {})
 					item:UseResources(false,false,true)
+					if (item:GetCooldownTime() > 0) then
+						-- Adds modifier duration equal to cooldown so echo effect resets appropriately
+						parent:AddNewModifier(parent, item, "modifier_imba_echo_rapier_haste", {duration = item:GetCooldownTime()})
+					else
+						-- Line to allow echo to work in WTF mode
+						parent:AddNewModifier(parent, item, "modifier_imba_echo_rapier_haste", {})
+					end
 				end
 			end
 		end
@@ -206,8 +211,14 @@ function modifier_imba_reverb_rapier_passive:OnAttackStart(keys)
 		if (keys.attacker == parent) then
 			if item:IsCooldownReady() then
 				if self:CheckUniqueValue(1,nil) == 1 then
-					parent:AddNewModifier(parent, item, "modifier_imba_echo_rapier_haste", {})
 					item:UseResources(false,false,true)
+					if (item:GetCooldownTime() > 0) then
+						-- Adds modifier duration equal to cooldown so reverb effect resets appropriately
+						parent:AddNewModifier(parent, item, "modifier_imba_echo_rapier_haste", {duration = item:GetCooldownTime()})
+					else
+						-- Line to allow reverb to work in WTF mode
+						parent:AddNewModifier(parent, item, "modifier_imba_echo_rapier_haste", {})
+					end
 				end
 			end
 		end

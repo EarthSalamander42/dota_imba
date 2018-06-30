@@ -3,6 +3,7 @@
 
 local ITEMS_KV = LoadKeyValues("scripts/npc/npc_items_custom.txt")
 local MAP_SIZE = 7000
+local MAP_SIZE_AIRDROP = 5000
 
 function Mutation:Init()
 --	print("Mutation: Initialize...")
@@ -14,6 +15,7 @@ function Mutation:Init()
 	LinkLuaModifier("modifier_mutation_shadow_dance", "components/mutation/modifiers/modifier_mutation_shadow_dance.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_mutation_ants", "components/mutation/modifiers/modifier_mutation_ants.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_disable_healing", "components/mutation/modifiers/modifier_disable_healing.lua", LUA_MODIFIER_MOTION_NONE )
+	LinkLuaModifier("modifier_mutation_stampede", "components/mutation/modifiers/periodic_spellcast/modifier_mutation_stampede.lua", LUA_MODIFIER_MOTION_NONE )
 
 	LinkLuaModifier("modifier_mutation_sun_strike", "components/mutation/modifiers/periodic_spellcast/modifier_mutation_sun_strike.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_mutation_call_down", "components/mutation/modifiers/modifier_mutation_call_down.lua", LUA_MODIFIER_MOTION_NONE )
@@ -37,6 +39,7 @@ function Mutation:Init()
 	IMBA_MUTATION_PERIODIC_SPELLS[4] = {"rupture", "Rupture", "Red", 10.0}
 	IMBA_MUTATION_PERIODIC_SPELLS[5] = {"torrent", "Torrent", "Red", -1}
 	IMBA_MUTATION_PERIODIC_SPELLS[6] = {"cold_feet", "Cold Feet", "Red", 4.0}
+	IMBA_MUTATION_PERIODIC_SPELLS[7] = {"stampede", "Stampede", "Green", 5.0}
 
 	self.restricted_items = {
 		"item_imba_ironleaf_boots",
@@ -49,6 +52,19 @@ function Mutation:Init()
 		"item_book_of_agility",
 		"item_book_of_strength",
 		"item_deployable_shop",
+
+		-- Removed items!
+		"item_imba_triumvirate",
+		"item_imba_sange_azura",
+		"item_imba_azura_yasha",
+		"item_imba_travel_boots",
+		"item_imba_travel_boots_2",
+		"item_imba_cyclone",
+		"item_imba_recipe_cyclone",
+		"item_imba_plancks_artifact",
+		"item_recipe_imba_plancks_artifact",
+		"item_nokrash_blade",
+		"item_recipe_nokrash_blade",
 	}
 
 	self.item_spawn_delay = 10
@@ -63,6 +79,26 @@ function Mutation:Init()
 --	"false_promise",
 --	"bloodrage",
 --	"bloodlust",
+end
+
+function Mutation:Precache(context)
+	-- Death Gold Drop
+--	PrecacheItemByNameSync("item_bag_of_gold", context)
+
+	-- Killstreak Power
+	PrecacheResource("particle", "particles/hw_fx/candy_carrying_stack.vpcf", context)
+
+	-- Periodic Spellcast
+	PrecacheResource("particle", "particles/econ/items/zeus/arcana_chariot/zeus_arcana_thundergods_wrath_start_bolt_parent.vpcf", context)
+
+	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_ancient_apparition.vsndevts", context)
+	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_bloodseeker.vsndevts", context)
+	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_bounty_hunter.vsndevts", context)
+	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_centaur.vsndevts", context)
+	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_kunkka.vsndevts", context)
+	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_pugna.vsndevts", context)
+	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_techies.vsndevts", context)
+	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_zuus.vsndevts", context)
 end
 
 function Mutation:ChooseMutation(type, table, count)
@@ -123,10 +159,10 @@ function Mutation:OnGameRulesStateChange(keys)
 				for _, hero in pairs(HeroList:GetAllHeroes()) do
 					local caster = Entities:FindByName(nil, "dota_badguys_fort")
 
-					if hero:GetTeamNumber() == 3 then
+					if (hero:GetTeamNumber() == 3 and IMBA_MUTATION_PERIODIC_SPELLS[random_int][3] == "Red") or (hero:GetTeamNumber() == 2 and IMBA_MUTATION_PERIODIC_SPELLS[random_int][3] == "Green") then
 						caster = Entities:FindByName(nil, "dota_goodguys_fort")
 					end
-
+					
 					hero:AddNewModifier(caster, caster, "modifier_mutation_"..IMBA_MUTATION_PERIODIC_SPELLS[random_int][1], {duration=IMBA_MUTATION_PERIODIC_SPELLS[random_int][4]})
 				end
 
@@ -178,7 +214,7 @@ function Mutation:OnGameRulesStateChange(keys)
 
 				if mine_count < max_mine_count then
 					for i = 1, 10 do
-						local mine = CreateUnitByName(mines[RandomInt(1, #mines)], Vector(0, 0, 0) + RandomVector(MAP_SIZE), true, nil, nil, DOTA_TEAM_NEUTRALS)
+						local mine = CreateUnitByName(mines[RandomInt(1, #mines)], RandomVector(MAP_SIZE), true, nil, nil, DOTA_TEAM_NEUTRALS)
 						mine:AddNewModifier(mine, nil, "modifier_invulnerable", {})
 					end
 				end
@@ -201,7 +237,8 @@ function Mutation:OnHeroFirstSpawn(hero)
 --	elseif IMBA_MUTATION["positive"] == "jump_start" then
 --		hero:AddExperience(XP_PER_LEVEL_TABLE[6], DOTA_ModifyXP_CreepKill, false, true)
 	elseif IMBA_MUTATION["positive"] == "super_blink" then
-		hero:AddItemByName("item_imba_blink")
+		if hero:IsIllusion() then return end
+		hero:AddItemByName("item_imba_blink"):SetSellable(false)
 	elseif IMBA_MUTATION["positive"] == "pocket_tower" then
 		hero:AddItemByName("item_pocket_tower")
 	end
@@ -302,14 +339,11 @@ end
 
 function Mutation:SpawnRandomItem()
 	local item_name
-	local random_int = RandomInt(1, 224) -- number of items
+	local random_int = RandomInt(1, 226) -- number of items
 	local i = 1
 
 	for k, v in pairs(ITEMS_KV) do
 		if random_int == i then
---			print("Map max bounds:", MAP_SIZE / 2.3)
---			print(random_int, k, v["ItemCost"])
-
 			for _, item in pairs(self.restricted_items) do
 				if k == item then
 					print("Item is forbidden! Re-roll...")
@@ -327,7 +361,7 @@ function Mutation:SpawnRandomItem()
 				return Mutation:SpawnRandomItem()
 			end
 
-			local pos = Vector(0, 0, 0) + RandomVector(MAP_SIZE)
+			local pos = RandomVector(MAP_SIZE_AIRDROP)
 			AddFOWViewer(2, pos, self.item_spawn_radius, self.item_spawn_delay + self.item_spawn_vision_linger, false)
 			AddFOWViewer(3, pos, self.item_spawn_radius, self.item_spawn_delay + self.item_spawn_vision_linger, false)
 			GridNav:DestroyTreesAroundPoint(pos, self.item_spawn_radius, false)
@@ -345,7 +379,6 @@ function Mutation:SpawnRandomItem()
 			Timers:CreateTimer(self.item_spawn_delay, function()
 				local item = CreateItem(k, nil, nil)
 				item.airdrop = true
-				item:SetSellable(true)
 				print("Item Name:", k, pos)
 
 				local drop = CreateItemOnPositionSync(pos, item)

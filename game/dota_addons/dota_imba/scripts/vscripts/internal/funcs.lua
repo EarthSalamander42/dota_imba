@@ -716,62 +716,6 @@ function CDOTA_BaseNPC:GetCooldownReduction()
 	return cooldown_reduction
 end
 
--- Respawn timer modifier
-function CDOTA_BaseNPC:GetRespawnTimeModifier()
-
-	-- If this is not a hero, do nothing
-	local respawn_modifier = 0
-	if not self:IsRealHero() then
-		return respawn_modifier
-	end
-
-	-- Fetch respawn time modifications from modifiers
-	for _, parent_modifier in pairs(self:FindAllModifiers()) do
-		if parent_modifier.RespawnTimeStacking then
-			respawn_modifier = respawn_modifier + parent_modifier:RespawnTimeStacking()
-		end
-	end
-
-	-- Calculate respawn timer reduction due to vanilla talents
-	local respawn_reduction_talents = {}
-	respawn_reduction_talents["special_bonus_respawn_reduction_15"] = 9
-	respawn_reduction_talents["special_bonus_respawn_reduction_20"] = 12
-	respawn_reduction_talents["special_bonus_respawn_reduction_25"] = 15
-	respawn_reduction_talents["special_bonus_respawn_reduction_30"] = 18
-	respawn_reduction_talents["special_bonus_respawn_reduction_35"] = 20
-	respawn_reduction_talents["special_bonus_respawn_reduction_40"] = 25
-	respawn_reduction_talents["special_bonus_respawn_reduction_50"] = 30
-	respawn_reduction_talents["special_bonus_respawn_reduction_60"] = 40
-
-	for talent_name, respawn_reduction_bonus in pairs(respawn_reduction_talents) do
-		if self:FindAbilityByName(talent_name) and self:FindAbilityByName(talent_name):GetLevel() > 0 then
-			respawn_modifier = respawn_modifier - respawn_reduction_bonus
-		end
-	end
-
-	-- Return current respawn time modifier
-	return respawn_modifier
-end
-
-function CDOTA_BaseNPC:GetRespawnTimeModifier_Pct()
-
-	-- If this is not a hero, do nothing
-	local multiplicator_pct = 100
-	if not self:IsRealHero() then
-		return multiplicator_pct
-	end
-
-	-- Fetch respawn time modifications from modifiers
-	for _, parent_modifier in pairs(self:FindAllModifiers()) do
-		if parent_modifier.RespawnTimeStacking_Pct then
-			multiplicator_pct = 100 - (100 - multiplicator_pct) * (100 - parent_modifier:RespawnTimeStacking_Pct()) * 0.01
-		end
-	end
-	
-	-- Return current respawn time modifier
-	return multiplicator_pct
-end
-
 -- Calculate physical damage post reduction
 function CDOTA_BaseNPC:GetPhysicalArmorReduction()
 	local armornpc = self:GetPhysicalArmorValue()
@@ -1798,6 +1742,20 @@ function CDOTA_BaseNPC:IsImbaInvisible()
 	end
 
 	for _, modifier in pairs(IMBA_INVISIBLE_MODIFIERS) do
+		if self:HasModifier(modifier) then
+			return true
+		end
+	end
+
+	return false
+end
+
+function CDOTA_BaseNPC:IsImbaReincarnating()
+	if self:IsReincarnating() then
+		return true
+	end
+
+	for _, modifier in pairs(IMBA_REINCARNATION_MODIFIERS) do
 		if self:HasModifier(modifier) then
 			return true
 		end

@@ -42,9 +42,10 @@ function imba_spectre_haunt:OnSpellStart()
 	local additional_modifiers = { "modifier_imba_spectre_haunt_illusion" } -- extra modifiers that are grante to Spectre illusions (contains min speed/flying movement)
 	local spawn_distance = 58 -- illusion spawn distance from enemy
 
-	if not self.spawned_illusions then
+--	if not self.spawned_illusions then
 		self.spawned_illusions = {}
-	end
+--	end
+
 	self.expire_time = GameRules:GetGameTime() + self:GetSpecialValueFor("duration")
 
 	local caster = self:GetCaster()
@@ -66,18 +67,19 @@ function imba_spectre_haunt:OnSpellStart()
 			end
 			local spawn_pos = Vector(enemy_position.x + spawn_dx, enemy_position.y + spawn_dy, enemy_position.z)
 
-			IllusionManager:CreateIllusion(caster,
-				self,
-				spawn_pos,
-				caster,
-				{
-					additional_modifiers =  additional_modifiers,
-					controllable = 0,
-					force_attack = 1,
-					damagein = ( self:GetSpecialValueFor("illusion_dmg_received") - 100),
-					damageout = ( self:GetSpecialValueFor("illusion_dmg_dealt") - 100 )
-				},
-				enemy)
+--			IllusionManager:CreateIllusion(caster,
+--				self,
+--				spawn_pos,
+--				caster,
+--				{
+--					additional_modifiers =  additional_modifiers,
+--					controllable = 0,
+--					force_attack = 1,
+--					damagein = ( self:GetSpecialValueFor("illusion_dmg_received") - 100),
+--					damageout = ( self:GetSpecialValueFor("illusion_dmg_dealt") - 100 )
+--				},
+--				enemy)
+			CreateImbaIllusion(caster, spawn_pos, self, self:GetSpecialValueFor("duration"), self:GetSpecialValueFor("illusion_dmg_received") - 100, self:GetSpecialValueFor("illusion_dmg_dealt") - 100, additional_modifiers)
 
 			EmitSoundOn(haunt_sound_enemy, enemy)
 		end
@@ -208,7 +210,6 @@ function imba_spectre_reality:OnSpellStart()
 	local reality_sound = "Hero_Spectre.Reality"
 
 	local caster = self:GetCaster()
-
 	local haunt_ability = caster:FindAbilityByName("imba_spectre_haunt")
 	-- if we don't have the haunt ability (somehow), or the ability isn't currently active, don't do anything
 	if not haunt_ability or not haunt_ability.expire_time or haunt_ability.expire_time < GameRules:GetGameTime() then
@@ -218,23 +219,25 @@ function imba_spectre_reality:OnSpellStart()
 
 	-- if haunt has spawned illusions, we loop through them to find active ones and check their distance to us
 	-- to find the closest one
+	print(haunt_ability.spawned_illusions)
 	if haunt_ability.spawned_illusions then
 		local cursor_pos = self:GetCursorPosition()
 		local closest_illusion
 		local illusion_count = 0
 		for entindex, illusion in pairs(haunt_ability.spawned_illusions) do
 			illusion_count = illusion_count + 1
-			if illusion.active == 1 then
+--			if illusion.active == 1 then
 				local distance = (cursor_pos - illusion:GetAbsOrigin()):Length2D()
 				if ( not closest_illusion ) or ( distance < (cursor_pos - closest_illusion:GetAbsOrigin()):Length2D() ) then
 					closest_illusion = illusion
 				end
-			end
+--			end
 		end
 
-		--print("Illusion Count: ", illusion_count)
+		print("Illusion Count: ", illusion_count)
 
 		-- If we found a closest illusion, swap our positions
+		print(closest_illusion)
 		if closest_illusion then
 			-- You're about to get shanked!
 			local temp_pos = closest_illusion:GetAbsOrigin()
@@ -245,6 +248,6 @@ function imba_spectre_reality:OnSpellStart()
 			caster:MoveToTargetToAttack(closest_illusion:GetForceAttackTarget())
 		end
 	else
-	--print("Haunt ability illusion table not found")
+		print("Haunt ability illusion table not found")
 	end
 end
