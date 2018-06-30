@@ -18,6 +18,7 @@ function Mutation:Init()
 	LinkLuaModifier("modifier_mutation_stampede", "components/mutation/modifiers/periodic_spellcast/modifier_mutation_stampede.lua", LUA_MODIFIER_MOTION_NONE )
 
 	LinkLuaModifier("modifier_mutation_sun_strike", "components/mutation/modifiers/periodic_spellcast/modifier_mutation_sun_strike.lua", LUA_MODIFIER_MOTION_NONE )
+	LinkLuaModifier("modifier_mutation_call_down", "components/mutation/modifiers/modifier_mutation_call_down.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_mutation_thundergods_wrath", "components/mutation/modifiers/periodic_spellcast/modifier_mutation_thundergods_wrath.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_mutation_track", "components/mutation/modifiers/periodic_spellcast/modifier_mutation_track.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_mutation_rupture", "components/mutation/modifiers/periodic_spellcast/modifier_mutation_rupture.lua", LUA_MODIFIER_MOTION_NONE )
@@ -114,9 +115,9 @@ function Mutation:ChooseMutation(type, table, count)
 			table[mutation] = true
 
 			if IsInToolsMode() then
---				IMBA_MUTATION["positive"] = "super_blink"
-				IMBA_MUTATION["negative"] = "periodic_spellcast"
---				IMBA_MUTATION["terrain"] = "gift_exchange"
+				IMBA_MUTATION["positive"] = "super_blink"
+				IMBA_MUTATION["negative"] = "death_explosion"
+				IMBA_MUTATION["terrain"] = "call_down"
 			end
 
 			return
@@ -177,6 +178,14 @@ function Mutation:OnGameRulesStateChange(keys)
 			end)
 		end
 
+
+		if IMBA_MUTATION["terrain"] == "call_down" then
+
+				local dummy_unit = CreateUnitByName("npc_dummy_unit", Vector(0, 0, 0), true, nil, nil, DOTA_TEAM_NEUTRALS)
+				dummy_unit:AddNewModifier(mine, nil, "modifier_mutation_call_down", {})
+
+		end
+		--[[
 		if IMBA_MUTATION["terrain"] == "minefield" then
 			local mines = {
 				"npc_imba_techies_proximity_mine",
@@ -214,6 +223,7 @@ function Mutation:OnGameRulesStateChange(keys)
 				return 10.0
 			end)
 		end
+		]]
 	end
 end
 

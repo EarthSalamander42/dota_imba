@@ -53,7 +53,8 @@ NEGATIVE_MUTATION_LIST["defense_of_the_ants"] = false
 TERRAIN_MUTATION_LIST = {}
 TERRAIN_MUTATION_LIST["sleepy_river"] = false
 TERRAIN_MUTATION_LIST["fast_runes"] = false
-TERRAIN_MUTATION_LIST["minefield"] = false
+TERRAIN_MUTATION_LIST["call_down"] = false
+--TERRAIN_MUTATION_LIST["minefield"] = false
 TERRAIN_MUTATION_LIST["gift_exchange"] = false
 
 -- Disabled

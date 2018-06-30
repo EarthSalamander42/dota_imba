@@ -49,3 +49,7 @@
 
 "DOTA_Tooltip_modifier_frantic"									"Frantic"
 "DOTA_Tooltip_modifier_frantic_Description"						"50% Cooldown Reduction, Respawn Time and Status Resistance, 100% Mana Regen."
+
+"DOTA_Tooltip_modifier_mutation_call_down"						"Call Down"
+"DOTA_Tooltip_modifier_mutation_call_down_Description"			"Rockers Periodicly falls down from the sky!"
+
