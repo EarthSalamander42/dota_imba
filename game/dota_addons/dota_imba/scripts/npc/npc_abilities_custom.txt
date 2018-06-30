@@ -8151,11 +8151,11 @@
 			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_enigma.vsndevts"
 			"particle"						"particles/units/heroes/hero_enigma/enigma_blackhole_target.vpcf"
 			"particle"						"particles/econ/items/enigma/enigma_world_chasm/enigma_blackhole_target_ti5.vpcf"
-			"particle"						"particles/econ/items/enigma/enigma_world_chasm/enigma_blackhole_ti5.vpcf"
 			"particle"						"particles/econ/items/enigma/enigma_world_chasm/status_effect_enigma_blackhole_tgt_ti5.vpcf"
-			"particle"						"particles/units/heroes/hero_enigma/enigma_blackhole.vpcf"
 			"particle"						"particles/status_fx/status_effect_enigma_blackhole_tgt.vpcf"
 			"particle"						"particles/hero/enigma/screen_blackhole_indicator.vpcf"
+			"particle"						"particles/hero/enigma/enigma_blackhole_scaleable.vpcf"
+			"particle"						"particles/hero/enigma/enigma_blackhole_ti5_scaleable.vpcf"
 		}
 
 		// Casting
