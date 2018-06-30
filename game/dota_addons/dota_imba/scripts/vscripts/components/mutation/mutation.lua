@@ -15,7 +15,6 @@ function Mutation:Init()
 	LinkLuaModifier("modifier_mutation_shadow_dance", "components/mutation/modifiers/modifier_mutation_shadow_dance.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_mutation_ants", "components/mutation/modifiers/modifier_mutation_ants.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_disable_healing", "components/mutation/modifiers/modifier_disable_healing.lua", LUA_MODIFIER_MOTION_NONE )
-	LinkLuaModifier("modifier_mutation_stampede", "components/mutation/modifiers/periodic_spellcast/modifier_mutation_stampede.lua", LUA_MODIFIER_MOTION_NONE )
 
 	LinkLuaModifier("modifier_mutation_sun_strike", "components/mutation/modifiers/periodic_spellcast/modifier_mutation_sun_strike.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_mutation_call_down", "components/mutation/modifiers/modifier_mutation_call_down.lua", LUA_MODIFIER_MOTION_NONE )
@@ -24,6 +23,8 @@ function Mutation:Init()
 	LinkLuaModifier("modifier_mutation_rupture", "components/mutation/modifiers/periodic_spellcast/modifier_mutation_rupture.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_mutation_torrent", "components/mutation/modifiers/periodic_spellcast/modifier_mutation_torrent.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_mutation_cold_feet", "components/mutation/modifiers/periodic_spellcast/modifier_mutation_cold_feet.lua", LUA_MODIFIER_MOTION_NONE )
+	LinkLuaModifier("modifier_mutation_stampede", "components/mutation/modifiers/periodic_spellcast/modifier_mutation_stampede.lua", LUA_MODIFIER_MOTION_NONE )
+	LinkLuaModifier("modifier_mutation_bloodlust", "components/mutation/modifiers/periodic_spellcast/modifier_mutation_bloodlust.lua", LUA_MODIFIER_MOTION_NONE )
 
 	LinkLuaModifier("modifier_river_flows", "modifier/mutation/modifier_river_flows.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_sticky_river", "modifier/mutation/modifier_sticky_river.lua", LUA_MODIFIER_MOTION_NONE )
@@ -40,6 +41,7 @@ function Mutation:Init()
 	IMBA_MUTATION_PERIODIC_SPELLS[5] = {"torrent", "Torrent", "Red", -1}
 	IMBA_MUTATION_PERIODIC_SPELLS[6] = {"cold_feet", "Cold Feet", "Red", 4.0}
 	IMBA_MUTATION_PERIODIC_SPELLS[7] = {"stampede", "Stampede", "Green", 5.0}
+	IMBA_MUTATION_PERIODIC_SPELLS[8] = {"bloodlust", "Bloodlust", "Green", 30.0}
 
 	self.restricted_items = {
 		"item_imba_ironleaf_boots",
@@ -96,6 +98,7 @@ function Mutation:Precache(context)
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_bounty_hunter.vsndevts", context)
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_centaur.vsndevts", context)
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_kunkka.vsndevts", context)
+	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_ogre_magi.vsndevts", context)
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_pugna.vsndevts", context)
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_techies.vsndevts", context)
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_zuus.vsndevts", context)
@@ -155,7 +158,7 @@ function Mutation:OnGameRulesStateChange(keys)
 				return 60.0
 			end)
 
-			Timers:CreateTimer(function()
+			Timers:CreateTimer(60.0, function()
 				for _, hero in pairs(HeroList:GetAllHeroes()) do
 					local caster = Entities:FindByName(nil, "dota_badguys_fort")
 

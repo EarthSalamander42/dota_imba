@@ -44,6 +44,9 @@
 "DOTA_Tooltip_modifier_mutation_stampede_slow"					"Stampede"
 "DOTA_Tooltip_modifier_mutation_stampede_slow_Description"		"Trampled, slowed movement speed."
 
+"DOTA_Tooltip_modifier_mutation_bloodlust"						"Bloodlust"
+"DOTA_Tooltip_modifier_mutation_bloodlust_Description"			"Increased movement speed, attack speed, and cast speed."
+
 "DOTA_Tooltip_modifier_mutation_shadow_dance_buff"				"Shadow Dance"
 "DOTA_Tooltip_modifier_mutation_shadow_dance_buff_Description"	"Regenerate health and mana slightly faster when not in vision of the enemy."
 
