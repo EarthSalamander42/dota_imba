@@ -97,6 +97,7 @@ function Mutation:Precache(context)
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_bloodseeker.vsndevts", context)
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_bounty_hunter.vsndevts", context)
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_centaur.vsndevts", context)
+	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_gyrocopter.vsndevts", context)
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_kunkka.vsndevts", context)
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_ogre_magi.vsndevts", context)
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_pugna.vsndevts", context)
@@ -118,8 +119,8 @@ function Mutation:ChooseMutation(type, table, count)
 			table[mutation] = true
 
 			if IsInToolsMode() then
-				IMBA_MUTATION["positive"] = "super_blink"
-				IMBA_MUTATION["negative"] = "death_explosion"
+--				IMBA_MUTATION["positive"] = "super_blink"
+				IMBA_MUTATION["negative"] = "periodic_spellcast"
 				IMBA_MUTATION["terrain"] = "call_down"
 			end
 
@@ -181,13 +182,11 @@ function Mutation:OnGameRulesStateChange(keys)
 			end)
 		end
 
-
 		if IMBA_MUTATION["terrain"] == "call_down" then
-
-				local dummy_unit = CreateUnitByName("npc_dummy_unit", Vector(0, 0, 0), true, nil, nil, DOTA_TEAM_NEUTRALS)
-				dummy_unit:AddNewModifier(mine, nil, "modifier_mutation_call_down", {})
-
+			local dummy_unit = CreateUnitByName("npc_dummy_unit_perma", Vector(0, 0, 0), true, nil, nil, DOTA_TEAM_NEUTRALS)
+			dummy_unit:AddNewModifier(dummy_unit, nil, "modifier_mutation_call_down", {})
 		end
+
 		--[[
 		if IMBA_MUTATION["terrain"] == "minefield" then
 			local mines = {

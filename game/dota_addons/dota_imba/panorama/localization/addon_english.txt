@@ -33,8 +33,10 @@
 
 	//Combat Events
 	"custom_toast_PlayerDenied"								"{killer_name} {denied_icon} Denied {victim_name}"
-	"custom_toast_CourierKilled"							"{courier_icon} {victim_name} courier is dead"
-	"custom_toast_CourierRespawned"							"{courier_icon} {victim_name} courier has respawned"
+//	"custom_toast_CourierKilled"							"{courier_icon} {victim_name} courier is dead" // 1 courier per player
+	"custom_toast_CourierKilled"							"{courier_icon} {team_name} courier is dead" // Team couriers
+	"custom_toast_CourierRespawned"							"{courier_icon} {team_name} courier has respawned" // Team couriers
+//	"custom_toast_CourierRespawned"							"{courier_icon} {victim_name} courier has respawned" // 1 courier per player
 	"custom_toast_GlyphUsed"								"{glyph_icon} {team_name} structures fortified"
 	"custom_toast_TeamKilled"								"{team_name} {killed_icon} {victim_name}"
 	"custom_toast_KillStreak"								"{player_name} is {kill_streak}"
@@ -419,4 +421,7 @@
 
 	"mutation_minefield"						"Minefield"
 	"mutation_minefield_Description"			"All kinds of mines spawn randomly across the entire map."
+
+	"mutation_call_down"						"Call Down"
+	"mutation_call_down_Description"			"Nuclear missiles launched across the entire map every 10 seconds."
 }
