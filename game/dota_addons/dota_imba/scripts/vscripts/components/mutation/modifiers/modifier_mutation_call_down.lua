@@ -52,7 +52,9 @@ function modifier_mutation_call_down:OnIntervalThink()
 		self.parent.pos_list = {}
 
 		for i = 0, self.num_call_downs do 
-			local pos = RandomVector(self.MAP_SIZE)
+			local x = math.random(-7500, 7500)
+            local y = math.random(-7500, 7500)
+            local pos = GetGroundPosition(Vector(x, y, 0), nil)
 			--DebugDrawCircle(pos, Vector( 0, 255, 0 ), 255, 50, false, 0.1 )
 			local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_gyrocopter/gyro_calldown_marker.vpcf", PATTACH_WORLDORIGIN, self.parent)
 			ParticleManager:SetParticleControl(particle, 0, pos)
