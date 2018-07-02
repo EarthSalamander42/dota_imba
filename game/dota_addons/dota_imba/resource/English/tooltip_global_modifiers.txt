@@ -47,8 +47,8 @@
 "DOTA_Tooltip_modifier_mutation_bloodlust"						"Bloodlust"
 "DOTA_Tooltip_modifier_mutation_bloodlust_Description"			"Increased movement speed, attack speed, and cast speed."
 
-"DOTA_Tooltip_modifier_mutation_bloodlust"						"Aphotic Shield"
-"DOTA_Tooltip_modifier_mutation_bloodlust_Description"			"Incoming damage blocked by Aphotic Shield's protection. Shield health and damage scale with game time."
+"DOTA_Tooltip_modifier_mutation_aphotic_shield"					"Aphotic Shield"
+"DOTA_Tooltip_modifier_mutation_aphotic_shield_Description"		"Incoming damage blocked by Aphotic Shield's protection. Shield health and damage scale with game time."
 
 "DOTA_Tooltip_modifier_mutation_shadow_dance_buff"				"Shadow Dance"
 "DOTA_Tooltip_modifier_mutation_shadow_dance_buff_Description"	"Regenerate health and mana slightly faster when not in vision of the enemy."
