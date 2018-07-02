@@ -1,6 +1,6 @@
 // Abaddon's Mist Coil
 "DOTA_Tooltip_ability_imba_abaddon_mist_coil"                          "Mist Coil"
-"DOTA_Tooltip_ability_imba_abaddon_mist_coil_Description"              "Abaddon releases a coil of deathly mist that can damage an enemy unit or heal a friendly unit at the cost of some of Abaddon's health. On death, Mist Coil is cast on all allies and enemies in cast range.\\n<font color='#FF7800'>Cursed Coil:</font> Applies Curse of Avernus on enemy target.\\n<font color='#FF7800'>Volatile Mist:</font> Enemies receive a debuff that causes additional magic damage on each damage instance above %damage_threshold% (before reductions).\\n<font color='#FF7800'>Shrouding Mist:</font> Allies receive a buff that heals the target for a portion of the damage received after the buff expires.\\n<font color='#FF7800'>Shield Renewal:</font> If the affected unit has Aphotic Shield, renew the shield and extend duration by %shield_duration_extend% seconds."
+"DOTA_Tooltip_ability_imba_abaddon_mist_coil_Description"              "Abaddon releases a coil of deathly mist that can damage an enemy unit or heal a friendly unit at the cost of some of Abaddon's health. On death, Mist Coil is cast on all allies and enemies in cast range.\n<font color='#FF7800'>Cursed Coil:</font> Applies Curse of Avernus on enemy target.\n<font color='#FF7800'>Volatile Mist:</font> Enemies receive a debuff that causes additional magic damage on each damage instance above %damage_threshold% (before reductions).\n<font color='#FF7800'>Shrouding Mist:</font> Allies receive a buff that heals the target for a portion of the damage received after the buff expires.\n<font color='#FF7800'>Shield Renewal:</font> If the affected unit has Aphotic Shield, renew the shield and extend duration by %shield_duration_extend% seconds."
 "DOTA_Tooltip_ability_imba_abaddon_mist_coil_Note0"                    "Self-castable."
 "DOTA_Tooltip_ability_imba_abaddon_mist_coil_Lore"                      "A mysterious vapor from the Curse of Avernus now infuses the breath of Abaddon, who releases it at will."
 "DOTA_Tooltip_ability_imba_abaddon_mist_coil_heal"                      "TARGET DAMAGE/HEAL:"
@@ -18,7 +18,7 @@
 
 // Abaddon's Aphotic Shield
 "DOTA_Tooltip_ability_imba_abaddon_aphotic_shield"                      "Aphotic Shield"
-"DOTA_Tooltip_ability_imba_abaddon_aphotic_shield_Description"          "Creates a shield around an allied unit that absorbs a set amount of damage (<font color='#FF7800'>blocks damage after reductions.</font>) before expiring. When destroyed, the shield will burst, dealing damage equal to the amount it could absorb to an area around it, <font color='#FF7800'>in addition to applying a basic dispel to all allies and enemies in the burst area.</font> Removes most debuffs and disables on cast.\\n<font color='#FF7800'>Cursed Shield:</font> Applies Curse of Avernus on enemies hit by the explosion."
+"DOTA_Tooltip_ability_imba_abaddon_aphotic_shield_Description"          "Creates a shield around an allied unit that absorbs a set amount of damage (<font color='#FF7800'>blocks damage after reductions.</font>) before expiring. When destroyed, the shield will burst, dealing damage equal to the amount it could absorb to an area around it, <font color='#FF7800'>in addition to applying a basic dispel to all allies and enemies in the burst area.</font> Removes most debuffs and disables on cast.\n<font color='#FF7800'>Cursed Shield:</font> Applies Curse of Avernus on enemies hit by the explosion."
 "DOTA_Tooltip_ability_imba_abaddon_aphotic_shield_Note0"                "Self-castable, can be casted on buildings."
 "DOTA_Tooltip_ability_imba_abaddon_aphotic_shield_Lore"                "The powers of the black mist rise to absorb attacks like the black mist absorbs light."
 "DOTA_Tooltip_ability_imba_abaddon_aphotic_shield_duration"            "DURATION:"
@@ -30,7 +30,7 @@
 
 // Abaddon's Curse of Avernus
 "DOTA_Tooltip_ability_imba_abaddon_curse_of_avernus"                    "Curse of Avernus"
-"DOTA_Tooltip_ability_imba_abaddon_curse_of_avernus_Description"                    "Abaddon strikes enemies with a chilling curse on every attack, causing all units who attack the slowed enemy to gain increased movement and attack speed.\\n<font color='#FF7800'>Health Hex:</font> Damaging enemies with this debuff will heal a %% of the damage to abaddon."
+"DOTA_Tooltip_ability_imba_abaddon_curse_of_avernus_Description"                    "Abaddon strikes enemies with a chilling curse on every attack, causing all units who attack the slowed enemy to gain increased movement and attack speed.\n<font color='#FF7800'>Health Hex:</font> Damaging enemies with this debuff will heal a %% of the damage to abaddon."
 "DOTA_Tooltip_ability_imba_abaddon_mist_coil_Note0"                    "Illusions do not apply this debuff."
 "DOTA_Tooltip_ability_imba_abaddon_curse_of_avernus_Lore"              "The curse that slows an enemy, speeds an ally."
 "DOTA_Tooltip_ability_imba_abaddon_curse_of_avernus_buff_duration"                  "BUFF DURATION:"
@@ -65,7 +65,7 @@
 
 // Abaddon's Borrowed Time
 "DOTA_Tooltip_ability_imba_abaddon_borrowed_time"                      "Borrowed Time"
-"DOTA_Tooltip_ability_imba_abaddon_borrowed_time_Description"          "When activated, all damage dealt to you will heal instead of harm. Most negative buffs will also be removed. If not on cooldown, Borrowed Time will activate whenever your hitpoints drop below %hp_threshold%.\\n<font color='#FF7800'>Borrowed Pain:</font> A %% of the damage taken by Abaddon's nearby allies will be redirected to him when Borrowed Time is active.</font>\\n\\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
+"DOTA_Tooltip_ability_imba_abaddon_borrowed_time_Description"          "When activated, all damage dealt to you will heal instead of harm. Most negative buffs will also be removed. If not on cooldown, Borrowed Time will activate whenever your hitpoints drop below %hp_threshold%.\n<font color='#FF7800'>Borrowed Pain:</font> A %% of the damage taken by Abaddon's nearby allies will be redirected to him when Borrowed Time is active.</font>\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
 "DOTA_Tooltip_ability_imba_abaddon_borrowed_time_aghanim_description"               "Curse of Avernus's healing will heal all allies in Borrowed Pain radius."
 "DOTA_Tooltip_ability_imba_abaddon_borrowed_time_Note0"                "Damage redirected from allies will heal Abaddon normally."
 "DOTA_Tooltip_ability_imba_abaddon_borrowed_time_Note1"                "Borrowed Time will activate if the incoming damage is more than abaddon's current health"
