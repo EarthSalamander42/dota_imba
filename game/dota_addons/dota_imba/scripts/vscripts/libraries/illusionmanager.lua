@@ -1,17 +1,17 @@
 --[[
-Usage:
+	Usage:
 Usage of this lib is 99% going to involve calls to just CreateIllusion, which handles all stuff under the hood.  There may be some special things you need to do involving illus 
 on other heroes, and for that there is a callback func built into CreateIllusion
 
-IllusionManager:CreateIllusion(OwningEntity,Ability(can be nil),SpawnVector,IllusionBase,{uniquekeys=here,CanBeNil})
-IllusionManager:CreateIllusion(handle,handle,vector,handle,{table})
+IllusionManager:CreateIllusion(OwningEntity,	Ability(can be nil),	SpawnVector,	IllusionBase,	{uniquekeys=here,CanBeNil})
+IllusionManager:CreateIllusion(handle,			handle,					vector,			handle,			{table})
 
 Accepted Special Keys
-duration							 = override duration	  provided by Ability, or use this if Ability is nil
-damagein							 = override DamageIn  % provided by Ability, or use this if Ability is nil
-damageout							 = override DamageOut % provided by Ability, or use this if Ability is nil
-modifier_illusion_name = use a special built in 'modifier_illusion', like juxtapose (which doesn't work anyway so don't do it)
-unique								 = assign a unique index to this illusions baseclass, allowing only one of each type to exist in the world
+duration							= override duration	  provided by Ability, or use this if Ability is nil
+damagein							= override DamageIn  % provided by Ability, or use this if Ability is nil
+damageout							= override DamageOut % provided by Ability, or use this if Ability is nil
+modifier_illusion_name				= use a special built in 'modifier_illusion', like juxtapose (which doesn't work anyway so don't do it)
+unique								= assign a unique index to this illusions baseclass, allowing only one of each type to exist in the world
 NOTE: in regards to the 'unique' specialkey, it's attached to the already existing baseclass! that means if you call two different base types and attempt to use unique, you can have multiple uniques!! this completely defeats the purpose of this key
 
 Example:
@@ -38,51 +38,52 @@ After being created, it will look at a function named 'mantacallback' and then r
 ]]--
 IllusionManager = IllusionManager or class({})
 
-LinkLuaModifier("modifier_illusion_manager"					 		 , "libraries/illusionmanager", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_illusion_manager_out_of_world" , "libraries/illusionmanager", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_illusion_manager"				, "libraries/illusionmanager", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_illusion_manager_out_of_world", "libraries/illusionmanager", LUA_MODIFIER_MOTION_NONE)
 
 modifier_illusion_manager = class({
-	DeclareFunctions                 				= function(self) return modifier_illusion_manager.funcs  end,       
-	IsDebuff                         				= function(self) return false                  				 	 end,    
-	IsPurgable                       				= function(self) return false                 					 end,  
-	IsHidden										= function(self) return true														 end,
-	IsPermanent 									= function(self) return true 									end,
-	GetModifierDamageOutgoing_Percentage 			= function(self) return self.damageout 									 end,
-	GetModifierIncomingDamage_Percentage			= function(self) return self.damagein										 end,
-	GetMinHealth									= function(self) return 1 end,	
+	DeclareFunctions						= function(self) return modifier_illusion_manager.funcs  end,       
+	IsDebuff								= function(self) return false end,    
+	IsPurgable								= function(self) return false end,  
+	IsHidden								= function(self) return true end,
+	IsPermanent								= function(self) return true end,
+	GetModifierDamageOutgoing_Percentage	= function(self) return self.damageout end,
+	GetModifierIncomingDamage_Percentage	= function(self) return self.damagein end,
+	GetMinHealth							= function(self) return 1 end,	
 },
 {
-	funcs = {MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE,
-		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
-		MODIFIER_EVENT_ON_TAKEDAMAGE,
-		MODIFIER_PROPERTY_MIN_HEALTH
+	funcs = {	MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE,
+				MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
+				MODIFIER_EVENT_ON_TAKEDAMAGE,
+				MODIFIER_PROPERTY_MIN_HEALTH
 	},
 	states = {}
 })		
 
 modifier_illusion_manager_out_of_world	= class({
-	DeclareFunctions                 = function(self) return modifier_illusion_manager_out_of_world.funcs end,       
-	CheckState						 = function(self) return self.states   											 					end,
-	IsDebuff                         = function(self) return false                               					end,    
-	IsPurgable                       = function(self) return false                               					end,    
-	IsHidden						 = function(self) return true																 					end,
-	IsPermanent 					= function(self) return true 									end,	
-	GetBonusDayVision 				= function(self) return -10000 end,
-	GetBonusNightVision				= function(self) return -10000 end,
-	GetMinHealth					= function(self) return 1 end,			
-	},
-	{
-	funcs = {MODIFIER_PROPERTY_BONUS_DAY_VISION,
-			MODIFIER_PROPERTY_BONUS_NIGHT_VISION,
-			MODIFIER_PROPERTY_MIN_HEALTH},
-	states = {[MODIFIER_STATE_OUT_OF_GAME]=true,
-		[MODIFIER_STATE_INVULNERABLE]=true,
-		[MODIFIER_STATE_NO_HEALTH_BAR]=true,
-		[MODIFIER_STATE_STUNNED]=true,
-		[MODIFIER_STATE_UNSELECTABLE]=true,
-		[MODIFIER_STATE_NO_UNIT_COLLISION]=true,
-		[MODIFIER_STATE_PASSIVES_DISABLED]=true,
-		[MODIFIER_STATE_MUTED]=true,
+	DeclareFunctions		= function(self) return modifier_illusion_manager_out_of_world.funcs end,       
+	CheckState				= function(self) return self.states end,
+	IsDebuff				= function(self) return false end,    
+	IsPurgable				= function(self) return false end,    
+	IsHidden				= function(self) return true end,
+	IsPermanent				= function(self) return true end,	
+	GetBonusDayVision		= function(self) return -10000 end,
+	GetBonusNightVisionc	= function(self) return -10000 end,
+	GetMinHealth			= function(self) return 1 end,			
+},
+{
+	funcs = {	MODIFIER_PROPERTY_BONUS_DAY_VISION,
+				MODIFIER_PROPERTY_BONUS_NIGHT_VISION,
+				MODIFIER_PROPERTY_MIN_HEALTH },
+	
+	states = {	[MODIFIER_STATE_OUT_OF_GAME]=true,
+				[MODIFIER_STATE_INVULNERABLE]=true,
+				[MODIFIER_STATE_NO_HEALTH_BAR]=true,
+				[MODIFIER_STATE_STUNNED]=true,
+				[MODIFIER_STATE_UNSELECTABLE]=true,
+				[MODIFIER_STATE_NO_UNIT_COLLISION]=true,
+				[MODIFIER_STATE_PASSIVES_DISABLED]=true,
+				[MODIFIER_STATE_MUTED]=true,
 	}		
 })
 
@@ -151,16 +152,18 @@ function modifier_illusion_manager_out_of_world:OnDestroy()
 	self:GetParent():RemoveNoDraw()																																   -- place our little guy back into the world
 end
 
-function IllusionManager:CreateIllusion(tEntity,tSkill,vSpawnLocation,tIllusionBase,tSpecialKeys,hAttackTarget)
+--CreateUnitByName
+
+function IllusionManager:CreateIllusion(tEntity, tSkill, vSpawnLocation, tIllusionBase, tSpecialKeys, hAttackTarget)
 	if not IsServer() then return end
 	if not tIllusionBase then log.warn('No unit specified!'); return end
 	local illusion_name = tIllusionBase:GetUnitName()
-	if not tEntity.illusions then tEntity.illusions = {} end 		 																		 -- create a table that will hold all of our named illusions by key on the original caster
-	for k,v in ipairs(tEntity.illusions) do 										 																		 -- iterate through requested illus with the required commands
-		if v.illusionname == illusion_name and not v:IsNull() then 																		 -- illusion is inactive, usable and not deleted by engine
-			if tSpecialKeys.unique then															 																		 -- our illusion is 'unique', meaning only one of this kind can exist
-				if tSpecialKeys.unique == v.unique then																										 -- if our found illusion matches the key..
-					IllusionManager:KillIllusion(v)																													 -- poof him !
+	if not tEntity.illusions then tEntity.illusions = {} end		-- create a table that will hold all of our named illusions by key on the original caster
+	for k,v in ipairs(tEntity.illusions) do							-- iterate through requested illus with the required commands
+		if v.illusionname == illusion_name and not v:IsNull() then	-- illusion is inactive, usable and not deleted by engine
+			if tSpecialKeys.unique then								-- our illusion is 'unique', meaning only one of this kind can exist
+				if tSpecialKeys.unique == v.unique then				-- if our found illusion matches the key..
+					IllusionManager:KillIllusion(v)					-- poof him !
 					IllusionManager:MoveExistingIllusion(tEntity,tIllusionBase,tSkill,vSpawnLocation,v,tSpecialKeys,hAttackTarget) -- create him where requested
 					return																																									 -- return execution to wherever this was requested from
 				end
@@ -172,8 +175,30 @@ function IllusionManager:CreateIllusion(tEntity,tSkill,vSpawnLocation,tIllusionB
 				IllusionManager:MoveExistingIllusion(tEntity,tIllusionBase,tSkill,vSpawnLocation,v,tSpecialKeys,hAttackTarget)	 -- provided we have a created entity, move him and do expected routines
 				return
 			end
+			
+			-- Add the dev/donator title
+			if not IsInToolsMode() and tIllusionBase:IsPlayer()then
+				local steam_id = tostring(PlayerResource:GetSteamID(tIllusionBase:GetPlayerID()))
+				if steam_id ~= "0" and api.imba.is_donator(steam_id) ~= false then
+					tIllusionBase:SetCustomHealthLabel("#imba_donator_label_"..api.imba.is_donator(steam_id), DONATOR_COLOR[api.imba.is_donator(steam_id)][1], DONATOR_COLOR[api.imba.is_donator(steam_id)][2], DONATOR_COLOR[api.imba.is_donator(steam_id)][3])
+					
+					-- Timers:CreateTimer(0.3, function()	-- needs a timer else GetSelectedHeroEntity is nil
+						-- if api.imba.get_player_info(steam_id) then
+							-- DonatorStatue(tIllusionBase:GetPlayerID(), api.imba.get_player_info(steam_id).ingame_statue_file)
+						-- end
+					-- end)
+					
+					-- if tIllusionBase:GetUnitName() ~= FORCE_PICKED_HERO then
+						-- Timers:CreateTimer(1.5, function()
+							-- local steam_id = tostring(PlayerResource:GetSteamID(tIllusionBase:GetPlayerID()))
+							-- DonatorCompanion(tIllusionBase:GetPlayerID(), api.imba.get_player_info(steam_id).companion_file)
+						-- end)
+					-- end
+				end
+			end
 		end
 	end
+	
 	local illucallback = function(tIllusion) 																	 -- xxxxxxxxxxxxxxxxxxxxxxxxxx
 		IllusionManager:IllusionCallback(tEntity,tIllusion,tSkill,tSpecialKeys,tIllusionBase,hAttackTarget)  -- callback for async request
 		if tSpecialKeys.callback then																						 --
@@ -182,12 +207,16 @@ function IllusionManager:CreateIllusion(tEntity,tSkill,vSpawnLocation,tIllusionB
 			else
 				tSpecialKeys:callback(tIllusion)																			 -- (callbackception)
 			end
-		end																																		 -- 
+		end
+		
 		return tIllusion -- this will returns execution with a 'completed' unit, should be ready to receive commands now
 	end																																				 -- xxxxxxxxxxxxxxxxxxxxxxxxxx
 
-	local illusion = CreateUnitByNameAsync(illusion_name, vSpawnLocation, true, tEntity, nil, tEntity:GetTeamNumber(),illucallback) -- Use an async operation to allow the game to perform other ops while we're waiting for this
---	local illusion = CreateUnitByName(illusion_name, vSpawnLocation, true, tEntity, nil, tEntity:GetTeamNumber())
+	local illusion = CreateUnitByNameAsync( illusion_name, vSpawnLocation, true, 			tEntity,   tEntity,	   tEntity:GetTeamNumber(), illucallback) -- Use an async operation to allow the game to perform other ops while we're waiting for this
+	--									  ( szUnitName,    vLocation, 	   bFindClearSpace, hNPCOwner, hUnitOwner, iTeamNumber,				hCallback )
+	-- EntIndexToHScript(illusion)
+	-- print(illusion)
+--	local illusion = CreateUnitByName(illusion_name, vSpawnLocation, true, tEntity, tEntity, tEntity:GetTeamNumber())
 	-- TODO: Seems obvious, no?
 --	for int, unit in pairs(HeroSelection.heroes_custom) do
 --		if unit == illusion_name then
@@ -327,7 +356,7 @@ function IllusionManager:SetModifiers(tEntity,tIllusionBase,tIllusion,tSkill,tSp
 	else
 		tIllusion:SetControllableByPlayer(tEntity:GetPlayerID(),true)
 	end
-	tIllusion:SetOwner(tEntity)
+	
 	IllusionManager:ResetIllusion(tIllusionBase,tIllusion)
 	if tSpecialKeys.modifier_illusion_name then
 		-- do we have a 'special' modifier request for illus?
@@ -366,12 +395,12 @@ function IllusionManager:RemoveIllusion(tEntity,sName)  -- DELETE entity from th
 end
 
 function IllusionManager:IllusionCallback(tEntity,tIllusion,tSkill,tSpecialKeys,tIllusionBase,hAttackTarget) -- Only called when a new entity needs to be produced
-	if not IsServer() then return end	
+	if not IsServer() then return end
 	if not tIllusion:IsCreep() then
 		tIllusion:SetPlayerID(tEntity:GetPlayerID())
 	end
 	tIllusion:SetControllableByPlayer(tEntity:GetPlayerID(),true)
-	tIllusion:SetOwner(tEntity)	
+	
 	IllusionManager:ResetIllusion(tIllusionBase,tIllusion)
 	if hAttackTarget and ( not hAttackTarget:IsNull() ) and hAttackTarget:IsAlive() then
 		if tSpecialKeys.force_attack and tSpecialKeys.force_attack == 1 then
