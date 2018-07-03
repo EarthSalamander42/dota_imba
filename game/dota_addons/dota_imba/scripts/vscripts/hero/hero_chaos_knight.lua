@@ -283,8 +283,7 @@ function modifier_chaos_knight_phantasm_cast:OnDestroy()
 	end
 
 	for i=1, images_count do
---		local illusion = IllusionManager:CreateIllusion(caster, ability, casterOrigin, caster, {damagein=incomingDamage, damageout=outgoingDamage, unique="chaos_knight_phantasm_"..i, duration=duration})
-		CreateImbaIllusion(caster, ability, duration, incomingDamage, outgoingDamage, true)
+		local illusion = IllusionManager:CreateIllusion(caster, ability, casterOrigin, caster, {damagein=incomingDamage, damageout=outgoingDamage, unique="chaos_knight_phantasm_"..i, duration=duration})
 		table.insert(caster.phantasm_illusions, illusion)
 	end
 

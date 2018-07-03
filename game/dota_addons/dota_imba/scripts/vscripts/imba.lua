@@ -157,8 +157,10 @@ function GameMode:OnFirstPlayerLoaded()
 		GameRules:SetSameHeroSelectionEnabled(true)
 		GameRules:GetGameModeEntity():SetCameraDistanceOverride(500) -- default: 1134
 	end
-
-	GameRules:GetGameModeEntity():SetPauseEnabled( false )
+	
+	if not IsInToolsMode() then
+		GameRules:GetGameModeEntity():SetPauseEnabled( false )
+	end
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Contributor models

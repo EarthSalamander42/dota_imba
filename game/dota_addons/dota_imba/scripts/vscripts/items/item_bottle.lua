@@ -14,17 +14,19 @@ function item_imba_bottle:SetCurrentCharges(charges)
 end
 
 function item_imba_bottle:OnSpellStart()
+	local caster = self:GetCaster()
 	if self.RuneStorage then
-		PickupRune(self.RuneStorage, self:GetCaster(), true)
+		-- Safe env. so the rune still gets consumed even if it errors
+		pcall(PickupRune, self.RuneStorage, caster, true)
 		self:SetCurrentCharges(3)
 		self.RuneStorage = nil
 	else
 		local charges = self:GetCurrentCharges()
 
 		if charges > 0 then
-			self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_item_imba_bottle_heal", {duration = self:GetSpecialValueFor("restore_time")})
+			caster:AddNewModifier(caster, self, "modifier_item_imba_bottle_heal", {duration = self:GetSpecialValueFor("restore_time")})
 			self:SetCurrentCharges(charges - 1)
-			self:GetCaster():EmitSound("Bottle.Drink")
+			caster:EmitSound("Bottle.Drink")
 		end
 	end
 end

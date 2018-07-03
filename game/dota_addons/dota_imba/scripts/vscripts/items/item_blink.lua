@@ -221,8 +221,9 @@ function modifier_imba_blink_boots_handler:IsPurgable() return false end
 function modifier_imba_blink_boots_handler:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_blink_boots_handler:DeclareFunctions()
-	if IMBA_MUTATION and IMBA_MUTATION["positive"] == "super_blink" then return {} end
-	return { MODIFIER_EVENT_ON_TAKEDAMAGE }
+	if IMBA_MUTATION and IMBA_MUTATION["positive"] == "super_blink" then return {MODIFIER_PROPERTY_MOVESPEED_BONUS_UNIQUE} end
+	return { MODIFIER_PROPERTY_MOVESPEED_BONUS_UNIQUE,
+	MODIFIER_EVENT_ON_TAKEDAMAGE }
 end
 
 function modifier_imba_blink_boots_handler:GetModifierMoveSpeedBonus_Special_Boots()
@@ -237,7 +238,7 @@ function modifier_imba_blink_boots_handler:OnTakeDamage( keys )
 
 	local parent = self:GetParent()					-- Modifier carrier
 	local unit = keys.unit							-- Who took damage
-
+	
 	if parent == unit then
 		-- Custom function from funcs.lua
 		if IsHeroDamage(keys.attacker, keys.damage) then

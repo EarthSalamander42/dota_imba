@@ -134,14 +134,16 @@ function HeroSelection:StartSelection()
 	CustomGameEventManager:RegisterListener('hero_selected', Dynamic_Wrap(HeroSelection, 'HeroSelected'))
 	CustomGameEventManager:RegisterListener('preview_hero', Dynamic_Wrap(HeroSelection, 'HeroPreview'))
 	CustomGameEventManager:RegisterListener("pick_abilities_requested", Dynamic_Wrap(HeroSelection, 'PickAbilitiesRequested'))
-
-	if IsRankedMap() then
-		EmitAnnouncerSound("announcer_announcer_type_capt_mode")
-		HeroSelection:CMManager(nil)
-	else
+	
+	
+	-- Temporarly disabled because Captains Mode seems to be incomplete, and it prevents pausing ranked games
+	-- if IsRankedMap() then
+		-- EmitAnnouncerSound("announcer_announcer_type_capt_mode")
+		-- HeroSelection:CMManager(nil)
+	-- else
 		EmitAnnouncerSound("announcer_announcer_type_all_pick")
 		HeroSelection:APTimer(AP_GAME_TIME, "ALL PICK")
-	end
+	-- end
 end
 
 -- start heropick CM timer

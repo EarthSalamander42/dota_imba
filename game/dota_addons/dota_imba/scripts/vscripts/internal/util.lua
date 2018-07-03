@@ -867,16 +867,17 @@ end
 function SpawnImbaRunes()
 
 	-- List of powerup rune types
-	local powerup_rune_types = {}
-	powerup_rune_types[1] = {"item_imba_rune_arcane", "particles/generic_gameplay/rune_arcane.vpcf"}
-	powerup_rune_types[2] = {"item_imba_rune_double_damage", "particles/generic_gameplay/rune_doubledamage.vpcf"}
-	powerup_rune_types[3] = {"item_imba_rune_haste", "particles/generic_gameplay/rune_haste.vpcf"}
-	powerup_rune_types[4] = {"item_imba_rune_regeneration", "particles/generic_gameplay/rune_regeneration.vpcf"}
-	powerup_rune_types[5] = {"item_imba_rune_illusion", "particles/generic_gameplay/rune_illusion.vpcf"}
-	powerup_rune_types[6] = {"item_imba_rune_invisibility", "particles/generic_gameplay/rune_invisibility.vpcf"}
-	powerup_rune_types[7] = {"item_imba_rune_frost", "particles/econ/items/puck/puck_snowflake/puck_snowflake_ambient.vpcf"}
---	powerup_rune_types[8] = {"item_imba_rune_ember", "particles/econ/items/shadow_fiend/sf_fire_arcana/sf_fire_arcana_trail.vpcf"}
---	powerup_rune_types[9] = {"item_imba_rune_stone", "particles/econ/items/natures_prophet/natures_prophet_flower_treant/natures_prophet_flower_treant_ambient.vpcf"}
+	local powerup_rune_types = {
+		{"item_imba_rune_arcane", "particles/generic_gameplay/rune_arcane.vpcf"},
+		{"item_imba_rune_double_damage", "particles/generic_gameplay/rune_doubledamage.vpcf"},
+		{"item_imba_rune_haste", "particles/generic_gameplay/rune_haste.vpcf"},
+		{"item_imba_rune_regeneration", "particles/generic_gameplay/rune_regeneration.vpcf"},
+		{"item_imba_rune_illusion", "particles/generic_gameplay/rune_illusion.vpcf"},
+		{"item_imba_rune_invisibility", "particles/generic_gameplay/rune_invisibility.vpcf"},
+		{"item_imba_rune_frost", "particles/econ/items/puck/puck_snowflake/puck_snowflake_ambient.vpcf"},
+		-- {"item_imba_rune_ember", "particles/econ/items/shadow_fiend/sf_fire_arcana/sf_fire_arcana_trail.vpcf"},
+		-- {"item_imba_rune_stone", "particles/econ/items/natures_prophet/natures_prophet_flower_treant/natures_prophet_flower_treant_ambient.vpcf"},
+	}
 
 	Timers:CreateTimer(function()
 		local random_int = RandomInt(1, #powerup_rune_types)
@@ -1062,8 +1063,7 @@ function PickupRune(rune_name, unit, bActiveByBottle)
 
 			for i = 1, images_count do
 				local origin = unit:GetAbsOrigin() + table.remove( vRandomSpawnPos, 1 )
---				local illusion = IllusionManager:CreateIllusion(unit, self, origin, unit, {damagein=incomingDamage, damageout=outcomingDamage, unique=unit:entindex().."_rune_illusion_"..i, duration=duration})
-				CreateImbaIllusion(unit, origin, nil, duration, -75, -400, {}, true)
+				local illusion = IllusionManager:CreateIllusion(unit, self, origin, unit, {damagein=incomingDamage, damageout=outcomingDamage, unique=unit:entindex().."_rune_illusion_"..i, duration=duration})
 			end
 
 			EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Illusion", unit)
@@ -1807,9 +1807,11 @@ function CreateImbaIllusion(hero, pos, ability, duration, out_damage, in_damage,
 	end
 
 	-- Set Custom label if there's one
-	local steam_id = tostring(PlayerResource:GetSteamID(hero:GetPlayerID()))
-	illusion:SetCustomHealthLabel("#imba_donator_label_"..api.imba.is_donator(steam_id), DONATOR_COLOR[api.imba.is_donator(steam_id)][1], DONATOR_COLOR[api.imba.is_donator(steam_id)][2], DONATOR_COLOR[api.imba.is_donator(steam_id)][3])
-
+	if not IsInToolsMode() then
+		local steam_id = tostring(PlayerResource:GetSteamID(hero:GetPlayerID()))
+		illusion:SetCustomHealthLabel("#imba_donator_label_"..api.imba.is_donator(steam_id), DONATOR_COLOR[api.imba.is_donator(steam_id)][1], DONATOR_COLOR[api.imba.is_donator(steam_id)][2], DONATOR_COLOR[api.imba.is_donator(steam_id)][3])
+	end
+	
 	-- Stop the attacker, since it still auto attacks the original (will force it to attack the closest target)
 	hero:Stop()
 

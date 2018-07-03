@@ -67,19 +67,18 @@ function imba_spectre_haunt:OnSpellStart()
 			end
 			local spawn_pos = Vector(enemy_position.x + spawn_dx, enemy_position.y + spawn_dy, enemy_position.z)
 
---			IllusionManager:CreateIllusion(caster,
---				self,
---				spawn_pos,
---				caster,
---				{
---					additional_modifiers =  additional_modifiers,
---					controllable = 0,
---					force_attack = 1,
---					damagein = ( self:GetSpecialValueFor("illusion_dmg_received") - 100),
---					damageout = ( self:GetSpecialValueFor("illusion_dmg_dealt") - 100 )
---				},
---				enemy)
-			CreateImbaIllusion(caster, spawn_pos, self, self:GetSpecialValueFor("duration"), self:GetSpecialValueFor("illusion_dmg_received") - 100, self:GetSpecialValueFor("illusion_dmg_dealt") - 100, additional_modifiers)
+			IllusionManager:CreateIllusion(caster,
+				self,
+				spawn_pos,
+				caster,
+				{
+					additional_modifiers =  additional_modifiers,
+					controllable = 0,
+					force_attack = 1,
+					damagein = ( self:GetSpecialValueFor("illusion_dmg_received") - 100),
+					damageout = ( self:GetSpecialValueFor("illusion_dmg_dealt") - 100 )
+				},
+				enemy)
 
 			EmitSoundOn(haunt_sound_enemy, enemy)
 		end
