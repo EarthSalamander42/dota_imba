@@ -58,8 +58,7 @@ function imba_naga_siren_mirror_image:OnSpellStart()
 		for i=1, image_count do
 			local j = RandomInt(1, #vRandomSpawnPos)
 			local pos = caster:GetAbsOrigin() + vRandomSpawnPos[j]
---			local illusion = IllusionManager:CreateIllusion(caster, self, pos, caster, {damagein=image_in_dmg, damageout=image_out_dmg, unique=caster_entid.."_siren_image_"..i, duration=image_duration})
-			CreateImbaIllusion(caster, self, image_duration, image_in_dmg, image_out_dmg, true)
+			local illusion = IllusionManager:CreateIllusion(caster, self, pos, caster, {damagein=image_in_dmg, damageout=image_out_dmg, unique=caster_entid.."_siren_image_"..i, duration=image_duration})
 			table.remove(vRandomSpawnPos,j)
 			local part2 = ParticleManager:CreateParticle(particle2, PATTACH_ABSORIGIN, illusion)
 			ParticleManager:ReleaseParticleIndex(part2)
