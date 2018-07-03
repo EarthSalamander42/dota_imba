@@ -77,7 +77,7 @@ function modifier_mutation_track:GetAuraSearchType()
 end
 
 function modifier_mutation_track:GetModifierAura()
-	return "modifier_imba_track_buff_ms"
+	return "modifier_mutation_track_buff_ms"
 end
 
 function modifier_mutation_track:IsAura()
