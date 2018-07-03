@@ -272,7 +272,7 @@ function imba_pudge_meat_hook:OnSpellStart()
 		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_pudge_meat_hook_caster_root", {})
 	end
 	local vHookOffset = Vector( 0, 0, 96 )
-	local target_position = self:GetCursorPosition() + vHookOffset
+	local target_position = GetGroundPosition(self:GetCursorPosition() + vHookOffset, self:GetCaster())
 
 	local dmg_hook_buff = self:GetCaster():FindModifierByName("modifier_imba_hook_sharp_stack")
 	local spd_hook_buff = self:GetCaster():FindModifierByName("modifier_imba_hook_light_stack")
