@@ -95,8 +95,7 @@ function item_imba_manta:OnSpellStart()
 		for i = 1, images_count do
 			if string.find(caster:GetUnitName(), "npc_dota_lone_druid_bear") then print("NO BEAR") break end
 			local origin = caster:GetAbsOrigin() + table.remove( vRandomSpawnPos, 1 )
---			local illusion = IllusionManager:CreateIllusion(caster, self, origin, caster, {damagein=incomingDamage, damageout=outcomingDamage, unique=caster_entid.."_manta_"..i, duration=duration})
-			CreateImbaIllusion(caster, origin, self, duration, incomingDamage, outcomingDamage, {}, true)
+			local illusion = IllusionManager:CreateIllusion(caster, self, origin, caster, {damagein=incomingDamage, damageout=outcomingDamage, unique=caster_entid.."_manta_"..i, duration=duration})
 			table.insert(caster.manta, illusion)
 		end
 
