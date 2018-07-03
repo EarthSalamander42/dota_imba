@@ -878,15 +878,6 @@ function SpawnImbaRunes()
 		-- {"item_imba_rune_ember", "particles/econ/items/shadow_fiend/sf_fire_arcana/sf_fire_arcana_trail.vpcf"},
 		-- {"item_imba_rune_stone", "particles/econ/items/natures_prophet/natures_prophet_flower_treant/natures_prophet_flower_treant_ambient.vpcf"},
 	}
-	-- powerup_rune_types[1] = 
-	-- powerup_rune_types[2] = 
-	-- powerup_rune_types[3] = 
-	-- powerup_rune_types[4] = 
-	-- powerup_rune_types[5] = 
-	-- powerup_rune_types[6] = 
-	-- powerup_rune_types[7] = 
---	powerup_rune_types[8] = 
---	powerup_rune_types[9] = 
 
 	Timers:CreateTimer(function()
 		local random_int = RandomInt(1, #powerup_rune_types)
