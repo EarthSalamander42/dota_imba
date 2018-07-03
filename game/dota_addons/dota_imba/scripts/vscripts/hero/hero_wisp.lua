@@ -870,7 +870,7 @@ function modifier_imba_wisp_spirits_true_sight:GetAuraSearchFlags()
 end
 
 function modifier_imba_wisp_spirits_true_sight:GetAuraSearchType()
-    return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
+    return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_OTHER
 end
 
 function modifier_imba_wisp_spirits_true_sight:GetAuraDuration()
