@@ -91,6 +91,7 @@ function GameMode:OnHeroKilled(killer, killed_unit)
 				respawn_time = respawn_time / (100 / _G.IMBA_FRANTIC_VALUE)
 			end
 
+			log.info("Set time until respawn for unit " .. tostring(killed_unit:GetUnitName()) .. " to " .. tostring(respawn_time) .. " seconds")
 			killed_unit:SetTimeUntilRespawn(respawn_time)
 		end
 	end
