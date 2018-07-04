@@ -86,6 +86,9 @@ function Precache(context)
 	LinkLuaModifier("modifier_imba_arcane_curse_debuff", "modifier/modifier_imba_arcane_curse_debuff.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_imba_silencer_int_steal", "modifier/modifier_imba_silencer_int_steal.lua", LUA_MODIFIER_MOTION_NONE )
 
+	-- Pudge flesh heap handler
+	LinkLuaModifier("modifier_imba_pudge_flesh_heap_handler", "hero/hero_pudge.lua", LUA_MODIFIER_MOTION_NONE)
+
 	-- Companion using mirana modifiers
 	LinkLuaModifier("modifier_imba_mirana_silence_stance", "hero/hero_mirana", LUA_MODIFIER_MOTION_NONE)
 	LinkLuaModifier("modifier_imba_mirana_silence_stance_visible", "hero/hero_mirana", LUA_MODIFIER_MOTION_NONE)

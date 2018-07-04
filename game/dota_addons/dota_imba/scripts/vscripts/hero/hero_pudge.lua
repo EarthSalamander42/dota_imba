@@ -988,8 +988,13 @@ function modifier_imba_pudge_flesh_heap_handler:OnDeath(params)
 	-- Checks to make sure death is an enemy hero
 	if target:IsRealHero() and caster:GetTeamNumber() ~= target:GetTeamNumber() then
 			
+		local flesh_heap_range = self:GetAbility():GetSpecialValueFor("range")
+		if flesh_heap_range == 0 then
+			flesh_heap_range = 2000
+		end
+
 		-- Check to make sure death is within range of Pudge
-		if (self:GetAbility():GetCaster():GetAbsOrigin() - target:GetAbsOrigin()):Length2D() <= self:GetAbility():GetSpecialValueFor("range") then
+		if (self:GetAbility():GetCaster():GetAbsOrigin() - target:GetAbsOrigin()):Length2D() <= flesh_heap_range then
 			self:SetStackCount(self:GetStackCount() + 1)
 			local pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_pudge/pudge_fleshheap_count.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
 			ParticleManager:ReleaseParticleIndex(pfx)
@@ -1030,7 +1035,9 @@ function modifier_imba_flesh_heap_stacks:RemoveOnDeath() return false end
 function modifier_imba_flesh_heap_stacks:OnCreated()
 	if IsServer() then
 		local ability = self:GetCaster():FindAbilityByName("imba_pudge_flesh_heap") 
-		self:GetCaster():AddNewModifier(self:GetCaster(), ability, "modifier_imba_pudge_flesh_heap_handler", {})
+		if not self:GetCaster():HasModifier("modifier_imba_pudge_flesh_heap_handler") then
+			self:GetCaster():AddNewModifier(self:GetCaster(), ability, "modifier_imba_pudge_flesh_heap_handler", {})
+		end
 	end
 
 	self:StartIntervalThink(0.1)
