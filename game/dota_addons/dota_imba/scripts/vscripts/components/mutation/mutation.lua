@@ -8,11 +8,18 @@ local MAP_SIZE = 7000
 local MAP_SIZE_AIRDROP = 5000
 local validItems = {} -- Empty table to fill with full list of valid airdrop items
 local minValue = 1000 -- Minimum cost of items that can spawn
-local maxValue = 99998 -- Will be re-initialized and changed in airdrop block
-local varMult = 4 -- Increase in maxValue cost every second starting from minValue
+local tier1 = {} -- 1000 to 2000 gold cost up to 5 minutes
+local t1cap = 2000
+local t1time = 5 * 60
+local tier2 = {} -- 2000 to 3500 gold cost up to 10 minutes
+local t2cap = 3500
+local t2time = 10 * 60
+local tier3 = {} -- 3500 to 5000 gold cost up to 15 minutes
+local t3cap = 5000
+local t3time = 15 * 60
+local tier4 = {} -- 5000 to 99998 gold cost beyond 15 minutes
 local counter = 1 -- Slowly increments as time goes on to expand list of cost-valid items
-local randMax = 1 -- Index of highest cost item permissible at particular airdrop time
-local varFlag = 0 -- Flag to stop the repeat until loop for randMax iteration
+local varFlag = 0 -- Flag to stop the repeat until loop for tier iterations
 --
 
 function Mutation:Init()
@@ -218,6 +225,92 @@ function Mutation:OnGameRulesStateChange(keys)
 			end	
 			]]--
 			
+			varFlag = 0
+			
+			-- Create Tier 1 Table
+			repeat
+				if validItems[counter].v <= t1cap then
+					tier1[#tier1 + 1] = {k = validItems[counter].k, v = validItems[counter].v}
+				else
+					varFlag = 1
+					counter = counter - 1
+				end
+				counter = counter + 1
+			until varFlag == 1
+			
+			varFlag = 0
+			
+			-- Create Tier 2 Table
+			repeat
+				if validItems[counter].v <= t2cap then
+					tier2[#tier2 + 1] = {k = validItems[counter].k, v = validItems[counter].v}
+				else
+					varFlag = 1
+					counter = counter - 1
+				end
+				counter = counter + 1
+			until varFlag == 1
+			
+			varFlag = 0
+			
+			-- Create Tier 3 Table
+			repeat
+				if validItems[counter].v <= t3cap then
+					tier3[#tier3 + 1] = {k = validItems[counter].k, v = validItems[counter].v}
+				else
+					varFlag = 1
+					counter = counter - 1
+				end
+				counter = counter + 1
+			until varFlag == 1
+			
+			varFlag = 0
+			
+			-- Create Tier 4 Table
+			for num = counter, #validItems do
+				tier4[#tier4 + 1] = {k = validItems[num].k, v = validItems[num].v}
+			end
+			
+			varFlag = 0
+			
+			--[[
+			print("TIER 1 LIST")
+			
+			for a, b in pairs(tier1) do
+				print(a)
+				for key, value in pairs(b) do
+					print('\t', key, value)
+				end
+			end	
+			
+			print("TIER 2 LIST")
+			
+			for a, b in pairs(tier2) do
+				print(a)
+				for key, value in pairs(b) do
+					print('\t', key, value)
+				end
+			end	
+			
+			print("TIER 3 LIST")
+			
+			for a, b in pairs(tier3) do
+				print(a)
+				for key, value in pairs(b) do
+					print('\t', key, value)
+				end
+			end	
+			
+			print("TIER 4 LIST")
+			
+			for a, b in pairs(tier4) do
+				print(a)
+				for key, value in pairs(b) do
+					print('\t', key, value)
+				end
+			end	
+			]]--
+			
 			Timers:CreateTimer(110.0, function()
 				Mutation:SpawnRandomItem()
 
@@ -383,20 +476,18 @@ function Mutation:RevealAllMap(duration)
 end
 
 function Mutation:SpawnRandomItem()
-	varFlag = 0
-	maxValue = minValue + (GameRules:GetDOTATime(false, false) * varMult)
+	local selectedItem 
 	
-	repeat
-		if validItems[counter].v > maxValue then
-			randMax = min(max(1, counter), #validItems) -- Just in case counter turns into some ridiculous garbage number
-			varFlag = 1
-			counter = counter - 1 -- Revert counter progress
-		end
-		counter = counter + 1
-	until varFlag == 1
+	if GameRules:GetDOTATime(false, false) > t3time then
+		selectedItem = tier4[RandomInt(1, #tier4)].k
+	elseif GameRules:GetDOTATime(false, false) > t2time then
+		selectedItem = tier3[RandomInt(1, #tier3)].k
+	elseif GameRules:GetDOTATime(false, false) > t1time then
+		selectedItem = tier2[RandomInt(1, #tier2)].k
+	else
+		selectedItem = tier1[RandomInt(1, #tier1)].k
+	end
 	
-	local selectedItem = validItems[RandomInt(1, randMax)].k
-
 	local pos = RandomVector(MAP_SIZE_AIRDROP)
 	AddFOWViewer(2, pos, self.item_spawn_radius, self.item_spawn_delay + self.item_spawn_vision_linger, false)
 	AddFOWViewer(3, pos, self.item_spawn_radius, self.item_spawn_delay + self.item_spawn_vision_linger, false)
