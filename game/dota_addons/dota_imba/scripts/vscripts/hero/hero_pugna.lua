@@ -733,6 +733,13 @@ function modifier_imba_nether_ward_degen:OnSpentMana(keys)
 		if string.find(target:GetUnitName(), "npc_imba_pugna_nether_ward") then
 			return nil
 		end
+		
+		-- Check if the ability is tagged as an allowed ability for Nether Ward through the ability definition
+		if cast_ability.IsNetherWardStealable then
+			if not cast_ability:IsNetherWardStealable() then
+				return nil
+			end
+		end
 
 		local ward = self.caster
 		local caster = ward:GetOwnerEntity()
@@ -773,13 +780,6 @@ function modifier_imba_nether_ward_degen:OnSpentMana(keys)
 		-- If the ward does not have enough health to survive a spell cast, do nothing
 		if ward:GetHealth() <= self.spell_damage then
 			return nil
-		end
-
-		-- Check if the ability is tagged as an allowed ability for Nether Ward through the ability definition
-		if cast_ability.IsNetherWardStealable then
-			if not cast_ability:IsNetherWardStealable() then
-				return nil
-			end
 		end
 
 		-- Iterate through the ability list
