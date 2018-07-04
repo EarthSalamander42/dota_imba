@@ -1,9 +1,19 @@
 -- Editors:
 --     Earth Salamander #42
+--     AltiV
 
+-- Airdrop Mutation Variables
 local ITEMS_KV = LoadKeyValues("scripts/npc/npc_items_custom.txt")
 local MAP_SIZE = 7000
 local MAP_SIZE_AIRDROP = 5000
+local validItems = {} -- Empty table to fill with full list of valid airdrop items
+local minValue = 1000 -- Minimum cost of items that can spawn
+local maxValue = 99998 -- Will be re-initialized and changed in airdrop block
+local varMult = 4 -- Increase in maxValue cost every second starting from minValue
+local counter = 1 -- Slowly increments as time goes on to expand list of cost-valid items
+local randMax = 1 -- Index of highest cost item permissible at particular airdrop time
+local varFlag = 0 -- Flag to stop the repeat until loop for randMax iteration
+--
 
 function Mutation:Init()
 --	print("Mutation: Initialize...")
@@ -44,6 +54,15 @@ function Mutation:Init()
 	IMBA_MUTATION_PERIODIC_SPELLS[7] = {"stampede", "Stampede", "Green", 5.0}
 	IMBA_MUTATION_PERIODIC_SPELLS[8] = {"bloodlust", "Bloodlust", "Green", 30.0}
 	IMBA_MUTATION_PERIODIC_SPELLS[9] = {"aphotic_shield", "Aphotic Shield", "Green", 15.0}
+    
+--[     TO DO
+--	"telekinesis",
+--	"glimpse",
+
+--	"shallow_grave",
+--	"false_promise",
+--	"bloodrage",
+--]
 
 	self.restricted_items = {
 		"item_imba_ironleaf_boots",
@@ -74,15 +93,6 @@ function Mutation:Init()
 	self.item_spawn_delay = 10
 	self.item_spawn_vision_linger = 10
 	self.item_spawn_radius = 300
-
---	"telekinesis",
---	"glimpse",
---	"torrent",
-
---	"shallow_grave",
---	"false_promise",
---	"bloodrage",
---	"bloodlust",
 end
 
 function Mutation:Precache(context)
@@ -124,7 +134,7 @@ function Mutation:ChooseMutation(type, table, count)
 			if IsInToolsMode() then
 --				IMBA_MUTATION["positive"] = "super_blink"
 				IMBA_MUTATION["negative"] = "periodic_spellcast"
-				IMBA_MUTATION["terrain"] = "call_down"
+				IMBA_MUTATION["terrain"] = "gift_exchange"
 			end
 
 			return
@@ -178,6 +188,36 @@ function Mutation:OnGameRulesStateChange(keys)
 		end
 
 		if IMBA_MUTATION["terrain"] == "gift_exchange" then
+		    for k, v in pairs(ITEMS_KV) do -- Go through all the items in ITEMS_KV and store valid items in validItems table
+			
+				varFlag = 0 -- Let's borrow this memory to suss out the forbidden items first...
+			
+				if v["ItemCost"] and v["ItemCost"] >= minValue and v["ItemCost"] ~= 99999 and not string.find(k, "recipe") and not string.find(k, "cheese") then
+					for _, item in pairs(self.restricted_items) do -- Make sure item isn't a restricted item
+						if k == item then
+							varFlag = 1
+						end
+					end
+				
+					if varFlag == 0 then -- If not a restricted item (while still meeting all the other criteria...)
+						validItems[#validItems + 1] = {k = k, v = v["ItemCost"]}
+					end	
+				end
+			end
+			
+			table.sort(validItems, function(a, b) return a.v < b.v end) -- Sort by ascending item cost for easier retrieval later on
+			
+			--[[
+			print("Table length: ", #validItems) -- # of valid items
+						
+			for a, b in pairs(validItems) do
+				print(a)
+				for key, value in pairs(b) do
+					print('\t', key, value)
+				end
+			end	
+			]]--
+			
 			Timers:CreateTimer(110.0, function()
 				Mutation:SpawnRandomItem()
 
@@ -343,66 +383,51 @@ function Mutation:RevealAllMap(duration)
 end
 
 function Mutation:SpawnRandomItem()
-	local item_name
-	local random_int = RandomInt(1, 226) -- number of items
-	local i = 1
-
-	for k, v in pairs(ITEMS_KV) do
-		if random_int == i then
-			for _, item in pairs(self.restricted_items) do
-				if k == item then
-					print("Item is forbidden! Re-roll...")
-					return Mutation:SpawnRandomItem()
-				end
-			end
-
-			if v["ItemCost"] then
-				if v["ItemCost"] < 1000 or v["ItemCost"] == 99999 or string.find(k, "recipe") then
-					print("Cost too low/high or recipe! Re-roll...")
-					return Mutation:SpawnRandomItem()
-				end
-			else
-				print("No item cost! Re-roll...")
-				return Mutation:SpawnRandomItem()
-			end
-
-			local pos = RandomVector(MAP_SIZE_AIRDROP)
-			AddFOWViewer(2, pos, self.item_spawn_radius, self.item_spawn_delay + self.item_spawn_vision_linger, false)
-			AddFOWViewer(3, pos, self.item_spawn_radius, self.item_spawn_delay + self.item_spawn_vision_linger, false)
-			GridNav:DestroyTreesAroundPoint(pos, self.item_spawn_radius, false)
-
-			local particle_dummy = CreateUnitByName("npc_dummy_unit", pos, true, nil, nil, 6)
-			local particle_arena_fx = ParticleManager:CreateParticle("particles/hero/centaur/centaur_hoof_stomp_arena.vpcf", PATTACH_ABSORIGIN_FOLLOW, particle_dummy)
-			ParticleManager:SetParticleControl(particle_arena_fx, 0, pos)
-			ParticleManager:SetParticleControl(particle_arena_fx, 1, Vector(self.item_spawn_radius + 45, 1, 1))
-
-			local particle = ParticleManager:CreateParticle("particles/items_fx/aegis_respawn_timer.vpcf", PATTACH_ABSORIGIN_FOLLOW, particle_dummy)
-			ParticleManager:SetParticleControl(particle, 1, Vector(self.item_spawn_delay, 0, 0))
-			ParticleManager:SetParticleControl(particle, 3, pos)
-			ParticleManager:ReleaseParticleIndex(particle)
-
-			Timers:CreateTimer(self.item_spawn_delay, function()
-				local item = CreateItem(k, nil, nil)
-				item.airdrop = true
-				print("Item Name:", k, pos)
-
-				local drop = CreateItemOnPositionSync(pos, item)
-
-				CustomGameEventManager:Send_ServerToAllClients("item_has_spawned", {spawn_location = pos})
-				EmitGlobalSound( "powerup_05" )
-
-				ParticleManager:DestroyParticle(particle_arena_fx, false)
-				ParticleManager:ReleaseParticleIndex(particle_arena_fx)
-
-				particle_dummy:ForceKill(false)
-			end)
-
-			CustomGameEventManager:Send_ServerToAllClients("item_will_spawn", {spawn_location = pos})
-			EmitGlobalSound("powerup_03")
-
-			return
+	varFlag = 0
+	maxValue = minValue + (GameRules:GetDOTATime(false, false) * varMult)
+	
+	repeat
+		if validItems[counter].v > maxValue then
+			randMax = min(max(1, counter), #validItems) -- Just in case counter turns into some ridiculous garbage number
+			varFlag = 1
+			counter = counter - 1 -- Revert counter progress
 		end
+		counter = counter + 1
+	until varFlag == 1
+	
+	local selectedItem = validItems[RandomInt(1, randMax)].k
 
-		i = i + 1
-	end
+	local pos = RandomVector(MAP_SIZE_AIRDROP)
+	AddFOWViewer(2, pos, self.item_spawn_radius, self.item_spawn_delay + self.item_spawn_vision_linger, false)
+	AddFOWViewer(3, pos, self.item_spawn_radius, self.item_spawn_delay + self.item_spawn_vision_linger, false)
+	GridNav:DestroyTreesAroundPoint(pos, self.item_spawn_radius, false)
+
+	local particle_dummy = CreateUnitByName("npc_dummy_unit", pos, true, nil, nil, 6)
+	local particle_arena_fx = ParticleManager:CreateParticle("particles/hero/centaur/centaur_hoof_stomp_arena.vpcf", PATTACH_ABSORIGIN_FOLLOW, particle_dummy)
+	ParticleManager:SetParticleControl(particle_arena_fx, 0, pos)
+	ParticleManager:SetParticleControl(particle_arena_fx, 1, Vector(self.item_spawn_radius + 45, 1, 1))
+
+	local particle = ParticleManager:CreateParticle("particles/items_fx/aegis_respawn_timer.vpcf", PATTACH_ABSORIGIN_FOLLOW, particle_dummy)
+	ParticleManager:SetParticleControl(particle, 1, Vector(self.item_spawn_delay, 0, 0))
+	ParticleManager:SetParticleControl(particle, 3, pos)
+	ParticleManager:ReleaseParticleIndex(particle)
+
+	Timers:CreateTimer(self.item_spawn_delay, function()
+		local item = CreateItem(selectedItem, nil, nil)
+		item.airdrop = true
+		-- print("Item Name:", selectedItem, pos)
+
+		local drop = CreateItemOnPositionSync(pos, item)
+
+		CustomGameEventManager:Send_ServerToAllClients("item_has_spawned", {spawn_location = pos})
+		EmitGlobalSound( "powerup_05" )
+
+		ParticleManager:DestroyParticle(particle_arena_fx, false)
+		ParticleManager:ReleaseParticleIndex(particle_arena_fx)
+
+		particle_dummy:ForceKill(false)
+	end)
+
+	CustomGameEventManager:Send_ServerToAllClients("item_will_spawn", {spawn_location = pos})
+	EmitGlobalSound("powerup_03")
 end
