@@ -16,6 +16,7 @@
 --     Firetoad
 --     AtroCty, 02.04.2017
 --     suthernfriend, 03.02.2018
+--     naowin, 07.04.2018
 
 CreateEmptyTalents("necrolyte")
 
@@ -177,7 +178,7 @@ function modifier_imba_sadist_stack:OnIntervalThink()
 
 			-- If after removing the stacks, the table is empty, remove the modifier.
 			if #self.stacks_table == 0 then
-				self:Destroy()
+				self:GetParent():RemoveModifierByName("modifier_imba_sadist_stack")
 
 				-- Otherwise, set its stack count
 			else
@@ -186,7 +187,7 @@ function modifier_imba_sadist_stack:OnIntervalThink()
 
 			-- If there are no stacks on the table, just remove the modifier.
 		else
-			self:Destroy()
+			self:GetParent():RemoveModifierByName("modifier_imba_sadist_stack")
 		end
 	end
 end
@@ -210,6 +211,10 @@ function modifier_imba_sadist_stack:DeclareFunctions()
 end
 
 function modifier_imba_sadist_stack:GetModifierConstantManaRegen()
+	if self.caster == nil or self.mana_regen == nil or self.regen_minimum == nil then 
+		return
+	end
+
 	local mana_regen = self.mana_regen + self.caster:FindTalentValue("special_bonus_imba_necrolyte_6")
 	mana_regen = mana_regen * self:GetStackCount() * self:GetParent():GetMaxMana() * 0.01
 	local regen_minimum = self.regen_minimum * self:GetStackCount()
@@ -218,6 +223,10 @@ end
 
 function modifier_imba_sadist_stack:GetModifierConstantHealthRegen()
 	if IsServer() then
+		if self.caster ~= nil or self.health_regen == nil or self.regen_minimum == nil then 
+			return
+		end
+
 		local health_regen = self.health_regen + self.caster:FindTalentValue("special_bonus_imba_necrolyte_6")
 		local expected_health_regen = health_regen * self:GetStackCount() * self:GetParent():GetMaxHealth() * 0.01
 		local regen_minimum = self.regen_minimum * self:GetStackCount()
@@ -792,8 +801,7 @@ end
 
 modifier_imba_reapers_scythe = modifier_imba_reapers_scythe or class({})
 function modifier_imba_reapers_scythe:IgnoreTenacity() return true end
-function modifier_imba_reapers_scythe:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
-function modifier_imba_reapers_scythe:OnCreated( params )
+function modifier_imba_reapers_scythe:OnCreated()
 	if IsServer() then
 		local caster = self:GetCaster()
 		local target = self:GetParent()
@@ -801,9 +809,28 @@ function modifier_imba_reapers_scythe:OnCreated( params )
 		self.damage = self.ability:GetSpecialValueFor("damage")
 
 		local stun_fx = ParticleManager:CreateParticle("particles/generic_gameplay/generic_stunned.vpcf", PATTACH_OVERHEAD_FOLLOW, target)
-		self:AddParticle(stun_fx,false,false,-1,false,false)
+		self:AddParticle(stun_fx, false, false, -1, false, false)
 		local orig_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_necrolyte/necrolyte_scythe_orig.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
-		self:AddParticle(orig_fx,false,false,-1,false,false)
+		self:AddParticle(orig_fx, false, false, -1, false, false)
+
+		local scythe_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_necrolyte/necrolyte_scythe_start.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
+		ParticleManager:SetParticleControlEnt(scythe_fx, 0, caster, PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", caster:GetAbsOrigin(), true)
+		ParticleManager:SetParticleControlEnt(scythe_fx, 1, target, PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
+		ParticleManager:ReleaseParticleIndex(scythe_fx)
+	end
+end
+
+function modifier_imba_reapers_scythe:OnRefresh()
+		if IsServer() then
+		local caster = self:GetCaster()
+		local target = self:GetParent()
+		self.ability = self:GetAbility()
+		self.damage = self.ability:GetSpecialValueFor("damage")
+
+		local stun_fx = ParticleManager:CreateParticle("particles/generic_gameplay/generic_stunned.vpcf", PATTACH_OVERHEAD_FOLLOW, target)
+		self:AddParticle(stun_fx, false, false, -1, false, false)
+		local orig_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_necrolyte/necrolyte_scythe_orig.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+		self:AddParticle(orig_fx, false, false, -1, false, false)
 
 		local scythe_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_necrolyte/necrolyte_scythe_start.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
 		ParticleManager:SetParticleControlEnt(scythe_fx, 0, caster, PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", caster:GetAbsOrigin(), true)
@@ -838,8 +865,6 @@ end
 
 function modifier_imba_reapers_scythe:IsPurgable() return false end
 function modifier_imba_reapers_scythe:IsPurgeException() return false end
-
-
 
 function modifier_imba_reapers_scythe:DeclareFunctions()
 	local decFuncs =
@@ -911,13 +936,13 @@ end
 
 function modifier_imba_reapers_scythe_respawn:OnRespawn( params )
 	if IsServer() then
-		if (self:GetParent() == params.unit) then
+		if self:GetParent() == params.unit then
 			if self.ability and not self.reincarnate_respawn then
 				local debuff_duration = self.ability:GetSpecialValueFor("debuff_duration")
 				params.unit:AddNewModifier(params.unit, self.ability, "modifier_imba_reapers_scythe_debuff", {duration = debuff_duration})
 			end
 
-			self:Destroy()
+			self:GetParent():RemoveModifierByName("modifier_imba_reapers_scythe_respawn")
 		end
 	end
 end

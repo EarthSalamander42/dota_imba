@@ -1034,7 +1034,7 @@ function GameMode:DamageFilter( keys )
 					-- Find the Reaper's Scythe ability
 					local ability = scythe_caster:FindAbilityByName("imba_necrolyte_reapers_scythe")
 					if not ability then return nil end
-					scythe_modifier:Destroy()
+					victim:RemoveModifierByName("modifier_imba_reapers_scythe")
 					victim:AddNewModifier(scythe_caster, ability, "modifier_imba_reapers_scythe_respawn", {})
 
 					-- Attempt to kill the target, crediting it to the caster of Reaper's Scythe
