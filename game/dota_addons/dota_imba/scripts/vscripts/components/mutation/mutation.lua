@@ -54,6 +54,15 @@ function Mutation:Init()
 	IMBA_MUTATION_PERIODIC_SPELLS[7] = {"stampede", "Stampede", "Green", 5.0}
 	IMBA_MUTATION_PERIODIC_SPELLS[8] = {"bloodlust", "Bloodlust", "Green", 30.0}
 	IMBA_MUTATION_PERIODIC_SPELLS[9] = {"aphotic_shield", "Aphotic Shield", "Green", 15.0}
+    
+--[     TO DO
+--	"telekinesis",
+--	"glimpse",
+
+--	"shallow_grave",
+--	"false_promise",
+--	"bloodrage",
+--]
 
 	self.restricted_items = {
 		"item_imba_ironleaf_boots",
@@ -84,13 +93,6 @@ function Mutation:Init()
 	self.item_spawn_delay = 10
 	self.item_spawn_vision_linger = 10
 	self.item_spawn_radius = 300
-
---	"telekinesis",
---	"glimpse",
-
---	"shallow_grave",
---	"false_promise",
---	"bloodrage",
 end
 
 function Mutation:Precache(context)
