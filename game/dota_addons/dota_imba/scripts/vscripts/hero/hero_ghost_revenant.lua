@@ -234,6 +234,10 @@ function ghost_revenant_miasma:GetAbilityTextureName()
 	return "custom/ghost_revenant_miasma"
 end
 
+function ghost_revenant_miasma:GetAOERadius()	 
+	return self:GetSpecialValueFor("area_of_effect")
+end
+
 function ghost_revenant_miasma:OnAbilityPhaseStart()
 	EmitSoundOn("Hero_Warlock.RainOfChaos_buildup", self:GetCaster())
 	return true
