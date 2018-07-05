@@ -174,6 +174,16 @@ function GameMode:OnHeroFirstSpawn(hero)
 		hero.vengeance_aura_target:RemoveModifierByName("modifier_imba_command_aura_negative_aura")
 		hero.vengeance_aura_target = nil
 	end
+
+	-- Speed Freaks mutation modifier
+	if IMBA_MUTATION["terrain"] == "speed_freaks" then
+		hero:AddNewModifier(hero, nil, "modifier_mutation_speed_freaks", {})
+	end
+
+	-- Super Fervor mutation modifier
+	if IMBA_MUTATION["positive"] == "super_fervor" then
+		hero:AddNewModifier(hero, nil, "modifier_mutation_super_fervor", {})
+	end
 end
 
 -- everytime a real hero respawn

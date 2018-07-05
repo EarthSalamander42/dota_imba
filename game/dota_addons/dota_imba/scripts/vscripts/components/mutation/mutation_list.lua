@@ -17,6 +17,7 @@ POSITIVE_MUTATION_LIST["killstreak_power"] = false
 POSITIVE_MUTATION_LIST["teammate_resurrection"] = false
 POSITIVE_MUTATION_LIST["super_blink"] = false
 POSITIVE_MUTATION_LIST["pocket_tower"] = false
+POSITIVE_MUTATION_LIST["super_fervor"] = false
 
 -- Not coded/approved yet
 -- POSITIVE_MUTATION_LIST["damage_reduction"] = false
@@ -30,7 +31,6 @@ POSITIVE_MUTATION_LIST["slark_mode"] = false
 -- Not coded/approved yet
 -- POSITIVE_MUTATION_LIST["greedisgood"] = false
 -- POSITIVE_MUTATION_LIST["angel_arena"] = false
--- POSITIVE_MUTATION_LIST["speed_freaks"] = false
 
 NEGATIVE_MUTATION_LIST = {}
 -- VANILLA
@@ -56,6 +56,7 @@ TERRAIN_MUTATION_LIST["fast_runes"] = false
 TERRAIN_MUTATION_LIST["call_down"] = false
 --TERRAIN_MUTATION_LIST["minefield"] = false
 TERRAIN_MUTATION_LIST["gift_exchange"] = false
+TERRAIN_MUTATION_LIST["speed_freaks"] = false
 
 -- Disabled
 -- TERRAIN_MUTATION_LIST["no_trees"] = false

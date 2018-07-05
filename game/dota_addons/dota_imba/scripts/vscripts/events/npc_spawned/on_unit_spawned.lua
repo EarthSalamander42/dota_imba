@@ -57,6 +57,11 @@ function GameMode:OnUnitFirstSpawn(unit)
 			end)
 		end
 	end
+
+	-- Speed Freaks mutation modifier
+	if IMBA_MUTATION["terrain"] == "speed_freaks" then
+		unit:AddNewModifier(unit, nil, "modifier_mutation_speed_freaks", {})
+	end
 end
 
 -- everytime a real hero respawn
