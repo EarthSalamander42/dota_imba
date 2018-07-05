@@ -32,6 +32,7 @@ function Mutation:Init()
 	LinkLuaModifier("modifier_mutation_shadow_dance", "components/mutation/modifiers/modifier_mutation_shadow_dance.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_mutation_ants", "components/mutation/modifiers/modifier_mutation_ants.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_disable_healing", "components/mutation/modifiers/modifier_disable_healing.lua", LUA_MODIFIER_MOTION_NONE )
+	LinkLuaModifier("modifier_mutation_stay_frosty", "components/mutation/modifiers/modifier_mutation_stay_frosty.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_mutation_speed_freaks", "components/mutation/modifiers/modifier_mutation_speed_freaks.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_mutation_super_fervor", "components/mutation/modifiers/modifier_mutation_super_fervor.lua", LUA_MODIFIER_MOTION_NONE )
 
@@ -391,7 +392,7 @@ function Mutation:OnHeroFirstSpawn(hero)
 	elseif IMBA_MUTATION["negative"] == "defense_of_the_ants" then
 		hero:AddNewModifier(hero, nil, "modifier_mutation_ants", {})
 	elseif IMBA_MUTATION["negative"] == "stay_frosty" then
-		hero:AddNewModifier(hero, nil, "modifier_disable_healing", {})
+		hero:AddNewModifier(hero, nil, "modifier_mutation_stay_frosty", {})
 	end
 end
 
