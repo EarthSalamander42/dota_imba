@@ -424,4 +424,7 @@
 
 	"mutation_call_down"						"Call Down"
 	"mutation_call_down_Description"			"Nuclear missiles launched across the entire map every 10 seconds."
+
+	"mutation_greed_is_good"					"Greed is Good"
+	"mutation_greed_is_good_Description"		"Bonus gold is granted each minute!"
 }

@@ -383,7 +383,7 @@ function Mutation:OnHeroFirstSpawn(hero)
 		hero:AddItemByName("item_imba_blink"):SetSellable(false)
 	elseif IMBA_MUTATION["positive"] == "pocket_tower" then
 		hero:AddItemByName("item_pocket_tower")
-	elseif IMBA_MUTATION["positive"] == "greed_is_gold" then
+	elseif IMBA_MUTATION["positive"] == "greed_is_good" then
 		hero:AddNewModifier(hero, nil, "modifier_mutation_greed_is_good", {})
 	end
 

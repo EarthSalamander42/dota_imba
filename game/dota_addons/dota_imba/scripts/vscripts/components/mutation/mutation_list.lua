@@ -18,7 +18,7 @@ POSITIVE_MUTATION_LIST["teammate_resurrection"] = false
 POSITIVE_MUTATION_LIST["super_blink"] = false
 POSITIVE_MUTATION_LIST["pocket_tower"] = false
 POSITIVE_MUTATION_LIST["super_fervor"] = false
-POSITIVE_MUTATION_LIST["greed_is_gold"] = false
+POSITIVE_MUTATION_LIST["greed_is_good"] = false
 
 -- Not coded/approved yet
 -- POSITIVE_MUTATION_LIST["damage_reduction"] = false
