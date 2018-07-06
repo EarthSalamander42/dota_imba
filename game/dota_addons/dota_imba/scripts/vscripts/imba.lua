@@ -929,6 +929,19 @@ function GameMode:OrderFilter( keys )
 		end
 	end
 
+	if keys.order_type == DOTA_UNIT_ORDER_PICKUP_ITEM then
+		local unit = EntIndexToHScript(keys.units["0"])
+		if unit ~= nil and unit:GetUnitName() == "npc_dota_courier" then
+			local drop = EntIndexToHScript(keys["entindex_target"])
+			local item = drop:GetContainedItem()			
+			if string.find(item:GetAbilityName(), "imba_rune") ~= nil then
+				return false
+			end
+				
+			return true
+		end
+	end
+
 	return true
 end
 
