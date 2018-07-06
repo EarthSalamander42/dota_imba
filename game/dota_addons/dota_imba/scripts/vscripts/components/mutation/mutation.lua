@@ -47,7 +47,7 @@ function Mutation:Init()
 	LinkLuaModifier("modifier_mutation_aphotic_shield", "components/mutation/modifiers/periodic_spellcast/modifier_mutation_aphotic_shield.lua", LUA_MODIFIER_MOTION_NONE )
 
 	LinkLuaModifier("modifier_mutation_river_flows", "components/mutation/modifiers/modifier_mutation_river_flows.lua", LUA_MODIFIER_MOTION_NONE )
-	LinkLuaModifier("modifier_mutation_sticky_river", "components/mutation/modifiers/modifier_mutation_sticky_river.lua", LUA_MODIFIER_MOTION_NONE )
+	LinkLuaModifier("modifier_sticky_river", "modifier/mutation/modifier_sticky_river.lua", LUA_MODIFIER_MOTION_NONE )
 
 	Mutation:ChooseMutation("positive", POSITIVE_MUTATION_LIST, 6 - 1) -- -1 because index is 0
 	Mutation:ChooseMutation("negative", NEGATIVE_MUTATION_LIST, 3 - 1)
