@@ -12,7 +12,7 @@ function modifier_mutation_track:OnCreated()
 	-- Ability specials
 	self.bonus_gold_allies = 300
 	self.haste_radius = 900
-	self.haste_linger = 0.5
+	self.duration = 0.5
 
 	if IsServer() then
 		-- Adjust custom lobby gold settings to the gold
@@ -44,7 +44,7 @@ function modifier_mutation_track:OnRefresh()
 end
 
 function modifier_mutation_track:OnIntervalThink()
-	AddFOWViewer(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), self.talent_2_vision_radius, FrameTime(), false)
+	AddFOWViewer(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), self.talent_2_vision_radius, self.duration, false)
 end
 
 function modifier_mutation_track:CheckState()
@@ -57,7 +57,7 @@ function modifier_mutation_track:CheckState()
 end
 
 function modifier_mutation_track:GetAuraDuration()
-	return self.haste_linger
+	return self.duration
 end
 
 function modifier_mutation_track:GetAuraRadius()
