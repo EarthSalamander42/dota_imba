@@ -12,7 +12,6 @@ function modifier_mutation_track:OnCreated()
 	-- Ability specials
 	self.bonus_gold_allies = 300
 	self.haste_radius = 900
-	self.duration = 0.5
 
 	if IsServer() then
 		-- Adjust custom lobby gold settings to the gold
@@ -32,6 +31,8 @@ function modifier_mutation_track:OnCreated()
 
 		-- Play cast sound for the player's team only
 		EmitSoundOnLocationForAllies(self:GetParent():GetAbsOrigin(), "Hero_BountyHunter.Target", self:GetParent())
+
+		self:GetParent():AddNewModifier(self:GetParent(), nil, "modifier_mutation_track_buff_ms", {})
 	end
 end
 
@@ -43,8 +44,8 @@ function modifier_mutation_track:OnRefresh()
 	self:OnCreated()
 end
 
-function modifier_mutation_track:OnIntervalThink()
-	AddFOWViewer(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), self.talent_2_vision_radius, self.duration, false)
+function modifier_mutation_track:OnRemoved()
+	self:GetParent():RemoveModifierByName("modifier_mutation_track_buff_ms")
 end
 
 function modifier_mutation_track:CheckState()
@@ -54,34 +55,6 @@ function modifier_mutation_track:CheckState()
 
 	local state = {[MODIFIER_STATE_INVISIBLE] = false}
 	return state
-end
-
-function modifier_mutation_track:GetAuraDuration()
-	return self.duration
-end
-
-function modifier_mutation_track:GetAuraRadius()
-	return self.haste_radius
-end
-
-function modifier_mutation_track:GetAuraSearchFlags()
-	return DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES
-end
-
-function modifier_mutation_track:GetAuraSearchTeam()
-	return DOTA_UNIT_TARGET_TEAM_ENEMY
-end
-
-function modifier_mutation_track:GetAuraSearchType()
-	return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
-end
-
-function modifier_mutation_track:GetModifierAura()
-	return "modifier_mutation_track_buff_ms"
-end
-
-function modifier_mutation_track:IsAura()
-	return true
 end
 
 function modifier_mutation_track:IsDebuff()
@@ -101,22 +74,12 @@ function modifier_mutation_track:IsHidden()
 end
 
 function modifier_mutation_track:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_PROVIDES_FOW_POSITION,
+	local decFuncs = {
+		MODIFIER_PROPERTY_PROVIDES_FOW_POSITION,
 		MODIFIER_EVENT_ON_HERO_KILLED,
-		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE}
+		}
 
 	return decFuncs
-end
-
-function modifier_mutation_track:GetModifierIncomingDamage_Percentage()
-	-- Only apply if the caster has #1 Talent: Tracked enemies take increased damage from any source
---	if self:GetCaster():HasTalent("special_bonus_imba_bounty_hunter_1") then
-		-- Gather talent info
---		local bonus_damage_pct = self:GetCaster():FindTalentValue("special_bonus_imba_bounty_hunter_1", "bonus_damage_pct")
---		return bonus_damage_pct
---	end
-
-	return nil
 end
 
 function modifier_mutation_track:OnHeroKilled(keys)
@@ -174,6 +137,7 @@ end
 function modifier_mutation_track:IsPermanent()
 	return false
 end
+
 
 modifier_mutation_track_buff_ms = modifier_mutation_track_buff_ms or class({})
 
