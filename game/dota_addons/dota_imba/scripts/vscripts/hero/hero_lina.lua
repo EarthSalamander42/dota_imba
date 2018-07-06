@@ -526,8 +526,7 @@ LinkLuaModifier("modifier_imba_fiery_soul", "hero/hero_lina", LUA_MODIFIER_MOTIO
 LinkLuaModifier("modifier_imba_fiery_soul_counter", "hero/hero_lina", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_fiery_soul_blaze_burn", "hero/hero_lina", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_fiery_soul_talent", "hero/hero_lina", LUA_MODIFIER_MOTION_NONE)
-
-
+function imba_lina_fiery_soul:IsStealable() return false end
 function imba_lina_fiery_soul:GetIntrinsicModifierName()
 	return "modifier_imba_fiery_soul"
 end
