@@ -66,7 +66,7 @@
 "DOTA_Tooltip_ability_special_bonus_imba_lina_7"				"Reverb Array"
 "DOTA_Tooltip_ability_special_bonus_imba_lina_7_Description"    "Light Strike Array's main explosion is repeated twice, each time with a bigger radius but lower stun duration."
 "DOTA_Tooltip_ability_special_bonus_imba_lina_8"            	"Blazing Fire"
-"DOTA_Tooltip_ability_special_bonus_imba_lina_8_Description"	"Attacks apply Blazing Fire, dealing 10% of Lina's intelligence as damage per second.\\nLina's spells will consume the debuff, instantly dealing remaing damage."
+"DOTA_Tooltip_ability_special_bonus_imba_lina_8_Description"	"Attacks apply Blazing Fire, dealing 10% of Lina's intelligence as damage per second.\nLina's spells will consume the debuff, instantly dealing remaing damage."
 
 
 "DOTA_Tooltip_modifier_imba_blazing_strike"                	"Blazing Fire"

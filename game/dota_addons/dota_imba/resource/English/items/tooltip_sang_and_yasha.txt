@@ -2,7 +2,7 @@
 // Sange and Yasha
 //=================================================================================================================
 "DOTA_Tooltip_Ability_item_imba_sange_yasha"                      "#{DOTA_Tooltip_Ability_item_sange_and_yasha}"
-"DOTA_Tooltip_ability_item_imba_sange_yasha_Description"          "<h1>Passive: Maiming Rhythm</h1> Attacking enemies slows their movement and attack speed, and grants you %as_stack% bonus attack speed. Stacks up to %max_stacks% times.\\n<h1>Passive: Swift Disarm Strike</h1> %proc_chance%%% chance to disarm your target for %proc_duration_enemy% seconds, while granting you %proc_ms%%% movement speed for %proc_duration_self% seconds, with each attack."
+"DOTA_Tooltip_ability_item_imba_sange_yasha_Description"          "<h1>Passive: Maiming Rhythm</h1> Attacking enemies slows their movement and attack speed, and grants you %as_stack% bonus attack speed. Stacks up to %max_stacks% times.\n<h1>Passive: Swift Disarm Strike</h1> %proc_chance%%% chance to disarm your target for %proc_duration_enemy% seconds, while granting you %proc_ms%%% movement speed for %proc_duration_self% seconds, with each attack."
 "DOTA_Tooltip_ability_item_imba_sange_yasha_Lore"                 "#{DOTA_Tooltip_ability_item_sange_and_yasha_Lore}"
 "DOTA_Tooltip_ability_item_imba_sange_yasha_Note0"                "Procs from Sange, Yasha, Azura and their upgrades all share the same cooldown."
 "DOTA_Tooltip_ability_item_imba_sange_yasha_Note1"                "Maim or Battle Rhythm from different sources does not stack."

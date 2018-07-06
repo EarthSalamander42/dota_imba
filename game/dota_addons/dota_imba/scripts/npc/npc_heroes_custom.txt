@@ -1926,9 +1926,9 @@
 		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
 
 		"Ability1"					"imba_troll_warlord_berserkers_rage"
-		"Ability2"					"imba_troll_warlord_whirling_axes_melee"
+		"Ability2"					"imba_troll_warlord_whirling_axes_ranged"
 		"Ability3"					"imba_troll_warlord_fervor"
-		"Ability4"					"imba_troll_warlord_whirling_axes_ranged"
+		"Ability4"					"imba_troll_warlord_whirling_axes_melee"
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_troll_warlord_battle_trance"
 
