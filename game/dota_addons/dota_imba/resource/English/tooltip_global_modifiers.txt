@@ -26,8 +26,8 @@
 "DOTA_Tooltip_modifier_sticky_river_slow"						"Sticky River"
 "DOTA_Tooltip_modifier_sticky_river_slow_Description"			"You are slowed while wading through water."
 
-"DOTA_Tooltip_modifier_river_flows_movementspeed"				"River Flows"
-"DOTA_Tooltip_modifier_river_flows_movementspeed_Description"	"Movement speed increased."
+"DOTA_Tooltip_modifier_mutation_river_flows_boost"				"River Flows"
+"DOTA_Tooltip_modifier_mutation_river_flows_boost_Description"	"Movement speed greatly increased in the river."
 
 "DOTA_Tooltip_modifier_mutation_death_explosion"				"Death Explosion"
 "DOTA_Tooltip_modifier_mutation_death_explosion_Description"	"Deal 600 + (150 * minutes) damage in a 400 radius on death afer a 0.9 seconds delay."
@@ -57,5 +57,4 @@
 "DOTA_Tooltip_modifier_frantic_Description"						"50% Cooldown Reduction, Respawn Time and Status Resistance, 100% Mana Regen."
 
 "DOTA_Tooltip_modifier_mutation_call_down"						"Call Down"
-"DOTA_Tooltip_modifier_mutation_call_down_Description"			"Rockers Periodicly falls down from the sky!"
-
+"DOTA_Tooltip_modifier_mutation_call_down_Description"			"Rockets periodically fall onto the battlefield. Watch out!"

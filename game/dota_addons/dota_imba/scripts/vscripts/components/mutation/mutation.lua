@@ -48,7 +48,7 @@ function Mutation:Init()
 	LinkLuaModifier("modifier_mutation_bloodlust", "components/mutation/modifiers/periodic_spellcast/modifier_mutation_bloodlust.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_mutation_aphotic_shield", "components/mutation/modifiers/periodic_spellcast/modifier_mutation_aphotic_shield.lua", LUA_MODIFIER_MOTION_NONE )
 
-	LinkLuaModifier("modifier_river_flows", "modifier/mutation/modifier_river_flows.lua", LUA_MODIFIER_MOTION_NONE )
+	LinkLuaModifier("modifier_mutation_river_flows", "components/mutation/modifiers/modifier_mutation_river_flows.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_sticky_river", "modifier/mutation/modifier_sticky_river.lua", LUA_MODIFIER_MOTION_NONE )
 
 	Mutation:ChooseMutation("positive", POSITIVE_MUTATION_LIST, 6 - 1) -- -1 because index is 0
@@ -145,8 +145,8 @@ function Mutation:ChooseMutation(type, table, count)
 
 			if IsInToolsMode() then
 				IMBA_MUTATION["positive"] = "super_fervor"
-				IMBA_MUTATION["negative"] = "alien_incubation"
-				IMBA_MUTATION["terrain"] = "speed_freaks"
+				IMBA_MUTATION["negative"] = "periodic_spellcast"
+				IMBA_MUTATION["terrain"] = "river_flows"
 			end
 
 			return
@@ -411,7 +411,7 @@ function Mutation:OnHeroSpawn(hero)
 	end
 
 	if IMBA_MUTATION["terrain"] == "river_flows" then
-		hero:AddNewModifier(hero, nil, "modifier_river_flows", {})
+		hero:AddNewModifier(hero, nil, "modifier_mutation_river_flows", {})
     end
 
 	if IMBA_MUTATION["terrain"] == "sticky_river" then
