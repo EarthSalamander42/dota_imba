@@ -95,11 +95,12 @@ function modifier_imba_mass_serpent_ward:OnCreated()
 	-- #2 TALENT: Serpent Wards gain more hp
 	if caster:HasTalent("special_bonus_imba_shadow_shaman_2") then
 		local bonus_hp = caster:FindTalentValue("special_bonus_imba_shadow_shaman_2")
-		local new_hp   = parent:GetHealth() + bonus_hp
-
-		parent:SetBaseMaxHealth(new_hp)
-		parent:SetMaxHealth(new_hp)
-		parent:SetHealth(new_hp)
+		if parent ~= nil and parent:IsAlive() then 
+			local new_hp   = parent:GetHealth() + bonus_hp
+			parent:SetBaseMaxHealth(new_hp)
+			parent:SetMaxHealth(new_hp)
+			parent:SetHealth(new_hp)
+		end
 	end
 
 	-- Prevent some recursion with the scepter effect
