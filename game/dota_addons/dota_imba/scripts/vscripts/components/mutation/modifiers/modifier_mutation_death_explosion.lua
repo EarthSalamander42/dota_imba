@@ -60,7 +60,7 @@ function modifier_mutation_death_explosion:OnDeath(keys)
 				local damageTable = {
 					victim = enemy,
 					damage = self.damage,
-					damage_type = DAMAGE_TYPE_MAGICAL,
+					damage_type = DAMAGE_TYPE_PURE,
 					attacker = self:GetParent(),
 				}
 

@@ -41,6 +41,7 @@ NEGATIVE_MUTATION_LIST["periodic_spellcast"] = false
 
 -- IMBA
 NEGATIVE_MUTATION_LIST["defense_of_the_ants"] = false
+NEGATIVE_MUTATION_LIST["alien_incubation"] = false
 
 -- Disabled
 -- NEGATIVE_MUTATION_LIST["stay_frosty"] = false
@@ -48,7 +49,6 @@ NEGATIVE_MUTATION_LIST["defense_of_the_ants"] = false
 -- Not coded/approved yet
 -- NEGATIVE_MUTATION_LIST["monkey_business"] = false
 -- NEGATIVE_MUTATION_LIST["the_walking_dead"] = false
--- NEGATIVE_MUTATION_LIST["alien_incubation"] = false
 
 TERRAIN_MUTATION_LIST = {}
 TERRAIN_MUTATION_LIST["sleepy_river"] = false
