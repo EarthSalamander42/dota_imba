@@ -58,7 +58,7 @@ function Mutation:Init()
 	IMBA_MUTATION_PERIODIC_SPELLS = {}
 	IMBA_MUTATION_PERIODIC_SPELLS[1] = {"sun_strike", "Sunstrike", "Red", -1}
 	IMBA_MUTATION_PERIODIC_SPELLS[2] = {"thundergods_wrath", "Thundergod's Wrath", "Red", -1}
-    IMBA_MUTATION_PERIODIC_SPELLS[3] = {"track", "Track", "Red", 20.0}
+	IMBA_MUTATION_PERIODIC_SPELLS[3] = {"track", "Track", "Red", 20.0}
 	IMBA_MUTATION_PERIODIC_SPELLS[4] = {"rupture", "Rupture", "Red", 10.0}
 	IMBA_MUTATION_PERIODIC_SPELLS[5] = {"torrent", "Torrent", "Red", -1}
 	IMBA_MUTATION_PERIODIC_SPELLS[6] = {"cold_feet", "Cold Feet", "Red", 4.0}
