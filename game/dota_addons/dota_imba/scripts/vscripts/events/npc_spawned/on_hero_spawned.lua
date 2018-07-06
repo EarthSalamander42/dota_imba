@@ -184,6 +184,11 @@ function GameMode:OnHeroFirstSpawn(hero)
 	if IMBA_MUTATION["positive"] == "super_fervor" then
 		hero:AddNewModifier(hero, nil, "modifier_mutation_super_fervor", {})
 	end
+
+	-- Alien Incubation mutation modifier
+	if IMBA_MUTATION["negative"] == "alien_incubation" then
+		hero:AddNewModifier(hero, nil, "modifier_mutation_alien_incubation", {})
+	end
 end
 
 -- everytime a real hero respawn

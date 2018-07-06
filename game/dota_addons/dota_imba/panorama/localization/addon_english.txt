@@ -394,8 +394,8 @@
 	"mutation_sleepy_river_Description"			"the river is icy, you can drift on it."
 	"mutation_sleepy_river_author"				"76561198015161808"
 
-	"modifier_river_flows"						"River Flows"
-	"modifier_river_flows_Description"			"the river flows, movement speed increased."
+	"mutation_river_flows_boost"				"River Flows"
+	"mutation_river_flows_boost_Description"	"The river flows. Movement speed greatly increased on the water."
 
 	"mutation_fast_runes"						"Fast Runes"
 	"mutation_fast_runes_Description"			"Powerup Runes spawn every 30 seconds. Bounty Runes spawn every 60 seconds."
@@ -427,4 +427,10 @@
 
 	"mutation_greed_is_good"					"Greed is Good"
 	"mutation_greed_is_good_Description"		"Bonus gold is granted each minute!"
+
+	"mutation_super_fervor"						"Super Fervor"
+	"mutation_super_fervor_Description"			"Killing enemy units decreases cooldowns and grants increased attack speed for a short duration. Killing heroes gives greater effects."
+	
+	"mutation_speed_freaks"						"Speed Freaks"
+	"mutation_speed_freaks_Description"			"Movement and projectile speed increased."
 }

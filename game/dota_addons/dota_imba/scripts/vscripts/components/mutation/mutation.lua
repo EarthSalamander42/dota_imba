@@ -32,10 +32,11 @@ function Mutation:Init()
 	LinkLuaModifier("modifier_mutation_shadow_dance", "components/mutation/modifiers/modifier_mutation_shadow_dance.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_mutation_ants", "components/mutation/modifiers/modifier_mutation_ants.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_disable_healing", "components/mutation/modifiers/modifier_disable_healing.lua", LUA_MODIFIER_MOTION_NONE )
+	LinkLuaModifier("modifier_mutation_stay_frosty", "components/mutation/modifiers/modifier_mutation_stay_frosty.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_mutation_speed_freaks", "components/mutation/modifiers/modifier_mutation_speed_freaks.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_mutation_super_fervor", "components/mutation/modifiers/modifier_mutation_super_fervor.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_mutation_greed_is_good", "components/mutation/modifiers/modifier_mutation_greed_is_good.lua", LUA_MODIFIER_MOTION_NONE )
-
+	LinkLuaModifier("modifier_mutation_alien_incubation", "components/mutation/modifiers/modifier_mutation_alien_incubation.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_mutation_sun_strike", "components/mutation/modifiers/periodic_spellcast/modifier_mutation_sun_strike.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_mutation_call_down", "components/mutation/modifiers/modifier_mutation_call_down.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_mutation_thundergods_wrath", "components/mutation/modifiers/periodic_spellcast/modifier_mutation_thundergods_wrath.lua", LUA_MODIFIER_MOTION_NONE )
@@ -47,7 +48,7 @@ function Mutation:Init()
 	LinkLuaModifier("modifier_mutation_bloodlust", "components/mutation/modifiers/periodic_spellcast/modifier_mutation_bloodlust.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_mutation_aphotic_shield", "components/mutation/modifiers/periodic_spellcast/modifier_mutation_aphotic_shield.lua", LUA_MODIFIER_MOTION_NONE )
 
-	LinkLuaModifier("modifier_river_flows", "modifier/mutation/modifier_river_flows.lua", LUA_MODIFIER_MOTION_NONE )
+	LinkLuaModifier("modifier_mutation_river_flows", "components/mutation/modifiers/modifier_mutation_river_flows.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_sticky_river", "modifier/mutation/modifier_sticky_river.lua", LUA_MODIFIER_MOTION_NONE )
 
 	Mutation:ChooseMutation("positive", POSITIVE_MUTATION_LIST, 6 - 1) -- -1 because index is 0
@@ -145,7 +146,7 @@ function Mutation:ChooseMutation(type, table, count)
 			if IsInToolsMode() then
 				IMBA_MUTATION["positive"] = "super_fervor"
 				IMBA_MUTATION["negative"] = "periodic_spellcast"
-				IMBA_MUTATION["terrain"] = "speed_freaks"
+				IMBA_MUTATION["terrain"] = "river_flows"
 			end
 
 			return
@@ -394,7 +395,7 @@ function Mutation:OnHeroFirstSpawn(hero)
 	elseif IMBA_MUTATION["negative"] == "defense_of_the_ants" then
 		hero:AddNewModifier(hero, nil, "modifier_mutation_ants", {})
 	elseif IMBA_MUTATION["negative"] == "stay_frosty" then
-		hero:AddNewModifier(hero, nil, "modifier_disable_healing", {})
+		hero:AddNewModifier(hero, nil, "modifier_mutation_stay_frosty", {})
 	end
 end
 
@@ -412,7 +413,7 @@ function Mutation:OnHeroSpawn(hero)
 	end
 
 	if IMBA_MUTATION["terrain"] == "river_flows" then
-		hero:AddNewModifier(hero, nil, "modifier_river_flows", {})
+		hero:AddNewModifier(hero, nil, "modifier_mutation_river_flows", {})
     end
 
 	if IMBA_MUTATION["terrain"] == "sticky_river" then

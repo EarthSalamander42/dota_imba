@@ -62,6 +62,11 @@ function GameMode:OnUnitFirstSpawn(unit)
 	if IMBA_MUTATION["terrain"] == "speed_freaks" then
 		unit:AddNewModifier(unit, nil, "modifier_mutation_speed_freaks", {})
 	end
+
+	-- Alien Incubation mutation modifier
+	if IMBA_MUTATION["negative"] == "alien_incubation" then
+		unit:AddNewModifier(unit, nil, "modifier_mutation_alien_incubation", {})
+	end
 end
 
 -- everytime a real hero respawn

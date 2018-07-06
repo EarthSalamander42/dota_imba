@@ -22,9 +22,7 @@ function modifier_mutation_super_fervor:OnDeath(keys)
 						local remaining_cooldown = ability:GetCooldownTimeRemaining()
 						ability:EndCooldown()
 						if remaining_cooldown > 10 then
-							Timers:CreateTimer(0.03, function()
-								ability:StartCooldown(remaining_cooldown - 10)
-							end)
+							ability:StartCooldown(remaining_cooldown - 10)
 						end
 					end
 				end
@@ -36,9 +34,7 @@ function modifier_mutation_super_fervor:OnDeath(keys)
 						local remaining_cooldown = ability:GetCooldownTimeRemaining()
 						ability:EndCooldown()
 						if remaining_cooldown > 1 then
-							Timers:CreateTimer(0.03, function()
-								ability:StartCooldown(remaining_cooldown - 1)
-							end)
+							ability:StartCooldown(remaining_cooldown - 1)
 						end
 					end
 				end
