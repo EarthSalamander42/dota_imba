@@ -435,6 +435,12 @@ function HeroSelection:GiveStartingHero(playerId, heroName, dev)
 	if hero and hero:GetUnitName() ~= FORCE_PICKED_HERO then
 		table.insert(self.spawnedHeroes, hero)
 		self.spawnedPlayers[playerId] = true
+	elseif hero and hero:GetUnitName() == "npc_dota_hero_dummy_dummy" then
+		hero:AddNewModifier(hero, nil, "modifier_unkillable_hero_dummy", {})
+		self.attemptedSpawnPlayers[playerId] = heroName
+		Timers:CreateTimer(5, function ()
+			self:GiveStartingHero(playerId, heroName)
+		end)
 	else
 		self.attemptedSpawnPlayers[playerId] = heroName
 		Timers:CreateTimer(2, function ()

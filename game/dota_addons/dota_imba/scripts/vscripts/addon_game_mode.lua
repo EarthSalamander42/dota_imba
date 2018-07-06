@@ -64,6 +64,9 @@ function Precache(context)
 	LinkLuaModifier("modifier_imba_stone_rune", "modifier/runes/modifier_imba_stone_rune", LUA_MODIFIER_MOTION_NONE)
 	LinkLuaModifier("modifier_imba_invisibility_rune_handler", "modifier/runes/modifier_imba_invisibility_rune", LUA_MODIFIER_MOTION_NONE)
 
+	-- Pending HeroSelection Wisp Modifier
+	LinkLuaModifier("modifier_unkillable_hero_dummy", "modifier/modifier_unkillable_hero_dummy.lua", LUA_MODIFIER_MOTION_NONE)
+
 	-- Imba Fountain Lua
 	LinkLuaModifier( "modifier_fountain_aura_lua", "modifier/modifier_fountain_aura_lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier( "modifier_fountain_aura_effect_lua", "modifier/modifier_fountain_aura_effect_lua", LUA_MODIFIER_MOTION_NONE )
