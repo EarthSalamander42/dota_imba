@@ -29,10 +29,6 @@ function imba_dragon_knight_breathe_fire:GetAbilityTextureName()
    return "dragon_knight_breathe_fire"
 end
 
-function imba_dragon_knight_breathe_fire:IsHiddenWhenStolen()
-	return false
-end
-
 function imba_dragon_knight_breathe_fire:OnSpellStart()
 local ability = self
 local target = self:GetCursorTarget()
@@ -139,8 +135,6 @@ LinkLuaModifier("modifier_imba_dragon_tail_miss", "hero/hero_dragon_knight.lua",
 LinkLuaModifier("modifier_imba_dragon_tail_debuff", "hero/hero_dragon_knight.lua", LUA_MODIFIER_MOTION_NONE)
 
 imba_dragon_knight_dragon_tail = class({})
-
-function imba_dragon_knight_dragon_tail:GetAssociatedPrimaryAbilities() return "imba_dragon_knight_elder_dragon_charge" end
 
 function imba_dragon_knight_dragon_tail:GetCastRange()
 self.cast_range = 150
@@ -410,7 +404,7 @@ LinkLuaModifier( "modifier_imba_elder_dragon_charge", "hero/hero_dragon_knight.l
 imba_dragon_knight_elder_dragon_charge = class({})
 
 function imba_dragon_knight_elder_dragon_charge:IsInnateAbility() return true end
-function imba_dragon_knight_dragon_tail:GetAssociatedPrimaryAbilities() return "imba_dragon_knight_elder_dragon_form" end
+function imba_dragon_knight_elder_dragon_charge:GetAssociatedSecondaryAbilities() return "imba_dragon_knight_elder_dragon_form" end
 
 function imba_dragon_knight_elder_dragon_charge:OnUpgrade()
 	self:SetActivated(false)
@@ -576,6 +570,8 @@ LinkLuaModifier( "modifier_imba_elder_dragon_form", "hero/hero_dragon_knight.lua
 LinkLuaModifier( "modifier_imba_elder_dragon_form_debuff", "hero/hero_dragon_knight.lua", LUA_MODIFIER_MOTION_NONE )
 
 imba_dragon_knight_elder_dragon_form = class({})
+
+function imba_dragon_knight_elder_dragon_form:GetAssociatedPrimaryAbilities() return "imba_dragon_knight_elder_dragon_charge" end
 
 -- this makes the ability passive when it has scepter
 function imba_dragon_knight_elder_dragon_form:GetBehavior()
