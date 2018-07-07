@@ -198,7 +198,7 @@ function Mutation:OnGameRulesStateChange(keys)
 
 			Timers:CreateTimer(60.0, function()
 				if bad_fountain == nil or good_fountain == nil then
-					print("nao cucekd up!!! ")
+					log.error("nao cucekd up!!! ")
 					return 60.0 
 				end
 
