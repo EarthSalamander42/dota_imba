@@ -630,7 +630,6 @@ modifier_imba_elder_dragon_form = class({})
 function modifier_imba_elder_dragon_form:IsHidden() return true end
 function modifier_imba_elder_dragon_form:IsDebuff() return false end
 function modifier_imba_elder_dragon_form:IsPurgable() return false end
---function modifier_imba_elder_dragon_form:RemoveOnDeath() return false end
 
 function modifier_imba_elder_dragon_form:OnCreated( event )
 	self:StartIntervalThink(0.5)
