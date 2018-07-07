@@ -35,37 +35,41 @@ function GameMode:OnUnitFirstSpawn(unit)
 			unit:SetBaseDamageMax(unit:GetBaseDamageMax() * damage_value)
 		else
 			Timers:CreateTimer(FrameTime(), function()
-				if UNIT_EQUIPMENT[unit:GetModelName()] then
-					for _, wearable in pairs(UNIT_EQUIPMENT[unit:GetModelName()]) do
-						local cosmetic = SpawnEntityFromTableSynchronous("prop_dynamic", {model = wearable})
-						cosmetic:FollowEntity(unit, true)
-						if wearable == "models/items/pudge/scorching_talon/scorching_talon.vmdl" then
-							local particle = ParticleManager:CreateParticle("particles/econ/items/pudge/pudge_scorching_talon/pudge_scorching_talon_ambient.vpcf", PATTACH_ABSORIGIN_FOLLOW, unit)
-							ParticleManager:ReleaseParticleIndex(particle)
-						elseif wearable == "models/items/pudge/immortal_arm/immortal_arm.vmdl" then
-							cosmetic:SetMaterialGroup("1")
-						elseif wearable == "models/items/pudge/arcana/pudge_arcana_back.vmdl" then
-							unit:SetMaterialGroup("1") -- zonnoz pet
-							cosmetic:SetMaterialGroup("1") -- zonnoz pet
+					if UNIT_EQUIPMENT[unit:GetModelName()] then
+						for _, wearable in pairs(UNIT_EQUIPMENT[unit:GetModelName()]) do
+							local cosmetic = SpawnEntityFromTableSynchronous("prop_dynamic", {model = wearable})
+							cosmetic:FollowEntity(unit, true)
+							if wearable == "models/items/pudge/scorching_talon/scorching_talon.vmdl" then
+								local particle = ParticleManager:CreateParticle("particles/econ/items/pudge/pudge_scorching_talon/pudge_scorching_talon_ambient.vpcf", PATTACH_ABSORIGIN_FOLLOW, unit)
+								ParticleManager:ReleaseParticleIndex(particle)
+							elseif wearable == "models/items/pudge/immortal_arm/immortal_arm.vmdl" then
+								cosmetic:SetMaterialGroup("1")
+							elseif wearable == "models/items/pudge/arcana/pudge_arcana_back.vmdl" then
+								unit:SetMaterialGroup("1") -- zonnoz pet
+								cosmetic:SetMaterialGroup("1") -- zonnoz pet
 
-							ParticleManager:CreateParticle("particles/econ/items/pudge/pudge_arcana/pudge_arcana_back_ambient.vpcf", PATTACH_ABSORIGIN_FOLLOW, cosmetic)
-							ParticleManager:CreateParticle("particles/econ/items/pudge/pudge_arcana/pudge_arcana_back_ambient_beam.vpcf", PATTACH_ABSORIGIN_FOLLOW, cosmetic)
-							ParticleManager:CreateParticle("particles/econ/items/pudge/pudge_arcana/pudge_arcana_ambient_flies.vpcf", PATTACH_ABSORIGIN_FOLLOW, unit)
+								ParticleManager:CreateParticle("particles/econ/items/pudge/pudge_arcana/pudge_arcana_back_ambient.vpcf", PATTACH_ABSORIGIN_FOLLOW, cosmetic)
+								ParticleManager:CreateParticle("particles/econ/items/pudge/pudge_arcana/pudge_arcana_back_ambient_beam.vpcf", PATTACH_ABSORIGIN_FOLLOW, cosmetic)
+								ParticleManager:CreateParticle("particles/econ/items/pudge/pudge_arcana/pudge_arcana_ambient_flies.vpcf", PATTACH_ABSORIGIN_FOLLOW, unit)
+							end
 						end
 					end
-				end
-			end)
+				end)
 		end
 	end
 
-	-- Speed Freaks mutation modifier
-	if IMBA_MUTATION["terrain"] == "speed_freaks" then
-		unit:AddNewModifier(unit, nil, "modifier_mutation_speed_freaks", {})
-	end
+	if IsMutationMap() then
 
-	-- Alien Incubation mutation modifier
-	if IMBA_MUTATION["negative"] == "alien_incubation" then
-		unit:AddNewModifier(unit, nil, "modifier_mutation_alien_incubation", {})
+		-- Speed Freaks mutation modifier
+		if IMBA_MUTATION["terrain"] == "speed_freaks" then
+			unit:AddNewModifier(unit, nil, "modifier_mutation_speed_freaks", {})
+		end
+
+		-- Alien Incubation mutation modifier
+		if IMBA_MUTATION["negative"] == "alien_incubation" then
+			unit:AddNewModifier(unit, nil, "modifier_mutation_alien_incubation", {})
+		end
+
 	end
 end
 

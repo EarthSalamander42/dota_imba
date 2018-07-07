@@ -391,9 +391,9 @@ function HeroSelection:SelectHero(playerId, hero)
 
 						if top_imr_string then
 							local top_imr = CustomNetTables:GetTableValue("top_imr5v5", tostring(i))
-							print(top_imr.SteamID64)
+							log.debug(top_imr.SteamID64)
 							if tostring(PlayerResource:GetSteamID(id)) == top_imr.SteamID64 then
-								print("Found a top leaderboard!")
+								log.debug("Found a top leaderboard!")
 								if GetMapName() == "imba_ranked_5v5" then
 									Say(nil, PlayerResource:GetPlayerName(id).." is top "..i.." IMR! ("..math.floor(top_imr.IMR_5v5)..")", false)
 								elseif GetMapName() == "imba_ranked_10v10" then

@@ -20,9 +20,9 @@ function GameMode:OnHeroFirstSpawn(hero)
 	if api.imba.is_donator(PlayerResource:GetSteamID(hero:GetPlayerID())) and PlayerResource:GetConnectionState(hero:GetPlayerID()) ~= 1 then
 		if hero:GetUnitName() ~= FORCE_PICKED_HERO then
 			Timers:CreateTimer(1.5, function()
-				local steam_id = tostring(PlayerResource:GetSteamID(hero:GetPlayerID()))
-				DonatorCompanion(hero:GetPlayerID(), api.imba.get_player_info(steam_id).companion_file)
-			end)
+					local steam_id = tostring(PlayerResource:GetSteamID(hero:GetPlayerID()))
+					DonatorCompanion(hero:GetPlayerID(), api.imba.get_player_info(steam_id).companion_file)
+				end)
 		end
 	end
 
@@ -46,16 +46,16 @@ function GameMode:OnHeroFirstSpawn(hero)
 		if not IsInToolsMode() then
 			local steam_id = tostring(PlayerResource:GetSteamID(hero:GetPlayerID()))
 			if steam_id ~= "0" and api.imba.is_donator(steam_id) ~= false then
-	--			print("set player original team of ID "..hero:GetPlayerID().." to "..hero:GetTeamNumber())
-	--			PLAYER_TEAM[hero:GetPlayerID()] = hero:GetTeamNumber()
+				--			print("set player original team of ID "..hero:GetPlayerID().." to "..hero:GetTeamNumber())
+				--			PLAYER_TEAM[hero:GetPlayerID()] = hero:GetTeamNumber()
 				hero:SetCustomHealthLabel("#imba_donator_label_"..api.imba.is_donator(steam_id), DONATOR_COLOR[api.imba.is_donator(steam_id)][1], DONATOR_COLOR[api.imba.is_donator(steam_id)][2], DONATOR_COLOR[api.imba.is_donator(steam_id)][3])
 
 				-- needs a timer else GetSelectedHeroEntity is nil
 				Timers:CreateTimer(0.3, function()
-					if api.imba.get_player_info(steam_id) then
-						DonatorStatue(hero:GetPlayerID(), api.imba.get_player_info(steam_id).ingame_statue_file)
-					end
-				end)
+						if api.imba.get_player_info(steam_id) then
+							DonatorStatue(hero:GetPlayerID(), api.imba.get_player_info(steam_id).ingame_statue_file)
+						end
+					end)
 			end
 		end
 	end
@@ -70,11 +70,11 @@ function GameMode:OnHeroFirstSpawn(hero)
 			local tempest_double_ability = hero:FindAbilityByName("arc_warden_tempest_double")
 			tempest_double_ability:SetLevel(4)
 			Timers:CreateTimer(0.1, function()
-				if not hero:HasModifier("modifier_arc_warden_tempest_double") then
-					tempest_double_ability:CastAbility()
-					tempest_double_ability:SetLevel(1)
-				end
-			end)
+					if not hero:HasModifier("modifier_arc_warden_tempest_double") then
+						tempest_double_ability:CastAbility()
+						tempest_double_ability:SetLevel(1)
+					end
+				end)
 		end
 
 		if hero:HasModifier("modifier_arc_warden_tempest_double") then
@@ -175,19 +175,21 @@ function GameMode:OnHeroFirstSpawn(hero)
 		hero.vengeance_aura_target = nil
 	end
 
-	-- Speed Freaks mutation modifier
-	if IMBA_MUTATION["terrain"] == "speed_freaks" then
-		hero:AddNewModifier(hero, nil, "modifier_mutation_speed_freaks", {})
-	end
+	if IsMutationMap() then
+		-- Speed Freaks mutation modifier
+		if IMBA_MUTATION["terrain"] == "speed_freaks" then
+			hero:AddNewModifier(hero, nil, "modifier_mutation_speed_freaks", {})
+		end
 
-	-- Super Fervor mutation modifier
-	if IMBA_MUTATION["positive"] == "super_fervor" then
-		hero:AddNewModifier(hero, nil, "modifier_mutation_super_fervor", {})
-	end
+		-- Super Fervor mutation modifier
+		if IMBA_MUTATION["positive"] == "super_fervor" then
+			hero:AddNewModifier(hero, nil, "modifier_mutation_super_fervor", {})
+		end
 
-	-- Alien Incubation mutation modifier
-	if IMBA_MUTATION["negative"] == "alien_incubation" then
-		hero:AddNewModifier(hero, nil, "modifier_mutation_alien_incubation", {})
+		-- Alien Incubation mutation modifier
+		if IMBA_MUTATION["negative"] == "alien_incubation" then
+			hero:AddNewModifier(hero, nil, "modifier_mutation_alien_incubation", {})
+		end
 	end
 end
 
@@ -197,8 +199,8 @@ function GameMode:OnHeroSpawned(hero)
 	if hero:HasModifier("modifier_ghost_revenant_ghost_immolation_debuff") then
 		hero:RemoveModifierByName("modifier_ghost_revenant_ghost_immolation_debuff")
 		Timers:CreateTimer(0.2, function()
-			hero:SetHealth(100000)
-		end)
+				hero:SetHealth(100000)
+			end)
 	end
 
 	if hero:GetUnitName() == "npc_dota_hero_meepo" then
@@ -214,8 +216,8 @@ function GameMode:OnHeroSpawned(hero)
 	end
 
 	Timers:CreateTimer(1.0, function() -- Silencer fix
-		if hero:HasModifier("modifier_silencer_int_steal") then
-			hero:RemoveModifierByName("modifier_silencer_int_steal")
-		end
-	end)
+			if hero:HasModifier("modifier_silencer_int_steal") then
+				hero:RemoveModifierByName("modifier_silencer_int_steal")
+			end
+		end)
 end

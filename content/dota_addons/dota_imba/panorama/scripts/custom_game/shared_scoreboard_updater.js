@@ -528,14 +528,22 @@ function ScoreboardUpdater_GetSortedTeamInfoList(scoreboardHandle) {
 }
 
 var playerInfo = null;
+var playerInfoPending = [];
 
 // returns true if available
 function LoadPlayerInfo(cb) {
 	
 	$.Msg("Loading player info");
 
-	if (playerInfo !== null)
+	if (playerInfo !== null) {
 		cb(playerInfo);
+		return;
+	}
+
+	playerInfoPending.push(cb);
+
+	if (playerInfoPending.length > 1)
+		return;
 
 	// get all player ids
 	var steamids = [];
@@ -545,7 +553,10 @@ function LoadPlayerInfo(cb) {
 
 	api.multi_player_info(steamids).then(function (data) {
 		playerInfo = data;
-		cb(playerInfo);
+		playerInfoPending.forEach(function (fn) {
+			fn(playerInfo);
+		});
+		playerInfoPending = [];
 	}).catch(function (err) {
 		$.Msg("Cannot load player info: " + err.message);
 	});
