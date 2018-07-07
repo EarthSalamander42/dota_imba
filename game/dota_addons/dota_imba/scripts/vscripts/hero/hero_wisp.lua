@@ -167,11 +167,7 @@ function modifier_imba_wisp_tether:OnIntervalThink()
 
 		-- handle health and mana
 		if self.update_timer > self.time_to_send then 
-			
-			self.target:Heal(self.total_gained_health * self.tether_heal_amp, self:GetAbility())
 			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, self.target, self.total_gained_health * self.tether_heal_amp, nil)	
-
-			self.target:GiveMana(self.total_gained_mana * self.tether_heal_amp)
 			SendOverheadEventMessage(nil, OVERHEAD_ALERT_MANA_ADD, self.target, self.total_gained_mana * self.tether_heal_amp, nil)
 
 			self.total_gained_mana 		= 0
@@ -195,6 +191,7 @@ end
 
 function modifier_imba_wisp_tether:OnHealthGained(keys)
 	if keys.unit == self:GetParent() then
+		self.target:Heal(keys.gain * self.tether_heal_amp, self:GetAbility())
 		-- in order to avoid spam in "OnGained" we group it up in total_gained. Value is sent and reset each 1s
 		self.total_gained_health = self.total_gained_health + keys.gain
 	end
@@ -202,6 +199,7 @@ end
 
 function modifier_imba_wisp_tether:OnManaGained(keys)
 	if keys.unit == self:GetParent() then
+		self.target:GiveMana(keys.gain * self.tether_heal_amp)
 		-- in order to avoid spam in "OnGained" we group it up in total_gained. Value is sent and reset each 1s
 		self.total_gained_mana = self.total_gained_mana + keys.gain
 	end
@@ -1293,6 +1291,9 @@ end
 modifier_imba_wisp_overcharge_aura = class({})
 function modifier_imba_wisp_overcharge_aura:IsHidden() return true end
 function modifier_imba_wisp_overcharge_aura:IsPurgable() return false end
+function modifier_imba_wisp_overcharge_aura:IsNetherWardStealable()
+	return false
+end
 function modifier_imba_wisp_overcharge_aura:OnCreated()
 	if IsServer() then 
 		self.ability 				= self:GetAbility()
@@ -1545,6 +1546,11 @@ modifier_imba_wisp_relocate_cast_delay = class({})
 --	Relocate modifier	--
 --------------------------
 modifier_imba_wisp_relocate = class({})
+function modifier_imba_wisp_relocate:IsDebuff() return false end
+function modifier_imba_wisp_relocate:IsHidden() return true end
+function modifier_imba_wisp_relocate:IsPurgable() return false end
+function modifier_imba_wisp_relocate:IsStunDebuff() return false end
+function modifier_imba_wisp_relocate:IsPurgeException() return false end
 function modifier_imba_wisp_relocate:OnCreated(params)
 	if IsServer() then
 		local caster 		= self:GetCaster()
@@ -1645,57 +1651,5 @@ function imba_wisp_relocate_break:OnSpellStart()
 	if IsServer() then
 		local caster = self:GetCaster()
 		caster:RemoveModifierByName("modifier_imba_wisp_relocate")
-	end
-end
-
-------------------------------
---	IO AOE ATTACK TALENT	--
-------------------------------
-modifier_special_bonus_imba_wisp_5 = class({
-	IsHidden      = function(self) return true  end,
-	RemoveOnDeath = function(self) return false end })
-
-function modifier_special_bonus_imba_wisp_5:DeclareFunctions()
-	local decFuncs = {
-		MODIFIER_EVENT_ON_ATTACK_LANDED
-	}
-
-	return decFuncs
-end
-
-function modifier_special_bonus_imba_wisp_5:OnAttackLanded( params )
-	if IsServer() then
-		local parent = self:GetParent()
-		local target = params.target
-		if parent == params.attacker and target:GetTeamNumber() ~= parent:GetTeamNumber() then
-			local splash_radius 	= parent:FindTalentValue("special_bonus_imba_wisp_5", "splash_radius")
-			local splash_damage_pct = parent:FindTalentValue("special_bonus_imba_wisp_5", "splash_damage_pct")
-
-			local nearby_enemy_units = FindUnitsInRadius(	
-				parent:GetTeam(), 
-				target:GetAbsOrigin(), 
-				nil, 
-				splash_radius, 
-				DOTA_UNIT_TARGET_TEAM_ENEMY,
-				DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
-				DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS, 
-				FIND_ANY_ORDER, 
-				false)
-
-				local damage_table 			= {}
-				damage_table.attacker 		= parent
-				damage_table.ability 		= nil
-				damage_table.damage_type 	= DAMAGE_TYPE_PHYSICAL 
-				damage_table.damage 		= parent:GetAttackDamage() * (splash_damage_pct / 100)
-
-			if nearby_enemy_units ~= nil then
-			for _,enemy in pairs(nearby_enemy_units) do
-				if enemy ~= parent and enemy ~= target then
-						damage_table.victim = enemy
-						ApplyDamage(damage_table)
-					end
-				end
-			end
-		end
 	end
 end
