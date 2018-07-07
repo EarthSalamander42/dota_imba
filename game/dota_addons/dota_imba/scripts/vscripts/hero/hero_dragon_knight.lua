@@ -509,12 +509,6 @@ function imba_dragon_knight_elder_dragon_charge:OnProjectileHit(target, location
 	end
 end
 
-function imba_dragon_knight_elder_dragon_charge:GetIntrinsicModifierName()
-	if self:GetCaster():HasScepter() then
-		return "modifier_imba_elder_dragon_charge"
-	end
-end
-
 modifier_imba_elder_dragon_charge = class({})
 
 function modifier_imba_elder_dragon_charge:IsDebuff() return false end
@@ -636,7 +630,7 @@ modifier_imba_elder_dragon_form = class({})
 function modifier_imba_elder_dragon_form:IsHidden() return true end
 function modifier_imba_elder_dragon_form:IsDebuff() return false end
 function modifier_imba_elder_dragon_form:IsPurgable() return false end
-function modifier_imba_elder_dragon_form:RemoveOnDeath() return false end
+--function modifier_imba_elder_dragon_form:RemoveOnDeath() return false end
 
 function modifier_imba_elder_dragon_form:OnCreated( event )
 	self:StartIntervalThink(0.5)
@@ -723,7 +717,7 @@ if IsServer() then
 		if hero:HasModifier("modifier_dragon_knight_dragon_form") and hero:FindModifierByName("modifier_dragon_knight_dragon_form"):GetDuration() == -1 and modifier_duration == -1 and self.level == level then
 			return
 		end
-
+		
 		if level >= 1 then
 			hero:AddNewModifier(hero, ability, "modifier_dragon_knight_dragon_form", {duration = modifier_duration})
 			hero:AddNewModifier(hero, ability, "modifier_dragon_knight_corrosive_breath", {duration = modifier_duration})
