@@ -175,8 +175,20 @@ function Mutation:OnGameRulesStateChange(keys)
 		end
 	elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
 		if IMBA_MUTATION["negative"] == "periodic_spellcast" then
-			local random_int = RandomInt(1, #IMBA_MUTATION_PERIODIC_SPELLS)
+			local buildings = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, Vector(0,0,0), nil, 20000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
+			local good_fountain = nil
+			local bad_fountain = nil
 
+			for _, building in pairs(buildings) do
+				local building_name = building:GetName()
+				if string.find(building_name, "ent_dota_fountain_bad") then
+					bad_fountain = building
+				elseif string.find(building_name, "ent_dota_fountain_good") then
+					good_fountain = building
+				end
+			end
+
+			local random_int = RandomInt(1, #IMBA_MUTATION_PERIODIC_SPELLS)
 			Timers:CreateTimer(55.0, function()
 				random_int = RandomInt(1, #IMBA_MUTATION_PERIODIC_SPELLS)
 				Notifications:TopToAll({text = IMBA_MUTATION_PERIODIC_SPELLS[random_int][2].." Mutation in 5 seconds...", duration = 5.0, style = {color = IMBA_MUTATION_PERIODIC_SPELLS[random_int][3]}})
@@ -185,11 +197,16 @@ function Mutation:OnGameRulesStateChange(keys)
 			end)
 
 			Timers:CreateTimer(60.0, function()
+				if bad_fountain == nil or good_fountain == nil then
+					log.error("nao cucekd up!!! ")
+					return 60.0 
+				end
+
 				for _, hero in pairs(HeroList:GetAllHeroes()) do
-					local caster = Entities:FindByName(nil, "dota_badguys_fort")
+					local caster = bad_fountain
 
 					if (hero:GetTeamNumber() == 3 and IMBA_MUTATION_PERIODIC_SPELLS[random_int][3] == "Red") or (hero:GetTeamNumber() == 2 and IMBA_MUTATION_PERIODIC_SPELLS[random_int][3] == "Green") then
-						caster = Entities:FindByName(nil, "dota_goodguys_fort")
+						caster = good_fountain
 					end
 					
 					hero:AddNewModifier(caster, caster, "modifier_mutation_"..IMBA_MUTATION_PERIODIC_SPELLS[random_int][1], {duration=IMBA_MUTATION_PERIODIC_SPELLS[random_int][4]})
