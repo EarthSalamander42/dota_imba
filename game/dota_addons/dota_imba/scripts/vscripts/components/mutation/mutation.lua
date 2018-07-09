@@ -217,7 +217,7 @@ function Mutation:ChooseMutation(type, table, count)
 			table[mutation] = true
 
 			if IsInToolsMode() then
-				IMBA_MUTATION["positive"] = "greed_is_good"
+				IMBA_MUTATION["positive"] = "super_fervor"
 				IMBA_MUTATION["negative"] = "alien_incubation"
 				IMBA_MUTATION["terrain"] = "tug_of_war"
 			end
