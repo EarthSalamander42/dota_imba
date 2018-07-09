@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "after": "^0.8.2",
     "npm": "^5.7.1",
     "parse-kv": "^0.3.1",
     "request": "^2.83.0"
