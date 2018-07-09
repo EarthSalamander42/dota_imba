@@ -591,6 +591,7 @@ IGNORE_FOUNTAIN_UNITS = {
 	"npc_dota_hero_dummy_dummy",
 	"npc_imba_donator_companion",
 	"npc_dota_wisp_spirit",
+	"npc_dota_mutation_golem"
 }
 
 RESTRICT_FOUNTAIN_UNITS = {

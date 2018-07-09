@@ -2,6 +2,7 @@ modifier_mutation_alien_incubation = class({})
 
 function modifier_mutation_alien_incubation:IsHidden() return true end
 function modifier_mutation_alien_incubation:RemoveOnDeath() return false end
+function modifier_mutation_alien_incubation:IsPurgable() return false end
 
 function modifier_mutation_alien_incubation:DeclareFunctions()
 	local funcs = {

@@ -59,6 +59,8 @@ TERRAIN_MUTATION_LIST["call_down"] = false
 TERRAIN_MUTATION_LIST["gift_exchange"] = false
 TERRAIN_MUTATION_LIST["speed_freaks"] = false
 TERRAIN_MUTATION_LIST["river_flows"] = false
+TERRAIN_MUTATION_LIST["wormhole"] = false
+TERRAIN_MUTATION_LIST["tug_of_war"] = false
 
 -- Disabled
 -- TERRAIN_MUTATION_LIST["no_trees"] = false
