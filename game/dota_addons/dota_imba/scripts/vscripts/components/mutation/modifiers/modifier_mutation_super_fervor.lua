@@ -2,6 +2,7 @@ modifier_mutation_super_fervor = class({})
 
 function modifier_mutation_super_fervor:IsHidden() return true end
 function modifier_mutation_super_fervor:RemoveOnDeath() return false end
+function modifier_mutation_super_fervor:IsPurgable() return false end
 
 function modifier_mutation_super_fervor:DeclareFunctions()
 	local funcs = {

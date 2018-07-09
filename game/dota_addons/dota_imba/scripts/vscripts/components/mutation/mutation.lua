@@ -37,6 +37,7 @@ function Mutation:Init()
 	LinkLuaModifier("modifier_mutation_super_fervor", "components/mutation/modifiers/modifier_mutation_super_fervor.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_mutation_greed_is_good", "components/mutation/modifiers/modifier_mutation_greed_is_good.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_mutation_alien_incubation", "components/mutation/modifiers/modifier_mutation_alien_incubation.lua", LUA_MODIFIER_MOTION_NONE )
+	LinkLuaModifier("modifier_mutation_wormhole_cooldown", "components/mutation/modifiers/modifier_mutation_wormhole_cooldown.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_mutation_sun_strike", "components/mutation/modifiers/periodic_spellcast/modifier_mutation_sun_strike.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_mutation_call_down", "components/mutation/modifiers/modifier_mutation_call_down.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_mutation_thundergods_wrath", "components/mutation/modifiers/periodic_spellcast/modifier_mutation_thundergods_wrath.lua", LUA_MODIFIER_MOTION_NONE )
@@ -65,6 +66,66 @@ function Mutation:Init()
 	IMBA_MUTATION_PERIODIC_SPELLS[7] = {"stampede", "Stampede", "Green", 5.0}
 	IMBA_MUTATION_PERIODIC_SPELLS[8] = {"bloodlust", "Bloodlust", "Green", 30.0}
 	IMBA_MUTATION_PERIODIC_SPELLS[9] = {"aphotic_shield", "Aphotic Shield", "Green", 15.0}
+
+	IMBA_MUTATION_WORMHOLE_COLORS = {}
+	IMBA_MUTATION_WORMHOLE_COLORS[1] = Vector(100, 0, 0)
+	IMBA_MUTATION_WORMHOLE_COLORS[2] = Vector(0, 100, 0)
+	IMBA_MUTATION_WORMHOLE_COLORS[3] = Vector(0, 0, 100)
+	IMBA_MUTATION_WORMHOLE_COLORS[4] = Vector(100, 100, 0)
+	IMBA_MUTATION_WORMHOLE_COLORS[5] = Vector(100, 0, 100)
+	IMBA_MUTATION_WORMHOLE_COLORS[6] = Vector(0, 100, 100)
+	IMBA_MUTATION_WORMHOLE_COLORS[7] = Vector(0, 100, 100)
+	IMBA_MUTATION_WORMHOLE_COLORS[8] = Vector(100, 0, 100)
+	IMBA_MUTATION_WORMHOLE_COLORS[9] = Vector(100, 100, 0)
+	IMBA_MUTATION_WORMHOLE_COLORS[10] = Vector(0, 0, 100)
+	IMBA_MUTATION_WORMHOLE_COLORS[11] = Vector(0, 100, 0)
+	IMBA_MUTATION_WORMHOLE_COLORS[12] = Vector(100, 0, 0)
+
+	IMBA_MUTATION_WORMHOLE_POSITIONS = {}
+	IMBA_MUTATION_WORMHOLE_POSITIONS[1] = Vector(-2471, -5025, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[2] = Vector(-576, -4320, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[3] = Vector(794, -3902, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[4] = Vector(2630, -3700, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[5] = Vector(3203, -6064, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[6] = Vector(1111, -5804, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[7] = Vector(4419, -5114, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[8] = Vector(6156, -4831, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[9] = Vector(6084, -3022, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[10] = Vector(4422, -1765, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[11] = Vector(6186, -654, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[12] = Vector(4754, -84, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[13] = Vector(3318, -58, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[14] = Vector(5008, 1799, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[15] = Vector(1534, -649, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[16] = Vector(2641, -2003, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[17] = Vector(3939, 2279, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[18] = Vector(2309, 4643, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[19] = Vector(843, 2300, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[20] = Vector(-544, -361, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[21] = Vector(354, -1349, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[22] = Vector(289, -2559, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[23] = Vector(-1534, -2893, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[24] = Vector(-5366, -2570, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[25] = Vector(-5238, -1727, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[26] = Vector(-3363, -1210, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[27] = Vector(-4535, 10, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[28] = Vector(-4420, 1351, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[29] = Vector(-6161, 440, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[30] = Vector(-2110, 376, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[31] = Vector(-840, 1384, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[32] = Vector(-388, 2537, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[33] = Vector(-36, 4042, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[34] = Vector(-1389, 4325, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[35] = Vector(-2812, 3633, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[36] = Vector(-4574, 4804, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[37] = Vector(-6339, 3841, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[38] = Vector(-5971, 5455, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[39] = Vector(-3099, 6112, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[40] = Vector(-1606, 6103, 0)
+
+	--IMBA_MUTATION_WORMHOLE_INTERVAL = 600
+	--IMBA_MUTATION_WORMHOLE_DURATION = 600
+	IMBA_MUTATION_WORMHOLE_PREVENT_DURATION = 3
     
 --[     TO DO
 --	"telekinesis",
@@ -115,6 +176,7 @@ function Mutation:Precache(context)
 
 	-- Periodic Spellcast
 	PrecacheResource("particle", "particles/econ/items/zeus/arcana_chariot/zeus_arcana_thundergods_wrath_start_bolt_parent.vpcf", context)
+	PrecacheResource("particle", "particles/ambient/wormhole_circle.vpcf", context)
 
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts", context)
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_ancient_apparition.vsndevts", context)
@@ -146,7 +208,7 @@ function Mutation:ChooseMutation(type, table, count)
 			if IsInToolsMode() then
 				IMBA_MUTATION["positive"] = "super_fervor"
 				IMBA_MUTATION["negative"] = "periodic_spellcast"
-				IMBA_MUTATION["terrain"] = "river_flows"
+				IMBA_MUTATION["terrain"] = "wormhole"
 			end
 
 			return
@@ -343,6 +405,59 @@ function Mutation:OnGameRulesStateChange(keys)
 		if IMBA_MUTATION["terrain"] == "call_down" then
 			local dummy_unit = CreateUnitByName("npc_dummy_unit_perma", Vector(0, 0, 0), true, nil, nil, DOTA_TEAM_NEUTRALS)
 			dummy_unit:AddNewModifier(dummy_unit, nil, "modifier_mutation_call_down", {})
+		end
+
+		if IMBA_MUTATION["terrain"] == "wormhole" then
+			
+			-- Assign initial wormhole positions
+			local current_wormholes = {}
+			for i = 1, 12 do
+				local random_int = RandomInt(1, #IMBA_MUTATION_WORMHOLE_POSITIONS)
+				current_wormholes[i] = IMBA_MUTATION_WORMHOLE_POSITIONS[random_int]
+				table.remove(IMBA_MUTATION_WORMHOLE_POSITIONS, random_int)
+			end
+
+			-- Create wormhole particles
+			local wormhole_particles = {}
+			for i = 1, 12 do
+				wormhole_particles[i] = ParticleManager:CreateParticle("particles/ambient/wormhole_circle.vpcf", PATTACH_CUSTOMORIGIN, nil)
+				ParticleManager:SetParticleControl(wormhole_particles[i], 0, GetGroundPosition(current_wormholes[i], nil) + Vector(0, 0, 20))
+				ParticleManager:SetParticleControl(wormhole_particles[i], 2, IMBA_MUTATION_WORMHOLE_COLORS[i])
+				ParticleManager:ReleaseParticleIndex(wormhole_particles[i])
+			end
+
+			-- Teleport loop
+			Timers:CreateTimer(0, function()
+
+				-- Find units to teleport
+				for i = 1, 12 do
+					local units = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, current_wormholes[i], nil, 150, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
+					for _, unit in pairs(units) do
+						if not unit:HasModifier("modifier_mutation_wormhole_cooldown") then
+							if unit:IsHero() then
+								unit:EmitSound("Wormhole.Disappear")
+								Timers:CreateTimer(0.03, function()
+									unit:EmitSound("Wormhole.Appear")
+								end)
+							else
+								unit:EmitSound("Wormhole.CreepDisappear")
+								Timers:CreateTimer(0.03, function()
+									unit:EmitSound("Wormhole.CreepAppear")
+								end)
+							end
+							unit:AddNewModifier(unit, nil, "modifier_mutation_wormhole_cooldown", {duration = IMBA_MUTATION_WORMHOLE_PREVENT_DURATION})
+							FindClearSpaceForUnit(unit, current_wormholes[13-i], true)
+							if unit.GetPlayerID and unit:GetPlayerID() then
+								PlayerResource:SetCameraTarget(unit:GetPlayerID(), unit)
+								Timers:CreateTimer(0.03, function()
+									PlayerResource:SetCameraTarget(unit:GetPlayerID(), nil)
+								end)
+							end
+						end
+					end
+				end
+				return 0.5
+			end)
 		end
 
 		--[[
