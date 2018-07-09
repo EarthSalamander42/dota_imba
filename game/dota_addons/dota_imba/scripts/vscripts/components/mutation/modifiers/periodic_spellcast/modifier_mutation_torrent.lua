@@ -59,12 +59,12 @@ function modifier_mutation_torrent:OnCreated()
 
 			-- Apply knockback on enemies hit
 			enemy:RemoveModifierByName("modifier_knockback")
-			enemy:AddNewModifier(caster, self, "modifier_knockback", knockback)
-			enemy:AddNewModifier(caster, self, "modifier_phased", {duration = self.stun_duration})
+			enemy:AddNewModifier(self:GetCaster(), self, "modifier_knockback", knockback)
+			enemy:AddNewModifier(self:GetCaster(), self, "modifier_phased", {duration = self.stun_duration})
 
 			-- Deals tick damage tick_count times
 			Timers:CreateTimer(function()
-				if current_ticks < self.tick_count then
+				if current_ticks < self.tick_count and not self:GetCaster():IsNull() then
 					log.debug(current_ticks, self.tick_count)
 					log.debug("Caster:", self:GetCaster())
 					ApplyDamage({victim = enemy, attacker = self:GetCaster(), damage = self.damage / self.tick_count, damage_type = DAMAGE_TYPE_MAGICAL})
@@ -73,15 +73,15 @@ function modifier_mutation_torrent:OnCreated()
 				end
 			end)
 
-			enemy:AddNewModifier(caster, self, "modifier_mutation_torrent_slow", {duration = 8.0})
+			enemy:AddNewModifier(self:GetCaster(), self, "modifier_mutation_torrent_slow", {duration = 8.0})
 		end
 
 		-- Creates the post-ability sound effect
-		EmitSoundOnLocationWithCaster(self.pos, "Ability.Torrent", caster)
+		EmitSoundOnLocationWithCaster(self.pos, "Ability.Torrent", self:GetCaster())
 
 		-- Draws the particle
 		local particle = "particles/hero/kunkka/torrent_splash.vpcf"
-		self.particle = ParticleManager:CreateParticle(particle, PATTACH_CUSTOMORIGIN, caster)
+		self.particle = ParticleManager:CreateParticle(particle, PATTACH_CUSTOMORIGIN, self:GetCaster())
 		ParticleManager:SetParticleControl(self.particle, 0, self.pos)
 		ParticleManager:SetParticleControl(self.particle, 1, Vector(self.radius, 0, 0))
 		ParticleManager:ReleaseParticleIndex(self.particle)
@@ -103,6 +103,9 @@ end
 LinkLuaModifier("modifier_mutation_torrent_slow", "components/mutation/modifiers/periodic_spellcast/modifier_mutation_torrent.lua", LUA_MODIFIER_MOTION_NONE )
 
 modifier_mutation_torrent_slow = class({})
+function modifier_mutation_torrent_slow:GetTexture()
+	return "kunkka_torrent"
+end
 
 function modifier_mutation_torrent_slow:IsHidden() return false end
 function modifier_mutation_torrent_slow:IsDebuff() return true end
