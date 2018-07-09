@@ -2812,6 +2812,9 @@
 "DOTA_Tooltip_ability_imba_nevermore_necromastery_max_souls"            "MAX SOULS:"
 "DOTA_Tooltip_ability_imba_nevermore_necromastery_max_temporary_souls_pct"          "%TEMPORARY SOULS:"
 
+"DOTA_Tooltip_modifier_imba_necromastery_souls"					"Necromastery"
+"DOTA_Tooltip_modifier_imba_necromastery_souls_Description"		"Stored souls grants additional bonus damage."
+
 ////===============================================================================================================
 // Shadow Fiend's Presence of the Dark Lord
 ////===============================================================================================================
