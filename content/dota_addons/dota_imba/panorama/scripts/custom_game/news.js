@@ -19,8 +19,6 @@
 			dataType : "json",
 			success : function(data) {
 
-//				$.Msg(data.data);
-
 				var lang = data.data.languages[defaultLanguage];
 				ui.title.text = lang.title;
 				ui.text.text = lang.text;

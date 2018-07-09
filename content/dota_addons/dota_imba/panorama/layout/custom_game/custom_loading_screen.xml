@@ -18,7 +18,7 @@
 					<Label id="imba-loading-map-text" text="Loading ..."/>
 					<Label id="imba-loading-content-text" html="true" text="Loading ..." />
 					<Button id="imba-loading-link" onactivate="link_clicked();">
-						<Label id="imba-loading-link-text" text="Test" />
+						<Label id="imba-loading-link-text" text="Loading ..." />
 					</Button>
 				</Panel>
 			</Panel>

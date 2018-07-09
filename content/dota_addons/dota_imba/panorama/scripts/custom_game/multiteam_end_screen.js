@@ -51,26 +51,24 @@ if (placeholder == true) {
 
 function EndScoreboard() {
 	GameEvents.Subscribe("end_game", function (args) {
-//		$.Msg(args);
 
 		HideIMR($.GetContextPanel())
-
-		var map_info = Game.GetMapInfo();
 
 		// Hide all other UI
 		var MainPanel = $.GetContextPanel().GetParent().GetParent().GetParent().GetParent()
 		MainPanel.FindChildTraverse("topbar").style.visibility = "collapse";
 		MainPanel.FindChildTraverse("minimap_container").style.visibility = "collapse";
 		MainPanel.FindChildTraverse("lower_hud").style.visibility = "collapse";
-//		MainPanel.FindChildTraverse("HudChat").style.visibility = "collapse";
+		// MainPanel.FindChildTraverse("HudChat").style.visibility = "collapse";
 		MainPanel.FindChildTraverse("NetGraph").style.visibility = "collapse";
 		MainPanel.FindChildTraverse("quickstats").style.visibility = "collapse";
 
 		// Gather info 
 		var playerResults = args.players;
 		var serverInfo = args.info;
-		var xpInfo = args.xp_info;
 		var mapInfo = Game.GetMapInfo();
+
+		// player ids
 		var radiantPlayerIds = Game.GetPlayerIDsOnTeam(DOTATeam_t.DOTA_TEAM_GOODGUYS);
 		var direPlayerIds = Game.GetPlayerIDsOnTeam(DOTATeam_t.DOTA_TEAM_BADGUYS);
 		var custom1PlayerIds = Game.GetPlayerIDsOnTeam(DOTATeam_t.DOTA_TEAM_CUSTOM_1);
@@ -133,30 +131,22 @@ function EndScoreboard() {
 
 		// sort a player by merging results from server and using getplayerinfo  
 		var loadPlayer = function (id) {
-			var playerInfo = Game.GetPlayerInfo(id);
-			var resultInfo = null;
-			var xp = null;
+			var info = Game.GetPlayerInfo(id);
 
-			for (var i in playerResults) {
-				if (playerInfo.player_steamid == playerResults[i].steamid)
-					resultInfo = playerResults[i];
+			var result = null;
+			for (var k in playerResults) {
+				if (playerResults[k].steamid == info.player_steamid)
+					return {
+						id: id,
+						info: info,
+						result: playerResults[k]
+					};
 			}
+	
+			$.Msg("WTF");
+			$.Msg(playerResults);
 
-//			$.Msg(xpInfo);
-			for (var i in xpInfo) {
-				
-//				$.Msg(xpInfo[i]);
-				
-				if (playerInfo.player_steamid == xpInfo[i].steamid)
-					xp = xpInfo[i];
-			}
-
-			return {
-				id: id,
-				info: playerInfo,
-				result: resultInfo,
-				xp: xp
-			};
+			return null;
 		};
 
 		// Load players = sort our data we got from above
@@ -229,10 +219,8 @@ function EndScoreboard() {
 			values.level.text = player.info.player_level;
 
 			// IMR
-			var map_info = Game.GetMapInfo();
-
 			if (player.result != null) {
-				if (map_info.map_display_name == "imba_ranked_5v5") {
+				if (mapInfo.map_display_name == "imba_ranked_5v5") {
 					values.imr.style.visibility = "visible";
 
 					if (player.result.imr5v5_calibrating)
@@ -252,7 +240,7 @@ function EndScoreboard() {
 							values.imr.AddClass("es-text-red");
 						}
 					}
-				} else if (map_info.map_display_name == "imba_ranked_10v10") {
+				} else if (mapInfo.map_display_name == "imba_ranked_10v10") {
 					values.imr10v10.style.visibility = "visible";
 					
 					if (player.result.imr10v10_calibrating)
@@ -272,7 +260,7 @@ function EndScoreboard() {
 							values.imr10v10.AddClass("es-text-red");
 						}
 					}
-				} else if (map_info.map_display_name == "imba_1v1") {
+				} else if (mapInfo.map_display_name == "imba_1v1") {
 					// display columns
 					values.rank1v1.style.visibility = "visible";
 					
@@ -296,24 +284,7 @@ function EndScoreboard() {
 				values.rank1v1.text = "N/A";
 			}
 
-			// XP
-			var booster = player.xp.booster * 100
-			if (booster == undefined) {
-				booster = 100;
-			}
-			var donator_color = player.xp.donator_color
-			if (donator_color == undefined) {
-				donator_color = "white";
-			}
-
-			$.Msg(booster)
-			$.Msg(donator_color)
-
 			var diff = player.result.xp_difference;
-
-			if (placeholder == true) {
-				diff = 500; // test value
-			}
 
 			if (player.result != null) {
 				var xp = Math.floor(player.result.xp);
@@ -330,48 +301,25 @@ function EndScoreboard() {
 					values.xp.earned.AddClass("es-text-red");
 				}
 
-				values.xp.booster.text = " (" + booster.toFixed(0) + "%)";
-				values.xp.booster.style.color = donator_color;
+				var multiplier = Math.round(player.result.xp_multiplier * 100.0);
 
-				var old_xp = player.xp.progress.xp;
-				var ply_color = player.xp.color;
-				var ply_title = player.xp.title;
-				var max_xp = player.xp.progress.max_xp;
+				values.xp.booster.text = " (" + multiplier + "%)";
+				values.xp.booster.style.color = "white";
 
-//				$.Msg(player.xp)
+				values.xp.level.text = $.Localize("#battlepass_level") + player.result.xp_level;
+				values.xp.rank_name.text = player.result.xp_rank_title;
+				values.xp.rank_name.style.color = "#" + player.result.xp_rank_color;
 
-				if (placeholder == true) {
-					old_xp = xp
-					ply_color = "#1456EF";
-					ply_title = "Icefrog";
-					max_xp = 6000;
-				}
+				values.xp.rank.text = Math.floor(player.result.xp_in_current_level) + "/" + Math.floor(player.result.total_xp_for_current_level);
+				var progress = Math.round((100.0 * player.result.xp_in_current_level) / player.result.total_xp_for_current_level);
+				
+				$.Msg(player.result.xp_rank_title);
+				$.Msg(progress);
 
-				if (old_xp == undefined) {
-					$.Msg("XP undefined")
-					old_xp = 0
-				} else if (old_xp < 0) {
-					$.Msg("XP below 0")
-					old_xp = 0
-				}
+				values.xp.progress.style.width = progress + "%";
 
-				var new_xp = (old_xp + diff);
-				var progress_bar = new_xp / max_xp * 100;
-//				$.Msg(progress_bar)
-				var progress_bar_100 = progress_bar * 100
-//				$.Msg(progress_bar * 100 / max_xp + "/" + max_xp)
-
-				$.Schedule(0.8, function () {
-					values.xp.level.text = $.Localize("#battlepass_level") + player.xp.level;
-//					$.Msg(ply_title)
-					values.xp.rank_name.text = ply_title;
-					values.xp.rank_name.style.color = ply_color;
-
-					// if max level
-					if (player.xp.level == 500) {
-						values.xp.progress.style.width = "100%";
-						values.xp.rank.text = "#42";
-					}
+					// TODO: WILL REWORK THIS SOON
+					/*
 					// if not leveling up
 					else if (progress_bar >= 0 && progress_bar < 100) {
 						values.xp.progress.style.width = progress_bar + "%";
@@ -417,7 +365,7 @@ function EndScoreboard() {
 							values.xp.rank.text = levelup_xp.toFixed(0) + "/" + max_xp; // BUG: max_xp should be the max xp of previous level.
 						});
 					}
-				});
+					*/
 
 			} else {
 				values.xp.earned.text = "N/A";
@@ -484,14 +432,17 @@ function EndScoreboard() {
 		// Set Team Score
 		$("#es-team-score-radiant").text = new String(serverInfo.radiant_score);
 		$("#es-team-score-dire").text = new String(serverInfo.dire_score);
-		$("#es-team-score-custom1").text = new String(serverInfo.custom1_score);
-		$("#es-team-score-custom2").text = new String(serverInfo.custom2_score);
-		$("#es-team-score-custom3").text = new String(serverInfo.custom3_score);
-		$("#es-team-score-custom4").text = new String(serverInfo.custom4_score);
-		$("#es-team-score-custom5").text = new String(serverInfo.custom5_score);
-		$("#es-team-score-custom6").text = new String(serverInfo.custom6_score);
-		$("#es-team-score-custom7").text = new String(serverInfo.custom7_score);
-		$("#es-team-score-custom8").text = new String(serverInfo.custom8_score);
+
+		if (map_name == "cavern") {
+			$("#es-team-score-custom1").text = new String(serverInfo.custom1_score);
+			$("#es-team-score-custom2").text = new String(serverInfo.custom2_score);
+			$("#es-team-score-custom3").text = new String(serverInfo.custom3_score);
+			$("#es-team-score-custom4").text = new String(serverInfo.custom4_score);
+			$("#es-team-score-custom5").text = new String(serverInfo.custom5_score);
+			$("#es-team-score-custom6").text = new String(serverInfo.custom6_score);
+			$("#es-team-score-custom7").text = new String(serverInfo.custom7_score);
+			$("#es-team-score-custom8").text = new String(serverInfo.custom8_score);
+		}
 	});
 }
 

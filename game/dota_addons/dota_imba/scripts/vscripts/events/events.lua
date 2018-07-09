@@ -23,69 +23,69 @@ function GameMode:OnGameRulesStateChange(keys)
 
 	-- Run this in safe context
 --	safe(function()
-		local new_state = GameRules:State_Get()
+	local new_state = GameRules:State_Get()
 
-		-------------------------------------------------------------------------------------------------
-		-- IMBA: Team selection
-		-------------------------------------------------------------------------------------------------
-		if new_state == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
-			log.info("events: team selection")
-			OnSetGameMode() -- setup gamemode rules
-			InitializeTeamSelection()
-			GameRules:SetSafeToLeave(true) -- seems to be useless for leaver penalties
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Team selection
+	-------------------------------------------------------------------------------------------------
+	if new_state == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
+		log.info("events: team selection")
+		OnSetGameMode() -- setup gamemode rules
+		InitializeTeamSelection()
+		GameRules:SetSafeToLeave(true) -- seems to be useless for leaver penalties
 
-			-- get the IXP of everyone (ignore bot)
-			GetPlayerInfoIXP()
+		-- get the IXP of everyone (ignore bot)
+		GetPlayerInfoIXP()
 
-			local hex_colors = {}
-			for i = 0, 23 do
-				table.insert(hex_colors, i, rgbToHex(PLAYER_COLORS[i]))
-			end
-
-			CustomNetTables:SetTableValue("game_options", "player_colors", hex_colors)
+		local hex_colors = {}
+		for i = 0, 23 do
+			table.insert(hex_colors, i, rgbToHex(PLAYER_COLORS[i]))
 		end
 
-		-------------------------------------------------------------------------------------------------
-		-- IMBA: Pick screen stuff
-		-------------------------------------------------------------------------------------------------
-		if new_state == DOTA_GAMERULES_STATE_HERO_SELECTION then
-			api.imba.event(api.events.entered_hero_selection)
+		CustomNetTables:SetTableValue("game_options", "player_colors", hex_colors)
+	end
 
-			HeroSelection:Init()
-		end
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Pick screen stuff
+	-------------------------------------------------------------------------------------------------
+	if new_state == DOTA_GAMERULES_STATE_HERO_SELECTION then
+		api.imba.event(api.events.entered_hero_selection)
 
-		-------------------------------------------------------------------------------------------------
-		-- IMBA: Start-of-pre-game stuff
-		-------------------------------------------------------------------------------------------------
-		if new_state == DOTA_GAMERULES_STATE_PRE_GAME then
-			api.imba.event(api.events.entered_pre_game)
+		HeroSelection:Init()
+	end
 
-			-- Shows various info to devs in pub-game to find lag issues
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Start-of-pre-game stuff
+	-------------------------------------------------------------------------------------------------
+	if new_state == DOTA_GAMERULES_STATE_PRE_GAME then
+		api.imba.event(api.events.entered_pre_game)
+
+		-- Shows various info to devs in pub-game to find lag issues
 --			ImbaNetGraph(10.0)
 
-			-- Initialize rune spawners
-			InitRunes()
+		-- Initialize rune spawners
+		InitRunes()
 
 --			if GetMapName() ~= "imba_overthrow" then
-				-- Initialize battlepass towers
+		-- Initialize battlepass towers
 --				Imbattlepass:InitializeTowers()
 --			end
 
-			CustomNetTables:SetTableValue("game_options", "donators", api.imba.get_donators())
-			CustomNetTables:SetTableValue("game_options", "developers", api.imba.get_developers())
+		CustomNetTables:SetTableValue("game_options", "donators", api.imba.get_donators())
+		CustomNetTables:SetTableValue("game_options", "developers", api.imba.get_developers())
 
-			-------------------------------------------------------------------------------------------------
-			-- IMBA: Custom maximum level EXP tables adjustment
-			-------------------------------------------------------------------------------------------------
-			local max_level = tonumber(CustomNetTables:GetTableValue("game_options", "max_level")["1"])
-			if max_level and max_level > 25 then
-				for i = 26, max_level do
-					XP_PER_LEVEL_TABLE[i] = XP_PER_LEVEL_TABLE[i-1] + 3500
-					GameRules:GetGameModeEntity():SetCustomXPRequiredToReachNextLevel( XP_PER_LEVEL_TABLE )
-				end
+		-------------------------------------------------------------------------------------------------
+		-- IMBA: Custom maximum level EXP tables adjustment
+		-------------------------------------------------------------------------------------------------
+		local max_level = tonumber(CustomNetTables:GetTableValue("game_options", "max_level")["1"])
+		if max_level and max_level > 25 then
+			for i = 26, max_level do
+				XP_PER_LEVEL_TABLE[i] = XP_PER_LEVEL_TABLE[i-1] + 3500
+				GameRules:GetGameModeEntity():SetCustomXPRequiredToReachNextLevel( XP_PER_LEVEL_TABLE )
 			end
+		end
 
-			Timers:CreateTimer(2.0, function()
+		Timers:CreateTimer(2.0, function()
 				for _, hero in pairs(HeroList:GetAllHeroes()) do
 					-- player table runs an error with new picking screen
 
@@ -93,10 +93,10 @@ function GameMode:OnGameRulesStateChange(keys)
 						local donators = api.imba.get_donators()
 						for k, v in pairs(donators) do
 							CustomNetTables:SetTableValue("player_table", tostring(hero:GetPlayerID()), {
-								companion_model = donators[k].model,
-								companion_enabled = donators[k].enabled,
-								Lvl = CustomNetTables:GetTableValue("player_table", tostring(hero:GetPlayerID())).Lvl,
-							})
+									companion_model = donators[k].model,
+									companion_enabled = donators[k].enabled,
+									Lvl = CustomNetTables:GetTableValue("player_table", tostring(hero:GetPlayerID())).Lvl,
+								})
 						end
 					end
 				end
@@ -127,20 +127,20 @@ function GameMode:OnGameRulesStateChange(keys)
 
 --							error = true
 --						else
-							if USE_TEAM_COURIER then
-								COURIER_TEAM = {}
-								COURIER_TEAM[2] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_radiant"):GetAbsOrigin(), true, nil, nil, 2)
-								COURIER_TEAM[3] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_dire"):GetAbsOrigin(), true, nil, nil, 3)
-							else
-								for _, hero in pairs(HeroList:GetAllHeroes()) do
-									COURIER_PLAYER = {}
-									if hero:GetTeamNumber() == 2 then
-										COURIER_PLAYER[hero:GetPlayerID()] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_radiant"):GetAbsOrigin(), true, nil, nil, hero:GetTeam())
-									elseif hero:GetTeamNumber() == 3 then
-										COURIER_PLAYER[hero:GetPlayerID()] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_dire"):GetAbsOrigin(), true, nil, nil, hero:GetTeam())
-									end
-								end
+					if USE_TEAM_COURIER then
+						COURIER_TEAM = {}
+						COURIER_TEAM[2] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_radiant"):GetAbsOrigin(), true, nil, nil, 2)
+						COURIER_TEAM[3] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_dire"):GetAbsOrigin(), true, nil, nil, 3)
+					else
+						for _, hero in pairs(HeroList:GetAllHeroes()) do
+							COURIER_PLAYER = {}
+							if hero:GetTeamNumber() == 2 then
+								COURIER_PLAYER[hero:GetPlayerID()] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_radiant"):GetAbsOrigin(), true, nil, nil, hero:GetTeam())
+							elseif hero:GetTeamNumber() == 3 then
+								COURIER_PLAYER[hero:GetPlayerID()] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_dire"):GetAbsOrigin(), true, nil, nil, hero:GetTeam())
 							end
+						end
+					end
 --						end
 
 --						error = false
@@ -177,121 +177,77 @@ function GameMode:OnGameRulesStateChange(keys)
 					CustomGameEventManager:Send_ServerToAllClients("override_top_bar_colors", {})
 				end
 			end)
-		end
+	end
 
-		-------------------------------------------------------------------------------------------------
-		-- IMBA: Game started (horn sounded)
-		-------------------------------------------------------------------------------------------------
-		if new_state == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
-			GameRules:SetSafeToLeave(false)
-			api.imba.event(api.events.started_game)
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Game started (horn sounded)
+	-------------------------------------------------------------------------------------------------
+	if new_state == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
+		GameRules:SetSafeToLeave(false)
+		api.imba.event(api.events.started_game)
 
-			Timers:CreateTimer(60, function()
+		Timers:CreateTimer(60, function()
 				StartGarbageCollector()
 				--			DefineLosingTeam()
 				return 60
 			end)
 
-			if IsMutationMap() then
-				SpawnEasterEgg()
-			elseif GetMapName() == "imba_overthrow" then
-				countdownEnabled = true
-				CustomGameEventManager:Send_ServerToAllClients( "show_timer", {} )
-				DoEntFire( "center_experience_ring_particles", "Start", "0", 0, self, self )
-			elseif GetMapName() == "imba_1v1" then
-				local removed_ents = {
-					"lane_top_goodguys_melee_spawner",
-					"lane_bot_goodguys_melee_spawner",
-					"lane_top_badguys_melee_spawner",
-					"lane_bot_badguys_melee_spawner",
-				}
+		if IsMutationMap() then
+			SpawnEasterEgg()
+		elseif GetMapName() == "imba_overthrow" then
+			countdownEnabled = true
+			CustomGameEventManager:Send_ServerToAllClients( "show_timer", {} )
+			DoEntFire( "center_experience_ring_particles", "Start", "0", 0, self, self )
+		elseif GetMapName() == "imba_1v1" then
+			local removed_ents = {
+				"lane_top_goodguys_melee_spawner",
+				"lane_bot_goodguys_melee_spawner",
+				"lane_top_badguys_melee_spawner",
+				"lane_bot_badguys_melee_spawner",
+			}
 
-				for _, ent_name in pairs(removed_ents) do
-					local ent = Entities:FindByName(nil, ent_name)
-					ent:RemoveSelf()
-				end
-
-				BlockJungleCamps()
+			for _, ent_name in pairs(removed_ents) do
+				local ent = Entities:FindByName(nil, ent_name)
+				ent:RemoveSelf()
 			end
+
+			BlockJungleCamps()
 		end
+	end
 
-		if new_state == DOTA_GAMERULES_STATE_POST_GAME then
-			-- call imba api
-			api.imba.event(api.events.entered_post_game)
+	if new_state == DOTA_GAMERULES_STATE_POST_GAME then
+		
+		api.imba.event(api.events.entered_post_game)
 
-			api.imba.complete(function (error, players)
---				safe(function ()
---					if error then
-						-- if we have an error we should display the scoreboard anyways, just with reduced data
-
---						CustomGameEventManager:Send_ServerToAllClients("end_game", {
---							players = {},
---							xp_info = {},
---							info = {
---								winner = GAME_WINNER_TEAM,
---								id = 0
---							},
---							error = true
---						})
---					else
-						-- everything went fine. use the old system for xp
-
-						local xp_info = {}
-
-						for i = 1, #players do
-							local player = players[i]
-
-							PrintTable(player)
-
-							local level = GetXPLevelByXp(player.xp)
-							local title = GetTitleIXP(level)
-							local color = rgbToHex(GetTitleColorIXP(title))
-							local progress = GetXpProgressToNextLevel(player.xp)
-							local donator_color
-							if donator_status ~= false and DONATOR_COLOR[player.donator_status] then
-								donator_color = rgbToHex(DONATOR_COLOR[player.donator_status])
-							end
-
-							if level and title and color and progress then
-								table.insert(xp_info, {
-									steamid = player.steamid,
-									level = level,
-									title = title,
-									color = color,
-									progress = progress,
-									booster = player.xp_multiplier,
-									donator_status = player.donator_status,
-									donator_color = donator_color,
-								})
-							end
+		api.imba.complete(function (error, players)
+				safe(function ()
+						local game_id = 0
+						if api.imba.data ~= nil then
+							game_id = api.imba.data.id or 0
 						end
 
 						CustomGameEventManager:Send_ServerToAllClients("end_game", {
-							players = players,
-							xp_info = xp_info,
-							info = {
-								winner = GAME_WINNER_TEAM,
-								id = api.imba.data.id,
-								radiant_score = GetTeamHeroKills(2),
-								dire_score = GetTeamHeroKills(3),
-								custom1_score = GetTeamHeroKills(6),
-								custom2_score = GetTeamHeroKills(7),
-								custom3_score = GetTeamHeroKills(8),
-								custom4_score = GetTeamHeroKills(9),
-								custom5_score = GetTeamHeroKills(10),
-								custom6_score = GetTeamHeroKills(11),
-								custom7_score = GetTeamHeroKills(12),
-								custom8_score = GetTeamHeroKills(13),
-							},
---							error = false
-						})
---					end
---				end)
+								players = players,
+								info = {
+									winner = GAME_WINNER_TEAM,
+									id = game_id,
+									radiant_score = GetTeamHeroKills(2),
+									dire_score = GetTeamHeroKills(3),
+									custom1_score = GetTeamHeroKills(6),
+									custom2_score = GetTeamHeroKills(7),
+									custom3_score = GetTeamHeroKills(8),
+									custom4_score = GetTeamHeroKills(9),
+									custom5_score = GetTeamHeroKills(10),
+									custom6_score = GetTeamHeroKills(11),
+									custom7_score = GetTeamHeroKills(12),
+									custom8_score = GetTeamHeroKills(13),
+								},
+							})
+					end)
 			end)
 
-			CustomNetTables:SetTableValue("game_options", "game_count", {value = 0})
-		end
---	end)
+		CustomNetTables:SetTableValue("game_options", "game_count", {value = 0})
+	end
 end
 
 dummy_created_count = 0
@@ -309,9 +265,9 @@ function GameMode:OnNPCSpawned(keys)
 		end
 
 		api.imba.event(api.events.unit_spawned, {
-			tostring(npc:GetUnitName()),
-			tostring(player)
-		})
+				tostring(npc:GetUnitName()),
+				tostring(player)
+			})
 
 		if npc:IsCourier() then
 			if npc.first_spawn == true then
@@ -386,10 +342,10 @@ function GameMode:OnItemPickedUp(keys)
 	end
 
 	api.imba.event(api.events.item_picked_up, {
-		tostring(keys.itemname),
-		tostring(hero:GetUnitName()),
-		tostring(PlayerResource:GetSteamID(plyID))
-	})
+			tostring(keys.itemname),
+			tostring(hero:GetUnitName()),
+			tostring(PlayerResource:GetSteamID(plyID))
+		})
 end
 
 -- An item was purchased by a player
@@ -401,10 +357,10 @@ function GameMode:OnItemPurchased( keys )
 	local itemcost = keys.itemcost
 
 	api.imba.event(api.events.item_purchased, {
-		tostring(keys.itemname),
-		tostring(hero:GetUnitName()),
-		tostring(PlayerResource:GetSteamID(plyID))
-	})
+			tostring(keys.itemname),
+			tostring(hero:GetUnitName()),
+			tostring(PlayerResource:GetSteamID(plyID))
+		})
 end
 
 -- An ability was used by a player
@@ -438,10 +394,10 @@ function GameMode:OnAbilityUsed(keys)
 
 	-- API
 	api.imba.event(api.events.ability_used, {
-		tostring(hero:GetUnitName()),
-		tostring(abilityname),
-		tostring(PlayerResource:GetSteamID(keys.PlayerID))
-	})
+			tostring(hero:GetUnitName()),
+			tostring(abilityname),
+			tostring(PlayerResource:GetSteamID(keys.PlayerID))
+		})
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Remote Mines adjustment
@@ -496,12 +452,12 @@ function GameMode:OnPlayerLearnedAbility(keys)
 	-- If it the ability is Homing Missiles, wait a bit and set count to 1
 	if abilityname == "gyrocopter_homing_missile" then
 		Timers:CreateTimer(1, function()
-			-- Find homing missile modifier
-			local modifier_charges = player:GetAssignedHero():FindModifierByName("modifier_gyrocopter_homing_missile_charge_counter")
-			if modifier_charges then
-				modifier_charges:SetStackCount(3)
-			end
-		end)
+				-- Find homing missile modifier
+				local modifier_charges = player:GetAssignedHero():FindModifierByName("modifier_gyrocopter_homing_missile_charge_counter")
+				if modifier_charges then
+					modifier_charges:SetStackCount(3)
+				end
+			end)
 	elseif abilityname == "special_bonus_imba_mirana_5" then -- fix for mirana stand still talent not working
 		hero:AddNewModifier(hero, nil, "modifier_imba_mirana_silence_stance", {})
 		hero:AddNewModifier(hero, nil, "modifier_imba_mirana_silence_stance_visible", {})
@@ -518,10 +474,10 @@ function GameMode:OnPlayerLearnedAbility(keys)
 
 	if hero then
 		api.imba.event(api.events.ability_learned, {
-			tostring(abilityname),
-			tostring(hero:GetUnitName()),
-			tostring(PlayerResource:GetSteamID(player:GetPlayerID()))
-		})
+				tostring(abilityname),
+				tostring(hero:GetUnitName()),
+				tostring(PlayerResource:GetSteamID(player:GetPlayerID()))
+			})
 	end
 end
 
@@ -537,10 +493,10 @@ function GameMode:OnPlayerLevelUp(keys)
 	hero:SetCustomDeathXP(HERO_XP_BOUNTY_PER_LEVEL[hero_level])
 
 	api.imba.event(api.events.hero_level_up, {
-		tostring(hero:GetUnitName()),
-		tostring(hero_level),
-		tostring(PlayerResource:GetSteamID(player:GetPlayerID()))
-	})
+			tostring(hero:GetUnitName()),
+			tostring(hero_level),
+			tostring(PlayerResource:GetSteamID(player:GetPlayerID()))
+		})
 
 	if hero:GetUnitName() == "npc_dota_hero_invoker" then
 		if hero_level == 6 or hero_level == 12 or hero_level == 18 then
@@ -571,8 +527,8 @@ function GameMode:OnLastHit(keys)
 	if isFirstBlood then
 		player:GetAssignedHero().kill_hero_bounty = 0
 		Timers:CreateTimer(FrameTime() * 2, function()
-			CombatEvents("kill", "first_blood", killedEnt, player:GetAssignedHero())
-		end)
+				CombatEvents("kill", "first_blood", killedEnt, player:GetAssignedHero())
+			end)
 		return
 	elseif isHeroKill then
 		if not player:GetAssignedHero().killstreak then player:GetAssignedHero().killstreak = 0 end
@@ -588,8 +544,8 @@ function GameMode:OnLastHit(keys)
 
 		player:GetAssignedHero().kill_hero_bounty = 0
 		Timers:CreateTimer(0.1, function()
-			CombatEvents("kill", "hero_kill", killedEnt, player:GetAssignedHero())
-		end)
+				CombatEvents("kill", "hero_kill", killedEnt, player:GetAssignedHero())
+			end)
 	end
 end
 
@@ -613,15 +569,15 @@ function GameMode:OnTeamKillCredit(keys)
 	if GetMapName() == "imba_overthrow" then
 		local nKillsRemaining = TEAM_KILLS_TO_WIN - nTeamKills
 		local broadcast_kill_event =
-			{
-				killer_id = keys.killer_userid,
-				team_id = keys.teamnumber,
-				team_kills = nTeamKills,
-				kills_remaining = nKillsRemaining,
-				victory = 0,
-				close_to_victory = 0,
-				very_close_to_victory = 0,
-			}
+		{
+			killer_id = keys.killer_userid,
+			team_id = keys.teamnumber,
+			team_kills = nTeamKills,
+			kills_remaining = nKillsRemaining,
+			victory = 0,
+			close_to_victory = 0,
+			very_close_to_victory = 0,
+		}
 
 		if nKillsRemaining <= 0 then
 			GameRules:SetCustomVictoryMessage( m_VictoryMessages[killer_team] )
@@ -776,11 +732,11 @@ function GameMode:OnEntityKilled( keys )
 			end
 
 			api.imba.event(api.events.unit_killed, {
-				tostring(killerUnitName),
-				tostring(killerPlayer),
-				tostring(killedUnitName),
-				tostring(killedPlayer)
-			})
+					tostring(killerUnitName),
+					tostring(killerPlayer),
+					tostring(killedUnitName),
+					tostring(killedPlayer)
+				})
 		end
 
 		-------------------------------------------------------------------------------------------------
@@ -912,10 +868,10 @@ function GameMode:OnItemCombined(keys)
 	local itemcost = keys.itemcost
 
 	api.imba.event(api.events.item_combined, {
-		tostring(keys.itemname),
-		tostring(hero:GetUnitName()),
-		tostring(PlayerResource:GetSteamID(plyID))
-	})
+			tostring(keys.itemname),
+			tostring(hero:GetUnitName()),
+			tostring(PlayerResource:GetSteamID(plyID))
+		})
 end
 
 -- This function is called whenever a tower is killed
