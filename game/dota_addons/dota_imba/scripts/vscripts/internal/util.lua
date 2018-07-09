@@ -42,7 +42,7 @@ function PrintTable(t, indent, done)
 
 	local l = {}
 	for k, v in pairs(t) do
-	table.insert(l, k)
+		table.insert(l, k)
 	end
 
 	table.sort(l)
@@ -156,7 +156,7 @@ end
 function GetKillstreakGold( hero )
 	local base_bounty = HERO_KILL_GOLD_BASE + hero:GetLevel() * HERO_KILL_GOLD_PER_LEVEL
 	local gold = ( hero.kill_streak_count ^ KILLSTREAK_EXP_FACTOR ) * HERO_KILL_GOLD_PER_KILLSTREAK - hero.death_streak_count * HERO_KILL_GOLD_PER_DEATHSTREAK
-	
+
 	-- Limits to maximum and minimum kill/deathstreak values
 	gold = math.max(gold, (-1) * base_bounty * HERO_KILL_GOLD_DEATHSTREAK_CAP / 100 )
 	gold = math.min(gold, base_bounty * ( HERO_KILL_GOLD_KILLSTREAK_CAP - 100 ) / 100)
@@ -167,21 +167,21 @@ end
 -- Precaches an unit, or, if something else is being precached, enters it into the precache queue
 function PrecacheUnitWithQueue( unit_name )
 	Timers:CreateTimer(function()
-		-- If something else is being precached, wait two seconds
-		if UNIT_BEING_PRECACHED then
-			return 2
+			-- If something else is being precached, wait two seconds
+			if UNIT_BEING_PRECACHED then
+				return 2
 
-		-- Otherwise, start precaching and block other calls from doing so
-		else
-			UNIT_BEING_PRECACHED = true
-			PrecacheUnitByNameAsync(unit_name, function(...) end)
+				-- Otherwise, start precaching and block other calls from doing so
+			else
+				UNIT_BEING_PRECACHED = true
+				PrecacheUnitByNameAsync(unit_name, function(...) end)
 
-			-- Release the queue after one second
-			Timers:CreateTimer(2, function()
-				UNIT_BEING_PRECACHED = false
-			end)
-		end
-	end)
+				-- Release the queue after one second
+				Timers:CreateTimer(2, function()
+						UNIT_BEING_PRECACHED = false
+					end)
+			end
+		end)
 
 --	print("Precached", unit_name)
 end
@@ -235,21 +235,26 @@ end
 -- Talents modifier function
 function ApplyAllTalentModifiers()
 	Timers:CreateTimer(0.1,function()
-		local current_hero_list = HeroList:GetAllHeroes()
-		for k,v in pairs(current_hero_list) do
-			local hero_name = string.match(v:GetName(),"npc_dota_hero_(.*)")
-			-- TODO: This is odd, please do something better bro
-			if hero_name == nil or hero_name == "npc_dota_hero_ghost_revenant" or hero_name == "npc_dota_hero_hell_empress" then print("Custom Hero, ignoring talents for now.") return end
-			for i = 1, 8 do
-				local talent_name = "special_bonus_imba_"..hero_name.."_"..i
-				local modifier_name = "modifier_special_bonus_imba_"..hero_name.."_"..i
-				if v:HasTalent(talent_name) and not v:HasModifier(modifier_name) then
-					v:AddNewModifier(v,v,modifier_name,{})
+			local current_hero_list = HeroList:GetAllHeroes()
+			for k,v in pairs(current_hero_list) do
+				local hero_name = string.match(v:GetName(),"npc_dota_hero_(.*)")
+
+				-- TODO: This is odd, please do something better bro
+				if hero_name == nil or hero_name == "npc_dota_hero_ghost_revenant" or hero_name == "npc_dota_hero_hell_empress" then 
+					log.info("Custom Hero, ignoring talents for now.") 
+					return 
+				end
+
+				for i = 1, 8 do
+					local talent_name = "special_bonus_imba_"..hero_name.."_"..i
+					local modifier_name = "modifier_special_bonus_imba_"..hero_name.."_"..i
+					if v:HasTalent(talent_name) and not v:HasModifier(modifier_name) then
+						v:AddNewModifier(v,v,modifier_name,{})
+					end
 				end
 			end
-		end
-		return 0.5
-	end)
+			return 0.5
+		end)
 end
 
 function NetTableM(tablename,keyname,...) 
@@ -286,7 +291,7 @@ function NetTableM(tablename,keyname,...)
 			end
 		end
 	end
-return unpack(returnvalues)
+	return unpack(returnvalues)
 end
 
 function netTableCmd(send,readtable,key,tabletosend)
@@ -338,7 +343,7 @@ function TalentManager(tEntity, nameScheme, ...)
 			table.insert(return_values, tEntity:FindTalentValue(nameScheme..v[1]))
 		end
 	end    
-return unpack(return_values)
+	return unpack(return_values)
 end
 
 function findtarget(source) -- simple list return function for finding a players current target entity
@@ -364,7 +369,7 @@ function UpdateComebackBonus(points, team)
 	if COMEBACK_BOUNTY_SCORE[team] == nil then
 		COMEBACK_BOUNTY_SCORE[team] = 0
 	end
-	
+
 	COMEBACK_BOUNTY_SCORE[team] = COMEBACK_BOUNTY_SCORE[team] + points
 
 	-- If one of the teams is eligible, apply the bonus
@@ -382,15 +387,15 @@ end
 function StoreCurrentDayCycle()	
 	Timers:CreateTimer(function()		
 
-		-- Get current daytime cycle
-		local is_day = GameRules:IsDaytime()		
+			-- Get current daytime cycle
+			local is_day = GameRules:IsDaytime()		
 
-		-- Set in the table
-		CustomNetTables:SetTableValue("game_options", "isdaytime", {is_day = is_day} )		
+			-- Set in the table
+			CustomNetTables:SetTableValue("game_options", "isdaytime", {is_day = is_day} )		
 
-	-- Repeat
-	return 0.5
-	end)	
+			-- Repeat
+			return 0.5
+		end)	
 end
 
 function IsDaytime()
@@ -586,8 +591,8 @@ function OverrideCreateParticle()
 
 		-- Index in a big, fat table. Only works in tools mode!
 --		if IsInToolsMode() then
-			PARTICLE_TABLE = PARTICLE_TABLE or {}
-			table.insert(PARTICLE_TABLE, manager)
+		PARTICLE_TABLE = PARTICLE_TABLE or {}
+		table.insert(PARTICLE_TABLE, manager)
 --		end
 
 --		if path == "particles/units/heroes/hero_pudge/pudge_meathook.vpcf" then
@@ -628,8 +633,8 @@ function OverrideCreateLinearProjectile()
 end
 
 function OverrideReleaseIndex()
-local ReleaseIndexFunc = ParticleManager.ReleaseParticleIndex
-local released_particles = 0
+	local ReleaseIndexFunc = ParticleManager.ReleaseParticleIndex
+	local released_particles = 0
 
 	ParticleManager.ReleaseParticleIndex = 
 	function(manager, int)		
@@ -657,40 +662,40 @@ end
 -- Custom NetGraph. Creator: Cookies [Earth Salamander]
 function ImbaNetGraph(tick)
 	Timers:CreateTimer(function()
-		local units = FindUnitsInRadius(DOTA_TEAM_BADGUYS, Vector(0,0,0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)		
-		local good_unit_count = 0
-		local bad_unit_count = 0
-		local good_build_count = 0
-		local bad_build_count = 0
-		local dummy_count = 0
+			local units = FindUnitsInRadius(DOTA_TEAM_BADGUYS, Vector(0,0,0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)		
+			local good_unit_count = 0
+			local bad_unit_count = 0
+			local good_build_count = 0
+			local bad_build_count = 0
+			local dummy_count = 0
 
-		for _, unit in pairs(units) do
-			if unit:GetTeamNumber() == 2 then
-				if unit:IsBuilding() then
-					good_build_count = good_build_count+1
-				else
-					good_unit_count = good_unit_count +1
+			for _, unit in pairs(units) do
+				if unit:GetTeamNumber() == 2 then
+					if unit:IsBuilding() then
+						good_build_count = good_build_count+1
+					else
+						good_unit_count = good_unit_count +1
+					end
+				elseif unit:GetTeamNumber() == 3 then
+					if unit:IsBuilding() then
+						bad_build_count = bad_build_count+1
+					else
+						bad_unit_count = bad_unit_count +1
+					end
 				end
-			elseif unit:GetTeamNumber() == 3 then
-				if unit:IsBuilding() then
-					bad_build_count = bad_build_count+1
-				else
-					bad_unit_count = bad_unit_count +1
+				if unit:GetUnitName() == "npc_dummy_unit" or unit:GetUnitName() == "npc_dummy_unit_perma" then			
+					dummy_count = dummy_count +1
 				end
 			end
-			if unit:GetUnitName() == "npc_dummy_unit" or unit:GetUnitName() == "npc_dummy_unit_perma" then			
-				dummy_count = dummy_count +1
-			end
-		end
 
-		CustomNetTables:SetTableValue("netgraph", "hero_number", {value = PlayerResource:GetPlayerCount()})
-		CustomNetTables:SetTableValue("netgraph", "good_unit_number", {value = good_unit_count -4}) -- developer statues
-		CustomNetTables:SetTableValue("netgraph", "bad_unit_number", {value = bad_unit_count -4}) -- developer statues
-		CustomNetTables:SetTableValue("netgraph", "good_build_number", {value = good_build_count})
-		CustomNetTables:SetTableValue("netgraph", "bad_build_number", {value = bad_build_count})
-		CustomNetTables:SetTableValue("netgraph", "total_unit_number", {value = #units})
-		CustomNetTables:SetTableValue("netgraph", "total_dummy_number", {value = dummy_count})
-		CustomNetTables:SetTableValue("netgraph", "total_dummy_created_number", {value = dummy_created_count})
+			CustomNetTables:SetTableValue("netgraph", "hero_number", {value = PlayerResource:GetPlayerCount()})
+			CustomNetTables:SetTableValue("netgraph", "good_unit_number", {value = good_unit_count -4}) -- developer statues
+			CustomNetTables:SetTableValue("netgraph", "bad_unit_number", {value = bad_unit_count -4}) -- developer statues
+			CustomNetTables:SetTableValue("netgraph", "good_build_number", {value = good_build_count})
+			CustomNetTables:SetTableValue("netgraph", "bad_build_number", {value = bad_build_count})
+			CustomNetTables:SetTableValue("netgraph", "total_unit_number", {value = #units})
+			CustomNetTables:SetTableValue("netgraph", "total_dummy_number", {value = dummy_count})
+			CustomNetTables:SetTableValue("netgraph", "total_dummy_created_number", {value = dummy_created_count})
 --		CustomNetTables:SetTableValue("netgraph", "total_particle_number", {value = total_particles})
 --		CustomNetTables:SetTableValue("netgraph", "total_particle_created_number", {value = total_particles_created})
 
@@ -698,8 +703,8 @@ function ImbaNetGraph(tick)
 --			CustomNetTables:SetTableValue("netgraph", "hero_particle_"..i-1, {particle = hero_particles[i-1], pID = i-1})
 --			CustomNetTables:SetTableValue("netgraph", "hero_total_particle_"..i-1, {particle = total_hero_particles[i-1], pID = i-1})
 --		end
-	return tick
-	end)
+			return tick
+		end)
 end
 
 function table.deepmerge(t1, t2)
@@ -718,16 +723,16 @@ function table.deepmerge(t1, t2)
 end
 
 function ReconnectPlayer(player_id)
-if not player_id then player_id = 0 end
-if player_id == "test_reconnect" then player_id = 0 end
+	if not player_id then player_id = 0 end
+	if player_id == "test_reconnect" then player_id = 0 end
 
 	print("Player is reconnecting:", player_id)
 
 	-- Reinitialize the player's pick screen panorama, if necessary
 	Timers:CreateTimer(1.0, function()
 --		print(PlayerResource:GetSelectedHeroEntity(player_id))
-		if PlayerResource:GetSelectedHeroEntity(player_id) then
-			CustomGameEventManager:Send_ServerToAllClients("player_reconnected", {PlayerID = player_id, PickedHeroes = HeroSelection.picked_heroes, pickState = pick_state, repickState = repick_state})
+			if PlayerResource:GetSelectedHeroEntity(player_id) then
+				CustomGameEventManager:Send_ServerToAllClients("player_reconnected", {PlayerID = player_id, PickedHeroes = HeroSelection.picked_heroes, pickState = pick_state, repickState = repick_state})
 
 --			Timers:CreateTimer(3.0, function()
 --				local table = {
@@ -740,7 +745,7 @@ if player_id == "test_reconnect" then player_id = 0 end
 --				GameMode:GG(table)
 --			end)
 
-			local hero = PlayerResource:GetSelectedHeroEntity(player_id)
+				local hero = PlayerResource:GetSelectedHeroEntity(player_id)
 
 --			print(hero:GetUnitName())
 
@@ -748,7 +753,7 @@ if player_id == "test_reconnect" then player_id = 0 end
 --				Notifications:TopToAll({text = "Player "..player_id.. " has reconnected with hero: "..hero:GetUnitName(), duration = 10.0, style = {color = "DodgerBlue"}})
 --			end
 
-			print(PICKING_SCREEN_OVER)
+				print(PICKING_SCREEN_OVER)
 --			if GameRules:IsCheatMode() then
 --				if PICKING_SCREEN_OVER then
 --					Notifications:TopToAll({text = "Pick Screen is over!", duration = 10.0, style = {color = "DodgerBlue"}})
@@ -757,23 +762,23 @@ if player_id == "test_reconnect" then player_id = 0 end
 --				end
 --			end
 
-			if PICKING_SCREEN_OVER == true then
-				if hero:GetUnitName() == FORCE_PICKED_HERO then
+				if PICKING_SCREEN_OVER == true then
+					if hero:GetUnitName() == FORCE_PICKED_HERO then
 --				if not lockedHeroes[player_id] or hero:GetUnitName() == FORCE_PICKED_HERO then
-					-- we don't care if they haven't locked in yet
+						-- we don't care if they haven't locked in yet
 --					if GameRules:IsCheatMode() then
 --						Notifications:TopToAll({text = "Player "..player_id.. ": NO HERO LOCKED IN, RANDOM A HERO!", duration = 10.0, style = {color = "DodgerBlue"}})
 --					end
 
-					print('Giving player ' .. player_id .. ' a random hero! (reconnected)')
+						print('Giving player ' .. player_id .. ' a random hero! (reconnected)')
 --					if GameRules:IsCheatMode() then
 --						Notifications:TopToAll({text = 'Giving player ' .. player_id .. ' a random hero: '..HeroSelection:RandomHero()..' (reconnected)', duration = 10.0, style = {color = "DodgerBlue"}})
 --					end
 
-					local random_hero = HeroSelection:RandomHero()
-					print("Random Hero:", random_hero)
-					HeroSelection:GiveStartingHero(player_id, random_hero, true)
-				else
+						local random_hero = HeroSelection:RandomHero()
+						print("Random Hero:", random_hero)
+						HeroSelection:GiveStartingHero(player_id, random_hero, true)
+					else
 --					print('Reconnecting... ' .. hero .. ' ' .. loadedHeroes[lockedHeroes[player_id]])
 --					print(loadedHeroes)
 --					if GameRules:IsCheatMode() then
@@ -786,21 +791,21 @@ if player_id == "test_reconnect" then player_id = 0 end
 --						print('Giving player ' .. player_id .. ' ' .. lockedHeroes[player_id] .. '(reconnected)')
 --						HeroSelection:GiveStartingHero(player_id, lockedHeroes[player_id])
 --					end
+					end
+
+					CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(player_id), "send_mutations", IMBA_MUTATION)
 				end
-
-				CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(player_id), "send_mutations", IMBA_MUTATION)
-			end
-		else
+			else
 --			print("Not fully reconnected yet:", player_id)
-			return 0.1
-		end
+				return 0.1
+			end
 
-		if GetMapName() == "imba_overthrow" then
-			CustomGameEventManager:Send_ServerToAllClients("imbathrow_topbar", {imbathrow = true})
-		else
-			CustomGameEventManager:Send_ServerToAllClients("imbathrow_topbar", {imbathrow = false})
-		end
-	end)
+			if GetMapName() == "imba_overthrow" then
+				CustomGameEventManager:Send_ServerToAllClients("imbathrow_topbar", {imbathrow = true})
+			else
+				CustomGameEventManager:Send_ServerToAllClients("imbathrow_topbar", {imbathrow = false})
+			end
+		end)
 
 	-- If this is a reconnect from abandonment due to a long disconnect, remove the abandon state
 	if PlayerResource:GetHasAbandonedDueToLongDisconnect(player_id) then
@@ -819,11 +824,11 @@ end
 
 function UpdateRoshanBar(roshan)
 	CustomNetTables:SetTableValue("game_options", "roshan", {
-		level = GAME_ROSHAN_KILLS +1,
-		HP = roshan:GetHealth(),
-		HP_alt = roshan:GetHealthPercent(),
-		maxHP = roshan:GetMaxHealth()
-	})
+			level = GAME_ROSHAN_KILLS +1,
+			HP = roshan:GetHealth(),
+			HP_alt = roshan:GetHealthPercent(),
+			maxHP = roshan:GetMaxHealth()
+		})
 	return time
 end
 
@@ -880,31 +885,31 @@ function SpawnImbaRunes()
 	}
 
 	Timers:CreateTimer(function()
-		local random_int = RandomInt(1, #powerup_rune_types)
+			local random_int = RandomInt(1, #powerup_rune_types)
 
-		RemoveRunes(1)
+			RemoveRunes(1)
 
-		for k, v in pairs(powerup_rune_locations) do
-			local rune = CreateItemOnPositionForLaunch(powerup_rune_locations[k], CreateItem(powerup_rune_types[random_int][1], nil, nil))
-			RegisterRune(rune, 1)
-			SpawnRuneParticle(rune, powerup_rune_types[random_int][2])
-		end
+			for k, v in pairs(powerup_rune_locations) do
+				local rune = CreateItemOnPositionForLaunch(powerup_rune_locations[k], CreateItem(powerup_rune_types[random_int][1], nil, nil))
+				RegisterRune(rune, 1)
+				SpawnRuneParticle(rune, powerup_rune_types[random_int][2])
+			end
 
-		return RUNE_SPAWN_TIME
-	end)
+			return RUNE_SPAWN_TIME
+		end)
 
 	Timers:CreateTimer(function()
-		RemoveRunes(2)
+			RemoveRunes(2)
 
-		for k, v in pairs(bounty_rune_locations) do
-			local bounty_rune = CreateItem("item_imba_rune_bounty", nil, nil)
-			local rune = CreateItemOnPositionForLaunch(bounty_rune_locations[k], bounty_rune)		
-			RegisterRune(rune, 2)
-			SpawnRuneParticle(rune, "particles/generic_gameplay/rune_bounty_first.vpcf")
-		end
+			for k, v in pairs(bounty_rune_locations) do
+				local bounty_rune = CreateItem("item_imba_rune_bounty", nil, nil)
+				local rune = CreateItemOnPositionForLaunch(bounty_rune_locations[k], bounty_rune)		
+				RegisterRune(rune, 2)
+				SpawnRuneParticle(rune, "particles/generic_gameplay/rune_bounty_first.vpcf")
+			end
 
-		return BOUNTY_RUNE_SPAWN_TIME
-	end)
+			return BOUNTY_RUNE_SPAWN_TIME
+		end)
 end
 
 function SpawnRuneParticle(rune, particle)
@@ -998,13 +1003,14 @@ function PickupRune(rune_name, unit, bActiveByBottle)
 			-- #3 Talent: Bounty runes give gold bags
 			if unit:HasTalent("special_bonus_imba_alchemist_3") then
 				local stacks_to_gold =( unit:FindTalentValue("special_bonus_imba_alchemist_3") / 100 )  / 5
-				local gold_per_bag = unit:FindModifierByName("modifier_imba_goblins_greed_passive"):GetStackCount() * stacks_to_gold
+				local gold_per_bag = unit:FindModifierByName("modifier_imba_goblins_greed_passive"):GetStackCount() + (current_bounty * stacks_to_gold)
+				print("gold_per_bag", gold_per_bag, stacks_to_gold)
 				for i=1, 5 do
 					-- Drop gold bags
 					local newItem = CreateItem( "item_bag_of_gold", nil, nil )
 					newItem:SetPurchaseTime( 0 )
 					newItem:SetCurrentCharges( gold_per_bag )
-					
+
 					local drop = CreateItemOnPositionSync( unit:GetAbsOrigin(), newItem )
 					local dropTarget = unit:GetAbsOrigin() + RandomVector( RandomFloat( 300, 450 ) )
 					newItem:LaunchLoot( true, 300, 0.75, dropTarget )
@@ -1091,12 +1097,12 @@ function PickupRune(rune_name, unit, bActiveByBottle)
 		end
 
 		CustomGameEventManager:Send_ServerToTeam(unit:GetTeam(), "create_custom_toast", {
-			type = "generic",
-			text = "#custom_toast_ActivatedRune",
-			player = unit:GetPlayerID(),
-			runeType = rune_name,
-			runeFirst = true, -- every bounty runes are global now
-		})
+				type = "generic",
+				text = "#custom_toast_ActivatedRune",
+				player = unit:GetPlayerID(),
+				runeType = rune_name,
+				runeFirst = true, -- every bounty runes are global now
+			})
 	end
 end
 
@@ -1127,7 +1133,7 @@ function PickRandomShuffle( reference_list, bucket )
 	if ( #reference_list == 0 ) then
 		return nil
 	end
-	
+
 	if ( #bucket == 0 ) then
 		-- ran out of options, refill the bucket from the reference
 		for k, v in pairs(reference_list) do
@@ -1201,12 +1207,12 @@ function CountdownTimer()
 	local s10 = math.floor(seconds / 10)
 	local s01 = seconds - (s10 * 10)
 	local broadcast_gametimer = 
-		{
-			timer_minute_10 = m10,
-			timer_minute_01 = m01,
-			timer_second_10 = s10,
-			timer_second_01 = s01,
-		}
+	{
+		timer_minute_10 = m10,
+		timer_minute_01 = m01,
+		timer_second_10 = s10,
+		timer_second_01 = s01,
+	}
 	CustomGameEventManager:Send_ServerToAllClients( "countdown", broadcast_gametimer )
 	if t <= 120 then
 		CustomGameEventManager:Send_ServerToAllClients( "time_remaining", broadcast_gametimer )
@@ -1265,35 +1271,35 @@ end
 -- not working: team kill tower, courier dead, courier respawn, 
 -- hero kill tower says hero denied
 function CombatEvents(event_type, reason, victim, attacker)
-local text = ""
-local team
-local atacker_name
-local victim_name
-local courier = false
-local first_blood = false
-local glyph = false
-local neutral = false
-local roshan = false
-local suicide = false
-local tower = false
-local gold = 0
-if victim then
-	if victim:IsBuilding() then gold = 200 end
-	if victim:GetUnitName() == "npc_dota_badguys_healers" then gold = 125 end
-end
-local attacker_id
-local victim_id
-local variables
+	local text = ""
+	local team
+	local atacker_name
+	local victim_name
+	local courier = false
+	local first_blood = false
+	local glyph = false
+	local neutral = false
+	local roshan = false
+	local suicide = false
+	local tower = false
+	local gold = 0
+	if victim then
+		if victim:IsBuilding() then gold = 200 end
+		if victim:GetUnitName() == "npc_dota_badguys_healers" then gold = 125 end
+	end
+	local attacker_id
+	local victim_id
+	local variables
 
-local streak = {}
-streak[3] = "Killing spree"
-streak[4] = "Dominating"
-streak[5] = "Mega kill"
-streak[6] = "Unstoppable"
-streak[7] = "Wicked sick"
-streak[8] = "Monster kill"
-streak[9] = "Godlike"
-streak[10] = "Beyond Godlike"
+	local streak = {}
+	streak[3] = "Killing spree"
+	streak[4] = "Dominating"
+	streak[5] = "Mega kill"
+	streak[6] = "Unstoppable"
+	streak[7] = "Wicked sick"
+	streak[8] = "Monster kill"
+	streak[9] = "Godlike"
+	streak[10] = "Beyond Godlike"
 
 	if event_type == "generic" then
 		if reason == "courier_respawn" then
@@ -1322,18 +1328,18 @@ streak[10] = "Beyond Godlike"
 		end
 
 		CustomGameEventManager:Send_ServerToAllClients("create_custom_toast", {
-			type = "generic",
-			text = text,
-			teamColor = team,
-			teamPlayer = team,
-			team = team,
-			victimUnitName = victim_name,
-			courier = courier,
-			gold = gold,
-			tower = tower,
-			glyph = glyph,
-			victimPlayer = victim_id,			
-		})
+				type = "generic",
+				text = text,
+				teamColor = team,
+				teamPlayer = team,
+				team = team,
+				victimUnitName = victim_name,
+				courier = courier,
+				gold = gold,
+				tower = tower,
+				glyph = glyph,
+				victimPlayer = victim_id,			
+			})
 	elseif event_type == "kill" then
 		if reason == "first_blood" then
 			attacker_id = attacker:GetPlayerID()
@@ -1369,43 +1375,43 @@ streak[10] = "Beyond Godlike"
 		end
 
 		CustomGameEventManager:Send_ServerToAllClients("create_custom_toast", {
-			type = "kill",
-			teamColor = team,
-			team = team,
-			killerPlayer = attacker_id,
-			victimPlayer = victim_id,
-			victimUnitName = victim_name,
-			courier = courier,
-			gold = gold,
-			tower = tower,
-			variables = variables,
-			roshan = roshan,
-			neutral = neutral,
-			suicide = suicide,
-		})
+				type = "kill",
+				teamColor = team,
+				team = team,
+				killerPlayer = attacker_id,
+				victimPlayer = victim_id,
+				victimUnitName = victim_name,
+				courier = courier,
+				gold = gold,
+				tower = tower,
+				variables = variables,
+				roshan = roshan,
+				neutral = neutral,
+				suicide = suicide,
+			})
 	end
 end
 
 function HeroVoiceLine(hero, event, extra) -- extra can be victim for kill event, or item purchased for purch event
-if not hero:GetKeyValue("ShortName") then return end
-local ID = hero:GetPlayerID()
-local hero_name = string.gsub(hero:GetUnitName(), "npc_dota_hero_", "")
-local short_hero_name = hero:GetKeyValue("ShortName")
-local max_line = 2
-local voice_line
+	if not hero:GetKeyValue("ShortName") then return end
+	local ID = hero:GetPlayerID()
+	local hero_name = string.gsub(hero:GetUnitName(), "npc_dota_hero_", "")
+	local short_hero_name = hero:GetKeyValue("ShortName")
+	local max_line = 2
+	local voice_line
 
-if event == "blink" or event == "firstblood" then
-	max_line = 1
-else
-	max_line = hero:GetKeyValue(event)
-end
+	if event == "blink" or event == "firstblood" then
+		max_line = 1
+	else
+		max_line = hero:GetKeyValue(event)
+	end
 
-local random_int = RandomInt(1, max_line)
+	local random_int = RandomInt(1, max_line)
 
-if not VOICELINE_IN_CD then
-	VOICELINE_IN_CD = {} -- move/cast/attack cd, 
-	VOICELINE_IN_CD[ID] = {false, false, false}
-end
+	if not VOICELINE_IN_CD then
+		VOICELINE_IN_CD = {} -- move/cast/attack cd, 
+		VOICELINE_IN_CD[ID] = {false, false, false}
+	end
 
 	-- NOT ADDED YET:
 	-- notyet
@@ -1442,7 +1448,7 @@ end
 	if event == "blink" or event == "purch" or event == "battlebegins" or event == "win" or event == "lose" or event == "kill" or event == "death" or event == "level_voiceline" or event == "laugh" or event == "thanks" then
 		if event == "level_voiceline" then event = string.gsub(event, "_voiceline", "") end
 		if event == "purch" and RandomInt(1, 100) <= 50 then return end -- 50% chance to play purchase voice line
-	return
+		return
 	elseif event == "move" or event == "cast" or event == "attack" then
 		if event == "cast" and RandomInt(1, 100) <= 50 then return end -- 50% chance to play purchase voice line
 --		print("Move/Attack/Cast cd:", VOICELINE_IN_CD[ID][1])
@@ -1450,10 +1456,10 @@ end
 
 			VOICELINE_IN_CD[ID][1] = true
 			Timers:CreateTimer(6.0, function()
-				VOICELINE_IN_CD[ID][1] = false
-			end)
+					VOICELINE_IN_CD[ID][1] = false
+				end)
 		end
-	return
+		return
 	elseif event == "lasthit" or event == "deny" then
 --		print("Last hit/Deny cd:", VOICELINE_IN_CD[ID][2])
 		if VOICELINE_IN_CD[ID][2] == false then
@@ -1465,23 +1471,23 @@ end
 
 			VOICELINE_IN_CD[ID][2] = true
 			Timers:CreateTimer(60.0, function()
-				VOICELINE_IN_CD[ID][2] = false
-			end)
+					VOICELINE_IN_CD[ID][2] = false
+				end)
 		end
-	return
+		return
 	elseif event == "pain" then
 		if VOICELINE_IN_CD[ID][3] == false then
 
 			VOICELINE_IN_CD[ID][3] = true
 			Timers:CreateTimer(3.0, function()
-				VOICELINE_IN_CD[ID][3] = false
-			end)
+					VOICELINE_IN_CD[ID][3] = false
+				end)
 		end
-	return
+		return
 --	elseif event == "notyet" or event == "nomana" then
 --		if VOICELINE_IN_CD[ID][4] == false then
 
-			-- make hero play anger voice lines if he click within 10 seconds
+		-- make hero play anger voice lines if he click within 10 seconds
 --		end
 	end
 end
@@ -1492,8 +1498,8 @@ function CreateGameEvent(name) --luacheck: ignore CreateGameEvent
 	local event = Event()
 
 	GameEvents[name] = (function (self, fn)
-		return event.listen(fn)
-	end)
+			return event.listen(fn)
+		end)
 
 	return event.broadcast
 end
@@ -1502,9 +1508,9 @@ function CheatDetector()
 	if CustomNetTables:GetTableValue("game_options", "game_count").value == 1 then
 		if Convars:GetBool("sv_cheats") == true or GameRules:IsCheatMode() then
 --			if not IsInToolsMode() then
-				log.info("Cheats have been enabled, game don't count.")
-				CustomNetTables:SetTableValue("game_options", "game_count", {value = 0})
-				CustomGameEventManager:Send_ServerToAllClients("safe_to_leave", {})
+			log.info("Cheats have been enabled, game don't count.")
+			CustomNetTables:SetTableValue("game_options", "game_count", {value = 0})
+			CustomGameEventManager:Send_ServerToAllClients("safe_to_leave", {})
 --			end
 		end
 	end
@@ -1577,22 +1583,22 @@ end
 
 function HideWearable(hero, item)
 	Timers:CreateTimer(function()
-		print("Check for cosmetic to hide...")
+			print("Check for cosmetic to hide...")
 
-		for i = 0, 44 do
-			if hero:GetTogglableWearable(i) then
-				print("WEARABLE:", i)
+			for i = 0, 44 do
+				if hero:GetTogglableWearable(i) then
+					print("WEARABLE:", i)
+				end
 			end
-		end
 
-		local wearable = hero:GetTogglableWearable(item)
-		if wearable then
-			wearable:AddEffects(EF_NODRAW)
+			local wearable = hero:GetTogglableWearable(item)
+			if wearable then
+				wearable:AddEffects(EF_NODRAW)
 --			print("Hide default wearable!")
-		end
+			end
 
-		return 2.0
-	end)
+			return 2.0
+		end)
 end
 
 --[[Author: Noya
@@ -1607,72 +1613,72 @@ function HideWearables(hero, number)
 	hero.hiddenWearables = {} -- Keep every wearable handle in a table to show them later
 
 	Timers:CreateTimer(3.0, function()
-		while model do
-			print("model count/classname:", i, model:GetClassname())
-			if model:GetClassname() == "dota_item_wearable" then
+			while model do
+				print("model count/classname:", i, model:GetClassname())
+				if model:GetClassname() == "dota_item_wearable" then
 --			if model:GetClassname() == "dota_item_wearable" and i == number then
-				print("Model has been hidden:", model:GetClassname())
-				model:AddEffects(EF_NODRAW) -- Set model hidden
-				table.insert(hero.hiddenWearables, model)
-			end
+					print("Model has been hidden:", model:GetClassname())
+					model:AddEffects(EF_NODRAW) -- Set model hidden
+					table.insert(hero.hiddenWearables, model)
+				end
 
-			i = i + 1
-			model = model:NextMovePeer()
-		end
-	end)
+				i = i + 1
+				model = model:NextMovePeer()
+			end
+		end)
 end
 
 function SwapWearable( unit, target_model, new_model )
-    local wearable = unit:FirstMoveChild()
-    while wearable ~= nil do
-        if wearable:GetClassname() == "dota_item_wearable" then
-            if wearable:GetModelName() == target_model then
-                wearable:SetModel( new_model )
-                return
-            end
-        end
-        wearable = wearable:NextMovePeer()
-    end
+	local wearable = unit:FirstMoveChild()
+	while wearable ~= nil do
+		if wearable:GetClassname() == "dota_item_wearable" then
+			if wearable:GetModelName() == target_model then
+				wearable:SetModel( new_model )
+				return
+			end
+		end
+		wearable = wearable:NextMovePeer()
+	end
 end
 
 -- Returns a wearable handle if its the passed target_model
 function GetWearable( unit, target_model )
-    local wearable = unit:FirstMoveChild()
-    while wearable ~= nil do
-        if wearable:GetClassname() == "dota_item_wearable" then
-            if wearable:GetModelName() == target_model then
-                return wearable
-            end
-        end
-        wearable = wearable:NextMovePeer()
-    end
-    return false
+	local wearable = unit:FirstMoveChild()
+	while wearable ~= nil do
+		if wearable:GetClassname() == "dota_item_wearable" then
+			if wearable:GetModelName() == target_model then
+				return wearable
+			end
+		end
+		wearable = wearable:NextMovePeer()
+	end
+	return false
 end
 
 function HideWearable( unit, target_model )
-    local wearable = unit:FirstMoveChild()
-    while wearable ~= nil do
-        if wearable:GetClassname() == "dota_item_wearable" then
-            if wearable:GetModelName() == target_model then
-                wearable:AddEffects(EF_NODRAW)
-                return
-            end
-        end
-        wearable = wearable:NextMovePeer()
-    end
+	local wearable = unit:FirstMoveChild()
+	while wearable ~= nil do
+		if wearable:GetClassname() == "dota_item_wearable" then
+			if wearable:GetModelName() == target_model then
+				wearable:AddEffects(EF_NODRAW)
+				return
+			end
+		end
+		wearable = wearable:NextMovePeer()
+	end
 end
 
 function ShowWearable( unit, target_model )
-    local wearable = unit:FirstMoveChild()
-    while wearable ~= nil do
-        if wearable:GetClassname() == "dota_item_wearable" then
-            if wearable:GetModelName() == target_model then
-                wearable:RemoveEffects(EF_NODRAW)
-                return
-            end
-        end
-        wearable = wearable:NextMovePeer()
-    end
+	local wearable = unit:FirstMoveChild()
+	while wearable ~= nil do
+		if wearable:GetClassname() == "dota_item_wearable" then
+			if wearable:GetModelName() == target_model then
+				wearable:RemoveEffects(EF_NODRAW)
+				return
+			end
+		end
+		wearable = wearable:NextMovePeer()
+	end
 end
 
 --[[
@@ -1711,17 +1717,17 @@ end
 function SpawnEasterEgg()
 	if RandomInt(1, 100) > 20 then
 		Timers:CreateTimer((RandomInt(10, 20) * 60) + RandomInt(0, 60), function()
-			local pos = {}
-			pos[1] = Vector(6446, -6979, 1496)
-			pos[2] = Vector(RandomInt(-6000, 0), RandomInt(7150, 7300), 1423)
-			pos[3] = Vector(RandomInt(-1000, 2000), RandomInt(6900, 7200), 1440)
-			pos[4] = Vector(7041, -6263, 1461)
-			local pos = pos[RandomInt(1, 4)]
+				local pos = {}
+				pos[1] = Vector(6446, -6979, 1496)
+				pos[2] = Vector(RandomInt(-6000, 0), RandomInt(7150, 7300), 1423)
+				pos[3] = Vector(RandomInt(-1000, 2000), RandomInt(6900, 7200), 1440)
+				pos[4] = Vector(7041, -6263, 1461)
+				local pos = pos[RandomInt(1, 4)]
 
-			GridNav:DestroyTreesAroundPoint(pos, 80, false)
-			local item = CreateItem("item_the_caustic_finale", nil, nil)
-			local drop = CreateItemOnPositionSync(pos, item)
-		end)
+				GridNav:DestroyTreesAroundPoint(pos, 80, false)
+				local item = CreateItem("item_the_caustic_finale", nil, nil)
+				local drop = CreateItemOnPositionSync(pos, item)
+			end)
 	end
 end
 
@@ -1817,7 +1823,7 @@ function CreateImbaIllusion(hero, pos, ability, duration, out_damage, in_damage,
 		local steam_id = tostring(PlayerResource:GetSteamID(hero:GetPlayerID()))
 		illusion:SetCustomHealthLabel("#imba_donator_label_"..api.imba.is_donator(steam_id), DONATOR_COLOR[api.imba.is_donator(steam_id)][1], DONATOR_COLOR[api.imba.is_donator(steam_id)][2], DONATOR_COLOR[api.imba.is_donator(steam_id)][3])
 	end
-	
+
 	-- Stop the attacker, since it still auto attacks the original (will force it to attack the closest target)
 	hero:Stop()
 

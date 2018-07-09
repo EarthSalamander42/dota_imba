@@ -1,1 +1,0 @@
-"key_in_different_file"            "#{some_complex_key}"

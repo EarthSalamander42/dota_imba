@@ -36,8 +36,6 @@ function fetch() {
 	var map_name = ucwords(mapInfo.map_display_name.replace('_', " "));
  
 	api.resolve_map_name(mapInfo.map_display_name).then(function (data) {
-		$.Msg(data);
-		$.Msg("hello!");
 		view.map.text = data;
 	}).catch(function (err) {
 		$.Msg("Failed to resolve map name: " + err.message);

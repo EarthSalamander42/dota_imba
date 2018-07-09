@@ -306,38 +306,20 @@
 	"overthrow_game_info_tip04"						"The fewer kills your team has, the stronger items you will recieve from a delivery."
 
 	// GG Panel
-	"gg_panel"					"GG Panel"
-	"gg_count"					"GG player count: "
-	"gg_call"					"GG player count: "
+	"gg_panel"										"GG Panel"
+	"gg_count"										"GG player count: "
+	"gg_call"										"GG player count: "
 
+	// -------------------------------------
 	// Mutation
-	//Positive
+	// -------------------------------------
+	
+	// Positive
 	"mutation_killstreak_power"						"Killstreak Power"
 	"mutation_killstreak_power_Description"			"Each kill increases damage done and taken by 20%%. Resets on death."
 
 	"mutation_teammate_resurrection"				"Teammate Resurrection"
 	"mutation_teammate_resurrection_Description"	"Players can resurrect teammates by clicking on their tombstone and channeling."
-
-	"mutation_jump_start"							"Jump Start"
-	"mutation_jump_start_Description"				"Heroes start at level 6."
-
-	"mutation_slark_mode"							"Shadow Dance"
-	"mutation_slark_mode_Description"				"Regenerate health and mana slightly faster when not in vision of the enemy."
-
-	"mutation_greedisgood"							"Greed Is Good"
-	"mutation_greedisgood_Description"				"{gold} gold for everyone each {minutes} minutes."
-
-	"mutation_speed_freaks"							"Speed Freaks"
-	"mutation_speed_freaks_Description"				"Enemy units have double their normal movement speed."
-
-	"mutation_fire_sales"							"Fire Sales"
-	"mutation_fire_sales_Description"				"Every {minutes} minutes, items cost {cost_percent}% of their current price for {seconds} seconds."
-
-	"mutation_battle_hunger"						"Battle Hunger"
-	"mutation_battle_hunger_Description"			"Everytime you kill an enemy's hero your team get troll ult."
-
-	"mutation_frantic"								"Frantic"
-	"mutation_frantic_Description"					"50% Cooldown Reduction, Mana Cost, Respawn Time and Status Resistance."
 
 	"mutation_super_blink"							"Super Blink"
 	"mutation_super_blink_Description"				"All players start with a Blink Dagger that is not disabled on damage."
@@ -345,92 +327,127 @@
 	"mutation_pocket_tower"							"Pocket Tower"
 	"mutation_pocket_tower_Description"				"All heroes start with a consumable that will spawn a tower."
 
+	"mutation_super_fervor"							"Super Fervor"
+	"mutation_super_fervor_Description"				"Killing enemy units decreases cooldowns and grants increased attack speed for a short duration. Killing heroes gives greater effects."
+	
+	"mutation_greed_is_good"						"Greed is Good"
+	"mutation_greed_is_good_Description"			"Bonus gold is granted each minute!"
+
+	"mutation_frantic"								"Frantic"
+	"mutation_frantic_Description"					"50% Cooldown Reduction, Mana Cost, Respawn Time and Status Resistance."
+
+	"mutation_slark_mode"							"Shadow Dance"
+	"mutation_slark_mode_Description"				"Regenerate health and mana slightly faster when not in vision of the enemy."
+	"mutation_slark_mode_author"					"76561198015161808"
+
+	"mutation_jump_start"							"Jump Start"
+	"mutation_jump_start_Description"				"Heroes start at level 6."
+
 	// Negative
-	"mutation_death_explosion"					"Death Explosion"
-	"mutation_death_explosion_Description"		"Deal 600 + (150 * minutes) damage in a 400 radius on death afer a 0.9 seconds delay."
+	"mutation_death_explosion"						"Death Explosion"
+	"mutation_death_explosion_Description"			"Deal 600 + (150 * minutes) damage in a 400 radius on death afer a 0.9 seconds delay."
 
-	"mutation_death_gold_drop"					"Death Gold Drop"
-	"mutation_death_gold_drop_Description"		"Whenever a hero is killed, they drop a gold sack."
+	"mutation_periodic_spellcast"					"Periodic Spellcast"
+	"mutation_periodic_spellcast_Description"		"Every minute, a random spell will be cast on everyone."
 
-	"mutation_stay_frosty"						"Stay Frosty"
-	"mutation_stay_frosty_Description"			"Health regeneration is disabled."
+	"mutation_defense_of_the_ants"					"Defense of the Feeders"
+	"mutation_defense_of_the_ants_Description"		"Every time you kill a hero or die, you become 5% smaller/bigger. Min/Max size caps at -75%/75%."
 
-	"mutation_monkey_business"					"Monkey Business"
-	"mutation_monkey_business_Description"		"Every hero gets the mischief ability passively when not attacking or being attacked for 5 seconds."
+	"mutation_alien_incubation"						"Alien Incubation"
+	"mutation_alien_incubation_Description"			"Every units spawn uncontrollable Broodlings upon death."
 
-	"mutation_defense_of_the_ants"				"Defense of the Feeders"
-	"mutation_defense_of_the_ants_Description"	"Every time you kill a hero or die, you become 5% smaller/bigger. Min/Max size caps at -75%/75%."
+	"mutation_death_gold_drop"						"Death Gold Drop"
+	"mutation_death_gold_drop_Description"			"Whenever a hero is killed, they drop a gold sack."
+	
+	"mutation_no_health_bar"						"No Health Bar"
+	"mutation_no_health_bar_Description"			"Heroes don't have health bars."
 
-	"mutation_the_walking_dead"					"The Walking Dead"
-	"mutation_the_walking_dead_Description"		"During night, zombies spawns in Jungle and attack the closest hero."
-
-	"mutation_angel_arena"						"Angel Arena"
-	"mutation_angel_arena_Description"			"Every 5 minutes, duels will occur. Winner team gets 2000 extra gold."
-	"mutation_slark_mode_author"				"76561198015161808"
-
-	"mutation_alien_incubation"					"Alien Incubation"
-	"mutation_alien_incubation_Description"		"Every units spawn uncontrollable Broodlings upon death."
-
-	"mutation_no_health_bar"					"No Health Bar"
-	"mutation_no_health_bar_Description"		"Heroes don't have health bars."
-
-	"mutation_periodic_spellcast"				"Periodic Spellcast"
-	"mutation_periodic_spellcast_Description"	"Every minute, a random spell will be cast on everyone."
+	"mutation_stay_frosty"							"Stay Frosty"
+	"mutation_stay_frosty_Description"				"Health regeneration is disabled."
 
 	// Terrain
-	"mutation_gift_exchange"					"Airdrop"
-	"mutation_gift_exchange_Description"		"Gifts are periodically deployed around the map every 2 minutes."
-
-	"mutation_no_trees"							"No Trees"
-	"mutation_no_trees_Description"				"All trees are cut and do not respawn."
-
-	"mutation_river_fag"						"River Fag"
-	"mutation_river_fag_Description"			"makes the river impassable without forced movement for heroes."
-
-	"modifier_sticky_river"						"Sticky River"
-	"modifier_sticky_river_Description"			"the river is sticky, you are slowed while wading through water."
-
-	"mutation_sleepy_river"						"Slippery River"
-	"mutation_sleepy_river_Description"			"the river is icy, you can drift on it."
-	"mutation_sleepy_river_author"				"76561198015161808"
-
-	"mutation_river_flows_boost"				"River Flows"
-	"mutation_river_flows_boost_Description"	"The river flows. Movement speed greatly increased on the water."
-
-	"mutation_fast_runes"						"Fast Runes"
-	"mutation_fast_runes_Description"			"Powerup Runes spawn every 30 seconds. Bounty Runes spawn every 60 seconds."
-
-	"mutation_diretide"							"Diretide"
-	"mutation_diretide_Description"				"Roshan roams around finding targets, killing the enemy if no candies is given (Candies are dropped from lane/neutral creeps, 30% chance)."
-	"mutation_diretide_author"					"76561198015161808"
-
-	"mutation_void_path"						"Void Path"
-	"mutation_void_path_Description"			""
-
-	"mutation_danger_zone"						"Danger Zone"
-	"mutation_danger_zone_Description"			"Gyrocopter Call Down is casted on random positions all over the map."
-
-	"mutation_reality_rift"						"Reality Rift"
-	"mutation_reality_rift_Description"			""
-
-	"mutation_blizzard"							"Blizzard"
-	"mutation_blizzard_Description"				""
-
-	"mutation_twister"							"Twister"
-	"mutation_twister_Description"				""
-
-	"mutation_minefield"						"Minefield"
-	"mutation_minefield_Description"			"All kinds of mines spawn randomly across the entire map."
-
-	"mutation_call_down"						"Call Down"
-	"mutation_call_down_Description"			"Nuclear missiles launched across the entire map every 10 seconds."
-
-	"mutation_greed_is_good"					"Greed is Good"
-	"mutation_greed_is_good_Description"		"Bonus gold is granted each minute!"
-
-	"mutation_super_fervor"						"Super Fervor"
-	"mutation_super_fervor_Description"			"Killing enemy units decreases cooldowns and grants increased attack speed for a short duration. Killing heroes gives greater effects."
 	
-	"mutation_speed_freaks"						"Speed Freaks"
-	"mutation_speed_freaks_Description"			"Movement and projectile speed increased."
+	"mutation_sleepy_river"							"Slippery River"
+	"mutation_sleepy_river_Description"				"the river is icy, you can drift on it."
+	"mutation_sleepy_river_author"					"76561198015161808"
+
+	"mutation_fast_runes"							"Fast Runes"
+	"mutation_fast_runes_Description"				"Powerup Runes spawn every 30 seconds. Bounty Runes spawn every 60 seconds."
+
+	"mutation_call_down"							"Call Down"
+	"mutation_call_down_Description"				"Nuclear missiles launched across the entire map every 10 seconds."
+
+	"mutation_gift_exchange"						"Airdrop"
+	"mutation_gift_exchange_Description"			"Gifts are periodically deployed around the map every 2 minutes."
+
+	"mutation_speed_freaks"							"Speed Freaks"
+	"mutation_speed_freaks_Description"				"Movement and projectile speed increased."
+	
+	"mutation_river_flows_boost"					"River Flows"
+	"mutation_river_flows_boost_Description"		"The river flows. Movement speed greatly increased on the water."
+
+	"mutation_wormhole"								"Wormholes"
+	"mutation_wormhole_Description"					"Wormholes spawn on the map. Activating one will bring you to another random wormhole."
+	
+	"mutation_tug_of_war"							"Tug of War"
+	"mutation_tug_of_war_Description"				"Spawns a big BOB (warlock golem) on the mid lane. Every time BOB dies, he comes back stronger (more HP/damage) and he switches to the opposite team."
+	
+	"mutation_minefield"							"Minefield"
+	"mutation_minefield_Description"				"All kinds of mines spawn randomly across the entire map."
+
+	"mutation_no_trees"								"No Trees"
+	"mutation_no_trees_Description"					"All trees are cut and do not respawn."
+	
+	"mutation_omni_vision"							""
+	"mutation_omni_vision_Description"				""
+
+	"modifier_sticky_river"							"Sticky River"
+	"modifier_sticky_river_Description"				"the river is sticky, you are slowed while wading through water."
+
+	// Not implemented yet
+	
+	// Positive
+	"mutation_fire_sales"							"Fire Sales"
+	"mutation_fire_sales_Description"				"Every {minutes} minutes, items cost {cost_percent}% of their current price for {seconds} seconds."
+
+	"mutation_battle_hunger"						"Battle Hunger"
+	"mutation_battle_hunger_Description"			"Everytime you kill an enemy's hero your team get troll ult."
+
+	//"mutation_speed_freaks"						"Speed Freaks"
+	//"mutation_speed_freaks_Description"			"Enemy units have double their normal movement speed."
+
+	// Negative
+	"mutation_monkey_business"						"Monkey Business"
+	"mutation_monkey_business_Description"			"Every hero gets the mischief ability passively when not attacking or being attacked for 5 seconds."
+
+	"mutation_the_walking_dead"						"The Walking Dead"
+	"mutation_the_walking_dead_Description"			"During night, zombies spawns in Jungle and attack the closest hero."
+
+	"mutation_angel_arena"							"Angel Arena"
+	"mutation_angel_arena_Description"				"Every 5 minutes, duels will occur. Winner team gets 2000 extra gold."
+
+	// Terrain
+	
+	"mutation_river_fag"							"River Fag"
+	"mutation_river_fag_Description"				"makes the river impassable without forced movement for heroes."
+
+	"mutation_diretide"								"Diretide"
+	"mutation_diretide_Description"					"Roshan roams around finding targets, killing the enemy if no candies is given (Candies are dropped from lane/neutral creeps, 30% chance)."
+	"mutation_diretide_author"						"76561198015161808"
+
+	"mutation_void_path"							"Void Path"
+	"mutation_void_path_Description"				""
+
+	"mutation_danger_zone"							"Danger Zone"
+	"mutation_danger_zone_Description"				"Gyrocopter Call Down is casted on random positions all over the map."
+
+	"mutation_reality_rift"							"Reality Rift"
+	"mutation_reality_rift_Description"				""
+
+	"mutation_blizzard"								"Blizzard"
+	"mutation_blizzard_Description"					""
+
+	"mutation_twister"								"Twister"
+	"mutation_twister_Description"					""
+
 }
