@@ -3320,7 +3320,7 @@
 			"07"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"respawn_time_reduction"	"1.75"
+				"respawn_time_reduction"	"3.0"
 			}
 			"08"
 			{
