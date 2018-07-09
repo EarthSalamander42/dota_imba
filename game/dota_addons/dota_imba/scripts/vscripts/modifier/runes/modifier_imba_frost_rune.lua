@@ -37,7 +37,7 @@ end
 function modifier_imba_frost_rune:OnTakeDamage(keys)
 	if IsServer() then
 		local target = keys.unit
-		if keys.attacker == target:GetTeam() or keys.attacker:IsBuilding() then
+		if keys.attacker:GetTeam() == target:GetTeam() or keys.attacker:IsBuilding() or keys.attacker == target then
 			return
 		end
 
@@ -99,7 +99,8 @@ function modifier_imba_frost_rune_aura:DeclareFunctions()
 end
 
 function modifier_imba_frost_rune_aura:OnAttackLanded(kv)
-	if (kv.attacker == self:GetParent()) and (kv.target:GetTeamNumber() ~= self:GetParent():GetTeamNumber()) then
+	if (kv.attacker == self:GetParent()) and (kv.target:GetTeamNumber() ~= self:GetParent():GetTeamNumber()) and (kv.attacker:GetTeam() ~= self:GetParent():GetTeam()) then
+		print("rune aura attack landed", kv.target:GetName())
 		kv.target:AddNewModifier(kv.attacker, nil, "modifier_imba_frost_rune_slow", {duration = self.slow_duration})
 	end
 end
@@ -107,7 +108,7 @@ end
 function modifier_imba_frost_rune_aura:OnTakeDamage(keys)
 	if IsServer() then
 		local target = keys.unit
-		if keys.attacker == target:GetTeam() or keys.attacker:IsBuilding() then
+		if keys.attacker:GetTeam() == target:GetTeam() or keys.attacker:IsBuilding() then
 			return
 		end
 
