@@ -998,7 +998,8 @@ function PickupRune(rune_name, unit, bActiveByBottle)
 			-- #3 Talent: Bounty runes give gold bags
 			if unit:HasTalent("special_bonus_imba_alchemist_3") then
 				local stacks_to_gold =( unit:FindTalentValue("special_bonus_imba_alchemist_3") / 100 )  / 5
-				local gold_per_bag = unit:FindModifierByName("modifier_imba_goblins_greed_passive"):GetStackCount() * stacks_to_gold
+				local gold_per_bag = unit:FindModifierByName("modifier_imba_goblins_greed_passive"):GetStackCount() + (current_bounty * stacks_to_gold)
+				print("gold_per_bag", gold_per_bag, stacks_to_gold)
 				for i=1, 5 do
 					-- Drop gold bags
 					local newItem = CreateItem( "item_bag_of_gold", nil, nil )
