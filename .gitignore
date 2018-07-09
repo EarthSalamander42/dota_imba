@@ -47,8 +47,6 @@ game/dota_addons/dota_imba/rich_presence_persistent_data\.txt
 
 game/dota_addons/dota_imba/server_log\.txt
 
-scripts/*
-
 # Roshan
 content/dota_addons/dota_imba/models/rosh*
 game/dota_addons/dota_imba/models/rosh*
