@@ -53,5 +53,5 @@
 "DOTA_Tooltip_modifier_get_xp_global"             "Global Aura"
 "DOTA_Tooltip_modifier_get_xp_global_Description"       "Gaining gold and experience"
 
-"DOTA_Tooltip_ability_item_bag_of_gold"             "300 Gold"
+"DOTA_Tooltip_ability_item_bag_of_gold"             "Bonus Gold"
 "DOTA_Tooltip_ability_item_treasure_chest"            "Treasure Chest"
