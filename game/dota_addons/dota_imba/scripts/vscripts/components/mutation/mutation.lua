@@ -62,7 +62,7 @@ function Mutation:Init()
 	IMBA_MUTATION_PERIODIC_SPELLS[2] = {"thundergods_wrath", "Thundergod's Wrath", "Red", -1}
 	IMBA_MUTATION_PERIODIC_SPELLS[3] = {"track", "Track", "Red", 20.0}
 	IMBA_MUTATION_PERIODIC_SPELLS[4] = {"rupture", "Rupture", "Red", 10.0}
-	IMBA_MUTATION_PERIODIC_SPELLS[5] = {"torrent", "Torrent", "Red", -1}
+	IMBA_MUTATION_PERIODIC_SPELLS[5] = {"torrent", "Torrent", "Red", 45}
 	IMBA_MUTATION_PERIODIC_SPELLS[6] = {"cold_feet", "Cold Feet", "Red", 4.0}
 	IMBA_MUTATION_PERIODIC_SPELLS[7] = {"stampede", "Stampede", "Green", 5.0}
 	IMBA_MUTATION_PERIODIC_SPELLS[8] = {"bloodlust", "Bloodlust", "Green", 30.0}
@@ -545,6 +545,9 @@ end
 function Mutation:OnHeroFirstSpawn(hero)
 --	print("Mutation: On Hero Respawned")
 
+	-- Check if we can add modifiers to hero
+	if not Mutation:IsEligibleHero(hero) then return end
+
 	if IMBA_MUTATION["positive"] == "killstreak_power" then
 		hero:AddNewModifier(hero, nil, "modifier_mutation_kill_streak_power", {})
 	elseif IMBA_MUTATION["positive"] == "frantic" then
@@ -573,6 +576,9 @@ end
 
 function Mutation:OnHeroSpawn(hero)
 --	print("Mutation: On Hero Respawned")
+
+	-- Check if we can add modifiers to hero
+	if not Mutation:IsEligibleHero(hero) then return end
 
 	if IMBA_MUTATION["positive"] == "damage_reduction" then
 		hero:AddNewModifier(hero, nil, "modifier_mutation_damage_reduction", {})
@@ -701,3 +707,13 @@ function Mutation:SpawnRandomItem()
 	CustomGameEventManager:Send_ServerToAllClients("item_will_spawn", {spawn_location = pos})
 	EmitGlobalSound("powerup_03")
 end
+
+-- Currently only checks stuff for monkey king
+function Mutation:IsEligibleHero(hero)	
+	if(hero:GetName() == "npc_dota_hero_monkey_king" or hero:GetName() == "npc_dota_hero_rubick") and hero:GetAbsOrigin() ~= Vector(0,0,0) then 
+		print("fake hero entered the game, ignoring mutation!", hero:GetEntityIndex(), hero:GetName())
+		return false
+	end
+
+	return true
+end	
