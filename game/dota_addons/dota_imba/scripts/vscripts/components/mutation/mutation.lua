@@ -218,7 +218,7 @@ function Mutation:ChooseMutation(type, table, count)
 
 			if IsInToolsMode() then
 				IMBA_MUTATION["positive"] = "super_fervor"
-				IMBA_MUTATION["negative"] = "periodic_spellcast"
+				IMBA_MUTATION["negative"] = "alien_incubation"
 				IMBA_MUTATION["terrain"] = "tug_of_war"
 			end
 
