@@ -25,5 +25,7 @@ Currently we examine all suggestions before implementing them, on the IMBA devel
 
 Feel free to just implement your suggestion/fix without talking to us, but please understand that there's a chance it might get ignored for game balance or other reasons. Thank you!
 
+Also see the CONTRIBUTING files for conventions
+
 ## Reporting bugs
 Report bugs by opening issues in our dota imba site https://www.dota2imba.org. Registration is easy and short and it would be very helpful for us to track bugs. 

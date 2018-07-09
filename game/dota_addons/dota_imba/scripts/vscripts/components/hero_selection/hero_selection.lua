@@ -322,7 +322,7 @@ function HeroSelection:APTimer(time, message)
 			end
 
 			HeroSelection:SelectHero(key, selectedtable[key].selectedhero)
-			print("PAUSE GAME!")
+			log.info("PAUSE GAME!")
 --			PauseGame(true)
 		end
 
@@ -363,7 +363,7 @@ function HeroSelection:SelectHero(playerId, hero)
 		loadingHeroes = loadingHeroes - 1
 		if loadingHeroes == 0 then
 			LoadFinishEvent.broadcast()
-			print("UNPAUSE GAME!")
+			log.info("UNPAUSE GAME!")
 --			PauseGame(false)
 			if IsMutationMap() then
 				GameRules:GetGameModeEntity():SetPauseEnabled( true )
@@ -391,9 +391,9 @@ function HeroSelection:SelectHero(playerId, hero)
 
 						if top_imr_string then
 							local top_imr = CustomNetTables:GetTableValue("top_imr5v5", tostring(i))
-							print(top_imr.SteamID64)
+							log.debug(top_imr.SteamID64)
 							if tostring(PlayerResource:GetSteamID(id)) == top_imr.SteamID64 then
-								print("Found a top leaderboard!")
+								log.debug("Found a top leaderboard!")
 								if GetMapName() == "imba_ranked_5v5" then
 									Say(nil, PlayerResource:GetPlayerName(id).." is top "..i.." IMR! ("..math.floor(top_imr.IMR_5v5)..")", false)
 								elseif GetMapName() == "imba_ranked_10v10" then
@@ -589,7 +589,7 @@ function HeroSelection:UnsafeRandomHero()
 		if curstate == rndhero then
 			for k, v in pairs(hotdisabledlist) do
 				if k == name then
-					print("Hero disabled! Try again!")
+					log.info("Hero disabled! Try again!")
 					return HeroSelection:UnsafeRandomHero()
 				end
 			end
@@ -626,7 +626,7 @@ function HeroSelection:StrategyTimer(time)
 	HeroSelection:CheckPause()
 	if time < 0 then
 		if finishedLoading then
---			print("PICK SCREEN IS OVER!")
+			log.debug("PICK SCREEN IS OVER!")
 			PICKING_SCREEN_OVER = true
 			HeroSelection:EndStrategyTime()
 		else

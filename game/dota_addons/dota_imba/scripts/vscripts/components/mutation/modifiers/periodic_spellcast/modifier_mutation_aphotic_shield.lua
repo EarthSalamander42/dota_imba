@@ -124,11 +124,7 @@ end
 
 function modifier_mutation_aphotic_shield:GetModifierAvoidDamage(traits)
 	local blocked = 0
-	
-	--for k,v in pairs(traits) do
-    --    print("Parameter: ", k, "Value: ", v)
-    --end
-	
+		
 	-- Reduce shield stacks / HP based on damage taken
 	self.shield_remain = self.shield_remain - traits.damage
 	self:SetStackCount(self.shield_remain)

@@ -37,6 +37,8 @@ function Mutation:Init()
 	LinkLuaModifier("modifier_mutation_super_fervor", "components/mutation/modifiers/modifier_mutation_super_fervor.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_mutation_greed_is_good", "components/mutation/modifiers/modifier_mutation_greed_is_good.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_mutation_alien_incubation", "components/mutation/modifiers/modifier_mutation_alien_incubation.lua", LUA_MODIFIER_MOTION_NONE )
+	LinkLuaModifier("modifier_mutation_wormhole_cooldown", "components/mutation/modifiers/modifier_mutation_wormhole_cooldown.lua", LUA_MODIFIER_MOTION_NONE )
+	LinkLuaModifier("modifier_mutation_tug_of_war_golem", "components/mutation/modifiers/modifier_mutation_tug_of_war_golem.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_mutation_sun_strike", "components/mutation/modifiers/periodic_spellcast/modifier_mutation_sun_strike.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_mutation_call_down", "components/mutation/modifiers/modifier_mutation_call_down.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_mutation_thundergods_wrath", "components/mutation/modifiers/periodic_spellcast/modifier_mutation_thundergods_wrath.lua", LUA_MODIFIER_MOTION_NONE )
@@ -58,13 +60,80 @@ function Mutation:Init()
 	IMBA_MUTATION_PERIODIC_SPELLS = {}
 	IMBA_MUTATION_PERIODIC_SPELLS[1] = {"sun_strike", "Sunstrike", "Red", -1}
 	IMBA_MUTATION_PERIODIC_SPELLS[2] = {"thundergods_wrath", "Thundergod's Wrath", "Red", -1}
-    IMBA_MUTATION_PERIODIC_SPELLS[3] = {"track", "Track", "Red", 20.0}
+	IMBA_MUTATION_PERIODIC_SPELLS[3] = {"track", "Track", "Red", 20.0}
 	IMBA_MUTATION_PERIODIC_SPELLS[4] = {"rupture", "Rupture", "Red", 10.0}
 	IMBA_MUTATION_PERIODIC_SPELLS[5] = {"torrent", "Torrent", "Red", -1}
 	IMBA_MUTATION_PERIODIC_SPELLS[6] = {"cold_feet", "Cold Feet", "Red", 4.0}
 	IMBA_MUTATION_PERIODIC_SPELLS[7] = {"stampede", "Stampede", "Green", 5.0}
 	IMBA_MUTATION_PERIODIC_SPELLS[8] = {"bloodlust", "Bloodlust", "Green", 30.0}
 	IMBA_MUTATION_PERIODIC_SPELLS[9] = {"aphotic_shield", "Aphotic Shield", "Green", 15.0}
+
+	IMBA_MUTATION_WORMHOLE_COLORS = {}
+	IMBA_MUTATION_WORMHOLE_COLORS[1] = Vector(100, 0, 0)
+	IMBA_MUTATION_WORMHOLE_COLORS[2] = Vector(0, 100, 0)
+	IMBA_MUTATION_WORMHOLE_COLORS[3] = Vector(0, 0, 100)
+	IMBA_MUTATION_WORMHOLE_COLORS[4] = Vector(100, 100, 0)
+	IMBA_MUTATION_WORMHOLE_COLORS[5] = Vector(100, 0, 100)
+	IMBA_MUTATION_WORMHOLE_COLORS[6] = Vector(0, 100, 100)
+	IMBA_MUTATION_WORMHOLE_COLORS[7] = Vector(0, 100, 100)
+	IMBA_MUTATION_WORMHOLE_COLORS[8] = Vector(100, 0, 100)
+	IMBA_MUTATION_WORMHOLE_COLORS[9] = Vector(100, 100, 0)
+	IMBA_MUTATION_WORMHOLE_COLORS[10] = Vector(0, 0, 100)
+	IMBA_MUTATION_WORMHOLE_COLORS[11] = Vector(0, 100, 0)
+	IMBA_MUTATION_WORMHOLE_COLORS[12] = Vector(100, 0, 0)
+
+	IMBA_MUTATION_WORMHOLE_POSITIONS = {}
+	IMBA_MUTATION_WORMHOLE_POSITIONS[1] = Vector(-2471, -5025, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[2] = Vector(-576, -4320, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[3] = Vector(794, -3902, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[4] = Vector(2630, -3700, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[5] = Vector(3203, -6064, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[6] = Vector(1111, -5804, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[7] = Vector(4419, -5114, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[8] = Vector(6156, -4831, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[9] = Vector(6084, -3022, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[10] = Vector(4422, -1765, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[11] = Vector(6186, -654, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[12] = Vector(4754, -84, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[13] = Vector(3318, -58, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[14] = Vector(5008, 1799, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[15] = Vector(1534, -649, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[16] = Vector(2641, -2003, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[17] = Vector(3939, 2279, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[18] = Vector(2309, 4643, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[19] = Vector(843, 2300, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[20] = Vector(-544, -361, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[21] = Vector(354, -1349, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[22] = Vector(289, -2559, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[23] = Vector(-1534, -2893, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[24] = Vector(-5366, -2570, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[25] = Vector(-5238, -1727, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[26] = Vector(-3363, -1210, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[27] = Vector(-4535, 10, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[28] = Vector(-4420, 1351, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[29] = Vector(-6161, 440, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[30] = Vector(-2110, 376, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[31] = Vector(-840, 1384, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[32] = Vector(-388, 2537, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[33] = Vector(-36, 4042, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[34] = Vector(-1389, 4325, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[35] = Vector(-2812, 3633, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[36] = Vector(-4574, 4804, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[37] = Vector(-6339, 3841, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[38] = Vector(-5971, 5455, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[39] = Vector(-3099, 6112, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[40] = Vector(-1606, 6103, 0)
+
+	--IMBA_MUTATION_WORMHOLE_INTERVAL = 600
+	--IMBA_MUTATION_WORMHOLE_DURATION = 600
+	IMBA_MUTATION_WORMHOLE_PREVENT_DURATION = 3
+
+	IMBA_MUTATION_TUG_OF_WAR_START = {}
+	IMBA_MUTATION_TUG_OF_WAR_START[DOTA_TEAM_BADGUYS] = Vector(4037, 3521, 0)
+	IMBA_MUTATION_TUG_OF_WAR_START[DOTA_TEAM_GOODGUYS] = Vector(-4448, -3936, 0)
+	IMBA_MUTATION_TUG_OF_WAR_TARGET = {}
+	IMBA_MUTATION_TUG_OF_WAR_TARGET[DOTA_TEAM_BADGUYS] = Vector(-5864, -5340, 0)
+	IMBA_MUTATION_TUG_OF_WAR_TARGET[DOTA_TEAM_GOODGUYS] = Vector(5654, 4939, 0)
     
 --[     TO DO
 --	"telekinesis",
@@ -115,6 +184,9 @@ function Mutation:Precache(context)
 
 	-- Periodic Spellcast
 	PrecacheResource("particle", "particles/econ/items/zeus/arcana_chariot/zeus_arcana_thundergods_wrath_start_bolt_parent.vpcf", context)
+	PrecacheResource("particle", "particles/ambient/wormhole_circle.vpcf", context)
+	PrecacheResource("particle", "particles/ambient/tug_of_war_team_dire.vpcf", context)
+	PrecacheResource("particle", "particles/ambient/tug_of_war_team_radiant.vpcf", context)
 
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts", context)
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_ancient_apparition.vsndevts", context)
@@ -127,6 +199,7 @@ function Mutation:Precache(context)
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_pugna.vsndevts", context)
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_techies.vsndevts", context)
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_troll_warlord.vsndevts", context)
+	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_warlock.vsndevts", context)
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_zuus.vsndevts", context)
 end
 
@@ -144,9 +217,9 @@ function Mutation:ChooseMutation(type, table, count)
 			table[mutation] = true
 
 			if IsInToolsMode() then
-				IMBA_MUTATION["positive"] = "super_fervor"
-				IMBA_MUTATION["negative"] = "periodic_spellcast"
-				IMBA_MUTATION["terrain"] = "river_flows"
+				IMBA_MUTATION["positive"] = "greed_is_good"
+				IMBA_MUTATION["negative"] = "alien_incubation"
+				IMBA_MUTATION["terrain"] = "tug_of_war"
 			end
 
 			return
@@ -175,8 +248,20 @@ function Mutation:OnGameRulesStateChange(keys)
 		end
 	elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
 		if IMBA_MUTATION["negative"] == "periodic_spellcast" then
-			local random_int = RandomInt(1, #IMBA_MUTATION_PERIODIC_SPELLS)
+			local buildings = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, Vector(0,0,0), nil, 20000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
+			local good_fountain = nil
+			local bad_fountain = nil
 
+			for _, building in pairs(buildings) do
+				local building_name = building:GetName()
+				if string.find(building_name, "ent_dota_fountain_bad") then
+					bad_fountain = building
+				elseif string.find(building_name, "ent_dota_fountain_good") then
+					good_fountain = building
+				end
+			end
+
+			local random_int = RandomInt(1, #IMBA_MUTATION_PERIODIC_SPELLS)
 			Timers:CreateTimer(55.0, function()
 				random_int = RandomInt(1, #IMBA_MUTATION_PERIODIC_SPELLS)
 				Notifications:TopToAll({text = IMBA_MUTATION_PERIODIC_SPELLS[random_int][2].." Mutation in 5 seconds...", duration = 5.0, style = {color = IMBA_MUTATION_PERIODIC_SPELLS[random_int][3]}})
@@ -185,11 +270,16 @@ function Mutation:OnGameRulesStateChange(keys)
 			end)
 
 			Timers:CreateTimer(60.0, function()
+				if bad_fountain == nil or good_fountain == nil then
+					log.error("nao cucekd up!!! ")
+					return 60.0 
+				end
+
 				for _, hero in pairs(HeroList:GetAllHeroes()) do
-					local caster = Entities:FindByName(nil, "dota_badguys_fort")
+					local caster = bad_fountain
 
 					if (hero:GetTeamNumber() == 3 and IMBA_MUTATION_PERIODIC_SPELLS[random_int][3] == "Red") or (hero:GetTeamNumber() == 2 and IMBA_MUTATION_PERIODIC_SPELLS[random_int][3] == "Green") then
-						caster = Entities:FindByName(nil, "dota_goodguys_fort")
+						caster = good_fountain
 					end
 					
 					hero:AddNewModifier(caster, caster, "modifier_mutation_"..IMBA_MUTATION_PERIODIC_SPELLS[random_int][1], {duration=IMBA_MUTATION_PERIODIC_SPELLS[random_int][4]})
@@ -327,6 +417,88 @@ function Mutation:OnGameRulesStateChange(keys)
 			local dummy_unit = CreateUnitByName("npc_dummy_unit_perma", Vector(0, 0, 0), true, nil, nil, DOTA_TEAM_NEUTRALS)
 			dummy_unit:AddNewModifier(dummy_unit, nil, "modifier_mutation_call_down", {})
 		end
+
+		if IMBA_MUTATION["terrain"] == "wormhole" then
+			
+			-- Assign initial wormhole positions
+			local current_wormholes = {}
+			for i = 1, 12 do
+				local random_int = RandomInt(1, #IMBA_MUTATION_WORMHOLE_POSITIONS)
+				current_wormholes[i] = IMBA_MUTATION_WORMHOLE_POSITIONS[random_int]
+				table.remove(IMBA_MUTATION_WORMHOLE_POSITIONS, random_int)
+			end
+
+			-- Create wormhole particles
+			local wormhole_particles = {}
+			for i = 1, 12 do
+				wormhole_particles[i] = ParticleManager:CreateParticle("particles/ambient/wormhole_circle.vpcf", PATTACH_CUSTOMORIGIN, nil)
+				ParticleManager:SetParticleControl(wormhole_particles[i], 0, GetGroundPosition(current_wormholes[i], nil) + Vector(0, 0, 20))
+				ParticleManager:SetParticleControl(wormhole_particles[i], 2, IMBA_MUTATION_WORMHOLE_COLORS[i])
+				ParticleManager:ReleaseParticleIndex(wormhole_particles[i])
+			end
+
+			-- Teleport loop
+			Timers:CreateTimer(0, function()
+
+				-- Find units to teleport
+				for i = 1, 12 do
+					local units = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, current_wormholes[i], nil, 150, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
+					for _, unit in pairs(units) do
+						if not unit:HasModifier("modifier_mutation_wormhole_cooldown") then
+							if unit:IsHero() then
+								unit:EmitSound("Wormhole.Disappear")
+								Timers:CreateTimer(0.03, function()
+									unit:EmitSound("Wormhole.Appear")
+								end)
+							else
+								unit:EmitSound("Wormhole.CreepDisappear")
+								Timers:CreateTimer(0.03, function()
+									unit:EmitSound("Wormhole.CreepAppear")
+								end)
+							end
+							unit:AddNewModifier(unit, nil, "modifier_mutation_wormhole_cooldown", {duration = IMBA_MUTATION_WORMHOLE_PREVENT_DURATION})
+							FindClearSpaceForUnit(unit, current_wormholes[13-i], true)
+							if unit.GetPlayerID and unit:GetPlayerID() then
+								PlayerResource:SetCameraTarget(unit:GetPlayerID(), unit)
+								Timers:CreateTimer(0.03, function()
+									PlayerResource:SetCameraTarget(unit:GetPlayerID(), nil)
+								end)
+							end
+						end
+					end
+				end
+				return 0.5
+			end)
+		end
+
+		if IMBA_MUTATION["terrain"] == "tug_of_war" then
+			local golem
+			
+			-- Random a team for the initial golem spawn
+			if RandomInt(1, 2) == 1 then
+				golem = CreateUnitByName("npc_dota_mutation_golem", IMBA_MUTATION_TUG_OF_WAR_START[DOTA_TEAM_GOODGUYS], false, nil, nil, DOTA_TEAM_GOODGUYS)
+				golem.ambient_pfx = ParticleManager:CreateParticle("particles/ambient/tug_of_war_team_radiant.vpcf", PATTACH_ABSORIGIN_FOLLOW, golem)
+				ParticleManager:SetParticleControl(golem.ambient_pfx, 0, golem:GetAbsOrigin())
+				Timers:CreateTimer(0.1, function()
+					golem:MoveToPositionAggressive(IMBA_MUTATION_TUG_OF_WAR_TARGET[DOTA_TEAM_GOODGUYS])
+				end)
+			else
+				golem = CreateUnitByName("npc_dota_mutation_golem", IMBA_MUTATION_TUG_OF_WAR_START[DOTA_TEAM_BADGUYS], false, nil, nil, DOTA_TEAM_BADGUYS)
+				golem.ambient_pfx = ParticleManager:CreateParticle("particles/ambient/tug_of_war_team_dire.vpcf", PATTACH_ABSORIGIN_FOLLOW, golem)
+				ParticleManager:SetParticleControl(golem.ambient_pfx, 0, golem:GetAbsOrigin())
+				Timers:CreateTimer(0.1, function()
+					golem:MoveToPositionAggressive(IMBA_MUTATION_TUG_OF_WAR_TARGET[DOTA_TEAM_BADGUYS])
+				end)
+			end
+
+			-- Initial logic
+			golem:AddNewModifier(golem, nil, "modifier_mutation_tug_of_war_golem", {}):SetStackCount(1)
+			FindClearSpaceForUnit(golem, golem:GetAbsOrigin(), true)
+			golem:SetDeathXP(50)
+			golem:SetMinimumGoldBounty(50)
+			golem:SetMaximumGoldBounty(50)
+		end
+			
 
 		--[[
 		if IMBA_MUTATION["terrain"] == "minefield" then

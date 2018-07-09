@@ -100,12 +100,11 @@
 .es-teams-columns {
 	flow-children: right;
 	horizontal-align: center;
-	width: 100%;
 }
 
 .es-team {
 	flow-children: down;
-	horizontal-align: center;
+	margin: 10px; 
 	border-top:  1px solid #3a363a;	
 	border-left:  1px solid #3a363a;
 	border-bottom: 1px solid #1d2126;	

@@ -65,8 +65,8 @@ function modifier_mutation_torrent:OnCreated()
 			-- Deals tick damage tick_count times
 			Timers:CreateTimer(function()
 				if current_ticks < self.tick_count then
-					print(current_ticks, self.tick_count)
-					print("Caster:", self:GetCaster())
+					log.debug(current_ticks, self.tick_count)
+					log.debug("Caster:", self:GetCaster())
 					ApplyDamage({victim = enemy, attacker = self:GetCaster(), damage = self.damage / self.tick_count, damage_type = DAMAGE_TYPE_MAGICAL})
 					current_ticks = current_ticks + 1
 					return 1.0

@@ -1662,6 +1662,7 @@ function imba_phoenix_supernova:OnSpellStart()
 	local caster = self:GetCaster()
 	local ability = self
 	local location = caster:GetAbsOrigin()
+	local ground_location = GetGroundPosition(location, caster)
 	local egg_duration = self:GetSpecialValueFor("duration")
 
 	local max_attack = self:GetSpecialValueFor("max_hero_attacks")
@@ -1669,7 +1670,7 @@ function imba_phoenix_supernova:OnSpellStart()
 	caster:AddNewModifier(caster, ability, "modifier_imba_phoenix_supernova_caster_dummy", {duration = egg_duration })
 	caster:AddNoDraw()
 
-	local egg = CreateUnitByName("npc_dota_phoenix_sun",location,false,caster,caster:GetOwner(),caster:GetTeamNumber())
+	local egg = CreateUnitByName("npc_dota_phoenix_sun", ground_location, false, caster, caster:GetOwner(), caster:GetTeamNumber())
 	egg:AddNewModifier(caster, ability, "modifier_kill", {duration = egg_duration })
 	egg:AddNewModifier(caster, ability, "modifier_imba_phoenix_supernova_egg_thinker", {duration = egg_duration + 0.3 })
 
