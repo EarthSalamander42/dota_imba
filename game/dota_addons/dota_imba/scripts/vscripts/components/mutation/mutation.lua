@@ -38,6 +38,7 @@ function Mutation:Init()
 	LinkLuaModifier("modifier_mutation_greed_is_good", "components/mutation/modifiers/modifier_mutation_greed_is_good.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_mutation_alien_incubation", "components/mutation/modifiers/modifier_mutation_alien_incubation.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_mutation_wormhole_cooldown", "components/mutation/modifiers/modifier_mutation_wormhole_cooldown.lua", LUA_MODIFIER_MOTION_NONE )
+	LinkLuaModifier("modifier_mutation_tug_of_war_golem", "components/mutation/modifiers/modifier_mutation_tug_of_war_golem.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_mutation_sun_strike", "components/mutation/modifiers/periodic_spellcast/modifier_mutation_sun_strike.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_mutation_call_down", "components/mutation/modifiers/modifier_mutation_call_down.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_mutation_thundergods_wrath", "components/mutation/modifiers/periodic_spellcast/modifier_mutation_thundergods_wrath.lua", LUA_MODIFIER_MOTION_NONE )
@@ -126,6 +127,13 @@ function Mutation:Init()
 	--IMBA_MUTATION_WORMHOLE_INTERVAL = 600
 	--IMBA_MUTATION_WORMHOLE_DURATION = 600
 	IMBA_MUTATION_WORMHOLE_PREVENT_DURATION = 3
+
+	IMBA_MUTATION_TUG_OF_WAR_START = {}
+	IMBA_MUTATION_TUG_OF_WAR_START[DOTA_TEAM_BADGUYS] = Vector(4037, 3521, 0)
+	IMBA_MUTATION_TUG_OF_WAR_START[DOTA_TEAM_GOODGUYS] = Vector(-4448, -3936, 0)
+	IMBA_MUTATION_TUG_OF_WAR_TARGET = {}
+	IMBA_MUTATION_TUG_OF_WAR_TARGET[DOTA_TEAM_BADGUYS] = Vector(-5864, -5340, 0)
+	IMBA_MUTATION_TUG_OF_WAR_TARGET[DOTA_TEAM_GOODGUYS] = Vector(5654, 4939, 0)
     
 --[     TO DO
 --	"telekinesis",
@@ -177,6 +185,8 @@ function Mutation:Precache(context)
 	-- Periodic Spellcast
 	PrecacheResource("particle", "particles/econ/items/zeus/arcana_chariot/zeus_arcana_thundergods_wrath_start_bolt_parent.vpcf", context)
 	PrecacheResource("particle", "particles/ambient/wormhole_circle.vpcf", context)
+	PrecacheResource("particle", "particles/ambient/tug_of_war_team_dire.vpcf", context)
+	PrecacheResource("particle", "particles/ambient/tug_of_war_team_radiant.vpcf", context)
 
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts", context)
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_ancient_apparition.vsndevts", context)
@@ -189,6 +199,7 @@ function Mutation:Precache(context)
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_pugna.vsndevts", context)
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_techies.vsndevts", context)
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_troll_warlord.vsndevts", context)
+	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_warlock.vsndevts", context)
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_zuus.vsndevts", context)
 end
 
@@ -208,7 +219,7 @@ function Mutation:ChooseMutation(type, table, count)
 			if IsInToolsMode() then
 				IMBA_MUTATION["positive"] = "super_fervor"
 				IMBA_MUTATION["negative"] = "periodic_spellcast"
-				IMBA_MUTATION["terrain"] = "wormhole"
+				IMBA_MUTATION["terrain"] = "tug_of_war"
 			end
 
 			return
@@ -459,6 +470,35 @@ function Mutation:OnGameRulesStateChange(keys)
 				return 0.5
 			end)
 		end
+
+		if IMBA_MUTATION["terrain"] == "tug_of_war" then
+			local golem
+			
+			-- Random a team for the initial golem spawn
+			if RandomInt(1, 2) == 1 then
+				golem = CreateUnitByName("npc_dota_mutation_golem", IMBA_MUTATION_TUG_OF_WAR_START[DOTA_TEAM_GOODGUYS], false, nil, nil, DOTA_TEAM_GOODGUYS)
+				golem.ambient_pfx = ParticleManager:CreateParticle("particles/ambient/tug_of_war_team_radiant.vpcf", PATTACH_ABSORIGIN_FOLLOW, golem)
+				ParticleManager:SetParticleControl(golem.ambient_pfx, 0, golem:GetAbsOrigin())
+				Timers:CreateTimer(0.1, function()
+					golem:MoveToPositionAggressive(IMBA_MUTATION_TUG_OF_WAR_TARGET[DOTA_TEAM_GOODGUYS])
+				end)
+			else
+				golem = CreateUnitByName("npc_dota_mutation_golem", IMBA_MUTATION_TUG_OF_WAR_START[DOTA_TEAM_BADGUYS], false, nil, nil, DOTA_TEAM_BADGUYS)
+				golem.ambient_pfx = ParticleManager:CreateParticle("particles/ambient/tug_of_war_team_dire.vpcf", PATTACH_ABSORIGIN_FOLLOW, golem)
+				ParticleManager:SetParticleControl(golem.ambient_pfx, 0, golem:GetAbsOrigin())
+				Timers:CreateTimer(0.1, function()
+					golem:MoveToPositionAggressive(IMBA_MUTATION_TUG_OF_WAR_TARGET[DOTA_TEAM_BADGUYS])
+				end)
+			end
+
+			-- Initial logic
+			golem:AddNewModifier(golem, nil, "modifier_mutation_tug_of_war_golem", {}):SetStackCount(1)
+			FindClearSpaceForUnit(golem, golem:GetAbsOrigin(), true)
+			golem:SetDeathXP(50)
+			golem:SetMinimumGoldBounty(50)
+			golem:SetMaximumGoldBounty(50)
+		end
+			
 
 		--[[
 		if IMBA_MUTATION["terrain"] == "minefield" then

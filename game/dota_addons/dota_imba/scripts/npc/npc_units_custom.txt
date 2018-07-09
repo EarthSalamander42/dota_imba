@@ -14349,6 +14349,79 @@
 		"VisionNighttimeRange"		"1200"		// Range of vision at night time.
 	}
 
+	"npc_dota_mutation_golem"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_warlock_golem"
+		"Model"						"models/items/warlock/golem/ti_8_warlock_darkness_apostate_golem/ti_8_warlock_darkness_apostate_golem.vmdl"
+		"SoundSet"					"Hero_WarlockGolem"
+		"IdleSoundLoop"				"Hero_WarlockGolem.Spawn_Loop"
+		"Level"						"1"
+		"ModelScale"				"0.7"
+		"IsAncient"					"1"
+		"ConsideredHero"			"1"
+		"CanBeDominated"			"0"		
+		"UnitLabel"					"mutation_golem"
+		"VoiceFile" 				"soundevents/voscripts/game_sounds_vo_warlock_golem.vsndevts"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					""
+		"Ability2"					""
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"0"
+		"MagicalResistance"			"25"
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"0"
+		"AttackDamageMax"			"0"
+		"AttackRate"				"1.2"
+		"AttackAnimationPoint"		"0.26"
+		"AttackAcquisitionRange"	"600"
+		"AttackRange"				"160"
+		"ProjectileModel"			""
+		"ProjectileSpeed"			"900"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"HealthBarOffset"			"240"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"0"
+		"BountyGoldMin"				"0"
+		"BountyGoldMax"				"0"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"320"
+		"MovementTurnRate"			"0.5"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"300"
+		"StatusHealthRegen"			"0"		
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"900"
+		"VisionNighttimeRange"		"900"
+	}
+
 	"npc_dota_xp_granter"
 	{
 		"BaseClass"					"npc_dota_creature"
