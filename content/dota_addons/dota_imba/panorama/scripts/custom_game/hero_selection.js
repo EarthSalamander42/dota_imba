@@ -35,13 +35,21 @@ var stepsCompleted = {
 var lastPickIndex = 0;
 var hilariousLoadingPhrases = [
 	'Precaching all heroes',
-	'Adding Mangonim Scepter',
+//	'Adding Mangonim Scepter',
 //	'Nerfed [Most pick hero]',
-	'Subscribing your account to Dota Imba plus for 42 months',
-	'Tooltip Missing!',
+//	'Subscribing your account to Dota Imba plus for 42 months',
+//	'Tooltip Missing!',
 	'Herding more llama',
-	'Developing Artifact Imba',
-	'Buffing Pudge'
+//	// 'Developing Artifact Imba',
+//	'Buffing Pudge',
+	'Working around Valve Bugs',
+	'REEEEEEEEEEEEEEEEEEE',
+	'Loading heroes',
+	'Opening wormholes',
+	'Training Creeps',
+	'Petting Roshan',
+	'Infesting units',
+	'Assembling runes'
 ];
 
 var abilityPanels = [
