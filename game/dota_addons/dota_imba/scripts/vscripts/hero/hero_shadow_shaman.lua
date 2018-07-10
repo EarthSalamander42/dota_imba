@@ -130,6 +130,14 @@ function modifier_imba_mass_serpent_ward:DeclareFunctions()
 	return funcs
 end
 
+function modifier_imba_mass_serpent_ward:CheckState()
+	local state = {
+		[MODIFIER_STATE_MAGIC_IMMUNE] = true,
+	}
+
+	return state
+end
+
 -- Set all damage taken to 1
 function modifier_imba_mass_serpent_ward:GetModifierIncomingDamage_Percentage()
 	return -100
