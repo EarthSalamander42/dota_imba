@@ -14,6 +14,7 @@
 --
 -- Editors:
 --     suthernfriend, 03.02.2018
+--     naowin, 10.07.2018
 
 CreateEmptyTalents("silencer")
 
@@ -164,7 +165,8 @@ function modifier_imba_arcane_curse_debuff:OnAbilityExecuted( params )
 				end
 
 				-- List of abilities that shouldn't get triggered by Arcane Curse
-				local uneffected_spells = {"invoker_quas",
+				local uneffected_spells = {
+					"invoker_quas",
 					"invoker_wex",
 					"invoker_exort",
 					"ancient_apparition_ice_blast_release",
@@ -436,31 +438,27 @@ function modifier_imba_silencer_glaives_of_wisdom:OnAttackLanded(keys)
 					hit_counter:SetDuration(self.hit_count_duration, true)
 				end
 
+				local int_damage = target:FindModifierByName(self.modifier_int_damage)
+				if not int_damage then
+					int_damage = target:AddNewModifier(attacker, self.ability, self.modifier_int_damage, {int_reduction = self.int_reduction_pct})
+				end
+
+				int_damage:IncrementStackCount()
+				int_damage:SetDuration(self.int_reduction_duration, true)
+
 				if attacker:HasTalent("special_bonus_imba_silencer_6") then
 					if not target:HasModifier("modifier_imba_silencer_glaives_talent_effect_procced") then
 						local arcaneSupremacy = attacker:FindModifierByName("modifier_imba_silencer_arcane_supremacy")
 						if arcaneSupremacy then
 							local stolenInt = arcaneSupremacy:GetStackCount()
-							if stolenInt > 0 then
-								local talentEffectModifier = target:FindModifierByName("modifier_imba_silencer_glaives_talent_effect")
-								if talentEffectModifier then
-									talentEffectModifier:SetStackCount(talentEffectModifier:GetStackCount() + stolenInt)
-									talentEffectModifier:SetDuration(attacker:FindTalentValue("special_bonus_imba_silencer_6", "duration"), true)
-								else
-									talentEffectModifier = target:AddNewModifier(attacker, self.ability, "modifier_imba_silencer_glaives_talent_effect", {duration = attacker:FindTalentValue("special_bonus_imba_silencer_6", "duration")})
-									talentEffectModifier:SetStackCount(stolenInt)
-								end
+							if int_damage.target_intelligence ~= nil then
+								stolenInt = stolenInt + int_damage.target_intelligence
 							end
+
+							local talentEffectModifier = target:AddNewModifier(attacker, self.ability, "modifier_imba_silencer_glaives_talent_effect", {duration = attacker:FindTalentValue("special_bonus_imba_silencer_6", "duration")})
+							talentEffectModifier:SetStackCount(stolenInt)
 						end
 					end
-				else
-					local int_damage = target:FindModifierByName(self.modifier_int_damage)
-					if not int_damage then
-						int_damage = target:AddNewModifier(attacker, self.ability, self.modifier_int_damage, {int_reduction = self.int_reduction_pct})
-					end
-
-					int_damage:IncrementStackCount()
-					int_damage:SetDuration(self.int_reduction_duration, true)
 				end
 
 				EmitSoundOn(self.sound_hit, target)
@@ -622,7 +620,7 @@ end
 -- Glaives of Wisdom int reduction modifier
 ---------------------------------
 LinkLuaModifier("modifier_imba_silencer_glaives_int_damage", "hero/hero_silencer", LUA_MODIFIER_MOTION_NONE)
-modifier_imba_silencer_glaives_int_damage = modifier_imba_silencer_glaives_int_damage or class({})
+modifier_imba_silencer_glaives_int_damage = class({})
 
 function modifier_imba_silencer_glaives_int_damage:IsDebuff() return true end
 
@@ -632,6 +630,7 @@ function modifier_imba_silencer_glaives_int_damage:OnCreated( kv )
 		self.caster = self:GetCaster()
 		self.int_reduction_pct = kv.int_reduction
 		self.total_int_reduced = 0
+		self.target_intelligence = self:GetParent():GetIntellect()
 	end
 end
 
@@ -639,15 +638,16 @@ function modifier_imba_silencer_glaives_int_damage:OnStackCountChanged(old_stack
 	if IsServer() then
 		local target = self:GetParent()
 		if target:GetIntellect() == nil then return end
-		local target_intelligence = target:GetIntellect()
-		if target_intelligence > 1 then
-			local int_to_steal = math.max(1, math.floor(target_intelligence * self.int_reduction_pct / 100))
+
+		if target:GetIntellect() > 1 then
+			local int_to_steal = math.max(1, math.floor(self.target_intelligence * self.int_reduction_pct / 100))
 			local int_taken
-			if ( (target_intelligence - int_to_steal) >= 1 ) then
+			if ( (self.target_intelligence - int_to_steal) >= 1 ) then
 				int_taken = int_to_steal
 			else
-				int_taken = -(1 - target_intelligence)
+				int_taken = -(1 - self.target_intelligence)
 			end
+
 			self.total_int_reduced = self.total_int_reduced + int_taken
 			target:CalculateStatBonus()
 		end
@@ -676,6 +676,7 @@ end
 LinkLuaModifier("modifier_imba_silencer_glaives_talent_effect", "hero/hero_silencer", LUA_MODIFIER_MOTION_NONE)
 modifier_imba_silencer_glaives_talent_effect = modifier_imba_silencer_glaives_talent_effect or class({})
 function modifier_imba_silencer_glaives_talent_effect:IsDebuff() return true end
+function modifier_imba_silencer_glaives_talent_effect:IsHidden() return true end
 
 function modifier_imba_silencer_glaives_talent_effect:GetTexture()
 	return "silencer_glaives_of_wisdom" end
@@ -697,18 +698,9 @@ function modifier_imba_silencer_glaives_talent_effect:OnStackCountChanged( oldSt
 			ApplyDamage( damageTable )
 
 			parent:AddNewModifier(caster, ability, "modifier_imba_silencer_glaives_talent_effect_procced", {duration = caster:FindTalentValue("special_bonus_imba_silencer_6", "noIntDuration")})
-			self:Destroy()
+			parent:RemoveModifierByName("modifier_imba_silencer_glaives_talent_effect")
 		end
 	end
-end
-
-function modifier_imba_silencer_glaives_talent_effect:DeclareFunctions()
-	local funcs = { MODIFIER_PROPERTY_STATS_INTELLECT_BONUS, }
-	return funcs
-end
-
-function modifier_imba_silencer_glaives_talent_effect:GetModifierBonusStats_Intellect()
-	return self:GetStackCount() * -1
 end
 
 ---------------------------------
@@ -724,6 +716,12 @@ function modifier_imba_silencer_glaives_talent_effect_procced:GetTexture()
 function modifier_imba_silencer_glaives_talent_effect_procced:OnCreated()
 	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_silencer/silencer_last_word_dmg.vpcf", PATTACH_POINT_FOLLOW, self:GetParent() )
 	ParticleManager:ReleaseParticleIndex(particle)
+end
+
+function modifier_imba_silencer_glaives_talent_effect_procced:OnRemoved() 
+	if IsServer() then 
+		self:GetParent():RemoveModifierByName("modifier_imba_silencer_glaives_int_damage")
+	end
 end
 
 function modifier_imba_silencer_glaives_talent_effect_procced:DeclareFunctions()
