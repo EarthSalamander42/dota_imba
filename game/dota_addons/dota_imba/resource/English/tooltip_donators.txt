@@ -18,6 +18,7 @@
 "npc_imba_donator_companion_suthernfriend"				"Suthern-shan"
 "npc_imba_donator_companion_devourling"					"Devourling"
 "npc_imba_donator_companion_zonnoz"						"Pudgling"
+"npc_imba_donator_companion_acalia"						"Desu"
 
 // Donator statues
 "npc_imba_donator_statue_brewmaster_earth_spirit"		"Earth Spirit (Brewmaster)"
