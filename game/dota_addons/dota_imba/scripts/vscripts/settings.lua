@@ -649,6 +649,7 @@ IMBA_DONATOR_COMPANION["76561198021465788"] = "npc_imba_donator_companion_suther
 IMBA_DONATOR_COMPANION["76561198073163389"] = "npc_imba_donator_companion_terdic"
 IMBA_DONATOR_COMPANION["76561197970766309"] = "npc_imba_donator_companion_hamahe"
 IMBA_DONATOR_COMPANION["76561193687456266"] = "npc_imba_donator_companion_exzas"
+IMBA_DONATOR_COMPANION["76561198009727790"] = "npc_imba_donator_companion_acalia"
 -- IMBA_DONATOR_COMPANION["76561198330946475"] = "npc_imba_donator_companion_deadknight"
 
 IMBA_DONATOR_STATUE = {}
@@ -712,6 +713,13 @@ UNIT_EQUIPMENT["models/heroes/rubick/rubick.vmdl"] = {
 	"models/items/rubick/kuroky_rubick_shoulders/kuroky_rubick_shoulders.vmdl",
 	"models/items/rubick/kuroky_rubick_weapon/kuroky_rubick_weapon.vmdl",
 	"models/items/rubick/rubick_kuroky_head/rubick_kuroky_head.vmdl",
+}
+UNIT_EQUIPMENT["models/heroes/enchantress/enchantress.vmdl"] = {
+	"models/items/enchantress/rainbow_spear/mesh/rainbow_spear_model.vmdl",
+	"models/items/enchantress/anuxi_summer_head/anuxi_summer_head.vmdl",
+	"models/items/enchantress/amberlight_belt/amberlight_belt.vmdl",
+	"models/items/enchantress/anuxi_summer_shoulder/anuxi_summer_shoulder.vmdl",
+	"models/items/enchantress/anuxi_wildkin_arm/anuxi_wildkin_arm.vmdl",
 }
 
 IMBA_DISABLED_SKULL_BASHER = {

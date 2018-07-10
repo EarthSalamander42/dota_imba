@@ -12955,6 +12955,13 @@
 		"ModelScale"				"0.5"
 	}
 
+	"npc_imba_donator_companion_acalia"
+	{
+		"BaseClass"					"npc_imba_donator_companion"
+		"Model"						"models/heroes/enchantress/enchantress.vmdl"
+		"ModelScale"				"0.5"
+	}
+
 	//=================================================================================================================
 	// HERO: Ghost Revenant // Need to be duplicated in npc_units_custom.txt
 	//=================================================================================================================
