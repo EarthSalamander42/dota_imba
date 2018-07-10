@@ -81,7 +81,7 @@ function imba_shadow_shaman_mass_serpent_ward:OnSpellStart()
 	local unit_owner 		= caster
 
 	for i = 1, ward_count do
-		local ward = CreateUnitByName("npc_imba_dota_shadow_shaman_ward_3", target_point + formation_vectors[i], find_clear_space, npc_owner, unit_owner, caster:GetTeamNumber())
+		local ward = CreateUnitByName(ward_name..ward_level, target_point + formation_vectors[i], find_clear_space, npc_owner, unit_owner, caster:GetTeamNumber())
 		ward:SetForwardVector(caster:GetForwardVector())
 		ward:AddNewModifier(caster, self, "modifier_imba_mass_serpent_ward", {})
 		ward:AddNewModifier(caster, self, "modifier_kill", {duration = ward_duration})
