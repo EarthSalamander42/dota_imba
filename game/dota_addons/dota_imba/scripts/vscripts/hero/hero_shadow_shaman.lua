@@ -15,6 +15,7 @@
 -- Editors:
 --     Fudge
 --     suthernfriend, 03.02.2018
+--     naowin, 10.07.2018
 
 CreateEmptyTalents("shadow_shaman")
 
@@ -37,6 +38,18 @@ function imba_shadow_shaman_mass_serpent_ward:OnSpellStart()
 	local ward_count    =   self:GetSpecialValueFor("ward_count")
 	local ward_duration =   self:GetSpecialValueFor("duration")
 
+	local base_hp 	= self:GetSpecialValueFor("ward_hp")
+	local bonus_hp	= 0
+	local bonus_dmg = 0
+
+	if caster:HasTalent("special_bonus_imba_shadow_shaman_2") then
+		bonus_hp = caster:FindTalentValue("special_bonus_imba_shadow_shaman_2")
+	end
+
+	if caster:HasTalent("special_bonus_imba_shadow_shaman_3") then
+		bonus_dmg = caster:FindTalentValue("special_bonus_imba_shadow_shaman_3")
+	end
+	
 	-- Emit cast sound
 	caster:EmitSound("Hero_ShadowShaman.SerpentWard")
 	-- Emit cast response
@@ -46,31 +59,42 @@ function imba_shadow_shaman_mass_serpent_ward:OnSpellStart()
 	local spawn_particle_fx = ParticleManager:CreateParticle(spawn_particle, PATTACH_ABSORIGIN, caster)
 	ParticleManager:SetParticleControl( spawn_particle_fx, 0, target_point )
 
-	-- #1 TALENT: More Serpent Wards
+	--[[
+	-- #1 TALENT: More Serpent Wards 
 	if caster:HasTalent("special_bonus_imba_shadow_shaman_1") then
 		ward_count = ward_count + caster:FindTalentValue("special_bonus_imba_shadow_shaman_1")
+		print("has talent 1", ward_count)
 	end
+	]]
 
 	-- Create 8 wards in a box formation (note the vectors) + more wards near them
 	local formation_vectors = {
-		Vector(-128 , 64 ,0), Vector(-64, 64, 0) ,  Vector(0, 64 ,0), Vector(64, 64 ,0) , Vector(128 , 64 ,0),
-		Vector(-64, 0, 0)  ,				      Vector(64, 0 ,0)  ,
-		Vector(-64, -64, 0), Vector(0, -64 ,0), Vector(64, -64 ,0),
-		-- Talent vectors
-		Vector(-192, 64 ,0),																										Vector(192, 64 ,0),
-		Vector(-128, -64 ,0),															 Vector(128, -64 ,0),
+		Vector(-128 , 64 ,0), 	Vector(-64, 64, 0), 	Vector(0, 64 ,0), 		
+		Vector(64, 64 ,0), 		Vector(128 , 64 ,0),	Vector(-64, 0, 0),   	
+		Vector(64, 0 ,0),		Vector(-64, -64, 0), 	Vector(0, -64 ,0), 		
+		Vector(64, -64 ,0), 	Vector(-192, 64 ,0),	Vector(192, 64 ,0),
+		Vector(-128, -64 ,0),	Vector(128, -64 ,0),
 	}
 
-	local find_clear_space = true
-	local npc_owner = caster
-	local unit_owner = caster
+	local find_clear_space 	= true
+	local npc_owner 		= caster
+	local unit_owner 		= caster
 
 	for i = 1, ward_count do
-		local ward = CreateUnitByName(ward_name..ward_level, target_point + formation_vectors[i], find_clear_space, npc_owner, unit_owner, caster:GetTeamNumber())
+		local ward = CreateUnitByName("npc_imba_dota_shadow_shaman_ward_3", target_point + formation_vectors[i], find_clear_space, npc_owner, unit_owner, caster:GetTeamNumber())
 		ward:SetForwardVector(caster:GetForwardVector())
 		ward:AddNewModifier(caster, self, "modifier_imba_mass_serpent_ward", {})
 		ward:AddNewModifier(caster, self, "modifier_kill", {duration = ward_duration})
 		ward:SetControllableByPlayer(caster:GetPlayerID(), true)
+		ward:CreatureLevelUp(1)
+		-- Update Health
+		local new_hp = base_hp + bonus_hp
+		ward:SetBaseMaxHealth(new_hp)
+		-- Update Damage
+		if bonus_dmg > 0 then
+			ward:SetBaseDamageMin(ward:GetBaseDamageMin() + bonus_dmg)
+			ward:SetBaseDamageMax(ward:GetBaseDamageMax() + bonus_dmg)
+		end
 	end
 
 end
@@ -91,18 +115,6 @@ function modifier_imba_mass_serpent_ward:OnCreated()
 	if caster:HasScepter() then
 		self.bonus_range    =   ability:GetSpecialValueFor("scepter_bonus_range")
 	end
-
-	-- #2 TALENT: Serpent Wards gain more hp
-	if caster:HasTalent("special_bonus_imba_shadow_shaman_2") then
-		local bonus_hp = caster:FindTalentValue("special_bonus_imba_shadow_shaman_2")
-		if parent ~= nil and parent:IsAlive() then 
-			local new_hp   = parent:GetHealth() + bonus_hp
-			parent:SetBaseMaxHealth(new_hp)
-			parent:SetMaxHealth(new_hp)
-			parent:SetHealth(new_hp)
-		end
-	end
-
 	-- Prevent some recursion with the scepter effect
 	self.main_attack    =   true
 end
