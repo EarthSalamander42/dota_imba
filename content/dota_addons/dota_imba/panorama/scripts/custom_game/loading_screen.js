@@ -66,7 +66,7 @@ function fetch() {
 
 		view.text.text = "News currently unavailable.";
 	});
-
+	/*
 	var player_info = Game.GetPlayerInfo(Game.GetLocalPlayerID());
 	
 	api.player_info(player_info.player_steamid).then(function (data) {
@@ -75,6 +75,7 @@ function fetch() {
 		$.Msg("Loading player info for loading screen failed!")
 		$.Msg(reason);
 	});
+	*/
 };
 
 fetch();

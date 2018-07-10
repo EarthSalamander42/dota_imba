@@ -283,6 +283,11 @@ function OnGameStateUpdated(table_name, key, data) {
 CustomNetTables.SubscribeNetTableListener("game_options", OnGameStateUpdated)
 
 function UpdateGameState() {
+
+	// do nothing on ranked maps
+	if (Game.GetMapInfo().map_display_name == "imba_ranked_5v5" || Game.GetMapInfo().map_display_name == "imba_ranked_10v10")
+		return;
+
 	if (Game.GameStateIsBefore(DOTA_GameState.DOTA_GAMERULES_STATE_PRE_GAME)) {
 		$("#TeamSelectContainer").SetHasClass("invisible", false);
 	} else {
@@ -294,6 +299,9 @@ function UpdateGameState() {
 // Entry point called when the team select panel is created
 // --------------------------------------------------------------------------------------------------
 (function () {
+
+	if (Game.GetState() != 2)
+		return;
 	
 	// -------------------------
 	// auto_team_select is used on 5v5 and 10v10

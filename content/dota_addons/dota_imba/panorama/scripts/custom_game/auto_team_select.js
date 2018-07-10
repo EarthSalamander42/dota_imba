@@ -75,8 +75,9 @@ var OnFailure = function(data) {
  
 var LegacyCompatSetupUI = function() {
 
+	$.Msg("Setup UI for legacy compatibility");
 	$("#auto_team_select_container").visible = true;
-
+ 
 	var mapInfo = Game.GetMapInfo();
 	var map_name = mapInfo.map_display_name.replace('_', " ")
 	$("#MapInfo").SetDialogVariable("map_name", map_name);
