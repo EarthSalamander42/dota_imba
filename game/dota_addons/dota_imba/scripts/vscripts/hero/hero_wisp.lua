@@ -148,10 +148,15 @@ function modifier_imba_wisp_tether:DeclareFunctions()
 	local decFuncs = {
 		MODIFIER_EVENT_ON_HEALTH_GAINED,
 		MODIFIER_EVENT_ON_MANA_GAINED,
-		MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE_MIN
+		MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE,
+		MODIFIER_PROPERTY_MOVESPEED_LIMIT
 	}
 
 	return decFuncs
+end
+
+function modifier_imba_wisp_tether:GetPriority()
+	return MODIFIER_PRIORITY_SUPER_ULTRA
 end
 
 function modifier_imba_wisp_tether:OnIntervalThink()
@@ -205,9 +210,13 @@ function modifier_imba_wisp_tether:OnManaGained(keys)
 	end
 end
 
-function modifier_imba_wisp_tether:GetModifierMoveSpeed_AbsoluteMin()
+function modifier_imba_wisp_tether:GetModifierMoveSpeed_Absolute()
     local net_table = CustomNetTables:GetTableValue("player_table", tostring(self:GetCaster():GetPlayerOwnerID())) or {}
 	return net_table.tether_movement_speed or 0
+end
+
+function modifier_imba_wisp_tether:GetModifierMoveSpeed_Limit()
+	return 2000
 end
 
 function modifier_imba_wisp_tether:OnRemoved()
