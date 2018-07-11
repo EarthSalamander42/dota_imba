@@ -45,7 +45,7 @@ function modifier_mutation_track:OnRefresh()
 end
 
 function modifier_mutation_track:OnRemoved()
-	if IsServer()
+	if IsServer() then
 		self:GetParent():RemoveModifierByName("modifier_mutation_track_buff_ms")
 	end
 end
