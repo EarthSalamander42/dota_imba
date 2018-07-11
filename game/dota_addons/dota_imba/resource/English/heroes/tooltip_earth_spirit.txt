@@ -82,10 +82,9 @@
 
 "DOTA_Tooltip_Ability_special_bonus_imba_earth_spirit_4"					"Earth's Mark reduces magic resistance by 5% per stack"
 
-"DOTA_Tooltip_Ability_special_bonus_imba_earth_spirit_5"					"-10 seconds Stone Remnant recharge time"
+"DOTA_Tooltip_Ability_special_bonus_imba_earth_spirit_5"					"-10 seconds Overdrow cooldown"
 
-"DOTA_Tooltip_Ability_special_bonus_imba_earth_spirit_6"                    "Ashes to Ashes"
-"DOTA_Tooltip_Ability_special_bonus_imba_earth_spirit_6_Description"		"Heroes deaths in a 1000 unit radius grant a Stone Remnant charge, up to 10"
+"DOTA_Tooltip_Ability_special_bonus_imba_earth_spirit_6"                    "+3 free Stone Remnants"
 
 "DOTA_Tooltip_Ability_special_bonus_imba_earth_spirit_7"                    "Eternal Mark"
 "DOTA_Tooltip_Ability_special_bonus_imba_earth_spirit_7_Description"		"Earth's Mark is unpurgeable, and its duration is frozen while the target is spell immune"
