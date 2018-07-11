@@ -598,6 +598,10 @@ function Mutation:OnHeroSpawn(hero)
 		hero:AddNewModifier(hero, nil, "modifier_sticky_river", {})
 	end
 
+	if IMBA_MUTATION["terrain"] == "speed_freaks" then
+		hero:AddNewModifier(hero, nil, "modifier_mutation_speed_freaks", {})
+	end
+
 	if hero.tombstone_fx then
 		ParticleManager:DestroyParticle(hero.tombstone_fx, false)
 		ParticleManager:ReleaseParticleIndex(hero.tombstone_fx)
