@@ -24693,6 +24693,7 @@
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_warlock.vsndevts"
 			"particle"					"particles/units/heroes/hero_warlock/warlock_fatal_bonds_icon.vpcf"
 			"particle"					"particles/units/heroes/hero_warlock/warlock_fatal_bonds_hit.vpcf"
+			"particle"					"particles/units/heroes/hero_warlock/warlock_fatal_bonds_base.vpcf"
 		}
 
 		// Special
