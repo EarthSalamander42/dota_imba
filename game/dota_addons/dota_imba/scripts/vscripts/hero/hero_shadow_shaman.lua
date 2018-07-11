@@ -86,7 +86,6 @@ function imba_shadow_shaman_mass_serpent_ward:OnSpellStart()
 		ward:AddNewModifier(caster, self, "modifier_imba_mass_serpent_ward", {})
 		ward:AddNewModifier(caster, self, "modifier_kill", {duration = ward_duration})
 		ward:SetControllableByPlayer(caster:GetPlayerID(), true)
-		ward:CreatureLevelUp(1)
 		-- Update Health
 		local new_hp = base_hp + bonus_hp
 		ward:SetBaseMaxHealth(new_hp)

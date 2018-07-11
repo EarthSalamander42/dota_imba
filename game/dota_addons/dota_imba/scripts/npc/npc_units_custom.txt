@@ -7518,10 +7518,10 @@
 	{
 		// General
 		//----------------------------------------------------------------
-		"BaseClass"                 "npc_dota_creature" 					// Class of entity of link to.
+		"BaseClass"                 "npc_dota_shadowshaman_serpentward" 					// Class of entity of link to.
 		"Model"                     "models/heroes/shadowshaman/shadowshaman_totem.vmdl"	// Model.
 		"SoundSet"                  "ShadowShaman_Ward"                						// Name of sound set.
-		"Level"                     "2"
+		"Level"                     "3"
 		"ModelScale"                "1.15"
 		"SelectionGroup"            "Shaman_Wards"
 		"wearable"                  "8371"
@@ -7588,10 +7588,10 @@
 	{
 		// General
 		//----------------------------------------------------------------
-		"BaseClass"                 "npc_dota_creature" 					// Class of entity of link to.
+		"BaseClass"                 "npc_dota_shadowshaman_serpentward" 					// Class of entity of link to.
 		"Model"                     "models/heroes/shadowshaman/shadowshaman_totem.vmdl"	// Model.
 		"SoundSet"                  "ShadowShaman_Ward"                						// Name of sound set.
-		"Level"                     "2"
+		"Level"                     "3"
 		"ModelScale"                "1.15"
 		"SelectionGroup"            "Shaman_Wards"
 		"wearable"                  "8371"
@@ -7658,10 +7658,10 @@
 	{
 		// General
 		//----------------------------------------------------------------
-		"BaseClass"                 "npc_dota_creature" 					// Class of entity of link to.
+		"BaseClass"                 "npc_dota_shadowshaman_serpentward" 					// Class of entity of link to.
 		"Model"                     "models/heroes/shadowshaman/shadowshaman_totem.vmdl"	// Model.
 		"SoundSet"                  "ShadowShaman_Ward"                						// Name of sound set.
-		"Level"                     "2"
+		"Level"                     "3"
 		"ModelScale"                "1.15"
 		"SelectionGroup"            "Shaman_Wards"
 		"wearable"                  "8371"
