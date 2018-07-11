@@ -597,6 +597,7 @@ LinkLuaModifier("modifier_imba_silencer_glaives_hit_counter", "hero/hero_silence
 modifier_imba_silencer_glaives_hit_counter = modifier_imba_silencer_glaives_hit_counter or class({})
 
 function modifier_imba_silencer_glaives_hit_counter:IsDebuff() return true end
+function modifier_imba_silencer_glaives_hit_counter:IsPurgable() return false end
 function modifier_imba_silencer_glaives_hit_counter:IsHidden() return true end
 
 function modifier_imba_silencer_glaives_hit_counter:OnCreated( kv )
@@ -623,6 +624,7 @@ LinkLuaModifier("modifier_imba_silencer_glaives_int_damage", "hero/hero_silencer
 modifier_imba_silencer_glaives_int_damage = class({})
 
 function modifier_imba_silencer_glaives_int_damage:IsDebuff() return true end
+function modifier_imba_silencer_glaives_hit_counter:IsPurgable() return false end
 
 function modifier_imba_silencer_glaives_int_damage:OnCreated( kv )
 	if IsServer() then
