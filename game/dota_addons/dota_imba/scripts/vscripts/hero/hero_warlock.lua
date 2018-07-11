@@ -15,6 +15,7 @@
 -- Editors:
 --     Shush, 25.04.2017
 --     suthernfriend, 03.02.2018
+--     naowin, 11.07.2018
 
 CreateEmptyTalents("warlock")
 
@@ -123,6 +124,9 @@ function modifier_imba_fatal_bonds:OnCreated()
 	self.modifier_word = "modifier_imba_shadow_word"
 	self.ability_word = "imba_warlock_shadow_word"
 
+	self.fatal_bonds_accumulated_magic_damage = 0
+	self.fatal_bonds_accumulated_phys_damage = 0
+
 	-- Ability specials
 	self.link_damage_share_pct = self.ability:GetSpecialValueFor("link_damage_share_pct")
 	self.golem_link_radius = self.ability:GetSpecialValueFor("golem_link_radius")
@@ -145,8 +149,8 @@ function modifier_imba_fatal_bonds:OnCreated()
 			self.ability_word_handler = self.caster:FindAbilityByName(self.ability_word)
 		end
 
-		-- Start thinking
-		self:StartIntervalThink(FrameTime())
+		-- Start thinking (update table)
+		self:StartIntervalThink(0.25)
 	end
 end
 
@@ -155,16 +159,80 @@ function modifier_imba_fatal_bonds:IsPurgable() return true end
 function modifier_imba_fatal_bonds:IsDebuff() return true end
 
 function modifier_imba_fatal_bonds:OnIntervalThink()
-	-- If an entity isn't alive anymore, remove it from the table
-	local delete_positions = {}
-	for i = 1, #self.bond_table do
-		if not self.bond_table[i]:IsAlive() then
-			table.insert(delete_positions, i)
-		end
-	end
+	if IsServer() then
+		-- If an entity isn't alive anymore, remove it from the table		
+		--print("bounds: ", self.fatal_bonds_accumulated_phys_damage, self.fatal_bonds_accumulated_magic_damage)
+		-- Cycle through every other enemy in the table and deal damage
+		for _,bonded_enemy in pairs(self.bond_table) do
+			if not bonded_enemy:IsNull() and bonded_enemy:IsAlive() and bonded_enemy ~= self.parent then
 
-	for i = 1, #delete_positions do
-		table.remove(self.bond_table, delete_positions[i])
+				if self.fatal_bonds_accumulated_phys_damage > 0 then
+					local damageTable = {victim = bonded_enemy,
+						damage = self.fatal_bonds_accumulated_phys_damage,
+						damage_type = DAMAGE_TYPE_PHYSICAL,
+						attacker = self.caster,
+						ability = self.ability,
+						damage_flags = DOTA_DAMAGE_FLAG_REFLECTION
+					}
+
+					ApplyDamage(damageTable)
+				end
+
+				if self.fatal_bonds_accumulated_magic_damage > 0 then 
+					local damageTable = {victim = bonded_enemy,
+						damage = self.fatal_bonds_accumulated_magic_damage,
+						damage_type = DAMAGE_TYPE_MAGICAL,
+						attacker = self.caster,
+						ability = self.ability,
+						damage_flags = DOTA_DAMAGE_FLAG_REFLECTION
+					}
+
+					ApplyDamage(damageTable)
+				end
+
+				-- Add particle hit effect
+				local particle_hit_fx = ParticleManager:CreateParticle(self.particle_hit, PATTACH_CUSTOMORIGIN_FOLLOW, self.parent)
+				ParticleManager:SetParticleControlEnt(particle_hit_fx, 0, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)
+				ParticleManager:SetParticleControlEnt(particle_hit_fx, 1, bonded_enemy, PATTACH_POINT_FOLLOW, "attach_hitloc", bonded_enemy:GetAbsOrigin(), true)
+				ParticleManager:ReleaseParticleIndex(particle_hit_fx)
+
+				-- If the parent has Shadow Word but the bonded unit doesn't, apply it on the unit as well
+				if self.parent:HasModifier(self.modifier_word) and not bonded_enemy:HasModifier(self.modifier_word) then
+
+					-- If Shadow Word is not defined on the caster of Fatal Bonds, do nothing
+					if not self.ability_word_handler then
+						return nil
+					end
+
+					-- If the unit is not magic immune, apply the debuff
+					if not bonded_enemy:IsMagicImmune() then
+						local modifier_word_handler = self.parent:FindModifierByName(self.modifier_word)
+						if modifier_word_handler then
+							local duration_remaining = modifier_word_handler:GetRemainingTime()
+							bonded_enemy:AddNewModifier(self.caster, self.ability_word_handler, self.modifier_word, {duration = duration_remaining})
+						end
+					end
+				end
+			end
+		end
+
+		self.fatal_bonds_accumulated_magic_damage = 0
+		self.fatal_bonds_accumulated_phys_damage = 0
+
+		--[[
+		-- i dont htink this is needed... but just in case
+		local delete_positions = {}
+		for i = 1, #self.bond_table do
+			if not self.bond_table[i]:IsAlive() then
+				table.insert(delete_positions, i)
+			end
+		end
+
+		-- remove enemies that has been garbatecollected on death
+		for i = 1, #delete_positions do
+			table.remove(self.bond_table, delete_positions[i])
+		end
+		]]
 	end
 end
 
@@ -182,7 +250,7 @@ function modifier_imba_fatal_bonds:OnTakeDamage(keys)
 		local inflictor = keys.inflictor
 
 		-- Only apply if the unit taking damage is the parent
-		if unit == self.parent then
+		if unit == self.parent and unit:IsAlive() then
 
 			-- If the bond table isn't initialized yet, do nothing
 			if not self.bond_table then
@@ -198,53 +266,11 @@ function modifier_imba_fatal_bonds:OnTakeDamage(keys)
 			local damage = original_damage
 			if damage_type == DAMAGE_TYPE_PHYSICAL then
 				damage = damage * (1 - self.parent:GetPhysicalArmorReduction() * 0.01)
+				self.fatal_bonds_accumulated_phys_damage = damage * self.link_damage_share_pct * 0.01
 
 			elseif damage_type == DAMAGE_TYPE_MAGICAL then
 				damage = damage * (1- self.parent:GetMagicalArmorValue() * 0.01)
-			end
-
-			-- Calculate damage to be shared
-			damage = damage * self.link_damage_share_pct * 0.01
-
-			-- Cycle through every other enemy in the table and deal damage
-			for _,bonded_enemy in pairs(self.bond_table) do
-
-				if bonded_enemy ~= self.parent then
-
-					local damageTable = {victim = bonded_enemy,
-						damage = damage,
-						damage_type = damage_type,
-						attacker = self.caster,
-						ability = self.ability,
-						damage_flags = DOTA_DAMAGE_FLAG_REFLECTION
-					}
-
-					ApplyDamage(damageTable)
-
-					-- Add particle hit effect
-					local particle_hit_fx = ParticleManager:CreateParticle(self.particle_hit, PATTACH_CUSTOMORIGIN_FOLLOW, self.parent)
-					ParticleManager:SetParticleControlEnt(particle_hit_fx, 0, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)
-					ParticleManager:SetParticleControlEnt(particle_hit_fx, 1, bonded_enemy, PATTACH_POINT_FOLLOW, "attach_hitloc", bonded_enemy:GetAbsOrigin(), true)
-					ParticleManager:ReleaseParticleIndex(particle_hit_fx)
-
-					-- If the parent has Shadow Word but the bonded unit doesn't, apply it on the unit as well
-					if self.parent:HasModifier(self.modifier_word) and not bonded_enemy:HasModifier(self.modifier_word) then
-
-						-- If Shadow Word is not defined on the caster of Fatal Bonds, do nothing
-						if not self.ability_word_handler then
-							return nil
-						end
-
-						-- If the unit is not magic immune, apply the debuff
-						if not bonded_enemy:IsMagicImmune() then
-							local modifier_word_handler = self.parent:FindModifierByName(self.modifier_word)
-							if modifier_word_handler then
-								local duration_remaining = modifier_word_handler:GetRemainingTime()
-								bonded_enemy:AddNewModifier(self.caster, self.ability_word_handler, self.modifier_word, {duration = duration_remaining})
-							end
-						end
-					end
-				end
+				self.fatal_bonds_accumulated_magic_damage = damage * self.link_damage_share_pct * 0.01
 			end
 		end
 
