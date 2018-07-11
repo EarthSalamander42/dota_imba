@@ -216,11 +216,11 @@ function Mutation:ChooseMutation(type, table, count)
 			IMBA_MUTATION[type] = mutation
 			table[mutation] = true
 
---			if IsInToolsMode() then
+			if IsInToolsMode() then
 				IMBA_MUTATION["positive"] = "teammate_resurrection"
 				IMBA_MUTATION["negative"] = "periodic_spellcast"
 				IMBA_MUTATION["terrain"] = "speed_freaks"
---			end
+			end
 
 			return
 		else
