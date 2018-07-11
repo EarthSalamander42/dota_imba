@@ -87,13 +87,13 @@ function Mutation:Init()
 	IMBA_MUTATION_WORMHOLE_POSITIONS[2] = Vector(-576, -4320, 0)
 	IMBA_MUTATION_WORMHOLE_POSITIONS[3] = Vector(794, -3902, 0)
 	IMBA_MUTATION_WORMHOLE_POSITIONS[4] = Vector(2630, -3700, 0)
-	IMBA_MUTATION_WORMHOLE_POSITIONS[5] = Vector(3203, -6064, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[5] = Vector(3203, -6064, 0) -- Bot Lane Wormhole
 	IMBA_MUTATION_WORMHOLE_POSITIONS[6] = Vector(1111, -5804, 0)
 	IMBA_MUTATION_WORMHOLE_POSITIONS[7] = Vector(4419, -5114, 0)
-	IMBA_MUTATION_WORMHOLE_POSITIONS[8] = Vector(6156, -4831, 0)
-	IMBA_MUTATION_WORMHOLE_POSITIONS[9] = Vector(6084, -3022, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[8] = Vector(6156, -4831, 0) -- Bot Lane Wormhole
+	IMBA_MUTATION_WORMHOLE_POSITIONS[9] = Vector(6084, -3022, 0) -- Bone Lane Wormhole
 	IMBA_MUTATION_WORMHOLE_POSITIONS[10] = Vector(4422, -1765, 0)
-	IMBA_MUTATION_WORMHOLE_POSITIONS[11] = Vector(6186, -654, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[11] = Vector(6186, -654, 0) -- Bot Lane Wormhole
 	IMBA_MUTATION_WORMHOLE_POSITIONS[12] = Vector(4754, -84, 0)
 	IMBA_MUTATION_WORMHOLE_POSITIONS[13] = Vector(3318, -58, 0)
 	IMBA_MUTATION_WORMHOLE_POSITIONS[14] = Vector(5008, 1799, 0)
@@ -102,7 +102,7 @@ function Mutation:Init()
 	IMBA_MUTATION_WORMHOLE_POSITIONS[17] = Vector(3939, 2279, 0)
 	IMBA_MUTATION_WORMHOLE_POSITIONS[18] = Vector(2309, 4643, 0)
 	IMBA_MUTATION_WORMHOLE_POSITIONS[19] = Vector(843, 2300, 0)
-	IMBA_MUTATION_WORMHOLE_POSITIONS[20] = Vector(-544, -361, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[20] = Vector(-544, -361, 0) -- Mid Lane Wormhole (Center)
 	IMBA_MUTATION_WORMHOLE_POSITIONS[21] = Vector(354, -1349, 0)
 	IMBA_MUTATION_WORMHOLE_POSITIONS[22] = Vector(289, -2559, 0)
 	IMBA_MUTATION_WORMHOLE_POSITIONS[23] = Vector(-1534, -2893, 0)
@@ -111,7 +111,7 @@ function Mutation:Init()
 	IMBA_MUTATION_WORMHOLE_POSITIONS[26] = Vector(-3363, -1210, 0)
 	IMBA_MUTATION_WORMHOLE_POSITIONS[27] = Vector(-4535, 10, 0)
 	IMBA_MUTATION_WORMHOLE_POSITIONS[28] = Vector(-4420, 1351, 0)
-	IMBA_MUTATION_WORMHOLE_POSITIONS[29] = Vector(-6161, 440, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[29] = Vector(-6161, 440, 0) -- Top Lane Wormhole
 	IMBA_MUTATION_WORMHOLE_POSITIONS[30] = Vector(-2110, 376, 0)
 	IMBA_MUTATION_WORMHOLE_POSITIONS[31] = Vector(-840, 1384, 0)
 	IMBA_MUTATION_WORMHOLE_POSITIONS[32] = Vector(-388, 2537, 0)
@@ -119,10 +119,10 @@ function Mutation:Init()
 	IMBA_MUTATION_WORMHOLE_POSITIONS[34] = Vector(-1389, 4325, 0)
 	IMBA_MUTATION_WORMHOLE_POSITIONS[35] = Vector(-2812, 3633, 0)
 	IMBA_MUTATION_WORMHOLE_POSITIONS[36] = Vector(-4574, 4804, 0)
-	IMBA_MUTATION_WORMHOLE_POSITIONS[37] = Vector(-6339, 3841, 0)
-	IMBA_MUTATION_WORMHOLE_POSITIONS[38] = Vector(-5971, 5455, 0)
-	IMBA_MUTATION_WORMHOLE_POSITIONS[39] = Vector(-3099, 6112, 0)
-	IMBA_MUTATION_WORMHOLE_POSITIONS[40] = Vector(-1606, 6103, 0)
+	IMBA_MUTATION_WORMHOLE_POSITIONS[37] = Vector(-6339, 3841, 0) -- Top Lane Wormhole
+	IMBA_MUTATION_WORMHOLE_POSITIONS[38] = Vector(-5971, 5455, 0) -- Top Lane Wormhole
+	IMBA_MUTATION_WORMHOLE_POSITIONS[39] = Vector(-3099, 6112, 0) -- Top Lane Wormhole
+	IMBA_MUTATION_WORMHOLE_POSITIONS[40] = Vector(-1606, 6103, 0) -- Top Lane Wormhole
 
 	--IMBA_MUTATION_WORMHOLE_INTERVAL = 600
 	--IMBA_MUTATION_WORMHOLE_DURATION = 600
@@ -427,22 +427,29 @@ function Mutation:OnGameRulesStateChange(keys)
 				current_wormholes[i] = IMBA_MUTATION_WORMHOLE_POSITIONS[random_int]
 				table.remove(IMBA_MUTATION_WORMHOLE_POSITIONS, random_int)
 			end
-
-			-- Create wormhole particles
+			
 			local wormhole_particles = {}
-			for i = 1, 12 do
-				wormhole_particles[i] = ParticleManager:CreateParticle("particles/ambient/wormhole_circle.vpcf", PATTACH_CUSTOMORIGIN, nil)
-				ParticleManager:SetParticleControl(wormhole_particles[i], 0, GetGroundPosition(current_wormholes[i], nil) + Vector(0, 0, 20))
-				ParticleManager:SetParticleControl(wormhole_particles[i], 2, IMBA_MUTATION_WORMHOLE_COLORS[i])
-				ParticleManager:ReleaseParticleIndex(wormhole_particles[i])
-			end
-
+			
+			-- Create wormhole particles (destroy and redraw every minute to accommodate for reconnecting players)
+			Timers:CreateTimer(0, function()
+				for i = 1, 12 do
+					if wormhole_particles[i] then
+						ParticleManager:DestroyParticle(wormhole_particles[i], true)
+						ParticleManager:ReleaseParticleIndex(wormhole_particles[i])
+					end
+					wormhole_particles[i] = ParticleManager:CreateParticle("particles/ambient/wormhole_circle.vpcf", PATTACH_CUSTOMORIGIN, nil)
+					ParticleManager:SetParticleControl(wormhole_particles[i], 0, GetGroundPosition(current_wormholes[i], nil) + Vector(0, 0, 20))
+					ParticleManager:SetParticleControl(wormhole_particles[i], 2, IMBA_MUTATION_WORMHOLE_COLORS[i])
+				end
+				return 60
+			end)
+			
 			-- Teleport loop
 			Timers:CreateTimer(0, function()
 
 				-- Find units to teleport
 				for i = 1, 12 do
-					local units = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, current_wormholes[i], nil, 150, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
+					local units = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, current_wormholes[i], nil, 150, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED, FIND_ANY_ORDER, false)
 					for _, unit in pairs(units) do
 						if not unit:HasModifier("modifier_mutation_wormhole_cooldown") then
 							if unit:IsHero() then
