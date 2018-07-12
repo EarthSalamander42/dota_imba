@@ -15,7 +15,7 @@
 -- Editors: 
 --     SquawkyArctangent
 --     EarthSalamander #42
---
+--     naowin, 12.07.2018
 
 ---------------------------
 --		BREATH FIRE  	 --
@@ -632,41 +632,48 @@ function modifier_imba_elder_dragon_form:IsDebuff() return false end
 function modifier_imba_elder_dragon_form:IsPurgable() return false end
 
 function modifier_imba_elder_dragon_form:OnCreated( event )
-	self:StartIntervalThink(0.5)
-
-	-- apply all the edf modifiers on creation if has scepter
-	if self:GetParent():HasScepter() then
-		modifier_imba_elder_dragon_form:AddElderForm(self:GetParent(), self:GetAbility(), self:GetAbility():GetLevel())
-	end
-end
-
-if IsServer() then
-	function modifier_imba_elder_dragon_form:OnRefresh( event )
+	if IsServer() then
+		self:StartIntervalThink(0.5)
+	
 		-- apply all the edf modifiers on creation if has scepter
 		if self:GetParent():HasScepter() then
 			modifier_imba_elder_dragon_form:AddElderForm(self:GetParent(), self:GetAbility(), self:GetAbility():GetLevel())
 		end
 	end
+end
 
-	function modifier_imba_elder_dragon_form:DeclareFunctions()
-		local funcs = {
-			MODIFIER_EVENT_ON_ATTACK_LANDED,
-			MODIFIER_EVENT_ON_RESPAWN,
-			MODIFIER_EVENT_ON_DEATH,
-			MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT,
-		}
 
-		return funcs
+function modifier_imba_elder_dragon_form:OnRefresh( event )
+	if IsServer() then
+		-- apply all the edf modifiers on creation if has scepter
+		if self:GetParent():HasScepter() then
+			modifier_imba_elder_dragon_form:AddElderForm(self:GetParent(), self:GetAbility(), self:GetAbility():GetLevel())
+		end
 	end
+end
 
-	function modifier_imba_elder_dragon_form:OnRespawn( event )
+function modifier_imba_elder_dragon_form:DeclareFunctions()
+	local funcs = {
+		MODIFIER_EVENT_ON_ATTACK_LANDED,
+		MODIFIER_EVENT_ON_RESPAWN,
+		MODIFIER_EVENT_ON_DEATH,
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT,
+	}
+
+	return funcs
+end
+
+function modifier_imba_elder_dragon_form:OnRespawn( event )
+	if IsServer() then
 		if event.unit == self:GetParent() and self:GetParent():HasScepter() then
 			-- apply the edf modifiers on respawn
 			modifier_imba_elder_dragon_form:AddElderForm(self:GetParent(), self:GetAbility(), self:GetAbility():GetLevel())
 		end
 	end
+end
 
-	function modifier_imba_elder_dragon_form:OnIntervalThink()
+function modifier_imba_elder_dragon_form:OnIntervalThink()
+	if IsServer() then 
 		if self:GetParent().HasModifier and self:GetParent():HasModifier("modifier_dragon_knight_dragon_form") then
 			if self:GetParent():HasAbility("imba_dragon_knight_elder_dragon_charge") then
 				self:GetParent():FindAbilityByName("imba_dragon_knight_elder_dragon_charge"):SetActivated(true)
@@ -706,8 +713,10 @@ if IsServer() then
 			self:SetStackCount(0)
 		end
 	end
+end
 
-	function modifier_imba_elder_dragon_form:AddElderForm(hero, ability, level, duration)
+function modifier_imba_elder_dragon_form:AddElderForm(hero, ability, level, duration)
+	if IsServer() then
 		local modifier_duration = -1
 		if not self.level then self.level = 0 end
 		if duration then modifier_duration = duration end
