@@ -64,3 +64,6 @@
 
 "DOTA_Tooltip_modifier_mutation_rupture"						"Rupture"
 "DOTA_Tooltip_modifier_mutation_rupture_Description"            "Ruptured! Moving will cause you to take damage."
+
+"DOTA_Tooltip_modifier_mutation_wormhole_cooldown"				"Wormhole Cooldown"
+"DOTA_Tooltip_modifier_mutation_wormhole_cooldown_Description"  "Experiencing teleportion sickness. You cannot use another wormhole while under this effect."
