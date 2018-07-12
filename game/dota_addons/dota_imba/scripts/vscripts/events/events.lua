@@ -18,107 +18,105 @@ function GameMode:OnGameRulesStateChange(keys)
 	-- This internal handling is used to set up main barebones functions
 	GameMode:_OnGameRulesStateChange(keys)
 
-	safe(function ()
+	if IsMutationMap() then
+		Mutation:OnGameRulesStateChange(keys)
+	end
 
-			if IsMutationMap() then
-				Mutation:OnGameRulesStateChange(keys)
-			end
+	-- Run this in safe context
+	local new_state = GameRules:State_Get()
 
-			-- Run this in safe context
-			local new_state = GameRules:State_Get()
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Team selection
+	-------------------------------------------------------------------------------------------------
+	if new_state == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
+		log.info("events: team selection")
+		OnSetGameMode() -- setup gamemode rules
+		InitializeTeamSelection()
+		GameRules:SetSafeToLeave(true) -- seems to be useless for leaver penalties
 
-			-------------------------------------------------------------------------------------------------
-			-- IMBA: Team selection
-			-------------------------------------------------------------------------------------------------
-			if new_state == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
-				log.info("events: team selection")
-				OnSetGameMode() -- setup gamemode rules
-				InitializeTeamSelection()
-				GameRules:SetSafeToLeave(true) -- seems to be useless for leaver penalties
+		-- get the IXP of everyone (ignore bot)
+		GetPlayerInfoIXP()
 
-				-- get the IXP of everyone (ignore bot)
-				GetPlayerInfoIXP()
+		local hex_colors = {}
+		for i = 0, 23 do
+			table.insert(hex_colors, i, rgbToHex(PLAYER_COLORS[i]))
+		end
 
-				local hex_colors = {}
-				for i = 0, 23 do
-					table.insert(hex_colors, i, rgbToHex(PLAYER_COLORS[i]))
-				end
+		CustomNetTables:SetTableValue("game_options", "player_colors", hex_colors)
+	end
 
-				CustomNetTables:SetTableValue("game_options", "player_colors", hex_colors)
-			end
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Pick screen stuff
+	-------------------------------------------------------------------------------------------------
+	if new_state == DOTA_GAMERULES_STATE_HERO_SELECTION then
+		api.imba.event(api.events.entered_hero_selection)
 
-			-------------------------------------------------------------------------------------------------
-			-- IMBA: Pick screen stuff
-			-------------------------------------------------------------------------------------------------
-			if new_state == DOTA_GAMERULES_STATE_HERO_SELECTION then
-				api.imba.event(api.events.entered_hero_selection)
+		HeroSelection:Init()
+	end
 
-				HeroSelection:Init()
-			end
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Start-of-pre-game stuff
+	-------------------------------------------------------------------------------------------------
+	if new_state == DOTA_GAMERULES_STATE_PRE_GAME then
+		api.imba.event(api.events.entered_pre_game)
 
-			-------------------------------------------------------------------------------------------------
-			-- IMBA: Start-of-pre-game stuff
-			-------------------------------------------------------------------------------------------------
-			if new_state == DOTA_GAMERULES_STATE_PRE_GAME then
-				api.imba.event(api.events.entered_pre_game)
-
-				-- Shows various info to devs in pub-game to find lag issues
+		-- Shows various info to devs in pub-game to find lag issues
 --			ImbaNetGraph(10.0)
 
-				-- Initialize rune spawners
-				InitRunes()
+		-- Initialize rune spawners
+		InitRunes()
 
 --			if GetMapName() ~= "imba_overthrow" then
-				-- Initialize battlepass towers
+		-- Initialize battlepass towers
 --				Imbattlepass:InitializeTowers()
 --			end
 
-				CustomNetTables:SetTableValue("game_options", "donators", api.imba.get_donators())
-				CustomNetTables:SetTableValue("game_options", "developers", api.imba.get_developers())
+		CustomNetTables:SetTableValue("game_options", "donators", api.imba.get_donators())
+		CustomNetTables:SetTableValue("game_options", "developers", api.imba.get_developers())
 
-				-------------------------------------------------------------------------------------------------
-				-- IMBA: Custom maximum level EXP tables adjustment
-				-------------------------------------------------------------------------------------------------
-				local max_level = tonumber(CustomNetTables:GetTableValue("game_options", "max_level")["1"])
-				if max_level and max_level > 25 then
-					for i = 26, max_level do
-						XP_PER_LEVEL_TABLE[i] = XP_PER_LEVEL_TABLE[i-1] + 3500
-						GameRules:GetGameModeEntity():SetCustomXPRequiredToReachNextLevel( XP_PER_LEVEL_TABLE )
+		-------------------------------------------------------------------------------------------------
+		-- IMBA: Custom maximum level EXP tables adjustment
+		-------------------------------------------------------------------------------------------------
+		local max_level = tonumber(CustomNetTables:GetTableValue("game_options", "max_level")["1"])
+		if max_level and max_level > 25 then
+			for i = 26, max_level do
+				XP_PER_LEVEL_TABLE[i] = XP_PER_LEVEL_TABLE[i-1] + 3500
+				GameRules:GetGameModeEntity():SetCustomXPRequiredToReachNextLevel( XP_PER_LEVEL_TABLE )
+			end
+		end
+
+		Timers:CreateTimer(2.0, function()
+				for _, hero in pairs(HeroList:GetAllHeroes()) do
+					-- player table runs an error with new picking screen
+
+					if CustomNetTables:GetTableValue("player_table", tostring(hero:GetPlayerID())) ~= nil then
+						local donators = api.imba.get_donators()
+						for k, v in pairs(donators) do
+							CustomNetTables:SetTableValue("player_table", tostring(hero:GetPlayerID()), {
+									companion_model = donators[k].model,
+									companion_enabled = donators[k].enabled,
+									Lvl = CustomNetTables:GetTableValue("player_table", tostring(hero:GetPlayerID())).Lvl,
+								})
+						end
 					end
 				end
 
-				Timers:CreateTimer(2.0, function()
-						for _, hero in pairs(HeroList:GetAllHeroes()) do
-							-- player table runs an error with new picking screen
-
-							if CustomNetTables:GetTableValue("player_table", tostring(hero:GetPlayerID())) ~= nil then
-								local donators = api.imba.get_donators()
-								for k, v in pairs(donators) do
-									CustomNetTables:SetTableValue("player_table", tostring(hero:GetPlayerID()), {
-											companion_model = donators[k].model,
-											companion_enabled = donators[k].enabled,
-											Lvl = CustomNetTables:GetTableValue("player_table", tostring(hero:GetPlayerID())).Lvl,
-										})
-								end
-							end
-						end
-
-						if GetMapName() == "imba_overthrow" then
-							local foundTeams = {}
-							COURIER_TEAM = {}
-							for _, playerStart in pairs(Entities:FindAllByClassname("info_courier_spawn")) do
-								COURIER_TEAM[playerStart:GetTeam()] = CreateUnitByName("npc_dota_courier", playerStart:GetAbsOrigin(), true, nil, nil, playerStart:GetTeam())
+				if GetMapName() == "imba_overthrow" then
+					local foundTeams = {}
+					COURIER_TEAM = {}
+					for _, playerStart in pairs(Entities:FindAllByClassname("info_courier_spawn")) do
+						COURIER_TEAM[playerStart:GetTeam()] = CreateUnitByName("npc_dota_courier", playerStart:GetAbsOrigin(), true, nil, nil, playerStart:GetTeam())
 --						COURIER_PLAYER[playerStart:GetTeam()] = CreateUnitByName("npc_dota_courier", playerStart:GetAbsOrigin(), true, nil, nil, playerStart:GetTeam())
-							end
+					end
 
-							for _, hero in pairs(HeroList:GetAllHeroes()) do
-								if Entities:FindAllByClassname("info_courier_spawn"):GetTeam() == hero:GetTeam() then
-									COURIER_TEAM[hero:GetPlayerID()] = CreateUnitByName("npc_dota_courier", Entities:FindAllByClassname("info_courier_spawn"):GetAbsOrigin(), true, nil, nil, hero:GetTeam())
+					for _, hero in pairs(HeroList:GetAllHeroes()) do
+						if Entities:FindAllByClassname("info_courier_spawn"):GetTeam() == hero:GetTeam() then
+							COURIER_TEAM[hero:GetPlayerID()] = CreateUnitByName("npc_dota_courier", Entities:FindAllByClassname("info_courier_spawn"):GetAbsOrigin(), true, nil, nil, hero:GetTeam())
 --							COURIER_PLAYER[hero:GetPlayerID()] = CreateUnitByName("npc_dota_courier", Entities:FindAllByClassname("info_courier_spawn"):GetAbsOrigin(), true, nil, nil, hero:GetTeam())
-								end
-							end
-						elseif GetMapName() == "cavern" then
-						else
+						end
+					end
+				elseif GetMapName() == "cavern" then
+				else
 --					safe(function()
 --						if error then
 --							log.info("An error occured with courier script, swap to original team couriers.")
@@ -129,129 +127,126 @@ function GameMode:OnGameRulesStateChange(keys)
 
 --							error = true
 --						else
-							if USE_TEAM_COURIER then
-								COURIER_TEAM = {}
-								COURIER_TEAM[2] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_radiant"):GetAbsOrigin(), true, nil, nil, 2)
-								COURIER_TEAM[3] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_dire"):GetAbsOrigin(), true, nil, nil, 3)
-							else
-								for _, hero in pairs(HeroList:GetAllHeroes()) do
-									COURIER_PLAYER = {}
-									if hero:GetTeamNumber() == 2 then
-										COURIER_PLAYER[hero:GetPlayerID()] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_radiant"):GetAbsOrigin(), true, nil, nil, hero:GetTeam())
-									elseif hero:GetTeamNumber() == 3 then
-										COURIER_PLAYER[hero:GetPlayerID()] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_dire"):GetAbsOrigin(), true, nil, nil, hero:GetTeam())
-									end
-								end
+					if USE_TEAM_COURIER then
+						COURIER_TEAM = {}
+						COURIER_TEAM[2] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_radiant"):GetAbsOrigin(), true, nil, nil, 2)
+						COURIER_TEAM[3] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_dire"):GetAbsOrigin(), true, nil, nil, 3)
+					else
+						for _, hero in pairs(HeroList:GetAllHeroes()) do
+							COURIER_PLAYER = {}
+							if hero:GetTeamNumber() == 2 then
+								COURIER_PLAYER[hero:GetPlayerID()] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_radiant"):GetAbsOrigin(), true, nil, nil, hero:GetTeam())
+							elseif hero:GetTeamNumber() == 3 then
+								COURIER_PLAYER[hero:GetPlayerID()] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_dire"):GetAbsOrigin(), true, nil, nil, hero:GetTeam())
 							end
+						end
+					end
 --						end
 
 --						error = false
 --					end)
 
-							local good_fillers = {
-								"good_filler_1",
-								"good_filler_3",
-								"good_filler_5",
-							}
-
-							local bad_fillers = {
-								"bad_filler_1",
-								"bad_filler_3",
-								"bad_filler_5",
-							}
-
-							for _, ent_name in pairs(good_fillers) do
-								local filler = Entities:FindByName(nil, ent_name)
-								local abs = filler:GetAbsOrigin()
-								filler:RemoveSelf()
-								local shrine = CreateUnitByName("npc_dota_goodguys_healers", abs, true, nil, nil, 2)
-								shrine:SetAbsOrigin(abs)
-							end
-
-							for _, ent_name in pairs(bad_fillers) do
-								local filler = Entities:FindByName(nil, ent_name)
-								local abs = filler:GetAbsOrigin()
-								filler:RemoveSelf()
-								local shrine = CreateUnitByName("npc_dota_badguys_healers", abs, true, nil, nil, 3)
-								shrine:SetAbsOrigin(abs)
-							end
-
-							CustomGameEventManager:Send_ServerToAllClients("override_top_bar_colors", {})
-						end
-					end)
-			end
-
-			-------------------------------------------------------------------------------------------------
-			-- IMBA: Game started (horn sounded)
-			-------------------------------------------------------------------------------------------------
-			if new_state == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
-				GameRules:SetSafeToLeave(false)
-				api.imba.event(api.events.started_game)
-
-				Timers:CreateTimer(60, function()
-						StartGarbageCollector()
-						--			DefineLosingTeam()
-						return 60
-					end)
-
-				if IsMutationMap() then
-					SpawnEasterEgg()
-				elseif GetMapName() == "imba_overthrow" then
-					countdownEnabled = true
-					CustomGameEventManager:Send_ServerToAllClients( "show_timer", {} )
-					DoEntFire( "center_experience_ring_particles", "Start", "0", 0, self, self )
-				elseif GetMapName() == "imba_1v1" then
-					local removed_ents = {
-						"lane_top_goodguys_melee_spawner",
-						"lane_bot_goodguys_melee_spawner",
-						"lane_top_badguys_melee_spawner",
-						"lane_bot_badguys_melee_spawner",
+					local good_fillers = {
+						"good_filler_1",
+						"good_filler_3",
+						"good_filler_5",
 					}
 
-					for _, ent_name in pairs(removed_ents) do
-						local ent = Entities:FindByName(nil, ent_name)
-						ent:RemoveSelf()
+					local bad_fillers = {
+						"bad_filler_1",
+						"bad_filler_3",
+						"bad_filler_5",
+					}
+
+					for _, ent_name in pairs(good_fillers) do
+						local filler = Entities:FindByName(nil, ent_name)
+						local abs = filler:GetAbsOrigin()
+						filler:RemoveSelf()
+						local shrine = CreateUnitByName("npc_dota_goodguys_healers", abs, true, nil, nil, 2)
+						shrine:SetAbsOrigin(abs)
 					end
 
-					BlockJungleCamps()
+					for _, ent_name in pairs(bad_fillers) do
+						local filler = Entities:FindByName(nil, ent_name)
+						local abs = filler:GetAbsOrigin()
+						filler:RemoveSelf()
+						local shrine = CreateUnitByName("npc_dota_badguys_healers", abs, true, nil, nil, 3)
+						shrine:SetAbsOrigin(abs)
+					end
+
+					CustomGameEventManager:Send_ServerToAllClients("override_top_bar_colors", {})
 				end
+			end)
+	end
+
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Game started (horn sounded)
+	-------------------------------------------------------------------------------------------------
+	if new_state == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
+		GameRules:SetSafeToLeave(false)
+		api.imba.event(api.events.started_game)
+
+		Timers:CreateTimer(60, function()
+				StartGarbageCollector()
+				--			DefineLosingTeam()
+				return 60
+			end)
+
+		if IsMutationMap() then
+			SpawnEasterEgg()
+		elseif GetMapName() == "imba_overthrow" then
+			countdownEnabled = true
+			CustomGameEventManager:Send_ServerToAllClients( "show_timer", {} )
+			DoEntFire( "center_experience_ring_particles", "Start", "0", 0, self, self )
+		elseif GetMapName() == "imba_1v1" then
+			local removed_ents = {
+				"lane_top_goodguys_melee_spawner",
+				"lane_bot_goodguys_melee_spawner",
+				"lane_top_badguys_melee_spawner",
+				"lane_bot_badguys_melee_spawner",
+			}
+
+			for _, ent_name in pairs(removed_ents) do
+				local ent = Entities:FindByName(nil, ent_name)
+				ent:RemoveSelf()
 			end
 
-			if new_state == DOTA_GAMERULES_STATE_POST_GAME then
-				api.imba.event(api.events.entered_post_game)
+			BlockJungleCamps()
+		end
+	end
 
-				api.imba.complete(function (error, players)
-						safe(function () 
-								local game_id = 0
-								if api.imba.data ~= nil then
-									game_id = api.imba.data.id or 0
-								end
+	if new_state == DOTA_GAMERULES_STATE_POST_GAME then
+		api.imba.event(api.events.entered_post_game)
 
-								CustomGameEventManager:Send_ServerToAllClients("end_game", {
-										players = players,
-										info = {
-											winner = GAME_WINNER_TEAM,
-											id = game_id,
-											radiant_score = GetTeamHeroKills(2),
-											dire_score = GetTeamHeroKills(3),
-											custom1_score = GetTeamHeroKills(6),
-											custom2_score = GetTeamHeroKills(7),
-											custom3_score = GetTeamHeroKills(8),
-											custom4_score = GetTeamHeroKills(9),
-											custom5_score = GetTeamHeroKills(10),
-											custom6_score = GetTeamHeroKills(11),
-											custom7_score = GetTeamHeroKills(12),
-											custom8_score = GetTeamHeroKills(13),
-										},
-									})
-							end)
-					end)
+		api.imba.complete(function (error, players)
+				local game_id = 0
+				if api.imba.data ~= nil then
+					game_id = api.imba.data.id or 0
+				end
 
-				CustomNetTables:SetTableValue("game_options", "game_count", {value = 0})
+				CustomGameEventManager:Send_ServerToAllClients("end_game", {
+						players = players,
+						info = {
+							winner = GAME_WINNER_TEAM,
+							id = game_id,
+							radiant_score = GetTeamHeroKills(2),
+							dire_score = GetTeamHeroKills(3),
+							custom1_score = GetTeamHeroKills(6),
+							custom2_score = GetTeamHeroKills(7),
+							custom3_score = GetTeamHeroKills(8),
+							custom4_score = GetTeamHeroKills(9),
+							custom5_score = GetTeamHeroKills(10),
+							custom6_score = GetTeamHeroKills(11),
+							custom7_score = GetTeamHeroKills(12),
+							custom8_score = GetTeamHeroKills(13),
+						},
+					})
+			end)
 
-			end
+		CustomNetTables:SetTableValue("game_options", "game_count", {value = 0})
 
-		end)
+	end
+
 end
 
 dummy_created_count = 0

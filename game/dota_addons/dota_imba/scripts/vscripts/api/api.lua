@@ -76,28 +76,28 @@ function api.request(endpoint, data, callback)
 
 	if callback == nil then
 		callback = (function (error, data)
-			if (error) then
-				log.error("Error during request to " .. endpoint)
-			else
-				log.info("Request to " .. endpoint .. " successful")
-			end
-		end)
+				if (error) then
+					log.error("Error during request to " .. endpoint)
+				else
+					log.info("Request to " .. endpoint .. " successful")
+				end
+			end)
 	end
 
 	if data ~= nil then
 		method = "POST"
 		payload = json.encode({
-			agent = api.config.agent,
-			version = api.config.version,
-			time = {
-				frames = tonumber(GetFrameCount()),
-				server_time = tonumber(Time()),
-				dota_time = tonumber(GameRules:GetDOTATime(true, true)),
-				game_time = tonumber(GameRules:GetGameTime()),
-				server_system_date_time = tostring(GetSystemDate()) .. " " .. tostring(GetSystemTime()),
-			},
-			data = data
-		})
+				agent = api.config.agent,
+				version = api.config.version,
+				time = {
+					frames = tonumber(GetFrameCount()),
+					server_time = tonumber(Time()),
+					dota_time = tonumber(GameRules:GetDOTATime(true, true)),
+					game_time = tonumber(GameRules:GetGameTime()),
+					server_system_date_time = tostring(GetSystemDate()) .. " " .. tostring(GetSystemTime()),
+				},
+				data = data
+			})
 	end
 
 	request = CreateHTTPRequestScriptVM(method, url)
@@ -115,58 +115,62 @@ function api.request(endpoint, data, callback)
 	end
 
 	request:Send(function (raw_result)
-		local result = {
-			code = raw_result.StatusCode,
-			body = raw_result.Body,
-		}
+			local result = {
+				code = raw_result.StatusCode,
+				body = raw_result.Body,
+			}
 
-		if result.code == 0 then
-			log.error("Request to " .. endpoint .. " timed out")
-			callback(true, "Request to " .. endpoint .. " timed out")
-			return
-		end
-
-		if result.body ~= nil then
-			log.debug(result.body)
-
-			local decoded = json.decode(result.body)
-
-			if decoded ~= nil then
-				result.data = decoded.data
-				result.error = decoded.error
-				result.server = decoded.server
-				result.version = decoded.version
-				result.message = decoded.message
-			else
-				log.error("Request failed with status code: " .. tostring(result.code))
+			if result.code == 0 then
+				log.error("Request to " .. endpoint .. " timed out")
+				callback(true, "Request to " .. endpoint .. " timed out")
+				return
 			end
 
-			if result.code == 503 then
-				log.error("Server unavailable")
-				callback(true, "Server unavailable")
-			elseif result.code == 500 then
-				if result.message ~= nil then
-					log.error("Internal Server Error: " .. tostring(result.message))
-					callback(true, "Internal Server Error: " .. tostring(result.message))
+			if result.body ~= nil then
+				log.debug(result.body)
+
+				local decoded = json.decode(result.body)
+
+				if decoded ~= nil then
+					result.data = decoded.data
+					result.error = decoded.error
+					result.server = decoded.server
+					result.version = decoded.version
+					result.message = decoded.message
 				else
-					log.error("Internal Server Error")
-					callback(true, "Internal Server Error")
+					log.error("Request failed with status code: " .. tostring(result.code))
 				end
-			elseif result.code == 405 then
-				log.error("Used invalid method on endpoint" .. endpoint)
-				callback(true, "Used invalid method on endpoint" .. endpoint)
-			elseif result.code == 404 then
-				log.error("Tried to access unknown endpoint " .. endpoint)
-				callback(true, "Tried to access unknown endpoint " .. endpoint)
-			elseif result.code ~= 200 then
-				log.error("Unknown Error: " .. tostring(result.code))
-				callback(true, "Unknown Error: " .. tostring(result.code))
+
+				safe(function ()
+
+						if result.code == 503 then
+							log.error("Server unavailable")
+							callback(true, "Server unavailable")
+						elseif result.code == 500 then
+							if result.message ~= nil then
+								log.error("Internal Server Error: " .. tostring(result.message))
+								callback(true, "Internal Server Error: " .. tostring(result.message))
+							else
+								log.error("Internal Server Error")
+								callback(true, "Internal Server Error")
+							end
+						elseif result.code == 405 then
+							log.error("Used invalid method on endpoint" .. endpoint)
+							callback(true, "Used invalid method on endpoint" .. endpoint)
+						elseif result.code == 404 then
+							log.error("Tried to access unknown endpoint " .. endpoint)
+							callback(true, "Tried to access unknown endpoint " .. endpoint)
+						elseif result.code ~= 200 then
+							log.error("Unknown Error: " .. tostring(result.code))
+							callback(true, "Unknown Error: " .. tostring(result.code))
+						else
+							log.debug("Request to " .. endpoint .. " successful")
+							callback(false, result.data)
+						end
+
+					end)
 			else
-				log.debug("Request to " .. endpoint .. " successful")
-				callback(false, result.data)
+				log.error("Warning: Recieved response for request " .. endpoint .. " without body!")
 			end
-		else
-			log.error("Warning: Recieved response for request " .. endpoint .. " without body!")
-		end
-	end)
+		end)
 end

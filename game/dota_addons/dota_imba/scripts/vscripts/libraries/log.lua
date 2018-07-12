@@ -37,6 +37,8 @@ if Log == nil then
 
 end
 
+nativePrint = print
+
 ---------------------------------------------
 -- Utility
 ---------------------------------------------
@@ -222,7 +224,11 @@ end
 -- Print function
 -- which actually just prepares data and passes them to the configured targets
 ---------------------------------------------
-function Log:Print(obj, level)
+function Log:Print(obj, level, traceLevel)
+
+	if traceLevel == nil then
+		traceLevel = 4
+	end
 
 	-- prepare level
 	local levelString = self:_LevelToString(level)
@@ -235,7 +241,7 @@ function Log:Print(obj, level)
 		content = tostring(obj)
 	end
 
-	local trace = self:_GetStackTrace(4);
+	local trace = self:_GetStackTrace(traceLevel);
 	local file = self:_GetFileFromTrace(trace)
 
 	for i = 1, #self.targets do
@@ -264,7 +270,7 @@ function Log:ExecuteInSafeContext(fun)
 			end
 	end)
 
-	return status
+	return status, err
 end
 
 ---------------------------------------------
@@ -339,7 +345,65 @@ function ConsoleLogTarget:print(level, content, trace)
 	if trace[1]["name"] ~= nil then
 		name = "|" .. trace[1]["name"]
 	end
-	print("[" .. level .. "][" .. trace[1]["short_src"] .. ":" .. trace[1]["currentline"] .. name .. "] " .. content)
+	nativePrint("[" .. level .. "][" .. trace[1]["short_src"] .. ":" .. trace[1]["currentline"] .. name .. "] " .. content)
+end
+
+
+NativeDynamic_Wrap = nil
+if Dynamic_Wrap ~= nil then
+	NativeDynamic_Wrap = Dynamic_Wrap
+	Dynamic_Wrap = nil
+end
+
+print = nil
+function print(...) 
+	
+	local args = {...}
+	
+	if #args == 1 then
+		args = args[1]
+	end
+	
+	Log:Print(args, Log.Levels.INFO) 
+end
+
+-----------------------------------------------------------------
+-- A function to re-lookup a function by name every time.
+-- Taken from /game/core/scripts/vscripts/utils/vscriptinit.lua
+-----------------------------------------------------------------
+function Dynamic_Wrap( mt, name ) 
+	local function wrapper(...)
+		
+		local args = {...}
+		
+		local status, v = safe(function () 
+			return mt[name](unpack(args))
+		end)
+	
+		if status then
+			return v
+		else
+			return nil
+		end
+	end
+	
+	return wrapper
+	
+	--[[
+	if Convars:GetBool( 'developer' ) then          
+        assert( mt ~= nil )
+        --assert( mt[name] ~= nil )
+		local function w(...)
+			if not mt[name] then
+				error( string.format( "Attempt to call %s which is undefined", name ) )
+			end
+			return mt[name](...)
+		end
+		return w
+	else
+		return mt[name]
+	end
+	]]
 end
 
 ---------------------------------------------

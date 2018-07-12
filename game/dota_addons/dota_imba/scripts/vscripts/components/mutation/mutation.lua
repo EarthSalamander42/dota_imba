@@ -60,13 +60,13 @@ function Mutation:Init()
 	IMBA_MUTATION_PERIODIC_SPELLS = {}
 	IMBA_MUTATION_PERIODIC_SPELLS[1] = {"sun_strike", "Sunstrike", "Red", -1}
 	IMBA_MUTATION_PERIODIC_SPELLS[2] = {"thundergods_wrath", "Thundergod's Wrath", "Red", -1}
-	IMBA_MUTATION_PERIODIC_SPELLS[3] = {"track", "Track", "Red", 20.0}
-	IMBA_MUTATION_PERIODIC_SPELLS[4] = {"rupture", "Rupture", "Red", 10.0}
-	IMBA_MUTATION_PERIODIC_SPELLS[5] = {"torrent", "Torrent", "Red", 45}
-	IMBA_MUTATION_PERIODIC_SPELLS[6] = {"cold_feet", "Cold Feet", "Red", 4.0}
-	IMBA_MUTATION_PERIODIC_SPELLS[7] = {"stampede", "Stampede", "Green", 5.0}
-	IMBA_MUTATION_PERIODIC_SPELLS[8] = {"bloodlust", "Bloodlust", "Green", 30.0}
-	IMBA_MUTATION_PERIODIC_SPELLS[9] = {"aphotic_shield", "Aphotic Shield", "Green", 15.0}
+	IMBA_MUTATION_PERIODIC_SPELLS[3] = {"rupture", "Rupture", "Red", 10.0}
+	IMBA_MUTATION_PERIODIC_SPELLS[4] = {"torrent", "Torrent", "Red", 45}
+	IMBA_MUTATION_PERIODIC_SPELLS[5] = {"cold_feet", "Cold Feet", "Red", 4.0}
+	IMBA_MUTATION_PERIODIC_SPELLS[6] = {"stampede", "Stampede", "Green", 5.0}
+	IMBA_MUTATION_PERIODIC_SPELLS[7] = {"bloodlust", "Bloodlust", "Green", 30.0}
+	IMBA_MUTATION_PERIODIC_SPELLS[8] = {"aphotic_shield", "Aphotic Shield", "Green", 15.0}
+	--IMBA_MUTATION_PERIODIC_SPELLS[9] = {"track", "Track", "Red", 20.0}
 
 	IMBA_MUTATION_WORMHOLE_COLORS = {}
 	IMBA_MUTATION_WORMHOLE_COLORS[1] = Vector(100, 0, 0)
@@ -134,7 +134,7 @@ function Mutation:Init()
 	IMBA_MUTATION_TUG_OF_WAR_TARGET = {}
 	IMBA_MUTATION_TUG_OF_WAR_TARGET[DOTA_TEAM_BADGUYS] = Vector(-5864, -5340, 0)
 	IMBA_MUTATION_TUG_OF_WAR_TARGET[DOTA_TEAM_GOODGUYS] = Vector(5654, 4939, 0)
-    
+
 --[     TO DO
 --	"telekinesis",
 --	"glimpse",
@@ -263,52 +263,52 @@ function Mutation:OnGameRulesStateChange(keys)
 
 			local random_int = RandomInt(1, #IMBA_MUTATION_PERIODIC_SPELLS)
 			Timers:CreateTimer(55.0, function()
-				random_int = RandomInt(1, #IMBA_MUTATION_PERIODIC_SPELLS)
-				Notifications:TopToAll({text = IMBA_MUTATION_PERIODIC_SPELLS[random_int][2].." Mutation in 5 seconds...", duration = 5.0, style = {color = IMBA_MUTATION_PERIODIC_SPELLS[random_int][3]}})
+					random_int = RandomInt(1, #IMBA_MUTATION_PERIODIC_SPELLS)
+					Notifications:TopToAll({text = IMBA_MUTATION_PERIODIC_SPELLS[random_int][2].." Mutation in 5 seconds...", duration = 5.0, style = {color = IMBA_MUTATION_PERIODIC_SPELLS[random_int][3]}})
 
-				return 60.0
-			end)
+					return 60.0
+				end)
 
 			Timers:CreateTimer(60.0, function()
-				if bad_fountain == nil or good_fountain == nil then
-					log.error("nao cucekd up!!! ")
-					return 60.0 
-				end
-
-				for _, hero in pairs(HeroList:GetAllHeroes()) do
-					local caster = bad_fountain
-
-					if (hero:GetTeamNumber() == 3 and IMBA_MUTATION_PERIODIC_SPELLS[random_int][3] == "Red") or (hero:GetTeamNumber() == 2 and IMBA_MUTATION_PERIODIC_SPELLS[random_int][3] == "Green") then
-						caster = good_fountain
+					if bad_fountain == nil or good_fountain == nil then
+						log.error("nao cucekd up!!! ")
+						return 60.0 
 					end
-					
-					hero:AddNewModifier(caster, caster, "modifier_mutation_"..IMBA_MUTATION_PERIODIC_SPELLS[random_int][1], {duration=IMBA_MUTATION_PERIODIC_SPELLS[random_int][4]})
-				end
 
-				return 60.0
-			end)
+					for _, hero in pairs(HeroList:GetAllHeroes()) do
+						local caster = bad_fountain
+
+						if (hero:GetTeamNumber() == 3 and IMBA_MUTATION_PERIODIC_SPELLS[random_int][3] == "Red") or (hero:GetTeamNumber() == 2 and IMBA_MUTATION_PERIODIC_SPELLS[random_int][3] == "Green") then
+							caster = good_fountain
+						end
+
+						hero:AddNewModifier(caster, caster, "modifier_mutation_"..IMBA_MUTATION_PERIODIC_SPELLS[random_int][1], {duration=IMBA_MUTATION_PERIODIC_SPELLS[random_int][4]})
+					end
+
+					return 60.0
+				end)
 		end
 
 		if IMBA_MUTATION["terrain"] == "gift_exchange" then
-		    for k, v in pairs(ITEMS_KV) do -- Go through all the items in ITEMS_KV and store valid items in validItems table
-			
+			for k, v in pairs(ITEMS_KV) do -- Go through all the items in ITEMS_KV and store valid items in validItems table
+
 				varFlag = 0 -- Let's borrow this memory to suss out the forbidden items first...
-			
+
 				if v["ItemCost"] and v["ItemCost"] >= minValue and v["ItemCost"] ~= 99999 and not string.find(k, "recipe") and not string.find(k, "cheese") then
 					for _, item in pairs(self.restricted_items) do -- Make sure item isn't a restricted item
 						if k == item then
 							varFlag = 1
 						end
 					end
-				
+
 					if varFlag == 0 then -- If not a restricted item (while still meeting all the other criteria...)
 						validItems[#validItems + 1] = {k = k, v = v["ItemCost"]}
 					end	
 				end
 			end
-			
+
 			table.sort(validItems, function(a, b) return a.v < b.v end) -- Sort by ascending item cost for easier retrieval later on
-			
+
 			--[[
 			print("Table length: ", #validItems) -- # of valid items
 						
@@ -319,9 +319,9 @@ function Mutation:OnGameRulesStateChange(keys)
 				end
 			end	
 			]]--
-			
+
 			varFlag = 0
-			
+
 			-- Create Tier 1 Table
 			repeat
 				if validItems[counter].v <= t1cap then
@@ -332,9 +332,9 @@ function Mutation:OnGameRulesStateChange(keys)
 				end
 				counter = counter + 1
 			until varFlag == 1
-			
+
 			varFlag = 0
-			
+
 			-- Create Tier 2 Table
 			repeat
 				if validItems[counter].v <= t2cap then
@@ -345,9 +345,9 @@ function Mutation:OnGameRulesStateChange(keys)
 				end
 				counter = counter + 1
 			until varFlag == 1
-			
+
 			varFlag = 0
-			
+
 			-- Create Tier 3 Table
 			repeat
 				if validItems[counter].v <= t3cap then
@@ -358,16 +358,16 @@ function Mutation:OnGameRulesStateChange(keys)
 				end
 				counter = counter + 1
 			until varFlag == 1
-			
+
 			varFlag = 0
-			
+
 			-- Create Tier 4 Table
 			for num = counter, #validItems do
 				tier4[#tier4 + 1] = {k = validItems[num].k, v = validItems[num].v}
 			end
-			
+
 			varFlag = 0
-			
+
 			--[[
 			print("TIER 1 LIST")
 			
@@ -405,12 +405,12 @@ function Mutation:OnGameRulesStateChange(keys)
 				end
 			end	
 			]]--
-			
-			Timers:CreateTimer(110.0, function()
-				Mutation:SpawnRandomItem()
 
-				return 120.0
-			end)
+			Timers:CreateTimer(110.0, function()
+					Mutation:SpawnRandomItem()
+
+					return 120.0
+				end)
 		end
 
 		if IMBA_MUTATION["terrain"] == "call_down" then
@@ -419,7 +419,7 @@ function Mutation:OnGameRulesStateChange(keys)
 		end
 
 		if IMBA_MUTATION["terrain"] == "wormhole" then
-			
+
 			-- Assign initial wormhole positions
 			local current_wormholes = {}
 			for i = 1, 12 do
@@ -427,75 +427,75 @@ function Mutation:OnGameRulesStateChange(keys)
 				current_wormholes[i] = IMBA_MUTATION_WORMHOLE_POSITIONS[random_int]
 				table.remove(IMBA_MUTATION_WORMHOLE_POSITIONS, random_int)
 			end
-			
+
 			local wormhole_particles = {}
-			
+
 			-- Create wormhole particles (destroy and redraw every minute to accommodate for reconnecting players)
 			Timers:CreateTimer(0, function()
-				for i = 1, 12 do
-					if wormhole_particles[i] then
-						ParticleManager:DestroyParticle(wormhole_particles[i], true)
-						ParticleManager:ReleaseParticleIndex(wormhole_particles[i])
+					for i = 1, 12 do
+						if wormhole_particles[i] then
+							ParticleManager:DestroyParticle(wormhole_particles[i], true)
+							ParticleManager:ReleaseParticleIndex(wormhole_particles[i])
+						end
+						wormhole_particles[i] = ParticleManager:CreateParticle("particles/ambient/wormhole_circle.vpcf", PATTACH_CUSTOMORIGIN, nil)
+						ParticleManager:SetParticleControl(wormhole_particles[i], 0, GetGroundPosition(current_wormholes[i], nil) + Vector(0, 0, 20))
+						ParticleManager:SetParticleControl(wormhole_particles[i], 2, IMBA_MUTATION_WORMHOLE_COLORS[i])
 					end
-					wormhole_particles[i] = ParticleManager:CreateParticle("particles/ambient/wormhole_circle.vpcf", PATTACH_CUSTOMORIGIN, nil)
-					ParticleManager:SetParticleControl(wormhole_particles[i], 0, GetGroundPosition(current_wormholes[i], nil) + Vector(0, 0, 20))
-					ParticleManager:SetParticleControl(wormhole_particles[i], 2, IMBA_MUTATION_WORMHOLE_COLORS[i])
-				end
-				return 60
-			end)
-			
+					return 60
+				end)
+
 			-- Teleport loop
 			Timers:CreateTimer(0, function()
 
-				-- Find units to teleport
-				for i = 1, 12 do
-					local units = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, current_wormholes[i], nil, 150, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED, FIND_ANY_ORDER, false)
-					for _, unit in pairs(units) do
-						if not unit:HasModifier("modifier_mutation_wormhole_cooldown") then
-							if unit:IsHero() then
-								unit:EmitSound("Wormhole.Disappear")
-								Timers:CreateTimer(0.03, function()
-									unit:EmitSound("Wormhole.Appear")
-								end)
-							else
-								unit:EmitSound("Wormhole.CreepDisappear")
-								Timers:CreateTimer(0.03, function()
-									unit:EmitSound("Wormhole.CreepAppear")
-								end)
-							end
-							unit:AddNewModifier(unit, nil, "modifier_mutation_wormhole_cooldown", {duration = IMBA_MUTATION_WORMHOLE_PREVENT_DURATION})
-							FindClearSpaceForUnit(unit, current_wormholes[13-i], true)
-							if unit.GetPlayerID and unit:GetPlayerID() then
-								PlayerResource:SetCameraTarget(unit:GetPlayerID(), unit)
-								Timers:CreateTimer(0.03, function()
-									PlayerResource:SetCameraTarget(unit:GetPlayerID(), nil)
-								end)
+					-- Find units to teleport
+					for i = 1, 12 do
+						local units = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, current_wormholes[i], nil, 150, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED, FIND_ANY_ORDER, false)
+						for _, unit in pairs(units) do
+							if not unit:HasModifier("modifier_mutation_wormhole_cooldown") then
+								if unit:IsHero() then
+									unit:EmitSound("Wormhole.Disappear")
+									Timers:CreateTimer(0.03, function()
+											unit:EmitSound("Wormhole.Appear")
+										end)
+								else
+									unit:EmitSound("Wormhole.CreepDisappear")
+									Timers:CreateTimer(0.03, function()
+											unit:EmitSound("Wormhole.CreepAppear")
+										end)
+								end
+								unit:AddNewModifier(unit, nil, "modifier_mutation_wormhole_cooldown", {duration = IMBA_MUTATION_WORMHOLE_PREVENT_DURATION})
+								FindClearSpaceForUnit(unit, current_wormholes[13-i], true)
+								if unit.GetPlayerID and unit:GetPlayerID() then
+									PlayerResource:SetCameraTarget(unit:GetPlayerID(), unit)
+									Timers:CreateTimer(0.03, function()
+											PlayerResource:SetCameraTarget(unit:GetPlayerID(), nil)
+										end)
+								end
 							end
 						end
 					end
-				end
-				return 0.5
-			end)
+					return 0.5
+				end)
 		end
 
 		if IMBA_MUTATION["terrain"] == "tug_of_war" then
 			local golem
-			
+
 			-- Random a team for the initial golem spawn
 			if RandomInt(1, 2) == 1 then
 				golem = CreateUnitByName("npc_dota_mutation_golem", IMBA_MUTATION_TUG_OF_WAR_START[DOTA_TEAM_GOODGUYS], false, nil, nil, DOTA_TEAM_GOODGUYS)
 				golem.ambient_pfx = ParticleManager:CreateParticle("particles/ambient/tug_of_war_team_radiant.vpcf", PATTACH_ABSORIGIN_FOLLOW, golem)
 				ParticleManager:SetParticleControl(golem.ambient_pfx, 0, golem:GetAbsOrigin())
 				Timers:CreateTimer(0.1, function()
-					golem:MoveToPositionAggressive(IMBA_MUTATION_TUG_OF_WAR_TARGET[DOTA_TEAM_GOODGUYS])
-				end)
+						golem:MoveToPositionAggressive(IMBA_MUTATION_TUG_OF_WAR_TARGET[DOTA_TEAM_GOODGUYS])
+					end)
 			else
 				golem = CreateUnitByName("npc_dota_mutation_golem", IMBA_MUTATION_TUG_OF_WAR_START[DOTA_TEAM_BADGUYS], false, nil, nil, DOTA_TEAM_BADGUYS)
 				golem.ambient_pfx = ParticleManager:CreateParticle("particles/ambient/tug_of_war_team_dire.vpcf", PATTACH_ABSORIGIN_FOLLOW, golem)
 				ParticleManager:SetParticleControl(golem.ambient_pfx, 0, golem:GetAbsOrigin())
 				Timers:CreateTimer(0.1, function()
-					golem:MoveToPositionAggressive(IMBA_MUTATION_TUG_OF_WAR_TARGET[DOTA_TEAM_BADGUYS])
-				end)
+						golem:MoveToPositionAggressive(IMBA_MUTATION_TUG_OF_WAR_TARGET[DOTA_TEAM_BADGUYS])
+					end)
 			end
 
 			-- Initial logic
@@ -505,7 +505,7 @@ function Mutation:OnGameRulesStateChange(keys)
 			golem:SetMinimumGoldBounty(50)
 			golem:SetMaximumGoldBounty(50)
 		end
-			
+
 
 		--[[
 		if IMBA_MUTATION["terrain"] == "minefield" then
@@ -599,7 +599,7 @@ function Mutation:OnHeroSpawn(hero)
 
 	if IMBA_MUTATION["terrain"] == "river_flows" then
 		hero:AddNewModifier(hero, nil, "modifier_mutation_river_flows", {})
-    end
+	end
 
 	if IMBA_MUTATION["terrain"] == "sticky_river" then
 		hero:AddNewModifier(hero, nil, "modifier_sticky_river", {})
@@ -666,14 +666,14 @@ function Mutation:RevealAllMap(duration)
 
 	if duration then
 		Timers:CreateTimer(duration, function()
-			GameRules:GetGameModeEntity():SetFogOfWarDisabled(false)
-		end)
+				GameRules:GetGameModeEntity():SetFogOfWarDisabled(false)
+			end)
 	end
 end
 
 function Mutation:SpawnRandomItem()
 	local selectedItem 
-	
+
 	if GameRules:GetDOTATime(false, false) > t3time then
 		selectedItem = tier4[RandomInt(1, #tier4)].k
 	elseif GameRules:GetDOTATime(false, false) > t2time then
@@ -683,7 +683,7 @@ function Mutation:SpawnRandomItem()
 	else
 		selectedItem = tier1[RandomInt(1, #tier1)].k
 	end
-	
+
 	local pos = RandomVector(MAP_SIZE_AIRDROP)
 	AddFOWViewer(2, pos, self.item_spawn_radius, self.item_spawn_delay + self.item_spawn_vision_linger, false)
 	AddFOWViewer(3, pos, self.item_spawn_radius, self.item_spawn_delay + self.item_spawn_vision_linger, false)
@@ -700,20 +700,20 @@ function Mutation:SpawnRandomItem()
 	ParticleManager:ReleaseParticleIndex(particle)
 
 	Timers:CreateTimer(self.item_spawn_delay, function()
-		local item = CreateItem(selectedItem, nil, nil)
-		item.airdrop = true
-		-- print("Item Name:", selectedItem, pos)
+			local item = CreateItem(selectedItem, nil, nil)
+			item.airdrop = true
+			-- print("Item Name:", selectedItem, pos)
 
-		local drop = CreateItemOnPositionSync(pos, item)
+			local drop = CreateItemOnPositionSync(pos, item)
 
-		CustomGameEventManager:Send_ServerToAllClients("item_has_spawned", {spawn_location = pos})
-		EmitGlobalSound( "powerup_05" )
+			CustomGameEventManager:Send_ServerToAllClients("item_has_spawned", {spawn_location = pos})
+			EmitGlobalSound( "powerup_05" )
 
-		ParticleManager:DestroyParticle(particle_arena_fx, false)
-		ParticleManager:ReleaseParticleIndex(particle_arena_fx)
+			ParticleManager:DestroyParticle(particle_arena_fx, false)
+			ParticleManager:ReleaseParticleIndex(particle_arena_fx)
 
-		particle_dummy:ForceKill(false)
-	end)
+			particle_dummy:ForceKill(false)
+		end)
 
 	CustomGameEventManager:Send_ServerToAllClients("item_will_spawn", {spawn_location = pos})
 	EmitGlobalSound("powerup_03")
