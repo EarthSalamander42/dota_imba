@@ -857,8 +857,6 @@ function imba_ember_spirit_activate_fire_remnant:OnSpellStart()
 				remnant:EmitSound("Hero_EmberSpirit.FireRemnant.Explode")
 				if remnant ~= caster then
 					remnant:ForceKill(false)
-				else
-					print("Attempting to kill self!")
 				end
 			end
 
