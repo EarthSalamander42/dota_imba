@@ -483,14 +483,14 @@ function imba_sven_gods_strength:GetCooldown( nLevel )
 	return self.BaseClass.GetCooldown( self, nLevel ) - self:GetCaster():FindTalentValue("special_bonus_imba_sven_4")
 end
 
-function imba_sven_gods_strength:GetAssociatedSecondaryAbilities()
+function imba_sven_gods_strength:GetAssociatedPrimaryAbilities()
 	return "imba_sven_colossal_slash"
 end
 
 function imba_sven_gods_strength:OnUpgrade()
 	if IsServer() then
 		local caster = self:GetCaster()
-		local ability_slash = caster:FindAbilityByName(self:GetAssociatedSecondaryAbilities())
+		local ability_slash = caster:FindAbilityByName(self:GetAssociatedPrimaryAbilities())
 		ability_slash:SetLevel(self:GetLevel())
 		if not caster:HasModifier("modifier_imba_god_strength") then
 			ability_slash:SetActivated(false)
@@ -661,7 +661,7 @@ function imba_sven_colossal_slash:GetAbilityTextureName()
 end
 -------------------------------------------
 
-function imba_sven_colossal_slash:GetAssociatedPrimaryAbilities()
+function imba_sven_colossal_slash:GetAssociatedSecondaryAbilities()
 	return "imba_sven_gods_strength"
 end
 
