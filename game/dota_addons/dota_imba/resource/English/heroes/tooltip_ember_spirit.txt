@@ -36,7 +36,7 @@
 "DOTA_Tooltip_Ability_imba_ember_spirit_activate_fire_remnant_damage"           "EXPLOSION DAMAGE:"
 
 "DOTA_Tooltip_Ability_imba_ember_spirit_fire_remnant"                       "Fire Remnant"
-"DOTA_Tooltip_Ability_imba_ember_spirit_fire_remnant_description"           "Deploys one of your fire remnants to the target area, generating various effects.\n<font color='#FF7800'>Through Fire and Flames:</font> remnants replicate Ember Spirit's abilities, and after expiring or being activated, only need a short %remnant_recharge% second cooldown to be usable again.."
+"DOTA_Tooltip_Ability_imba_ember_spirit_fire_remnant_description"           "Deploys one of your fire remnants to the target area, generating various effects.\n<font color='#FF7800'>Through Fire and Flames:</font> remnants replicate Ember Spirit's abilities, and after expiring or being activated, only need a short %remnant_recharge% second cooldown to be usable again.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
 "DOTA_Tooltip_Ability_imba_ember_spirit_fire_remnant_note0"                 "If a remnant's duration expires, it doesn't explode, and simply returns to Ember Spirit."
 "DOTA_Tooltip_Ability_imba_ember_spirit_fire_remnant_lore"                  "Xin's spirit fragments into quasi-real copies of himself, able of replicating his feats at a distance."
 "DOTA_Tooltip_Ability_imba_ember_spirit_fire_remnant_max_charges"           "REMNANT CHARGES:"
