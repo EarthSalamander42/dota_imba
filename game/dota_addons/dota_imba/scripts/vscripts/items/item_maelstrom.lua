@@ -313,6 +313,10 @@ function item_imba_jarnbjorn:GetAbilityTextureName()
 	return "custom/imba_jarnbjorn"
 end
 
+function item_imba_jarnbjorn:GetTexture()
+	return "custom/imba_jarnbjorn"
+end
+
 function item_imba_jarnbjorn:OnSpellStart()
 	if IsServer() then
 		local target = self:GetCursorTarget()
@@ -416,16 +420,7 @@ function modifier_item_imba_jarnbjorn:OnAttackLanded( keys )
 			-- Calculate bonus damage
 			local splash_damage = damage * (ability:GetSpecialValueFor("splash_damage_pct") * 0.01)
 
-			-- Apply bonus damage on every enemy EXCEPT the main target
-			local enemy_units = FindUnitsInRadius(self:GetParent():GetTeamNumber(), target:GetAbsOrigin(), nil, ability:GetSpecialValueFor("splash_range"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
-
-			for _,enemy in pairs(enemy_units) do
-				if enemy ~= target then
-					local damageTable = {victim = enemy, attacker = self:GetParent(), damage = splash_damage, damage_type = DAMAGE_TYPE_PHYSICAL, damage_flags = DOTA_DAMAGE_FLAG_BYPASSES_BLOCK + DOTA_DAMAGE_FLAG_IGNORES_PHYSICAL_ARMOR + DOTA_DAMAGE_FLAG_NO_DAMAGE_MULTIPLIERS, ability = self.ability}
-
-					ApplyDamage(damageTable)
-				end
-			end
+			DoCleaveAttack( attacker, keys.target, ability, splash_damage, ability:GetSpecialValueFor("cleave_start"), ability:GetSpecialValueFor("cleave_end"), ability:GetSpecialValueFor("splash_range"), "particles/econ/items/sven/sven_ti7_sword/sven_ti7_sword_spell_great_cleave.vpcf" )
 		end
 	end
 end

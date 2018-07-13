@@ -10983,6 +10983,16 @@
 				"var_type"				"FIELD_FLOAT"
 				"tree_cooldown"			"2.5"
 			}
+			"19"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cleave_start"			"150"
+			}
+			"20"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cleave_end"			"330"
+			}
 		}
 	}
 
