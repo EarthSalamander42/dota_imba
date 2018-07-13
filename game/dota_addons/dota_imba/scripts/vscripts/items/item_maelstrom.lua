@@ -420,7 +420,7 @@ function modifier_item_imba_jarnbjorn:OnAttackLanded( keys )
 			-- Calculate bonus damage
 			local splash_damage = damage * (ability:GetSpecialValueFor("splash_damage_pct") * 0.01)
 
-			DoCleaveAttack( attacker, keys.target, ability, splash_damage, ability:GetSpecialValueFor("cleave_start"), ability:GetSpecialValueFor("cleave_end"), ability:GetSpecialValueFor("splash_range"), "particles/econ/items/sven/sven_ti7_sword/sven_ti7_sword_spell_great_cleave_crit.vpcf" )
+			DoCleaveAttack( attacker, keys.target, ability, splash_damage, ability:GetSpecialValueFor("cleave_start"), ability:GetSpecialValueFor("cleave_end"), ability:GetSpecialValueFor("splash_range"), "particles/econ/items/sven/sven_ti7_sword/sven_ti7_sword_spell_great_cleave.vpcf" )
 		end
 	end
 end
