@@ -53,9 +53,16 @@ function Mutation:Init()
 	LinkLuaModifier("modifier_mutation_river_flows", "components/mutation/modifiers/modifier_mutation_river_flows.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_sticky_river", "modifier/mutation/modifier_sticky_river.lua", LUA_MODIFIER_MOTION_NONE )
 
-	Mutation:ChooseMutation("positive", POSITIVE_MUTATION_LIST, 6 - 1) -- -1 because index is 0
-	Mutation:ChooseMutation("negative", NEGATIVE_MUTATION_LIST, 3 - 1)
-	Mutation:ChooseMutation("terrain", TERRAIN_MUTATION_LIST, 4 - 1)
+	-- Selecting Mutations (Take out if statement for IsInToolsMode if you want to test randomized)
+	--if IsInToolsMode() then
+	--	IMBA_MUTATION["positive"] = "teammate_resurrection"
+	--	IMBA_MUTATION["negative"] = "periodic_spellcast"
+	--	IMBA_MUTATION["terrain"] = "wormhole"
+	--else
+		Mutation:ChooseMutation("positive", POSITIVE_MUTATION_LIST)
+		Mutation:ChooseMutation("negative", NEGATIVE_MUTATION_LIST)
+		Mutation:ChooseMutation("terrain", TERRAIN_MUTATION_LIST)
+	--end
 
 	IMBA_MUTATION_PERIODIC_SPELLS = {}
 	IMBA_MUTATION_PERIODIC_SPELLS[1] = {"sun_strike", "Sunstrike", "Red", -1}
@@ -203,30 +210,12 @@ function Mutation:Precache(context)
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_zuus.vsndevts", context)
 end
 
-function Mutation:ChooseMutation(type, table, count)
-	local i = 0
---	local random_int = RandomInt(0, #table) -- dunno why it doesn't get table length
-	local random_int = RandomInt(0, count)
-
---	print("Mutation: Choose Mutation:", type, random_int)
-
-	for mutation, bool in pairs(table) do
-		if i == random_int then
---			print("Mutation:", mutation)
-			IMBA_MUTATION[type] = mutation
-			table[mutation] = true
-
-			if IsInToolsMode() then
-				IMBA_MUTATION["positive"] = "teammate_resurrection"
-				IMBA_MUTATION["negative"] = "periodic_spellcast"
-				IMBA_MUTATION["terrain"] = "speed_freaks"
-			end
-
-			return
-		else
-			i = i + 1
-		end
-	end
+function Mutation:ChooseMutation(mType, mList)
+	-- Pick a random number within bounds of given mutation list	
+	local random_int = RandomInt(1, #mList)
+	-- Select a mutation from within that list and place it in the relevant IMBA_MUTATION field
+	IMBA_MUTATION[mType] = mList[random_int]
+	--print("IMBA_MUTATION["..mType.."] mutation picked: ", mList[random_int])
 end
 
 -- Mutation: Events
