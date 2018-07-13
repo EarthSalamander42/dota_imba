@@ -42439,7 +42439,7 @@
 		"SpellImmunityType"			"SPELL_IMMUNITY_ENEMIES_NO"
 		"AbilityTextureName"		"ember_spirit_fire_remnant"
 		"ScriptFile"				"hero/hero_ember.lua"
-
+		"HasScepterUpgrade"         "1"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------

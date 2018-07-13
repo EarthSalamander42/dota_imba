@@ -20,7 +20,8 @@ function FindActiveRemnants(caster)
 	local remnants = Entities:FindAllByModel("models/heroes/ember_spirit/ember_spirit.vmdl")
 
 	for key, remnant in pairs(remnants) do
-		if caster == remnant or caster ~= remnant:GetOwner() or (not remnant:IsAlive()) then
+		--if caster == remnant or caster ~= remnant:GetOwner() or remnant:IsIllusion() or (not remnant:IsAlive()) then	
+		if caster ~= remnant:GetOwner() or not remnant:HasModifier("modifier_imba_fire_remnant_state") then
 			table.remove(remnants, key)
 		end
 	end
@@ -705,6 +706,8 @@ end
 -- Fire Remnant ability
 imba_ember_spirit_fire_remnant = imba_ember_spirit_fire_remnant or class ({})
 
+function imba_ember_spirit_fire_remnant:GetAssociatedPrimaryAbilities() return "imba_ember_spirit_activate_fire_remnant" end
+
 function imba_ember_spirit_fire_remnant:CollectRemnant()
 	if IsServer() then
 		-- ember spirit bug: this modifier is not added
@@ -822,6 +825,8 @@ end
 -- Activate Fire Remnant ability
 imba_ember_spirit_activate_fire_remnant = imba_ember_spirit_activate_fire_remnant or class ({})
 
+function imba_ember_spirit_activate_fire_remnant:GetAssociatedSecondaryAbilities() return "imba_ember_spirit_fire_remnant" end
+
 function imba_ember_spirit_activate_fire_remnant:OnUpgrade()
 	if IsServer() then
 		if self:GetLevel() == 1 then
@@ -850,7 +855,9 @@ function imba_ember_spirit_activate_fire_remnant:OnSpellStart()
 					ApplyDamage({victim = enemy, attacker = caster, damage = self:GetSpecialValueFor("damage"), damage_type = DAMAGE_TYPE_MAGICAL, ability = self})
 				end
 				remnant:EmitSound("Hero_EmberSpirit.FireRemnant.Explode")
-				remnant:ForceKill(false)
+				if remnant ~= caster then
+					remnant:ForceKill(false)
+				end
 			end
 
 			ProjectileManager:ProjectileDodge(caster)
