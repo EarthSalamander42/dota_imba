@@ -38,7 +38,6 @@ NEGATIVE_MUTATION_LIST[2] = "periodic_spellcast"
 
 -- Terrain Mutations
 TERRAIN_MUTATION_LIST = {}
-
 TERRAIN_MUTATION_LIST[1] = "fast_runes"
 TERRAIN_MUTATION_LIST[2] = "gift_exchange"
 TERRAIN_MUTATION_LIST[3] = "speed_freaks"
