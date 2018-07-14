@@ -48,14 +48,18 @@ function GameMode:OnHeroFirstSpawn(hero)
 			if steam_id ~= "0" and api.imba.is_donator(steam_id) ~= false then
 				--			print("set player original team of ID "..hero:GetPlayerID().." to "..hero:GetTeamNumber())
 				--			PLAYER_TEAM[hero:GetPlayerID()] = hero:GetTeamNumber()
-				hero:SetCustomHealthLabel("#imba_donator_label_"..api.imba.is_donator(steam_id), DONATOR_COLOR[api.imba.is_donator(steam_id)][1], DONATOR_COLOR[api.imba.is_donator(steam_id)][2], DONATOR_COLOR[api.imba.is_donator(steam_id)][3])
+				local donator_level = api.imba.is_donator(steam_id)
 
-				-- needs a timer else GetSelectedHeroEntity is nil
-				Timers:CreateTimer(0.3, function()
-						if api.imba.get_player_info(steam_id) then
-							DonatorStatue(hero:GetPlayerID(), api.imba.get_player_info(steam_id).ingame_statue_file)
-						end
-					end)
+				if donator_level then
+					hero:SetCustomHealthLabel("#imba_donator_label_" .. donator_level, DONATOR_COLOR[donator_level][1], DONATOR_COLOR[donator_level][2], DONATOR_COLOR[donator_level][3])
+
+					-- needs a timer else GetSelectedHeroEntity is nil
+					Timers:CreateTimer(0.3, function()
+							if api.imba.get_player_info(steam_id) then
+								DonatorStatue(hero:GetPlayerID(), api.imba.get_player_info(steam_id).ingame_statue_file)
+							end
+						end)
+				end
 			end
 		end
 	end

@@ -100,35 +100,40 @@ function modifier_imba_power_treads_2:OnCreated()
 				self:StartIntervalThink(0.2)
 			else
 				Timers:CreateTimer(FrameTime(), function()	-- Timer because Valve decided that modifiers should be applied before items are added
-					local ownerFinder = FindUnitsInRadius(parent:GetTeamNumber(), parent:GetAbsOrigin(), nil, 25000, DOTA_UNIT_TARGET_TEAM_BOTH , DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_DEAD + DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD , FIND_ANY_ORDER , false)
-					for _,hero in pairs(ownerFinder) do
-						if hero:GetName() == parent:GetName() then
-							for i = 0,5 do
-								local hero_item = hero:GetItemInSlot(i)
-								if hero_item and hero_item:GetName() == "item_imba_power_treads_2" then
-									local illusion_item = parent:GetItemInSlot(i)
-									if illusion_item == self:GetAbility() then
-										local state = (hero_item.state - 1 + DOTA_ATTRIBUTE_MAX) % DOTA_ATTRIBUTE_MAX
-										illusion_item.state = state
-										self:SetStackCount(state)
-										ability.state = state
-										local healthPcnt = hero:GetHealthPercent()/100
-										local manaPcnt = hero:GetManaPercent()/100
+						local ownerFinder = FindUnitsInRadius(parent:GetTeamNumber(), parent:GetAbsOrigin(), nil, 25000, DOTA_UNIT_TARGET_TEAM_BOTH , DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_DEAD + DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD , FIND_ANY_ORDER , false)
+						for _,hero in pairs(ownerFinder) do
+							if hero:GetName() == parent:GetName() then
+								for i = 0,5 do
+									local hero_item = hero:GetItemInSlot(i)
+									if hero_item and hero_item:GetName() == "item_imba_power_treads_2" then
+										local illusion_item = parent:GetItemInSlot(i)
+										if illusion_item == self:GetAbility() then
 
-										local maxHealth = parent:GetMaxHealth()
-										local maxMana = parent:GetMaxMana()
+											local state = 0
+											if hero_item.state ~= nil then
+												state = (hero_item.state - 1 + DOTA_ATTRIBUTE_MAX) % DOTA_ATTRIBUTE_MAX
+											end
 
-										parent:SetHealth(maxHealth*healthPcnt)
-										parent:SetMana(maxMana*manaPcnt)
-										break
+											illusion_item.state = state
+											self:SetStackCount(state)
+											ability.state = state
+											local healthPcnt = hero:GetHealthPercent()/100
+											local manaPcnt = hero:GetManaPercent()/100
+
+											local maxHealth = parent:GetMaxHealth()
+											local maxMana = parent:GetMaxMana()
+
+											parent:SetHealth(maxHealth*healthPcnt)
+											parent:SetMana(maxMana*manaPcnt)
+											break
+										end
 									end
 								end
+								break
 							end
-							break
 						end
-					end
-					self:StartIntervalThink(0.2)
-				end)
+						self:StartIntervalThink(0.2)
+					end)
 			end
 		end
 	end

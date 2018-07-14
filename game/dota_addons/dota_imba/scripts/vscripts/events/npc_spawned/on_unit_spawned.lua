@@ -35,7 +35,7 @@ function GameMode:OnUnitFirstSpawn(unit)
 			unit:SetBaseDamageMax(unit:GetBaseDamageMax() * damage_value)
 		else
 			Timers:CreateTimer(FrameTime(), function()
-					if UNIT_EQUIPMENT[unit:GetModelName()] then
+					if not unit:IsNull() and UNIT_EQUIPMENT[unit:GetModelName()] then
 						for _, wearable in pairs(UNIT_EQUIPMENT[unit:GetModelName()]) do
 							local cosmetic = SpawnEntityFromTableSynchronous("prop_dynamic", {model = wearable})
 							cosmetic:FollowEntity(unit, true)

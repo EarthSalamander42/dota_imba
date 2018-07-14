@@ -4656,6 +4656,7 @@ function modifier_imba_tower_tenacity_aura_buff:IsHidden()
 end
 
 function modifier_imba_tower_tenacity_aura_buff:GetCustomTenacity()
+	if self.caster:IsNull() then return 0 end
 	local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct", self.caster)
 	local tenacity = self.base_tenacity_pct + self.tenacity_per_protective * protective_instinct_stacks
 	return tenacity

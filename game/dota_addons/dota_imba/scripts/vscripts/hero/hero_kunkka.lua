@@ -378,60 +378,60 @@ function imba_kunkka_torrent:OnSpellStart()
 			local delay = first_delay + (torrent_count * 2)
 			-- Start after the delay
 			Timers:CreateTimer(delay, function()
-				-- Parameters for secoundary Torrents
-				if torrent_count > 0 then
-					damage_tick = sec_torrent_damage / tick_count
-					stun_duration = sec_torrent_stun
-					torrent_height = torrent_height / 1.5
-					radius = self:GetSpecialValueFor("sec_torrent_radius")
-				end
-
-				-- Destroy initial bubble-particle & create secoundary visible for both teams
-				if torrent_count == 0 then
-					ParticleManager:DestroyParticle(bubbles_pfx, false)
-					ParticleManager:ReleaseParticleIndex(bubbles_pfx)
-					bubbles_sec_pfc = ParticleManager:CreateParticleForTeam("particles/hero/kunkka/torrent_bubbles.vpcf", PATTACH_ABSORIGIN, caster, caster:GetTeam())
-					ParticleManager:SetParticleControl(bubbles_sec_pfc, 0, target)
-					ParticleManager:SetParticleControl(bubbles_sec_pfc, 1, Vector(radius,0,0))
-				end
-
-				-- Destroy bubbles if it was the last torrent
-				if torrent_count == sec_torrent_count then
-					ParticleManager:DestroyParticle(bubbles_sec_pfc, false)
-					ParticleManager:ReleaseParticleIndex(bubbles_sec_pfc)
-				end
-
-				-- Finds affected enemies
-				local enemies = FindUnitsInRadius(caster:GetTeam(), target, nil, radius, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), 0, false)
-
-				-- Torrent response if an enemy was hit 30%
-				if (#enemies > 0) and (caster:GetName() == "npc_dota_hero_kunkka") then
-					if math.random(1,10) < 3 then
-						caster:EmitSound("kunkka_kunk_ability_torrent_0"..math.random(1,4))
-					end
-				end
-				-- Iterate through affected enemies
-				for _,enemy in pairs(enemies) do
-
-					-- Deals the initial damage
-					ApplyDamage({victim = enemy, attacker = caster, ability = self, damage = damage_tick, damage_type = self:GetAbilityDamageType()})
-					local current_ticks = 0
-					local randomness_x = 0
-					local randomness_y = 0
-
-					-- Calculates the knockback position (for Tsunami)
-					local torrent_border = ( enemy:GetAbsOrigin() - target ):Normalized() * ( radius + 100 )
-					local distance_from_center = ( enemy:GetAbsOrigin() - target ):Length2D()
-					if not ( tsunami and torrent_count == 0 ) then
-						distance_from_center = 0
-					else
-						-- Some randomness to tsunami-torrent for smoother animation
-						randomness_x = math.random() * math.random(-30,30)
-						randomness_y = math.random() * math.random(-30,30)
+					-- Parameters for secoundary Torrents
+					if torrent_count > 0 then
+						damage_tick = sec_torrent_damage / tick_count
+						stun_duration = sec_torrent_stun
+						torrent_height = torrent_height / 1.5
+						radius = self:GetSpecialValueFor("sec_torrent_radius")
 					end
 
-					-- Knocks the target up
-					local knockback =
+					-- Destroy initial bubble-particle & create secoundary visible for both teams
+					if torrent_count == 0 then
+						ParticleManager:DestroyParticle(bubbles_pfx, false)
+						ParticleManager:ReleaseParticleIndex(bubbles_pfx)
+						bubbles_sec_pfc = ParticleManager:CreateParticleForTeam("particles/hero/kunkka/torrent_bubbles.vpcf", PATTACH_ABSORIGIN, caster, caster:GetTeam())
+						ParticleManager:SetParticleControl(bubbles_sec_pfc, 0, target)
+						ParticleManager:SetParticleControl(bubbles_sec_pfc, 1, Vector(radius,0,0))
+					end
+
+					-- Destroy bubbles if it was the last torrent
+					if torrent_count == sec_torrent_count then
+						ParticleManager:DestroyParticle(bubbles_sec_pfc, false)
+						ParticleManager:ReleaseParticleIndex(bubbles_sec_pfc)
+					end
+
+					-- Finds affected enemies
+					local enemies = FindUnitsInRadius(caster:GetTeam(), target, nil, radius, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), 0, false)
+
+					-- Torrent response if an enemy was hit 30%
+					if (#enemies > 0) and (caster:GetName() == "npc_dota_hero_kunkka") then
+						if math.random(1,10) < 3 then
+							caster:EmitSound("kunkka_kunk_ability_torrent_0"..math.random(1,4))
+						end
+					end
+					-- Iterate through affected enemies
+					for _,enemy in pairs(enemies) do
+
+						-- Deals the initial damage
+						ApplyDamage({victim = enemy, attacker = caster, ability = self, damage = damage_tick, damage_type = self:GetAbilityDamageType()})
+						local current_ticks = 0
+						local randomness_x = 0
+						local randomness_y = 0
+
+						-- Calculates the knockback position (for Tsunami)
+						local torrent_border = ( enemy:GetAbsOrigin() - target ):Normalized() * ( radius + 100 )
+						local distance_from_center = ( enemy:GetAbsOrigin() - target ):Length2D()
+						if not ( tsunami and torrent_count == 0 ) then
+							distance_from_center = 0
+						else
+							-- Some randomness to tsunami-torrent for smoother animation
+							randomness_x = math.random() * math.random(-30,30)
+							randomness_y = math.random() * math.random(-30,30)
+						end
+
+						-- Knocks the target up
+						local knockback =
 						{
 							should_stun = 1,
 							knockback_duration = stun_duration,
@@ -443,63 +443,63 @@ function imba_kunkka_torrent:OnSpellStart()
 							center_z = (target + torrent_border).z
 						}
 
-					-- Apply knockback on enemies hit
-					enemy:RemoveModifierByName("modifier_knockback")
-					enemy:AddNewModifier(caster, self, "modifier_knockback", knockback)
-					enemy:AddNewModifier(caster, self, "modifier_imba_torrent_phase", {duration = stun_duration})
+						-- Apply knockback on enemies hit
+						enemy:RemoveModifierByName("modifier_knockback")
+						enemy:AddNewModifier(caster, self, "modifier_knockback", knockback)
+						enemy:AddNewModifier(caster, self, "modifier_imba_torrent_phase", {duration = stun_duration})
 
-					-- Deals tick damage tick_count times
-					Timers:CreateTimer(function()
-						if current_ticks < tick_count then
-							ApplyDamage({victim = enemy, attacker = caster, ability = self, damage = damage_tick, damage_type = self:GetAbilityDamageType()})
-							current_ticks = current_ticks + 1
-							return tick_interval
+						-- Deals tick damage tick_count times
+						Timers:CreateTimer(function()
+								if current_ticks < tick_count then
+									ApplyDamage({victim = enemy, attacker = caster, ability = self, damage = damage_tick, damage_type = self:GetAbilityDamageType()})
+									current_ticks = current_ticks + 1
+									return tick_interval
+								end
+							end)
+
+						-- Applies the slow
+						if torrent_count == 0 then
+							enemy:AddNewModifier(caster, self, "modifier_imba_torrent_slow", {duration = slow_duration})
+							if extra_slow then
+								enemy:AddNewModifier(caster, self, "modifier_imba_torrent_slow_tide", {duration = slow_duration})
+							end
+						else
+							enemy:AddNewModifier(caster, self, "modifier_imba_sec_torrent_slow", {duration = sec_torrent_slow_duration})
 						end
-					end)
+					end
 
-					-- Applies the slow
-					if torrent_count == 0 then
-						enemy:AddNewModifier(caster, self, "modifier_imba_torrent_slow", {duration = slow_duration})
-						if extra_slow then
-							enemy:AddNewModifier(caster, self, "modifier_imba_torrent_slow_tide", {duration = slow_duration})
+					-- Creates the post-ability sound effect
+					EmitSoundOnLocationWithCaster(target, "Ability.Torrent", caster)
+
+					-- Draws the particle
+					local particle = "particles/hero/kunkka/torrent_splash.vpcf"
+					local torrent_fx = ParticleManager:CreateParticle(particle, PATTACH_CUSTOMORIGIN, caster)
+					ParticleManager:SetParticleControl(torrent_fx, 0, target)
+					ParticleManager:SetParticleControl(torrent_fx, 1, Vector(radius,0,0))
+					ParticleManager:ReleaseParticleIndex(torrent_fx)
+
+					-- SUPER DUPER HYPER torrent animation if tsunami
+					if torrent_count == 0 and tsunami then
+						local torrent_tsunami_fx = ParticleManager:CreateParticle("particles/econ/items/kunkka/kunkka_weapon_whaleblade/kunkka_spell_torrent_whaleblade_tail.vpcf", PATTACH_CUSTOMORIGIN, caster)
+						ParticleManager:SetParticleControl(torrent_tsunami_fx, 0, target)
+						ParticleManager:ReleaseParticleIndex(torrent_tsunami_fx)
+
+						local count_mini = math.floor(radius / 35)
+						for i = 0, count_mini, 1
+						do
+							Timers:CreateTimer(math.random(80)*0.01, function()
+									local radius_mini = math.random(50)+15
+									local angle = (360 / count_mini) * i
+									local border = radius - radius_mini
+									local mini_target = target + Vector( math.cos(angle) * border , math.sin(angle) * border , 0 )
+									local torrent_fx_mini = ParticleManager:CreateParticle(particle, PATTACH_CUSTOMORIGIN, caster)
+									ParticleManager:SetParticleControl(torrent_fx_mini, 0, mini_target)
+									ParticleManager:SetParticleControl(torrent_fx_mini, 1, Vector(radius_mini,0,0))
+									ParticleManager:ReleaseParticleIndex(torrent_fx_mini)
+								end)
 						end
-					else
-						enemy:AddNewModifier(caster, self, "modifier_imba_sec_torrent_slow", {duration = sec_torrent_slow_duration})
 					end
-				end
-
-				-- Creates the post-ability sound effect
-				EmitSoundOnLocationWithCaster(target, "Ability.Torrent", caster)
-
-				-- Draws the particle
-				local particle = "particles/hero/kunkka/torrent_splash.vpcf"
-				local torrent_fx = ParticleManager:CreateParticle(particle, PATTACH_CUSTOMORIGIN, caster)
-				ParticleManager:SetParticleControl(torrent_fx, 0, target)
-				ParticleManager:SetParticleControl(torrent_fx, 1, Vector(radius,0,0))
-				ParticleManager:ReleaseParticleIndex(torrent_fx)
-
-				-- SUPER DUPER HYPER torrent animation if tsunami
-				if torrent_count == 0 and tsunami then
-					local torrent_tsunami_fx = ParticleManager:CreateParticle("particles/econ/items/kunkka/kunkka_weapon_whaleblade/kunkka_spell_torrent_whaleblade_tail.vpcf", PATTACH_CUSTOMORIGIN, caster)
-					ParticleManager:SetParticleControl(torrent_tsunami_fx, 0, target)
-					ParticleManager:ReleaseParticleIndex(torrent_tsunami_fx)
-
-					local count_mini = math.floor(radius / 35)
-					for i = 0, count_mini, 1
-					do
-						Timers:CreateTimer(math.random(80)*0.01, function()
-							local radius_mini = math.random(50)+15
-							local angle = (360 / count_mini) * i
-							local border = radius - radius_mini
-							local mini_target = target + Vector( math.cos(angle) * border , math.sin(angle) * border , 0 )
-							local torrent_fx_mini = ParticleManager:CreateParticle(particle, PATTACH_CUSTOMORIGIN, caster)
-							ParticleManager:SetParticleControl(torrent_fx_mini, 0, mini_target)
-							ParticleManager:SetParticleControl(torrent_fx_mini, 1, Vector(radius_mini,0,0))
-							ParticleManager:ReleaseParticleIndex(torrent_fx_mini)
-						end)
-					end
-				end
-			end)
+				end)
 		end
 	end
 end
@@ -559,9 +559,9 @@ modifier_imba_torrent_slow = class({})
 
 function modifier_imba_torrent_slow:DeclareFunctions()
 	local decFuncs =
-		{
-			MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
-		}
+	{
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
+	}
 	return decFuncs
 end
 
@@ -590,9 +590,9 @@ modifier_imba_sec_torrent_slow = class({})
 
 function modifier_imba_sec_torrent_slow:DeclareFunctions()
 	local decFuncs =
-		{
-			MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
-		}
+	{
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
+	}
 	return decFuncs
 end
 
@@ -618,10 +618,10 @@ modifier_imba_torrent_cast = class({})
 
 function modifier_imba_torrent_cast:DeclareFunctions()
 	local decFuncs =
-		{
-			MODIFIER_PROPERTY_IGNORE_CAST_ANGLE,
-			MODIFIER_PROPERTY_DISABLE_TURNING
-		}
+	{
+		MODIFIER_PROPERTY_IGNORE_CAST_ANGLE,
+		MODIFIER_PROPERTY_DISABLE_TURNING
+	}
 	return decFuncs
 end
 
@@ -641,10 +641,10 @@ end
 function modifier_imba_torrent_cast:OnDestroy( params )
 	if IsServer() then
 		local stopOrder =
-			{
-				UnitIndex = self:GetCaster():entindex(),
-				OrderType = DOTA_UNIT_ORDER_STOP
-			}
+		{
+			UnitIndex = self:GetCaster():entindex(),
+			OrderType = DOTA_UNIT_ORDER_STOP
+		}
 		ExecuteOrderFromTable( stopOrder )
 	end
 end
@@ -733,16 +733,16 @@ function modifier_imba_kunkka_torrent_talent_thinker:OnIntervalThink()
 
 					-- Knocks the target up
 					local knockback =
-						{
-							should_stun = 1,
-							knockback_duration = stun_duration,
-							duration = stun_duration,
-							knockback_distance = distance_from_center,
-							knockback_height = torrent_height,
-							center_x = (random_vector + torrent_border).x + randomness_x,
-							center_y = (random_vector + torrent_border).y + randomness_y,
-							center_z = (random_vector + torrent_border).z
-						}
+					{
+						should_stun = 1,
+						knockback_duration = stun_duration,
+						duration = stun_duration,
+						knockback_distance = distance_from_center,
+						knockback_height = torrent_height,
+						center_x = (random_vector + torrent_border).x + randomness_x,
+						center_y = (random_vector + torrent_border).y + randomness_y,
+						center_z = (random_vector + torrent_border).z
+					}
 
 					-- Apply knockback on enemies hit
 					enemy:RemoveModifierByName("modifier_knockback")
@@ -751,12 +751,13 @@ function modifier_imba_kunkka_torrent_talent_thinker:OnIntervalThink()
 
 					-- Deals tick damage tick_count times
 					Timers:CreateTimer(function()
-						if current_ticks < tick_count then
-							ApplyDamage({victim = enemy, attacker = self.caster, ability = self.ability, damage = damage_tick, damage_type = self.ability:GetAbilityDamageType()})
-							current_ticks = current_ticks + 1
-							return tick_interval
-						end
-					end)
+							-- TODO: tick count can be nil for some reason
+							if tick_count ~= nil and current_ticks < tick_count then
+								ApplyDamage({victim = enemy, attacker = self.caster, ability = self.ability, damage = damage_tick, damage_type = self.ability:GetAbilityDamageType()})
+								current_ticks = current_ticks + 1
+								return tick_interval
+							end
+						end)
 
 
 					enemy:AddNewModifier(self.caster, self.ability, "modifier_imba_sec_torrent_slow", {duration = self.sec_torrent_slow_duration})
@@ -772,7 +773,7 @@ function modifier_imba_kunkka_torrent_talent_thinker:OnIntervalThink()
 				ParticleManager:SetParticleControl(torrent_fx, 1, Vector(radius,0,0))
 				ParticleManager:ReleaseParticleIndex(torrent_fx)
 
-		end)
+			end)
 	end
 end
 
@@ -888,12 +889,12 @@ modifier_imba_tidebringer = class({})
 
 function modifier_imba_tidebringer:DeclareFunctions()
 	local decFuncs =
-		{
-			MODIFIER_EVENT_ON_ATTACK_LANDED,
-			MODIFIER_EVENT_ON_TAKEDAMAGE,
-			MODIFIER_EVENT_ON_ATTACK_START,
-			MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE
-		}
+	{
+		MODIFIER_EVENT_ON_ATTACK_LANDED,
+		MODIFIER_EVENT_ON_TAKEDAMAGE,
+		MODIFIER_EVENT_ON_ATTACK_START,
+		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE
+	}
 
 	return decFuncs
 end
@@ -1058,11 +1059,11 @@ function modifier_imba_tidebringer:OnAttackLanded( params )
 					local cooldown = ability:GetCooldown(ability:GetLevel()-1)
 					ability:UseResources(false, false, true)
 					Timers:CreateTimer( cooldown, function()
-						if not parent:HasModifier("modifier_imba_tidebringer_sword_particle") then
-							parent:AddNewModifier(parent, ability, "modifier_imba_tidebringer_sword_particle", {})
-						end
-						--return nil
-					end)
+							if not parent:HasModifier("modifier_imba_tidebringer_sword_particle") then
+								parent:AddNewModifier(parent, ability, "modifier_imba_tidebringer_sword_particle", {})
+							end
+							--return nil
+						end)
 				end
 				if parent:HasModifier("modifier_imba_tidebringer_manual") then
 					parent:RemoveModifierByName("modifier_imba_tidebringer_manual")
@@ -1112,16 +1113,16 @@ function modifier_imba_tidebringer:TidebringerEffects( target, ability )
 
 		local knocking_up = ((self.torrent_radius / distance_from_center ) * 50) * ( attacker:GetAverageTrueAttackDamage(attacker) / 300) + 40
 		local knockback =
-			{
-				should_stun = 1,
-				knockback_duration = ability:GetSpecialValueFor("tsunami_stun"),
-				duration = ability:GetSpecialValueFor("tsunami_stun"),
-				knockback_distance = 0,
-				knockback_height = knocking_up,
-				center_x = location.x,
-				center_y = location.y,
-				center_z = location.z
-			}
+		{
+			should_stun = 1,
+			knockback_duration = ability:GetSpecialValueFor("tsunami_stun"),
+			duration = ability:GetSpecialValueFor("tsunami_stun"),
+			knockback_distance = 0,
+			knockback_height = knocking_up,
+			center_x = location.x,
+			center_y = location.y,
+			center_z = location.z
+		}
 
 		target:EmitSound("Hero_Kunkka.TidebringerDamage")
 		if (knocking_up > sound_height) and not self.sound_triggered then
@@ -1151,9 +1152,9 @@ modifier_imba_tidebringer_slow = class({})
 
 function modifier_imba_tidebringer_slow:DeclareFunctions()
 	local decFuncs =
-		{
-			MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
-		}
+	{
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
+	}
 	return decFuncs
 end
 
@@ -1351,10 +1352,10 @@ function modifier_imba_x_marks_the_spot:OnDestroy( params )
 
 		if not ( parent:IsMagicImmune() or parent:IsInvulnerable() ) then
 			local stopOrder =
-				{
-					UnitIndex = parent:entindex(),
-					OrderType = DOTA_UNIT_ORDER_STOP
-				}
+			{
+				UnitIndex = parent:entindex(),
+				OrderType = DOTA_UNIT_ORDER_STOP
+			}
 			ExecuteOrderFromTable( stopOrder )
 
 			FindClearSpaceForUnit(parent, self.position, true)
@@ -1634,111 +1635,111 @@ function imba_kunkka_ghostship:OnSpellStart()
 			ParticleManager:SetParticleControl(bubbles_pfx, 0, target)
 			ParticleManager:SetParticleControl(bubbles_pfx, 1, Vector(radius,0,0))
 			Timers:CreateTimer((crash_delay + 1), function()
-				ParticleManager:DestroyParticle(bubbles_pfx, false)
-				ParticleManager:ReleaseParticleIndex(bubbles_pfx)
-			end)
+					ParticleManager:DestroyParticle(bubbles_pfx, false)
+					ParticleManager:ReleaseParticleIndex(bubbles_pfx)
+				end)
 			local boat_pfx = ParticleManager:CreateParticle("particles/hero/kunkka/kunkka_ghost_ship.vpcf", PATTACH_ABSORIGIN, caster)
 			ParticleManager:SetParticleControl(boat_pfx, 0, (spawn_pos - boat_direction * (-1) * crash_distance ) )
 			Timers:CreateTimer(ticks, function()
-				float_boat = float_boat + Vector(0,0,height_ticks)
-				ParticleManager:SetParticleControl(boat_pfx, 3, float_boat )
+					float_boat = float_boat + Vector(0,0,height_ticks)
+					ParticleManager:SetParticleControl(boat_pfx, 3, float_boat )
 
-				travel = travel + ticks
-				if travel > crash_delay then
+					travel = travel + ticks
+					if travel > crash_delay then
 
-					-- Water Nova on hit + crash sound
-					local water_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_kunkka/kunkka_boat_splash_end.vpcf", PATTACH_CUSTOMORIGIN, caster)
-					ParticleManager:SetParticleControl(water_fx, 3, target)
-					Timers:CreateTimer(2, function()
-						ParticleManager:DestroyParticle(water_fx, false)
-						ParticleManager:ReleaseParticleIndex(water_fx)
-					end)
+						-- Water Nova on hit + crash sound
+						local water_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_kunkka/kunkka_boat_splash_end.vpcf", PATTACH_CUSTOMORIGIN, caster)
+						ParticleManager:SetParticleControl(water_fx, 3, target)
+						Timers:CreateTimer(2, function()
+								ParticleManager:DestroyParticle(water_fx, false)
+								ParticleManager:ReleaseParticleIndex(water_fx)
+							end)
 
-					-- Stunning and rooting all hit enemies
-					local enemies = FindUnitsInRadius(caster:GetTeam(), target, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, self:GetAbilityTargetType(), 0, 0, false)
-					for k, enemy in pairs(enemies) do
-						enemy:AddNewModifier(caster, self, "modifier_stunned", {duration = stun_duration})
-						enemy:AddNewModifier(caster, self, "modifier_rooted", { duration = travel_time})
+						-- Stunning and rooting all hit enemies
+						local enemies = FindUnitsInRadius(caster:GetTeam(), target, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, self:GetAbilityTargetType(), 0, 0, false)
+						for k, enemy in pairs(enemies) do
+							enemy:AddNewModifier(caster, self, "modifier_stunned", {duration = stun_duration})
+							enemy:AddNewModifier(caster, self, "modifier_rooted", { duration = travel_time})
 
-						-- Deal crash damage to enemies hit
-						ApplyDamage({victim = enemy, attacker = caster, ability = self, damage = damage, damage_type = self:GetAbilityDamageType()})
+							-- Deal crash damage to enemies hit
+							ApplyDamage({victim = enemy, attacker = caster, ability = self, damage = damage, damage_type = self:GetAbilityDamageType()})
+						end
+
+						-- Setting ship underneath the world + deleting it
+						ParticleManager:SetParticleControl(boat_pfx, 3, ( float_boat - Vector(0,0,500)) )
+						ParticleManager:DestroyParticle(boat_pfx, false)
+						ParticleManager:ReleaseParticleIndex(boat_pfx)
+						return nil
 					end
-
-					-- Setting ship underneath the world + deleting it
-					ParticleManager:SetParticleControl(boat_pfx, 3, ( float_boat - Vector(0,0,500)) )
-					ParticleManager:DestroyParticle(boat_pfx, false)
-					ParticleManager:ReleaseParticleIndex(boat_pfx)
-					return nil
-				end
-				return ticks
-			end)
+					return ticks
+				end)
 		end
 
 		Timers:CreateTimer(crash_delay, function()
-			self:CreateVisibilityNode(crash_pos, radius, travel_time + 2 )
-			local boat_velocity
-			if caster:HasScepter() then
-				boat_velocity = boat_direction * speed * (-1)
-			else
-				boat_velocity = boat_direction * speed
-			end
-			-- Spawn the boat
-			local boat_projectile = {
-				Ability = self,
-				EffectName = "particles/units/heroes/hero_kunkka/kunkka_ghost_ship.vpcf",
-				vSpawnOrigin = spawn_pos,
-				fDistance = start_distance + crash_distance - radius,
-				fStartRadius = radius,
-				fEndRadius = radius,
-				fExpireTime = GameRules:GetGameTime() + travel_time + 2,
-				Source = caster,
-				bHasFrontalCone = false,
-				bReplaceExisting = false,
-				bProvidesVision = false,
-				iUnitTargetTeam = self:GetAbilityTargetTeam(),
-				iUnitTargetType = self:GetAbilityTargetType(),
-				vVelocity = boat_velocity,
-				ExtraData =
-				{
-					crash_x = crash_pos.x,
-					crash_y = crash_pos.y,
-					crash_z = crash_pos.z,
-					speed = speed,
-					radius = radius
+				self:CreateVisibilityNode(crash_pos, radius, travel_time + 2 )
+				local boat_velocity
+				if caster:HasScepter() then
+					boat_velocity = boat_direction * speed * (-1)
+				else
+					boat_velocity = boat_direction * speed
+				end
+				-- Spawn the boat
+				local boat_projectile = {
+					Ability = self,
+					EffectName = "particles/units/heroes/hero_kunkka/kunkka_ghost_ship.vpcf",
+					vSpawnOrigin = spawn_pos,
+					fDistance = start_distance + crash_distance - radius,
+					fStartRadius = radius,
+					fEndRadius = radius,
+					fExpireTime = GameRules:GetGameTime() + travel_time + 2,
+					Source = caster,
+					bHasFrontalCone = false,
+					bReplaceExisting = false,
+					bProvidesVision = false,
+					iUnitTargetTeam = self:GetAbilityTargetTeam(),
+					iUnitTargetType = self:GetAbilityTargetType(),
+					vVelocity = boat_velocity,
+					ExtraData =
+					{
+						crash_x = crash_pos.x,
+						crash_y = crash_pos.y,
+						crash_z = crash_pos.z,
+						speed = speed,
+						radius = radius
+					}
 				}
-			}
-			ProjectileManager:CreateLinearProjectile(boat_projectile)
+				ProjectileManager:CreateLinearProjectile(boat_projectile)
 
-			EmitSoundOnLocationWithCaster( spawn_pos, "Ability.Ghostship.bell", caster )
-			EmitSoundOnLocationWithCaster( spawn_pos, "Ability.Ghostship", caster )
+				EmitSoundOnLocationWithCaster( spawn_pos, "Ability.Ghostship.bell", caster )
+				EmitSoundOnLocationWithCaster( spawn_pos, "Ability.Ghostship", caster )
 
-			-- Show visual crash point effect to allies only
-			local crash_pfx = ParticleManager:CreateParticleForTeam("particles/units/heroes/hero_kunkka/kunkka_ghostship_marker.vpcf", PATTACH_ABSORIGIN, caster, caster:GetTeam())
-			ParticleManager:SetParticleControl(crash_pfx, 0, crash_pos )
-			-- Destroy particle after the crash
-			Timers:CreateTimer(travel_time, function()
-				ParticleManager:DestroyParticle(crash_pfx, false)
-				ParticleManager:ReleaseParticleIndex(crash_pfx)
+				-- Show visual crash point effect to allies only
+				local crash_pfx = ParticleManager:CreateParticleForTeam("particles/units/heroes/hero_kunkka/kunkka_ghostship_marker.vpcf", PATTACH_ABSORIGIN, caster, caster:GetTeam())
+				ParticleManager:SetParticleControl(crash_pfx, 0, crash_pos )
+				-- Destroy particle after the crash
+				Timers:CreateTimer(travel_time, function()
+						ParticleManager:DestroyParticle(crash_pfx, false)
+						ParticleManager:ReleaseParticleIndex(crash_pfx)
 
-				-- Fire sound on crash point
-				EmitSoundOnLocationWithCaster(crash_pos, "Ability.Ghostship.crash", caster)
+						-- Fire sound on crash point
+						EmitSoundOnLocationWithCaster(crash_pos, "Ability.Ghostship.crash", caster)
 
-				-- Stun and damage enemies
-				local enemies = FindUnitsInRadius(caster:GetTeam(), crash_pos, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, self:GetAbilityTargetType(), 0, 0, false)
-				if (not (#enemies > 0)) and (caster:GetName() == "npc_dota_hero_kunkka") then
-					if math.random(1,2) == 1 then
-						caster:EmitSound("kunkka_kunk_ability_failure_0"..math.random(1,2))
-					end
-				end
-				for k, enemy in pairs(enemies) do
-					ApplyDamage({victim = enemy, attacker = caster, ability = self, damage = damage, damage_type = self:GetAbilityDamageType()})
-					if extra_slow then
-						enemy:AddNewModifier(caster, self, "modifier_imba_ghostship_tide_slow", { duration = stun_duration + self:GetSpecialValueFor("tide_red_slow_duration") })
-					end
-					enemy:AddNewModifier(caster, self, "modifier_stunned", { duration = stun_duration })
-				end
+						-- Stun and damage enemies
+						local enemies = FindUnitsInRadius(caster:GetTeam(), crash_pos, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, self:GetAbilityTargetType(), 0, 0, false)
+						if (not (#enemies > 0)) and (caster:GetName() == "npc_dota_hero_kunkka") then
+							if math.random(1,2) == 1 then
+								caster:EmitSound("kunkka_kunk_ability_failure_0"..math.random(1,2))
+							end
+						end
+						for k, enemy in pairs(enemies) do
+							ApplyDamage({victim = enemy, attacker = caster, ability = self, damage = damage, damage_type = self:GetAbilityDamageType()})
+							if extra_slow then
+								enemy:AddNewModifier(caster, self, "modifier_imba_ghostship_tide_slow", { duration = stun_duration + self:GetSpecialValueFor("tide_red_slow_duration") })
+							end
+							enemy:AddNewModifier(caster, self, "modifier_stunned", { duration = stun_duration })
+						end
+					end)
 			end)
-		end)
 	end
 end
 
@@ -1791,15 +1792,15 @@ function imba_kunkka_ghostship:OnProjectileHit_ExtraData(target, location, Extra
 		local duration = ((location - crash_pos ):Length2D() - ExtraData.radius) / ExtraData.speed
 		-- Apply the knockback modifier
 		local knockback =
-			{	should_stun = 0,
-				knockback_duration = duration,
-				duration = duration,
-				knockback_distance = distance,
-				knockback_height = 0,
-				center_x = knockback_origin.x + (math.random() * math.random(-10,10)),
-				center_y = knockback_origin.y + (math.random() * math.random(-10,10)),
-				center_z = knockback_origin.z
-			}
+		{	should_stun = 0,
+			knockback_duration = duration,
+			duration = duration,
+			knockback_distance = distance,
+			knockback_height = 0,
+			center_x = knockback_origin.x + (math.random() * math.random(-10,10)),
+			center_y = knockback_origin.y + (math.random() * math.random(-10,10)),
+			center_z = knockback_origin.z
+		}
 		-- Apply a new modifier to drag
 		if target == caster then
 			ghostship_drag = target:AddNewModifier(caster,self,"modifier_imba_ghostship_drag", {duration = duration})
@@ -1882,15 +1883,15 @@ function modifier_imba_ghostship_drag:GetDragged()
 		self.distance = (self.crash_pos - self.current_loc):Length2D()
 
 		Timers:CreateTimer(self.tick, function()
-			if not self:IsNull() then
-				self.next_loc = self.caster:GetAbsOrigin()
-				self.distance_between_ship = (self.next_loc - self.current_loc):Length2D()
-				-- If Kunkka exits the Ghost ship, remove the drag force.
-				if self.distance_between_ship > (self.ship_width/2) then
-					self:Destroy()
+				if not self:IsNull() then
+					self.next_loc = self.caster:GetAbsOrigin()
+					self.distance_between_ship = (self.next_loc - self.current_loc):Length2D()
+					-- If Kunkka exits the Ghost ship, remove the drag force.
+					if self.distance_between_ship > (self.ship_width/2) then
+						self:Destroy()
+					end
 				end
-			end
-		end)
+			end)
 		-- If the distance is more than 20, set Kunkka to the new dragged location
 		if self.distance > 20 then
 			self.caster:SetAbsOrigin(self.new_loc)
@@ -1930,10 +1931,10 @@ end
 
 function modifier_imba_ghostship_rum:DeclareFunctions()
 	local decFuncs =
-		{
-			MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-			MODIFIER_EVENT_ON_TAKEDAMAGE,
-		}
+	{
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		MODIFIER_EVENT_ON_TAKEDAMAGE,
+	}
 	return decFuncs
 end
 
@@ -2022,27 +2023,27 @@ function modifier_imba_ghostship_rum_damage:OnCreated( params )
 		local current_tick = 0
 
 		Timers:CreateTimer(damage_interval, function()
-			-- If the target has died, do nothing
-			if parent:IsAlive() then
+				-- If the target has died, do nothing
+				if parent:IsAlive() then
 
-				-- Nonlethal HP removal
-				local target_hp = parent:GetHealth()
-				if target_hp - damage_amount < 1 then
-					parent:SetHealth(1)
+					-- Nonlethal HP removal
+					local target_hp = parent:GetHealth()
+					if target_hp - damage_amount < 1 then
+						parent:SetHealth(1)
+					else
+						parent:SetHealth(target_hp - damage_amount)
+					end
+
+					current_tick = current_tick + 1
+					if current_tick >= ticks then
+						return nil
+					else
+						return damage_interval
+					end
 				else
-					parent:SetHealth(target_hp - damage_amount)
-				end
-
-				current_tick = current_tick + 1
-				if current_tick >= ticks then
 					return nil
-				else
-					return damage_interval
 				end
-			else
-				return nil
-			end
-		end)
+			end)
 	end
 end
 
@@ -2050,9 +2051,9 @@ modifier_imba_ghostship_tide_slow = class({})
 
 function modifier_imba_ghostship_tide_slow:DeclareFunctions()
 	local decFuncs =
-		{
-			MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
-		}
+	{
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
+	}
 	return decFuncs
 end
 

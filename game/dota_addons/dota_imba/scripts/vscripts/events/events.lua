@@ -322,6 +322,12 @@ end
 
 -- An item was picked up off the ground
 function GameMode:OnItemPickedUp(keys)
+	
+	if type(keys.HeroEntityIndex) ~= "number" then 
+		log.warn({"Item picked up but hero entity index is not a number.", keys})
+		return 
+	end
+	
 	local heroEntity = EntIndexToHScript(keys.HeroEntityIndex)
 	local plyID = keys.PlayerID
 	if not plyID then return end
@@ -523,7 +529,7 @@ function GameMode:OnLastHit(keys)
 	local player = PlayerResource:GetPlayer(keys.PlayerID)
 	local killedEnt = EntIndexToHScript(keys.EntKilled)
 
-	if isFirstBlood then
+	if isFirstBlood and player ~= nil then
 		player:GetAssignedHero().kill_hero_bounty = 0
 		Timers:CreateTimer(FrameTime() * 2, function()
 				CombatEvents("kill", "first_blood", killedEnt, player:GetAssignedHero())

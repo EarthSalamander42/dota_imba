@@ -220,3 +220,8 @@ function CreateEmptyTalents(hero)
 		load (class2)()
 	end
 end
+
+-- Define an empty AdvLogRegisterLuaModifier function for the client as syntactic sugar
+if IsClient() then
+	function AdvLogRegisterLuaModifier() end
+end

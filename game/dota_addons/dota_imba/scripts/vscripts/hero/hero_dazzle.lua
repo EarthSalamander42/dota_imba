@@ -1290,8 +1290,10 @@ function modifier_imba_dazzle_shadow_wave_delayed_bounce:OnCreated()
 		local cooldownMod = parent:AddNewModifier(caster, ability, "modifier_imba_dazzle_shadow_wave_delayed_bounce_cooldown", {duration = caster:FindTalentValue("special_bonus_imba_dazzle_1", "talent_delayed_wave_rehit_cd") + caster:FindTalentValue("special_bonus_imba_dazzle_1", "talent_delayed_wave_delay")})
 
 		Timers:CreateTimer(0.01, function()
-			self.data = ability:GetDelayedWaveData(self:GetStackCount())
-			cooldownMod:SetStackCount(self:GetStackCount())
+			if not (self:IsNull() or ability:IsNull()) then
+				self.data = ability:GetDelayedWaveData(self:GetStackCount())
+				cooldownMod:SetStackCount(self:GetStackCount())
+			end
 		end)
 	end
 end

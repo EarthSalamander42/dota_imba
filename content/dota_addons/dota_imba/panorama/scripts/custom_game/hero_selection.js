@@ -349,15 +349,19 @@ function onPlayerStatChange(table, key, data) {
 
 					if (player_table) {
 						if (currentMap == "imba_ranked_5v5") {
-							if (player_table.IMR_5v5) {
-								newinfo.text = "IMR: " + player_table.IMR_5v5.toFixed(0)
+							if (player_table.IMR_5v5_calibrating) {
+								newinfo.text = "IMR: TBD";
+							} else if (player_table.IMR_5v5) {
+								newinfo.text = "IMR: " + Math.floor(player_table.IMR_5v5);
 							}
 						} else if (currentMap == "imba_ranked_10v10") {
-							if (player_table.IMR_5v5) {
-								newinfo.text = "IMR: " + player_table.IMR_10v10.toFixed(0)
+							if (player_table.IMR_10v10_calibrating) {
+								newinfo.text = "IMR: TBD";
+							} else if (player_table.IMR_10v10) {
+								newinfo.text = "IMR: " + Math.floor(player_table.IMR_10v10);
 							}
 						} else {
-							newinfo.text = "Lvl: " + player_table.Lvl.toFixed(0)
+							newinfo.text = "Lvl: " + Math.floor(player_table.Lvl);
 						}
 					}
 				}

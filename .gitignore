@@ -33,6 +33,7 @@ game/dota_addons/*
 *.vcss_c
 *.vmdl_c
 *.vagrp_c
+*.vmesh_c
 
 # Map files
 *.vpk
