@@ -11,6 +11,7 @@ function modifier_mutation_torrent:OnCreated()
 	self.radius = 225
 	local game_time = math.min(GameRules:GetDOTATime(false, false) / 60, 30)
 	self.damage = 250 + (50 * game_time)
+	self.tick_damage = 250 + (25 * game_time)
 	self.pos = self:GetParent():GetAbsOrigin()
 	self.tick_count = 10
 	self.height = 400
@@ -28,9 +29,6 @@ function modifier_mutation_torrent:OnCreated()
 
 		-- Iterate through affected enemies
 		for _,enemy in pairs(enemies) do
-			-- Deals the initial damage
-			ApplyDamage({victim = enemy, attacker = self:GetCaster(), damage = self.damage, damage_type = DAMAGE_TYPE_MAGICAL})
-
 			local current_ticks = 1
 			local randomness_x = 0
 			local randomness_y = 0
@@ -38,7 +36,6 @@ function modifier_mutation_torrent:OnCreated()
 			-- Calculates the knockback position (for Tsunami)
 			local torrent_border = ( enemy:GetAbsOrigin() - self.pos ):Normalized() * ( self.radius + 100 )
 			local distance_from_center = ( enemy:GetAbsOrigin() - self.pos ):Length2D()
---			distance_from_center = 0
 
 			-- Some randomness to tsunami-torrent for smoother animation
 			randomness_x = math.random() * math.random(-30,30)
@@ -62,18 +59,12 @@ function modifier_mutation_torrent:OnCreated()
 			enemy:AddNewModifier(self:GetCaster(), self, "modifier_knockback", knockback)
 			enemy:AddNewModifier(self:GetCaster(), self, "modifier_phased", {duration = self.stun_duration})
 
-			-- Deals tick damage tick_count times
-			Timers:CreateTimer(function()
-				if current_ticks < self.tick_count and not self:GetCaster():IsNull() then
-					log.debug(current_ticks, self.tick_count)
-					log.debug("Caster:", self:GetCaster())
-					ApplyDamage({victim = enemy, attacker = self:GetCaster(), damage = self.damage / self.tick_count, damage_type = DAMAGE_TYPE_MAGICAL})
-					current_ticks = current_ticks + 1
-					return 1.0
-				end
-			end)
-
+			-- Add dot dealing damage every sec for 10 sec (if target is alive)
+			enemy:AddNewModifier(self:GetCaster(), self, "modifier_mutation_torrent_dot", {duration = 3, damage = (self.tick_damage / 10), damage_interval = (self.stun_duration / 10)})
 			enemy:AddNewModifier(self:GetCaster(), self, "modifier_mutation_torrent_slow", {duration = 8.0})
+
+			-- Lastly deal initial hit damage
+			ApplyDamage({victim = enemy, attacker = self:GetCaster(), damage = self.damage, damage_type = DAMAGE_TYPE_MAGICAL})
 		end
 
 		-- Creates the post-ability sound effect
@@ -134,4 +125,24 @@ end
 
 function modifier_mutation_torrent_slow:GetModifierMoveSpeedBonus_Percentage( )
 	return self.slow * (-1)
+end
+
+LinkLuaModifier("modifier_mutation_torrent_dot", "components/mutation/modifiers/periodic_spellcast/modifier_mutation_torrent.lua", LUA_MODIFIER_MOTION_NONE )
+
+modifier_mutation_torrent_dot = class({})
+function modifier_mutation_torrent_dot:IsDebuff() return true end
+function modifier_mutation_torrent_dot:IsHidden() return true end
+function modifier_mutation_torrent_dot:OnCreated(kv) 
+	if IsServer() then
+		self.damage = kv.damage
+
+		-- dmg loop, trigger each second
+		self:StartIntervalThink(kv.damage_interval)
+	end
+end
+
+function modifier_mutation_torrent_dot:OnIntervalThink()
+	if self:GetParent():IsAlive() and self:GetCaster() ~= nil then
+		ApplyDamage({victim = self:GetParent(), attacker = self:GetCaster(), damage = self.damage, damage_type = DAMAGE_TYPE_MAGICAL})
+	end
 end
