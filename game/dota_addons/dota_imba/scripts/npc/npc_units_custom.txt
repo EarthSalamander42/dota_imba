@@ -12955,6 +12955,13 @@
 		"ModelScale"				"0.5"
 	}
 
+	"npc_imba_donator_companion_the_blind_dog"
+	{
+		"BaseClass"					"npc_imba_donator_companion"
+		"Model"						"models/items/courier/gnomepig/gnomepig_flying.vmdl"
+		"ModelScale"				"0.75"
+	}
+
 	"npc_imba_donator_companion_acalia"
 	{
 		"BaseClass"					"npc_imba_donator_companion"

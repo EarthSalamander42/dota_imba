@@ -649,6 +649,7 @@ IMBA_DONATOR_COMPANION["76561198021465788"] = "npc_imba_donator_companion_suther
 IMBA_DONATOR_COMPANION["76561198073163389"] = "npc_imba_donator_companion_terdic"
 IMBA_DONATOR_COMPANION["76561197970766309"] = "npc_imba_donator_companion_hamahe"
 IMBA_DONATOR_COMPANION["76561193687456266"] = "npc_imba_donator_companion_exzas"
+IMBA_DONATOR_COMPANION["76561198095342815"] = "npc_imba_donator_companion_the_blind_dog"
 IMBA_DONATOR_COMPANION["76561198009727790"] = "npc_imba_donator_companion_acalia"
 -- IMBA_DONATOR_COMPANION["76561198330946475"] = "npc_imba_donator_companion_deadknight"
 
