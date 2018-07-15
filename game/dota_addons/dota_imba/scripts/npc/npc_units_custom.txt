@@ -12958,7 +12958,7 @@
 	"npc_imba_donator_companion_the_blind_dog"
 	{
 		"BaseClass"					"npc_imba_donator_companion"
-		"Model"						"models/items/courier/gnomepig/gnomepig.vmdl"
+		"Model"						"models/items/courier/gnomepig/gnomepig_flying.vmdl"
 		"ModelScale"				"0.75"
 	}
 
