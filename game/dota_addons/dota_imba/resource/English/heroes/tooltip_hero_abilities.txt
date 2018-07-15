@@ -1671,12 +1671,12 @@
 ////===============================================================================================================
 
 "DOTA_Tooltip_ability_imba_necrolyte_sadist"                            "Sadist"
-"DOTA_Tooltip_ability_imba_necrolyte_sadist_Description"                "Necrophos gains health and mana regeneration for %regen_duration% seconds every time he kills a unit. Hero kills grant %hero_multiplier% times the bonus.\n<font color='#FF7800'>Dead Delight:</font> Health and mana regeneration are a percentage of Necrophos' maximum health and mana. Has a minimum of %regen_minimum% health and mana per second."
+"DOTA_Tooltip_ability_imba_necrolyte_sadist_Description"                "Necrophos gains health and mana regeneration for %regen_duration% seconds every time he kills a unit. Hero kills grant %hero_multiplier% times the bonus.\n<font color='#FF7800'>Dead Delight:</font> Health and mana regeneration are a percentage of Necrophos' maximum health and mana. Regenerates a minimum of %regen_minimum% health and mana per stack per second."
 "DOTA_Tooltip_ability_imba_necrolyte_sadist_Note0"                      "Will always recover at least the minimum health and mana per second, unless the percentages are higher."
 "DOTA_Tooltip_ability_imba_necrolyte_sadist_Lore"                      "Rotund'jere revels in death and decay, gaining renewed strength from it."
 "DOTA_Tooltip_ability_imba_necrolyte_sadist_health_regen"              "%HEALTH REGENERATION:"
 "DOTA_Tooltip_ability_imba_necrolyte_sadist_mana_regen"                "%MANA REGENERATION:"
-"DOTA_Tooltip_ability_imba_necrolyte_sadist_regen_minimum"              "MINIMUM REGENERATION:"
+"DOTA_Tooltip_ability_imba_necrolyte_sadist_regen_minimum"              "MINIMUM REGENERATION PER STACK:"
 
 "DOTA_Tooltip_modifier_imba_sadist_stack"                              "Sadist"
 "DOTA_Tooltip_modifier_imba_sadist_stack_Description"                  "Regenerating health and mana."
