@@ -535,7 +535,7 @@ function GameMode:OnLastHit(keys)
 				CombatEvents("kill", "first_blood", killedEnt, player:GetAssignedHero())
 			end)
 		return
-	elseif isHeroKill then
+	elseif isHeroKill and player ~= nil then
 		if not player:GetAssignedHero().killstreak then player:GetAssignedHero().killstreak = 0 end
 		player:GetAssignedHero().killstreak = player:GetAssignedHero().killstreak +1
 
