@@ -809,7 +809,7 @@ function ReconnectPlayer(player_id)
 
 	-- If this is a reconnect from abandonment due to a long disconnect, remove the abandon state
 	if PlayerResource:GetHasAbandonedDueToLongDisconnect(player_id) then
-		local player_name = keys.name
+		local player_name = PlayerResource:GetPlayerName(player_id)
 		local hero = PlayerResource:GetPickedHero(player_id)
 		local hero_name = PlayerResource:GetPickedHeroName(player_id)
 		local line_duration = 7
