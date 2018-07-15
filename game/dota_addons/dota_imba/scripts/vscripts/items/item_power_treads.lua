@@ -107,8 +107,8 @@ function modifier_imba_power_treads_2:OnCreated()
 									local hero_item = hero:GetItemInSlot(i)
 									if hero_item and hero_item:GetName() == "item_imba_power_treads_2" then
 										local illusion_item = parent:GetItemInSlot(i)
-										if illusion_item == self:GetAbility() then
-
+										local ability = self:GetAbility()
+										if illusion_item ~= nil and ability ~= nil and illusion_item == ability then
 											local state = 0
 											if hero_item.state ~= nil then
 												state = (hero_item.state - 1 + DOTA_ATTRIBUTE_MAX) % DOTA_ATTRIBUTE_MAX

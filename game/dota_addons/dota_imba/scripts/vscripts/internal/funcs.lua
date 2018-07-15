@@ -811,7 +811,8 @@ function CDOTA_BaseNPC:GetTenacity()
 
 		-- Stack all other sources multiplicatively
 		if parent_modifier.GetCustomTenacity then
-			tenacity = tenacity * (100 - parent_modifier:GetCustomTenacity()) * 0.01
+			local parent_tenacity = parent_modifier:GetCustomTenacity() or 0
+			tenacity = tenacity * (100 - parent_tenacity) * 0.01
 		end
 	end
 
