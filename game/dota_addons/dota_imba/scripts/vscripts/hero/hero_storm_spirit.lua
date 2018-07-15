@@ -85,9 +85,11 @@ function modifier_imba_static_remnant:OnCreated()
 
 		--Create a timer to delay the remnant explosion
 		Timers:CreateTimer(activation_delay, function()
-			--Start checking for nearby enemies
-			self:StartIntervalThink(check_interval)
-		end)
+				if not self:IsNull() then 
+					--Start checking for nearby enemies
+					self:StartIntervalThink(check_interval)
+				end
+			end)
 	end
 end
 
@@ -353,10 +355,10 @@ end
 
 function modifier_imba_vortex_pull:CheckState()
 	local state =
-		{
-			[MODIFIER_STATE_STUNNED] = true,
-			[MODIFIER_STATE_NO_UNIT_COLLISION] = true
-		}
+	{
+		[MODIFIER_STATE_STUNNED] = true,
+		[MODIFIER_STATE_NO_UNIT_COLLISION] = true
+	}
 	return state
 end
 
@@ -367,7 +369,7 @@ function modifier_imba_vortex_pull:HorizontalMotion( unit, time )
 		local set_point = unit:GetAbsOrigin() + (self:GetCaster():GetAbsOrigin() - unit:GetAbsOrigin()):Normalized() * self.speed
 		-- Stop moving when the vortex has been reached
 --		if (unit:GetAbsOrigin() - self.vortex_loc):Length2D() > 50 then
-			unit:SetAbsOrigin(Vector(set_point.x, set_point.y, GetGroundPosition(set_point, unit).z))
+		unit:SetAbsOrigin(Vector(set_point.x, set_point.y, GetGroundPosition(set_point, unit).z))
 --		end
 	end
 end
@@ -375,9 +377,9 @@ end
 
 function modifier_imba_vortex_pull:DeclareFunctions()
 	local decFuncs =
-		{
-			MODIFIER_PROPERTY_OVERRIDE_ANIMATION,
-		}
+	{
+		MODIFIER_PROPERTY_OVERRIDE_ANIMATION,
+	}
 	return decFuncs
 end
 
@@ -454,10 +456,10 @@ end
 
 function modifier_imba_vortex_root:CheckState()
 	local state =
-		{
-			[MODIFIER_STATE_ROOTED] = true,
-			[MODIFIER_STATE_NO_UNIT_COLLISION] = true
-		}
+	{
+		[MODIFIER_STATE_ROOTED] = true,
+		[MODIFIER_STATE_NO_UNIT_COLLISION] = true
+	}
 	return state
 end
 
@@ -467,7 +469,7 @@ function modifier_imba_vortex_root:HorizontalMotion( unit, time )
 		local set_point = unit:GetAbsOrigin() + (self.vortex_loc - unit:GetAbsOrigin()):Normalized() * self.speed
 		-- Stop moving when the vortex has been reached
 --		if (unit:GetAbsOrigin() - self.vortex_loc):Length2D() > 50 then
-			unit:SetAbsOrigin(Vector(set_point.x, set_point.y, GetGroundPosition(set_point, unit).z))
+		unit:SetAbsOrigin(Vector(set_point.x, set_point.y, GetGroundPosition(set_point, unit).z))
 --		end
 	end
 end
@@ -475,9 +477,9 @@ end
 
 function modifier_imba_vortex_root:DeclareFunctions()
 	local decFuncs =
-		{
-			MODIFIER_PROPERTY_OVERRIDE_ANIMATION,
-		}
+	{
+		MODIFIER_PROPERTY_OVERRIDE_ANIMATION,
+	}
 	return decFuncs
 end
 

@@ -1202,3 +1202,7 @@ end
 for LinkedModifier, MotionController in pairs(LinkedModifiers) do
 	LinkLuaModifier(LinkedModifier, "hero/hero_axe", MotionController)
 end
+
+-- Register Modifiers to log system
+-- AdvLogRegisterLuaModifier(modifier_imba_counter_helix_passive)
+

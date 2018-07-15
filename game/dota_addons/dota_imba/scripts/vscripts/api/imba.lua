@@ -259,16 +259,10 @@ function api.imba.is_donator(steamid)
 	for i = 1, #api.imba.data.donators do
 		if tostring(steamid) == api.imba.data.donators[i] then
 			local player = api.imba.get_player_info(steamid)
-			local status
-			local xp_mult
+			local status = false
 			if player then
---				PrintTable(player)
---				print("Donator Status:", player.donator_status)
---				print("Donator XP Boosters:", player.xp_multiplier)
-				status =  player.donator_status
-				xp_mult = player.xp_multiplier
+				status = player.donator_status
 			end
-
 			return status
 		end
 	end

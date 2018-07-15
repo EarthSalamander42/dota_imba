@@ -25,6 +25,7 @@
 
 require('internal/util')
 require('internal/funcs')
+require('libraries/adv_log')
 require('libraries/player_resource')
 require('imba')
 

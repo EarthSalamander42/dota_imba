@@ -1,8 +1,24 @@
--- Copyright (c) 2018  The Dota IMBA Development Team
--- Licensed under the terms of the Apache 2.0 License
+-- Copyright (C) 2018  The Dota IMBA Development Team
+--
+-- Licensed under the Apache License, Version 2.0 (the "License");
+-- you may not use this file except in compliance with the License.
+-- You may obtain a copy of the License at
+--
+-- http://www.apache.org/licenses/LICENSE-2.0
+--
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- See the License for the specific language governing permissions and
+-- limitations under the License.
+--
+
+--------------------------------------------------------------------------
+-- Advanced Log and Debugging Library
+--------------------------------------------------------------------------
 
 log = {
-	}
+}
 
 
 if Log == nil then
@@ -26,7 +42,7 @@ if Log == nil then
 				"api",
 				"console"
 			}
-		}, {
+			}, {
 			matcher = ".*",
 			level = Log.Levels.INFO,
 			targets = {
@@ -222,20 +238,24 @@ end
 -- Print function
 -- which actually just prepares data and passes them to the configured targets
 ---------------------------------------------
-function Log:Print(obj, level)
+function Log:Print(obj, level, traceLevel)
+
+	if traceLevel == nil then
+		traceLevel = 4
+	end
 
 	-- prepare level
 	local levelString = self:_LevelToString(level)
 
 	local content = ""
 
-	if type(obj) == table then
+	if type(obj) == "table" then
 		content = self:_PrintTable(obj)
 	else
 		content = tostring(obj)
 	end
 
-	local trace = self:_GetStackTrace(4);
+	local trace = self:_GetStackTrace(traceLevel);
 	local file = self:_GetFileFromTrace(trace)
 
 	for i = 1, #self.targets do
@@ -249,7 +269,12 @@ end
 -- Runs code in safe context: Catches exceptions
 -- and logs errors
 ---------------------------------------------
-function Log:ExecuteInSafeContext(fun)
+function Log:ExecuteInSafeContext(fun, args)
+	
+	if args == nil then
+		args = {}
+	end
+	
 	local status, err = xpcall(fun, function (err)
 
 			if err == nil then
@@ -262,9 +287,9 @@ function Log:ExecuteInSafeContext(fun)
 			for i = 1, #self.targets do
 				self.targets[i]:print(levelString, "Error occured while executing in safe context: " .. err, self:_GetStackTrace(4))
 			end
-	end)
+		end, unpack(args))
 
-	return status
+	return status, err
 end
 
 ---------------------------------------------
@@ -279,9 +304,9 @@ end
 ---------------------------------------------
 function Log:ConfigureFromApi()
 	api.imba.load_logging_configuration(function (data)
-		log.info("Loaded new Logging configuration from server")
-		self.config = data.rules
-	end)
+			log.info("Loaded new Logging configuration from server")
+			self.config = data.rules
+		end)
 end
 
 ---------------------------------------------
@@ -327,7 +352,9 @@ function ApiLogTarget:print(level, content, trace)
 	end
 
 	-- prepare api request
-	api.imba.event(api.events.log, data, true)
+	if api ~= nil and api.imba ~= nil then
+		api.imba.event(api.events.log, data, true)
+	end
 end
 
 ConsoleLogTarget = {
@@ -339,7 +366,126 @@ function ConsoleLogTarget:print(level, content, trace)
 	if trace[1]["name"] ~= nil then
 		name = "|" .. trace[1]["name"]
 	end
-	print("[" .. level .. "][" .. trace[1]["short_src"] .. ":" .. trace[1]["currentline"] .. name .. "] " .. content)
+	NativePrint("[" .. level .. "][" .. trace[1]["short_src"] .. ":" .. trace[1]["currentline"] .. name .. "] " .. content)
+end
+
+
+
+-----------------------------------------------------------------
+-- Overwrite the default print and redirect it to the custom
+-- Log implementation above
+-----------------------------------------------------------------
+NativePrint = print
+print = nil
+
+function print(...) 
+
+	local args = {...}
+
+	if #args == 1 then
+		args = args[1]
+	end
+
+	Log:Print(args, Log.Levels.INFO) 
+end
+
+-----------------------------------------------------------------
+-- A function to re-lookup a function by name every time.
+-- Taken from /game/core/scripts/vscripts/utils/vscriptinit.lua
+-----------------------------------------------------------------
+NativeDynamic_Wrap = nil
+if Dynamic_Wrap ~= nil then
+	NativeDynamic_Wrap = Dynamic_Wrap
+	Dynamic_Wrap = nil
+end
+
+function Dynamic_Wrap(mt, name) 
+	local function wrapper(...)
+
+		local args = {...}
+
+		local status, v = safe(function () 
+				return mt[name](unpack(args))
+			end)
+
+		if status then
+			return v
+		else
+			return nil
+		end
+	end
+
+	return wrapper
+end
+
+-----------------------------------------------------------------
+-- AdvLogRegisterLuaModifier(modifier)
+-- This function proxies a given modifier to run in safe
+-- contexts. all functions starting with On* will be proxied
+-----------------------------------------------------------------
+local coveredByProxy = {
+	"OnAbilityEndChannel",
+	"OnAbilityExecuted",
+	"OnAbilityFullyCast",
+	"OnAbilityStart",
+	"OnAttack",
+	"OnAttackAllied",
+	"OnAttacked",
+	"OnAttackFail",
+	"OnAttackFinished",
+	"OnAttackLanded",
+	"OnAttackRecord",
+	"OnAttackStart",
+	"OnBreakInvisibility",
+	"OnBuildingKilled",
+	"OnDeath",
+	"OnDominated",
+	"OnHealReceived",
+	"OnHealthGained",
+	"OnHeroKilled",
+	"OnManaGained",
+	"OnModelChanged",
+	"OnModifierAdded",
+	"OnOrder",
+	"OnProjectileDodge",
+	"OnRespawn",
+	"OnSetLocation",
+	"OnSpellTargetReady",
+	"OnSpentMana",
+	"OnStateChanged",
+	"OnTakeDamage",
+	"OnTakeDamageKillCredit",
+	"OnTeleported",
+	"OnTeleporting",
+	"OnTooltip",
+	"OnUnitMoved",
+	"OnCreated",
+	"OnDestroy",
+	"OnIntervalThink",
+	"OnRefresh",
+	"OnRemoved",
+	"OnStackCountChanged"
+}
+
+function AdvLogRegisterLuaModifier(modifier)
+	
+	-- check if a covered function is defined
+	for _, name in pairs(coveredByProxy) do
+		
+		print("Checking modifier for " .. name)
+		
+		if modifier[name] ~= nil then
+			print("Modifier defines method " .. name .. ": " .. tostring(modifier[name]))
+			
+			-- create proxy
+			local original = modifier[name]
+			local function proxy(...) 
+				print("Running Proxy")
+				return Log:ExecuteInSafeContext(original, {...})
+			end			
+			modifier[name] = proxy
+		end
+	end
 end
 
 ---------------------------------------------

@@ -14,6 +14,7 @@
 --
 
 function GameMode:OnGameRulesStateChange(keys)
+
 	-- This internal handling is used to set up main barebones functions
 	GameMode:_OnGameRulesStateChange(keys)
 
@@ -22,7 +23,6 @@ function GameMode:OnGameRulesStateChange(keys)
 	end
 
 	-- Run this in safe context
---	safe(function()
 	local new_state = GameRules:State_Get()
 
 	-------------------------------------------------------------------------------------------------
@@ -216,38 +216,37 @@ function GameMode:OnGameRulesStateChange(keys)
 	end
 
 	if new_state == DOTA_GAMERULES_STATE_POST_GAME then
-		
 		api.imba.event(api.events.entered_post_game)
 
 		api.imba.complete(function (error, players)
-				safe(function ()
-						local game_id = 0
-						if api.imba.data ~= nil then
-							game_id = api.imba.data.id or 0
-						end
+				local game_id = 0
+				if api.imba.data ~= nil then
+					game_id = api.imba.data.id or 0
+				end
 
-						CustomGameEventManager:Send_ServerToAllClients("end_game", {
-								players = players,
-								info = {
-									winner = GAME_WINNER_TEAM,
-									id = game_id,
-									radiant_score = GetTeamHeroKills(2),
-									dire_score = GetTeamHeroKills(3),
-									custom1_score = GetTeamHeroKills(6),
-									custom2_score = GetTeamHeroKills(7),
-									custom3_score = GetTeamHeroKills(8),
-									custom4_score = GetTeamHeroKills(9),
-									custom5_score = GetTeamHeroKills(10),
-									custom6_score = GetTeamHeroKills(11),
-									custom7_score = GetTeamHeroKills(12),
-									custom8_score = GetTeamHeroKills(13),
-								},
-							})
-					end)
+				CustomGameEventManager:Send_ServerToAllClients("end_game", {
+						players = players,
+						info = {
+							winner = GAME_WINNER_TEAM,
+							id = game_id,
+							radiant_score = GetTeamHeroKills(2),
+							dire_score = GetTeamHeroKills(3),
+							custom1_score = GetTeamHeroKills(6),
+							custom2_score = GetTeamHeroKills(7),
+							custom3_score = GetTeamHeroKills(8),
+							custom4_score = GetTeamHeroKills(9),
+							custom5_score = GetTeamHeroKills(10),
+							custom6_score = GetTeamHeroKills(11),
+							custom7_score = GetTeamHeroKills(12),
+							custom8_score = GetTeamHeroKills(13),
+						},
+					})
 			end)
 
 		CustomNetTables:SetTableValue("game_options", "game_count", {value = 0})
+
 	end
+
 end
 
 dummy_created_count = 0
@@ -323,6 +322,12 @@ end
 
 -- An item was picked up off the ground
 function GameMode:OnItemPickedUp(keys)
+	
+	if type(keys.HeroEntityIndex) ~= "number" then 
+		log.warn({"Item picked up but hero entity index is not a number.", keys})
+		return 
+	end
+	
 	local heroEntity = EntIndexToHScript(keys.HeroEntityIndex)
 	local plyID = keys.PlayerID
 	if not plyID then return end
@@ -524,7 +529,7 @@ function GameMode:OnLastHit(keys)
 	local player = PlayerResource:GetPlayer(keys.PlayerID)
 	local killedEnt = EntIndexToHScript(keys.EntKilled)
 
-	if isFirstBlood then
+	if isFirstBlood and player ~= nil then
 		player:GetAssignedHero().kill_hero_bounty = 0
 		Timers:CreateTimer(FrameTime() * 2, function()
 				CombatEvents("kill", "first_blood", killedEnt, player:GetAssignedHero())

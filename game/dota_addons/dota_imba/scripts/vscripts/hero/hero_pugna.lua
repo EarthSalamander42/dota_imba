@@ -1136,7 +1136,7 @@ function imba_pugna_life_drain:IsHiddenWhenStolen()
 	return false
 end
 
-function imba_pugna_life_drain:GetAssociatedSecondaryAbilities()
+function imba_pugna_life_drain:GetAssociatedPrimaryAbilities()
 	return "imba_pugna_life_drain_end"
 end
 
@@ -1486,7 +1486,7 @@ function imba_pugna_life_drain_end:IsHiddenWhenStolen()
 	return false
 end
 
-function imba_pugna_life_drain_end:GetAssociatedPrimaryAbilities()
+function imba_pugna_life_drain_end:GetAssociatedSecondaryAbilities()
 	return "imba_pugna_life_drain"
 end
 

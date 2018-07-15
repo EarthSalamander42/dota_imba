@@ -1,5 +1,6 @@
 -- Editors:
 --     Earth Salamander #42
+--     AltiV
 
 if Mutation == nil then
 	Mutation = class({})
@@ -10,25 +11,26 @@ if Mutation == nil then
 	IMBA_MUTATION["terrain"] = ""
 end
 
-
 -- Positive Mutations 
 
 POSITIVE_MUTATION_LIST = {}
-POSITIVE_MUTATION_LIST["killstreak_power"] = false
-POSITIVE_MUTATION_LIST["teammate_resurrection"] = false
+POSITIVE_MUTATION_LIST[1] = "killstreak_power"
+POSITIVE_MUTATION_LIST[2] = "teammate_resurrection"
+POSITIVE_MUTATION_LIST[3] = "pocket_tower"
+POSITIVE_MUTATION_LIST[4] = "super_fervor"
+POSITIVE_MUTATION_LIST[5] = "frantic"
+POSITIVE_MUTATION_LIST[6] = "slark_mode"
+
 --POSITIVE_MUTATION_LIST["super_blink"] = false
-POSITIVE_MUTATION_LIST["pocket_tower"] = false
-POSITIVE_MUTATION_LIST["super_fervor"] = false
 --POSITIVE_MUTATION_LIST["greed_is_good"] = false
-POSITIVE_MUTATION_LIST["frantic"] = false
-POSITIVE_MUTATION_LIST["slark_mode"] = false
 -- POSITIVE_MUTATION_LIST["jump_start"] = false
 
 -- Negative Mutations
 NEGATIVE_MUTATION_LIST = {}
-NEGATIVE_MUTATION_LIST["death_explosion"] = false
-NEGATIVE_MUTATION_LIST["periodic_spellcast"] = false
-NEGATIVE_MUTATION_LIST["defense_of_the_ants"] = false
+NEGATIVE_MUTATION_LIST[1] = "death_explosion"
+NEGATIVE_MUTATION_LIST[2] = "periodic_spellcast"
+
+-- NEGATIVE_MUTATION_LIST["defense_of_the_ants"] = false
 -- NEGATIVE_MUTATION_LIST["alien_incubation"] = false
 -- NEGATIVE_MUTATION_LIST["death_gold_drop"] = false
 -- NEGATIVE_MUTATION_LIST["no_health_bar"] = false
@@ -36,14 +38,15 @@ NEGATIVE_MUTATION_LIST["defense_of_the_ants"] = false
 
 -- Terrain Mutations
 TERRAIN_MUTATION_LIST = {}
+TERRAIN_MUTATION_LIST[1] = "fast_runes"
+TERRAIN_MUTATION_LIST[2] = "gift_exchange"
+TERRAIN_MUTATION_LIST[3] = "speed_freaks"
+TERRAIN_MUTATION_LIST[4] = "river_flows"
+TERRAIN_MUTATION_LIST[5] = "wormhole"
+TERRAIN_MUTATION_LIST[6] = "tug_of_war"
+
 --TERRAIN_MUTATION_LIST["sleepy_river"] = false
-TERRAIN_MUTATION_LIST["fast_runes"] = false
 --TERRAIN_MUTATION_LIST["call_down"] = false
-TERRAIN_MUTATION_LIST["gift_exchange"] = false
-TERRAIN_MUTATION_LIST["speed_freaks"] = false
-TERRAIN_MUTATION_LIST["river_flows"] = false
-TERRAIN_MUTATION_LIST["wormhole"] = false
-TERRAIN_MUTATION_LIST["tug_of_war"] = false
 -- TERRAIN_MUTATION_LIST["minefield"] = false
 -- TERRAIN_MUTATION_LIST["no_trees"] = false
 -- TERRAIN_MUTATION_LIST["omni_vision"] = false

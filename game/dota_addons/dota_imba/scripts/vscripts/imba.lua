@@ -23,8 +23,6 @@ require('settings')
 -- load api before internal/events
 require('api/imba')
 
-require('libraries/log')
-
 require('libraries/timers')
 require('libraries/physics')
 require('libraries/projectiles')
@@ -111,9 +109,9 @@ function GameMode:OnFirstPlayerLoaded()
 	-- IMBA: API. Preload
 	-------------------------------------------------------------------------------------------------
 	api.imba.register(function ()
-		-- configure log from api
-		Log:ConfigureFromApi()
-	end)
+			-- configure log from api
+			Log:ConfigureFromApi()
+		end)
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Roshan and Picking Screen camera initialization
@@ -157,7 +155,7 @@ function GameMode:OnFirstPlayerLoaded()
 		GameRules:SetSameHeroSelectionEnabled(true)
 		GameRules:GetGameModeEntity():SetCameraDistanceOverride(500) -- default: 1134
 	end
-	
+
 	if not IsInToolsMode() then
 		GameRules:GetGameModeEntity():SetPauseEnabled( false )
 	end
@@ -236,48 +234,44 @@ function GameMode:GoldFilter(keys)
 		return true
 	end
 
-	local hero = PlayerResource:GetPlayer(keys.player_id_const):GetAssignedHero()
 
 	-- Ignore negative experience values
 	if keys.gold < 0 then
 		return false
 	end
 
-	-- Hand of Midas gold bonus
-	if hero and hero:HasModifier("modifier_item_imba_hand_of_midas") and keys.gold > 0 then
-		keys.gold = keys.gold * 1.1
-	end
+	local player = PlayerResource:GetPlayer(keys.player_id_const)
 
-	-- Lobby options adjustment
-	local game_time = math.min(GameRules:GetDOTATime(false, false) / 60, 30) -- minutes
-	local custom_gold_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "bounty_multiplier")["1"]) or 100
+	-- player can be nil for some reason
+	if player then
+		local hero = player:GetAssignedHero()
 
-	if keys.reason_const == DOTA_ModifyGold_HeroKill then
-		keys.gold = keys.gold * (custom_gold_bonus / 100)
-		if not hero.kill_hero_bounty then hero.kill_hero_bounty = 0 end
-		if hero.kill_hero_bounty == 0 then hero.kill_hero_bounty = keys.gold end
-		if hero.kill_hero_bounty ~= 0 and hero.kill_hero_bounty ~= keys.gold then
-			CustomNetTables:SetTableValue("player_table", tostring(keys.player_id_const), {hero_kill_bounty = keys.gold + hero.kill_hero_bounty})
+		-- Hand of Midas gold bonus
+		if hero:HasModifier("modifier_item_imba_hand_of_midas") and keys.gold > 0 then
+			keys.gold = keys.gold * 1.1
 		end
-	else
---		log.debug(keys.gold, custom_gold_bonus / 100, 1 + game_time / 25)
-		keys.gold = (custom_gold_bonus / 100) + (1 + game_time / 25) * keys.gold
---		log.debug(keys.gold)
-	end
 
-	-- Comeback gold gain
-	--	local team = PlayerResource:GetTeam(keys.player_id_const)
-	--	if COMEBACK_BOUNTY_BONUS[team] > 0 then
-	--		keys.gold = keys.gold * (1 + COMEBACK_BOUNTY_BONUS[team])
-	--	end
+		-- Lobby options adjustment
+		local game_time = math.min(GameRules:GetDOTATime(false, false) / 60, 30) -- minutes
+		local custom_gold_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "bounty_multiplier")["1"]) or 100
 
-	local reliable = false
-	if keys.reason_const == DOTA_ModifyGold_HeroKill or keys.reason_const == DOTA_ModifyGold_RoshanKill or keys.reason_const == DOTA_ModifyGold_CourierKill or keys.reason_const == DOTA_ModifyGold_Building then
-		reliable = true
-	end
+		if keys.reason_const == DOTA_ModifyGold_HeroKill then
+			keys.gold = keys.gold * (custom_gold_bonus / 100)
+			if not hero.kill_hero_bounty then hero.kill_hero_bounty = 0 end
+			if hero.kill_hero_bounty == 0 then hero.kill_hero_bounty = keys.gold end
+			if hero.kill_hero_bounty ~= 0 and hero.kill_hero_bounty ~= keys.gold then
+				CustomNetTables:SetTableValue("player_table", tostring(keys.player_id_const), {hero_kill_bounty = keys.gold + hero.kill_hero_bounty})
+			end
+		else
+			keys.gold = (custom_gold_bonus / 100) + (1 + game_time / 25) * keys.gold
+		end
 
-	-- Show gold earned message??
-	if hero then
+		local reliable = false
+		if keys.reason_const == DOTA_ModifyGold_HeroKill or keys.reason_const == DOTA_ModifyGold_RoshanKill or keys.reason_const == DOTA_ModifyGold_CourierKill or keys.reason_const == DOTA_ModifyGold_Building then
+			reliable = true
+		end
+
+		-- Show gold earned message??
 		hero:ModifyGold(keys.gold, reliable, keys.reason_const)
 		if keys.reason_const == DOTA_ModifyGold_Unspecified then return true end
 		SendOverheadEventMessage(PlayerResource:GetPlayer(keys.player_id_const), OVERHEAD_ALERT_GOLD, hero, keys.gold, nil)
@@ -498,10 +492,10 @@ function GameMode:ModifierFilter( keys )
 			if modifier_owner:FindAbilityByName("tusk_snowball") then
 				modifier_owner:FindAbilityByName("tusk_snowball"):SetActivated(false)
 				Timers:CreateTimer(15.0, function()
-					if not modifier_owner:FindModifierByName("modifier_tusk_snowball_movement") then
-						modifier_owner:FindAbilityByName("tusk_snowball"):SetActivated(true)
-					end
-				end)
+						if not modifier_owner:FindModifierByName("modifier_tusk_snowball_movement") then
+							modifier_owner:FindAbilityByName("tusk_snowball"):SetActivated(true)
+						end
+					end)
 			end
 		end
 
@@ -556,7 +550,7 @@ function GameMode:ItemAddedFilter( keys )
 
 			-- Destroy the item
 			return false
-		-- If this is not a player, do nothing and drop another Aegis
+			-- If this is not a player, do nothing and drop another Aegis
 		else
 			local drop = CreateItem("item_imba_aegis", nil, nil)
 			CreateItemOnPositionSync(unit:GetAbsOrigin(), drop)
@@ -607,9 +601,9 @@ function GameMode:ItemAddedFilter( keys )
 				end
 			end
 			if 	((item_name == "item_imba_rapier") and (rapier_amount == 2)) or
-				((item_name == "item_imba_rapier_magic") and (rapier_magic_amount == 2)) or
-				((item_name == "item_imba_rapier_2") and (rapier_magic_2_amount >= 1)) or
-				((item_name == "item_imba_rapier_magic_2") and (rapier_2_amount >= 1)) then
+			((item_name == "item_imba_rapier_magic") and (rapier_magic_amount == 2)) or
+			((item_name == "item_imba_rapier_2") and (rapier_magic_2_amount >= 1)) or
+			((item_name == "item_imba_rapier_magic_2") and (rapier_2_amount >= 1)) then
 				return true
 			else
 				DisplayError(unit:GetPlayerID(),"#dota_hud_error_cant_item_enough_slots")
@@ -809,7 +803,7 @@ function GameMode:OrderFilter( keys )
 		end
 
 		if keys.order_type == DOTA_UNIT_ORDER_CAST_TARGET_TREE then
-		-- Still needs some checkup
+			-- Still needs some checkup
 
 		end
 
@@ -840,7 +834,7 @@ function GameMode:OrderFilter( keys )
 		local ability = EntIndexToHScript(keys.entindex_ability)
 
 		-- Kunkka Torrent cast-handling
-		if ability:GetAbilityName() == "imba_kunkka_torrent" then
+		if ability ~= nil and ability:GetAbilityName() == "imba_kunkka_torrent" then
 			local range = ability.BaseClass.GetCastRange(ability,ability:GetCursorPosition(),unit) + GetCastRangeIncrease(unit)
 			if unit:HasModifier("modifier_imba_ebb_and_flow_tide_low") or unit:HasModifier("modifier_imba_ebb_and_flow_tsunami") then
 				range = range + ability:GetSpecialValueFor("tide_low_range")
@@ -853,7 +847,7 @@ function GameMode:OrderFilter( keys )
 		end
 
 		-- Kunkka Tidebringer cast-handling
-		if ability:GetAbilityName() == "imba_kunkka_tidebringer" then
+		if ability ~= nil and ability:GetAbilityName() == "imba_kunkka_tidebringer" then
 			ability.manual_cast = true
 		end
 
@@ -874,12 +868,12 @@ function GameMode:OrderFilter( keys )
 		local ability = EntIndexToHScript(keys.entindex_ability)
 
 		-- Techies' Focused Detonate cast-handling
-		if ability:GetAbilityName() == "imba_techies_focused_detonate" then
+		if ability ~= nil and ability:GetAbilityName() == "imba_techies_focused_detonate" then
 			unit:AddNewModifier(unit, ability, "modifier_imba_focused_detonate", {duration = 0.2})
 		end
 
 		-- Mirana's Leap talent cast-handling
-		if ability:GetAbilityName() == "imba_mirana_leap" and unit:HasTalent("special_bonus_imba_mirana_7") then
+		if ability ~= nil and ability:GetAbilityName() == "imba_mirana_leap" and unit:HasTalent("special_bonus_imba_mirana_7") then
 			unit:AddNewModifier(unit, ability, "modifier_imba_leap_talent_cast_angle_handler", {duration = FrameTime()})
 		end
 	end
@@ -937,7 +931,7 @@ function GameMode:OrderFilter( keys )
 			if string.find(item:GetAbilityName(), "imba_rune") ~= nil then
 				return false
 			end
-				
+
 			return true
 		end
 	end
@@ -1251,16 +1245,16 @@ function GameMode:OnHeroInGame(hero)
 
 	if IMBA_PICK_MODE_ALL_RANDOM then
 		Timers:CreateTimer(3.0, function()
-			HeroSelection:RandomHero({PlayerID = hero:GetPlayerID()})
-		end)
+				HeroSelection:RandomHero({PlayerID = hero:GetPlayerID()})
+			end)
 	elseif IMBA_PICK_MODE_ALL_RANDOM_SAME_HERO then
 		Timers:CreateTimer(3.0, function()
-			if arsm == nil then
-				arsm = true
-				log.info("ARSM")
-				HeroSelection:RandomSameHero()
-			end
-		end)
+				if arsm == nil then
+					arsm = true
+					log.info("ARSM")
+					HeroSelection:RandomSameHero()
+				end
+			end)
 	end
 end
 
@@ -1390,8 +1384,8 @@ function GameMode:StartImbaTest()
 		PlayerResource:SetCameraTarget(0, hero)
 	end
 	Timers:CreateTimer(0.1, function()
-		PlayerResource:SetCameraTarget(0, nil)
-	end)
+			PlayerResource:SetCameraTarget(0, nil)
+		end)
 	ResolveNPCPositions(testbed_center + Vector(-300, 0, 0), 128)
 
 	-- Spawn some high health allies for benefic spell testing
@@ -1643,10 +1637,10 @@ function GameMode:UpdateScoreboard()
 
 		-- Scaleform UI Scoreboard
 		local score =
-			{
-				team_id = t.teamID,
-				team_score = t.teamScore
-			}
+		{
+			team_id = t.teamID,
+			team_score = t.teamScore
+		}
 		FireGameEvent( "score_board", score )
 	end
 	-- Leader effects (moved from OnTeamKillCredit)
@@ -1756,10 +1750,10 @@ function spawnunits(campname)
 	end
 
 	local randomCreature =
-		{
-			"basic_zombie",
-			"berserk_zombie"
-		}
+	{
+		"basic_zombie",
+		"berserk_zombie"
+	}
 	local r = randomCreature[RandomInt(1,#randomCreature)]
 
 	--log.debug(r)
@@ -2075,7 +2069,7 @@ function GameMode:NetgraphGiveItem(event)
 end
 
 function GameMode:GG(event)
-if GameRules:State_Get() == DOTA_GAMERULES_STATE_POST_GAME then return end
+	if GameRules:State_Get() == DOTA_GAMERULES_STATE_POST_GAME then return end
 
 --	print(event.ID, event.Vote)
 
@@ -2131,14 +2125,14 @@ if GameRules:State_Get() == DOTA_GAMERULES_STATE_POST_GAME then return end
 			Notifications:BottomToAll({text = text[i], duration = 5.0, style = {color = "DodgerBlue"} })
 
 			Timers:CreateTimer(5.0, function()
-				if i == 2 then
-					GAME_WINNER_TEAM = 3
-					GameRules:SetGameWinner(3)
-				elseif i == 3 then
-					GAME_WINNER_TEAM = 2
-					GameRules:SetGameWinner(2)
-				end
-			end)
+					if i == 2 then
+						GAME_WINNER_TEAM = 3
+						GameRules:SetGameWinner(3)
+					elseif i == 3 then
+						GAME_WINNER_TEAM = 2
+						GameRules:SetGameWinner(2)
+					end
+				end)
 
 			break
 		end

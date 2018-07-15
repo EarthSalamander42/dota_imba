@@ -1021,7 +1021,7 @@ function PickupRune(rune_name, unit, bActiveByBottle)
 			-- global bounty rune
 			for _, hero in pairs(HeroList:GetAllHeroes()) do
 				if hero:GetTeam() == unit:GetTeam() then
-					if (hero:GetUnitName() == "npc_dota_hero_monkey_king" and not hero.is_real_mk) or (hero:GetUnitName() == "npc_dota_hero_meepo" and not hero.is_real_meepo) or hero:IsIllusion() then
+					if (hero:GetUnitName() == "npc_dota_hero_monkey_king" and hero:HasModifier("modifier_monkey_king_fur_army_soldier_hidden")) or (hero:GetUnitName() == "npc_dota_hero_meepo" and not hero.is_real_meepo) or hero:IsIllusion() then
 						-- Dont give gold to illusions or monkey king clones.
 					elseif hero:GetUnitName() == "npc_dota_hero_alchemist" then 
 						local alchemy_bounty = 0
