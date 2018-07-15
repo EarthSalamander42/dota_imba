@@ -211,30 +211,24 @@ function modifier_imba_sadist_stack:DeclareFunctions()
 end
 
 function modifier_imba_sadist_stack:GetModifierConstantManaRegen()
-	if self.caster == nil or self.mana_regen == nil or self.regen_minimum == nil then 
-		return
+	if not IsServer() then return end
+	if self.caster and self.mana_regen and self.regen_minimum then 
+		local mana_regen = self.mana_regen + self.caster:FindTalentValue("special_bonus_imba_necrolyte_6")
+		mana_regen = mana_regen * self:GetStackCount() * self:GetParent():GetMaxMana() * 0.01
+		local regen_minimum = self.regen_minimum * self:GetStackCount()
+		return math.max(mana_regen, regen_minimum)
 	end
-
-	local mana_regen = self.mana_regen + self.caster:FindTalentValue("special_bonus_imba_necrolyte_6")
-	mana_regen = mana_regen * self:GetStackCount() * self:GetParent():GetMaxMana() * 0.01
-	local regen_minimum = self.regen_minimum * self:GetStackCount()
-	return math.max(mana_regen, regen_minimum)
 end
 
 function modifier_imba_sadist_stack:GetModifierConstantHealthRegen()
-	if IsServer() then
-		if self.caster ~= nil or self.health_regen == nil or self.regen_minimum == nil then 
-			return
-		end
-
+	if not IsServer() then return end
+	if self.caster and self.health_regen and self.regen_minimum then 	
 		local health_regen = self.health_regen + self.caster:FindTalentValue("special_bonus_imba_necrolyte_6")
-		local expected_health_regen = health_regen * self:GetStackCount() * self:GetParent():GetMaxHealth() * 0.01
+		health_regen = health_regen * self:GetStackCount() * self:GetParent():GetMaxHealth() * 0.01
 		local regen_minimum = self.regen_minimum * self:GetStackCount()
-
-		return math.max(expected_health_regen, regen_minimum)
+		return math.max(health_regen, regen_minimum)
 	end
 end
-
 
 -------------------------------------------
 --			DEATH PULSE
