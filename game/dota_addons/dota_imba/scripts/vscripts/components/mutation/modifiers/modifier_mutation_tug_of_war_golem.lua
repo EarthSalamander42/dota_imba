@@ -4,12 +4,37 @@ function modifier_mutation_tug_of_war_golem:IsHidden() return false end
 function modifier_mutation_tug_of_war_golem:RemoveOnDeath() return false end
 function modifier_mutation_tug_of_war_golem:IsPurgable() return false end
 
+-- Golem Parameters (per stack, unless variable ends in Max)
+healthBonus = 300
+attackBonus = 30
+moveSpeedBonus = 5
+aspdBonus = 10
+pArmorBonus = 2
+mResistBonus = 2
+healthRegen = 2.5
+rangeBonus = 10
+rangeBonusMax = 190
+tenacity = 5
+tenacityMax = 50
+pBlock = 3
+pBlockMax = 60
+mitigation = 2
+mitigationMax = 30
+modelScaleMax = 150
+modelScale = 10
+expBonus = 50
+goldBonus = 50
+
 function modifier_mutation_tug_of_war_golem:OnCreated()
 	if IsServer() then
 		Timers:CreateTimer(0.1, function()
-			SetCreatureHealth(self:GetParent(), 300 * (1 + self:GetStackCount()), true)
+			SetCreatureHealth(self:GetParent(), healthBonus * (1 + self:GetStackCount()), true)
 		end)
 	end
+end
+
+function modifier_mutation_tug_of_war_golem:GetTexture()
+	return "warlock_rain_of_chaos"
 end
 
 function modifier_mutation_tug_of_war_golem:DeclareFunctions()
@@ -30,47 +55,47 @@ function modifier_mutation_tug_of_war_golem:DeclareFunctions()
 end
 
 function modifier_mutation_tug_of_war_golem:GetModifierPreAttack_BonusDamage()
-	return 40 * self:GetStackCount()
+	return attackBonus * self:GetStackCount()
 end
 
 function modifier_mutation_tug_of_war_golem:GetModifierMoveSpeedBonus_Constant()
-	return 10 * self:GetStackCount()
+	return moveSpeedBonus * self:GetStackCount()
 end
 
 function modifier_mutation_tug_of_war_golem:GetModifierAttackSpeedBonus_Constant()
-	return 10 * self:GetStackCount()
+	return aspdBonus * self:GetStackCount()
 end
 
 function modifier_mutation_tug_of_war_golem:GetModifierPhysicalArmorBonus()
-	return 2 * self:GetStackCount()
+	return pArmorBonus * self:GetStackCount()
 end
 
 function modifier_mutation_tug_of_war_golem:GetModifierMagicalResistanceBonus()
-	return 2 * self:GetStackCount()
+	return mResistBonus * self:GetStackCount()
 end
 
 function modifier_mutation_tug_of_war_golem:GetModifierConstantHealthRegen()
-	return 2.5 * self:GetStackCount()
+	return healthRegen * self:GetStackCount()
 end
 
 function modifier_mutation_tug_of_war_golem:GetModifierAttackRangeBonus()
-	return math.min(10 * self:GetStackCount(), 190)
+	return math.min(rangeBonus * self:GetStackCount(), rangeBonusMax)
 end
 
 function modifier_mutation_tug_of_war_golem:GetCustomTenacity()
-	return math.min(7.5 * self:GetStackCount(), 75)
+	return math.min(tenacity * self:GetStackCount(), tenacityMax)
 end
 
 function modifier_mutation_tug_of_war_golem:GetModifierPhysical_ConstantBlock()
-	return math.min(3 * self:GetStackCount(), 60)
+	return math.min(pBlock * self:GetStackCount(), pBlockMax)
 end
 
 function modifier_mutation_tug_of_war_golem:GetModifierIncomingDamage_Percentage()
-	return (-1) * math.min(2.5 * self:GetStackCount(), 40)
+	return (-1) * math.min(mitigation * self:GetStackCount(), mitigationMax)
 end
 
 function modifier_mutation_tug_of_war_golem:GetModifierModelScale()
-	return math.min(10 * self:GetStackCount(), 150)
+	return math.min(modelScale * self:GetStackCount(), modelScaleMax)
 end
 
 function modifier_mutation_tug_of_war_golem:OnDeath(keys)
@@ -102,22 +127,22 @@ function modifier_mutation_tug_of_war_golem:OnDeath(keys)
 					ParticleManager:SetParticleControl(golem.ambient_pfx, 0, golem:GetAbsOrigin())
 					Timers:CreateTimer(0.1, function()
 						golem:MoveToPositionAggressive(IMBA_MUTATION_TUG_OF_WAR_TARGET[DOTA_TEAM_BADGUYS])
-					end)
+					return 2 end) -- Recall the command every 2 seconds so AI doesn't get bricked
 				elseif original_team == DOTA_TEAM_BADGUYS then
 					golem = CreateUnitByName("npc_dota_mutation_golem", death_position, false, nil, nil, DOTA_TEAM_GOODGUYS)
 					golem.ambient_pfx = ParticleManager:CreateParticle("particles/ambient/tug_of_war_team_radiant.vpcf", PATTACH_ABSORIGIN_FOLLOW, golem)
 					ParticleManager:SetParticleControl(golem.ambient_pfx, 0, golem:GetAbsOrigin())
 					Timers:CreateTimer(0.1, function()
 						golem:MoveToPositionAggressive(IMBA_MUTATION_TUG_OF_WAR_TARGET[DOTA_TEAM_GOODGUYS])
-					end)
+					return 2 end) -- Recall the command every 2 seconds so AI doesn't get bricked
 				end
 
 				-- Spawn logic
 				golem:AddNewModifier(golem, nil, "modifier_mutation_tug_of_war_golem", {}):SetStackCount(previous_stacks + 1)
 				FindClearSpaceForUnit(golem, golem:GetAbsOrigin(), true)
-				golem:SetDeathXP(50 * (1 + previous_stacks))
-				golem:SetMinimumGoldBounty(50 * (1 + previous_stacks))
-				golem:SetMaximumGoldBounty(50 * (1 + previous_stacks))
+				golem:SetDeathXP(expBonus * (1 + previous_stacks))
+				golem:SetMinimumGoldBounty(goldBonus * (1 + previous_stacks))
+				golem:SetMaximumGoldBounty(goldBonus * (1 + previous_stacks))
 			end)
 		end
 	end
