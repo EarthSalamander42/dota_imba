@@ -43,10 +43,15 @@ rapier_base_class = class({})
 
 function rapier_base_class:OnOwnerDied(params)
 	local hOwner = self:GetOwner()
-	if hOwner.IsImbaReincarnating and hOwner:IsImbaReincarnating() then
-		return nil
+	-- Non-heroes should automatically drop rapier and return so they can't crash script at hOwner:IsImbaReincarnating() check
+	if not hOwner:IsRealHero() then
+		hOwner:DropRapier(self, true)
+		return
 	end
-	hOwner:DropRapier(self, true)
+	
+	if not hOwner:IsImbaReincarnating() then
+		hOwner:DropRapier(self, true)
+	end
 end
 
 function rapier_base_class:IsRapier()
