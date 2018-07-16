@@ -3,8 +3,8 @@
 // Wisp's Tether
 ////===============================================================================================================
 
-"DOTA_Tooltip_ability_imba_wisp_tether"                          "TETHER"
-"DOTA_Tooltip_ability_imba_wisp_tether_description"              "Tethers Io to an allied unit, granting bonus movement speed to both. When Io restores health or mana, tethered units target gains a larger portion of that amount. The tether breaks when the allied unit moves too far away, or Io cancels the tether. \n<font color='#FF7800'>Entwine</font color='#FF7800'>: Enemies hit by tether have their movement and attack speed slowed."
+"DOTA_Tooltip_ability_imba_wisp_tether"                         "TETHER"
+"DOTA_Tooltip_ability_imba_wisp_tether_description"             "Tethers Io to an allied unit, granting bonus movement speed to both <font color='#FF7800'>and setting both to the faster unit's speed.</font color='#FF7800'> When Io restores health or mana, tethered units target gains a larger portion of that amount. The tether breaks when the allied unit moves too far away, or Io cancels the tether. \n<font color='#FF7800'>Entwine</font color='#FF7800'>: Enemies hit by tether have their movement and attack speed slowed."
 "DOTA_Tooltip_ability_imba_wisp_tether_Note0"                   "If you try to tether a unit that is 1800 distance or futher away from Io, he will latch on and pull himself close to the tethered unit (to a distance of 700). The tethered unit will heal faster."
 "DOTA_Tooltip_ability_imba_wisp_tether_Note1"                   "Pierces ally magic immunity."
 "DOTA_Tooltip_ability_imba_wisp_tether_lore"                    "The benevolent touch of Io brings strength from between the planes."
