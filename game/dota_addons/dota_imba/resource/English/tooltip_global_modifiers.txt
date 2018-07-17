@@ -67,3 +67,7 @@
 
 "DOTA_Tooltip_modifier_mutation_wormhole_cooldown"				"Wormhole Cooldown"
 "DOTA_Tooltip_modifier_mutation_wormhole_cooldown_Description"  "Experiencing teleportion sickness. You cannot use another wormhole while under this effect."
+
+"npc_dota_mutation_golem"						            	"BOB"
+"DOTA_Tooltip_modifier_mutation_tug_of_war_golem" 				"Creation Stacks"
+"DOTA_Tooltip_modifier_mutation_tug_of_war_golem_Description"	"Grows stronger with each revival. Each stack grants additional health, attack, movement speed, attack speed, armor, magic resistance, health regeneration, attack range, tenacity, physical block, damage reduction, model size, and exp/gold when killed. Some parameters have a maximum to prevent infinite scaling."

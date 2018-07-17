@@ -216,7 +216,7 @@ function modifier_imba_wisp_tether:GetModifierMoveSpeed_Absolute()
 end
 
 function modifier_imba_wisp_tether:GetModifierMoveSpeed_Limit()
-	return 2000
+	return 3000
 end
 
 function modifier_imba_wisp_tether:OnRemoved()
