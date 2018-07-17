@@ -391,6 +391,10 @@ sohei_flurry_of_blows = sohei_flurry_of_blows or class ({})
 
 LinkLuaModifier( "modifier_sohei_flurry_self", "hero/hero_sohei.lua", LUA_MODIFIER_MOTION_NONE )
 
+function sohei_flurry_of_blows:GetAssociatedPrimaryAbilities()
+	return "sohei_momentum"
+end
+
 --------------------------------------------------------------------------------
 
 -- Cast animation + playback rate
