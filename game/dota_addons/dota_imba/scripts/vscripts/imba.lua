@@ -1953,7 +1953,7 @@ function GameMode:OnThink()
 						respawn_time = HERO_RESPAWN_TIME_PER_LEVEL[math.min(hero:GetLevel(), #HERO_RESPAWN_TIME_PER_LEVEL)]
 					end
 				end
-				hero:SetTimeUntilRespawn(respawn_time)
+				hero:SetTimeUntilRespawn(min(respawn_time, 99))
 			end
 		end
 
