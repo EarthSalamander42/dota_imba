@@ -22,32 +22,32 @@
 					</Button>
 				</Panel>
 			</Panel>
-			<Panel id="imba-loading-social">
-<!--				<Button onactivate="DOTADisplayURL('https://preview.dota2imba.org/statistics/rankings');">
-					<Label text="Official Website" />
-				</Button>
-				<Button onactivate="DOTADisplayURL('https://www.facebook.com/D2IMBA/');">
-					<Label text="Facebook" />
-				</Button>
-				<Button onactivate="DOTADisplayURL('https://twitter.com/Dota2IMBA42');">
-					<Label text="Twitter" />
-				</Button>
-				<Button onactivate="DOTADisplayURL('https://www.patreon.com/xherosiege');">
-					<Label text="Patreon" />
-				</Button>
-				<Button onactivate="DOTADisplayURL('http://tinyurl.com/imba-discord');">
-					<Label text="Discord EN" />
-				</Button>
-				<Button onactivate="DOTADisplayURL('https://discord.gg/HcybJKt');">
-					<Label text="Discord RU" />
-				</Button>
-				<Button onactivate="DOTADisplayURL('https://www.bilibiliduang.cn/imbagroup');">
-					<Label text="Tencent" />
-				</Button>
--->
-			</Panel>
-			<Panel id="imba-status">
-
+			<Panel id="ImbaLoadingSocial">
+				<Panel class="Row">
+					<Button id="ImbaLoadingSocialOfficialWebsite" onactivate="DOTADisplayURL('https://preview.dota2imba.org/statistics/rankings');">
+						<Label text="Official Website" />
+					</Button>
+					<Button id="ImbaLoadingSocialFacebook" onactivate="DOTADisplayURL('https://www.facebook.com/D2IMBA/');">
+						<Label text="Facebook" />
+					</Button>
+					<Button id="ImbaLoadingSocialTwitter" onactivate="DOTADisplayURL('https://twitter.com/Dota2IMBA42');">
+						<Label text="Twitter" />
+					</Button>
+					<Button id="ImbaLoadingSocialDiscordEn" onactivate="DOTADisplayURL('http://tinyurl.com/imba-discord');">
+						<Label text="English Discord" />
+					</Button>
+					<Button id="ImbaLoadingSocialDiscordRu" onactivate="DOTADisplayURL('https://discord.gg/HcybJKt');">
+						<Label text="Русский Дискорд" />
+					</Button>
+					<Button id="ImbaLoadingSocialTencent" onactivate="DOTADisplayURL('https://www.bilibiliduang.cn/imbagroup');">
+						<Label text="Tencent" />
+					</Button>
+				</Panel>
+				<Panel class="Row">
+					<Button id="ImbaLoadingSocialPatreon" onactivate="DOTADisplayURL('https://www.patreon.com/xherosiege');">
+						<Label text="Get your XP Booster, Companion and Statue by becoming a Donator on Patreon!" />
+					</Button>
+				</Panel>
 			</Panel>
 		</Panel>
 	</Panel>

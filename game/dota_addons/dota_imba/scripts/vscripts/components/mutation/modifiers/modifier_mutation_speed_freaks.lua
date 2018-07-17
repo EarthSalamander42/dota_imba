@@ -22,7 +22,7 @@ function modifier_mutation_speed_freaks:GetModifierMoveSpeedBonus_Constant()
 end
 
 function modifier_mutation_speed_freaks:GetModifierMoveSpeed_Max()
-	return 1000
+	return 1500
 end
 
 function modifier_mutation_speed_freaks:GetPriority()

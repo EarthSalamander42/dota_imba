@@ -313,7 +313,7 @@ function UpdateGameState() {
 		$.Msg("Skipping legacy team select on map " + Game.GetMapInfo().map_display_name + ", Imba Matchmaking enabled.");
 		return;
 	}
-		
+
 	var bShowSpectatorTeam = false;
 	var bAutoAssignTeams = true;
 

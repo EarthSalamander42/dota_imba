@@ -300,9 +300,10 @@
 	flow-children: none; 
 	width: 250px;
 	vertical-align: center;
-	border: 1px solid #444;
-	border-radius: 2px;
-	box-shadow: #000000 0px 0px 10px 0px;
+	background-color: black;
+	border: 1px solid #222;
+	height: 26px;
+	box-shadow: 0 0 5px 0 #00000022 inset;
 }
 
 .level-up {
@@ -320,9 +321,11 @@
 }
 
 #es-player-xp-progress { 
-	background-color: gradient( linear, 0% 0%, 0% 100%, from( #326114 ), color-stop( 0.3, #54BA07 ), color-stop( .5, #54BA07 ), to( #326114 ) );
+
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #006E2E ),  to( #00540E ) );
+	border-radius: 1px;
 	width: 0%;
-	height: 20px;
+	height: 22px;
 	transition-property: width;
 	transition-duration: 2s;
 }
@@ -332,7 +335,7 @@
 	width: 100%;
 	font-size: 16px;
 	vertical-align: center;
-	padding: 0px 5px;
+	padding: 2px 5px;
 }
 
 #es-player-xp-rank { text-align: right; }

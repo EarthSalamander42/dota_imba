@@ -393,7 +393,7 @@
 .AspectRatio4x3 .imba-social-buttons Button:active {
 	width: 178px; 
 }
-
+/*
 .imba-social-button {
 	margin-left: 12px;
 	background-size: contain;
@@ -434,7 +434,7 @@
 	background-image: url("file://{images}/custom_game/loading_screen/twitter_banner.png");
 	background-size: 200px 65px;
 }
-
+*/
 #GameOptionsPanel
 {
 	width: 100%;
@@ -623,7 +623,9 @@
 {
 	width: 100%;
 	margin-left: 5%;
-	text-align: left;
+	text-align: left;  /* */
 	horizontal-align: left;
 	vertical-align: center;
 }
+
+
