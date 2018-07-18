@@ -290,17 +290,18 @@ function modifier_imba_wisp_tether_ally:OnCreated()
 
 		EmitSoundOn("Hero_Wisp.Tether.Target", self:GetParent())
 
-		if self:GetCaster():HasTalent("special_bonus_imba_wisp_8") then
-			local movement_speed_cap = self:GetCaster():FindTalentValue("special_bonus_imba_wisp_8", "movement_speed_cap")
+		local movement_speed_cap = self:GetCaster():FindTalentValue("special_bonus_imba_wisp_8", "movement_speed_cap")
 
-			CustomNetTables:SetTableValue(
-			"player_table", 
-			tostring(self:GetCaster():GetPlayerOwnerID()), 
-			{ 	
-				tether_limit 			= movement_speed_cap,
-				tether_minimum_speed 	= self:GetParent():GetIdealSpeed(),
-			})
+		CustomNetTables:SetTableValue(
+		"player_table", 
+		tostring(self:GetCaster():GetPlayerOwnerID()), 
+		{ 	
+			tether_limit 			= movement_speed_cap,
+			tether_minimum_speed 	= self:GetParent():GetIdealSpeed(),
+		})
 
+        --[[
+        if self:GetCaster():HasTalent("special_bonus_imba_wisp_8") then
 			-- modify absolute movement speed to never go down
 			self:GetParent():AddNewModifier(
 				self:GetCaster(), 
@@ -321,6 +322,7 @@ function modifier_imba_wisp_tether_ally:OnCreated()
 					minimum_speed 	= self:GetParent():GetIdealSpeed()
 				})
 		end
+		]]
 		
 		self:StartIntervalThink(FrameTime())
 	end
