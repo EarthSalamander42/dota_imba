@@ -179,7 +179,12 @@ function modifier_imba_wisp_tether:OnIntervalThink()
 			self.total_gained_health 	= 0
 			self.update_timer 			= 0
 		end
-
+		
+		if (self:GetParent():IsOutOfGame()) then
+			self:GetParent():RemoveModifierByName("modifier_imba_wisp_tether")
+			return
+		end
+		
 		if self:GetParent():HasModifier("modifier_imba_wisp_tether_latch") then
 			return
 		end
