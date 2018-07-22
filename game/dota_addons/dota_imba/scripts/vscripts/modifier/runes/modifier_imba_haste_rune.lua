@@ -31,8 +31,7 @@ function modifier_imba_haste_rune:DeclareFunctions()
 	local funcs	=	{
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
-		MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE,
-		MODIFIER_PROPERTY_MOVESPEED_MAX
+		MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE_MIN
 	}
 	return funcs
 end
@@ -48,13 +47,8 @@ function modifier_imba_haste_rune:GetModifierAttackSpeedBonus_Constant()
 end
 
 -- Minimum unslowable movement speed
-function modifier_imba_haste_rune:GetModifierMoveSpeed_Absolute()
+function modifier_imba_haste_rune:GetModifierMoveSpeed_AbsoluteMin()
 	return 550
-end
-
--- Infinite max movespeed
-function modifier_imba_haste_rune:GetModifierMoveSpeed_Max()
-	return 10000
 end
 
 -- Aura properties
