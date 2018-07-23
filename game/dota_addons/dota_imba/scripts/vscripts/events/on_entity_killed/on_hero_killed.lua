@@ -92,7 +92,7 @@ function GameMode:OnHeroKilled(killer, killed_unit)
 			end
 
 			log.info("Set time until respawn for unit " .. tostring(killed_unit:GetUnitName()) .. " to " .. tostring(respawn_time) .. " seconds")
-			killed_unit:SetTimeUntilRespawn(min(respawn_time, 90))
+			killed_unit:SetTimeUntilRespawn(min(respawn_time, 120))
 		end
 	end
 end
