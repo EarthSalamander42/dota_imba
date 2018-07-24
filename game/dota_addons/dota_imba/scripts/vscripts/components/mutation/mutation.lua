@@ -54,27 +54,41 @@ function Mutation:Init()
 	LinkLuaModifier("modifier_sticky_river", "modifier/mutation/modifier_sticky_river.lua", LUA_MODIFIER_MOTION_NONE )
 
 	-- Selecting Mutations (Take out if statement for IsInToolsMode if you want to test randomized)
-	--if IsInToolsMode() then
-	--	IMBA_MUTATION["positive"] = "teammate_resurrection"
-	--	IMBA_MUTATION["negative"] = "periodic_spellcast"
-	--	IMBA_MUTATION["terrain"] = "wormhole"
-	--else
+	if IsInToolsMode() then
+		IMBA_MUTATION["positive"] = "teammate_resurrection"
+		IMBA_MUTATION["negative"] = "periodic_spellcast"
+		IMBA_MUTATION["terrain"] = "river_flows"
+	else
 		Mutation:ChooseMutation("positive", POSITIVE_MUTATION_LIST)
 		Mutation:ChooseMutation("negative", NEGATIVE_MUTATION_LIST)
 		Mutation:ChooseMutation("terrain", TERRAIN_MUTATION_LIST)
-	--end
+	end
 
 	IMBA_MUTATION_PERIODIC_SPELLS = {}
-	IMBA_MUTATION_PERIODIC_SPELLS[1] = {"sun_strike", "Sunstrike", "Red", -1}
-	IMBA_MUTATION_PERIODIC_SPELLS[2] = {"thundergods_wrath", "Thundergod's Wrath", "Red", -1}
-	IMBA_MUTATION_PERIODIC_SPELLS[3] = {"rupture", "Rupture", "Red", 10.0}
-	IMBA_MUTATION_PERIODIC_SPELLS[4] = {"torrent", "Torrent", "Red", 45}
-	IMBA_MUTATION_PERIODIC_SPELLS[5] = {"cold_feet", "Cold Feet", "Red", 4.0}
-	IMBA_MUTATION_PERIODIC_SPELLS[6] = {"stampede", "Stampede", "Green", 5.0}
-	IMBA_MUTATION_PERIODIC_SPELLS[7] = {"bloodlust", "Bloodlust", "Green", 30.0}
-	IMBA_MUTATION_PERIODIC_SPELLS[8] = {"aphotic_shield", "Aphotic Shield", "Green", 15.0}
+	-- IMBA_MUTATION_PERIODIC_SPELLS[1] = {"sun_strike", "Sunstrike", "Red", -1}
+	-- IMBA_MUTATION_PERIODIC_SPELLS[2] = {"thundergods_wrath", "Thundergod's Wrath", "Red", -1}
+	-- IMBA_MUTATION_PERIODIC_SPELLS[3] = {"rupture", "Rupture", "Red", 10.0}
+	-- IMBA_MUTATION_PERIODIC_SPELLS[4] = {"torrent", "Torrent", "Red", 45}
+	-- IMBA_MUTATION_PERIODIC_SPELLS[5] = {"cold_feet", "Cold Feet", "Red", 4.0}
+	-- IMBA_MUTATION_PERIODIC_SPELLS[6] = {"stampede", "Stampede", "Green", 5.0}
+	-- IMBA_MUTATION_PERIODIC_SPELLS[7] = {"bloodlust", "Bloodlust", "Green", 30.0}
+	-- IMBA_MUTATION_PERIODIC_SPELLS[8] = {"aphotic_shield", "Aphotic Shield", "Green", 15.0}
 	--IMBA_MUTATION_PERIODIC_SPELLS[9] = {"track", "Track", "Red", 20.0}
+	
+	-- Negative Spellcasts
+	IMBA_MUTATION_PERIODIC_SPELLS[1] = {}
+	IMBA_MUTATION_PERIODIC_SPELLS[1][1] = {"sun_strike", "Sunstrike", "Red", -1}
+	IMBA_MUTATION_PERIODIC_SPELLS[1][2] = {"thundergods_wrath", "Thundergod's Wrath", "Red", -1}
+	IMBA_MUTATION_PERIODIC_SPELLS[1][3] = {"rupture", "Rupture", "Red", 10.0}
+	IMBA_MUTATION_PERIODIC_SPELLS[1][4] = {"torrent", "Torrent", "Red", 45}
+	IMBA_MUTATION_PERIODIC_SPELLS[1][5] = {"cold_feet", "Cold Feet", "Red", 4.0}
 
+	-- Positive Spellcasts
+	IMBA_MUTATION_PERIODIC_SPELLS[2] = {}
+	IMBA_MUTATION_PERIODIC_SPELLS[2][1] = {"stampede", "Stampede", "Green", 5.0}
+	IMBA_MUTATION_PERIODIC_SPELLS[2][2] = {"bloodlust", "Bloodlust", "Green", 30.0}
+	IMBA_MUTATION_PERIODIC_SPELLS[2][3] = {"aphotic_shield", "Aphotic Shield", "Green", 15.0}
+	
 	IMBA_MUTATION_WORMHOLE_COLORS = {}
 	IMBA_MUTATION_WORMHOLE_COLORS[1] = Vector(100, 0, 0)
 	IMBA_MUTATION_WORMHOLE_COLORS[2] = Vector(0, 100, 0)
@@ -250,11 +264,15 @@ function Mutation:OnGameRulesStateChange(keys)
 				end
 			end
 
-			local random_int = RandomInt(1, #IMBA_MUTATION_PERIODIC_SPELLS)
-			Timers:CreateTimer(55.0, function()
-					random_int = RandomInt(1, #IMBA_MUTATION_PERIODIC_SPELLS)
-					Notifications:TopToAll({text = IMBA_MUTATION_PERIODIC_SPELLS[random_int][2].." Mutation in 5 seconds...", duration = 5.0, style = {color = IMBA_MUTATION_PERIODIC_SPELLS[random_int][3]}})
+			local random_int
+			local counter = 0 -- Used to alternate between negative and positive spellcasts, and increments after each timer call
+			local varSwap -- Switches between 1 and 2 based on counter for negative and positive spellcasts
 
+			Timers:CreateTimer(55.0, function()
+					varSwap = (counter % 2) + 1
+					random_int = RandomInt(1, #IMBA_MUTATION_PERIODIC_SPELLS[varSwap])
+					Notifications:TopToAll({text = IMBA_MUTATION_PERIODIC_SPELLS[varSwap][random_int][2].." Mutation in 5 seconds...", duration = 5.0, style = {color = IMBA_MUTATION_PERIODIC_SPELLS[varSwap][random_int][3]}})
+					
 					return 60.0
 				end)
 
@@ -267,13 +285,15 @@ function Mutation:OnGameRulesStateChange(keys)
 					for _, hero in pairs(HeroList:GetAllHeroes()) do
 						local caster = bad_fountain
 
-						if (hero:GetTeamNumber() == 3 and IMBA_MUTATION_PERIODIC_SPELLS[random_int][3] == "Red") or (hero:GetTeamNumber() == 2 and IMBA_MUTATION_PERIODIC_SPELLS[random_int][3] == "Green") then
+						if (hero:GetTeamNumber() == 3 and IMBA_MUTATION_PERIODIC_SPELLS[varSwap][random_int][3] == "Red") or (hero:GetTeamNumber() == 2 and IMBA_MUTATION_PERIODIC_SPELLS[varSwap][random_int][3] == "Green") then
 							caster = good_fountain
 						end
 
-						hero:AddNewModifier(caster, caster, "modifier_mutation_"..IMBA_MUTATION_PERIODIC_SPELLS[random_int][1], {duration=IMBA_MUTATION_PERIODIC_SPELLS[random_int][4]})
+						hero:AddNewModifier(caster, caster, "modifier_mutation_"..IMBA_MUTATION_PERIODIC_SPELLS[varSwap][random_int][1], {duration=IMBA_MUTATION_PERIODIC_SPELLS[varSwap][random_int][4]})
 					end
 
+					counter = counter + 1
+					
 					return 60.0
 				end)
 		end
@@ -315,11 +335,10 @@ function Mutation:OnGameRulesStateChange(keys)
 			repeat
 				if validItems[counter].v <= t1cap then
 					tier1[#tier1 + 1] = {k = validItems[counter].k, v = validItems[counter].v}
+					counter = counter + 1
 				else
 					varFlag = 1
-					counter = counter - 1
 				end
-				counter = counter + 1
 			until varFlag == 1
 
 			varFlag = 0
@@ -328,11 +347,10 @@ function Mutation:OnGameRulesStateChange(keys)
 			repeat
 				if validItems[counter].v <= t2cap then
 					tier2[#tier2 + 1] = {k = validItems[counter].k, v = validItems[counter].v}
+					counter = counter + 1
 				else
 					varFlag = 1
-					counter = counter - 1
 				end
-				counter = counter + 1
 			until varFlag == 1
 
 			varFlag = 0
@@ -341,11 +359,10 @@ function Mutation:OnGameRulesStateChange(keys)
 			repeat
 				if validItems[counter].v <= t3cap then
 					tier3[#tier3 + 1] = {k = validItems[counter].k, v = validItems[counter].v}
+					counter = counter + 1
 				else
 					varFlag = 1
-					counter = counter - 1
 				end
-				counter = counter + 1
 			until varFlag == 1
 
 			varFlag = 0
@@ -716,4 +733,4 @@ function Mutation:IsEligibleHero(hero)
 	end
 
 	return true
-end	
+end
