@@ -54,27 +54,18 @@ function Mutation:Init()
 	LinkLuaModifier("modifier_sticky_river", "modifier/mutation/modifier_sticky_river.lua", LUA_MODIFIER_MOTION_NONE )
 
 	-- Selecting Mutations (Take out if statement for IsInToolsMode if you want to test randomized)
-	if IsInToolsMode() then
-		IMBA_MUTATION["positive"] = "teammate_resurrection"
-		IMBA_MUTATION["negative"] = "periodic_spellcast"
-		IMBA_MUTATION["terrain"] = "river_flows"
-	else
+	--if IsInToolsMode() then
+	--	IMBA_MUTATION["positive"] = "teammate_resurrection"
+	--	IMBA_MUTATION["negative"] = "periodic_spellcast"
+	--	IMBA_MUTATION["terrain"] = "river_flows"
+	--else
 		Mutation:ChooseMutation("positive", POSITIVE_MUTATION_LIST)
 		Mutation:ChooseMutation("negative", NEGATIVE_MUTATION_LIST)
 		Mutation:ChooseMutation("terrain", TERRAIN_MUTATION_LIST)
-	end
+	--end
 
 	IMBA_MUTATION_PERIODIC_SPELLS = {}
-	-- IMBA_MUTATION_PERIODIC_SPELLS[1] = {"sun_strike", "Sunstrike", "Red", -1}
-	-- IMBA_MUTATION_PERIODIC_SPELLS[2] = {"thundergods_wrath", "Thundergod's Wrath", "Red", -1}
-	-- IMBA_MUTATION_PERIODIC_SPELLS[3] = {"rupture", "Rupture", "Red", 10.0}
-	-- IMBA_MUTATION_PERIODIC_SPELLS[4] = {"torrent", "Torrent", "Red", 45}
-	-- IMBA_MUTATION_PERIODIC_SPELLS[5] = {"cold_feet", "Cold Feet", "Red", 4.0}
-	-- IMBA_MUTATION_PERIODIC_SPELLS[6] = {"stampede", "Stampede", "Green", 5.0}
-	-- IMBA_MUTATION_PERIODIC_SPELLS[7] = {"bloodlust", "Bloodlust", "Green", 30.0}
-	-- IMBA_MUTATION_PERIODIC_SPELLS[8] = {"aphotic_shield", "Aphotic Shield", "Green", 15.0}
-	--IMBA_MUTATION_PERIODIC_SPELLS[9] = {"track", "Track", "Red", 20.0}
-	
+
 	-- Negative Spellcasts
 	IMBA_MUTATION_PERIODIC_SPELLS[1] = {}
 	IMBA_MUTATION_PERIODIC_SPELLS[1][1] = {"sun_strike", "Sunstrike", "Red", -1}
