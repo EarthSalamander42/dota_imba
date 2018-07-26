@@ -42,31 +42,33 @@ end
 
 function modifier_boundaries:OnIntervalThink()
 	if not IsServer() then return end
-	pos = self.parent:GetAbsOrigin()
-	
-	-- Putting max/min guards for edge cases where people jump out of map corners (only somewhat works)
-	if pos.x < bLeftOut then
-		print("Outside Left Boundary! Warping unit back in bounds...")
-		self.parent:SetAbsOrigin(Vector(bLeftIn, max(min(pos.y, bTopIn), bBottomIn), pos.z))
-		self.parent:SetUnitOnClearGround()
-	end
-	
-	if pos.x > bRightOut then
-		print("Outside Right Boundary! Warping unit back in bounds...")
-		self.parent:SetAbsOrigin(Vector(bRightIn, max(min(pos.y, bTopIn), bBottomIn), pos.z))
-		self.parent:SetUnitOnClearGround()
-	end
-	
-	if pos.y > bTopOut then
-		print("Outside Top Boundary! Warping unit back in bounds...")
-		self.parent:SetAbsOrigin(Vector(max(min(pos.x, bRightIn), bLeftIn), bTopIn, pos.z))
-		self.parent:SetUnitOnClearGround()
-	end
-	
-	if pos.y < bBottomOut then
-		print("Outside Bottom Boundary! Warping unit back in bounds...")
-		self.parent:SetAbsOrigin(Vector(max(min(pos.x, bRightIn), bLeftIn), bBottomIn, pos.z))
-		self.parent:SetUnitOnClearGround()
+	if not self.parent:IsNull() then
+		pos = self.parent:GetAbsOrigin()
+
+		-- Putting max/min guards for edge cases where people jump out of map corners (only somewhat works)
+		if pos.x < bLeftOut then
+			print("Outside Left Boundary! Warping unit back in bounds...")
+			self.parent:SetAbsOrigin(Vector(bLeftIn, max(min(pos.y, bTopIn), bBottomIn), pos.z))
+			self.parent:SetUnitOnClearGround()
+		end
+		
+		if pos.x > bRightOut then
+			print("Outside Right Boundary! Warping unit back in bounds...")
+			self.parent:SetAbsOrigin(Vector(bRightIn, max(min(pos.y, bTopIn), bBottomIn), pos.z))
+			self.parent:SetUnitOnClearGround()
+		end
+		
+		if pos.y > bTopOut then
+			print("Outside Top Boundary! Warping unit back in bounds...")
+			self.parent:SetAbsOrigin(Vector(max(min(pos.x, bRightIn), bLeftIn), bTopIn, pos.z))
+			self.parent:SetUnitOnClearGround()
+		end
+		
+		if pos.y < bBottomOut then
+			print("Outside Bottom Boundary! Warping unit back in bounds...")
+			self.parent:SetAbsOrigin(Vector(max(min(pos.x, bRightIn), bLeftIn), bBottomIn, pos.z))
+			self.parent:SetUnitOnClearGround()
+		end
 	end
 	
 	-- self.parent:SetUnitOnClearGround() is not put outside the if statements because it should not be getting called all the time
