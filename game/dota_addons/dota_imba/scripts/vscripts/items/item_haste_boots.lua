@@ -176,9 +176,9 @@ function modifier_imba_haste_boots_buff:GetModifierMoveSpeedBonus_Percentage()
 	return self.phase_ms
 end
 
-function modifier_imba_haste_boots_buff:GetModifierMoveSpeed_Max()
-	return self.ms_limit
-end
+--function modifier_imba_haste_boots_buff:GetModifierMoveSpeed_Max()
+--	return self.ms_limit
+--end
 
 function modifier_imba_haste_boots_buff:CheckState()
 	local state = {[MODIFIER_STATE_NO_UNIT_COLLISION] = true}
