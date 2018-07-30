@@ -54,15 +54,15 @@ function Mutation:Init()
 	LinkLuaModifier("modifier_sticky_river", "modifier/mutation/modifier_sticky_river.lua", LUA_MODIFIER_MOTION_NONE )
 
 	-- Selecting Mutations (Take out if statement for IsInToolsMode if you want to test randomized)
-	--if IsInToolsMode() then
-	--	IMBA_MUTATION["positive"] = "teammate_resurrection"
-	--	IMBA_MUTATION["negative"] = "periodic_spellcast"
-	--	IMBA_MUTATION["terrain"] = "wormhole"
-	--else
+	if IsInToolsMode() then
+		IMBA_MUTATION["positive"] = "teammate_resurrection"
+		IMBA_MUTATION["negative"] = "tug_of_war"
+		IMBA_MUTATION["terrain"] = "wormhole"
+	else
 		Mutation:ChooseMutation("positive", POSITIVE_MUTATION_LIST)
 		Mutation:ChooseMutation("negative", NEGATIVE_MUTATION_LIST)
 		Mutation:ChooseMutation("terrain", TERRAIN_MUTATION_LIST)
-	--end
+	end
 
 	IMBA_MUTATION_PERIODIC_SPELLS = {}
 	IMBA_MUTATION_PERIODIC_SPELLS[1] = {"sun_strike", "Sunstrike", "Red", -1}
@@ -396,10 +396,10 @@ function Mutation:OnGameRulesStateChange(keys)
 			]]--
 
 			Timers:CreateTimer(110.0, function()
-					Mutation:SpawnRandomItem()
+				Mutation:SpawnRandomItem()
 
-					return 120.0
-				end)
+				return 120.0
+			end)
 		end
 
 		if IMBA_MUTATION["terrain"] == "call_down" then
@@ -408,7 +408,6 @@ function Mutation:OnGameRulesStateChange(keys)
 		end
 
 		if IMBA_MUTATION["terrain"] == "wormhole" then
-
 			-- Assign initial wormhole positions
 			local current_wormholes = {}
 			for i = 1, 12 do
@@ -434,50 +433,48 @@ function Mutation:OnGameRulesStateChange(keys)
 				end)
 
 			-- Teleport loop
-			Timers:CreateTimer(0, function()
-
-					-- Find units to teleport
-					for i = 1, 12 do
-						local units = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, current_wormholes[i], nil, 150, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED, FIND_ANY_ORDER, false)
-						for _, unit in pairs(units) do
-							if not unit:HasModifier("modifier_mutation_wormhole_cooldown") then
-								if unit:IsHero() then
-									unit:EmitSound("Wormhole.Disappear")
-									Timers:CreateTimer(0.03, function()
-											unit:EmitSound("Wormhole.Appear")
-										end)
-								else
-									unit:EmitSound("Wormhole.CreepDisappear")
-									Timers:CreateTimer(0.03, function()
-											unit:EmitSound("Wormhole.CreepAppear")
-										end)
-								end
-								unit:AddNewModifier(unit, nil, "modifier_mutation_wormhole_cooldown", {duration = IMBA_MUTATION_WORMHOLE_PREVENT_DURATION})
-								FindClearSpaceForUnit(unit, current_wormholes[13-i], true)
-								if unit.GetPlayerID and unit:GetPlayerID() then
-									PlayerResource:SetCameraTarget(unit:GetPlayerID(), unit)
-									Timers:CreateTimer(0.03, function()
-											PlayerResource:SetCameraTarget(unit:GetPlayerID(), nil)
-										end)
-								end
+			Timers:CreateTimer(function()
+				-- Find units to teleport
+				for i = 1, 12 do
+					local units = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, current_wormholes[i], nil, 150, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED, FIND_ANY_ORDER, false)
+					for _, unit in pairs(units) do
+						if not unit:HasModifier("modifier_mutation_wormhole_cooldown") then
+							if unit:IsHero() then
+								unit:EmitSound("Wormhole.Disappear")
+								Timers:CreateTimer(0.03, function()
+									unit:EmitSound("Wormhole.Appear")
+								end)
+							else
+								unit:EmitSound("Wormhole.CreepDisappear")
+								Timers:CreateTimer(0.03, function()
+									unit:EmitSound("Wormhole.CreepAppear")
+								end)
+							end
+							unit:AddNewModifier(unit, nil, "modifier_mutation_wormhole_cooldown", {duration = IMBA_MUTATION_WORMHOLE_PREVENT_DURATION})
+							FindClearSpaceForUnit(unit, current_wormholes[13-i], true)
+							if unit.GetPlayerID and unit:GetPlayerID() then
+								PlayerResource:SetCameraTarget(unit:GetPlayerID(), unit)
+								Timers:CreateTimer(0.03, function()
+									PlayerResource:SetCameraTarget(unit:GetPlayerID(), nil)
+								end)
 							end
 						end
 					end
-					return 0.5
-				end)
+				end
+				return 0.5
+			end)
 		end
 
 		if IMBA_MUTATION["terrain"] == "tug_of_war" then
 			local golem
-
 			-- Random a team for the initial golem spawn
 			if RandomInt(1, 2) == 1 then
 				golem = CreateUnitByName("npc_dota_mutation_golem", IMBA_MUTATION_TUG_OF_WAR_START[DOTA_TEAM_GOODGUYS], false, nil, nil, DOTA_TEAM_GOODGUYS)
 				golem.ambient_pfx = ParticleManager:CreateParticle("particles/ambient/tug_of_war_team_radiant.vpcf", PATTACH_ABSORIGIN_FOLLOW, golem)
 				ParticleManager:SetParticleControl(golem.ambient_pfx, 0, golem:GetAbsOrigin())
 				Timers:CreateTimer(0.1, function()
-						golem:MoveToPositionAggressive(IMBA_MUTATION_TUG_OF_WAR_TARGET[DOTA_TEAM_GOODGUYS])
-					end)
+					golem:MoveToPositionAggressive(IMBA_MUTATION_TUG_OF_WAR_TARGET[DOTA_TEAM_GOODGUYS])
+				end)
 			else
 				golem = CreateUnitByName("npc_dota_mutation_golem", IMBA_MUTATION_TUG_OF_WAR_START[DOTA_TEAM_BADGUYS], false, nil, nil, DOTA_TEAM_BADGUYS)
 				golem.ambient_pfx = ParticleManager:CreateParticle("particles/ambient/tug_of_war_team_dire.vpcf", PATTACH_ABSORIGIN_FOLLOW, golem)
