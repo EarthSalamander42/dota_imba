@@ -925,7 +925,8 @@ function GameMode:OrderFilter( keys )
 
 	if keys.order_type == DOTA_UNIT_ORDER_PICKUP_ITEM then
 		local unit = EntIndexToHScript(keys.units["0"])
-		if unit ~= nil and unit:GetUnitName() == "npc_dota_courier" then
+		-- Make sure non-heroes cannot pick up runes and make them do nothing
+		if unit ~= nil and not unit:IsRealHero() then
 			local drop = EntIndexToHScript(keys["entindex_target"])
 			local item = drop:GetContainedItem()			
 			if string.find(item:GetAbilityName(), "imba_rune") ~= nil then
@@ -1937,25 +1938,25 @@ function GameMode:OnThink()
 	elseif GetMapName() == "cavern" then
 	else
 		-- fix for super high respawn time
-		-- for _, hero in pairs(HeroList:GetAllHeroes()) do
-			-- if not hero:IsAlive() then
-				-- local respawn_time = hero:GetTimeUntilRespawn()
-				-- local reaper_scythe = 36 -- max necro timer addition
+		for _, hero in pairs(HeroList:GetAllHeroes()) do
+			if not hero:IsAlive() then
+				local respawn_time = hero:GetTimeUntilRespawn()
+				local reaper_scythe = 36 -- max necro timer addition
 
-				-- if hero:HasModifier("modifier_imba_reapers_scythe_respawn") then
-					-- if respawn_time > HERO_RESPAWN_TIME_PER_LEVEL[math.min(hero:GetLevel(), #HERO_RESPAWN_TIME_PER_LEVEL)] + reaper_scythe then
-						-- log.warn("NECROPHOS BUG:", hero:GetUnitName(), "respawn time too high:", respawn_time..". setting to", HERO_RESPAWN_TIME_PER_LEVEL[#HERO_RESPAWN_TIME_PER_LEVEL])
-						-- respawn_time = respawn_time + reaper_scythe
-					-- end
-				-- else
-					-- if respawn_time > HERO_RESPAWN_TIME_PER_LEVEL[math.min(hero:GetLevel(), #HERO_RESPAWN_TIME_PER_LEVEL)] then
-						-- log.warn(hero:GetUnitName(), "respawn time too high:", respawn_time..". setting to", HERO_RESPAWN_TIME_PER_LEVEL[#HERO_RESPAWN_TIME_PER_LEVEL])
-						-- respawn_time = HERO_RESPAWN_TIME_PER_LEVEL[math.min(hero:GetLevel(), #HERO_RESPAWN_TIME_PER_LEVEL)]
-					-- end
-				-- end
-				-- hero:SetTimeUntilRespawn(min(respawn_time, 99))
-			-- end
-		-- end
+				if hero:HasModifier("modifier_imba_reapers_scythe_respawn") then
+					if respawn_time > HERO_RESPAWN_TIME_PER_LEVEL[math.min(hero:GetLevel(), #HERO_RESPAWN_TIME_PER_LEVEL)] + reaper_scythe then
+						log.warn("NECROPHOS BUG:", hero:GetUnitName(), "respawn time too high:", respawn_time..". setting to", HERO_RESPAWN_TIME_PER_LEVEL[#HERO_RESPAWN_TIME_PER_LEVEL])
+						respawn_time = respawn_time + reaper_scythe
+					end
+				else
+					if respawn_time > HERO_RESPAWN_TIME_PER_LEVEL[math.min(hero:GetLevel(), #HERO_RESPAWN_TIME_PER_LEVEL)] then
+						log.warn(hero:GetUnitName(), "respawn time too high:", respawn_time..". setting to", HERO_RESPAWN_TIME_PER_LEVEL[#HERO_RESPAWN_TIME_PER_LEVEL])
+						respawn_time = HERO_RESPAWN_TIME_PER_LEVEL[math.min(hero:GetLevel(), #HERO_RESPAWN_TIME_PER_LEVEL)]
+					end
+				end
+				hero:SetTimeUntilRespawn(min(respawn_time, 99))
+			end
+		end
 
 		if GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
 			-- End the game if one team completely abandoned
