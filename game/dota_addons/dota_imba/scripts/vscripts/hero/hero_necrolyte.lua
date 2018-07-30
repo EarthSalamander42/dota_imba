@@ -878,12 +878,20 @@ function modifier_imba_reapers_scythe:OnRemoved()
 		local target = self:GetParent()
 		if target:IsAlive() and self.ability then
 			self.damage = self.damage * (target:GetMaxHealth() - target:GetHealth())
-			if (self.damage * 1 + (caster:GetSpellPower() * 0.01) * target:GetMagicalArmorValue()) >= target:GetHealth() then
+			-- If this very rough formula for damage exceeds that of the target's health, apply the respawn modifier that increases respawn time of target...
+			if (self.damage * (1 + (caster:GetSpellPower() * 0.01)) * (1 - target:GetMagicalArmorValue())) >= target:GetHealth() then
 				self:GetParent():AddNewModifier(self:GetCaster(), self.ability, "modifier_imba_reapers_scythe_respawn", {})
 			end
-			-- Deals damage
+			-- Deals damage (optimally, the ApplyDamage float number would be used for calculating whether the respawn modifier should be applied.
+			-- However, that doesn't seem to be possible without actually inflicting the damage, and modifiers cannot be applied on dead units)
 			local actually_dmg = ApplyDamage({attacker = caster, victim = target, ability = self.ability, damage = self.damage, damage_type = DAMAGE_TYPE_MAGICAL})
 			SendOverheadEventMessage(nil, OVERHEAD_ALERT_DAMAGE, target, actually_dmg, nil)
+			
+			-- ...HOWEVER, in the case of the target not actually dying under scythe due to incorrect calculations (ex. Dazzle Grave, Oracle False Promise, Bristleback damage reduction, etc.), remove the modifier
+			-- This will prevent a indefinitely lingering respawn modifier that increases respawn time (or worse) upon an actual death later
+			if target:IsAlive() and target:HasModifier("modifier_imba_reapers_scythe_respawn") then
+				self:GetParent():RemoveModifierByName("modifier_imba_reapers_scythe_respawn")
+			end
 		end
 	end
 end
@@ -905,7 +913,7 @@ function modifier_imba_reapers_scythe_respawn:OnCreated()
 end
 
 function modifier_imba_reapers_scythe_respawn:IsHidden()
-	return true
+	return false
 end
 
 function modifier_imba_reapers_scythe_respawn:IsPurgable()
