@@ -61,5 +61,5 @@ function modifier_mutation_ants:OnHeroKilled(params)
 end
 
 function modifier_mutation_ants:GetModifierModelScale()
-	return math.max(5 * self:GetStackCount(), self.minimum_cap)
+	return math.max(-5 * self:GetStackCount(), self.minimum_cap)
 end

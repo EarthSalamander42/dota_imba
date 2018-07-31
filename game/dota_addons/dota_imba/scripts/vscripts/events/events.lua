@@ -246,7 +246,10 @@ function GameMode:OnNPCSpawned(keys)
 	if npc then
 		-- UnitSpawned Api Event
 		local player = "-1"
-
+		
+		-- Adding boundary modifier here (to keep entities within the map)
+		npc:AddNewModifier(npc, nil, "modifier_boundaries", {})
+		
 		if npc:IsRealHero() and npc:GetPlayerID() then
 			player = PlayerResource:GetSteamID(npc:GetPlayerID())
 		end

@@ -8,7 +8,7 @@ function modifier_mutation_thundergods_wrath:OnCreated()
 	if IsClient() then return end
 	self.delay = 1.7
 	local game_time = math.min(GameRules:GetDOTATime(false, false) / 60, 30)
-	self.damage = 400 + (100 * game_time)
+	self.damage = 300 + (80 * game_time)
 
 	EmitSoundOn("Hero_Zuus.GodsWrath", self:GetParent())
 
