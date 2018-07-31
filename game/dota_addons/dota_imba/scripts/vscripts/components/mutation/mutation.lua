@@ -416,9 +416,8 @@ function Mutation:OnGameRulesStateChange(keys)
 				table.remove(IMBA_MUTATION_WORMHOLE_POSITIONS, random_int)
 			end
 
-			local wormhole_particles = {}
-
 			-- Create wormhole particles (destroy and redraw every minute to accommodate for reconnecting players)
+			local wormhole_particles = {}
 			Timers:CreateTimer(0, function()
 					for i = 1, 12 do
 						if wormhole_particles[i] then
@@ -431,7 +430,6 @@ function Mutation:OnGameRulesStateChange(keys)
 					end
 					return 60
 				end)
-
 			-- Teleport loop
 			Timers:CreateTimer(function()
 				-- Find units to teleport
@@ -461,6 +459,7 @@ function Mutation:OnGameRulesStateChange(keys)
 						end
 					end
 				end
+
 				return 0.5
 			end)
 		end
@@ -480,8 +479,8 @@ function Mutation:OnGameRulesStateChange(keys)
 				golem.ambient_pfx = ParticleManager:CreateParticle("particles/ambient/tug_of_war_team_dire.vpcf", PATTACH_ABSORIGIN_FOLLOW, golem)
 				ParticleManager:SetParticleControl(golem.ambient_pfx, 0, golem:GetAbsOrigin())
 				Timers:CreateTimer(0.1, function()
-						golem:MoveToPositionAggressive(IMBA_MUTATION_TUG_OF_WAR_TARGET[DOTA_TEAM_BADGUYS])
-					end)
+					golem:MoveToPositionAggressive(IMBA_MUTATION_TUG_OF_WAR_TARGET[DOTA_TEAM_BADGUYS])
+				end)
 			end
 
 			-- Initial logic
@@ -491,7 +490,6 @@ function Mutation:OnGameRulesStateChange(keys)
 			golem:SetMinimumGoldBounty(50)
 			golem:SetMaximumGoldBounty(50)
 		end
-
 
 		--[[
 		if IMBA_MUTATION["terrain"] == "minefield" then

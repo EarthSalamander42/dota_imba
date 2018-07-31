@@ -14,7 +14,6 @@
 --
 
 function GameMode:OnGameRulesStateChange(keys)
-
 	-- This internal handling is used to set up main barebones functions
 	GameMode:_OnGameRulesStateChange(keys)
 
@@ -25,14 +24,11 @@ function GameMode:OnGameRulesStateChange(keys)
 	-- Run this in safe context
 	local new_state = GameRules:State_Get()
 
-	-------------------------------------------------------------------------------------------------
 	-- IMBA: Team selection
-	-------------------------------------------------------------------------------------------------
 	if new_state == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
 		log.info("events: team selection")
 		OnSetGameMode() -- setup gamemode rules
 		InitializeTeamSelection()
-		GameRules:SetSafeToLeave(true) -- seems to be useless for leaver penalties
 
 		-- get the IXP of everyone (ignore bot)
 		GetPlayerInfoIXP()
@@ -45,38 +41,30 @@ function GameMode:OnGameRulesStateChange(keys)
 		CustomNetTables:SetTableValue("game_options", "player_colors", hex_colors)
 	end
 
-	-------------------------------------------------------------------------------------------------
 	-- IMBA: Pick screen stuff
-	-------------------------------------------------------------------------------------------------
 	if new_state == DOTA_GAMERULES_STATE_HERO_SELECTION then
 		api.imba.event(api.events.entered_hero_selection)
-
 		HeroSelection:Init()
 	end
 
-	-------------------------------------------------------------------------------------------------
 	-- IMBA: Start-of-pre-game stuff
-	-------------------------------------------------------------------------------------------------
 	if new_state == DOTA_GAMERULES_STATE_PRE_GAME then
 		api.imba.event(api.events.entered_pre_game)
-
 		-- Shows various info to devs in pub-game to find lag issues
---			ImbaNetGraph(10.0)
+--		ImbaNetGraph(10.0)
 
 		-- Initialize rune spawners
 		InitRunes()
 
---			if GetMapName() ~= "imba_overthrow" then
-		-- Initialize battlepass towers
---				Imbattlepass:InitializeTowers()
---			end
+--		if GetMapName() ~= "imba_overthrow" then
+			-- Initialize battlepass towers
+--			Imbattlepass:InitializeTowers()
+--		end
 
 		CustomNetTables:SetTableValue("game_options", "donators", api.imba.get_donators())
 		CustomNetTables:SetTableValue("game_options", "developers", api.imba.get_developers())
 
-		-------------------------------------------------------------------------------------------------
 		-- IMBA: Custom maximum level EXP tables adjustment
-		-------------------------------------------------------------------------------------------------
 		local max_level = tonumber(CustomNetTables:GetTableValue("game_options", "max_level")["1"])
 		if max_level and max_level > 25 then
 			for i = 26, max_level do

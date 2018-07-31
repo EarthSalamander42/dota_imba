@@ -25,7 +25,7 @@ end
 
 function modifier_frantic:DeclareFunctions()
 	local funcs = {
-		MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE,
+		MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE_STACKING,
 		MODIFIER_PROPERTY_MANACOST_PERCENTAGE,
 		MODIFIER_PROPERTY_STATUS_RESISTANCE,
 		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING,
@@ -39,7 +39,7 @@ function modifier_frantic:OnCreated()
 	self:SetStackCount(_G.IMBA_FRANTIC_VALUE)
 end
 
-function modifier_frantic:GetModifierPercentageCooldown()
+function modifier_frantic:GetModifierPercentageCooldownStacking()
 	return self:GetStackCount()
 end
 

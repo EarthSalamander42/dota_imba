@@ -18,11 +18,11 @@ POSITIVE_MUTATION_LIST[1] = "killstreak_power"
 POSITIVE_MUTATION_LIST[2] = "teammate_resurrection"
 POSITIVE_MUTATION_LIST[3] = "pocket_tower"
 POSITIVE_MUTATION_LIST[4] = "super_fervor"
-POSITIVE_MUTATION_LIST[5] = "frantic"
+POSITIVE_MUTATION_LIST[5] = "super_blink"
 POSITIVE_MUTATION_LIST[6] = "slark_mode"
 
---POSITIVE_MUTATION_LIST["super_blink"] = false
---POSITIVE_MUTATION_LIST["greed_is_good"] = false
+-- POSITIVE_MUTATION_LIST[5] = "frantic"
+-- POSITIVE_MUTATION_LIST["greed_is_good"] = false
 -- POSITIVE_MUTATION_LIST["jump_start"] = false
 
 -- Negative Mutations

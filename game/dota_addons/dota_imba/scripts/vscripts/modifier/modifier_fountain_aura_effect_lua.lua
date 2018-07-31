@@ -21,9 +21,9 @@ function modifier_fountain_aura_effect_lua:OnCreated()
 	if IsServer() then
 		self.pfx = ParticleManager:CreateParticle(self:GetParent().fountain_effect, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 
-		if self:GetParent():GetUnitName() == "npc_dota_courier" then
+--		if self:GetParent():GetUnitName() == "npc_dota_courier" then
 			self:GetParent():AddNewModifier(self:GetParent(), nil, "modifier_invulnerable", {})
-		end
+--		end
 	end
 end
 
@@ -37,9 +37,9 @@ end
 
 function modifier_fountain_aura_effect_lua:OnDestroy()
 	if IsServer() then
-		if self:GetParent():GetUnitName() == "npc_dota_courier" then
+--		if self:GetParent():GetUnitName() == "npc_dota_courier" then
 			self:GetParent():RemoveModifierByName("modifier_invulnerable")
-		end
+--		end
 
 		ParticleManager:DestroyParticle(self.pfx, false)
 		ParticleManager:ReleaseParticleIndex(self.pfx)

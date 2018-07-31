@@ -306,13 +306,13 @@ GG_TEAM = {}
 GG_TEAM[2] = 0
 GG_TEAM[3] = 0
 
-if IsFranticMap() then
+if IsMutationMap() then
 	IMBA_FRANTIC_MODE_ON = true
 else
 	IMBA_FRANTIC_MODE_ON = false
 end
 
-_G.IMBA_FRANTIC_VALUE = 50
+_G.IMBA_FRANTIC_VALUE = 25
 
 IMBA_PICK_MODE_ALL_PICK = true												-- Activates All Pick mode when true
 IMBA_PICK_MODE_ALL_RANDOM = false											-- Activates All Random mode when true

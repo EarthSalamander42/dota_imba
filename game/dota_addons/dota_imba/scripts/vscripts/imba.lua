@@ -1229,7 +1229,7 @@ function GameMode:OnAllPlayersLoaded()
 		if string.find(building_name, "fountain") then
 			-- Add fountain passive abilities
 			building:AddAbility("imba_fountain_danger_zone"):SetLevel(1)
-			building:AddAbility("imba_fountain_relief"):SetLevel(1)
+--			building:AddAbility("imba_fountain_relief"):SetLevel(1)
 
 			-- remove vanilla fountain healing
 			if building:HasModifier("modifier_fountain_aura") then

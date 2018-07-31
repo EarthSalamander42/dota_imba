@@ -54,7 +54,7 @@
 "DOTA_Tooltip_modifier_mutation_shadow_dance_buff_Description"	"Regenerate health and mana slightly faster when not in vision of the enemy."
 
 "DOTA_Tooltip_modifier_frantic"									"Frantic"
-"DOTA_Tooltip_modifier_frantic_Description"						"50% Cooldown Reduction, Respawn Time and Status Resistance, 100% Mana Regen."
+"DOTA_Tooltip_modifier_frantic_Description"						"25% Cooldown Reduction, Mana Cost and Status Resistance."
 
 "DOTA_Tooltip_modifier_mutation_call_down"						"Call Down"
 "DOTA_Tooltip_modifier_mutation_call_down_Description"			"Rockets periodically fall onto the battlefield. Watch out!"
