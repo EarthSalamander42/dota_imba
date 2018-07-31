@@ -5,6 +5,7 @@
 #base heroes/night_stalker/abilities.txt
 #base heroes/wisp/abilities.txt
 #base heroes/shadow_shaman/abilities.txt
+#base heroes/zeus/abilities.txt
 
 "DOTAAbilities"
 {

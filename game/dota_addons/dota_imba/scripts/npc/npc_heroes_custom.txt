@@ -1,4 +1,5 @@
 #base heroes/wisp/hero.txt
+#base heroes/zeus/hero.txt
 #base heroes/shadow_shaman/hero.txt
 
 "DOTAHeroes"
@@ -2085,24 +2086,6 @@
 		"Ability15"					"special_bonus_imba_witch_doctor_1" //Every Maledict burst deals it's damage around the target (spreads between enemies)
 		"Ability16"					"special_bonus_imba_witch_doctor_3" //Voodoo Restoration's purge is now a strong purge.
 		"Ability17"					"special_bonus_imba_witch_doctor_8" //Now spawns two Death Wards; if channeling is broken, only one of them disappears.
-	}
-
-	//=================================================================================================================
-	// HERO: Zeus
-	//=================================================================================================================
-	"npc_dota_hero_zuus"
-	{
-		"override_hero"				"npc_dota_hero_zuus"
-
-		//Picking Screen
-		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
-
-		"Ability1"					"zuus_arc_lightning"
-		"Ability2"					"zuus_lightning_bolt"
-		"Ability3"					"zuus_static_field"
-		"Ability4"					"zuus_cloud"
-		"Ability5"					"generic_hidden"
-		"Ability6"					"zuus_thundergods_wrath"
 	}
 
 	//=================================================================================================================
