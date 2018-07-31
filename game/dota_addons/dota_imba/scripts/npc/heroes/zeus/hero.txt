@@ -14,8 +14,8 @@
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
 
 		"Ability1"					"imba_zuus_arc_lightning"
-		"Ability2"					"imba_zuus_static_field"
-		"Ability3"					"imba_zuus_lightning_bolt"
+		"Ability2"					"imba_zuus_lightning_bolt"
+		"Ability3"					"imba_zuus_static_field"
 		"Ability4"					"imba_zuus_cloud"
 		"Ability5"					"imba_zuus_nimbus_zap"
 		"Ability6"					"imba_zuus_thundergods_wrath"
