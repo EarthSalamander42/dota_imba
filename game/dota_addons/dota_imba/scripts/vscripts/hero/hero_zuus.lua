@@ -628,9 +628,10 @@ function imba_zuus_cloud:OnSpellStart()
 		local cloud_radius 			= self:GetSpecialValueFor("cloud_radius")
 
 		caster:RemoveModifierByName("modifier_imba_zuus_on_nimbus")
-		self.zuus_nimbus_unit = CreateUnitByName("imba_npc_dota_zeus_cloud", Vector(self.target_point.x, self.target_point.y, 450), false, caster, nil, caster:GetTeam())
+		self.zuus_nimbus_unit = CreateUnitByName("npc_dota_zeus_cloud", Vector(self.target_point.x, self.target_point.y, 450), false, caster, nil, caster:GetTeam())
 		self.zuus_nimbus_unit:SetControllableByPlayer(caster:GetPlayerID(), true)
 		self.zuus_nimbus_unit:SetModelScale(0.7)
+		self.zuus_nimbus_unit:AddNewModifier(self.zuus_nimbus_unit, self, "modifier_phased", {})
 		self.zuus_nimbus_unit:AddNewModifier(caster, self, "modifier_zuus_nimbus_storm", {duration = cloud_duration, cloud_bolt_interval = cloud_bolt_interval, cloud_radius = cloud_radius})
 		self.zuus_nimbus_unit:AddNewModifier(caster, nil, "modifier_kill", {duration = cloud_duration})
 
@@ -641,7 +642,6 @@ function imba_zuus_cloud:OnSpellStart()
 		end
 	end
 end
-
 
 modifier_zuus_nimbus_storm = class({})
 function modifier_zuus_nimbus_storm:OnCreated(keys)

@@ -96,14 +96,15 @@
 // Tiny's Grow
 ////===============================================================================================================
 
-"DOTA_Tooltip_ability_imba_tiny_grow"                      "Grow"
-"DOTA_Tooltip_ability_imba_tiny_grow_Description"                      "Tiny gains craggy mass that increases his power at the cost of his attack speed. Increases Tossed unit damage and improves movement speed and the area of effect of Tiny's spells.\n\nUpgradable by Aghanim's Scepter."
-"DOTA_Tooltip_ability_imba_tiny_grow_aghanim_description"              "Tiny gains a tree that lets him cleave, increases his range and lets him do bonus damage to buildings."
-"DOTA_Tooltip_ability_imba_tiny_grow_Lore"                              "Watching a hill become a mountain is awe-inspiring - especially if the mountain begins laying waste to adversaries."
-"DOTA_Tooltip_ability_imba_tiny_grow_rolling_stones_stacks"            "ROLLING STONE STACKS:"
-"DOTA_Tooltip_ability_imba_tiny_grow_rolling_stones_aoe"                "ROLLING STONE BONUS RADIUS:"
-"DOTA_Tooltip_ability_imba_tiny_grow_bonus_cleave_damage_scepter"                   "%CLEAVE DAMAGE:"
-"DOTA_Tooltip_ability_imba_tiny_grow_bonus_building_damage_scepter"                 "%BONUS BUILDING DAMAGE:"
+"DOTA_Tooltip_ability_imba_tiny_grow"									"Grow"
+"DOTA_Tooltip_ability_imba_tiny_grow_Description"						"Tiny gains craggy mass that increases his power at the cost of his attack speed. Increases Tossed unit damage and improves movement speed and the area of effect of Tiny's spells.\n\nUpgradable by Aghanim's Scepter."
+"DOTA_Tooltip_ability_imba_tiny_grow_aghanim_description"				"Tiny gains a tree that lets him cleave, increases his range and lets him do bonus damage to buildings."
+"DOTA_Tooltip_ability_imba_tiny_grow_Lore"								"Watching a hill become a mountain is awe-inspiring - especially if the mountain begins laying waste to adversaries."
+"DOTA_Tooltip_ability_imba_tiny_grow_rolling_stones_stacks"				"ROLLING STONE STACKS:"
+"DOTA_Tooltip_ability_imba_tiny_grow_rolling_stones_aoe"				"ROLLING STONE BONUS RADIUS:"
+"DOTA_Tooltip_ability_imba_tiny_grow_bonus_cleave_damage_scepter"		"%CLEAVE DAMAGE:"
+"DOTA_Tooltip_ability_imba_tiny_grow_bonus_building_damage_scepter"		"%BONUS BUILDING DAMAGE:"
+"DOTA_Tooltip_ability_imba_tiny_grow_status_resistance"					"%STATUS RESISTANCE:"
 
 ////===============================================================================================================
 // Tiny's Custom Talents

@@ -51,7 +51,10 @@ function modifier_imba_thick_hide:OnCreated()
 end
 
 function modifier_imba_thick_hide:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE}
+	local decFuncs = {
+		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
+		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING,
+	}
 
 	return decFuncs
 end
@@ -65,10 +68,9 @@ function modifier_imba_thick_hide:GetModifierIncomingDamage_Percentage()
 	return self.damage_reduction_pct * (-1)
 end
 
-function modifier_imba_thick_hide:GetCustomTenacity()
+function modifier_imba_thick_hide:GetModifierStatusResistanceStacking()
 	return self.debuff_duration_red_pct
 end
-
 
 ---------------------------------
 -- 		   Hoof Stomp          --
@@ -1056,8 +1058,11 @@ function modifier_imba_stampede_haste:OnIntervalThink()
 end
 
 function modifier_imba_stampede_haste:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE,
-		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE}
+	local decFuncs = {
+		MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE,
+		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE
+		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING,
+	}
 
 	return decFuncs
 end
@@ -1075,7 +1080,7 @@ function modifier_imba_stampede_haste:GetModifierIncomingDamage_Percentage()
 	return nil
 end
 
-function modifier_imba_stampede_haste:GetCustomTenacity()
+function modifier_imba_stampede_haste:GetModifierStatusResistanceStacking()
 	return self:GetCaster():FindTalentValue("special_bonus_imba_centaur_5")
 end
 

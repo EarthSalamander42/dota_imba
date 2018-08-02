@@ -1059,8 +1059,11 @@ function modifier_imba_enrage_buff:OnIntervalThink()
 end
 
 function modifier_imba_enrage_buff:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
-		MODIFIER_PROPERTY_MODEL_SCALE}
+	local decFuncs = {
+		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
+		MODIFIER_PROPERTY_MODEL_SCALE,
+		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING
+	}
 	return decFuncs
 end
 
@@ -1074,7 +1077,7 @@ function modifier_imba_enrage_buff:GetModifierIncomingDamage_Percentage()
 	return damage_reduction * (-1)
 end
 
-function modifier_imba_enrage_buff:GetCustomTenacityUnique()
+function modifier_imba_enrage_buff:GetModifierStatusResistanceStacking()
 	return self:GetAbility():GetSpecialValueFor("damage_reduction")
 end
 

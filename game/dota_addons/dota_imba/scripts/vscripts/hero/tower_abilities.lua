@@ -4647,6 +4647,14 @@ function modifier_imba_tower_tenacity_aura_buff:OnCreated()
 	self.tenacity_per_protective = self.ability:GetSpecialValueFor("tenacity_per_protective")
 end
 
+function modifier_imba_tower_tenacity_aura_buff:DeclareFunctions()
+	local funcs = {
+		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING,
+	}
+
+	return funcs
+end
+
 function modifier_imba_tower_tenacity_aura_buff:OnRefresh()
 	self:OnCreated()
 end
@@ -4655,7 +4663,7 @@ function modifier_imba_tower_tenacity_aura_buff:IsHidden()
 	return false
 end
 
-function modifier_imba_tower_tenacity_aura_buff:GetCustomTenacity()
+function modifier_imba_tower_tenacity_aura_buff:GetModifierStatusResistanceStacking()
 	if self.caster:IsNull() then return 0 end
 	local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct", self.caster)
 	local tenacity = self.base_tenacity_pct + self.tenacity_per_protective * protective_instinct_stacks
