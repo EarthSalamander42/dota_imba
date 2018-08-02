@@ -207,11 +207,11 @@ function api.imba.complete(callback)
 				has_repicked = false, -- PlayerResource:HasRepicked(id),
 				valid_team_player = PlayerResource:IsValidTeamPlayer(id),
 				id = id,
-				items = data.items
+				items = data.items,
+				abandon = PlayerResource:GetHasAbandonedDueToLongDisconnect(id)
 			})
 		end
 	end
-
 
 	-- complete game
 	log.info("Completing game " .. tostring(api.imba.data.id))
