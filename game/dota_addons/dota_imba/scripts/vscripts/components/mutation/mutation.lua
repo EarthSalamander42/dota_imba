@@ -56,8 +56,8 @@ function Mutation:Init()
 	-- Selecting Mutations (Take out if statement for IsInToolsMode if you want to test randomized)
 	if IsInToolsMode() then
 		IMBA_MUTATION["positive"] = "teammate_resurrection"
-		IMBA_MUTATION["negative"] = "tug_of_war"
-		IMBA_MUTATION["terrain"] = "wormhole"
+		IMBA_MUTATION["negative"] = "periodic_spellcast"
+		IMBA_MUTATION["terrain"] = "tug_of_war"
 	else
 		Mutation:ChooseMutation("positive", POSITIVE_MUTATION_LIST)
 		Mutation:ChooseMutation("negative", NEGATIVE_MUTATION_LIST)
@@ -66,9 +66,9 @@ function Mutation:Init()
 
 	IMBA_MUTATION_PERIODIC_SPELLS = {}
 	IMBA_MUTATION_PERIODIC_SPELLS[1] = {"sun_strike", "Sunstrike", "Red", -1}
-	IMBA_MUTATION_PERIODIC_SPELLS[2] = {"thundergods_wrath", "Thundergod's Wrath", "Red", -1}
+	IMBA_MUTATION_PERIODIC_SPELLS[2] = {"thundergods_wrath", "Thundergod's Wrath", "Red", 3.5}
 	IMBA_MUTATION_PERIODIC_SPELLS[3] = {"rupture", "Rupture", "Red", 10.0}
-	IMBA_MUTATION_PERIODIC_SPELLS[4] = {"torrent", "Torrent", "Red", 45}
+	IMBA_MUTATION_PERIODIC_SPELLS[4] = {"torrent", "Torrent", "Red", 10}
 	IMBA_MUTATION_PERIODIC_SPELLS[5] = {"cold_feet", "Cold Feet", "Red", 4.0}
 	IMBA_MUTATION_PERIODIC_SPELLS[6] = {"stampede", "Stampede", "Green", 5.0}
 	IMBA_MUTATION_PERIODIC_SPELLS[7] = {"bloodlust", "Bloodlust", "Green", 30.0}
@@ -315,11 +315,10 @@ function Mutation:OnGameRulesStateChange(keys)
 			repeat
 				if validItems[counter].v <= t1cap then
 					tier1[#tier1 + 1] = {k = validItems[counter].k, v = validItems[counter].v}
+					counter = counter + 1
 				else
 					varFlag = 1
-					counter = counter - 1
 				end
-				counter = counter + 1
 			until varFlag == 1
 
 			varFlag = 0
@@ -328,11 +327,10 @@ function Mutation:OnGameRulesStateChange(keys)
 			repeat
 				if validItems[counter].v <= t2cap then
 					tier2[#tier2 + 1] = {k = validItems[counter].k, v = validItems[counter].v}
+					counter = counter + 1
 				else
 					varFlag = 1
-					counter = counter - 1
 				end
-				counter = counter + 1
 			until varFlag == 1
 
 			varFlag = 0
@@ -341,11 +339,10 @@ function Mutation:OnGameRulesStateChange(keys)
 			repeat
 				if validItems[counter].v <= t3cap then
 					tier3[#tier3 + 1] = {k = validItems[counter].k, v = validItems[counter].v}
+					counter = counter + 1
 				else
 					varFlag = 1
-					counter = counter - 1
 				end
-				counter = counter + 1
 			until varFlag == 1
 
 			varFlag = 0
