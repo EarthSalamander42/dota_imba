@@ -531,6 +531,7 @@ function modifier_imba_elder_titan_natural_order:DeclareFunctions()
 		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
 		MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS,
 		MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE,
+		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING,
 	}
 	return funcs
 end
@@ -571,7 +572,7 @@ function modifier_imba_elder_titan_natural_order:GetModifierBaseAttack_BonusDama
 	end
 end
 
-function modifier_imba_elder_titan_natural_order:GetCustomTenacityUnique()
+function modifier_imba_elder_titan_natural_order:GetModifierStatusResistanceStacking()
 	if self:GetCaster():HasTalent("special_bonus_imba_elder_titan_5") then
 		if self:GetCaster():GetUnitName() == "npc_dota_elder_titan_ancestral_spirit" then
 			return self:GetCaster():GetOwner():FindTalentValue("special_bonus_imba_elder_titan_5") * (-1)

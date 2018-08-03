@@ -155,7 +155,8 @@ end
 function modifier_imba_pipe_aura:DeclareFunctions()
 	local funcs = {
 		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
-		MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS
+		MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS,
+		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING
 	}
 	return funcs
 end
@@ -168,7 +169,7 @@ function modifier_imba_pipe_aura:GetModifierMagicalResistanceBonus()
 	return self.bonus_magic_resist
 end
 
-function modifier_imba_pipe_aura:GetCustomTenacity()
+function modifier_imba_pipe_aura:GetModifierStatusResistanceStacking()
 	-- If the parent has the active bonus, tenacity bonus is increased
 	if self.parent:HasModifier("modifier_imba_pipe_active_bonus") then
 		return self.active_tenacity_pct

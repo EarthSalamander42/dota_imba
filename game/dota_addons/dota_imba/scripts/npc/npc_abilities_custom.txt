@@ -24375,6 +24375,11 @@
 				"var_type"					"FIELD_INTEGER"
 				"bonus_building_damage_scepter"	"75"
 			}
+			"11"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"status_resistance"			"30 40 50"
+			}
 		}
 	}
 

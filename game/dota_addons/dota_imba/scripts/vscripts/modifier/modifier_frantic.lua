@@ -12,7 +12,7 @@ function modifier_frantic:IsPurgable() return false end
 function modifier_frantic:IsPurgeException() return false end
 
 function modifier_frantic:GetTexture()
-	return "custom/imba_rune_arcane"
+	return "custom/frantic"
 end
 
 function modifier_frantic:GetEffectName()
@@ -27,7 +27,6 @@ function modifier_frantic:DeclareFunctions()
 	local funcs = {
 		MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE_STACKING,
 		MODIFIER_PROPERTY_MANACOST_PERCENTAGE,
-		MODIFIER_PROPERTY_STATUS_RESISTANCE,
 		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING,
 	}
 
@@ -48,11 +47,5 @@ function modifier_frantic:GetModifierPercentageManacost()
 end
 
 function modifier_frantic:GetModifierStatusResistanceStacking()
-	print("Status Resistance:", self:GetStackCount())
-	return self:GetStackCount()
-end
-
-function modifier_frantic:GetModifierStatusResistance()
-	print("Status Resistance:", self:GetStackCount())
 	return self:GetStackCount()
 end

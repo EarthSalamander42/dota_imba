@@ -1,7 +1,3 @@
--- Editors:
---     Earth Salamander #42
---     AltiV
-
 if Mutation == nil then
 	Mutation = class({})
 
@@ -12,7 +8,6 @@ if Mutation == nil then
 end
 
 -- Positive Mutations 
-
 POSITIVE_MUTATION_LIST = {}
 POSITIVE_MUTATION_LIST[1] = "killstreak_power"
 POSITIVE_MUTATION_LIST[2] = "teammate_resurrection"
@@ -20,6 +15,7 @@ POSITIVE_MUTATION_LIST[3] = "pocket_tower"
 POSITIVE_MUTATION_LIST[4] = "super_fervor"
 POSITIVE_MUTATION_LIST[5] = "super_blink"
 POSITIVE_MUTATION_LIST[6] = "slark_mode"
+POSITIVE_MUTATION_LIST[7] = "ultimate_level"
 
 -- POSITIVE_MUTATION_LIST[5] = "frantic"
 -- POSITIVE_MUTATION_LIST["greed_is_good"] = false

@@ -387,7 +387,7 @@ function modifier_item_imba_greatwyrm_plate:GetCustomIncomingDamageReductionUniq
 	return self:GetAbility():GetSpecialValueFor("damage_reduction") end
 
 -- Custom tenacity property
-function modifier_item_imba_greatwyrm_plate:GetCustomTenacityUnique()
+function modifier_item_imba_greatwyrm_plate:GetModifierStatusResistanceStacking()
 	return self:GetAbility():GetSpecialValueFor("tenacity") end
 
 -- Declare modifier events/properties
@@ -399,6 +399,7 @@ function modifier_item_imba_greatwyrm_plate:DeclareFunctions()
 		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
 		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
+		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING,
 	}
 	return funcs
 end
@@ -461,7 +462,7 @@ function modifier_item_imba_greatwyrm_plate_buff:GetCustomIncomingDamageReductio
 	return self.damage_reduction end
 
 -- Custom tenacity property
-function modifier_item_imba_greatwyrm_plate_buff:GetCustomTenacityUnique()
+function modifier_item_imba_greatwyrm_plate_buff:GetModifierStatusResistanceStacking()
 	return self.tenacity end
 
 -- Declare modifier events/properties
@@ -469,6 +470,7 @@ function modifier_item_imba_greatwyrm_plate_buff:DeclareFunctions()
 	local funcs = {
 		MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK,
 		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
+		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING
 	}
 	return funcs
 end

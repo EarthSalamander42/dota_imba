@@ -835,8 +835,18 @@ modifier_imba_blur_invuln = class({})
 function modifier_imba_blur_invuln:IsHidden()	return false end
 function modifier_imba_blur_invuln:IsDebuff()	return false end
 function modifier_imba_blur_invuln:IsPurgable() return false end
-function modifier_imba_blur_invuln:GetCustomTenacityUnique() return 100 end
-	
+
+function modifier_imba_blur_invuln:DeclareFunctions()
+	local funcs = {
+		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING,
+	}
+	return funcs
+end
+
+function modifier_imba_blur_invuln:GetModifierStatusResistanceStacking()
+	return 100
+end
+
 function modifier_imba_blur_invuln:CheckState()
 	return { [MODIFIER_STATE_NO_HEALTH_BAR] = true,
 			 [MODIFIER_STATE_STUNNED] = true,

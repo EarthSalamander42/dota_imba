@@ -27,7 +27,7 @@
 //      Zeus: Lightning Bolt
 //---------------------------------------------------------------------------
 "DOTA_Tooltip_Ability_imba_zuus_lightning_bolt"					"Lightning Bolt"
-"DOTA_Tooltip_Ability_imba_zuus_lightning_bolt_description"		"Calls down a bolt of lightning to strike an enemy unit, causing damage and a mini-stun. When cast, Lightning Bolt briefly provides unobstructed vision and True Sight around the target in a 750 radius. Can be cast on the ground, affecting the closest enemy hero in %spread_aoe% range.\n<font color='#FF7800'>Thunder Struck:</font> Enemies hit recieves 3 <font color='#FFFFFF'>Static Charges.</font>\n<font color='#FF7800'>Thundergods Focus:</font> Zeus can cast Lightning Bolt on himself without harm to gain a stack of Thundergods Focus. Duration: %thundergods_focus_duration%s"
+"DOTA_Tooltip_Ability_imba_zuus_lightning_bolt_description"		"Calls down a bolt of lightning to strike an enemy unit, causing damage and a mini-stun. When cast, Lightning Bolt briefly provides unobstructed vision and True Sight around the target in a 750 radius. Can be cast on the ground, affecting the closest enemy hero in %spread_aoe% range.\n<font color='#FF7800'>Thunder Struck:</font> Enemies hit recieves 3 <font color='#FFFFFF'>Static Charges.</font>\n<font color='#FF7800'>Thundergods Focus:</font> Zeus can cast Lightning Bolt on himself without harm to gain a stack of Thundergods Focus. Lasts %thundergods_focus_duration% seconds."
 "DOTA_Tooltip_Ability_imba_zuus_lightning_bolt_lore" 			"A shocking punishment for rebellious heathen."
 "DOTA_Tooltip_Ability_imba_zuus_lightning_bolt_note0"			"You can interrupt channeling spells and items with this ability."
 "DOTA_Tooltip_Ability_imba_zuus_lightning_bolt_cast_range_tooltip" 	"CAST RANGE:"

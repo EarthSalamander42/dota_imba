@@ -372,7 +372,8 @@ function modifier_imba_warcry:DeclareFunctions()
 		{
 			MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 			MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
-			MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS
+			MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS,
+			MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING
 		}
 	return decFuns
 end
@@ -427,7 +428,7 @@ function modifier_imba_warcry:OnRefresh()
 	self:OnCreated()
 end
 
-function modifier_imba_warcry:GetCustomTenacity()
+function modifier_imba_warcry:GetModifierStatusResistanceStacking()
 	return self.tenacity_pct
 end
 
