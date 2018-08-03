@@ -497,7 +497,8 @@ function modifier_imba_roshan_death_buff:DeclareFunctions()
 		MODIFIER_PROPERTY_EXTRA_HEALTH_BONUS,
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
-		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS
+		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
+		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING
 	}
 end
 
@@ -521,9 +522,9 @@ function modifier_imba_roshan_death_buff:GetModifierPhysicalArmorBonus()
 	return self:GetAbility():GetSpecialValueFor("armor_per_death") * self:GetStackCount()
 end
 
---	function modifier_imba_roshan_death_buff:GetCustomTenacityUnique()
---		return self:GetAbility():GetSpecialValueFor("tenacity_per_death") * self:GetStackCount()
---	end
+function modifier_imba_roshan_death_buff:GetModifierStatusResistanceStacking()
+	return self:GetAbility():GetSpecialValueFor("tenacity_per_death") * self:GetStackCount()
+end
 
 ------------------------------------------
 --				APOCALYPSE				--

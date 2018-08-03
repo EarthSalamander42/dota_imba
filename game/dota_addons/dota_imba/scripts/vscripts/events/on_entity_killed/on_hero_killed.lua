@@ -80,6 +80,10 @@ function GameMode:OnHeroKilled(killer, killed_unit)
 		else
 			if killed_unit:HasModifier("modifier_imba_reapers_scythe_respawn") then
 				local reaper_scythe = killer:FindAbilityByName("imba_necrolyte_reapers_scythe"):GetSpecialValueFor("respawn_increase")
+				-- Sometimes the killer is not actually Necrophos due to the respawn modifier lingering on a target, which makes reaper_scythe nil and causes massive problems
+				if not reaper_scythe then
+					reaper_scythe = 0
+				end
 				respawn_time = HERO_RESPAWN_TIME_PER_LEVEL[hero_level] + reaper_scythe
 			elseif respawn_time > HERO_RESPAWN_TIME_PER_LEVEL[#HERO_RESPAWN_TIME_PER_LEVEL] then
 				log.warn("Respawn Time too high: "..tostring(respawn_time)..". New Respawn Time:"..tostring(HERO_RESPAWN_TIME_PER_LEVEL[#HERO_RESPAWN_TIME_PER_LEVEL]))
@@ -92,7 +96,7 @@ function GameMode:OnHeroKilled(killer, killed_unit)
 			end
 
 			log.info("Set time until respawn for unit " .. tostring(killed_unit:GetUnitName()) .. " to " .. tostring(respawn_time) .. " seconds")
-			killed_unit:SetTimeUntilRespawn(min(respawn_time, 90))
+			killed_unit:SetTimeUntilRespawn(min(respawn_time, 100))
 		end
 	end
 end

@@ -229,7 +229,15 @@ function modifier_imba_mega_treads_stat_multiplier_00:IsDebuff() return false en
 function modifier_imba_mega_treads_stat_multiplier_00:IsPurgable() return false end
 function modifier_imba_mega_treads_stat_multiplier_00:RemoveOnDeath() return false end
 
-function modifier_imba_mega_treads_stat_multiplier_00:GetCustomTenacity()
+function modifier_imba_mega_treads_stat_multiplier_00:DeclareFunctions()
+	local funcs = {
+		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING,
+	}
+
+	return funcs
+end
+
+function modifier_imba_mega_treads_stat_multiplier_00:GetModifierStatusResistanceStacking()
 	return self:GetAbility():GetSpecialValueFor("str_mode_tenacity")
 end
 

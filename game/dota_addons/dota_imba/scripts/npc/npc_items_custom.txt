@@ -4354,7 +4354,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"base_crit"				"235"
+				"base_crit"				"255"
 			}
 			"04"
 			{
@@ -4710,7 +4710,6 @@
 				"var_type"					"FIELD_INTEGER"
 				"shadow_rip_end_width"		"700"
 			}
-			
 			"12"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -4729,9 +4728,8 @@
 			"15"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"main_debuff_duration"		"5.0"
+				"main_debuff_duration"		"7.0"
 			}
-
 		}
 	}
 
@@ -10432,7 +10430,7 @@
 			"09"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"actual_break_duration"			"3"
+				"actual_break_duration"			"5"
 			}
 		}
 	}
@@ -10570,7 +10568,7 @@
 			"15"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"actual_break_duration"			"3"
+				"actual_break_duration"			"7"
 			}
 		}
 	}
@@ -10767,8 +10765,7 @@
 			}
 		}
 	}
-	
-	
+
 	//=================================================================================================================
 	// Recipe: Lesser Crit
 	//=================================================================================================================
@@ -10833,7 +10830,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"base_crit"				"175"
+				"base_crit"				"200"
 			}
 		}
 	}
@@ -12498,17 +12495,17 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
 		"Model"							"models/props_gameplay/tombstoneb01.vmdl"
 		"PingOverrideText"				"DOTA_Chat_Tombstone_Pinged"
+
 		"precache"
 		{
 			"particle_folder" "particles/units/heroes/hero_morphling"
 		}
 
-
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"100"
 		"AbilityCastPoint"				"0.0"
-		"AbilityChannelTime"			"3.0"
+		"AbilityChannelTime"			"6.0"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------

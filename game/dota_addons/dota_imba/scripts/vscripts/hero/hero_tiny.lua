@@ -1438,7 +1438,6 @@ function imba_tiny_grow:GetIntrinsicModifierName()
 	return "modifier_imba_tiny_grow_passive"
 end
 
-
 function imba_tiny_grow:OnUpgrade()
 	if IsServer() then
 		local caster = self:GetCaster()
@@ -1506,7 +1505,8 @@ function modifier_imba_tiny_grow_passive:DeclareFunctions()
 	local funcs = {
 		MODIFIER_EVENT_ON_ATTACK_LANDED,
 		MODIFIER_PROPERTY_TOTALDAMAGEOUTGOING_PERCENTAGE,
-		MODIFIER_PROPERTY_ATTACK_RANGE_BONUS
+		MODIFIER_PROPERTY_ATTACK_RANGE_BONUS,
+		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING
 	}
 
 	return funcs
@@ -1536,4 +1536,8 @@ function modifier_imba_tiny_grow_passive:OnAttackLanded( params )
 			DoCleaveAttack( params.attacker, params.target, self:GetAbility(), params.damage * self.cleave_pct / 100, self.cleave_startwidth, self.cleave_endwidth, self.cleave_distance, "particles/units/heroes/hero_tiny/tiny_grow_cleave.vpcf" )
 		end
 	end
+end
+
+function modifier_imba_tiny_grow_passive:GetModifierStatusResistanceStacking()
+	return self:GetSpecialValueFor("status_resistance")
 end

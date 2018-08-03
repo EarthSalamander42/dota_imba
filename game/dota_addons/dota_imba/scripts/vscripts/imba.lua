@@ -492,10 +492,16 @@ function GameMode:ModifierFilter( keys )
 			if modifier_owner:FindAbilityByName("tusk_snowball") then
 				modifier_owner:FindAbilityByName("tusk_snowball"):SetActivated(false)
 				Timers:CreateTimer(15.0, function()
-						if not modifier_owner:FindModifierByName("modifier_tusk_snowball_movement") then
-							modifier_owner:FindAbilityByName("tusk_snowball"):SetActivated(true)
-						end
-					end)
+					if not modifier_owner:FindModifierByName("modifier_tusk_snowball_movement") then
+						modifier_owner:FindAbilityByName("tusk_snowball"):SetActivated(true)
+					end
+				end)
+			end
+		end
+
+		if modifier_owner:GetUnitName() == "npc_imba_warlock_demonic_ascension" then
+			if modifier_name == "modifier_fountain_aura_effect_lua" then
+				return false
 			end
 		end
 
@@ -925,7 +931,8 @@ function GameMode:OrderFilter( keys )
 
 	if keys.order_type == DOTA_UNIT_ORDER_PICKUP_ITEM then
 		local unit = EntIndexToHScript(keys.units["0"])
-		if unit ~= nil and unit:GetUnitName() == "npc_dota_courier" then
+		-- Make sure non-heroes cannot pick up runes and make them do nothing
+		if unit ~= nil and not unit:IsRealHero() then
 			local drop = EntIndexToHScript(keys["entindex_target"])
 			local item = drop:GetContainedItem()			
 			if string.find(item:GetAbilityName(), "imba_rune") ~= nil then
@@ -1229,7 +1236,7 @@ function GameMode:OnAllPlayersLoaded()
 		if string.find(building_name, "fountain") then
 			-- Add fountain passive abilities
 			building:AddAbility("imba_fountain_danger_zone"):SetLevel(1)
-			building:AddAbility("imba_fountain_relief"):SetLevel(1)
+--			building:AddAbility("imba_fountain_relief"):SetLevel(1)
 
 			-- remove vanilla fountain healing
 			if building:HasModifier("modifier_fountain_aura") then
@@ -1936,27 +1943,6 @@ function GameMode:OnThink()
 		end
 	elseif GetMapName() == "cavern" then
 	else
-		-- fix for super high respawn time
-		for _, hero in pairs(HeroList:GetAllHeroes()) do
-			if not hero:IsAlive() then
-				local respawn_time = hero:GetTimeUntilRespawn()
-				local reaper_scythe = 36 -- max necro timer addition
-
-				if hero:HasModifier("modifier_imba_reapers_scythe_respawn") then
-					if respawn_time > HERO_RESPAWN_TIME_PER_LEVEL[math.min(hero:GetLevel(), #HERO_RESPAWN_TIME_PER_LEVEL)] + reaper_scythe then
-						log.warn("NECROPHOS BUG:", hero:GetUnitName(), "respawn time too high:", respawn_time..". setting to", HERO_RESPAWN_TIME_PER_LEVEL[#HERO_RESPAWN_TIME_PER_LEVEL])
-						respawn_time = respawn_time + reaper_scythe
-					end
-				else
-					if respawn_time > HERO_RESPAWN_TIME_PER_LEVEL[math.min(hero:GetLevel(), #HERO_RESPAWN_TIME_PER_LEVEL)] then
-						log.warn(hero:GetUnitName(), "respawn time too high:", respawn_time..". setting to", HERO_RESPAWN_TIME_PER_LEVEL[#HERO_RESPAWN_TIME_PER_LEVEL])
-						respawn_time = HERO_RESPAWN_TIME_PER_LEVEL[math.min(hero:GetLevel(), #HERO_RESPAWN_TIME_PER_LEVEL)]
-					end
-				end
-				hero:SetTimeUntilRespawn(min(respawn_time, 99))
-			end
-		end
-
 		if GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
 			-- End the game if one team completely abandoned
 			if CustomNetTables:GetTableValue("game_options", "game_count").value == 1 then

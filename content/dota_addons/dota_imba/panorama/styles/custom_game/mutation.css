@@ -2,16 +2,14 @@
 	width: 400px;
 }
 
-#Mutations
-{
+#Mutations {
 	flow-children: down;
 	box-shadow: none;
-	margin-top: 120px;
+	margin-top: 130px;
 	visibility: collapse;
 }
 
-.DotaMutations
-{
+.DotaMutations {
 	margin-top: 4px;
 	margin-left: 0;
 	padding-left: 10px;
@@ -20,6 +18,13 @@
 	color: #A3FDCC;
 	height: 42px;
 	width: 195px;
+}
+
+#Mutation0Label {	
+	background-image: url("file://panorama/images/custom_game/mutation/imba-bg.png");
+	background-size: cover;
+	color: #ccebff;
+	text-shadow: 1px 0px 2px 2.0 #000000ca;
 }
 
 #Mutation1Label {	

@@ -1020,9 +1020,10 @@ function PickupRune(rune_name, unit, bActiveByBottle)
 
 			-- global bounty rune
 			for _, hero in pairs(HeroList:GetAllHeroes()) do
-				if hero:GetTeam() == unit:GetTeam() then
-					if (hero:GetUnitName() == "npc_dota_hero_monkey_king" and hero:HasModifier("modifier_monkey_king_fur_army_soldier_hidden")) or (hero:GetUnitName() == "npc_dota_hero_meepo" and not hero.is_real_meepo) or hero:IsIllusion() then
-						-- Dont give gold to illusions or monkey king clones.
+				if hero:GetTeam() == unit:GetTeam() then					
+				    -- Do not give gold to illusions or monkey king clones (has to check for two separate modifiers)
+					if not hero:IsRealHero() or hero:IsClone() or hero:HasModifier("modifier_monkey_king_fur_army_soldier") or hero:HasModifier("modifier_monkey_king_fur_army_soldier_hidden") then
+
 					elseif hero:GetUnitName() == "npc_dota_hero_alchemist" then 
 						local alchemy_bounty = 0
 						if unit:FindAbilityByName("imba_alchemist_goblins_greed") and unit:FindAbilityByName("imba_alchemist_goblins_greed"):GetLevel() > 0 then
@@ -1036,6 +1037,13 @@ function PickupRune(rune_name, unit, bActiveByBottle)
 							alchemy_bounty = current_bounty
 						end
 
+						-- Balancing for stacking gold multipliers to not go out of control in mutation/frantic maps
+						if(IsMutationMap() or IsFranticMap()) then
+							local bountyReductionPct = 0.5 -- 0.0 to 1.0, with 0.0 being reduce nothing, and 1.0 being remove greevil's greed effect
+							-- Set variable to number between current_bounty and alchemy_bounty based on bountyReductionPct
+							alchemy_bounty = max(current_bounty, alchemy_bounty - ((alchemy_bounty - current_bounty) * bountyReductionPct))
+						end
+						
 						hero:ModifyGold(alchemy_bounty, false, DOTA_ModifyGold_Unspecified)
 						SendOverheadEventMessage(PlayerResource:GetPlayer(hero:GetPlayerOwnerID()), OVERHEAD_ALERT_GOLD, hero, alchemy_bounty, nil)
 					else

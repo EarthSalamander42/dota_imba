@@ -79,7 +79,6 @@ local base_modifier_dual_breath_caster = class({
 	IsHidden 						= function(self) return true end,
 	IsPurgable 						= function(self) return false end,
 	IsDebuff 						= function(self) return false end,
-	IgnoreTenacity					= function(self) return true end,
 	IsMotionController				= function(self) return true end,
 	GetMotionControllerPriority		= function(self) return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end,
 	AllowIllusionDuplicate			= function(self) return false end,

@@ -10,7 +10,7 @@
 "DOTA_Tooltip_ability_imba_wisp_tether_lore"                    "The benevolent touch of Io brings strength from between the planes."
 "DOTA_Tooltip_ability_imba_wisp_tether_radius"            		"MAX TETHER DISTANCE:"
 "DOTA_Tooltip_ability_imba_wisp_tether_movespeed"               "%MOVEMENT SPEED BONUS:"
-"DOTA_Tooltip_ability_imba_wisp_tether_heal_amp"         		"HP/MANA AMP:"
+"DOTA_Tooltip_ability_imba_wisp_tether_tether_heal_amp"         		"HP/MANA AMP:"
 "DOTA_Tooltip_ability_imba_wisp_tether_attackslow_tooltip"		"SLOW:"
 "DOTA_Tooltip_ability_imba_wisp_tether_stun_duration" 			"SLOW DURATION:"
 

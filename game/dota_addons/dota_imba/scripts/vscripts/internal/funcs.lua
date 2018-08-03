@@ -281,7 +281,7 @@ end
 --	end
 
 -- Check if an unit is near the enemy fountain
-function IsNearEnemyFountain(location, team, distance)
+function IsNearFountain(location, distance)
 	for _, fountain in pairs(Entities:FindAllByClassname("ent_dota_fountain")) do
 		if (fountain:GetAbsOrigin() - location):Length2D() <= distance then
 			return true
@@ -794,32 +794,6 @@ function CDOTA_BaseNPC:GetIncomingDamagePct()
 	damage_amp = damage_amp * vanguard_damage_reduction
 
 	return (damage_amp - 1) * 100
-end
-
--- Tenacity
-function CDOTA_BaseNPC:GetTenacity()
-
-	-- Fetch tenacity from modifiers
-	local tenacity = 1
-	local tenacity_unique = 0
-	for _, parent_modifier in pairs(self:FindAllModifiers()) do
-
-		-- Tutela Plate's tenacity does not stack with itself
-		if parent_modifier.GetCustomTenacityUnique then
-			tenacity_unique = math.max(tenacity_unique, parent_modifier:GetCustomTenacityUnique())
-		end
-
-		-- Stack all other sources multiplicatively
-		if parent_modifier.GetCustomTenacity then
-			local parent_tenacity = parent_modifier:GetCustomTenacity() or 0
-			tenacity = tenacity * (100 - parent_tenacity) * 0.01
-		end
-	end
-
-	-- Calculate total tenacity
-	tenacity = tenacity * (100 - tenacity_unique) * 0.01
-
-	return (1 - tenacity) * 100
 end
 
 -- Safely checks if this unit is a hero or a creep

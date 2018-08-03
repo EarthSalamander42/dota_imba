@@ -1,6 +1,7 @@
 <root>
 	<scripts>
 		<include src="file://{resources}/scripts/custom_game/mutation.js" /> 
+		<include src="file://{resources}/scripts/custom_game/util.js" />
 	</scripts>
 	<styles>
 		<include src="file://{resources}/styles/custom_game/mutation.css" />
@@ -8,6 +9,9 @@
 
 	<Panel class="Main">
 		<Panel id="Mutations">
+			<Panel id="Mutation0" class="MutationWrap">
+				<Label id="Mutation0Label" class="DotaMutations" text="Mutation 0"/>
+			</Panel>
 			<Panel id="Mutation1" class="MutationWrap">
 				<Label id="Mutation1Label" class="DotaMutations" text="Mutation 1"/>
 			</Panel>

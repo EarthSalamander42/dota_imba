@@ -49,7 +49,8 @@ function modifier_mutation_tug_of_war_golem:DeclareFunctions()
 		MODIFIER_PROPERTY_ATTACK_RANGE_BONUS,
 		MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK,
 		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
-		MODIFIER_PROPERTY_MODEL_SCALE
+		MODIFIER_PROPERTY_MODEL_SCALE,
+		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING,
 	}
 	return funcs
 end
@@ -82,8 +83,8 @@ function modifier_mutation_tug_of_war_golem:GetModifierAttackRangeBonus()
 	return math.min(rangeBonus * self:GetStackCount(), rangeBonusMax)
 end
 
-function modifier_mutation_tug_of_war_golem:GetCustomTenacity()
-	return math.min(tenacity * self:GetStackCount(), tenacityMax)
+function modifier_mutation_tug_of_war_golem:GetModifierStatusResistanceStacking()
+	return self:GetStackCount()
 end
 
 function modifier_mutation_tug_of_war_golem:GetModifierPhysical_ConstantBlock()

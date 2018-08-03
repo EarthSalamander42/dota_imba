@@ -5,6 +5,7 @@
 #base heroes/night_stalker/abilities.txt
 #base heroes/wisp/abilities.txt
 #base heroes/shadow_shaman/abilities.txt
+#base heroes/zeus/abilities.txt
 
 "DOTAAbilities"
 {
@@ -24373,6 +24374,11 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"bonus_building_damage_scepter"	"75"
+			}
+			"11"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"status_resistance"			"30 40 50"
 			}
 		}
 	}

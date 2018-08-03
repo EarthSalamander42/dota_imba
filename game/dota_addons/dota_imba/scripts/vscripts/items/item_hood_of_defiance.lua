@@ -56,7 +56,7 @@ function modifier_imba_hood_of_defiance_passive:OnCreated( params )
 	self.bonus_magic_resist = self:GetAbility():GetSpecialValueFor("bonus_magic_resist")
 end
 
-function modifier_imba_hood_of_defiance_passive:GetCustomTenacity()
+function modifier_imba_hood_of_defiance_passive:GetModifierStatusResistanceStacking()
 	if self.parent:HasModifier("modifier_imba_hood_of_defiance_active_bonus") then
 		return self.active_tenacity_pct
 	end
@@ -67,7 +67,8 @@ end
 function modifier_imba_hood_of_defiance_passive:DeclareFunctions()
 	local funcs = {
 		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
-		MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS
+		MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS,
+		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING
 	}
 	return funcs
 end

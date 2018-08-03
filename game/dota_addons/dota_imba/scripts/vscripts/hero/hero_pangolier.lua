@@ -1444,12 +1444,13 @@ function modifier_imba_heartpiercer_debuff:DeclareFunctions()
 	local declfuncs = {
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
+		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING,
 	}
 
 	return declfuncs
 end
 
-function modifier_imba_heartpiercer_debuff:GetCustomTenacity()
+function modifier_imba_heartpiercer_debuff:GetModifierStatusResistanceStacking()
 	--Talent #6: Heartpiercer decrease the parent tenacity
 	if self:GetCaster():HasTalent("special_bonus_imba_pangolier_6") then
 		return self:GetCaster():FindTalentValue("special_bonus_imba_pangolier_6") * (-1)

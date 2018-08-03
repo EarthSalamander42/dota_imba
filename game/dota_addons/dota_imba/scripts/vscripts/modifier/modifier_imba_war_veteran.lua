@@ -8,7 +8,7 @@ function modifier_imba_war_veteran_0:IsHidden() return false end
 function modifier_imba_war_veteran_0:IsPermanent() return true end
 
 function modifier_imba_war_veteran_0:OnCreated()
-	self.hp_regen = 2				-- +50 health regen
+	self.hp_regen = 1				-- +25 health regen
 	self.status_resistance = 0.5		-- +12.5% tenacity
 end
 
@@ -19,6 +19,7 @@ end
 function modifier_imba_war_veteran_0:DeclareFunctions()
 	local funcs = {
 		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
+		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING,
 	}
 
 	return funcs
@@ -28,7 +29,7 @@ function modifier_imba_war_veteran_0:GetModifierConstantHealthRegen()
 	return self.hp_regen * (self:GetParent():GetLevel() - 25)
 end
 
-function modifier_imba_war_veteran_0:GetCustomTenacity()
+function modifier_imba_war_veteran_0:GetModifierStatusResistanceStacking()
 	return self.status_resistance * (self:GetParent():GetLevel() - 25)
 end
 

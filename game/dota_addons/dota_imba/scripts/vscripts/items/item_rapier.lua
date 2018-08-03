@@ -267,7 +267,8 @@ function modifier_imba_rapier_cursed:DeclareFunctions()
 			MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
 			MODIFIER_PROPERTY_PROVIDES_FOW_POSITION,
 			MODIFIER_PROPERTY_FORCE_DRAW_MINIMAP,
-			MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE
+			MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
+			MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING
 		}
 	return decFuns
 end
@@ -303,7 +304,7 @@ function modifier_imba_rapier_cursed:OnDestroy()
 	end
 end
 
-function modifier_imba_rapier_cursed:GetCustomTenacity()
+function modifier_imba_rapier_cursed:GetModifierStatusResistanceStacking()
 	return self.tenacity_pct
 end
 

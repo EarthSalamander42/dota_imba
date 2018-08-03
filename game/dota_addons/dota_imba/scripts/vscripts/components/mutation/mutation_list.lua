@@ -1,7 +1,3 @@
--- Editors:
---     Earth Salamander #42
---     AltiV
-
 if Mutation == nil then
 	Mutation = class({})
 
@@ -12,25 +8,24 @@ if Mutation == nil then
 end
 
 -- Positive Mutations 
-
 POSITIVE_MUTATION_LIST = {}
 POSITIVE_MUTATION_LIST[1] = "killstreak_power"
 POSITIVE_MUTATION_LIST[2] = "teammate_resurrection"
 POSITIVE_MUTATION_LIST[3] = "pocket_tower"
 POSITIVE_MUTATION_LIST[4] = "super_fervor"
-POSITIVE_MUTATION_LIST[5] = "frantic"
-POSITIVE_MUTATION_LIST[6] = "slark_mode"
+-- POSITIVE_MUTATION_LIST[5] = "super_blink"
+POSITIVE_MUTATION_LIST[5] = "slark_mode"
+POSITIVE_MUTATION_LIST[6] = "ultimate_level"
 
---POSITIVE_MUTATION_LIST["super_blink"] = false
---POSITIVE_MUTATION_LIST["greed_is_good"] = false
+-- POSITIVE_MUTATION_LIST[5] = "frantic"
+-- POSITIVE_MUTATION_LIST["greed_is_good"] = false
 -- POSITIVE_MUTATION_LIST["jump_start"] = false
 
 -- Negative Mutations
 NEGATIVE_MUTATION_LIST = {}
 NEGATIVE_MUTATION_LIST[1] = "death_explosion"
 NEGATIVE_MUTATION_LIST[2] = "periodic_spellcast"
-
--- NEGATIVE_MUTATION_LIST["defense_of_the_ants"] = false
+NEGATIVE_MUTATION_LIST[3] = "defense_of_the_ants"
 -- NEGATIVE_MUTATION_LIST["alien_incubation"] = false
 -- NEGATIVE_MUTATION_LIST["death_gold_drop"] = false
 -- NEGATIVE_MUTATION_LIST["no_health_bar"] = false

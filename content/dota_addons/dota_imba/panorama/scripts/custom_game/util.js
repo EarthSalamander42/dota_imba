@@ -209,3 +209,36 @@ function OverrideTopBarColor() {
 }
 
 GameEvents.Subscribe("override_top_bar_colors", OverrideTopBarColor);
+
+// Mutation tooltips (used in mutation.js and hero_selection.js)
+var mutation = [];
+
+function Mutation(args) {
+	$.Msg(args)
+	mutation[0] = "imba"
+	mutation[1] = args["positive"]
+	mutation[2] = args["negative"]
+	mutation[3] = args["terrain"]
+
+	$("#Mutations").style.visibility = "visible";
+
+	for (var j = 0; j <= 3; j++) {
+		SetMutationTooltip(j)
+	}
+}
+
+function SetMutationTooltip(j) {
+	var panel = $("#Mutation" + j)
+
+	$("#Mutation" + j + "Label").text = $.Localize("mutation_" + mutation[j]);
+
+	panel.SetPanelEvent("onmouseover", function () {
+		$.DispatchEvent("UIShowTextTooltip", panel, $.Localize("mutation_" + mutation[j] + "_Description"));
+	})
+
+	panel.SetPanelEvent("onmouseout", function () {
+		$.DispatchEvent("UIHideTextTooltip", panel);
+	})
+}
+
+GameEvents.Subscribe("send_mutations", Mutation);

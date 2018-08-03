@@ -109,8 +109,11 @@ function modifier_mutation_stampede:OnIntervalThink()
 end
 
 function modifier_mutation_stampede:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE_MIN,
-	MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE}
+	local decFuncs = {
+		MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE_MIN,
+		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
+		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING,
+	}
 
 	return decFuncs
 end
@@ -127,7 +130,7 @@ function modifier_mutation_stampede:CheckState()
 	return {[MODIFIER_STATE_NO_UNIT_COLLISION] = true, [MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY] = true}
 end
 
-function modifier_mutation_stampede:GetCustomTenacity()
+function modifier_mutation_stampede:GetModifierStatusResistanceStacking()
 	return self.tenacity
 end
 

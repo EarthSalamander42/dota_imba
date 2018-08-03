@@ -52,7 +52,7 @@ end
 -- Fountain's Relief Aura (increases tenacity and damage reduction)
 --------------------------------------------------------------------------------------------------------
 --------------------------------------------------------------------------------------------------------
-
+--[[
 imba_fountain_relief = imba_fountain_relief or class({})
 LinkLuaModifier("modifier_imba_fountain_relief_aura", "hero/fountain_abilities", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_fountain_relief_aura_buff", "hero/fountain_abilities", LUA_MODIFIER_MOTION_NONE)
@@ -165,14 +165,17 @@ function modifier_imba_fountain_relief_aura_buff:IsHidden()
 	return false
 end
 
-function modifier_imba_fountain_relief_aura_buff:GetCustomTenacity()
+function modifier_imba_fountain_relief_aura_buff:GetModifierStatusResistanceStacking()
 	return self.tenacity
 end
 
 function modifier_imba_fountain_relief_aura_buff:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
+	local decFuncs = {
+		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
 		MODIFIER_EVENT_ON_ATTACK,
-		MODIFIER_EVENT_ON_ABILITY_FULLY_CAST}
+		MODIFIER_EVENT_ON_ABILITY_FULLY_CAST,
+		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING,
+	}
 
 	return decFuncs
 end
@@ -281,3 +284,4 @@ function modifier_imba_fountain_relief_aura_reject:OnAbilityFullyCast(keys)
 		end
 	end
 end
+--]]
