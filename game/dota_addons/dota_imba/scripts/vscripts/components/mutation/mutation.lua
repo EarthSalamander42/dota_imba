@@ -75,6 +75,20 @@ function Mutation:Init()
 	IMBA_MUTATION_PERIODIC_SPELLS[8] = {"aphotic_shield", "Aphotic Shield", "Green", 15.0}
 	--IMBA_MUTATION_PERIODIC_SPELLS[9] = {"track", "Track", "Red", 20.0}
 
+	-- Negative Spellcasts
+	IMBA_MUTATION_PERIODIC_SPELLS[1] = {}
+	IMBA_MUTATION_PERIODIC_SPELLS[1][1] = {"sun_strike", "Sunstrike", "Red", -1}
+	IMBA_MUTATION_PERIODIC_SPELLS[1][2] = {"thundergods_wrath", "Thundergod's Wrath", "Red", -1}
+	IMBA_MUTATION_PERIODIC_SPELLS[1][3] = {"rupture", "Rupture", "Red", 10.0}
+	IMBA_MUTATION_PERIODIC_SPELLS[1][4] = {"torrent", "Torrent", "Red", 45}
+	IMBA_MUTATION_PERIODIC_SPELLS[1][5] = {"cold_feet", "Cold Feet", "Red", 4.0}
+
+	-- Positive Spellcasts
+	IMBA_MUTATION_PERIODIC_SPELLS[2] = {}
+	IMBA_MUTATION_PERIODIC_SPELLS[2][1] = {"stampede", "Stampede", "Green", 5.0}
+	IMBA_MUTATION_PERIODIC_SPELLS[2][2] = {"bloodlust", "Bloodlust", "Green", 30.0}
+	IMBA_MUTATION_PERIODIC_SPELLS[2][3] = {"aphotic_shield", "Aphotic Shield", "Green", 15.0}
+	
 	IMBA_MUTATION_WORMHOLE_COLORS = {}
 	IMBA_MUTATION_WORMHOLE_COLORS[1] = Vector(100, 0, 0)
 	IMBA_MUTATION_WORMHOLE_COLORS[2] = Vector(0, 100, 0)
@@ -250,13 +264,17 @@ function Mutation:OnGameRulesStateChange(keys)
 				end
 			end
 
-			local random_int = RandomInt(1, #IMBA_MUTATION_PERIODIC_SPELLS)
-			Timers:CreateTimer(55.0, function()
-				random_int = RandomInt(1, #IMBA_MUTATION_PERIODIC_SPELLS)
-				Notifications:TopToAll({text = IMBA_MUTATION_PERIODIC_SPELLS[random_int][2].." Mutation in 5 seconds...", duration = 5.0, style = {color = IMBA_MUTATION_PERIODIC_SPELLS[random_int][3]}})
+			local random_int
+			local counter = 0 -- Used to alternate between negative and positive spellcasts, and increments after each timer call
+			local varSwap -- Switches between 1 and 2 based on counter for negative and positive spellcasts
 
-				return 60.0
-			end)
+			Timers:CreateTimer(55.0, function()
+					varSwap = (counter % 2) + 1
+					random_int = RandomInt(1, #IMBA_MUTATION_PERIODIC_SPELLS[varSwap])
+					Notifications:TopToAll({text = IMBA_MUTATION_PERIODIC_SPELLS[varSwap][random_int][2].." Mutation in 5 seconds...", duration = 5.0, style = {color = IMBA_MUTATION_PERIODIC_SPELLS[varSwap][random_int][3]}})
+					
+					return 60.0
+				end)
 
 			Timers:CreateTimer(60.0, function()
 				if bad_fountain == nil or good_fountain == nil then
@@ -264,18 +282,17 @@ function Mutation:OnGameRulesStateChange(keys)
 					return 60.0 
 				end
 
-				for _, hero in pairs(HeroList:GetAllHeroes()) do
-					local caster = bad_fountain
+						if (hero:GetTeamNumber() == 3 and IMBA_MUTATION_PERIODIC_SPELLS[varSwap][random_int][3] == "Red") or (hero:GetTeamNumber() == 2 and IMBA_MUTATION_PERIODIC_SPELLS[varSwap][random_int][3] == "Green") then
+							caster = good_fountain
+						end
 
-					if (hero:GetTeamNumber() == 3 and IMBA_MUTATION_PERIODIC_SPELLS[random_int][3] == "Red") or (hero:GetTeamNumber() == 2 and IMBA_MUTATION_PERIODIC_SPELLS[random_int][3] == "Green") then
-						caster = good_fountain
+						hero:AddNewModifier(caster, caster, "modifier_mutation_"..IMBA_MUTATION_PERIODIC_SPELLS[varSwap][random_int][1], {duration=IMBA_MUTATION_PERIODIC_SPELLS[varSwap][random_int][4]})
 					end
 
-					hero:AddNewModifier(caster, caster, "modifier_mutation_"..IMBA_MUTATION_PERIODIC_SPELLS[random_int][1], {duration=IMBA_MUTATION_PERIODIC_SPELLS[random_int][4]})
-				end
-
-				return 60.0
-			end)
+					counter = counter + 1
+					
+					return 60.0
+				end)
 		end
 
 		if IMBA_MUTATION["terrain"] == "gift_exchange" then
@@ -708,4 +725,4 @@ function Mutation:IsEligibleHero(hero)
 	end
 
 	return true
-end	
+end
