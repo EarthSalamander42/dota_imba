@@ -450,7 +450,7 @@ function imba_pudge_meat_hook:OnProjectileHit_ExtraData(hTarget, vLocation, Extr
 		local buff2 = hTarget:FindModifierByName("modifier_imba_hook_target_ally")
 	end
 
-	if hTarget and self:GetCaster():GetTeamNumber() ~= hTarget:GetTeamNumber() and IsNearEnemyFountain(hTarget:GetAbsOrigin(), self:GetCaster():GetTeamNumber(), 1200) then
+	if hTarget and self:GetCaster():GetTeamNumber() ~= hTarget:GetTeamNumber() and IsNearFountain(hTarget:GetAbsOrigin(), 1200) then
 		return false
 	end
 

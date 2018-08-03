@@ -201,6 +201,8 @@ function onPlayerStatChange(table, key, data) {
 
 		var ply_battlepass = CustomNetTables.GetTableValue("battlepass", Game.GetLocalPlayerID());
 
+		Mutation(data.mutation)
+
 		Object.keys(data.herolist).sort().forEach(function (heroName) {
 			var currentstat = null;
 			switch (data.herolist[heroName]) {

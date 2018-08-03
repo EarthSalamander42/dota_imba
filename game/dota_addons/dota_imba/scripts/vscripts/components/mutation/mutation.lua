@@ -252,30 +252,30 @@ function Mutation:OnGameRulesStateChange(keys)
 
 			local random_int = RandomInt(1, #IMBA_MUTATION_PERIODIC_SPELLS)
 			Timers:CreateTimer(55.0, function()
-					random_int = RandomInt(1, #IMBA_MUTATION_PERIODIC_SPELLS)
-					Notifications:TopToAll({text = IMBA_MUTATION_PERIODIC_SPELLS[random_int][2].." Mutation in 5 seconds...", duration = 5.0, style = {color = IMBA_MUTATION_PERIODIC_SPELLS[random_int][3]}})
+				random_int = RandomInt(1, #IMBA_MUTATION_PERIODIC_SPELLS)
+				Notifications:TopToAll({text = IMBA_MUTATION_PERIODIC_SPELLS[random_int][2].." Mutation in 5 seconds...", duration = 5.0, style = {color = IMBA_MUTATION_PERIODIC_SPELLS[random_int][3]}})
 
-					return 60.0
-				end)
+				return 60.0
+			end)
 
 			Timers:CreateTimer(60.0, function()
-					if bad_fountain == nil or good_fountain == nil then
-						log.error("nao cucekd up!!! ")
-						return 60.0 
+				if bad_fountain == nil or good_fountain == nil then
+					log.error("nao cucekd up!!! ")
+					return 60.0 
+				end
+
+				for _, hero in pairs(HeroList:GetAllHeroes()) do
+					local caster = bad_fountain
+
+					if (hero:GetTeamNumber() == 3 and IMBA_MUTATION_PERIODIC_SPELLS[random_int][3] == "Red") or (hero:GetTeamNumber() == 2 and IMBA_MUTATION_PERIODIC_SPELLS[random_int][3] == "Green") then
+						caster = good_fountain
 					end
 
-					for _, hero in pairs(HeroList:GetAllHeroes()) do
-						local caster = bad_fountain
+					hero:AddNewModifier(caster, caster, "modifier_mutation_"..IMBA_MUTATION_PERIODIC_SPELLS[random_int][1], {duration=IMBA_MUTATION_PERIODIC_SPELLS[random_int][4]})
+				end
 
-						if (hero:GetTeamNumber() == 3 and IMBA_MUTATION_PERIODIC_SPELLS[random_int][3] == "Red") or (hero:GetTeamNumber() == 2 and IMBA_MUTATION_PERIODIC_SPELLS[random_int][3] == "Green") then
-							caster = good_fountain
-						end
-
-						hero:AddNewModifier(caster, caster, "modifier_mutation_"..IMBA_MUTATION_PERIODIC_SPELLS[random_int][1], {duration=IMBA_MUTATION_PERIODIC_SPELLS[random_int][4]})
-					end
-
-					return 60.0
-				end)
+				return 60.0
+			end)
 		end
 
 		if IMBA_MUTATION["terrain"] == "gift_exchange" then

@@ -12495,17 +12495,17 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
 		"Model"							"models/props_gameplay/tombstoneb01.vmdl"
 		"PingOverrideText"				"DOTA_Chat_Tombstone_Pinged"
+
 		"precache"
 		{
 			"particle_folder" "particles/units/heroes/hero_morphling"
 		}
 
-
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"100"
 		"AbilityCastPoint"				"0.0"
-		"AbilityChannelTime"			"3.0"
+		"AbilityChannelTime"			"6.0"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------

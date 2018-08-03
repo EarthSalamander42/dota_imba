@@ -887,7 +887,6 @@ function imba_warlock_rain_of_chaos:OnSpellStart()
 	local modifier_demon_link = "modifier_imba_rain_of_chaos_demon_link"
 	local ability_fists = "imba_warlock_flaming_fists"
 	local ability_immolate = "imba_warlock_permanent_immolation"
-	local scepter = caster:HasScepter()
 
 	-- Ability specials
 	local radius = ability:GetSpecialValueFor("radius")
@@ -938,7 +937,6 @@ function imba_warlock_rain_of_chaos:OnSpellStart()
 
 	-- Wait for the effect delay
 	Timers:CreateTimer(effect_delay, function()
-
 			-- Add main particle effect
 			local particle_main_fx = ParticleManager:CreateParticle(particle_main, PATTACH_ABSORIGIN, caster)
 			ParticleManager:SetParticleControl(particle_main_fx, 0, target_point)
@@ -1012,7 +1010,7 @@ function imba_warlock_rain_of_chaos:OnSpellStart()
 			ResolveNPCPositions(target_point, 128)
 
 			-- If caster has scepter, summon Demonic Ascension
-			if scepter then
+			if caster:HasScepter() then
 				-- Assign the golem with the demon link modifier
 				local demon_link_modifier = golem:AddNewModifier(caster, ability, modifier_demon_link, {})
 
@@ -1021,7 +1019,6 @@ function imba_warlock_rain_of_chaos:OnSpellStart()
 				local summon_edge_point = target_point + (target_point - caster:GetAbsOrigin()):Normalized() * scepter_demon_distance
 
 				for i = 0, (scepter_demon_count -1) do
-
 					-- Spawning point
 					local qangle = QAngle(0, i * angle_per_demon, 0)
 					local demon_spawn_point = RotatePosition(target_point, qangle, summon_edge_point)

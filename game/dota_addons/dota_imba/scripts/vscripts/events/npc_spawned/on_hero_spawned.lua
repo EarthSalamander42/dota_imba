@@ -203,8 +203,8 @@ function GameMode:OnHeroSpawned(hero)
 	if hero:HasModifier("modifier_ghost_revenant_ghost_immolation_debuff") then
 		hero:RemoveModifierByName("modifier_ghost_revenant_ghost_immolation_debuff")
 		Timers:CreateTimer(0.2, function()
-				hero:SetHealth(100000)
-			end)
+			hero:SetHealth(100000)
+		end)
 	end
 
 	if hero:GetUnitName() == "npc_dota_hero_meepo" then
@@ -220,8 +220,15 @@ function GameMode:OnHeroSpawned(hero)
 	end
 
 	Timers:CreateTimer(1.0, function() -- Silencer fix
-			if hero:HasModifier("modifier_silencer_int_steal") then
-				hero:RemoveModifierByName("modifier_silencer_int_steal")
-			end
-		end)
+		if hero:HasModifier("modifier_silencer_int_steal") then
+			hero:RemoveModifierByName("modifier_silencer_int_steal")
+		end
+	end)
+
+	Timers:CreateTimer(FrameTime(), function()
+		if IsNearFountain(hero:GetAbsOrigin(), 1200) == false then
+			hero:SetHealth(hero:GetHealth() / 2)
+			hero:SetMana(hero:GetMana() / 2)
+		end
+	end)
 end

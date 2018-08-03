@@ -10,7 +10,8 @@
 
 	<Panel class="es-root">
 		<Panel id="es-victory-info">
-			<Label id="es-victory-info-text" text="" />
+			<Label id="es-victory-info-text" text="ES-Sama Victory!" />
+			<Label id="es-game-time-text" text="00:00" />
 		</Panel>
 		<Panel id="es-teams">
 			<Panel class="es-teams-columns">

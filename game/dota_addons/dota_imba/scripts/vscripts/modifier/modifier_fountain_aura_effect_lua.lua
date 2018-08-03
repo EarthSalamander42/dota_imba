@@ -15,7 +15,10 @@ end
 
 function modifier_fountain_aura_effect_lua:CheckState()
 	if IsServer() then
-		local state = { [MODIFIER_STATE_INVULNERABLE] = true}
+		local state = {
+			[MODIFIER_STATE_INVULNERABLE] = true
+		}
+
 		return state
 	end
 end

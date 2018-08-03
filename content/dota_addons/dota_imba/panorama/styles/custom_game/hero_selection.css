@@ -392,7 +392,6 @@ Label {
 }
 
 .MiddleColumn {
-	margin-top: 30px;
 	padding: 0 20px;
 	width: 100%;
 	height: 100%;
@@ -1433,4 +1432,49 @@ Label.SectionTitle {
 #RadiantIMR,
 #DireIMR {
 	visibility: collapse;
+}
+
+#Mutations {
+	flow-children: right;
+	align: center top;
+	box-shadow: none;
+}
+
+.DotaMutations {
+	margin-top: 4px;
+	margin-left: 0;
+	padding-left: 10px;
+	padding-top: 9px;
+	font-size: 16px;
+	color: #A3FDCC;
+	height: 42px;
+	width: 195px;
+}
+
+#Mutation0Label {	
+	background-image: url("file://panorama/images/custom_game/mutation/imba-bg.png");
+	background-size: cover;
+	color: #ccebff;
+	text-shadow: 1px 0px 2px 2.0 #000000ca;
+}
+
+#Mutation1Label {	
+	background-image: url("file://panorama/images/custom_game/mutation/positive-bg.png");
+	background-size: cover;
+	color: #ecfef6;
+	text-shadow: 1px 0px 2px 2.0 #000000ca;
+}
+
+#Mutation2Label {	
+	background-image: url("file://panorama/images/custom_game/mutation/negative-bg.png");
+	background-size: cover;
+	color: #ffe9eb;
+	text-shadow: 1px 0px 2px 2.0 #000000ca;
+}
+
+#Mutation3Label {	
+	background-image: url("file://panorama/images/custom_game/mutation/terrain-bg.png");
+	background-size: cover;
+	color: #ede5da;
+	text-shadow: 1px 0px 2px 2.0 #000000ca;
 }

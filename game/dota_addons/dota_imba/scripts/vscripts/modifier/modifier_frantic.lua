@@ -16,7 +16,7 @@ function modifier_frantic:GetTexture()
 end
 
 function modifier_frantic:GetEffectName()
-	return "particles/generic_gameplay/rune_arcane_owner.vpcf"
+	return "particles/generic_gameplay/frantic.vpcf"
 end
 
 function modifier_frantic:GetEffectAttachType()

@@ -281,7 +281,7 @@ end
 --	end
 
 -- Check if an unit is near the enemy fountain
-function IsNearEnemyFountain(location, team, distance)
+function IsNearFountain(location, distance)
 	for _, fountain in pairs(Entities:FindAllByClassname("ent_dota_fountain")) do
 		if (fountain:GetAbsOrigin() - location):Length2D() <= distance then
 			return true

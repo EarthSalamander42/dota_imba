@@ -79,6 +79,7 @@ function HeroSelection:Init()
 		newlist = newlist,
 		customlist = customlist,
 		hotdisabledlist = hotdisabledlist,
+		mutation = IMBA_MUTATION,
 	})
 
 	-- lock down the "pick" hero so that they can't do anything

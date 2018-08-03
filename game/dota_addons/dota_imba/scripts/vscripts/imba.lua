@@ -492,10 +492,16 @@ function GameMode:ModifierFilter( keys )
 			if modifier_owner:FindAbilityByName("tusk_snowball") then
 				modifier_owner:FindAbilityByName("tusk_snowball"):SetActivated(false)
 				Timers:CreateTimer(15.0, function()
-						if not modifier_owner:FindModifierByName("modifier_tusk_snowball_movement") then
-							modifier_owner:FindAbilityByName("tusk_snowball"):SetActivated(true)
-						end
-					end)
+					if not modifier_owner:FindModifierByName("modifier_tusk_snowball_movement") then
+						modifier_owner:FindAbilityByName("tusk_snowball"):SetActivated(true)
+					end
+				end)
+			end
+		end
+
+		if modifier_owner:GetUnitName() == "npc_imba_warlock_demonic_ascension" then
+			if modifier_name == "modifier_fountain_aura_effect_lua" then
+				return false
 			end
 		end
 

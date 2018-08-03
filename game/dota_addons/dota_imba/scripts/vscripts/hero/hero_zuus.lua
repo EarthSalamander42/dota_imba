@@ -30,21 +30,23 @@ function imba_zuus_arc_lightning:OnSpellStart()
 	local damage 			= ability:GetSpecialValueFor("arc_damage")
 	local target 			= self:GetCursorTarget()
 
+	caster:EmitSound("Hero_Zuus.ArcLightning.Cast")
+
 	local lightningBolt = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_arc_lightning_.vpcf", PATTACH_WORLDORIGIN, caster)
 	ParticleManager:SetParticleControl(lightningBolt, 0, Vector(caster:GetAbsOrigin().x, caster:GetAbsOrigin().y , caster:GetAbsOrigin().z + caster:GetBoundingMaxs().z ))   
 	ParticleManager:SetParticleControl(lightningBolt, 1, Vector(target:GetAbsOrigin().x, target:GetAbsOrigin().y, target:GetAbsOrigin().z + target:GetBoundingMaxs().z ))
 
 	local nearby_enemy_units = FindUnitsInRadius(
-			caster:GetTeam(),
-			target:GetAbsOrigin(), 
-			nil, 
-			radius, 
-			DOTA_UNIT_TARGET_TEAM_ENEMY,
-			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
-			DOTA_UNIT_TARGET_FLAG_NONE, 
-			FIND_CLOSEST, 
-			false
-		)
+		caster:GetTeam(),
+		target:GetAbsOrigin(), 
+		nil, 
+		radius, 
+		DOTA_UNIT_TARGET_TEAM_ENEMY,
+		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
+		DOTA_UNIT_TARGET_FLAG_NONE, 
+		FIND_CLOSEST, 
+		false
+	)
 
 	local damage_table 			= {}
 	damage_table.attacker 		= caster
@@ -209,6 +211,7 @@ function imba_zuus_lightning_bolt:OnSpellStart()
 		local target 		= self:GetCursorTarget()
 		local target_point 	= self:GetCursorPosition()
 
+		caster:EmitSound("Hero_Zuus.LightningBolt")
 
 		local reduced_magic_resistance = caster:FindAbilityByName("imba_zuus_static_field"):GetSpecialValueFor("reduced_magic_resistance")
 		if self:GetCaster():HasTalent("special_bonus_imba_zuus_3") then 
@@ -242,6 +245,7 @@ function imba_zuus_lightning_bolt:CastLightningBolt(caster, ability, target, tar
 		local sight_radius_day  	= ability:GetSpecialValueFor("sight_radius_day")
 		local sight_radius_night  	= ability:GetSpecialValueFor("sight_radius_night")
 		local sight_duration 		= ability:GetSpecialValueFor("sight_duration")
+		local stun_duration 		= ability:GetSpecialValueFor("stun_duration")
 		local pierce_spellimmunity 	= false
 		local z_pos 				= 2000
 
@@ -338,10 +342,12 @@ function imba_zuus_lightning_bolt:CastLightningBolt(caster, ability, target, tar
 			thundergods_focus_modifier:SetStackCount(thundergods_focus_modifier:GetStackCount() + 1)	
 		elseif target ~= nil then
 			if not target:IsAncient() then 
-				local static_charge_modifier = target:AddNewModifier(caster, self, "modifier_imba_zuus_static_charge", {duration = 15.0})
+				local static_charge_modifier = target:AddNewModifier(caster, self, "modifier_imba_zuus_static_charge", {duration = 5.0})
 				if static_charge_modifier ~= nil then 
 					static_charge_modifier:SetStackCount(static_charge_modifier:GetStackCount() + 3)	
 				end
+
+				target:AddNewModifier(caster, ability, "modifier_stunned", {duration = stun_duration})
 
 				if caster:HasTalent("special_bonus_imba_zuus_5") then 
 					local root_duration = 0.5
@@ -618,7 +624,7 @@ function imba_zuus_cloud:OnInventoryContentsChanged()
 	end
 end
 
-function imba_zuus_cloud:OnSpellStart() 
+function imba_zuus_cloud:OnSpellStart()
 	if IsServer() then
 		local caster 				= self:GetCaster()
 		self.target_point 			= self:GetCursorPosition()
@@ -626,6 +632,8 @@ function imba_zuus_cloud:OnSpellStart()
 		local cloud_bolt_interval 	= self:GetSpecialValueFor("cloud_bolt_interval")
 		local cloud_duration 		= self:GetSpecialValueFor("cloud_duration")
 		local cloud_radius 			= self:GetSpecialValueFor("cloud_radius")
+
+		caster:EmitSound("Hero_Zuus.Cloud.Cast")
 
 		caster:RemoveModifierByName("modifier_imba_zuus_on_nimbus")
 		self.zuus_nimbus_unit = CreateUnitByName("npc_dota_zeus_cloud", Vector(self.target_point.x, self.target_point.y, 450), false, caster, nil, caster:GetTeam())
@@ -650,7 +658,7 @@ function modifier_zuus_nimbus_storm:OnCreated(keys)
 		self.ability 				= self
 		self.cloud_radius 			= keys.cloud_radius
 		self.cloud_bolt_interval 	= keys.cloud_bolt_interval
-		self.dmg_timer 				= 0
+		self.dmg_timer 				= self:GetAbility():GetSpecialValueFor("cloud_bolt_interval")
 		self.lightning_bolt 		= self.caster:FindAbilityByName("imba_zuus_lightning_bolt")
 		local target_point 			= GetGroundPosition(self:GetParent():GetAbsOrigin(), self:GetParent())
 		
@@ -671,10 +679,16 @@ function modifier_zuus_nimbus_storm:OnCreated(keys)
 end
 
 function modifier_zuus_nimbus_storm:DeclareFunctions()
-	local funcs = {MODIFIER_PROPERTY_VISUAL_Z_DELTA}
+	local funcs = {
+		MODIFIER_PROPERTY_VISUAL_Z_DELTA,
+		MODIFIER_EVENT_ON_ATTACKED,
+		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL,
+		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_MAGICAL,
+		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE,
+	}
+
 	return funcs
 end
-
 
 function modifier_zuus_nimbus_storm:GetVisualZDelta()
 	return 450
@@ -725,6 +739,32 @@ function modifier_zuus_nimbus_storm:OnIntervalThink()
 	end
 end
 
+function modifier_zuus_nimbus_storm:OnAttacked(params)
+	if params.target == self:GetParent() then
+		if params.attacker:IsRealHero() then
+			if params.attacker:IsRangedAttacker() then
+				self:GetParent():SetHealth(self:GetParent():GetHealth() - (self:GetAbility():GetSpecialValueFor("ranged_hero_damage") / self:GetParent():GetMaxHealth()))
+			else
+				self:GetParent():SetHealth(self:GetParent():GetHealth() - (self:GetAbility():GetSpecialValueFor("melee_hero_damage") / self:GetParent():GetMaxHealth()))
+			end
+		else
+			self:GetParent():SetHealth(self:GetParent():GetHealth() - (self:GetAbility():GetSpecialValueFor("non_hero_damage") / self:GetParent():GetMaxHealth()))
+		end
+	end
+end
+
+function modifier_zuus_nimbus_storm:GetAbsoluteNoDamagePhysical()
+	return 1
+end
+
+function modifier_zuus_nimbus_storm:GetAbsoluteNoDamageMagical()
+	return 1
+end
+
+function modifier_zuus_nimbus_storm:GetAbsoluteNoDamagePure()
+	return 1
+end
+
 function modifier_zuus_nimbus_storm:OnRemoved()
 	if IsServer() then
 		-- Cleanup particle
@@ -769,6 +809,8 @@ function imba_zuus_nimbus_zap:OnSpellStart()
 			caster:SwapAbilities("imba_zuus_nimbus_zap", "imba_zuus_cloud", false, true)
 			return 
 		end
+
+		caster:EmitSound("Hero_Zuus.LightningBolt")
 
 		local target_loc 	= self.nimbus:GetAbsOrigin()
 		local caster_loc 	= GetGroundPosition(caster:GetAbsOrigin(), caster)
@@ -983,12 +1025,17 @@ end
 LinkLuaModifier("modifier_imba_zuus_on_nimbus", "hero/hero_zuus.lua", LUA_MODIFIER_MOTION_NONE)
 modifier_imba_zuus_on_nimbus = class({})
 
-
-
 ----------------------------------------------
 --				Thundergods Wrath  			--
 ----------------------------------------------
 imba_zuus_thundergods_wrath = class({})
+
+function imba_zuus_thundergods_wrath:OnAbilityPhaseStart()
+	self:GetCaster():EmitSound("Hero_Zuus.GodsWrath.PreCast")
+
+	return true
+end
+
 function imba_zuus_thundergods_wrath:OnSpellStart() 
 	if IsServer() then
 		local caster 				= self:GetCaster()
@@ -1017,6 +1064,7 @@ function imba_zuus_thundergods_wrath:OnSpellStart()
 			end
 		end
 
+		EmitSoundOnLocationForAllies(caster:GetAbsOrigin(), "Hero_Zuus.GodsWrath", caster)
 
 		local damage_table 			= {}
 		damage_table.attacker 		= self:GetCaster()
@@ -1038,11 +1086,11 @@ function imba_zuus_thundergods_wrath:OnSpellStart()
 					ParticleManager:SetParticleControl(thundergod_strike_particle, 0, Vector(target_point.x, target_point.y, target_point.z + hero:GetBoundingMaxs().z))		
 					ParticleManager:SetParticleControl(thundergod_strike_particle, 1, Vector(target_point.x, target_point.y, 2000))	
 					ParticleManager:SetParticleControl(thundergod_strike_particle, 2, Vector(target_point.x, target_point.y, target_point.z + hero:GetBoundingMaxs().z))
-				
+
 					damage_table.damage	 = self:GetAbilityDamage()
 					damage_table.victim  = hero
 					ApplyDamage(damage_table)
-
+					hero:EmitSound("Hero_Zuus.LightningBolt")
 					hero:AddNewModifier(caster, ability, "modifier_imba_zuus_lightning_fow", {duration = sight_duration, radius = true_sight_radius})
 					local true_sight = hero:AddNewModifier(caster, self, "modifier_imba_zuus_lightning_true_sight", {duration = sight_duration})
 					if true_sight ~= nil then

@@ -205,36 +205,33 @@ function GameMode:OnGameRulesStateChange(keys)
 
 	if new_state == DOTA_GAMERULES_STATE_POST_GAME then
 		api.imba.event(api.events.entered_post_game)
-
 		api.imba.complete(function (error, players)
-				local game_id = 0
-				if api.imba.data ~= nil then
-					game_id = api.imba.data.id or 0
-				end
+			local game_id = 0
+			if api.imba.data ~= nil then
+				game_id = api.imba.data.id or 0
+			end
 
-				CustomGameEventManager:Send_ServerToAllClients("end_game", {
-						players = players,
-						info = {
-							winner = GAME_WINNER_TEAM,
-							id = game_id,
-							radiant_score = GetTeamHeroKills(2),
-							dire_score = GetTeamHeroKills(3),
-							custom1_score = GetTeamHeroKills(6),
-							custom2_score = GetTeamHeroKills(7),
-							custom3_score = GetTeamHeroKills(8),
-							custom4_score = GetTeamHeroKills(9),
-							custom5_score = GetTeamHeroKills(10),
-							custom6_score = GetTeamHeroKills(11),
-							custom7_score = GetTeamHeroKills(12),
-							custom8_score = GetTeamHeroKills(13),
-						},
-					})
-			end)
+			CustomGameEventManager:Send_ServerToAllClients("end_game", {
+				players = players,
+				info = {
+					winner = GAME_WINNER_TEAM,
+					id = game_id,
+					radiant_score = GetTeamHeroKills(2),
+					dire_score = GetTeamHeroKills(3),
+					custom1_score = GetTeamHeroKills(6),
+					custom2_score = GetTeamHeroKills(7),
+					custom3_score = GetTeamHeroKills(8),
+					custom4_score = GetTeamHeroKills(9),
+					custom5_score = GetTeamHeroKills(10),
+					custom6_score = GetTeamHeroKills(11),
+					custom7_score = GetTeamHeroKills(12),
+					custom8_score = GetTeamHeroKills(13),
+				},
+			})
+		end)
 
 		CustomNetTables:SetTableValue("game_options", "game_count", {value = 0})
-
 	end
-
 end
 
 dummy_created_count = 0
@@ -246,18 +243,18 @@ function GameMode:OnNPCSpawned(keys)
 	if npc then
 		-- UnitSpawned Api Event
 		local player = "-1"
-		
+
 		-- Adding boundary modifier here (to keep entities within the map)
 		npc:AddNewModifier(npc, nil, "modifier_boundaries", {})
-		
+
 		if npc:IsRealHero() and npc:GetPlayerID() then
 			player = PlayerResource:GetSteamID(npc:GetPlayerID())
 		end
 
 		api.imba.event(api.events.unit_spawned, {
-				tostring(npc:GetUnitName()),
-				tostring(player)
-			})
+			tostring(npc:GetUnitName()),
+			tostring(player)
+		})
 
 		if npc:IsCourier() then
 			if npc.first_spawn == true then

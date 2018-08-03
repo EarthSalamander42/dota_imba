@@ -321,11 +321,11 @@ IMBA_ALL_RANDOM_HERO_SELECTION_TIME = 5.0									-- Time we need to wait before
 
 -- Global Gold earning, values are doubled with Hyper for non-custom maps
 CUSTOM_GOLD_BONUS = {} -- 1 = Normal, 2 = Hyper
-CUSTOM_GOLD_BONUS["imba_1v1"] = 250
-CUSTOM_GOLD_BONUS["imba_overthrow"] = 250
-CUSTOM_GOLD_BONUS["imba_ranked_5v5"] = 250
-CUSTOM_GOLD_BONUS["imba_ranked_10v10"] = 250
-CUSTOM_GOLD_BONUS["imba_tournament"] = 250
+CUSTOM_GOLD_BONUS["imba_1v1"] = 350
+CUSTOM_GOLD_BONUS["imba_overthrow"] = 350
+CUSTOM_GOLD_BONUS["imba_ranked_5v5"] = 350
+CUSTOM_GOLD_BONUS["imba_ranked_10v10"] = 350
+CUSTOM_GOLD_BONUS["imba_tournament"] = 350
 CUSTOM_GOLD_BONUS["imba_mutation_5v5"] = 350
 CUSTOM_GOLD_BONUS["imba_mutation_10v10"] = 350
 CUSTOM_GOLD_BONUS["imba_frantic_5v5"] = 350
@@ -348,12 +348,12 @@ CUSTOM_XP_BONUS["cavern"] = 100
 -- Hero base level, values are doubled with Hyper for non-custom maps
 HERO_STARTING_LEVEL = {} -- 1 = Normal, 2 = Hyper
 HERO_STARTING_LEVEL["imba_1v1"] = 1
-HERO_STARTING_LEVEL["imba_overthrow"] = 1
-HERO_STARTING_LEVEL["imba_ranked_5v5"] = 1
-HERO_STARTING_LEVEL["imba_ranked_10v10"] = 1
-HERO_STARTING_LEVEL["imba_tournament"] = 1
-HERO_STARTING_LEVEL["imba_mutation_5v5"] = 3
-HERO_STARTING_LEVEL["imba_mutation_10v10"] = 3
+HERO_STARTING_LEVEL["imba_overthrow"] = 3
+HERO_STARTING_LEVEL["imba_ranked_5v5"] = 3
+HERO_STARTING_LEVEL["imba_ranked_10v10"] = 3
+HERO_STARTING_LEVEL["imba_tournament"] = 3
+HERO_STARTING_LEVEL["imba_mutation_5v5"] = 5
+HERO_STARTING_LEVEL["imba_mutation_10v10"] = 5
 HERO_STARTING_LEVEL["imba_frantic_5v5"] = 5
 HERO_STARTING_LEVEL["imba_frantic_10v10"] = 5
 HERO_STARTING_LEVEL["cavern"] = 1
@@ -371,16 +371,16 @@ MAX_LEVEL["imba_frantic_10v10"] = 42
 MAX_LEVEL["cavern"] = 42
 
 HERO_INITIAL_GOLD = {}
-HERO_INITIAL_GOLD["imba_1v1"] = 1200
-HERO_INITIAL_GOLD["imba_overthrow"] = 1200
-HERO_INITIAL_GOLD["imba_ranked_5v5"] = 1200
-HERO_INITIAL_GOLD["imba_ranked_10v10"] = 1200
-HERO_INITIAL_GOLD["imba_tournament"] = 1200
-HERO_INITIAL_GOLD["imba_mutation_5v5"] = 2000
-HERO_INITIAL_GOLD["imba_mutation_10v10"] = 2000
-HERO_INITIAL_GOLD["imba_frantic_5v5"] = 4000
-HERO_INITIAL_GOLD["imba_frantic_10v10"] = 4000
-HERO_INITIAL_GOLD["cavern"] = 1200
+HERO_INITIAL_GOLD["imba_1v1"] = 1400
+HERO_INITIAL_GOLD["imba_overthrow"] = 1400
+HERO_INITIAL_GOLD["imba_ranked_5v5"] = 1400
+HERO_INITIAL_GOLD["imba_ranked_10v10"] = 1400
+HERO_INITIAL_GOLD["imba_tournament"] = 1400
+HERO_INITIAL_GOLD["imba_mutation_5v5"] = 2500
+HERO_INITIAL_GOLD["imba_mutation_10v10"] = 2500
+HERO_INITIAL_GOLD["imba_frantic_5v5"] = 2500
+HERO_INITIAL_GOLD["imba_frantic_10v10"] = 2500
+HERO_INITIAL_GOLD["cavern"] = 1400
 
 GOLD_TICK_TIME = {}
 GOLD_TICK_TIME["imba_1v1"] = 0.6
