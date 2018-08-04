@@ -214,7 +214,6 @@ GameEvents.Subscribe("override_top_bar_colors", OverrideTopBarColor);
 var mutation = [];
 
 function Mutation(args) {
-	$.Msg(args)
 	mutation[0] = "imba"
 	mutation[1] = args["positive"]
 	mutation[2] = args["negative"]

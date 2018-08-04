@@ -1438,6 +1438,7 @@ Label.SectionTitle {
 	flow-children: right;
 	align: center top;
 	box-shadow: none;
+	visibility: collapse;
 }
 
 .DotaMutations {

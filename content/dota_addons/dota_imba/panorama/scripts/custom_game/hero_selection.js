@@ -201,7 +201,8 @@ function onPlayerStatChange(table, key, data) {
 
 		var ply_battlepass = CustomNetTables.GetTableValue("battlepass", Game.GetLocalPlayerID());
 
-		Mutation(data.mutation)
+		if (Game.GetMapInfo().map_display_name == "imba_mutation_5v5" || Game.GetMapInfo().map_display_name == "imba_mutation_10v10")
+			Mutation(data.mutation)
 
 		Object.keys(data.herolist).sort().forEach(function (heroName) {
 			var currentstat = null;
