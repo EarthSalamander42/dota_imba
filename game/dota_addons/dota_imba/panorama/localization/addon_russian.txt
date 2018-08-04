@@ -201,7 +201,7 @@
 	"modifier_sticky_river" "Мерзкая река"
 	"modifier_sticky_river_description" "Река вся липкая и жутко вас замедляет."
 	"mutation_alien_incubation" "Инопланетное вторжение"
-	"mutation_alien_incubation_description" "Каждый юнит после смерти спавнит неконтролируемого Broodling\'a."
+	"mutation_alien_incubation_description" "Каждый юнит после смерти спавнит неконтролируемого Broodling'a."
 	"mutation_angel_arena" "Ангельская арена"
 	"mutation_angel_arena_description" "Раз в 5 минут начинаются дуэли. Команда победителей получает 2000 золота!"
 	"mutation_battle_hunger" "Battle Hunger"
