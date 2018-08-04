@@ -1062,8 +1062,7 @@
 		"Ability18"					"special_bonus_attack_speed_30"
 		"Ability19"					"special_bonus_unique_morphling_5"
 		"Ability20"					"special_bonus_unique_morphling_4"
-		"Ability21"					"generic_hidden"
-//		"Ability21"					"special_bonus_unique_morphling_6"
+		"Ability21"					"special_bonus_unique_morphling_6"
 		"Ability22"					"special_bonus_unique_morphling_3"
 	}
 
@@ -1908,9 +1907,9 @@
 		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
 
 		"Ability1"					"imba_troll_warlord_berserkers_rage"
-		"Ability2"					"imba_troll_warlord_whirling_axes_ranged"
+		"Ability2"					"imba_troll_warlord_whirling_axes_melee"
 		"Ability3"					"imba_troll_warlord_fervor"
-		"Ability4"					"imba_troll_warlord_whirling_axes_melee"
+		"Ability4"					"imba_troll_warlord_whirling_axes_ranged"
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_troll_warlord_battle_trance"
 
