@@ -180,7 +180,7 @@
 	"imba_tutorial_items_title" "Tips:"
 	"imba_waiting_for_other_players_button" "Waiting for other players..."
 	"instructionshowtoplay" "HOW TO PLAY"
-	"instructionslines" "-Approach the Midas Throne to earn bonus gold and experience.<br>\n-Snatch up any giant coins the Over Boss tosses to earn even more gold.<br>\n-Keep an eye out for item deliveries. An icon will appear on your map where an item will appear.<br>\n-The fewer kills your team has, the better the item you will receive from a delivery.<br>\n-Slay anyone who isn't on your team."
+	"instructionslines" "-Approach the Midas Throne to earn bonus gold and experience.<br>\n-Snatch up any giant coins the Over Boss tosses to earn even more gold.<br>\n-Keep an eye out for item deliveries. An icon will appear on your map where an item will appear.<br>\n-The fewer kills your team has, the better the item you will receive from a delivery.<br>\n-Slay anyone who isn't on your team."
 	"instructionsobjective" "OBJECTIVE"
 	"instructionsobjectivetext" "Slay your enemies! Be the first to earn the goal number of kills, or the team with the most kills when the round ends, and you will be victorious."
 	"instructionstitle" "OVERTHROW"

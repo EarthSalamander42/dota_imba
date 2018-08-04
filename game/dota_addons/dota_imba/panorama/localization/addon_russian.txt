@@ -180,7 +180,7 @@
 	"imba_tutorial_items_title" "Советы:"
 	"imba_waiting_for_other_players_button" "Ожидание остальных игроков..."
 	"instructionshowtoplay" "КАК ИГРАТЬ"
-	"instructionslines" "-Будь ближе к Трону Мидаса чтобы получить бонусные опыт и золото.<br>\n													-Хватай гигантские монеты, которые бросает Овербосс чтобы получить дополнительное золото.<br>\n													-Следи за доставляемыми предметами. На карте появится иконка куда доставится предмет.<br>\n													-Чем меньше убийств твоя команда сделала, тем лучше предметы получишь с доставки.<br>\n													-Убивай любого кто не в твоей команде."
+	"instructionslines" "-Approach the Midas Throne to earn bonus gold and experience.<br>\n-Snatch up any giant coins the Over Boss tosses to earn even more gold.<br>\n-Keep an eye out for item deliveries. An icon will appear on your map where an item will appear.<br>\n-The fewer kills your team has, the better the item you will receive from a delivery.<br>\n-Slay anyone who isn't on your team."
 	"instructionsobjective" "ЗАДАЧА"
 	"instructionsobjectivetext" "Убивай врагов! Будь первым набрав нужное для победы количество убийств, или в команде которая к концу раунда набрала нужное количество убийств, и ты победишь."
 	"instructionstitle" "OVERTHROW"

@@ -5,6 +5,7 @@
 .addon-root {
 	width: 100%;
 	height: 100%;
+	z-index: 10;
 }
 
 .down {
@@ -49,6 +50,7 @@
 	flow-children: down;
 	width: 59%;
 }
+
 @keyframes 'logo_animation' 
 {
 	0% {
@@ -62,8 +64,7 @@
 	100% {
 		transform: scaleX(1) scaleY(1);
 	}
-	
-  }
+}
 
 #imba-loading-title-logo {
 	width: 140px; height: 100px;
@@ -78,6 +79,7 @@
 	margin: 25px 40px 10px;
 	font-size: 36px;
 	color: #367498;
+	text-decoration: underline;
 }
 
 #imba-loading-content-text {
@@ -100,6 +102,8 @@
 
 #imba-loading-link-text {
 	font-size: 24px;
+	color: COLOR_INFO_TEXT;
+	text-shadow: 0 0 5px #000;
 }
 
 #imba-loading-link-text:hover {

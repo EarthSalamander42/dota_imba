@@ -180,7 +180,7 @@
 	"imba_tutorial_items_title" "Tips:"
 	"imba_waiting_for_other_players_button" "等待其他玩家..."
 	"instructionshowtoplay" "游戏方法"
-	"instructionslines" "-尽可能地呆在中央场地获取资源<br>\n													-拾取炼金术士的零花钱<br>\n													-争夺被运送到地图周围的装备宝箱<br>\n													-队伍的制胜点数越低，获得的装备越好<br>\n													-消灭所有的敌人！"
+	"instructionslines" "-Approach the Midas Throne to earn bonus gold and experience.<br>\n-Snatch up any giant coins the Over Boss tosses to earn even more gold.<br>\n-Keep an eye out for item deliveries. An icon will appear on your map where an item will appear.<br>\n-The fewer kills your team has, the better the item you will receive from a delivery.<br>\n-Slay anyone who isn't on your team."
 	"instructionsobjective" "目标："
 	"instructionsobjectivetext" "消灭你的敌人来获得制胜点数！"
 	"instructionstitle" "IMBA先锋"

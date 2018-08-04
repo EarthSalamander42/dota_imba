@@ -83,6 +83,8 @@ function imba_zuus_arc_lightning:Chain(caster, origin_target, chained_target, ab
 
 		print("num_jumps_done", num_jumps_done, chained_target, hit_list[chained_target])
 
+		origin_target:EmitSound("Hero_Zuus.ArcLightning.Target")
+
 		local lightningBolt = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_arc_lightning_.vpcf", PATTACH_WORLDORIGIN, origin_target)
 		ParticleManager:SetParticleControl(lightningBolt, 0, Vector(origin_target:GetAbsOrigin().x, origin_target:GetAbsOrigin().y , origin_target:GetAbsOrigin().z + origin_target:GetBoundingMaxs().z ))   
 		ParticleManager:SetParticleControl(lightningBolt, 1, Vector(chained_target:GetAbsOrigin().x, chained_target:GetAbsOrigin().y, chained_target:GetAbsOrigin().z + chained_target:GetBoundingMaxs().z ))
@@ -211,8 +213,6 @@ function imba_zuus_lightning_bolt:OnSpellStart()
 		local target 		= self:GetCursorTarget()
 		local target_point 	= self:GetCursorPosition()
 
-		caster:EmitSound("Hero_Zuus.LightningBolt")
-
 		local reduced_magic_resistance = caster:FindAbilityByName("imba_zuus_static_field"):GetSpecialValueFor("reduced_magic_resistance")
 		if self:GetCaster():HasTalent("special_bonus_imba_zuus_3") then 
 			reduced_magic_resistance = reduced_magic_resistance + caster:FindTalentValue("special_bonus_imba_zuus_3", "reduced_magic_resistance")
@@ -248,6 +248,8 @@ function imba_zuus_lightning_bolt:CastLightningBolt(caster, ability, target, tar
 		local stun_duration 		= ability:GetSpecialValueFor("stun_duration")
 		local pierce_spellimmunity 	= false
 		local z_pos 				= 2000
+
+		caster:EmitSound("Hero_Zuus.LightningBolt")
 
 		if caster:HasTalent("special_bonus_imba_zuus_1") then 
 			spread_aoe = spread_aoe + caster:FindTalentValue("special_bonus_imba_zuus_1", "spread_aoe")
@@ -633,7 +635,7 @@ function imba_zuus_cloud:OnSpellStart()
 		local cloud_duration 		= self:GetSpecialValueFor("cloud_duration")
 		local cloud_radius 			= self:GetSpecialValueFor("cloud_radius")
 
-		caster:EmitSound("Hero_Zuus.Cloud.Cast")
+		EmitSoundOnLocationWithCaster(self.target_point, "Hero_Zuus.Cloud.Cast", caster)
 
 		caster:RemoveModifierByName("modifier_imba_zuus_on_nimbus")
 		self.zuus_nimbus_unit = CreateUnitByName("npc_dota_zeus_cloud", Vector(self.target_point.x, self.target_point.y, 450), false, caster, nil, caster:GetTeam())
@@ -743,12 +745,15 @@ function modifier_zuus_nimbus_storm:OnAttacked(params)
 	if params.target == self:GetParent() then
 		if params.attacker:IsRealHero() then
 			if params.attacker:IsRangedAttacker() then
-				self:GetParent():SetHealth(self:GetParent():GetHealth() - (self:GetAbility():GetSpecialValueFor("ranged_hero_damage") / self:GetParent():GetMaxHealth()))
+				print("Ranged attack!", self:GetParent():GetHealth() - self:GetParent():GetMaxHealth() / self:GetAbility():GetSpecialValueFor("ranged_hero_attack"))
+				self:GetParent():SetHealth(self:GetParent():GetHealth() - self:GetParent():GetMaxHealth() / self:GetAbility():GetSpecialValueFor("ranged_hero_attack"))
 			else
-				self:GetParent():SetHealth(self:GetParent():GetHealth() - (self:GetAbility():GetSpecialValueFor("melee_hero_damage") / self:GetParent():GetMaxHealth()))
+				print("Melee Attack!", self:GetParent():GetHealth() - (self:GetParent():GetMaxHealth() / self:GetAbility():GetSpecialValueFor("melee_hero_attack")))
+				self:GetParent():SetHealth(self:GetParent():GetHealth() - (self:GetParent():GetMaxHealth() / self:GetAbility():GetSpecialValueFor("melee_hero_attack")))
 			end
 		else
-			self:GetParent():SetHealth(self:GetParent():GetHealth() - (self:GetAbility():GetSpecialValueFor("non_hero_damage") / self:GetParent():GetMaxHealth()))
+			print("Non-hero!", self:GetParent():GetHealth() - (self:GetParent():GetMaxHealth() / self:GetAbility():GetSpecialValueFor("non_hero_attack")))
+			self:GetParent():SetHealth(self:GetParent():GetHealth() - (self:GetParent():GetMaxHealth() / self:GetAbility():GetSpecialValueFor("non_hero_attack")))
 		end
 	end
 end
@@ -846,7 +851,7 @@ function imba_zuus_nimbus_zap:OnSpellStart()
 		caster:AddNewModifier(caster, self, "modifier_imba_ball_lightning", {})
 		self.nimbus_z = caster:AddNewModifier(caster, self, "modifier_imba_zuus_nimbus_z", {})
 
-		print("nimbus location", target_loc, caster_loc, max_height, add_height)
+--		print("nimbus location", target_loc, caster_loc, max_height, add_height)
 		-- Fire the ball of death!
 		local projectile =
 		{
@@ -941,7 +946,6 @@ function imba_zuus_nimbus_zap:OnProjectileThink_ExtraData(location, ExtraData)
 	end
 end
 
-
 imba_zuus_leave_nimbus = class({})
 function imba_zuus_leave_nimbus:OnSpellStart()
 	if IsServer() then
@@ -949,6 +953,7 @@ function imba_zuus_leave_nimbus:OnSpellStart()
 		caster:RemoveModifierByName("modifier_imba_zuus_on_nimbus")
 		caster:RemoveModifierByName("modifier_imba_zuus_nimbus_z")
 
+		ResolveNPCPositions(caster:GetAbsOrigin(), 128)
 		caster:SwapAbilities("imba_zuus_leave_nimbus", "imba_zuus_cloud", false, true)
 	end
 end
