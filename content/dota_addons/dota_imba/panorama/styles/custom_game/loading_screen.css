@@ -13,10 +13,10 @@
 	margin: 0;
 	flow-children: down;
 	width: 100%;
-	background-color: COLOR_INFO_BACKGROUND;
+/*	background-color: COLOR_INFO_BACKGROUND;
 	border: 2px solid COLOR_INFO_BACKGROUND_DARK;
 	box-shadow: 0 0 10px #111;
-//	border-radius: 20px;
+//	border-radius: 20px;*/
 }
 
 .large {
@@ -40,15 +40,15 @@
 	width: 100%;
 	height: 100%;
 	background-color: black;
-	background-position: 100% center;
+	background-position: center center;
 	background-size: cover;
-	background-image: url("file://{images}/custom_game/loading_screen/frantic_thunder.jpg");
+	background-image: url("file://{images}/custom_game/loading_screen/frantic_thunder.png");
 }
 
 #imba-loading-title {
-	padding: 40px 40px;
-	flow-children: down;
-	width: 59%;
+	padding: 60px 80px;
+	flow-children: right;
+	width: 70%;
 }
 
 @keyframes 'logo_animation' 
@@ -78,21 +78,19 @@
 #imba-loading-title-text {
 	margin: 25px 40px 10px;
 	font-size: 36px;
-	color: #367498;
-	text-decoration: underline;
+	color: #eeeeff;
 }
 
 #imba-loading-content-text {
 	margin: 0px 40px;
-	font-size: 24px;
-	color: COLOR_INFO_TEXT;
-	font-weight: bold;
-	text-shadow: 0 0 5px #000;
+	font-size: 20px;
+	color: #cccccc;
 	width: 100%;
 }
 
 #imba-loading-map-text {
 	margin: 0px 40px 40px;
+	color: #ddddff;
 	font-size: 24px;
 }
 
@@ -102,8 +100,8 @@
 
 #imba-loading-link-text {
 	font-size: 24px;
-	color: COLOR_INFO_TEXT;
 	text-shadow: 0 0 5px #000;
+	color: #cccccc;	
 }
 
 #imba-loading-link-text:hover {
@@ -111,7 +109,7 @@
 }
 
 #ImbaLoadingSocial {
-	margin-left: 50px;
+	margin-left: 260px;
 	overflow: scroll;
 	flow-children: down;
 } 
