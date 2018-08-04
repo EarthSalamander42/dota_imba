@@ -269,12 +269,12 @@ function Mutation:OnGameRulesStateChange(keys)
 			local varSwap -- Switches between 1 and 2 based on counter for negative and positive spellcasts
 
 			Timers:CreateTimer(55.0, function()
-					varSwap = (counter % 2) + 1
-					random_int = RandomInt(1, #IMBA_MUTATION_PERIODIC_SPELLS[varSwap])
-					Notifications:TopToAll({text = IMBA_MUTATION_PERIODIC_SPELLS[varSwap][random_int][2].." Mutation in 5 seconds...", duration = 5.0, style = {color = IMBA_MUTATION_PERIODIC_SPELLS[varSwap][random_int][3]}})
-					
-					return 60.0
-				end)
+				varSwap = (counter % 2) + 1
+				random_int = RandomInt(1, #IMBA_MUTATION_PERIODIC_SPELLS[varSwap])
+				Notifications:TopToAll({text = IMBA_MUTATION_PERIODIC_SPELLS[varSwap][random_int][2].." Mutation in 5 seconds...", duration = 5.0, style = {color = IMBA_MUTATION_PERIODIC_SPELLS[varSwap][random_int][3]}})
+
+				return 60.0
+			end)
 
 			Timers:CreateTimer(60.0, function()
 				if bad_fountain == nil or good_fountain == nil then
@@ -282,22 +282,21 @@ function Mutation:OnGameRulesStateChange(keys)
 					return 60.0 
 				end
 
-						if (hero:GetTeamNumber() == 3 and IMBA_MUTATION_PERIODIC_SPELLS[varSwap][random_int][3] == "Red") or (hero:GetTeamNumber() == 2 and IMBA_MUTATION_PERIODIC_SPELLS[varSwap][random_int][3] == "Green") then
-							caster = good_fountain
-						end
-
-						hero:AddNewModifier(caster, caster, "modifier_mutation_"..IMBA_MUTATION_PERIODIC_SPELLS[varSwap][random_int][1], {duration=IMBA_MUTATION_PERIODIC_SPELLS[varSwap][random_int][4]})
+				for _, hero in pairs(HeroList:GetAllHeroes()) do
+					if (hero:GetTeamNumber() == 3 and IMBA_MUTATION_PERIODIC_SPELLS[varSwap][random_int][3] == "Red") or (hero:GetTeamNumber() == 2 and IMBA_MUTATION_PERIODIC_SPELLS[varSwap][random_int][3] == "Green") then
+						caster = good_fountain
 					end
 
-					counter = counter + 1
-					
-					return 60.0
-				end)
+					hero:AddNewModifier(caster, caster, "modifier_mutation_"..IMBA_MUTATION_PERIODIC_SPELLS[varSwap][random_int][1], {duration=IMBA_MUTATION_PERIODIC_SPELLS[varSwap][random_int][4]})
+				end
+				counter = counter + 1
+
+				return 60.0
+			end)
 		end
 
 		if IMBA_MUTATION["terrain"] == "gift_exchange" then
 			for k, v in pairs(ITEMS_KV) do -- Go through all the items in ITEMS_KV and store valid items in validItems table
-
 				varFlag = 0 -- Let's borrow this memory to suss out the forbidden items first...
 
 				if v["ItemCost"] and v["ItemCost"] >= minValue and v["ItemCost"] ~= 99999 and not string.find(k, "recipe") and not string.find(k, "cheese") then

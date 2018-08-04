@@ -1,3 +1,7 @@
+@define COLOR_INFO_BACKGROUND: #224470dd;
+@define COLOR_INFO_BACKGROUND_DARK: #002233;
+@define COLOR_INFO_TEXT: #66aaff;
+
 .addon-root {
 	width: 100%;
 	height: 100%;
@@ -8,6 +12,10 @@
 	margin: 0;
 	flow-children: down;
 	width: 100%;
+	background-color: COLOR_INFO_BACKGROUND;
+	border: 2px solid COLOR_INFO_BACKGROUND_DARK;
+	box-shadow: 0 0 10px #111;
+//	border-radius: 20px;
 }
 
 .large {
@@ -31,15 +39,15 @@
 	width: 100%;
 	height: 100%;
 	background-color: black;
-	background-position: center center;
+	background-position: 100% center;
 	background-size: cover;
-	background-image: url("file://{images}/custom_game/loading_screen/fundamentals.jpg");
+	background-image: url("file://{images}/custom_game/loading_screen/frantic_thunder.jpg");
 }
 
 #imba-loading-title {
-	padding: 60px 80px;
-	flow-children: right;
-	width: 70%;
+	padding: 40px 40px;
+	flow-children: down;
+	width: 59%;
 }
 @keyframes 'logo_animation' 
 {
@@ -74,7 +82,10 @@
 
 #imba-loading-content-text {
 	margin: 0px 40px;
-	font-size: 20px;
+	font-size: 24px;
+	color: COLOR_INFO_TEXT;
+	font-weight: bold;
+	text-shadow: 0 0 5px #000;
 	width: 100%;
 }
 
@@ -96,7 +107,7 @@
 }
 
 #ImbaLoadingSocial {
-	margin-left: 260px;
+	margin-left: 50px;
 	overflow: scroll;
 	flow-children: down;
 } 

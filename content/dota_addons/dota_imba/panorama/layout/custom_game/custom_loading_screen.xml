@@ -30,7 +30,7 @@
 					<Button id="ImbaLoadingSocialFacebook" onactivate="DOTADisplayURL('https://www.facebook.com/D2IMBA/');">
 						<Label text="Facebook" />
 					</Button>
-					<Button id="ImbaLoadingSocialTwitter" onactivate="DOTADisplayURL('https://twitter.com/Dota2IMBA42');">
+					<Button id="ImbaLoadingSocialTwitter" onactivate="DOTADisplayURL('https://twitter.com/dota2imba');">
 						<Label text="Twitter" />
 					</Button>
 					<Button id="ImbaLoadingSocialDiscordEn" onactivate="DOTADisplayURL('http://tinyurl.com/imba-discord');">
