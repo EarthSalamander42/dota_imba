@@ -314,6 +314,12 @@ function UpdateGameState() {
 		return;
 	}
 
+	/* TODO: COMMENT THIS: 
+	Game.SetRemainingSetupTime(-1);
+	Game.SetAutoLaunchEnabled(false);
+	return;
+	END TODO */
+	
 	var bShowSpectatorTeam = false;
 	var bAutoAssignTeams = true;
 
