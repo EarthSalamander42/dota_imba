@@ -95,11 +95,13 @@ function modifier_imba_rune_double_damage_aura:GetEffectAttachType()
 end
 
 function modifier_imba_rune_double_damage_aura:OnCreated()
+	if not IsServer() then return end
 	self.parent = self:GetParent()
 	self.bonus_damage_pct_aura = 100			/2
 	self.bonus_main_attribute_multiplier = 1	/2
-	
-	if self.parent:IsRealHero() then
+    
+    -- Don't calculate all this stuff for MK clones cause it can cause lag problems
+	if self.parent:IsRealHero() and not self.parent:HasModifier("modifier_monkey_king_fur_army_soldier") and not self.parent:HasModifier("modifier_monkey_king_fur_army_soldier_hidden") then
 		self.strength_bonus = 0
 		self.agility_bonus = 0
 		self.intellect_bonus = 0
