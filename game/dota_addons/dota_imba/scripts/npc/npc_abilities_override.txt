@@ -7982,6 +7982,11 @@
 				"var_type"					"FIELD_INTEGER"
 				"charge_restore_time"		"11"
 			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"range_tooltip"				"1000 1100 1200 1300"
+			}
 		}
 	}
 
@@ -8169,6 +8174,11 @@
 				"var_type"				"FIELD_INTEGER"
 				"duration"				"30 35 40"
 				"LinkedSpecialBonus"	"special_bonus_unique_morphling_8"
+			}
+				"02"
+			{
+					"var_type"				"FIELD_INTEGER"
+					"range_tooltip"			"1000"
 			}
 		}
 	}

@@ -155,6 +155,14 @@ function imba_scaldris_heatwave:GetAbilityTextureName()
 	return "custom/scaldris_heatwave"
 end
 
+function imba_scaldris_heatwave:GetIntrinsicModifierName()
+	return "modifier_imba_antipode_passive"
+end
+
+function imba_scaldris_heatwave:GetAssociatedSecondaryAbilities()
+	return "imba_scaldris_cold_front"
+end
+
 function imba_scaldris_heatwave:OnUpgrade()
 	if IsServer() then
 		if self:GetCaster():FindAbilityByName("imba_scaldris_cold_front") then
@@ -270,7 +278,7 @@ imba_scaldris_cold_front = class({})
 LinkLuaModifier("modifier_imba_cold_front_root", "hero/hero_scaldris", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_cold_front_dps", "hero/hero_scaldris", LUA_MODIFIER_MOTION_NONE)
 
-function imba_scaldris_cold_front:IsHiddenWhenStolen() return false end
+function imba_scaldris_cold_front:IsHiddenWhenStolen() return true end
 function imba_scaldris_cold_front:IsRefreshable() return true end
 function imba_scaldris_cold_front:IsStealable() return true end
 function imba_scaldris_cold_front:IsNetherWardStealable() return true end
@@ -282,6 +290,15 @@ end
 function imba_scaldris_cold_front:GetAbilityTextureName()
 	return "custom/scaldris_cold_front"
 end
+
+function imba_scaldris_cold_front:GetIntrinsicModifierName()
+	return "modifier_imba_antipode_passive"
+end
+
+function imba_scaldris_cold_front:GetAssociatedPrimaryAbilities()
+	return "imba_scaldris_heatwave"
+end
+
 
 function imba_scaldris_cold_front:OnUpgrade()
 	if IsServer() then
@@ -449,6 +466,14 @@ function imba_scaldris_scorch:GetAbilityTextureName()
 	return "custom/scaldris_scorch"
 end
 
+function imba_scaldris_scorch:GetIntrinsicModifierName()
+	return "modifier_imba_antipode_passive"
+end
+
+function imba_scaldris_scorch:GetAssociatedSecondaryAbilities()
+	return "imba_scaldris_freeze"
+end
+
 function imba_scaldris_scorch:OnUpgrade()
 	if IsServer() then
 		if self:GetCaster():FindAbilityByName("imba_scaldris_freeze") then
@@ -570,13 +595,21 @@ imba_scaldris_freeze = class({})
 LinkLuaModifier("modifier_imba_freeze_slow", "hero/hero_scaldris", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_freeze_dps", "hero/hero_scaldris", LUA_MODIFIER_MOTION_NONE)
 
-function imba_scaldris_freeze:IsHiddenWhenStolen() return false end
+function imba_scaldris_freeze:IsHiddenWhenStolen() return true end
 function imba_scaldris_freeze:IsRefreshable() return true end
 function imba_scaldris_freeze:IsStealable() return true end
 function imba_scaldris_freeze:IsNetherWardStealable() return true end
 
 function imba_scaldris_freeze:GetAbilityTextureName()
 	return "custom/scaldris_freeze"
+end
+
+function imba_scaldris_freeze:GetIntrinsicModifierName()
+	return "modifier_imba_antipode_passive"
+end
+
+function imba_scaldris_freeze:GetAssociatedPrimaryAbilities()
+	return "imba_scaldris_scorch"
 end
 
 function imba_scaldris_freeze:OnUpgrade()
@@ -721,6 +754,14 @@ function imba_scaldris_jet_blaze:IsNetherWardStealable() return true end
 
 function imba_scaldris_jet_blaze:GetAbilityTextureName()
 	return "custom/scaldris_jet_blaze"
+end
+
+function imba_scaldris_jet_blaze:GetIntrinsicModifierName()
+	return "modifier_imba_antipode_passive"
+end
+
+function imba_scaldris_jet_blaze:GetAssociatedSecondaryAbilities()
+	return "imba_scaldris_ice_floes"
 end
 
 function imba_scaldris_jet_blaze:OnUpgrade()
@@ -898,13 +939,21 @@ imba_scaldris_ice_floes = class({})
 LinkLuaModifier("modifier_imba_ice_floes_stun", "hero/hero_scaldris", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_ice_floes_dps", "hero/hero_scaldris", LUA_MODIFIER_MOTION_NONE)
 
-function imba_scaldris_ice_floes:IsHiddenWhenStolen() return false end
+function imba_scaldris_ice_floes:IsHiddenWhenStolen() return true end
 function imba_scaldris_ice_floes:IsRefreshable() return true end
 function imba_scaldris_ice_floes:IsStealable() return true end
 function imba_scaldris_ice_floes:IsNetherWardStealable() return true end
 
 function imba_scaldris_ice_floes:GetAbilityTextureName()
 	return "custom/scaldris_ice_floes"
+end
+
+function imba_scaldris_ice_floes:GetIntrinsicModifierName()
+	return "modifier_imba_antipode_passive"
+end
+
+function imba_scaldris_ice_floes:GetAssociatedPrimaryAbilities()
+	return "imba_scaldris_jet_blaze"
 end
 
 function imba_scaldris_ice_floes:OnUpgrade()
@@ -1076,6 +1125,14 @@ function imba_scaldris_living_flame:GetAbilityTextureName()
 	return "custom/scaldris_living_flame"
 end
 
+function imba_scaldris_living_flame:GetIntrinsicModifierName()
+	return "modifier_imba_antipode_passive"
+end
+
+function imba_scaldris_living_flame:GetAssociatedSecondaryAbilities()
+	return "imba_scaldris_absolute_zero"
+end
+
 function imba_scaldris_living_flame:OnUpgrade()
 	if IsServer() then
 		if self:GetCaster():FindAbilityByName("imba_scaldris_absolute_zero") then
@@ -1206,13 +1263,21 @@ LinkLuaModifier("modifier_imba_absolute_zero_stun", "hero/hero_scaldris", LUA_MO
 LinkLuaModifier("modifier_imba_absolute_zero_slow", "hero/hero_scaldris", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_absolute_zero_dps", "hero/hero_scaldris", LUA_MODIFIER_MOTION_NONE)
 
-function imba_scaldris_absolute_zero:IsHiddenWhenStolen() return false end
+function imba_scaldris_absolute_zero:IsHiddenWhenStolen() return true end
 function imba_scaldris_absolute_zero:IsRefreshable() return true end
 function imba_scaldris_absolute_zero:IsStealable() return true end
 function imba_scaldris_absolute_zero:IsNetherWardStealable() return true end
 
 function imba_scaldris_absolute_zero:GetAbilityTextureName()
 	return "custom/scaldris_absolute_zero"
+end
+
+function imba_scaldris_absolute_zero:GetIntrinsicModifierName()
+	return "modifier_imba_antipode_passive"
+end
+
+function imba_scaldris_absolute_zero:GetAssociatedPrimaryAbilities()
+	return "imba_scaldris_living_flame"
 end
 
 function imba_scaldris_absolute_zero:OnUpgrade()
