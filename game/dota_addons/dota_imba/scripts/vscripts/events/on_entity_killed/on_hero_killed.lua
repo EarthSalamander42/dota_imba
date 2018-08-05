@@ -92,7 +92,7 @@ function GameMode:OnHeroKilled(killer, killed_unit)
 
 			-- divide the respawn time by 2 for frantic mode
 			if killed_unit:HasModifier("modifier_frantic") then
-				respawn_time = respawn_time / (100 / _G.IMBA_FRANTIC_VALUE)
+				respawn_time = respawn_time - respawn_time / (100 / _G.IMBA_FRANTIC_VALUE)
 			end
 
 			log.info("Set time until respawn for unit " .. tostring(killed_unit:GetUnitName()) .. " to " .. tostring(respawn_time) .. " seconds")

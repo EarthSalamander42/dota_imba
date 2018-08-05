@@ -55,9 +55,9 @@ function Mutation:Init()
 
 	-- Selecting Mutations (Take out if statement for IsInToolsMode if you want to test randomized)
 	if IsInToolsMode() then
-		IMBA_MUTATION["positive"] = "teammate_resurrection"
+		IMBA_MUTATION["positive"] = "killstreak_power"
 		IMBA_MUTATION["negative"] = "periodic_spellcast"
-		IMBA_MUTATION["terrain"] = "tug_of_war"
+		IMBA_MUTATION["terrain"] = "speed_freaks"
 	else
 		Mutation:ChooseMutation("positive", POSITIVE_MUTATION_LIST)
 		Mutation:ChooseMutation("negative", NEGATIVE_MUTATION_LIST)

@@ -72,6 +72,16 @@ function HeroSelection:Init()
 		end
 	end
 
+	-- Disable bara in that specific mutator
+	if IMBA_MUTATION["terrain"] == "speed_freaks" then
+		hotdisabledlist["npc_dota_hero_spirit_breaker"] = 1
+	end
+
+	-- Disable zeus in that specific mutator
+	if IMBA_MUTATION["positive"] == "killstreak_power" then
+		hotdisabledlist["npc_dota_hero_zuus"] = 1
+	end
+
 	CustomNetTables:SetTableValue( "hero_selection", "herolist", {
 		gametype = GetMapName(),
 		herolist = herolist,

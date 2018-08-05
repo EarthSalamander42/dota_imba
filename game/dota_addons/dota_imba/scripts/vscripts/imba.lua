@@ -374,37 +374,6 @@ function GameMode:ModifierFilter( keys )
 		end
 
 		-------------------------------------------------------------------------------------------------
-		-- Tenacity debuff duration reduction
-		-------------------------------------------------------------------------------------------------
-		if modifier_owner.GetTenacity and keys.duration > 0 then
-			local original_duration = keys.duration
-			local actually_duration = original_duration
-			local tenacity = modifier_owner:GetTenacity()
-
-			if modifier_owner:GetTeam() ~= modifier_caster:GetTeam() and keys.duration > 0 then --and tenacity ~= 0 then
-				actually_duration = actually_duration * (100 - tenacity) * 0.01
-
-				-------------------------------------------------------------------------------------------------
-				-- Frantic mode duration adjustment
-				-------------------------------------------------------------------------------------------------
-				if IMBA_FRANTIC_MODE_ON then
-					actually_duration = actually_duration / (100/IMBA_FRANTIC_VALUE)
-				end
-			end
-
-			local modifier_handler = modifier_owner:FindModifierByName(modifier_name)
-			if modifier_handler then
-				if modifier_handler.IgnoreTenacity then
-					if modifier_handler:IgnoreTenacity() then
-						actually_duration = original_duration
-					end
-				end
-			end
-
-			keys.duration = actually_duration
-		end
-
-		-------------------------------------------------------------------------------------------------
 		-- Silencer Arcane Supremacy silence duration reduction
 		-------------------------------------------------------------------------------------------------
 		if modifier_owner:HasModifier("modifier_imba_silencer_arcane_supremacy") then
