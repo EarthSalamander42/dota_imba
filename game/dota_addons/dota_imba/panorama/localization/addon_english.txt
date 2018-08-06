@@ -211,6 +211,8 @@
 	"mutation_call_down_description" "Nuclear missiles launched across the entire map every 10 seconds."
 	"mutation_danger_zone" "Danger Zone"
 	"mutation_danger_zone_description" "Gyrocopter Call Down is casted on random positions all over the map."
+	"mutation_ultimate_level" "Ultimate Level"
+	"mutation_ultimate_level_Description" "Max hero level increased to 500. Max health regen capped at 300 (600 with heart of tarrasque)."
 	"mutation_death_explosion" "Death Explosion"
 	"mutation_death_explosion_description" "Deal 600 + (150 * minutes) damage in a 400 radius on death afer a 0.9 seconds delay."
 	"mutation_death_gold_drop" "Death Gold Drop"

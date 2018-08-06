@@ -52,10 +52,11 @@ function Mutation:Init()
 
 	LinkLuaModifier("modifier_mutation_river_flows", "components/mutation/modifiers/modifier_mutation_river_flows.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_sticky_river", "modifier/mutation/modifier_sticky_river.lua", LUA_MODIFIER_MOTION_NONE )
+	LinkLuaModifier("modifier_ultimate_level", "modifier/modifier_ultimate_level.lua", LUA_MODIFIER_MOTION_NONE )
 
 	-- Selecting Mutations (Take out if statement for IsInToolsMode if you want to test randomized)
 	if IsInToolsMode() then
-		IMBA_MUTATION["positive"] = "killstreak_power"
+		IMBA_MUTATION["positive"] = "ultimate_level"
 		IMBA_MUTATION["negative"] = "periodic_spellcast"
 		IMBA_MUTATION["terrain"] = "speed_freaks"
 	else
@@ -565,6 +566,8 @@ function Mutation:OnHeroFirstSpawn(hero)
 		hero:AddItemByName("item_pocket_tower")
 	elseif IMBA_MUTATION["positive"] == "greed_is_good" then
 		hero:AddNewModifier(hero, nil, "modifier_mutation_greed_is_good", {})
+--	elseif IMBA_MUTATION["positive"] == "ultimate_level" then
+--		hero:AddNewModifier(hero, nil, "modifier_ultimate_level", {})
 	end
 
 	if IMBA_MUTATION["negative"] == "death_explosion" then

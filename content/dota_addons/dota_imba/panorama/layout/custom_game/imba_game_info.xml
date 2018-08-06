@@ -10,7 +10,7 @@
 
 	<Panel class="ImbaGameInfo">
 		<Panel id="Title">
-			<Image id="ImbaTitle" class="SeqImg" src="file://{images}/custom_game/tutorial/imba.png" />
+<!--		<Image id="ImbaTitle" class="SeqImg" src="file://{images}/custom_game/tutorial/imba.png" /> -->
 		</Panel>
 
 		<Label id="Intro01" class="Header" html="true" text="#imba_tutorial_intro_01" />

@@ -72,14 +72,17 @@ function HeroSelection:Init()
 		end
 	end
 
-	-- Disable bara in that specific mutator
-	if IMBA_MUTATION["terrain"] == "speed_freaks" then
-		hotdisabledlist["npc_dota_hero_spirit_breaker"] = 1
-	end
+	if IsMutationMap() then
+		-- Disable bara in that specific mutator
+		if IMBA_MUTATION["terrain"] == "speed_freaks" then
+			hotdisabledlist["npc_dota_hero_bloodseeker"] = 1
+			hotdisabledlist["npc_dota_hero_spirit_breaker"] = 1
+		end
 
-	-- Disable zeus in that specific mutator
-	if IMBA_MUTATION["positive"] == "killstreak_power" then
-		hotdisabledlist["npc_dota_hero_zuus"] = 1
+		-- Disable zeus in that specific mutator
+		if IMBA_MUTATION["positive"] == "killstreak_power" then
+			hotdisabledlist["npc_dota_hero_zuus"] = 1
+		end
 	end
 
 	CustomNetTables:SetTableValue( "hero_selection", "herolist", {
@@ -496,12 +499,12 @@ function HeroSelection:GiveStartingHero(playerId, heroName, dev)
 
 	local initial_gold = tonumber(CustomNetTables:GetTableValue("game_options", "initial_gold")["1"]) or 1200
 
-	if has_repicked and has_randomed then
-		PlayerResource:SetGold(playerId, initial_gold +100, false)
+	if  has_repicked and has_randomed then
+		PlayerResource:SetGold(playerId, initial_gold + 100, false)
 	elseif has_repicked then
-		PlayerResource:SetGold(playerId, initial_gold -100, false)
+		PlayerResource:SetGold(playerId, initial_gold - 100, false)
 	elseif has_randomed or IMBA_PICK_MODE_ALL_RANDOM or IMBA_PICK_MODE_ALL_RANDOM_SAME_HERO then
-		PlayerResource:SetGold(playerId, initial_gold +200, false)
+		PlayerResource:SetGold(playerId, initial_gold + 200, false)
 	else
 		PlayerResource:SetGold(playerId, initial_gold, false)
 	end
@@ -522,10 +525,6 @@ function HeroSelection:GiveStartingHero(playerId, heroName, dev)
 	PlayerResource:SetCustomPlayerColor(playerId, PLAYER_COLORS[playerId][1], PLAYER_COLORS[playerId][2], PLAYER_COLORS[playerId][3])
 
 	Imbattlepass:AddItemEffects(hero)
-
-	if IMBA_FRANTIC_MODE_ON then
-		hero:AddNewModifier(hero, nil, "modifier_frantic", {})
-	end
 
 	Timers:CreateTimer(1.0, function()
 		if wisp then

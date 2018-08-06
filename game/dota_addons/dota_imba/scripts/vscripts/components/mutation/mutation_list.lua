@@ -15,7 +15,7 @@ POSITIVE_MUTATION_LIST[3] = "pocket_tower"
 POSITIVE_MUTATION_LIST[4] = "super_fervor"
 -- POSITIVE_MUTATION_LIST[5] = "super_blink"
 POSITIVE_MUTATION_LIST[5] = "slark_mode"
-POSITIVE_MUTATION_LIST[6] = "ultimate_level"
+-- POSITIVE_MUTATION_LIST[6] = "ultimate_level"
 
 -- POSITIVE_MUTATION_LIST[5] = "frantic"
 -- POSITIVE_MUTATION_LIST["greed_is_good"] = false

@@ -524,12 +524,8 @@ HERO_XP_BOUNTY_PER_LEVEL[5] = 305
 HERO_XP_BOUNTY_PER_LEVEL[6] = 350
 HERO_XP_BOUNTY_PER_LEVEL[7] = 395
 
-for i = 8, 25 do
+for i = 8, 500 do
 	HERO_XP_BOUNTY_PER_LEVEL[i] = HERO_XP_BOUNTY_PER_LEVEL[i-1] + 135
-end
-
-for i = 26, 100 do
-	HERO_XP_BOUNTY_PER_LEVEL[i] = HERO_XP_BOUNTY_PER_LEVEL[i-1] + 135 + i * 3
 end
 
 USE_MEME_SOUNDS = true														-- Should we use meme/fun sounds on abilities occasionally?

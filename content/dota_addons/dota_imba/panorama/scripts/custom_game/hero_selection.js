@@ -116,6 +116,7 @@ var hiddenAbilities = [
 	"imba_tiny_tree_throw",
 	"imba_wisp_tether_break",
 	"imba_wisp_relocate_break",
+	"imba_zuus_nimbus_zap",
 	"" // Leave it alone, he's useful
 ]
 

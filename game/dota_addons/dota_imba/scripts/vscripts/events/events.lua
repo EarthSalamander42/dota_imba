@@ -67,104 +67,95 @@ function GameMode:OnGameRulesStateChange(keys)
 		-- IMBA: Custom maximum level EXP tables adjustment
 		local max_level = tonumber(CustomNetTables:GetTableValue("game_options", "max_level")["1"])
 		if max_level and max_level > 25 then
-			for i = 26, max_level do
-				XP_PER_LEVEL_TABLE[i] = XP_PER_LEVEL_TABLE[i-1] + 3500
-				GameRules:GetGameModeEntity():SetCustomXPRequiredToReachNextLevel( XP_PER_LEVEL_TABLE )
-			end
+			local j = 26
+			Timers:CreateTimer(function()
+				if j >= max_level then return end
+				for i = j, j + 2 do
+					XP_PER_LEVEL_TABLE[i] = XP_PER_LEVEL_TABLE[i-1] + 3500
+					GameRules:GetGameModeEntity():SetCustomXPRequiredToReachNextLevel( XP_PER_LEVEL_TABLE )
+				end
+				j = j + 2
+				return 1.0
+			end)
 		end
 
 		Timers:CreateTimer(2.0, function()
+			for _, hero in pairs(HeroList:GetAllHeroes()) do
+				-- player table runs an error with new picking screen
+				if CustomNetTables:GetTableValue("player_table", tostring(hero:GetPlayerID())) ~= nil then
+					local donators = api.imba.get_donators()
+					for k, v in pairs(donators) do
+						CustomNetTables:SetTableValue("player_table", tostring(hero:GetPlayerID()), {
+							companion_model = donators[k].model,
+							companion_enabled = donators[k].enabled,
+							Lvl = CustomNetTables:GetTableValue("player_table", tostring(hero:GetPlayerID())).Lvl,
+						})
+					end
+				end
+			end
+
+			if GetMapName() == "imba_overthrow" then
+				local foundTeams = {}
+				COURIER_TEAM = {}
+				for _, playerStart in pairs(Entities:FindAllByClassname("info_courier_spawn")) do
+					COURIER_TEAM[playerStart:GetTeam()] = CreateUnitByName("npc_dota_courier", playerStart:GetAbsOrigin(), true, nil, nil, playerStart:GetTeam())
+--					COURIER_PLAYER[playerStart:GetTeam()] = CreateUnitByName("npc_dota_courier", playerStart:GetAbsOrigin(), true, nil, nil, playerStart:GetTeam())
+				end
+
 				for _, hero in pairs(HeroList:GetAllHeroes()) do
-					-- player table runs an error with new picking screen
-
-					if CustomNetTables:GetTableValue("player_table", tostring(hero:GetPlayerID())) ~= nil then
-						local donators = api.imba.get_donators()
-						for k, v in pairs(donators) do
-							CustomNetTables:SetTableValue("player_table", tostring(hero:GetPlayerID()), {
-									companion_model = donators[k].model,
-									companion_enabled = donators[k].enabled,
-									Lvl = CustomNetTables:GetTableValue("player_table", tostring(hero:GetPlayerID())).Lvl,
-								})
-						end
+					if Entities:FindAllByClassname("info_courier_spawn"):GetTeam() == hero:GetTeam() then
+						COURIER_TEAM[hero:GetPlayerID()] = CreateUnitByName("npc_dota_courier", Entities:FindAllByClassname("info_courier_spawn"):GetAbsOrigin(), true, nil, nil, hero:GetTeam())
+--						COURIER_PLAYER[hero:GetPlayerID()] = CreateUnitByName("npc_dota_courier", Entities:FindAllByClassname("info_courier_spawn"):GetAbsOrigin(), true, nil, nil, hero:GetTeam())
 					end
 				end
-
-				if GetMapName() == "imba_overthrow" then
-					local foundTeams = {}
+			elseif GetMapName() == "cavern" then
+			else
+				if USE_TEAM_COURIER then
 					COURIER_TEAM = {}
-					for _, playerStart in pairs(Entities:FindAllByClassname("info_courier_spawn")) do
-						COURIER_TEAM[playerStart:GetTeam()] = CreateUnitByName("npc_dota_courier", playerStart:GetAbsOrigin(), true, nil, nil, playerStart:GetTeam())
---						COURIER_PLAYER[playerStart:GetTeam()] = CreateUnitByName("npc_dota_courier", playerStart:GetAbsOrigin(), true, nil, nil, playerStart:GetTeam())
-					end
-
-					for _, hero in pairs(HeroList:GetAllHeroes()) do
-						if Entities:FindAllByClassname("info_courier_spawn"):GetTeam() == hero:GetTeam() then
-							COURIER_TEAM[hero:GetPlayerID()] = CreateUnitByName("npc_dota_courier", Entities:FindAllByClassname("info_courier_spawn"):GetAbsOrigin(), true, nil, nil, hero:GetTeam())
---							COURIER_PLAYER[hero:GetPlayerID()] = CreateUnitByName("npc_dota_courier", Entities:FindAllByClassname("info_courier_spawn"):GetAbsOrigin(), true, nil, nil, hero:GetTeam())
-						end
-					end
-				elseif GetMapName() == "cavern" then
+					COURIER_TEAM[2] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_radiant"):GetAbsOrigin(), true, nil, nil, 2)
+					COURIER_TEAM[3] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_dire"):GetAbsOrigin(), true, nil, nil, 3)
 				else
---					safe(function()
---						if error then
---							log.info("An error occured with courier script, swap to original team couriers.")
-
---							COURIER_TEAM = {}
---							COURIER_TEAM[2] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_radiant"):GetAbsOrigin(), true, nil, nil, 2)
---							COURIER_TEAM[3] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_dire"):GetAbsOrigin(), true, nil, nil, 3)
-
---							error = true
---						else
-					if USE_TEAM_COURIER then
-						COURIER_TEAM = {}
-						COURIER_TEAM[2] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_radiant"):GetAbsOrigin(), true, nil, nil, 2)
-						COURIER_TEAM[3] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_dire"):GetAbsOrigin(), true, nil, nil, 3)
-					else
-						for _, hero in pairs(HeroList:GetAllHeroes()) do
-							COURIER_PLAYER = {}
-							if hero:GetTeamNumber() == 2 then
-								COURIER_PLAYER[hero:GetPlayerID()] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_radiant"):GetAbsOrigin(), true, nil, nil, hero:GetTeam())
-							elseif hero:GetTeamNumber() == 3 then
-								COURIER_PLAYER[hero:GetPlayerID()] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_dire"):GetAbsOrigin(), true, nil, nil, hero:GetTeam())
-							end
+					for _, hero in pairs(HeroList:GetAllHeroes()) do
+						COURIER_PLAYER = {}
+						if hero:GetTeamNumber() == 2 then
+							COURIER_PLAYER[hero:GetPlayerID()] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_radiant"):GetAbsOrigin(), true, nil, nil, hero:GetTeam())
+						elseif hero:GetTeamNumber() == 3 then
+							COURIER_PLAYER[hero:GetPlayerID()] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_dire"):GetAbsOrigin(), true, nil, nil, hero:GetTeam())
 						end
 					end
---						end
-
---						error = false
---					end)
-
-					local good_fillers = {
-						"good_filler_1",
-						"good_filler_3",
-						"good_filler_5",
-					}
-
-					local bad_fillers = {
-						"bad_filler_1",
-						"bad_filler_3",
-						"bad_filler_5",
-					}
-
-					for _, ent_name in pairs(good_fillers) do
-						local filler = Entities:FindByName(nil, ent_name)
-						local abs = filler:GetAbsOrigin()
-						filler:RemoveSelf()
-						local shrine = CreateUnitByName("npc_dota_goodguys_healers", abs, true, nil, nil, 2)
-						shrine:SetAbsOrigin(abs)
-					end
-
-					for _, ent_name in pairs(bad_fillers) do
-						local filler = Entities:FindByName(nil, ent_name)
-						local abs = filler:GetAbsOrigin()
-						filler:RemoveSelf()
-						local shrine = CreateUnitByName("npc_dota_badguys_healers", abs, true, nil, nil, 3)
-						shrine:SetAbsOrigin(abs)
-					end
-
-					CustomGameEventManager:Send_ServerToAllClients("override_top_bar_colors", {})
 				end
-			end)
+
+				local good_fillers = {
+					"good_filler_1",
+					"good_filler_3",
+					"good_filler_5",
+				}
+
+				local bad_fillers = {
+					"bad_filler_1",
+					"bad_filler_3",
+					"bad_filler_5",
+				}
+
+				for _, ent_name in pairs(good_fillers) do
+					local filler = Entities:FindByName(nil, ent_name)
+					local abs = filler:GetAbsOrigin()
+					filler:RemoveSelf()
+					local shrine = CreateUnitByName("npc_dota_goodguys_healers", abs, true, nil, nil, 2)
+					shrine:SetAbsOrigin(abs)
+				end
+
+				for _, ent_name in pairs(bad_fillers) do
+					local filler = Entities:FindByName(nil, ent_name)
+					local abs = filler:GetAbsOrigin()
+					filler:RemoveSelf()
+					local shrine = CreateUnitByName("npc_dota_badguys_healers", abs, true, nil, nil, 3)
+					shrine:SetAbsOrigin(abs)
+				end
+
+				CustomGameEventManager:Send_ServerToAllClients("override_top_bar_colors", {})
+			end
+		end)
 	end
 
 	-------------------------------------------------------------------------------------------------

@@ -331,11 +331,14 @@
 "mutation_super_fervor"							"Super Fervor"
 "mutation_super_fervor_Description"				"Killing enemy units decreases cooldowns and grants increased attack speed for a short duration. Killing heroes gives greater effects."
 
+"mutation_ultimate_level"						"Ultimate Level"
+"mutation_ultimate_level_Description" "Max hero level increased to 500. Max health regen capped at 300 (600 with heart of tarrasque)."
+
 "mutation_greed_is_good"						"Greed is Good"
 "mutation_greed_is_good_Description"			"Bonus gold is granted each minute!"
 
-//	"mutation_frantic"								"Frantic"
-//	"mutation_frantic_Description"					"50% Cooldown Reduction, Mana Cost, Respawn Time and Status Resistance."
+//	"mutation_frantic"							"Frantic"
+//	"mutation_frantic_Description"				"50% Cooldown Reduction, Mana Cost, Respawn Time and Status Resistance."
 
 "mutation_slark_mode"							"Shadow Dance"
 "mutation_slark_mode_Description"				"Regenerate health and mana slightly faster when not in vision of the enemy."

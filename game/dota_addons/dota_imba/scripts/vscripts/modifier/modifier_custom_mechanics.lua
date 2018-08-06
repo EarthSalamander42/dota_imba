@@ -39,7 +39,7 @@ function modifier_custom_mechanics:DeclareFunctions()
 		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
 		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
 		MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE,
-		MODIFIER_EVENT_ON_ABILITY_FULLY_CAST
+		MODIFIER_EVENT_ON_ABILITY_FULLY_CAST,
 	}
 	return funcs
 end
@@ -169,27 +169,26 @@ function modifier_custom_mechanics:OnAttackLanded( keys )
 end
 
 function modifier_custom_mechanics:OnCreated()
-    if IsServer() then
-        self.health_regen_amp = 0
-        self:StartIntervalThink(0.25)
-    end
+	if IsServer() then
+		self.health_regen_amp = 0
+		self:StartIntervalThink(0.25)
+	end
 end
 
 function modifier_custom_mechanics:OnIntervalThink()
-    if IsServer() then
+	if IsServer() then
+		-- Calculate current regen before this modifier
+		local parent = self:GetParent()
+		local base_health_regen = parent:GetHealthRegen() - self.health_regen_amp
 
-        -- Calculate current regen before this modifier
-        local parent = self:GetParent()
-        local base_health_regen = parent:GetHealthRegen() - self.health_regen_amp
-
-        -- Update health regen amp bonus
-        self.health_regen_amp = base_health_regen * parent:GetHealthRegenAmp() * 0.01
-    end
+		-- Update health regen amp bonus
+		self.health_regen_amp = base_health_regen * parent:GetHealthRegenAmp() * 0.01
+	end
 end
 
 -- Health regeneration amplification handler
 function modifier_custom_mechanics:GetModifierConstantHealthRegen()
-    if IsServer() then
-        return self.health_regen_amp
-    end
+	if IsServer() then
+		return self.health_regen_amp
+	end
 end
