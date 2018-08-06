@@ -553,10 +553,11 @@ function Mutation:OnHeroFirstSpawn(hero)
 	-- Check if we can add modifiers to hero
 	if not Mutation:IsEligibleHero(hero) then return end
 
+	-- Frantic is permanent now
+	hero:AddNewModifier(hero, nil, "modifier_frantic", {})
+
 	if IMBA_MUTATION["positive"] == "killstreak_power" then
 		hero:AddNewModifier(hero, nil, "modifier_mutation_kill_streak_power", {})
-	elseif IMBA_MUTATION["positive"] == "frantic" then
-		hero:AddNewModifier(hero, nil, "modifier_frantic", {})
 --	elseif IMBA_MUTATION["positive"] == "jump_start" then
 --		hero:AddExperience(XP_PER_LEVEL_TABLE[6], DOTA_ModifyXP_CreepKill, false, true)
 	elseif IMBA_MUTATION["positive"] == "super_blink" then

@@ -52,8 +52,8 @@ end
 
 modifier_fountain_invulnerable = class({})
 
--- function modifier_fountain_invulnerable:IsHidden() return true end
 function modifier_fountain_invulnerable:IsPurgable() return false end
+function modifier_fountain_invulnerable:GetTexture() return "tower_armor_aura" end
 
 function modifier_fountain_invulnerable:DeclareFunctions()
 	local funcs = {
