@@ -12821,6 +12821,103 @@
 			}
 		}
 	}
+	//=================================================================================================================
+	// Recipe: Anomalous Crux
+	//=================================================================================================================
+	"item_recipe_imba_anomalous_crux"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2290"
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"custom/imba_recipe"
 
-	//next free ID: 2290
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"0"
+		"ItemShopTags"					""
+
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_anomalous_crux"
+		"ItemRequirements"
+		{
+			"01"						"item_imba_octarine_core;item_refresher;item_staff_of_wizardry"
+		}
+	}
+	
+	//=================================================================================================================
+	// Anomalous Crux
+	//=================================================================================================================
+	"item_imba_anomalous_crux"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2291"
+		"BaseClass"						"item_lua"
+		"ScriptFile"					"items/item_anomalous_crux.lua"
+		"AbilityTextureName" 			"custom/imba_anomalous_crux_active"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"18.0"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"12000"		
+		"ItemShopTags"					"regen_health;regen_mana;mana_pool;health_pool;cooldown_reduction;spell_lifesteal"
+		"ItemQuality"					"epic"
+		"ItemAliases"					"anomalous;crux"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
+				
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"health_bonus"				"500"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"mana_bonus"				"500"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"intellect_bonus"			"40"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"health_regen"				"15"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"mana_regen"				"5"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cooldown_pct"				"30"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"spell_lifesteal"			"35"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"min_cooldown"				"1.5"
+			}
+		}
+	}
+	
+	//next free ID: 2292
 }
