@@ -274,7 +274,6 @@
 		"item"		"item_gloves"
 		"item"		"item_iron_talon"
 		"item"		"item_cloak"
-		"item"		"item_imba_magic_wand"
 		"item"		"item_recipe_soul_ring"
 	}
 }

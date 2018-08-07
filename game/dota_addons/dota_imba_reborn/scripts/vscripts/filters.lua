@@ -793,10 +793,8 @@ function GameMode:DamageFilter( keys )
 
 		-- Cheese auto-healing
 		if victim:HasModifier("modifier_imba_cheese_death_prevention") then
-
 			-- Only apply if it was a real hero
 			if victim:IsRealHero() then
-
 				-- Check if death is imminent
 				local victim_health = victim:GetHealth()
 				if keys.damage >= victim_health and not ( victim:HasModifier("modifier_imba_dazzle_shallow_grave") or victim:HasModifier("modifier_imba_dazzle_nothl_protection") ) then
@@ -820,9 +818,6 @@ function GameMode:DamageFilter( keys )
 
 						-- Spend a charge
 						item:SetCurrentCharges( item:GetCurrentCharges() - 1 )
-
-						-- Trigger cooldown
-						item:StartCooldown( item:GetCooldown(1) * (1 - victim:GetCooldownReduction() * 0.01) )
 
 						-- If this was the last charge, remove the item
 						if item:GetCurrentCharges() == 0 then

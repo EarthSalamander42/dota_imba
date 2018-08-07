@@ -270,7 +270,7 @@ function modifier_item_imba_heavens_halberd:OnAttackLanded( keys )
 
 		-- If the target is not valid, do nothing either
 		local target = keys.target
-		if target:IsMagicImmune() or (not IsHeroOrCreep(target)) then -- or owner:GetTeam() == target:GetTeam() then
+		if target:IsMagicImmune() or (not target:IsHeroOrCreep()) then -- or owner:GetTeam() == target:GetTeam() then
 			return end
 
 		-- Stack the maim up
@@ -1622,7 +1622,7 @@ function SangeAttack(attacker, target, ability, modifier_stacks, modifier_proc)
 		return end
 
 	-- If the target is not valid, do nothing either
-	if target:IsMagicImmune() or (not IsHeroOrCreep(target)) then -- or attacker:GetTeam() == target:GetTeam() then
+	if target:IsMagicImmune() or (not target:IsHeroOrCreep()) then -- or attacker:GetTeam() == target:GetTeam() then
 		return end
 
 	-- Stack the maim up
@@ -1672,7 +1672,7 @@ function kayaAttack(attacker, target, ability, modifier_stacks, modifier_proc)
 		return end
 
 	-- If the target is not valid, do nothing either
-	if target:IsMagicImmune() or (not IsHeroOrCreep(target)) then -- or attacker:GetTeam() == target:GetTeam() then
+	if target:IsMagicImmune() or (not target:IsHeroOrCreep()) then -- or attacker:GetTeam() == target:GetTeam() then
 		return end
 
 	-- Stack the magic amp up
@@ -1706,7 +1706,7 @@ function SangeYashaAttack(attacker, target, ability, modifier_enemy_stacks, modi
 		return end
 
 	-- If the target is not valid, do nothing else
-	if target:IsMagicImmune() or (not IsHeroOrCreep(target)) then -- or attacker:GetTeam() == target:GetTeam() then
+	if target:IsMagicImmune() or (not target:IsHeroOrCreep()) then -- or attacker:GetTeam() == target:GetTeam() then
 		return end
 
 	-- If the ability is not on cooldown, roll for a proc
@@ -1737,7 +1737,7 @@ function SangekayaAttack(attacker, target, ability, modifier_stacks, modifier_pr
 		return end
 
 	-- If the target is not valid, do nothing either
-	if target:IsMagicImmune() or (not IsHeroOrCreep(target)) then -- or attacker:GetTeam() == target:GetTeam() then
+	if target:IsMagicImmune() or (not target:IsHeroOrCreep()) then -- or attacker:GetTeam() == target:GetTeam() then
 		return end
 
 	-- Stack the maim/amp up
@@ -1773,7 +1773,7 @@ function kayaYashaAttack(attacker, target, ability, modifier_enemy_stacks, modif
 		return end
 
 	-- If the target is not valid, do nothing else
-	if target:IsMagicImmune() or (not IsHeroOrCreep(target)) then -- or attacker:GetTeam() == target:GetTeam() then
+	if target:IsMagicImmune() or (not target:IsHeroOrCreep()) then -- or attacker:GetTeam() == target:GetTeam() then
 		return end
 
 	-- If the ability is not on cooldown, roll for a proc
@@ -1811,7 +1811,7 @@ function TriumAttack(attacker, target, ability, modifier_enemy_stacks, modifier_
 		return end
 
 	-- If the target is not valid, do nothing else
-	if target:IsMagicImmune() or (not IsHeroOrCreep(target)) then -- or attacker:GetTeam() == target:GetTeam() then
+	if target:IsMagicImmune() or (not target:IsHeroOrCreep()) then -- or attacker:GetTeam() == target:GetTeam() then
 		return end
 
 	-- If the ability is not on cooldown, roll for a proc

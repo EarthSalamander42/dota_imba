@@ -160,10 +160,6 @@ function modifier_imba_octarine_core_unique:OnSpentMana( keys )
 			local blast_damage = ability:GetSpecialValueFor("blast_damage")
 
 			if unit == parent and ability:IsCooldownReady() and cost > 0 then
-
-				-- Trigger ability cooldown
-				ability:StartCooldown(ability:GetCooldown(0) * (1 - parent:GetCooldownReduction() * 0.01))
-
 				-- Blast geometry
 				local blast_duration = 0.75 * 0.75
 				local blast_speed = blast_radius / blast_duration

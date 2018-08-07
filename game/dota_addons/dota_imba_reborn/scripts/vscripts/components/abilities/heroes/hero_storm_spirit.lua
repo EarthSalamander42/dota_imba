@@ -872,7 +872,7 @@ function imba_storm_spirit_ball_lightning:OnProjectileHit_ExtraData(target, loca
 			if self.traveled > ExtraData.max_spell_amp_range then
 				damage_flags = damage_flags + DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION
 
-				local damage_at_max_distance =  ExtraData.damage * ExtraData.max_spell_amp_range * 0.01 * (1 + (caster:GetSpellPower() * 0.01))
+				local damage_at_max_distance =  ExtraData.damage * ExtraData.max_spell_amp_range * 0.01 * (1 + (caster:GetSpellAmplification(false) * 0.01))
 
 				-- If you are doing less damage because you went slightly more than the max range, set the damage to how much it would be at max range.
 				if damage < damage_at_max_distance then

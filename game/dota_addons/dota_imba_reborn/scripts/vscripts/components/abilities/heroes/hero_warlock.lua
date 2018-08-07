@@ -498,7 +498,7 @@ function modifier_imba_shadow_word:OnIntervalThink()
 	-- Determine whether to deal damage or to heal
 	if self.good_guy then
 		-- Get caster's current Spell Power
-		local spell_power = self.caster:GetSpellPower()
+		local spell_power = self.caster:GetSpellAmplification(false)
 		local heal = self.tick_value * (1 + spell_power * 0.01)
 
 		self.parent:Heal(heal, self.caster)

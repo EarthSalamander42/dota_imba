@@ -442,7 +442,7 @@ end
 
 function modifier_imba_voodoo_restoration_heal:OnIntervalThink()
 	local hParent = self:GetParent()
-	local heal_amp = 1 + (self:GetCaster():GetSpellPower() * 0.01)
+	local heal_amp = 1 + (self:GetCaster():GetSpellAmplification(false) * 0.01)
 	local heal = (self:GetAbility():GetSpecialValueFor("heal") + (self:GetCaster():GetIntellect() * self:GetAbility():GetSpecialValueFor("int_to_heal") * 0.01)) * heal_amp * self.interval
 
 	hParent:Heal(heal, self:GetCaster())

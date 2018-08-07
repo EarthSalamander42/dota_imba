@@ -1211,7 +1211,7 @@ end
 function imba_dazzle_shadow_wave:WaveHit(unit, isAlly, poisonTouched)
 	if IsServer() then
 		local caster = self:GetCaster()
-		local spellAmp = caster:GetSpellPower()
+		local spellAmp = caster:GetSpellAmplification(false)
 		local damage = self:GetSpecialValueFor("damage")
 		local damageRadius = self:GetSpecialValueFor("damage_radius")
 

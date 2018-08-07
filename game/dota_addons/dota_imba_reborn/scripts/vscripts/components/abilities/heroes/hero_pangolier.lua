@@ -15,6 +15,13 @@
 -- Editors:
 --     Lindbrum, 11.11.2017
 
+LinkLuaModifier("modifier_special_bonus_imba_pangolier_3", "components/abilities/heroes/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_pangolier_3 = modifier_special_bonus_imba_pangolier_3 or class({})
+
+function modifier_special_bonus_imba_pangolier_3:IsHidden() return false end
+function modifier_special_bonus_imba_pangolier_3:RemoveOnDeath() return false end
+
 --Talent #3: Grants Pangolier a parry modifier that will gain stacks through Shield Crash
 function modifier_special_bonus_imba_pangolier_3:OnCreated()
 	if IsServer() then
@@ -95,7 +102,6 @@ function imba_pangolier_swashbuckle:OnUpgrade()
 end
 
 function imba_pangolier_swashbuckle:OnSpellStart()
-
 	-- Ability properties
 	local caster = self:GetCaster()
 	local ability = self
@@ -171,7 +177,6 @@ end
 
 --pangolier is stunned during the dash
 function modifier_imba_swashbuckle_dash:CheckState()
-
 	--Talent #2: Pangolier is invulnerable while dashing
 	if self:GetCaster():HasTalent("special_bonus_imba_pangolier_2") then
 		state = {

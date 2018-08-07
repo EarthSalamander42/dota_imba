@@ -43,6 +43,22 @@ function GameMode:OnGameRulesStateChange(keys)
 			COURIER_TEAM[2] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_radiant"):GetAbsOrigin(), true, nil, nil, 2)
 			COURIER_TEAM[3] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_dire"):GetAbsOrigin(), true, nil, nil, 3)
 
+			-- IMBA: Custom maximum level EXP tables adjustment
+			local max_level = tonumber(CustomNetTables:GetTableValue("game_options", "max_level")["1"])
+			if max_level and max_level > 25 then
+				local j = 26
+				Timers:CreateTimer(function()
+					if j >= max_level then return end
+					for i = j, j + 2 do
+						XP_PER_LEVEL_TABLE[i] = XP_PER_LEVEL_TABLE[i-1] + 3500
+						GameRules:GetGameModeEntity():SetCustomXPRequiredToReachNextLevel( XP_PER_LEVEL_TABLE )
+					end
+					j = j + 2
+					return 1.0
+				end)
+			end
+
+			-- Initialize IMBA Runes system
 			ImbaRunes:Init()
 		end)
 	elseif newState == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
@@ -79,9 +95,9 @@ function GameMode:OnNPCSpawned(keys)
 		end
 
 		api.imba.event(api.events.unit_spawned, {
-				tostring(npc:GetUnitName()),
-				tostring(player)
-			})
+			tostring(npc:GetUnitName()),
+			tostring(player)
+		})
 
 		if npc:IsCourier() then
 			if npc.first_spawn == true then
@@ -119,6 +135,9 @@ function GameMode:OnNPCSpawned(keys)
 
 			GameMode:OnHeroSpawned(npc)
 
+			return
+		elseif string.find(npc:GetUnitName(), "tower") then
+			SetupTower(npc)
 			return
 		else
 			if npc.first_spawn ~= true then
@@ -382,6 +401,43 @@ function GameMode:OnPlayerLevelUp(keys)
 	local level = keys.level
 end
 
+function GameMode:OnPlayerLearnedAbility(keys)
+	local player = EntIndexToHScript(keys.player)
+	local hero = player:GetAssignedHero()
+	local abilityname = keys.abilityname
+
+	-- If it the ability is Homing Missiles, wait a bit and set count to 1
+	if abilityname == "gyrocopter_homing_missile" then
+		Timers:CreateTimer(1, function()
+			-- Find homing missile modifier
+			local modifier_charges = player:GetAssignedHero():FindModifierByName("modifier_gyrocopter_homing_missile_charge_counter")
+			if modifier_charges then
+				modifier_charges:SetStackCount(3)
+			end
+		end)
+	elseif abilityname == "special_bonus_imba_mirana_5" then -- fix for mirana stand still talent not working
+		hero:AddNewModifier(hero, nil, "modifier_imba_mirana_silence_stance", {})
+		hero:AddNewModifier(hero, nil, "modifier_imba_mirana_silence_stance_visible", {})
+	end
+
+	-- initiate talent!
+	if abilityname:find("special_bonus_imba_") == 1 then
+		hero:AddNewModifier(hero, nil, "modifier_"..abilityname, {})
+	end
+
+	if abilityname == "lone_druid_savage_roar" and not hero.savage_roar then
+		hero.savage_roar = true
+	end
+
+	if hero then
+		api.imba.event(api.events.ability_learned, {
+			tostring(abilityname),
+			tostring(hero:GetUnitName()),
+			tostring(PlayerResource:GetSteamID(player:GetPlayerID()))
+		})
+	end
+end
+
 function GameMode:PlayerConnect(keys)
 
 end
@@ -400,6 +456,52 @@ function GameMode:OnPlayerChat(keys)
 --	local playerID = self.vUserIds[userID]:GetPlayerID()
 
 	local text = keys.text
+
+	-- I dont know exactly where to put this so ill put here
+	local steamid = tostring(PlayerResource:GetSteamID(keys.playerid))
+	local _text = tostring(text)
+	api.imba.event(api.events.chat, {
+		steamid,
+		_text
+	})
+
+	-- This Handler is only for commands, ends the function if first character is not "-"
+	if not (string.byte(text) == 45) then
+		return nil
+	end
+	local caster = PlayerResource:GetSelectedHeroEntity(keys.playerid)
+
+	for str in string.gmatch(text, "%S+") do
+		if IsInToolsMode() or GameRules:IsCheatMode() or api.imba.is_developer(steamid) then
+			if str == "-dev_remove_units" then
+				GameMode:RemoveUnits(true, true, true)
+			end
+
+			if str == "-spawnimbarune" then
+				SpawnImbaRunes()
+			end
+
+			if str == "-replaceherowith" then
+				text = string.gsub(text, str, "")
+				text = string.gsub(text, " ", "")
+				if PlayerResource:GetSelectedHeroName(caster:GetPlayerID()) ~= "npc_dota_hero_"..text then
+					if caster.companion then
+						caster.companion:ForceKill(false)
+						caster.companion = nil
+					end
+
+					PrecacheUnitByNameAsync("npc_dota_hero_"..text, function()
+						HeroSelection:GiveStartingHero(caster:GetPlayerID(), "npc_dota_hero_"..text, true)
+					end)
+				end
+			end
+		end
+
+		if str == "-gg" then
+			log.info("Player has GG!")
+			CustomGameEventManager:Send_ServerToPlayer(caster:GetPlayerOwner(), "gg_init_by_local", {})
+		end
+	end
 end
 
 -- TODO: FORMAT THIS GARBAGE

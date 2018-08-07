@@ -15,7 +15,7 @@
 -- Editors:
 --     MouJiaoZi, 15.12.2017
 
-LinkLuaModifier("modifier_imba_enigma_generic_pull","hero/hero_enigma", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_enigma_generic_pull","components/abilities/heroes/hero_enigma", LUA_MODIFIER_MOTION_NONE)
 
 function CalculatePullLength(caster, target, length)
 	if not IsServer() then return end
@@ -126,7 +126,7 @@ end
 
 
 
-LinkLuaModifier("modifier_enigma_magic_immunity","hero/hero_enigma",LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_enigma_magic_immunity","components/abilities/heroes/hero_enigma",LUA_MODIFIER_MOTION_NONE)
 modifier_enigma_magic_immunity = class({})
 
 function modifier_enigma_magic_immunity:IsDebuff() return false end
@@ -157,6 +157,13 @@ function SetTalentSpellImmunity(caster)
 	end
 end
 
+LinkLuaModifier("modifier_special_bonus_imba_enigma_7", "components/abilities/heroes/hero_enigma.lua", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_enigma_7 = modifier_special_bonus_imba_enigma_7 or class({})
+
+function modifier_special_bonus_imba_enigma_7:IsHidden() return false end
+function modifier_special_bonus_imba_enigma_7:RemoveOnDeath() return false end
+
 -- gain spell immune when casting
 function modifier_special_bonus_imba_enigma_7:DeclareFunctions()
 	local funcs =
@@ -173,15 +180,13 @@ function modifier_special_bonus_imba_enigma_7:OnAbilityStart(keys)
 end
 
 
-
-
 --=================================================================================================================
 -- Enigma's Malefice
 --=================================================================================================================
 
 imba_enigma_malefice = imba_enigma_malefice or class({})
 
-LinkLuaModifier("modifier_imba_enigma_malefice","hero/hero_enigma", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_enigma_malefice","components/abilities/heroes/hero_enigma", LUA_MODIFIER_MOTION_NONE)
 
 function imba_enigma_malefice:IsHiddenWhenStolen() 		return false end
 function imba_enigma_malefice:IsRefreshable() 			return true  end
@@ -275,9 +280,9 @@ end
 
 imba_enigma_demonic_conversion = imba_enigma_demonic_conversion or class({})
 
-LinkLuaModifier("modifier_imba_enigma_eidolon","hero/hero_enigma", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_enigma_eidolon_attack_counter","hero/hero_enigma", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_enigma_eidolon_attacks_debuff","hero/hero_enigma", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_enigma_eidolon","components/abilities/heroes/hero_enigma", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_enigma_eidolon_attack_counter","components/abilities/heroes/hero_enigma", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_enigma_eidolon_attacks_debuff","components/abilities/heroes/hero_enigma", LUA_MODIFIER_MOTION_NONE)
 
 function imba_enigma_demonic_conversion:CastFilterResultTarget(target)
 	if IsServer() then
@@ -440,8 +445,8 @@ function modifier_imba_enigma_eidolon_attacks_debuff:GetAttributes() 	return MOD
 
 imba_enigma_midnight_pulse = imba_enigma_midnight_pulse or class({})
 
-LinkLuaModifier("modifier_imba_enigma_midnight_pulse_thinker","hero/hero_enigma", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_enigma_midnight_pulse_aura","hero/hero_enigma", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_enigma_midnight_pulse_thinker","components/abilities/heroes/hero_enigma", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_enigma_midnight_pulse_aura","components/abilities/heroes/hero_enigma", LUA_MODIFIER_MOTION_NONE)
 
 function imba_enigma_midnight_pulse:GetAOERadius()	 return self:GetSpecialValueFor("radius") end
 
@@ -547,10 +552,10 @@ function modifier_imba_enigma_midnight_pulse_aura:GetTexture()			return "enigma_
 --=================================================================================================================
 
 imba_enigma_black_hole = imba_enigma_black_hole or class({})
-LinkLuaModifier("modifier_imba_enigma_black_hole_thinker","hero/hero_enigma", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_enigma_black_hole","hero/hero_enigma", LUA_MODIFIER_MOTION_NONE) --Auctually enemies' buff
-LinkLuaModifier("modifier_imba_enigma_black_hole_pull","hero/hero_enigma", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_singularity","hero/hero_enigma", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_enigma_black_hole_thinker","components/abilities/heroes/hero_enigma", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_enigma_black_hole","components/abilities/heroes/hero_enigma", LUA_MODIFIER_MOTION_NONE) --Auctually enemies' buff
+LinkLuaModifier("modifier_imba_enigma_black_hole_pull","components/abilities/heroes/hero_enigma", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_singularity","components/abilities/heroes/hero_enigma", LUA_MODIFIER_MOTION_NONE)
 
 function imba_enigma_black_hole:IsHiddenWhenStolen() 		return false end
 function imba_enigma_black_hole:IsRefreshable() 			return true end

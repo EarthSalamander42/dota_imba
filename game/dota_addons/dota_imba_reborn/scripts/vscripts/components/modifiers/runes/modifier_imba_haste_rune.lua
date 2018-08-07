@@ -1,5 +1,7 @@
 -- Author: Fudge
 
+LinkLuaModifier("modifier_imba_haste_rune_speed_limit_break", "components/modifiers/runes/modifier_imba_haste_rune.lua", LUA_MODIFIER_MOTION_NONE)
+
 item_imba_rune_haste = item_imba_rune_haste or class({})
 
 ------------------------------

@@ -118,7 +118,7 @@ function Purification(caster, ability, target)
     ParticleManager:ReleaseParticleIndex(particle_aoe_fx)    
 
     -- Get spell power
-    local spell_power = caster:GetSpellPower()
+    local spell_power = caster:GetSpellAmplification(false)
 
     -- Calculate final heal/damage values
     local heal = heal_amount * (1+ (spell_power * 0.01))

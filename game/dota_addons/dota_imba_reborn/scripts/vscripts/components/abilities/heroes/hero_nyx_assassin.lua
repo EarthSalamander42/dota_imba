@@ -20,12 +20,12 @@
 -------------------------------------------------
 
 imba_nyx_assassin_impale = class({})
-LinkLuaModifier("modifier_imba_impale_suffering_aura", "hero/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_impale_suffering", "hero/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_impale_suffering_damage_counter", "hero/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_impale_stun", "hero/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_impale_talent_slow", "hero/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_impale_talent_thinker", "hero/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_impale_suffering_aura", "components/abilities/heroes/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_impale_suffering", "components/abilities/heroes/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_impale_suffering_damage_counter", "components/abilities/heroes/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_impale_stun", "components/abilities/heroes/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_impale_talent_slow", "components/abilities/heroes/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_impale_talent_thinker", "components/abilities/heroes/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
 
 function imba_nyx_assassin_impale:GetAbilityTextureName()
 	return "nyx_assassin_impale"
@@ -542,9 +542,9 @@ end
 -------------------------------------------------
 
 imba_nyx_assassin_mana_burn = class({})
-LinkLuaModifier("modifier_imba_mana_burn_parasite", "hero/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_mana_burn_parasite_charged", "hero/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_mana_burn_talent_parasite", "hero/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_mana_burn_parasite", "components/abilities/heroes/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_mana_burn_parasite_charged", "components/abilities/heroes/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_mana_burn_talent_parasite", "components/abilities/heroes/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
 
 function imba_nyx_assassin_mana_burn:GetAbilityTextureName()
 	return "nyx_assassin_mana_burn"
@@ -917,8 +917,8 @@ function modifier_imba_mana_burn_talent_parasite:IsDebuff() return false end
 -------------------------------------------------
 
 imba_nyx_assassin_spiked_carapace = class({})
-LinkLuaModifier("modifier_imba_spiked_carapace", "hero/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_spiked_carapace_stun", "hero/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_spiked_carapace", "components/abilities/heroes/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_spiked_carapace_stun", "components/abilities/heroes/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
 
 function imba_nyx_assassin_spiked_carapace:GetAbilityTextureName()
 	return "nyx_assassin_spiked_carapace"
@@ -1177,8 +1177,8 @@ end
 
 
 imba_nyx_assassin_vendetta = class({})
-LinkLuaModifier("modifier_imba_vendetta", "hero/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_vendetta_charge", "hero/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_vendetta", "components/abilities/heroes/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_vendetta_charge", "components/abilities/heroes/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
 
 function imba_nyx_assassin_vendetta:GetAbilityTextureName()
 	return "nyx_assassin_vendetta"
@@ -1397,9 +1397,12 @@ end
 -----------------------------------------------------------------
 -- Custom Talent Modifier code
 -----------------------------------------------------------------
---
 -- Falling below 30% procs Spiked Carapace automatically if the skill is off cooldown. Triggers cooldown.
---
+
+LinkLuaModifier("modifier_special_bonus_imba_nyx_assassin_5", "components/abilities/heroes/hero_nyx_assassin.lua", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_nyx_assassin_5 = class({})
+
 function modifier_special_bonus_imba_nyx_assassin_5:IsHidden() return true end
 function modifier_special_bonus_imba_nyx_assassin_5:IsPurgable() return false end
 function modifier_special_bonus_imba_nyx_assassin_5:IsDebuff() return false end

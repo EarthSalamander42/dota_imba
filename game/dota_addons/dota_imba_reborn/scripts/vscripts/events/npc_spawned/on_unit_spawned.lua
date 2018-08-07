@@ -15,6 +15,18 @@
 
 -- first time a real hero spawn
 function GameMode:OnUnitFirstSpawn(unit)
+	if IsMutationMap() then
+		-- Speed Freaks mutation modifier
+		if IMBA_MUTATION["terrain"] == "speed_freaks" then
+			unit:AddNewModifier(unit, nil, "modifier_mutation_speed_freaks", {})
+		end
+
+		-- Alien Incubation mutation modifier
+		if IMBA_MUTATION["negative"] == "alien_incubation" then
+			unit:AddNewModifier(unit, nil, "modifier_mutation_alien_incubation", {})
+		end
+	end
+
 	if unit:IsIllusion() and not unit:HasModifier("modifier_illusion_manager_out_of_world") and not unit:HasModifier("modifier_illusion_manager") then
 		HeroSelection:Attachments(unit)
 		return
@@ -40,20 +52,7 @@ function GameMode:OnUnitFirstSpawn(unit)
 				end
 			end
 		end)
-	end
-
-	if IsMutationMap() then
-
-		-- Speed Freaks mutation modifier
-		if IMBA_MUTATION["terrain"] == "speed_freaks" then
-			unit:AddNewModifier(unit, nil, "modifier_mutation_speed_freaks", {})
-		end
-
-		-- Alien Incubation mutation modifier
-		if IMBA_MUTATION["negative"] == "alien_incubation" then
-			unit:AddNewModifier(unit, nil, "modifier_mutation_alien_incubation", {})
-		end
-
+		return
 	end
 end
 

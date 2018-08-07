@@ -186,7 +186,7 @@ function imba_abaddon_mist_coil:OnProjectileHit_ExtraData( hTarget, vLocation, E
 			target:AddNewModifier(caster, self, "modifier_imba_mist_coil_mist_enemy", {duration = mist_duration})
 		else
 			--Apply spellpower to heal
-			local heal_amp = 1 + (caster:GetSpellPower() * 0.01)
+			local heal_amp = 1 + (caster:GetSpellAmplification(false) * 0.01)
 
 			local heal = (self:GetLevelSpecialValueFor("heal", ability_level) + self.overchannel_damage_increase) * heal_amp
 
@@ -733,7 +733,7 @@ function modifier_imba_curse_of_avernus_passive:OnAttack(kv)
 			self.damage = health_lost * caster:FindTalentValue("special_bonus_imba_abaddon_4", "health_to_damage_ratio")
 			self.ability.curse_of_avernus_target = kv.target
 			ApplyDamage({ victim = caster, attacker = caster, ability = self.ability, damage = health_lost, damage_type = DAMAGE_TYPE_PURE, damage_flags = DOTA_DAMAGE_FLAG_HPLOSS})
-			local cooldown = self.ability:GetCooldown( self.ability:GetLevel() - 1 ) *  (1 - caster:GetCooldownReduction() * 0.01)
+			local cooldown = self.ability:GetCooldown( self.ability:GetLevel() - 1 )
 			-- Start cooldown
 			self.ability:StartCooldown( cooldown )
 		end
@@ -1323,6 +1323,14 @@ end
 -- Special Modifier OnCreated Logic
 -- This is done to reget the behavior of the spell for client purposes
 -------------------------------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_abaddon_4", "components/abilities/heroes/hero_abaddon.lua", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_abaddon_4 = modifier_special_bonus_imba_abaddon_4 or class({})
+
+function modifier_special_bonus_imba_abaddon_4:IsHidden() return false end
+function modifier_special_bonus_imba_abaddon_4:RemoveOnDeath() return false end
+
 function modifier_special_bonus_imba_abaddon_4:OnCreated( params )
 	if IsServer() then
 		local curse_of_avernus_ability = self:GetParent():FindAbilityByName("imba_abaddon_curse_of_avernus")

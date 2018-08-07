@@ -112,7 +112,7 @@ end
 function item_imba_mekansm:OnSpellStart()
 	if IsServer() then
 		-- Parameters
-		local heal_amount = self:GetSpecialValueFor("heal_amount") * (1 + self:GetCaster():GetSpellPower() * 0.01)
+		local heal_amount = self:GetSpecialValueFor("heal_amount") * (1 + self:GetCaster():GetSpellAmplification(false) * 0.01)
 		local heal_radius = self:GetSpecialValueFor("heal_radius")
 		local heal_duration = self:GetSpecialValueFor("heal_duration")
 
@@ -333,7 +333,7 @@ function item_imba_guardian_greaves:OnSpellStart()
 	if IsServer() then
 
 		-- Parameters
-		local heal_amount = self:GetSpecialValueFor("mend_base_health") * (1 + self:GetCaster():GetSpellPower() * 0.01)
+		local heal_amount = self:GetSpecialValueFor("mend_base_health") * (1 + self:GetCaster():GetSpellAmplification(false) * 0.01)
 		local mana_amount = self:GetSpecialValueFor("mend_base_mana") + self:GetSpecialValueFor("mend_mana_pct") * self:GetCaster():GetMaxMana() * 0.01
 		local heal_radius = self:GetSpecialValueFor("aura_radius")
 		local heal_duration = self:GetSpecialValueFor("mend_duration")
@@ -476,12 +476,11 @@ function modifier_item_imba_guardian_greaves_aura_emitter:OnTakeDamage( keys )
 		-- If the owner's health is below the threshold, and Mend is off cooldown, activate it
 		local ability = self:GetAbility()
 		if owner:GetHealthPercent() <= ability:GetSpecialValueFor("min_health_threshold") and owner:GetHealthPercent() > 0 and ability:IsCooldownReady() then
-			local heal_amount = ability:GetSpecialValueFor("mend_base_health") * (1 + owner:GetSpellPower() * 0.01)
+			local heal_amount = ability:GetSpecialValueFor("mend_base_health") * (1 + owner:GetSpellAmplification(false) * 0.01)
 			local mana_amount = ability:GetSpecialValueFor("mend_base_mana") + ability:GetSpecialValueFor("mend_mana_pct") * owner:GetMaxMana() * 0.01
 			local heal_radius = ability:GetSpecialValueFor("aura_radius")
 			local heal_duration = ability:GetSpecialValueFor("mend_duration")
 			GreavesActivate(owner, ability, heal_amount, mana_amount, heal_radius, heal_duration)
-			ability:StartCooldown(ability:GetCooldown(1) * (1 - owner:GetCooldownReduction() * 0.01))
 		end
 	end
 end

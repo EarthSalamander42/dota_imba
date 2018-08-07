@@ -219,8 +219,7 @@ function modifier_imba_royal_wrath:OnTakeDamage( keys )
 				end
 
 				-- Trigger the passive's cooldown
-				local cooldown_reduction = parent:GetCooldownReduction() * 0.01
-				ability:StartCooldown(ability:GetCooldown(ability:GetLevel()) * (1 - cooldown_reduction))
+				ability:StartCooldown(ability:GetCooldown(ability:GetLevel()))
 			end
 		end
 	end

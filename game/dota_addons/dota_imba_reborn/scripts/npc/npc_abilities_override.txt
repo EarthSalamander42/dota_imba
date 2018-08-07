@@ -173,44 +173,6 @@
 	//-----------------------------------------------------------------------------------------------------------------
 	//=================================================================================================================
 
-	"item_belt_of_strength"		{ "AbilityTextureName" "custom/imba_belt_of_strength" }
-	"item_blade_of_alacrity"	{ "AbilityTextureName" "custom/imba_blade_of_alacrity" }
-	"item_blades_of_attack"		{ "AbilityTextureName" "custom/imba_blades_of_attack" }
-	"item_boots"				{ "AbilityTextureName" "custom/imba_boots" }
-	"item_boots_of_elves"		{ "AbilityTextureName" "custom/imba_boots_of_elves" }
-	"item_broadsword"			{ "AbilityTextureName" "custom/imba_broadsword" }
-	"item_chainmail"			{ "AbilityTextureName" "custom/imba_chainmail" }
-	"item_circlet"				{ "AbilityTextureName" "custom/imba_circlet" }
-	"item_claymore"				{ "AbilityTextureName" "custom/imba_claymore" }
-	"item_cloak"				{ "AbilityTextureName" "custom/imba_cloak" }
-	"item_demon_edge"			{ "AbilityTextureName" "custom/imba_demon_edge" }
-	"item_eagle"				{ "AbilityTextureName" "custom/imba_eaglesong" }
-	"item_ethereal_blade"		{ "AbilityTextureName" "custom/imba_ethereal_blade" }
-	"item_gauntlets"			{ "AbilityTextureName" "custom/imba_gauntlets" }
-	"item_gloves"				{ "AbilityTextureName" "custom/imba_gloves" }
-	"item_hyperstone"			{ "AbilityTextureName" "custom/imba_hyperstone" }
-	"item_mantle"				{ "AbilityTextureName" "custom/imba_mantle" }
-	"item_medallion_of_courage"	{ "AbilityTextureName" "custom/imba_medallion_of_courage" }
-	"item_mystic_staff"			{ "AbilityTextureName" "custom/imba_mystic_staff" }
-	"item_oblivion_staff"		{ "AbilityTextureName" "custom/imba_oblivion_staff" }
-	"item_ogre_axe"				{ "AbilityTextureName" "custom/imba_ogre_axe" }
-	"item_phase_boots"			{ "AbilityTextureName" "custom/imba_phase_boots" }
-	"item_platemail"			{ "AbilityTextureName" "custom/imba_platemail" }
-	"item_quarterstaff"			{ "AbilityTextureName" "custom/imba_quarterstaff" }
-	"item_reaver"				{ "AbilityTextureName" "custom/imba_reaver" }
-	"item_relic"				{ "AbilityTextureName" "custom/imba_relic" }
-	"item_ring_of_protection"	{ "AbilityTextureName" "custom/imba_ring_of_protection" }
-	"item_robe"					{ "AbilityTextureName" "custom/imba_robe" }
-	"item_slippers"				{ "AbilityTextureName" "custom/imba_slippers" }
-	"item_smoke_of_deceit"		{ "AbilityTextureName" "custom/imba_smoke_of_deceit" }
-	"item_sobi_mask"			{ "AbilityTextureName" "custom/imba_sobi_mask" }
-	"item_solar_crest"			{ "AbilityTextureName" "custom/imba_solar_crest" }
-	"item_soul_ring"			{ "AbilityTextureName" "custom/imba_soul_ring" }
-	"item_staff_of_wizardry"	{ "AbilityTextureName" "custom/imba_staff_of_wizardry" }
-	"item_talisman_of_evasion"	{ "AbilityTextureName" "custom/imba_talisman_of_evasion" }
-	"item_ultimate_orb"			{ "AbilityTextureName" "custom/imba_ultimate_orb" }
-	"item_void_stone"			{ "AbilityTextureName" "custom/imba_void_stone" }
-
 	"item_courier"
 	{
 		"ItemPurchasable"					"0"
@@ -221,8 +183,6 @@
 	//=================================================================================================================
 	"item_mithril_hammer"
 	{
-		"AbilityTextureName"			"custom/imba_mithril_hammer"
-
 		"AbilitySpecial"
 		{
 //			"01"
@@ -291,8 +251,6 @@
 	//=================================================================================================================
 	"item_tango"
 	{
-		"AbilityTextureName"			"custom/imba_tango"
-
 		"AbilitySpecial"
 		{
 			"01"
@@ -327,8 +285,6 @@
 	//=================================================================================================================
 	"item_ring_of_regen"
 	{
-		"AbilityTextureName"			"custom/imba_ring_of_regen"
-
 		"AbilitySpecial"
 		{
 			"01"
@@ -344,8 +300,6 @@
 	//=================================================================================================================
 	"item_ring_of_health"
 	{
-		"AbilityTextureName"			"custom/imba_ring_of_health"
-
 		"AbilitySpecial"
 		{
 			"01"
@@ -386,7 +340,6 @@
 	//=================================================================================================================
 	"item_flask"
 	{
-		"AbilityTextureName"			"custom/imba_flask"
 		"AbilityCastRange"				"400"
 
 		"AbilitySpecial"
@@ -414,8 +367,6 @@
 	//=================================================================================================================
 	"item_clarity"
 	{
-		"AbilityTextureName"			"custom/imba_clarity"
-
 		"AbilitySpecial"
 		{
 			"01"
@@ -431,8 +382,6 @@
 	//=================================================================================================================
 	"item_enchanted_mango"
 	{
-		"AbilityTextureName"			"custom/imba_enchanted_mango"
-
 		"AbilitySpecial"
 		{
 			"01"
@@ -453,8 +402,6 @@
 	//=================================================================================================================
 	"item_energy_booster"
 	{
-		"AbilityTextureName"			"custom/imba_energy_booster"
-
 		"AbilitySpecial"
 		{
 			"01"
@@ -470,7 +417,6 @@
 	//=================================================================================================================
 	"item_vitality_booster"
 	{
-		"AbilityTextureName"			"custom/imba_vitality_booster"
 		"AbilitySpecial"
 		{
 			"01"
@@ -486,8 +432,6 @@
 	//=================================================================================================================
 	"item_point_booster"
 	{
-		"AbilityTextureName"			"custom/imba_point_booster"
-
 		"AbilitySpecial"
 		{
 			"01"
@@ -508,11 +452,7 @@
 	// Perseverence
 	//=================================================================================================================
 	"item_pers"
-	{
-		"AbilityTextureName"			"custom/imba_pers"
-		
-		// Special	
-		//-------------------------------------------------------------------------------------------------------------
+	{		
 		"AbilitySpecial"
 		{
 			"01"
@@ -533,8 +473,6 @@
 	//=================================================================================================================
 	"item_ultimate_scepter"
 	{
-		"AbilityTextureName"			"custom/imba_ultimate_scepter"
-
 		"AbilitySpecial"
 		{
 			"01"
@@ -631,7 +569,6 @@
 	"item_bracer"
 	{
 		"ItemCost"						"315"
-		"AbilityTextureName"			"custom/imba_bracer"
 		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_ALWAYS"
 	}
 
@@ -648,7 +585,6 @@
 	//=================================================================================================================
 	"item_wraith_band"
 	{
-		"AbilityTextureName"			"custom/imba_wraith_band"
 		"ItemCost"						"315"
 		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_ALWAYS"
 	}
@@ -666,7 +602,6 @@
 	//=================================================================================================================
 	"item_null_talisman"
 	{
-		"AbilityTextureName"			"custom/imba_null_talisman"
 		"ItemCost"						"315"
 		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_ALWAYS"
 	}
@@ -677,7 +612,6 @@
 	"item_branches"
 	{
 		"ItemCost"						"5"
-		"AbilityTextureName"			"custom/imba_branches"
 
 		"AbilitySpecial"
 		{
@@ -699,8 +633,6 @@
 	//=================================================================================================================
 	"item_ghost"
 	{
-		"AbilityTextureName"			"custom/imba_ghost"
-
 		"AbilitySpecial"
 		{
 			"01"
@@ -726,7 +658,6 @@
 	//=================================================================================================================
 	"item_tpscroll"
 	{
-		"AbilityTextureName"			"custom/imba_tpscroll"
 		"AbilityCooldown"				"45.0"
 		"AbilityChannelTime"			"3.0"
 		"AbilityManaCost"				"50"
@@ -903,10 +834,7 @@
 	//=================================================================================================================
 	"item_quelling_blade"
 	{
-		"AbilityTextureName"			"custom/imba_quelling_blade"
-
 		"ItemCost"						"100"
-
 		"AbilityCooldown"				"2.5"
 	}
 
@@ -1030,8 +958,6 @@
 	//=================================================================================================================
 	"item_glimmer_cape"
 	{
-		"AbilityTextureName"			"custom/imba_glimmer_cape"
-
 		"AbilitySpecial"
 		{			
 			"01"
@@ -1075,7 +1001,6 @@
 	//=================================================================================================================
 	"item_helm_of_iron_will"
 	{
-		"AbilityTextureName"			"custom/imba_helm_of_iron_will"
 		"AbilitySpecial"
 		{
 			"01"
@@ -1096,8 +1021,6 @@
 	//=================================================================================================================
 	"item_helm_of_the_dominator"
 	{
-		"AbilityTextureName"			"custom/imba_helm_of_the_dominator"
-
 		"AbilitySpecial"
 		{
 			"01"
@@ -1148,7 +1071,6 @@
 	//=================================================================================================================
 	"item_recipe_headdress"
 	{
-		"AbilityTextureName"			"custom/imba_headdress"
 		"ItemCost"						"295"	
 	}
 
@@ -1192,7 +1114,6 @@
 	//=================================================================================================================
 	"item_buckler"
 	{
-		"AbilityTextureName"			"custom/imba_buckler"
 		"ItemCost"						"750"
 	}
 
@@ -1201,7 +1122,6 @@
 	//=================================================================================================================
 	"item_dagon"
 	{
-		"AbilityTextureName"			"custom/imba_dagon"
 		"AbilityCastRange"				"600"
 		"AbilityCooldown"				"35"
 		"MaxUpgradeLevel"				"10"
@@ -1246,7 +1166,6 @@
 
 	"item_dagon_2"
 	{
-		"AbilityTextureName"			"custom/imba_dagon_2"
 		"AbilityCastRange"				"650"
 		"AbilityCooldown"				"30"
 		"MaxUpgradeLevel"				"10"
@@ -1291,7 +1210,6 @@
 
 	"item_dagon_3"
 	{
-		"AbilityTextureName"			"custom/imba_dagon_3"
 		"AbilityCastRange"				"700"
 		"AbilityCooldown"				"25"
 		"MaxUpgradeLevel"				"10"
@@ -1336,7 +1254,6 @@
 
 	"item_dagon_4"
 	{
-		"AbilityTextureName"			"custom/imba_dagon_4"
 		"AbilityCastRange"				"750"
 		"AbilityCooldown"				"20"
 		"MaxUpgradeLevel"				"10"
@@ -1381,7 +1298,6 @@
 
 	"item_dagon_5"
 	{
-		"AbilityTextureName"			"custom/imba_dagon_5"
 		"AbilityCastRange"				"800"
 		"AbilityCooldown"				"15"
 		"MaxUpgradeLevel"				"10"
@@ -1429,7 +1345,6 @@
 	//=================================================================================================================
 	"item_refresher"
 	{
-		"AbilityTextureName"			"custom/imba_refresher"
 		"AbilityCooldown"				"90"
 
 		"AbilitySpecial"
@@ -1452,7 +1367,6 @@
 	//=================================================================================================================
 	"item_soul_booster"
 	{
-		"AbilityTextureName"			"custom/imba_soul_booster"
 		"AbilitySpecial"
 		{
 			"01"
@@ -1545,7 +1459,6 @@
 	//=================================================================================================================
 	"item_sphere"
 	{
-		"AbilityTextureName"			"custom/imba_sphere"
 		"AbilityCooldown"				"8.5"
 
 		"AbilitySpecial"
@@ -1584,8 +1497,6 @@
 	//=================================================================================================================
 	"item_rod_of_atos"
 	{
-		"AbilityTextureName"			"custom/imba_rod_of_atos"
-
 		"AbilitySpecial"
 		{		
 			"04"
@@ -1601,7 +1512,6 @@
 	//=================================================================================================================
 	"item_orb_of_venom"
 	{
-		"AbilityTextureName"			"custom/imba_orb_of_venom"
 		"ItemCost"						"150"
 
 		// Special	
@@ -11051,7 +10961,6 @@
 		"MaxLevel"						"3"
 		"BaseClass"						"ability_lua"
 		"ScriptFile"					"hero/hero_tinker_temp"
-		"AbilityTextureName"			"tinker_rearm"
 		"AbilityCastPoint"				"0.53"
 
 		"AbilitySpecial"
@@ -15125,8 +15034,6 @@
 	//=================================================================================================================
 	"item_lotus_orb"
 	{
-		"AbilityTextureName"			"custom/imba_lotus_orb"
-
 		"AbilitySpecial"
 		{
 			"01"

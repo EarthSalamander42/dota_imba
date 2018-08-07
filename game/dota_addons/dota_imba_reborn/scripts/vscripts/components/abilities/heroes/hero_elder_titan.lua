@@ -171,9 +171,9 @@ end
 
 -- Astral Spirit
 imba_elder_titan_ancestral_spirit = class({})
-LinkLuaModifier("modifier_imba_elder_titan_ancestral_spirit_damage", "hero/hero_elder_titan", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_elder_titan_ancestral_spirit_ms", "hero/hero_elder_titan", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_elder_titan_ancestral_spirit_self", "hero/hero_elder_titan", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_elder_titan_ancestral_spirit_damage", "components/abilities/heroes/hero_elder_titan", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_elder_titan_ancestral_spirit_ms", "components/abilities/heroes/hero_elder_titan", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_elder_titan_ancestral_spirit_self", "components/abilities/heroes/hero_elder_titan", LUA_MODIFIER_MOTION_NONE)
 
 function imba_elder_titan_ancestral_spirit:GetAbilityTextureName()
 	return "elder_titan_ancestral_spirit"
@@ -458,8 +458,8 @@ end
 
 -- Natural Order
 imba_elder_titan_natural_order = imba_elder_titan_natural_order or class({})
-LinkLuaModifier("modifier_imba_elder_titan_natural_order_aura", "hero/hero_elder_titan", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_elder_titan_natural_order", "hero/hero_elder_titan", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_elder_titan_natural_order_aura", "components/abilities/heroes/hero_elder_titan", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_elder_titan_natural_order", "components/abilities/heroes/hero_elder_titan", LUA_MODIFIER_MOTION_NONE)
 
 function imba_elder_titan_natural_order:GetAbilityTextureName()
 	if self:GetCaster():GetUnitName() == "npc_dota_elder_titan_ancestral_spirit" then
@@ -665,7 +665,7 @@ end
 --    Earth Splitter     --
 -----------------------------
 imba_elder_titan_earth_splitter = class({})
-LinkLuaModifier("modifier_imba_earth_splitter", "hero/hero_elder_titan.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_earth_splitter", "components/abilities/heroes/hero_elder_titan.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_elder_titan_earth_splitter:GetAbilityTextureName()
 	return "elder_titan_earth_splitter"

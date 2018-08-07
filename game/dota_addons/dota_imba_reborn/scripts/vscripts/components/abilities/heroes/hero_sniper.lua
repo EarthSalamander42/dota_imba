@@ -372,7 +372,7 @@ function modifier_imba_shrapnel_charges:OnStackCountChanged(old_stack_count)
 	if IsServer() then
 		-- Current stacks
 		local stacks = self:GetStackCount()
-		local true_replenish_cooldown = self.charge_replenish_rate * (1 - self.caster:GetCooldownReduction() * 0.01)
+		local true_replenish_cooldown = self.charge_replenish_rate
 
 		-- If the stacks are now 0, start the ability's cooldown
 		if stacks < 1 then

@@ -274,7 +274,7 @@ function modifier_imba_phoenix_icarus_dive_dash_dummy:OnDestroy()
 		false)
 	for _, unit in pairs(units) do -- It's an ally, heal
 		if unit:GetTeamNumber() == caster:GetTeamNumber() and unit ~= caster then
-			local heal_amp = 1 + (caster:GetSpellPower() * 0.01)
+			local heal_amp = 1 + (caster:GetSpellAmplification(false) * 0.01)
 			stop_dmg_heal = stop_dmg_heal * heal_amp
 			unit:Heal(stop_dmg_heal, caster)
 			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, unit, stop_dmg_heal, nil)
@@ -964,7 +964,7 @@ function modifier_imba_phoenix_fire_spirits_buff:OnIntervalThink()
 	local ability = self:GetAbility()
 	local tick = ability:GetSpecialValueFor("tick_interval")
 	local dmg = ability:GetSpecialValueFor("damage_per_second") * ( tick / 1.0 )
-	local heal_amp = 1 + (caster:GetSpellPower() * 0.01)
+	local heal_amp = 1 + (caster:GetSpellAmplification(false) * 0.01)
 	dmg = dmg * heal_amp
 	self:GetParent():Heal(dmg * self:GetStackCount(), caster)
 	SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, self:GetParent(), dmg * self:GetStackCount(), nil)
@@ -1509,7 +1509,7 @@ function modifier_imba_phoenix_sun_ray_buff:OnIntervalThink()
 	local taker_health = taker:GetMaxHealth()
 
 	local total_heal = base_heal + taker_health * pct_base_heal
-	total_heal = total_heal * (1 + (caster:GetSpellPower() * 0.01))
+	total_heal = total_heal * (1 + (caster:GetSpellAmplification(false) * 0.01))
 	if taker ~= self:GetCaster() then
 		taker:Heal( total_heal , self:GetCaster())
 		SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, taker, total_heal, nil)
@@ -2546,7 +2546,7 @@ function modifier_imba_phoenix_burning_wings_ally_buff:OnDestroy()
 	if not buff or not ability or caster == self:GetParent() then
 		return
 	end
-	local num_heal = ability:GetSpecialValueFor("hit_ally_heal") + ability:GetSpecialValueFor("hit_ally_heal") * ( caster:GetSpellPower() / 100 )
+	local num_heal = ability:GetSpecialValueFor("hit_ally_heal") + ability:GetSpecialValueFor("hit_ally_heal") * ( caster:GetSpellAmplification(false) / 100 )
 	caster:Heal(num_heal, caster)
 	SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, caster, num_heal, nil)
 end

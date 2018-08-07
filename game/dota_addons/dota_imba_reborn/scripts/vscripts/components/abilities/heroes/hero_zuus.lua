@@ -189,8 +189,8 @@ end
 --------------------------------------
 --			Lightning Bolt			--
 --------------------------------------
-LinkLuaModifier("modifier_imba_zuus_lightning_true_sight", "hero/hero_zuus.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_zuus_lightning_dummy", "hero/hero_zuus.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_zuus_lightning_true_sight", "components/abilities/heroes/hero_zuus.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_zuus_lightning_dummy", "components/abilities/heroes/hero_zuus.lua", LUA_MODIFIER_MOTION_NONE)
 
 imba_zuus_lightning_bolt = class({})
 
@@ -450,7 +450,7 @@ end
 ----------------------------------------------
 --  			FOW modifier  				--
 ----------------------------------------------
-LinkLuaModifier("modifier_imba_zuus_lightning_fow", "hero/hero_zuus.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_zuus_lightning_fow", "components/abilities/heroes/hero_zuus.lua", LUA_MODIFIER_MOTION_NONE)
 modifier_imba_zuus_lightning_fow = class({})
 function modifier_imba_zuus_lightning_fow:IsHidden() return true end
 function modifier_imba_zuus_lightning_fow:OnCreated(keys) 
@@ -471,7 +471,7 @@ end
 ----------------------------------------------
 --  			Static Field  				--
 ----------------------------------------------
-LinkLuaModifier("modifier_imba_zuus_static_field", "hero/hero_zuus.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_zuus_static_field", "components/abilities/heroes/hero_zuus.lua", LUA_MODIFIER_MOTION_NONE)
 imba_zuus_static_field = class({})
 function imba_zuus_static_field:OnUpgrade(keys)
 	if IsServer() then
@@ -549,7 +549,7 @@ end
 ------------------------------------------------------
 --				Static Charge Modifier  			--
 ------------------------------------------------------
-LinkLuaModifier("modifier_imba_zuus_static_charge", "hero/hero_zuus.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_zuus_static_charge", "components/abilities/heroes/hero_zuus.lua", LUA_MODIFIER_MOTION_NONE)
 modifier_imba_zuus_static_charge = class({})
 function modifier_imba_zuus_static_charge:IsDebuff() return true end
 function modifier_imba_zuus_static_charge:OnCreated() 
@@ -606,8 +606,8 @@ end
 --------------------------------------
 --				Nimbus				--
 --------------------------------------
-LinkLuaModifier("modifier_zuus_nimbus", "hero/hero_zuus.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_zuus_nimbus_storm", "hero/hero_zuus.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_zuus_nimbus", "components/abilities/heroes/hero_zuus.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_zuus_nimbus_storm", "components/abilities/heroes/hero_zuus.lua", LUA_MODIFIER_MOTION_NONE)
 
 imba_zuus_cloud = class({})
 function imba_zuus_cloud:OnInventoryContentsChanged()
@@ -798,8 +798,8 @@ end
 ----------------------------------------------
 --				Nimbus Teleport				--
 ----------------------------------------------
-LinkLuaModifier("modifier_imba_ball_lightning", "hero/hero_zuus.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_zuus_nimbus_z", "hero/hero_zuus.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_ball_lightning", "components/abilities/heroes/hero_zuus.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_zuus_nimbus_z", "components/abilities/heroes/hero_zuus.lua", LUA_MODIFIER_MOTION_NONE)
 imba_zuus_nimbus_zap = class({})
 function imba_zuus_nimbus_zap:OnSpellStart() 
 	if IsServer() then
@@ -1025,7 +1025,7 @@ function modifier_imba_zuus_nimbus_z:GetVisualZDelta()
 end
 
 
-LinkLuaModifier("modifier_imba_zuus_on_nimbus", "hero/hero_zuus.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_zuus_on_nimbus", "components/abilities/heroes/hero_zuus.lua", LUA_MODIFIER_MOTION_NONE)
 modifier_imba_zuus_on_nimbus = class({})
 
 ----------------------------------------------
@@ -1143,7 +1143,7 @@ end
 ---------------------------------------------------------
 --				Thundergods Focus Modifier  			--
 ----------------------------------------------------------
-LinkLuaModifier("modifier_imba_zuus_thundergods_focus", "hero/hero_zuus.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_zuus_thundergods_focus", "components/abilities/heroes/hero_zuus.lua", LUA_MODIFIER_MOTION_NONE)
 modifier_imba_zuus_thundergods_focus = class({})
 function modifier_imba_zuus_thundergods_focus:IsBuff() return true end
 function modifier_imba_zuus_thundergods_focus:OnCreated() 
@@ -1214,14 +1214,14 @@ function modifier_imba_zuus_thundergods_focus:GetModifierTurnRate_Percentage()
 end
 
 
-LinkLuaModifier("modifier_imba_zuus_pierce_spellimmunity", "hero/hero_zuus.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_zuus_pierce_spellimmunity", "components/abilities/heroes/hero_zuus.lua", LUA_MODIFIER_MOTION_NONE)
 modifier_imba_zuus_pierce_spellimmunity = class({})
 function modifier_imba_zuus_pierce_spellimmunity:IsHidden() return false end
 
 --------------------------------------------------------------
 --				Thundergods Awakening Modifier  			--
 --------------------------------------------------------------
-LinkLuaModifier("modifier_imba_zuus_thundergods_awakening", "hero/hero_zuus.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_zuus_thundergods_awakening", "components/abilities/heroes/hero_zuus.lua", LUA_MODIFIER_MOTION_NONE)
 modifier_imba_zuus_thundergods_awakening = class({})
 function modifier_imba_zuus_thundergods_awakening:IsHidden() return false end
 function modifier_imba_zuus_thundergods_awakening:IsBuff() return true end

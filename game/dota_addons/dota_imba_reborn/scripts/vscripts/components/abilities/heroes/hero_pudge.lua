@@ -19,8 +19,6 @@
 ---- PUDGE'S HOOK
 --------------------------------------------------------
 
-CreateEmptyTalents("pudge")
-
 imba_pudge_meat_hook = imba_pudge_meat_hook or class({})
 imba_pudge_sharp_hook = imba_pudge_sharp_hook or class({})
 imba_pudge_light_hook = imba_pudge_light_hook or class({})
@@ -1122,7 +1120,7 @@ function imba_pudge_dismember:OnSpellStart()
 	target:AddNewModifier(self:GetCaster(), self, "modifier_dismember", {duration = self.channelTime})
 
 	if self:GetCaster().pudge_arcana then
-		self.pfx = ParticleManager:CreateParticle("particles/econ/items/pudge/pudge_arcana/pudge_arcana_dismember_"..GetHeroType(target)..".vpcf", PATTACH_ABSORIGIN, target)
+		self.pfx = ParticleManager:CreateParticle("particles/econ/items/pudge/pudge_arcana/pudge_arcana_dismember_"..target:GetHeroType()..".vpcf", PATTACH_ABSORIGIN, target)
 		ParticleManager:SetParticleControl(self.pfx, 1, target:GetAbsOrigin())
 		ParticleManager:SetParticleControl(self.pfx, 8, Vector(1, 1, 1))
 		ParticleManager:SetParticleControl(self.pfx, 15, target:GetFittingColor())

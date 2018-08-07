@@ -7868,7 +7868,7 @@
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"enigma_malefice"		
 		"MaxLevel"     					"4"
-		"ScriptFile"      				"hero/hero_enigma"
+		"ScriptFile"      				"components/abilities/heroes/hero_enigma"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -7878,7 +7878,7 @@
 			"particle"					"particles/status_fx/status_effect_enigma_malefice.vpcf"
 			"particle"					"particles/units/heroes/hero_enigma/enigma_malefice.vpcf"	
 		}		
-		
+
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"15"
@@ -7958,7 +7958,7 @@
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"enigma_demonic_conversion"
 		"MaxLevel"   				    "4"
-		"ScriptFile"     			    "hero/hero_enigma"    
+		"ScriptFile"     			    "components/abilities/heroes/hero_enigma"    
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -8064,7 +8064,7 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"enigma_midnight_pulse"		
-		"ScriptFile" 					"hero/hero_enigma"
+		"ScriptFile" 					"components/abilities/heroes/hero_enigma"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -8143,7 +8143,7 @@
 		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_YES"
 		"FightRecapLevel"					"2"
 		"AbilityTextureName"				"enigma_black_hole"		
-		"ScriptFile"        				"hero/hero_enigma"
+		"ScriptFile"        				"components/abilities/heroes/hero_enigma"
 		"HasScepterUpgrade"					"1"
 
 		// Precache

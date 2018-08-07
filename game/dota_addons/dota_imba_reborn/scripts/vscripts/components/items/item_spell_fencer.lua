@@ -170,7 +170,7 @@ function modifier_item_imba_spell_fencer_unique:OnAttackLanded( keys )
 
 		-- If the target is not valid, do nothing either
 		local target = keys.target
-		if (not IsHeroOrCreep(target)) then
+		if (not target:IsHeroOrCreep()) then
 			return end
 
 		-- Apply the damage conversion modifier and deal magical damage
@@ -224,7 +224,7 @@ function modifier_item_imba_spell_fencer_passive_silence:OnAttackLanded( keys )
 
 		-- If the target is not valid, do nothing either
 		local target = keys.target
-		if (not IsHeroOrCreep(target)) then
+		if (not target:IsHeroOrCreep()) then
 			return end
 
 		-- No spellfencers in inventory

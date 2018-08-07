@@ -127,7 +127,7 @@ function modifier_item_imba_javelin_unique:OnAttackLanded(keys)
 		local target = keys.target
 
 		-- If the target is a hero or creep, increase this modifier's stack count
-		if IsHeroOrCreep(target) then -- and owner:GetTeam() ~= target:GetTeam() then
+		if target:IsHeroOrCreep() then -- and owner:GetTeam() ~= target:GetTeam() then
 			self:SetStackCount(self:GetStackCount() + 1)
 
 			-- If this is the appropriate amount of stacks, deal bonus damage
@@ -250,12 +250,11 @@ function modifier_item_imba_monkey_king_bar_unique:OnAttackLanded(keys)
 
 		-- If this is an illusion, do nothing
 		if owner:IsIllusion() then
-			return end
-
-		-- Else, keep going
+			return
+		end
 
 		-- If the target is a hero or creep, increase this modifier's stack count
-		if IsHeroOrCreep(target) then -- and owner:GetTeam() ~= target:GetTeam() then
+		if target:IsHeroOrCreep() then -- and owner:GetTeam() ~= target:GetTeam() then
 			self:SetStackCount(self:GetStackCount() + 1)
 
 			-- If this is the appropriate amount of stacks, pulverize the target

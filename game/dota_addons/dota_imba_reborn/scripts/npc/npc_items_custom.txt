@@ -3918,7 +3918,7 @@
 		"ID"							"2235"
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"components/items/item_mkb.lua"
-		"AbilityTextureName" 			"custom/imba_javelin"
+		"AbilityTextureName" 			"item_javelin"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
 		// Item Info

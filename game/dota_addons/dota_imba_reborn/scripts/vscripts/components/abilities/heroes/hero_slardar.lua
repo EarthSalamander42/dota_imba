@@ -226,7 +226,7 @@ end
 function modifier_imba_guardian_sprint_buff:OnDestroy()
 	if IsServer() then
 		self.ability:SetActivated(true)
-		local cooldown_start = (self.ability:GetCooldown(-1) * (1 - self.caster:GetCooldownReduction() * 0.01) - self.duration)
+		local cooldown_start = (self.ability:GetCooldown(-1) - self.duration)
 
 		-- Adjusts the cooldown timer in case Guardian Sprint was dispelled.
 		local remaining_time = self:GetRemainingTime()

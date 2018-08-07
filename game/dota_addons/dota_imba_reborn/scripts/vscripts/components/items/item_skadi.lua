@@ -241,7 +241,7 @@ function modifier_item_imba_skadi_unique:OnTakeDamage( keys )
 		local target = keys.unit
 
 		-- If there's no valid target, do nothing
-		if (not IsHeroOrCreep(target)) or attacker:GetTeam() == target:GetTeam() then
+		if (not target:IsHeroOrCreep()) or attacker:GetTeam() == target:GetTeam() then
 			return
 		end
 

@@ -259,7 +259,7 @@ function modifier_imba_telekinesis:EndTransition()
 			cooldown = ability.BaseClass.GetCooldown( ability, ability:GetLevel() )
 		end
 
-		cooldown = ((cooldown - caster:FindTalentValue("special_bonus_unique_rubick_4")) * (1 - caster:GetCooldownReduction() * 0.01)) - self:GetDuration()
+		cooldown = (cooldown - caster:FindTalentValue("special_bonus_unique_rubick_4"))  - self:GetDuration()
 
 		parent:StopSound("Hero_Rubick.Telekinesis.Target")
 		parent:EmitSound("Hero_Rubick.Telekinesis.Target.Land")

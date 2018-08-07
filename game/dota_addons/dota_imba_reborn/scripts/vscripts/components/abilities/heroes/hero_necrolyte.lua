@@ -248,7 +248,7 @@ function imba_necrolyte_death_pulse:OnSpellStart()
 		-- Parameters
 		local radius = self:GetTalentSpecialValueFor("radius")
 		local damage = self:GetSpecialValueFor("damage")
-		local heal_amp = 1 + (caster:GetSpellPower() * 0.01)
+		local heal_amp = 1 + (caster:GetSpellAmplification(false) * 0.01)
 		local base_heal = self:GetSpecialValueFor("base_heal")
 		local sec_heal_pct = self:GetSpecialValueFor("sec_heal_pct")
 		local enemy_speed = self:GetSpecialValueFor("enemy_speed")
@@ -876,7 +876,7 @@ function modifier_imba_reapers_scythe:OnRemoved()
 		if target:IsAlive() and self.ability then
 			self.damage = self.damage * (target:GetMaxHealth() - target:GetHealth())
 			-- If this very rough formula for damage exceeds that of the target's health, apply the respawn modifier that increases respawn time of target...
-			if (self.damage * (1 + (caster:GetSpellPower() * 0.01)) * (1 - target:GetMagicalArmorValue())) >= target:GetHealth() then
+			if (self.damage * (1 + (caster:GetSpellAmplification(false) * 0.01)) * (1 - target:GetMagicalArmorValue())) >= target:GetHealth() then
 				self:GetParent():AddNewModifier(self:GetCaster(), self.ability, "modifier_imba_reapers_scythe_respawn", {})
 			end
 			-- Deals damage (optimally, the ApplyDamage float number would be used for calculating whether the respawn modifier should be applied.
