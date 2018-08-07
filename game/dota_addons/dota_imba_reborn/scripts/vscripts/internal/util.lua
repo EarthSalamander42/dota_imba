@@ -184,3 +184,222 @@ function InitItemIds()
 		end
 	end
 end
+
+-- Yahnich's calculate distance and direction functions
+function CalculateDistance(ent1, ent2)
+	local pos1 = ent1
+	local pos2 = ent2
+	if ent1.GetAbsOrigin then pos1 = ent1:GetAbsOrigin() end
+	if ent2.GetAbsOrigin then pos2 = ent2:GetAbsOrigin() end
+	local distance = (pos1 - pos2):Length2D()
+	return distance
+end
+
+-- Rolls a Psuedo Random chance. If failed, chances increases, otherwise chances are reset
+function RollPseudoRandom(base_chance, entity)
+	local chances_table = {
+		{5, 0.38},
+		{10, 1.48},
+		{15, 3.22},
+		{16, 3.65},
+		{17, 4.09},
+		{19, 5.06},
+		{20, 5.57},
+		{21, 6.11},
+		{22, 6.67},
+		{24, 7.85},
+		{25, 8.48},
+		{27, 9.78},
+		{30, 11.9},
+		{35, 15.8},
+		{40, 20.20},
+		{50, 30.20},
+		{60, 42.30},
+		{70, 57.10},
+		{100, 100}
+	}
+
+	entity.pseudoRandomModifier = entity.pseudoRandomModifier or 0
+	local prngBase
+	for i = 1, #chances_table do
+		if base_chance == chances_table[i][1] then		  
+			prngBase = chances_table[i][2]
+		end	 
+	end
+
+	if not prngBase then
+		log.warn("The chance was not found! Make sure to add it to the table or change the value.")
+		return false
+	end
+	
+	if RollPercentage( prngBase + entity.pseudoRandomModifier ) then
+		entity.pseudoRandomModifier = 0
+		return true
+	else
+		entity.pseudoRandomModifier = entity.pseudoRandomModifier + prngBase		
+		return false
+	end
+end
+
+-- 100% kills a unit. Activates death-preventing modifiers, then removes them. Does not killsteal from Reaper's Scythe.
+function TrueKill(caster, target, ability)
+
+	-- Extremely specific blademail interaction because fuck everything
+	if caster:HasModifier("modifier_item_blade_mail_reflect") then
+		target:RemoveModifierByName("modifier_imba_purification_passive")
+	end
+
+	local nothlProtection = target:FindModifierByName("modifier_imba_dazzle_nothl_protection")
+	if nothlProtection and nothlProtection:GetStackCount() < 1 then
+		nothlProtection:SetStackCount(1)
+		nothlProtection:StartIntervalThink(1)
+	end
+
+	-- Deals lethal damage in order to trigger death-preventing abilities... Except for Reincarnation
+	if not ( target:HasModifier("modifier_imba_reincarnation") or target:HasModifier("modifier_imba_reincarnation_wraith_form_buff") or target:HasModifier("modifier_imba_reincarnation_wraith_form") ) then
+		target:Kill(ability, caster)
+	end
+
+	-- Removes the relevant modifiers
+	target:RemoveModifierByName("modifier_invulnerable")
+	target:RemoveModifierByName("modifier_imba_dazzle_shallow_grave")
+	target:RemoveModifierByName("modifier_imba_aphotic_shield_buff_block")
+	target:RemoveModifierByName("modifier_imba_spiked_carapace")
+	target:RemoveModifierByName("modifier_borrowed_time")
+	target:RemoveModifierByName("modifier_imba_centaur_return")
+	target:RemoveModifierByName("modifier_item_greatwyrm_plate_unique")
+	target:RemoveModifierByName("modifier_item_greatwyrm_plate_active")
+	target:RemoveModifierByName("modifier_item_crimson_guard_unique")
+	target:RemoveModifierByName("modifier_item_crimson_guard_active")	
+	target:RemoveModifierByName("modifier_item_vanguard_unique")
+	target:RemoveModifierByName("modifier_item_imba_initiate_robe_stacks")
+	target:RemoveModifierByName("modifier_imba_cheese_death_prevention")
+	target:RemoveModifierByName("modifier_imba_rapier_cursed")
+	target:RemoveModifierByName("modifier_imba_dazzle_nothl_protection_aura_talent")
+	
+
+	-- Kills the target
+	if not target:HasModifier("modifier_imba_reincarnation_wraith_form") then
+		target:Kill(ability, caster)
+	end
+end
+
+-- Checks if a unit is near units of a certain class on the same team
+function IsNearFriendlyClass(unit, radius, class)
+	local class_units = Entities:FindAllByClassnameWithin(class, unit:GetAbsOrigin(), radius)
+
+	for _,found_unit in pairs(class_units) do
+		if found_unit:GetTeam() == unit:GetTeam() then
+			return true
+		end
+	end
+	
+	return false
+end
+
+function ChangeAttackProjectileImba(unit)
+
+	local particle_deso = "particles/items_fx/desolator_projectile.vpcf"
+	local particle_skadi = "particles/items2_fx/skadi_projectile.vpcf"
+	local particle_lifesteal = "particles/item/lifesteal_mask/lifesteal_particle.vpcf"
+	local particle_deso_skadi = "particles/item/desolator/desolator_skadi_projectile_2.vpcf"
+	local particle_clinkz_arrows = "particles/units/heroes/hero_clinkz/clinkz_searing_arrow.vpcf"
+	local particle_dragon_form_green = "particles/units/heroes/hero_dragon_knight/dragon_knight_elder_dragon_corrosive.vpcf"
+	local particle_dragon_form_red = "particles/units/heroes/hero_dragon_knight/dragon_knight_elder_dragon_fire.vpcf"
+	local particle_dragon_form_blue = "particles/units/heroes/hero_dragon_knight/dragon_knight_elder_dragon_frost.vpcf"
+	local particle_terrorblade_transform = "particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis_base_attack.vpcf"
+
+	-- If the unit has a Desolator and a Skadi, use the special projectile
+	if unit:HasModifier("modifier_item_imba_desolator") or unit:HasModifier("modifier_item_imba_desolator_2") then
+		if unit:HasModifier("modifier_item_imba_skadi") then
+			unit:SetRangedProjectileName(particle_deso_skadi)
+		-- If only a Desolator, use its attack projectile instead
+		else
+			unit:SetRangedProjectileName(particle_deso)
+		end
+	-- If only a Skadi, use its attack projectile instead
+	elseif unit:HasModifier("modifier_item_imba_skadi") then
+		unit:SetRangedProjectileName(particle_skadi)
+
+	-- If the unit has any form of lifesteal, use the lifesteal projectile
+	elseif unit:HasModifier("modifier_imba_morbid_mask") or unit:HasModifier("modifier_imba_mask_of_madness") or unit:HasModifier("modifier_imba_satanic") or unit:HasModifier("modifier_item_imba_vladmir") or unit:HasModifier("modifier_item_imba_vladmir_blood") then		
+		unit:SetRangedProjectileName(particle_lifesteal)	
+
+	-- If it's one of Dragon Knight's forms, use its attack projectile instead
+	elseif unit:HasModifier("modifier_dragon_knight_corrosive_breath") then
+		unit:SetRangedProjectileName(particle_dragon_form_green)
+	elseif unit:HasModifier("modifier_dragon_knight_splash_attack") then
+		unit:SetRangedProjectileName(particle_dragon_form_red)
+	elseif unit:HasModifier("modifier_dragon_knight_frost_breath") then
+		unit:SetRangedProjectileName(particle_dragon_form_blue)
+
+	-- If it's a metamorphosed Terrorblade, use its attack projectile instead
+	elseif unit:HasModifier("modifier_terrorblade_metamorphosis") then
+		unit:SetRangedProjectileName(particle_terrorblade_transform)
+
+	-- Else, default to the base ranged projectile
+	else
+		log.debug(unit:GetKeyValue("ProjectileModel"))
+		unit:SetRangedProjectileName(unit:GetKeyValue("ProjectileModel"))
+	end
+end
+
+-- Sets a creature's max health to [health]
+function SetCreatureHealth(unit, health, update_current_health)
+
+	unit:SetBaseMaxHealth(health)
+	unit:SetMaxHealth(health)
+
+	if update_current_health then
+		unit:SetHealth(health)
+	end
+end
+
+--[[
+-- Items and abilities that have uninterruptable forced movement
+function IsUninterruptableForcedMovement( unit )
+	
+	-- List of uninterruptable movement modifiers
+	local modifier_list = {
+		"modifier_spirit_breaker_charge_of_darkness",
+		"modifier_magnataur_skewer_movement",
+		"modifier_invoker_deafening_blast_knockback",
+		"modifier_knockback",
+		"modifier_item_forcestaff_active",
+		"modifier_shredder_timber_chain",
+		"modifier_batrider_flaming_lasso",
+		"modifier_imba_leap_self_root",
+		"modifier_faceless_void_chronosphere_freeze",
+		"modifier_storm_spirit_ball_lightning",
+		"modifier_morphling_waveform"
+	}
+
+	-- Iterate through the list
+	for _,modifier_name in pairs(modifier_list) do
+		if unit:HasModifier(modifier_name) then
+			return true
+		end
+	end
+
+	return false
+end
+--]]
+
+-- Returns an unit's existing increased cast range modifiers
+function GetCastRangeIncrease( unit )
+    local cast_range_increase = 0
+    -- Only the greatefd st increase counts for items, they do not stack
+    for _, parent_modifier in pairs(unit:FindAllModifiers()) do        
+        if parent_modifier.GetModifierCastRangeBonus then
+            cast_range_increase = math.max(cast_range_increase,parent_modifier:GetModifierCastRangeBonus())
+        end        
+    end    
+
+    for _, parent_modifier in pairs(unit:FindAllModifiers()) do        
+        if parent_modifier.GetModifierCastRangeBonusStacking then
+            cast_range_increase = cast_range_increase + parent_modifier:GetModifierCastRangeBonusStacking()
+        end
+    end        
+
+    return cast_range_increase
+end

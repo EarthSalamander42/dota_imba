@@ -118,7 +118,7 @@ function GameMode:_CaptureGameMode()
 end
 
 -- This function captures the game mode options when they are set
-function OnSetGameMode()
+function GameMode:OnSetGameMode()
 	CustomNetTables:SetTableValue("game_options", "bounty_multiplier", {CUSTOM_GOLD_BONUS[GetMapName()]})
 	CustomNetTables:SetTableValue("game_options", "exp_multiplier", {CUSTOM_XP_BONUS[GetMapName()]})
 	CustomNetTables:SetTableValue("game_options", "initial_gold", {HERO_INITIAL_GOLD[GetMapName()]})

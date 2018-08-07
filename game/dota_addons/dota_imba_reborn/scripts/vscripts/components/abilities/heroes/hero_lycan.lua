@@ -6,9 +6,9 @@
 ---------------------------------------------------
 
 imba_lycan_summon_wolves = class({})
-LinkLuaModifier("modifier_imba_lycan_wolf_charge", "hero/hero_lycan", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_lycan_wolf_death_check", "hero/hero_lycan", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_summon_wolves_talent", "hero/hero_lycan", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_lycan_wolf_charge", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_lycan_wolf_death_check", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_summon_wolves_talent", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 
 function imba_lycan_summon_wolves:GetAbilityTextureName()
    return "lycan_summon_wolves"
@@ -451,8 +451,8 @@ end
 ---------------------------------------------------
 
 imba_lycan_howl = class ({})
-LinkLuaModifier("modifier_imba_howl_buff", "hero/hero_lycan", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_howl_flying_movement_talent", "hero/hero_lycan", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_howl_buff", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_howl_flying_movement_talent", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 
 function imba_lycan_howl:GetAbilityTextureName()
    return "lycan_howl"
@@ -722,8 +722,8 @@ end
 ---------------------------------------------------
 
 imba_lycan_feral_impulse = class({})
-LinkLuaModifier("modifier_imba_feral_impulse_aura", "hero/hero_lycan", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_feral_impulse", "hero/hero_lycan", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_feral_impulse_aura", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_feral_impulse", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 
 function imba_lycan_feral_impulse:GetAbilityTextureName()
    return "lycan_feral_impulse"
@@ -904,11 +904,11 @@ end
 ---------------------------------------------------
 
 imba_lycan_shapeshift = class({})
-LinkLuaModifier("modifier_imba_shapeshift_transform_stun", "hero/hero_lycan", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_shapeshift_transform", "hero/hero_lycan", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_shapeshift_aura", "hero/hero_lycan", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_shapeshift", "hero/hero_lycan", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_shapeshift_certain_crit", "hero/hero_lycan", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_shapeshift_transform_stun", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_shapeshift_transform", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_shapeshift_aura", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_shapeshift", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_shapeshift_certain_crit", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 
 function imba_lycan_shapeshift:GetAbilityTextureName()
    return "lycan_shapeshift"
@@ -1262,11 +1262,11 @@ end
 ---------------------------------------------------
 
 imba_lycan_wolfsbane = class({})
-LinkLuaModifier("modifier_imba_wolfsbane_aura", "hero/hero_lycan", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_wolfsbane_wolves", "hero/hero_lycan", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_wolfsbane_lycan", "hero/hero_lycan", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_wolfsbane_lycan_prevent", "hero/hero_lycan", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_wolfsbane_talent", "hero/hero_lycan", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_wolfsbane_aura", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_wolfsbane_wolves", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_wolfsbane_lycan", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_wolfsbane_lycan_prevent", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_wolfsbane_talent", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 
 function imba_lycan_wolfsbane:GetAbilityTextureName()
    return "custom/wolfsbane"
@@ -1678,9 +1678,9 @@ end
 ---------------------------------------------------
 
 imba_summoned_wolf_wicked_crunch = class({})
-LinkLuaModifier("modifier_imba_summoned_wolf_wicked_crunch_debuff", "hero/hero_lycan", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_summoned_wolf_wicked_crunch", "hero/hero_lycan", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_summoned_wolf_wicked_crunch_damage", "hero/hero_lycan", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_summoned_wolf_wicked_crunch_debuff", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_summoned_wolf_wicked_crunch", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_summoned_wolf_wicked_crunch_damage", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 
 function imba_summoned_wolf_wicked_crunch:GetAbilityTextureName()
    return "lycan_summon_wolves_critical_strike"
@@ -2088,7 +2088,7 @@ end
 ---------------------------------------------------
 ---------------------------------------------------
 imba_summoned_wolf_hunter_instincts = class({})
-LinkLuaModifier("modifier_imba_summoned_wolf_hunter_instincts", "hero/hero_lycan", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_summoned_wolf_hunter_instincts", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 
 function imba_summoned_wolf_hunter_instincts:GetAbilityTextureName()
    return "custom/hunter_instincts"
@@ -2152,8 +2152,8 @@ end
 
 
 imba_summoned_wolf_invisibility = class({})
-LinkLuaModifier("modifier_imba_summoned_wolf_invisibility_fade", "hero/hero_lycan", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_summoned_wolf_invisibility", "hero/hero_lycan", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_summoned_wolf_invisibility_fade", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_summoned_wolf_invisibility", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 
 function imba_summoned_wolf_invisibility:GetAbilityTextureName()
    return "lycan_summon_wolves_invisibility"
@@ -2259,8 +2259,8 @@ end
 ------    #3 TALENT: Alpha Wolf's Packleader aura    -------
 -------------------------------------------------------------
 imba_summoned_wolf_pack_leader = imba_summoned_wolf_pack_leader or class({})
-LinkLuaModifier("modifier_imba_talent_wolf_packleader_aura", "hero/hero_lycan", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_talent_wolf_packleader", "hero/hero_lycan", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_talent_wolf_packleader_aura", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_talent_wolf_packleader", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 
 function imba_summoned_wolf_pack_leader:GetIntrinsicModifierName()	
     return "modifier_imba_talent_wolf_packleader_aura"

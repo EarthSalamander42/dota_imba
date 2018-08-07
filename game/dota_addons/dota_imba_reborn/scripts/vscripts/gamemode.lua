@@ -22,8 +22,10 @@ require('components/battlepass/donator')
 require('components/battlepass/experience')
 require('components/battlepass/imbattlepass')
 require('components/hero_selection/hero_selection')
+require('components/mutation/mutation')
+require('components/runes')
 require('components/settings/settings')
-require('components/team_selection/team_selection')
+require('components/team_selection')
 
 require('events/events')
 require('filters')
@@ -38,7 +40,7 @@ function GameMode:OnFirstPlayerLoaded()
 		-- configure log from api
 		Log:ConfigureFromApi()
 	end)
-	
+
 	GoodCamera = Entities:FindByName(nil, "good_healer_6")
 	BadCamera = Entities:FindByName(nil, "bad_healer_6")
 end
@@ -56,5 +58,23 @@ function GameMode:OnAllPlayersLoaded()
 end
 
 function GameMode:InitGameMode()
+	self:SetUpFountains()
+
 	self:_InitGameMode()
+end
+
+-- Set up fountain regen
+function GameMode:SetUpFountains()
+
+	local fountainEntities = Entities:FindAllByClassname( "ent_dota_fountain")
+	for _,fountainEnt in pairs( fountainEntities ) do
+		fountainEnt:AddNewModifier( fountainEnt, fountainEnt, "modifier_fountain_aura_lua", {} )
+		fountainEnt:AddAbility("imba_fountain_danger_zone"):SetLevel(1)
+
+		-- remove vanilla fountain healing
+		if fountainEnt:HasModifier("modifier_fountain_aura") then
+			fountainEnt:RemoveModifierByName("modifier_fountain_aura")
+			fountainEnt:AddNewModifier(fountainEnt, nil, "modifier_fountain_aura_lua", {})
+		end
+	end
 end

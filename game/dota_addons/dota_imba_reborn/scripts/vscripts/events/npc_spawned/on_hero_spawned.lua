@@ -54,7 +54,7 @@ function GameMode:OnHeroFirstSpawn(hero)
 --			CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "show_netgraph_heronames", {})
 		end
 
-		if not IsInToolsMode() then
+--		if not IsInToolsMode() then
 			local steam_id = tostring(PlayerResource:GetSteamID(hero:GetPlayerID()))
 			if steam_id ~= "0" and api.imba.is_donator(steam_id) ~= false then
 --			print("set player original team of ID "..hero:GetPlayerID().." to "..hero:GetTeamNumber())
@@ -71,7 +71,7 @@ function GameMode:OnHeroFirstSpawn(hero)
 					end)
 				end
 			end
-		end
+--		end
 	end
 
 	if hero:GetUnitName() == "npc_dota_hero_arc_warden" then

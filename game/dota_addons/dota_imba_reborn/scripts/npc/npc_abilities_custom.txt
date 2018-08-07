@@ -75,7 +75,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-		"ScriptFile"				"components/abilities/heroes/courier.lua"
+		"ScriptFile"					"components/abilities/courier.lua"
 		"MaxLevel"						"1"
 
 		// Special

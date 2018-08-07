@@ -385,7 +385,7 @@
 "mutation_gift_exchange_Description"			"Gifts are periodically deployed around the map every 2 minutes."
 
 "mutation_speed_freaks"							"Speed Freaks"
-"mutation_speed_freaks_Description"				"Movement and projectile speed increased."
+"mutation_speed_freaks_Description"				"Movement speed increased by 50% and projectile speed increased by 500. Movespeed capped at 1000."
 
 "mutation_river_flows"					        "River Flows"
 "mutation_river_flows_Description"	        	"The river flows. Movement speed greatly increased on the water."

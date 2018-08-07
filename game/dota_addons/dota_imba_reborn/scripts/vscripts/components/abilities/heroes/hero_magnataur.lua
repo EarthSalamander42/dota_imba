@@ -15,6 +15,20 @@
 -- Editors:
 --     AtroCty, 28.03.2017
 
+-- util
+-- Checks if a unit is near units of a certain class not on its team
+local function IsNearEnemyClass(unit, radius, class)
+	local class_units = Entities:FindAllByClassnameWithin(class, unit:GetAbsOrigin(), radius)
+
+	for _,found_unit in pairs(class_units) do
+		if found_unit:GetTeam() ~= unit:GetTeam() then
+			return true
+		end
+	end
+	
+	return false
+end
+
 -------------------------------------------
 --				POLARIZE
 -------------------------------------------

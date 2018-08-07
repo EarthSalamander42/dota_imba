@@ -15,6 +15,15 @@
 -- Editors:
 --     Broccoli, 24.03.2017
 
+-- utils
+-- Sets level of the ability with [ability_name] to [level] for [caster] if the caster has this ability
+local function SetAbilityLevelIfPresent(caster, ability_name, level)
+	local ability = caster:FindAbilityByName(ability_name)
+	if ability then
+		ability:SetLevel(level)
+	end
+end
+
 -- Base local ability to be used for fire breath and ice breath
 local base_ability_dual_breath = class({})
 

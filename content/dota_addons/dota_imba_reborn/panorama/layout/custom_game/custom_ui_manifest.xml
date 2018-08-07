@@ -30,6 +30,8 @@
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/barebones_notifications.xml" /> 
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/combat_events.xml" /> 
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/hero_selection.xml" /> 
+		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/imba_game_info.xml" /> 
+		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/mutation.xml" /> 
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/precache.xml" /> 
 	</Panel>
 </root>

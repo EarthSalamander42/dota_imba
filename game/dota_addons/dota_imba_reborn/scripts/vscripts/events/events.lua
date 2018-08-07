@@ -20,10 +20,15 @@ require('events/on_entity_killed/on_hero_killed')
 
 function GameMode:OnGameRulesStateChange(keys)
 	local newState = GameRules:State_Get()
+
+	if IsMutationMap() then
+		Mutation:OnGameRulesStateChange(keys)
+	end
+
 	if newState == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
 		InitItemIds()
 		HeroSelection:Init() -- init picking screen kv (this function is a bit heavy to run)
-		OnSetGameMode() -- setup gamemode rules
+		GameMode:OnSetGameMode() -- setup gamemode rules
 		TeamSelection:InitializeTeamSelection()
 		GetPlayerInfoIXP() -- Add a class later
 	elseif newState == DOTA_GAMERULES_STATE_HERO_SELECTION then
@@ -31,11 +36,22 @@ function GameMode:OnGameRulesStateChange(keys)
 		HeroSelection:StartSelection()
 	elseif newState == DOTA_GAMERULES_STATE_PRE_GAME then
 		api.imba.event(api.events.entered_pre_game)
-		COURIER_TEAM = {}
-		COURIER_TEAM[2] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_radiant"):GetAbsOrigin(), true, nil, nil, 2)
-		COURIER_TEAM[3] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_dire"):GetAbsOrigin(), true, nil, nil, 3)
+
+		-- Create a timer to avoid lag spike entering pick screen
+		Timers:CreateTimer(3.0, function()
+			COURIER_TEAM = {}
+			COURIER_TEAM[2] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_radiant"):GetAbsOrigin(), true, nil, nil, 2)
+			COURIER_TEAM[3] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_dire"):GetAbsOrigin(), true, nil, nil, 3)
+
+			ImbaRunes:Init()
+		end)
 	elseif newState == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
 		api.imba.event(api.events.started_game)
+
+		-- start rune timers
+		if GetMapName() ~= "imba_1v1" then
+			ImbaRunes:SpawnImbaRunes(RUNE_SPAWN_TIME, BOUNTY_RUNE_SPAWN_TIME)
+		end
 	elseif newState == DOTA_GAMERULES_STATE_POST_GAME then
 		api.imba.event(api.events.entered_post_game)
 	end
@@ -76,7 +92,7 @@ function GameMode:OnNPCSpawned(keys)
 
 			if IsMutationMap() then
 				if npc:GetUnitName() ~= FORCE_PICKED_HERO then
-					Mutation:OnHeroSpawn(npc)
+					Mutation:OnUnitSpawn(npc)
 				end
 			end
 

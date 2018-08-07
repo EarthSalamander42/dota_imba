@@ -1,6 +1,26 @@
 -- Author: Shush
 -- Date: 22/04/2017
 
+-- utils
+-- Returns true if a hero has red hair
+local function IsGinger(unit)
+
+    local ginger_hero_names = {
+        "npc_dota_hero_enchantress",
+        "npc_dota_hero_lina",
+        "npc_dota_hero_windrunner"
+    }
+
+    local unit_name = unit:GetName()
+    for _,name in pairs(ginger_hero_names) do
+        if name == unit_name then
+            return true
+        end
+    end
+    
+    return false
+end
+
 ------------------------------------
 --     SHADOW RAZE (CLOSE)        --
 ------------------------------------

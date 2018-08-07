@@ -21,9 +21,9 @@
 -----------------------------------
 
 imba_lich_cold_front = class({})
-LinkLuaModifier("modifier_imba_cold_front_passive", "hero/hero_lich", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_cold_front_debuff", "hero/hero_lich", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_cold_front_freeze", "hero/hero_lich", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_cold_front_passive", "components/abilities/heroes/hero_lich", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_cold_front_debuff", "components/abilities/heroes/hero_lich", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_cold_front_freeze", "components/abilities/heroes/hero_lich", LUA_MODIFIER_MOTION_NONE)
 
 function imba_lich_cold_front:GetAbilityTextureName()
 	return "custom/lich_cold_front"
@@ -218,7 +218,7 @@ end
 -----------------------------------
 
 imba_lich_frost_nova = class({})
-LinkLuaModifier("modifier_imba_frost_nova_debuff", "hero/hero_lich", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_frost_nova_debuff", "components/abilities/heroes/hero_lich", LUA_MODIFIER_MOTION_NONE)
 
 function imba_lich_frost_nova:GetAbilityTextureName()
 	return "lich_frost_nova"
@@ -512,11 +512,11 @@ end
 -----------------------------------
 
 imba_lich_frost_armor = class({})
-LinkLuaModifier("modifier_imba_frost_armor_buff", "hero/hero_lich", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_frost_armor_debuff", "hero/hero_lich", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_frost_armor_freeze", "hero/hero_lich", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_frost_armor_auto_cast", "hero/hero_lich", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_frost_armor_freezing_point", "hero/hero_lich", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_frost_armor_buff", "components/abilities/heroes/hero_lich", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_frost_armor_debuff", "components/abilities/heroes/hero_lich", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_frost_armor_freeze", "components/abilities/heroes/hero_lich", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_frost_armor_auto_cast", "components/abilities/heroes/hero_lich", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_frost_armor_freezing_point", "components/abilities/heroes/hero_lich", LUA_MODIFIER_MOTION_NONE)
 
 function imba_lich_frost_armor:GetAbilityTextureName()
 	return "lich_frost_armor"
@@ -1004,9 +1004,9 @@ function modifier_imba_frost_armor_auto_cast:IsPermanent() return true end
 -----------------------------------
 
 imba_lich_dark_ritual = class({})
-LinkLuaModifier("modifier_imba_dark_ritual_creeps", "hero/hero_lich", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_dark_ritual_allied_sacrifice", "hero/hero_lich", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_dark_ritual_enemy_sacrifice", "hero/hero_lich", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_dark_ritual_creeps", "components/abilities/heroes/hero_lich", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_dark_ritual_allied_sacrifice", "components/abilities/heroes/hero_lich", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_dark_ritual_enemy_sacrifice", "components/abilities/heroes/hero_lich", LUA_MODIFIER_MOTION_NONE)
 
 function imba_lich_dark_ritual:GetAbilityTextureName()
 	return "lich_dark_ritual"
@@ -1282,8 +1282,8 @@ end
 -----------------------------------
 
 imba_lich_chain_frost = class({})
-LinkLuaModifier("modifier_imba_chain_frost_slow", "hero/hero_lich", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_chain_frost_talent_buff", "hero/hero_lich", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_chain_frost_slow", "components/abilities/heroes/hero_lich", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_chain_frost_talent_buff", "components/abilities/heroes/hero_lich", LUA_MODIFIER_MOTION_NONE)
 
 function imba_lich_chain_frost:GetAbilityTextureName()
 	return "lich_chain_frost"
