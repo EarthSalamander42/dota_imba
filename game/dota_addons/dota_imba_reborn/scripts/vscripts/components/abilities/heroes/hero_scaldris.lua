@@ -97,7 +97,7 @@ end
 
 imba_scaldris_antipode = class({})
 
-LinkLuaModifier("modifier_imba_antipode_passive", "hero/hero_scaldris", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_antipode_passive", "components/abilities/heroes/hero_scaldris", LUA_MODIFIER_MOTION_NONE)
 
 function imba_scaldris_antipode:IsHiddenWhenStolen() return false end
 function imba_scaldris_antipode:IsRefreshable() return false end
@@ -143,7 +143,7 @@ end
 
 imba_scaldris_heatwave = class({})
 
-LinkLuaModifier("modifier_imba_heatwave_dps", "hero/hero_scaldris", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_heatwave_dps", "components/abilities/heroes/hero_scaldris", LUA_MODIFIER_MOTION_NONE)
 
 function imba_scaldris_heatwave:IsHiddenWhenStolen() return false end
 function imba_scaldris_heatwave:IsRefreshable() return true end
@@ -274,8 +274,8 @@ end
 
 imba_scaldris_cold_front = class({})
 
-LinkLuaModifier("modifier_imba_cold_front_root", "hero/hero_scaldris", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_cold_front_dps", "hero/hero_scaldris", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_cold_front_root", "components/abilities/heroes/hero_scaldris", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_cold_front_dps", "components/abilities/heroes/hero_scaldris", LUA_MODIFIER_MOTION_NONE)
 
 function imba_scaldris_cold_front:IsHiddenWhenStolen() return true end
 function imba_scaldris_cold_front:IsRefreshable() return true end
@@ -453,8 +453,8 @@ end
 
 imba_scaldris_scorch = class({})
 
-LinkLuaModifier("modifier_imba_scorch_blind", "hero/hero_scaldris", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_scorch_dps", "hero/hero_scaldris", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_scorch_blind", "components/abilities/heroes/hero_scaldris", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_scorch_dps", "components/abilities/heroes/hero_scaldris", LUA_MODIFIER_MOTION_NONE)
 
 function imba_scaldris_scorch:IsHiddenWhenStolen() return false end
 function imba_scaldris_scorch:IsRefreshable() return true end
@@ -591,8 +591,8 @@ end
 
 imba_scaldris_freeze = class({})
 
-LinkLuaModifier("modifier_imba_freeze_slow", "hero/hero_scaldris", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_freeze_dps", "hero/hero_scaldris", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_freeze_slow", "components/abilities/heroes/hero_scaldris", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_freeze_dps", "components/abilities/heroes/hero_scaldris", LUA_MODIFIER_MOTION_NONE)
 
 function imba_scaldris_freeze:IsHiddenWhenStolen() return true end
 function imba_scaldris_freeze:IsRefreshable() return true end
@@ -743,8 +743,8 @@ end
 
 imba_scaldris_jet_blaze = class({})
 
-LinkLuaModifier("modifier_imba_jet_blaze_dps", "hero/hero_scaldris", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_jet_blaze_rush", "hero/hero_scaldris", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_jet_blaze_dps", "components/abilities/heroes/hero_scaldris", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_jet_blaze_rush", "components/abilities/heroes/hero_scaldris", LUA_MODIFIER_MOTION_NONE)
 
 function imba_scaldris_jet_blaze:IsHiddenWhenStolen() return false end
 function imba_scaldris_jet_blaze:IsRefreshable() return true end
@@ -935,8 +935,8 @@ end
 
 imba_scaldris_ice_floes = class({})
 
-LinkLuaModifier("modifier_imba_ice_floes_stun", "hero/hero_scaldris", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_ice_floes_dps", "hero/hero_scaldris", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_ice_floes_stun", "components/abilities/heroes/hero_scaldris", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_ice_floes_dps", "components/abilities/heroes/hero_scaldris", LUA_MODIFIER_MOTION_NONE)
 
 function imba_scaldris_ice_floes:IsHiddenWhenStolen() return true end
 function imba_scaldris_ice_floes:IsRefreshable() return true end
@@ -1113,7 +1113,7 @@ end
 
 imba_scaldris_living_flame = class({})
 
-LinkLuaModifier("modifier_imba_living_flame_dps", "hero/hero_scaldris", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_living_flame_dps", "components/abilities/heroes/hero_scaldris", LUA_MODIFIER_MOTION_NONE)
 
 function imba_scaldris_living_flame:IsHiddenWhenStolen() return false end
 function imba_scaldris_living_flame:IsRefreshable() return true end
@@ -1258,9 +1258,9 @@ end
 
 imba_scaldris_absolute_zero = class({})
 
-LinkLuaModifier("modifier_imba_absolute_zero_stun", "hero/hero_scaldris", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_absolute_zero_slow", "hero/hero_scaldris", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_absolute_zero_dps", "hero/hero_scaldris", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_absolute_zero_stun", "components/abilities/heroes/hero_scaldris", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_absolute_zero_slow", "components/abilities/heroes/hero_scaldris", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_absolute_zero_dps", "components/abilities/heroes/hero_scaldris", LUA_MODIFIER_MOTION_NONE)
 
 function imba_scaldris_absolute_zero:IsHiddenWhenStolen() return true end
 function imba_scaldris_absolute_zero:IsRefreshable() return true end

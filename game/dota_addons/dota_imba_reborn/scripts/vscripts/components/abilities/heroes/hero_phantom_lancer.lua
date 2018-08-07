@@ -19,7 +19,7 @@
 --			SPIRIT LANCE            --
 --------------------------------------
 imba_phantom_lancer_spirit_lance = imba_phantom_lancer_spirit_lance or class({})
-LinkLuaModifier("modifier_imba_spirit_lance_slow", "hero/hero_phantom_lancer", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_spirit_lance_slow", "components/abilities/heroes/hero_phantom_lancer", LUA_MODIFIER_MOTION_NONE)
 
 function imba_phantom_lancer_spirit_lance:OnAbilityPhaseStart()
 	-- Ability properties

@@ -5,10 +5,10 @@
 --       ARCANE ORB      --
 ---------------------------
 imba_obsidian_destroyer_arcane_orb = class({})
-LinkLuaModifier("modifier_imba_arcane_orb_thinker", "hero/hero_obsidian_destroyer.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_arcane_orb_buff", "hero/hero_obsidian_destroyer.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_arcane_orb_debuff", "hero/hero_obsidian_destroyer.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_arcane_orb_instance", "hero/hero_obsidian_destroyer.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_arcane_orb_thinker", "components/abilities/heroes/hero_obsidian_destroyer.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_arcane_orb_buff", "components/abilities/heroes/hero_obsidian_destroyer.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_arcane_orb_debuff", "components/abilities/heroes/hero_obsidian_destroyer.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_arcane_orb_instance", "components/abilities/heroes/hero_obsidian_destroyer.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_obsidian_destroyer_arcane_orb:GetAbilityTextureName()
    return "obsidian_destroyer_arcane_orb"
@@ -753,9 +753,9 @@ function modifier_imba_arcane_orb_instance:IsDebuff() return false end
 --  ASTRAL IMPRISONMENT  --
 ---------------------------
 imba_obsidian_destroyer_astral_imprisonment = class({})
-LinkLuaModifier("modifier_imba_astral_imprisonment", "hero/hero_obsidian_destroyer.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_astral_imprisonment_buff", "hero/hero_obsidian_destroyer.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_astral_imprisonment_sucked", "hero/hero_obsidian_destroyer.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_astral_imprisonment", "components/abilities/heroes/hero_obsidian_destroyer.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_astral_imprisonment_buff", "components/abilities/heroes/hero_obsidian_destroyer.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_astral_imprisonment_sucked", "components/abilities/heroes/hero_obsidian_destroyer.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_obsidian_destroyer_astral_imprisonment:GetAbilityTextureName()
    return "obsidian_destroyer_astral_imprisonment"
@@ -1210,11 +1210,11 @@ end
 --     ESSENCE AURA      --
 ---------------------------
 imba_obsidian_destroyer_essence_aura = class({})
-LinkLuaModifier("modifier_imba_essence_aura", "hero/hero_obsidian_destroyer.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_essence_aura_buff", "hero/hero_obsidian_destroyer.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_essence_aura_proc", "hero/hero_obsidian_destroyer.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_essence_aura_over_maximum", "hero/hero_obsidian_destroyer.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_essence_aura_over_maximum_indicator", "hero/hero_obsidian_destroyer.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_essence_aura", "components/abilities/heroes/hero_obsidian_destroyer.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_essence_aura_buff", "components/abilities/heroes/hero_obsidian_destroyer.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_essence_aura_proc", "components/abilities/heroes/hero_obsidian_destroyer.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_essence_aura_over_maximum", "components/abilities/heroes/hero_obsidian_destroyer.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_essence_aura_over_maximum_indicator", "components/abilities/heroes/hero_obsidian_destroyer.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_obsidian_destroyer_essence_aura:GetAbilityTextureName()
    return "obsidian_destroyer_essence_aura"

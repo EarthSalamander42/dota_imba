@@ -922,5 +922,5 @@ end
 
 --------------------------------------------------------------------------------
 for LinkedModifier, MotionController in pairs(LinkedModifiers) do
-	LinkLuaModifier(LinkedModifier, "hero/hero_bloodseeker", MotionController)
+	LinkLuaModifier(LinkedModifier, "components/abilities/heroes/hero_bloodseeker", MotionController)
 end

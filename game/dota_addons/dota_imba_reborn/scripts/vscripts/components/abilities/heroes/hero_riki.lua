@@ -805,12 +805,12 @@ end
 --------------------	  Cloak and Dagger		 --------------------
 ---------------------------------------------------------------------
 imba_riki_cloak_and_dagger = imba_riki_cloak_and_dagger or class({})
-LinkLuaModifier( "modifier_imba_riki_cloak_and_dagger", "hero/hero_riki.lua", LUA_MODIFIER_MOTION_NONE )	-- Backstab and invisibility handler
-LinkLuaModifier( "modifier_imba_riki_invisibility", "hero/hero_riki.lua", LUA_MODIFIER_MOTION_NONE )		-- Invisibility modifier
-LinkLuaModifier( "modifier_imba_riki_backstab_translation", "hero/hero_riki.lua", LUA_MODIFIER_MOTION_NONE )		-- Attack translate
-LinkLuaModifier( "modifier_imba_riki_peek_a_boo", "hero/hero_riki.lua", LUA_MODIFIER_MOTION_NONE )
-LinkLuaModifier( "modifier_imba_riki_backbreaker", "hero/hero_riki.lua", LUA_MODIFIER_MOTION_NONE )
-LinkLuaModifier( "modifier_imba_riki_backbroken", "hero/hero_riki.lua", LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier( "modifier_imba_riki_cloak_and_dagger", "components/abilities/heroes/hero_riki.lua", LUA_MODIFIER_MOTION_NONE )	-- Backstab and invisibility handler
+LinkLuaModifier( "modifier_imba_riki_invisibility", "components/abilities/heroes/hero_riki.lua", LUA_MODIFIER_MOTION_NONE )		-- Invisibility modifier
+LinkLuaModifier( "modifier_imba_riki_backstab_translation", "components/abilities/heroes/hero_riki.lua", LUA_MODIFIER_MOTION_NONE )		-- Attack translate
+LinkLuaModifier( "modifier_imba_riki_peek_a_boo", "components/abilities/heroes/hero_riki.lua", LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier( "modifier_imba_riki_backbreaker", "components/abilities/heroes/hero_riki.lua", LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier( "modifier_imba_riki_backbroken", "components/abilities/heroes/hero_riki.lua", LUA_MODIFIER_MOTION_NONE )
 
 
 function imba_riki_cloak_and_dagger:GetAbilityTextureName()
@@ -1257,9 +1257,9 @@ end
 --------------------	Tricks of the Trade		---------------------
 ---------------------------------------------------------------------
 if imba_riki_tricks_of_the_trade == nil then imba_riki_tricks_of_the_trade = class({}) end
-LinkLuaModifier( "modifier_imba_riki_tricks_of_the_trade_primary", "hero/hero_riki.lua", LUA_MODIFIER_MOTION_NONE )		-- Hides the caster and damages all enemies in the AoE
-LinkLuaModifier( "modifier_imba_riki_tricks_of_the_trade_secondary", "hero/hero_riki.lua", LUA_MODIFIER_MOTION_NONE )	-- Attacks a single enemy based on attack speed
-LinkLuaModifier( "modifier_imba_martyrs_mark", "hero/hero_riki.lua", LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier( "modifier_imba_riki_tricks_of_the_trade_primary", "components/abilities/heroes/hero_riki.lua", LUA_MODIFIER_MOTION_NONE )		-- Hides the caster and damages all enemies in the AoE
+LinkLuaModifier( "modifier_imba_riki_tricks_of_the_trade_secondary", "components/abilities/heroes/hero_riki.lua", LUA_MODIFIER_MOTION_NONE )	-- Attacks a single enemy based on attack speed
+LinkLuaModifier( "modifier_imba_martyrs_mark", "components/abilities/heroes/hero_riki.lua", LUA_MODIFIER_MOTION_NONE )
 
 function imba_riki_tricks_of_the_trade:GetAbilityTextureName()
 	return "riki_tricks_of_the_trade"
@@ -1674,6 +1674,6 @@ end
 
 -------------------------------------------
 for LinkedModifier, MotionController in pairs(LinkedModifiers) do
-	LinkLuaModifier(LinkedModifier, "hero/hero_riki", MotionController)
+	LinkLuaModifier(LinkedModifier, "components/abilities/heroes/hero_riki", MotionController)
 end
 -------------------------------------------

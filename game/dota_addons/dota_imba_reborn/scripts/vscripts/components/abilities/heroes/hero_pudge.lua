@@ -25,10 +25,10 @@ imba_pudge_meat_hook = imba_pudge_meat_hook or class({})
 imba_pudge_sharp_hook = imba_pudge_sharp_hook or class({})
 imba_pudge_light_hook = imba_pudge_light_hook or class({})
 
-LinkLuaModifier("modifier_imba_hook_sharp_stack","hero/hero_pudge", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_pudge_sharp_hook_handler","hero/hero_pudge", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_hook_light_stack","hero/hero_pudge", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_pudge_light_hook_handler","hero/hero_pudge", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_hook_sharp_stack","components/abilities/heroes/hero_pudge", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_pudge_sharp_hook_handler","components/abilities/heroes/hero_pudge", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_hook_light_stack","components/abilities/heroes/hero_pudge", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_pudge_light_hook_handler","components/abilities/heroes/hero_pudge", LUA_MODIFIER_MOTION_NONE)
 
 function imba_pudge_sharp_hook:GetIntrinsicModifierName() return "modifier_imba_hook_sharp_stack" end
 function imba_pudge_light_hook:GetIntrinsicModifierName() return "modifier_imba_hook_light_stack" end
@@ -205,10 +205,10 @@ function modifier_imba_pudge_light_hook_handler:OnCreated()
 	end
 end
 
-LinkLuaModifier("modifier_imba_pudge_meat_hook_caster_root","hero/hero_pudge", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_hook_target_enemy","hero/hero_pudge", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_hook_target_ally","hero/hero_pudge", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_pudge_meat_hook_handler","hero/hero_pudge", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_pudge_meat_hook_caster_root","components/abilities/heroes/hero_pudge", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_hook_target_enemy","components/abilities/heroes/hero_pudge", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_hook_target_ally","components/abilities/heroes/hero_pudge", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_pudge_meat_hook_handler","components/abilities/heroes/hero_pudge", LUA_MODIFIER_MOTION_NONE)
 
 function imba_pudge_meat_hook:IsHiddenWhenStolen() return false end
 function imba_pudge_meat_hook:IsRefreshable() 			return true  end
@@ -779,9 +779,9 @@ end
 
 imba_pudge_rot = imba_pudge_rot or class({})
 
-LinkLuaModifier("imba_pudge_rot_active","hero/hero_pudge", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_rot_slow","hero/hero_pudge", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_pudge_rot_handler","hero/hero_pudge", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("imba_pudge_rot_active","components/abilities/heroes/hero_pudge", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_rot_slow","components/abilities/heroes/hero_pudge", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_pudge_rot_handler","components/abilities/heroes/hero_pudge", LUA_MODIFIER_MOTION_NONE)
 
 function imba_pudge_rot:IsHiddenWhenStolen() 	return false end
 function imba_pudge_rot:IsRefreshable() 		return true  end
@@ -953,8 +953,8 @@ function modifier_imba_rot_slow:GetModifierMoveSpeedBonus_Percentage() return se
 
 imba_pudge_flesh_heap = imba_pudge_flesh_heap or class({})
 
-LinkLuaModifier("modifier_imba_flesh_heap_stacks","hero/hero_pudge", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_pudge_flesh_heap_handler","hero/hero_pudge", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_flesh_heap_stacks","components/abilities/heroes/hero_pudge", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_pudge_flesh_heap_handler","components/abilities/heroes/hero_pudge", LUA_MODIFIER_MOTION_NONE)
 
 function imba_pudge_flesh_heap:GetIntrinsicModifierName()
 	return "modifier_imba_flesh_heap_stacks"
@@ -1090,9 +1090,9 @@ end
 
 imba_pudge_dismember = imba_pudge_dismember or class({})
 
-LinkLuaModifier("modifier_dismember","hero/hero_pudge", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_pudge_dismember_buff","hero/hero_pudge", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_pudge_dismember_handler","hero/hero_pudge", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_dismember","components/abilities/heroes/hero_pudge", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_pudge_dismember_buff","components/abilities/heroes/hero_pudge", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_pudge_dismember_handler","components/abilities/heroes/hero_pudge", LUA_MODIFIER_MOTION_NONE)
 
 function imba_pudge_dismember:GetChannelTime()
 	return self.channelTime

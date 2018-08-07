@@ -5,8 +5,8 @@
 --      ARCANE BOLT       --
 ----------------------------
 imba_skywrath_mage_arcane_bolt = class({})
-LinkLuaModifier("modifier_imba_arcane_bolt_buff", "hero/hero_skywrath_mage.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_skywrath_flying_movement", "hero/hero_skywrath_mage.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_arcane_bolt_buff", "components/abilities/heroes/hero_skywrath_mage.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_skywrath_flying_movement", "components/abilities/heroes/hero_skywrath_mage.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_skywrath_mage_arcane_bolt:GetAbilityTextureName()
    return "skywrath_mage_arcane_bolt"
@@ -257,7 +257,7 @@ function modifier_imba_arcane_bolt_buff:IsDebuff() return false end
 --    CONCUSSIVE SHOT     --
 ----------------------------
 imba_skywrath_mage_concussive_shot = class({})
-LinkLuaModifier("modifier_imba_concussive_shot_slow", "hero/hero_skywrath_mage.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_concussive_shot_slow", "components/abilities/heroes/hero_skywrath_mage.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_skywrath_mage_concussive_shot:GetAbilityTextureName()
    return "skywrath_mage_concussive_shot"
@@ -550,9 +550,9 @@ end
 --      ANCIENT SEAL      --
 ----------------------------
 imba_skywrath_mage_ancient_seal = class({})
-LinkLuaModifier("modifier_imba_ancient_seal_main", "hero/hero_skywrath_mage.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_ancient_seal_aura", "hero/hero_skywrath_mage.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_ancient_seal_secondary", "hero/hero_skywrath_mage.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_ancient_seal_main", "components/abilities/heroes/hero_skywrath_mage.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_ancient_seal_aura", "components/abilities/heroes/hero_skywrath_mage.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_ancient_seal_secondary", "components/abilities/heroes/hero_skywrath_mage.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_skywrath_mage_ancient_seal:GetAbilityTextureName()
    return "skywrath_mage_ancient_seal"
@@ -820,7 +820,7 @@ end
 --      MYSTIC FLARE      --
 ----------------------------
 imba_skywrath_mage_mystic_flare = class({})
-LinkLuaModifier("modifier_imba_mystic_flare", "hero/hero_skywrath_mage.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_mystic_flare", "components/abilities/heroes/hero_skywrath_mage.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_skywrath_mage_mystic_flare:GetAbilityTextureName()
    return "skywrath_mage_mystic_flare"

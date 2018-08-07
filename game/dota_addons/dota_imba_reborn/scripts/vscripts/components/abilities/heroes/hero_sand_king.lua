@@ -5,8 +5,8 @@
 --       BURROWSTRIKE        --
 -------------------------------
 imba_sandking_burrowstrike = class({})
-LinkLuaModifier("modifier_imba_burrowstrike_stun", "hero/hero_sand_king.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_burrowstrike_burrow", "hero/hero_sand_king.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_burrowstrike_stun", "components/abilities/heroes/hero_sand_king.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_burrowstrike_burrow", "components/abilities/heroes/hero_sand_king.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_sandking_burrowstrike:GetAbilityTextureName()
    return "sandking_burrowstrike"
@@ -254,9 +254,9 @@ function modifier_imba_burrowstrike_burrow:IsDebuff() return false end
 --        SAND STORM         --
 -------------------------------
 imba_sandking_sand_storm = class({})
-LinkLuaModifier("modifier_imba_sandstorm", "hero/hero_sand_king.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_sandstorm_invis", "hero/hero_sand_king.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_sandstorm_aura", "hero/hero_sand_king.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_sandstorm", "components/abilities/heroes/hero_sand_king.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_sandstorm_invis", "components/abilities/heroes/hero_sand_king.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_sandstorm_aura", "components/abilities/heroes/hero_sand_king.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_sandking_sand_storm:GetAbilityTextureName()
    return "sandking_sand_storm"
@@ -679,9 +679,9 @@ end
 -------------------------------
 
 imba_sandking_caustic_finale = class({})
-LinkLuaModifier("modifier_imba_caustic_finale_trigger", "hero/hero_sand_king.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_caustic_finale_poison", "hero/hero_sand_king.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_caustic_finale_debuff", "hero/hero_sand_king.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_caustic_finale_trigger", "components/abilities/heroes/hero_sand_king.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_caustic_finale_poison", "components/abilities/heroes/hero_sand_king.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_caustic_finale_debuff", "components/abilities/heroes/hero_sand_king.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_sandking_caustic_finale:GetAbilityTextureName()
     return "sandking_caustic_finale"
@@ -898,8 +898,8 @@ end
 --         EPICENTER         --
 -------------------------------
 imba_sandking_epicenter = class({})
-LinkLuaModifier("modifier_imba_epicenter_pulse", "hero/hero_sand_king.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_epicenter_slow", "hero/hero_sand_king.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_epicenter_pulse", "components/abilities/heroes/hero_sand_king.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_epicenter_slow", "components/abilities/heroes/hero_sand_king.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_sandking_epicenter:GetAbilityTextureName()
     return "sandking_epicenter"

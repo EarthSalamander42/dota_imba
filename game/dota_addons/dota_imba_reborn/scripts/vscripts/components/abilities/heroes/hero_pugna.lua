@@ -20,7 +20,7 @@
 --------------------------------
 
 imba_pugna_nether_blast = class({})
-LinkLuaModifier("modifier_imba_nether_blast_magic_res", "hero/hero_pugna.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_nether_blast_magic_res", "components/abilities/heroes/hero_pugna.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_pugna_nether_blast:GetAbilityTextureName()
 	return "pugna_nether_blast"
@@ -237,7 +237,7 @@ end
 --------------------------------
 
 imba_pugna_decrepify = class({})
-LinkLuaModifier("modifier_imba_decrepify", "hero/hero_pugna.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_decrepify", "components/abilities/heroes/hero_pugna.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_pugna_decrepify:GetAbilityTextureName()
 	return "pugna_decrepify"
@@ -540,8 +540,8 @@ end
 --        NETHER AURA         --
 --------------------------------
 imba_pugna_nether_ward_aura = class({})
-LinkLuaModifier("modifier_imba_nether_ward_aura", "hero/hero_pugna.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_nether_ward_degen", "hero/hero_pugna.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_nether_ward_aura", "components/abilities/heroes/hero_pugna.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_nether_ward_degen", "components/abilities/heroes/hero_pugna.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_pugna_nether_ward_aura:GetAbilityTextureName()
 	return "pugna_nether_ward"
@@ -1118,7 +1118,7 @@ end
 --       LIFE DRAIN           --
 --------------------------------
 imba_pugna_life_drain = class({})
-LinkLuaModifier("modifier_imba_life_drain", "hero/hero_pugna.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_life_drain", "components/abilities/heroes/hero_pugna.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_pugna_life_drain:GetAbilityTextureName()
 	return "pugna_life_drain"

@@ -16,7 +16,7 @@
 --     Fudge
 
 imba_storm_spirit_static_remnant = storm_spirit_static_remnant or class({})
-LinkLuaModifier("modifier_imba_static_remnant", "hero/hero_storm_spirit.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_static_remnant", "components/abilities/heroes/hero_storm_spirit.lua", LUA_MODIFIER_MOTION_NONE)
 
 --------------------------------------
 ---		    STATIC REMNANT		   ---
@@ -218,9 +218,9 @@ end
 ---		   ELECTRIC VORTEX		   ---
 --------------------------------------
 imba_storm_spirit_electric_vortex = storm_spirit_electric_vortex or class({})
-LinkLuaModifier("modifier_imba_vortex_pull", "hero/hero_storm_spirit.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_vortex_root", "hero/hero_storm_spirit.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_vortex_self_slow", "hero/hero_storm_spirit.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_vortex_pull", "components/abilities/heroes/hero_storm_spirit.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_vortex_root", "components/abilities/heroes/hero_storm_spirit.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_vortex_self_slow", "components/abilities/heroes/hero_storm_spirit.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_storm_spirit_electric_vortex:OnSpellStart()
 	if IsServer() then
@@ -525,9 +525,9 @@ end
 ---		   	  OVERLOAD		       ---
 --------------------------------------
 imba_storm_spirit_overload = imba_storm_spirit_overload or class({})
-LinkLuaModifier("modifier_imba_overload", 			"hero/hero_storm_spirit.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_overload_buff", 		"hero/hero_storm_spirit.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_overload_debuff", 	"hero/hero_storm_spirit.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_overload", 			"components/abilities/heroes/hero_storm_spirit.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_overload_buff", 		"components/abilities/heroes/hero_storm_spirit.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_overload_debuff", 	"components/abilities/heroes/hero_storm_spirit.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_storm_spirit_overload:GetIntrinsicModifierName()
 	return "modifier_imba_overload"
@@ -724,7 +724,7 @@ end
 --- 	 BALL LIGHTNING      ---
 --------------------------------
 imba_storm_spirit_ball_lightning = imba_storm_spirit_ball_lightning or class({})
-LinkLuaModifier("modifier_imba_ball_lightning", "hero/hero_storm_spirit.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_ball_lightning", "components/abilities/heroes/hero_storm_spirit.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_storm_spirit_ball_lightning:OnSpellStart()
 	if IsServer() then

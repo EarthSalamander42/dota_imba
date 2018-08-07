@@ -3,9 +3,9 @@
 
 sohei_dash = sohei_dash or class ({})
 
-LinkLuaModifier( "modifier_sohei_dash_free_turning", "hero/hero_sohei.lua", LUA_MODIFIER_MOTION_NONE )
-LinkLuaModifier( "modifier_sohei_dash_movement", "hero/hero_sohei.lua", LUA_MODIFIER_MOTION_HORIZONTAL )
-LinkLuaModifier( "modifier_sohei_dash_charges", "hero/hero_sohei.lua", LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier( "modifier_sohei_dash_free_turning", "components/abilities/heroes/hero_sohei.lua", LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier( "modifier_sohei_dash_movement", "components/abilities/heroes/hero_sohei.lua", LUA_MODIFIER_MOTION_HORIZONTAL )
+LinkLuaModifier( "modifier_sohei_dash_charges", "components/abilities/heroes/hero_sohei.lua", LUA_MODIFIER_MOTION_NONE )
 
 --------------------------------------------------------------------------------
 
@@ -388,7 +388,7 @@ end
 
 sohei_flurry_of_blows = sohei_flurry_of_blows or class ({})
 
-LinkLuaModifier( "modifier_sohei_flurry_self", "hero/hero_sohei.lua", LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier( "modifier_sohei_flurry_self", "components/abilities/heroes/hero_sohei.lua", LUA_MODIFIER_MOTION_NONE )
 
 function sohei_flurry_of_blows:GetAssociatedPrimaryAbilities()
 	return "sohei_momentum"
@@ -659,8 +659,8 @@ end
 
 sohei_guard = sohei_guard or class ({})
 
-LinkLuaModifier( "modifier_sohei_guard_reflect", "hero/hero_sohei.lua", LUA_MODIFIER_MOTION_NONE )
-LinkLuaModifier( "modifier_sohei_guard_knockback", "hero/hero_sohei.lua", LUA_MODIFIER_MOTION_HORIZONTAL )
+LinkLuaModifier( "modifier_sohei_guard_reflect", "components/abilities/heroes/hero_sohei.lua", LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier( "modifier_sohei_guard_knockback", "components/abilities/heroes/hero_sohei.lua", LUA_MODIFIER_MOTION_HORIZONTAL )
 
 --------------------------------------------------------------------------------
 
@@ -1029,9 +1029,9 @@ end
 
 sohei_momentum = sohei_momentum or class ({})
 
-LinkLuaModifier("modifier_sohei_momentum_passive", "hero/hero_sohei.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier( "modifier_sohei_momentum_knockback", "hero/hero_sohei.lua", LUA_MODIFIER_MOTION_HORIZONTAL )
-LinkLuaModifier("modifier_sohei_momentum_slow", "hero/hero_sohei.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_sohei_momentum_passive", "components/abilities/heroes/hero_sohei.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier( "modifier_sohei_momentum_knockback", "components/abilities/heroes/hero_sohei.lua", LUA_MODIFIER_MOTION_HORIZONTAL )
+LinkLuaModifier("modifier_sohei_momentum_slow", "components/abilities/heroes/hero_sohei.lua", LUA_MODIFIER_MOTION_NONE)
 
 --------------------------------------------------------------------------------
 
@@ -1463,7 +1463,7 @@ end
 
 sohei_palm_of_life = sohei_palm_of_life or class ({})
 
-LinkLuaModifier( "modifier_sohei_palm_of_life_movement", "hero/hero_sohei.lua", LUA_MODIFIER_MOTION_HORIZONTAL )
+LinkLuaModifier( "modifier_sohei_palm_of_life_movement", "components/abilities/heroes/hero_sohei.lua", LUA_MODIFIER_MOTION_HORIZONTAL )
 
 --------------------------------------------------------------------------------
 

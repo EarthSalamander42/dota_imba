@@ -20,11 +20,11 @@
 ---------------------------------------------------
 
 imba_slardar_guardian_sprint = class({})
-LinkLuaModifier("modifier_imba_guardian_sprint_buff", "hero/hero_slardar", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_guardian_sprint_aspd_slow", "hero/hero_slardar", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_rip_current_movement", "hero/hero_slardar", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_rip_current_stun", "hero/hero_slardar", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_rip_current_slow", "hero/hero_slardar", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_guardian_sprint_buff", "components/abilities/heroes/hero_slardar", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_guardian_sprint_aspd_slow", "components/abilities/heroes/hero_slardar", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_rip_current_movement", "components/abilities/heroes/hero_slardar", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_rip_current_stun", "components/abilities/heroes/hero_slardar", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_rip_current_slow", "components/abilities/heroes/hero_slardar", LUA_MODIFIER_MOTION_NONE)
 
 
 function imba_slardar_guardian_sprint:GetAbilityTextureName()
@@ -501,9 +501,9 @@ end
 ---------------------------------------------------
 
 imba_slardar_slithereen_crush = class({})
-LinkLuaModifier("modifier_imba_slithereen_crush_stun", "hero/hero_slardar", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_slithereen_crush_slow", "hero/hero_slardar", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_slithereen_crush_royal_break", "hero/hero_slardar", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_slithereen_crush_stun", "components/abilities/heroes/hero_slardar", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_slithereen_crush_slow", "components/abilities/heroes/hero_slardar", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_slithereen_crush_royal_break", "components/abilities/heroes/hero_slardar", LUA_MODIFIER_MOTION_NONE)
 
 function imba_slardar_slithereen_crush:GetAbilityTextureName()
 	return "slardar_slithereen_crush"
@@ -739,8 +739,8 @@ end
 ---------------------------------------------------
 
 imba_slardar_bash_of_the_deep = class({})
-LinkLuaModifier("modifier_imba_bash_of_the_deep_attack", "hero/hero_slardar", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_bash_of_the_deep_stun", "hero/hero_slardar", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_bash_of_the_deep_attack", "components/abilities/heroes/hero_slardar", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_bash_of_the_deep_stun", "components/abilities/heroes/hero_slardar", LUA_MODIFIER_MOTION_NONE)
 
 function imba_slardar_bash_of_the_deep:GetAbilityTextureName()
 	return "slardar_bash"
@@ -938,9 +938,9 @@ end
 ---------------------------------------------------
 
 imba_slardar_corrosive_haze = class({})
-LinkLuaModifier("modifier_imba_corrosive_haze_debuff", "hero/hero_slardar", LUA_MODIFIER_MOTION_HORIZONTAL)
-LinkLuaModifier("modifier_imba_corrosive_haze_debuff_secondary", "hero/hero_slardar", LUA_MODIFIER_MOTION_HORIZONTAL)
-LinkLuaModifier("modifier_imba_corrosive_haze_slip_debuff", "hero/hero_slardar", LUA_MODIFIER_MOTION_HORIZONTAL)
+LinkLuaModifier("modifier_imba_corrosive_haze_debuff", "components/abilities/heroes/hero_slardar", LUA_MODIFIER_MOTION_HORIZONTAL)
+LinkLuaModifier("modifier_imba_corrosive_haze_debuff_secondary", "components/abilities/heroes/hero_slardar", LUA_MODIFIER_MOTION_HORIZONTAL)
+LinkLuaModifier("modifier_imba_corrosive_haze_slip_debuff", "components/abilities/heroes/hero_slardar", LUA_MODIFIER_MOTION_HORIZONTAL)
 
 function imba_slardar_corrosive_haze:GetAbilityTextureName()
 	return "slardar_amplify_damage"
@@ -1370,9 +1370,9 @@ end
 ---------------------------------------------------
 
 imba_slardar_rain_cloud = class({})
-LinkLuaModifier("modifier_imba_rain_cloud_slardar", "hero/hero_slardar", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_rain_cloud_buff", "hero/hero_slardar", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_rain_cloud_dummy", "hero/hero_slardar", LUA_MODIFIER_MOTION_HORIZONTAL)
+LinkLuaModifier("modifier_imba_rain_cloud_slardar", "components/abilities/heroes/hero_slardar", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_rain_cloud_buff", "components/abilities/heroes/hero_slardar", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_rain_cloud_dummy", "components/abilities/heroes/hero_slardar", LUA_MODIFIER_MOTION_HORIZONTAL)
 
 function imba_slardar_rain_cloud:GetAbilityTextureName()
 	return "custom/slardar_rain_cloud"

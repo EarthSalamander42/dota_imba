@@ -47,9 +47,9 @@ end
 -----        SWASHBUCKLE       ------
 -------------------------------------
 imba_pangolier_swashbuckle = imba_pangolier_swashbuckle or class({})
-LinkLuaModifier("modifier_imba_swashbuckle_dash", "hero/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_swashbuckle_slashes", "hero/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_swashbuckle_buff", "hero/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_swashbuckle_dash", "components/abilities/heroes/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_swashbuckle_slashes", "components/abilities/heroes/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_swashbuckle_buff", "components/abilities/heroes/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_pangolier_swashbuckle:GetAbilityTextureName()
 	return "pangolier_swashbuckle"
@@ -511,11 +511,11 @@ end
 -----      SHIELD CRUSH         -----
 -------------------------------------
 imba_pangolier_shield_crash = imba_pangolier_shield_crash or class({})
-LinkLuaModifier("modifier_imba_shield_crash_buff", "hero/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE) -- Damage reduction
-LinkLuaModifier("modifier_imba_shield_crash_jump", "hero/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE) -- movement
-LinkLuaModifier("modifier_imba_shield_crash_block", "hero/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE) -- Talent #3: parry stacks
-LinkLuaModifier("modifier_imba_shield_crash_block_parry", "hero/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE) --Talent #3: Pangolier parry (100% evasion)
-LinkLuaModifier("modifier_imba_shield_crash_block_miss", "hero/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE) --Talent #3: Parried attack debuff (remove true strike during the attack)
+LinkLuaModifier("modifier_imba_shield_crash_buff", "components/abilities/heroes/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE) -- Damage reduction
+LinkLuaModifier("modifier_imba_shield_crash_jump", "components/abilities/heroes/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE) -- movement
+LinkLuaModifier("modifier_imba_shield_crash_block", "components/abilities/heroes/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE) -- Talent #3: parry stacks
+LinkLuaModifier("modifier_imba_shield_crash_block_parry", "components/abilities/heroes/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE) --Talent #3: Pangolier parry (100% evasion)
+LinkLuaModifier("modifier_imba_shield_crash_block_miss", "components/abilities/heroes/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE) --Talent #3: Parried attack debuff (remove true strike during the attack)
 
 function imba_pangolier_shield_crash:GetAbilityTextureName()
 	return "pangolier_shield_crash"
@@ -1195,11 +1195,11 @@ end
 -----      HEARTPIERCER        -----
 ------------------------------------
 imba_pangolier_heartpiercer = imba_pangolier_heartpiercer or class({})
-LinkLuaModifier("modifier_imba_heartpiercer_passive", "hero/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_heartpiercer_delay", "hero/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_heartpiercer_debuff", "hero/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_heartpiercer_talent_debuff", "hero/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE) --visual
-LinkLuaModifier("modifier_imba_heartpiercer_talent_debuff_2", "hero/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE) --visual
+LinkLuaModifier("modifier_imba_heartpiercer_passive", "components/abilities/heroes/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_heartpiercer_delay", "components/abilities/heroes/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_heartpiercer_debuff", "components/abilities/heroes/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_heartpiercer_talent_debuff", "components/abilities/heroes/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE) --visual
+LinkLuaModifier("modifier_imba_heartpiercer_talent_debuff_2", "components/abilities/heroes/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE) --visual
 
 
 function imba_pangolier_heartpiercer:GetAbilityTextureName()
@@ -1492,12 +1492,12 @@ function modifier_imba_heartpiercer_talent_debuff_2:IsDebuff() return true end
 -----    ROLLING THUNDER       -----
 ------------------------------------
 imba_pangolier_gyroshell = imba_pangolier_gyroshell or class({})
---LinkLuaModifier("modifier_imba_gyroshell_roll", "hero/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE) 				------|
---LinkLuaModifier("modifier_imba_gyroshell_ricochet", "hero/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE)			------|  IMBA MODIFIERS (not used atm)
---LinkLuaModifier("modifier_imba_gyroshell_stun", "hero/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE)				------|
---LinkLuaModifier("modifier_imba_pangolier_gyroshell_bounce", "hero/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE)	------|
-LinkLuaModifier("modifier_imba_gyroshell_impact_check", "hero/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE) -- extend Rolling Thunder on each impact and implement #7 Talent
-LinkLuaModifier("modifier_imba_gyroshell_linger", "hero/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE) --Talent #4: Extra spell immunity
+--LinkLuaModifier("modifier_imba_gyroshell_roll", "components/abilities/heroes/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE) 				------|
+--LinkLuaModifier("modifier_imba_gyroshell_ricochet", "components/abilities/heroes/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE)			------|  IMBA MODIFIERS (not used atm)
+--LinkLuaModifier("modifier_imba_gyroshell_stun", "components/abilities/heroes/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE)				------|
+--LinkLuaModifier("modifier_imba_pangolier_gyroshell_bounce", "components/abilities/heroes/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE)	------|
+LinkLuaModifier("modifier_imba_gyroshell_impact_check", "components/abilities/heroes/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE) -- extend Rolling Thunder on each impact and implement #7 Talent
+LinkLuaModifier("modifier_imba_gyroshell_linger", "components/abilities/heroes/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE) --Talent #4: Extra spell immunity
 
 function imba_pangolier_gyroshell:GetAbilityTextureName()
 	return "pangolier_gyroshell"

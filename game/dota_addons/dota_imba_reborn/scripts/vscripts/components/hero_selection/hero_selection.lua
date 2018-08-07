@@ -51,8 +51,7 @@ function HeroSelection:Init()
 		herolist[key] = KeyValues.HeroKV[key].AttributePrimary
 
 		if KeyValues.HeroKV[key].IsImba == 1 then
-			hotdisabledlist[key] = 1
---			imbalist[key] = KeyValues.HeroKV[key].IsImba
+			imbalist[key] = KeyValues.HeroKV[key].IsImba
 		elseif KeyValues.HeroKV[key].IsNew == 1 then
 			newlist[key] = KeyValues.HeroKV[key].IsNew
 		elseif KeyValues.HeroKV[key].IsCustom == 1 then
@@ -367,9 +366,8 @@ function HeroSelection:SelectHero(playerId, hero)
 
 						if top_imr_string then
 							local top_imr = CustomNetTables:GetTableValue("top_imr5v5", tostring(i))
-							log.debug(top_imr.SteamID64)
-							if tostring(PlayerResource:GetSteamID(id)) == top_imr.SteamID64 then
-								log.debug("Found a top leaderboard!")
+							if tostring(PlayerResource:GetSteamID(id)) == top_imr.SteamID64 and type == "number" then
+								print("Found a top leaderboard:", top_imr.IMR_10v10)
 								if GetMapName() == MapRanked5v5() then
 									Say(nil, PlayerResource:GetPlayerName(id).." is top "..i.." IMR! ("..math.floor(top_imr.IMR_5v5)..")", false)
 								elseif GetMapName() == MapRanked10v10() then

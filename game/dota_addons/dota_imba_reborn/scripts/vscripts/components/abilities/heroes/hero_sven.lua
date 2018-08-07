@@ -19,8 +19,8 @@
 -------------------------------------------
 --            STORM BOLT
 -------------------------------------------
-LinkLuaModifier("modifier_imba_storm_bolt_caster", "hero/hero_sven", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_storm_bolt_crit", "hero/hero_sven", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_storm_bolt_caster", "components/abilities/heroes/hero_sven", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_storm_bolt_crit", "components/abilities/heroes/hero_sven", LUA_MODIFIER_MOTION_NONE)
 
 imba_sven_storm_bolt = class({})
 function imba_sven_storm_bolt:IsHiddenWhenStolen() return false end
@@ -186,8 +186,8 @@ end
 -------------------------------------------
 -- 				GREAT CLEAVE
 -------------------------------------------
-LinkLuaModifier("modifier_imba_great_cleave", "hero/hero_sven", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_great_cleave_active", "hero/hero_sven", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_great_cleave", "components/abilities/heroes/hero_sven", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_great_cleave_active", "components/abilities/heroes/hero_sven", LUA_MODIFIER_MOTION_NONE)
 
 imba_sven_great_cleave = class({})
 function imba_sven_great_cleave:IsHiddenWhenStolen() return false end
@@ -309,8 +309,8 @@ end
 -------------------------------------------
 --            WARCRY
 -------------------------------------------
-LinkLuaModifier("modifier_imba_warcry", "hero/hero_sven", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_warcry_immunity", "hero/hero_sven", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_warcry", "components/abilities/heroes/hero_sven", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_warcry_immunity", "components/abilities/heroes/hero_sven", LUA_MODIFIER_MOTION_NONE)
 
 imba_sven_warcry = class({})
 function imba_sven_warcry:IsHiddenWhenStolen() return false end
@@ -464,8 +464,8 @@ end
 -------------------------------------------
 --			GOD'S STRENGTH
 -------------------------------------------
-LinkLuaModifier("modifier_imba_god_strength", "hero/hero_sven", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_god_strength_allies", "hero/hero_sven", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_god_strength", "components/abilities/heroes/hero_sven", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_god_strength_allies", "components/abilities/heroes/hero_sven", LUA_MODIFIER_MOTION_NONE)
 
 imba_sven_gods_strength = class({})
 function imba_sven_gods_strength:IsHiddenWhenStolen() return false end
@@ -646,8 +646,8 @@ end
 -------------------------------------------
 --			COLOSSAL SLASH
 -------------------------------------------
-LinkLuaModifier("modifier_imba_colossal_slash_animation", "hero/hero_sven", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_colossal_slash_crit", "hero/hero_sven", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_colossal_slash_animation", "components/abilities/heroes/hero_sven", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_colossal_slash_crit", "components/abilities/heroes/hero_sven", LUA_MODIFIER_MOTION_NONE)
 imba_sven_colossal_slash = class({})
 function imba_sven_colossal_slash:IsHiddenWhenStolen() return false end
 function imba_sven_colossal_slash:IsRefreshable() return true end

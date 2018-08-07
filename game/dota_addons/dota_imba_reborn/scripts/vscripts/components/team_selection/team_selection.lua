@@ -67,7 +67,7 @@ function TeamSelection:InitializeTeamSelection()
 
 	if GetMapName() == MapRanked5v5() then
 		TeamSelection:Random5v5TeamSelection()
-	elseif GetMapName() == MapRanked10v10()() then
+	elseif GetMapName() == MapRanked10v10() then
 		TeamSelection:KeepTeams10v10TeamSelection()
 	else
 		TeamSelection:ManualTeamSelection()
@@ -167,11 +167,11 @@ function TeamSelection:KeepTeams10v10TeamSelection()
 	-- register the host-ready event
 	TeamSelectionListeners.hostReady = CustomGameEventManager:RegisterListener(
 		TeamSelectionEvents.hostReady,
-		TeamSelection:KeepTeams10v10TeamSelectionReady()
+		KeepTeams10v10TeamSelectionReady
 	)
 end
 
-function TeamSelection:KeepTeams10v10TeamSelectionReady(obj, event)
+function KeepTeams10v10TeamSelectionReady(obj, event)
 	log.info("We got notification from host")
 
 	-- save the playerid of the privileged client / volvos function is unreliable

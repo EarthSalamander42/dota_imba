@@ -17,7 +17,7 @@
 
 imba_spectre_haunt = imba_spectre_haunt or class({})
 
-LinkLuaModifier("modifier_imba_spectre_haunt_illusion", "hero/hero_spectre", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_spectre_haunt_illusion", "components/abilities/heroes/hero_spectre", LUA_MODIFIER_MOTION_NONE)
 
 function imba_spectre_haunt:IsNetherWardStealable() return false end
 function imba_spectre_haunt:GetAbilityTextureName() return "spectre_haunt" end

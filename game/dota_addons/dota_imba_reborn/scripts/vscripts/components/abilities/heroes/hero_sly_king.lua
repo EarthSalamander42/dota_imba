@@ -22,8 +22,8 @@
 
 imba_sly_king_frost_gale = imba_sly_king_frost_gale or class({})
 
-LinkLuaModifier( "modifier_imba_frost_gale_setin", "hero/hero_sly_king.lua", LUA_MODIFIER_MOTION_NONE )		-- Set in modifier (slow)
-LinkLuaModifier( "modifier_imba_frost_gale_debuff", "hero/hero_sly_king.lua", LUA_MODIFIER_MOTION_NONE )		-- Root
+LinkLuaModifier( "modifier_imba_frost_gale_setin", "components/abilities/heroes/hero_sly_king.lua", LUA_MODIFIER_MOTION_NONE )		-- Set in modifier (slow)
+LinkLuaModifier( "modifier_imba_frost_gale_debuff", "components/abilities/heroes/hero_sly_king.lua", LUA_MODIFIER_MOTION_NONE )		-- Root
 
 function imba_sly_king_frost_gale:GetCastRange()
 	return self:GetSpecialValueFor("cast_range")
@@ -249,7 +249,7 @@ end
 --       burrowblast        --
 -------------------------------
 imba_sly_king_burrow_blast = class({})
-LinkLuaModifier("modifier_imba_burrowblast_burrow", "hero/hero_sly_king.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_burrowblast_burrow", "components/abilities/heroes/hero_sly_king.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_sly_king_burrow_blast:IsHiddenWhenStolen()
 	return false
@@ -468,8 +468,8 @@ function modifier_imba_burrowblast_burrow:IsDebuff() return false end
 
 imba_sly_king_frozen_skin = imba_sly_king_frozen_skin or class({})
 
-LinkLuaModifier("modifier_imba_frozen_skin_passive", "hero/hero_sly_king", LUA_MODIFIER_MOTION_NONE) --intrinsic modifier
-LinkLuaModifier("modifier_imba_frozen_skin_debuff", "hero/hero_sly_king", LUA_MODIFIER_MOTION_NONE)  --frostbite debuff
+LinkLuaModifier("modifier_imba_frozen_skin_passive", "components/abilities/heroes/hero_sly_king", LUA_MODIFIER_MOTION_NONE) --intrinsic modifier
+LinkLuaModifier("modifier_imba_frozen_skin_debuff", "components/abilities/heroes/hero_sly_king", LUA_MODIFIER_MOTION_NONE)  --frostbite debuff
 
 function imba_sly_king_frozen_skin:GetIntrinsicModifierName()
 	return "modifier_imba_frozen_skin_passive"
@@ -584,8 +584,8 @@ function modifier_imba_frozen_skin_debuff:GetEffectAttachType() return PATTACH_A
 ----------------------------------------------
 
 imba_sly_king_winterbringer = imba_sly_king_winterbringer or class({})
-LinkLuaModifier("modifier_imba_winterbringer_pulse", "hero/hero_sly_king.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_winterbringer_slow", "hero/hero_sly_king.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_winterbringer_pulse", "components/abilities/heroes/hero_sly_king.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_winterbringer_slow", "components/abilities/heroes/hero_sly_king.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_sly_king_winterbringer:IsHiddenWhenStolen()
 	return false

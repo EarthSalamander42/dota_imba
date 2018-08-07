@@ -51,7 +51,7 @@ end
 -------- CALL OF THE WILD: HAWK -------
 ---------------------------------------
 imba_beastmaster_summon_hawk    =   imba_beastmaster_summon_hawk or class({})
-LinkLuaModifier("modifier_imba_beastmaster_hawk",  "hero/hero_beastmaster", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_beastmaster_hawk",  "components/abilities/heroes/hero_beastmaster", LUA_MODIFIER_MOTION_NONE)
 
 function imba_beastmaster_summon_hawk:OnUpgrade()
 	UpgradeBeastsSummons(self:GetCaster(), self)
@@ -136,8 +136,8 @@ end
 -----------------------------------------------------
 imba_beastmaster_hawk_invis = imba_beastmaster_hawk_invis or class({})
 
-LinkLuaModifier("modifier_imba_hawk_invis_handler",  "hero/hero_beastmaster", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_hawk_invis",  "hero/hero_beastmaster", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_hawk_invis_handler",  "components/abilities/heroes/hero_beastmaster", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_hawk_invis",  "components/abilities/heroes/hero_beastmaster", LUA_MODIFIER_MOTION_NONE)
 
 function imba_beastmaster_hawk_invis:GetIntrinsicModifierName()
 	return "modifier_imba_hawk_invis_handler"
@@ -241,7 +241,7 @@ end
 
 imba_beastmaster_summon_boar = imba_beastmaster_summon_boar or class({})
 
-LinkLuaModifier("modifier_imba_beastmaster_boar",  "hero/hero_beastmaster", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_beastmaster_boar",  "components/abilities/heroes/hero_beastmaster", LUA_MODIFIER_MOTION_NONE)
 
 function imba_beastmaster_summon_boar:OnUpgrade()
 	UpgradeBeastsSummons(self:GetCaster(), self)
@@ -335,8 +335,8 @@ end
 
 imba_beastmaster_boar_poison = imba_beastmaster_boar_poison or class({})
 
-LinkLuaModifier("modifier_imba_boar_poison" , "hero/hero_beastmaster", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_boar_poison_debuff" , "hero/hero_beastmaster", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_boar_poison" , "components/abilities/heroes/hero_beastmaster", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_boar_poison_debuff" , "components/abilities/heroes/hero_beastmaster", LUA_MODIFIER_MOTION_NONE)
 
 function imba_beastmaster_boar_poison:GetIntrinsicModifierName()
 	return "modifier_imba_boar_poison"

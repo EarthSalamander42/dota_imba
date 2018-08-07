@@ -89,7 +89,7 @@ end
 --     PROXIMITY MINE       --
 ------------------------------
 imba_techies_proximity_mine = imba_techies_proximity_mine or class({})
-LinkLuaModifier("modifier_imba_proximity_mine_charges", "hero/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_proximity_mine_charges", "components/abilities/heroes/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_techies_proximity_mine:GetAbilityTextureName()
    return "techies_land_mines"
@@ -337,9 +337,9 @@ end
 --     PROXIMITY MINE AI    --
 ------------------------------
 imba_techies_proximity_mine_trigger = imba_techies_proximity_mine_trigger or class({})
-LinkLuaModifier("modifier_imba_proximity_mine", "hero/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_proximity_mine_building_res", "hero/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_proximity_mine_talent", "hero/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_proximity_mine", "components/abilities/heroes/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_proximity_mine_building_res", "components/abilities/heroes/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_proximity_mine_talent", "components/abilities/heroes/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_techies_proximity_mine_trigger:GetIntrinsicModifierName()
 	return "modifier_imba_proximity_mine"
@@ -882,10 +882,10 @@ end
 --      STATIS TRAP AI      --
 ------------------------------
 imba_techies_stasis_trap_trigger = imba_techies_stasis_trap_trigger or class({})
-LinkLuaModifier("modifier_imba_statis_trap", "hero/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_statis_trap_root", "hero/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_statis_trap_electrocharge", "hero/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_statis_trap_disarmed", "hero/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_statis_trap", "components/abilities/heroes/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_statis_trap_root", "components/abilities/heroes/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_statis_trap_electrocharge", "components/abilities/heroes/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_statis_trap_disarmed", "components/abilities/heroes/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_techies_stasis_trap_trigger:GetAbilityTextureName()
    return "techies_stasis_trap"
@@ -1192,9 +1192,9 @@ function modifier_imba_statis_trap_disarmed:IsDebuff() return false end
 --        BLAST OFF!        --
 ------------------------------
 imba_techies_blast_off = imba_techies_blast_off or class({})
-LinkLuaModifier("modifier_imba_blast_off", "hero/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_blast_off_movement", "hero/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_blast_off_silence", "hero/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_blast_off", "components/abilities/heroes/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_blast_off_movement", "components/abilities/heroes/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_blast_off_silence", "components/abilities/heroes/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_techies_blast_off:GetAbilityTextureName()
    return "techies_suicide"
@@ -1732,8 +1732,8 @@ end
 --    PINPOINT DETONATION   --
 ------------------------------
 imba_techies_remote_mine_pinpoint_detonation = imba_techies_remote_mine_pinpoint_detonation or class({})
-LinkLuaModifier("modifier_imba_remote_mine", "hero/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_remote_mine_inflammable", "hero/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_remote_mine", "components/abilities/heroes/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_remote_mine_inflammable", "components/abilities/heroes/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_techies_remote_mine_pinpoint_detonation:GetAbilityTextureName()
    return "techies_remote_mines_self_detonate"
@@ -1928,7 +1928,7 @@ end
 --     FOCUSED DETONATE     --
 ------------------------------
 imba_techies_focused_detonate = imba_techies_focused_detonate or class({})
-LinkLuaModifier("modifier_imba_focused_detonate", "hero/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_focused_detonate", "components/abilities/heroes/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_techies_focused_detonate:GetAbilityTextureName()
    return "techies_focused_detonate"
@@ -2033,8 +2033,8 @@ end
 --      MINEFIELD SIGN      --
 ------------------------------
 imba_techies_minefield_sign = imba_techies_minefield_sign or class({})
-LinkLuaModifier("modifier_imba_minefield_sign_aura", "hero/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_minefield_sign_detection", "hero/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_minefield_sign_aura", "components/abilities/heroes/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_minefield_sign_detection", "components/abilities/heroes/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_techies_minefield_sign:GetAbilityTextureName()
    return "techies_minefield_sign"

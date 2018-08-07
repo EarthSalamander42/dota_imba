@@ -1198,7 +1198,7 @@ function modifier_imba_culling_blade_motion:OnDestroy()
 end
 -------------------------------------------
 for LinkedModifier, MotionController in pairs(LinkedModifiers) do
-	LinkLuaModifier(LinkedModifier, "hero/hero_axe", MotionController)
+	LinkLuaModifier(LinkedModifier, "components/abilities/heroes/hero_axe", MotionController)
 end
 
 -- Register Modifiers to log system

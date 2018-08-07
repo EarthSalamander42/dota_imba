@@ -20,8 +20,8 @@
 -------------------------------------------
 --			DELIGHTFUL TORMENT
 -------------------------------------------
-LinkLuaModifier("modifier_imba_delightful_torment_thinker", "hero/hero_queenofpain", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_delightful_torment_as_bonus", "hero/hero_queenofpain", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_delightful_torment_thinker", "components/abilities/heroes/hero_queenofpain", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_delightful_torment_as_bonus", "components/abilities/heroes/hero_queenofpain", LUA_MODIFIER_MOTION_NONE)
 
 imba_queenofpain_delightful_torment = class({})
 function imba_queenofpain_delightful_torment:IsHiddenWhenStolen() return false end
@@ -112,7 +112,7 @@ end
 -------------------------------------------
 --			  SHADOW STRIKE
 -------------------------------------------
-LinkLuaModifier("modifier_imba_shadow_strike_debuff", "hero/hero_queenofpain", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_shadow_strike_debuff", "components/abilities/heroes/hero_queenofpain", LUA_MODIFIER_MOTION_NONE)
 
 imba_queenofpain_shadow_strike = class({})
 function imba_queenofpain_shadow_strike:IsHiddenWhenStolen() return false end
@@ -298,7 +298,7 @@ end
 -------------------------------------------
 --				BLINK
 -------------------------------------------
-LinkLuaModifier("modifier_imba_queenofpain_blink_decision_time", "hero/hero_queenofpain", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_queenofpain_blink_decision_time", "components/abilities/heroes/hero_queenofpain", LUA_MODIFIER_MOTION_NONE)
 
 imba_queenofpain_blink = class({})
 function imba_queenofpain_blink:IsHiddenWhenStolen() return false end
@@ -403,7 +403,7 @@ end
 -------------------------------------------
 --			SCREAM OF PAIN
 -------------------------------------------
-LinkLuaModifier("modifier_imba_scream_of_pain_reflect", "hero/hero_queenofpain", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_scream_of_pain_reflect", "components/abilities/heroes/hero_queenofpain", LUA_MODIFIER_MOTION_NONE)
 imba_queenofpain_scream_of_pain = class({})
 
 function imba_queenofpain_scream_of_pain:GetAbilityTextureName()
@@ -566,8 +566,8 @@ end
 -------------------------------------------
 --            SONIC WAVE
 -------------------------------------------
-LinkLuaModifier("modifier_imba_sonic_wave", "hero/hero_queenofpain", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_sonic_wave_daze", "hero/hero_queenofpain", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_sonic_wave", "components/abilities/heroes/hero_queenofpain", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_sonic_wave_daze", "components/abilities/heroes/hero_queenofpain", LUA_MODIFIER_MOTION_NONE)
 
 imba_queenofpain_sonic_wave = class({})
 

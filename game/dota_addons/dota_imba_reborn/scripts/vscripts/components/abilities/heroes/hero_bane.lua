@@ -18,8 +18,8 @@
 --------------------------------------
 ----------    ENFEEBLE    ------------
 --------------------------------------
-LinkLuaModifier("modifier_imba_enfeeble_debuff", "hero/hero_bane", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_enfeeble_debuff_vision_handler", "hero/hero_bane", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_enfeeble_debuff", "components/abilities/heroes/hero_bane", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_enfeeble_debuff_vision_handler", "components/abilities/heroes/hero_bane", LUA_MODIFIER_MOTION_NONE)
 
 -- Main enfeeble casting
 imba_bane_enfeeble = imba_bane_enfeeble or class({})
@@ -293,8 +293,8 @@ end
 --------------------------------------
 ---------    BRAIN SAP     -----------
 --------------------------------------
-LinkLuaModifier("modifier_imba_brain_sap_mana", "hero/hero_bane", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_brain_sap_baby_bane", "hero/hero_bane", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_brain_sap_mana", "components/abilities/heroes/hero_bane", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_brain_sap_baby_bane", "components/abilities/heroes/hero_bane", LUA_MODIFIER_MOTION_NONE)
 
 -- Main Brain Sap casting
 imba_bane_brain_sap = imba_bane_brain_sap or class({})
@@ -482,10 +482,10 @@ end
 ---------    NIGHTMARE     -----------
 --------------------------------------
 
-LinkLuaModifier("modifier_imba_nightmare_dot", "hero/hero_bane", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_nightmare_invul", "hero/hero_bane", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_nightmare_vision", "hero/hero_bane", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_nightmare_talent", "hero/hero_bane", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_nightmare_dot", "components/abilities/heroes/hero_bane", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_nightmare_invul", "components/abilities/heroes/hero_bane", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_nightmare_vision", "components/abilities/heroes/hero_bane", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_nightmare_talent", "components/abilities/heroes/hero_bane", LUA_MODIFIER_MOTION_NONE)
 
 -- Main Nightmare casting
 imba_bane_nightmare = imba_bane_nightmare or class({})
@@ -789,9 +789,9 @@ function modifier_imba_nightmare_talent:IsPurgable() return true end
 --------------------------------------
 -----       FIEND'S GRIP         -----
 --------------------------------------
-LinkLuaModifier("modifier_imba_fiends_grip_handler", "hero/hero_bane", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_fiends_grip_demon", "hero/hero_bane", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_fiends_grip_talent", "hero/hero_bane", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_fiends_grip_handler", "components/abilities/heroes/hero_bane", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_fiends_grip_demon", "components/abilities/heroes/hero_bane", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_fiends_grip_talent", "components/abilities/heroes/hero_bane", LUA_MODIFIER_MOTION_NONE)
 
 imba_bane_fiends_grip = imba_bane_fiends_grip or class({})
 

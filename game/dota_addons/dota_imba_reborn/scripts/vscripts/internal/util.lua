@@ -93,6 +93,17 @@ function IsNearFountain(location, distance)
 	return false
 end
 
+-- Finds whether or not an entity is an item container (the box on the game ground)
+function CBaseEntity:IsItemContainer()
+	if self.GetContainedItem then
+		if self:GetContainedItem() then
+			return true
+		end
+	end
+
+	return false
+end
+
 -- hero utils
 
 -- Initializes heroes' innate abilities

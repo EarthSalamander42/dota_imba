@@ -26,10 +26,10 @@ end
 -------------------------------------------
 --			  Icarus Dive
 -------------------------------------------
-LinkLuaModifier("modifier_imba_phoenix_icarus_dive_dash_dummy", "hero/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_phoenix_icarus_dive_extend_burn", "hero/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_phoenix_icarus_dive_ignore_turn_ray", "hero/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_phoenix_icarus_dive_slow_debuff", "hero/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_phoenix_icarus_dive_dash_dummy", "components/abilities/heroes/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_phoenix_icarus_dive_extend_burn", "components/abilities/heroes/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_phoenix_icarus_dive_ignore_turn_ray", "components/abilities/heroes/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_phoenix_icarus_dive_slow_debuff", "components/abilities/heroes/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
 
 imba_phoenix_icarus_dive = imba_phoenix_icarus_dive or class({})
 
@@ -502,7 +502,7 @@ end
 -------------------------------------------
 --			  Fire Spirits
 -------------------------------------------
-LinkLuaModifier("modifier_imba_phoenix_fire_spirits_count", "hero/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_phoenix_fire_spirits_count", "components/abilities/heroes/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
 
 imba_phoenix_fire_spirits = imba_phoenix_fire_spirits or class({})
 
@@ -654,8 +654,8 @@ end
 --			  Fire Spirits : Launch
 -------------------------------------------
 
-LinkLuaModifier("modifier_imba_phoenix_fire_spirits_debuff", "hero/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_phoenix_fire_spirits_buff", "hero/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_phoenix_fire_spirits_debuff", "components/abilities/heroes/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_phoenix_fire_spirits_buff", "components/abilities/heroes/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
 
 imba_phoenix_launch_fire_spirit = imba_phoenix_launch_fire_spirit or class({})
 
@@ -985,11 +985,11 @@ function imba_phoenix_sun_ray:GetAssociatedSecondaryAbilities()  return "imba_ph
 
 function imba_phoenix_sun_ray:GetAbilityTextureName()   return "phoenix_sun_ray" end
 
-LinkLuaModifier("modifier_imba_phoenix_sun_ray_caster_dummy", "hero/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_phoenix_sun_ray_dummy_unit_thinker", "hero/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_phoenix_sun_ray_dummy_buff", "hero/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_phoenix_sun_ray_buff", "hero/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_phoenix_sun_ray_debuff", "hero/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_phoenix_sun_ray_caster_dummy", "components/abilities/heroes/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_phoenix_sun_ray_dummy_unit_thinker", "components/abilities/heroes/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_phoenix_sun_ray_dummy_buff", "components/abilities/heroes/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_phoenix_sun_ray_buff", "components/abilities/heroes/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_phoenix_sun_ray_debuff", "components/abilities/heroes/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
 
 function imba_phoenix_sun_ray:OnSpellStart()
 	if not IsServer() then
@@ -1620,13 +1620,13 @@ end
 --			  Super Nova
 -------------------------------------------
 
-LinkLuaModifier("modifier_imba_phoenix_supernova_egg_thinker", "hero/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_phoenix_supernova_caster_dummy", "hero/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_phoenix_supernova_bird_thinker", "hero/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_phoenix_supernova_dmg", "hero/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_phoenix_supernova_scepter_passive", "hero/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_phoenix_supernova_scepter_passive_cooldown", "hero/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_phoenix_supernova_egg_double", "hero/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_phoenix_supernova_egg_thinker", "components/abilities/heroes/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_phoenix_supernova_caster_dummy", "components/abilities/heroes/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_phoenix_supernova_bird_thinker", "components/abilities/heroes/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_phoenix_supernova_dmg", "components/abilities/heroes/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_phoenix_supernova_scepter_passive", "components/abilities/heroes/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_phoenix_supernova_scepter_passive_cooldown", "components/abilities/heroes/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_phoenix_supernova_egg_double", "components/abilities/heroes/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_kill_no_timer", "modifier/modifier_kill_no_timer", LUA_MODIFIER_MOTION_NONE)
 
 imba_phoenix_supernova = imba_phoenix_supernova or class({})
@@ -2405,8 +2405,8 @@ function modifier_imba_phoenix_supernova_scepter_passive_cooldown:AllowIllusionD
 --			Burning Wings
 -------------------------------------------
 
-LinkLuaModifier("modifier_imba_phoenix_burning_wings_buff", "hero/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_phoenix_burning_wings_ally_buff", "hero/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_phoenix_burning_wings_buff", "components/abilities/heroes/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_phoenix_burning_wings_ally_buff", "components/abilities/heroes/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
 
 imba_phoenix_burning_wings = imba_phoenix_burning_wings or class({})
 

@@ -21,9 +21,9 @@ end
 -------------------------------------------
 --			   REARM
 -------------------------------------------
-LinkLuaModifier("modifier_imba_rearm_animation", "hero/hero_tinker", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_rearm_overdrive", "hero/hero_tinker", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_rearm_shield", "hero/hero_tinker", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_rearm_animation", "components/abilities/heroes/hero_tinker", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_rearm_overdrive", "components/abilities/heroes/hero_tinker", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_rearm_shield", "components/abilities/heroes/hero_tinker", LUA_MODIFIER_MOTION_NONE)
 
 imba_tinker_rearm = class({})
 
@@ -356,7 +356,7 @@ end
 -------------------------------------------
 --			   LASER
 -------------------------------------------
-LinkLuaModifier("modifier_imba_laser_blind", "hero/hero_tinker", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_laser_blind", "components/abilities/heroes/hero_tinker", LUA_MODIFIER_MOTION_NONE)
 imba_tinker_laser = class({})
 
 function imba_tinker_laser:GetAbilityTextureName()
@@ -589,7 +589,7 @@ end
 -------------------------------------------
 --		HEAT-SEEKING MISSILES
 -------------------------------------------
-LinkLuaModifier("modifier_imba_heat_seeking_missile_break", "hero/hero_tinker", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_heat_seeking_missile_break", "components/abilities/heroes/hero_tinker", LUA_MODIFIER_MOTION_NONE)
 imba_tinker_heat_seeking_missile = class({})
 
 function imba_tinker_heat_seeking_missile:GetAbilityTextureName()
@@ -895,12 +895,12 @@ end
 -------------------------------------------
 --		MARCH OF THE MACHINES
 -------------------------------------------
-LinkLuaModifier("modifier_imba_march_flame_aura", "hero/hero_tinker", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_march_flame_damage", "hero/hero_tinker", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_march_tesla_stun", "hero/hero_tinker", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_march_sticky_root", "hero/hero_tinker", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_march_dismantle", "hero/hero_tinker", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_march_drone", "hero/hero_tinker", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_march_flame_aura", "components/abilities/heroes/hero_tinker", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_march_flame_damage", "components/abilities/heroes/hero_tinker", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_march_tesla_stun", "components/abilities/heroes/hero_tinker", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_march_sticky_root", "components/abilities/heroes/hero_tinker", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_march_dismantle", "components/abilities/heroes/hero_tinker", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_march_drone", "components/abilities/heroes/hero_tinker", LUA_MODIFIER_MOTION_NONE)
 
 imba_tinker_march_of_the_machines = class({})
 

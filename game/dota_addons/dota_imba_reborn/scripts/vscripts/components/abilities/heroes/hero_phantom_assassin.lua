@@ -22,10 +22,10 @@
 
 imba_phantom_assassin_stifling_dagger = class({})
 
-LinkLuaModifier("modifier_imba_stifling_dagger_slow", "hero/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_stifling_dagger_silence", "hero/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_stifling_dagger_bonus_damage", "hero/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_stifling_dagger_dmg_reduction", "hero/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_stifling_dagger_slow", "components/abilities/heroes/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_stifling_dagger_silence", "components/abilities/heroes/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_stifling_dagger_bonus_damage", "components/abilities/heroes/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_stifling_dagger_dmg_reduction", "components/abilities/heroes/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
 
 function imba_phantom_assassin_stifling_dagger:GetAbilityTextureName()
 	return "phantom_assassin_stifling_dagger"
@@ -375,8 +375,8 @@ function imba_phantom_assassin_phantom_strike:GetAbilityTextureName()
 	return "phantom_assassin_phantom_strike"
 end
 
-LinkLuaModifier("modifier_imba_phantom_strike", "hero/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_phantom_strike_coup_de_grace", "hero/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_phantom_strike", "components/abilities/heroes/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_phantom_strike_coup_de_grace", "components/abilities/heroes/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
 function imba_phantom_assassin_phantom_strike:IsNetherWardStealable() return false end
 function imba_phantom_assassin_phantom_strike:CastFilterResultTarget(target)
 	if IsServer() then
@@ -565,11 +565,11 @@ function modifier_imba_phantom_strike_coup_de_grace:IsPurgable()	return true end
 
 imba_phantom_assassin_blur = class({})
 
-LinkLuaModifier("modifier_imba_blur", "hero/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_blur_blur", "hero/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE) --wat
-LinkLuaModifier("modifier_imba_blur_speed", "hero/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_blur_opacity", "hero/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_blur_invuln", "hero/hero_phantom_assassin", LUA_MODIFIER_MOTION_VERTICAL)
+LinkLuaModifier("modifier_imba_blur", "components/abilities/heroes/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_blur_blur", "components/abilities/heroes/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE) --wat
+LinkLuaModifier("modifier_imba_blur_speed", "components/abilities/heroes/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_blur_opacity", "components/abilities/heroes/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_blur_invuln", "components/abilities/heroes/hero_phantom_assassin", LUA_MODIFIER_MOTION_VERTICAL)
 
 function imba_phantom_assassin_blur:GetAbilityTextureName()
 	return "phantom_assassin_blur"
@@ -916,8 +916,8 @@ end
 
 imba_phantom_assassin_coup_de_grace = class({})
 
-LinkLuaModifier("modifier_imba_coup_de_grace", "hero/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_coup_de_grace_crit", "hero/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_coup_de_grace", "components/abilities/heroes/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_coup_de_grace_crit", "components/abilities/heroes/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
 
 function imba_phantom_assassin_coup_de_grace:GetIntrinsicModifierName()
 	return "modifier_imba_coup_de_grace"

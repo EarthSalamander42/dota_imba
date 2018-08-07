@@ -18,10 +18,10 @@
 -------------------------------------------
 --			TRANSPOSITION
 -------------------------------------------
-LinkLuaModifier("modifier_imba_telekinesis", "hero/hero_rubick", LUA_MODIFIER_MOTION_BOTH)
-LinkLuaModifier("modifier_imba_telekinesis_stun", "hero/hero_rubick", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_telekinesis_root", "hero/hero_rubick", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_telekinesis_caster", "hero/hero_rubick", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_telekinesis", "components/abilities/heroes/hero_rubick", LUA_MODIFIER_MOTION_BOTH)
+LinkLuaModifier("modifier_imba_telekinesis_stun", "components/abilities/heroes/hero_rubick", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_telekinesis_root", "components/abilities/heroes/hero_rubick", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_telekinesis_caster", "components/abilities/heroes/hero_rubick", LUA_MODIFIER_MOTION_NONE)
 
 imba_rubick_telekinesis = class({})
 function imba_rubick_telekinesis:IsHiddenWhenStolen() return false end
@@ -401,7 +401,7 @@ end
 -------------------------------------------
 
 imba_rubick_spell_steal_controller = imba_rubick_spell_steal_controller or class({})
-LinkLuaModifier("modifier_imba_rubick_spell_steal_controller", "hero/hero_rubick", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_rubick_spell_steal_controller", "components/abilities/heroes/hero_rubick", LUA_MODIFIER_MOTION_NONE)
 
 function imba_rubick_spell_steal_controller:IsInnateAbility()	return true end
 function imba_rubick_spell_steal_controller:GetIntrinsicModifierName()	return "modifier_imba_rubick_spell_steal_controller" end

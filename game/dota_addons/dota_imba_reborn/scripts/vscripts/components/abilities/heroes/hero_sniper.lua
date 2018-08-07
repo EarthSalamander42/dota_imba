@@ -19,10 +19,10 @@
 --         SHRAPNEL           --
 --------------------------------
 imba_sniper_shrapnel = class({})
-LinkLuaModifier("modifier_imba_shrapnel_attack", "hero/hero_sniper.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_shrapnel_charges", "hero/hero_sniper.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_shrapnel_aura", "hero/hero_sniper.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_shrapnel_slow", "hero/hero_sniper.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_shrapnel_attack", "components/abilities/heroes/hero_sniper.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_shrapnel_charges", "components/abilities/heroes/hero_sniper.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_shrapnel_aura", "components/abilities/heroes/hero_sniper.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_shrapnel_slow", "components/abilities/heroes/hero_sniper.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_sniper_shrapnel:GetAbilityTextureName()
 	return "sniper_shrapnel"
@@ -579,10 +579,10 @@ end
 --         HEADSHOT           --
 --------------------------------
 imba_sniper_headshot = class({})
-LinkLuaModifier("modifier_imba_headshot_attacks", "hero/hero_sniper.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_headshot_slow", "hero/hero_sniper.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_perfectshot_stun", "hero/hero_sniper.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_headshot_eyeshot", "hero/hero_sniper.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_headshot_attacks", "components/abilities/heroes/hero_sniper.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_headshot_slow", "components/abilities/heroes/hero_sniper.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_perfectshot_stun", "components/abilities/heroes/hero_sniper.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_headshot_eyeshot", "components/abilities/heroes/hero_sniper.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_sniper_headshot:GetAbilityTextureName()
 	return "sniper_headshot"
@@ -1020,7 +1020,7 @@ end
 --         TAKE AIM           --
 --------------------------------
 imba_sniper_take_aim = class({})
-LinkLuaModifier("modifier_imba_take_aim_range", "hero/hero_sniper.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_take_aim_range", "components/abilities/heroes/hero_sniper.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_sniper_take_aim:GetAbilityTextureName()
 	return "sniper_take_aim"
@@ -1174,8 +1174,8 @@ end
 --        ASSASSINATE         --
 --------------------------------
 imba_sniper_assassinate = class({})
-LinkLuaModifier("modifier_imba_assassinate_cross", "hero/hero_sniper.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_assassinate_ministun", "hero/hero_sniper.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_assassinate_cross", "components/abilities/heroes/hero_sniper.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_assassinate_ministun", "components/abilities/heroes/hero_sniper.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_sniper_assassinate:GetAbilityTextureName()
 	return "sniper_assassinate"

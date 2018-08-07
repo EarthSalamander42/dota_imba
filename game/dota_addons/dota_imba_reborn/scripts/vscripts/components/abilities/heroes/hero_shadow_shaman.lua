@@ -21,7 +21,7 @@
 --------------------------------
 imba_shadow_shaman_mass_serpent_ward = imba_shadow_shaman_mass_serpent_ward or class({})
 
-LinkLuaModifier("modifier_imba_mass_serpent_ward",  "hero/hero_shadow_shaman", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_mass_serpent_ward",  "components/abilities/heroes/hero_shadow_shaman", LUA_MODIFIER_MOTION_NONE)
 
 function imba_shadow_shaman_mass_serpent_ward:OnSpellStart()
 	-- Ability properties

@@ -1316,7 +1316,7 @@ end
 
 -------------------------------------------
 for LinkedModifier, MotionController in pairs(LinkedModifiers) do
-	LinkLuaModifier(LinkedModifier, "hero/hero_abaddon", MotionController)
+	LinkLuaModifier(LinkedModifier, "components/abilities/heroes/hero_abaddon", MotionController)
 end
 
 -------------------------------------------

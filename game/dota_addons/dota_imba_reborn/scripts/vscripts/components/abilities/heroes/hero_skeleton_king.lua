@@ -5,9 +5,9 @@
 --      WRAITHFIRE BLAST      --
 --------------------------------
 imba_wraith_king_wraithfire_blast = class({})
-LinkLuaModifier("modifier_imba_wraithfire_blast_stun", "hero/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_wraithfire_blast_debuff", "hero/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_wraithfire_blast_debuff_talent", "hero/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_wraithfire_blast_stun", "components/abilities/heroes/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_wraithfire_blast_debuff", "components/abilities/heroes/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_wraithfire_blast_debuff_talent", "components/abilities/heroes/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_wraith_king_wraithfire_blast:GetAbilityTextureName()
    return "skeleton_king_hellfire_blast"
@@ -387,8 +387,8 @@ end
 --      VAMPIRIC AURA      --
 --------------------------------
 imba_wraith_king_vampiric_aura = class({})
-LinkLuaModifier("modifier_imba_vampiric_aura", "hero/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_vampiric_aura_buff", "hero/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_vampiric_aura", "components/abilities/heroes/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_vampiric_aura_buff", "components/abilities/heroes/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_wraith_king_vampiric_aura:GetAbilityTextureName()
    return "skeleton_king_vampiric_aura"
@@ -655,9 +655,9 @@ end
 --       MORTAL STRIKE        --
 --------------------------------
 imba_wraith_king_mortal_strike = class({})
-LinkLuaModifier("modifier_imba_mortal_strike", "hero/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_mortal_strike_buff", "hero/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_mortal_strike_buff_talent", "hero/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_mortal_strike", "components/abilities/heroes/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_mortal_strike_buff", "components/abilities/heroes/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_mortal_strike_buff_talent", "components/abilities/heroes/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_wraith_king_mortal_strike:GetAbilityTextureName()
    return "skeleton_king_mortal_strike"
@@ -984,9 +984,9 @@ end
 --       REINCARNATION        --
 --------------------------------
 imba_wraith_king_reincarnation = imba_wraith_king_reincarnation or class({})
-LinkLuaModifier("modifier_imba_reincarnation", "hero/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_reincarnation_wraith_form_buff", "hero/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_reincarnation_wraith_form", "hero/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_reincarnation", "components/abilities/heroes/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_reincarnation_wraith_form_buff", "components/abilities/heroes/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_reincarnation_wraith_form", "components/abilities/heroes/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_wraith_king_reincarnation:GetAbilityTextureName()
    return "skeleton_king_reincarnation"
@@ -1457,9 +1457,9 @@ end
 --        KINGDOM COME        --
 --------------------------------
 imba_wraith_king_kingdom_come = imba_wraith_king_kingdom_come or class({})
-LinkLuaModifier("modifier_imba_kingdom_come", "hero/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)    
-LinkLuaModifier("modifier_imba_kingdom_come_slow", "hero/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_kingdom_come_stun", "hero/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_kingdom_come", "components/abilities/heroes/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)    
+LinkLuaModifier("modifier_imba_kingdom_come_slow", "components/abilities/heroes/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_kingdom_come_stun", "components/abilities/heroes/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_wraith_king_kingdom_come:IsHiddenWhenStolen()        return true end
 function imba_wraith_king_kingdom_come:IsRefreshable()             return true end
@@ -1719,8 +1719,8 @@ end
 --    WRAITH'S SOUL STRIKE    --
 --------------------------------
 imba_wraith_king_wraith_soul_strike = class({})
-LinkLuaModifier("modifier_imba_wraith_soul_strike", "hero/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)    
-LinkLuaModifier("modifier_imba_wraith_soul_strike_slow", "hero/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)    
+LinkLuaModifier("modifier_imba_wraith_soul_strike", "components/abilities/heroes/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)    
+LinkLuaModifier("modifier_imba_wraith_soul_strike_slow", "components/abilities/heroes/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)    
 
 function imba_wraith_king_wraith_soul_strike:GetAbilityTextureName()
    return "ghost_frost_attack"
