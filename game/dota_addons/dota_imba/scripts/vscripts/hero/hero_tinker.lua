@@ -130,6 +130,8 @@ function imba_tinker_rearm:OnChannelFinish( bInterrupted )
 				"item_sphere",
 				"item_imba_plancks_artifact",
 				"item_imba_white_queen_cape",
+				"item_imba_black_queen_cape",
+				"item_imba_anomalous_crux"
 			}
 
 			for i = 0, caster:GetAbilityCount() do
