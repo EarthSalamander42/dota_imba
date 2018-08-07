@@ -31,9 +31,6 @@ AUTO_LAUNCH_DELAY = 5.0					-- How long should we wait for the host to setup the
 STRATEGY_TIME = 0.0						-- How long should strategy time last?
 SHOWCASE_TIME = 0.0						-- How long should showcase time last?
 PRE_GAME_TIME = 90 + AP_GAME_TIME		-- How long after people select their heroes should the horn blow and the game start?
-if GetMapName() == "cavern" then
-PRE_GAME_TIME = 45 + AP_GAME_TIME		-- How long after people select their heroes should the horn blow and the game start?
-end
 TREE_REGROW_TIME = 180.0				-- How long should it take individual trees to respawn after being cut down/destroyed?
 POST_GAME_TIME = 600.0					-- How long should we let people look at the scoreboard before closing the server automatically?
 CAMERA_DISTANCE_OVERRIDE = -1
@@ -186,16 +183,6 @@ elseif GetMapName() == "imba_12v12" then
 	IMBA_PLAYERS_ON_GAME = 24
 	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_GOODGUYS] = 12
 	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_BADGUYS]  = 12
-elseif GetMapName() == "cavern" then
-	IMBA_PLAYERS_ON_GAME = 24
-	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_GOODGUYS] = 3
-	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_BADGUYS]  = 3
-	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_CUSTOM_1]  = 3
-	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_CUSTOM_2]  = 3
-	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_CUSTOM_3]  = 3
-	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_CUSTOM_4]  = 3
-	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_CUSTOM_5]  = 3
-	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_CUSTOM_6]  = 3
 end
 
 -------------------------------------------------------------------------------------------------
@@ -225,9 +212,8 @@ CUSTOM_GOLD_BONUS[Map1v1()] = 350
 CUSTOM_GOLD_BONUS[MapRanked5v5()] = 350
 CUSTOM_GOLD_BONUS[MapRanked10v10()] = 350
 CUSTOM_GOLD_BONUS[MapTournament()] = 350
-CUSTOM_GOLD_BONUS[MapMutation5v5] = 350
+CUSTOM_GOLD_BONUS[MapMutation5v5()] = 350
 CUSTOM_GOLD_BONUS[MapMutation10v10()] = 350
-CUSTOM_GOLD_BONUS["cavern"] = 100
 
 -- Global XP earning, values are doubled with Hyper for non-custom maps (right now this is not used anymore, but i'll keep it there just in case)
 CUSTOM_XP_BONUS = {} -- 1 = Normal, 2 = Hyper
@@ -235,9 +221,8 @@ CUSTOM_XP_BONUS[Map1v1()] = 200
 CUSTOM_XP_BONUS[MapRanked5v5()] = 200
 CUSTOM_XP_BONUS[MapRanked10v10()] = 200
 CUSTOM_XP_BONUS[MapTournament()] = 200
-CUSTOM_XP_BONUS[MapMutation5v5] = 200
+CUSTOM_XP_BONUS[MapMutation5v5()] = 200
 CUSTOM_XP_BONUS[MapMutation10v10()] = 200
-CUSTOM_XP_BONUS["cavern"] = 100
 
 -- Hero base level, values are doubled with Hyper for non-custom maps
 HERO_STARTING_LEVEL = {} -- 1 = Normal, 2 = Hyper
@@ -245,7 +230,7 @@ HERO_STARTING_LEVEL[Map1v1()] = 1
 HERO_STARTING_LEVEL[MapRanked5v5()] = 3
 HERO_STARTING_LEVEL[MapRanked10v10()] = 3
 HERO_STARTING_LEVEL[MapTournament()] = 3
-HERO_STARTING_LEVEL[MapMutation5v5] = 5
+HERO_STARTING_LEVEL[MapMutation5v5()] = 5
 HERO_STARTING_LEVEL[MapMutation10v10()] = 5
 
 MAX_LEVEL = {}
@@ -253,27 +238,24 @@ MAX_LEVEL[Map1v1()] = 42
 MAX_LEVEL[MapRanked5v5()] = 42
 MAX_LEVEL[MapRanked10v10()] = 42
 MAX_LEVEL[MapTournament()] = 42
-MAX_LEVEL[MapMutation5v5] = 42
+MAX_LEVEL[MapMutation5v5()] = 42
 MAX_LEVEL[MapMutation10v10()] = 42
-MAX_LEVEL["cavern"] = 42
 
 HERO_INITIAL_GOLD = {}
 HERO_INITIAL_GOLD[Map1v1()] = 1400
 HERO_INITIAL_GOLD[MapRanked5v5()] = 1400
 HERO_INITIAL_GOLD[MapRanked10v10()] = 1400
 HERO_INITIAL_GOLD[MapTournament()] = 1400
-HERO_INITIAL_GOLD[MapMutation5v5] = 2500
+HERO_INITIAL_GOLD[MapMutation5v5()] = 2500
 HERO_INITIAL_GOLD[MapMutation10v10()] = 2500
-HERO_INITIAL_GOLD["cavern"] = 1400
 
 GOLD_TICK_TIME = {}
 GOLD_TICK_TIME[Map1v1()] = 0.6
 GOLD_TICK_TIME[MapRanked5v5()] = 0.6
 GOLD_TICK_TIME[MapRanked10v10()] = 0.4
 GOLD_TICK_TIME[MapTournament()] = 0.6
-GOLD_TICK_TIME[MapMutation5v5] = 0.6
+GOLD_TICK_TIME[MapMutation5v5()] = 0.6
 GOLD_TICK_TIME[MapMutation10v10()] = 0.4
-GOLD_TICK_TIME["cavern"] = 9999.0
 
 BANNED_ITEMS = {}
 BANNED_ITEMS[Map1v1()] = {
@@ -281,37 +263,6 @@ BANNED_ITEMS[Map1v1()] = {
 	"item_infused_raindrop",
 	"item_soul_ring",
 	"item_tome_of_knowledge",
-}
-BANNED_ITEMS[MapRanked5v5()] = {
-	"item_cavern_dynamite",
-}
-BANNED_ITEMS[MapRanked10v10()] = {
-	"item_cavern_dynamite",
-}
-BANNED_ITEMS[MapTournament()] = {
-	"item_cavern_dynamite",
-}
-BANNED_ITEMS[MapMutation5v5] = {
-	"item_cavern_dynamite",
-}
-BANNED_ITEMS[MapMutation10v10()] = {
-	"item_cavern_dynamite",
-}
-BANNED_ITEMS["imba_frantic_5v5"] = {
-	"item_cavern_dynamite",
-}
-BANNED_ITEMS["cavern"] = {
-	"item_imba_aegis",
-	"item_imba_bottle",
-	"item_imba_hand_of_midas",
-	"item_recipe_imba_hand_of_midas",
-	"item_imba_heart",
-	"item_helm_of_the_dominator",
-	"item_smoke_of_deceit",
-	"item_tome_of_knowledge",
-	"item_tpscroll",
-	"item_imba_blink",
-	"item_imba_blink_boots",
 }
 
 TOWER_ABILITIES = {}

@@ -168,13 +168,6 @@ function Mutation:Init()
 		"item_imba_ironleaf_boots",
 		"item_imba_travel_boots",
 		"item_imba_travel_boots_2",
-		"item_big_cheese_cavern",
-		"item_potion_of_cowardice",
-		"item_cavern_dynamite",
-		"item_book_of_intelligence",
-		"item_book_of_agility",
-		"item_book_of_strength",
-		"item_deployable_shop",
 
 		-- Removed items!
 		"item_imba_triumvirate",

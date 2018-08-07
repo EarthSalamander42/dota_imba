@@ -403,3 +403,15 @@ function GetCastRangeIncrease( unit )
 
     return cast_range_increase
 end
+
+function SetupTower(tower)
+	if tower.initialized then return end
+	for i = 1, 4 do
+		for _, ability in pairs(TOWER_ABILITIES["tower"..i]) do
+			if string.find(tower:GetUnitName(), "tower"..i) then
+				tower:AddAbility(ability):SetLevel(1)
+				tower.initialized = true
+			end
+		end
+	end
+end

@@ -52,6 +52,13 @@ function GameMode:OnGameRulesStateChange(keys)
 		if GetMapName() ~= "imba_1v1" then
 			ImbaRunes:SpawnImbaRunes(RUNE_SPAWN_TIME, BOUNTY_RUNE_SPAWN_TIME)
 		end
+
+		-- add abilities to all towers
+		local towers = Entities:FindAllByClassname("npc_dota_tower")
+
+		for _, tower in pairs(towers) do
+			SetupTower(tower)
+		end
 	elseif newState == DOTA_GAMERULES_STATE_POST_GAME then
 		api.imba.event(api.events.entered_post_game)
 	end
@@ -494,7 +501,6 @@ function GameMode:OnThink()
 				CustomGameEventManager:Send_ServerToAllClients( "overtime_alert", broadcast_killcount )
 			end
 		end
-	elseif GetMapName() == "cavern" then
 	else
 		if GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
 			-- End the game if one team completely abandoned

@@ -27,7 +27,7 @@ end
 
 function modifier_companion:OnCreated()
 	if IsServer() then
-		if GetMapName() == "cavern" then
+		if GetMapName() == Map1v1() then
 			self:GetParent():ForceKill(false)
 			return
 		else

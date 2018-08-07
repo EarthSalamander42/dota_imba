@@ -5,7 +5,6 @@ ANIMATIONS_VERSION = "0.80"
 
 	Installation
 	-"require" this file inside your code in order to gain access to the StartAnmiation and EndAnimation global.
-	-Additionally, ensure that this file is placed in the vscripts/libraries path and that the vscripts/libraries/components/cavern/modifiers/modifier_animation.lua and modifier_animiation_translate.lua files exist and are in the correct path
 
 	Usage
 	-Animations can be started for any unit and are provided as a table of information to the StartAnimation call

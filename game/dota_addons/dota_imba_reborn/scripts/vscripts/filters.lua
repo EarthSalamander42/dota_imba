@@ -640,25 +640,25 @@ function GameMode:OrderFilter( keys )
 		end
 	end
 
-	if keys.order_type == DOTA_UNIT_ORDER_PURCHASE_ITEM then
-		local purchaser = EntIndexToHScript(units["0"])
-		local item = keys.entindex_ability
-		if item == nil then return true end
-
-		for _, banned_item in pairs(BANNED_ITEMS[GetMapName()]) do
-			if self.itemIDs[item] == banned_item then
-				DisplayError(unit:GetPlayerID(),"#dota_hud_error_cant_purchase_1v1")
-				return false
-			end
-		end
-	end
-
 	if GetMapName() == Map1v1() then
 		if keys.order_type == DOTA_UNIT_ORDER_MOVE_TO_TARGET then
 			local target = EntIndexToHScript(keys["entindex_target"])
 			if target:GetUnitName() == "npc_dota_goodguys_healers" or target:GetUnitName() == "npc_dota_badguys_healers" then
 				DisplayError(unit:GetPlayerID(),"#dota_hud_error_cant_shrine_1v1")
 				return false
+			end
+		end
+
+		if keys.order_type == DOTA_UNIT_ORDER_PURCHASE_ITEM then
+			local purchaser = EntIndexToHScript(units["0"])
+			local item = keys.entindex_ability
+			if item == nil then return true end
+
+			for _, banned_item in pairs(BANNED_ITEMS[GetMapName()]) do
+				if self.itemIDs[item] == banned_item then
+					DisplayError(unit:GetPlayerID(),"#dota_hud_error_cant_purchase_1v1")
+					return false
+				end
 			end
 		end
 	end

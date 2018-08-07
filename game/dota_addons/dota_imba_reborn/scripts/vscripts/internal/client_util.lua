@@ -24,3 +24,22 @@ function C_DOTA_BaseNPC:FindTalentValue(talentName, key)
 	end    
 	return 0
 end
+
+function C_DOTABaseAbility:GetTalentSpecialValueFor(value)
+	local base = self:GetSpecialValueFor(value)
+	local talentName
+	local kv = AbilityKV[self:GetName()]
+	for k,v in pairs(kv) do -- trawl through keyvalues
+		if k == "AbilitySpecial" then
+			for l,m in pairs(v) do
+				if m[value] then
+					talentName = m["LinkedSpecialBonus"]
+				end
+			end
+		end
+	end
+	if talentName and self:GetCaster():HasModifier("modifier_"..talentName) then 
+		base = base + self:GetCaster():FindTalentValue(talentName) 
+	end
+	return base
+end

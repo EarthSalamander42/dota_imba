@@ -19,43 +19,27 @@ function GameMode:OnUnitFirstSpawn(unit)
 		HeroSelection:Attachments(unit)
 		return
 	else
-		if GetMapName() == "cavern" then
-			local gold_value = 0.8
-			local xp_value = 0.9
-			local damage_value = 1.5
+		Timers:CreateTimer(FrameTime(), function()
+			if not unit:IsNull() and UNIT_EQUIPMENT[unit:GetModelName()] then
+				for _, wearable in pairs(UNIT_EQUIPMENT[unit:GetModelName()]) do
+					local cosmetic = SpawnEntityFromTableSynchronous("prop_dynamic", {model = wearable})
+					cosmetic:FollowEntity(unit, true)
+					if wearable == "models/items/pudge/scorching_talon/scorching_talon.vmdl" then
+						local particle = ParticleManager:CreateParticle("particles/econ/items/pudge/pudge_scorching_talon/pudge_scorching_talon_ambient.vpcf", PATTACH_ABSORIGIN_FOLLOW, unit)
+						ParticleManager:ReleaseParticleIndex(particle)
+					elseif wearable == "models/items/pudge/immortal_arm/immortal_arm.vmdl" then
+						cosmetic:SetMaterialGroup("1")
+					elseif wearable == "models/items/pudge/arcana/pudge_arcana_back.vmdl" then
+						unit:SetMaterialGroup("1") -- zonnoz pet
+						cosmetic:SetMaterialGroup("1") -- zonnoz pet
 
-			if unit:GetUnitName() == "npc_dota_ranged_creep_linear" then
-				damage_value = 3.0
-			end
-
-			unit:SetMinimumGoldBounty(unit:GetGoldBounty() * gold_value)
-			unit:SetMaximumGoldBounty(unit:GetGoldBounty() * gold_value)
-			unit:SetDeathXP(unit:GetDeathXP() * xp_value)
-			unit:SetBaseDamageMin(unit:GetBaseDamageMin() * damage_value)
-			unit:SetBaseDamageMax(unit:GetBaseDamageMax() * damage_value)
-		else
-			Timers:CreateTimer(FrameTime(), function()
-					if not unit:IsNull() and UNIT_EQUIPMENT[unit:GetModelName()] then
-						for _, wearable in pairs(UNIT_EQUIPMENT[unit:GetModelName()]) do
-							local cosmetic = SpawnEntityFromTableSynchronous("prop_dynamic", {model = wearable})
-							cosmetic:FollowEntity(unit, true)
-							if wearable == "models/items/pudge/scorching_talon/scorching_talon.vmdl" then
-								local particle = ParticleManager:CreateParticle("particles/econ/items/pudge/pudge_scorching_talon/pudge_scorching_talon_ambient.vpcf", PATTACH_ABSORIGIN_FOLLOW, unit)
-								ParticleManager:ReleaseParticleIndex(particle)
-							elseif wearable == "models/items/pudge/immortal_arm/immortal_arm.vmdl" then
-								cosmetic:SetMaterialGroup("1")
-							elseif wearable == "models/items/pudge/arcana/pudge_arcana_back.vmdl" then
-								unit:SetMaterialGroup("1") -- zonnoz pet
-								cosmetic:SetMaterialGroup("1") -- zonnoz pet
-
-								ParticleManager:CreateParticle("particles/econ/items/pudge/pudge_arcana/pudge_arcana_back_ambient.vpcf", PATTACH_ABSORIGIN_FOLLOW, cosmetic)
-								ParticleManager:CreateParticle("particles/econ/items/pudge/pudge_arcana/pudge_arcana_back_ambient_beam.vpcf", PATTACH_ABSORIGIN_FOLLOW, cosmetic)
-								ParticleManager:CreateParticle("particles/econ/items/pudge/pudge_arcana/pudge_arcana_ambient_flies.vpcf", PATTACH_ABSORIGIN_FOLLOW, unit)
-							end
-						end
+						ParticleManager:CreateParticle("particles/econ/items/pudge/pudge_arcana/pudge_arcana_back_ambient.vpcf", PATTACH_ABSORIGIN_FOLLOW, cosmetic)
+						ParticleManager:CreateParticle("particles/econ/items/pudge/pudge_arcana/pudge_arcana_back_ambient_beam.vpcf", PATTACH_ABSORIGIN_FOLLOW, cosmetic)
+						ParticleManager:CreateParticle("particles/econ/items/pudge/pudge_arcana/pudge_arcana_ambient_flies.vpcf", PATTACH_ABSORIGIN_FOLLOW, unit)
 					end
-				end)
-		end
+				end
+			end
+		end)
 	end
 
 	if IsMutationMap() then

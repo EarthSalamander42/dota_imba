@@ -3,6 +3,7 @@ modifier_mutation_speed_freaks = class({})
 function modifier_mutation_speed_freaks:IsHidden() return false end
 function modifier_mutation_speed_freaks:RemoveOnDeath() return false end
 function modifier_mutation_speed_freaks:IsPurgable() return false end
+function modifier_mutation_speed_freaks:GetTexture() return "item_travel_boots" end
 
 function modifier_mutation_speed_freaks:DeclareFunctions()
 	local funcs = {
