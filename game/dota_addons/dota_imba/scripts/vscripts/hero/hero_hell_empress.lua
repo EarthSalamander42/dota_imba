@@ -138,13 +138,6 @@ function imba_empress_hellbolt:OnProjectileHit(target, target_loc)
 	local base_damage = self:GetSpecialValueFor("base_damage")
 	local bonus_damage = self:GetSpecialValueFor("bonus_damage")
 
-	-- If target has Linken's Sphere off cooldown, do nothing
-	if target:GetTeam() ~= caster:GetTeam() then
-		if target:TriggerSpellAbsorb(self) then
-			return nil
-		end
-	end
-
 	-- If the target is not spell immune, impact
 	if not target:IsMagicImmune() then
 
