@@ -1,0 +1,71 @@
+"DOTA_Tooltip_ability_imba_juggernaut_blade_fury"						"#{DOTA_Tooltip_ability_juggernaut_blade_fury}"
+"DOTA_Tooltip_ability_imba_juggernaut_blade_fury_Description"			"#{DOTA_Tooltip_ability_juggernaut_blade_fury_Description}"
+"DOTA_Tooltip_ability_imba_juggernaut_blade_fury_Lore"					"#{DOTA_Tooltip_ability_juggernaut_blade_fury_Lore}"
+"DOTA_Tooltip_ability_imba_juggernaut_blade_fury_Note0"					"#{DOTA_Tooltip_ability_juggernaut_blade_fury_Note0}"
+"DOTA_Tooltip_ability_imba_juggernaut_blade_fury_Note1"					"#{DOTA_Tooltip_ability_juggernaut_blade_fury_Note1}"
+"DOTA_Tooltip_ability_imba_juggernaut_blade_fury_Note2"					"#{DOTA_Tooltip_ability_juggernaut_blade_fury_Note2}"
+"DOTA_Tooltip_ability_imba_juggernaut_blade_fury_effect_radius"			"#{DOTA_Tooltip_ability_juggernaut_blade_fury_blade_fury_radius}"
+"DOTA_Tooltip_ability_imba_juggernaut_blade_fury_damage_per_sec"		"DAMAGE PER SECOND:"
+"DOTA_Tooltip_ability_imba_juggernaut_blade_fury_deflect_chance"		"%DEFLECT CHANCE:"
+"DOTA_Tooltip_ability_imba_juggernaut_blade_fury_duration"				"DURATION:"
+
+"DOTA_Tooltip_modifier_imba_juggernaut_blade_fury_succ"					"Fury Siphon"
+"DOTA_Tooltip_modifier_imba_juggernaut_blade_fury_succ_Description"		"You are being sucked towards Juggernaut. Run!"
+
+// Juggernaut's Healing Ward
+"DOTA_Tooltip_ability_imba_juggernaut_healing_ward"						"#{DOTA_Tooltip_ability_juggernaut_healing_ward}"
+"DOTA_Tooltip_ability_imba_juggernaut_healing_ward_Description"			"#{DOTA_Tooltip_ability_juggernaut_healing_ward_Description}"
+"DOTA_Tooltip_ability_imba_juggernaut_healing_ward_Lore"				"#{DOTA_Tooltip_ability_juggernaut_healing_ward_Lore}"
+"DOTA_Tooltip_ability_imba_juggernaut_healing_ward_Note0"				"#{DOTA_Tooltip_ability_juggernaut_healing_ward_Note0}"
+"DOTA_Tooltip_ability_imba_juggernaut_healing_ward_Note1"				"#{DOTA_Tooltip_ability_juggernaut_healing_ward_Note1}"
+"DOTA_Tooltip_ability_imba_juggernaut_healing_ward_heal_radius"			"HEALING RADIUS:"
+"DOTA_Tooltip_ability_imba_juggernaut_healing_ward_heal_per_sec"		"#{DOTA_Tooltip_ability_juggernaut_healing_ward_healing_ward_heal_amount}"
+"DOTA_Tooltip_ability_imba_juggernaut_healing_ward_health"				"WARD HEALTH:"
+"DOTA_Tooltip_ability_imba_juggernaut_healing_ward_duration"			"DURATION:"
+
+"DOTA_Tooltip_ability_imba_juggernaut_healing_ward_passive"						"Healing Aura"
+"DOTA_Tooltip_ability_imba_juggernaut_healing_ward_passive_Description"			"Heals all nearby allied units.\n<font color='#FF7800'>Use this ability to transform into a totem.</font>"
+"DOTA_Tooltip_ability_imba_juggernaut_healing_ward_passive_heal_radius"			"HEALING RADIUS:"
+"DOTA_Tooltip_ability_imba_juggernaut_healing_ward_passive_heal_per_sec"		"%HEALING PER SECOND:"
+"DOTA_Tooltip_ability_imba_juggernaut_healing_ward_passive_health"				"WARD HEALTH:"
+"DOTA_Tooltip_ability_imba_juggernaut_healing_ward_passive_heal_per_sec_totem"	"%TOTEM HEALING PER SECOND:"
+"DOTA_Tooltip_ability_imba_juggernaut_healing_ward_passive_heal_radius_totem"	"TOTEM HEALING RADIUS:"
+"DOTA_Tooltip_ability_imba_juggernaut_healing_ward_passive_health_totem"		"TOTEM HEALTH:"
+
+//    "DOTA_Tooltip_modifier_imba_juggernaut_healing_ward_aura"					"Healing Ward"
+//    "DOTA_Tooltip_modifier_imba_juggernaut_healing_ward_aura_Description"		"Regenerating %dMODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE%%% of max health per second."
+
+// Juggernaut's Blade Dance
+"DOTA_Tooltip_ability_imba_juggernaut_blade_dance"						"#{DOTA_Tooltip_ability_juggernaut_blade_dance}"
+"DOTA_Tooltip_ability_imba_juggernaut_blade_dance_Description"			"#{DOTA_Tooltip_ability_juggernaut_blade_dance_Description}"
+"DOTA_Tooltip_ability_imba_juggernaut_blade_dance_Lore"					"#{DOTA_Tooltip_ability_juggernaut_blade_dance_Lore}"
+"DOTA_Tooltip_ability_imba_juggernaut_blade_dance_crit_chance"			"#{DOTA_Tooltip_ability_juggernaut_blade_dance_blade_dance_crit_mult}"
+"DOTA_Tooltip_ability_imba_juggernaut_blade_dance_crit_damage"			"#{DOTA_Tooltip_ability_juggernaut_blade_dance_blade_dance_crit_chance}"
+
+// Juggernaut's Omnislash
+"DOTA_Tooltip_ability_imba_juggernaut_omni_slash"						"#{DOTA_Tooltip_ability_juggernaut_omni_slash}"
+"DOTA_Tooltip_ability_imba_juggernaut_omni_slash_Description"			"#{DOTA_Tooltip_ability_juggernaut_omni_slash_Description}"
+"DOTA_Tooltip_ability_imba_juggernaut_omni_slash_aghanim_description"	"#{DOTA_Tooltip_ability_juggernaut_omni_slash_aghanim_description}"
+"DOTA_Tooltip_ability_imba_juggernaut_omni_slash_Lore"					"#{DOTA_Tooltip_ability_juggernaut_omni_slash_Lore}"
+"DOTA_Tooltip_ability_imba_juggernaut_omni_slash_min_damage"			"DAMAGE:"
+"DOTA_Tooltip_ability_imba_juggernaut_omni_slash_jump_amount"			"#{DOTA_Tooltip_ability_juggernaut_omni_slash_omni_slash_jumps}"
+"DOTA_Tooltip_ability_imba_juggernaut_omni_slash_bounce_range"			"#{DOTA_Tooltip_ability_juggernaut_omni_slash_omni_slash_radius}"
+"DOTA_Tooltip_ability_imba_juggernaut_omni_slash_scepter_jump_amt"		"#{DOTA_Tooltip_ability_juggernaut_omni_slash_omni_slash_jumps_scepter}"
+"DOTA_Tooltip_ability_imba_juggernaut_omni_slash_scepter_cooldown"		"#{DOTA_Tooltip_ability_juggernaut_omni_slash_omni_slash_cooldown_scepter}"
+
+//    "DOTA_Tooltip_modifier_imba_omni_slash_caster"                          "Omnislash"
+//    "DOTA_Tooltip_modifier_imba_omni_slash_caster_Description"              "Invulnerable. Slashing enemies in a frenzy."
+
+// Juggernaut's Custom Talents
+"Dota_Tooltip_Ability_special_bonus_imba_juggernaut_1"                  "Blade Fury acts as a vacuum, sucking nearby enemies"
+"Dota_Tooltip_Ability_special_bonus_imba_juggernaut_2"                  "Blade Fury slowly increases in size"
+"Dota_Tooltip_Ability_special_bonus_imba_juggernaut_3"                  "Healing Ward gives 50/100 attack speed"
+"Dota_Tooltip_Ability_special_bonus_imba_juggernaut_4"                  "Secret Blade strikes once forward, twice to the sides"
+"Dota_Tooltip_Ability_special_bonus_imba_juggernaut_5"                  "Activating Secret Blade consumes all Wind Dance stacks to increase it's max attack count"
+"Dota_Tooltip_Ability_special_bonus_imba_juggernaut_6"                  "Blade Fury gains Blade Dance's effects"
+"Dota_Tooltip_Ability_special_bonus_imba_juggernaut_7"                  "Omnislash sends a doppelgänger to slash enemies instead of Juggernaut"
+"Dota_Tooltip_Ability_special_bonus_imba_juggernaut_8"                  "Landing Blade Dance critical grants a stack of Jade Blossom"
+
+// Juggernaut's summoned unit: Healing Ward, Healing Totem
+"npc_imba_juggernaut_healing_ward"                          "Healing Ward"
+"npc_imba_juggernaut_healing_totem"                        "Healing Totem"

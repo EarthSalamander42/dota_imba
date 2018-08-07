@@ -19,8 +19,8 @@
 -- Ancient Defense ability
 imba_ancient_defense = class({})
 
-LinkLuaModifier("modifier_imba_ancient_defense", "hero/ancient_abilities", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_fountain_danger_zone", "hero/ancient_abilities", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_ancient_defense", "components/abilities/buildings/ancient_abilities", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_fountain_danger_zone", "components/abilities/buildings/ancient_abilities", LUA_MODIFIER_MOTION_NONE)
 
 function imba_ancient_defense:IsHiddenWhenStolen() return false end
 function imba_ancient_defense:IsRefreshable() return false end
@@ -75,8 +75,8 @@ end
 -- Ancient Last Resort ability
 imba_ancient_last_resort = class({})
 
-LinkLuaModifier("modifier_imba_ancient_last_resort_aura", "hero/ancient_abilities", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_ancient_last_resort_debuff", "hero/ancient_abilities", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_ancient_last_resort_aura", "components/abilities/buildings/ancient_abilities", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_ancient_last_resort_debuff", "components/abilities/buildings/ancient_abilities", LUA_MODIFIER_MOTION_NONE)
 
 function imba_ancient_last_resort:IsHiddenWhenStolen() return false end
 function imba_ancient_last_resort:IsRefreshable() return false end
@@ -138,8 +138,8 @@ end
 -- Fountain Danger Zone ability
 imba_fountain_danger_zone = class({})
 
-LinkLuaModifier("modifier_imba_fountain_danger_zone", "hero/ancient_abilities", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_fountain_danger_zone_debuff", "hero/ancient_abilities", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_fountain_danger_zone", "components/abilities/buildings/ancient_abilities", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_fountain_danger_zone_debuff", "components/abilities/buildings/ancient_abilities", LUA_MODIFIER_MOTION_NONE)
 
 function imba_fountain_danger_zone:IsHiddenWhenStolen() return false end
 function imba_fountain_danger_zone:IsRefreshable() return false end

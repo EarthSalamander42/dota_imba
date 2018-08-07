@@ -9,8 +9,6 @@ function GameMode:_OnGameRulesStateChange(keys)
 		self.bSeenWaitForPlayers = true
 	elseif newState == DOTA_GAMERULES_STATE_INIT then
 		--Timers:RemoveTimer("alljointimer")
-	elseif newState == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
-		TeamSelection:InitializeTeamSelection()
 	elseif newState == DOTA_GAMERULES_STATE_HERO_SELECTION then
 		GameMode:PostLoadPrecache()
 		GameMode:OnAllPlayersLoaded()
@@ -40,6 +38,9 @@ function GameMode:_OnNPCSpawned(keys)
 
 	if npc:IsRealHero() and npc.bFirstSpawned == nil then
 		npc.bFirstSpawned = true
+		if npc:GetUnitName() ~= FORCE_PICKED_HERO then
+			InitializeInnateAbilities(npc)
+		end
 	end
 
 	GameMode._reentrantCheck = true

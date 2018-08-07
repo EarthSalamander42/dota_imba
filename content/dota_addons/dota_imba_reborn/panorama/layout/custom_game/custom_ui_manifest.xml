@@ -23,10 +23,12 @@
 		GameUI.CustomUIConfig().team_colors = {}
 		GameUI.CustomUIConfig().team_colors[DOTATeam_t.DOTA_TEAM_GOODGUYS] = "#3dd296;"; // Format this later using rgbtohex lib, and taking team color in settings.lua
 		GameUI.CustomUIConfig().team_colors[DOTATeam_t.DOTA_TEAM_BADGUYS ] = "#F3C909;"; // Format this later using rgbtohex lib, and taking team color in settings.lua
-	</script> 
+	</script>
 
 	<Panel>
 		<!-- CustomUIElements go here.-->
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/barebones_notifications.xml" /> 
+		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/hero_selection.xml" /> 
+		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/precache.xml" /> 
 	</Panel>
 </root>

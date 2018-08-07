@@ -1,0 +1,90 @@
+//---------------------------------------------------------------------------
+//      Zeus
+//---------------------------------------------------------------------------
+
+//---------------------------------------------------------------------------
+//      Zeus: Arc Lightning
+//---------------------------------------------------------------------------
+"DOTA_Tooltip_Ability_imba_zuus_arc_lightning"					"Arc Lightning"
+"DOTA_Tooltip_Ability_imba_zuus_arc_lightning_description"		"Hurls a bolt of lightning that leaps through nearby enemy units.\n<font color='#FF7800'>Static Chain:</font> When Arc Lightning runs out of targets it will jump to the nearest enemy hero with atleast 1 stack of <font color='#FFFFFF'>Static Charge</font>, regardless of distance. <font color='#FF0000'>Cannot exceed jump cap.</font>"
+"DOTA_Tooltip_Ability_imba_zuus_arc_lightning_lore"				"Arc Lightning is Zeus' favorite spell to use against puny mortals."
+"DOTA_Tooltip_Ability_imba_zuus_arc_lightning_arc_damage"		"DAMAGE:"
+"DOTA_Tooltip_Ability_imba_zuus_arc_lightning_jump_count"		"JUMPS:"
+"DOTA_Tooltip_Ability_imba_zuus_arc_lightning_jump_delay"		"JUMP DELAY:"
+"DOTA_Tooltip_Ability_imba_zuus_arc_lightning_radius"			"CHAIN RADIUS:"
+
+//---------------------------------------------------------------------------
+//      Zeus: Static Field
+//---------------------------------------------------------------------------
+"DOTA_Tooltip_Ability_imba_zuus_static_field"					"Static Field"
+"DOTA_Tooltip_Ability_imba_zuus_static_field_description"		"Zeus shocks all nearby enemy units whenever he casts a spell, causing damage proportional to their current health.\n<font color='#FF7800'>Static Charge:</font> Each time Static Field deals damage it also applies 1 stack of <font color='#FFFFFF'>Static Charge</font>. Each stack of <font color='#FFFFFF'>Static Charge</font> reduces magic resistance by: %reduced_magic_resistance%%%\n<font color='#FF7800'>At 5 stacks:</font> Affected units are revealed.\n<font color='#FF7800'>At 9 stacks:</font> Affected units are muted."
+"DOTA_Tooltip_Ability_imba_zuus_static_field_note0"				"The damage from Static Field is dealt before the damage from the used spell.\nUsing items dosen't trigger Static Field.\nDoes not require unit visibility to take effect."
+"DOTA_Tooltip_Ability_imba_zuus_static_field_lore"				"The air crackles with static when the Thundergod walks the world."
+"DOTA_Tooltip_Ability_imba_zuus_static_field_radius"			"RADIUS:"
+"DOTA_Tooltip_Ability_imba_zuus_static_field_damage_health_pct" "%HEALTH REDUCTION:"
+
+//---------------------------------------------------------------------------
+//      Zeus: Lightning Bolt
+//---------------------------------------------------------------------------
+"DOTA_Tooltip_Ability_imba_zuus_lightning_bolt"					"Lightning Bolt"
+"DOTA_Tooltip_Ability_imba_zuus_lightning_bolt_description"		"Calls down a bolt of lightning to strike an enemy unit, causing damage and a mini-stun. When cast, Lightning Bolt briefly provides unobstructed vision and True Sight around the target in a 750 radius. Can be cast on the ground, affecting the closest enemy hero in %spread_aoe% range.\n<font color='#FF7800'>Thunder Struck:</font> Enemies hit recieves 3 <font color='#FFFFFF'>Static Charges.</font>\n<font color='#FF7800'>Thundergods Focus:</font> Zeus can cast Lightning Bolt on himself without harm to gain a stack of Thundergods Focus. Lasts %thundergods_focus_duration% seconds."
+"DOTA_Tooltip_Ability_imba_zuus_lightning_bolt_lore" 			"A shocking punishment for rebellious heathen."
+"DOTA_Tooltip_Ability_imba_zuus_lightning_bolt_note0"			"You can interrupt channeling spells and items with this ability."
+"DOTA_Tooltip_Ability_imba_zuus_lightning_bolt_cast_range_tooltip" 	"CAST RANGE:"
+"DOTA_Tooltip_Ability_imba_zuus_lightning_bolt_true_sight_radius"	"SIGHT RADIUS:"
+"DOTA_Tooltip_Ability_imba_zuus_lightning_bolt_sight_duration"	"SIGHT DURATION:"
+
+//---------------------------------------------------------------------------
+//      Zeus: Thundergods Wrath
+//---------------------------------------------------------------------------
+"DOTA_Tooltip_Ability_imba_zuus_thundergods_wrath"								"Thundergods Wrath"
+"DOTA_Tooltip_Ability_imba_zuus_thundergods_wrath_description"					"Strikes all enemy heroes with a bolt of lightning, no matter where they may be. Thundergod's Wrath also provides True Sight around each hero struck. If an enemy hero is invisible, it takes no damage, but the True Sight is still created at that hero's location.\n<font color='#FF7800'>Awakening:</font> With 6 or more stacks of Thundergod Focus, Thundergod's Wrath doesn't target enemies but instead targets Zeus himself without harm. Awaken lasts for 3sec per Thundergods Focus consumed, as well as 3sec per enemy that would have been targeted by Thundergod's Wrath\n<font color='#FF7800'>Awaken:</font> While awaken Zeus gains magic immunity and 100% magic resistance. Any physical attack made to Zeus triggers lightning strikes in return."
+"DOTA_Tooltip_Ability_imba_zuus_thundergods_wrath_lore"							"The Lord of Heaven smites all who oppose him, near or far."
+"DOTA_Tooltip_Ability_imba_zuus_thundergods_wrath_sight_duration"				"DURATION:"
+"DOTA_Tooltip_Ability_imba_zuus_thundergods_wrath_true_sight_radius_tooltip"	"TRUE SIGHT RADIUS:"
+
+//---------------------------------------------------------------------------
+//      Zeus: Nimbus
+//---------------------------------------------------------------------------
+"DOTA_Tooltip_Ability_imba_zuus_cloud"							"Nimbus"
+"DOTA_Tooltip_Ability_imba_zuus_cloud_description"				"Creates a controllable storm cloud anywhere on the map that automatically casts Lightning Bolt on nearby enemies.\n<font color='#FF7800'>Zap:</font> At any time Zeus can choose to travel to the cloud by lightning."
+"DOTA_Tooltip_Ability_imba_zuus_cloud_lore"						"Where the thunder god's ire grows, storm clouds quickly gather."
+"DOTA_Tooltip_Ability_imba_zuus_cloud_cloud_duration"			"DURATION:"
+"DOTA_Tooltip_Ability_imba_zuus_cloud_cloud_bolt_interval"		"LIGHTNING BOLT INTERVAL:"
+
+//---------------------------------------------------------------------------
+//      Zeus: Zap
+//---------------------------------------------------------------------------
+"DOTA_Tooltip_Ability_imba_zuus_nimbus_zap"						"Ascend"
+"DOTA_Tooltip_Ability_imba_zuus_nimbus_zap_description"			"Travel to Nimbus by lightning"
+
+//---------------------------------------------------------------------------
+//      Zeus: Leave Nimbus
+//---------------------------------------------------------------------------
+"DOTA_Tooltip_Ability_imba_zuus_leave_nimbus"					"Decend"
+"DOTA_Tooltip_Ability_imba_zuus_leave_nimbus_description"		"Return Zeus to the ground"
+
+//---------------------------------------------------------------------------
+//      Zeus: Modifier
+//---------------------------------------------------------------------------
+"DOTA_Tooltip_modifier_imba_zuus_static_charge"					"Static Charge"
+"DOTA_Tooltip_modifier_imba_zuus_static_charge_description"		"Be carefull! Don't let this stack to high."
+"DOTA_Tooltip_modifier_imba_zuus_thundergods_focus"				"Thundergods Focus"
+
+//---------------------------------------------------------------------------
+//      Zeus Talents
+//---------------------------------------------------------------------------
+"DOTA_Tooltip_Ability_special_bonus_imba_zuus_1"				"+100 Lightning Bolt AOE"
+"DOTA_Tooltip_Ability_special_bonus_imba_zuus_2"				"+150 Arc Lightning Cast Range"
+"DOTA_Tooltip_Ability_special_bonus_imba_zuus_3"				"Static Charge"
+"DOTA_Tooltip_Ability_special_bonus_imba_zuus_3_description"	"Each stack of Static Charge reduces enemy magic resistance by an additional -1.5%"
+"DOTA_Tooltip_Ability_special_bonus_imba_zuus_4"				"Thundergods Focus"
+"DOTA_Tooltip_Ability_special_bonus_imba_zuus_4_description"	"Each stack of Thundergods Focus grants +20 movement speed and 1% faster turn rate"
+"DOTA_Tooltip_Ability_special_bonus_imba_zuus_5"				"Lightning Bolt Roots"
+"DOTA_Tooltip_Ability_special_bonus_imba_zuus_5_description"	"Base Root duration is 0.5s\nAdds additional +0.25s per stack of Thundergods Focus"
+"DOTA_Tooltip_Ability_special_bonus_imba_zuus_6"				"Thundergods Focus reduces active cooldowns by -1s"
+"DOTA_Tooltip_Ability_special_bonus_imba_zuus_6"				"-1s to all cooldowns when you gain Thundergods Focus"
+"DOTA_Tooltip_Ability_special_bonus_imba_zuus_7"				"Thundergod"
+"DOTA_Tooltip_Ability_special_bonus_imba_zuus_7_description"	"With 3 or more stacks of Thundergod Focus, next Lightning Bolt or Thundergod's Wrath will pierces spell immunity"
+"DOTA_Tooltip_Ability_special_bonus_imba_zuus_8"				"Master of lightning"
+"DOTA_Tooltip_Ability_special_bonus_imba_zuus_8_description"	"Arc lightning can chain between same targets up to 3 times."

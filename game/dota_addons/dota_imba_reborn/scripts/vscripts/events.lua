@@ -7,6 +7,21 @@ end
 
 function GameMode:OnGameRulesStateChange(keys)
 	local newState = GameRules:State_Get()
+	if newState == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
+		HeroSelection:Init() -- init picking screen kv (this function is a bit heavy to run)
+		OnSetGameMode() -- setup gamemode rules
+		TeamSelection:InitializeTeamSelection()
+		GetPlayerInfoIXP() -- Add a class later
+	elseif newState == DOTA_GAMERULES_STATE_HERO_SELECTION then
+		api.imba.event(api.events.entered_hero_selection)
+		HeroSelection:StartSelection()
+	elseif newState == DOTA_GAMERULES_STATE_PRE_GAME then
+		api.imba.event(api.events.entered_pre_game)
+	elseif newState == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
+		api.imba.event(api.events.started_game)
+	elseif newState == DOTA_GAMERULES_STATE_POST_GAME then
+		api.imba.event(api.events.entered_post_game)
+	end
 end
 
 function GameMode:OnNPCSpawned(keys)

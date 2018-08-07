@@ -42,27 +42,27 @@ function HeroSelection:Init()
 	local herolistFile = "scripts/npc/herolist/"..GetMapName()..".txt"
 
 	for key,value in pairs(LoadKeyValues(herolistFile)) do
-		if GameRules.HeroKV[key] == nil then -- Cookies: If the hero is not in custom file, load vanilla KV's
+		if KeyValues.HeroKV[key] == nil then -- Cookies: If the hero is not in custom file, load vanilla KV's
 			log.debug(key .. " is not in custom file!")
 			local data = LoadKeyValues("scripts/npc/npc_heroes.txt")
 			if data and data[key] then
-				GameRules.HeroKV[key] = data[key]
+				KeyValues.HeroKV[key] = data[key]
 			end
 		end
 
-		herolist[key] = GameRules.HeroKV[key].AttributePrimary
+		herolist[key] = KeyValues.HeroKV[key].AttributePrimary
 
-		if GameRules.HeroKV[key].IsImba == 1 then
-			imbalist[key] = GameRules.HeroKV[key].IsImba
-		elseif GameRules.HeroKV[key].IsNew == 1 then
-			newlist[key] = GameRules.HeroKV[key].IsNew
-		elseif GameRules.HeroKV[key].IsCustom == 1 then
-			customlist[key] = GameRules.HeroKV[key].IsCustom
+		if KeyValues.HeroKV[key].IsImba == 1 then
+			imbalist[key] = KeyValues.HeroKV[key].IsImba
+		elseif KeyValues.HeroKV[key].IsNew == 1 then
+			newlist[key] = KeyValues.HeroKV[key].IsNew
+		elseif KeyValues.HeroKV[key].IsCustom == 1 then
+			customlist[key] = KeyValues.HeroKV[key].IsCustom
 		end
 
-		if api.imba.hero_is_disabled(key) then
-			hotdisabledlist[key] = 1
-		end
+--		if api.imba.hero_is_disabled(key) then
+--			hotdisabledlist[key] = 1
+--		end
 
 		if value == 0 then
 			hotdisabledlist[key] = 1
@@ -74,15 +74,15 @@ function HeroSelection:Init()
 
 	if IsMutationMap() then
 		-- Disable bara in that specific mutator
-		if IMBA_MUTATION["terrain"] == "speed_freaks" then
-			hotdisabledlist["npc_dota_hero_bloodseeker"] = 1
-			hotdisabledlist["npc_dota_hero_spirit_breaker"] = 1
-		end
+--		if IMBA_MUTATION["terrain"] == "speed_freaks" then
+--			hotdisabledlist["npc_dota_hero_bloodseeker"] = 1
+--			hotdisabledlist["npc_dota_hero_spirit_breaker"] = 1
+--		end
 
 		-- Disable zeus in that specific mutator
-		if IMBA_MUTATION["positive"] == "killstreak_power" then
-			hotdisabledlist["npc_dota_hero_zuus"] = 1
-		end
+--		if IMBA_MUTATION["positive"] == "killstreak_power" then
+--			hotdisabledlist["npc_dota_hero_zuus"] = 1
+--		end
 	end
 
 	CustomNetTables:SetTableValue( "hero_selection", "herolist", {
@@ -108,30 +108,6 @@ function HeroSelection:Init()
 	--			end
 	--		end
 	--	end)
-
-	--	if IsRandomMap() then
-	--		-- if it's ardm, show strategy screen right away,
-	--		-- lock in all heroes to initial random heroes
-	--		HeroSelection:StrategyTimer(3)
-	--		PlayerResource:GetAllTeamPlayerIDs():each(function(playerID)
-	--			lockedHeroes[playerID] = ARDMMode:GetRandomHero(PlayerResource:GetTeam(playerID))
-	--		end)
-	--		-- once ardm is done precaching, replace all the heroes, then fire off the finished loading event
-	--		ARDMMode:OnPrecache(function ()
-	--			print('Precache finished! Woohoo!')
-	--			PlayerResource:GetAllTeamPlayerIDs():each(function(playerID)
-	--				print('Giving starting hero ' .. lockedHeroes[playerID])
-	--				HeroSelection:GiveStartingHero(playerID, lockedHeroes[playerID])
-	--			end)
-	--			LoadFinishEvent.broadcast()
-	--		end)
-	--	else
-	HeroSelection:StartSelection()
-	--	end
-
-	--	if self.isARDM and ARDMMode then
-	--		ARDMMode:Init(herolist)
-	--	end
 end
 
 -- set "empty" hero for every player and start picking phase
@@ -150,14 +126,13 @@ function HeroSelection:StartSelection()
 	CustomGameEventManager:RegisterListener("pick_abilities_requested", Dynamic_Wrap(HeroSelection, 'PickAbilitiesRequested'))
 	
 	
-	-- Temporarly disabled because Captains Mode seems to be incomplete, and it prevents pausing ranked games
-	-- if IsRankedMap() then
-		-- EmitAnnouncerSound("announcer_announcer_type_capt_mode")
-		-- HeroSelection:CMManager(nil)
-	-- else
+	if IsTournamentMap() then
+		EmitAnnouncerSound("announcer_announcer_type_capt_mode")
+		HeroSelection:CMManager(nil)
+	else
 		EmitAnnouncerSound("announcer_announcer_type_all_pick")
 		HeroSelection:APTimer(AP_GAME_TIME, "ALL PICK")
-	-- end
+	end
 end
 
 -- start heropick CM timer
@@ -196,7 +171,6 @@ function HeroSelection:CMManager(event)
 			cmpickorder["currentstage"] = cmpickorder["currentstage"] + 1
 			CustomNetTables:SetTableValue( 'hero_selection', 'CMdata', cmpickorder)
 			HeroSelection:CMTimer(CAPTAINS_MODE_PICK_BAN_TIME, "CAPTAINS MODE")
-
 		elseif cmpickorder["currentstage"] <= cmpickorder["totalstages"] then
 			--random if not selected
 			log.debug(event)
@@ -337,7 +311,7 @@ function HeroSelection:APTimer(time, message)
 
 			HeroSelection:SelectHero(key, selectedtable[key].selectedhero)
 			log.info("PAUSE GAME!")
---			PauseGame(true)
+			PauseGame(true)
 		end
 
 		PlayerResource:GetAllTeamPlayerIDs():each(function (playerId)
@@ -378,7 +352,7 @@ function HeroSelection:SelectHero(playerId, hero)
 		if loadingHeroes == 0 then
 			LoadFinishEvent.broadcast()
 			log.info("UNPAUSE GAME!")
---			PauseGame(false)
+			PauseGame(false)
 			if IsMutationMap() then
 				GameRules:GetGameModeEntity():SetPauseEnabled( true )
 --				CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(playerId), "send_mutations", IMBA_MUTATION) -- doesn't work for some players
@@ -464,9 +438,6 @@ function HeroSelection:GiveStartingHero(playerId, heroName, dev)
 
 	HeroSelection:Attachments(hero)
 
-	-- Set the picked hero for this player
-	PlayerResource:SetPickedHero(playerId, hero)
-
 	-- Initializes player data if this is a bot
 	if PlayerResource:GetConnectionState(playerId) == 1 then
 		PlayerResource:InitPlayerData(playerId)
@@ -495,15 +466,9 @@ function HeroSelection:GiveStartingHero(playerId, heroName, dev)
 	-- local has_randomed = PlayerResource:HasRandomed(playerId)
 	-- This randomed variable gets reset when the player chooses to Repick, so you can detect a rerandom
 	--	local has_randomed = HeroSelection.playerPickState[playerId].random_state
-	local has_repicked = PlayerResource:CustomGetHasRepicked(playerId)
-
 	local initial_gold = tonumber(CustomNetTables:GetTableValue("game_options", "initial_gold")["1"]) or 1200
 
-	if  has_repicked and has_randomed then
-		PlayerResource:SetGold(playerId, initial_gold + 100, false)
-	elseif has_repicked then
-		PlayerResource:SetGold(playerId, initial_gold - 100, false)
-	elseif has_randomed or IMBA_PICK_MODE_ALL_RANDOM or IMBA_PICK_MODE_ALL_RANDOM_SAME_HERO then
+	if has_randomed or IMBA_PICK_MODE_ALL_RANDOM or IMBA_PICK_MODE_ALL_RANDOM_SAME_HERO then
 		PlayerResource:SetGold(playerId, initial_gold + 200, false)
 	else
 		PlayerResource:SetGold(playerId, initial_gold, false)
@@ -523,7 +488,6 @@ function HeroSelection:GiveStartingHero(playerId, heroName, dev)
 
 	-- Set up player color
 	PlayerResource:SetCustomPlayerColor(playerId, PLAYER_COLORS[playerId][1], PLAYER_COLORS[playerId][2], PLAYER_COLORS[playerId][3])
-
 	Imbattlepass:AddItemEffects(hero)
 
 	Timers:CreateTimer(1.0, function()
@@ -534,7 +498,6 @@ function HeroSelection:GiveStartingHero(playerId, heroName, dev)
 end
 
 function HeroSelection:IsHeroDisabled(hero)
-
 	if hero then
 		if api.imba.hero_is_disabled(hero) then
 			return true
@@ -778,42 +741,6 @@ function HeroSelection:Attachments(hero)
 		hero.weapon = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/razor/severing_lash/mesh/severing_lash.vmdl"})
 		hero.weapon:FollowEntity(hero, true)
 		hero.weapon:SetRenderColor(128, 255, 0)
-	elseif hero_name == "hell_empress" then
-
-	elseif hero_name == "scaldris" then
-		-- for i = 0, 24 do
-		-- 	if hero:GetAbilityByIndex(i) then
-		-- 		hero:RemoveAbility(hero:GetAbilityByIndex(i):GetAbilityName())
-		-- 	end
-		-- end
-		--
-		-- hero:AddAbility("imba_scaldris_heatwave")
-		-- hero:AddAbility("imba_scaldris_scorch")
-		-- hero:AddAbility("imba_scaldris_jet_blaze")
-		-- hero:AddAbility("generic_hidden")
-		--
-		-- local ab = hero:AddAbility("imba_scaldris_antipode")
-		-- ab:SetLevel(1)
-		--
-		-- hero:AddAbility("imba_scaldris_living_flame")
-		-- hero:AddAbility("imba_scaldris_cold_front")
-		-- hero:AddAbility("imba_scaldris_freeze")
-		-- hero:AddAbility("imba_scaldris_ice_floes")
-		-- hero:AddAbility("imba_scaldris_absolute_zero")
-		-- hero:AddAbility("generic_hidden")
-		-- hero:AddAbility("generic_hidden")
-		-- hero:AddAbility("generic_hidden")
-		-- hero:AddAbility("generic_hidden")
-		-- hero:AddAbility("generic_hidden")
-		-- hero:AddAbility("generic_hidden")
-		-- hero:AddAbility("generic_hidden")
-		-- hero:AddAbility("generic_hidden")
-		-- hero:AddAbility("generic_hidden")
-		-- hero:AddAbility("generic_hidden")
-		-- hero:AddAbility("generic_hidden")
-		-- hero:AddAbility("generic_hidden")
-		-- hero:AddAbility("generic_hidden")
-		-- hero:AddAbility("generic_hidden")
 	elseif hero_name == "sohei" then
 		-- hero.hand = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/heroes/sohei/so_weapon.vmdl"})
 		hero.hand = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/heroes/sohei/weapon/immortal/thunderlord.vmdl"})
