@@ -7,8 +7,6 @@ if HeroSelection == nil then
 	HeroSelection = class({})
 end
 
-HERO_SELECTION_WHILE_PAUSED = false
-
 -- available heroes
 local herolist = {}
 local imbalist = {}
@@ -53,7 +51,8 @@ function HeroSelection:Init()
 		herolist[key] = KeyValues.HeroKV[key].AttributePrimary
 
 		if KeyValues.HeroKV[key].IsImba == 1 then
-			imbalist[key] = KeyValues.HeroKV[key].IsImba
+			hotdisabledlist[key] = 1
+--			imbalist[key] = KeyValues.HeroKV[key].IsImba
 		elseif KeyValues.HeroKV[key].IsNew == 1 then
 			newlist[key] = KeyValues.HeroKV[key].IsNew
 		elseif KeyValues.HeroKV[key].IsCustom == 1 then
@@ -73,15 +72,14 @@ function HeroSelection:Init()
 	end
 
 	if IsMutationMap() then
-		-- Disable bara in that specific mutator
+--		if IMBA_MUTATION["positive"] == "killstreak_power" then
+--			hotdisabledlist["npc_dota_hero_ember_spirit"] = 1
+--			hotdisabledlist["npc_dota_hero_zuus"] = 1
+--		end
+
 --		if IMBA_MUTATION["terrain"] == "speed_freaks" then
 --			hotdisabledlist["npc_dota_hero_bloodseeker"] = 1
 --			hotdisabledlist["npc_dota_hero_spirit_breaker"] = 1
---		end
-
-		-- Disable zeus in that specific mutator
---		if IMBA_MUTATION["positive"] == "killstreak_power" then
---			hotdisabledlist["npc_dota_hero_zuus"] = 1
 --		end
 	end
 
@@ -112,8 +110,7 @@ end
 
 -- set "empty" hero for every player and start picking phase
 function HeroSelection:StartSelection()
-	HeroSelection.shouldBePaused = true
-	HeroSelection:CheckPause()
+	ShowHUD(false)
 
 	PlayerResource:GetAllTeamPlayerIDs():each(function(playerID)
 		HeroSelection:UpdateTable(playerID, "empty")
@@ -217,7 +214,6 @@ end
 
 -- manage cm timer
 function HeroSelection:CMTimer (time, message, isReserveTime)
-	HeroSelection:CheckPause()
 	CustomNetTables:SetTableValue( 'hero_selection', 'time', {time = time, mode = message, isReserveTime = isReserveTime})
 
 	if cmpickorder["currentstage"] > 0 and forcestop == false then
@@ -260,20 +256,12 @@ function HeroSelection:CMTimer (time, message, isReserveTime)
 	end
 
 	cmtimer = Timers:CreateTimer({
-		useGameTime = not HERO_SELECTION_WHILE_PAUSED,
+--		useGameTime = not HERO_SELECTION_WHILE_PAUSED,
 		endTime = 1,
 		callback = function()
 			HeroSelection:CMTimer(time -1, message, isReserveTime)
 		end
 	})
-end
-
-function HeroSelection:CheckPause ()
-	if HERO_SELECTION_WHILE_PAUSED then
-		if GameRules:IsGamePaused() ~= HeroSelection.shouldBePaused then
-			PauseGame(HeroSelection.shouldBePaused)
-		end
-	end
 end
 
 -- become a captain, go to next stage, if both captains are selected
@@ -297,12 +285,11 @@ end
 
 -- start heropick AP timer
 function HeroSelection:APTimer(time, message)
-	HeroSelection:CheckPause()
 	if forcestop == true or time < 0 then
 		for key, value in pairs(selectedtable) do
 			if value.selectedhero == "empty" then
 				-- if someone hasnt selected until time end, random for him
-				if IsRankedMap() then
+				if IsTournamentMap() then
 					HeroSelection:UpdateTable(key, cmpickorder[value.team.."picks"][1])
 				else
 					HeroSelection:UpdateTable(key, HeroSelection:RandomHero())
@@ -310,13 +297,13 @@ function HeroSelection:APTimer(time, message)
 			end
 
 			HeroSelection:SelectHero(key, selectedtable[key].selectedhero)
-			log.info("PAUSE GAME!")
+			print("PAUSE GAME!")
 			PauseGame(true)
 		end
 
 		PlayerResource:GetAllTeamPlayerIDs():each(function (playerId)
 			if not lockedHeroes[playerId] then
-				if IsRankedMap() then
+				if IsTournamentMap() then
 					HeroSelection:UpdateTable(playerId, cmpickorder[PlayerResource:GetTeam(playerId).."picks"][1])
 				else
 					HeroSelection:UpdateTable(playerId, HeroSelection:RandomHero())
@@ -351,8 +338,9 @@ function HeroSelection:SelectHero(playerId, hero)
 		loadingHeroes = loadingHeroes - 1
 		if loadingHeroes == 0 then
 			LoadFinishEvent.broadcast()
-			log.info("UNPAUSE GAME!")
+			print("UNPAUSE GAME!")
 			PauseGame(false)
+			ShowHUD(true)
 			if IsMutationMap() then
 				GameRules:GetGameModeEntity():SetPauseEnabled( true )
 --				CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(playerId), "send_mutations", IMBA_MUTATION) -- doesn't work for some players
@@ -371,9 +359,9 @@ function HeroSelection:SelectHero(playerId, hero)
 				for id = 0, PlayerResource:GetPlayerCount() - 1 do
 					for i = 1, 25 do
 						local top_imr_string = nil
-						if GetMapName() == "MapRanked5v5()" then
+						if GetMapName() == MapRanked5v5() then
 							top_imr_string = "top_imr5v5"
-						elseif GetMapName() == "imba_ranked_10v10" then
+						elseif GetMapName() == MapRanked10v10() then
 							top_imr_string = "top_imr10v10"
 						end
 
@@ -382,9 +370,9 @@ function HeroSelection:SelectHero(playerId, hero)
 							log.debug(top_imr.SteamID64)
 							if tostring(PlayerResource:GetSteamID(id)) == top_imr.SteamID64 then
 								log.debug("Found a top leaderboard!")
-								if GetMapName() == "MapRanked5v5()" then
+								if GetMapName() == MapRanked5v5() then
 									Say(nil, PlayerResource:GetPlayerName(id).." is top "..i.." IMR! ("..math.floor(top_imr.IMR_5v5)..")", false)
-								elseif GetMapName() == "imba_ranked_10v10" then
+								elseif GetMapName() == MapRanked10v10() then
 									Say(nil, PlayerResource:GetPlayerName(id).." is top "..i.." IMR! ("..math.floor(top_imr.IMR_10v10)..")", false)
 								end
 							end
@@ -424,7 +412,7 @@ function HeroSelection:GiveStartingHero(playerId, heroName, dev)
 		table.insert(self.spawnedHeroes, hero)
 		self.spawnedPlayers[playerId] = true
 	elseif hero and hero:GetUnitName() == "npc_dota_hero_dummy_dummy" then
-		hero:AddNewModifier(hero, nil, "modifier_unkillable_hero_dummy", {})
+		hero:AddNewModifier(hero, nil, "modifier_dummy_dummy", {})
 		self.attemptedSpawnPlayers[playerId] = heroName
 		Timers:CreateTimer(5, function ()
 			self:GiveStartingHero(playerId, heroName)
@@ -504,7 +492,7 @@ function HeroSelection:IsHeroDisabled(hero)
 		end
 	end
 
-	if IsRankedMap() then
+	if IsTournamentMap() then
 		for _,data in ipairs(cmpickorder["order"]) do
 			if hero == data.hero then
 				return true
@@ -576,14 +564,11 @@ end
 
 -- start strategy timer
 function HeroSelection:EndStrategyTime()
-	HeroSelection.shouldBePaused = false
-	HeroSelection:CheckPause()
-
 	GameRules:SetTimeOfDay(0.25)
 
-	if self.isCM then
-		PauseGame(true)
-	end
+--	if self.isCM then
+--		PauseGame(true)
+--	end
 
 	--	OnGameInProgressEvent() -- ENABLE BEFORE 7.05
 
@@ -596,7 +581,6 @@ function HeroSelection:EndStrategyTime()
 end
 
 function HeroSelection:StrategyTimer(time)
-	HeroSelection:CheckPause()
 	if time < 0 then
 		if finishedLoading then
 			log.debug("PICK SCREEN IS OVER!")
@@ -610,7 +594,7 @@ function HeroSelection:StrategyTimer(time)
 	else
 		CustomNetTables:SetTableValue( 'hero_selection', 'time', {time = time, mode = "STRATEGY"})
 		Timers:CreateTimer({
-			useGameTime = not HERO_SELECTION_WHILE_PAUSED,
+--			useGameTime = not HERO_SELECTION_WHILE_PAUSED,
 			endTime = 1,
 			callback = function()
 				HeroSelection:StrategyTimer(time -1)
@@ -659,7 +643,7 @@ function HeroSelection:UpdateTable(playerID, hero)
 		hero = "empty"
 	end
 
-	if IsRankedMap() then
+	if IsTournamentMap() then
 		if hero ~= "empty" then
 			local cmFound = false
 			for k,v in pairs(cmpickorder[teamID.."picks"])do
@@ -685,7 +669,7 @@ function HeroSelection:UpdateTable(playerID, hero)
 	-- if everyone has picked, stop
 	local isanyempty = false
 	for key, value in pairs(selectedtable) do --pseudocode
-		if GetMapName() ~= "imba_tournament" and value.steamid == "0" then
+		if GetMapName() ~= MapTournament() and value.steamid == "0" then
 			value.selectedhero = HeroSelection:RandomHero()
 		end
 

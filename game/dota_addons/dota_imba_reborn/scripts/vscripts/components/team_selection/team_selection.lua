@@ -35,7 +35,7 @@ local TeamSelectionEvents = {
 }
 
 -- Utility function to recieve a list of all player steamids
-function TeamSelection:TeamSelectionGetAllPlayers()
+local function TeamSelectionGetAllPlayers()
 	local playerIds = {}
 	for i = 0, PlayerResource:GetPlayerCount() - 1 do
 		table.insert(playerIds, tostring(PlayerResource:GetSteamID(i)))
@@ -67,7 +67,7 @@ function TeamSelection:InitializeTeamSelection()
 
 	if GetMapName() == MapRanked5v5() then
 		TeamSelection:Random5v5TeamSelection()
-	elseif GetMapName() == MapRanked10v10() then
+	elseif GetMapName() == MapRanked10v10()() then
 		TeamSelection:KeepTeams10v10TeamSelection()
 	else
 		TeamSelection:ManualTeamSelection()
@@ -90,31 +90,7 @@ end
 local PlayerWithHostPrivileges = nil
 local TeamSelectionListeners = {}
 
-function TeamSelection:Random5v5TeamSelection()
-
-	log.info("Initializing 5v5 random team selection")
-
-	-- wait until the player with host privileges notifies us that he is ready
-	-- register the host-ready event
-	TeamSelectionListeners.hostReady = CustomGameEventManager:RegisterListener(
-		TeamSelectionEvents.hostReady,
-		TeamSelection:Random5v5TeamSelectionReady()
-	)
-end
-
-function TeamSelection:Random5v5TeamSelectionReady(obj, event)
-
-	-- unregister host-ready listener
-	CustomGameEventManager:UnregisterListener(TeamSelectionListeners.hostReady)
-
-	-- Make request
-	api.imba.matchmaking.imr_5v5_random(
-		TeamSelection:TeamSelectionGetAllPlayers(),
-		TeamSelection:Random5v5TeamSelectionFinalize()
-	)
-end
-
-function TeamSelection:Random5v5TeamSelectionFinalize(response)
+local function Random5v5TeamSelectionFinalize(response)
 
 	log.info("recieved response from server")
 
@@ -149,6 +125,30 @@ function TeamSelection:Random5v5TeamSelectionFinalize(response)
 	-- send the complete event
 	-- will cleanup event handlers on the client / ui changes
 	CustomGameEventManager:Send_ServerToAllClients(TeamSelectionEvents.complete, nil)
+end
+
+local function Random5v5TeamSelectionReady(obj, event)
+
+	-- unregister host-ready listener
+	CustomGameEventManager:UnregisterListener(TeamSelectionListeners.hostReady)
+
+	-- Make request
+	api.imba.matchmaking.imr_5v5_random(
+		TeamSelectionGetAllPlayers,
+		Random5v5TeamSelectionFinalize
+	)
+end
+
+function TeamSelection:Random5v5TeamSelection()
+
+	log.info("Initializing 5v5 random team selection")
+
+	-- wait until the player with host privileges notifies us that he is ready
+	-- register the host-ready event
+	TeamSelectionListeners.hostReady = CustomGameEventManager:RegisterListener(
+		TeamSelectionEvents.hostReady,
+		Random5v5TeamSelectionReady
+	)
 end
 
 -----------------------------------
@@ -244,34 +244,7 @@ function TeamSelection:KeepTeams10v10TeamSelectionComputeRound(obj, event)
 	end
 end
 
-function TeamSelection:KeepTeams10v10TeamSelectionDone()
-
-	log.info("Team selection complete")
-
-	-- unregister listener and send complete event
-	CustomGameEventManager:UnregisterListener(TeamSelectionListeners.computeComplete)
-
-	-- perform api request
-	api.imba.matchmaking.imr_10v10_teams(
-		TeamSelection:TeamSelectionGetAllPlayers(),
-		TeamSelectionComputed,
-		TeamSelection:KeepTeams10v10TeamSelectionFinalize()
-	)
-end
-
-function TeamSelection:TeamSelectionFallbackAssignment()
-
-	-- unassign teams
-	log.info("Unassigning teams")
-	TeamSelection:TeamSelectionUnassignTeams()
-
-	-- send failure event
-	log.info("Sending failure event to clients")
-	CustomGameEventManager:Send_ServerToAllClients(TeamSelectionEvents.failure, nil)
-end
-
-function TeamSelection:KeepTeams10v10TeamSelectionFinalize(response)
-
+local function KeepTeams10v10TeamSelectionFinalize(response)
 	log.info("recieved response from server")
 
 	-- catch errors
@@ -305,4 +278,28 @@ function TeamSelection:KeepTeams10v10TeamSelectionFinalize(response)
 	-- send the complete event
 	-- will cleanup event handlers on the client / ui changes
 	CustomGameEventManager:Send_ServerToAllClients(TeamSelectionEvents.complete, nil)
+end
+
+function TeamSelection:KeepTeams10v10TeamSelectionDone()
+	log.info("Team selection complete")
+
+	-- unregister listener and send complete event
+	CustomGameEventManager:UnregisterListener(TeamSelectionListeners.computeComplete)
+
+	-- perform api request
+	api.imba.matchmaking.imr_10v10_teams(
+		TeamSelectionGetAllPlayers,
+		TeamSelectionComputed,
+		KeepTeams10v10TeamSelectionFinalize
+	)
+end
+
+function TeamSelection:TeamSelectionFallbackAssignment()
+	-- unassign teams
+	log.info("Unassigning teams")
+	TeamSelection:TeamSelectionUnassignTeams()
+
+	-- send failure event
+	log.info("Sending failure event to clients")
+	CustomGameEventManager:Send_ServerToAllClients(TeamSelectionEvents.failure, nil)
 end

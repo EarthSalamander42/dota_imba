@@ -11,6 +11,14 @@ function CDOTA_PlayerResource:InitPlayerData(player_id)
 	log.debug("player data set up for player with ID "..player_id)
 end
 
+function CDOTA_PlayerResource:IsImbaPlayer(player_id)
+	if self.PlayerData[player_id] then
+		return true
+	else
+		return false
+	end
+end
+
 function CDOTA_PlayerResource:GetAllTeamPlayerIDs()
 --	local player_id_table = {}
 

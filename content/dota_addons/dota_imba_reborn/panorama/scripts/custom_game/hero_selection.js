@@ -127,7 +127,6 @@ if (localTeam != 2 && localTeam != 3 && localTeam != 6 && localTeam != 7 && loca
 	SetupBackgroundImage();
 	CustomNetTables.SubscribeNetTableListener('hero_selection', onPlayerStatChange);
 
-	GameEvents.Subscribe("dota_hud", ShowHUD);
 	GameEvents.Subscribe("pick_abilities", OnReceiveAbilities);
 
 	onPlayerStatChange(null, 'herolist', CustomNetTables.GetTableValue('hero_selection', 'herolist'));
@@ -204,6 +203,8 @@ function onPlayerStatChange(table, key, data) {
 
 		if (Game.GetMapInfo().map_display_name == "imba_mutation_5v5" || Game.GetMapInfo().map_display_name == "imba_mutation_10v10")
 			Mutation(data.mutation)
+		else
+			FindDotaHudElement('MainContent').AddClass("Ranked")
 
 		Object.keys(data.herolist).sort().forEach(function (heroName) {
 			var currentstat = null;
@@ -666,32 +667,6 @@ function SetupTopBar() {
 
 	var DireTeamContainer = FindDotaHudElement('DireTeamContainer');
 	DireTeamContainer.style.height = '737px';
-}
-
-function ShowHUD(args) {
-	var boolean = "visible"
-
-	if (args.show == false) {
-		boolean = "collapse"
-	}
-
-	var MainPanel = $.GetContextPanel().GetParent().GetParent().GetParent().GetParent()
-	if (currentMap == "cavern") {
-		if (args.show == true) {
-			if (currentMap == "cavern") {
-				$.Msg("Show Cavern Top Bar!")
-				MainPanel.FindChildrenWithClassTraverse("CavernTopBar").visible = boolean;
-			}
-		}
-	} else if (currentMap == "imba_overthrow") {
-	} else {
-		MainPanel.FindChildTraverse("topbar").style.visibility = boolean;
-	}
-
-	MainPanel.FindChildTraverse("minimap_container").style.visibility = boolean;
-	MainPanel.FindChildTraverse("lower_hud").style.visibility = boolean;
-	MainPanel.FindChildTraverse("NetGraph").style.visibility = boolean;
-	MainPanel.FindChildTraverse("quickstats").style.visibility = boolean;
 }
 
 function FillTopBarPlayer(TeamContainer) {

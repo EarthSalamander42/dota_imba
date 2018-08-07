@@ -110,6 +110,9 @@ function GameMode:_CaptureGameMode()
 		mode:SetMinimumAttackSpeed( MINIMUM_ATTACK_SPEED )
 		mode:SetMaximumAttackSpeed( MAXIMUM_ATTACK_SPEED )
 
+		mode:SetHudCombatEventsDisabled(true)
+		mode:SetCustomTerrainWeatherEffect(IMBA_WEATHER_EFFECT[RandomInt(1, #IMBA_WEATHER_EFFECT)])
+
 		self:OnFirstPlayerLoaded()
 	end
 end

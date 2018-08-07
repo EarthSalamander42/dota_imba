@@ -176,7 +176,7 @@ CUSTOM_TEAM_PLAYER_COUNT = {}
 CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_GOODGUYS] = 5
 CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_BADGUYS]  = 5
 
-if GetMapName() == "imba_1v1" then
+if GetMapName() == Map1v1() then
 	IMBA_PLAYERS_ON_GAME = 2
 	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_GOODGUYS] = 1
 	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_BADGUYS]  = 1
@@ -221,81 +221,80 @@ IMBA_ALL_RANDOM_HERO_SELECTION_TIME = 5.0									-- Time we need to wait before
 
 -- Global Gold earning, values are doubled with Hyper for non-custom maps
 CUSTOM_GOLD_BONUS = {} -- 1 = Normal, 2 = Hyper
-CUSTOM_GOLD_BONUS["imba_1v1"] = 350
-CUSTOM_GOLD_BONUS["MapRanked5v5()"] = 350
-CUSTOM_GOLD_BONUS["imba_ranked_10v10"] = 350
-CUSTOM_GOLD_BONUS["imba_tournament"] = 350
-CUSTOM_GOLD_BONUS["imba_mutation_5v5"] = 350
-CUSTOM_GOLD_BONUS["imba_mutation_10v10"] = 350
+CUSTOM_GOLD_BONUS[Map1v1()] = 350
+CUSTOM_GOLD_BONUS[MapRanked5v5()] = 350
+CUSTOM_GOLD_BONUS[MapRanked10v10()] = 350
+CUSTOM_GOLD_BONUS[MapTournament()] = 350
+CUSTOM_GOLD_BONUS[MapMutation5v5] = 350
+CUSTOM_GOLD_BONUS[MapMutation10v10()] = 350
 CUSTOM_GOLD_BONUS["cavern"] = 100
 
 -- Global XP earning, values are doubled with Hyper for non-custom maps (right now this is not used anymore, but i'll keep it there just in case)
 CUSTOM_XP_BONUS = {} -- 1 = Normal, 2 = Hyper
-CUSTOM_XP_BONUS["imba_1v1"] = 200
-CUSTOM_XP_BONUS["MapRanked5v5()"] = 200
-CUSTOM_XP_BONUS["imba_ranked_10v10"] = 200
-CUSTOM_XP_BONUS["imba_tournament"] = 200
-CUSTOM_XP_BONUS["imba_mutation_5v5"] = 200
-CUSTOM_XP_BONUS["imba_mutation_10v10"] = 200
+CUSTOM_XP_BONUS[Map1v1()] = 200
+CUSTOM_XP_BONUS[MapRanked5v5()] = 200
+CUSTOM_XP_BONUS[MapRanked10v10()] = 200
+CUSTOM_XP_BONUS[MapTournament()] = 200
+CUSTOM_XP_BONUS[MapMutation5v5] = 200
+CUSTOM_XP_BONUS[MapMutation10v10()] = 200
 CUSTOM_XP_BONUS["cavern"] = 100
 
 -- Hero base level, values are doubled with Hyper for non-custom maps
 HERO_STARTING_LEVEL = {} -- 1 = Normal, 2 = Hyper
-HERO_STARTING_LEVEL["imba_1v1"] = 1
-HERO_STARTING_LEVEL["MapRanked5v5()"] = 3
-HERO_STARTING_LEVEL["imba_ranked_10v10"] = 3
-HERO_STARTING_LEVEL["imba_tournament"] = 3
-HERO_STARTING_LEVEL["imba_mutation_5v5"] = 5
-HERO_STARTING_LEVEL["imba_mutation_10v10"] = 5
-HERO_STARTING_LEVEL["cavern"] = 1
+HERO_STARTING_LEVEL[Map1v1()] = 1
+HERO_STARTING_LEVEL[MapRanked5v5()] = 3
+HERO_STARTING_LEVEL[MapRanked10v10()] = 3
+HERO_STARTING_LEVEL[MapTournament()] = 3
+HERO_STARTING_LEVEL[MapMutation5v5] = 5
+HERO_STARTING_LEVEL[MapMutation10v10()] = 5
 
 MAX_LEVEL = {}
-MAX_LEVEL["imba_1v1"] = 42
-MAX_LEVEL["MapRanked5v5()"] = 42
-MAX_LEVEL["imba_ranked_10v10"] = 42
-MAX_LEVEL["imba_tournament"] = 42
-MAX_LEVEL["imba_mutation_5v5"] = 42
-MAX_LEVEL["imba_mutation_10v10"] = 42
+MAX_LEVEL[Map1v1()] = 42
+MAX_LEVEL[MapRanked5v5()] = 42
+MAX_LEVEL[MapRanked10v10()] = 42
+MAX_LEVEL[MapTournament()] = 42
+MAX_LEVEL[MapMutation5v5] = 42
+MAX_LEVEL[MapMutation10v10()] = 42
 MAX_LEVEL["cavern"] = 42
 
 HERO_INITIAL_GOLD = {}
-HERO_INITIAL_GOLD["imba_1v1"] = 1400
-HERO_INITIAL_GOLD["MapRanked5v5()"] = 1400
-HERO_INITIAL_GOLD["imba_ranked_10v10"] = 1400
-HERO_INITIAL_GOLD["imba_tournament"] = 1400
-HERO_INITIAL_GOLD["imba_mutation_5v5"] = 2500
-HERO_INITIAL_GOLD["imba_mutation_10v10"] = 2500
+HERO_INITIAL_GOLD[Map1v1()] = 1400
+HERO_INITIAL_GOLD[MapRanked5v5()] = 1400
+HERO_INITIAL_GOLD[MapRanked10v10()] = 1400
+HERO_INITIAL_GOLD[MapTournament()] = 1400
+HERO_INITIAL_GOLD[MapMutation5v5] = 2500
+HERO_INITIAL_GOLD[MapMutation10v10()] = 2500
 HERO_INITIAL_GOLD["cavern"] = 1400
 
 GOLD_TICK_TIME = {}
-GOLD_TICK_TIME["imba_1v1"] = 0.6
-GOLD_TICK_TIME["MapRanked5v5()"] = 0.6
-GOLD_TICK_TIME["imba_ranked_10v10"] = 0.4
-GOLD_TICK_TIME["imba_tournament"] = 0.6
-GOLD_TICK_TIME["imba_mutation_5v5"] = 0.6
-GOLD_TICK_TIME["imba_mutation_10v10"] = 0.4
+GOLD_TICK_TIME[Map1v1()] = 0.6
+GOLD_TICK_TIME[MapRanked5v5()] = 0.6
+GOLD_TICK_TIME[MapRanked10v10()] = 0.4
+GOLD_TICK_TIME[MapTournament()] = 0.6
+GOLD_TICK_TIME[MapMutation5v5] = 0.6
+GOLD_TICK_TIME[MapMutation10v10()] = 0.4
 GOLD_TICK_TIME["cavern"] = 9999.0
 
 BANNED_ITEMS = {}
-BANNED_ITEMS["imba_1v1"] = {
+BANNED_ITEMS[Map1v1()] = {
 	"item_imba_bottle",
 	"item_infused_raindrop",
 	"item_soul_ring",
 	"item_tome_of_knowledge",
 }
-BANNED_ITEMS["MapRanked5v5()"] = {
+BANNED_ITEMS[MapRanked5v5()] = {
 	"item_cavern_dynamite",
 }
-BANNED_ITEMS["imba_ranked_10v10"] = {
+BANNED_ITEMS[MapRanked10v10()] = {
 	"item_cavern_dynamite",
 }
-BANNED_ITEMS["imba_tournament"] = {
+BANNED_ITEMS[MapTournament()] = {
 	"item_cavern_dynamite",
 }
-BANNED_ITEMS["imba_mutation_5v5"] = {
+BANNED_ITEMS[MapMutation5v5] = {
 	"item_cavern_dynamite",
 }
-BANNED_ITEMS["imba_mutation_10v10"] = {
+BANNED_ITEMS[MapMutation10v10()] = {
 	"item_cavern_dynamite",
 }
 BANNED_ITEMS["imba_frantic_5v5"] = {
@@ -554,7 +553,10 @@ IMBA_DISABLED_SKULL_BASHER = {
 	"npc_dota_hero_troll_warlord",
 }
 
+IMBA_WEATHER_EFFECT = {}
+IMBA_WEATHER_EFFECT[1] = "particles/rain_fx/econ_snow.vpcf"
+
 require('components/settings/settings_donator')
 if string.find(GetMapName(), "10v10") then
-require('components/settings/settings_10v10')
+	require('components/settings/settings_10v10')
 end

@@ -1,70 +1,144 @@
-@define TotalLength: 40s;
-@define TimingFunc: linear;
-@define IterationCount: 1;
-@define AnimationDelay: 0s;
+@define COLOR_INFO_BACKGROUND: #224470dd;
+@define COLOR_INFO_BACKGROUND_DARK: #002233;
+@define COLOR_INFO_TEXT: #66aaff;
 
-.AddonLoadingRoot
-{
+.addon-root {
+	width: 100%;
+	height: 100%;
+/*	z-index: 10; */
+}
+
+.down {
+	padding: 0;
+	margin: 0;
+	flow-children: down;
+	width: 100%;
+/*	background-color: COLOR_INFO_BACKGROUND;
+	border: 2px solid COLOR_INFO_BACKGROUND_DARK;
+	box-shadow: 0 0 10px #111;
+//	border-radius: 20px;*/
+}
+
+.large {
+	font-size: 28px;
+}
+
+.huge {
+	font-size: 36px;
+}
+
+.normal {
+	font-size: 20px;
+}
+
+.small {
+	font-size: 12px;
+}
+
+#imba-loading {
+	flow-children: down;
 	width: 100%;
 	height: 100%;
 	background-color: black;
-	overflow: clip;
+	background-position: center center;
+	background-size: cover;
+	background-image: url("file://{images}/custom_game/loading_screen/frantic_thunder.png");
 }
 
-#TitlePanel
+#imba-loading-title {
+	padding: 60px 80px;
+	flow-children: right;
+	width: 70%;
+}
+
+@keyframes 'logo_animation' 
 {
-	horizontal-align: left;
-	vertical-align: bottom;
-	margin-bottom: 150px;
-	margin-left: 100px;
+	0% {
+		transform: scaleX(1) scaleY(1);
+	}
+  
+	50% {
+		transform: scaleX(1.1) scaleY(1.1);
+	}
+
+	100% {
+		transform: scaleX(1) scaleY(1);
+	}
+}
+
+#imba-loading-title-logo {
+	width: 140px; height: 100px;
+	animation-name: logo_animation;
+	animation-duration: 7.0s;
+	animation-timing-function: linear;
+	animation-direction: alternate;
+	animation-iteration-count: infinite;
+}
+
+#imba-loading-title-text {
+	margin: 25px 40px 10px;
+	font-size: 36px;
+	color: #eeeeff;
+}
+
+#imba-loading-content-text {
+	margin: 0px 40px;
+	font-size: 20px;
+	color: #cccccc;
+	width: 100%;
+}
+
+#imba-loading-map-text {
+	margin: 0px 40px 40px;
+	color: #ddddff;
+	font-size: 24px;
+}
+
+#imba-loading-link {
+	margin: 0px 40px;
+}
+
+#imba-loading-link-text {
+	font-size: 24px;
+	text-shadow: 0 0 5px #000;
+	color: #cccccc;	
+}
+
+#imba-loading-link-text:hover {
+	text-decoration: underline;
+}
+
+#ImbaLoadingSocial {
+	margin-left: 260px;
+	overflow: scroll;
+	flow-children: down;
+} 
+
+#ImbaLoadingSocial Panel {
 	flow-children: right;
 }
 
-#AddonTitle
-{
-	margin-bottom: -15px;
-	vertical-align: center;
-	text-transform: uppercase;
-	font-size: 80px;
-	color: #cccccc;
-	text-shadow: 2px 2px 2px #000000;
+#ImbaLoadingSocial Button:hover {
+	box-shadow: 0 0 7px #333;
 }
 
-.SeqImg
-{
-	background-repeat: no-repeat;
-	background-position: 50% 50%;
-	background-size: 100% 100%;
+#ImbaLoadingSocial Button {
+	border: 1px solid #333;
+	padding: 5px 20px 3px;
+	margin: 4px 12px 4px 0px;
+	box-shadow: 0 0 5px  #222;
 }
 
-#CustomBg
-{
-	margin-top: 350px;
-	overflow: clip;
-	pre-transform-scale2d: 1.0;
-	animation-name: gamemode_anim;
-	animation-delay: AnimationDelay;
-	animation-duration: TotalLength;
-	animation-timing-function: TimingFunc;
-	animation-iteration-count: IterationCount;
+#ImbaLoadingSocial Label {
+	font-size: 22px;
+	color: #fff;
 }
 
-#gamemode
-{
-	margin-left: 160px;
-	/*margin-bottom: 0px;*/
-}
-
-@keyframes 'gamemode_anim'
-{
-	0%
-	{
-		transform: translateX( 0px ) translateY( 0px );
-		pre-transform-scale2d: .8;
-	}
-
-	100%
-	{
-		transform: translateX( 0px ) translateY( -200px );
-	}
-}
+#ImbaLoadingSocialOfficialWebsite { background-color: #333; }
+#ImbaLoadingSocialFacebook { background-color: #11a; }
+#ImbaLoadingSocialTwitter { background-color: #0D91E2; }
+#ImbaLoadingSocialTwitter Label { color: #fff; }
+#ImbaLoadingSocialPatreon { background-color: #d40; }
+#ImbaLoadingSocialDiscordEn { background-color: #7289DA; }
+#ImbaLoadingSocialDiscordRu { background-color: #7289DA; }
+#ImbaLoadingSocialTencent { background-color: #f00; }

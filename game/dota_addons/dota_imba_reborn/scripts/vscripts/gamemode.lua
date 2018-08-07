@@ -25,7 +25,7 @@ require('components/hero_selection/hero_selection')
 require('components/settings/settings')
 require('components/team_selection/team_selection')
 
-require('events')
+require('events/events')
 require('filters')
 
 -- Use this function as much as possible over the regular Precache (this is Async Precache)
@@ -34,14 +34,25 @@ function GameMode:PostLoadPrecache()
 end
 
 function GameMode:OnFirstPlayerLoaded()
-	api.imba.register(function ()
+	api.imba.register(function()
 		-- configure log from api
 		Log:ConfigureFromApi()
 	end)
+	
+	GoodCamera = Entities:FindByName(nil, "good_healer_6")
+	BadCamera = Entities:FindByName(nil, "bad_healer_6")
 end
 
 function GameMode:OnAllPlayersLoaded()
-
+	-- Setup filters
+--	GameRules:GetGameModeEntity():SetHealingFilter( Dynamic_Wrap(GameMode, "HealingFilter"), self )
+	GameRules:GetGameModeEntity():SetExecuteOrderFilter( Dynamic_Wrap(GameMode, "OrderFilter"), self )
+	GameRules:GetGameModeEntity():SetDamageFilter( Dynamic_Wrap(GameMode, "DamageFilter"), self )
+	GameRules:GetGameModeEntity():SetModifyGoldFilter( Dynamic_Wrap(GameMode, "GoldFilter"), self )
+	GameRules:GetGameModeEntity():SetModifyExperienceFilter( Dynamic_Wrap(GameMode, "ExperienceFilter"), self )
+	GameRules:GetGameModeEntity():SetModifierGainedFilter( Dynamic_Wrap(GameMode, "ModifierFilter"), self )
+	GameRules:GetGameModeEntity():SetItemAddedToInventoryFilter( Dynamic_Wrap(GameMode, "ItemAddedFilter"), self )
+	GameRules:GetGameModeEntity():SetThink( "OnThink", self, 1 )
 end
 
 function GameMode:InitGameMode()
