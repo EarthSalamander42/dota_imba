@@ -44,7 +44,7 @@
 					</Button>
 				</Panel>
 				<Panel class="Row">
-					<Button id="ImbaLoadingSocialPatreon" onactivate="DOTADisplayURL('https://www.patreon.com/xherosiege');">
+					<Button id="ImbaLoadingSocialPatreon" onactivate="DOTADisplayURL('https://www.patreon.com/earthsalamander42');">
 						<Label text="Get your XP Booster, Companion and Statue by becoming a Donator on Patreon!" />
 					</Button>
 				</Panel>
