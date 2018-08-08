@@ -150,6 +150,7 @@ local nearbyHeroes = FindUnitsInRadius(self.roshan:GetTeamNumber(), self.roshan:
 			UpdateRoshanBar(self.roshan)
 		end
 	end
+	local pos = self.roshan:GetAbsOrigin()
 	if self.roshan:IsAlive() then
 		-- When back from the dead, respawns Rosh at his death point
 		if self.isDead then
@@ -177,7 +178,6 @@ local nearbyHeroes = FindUnitsInRadius(self.roshan:GetTeamNumber(), self.roshan:
 			Timers:CreateTimer(self.animDeath, function()
 				if self.isDead then
 					local item = CreateItem("item_imba_aegis", nil, nil)
-					local pos = self.roshan:GetAbsOrigin()
 					local drop = CreateItemOnPositionSync(pos, item)
 					item:LaunchLoot(false, 300, 0.5, pos)
 

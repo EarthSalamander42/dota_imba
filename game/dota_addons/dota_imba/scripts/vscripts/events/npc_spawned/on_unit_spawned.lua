@@ -62,7 +62,9 @@ function GameMode:OnUnitFirstSpawn(unit)
 
 		-- Speed Freaks mutation modifier
 		if IMBA_MUTATION["terrain"] == "speed_freaks" then
-			unit:AddNewModifier(unit, nil, "modifier_mutation_speed_freaks", {})
+			if not string.find(unit:GetUnitName(), "companion") then
+				unit:AddNewModifier(unit, nil, "modifier_mutation_speed_freaks", {})
+			end
 		end
 
 		-- Alien Incubation mutation modifier
