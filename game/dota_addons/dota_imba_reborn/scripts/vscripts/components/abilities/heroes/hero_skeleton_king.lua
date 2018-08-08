@@ -1657,7 +1657,7 @@ function modifier_imba_kingdom_come_slow:OnDestroy()
 			ResolveNPCPositions(self.parent:GetAbsOrigin(), 164)
 		-- If it is a creep or an illusion, instantly kill it
 		else
-			if not IsRoshan(self.parent) or not self.parent:IsIllusion() then
+			if not self.parent:IsRoshan() or not self.parent:IsIllusion() then
 				self.parent:Kill(self.ability, self.caster)
 			end
 		end

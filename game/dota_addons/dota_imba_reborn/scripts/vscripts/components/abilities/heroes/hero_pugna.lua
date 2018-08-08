@@ -608,7 +608,7 @@ function modifier_imba_nether_ward_aura:OnAttackLanded(keys)
 		local damage
 
 		-- If the attacker is a real hero, a tower or Roshan, deal hero damage
-		if attacker:IsRealHero() or attacker:IsTower() or IsRoshan(attacker) then
+		if attacker:IsRealHero() or attacker:IsTower() or attacker:IsRoshan() then
 			damage = self.hero_damage
 		else
 			-- Assign creep or illusion damage

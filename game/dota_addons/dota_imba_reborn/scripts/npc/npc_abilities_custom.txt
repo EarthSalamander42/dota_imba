@@ -21126,7 +21126,7 @@
 		"SpellImmunityType" 	 	"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"			"1"
 		"AbilityTextureName"		"skywrath_mage_arcane_bolt"
-		"ScriptFile" 				"hero/hero_skywrath_mage.lua"
+		"ScriptFile" 				"components/abilities/heroes/hero_skywrath_mage.lua"
 		"HasScepterUpgrade"			"1"
 
 		// Precache
@@ -21228,7 +21228,7 @@
 		"FightRecapLevel"			"1"
 		"AbilityTextureName"     	"skywrath_mage_concussive_shot"
 		"MaxLevel"					"4"
-		"ScriptFile" 				"hero/hero_skywrath_mage.lua"
+		"ScriptFile" 				"components/abilities/heroes/hero_skywrath_mage.lua"
 		"HasScepterUpgrade"			"1"
 
 		// Precache
@@ -21348,7 +21348,7 @@
 		"FightRecapLevel"			"1"
 		"AbilityTextureName"     	"skywrath_mage_ancient_seal"
 		"MaxLevel"					"4"
-		"ScriptFile" 				"hero/hero_skywrath_mage.lua"
+		"ScriptFile" 				"components/abilities/heroes/hero_skywrath_mage.lua"
 		"HasScepterUpgrade"			"1"
 
 		// Precache
@@ -21426,7 +21426,7 @@
 		"FightRecapLevel"			"2"
 		"AbilityTextureName"     	"skywrath_mage_mystic_flare"
 		"MaxLevel"					"3"
-		"ScriptFile" 				"hero/hero_skywrath_mage.lua"
+		"ScriptFile" 				"components/abilities/heroes/hero_skywrath_mage.lua"
 		"HasScepterUpgrade"			"1"
 
 		// Precache
@@ -39876,7 +39876,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
-		"ScriptFile" 					"hero/hero_sly_king.lua"
+		"ScriptFile" 					"components/abilities/heroes/hero_sly_king.lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
@@ -39976,7 +39976,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
-		"ScriptFile" 					"hero/hero_sly_king.lua"
+		"ScriptFile" 					"components/abilities/heroes/hero_sly_king.lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitDamageType"  		"DAMAGE_TYPE_MAGICAL"
 		"AbilityTextureName"			"custom/sly_king_burrowblast"
@@ -40051,7 +40051,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
-		"ScriptFile" 					"hero/hero_sly_king.lua"
+		"ScriptFile" 					"components/abilities/heroes/hero_sly_king.lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitDamageType"  		"DAMAGE_TYPE_MAGICAL"
 		"AbilityTextureName"			"custom/sly_king_frozen_skin"
@@ -40122,7 +40122,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
-		"ScriptFile" 					"hero/hero_sly_king.lua"
+		"ScriptFile" 					"components/abilities/heroes/hero_sly_king.lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
 		"AbilityUnitDamageType"  		"DAMAGE_TYPE_MAGICAL"
 		"AbilityTextureName"			"custom/sly_king_winterbringer"

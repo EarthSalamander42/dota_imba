@@ -1538,7 +1538,7 @@ function modifier_imba_death_pact_spirit_aura:OnAttackLanded(keys)
 	if target == self.parent then
 
 		-- If the attacker is not a creep, deal damage.
-		if attacker:IsHero() or attacker:IsTower() or IsRoshan(attacker) then
+		if attacker:IsHero() or attacker:IsTower() or attacker:IsRoshan() then
 			-- If the damage is enough to kill the spirit, destroy it 
 			if self.parent:GetHealth() <= 1 then 
 				self.parent:Kill(self.ability, attacker)

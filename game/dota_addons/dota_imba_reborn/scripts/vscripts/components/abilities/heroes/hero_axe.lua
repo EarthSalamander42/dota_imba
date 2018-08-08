@@ -365,7 +365,7 @@ function imba_axe_battle_hunger:ApplyBattleHunger(caster, target)
 
 	-- Roshan Battle Hunger doesn't pause due to no damage done, sorry, no cheesing
 	-- feel free to cast on creeps, though
-	if IsRoshan(target) then
+	if target:IsRoshan() then
 		target:AddNewModifier(caster, self, target_modifier, {duration = duration, no_pause = true})
 	else
 		target:AddNewModifier(caster, self, target_modifier, {duration = duration, no_pause = false})

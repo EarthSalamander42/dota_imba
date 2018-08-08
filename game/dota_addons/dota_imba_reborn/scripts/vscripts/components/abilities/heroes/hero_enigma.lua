@@ -706,7 +706,7 @@ function modifier_imba_enigma_black_hole_thinker:OnIntervalThink()
 	-- Pull effect
 	local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.pull_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 	for _,enemy in pairs(enemies) do
-		if not IsRoshan(enemy) then
+		if not enemy:IsRoshan() then
 			enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_enigma_black_hole_pull", {})
 		end
 	end
@@ -728,7 +728,7 @@ function modifier_imba_enigma_black_hole_thinker:OnIntervalThink()
 		
 		local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 		for _, enemy in pairs(enemies) do
-			if not IsRoshan(enemy) then
+			if not enemy:IsRoshan() then
 				ApplyDamage({victim = enemy, attacker = self:GetCaster(), damage = self.dmg, damage_type = DAMAGE_TYPE_PURE, ability = self:GetAbility()})
 				
 				if self.scepter then
@@ -764,7 +764,7 @@ function modifier_imba_enigma_black_hole:GetMotionControllerPriority()  return D
 function modifier_imba_enigma_black_hole:CheckState()
 	local state = {}
 	--Does not affect Roshan
-	if not IsRoshan(self:GetParent()) then
+	if not self:GetParent():IsRoshan() then
 		state =
 			{
 				[MODIFIER_STATE_DISARMED] = true,
@@ -778,7 +778,7 @@ end
 
 function modifier_imba_enigma_black_hole:OnCreated()
 	if not IsServer() then return end
-	if self:GetParent() and IsRoshan(self:GetParent()) then self:Destroy() end  --Roshan is immune to Black Hole
+	if self:GetParent() and self:GetParent():IsRoshan() then self:Destroy() end  --Roshan is immune to Black Hole
 	self:StartIntervalThink(FrameTime())
 	local ability = self:GetAbility()
 	self.radius = self:GetAbility().radius
@@ -831,7 +831,7 @@ function modifier_imba_enigma_black_hole_pull:GetMotionControllerPriority()  ret
 
 function modifier_imba_enigma_black_hole_pull:OnCreated()
 	if not IsServer() then return end
-	if IsRoshan(self:GetParent()) then self:Destroy() end  --Roshan is immune to Black Hole
+	if self:GetParent():IsRoshan() then self:Destroy() end  --Roshan is immune to Black Hole
 	self:StartIntervalThink(FrameTime())
 	local ability = self:GetAbility()
 	self.pull_radius = self:GetAbility().pull_radius

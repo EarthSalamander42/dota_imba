@@ -144,15 +144,6 @@ function ShowHUD(bool)
 	end
 end
 
--- Checks if a given unit is Roshan
-function IsRoshan(unit)
-	if unit:GetName() == "npc_imba_roshan" or unit:GetName() == "npc_dota_roshan" then
-		return true
-	else
-		return false
-	end
-end
-
 function UpdateRoshanBar(roshan)
 	CustomNetTables:SetTableValue("game_options", "roshan", {
 			level = GAME_ROSHAN_KILLS +1,
@@ -409,7 +400,7 @@ function SetupTower(tower)
 	for i = 1, 4 do
 		for _, ability in pairs(TOWER_ABILITIES["tower"..i]) do
 			if string.find(tower:GetUnitName(), "tower"..i) then
-				print("Tower found:", ability) -- tower spawned from pocket tower mutation are found and print well, abilities are not given for reasons
+--				print("Tower found:", ability) -- tower spawned from pocket tower mutation are found and print well, abilities are not given for reasons
 				tower:AddAbility(ability):SetLevel(1)
 				tower.initialized = true
 				return

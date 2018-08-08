@@ -70,7 +70,7 @@ function BattleFuryHit( keys )
 	quelling_bonus = quelling_bonus * cleave_stacks
 
 	-- If the target is a creep, deal bonus damage
-	if not ( target:IsHero() or target:IsBuilding() or IsRoshan(target) ) then
+	if not (target:IsHero() or target:IsBuilding() or target:IsRoshan()) then
 		ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage * quelling_bonus * 0.01, damage_type = DAMAGE_TYPE_PHYSICAL})
 	end
 

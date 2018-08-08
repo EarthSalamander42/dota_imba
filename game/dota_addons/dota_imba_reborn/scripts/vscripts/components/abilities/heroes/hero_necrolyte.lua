@@ -21,8 +21,8 @@
 --				SADIST
 -------------------------------------------
 
-LinkLuaModifier("modifier_imba_sadist", "abilities/heroes/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_sadist_stack", "abilities/heroes/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_sadist", "components/abilities/heroes/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_sadist_stack", "components/abilities/heroes/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
 
 imba_necrolyte_sadist = imba_necrolyte_sadist or class({})
 
@@ -364,11 +364,11 @@ end
 -------------------------------------------
 
 imba_necrolyte_ghost_shroud = imba_necrolyte_ghost_shroud or class({})
-LinkLuaModifier("modifier_imba_ghost_shroud_aura", "abilities/heroes/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_ghost_shroud_aura_debuff", "abilities/heroes/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_ghost_shroud_aura_purge", "abilities/heroes/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_ghost_shroud_buff", "abilities/heroes/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_ghost_shroud_debuff", "abilities/heroes/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_ghost_shroud_aura", "components/abilities/heroes/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_ghost_shroud_aura_debuff", "components/abilities/heroes/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_ghost_shroud_aura_purge", "components/abilities/heroes/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_ghost_shroud_buff", "components/abilities/heroes/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_ghost_shroud_debuff", "components/abilities/heroes/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
 
 function imba_necrolyte_ghost_shroud:GetAbilityTextureName()
 	return "necrolyte_sadist"
@@ -619,8 +619,8 @@ end
 --		  HEARTSTOPPER AURA
 -------------------------------------------
 
-LinkLuaModifier("modifier_imba_heartstopper_aura", "abilities/heroes/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_heartstopper_aura_damage", "abilities/heroes/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_heartstopper_aura", "components/abilities/heroes/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_heartstopper_aura_damage", "components/abilities/heroes/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
 
 imba_necrolyte_heartstopper_aura = imba_necrolyte_heartstopper_aura or class({})
 function imba_necrolyte_heartstopper_aura:GetIntrinsicModifierName()
@@ -749,9 +749,9 @@ end
 --			REAPER'S SCYTHE
 -------------------------------------------
 imba_necrolyte_reapers_scythe = imba_necrolyte_reapers_scythe or class({})
-LinkLuaModifier("modifier_imba_reapers_scythe", "abilities/heroes/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_reapers_scythe_debuff", "abilities/heroes/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_reapers_scythe_respawn", "abilities/heroes/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_reapers_scythe", "components/abilities/heroes/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_reapers_scythe_debuff", "components/abilities/heroes/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_reapers_scythe_respawn", "components/abilities/heroes/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
 
 function imba_necrolyte_reapers_scythe:GetAbilityTextureName()
 	return "necrolyte_reapers_scythe"

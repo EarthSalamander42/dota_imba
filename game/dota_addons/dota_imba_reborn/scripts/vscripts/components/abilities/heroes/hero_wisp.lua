@@ -21,13 +21,13 @@
 --			TETHER			--
 ------------------------------
 imba_wisp_tether = class({})
-LinkLuaModifier("modifier_imba_wisp_tether", "hero/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_wisp_tether_ally", "hero/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_wisp_tether_latch", "hero/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_wisp_tether_slow", "hero/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_wisp_tether_slow_immune", "hero/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_wisp_tether_ally_attack", "hero/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_wisp_tether_bonus_regen", "hero/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_wisp_tether", "components/abilities/heroes/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_wisp_tether_ally", "components/abilities/heroes/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_wisp_tether_latch", "components/abilities/heroes/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_wisp_tether_slow", "components/abilities/heroes/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_wisp_tether_slow_immune", "components/abilities/heroes/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_wisp_tether_ally_attack", "components/abilities/heroes/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_wisp_tether_bonus_regen", "components/abilities/heroes/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_wisp_tether:GetCustomCastErrorTarget(target)
 	if target == self:GetCaster() then
@@ -539,13 +539,13 @@ end
 --			SPIRITS			--
 ------------------------------
 imba_wisp_spirits = class({})
-LinkLuaModifier("modifier_imba_wisp_spirits", "hero/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_wisp_spirit_handler", "hero/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_wisp_spirits_hero_hit", "hero/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_wisp_spirits_creep_hit", "hero/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_wisp_spirits_slow", "hero/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_wisp_spirit_damage_handler", "hero/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_wisp_spirits_true_sight", "hero/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_wisp_spirits", "components/abilities/heroes/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_wisp_spirit_handler", "components/abilities/heroes/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_wisp_spirits_hero_hit", "components/abilities/heroes/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_wisp_spirits_creep_hit", "components/abilities/heroes/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_wisp_spirits_slow", "components/abilities/heroes/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_wisp_spirit_damage_handler", "components/abilities/heroes/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_wisp_spirits_true_sight", "components/abilities/heroes/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
 function imba_wisp_spirits:OnSpellStart()
 	if IsServer() then
 		self.caster 					= self:GetCaster()
@@ -1100,8 +1100,8 @@ end
 ------------------------------------------
 --		SPIRITS	Swap silence/disarm		--
 ------------------------------------------
-LinkLuaModifier("modifier_imba_wisp_swap_spirits_disarm", "hero/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_wisp_swap_spirits_silence", "hero/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_wisp_swap_spirits_disarm", "components/abilities/heroes/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_wisp_swap_spirits_silence", "components/abilities/heroes/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
 imba_wisp_swap_spirits = class({})
 function imba_wisp_swap_spirits:IsInnateAbility()
 	return true
@@ -1182,10 +1182,10 @@ function modifier_imba_wisp_swap_spirits_silence:RemoveOnDeath() return false en
 --		OVERCHARGE		--
 ------------------------------
 imba_wisp_overcharge = class({})
-LinkLuaModifier("modifier_imba_wisp_overcharge", "hero/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_wisp_overcharge_drain", "hero/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_wisp_overcharge_regen_talent", "hero/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_wisp_overcharge_aura", "hero/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_wisp_overcharge", "components/abilities/heroes/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_wisp_overcharge_drain", "components/abilities/heroes/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_wisp_overcharge_regen_talent", "components/abilities/heroes/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_wisp_overcharge_aura", "components/abilities/heroes/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_wisp_overcharge:IsNetherWardStealable()
 	return false
@@ -1459,9 +1459,9 @@ end
 --			RELOCATE		--
 ------------------------------
 imba_wisp_relocate = class({})
-LinkLuaModifier("modifier_imba_wisp_relocate", "hero/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_wisp_relocate_cast_delay", "hero/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_wisp_relocate_talent", "hero/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_wisp_relocate", "components/abilities/heroes/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_wisp_relocate_cast_delay", "components/abilities/heroes/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_wisp_relocate_talent", "components/abilities/heroes/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
 function imba_wisp_relocate:GetBehavior()
 	if IsServer() then
 		return DOTA_ABILITY_BEHAVIOR_UNIT_TARGET + DOTA_ABILITY_BEHAVIOR_OPTIONAL_POINT

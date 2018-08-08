@@ -133,7 +133,7 @@ function modifier_item_imba_heart_unique:OnTakeDamage(keys)
 		-- Only apply if the unit taking damage is the caster
 		if unit == self:GetCaster() then
 			-- If the attacker wasn't an enemy hero or Roshan, do nothing
-			if attacker:IsHero() or IsRoshan(attacker) then
+			if attacker:IsHero() or attacker:IsRoshan() then
 				if attacker == unit then
 					-- don't trigger cd with self damage
 					return

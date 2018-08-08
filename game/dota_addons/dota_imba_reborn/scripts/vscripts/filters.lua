@@ -121,7 +121,7 @@ function GameMode:ModifierFilter( keys )
 		-------------------------------------------------------------------------------------------------
 		-- Roshan special modifier rules
 		-------------------------------------------------------------------------------------------------
-		if IsRoshan(modifier_owner) then
+		if modifier_owner:IsRoshan() then
 			-- Ignore stuns
 			if modifier_name == "modifier_stunned" then
 				return false
@@ -795,6 +795,7 @@ function GameMode:DamageFilter( keys )
 		if victim:HasModifier("modifier_imba_cheese_death_prevention") then
 			-- Only apply if it was a real hero
 			if victim:IsRealHero() then
+
 				-- Check if death is imminent
 				local victim_health = victim:GetHealth()
 				if keys.damage >= victim_health and not ( victim:HasModifier("modifier_imba_dazzle_shallow_grave") or victim:HasModifier("modifier_imba_dazzle_nothl_protection") ) then

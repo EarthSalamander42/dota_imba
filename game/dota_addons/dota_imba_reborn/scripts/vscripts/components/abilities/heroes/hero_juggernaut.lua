@@ -701,7 +701,7 @@ function modifier_imba_omni_slash_caster:BounceAndSlaughter()
 			self.caster:PerformAttack(enemy, true, true, true, true, true, false, false)
 
 			-- If the target is not Roshan or a hero, instantly kill it
-			if not ( enemy:IsHero() or IsRoshan(enemy) ) then
+			if not (enemy:IsHero() or enemy:IsRoshan()) then
 				enemy:Kill(self:GetAbility(), self.original_caster)
 			end
 

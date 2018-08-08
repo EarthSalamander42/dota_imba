@@ -1279,7 +1279,7 @@ function modifier_imba_heartpiercer_passive:OnAttackLanded(kv)
 			end
 
 			--Won't work on Roshan
-			--if IsRoshan(target) then
+			--if target:IsRoshan() then
 			--	return nil
 			--  end
 

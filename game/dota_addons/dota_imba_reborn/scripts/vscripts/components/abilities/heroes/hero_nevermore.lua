@@ -25,9 +25,9 @@ end
 --     SHADOW RAZE (CLOSE)        --
 ------------------------------------
 imba_nevermore_shadowraze_close = imba_nevermore_shadowraze_close or class({})
-LinkLuaModifier("modifier_shadow_raze_combo", "hero/hero_nevermore.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_shadow_raze_prevention", "hero/hero_nevermore.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_shadow_raze_pool", "hero/hero_nevermore.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_shadow_raze_combo", "components/abilities/heroes/hero_nevermore.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_shadow_raze_prevention", "components/abilities/heroes/hero_nevermore.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_shadow_raze_pool", "components/abilities/heroes/hero_nevermore.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_nevermore_shadowraze_close:GetAbilityTextureName()
    return "nevermore_shadowraze1"
@@ -700,8 +700,8 @@ end
 --           NECROMASTERY         --
 ------------------------------------
 imba_nevermore_necromastery = imba_nevermore_necromastery or class({})
-LinkLuaModifier("modifier_imba_necromastery_souls", "hero/hero_nevermore.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_necromastery_talent_extra_cap", "hero/hero_nevermore.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_necromastery_souls", "components/abilities/heroes/hero_nevermore.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_necromastery_talent_extra_cap", "components/abilities/heroes/hero_nevermore.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_nevermore_necromastery:GetAbilityTextureName()
    return "nevermore_necromastery"
@@ -1236,8 +1236,8 @@ end
 --   PRESENCE OF THE DARK LORD    --
 ------------------------------------
 imba_nevermore_dark_lord = imba_nevermore_dark_lord or class({})
-LinkLuaModifier("modifier_imba_dark_lord_aura", "hero/hero_nevermore.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_dark_lord_debuff", "hero/hero_nevermore.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_dark_lord_aura", "components/abilities/heroes/hero_nevermore.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_dark_lord_debuff", "components/abilities/heroes/hero_nevermore.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_nevermore_dark_lord:GetAbilityTextureName()
    return "nevermore_dark_lord"
@@ -1459,9 +1459,9 @@ end
 --       REQUIEM OF SOULS         --
 ------------------------------------
 imba_nevermore_requiem = imba_nevermore_requiem or class({})
-LinkLuaModifier("modifier_imba_reqiuem_phase_buff", "hero/hero_nevermore.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_reqiuem_debuff", "hero/hero_nevermore.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_reqiuem_harvest", "hero/hero_nevermore.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_reqiuem_phase_buff", "components/abilities/heroes/hero_nevermore.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_reqiuem_debuff", "components/abilities/heroes/hero_nevermore.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_reqiuem_harvest", "components/abilities/heroes/hero_nevermore.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_nevermore_requiem:GetAbilityTextureName()
    return "nevermore_requiem"

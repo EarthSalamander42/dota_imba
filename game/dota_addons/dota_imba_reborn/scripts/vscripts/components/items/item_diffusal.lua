@@ -78,7 +78,7 @@ function item_imba_diffusal_blade:OnSpellStart()
 	target:Purge(true, false, false, false, false)
 
 	-- If the target is not a hero (or a creep hero), root it
-	if not target:IsHero() and not IsRoshan(target) and not target:IsConsideredHero() then
+	if not target:IsHero() and not target:IsRoshan() and not target:IsConsideredHero() then
 		target:AddNewModifier(caster, ability, modifier_root, {duration = root_duration})
 	end
 
@@ -408,7 +408,7 @@ function item_imba_diffusal_blade_2:OnSpellStart()
 		end
 
 		-- If the target is not a hero (or a creep hero), root it
-		if not target:IsHero() and not IsRoshan(target) and not target:IsConsideredHero() then
+		if not target:IsHero() and not target:IsRoshan() and not target:IsConsideredHero() then
 			target:AddNewModifier(caster, ability, modifier_root, {duration = root_duration})
 		end
 

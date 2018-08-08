@@ -160,7 +160,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2171"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_magic_stick"
+		"AbilityTextureName" 			"item_magic_stick"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"Model"							"models/props_gameplay/magic_wand.mdl"
 
@@ -288,7 +288,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2172"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_magic_wand"
+		"AbilityTextureName" 			"item_magic_wand"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"Model"							"models/props_gameplay/magic_wand.mdl"
 
@@ -442,7 +442,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS | DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-		"AbilityTextureName" 			"custom/imba_hand_of_midas"
+		"AbilityTextureName" 			"item_hand_of_midas"
 		"ScriptFile"					"components/items/item_midas.lua"
 
 		// Stats
@@ -524,7 +524,7 @@
 		"ID"							"2095"
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"components/items/item_mekansm.lua"
-		"AbilityTextureName"			"custom/imba_arcane_boots"
+		"AbilityTextureName"			"item_arcane_boots"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 
 		// Stats
@@ -612,7 +612,7 @@
 		"ID"							"2015"
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"components/items/item_mekansm.lua"
-		"AbilityTextureName"			"custom/imba_mekansm"
+		"AbilityTextureName"			"item_mekansm"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"FightRecapLevel"				"2"
 
@@ -722,7 +722,7 @@
 		"ID"							"2123"
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"components/items/item_mekansm.lua"
-		"AbilityTextureName"			"custom/imba_guardian_greaves"
+		"AbilityTextureName"			"item_guardian_greaves"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"FightRecapLevel"				"2"
 
@@ -885,7 +885,7 @@
 		"ID"							"2019"
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"components/items/item_vladmir.lua"
-		"AbilityTextureName"			"custom/imba_vladmir"
+		"AbilityTextureName"			"item_vladmir"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -1062,7 +1062,7 @@
 		"ID"							"2028"
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"components/items/item_sheepstick.lua"
-		"AbilityTextureName"			"custom/imba_sheepstick"
+		"AbilityTextureName"			"item_sheepstick"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
@@ -1175,7 +1175,7 @@
 		"ID"							"2030"
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"components/items/item_orchid.lua"
-		"AbilityTextureName"			"custom/imba_orchid"
+		"AbilityTextureName"			"item_orchid"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
@@ -1280,7 +1280,7 @@
 		"ID"							"2140"
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"components/items/item_orchid.lua"
-		"AbilityTextureName"			"custom/imba_bloodthorn"
+		"AbilityTextureName"			"item_bloodthorn"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
@@ -2756,7 +2756,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2151"
 		"BaseClass"						"item_lua"
-		"AbilityTextureName" 			"custom/imba_assault"
+		"AbilityTextureName" 			"item_assault"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"ScriptFile"					"components/items/item_assault_cuirass.lua"
 
@@ -3023,7 +3023,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2185"
 		"BaseClass"						"item_lua"
-		"AbilityTextureName" 			"custom/imba_heart"
+		"AbilityTextureName" 			"item_heart"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"ScriptFile"					"components/items/item_heart.lua"
 
@@ -3119,7 +3119,7 @@
 		"ID"							"2146"
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"components/items/item_shiva.lua"
-		"AbilityTextureName" 			"custom/imba_shiva"
+		"AbilityTextureName" 			"item_shivas_guard"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
@@ -3261,7 +3261,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2126"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_bloodstone"
+		"AbilityTextureName" 			"item_bloodstone"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
@@ -3513,7 +3513,7 @@
 		"ID"							"2031"
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"components/items/item_vanguard.lua"
-		"AbilityTextureName" 			"custom/imba_stout_shield"
+		"AbilityTextureName" 			"item_stout_shield"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
 		// Item Info
@@ -3639,7 +3639,7 @@
 		"ID"							"2181"
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"components/items/item_vanguard.lua"
-		"AbilityTextureName" 			"custom/imba_vanguard"
+		"AbilityTextureName" 			"item_vanguard"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
 		// Item Info
@@ -3710,7 +3710,7 @@
 		"ID"							"2182"
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"components/items/item_vanguard.lua"
-		"AbilityTextureName"			"custom/imba_crimson_guard"
+		"AbilityTextureName"			"item_crimson_guard"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
@@ -3993,7 +3993,7 @@
 		"ID"							"1135"
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"components/items/item_mkb.lua"
-		"AbilityTextureName" 			"custom/imba_monkey_king_bar"
+		"AbilityTextureName" 			"item_monkey_king_bar"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
 		// Item Info
@@ -4074,7 +4074,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2068"
 		"BaseClass"						"item_lua"
-		"AbilityTextureName"			"custom/imba_radiance"
+		"AbilityTextureName"			"item_radiance"
 		"ScriptFile"                    "components/items/item_radiance.lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
 
@@ -4173,7 +4173,7 @@
 		"ID"							"2070"
 		"BaseClass"						"item_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityTextureName" 			"custom/imba_butterfly"
+		"AbilityTextureName" 			"item_butterfly"
 		"ScriptFile"					"components/items/item_butterfly.lua"
 
 		// Stats
@@ -4325,7 +4325,7 @@
 		"ID"							"2147"
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"components/items/item_crit.lua"
-		"AbilityTextureName" 			"custom/imba_greater_crit"
+		"AbilityTextureName" 			"item_greater_crit"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
 		// Item Info
@@ -4400,7 +4400,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2077"
 		"BaseClass"						"item_lua"
-		"AbilityTextureName"			"custom/imba_armlet"
+		"AbilityTextureName"			"item_armlet"
 		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
 		"ScriptFile"                    "components/items/item_armlet.lua"
 
@@ -4521,7 +4521,7 @@
 		"ID"							"2168"
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"components/items/item_shadow_blade.lua"
-		"AbilityTextureName"			"custom/imba_invis_sword"
+		"AbilityTextureName"			"item_invis_sword"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
 		"FightRecapLevel"				"1"
 
@@ -4629,7 +4629,7 @@
 		"ID"								"2169"
 		"BaseClass"							"item_lua"
 		"ScriptFile"						"components/items/item_silver_edge.lua"
-		"AbilityTextureName"				"custom/imba_silver_edge"
+		"AbilityTextureName"				"item_silver_edge"
 		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
 		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"					"1"
@@ -4849,7 +4849,7 @@
 		"ID"							"2127"
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"components/items/item_swords.lua"
-		"AbilityTextureName"			"custom/imba_sange"
+		"AbilityTextureName"			"item_sange"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
 		// Stats
@@ -4917,7 +4917,7 @@
 		"ID"							"2131"
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"components/items/item_swords.lua"
-		"AbilityTextureName"			"custom/imba_yasha"
+		"AbilityTextureName"			"item_yasha"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
 		// Stats
@@ -5036,7 +5036,7 @@
 		"ID"							"2134"
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"components/items/item_swords.lua"
-		"AbilityTextureName"			"custom/imba_sange_and_yasha"
+		"AbilityTextureName"			"item_sange_and_yasha"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
 		// Stats
@@ -5285,7 +5285,7 @@
 		"ID"							"1160"
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"components/items/item_skadi.lua"
-		"AbilityTextureName"			"custom/imba_skadi"
+		"AbilityTextureName"			"item_skadi"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
 
 		// Stats
@@ -5440,7 +5440,7 @@
 		"ID"							"2143"
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"components/items/item_maelstrom.lua"
-		"AbilityTextureName"			"custom/imba_maelstrom"
+		"AbilityTextureName"			"item_maelstrom"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
 		// Item Info
@@ -5522,7 +5522,7 @@
 		"ID"							"2145"
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"components/items/item_maelstrom.lua"
-		"AbilityTextureName"			"custom/imba_mjollnir"
+		"AbilityTextureName"			"item_mjollnir"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
@@ -5618,7 +5618,7 @@
 		"ID"							"2238"
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"components/items/item_desolator.lua"
-		"AbilityTextureName"			"custom/imba_blight_stone"
+		"AbilityTextureName"			"item_blight_stone"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
 		// Item Info
@@ -5687,7 +5687,7 @@
 		"ID"							"2197"
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"components/items/item_desolator.lua"
-		"AbilityTextureName"			"custom/imba_desolator"
+		"AbilityTextureName"			"item_desolator"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
@@ -5948,7 +5948,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2201"
 		"BaseClass"						"item_lua"
-		"AbilityTextureName" 			"custom/imba_diffusal_blade"
+		"AbilityTextureName" 			"item_diffusal_blade"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
@@ -6168,7 +6168,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2148"
 		"BaseClass"						"item_lua"
-		"AbilityTextureName" 			"custom/imba_ancient_janggo"
+		"AbilityTextureName" 			"item_ancient_janggo"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
 		"FightRecapLevel"				"1"
 		"ScriptFile"					"components/items/item_drums.lua"
@@ -6303,7 +6303,7 @@
 		"ID"							"2101"
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"components/items/item_veil_of_discord.lua"
-		"AbilityTextureName" 			"custom/imba_veil_of_discord"
+		"AbilityTextureName" 			"item_veil_of_discord"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
@@ -6427,7 +6427,7 @@
 		"ID"							"2128"
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"components/items/item_swords.lua"
-		"AbilityTextureName"			"custom/imba_heavens_halberd"
+		"AbilityTextureName"			"item_heavens_halberd"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
@@ -6800,7 +6800,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2121"
 		"BaseClass"						"item_lua"
-		"AbilityTextureName" 			"custom/imba_octarine_core"
+		"AbilityTextureName" 			"item_octarine_core"
 		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
 		"ScriptFile"                    "components/items/item_octarine_core.lua"
 
@@ -6871,7 +6871,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"								"2165"
 		"BaseClass"							"item_lua"
-		"AbilityTextureName" 				"custom/imba_aegis"
+		"AbilityTextureName" 				"item_aegis"
 		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"Model"								"models/props_gameplay/aegis.mdl"
 		"ScriptFile"                   		"components/items/item_aegis.lua"
@@ -6919,7 +6919,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2166"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_cheese"
+		"AbilityTextureName" 			"item_cheese"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
@@ -7674,7 +7674,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2196"
 		"BaseClass"						"item_lua"
-		"AbilityTextureName"			"custom/imba_blink"
+		"AbilityTextureName"			"item_blink"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE | DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
@@ -7866,7 +7866,7 @@
 		"ID"							"2155"
 		"BaseClass"						"item_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"			"custom/imba_echo_sabre"
+		"AbilityTextureName"			"item_echo_sabre"
 		"FightRecapLevel"				"1"
 		"ScriptFile"					"components/items/item_echo_sabre.lua"
 
@@ -8383,7 +8383,7 @@
 		"ID"							"2163"
 		"BaseClass"						"item_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"			"custom/imba_aether_lens"
+		"AbilityTextureName"			"item_aether_lens"
 		"ScriptFile"					"components/items/item_aether_lens.lua"
 
 		// Item Info
@@ -8662,7 +8662,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"									"2065"
 		"BaseClass"								"item_lua"
-		"AbilityTextureName" 					"custom/imba_rapier"
+		"AbilityTextureName" 					"item_rapier"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"Model"									"models/props_gameplay/divine_rapier.mdl"
 		"ScriptFile"							"components/items/item_rapier.lua"
@@ -8914,7 +8914,7 @@
 		"ID"							"2223"
 		"BaseClass"						"item_lua"
 		"FightRecapLevel"				"1"
-		"AbilityTextureName" 			"custom/imba_dust_of_appearance"
+		"AbilityTextureName" 			"item_dust"
 		"ScriptFile"					"components/items/item_dust_of_appearance.lua"
 		"Model"							"models/props_gameplay/dust.vmdl"
 
@@ -9396,7 +9396,7 @@
 	{
 		"ID"							"2230"
 		"BaseClass"						"item_lua"
-		"AbilityTextureName"			"custom/imba_lifesteal"
+		"AbilityTextureName"			"item_lifesteal"
 		"ScriptFile"					"components/items/item_lifesteal.lua"
 
 		// Item Info
@@ -9469,7 +9469,7 @@
 	{
 		"ID"							"2232"
 		"BaseClass"						"item_lua"
-		"AbilityTextureName"			"custom/imba_mask_of_madness"
+		"AbilityTextureName"			"item_mask_of_madness"
 		"ScriptFile"					"components/items/item_mask_of_madness.lua"
 
 		// Item Info
@@ -9594,7 +9594,7 @@
 	{
 		"ID"							"2234"
 		"BaseClass"						"item_lua"
-		"AbilityTextureName"			"custom/imba_satanic"
+		"AbilityTextureName"			"item_satanic"
 		"ScriptFile"					"components/items/item_satanic.lua"
 
 		// Item Info
@@ -9712,7 +9712,7 @@
 	{
 		"ID"							"2240"
 		"BaseClass"						"item_lua"
-		"AbilityTextureName"			"custom/imba_urn_of_shadows"
+		"AbilityTextureName"			"item_urn_of_shadows"
 		"ScriptFile"					"components/items/item_urn_of_shadows.lua"
 
 		// Item Info
@@ -9961,7 +9961,7 @@
 	{
 		"ID"							"2244"
 		"BaseClass"						"item_lua"
-		"AbilityTextureName"			"custom/imba_hood_of_defiance"
+		"AbilityTextureName"			"item_hood_of_defiance"
 		"ScriptFile"					"components/items/item_hood_of_defiance.lua"
 
 		// Item Info
@@ -10036,7 +10036,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2245"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
+		"AbilityTextureName" 			"item_recipe"
 		"Model"							"models/props_gameplay/recipe.mdl"
 
 		// Item Info
@@ -10177,7 +10177,7 @@
 	{
 		"ID"							"2248"
 		"BaseClass"						"item_lua"
-		"AbilityTextureName"			"custom/imba_blade_mail"
+		"AbilityTextureName"			"item_blade_mail"
 		"ScriptFile"					"components/items/item_blademail.lua"
 
 		// Item Info
@@ -10367,7 +10367,7 @@
 	{
 		"ID"							"2252"
 		"BaseClass"						"item_lua"
-		"AbilityTextureName"			"custom/imba_basher"
+		"AbilityTextureName"			"item_basher"
 		"ScriptFile"					"components/items/item_skull_basher.lua"		
 
 		// Item Info
@@ -10469,7 +10469,7 @@
 	{
 		"ID"							"2254"
 		"BaseClass"						"item_lua"
-		"AbilityTextureName"			"custom/imba_abyssal_blade"
+		"AbilityTextureName"			"item_abyssal_blade"
 		"ScriptFile"					"components/items/item_abyssal_blade.lua"		
 
 		// Item Info
@@ -10614,7 +10614,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
 		"Model"							"models/props_gameplay/red_box.vmdl" 
 		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
-		"AbilityTextureName"			"custom/imba_manta"
+		"AbilityTextureName"			"item_manta"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -10803,7 +10803,7 @@
 		"ID"							"2258"
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"components/items/item_crit.lua"
-		"AbilityTextureName" 			"custom/imba_lesser_crit"
+		"AbilityTextureName" 			"item_lesser_crit"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
 		// Item Info
@@ -11099,7 +11099,7 @@
 	{
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"components/items/item_force_staff"
-		"AbilityTextureName"			"custom/imba_force_staff"
+		"AbilityTextureName"			"item_force_staff"
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2265"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
@@ -11162,7 +11162,7 @@
 		"ID"							"2266"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
 		"Model"							"models/props_gameplay/recipe.vmdl"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 				"custom/imba_recipe"
+		"AbilityTextureName" 			"custom/imba_recipe"
 		
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -11427,7 +11427,7 @@
 		"AbilityCooldown"				"40.0"
 		"AbilitySharedCooldown"			"teleport"
 		"AbilityChannelTime"			"2.0"
-		
+
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"75"
@@ -11439,10 +11439,9 @@
 		"MaxUpgradeLevel"				"2"
 		"ItemBaseLevel"					"1"
 		"ShouldBeSuggested"				"1"
-		
+
 		"UpgradesItems"					"item_imba_travel_boots"
 		"UpgradeRecipe"					"item_recipe_imba_travel_boots"
-
 
 		// Special	
 		//-------------------------------------------------------------------------------------------------------------
@@ -11792,7 +11791,7 @@
 //		"BaseClass"						"item_lua"
 //		"ID"							"2283"
 //		"ScriptFile"					"components/items/item_eul_scepter.lua"
-//		"AbilityTextureName"			"custom/imba_cyclone"
+//		"AbilityTextureName"			"item_cyclone"
 //		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
 //		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
 //		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"

@@ -511,13 +511,13 @@ function imba_mirana_arrow:OnProjectileHit_ExtraData(target, location, extra_dat
 	local vision_linger_duration = ability:GetSpecialValueFor("vision_linger_duration")
 
 	-- Cast response for creeps
-	if target:IsCreep() and not IsRoshan(target) then
+	if target:IsCreep() and not target:IsRoshan() then
 		local chosen_response = cast_response_creep[math.random(1, 5)]
 		EmitSoundOn(chosen_response, caster)
 	end
 
 	-- Cast response for Roshan
-	if IsRoshan(target) then
+	if target:IsRoshan() then
 		local chosen_response = cast_response_roshan[math.random(1,4)]
 		EmitSoundOn(chosen_response, caster)
 	end
@@ -529,7 +529,7 @@ function imba_mirana_arrow:OnProjectileHit_ExtraData(target, location, extra_dat
 	AddFOWViewer(caster:GetTeamNumber(), location, vision_radius, vision_linger_duration, false)
 
 	-- If target was a creep, kill it immediately and exit
-	if target:IsCreep() and not IsRoshan(target) and not target:IsAncient() then
+	if target:IsCreep() and not target:IsRoshan() and not target:IsAncient() then
 		target:Kill(ability, caster)
 		return true
 	end
