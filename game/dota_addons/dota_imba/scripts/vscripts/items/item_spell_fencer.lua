@@ -19,6 +19,8 @@
 --	Date: 			25.03.2017
 --	Last Update:	25.03.2017
 --	Spellfencer definitions
+--
+--  Some fixes by AltiV		August 6th, 2018
 
 -----------------------------------------------------------------------------------------------------------
 --	Spellfencer definition
@@ -27,8 +29,10 @@
 if item_imba_spell_fencer == nil then item_imba_spell_fencer = class({}) end
 LinkLuaModifier( "modifier_item_imba_spell_fencer", "items/item_spell_fencer.lua", LUA_MODIFIER_MOTION_NONE )			-- Owner's bonus attributes, stackable
 LinkLuaModifier( "modifier_item_imba_spell_fencer_unique", "items/item_spell_fencer.lua", LUA_MODIFIER_MOTION_NONE )	-- Unique toggle modifier
-LinkLuaModifier( "modifier_item_imba_spell_fencer_passive_silence", "items/item_spell_fencer.lua", LUA_MODIFIER_MOTION_NONE )	-- Passive silence
+LinkLuaModifier( "modifier_item_imba_spell_fencer_passive_silence", "items/item_spell_fencer.lua", LUA_MODIFIER_MOTION_NONE )	-- Passive magic resist debuff + on-hit silencer modifier
 LinkLuaModifier( "modifier_item_imba_spell_fencer_buff", "items/item_spell_fencer.lua", LUA_MODIFIER_MOTION_NONE )		-- Physical damage prevention modifier
+LinkLuaModifier( "modifier_item_imba_spell_fencer_soul_rend", "items/item_spell_fencer.lua", LUA_MODIFIER_MOTION_NONE )		-- Stacking Magic Amp
+LinkLuaModifier( "modifier_item_imba_spell_fencer_spirit_strike", "items/item_spell_fencer.lua", LUA_MODIFIER_MOTION_NONE )		-- Silence modifier
 LinkLuaModifier( "modifier_item_imba_spell_fencer_cooldown", "items/item_spell_fencer.lua", LUA_MODIFIER_MOTION_NONE )  -- Passive silence cooldown modifier
 
 function item_imba_spell_fencer:GetAbilityTextureName()
@@ -251,7 +255,7 @@ function modifier_item_imba_spell_fencer_passive_silence:OnAttackLanded( keys )
 		end
 
 		-- Stack the magic amp up
-		local modifier_amp = target:AddNewModifier(owner, ability, "modifier_item_imba_kaya_amp", {duration = ability:GetSpecialValueFor("stack_duration")})
+		local modifier_amp = target:AddNewModifier(owner, ability, "modifier_item_imba_spell_fencer_soul_rend", {duration = ability:GetSpecialValueFor("stack_duration")})
 		if modifier_amp and modifier_amp:GetStackCount() < ability:GetSpecialValueFor("max_stacks") then
 			modifier_amp:SetStackCount(modifier_amp:GetStackCount() + 1)
 			target:EmitSound("Imba.AzuraStack")
@@ -260,7 +264,7 @@ function modifier_item_imba_spell_fencer_passive_silence:OnAttackLanded( keys )
 		-- If the ability is not on cooldown, roll for a proc
 		if not owner:HasModifier("modifier_item_imba_spell_fencer_cooldown") and RollPercentage(ability:GetSpecialValueFor("proc_chance")) then
 			-- Proc! Apply the silence modifier and put the ability on cooldown
-			target:AddNewModifier(owner, ability, "modifier_item_imba_kaya_silence", {duration = ability:GetSpecialValueFor("proc_duration")})
+			target:AddNewModifier(owner, ability, "modifier_item_imba_spell_fencer_spirit_strike", {duration = ability:GetSpecialValueFor("proc_duration")})
 			target:EmitSound("Imba.AzuraProc")
 			owner:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_item_imba_spell_fencer_cooldown", {duration = self:GetAbility():GetSpecialValueFor("proc_cooldown")})
 		end
@@ -287,6 +291,81 @@ end
 
 function modifier_item_imba_spell_fencer_buff:GetAbsoluteNoDamagePhysical()
 	return 1 end
+
+-----------------------------------------------------------------------------------------------------------
+--	Spellfencer Soul Rend (Stacking Magic Amp)
+-----------------------------------------------------------------------------------------------------------
+modifier_item_imba_spell_fencer_soul_rend = class ({})
+
+function modifier_item_imba_spell_fencer_soul_rend:IsHidden() return false end
+function modifier_item_imba_spell_fencer_soul_rend:IsDebuff() return true end
+function modifier_item_imba_spell_fencer_soul_rend:IsPurgable() return true end
+
+-- Modifier particle
+function modifier_item_imba_spell_fencer_soul_rend:GetEffectName()
+	return "particles/item/swords/azura_debuff.vpcf"
+end
+
+function modifier_item_imba_spell_fencer_soul_rend:GetEffectAttachType()
+	return PATTACH_ABSORIGIN_FOLLOW
+end
+
+-- Modifier property storage
+function modifier_item_imba_spell_fencer_soul_rend:OnCreated()
+	self.amp_stack = self:GetAbility():GetSpecialValueFor("amp_stack")
+
+	-- Remove this if higher tier modifiers are present
+	if IsServer() then
+		local owner = self:GetParent()
+		local higher_tier_modifiers = {
+			"modifier_item_imba_sange_kaya_stacks",
+			"modifier_item_imba_triumvirate_stacks_debuff"
+		}
+		for _, modifier in pairs(higher_tier_modifiers) do
+			if owner:FindModifierByName(modifier) then
+				self:Destroy()
+			end
+		end
+	end
+end
+
+-- Declare modifier events/properties
+function modifier_item_imba_spell_fencer_soul_rend:DeclareFunctions()
+	local funcs = {
+		MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS
+	}
+	return funcs
+end
+
+function modifier_item_imba_spell_fencer_soul_rend:GetModifierMagicalResistanceBonus()
+	if not self:GetAbility() then return end
+	return self.amp_stack * self:GetStackCount() end
+	
+-----------------------------------------------------------------------------------------------------------
+--	Spellfencer Spirit Strike (Passive Silence)
+-----------------------------------------------------------------------------------------------------------
+modifier_item_imba_spell_fencer_spirit_strike = class ({})
+
+function modifier_item_imba_spell_fencer_spirit_strike:IsHidden() return true end
+function modifier_item_imba_spell_fencer_spirit_strike:IsDebuff() return true end
+function modifier_item_imba_spell_fencer_spirit_strike:IsPurgable() return true end
+
+-- Modifier particle
+function modifier_item_imba_spell_fencer_spirit_strike:GetEffectName()
+	return "particles/item/swords/azura_proc.vpcf"
+end
+
+function modifier_item_imba_spell_fencer_spirit_strike:GetEffectAttachType()
+	return PATTACH_OVERHEAD_FOLLOW
+end
+
+-- Declare modifier states
+function modifier_item_imba_spell_fencer_spirit_strike:CheckState()
+	local states = {
+		[MODIFIER_STATE_SILENCED] = true
+	}
+	return states
+end
 
 -----------------------------------------------------------------------------------------------------------
 --	Spellfencer Spirit Strike internal cooldown modifier

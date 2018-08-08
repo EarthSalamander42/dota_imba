@@ -1493,7 +1493,9 @@ function imba_lich_chain_frost:OnProjectileHit_ExtraData(target, location, extra
 
 	-- If target has Linken's Sphere off cooldown, do nothing
 	if target:GetTeam() ~= caster:GetTeam() then
-		if target:TriggerSpellAbsorb(ability) then
+		if ((not self:GetCaster():HasScepter() and extradata.bounces_left == self:GetSpecialValueFor("num_bounces"))
+		or (self:GetCaster():HasScepter() and extradata.bounces_left == self:GetSpecialValueFor("num_bounces") + 99999))
+		and target:TriggerSpellAbsorb(ability) then
 			return nil
 		end
 	end

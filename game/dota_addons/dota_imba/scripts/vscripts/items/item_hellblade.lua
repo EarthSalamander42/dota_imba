@@ -223,17 +223,15 @@ function modifier_item_imba_hellblade:OnCreated()
 	end
 end
 
--- Removes the unique modifier from the caster if this is the last skadi in its inventory
+-- Removes the unique modifier from the caster if this is the last hellblade in its inventory
 function modifier_item_imba_hellblade:OnDestroy()
 	if IsServer() then
 		local parent = self:GetParent()
 		if not parent:HasModifier("modifier_item_imba_hellblade") then
 			parent:RemoveModifierByName("modifier_imba_helldrain")
 		end
-		if not self.caster:HasModifier("modifier_item_imba_hellblade") then
+		if not self.caster:IsNull() and not self.caster:HasModifier("modifier_item_imba_hellblade") then
 			self.caster:RemoveModifierByName("modifier_item_imba_hellblade_unique")
-
-
 		end
 	end
 end
