@@ -204,6 +204,8 @@ function onPlayerStatChange(table, key, data) {
 
 		if (Game.GetMapInfo().map_display_name == "imba_mutation_5v5" || Game.GetMapInfo().map_display_name == "imba_mutation_10v10")
 			Mutation(data.mutation)
+		else
+			FindDotaHudElement('MainContent').AddClass("Ranked")
 
 		Object.keys(data.herolist).sort().forEach(function (heroName) {
 			var currentstat = null;

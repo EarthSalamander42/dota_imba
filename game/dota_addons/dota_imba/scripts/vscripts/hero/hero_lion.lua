@@ -1261,16 +1261,21 @@ function modifier_imba_finger_of_death_hex:IsPurgable() return true end
 function modifier_imba_finger_of_death_hex:IsDebuff() return true end
 
 function modifier_imba_finger_of_death_hex:CheckState()
-	local state = {[MODIFIER_STATE_HEXED] = true,
-				   [MODIFIER_STATE_DISARMED] = true,
-				   [MODIFIER_STATE_SILENCED] = true,
-				   [MODIFIER_STATE_MUTED] = true}
+	local state = {
+		[MODIFIER_STATE_HEXED] = true,
+		[MODIFIER_STATE_DISARMED] = true,
+		[MODIFIER_STATE_SILENCED] = true,
+		[MODIFIER_STATE_MUTED] = true
+	}
+
 	return state
 end
 
 function modifier_imba_finger_of_death_hex:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_MODEL_CHANGE,
-					  MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE}
+	local decFuncs = {
+		MODIFIER_PROPERTY_MODEL_CHANGE,
+		MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE
+	}
 
 	return decFuncs
 end
