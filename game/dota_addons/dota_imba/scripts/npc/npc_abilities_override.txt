@@ -166,6 +166,8 @@
 	"item_recipe_imba_plancks_artifact"		"REMOVE"
 	"item_nokrash_blade"					"REMOVE"
 	"item_recipe_nokrash_blade"				"REMOVE"
+	"item_imba_anomalous_crux"				"REMOVE"
+	"item_recipe_imba_anomalous_crux"		"REMOVE"
 
 	//=================================================================================================================
 	//-----------------------------------------------------------------------------------------------------------------
