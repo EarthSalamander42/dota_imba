@@ -16,6 +16,7 @@
 --     Firetoad
 --     AtroCty, 02.04.2017
 --     naowin, 07.04.2018
+--	   AltiV, 08.08.2018
 
 -------------------------------------------
 --				SADIST
@@ -364,9 +365,9 @@ end
 -------------------------------------------
 
 imba_necrolyte_ghost_shroud = imba_necrolyte_ghost_shroud or class({})
+LinkLuaModifier("modifier_imba_ghost_shroud_active", "components/abilities/heroes/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_ghost_shroud_aura", "components/abilities/heroes/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_ghost_shroud_aura_debuff", "components/abilities/heroes/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_ghost_shroud_aura_purge", "components/abilities/heroes/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_ghost_shroud_buff", "components/abilities/heroes/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_ghost_shroud_debuff", "components/abilities/heroes/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
 
@@ -387,9 +388,9 @@ function imba_necrolyte_ghost_shroud:OnSpellStart()
 		caster:EmitSound("Hero_Necrolyte.SpiritForm.Cast")
 
 		caster:StartGesture(ACT_DOTA_NECRO_GHOST_SHROUD)
+		caster:AddNewModifier(caster, self, "modifier_imba_ghost_shroud_active", { duration = duration })
 		caster:AddNewModifier(caster, self, "modifier_imba_ghost_shroud_aura", { duration = duration, radius = radius, healing_amp_pct = healing_amp_pct, slow_pct = slow_pct})
 		caster:AddNewModifier(caster, self, "modifier_imba_ghost_shroud_aura_debuff", { duration = duration, radius = radius, healing_amp_pct = healing_amp_pct, slow_pct = slow_pct})
-		caster:AddNewModifier(caster, self, "modifier_imba_ghost_shroud_aura_purge", { duration = duration - FrameTime()})
 	end
 end
 
@@ -401,31 +402,67 @@ function imba_necrolyte_ghost_shroud:IsHiddenWhenStolen()
 	return false
 end
 
-modifier_imba_ghost_shroud_aura_purge = modifier_imba_ghost_shroud_aura_purge or class({})
-function modifier_imba_ghost_shroud_aura_purge:IsPurgable()
-	return true
+---------------------------------------------
+-- Ghost Shroud Active Modifier (Purgable) --
+---------------------------------------------
+
+modifier_imba_ghost_shroud_active = class({})
+
+function modifier_imba_ghost_shroud_active:IsHidden() return false end
+function modifier_imba_ghost_shroud_active:IsPurgable() return true end
+
+function modifier_imba_ghost_shroud_active:GetEffectName()
+	return "particles/units/heroes/hero_pugna/pugna_decrepify.vpcf"
 end
 
--- Make the aura purgable
-function modifier_imba_ghost_shroud_aura_purge:OnRemoved()
-	if IsServer() then
-		local parent = self:GetParent()
-		if parent:HasModifier("modifier_imba_ghost_shroud_aura") then
-			parent:RemoveModifierByName("modifier_imba_ghost_shroud_aura")
-			parent:RemoveModifierByName("modifier_imba_ghost_shroud_aura_debuff")
-		end
-	end
+function modifier_imba_ghost_shroud_active:GetEffectAttachType()
+	return PATTACH_POINT_FOLLOW
 end
 
-function modifier_imba_ghost_shroud_aura_purge:IsDebuff()
-	return false
+function modifier_imba_ghost_shroud_active:DeclareFunctions()
+	return 
+	{ MODIFIER_PROPERTY_MAGICAL_RESISTANCE_DECREPIFY_UNIQUE,
+	MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL }
 end
 
-function modifier_imba_ghost_shroud_aura_purge:IsHidden()
-	return true
+function modifier_imba_ghost_shroud_active:GetModifierMagicalResistanceDecrepifyUnique( params )
+	return self:GetAbility():GetSpecialValueFor("magic_amp_pct") * (-1)
 end
+
+function modifier_imba_ghost_shroud_active:GetAbsoluteNoDamagePhysical()
+	if self:GetCaster() == self:GetParent() then return 1
+	else return nil end
+end
+
+function modifier_imba_ghost_shroud_active:CheckState()
+	return
+		{
+			[MODIFIER_STATE_DISARMED] = true,
+			[MODIFIER_STATE_ATTACK_IMMUNE] = true,
+		}
+end
+
+-- IntervalThink to remove active if magic immune (so you can't stack the two)
+function modifier_imba_ghost_shroud_active:OnCreated()
+	if not IsServer() then return end
+	self:StartIntervalThink(FrameTime())
+end
+
+function modifier_imba_ghost_shroud_active:OnIntervalThink()
+	if not IsServer() then return end
+	if self:GetParent():IsMagicImmune() then self:Destroy()	end
+end
+
+-----------------------------------------------------
+-- Ghost Shroud Positive Aura Handler (Unpurgable) --
+-----------------------------------------------------
 
 modifier_imba_ghost_shroud_aura = class({})
+
+function modifier_imba_ghost_shroud_aura:IsHidden() return false end
+function modifier_imba_ghost_shroud_aura:IsPurgable() return false end
+function modifier_imba_ghost_shroud_aura:IsAura() return true end
+
 function modifier_imba_ghost_shroud_aura:OnCreated( params )
 	if IsServer() then
 		self.radius = params.radius
@@ -472,34 +509,47 @@ function modifier_imba_ghost_shroud_aura:GetModifierAura()
 	return "modifier_imba_ghost_shroud_buff"
 end
 
-function modifier_imba_ghost_shroud_aura:IsAura()
-	return true
-end
+------------------------------------------------
+-- Ghost Shroud Positive Aura Buff (Heal Amp) --
+------------------------------------------------
 
-function modifier_imba_ghost_shroud_aura:IsHidden()
+modifier_imba_ghost_shroud_buff = modifier_imba_ghost_shroud_buff or class({})
+
+function modifier_imba_ghost_shroud_buff:IsHidden()
 	if self:GetParent() == self:GetCaster() then return true end
 	return false
 end
+function modifier_imba_ghost_shroud_buff:IsDebuff()	return false end
+
+function modifier_imba_ghost_shroud_buff:DeclareFunctions()
+	local decFuncs =
+		{
+			MODIFIER_PROPERTY_HP_REGEN_AMPLIFY_PERCENTAGE
+		}
+	return decFuncs
+end
+
+function modifier_imba_ghost_shroud_buff:GetModifierHPRegenAmplify_Percentage()
+	local healing_amp_pct = self:GetAbility():GetSpecialValueFor("healing_amp_pct")
+	if self:GetCaster() ~= self:GetParent() then
+		healing_amp_pct = healing_amp_pct / 2
+	end
+	return healing_amp_pct
+end
+
+----------------------------------------
+-- Ghost Shroud Negative Aura Handler --
+----------------------------------------
 
 modifier_imba_ghost_shroud_aura_debuff = modifier_imba_ghost_shroud_aura_debuff or class({})
+
+function modifier_imba_ghost_shroud_aura_debuff:IsHidden() return true end
+function modifier_imba_ghost_shroud_aura_debuff:IsPurgable() return false end
+function modifier_imba_ghost_shroud_aura_debuff:IsAura() return true end
+
 function modifier_imba_ghost_shroud_aura_debuff:OnCreated( params )
 	if IsServer() then
 		self.radius = params.radius
-		self.healing_amp_pct = params.healing_amp_pct
-	end
-end
-
-function modifier_imba_ghost_shroud_aura_debuff:GetEffectName()
-	return "particles/units/heroes/hero_pugna/pugna_decrepify.vpcf"
-end
-
-function modifier_imba_ghost_shroud_aura_debuff:GetEffectAttachType()
-	return PATTACH_POINT_FOLLOW
-end
-
-function modifier_imba_ghost_shroud_aura_debuff:GetAuraEntityReject(target)
-	if IsServer() then
-		return false
 	end
 end
 
@@ -523,68 +573,17 @@ function modifier_imba_ghost_shroud_aura_debuff:GetModifierAura()
 	return "modifier_imba_ghost_shroud_debuff"
 end
 
-function modifier_imba_ghost_shroud_aura_debuff:IsAura()
-	return true
-end
-
-function modifier_imba_ghost_shroud_aura_debuff:DeclareFunctions()
-	return { MODIFIER_PROPERTY_MAGICAL_RESISTANCE_DECREPIFY_UNIQUE, }
-end
-
-function modifier_imba_ghost_shroud_aura_debuff:CheckState()
-	return
-		{
-			[MODIFIER_STATE_DISARMED] = true,
-			[MODIFIER_STATE_ATTACK_IMMUNE] = true,
-		}
-end
-
-function modifier_imba_ghost_shroud_aura_debuff:GetModifierMagicalResistanceDecrepifyUnique( params )
-	return self:GetAbility():GetSpecialValueFor("magic_amp_pct") * (-1)
-end
-
-modifier_imba_ghost_shroud_buff = modifier_imba_ghost_shroud_buff or class({})
-function modifier_imba_ghost_shroud_buff:DeclareFunctions()
-	local decFuncs =
-		{
-			MODIFIER_PROPERTY_HP_REGEN_AMPLIFY_PERCENTAGE,
-			MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL,
-		}
-	return decFuncs
-end
-
-function modifier_imba_ghost_shroud_buff:GetModifierHPRegenAmplify_Percentage()
-	local healing_amp_pct = self:GetAbility():GetSpecialValueFor("healing_amp_pct")
-	if self:GetCaster() ~= self:GetParent() then
-		healing_amp_pct = healing_amp_pct / 2
-	end
-	return healing_amp_pct
-end
-
-function modifier_imba_ghost_shroud_buff:GetAbsoluteNoDamagePhysical()
-	if self:GetCaster() == self:GetParent() then
-		return 1
-	else
-		return nil
-	end
-end
-
-function modifier_imba_ghost_shroud_buff:IsDebuff()
-	return false
-end
-
-function modifier_imba_ghost_shroud_buff:IsHidden()
-	if self:GetParent() == self:GetCaster() then return true end
-	return false
-end
-
-function modifier_imba_ghost_shroud_buff:IsPurgable()
-	return true
-end
+-------------------------------------------------------
+-- Ghost Shroud Negative Aura Debuff (Movement Slow) --
+-------------------------------------------------------
 
 modifier_imba_ghost_shroud_debuff = modifier_imba_ghost_shroud_debuff or class({})
-function modifier_imba_ghost_shroud_debuff:GetEffectAttachType()
-	return PATTACH_POINT_FOLLOW
+
+function modifier_imba_ghost_shroud_debuff:IsHidden() return false end
+function modifier_imba_ghost_shroud_debuff:IsDebuff() return true end
+
+function modifier_imba_ghost_shroud_debuff:GetEffectName()
+	return "particles/units/heroes/hero_necrolyte/necrolyte_spirit_debuff.vpcf"
 end
 
 function modifier_imba_ghost_shroud_debuff:DeclareFunctions()
@@ -597,22 +596,6 @@ end
 
 function modifier_imba_ghost_shroud_debuff:GetModifierMoveSpeedBonus_Percentage()
 	return self:GetAbility():GetSpecialValueFor("slow_pct") * (-1)
-end
-
-function modifier_imba_ghost_shroud_debuff:IsDebuff()
-	return true
-end
-
-function modifier_imba_ghost_shroud_debuff:GetEffectName()
-	return "particles/units/heroes/hero_necrolyte/necrolyte_spirit_debuff.vpcf"
-end
-
-function modifier_imba_ghost_shroud_debuff:GetEffectAttachType()
-	return PATTACH_POINT_FOLLOW
-end
-
-function modifier_imba_ghost_shroud_debuff:IsPurgable()
-	return true
 end
 
 -------------------------------------------
