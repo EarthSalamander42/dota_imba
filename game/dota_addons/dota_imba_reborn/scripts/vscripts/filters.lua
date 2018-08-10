@@ -736,6 +736,19 @@ function GameMode:DamageFilter( keys )
 			end
 		end
 
+		-- If the attacker has mutation killstreak stacks and the distance is over the cap, remove the damage bonus from it
+		if attacker:HasModifier("modifier_mutation_kill_streak_power") then
+			local distance = (attacker:GetAbsOrigin() - victim:GetAbsOrigin()):Length2D()
+			if distance > IMBA_DAMAGE_EFFECTS_DISTANCE_CUTOFF then
+				local ksp = attacker:FindModifierByName("modifier_mutation_kill_streak_power")
+				-- Note that this formula isn't truly accurate in modifying damage as if there were no killstreak stacks
+				-- If a more precise formula is known, use that instead
+				-- Note that stacking this with arcane rapiers basically turns your global damage into absolute garbage
+				keys.damage = keys.damage / ((ksp.damage_increase * ksp:GetStackCount() * 0.01) + 1)
+				SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, victim, keys.damage, nil)
+			end
+		end
+
 		-- Magic shield damage prevention
 		if victim:HasModifier("modifier_item_imba_initiate_robe_stacks") and victim:GetTeam() ~= attacker:GetTeam() then
 
