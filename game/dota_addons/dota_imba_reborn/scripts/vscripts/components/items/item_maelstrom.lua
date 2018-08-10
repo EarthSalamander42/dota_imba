@@ -44,6 +44,10 @@ function modifier_item_imba_maelstrom:IsDebuff() return false end
 function modifier_item_imba_maelstrom:IsPurgable() return false end
 function modifier_item_imba_maelstrom:IsPermanent() return true end
 
+function modifier_item_imba_maelstrom:GetAttributes()
+	return MODIFIER_ATTRIBUTE_MULTIPLE
+end
+
 -- Declare modifier events/properties
 function modifier_item_imba_maelstrom:DeclareFunctions()
 	local funcs = {
@@ -132,6 +136,10 @@ function modifier_item_imba_mjollnir:IsHidden() return true end
 function modifier_item_imba_mjollnir:IsDebuff() return false end
 function modifier_item_imba_mjollnir:IsPurgable() return false end
 function modifier_item_imba_mjollnir:IsPermanent() return true end
+
+function modifier_item_imba_mjollnir:GetAttributes()
+	return MODIFIER_ATTRIBUTE_MULTIPLE
+end
 
 -- Declare modifier events/properties
 function modifier_item_imba_mjollnir:DeclareFunctions()
@@ -344,6 +352,10 @@ function modifier_item_imba_jarnbjorn:IsHidden() return true end
 function modifier_item_imba_jarnbjorn:IsDebuff() return false end
 function modifier_item_imba_jarnbjorn:IsPurgable() return false end
 function modifier_item_imba_jarnbjorn:IsPermanent() return true end
+
+function modifier_item_imba_jarnbjorn:GetAttributes()
+	return MODIFIER_ATTRIBUTE_MULTIPLE
+end
 
 -- Declare modifier events/properties
 function modifier_item_imba_jarnbjorn:DeclareFunctions()
