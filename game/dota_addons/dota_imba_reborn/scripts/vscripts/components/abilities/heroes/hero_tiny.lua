@@ -841,15 +841,22 @@ function imba_tiny_toss:OnSpellStart()
 
 	local vLocation = self.tossPosition
 	local kv =
-		{
-			vLocX = vLocation.x,
-			vLocY = vLocation.y,
-			vLocZ = vLocation.z,
-			duration = duration,
-			damage = self:GetSpecialValueFor("toss_damage")
-		}
+	{
+		vLocX = vLocation.x,
+		vLocY = vLocation.y,
+		vLocZ = vLocation.z,
+		duration = duration,
+		damage = self:GetSpecialValueFor("toss_damage")
+	}
 
 	local tossVictims = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, self:GetSpecialValueFor("grab_radius"), DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_CHECK_DISABLE_HELP, 1, false)
+
+	for _, victim in pairs(tossVictims) do
+		if (PlayerResource:IsDisableHelpSetForPlayerID(victim:GetPlayerOwnerID(), self:GetCaster():GetPlayerOwnerID())) then
+			table.remove(tossVictims, _)
+		end
+	end
+
 	for _, victim in pairs(tossVictims) do
 		if victim ~= caster then
 			victim:AddNewModifier(caster, self, "modifier_tiny_toss_movement", kv)
