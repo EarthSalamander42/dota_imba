@@ -6,6 +6,7 @@
 	]]
 
 -- #7 Talent - Decreased cast-animations
+--[[
 function modifier_special_bonus_imba_tinker_7:DeclareFunctions()
 	local decFuncs =
 	{
@@ -17,7 +18,7 @@ end
 function modifier_special_bonus_imba_tinker_7:GetModifierPercentageCasttime()
 	return self:GetParent():FindTalentValue("special_bonus_imba_tinker_7")
 end
-
+--]]
 -------------------------------------------
 --			   REARM
 -------------------------------------------

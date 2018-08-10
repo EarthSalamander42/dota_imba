@@ -30,6 +30,7 @@ function GameMode:OnGameRulesStateChange(keys)
 		GameMode:OnSetGameMode() -- setup gamemode rules
 		TeamSelection:InitializeTeamSelection()
 		GetPlayerInfoIXP() -- Add a class later
+		Imbattlepass:Init() -- Initialize Battle Pass
 	elseif newState == DOTA_GAMERULES_STATE_HERO_SELECTION then
 		api.imba.event(api.events.entered_hero_selection)
 		HeroSelection:StartSelection()

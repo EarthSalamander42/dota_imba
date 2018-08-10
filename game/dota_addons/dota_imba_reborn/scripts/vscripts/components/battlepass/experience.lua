@@ -160,9 +160,6 @@ function GetPlayerInfoIXP() -- yet it has too much useless loops, format later. 
 
 	GetTopPlayersIXP()
 	GetTopPlayersIMR()
-
-	-- Initialize Battle Pass
-	Imbattlepass:Init()
 end
 
 function GetTopPlayersIXP()
