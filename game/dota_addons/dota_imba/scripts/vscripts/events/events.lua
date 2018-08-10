@@ -236,7 +236,7 @@ function GameMode:OnNPCSpawned(keys)
 		local player = "-1"
 
 		-- Adding boundary modifier here (to keep entities within the map)
-		npc:AddNewModifier(npc, nil, "modifier_boundaries", {})
+--		npc:AddNewModifier(npc, nil, "modifier_boundaries", {})
 
 		if npc:IsRealHero() and npc:GetPlayerID() then
 			player = PlayerResource:GetSteamID(npc:GetPlayerID())
