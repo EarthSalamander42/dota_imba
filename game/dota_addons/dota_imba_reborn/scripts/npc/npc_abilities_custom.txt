@@ -19157,7 +19157,6 @@
 				"ms_bonus_pct"			"12"
 				"LinkedSpecialBonus"	"special_bonus_imba_sven_3"
 			}
-
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"

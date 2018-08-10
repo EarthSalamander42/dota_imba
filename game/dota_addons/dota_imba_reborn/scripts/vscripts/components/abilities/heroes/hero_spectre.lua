@@ -66,20 +66,10 @@ function imba_spectre_haunt:OnSpellStart()
 				spawn_dy = -spawn_dy
 			end
 			local spawn_pos = Vector(enemy_position.x + spawn_dx, enemy_position.y + spawn_dy, enemy_position.z)
+			local inc = self:GetSpecialValueFor("illusion_dmg_received") - 100
+			local out = self:GetSpecialValueFor("illusion_dmg_dealt") - 100
 
-			IllusionManager:CreateIllusion(caster,
-				self,
-				spawn_pos,
-				caster,
-				{
-					additional_modifiers =  additional_modifiers,
-					controllable = 0,
-					force_attack = 1,
-					damagein = ( self:GetSpecialValueFor("illusion_dmg_received") - 100),
-					damageout = ( self:GetSpecialValueFor("illusion_dmg_dealt") - 100 )
-				},
-				enemy)
-
+			self:GetCaster():CreateIllusion(self:GetSpecialValueFor("duration"), inc, out, spawn_pos, additional_modifiers, self)
 			EmitSoundOn(haunt_sound_enemy, enemy)
 		end
 	end
@@ -218,7 +208,6 @@ function imba_spectre_reality:OnSpellStart()
 
 	-- if haunt has spawned illusions, we loop through them to find active ones and check their distance to us
 	-- to find the closest one
-	print(haunt_ability.spawned_illusions)
 	if haunt_ability.spawned_illusions then
 		local cursor_pos = self:GetCursorPosition()
 		local closest_illusion
@@ -233,10 +222,7 @@ function imba_spectre_reality:OnSpellStart()
 --			end
 		end
 
-		print("Illusion Count: ", illusion_count)
-
 		-- If we found a closest illusion, swap our positions
-		print(closest_illusion)
 		if closest_illusion then
 			-- You're about to get shanked!
 			local temp_pos = closest_illusion:GetAbsOrigin()

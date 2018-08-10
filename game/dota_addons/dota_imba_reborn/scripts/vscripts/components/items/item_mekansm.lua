@@ -28,10 +28,6 @@
 if item_imba_arcane_boots == nil then item_imba_arcane_boots = class({}) end
 LinkLuaModifier( "modifier_item_imba_arcane_boots", "components/items/item_mekansm.lua", LUA_MODIFIER_MOTION_NONE )				-- Owner's bonus attributes, stackable
 
-function item_imba_arcane_boots:GetAbilityTextureName()
-	return "custom/imba_arcane_boots"
-end
-
 function item_imba_arcane_boots:GetIntrinsicModifierName()
 	return "modifier_item_imba_arcane_boots" end
 
@@ -104,7 +100,7 @@ function item_imba_mekansm:GetIntrinsicModifierName()
 
 function item_imba_mekansm:GetAbilityTextureName()
 	if not IsClient() then return end
-	if not self:GetCaster().mekansm_icon_client then return "custom/imba_mekansm" end
+	if not self:GetCaster().mekansm_icon_client then return "item_mekansm" end
 
 	return "custom/imba_mekansm"..self:GetCaster().mekansm_icon_client
 end
@@ -255,7 +251,7 @@ function modifier_item_imba_mekansm_aura:IsPurgable() return false end
 
 -- Aura icon
 function modifier_item_imba_mekansm_aura:GetTexture()
-	return "custom/imba_mekansm" end
+	return "item_mekansm" end
 
 -- Stores the aura's parameters to prevent errors when the item is destroyed
 function modifier_item_imba_mekansm_aura:OnCreated(keys)
@@ -284,7 +280,7 @@ function modifier_item_imba_mekansm_heal:IsPurgable() return true end
 
 -- Modifier texture
 function modifier_item_imba_mekansm_heal:GetTexture()
-	return "custom/imba_mekansm" end
+	return "item_mekansm" end
 
 -- Stores the ability's parameters to prevent errors if the item is destroyed
 function modifier_item_imba_mekansm_heal:OnCreated(keys)
@@ -321,7 +317,7 @@ LinkLuaModifier( "modifier_item_imba_guardian_greaves_heal", "components/items/i
 
 function item_imba_guardian_greaves:GetAbilityTextureName()
 	if not IsClient() then return end
-	if not self:GetCaster().mekansm_icon_client then return "custom/imba_guardian_greaves" end
+	if not self:GetCaster().mekansm_icon_client then return "item_guardian_greaves" end
 
 	return "custom/imba_guardian_greaves"..self:GetCaster().mekansm_icon_client
 end
@@ -496,7 +492,7 @@ function modifier_item_imba_guardian_greaves_aura:IsPurgable() return false end
 
 -- Aura icon
 function modifier_item_imba_guardian_greaves_aura:GetTexture()
-	return "custom/imba_guardian_greaves" end
+	return "item_guardian_greaves" end
 
 -- Stores the aura's parameters to prevent errors when the item is destroyed
 function modifier_item_imba_guardian_greaves_aura:OnCreated(keys)
@@ -552,7 +548,7 @@ function modifier_item_imba_guardian_greaves_heal:IsPurgable() return true end
 
 -- Modifier texture
 function modifier_item_imba_guardian_greaves_heal:GetTexture()
-	return "custom/imba_guardian_greaves"
+	return "item_guardian_greaves"
 end
 
 -- Stores the ability's parameters to prevent errors if the item is destroyed

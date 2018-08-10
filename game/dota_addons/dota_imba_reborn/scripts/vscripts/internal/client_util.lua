@@ -12,6 +12,9 @@ function C_DOTA_BaseNPC:HasTalent(talentName)
 	return false
 end
 
+--Load ability KVs
+local AbilityKV = LoadKeyValues("scripts/npc/npc_abilities_custom.txt")
+
 function C_DOTA_BaseNPC:FindTalentValue(talentName, key)
 	if self:HasModifier("modifier_"..talentName) then  
 		local value_name = key or "value"

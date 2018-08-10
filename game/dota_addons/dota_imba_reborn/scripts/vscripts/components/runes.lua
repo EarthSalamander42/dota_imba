@@ -61,7 +61,7 @@ function ImbaRunes:Init()
 end
 
 -- Spawns runes on the map
-function ImbaRunes:SpawnImbaRunes()
+function ImbaRunes:Spawn()
 	-- List of powerup rune types
 	local powerup_rune_types = {
 		{"item_imba_rune_arcane", "particles/generic_gameplay/rune_arcane.vpcf"},

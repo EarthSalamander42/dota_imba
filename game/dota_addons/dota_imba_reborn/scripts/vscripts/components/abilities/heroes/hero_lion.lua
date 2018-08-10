@@ -6,8 +6,8 @@
 ------------------------------------------
 
 imba_lion_earth_spike = class({})
-LinkLuaModifier("modifier_imba_earthspike_stun", "hero/hero_lion", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_earthspike_death_spike", "hero/hero_lion", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_earthspike_stun", "components/abilities/heroes/hero_lion", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_earthspike_death_spike", "components/abilities/heroes/hero_lion", LUA_MODIFIER_MOTION_NONE)
 
 function imba_lion_earth_spike:GetAbilityTextureName()
    return "lion_impale"
@@ -330,7 +330,7 @@ end
 
 
 imba_lion_hex = class({})
-LinkLuaModifier("modifier_imba_lion_hex", "hero/hero_lion", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_lion_hex", "components/abilities/heroes/hero_lion", LUA_MODIFIER_MOTION_NONE)
 
 function imba_lion_hex:GetAbilityTextureName()
    return "lion_voodoo"
@@ -534,11 +534,11 @@ end
 ------------------------------------------
 
 imba_lion_mana_drain = class({})
-LinkLuaModifier("modifier_imba_manadrain_aura", "hero/hero_lion", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_manadrain_aura_debuff", "hero/hero_lion", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_manadrain_debuff", "hero/hero_lion", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_manadrain_buff", "hero/hero_lion", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_manadrain_manaovercharge", "hero/hero_lion", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_manadrain_aura", "components/abilities/heroes/hero_lion", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_manadrain_aura_debuff", "components/abilities/heroes/hero_lion", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_manadrain_debuff", "components/abilities/heroes/hero_lion", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_manadrain_buff", "components/abilities/heroes/hero_lion", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_manadrain_manaovercharge", "components/abilities/heroes/hero_lion", LUA_MODIFIER_MOTION_NONE)
 
 function imba_lion_mana_drain:GetAbilityTextureName()
    return "lion_mana_drain"
@@ -970,8 +970,8 @@ end
 --          FINGER OF DEATH             --
 ------------------------------------------
 imba_lion_finger_of_death = class({})
-LinkLuaModifier("modifier_imba_trigger_finger_debuff", "hero/hero_lion", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_finger_of_death_hex", "hero/hero_lion", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_trigger_finger_debuff", "components/abilities/heroes/hero_lion", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_finger_of_death_hex", "components/abilities/heroes/hero_lion", LUA_MODIFIER_MOTION_NONE)
 
 function imba_lion_finger_of_death:GetAbilityTextureName()
    return "lion_finger_of_death"

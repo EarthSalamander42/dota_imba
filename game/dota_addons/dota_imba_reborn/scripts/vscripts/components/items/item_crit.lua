@@ -28,10 +28,6 @@ if item_imba_lesser_crit == nil then item_imba_lesser_crit = class({}) end
 LinkLuaModifier( "modifier_item_imba_lesser_crit", "components/items/item_crit.lua", LUA_MODIFIER_MOTION_NONE )		-- Owner's bonus attributes, stackable
 LinkLuaModifier( "modifier_item_imba_lesser_crit_buff", "components/items/item_crit.lua", LUA_MODIFIER_MOTION_NONE )	-- Critical damage increase counter
 
-function item_imba_lesser_crit:GetAbilityTextureName()
-	return "item_lesser_crit"
-end
-
 function item_imba_lesser_crit:GetIntrinsicModifierName()
 	return "modifier_item_imba_lesser_crit" end
 
@@ -124,10 +120,6 @@ end
 if item_imba_greater_crit == nil then item_imba_greater_crit = class({}) end
 LinkLuaModifier( "modifier_item_imba_greater_crit", "components/items/item_crit.lua", LUA_MODIFIER_MOTION_NONE )		-- Owner's bonus attributes, stackable
 LinkLuaModifier( "modifier_item_imba_greater_crit_buff", "components/items/item_crit.lua", LUA_MODIFIER_MOTION_NONE )	-- Critical damage increase counter
-
-function item_imba_greater_crit:GetAbilityTextureName()
-	return "custom/imba_greater_crit"
-end
 
 function item_imba_greater_crit:GetIntrinsicModifierName()
 	return "modifier_item_imba_greater_crit" end

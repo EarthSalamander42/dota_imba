@@ -448,7 +448,6 @@ function HeroSelection:GiveStartingHero(playerId, heroName, dev)
 
 	-- Set up initial gold
 	-- local has_randomed = PlayerResource:HasRandomed(playerId)
-	-- This randomed variable gets reset when the player chooses to Repick, so you can detect a rerandom
 	--	local has_randomed = HeroSelection.playerPickState[playerId].random_state
 	local initial_gold = tonumber(CustomNetTables:GetTableValue("game_options", "initial_gold")["1"]) or 1200
 
@@ -461,6 +460,10 @@ function HeroSelection:GiveStartingHero(playerId, heroName, dev)
 	-- add modifier for custom mechanics handling
 	hero:AddNewModifier(hero, nil, "modifier_custom_mechanics", {})
 
+	-- set player colors (literally the same code i use in XHS, but it doesn't work in imba?)
+	print(playerId, PLAYER_COLORS[playerId])
+	PlayerResource:SetCustomPlayerColor(playerId, PLAYER_COLORS[playerId][1], PLAYER_COLORS[playerId][2], PLAYER_COLORS[playerId][3])
+
 	-- Initialize innate hero abilities
 	InitializeInnateAbilities(hero)
 
@@ -470,8 +473,6 @@ function HeroSelection:GiveStartingHero(playerId, heroName, dev)
 		hero:AddNewModifier(hero, hero:FindAbilityByName("invoker_invoke"), "modifier_imba_invoke_buff", {})
 	end
 
-	-- Set up player color
-	PlayerResource:SetCustomPlayerColor(playerId, PLAYER_COLORS[playerId][1], PLAYER_COLORS[playerId][2], PLAYER_COLORS[playerId][3])
 	Imbattlepass:AddItemEffects(hero)
 
 	Timers:CreateTimer(1.0, function()

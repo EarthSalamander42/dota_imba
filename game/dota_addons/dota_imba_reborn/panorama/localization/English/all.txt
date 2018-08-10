@@ -417,9 +417,6 @@
 "mutation_battle_hunger"						"Battle Hunger"
 "mutation_battle_hunger_Description"			"Everytime you kill an enemy's hero your team get troll ult."
 
-//"mutation_speed_freaks"						"Speed Freaks"
-//"mutation_speed_freaks_Description"			"Enemy units have double their normal movement speed."
-
 // Negative
 "mutation_monkey_business"						"Monkey Business"
 "mutation_monkey_business_Description"			"Every hero gets the mischief ability passively when not attacking or being attacked for 5 seconds."

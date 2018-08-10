@@ -33,11 +33,6 @@ function item_imba_assault:GetIntrinsicModifierName()
 	return "modifier_imba_assault_cuirass"
 end
 
-function item_imba_assault:GetAbilityTextureName()
-	return "custom/imba_assault"
-end
-
-
 -- Stats passive modifier (stacking)
 modifier_imba_assault_cuirass = class({})
 

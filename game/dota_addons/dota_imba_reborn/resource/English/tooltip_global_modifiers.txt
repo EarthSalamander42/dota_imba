@@ -73,4 +73,4 @@
 "DOTA_Tooltip_modifier_mutation_tug_of_war_golem_Description"	"Grows stronger with each revival. Each stack grants additional health, attack, movement speed, attack speed, armor, magic resistance, health regeneration, attack range, tenacity, physical block, damage reduction, model size, and exp/gold when killed. Some parameters have a maximum to prevent infinite scaling."
 
 "DOTA_Tooltip_modifier_mutation_speed_freaks"					"Speed Freaks"
-"DOTA_Tooltip_modifier_mutation_speed_freaks_Description"		"Movement speed increased by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%% and projectile speed increased by %dMODIFIER_PROPERTY_PROJECTILE_SPEED_BONUS%. Movespeed capped at %dMODIFIER_PROPERTY_MOVESPEED_MAX%."
+"DOTA_Tooltip_modifier_mutation_speed_freaks_Description"		"Movement speed increased by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%% and projectile speed increased by 500. Movespeed capped at 1000."

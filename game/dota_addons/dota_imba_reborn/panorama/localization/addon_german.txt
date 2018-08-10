@@ -258,7 +258,7 @@
 	"mutation_sleepy_river_author" "76561198015161808"
 	"mutation_sleepy_river_description" "the river is icy, you can drift on it."
 	"mutation_speed_freaks" "Irre Geschwindigkeit"
-	"mutation_speed_freaks_description" "Movement and projectile speed increased."
+	"mutation_speed_freaks_Description" "Movement speed increased by 50% and projectile speed increased by 500. Movespeed capped at 1000."
 	"mutation_stay_frosty" "Bleib vereißt"
 	"mutation_stay_frosty_description" "Health regeneration is disabled."
 	"mutation_super_blink" "Super Blink"

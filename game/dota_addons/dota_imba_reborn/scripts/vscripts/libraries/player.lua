@@ -1,3 +1,51 @@
+function CDOTA_BaseNPC:CreateIllusion(duration, inc, out, pos, mod, ab)
+	if pos == nil then
+		pos = self:GetAbsOrigin() + RandomVector(100)
+	end
+
+	local illusion = CreateUnitByName(self:GetUnitName(), pos, true, self, nil, self:GetTeamNumber())
+	illusion:SetHealth(self:GetHealth())
+	illusion:SetMana(self:GetMana())
+	illusion:AddNewModifier(self, nil, "modifier_illusion", {duration = duration, outgoing_damage = out, incoming_damage = inc})
+	illusion:MakeIllusion()
+	FindClearSpaceForUnit(illusion, illusion:GetAbsOrigin(), true)
+
+	if mod then
+		for _, modifier in pairs(mod) do
+			illusion:AddNewModifier(self, ab, modifier, {})
+		end
+	end
+
+	return illusion
+end
+
+--[[Author: Noya
+	Editor: EarthSalamander #42
+	Date: 09.08.2015.
+	Hides all dem hats
+]]
+function CDOTA_BaseNPC:HideWearables(number)
+	local model = self:FirstMoveChild()
+	local i = 0
+
+	self.hiddenWearables = {} -- Keep every wearable handle in a table to show them later
+
+	Timers:CreateTimer(3.0, function()
+		while model do
+			print("model count/classname:", i, model:GetClassname())
+			if model:GetClassname() == "dota_item_wearable" then
+--			if model:GetClassname() == "dota_item_wearable" and i == number then
+				print("Model has been hidden:", model:GetClassname())
+				model:AddEffects(EF_NODRAW) -- Set model hidden
+				table.insert(self.hiddenWearables, model)
+			end
+
+			i = i + 1
+			model = model:NextMovePeer()
+		end
+	end)
+end
+
 -- Checks if a given unit is Roshan
 function CDOTA_BaseNPC:IsRoshan()
 	if self:GetName() == "npc_imba_roshan" or self:GetName() == "npc_dota_roshan" then

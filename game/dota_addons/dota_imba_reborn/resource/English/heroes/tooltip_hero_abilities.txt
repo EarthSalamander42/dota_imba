@@ -1707,11 +1707,8 @@
 "DOTA_Tooltip_ability_imba_necrolyte_ghost_shroud_healing_amp_tooltip"              "%ALLIES HEAL AMPLIFICATION:"
 "DOTA_Tooltip_ability_imba_necrolyte_ghost_shroud_slow_pct"            "%MOVEMENT SLOW:"
 
-"DOTA_Tooltip_modifier_imba_ghost_shroud_active"                  "Ghost Shroud"
-"DOTA_Tooltip_modifier_imba_ghost_shroud_active_Description"      "Ethereal with 100%% physical damage resistance, but more vulnerable to magical damage."
-
-"DOTA_Tooltip_modifier_imba_ghost_shroud_aura"                  "Ghost Shroud Aura"
-"DOTA_Tooltip_modifier_imba_ghost_shroud_aura_Description"      "Slowing nearby enemies and increasing healing effects received by nearby allies."
+"DOTA_Tooltip_modifier_imba_ghost_shroud_aura_debuff"                  "Ghost Shroud"
+"DOTA_Tooltip_modifier_imba_ghost_shroud_aura_debuff_Description"                   "Immune to physical damage, but taking more magical damage. Slows nearby enemies and increases healing received by nearby allies."
 
 "DOTA_Tooltip_modifier_imba_ghost_shroud_debuff"                        "Ghost Shroud"
 "DOTA_Tooltip_modifier_imba_ghost_shroud_debuff_Description"            "Movement speed slowed by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%."

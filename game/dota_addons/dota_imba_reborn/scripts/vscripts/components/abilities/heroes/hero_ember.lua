@@ -1,17 +1,17 @@
 --	IMBA Ember Spirit
 -- 	by Firetoad, 22.03.2018
 
-LinkLuaModifier("modifier_imba_flame_guard_aura", ""components/abilities/heroes/hero_ember.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_flame_guard_talent", ""components/abilities/heroes/hero_ember.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_flame_guard_passive", ""components/abilities/heroes/hero_ember.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_sleight_of_fist_caster", ""components/abilities/heroes/hero_ember.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_sleight_of_fist_marker", ""components/abilities/heroes/hero_ember.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_searing_chains_attack", ""components/abilities/heroes/hero_ember.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_searing_chains_debuff", ""components/abilities/heroes/hero_ember.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_fire_remnant_state", ""components/abilities/heroes/hero_ember.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_fire_remnant_charges", ""components/abilities/heroes/hero_ember.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_fire_remnant_cooldown", ""components/abilities/heroes/hero_ember.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_fire_remnant_dash", ""components/abilities/heroes/hero_ember.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_flame_guard_aura", "components/abilities/heroes/hero_ember.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_flame_guard_talent", "components/abilities/heroes/hero_ember.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_flame_guard_passive", "components/abilities/heroes/hero_ember.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_sleight_of_fist_caster", "components/abilities/heroes/hero_ember.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_sleight_of_fist_marker", "components/abilities/heroes/hero_ember.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_searing_chains_attack", "components/abilities/heroes/hero_ember.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_searing_chains_debuff", "components/abilities/heroes/hero_ember.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_fire_remnant_state", "components/abilities/heroes/hero_ember.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_fire_remnant_charges", "components/abilities/heroes/hero_ember.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_fire_remnant_cooldown", "components/abilities/heroes/hero_ember.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_fire_remnant_dash", "components/abilities/heroes/hero_ember.lua", LUA_MODIFIER_MOTION_NONE)
 
 --------------------------------------------------------------------------------
 

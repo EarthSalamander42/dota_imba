@@ -11,7 +11,7 @@
 -----------------------------------------------------------------
 modifier_imba_invisibility_rune_handler = modifier_imba_invisibility_rune_handler or class({})
 
-LinkLuaModifier("modifier_imba_invisibility_rune", "modifier/runes/modifier_imba_invisibility_rune", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_invisibility_rune", "components/modifiers/runes/modifier_imba_invisibility_rune", LUA_MODIFIER_MOTION_NONE)
 
 function modifier_imba_invisibility_rune_handler:IsHidden() return true end
 function modifier_imba_invisibility_rune_handler:IsDebuff() return false end

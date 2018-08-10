@@ -16,6 +16,12 @@
 --     Firetoad
 --     AtroCty, 20.04.2017
 
+LinkLuaModifier("modifier_special_bonus_imba_vengefulspirit_4", "components/abilities/heroes/hero_vengefulspirit.lua", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_vengefulspirit_4 = modifier_special_bonus_imba_vengefulspirit_4 or class({})
+
+function modifier_special_bonus_imba_vengefulspirit_4:IsHidden() return false end
+function modifier_special_bonus_imba_vengefulspirit_4:RemoveOnDeath() return false end
 function modifier_special_bonus_imba_vengefulspirit_4:IsAura()
 	return true
 end
@@ -54,7 +60,6 @@ end
 function modifier_special_bonus_imba_vengefulspirit_4:GetAuraSearchType()
 	return DOTA_UNIT_TARGET_HERO
 end
-
 
 -------------------------------------------
 --				 RANCOR

@@ -20,9 +20,9 @@
 -----------------------------
 
 imba_clinkz_strafe = class({})
-LinkLuaModifier("modifier_imba_strafe_aspd", "hero/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_strafe_mount", "hero/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_strafe_self_root", "hero/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_strafe_aspd", "components/abilities/heroes/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_strafe_mount", "components/abilities/heroes/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_strafe_self_root", "components/abilities/heroes/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
 
 function imba_clinkz_strafe:GetAbilityTextureName()
    return "clinkz_strafe"
@@ -133,12 +133,10 @@ end
 modifier_imba_strafe_aspd = class({})
 
 function modifier_imba_strafe_aspd:OnCreated()
-	self.caster = self:GetCaster()
-	self.ability = self:GetAbility()
 	self.modifier_mount = "modifier_imba_strafe_mount"
 
-	self.as_bonus = self.ability:GetSpecialValueFor("as_bonus")
-	self.bonus_attack_range = self.ability:GetSpecialValueFor("bonus_attack_range")
+	self.as_bonus = self:GetAbility():GetSpecialValueFor("as_bonus")
+	self.bonus_attack_range = self:GetAbility():GetSpecialValueFor("bonus_attack_range")
 end
 
 function modifier_imba_strafe_aspd:IsHidden() return false end
@@ -164,7 +162,7 @@ function modifier_imba_strafe_aspd:GetModifierAttackSpeedBonus_Constant()
 
 	-- 7.01, grants 2x the bonus when mounted
 	
-	if self.caster:HasModifier(self.modifier_mount) then 
+	if self:GetCaster():HasModifier(self.modifier_mount) then 
 		return self.as_bonus + self.as_bonus
 	else
 		return self.as_bonus 
@@ -175,13 +173,13 @@ end
 function modifier_imba_strafe_aspd:GetModifierAttackRangeBonus()
 
 	-- 7.01, grants buff when not mounted, also 2x the bonus when mounted	
-	if self.caster:HasModifier(self.modifier_mount) then 
+	if self:GetCaster():HasModifier(self.modifier_mount) then 
 		return self.bonus_attack_range + self.bonus_attack_range
 	else
 
 		-- 7.01, talent grants buff when not mounted, also 4x the bonus when casted on self		
-		if self.caster:HasModifier("modifier_imba_strafe_self_root") then
-		return self.bonus_attack_range * self.caster:FindTalentValue("special_bonus_imba_clinkz_5")
+		if self:GetCaster():HasModifier("modifier_imba_strafe_self_root") then
+		return self.bonus_attack_range * self:GetCaster():FindTalentValue("special_bonus_imba_clinkz_5")
 		else
 		return self.bonus_attack_range
 		end
@@ -196,21 +194,20 @@ modifier_imba_strafe_mount = class({})
 function modifier_imba_strafe_mount:OnCreated()
 	if IsServer() then
 		-- Ability properties
-		self.caster = self:GetCaster()
-		self.ability = self:GetAbility()        
+
 
 		-- Ability specials
-		self.duration = self.ability:GetSpecialValueFor("duration")
+		self.duration = self:GetAbility():GetSpecialValueFor("duration")
 
 		-- Wait a game tick so we can have the target assigned to this modifier
 		Timers:CreateTimer(FrameTime(), function()           
 			-- Get mount location
 			local direction = self.target:GetForwardVector()
-			local collision_radius = self.caster:GetPaddedCollisionRadius() + self.target:GetPaddedCollisionRadius() + 80
+			local collision_radius = self:GetCaster():GetPaddedCollisionRadius() + self.target:GetPaddedCollisionRadius() + 80
 			local mount_point = self.target:GetAbsOrigin() + direction * (-1) * collision_radius
 
 			-- Set Clinkz' location to it        
-			self.caster:SetAbsOrigin(mount_point)            
+			self:GetCaster():SetAbsOrigin(mount_point)            
 
 			-- Start thinking
 			self:StartIntervalThink(FrameTime())
@@ -232,10 +229,10 @@ end
 function modifier_imba_strafe_mount:OnIntervalThink()
 	if IsServer() then
 		-- Get new point        
-		local current_loc = self.caster:GetAbsOrigin()
+		local current_loc = self:GetCaster():GetAbsOrigin()
 
 		local direction = self.target:GetForwardVector()
-		local collision_radius = self.caster:GetPaddedCollisionRadius() + self.target:GetPaddedCollisionRadius() + 80
+		local collision_radius = self:GetCaster():GetPaddedCollisionRadius() + self.target:GetPaddedCollisionRadius() + 80
 		local mount_point = self.target:GetAbsOrigin() + direction * (-1) * collision_radius
 
 		local distance = (mount_point - current_loc):Length2D()
@@ -252,18 +249,18 @@ function modifier_imba_strafe_mount:OnIntervalThink()
 
 		if distance > 300 then
 			-- Set Clinkz' location to it        
-			self.caster:SetAbsOrigin(mount_point) 
+			self:GetCaster():SetAbsOrigin(mount_point) 
 		else
 			-- Move Clinkz toward it
 			direction = (mount_point - current_loc):Normalized()            
 			local target_movespeed = self.target:GetMoveSpeedModifier(self.target:GetBaseMoveSpeed())
 
 			local new_point = current_loc + direction * ((target_movespeed * 1.25) * FrameTime())
-			local ground_point = GetGroundPosition(new_point, self.caster)
+			local ground_point = GetGroundPosition(new_point, self:GetCaster())
 			new_point.z = ground_point.z
 
 			if distance > 25 then                
-				self.caster:SetAbsOrigin(new_point)
+				self:GetCaster():SetAbsOrigin(new_point)
 			end
 		end
 	end
@@ -272,9 +269,9 @@ end
 function modifier_imba_strafe_mount:OnRemoved()
 	if IsServer() then
 		-- Start cooldown, reduce it by the duration of the skill
-		if self.ability:IsCooldownReady() then
-			self.ability.time_remaining = self:GetRemainingTime()
-			self.ability:UseResources(false, false, true)
+		if self:GetAbility():IsCooldownReady() then
+			self:GetAbility().time_remaining = self:GetRemainingTime()
+			self:GetAbility():UseResources(false, false, true)
 		end
 	end
 end
@@ -299,8 +296,8 @@ end
 -----------------------------
 
 imba_clinkz_searing_arrows = class({})
-LinkLuaModifier("modifier_imba_searing_arrows_passive", "hero/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_searing_arrows_active", "hero/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_searing_arrows_passive", "components/abilities/heroes/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_searing_arrows_active", "components/abilities/heroes/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
 
 function imba_clinkz_searing_arrows:GetAbilityTextureName()
    return "clinkz_searing_arrows"
@@ -439,11 +436,9 @@ modifier_imba_searing_arrows_passive = class({})
 
 function modifier_imba_searing_arrows_passive:OnCreated()
 	-- Ability properties
-	self.caster = self:GetCaster()
-	self.ability = self:GetAbility()
 
 	-- Ability specials
-	self.bonus_damage = self.ability:GetSpecialValueFor("bonus_damage")
+	self.bonus_damage = self:GetAbility():GetSpecialValueFor("bonus_damage")
 end
 
 function modifier_imba_searing_arrows_passive:IsHidden() return true end
@@ -463,32 +458,32 @@ function modifier_imba_searing_arrows_passive:OnAttackStart(keys)
 		local target = keys.target
 
 		-- If the ability is null, do nothing
-		if self.ability:IsNull() then
+		if self:GetAbility():IsNull() then
 			return nil
 		end
 
 		-- If the ability is stolen, do nothing
-		if self.ability:IsStolen() then
+		if self:GetAbility():IsStolen() then
 			return nil
 		end
 
 		-- If the target is not a valid Searing Arrow target, do nothing
 		if not target:IsHero() and not target:IsBuilding() and not target:IsCreep() then
-			SetArrowAttackProjectile(self.caster, false)
+			SetArrowAttackProjectile(self:GetCaster(), false)
 			return nil
 		end          
 
 		-- Only apply to the caster's attacks on enemy team
-		if self.caster == attacker and self.caster:GetTeamNumber() ~= target:GetTeamNumber() then
+		if self:GetCaster() == attacker and self:GetCaster():GetTeamNumber() ~= target:GetTeamNumber() then
 			-- Change to correct projectile
-			if self.caster:PassivesDisabled() then
-				SetArrowAttackProjectile(self.caster, false)
+			if self:GetCaster():PassivesDisabled() then
+				SetArrowAttackProjectile(self:GetCaster(), false)
 			else
-				SetArrowAttackProjectile(self.caster, true)
+				SetArrowAttackProjectile(self:GetCaster(), true)
 
-				if self.caster:HasTalent("special_bonus_imba_clinkz_7") then				
-					if RollPercentage(self.caster:FindTalentValue("special_bonus_imba_clinkz_7")) then
-					   self.caster:PerformAttack(target, false, true, true, false, true, false, false)
+				if self:GetCaster():HasTalent("special_bonus_imba_clinkz_7") then				
+					if RollPercentage(self:GetCaster():FindTalentValue("special_bonus_imba_clinkz_7")) then
+					   self:GetCaster():PerformAttack(target, false, true, true, false, true, false, false)
 					end
 				end
 			end        
@@ -499,17 +494,17 @@ end
 
 function modifier_imba_searing_arrows_passive:GetModifierBaseAttack_BonusDamage()
 	-- If the ability is null, do nothing
-	if self.ability:IsNull() then
+	if self:GetAbility():IsNull() then
 		return nil
 	end
 	
 	-- Ignore if it is a stolen ability
-	if self.ability:IsStolen() then
+	if self:GetAbility():IsStolen() then
 		return nil
 	end
 
-	if not self.caster:PassivesDisabled() then
-		return self.bonus_damage -- + self.caster:FindTalentValue("special_bonus_imba_clinkz_3")
+	if not self:GetCaster():PassivesDisabled() then
+		return self.bonus_damage -- + self:GetCaster():FindTalentValue("special_bonus_imba_clinkz_3")
 	end
 
 	return nil
@@ -647,21 +642,18 @@ function modifier_imba_searing_arrows_active:IsPurgable() return true end
 function modifier_imba_searing_arrows_active:IsDebuff() return true end
 
 function modifier_imba_searing_arrows_active:OnCreated()
-		-- Ability properties
-		self.caster = self:GetCaster()
-		self.ability = self:GetAbility()
-		self.parent = self:GetParent()
-		self.particle_flame = "particles/hero/clinkz/searing_flames_active/burn_effect.vpcf"
+	-- Ability properties
+	self.particle_flame = "particles/hero/clinkz/searing_flames_active/burn_effect.vpcf"
 
-		-- Ability specials
-		self.vision_radius = self.ability:GetSpecialValueFor("vision_radius")
-		self.active_tick_interval = self.ability:GetSpecialValueFor("active_tick_interval")        
-		self.armor_burn_per_stack = self.ability:GetSpecialValueFor("armor_burn_per_stack")
+	-- Ability specials
+	self.vision_radius = self:GetAbility():GetSpecialValueFor("vision_radius")
+	self.active_tick_interval = self:GetAbility():GetSpecialValueFor("active_tick_interval")        
+	self.armor_burn_per_stack = self:GetAbility():GetSpecialValueFor("armor_burn_per_stack")
 
 	if IsServer() then
 		-- Add and attach flaming particle
-		self.particle_flame_fx = ParticleManager:CreateParticle(self.particle_flame, PATTACH_POINT_FOLLOW, self.parent)
-		ParticleManager:SetParticleControlEnt(self.particle_flame_fx, 0, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)
+		self.particle_flame_fx = ParticleManager:CreateParticle(self.particle_flame, PATTACH_POINT_FOLLOW, self:GetParent())
+		ParticleManager:SetParticleControlEnt(self.particle_flame_fx, 0, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
 
 		self:AddParticle(self.particle_flame_fx, false, false, -1, false, false)        
 		
@@ -681,7 +673,7 @@ function modifier_imba_searing_arrows_active:OnCreated()
 end
 
 function modifier_imba_searing_arrows_active:OnIntervalThink()    
-	AddFOWViewer(self.caster:GetTeamNumber(), self.parent:GetAbsOrigin(), self.vision_radius, FrameTime(), false)		     
+	AddFOWViewer(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), self.vision_radius, FrameTime(), false)		     
 end
 
 function modifier_imba_searing_arrows_active:DeclareFunctions()
@@ -698,10 +690,10 @@ end
 -----------------------------
 
 imba_clinkz_skeleton_walk = class({})
-LinkLuaModifier("modifier_imba_skeleton_walk_invis", "hero/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_skeleton_walk_spook", "hero/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_skeleton_walk_talent_root", "hero/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_skeleton_walk_talent_ms", "hero/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_skeleton_walk_invis", "components/abilities/heroes/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_skeleton_walk_spook", "components/abilities/heroes/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_skeleton_walk_talent_root", "components/abilities/heroes/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_skeleton_walk_talent_ms", "components/abilities/heroes/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
 
 function imba_clinkz_skeleton_walk:GetAbilityTextureName()
    return "clinkz_wind_walk"
@@ -714,7 +706,6 @@ end
 function imba_clinkz_skeleton_walk:OnSpellStart()
 	-- Ability properties
 	local caster = self:GetCaster()
-	local ability = self
 	local particle_invis = "particles/units/heroes/hero_clinkz/clinkz_windwalk.vpcf"
 	local sound_cast = "Hero_Clinkz.WindWalk"
 	local modifier_invis = "modifier_imba_skeleton_walk_invis"
@@ -722,7 +713,7 @@ function imba_clinkz_skeleton_walk:OnSpellStart()
 	local modifier_mount = "modifier_imba_strafe_mount"
 
 	-- Ability specials
-	local duration = ability:GetSpecialValueFor("duration")
+	local duration = self:GetSpecialValueFor("duration")
 
 	-- Play cast sound
 	EmitSoundOn(sound_cast, caster)
@@ -733,7 +724,7 @@ function imba_clinkz_skeleton_walk:OnSpellStart()
 	ParticleManager:SetParticleControl(particle_invis_fx, 1, caster:GetAbsOrigin())
 
 	-- Apply invisibilty modifier on self
-	caster:AddNewModifier(caster, ability, modifier_invis, {duration = duration})
+	caster:AddNewModifier(caster, self, modifier_invis, {duration = duration})
 
 	-- Scepter skeleton walk on mounted 
 	if scepter then        
@@ -741,7 +732,7 @@ function imba_clinkz_skeleton_walk:OnSpellStart()
 			local modifier_mount_handler = caster:FindModifierByName(modifier_mount)
 			if modifier_mount_handler then
 				local mounted_ally = modifier_mount_handler.target
-				mounted_ally:AddNewModifier(caster, ability, modifier_invis, {duration = modifier_mount_handler:GetRemainingTime()})
+				mounted_ally:AddNewModifier(caster, self, modifier_invis, {duration = modifier_mount_handler:GetRemainingTime()})
 			end
 		end
 
@@ -757,40 +748,37 @@ function modifier_imba_skeleton_walk_invis:IsDebuff() return false end
 
 function modifier_imba_skeleton_walk_invis:OnCreated()
 	-- Ability properties
-	self.caster = self:GetCaster()
-	self.ability = self:GetAbility()
-	self.parent = self:GetParent()
 	self.sound_cast = "Hero_Clinkz.WindWalk"
 	self.modifier_spook = "modifier_imba_skeleton_walk_spook"        
 	self.modifier_talent_ms = "modifier_imba_skeleton_walk_talent_ms"
 	self.modifier_mount = "modifier_imba_strafe_mount"   
 
 	-- Ability specials
-	self.ms_bonus_pct = self.ability:GetSpecialValueFor("ms_bonus_pct")
-	self.spook_radius = self.ability:GetSpecialValueFor("spook_radius")
-	self.base_spook_duration = self.ability:GetSpecialValueFor("base_spook_duration")
-	self.spook_distance_inc = self.ability:GetSpecialValueFor("spook_distance_inc")
-	self.spook_added_duration = self.ability:GetSpecialValueFor("spook_added_duration")    
+	self.ms_bonus_pct = self:GetAbility():GetSpecialValueFor("ms_bonus_pct")
+	self.spook_radius = self:GetAbility():GetSpecialValueFor("spook_radius")
+	self.base_spook_duration = self:GetAbility():GetSpecialValueFor("base_spook_duration")
+	self.spook_distance_inc = self:GetAbility():GetSpecialValueFor("spook_distance_inc")
+	self.spook_added_duration = self:GetAbility():GetSpecialValueFor("spook_added_duration")    
 		
 	-- Talent: Increases Clinkz Skeleton Walk movement speed if no enemies are nearby.
 	if IsServer() then
 		self:StartIntervalThink(0.2)
 	end
 end
-	
+
 function modifier_imba_skeleton_walk_invis:OnIntervalThink()
 	if IsServer() then
 		-- If it is someone else from the caster (agh effect) then
 		-- Check if the caster still has the Mounted buff. Remove it if he doesn't.    
-		if self.parent ~= self.caster then
-			if not self.caster:HasModifier(self.modifier_mount) then
+		if self:GetParent() ~= self:GetCaster() then
+			if not self:GetCaster():HasModifier(self.modifier_mount) then
 				self:Destroy()
 			end
 		end	
 	
 		-- Talent: Increases Clinkz Skeleton Walk movement speed if no enemies are nearby.	
-		local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(),
-											self.caster:GetAbsOrigin(),
+		local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(),
+											self:GetCaster():GetAbsOrigin(),
 											nil,
 											self.spook_radius,
 											DOTA_UNIT_TARGET_TEAM_ENEMY,
@@ -799,19 +787,19 @@ function modifier_imba_skeleton_walk_invis:OnIntervalThink()
 											FIND_ANY_ORDER,
 											false)
 											
-		if self.caster:HasTalent("special_bonus_imba_clinkz_2") then
+		if self:GetCaster():HasTalent("special_bonus_imba_clinkz_2") then
 			if #enemies > 0 then			    
-				self:SetStackCount(self.caster:FindTalentValue("special_bonus_imba_clinkz_2"))
+				self:SetStackCount(self:GetCaster():FindTalentValue("special_bonus_imba_clinkz_2"))
 			else
 				self:SetStackCount(0)
 			end
 		end
 			
 	   -- Talent: If Clinkz passed through an enemy, root him and Clinkz loses Invisibility.	
-		if self.caster:HasTalent("special_bonus_imba_clinkz_3") then				
+		if self:GetCaster():HasTalent("special_bonus_imba_clinkz_3") then				
 		
-		local enemy_heroes = FindUnitsInRadius(self.parent:GetTeamNumber(),
-											self.parent:GetAbsOrigin(),
+		local enemy_heroes = FindUnitsInRadius(self:GetParent():GetTeamNumber(),
+											self:GetParent():GetAbsOrigin(),
 											nil,
 											128,
 											DOTA_UNIT_TARGET_TEAM_ENEMY,
@@ -823,7 +811,7 @@ function modifier_imba_skeleton_walk_invis:OnIntervalThink()
 			for _,enemy in pairs(enemy_heroes) do				
 				-- Stop at the first valid enemy that isn't magic immune
 				if not enemy:IsMagicImmune() then
-					enemy:AddNewModifier(self.caster, self.ability, "modifier_imba_skeleton_walk_talent_root", {duration = self.caster:FindTalentValue("special_bonus_imba_clinkz_3")})
+					enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_skeleton_walk_talent_root", {duration = self:GetCaster():FindTalentValue("special_bonus_imba_clinkz_3")})
 
 					-- If an enemy was rooted successfully, remove Clinkz's invisibility
 					if enemy:HasModifier("modifier_imba_skeleton_walk_talent_root") then
@@ -877,9 +865,9 @@ function modifier_imba_skeleton_walk_invis:OnAbilityExecuted(keys)
 		local caster = keys.unit        
 
 		-- Only apply when Clinkz was the one who activated an ability        
-		if self.parent == caster then            
-			local enemy = FindUnitsInRadius(self.parent:GetTeamNumber(),
-											self.parent:GetAbsOrigin(),
+		if self:GetParent() == caster then            
+			local enemy = FindUnitsInRadius(self:GetParent():GetTeamNumber(),
+											self:GetParent():GetAbsOrigin(),
 											nil,
 											1000,
 											DOTA_UNIT_TARGET_TEAM_ENEMY,
@@ -889,7 +877,7 @@ function modifier_imba_skeleton_walk_invis:OnAbilityExecuted(keys)
 											false)
 
 			-- Check if Clinkz is visible to the enemy when appearing            
-			if enemy[1] and enemy[1]:CanEntityBeSeenByMyTeam(self.parent) then
+			if enemy[1] and enemy[1]:CanEntityBeSeenByMyTeam(self:GetParent()) then
 				self.detected = true
 			end
 
@@ -904,10 +892,10 @@ function modifier_imba_skeleton_walk_invis:OnAttack(keys)
 		local attacker = keys.attacker
 
 		-- Only apply when Clinkz was the one attacking anything
-		if self.parent == attacker then
+		if self:GetParent() == attacker then
 			-- Find nearby closest enemy
-			local enemy = FindUnitsInRadius(self.parent:GetTeamNumber(),
-											self.parent:GetAbsOrigin(),
+			local enemy = FindUnitsInRadius(self:GetParent():GetTeamNumber(),
+											self:GetParent():GetAbsOrigin(),
 											nil,
 											1000,
 											DOTA_UNIT_TARGET_TEAM_ENEMY,
@@ -917,7 +905,7 @@ function modifier_imba_skeleton_walk_invis:OnAttack(keys)
 											false)
 			
 			-- Check if Clinkz is visible to the enemy when appearing            
-			if enemy[1] and enemy[1]:CanEntityBeSeenByMyTeam(self.parent) then
+			if enemy[1] and enemy[1]:CanEntityBeSeenByMyTeam(self:GetParent()) then
 				self.detected = true
 			end            
  
@@ -930,8 +918,8 @@ end
 function modifier_imba_skeleton_walk_invis:OnRemoved()
 	if IsServer() then
 		-- #6 Talent: Skeleton Walk move speed persists for a small period
-		if self.caster:HasTalent("special_bonus_imba_clinkz_6") then
-			self.parent:AddNewModifier(self.caster, self.ability, self.modifier_talent_ms, {duration = self.caster:FindTalentValue("special_bonus_imba_clinkz_6")})
+		if self:GetCaster():HasTalent("special_bonus_imba_clinkz_6") then
+			self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), self.modifier_talent_ms, {duration = self:GetCaster():FindTalentValue("special_bonus_imba_clinkz_6")})
 		end        
 
 		-- Only apply if Clinkz wasn't detected before removing modifier
@@ -940,16 +928,16 @@ function modifier_imba_skeleton_walk_invis:OnRemoved()
 		end
 
 		-- If Clinkz died, when it was removed, do nothing
-		if not self.caster:IsAlive() then
+		if not self:GetCaster():IsAlive() then
 			return nil
 		end
 
 		-- Play cast sound, yes, again
-		EmitSoundOn(self.sound_cast, self.parent)
+		EmitSoundOn(self.sound_cast, self:GetParent())
 		
 		-- Find nearby enemies
-		local enemies = FindUnitsInRadius(self.parent:GetTeamNumber(),
-										  self.parent:GetAbsOrigin(),
+		local enemies = FindUnitsInRadius(self:GetParent():GetTeamNumber(),
+										  self:GetParent():GetAbsOrigin(),
 										  nil,
 										  self.spook_radius,
 										  DOTA_UNIT_TARGET_TEAM_ENEMY,
@@ -963,13 +951,13 @@ function modifier_imba_skeleton_walk_invis:OnRemoved()
 			-- Only apply on non-magic immune enemies
 			if not enemy:IsMagicImmune() then
 				-- Calculate distance to each enemy
-				local distance = (enemy:GetAbsOrigin() - self.parent:GetAbsOrigin()):Length2D()
+				local distance = (enemy:GetAbsOrigin() - self:GetParent():GetAbsOrigin()):Length2D()
 
 				-- Calculate spook duration
 				local spook_duration = self.base_spook_duration + (((self.spook_radius - distance) / self.spook_distance_inc) * self.spook_added_duration)
 
 				-- Apply spook for the duration
-				enemy:AddNewModifier(self.parent, self.ability, self.modifier_spook, {duration = spook_duration})
+				enemy:AddNewModifier(self:GetParent(), self:GetAbility(), self.modifier_spook, {duration = spook_duration})
 			end
 		end
 		
@@ -977,7 +965,7 @@ function modifier_imba_skeleton_walk_invis:OnRemoved()
 		local spook_likelihood = 10
 		if #enemies > 0 and RollPercentage(spook_likelihood) then
 			-- sPo0kY sCaRy sKeLeToNs
-			EmitSoundOn("Imba.ClinkzSpooky", self.parent)
+			EmitSoundOn("Imba.ClinkzSpooky", self:GetParent())
 		end
 	end
 end
@@ -992,25 +980,23 @@ function modifier_imba_skeleton_walk_spook:IsDebuff() return true end
 function modifier_imba_skeleton_walk_spook:OnCreated()
 	if IsServer() then
 		-- Ability properties
-		self.caster = self:GetCaster()
-		self.ability = self:GetAbility()
-		self.parent = self:GetParent()
+
 		self.particle_spook = "particles/hero/clinkz/spooked/spooky_skull.vpcf"        
 
 		-- Add particle
-		self.particle_spook_fx = ParticleManager:CreateParticle(self.particle_spook, PATTACH_OVERHEAD_FOLLOW, self.parent)
-		ParticleManager:SetParticleControl(self.particle_spook_fx, 0, self.parent:GetAbsOrigin())
-		ParticleManager:SetParticleControl(self.particle_spook_fx, 3, self.parent:GetAbsOrigin())
+		self.particle_spook_fx = ParticleManager:CreateParticle(self.particle_spook, PATTACH_OVERHEAD_FOLLOW, self:GetParent())
+		ParticleManager:SetParticleControl(self.particle_spook_fx, 0, self:GetParent():GetAbsOrigin())
+		ParticleManager:SetParticleControl(self.particle_spook_fx, 3, self:GetParent():GetAbsOrigin())
 
 		self:AddParticle(self.particle_spook_fx, false, false, -1, false, true)        
 
 		self.reacting = true
 
 		-- Determine location to force move to
-		local direction = (self.parent:GetAbsOrigin() - self.caster:GetAbsOrigin()):Normalized()
-		local location = self.parent:GetAbsOrigin() + direction * 500
+		local direction = (self:GetParent():GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Normalized()
+		local location = self:GetParent():GetAbsOrigin() + direction * 500
 
-		local newOrder = {UnitIndex = self.parent:entindex(), 
+		local newOrder = {UnitIndex = self:GetParent():entindex(), 
 						  OrderType = DOTA_UNIT_ORDER_MOVE_TO_POSITION,                 
 						  Position = location}
  
@@ -1033,16 +1019,16 @@ function modifier_imba_skeleton_walk_spook:OnIntervalThink()
 		self.qangle_angle = 0
 	end
 
-	local direction = (self.parent:GetAbsOrigin() - self.caster:GetAbsOrigin()):Normalized()        
-	local location = self.parent:GetAbsOrigin() + direction * 500    
-	local final_location = RotatePosition(self.parent:GetAbsOrigin(), qangle, location)
+	local direction = (self:GetParent():GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Normalized()        
+	local location = self:GetParent():GetAbsOrigin() + direction * 500    
+	local final_location = RotatePosition(self:GetParent():GetAbsOrigin(), qangle, location)
 
-	self.parent:MoveToPosition(final_location)  
+	self:GetParent():MoveToPosition(final_location)  
 end
 
 function modifier_imba_skeleton_walk_spook:OnDestroy()
 	if IsServer() then
-		self.parent:Stop()
+		self:GetParent():Stop()
 	end
 end
 
@@ -1075,10 +1061,7 @@ function modifier_imba_skeleton_walk_talent_ms:IsPurgable() return true end
 function modifier_imba_skeleton_walk_talent_ms:IsDebuff() return false end
 
 function modifier_imba_skeleton_walk_talent_ms:OnCreated()
-	self.caster = self:GetCaster()
-	self.ability = self:GetAbility()   
-
-	self.ms_bonus_pct = self.ability:GetSpecialValueFor("ms_bonus_pct")
+	self.ms_bonus_pct = self:GetAbility():GetSpecialValueFor("ms_bonus_pct")
 	
 	
 	-- FUUUUUUSION Talent: Increases Clinkz Skeleton Walk movement speed if no enemies are nearby. + Talent 6
@@ -1089,10 +1072,10 @@ end
 
 function modifier_imba_skeleton_walk_talent_ms:OnIntervalThink()
 	if IsServer() then
-		if self.caster:HasTalent("special_bonus_imba_clinkz_2") then
-			self.spook_radius = self.ability:GetSpecialValueFor("spook_radius")
-			local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(),
-											self.caster:GetAbsOrigin(),
+		if self:GetCaster():HasTalent("special_bonus_imba_clinkz_2") then
+			self.spook_radius = self:GetAbility():GetSpecialValueFor("spook_radius")
+			local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(),
+											self:GetCaster():GetAbsOrigin(),
 											nil,
 											self.spook_radius,
 											DOTA_UNIT_TARGET_TEAM_ENEMY,
@@ -1101,9 +1084,9 @@ function modifier_imba_skeleton_walk_talent_ms:OnIntervalThink()
 											FIND_ANY_ORDER,
 											false)
 			if #enemies > 0 then
-			self.ms_bonus_pct = self.ability:GetSpecialValueFor("ms_bonus_pct") + self.caster:FindTalentValue("special_bonus_imba_clinkz_2")
+			self.ms_bonus_pct = self:GetAbility():GetSpecialValueFor("ms_bonus_pct") + self:GetCaster():FindTalentValue("special_bonus_imba_clinkz_2")
 			else
-			self.ms_bonus_pct = self.ability:GetSpecialValueFor("ms_bonus_pct")
+			self.ms_bonus_pct = self:GetAbility():GetSpecialValueFor("ms_bonus_pct")
 			end
 		end
 	end
@@ -1127,15 +1110,15 @@ end
 -----------------------------
 
 imba_clinkz_death_pact = class({})
-LinkLuaModifier("modifier_imba_death_pact_buff", "hero/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_death_pact_stack_creep", "hero/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_death_pact_stack_hero", "hero/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_death_pact_talent_debuff", "hero/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_death_pact_talent_buff", "hero/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_death_pact_hero_debuff", "hero/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_death_pact_spirit_aura", "hero/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_death_pact_spirit_attack_range", "hero/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_death_pact_bonus_spirited", "hero/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_death_pact_buff", "components/abilities/heroes/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_death_pact_stack_creep", "components/abilities/heroes/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_death_pact_stack_hero", "components/abilities/heroes/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_death_pact_talent_debuff", "components/abilities/heroes/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_death_pact_talent_buff", "components/abilities/heroes/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_death_pact_hero_debuff", "components/abilities/heroes/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_death_pact_spirit_aura", "components/abilities/heroes/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_death_pact_spirit_attack_range", "components/abilities/heroes/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_death_pact_bonus_spirited", "components/abilities/heroes/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
 
 function imba_clinkz_death_pact:GetAbilityTextureName()
    return "clinkz_death_pact"
@@ -1364,18 +1347,16 @@ function modifier_imba_death_pact_stack_creep:IsDebuff() return false end
 
 function modifier_imba_death_pact_stack_creep:OnCreated()
 	-- Ability properties
-	self.caster = self:GetCaster()
-	self.ability = self:GetAbility()
 	self.particle_pact_buff = "particles/units/heroes/hero_clinkz/clinkz_death_pact_buff.vpcf"
 
 	-- Ability specials		
-	self.creep_bonus_hp_pct = self.ability:GetSpecialValueFor("creep_bonus_hp_pct")
-	self.creep_bonus_dmg_pct = self.ability:GetSpecialValueFor("creep_bonus_dmg_pct")  
+	self.creep_bonus_hp_pct = self:GetAbility():GetSpecialValueFor("creep_bonus_hp_pct")
+	self.creep_bonus_dmg_pct = self:GetAbility():GetSpecialValueFor("creep_bonus_dmg_pct")  
 
 	-- Add buff effect
-	self.particle_pact_buff_fx = ParticleManager:CreateParticle(self.particle_pact_buff, PATTACH_POINT_FOLLOW, self.caster)
-	ParticleManager:SetParticleControlEnt(self.particle_pact_buff_fx, 0, self.caster, PATTACH_POINT_FOLLOW, "attach_hitloc", self.caster:GetAbsOrigin(), true)
-	ParticleManager:SetParticleControl(self.particle_pact_buff_fx, 2, self.caster:GetAbsOrigin())
+	self.particle_pact_buff_fx = ParticleManager:CreateParticle(self.particle_pact_buff, PATTACH_POINT_FOLLOW, self:GetCaster())
+	ParticleManager:SetParticleControlEnt(self.particle_pact_buff_fx, 0, self:GetCaster(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetCaster():GetAbsOrigin(), true)
+	ParticleManager:SetParticleControl(self.particle_pact_buff_fx, 2, self:GetCaster():GetAbsOrigin())
 	ParticleManager:SetParticleControl(self.particle_pact_buff_fx, 8, Vector(1,0,0))
 
 	self:AddParticle(self.particle_pact_buff_fx, false, false, -1, false, false)
@@ -1383,7 +1364,7 @@ function modifier_imba_death_pact_stack_creep:OnCreated()
 	if IsServer() then        
 		Timers:CreateTimer(FrameTime(), function()
 			local stacks = self:GetStackCount()
-			self.caster:Heal(self.creep_bonus_hp_pct * 0.01 * stacks, self.caster)            
+			self:GetCaster():Heal(self.creep_bonus_hp_pct * 0.01 * stacks, self:GetCaster())            
 		end)
 	end
 end
@@ -1413,7 +1394,7 @@ end
 -- Creeps killed are turned into spirits
 
 modifier_imba_death_pact_spirit_aura = class({})
-LinkLuaModifier("modifier_imba_death_pact_spirit_aura_invis", "hero/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_death_pact_spirit_aura_invis", "components/abilities/heroes/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
 
 function modifier_imba_death_pact_spirit_aura:IsHidden() return true end
 function modifier_imba_death_pact_spirit_aura:IsPurgable() return false end
@@ -1421,35 +1402,34 @@ function modifier_imba_death_pact_spirit_aura:IsDebuff() return false end
 
 function modifier_imba_death_pact_spirit_aura:OnCreated()
 	if IsServer() then
-		self.caster = self:GetCaster() -- Tax Collector
-		self.ability = self:GetAbility()
-		self.parent = self:GetParent() -- Taxed Spirits
+ -- Tax Collector
+ -- Taxed Spirits
 		
 		-- Ability Specials
 		local modifier_bonus_spirited = "modifier_imba_death_pact_bonus_spirited"
-		local duration = self.ability:GetSpecialValueFor("duration")        
+		local duration = self:GetAbility():GetSpecialValueFor("duration")        
 		
 		-- YOU SHALL NOT ATTKCK!
-		self.parent:SetAttackCapability(DOTA_UNIT_CAP_NO_ATTACK)
+		self:GetParent():SetAttackCapability(DOTA_UNIT_CAP_NO_ATTACK)
 	
 		-- Wait a game tick so we can have the target assigned to this modifier
 		 Timers:CreateTimer(FrameTime(), function()
 			-- Get mount location
 			
-			local direction = self.caster:GetForwardVector()
-			local collision_radius = self.caster:GetPaddedCollisionRadius() + self.parent:GetPaddedCollisionRadius() + 80
-			local mount_point = self.caster:GetAbsOrigin() + direction * (-1) * collision_radius
+			local direction = self:GetCaster():GetForwardVector()
+			local collision_radius = self:GetCaster():GetPaddedCollisionRadius() + self:GetParent():GetPaddedCollisionRadius() + 80
+			local mount_point = self:GetCaster():GetAbsOrigin() + direction * (-1) * collision_radius
 
 			-- Set the Sp0000000ky spirit behind Clinkz!        
-			self.parent:SetAbsOrigin(mount_point)   
+			self:GetParent():SetAbsOrigin(mount_point)   
 
 
 			-- Add particle effect
 			local particle_pact = "particles/units/heroes/hero_clinkz/clinkz_death_pact.vpcf"
-			local particle_pact_fx = ParticleManager:CreateParticle(particle_pact, PATTACH_ABSORIGIN_FOLLOW, self.parent)
-			ParticleManager:SetParticleControl(particle_pact_fx, 0, self.parent:GetAbsOrigin())
-			ParticleManager:SetParticleControl(particle_pact_fx, 1, self.parent:GetAbsOrigin())
-			ParticleManager:SetParticleControl(particle_pact_fx, 5, self.parent:GetAbsOrigin())			
+			local particle_pact_fx = ParticleManager:CreateParticle(particle_pact, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+			ParticleManager:SetParticleControl(particle_pact_fx, 0, self:GetParent():GetAbsOrigin())
+			ParticleManager:SetParticleControl(particle_pact_fx, 1, self:GetParent():GetAbsOrigin())
+			ParticleManager:SetParticleControl(particle_pact_fx, 5, self:GetParent():GetAbsOrigin())			
 				
 			-- HEY TAX COLLECTOR, YOU THERE?
 			self:StartIntervalThink(FrameTime())
@@ -1461,51 +1441,51 @@ function modifier_imba_death_pact_spirit_aura:OnIntervalThink(keys)
 	if IsServer() then
 		
 		-- Clinkz Spirit Talent bonus, wait a game tick so that it doesn't interact with the original bonus Clinkz gain.
-		if self.caster:HasTalent("special_bonus_imba_clinkz_1") then
-		   self.parent:SetAttackCapability(DOTA_UNIT_CAP_RANGED_ATTACK)
+		if self:GetCaster():HasTalent("special_bonus_imba_clinkz_1") then
+		   self:GetParent():SetAttackCapability(DOTA_UNIT_CAP_RANGED_ATTACK)
 		end
 		
 		local modifier_spirit_invis = "modifier_imba_death_pact_spirit_aura_invis"
 		
 		-- IT'S NOT FAIR IF YOU'RE INVISIBLE WHILE I'M NOT!
-		if self.caster:IsImbaInvisible() then
-		  self.parent:AddNewModifier(self.caster, self.ability, modifier_spirit_invis, {})
+		if self:GetCaster():IsImbaInvisible() then
+		  self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), modifier_spirit_invis, {})
 		else
-		  self.parent:RemoveModifierByName(modifier_spirit_invis)
+		  self:GetParent():RemoveModifierByName(modifier_spirit_invis)
 		end
 		
 		-- Get new point        
-		local current_loc = self.parent:GetAbsOrigin()
+		local current_loc = self:GetParent():GetAbsOrigin()
 
-		local direction = self.caster:GetForwardVector()
-		local collision_radius = self.caster:GetPaddedCollisionRadius() + self.parent:GetPaddedCollisionRadius() + 80
-		local mount_point = self.caster:GetAbsOrigin() + direction * (-1) * collision_radius
+		local direction = self:GetCaster():GetForwardVector()
+		local collision_radius = self:GetCaster():GetPaddedCollisionRadius() + self:GetParent():GetPaddedCollisionRadius() + 80
+		local mount_point = self:GetCaster():GetAbsOrigin() + direction * (-1) * collision_radius
 
 		local distance = (mount_point - current_loc):Length2D()
 
 		-- If Clinkz died, kill the tax payer
-		if not self.caster:IsAlive() then
-			self.parent:Kill(self.ability, self.caster)
+		if not self:GetCaster():IsAlive() then
+			self:GetParent():Kill(self:GetAbility(), self:GetCaster())
 		end
 		
 		-- Set the distance behind Clinkz. TAX PAYER, YOU MUST NOT ESCAPE
 		
 		-- F A C E Y O U R M A S T E R
-		self.parent:SetForwardVector(direction)
+		self:GetParent():SetForwardVector(direction)
 		
 		if distance > 300 then
 			-- Set it to Clinkz' location        
-			self.parent:SetAbsOrigin(mount_point)            
+			self:GetParent():SetAbsOrigin(mount_point)            
 		else
 			direction = (mount_point - current_loc):Normalized()
-			local Clinkz_move_speed = self.caster:GetMoveSpeedModifier(self.caster:GetBaseMoveSpeed())
+			local Clinkz_move_speed = self:GetCaster():GetMoveSpeedModifier(self:GetCaster():GetBaseMoveSpeed())
 
 			local new_point = current_loc + direction * ((Clinkz_move_speed * 1.25) * FrameTime())
-			local ground_point = GetGroundPosition(new_point, self.parent)
+			local ground_point = GetGroundPosition(new_point, self:GetParent())
 			new_point.z = ground_point.z
 
 			if distance > 25 then                
-				self.parent:SetAbsOrigin(new_point)
+				self:GetParent():SetAbsOrigin(new_point)
 			end
 		end    
 	end
@@ -1535,16 +1515,16 @@ function modifier_imba_death_pact_spirit_aura:OnAttackLanded(keys)
 	local attacker = keys.attacker
 	local modifier_spirited_aura = "modifier_imba_death_pact_spirit_aura"
 
-	if target == self.parent then
+	if target == self:GetParent() then
 
 		-- If the attacker is not a creep, deal damage.
 		if attacker:IsHero() or attacker:IsTower() or attacker:IsRoshan() then
 			-- If the damage is enough to kill the spirit, destroy it 
-			if self.parent:GetHealth() <= 1 then 
-				self.parent:Kill(self.ability, attacker)
+			if self:GetParent():GetHealth() <= 1 then 
+				self:GetParent():Kill(self:GetAbility(), attacker)
 			-- Else, reduce its HP
 			else
-			self.parent:SetHealth(self.parent:GetHealth() - 1)
+			self:GetParent():SetHealth(self:GetParent():GetHealth() - 1)
 			end
 		else
 			return nil
@@ -1556,8 +1536,8 @@ end
 function modifier_imba_death_pact_spirit_aura:OnRemoved()
 	if IsServer() then
 	-- When the Spirit dies, remove Clinkz the bonuses
-	self.parent:SetOriginalModel("models/creeps/neutral_creeps/n_creep_ghost_b/n_creep_ghost_frost.vmdl")
-	self.caster:RemoveModifierByName("modifier_imba_death_pact_bonus_spirited")
+	self:GetParent():SetOriginalModel("models/creeps/neutral_creeps/n_creep_ghost_b/n_creep_ghost_frost.vmdl")
+	self:GetCaster():RemoveModifierByName("modifier_imba_death_pact_bonus_spirited")
 	end
 end
 				
@@ -1611,12 +1591,9 @@ function modifier_imba_death_pact_spirit_attack_range:IsDebuff() return false en
 function modifier_imba_death_pact_spirit_attack_range:OnCreated()
   -- Ability properties
  if IsServer() then
-	self.caster = self:GetCaster()
-	self.ability = self:GetAbility()
-	self.parent = self:GetParent()
 	
-	self.spirit_attack_range = self.caster:GetAttackRange()
-	self.spirit_damage = self.caster:GetAttackDamage() -- GetBaseDamageMax
+	self.spirit_attack_range = self:GetCaster():GetAttackRange()
+	self.spirit_damage = self:GetCaster():GetAttackDamage() -- GetBaseDamageMax
 	
 	self:StartIntervalThink(1)
  end
@@ -1624,7 +1601,7 @@ end
 
 function modifier_imba_death_pact_spirit_attack_range:OnIntervalThink()
  if IsServer() then
-	self.spirit_attack_range = self.caster:GetAttackRange()
+	self.spirit_attack_range = self:GetCaster():GetAttackRange()
  end
 end
 
@@ -1652,17 +1629,14 @@ function modifier_imba_death_pact_bonus_spirited:IsDebuff() return false end
 
 function modifier_imba_death_pact_bonus_spirited:OnCreated()
 	-- Ability properties
-	self.caster = self:GetCaster()
-	self.ability = self:GetAbility()
-	self.parent = self:GetParent()
 
 	if IsServer() then    		
 		-- Need to set as stack count since you cannot access it clientside for some weird reason
-		self.spirit_damage = self.caster:GetAttackDamage() -- GetBaseDamageMax
+		self.spirit_damage = self:GetCaster():GetAttackDamage() -- GetBaseDamageMax
 		self:SetStackCount(self.spirit_damage)
 	end
 
-	self.spirit_armor = self.caster:GetPhysicalArmorValue() 
+	self.spirit_armor = self:GetCaster():GetPhysicalArmorValue() 
 end
 
 -- Check if there's any tax to collect.
@@ -1690,12 +1664,12 @@ function modifier_imba_death_pact_bonus_spirited:OnAttackStart(keys)
  
  local attacker = keys.attacker
  
- if self.parent == attacker then
+ if self:GetParent() == attacker then
  
- local target = self.parent:GetAttackTarget()
+ local target = self:GetParent():GetAttackTarget()
  local modifier_spirited_aura = "modifier_imba_death_pact_spirit_aura"
- local nearby_allies = FindUnitsInRadius(self.parent:GetTeamNumber(),
-								   self.parent:GetAbsOrigin(),
+ local nearby_allies = FindUnitsInRadius(self:GetParent():GetTeamNumber(),
+								   self:GetParent():GetAbsOrigin(),
 								   nil,
 								   500,
 								   DOTA_UNIT_TARGET_TEAM_FRIENDLY,
@@ -1705,7 +1679,7 @@ function modifier_imba_death_pact_bonus_spirited:OnAttackStart(keys)
 								   false)
 						
 	for _,spirits in pairs(nearby_allies) do
-		if spirits:FindModifierByNameAndCaster(modifier_spirited_aura,self.parent) then
+		if spirits:FindModifierByNameAndCaster(modifier_spirited_aura,self:GetParent()) then
 			spirits:SetForceAttackTarget(target)
 		end
 	end
@@ -1723,18 +1697,16 @@ function modifier_imba_death_pact_stack_hero:IsDebuff() return false end
 
 function modifier_imba_death_pact_stack_hero:OnCreated()
 	-- Ability properties
-	self.caster = self:GetCaster()
-	self.ability = self:GetAbility()
 	self.particle_pact_buff = "particles/units/heroes/hero_clinkz/clinkz_death_pact_buff.vpcf"
 
 	-- Ability specials
-	self.hero_bonus_hp_dmg_mult = self.ability:GetSpecialValueFor("hero_bonus_hp_dmg_mult")
-	self.hero_bonus_dmg_pct = self.ability:GetSpecialValueFor("hero_bonus_dmg_pct")      
+	self.hero_bonus_hp_dmg_mult = self:GetAbility():GetSpecialValueFor("hero_bonus_hp_dmg_mult")
+	self.hero_bonus_dmg_pct = self:GetAbility():GetSpecialValueFor("hero_bonus_dmg_pct")      
 
 	-- Add buff effect
-	self.particle_pact_buff_fx = ParticleManager:CreateParticle(self.particle_pact_buff, PATTACH_POINT_FOLLOW, self.caster)
-	ParticleManager:SetParticleControlEnt(self.particle_pact_buff_fx, 0, self.caster, PATTACH_POINT_FOLLOW, "attach_hitloc", self.caster:GetAbsOrigin(), true)
-	ParticleManager:SetParticleControl(self.particle_pact_buff_fx, 2, self.caster:GetAbsOrigin())
+	self.particle_pact_buff_fx = ParticleManager:CreateParticle(self.particle_pact_buff, PATTACH_POINT_FOLLOW, self:GetCaster())
+	ParticleManager:SetParticleControlEnt(self.particle_pact_buff_fx, 0, self:GetCaster(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetCaster():GetAbsOrigin(), true)
+	ParticleManager:SetParticleControl(self.particle_pact_buff_fx, 2, self:GetCaster():GetAbsOrigin())
 	ParticleManager:SetParticleControl(self.particle_pact_buff_fx, 8, Vector(1,0,0))
 
 	self:AddParticle(self.particle_pact_buff_fx, false, false, -1, false, false)   
@@ -1742,7 +1714,7 @@ function modifier_imba_death_pact_stack_hero:OnCreated()
 	if IsServer() then        
 		Timers:CreateTimer(FrameTime(), function()
 			local stacks = self:GetStackCount()
-			self.caster:Heal(self.hero_bonus_hp_dmg_mult * stacks, self.caster)            
+			self:GetCaster():Heal(self.hero_bonus_hp_dmg_mult * stacks, self:GetCaster())            
 		end)
 	end
 end
@@ -1781,9 +1753,8 @@ function modifier_imba_death_pact_talent_debuff:IsDebuff() return true end
 
 function modifier_imba_death_pact_talent_debuff:OnCreated()
 	if IsServer() then
-		self.caster = self:GetCaster()
-		self.ability = self:GetAbility()
-		self.parent = self:GetParent()
+
+
 		self.modifier_hero_pact = "modifier_imba_death_pact_stack_hero"
 		self.modifier_perma_buff = "modifier_imba_death_pact_talent_buff"
 	end
@@ -1800,20 +1771,20 @@ function modifier_imba_death_pact_talent_debuff:OnHeroKilled(keys)
 		local killed_hero = keys.target        
 
 		-- Only apply if the killed hero is the parent of the debuff        
-		if killed_hero == self.parent and self.caster:HasModifier(self.modifier_hero_pact) then            
+		if killed_hero == self:GetParent() and self:GetCaster():HasModifier(self.modifier_hero_pact) then            
 			-- Get stack count from the modifier
-			local buff_stacks = self.caster:FindModifierByName(self.modifier_hero_pact):GetStackCount()            
+			local buff_stacks = self:GetCaster():FindModifierByName(self.modifier_hero_pact):GetStackCount()            
 
 			-- Calculate stack amount to keep
-			local stacks = buff_stacks * (self.caster:FindTalentValue("special_bonus_imba_clinkz_8", "stacks_pct") * 0.01)            
+			local stacks = buff_stacks * (self:GetCaster():FindTalentValue("special_bonus_imba_clinkz_8", "stacks_pct") * 0.01)            
 			
 			-- Add perma buff if not exists yet
-			if not self.caster:HasModifier(self.modifier_perma_buff) then
-				self.caster:AddNewModifier(self.caster, self.ability, self.modifier_perma_buff, {})
+			if not self:GetCaster():HasModifier(self.modifier_perma_buff) then
+				self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), self.modifier_perma_buff, {})
 			end
 
 			-- Increase stack count of the perma buff 
-			local modifier_buff_handler = self.caster:FindModifierByName(self.modifier_perma_buff)
+			local modifier_buff_handler = self:GetCaster():FindModifierByName(self.modifier_perma_buff)
 			modifier_buff_handler:SetStackCount(modifier_buff_handler:GetStackCount() + stacks)
 		end
 	end
@@ -1828,9 +1799,8 @@ function modifier_imba_death_pact_hero_debuff:IsDebuff() return true end
 
 function modifier_imba_death_pact_hero_debuff:OnCreated()
 	if IsServer() then
-		self.caster = self:GetCaster()
-		self.ability = self:GetAbility()
-		self.parent = self:GetParent()
+
+
 	end
 end
 
@@ -1848,15 +1818,15 @@ function modifier_imba_death_pact_hero_debuff:OnHeroKilled(keys)
 		local modifier_stack_hero = "modifier_imba_death_pact_stack_hero"		
 
 		-- Only apply if the killed hero is the parent of the debuff        
-		if killed_hero == self.parent and self.caster:HasModifier(modifier_stack_hero) then            
+		if killed_hero == self:GetParent() and self:GetCaster():HasModifier(modifier_stack_hero) then            
 			
-			local duration = self.ability:GetSpecialValueFor("duration")
+			local duration = self:GetAbility():GetSpecialValueFor("duration")
 			local modifier_bonus_spirited = "modifier_imba_death_pact_bonus_spirited"
 			local modifier_spirited_aura = "modifier_imba_death_pact_spirit_aura"
 
 			-- Kill any spirits that already pay their taxes, if any.
-			local spirits_to_kill = FindUnitsInRadius(self.caster:GetTeamNumber(),
-													self.caster:GetAbsOrigin(),
+			local spirits_to_kill = FindUnitsInRadius(self:GetCaster():GetTeamNumber(),
+													self:GetCaster():GetAbsOrigin(),
 													nil,
 													500,
 													DOTA_UNIT_TARGET_TEAM_FRIENDLY,
@@ -1866,23 +1836,23 @@ function modifier_imba_death_pact_hero_debuff:OnHeroKilled(keys)
 													false)
 										
 			for _,unit in pairs(spirits_to_kill) do
-				if unit:FindModifierByNameAndCaster(modifier_spirited_aura,self.caster) then
-					unit:Kill(self.ability,self.caster)
+				if unit:FindModifierByNameAndCaster(modifier_spirited_aura,self:GetCaster()) then
+					unit:Kill(self:GetAbility(),self:GetCaster())
 				end
 			end
 			
-			self.caster:RemoveModifierByName(modifier_bonus_spirited)
+			self:GetCaster():RemoveModifierByName(modifier_bonus_spirited)
 			
 			-- Summons a spirit. Wooooooooooooooooo~ :)
-			local spirit_model = self.parent:GetModelName()
-			local spirit_scale = self.parent:GetModelScale()
-			local direction = (self.parent:GetAbsOrigin() - self.caster:GetAbsOrigin()):Normalized()
-			local distance = (self.parent:GetAbsOrigin() - self.caster:GetAbsOrigin()):Length2D()
-			local summon_point = self.caster:GetAbsOrigin() + direction * distance - 100
-			local spirit = CreateUnitByName("npc_imba_clinkz_spirits", summon_point, true, self.caster, self.caster, self.caster:GetTeamNumber())        
+			local spirit_model = self:GetParent():GetModelName()
+			local spirit_scale = self:GetParent():GetModelScale()
+			local direction = (self:GetParent():GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Normalized()
+			local distance = (self:GetParent():GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Length2D()
+			local summon_point = self:GetCaster():GetAbsOrigin() + direction * distance - 100
+			local spirit = CreateUnitByName("npc_imba_clinkz_spirits", summon_point, true, self:GetCaster(), self:GetCaster(), self:GetCaster():GetTeamNumber())        
 
 			-- Set the owner of the wraith as the caster
-			spirit:SetOwner(self.caster)
+			spirit:SetOwner(self:GetCaster())
 
 			-- TURN THE TARGETS INTO SPIRITZ!!
 			spirit:SetOriginalModel(spirit_model)
@@ -1891,15 +1861,15 @@ function modifier_imba_death_pact_hero_debuff:OnHeroKilled(keys)
 			spirit:ManageModelChanges()
 			
 			-- Set the Wraith to die after a small duration
-			spirit:AddNewModifier(self.caster, self.ability, "modifier_kill", {duration = duration})
-			spirit:AddNewModifier(self.caster, self.ability, modifier_spirited_aura, {duration = duration})
+			spirit:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_kill", {duration = duration})
+			spirit:AddNewModifier(self:GetCaster(), self:GetAbility(), modifier_spirited_aura, {duration = duration})
 			
 			-- Add Spirit's Attack Damage					
 			local modifier_spirit_attack_range_bonus = "modifier_imba_death_pact_spirit_attack_range"					
-			spirit:AddNewModifier(self.caster, self.ability, modifier_spirit_attack_range_bonus, {duration = duration})
+			spirit:AddNewModifier(self:GetCaster(), self:GetAbility(), modifier_spirit_attack_range_bonus, {duration = duration})
 			
 			-- ALL YOUR STATS ARE BELONG TO CLINKZ
-			self.caster:AddNewModifier(self.parent, self.ability, modifier_bonus_spirited, {duration = duration})
+			self:GetCaster():AddNewModifier(self:GetParent(), self:GetAbility(), modifier_bonus_spirited, {duration = duration})
 		end
 	end
 end
@@ -1913,12 +1883,10 @@ function modifier_imba_death_pact_talent_buff:IsDebuff() return false end
 
 function modifier_imba_death_pact_talent_buff:OnCreated()
 	-- Ability properties
-	self.caster = self:GetCaster()
-	self.ability = self:GetAbility()        
 
 	-- Ability specials
-	self.hero_bonus_hp_dmg_mult = self.ability:GetSpecialValueFor("hero_bonus_hp_dmg_mult")
-	self.hero_bonus_dmg_pct = self.ability:GetSpecialValueFor("hero_bonus_dmg_pct")      
+	self.hero_bonus_hp_dmg_mult = self:GetAbility():GetSpecialValueFor("hero_bonus_hp_dmg_mult")
+	self.hero_bonus_dmg_pct = self:GetAbility():GetSpecialValueFor("hero_bonus_dmg_pct")      
 end
 
 function modifier_imba_death_pact_talent_buff:DeclareFunctions()

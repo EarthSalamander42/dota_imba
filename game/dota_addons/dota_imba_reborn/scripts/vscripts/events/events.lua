@@ -65,7 +65,7 @@ function GameMode:OnGameRulesStateChange(keys)
 
 		-- start rune timers
 		if GetMapName() ~= "imba_1v1" then
-			ImbaRunes:SpawnImbaRunes(RUNE_SPAWN_TIME, BOUNTY_RUNE_SPAWN_TIME)
+			ImbaRunes:Spawn()
 		end
 
 		-- add abilities to all towers
@@ -169,10 +169,7 @@ function GameMode:OnDisconnect(keys)
 	-- userid: 7
 	-- xuid: 76561198055762111
 
-	-------------------------------------------------------------------------------------------------
 	-- IMBA: Player disconnect/abandon logic
-	-------------------------------------------------------------------------------------------------
-
 	-- If the game hasn't started, or has already ended, do nothing
 	if (GameRules:State_Get() >= DOTA_GAMERULES_STATE_POST_GAME) or (GameRules:State_Get() < DOTA_GAMERULES_STATE_PRE_GAME) then
 		return nil
@@ -397,7 +394,17 @@ end
 
 function GameMode:OnPlayerLevelUp(keys)
 	local player = EntIndexToHScript(keys.player)
+	local hero = player:GetAssignedHero()
 	local level = keys.level
+
+	if hero:GetLevel() >= 26 then
+		if not hero:HasModifier("modifier_imba_war_veteran_"..hero:GetPrimaryAttribute()) then
+			hero:AddNewModifier(hero, nil, "modifier_imba_war_veteran_"..hero:GetPrimaryAttribute(), {})
+		end
+
+		hero:SetModifierStackCount("modifier_imba_war_veteran_"..hero:GetPrimaryAttribute(), hero, hero:GetLevel() -25)
+		hero:SetAbilityPoints(hero:GetAbilityPoints() -1)
+	end
 end
 
 function GameMode:OnPlayerLearnedAbility(keys)
@@ -477,7 +484,7 @@ function GameMode:OnPlayerChat(keys)
 			end
 
 			if str == "-spawnimbarune" then
-				SpawnImbaRunes()
+				ImbaRunes:Spawn()
 			end
 
 			if str == "-replaceherowith" then
