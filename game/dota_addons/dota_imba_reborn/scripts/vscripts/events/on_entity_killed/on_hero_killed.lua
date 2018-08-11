@@ -18,8 +18,8 @@ function GameMode:OnHeroKilled(killer, killed_unit)
 
 	-- #7 Talent Vengeful Spirit - Decreased respawn time & cost
 	if killed_unit:HasTalent("special_bonus_imba_vengefulspirit_7") then
-		buyback_cost = buyback_cost * (1 - (killed_unit:FindSpecificTalentValue("special_bonus_imba_vengefulspirit_7", "buyback_cost_pct") * 0.01))
-		buyback_cooldown = buyback_cooldown * (1 - (killed_unit:FindSpecificTalentValue("special_bonus_imba_vengefulspirit_7", "buyback_cooldown_pct") * 0.01))
+		buyback_cost = buyback_cost * (1 - (killed_unit:FindTalentValue("special_bonus_imba_vengefulspirit_7", "buyback_cost_pct") * 0.01))
+		buyback_cooldown = buyback_cooldown * (1 - (killed_unit:FindTalentValue("special_bonus_imba_vengefulspirit_7", "buyback_cooldown_pct") * 0.01))
 	end
 
 	-- Update buyback cost
@@ -90,12 +90,20 @@ function GameMode:OnHeroKilled(killer, killed_unit)
 				respawn_time = HERO_RESPAWN_TIME_PER_LEVEL[#HERO_RESPAWN_TIME_PER_LEVEL]
 			end
 
+            -- Another check to try and catch any unknown exceptions
+            if respawn_time == nil then
+                -- Set it back to something normal...
+				log.warn("Respawn Time nil...New Respawn Time: "..tostring(HERO_RESPAWN_TIME_PER_LEVEL[#HERO_RESPAWN_TIME_PER_LEVEL]))
+                respawn_time = HERO_RESPAWN_TIME_PER_LEVEL[#HERO_RESPAWN_TIME_PER_LEVEL]
+            end
+
 			-- divide the respawn time by 2 for frantic mode
 			if killed_unit:HasModifier("modifier_frantic") then
 				respawn_time = respawn_time - respawn_time / (100 / _G.IMBA_FRANTIC_VALUE)
 			end
 
-			log.info("Set time until respawn for unit " .. tostring(killed_unit:GetUnitName()) .. " to " .. tostring(respawn_time) .. " seconds")
+            -- Finally, cap respawn time to a maximum of 100 seconds in case all the checks above failed
+			log.info("Set time until respawn for unit " .. tostring(killed_unit:GetUnitName()) .. " to " .. tostring(min(respawn_time, 100)) .. " seconds")
 			killed_unit:SetTimeUntilRespawn(min(respawn_time, 100))
 		end
 	end
