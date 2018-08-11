@@ -1044,7 +1044,6 @@ function imba_scaldris_ice_floes:OnProjectileThink_ExtraData(location, extra_dat
 			-- Apply stun and damage modifiers to enemies in the path
 			--local enemies = FindUnitsInLine(caster:GetTeamNumber(), caster:GetAbsOrigin(), location, nil, self:GetSpecialValueFor("effect_radius") * 2, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE)
 			local enemies = FindUnitsInRadius(caster:GetTeamNumber(), location, nil, self:GetSpecialValueFor("effect_radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
-			local enemies = FindUnitsInRadius(caster:GetTeamNumber(), location, nil, self:GetSpecialValueFor("effect_radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 			for _, enemy in pairs(enemies) do
 				enemy:AddNewModifier(caster, self, "modifier_imba_ice_floes_stun", {duration = self:GetSpecialValueFor("stun_duration")})
 				enemy:AddNewModifier(caster, self, "modifier_imba_ice_floes_dps", {duration = self:GetSpecialValueFor("damage_duration"), dps = self:GetSpecialValueFor("dps")})
