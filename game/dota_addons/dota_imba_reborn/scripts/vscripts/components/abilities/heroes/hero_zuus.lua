@@ -610,44 +610,44 @@ LinkLuaModifier("modifier_zuus_nimbus", "components/abilities/heroes/hero_zuus.l
 LinkLuaModifier("modifier_zuus_nimbus_storm", "components/abilities/heroes/hero_zuus.lua", LUA_MODIFIER_MOTION_NONE)
 
 imba_zuus_cloud = class({})
+
+function imba_zuus_cloud:IsInnateAbility() return true end
+
+function imba_zuus_cloud:GetAOERadius()
+	return self:GetSpecialValueFor("cloud_radius")
+end
+
 function imba_zuus_cloud:OnInventoryContentsChanged()
 	if IsServer() then
-		local caster = self:GetCaster()
-		if caster:HasScepter() then
-			self:SetHidden( false )
-			if self:GetLevel() <= 0 then
-				self:SetLevel( 1 )
-			end
+		if self:GetCaster():HasScepter() then
+			self:SetHidden(false)
+			self:GetCaster():FindAbilityByName("imba_zuus_nimbus_zap"):SetHidden(false)
 		else
-			self:SetHidden( true )
+			self:SetHidden(true)
+			self:GetCaster():FindAbilityByName("imba_zuus_nimbus_zap"):SetHidden(true)
 		end
 	end
 end
 
 function imba_zuus_cloud:OnSpellStart()
 	if IsServer() then
-		local caster 				= self:GetCaster()
 		self.target_point 			= self:GetCursorPosition()
 
 		local cloud_bolt_interval 	= self:GetSpecialValueFor("cloud_bolt_interval")
 		local cloud_duration 		= self:GetSpecialValueFor("cloud_duration")
 		local cloud_radius 			= self:GetSpecialValueFor("cloud_radius")
 
-		EmitSoundOnLocationWithCaster(self.target_point, "Hero_Zuus.Cloud.Cast", caster)
+		EmitSoundOnLocationWithCaster(self.target_point, "Hero_Zuus.Cloud.Cast", self:GetCaster())
+		self:GetCaster():RemoveModifierByName("modifier_imba_zuus_on_nimbus")
+		self:GetCaster():FindAbilityByName("imba_zuus_nimbus_zap"):SetActivated(true)
 
-		caster:RemoveModifierByName("modifier_imba_zuus_on_nimbus")
-		self.zuus_nimbus_unit = CreateUnitByName("npc_dota_zeus_cloud", Vector(self.target_point.x, self.target_point.y, 450), false, caster, nil, caster:GetTeam())
-		self.zuus_nimbus_unit:SetControllableByPlayer(caster:GetPlayerID(), true)
+
+		self.zuus_nimbus_unit = CreateUnitByName("npc_dota_zeus_cloud", Vector(self.target_point.x, self.target_point.y, 450), false, self:GetCaster(), nil, self:GetCaster():GetTeam())
+		self.zuus_nimbus_unit:SetControllableByPlayer(self:GetCaster():GetPlayerID(), true)
 		self.zuus_nimbus_unit:SetModelScale(0.7)
 		self.zuus_nimbus_unit:AddNewModifier(self.zuus_nimbus_unit, self, "modifier_phased", {})
-		self.zuus_nimbus_unit:AddNewModifier(caster, self, "modifier_zuus_nimbus_storm", {duration = cloud_duration, cloud_bolt_interval = cloud_bolt_interval, cloud_radius = cloud_radius})
-		self.zuus_nimbus_unit:AddNewModifier(caster, nil, "modifier_kill", {duration = cloud_duration})
-
-		local zap_ability = caster:FindAbilityByName("imba_zuus_nimbus_zap")
-		if zap_ability ~= nil then
-			zap_ability:SetLevel(1)
-			caster:SwapAbilities("imba_zuus_cloud", "imba_zuus_nimbus_zap", false, true)
-		end
+		self.zuus_nimbus_unit:AddNewModifier(self:GetCaster(), self, "modifier_zuus_nimbus_storm", {duration = cloud_duration, cloud_bolt_interval = cloud_bolt_interval, cloud_radius = cloud_radius})
+		self.zuus_nimbus_unit:AddNewModifier(self:GetCaster(), nil, "modifier_kill", {duration = cloud_duration})
 	end
 end
 
@@ -666,7 +666,7 @@ function modifier_zuus_nimbus_storm:OnCreated(keys)
 		self:SetStackCount(self.original_z)
 
 		-- Create nimbus cloud particle
-		self.zuus_nimbus_particle = ParticleManager:CreateParticle("particles/hero/zeus/zeus_cloud.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+		self.zuus_nimbus_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_zeus/zeus_cloud.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 		-- Position of ground effect
 		ParticleManager:SetParticleControl(self.zuus_nimbus_particle, 0, Vector(target_point.x, target_point.y, 450))
 		-- Radius of ground effect
@@ -773,50 +773,41 @@ function modifier_zuus_nimbus_storm:OnRemoved()
 		-- Cleanup particle
 		ParticleManager:DestroyParticle(self.zuus_nimbus_particle, false)
 
-		local caster = self:GetCaster()
+		self:GetCaster():FindAbilityByName("imba_zuus_nimbus_zap"):SetActivated(false)
+
 		-- Return Zeus to ground if its the current cloud that ended
-		local nimbus_ability = caster:FindAbilityByName("imba_zuus_cloud")
+		local nimbus_ability = self:GetCaster():FindAbilityByName("imba_zuus_cloud")
 		if self:GetParent() == nimbus_ability.zuus_nimbus_unit then
-			caster:RemoveModifierByName("modifier_imba_zuus_nimbus_z")
-
-			local skill_slot_4 = caster:GetAbilityByIndex(3):GetAbilityName()
-			-- print("skill to swap? ", skill_slot_4)
-			if skill_slot_4 == "imba_zuus_nimbus_zap" then 
-				caster:SwapAbilities("imba_zuus_nimbus_zap", "imba_zuus_cloud", false, true)	
-			end
-
-			if skill_slot_4 == "imba_zuus_leave_nimbus" then 
-				caster:SwapAbilities("imba_zuus_leave_nimbus", "imba_zuus_cloud", false, true)	
-			end
-
-			FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), false)
+			self:GetCaster():RemoveModifierByName("modifier_imba_zuus_nimbus_z")
+			FindClearSpaceForUnit(self:GetCaster(), self:GetCaster():GetAbsOrigin(), false)
 		end
 	end
 end
-
 
 ----------------------------------------------
 --				Nimbus Teleport				--
 ----------------------------------------------
 LinkLuaModifier("modifier_imba_ball_lightning", "components/abilities/heroes/hero_zuus.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_zuus_nimbus_z", "components/abilities/heroes/hero_zuus.lua", LUA_MODIFIER_MOTION_NONE)
+
 imba_zuus_nimbus_zap = class({})
+
+function imba_zuus_nimbus_zap:IsInnateAbility() return true end
+
+function imba_zuus_nimbus_zap:OnUpgrade()
+	self:SetActivated(false)
+end
+
 function imba_zuus_nimbus_zap:OnSpellStart() 
 	if IsServer() then
-		-- Ability properties
-		local caster 			= self:GetCaster()
-		local nimbus_ability 	= caster:FindAbilityByName("imba_zuus_cloud")
-		self.nimbus 			= nimbus_ability.zuus_nimbus_unit
-		if self.nimbus:IsNull() then 
-			print("Nimbus is null")
-			caster:SwapAbilities("imba_zuus_nimbus_zap", "imba_zuus_cloud", false, true)
-			return 
-		end
+		local nimbus_ability 	= self:GetCaster():FindAbilityByName("imba_zuus_cloud")
+		self.nimbus = nimbus_ability.zuus_nimbus_unit
+		if self.nimbus == nil then return false end
 
-		caster:EmitSound("Hero_Zuus.LightningBolt")
+		self:GetCaster():EmitSound("Hero_Zuus.LightningBolt")
 
 		local target_loc 	= self.nimbus:GetAbsOrigin()
-		local caster_loc 	= GetGroundPosition(caster:GetAbsOrigin(), caster)
+		local caster_loc 	= GetGroundPosition(self:GetCaster():GetAbsOrigin(), self:GetCaster())
 		target_loc.z 		= target_loc.z + 100
 		local max_height 	= target_loc.z + 100
 		
@@ -827,7 +818,7 @@ function imba_zuus_nimbus_zap:OnSpellStart()
 		local tree_radius 		= 	100
 		local damage 			= 	self:GetSpecialValueFor("damage_per_100_units")
 		local base_mana_cost	= 	self:GetSpecialValueFor("travel_mana_cost_base")
-		local pct_mana_cost		= 	self:GetSpecialValueFor("travel_mana_cost_pct") * caster:GetMaxMana()
+		local pct_mana_cost		= 	self:GetSpecialValueFor("travel_mana_cost_pct") * self:GetCaster():GetMaxMana()
 		local total_mana_cost 	=	base_mana_cost + pct_mana_cost
 		local max_spell_amp_range	=	self:GetSpecialValueFor("max_spell_amp_range")
 
@@ -843,11 +834,11 @@ function imba_zuus_nimbus_zap:OnSpellStart()
 		self.target_loc = target_loc
 
 		-- Play the cast sound
-		caster:EmitSound("Hero_StormSpirit.BallLightning")
-		caster:EmitSound("Hero_StormSpirit.BallLightning.Loop")
+		self:GetCaster():EmitSound("Hero_StormSpirit.BallLightning")
+		self:GetCaster():EmitSound("Hero_StormSpirit.BallLightning.Loop")
 		
-		caster:AddNewModifier(caster, self, "modifier_imba_ball_lightning", {})
-		self.nimbus_z = caster:AddNewModifier(caster, self, "modifier_imba_zuus_nimbus_z", {})
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_ball_lightning", {})
+		self.nimbus_z = self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_zuus_nimbus_z", {})
 
 --		print("nimbus location", target_loc, caster_loc, max_height, add_height)
 		-- Fire the ball of death!
@@ -859,7 +850,7 @@ function imba_zuus_nimbus_zap:OnSpellStart()
 			fDistance			= self.distance,
 			fStartRadius		= damage_radius,
 			fEndRadius			= damage_radius,
-			Source				= caster,
+			Source				= self:GetCaster(),
 			bHasFrontalCone		= false,
 			bReplaceExisting	= false,
 			iUnitTargetTeam		= self:GetAbilityTargetTeam(),
@@ -869,7 +860,7 @@ function imba_zuus_nimbus_zap:OnSpellStart()
 			vVelocity 			= self.direction * speed * Vector(1, 1, 0),
 			bProvidesVision		= true,
 			iVisionRadius 		= vision,
-			iVisionTeamNumber 	= caster:GetTeamNumber(),
+			iVisionTeamNumber 	= self:GetCaster():GetTeamNumber(),
 			ExtraData			= {damage = damage,
 				tree_radius = tree_radius,
 				speed = speed * FrameTime(),
@@ -884,33 +875,30 @@ function imba_zuus_nimbus_zap:OnSpellStart()
 		self.projectileID = ProjectileManager:CreateLinearProjectile(projectile)
 
 		-- Add Motion-Controller Modifier
-		--self.zap_modifier = caster:AddNewModifier(caster, self, "modifier_imba_ball_lightning", {})
+		--self.zap_modifier = self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_ball_lightning", {})
 		-- StartAnimation(self:GetCaster(), {duration=10.0, activity=ACT_DOTA_OVERRIDE_ABILITY_4, rate=1.0})		
 	end
 end
 
 function imba_zuus_nimbus_zap:OnProjectileThink_ExtraData(location, ExtraData)
 	-- Move the caster as long as he has not reached the distance he wants to go to, and he still has enough mana
-	local caster = self:GetCaster()
-
 	-- When cloud is killed before we get to it...
 	if self.nimbus_z:IsNull() then 
-		caster:RemoveModifierByName("modifier_imba_ball_lightning")
+		self:GetCaster():RemoveModifierByName("modifier_imba_ball_lightning")
 		return
 	end
 
-	if (self.traveled + ExtraData.speed< self.distance) and caster:IsAlive() then
-
+	if (self.traveled + ExtraData.speed < self.distance) and self:GetCaster():IsAlive() then
 		-- Destroy the trees in the way
 		GridNav:DestroyTreesAroundPoint(location, ExtraData.tree_radius, false)
 
-		local tmp = caster:GetAbsOrigin()
+		local tmp = self:GetCaster():GetAbsOrigin()
 		--print("z loc ", tmp.z)
 		-- Set Zuus new position
 		if tmp.z > ExtraData.max_height then 
-			caster:SetAbsOrigin(Vector(location.x, location.y, ExtraData.max_height))
+			self:GetCaster():SetAbsOrigin(Vector(location.x, location.y, ExtraData.max_height))
 		else
-			caster:SetAbsOrigin(Vector(location.x, location.y, tmp.z + ExtraData.add_height))
+			self:GetCaster():SetAbsOrigin(Vector(location.x, location.y, tmp.z + ExtraData.add_height))
 		end
 		
 		-- Set Zuus z offset from ground
@@ -920,39 +908,39 @@ function imba_zuus_nimbus_zap:OnProjectileThink_ExtraData(location, ExtraData)
 		self.traveled = self.traveled + ExtraData.speed
 		self.units_traveled_in_last_tick = ExtraData.speed
 
-		caster:Purge(false, true, true, true, true)
-		caster:AddNewModifier(caster, self, "modifier_item_lotus_orb_active", {duration=FrameTime()})
+		self:GetCaster():Purge(false, true, true, true, true)
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_item_lotus_orb_active", {duration=FrameTime()})
 	else
 		-- Make sure we end up at the correct location.
-		caster:SetAbsOrigin(self.target_loc)
+		self:GetCaster():SetAbsOrigin(self.target_loc)
 		self.nimbus_z:SetStackCount(450)
 
 		-- Get rid of stuff
-		caster:StopSound("Hero_StormSpirit.BallLightning.Loop")
-		caster:RemoveModifierByName("modifier_imba_ball_lightning")
+		self:GetCaster():StopSound("Hero_StormSpirit.BallLightning.Loop")
+		self:GetCaster():RemoveModifierByName("modifier_imba_ball_lightning")
 		--ProjectileManager:DestroyLinearProjectile(self.projectileID)
 
-		local leave_nimbus_ability = caster:FindAbilityByName("imba_zuus_leave_nimbus")
+		local leave_nimbus_ability = self:GetCaster():FindAbilityByName("imba_zuus_leave_nimbus")
 		if leave_nimbus_ability ~= nil then
-			leave_nimbus_ability:SetLevel(1)
-			if not self.nimbus:IsNull() and self.nimbus ~= nil then
-				if caster:GetAbilityByIndex(3):GetAbilityName() == "imba_zuus_nimbus_zap" then
-					caster:SwapAbilities("imba_zuus_nimbus_zap", "imba_zuus_leave_nimbus", false, true)
-				end
+			if self.nimbus ~= nil then
+				self:GetCaster():SwapAbilities("imba_zuus_nimbus_zap", "imba_zuus_leave_nimbus", false, true)
 			end
 		end
 	end
 end
 
 imba_zuus_leave_nimbus = class({})
+
+function imba_zuus_leave_nimbus:IsInnateAbility() return true end
+
 function imba_zuus_leave_nimbus:OnSpellStart()
 	if IsServer() then
-		local caster = self:GetCaster()
-		caster:RemoveModifierByName("modifier_imba_zuus_on_nimbus")
-		caster:RemoveModifierByName("modifier_imba_zuus_nimbus_z")
+		self:GetCaster():RemoveModifierByName("modifier_imba_zuus_on_nimbus")
+		self:GetCaster():RemoveModifierByName("modifier_imba_zuus_nimbus_z")
 
-		ResolveNPCPositions(caster:GetAbsOrigin(), 128)
-		caster:SwapAbilities("imba_zuus_leave_nimbus", "imba_zuus_cloud", false, true)
+		ResolveNPCPositions(self:GetCaster():GetAbsOrigin(), 128)
+		print("Swap leave -> zap")
+		self:GetCaster():SwapAbilities("imba_zuus_leave_nimbus", "imba_zuus_nimbus_zap", false, true)
 	end
 end
 
@@ -1041,7 +1029,6 @@ end
 
 function imba_zuus_thundergods_wrath:OnSpellStart() 
 	if IsServer() then
-		local caster 				= self:GetCaster()
 		local ability 				= self
 		local true_sight_radius 	= ability:GetSpecialValueFor("true_sight_radius")
 		local sight_radius_day 		= ability:GetSpecialValueFor("sight_radius_day")
@@ -1049,25 +1036,25 @@ function imba_zuus_thundergods_wrath:OnSpellStart()
 		local sight_duration 		= ability:GetSpecialValueFor("sight_duration")
 		local pierce_spellimmunity 	= false
 
-		local position 				= caster:GetAbsOrigin()	
-		local attack_lock 			= caster:GetAttachmentOrigin(caster:ScriptLookupAttachment("attach_attack1"))
-		local thundergod_spell_cast = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_thundergods_wrath_start_bolt_parent.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+		local position 				= self:GetCaster():GetAbsOrigin()	
+		local attack_lock 			= self:GetCaster():GetAttachmentOrigin(self:GetCaster():ScriptLookupAttachment("attach_attack1"))
+		local thundergod_spell_cast = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_thundergods_wrath_start_bolt_parent.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
 		ParticleManager:SetParticleControl(thundergod_spell_cast, 0, Vector(attack_lock.x, attack_lock.y, attack_lock.z))		
 		ParticleManager:SetParticleControl(thundergod_spell_cast, 1, Vector(attack_lock.x, attack_lock.y, attack_lock.z))		
 
 		local used_on_zuus = false
-		local thundergods_focus_modifier = caster:FindModifierByName("modifier_imba_zuus_thundergods_focus")
+		local thundergods_focus_modifier = self:GetCaster():FindModifierByName("modifier_imba_zuus_thundergods_focus")
 		if thundergods_focus_modifier ~= nil and thundergods_focus_modifier:GetStackCount() > 5 then
 			used_on_zuus = true
 		end
 
-		if caster:HasTalent("special_bonus_imba_zuus_7") then
-			if caster:HasModifier("modifier_imba_zuus_pierce_spellimmunity") then
+		if self:GetCaster():HasTalent("special_bonus_imba_zuus_7") then
+			if self:GetCaster():HasModifier("modifier_imba_zuus_pierce_spellimmunity") then
 				pierce_spellimmunity = true
 			end
 		end
 
-		EmitSoundOnLocationForAllies(caster:GetAbsOrigin(), "Hero_Zuus.GodsWrath", caster)
+		EmitSoundOnLocationForAllies(self:GetCaster():GetAbsOrigin(), "Hero_Zuus.GodsWrath", self:GetCaster())
 
 		local damage_table 			= {}
 		damage_table.attacker 		= self:GetCaster()
@@ -1080,7 +1067,7 @@ function imba_zuus_thundergods_wrath:OnSpellStart()
 
 		local enemies_hit = 0 
 		for _,hero in pairs(HeroList:GetAllHeroes()) do 
-			if hero:IsAlive() and hero:GetTeam() ~= caster:GetTeam() and (not hero:IsMagicImmune() or pierce_spellimmunity) then 
+			if hero:IsAlive() and hero:GetTeam() ~= self:GetCaster():GetTeam() and (not hero:IsMagicImmune() or pierce_spellimmunity) then 
 				if used_on_zuus == true and not hero:IsIllusion() then 
 					-- enemies_hit = enemies_hit + 1
 				else
@@ -1094,21 +1081,21 @@ function imba_zuus_thundergods_wrath:OnSpellStart()
 					damage_table.victim  = hero
 					ApplyDamage(damage_table)
 					hero:EmitSound("Hero_Zuus.LightningBolt")
-					hero:AddNewModifier(caster, ability, "modifier_imba_zuus_lightning_fow", {duration = sight_duration, radius = true_sight_radius})
-					local true_sight = hero:AddNewModifier(caster, self, "modifier_imba_zuus_lightning_true_sight", {duration = sight_duration})
+					hero:AddNewModifier(self:GetCaster(), ability, "modifier_imba_zuus_lightning_fow", {duration = sight_duration, radius = true_sight_radius})
+					local true_sight = hero:AddNewModifier(self:GetCaster(), self, "modifier_imba_zuus_lightning_true_sight", {duration = sight_duration})
 					if true_sight ~= nil then
 						true_sight:SetStackCount(true_sight_radius)
 					end
 
 					-- Add dummy to provide us with truesight aura
-					--local dummy_unit = CreateUnitByName("npc_dummy_unit", Vector(target_point.x, target_point.y, 0), false, nil, nil, caster:GetTeam())
-					--local true_sight = dummy_unit:AddNewModifier(caster, self, "modifier_imba_zuus_lightning_true_sight", {duration = sight_duration})
+					--local dummy_unit = CreateUnitByName("npc_dummy_unit", Vector(target_point.x, target_point.y, 0), false, nil, nil, self:GetCaster():GetTeam())
+					--local true_sight = dummy_unit:AddNewModifier(self:GetCaster(), self, "modifier_imba_zuus_lightning_true_sight", {duration = sight_duration})
 					--dummy_unit:SetDayTimeVisionRange(sight_radius_day)
 					--dummy_unit:SetNightTimeVisionRange(sight_radius_night)
-					--dummy_unit:AddNewModifier(caster, self, "modifier_imba_zuus_lightning_dummy", {})
-					--dummy_unit:AddNewModifier(caster, nil, "modifier_kill", {duration = sight_duration + 1})
+					--dummy_unit:AddNewModifier(self:GetCaster(), self, "modifier_imba_zuus_lightning_dummy", {})
+					--dummy_unit:AddNewModifier(self:GetCaster(), nil, "modifier_kill", {duration = sight_duration + 1})
 
-					local static_charge_modifier = hero:AddNewModifier(caster, self, "modifier_imba_zuus_static_charge", {duration = 5.0})
+					local static_charge_modifier = hero:AddNewModifier(self:GetCaster(), self, "modifier_imba_zuus_static_charge", {duration = 5.0})
 					if static_charge_modifier ~= nil then
 						static_charge_modifier:SetStackCount(static_charge_modifier:GetStackCount() + 1)
 					end
@@ -1126,21 +1113,19 @@ function imba_zuus_thundergods_wrath:OnSpellStart()
 			else
 				thundergods_focus_modifier:SetStackCount(thundergods_focus_modifier:GetStackCount() - thundergods_focus_stacks)
 				if thundergods_focus_stacks == 6 then
-					caster:RemoveModifierByName("modifier_imba_zuus_thundergods_focus")
+					self:GetCaster():RemoveModifierByName("modifier_imba_zuus_thundergods_focus")
 				end
 			end
 
 			-- Add duration for number of stacks
 			awakening_duration = awakening_duration + (thundergods_focus_stacks * 3)
 			-- print("awakening_duration", awakening_duration, thundergods_focus_stacks, enemies_hit)
- 			caster:AddNewModifier(caster, self, "modifier_imba_zuus_thundergods_awakening", {duration = awakening_duration})
+ 			self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_zuus_thundergods_awakening", {duration = awakening_duration})
 		end
 	end
 end
 
-
-
----------------------------------------------------------
+----------------------------------------------------------
 --				Thundergods Focus Modifier  			--
 ----------------------------------------------------------
 LinkLuaModifier("modifier_imba_zuus_thundergods_focus", "components/abilities/heroes/hero_zuus.lua", LUA_MODIFIER_MOTION_NONE)

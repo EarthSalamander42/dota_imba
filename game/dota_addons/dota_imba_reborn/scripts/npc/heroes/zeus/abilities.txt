@@ -174,7 +174,7 @@
 		"SpellImmunityType"             "SPELL_IMMUNITY_ENEMIES_NO" 
 		"AbilityTextureName"            "zuus_static_field"
 		"AbilitySound"                  "Hero_Zuus.StaticField"
-		
+
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"                  "1200 1400 1600 1800"
@@ -240,7 +240,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityModifierSupportValue"   "0.1"   // just a ministun
 
-
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -287,10 +286,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"                     "ability_lua"
 		"ScriptFile"                    "components/abilities/heroes/hero_zuus.lua"
-		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
-		"AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
-		"AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"   
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 		"SpellImmunityType"             "SPELL_IMMUNITY_ENEMIES_NO"
 		"AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_4"
 		"AbilityTextureName"            "storm_spirit_ball_lightning"

@@ -122,26 +122,26 @@ function HideIMR(panel) {
 	var map_info = Game.GetMapInfo();
 	var imr_panel = panel.FindChildrenWithClassTraverse("ScoreCol_ImbaImr5v5");
 	var imr_panel_10v10 = panel.FindChildrenWithClassTraverse("ScoreCol_ImbaImr10v10");
+	var imr_panel_1v1 = panel.FindChildrenWithClassTraverse("ScoreCol_ImbaImr1v1");
 
 	var end_imr5v5 = panel.FindChildrenWithClassTraverse("es-legend-imr");
 	var end_imr10v10 = panel.FindChildrenWithClassTraverse("es-legend-imr10v10");
+	var end_imr1v1 = panel.FindChildrenWithClassTraverse("es-legend-imr1v1");
 
-	var hide = function(panels) {
+	var show = function(panels) {
 		for ( var i in panels)
-			panels[i].style.visibility = "collapse";
+			panels[i].style.visibility = "visible";
 	};
 
 	if (map_info.map_display_name == "imba_ranked_5v5") {
-		hide(imr_panel_10v10);
-		hide(end_imr10v10);
+		show(imr_panel);
+		show(end_imr5v5);
 	} else if (map_info.map_display_name == "imba_ranked_10v10") {
-		hide(imr_panel);
-		hide(end_imr5v5);
-	} else {
-		hide(imr_panel_10v10);
-		hide(imr_panel);
-		hide(end_imr5v5);
-		hide(end_imr10v10);
+		show(imr_panel_10v10);
+		show(end_imr10v10);
+	} else if (map_info.map_display_name == "imba_1v1") {
+		show(imr_panel_1v1);
+		show(end_imr1v1);
 	}
 }
 

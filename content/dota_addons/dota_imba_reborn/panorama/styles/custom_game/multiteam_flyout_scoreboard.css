@@ -113,14 +113,12 @@
 	width: 70px;
 }
 
-.ScoreCol_ImbaImr5v5
+.ScoreCol_ImbaImr5v5,
+.ScoreCol_ImbaImr10v10,
+.ScoreCol_ImbaImr1v1
 {
 	width: 70px;
-}
-
-.es-legend-imr10v10
-{
-	width: 75px;
+	visibility: collapse;
 }
 
 .ScoreCol_Kills,

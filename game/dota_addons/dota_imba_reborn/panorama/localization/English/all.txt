@@ -28,6 +28,7 @@
 "scoreboard_tool_tip_active_disable_help"		"(DISABLED)"
 "custom_end_screen_legend_imr"					"IMR"
 "custom_end_screen_legend_imr10v10"				"IMR 10v10"
+"custom_end_screen_legend_imr1v1"				"IMR 1v1"
 
 //Combat Events
 "custom_toast_PlayerDenied"								"{killer_name} {denied_icon} Denied {victim_name}"

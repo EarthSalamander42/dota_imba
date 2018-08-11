@@ -105,7 +105,7 @@
 
 .es-team {
 	flow-children: down;
-	margin: 10px; 
+	margin: 10px;
 	border-top:  1px solid #3a363a;	
 	border-left:  1px solid #3a363a;
 	border-bottom: 1px solid #1d2126;	
@@ -279,22 +279,24 @@
 	color: #ee7;
 }
 
-.es-legend-imr10v10,
 .es-legend-imr,
-.es-legend-rank1v1 {
+.es-legend-imr10v10,
+.es-legend-imr1v1 {
 	width: 60px; 
 	margin-right: 15px;
 	text-align: center;
+	visibility: collapse;
 }
 
 #es-player-imr,
 #es-player-imr10v10,
-#es-player-rank1v1 {
+#es-player-imr1v1 {
 	width: 60px;
 	vertical-align: center;
 	text-align: center;
 	visibility: collapse;
 	margin-right: 15px;
+	visibility: collapse;
 }
 
 .es-player-xp {

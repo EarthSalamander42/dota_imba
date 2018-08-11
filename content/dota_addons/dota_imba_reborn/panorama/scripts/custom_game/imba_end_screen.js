@@ -71,14 +71,6 @@ function EndScoreboard() {
 		// player ids
 		var radiantPlayerIds = Game.GetPlayerIDsOnTeam(DOTATeam_t.DOTA_TEAM_GOODGUYS);
 		var direPlayerIds = Game.GetPlayerIDsOnTeam(DOTATeam_t.DOTA_TEAM_BADGUYS);
-		var custom1PlayerIds = Game.GetPlayerIDsOnTeam(DOTATeam_t.DOTA_TEAM_CUSTOM_1);
-		var custom2PlayerIds = Game.GetPlayerIDsOnTeam(DOTATeam_t.DOTA_TEAM_CUSTOM_2);
-		var custom3PlayerIds = Game.GetPlayerIDsOnTeam(DOTATeam_t.DOTA_TEAM_CUSTOM_3);
-		var custom4PlayerIds = Game.GetPlayerIDsOnTeam(DOTATeam_t.DOTA_TEAM_CUSTOM_4);
-		var custom5PlayerIds = Game.GetPlayerIDsOnTeam(DOTATeam_t.DOTA_TEAM_CUSTOM_5);
-		var custom6PlayerIds = Game.GetPlayerIDsOnTeam(DOTATeam_t.DOTA_TEAM_CUSTOM_6);
-		var custom7PlayerIds = Game.GetPlayerIDsOnTeam(DOTATeam_t.DOTA_TEAM_CUSTOM_7);
-		var custom8PlayerIds = Game.GetPlayerIDsOnTeam(DOTATeam_t.DOTA_TEAM_CUSTOM_8);
 
 		// Victory Info text
 		var victoryMessage = "winning_team_name Victory!";
@@ -88,22 +80,6 @@ function EndScoreboard() {
 			victoryMessage = victoryMessage.replace("winning_team_name", $.Localize("#DOTA_GoodGuys"));
 		} else if (serverInfo.winner == 3) {
 			victoryMessage = victoryMessage.replace("winning_team_name", $.Localize("#DOTA_BadGuys"));
-		} else if (serverInfo.winner == 6) {
-			victoryMessage = victoryMessage.replace("winning_team_name", $.Localize("#DOTA_Custom1"));
-		} else if (serverInfo.winner == 7) {
-			victoryMessage = victoryMessage.replace("winning_team_name", $.Localize("#DOTA_Custom2"));
-		} else if (serverInfo.winner == 8) {
-			victoryMessage = victoryMessage.replace("winning_team_name", $.Localize("#DOTA_Custom3"));
-		} else if (serverInfo.winner == 9) {
-			victoryMessage = victoryMessage.replace("winning_team_name", $.Localize("#DOTA_Custom4"));
-		} else if (serverInfo.winner == 10) {
-			victoryMessage = victoryMessage.replace("winning_team_name", $.Localize("#DOTA_Custom5"));
-		} else if (serverInfo.winner == 11) {
-			victoryMessage = victoryMessage.replace("winning_team_name", $.Localize("#DOTA_Custom6"));
-		} else if (serverInfo.winner == 12) {
-			victoryMessage = victoryMessage.replace("winning_team_name", $.Localize("#DOTA_Custom7"));
-		} else if (serverInfo.winner == 13) {
-			victoryMessage = victoryMessage.replace("winning_team_name", $.Localize("#DOTA_Custom8"));
 		}
 
 		victoryMessageLabel.text = victoryMessage;
@@ -116,14 +92,6 @@ function EndScoreboard() {
 			dire: $("#es-dire"),
 			radiantPlayers: $("#es-radiant-players"),
 			direPlayers: $("#es-dire-players"),
-			custom1Players: $("#es-custom1-players"),
-			custom2Players: $("#es-custom2-players"),
-			custom3Players: $("#es-custom3-players"),
-			custom4Players: $("#es-custom4-players"),
-			custom5Players: $("#es-custom5-players"),
-			custom6Players: $("#es-custom6-players"),
-			custom7Players: $("#es-custom7-players"),
-			custom8Players: $("#es-custom8-players"),
 		};
 
 		// the panorama xml file used for the player lines
@@ -152,25 +120,9 @@ function EndScoreboard() {
 		// Load players = sort our data we got from above
 		var radiantPlayers = [];
 		var direPlayers = [];
-		var custom1Players = [];
-		var custom2Players = [];
-		var custom3Players = [];
-		var custom4Players = [];
-		var custom5Players = [];
-		var custom6Players = [];
-		var custom7Players = [];
-		var custom8Players = [];
 
 		$.Each(radiantPlayerIds, function (id) { radiantPlayers.push(loadPlayer(id)); });
 		$.Each(direPlayerIds, function (id) { direPlayers.push(loadPlayer(id)); });
-		$.Each(custom1PlayerIds, function (id) { custom1Players.push(loadPlayer(id)); });
-		$.Each(custom2PlayerIds, function (id) { custom2Players.push(loadPlayer(id)); });
-		$.Each(custom3PlayerIds, function (id) { custom3Players.push(loadPlayer(id)); });
-		$.Each(custom4PlayerIds, function (id) { custom4Players.push(loadPlayer(id)); });
-		$.Each(custom5PlayerIds, function (id) { custom5Players.push(loadPlayer(id)); });
-		$.Each(custom6PlayerIds, function (id) { custom6Players.push(loadPlayer(id)); });
-		$.Each(custom7PlayerIds, function (id) { custom7Players.push(loadPlayer(id)); });
-		$.Each(custom8PlayerIds, function (id) { custom8Players.push(loadPlayer(id)); });
 
 		var createPanelForPlayer = function (player, parent) {
 			// Create a new Panel for this player
@@ -189,7 +141,7 @@ function EndScoreboard() {
 				assists: pp.FindChildInLayoutFile("es-player-a"),
 				imr: pp.FindChildInLayoutFile("es-player-imr"),
 				imr10v10: pp.FindChildInLayoutFile("es-player-imr10v10"),
-				rank1v1: pp.FindChildInLayoutFile("es-player-rank1v1"),
+				rank1v1: pp.FindChildInLayoutFile("es-player-imr1v1"),
 				gold: pp.FindChildInLayoutFile("es-player-gold"),
 				level: pp.FindChildInLayoutFile("es-player-level"),
 				xp: {
@@ -313,7 +265,7 @@ function EndScoreboard() {
 				values.xp.rank.text = Math.floor(player.result.xp_in_current_level) + "/" + Math.floor(player.result.total_xp_for_current_level);
 				var progress = Math.round((100.0 * player.result.xp_in_current_level) / player.result.total_xp_for_current_level);
 				
-				$.Msg(player.result.xp_rank_title);
+				$.Msg("Progress:");
 				$.Msg(progress);
 
 				values.xp.progress.style.width = progress + "%";
@@ -381,72 +333,10 @@ function EndScoreboard() {
 			createPanelForPlayer(player, panels.direPlayers);
 		});
 
-		$.Each(custom1Players, function (player) {
-			createPanelForPlayer(player, panels.custom1Players);
-		});
-
-		$.Each(custom2Players, function (player) {
-			createPanelForPlayer(player, panels.custom2Players);
-		});
-
-		$.Each(custom3Players, function (player) {
-			createPanelForPlayer(player, panels.custom3Players);
-		});
-
-		$.Each(custom4Players, function (player) {
-			createPanelForPlayer(player, panels.custom4Players);
-		});
-
-		$.Each(custom5Players, function (player) {
-			createPanelForPlayer(player, panels.custom5Players);
-		});
-
-		$.Each(custom6Players, function (player) {
-			createPanelForPlayer(player, panels.custom6Players);
-		});
-
-		$.Each(custom7Players, function (player) {
-			createPanelForPlayer(player, panels.custom7Players);
-		});
-
-		$.Each(custom8Players, function (player) {
-			createPanelForPlayer(player, panels.custom8Players);
-		});
-
-		var map_name = Game.GetMapInfo().map_display_name;
-
-		if (map_name == "cavern") {
-			$("#es-radiant").style.visibility = "collapse";
-			$("#es-dire").style.visibility = "collapse";
-			$("#es-custom1").style.visibility = "visible";
-			$("#es-custom2").style.visibility = "visible";
-			$("#es-custom3").style.visibility = "visible";
-			$("#es-custom4").style.visibility = "visible";
-			$("#es-custom5").style.visibility = "visible";
-			$("#es-custom6").style.visibility = "visible";
-			$("#es-custom7").style.visibility = "visible";
-			$("#es-custom8").style.visibility = "visible";
-			$("#es-victory-info").style.marginTop = "20px";
-		}
-
 		// Set Team Score
 		$("#es-team-score-radiant").text = new String(serverInfo.radiant_score);
 		$("#es-team-score-dire").text = new String(serverInfo.dire_score);
-
-		if (map_name == "cavern") {
-			$("#es-team-score-custom1").text = new String(serverInfo.custom1_score);
-			$("#es-team-score-custom2").text = new String(serverInfo.custom2_score);
-			$("#es-team-score-custom3").text = new String(serverInfo.custom3_score);
-			$("#es-team-score-custom4").text = new String(serverInfo.custom4_score);
-			$("#es-team-score-custom5").text = new String(serverInfo.custom5_score);
-			$("#es-team-score-custom6").text = new String(serverInfo.custom6_score);
-			$("#es-team-score-custom7").text = new String(serverInfo.custom7_score);
-			$("#es-team-score-custom8").text = new String(serverInfo.custom8_score);
-		}
-
-		var time = RawTimetoGameTime(Game.GetDOTATime( false, false ));
-		$.Msg(time)
-		$("#es-game-time-text").text = time;
+		$("#es-game-time-text").text = RawTimetoGameTime(Game.GetDOTATime(false, false));
 	});
 }
 

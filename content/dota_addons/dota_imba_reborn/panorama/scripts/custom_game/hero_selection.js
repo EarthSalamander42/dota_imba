@@ -117,6 +117,7 @@ var hiddenAbilities = [
 	"imba_wisp_tether_break",
 	"imba_wisp_relocate_break",
 	"imba_zuus_nimbus_zap",
+	"imba_zuus_leave_nimbus",
 	"" // Leave it alone, he's useful
 ]
 
