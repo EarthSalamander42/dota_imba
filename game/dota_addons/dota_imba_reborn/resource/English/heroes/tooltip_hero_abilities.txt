@@ -1401,10 +1401,10 @@
 "DOTA_Tooltip_ability_imba_elder_titan_ancestral_spirit_pass_damage"        "DAMAGE:"
 "DOTA_Tooltip_ability_imba_elder_titan_ancestral_spirit_speed"            "MOVESPEED:"
 "DOTA_Tooltip_ability_imba_elder_titan_ancestral_spirit_radius"           "RADIUS:"
-"DOTA_Tooltip_ability_imba_elder_titan_ancestral_spirit_move_pct_creeps"      "%BONUS SPEED(CREEPS):"
-"DOTA_Tooltip_ability_imba_elder_titan_ancestral_spirit_move_pct_heroes"      "%BONUS SPEED(HEROES):"
-"DOTA_Tooltip_ability_imba_elder_titan_ancestral_spirit_damage_creeps"        "BONUS DAMAGE(CREEPS):"
-"DOTA_Tooltip_ability_imba_elder_titan_ancestral_spirit_damage_heroes"        "BONUS DAMAGE(HEROES):"
+"DOTA_Tooltip_ability_imba_elder_titan_ancestral_spirit_move_pct_creeps"      "%BONUS SPEED (CREEPS):"
+"DOTA_Tooltip_ability_imba_elder_titan_ancestral_spirit_move_pct_heroes"      "%BONUS SPEED (HEROES):"
+"DOTA_Tooltip_ability_imba_elder_titan_ancestral_spirit_damage_creeps"        "BONUS DAMAGE (CREEPS):"
+"DOTA_Tooltip_ability_imba_elder_titan_ancestral_spirit_damage_heroes"        "BONUS DAMAGE (HEROES):"
 
 "DOTA_Tooltip_modifier_imba_elder_titan_ancestral_spirit_aura"            "Ancestral Spirit Aura"
 "DOTA_Tooltip_modifier_imba_elder_titan_ancestral_spirit_damage"          "Ancestral Spirit (Damage)"
@@ -1412,8 +1412,8 @@
 "DOTA_Tooltip_modifier_imba_elder_titan_ancestral_spirit_ms"            "Ancestral Spirit (Movespeed)"
 "DOTA_Tooltip_modifier_imba_elder_titan_ancestral_spirit_ms_Description"      "Movespeed increased for each units hit."
 
-"DOTA_Tooltip_ability_elder_titan_return_spirit"                  "Return Astral Spirit"
-"DOTA_Tooltip_ability_elder_titan_return_spirit_Description"            "Returns the Astral Spirit to Elder Titan."
+"DOTA_Tooltip_ability_imba_elder_titan_return_spirit"                  "Return Astral Spirit"
+"DOTA_Tooltip_ability_imba_elder_titan_return_spirit_Description"            "Returns the Astral Spirit to Elder Titan."
 
 "DOTA_Tooltip_ability_imba_elder_titan_natural_order"               "Natural Order"
 "DOTA_Tooltip_ability_imba_elder_titan_natural_order_Description"         "Reduces all elements to their basic levels, removing base armor and magic damage resistance from nearby enemy units. The armor reduction is centered around the hero, while the magic armor reduction is centered around Astral Spirit."
@@ -1421,10 +1421,10 @@
 "DOTA_Tooltip_ability_imba_elder_titan_natural_order_Note0"             "When the Astral Spirit isn't present, both the armor and magic armor reduction is centered around Elder Titan."
 "DOTA_Tooltip_ability_imba_elder_titan_natural_order_radius"            "RADIUS:"
 "DOTA_Tooltip_ability_imba_elder_titan_natural_order_armor_reduction_pct"     "%BASE ARMOR REDUCTION:"
-"DOTA_Tooltip_ability_imba_elder_titan_natural_order_magic_resistance_pct"      "%BASE RESIST REDUCTION:"
+"DOTA_Tooltip_ability_imba_elder_titan_natural_order_magic_resistance_pct"      "%BASE MAGIC RESIST REDUCTION:"
 
 "DOTA_Tooltip_modifier_imba_elder_titan_natural_order"                "Natural Order"
-"DOTA_Tooltip_modifier_imba_elder_titan_natural_order_Description"          ""
+"DOTA_Tooltip_modifier_imba_elder_titan_natural_order_Description"          "Base Armor and Base Magic Resistance greatly reduced."
 
 "DOTA_Tooltip_ability_imba_elder_titan_earth_splitter"                "Earth Splitter"
 "DOTA_Tooltip_ability_imba_elder_titan_earth_splitter_Description"          "Sends forth a jagged crack in front of Elder Titan. After 3 seconds, the crack implodes, slowing movement while dealing damage to each enemy based on their maximum life. Half of the damage dealt is Magical damage, while the other half is Physical damage.\n<font color='#FF7800'>Mind Split:</font> Applies break to enemies hit."
@@ -1436,7 +1436,13 @@
 "DOTA_Tooltip_ability_imba_elder_titan_earth_splitter_damage_pct"         "%MAX HP AS DAMAGE:"
 "DOTA_Tooltip_ability_imba_elder_titan_earth_splitter_slow_pct"           "%MOVEMENT SLOW:"
 "DOTA_Tooltip_ability_imba_elder_titan_earth_splitter_aghanim_description"      "Increases slow duration, and units pulled in by Earth Splitter are also disarmed."
-//    "DOTA_Tooltip_ability_imba_elder_titan_earth_splitter_slow_duration_scepter"    "SCEPTER SLOW/DISARM DURATION:"
+"DOTA_Tooltip_ability_imba_elder_titan_earth_splitter_slow_duration_scepter"    "SCEPTER SLOW/DISARM DURATION:"
+
+"DOTA_Tooltip_modifier_imba_earth_splitter"								"Earth Splitter"
+"DOTA_Tooltip_modifier_imba_earth_splitter_Description"					"Slowed and broken for the duration."
+
+"DOTA_Tooltip_modifier_imba_earth_splitter_scepter"								"Earth Splitter Scepter"
+"DOTA_Tooltip_modifier_imba_earth_splitter_scepter_Description"					"Disarmed for the duration."
 
 "DOTA_Tooltip_ability_imba_elder_titan_echo_stomp_spirit"             "Echo Stomp (Spirit)"
 "DOTA_Tooltip_ability_imba_elder_titan_echo_stomp_spirit_Description"       "Elder Titan and his Astral Spirit both stomp the ground, damaging and knocking nearby enemy units unconscious around their locations.  The Elder Titan stomp deals physical damage, while the Spirit stomp deals magical damage.\n<font color='#FF7800'>Titan Vigor:</font> Echo Stomp fully stuns targets hit instead of causing them to lose consciousness."
@@ -1449,16 +1455,17 @@
 ////===============================================================================================================
 // Elder Titan's Custom Talents
 ////===============================================================================================================
-"DOTA_Tooltip_ability_special_bonus_imba_elder_titan_1"               "2400 Cast Range"
-"DOTA_Tooltip_ability_special_bonus_imba_elder_titan_2"               "+400 Ancestral Spirit movespeed"
-"DOTA_Tooltip_ability_special_bonus_imba_elder_titan_3"               "Ancestral Spirit roots targets hit"
+"DOTA_Tooltip_ability_special_bonus_imba_elder_titan_1"               "Increase cast range on Astral Spirit to 2400"
+"DOTA_Tooltip_ability_special_bonus_imba_elder_titan_2"               "+400 Astral Spirit movespeed"
+"DOTA_Tooltip_ability_special_bonus_imba_elder_titan_3"               "Astral Spirit roots targets hit"
 "DOTA_Tooltip_ability_special_bonus_imba_elder_titan_4"               "Natural Order reduces base damage by 25%"
-"DOTA_Tooltip_ability_special_bonus_imba_elder_titan_5"               "Natural Order reduces tenacity by 25%"
+"DOTA_Tooltip_ability_special_bonus_imba_elder_titan_4_Description"		"Does not apply to Astral Spirit's Natrural Order Aura."
+"DOTA_Tooltip_ability_special_bonus_imba_elder_titan_5"               "Natural Order reduces status resistance by 25%"
+"DOTA_Tooltip_ability_special_bonus_imba_elder_titan_5_Description"		"Does not apply to Astral Spirit's Natrural Order Aura."
 "DOTA_Tooltip_ability_special_bonus_imba_elder_titan_6"               "+3000 Earth Splitter crack distance"
 "DOTA_Tooltip_ability_special_bonus_imba_elder_titan_7"               "Echo Stomp can no longer be interrupted"
 "DOTA_Tooltip_ability_special_bonus_imba_elder_titan_8"               "Full Natural Order"
 "DOTA_Tooltip_ability_special_bonus_imba_elder_titan_8_Description"         "Natural Order reduces both physical and magical resistance."
-
 
 // Lion
 ////===============================================================================================================
@@ -1707,11 +1714,8 @@
 "DOTA_Tooltip_ability_imba_necrolyte_ghost_shroud_healing_amp_tooltip"              "%ALLIES HEAL AMPLIFICATION:"
 "DOTA_Tooltip_ability_imba_necrolyte_ghost_shroud_slow_pct"            "%MOVEMENT SLOW:"
 
-"DOTA_Tooltip_modifier_imba_ghost_shroud_active"                  "Ghost Shroud"
-"DOTA_Tooltip_modifier_imba_ghost_shroud_active_Description"      "Ethereal with 100%% physical damage resistance, but more vulnerable to magical damage."
-
-"DOTA_Tooltip_modifier_imba_ghost_shroud_aura"                  "Ghost Shroud Aura"
-"DOTA_Tooltip_modifier_imba_ghost_shroud_aura_Description"      "Slowing nearby enemies and increasing healing effects received by nearby allies."
+"DOTA_Tooltip_modifier_imba_ghost_shroud_aura_debuff"                  "Ghost Shroud"
+"DOTA_Tooltip_modifier_imba_ghost_shroud_aura_debuff_Description"                   "Immune to physical damage, but taking more magical damage. Slows nearby enemies and increases healing received by nearby allies."
 
 "DOTA_Tooltip_modifier_imba_ghost_shroud_debuff"                        "Ghost Shroud"
 "DOTA_Tooltip_modifier_imba_ghost_shroud_debuff_Description"            "Movement speed slowed by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%."

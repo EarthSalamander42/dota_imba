@@ -213,10 +213,13 @@ function Mutation(args) {
 	mutation[2] = args["negative"]
 	mutation[3] = args["terrain"]
 
-	$("#Mutations").style.visibility = "visible";
+	if ($("#Mutations"))
+	{
+		$("#Mutations").style.visibility = "visible";
 
-	for (var j = 0; j <= 3; j++) {
-		SetMutationTooltip(j)
+		for (var j = 0; j <= 3; j++) {
+			SetMutationTooltip(j)
+		}
 	}
 }
 

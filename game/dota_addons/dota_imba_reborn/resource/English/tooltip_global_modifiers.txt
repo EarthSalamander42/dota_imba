@@ -54,7 +54,7 @@
 "DOTA_Tooltip_modifier_mutation_shadow_dance_buff_Description"	"Regenerate health and mana slightly faster when not in vision of the enemy."
 
 "DOTA_Tooltip_modifier_frantic"									"Frantic"
-"DOTA_Tooltip_modifier_frantic_Description"						"25% Cooldown Reduction, Mana Cost and Status Resistance."
+"DOTA_Tooltip_modifier_frantic_Description"						"25%% Cooldown Reduction, Mana Cost and Status Resistance."
 
 "DOTA_Tooltip_modifier_mutation_call_down"						"Call Down"
 "DOTA_Tooltip_modifier_mutation_call_down_Description"			"Rockets periodically fall onto the battlefield. Watch out!"
@@ -71,6 +71,3 @@
 "npc_dota_mutation_golem"						            	"BOB"
 "DOTA_Tooltip_modifier_mutation_tug_of_war_golem" 				"Creation Stacks"
 "DOTA_Tooltip_modifier_mutation_tug_of_war_golem_Description"	"Grows stronger with each revival. Each stack grants additional health, attack, movement speed, attack speed, armor, magic resistance, health regeneration, attack range, tenacity, physical block, damage reduction, model size, and exp/gold when killed. Some parameters have a maximum to prevent infinite scaling."
-
-"DOTA_Tooltip_modifier_mutation_speed_freaks"					"Speed Freaks"
-"DOTA_Tooltip_modifier_mutation_speed_freaks_Description"		"Movement speed increased by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%% and projectile speed increased by 500. Movespeed capped at 1000."
