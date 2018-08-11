@@ -478,7 +478,7 @@ function imba_lycan_howl:OnSpellStart()
 	local particle_wolves_howl = "particles/units/heroes/hero_lycan/lycan_howl_cast_wolves.vpcf"
 	local wolf_name = "npc_lycan_wolf"
 	local buff = "modifier_imba_howl_buff"
-	local day = GameRules:IsDaytime()	
+	local day = GameRules:IsDaytime()
 	
 	-- Ability specials
 	local duration = ability:GetSpecialValueFor("duration")

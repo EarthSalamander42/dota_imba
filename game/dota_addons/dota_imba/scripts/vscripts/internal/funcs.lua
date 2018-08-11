@@ -92,7 +92,6 @@ function CheckIfInTable(table, searched_value, optional_number_of_table_rows_to_
 			end
 		end
 	else
-	
 		-- Searches through the first few rows
 		for i=1, optional_number_of_table_rows_to_search_through do
 			if i <= #table then
@@ -102,6 +101,7 @@ function CheckIfInTable(table, searched_value, optional_number_of_table_rows_to_
 			end
 		end
 	end
+
 	return false
 end
 

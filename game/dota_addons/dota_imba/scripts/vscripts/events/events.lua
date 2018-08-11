@@ -528,8 +528,8 @@ function GameMode:OnLastHit(keys)
 
 		player:GetAssignedHero().kill_hero_bounty = 0
 		Timers:CreateTimer(0.1, function()
-				CombatEvents("kill", "hero_kill", killedEnt, player:GetAssignedHero())
-			end)
+			CombatEvents("kill", "hero_kill", killedEnt, player:GetAssignedHero())
+		end)
 	end
 end
 

@@ -180,7 +180,7 @@
 	"imba_tutorial_items_title" "Tips:"
 	"imba_waiting_for_other_players_button" "Warte auf andere Spieler..."
 	"instructionshowtoplay" "WIE ES FUNKTIONIERT"
-	"instructionslines" "-Approach the Midas Throne to earn bonus gold and experience.<br>\n-Snatch up any giant coins the Over Boss tosses to earn even more gold.<br>\n-Keep an eye out for item deliveries. An icon will appear on your map where an item will appear.<br>\n-The fewer kills your team has, the better the item you will receive from a delivery.<br>\n-Slay anyone who isn't on your team."
+	"instructionslines" "-Approach the Midas Throne to earn bonus gold and experience.<br>\n-Snatch up any giant coins the Over Boss tosses to earn even more gold.<br>\n-Keep an eye out for item deliveries. An icon will appear on your map where an item will appear.<br>\n-The fewer kills your team has, the better the item you will receive from a delivery.<br>\n-Slay anyone who isn't on your team."
 	"instructionsobjective" "ZIEL"
 	"instructionsobjectivetext" "Slay your enemies! Be the first to earn the goal number of kills, or the team with the most kills when the round ends, and you will be victorious."
 	"instructionstitle" "OVERTHROW"
@@ -272,6 +272,8 @@
 	"mutation_tug_of_war" "Tauziehen"
 	"mutation_tug_of_war_description" "Spawns a big BOB (warlock golem) on the mid lane. Every time BOB dies, he comes back stronger (more HP/damage) and he switches to the opposite team."
 	"mutation_twister" "Twister"
+	"mutation_ultimate_level" "Ultimate Level"
+	"mutation_ultimate_level_description" "Max hero level increased to 500. Max health regen capped at 300 (600 with heart of tarrasque)."
 	"mutation_void_path" "Void Path"
 	"mutation_wormhole" "Wurmlöcher"
 	"mutation_wormhole_description" "Wormholes spawn on the map. Activating one will bring you to another random wormhole."
