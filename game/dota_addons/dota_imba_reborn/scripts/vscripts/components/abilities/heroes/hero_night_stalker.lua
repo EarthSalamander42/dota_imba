@@ -460,7 +460,7 @@ end
 
 function modifier_imba_crippling_fear_silence:GetModifierMiss_Percentage()
 	-- Check if it is a day or night
-	local is_day = IsDaytime()
+	local is_day = GameRules:IsDaytime()
 
 	-- Assign miss chance according to day-night cycle
 	if is_day then

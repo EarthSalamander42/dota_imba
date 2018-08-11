@@ -137,7 +137,7 @@ function api.imba.complete(callback)
 			local data = {
 				player = PlayerResource:GetPlayer(id),
 				steamid = tostring(PlayerResource:GetSteamID(id)),
-				hero = PlayerResource:GetPickedHero(id),
+				hero = PlayerResource:GetPlayer(id):GetAssignedHero(),
 				hero_name = json.null,
 				items = {}
 			}
@@ -209,7 +209,7 @@ function api.imba.complete(callback)
 				valid_team_player = PlayerResource:IsValidTeamPlayer(id),
 				id = id,
 				items = data.items,
-				abandon = PlayerResource:GetHasAbandonedDueToLongDisconnect(id)
+--				abandon = PlayerResource:GetHasAbandonedDueToLongDisconnect(id),
 			})
 		end
 	end

@@ -77,6 +77,30 @@ function GameMode:OnGameRulesStateChange(keys)
 		end
 	elseif newState == DOTA_GAMERULES_STATE_POST_GAME then
 		api.imba.event(api.events.entered_post_game)
+		api.imba.complete(function (error, players)
+			local game_id = 0
+			if api.imba.data ~= nil then
+				game_id = api.imba.data.id or 0
+			end
+
+			CustomGameEventManager:Send_ServerToAllClients("end_game", {
+				players = players,
+				info = {
+					winner = GAME_WINNER_TEAM,
+					id = game_id,
+					radiant_score = GetTeamHeroKills(2),
+					dire_score = GetTeamHeroKills(3),
+					custom1_score = GetTeamHeroKills(6),
+					custom2_score = GetTeamHeroKills(7),
+					custom3_score = GetTeamHeroKills(8),
+					custom4_score = GetTeamHeroKills(9),
+					custom5_score = GetTeamHeroKills(10),
+					custom6_score = GetTeamHeroKills(11),
+					custom7_score = GetTeamHeroKills(12),
+					custom8_score = GetTeamHeroKills(13),
+				},
+			})
+		end)
 	end
 end
 
@@ -179,8 +203,8 @@ function GameMode:OnDisconnect(keys)
 		-- Fetch player's player and hero information
 		local player_id = keys.PlayerID
 		local player_name = keys.name
-		local hero = PlayerResource:GetPickedHero(player_id)
-		local hero_name = PlayerResource:GetPickedHeroName(player_id)
+		local hero = PlayerResource:GetPlayer(player_id):GetAssignedHero()
+		local hero_name = PlayerResource:GetPlayer(player_id):GetAssignedHero():GetUnitName()
 		local line_duration = 7
 
 		-- Start tracking
@@ -294,13 +318,12 @@ function GameMode:OnEntityKilled( keys )
 
 			if GetMapName() == "imba_overthrow" then
 				Overthrow:OnEntityKilled(killer, killed_unit)
+			elseif IsMutationMap() then
+				Mutation:OnHeroDeath(killed_unit)
 			else
 				GameMode:OnHeroKilled(killer, killed_unit)
-
-				if IsMutationMap() then
-					Mutation:OnHeroDeath(killed_unit)
-				end
 			end
+
 			return
 		elseif killed_unit:IsBuilding() then
 			if string.find(killed_unit:GetUnitName(), "tower3") then
@@ -336,12 +359,15 @@ function GameMode:OnEntityKilled( keys )
 				GAME_WINNER_TEAM = winner
 				GameRules:SetGameWinner(winner)
 			end
+
 			return
 		elseif killed_unit:IsCourier() then
 			CombatEvents("generic", "courier_dead", killed_unit)
+
 			return
 		elseif killed_unit:GetUnitName() == "npc_imba_roshan" then
 			CombatEvents("kill", "roshan_dead", killed_unit, killer)
+
 			return
 		end
 
@@ -349,6 +375,7 @@ function GameMode:OnEntityKilled( keys )
 			if killer:GetTeam() ~= killed_unit:GetTeam() and killed_unit:GetGoldBounty() > 0 then
 				SendOverheadEventMessage(killer:GetPlayerOwner(), OVERHEAD_ALERT_GOLD, killed_unit, killed_unit:GetGoldBounty(), nil)
 			end
+
 			if killer == killed_unit then
 				CombatEvents("kill", "hero_suicide", killed_unit)
 				return
@@ -356,12 +383,14 @@ function GameMode:OnEntityKilled( keys )
 				CombatEvents("kill", "hero_deny_hero", killed_unit, killer)
 				return
 			end
+
 			return
 		elseif killer:IsBuilding() then
 			if killed_unit:IsRealHero() then
 				CombatEvents("generic", "tower_kill_hero", killed_unit, killer)
 				return
 			end
+
 			return
 		end
 
@@ -444,11 +473,11 @@ function GameMode:OnPlayerLearnedAbility(keys)
 		})
 	end
 end
-
+--[[
 function GameMode:PlayerConnect(keys)
 
 end
-
+--]]
 -- This function is called once when the player fully connects and becomes "Ready" during Loading
 function GameMode:OnConnectFull(keys)
 	local entIndex = keys.index + 1
@@ -671,4 +700,181 @@ function GameMode:OnThink()
 --	print("i = "..i)
 
 	return 1
+end
+
+-- TODO: FORMAT LATER
+-- A player last hit a creep, a tower, or a hero
+function GameMode:OnLastHit(keys)
+	if keys.PlayerID == -1 then return end
+	local isFirstBlood = keys.FirstBlood == 1
+	local isHeroKill = keys.HeroKill == 1
+	local isTowerKill = keys.TowerKill == 1
+	local player = PlayerResource:GetPlayer(keys.PlayerID)
+	local killedEnt = EntIndexToHScript(keys.EntKilled)
+
+	if isFirstBlood and player ~= nil then
+		player:GetAssignedHero().kill_hero_bounty = 0
+		Timers:CreateTimer(FrameTime() * 2, function()
+				CombatEvents("kill", "first_blood", killedEnt, player:GetAssignedHero())
+			end)
+		return
+	elseif isHeroKill and player ~= nil then
+		if not player:GetAssignedHero().killstreak then player:GetAssignedHero().killstreak = 0 end
+		player:GetAssignedHero().killstreak = player:GetAssignedHero().killstreak +1
+
+--		for _,attacker in pairs(HeroList:GetAllHeroes()) do
+--			for i = 0, killedEnt:GetNumAttackers() -1 do
+--				if attacker == killedEnt:GetAttacker(i) then
+--					log.debug(attacker:GetUnitName())
+--				end
+--			end
+--		end
+
+		player:GetAssignedHero().kill_hero_bounty = 0
+		Timers:CreateTimer(0.1, function()
+			CombatEvents("kill", "hero_kill", killedEnt, player:GetAssignedHero())
+		end)
+	end
+end
+
+-- A player killed another player in a multi-team context
+function GameMode:OnTeamKillCredit(keys)
+
+	-- Typical keys:
+	-- herokills: 6
+	-- killer_userid: 0
+	-- splitscreenplayer: -1
+	-- teamnumber: 2
+	-- victim_userid: 7
+	-- killer id will be -1 in case of a non-player owned killer (e.g. neutrals, towers, etc.)
+
+	local killer_id = keys.killer_userid
+	local victim_id = keys.victim_userid
+	local killer_team = keys.teamnumber
+	local nTeamKills = keys.herokills
+
+	-- Overthrow
+	if GetMapName() == "imba_overthrow" then
+		local nKillsRemaining = TEAM_KILLS_TO_WIN - nTeamKills
+		local broadcast_kill_event =
+		{
+			killer_id = keys.killer_userid,
+			team_id = keys.teamnumber,
+			team_kills = nTeamKills,
+			kills_remaining = nKillsRemaining,
+			victory = 0,
+			close_to_victory = 0,
+			very_close_to_victory = 0,
+		}
+
+		if nKillsRemaining <= 0 then
+			GameRules:SetCustomVictoryMessage( m_VictoryMessages[killer_team] )
+			GAME_WINNER_TEAM = killer_team
+			GameRules:SetGameWinner( killer_team )
+			broadcast_kill_event.victory = 1
+		elseif nKillsRemaining == 1 then
+			EmitGlobalSound( "ui.npe_objective_complete" )
+			broadcast_kill_event.very_close_to_victory = 1
+		elseif nKillsRemaining <= CLOSE_TO_VICTORY_THRESHOLD then
+			EmitGlobalSound( "ui.npe_objective_given" )
+			broadcast_kill_event.close_to_victory = 1
+		end
+		CustomGameEventManager:Send_ServerToAllClients( "kill_event", broadcast_kill_event )
+	elseif GetMapName() == "imba_1v1" then
+		if nTeamKills == IMBA_1V1_SCORE then
+			GAME_WINNER_TEAM = killer_team
+			GameRules:SetGameWinner( killer_team )
+		end
+	end
+
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Comeback gold logic
+	-------------------------------------------------------------------------------------------------
+	--	UpdateComebackBonus(1, killer_team)
+
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Deathstreak logic
+	-------------------------------------------------------------------------------------------------
+	if PlayerResource:IsValidPlayerID(killer_id) and PlayerResource:IsValidPlayerID(victim_id) then
+		PlayerResource:ResetDeathstreak(killer_id)
+		PlayerResource:IncrementDeathstreak(victim_id)
+
+		-- Show Deathstreak message
+		local victim_hero_name = PlayerResource:GetPickedHeroName(victim_id)
+		local victim_player_name = PlayerResource:GetPlayerName(victim_id)
+		local victim_death_streak = PlayerResource:GetDeathstreak(victim_id)
+		local line_duration = 7
+
+		if victim_death_streak then
+			if victim_death_streak >= 3 then
+				Notifications:BottomToAll({hero = victim_hero_name, duration = line_duration})
+				Notifications:BottomToAll({text = victim_player_name.." ", duration = line_duration, continue = true})
+			end
+
+			if victim_death_streak == 3 then
+				Notifications:BottomToAll({text = "#imba_deathstreak_3", duration = line_duration, continue = true})
+			elseif victim_death_streak == 4 then
+				Notifications:BottomToAll({text = "#imba_deathstreak_4", duration = line_duration, continue = true})
+			elseif victim_death_streak == 5 then
+				Notifications:BottomToAll({text = "#imba_deathstreak_5", duration = line_duration, continue = true})
+			elseif victim_death_streak == 6 then
+				Notifications:BottomToAll({text = "#imba_deathstreak_6", duration = line_duration, continue = true})
+			elseif victim_death_streak == 7 then
+				Notifications:BottomToAll({text = "#imba_deathstreak_7", duration = line_duration, continue = true})
+			elseif victim_death_streak == 8 then
+				Notifications:BottomToAll({text = "#imba_deathstreak_8", duration = line_duration, continue = true})
+			elseif victim_death_streak == 9 then
+				Notifications:BottomToAll({text = "#imba_deathstreak_9", duration = line_duration, continue = true})
+			elseif victim_death_streak >= 10 then
+				Notifications:BottomToAll({text = "#imba_deathstreak_10", duration = line_duration, continue = true})
+			end
+		end
+	end
+
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Rancor logic
+	-------------------------------------------------------------------------------------------------
+
+	-- Victim stack loss
+	local victim_hero = PlayerResource:GetPickedHero(victim_id)
+	if victim_hero and victim_hero:HasModifier("modifier_imba_rancor") then
+		local current_stacks = victim_hero:GetModifierStackCount("modifier_imba_rancor", VENGEFUL_RANCOR_CASTER)
+		if current_stacks <= 2 then
+			victim_hero:RemoveModifierByName("modifier_imba_rancor")
+		else
+			victim_hero:SetModifierStackCount("modifier_imba_rancor", VENGEFUL_RANCOR_CASTER, current_stacks - math.floor(current_stacks / 2) - 1)
+		end
+	end
+
+	-- Killer stack gain
+	if victim_hero and VENGEFUL_RANCOR and PlayerResource:IsImbaPlayer(killer_id) and killer_team ~= VENGEFUL_RANCOR_TEAM then
+		local eligible_rancor_targets = FindUnitsInRadius(victim_hero:GetTeamNumber(), victim_hero:GetAbsOrigin(), nil, 1500, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_CLOSEST, false)
+		if eligible_rancor_targets[1] then
+			local rancor_stacks = 1
+
+			-- Double stacks if the killed unit was Venge
+			if victim_hero == VENGEFUL_RANCOR_CASTER then
+				rancor_stacks = rancor_stacks * 2
+			end
+
+			-- Add stacks and play particle effect
+			AddStacks(VENGEFUL_RANCOR_ABILITY, VENGEFUL_RANCOR_CASTER, eligible_rancor_targets[1], "modifier_imba_rancor", rancor_stacks, true)
+			local rancor_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_vengeful/vengeful_negative_aura.vpcf", PATTACH_ABSORIGIN, eligible_rancor_targets[1])
+			ParticleManager:SetParticleControl(rancor_pfx, 0, eligible_rancor_targets[1]:GetAbsOrigin())
+			ParticleManager:SetParticleControl(rancor_pfx, 1, VENGEFUL_RANCOR_CASTER:GetAbsOrigin())
+		end
+	end
+
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Vengeance Aura logic
+	-------------------------------------------------------------------------------------------------
+
+	if victim_hero and PlayerResource:IsImbaPlayer(killer_id) then
+		local vengeance_aura_ability = victim_hero:FindAbilityByName("imba_vengeful_command_aura")
+		local killer_hero = PlayerResource:GetPickedHero(killer_id)
+		if vengeance_aura_ability and vengeance_aura_ability:GetLevel() > 0 then
+			vengeance_aura_ability:ApplyDataDrivenModifier(victim_hero, killer_hero, "modifier_imba_command_aura_negative_aura", {})
+			victim_hero.vengeance_aura_target = killer_hero
+		end
+	end
 end

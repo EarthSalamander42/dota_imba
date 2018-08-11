@@ -752,7 +752,7 @@ function imba_mirana_leap:GetCastRange(location, target)
 	local leap_range = ability:GetSpecialValueFor("leap_range")
 	local night_leap_range_bonus = ability:GetSpecialValueFor("night_leap_range_bonus")
 
-	if IsDaytime() then
+	if GameRules:IsDaytime() then
 		return leap_range
 	else
 		return leap_range + night_leap_range_bonus

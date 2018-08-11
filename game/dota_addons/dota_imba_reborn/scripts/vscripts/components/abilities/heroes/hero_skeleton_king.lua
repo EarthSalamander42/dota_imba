@@ -1061,7 +1061,7 @@ function imba_wraith_king_reincarnation:TheWillOfTheKing( OnDeathKeys, BuffInfo 
 		ParticleManager:ReleaseParticleIndex(particle_death_fx)
 
 		-- Add a FOW Viewer, depending on if it is a day or night
-		if IsDaytime() then
+		if GameRules:IsDaytime() then
 			AddFOWViewer(BuffInfo.caster:GetTeamNumber(), BuffInfo.caster:GetAbsOrigin(), BuffInfo.caster:GetDayTimeVisionRange(), BuffInfo.reincarnate_delay, true)
 		else
 			AddFOWViewer(BuffInfo.caster:GetTeamNumber(), BuffInfo.caster:GetAbsOrigin(), BuffInfo.caster:GetNightTimeVisionRange(), BuffInfo.reincarnate_delay, true)

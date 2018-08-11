@@ -203,7 +203,7 @@ function modifier_item_imba_shadow_blade_passive:OnTakeDamage(params)
 			local parent            =   self:GetParent()
 			local disable_duration  =   self:GetAbility():GetSpecialValueFor("invis_flying_damage_disable_duration")
 
-			if IsHeroDamage(params.attacker, params.damage) then
+			if params.attacker:IsHeroDamage(params.damage) then
 				-- Disable flying
 				parent:AddNewModifier(parent, self, "modifier_item_imba_shadow_blade_invis_flying_disabled", {duration = disable_duration})
 			end

@@ -411,9 +411,42 @@ end
 
 function GetReductionFromArmor(armor)
 	local m = 0.06 * armor
+
 	return 100 * (1 - m / ( 1 + math.abs(m)))
 end
 
 function CalculateReductionFromArmor_Percentage(armorOffset, armor)
 	return -GetReductionFromArmor(armor) + GetReductionFromArmor(armorOffset)
+end
+
+-- if isDegree = true, entered angle is degree, else radians
+function RotateVector2D(v,angle,bIsDegree)
+	if bIsDegree then angle = math.rad(angle) end
+	local xp = v.x * math.cos(angle) - v.y * math.sin(angle)
+	local yp = v.x * math.sin(angle) + v.y * math.cos(angle)
+
+	return Vector(xp,yp,v.z):Normalized()
+end
+
+-- Returns true if a value is in a table, false if it is not.
+function CheckIfInTable(table, searched_value, optional_number_of_table_rows_to_search_through)
+	-- Searches through the ENTIRE table
+	if not optional_number_of_table_rows_to_search_through then
+		for _,table_value in pairs(table) do
+			if table_value == searched_value then
+				return true
+			end
+		end
+	else
+		-- Searches through the first few rows
+		for i=1, optional_number_of_table_rows_to_search_through do
+			if i <= #table then
+				if table[i] == searched_value then
+					return true
+				end
+			end
+		end
+	end
+
+	return false
 end

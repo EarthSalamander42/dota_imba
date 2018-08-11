@@ -19,6 +19,17 @@ function CDOTA_BaseNPC:CreateIllusion(duration, inc, out, pos, mod, ab)
 	return illusion
 end
 
+-- Checks if the attacker's damage is classified as "hero damage".	 More `or`s may need to be added.
+function CDOTA_BaseNPC:IsHeroDamage(damage)
+	if damage > 0 then
+		if self:GetName() == "npc_dota_roshan" or self:IsControllableByAnyPlayer() or self:GetName() == "npc_dota_shadowshaman_serpentward" then
+			return true
+		end
+	end
+
+	return false
+end
+
 --[[Author: Noya
 	Editor: EarthSalamander #42
 	Date: 09.08.2015.

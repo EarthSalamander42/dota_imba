@@ -606,7 +606,7 @@ end
 function modifier_imba_howl_buff:GetModifierPreAttack_BonusDamage()
 
 	-- Ability properties		
-	local day = IsDaytime()
+	local day = GameRules:IsDaytime()
 		
 	-- If hero, give appropriate hero damage bonus, else creep damage
 	if self.parent:IsHero() then
@@ -626,7 +626,7 @@ end
 
 function modifier_imba_howl_buff:GetModifierExtraHealthBonus()
 	-- Ability properties		
-	local day =IsDaytime()
+	local day = GameRules:IsDaytime()
 		
 	-- If hero, give appropriate hero health bonus based on current day cycle
 	if self.parent:IsHero() then
@@ -647,7 +647,7 @@ end
 
 function modifier_imba_howl_buff:GetModifierMoveSpeedBonus_Constant()
 	-- Get daytime value
-	local day = IsDaytime()
+	local day = GameRules:IsDaytime()
 
 	-- If hero, give appropriate hero move speed bonus based on current day cycle
 	if self.parent:IsHero() then					

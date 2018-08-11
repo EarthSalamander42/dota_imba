@@ -77,7 +77,7 @@ function modifier_imba_regen_rune:OnTakeDamage(params)
 	local attacker = params.attacker
 
 	-- Only damage from hero/roshan units count towards the damage instances
-	if self:GetCaster() == victim and (IsHeroDamage(attacker, params.damage) or attacker:IsTower()) then
+	if self:GetCaster() == victim and (attacker:IsHeroDamage(params.damage) or attacker:IsTower()) then
 		local current_stacks = self:GetStackCount()
 
 		-- last stack, remove modifier
