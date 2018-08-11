@@ -33,8 +33,8 @@ function imba_juggernaut_blade_fury:OnSpellStart()
 	end
 end
 
-LinkLuaModifier("modifier_imba_juggernaut_blade_fury", "hero/hero_juggernaut", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_juggernaut_blade_fury_debuff", "hero/hero_juggernaut", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_juggernaut_blade_fury", "components/abilities/heroes/hero_juggernaut", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_juggernaut_blade_fury_debuff", "components/abilities/heroes/hero_juggernaut", LUA_MODIFIER_MOTION_NONE)
 
 modifier_imba_juggernaut_blade_fury = modifier_imba_juggernaut_blade_fury or class({})
 
@@ -199,7 +199,7 @@ function imba_juggernaut_healing_ward_passive:OnSpellStart()
 	caster:FindModifierByName("modifier_imba_juggernaut_healing_ward_passive"):ForceRefresh()
 end
 
-LinkLuaModifier("modifier_imba_juggernaut_healing_ward_passive", "hero/hero_juggernaut", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_juggernaut_healing_ward_passive", "components/abilities/heroes/hero_juggernaut", LUA_MODIFIER_MOTION_NONE)
 modifier_imba_juggernaut_healing_ward_passive = modifier_imba_juggernaut_healing_ward_passive or class({})
 
 function modifier_imba_juggernaut_healing_ward_passive:OnCreated()
@@ -336,7 +336,7 @@ function modifier_imba_juggernaut_healing_ward_passive:OnDeath(params) -- modifi
 	end
 end
 
-LinkLuaModifier("modifier_imba_juggernaut_healing_ward_aura", "hero/hero_juggernaut", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_juggernaut_healing_ward_aura", "components/abilities/heroes/hero_juggernaut", LUA_MODIFIER_MOTION_NONE)
 modifier_imba_juggernaut_healing_ward_aura = modifier_imba_juggernaut_healing_ward_aura or class({})
 
 function modifier_imba_juggernaut_healing_ward_aura:OnCreated()
@@ -380,7 +380,7 @@ function imba_juggernaut_blade_dance:GetIntrinsicModifierName()
 	return "modifier_imba_juggernaut_blade_dance_passive"
 end
 
-LinkLuaModifier("modifier_imba_juggernaut_blade_dance_passive", "hero/hero_juggernaut", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_juggernaut_blade_dance_passive", "components/abilities/heroes/hero_juggernaut", LUA_MODIFIER_MOTION_NONE)
 modifier_imba_juggernaut_blade_dance_passive = modifier_imba_juggernaut_blade_dance_passive or class({})
 
 function modifier_imba_juggernaut_blade_dance_passive:IsHidden()
@@ -449,10 +449,10 @@ end
 
 -- OMNI SLASH --
 imba_juggernaut_omni_slash = imba_juggernaut_omni_slash or class({})
-LinkLuaModifier("modifier_imba_omni_slash_caster", "hero/hero_juggernaut", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_omni_slash_image", "hero/hero_juggernaut", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_omni_slash_talent", "hero/hero_juggernaut", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_omnislash_image_afterimage_fade", "hero/hero_juggernaut", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_omni_slash_caster", "components/abilities/heroes/hero_juggernaut", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_omni_slash_image", "components/abilities/heroes/hero_juggernaut", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_omni_slash_talent", "components/abilities/heroes/hero_juggernaut", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_omnislash_image_afterimage_fade", "components/abilities/heroes/hero_juggernaut", LUA_MODIFIER_MOTION_NONE)
 
 function imba_juggernaut_omni_slash:IsNetherWardStealable() return false end
 function imba_juggernaut_omni_slash:GetIntrinsicModifierName()
@@ -872,7 +872,7 @@ function modifier_imba_omni_slash_caster:IsHidden() return false end
 function modifier_imba_omni_slash_caster:IsPurgable() return false end
 function modifier_imba_omni_slash_caster:IsDebuff() return false end
 
-LinkLuaModifier("modifier_imba_juggernaut_omni_slash_cdr", "hero/hero_juggernaut", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_juggernaut_omni_slash_cdr", "components/abilities/heroes/hero_juggernaut", LUA_MODIFIER_MOTION_NONE)
 modifier_imba_juggernaut_omni_slash_cdr = modifier_imba_juggernaut_omni_slash_cdr or class({})
 
 function modifier_imba_juggernaut_omni_slash_cdr:IsHidden()

@@ -767,8 +767,8 @@ MergeTables(LinkedModifiers,{
 })
 
 imba_bounty_hunter_shadow_walk = imba_bounty_hunter_shadow_walk or class({})
-LinkLuaModifier("modifier_imba_shadow_walk_buff_invis", "hero/hero_bounty_hunter", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_shadow_walk_vision", "hero/hero_bounty_hunter", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_shadow_walk_buff_invis", "components/abilities/heroes/hero_bounty_hunter", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_shadow_walk_vision", "components/abilities/heroes/hero_bounty_hunter", LUA_MODIFIER_MOTION_NONE)
 
 function imba_bounty_hunter_shadow_walk:GetAbilityTextureName()
 	return "bounty_hunter_wind_walk"
@@ -1360,10 +1360,10 @@ MergeTables(LinkedModifiers,{
 	["modifier_imba_headhunter_debuff_illu"] = LUA_MODIFIER_MOTION_NONE,
 })
 imba_bounty_hunter_headhunter = imba_bounty_hunter_headhunter or class({})
-LinkLuaModifier("modifier_imba_headhunter_passive", "hero/hero_bounty_hunter", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_headhunter_debuff_handler", "hero/hero_bounty_hunter", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_headhunter_buff_handler", "hero/hero_bounty_hunter", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_headhunter_debuff_illu", "hero/hero_bounty_hunter", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_headhunter_passive", "components/abilities/heroes/hero_bounty_hunter", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_headhunter_debuff_handler", "components/abilities/heroes/hero_bounty_hunter", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_headhunter_buff_handler", "components/abilities/heroes/hero_bounty_hunter", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_headhunter_debuff_illu", "components/abilities/heroes/hero_bounty_hunter", LUA_MODIFIER_MOTION_NONE)
 
 function imba_bounty_hunter_headhunter:GetAbilityTextureName()
 	return "custom/bounty_hunter_headhunter"
@@ -1686,5 +1686,5 @@ function modifier_imba_headhunter_debuff_illu:IsHidden()
 end
 -------------------------------------------
 for LinkedModifier, MotionController in pairs(LinkedModifiers) do
-	LinkLuaModifier(LinkedModifier, "hero/hero_bounty_hunter", MotionController)
+	LinkLuaModifier(LinkedModifier, "components/abilities/heroes/hero_bounty_hunter", MotionController)
 end

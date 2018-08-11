@@ -18,8 +18,8 @@
 -------------------------------------------
 --			GOD'S STRENGTH
 -------------------------------------------
-LinkLuaModifier("modifier_imba_doom_bringer_doom", "hero/hero_doom_bringer", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_doom_bringer_doom_enemies", "hero/hero_doom_bringer", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_doom_bringer_doom", "components/abilities/heroes/hero_doom_bringer", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_doom_bringer_doom_enemies", "components/abilities/heroes/hero_doom_bringer", LUA_MODIFIER_MOTION_NONE)
 
 imba_doom_bringer_doom = class({})
 function imba_doom_bringer_doom:IsHiddenWhenStolen() return false end

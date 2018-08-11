@@ -24,6 +24,14 @@ local function SetAbilityLevelIfPresent(caster, ability_name, level)
 	end
 end
 
+local function ShallowCopy(orig)
+	local copy = {}
+	for orig_key, orig_value in pairs(orig) do
+		copy[orig_key] = orig_value
+	end
+	return copy
+end
+
 -- Base local ability to be used for fire breath and ice breath
 local base_ability_dual_breath = class({})
 
@@ -363,8 +371,8 @@ end
 imba_jakiro_fire_breath = ShallowCopy( base_ability_dual_breath )
 imba_jakiro_fire_breath.ability_other_breath_name = "imba_jakiro_ice_breath"
 imba_jakiro_fire_breath.modifier_caster_name = "modifier_imba_fire_breath_caster"
-LinkLuaModifier("modifier_imba_fire_breath_debuff", "hero/hero_jakiro", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_fire_breath_caster", "hero/hero_jakiro", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_fire_breath_debuff", "components/abilities/heroes/hero_jakiro", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_fire_breath_caster", "components/abilities/heroes/hero_jakiro", LUA_MODIFIER_MOTION_NONE)
 
 function imba_jakiro_fire_breath:GetAbilityTextureName()
 	return "custom/jakiro_fire_breath"
@@ -417,8 +425,8 @@ modifier_imba_fire_breath_caster.particle_breath = "particles/hero/jakiro/jakiro
 imba_jakiro_ice_breath = ShallowCopy( base_ability_dual_breath )
 imba_jakiro_ice_breath.ability_other_breath_name = "imba_jakiro_fire_breath"
 imba_jakiro_ice_breath.modifier_caster_name = "modifier_imba_ice_breath_caster"
-LinkLuaModifier("modifier_imba_ice_breath_debuff", "hero/hero_jakiro", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_ice_breath_caster", "hero/hero_jakiro", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_ice_breath_debuff", "components/abilities/heroes/hero_jakiro", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_ice_breath_caster", "components/abilities/heroes/hero_jakiro", LUA_MODIFIER_MOTION_NONE)
 
 function imba_jakiro_ice_breath:GetAbilityTextureName()
 	return "custom/jakiro_ice_breath"
@@ -468,9 +476,9 @@ modifier_imba_ice_breath_caster.particle_breath = "particles/hero/jakiro/jakiro_
 -----------------------------
 
 imba_jakiro_ice_path = class({})
-LinkLuaModifier("modifier_imba_ice_path_thinker", "hero/hero_jakiro", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_ice_path_freeze_debuff", "hero/hero_jakiro", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_ice_path_slow_debuff", "hero/hero_jakiro", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_ice_path_thinker", "components/abilities/heroes/hero_jakiro", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_ice_path_freeze_debuff", "components/abilities/heroes/hero_jakiro", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_ice_path_slow_debuff", "components/abilities/heroes/hero_jakiro", LUA_MODIFIER_MOTION_NONE)
 
 function imba_jakiro_ice_path:GetAbilityTextureName()
 	return "jakiro_ice_path"
@@ -698,9 +706,9 @@ function modifier_imba_ice_path_slow_debuff:GetModifierAttackSpeedBonus_Constant
 imba_jakiro_liquid_fire = class({
 	GetIntrinsicModifierName = function(self) return "modifier_imba_liquid_fire_caster" end
 })
-LinkLuaModifier("modifier_imba_liquid_fire_caster", "hero/hero_jakiro", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_liquid_fire_animate", "hero/hero_jakiro", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_liquid_fire_debuff", "hero/hero_jakiro", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_liquid_fire_caster", "components/abilities/heroes/hero_jakiro", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_liquid_fire_animate", "components/abilities/heroes/hero_jakiro", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_liquid_fire_debuff", "components/abilities/heroes/hero_jakiro", LUA_MODIFIER_MOTION_NONE)
 
 function imba_jakiro_liquid_fire:GetAbilityTextureName()
 	return "jakiro_liquid_fire"
@@ -962,8 +970,8 @@ function modifier_imba_liquid_fire_debuff:GetEffectAttachType() return PATTACH_A
 -----------------------------
 
 imba_jakiro_macropyre = class({})
-LinkLuaModifier("modifier_imba_macropyre_thinker", "hero/hero_jakiro", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_macropyre_debuff", "hero/hero_jakiro", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_macropyre_thinker", "components/abilities/heroes/hero_jakiro", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_macropyre_debuff", "components/abilities/heroes/hero_jakiro", LUA_MODIFIER_MOTION_NONE)
 
 function imba_jakiro_macropyre:GetAbilityTextureName()
 	return "jakiro_macropyre"

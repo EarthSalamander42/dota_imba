@@ -21,8 +21,8 @@
 ---------------------------------
 
 imba_crystal_maiden_arcane_dynamo = class({})
-LinkLuaModifier("modifier_imba_arcane_dynamo", "hero/hero_crystal_maiden.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_crystal_maiden_ability_slow", "hero/hero_crystal_maiden.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_arcane_dynamo", "components/abilities/heroes/hero_crystal_maiden.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_crystal_maiden_ability_slow", "components/abilities/heroes/hero_crystal_maiden.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_crystal_maiden_arcane_dynamo:GetIntrinsicModifierName() return "modifier_imba_arcane_dynamo" end
 function imba_crystal_maiden_arcane_dynamo:IsInnateAbility() return true end
@@ -150,11 +150,11 @@ function modifier_imba_crystal_maiden_ability_slow:IsPurgable() return true end
 -- 		   Crystal Nova        --
 ---------------------------------
 imba_crystal_maiden_crystal_nova = class({})
-LinkLuaModifier("modifier_imba_crystal_nova_slow", "hero/hero_crystal_maiden.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_crystal_nova_snowfield_ally_aura", "hero/hero_crystal_maiden.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_crystal_nova_snowfield_enemy_aura", "hero/hero_crystal_maiden.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_crystal_nova_snowfield_debuff", "hero/hero_crystal_maiden.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_crystal_nova_snowfield_buff", "hero/hero_crystal_maiden.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_crystal_nova_slow", "components/abilities/heroes/hero_crystal_maiden.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_crystal_nova_snowfield_ally_aura", "components/abilities/heroes/hero_crystal_maiden.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_crystal_nova_snowfield_enemy_aura", "components/abilities/heroes/hero_crystal_maiden.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_crystal_nova_snowfield_debuff", "components/abilities/heroes/hero_crystal_maiden.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_crystal_nova_snowfield_buff", "components/abilities/heroes/hero_crystal_maiden.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_crystal_maiden_crystal_nova:GetAbilityTextureName()
 	return "crystal_maiden_crystal_nova"
@@ -424,11 +424,11 @@ function modifier_imba_crystal_nova_snowfield_debuff:GetEffectAttachType() retur
 ---------------------------------
 -- 		   Frost Bite          --
 ---------------------------------
-LinkLuaModifier("modifier_imba_crystal_maiden_frostbite_passive_ready", "hero/hero_crystal_maiden.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_crystal_maiden_frostbite_passive_recharging", "hero/hero_crystal_maiden.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_crystal_maiden_frostbite_enemy", "hero/hero_crystal_maiden.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_crystal_maiden_frostbite_enemy_talent", "hero/hero_crystal_maiden.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_crystal_maiden_frostbite_ally", "hero/hero_crystal_maiden.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_crystal_maiden_frostbite_passive_ready", "components/abilities/heroes/hero_crystal_maiden.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_crystal_maiden_frostbite_passive_recharging", "components/abilities/heroes/hero_crystal_maiden.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_crystal_maiden_frostbite_enemy", "components/abilities/heroes/hero_crystal_maiden.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_crystal_maiden_frostbite_enemy_talent", "components/abilities/heroes/hero_crystal_maiden.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_crystal_maiden_frostbite_ally", "components/abilities/heroes/hero_crystal_maiden.lua", LUA_MODIFIER_MOTION_NONE)
 
 imba_crystal_maiden_frostbite = class({})
 
@@ -689,8 +689,8 @@ end
 
 function imba_crystal_maiden_brilliance_aura:GetIntrinsicModifierName() return "modifier_imba_crystal_maiden_brilliance_aura_emitter" end
 
-LinkLuaModifier("modifier_imba_crystal_maiden_brilliance_aura_emitter", "hero/hero_crystal_maiden.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_crystal_maiden_brilliance_aura", "hero/hero_crystal_maiden.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_crystal_maiden_brilliance_aura_emitter", "components/abilities/heroes/hero_crystal_maiden.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_crystal_maiden_brilliance_aura", "components/abilities/heroes/hero_crystal_maiden.lua", LUA_MODIFIER_MOTION_NONE)
 
 -- Brilcane Aura Emitter
 modifier_imba_crystal_maiden_brilliance_aura_emitter = class({})
@@ -792,8 +792,8 @@ function modifier_imba_crystal_maiden_brilliance_aura:IsPurgable() return false 
 ---------------------------------
 -- 		   Freezing Field      --
 ---------------------------------
-LinkLuaModifier("modifier_imba_crystal_maiden_freezing_field_aura", "hero/hero_crystal_maiden.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_crystal_maiden_freezing_field_slow", "hero/hero_crystal_maiden.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_crystal_maiden_freezing_field_aura", "components/abilities/heroes/hero_crystal_maiden.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_crystal_maiden_freezing_field_slow", "components/abilities/heroes/hero_crystal_maiden.lua", LUA_MODIFIER_MOTION_NONE)
 
 imba_crystal_maiden_freezing_field = class({})
 

@@ -19,8 +19,8 @@
 -------------------------------------------
 --				TOXICITY
 -------------------------------------------
-LinkLuaModifier("modifier_imba_toxicity", "hero/hero_venomancer", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_toxicity_debuff", "hero/hero_venomancer", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_toxicity", "components/abilities/heroes/hero_venomancer", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_toxicity_debuff", "components/abilities/heroes/hero_venomancer", LUA_MODIFIER_MOTION_NONE)
 
 imba_venomancer_toxicity = class({})
 function imba_venomancer_toxicity:IsHiddenWhenStolen() return false end
@@ -136,8 +136,8 @@ end
 -------------------------------------------
 --            VENOMOUS GALE
 -------------------------------------------
-LinkLuaModifier("modifier_imba_venomous_gale", "hero/hero_venomancer", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_venomous_gale_wardcast", "hero/hero_venomancer", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_venomous_gale", "components/abilities/heroes/hero_venomancer", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_venomous_gale_wardcast", "components/abilities/heroes/hero_venomancer", LUA_MODIFIER_MOTION_NONE)
 
 imba_venomancer_venomous_gale = class({})
 function imba_venomancer_venomous_gale:IsHiddenWhenStolen() return false end
@@ -393,9 +393,9 @@ end
 -------------------------------------------
 --			  POISON STING
 -------------------------------------------
-LinkLuaModifier("modifier_imba_poison_sting", "hero/hero_venomancer", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_poison_sting_debuff", "hero/hero_venomancer", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_poison_sting_debuff_ward", "hero/hero_venomancer", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_poison_sting", "components/abilities/heroes/hero_venomancer", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_poison_sting_debuff", "components/abilities/heroes/hero_venomancer", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_poison_sting_debuff_ward", "components/abilities/heroes/hero_venomancer", LUA_MODIFIER_MOTION_NONE)
 
 imba_venomancer_poison_sting = class({})
 function imba_venomancer_poison_sting:IsHiddenWhenStolen() return false end
@@ -614,7 +614,7 @@ end
 -------------------------------------------
 --			  PLAGUE WARD
 -------------------------------------------
-LinkLuaModifier("modifier_imba_plague_ward", "hero/hero_venomancer", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_plague_ward", "components/abilities/heroes/hero_venomancer", LUA_MODIFIER_MOTION_NONE)
 
 imba_venomancer_plague_ward = class({})
 function imba_venomancer_plague_ward:IsHiddenWhenStolen() return false end
@@ -757,7 +757,7 @@ end
 -------------------------------------------
 --			   POISON NOVA
 -------------------------------------------
-LinkLuaModifier("modifier_imba_poison_nova", "hero/hero_venomancer", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_poison_nova", "components/abilities/heroes/hero_venomancer", LUA_MODIFIER_MOTION_NONE)
 
 imba_venomancer_poison_nova = class({})
 function imba_venomancer_poison_nova:IsHiddenWhenStolen() return false end

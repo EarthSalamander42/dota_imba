@@ -64,9 +64,9 @@ end
 -------------------------------------------
 --				 RANCOR
 -------------------------------------------
-LinkLuaModifier("modifier_imba_rancor", "hero/hero_vengefulspirit", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_rancor_stack", "hero/hero_vengefulspirit", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_rancor_allies", "hero/hero_vengefulspirit", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_rancor", "components/abilities/heroes/hero_vengefulspirit", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_rancor_stack", "components/abilities/heroes/hero_vengefulspirit", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_rancor_allies", "components/abilities/heroes/hero_vengefulspirit", LUA_MODIFIER_MOTION_NONE)
 
 imba_vengefulspirit_rancor = class({})
 function imba_vengefulspirit_rancor:IsHiddenWhenStolen() return false end
@@ -390,7 +390,7 @@ function imba_vengefulspirit_magic_missile:OnProjectileHit_ExtraData(target, loc
 	end
 end
 
-LinkLuaModifier("modifier_imba_vengefulspirit_magic_missile_handler", "hero/hero_vengefulspirit", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_vengefulspirit_magic_missile_handler", "components/abilities/heroes/hero_vengefulspirit", LUA_MODIFIER_MOTION_NONE)
 
 if modifier_imba_vengefulspirit_magic_missile_handler == nil then modifier_imba_vengefulspirit_magic_missile_handler = class({}) end
 
@@ -425,7 +425,7 @@ function imba_vengefulspirit_wave_of_terror:GetAbilityTextureName()
 	return "vengefulspirit_wave_of_terror"
 end
 -------------------------------------------
-LinkLuaModifier("modifier_imba_wave_of_terror", "hero/hero_vengefulspirit", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_wave_of_terror", "components/abilities/heroes/hero_vengefulspirit", LUA_MODIFIER_MOTION_NONE)
 
 function imba_vengefulspirit_wave_of_terror:OnSpellStart()
 	if IsServer() then
@@ -550,10 +550,10 @@ end
 -------------------------------------------
 --            VENGEANCE AURA
 -------------------------------------------
-LinkLuaModifier("modifier_imba_command_aura_positive", "hero/hero_vengefulspirit", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_command_aura_positive_aura", "hero/hero_vengefulspirit", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_command_aura_negative", "hero/hero_vengefulspirit", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_command_aura_negative_aura", "hero/hero_vengefulspirit", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_command_aura_positive", "components/abilities/heroes/hero_vengefulspirit", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_command_aura_positive_aura", "components/abilities/heroes/hero_vengefulspirit", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_command_aura_negative", "components/abilities/heroes/hero_vengefulspirit", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_command_aura_negative_aura", "components/abilities/heroes/hero_vengefulspirit", LUA_MODIFIER_MOTION_NONE)
 
 imba_vengefulspirit_command_aura = class({})
 function imba_vengefulspirit_command_aura:IsHiddenWhenStolen() return false end
@@ -765,7 +765,7 @@ end
 --            NETHER SWAP
 -------------------------------------------
 
-LinkLuaModifier("modifier_imba_nether_swap", "hero/hero_vengefulspirit", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_nether_swap", "components/abilities/heroes/hero_vengefulspirit", LUA_MODIFIER_MOTION_NONE)
 
 imba_vengefulspirit_nether_swap = class({})
 function imba_vengefulspirit_nether_swap:IsHiddenWhenStolen() return false end
@@ -1029,7 +1029,7 @@ end
 -------------------------------------------
 --            SWAPBACK
 -------------------------------------------
-LinkLuaModifier("modifier_imba_swap_back", "hero/hero_vengefulspirit", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_swap_back", "components/abilities/heroes/hero_vengefulspirit", LUA_MODIFIER_MOTION_NONE)
 
 imba_vengefulspirit_swap_back = class({})
 function imba_vengefulspirit_swap_back:IsHiddenWhenStolen() return false end

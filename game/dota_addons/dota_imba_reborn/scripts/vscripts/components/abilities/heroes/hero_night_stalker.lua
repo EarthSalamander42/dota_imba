@@ -6,7 +6,7 @@
 ----------------------------------
 
 imba_night_stalker_stalker_in_the_night = class({})
-LinkLuaModifier("modifier_imba_stalker_in_the_night", "hero/hero_night_stalker", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_stalker_in_the_night", "components/abilities/heroes/hero_night_stalker", LUA_MODIFIER_MOTION_NONE)
 
 function imba_night_stalker_stalker_in_the_night:GetAbilityTextureName()
    return "custom/stalker_in_the_night"
@@ -141,8 +141,8 @@ end
 --            VOID              --
 ----------------------------------
 imba_night_stalker_void = class({})
-LinkLuaModifier("modifier_imba_void_ministun", "hero/hero_night_stalker", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_void_slow", "hero/hero_night_stalker", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_void_ministun", "components/abilities/heroes/hero_night_stalker", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_void_slow", "components/abilities/heroes/hero_night_stalker", LUA_MODIFIER_MOTION_NONE)
 
 function imba_night_stalker_void:GetAbilityTextureName()
    return "night_stalker_void"
@@ -354,7 +354,7 @@ end
 --        Crippling Fear        --
 ----------------------------------
 imba_night_stalker_crippling_fear = class({})
-LinkLuaModifier("modifier_imba_crippling_fear_silence", "hero/hero_night_stalker", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_crippling_fear_silence", "components/abilities/heroes/hero_night_stalker", LUA_MODIFIER_MOTION_NONE)
 
 function imba_night_stalker_crippling_fear:GetAbilityTextureName()
    return "night_stalker_crippling_fear"
@@ -531,9 +531,9 @@ end
 --      Hunter in the Night     --
 ----------------------------------
 imba_night_stalker_hunter_in_the_night = class({})
-LinkLuaModifier("modifier_imba_hunter_in_the_night_thinker", "hero/hero_night_stalker", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_hunter_in_the_night", "hero/hero_night_stalker", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_hunter_in_the_night_flying", "hero/hero_night_stalker", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_hunter_in_the_night_thinker", "components/abilities/heroes/hero_night_stalker", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_hunter_in_the_night", "components/abilities/heroes/hero_night_stalker", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_hunter_in_the_night_flying", "components/abilities/heroes/hero_night_stalker", LUA_MODIFIER_MOTION_NONE)
 
 function imba_night_stalker_hunter_in_the_night:GetAbilityTextureName()
    return "night_stalker_hunter_in_the_night" end
@@ -826,9 +826,9 @@ function modifier_imba_hunter_in_the_night_flying:GetActivityTranslationModifier
 --           Darkness           --
 ----------------------------------
 imba_night_stalker_darkness = class({})
-LinkLuaModifier("modifier_imba_darkness_night", "hero/hero_night_stalker", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_darkness_vision", "hero/hero_night_stalker", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_darkness_fogvision", "hero/hero_night_stalker", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_darkness_night", "components/abilities/heroes/hero_night_stalker", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_darkness_vision", "components/abilities/heroes/hero_night_stalker", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_darkness_fogvision", "components/abilities/heroes/hero_night_stalker", LUA_MODIFIER_MOTION_NONE)
 
 function imba_night_stalker_darkness:IsNetherWardStealable() return false end
 function imba_night_stalker_darkness:IsHiddenWhenStolen()

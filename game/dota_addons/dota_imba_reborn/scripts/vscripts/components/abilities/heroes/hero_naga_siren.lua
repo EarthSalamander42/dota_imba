@@ -21,7 +21,7 @@
 
 imba_naga_siren_mirror_image = imba_naga_siren_mirror_image or class({})
 
-LinkLuaModifier( "modifier_imba_naga_siren_mirror_image_invulnerable", "hero/hero_naga_siren.lua", LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier( "modifier_imba_naga_siren_mirror_image_invulnerable", "components/abilities/heroes/hero_naga_siren.lua", LUA_MODIFIER_MOTION_NONE )
 
 function imba_naga_siren_mirror_image:IsHiddenWhenStolen() 		return false end
 function imba_naga_siren_mirror_image:IsRefreshable() 			return true  end
@@ -94,7 +94,7 @@ end
 
 imba_naga_siren_rip_tide = imba_naga_siren_rip_tide or class({})
 
-LinkLuaModifier( "modifier_imba_naga_siren_rip_tide_debuff", "hero/hero_naga_siren.lua", LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier( "modifier_imba_naga_siren_rip_tide_debuff", "components/abilities/heroes/hero_naga_siren.lua", LUA_MODIFIER_MOTION_NONE )
 
 function imba_naga_siren_rip_tide:IsHiddenWhenStolen() 		return false end
 function imba_naga_siren_rip_tide:IsRefreshable() 			return true  end

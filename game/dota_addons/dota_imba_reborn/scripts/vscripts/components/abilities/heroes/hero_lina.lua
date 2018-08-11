@@ -44,7 +44,7 @@ function modifier_special_bonus_imba_lina_8:OnAttackLanded( params )
 	end
 end
 
-LinkLuaModifier("modifier_imba_blazing_fire", "hero/hero_lina", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_blazing_fire", "components/abilities/heroes/hero_lina", LUA_MODIFIER_MOTION_NONE)
 modifier_imba_blazing_fire = class({})
 
 function modifier_imba_blazing_fire:OnCreated( params )
@@ -304,7 +304,7 @@ end
 -------------------------------------------
 
 imba_lina_light_strike_array = class({})
-LinkLuaModifier("modifier_imba_lsa_talent_magma", "hero/hero_lina", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_lsa_talent_magma", "components/abilities/heroes/hero_lina", LUA_MODIFIER_MOTION_NONE)
 
 function imba_lina_light_strike_array:GetAbilityTextureName()
 	return "lina_light_strike_array"
@@ -519,10 +519,10 @@ end
 -------------------------------------------
 
 imba_lina_fiery_soul = class({})
-LinkLuaModifier("modifier_imba_fiery_soul", "hero/hero_lina", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_fiery_soul_counter", "hero/hero_lina", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_fiery_soul_blaze_burn", "hero/hero_lina", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_fiery_soul_talent", "hero/hero_lina", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_fiery_soul", "components/abilities/heroes/hero_lina", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_fiery_soul_counter", "components/abilities/heroes/hero_lina", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_fiery_soul_blaze_burn", "components/abilities/heroes/hero_lina", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_fiery_soul_talent", "components/abilities/heroes/hero_lina", LUA_MODIFIER_MOTION_NONE)
 function imba_lina_fiery_soul:IsStealable() return false end
 function imba_lina_fiery_soul:GetIntrinsicModifierName()
 	return "modifier_imba_fiery_soul"

@@ -15,7 +15,7 @@
 -- Editors:
 --     EarthSalamander #42, 04.09.2017
 
-LinkLuaModifier("modifier_reality_rift_armor_reduction_debuff", "hero/hero_chaos_knight", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_reality_rift_armor_reduction_debuff", "components/abilities/heroes/hero_chaos_knight", LUA_MODIFIER_MOTION_NONE)
 
 imba_chaos_knight_reality_rift = class({})
 
@@ -171,7 +171,7 @@ end
 --------------------------
 
 imba_chaos_knight_phantasm = class({})
-LinkLuaModifier("modifier_chaos_knight_phantasm_cast", "hero/hero_chaos_knight", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_chaos_knight_phantasm_cast", "components/abilities/heroes/hero_chaos_knight", LUA_MODIFIER_MOTION_NONE)
 
 function imba_chaos_knight_phantasm:GetAbilityTextureName()
 	return "chaos_knight_phantasm"

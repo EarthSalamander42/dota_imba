@@ -19,7 +19,7 @@
 -- Wraith
 -----------------------------------------------------------------------------------------------------------
 ghost_revenant_wraith = class({})
-LinkLuaModifier("modifier_ghost_revenant_wraith", "hero/hero_ghost_revenant.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_ghost_revenant_wraith", "components/abilities/heroes/hero_ghost_revenant.lua", LUA_MODIFIER_MOTION_NONE)
 
 function ghost_revenant_wraith:GetAbilityTextureName()
 	return "custom/ghost_revenant_wraith"
@@ -102,7 +102,7 @@ end
 -----------------------------------------------------------------------------------------------------------
 
 if ghost_revenant_blackjack == nil then ghost_revenant_blackjack = class({}) end
-LinkLuaModifier( "modifier_ghost_revenant_blackjack_debuff", "hero/hero_ghost_revenant.lua", LUA_MODIFIER_MOTION_NONE )	-- Armor/vision debuff
+LinkLuaModifier( "modifier_ghost_revenant_blackjack_debuff", "components/abilities/heroes/hero_ghost_revenant.lua", LUA_MODIFIER_MOTION_NONE )	-- Armor/vision debuff
 
 function ghost_revenant_blackjack:GetAbilityTextureName()
 	return "custom/ghost_revenant_blackjack"
@@ -227,7 +227,7 @@ function modifier_ghost_revenant_blackjack_debuff:GetEffectAttachType() return P
 -----------------------------------------------------------------------------------------------------------
 --	Miasma
 -----------------------------------------------------------------------------------------------------------
-LinkLuaModifier( "modifier_ghost_revenant_miasma", "hero/hero_ghost_revenant.lua", LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier( "modifier_ghost_revenant_miasma", "components/abilities/heroes/hero_ghost_revenant.lua", LUA_MODIFIER_MOTION_NONE )
 if ghost_revenant_miasma == nil then ghost_revenant_miasma = class({}) end
 
 function ghost_revenant_miasma:GetAbilityTextureName()
@@ -389,8 +389,8 @@ function ghost_revenant_ghost_immolation:GetCastRange(location, target)
 	return self:GetSpecialValueFor("radius")
 end
 
-LinkLuaModifier("modifier_ghost_revenant_ghost_immolation", "hero/hero_ghost_revenant", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_ghost_revenant_ghost_immolation_debuff", "hero/hero_ghost_revenant", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_ghost_revenant_ghost_immolation", "components/abilities/heroes/hero_ghost_revenant", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_ghost_revenant_ghost_immolation_debuff", "components/abilities/heroes/hero_ghost_revenant", LUA_MODIFIER_MOTION_NONE)
 
 modifier_ghost_revenant_ghost_immolation = class({})
 
@@ -536,7 +536,7 @@ end
 -----------------------------------------------------------------------------------------------------------
 --	Exhaustion
 -----------------------------------------------------------------------------------------------------------
-LinkLuaModifier( "modifier_ghost_revenant_exhaustion", "hero/hero_ghost_revenant.lua", LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier( "modifier_ghost_revenant_exhaustion", "components/abilities/heroes/hero_ghost_revenant.lua", LUA_MODIFIER_MOTION_NONE )
 if ghost_revenant_exhaustion == nil then ghost_revenant_exhaustion = class({}) end
 
 function ghost_revenant_exhaustion:GetAbilityTextureName()

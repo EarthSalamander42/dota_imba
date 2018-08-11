@@ -21,8 +21,8 @@
 -------------------------------
 
 imba_mirana_starfall = class({})
-LinkLuaModifier("modifier_imba_starfall_scepter_thinker", "hero/hero_mirana", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_starfall_talent_seed_debuff", "hero/hero_mirana", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_starfall_scepter_thinker", "components/abilities/heroes/hero_mirana", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_starfall_talent_seed_debuff", "components/abilities/heroes/hero_mirana", LUA_MODIFIER_MOTION_NONE)
 
 function imba_mirana_starfall:GetAbilityTextureName()
 	return "mirana_starfall"
@@ -382,8 +382,8 @@ end
 -------------------------------
 
 imba_mirana_arrow = class({})
-LinkLuaModifier("modifier_imba_sacred_arrow_stun", "hero/hero_mirana", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_sacred_arrow_haste", "hero/hero_mirana", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_sacred_arrow_stun", "components/abilities/heroes/hero_mirana", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_sacred_arrow_haste", "components/abilities/heroes/hero_mirana", LUA_MODIFIER_MOTION_NONE)
 
 function imba_mirana_arrow:GetAbilityTextureName()
 	return "mirana_arrow"
@@ -737,10 +737,10 @@ end
 -------------------------------
 
 imba_mirana_leap = class({})
-LinkLuaModifier("modifier_imba_leap_movement", "hero/hero_mirana", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_leap_aura", "hero/hero_mirana", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_leap_speed_boost", "hero/hero_mirana", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_leap_talent_cast_angle_handler", "hero/hero_mirana", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_leap_movement", "components/abilities/heroes/hero_mirana", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_leap_aura", "components/abilities/heroes/hero_mirana", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_leap_speed_boost", "components/abilities/heroes/hero_mirana", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_leap_talent_cast_angle_handler", "components/abilities/heroes/hero_mirana", LUA_MODIFIER_MOTION_NONE)
 
 function imba_mirana_leap:GetAbilityTextureName()
 	return "mirana_leap"
@@ -1079,11 +1079,11 @@ end
 -------------------------------
 
 imba_mirana_moonlight_shadow = class({})
-LinkLuaModifier("modifier_imba_moonlight_shadow", "hero/hero_mirana", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_moonlight_shadow_invis", "hero/hero_mirana", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_moonlight_shadow_invis_dummy", "hero/hero_mirana", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_moonlight_shadow_invis_fade_time", "hero/hero_mirana", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_moonlight_shadow_talent_starstorm", "hero/hero_mirana", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_moonlight_shadow", "components/abilities/heroes/hero_mirana", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_moonlight_shadow_invis", "components/abilities/heroes/hero_mirana", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_moonlight_shadow_invis_dummy", "components/abilities/heroes/hero_mirana", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_moonlight_shadow_invis_fade_time", "components/abilities/heroes/hero_mirana", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_moonlight_shadow_talent_starstorm", "components/abilities/heroes/hero_mirana", LUA_MODIFIER_MOTION_NONE)
 
 function imba_mirana_moonlight_shadow:GetAbilityTextureName()
 	return "mirana_invis"

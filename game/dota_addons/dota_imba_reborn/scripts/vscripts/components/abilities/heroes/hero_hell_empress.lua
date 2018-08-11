@@ -19,7 +19,7 @@
 --	ELEVEN CURSES
 --------------------------------------
 imba_empress_eleven_curses = class({})
-LinkLuaModifier("modifier_imba_eleven_curses", "hero/hero_hell_empress.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_eleven_curses", "components/abilities/heroes/hero_hell_empress.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_empress_eleven_curses:GetAOERadius()
 	return self:GetSpecialValueFor("effect_radius")
@@ -167,7 +167,7 @@ end
 --	ROYAL WRATH
 --------------------------------------
 imba_empress_royal_wrath = class({})
-LinkLuaModifier("modifier_imba_royal_wrath", "hero/hero_hell_empress.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_royal_wrath", "components/abilities/heroes/hero_hell_empress.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_empress_royal_wrath:GetIntrinsicModifierName()
 	return "modifier_imba_royal_wrath"
@@ -229,13 +229,13 @@ end
 --	HURL THROUGH HELL
 --------------------------------------
 imba_empress_hurl_through_hell = class({})
-LinkLuaModifier("modifier_imba_hurl_through_hell", "hero/hero_hell_empress.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_hurl_through_hell_slow", "hero/hero_hell_empress.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_hurl_through_hell_root", "hero/hero_hell_empress.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_hurl_through_hell_disarm", "hero/hero_hell_empress.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_hurl_through_hell_silence", "hero/hero_hell_empress.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_hurl_through_hell_mute", "hero/hero_hell_empress.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_hurl_through_hell_break", "hero/hero_hell_empress.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_hurl_through_hell", "components/abilities/heroes/hero_hell_empress.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_hurl_through_hell_slow", "components/abilities/heroes/hero_hell_empress.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_hurl_through_hell_root", "components/abilities/heroes/hero_hell_empress.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_hurl_through_hell_disarm", "components/abilities/heroes/hero_hell_empress.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_hurl_through_hell_silence", "components/abilities/heroes/hero_hell_empress.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_hurl_through_hell_mute", "components/abilities/heroes/hero_hell_empress.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_hurl_through_hell_break", "components/abilities/heroes/hero_hell_empress.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_empress_hurl_through_hell:GetAOERadius()
 	return self:GetSpecialValueFor("hurl_radius")
@@ -488,7 +488,7 @@ end
 
 function imba_empress_ambient_effects:IsInnateAbility() return true end
 
-LinkLuaModifier("modifier_hell_empress_ambient_effects", "hero/hero_hell_empress", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_hell_empress_ambient_effects", "components/abilities/heroes/hero_hell_empress", LUA_MODIFIER_MOTION_NONE)
 
 modifier_hell_empress_ambient_effects = class({})
 

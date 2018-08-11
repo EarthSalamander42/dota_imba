@@ -20,10 +20,10 @@
 ----------------------------
 
 imba_drow_ranger_frost_arrows = class({})
-LinkLuaModifier("modifier_imba_frost_arrows_thinker", "hero/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_frost_arrows_slow", "hero/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_frost_arrows_freeze", "hero/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_frost_arrows_buff", "hero/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_frost_arrows_thinker", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_frost_arrows_slow", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_frost_arrows_freeze", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_frost_arrows_buff", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
 
 
 function imba_drow_ranger_frost_arrows:GetAbilityTextureName()
@@ -523,8 +523,8 @@ end
 ----------------------------
 
 imba_drow_ranger_deadeye = class({})
-LinkLuaModifier("modifier_imba_deadeye_aura", "hero/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_deadeye_vision", "hero/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_deadeye_aura", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_deadeye_vision", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
 
 function imba_drow_ranger_deadeye:GetAbilityTextureName()
 	return "custom/drow_deadeye"
@@ -657,9 +657,9 @@ end
 
 imba_drow_ranger_gust = class({})
 
-LinkLuaModifier("modifier_imba_gust_silence", "hero/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_gust_movement", "hero/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_gust_buff", "hero/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_gust_silence", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_gust_movement", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_gust_buff", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
 
 function imba_drow_ranger_gust:GetAbilityTextureName()
 	return "drow_ranger_wave_of_silence"
@@ -976,10 +976,10 @@ end
 ----------------------------
 
 imba_drow_ranger_trueshot = class({})
-LinkLuaModifier("modifier_imba_trueshot_aura", "hero/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_trueshot", "hero/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_trueshot_active", "hero/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_trueshot_talent_buff", "hero/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_trueshot_aura", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_trueshot", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_trueshot_active", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_trueshot_talent_buff", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
 
 function imba_drow_ranger_trueshot:GetAbilityTextureName()
 	return "drow_ranger_trueshot"
@@ -1257,11 +1257,11 @@ function modifier_imba_trueshot_talent_buff:IsHidden() return false end
 ----------------------------
 
 imba_drow_ranger_marksmanship = class({})
-LinkLuaModifier("modifier_imba_marksmanship", "hero/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_marksmanship_scepter_dmg_reduction", "hero/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_markmanship_aura", "hero/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_markmanship_buff", "hero/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_markmanship_slow", "hero/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_marksmanship", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_marksmanship_scepter_dmg_reduction", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_markmanship_aura", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_markmanship_buff", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_markmanship_slow", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
 
 function imba_drow_ranger_marksmanship:GetAbilityTextureName()
 	return "drow_ranger_marksmanship"

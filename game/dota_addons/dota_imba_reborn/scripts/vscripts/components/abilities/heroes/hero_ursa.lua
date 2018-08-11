@@ -21,10 +21,10 @@
 
 imba_ursa_earthshock = class({})
 
-LinkLuaModifier("modifier_imba_earthshock_slow", "hero/hero_ursa", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_trembling_steps_buff", "hero/hero_ursa", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_trembling_steps_prevent", "hero/hero_ursa", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_trembling_steps_debuff", "hero/hero_ursa", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_earthshock_slow", "components/abilities/heroes/hero_ursa", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_trembling_steps_buff", "components/abilities/heroes/hero_ursa", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_trembling_steps_prevent", "components/abilities/heroes/hero_ursa", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_trembling_steps_debuff", "components/abilities/heroes/hero_ursa", LUA_MODIFIER_MOTION_NONE)
 
 function imba_ursa_earthshock:GetAbilityTextureName()
 	return "ursa_earthshock"
@@ -387,9 +387,9 @@ end
 ---------------------------------------------------
 
 imba_ursa_overpower = class({})
-LinkLuaModifier("modifier_imba_overpower_buff", "hero/hero_ursa", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_overpower_disarm", "hero/hero_ursa", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_overpower_talent_fangs", "hero/hero_ursa", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_overpower_buff", "components/abilities/heroes/hero_ursa", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_overpower_disarm", "components/abilities/heroes/hero_ursa", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_overpower_talent_fangs", "components/abilities/heroes/hero_ursa", LUA_MODIFIER_MOTION_NONE)
 
 function imba_ursa_overpower:GetBehavior()
 	-- #8 Talent: Overpower becomes a passive, allowing Ursa to use it as he attacks.
@@ -705,9 +705,9 @@ end
 ---------------------------------------------------
 
 imba_ursa_fury_swipes = class({})
-LinkLuaModifier("modifier_imba_fury_swipes", "hero/hero_ursa", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_fury_swipes_debuff", "hero/hero_ursa", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_fury_swipes_talent_ripper", "hero/hero_ursa", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_fury_swipes", "components/abilities/heroes/hero_ursa", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_fury_swipes_debuff", "components/abilities/heroes/hero_ursa", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_fury_swipes_talent_ripper", "components/abilities/heroes/hero_ursa", LUA_MODIFIER_MOTION_NONE)
 
 function imba_ursa_fury_swipes:GetAbilityTextureName()
 	return "ursa_fury_swipes"
@@ -912,10 +912,10 @@ end
 ---------------------------------------------------
 
 imba_ursa_enrage = class({})
-LinkLuaModifier("modifier_imba_enrage_buff", "hero/hero_ursa", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_enrage_talent_buff", "hero/hero_ursa", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_talent_enrage_damage", "hero/hero_ursa", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_talent_enrage_prevent", "hero/hero_ursa", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_enrage_buff", "components/abilities/heroes/hero_ursa", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_enrage_talent_buff", "components/abilities/heroes/hero_ursa", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_talent_enrage_damage", "components/abilities/heroes/hero_ursa", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_talent_enrage_prevent", "components/abilities/heroes/hero_ursa", LUA_MODIFIER_MOTION_NONE)
 
 function imba_ursa_enrage:GetAbilityTextureName()
 	return "ursa_enrage"
@@ -1273,9 +1273,9 @@ end
 ---------------------------------------------------
 
 imba_ursa_territorial_hunter = class({})
-LinkLuaModifier("modifier_terrorital_hunter_aura", "hero/hero_ursa", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_terrorital_hunter_fogvision", "hero/hero_ursa", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_terrorital_hunter_talent_tenacity", "hero/hero_ursa", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_terrorital_hunter_aura", "components/abilities/heroes/hero_ursa", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_terrorital_hunter_fogvision", "components/abilities/heroes/hero_ursa", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_terrorital_hunter_talent_tenacity", "components/abilities/heroes/hero_ursa", LUA_MODIFIER_MOTION_NONE)
 
 function imba_ursa_territorial_hunter:GetAbilityTextureName()
 	return "custom/territorial_hunter"

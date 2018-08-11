@@ -216,8 +216,8 @@ end
 -------------------------------------------
 
 imba_witch_doctor_voodoo_restoration = class({})
-LinkLuaModifier("modifier_imba_voodoo_restoration", "hero/hero_witch_doctor", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_voodoo_restoration_heal", "hero/hero_witch_doctor", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_voodoo_restoration", "components/abilities/heroes/hero_witch_doctor", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_voodoo_restoration_heal", "components/abilities/heroes/hero_witch_doctor", LUA_MODIFIER_MOTION_NONE)
 
 function imba_witch_doctor_voodoo_restoration:GetAbilityTextureName()
 	return "witch_doctor_voodoo_restoration"
@@ -452,8 +452,8 @@ end
 -------------------------------------------
 --				MALEDICT
 -------------------------------------------
-LinkLuaModifier("modifier_imba_maledict", "hero/hero_witch_doctor", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_maledict_talent", "hero/hero_witch_doctor", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_maledict", "components/abilities/heroes/hero_witch_doctor", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_maledict_talent", "components/abilities/heroes/hero_witch_doctor", LUA_MODIFIER_MOTION_NONE)
 
 imba_witch_doctor_maledict = class({})
 function imba_witch_doctor_maledict:IsHiddenWhenStolen() return false end
@@ -670,8 +670,8 @@ end
 -------------------------------------------
 --				DEATH WARD
 -------------------------------------------
-LinkLuaModifier("modifier_imba_death_ward", "hero/hero_witch_doctor", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_death_ward_caster", "hero/hero_witch_doctor", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_death_ward", "components/abilities/heroes/hero_witch_doctor", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_death_ward_caster", "components/abilities/heroes/hero_witch_doctor", LUA_MODIFIER_MOTION_NONE)
 
 imba_witch_doctor_death_ward = class({})
 function imba_witch_doctor_death_ward:IsHiddenWhenStolen() return false end

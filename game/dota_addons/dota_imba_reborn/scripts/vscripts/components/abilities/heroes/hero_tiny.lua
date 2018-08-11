@@ -21,10 +21,10 @@
 --          Tree Grab                --
 ---------------------------------------
 imba_tiny_tree_grab = imba_tiny_tree_grab or class({})
-LinkLuaModifier("imba_tiny_tree_modifier", "hero/hero_tiny", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("imba_tiny_tree_damage_modifier", "hero/hero_tiny", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("imba_tiny_tree_building_modifier", "hero/hero_tiny", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("imba_tiny_tree_animation_modifier", "hero/hero_tiny", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("imba_tiny_tree_modifier", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("imba_tiny_tree_damage_modifier", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("imba_tiny_tree_building_modifier", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("imba_tiny_tree_animation_modifier", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_NONE)
 function imba_tiny_tree_grab:OnSpellStart()
 	if IsServer() then 
 		local caster = self:GetCaster()
@@ -298,8 +298,8 @@ end
 --          Tree Throw               --
 ---------------------------------------
 imba_tiny_tree_throw = imba_tiny_tree_throw or class({})
-LinkLuaModifier("modifier_imba_tree_throw", "hero/hero_tiny", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_tiny_tree_throw_knockback", "hero/hero_tiny", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tree_throw", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tiny_tree_throw_knockback", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_NONE)
 function imba_tiny_tree_throw:OnSpellStart()
 	if IsServer() then
 		local target_point 		= self:GetCursorPosition()
@@ -510,7 +510,7 @@ function imba_tiny_rolling_stone:GetIntrinsicModifierName()
 end
 
 
-LinkLuaModifier("modifier_imba_tiny_rolling_stone", "hero/hero_tiny", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tiny_rolling_stone", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_NONE)
 modifier_imba_tiny_rolling_stone = class({})
 
 function modifier_imba_tiny_rolling_stone:OnCreated()
@@ -727,7 +727,7 @@ function imba_tiny_avalanche:GetIntrinsicModifierName()
 	return "modifier_imba_tiny_avalanche_passive"
 end
 
-LinkLuaModifier("modifier_imba_tiny_avalanche_passive", "hero/hero_tiny", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tiny_avalanche_passive", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_NONE)
 modifier_imba_tiny_avalanche_passive = class({})
 function modifier_imba_tiny_avalanche_passive:OnCreated()
 	self.chance = self:GetAbility():GetSpecialValueFor("passive_chance")
@@ -894,7 +894,7 @@ function imba_tiny_toss:GetAOERadius()
 	return radius
 end
 
-LinkLuaModifier("modifier_tiny_toss_movement", "hero/hero_tiny", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_tiny_toss_movement", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_NONE)
 
 modifier_tiny_toss_movement = modifier_tiny_toss_movement or class({})
 function modifier_tiny_toss_movement:IsDebuff()
@@ -1150,7 +1150,7 @@ function modifier_tiny_toss_movement:VerticalMotion( me, dt )
 	end
 end
 
-LinkLuaModifier("modifier_tiny_toss_scepter_bounce", "hero/hero_tiny", LUA_MODIFIER_MOTION_VERTICAL)
+LinkLuaModifier("modifier_tiny_toss_scepter_bounce", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_VERTICAL)
 
 modifier_tiny_toss_scepter_bounce = modifier_tiny_toss_scepter_bounce or class({})
 function modifier_tiny_toss_scepter_bounce:IsDebuff()
@@ -1315,7 +1315,7 @@ function imba_tiny_craggy_exterior:GetAbilityTextureName()
 	return "tiny_craggy_exterior"
 end
 
-LinkLuaModifier("modifier_imba_tiny_craggy_exterior_passive", "hero/hero_tiny", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tiny_craggy_exterior_passive", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_NONE)
 modifier_imba_tiny_craggy_exterior_passive = class({})
 function modifier_imba_tiny_craggy_exterior_passive:OnCreated()
 	self.chance = self:GetAbility():GetSpecialValueFor("stun_chance")
@@ -1407,7 +1407,7 @@ function modifier_imba_tiny_craggy_exterior_passive:OnAttackLanded(params)
 	end
 end
 
-LinkLuaModifier("modifier_craggy_exterior_blunt", "hero/hero_tiny", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_craggy_exterior_blunt", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_NONE)
 modifier_craggy_exterior_blunt = class({})
 function modifier_craggy_exterior_blunt:OnCreated()
 	self.caster = self:GetCaster()
@@ -1485,7 +1485,7 @@ function imba_tiny_grow:OnUpgrade()
 	end
 end
 
-LinkLuaModifier("modifier_imba_tiny_grow_passive", "hero/hero_tiny", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tiny_grow_passive", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_NONE)
 modifier_imba_tiny_grow_passive = class({})
 
 function modifier_imba_tiny_grow_passive:OnCreated()

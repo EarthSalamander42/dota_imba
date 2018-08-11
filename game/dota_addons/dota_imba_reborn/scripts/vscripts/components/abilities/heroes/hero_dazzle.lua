@@ -20,9 +20,9 @@
 ---------------------------------------------------------------------
 
 if imba_dazzle_poison_touch == nil then imba_dazzle_poison_touch = class({}) end
-LinkLuaModifier( "modifier_imba_dazzle_poison_touch_setin", "hero/hero_dazzle.lua", LUA_MODIFIER_MOTION_NONE )		-- Set in modifier (slow + attack counter)
-LinkLuaModifier( "modifier_imba_dazzle_poison_touch_debuff", "hero/hero_dazzle.lua", LUA_MODIFIER_MOTION_NONE )		-- Stun + damage over time
-LinkLuaModifier( "modifier_imba_dazzle_poison_touch_talent_slow", "hero/hero_dazzle.lua", LUA_MODIFIER_MOTION_NONE )-- Because FUCK Valve, and FUCK net tables
+LinkLuaModifier( "modifier_imba_dazzle_poison_touch_setin", "components/abilities/heroes/hero_dazzle.lua", LUA_MODIFIER_MOTION_NONE )		-- Set in modifier (slow + attack counter)
+LinkLuaModifier( "modifier_imba_dazzle_poison_touch_debuff", "components/abilities/heroes/hero_dazzle.lua", LUA_MODIFIER_MOTION_NONE )		-- Stun + damage over time
+LinkLuaModifier( "modifier_imba_dazzle_poison_touch_talent_slow", "components/abilities/heroes/hero_dazzle.lua", LUA_MODIFIER_MOTION_NONE )-- Because FUCK Valve, and FUCK net tables
 
 function imba_dazzle_poison_touch:GetAbilityTextureName()
 	return "dazzle_poison_touch"
@@ -282,11 +282,11 @@ end
 ---------------------------------------------------------------------
 
 if imba_dazzle_shallow_grave == nil then imba_dazzle_shallow_grave = class({}) end
-LinkLuaModifier( "modifier_imba_dazzle_shallow_grave", "hero/hero_dazzle.lua", LUA_MODIFIER_MOTION_NONE )				-- Shallow Grave effect
-LinkLuaModifier( "modifier_imba_dazzle_nothl_protection", "hero/hero_dazzle.lua", LUA_MODIFIER_MOTION_NONE )			-- Passive self-cast
-LinkLuaModifier( "modifier_imba_dazzle_post_shallow_grave_buff", "hero/hero_dazzle.lua", LUA_MODIFIER_MOTION_NONE )		-- Post-grave buff
-LinkLuaModifier( "modifier_imba_dazzle_nothl_protection_aura_talent", "hero/hero_dazzle.lua", LUA_MODIFIER_MOTION_NONE )-- Talent aura Nothl Protection
-LinkLuaModifier( "modifier_imba_dazzle_nothl_protection_particle", "hero/hero_dazzle.lua", LUA_MODIFIER_MOTION_NONE )-- Talent aura Nothl Protection
+LinkLuaModifier( "modifier_imba_dazzle_shallow_grave", "components/abilities/heroes/hero_dazzle.lua", LUA_MODIFIER_MOTION_NONE )				-- Shallow Grave effect
+LinkLuaModifier( "modifier_imba_dazzle_nothl_protection", "components/abilities/heroes/hero_dazzle.lua", LUA_MODIFIER_MOTION_NONE )			-- Passive self-cast
+LinkLuaModifier( "modifier_imba_dazzle_post_shallow_grave_buff", "components/abilities/heroes/hero_dazzle.lua", LUA_MODIFIER_MOTION_NONE )		-- Post-grave buff
+LinkLuaModifier( "modifier_imba_dazzle_nothl_protection_aura_talent", "components/abilities/heroes/hero_dazzle.lua", LUA_MODIFIER_MOTION_NONE )-- Talent aura Nothl Protection
+LinkLuaModifier( "modifier_imba_dazzle_nothl_protection_particle", "components/abilities/heroes/hero_dazzle.lua", LUA_MODIFIER_MOTION_NONE )-- Talent aura Nothl Protection
 
 function imba_dazzle_shallow_grave:GetAbilityTextureName()
 	return "dazzle_shallow_grave"
@@ -1025,8 +1025,8 @@ end
 -------------------------	Shadow Wave		-------------------------
 ---------------------------------------------------------------------
 if imba_dazzle_shadow_wave == nil then imba_dazzle_shadow_wave = class({}) end
-LinkLuaModifier( "modifier_imba_dazzle_shadow_wave_delayed_bounce", "hero/hero_dazzle.lua", LUA_MODIFIER_MOTION_NONE )			-- Talent delayed wave bounce
-LinkLuaModifier( "modifier_imba_dazzle_shadow_wave_delayed_bounce_cooldown", "hero/hero_dazzle.lua", LUA_MODIFIER_MOTION_NONE )	-- Talent delayed wave bounce cooldown
+LinkLuaModifier( "modifier_imba_dazzle_shadow_wave_delayed_bounce", "components/abilities/heroes/hero_dazzle.lua", LUA_MODIFIER_MOTION_NONE )			-- Talent delayed wave bounce
+LinkLuaModifier( "modifier_imba_dazzle_shadow_wave_delayed_bounce_cooldown", "components/abilities/heroes/hero_dazzle.lua", LUA_MODIFIER_MOTION_NONE )	-- Talent delayed wave bounce cooldown
 
 function imba_dazzle_shadow_wave:GetAbilityTextureName()
 	return "dazzle_shadow_wave"
@@ -1441,9 +1441,9 @@ function modifier_imba_dazzle_shadow_wave_delayed_bounce_cooldown:GetAttributes(
 -------------------------	Weave	-------------------------
 -------------------------------------------------------------
 if imba_dazzle_weave == nil then imba_dazzle_weave = class({}) end
-LinkLuaModifier( "modifier_imba_dazzle_weave_buff", "hero/hero_dazzle.lua", LUA_MODIFIER_MOTION_NONE )			-- Allied bonus armor
-LinkLuaModifier( "modifier_imba_dazzle_weave_debuff", "hero/hero_dazzle.lua", LUA_MODIFIER_MOTION_NONE )		-- Allied bonus armor
-LinkLuaModifier( "modifier_imba_dazzle_ressurection_layout", "hero/hero_dazzle.lua", LUA_MODIFIER_MOTION_NONE )	-- Ressurection ability layout modifier
+LinkLuaModifier( "modifier_imba_dazzle_weave_buff", "components/abilities/heroes/hero_dazzle.lua", LUA_MODIFIER_MOTION_NONE )			-- Allied bonus armor
+LinkLuaModifier( "modifier_imba_dazzle_weave_debuff", "components/abilities/heroes/hero_dazzle.lua", LUA_MODIFIER_MOTION_NONE )		-- Allied bonus armor
+LinkLuaModifier( "modifier_imba_dazzle_ressurection_layout", "components/abilities/heroes/hero_dazzle.lua", LUA_MODIFIER_MOTION_NONE )	-- Ressurection ability layout modifier
 
 function imba_dazzle_weave:GetAbilityTextureName()
 	return "dazzle_weave" end
@@ -1753,7 +1753,7 @@ end
 -----	Talents	 -----
 ----------------------
 for i = 1,8 do
-	LinkLuaModifier("modifier_special_bonus_imba_dazzle_"..i, "hero/hero_dazzle", LUA_MODIFIER_MOTION_NONE)
+	LinkLuaModifier("modifier_special_bonus_imba_dazzle_"..i, "components/abilities/heroes/hero_dazzle", LUA_MODIFIER_MOTION_NONE)
 end
 
 modifier_special_bonus_imba_dazzle_1 = class({

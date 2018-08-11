@@ -21,7 +21,7 @@
 --		BREATH FIRE  	 --
 ---------------------------
 
-LinkLuaModifier("modifier_imba_breathe_fire_debuff", "hero/hero_dragon_knight", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_breathe_fire_debuff", "components/abilities/heroes/hero_dragon_knight", LUA_MODIFIER_MOTION_NONE)
 
 imba_dragon_knight_breathe_fire = class({})
 
@@ -130,9 +130,9 @@ function modifier_imba_breathe_fire_debuff:IsDebuff() return true end
 --		Dragon Tail  	 --
 ---------------------------
 
-LinkLuaModifier("modifier_imba_dragon_tail", "hero/hero_dragon_knight.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_dragon_tail_miss", "hero/hero_dragon_knight.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_dragon_tail_debuff", "hero/hero_dragon_knight.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_dragon_tail", "components/abilities/heroes/hero_dragon_knight.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_dragon_tail_miss", "components/abilities/heroes/hero_dragon_knight.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_dragon_tail_debuff", "components/abilities/heroes/hero_dragon_knight.lua", LUA_MODIFIER_MOTION_NONE)
 
 imba_dragon_knight_dragon_tail = class({})
 
@@ -358,7 +358,7 @@ function modifier_imba_dragon_tail_debuff:GetEffectAttachType() return PATTACH_O
 --	Dragon Blood   --
 ---------------------
 
-LinkLuaModifier("modifier_imba_dragon_blood", "hero/hero_dragon_knight.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_dragon_blood", "components/abilities/heroes/hero_dragon_knight.lua", LUA_MODIFIER_MOTION_NONE)
 
 imba_dragon_knight_dragon_blood = imba_dragon_knight_dragon_blood or class({})
 
@@ -399,7 +399,7 @@ end
 --	Elder Dragon Charge	 --
 ---------------------------
 
-LinkLuaModifier( "modifier_imba_elder_dragon_charge", "hero/hero_dragon_knight.lua", LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier( "modifier_imba_elder_dragon_charge", "components/abilities/heroes/hero_dragon_knight.lua", LUA_MODIFIER_MOTION_NONE )
 
 imba_dragon_knight_elder_dragon_charge = class({})
 
@@ -560,8 +560,8 @@ end
 --	Elder Dragon Form  	 --
 ---------------------------
 
-LinkLuaModifier( "modifier_imba_elder_dragon_form", "hero/hero_dragon_knight.lua", LUA_MODIFIER_MOTION_NONE )
-LinkLuaModifier( "modifier_imba_elder_dragon_form_debuff", "hero/hero_dragon_knight.lua", LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier( "modifier_imba_elder_dragon_form", "components/abilities/heroes/hero_dragon_knight.lua", LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier( "modifier_imba_elder_dragon_form_debuff", "components/abilities/heroes/hero_dragon_knight.lua", LUA_MODIFIER_MOTION_NONE )
 
 imba_dragon_knight_elder_dragon_form = class({})
 

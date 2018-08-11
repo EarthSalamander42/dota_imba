@@ -33,7 +33,7 @@ end
 --				POLARIZE
 -------------------------------------------
 
-LinkLuaModifier("modifier_imba_polarize_debuff", "hero/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_polarize_debuff", "components/abilities/heroes/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
 modifier_imba_polarize_debuff = modifier_imba_polarize_debuff or class({})
 
 function modifier_imba_polarize_debuff:IsDebuff()
@@ -104,7 +104,7 @@ function modifier_imba_polarize_debuff:GetEffectAttachType()
 	return PATTACH_OVERHEAD_FOLLOW
 end
 
-LinkLuaModifier("modifier_imba_polarize_debuff_stack", "hero/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_polarize_debuff_stack", "components/abilities/heroes/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
 modifier_imba_polarize_debuff_stack = modifier_imba_polarize_debuff_stack or class({})
 
 function modifier_imba_polarize_debuff_stack:IsDebuff()
@@ -156,7 +156,7 @@ function modifier_imba_polarize_debuff_stack:OnDestroy( )
 	end
 end
 
-LinkLuaModifier("modifier_imba_polarize_debuff_pull", "hero/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_polarize_debuff_pull", "components/abilities/heroes/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
 
 modifier_imba_polarize_debuff_pull = class ({})
 
@@ -185,7 +185,7 @@ end
 --				MAGNETIZE
 -------------------------------------------
 
-LinkLuaModifier("modifier_imba_magnetize_debuff", "hero/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_magnetize_debuff", "components/abilities/heroes/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
 modifier_imba_magnetize_debuff = modifier_imba_magnetize_debuff or class({})
 
 function modifier_imba_magnetize_debuff:IsDebuff()
@@ -212,7 +212,7 @@ function modifier_imba_magnetize_debuff:GetEffectAttachType()
 	return PATTACH_OVERHEAD_FOLLOW
 end
 
-LinkLuaModifier("modifier_imba_magnetize_debuff_stack", "hero/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_magnetize_debuff_stack", "components/abilities/heroes/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
 modifier_imba_magnetize_debuff_stack = modifier_imba_magnetize_debuff_stack or class({})
 
 function modifier_imba_magnetize_debuff_stack:IsDebuff()
@@ -333,7 +333,7 @@ function modifier_imba_magnetize_debuff_stack:OnIntervalThink()
 	end
 end
 
-LinkLuaModifier("modifier_imba_magnetize_debuff_immune", "hero/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_magnetize_debuff_immune", "components/abilities/heroes/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
 modifier_imba_magnetize_debuff_immune = modifier_imba_magnetize_debuff_immune or class({})
 
 function modifier_imba_magnetize_debuff_immune:IsDebuff()
@@ -352,7 +352,7 @@ end
 --				SHOCKWAVE
 -------------------------------------------
 
-LinkLuaModifier("modifier_imba_shockwave_root", "hero/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_shockwave_root", "components/abilities/heroes/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
 imba_magnataur_shockwave = imba_magnataur_shockwave or class({})
 
 function imba_magnataur_shockwave:GetAbilityTextureName()
@@ -668,14 +668,14 @@ end
 -------------------------------------------
 
 imba_magnataur_empower = imba_magnataur_empower or class({})
-LinkLuaModifier("modifier_imba_empower_aura", "hero/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_empower", "hero/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_empower_particle", "hero/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_supercharged", "hero/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_empower_linger", "hero/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_empower_polarizer", "hero/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_ubercharged", "hero/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_ubercharged_indicator", "hero/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_empower_aura", "components/abilities/heroes/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_empower", "components/abilities/heroes/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_empower_particle", "components/abilities/heroes/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_supercharged", "components/abilities/heroes/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_empower_linger", "components/abilities/heroes/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_empower_polarizer", "components/abilities/heroes/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_ubercharged", "components/abilities/heroes/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_ubercharged_indicator", "components/abilities/heroes/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
 
 function imba_magnataur_empower:GetAbilityTextureName()
 	return "magnataur_empower"
@@ -1337,10 +1337,10 @@ end
 -------------------------------------------
 
 imba_magnataur_skewer = imba_magnataur_skewer or class({})
-LinkLuaModifier("modifier_imba_skewer_motion_controller", "hero/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_skewer_motion_controller_target", "hero/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_skewer_slow", "hero/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_skewer_entangle", "hero/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_skewer_motion_controller", "components/abilities/heroes/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_skewer_motion_controller_target", "components/abilities/heroes/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_skewer_slow", "components/abilities/heroes/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_skewer_entangle", "components/abilities/heroes/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
 
 function imba_magnataur_skewer:GetAbilityTextureName()
 	return "magnataur_skewer"
@@ -1847,7 +1847,7 @@ end
 -------------------------------------------
 
 imba_magnataur_reverse_polarity = imba_magnataur_reverse_polarity or class({})
-LinkLuaModifier("modifier_imba_reverse_polarity_slow", "hero/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_reverse_polarity_slow", "components/abilities/heroes/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
 
 function imba_magnataur_reverse_polarity:GetAbilityTextureName()
 	return "magnataur_reverse_polarity"

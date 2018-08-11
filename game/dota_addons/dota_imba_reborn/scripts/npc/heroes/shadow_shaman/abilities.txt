@@ -120,7 +120,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"              		"ability_lua"
-		"ScriptFile"					"hero/hero_shadow_shaman.lua"
+		"ScriptFile"					"components/abilities/heroes/hero_shadow_shaman.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
 		"MaxLevel"						"3"
