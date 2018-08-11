@@ -90,6 +90,11 @@ function GameMode:OnHeroKilled(killer, killed_unit)
 				respawn_time = HERO_RESPAWN_TIME_PER_LEVEL[#HERO_RESPAWN_TIME_PER_LEVEL]
 			end
 
+			-- Adjust respawn time for Wraith King's Reincarnation Passive Respawn Reduction
+			if killed_unit:HasModifier("modifier_imba_reincarnation") then
+				respawn_time = respawn_time - killed_unit:FindModifierByName("modifier_imba_reincarnation").passive_respawn_haste
+			end
+			
 			-- divide the respawn time by 2 for frantic mode
 			if killed_unit:HasModifier("modifier_frantic") then
 				respawn_time = respawn_time - respawn_time / (100 / _G.IMBA_FRANTIC_VALUE)
