@@ -331,15 +331,15 @@ function item_imba_jarnbjorn:OnSpellStart()
 		local tree_cooldown = self:GetSpecialValueFor("tree_cooldown")
 
 		if target.GetUnitName == nil then
+			self:RefundManaCost()
 			target:CutDown(-1)
 			self:EndCooldown()
 			self:StartCooldown(tree_cooldown)
 		else
+			-- Play cast sound
+			target:EmitSound("DOTA_Item.Mjollnir.Activate")
 			target:AddNewModifier(target, self, "modifier_item_imba_jarnbjorn_static", {duration = self:GetSpecialValueFor("static_duration")})
 		end
-
-		-- Play cast sound
-		target:EmitSound("DOTA_Item.Mjollnir.Activate")
 	end
 end
 
