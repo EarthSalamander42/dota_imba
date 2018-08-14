@@ -1,5 +1,7 @@
 -- Created by X-The-Dark
 
+LinkLuaModifier("modifier_imba_rune_double_damage_aura", "components/modifiers/runes/modifier_imba_double_damage_rune.lua", LUA_MODIFIER_MOTION_NONE)
+
 modifier_imba_double_damage_rune = modifier_imba_double_damage_rune or class({})
 
 function modifier_imba_double_damage_rune:IsAura() return true end

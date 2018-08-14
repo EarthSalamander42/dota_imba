@@ -72,7 +72,6 @@ function HeroSelection:Init()
 
 	if IsMutationMap() then
 --		if IMBA_MUTATION["positive"] == "killstreak_power" then
---			hotdisabledlist["npc_dota_hero_ember_spirit"] = 1
 --			hotdisabledlist["npc_dota_hero_zuus"] = 1
 --		end
 
@@ -82,7 +81,7 @@ function HeroSelection:Init()
 --		end
 	end
 
-	CustomNetTables:SetTableValue( "hero_selection", "herolist", {
+	CustomNetTables:SetTableValue("hero_selection", "herolist", {
 		gametype = GetMapName(),
 		herolist = herolist,
 		imbalist = imbalist,

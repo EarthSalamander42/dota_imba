@@ -39,6 +39,7 @@ TERRAIN_MUTATION_LIST[3] = "speed_freaks"
 TERRAIN_MUTATION_LIST[4] = "river_flows"
 TERRAIN_MUTATION_LIST[5] = "wormhole"
 TERRAIN_MUTATION_LIST[6] = "tug_of_war"
+TERRAIN_MUTATION_LIST[7] = "super_runes"
 
 --TERRAIN_MUTATION_LIST["sleepy_river"] = false
 --TERRAIN_MUTATION_LIST["call_down"] = false
@@ -51,7 +52,6 @@ TERRAIN_MUTATION_LIST[6] = "tug_of_war"
 
 -- POSITIVE_MUTATION_LIST["damage_reduction"] = false
 -- POSITIVE_MUTATION_LIST["stationary_damage_reduction"] = false
--- POSITIVE_MUTATION_LIST["super_runes"] = false
 -- POSITIVE_MUTATION_LIST["greedisgood"] = false
 -- POSITIVE_MUTATION_LIST["angel_arena"] = false
 

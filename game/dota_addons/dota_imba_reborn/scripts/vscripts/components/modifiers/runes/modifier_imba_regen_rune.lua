@@ -1,6 +1,5 @@
----------------------------------------------------------
--- Regeneration rune owner modifier
----------------------------------------------------------
+LinkLuaModifier("modifier_imba_regen_rune_aura", "components/modifiers/runes/modifier_imba_regen_rune", LUA_MODIFIER_MOTION_NONE)
+
 modifier_imba_regen_rune = modifier_imba_regen_rune or class({})
 
 -- Modifier property stuff

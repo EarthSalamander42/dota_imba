@@ -19,6 +19,30 @@ function CDOTA_PlayerResource:IsImbaPlayer(player_id)
 	end
 end
 
+-- Increase a player's current deathstreak count
+function CDOTA_PlayerResource:IncrementDeathstreak(player_id)
+	if self:IsImbaPlayer(player_id) then
+		self.PlayerData[player_id]["current_deathstreak"] = self.PlayerData[player_id]["current_deathstreak"] + 1
+		log.debug("Current deathstreak for player "..player_id..": "..self.PlayerData[player_id]["current_deathstreak"])
+	end
+end
+
+-- Reset a player's current deathstreak count
+function CDOTA_PlayerResource:ResetDeathstreak(player_id)
+	if self:IsImbaPlayer(player_id) then
+		self.PlayerData[player_id]["current_deathstreak"] = 0
+		log.debug("Current deathstreak for player "..player_id.." reset to zero.")
+	end
+end
+
+-- Fetch a player's current deathstreak count
+function CDOTA_PlayerResource:GetDeathstreak(player_id)
+	if self:IsImbaPlayer(player_id) then
+		return self.PlayerData[player_id]["current_deathstreak"]
+	end
+	return nil
+end
+
 function CDOTA_PlayerResource:GetAllTeamPlayerIDs()
 --	local player_id_table = {}
 

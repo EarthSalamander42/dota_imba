@@ -1,22 +1,26 @@
-@define COLOR_INFO_BACKGROUND: #224470dd;
-@define COLOR_INFO_BACKGROUND_DARK: #002233;
-@define COLOR_INFO_TEXT: #66aaff;
+@define COLOR_INFO_BACKGROUND_BLUE: #224470dd;
+@define COLOR_INFO_BACKGROUND_DARK_BLUE: #002233;
+@define COLOR_INFO_TEXT_BLUE: #66aaff;
+
+@define COLOR_INFO_BACKGROUND_GREEN: #004d1ada;
+@define COLOR_INFO_BACKGROUND_DARK_GREEN: #003312;
+@define COLOR_INFO_TEXT_GREEN: #00e64d;
+
+@define COLOR_INFO_BACKGROUND_ORANGE: #994d00ee;
+@define COLOR_INFO_BACKGROUND_DARK_ORANGE: #663300;
+@define COLOR_INFO_TEXT_ORANGE: #ffb366;
 
 .addon-root {
 	width: 100%;
 	height: 100%;
-/*	z-index: 10; */
+	z-index: 1;
 }
 
 .down {
-	padding: 0;
-	margin: 0;
 	flow-children: down;
 	width: 100%;
-/*	background-color: COLOR_INFO_BACKGROUND;
-	border: 2px solid COLOR_INFO_BACKGROUND_DARK;
 	box-shadow: 0 0 10px #111;
-//	border-radius: 20px;*/
+	padding: 25px 40px;
 }
 
 .large {
@@ -45,73 +49,104 @@
 	background-image: url("file://{images}/custom_game/loading_screen/frantic_thunder.png");
 }
 
-#imba-loading-title {
-	padding: 60px 80px;
+#imba-loading-title,
+#imba-loading-title-patreon,
+#imba-loading-title-promote, {
+	width: 1250px;
+	margin-top: 30px;
+	margin-left: 120px;
 	flow-children: right;
-	width: 70%;
 }
 
-@keyframes 'logo_animation' 
-{
-	0% {
-		transform: scaleX(1) scaleY(1);
-	}
-  
-	50% {
-		transform: scaleX(1.1) scaleY(1.1);
-	}
-
-	100% {
-		transform: scaleX(1) scaleY(1);
-	}
+#imba-loading-title {
+	background-color: COLOR_INFO_BACKGROUND_BLUE;
+	border: 2px solid COLOR_INFO_BACKGROUND_DARK_BLUE;
 }
 
-#imba-loading-title-logo {
-	width: 140px; height: 100px;
-	animation-name: logo_animation;
-	animation-duration: 7.0s;
-	animation-timing-function: linear;
-	animation-direction: alternate;
-	animation-iteration-count: infinite;
+#imba-loading-title-patreon {
+	background-color: COLOR_INFO_BACKGROUND_ORANGE;
+	border: 2px solid COLOR_INFO_BACKGROUND_DARK_ORANGE;
+}
+
+#imba-loading-title-promote, {
+	background-color: COLOR_INFO_BACKGROUND_GREEN;
+	border: 2px solid COLOR_INFO_BACKGROUND_DARK_GREEN;
+}
+
+#imba-loading-title-text,
+#imba-loading-title-text-patreon,
+#imba-loading-title-text-promote {
+	font-size: 36px;
 }
 
 #imba-loading-title-text {
-	margin: 25px 40px 10px;
-	font-size: 36px;
-	color: #eeeeff;
+	color: COLOR_INFO_TEXT_BLUE;
 }
 
-#imba-loading-content-text {
-	margin: 0px 40px;
+#imba-loading-title-text-patreon {
+	color: COLOR_INFO_TEXT_ORANGE;
+}
+
+#imba-loading-title-text-promote {
+	color: COLOR_INFO_TEXT_GREEN;
+}
+
+#imba-loading-content-text,
+#imba-loading-content-text-patreon,
+#imba-loading-content-text-promote, {
 	font-size: 20px;
 	color: #cccccc;
 	width: 100%;
 }
 
 #imba-loading-map-text {
-	margin: 0px 40px 40px;
+	margin: 20px 0px;
 	color: #ddddff;
 	font-size: 24px;
 }
 
 #imba-loading-link {
-	margin: 0px 40px;
+	background-color: COLOR_INFO_BACKGROUND_DARK_BLUE;
+	border: 2px solid COLOR_INFO_BACKGROUND_DARK_BLUE;
+	box-shadow: 0 0 10px #111;
 }
 
-#imba-loading-link-text {
+#imba-loading-link-promote {
+	background-color: COLOR_INFO_BACKGROUND_DARK_GREEN;
+	border: 2px solid COLOR_INFO_BACKGROUND_DARK_GREEN;
+	box-shadow: 0 0 10px #111;
+	margin-top: 40px;
+}
+
+#imba-loading-link-patreon {
+	background-color: COLOR_INFO_BACKGROUND_DARK_ORANGE;
+	border: 2px solid COLOR_INFO_BACKGROUND_DARK_ORANGE;
+	box-shadow: 0 0 10px #111;
+	margin-top: 40px;
+}
+
+#imba-loading-link-text,
+#imba-loading-link-text-patreon,
+#imba-loading-link-text-promote {
 	font-size: 24px;
 	text-shadow: 0 0 5px #000;
 	color: #cccccc;	
 }
 
-#imba-loading-link-text:hover {
+#imba-loading-link-text:hover,
+#imba-loading-link-text-patreon:hover,
+#imba-loading-link-text-promote:hover {
 	text-decoration: underline;
+	background-color: #003339;
 }
 
 #ImbaLoadingSocial {
+	padding: 0px 20px;
 	margin-left: 260px;
 	overflow: scroll;
 	flow-children: down;
+	background-color: #002239;
+	border: 2px solid COLOR_INFO_BACKGROUND_DARK_BLUE;
 } 
 
 #ImbaLoadingSocial Panel {
@@ -130,8 +165,12 @@
 }
 
 #ImbaLoadingSocial Label {
-	font-size: 22px;
+	font-size: 20px;
 	color: #fff;
+}
+
+.SocialButtons {
+
 }
 
 #ImbaLoadingSocialOfficialWebsite { background-color: #333; }

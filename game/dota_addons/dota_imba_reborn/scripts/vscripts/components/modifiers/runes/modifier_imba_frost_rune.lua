@@ -1,5 +1,8 @@
 -- Custom Model Author: Champi Suicidaire
 
+LinkLuaModifier("modifier_imba_frost_rune_aura", "components/modifiers/runes/modifier_imba_frost_rune", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_frost_rune_slow", "components/modifiers/runes/modifier_imba_frost_rune", LUA_MODIFIER_MOTION_NONE)
+
 item_imba_rune_frost = item_imba_rune_frost or class({})
 
 modifier_imba_frost_rune = modifier_imba_frost_rune or class({})

@@ -35,18 +35,36 @@
 		GameUI.CustomUIConfig().team_colors[DOTATeam_t.DOTA_TEAM_GOODGUYS] = "#08640E;"; // Format this later using rgbtohex lib, and taking team color in settings.lua
 		GameUI.CustomUIConfig().team_colors[DOTATeam_t.DOTA_TEAM_BADGUYS ] = "#640808;"; // Format this later using rgbtohex lib, and taking team color in settings.lua
 
-		// fix for battlepass button being in middle of the way
+		// fix for battlepass button being in middle of the way of clock time until
 		var Parent = $.GetContextPanel().GetParent().GetParent()
-		var hudElements = Parent.FindChildTraverse("HUDElements");
-		var TimeUntil = hudElements.FindChildTraverse("topbar").FindChildTraverse("TimeUntil");
+		var hudElements = Parent.FindChildTraverse("HUDElements")
+		var TimeUntil = hudElements.FindChildTraverse("TimeUntil");
 		TimeUntil.style.marginBottom = "0px";
+
+		// setup modified vanilla HUD in loading screen
+//		if (Game.GetMapInfo().map_display_name == "imba_mutation_5v5" || Game.GetMapInfo().map_display_name == "imba_mutation_10v10")
+			SetupLoadingScreen()
+
+		function SetupLoadingScreen() {
+			if (Parent.FindChildTraverse("GameAndPlayersRoot") == undefined || Parent.FindChildTraverse("TeamsList") == undefined || Parent.FindChildTraverse("TeamsListGroup") == undefined || Parent.FindChildTraverse("CancelAndUnlockButton") == undefined || Parent.FindChildTraverse("UnassignedPlayerPanel") == undefined || Parent.FindChildTraverse("ShuffleTeamAssignmentButton") == undefined)
+				$.Schedule(0.25, SetupLoadingScreen);
+			else {
+				Parent.FindChildTraverse("GameAndPlayersRoot").style.backgroundColor = "rgba(50, 90, 128, 0.3)";
+				Parent.FindChildTraverse("GameAndPlayersRoot").style.borderRadius = "3px";
+				Parent.FindChildTraverse("GameAndPlayersRoot").style.boxShadow = "black -4px -4px 8px 8px";
+				Parent.FindChildTraverse("TeamsList").style.visibility = "collapse";
+				Parent.FindChildTraverse("TeamsListGroup").SetParent(Parent.FindChildTraverse("GameAndPlayersRoot"))
+				Parent.FindChildTraverse("TeamsListGroup").style.verticalAlign = "top";
+				Parent.FindChildTraverse("UnassignedPlayerPanel").style.visibility = "collapse";
+				Parent.FindChildTraverse("CancelAndUnlockButton").style.visibility = "collapse";
+				Parent.FindChildTraverse("ShuffleTeamAssignmentButton").style.visibility = "collapse";
+			}
+		}
 
 		// Nice topbar colors
 		var topbar = hudElements.FindChildTraverse("topbar");
 		var topbarRadiant = topbar.FindChildTraverse("TopBarRadiantTeam");
-		var topbarRadiantContainer = topbarRadiant.FindChildTraverse("TopBarRadiantPlayersContainer");
 		var topbarDire = topbar.FindChildTraverse("TopBarDireTeam");
-		var topbarDireContainer = topbarDire.FindChildTraverse("TopBarDirePlayersContainer");
 
 		for (var tbg of topbarRadiant.FindChildrenWithClassTraverse("TeamBackground")) {
 			for (var tbbg of tbg.FindChildrenWithClassTraverse("TopBarBackground")) {

@@ -1,3 +1,5 @@
+LinkLuaModifier("modifier_imba_arcane_rune_aura", "components/modifiers/runes/modifier_imba_arcane_rune.lua", LUA_MODIFIER_MOTION_NONE)
+
 modifier_imba_arcane_rune = modifier_imba_arcane_rune or class({})
 
 function modifier_imba_arcane_rune:IsAura() return true end
