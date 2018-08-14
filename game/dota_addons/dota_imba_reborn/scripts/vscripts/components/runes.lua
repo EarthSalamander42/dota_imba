@@ -30,10 +30,6 @@ function ImbaRunes:Init()
 	LinkLuaModifier("modifier_imba_stone_rune", "components/modifiers/runes/modifier_imba_stone_rune", LUA_MODIFIER_MOTION_NONE)
 	LinkLuaModifier("modifier_imba_invisibility_rune_handler", "components/modifiers/runes/modifier_imba_invisibility_rune", LUA_MODIFIER_MOTION_NONE)
 
-	if IMBA_MUTATION and IMBA_MUTATION["terrain"] == "super_runes" then
-
-	end
-
 	bounty_rune_spawners = {}
 	bounty_rune_locations = {}
 	powerup_rune_spawners = {}
@@ -62,15 +58,15 @@ end
 function ImbaRunes:Spawn()
 	-- List of powerup rune types
 	local powerup_rune_types = {
-		{"item_imba_rune_arcane", "particles/generic_gameplay/rune_arcane.vpcf"},
-		{"item_imba_rune_double_damage", "particles/generic_gameplay/rune_doubledamage.vpcf"},
-		{"item_imba_rune_haste", "particles/generic_gameplay/rune_haste.vpcf"},
-		{"item_imba_rune_regeneration", "particles/generic_gameplay/rune_regeneration.vpcf"},
-		{"item_imba_rune_illusion", "particles/generic_gameplay/rune_illusion.vpcf"},
-		{"item_imba_rune_invisibility", "particles/generic_gameplay/rune_invisibility.vpcf"},
-		{"item_imba_rune_frost", "particles/econ/items/puck/puck_snowflake/puck_snowflake_ambient.vpcf"},
-		-- {"item_imba_rune_ember", "particles/econ/items/shadow_fiend/sf_fire_arcana/sf_fire_arcana_trail.vpcf"},
-		-- {"item_imba_rune_stone", "particles/econ/items/natures_prophet/natures_prophet_flower_treant/natures_prophet_flower_treant_ambient.vpcf"},
+		{"item_imba_rune_arcane", "particles/generic_gameplay/rune_arcane.vpcf", "particles/generic_gameplay/rune_arcane_super.vpcf"},
+		{"item_imba_rune_double_damage", "particles/generic_gameplay/rune_doubledamage.vpcf", "particles/generic_gameplay/rune_quadrupledamage.vpcf"},
+		{"item_imba_rune_haste", "particles/generic_gameplay/rune_haste.vpcf", "particles/generic_gameplay/rune_haste_super.vpcf"},
+		{"item_imba_rune_regeneration", "particles/generic_gameplay/rune_regeneration.vpcf", "particles/generic_gameplay/rune_regeneration_super.vpcf"},
+		{"item_imba_rune_illusion", "particles/generic_gameplay/rune_illusion.vpcf", "particles/generic_gameplay/rune_illusion_super.vpcf"},
+		{"item_imba_rune_invisibility", "particles/generic_gameplay/rune_invisibility.vpcf", "particles/generic_gameplay/rune_invisibility_super.vpcf"},
+		{"item_imba_rune_frost", "particles/econ/items/puck/puck_snowflake/puck_snowflake_ambient.vpcf", , "particles/econ/items/puck/puck_snowflake/puck_snowflake_ambient.vpcf"},
+--		{"item_imba_rune_ember", "particles/econ/items/shadow_fiend/sf_fire_arcana/sf_fire_arcana_trail.vpcf"},
+--		{"item_imba_rune_stone", "particles/econ/items/natures_prophet/natures_prophet_flower_treant/natures_prophet_flower_treant_ambient.vpcf"},
 	}
 
 	Timers:CreateTimer(function()
@@ -81,7 +77,11 @@ function ImbaRunes:Spawn()
 		for k, v in pairs(powerup_rune_locations) do
 			local rune = CreateItemOnPositionForLaunch(powerup_rune_locations[k], CreateItem(powerup_rune_types[random_int][1], nil, nil))
 			ImbaRunes:RegisterRune(rune, 1)
-			ImbaRunes:SpawnRuneParticle(rune, powerup_rune_types[random_int][2])
+			if IMBA_MUTATION and IMBA_MUTATION["terrain"] == "super_runes" then
+				ImbaRunes:SpawnRuneParticle(rune, powerup_rune_types[random_int][3])
+			else
+				ImbaRunes:SpawnRuneParticle(rune, powerup_rune_types[random_int][2])
+			end
 		end
 
 		return RUNE_SPAWN_TIME
