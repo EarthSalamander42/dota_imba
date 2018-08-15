@@ -56,8 +56,8 @@
 "DOTA_Tooltip_modifier_frantic"									"Frantic"
 "DOTA_Tooltip_modifier_frantic_Description"						"25%% Cooldown Reduction, Mana Cost and Status Resistance."
 
-"DOTA_Tooltip_modifier_mutation_call_down"						"Call Down"
-"DOTA_Tooltip_modifier_mutation_call_down_Description"			"Rockets periodically fall onto the battlefield. Watch out!"
+"DOTA_Tooltip_modifier_mutation_danger_zone"					"Call Down"
+"DOTA_Tooltip_modifier_mutation_danger_zone_Description"		"Rockets periodically fall onto the battlefield. Watch out!"
 
 "DOTA_Tooltip_modifier_mutation_torrent_slow"					"Torrent Slow"
 "DOTA_Tooltip_modifier_mutation_torrent_slow_Description"		"Movemnt speed slowed."

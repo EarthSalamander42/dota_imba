@@ -338,15 +338,9 @@
 "mutation_greed_is_good"						"Greed is Good"
 "mutation_greed_is_good_Description"			"Bonus gold is granted each minute!"
 
-//	"mutation_frantic"							"Frantic"
-//	"mutation_frantic_Description"				"50% Cooldown Reduction, Mana Cost, Respawn Time and Status Resistance."
-
 "mutation_slark_mode"							"Shadow Dance"
 "mutation_slark_mode_Description"				"Regenerate health and mana slightly faster when not in vision of the enemy."
 "mutation_slark_mode_author"					"76561198015161808"
-
-"mutation_jump_start"							"Jump Start"
-"mutation_jump_start_Description"				"Heroes start at level 6."
 
 // Negative
 "mutation_death_explosion"						"Death Explosion"
@@ -379,9 +373,6 @@
 "mutation_fast_runes"							"Fast Runes"
 "mutation_fast_runes_Description"				"Powerup Runes spawn every 30 seconds. Bounty Runes spawn every 60 seconds."
 
-"mutation_call_down"							"Call Down"
-"mutation_call_down_Description"				"Nuclear missiles launched across the entire map every 10 seconds."
-
 "mutation_gift_exchange"						"Airdrop"
 "mutation_gift_exchange_Description"			"Gifts are periodically deployed around the map every 2 minutes."
 
@@ -408,6 +399,9 @@
 
 "modifier_sticky_river"							"Sticky River"
 "modifier_sticky_river_Description"				"the river is sticky, you are slowed while wading through water."
+
+"modifier_super_runes"							"Super Runes"
+"modifier_super_runes_Description"				"Runes are unusually effective"
 
 // Not implemented yet
 
@@ -441,7 +435,7 @@
 "mutation_void_path_Description"				""
 
 "mutation_danger_zone"							"Danger Zone"
-"mutation_danger_zone_Description"				"Gyrocopter Call Down is casted on random positions all over the map."
+"mutation_danger_zone_Description"				"10 Gyrocopter Call Down are casted on random positions all over the map every 10 seconds."
 
 "mutation_reality_rift"							"Reality Rift"
 "mutation_reality_rift_Description"				""

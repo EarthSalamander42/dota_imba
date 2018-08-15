@@ -23,45 +23,64 @@ local SPEED_FREAKS_MAX_MOVESPEED = 1000
 
 function Mutation:Init()
 	LinkLuaModifier("modifier_frantic", "components/modifiers/mutation/modifier_frantic.lua", LUA_MODIFIER_MOTION_NONE )
-	LinkLuaModifier("modifier_mutation_death_explosion", "components/modifiers/mutation/modifier_mutation_death_explosion.lua", LUA_MODIFIER_MOTION_NONE )
-	LinkLuaModifier("modifier_mutation_kill_streak_power", "components/modifiers/mutation/modifier_mutation_kill_streak_power.lua", LUA_MODIFIER_MOTION_NONE )
-	LinkLuaModifier("modifier_frantic", "components/modifiers/mutation/modifier_frantic.lua", LUA_MODIFIER_MOTION_NONE )
-	LinkLuaModifier("modifier_no_health_bar", "components/modifiers/mutation/modifier_no_health_bar.lua", LUA_MODIFIER_MOTION_NONE )
-	LinkLuaModifier("modifier_mutation_shadow_dance", "components/modifiers/mutation/modifier_mutation_shadow_dance.lua", LUA_MODIFIER_MOTION_NONE )
-	LinkLuaModifier("modifier_mutation_ants", "components/modifiers/mutation/modifier_mutation_ants.lua", LUA_MODIFIER_MOTION_NONE )
-	LinkLuaModifier("modifier_disable_healing", "components/modifiers/mutation/modifier_disable_healing.lua", LUA_MODIFIER_MOTION_NONE )
-	LinkLuaModifier("modifier_mutation_stay_frosty", "components/modifiers/mutation/modifier_mutation_stay_frosty.lua", LUA_MODIFIER_MOTION_NONE )
-	LinkLuaModifier("modifier_mutation_speed_freaks", "components/modifiers/mutation/modifier_mutation_speed_freaks.lua", LUA_MODIFIER_MOTION_NONE )
-	LinkLuaModifier("modifier_mutation_super_fervor", "components/modifiers/mutation/modifier_mutation_super_fervor.lua", LUA_MODIFIER_MOTION_NONE )
-	LinkLuaModifier("modifier_mutation_greed_is_good", "components/modifiers/mutation/modifier_mutation_greed_is_good.lua", LUA_MODIFIER_MOTION_NONE )
-	LinkLuaModifier("modifier_mutation_alien_incubation", "components/modifiers/mutation/modifier_mutation_alien_incubation.lua", LUA_MODIFIER_MOTION_NONE )
-	LinkLuaModifier("modifier_mutation_wormhole_cooldown", "components/modifiers/mutation/modifier_mutation_wormhole_cooldown.lua", LUA_MODIFIER_MOTION_NONE )
-	LinkLuaModifier("modifier_mutation_tug_of_war_golem", "components/modifiers/mutation/modifier_mutation_tug_of_war_golem.lua", LUA_MODIFIER_MOTION_NONE )
-	LinkLuaModifier("modifier_mutation_sun_strike", "components/modifiers/mutation/periodic_spellcast/modifier_mutation_sun_strike.lua", LUA_MODIFIER_MOTION_NONE )
-	LinkLuaModifier("modifier_mutation_call_down", "components/modifiers/mutation/modifier_mutation_call_down.lua", LUA_MODIFIER_MOTION_NONE )
-	LinkLuaModifier("modifier_mutation_thundergods_wrath", "components/modifiers/mutation/periodic_spellcast/modifier_mutation_thundergods_wrath.lua", LUA_MODIFIER_MOTION_NONE )
-	LinkLuaModifier("modifier_mutation_track", "components/modifiers/mutation/periodic_spellcast/modifier_mutation_track.lua", LUA_MODIFIER_MOTION_NONE )
-	LinkLuaModifier("modifier_mutation_rupture", "components/modifiers/mutation/periodic_spellcast/modifier_mutation_rupture.lua", LUA_MODIFIER_MOTION_NONE )
-	LinkLuaModifier("modifier_mutation_torrent", "components/modifiers/mutation/periodic_spellcast/modifier_mutation_torrent.lua", LUA_MODIFIER_MOTION_NONE )
-	LinkLuaModifier("modifier_mutation_cold_feet", "components/modifiers/mutation/periodic_spellcast/modifier_mutation_cold_feet.lua", LUA_MODIFIER_MOTION_NONE )
-	LinkLuaModifier("modifier_mutation_stampede", "components/modifiers/mutation/periodic_spellcast/modifier_mutation_stampede.lua", LUA_MODIFIER_MOTION_NONE )
-	LinkLuaModifier("modifier_mutation_bloodlust", "components/modifiers/mutation/periodic_spellcast/modifier_mutation_bloodlust.lua", LUA_MODIFIER_MOTION_NONE )
-	LinkLuaModifier("modifier_mutation_aphotic_shield", "components/modifiers/mutation/periodic_spellcast/modifier_mutation_aphotic_shield.lua", LUA_MODIFIER_MOTION_NONE )
-
-	LinkLuaModifier("modifier_mutation_river_flows", "components/modifiers/mutation/modifier_mutation_river_flows.lua", LUA_MODIFIER_MOTION_NONE )
-	LinkLuaModifier("modifier_sticky_river", "components/modifiers/mutation/modifier_sticky_river.lua", LUA_MODIFIER_MOTION_NONE )
---	LinkLuaModifier("modifier_ultimate_level", "components/modifiers/mutation/modifier_ultimate_level.lua", LUA_MODIFIER_MOTION_NONE )
-
+	
 	-- Selecting Mutations (Take out if statement for IsInToolsMode if you want to test randomized)
 	if IsInToolsMode() then
 		IMBA_MUTATION["positive"] = "ultimate_level"
 		IMBA_MUTATION["negative"] = "periodic_spellcast"
-		IMBA_MUTATION["terrain"] = "super_runes"
+		IMBA_MUTATION["terrain"] = "speed_freaks"
 	else
 		Mutation:ChooseMutation("positive", POSITIVE_MUTATION_LIST)
 		Mutation:ChooseMutation("negative", NEGATIVE_MUTATION_LIST)
 		Mutation:ChooseMutation("terrain", TERRAIN_MUTATION_LIST)
 	end
+
+	if IMBA_MUTATION["positive"] == "killstreak_power" then
+		LinkLuaModifier("modifier_mutation_kill_streak_power", "components/modifiers/mutation/modifier_mutation_kill_streak_power.lua", LUA_MODIFIER_MOTION_NONE )
+	elseif IMBA_MUTATION["positive"] == "greed_is_good" then
+		LinkLuaModifier("modifier_mutation_greed_is_good", "components/modifiers/mutation/modifier_mutation_greed_is_good.lua", LUA_MODIFIER_MOTION_NONE )
+	elseif IMBA_MUTATION["positive"] == "super_fervor" then
+		LinkLuaModifier("modifier_mutation_super_fervor", "components/modifiers/mutation/modifier_mutation_super_fervor.lua", LUA_MODIFIER_MOTION_NONE )
+	elseif IMBA_MUTATION["positive"] == "slark_mode" then
+		LinkLuaModifier("modifier_mutation_shadow_dance", "components/modifiers/mutation/modifier_mutation_shadow_dance.lua", LUA_MODIFIER_MOTION_NONE )
+	elseif IMBA_MUTATION["positive"] == "" then
+	elseif IMBA_MUTATION["positive"] == "" then
+	elseif IMBA_MUTATION["positive"] == "" then
+	end
+
+	if IMBA_MUTATION["negative"] == "periodic_spellcast" then
+		LinkLuaModifier("modifier_mutation_thundergods_wrath", "components/modifiers/mutation/periodic_spellcast/modifier_mutation_thundergods_wrath.lua", LUA_MODIFIER_MOTION_NONE )
+		LinkLuaModifier("modifier_mutation_track", "components/modifiers/mutation/periodic_spellcast/modifier_mutation_track.lua", LUA_MODIFIER_MOTION_NONE )
+		LinkLuaModifier("modifier_mutation_rupture", "components/modifiers/mutation/periodic_spellcast/modifier_mutation_rupture.lua", LUA_MODIFIER_MOTION_NONE )
+		LinkLuaModifier("modifier_mutation_torrent", "components/modifiers/mutation/periodic_spellcast/modifier_mutation_torrent.lua", LUA_MODIFIER_MOTION_NONE )
+		LinkLuaModifier("modifier_mutation_cold_feet", "components/modifiers/mutation/periodic_spellcast/modifier_mutation_cold_feet.lua", LUA_MODIFIER_MOTION_NONE )
+		LinkLuaModifier("modifier_mutation_stampede", "components/modifiers/mutation/periodic_spellcast/modifier_mutation_stampede.lua", LUA_MODIFIER_MOTION_NONE )
+		LinkLuaModifier("modifier_mutation_bloodlust", "components/modifiers/mutation/periodic_spellcast/modifier_mutation_bloodlust.lua", LUA_MODIFIER_MOTION_NONE )
+		LinkLuaModifier("modifier_mutation_aphotic_shield", "components/modifiers/mutation/periodic_spellcast/modifier_mutation_aphotic_shield.lua", LUA_MODIFIER_MOTION_NONE )
+	elseif IMBA_MUTATION["negative"] == "death_explosion" then
+		LinkLuaModifier("modifier_mutation_death_explosion", "components/modifiers/mutation/modifier_mutation_death_explosion.lua", LUA_MODIFIER_MOTION_NONE )
+	elseif IMBA_MUTATION["negative"] == "defense_of_the_ants" then
+		LinkLuaModifier("modifier_mutation_ants", "components/modifiers/mutation/modifier_mutation_ants.lua", LUA_MODIFIER_MOTION_NONE )
+	elseif IMBA_MUTATION["negative"] == "no_health_bar" then
+		LinkLuaModifier("modifier_no_health_bar", "components/modifiers/mutation/modifier_no_health_bar.lua", LUA_MODIFIER_MOTION_NONE )
+	end
+
+	if IMBA_MUTATION["terrain"] == "speed_freaks" then
+		LinkLuaModifier("modifier_mutation_speed_freaks", "components/modifiers/mutation/modifier_mutation_speed_freaks.lua", LUA_MODIFIER_MOTION_NONE )
+	elseif IMBA_MUTATION["terrain"] == "danger_zone" then
+		LinkLuaModifier("modifier_mutation_danger_zone", "components/modifiers/mutation/modifier_mutation_danger_zone.lua", LUA_MODIFIER_MOTION_NONE )
+	end
+
+	LinkLuaModifier("modifier_disable_healing", "components/modifiers/mutation/modifier_disable_healing.lua", LUA_MODIFIER_MOTION_NONE )
+	LinkLuaModifier("modifier_mutation_stay_frosty", "components/modifiers/mutation/modifier_mutation_stay_frosty.lua", LUA_MODIFIER_MOTION_NONE )
+	LinkLuaModifier("modifier_mutation_alien_incubation", "components/modifiers/mutation/modifier_mutation_alien_incubation.lua", LUA_MODIFIER_MOTION_NONE )
+	LinkLuaModifier("modifier_mutation_wormhole_cooldown", "components/modifiers/mutation/modifier_mutation_wormhole_cooldown.lua", LUA_MODIFIER_MOTION_NONE )
+	LinkLuaModifier("modifier_mutation_tug_of_war_golem", "components/modifiers/mutation/modifier_mutation_tug_of_war_golem.lua", LUA_MODIFIER_MOTION_NONE )
+	LinkLuaModifier("modifier_mutation_sun_strike", "components/modifiers/mutation/periodic_spellcast/modifier_mutation_sun_strike.lua", LUA_MODIFIER_MOTION_NONE )
+
+	LinkLuaModifier("modifier_mutation_river_flows", "components/modifiers/mutation/modifier_mutation_river_flows.lua", LUA_MODIFIER_MOTION_NONE )
+	LinkLuaModifier("modifier_sticky_river", "components/modifiers/mutation/modifier_sticky_river.lua", LUA_MODIFIER_MOTION_NONE )
+
 
 	IMBA_MUTATION_PERIODIC_SPELLS = {}
 	IMBA_MUTATION_PERIODIC_SPELLS[1] = {"sun_strike", "Sunstrike", "Red", -1}
@@ -405,9 +424,9 @@ function Mutation:OnGameRulesStateChange(keys)
 			end)
 		end
 
-		if IMBA_MUTATION["terrain"] == "call_down" then
+		if IMBA_MUTATION["terrain"] == "danger_zone" then
 			local dummy_unit = CreateUnitByName("npc_dummy_unit_perma", Vector(0, 0, 0), true, nil, nil, DOTA_TEAM_NEUTRALS)
-			dummy_unit:AddNewModifier(dummy_unit, nil, "modifier_mutation_call_down", {})
+			dummy_unit:AddNewModifier(dummy_unit, nil, "modifier_mutation_danger_zone", {})
 		end
 
 		if IMBA_MUTATION["terrain"] == "wormhole" then
@@ -556,9 +575,7 @@ function Mutation:OnHeroFirstSpawn(hero)
 		hero:AddItemByName("item_pocket_tower")
 	elseif IMBA_MUTATION["positive"] == "greed_is_good" then
 		hero:AddNewModifier(hero, nil, "modifier_mutation_greed_is_good", {})
---	elseif IMBA_MUTATION["positive"] == "ultimate_level" then
---		hero:AddNewModifier(hero, nil, "modifier_ultimate_level", {})
-	end
+s	end
 
 	if IMBA_MUTATION["negative"] == "death_explosion" then
 		hero:AddNewModifier(hero, nil, "modifier_mutation_death_explosion", {})

@@ -37547,7 +37547,7 @@
 		"BaseClass"						"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"			"rubick_empty1"
-		"ScriptFile"				"components/abilities/heroes/neutral_roshan.lua"
+		"ScriptFile"				"components/abilities/neutral_roshan.lua"
 		"MaxLevel"						"1"
 		
 		
@@ -37767,7 +37767,7 @@
 		"AbilityCastPoint"				"1.0"
 		"AbilityManaCost"				"0"
 		"MaxLevel"						"1"
-		"ScriptFile"				"components/abilities/heroes/neutral_roshan.lua"
+		"ScriptFile"				"components/abilities/neutral_roshan.lua"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -37821,7 +37821,7 @@
 		"AbilityCastPoint"				"0"
 		"AbilityManaCost"				"0"
 		"MaxLevel"						"1"
-		"ScriptFile"				"components/abilities/heroes/neutral_roshan.lua"
+		"ScriptFile"				"components/abilities/neutral_roshan.lua"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
