@@ -15,7 +15,7 @@ POSITIVE_MUTATION_LIST[3] = "pocket_tower"
 POSITIVE_MUTATION_LIST[4] = "super_fervor"
 POSITIVE_MUTATION_LIST[5] = "slark_mode"
 POSITIVE_MUTATION_LIST[6] = "ultimate_level"
--- POSITIVE_MUTATION_LIST[5] = "super_blink"
+-- POSITIVE_MUTATION_LIST[5] = "super_blink" -- nofun
 
 -- POSITIVE_MUTATION_LIST["greed_is_good"] = false
 
@@ -24,9 +24,9 @@ NEGATIVE_MUTATION_LIST = {}
 NEGATIVE_MUTATION_LIST[1] = "death_explosion"
 NEGATIVE_MUTATION_LIST[2] = "periodic_spellcast"
 NEGATIVE_MUTATION_LIST[3] = "defense_of_the_ants"
-NEGATIVE_MUTATION_LIST[4] = "mischief"
+NEGATIVE_MUTATION_LIST[4] = "monkey_business"
+-- NEGATIVE_MUTATION_LIST[5] = "death_gold_drop" -- nofun
 -- NEGATIVE_MUTATION_LIST["alien_incubation"] = false
--- NEGATIVE_MUTATION_LIST["death_gold_drop"] = false
 -- NEGATIVE_MUTATION_LIST["no_health_bar"] = false
 -- NEGATIVE_MUTATION_LIST["stay_frosty"] = false
 
@@ -38,11 +38,11 @@ TERRAIN_MUTATION_LIST[3] = "speed_freaks"
 TERRAIN_MUTATION_LIST[4] = "river_flows"
 TERRAIN_MUTATION_LIST[5] = "wormhole"
 TERRAIN_MUTATION_LIST[6] = "tug_of_war"
-TERRAIN_MUTATION_LIST[7] = "super_runes"
-TERRAIN_MUTATION_LIST[8] = "danger_zone"
+TERRAIN_MUTATION_LIST[7] = "danger_zone"
+-- TERRAIN_MUTATION_LIST[8] = "super_runes"
+-- TERRAIN_MUTATION_LIST[9] = "minefield" -- nofun
 
---TERRAIN_MUTATION_LIST["sleepy_river"] = false
--- TERRAIN_MUTATION_LIST["minefield"] = false
+-- TERRAIN_MUTATION_LIST["sleepy_river"] = false
 -- TERRAIN_MUTATION_LIST["no_trees"] = false
 -- TERRAIN_MUTATION_LIST["omni_vision"] = false
 -- TERRAIN_MUTATION_LIST["sticky_river"] = false

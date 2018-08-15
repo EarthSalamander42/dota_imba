@@ -20,11 +20,20 @@
 -------------------------------------------
 -- 	#8 Talent - Blazing strike
 -------------------------------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_lina_8", "components/abilities/heroes/hero_lina.lua", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_lina_8 = modifier_special_bonus_imba_lina_8 or class({})
+
+function modifier_special_bonus_imba_lina_8:IsHidden() return false end
+function modifier_special_bonus_imba_lina_8:RemoveOnDeath() return false end
+
 function modifier_special_bonus_imba_lina_8:DeclareFunctions()
 	local decFuncs =
-		{
-			MODIFIER_EVENT_ON_ATTACK_LANDED
-		}
+	{
+		MODIFIER_EVENT_ON_ATTACK_LANDED
+	}
+
 	return decFuncs
 end
 
@@ -736,6 +745,14 @@ function modifier_imba_fiery_soul_counter:OnRefresh()
 end
 
 -- When selecting #3 Talent while having max stacks, refresh the modifier to inject function calls
+
+LinkLuaModifier("modifier_special_bonus_imba_lina_3", "components/abilities/heroes/hero_lina.lua", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_lina_3 = modifier_special_bonus_imba_lina_3 or class({})
+
+function modifier_special_bonus_imba_lina_3:IsHidden() return false end
+function modifier_special_bonus_imba_lina_3:RemoveOnDeath() return false end
+
 function modifier_special_bonus_imba_lina_3:OnCreated()
 	if IsServer() then
 		fiery_soul = self:GetParent():FindAbilityByName("imba_lina_fiery_soul")

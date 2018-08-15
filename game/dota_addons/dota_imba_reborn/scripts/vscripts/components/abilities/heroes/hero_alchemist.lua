@@ -421,16 +421,16 @@ function imba_alchemist_unstable_concoction:OnSpellStart()
 		Timers:CreateTimer(0.3, function()
 			local projectile_speed = self:GetSpecialValueFor("movement_speed")
 			local info =
-				{
-					Target = target,
-					Source = caster,
-					Ability = self,
-					bDodgeable = false,
-					EffectName = "particles/units/heroes/hero_alchemist/alchemist_unstable_concoction_projectile.vpcf",
-					iMoveSpeed = projectile_speed,
-				}
-			ProjectileManager:CreateTrackingProjectile(info)
+			{
+				Target = target,
+				Source = caster,
+				Ability = self,
+				bDodgeable = false,
+				EffectName = "particles/units/heroes/hero_alchemist/alchemist_unstable_concoction_projectile.vpcf",
+				iMoveSpeed = projectile_speed,
+			}
 
+			ProjectileManager:CreateTrackingProjectile(info)
 		end)
 		return
 	end

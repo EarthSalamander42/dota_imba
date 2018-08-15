@@ -801,7 +801,7 @@ function GameMode:OnTeamKillCredit(keys)
 		PlayerResource:IncrementDeathstreak(victim_id)
 
 		-- Show Deathstreak message
-		local victim_hero_name = PlayerResource:GetPickedHeroName(victim_id)
+		local victim_hero_name = PlayerResource:GetPlayer(victim_id):GetAssignedHero()
 		local victim_player_name = PlayerResource:GetPlayerName(victim_id)
 		local victim_death_streak = PlayerResource:GetDeathstreak(victim_id)
 		local line_duration = 7
@@ -836,6 +836,7 @@ function GameMode:OnTeamKillCredit(keys)
 	-- IMBA: Rancor logic
 	-------------------------------------------------------------------------------------------------
 
+	-- TODO: Format this into venge's hero file
 	-- Victim stack loss
 	local victim_hero = PlayerResource:GetPlayer(victim_id):GetAssignedHero()
 	if victim_hero and victim_hero:HasModifier("modifier_imba_rancor") then

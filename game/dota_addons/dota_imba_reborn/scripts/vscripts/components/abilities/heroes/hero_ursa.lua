@@ -624,7 +624,13 @@ end
 
 
 -- #8 Talent: Overpower becomes a passive, allowing Ursa to proc Overpower as he attacks
+
+LinkLuaModifier("modifier_special_bonus_imba_ursa_8", "components/abilities/heroes/hero_ursa.lua", LUA_MODIFIER_MOTION_NONE)
+
 modifier_special_bonus_imba_ursa_8 = modifier_special_bonus_imba_ursa_8 or class({})
+
+function modifier_special_bonus_imba_ursa_8:IsHidden() return false end
+function modifier_special_bonus_imba_ursa_8:RemoveOnDeath() return false end
 
 function modifier_special_bonus_imba_ursa_8:OnCreated()
 	if IsServer() then
@@ -1124,6 +1130,14 @@ end
 
 
 -- #1 Talent: When taking the talent, get the modifier
+
+LinkLuaModifier("modifier_special_bonus_imba_ursa_1", "components/abilities/heroes/hero_ursa.lua", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_ursa_1 = modifier_special_bonus_imba_ursa_1 or class({})
+
+function modifier_special_bonus_imba_ursa_1:IsHidden() return false end
+function modifier_special_bonus_imba_ursa_1:RemoveOnDeath() return false end
+
 function modifier_special_bonus_imba_ursa_1:OnCreated()
 	if IsServer() then
 		local ability = self:GetParent():FindAbilityByName("imba_ursa_enrage")

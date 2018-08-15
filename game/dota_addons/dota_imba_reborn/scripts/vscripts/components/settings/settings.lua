@@ -48,7 +48,8 @@ MINIMAP_ICON_SIZE = 1						-- What icon size should we use for our heroes?
 MINIMAP_CREEP_ICON_SIZE = 1					-- What icon size should we use for creeps?
 MINIMAP_RUNE_ICON_SIZE = 1					-- What icon size should we use for runes?
 
-CUSTOM_BUYBACK_COST_ENABLED = true			-- Should we use a custom buyback cost setting?
+-- TODO: Set back to true and fix it
+CUSTOM_BUYBACK_COST_ENABLED = false			-- Should we use a custom buyback cost setting?
 CUSTOM_BUYBACK_COOLDOWN_ENABLED = true		-- Should we use a custom buyback time?
 BUYBACK_ENABLED = true						-- Should we allow people to buyback when they die?
 
@@ -440,6 +441,7 @@ SHARED_NODRAW_MODIFIERS = {
 	"modifier_monkey_king_transform",
 	"modifier_pangolier_gyroshell",
 	"modifier_smoke_of_deceit",
+	"modifier_mutation_monkey_business_transform",
 }
 
 UNIT_EQUIPMENT = {}

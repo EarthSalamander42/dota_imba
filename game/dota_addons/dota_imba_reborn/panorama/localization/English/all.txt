@@ -364,9 +364,6 @@
 "mutation_stay_frosty"							"Stay Frosty"
 "mutation_stay_frosty_Description"				"Health regeneration is disabled."
 
-"mutation_mischief"								"Mischief!"
-"mutation_mischief_Description"			    	"Standing still and uninterrupted for 2.5 seconds changes your shape, taking inspiration from certain surroundings. Taking damage, attacking, or using any item or ability breaks the disguise."
-
 // Terrain
 
 "mutation_sleepy_river"							"Slippery River"
@@ -417,7 +414,7 @@
 
 // Negative
 "mutation_monkey_business"						"Monkey Business"
-"mutation_monkey_business_Description"			"Every hero gets the mischief ability passively when not attacking or being attacked for 5 seconds."
+"mutation_monkey_business_Description"			"Standing still and uninterrupted for 5 seconds changes your shape, taking inspiration from certain surroundings. Taking damage, attacking, or using any item or ability breaks the disguise."
 
 "mutation_the_walking_dead"						"The Walking Dead"
 "mutation_the_walking_dead_Description"			"During night, zombies spawns in Jungle and attack the closest hero."
