@@ -24,6 +24,7 @@ NEGATIVE_MUTATION_LIST = {}
 NEGATIVE_MUTATION_LIST[1] = "death_explosion"
 NEGATIVE_MUTATION_LIST[2] = "periodic_spellcast"
 NEGATIVE_MUTATION_LIST[3] = "defense_of_the_ants"
+NEGATIVE_MUTATION_LIST[4] = "mischief"
 -- NEGATIVE_MUTATION_LIST["alien_incubation"] = false
 -- NEGATIVE_MUTATION_LIST["death_gold_drop"] = false
 -- NEGATIVE_MUTATION_LIST["no_health_bar"] = false
