@@ -26,11 +26,11 @@ function modifier_imba_war_veteran_0:DeclareFunctions()
 end
 
 function modifier_imba_war_veteran_0:GetModifierConstantHealthRegen()
-	return self.hp_regen * (self:GetParent():GetLevel() - 25)
+	return self.hp_regen * (self:GetStackCount())
 end
 
 function modifier_imba_war_veteran_0:GetModifierStatusResistanceStacking()
-	return self.status_resistance * (self:GetParent():GetLevel() - 25)
+	return self.status_resistance * (self:GetStackCount())
 end
 
 modifier_imba_war_veteran_1 = class({})
@@ -58,11 +58,11 @@ function modifier_imba_war_veteran_1:DeclareFunctions()
 end
 
 function modifier_imba_war_veteran_1:GetModifierAttackSpeedBonus_Constant()
-	return self.attack_speed * (self:GetParent():GetLevel() - 25)
+	return self.attack_speed * (self:GetStackCount())
 end
 
 function modifier_imba_war_veteran_1:GetModifierMoveSpeedBonus_Percentage()
-	return self.movespeed_pct * (self:GetParent():GetLevel() - 25)
+	return self.movespeed_pct * (self:GetStackCount())
 end
 
 modifier_imba_war_veteran_2 = class({})
@@ -90,9 +90,9 @@ function modifier_imba_war_veteran_2:DeclareFunctions()
 end
 
 function modifier_imba_war_veteran_2:GetModifierSpellAmplify_Percentage()
-	return self.spell_amp * (self:GetParent():GetLevel() - 25)
+	return self.spell_amp * (self:GetStackCount())
 end
 
 function modifier_imba_war_veteran_2:GetModifierMagicalResistanceBonus()
-	return self.magic_resist * (self:GetParent():GetLevel() - 25)
+	return self.magic_resist * (self:GetStackCount())
 end

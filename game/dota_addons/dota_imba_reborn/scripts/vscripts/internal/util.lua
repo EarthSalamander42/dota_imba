@@ -403,7 +403,6 @@ function SetupTower(tower)
 --				print("Tower found:", ability) -- tower spawned from pocket tower mutation are found and print well, abilities are not given for reasons
 				tower:AddAbility(ability):SetLevel(1)
 				tower.initialized = true
-				return
 			end
 		end
 	end

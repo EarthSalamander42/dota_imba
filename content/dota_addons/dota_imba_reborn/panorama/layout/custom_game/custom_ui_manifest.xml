@@ -41,6 +41,10 @@
 		var TimeUntil = hudElements.FindChildTraverse("TimeUntil");
 		TimeUntil.style.marginBottom = "0px";
 
+		//Fix 3 digits levels (up to 4)
+		var Parent = $.GetContextPanel().GetParent().GetParent()
+		Parent.FindChildTraverse("LevelLabel").style.width = "50px";
+
 		// setup modified vanilla HUD in loading screen
 //		if (Game.GetMapInfo().map_display_name == "imba_mutation_5v5" || Game.GetMapInfo().map_display_name == "imba_mutation_10v10")
 			SetupLoadingScreen()

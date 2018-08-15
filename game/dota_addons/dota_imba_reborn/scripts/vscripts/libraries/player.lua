@@ -19,6 +19,33 @@ function CDOTA_BaseNPC:CreateIllusion(duration, inc, out, pos, mod, ab)
 	return illusion
 end
 
+--[[Author: Noya
+	Editor: EarthSalamander #42
+	Date: 09.08.2015.
+	Hides all dem hats
+]]
+function CDOTA_BaseNPC:HideWearables(number)
+	local model = hero:FirstMoveChild()
+	local i = 0
+
+	hero.hiddenWearables = {} -- Keep every wearable handle in a table to show them later
+
+	Timers:CreateTimer(3.0, function()
+		while model do
+			print("model count/classname:", i, model:GetClassname())
+			if model:GetClassname() == "dota_item_wearable" then
+--		if model:GetClassname() == "dota_item_wearable" and i == number then
+				print("Model has been hidden:", model:GetClassname())
+				model:AddEffects(EF_NODRAW) -- Set model hidden
+				table.insert(hero.hiddenWearables, model)
+			end
+
+			i = i + 1
+			model = model:NextMovePeer()
+		end
+	end)
+end
+
 -- Checks if the attacker's damage is classified as "hero damage".	 More `or`s may need to be added.
 function CDOTA_BaseNPC:IsHeroDamage(damage)
 	if damage > 0 then

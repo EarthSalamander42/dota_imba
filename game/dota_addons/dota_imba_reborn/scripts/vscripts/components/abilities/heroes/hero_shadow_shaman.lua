@@ -181,22 +181,22 @@ function modifier_imba_mass_serpent_ward:OnAttack(params)
 					FIND_ANY_ORDER,
 					false)
 
-				-- Do not include the main target as eligible split shot target
-				for _, enemy in pairs(enemies) do
-					if enemy == params.target then
-						table.remove(params.target, _)
-					end
+				-- "skip" the iteration if the main target was chosen
+				if CheckIfInTable(enemies, params.target, max_targets) then
+					max_targets = max_targets + 1
 				end
-				
+
 				-- Send a attack projectile to the chosen enemies
 				for i=1, max_targets do
 					if enemies[i] ~= params.target and i <= #enemies then
 						parent:PerformAttack(enemies[i], false, true, true, true, true, false, false)
+
+						-- Recursion handling
+						Timers:CreateTimer(FrameTime(), function()
+							self.main_attack = true
+						end)
 					end
 				end
-				
-				-- Reset attack back to main			
-				self.main_attack = true
 			end
 		end
 	end

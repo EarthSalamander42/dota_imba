@@ -50,13 +50,13 @@ function Mutation:Init()
 
 	LinkLuaModifier("modifier_mutation_river_flows", "components/modifiers/mutation/modifier_mutation_river_flows.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_sticky_river", "components/modifiers/mutation/modifier_sticky_river.lua", LUA_MODIFIER_MOTION_NONE )
-	LinkLuaModifier("modifier_ultimate_level", "components/modifiers/mutation/modifier_ultimate_level.lua", LUA_MODIFIER_MOTION_NONE )
+--	LinkLuaModifier("modifier_ultimate_level", "components/modifiers/mutation/modifier_ultimate_level.lua", LUA_MODIFIER_MOTION_NONE )
 
 	-- Selecting Mutations (Take out if statement for IsInToolsMode if you want to test randomized)
 	if IsInToolsMode() then
 		IMBA_MUTATION["positive"] = "ultimate_level"
 		IMBA_MUTATION["negative"] = "periodic_spellcast"
-		IMBA_MUTATION["terrain"] = "speed_freaks"
+		IMBA_MUTATION["terrain"] = "super_runes"
 	else
 		Mutation:ChooseMutation("positive", POSITIVE_MUTATION_LIST)
 		Mutation:ChooseMutation("negative", NEGATIVE_MUTATION_LIST)

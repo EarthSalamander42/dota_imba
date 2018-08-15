@@ -161,6 +161,7 @@ function GameMode:OnNPCSpawned(keys)
 
 			return
 		elseif string.find(npc:GetUnitName(), "tower") then
+			print("Tower Spawned!")
 			SetupTower(npc)
 			return
 		else
@@ -427,13 +428,13 @@ function GameMode:OnPlayerLevelUp(keys)
 	local hero = player:GetAssignedHero()
 	local level = keys.level
 
-	if hero:GetLevel() >= 26 then
+	if hero:GetLevel() > 25 then
 		if not hero:HasModifier("modifier_imba_war_veteran_"..hero:GetPrimaryAttribute()) then
 			hero:AddNewModifier(hero, nil, "modifier_imba_war_veteran_"..hero:GetPrimaryAttribute(), {})
 		end
 
-		hero:SetModifierStackCount("modifier_imba_war_veteran_"..hero:GetPrimaryAttribute(), hero, hero:GetLevel() -25)
-		hero:SetAbilityPoints(hero:GetAbilityPoints() -1)
+		hero:FindModifierByName("modifier_imba_war_veteran_"..hero:GetPrimaryAttribute()):SetStackCount(math.min(hero:GetLevel() -25, 17))
+		hero:SetAbilityPoints(hero:GetAbilityPoints() - 1)
 	end
 end
 
@@ -836,7 +837,7 @@ function GameMode:OnTeamKillCredit(keys)
 	-------------------------------------------------------------------------------------------------
 
 	-- Victim stack loss
-	local victim_hero = PlayerResource:GetPickedHero(victim_id)
+	local victim_hero = PlayerResource:GetPlayer(victim_id):GetAssignedHero()
 	if victim_hero and victim_hero:HasModifier("modifier_imba_rancor") then
 		local current_stacks = victim_hero:GetModifierStackCount("modifier_imba_rancor", VENGEFUL_RANCOR_CASTER)
 		if current_stacks <= 2 then
@@ -871,7 +872,7 @@ function GameMode:OnTeamKillCredit(keys)
 
 	if victim_hero and PlayerResource:IsImbaPlayer(killer_id) then
 		local vengeance_aura_ability = victim_hero:FindAbilityByName("imba_vengeful_command_aura")
-		local killer_hero = PlayerResource:GetPickedHero(killer_id)
+		local killer_hero = PlayerResource:GetPlayer(killer_id):GetAssignedHero()
 		if vengeance_aura_ability and vengeance_aura_ability:GetLevel() > 0 then
 			vengeance_aura_ability:ApplyDataDrivenModifier(victim_hero, killer_hero, "modifier_imba_command_aura_negative_aura", {})
 			victim_hero.vengeance_aura_target = killer_hero

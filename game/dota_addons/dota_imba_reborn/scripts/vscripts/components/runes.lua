@@ -64,17 +64,16 @@ function ImbaRunes:Spawn()
 		{"item_imba_rune_regeneration", "particles/generic_gameplay/rune_regeneration.vpcf", "particles/generic_gameplay/rune_regeneration_super.vpcf"},
 		{"item_imba_rune_illusion", "particles/generic_gameplay/rune_illusion.vpcf", "particles/generic_gameplay/rune_illusion_super.vpcf"},
 		{"item_imba_rune_invisibility", "particles/generic_gameplay/rune_invisibility.vpcf", "particles/generic_gameplay/rune_invisibility_super.vpcf"},
-		{"item_imba_rune_frost", "particles/econ/items/puck/puck_snowflake/puck_snowflake_ambient.vpcf", , "particles/econ/items/puck/puck_snowflake/puck_snowflake_ambient.vpcf"},
+		{"item_imba_rune_frost", "particles/econ/items/puck/puck_snowflake/puck_snowflake_ambient.vpcf", "particles/econ/items/puck/puck_snowflake/puck_snowflake_ambient.vpcf"},
 --		{"item_imba_rune_ember", "particles/econ/items/shadow_fiend/sf_fire_arcana/sf_fire_arcana_trail.vpcf"},
 --		{"item_imba_rune_stone", "particles/econ/items/natures_prophet/natures_prophet_flower_treant/natures_prophet_flower_treant_ambient.vpcf"},
 	}
 
 	Timers:CreateTimer(function()
-		local random_int = RandomInt(1, #powerup_rune_types)
-
 		ImbaRunes:RemoveRunes(1)
 
 		for k, v in pairs(powerup_rune_locations) do
+			local random_int = RandomInt(1, #powerup_rune_types)
 			local rune = CreateItemOnPositionForLaunch(powerup_rune_locations[k], CreateItem(powerup_rune_types[random_int][1], nil, nil))
 			ImbaRunes:RegisterRune(rune, 1)
 			if IMBA_MUTATION and IMBA_MUTATION["terrain"] == "super_runes" then
@@ -255,26 +254,15 @@ function ImbaRunes:PickupRune(rune_name, unit, bActiveByBottle)
 			EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Haste", unit)
 		elseif rune_name == "illusion" then
 			local images_count = 3
-			local vRandomSpawnPos = {
-				Vector( 72, 0, 0 ),		-- North
-				Vector( 0, 72, 0 ),		-- East
-				Vector( -72, 0, 0 ),	-- South
-				Vector( 0, -72, 0 ),	-- West
-			}
-
-			for i = #vRandomSpawnPos, 2, -1 do	-- Simply shuffle them
-				local j = RandomInt( 1, i )
-				vRandomSpawnPos[i], vRandomSpawnPos[j] = vRandomSpawnPos[j], vRandomSpawnPos[i]
+			if IMBA_MUTATION and IMBA_MUTATION["terrain"] == "super_runes" then
+				images_count = 6
 			end
-
-			table.insert( vRandomSpawnPos, RandomInt( 1, images_count+1 ), Vector( 0, 0, 0 ) )
-			FindClearSpaceForUnit(unit, unit:GetAbsOrigin() + table.remove( vRandomSpawnPos, 1 ), true)
 
 			for i = 1, images_count do
-				local origin = unit:GetAbsOrigin() + table.remove( vRandomSpawnPos, 1 )
-				local illusion = IllusionManager:CreateIllusion(unit, self, origin, unit, {damagein=incomingDamage, damageout=outcomingDamage, unique=unit:entindex().."_rune_illusion_"..i, duration=duration})
+				unit:CreateIllusion(duration, 200, 75, unit:GetAbsOrigin() + RandomVector(72))
 			end
 
+			FindClearSpaceForUnit(unit, unit:GetAbsOrigin() + RandomVector(72), true)
 			EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Illusion", unit)
 		elseif rune_name == "invisibility" then
 			unit:AddNewModifier(unit, nil, "modifier_imba_invisibility_rune_handler", {duration=2.0, rune_duration=duration})

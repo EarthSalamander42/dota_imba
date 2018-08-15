@@ -60,7 +60,6 @@ end
 
 function GameMode:InitGameMode()
 	self:SetUpFountains()
-
 	self:_InitGameMode()
 end
 

@@ -21,7 +21,7 @@
 					</Button>
 				</Panel>
 			</Panel>
-
+<!--
 			<Panel id="imba-loading-title-promote">
 				<Panel class="down">
 					<Label id="imba-loading-title-text-promote" text="Promoting this shit!"/>
@@ -31,11 +31,11 @@
 					</Button>
 				</Panel>
 			</Panel>
-
+-->
 			<Panel id="imba-loading-title-patreon">
 				<Panel class="down">
 					<Label id="imba-loading-title-text-patreon" text="Patreon"/>
-					<Label id="imba-loading-content-text-patreon" html="true" text="Earthsalamnder #42 is developing IMBA at full time! We also have to pay servers for Battlepass, Donator system and Imba XP. Feel free to donate, even small amounts matters :)" />
+					<Label id="imba-loading-content-text-patreon" html="true" text="Earthsalamander #42 is developing IMBA at full time! We also have to pay servers for Battlepass, Donator system and Imba XP. Feel free to donate, even small amounts matters :)" />
 					<Button id="imba-loading-link-patreon" onactivate="DOTADisplayURL('https://www.patreon.com/earthsalamander42');">
 						<Label id="imba-loading-link-text-patreon" text="Click here to redirect to the Patreon Page!" />
 					</Button>

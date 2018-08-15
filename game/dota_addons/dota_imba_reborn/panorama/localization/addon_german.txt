@@ -274,7 +274,7 @@
 	"mutation_tug_of_war_description" "Spawns a big BOB (warlock golem) on the mid lane. Every time BOB dies, he comes back stronger (more HP/damage) and he switches to the opposite team."
 	"mutation_twister" "Twister"
 	"mutation_ultimate_level" "Ultimate Level"
-	"mutation_ultimate_level_description" "Max hero level increased to 500. Max health regen capped at 300 (600 with heart of tarrasque)."
+	"mutation_ultimate_level_description" "Max hero level increased to 100."
 	"mutation_void_path" "Void Path"
 	"mutation_wormhole" "Wurmlöcher"
 	"mutation_wormhole_description" "Wormholes spawn on the map. Activating one will bring you to another random wormhole."

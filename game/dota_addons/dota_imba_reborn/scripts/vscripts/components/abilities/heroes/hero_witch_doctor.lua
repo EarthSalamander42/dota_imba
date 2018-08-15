@@ -223,6 +223,13 @@ function imba_witch_doctor_voodoo_restoration:GetAbilityTextureName()
 	return "witch_doctor_voodoo_restoration"
 end
 
+LinkLuaModifier("modifier_special_bonus_imba_witch_doctor_6", "components/abilities/heroes/hero_witch_doctor.lua", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_witch_doctor_6 = modifier_special_bonus_imba_witch_doctor_6 or class({})
+
+function modifier_special_bonus_imba_witch_doctor_6:IsHidden() return false end
+function modifier_special_bonus_imba_witch_doctor_6:RemoveOnDeath() return false end
+
 -- #6 TALENT : Voodo restoration turns into a passive.
 function modifier_special_bonus_imba_witch_doctor_6:OnCreated()
 	if IsServer() then

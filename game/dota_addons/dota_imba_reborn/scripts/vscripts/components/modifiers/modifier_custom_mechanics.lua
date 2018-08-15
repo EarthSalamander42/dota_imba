@@ -31,18 +31,20 @@ function modifier_custom_mechanics:OnIntervalThink()
 	if IsServer() then
 		-- Calculate current regen before this modifier
 		local parent = self:GetParent()
-		local base_health_regen = parent:GetHealthRegen() - self.health_regen_amp
+		local base_health_regen = parent:GetHealthRegen() - self:GetStackCount()
 
 		-- Update health regen amp bonus
-		self.health_regen_amp = base_health_regen * parent:GetHealthRegenAmp() * 0.01
+		self:SetStackCount(self:GetStackCount() * parent:GetHealthRegenAmp() * 0.01)
+--		print(parent:GetHealthRegen(), self:GetStackCount(), (-1) * parent:GetHealthRegen() - 300)
+--		if parent:GetHealthRegen() > 300 then
+--			self:SetStackCount((-1) * parent:GetHealthRegen() - 300)
+--		end
 	end
 end
 
 -- Health regeneration amplification handler
 function modifier_custom_mechanics:GetModifierConstantHealthRegen()
-	if IsServer() then
-		return self.health_regen_amp
-	end
+	return self:GetStackCount()
 end
 
 -- Damage block handler

@@ -17,7 +17,7 @@
 		<Label id="es-player-gold" class="es-player-line-text es-legend-gold" text="99999" />
 		<Label id="es-player-imr" class="es-player-line-text" text="10000 (-50)" />
 		<Label id="es-player-imr10v10" class="es-player-line-text" text="10000 (+50)" />
-		<Label id="es-player-rank1v1" class="es-player-line-text" text="442 (+1)" />
+		<Label id="es-player-imr1v1" class="es-player-line-text" text="442 (+1)" />
 		<Panel class="es-player-xp">
 			<Panel id="es-player-xp-progress" />
 			<Label id="es-player-xp-rank-name" class="es-player-line-text es-legend-rank" text="Icefrog" /> 

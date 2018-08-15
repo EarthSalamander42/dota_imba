@@ -274,7 +274,7 @@
 	"mutation_tug_of_war_description" "На центральной линии появляется голем. Каждый раз когда он умирает, становится сильнее (хп/урон) и переходит на сторону вражеской команды."
 	"mutation_twister" "Твистер"
 	"mutation_ultimate_level" "Бесконечность не предел!"
-	"mutation_ultimate_level_description" "Теперь возможно достигнуть 500-го уровня. Максимальная регенерация здоровья в секунду 300 или же 600 при использовании heart of tarrasque."
+	"mutation_ultimate_level_description" "Max hero level increased to 100."
 	"mutation_void_path" "Путь пустоты"
 	"mutation_wormhole" "Червоточины "
 	"mutation_wormhole_description" "По всей карте появляются червоточины переносящие вас между собой."

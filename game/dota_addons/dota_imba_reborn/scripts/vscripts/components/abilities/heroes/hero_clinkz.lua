@@ -759,7 +759,7 @@ function modifier_imba_skeleton_walk_invis:OnCreated()
 	self.spook_distance_inc = self:GetAbility():GetSpecialValueFor("spook_distance_inc")
 	self.spook_added_duration = self:GetAbility():GetSpecialValueFor("spook_added_duration")    
 	self.ms_bonus_pct = self:GetAbility():GetSpecialValueFor("ms_bonus_pct")
-		
+
 	-- Talent: Increases Clinkz Skeleton Walk movement speed if no enemies are nearby.
 	if IsServer() then
 		self:StartIntervalThink(0.2)

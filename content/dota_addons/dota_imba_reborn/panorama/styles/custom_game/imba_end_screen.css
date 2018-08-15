@@ -313,14 +313,14 @@
 	animation-name: level_up;
 	animation-duration: 2.0s;
 	animation-timing-function: ease-in;
-	animation-iteration-count: 1;
+	animation-iteration-count: infinite;
 }
 
 .level-down {
 	animation-name: level_down;
 	animation-duration: 2.0s;
 	animation-timing-function: ease-in;
-	animation-iteration-count: 1;
+	animation-iteration-count: infinite;
 }
 
 #es-player-xp-progress { 

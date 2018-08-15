@@ -340,7 +340,7 @@ function modifier_imba_faceless_void_time_walk_cast:OnIntervalThink()
 
 	-- If spell not stolen, add chronocharges
 	if not ability:IsStolen() then
-		AddStacksLua(ability, caster, caster, "modifier_imba_faceless_void_chronocharges", chronocharges, false)
+		self:GetParent():FindModifierByName("modifier_imba_faceless_void_chronocharges"):SetStackCount(self:GetParent():FindModifierByName("modifier_imba_faceless_void_chronocharges"):GetStackCount() + chronocharges)
 	end
 end
 
@@ -448,7 +448,7 @@ function imba_faceless_void_time_dilation:OnUpgrade()
 				if originalCaster then
 					local chronochargeModifier = originalCaster:FindModifierByName("modifier_imba_faceless_void_chronocharges")
 					if chronochargeModifier then
-						AddStacksLua(self, caster, caster, "modifier_imba_faceless_void_chronocharges", chronochargeModifier:GetStackCount(), false)
+						self:GetParent():FindModifierByName("modifier_imba_faceless_void_chronocharges"):SetStackCount(self:GetParent():FindModifierByName("modifier_imba_faceless_void_chronocharges"):GetStackCount())
 					end
 				end
 			end
@@ -795,7 +795,7 @@ function modifier_imba_faceless_void_time_lock:GetModifierProcAttack_BonusDamage
 
 					-- Add a chronocharge if a hero was bashed
 					if target:IsRealHero() then
-						AddStacksLua(ability, parent, parent, "modifier_imba_faceless_void_chronocharges", 1, false)
+						self:GetParent():FindModifierByName("modifier_imba_faceless_void_chronocharges"):SetStackCount(self:GetParent():FindModifierByName("modifier_imba_faceless_void_chronocharges"):GetStackCount() + 1)
 					end
 
 					-- Iterate through all victims abilities

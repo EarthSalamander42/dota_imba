@@ -274,7 +274,7 @@
 	"mutation_tug_of_war_description" "Aparece un gran BOB (Golem de warlock) en la linea de medio. Cada vez que BOB muere, vuelve mas fuerte (más vida/daño) y cambia de objetivo al otro equipo."
 	"mutation_twister" "Tornado"
 	"mutation_ultimate_level" "Nivel extremo"
-	"mutation_ultimate_level_description" "Nivel máximo del héroe incrementado a 500. Regeneración de vida máxima limitada a 300 (600 con corazón de tarasca)"
+	"mutation_ultimate_level_description" "Max hero level increased to 100."
 	"mutation_void_path" "Camino vacío"
 	"mutation_wormhole" "Agujeros de gusano"
 	"mutation_wormhole_description" "Hay agujeros de gusano en el mapa, activar uno te llevara a otro agujero de gusano aleatorio."

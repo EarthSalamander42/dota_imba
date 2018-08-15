@@ -432,7 +432,7 @@ function Imbattlepass:GetHeroEffect(hero)
 		end
 	elseif hero:GetUnitName() == "npc_dota_hero_vengefulspirit" then
 		if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_VENGEFULSPIRIT["vengefulspirit_immortal"] then
-			HideWearables(hero, 28)
+			hero:HideWearables(28)
 			Imbattlepass:GetVengefulspiritEffect(hero:GetPlayerID())
 		end
 	end

@@ -19,9 +19,9 @@
 -------------------------------------------
 --			  BESERKERS RAGE
 -------------------------------------------
-LinkLuaModifier("modifier_imba_berserkers_rage_ranged", ""components/abilities/heroes/hero_troll_warlord", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_berserkers_rage_slow", ""components/abilities/heroes/hero_troll_warlord", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_berserkers_rage_melee", ""components/abilities/heroes/hero_troll_warlord", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_berserkers_rage_ranged", "components/abilities/heroes/hero_troll_warlord", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_berserkers_rage_slow", "components/abilities/heroes/hero_troll_warlord", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_berserkers_rage_melee", "components/abilities/heroes/hero_troll_warlord", LUA_MODIFIER_MOTION_NONE)
 
 imba_troll_warlord_berserkers_rage = imba_troll_warlord_berserkers_rage or class({})
 function imba_troll_warlord_berserkers_rage:IsHiddenWhenStolen() return false end
@@ -262,7 +262,7 @@ end
 -------------------------------------------
 --		  WHIRLING AXES (RANGED)
 -------------------------------------------
-LinkLuaModifier("modifier_imba_whirling_axes_ranged", ""components/abilities/heroes/hero_troll_warlord", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_whirling_axes_ranged", "components/abilities/heroes/hero_troll_warlord", LUA_MODIFIER_MOTION_NONE)
 
 imba_troll_warlord_whirling_axes_ranged = imba_troll_warlord_whirling_axes_ranged or class({})
 function imba_troll_warlord_whirling_axes_ranged:IsHiddenWhenStolen() return false end
@@ -421,7 +421,7 @@ end
 -------------------------------------------
 --		  WHIRLING AXES (MELEE)
 -------------------------------------------
-LinkLuaModifier("modifier_imba_whirling_axes_melee", ""components/abilities/heroes/hero_troll_warlord", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_whirling_axes_melee", "components/abilities/heroes/hero_troll_warlord", LUA_MODIFIER_MOTION_NONE)
 
 imba_troll_warlord_whirling_axes_melee = imba_troll_warlord_whirling_axes_melee or class({})
 function imba_troll_warlord_whirling_axes_melee:IsHiddenWhenStolen() return false end
@@ -586,8 +586,8 @@ end
 -------------------------------------------
 --				FERVOR
 -------------------------------------------
-LinkLuaModifier("modifier_imba_fervor", ""components/abilities/heroes/hero_troll_warlord", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_fervor_stacks", ""components/abilities/heroes/hero_troll_warlord", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_fervor", "components/abilities/heroes/hero_troll_warlord", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_fervor_stacks", "components/abilities/heroes/hero_troll_warlord", LUA_MODIFIER_MOTION_NONE)
 
 imba_troll_warlord_fervor = imba_troll_warlord_fervor or class({})
 function imba_troll_warlord_fervor:IsHiddenWhenStolen() return false end
@@ -693,7 +693,7 @@ end
 -------------------------------------------
 --			  BATTLE TRANCE
 -------------------------------------------
-LinkLuaModifier("modifier_imba_battle_trance", ""components/abilities/heroes/hero_troll_warlord", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_battle_trance", "components/abilities/heroes/hero_troll_warlord", LUA_MODIFIER_MOTION_NONE)
 
 imba_troll_warlord_battle_trance = imba_troll_warlord_battle_trance or class({})
 function imba_troll_warlord_battle_trance:IsHiddenWhenStolen() return false end
