@@ -27,7 +27,7 @@ function Mutation:Init()
 	-- Selecting Mutations (Take out if statement for IsInToolsMode if you want to test randomized)
 	if IsInToolsMode() then
 		IMBA_MUTATION["positive"] = "ultimate_level"
-		IMBA_MUTATION["negative"] = "periodic_spellcast"
+		IMBA_MUTATION["negative"] = "mischief"
 		IMBA_MUTATION["terrain"] = "speed_freaks"
 	else
 		Mutation:ChooseMutation("positive", POSITIVE_MUTATION_LIST)
@@ -80,6 +80,7 @@ function Mutation:Init()
 
 	LinkLuaModifier("modifier_mutation_river_flows", "components/modifiers/mutation/modifier_mutation_river_flows.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_sticky_river", "components/modifiers/mutation/modifier_sticky_river.lua", LUA_MODIFIER_MOTION_NONE )
+	LinkLuaModifier("modifier_mutation_mischief", "components/modifiers/mutation/modifier_mutation_mischief.lua", LUA_MODIFIER_MOTION_NONE )
 
 
 	IMBA_MUTATION_PERIODIC_SPELLS = {}
@@ -227,6 +228,7 @@ function Mutation:Precache(context)
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_centaur.vsndevts", context)
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_gyrocopter.vsndevts", context)
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_kunkka.vsndevts", context)
+	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_monkey_king.vsndevts", context)
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_ogre_magi.vsndevts", context)
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_pugna.vsndevts", context)
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_techies.vsndevts", context)
@@ -575,7 +577,7 @@ function Mutation:OnHeroFirstSpawn(hero)
 		hero:AddItemByName("item_pocket_tower")
 	elseif IMBA_MUTATION["positive"] == "greed_is_good" then
 		hero:AddNewModifier(hero, nil, "modifier_mutation_greed_is_good", {})
-s	end
+	end
 
 	if IMBA_MUTATION["negative"] == "death_explosion" then
 		hero:AddNewModifier(hero, nil, "modifier_mutation_death_explosion", {})
@@ -585,6 +587,8 @@ s	end
 		hero:AddNewModifier(hero, nil, "modifier_mutation_ants", {})
 	elseif IMBA_MUTATION["negative"] == "stay_frosty" then
 		hero:AddNewModifier(hero, nil, "modifier_mutation_stay_frosty", {})
+	elseif IMBA_MUTATION["negative"] == "mischief" then
+		hero:AddNewModifier(hero, nil, "modifier_mutation_mischief", {})
 	end
 end
 
