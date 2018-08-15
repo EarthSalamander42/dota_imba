@@ -78,3 +78,4 @@
 "DOTA_Tooltip_ability_special_bonus_imba_jakiro_6"				"+500 Dual Breath speed"
 "DOTA_Tooltip_ability_special_bonus_imba_jakiro_7"				"+30% Ice Path Antipode effect"
 "DOTA_Tooltip_ability_special_bonus_imba_jakiro_8"				"Macropyre slows enemies (5% * 1.05% per tick)"
+"DOTA_Tooltip_ability_special_bonus_imba_jakiro_9"				"Macropyre Pure and Pierces Immunity"

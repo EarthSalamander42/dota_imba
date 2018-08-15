@@ -977,6 +977,16 @@ function imba_jakiro_macropyre:GetAbilityTextureName()
 	return "jakiro_macropyre"
 end
 
+function imba_jakiro_macropyre:GetAbilityDamageType()
+	if self:GetCaster():HasTalent("special_bonus_imba_jakiro_9") then
+		return DAMAGE_TYPE_PURE
+	else
+		return DAMAGE_TYPE_MAGICAL
+	end
+end
+
+
+
 function imba_jakiro_macropyre:OnSpellStart()
 	if IsServer() then
 		local caster = self:GetCaster()
@@ -1096,6 +1106,10 @@ function modifier_imba_macropyre_thinker:OnIntervalThink()
 			local ability_target_flags	= self.ability_target_flags
 			local debuff_duration		= self.debuff_duration
 
+			if caster:HasTalent("special_bonus_imba_jakiro_9") then
+				ability_target_flags = ability_target_flags + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES 
+			end
+			
 			--Increase Modifier Duration
 			local modifier_list 		= {
 				"modifier_imba_liquid_fire_debuff",
