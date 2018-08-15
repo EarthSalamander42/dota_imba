@@ -59,6 +59,7 @@
 				Parent.FindChildTraverse("TeamsList").style.visibility = "collapse";
 				Parent.FindChildTraverse("TeamsListGroup").SetParent(Parent.FindChildTraverse("GameAndPlayersRoot"))
 				Parent.FindChildTraverse("TeamsListGroup").style.verticalAlign = "top";
+				Parent.FindChildTraverse("TeamsListGroup").style.width = "99%";
 				Parent.FindChildTraverse("UnassignedPlayerPanel").style.visibility = "collapse";
 				Parent.FindChildTraverse("CancelAndUnlockButton").style.visibility = "collapse";
 				Parent.FindChildTraverse("ShuffleTeamAssignmentButton").style.visibility = "collapse";

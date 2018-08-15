@@ -21,6 +21,29 @@
 					</Button>
 				</Panel>
 			</Panel>
+
+			<Panel id="ImbaLoadingSocial">
+				<Panel class="Row">
+					<Button id="ImbaLoadingSocialOfficialWebsite" class="SocialButtons" onactivate="DOTADisplayURL('https://preview.dota2imba.org/statistics/rankings');">
+						<Label text="Official Website" />
+					</Button>
+					<Button id="ImbaLoadingSocialFacebook" class="SocialButtons" onactivate="DOTADisplayURL('https://www.facebook.com/D2IMBA/');">
+						<Label text="Facebook" />
+					</Button>
+					<Button id="ImbaLoadingSocialTwitter" class="SocialButtons" onactivate="DOTADisplayURL('https://twitter.com/dota2imba');">
+						<Label text="Twitter" />
+					</Button>
+					<Button id="ImbaLoadingSocialDiscordEn" class="SocialButtons" onactivate="DOTADisplayURL('http://tinyurl.com/imba-discord');">
+						<Label text="English Discord" />
+					</Button>
+					<Button id="ImbaLoadingSocialDiscordRu" class="SocialButtons" onactivate="DOTADisplayURL('https://discord.gg/HcybJKt');">
+						<Label text="Русский Дискорд" />
+					</Button>
+					<Button id="ImbaLoadingSocialTencent" class="SocialButtons" onactivate="DOTADisplayURL('https://www.bilibiliduang.cn/imbagroup');">
+						<Label text="Tencent" />
+					</Button>
+				</Panel>
+			</Panel>
 <!--
 			<Panel id="imba-loading-title-promote">
 				<Panel class="down">
@@ -38,29 +61,6 @@
 					<Label id="imba-loading-content-text-patreon" html="true" text="Earthsalamander #42 is developing IMBA at full time! We also have to pay servers for Battlepass, Donator system and Imba XP. Feel free to donate, even small amounts matters :)" />
 					<Button id="imba-loading-link-patreon" onactivate="DOTADisplayURL('https://www.patreon.com/earthsalamander42');">
 						<Label id="imba-loading-link-text-patreon" text="Click here to redirect to the Patreon Page!" />
-					</Button>
-				</Panel>
-			</Panel>
-
-			<Panel id="ImbaLoadingSocial">
-				<Panel class="Row">
-					<Button id="ImbaLoadingSocialOfficialWebsite" onactivate="DOTADisplayURL('https://preview.dota2imba.org/statistics/rankings');">
-						<Label text="Official Website" />
-					</Button>
-					<Button id="ImbaLoadingSocialFacebook" onactivate="DOTADisplayURL('https://www.facebook.com/D2IMBA/');">
-						<Label text="Facebook" />
-					</Button>
-					<Button id="ImbaLoadingSocialTwitter" onactivate="DOTADisplayURL('https://twitter.com/dota2imba');">
-						<Label text="Twitter" />
-					</Button>
-					<Button id="ImbaLoadingSocialDiscordEn" onactivate="DOTADisplayURL('http://tinyurl.com/imba-discord');">
-						<Label text="English Discord" />
-					</Button>
-					<Button id="ImbaLoadingSocialDiscordRu" onactivate="DOTADisplayURL('https://discord.gg/HcybJKt');">
-						<Label text="Русский Дискорд" />
-					</Button>
-					<Button id="ImbaLoadingSocialTencent" onactivate="DOTADisplayURL('https://www.bilibiliduang.cn/imbagroup');">
-						<Label text="Tencent" />
 					</Button>
 				</Panel>
 			</Panel>

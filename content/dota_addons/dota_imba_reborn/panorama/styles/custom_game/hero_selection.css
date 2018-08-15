@@ -721,10 +721,12 @@ RadioButton {
 	box-shadow: #000000ba -2px -2px 2px 2px;
 	border: 1px solid #6f7074;
 	border-radius: 3px;
+	pre-transform-scale2d: 0.98;
 }
 
 RadioButton:hover {
 	border-color: #fff;
+	pre-transform-scale2d: 1.03;
 }
 
 RadioButton:selected {
@@ -745,10 +747,7 @@ RadioButton.Disabled:selected {
 }
 
 .HeroCard {
-	/* height: 100%; */
-	/* width: 100%; */
 	border: 1px solid grey;
-	/* box-shadow: fill grey -1px -1px 2px 2px; */
 }
 
 .ImbaCard {

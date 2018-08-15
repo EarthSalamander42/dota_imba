@@ -128,28 +128,37 @@
 #imba-loading-link-text,
 #imba-loading-link-text-patreon,
 #imba-loading-link-text-promote {
+	padding: 0px 10px;
 	font-size: 24px;
 	text-shadow: 0 0 5px #000;
 	color: #cccccc;	
 }
 
-#imba-loading-link-text:hover,
-#imba-loading-link-text-patreon:hover,
+#imba-loading-link-text:hover {
+	text-decoration: underline;
+	background-color: #003339;
+}
+
+#imba-loading-link-text-patreon:hover {
+	text-decoration: underline;
+	background-color: #4d2600;
+}
+
 #imba-loading-link-text-promote:hover {
 	text-decoration: underline;
 	background-color: #003339;
 }
 
 #ImbaLoadingSocial {
-	padding: 0px 20px;
 	margin-left: 260px;
 	overflow: scroll;
 	flow-children: down;
-	background-color: #002239;
+	background-color: #002239da;
 	border: 2px solid COLOR_INFO_BACKGROUND_DARK_BLUE;
 } 
 
 #ImbaLoadingSocial Panel {
+	padding: 0px 20px;
 	flow-children: right;
 }
 
@@ -169,15 +178,14 @@
 	color: #fff;
 }
 
-.SocialButtons {
-
+.SocialButtons:hover {
+	pre-transform-scale2d: 1.1;
 }
 
-#ImbaLoadingSocialOfficialWebsite { background-color: #333; }
-#ImbaLoadingSocialFacebook { background-color: #11a; }
-#ImbaLoadingSocialTwitter { background-color: #0D91E2; }
+#ImbaLoadingSocialOfficialWebsite { background-color: gradient(linear, 0% 0%, 0% 100%, from(#333), to(#111)); }
+#ImbaLoadingSocialFacebook { background-color: gradient(linear, 0% 0%, 0% 100%, from(#22e), to(#111)); }
+#ImbaLoadingSocialTwitter { background-color: gradient(linear, 0% 0%, 0% 100%, from(#0D91E2), to(#111)); }
 #ImbaLoadingSocialTwitter Label { color: #fff; }
-#ImbaLoadingSocialPatreon { background-color: #d40; }
-#ImbaLoadingSocialDiscordEn { background-color: #7289DA; }
-#ImbaLoadingSocialDiscordRu { background-color: #7289DA; }
-#ImbaLoadingSocialTencent { background-color: #f00; }
+#ImbaLoadingSocialDiscordEn { background-color: gradient(linear, 0% 0%, 0% 100%, from(#7289DA), to(#111)); }
+#ImbaLoadingSocialDiscordRu { background-color: gradient(linear, 0% 0%, 0% 100%, from(#7289DA), to(#111)); }
+#ImbaLoadingSocialTencent { background-color: gradient(linear, 0% 0%, 0% 100%, from(#f00), to(#111)); }
