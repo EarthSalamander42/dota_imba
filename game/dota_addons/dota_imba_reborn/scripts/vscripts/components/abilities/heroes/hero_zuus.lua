@@ -782,6 +782,7 @@ function modifier_zuus_nimbus_storm:OnRemoved()
 	if IsServer() then
 		-- Cleanup particle
 		ParticleManager:DestroyParticle(self.zuus_nimbus_particle, false)
+		local caster = self:GetCaster()
 
 		--self:GetCaster():FindAbilityByName("imba_zuus_nimbus_zap"):SetActivated(false)
 		local skill_slot_4 = caster:GetAbilityByIndex(3):GetAbilityName()
@@ -795,10 +796,10 @@ function modifier_zuus_nimbus_storm:OnRemoved()
 		end
 
 		-- Return Zeus to ground if its the current cloud that ended
-		local nimbus_ability = self:GetCaster():FindAbilityByName("imba_zuus_cloud")
+		local nimbus_ability = caster:FindAbilityByName("imba_zuus_cloud")
 		if self:GetParent() == nimbus_ability.zuus_nimbus_unit then
-			self:GetCaster():RemoveModifierByName("modifier_imba_zuus_nimbus_z")
-			FindClearSpaceForUnit(self:GetCaster(), self:GetCaster():GetAbsOrigin(), false)
+			caster:RemoveModifierByName("modifier_imba_zuus_nimbus_z")
+			FindClearSpaceForUnit(caster, self:GetCaster():GetAbsOrigin(), false)
 		end
 	end
 end
@@ -942,7 +943,10 @@ function imba_zuus_nimbus_zap:OnProjectileThink_ExtraData(location, ExtraData)
 		local leave_nimbus_ability = self:GetCaster():FindAbilityByName("imba_zuus_leave_nimbus")
 		if leave_nimbus_ability ~= nil then
 			if self.nimbus ~= nil then
-				self:GetCaster():SwapAbilities("imba_zuus_nimbus_zap", "imba_zuus_leave_nimbus", false, true)
+				local skill_slot_4 =  self:GetCaster():GetAbilityByIndex(3):GetAbilityName()
+				if skill_slot_4 ~= "imba_zuus_leave_nimbus" then
+					self:GetCaster():SwapAbilities("imba_zuus_nimbus_zap", "imba_zuus_leave_nimbus", false, true)
+				end
 			end
 		end
 	end
