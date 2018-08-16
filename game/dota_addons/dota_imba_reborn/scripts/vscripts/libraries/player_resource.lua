@@ -36,7 +36,6 @@ function CDOTA_PlayerResource:GetHasAbandonedDueToLongDisconnect(player_id)
 	end
 end
 
-
 -- While active, redistributes a player's gold to its allies
 function CDOTA_PlayerResource:StartAbandonGoldRedistribution(player_id)
 

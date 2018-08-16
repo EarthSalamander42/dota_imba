@@ -318,9 +318,9 @@ function GameMode:OnEntityKilled( keys )
 
 			if IsMutationMap() then
 				Mutation:OnHeroDeath(killed_unit)
-			else
-				GameMode:OnHeroKilled(killer, killed_unit)
 			end
+
+			GameMode:OnHeroKilled(killer, killed_unit)
 
 			return
 		elseif killed_unit:IsBuilding() then
@@ -483,9 +483,9 @@ function GameMode:OnConnectFull(keys)
 	local ply = EntIndexToHScript(entIndex)
 	local playerID = ply:GetPlayerID()
 	
-	ReconnectPlayer(player_id)
+	ReconnectPlayer(playerID)
 	
-	PlayerResource:InitPlayerData(player_id)
+	PlayerResource:InitPlayerData(playerID)
 end
 
 -- This function is called whenever any player sends a chat message to team or All

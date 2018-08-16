@@ -367,7 +367,7 @@ function onPlayerStatChange(table, key, data) {
 						} else {
 							newinfo.text = "Lvl: " + Math.floor(player_table.Lvl);
 						}
-						player_color = player_table.color;
+						player_color = player_table.ply_color;
 					}
 				}
 

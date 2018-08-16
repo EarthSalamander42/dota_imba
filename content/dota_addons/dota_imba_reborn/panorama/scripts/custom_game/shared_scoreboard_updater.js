@@ -234,8 +234,12 @@ function _ScoreboardUpdater_UpdatePlayerPanel(scoreboardConfig, playersContainer
 
 		var playerColorBar = playerPanel.FindChildInLayoutFile("PlayerColorBar");
 		if (playerColorBar !== null) {
-			var playerColor = CustomNetTables.GetTableValue("player_table", playerId).color;
-			playerColorBar.style.backgroundColor = playerColor;
+			var PlyData = CustomNetTables.GetTableValue("player_table", playerId);
+			if (PlyData != undefined)
+			{
+				if (PlyData.ply_color != undefined)
+					playerColorBar.style.backgroundColor = PlyData.ply_color;
+			}
 		}
 	}
 

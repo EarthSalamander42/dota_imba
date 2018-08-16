@@ -32,8 +32,13 @@
 		})
 
 		GameUI.CustomUIConfig().team_colors = {}
+		GameUI.CustomUIConfig().team_names = {}
+
 		GameUI.CustomUIConfig().team_colors[DOTATeam_t.DOTA_TEAM_GOODGUYS] = "#08640E;"; // Format this later using rgbtohex lib, and taking team color in settings.lua
 		GameUI.CustomUIConfig().team_colors[DOTATeam_t.DOTA_TEAM_BADGUYS ] = "#640808;"; // Format this later using rgbtohex lib, and taking team color in settings.lua
+
+		GameUI.CustomUIConfig().team_names[DOTATeam_t.DOTA_TEAM_GOODGUYS] = "Radiant";
+		GameUI.CustomUIConfig().team_names[DOTATeam_t.DOTA_TEAM_BADGUYS] = "Dire";
 
 		// fix for battlepass button being in middle of the way of clock time until
 		var Parent = $.GetContextPanel().GetParent().GetParent()
