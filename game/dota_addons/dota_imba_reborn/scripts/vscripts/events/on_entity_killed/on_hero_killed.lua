@@ -1,4 +1,4 @@
-function GameMode:OnHeroKilled(killer, killed_unit)
+function GameMode:OnHeroDeath(killer, killed_unit)
 	-- Buyback parameters
 	local player_id = killed_unit:GetPlayerID()
 	local hero_level = killed_unit:GetLevel()

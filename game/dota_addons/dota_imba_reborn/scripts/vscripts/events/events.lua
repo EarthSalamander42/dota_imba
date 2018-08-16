@@ -320,7 +320,7 @@ function GameMode:OnEntityKilled( keys )
 				Mutation:OnHeroDeath(killed_unit)
 			end
 
-			GameMode:OnHeroKilled(killer, killed_unit)
+			GameMode:OnHeroDeath(killer, killed_unit)
 
 			return
 		elseif killed_unit:IsBuilding() then
