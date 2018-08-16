@@ -29,31 +29,10 @@ function GameMode:OnHeroKilled(killer, killed_unit)
 	-- undying reincarnation talent fix
 	if killed_unit:HasModifier("modifier_special_bonus_reincarnation") then
 		if not killed_unit.undying_respawn_timer or killed_unit.undying_respawn_timer == 0 then
-			log.info(killed_unit:FindModifierByName("modifier_special_bonus_reincarnation"):GetDuration())
+			print(killed_unit:FindModifierByName("modifier_special_bonus_reincarnation"):GetDuration())
 			killed_unit:SetTimeUntilRespawn(IMBA_REINCARNATION_TIME)
 			killed_unit.undying_respawn_timer = 200
 			return
-		end
-	end
-
-	-- meepo fix
-	if killed_unit:GetUnitName() == "npc_dota_hero_meepo" then
-		if killed_unit:GetCloneSource() then
-			if killed_unit:GetCloneSource():HasModifier("modifier_item_imba_aegis") then
-				local meepo_table = Entities:FindAllByName("npc_dota_hero_meepo")
-				if meepo_table then
-					for i = 1, #meepo_table do
-						if meepo_table[i]:IsClone() then
-							meepo_table[i]:SetRespawnsDisabled(true)
-							meepo_table[i]:GetCloneSource():SetTimeUntilRespawn(killed_unit:GetCloneSource():FindModifierByName("modifier_item_imba_aegis").reincarnate_time)
-							meepo_table[i]:GetCloneSource():RemoveModifierByName("modifier_item_imba_aegis")
-						else
-							meepo_table[i]:SetTimeUntilRespawn(killed_unit:FindModifierByName("modifier_item_imba_aegis").reincarnate_time)
-							return
-						end
-					end
-				end
-			end
 		end
 	end
 
@@ -63,40 +42,30 @@ function GameMode:OnHeroKilled(killer, killed_unit)
 		return
 	elseif killed_unit:IsRealHero() and killed_unit:GetPlayerID() and (PlayerResource:IsImbaPlayer(killed_unit:GetPlayerID()) or (GameRules:IsCheatMode() == true)) then
 		-- Calculate base respawn timer, capped at 60 seconds
-		local hero_level = math.min(killed_unit:GetLevel(), #HERO_RESPAWN_TIME_PER_LEVEL)
-		respawn_time = HERO_RESPAWN_TIME_PER_LEVEL[hero_level]
+		local hero_level = math.min(killed_unit:GetLevel(), #_G.HERO_RESPAWN_TIME_PER_LEVEL)
+		respawn_time = _G.HERO_RESPAWN_TIME_PER_LEVEL[hero_level]
 
 		-- Fetch decreased respawn timer due to Bloodstone charges
 		if killed_unit.bloodstone_respawn_reduction and (respawn_time > 0) then
 			respawn_time = math.max( respawn_time - killed_unit.bloodstone_respawn_reduction, 1)
-			-- 1 sec minimum respawn time
 		elseif killed_unit.plancks_artifact_respawn_reduction and respawn_time > 0 then
 			respawn_time = math.max(respawn_time - killed_unit.plancks_artifact_respawn_reduction, 1)
 		end
 
-		-- Set up the respawn timer, include meepo fix
-		if killed_unit:GetUnitName() == "npc_dota_hero_meepo" then
-			KillMeepos()
-		else
-			if killed_unit:HasModifier("modifier_imba_reapers_scythe_respawn") then
-				local reaper_scythe = killer:FindAbilityByName("imba_necrolyte_reapers_scythe"):GetSpecialValueFor("respawn_increase")
-				-- Sometimes the killer is not actually Necrophos due to the respawn modifier lingering on a target, which makes reaper_scythe nil and causes massive problems
-				if not reaper_scythe then
-					reaper_scythe = 0
-				end
-				respawn_time = HERO_RESPAWN_TIME_PER_LEVEL[hero_level] + reaper_scythe
-			elseif respawn_time > HERO_RESPAWN_TIME_PER_LEVEL[#HERO_RESPAWN_TIME_PER_LEVEL] then
-				log.warn("Respawn Time too high: "..tostring(respawn_time)..". New Respawn Time:"..tostring(HERO_RESPAWN_TIME_PER_LEVEL[#HERO_RESPAWN_TIME_PER_LEVEL]))
-				respawn_time = HERO_RESPAWN_TIME_PER_LEVEL[#HERO_RESPAWN_TIME_PER_LEVEL]
+		if killed_unit:HasModifier("modifier_imba_reapers_scythe_respawn") then
+			local reaper_scythe = killer:FindAbilityByName("imba_necrolyte_reapers_scythe"):GetSpecialValueFor("respawn_increase")
+			-- Sometimes the killer is not actually Necrophos due to the respawn modifier lingering on a target, which makes reaper_scythe nil and causes massive problems
+--			print("Killed by Reaper Scythe!", reaper_scythe, _G.HERO_RESPAWN_TIME_PER_LEVEL[hero_level] + reaper_scythe)
+			if not reaper_scythe then
+				reaper_scythe = 0
 			end
-
-			-- divide the respawn time by 2 for frantic mode
-			if killed_unit:HasModifier("modifier_frantic") then
-				respawn_time = respawn_time - respawn_time / (100 / _G.IMBA_FRANTIC_VALUE)
-			end
-
-			log.info("Set time until respawn for unit " .. tostring(killed_unit:GetUnitName()) .. " to " .. tostring(respawn_time) .. " seconds")
-			killed_unit:SetTimeUntilRespawn(min(respawn_time, 100))
+			respawn_time = _G.HERO_RESPAWN_TIME_PER_LEVEL[hero_level] + reaper_scythe
+			killed_unit:SetTimeUntilRespawn(respawn_time)
+			return
 		end
+
+		log.info("Set time until respawn for unit " .. tostring(killed_unit:GetUnitName()) .. " to " .. tostring(respawn_time) .. " seconds")
+		killed_unit:SetTimeUntilRespawn(math.min(respawn_time, 60))
+		return
 	end
 end

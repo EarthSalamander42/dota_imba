@@ -1,6 +1,8 @@
 function CDOTA_BaseNPC:CreateIllusion(duration, inc, out, pos, mod, ab)
 	if pos == nil then
 		pos = self:GetAbsOrigin() + RandomVector(100)
+	else
+		pos = pos + RandomVector(100)
 	end
 
 	local illusion = CreateUnitByName(self:GetUnitName(), pos, true, self, nil, self:GetTeamNumber())
@@ -8,7 +10,12 @@ function CDOTA_BaseNPC:CreateIllusion(duration, inc, out, pos, mod, ab)
 	illusion:SetMana(self:GetMana())
 	illusion:AddNewModifier(self, nil, "modifier_illusion", {duration = duration, outgoing_damage = out, incoming_damage = inc})
 	illusion:MakeIllusion()
+	illusion:SetControllableByPlayer(self:GetPlayerID(), true)
 	FindClearSpaceForUnit(illusion, illusion:GetAbsOrigin(), true)
+
+	for i = 1, self:GetLevel() do
+		illusion:HeroLevelUp(false)
+	end
 
 	if mod then
 		for _, modifier in pairs(mod) do
@@ -17,6 +24,42 @@ function CDOTA_BaseNPC:CreateIllusion(duration, inc, out, pos, mod, ab)
 	end
 
 	return illusion
+end
+
+-- Serversided function only
+function CDOTA_BaseNPC:DropRapier(hItem, sNewItemName)
+	local vLocation = self:GetAbsOrigin()
+	local sName
+	local hRapier
+	local vRandomVector = RandomVector(100)
+	if hItem then
+		hRapier = hItem
+		sName = hItem:GetName()
+		self:DropItemAtPositionImmediate(hRapier, vLocation)
+	else
+		sName = sNewItemName
+		hRapier = CreateItem(sNewItemName, nil, nil)
+		CreateItemOnPositionSync(vLocation, hRapier)
+	end
+	if sName == "item_imba_rapier" then
+		hRapier:GetContainer():SetRenderColor(230,240,35)
+	elseif sName == "item_imba_rapier_2" then
+		hRapier:GetContainer():SetRenderColor(240,150,30)
+		hRapier.rapier_pfx = ParticleManager:CreateParticle("particles/item/rapier/item_rapier_trinity.vpcf", PATTACH_CUSTOMORIGIN, nil)
+		ParticleManager:SetParticleControl(hRapier.rapier_pfx, 0, vLocation + vRandomVector)
+	elseif sName == "item_imba_rapier_magic" then
+		hRapier:GetContainer():SetRenderColor(35,35,240)
+	elseif sName == "item_imba_rapier_magic_2" then
+		hRapier:GetContainer():SetRenderColor(140,70,220)
+		hRapier.rapier_pfx = ParticleManager:CreateParticle("particles/item/rapier/item_rapier_archmage.vpcf", PATTACH_CUSTOMORIGIN, nil)
+		ParticleManager:SetParticleControl(hRapier.rapier_pfx, 0, vLocation + vRandomVector)
+	elseif sName == "item_imba_rapier_cursed" then
+		hRapier.rapier_pfx = ParticleManager:CreateParticle("particles/item/rapier/item_rapier_cursed.vpcf", PATTACH_CUSTOMORIGIN, nil)
+		ParticleManager:SetParticleControl(hRapier.rapier_pfx, 0, vLocation + vRandomVector)
+		hRapier.x_pfx = ParticleManager:CreateParticle("particles/item/rapier/cursed_x.vpcf", PATTACH_CUSTOMORIGIN, nil)
+		ParticleManager:SetParticleControl(hRapier.x_pfx, 0, vLocation + vRandomVector)
+	end
+	hRapier:LaunchLoot(false, 250, 0.5, vLocation + vRandomVector)
 end
 
 --[[Author: Noya

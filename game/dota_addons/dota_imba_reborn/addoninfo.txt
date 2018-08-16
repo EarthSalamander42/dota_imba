@@ -11,7 +11,7 @@
 	"addonContent_Campaign"			"0"
 	"addonDescription"				"A modified version of Dota, where everything is insanely powerful."
 	"HeroGuidesSupported"			"1"
-	"PenaltiesEnabled"				"1"
+	"PenaltiesEnabled"				"0"
 
 	"maps"							"imba_ranked_5v5 imba_ranked_10v10 imba_mutation_5v5 imba_mutation_10v10 imba_1v1"
 

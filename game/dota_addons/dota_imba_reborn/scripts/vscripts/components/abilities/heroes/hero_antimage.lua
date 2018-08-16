@@ -562,7 +562,7 @@ modifier_imba_antimage_blink_spell_immunity = modifier_imba_antimage_blink_spell
 
 function modifier_imba_antimage_blink_spell_immunity:OnCreated()
 	-- Purge the target
-	self:GetParent():Purge(false, true, false, false, false)
+	self:GetParent():Purge(false, true, false, false, false) -- TODO: Purge is a nil value? WTF? WHITE IS BLACK? BLACK IS WHITE?
 end
 
 function modifier_imba_antimage_blink_spell_immunity:GetEffectName()

@@ -146,7 +146,7 @@ function GetPlayerInfoIXP() -- yet it has too much useless loops, format later. 
 			XP = current_xp_in_level,
 			MaxXP = max_xp,
 			Lvl = level,
-			color = rgbToHex(color),
+			ply_color = rgbToHex(color),
 			title = GetTitleIXP(level),
 			title_color = rgbToHex(GetTitleColorIXP(GetTitleIXP(level))),
 			IMR_5v5 = api.imba.get_player_info(PlayerResource:GetSteamID(ID)).imr5v5,

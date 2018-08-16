@@ -67,16 +67,17 @@ function modifier_item_imba_shadow_blade_invis:IsHidden() return false end
 function modifier_item_imba_shadow_blade_invis:IsPurgable() return false end
 
 function modifier_item_imba_shadow_blade_invis:OnCreated()
-	if not self:GetParent():IsCreature() then
-		self.bonus_movespeed = self:GetAbility():GetSpecialValueFor("invis_ms_pct")
-		self.bonus_attack_damage = self:GetAbility():GetSpecialValueFor("invis_damage")
-	end
-
 	-- Start flying if has not taken damage recently
 	if IsServer() then
 		if not self:GetParent():FindModifierByName("modifier_item_imba_shadow_blade_invis_flying_disabled") then
 			self:GetParent():SetMoveCapability(DOTA_UNIT_CAP_MOVE_FLY)
 		end
+	end
+
+	if self:GetAbility() == nil then return end
+	if not self:GetParent():IsCreature() then
+		self.bonus_movespeed = self:GetAbility():GetSpecialValueFor("invis_ms_pct")
+		self.bonus_attack_damage = self:GetAbility():GetSpecialValueFor("invis_damage")
 	end
 end
 

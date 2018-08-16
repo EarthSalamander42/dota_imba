@@ -158,7 +158,7 @@ function CheatDetector()
 	if CustomNetTables:GetTableValue("game_options", "game_count").value == 1 then
 		if Convars:GetBool("sv_cheats") == true or GameRules:IsCheatMode() then
 --			if not IsInToolsMode() then
-			log.info("Cheats have been enabled, game don't count.")
+			print("Cheats have been enabled, game don't count.")
 			CustomNetTables:SetTableValue("game_options", "game_count", {value = 0})
 			CustomGameEventManager:Send_ServerToAllClients("safe_to_leave", {})
 --			end
@@ -219,7 +219,7 @@ function RollPseudoRandom(base_chance, entity)
 	end
 
 	if not prngBase then
-		log.warn("The chance was not found! Make sure to add it to the table or change the value.")
+--		log.warn("The chance was not found! Make sure to add it to the table or change the value.")
 		return false
 	end
 	
@@ -600,4 +600,177 @@ local vanilla_debuffs =
 	end
 
 	return false
+end
+
+-- Finds units only on the outer layer of a ring
+function FindUnitsInRing(teamNumber, position, cacheUnit, ring_radius, ring_width, teamFilter, typeFilter, flagFilter, order, canGrowCache)
+	-- First checks all of the units in a radius
+	local all_units	= FindUnitsInRadius(teamNumber, position, cacheUnit, ring_radius, teamFilter, typeFilter, flagFilter, order, canGrowCache)
+	
+	-- Then builds a table composed of the units that are in the outer ring, but not in the inner one.
+	local outer_ring_units	=	{}
+
+	for _,unit in pairs(all_units) do
+		-- Custom function, checks if the unit is far enough away from the inner radius
+		if CalculateDistance(unit:GetAbsOrigin(), position) >= ring_radius - ring_width then
+			table.insert(outer_ring_units, unit)
+		end
+	end
+
+	return outer_ring_units
+end
+
+-- Cleave-like cone search - returns the units in front of the caster in a cone.
+function FindUnitsInCone(teamNumber, vDirection, vPosition, startRadius, endRadius, flLength, hCacheUnit, targetTeam, targetUnit, targetFlags, findOrder, bCache)
+	local vDirectionCone = Vector( vDirection.y, -vDirection.x, 0.0 )
+	local enemies = FindUnitsInRadius(teamNumber, vPosition, hCacheUnit, endRadius + flLength, targetTeam, targetUnit, targetFlags, findOrder, bCache )
+	local unitTable = {}
+	if #enemies > 0 then
+		for _,enemy in pairs(enemies) do
+			if enemy ~= nil then
+				local vToPotentialTarget = enemy:GetOrigin() - vPosition
+				local flSideAmount = math.abs( vToPotentialTarget.x * vDirectionCone.x + vToPotentialTarget.y * vDirectionCone.y + vToPotentialTarget.z * vDirectionCone.z )
+				local enemy_distance_from_caster = ( vToPotentialTarget.x * vDirection.x + vToPotentialTarget.y * vDirection.y + vToPotentialTarget.z * vDirection.z )
+				
+				-- Author of this "increase over distance": Fudge, pretty proud of this :D 
+				
+				-- Calculate how much the width of the check can be higher than the starting point
+				local max_increased_radius_from_distance = endRadius - startRadius
+				
+				-- Calculate how close the enemy is to the caster, in comparison to the total distance
+				local pct_distance = enemy_distance_from_caster / flLength
+				
+				-- Calculate how much the width should be higher due to the distance of the enemy to the caster.
+				local radius_increase_from_distance = max_increased_radius_from_distance * pct_distance
+				
+				if ( flSideAmount < startRadius + radius_increase_from_distance ) and ( enemy_distance_from_caster > 0.0 ) and ( enemy_distance_from_caster < flLength ) then
+					table.insert(unitTable, enemy)
+				end
+			end
+		end
+	end
+	return unitTable
+end
+
+function CalculateDirection(ent1, ent2)
+	local pos1 = ent1
+	local pos2 = ent2
+	if ent1.GetAbsOrigin then pos1 = ent1:GetAbsOrigin() end
+	if ent2.GetAbsOrigin then pos2 = ent2:GetAbsOrigin() end
+	local direction = (pos1 - pos2):Normalized()
+	return direction
+end
+
+-- Thanks to LoD-Redux & darklord for this!
+function DisplayError(playerID, message)
+	local player = PlayerResource:GetPlayer(playerID)
+	if player then
+		CustomGameEventManager:Send_ServerToPlayer(player, "CreateIngameErrorMessage", {message=message})
+	end
+end
+
+
+-- TODO: FORMAT THIS SHIT
+function ReconnectPlayer(player_id)
+	if not player_id then player_id = 0 end
+	if player_id == "test_reconnect" then player_id = 0 end
+
+	print("Player is reconnecting:", player_id)
+
+	-- Reinitialize the player's pick screen panorama, if necessary
+	Timers:CreateTimer(1.0, function()
+--		print(PlayerResource:GetSelectedHeroEntity(player_id))
+			if PlayerResource:GetSelectedHeroEntity(player_id) then
+				CustomGameEventManager:Send_ServerToAllClients("player_reconnected", {PlayerID = player_id, PickedHeroes = HeroSelection.picked_heroes, pickState = pick_state, repickState = repick_state})
+
+--			Timers:CreateTimer(3.0, function()
+--				local table = {
+--					ID = player_id,
+--					team = PlayerResource:GetTeam(player_id),
+--					disconnect = 2,
+--				}
+
+--				print("Decrease GG Amount!")
+--				GameMode:GG(table)
+--			end)
+
+				local hero = PlayerResource:GetSelectedHeroEntity(player_id)
+
+--			print(hero:GetUnitName())
+
+--			if GameRules:IsCheatMode() then
+--				Notifications:TopToAll({text = "Player "..player_id.. " has reconnected with hero: "..hero:GetUnitName(), duration = 10.0, style = {color = "DodgerBlue"}})
+--			end
+
+--				print(PICKING_SCREEN_OVER)
+--			if GameRules:IsCheatMode() then
+--				if PICKING_SCREEN_OVER then
+--					Notifications:TopToAll({text = "Pick Screen is over!", duration = 10.0, style = {color = "DodgerBlue"}})
+--				else
+--					Notifications:TopToAll({text = "Pick Screen is not over yet!", duration = 10.0, style = {color = "DodgerBlue"}})
+--				end
+--			end
+
+				if PICKING_SCREEN_OVER == true then
+					if hero:GetUnitName() == FORCE_PICKED_HERO then
+--				if not lockedHeroes[player_id] or hero:GetUnitName() == FORCE_PICKED_HERO then
+						-- we don't care if they haven't locked in yet
+--					if GameRules:IsCheatMode() then
+--						Notifications:TopToAll({text = "Player "..player_id.. ": NO HERO LOCKED IN, RANDOM A HERO!", duration = 10.0, style = {color = "DodgerBlue"}})
+--					end
+
+						print('Giving player ' .. player_id .. ' a random hero! (reconnected)')
+--					if GameRules:IsCheatMode() then
+--						Notifications:TopToAll({text = 'Giving player ' .. player_id .. ' a random hero: '..HeroSelection:RandomHero()..' (reconnected)', duration = 10.0, style = {color = "DodgerBlue"}})
+--					end
+
+						local random_hero = HeroSelection:RandomHero()
+						print("Random Hero:", random_hero)
+						HeroSelection:GiveStartingHero(player_id, random_hero, true)
+					else
+--					print('Reconnecting... ' .. hero .. ' ' .. loadedHeroes[lockedHeroes[player_id]])
+--					print(loadedHeroes)
+--					if GameRules:IsCheatMode() then
+--						Notifications:TopToAll({text = 'Reconnecting... ' .. hero .. ' ' .. loadedHeroes[lockedHeroes[player_id]], duration = 10.0, style = {color = "DodgerBlue"}})
+--					end
+--					if not hero or hero:GetUnitName() == FORCE_PICKED_HERO and loadedHeroes[lockedHeroes[player_id]] then
+--						if GameRules:IsCheatMode() then
+--							Notifications:TopToAll({text = 'Giving player ' .. player_id .. ' ' .. lockedHeroes[player_id] .. '(reconnected)', duration = 10.0, style = {color = "DodgerBlue"}})
+--						end
+--						print('Giving player ' .. player_id .. ' ' .. lockedHeroes[player_id] .. '(reconnected)')
+--						HeroSelection:GiveStartingHero(player_id, lockedHeroes[player_id])
+--					end
+					end
+
+					CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(player_id), "send_mutations", IMBA_MUTATION)
+				end
+			else
+--			print("Not fully reconnected yet:", player_id)
+				return 0.1
+			end
+
+			if GetMapName() == "imba_overthrow" then
+				CustomGameEventManager:Send_ServerToAllClients("imbathrow_topbar", {imbathrow = true})
+			else
+				CustomGameEventManager:Send_ServerToAllClients("imbathrow_topbar", {imbathrow = false})
+			end
+		end)
+
+	-- If this is a reconnect from abandonment due to a long disconnect, remove the abandon state
+	if PlayerResource:GetHasAbandonedDueToLongDisconnect(player_id) then
+		local player_name = PlayerResource:GetPlayerName(player_id)
+		local hero = PlayerResource:GetPickedHero(player_id)
+		local hero_name = PlayerResource:GetPickedHeroName(player_id)
+		local line_duration = 7
+		Notifications:BottomToAll({hero = hero_name, duration = line_duration})
+		Notifications:BottomToAll({text = player_name.." ", duration = line_duration, continue = true})
+		Notifications:BottomToAll({text = "#imba_player_reconnect_message", duration = line_duration, style = {color = "DodgerBlue"}, continue = true})
+
+		-- Stop redistributing gold to allies, if applicable
+		PlayerResource:StopAbandonGoldRedistribution(player_id)
+	end
+
+	if IsMutationMap() then
+		CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(player_id), "send_mutations", IMBA_MUTATION)
+	end
 end

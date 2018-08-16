@@ -47,7 +47,10 @@ function GameMode:OnHeroFirstSpawn(hero)
 
 		-- remove camera focused pick screen
 		PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), nil)
-
+		Timers:CreateTimer(0.1, function()
+			PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), nil)
+		end)
+		
 		if api.imba.is_developer(PlayerResource:GetSteamID(hero:GetPlayerID())) then
 			hero.has_graph = true
 			CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "show_netgraph", {})
@@ -229,13 +232,6 @@ function GameMode:OnHeroSpawned(hero)
 	Timers:CreateTimer(1.0, function() -- Silencer fix
 		if hero:HasModifier("modifier_silencer_int_steal") then
 			hero:RemoveModifierByName("modifier_silencer_int_steal")
-		end
-	end)
-
-	Timers:CreateTimer(FrameTime(), function()
-		if IsNearFountain(hero:GetAbsOrigin(), 1200) == false then
-			hero:SetHealth(hero:GetHealth() / 2)
-			hero:SetMana(hero:GetMana() / 2)
 		end
 	end)
 end

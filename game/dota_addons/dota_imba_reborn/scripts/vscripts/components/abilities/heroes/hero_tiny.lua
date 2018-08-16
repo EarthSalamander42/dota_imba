@@ -232,14 +232,12 @@ function imba_tiny_tree_modifier:OnRemoved()
 		local ability_slot4 = caster:GetAbilityByIndex(3)
 		caster:SwapAbilities(ability_slot3:GetAbilityName(), ability_slot4:GetAbilityName(), false, true)
 		-- Trigger cd when last stack is used up
-		print("end Cooldown")
 		self:GetAbility():UseResources(false, false, true)
 		if caster:HasTalent("special_bonus_imba_tiny_4") then
 			local ability = self:GetAbility()
 			local cooldown_reduction = self:GetParent():FindTalentValue("special_bonus_imba_tiny_4")
 			local current_cooldown = ability:GetCooldownTime()
 			local new_cooldown = current_cooldown - self:GetParent():FindTalentValue("special_bonus_imba_tiny_4")
-			print(new_cooldown)
 			ability:EndCooldown()
 			self:GetAbility():StartCooldown(new_cooldown)
 		end

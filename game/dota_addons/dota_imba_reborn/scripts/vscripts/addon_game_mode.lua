@@ -13,6 +13,10 @@ function Precache( context )
 	LinkLuaModifier("modifier_imba_donator", "components/modifiers/modifier_imba_donator.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_imba_donator_statue", "components/modifiers/modifier_imba_donator_statue.lua", LUA_MODIFIER_MOTION_NONE )
 
+	-- Battlepass
+	PrecacheResource("model_folder", "models/items/pudge/arcana", context)
+	PrecacheResource("particle_folder", "particles/econ/items/pudge/pudge_arcana", context)
+
 	Mutation:Precache(context)
 end
 

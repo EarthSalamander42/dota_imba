@@ -226,7 +226,7 @@ function ImbaRunes:PickupRune(rune_name, unit, bActiveByBottle)
 						end
 
 						-- Balancing for stacking gold multipliers to not go out of control in mutation/frantic maps
-						if(IsMutationMap() or IsFranticMap()) then
+						if IsMutationMap() then
 							local bountyReductionPct = 0.5 -- 0.0 to 1.0, with 0.0 being reduce nothing, and 1.0 being remove greevil's greed effect
 							-- Set variable to number between current_bounty and alchemy_bounty based on bountyReductionPct
 							alchemy_bounty = max(current_bounty, alchemy_bounty - ((alchemy_bounty - current_bounty) * bountyReductionPct))
@@ -259,7 +259,7 @@ function ImbaRunes:PickupRune(rune_name, unit, bActiveByBottle)
 			end
 
 			for i = 1, images_count do
-				unit:CreateIllusion(duration, 200, 75, unit:GetAbsOrigin() + RandomVector(72))
+				unit:CreateIllusion(duration, 200, 75)
 			end
 
 			FindClearSpaceForUnit(unit, unit:GetAbsOrigin() + RandomVector(72), true)

@@ -23,6 +23,8 @@ function modifier_custom_mechanics:DeclareFunctions()
 		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
 		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
 		MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE,
+--		MODIFIER_PROPERTY_RESPAWNTIME,
+--		MODIFIER_PROPERTY_RESPAWNTIME_PERCENTAGE,
 	}
 	return funcs
 end
@@ -142,3 +144,19 @@ function modifier_custom_mechanics:OnAttackLanded( keys )
 		ParticleManager:ReleaseParticleIndex(lifesteal_pfx)
 	end
 end
+--[[
+-- this function stack with actual respawn time, and when trying to call GetRespawnTime() or GetTimeUntilRespawn() game crash
+function modifier_custom_mechanics:GetModifierConstantRespawnTime()
+--	local respawn_time = self:GetParent():GetTimeUntilRespawn() / 2
+	local respawn_time = _G.HERO_RESPAWN_TIME_PER_LEVEL[self:GetParent():GetLevel()]
+	print("Respawn Time:", respawn_time)
+
+	return respawn_time
+end
+--]]
+
+--[[ Respawn time is always 1 second...
+function modifier_custom_mechanics:GetModifierPercentageRespawnTime()
+	return 50
+end
+--]]

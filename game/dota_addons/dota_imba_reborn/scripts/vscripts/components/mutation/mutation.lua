@@ -28,7 +28,7 @@ function Mutation:Init()
 	if IsInToolsMode() then
 		IMBA_MUTATION["positive"] = "ultimate_level"
 		IMBA_MUTATION["negative"] = "monkey_business"
-		IMBA_MUTATION["terrain"] = "speed_freaks"
+		IMBA_MUTATION["terrain"] = "gift_exchange"
 	else
 		Mutation:ChooseMutation("positive", POSITIVE_MUTATION_LIST)
 		Mutation:ChooseMutation("negative", NEGATIVE_MUTATION_LIST)
@@ -476,7 +476,7 @@ function Mutation:OnGameRulesStateChange(keys)
 							FindClearSpaceForUnit(unit, current_wormholes[13-i], true)
 							if unit.GetPlayerID and unit:GetPlayerID() then
 								PlayerResource:SetCameraTarget(unit:GetPlayerID(), unit)
-								Timers:CreateTimer(0.03, function()
+								Timers:CreateTimer(0.1, function()
 									PlayerResource:SetCameraTarget(unit:GetPlayerID(), nil)
 								end)
 							end
@@ -577,6 +577,8 @@ function Mutation:OnHeroFirstSpawn(hero)
 		hero:AddItemByName("item_pocket_tower")
 	elseif IMBA_MUTATION["positive"] == "greed_is_good" then
 		hero:AddNewModifier(hero, nil, "modifier_mutation_greed_is_good", {})
+	elseif IMBA_MUTATION["positive"] == "teammate_resurrection" then
+		hero.reincarnating = false
 	end
 
 	if IMBA_MUTATION["negative"] == "death_explosion" then
@@ -617,10 +619,21 @@ function Mutation:OnUnitSpawn(hero)
 			hero:AddNewModifier(hero, nil, "modifier_sticky_river", {})
 		end
 
-		if hero.tombstone_fx then
-			ParticleManager:DestroyParticle(hero.tombstone_fx, false)
-			ParticleManager:ReleaseParticleIndex(hero.tombstone_fx)
-			hero.tombstone_fx = nil
+		if IMBA_MUTATION["positive"] == "teammate_resurrection" then
+			if hero.tombstone_fx then
+				ParticleManager:DestroyParticle(hero.tombstone_fx, false)
+				ParticleManager:ReleaseParticleIndex(hero.tombstone_fx)
+				hero.tombstone_fx = nil
+			end
+
+			Timers:CreateTimer(FrameTime(), function()
+				if IsNearFountain(hero:GetAbsOrigin(), 1200) == false and hero.reincarnating == false then
+					hero:SetHealth(hero:GetHealth() * 50 / 100)
+					hero:SetMana(hero:GetMana() * 50 / 100)
+				end
+
+				hero.reincarnating = false
+			end)
 		end
 	end
 
@@ -643,6 +656,11 @@ function Mutation:OnHeroDeath(hero)
 		FindClearSpaceForUnit(tombstone, hero:GetAbsOrigin(), true)
 
 		hero.tombstone_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_abaddon/holdout_borrowed_time_"..hero:GetTeamNumber()..".vpcf", PATTACH_ABSORIGIN_FOLLOW, tombstone)
+
+		if hero:IsImbaReincarnating() then
+			print("Hero is reincarnating!")
+			hero.reincarnation = true
+		end
 	end
 
 --	if IMBA_MUTATION["negative"] == "death_gold_drop" then
@@ -735,7 +753,7 @@ end
 -- Currently only checks stuff for monkey king
 function Mutation:IsEligibleHero(hero)	
 	if(hero:GetName() == "npc_dota_hero_monkey_king" or hero:GetName() == "npc_dota_hero_rubick") and hero:GetAbsOrigin() ~= Vector(0,0,0) then 
-		log.info("fake hero entered the game, ignoring mutation!", hero:GetEntityIndex(), hero:GetName())
+--		print("fake hero entered the game, ignoring mutation!", hero:GetEntityIndex(), hero:GetName())
 		return false
 	end
 

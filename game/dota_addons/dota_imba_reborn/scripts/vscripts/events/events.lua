@@ -204,12 +204,11 @@ function GameMode:OnDisconnect(keys)
 		-- Fetch player's player and hero information
 		local player_id = keys.PlayerID
 		local player_name = keys.name
-		local hero = PlayerResource:GetPlayer(player_id):GetAssignedHero()
-		local hero_name = PlayerResource:GetPlayer(player_id):GetAssignedHero():GetUnitName()
+		local hero = PlayerResource:GetSelectedHeroEntity(player_id)
 		local line_duration = 7
 
 		-- Start tracking
-		log.info("started keeping track of player "..player_id.."'s connection state")
+--		log.info("started keeping track of player "..player_id.."'s connection state")
 		api.imba.event(api.events.player_disconnected, { tostring(PlayerResource:GetSteamID(player_id)) })
 
 		local disconnect_time = 0
@@ -220,7 +219,7 @@ function GameMode:OnDisconnect(keys)
 			-- If the player has abandoned the game, set his gold to zero and distribute passive gold towards its allies
 			if disconnect_time >= ABANDON_TIME then
 				-- Abandon message
-				Notifications:BottomToAll({hero = hero_name, duration = line_duration})
+				Notifications:BottomToAll({hero = hero:GetUnitName(), duration = line_duration})
 				Notifications:BottomToAll({text = player_name.." ", duration = line_duration, continue = true})
 				Notifications:BottomToAll({text = "#imba_player_abandon_message", duration = line_duration, style = {color = "DodgerBlue"}, continue = true})
 				PlayerResource:SetHasAbandonedDueToLongDisconnect(player_id, true)
@@ -235,7 +234,7 @@ function GameMode:OnDisconnect(keys)
 
 			-- Else, keep tracking connection state
 			else
-				log.info("tracking player "..player_id.."'s connection state, disconnected for "..disconnect_time.." seconds.")
+--				log.info("tracking player "..player_id.."'s connection state, disconnected for "..disconnect_time.." seconds.")
 				return 1
 			end
 		end)
@@ -317,9 +316,7 @@ function GameMode:OnEntityKilled( keys )
 				killed_unit.killstreak = 0
 			end
 
-			if GetMapName() == "imba_overthrow" then
-				Overthrow:OnEntityKilled(killer, killed_unit)
-			elseif IsMutationMap() then
+			if IsMutationMap() then
 				Mutation:OnHeroDeath(killed_unit)
 			else
 				GameMode:OnHeroKilled(killer, killed_unit)
@@ -431,9 +428,10 @@ function GameMode:OnPlayerLevelUp(keys)
 	if hero:GetLevel() > 25 then
 		if not hero:HasModifier("modifier_imba_war_veteran_"..hero:GetPrimaryAttribute()) then
 			hero:AddNewModifier(hero, nil, "modifier_imba_war_veteran_"..hero:GetPrimaryAttribute(), {})
+		else
+			hero:FindModifierByName("modifier_imba_war_veteran_"..hero:GetPrimaryAttribute()):SetStackCount(math.min(hero:GetLevel() -25, 17))
 		end
 
-		hero:FindModifierByName("modifier_imba_war_veteran_"..hero:GetPrimaryAttribute()):SetStackCount(math.min(hero:GetLevel() -25, 17))
 		hero:SetAbilityPoints(hero:GetAbilityPoints() - 1)
 	end
 end
@@ -484,6 +482,10 @@ function GameMode:OnConnectFull(keys)
 	local entIndex = keys.index + 1
 	local ply = EntIndexToHScript(entIndex)
 	local playerID = ply:GetPlayerID()
+	
+	ReconnectPlayer(player_id)
+	
+	PlayerResource:InitPlayerData(player_id)
 end
 
 -- This function is called whenever any player sends a chat message to team or All
@@ -608,79 +610,52 @@ function GameMode:OnThink()
 		end
 
 		-- Find hidden modifiers
---		for i = 0, hero:GetModifierCount() -1 do
---			print(hero:GetUnitName(), hero:GetModifierNameByIndex(i))
+--		if hero:GetUnitName() == "npc_dota_hero_skeleton_king" then
+--			for i = 0, hero:GetModifierCount() -1 do
+--				print(hero:GetUnitName(), hero:GetModifierNameByIndex(i))
+--			end
 --		end
 	end
 
-	if GetMapName() == "imba_overthrow" then
-		self:UpdateScoreboard()
-		self:ThinkGoldDrop() -- TODO: Enable this
-		self:ThinkSpecialItemDrop()
-		CountdownTimer()
-
-		if nCOUNTDOWNTIMER == 30 then
-			CustomGameEventManager:Send_ServerToAllClients( "timer_alert", {} )
-		end
-
-		if nCOUNTDOWNTIMER <= 0 then
-			--Check to see if there's a tie
-			if isGameTied == false then
-				GameRules:SetCustomVictoryMessage( m_VictoryMessages[leadingTeam] )
-				GameMode:EndGame( leadingTeam )
-				countdownEnabled = false
-				return nil
-			else
-				TEAM_KILLS_TO_WIN = leadingTeamScore + 1
-				local broadcast_killcount =
-				{
-					killcount = TEAM_KILLS_TO_WIN
-				}
-
-				CustomGameEventManager:Send_ServerToAllClients( "overtime_alert", broadcast_killcount )
+	if GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
+		-- End the game if one team completely abandoned
+		if CustomNetTables:GetTableValue("game_options", "game_count").value == 1 then
+			if not TEAM_ABANDON then
+				TEAM_ABANDON = {} -- 15 second to abandon, is_abandoning?, player_count.
+				TEAM_ABANDON[2] = {FULL_ABANDON_TIME, false, 0}
+				TEAM_ABANDON[3] = {FULL_ABANDON_TIME, false, 0}
 			end
-		end
-	else
-		if GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
-			-- End the game if one team completely abandoned
-			if CustomNetTables:GetTableValue("game_options", "game_count").value == 1 then
-				if not TEAM_ABANDON then
-					TEAM_ABANDON = {} -- 15 second to abandon, is_abandoning?, player_count.
-					TEAM_ABANDON[2] = {FULL_ABANDON_TIME, false, 0}
-					TEAM_ABANDON[3] = {FULL_ABANDON_TIME, false, 0}
+
+			TEAM_ABANDON[2][3] = PlayerResource:GetPlayerCountForTeam(2)
+			TEAM_ABANDON[3][3] = PlayerResource:GetPlayerCountForTeam(3)
+
+			for ID = 0, PlayerResource:GetPlayerCount() -1 do
+				local team = PlayerResource:GetTeam(ID)
+
+				if PlayerResource:GetConnectionState(ID) ~= 2 then -- if disconnected then
+					TEAM_ABANDON[team][3] = TEAM_ABANDON[team][3] -1
 				end
 
-				TEAM_ABANDON[2][3] = PlayerResource:GetPlayerCountForTeam(2)
-				TEAM_ABANDON[3][3] = PlayerResource:GetPlayerCountForTeam(3)
-
-				for ID = 0, PlayerResource:GetPlayerCount() -1 do
-					local team = PlayerResource:GetTeam(ID)
-
-					if PlayerResource:GetConnectionState(ID) ~= 2 then -- if disconnected then
-						TEAM_ABANDON[team][3] = TEAM_ABANDON[team][3] -1
+				if TEAM_ABANDON[team][3] > 0 then
+					TEAM_ABANDON[team][2] = false
+				else
+					if TEAM_ABANDON[team][2] == false then
+						local abandon_text = "#imba_team_good_abandon_message"
+						if team == 3 then
+							abandon_text = "#imba_team_bad_abandon_message"
+						end
+						Notifications:BottomToAll({text = abandon_text.." ("..tostring(TEAM_ABANDON[team][1])..")", duration = 1.0, style = {color = "DodgerBlue"} })
 					end
 
-					if TEAM_ABANDON[team][3] > 0 then
-						TEAM_ABANDON[team][2] = false
-					else
-						if TEAM_ABANDON[team][2] == false then
-							local abandon_text = "#imba_team_good_abandon_message"
-							if team == 3 then
-								abandon_text = "#imba_team_bad_abandon_message"
-							end
-							Notifications:BottomToAll({text = abandon_text.." ("..tostring(TEAM_ABANDON[team][1])..")", duration = 1.0, style = {color = "DodgerBlue"} })
-						end
+					TEAM_ABANDON[team][2] = true
+					TEAM_ABANDON[team][1] = TEAM_ABANDON[team][1] -1
 
-						TEAM_ABANDON[team][2] = true
-						TEAM_ABANDON[team][1] = TEAM_ABANDON[team][1] -1
-
-						if TEAM_ABANDON[2][1] <= 0 then
-							GAME_WINNER_TEAM = 3
-							GameRules:SetGameWinner(3)
-						elseif TEAM_ABANDON[3][1] <= 0 then
-							GAME_WINNER_TEAM = 2
-							GameRules:SetGameWinner(2)
-						end
+					if TEAM_ABANDON[2][1] <= 0 then
+						GAME_WINNER_TEAM = 3
+						GameRules:SetGameWinner(3)
+					elseif TEAM_ABANDON[3][1] <= 0 then
+						GAME_WINNER_TEAM = 2
+						GameRules:SetGameWinner(2)
 					end
 				end
 			end
@@ -754,34 +729,7 @@ function GameMode:OnTeamKillCredit(keys)
 	local killer_team = keys.teamnumber
 	local nTeamKills = keys.herokills
 
-	-- Overthrow
-	if GetMapName() == "imba_overthrow" then
-		local nKillsRemaining = TEAM_KILLS_TO_WIN - nTeamKills
-		local broadcast_kill_event =
-		{
-			killer_id = keys.killer_userid,
-			team_id = keys.teamnumber,
-			team_kills = nTeamKills,
-			kills_remaining = nKillsRemaining,
-			victory = 0,
-			close_to_victory = 0,
-			very_close_to_victory = 0,
-		}
-
-		if nKillsRemaining <= 0 then
-			GameRules:SetCustomVictoryMessage( m_VictoryMessages[killer_team] )
-			GAME_WINNER_TEAM = killer_team
-			GameRules:SetGameWinner( killer_team )
-			broadcast_kill_event.victory = 1
-		elseif nKillsRemaining == 1 then
-			EmitGlobalSound( "ui.npe_objective_complete" )
-			broadcast_kill_event.very_close_to_victory = 1
-		elseif nKillsRemaining <= CLOSE_TO_VICTORY_THRESHOLD then
-			EmitGlobalSound( "ui.npe_objective_given" )
-			broadcast_kill_event.close_to_victory = 1
-		end
-		CustomGameEventManager:Send_ServerToAllClients( "kill_event", broadcast_kill_event )
-	elseif GetMapName() == "imba_1v1" then
+	if GetMapName() == "imba_1v1" then
 		if nTeamKills == IMBA_1V1_SCORE then
 			GAME_WINNER_TEAM = killer_team
 			GameRules:SetGameWinner( killer_team )
@@ -801,7 +749,7 @@ function GameMode:OnTeamKillCredit(keys)
 		PlayerResource:IncrementDeathstreak(victim_id)
 
 		-- Show Deathstreak message
-		local victim_hero_name = PlayerResource:GetPlayer(victim_id):GetAssignedHero()
+		local victim_hero_name = PlayerResource:GetSelectedHeroEntity(victim_id)
 		local victim_player_name = PlayerResource:GetPlayerName(victim_id)
 		local victim_death_streak = PlayerResource:GetDeathstreak(victim_id)
 		local line_duration = 7
@@ -838,7 +786,7 @@ function GameMode:OnTeamKillCredit(keys)
 
 	-- TODO: Format this into venge's hero file
 	-- Victim stack loss
-	local victim_hero = PlayerResource:GetPlayer(victim_id):GetAssignedHero()
+	local victim_hero = PlayerResource:GetSelectedHeroEntity(victim_id)
 	if victim_hero and victim_hero:HasModifier("modifier_imba_rancor") then
 		local current_stacks = victim_hero:GetModifierStackCount("modifier_imba_rancor", VENGEFUL_RANCOR_CASTER)
 		if current_stacks <= 2 then
@@ -873,7 +821,7 @@ function GameMode:OnTeamKillCredit(keys)
 
 	if victim_hero and PlayerResource:IsImbaPlayer(killer_id) then
 		local vengeance_aura_ability = victim_hero:FindAbilityByName("imba_vengeful_command_aura")
-		local killer_hero = PlayerResource:GetPlayer(killer_id):GetAssignedHero()
+		local killer_hero = PlayerResource:GetSelectedHeroEntity(killer_id)
 		if vengeance_aura_ability and vengeance_aura_ability:GetLevel() > 0 then
 			vengeance_aura_ability:ApplyDataDrivenModifier(victim_hero, killer_hero, "modifier_imba_command_aura_negative_aura", {})
 			victim_hero.vengeance_aura_target = killer_hero

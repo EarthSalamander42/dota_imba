@@ -137,7 +137,7 @@ function api.imba.complete(callback)
 			local data = {
 				player = PlayerResource:GetPlayer(id),
 				steamid = tostring(PlayerResource:GetSteamID(id)),
-				hero = PlayerResource:GetPlayer(id):GetAssignedHero(),
+				hero = PlayerResource:GetSelectedHeroEntity(id),
 				hero_name = json.null,
 				items = {}
 			}

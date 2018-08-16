@@ -584,7 +584,6 @@ function GreavesActivate(caster, ability, heal_amount, mana_amount, heal_radius,
 	-- Iterate through nearby allies
 	local nearby_allies = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, heal_radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 	for _, ally in pairs(nearby_allies) do
-
 		-- Heal & replenish mana
 		ally:Heal(heal_amount, caster)
 		ally:GiveMana(mana_amount)
@@ -608,5 +607,7 @@ function GreavesActivate(caster, ability, heal_amount, mana_amount, heal_radius,
 
 		-- Apply heal over time buff
 		ally:AddNewModifier(caster, ability, "modifier_item_imba_guardian_greaves_heal", {duration = heal_duration})
+
+		ability:StartCooldown(ability:GetCooldown(ability:GetLevel()))
 	end
 end

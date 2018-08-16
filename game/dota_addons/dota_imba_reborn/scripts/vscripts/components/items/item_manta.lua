@@ -12,8 +12,8 @@
 -- See the License for the specific language governing permissions and
 -- limitations under the License.
 --
--- Editors:
---
+-- Author:
+-- EarthSalamander #42
 
 LinkLuaModifier( "modifier_item_manta_passive", "components/items/item_manta.lua", LUA_MODIFIER_MOTION_NONE )
 LinkLuaModifier( "modifier_item_imba_manta_stacks", "components/items/item_manta.lua", LUA_MODIFIER_MOTION_NONE )		-- Stacking attack speed
@@ -33,19 +33,8 @@ function item_imba_manta:GetIntrinsicModifierName()
 	return "modifier_item_manta_passive"
 end
 
-function item_imba_manta:OnCreated()
-	self.ability = self:GetAbility()
-
-	--	if not self.ability then
-	--		self:Destroy()
-	--	end
-
-	caster:AddNewModifier(self:GetCaster(), self, "modifier_item_manta_passive", {})
-end
-
 function item_imba_manta:OnSpellStart()
-	local caster = self:GetCaster()
-	local caster_entid = caster:entindex()
+	local caster_entid = self:GetCaster():entindex()
 	local duration = self:GetSpecialValueFor("tooltip_illusion_duration")
 	local invulnerability_duration = self:GetSpecialValueFor("invuln_duration")
 	local images_count = self:GetSpecialValueFor("images_count")
@@ -53,50 +42,35 @@ function item_imba_manta:OnSpellStart()
 	local outgoingDamage = self:GetSpecialValueFor("images_do_damage_percent_ranged")
 	local incomingDamage = self:GetSpecialValueFor("images_take_damage_percent_ranged")
 
-	if not caster:IsRangedAttacker() then  --Manta Style's cooldown is less for melee heroes.
+	if not self:GetCaster():IsRangedAttacker() then  --Manta Style's cooldown is less for melee heroes.
 		self:EndCooldown()
 		self:StartCooldown(cooldown_melee)
-		local outgoingDamage = self:GetSpecialValueFor("images_do_damage_percent_melee")
-		local incomingDamage = self:GetSpecialValueFor("images_take_damage_percent_melee")
+		outgoingDamage = self:GetSpecialValueFor("images_do_damage_percent_melee")
+		incomingDamage = self:GetSpecialValueFor("images_take_damage_percent_melee")
 	end
 
-	caster:Purge(false, true, false, false, false)
-	caster:AddNewModifier(caster, self, "modifier_manta_invulnerable", {duration=invulnerability_duration})
+	self:GetCaster():Purge(false, true, false, false, false)
+	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_manta_invulnerable", {duration=invulnerability_duration})
 
-	if not caster.manta then
-		caster.manta = {}
+	if not self:GetCaster().manta then
+		self:GetCaster().manta = {}
 	end
 
-	for k,v in pairs(caster.manta) do
+	for k,v in pairs(self:GetCaster().manta) do
 		if v and IsValidEntity(v) then
 			v:ForceKill(false)
 		end
 	end
 
-	local vRandomSpawnPos = {
-		Vector( 72, 0, 0 ),		-- North
-		Vector( 0, 72, 0 ),		-- East
-		Vector( -72, 0, 0 ),	-- South
-		Vector( 0, -72, 0 ),	-- West
-	}
-
-	for i=#vRandomSpawnPos, 2, -1 do	-- Simply shuffle them
-		local j = RandomInt( 1, i )
-		vRandomSpawnPos[i], vRandomSpawnPos[j] = vRandomSpawnPos[j], vRandomSpawnPos[i]
-	end
-
-	table.insert( vRandomSpawnPos, RandomInt( 1, images_count+1 ), Vector( 0, 0, 0 ) )
-
-	caster:EmitSound("DOTA_Item.Manta.Activate")
-	local manta_particle = ParticleManager:CreateParticle("particles/items2_fx/manta_phase.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+	self:GetCaster():EmitSound("DOTA_Item.Manta.Activate")
+	local manta_particle = ParticleManager:CreateParticle("particles/items2_fx/manta_phase.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
 	Timers:CreateTimer(invulnerability_duration, function()
-		FindClearSpaceForUnit(caster, caster:GetAbsOrigin() + table.remove( vRandomSpawnPos, 1 ), true)
+		FindClearSpaceForUnit(self:GetCaster(), self:GetCaster():GetAbsOrigin() + RandomVector(100), true)
 
 		for i = 1, images_count do
-			if string.find(caster:GetUnitName(), "npc_dota_lone_druid_bear") then print("NO BEAR") break end
-			local origin = caster:GetAbsOrigin() + table.remove( vRandomSpawnPos, 1 )
-			local illusion = IllusionManager:CreateIllusion(caster, self, origin, caster, {damagein=incomingDamage, damageout=outcomingDamage, unique=caster_entid.."_manta_"..i, duration=duration})
-			table.insert(caster.manta, illusion)
+			if string.find(self:GetCaster():GetUnitName(), "npc_dota_lone_druid_bear") then print("NO BEAR") break end
+			self:GetCaster():CreateIllusion(duration, incomingDamage, outcomingDamage)
+			table.insert(self:GetCaster().manta, illusion)
 		end
 
 		ParticleManager:DestroyParticle(manta_particle, false)

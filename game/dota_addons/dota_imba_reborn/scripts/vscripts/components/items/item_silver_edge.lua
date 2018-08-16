@@ -45,12 +45,11 @@ function item_imba_silver_edge:OnSpellStart()
 
 	-- Wait for the fade time to end, then emit the invisibility effect and apply the invis modifier
 	Timers:CreateTimer(fade_time, function()
+		local particle_invis_start_fx = ParticleManager:CreateParticle(particle_invis_start, PATTACH_ABSORIGIN, caster)
+		ParticleManager:SetParticleControl(particle_invis_start_fx, 0, caster:GetAbsOrigin())
+		ParticleManager:ReleaseParticleIndex(particle_invis_start_fx)
 
-			local particle_invis_start_fx = ParticleManager:CreateParticle(particle_invis_start, PATTACH_ABSORIGIN, caster)
-			ParticleManager:SetParticleControl(particle_invis_start_fx, 0, caster:GetAbsOrigin())
-			ParticleManager:ReleaseParticleIndex(particle_invis_start_fx)
-
-			caster:AddNewModifier(caster, self, "modifier_item_imba_silver_edge_invis", {duration = duration})
+		caster:AddNewModifier(caster, self, "modifier_item_imba_silver_edge_invis", {duration = duration})
 	end)
 end
 
@@ -70,18 +69,16 @@ function modifier_item_imba_silver_edge_invis:IsHidden() return false end
 function modifier_item_imba_silver_edge_invis:IsPurgable() return false end
 
 function modifier_item_imba_silver_edge_invis:OnCreated()
-	self.parent     =   self:GetParent()
-	local ability   =   self:GetAbility()
-
-	self.bonus_movespeed        =   ability:GetSpecialValueFor("invis_ms_pct")
-	self.bonus_attack_damage    =   ability:GetSpecialValueFor("invis_damage")
-
 	-- Start flying if has not taken damage recently
 	if IsServer() then
-		if not self.parent:FindModifierByName("modifier_item_imba_silver_edge_invis_flying_disabled") then
-			self.parent:SetMoveCapability(DOTA_UNIT_CAP_MOVE_FLY)
+		if not self:GetParent():FindModifierByName("modifier_item_imba_silver_edge_invis_flying_disabled") then
+			self:GetParent():SetMoveCapability(DOTA_UNIT_CAP_MOVE_FLY)
 		end
 	end
+
+	if self:GetAbility() == nil then return end
+	self.bonus_movespeed        =   self:GetAbility():GetSpecialValueFor("invis_ms_pct")
+	self.bonus_attack_damage    =   self:GetAbility():GetSpecialValueFor("invis_damage")
 end
 
 -- Damage and movespeed bonuses
@@ -124,7 +121,7 @@ end
 function modifier_item_imba_silver_edge_invis:OnAttackLanded(params)
 	if IsServer() then
 
-		if params.attacker == self.parent then
+		if params.attacker == self:GetParent() then
 
 			local ability 			=	self:GetAbility()
 			local attack_particle	=	"particles/item/silver_edge/imba_silver_edge.vpcf"
@@ -138,9 +135,9 @@ function modifier_item_imba_silver_edge_invis:OnAttackLanded(params)
 			local break_duration		= ability:GetSpecialValueFor("main_debuff_duration")
 
 			-- Teleport ranged attackers to make the affect go from the target's vector
-			if self.parent:IsRangedAttacker() then
+			if self:GetParent():IsRangedAttacker() then
 
-				initial_pos 	= self.parent:GetAbsOrigin()
+				initial_pos 	= self:GetParent():GetAbsOrigin()
 				local target_pos 	= params.target:GetAbsOrigin()
 
 				-- Offset is necessary, because cleave from Battlefury doesn't work (in any direction) if you are exactly on top of the target unit
@@ -156,14 +153,14 @@ function modifier_item_imba_silver_edge_invis:OnAttackLanded(params)
 				target_pos.x = target_pos.x - offset * distance_vector.x
 				target_pos.y = target_pos.y - offset * distance_vector.y
 
-				self.parent:SetAbsOrigin(target_pos)
+				self:GetParent():SetAbsOrigin(target_pos)
 
 				-- Give the dummy which direction to look at
-				local direction = (CalculateDirection(params.target, self.parent))
+				local direction = (CalculateDirection(params.target, self:GetParent()))
 
 				-- Create a particle for the cleave effect for ranged heroes
-				CreateModifierThinker(self.parent, ability, "modifier_item_imba_silver_edge_invis_attack_cleave_particle",
-					{duration =1, direction_x = direction.x, direction_y = direction.y, direction_z = direction.z}, target_pos, self.parent:GetTeamNumber(), false)
+				CreateModifierThinker(self:GetParent(), ability, "modifier_item_imba_silver_edge_invis_attack_cleave_particle",
+					{duration =1, direction_x = direction.x, direction_y = direction.y, direction_z = direction.z}, target_pos, self:GetParent():GetTeamNumber(), false)
 				--end
 			else
 				-- Do Cleave particle for melee heroes
@@ -176,9 +173,9 @@ function modifier_item_imba_silver_edge_invis:OnAttackLanded(params)
 			-- Find units hit by the cleave (amazing custom function from funcs.lua)
 
 
-			local enemies = FindUnitsInCone(self.parent:GetTeamNumber(),
-				CalculateDirection(params.target, self.parent),
-				self.parent:GetAbsOrigin(),
+			local enemies = FindUnitsInCone(self:GetParent():GetTeamNumber(),
+				CalculateDirection(params.target, self:GetParent()),
+				self:GetParent():GetAbsOrigin(),
 				cleave_radius_start,
 				cleave_radius_end,
 				cleave_distance,
@@ -191,7 +188,7 @@ function modifier_item_imba_silver_edge_invis:OnAttackLanded(params)
 
 			-- Damage each unit hit by the cleave and give them the panic modifier
 			for _,enemy in pairs(enemies) do
-				local damager = self.parent
+				local damager = self:GetParent()
 
 				local damageTable =({victim = enemy,
 					attacker = damager,
@@ -201,23 +198,23 @@ function modifier_item_imba_silver_edge_invis:OnAttackLanded(params)
 
 				ApplyDamage(damageTable)
 
-				enemy:AddNewModifier(self.parent, ability, "modifier_item_imba_silver_edge_invis_panic_debuff", {duration = panic_duration})
+				enemy:AddNewModifier(self:GetParent(), ability, "modifier_item_imba_silver_edge_invis_panic_debuff", {duration = panic_duration})
 			end
 
 			-- Give the main target a different, longer modifier
-			params.target:AddNewModifier(self.parent, ability, "modifier_item_imba_silver_edge_invis_break_debuff", {duration = break_duration})
+			params.target:AddNewModifier(self:GetParent(), ability, "modifier_item_imba_silver_edge_invis_break_debuff", {duration = break_duration})
 
 			-- Emit custom sound effect
-			self.parent:EmitSound("Imba.SilverEdgeInvisAttack")
+			self:GetParent():EmitSound("Imba.SilverEdgeInvisAttack")
 
 			-- Emit custom slash particle
-			local particle_fx = ParticleManager:CreateParticle(attack_particle, PATTACH_ABSORIGIN, self.parent)
+			local particle_fx = ParticleManager:CreateParticle(attack_particle, PATTACH_ABSORIGIN, self:GetParent())
 			ParticleManager:SetParticleControl(particle_fx, 0, params.target:GetAbsOrigin())
 			ParticleManager:ReleaseParticleIndex(particle_fx)
 
 			-- Teleport ranged attackers to make the affect go from the target's vector
-			if self.parent:IsRangedAttacker() then
-				self.parent:SetAbsOrigin(initial_pos)
+			if self:GetParent():IsRangedAttacker() then
+				self:GetParent():SetAbsOrigin(initial_pos)
 			end
 
 			-- Remove the invis on attack
@@ -239,7 +236,7 @@ end
 
 function modifier_item_imba_silver_edge_invis:OnDestroy()
 	if IsServer() then
-		if not self.parent:FindModifierByName("modifier_silver_edge_invis_flying_disabled") then
+		if not self:GetParent():FindModifierByName("modifier_silver_edge_invis_flying_disabled") then
 			-- Remove flying movement
 			self:GetParent():SetMoveCapability(DOTA_UNIT_CAP_MOVE_GROUND)
 			-- Destroy trees to not get stuck
@@ -318,22 +315,21 @@ function modifier_item_imba_silver_edge_invis_flying_disabled:IsPurgable() retur
 
 function modifier_item_imba_silver_edge_invis_flying_disabled:OnCreated()
 	if IsServer() then
-		self.parent =   self:GetParent()
 		-- flying disabled
-		self.parent:SetMoveCapability(DOTA_UNIT_CAP_MOVE_GROUND)
+		self:GetParent():SetMoveCapability(DOTA_UNIT_CAP_MOVE_GROUND)
 
 		-- Destroy trees to not get stuck
-		GridNav:DestroyTreesAroundPoint(self.parent:GetAbsOrigin(), 175, false)
+		GridNav:DestroyTreesAroundPoint(self:GetParent():GetAbsOrigin(), 175, false)
 		-- Find a clear space to stand on
-		self.parent:SetUnitOnClearGround()
+		self:GetParent():SetUnitOnClearGround()
 	end
 end
 
 function modifier_item_imba_silver_edge_invis_flying_disabled:OnDestroy()
 	if IsServer() then
 		-- flying enabled
-		if self.parent:FindModifierByName("modifier_item_imba_silver_edge_invis") then
-			self.parent:SetMoveCapability(DOTA_UNIT_CAP_MOVE_FLY)
+		if self:GetParent():FindModifierByName("modifier_item_imba_silver_edge_invis") then
+			self:GetParent():SetMoveCapability(DOTA_UNIT_CAP_MOVE_FLY)
 		end
 	end
 end

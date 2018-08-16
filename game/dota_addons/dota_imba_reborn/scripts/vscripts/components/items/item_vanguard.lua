@@ -74,10 +74,8 @@ function modifier_item_imba_poor_mans_shield:IsPermanent() return true end
 function modifier_item_imba_poor_mans_shield:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_poor_mans_shield:OnCreated()
-	self.ability = self:GetAbility()
-
-	self.damage_block = self.ability:GetSpecialValueFor("damage_block")
-	self.bonus_agi = self.ability:GetSpecialValueFor("bonus_agi")
+	self.damage_block = self:GetAbility():GetSpecialValueFor("damage_block")
+	self.bonus_agi = self:GetAbility():GetSpecialValueFor("bonus_agi")
 end
 
 -- Custom unique damage block property
@@ -121,10 +119,8 @@ function modifier_item_imba_vanguard:IsPermanent() return true end
 function modifier_item_imba_vanguard:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_vanguard:OnCreated()
-	self.ability = self:GetAbility()
-
-	self.health = self.ability:GetSpecialValueFor("health")
-	self.health_regen = self.ability:GetSpecialValueFor("health_regen")
+	self.health = self:GetAbility():GetSpecialValueFor("health")
+	self.health_regen = self:GetAbility():GetSpecialValueFor("health_regen")
 end
 
 -- Custom unique damage block property
@@ -206,14 +202,12 @@ function modifier_item_imba_crimson_guard:IsPermanent() return true end
 function modifier_item_imba_crimson_guard:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_crimson_guard:OnCreated()
-	self.ability = self:GetAbility()
-
-	self.damage_block = self.ability:GetSpecialValueFor("damage_block")
-	self.damage_reduction = self.ability:GetSpecialValueFor("damage_reduction")
-	self.health = self.ability:GetSpecialValueFor("health")
-	self.health_regen = self.ability:GetSpecialValueFor("health_regen")
-	self.armor = self.ability:GetSpecialValueFor("armor")
-	self.bonus_stats = self.ability:GetSpecialValueFor("bonus_stats")
+	self.damage_block = self:GetAbility():GetSpecialValueFor("damage_block")
+	self.damage_reduction = self:GetAbility():GetSpecialValueFor("damage_reduction")
+	self.health = self:GetAbility():GetSpecialValueFor("health")
+	self.health_regen = self:GetAbility():GetSpecialValueFor("health_regen")
+	self.armor = self:GetAbility():GetSpecialValueFor("armor")
+	self.bonus_stats = self:GetAbility():GetSpecialValueFor("bonus_stats")
 end
 
 
@@ -369,13 +363,11 @@ function modifier_item_imba_greatwyrm_plate:IsPermanent() return true end
 function modifier_item_imba_greatwyrm_plate:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_greatwyrm_plate:OnCreated()
-	self.ability = self:GetAbility()
-
-	self.health = self.ability:GetSpecialValueFor("health")
-	self.health_regen = self.ability:GetSpecialValueFor("health_regen")
-	self.armor = self.ability:GetSpecialValueFor("armor")
-	self.bonus_stats = self.ability:GetSpecialValueFor("bonus_stats")
-	self.bonus_strength = self.ability:GetSpecialValueFor("bonus_strength")
+	self.health = self:GetAbility():GetSpecialValueFor("health")
+	self.health_regen = self:GetAbility():GetSpecialValueFor("health_regen")
+	self.armor = self:GetAbility():GetSpecialValueFor("armor")
+	self.bonus_stats = self:GetAbility():GetSpecialValueFor("bonus_stats")
+	self.bonus_strength = self:GetAbility():GetSpecialValueFor("bonus_strength")
 end
 
 -- Custom unique damage block property

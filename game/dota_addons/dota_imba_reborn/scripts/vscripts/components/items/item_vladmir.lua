@@ -365,6 +365,7 @@ function modifier_item_imba_vladmir_blood_aura:GetTexture()
 
 -- Stores the aura's parameters to prevent errors when the item is unequipped
 function modifier_item_imba_vladmir_blood_aura:OnCreated(keys)
+	if self:GetAbility() == nil then return end
 	self.damage_aura = self:GetAbility():GetSpecialValueFor("damage_aura")
 	self.armor_aura = self:GetAbility():GetSpecialValueFor("armor_aura")
 	self.hp_regen_aura = self:GetAbility():GetSpecialValueFor("hp_regen_aura")

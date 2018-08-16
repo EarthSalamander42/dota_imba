@@ -41,7 +41,7 @@ function HeroSelection:Init()
 
 	for key,value in pairs(LoadKeyValues(herolistFile)) do
 		if KeyValues.HeroKV[key] == nil then -- Cookies: If the hero is not in custom file, load vanilla KV's
-			log.debug(key .. " is not in custom file!")
+--			log.debug(key .. " is not in custom file!")
 			local data = LoadKeyValues("scripts/npc/npc_heroes.txt")
 			if data and data[key] then
 				KeyValues.HeroKV[key] = data[key]
@@ -168,7 +168,7 @@ function HeroSelection:CMManager(event)
 			HeroSelection:CMTimer(CAPTAINS_MODE_PICK_BAN_TIME, "CAPTAINS MODE")
 		elseif cmpickorder["currentstage"] <= cmpickorder["totalstages"] then
 			--random if not selected
-			log.debug(event)
+--			log.debug(event)
 			if event.hero == "random" then
 				event.hero = HeroSelection:RandomHero()
 			elseif HeroSelection:IsHeroDisabled(event.hero) then
@@ -184,7 +184,7 @@ function HeroSelection:CMManager(event)
 				end
 			end
 
-			log.info('Got a CM pick ' .. cmpickorder["order"][cmpickorder["currentstage"]].side)
+--			log.info('Got a CM pick ' .. cmpickorder["order"][cmpickorder["currentstage"]].side)
 
 			Timers:RemoveTimer(cmtimer)
 
@@ -195,8 +195,8 @@ function HeroSelection:CMManager(event)
 			CustomNetTables:SetTableValue( 'hero_selection', 'CMdata', cmpickorder)
 			cmpickorder["currentstage"] = cmpickorder["currentstage"] + 1
 
-			log.info('--')
-			log.debug(event)
+--			log.info('--')
+--			log.debug(event)
 
 			if cmpickorder["currentstage"] <= cmpickorder["totalstages"] then
 				HeroSelection:CMTimer(CAPTAINS_MODE_PICK_BAN_TIME, "CAPTAINS MODE")
@@ -264,8 +264,8 @@ end
 
 -- become a captain, go to next stage, if both captains are selected
 function HeroSelection:CMBecomeCaptain (event)
-	log.debug("Selecting captain")
-	log.debug(event)
+--	log.debug("Selecting captain")
+--	log.debug(event)
 	if PlayerResource:GetTeam(event.PlayerID) == 2 then
 		cmpickorder["captainradiant"] = event.PlayerID
 		CustomNetTables:SetTableValue( 'hero_selection', 'CMdata', cmpickorder)
@@ -295,7 +295,6 @@ function HeroSelection:APTimer(time, message)
 			end
 
 			HeroSelection:SelectHero(key, selectedtable[key].selectedhero)
-			print("PAUSE GAME!")
 			PauseGame(true)
 		end
 
@@ -336,7 +335,6 @@ function HeroSelection:SelectHero(playerId, hero)
 		loadingHeroes = loadingHeroes - 1
 		if loadingHeroes == 0 then
 			LoadFinishEvent.broadcast()
-			print("UNPAUSE GAME!")
 			PauseGame(false)
 			ShowHUD(true)
 			if IsMutationMap() then
@@ -351,30 +349,30 @@ function HeroSelection:SelectHero(playerId, hero)
 				SendToServerConsole('dota_bot_populate')
 			end
 
-			Timers:CreateTimer(3.0, function()
-				for id = 0, PlayerResource:GetPlayerCount() - 1 do
-					for i = 1, 25 do
-						local top_imr_string = nil
-						if GetMapName() == MapRanked5v5() then
-							top_imr_string = "top_imr5v5"
-						elseif GetMapName() == MapRanked10v10() then
-							top_imr_string = "top_imr10v10"
-						end
+			if IsRankedMap() then
+				Timers:CreateTimer(3.0, function()
+					for id = 0, PlayerResource:GetPlayerCount() - 1 do
+						for i = 1, 25 do
+							local top_imr = nil
+							if GetMapName() == MapRanked5v5() then
+								top_imr = CustomNetTables:GetTableValue("top_imr5v5", tostring(i))
+							elseif GetMapName() == MapRanked10v10() then
+								top_imr = CustomNetTables:GetTableValue("top_imr10v10", tostring(i))
+							end
 
-						if top_imr_string then
-							local top_imr = CustomNetTables:GetTableValue("top_imr5v5", tostring(i))
-							if tostring(PlayerResource:GetSteamID(id)) == top_imr.SteamID64 and type == "number" then
-								print("Found a top leaderboard:", top_imr.IMR_10v10)
-								if GetMapName() == MapRanked5v5() then
-									Say(nil, PlayerResource:GetPlayerName(id).." is top "..i.." IMR! ("..math.floor(top_imr.IMR_5v5)..")", false)
-								elseif GetMapName() == MapRanked10v10() then
-									Say(nil, PlayerResource:GetPlayerName(id).." is top "..i.." IMR! ("..math.floor(top_imr.IMR_10v10)..")", false)
+							if top_imr then
+								if tostring(PlayerResource:GetSteamID(id)) == top_imr.SteamID64 then
+									if GetMapName() == MapRanked5v5() then
+										Say(nil, PlayerResource:GetPlayerName(id).." is top "..i.." IMR! ("..math.floor(top_imr.IMR_5v5)..")", false)
+									elseif GetMapName() == MapRanked10v10() then
+										Say(nil, PlayerResource:GetPlayerName(id).." is top "..i.." IMR! ("..math.floor(top_imr.IMR_10v10)..")", false)
+									end
 								end
 							end
 						end
 					end
-				end
-			end)
+				end)
+			end
 		end
 
 		local player = PlayerResource:GetPlayer(playerId)
@@ -384,7 +382,7 @@ function HeroSelection:SelectHero(playerId, hero)
 		end
 
 		self:GiveStartingHero(playerId, hero)
-		log.debug('Giving player ' .. playerId .. ' ' .. hero)
+--		log.debug('Giving player ' .. playerId .. ' ' .. hero)
 	end)
 end
 
@@ -459,8 +457,7 @@ function HeroSelection:GiveStartingHero(playerId, heroName, dev)
 	-- add modifier for custom mechanics handling
 	hero:AddNewModifier(hero, nil, "modifier_custom_mechanics", {})
 
-	-- set player colors (literally the same code i use in XHS, but it doesn't work in imba?)
-	print(playerId, PLAYER_COLORS[playerId])
+	-- set player colors (literally the same code i use in XHS, but it doesn't work in imba? in chat)
 	PlayerResource:SetCustomPlayerColor(playerId, PLAYER_COLORS[playerId][1], PLAYER_COLORS[playerId][2], PLAYER_COLORS[playerId][3])
 
 	-- Initialize innate hero abilities
@@ -546,7 +543,7 @@ function HeroSelection:UnsafeRandomHero()
 		if curstate == rndhero then
 			for k, v in pairs(hotdisabledlist) do
 				if k == name then
-					log.info("Hero disabled! Try again!")
+--					log.info("Hero disabled! Try again!")
 					return HeroSelection:UnsafeRandomHero()
 				end
 			end
@@ -579,7 +576,7 @@ end
 function HeroSelection:StrategyTimer(time)
 	if time < 0 then
 		if finishedLoading then
-			log.debug("PICK SCREEN IS OVER!")
+--			log.debug("PICK SCREEN IS OVER!")
 			PICKING_SCREEN_OVER = true
 			HeroSelection:EndStrategyTime()
 		else
@@ -630,12 +627,12 @@ function HeroSelection:UpdateTable(playerID, hero)
 	end
 
 	if selectedtable[playerID] and selectedtable[playerID].selectedhero == hero then
-		log.info('Player re-selected their hero again ' .. hero)
+--		log.info('Player re-selected their hero again ' .. hero)
 		return
 	end
 
 	if self:IsHeroChosen(hero) then
-		log.info('That hero is already disabled ' .. hero)
+--		log.info('That hero is already disabled ' .. hero)
 		hero = "empty"
 	end
 
@@ -649,7 +646,7 @@ function HeroSelection:UpdateTable(playerID, hero)
 				end
 			end
 			if not cmFound then
-				log.info('Couldnt find that hero in the CM pool ' .. tostring(hero))
+--				log.info('Couldnt find that hero in the CM pool ' .. tostring(hero))
 				hero = "empty"
 			end
 		end

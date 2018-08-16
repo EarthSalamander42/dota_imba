@@ -12,6 +12,7 @@ require('libraries/modifiers')
 require('libraries/notifications')
 require('libraries/player')
 require('libraries/player_resource')
+require('libraries/projectiles')
 require('libraries/rgb_to_hex')
 require('libraries/timers')
 

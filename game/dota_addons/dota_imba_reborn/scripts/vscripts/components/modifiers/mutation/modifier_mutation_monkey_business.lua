@@ -16,7 +16,6 @@ local model_list = {
 	-- Couriers
 	"models/items/courier/courier_mvp_redkita/courier_mvp_redkita.vmdl",
 	"models/items/courier/faceless_rex/faceless_rex_flying.vmdl",
-	"models/items/courier/hermit_crab/lotus_orb.vmdl",
 	"models/items/courier/kanyu_shark/kanyu_shark.vmdl",
 	"models/items/courier/mole_messenger/mole_messenger_lvl7.vmdl",
 	
@@ -41,7 +40,6 @@ local model_list = {
 	"models/props_gameplay/salve_blue.vmdl",
 	"models/props_gameplay/salve_red.vmdl",
 	"models/props_gameplay/smoke.vmdl",
-	"models/props_gameplay/tombstonea01.vmdl",
 	
 	-- Rapiers
 	"models/props_gameplay/divine_rapier.vmdl",

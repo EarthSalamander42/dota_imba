@@ -67,7 +67,6 @@ function imba_pudge_sharp_hook:OnInventoryContentsChanged()
 	if IsClient() then return end
 
 	if self:GetCaster():HasModifier("modifier_imba_hook_sharp_stack") then
-		print(self:GetCaster():FindModifierByName("modifier_imba_hook_sharp_stack"):GetStackCount() + self:GetCaster():FindModifierByName("modifier_imba_hook_light_stack"):GetStackCount(), UpdateHookStacks(self:GetCaster()) * 2)
 		if self:GetCaster():FindModifierByName("modifier_imba_hook_sharp_stack"):GetStackCount() + self:GetCaster():FindModifierByName("modifier_imba_hook_light_stack"):GetStackCount() ~= UpdateHookStacks(self:GetCaster()) * 2 then
 			self:GetCaster():FindModifierByName("modifier_imba_hook_sharp_stack"):SetStackCount(UpdateHookStacks(self:GetCaster()))
 		end
@@ -78,7 +77,6 @@ function imba_pudge_light_hook:OnInventoryContentsChanged()
 	if IsClient() then return end
 
 	if self:GetCaster():HasModifier("modifier_imba_hook_light_stack") then
-		print(self:GetCaster():FindModifierByName("modifier_imba_hook_sharp_stack"):GetStackCount() + self:GetCaster():FindModifierByName("modifier_imba_hook_light_stack"):GetStackCount(), UpdateHookStacks(self:GetCaster()) * 2)
 		if self:GetCaster():FindModifierByName("modifier_imba_hook_sharp_stack"):GetStackCount() + self:GetCaster():FindModifierByName("modifier_imba_hook_light_stack"):GetStackCount() ~= UpdateHookStacks(self:GetCaster()) * 2 then
 			self:GetCaster():FindModifierByName("modifier_imba_hook_light_stack"):SetStackCount(UpdateHookStacks(self:GetCaster()))
 		end
@@ -855,7 +853,7 @@ function imba_pudge_rot_active:OnCreated()
 		local caster = self:GetCaster()
 		local buff = caster:FindModifierByName("modifier_imba_flesh_heap_stacks")
 		self.radius = ability:GetSpecialValueFor("base_radius")
-		print("Rot radius:", self.radius)
+--		print("Rot radius:", self.radius)
 
 		if buff then
 			local stack_radius = ability:GetSpecialValueFor("stack_radius")
@@ -1004,7 +1002,6 @@ function modifier_imba_pudge_flesh_heap_handler:OnCreated()
 
 	if IsServer() then
 		self.max_stacks = self:GetAbility():GetSpecialValueFor("max_stacks")
-		print("Hook icon:", self:GetCaster().pudge_arcana)
 		if self:GetCaster().pudge_arcana == nil then
 			self:GetCaster().pudge_arcana = 0
 			self:SetStackCount(0)

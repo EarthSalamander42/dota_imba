@@ -64,7 +64,7 @@ function GameMode:ExperienceFilter( keys )
 	-- experience		130
 	-- player_id_const	0
 
-	local hero = PlayerResource:GetPlayer(keys.player_id_const):GetAssignedHero()
+	local hero = PlayerResource:GetSelectedHeroEntity(keys.player_id_const)
 
 	-- Ignore negative experience values
 	if keys.experience < 0 then
@@ -272,6 +272,7 @@ function GameMode:ItemAddedFilter( keys )
 		}
 		CustomGameEventManager:Send_ServerToAllClients("overthrow_item_drop", overthrow_item_drop)
 		EmitGlobalSound("powerup_04")
+		item.airdrop = nil
 	end
 
 	-------------------------------------------------------------------------------------------------
@@ -362,7 +363,6 @@ function GameMode:ItemAddedFilter( keys )
 	-------------------------------------------------------------------------------------------------
 
 	if unit:IsTempestDouble() then
-
 		-- List of items the clone can't carry
 		local clone_forbidden_items = {
 			"item_imba_rapier",
@@ -650,7 +650,6 @@ function GameMode:OrderFilter( keys )
 		end
 
 		if keys.order_type == DOTA_UNIT_ORDER_PURCHASE_ITEM then
-			local purchaser = EntIndexToHScript(units["0"])
 			local item = keys.entindex_ability
 			if item == nil then return true end
 
@@ -665,16 +664,28 @@ function GameMode:OrderFilter( keys )
 
 	if keys.order_type == DOTA_UNIT_ORDER_PICKUP_ITEM then
 		local unit = EntIndexToHScript(keys.units["0"])
+		if unit == nil then return false end
+		local drop = EntIndexToHScript(keys["entindex_target"])
+		local item
+		if drop ~= nil then
+			item = drop:GetContainedItem()
+		end
+		if item == nil then return false end
+
 		-- Make sure non-heroes cannot pick up runes and make them do nothing
-		if unit ~= nil and not unit:IsRealHero() then
-			local drop = EntIndexToHScript(keys["entindex_target"])
-			local item = drop:GetContainedItem()			
+		if not unit:IsRealHero() then
 			if string.find(item:GetAbilityName(), "imba_rune") ~= nil then
 				return false
 			end
 
+			if unit:IsCourier() then
+				if item.airdrop then
+					return false
+				end
+			end
+
 			return true
-		end
+		end		
 	end
 
 	return true

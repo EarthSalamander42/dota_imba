@@ -27,7 +27,6 @@ end
 function modifier_mutation_cold_feet:OnIntervalThink()
 	if IsServer() then
 		if (self.pos - self:GetParent():GetAbsOrigin()):Length() > self.break_distance then
-			print("Distance Break!")
 			self.cold_feet = false
 			self:GetParent():RemoveModifierByName("modifier_mutation_cold_feet")
 		end
