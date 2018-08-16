@@ -1,5 +1,6 @@
 #base heroes/wisp/hero.txt
 #base heroes/zeus/hero.txt
+#base heroes/silencer/hero.txt
 #base heroes/shadow_shaman/hero.txt
 
 "DOTAHeroes"
@@ -1612,34 +1613,6 @@
 		"Ability15"					"special_bonus_imba_nevermore_6"
 		"Ability16"					"special_bonus_imba_nevermore_7"
 		"Ability17"					"special_bonus_imba_nevermore_8"
-	}
-
-	//=================================================================================================================
-	// HERO: Silencer
-	//=================================================================================================================
-	"npc_dota_hero_silencer"
-	{
-		"override_hero"				"npc_dota_hero_silencer"		
-
-		//Picking Screen
-		"IsImba"					"1"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
-
-		"Ability1"					"imba_silencer_arcane_curse"
-		"Ability2"					"imba_silencer_glaives_of_wisdom"
-		"Ability3"					"imba_silencer_last_word"
-		"Ability4"					"imba_silencer_arcane_supremacy"
-		"Ability5"					"generic_hidden"
-		"Ability6"					"imba_silencer_global_silence"
-		
-		"Ability10"					"special_bonus_imba_silencer_1"
-		"Ability11"					"special_bonus_imba_silencer_2"
-		"Ability12"					"special_bonus_imba_silencer_3"
-		"Ability13"					"special_bonus_imba_silencer_6"
-		"Ability14"					"special_bonus_imba_silencer_5"
-		"Ability15"					"special_bonus_imba_silencer_4"
-		"Ability16"					"special_bonus_imba_silencer_7"
-		"Ability17"					"special_bonus_imba_silencer_8"
 	}
 
 	//=================================================================================================================
