@@ -64,7 +64,8 @@ function GameMode:ExperienceFilter( keys )
 	-- experience		130
 	-- player_id_const	0
 
-	local hero = PlayerResource:GetSelectedHeroEntity(keys.player_id_const)
+	local player = PlayerResource:GetPlayer(keys.player_id_const)
+	local hero = player:GetAssignedHero()
 
 	-- Ignore negative experience values
 	if keys.experience < 0 then
@@ -252,7 +253,9 @@ function GameMode:ItemAddedFilter( keys )
 	-- item_parent_entindex_const: -1
 	-- suggested_slot: -1
 	local unit = EntIndexToHScript(keys.inventory_parent_entindex_const)
+	if unit == nil then return end
 	local item = EntIndexToHScript(keys.item_entindex_const)
+	if item == nil then return end
 	if item:GetAbilityName() == "item_tpscroll" and item:GetPurchaser() == nil then return false end
 	local item_name = 0
 	if item:GetName() then
@@ -409,6 +412,7 @@ function GameMode:OrderFilter( keys )
 	else
 		return nil
 	end
+	if unit == nil then return end
 
 	-- Do special handlings if shift-casted only here! The event gets fired another time if the caster
 	-- is actually doing this order
@@ -474,6 +478,7 @@ function GameMode:OrderFilter( keys )
 	-- Riki Blink-Strike handler
 	------------------------------------------------------------------------------------
 	if keys.order_type == DOTA_UNIT_ORDER_CAST_TARGET then
+		if EntIndexToHScript(keys["entindex_ability"]) == nil then return end
 		local ability = EntIndexToHScript(keys["entindex_ability"])
 		if ability:GetAbilityName() == "imba_riki_blink_strike" then
 			ability.thinker = unit:AddNewModifier(unit, ability, "modifier_imba_blink_strike_thinker", {target = keys.entindex_target})

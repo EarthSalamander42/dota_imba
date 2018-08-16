@@ -205,7 +205,6 @@ function api.imba.complete(callback)
 				team = tonumber(PlayerResource:GetTeam(id)),
 				valid_player = PlayerResource:IsValidPlayer(id),
 				has_randomed = PlayerResource:HasRandomed(id),
-				has_repicked = false, -- PlayerResource:HasRepicked(id),
 				valid_team_player = PlayerResource:IsValidTeamPlayer(id),
 				id = id,
 				items = data.items,

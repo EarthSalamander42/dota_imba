@@ -75,7 +75,6 @@ end
 function modifier_imba_doom_bringer_doom:GetAuraEntityReject(target)
 	if IsServer() then
 		if self:GetParent() == target then
-			print("Remove caster bonus aura")
 			return true
 		end
 	end

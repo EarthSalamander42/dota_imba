@@ -75,10 +75,10 @@ function CDOTA_BaseNPC:HideWearables(number)
 
 	Timers:CreateTimer(3.0, function()
 		while model do
-			print("model count/classname:", i, model:GetClassname())
+--			print("model count/classname:", i, model:GetClassname())
 			if model:GetClassname() == "dota_item_wearable" then
---		if model:GetClassname() == "dota_item_wearable" and i == number then
-				print("Model has been hidden:", model:GetClassname())
+--			if model:GetClassname() == "dota_item_wearable" and i == number then
+--				print("Model has been hidden:", model:GetClassname())
 				model:AddEffects(EF_NODRAW) -- Set model hidden
 				table.insert(hero.hiddenWearables, model)
 			end

@@ -638,7 +638,7 @@ if IsServer() then
 		for _,wearable in pairs(wearables) do
             if wearable:GetClassname() == "dota_item_wearable" then
                 if wearable:GetModelName():match("tree") then
-                	print("Tree", (wearable:GetAbsOrigin() - caster:GetAbsOrigin()):Normalized(), wearable:GetAngles())
+--					print("Tree", (wearable:GetAbsOrigin() - caster:GetAbsOrigin()):Normalized(), wearable:GetAngles())
                 end
             end
 		end

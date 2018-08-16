@@ -669,13 +669,12 @@ function DisplayError(playerID, message)
 	end
 end
 
-
 -- TODO: FORMAT THIS SHIT
 function ReconnectPlayer(player_id)
 	if not player_id then player_id = 0 end
 	if player_id == "test_reconnect" then player_id = 0 end
 
-	print("Player is reconnecting:", player_id)
+--	print("Player is reconnecting:", player_id)
 
 	-- Reinitialize the player's pick screen panorama, if necessary
 	Timers:CreateTimer(1.0, function()
@@ -759,8 +758,8 @@ function ReconnectPlayer(player_id)
 	-- If this is a reconnect from abandonment due to a long disconnect, remove the abandon state
 	if PlayerResource:GetHasAbandonedDueToLongDisconnect(player_id) then
 		local player_name = PlayerResource:GetPlayerName(player_id)
-		local hero = PlayerResource:GetPickedHero(player_id)
-		local hero_name = PlayerResource:GetPickedHeroName(player_id)
+		local hero = PlayerResource:GetPlayer(player_id):GetAssignedHero()
+		local hero_name = PlayerResource:GetPlayer(player_id):GetAssignedHero():GetUnitName()
 		local line_duration = 7
 		Notifications:BottomToAll({hero = hero_name, duration = line_duration})
 		Notifications:BottomToAll({text = player_name.." ", duration = line_duration, continue = true})

@@ -1,17 +1,18 @@
-CDOTA_PlayerResource.PlayerData = {}
+local PlayerResource = CDOTA_PlayerResource
+PlayerResource.PlayerData = {}
 
 -- Initializes a player's data
-function CDOTA_PlayerResource:InitPlayerData(player_id)
+function PlayerResource:InitPlayerData(player_id)
 	self.PlayerData = {}
 	self.PlayerData[player_id] = {}
 	self.PlayerData[player_id]["current_deathstreak"] = 0
 	self.PlayerData[player_id]["has_abandoned_due_to_long_disconnect"] = false
 	self.PlayerData[player_id]["distribute_gold_to_allies"] = false
 	self.PlayerData[player_id]["has_repicked"] = false
-	log.debug("player data set up for player with ID "..player_id)
+--	log.debug("player data set up for player with ID "..player_id)
 end
 
-function CDOTA_PlayerResource:IsImbaPlayer(player_id)
+function PlayerResource:IsImbaPlayer(player_id)
 	if self.PlayerData[player_id] then
 		return true
 	else
@@ -20,15 +21,15 @@ function CDOTA_PlayerResource:IsImbaPlayer(player_id)
 end
 
 -- Set a player's abandonment due to long disconnect status
-function CDOTA_PlayerResource:SetHasAbandonedDueToLongDisconnect(player_id, state)
+function PlayerResource:SetHasAbandonedDueToLongDisconnect(player_id, state)
 	if self:IsImbaPlayer(player_id) then
 		self.PlayerData[player_id]["has_abandoned_due_to_long_disconnect"] = state
-		log.debug("Set player "..player_id.." 's abandon due to long disconnect state as "..tostring(state))
+--		log.debug("Set player "..player_id.." 's abandon due to long disconnect state as "..tostring(state))
 	end
 end
 
 -- Fetch a player's abandonment due to long disconnect status
-function CDOTA_PlayerResource:GetHasAbandonedDueToLongDisconnect(player_id)
+function PlayerResource:GetHasAbandonedDueToLongDisconnect(player_id)
 	if self:IsImbaPlayer(player_id) then
 		return self.PlayerData[player_id]["has_abandoned_due_to_long_disconnect"]
 	else
@@ -37,7 +38,7 @@ function CDOTA_PlayerResource:GetHasAbandonedDueToLongDisconnect(player_id)
 end
 
 -- While active, redistributes a player's gold to its allies
-function CDOTA_PlayerResource:StartAbandonGoldRedistribution(player_id)
+function PlayerResource:StartAbandonGoldRedistribution(player_id)
 
 	-- Set redistribution as active
 	self.PlayerData[player_id]["distribute_gold_to_allies"] = true
@@ -114,37 +115,37 @@ function CDOTA_PlayerResource:StartAbandonGoldRedistribution(player_id)
 end
 
 -- Stops a specific player from redistributing their gold to its allies
-function CDOTA_PlayerResource:StopAbandonGoldRedistribution(player_id)
+function PlayerResource:StopAbandonGoldRedistribution(player_id)
 	self.PlayerData[player_id]["distribute_gold_to_allies"] = false
 	self:ModifyGold(player_id, -self:GetGold(player_id), false, DOTA_ModifyGold_AbandonedRedistribute)
-	log.debug("player "..player_id.." is no longer redistributing gold to its allies.")
+--	log.debug("player "..player_id.." is no longer redistributing gold to its allies.")
 end
 
 -- Increase a player's current deathstreak count
-function CDOTA_PlayerResource:IncrementDeathstreak(player_id)
+function PlayerResource:IncrementDeathstreak(player_id)
 	if self:IsImbaPlayer(player_id) then
 		self.PlayerData[player_id]["current_deathstreak"] = self.PlayerData[player_id]["current_deathstreak"] + 1
-		log.debug("Current deathstreak for player "..player_id..": "..self.PlayerData[player_id]["current_deathstreak"])
+--		log.debug("Current deathstreak for player "..player_id..": "..self.PlayerData[player_id]["current_deathstreak"])
 	end
 end
 
 -- Reset a player's current deathstreak count
-function CDOTA_PlayerResource:ResetDeathstreak(player_id)
+function PlayerResource:ResetDeathstreak(player_id)
 	if self:IsImbaPlayer(player_id) then
 		self.PlayerData[player_id]["current_deathstreak"] = 0
-		log.debug("Current deathstreak for player "..player_id.." reset to zero.")
+--		log.debug("Current deathstreak for player "..player_id.." reset to zero.")
 	end
 end
 
 -- Fetch a player's current deathstreak count
-function CDOTA_PlayerResource:GetDeathstreak(player_id)
+function PlayerResource:GetDeathstreak(player_id)
 	if self:IsImbaPlayer(player_id) then
 		return self.PlayerData[player_id]["current_deathstreak"]
 	end
 	return nil
 end
 
-function CDOTA_PlayerResource:GetAllTeamPlayerIDs()
+function PlayerResource:GetAllTeamPlayerIDs()
 --	local player_id_table = {}
 
 --	for i = 0, self:GetPlayerCount() -1 do

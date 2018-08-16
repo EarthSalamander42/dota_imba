@@ -18,8 +18,8 @@ function GameMode:OnHeroDeath(killer, killed_unit)
 
 	-- #7 Talent Vengeful Spirit - Decreased respawn time & cost
 	if killed_unit:HasTalent("special_bonus_imba_vengefulspirit_7") then
-		buyback_cost = buyback_cost * (1 - (killed_unit:FindSpecificTalentValue("special_bonus_imba_vengefulspirit_7", "buyback_cost_pct") * 0.01))
-		buyback_cooldown = buyback_cooldown * (1 - (killed_unit:FindSpecificTalentValue("special_bonus_imba_vengefulspirit_7", "buyback_cooldown_pct") * 0.01))
+		buyback_cost = buyback_cost * (1 - (killed_unit:FindTalentValue("special_bonus_imba_vengefulspirit_7", "buyback_cost_pct") * 0.01))
+		buyback_cooldown = buyback_cooldown * (1 - (killed_unit:FindTalentValue("special_bonus_imba_vengefulspirit_7", "buyback_cooldown_pct") * 0.01))
 	end
 
 	-- Update buyback cost
@@ -40,7 +40,7 @@ function GameMode:OnHeroDeath(killer, killed_unit)
 	if killed_unit:IsImbaReincarnating() then
 		killed_unit:SetTimeUntilRespawn(IMBA_REINCARNATION_TIME)
 		return
-	elseif killed_unit:IsRealHero() and killed_unit:GetPlayerID() and (PlayerResource:IsImbaPlayer(killed_unit:GetPlayerID()) or (GameRules:IsCheatMode() == true)) then
+	else
 		-- Calculate base respawn timer, capped at 60 seconds
 		local hero_level = math.min(killed_unit:GetLevel(), #_G.HERO_RESPAWN_TIME_PER_LEVEL)
 		respawn_time = _G.HERO_RESPAWN_TIME_PER_LEVEL[hero_level]

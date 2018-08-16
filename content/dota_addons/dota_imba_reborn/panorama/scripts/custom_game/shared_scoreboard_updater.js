@@ -234,11 +234,11 @@ function _ScoreboardUpdater_UpdatePlayerPanel(scoreboardConfig, playersContainer
 
 		var playerColorBar = playerPanel.FindChildInLayoutFile("PlayerColorBar");
 		if (playerColorBar !== null) {
-			var PlyData = CustomNetTables.GetTableValue("player_table", playerId);
-			if (PlyData != undefined)
+			var PlyColors = CustomNetTables.GetTableValue("game_options", "player_colors");
+			if (PlyColors != undefined)
 			{
-				if (PlyData.ply_color != undefined)
-					playerColorBar.style.backgroundColor = PlyData.ply_color;
+				if (PlyColors[playerId] != undefined)
+					playerColorBar.style.backgroundColor = PlyColors[playerId];
 			}
 		}
 	}

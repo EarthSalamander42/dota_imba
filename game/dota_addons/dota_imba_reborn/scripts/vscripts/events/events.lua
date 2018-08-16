@@ -31,6 +31,14 @@ function GameMode:OnGameRulesStateChange(keys)
 		TeamSelection:InitializeTeamSelection()
 		GetPlayerInfoIXP() -- Add a class later
 		Imbattlepass:Init() -- Initialize Battle Pass
+
+		-- setup Player colors into hex for panorama
+		local hex_colors = {}
+		for i = 0, PlayerResource:GetPlayerCount() - 1 do
+			table.insert(hex_colors, i, rgbToHex(PLAYER_COLORS[i]))
+		end
+
+		CustomNetTables:SetTableValue("game_options", "player_colors", hex_colors)
 	elseif newState == DOTA_GAMERULES_STATE_HERO_SELECTION then
 		api.imba.event(api.events.entered_hero_selection)
 		HeroSelection:StartSelection()
@@ -60,6 +68,9 @@ function GameMode:OnGameRulesStateChange(keys)
 
 			-- Initialize IMBA Runes system
 			ImbaRunes:Init()
+
+			-- Setup topbar player colors
+			CustomGameEventManager:Send_ServerToAllClients("override_top_bar_colors", {})
 		end)
 	elseif newState == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
 		api.imba.event(api.events.started_game)
@@ -204,7 +215,7 @@ function GameMode:OnDisconnect(keys)
 		-- Fetch player's player and hero information
 		local player_id = keys.PlayerID
 		local player_name = keys.name
-		local hero = PlayerResource:GetSelectedHeroEntity(player_id)
+		local hero = PlayerResource:GetPlayer(player_id):GetAssignedHero()
 		local line_duration = 7
 
 		-- Start tracking
@@ -508,7 +519,7 @@ function GameMode:OnPlayerChat(keys)
 	if not (string.byte(text) == 45) then
 		return nil
 	end
-	local caster = PlayerResource:GetSelectedHeroEntity(keys.playerid)
+	local caster = PlayerResource:GetPlayer(keys.playerid):GetAssignedHero()
 
 	for str in string.gmatch(text, "%S+") do
 		if IsInToolsMode() or GameRules:IsCheatMode() or api.imba.is_developer(steamid) then
@@ -749,7 +760,7 @@ function GameMode:OnTeamKillCredit(keys)
 		PlayerResource:IncrementDeathstreak(victim_id)
 
 		-- Show Deathstreak message
-		local victim_hero_name = PlayerResource:GetSelectedHeroEntity(victim_id)
+		local victim_hero_name = PlayerResource:GetPlayer(victim_id):GetAssignedHero()
 		local victim_player_name = PlayerResource:GetPlayerName(victim_id)
 		local victim_death_streak = PlayerResource:GetDeathstreak(victim_id)
 		local line_duration = 7
@@ -786,7 +797,7 @@ function GameMode:OnTeamKillCredit(keys)
 
 	-- TODO: Format this into venge's hero file
 	-- Victim stack loss
-	local victim_hero = PlayerResource:GetSelectedHeroEntity(victim_id)
+	local victim_hero = PlayerResource:GetPlayer(victim_id):GetAssignedHero()
 	if victim_hero and victim_hero:HasModifier("modifier_imba_rancor") then
 		local current_stacks = victim_hero:GetModifierStackCount("modifier_imba_rancor", VENGEFUL_RANCOR_CASTER)
 		if current_stacks <= 2 then
@@ -821,7 +832,7 @@ function GameMode:OnTeamKillCredit(keys)
 
 	if victim_hero and PlayerResource:IsImbaPlayer(killer_id) then
 		local vengeance_aura_ability = victim_hero:FindAbilityByName("imba_vengeful_command_aura")
-		local killer_hero = PlayerResource:GetSelectedHeroEntity(killer_id)
+		local killer_hero = PlayerResource:GetPlayer(killer_id):GetAssignedHero()
 		if vengeance_aura_ability and vengeance_aura_ability:GetLevel() > 0 then
 			vengeance_aura_ability:ApplyDataDrivenModifier(victim_hero, killer_hero, "modifier_imba_command_aura_negative_aura", {})
 			victim_hero.vengeance_aura_target = killer_hero

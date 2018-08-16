@@ -65,6 +65,7 @@ function GameMode:OnAllPlayersLoaded()
 	GameRules:GetGameModeEntity():SetModifierGainedFilter( Dynamic_Wrap(GameMode, "ModifierFilter"), self )
 	GameRules:GetGameModeEntity():SetItemAddedToInventoryFilter( Dynamic_Wrap(GameMode, "ItemAddedFilter"), self )
 	GameRules:GetGameModeEntity():SetThink( "OnThink", self, 1 )
+	GameRules:GetGameModeEntity():SetPauseEnabled(false)
 end
 
 function GameMode:InitGameMode()
