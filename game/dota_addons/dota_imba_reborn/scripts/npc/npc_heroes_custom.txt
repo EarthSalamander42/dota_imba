@@ -744,11 +744,11 @@
 		"Ability10"					"special_bonus_imba_jakiro_1"
 		"Ability11"					"special_bonus_imba_jakiro_2"
 		"Ability12"					"special_bonus_imba_jakiro_3"
-		"Ability13"					"special_bonus_imba_jakiro_4"
-		"Ability14"					"special_bonus_imba_jakiro_5"
+		"Ability13"					"special_bonus_spell_amplify_12"
+		"Ability14"					"special_bonus_imba_jakiro_7"
 		"Ability15"					"special_bonus_imba_jakiro_6"
-		"Ability16"					"special_bonus_imba_jakiro_7"
-		"Ability17"					"special_bonus_imba_jakiro_8"
+		"Ability16"					"special_bonus_imba_jakiro_5"
+		"Ability17"					"special_bonus_imba_jakiro_9"
 	}
 
 	//=================================================================================================================
