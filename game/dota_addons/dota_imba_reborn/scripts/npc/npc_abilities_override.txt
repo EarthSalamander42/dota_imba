@@ -1894,7 +1894,7 @@
 	"arc_warden_flux"
 	{
 		"AbilityCastRange"				"500 700 900 1100"
-		"AbilityCooldown"				"18 16 14 12"
+		"AbilityCooldown"				"12"
 		"AbilityManaCost"				"75"
 
 		"AbilitySpecial"
@@ -1913,7 +1913,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"search_radius"			"200 190 180 170"
+				"search_radius"			"175"
 			}
 			"04"
 			{
@@ -1938,14 +1938,14 @@
 	//=================================================================================================================
 	"arc_warden_magnetic_field"
 	{
-		"AbilityCooldown"				"35 26 17 8"
+		"AbilityCooldown"				"20"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"275"
+				"radius"					"300"
 			}
 			"02"
 			{
@@ -1982,7 +1982,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"activation_delay"			"2.0"
+				"activation_delay"			"1.8"
 			}			
 			"03"
 			{
@@ -1997,7 +1997,7 @@
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"spark_damage"				"120 240 330 390"
+				"spark_damage"				"120 210 300 390"
 				"LinkedSpecialBonus"		"special_bonus_unique_arc_warden"
 			}
 			"06"
