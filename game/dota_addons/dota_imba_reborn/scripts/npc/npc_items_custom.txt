@@ -11693,7 +11693,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"									"2280"
 		"BaseClass"								"item_datadriven"
-		"Model"									"models/props_gameplay/rune_frost.vmdl"
+		"Model"									"models/props_gameplay/rune_ice_imba.vmdl"
 		"RuneDuration"							"45"
 
 		// Item Info

@@ -174,8 +174,9 @@
 
 #BattlepassButtons {
 	margin-top:  -40px;
+	margin-right:  10px;
 	margin-bottom: 15px;
-	width: 30%;
+	width: 50%;
 	flow-children: right;
 	align:  right top;
 }
@@ -654,7 +655,7 @@
 	/* color: #A3B5D0dd; */
 }
 #ComingSoonPanel, #TabTitlePanel {
-	width: 75%;
+	width: 50%;
 	height: 40px;
 	background-color: #39404855;
 	align: left top;
@@ -938,9 +939,11 @@
 }
 
 .BattlepassButton {
+	width: 190px;
 	height: 40px;
+	margin-left: 10px;
 	margin-bottom: 5px;
-	align:  right center;
+	align:  left center;
 	border-bottom: 1px solid #333333;
 	border-right: 1px solid #333333;
 	border-top: 1px solid #555555;

@@ -39,6 +39,7 @@ function DonatorStatue(ID, statue_unit)
 			filler:RemoveSelf()
 
 			local unit = CreateUnitByName(statue_unit, abs, true, nil, nil, PlayerResource:GetPlayer(ID):GetTeam())
+			if unit == nil then return end
 			unit:SetAbsOrigin(abs + Vector(0, 0, 45))
 			unit:AddNewModifier(unit, nil, "modifier_imba_donator_statue", {})
 			unit:AddNewModifier(unit, nil, "modifier_invulnerable", {})

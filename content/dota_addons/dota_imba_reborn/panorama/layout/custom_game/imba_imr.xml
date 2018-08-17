@@ -33,14 +33,12 @@
 					<Panel class="GameModeLabelPanel">
 						<Label class="ImbaGameInfoLabel" text="#imba_gamemode_settings_gold_multiplier" />
 						<Label class="ImbaGameInfoLabel" text="#imba_gamemode_settings_exp_multiplier" />
-						<Label class="ImbaGameInfoLabel" text="#imba_gamemode_settings_tower_power_title" />
 						<Label class="ImbaGameInfoLabel" text="#imba_gamemode_settings_max_level" />
 					</Panel>
 
 					<Panel class="GameModeValuePanel">
 						<Label id="BountyMultiplierValue" class="ImbaGameInfoLabel" text="0%" />
 						<Label id="ExpMultiplierValue" class="ImbaGameInfoLabel" text="0%" />
-						<Label id="TowerPowerValue" class="ImbaGameInfoLabel" text="0" />
 						<Label id="MaxLevelValue" class="ImbaGameInfoLabel" text="0" />
 					</Panel>
 
@@ -102,10 +100,6 @@
 						<Panel id="RefreshBattlepass" onactivate="RefreshBattlepass();"/>
 						<Label id="RefreshLabel" text="#battlepass_refresh"/>
 					</Button>
-<!--
-					<Button class="BattlepassButton" onactivate="ToggleCompanion();">
-						<Label id="ToggleCompanionLabel" text="#toggle_companion"/>
-					</Button> -->
 				</Panel>				
 				<!-- JS Inserts records here -->
 			</Panel>
@@ -121,9 +115,10 @@
 						<Label id="RefreshLabel" text="#battlepass_refresh"/>
 					</Button>
 <!--
-					<Button class="BattlepassButton" onactivate="ToggleCompanion();">
+					<DOTASettingsCheckbox class="BattlepassButton" onactivate="ToggleCompanion();">
 						<Label id="ToggleCompanionLabel" text="#toggle_companion"/>
-					</Button> -->
+					</DOTASettingsCheckbox>
+-->
 				</Panel>
 <!--
 				<Panel id="DonatorOptions" hittest="false">
@@ -132,7 +127,7 @@
 					</Button>
 				</Panel>
 -->
-				<Button id="CompanionNotification" onactivate="DOTADisplayURL('https://www.patreon.com/xherosiege');">
+				<Button id="CompanionNotification" onactivate="DOTADisplayURL('https://www.patreon.com/earthsalamander42');">
 					<Label id="CompanionNotificationLabel"/>
 				</Button>
 	

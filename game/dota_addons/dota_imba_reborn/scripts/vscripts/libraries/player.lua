@@ -5,16 +5,44 @@ function CDOTA_BaseNPC:CreateIllusion(duration, inc, out, pos, mod, ab)
 		pos = pos + RandomVector(100)
 	end
 
+	local player = self:GetPlayerOwner()
 	local illusion = CreateUnitByName(self:GetUnitName(), pos, true, self, nil, self:GetTeamNumber())
 	illusion:SetHealth(self:GetHealth())
 	illusion:SetMana(self:GetMana())
+	illusion:SetForwardVector(self:GetForwardVector())
 	illusion:AddNewModifier(self, nil, "modifier_illusion", {duration = duration, outgoing_damage = out, incoming_damage = inc})
 	illusion:MakeIllusion()
 	illusion:SetControllableByPlayer(self:GetPlayerID(), true)
+	illusion:SetOwner(self)
 	FindClearSpaceForUnit(illusion, illusion:GetAbsOrigin(), true)
 
-	for i = 1, self:GetLevel() do
-		illusion:HeroLevelUp(false)
+	if self:IsRealHero() then
+		illusion:SetPlayerID(player:GetPlayerID())
+		illusion:SetOwner(player)
+		--local targetLevel = self:GetLevel()
+		--for i=1,targetLevel-1 do
+		--	illusion:HeroLevelUp(false)
+		--end
+		illusion:SetAbilityPoints(0)
+	end
+
+	for abilitySlot=0,15 do
+		local ability = self:GetAbilityByIndex(abilitySlot)
+		if ability ~= nil then 
+			local abilityLevel = ability:GetLevel()
+			local abilityName = ability:GetAbilityName()
+			local illusionAbility = illusion:FindAbilityByName(abilityName)
+			illusionAbility:SetLevel(abilityLevel)
+		end
+	end
+
+	for itemSlot=0,8 do
+		local item = self:GetItemInSlot(itemSlot)
+		if item ~= nil then
+			local itemName = item:GetName()
+			local newItem = CreateItem(itemName, illusion, illusion)
+			illusion:AddItem(newItem)
+		end
 	end
 
 	if mod then

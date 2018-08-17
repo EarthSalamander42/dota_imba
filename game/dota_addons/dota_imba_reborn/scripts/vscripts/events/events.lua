@@ -45,6 +45,9 @@ function GameMode:OnGameRulesStateChange(keys)
 	elseif newState == DOTA_GAMERULES_STATE_PRE_GAME then
 		api.imba.event(api.events.entered_pre_game)
 
+		CustomNetTables:SetTableValue("game_options", "donators", api.imba.get_donators())
+		CustomNetTables:SetTableValue("game_options", "developers", api.imba.get_developers())
+
 		-- Create a timer to avoid lag spike entering pick screen
 		Timers:CreateTimer(3.0, function()
 			COURIER_TEAM = {}
@@ -547,10 +550,10 @@ function GameMode:OnPlayerChat(keys)
 			end
 		end
 
-		if str == "-gg" then
-			log.info("Player has GG!")
-			CustomGameEventManager:Send_ServerToPlayer(caster:GetPlayerOwner(), "gg_init_by_local", {})
-		end
+--		if str == "-gg" then
+--			log.info("Player has GG!")
+--			CustomGameEventManager:Send_ServerToPlayer(caster:GetPlayerOwner(), "gg_init_by_local", {})
+--		end
 	end
 end
 

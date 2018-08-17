@@ -155,6 +155,7 @@
 "companion_success"				"Companion changed with: "
 "companion_error"				"Oops! Something went wrong."
 "companion_not_donator"			"This feature is only for Patreon donators. Click here to pledge!"
+"toggle_companion"				"Toggle Companion"
 
 "statue_success"				"Statue changed with: "
 

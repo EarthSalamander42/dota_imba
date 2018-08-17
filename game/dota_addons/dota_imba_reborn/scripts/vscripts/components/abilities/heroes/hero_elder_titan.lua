@@ -15,6 +15,13 @@
 -- Editors:
 --     EarthSalamander #42, 03.12.2017
 
+local function FindNearestPointFromLine(caster, dir, affected)
+	local castertoaffected = affected - caster
+	local len = castertoaffected:Dot(dir)
+	local ntgt = Vector(dir.x * len, dir.y * len, caster.z)
+	return caster + ntgt
+end
+
 -- Echo Stomp
 imba_elder_titan_echo_stomp = class({})
 

@@ -21,6 +21,12 @@
 LinkLuaModifier("modifier_imba_enfeeble_debuff", "components/abilities/heroes/hero_bane", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_enfeeble_debuff_vision_handler", "components/abilities/heroes/hero_bane", LUA_MODIFIER_MOTION_NONE)
 
+local function findtarget(source) -- simple list return function for finding a players current target entity
+	local t = source:GetCursorTarget()
+	local c = source:GetCaster()
+	if t and c then return t,c end
+end
+
 -- Main enfeeble casting
 imba_bane_enfeeble = imba_bane_enfeeble or class({})
 

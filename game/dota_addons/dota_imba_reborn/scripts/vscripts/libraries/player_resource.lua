@@ -52,10 +52,9 @@ function PlayerResource:StartAbandonGoldRedistribution(player_id)
 	local custom_gold_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "bounty_multiplier")["1"])
 	local gold_per_interval = 3 * (custom_gold_bonus / 100 ) / GOLD_TICK_TIME[GetMapName()]
 
-	local playerCount = PlayerResource:GetPlayerCount()
-	if playerCount ~= nil then 
+	if self:GetPlayerCount() ~= nil then 
 		-- Distribute initial gold
-		for id = 0, playerCount -1 do
+		for id = 0, self:GetPlayerCount() -1 do
 			if self:IsImbaPlayer(id) and (not self.PlayerData[id]["distribute_gold_to_allies"]) and self:GetTeam(id) == player_team then
 				current_allies[#current_allies + 1] = id
 			end

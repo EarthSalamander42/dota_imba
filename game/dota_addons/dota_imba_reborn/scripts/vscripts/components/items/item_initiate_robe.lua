@@ -68,7 +68,7 @@ function InitiateRobeThink( keys )
 		local current_stacks = caster:GetModifierStackCount(modifier_stacks, caster)
 
 		-- Add the appropriate amount of shield stacks
-		AddStacks(ability, caster, caster, modifier_stacks, math.min(stacks_to_gain, max_stacks - current_stacks), true)
+		caster:SetModifierStackCount(modifier_stacks, caster, math.min(stacks_to_gain, max_stacks - current_stacks))
 
 		-- Play the mana shield particle
 		local shield_pfx = ParticleManager:CreateParticle(particle_shield, PATTACH_ABSORIGIN_FOLLOW, caster)
