@@ -340,7 +340,7 @@ function imba_zuus_lightning_bolt:CastLightningBolt(caster, ability, target, tar
 			-- Apply Thundergods Focus and update stacks
 			local thundergods_focus_modifier = caster:AddNewModifier(caster, self, "modifier_imba_zuus_thundergods_focus", {duration = 10.0})
 			thundergods_focus_modifier:SetStackCount(thundergods_focus_modifier:GetStackCount() + 1)	
-		elseif target ~= nil then
+		elseif target ~= nil and target:GetTeam() ~= caster:GetTeam() then
 			if not target:IsAncient() then 
 				local static_charge_modifier = target:AddNewModifier(caster, self, "modifier_imba_zuus_static_charge", {duration = 5.0})
 				if static_charge_modifier ~= nil then 
@@ -505,7 +505,7 @@ end
 function modifier_imba_zuus_static_field:OnAbilityExecuted(keys)
 	if IsServer() then
 		local caster = self:GetCaster()		
-		if keys.unit == caster then 
+		if keys.unit == caster and not keys.ability:IsItem() then 
 			local ability 			 = self:GetAbility()
 			local radius 			 = ability:GetSpecialValueFor("radius")
 			local damage_health_pct  = ability:GetSpecialValueFor("damage_health_pct")
