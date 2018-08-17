@@ -45,6 +45,11 @@ function GameMode:OnHeroDeath(killer, killed_unit)
 		local hero_level = math.min(killed_unit:GetLevel(), #_G.HERO_RESPAWN_TIME_PER_LEVEL)
 		respawn_time = _G.HERO_RESPAWN_TIME_PER_LEVEL[hero_level]
 
+		-- Adjust respawn time for Wraith King's Reincarnation Passive Respawn Reduction
+		if killed_unit:HasModifier("modifier_imba_reincarnation") then
+			respawn_time = respawn_time - killed_unit:FindModifierByName("modifier_imba_reincarnation").passive_respawn_haste
+		end
+		
 		-- Fetch decreased respawn timer due to Bloodstone charges
 		if killed_unit.bloodstone_respawn_reduction and (respawn_time > 0) then
 			respawn_time = math.max( respawn_time - killed_unit.bloodstone_respawn_reduction, 1)
@@ -63,7 +68,7 @@ function GameMode:OnHeroDeath(killer, killed_unit)
 			killed_unit:SetTimeUntilRespawn(respawn_time)
 			return
 		end
-
+		
 		log.info("Set time until respawn for unit " .. tostring(killed_unit:GetUnitName()) .. " to " .. tostring(respawn_time) .. " seconds")
 		killed_unit:SetTimeUntilRespawn(math.min(respawn_time, 60))
 		return

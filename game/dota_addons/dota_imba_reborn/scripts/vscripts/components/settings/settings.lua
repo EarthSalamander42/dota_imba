@@ -400,7 +400,7 @@ IMBA_INVISIBLE_MODIFIERS = {
 }
 
 IMBA_REINCARNATION_MODIFIERS = {
-	"modifier_imba_reincarnation",
+--	"modifier_imba_reincarnation",
 	"modifier_item_imba_aegis",
 }
 
