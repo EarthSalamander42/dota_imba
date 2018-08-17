@@ -828,8 +828,8 @@ function modifier_imba_mortal_strike:OnAttackLanded(keys)
 					end
 				end
 			end
-
-			if not target:IsHero() then
+			-- Make sure Wraith King can't do this: https://gfycat.com/gifs/detail/HealthyHighlevelKusimanse
+			if target:IsCreep() and not target:IsAncient() then
 				local damageTable = {
 					victim = target,
 					attacker = attacker,
@@ -1602,7 +1602,8 @@ function modifier_imba_kingdom_come_slow:OnCreated()
 	self.parent = self:GetParent()
 	self.particle_slow = "particles/units/heroes/hero_skeletonking/wraith_king_reincarnate_slow_debuff.vpcf"
 	self.modifier_stun = "modifier_imba_kingdom_come_stun"
-
+	self.position = self:GetCaster():GetAbsOrigin()
+	
 	-- Ability specials
 	self.ms_slow_pct = self.ability:GetSpecialValueFor("ms_slow_pct")
 	self.as_slow = self.ability:GetSpecialValueFor("as_slow")
@@ -1639,7 +1640,7 @@ end
 function modifier_imba_kingdom_come_slow:OnDestroy()    
 	if IsServer() then
 		-- Check the distance, see if it's still inside the ring AoE        
-		local distance = (self.caster:GetAbsOrigin() - self.parent:GetAbsOrigin()):Length2D()
+		local distance = (self.position - self.parent:GetAbsOrigin()):Length2D()
 
 		-- if the parent is too far, do nothing
 		if distance > self.radius then
