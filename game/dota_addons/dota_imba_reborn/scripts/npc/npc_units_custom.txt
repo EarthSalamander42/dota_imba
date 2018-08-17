@@ -13301,7 +13301,7 @@
 //		"Ability5"					"imba_roshan_diretide_summon_roshlings"
 		"Ability6"					"roshan_berserkers_blood"
 		"Ability7"					"roshan_spell_block"
-		"Ability8"					"roshan_true_sight"
+//		"Ability8"					"roshan_true_sight"
 		"Ability9"					"imba_roshan_ai_diretide"
 		"Ability10"					"special_bonus_unique_invoker_2"
 
