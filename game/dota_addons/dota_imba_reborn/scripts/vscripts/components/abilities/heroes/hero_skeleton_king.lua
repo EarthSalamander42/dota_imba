@@ -1,6 +1,35 @@
 -- Author: Shush
 -- Date: 30/04/2017
 
+-- Setting the two behavior changing talents to call for behavior again so the update works properly
+LinkLuaModifier("modifier_special_bonus_imba_skeleton_king_2", "components/abilities/heroes/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_skeleton_king_5", "components/abilities/heroes/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_skeleton_king_2 = class({})
+modifier_special_bonus_imba_skeleton_king_5 = class({})
+
+function modifier_special_bonus_imba_skeleton_king_2:IsHidden() 		return true end
+function modifier_special_bonus_imba_skeleton_king_2:IsPurgable() 		return false end
+function modifier_special_bonus_imba_skeleton_king_2:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_skeleton_king_5:IsHidden() 		return true end
+function modifier_special_bonus_imba_skeleton_king_5:IsPurgable() 		return false end
+function modifier_special_bonus_imba_skeleton_king_5:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_skeleton_king_2:OnCreated()
+	if not IsServer() then return end
+	if self:GetParent():FindAbilityByName("imba_wraith_king_kingdom_come") then
+		self:GetParent():FindAbilityByName("imba_wraith_king_kingdom_come"):GetBehavior()
+	end
+end
+
+function modifier_special_bonus_imba_skeleton_king_5:OnCreated()
+	if not IsServer() then return end
+	if self:GetParent():FindAbilityByName("imba_wraith_king_reincarnation") then
+		self:GetParent():FindAbilityByName("imba_wraith_king_reincarnation"):GetBehavior()
+	end
+end
+
 --------------------------------
 --      WRAITHFIRE BLAST      --
 --------------------------------
