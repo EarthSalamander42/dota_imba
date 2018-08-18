@@ -278,6 +278,7 @@ function Mutation:OnGameRulesStateChange(keys)
 			local random_int
 			local counter = 0 -- Used to alternate between negative and positive spellcasts, and increments after each timer call
 			local varSwap -- Switches between 1 and 2 based on counter for negative and positive spellcasts
+			local caster
 
 			Timers:CreateTimer(55.0, function()
 				varSwap = (counter % 2) + 1
@@ -296,6 +297,8 @@ function Mutation:OnGameRulesStateChange(keys)
 				for _, hero in pairs(HeroList:GetAllHeroes()) do
 					if (hero:GetTeamNumber() == 3 and IMBA_MUTATION_PERIODIC_SPELLS[varSwap][random_int][3] == "Red") or (hero:GetTeamNumber() == 2 and IMBA_MUTATION_PERIODIC_SPELLS[varSwap][random_int][3] == "Green") then
 						caster = good_fountain
+					else
+					    caster = bad_fountain
 					end
 
 					hero:AddNewModifier(caster, caster, "modifier_mutation_"..IMBA_MUTATION_PERIODIC_SPELLS[varSwap][random_int][1], {duration=IMBA_MUTATION_PERIODIC_SPELLS[varSwap][random_int][4]})

@@ -8,7 +8,8 @@
 modifier_mutation_aphotic_shield = class({})
 
 -- Add proper buff icon on toolbar
-function modifier_mutation_aphotic_shield:GetTexture() return "abaddon_aphotic_shield" end
+function modifier_mutation_aphotic_shield:GetTexture()  return "abaddon_aphotic_shield" end
+function modifier_mutation_aphotic_shield:IsDebuff() 	return false end
 
 -- Add particle effects to heroes affected (not needed?)
 --[[
