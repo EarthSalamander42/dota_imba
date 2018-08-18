@@ -194,6 +194,12 @@ LinkLuaModifier("modifier_imba_zuus_lightning_dummy", "components/abilities/hero
 
 imba_zuus_lightning_bolt = class({})
 
+function imba_zuus_lightning_bolt:OnAbilityPhaseStart()
+	self:GetCaster():EmitSound("Hero_Zuus.LightningBolt.Cast")
+
+	return true
+end
+
 function imba_zuus_lightning_bolt:CastFilterResultTarget( target )
 	if IsServer() then
 		if target ~= nil and target:IsMagicImmune() and ( not self:GetCaster():HasModifier("modifier_imba_zuus_pierce_spellimmunity") ) then
@@ -376,7 +382,7 @@ function imba_zuus_lightning_bolt:CastLightningBolt(caster, ability, target, tar
 		end
 
 		if pierce_spellimmunity == true then
-			local thundergods_focus_modifier = self:GetCaster():FindModifierByName("modifier_imba_zuus_thundergods_focus")
+			local thundergods_focus_modifier = caster:FindModifierByName("modifier_imba_zuus_thundergods_focus")
 			thundergods_focus_modifier:SetStackCount(thundergods_focus_modifier:GetStackCount() - 3)
 		end
 	end
