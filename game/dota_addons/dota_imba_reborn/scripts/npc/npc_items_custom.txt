@@ -8094,10 +8094,11 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2159"
-		"BaseClass"						"item_datadriven"
+		"BaseClass"						"item_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"			"custom/imba_initiate_robe"
 		"FightRecapLevel"				"1"
+		"ScriptFile"					"components/items/item_initiate_robe.lua"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -8136,79 +8137,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"max_stacks"			"250"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_item_imba_initiate_robe"
-			{
-				"Passive"				"1"
-				"IsHidden"				"1"
-				"IsPurgable"			"0"
-				"IsBuff"				"1"
-
-				"Attributes" 			"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"		"%magic_resist"
-					"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"				"1.0"		// this is hardcoded due to an obscure engine bug
-				}
-			}
-
-			"modifier_item_imba_initiate_robe_unique"
-			{
-				"Passive"				"1"
-				"IsHidden"				"1"
-				"IsPurgable"			"0"
-				"IsBuff"				"1"
-
-				"ThinkInterval"			"0.03"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"components/items/item_initiate_robe.lua"
-						"Function"			"InitiateRobeThink"
-
-						"modifier_stacks"	"modifier_item_imba_initiate_robe_stacks"
-						"particle_shield"	"particles/item/initiate_robe/initiate_robe_shield.vpcf"
-					}
-				}
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"internal/util.lua"
-						"Function"			"IllusionPassiveRemover"
-
-						"modifier"			"modifier_item_imba_initiate_robe_unique"
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"components/items/item_initiate_robe.lua"
-						"Function"			"InitiateRobeEnd"
-
-						"modifier_stacks"	"modifier_item_imba_initiate_robe_stacks"
-					}
-				}
-			}
-
-			"modifier_item_imba_initiate_robe_stacks"
-			{
-				"Passive"				"0"
-				"IsHidden"				"0"
-				"IsPurgable"			"0"
-				"IsBuff"				"1"
-
-				"TextureName"			"custom/imba_initiate_robe"
 			}
 		}
 	}
