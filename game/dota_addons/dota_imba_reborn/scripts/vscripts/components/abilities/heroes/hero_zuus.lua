@@ -1262,7 +1262,7 @@ end
 
 LinkLuaModifier("modifier_imba_zuus_pierce_spellimmunity", "components/abilities/heroes/hero_zuus.lua", LUA_MODIFIER_MOTION_NONE)
 modifier_imba_zuus_pierce_spellimmunity = class({})
-function modifier_imba_zuus_pierce_spellimmunity:IsHidden() return false end
+function modifier_imba_zuus_pierce_spellimmunity:IsHidden() return true end
 
 --------------------------------------------------------------
 --				Thundergods Awakening Modifier  			--
