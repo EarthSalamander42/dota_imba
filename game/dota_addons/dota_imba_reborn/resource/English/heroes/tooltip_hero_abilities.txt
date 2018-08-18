@@ -1551,13 +1551,14 @@
 // Lion's Custom Talents
 ////===============================================================================================================
 
-"DOTA_Tooltip_ability_special_bonus_imba_lion_1"            	"Earth Spikes branches off creeps as well"
-"DOTA_Tooltip_ability_special_bonus_imba_lion_2"            	"Hexed targets have Break applied"
-"DOTA_Tooltip_ability_special_bonus_imba_lion_3"            	"Mana Drain Overcharge"
-"DOTA_Tooltip_ability_special_bonus_imba_lion_4"            	"Mana Drain slows target based on missing mana"
-"DOTA_Tooltip_ability_special_bonus_imba_lion_5"            	"FoD refresh if last-hit hero"
-"DOTA_Tooltip_ability_special_bonus_imba_lion_6"            	"Chain Hex spreads to two enemies simultaneously"
-"DOTA_Tooltip_ability_special_bonus_imba_lion_7"            	"Death Spike debuff"
+"DOTA_Tooltip_ability_special_bonus_imba_lion_1"                "Earth Spikes branches off creeps as well"
+"DOTA_Tooltip_ability_special_bonus_imba_lion_2"                "Hexed targets have Break applied"
+"DOTA_Tooltip_ability_special_bonus_imba_lion_3"                "Mana Drain Overcharge"
+"DOTA_Tooltip_ability_special_bonus_imba_lion_3_Description"    "Any mana absorbed beyond full feeds into a separate pool for %duration% seconds, adding to Finger of Death's damage."
+"DOTA_Tooltip_ability_special_bonus_imba_lion_4"                "Mana Drain slows target based on missing mana"
+"DOTA_Tooltip_ability_special_bonus_imba_lion_5"                "FoD's Trigger Finger no longer requires kills"
+"DOTA_Tooltip_ability_special_bonus_imba_lion_6"                "Chain Hex spreads to two enemies simultaneously"
+"DOTA_Tooltip_ability_special_bonus_imba_lion_7"                "Death Spike debuff"
 "DOTA_Tooltip_ability_special_bonus_imba_lion_7_Description"  	"Earth Spike slows targets by 25% and increases damage taken from Finger of Death by 30% for 3 seconds."
 "DOTA_Tooltip_ability_special_bonus_imba_lion_8"            	"Mana Drain targets all enemies in aura range"
 
@@ -4138,7 +4139,7 @@
 ////===============================================================================================================
 
 "DOTA_Tooltip_ability_imba_wraith_king_mortal_strike"                  "Mortal Strike"
-"DOTA_Tooltip_ability_imba_wraith_king_mortal_strike_Description"                   "The King's strikes have a chance to crit, increasing damage signifcantly. Deals higher damage to creeps.\n<font color='#FF7800'>Behold Your King:</font> Whenever a critical strike occurs, Wraith King gains bonus health based on damage dealt to the enemy. Bonus health stacks infinitely, but each stack has its own duration. Critting a hero multiplies the stacks gained."
+"DOTA_Tooltip_ability_imba_wraith_king_mortal_strike_Description"		"The King's strikes have a chance to crit, increasing damage signifcantly. Deals higher damage to creeps.\n<font color='#FF7800'>Behold Your King:</font> Whenever a critical strike occurs, Wraith King gains bonus health based on damage dealt to the enemy. Bonus health stacks infinitely, but each stack has its own duration. Critting a hero multiplies the stacks gained.\n<font color='#FF7800'>Guillotine:</font> Instantly kills non-ancient creeps on critical strike, dealing their health as pure damage."
 "DOTA_Tooltip_ability_imba_wraith_king_mortal_strike_Note0"            "Each stack represents 10 health, and it is also rounded up when calculating stacks."
 "DOTA_Tooltip_ability_imba_wraith_king_mortal_strike_Lore"              "One blow to crush a foe."
 "DOTA_Tooltip_ability_imba_wraith_king_mortal_strike_crit_chance"                   "%CRIT CHANCE:"
