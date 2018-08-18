@@ -362,6 +362,7 @@ function imba_zuus_lightning_bolt:CastLightningBolt(caster, ability, target, tar
 						root_duration = 0.5 + (thundergod_focus_modifier:GetStackCount() * 0.25)
 					end
 
+					print("Root duration:", root_duration)
 					target:AddNewModifier(caster, ability, "modifier_rooted", {duration = root_duration})
 				end
 			end
@@ -379,11 +380,11 @@ function imba_zuus_lightning_bolt:CastLightningBolt(caster, ability, target, tar
 			end
 
 			ApplyDamage(damage_table)
-		end
 
-		if pierce_spellimmunity == true then
-			local thundergods_focus_modifier = caster:FindModifierByName("modifier_imba_zuus_thundergods_focus")
-			thundergods_focus_modifier:SetStackCount(thundergods_focus_modifier:GetStackCount() - 3)
+			if pierce_spellimmunity == true then
+				local thundergods_focus_modifier = caster:FindModifierByName("modifier_imba_zuus_thundergods_focus")
+				thundergods_focus_modifier:SetStackCount(thundergods_focus_modifier:GetStackCount() - 3)
+			end
 		end
 	end
 end
@@ -620,8 +621,8 @@ end
 LinkLuaModifier("modifier_zuus_nimbus", "components/abilities/heroes/hero_zuus.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_zuus_nimbus_storm", "components/abilities/heroes/hero_zuus.lua", LUA_MODIFIER_MOTION_NONE)
 
-imba_zuus_cloud = class({})
-
+imba_zuus_cloud = imba_zuus_cloud or class({})
+imba_zuus_cloud.activated = false
 function imba_zuus_cloud:IsInnateAbility() return true end
 
 function imba_zuus_cloud:GetAOERadius()
@@ -630,12 +631,13 @@ end
 
 function imba_zuus_cloud:OnInventoryContentsChanged()
 	if IsServer() then
-		if self:GetCaster():HasScepter() then
+
+		-- only activate ability once to avoid all possible abuse by switching item in and out of inventory.
+		if self:GetCaster():HasScepter() and imba_zuus_cloud.activated == false then
+			imba_zuus_cloud.activated = true 
 			self:SetHidden(false)
-			--self:GetCaster():FindAbilityByName("imba_zuus_nimbus_zap"):SetHidden(false)
 		else
-			self:SetHidden(true)
-			--self:GetCaster():FindAbilityByName("imba_zuus_nimbus_zap"):SetHidden(true)
+			--self:SetHidden(true)
 		end
 	end
 end
@@ -950,9 +952,19 @@ function imba_zuus_nimbus_zap:OnProjectileThink_ExtraData(location, ExtraData)
 		if leave_nimbus_ability ~= nil then
 			if self.nimbus ~= nil then
 				local skill_slot_4 =  self:GetCaster():GetAbilityByIndex(3):GetAbilityName()
+				if skill_slot_4 == "imba_zuus_nimbus_zap" then 
+					self:GetCaster():SwapAbilities("imba_zuus_nimbus_zap", "imba_zuus_leave_nimbus", false, true)	
+				end
+
+				--[[
+				if skill_slot_4 == "imba_zuus_leave_nimbus" then 
+					self:GetCaster():SwapAbilities("imba_zuus_leave_nimbus", "imba_zuus_cloud", false, true)	
+				end
+
 				if skill_slot_4 ~= "imba_zuus_leave_nimbus" then
 					self:GetCaster():SwapAbilities("imba_zuus_nimbus_zap", "imba_zuus_leave_nimbus", false, true)
 				end
+				]]
 			end
 		end
 	end
@@ -962,11 +974,24 @@ imba_zuus_leave_nimbus = class({})
 function imba_zuus_leave_nimbus:IsInnateAbility() return true end
 function imba_zuus_leave_nimbus:OnSpellStart()
 	if IsServer() then
-		self:GetCaster():RemoveModifierByName("modifier_imba_zuus_on_nimbus")
-		self:GetCaster():RemoveModifierByName("modifier_imba_zuus_nimbus_z")
+		local caster = self:GetCaster()
+		caster:RemoveModifierByName("modifier_imba_zuus_on_nimbus")
+		caster:RemoveModifierByName("modifier_imba_zuus_nimbus_z")
 
 		ResolveNPCPositions(self:GetCaster():GetAbsOrigin(), 128)
-		print("Swap leave -> zap")
+
+		-- only zap to nimbus once?
+		--[[
+		local skill_slot_4 = caster:GetAbilityByIndex(3):GetAbilityName()
+		if skill_slot_4 == "imba_zuus_nimbus_zap" then 
+			caster:SwapAbilities("imba_zuus_nimbus_zap", "imba_zuus_cloud", false, true)	
+		end
+
+		if skill_slot_4 == "imba_zuus_leave_nimbus" then 
+			caster:SwapAbilities("imba_zuus_leave_nimbus", "imba_zuus_cloud", false, true)	
+		end
+		]]
+
 		self:GetCaster():SwapAbilities("imba_zuus_leave_nimbus", "imba_zuus_nimbus_zap", false, true)
 	end
 end
@@ -1237,7 +1262,7 @@ end
 
 LinkLuaModifier("modifier_imba_zuus_pierce_spellimmunity", "components/abilities/heroes/hero_zuus.lua", LUA_MODIFIER_MOTION_NONE)
 modifier_imba_zuus_pierce_spellimmunity = class({})
-function modifier_imba_zuus_pierce_spellimmunity:IsHidden() return false end
+function modifier_imba_zuus_pierce_spellimmunity:IsHidden() return true end
 
 --------------------------------------------------------------
 --				Thundergods Awakening Modifier  			--
