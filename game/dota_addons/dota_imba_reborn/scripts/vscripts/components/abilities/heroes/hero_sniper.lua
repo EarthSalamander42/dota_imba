@@ -230,7 +230,7 @@ function modifier_imba_shrapnel_attack:OnOrder(keys)
 		if unit == self.parent then
 
 			-- If the target is a Roshan, do nothing.
-			if target and IsRoshan(target) then
+			if target and target:IsRoshan() then
 				self.current_target = nil
 				self.global_distance = false
 				return nil
@@ -307,7 +307,7 @@ function modifier_imba_shrapnel_charges:OnCreated()
 		self.charge_replenish_rate = self.ability:GetSpecialValueFor("charge_replenish_rate")
 
 		-- #4 Talent: Double max Shrapnel charges. Each recharge grants twice as much
-		if self.caster:HasTalent("special_bonus_imba_sniper_4") then
+		if self.caster:HasAbility("special_bonus_imba_sniper_4") and self.caster:FindAbilityByName("special_bonus_imba_sniper_4"):GetLevel() == 1 then
 			self.max_charge_count = self.max_charge_count * self.caster:FindTalentValue("special_bonus_imba_sniper_4", "max_charge_mult")
 		end
 
@@ -336,7 +336,11 @@ end
 function modifier_imba_shrapnel_charges:OnIntervalThink()
 	if IsServer() then
 		local stacks = self:GetStackCount()
-
+		
+		if self.caster:HasAbility("special_bonus_imba_sniper_4") and self.caster:FindAbilityByName("special_bonus_imba_sniper_4"):GetLevel() == 1 then
+			self.max_charge_count = self.ability:GetSpecialValueFor("max_charge_count") * self.caster:FindTalentValue("special_bonus_imba_sniper_4", "max_charge_mult")
+		end
+		
 		-- If we have at least one stack, set ability to active, otherwise disable it
 		if stacks > 0 then
 			self.ability:SetActivated(true)
@@ -348,11 +352,11 @@ function modifier_imba_shrapnel_charges:OnIntervalThink()
 		if stacks == self.max_charge_count then
 			return nil
 		end
-
+		
 		-- If a charge has finished charging, give a stack
 		if self:GetRemainingTime() < 0 then
 			local replenish_count = 1
-			if self.caster:HasTalent("special_bonus_imba_sniper_4") then
+			if self.caster:HasAbility("special_bonus_imba_sniper_4") and self.caster:FindAbilityByName("special_bonus_imba_sniper_4"):GetLevel() == 1 then
 				replenish_count = self.caster:FindTalentValue("special_bonus_imba_sniper_4", "charges_per_recharge")
 			end
 
@@ -439,6 +443,11 @@ function modifier_imba_shrapnel_charges:IsDebuff() return false end
 -- #4 Talent: Doubles the maximum amount of Shrapnel charges and grants twice the amount of charges per recharge
 -- Triggers the "restart" of the charges modifier
 modifier_special_bonus_imba_sniper_4 = modifier_special_bonus_imba_sniper_4 or class({})
+
+function modifier_special_bonus_imba_sniper_4:IsHidden() return true end
+function modifier_special_bonus_imba_sniper_4:IsPurgable() return false end
+function modifier_special_bonus_imba_sniper_4:RemoveOnDeath() return false end
+
 
 function modifier_special_bonus_imba_sniper_4:OnCreated()
 	if IsServer() then
