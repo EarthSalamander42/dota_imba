@@ -69,6 +69,11 @@ function GameMode:OnHeroDeath(killer, killed_unit)
 			return
 		end
 		
+		if respawn_time == nil or not respawn_time then
+			print("Something terrible has happened...set respawn timer to something reasonable.")
+			respawn_time = G.HERO_RESPAWN_TIME_PER_LEVEL[hero_level]
+		end
+
 		log.info("Set time until respawn for unit " .. tostring(killed_unit:GetUnitName()) .. " to " .. tostring(respawn_time) .. " seconds")
 		killed_unit:SetTimeUntilRespawn(math.min(respawn_time, 60))
 		return
