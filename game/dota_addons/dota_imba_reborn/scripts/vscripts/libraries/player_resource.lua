@@ -41,7 +41,7 @@ end
 function PlayerResource:StartAbandonGoldRedistribution(player_id)
 
 	-- Set redistribution as active
-	self.PlayerData[player_id]["distribute_gold_to_allies"] = true
+	self.PlayerData[player_id]["distribute_gold_to_allies"] = true -- TODO: nil sometimes
 	log.debug("player "..player_id.." is now redistributing gold to its allies.")
 
 	-- Fetch this player's team
