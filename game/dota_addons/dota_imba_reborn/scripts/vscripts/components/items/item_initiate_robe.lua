@@ -13,83 +13,101 @@
 -- limitations under the License.
 --
 -- Editors:
---
+--	   Naowin, 18.08.2018
 
---[[	Author: Firetoad
-		Date:	14.11.2016	]]
+-- Author:  Firetoad
+-- Date:	14.11.2016
 
-function InitiateRobeThink( keys )
-	local caster = keys.caster
+-------------------------------------------
+--				Initiate Robe
+-------------------------------------------
+LinkLuaModifier("modifier_imba_initiate_robe_passive", "components/items/item_initiate_robe.lua", LUA_MODIFIER_MOTION_NONE)
+-------------------------------------------
+item_imba_initiate_robe = class({})
+-------------------------------------------
+function item_imba_initiate_robe:GetIntrinsicModifierName()
+	return "modifier_imba_initiate_robe_passive"
+end
 
-	-- If a higher-level version of the ability is present, do nothing
-	if caster:HasModifier("modifier_item_imba_arcane_nexus_unique") then
-		return nil
-	end
+function item_imba_initiate_robe:GetAbilityTextureName()
+	return "custom/imba_initiate_robe"
+end
 
-	-- Parameters
-	local ability = keys.ability
-	local modifier_stacks = keys.modifier_stacks
-	local particle_shield = keys.particle_shield
-	local mana_conversion_rate = ability:GetSpecialValueFor("mana_conversion_rate") * 0.01
-	local max_stacks = ability:GetSpecialValueFor("max_stacks")
+modifier_imba_initiate_robe_passive = modifier_imba_initiate_robe_passive or class({})
+function modifier_imba_initiate_robe_passive:IsDebuff() return false end
+function modifier_imba_initiate_robe_passive:IsHidden() return false end
+function modifier_imba_initiate_robe_passive:IsPermanent() return true end
+function modifier_imba_initiate_robe_passive:IsPurgable() return false end
+function modifier_imba_initiate_robe_passive:IsPurgeException() return false end
+function modifier_imba_initiate_robe_passive:IsStunDebuff() return false end
+function modifier_imba_initiate_robe_passive:RemoveOnDeath() return false end
+function modifier_imba_initiate_robe_passive:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_imba_initiate_robe_passive:DeclareFunctions()
+	local decFuns = {
+		MODIFIER_EVENT_ON_SPENT_MANA,
+		MODIFIER_PROPERTY_MANA_REGEN_CONSTANT,
+		MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS,
+		MODIFIER_EVENT_ON_TAKEDAMAGE,
+	}	
 
-	-- Create the global variables, if necessary
-	if not caster.magic_shield_mana_count then
-		caster.magic_shield_mana_count = caster:GetMana()
-	end
+	return decFuns
+end
 
-	if not caster.magic_shield_int_count then
-		caster.magic_shield_int_count = caster:GetIntellect()
-	end
-
-	-- Fetch current parameters
-	local current_mana = caster:GetMana()
-	local current_int = caster:GetIntellect()
-
-	-- Adjust mana tracking variable based on intelligence
-	if current_int < caster.magic_shield_int_count then
-		local int_loss = (caster.magic_shield_int_count - current_int)
-		caster.magic_shield_mana_count = caster.magic_shield_mana_count - 12 * int_loss
-	end
-
-	-- Update intelligence count
-	caster.magic_shield_int_count = current_int
-
-	-- If mana was spent or lost, grant magic shield stacks
-	if current_mana < caster.magic_shield_mana_count then
-
-		-- Calculate magic shield stacks to gain
-		local stacks_to_gain = ( caster.magic_shield_mana_count - current_mana ) * mana_conversion_rate
-
-		-- Update mana tracking variable
-		caster.magic_shield_mana_count = current_mana
-
-		-- Fetch current amount of shield stacks
-		local current_stacks = caster:GetModifierStackCount(modifier_stacks, caster)
-
-		-- Add the appropriate amount of shield stacks
-		caster:SetModifierStackCount(modifier_stacks, caster, math.min(stacks_to_gain, max_stacks - current_stacks))
-
-		-- Play the mana shield particle
-		local shield_pfx = ParticleManager:CreateParticle(particle_shield, PATTACH_ABSORIGIN_FOLLOW, caster)
-		ParticleManager:SetParticleControl(shield_pfx, 0, caster:GetAbsOrigin())
-		ParticleManager:ReleaseParticleIndex(shield_pfx)
-
-		-- Else, update the mana tracking variable
-	else
-		caster.magic_shield_mana_count = current_mana
+function modifier_imba_initiate_robe_passive:OnCreated()
+	local item = self:GetAbility()
+	self.parent = self:GetParent()
+	if self.parent:IsHero() and item then
+		self.bonus_mana_regen = item:GetSpecialValueFor("mana_regen")
+		self.bonus_magic_resistance = item:GetSpecialValueFor("magic_resist")
+		self.mana_conversion_rate = item:GetSpecialValueFor("mana_conversion_rate")
+		self.max_stacks = item:GetSpecialValueFor("max_stacks")
+		self.shield_pfx = nil
+		self:CheckUnique(true)
 	end
 end
 
-function InitiateRobeEnd( keys )
-	local caster = keys.caster
-	local ability = keys.ability
-	local modifier_stacks = keys.modifier_stacks
 
-	-- Clear global variables
-	caster.magic_shield_mana_count = nil
-	caster.magic_shield_int_count = nil
+function modifier_imba_initiate_robe_passive:OnSpentMana(keys)
+	if IsServer() then
+		if keys.unit == self:GetParent() then 
+			local stacks = self:GetStackCount()
+			stacks = stacks + keys.cost
+			if stacks > self.max_stacks then
+				stacks = self.max_stacks
+			end
 
-	-- Remove magic shield stacks
-	caster:RemoveModifierByName(modifier_stacks)
+			local parent = self:GetParent()	
+			-- Play the mana shield particle
+			self.shield_pfx = ParticleManager:CreateParticle("particles/item/initiate_robe/initiate_robe_shield.vpcf", PATTACH_ABSORIGIN_FOLLOW, parent)
+			ParticleManager:SetParticleControl(self.shield_pfx, 0, parent:GetAbsOrigin())
+			ParticleManager:ReleaseParticleIndex(self.shield_pfx)
+
+			self:SetStackCount(stacks)
+		end
+	end
+end
+
+function modifier_imba_initiate_robe_passive:OnTakeDamage(keys)
+	if IsServer() then 
+		if self:GetParent() == keys.unit then
+			local current_stacks = self:GetStackCount()
+			if current_stacks > 0 then 
+				if current_stacks > keys.damage then
+					self:GetParent():Heal(keys.damage, self)
+					self:SetStackCount(math.ceil(current_stacks - keys.damage))
+				else
+					self:GetParent():Heal(current_stacks, self)
+					self:SetStackCount(0)
+				end
+			end
+		end
+	end
+end
+
+function modifier_imba_initiate_robe_passive:GetModifierConstantManaRegen()
+	return self.bonus_mana_regen
+end
+
+function modifier_imba_initiate_robe_passive:GetModifierMagicalResistanceBonus()
+	return self.bonus_magic_resistance
 end
