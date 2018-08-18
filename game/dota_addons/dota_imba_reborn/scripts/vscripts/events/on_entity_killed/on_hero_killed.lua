@@ -70,7 +70,7 @@ function GameMode:OnHeroDeath(killer, killed_unit)
 		end
 		
 		if respawn_time == nil or not respawn_time then
-			print("Something terrible has happened...set respawn timer to something reasonable.")
+			log.info("Something terrible has happened...set respawn timer to something reasonable.")
 			respawn_time = _G.HERO_RESPAWN_TIME_PER_LEVEL[hero_level]
 		end
 
