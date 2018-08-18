@@ -741,7 +741,9 @@ function ReconnectPlayer(player_id)
 --					end
 					end
 
-					CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(player_id), "send_mutations", IMBA_MUTATION)
+					if IsMutationMap() then
+						CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(player_id), "send_mutations", IMBA_MUTATION)
+					end
 				end
 			else
 --			print("Not fully reconnected yet:", player_id)
@@ -767,10 +769,6 @@ function ReconnectPlayer(player_id)
 
 		-- Stop redistributing gold to allies, if applicable
 		PlayerResource:StopAbandonGoldRedistribution(player_id)
-	end
-
-	if IsMutationMap() then
-		CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(player_id), "send_mutations", IMBA_MUTATION)
 	end
 end
 

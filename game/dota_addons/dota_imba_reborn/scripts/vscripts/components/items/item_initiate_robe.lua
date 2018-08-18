@@ -95,9 +95,11 @@ function modifier_imba_initiate_robe_passive:OnTakeDamage(keys)
 				if current_stacks > keys.damage then
 					self:GetParent():Heal(keys.damage, self)
 					self:SetStackCount(math.ceil(current_stacks - keys.damage))
+					SendOverheadEventMessage(self:GetParent(), OVERHEAD_ALERT_MAGICAL_BLOCK , self:GetParent(), keys.damage, self:GetParent())
 				else
 					self:GetParent():Heal(current_stacks, self)
 					self:SetStackCount(0)
+					SendOverheadEventMessage(self:GetParent(), OVERHEAD_ALERT_MAGICAL_BLOCK , self:GetParent(), current_stacks, self:GetParent())
 				end
 			end
 		end

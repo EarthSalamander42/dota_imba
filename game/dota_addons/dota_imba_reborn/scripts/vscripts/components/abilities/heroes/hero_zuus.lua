@@ -79,7 +79,7 @@ function imba_zuus_arc_lightning:Chain(caster, origin_target, chained_target, ab
 			hit_list[chained_target] = hit_list[chained_target] + 1
 		end
 
-		print("num_jumps_done", num_jumps_done, chained_target, hit_list[chained_target])
+--		print("num_jumps_done", num_jumps_done, chained_target, hit_list[chained_target])
 
 		origin_target:EmitSound("Hero_Zuus.ArcLightning.Target")
 
