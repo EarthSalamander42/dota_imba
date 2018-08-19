@@ -76,11 +76,6 @@
 "DOTA_Tooltip_modifier_imba_zuus_thundergods_awakening"					"Awaken"
 "DOTA_Tooltip_modifier_imba_zuus_thundergods_awakening_description"		"Spell immune with 100%% magic resistance for a short duration. Any physical attack received triggers Arc Lightning damage in retaliation."
 
-"DOTA_Tooltip_modifier_imba_zuus_thundergods_awakening" "Thundergods Awakening"
-"DOTA_Tooltip_modifier_imba_zuus_thundergods_awakening_description" "Any physical attack made to Zeus triggers lightning strikes in return"
-"DOTA_Tooltip_modifier_imba_zuus_thundergods_awakening_bkb" "Thundergods Awakening"
-"DOTA_Tooltip_modifier_imba_zuus_thundergods_awakening_bkb_description" "Spell Immune"
-
 //---------------------------------------------------------------------------
 //      Zeus Talents
 //---------------------------------------------------------------------------

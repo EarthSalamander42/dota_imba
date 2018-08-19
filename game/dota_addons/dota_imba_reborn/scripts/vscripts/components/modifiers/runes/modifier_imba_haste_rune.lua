@@ -19,13 +19,9 @@ function modifier_imba_haste_rune:GetTexture()
 end
 
 function modifier_imba_haste_rune:OnCreated()
-	-- Ability properties
-	self.caster		=	self:GetCaster()
-
-	-- Ability parameters
-	self.radius			=	900
-	self.movespeed_pct	=	60
-	self.attackspeed	=	80
+	if IsServer() then
+		self:SetStackCount(GetAbilitySpecial("item_imba_rune_haste", "movespeed_pct"))
+	end
 end
 
 -- Function declarations
@@ -40,17 +36,19 @@ end
 
 -- Bonus movespeed
 function modifier_imba_haste_rune:GetModifierMoveSpeedBonus_Percentage()
-	return self.movespeed_pct
+	return self:GetStackCount()
 end
 
 -- Bonus attackspeed
 function modifier_imba_haste_rune:GetModifierAttackSpeedBonus_Constant()
-	return self.attackspeed
+	if IsClient() then return end
+	return GetAbilitySpecial("item_imba_rune_haste", "bonus_attack_speed")
 end
 
 -- Minimum unslowable movement speed
 function modifier_imba_haste_rune:GetModifierMoveSpeed_AbsoluteMin()
-	return 550
+	if IsClient() then return end
+	return GetAbilitySpecial("item_imba_rune_haste", "absolute_min_speed")
 end
 
 -- Aura properties
@@ -59,7 +57,8 @@ function modifier_imba_haste_rune:IsAura()
 end
 
 function modifier_imba_haste_rune:GetAuraRadius()
-	return self.radius
+	if IsClient() then return end
+	return GetAbilitySpecial("item_imba_rune_haste", "radius")
 end
 
 function modifier_imba_haste_rune:GetAuraSearchTeam()
@@ -79,7 +78,7 @@ function modifier_imba_haste_rune:GetModifierAura()
 end
 
 function modifier_imba_haste_rune:GetAuraEntityReject(target)
-	if target == self.caster then
+	if target == self:GetCaster() then
         return true
     end
 	return false

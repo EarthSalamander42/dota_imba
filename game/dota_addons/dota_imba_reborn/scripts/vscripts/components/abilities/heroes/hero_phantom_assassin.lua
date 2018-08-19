@@ -201,9 +201,7 @@ function imba_phantom_assassin_stifling_dagger:OnSpellStart()
 				return nil
 			end
 		end)
-
 	end
-
 end
 
 function imba_phantom_assassin_stifling_dagger:OnProjectileHit( target, location )
@@ -211,7 +209,7 @@ function imba_phantom_assassin_stifling_dagger:OnProjectileHit( target, location
 	local caster = self:GetCaster()
 
 	if not target then
-		return nil
+		return false
 	end
 
 	-- With 20 percentage play random stifling dagger response
@@ -221,7 +219,7 @@ function imba_phantom_assassin_stifling_dagger:OnProjectileHit( target, location
 	-- If the target possesses a ready Linken's Sphere, do nothing else
 	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
 		if target:TriggerSpellAbsorb(self) then
-			return nil
+			return false
 		end
 	end
 
@@ -233,6 +231,11 @@ function imba_phantom_assassin_stifling_dagger:OnProjectileHit( target, location
 
 	caster:AddNewModifier(caster, self, "modifier_imba_stifling_dagger_dmg_reduction", {})
 	caster:AddNewModifier(caster, self, "modifier_imba_stifling_dagger_bonus_damage", {})
+
+	-- fix to not decrement phantom strike attacks on dagger hit
+	if caster:HasModifier("modifier_imba_phantom_strike_coup_de_grace") then
+		caster:SetModifierStackCount("modifier_imba_phantom_strike_coup_de_grace", caster, caster:GetModifierStackCount("modifier_imba_phantom_strike_coup_de_grace", caster) + 1)
+	end
 
 	-- Attack (calculates on-hit procs)
 	local initial_pos = caster:GetAbsOrigin()
@@ -540,7 +543,8 @@ function modifier_imba_phantom_strike_coup_de_grace:OnAttackLanded(keys)
 
 		-- If attack was not performed by the modifier's owner, do nothing
 		if owner ~= keys.attacker then
-			return end
+			return
+		end
 
 		if stackcount == 1 then
 			self:Destroy()
@@ -983,7 +987,6 @@ function modifier_imba_coup_de_grace:GetModifierPreAttack_CriticalStrike(keys)
 		end
 
 		if RollPseudoRandom(crit_chance_total, self) then
-
 			StartSoundEvent("Hero_PhantomAssassin.CoupDeGrace", target)
 			local responses = {"phantom_assassin_phass_ability_coupdegrace_01",
 				"phantom_assassin_phass_ability_coupdegrace_02",
@@ -1023,15 +1026,37 @@ function modifier_imba_coup_de_grace:OnAttackLanded(keys)
 	if IsServer() then
 		local target = keys.target
 		local attacker = keys.attacker
+		local fatality = self.ability:GetSpecialValueFor("fatality_chance")
 
 		-- Only apply if the attacker is the caster and it was a critical strike
-		if self:GetCaster() == attacker and self.crit_strike then
+		if self:GetCaster() == attacker then
+			-- Roll for fatality
+			if RandomInt(1, 100) <= fatality then
+				TrueKill(self.caster, target, self.ability)
+				SendOverheadEventMessage(nil, OVERHEAD_ALERT_CRITICAL, target, 999999, nil)
 
-			-- If that attack was marked as a critical strike, apply the particles
-			local coup_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_phantom_assassin/phantom_assassin_crit_impact.vpcf", PATTACH_CUSTOMORIGIN, attacker)
-			ParticleManager:SetParticleControlEnt(coup_pfx, 0, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
-			ParticleManager:SetParticleControlEnt(coup_pfx, 1, target, PATTACH_ABSORIGIN_FOLLOW, "attach_origin", target:GetAbsOrigin(), true)
-			ParticleManager:ReleaseParticleIndex(coup_pfx)
+				-- Global effect when killing a real hero
+				if target:IsRealHero() then
+					-- Play screen blood particle
+					local blood_pfx = ParticleManager:CreateParticle("particles/hero/phantom_assassin/screen_blood_splatter.vpcf", PATTACH_EYES_FOLLOW, target)
+
+					-- Play fatality message
+					Notifications:BottomToAll({text = "FATALITY!", duration = 4.0, style = {["font-size"] = "50px", color = "Red"} })
+
+					-- Play global sounds
+					self:GetCaster():EmitSound("Hero_PhantomAssassin.CoupDeGrace")
+					self:GetCaster():EmitSound("Imba.PhantomAssassinFatality")
+					return nil
+				end
+			end
+
+			if self.crit_strike then
+				-- If that attack was marked as a critical strike, apply the particles
+				local coup_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_phantom_assassin/phantom_assassin_crit_impact.vpcf", PATTACH_CUSTOMORIGIN, attacker)
+				ParticleManager:SetParticleControlEnt(coup_pfx, 0, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
+				ParticleManager:SetParticleControlEnt(coup_pfx, 1, target, PATTACH_ABSORIGIN_FOLLOW, "attach_origin", target:GetAbsOrigin(), true)
+				ParticleManager:ReleaseParticleIndex(coup_pfx)
+			end
 		end
 	end
 end

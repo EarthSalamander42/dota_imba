@@ -89,8 +89,8 @@ function modifier_companion:OnIntervalThink()
 		local min_distance = 250
 		local blink_distance = 750
 
-		if companion:GetIdealSpeed() ~= hero:GetIdealSpeed() - 60 then
-			companion:SetBaseMoveSpeed(hero:GetIdealSpeed() - 60)
+		if companion:GetIdealSpeed() ~= hero:GetIdealSpeed() - 70 then
+			companion:SetBaseMoveSpeed(hero:GetIdealSpeed() - 70)
 		end
 
 		for _,v in pairs(IMBA_INVISIBLE_MODIFIERS) do

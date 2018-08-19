@@ -90,6 +90,33 @@ function CDOTA_BaseNPC:DropRapier(hItem, sNewItemName)
 	hRapier:LaunchLoot(false, 250, 0.5, vLocation + vRandomVector)
 end
 
+--[[
+function CDOTA_BaseNPC:FindItemByName(item_name)
+	for slot = 0, 8 do
+		local item = self:GetItemInSlot(slot)
+		if item then
+			if item:GetName() == item_name then
+				return item
+			end
+		end
+	end
+
+	return nil
+end
+
+function CDOTA_BaseNPC:RemoveItemByName(item_name)
+	for slot = 0, 8 do
+		local item = self:GetItemInSlot(slot)
+		if item then
+			if item:GetName() == item_name then
+				self:RemoveItem(item)
+				break
+			end
+		end
+	end
+end
+--]]
+
 --[[Author: Noya
 	Editor: EarthSalamander #42
 	Date: 09.08.2015.

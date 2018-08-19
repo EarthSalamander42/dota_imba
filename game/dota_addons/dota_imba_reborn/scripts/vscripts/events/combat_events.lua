@@ -15,7 +15,7 @@ function CombatEvents(event_type, reason, victim, attacker)
 	local gold = 0
 	if victim then
 		if victim:IsBuilding() then gold = 200 end
-		if victim:GetUnitName() == "npc_dota_badguys_healers" then gold = 125 end
+		if victim:GetUnitName() == "npc_dota_goodguys_healers" or victim:GetUnitName() == "npc_dota_badguys_healers" then gold = 125 end
 	end
 	local attacker_id
 	local victim_id
@@ -30,6 +30,8 @@ function CombatEvents(event_type, reason, victim, attacker)
 	streak[8] = "Monster kill"
 	streak[9] = "Godlike"
 	streak[10] = "Beyond Godlike"
+
+--	gold = gold * (tonumber(CustomNetTables:GetTableValue("game_options", "bounty_multiplier")["1"]) / 100)
 
 	if event_type == "generic" then
 		if reason == "courier_respawn" then

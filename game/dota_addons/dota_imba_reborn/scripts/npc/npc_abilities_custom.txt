@@ -1,12 +1,13 @@
 // Dota Abilities Override File
 // DataDriven Ability Guide: https://moddota.com/forums/discussion/14/datadriven-ability-breakdown-documentation
 
+#base heroes/towers.txt
+
 #base heroes/alchemist/abilities.txt
 #base heroes/earth_spirit/abilities.txt
 #base heroes/night_stalker/abilities.txt
 #base heroes/silencer/abilities.txt
 #base heroes/shadow_shaman/abilities.txt
-#base heroes/towers.txt
 #base heroes/wisp/abilities.txt
 #base heroes/zeus/abilities.txt
 
@@ -28943,7 +28944,7 @@
 			"14"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"arrow_distance"					"3000"
+				"arrow_distance"					"6000"
 			}
 			"15"
 			{
@@ -28970,7 +28971,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityTextureName"			"mirana_leap"
-		"ScriptFile"				"components/abilities/heroes/hero_mirana.lua"
+		"ScriptFile"					"components/abilities/heroes/hero_mirana.lua"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -31790,24 +31791,26 @@
 				"crit_bonus"				"230 340 450"
 				"LinkedSpecialBonus"		"special_bonus_imba_phantom_assassin_5"
 			}
-
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"crit_chance"				"15"
 			}
-
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"crit_increase_damage"	    "25 40 55"
 			}
-
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"crit_increase_duration"	"5"
 				"LinkedSpecialBonus"		"special_bonus_imba_phantom_assassin_7"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"fatality_chance"			"1"
 			}
 		}
 	}

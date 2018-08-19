@@ -27,8 +27,8 @@ function Mutation:Init()
 	-- Selecting Mutations (Take out if statement for IsInToolsMode if you want to test randomized)
 	if IsInToolsMode() then
 		IMBA_MUTATION["positive"] = "ultimate_level"
-		IMBA_MUTATION["negative"] = "monkey_business"
-		IMBA_MUTATION["terrain"] = "gift_exchange"
+		IMBA_MUTATION["negative"] = "periodic_spellcast"
+		IMBA_MUTATION["terrain"] = "super_runes"
 	else
 		Mutation:ChooseMutation("positive", POSITIVE_MUTATION_LIST)
 		Mutation:ChooseMutation("negative", NEGATIVE_MUTATION_LIST)

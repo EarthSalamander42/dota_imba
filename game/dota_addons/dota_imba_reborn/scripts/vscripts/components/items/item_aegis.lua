@@ -100,6 +100,11 @@ function modifier_item_imba_aegis:OnDestroy()
 	if IsServer() then
 		local item = self:GetAbility()
 
+		if self:GetParent():IsAlive() then
+			self:GetParent():AddNewModifier(self:GetParent(), nil, "modifier_imba_regen_rune", {GetItemKV("item_imba_rune_regen", "RuneDuration")})
+			self:GetParent():EmitSound("Aegis.Expire")
+		end
+
 		UTIL_Remove(item:GetContainer())
 		UTIL_Remove(item)
 	end

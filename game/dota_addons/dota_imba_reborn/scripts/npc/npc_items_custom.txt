@@ -3876,7 +3876,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_block"			"85"
+				"damage_block"			"60"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"07"
@@ -4206,80 +4206,67 @@
 				"var_type"				"FIELD_INTEGER"
 				"bonus_agility"			"35"
 			}
-
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_damage"			"30"
 				"CalculateSpellDamageTooltip"	"0"
 			}
-
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_evasion"			"35"
 			}
-
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_attack_speed"	"30"
 			}
-
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"flutter_duration"		"4"
 			}
-
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"flutter_movespeed_pct" "40"
 			}
-
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"wind_song_stack_duration"	"15"
 			}
-
 			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"wind_song_active_stacks"	"5"
 			}
-
 			"09"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"wind_song_bonus_ms_pct"	"35"
 			}
-
 			"10"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"wind_song_bonus_as"	"75"
 			}
-
 			"11"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"wind_song_evasion"		"100"
 			}
-
 			"12"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"wind_song_duration"	"3"
 			}
-
 			"13"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"wind_song_ms_slow_pct"	"20"
 			}
-
 			"14"
 			{
 				"var_type"				"FIELD_INTEGER"
@@ -4448,7 +4435,7 @@
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"unholy_bonus_strength"		"25"
+				"unholy_bonus_strength"		"35"
 			}
 			"07"
 			{
@@ -5011,7 +4998,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"spell_amp"				"10"
+				"spell_amp"				"16"
 			}
 			"02"
 			{
@@ -5244,7 +5231,7 @@
 			"13"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"spell_amp"				"10"
+				"spell_amp"				"16"
 			}
 		}
 	}
@@ -5582,7 +5569,7 @@
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"static_proc_chance"	"20"
+				"static_proc_chance"	"30"
 			}
 			"10"
 			{
@@ -8439,7 +8426,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"spell_amp"				"16"
+				"spell_amp"				"22"
 			}
 			"03"
 			{
@@ -10860,7 +10847,7 @@
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"static_proc_chance"	"20"
+				"static_proc_chance"	"35"
 			}
 			"10"
 			{
@@ -11478,6 +11465,30 @@
 		"ItemSellable"							"0"
 		"ItemKillable"							"1"
 		"ItemCastOnPickup"						"1"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"base_bounty"					"100"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bounty_increase_per_minute"	"4"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"xp_increase_per_minute"		"10"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"super_runes_multiplier"		"2"
+			}
+		}
 	}
 
 	//=================================================================================================================
@@ -11487,19 +11498,43 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"									"2274"
-		"BaseClass"								"item_datadriven"
-		"Model"									"models/props_gameplay/rune_haste01.vmdl"
-		"RuneDuration"							"22"
+		"ID"							"2274"
+		"BaseClass"						"item_datadriven"
+		"Model"							"models/props_gameplay/rune_haste01.vmdl"
+		"RuneDuration"					"22"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"								"0"
-		"ItemQuality"							"artifact"
-		"ItemPurchasable"						"0"
-		"ItemSellable"							"0"
-		"ItemKillable"							"1"
-		"ItemCastOnPickup"						"1"
+		"ItemCost"						"0"
+		"ItemQuality"					"artifact"
+		"ItemPurchasable"				"0"
+		"ItemSellable"					"0"
+		"ItemKillable"					"1"
+		"ItemCastOnPickup"				"1"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"900"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"movespeed_pct"			"60"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_attack_speed"	"80"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"absolute_min_speed"	"550"
+			}
+		}
 	}
 
 	//=================================================================================================================

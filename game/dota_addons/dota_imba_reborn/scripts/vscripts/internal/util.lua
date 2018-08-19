@@ -809,3 +809,32 @@ function StringToTableEnt(string, separator)
 
 	return return_table
 end
+
+function StoreCurrentDayCycle()	
+	Timers:CreateTimer(function()		
+		-- Get current daytime cycle
+		local is_day = GameRules:IsDaytime()		
+
+		-- Set in the table
+		CustomNetTables:SetTableValue("game_options", "isdaytime", {is_day = is_day} )		
+
+		-- Repeat
+		return 0.5
+	end)	
+end
+
+function IsDaytime()
+	if CustomNetTables:GetTableValue("game_options", "isdaytime") then
+		if CustomNetTables:GetTableValue("game_options", "isdaytime").is_day then  
+			local is_day = CustomNetTables:GetTableValue("game_options", "isdaytime").is_day  
+
+			if is_day == 1 then
+				return true
+			else
+				return false
+			end
+		end
+	end
+
+	return true   
+end

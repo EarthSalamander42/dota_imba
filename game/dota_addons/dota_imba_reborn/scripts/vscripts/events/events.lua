@@ -357,6 +357,13 @@ function GameMode:OnEntityKilled( keys )
 
 			if killer:IsRealHero() then
 				CombatEvents("kill", "hero_kill_tower", killed_unit, killer)
+				if killer:GetTeam() ~= killed_unit:GetTeam() then
+					if killed_unit:GetUnitName() == "npc_dota_goodguys_healers" or killed_unit:GetUnitName() == "npc_dota_badguys_healers" then
+						SendOverheadEventMessage(killer:GetPlayerOwner(), OVERHEAD_ALERT_GOLD, killed_unit, 125, nil)
+					else
+						SendOverheadEventMessage(killer:GetPlayerOwner(), OVERHEAD_ALERT_GOLD, killed_unit, 200, nil)
+					end
+				end
 			else
 				CombatEvents("generic", "tower", killed_unit, killer)
 			end

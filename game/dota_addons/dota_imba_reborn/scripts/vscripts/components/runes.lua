@@ -174,9 +174,9 @@ function ImbaRunes:PickupRune(rune_name, unit, bActiveByBottle)
 	if store_in_bottle == false then
 		if rune_name == "bounty" then
 			-- Bounty rune parameters
-			local base_bounty = 100
-			local bounty_per_minute = 4
-			local xp_per_minute = 10
+			local base_bounty = GetAbilitySpecial("item_imba_rune_bounty", "base_bounty")
+			local bounty_per_minute = GetAbilitySpecial("item_imba_rune_bounty", "bounty_increase_per_minute")
+			local xp_per_minute = GetAbilitySpecial("item_imba_rune_bounty", "xp_increase_per_minute")
 			local game_time = GameRules:GetDOTATime(false, false)
 			local current_bounty = base_bounty + bounty_per_minute * game_time / 60
 			local current_xp = xp_per_minute * game_time / 60
@@ -185,6 +185,13 @@ function ImbaRunes:PickupRune(rune_name, unit, bActiveByBottle)
 			local custom_gold_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "bounty_multiplier")["1"])
 			current_bounty = current_bounty * (1 + custom_gold_bonus * 0.01)
 
+			if IsMutationMap() then
+				if IMBA_MUTATION["terrain"] == "super_runes" then
+					current_bounty = current_bounty * GetAbilitySpecial("item_imba_rune_bounty", "super_runes_multiplier")
+					current_xp = current_xp * GetAbilitySpecial("item_imba_rune_bounty", "super_runes_multiplier")
+				end
+			end
+
 			-- Grant the unit experience
 			unit:AddExperience(current_xp, DOTA_ModifyXP_CreepKill, false, true)
 
@@ -192,8 +199,7 @@ function ImbaRunes:PickupRune(rune_name, unit, bActiveByBottle)
 			if unit:HasTalent("special_bonus_imba_alchemist_3") then
 				local stacks_to_gold =( unit:FindTalentValue("special_bonus_imba_alchemist_3") / 100 )  / 5
 				local gold_per_bag = unit:FindModifierByName("modifier_imba_goblins_greed_passive"):GetStackCount() + (current_bounty * stacks_to_gold)
-				print("gold_per_bag", gold_per_bag, stacks_to_gold)
-				for i=1, 5 do
+				for i = 1, 5 do
 					-- Drop gold bags
 					local newItem = CreateItem( "item_bag_of_gold", nil, nil )
 					newItem:SetPurchaseTime( 0 )
@@ -241,7 +247,6 @@ function ImbaRunes:PickupRune(rune_name, unit, bActiveByBottle)
 				end
 			end
 
---			EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "General.Coins", unit)
 			EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Bounty", unit)
 		elseif rune_name == "arcane" then
 			unit:AddNewModifier(unit, item, "modifier_imba_arcane_rune", {duration=duration})

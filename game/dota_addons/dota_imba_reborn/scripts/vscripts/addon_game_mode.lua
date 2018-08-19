@@ -17,6 +17,9 @@ function Precache( context )
 	PrecacheResource("model_folder", "models/items/pudge/arcana", context)
 	PrecacheResource("particle_folder", "particles/econ/items/pudge/pudge_arcana", context)
 
+	-- Sounds
+	PrecacheResource("soundfile", "soundevents/imba_soundevents.vsndevts", context)
+
 	Mutation:Precache(context)
 end
 

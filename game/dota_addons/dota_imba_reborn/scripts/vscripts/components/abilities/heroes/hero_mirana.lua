@@ -731,7 +731,6 @@ function modifier_imba_sacred_arrow_haste:GetEffectAttachType()
 	return PATTACH_ABSORIGIN_FOLLOW
 end
 
-
 -------------------------------
 --           LEAP            --
 -------------------------------
@@ -747,12 +746,11 @@ function imba_mirana_leap:GetAbilityTextureName()
 end
 
 function imba_mirana_leap:GetCastRange(location, target)
-	if IsServer() then return end
-	local ability = self
-	local leap_range = ability:GetSpecialValueFor("leap_range")
-	local night_leap_range_bonus = ability:GetSpecialValueFor("night_leap_range_bonus")
+--	if IsServer() then return end
+	local leap_range = self:GetSpecialValueFor("leap_range")
+	local night_leap_range_bonus = self:GetSpecialValueFor("night_leap_range_bonus")
 
-	if GameRules:IsDaytime() then
+	if IsDaytime() then
 		return leap_range
 	else
 		return leap_range + night_leap_range_bonus
@@ -766,13 +764,12 @@ end
 function imba_mirana_leap:OnSpellStart()
 	-- Ability properties
 	local caster = self:GetCaster()
-	local ability = self
 	local target_point = self:GetCursorPosition()
 	local modifier_movement = "modifier_imba_leap_movement"
 	local sound_cast = "Ability.Leap"
 
 	-- Ability specials
-	local jump_speed = ability:GetSpecialValueFor("jump_speed")
+	local jump_speed = self:GetSpecialValueFor("jump_speed")
 
 	-- Start gesture
 	caster:StartGesture(ACT_DOTA_OVERRIDE_ABILITY_3)
@@ -787,7 +784,7 @@ function imba_mirana_leap:OnSpellStart()
 	caster:FaceTowards(target_point)
 
 	-- Start moving
-	local modifier_movement_handler = caster:AddNewModifier(caster, ability, modifier_movement, {})
+	local modifier_movement_handler = caster:AddNewModifier(caster, self, modifier_movement, {})
 
 	-- Assign the target location in the modifier
 	if modifier_movement_handler then
@@ -796,7 +793,6 @@ function imba_mirana_leap:OnSpellStart()
 
 	-- #6 Talent: Free Sacred Arrow after Leap ends
 	if caster:HasTalent("special_bonus_imba_mirana_6") then
-
 		-- Calculate the landing time
 		local distance = (caster:GetAbsOrigin() - target_point):Length2D()
 		local jump_time = distance / jump_speed
@@ -809,24 +805,23 @@ function imba_mirana_leap:OnSpellStart()
 
 		-- Create Timer
 		Timers:CreateTimer(jump_time, function()
+			-- Get the Sacred Arrow ability definition and distance
+			local sacred_arrow_ability = caster:FindAbilityByName("imba_mirana_arrow")
 
-				-- Get the Sacred Arrow ability definition and distance
-				local sacred_arrow_ability = caster:FindAbilityByName("imba_mirana_arrow")
+			-- Get values for at least level 1 arrow
+			local spawn_distance
 
-				-- Get values for at least level 1 arrow
-				local spawn_distance
+			if sacred_arrow_ability:GetLevel() > 0 then
+				spawn_distance = sacred_arrow_ability:GetSpecialValueFor("spawn_distance")
+			else
+				spawn_distance = sacred_arrow_ability:GetLevelSpecialValueFor("spawn_distance", sacred_arrow_ability:GetLevel()+1)
+			end
 
-				if sacred_arrow_ability:GetLevel() > 0 then
-					spawn_distance = sacred_arrow_ability:GetSpecialValueFor("spawn_distance")
-				else
-					spawn_distance = sacred_arrow_ability:GetLevelSpecialValueFor("spawn_distance", sacred_arrow_ability:GetLevel()+1)
-				end
+			-- Get spawn point
+			local spawn_point = caster_location + direction * (spawn_distance + distance)
 
-				-- Get spawn point
-				local spawn_point = caster_location + direction * (spawn_distance + distance)
-
-				-- Fire Sacred Arrow
-				FireSacredArrow(caster, sacred_arrow_ability, spawn_point, direction)
+			-- Fire Sacred Arrow
+			FireSacredArrow(caster, sacred_arrow_ability, spawn_point, direction)
 		end)
 	end
 end

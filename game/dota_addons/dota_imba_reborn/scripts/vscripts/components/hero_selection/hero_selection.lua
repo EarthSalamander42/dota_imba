@@ -120,7 +120,6 @@ function HeroSelection:StartSelection()
 	CustomGameEventManager:RegisterListener('preview_hero', Dynamic_Wrap(HeroSelection, 'HeroPreview'))
 	CustomGameEventManager:RegisterListener("pick_abilities_requested", Dynamic_Wrap(HeroSelection, 'PickAbilitiesRequested'))
 	
-	
 	if IsTournamentMap() then
 		EmitAnnouncerSound("announcer_announcer_type_capt_mode")
 		HeroSelection:CMManager(nil)
@@ -254,7 +253,6 @@ function HeroSelection:CMTimer (time, message, isReserveTime)
 	end
 
 	cmtimer = Timers:CreateTimer({
---		useGameTime = not HERO_SELECTION_WHILE_PAUSED,
 		endTime = 1,
 		callback = function()
 			HeroSelection:CMTimer(time -1, message, isReserveTime)
@@ -295,6 +293,7 @@ function HeroSelection:APTimer(time, message)
 			end
 
 			HeroSelection:SelectHero(key, selectedtable[key].selectedhero)
+			CustomGameEventManager:Send_ServerToAllClients("hide_pause", {show = false})			
 			PauseGame(true)
 		end
 
@@ -337,7 +336,8 @@ function HeroSelection:SelectHero(playerId, hero)
 			LoadFinishEvent.broadcast()
 			PauseGame(false)
 			ShowHUD(true)
-			GameRules:GetGameModeEntity():SetPauseEnabled( true )
+			GameRules:GetGameModeEntity():SetPauseEnabled(true)
+			CustomGameEventManager:Send_ServerToAllClients("hide_pause", {show = true})			
 			if IsMutationMap() then
 --				CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(playerId), "send_mutations", IMBA_MUTATION) -- doesn't work for some players
 				CustomGameEventManager:Send_ServerToAllClients("send_mutations", IMBA_MUTATION)

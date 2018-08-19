@@ -39,7 +39,9 @@ TERRAIN_MUTATION_LIST[4] = "river_flows"
 TERRAIN_MUTATION_LIST[5] = "wormhole"
 TERRAIN_MUTATION_LIST[6] = "tug_of_war"
 TERRAIN_MUTATION_LIST[7] = "danger_zone"
--- TERRAIN_MUTATION_LIST[8] = "super_runes"
+if IsInToolsMode() then
+	TERRAIN_MUTATION_LIST[8] = "super_runes"
+end
 -- TERRAIN_MUTATION_LIST[9] = "minefield" -- nofun
 
 -- TERRAIN_MUTATION_LIST["sleepy_river"] = false

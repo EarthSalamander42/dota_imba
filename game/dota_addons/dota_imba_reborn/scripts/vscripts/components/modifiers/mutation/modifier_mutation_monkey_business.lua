@@ -108,9 +108,8 @@ function modifier_mutation_monkey_business:GetTexture()	return "monkey_king_untr
 
 function modifier_mutation_monkey_business:OnCreated()
 	if not IsServer() then return end
-	self.internal_timer = 0 	-- Initialize internal timer
 	self.tick_rate 		= 0.1	-- Set tick rate for timer
-	self.transform_time = 5		-- Amount of time to wait (in seconds) before transforming
+	self.transform_time = 3.0		-- Amount of time to wait (in seconds) before transforming
 
 	if IsServer() then
 		self:StartIntervalThink(self.tick_rate)
@@ -121,23 +120,11 @@ function modifier_mutation_monkey_business:OnIntervalThink()
 	-- Don't tick down if unit already has the transform modifier or standard monkey_business
 	if not self:GetParent():HasModifier("modifier_mutation_monkey_business_transform") and not self:GetParent():HasModifier("modifier_monkey_king_transform") then
 		if not self:GetParent():IsMoving() then
-			self.internal_timer = self.internal_timer + self.tick_rate
 			if self:GetDuration() == -1 then
-				self:SetDuration(5, true)
+				self:SetDuration(self.transform_time, true)
 			end
 		else
-			self.internal_timer = 0
 			self:SetDuration(-1, true)
-		end
-
-		if self.internal_timer >= self.transform_time then
-			self:GetParent():AddNewModifier(self:GetParent(), nil, "modifier_mutation_monkey_business_transform", {})
-			Timers:CreateTimer(FrameTime(), function()
-				if not self:IsNull() then
-					self:GetParent():AddNewModifier(self:GetParent(), nil, "modifier_mutation_monkey_business_transform_extra", {})
-				end
-			end)
-			self.internal_timer = 0
 		end
 	end
 end
@@ -146,6 +133,10 @@ function modifier_mutation_monkey_business:OnRemoved()
 	if IsServer() then
 		self:StartIntervalThink(-1)
 		self:GetParent():AddNewModifier(self:GetParent(), nil, "modifier_mutation_monkey_business", {})
+		self:GetParent():AddNewModifier(self:GetParent(), nil, "modifier_mutation_monkey_business_transform", {})
+		Timers:CreateTimer(FrameTime(), function()
+			self:GetParent():AddNewModifier(self:GetParent(), nil, "modifier_mutation_monkey_business_transform_extra", {})
+		end)
 	end
 end
 
@@ -162,7 +153,7 @@ end
 
 -- Separate helper function that resets internal timer and removes the transform modifiers if they exist
 function modifier_mutation_monkey_business:Exposed()
-	self.internal_timer = 0
+	self:SetDuration(self.transform_time, true)
 	if self:GetParent():HasModifier("modifier_mutation_monkey_business_transform") then
 		self:GetParent():RemoveModifierByName("modifier_mutation_monkey_business_transform")
 		self:GetParent():RemoveModifierByName("modifier_mutation_monkey_business_transform_extra")

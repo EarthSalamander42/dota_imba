@@ -32,9 +32,6 @@ require('components/team_selection')
 require('events/events')
 require('filters')
 
--- A*-Path-finding logic
-require('libraries/astar')
-
 -- Use this function as much as possible over the regular Precache (this is Async Precache)
 function GameMode:PostLoadPrecache()
 
@@ -72,6 +69,10 @@ function GameMode:OnAllPlayersLoaded()
 end
 
 function GameMode:InitGameMode()
+	-- Store day/night time clientside
+	StoreCurrentDayCycle()
+	CustomGameEventManager:RegisterListener("change_companion", Dynamic_Wrap(self, "DonatorCompanionJS"))
+
 	self:SetUpFountains()
 	self:_InitGameMode()
 end
@@ -90,4 +91,8 @@ function GameMode:SetUpFountains()
 			fountainEnt:AddNewModifier(fountainEnt, nil, "modifier_fountain_aura_lua", {})
 		end
 	end
+end
+
+function GameMode:DonatorCompanionJS(event)
+	DonatorCompanion(event.ID, event.unit, event.js)
 end
