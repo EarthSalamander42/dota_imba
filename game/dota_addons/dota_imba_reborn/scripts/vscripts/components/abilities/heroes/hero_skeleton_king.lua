@@ -1046,6 +1046,14 @@ function imba_wraith_king_reincarnation:GetBehavior()
 	return DOTA_ABILITY_BEHAVIOR_PASSIVE
 end
 
+-- Should fully close out talent behavior change problems
+function imba_wraith_king_reincarnation:OnOwnerSpawned()
+	if not IsServer() then return end
+	if self:GetCaster():HasAbility("special_bonus_imba_skeleton_king_5") and self:GetCaster():FindAbilityByName("special_bonus_imba_skeleton_king_5"):IsTrained() and not self:GetCaster():HasModifier("modifier_special_bonus_imba_skeleton_king_5") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_special_bonus_imba_skeleton_king_5", {})
+	end
+end
+
 function imba_wraith_king_reincarnation:GetIntrinsicModifierName()
 	return "modifier_imba_reincarnation"
 end
@@ -1521,6 +1529,14 @@ function imba_wraith_king_kingdom_come:GetBehavior()
 	return DOTA_ABILITY_BEHAVIOR_PASSIVE
 end
 
+-- Should fully close out talent behavior change problems
+function imba_wraith_king_kingdom_come:OnOwnerSpawned()
+	if not IsServer() then return end
+	if self:GetCaster():HasAbility("special_bonus_imba_skeleton_king_2") and self:GetCaster():FindAbilityByName("special_bonus_imba_skeleton_king_2"):IsTrained() and not self:GetCaster():HasModifier("modifier_special_bonus_imba_skeleton_king_2") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_special_bonus_imba_skeleton_king_2", {})
+	end
+end
+
 function imba_wraith_king_kingdom_come:GetCastPoint()
 	if self:GetBehavior() ~= DOTA_ABILITY_BEHAVIOR_PASSIVE then
 		return 1.0
@@ -1687,7 +1703,7 @@ function modifier_imba_kingdom_come_slow:OnDestroy()
 			ResolveNPCPositions(self.parent:GetAbsOrigin(), 164)
 		-- If it is a creep or an illusion, instantly kill it
 		else
-			if not self.parent:IsRoshan() or not self.parent:IsIllusion() then
+			if (self.parent:IsCreep() and not self.parent:IsAncient()) or self.parent:IsIllusion() then
 				self.parent:Kill(self.ability, self.caster)
 			end
 		end
