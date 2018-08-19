@@ -133,7 +133,9 @@ function modifier_mutation_monkey_business:OnIntervalThink()
 		if self.internal_timer >= self.transform_time then
 			self:GetParent():AddNewModifier(self:GetParent(), nil, "modifier_mutation_monkey_business_transform", {})
 			Timers:CreateTimer(FrameTime(), function()
-				self:GetParent():AddNewModifier(self:GetParent(), nil, "modifier_mutation_monkey_business_transform_extra", {})
+				if not self:IsNull() then
+					self:GetParent():AddNewModifier(self:GetParent(), nil, "modifier_mutation_monkey_business_transform_extra", {})
+				end
 			end)
 			self.internal_timer = 0
 		end
