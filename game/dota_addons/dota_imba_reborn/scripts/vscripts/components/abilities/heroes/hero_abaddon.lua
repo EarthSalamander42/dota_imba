@@ -31,7 +31,7 @@ local function getOverChannelDamageIncrease(caster)
 		local over_channel = caster:FindAbilityByName("imba_abaddon_over_channel")
 		if over_channel then
 			-- #6 Talent: +50% Overchannel power
-			return over_channel:GetSpecialValueFor("extra_dmg") * (1 + caster:FindTalentValue("special_bonus_imba_abaddon_6") * 0.01)
+			return over_channel:GetSpecialValueFor("extra_dmg") * (1 + caster:FindTalentValue("special_bonus_imba_abaddon_6"))
 		end
 	end
 
@@ -44,7 +44,7 @@ local function getOverChannelMistIncrease(caster)
 		if over_channel then
 			local ability_level = over_channel:GetLevel() - 1
 			-- #6 Talent: +50% Overchannel power
-			return over_channel:GetLevelSpecialValueFor( "extra_mist_duration" , ability_level ) * (1 + caster:FindTalentValue("special_bonus_imba_abaddon_6") * 0.01)
+			return over_channel:GetLevelSpecialValueFor( "extra_mist_duration" , ability_level ) * (1 + caster:FindTalentValue("special_bonus_imba_abaddon_6"))
 		end
 	end
 
@@ -57,7 +57,7 @@ local function getOverChannelShieldIncrease(caster)
 		if over_channel then
 			local ability_level = over_channel:GetLevel() - 1
 			-- #6 Talent: +50% Overchannel power
-			return over_channel:GetLevelSpecialValueFor( "extra_dmg" , ability_level ) * (1 + caster:FindTalentValue("special_bonus_imba_abaddon_6") * 0.01) + over_channel:GetLevelSpecialValueFor( "extra_shield_health" , ability_level )
+			return over_channel:GetLevelSpecialValueFor( "extra_dmg" , ability_level ) * (1 + caster:FindTalentValue("special_bonus_imba_abaddon_6")) + over_channel:GetLevelSpecialValueFor( "extra_shield_health" , ability_level )
 		end
 	end
 
@@ -618,6 +618,14 @@ function imba_abaddon_curse_of_avernus:GetBehavior()
 	end
 
 	return DOTA_ABILITY_BEHAVIOR_PASSIVE
+end
+
+function imba_abaddon_curse_of_avernus:OnOwnerSpawned()
+	if not IsServer() then return end
+	self:EndCooldown()
+	if self:GetCaster():HasAbility("special_bonus_imba_abaddon_4") and self:GetCaster():FindAbilityByName("special_bonus_imba_abaddon_4"):IsTrained() and not self:GetCaster():HasModifier("modifier_special_bonus_imba_abaddon_4") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_special_bonus_imba_abaddon_4", {})
+	end
 end
 
 function imba_abaddon_curse_of_avernus:GetCooldown()
@@ -1328,7 +1336,8 @@ LinkLuaModifier("modifier_special_bonus_imba_abaddon_4", "components/abilities/h
 
 modifier_special_bonus_imba_abaddon_4 = modifier_special_bonus_imba_abaddon_4 or class({})
 
-function modifier_special_bonus_imba_abaddon_4:IsHidden() return false end
+function modifier_special_bonus_imba_abaddon_4:IsHidden() return true end
+function modifier_special_bonus_imba_abaddon_4:IsPurgable() return false end
 function modifier_special_bonus_imba_abaddon_4:RemoveOnDeath() return false end
 
 function modifier_special_bonus_imba_abaddon_4:OnCreated( params )
