@@ -79,7 +79,7 @@ function imba_zuus_arc_lightning:Chain(caster, origin_target, chained_target, ab
 			hit_list[chained_target] = hit_list[chained_target] + 1
 		end
 
---		print("num_jumps_done", num_jumps_done, chained_target, hit_list[chained_target])
+		-- print("num_jumps_done", num_jumps_done, chained_target, hit_list[chained_target])
 
 		origin_target:EmitSound("Hero_Zuus.ArcLightning.Target")
 
@@ -676,7 +676,6 @@ function modifier_zuus_nimbus_storm:OnCreated(keys)
 		self.ability 				= self
 		self.cloud_radius 			= keys.cloud_radius
 		self.cloud_bolt_interval 	= keys.cloud_bolt_interval
-		self.dmg_timer 				= self:GetAbility():GetSpecialValueFor("cloud_bolt_interval")
 		self.lightning_bolt 		= self.caster:FindAbilityByName("imba_zuus_lightning_bolt")
 		local target_point 			= GetGroundPosition(self:GetParent():GetAbsOrigin(), self:GetParent())
 		
@@ -692,7 +691,7 @@ function modifier_zuus_nimbus_storm:OnCreated(keys)
 		-- Position of cloud 
 		ParticleManager:SetParticleControl(self.zuus_nimbus_particle, 2, Vector(target_point.x, target_point.y, target_point.z + 450))	
 
-		self:StartIntervalThink(FrameTime())
+		self:StartIntervalThink(self.cloud_bolt_interval)
 	end
 end
 
@@ -714,23 +713,7 @@ end
 
 function modifier_zuus_nimbus_storm:OnIntervalThink()
 	if IsServer() then
-		-- Current position
-		local target_point = self:GetParent():GetAbsOrigin()
-		-- Reposition of ground effect
-		ParticleManager:SetParticleControl(self.zuus_nimbus_particle, 0, Vector(target_point.x, target_point.y, 450))
-		-- Reposition of cloud 
-		ParticleManager:SetParticleControl(self.zuus_nimbus_particle, 2, Vector(target_point.x, target_point.y, target_point.z +450))	
-
-		-- Is Zeus on the cloud?
-		if self.caster:HasModifier("modifier_imba_zuus_on_nimbus") then
-			-- Move sync zeus movement with the cloud... 
-			self.caster:SetAbsOrigin(target_point)
-		end
-
-		self.dmg_timer = self.dmg_timer + FrameTime()
-
-		-- Time to cast a lightningbolt?
-		if self.lightning_bolt:GetLevel() > 0 and self.dmg_timer >= self.cloud_bolt_interval then
+		if self.lightning_bolt:GetLevel() > 0 then
 			local nearby_enemy_units = FindUnitsInRadius(
 				self.caster:GetTeamNumber(), 
 				self:GetParent():GetAbsOrigin(), 
@@ -750,9 +733,6 @@ function modifier_zuus_nimbus_storm:OnIntervalThink()
 					break
 				end
 			end
-
-			-- Reset timer
-			self.dmg_timer = 0
 		end
 	end
 end
@@ -1262,7 +1242,7 @@ end
 
 LinkLuaModifier("modifier_imba_zuus_pierce_spellimmunity", "components/abilities/heroes/hero_zuus.lua", LUA_MODIFIER_MOTION_NONE)
 modifier_imba_zuus_pierce_spellimmunity = class({})
-function modifier_imba_zuus_pierce_spellimmunity:IsHidden() return true end
+function modifier_imba_zuus_pierce_spellimmunity:IsHidden() return false end
 
 --------------------------------------------------------------
 --				Thundergods Awakening Modifier  			--
@@ -1326,7 +1306,7 @@ end
 
 LinkLuaModifier("modifier_imba_zuus_thundergods_awakening_bkb", "components/abilities/heroes/hero_zuus.lua", LUA_MODIFIER_MOTION_NONE)
 modifier_imba_zuus_thundergods_awakening_bkb = class({})
-function modifier_imba_zuus_thundergods_awakening_bkb:IsHidden() return true end
+function modifier_imba_zuus_thundergods_awakening_bkb:IsHidden() return false end
 function modifier_imba_zuus_thundergods_awakening_bkb:IsBuff() return true end
 function modifier_imba_zuus_thundergods_awakening_bkb:IsPurgable() return false end
 function modifier_imba_zuus_thundergods_awakening_bkb:OnCreated()
