@@ -2647,15 +2647,15 @@
 "DOTA_Tooltip_Ability_special_bonus_imba_riki_2"				"Martyr Strike's Marks"
 "DOTA_Tooltip_Ability_special_bonus_imba_riki_2_Description"	"Tricks of the Trade's Martyr Strikes mark its targets, becoming more likely to get hit by it."
 "DOTA_Tooltip_Ability_special_bonus_imba_riki_3"            	"Cloak and Dagger Reveal"
-"DOTA_Tooltip_Ability_special_bonus_imba_riki_3_Description"	"Cloak and Dagger can be activated to gain bonus agility multiplier, trading in invisibility for 6 seconds."
+"DOTA_Tooltip_Ability_special_bonus_imba_riki_3_Description"	"Cloak and Dagger can be activated to multiply the Backstab bonus agility multiplier by %value%x, trading in invisibility for 6 seconds."
 "DOTA_Tooltip_Ability_special_bonus_imba_riki_4"            	"Riki can apply Sidestab with reduced Agi multiplier bonus"
 "DOTA_Tooltip_Ability_special_bonus_imba_riki_5"           		"Smokescreen grants Riki another form of Invisibility"
-"DOTA_Tooltip_Ability_special_bonus_imba_riki_6" 				"Trick of the Trade cooldown storage"
+"DOTA_Tooltip_Ability_special_bonus_imba_riki_6" 				"Tricks of the Trade cooldown storage"
 "DOTA_Tooltip_Ability_special_bonus_imba_riki_6_Description"    "Ending Tricks of the Trade early reduces its cooldown proportionally to the remaining time."
 "DOTA_Tooltip_Ability_special_bonus_imba_riki_7"           		"Broken Back"
-"DOTA_Tooltip_Ability_special_bonus_imba_riki_7_Description"	"4 successive Backstabs apply Break on the target for 5 seconds."
+"DOTA_Tooltip_Ability_special_bonus_imba_riki_7_Description"	"Landing four successive Backstabs on a target applies Break for 5 seconds."
 "DOTA_Tooltip_Ability_special_bonus_imba_riki_8"				"Blink Strike Passive"
-"DOTA_Tooltip_Ability_special_bonus_imba_riki_8"           		"Riki gains 20% chance on attack to cast Blink Strike on the target, backstabbing it."
+"DOTA_Tooltip_Ability_special_bonus_imba_riki_8_Description"    "Riki gains a %value%%  chance on attack to cast Blink Strike on the target, backstabbing it."
 
 // Rubick
 ////===============================================================================================================

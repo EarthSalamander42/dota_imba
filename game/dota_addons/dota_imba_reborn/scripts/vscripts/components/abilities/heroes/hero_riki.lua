@@ -812,6 +812,23 @@ LinkLuaModifier( "modifier_imba_riki_peek_a_boo", "components/abilities/heroes/h
 LinkLuaModifier( "modifier_imba_riki_backbreaker", "components/abilities/heroes/hero_riki.lua", LUA_MODIFIER_MOTION_NONE )
 LinkLuaModifier( "modifier_imba_riki_backbroken", "components/abilities/heroes/hero_riki.lua", LUA_MODIFIER_MOTION_NONE )
 
+-- Adding "modifier_special_bonus_imba_riki_3" as separate modifier to force GetBehavior call from passive to active skill
+LinkLuaModifier("modifier_special_bonus_imba_riki_3", "components/abilities/heroes/hero_riki.lua", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_riki_3 = class({})
+
+function modifier_special_bonus_imba_riki_3:IsHidden() 			return true end
+function modifier_special_bonus_imba_riki_3:IsPurgable() 		return false end
+function modifier_special_bonus_imba_riki_3:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_riki_3:OnCreated()
+	if not IsServer() then return end
+	if self:GetParent():FindAbilityByName("imba_riki_cloak_and_dagger") then
+		self:GetParent():FindAbilityByName("imba_riki_cloak_and_dagger"):GetBehavior()
+	end
+end
+
+---
 
 function imba_riki_cloak_and_dagger:GetAbilityTextureName()
 	return "riki_permanent_invisibility"
@@ -824,6 +841,7 @@ function imba_riki_cloak_and_dagger:GetBehavior()
 		return DOTA_ABILITY_BEHAVIOR_PASSIVE
 	end
 end
+
 function imba_riki_cloak_and_dagger:IsRefreshable() return false end
 
 function imba_riki_cloak_and_dagger:GetIntrinsicModifierName()
@@ -831,7 +849,11 @@ function imba_riki_cloak_and_dagger:GetIntrinsicModifierName()
 end
 
 function imba_riki_cloak_and_dagger:OnOwnerSpawned()
+	if not IsServer() then return end
 	self:EndCooldown()
+	if self:GetCaster():HasAbility("special_bonus_imba_riki_3") and self:GetCaster():FindAbilityByName("special_bonus_imba_riki_3"):IsTrained() and not self:GetCaster():HasModifier("modifier_special_bonus_imba_riki_3") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_special_bonus_imba_riki_3", {})
+	end
 end
 
 function imba_riki_cloak_and_dagger:GetCooldown( nLevel )
