@@ -2658,7 +2658,6 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"last_proc"					"12 10 8 6"
-				"LinkedSpecialBonus"		"special_bonus_unique_brewmaster_4"
 			}
 		}
 	}
@@ -3036,7 +3035,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"value"				"4"
+				"value"				"6"
 			}
 		}
 	}
@@ -4266,7 +4265,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"value"					"60"
+				"value"					"150"
 			}
 		}
 	}
