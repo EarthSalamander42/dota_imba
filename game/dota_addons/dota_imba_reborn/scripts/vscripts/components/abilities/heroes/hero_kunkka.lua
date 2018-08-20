@@ -1787,6 +1787,10 @@ function imba_kunkka_ghostship:OnProjectileHit_ExtraData(target, location, Extra
 		local knockback_origin = target_pos + (target_pos - crash_pos):Normalized() * 100
 		local distance = (crash_pos - target_pos ):Length2D()
 		local duration = ((location - crash_pos ):Length2D() - ExtraData.radius) / ExtraData.speed
+		if IsNearFountain(target_pos, 1200) or IsNearFountain(crash_pos, 1200) then
+			duration = 0
+		end
+		
 		-- Apply the knockback modifier
 		local knockback =
 		{	should_stun = 0,
