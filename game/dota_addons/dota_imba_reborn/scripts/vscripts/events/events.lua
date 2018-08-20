@@ -72,6 +72,9 @@ function GameMode:OnGameRulesStateChange(keys)
 			-- Initialize IMBA Runes system
 			ImbaRunes:Init()
 
+			-- Initialize base shrines
+			SetupShrines()
+
 			-- Setup topbar player colors
 			CustomGameEventManager:Send_ServerToAllClients("override_top_bar_colors", {})
 		end)

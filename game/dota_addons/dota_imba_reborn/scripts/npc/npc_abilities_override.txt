@@ -9071,7 +9071,7 @@
 
 		"AbilityCastRange"					"4000"
 		"AbilityManaCost"					"50 75 100 125"
-		"AbilityDamage"						"100 200 300 400"
+		"AbilityDamage"						"125 250 375 500"
 
 		"AbilitySpecial"
 		{
@@ -9151,7 +9151,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"100 220 310 370"
+				"damage"					"100 200 300 400"
 				"LinkedSpecialBonus"		"special_bonus_unique_puck_4"
 			}
 		}
@@ -9217,12 +9217,12 @@
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"coil_stun_duration"		"1.5 3.0 3.3"
+				"coil_stun_duration"		"1.5 3.0 4.5"
 			}
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"coil_break_damage"			"300 500 600"
+				"coil_break_damage"			"300 450 600"
 			}
 			"06"
 			{
@@ -9237,12 +9237,12 @@
 			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"coil_break_damage_scepter"	"400 700 900"
+				"coil_break_damage_scepter"	"400 650 900"
 			}
 			"09"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"coil_stun_duration_scepter"	"1.5 4.5 4.8"
+				"coil_stun_duration_scepter"	"3.0 4.5 6.0"
 			}
 		}
 	}
@@ -10120,7 +10120,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"cast_range_scepter"	"25000"
+				"cast_range_scepter"	"4242"
 			}
 			"05"
 			{

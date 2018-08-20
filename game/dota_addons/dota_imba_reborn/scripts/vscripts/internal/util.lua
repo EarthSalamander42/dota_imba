@@ -838,3 +838,33 @@ function IsDaytime()
 
 	return true   
 end
+
+function SetupShrines()
+	local good_fillers = {
+		"good_filler_1",
+		"good_filler_3",
+		"good_filler_5",
+	}
+
+	local bad_fillers = {
+		"bad_filler_1",
+		"bad_filler_3",
+		"bad_filler_5",
+	}
+
+	for _, ent_name in pairs(good_fillers) do
+		local filler = Entities:FindByName(nil, ent_name)
+		local abs = filler:GetAbsOrigin()
+		filler:RemoveSelf()
+		local shrine = CreateUnitByName("npc_dota_goodguys_healers", abs, true, nil, nil, 2)
+		shrine:SetAbsOrigin(abs)
+	end
+
+	for _, ent_name in pairs(bad_fillers) do
+		local filler = Entities:FindByName(nil, ent_name)
+		local abs = filler:GetAbsOrigin()
+		filler:RemoveSelf()
+		local shrine = CreateUnitByName("npc_dota_badguys_healers", abs, true, nil, nil, 3)
+		shrine:SetAbsOrigin(abs)
+	end
+end

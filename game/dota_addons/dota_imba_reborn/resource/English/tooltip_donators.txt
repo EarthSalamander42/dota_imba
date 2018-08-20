@@ -25,6 +25,9 @@
 "npc_imba_donator_statue_brewmaster_ember_spirit"		"Fire Spirit (Brewmaster)"
 "npc_imba_donator_statue_brewmaster_storm_spirit"		"Storm Spirit (Brewmaster)"
 "npc_imba_donator_statue_grillhound"					"Grillhound"
+"npc_imba_donator_statue_llama"							"Llama"
+"npc_imba_donator_statue_roshan"						"Roshan"
+"npc_imba_donator_statue_crystal_maiden_arcana"			"Crystal Maiden (Arcana)"
 
 "npc_imba_donator_statue_cookies"						"EarthSalamander's Chocobo"
 "npc_imba_donator_statue_suthernfriend"					"suthernfriend's Dog"

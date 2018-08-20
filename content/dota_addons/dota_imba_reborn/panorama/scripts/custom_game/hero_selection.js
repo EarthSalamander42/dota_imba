@@ -193,7 +193,7 @@ function onPlayerStatChange(table, key, data) {
 	if (key === 'herolist' && data != null) {
 		// do not move chat for ardm
 		if (currentMap !== 'ardm') {
-			MoveChatWindow();
+//			MoveChatWindow();
 		}
 
 		var strengthholder = FindDotaHudElement('StrengthHeroes');
@@ -560,7 +560,7 @@ function onPlayerStatChange(table, key, data) {
 			// CM Hides the chat on last pick, before selecting plyer hero
 			// ARDM don't have pick screen chat
 //			if (currentMap === 'imba_ranked_5v5' || currentMap === 'imba_ranked_10v10') {
-				ReturnChatWindow();
+//				ReturnChatWindow();
 //			}
 
 			HideStrategy();
@@ -766,7 +766,7 @@ function ReloadCMStatus(data) {
 
 		// the "select your hero at the end" thing
 		if (obj.side === teamID && obj.type === 'Pick' && obj.hero !== 'empty') {
-			ReturnChatWindow();
+//			ReturnChatWindow();
 			var newbutton = $.CreatePanel('RadioButton', FindDotaHudElement('CMHeroPreview'), '');
 			newbutton.group = 'CMHeroChoises';
 			newbutton.AddClass('CMHeroPreviewItem');

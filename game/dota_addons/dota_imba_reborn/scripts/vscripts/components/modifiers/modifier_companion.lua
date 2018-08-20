@@ -127,7 +127,7 @@ function modifier_companion:OnIntervalThink()
 			end
 		end
 
-		self:SetStackCount(hero_distance / 3)
+		self:SetStackCount(hero_distance / 4)
 
 		for _, v in ipairs(SHARED_NODRAW_MODIFIERS) do
 			if hero:HasModifier(v) or self:IsOnMountain() then

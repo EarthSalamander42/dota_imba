@@ -31,6 +31,18 @@ function DonatorStatue(ID, statue_unit)
 		team.."_filler_7",
 	}
 
+	local model_scale = nil
+
+	for key, value in pairs(LoadKeyValues("scripts/npc/units/statues.txt")) do
+		if key == statue_unit then
+			model_scale = value["ModelScale"]
+			break
+		end
+	end
+
+	if model_scale == nil then model_scale = 1.0 end
+
+	if statue_unit == nil then return end
 	for _, ent_name in pairs(fillers) do
 		local filler = Entities:FindByName(nil, ent_name)
 		if filler then
@@ -40,8 +52,9 @@ function DonatorStatue(ID, statue_unit)
 
 			local unit = CreateUnitByName(statue_unit, abs, true, nil, nil, PlayerResource:GetPlayer(ID):GetTeam())
 			if unit == nil then return end
+			unit:SetModelScale(model_scale)
 			unit:SetAbsOrigin(abs + Vector(0, 0, 45))
-			unit:AddNewModifier(unit, nil, "modifier_imba_donator_statue", {})
+--			unit:AddNewModifier(unit, nil, "modifier_imba_donator_statue", {})
 			unit:AddNewModifier(unit, nil, "modifier_invulnerable", {})
 			hero.donator_statue = unit
 
@@ -76,10 +89,11 @@ function DonatorStatue(ID, statue_unit)
 				unit:SetMaterialGroup("1")
 			elseif statue_unit == "npc_imba_donator_statue_tabisama" then
 				unit:SetAbsOrigin(unit:GetAbsOrigin() + Vector(0, 0, 40))
-			end
-
-			if statue_unit == "npc_imba_donator_statue_zonnoz" then
+			elseif statue_unit == "npc_imba_donator_statue_zonnoz" then
 				pedestal_name = "npc_imba_donator_pedestal_pudge_arcana"
+			elseif statue_unit == "npc_imba_donator_statue_crystal_maiden_arcana" then
+				local particle = ParticleManager:CreateParticle("particles/econ/items/crystal_maiden/crystal_maiden_maiden_of_icewrack/maiden_arcana_base_ambient.vpcf", PATTACH_ABSORIGIN_FOLLOW, unit)
+				ParticleManager:ReleaseParticleIndex(particle)
 			end
 
 			local pedestal = CreateUnitByName(pedestal_name, abs, true, nil, nil, PlayerResource:GetPlayer(ID):GetTeam())
