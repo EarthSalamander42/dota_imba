@@ -199,7 +199,7 @@ function SwitchTab(tab) {
 
 function SwitchDonatorWrapper(type) {
 	if (current_sub_tab == type) {
-		$.Msg("Bro don't reload you're fine!");
+//		$.Msg("Bro don't reload you're fine!");
 		return;
 	}
 
@@ -335,7 +335,7 @@ var current_type = "";
 function HallOfFame(type) {
 
 	if (current_type == type) {
-		$.Msg("Bro don't reload you're fine!");
+//		$.Msg("Bro don't reload you're fine!");
 		return;
 	}
 
@@ -414,8 +414,17 @@ function GenerateBattlepassPanel(BattlepassRewards, player) {
 
 	for (var i = 1; i <= 200; i++) {
 		if (BattlepassRewards[i] != undefined) {
+			var is_arcana = false;
+			var is_immortal = false;
 
 			i_count = i_count + 1;
+
+			var arcana = BattlepassRewards[i].search("arcana");
+			if (arcana != -1)
+				is_arcana = true;
+			var immortal = BattlepassRewards[i].search("immortal");
+			if (immortal != -1)
+				is_immortal = true;
 
 			if (i_count > 10) {
 				class_option_count = class_option_count + 1;
@@ -426,14 +435,21 @@ function GenerateBattlepassPanel(BattlepassRewards, player) {
 
 			var reward = $.CreatePanel("Panel", $("#BattlepassRow" + class_option_count + "_" + player), BattlepassRewards[i]);
 			reward.AddClass("BattlepassReward");
-
 			var reward_icon = $.CreatePanel("Panel", reward, BattlepassRewards[i] + "_icon");
 			reward_icon.AddClass("BattlepassRewardIcon");
 			reward_icon.style.backgroundImage = 'url("file://{images}/custom_game/battlepass/' + BattlepassRewards[i] + '.png")';
+			if (is_arcana == true)
+				reward_icon.AddClass("arcana_border");
+			if (is_immortal == true)
+				reward_icon.AddClass("immortal_border");
 
 			var reward_label = $.CreatePanel("Label", reward, BattlepassRewards[i] + "_label");
 			reward_label.AddClass("BattlepassRewardLabel");
 			reward_label.text = $.Localize("battlepass_level") + i;
+			if (is_arcana == true)
+				reward_label.AddClass("arcana_text");
+			if (is_immortal == true)
+				reward_label.AddClass("immortal_text");
 
 			if (plyData != null) {
 				if (i <= plyData.Lvl) {
@@ -449,13 +465,13 @@ function GenerateBattlepassPanel(BattlepassRewards, player) {
 					reward_icon.AddClass("BattlepassRewardIcon_locked")
 					var reward_label_locked = $.CreatePanel("Label", reward_icon, BattlepassRewards[i] + "_label");
 					reward_label_locked.AddClass("BattlepassRewardLabelLocked");
-					reward_label_locked.text = $.Localize("battlepass_reward_locked");
+					reward_label_locked.text = $.Localize("battlepass_reward_locked") + $.Localize("#battlepass_" + BattlepassRewards[i]);
 				}
 			} else {
 				reward_icon.AddClass("BattlepassRewardIcon_locked")
 				var reward_label_locked = $.CreatePanel("Label", reward_icon, BattlepassRewards[i] + "_label");
 				reward_label_locked.AddClass("BattlepassRewardLabelLocked");
-				reward_label_locked.text = $.Localize("battlepass_reward_locked");
+				reward_label_locked.text = $.Localize("battlepass_reward_locked") + $.Localize("#battlepass_" + "\n" +  BattlepassRewards[i]);
 			}
 		}
 	}
@@ -486,6 +502,7 @@ function GenerateCompanionPanel(companions, player, panel, retainSubTab) {
 	var companion_unit = [];
 	var companion_name = [];
 	var companion_id = [];
+	var companion_skin = [];
 
 	// +1 for unique companion (e.g: cookies, baumi,
 	// bulldog, icefrog)
@@ -502,6 +519,8 @@ function GenerateCompanionPanel(companions, player, panel, retainSubTab) {
 			companion_unit[i] = companions[i].file;
 			companion_name[i] = companions[i].name;
 			companion_id[i] = companions[i].id;
+			if (companions[i].file == "npc_imba_donator_companion_sappling")
+				companion_skin[i] = 3;
 		} else {
 			var steamId = Game.GetLocalPlayerInfo().player_steamid;
 			if (steamId == "76561198015161808") {
@@ -540,8 +559,44 @@ function GenerateCompanionPanel(companions, player, panel, retainSubTab) {
 		companionpreview.style.width = "132px";
 		companionpreview.style.height = "135px";
 		companionpreview.BLoadLayoutFromString('<root><Panel><DOTAScenePanel style="width:100%; height:153px; margin-top: -45px;" particleonly="false" unit="' + companion_unit[i.toString()] + '"/></Panel></root>', false, false);
-		// companionpreview.style.opacityMask = 'url("s2r://panorama/images/masks/hero_model_opacity_mask_png.vtex");'
+		companionpreview.style.opacityMask = 'url("s2r://panorama/images/masks/hero_model_opacity_mask_png.vtex");'
+/*
+		var companionskin = $.CreatePanel("Panel", companionpreview, "CompanionSkinPanel_" + i);
+		companionskin.style.width = "100%";
+		companionskin.style.height = "25px";
+		companionskin.style.align = "center bottom";
+		companionskin.style.flowChildren = "right";
 
+		for (var j = 0; j <= companion_skin[i]; j++) {
+			var companionskinbutton = $.CreatePanel("Button", companionskin, "CompanionSkin_" + i + "_" + j);
+			companionskinbutton.style.width = "20%";
+			companionskinbutton.style.height = "25px";
+			companionskinbutton.style.margin = "1px";
+			companionskinbutton.style.align = "center bottom";
+			companionskinbutton.style.zIndex = "100";
+			companionskinbutton.style.backgroundColor = "grey";
+			var event = function(unit, j) {
+				return function() {
+					CompanionSkin(unit, j);
+				}
+			};
+			companionskinbutton.SetPanelEvent("onactivate", event(companion_unit_name, j));
+
+			var label = $.CreatePanel("Label", companionskinbutton, companion_name[i] + "_label");
+			label.text = j + 1;
+
+			label.style.horizontalAlign = "left";
+			label.style.fontSize = "12px";
+			label.style.verticalAlign = "top";
+			label.style.letterSpacing = "1px";
+			label.style.align = "center center";
+			label.style.textTransform = "uppercase";
+			label.style.textAlign = "center center";
+			label.style.textShadow = "0px 0px 3px 3 #00000070";
+			label.style.color = "#99a8ad";
+			label.style.width = "100%";
+		}
+*/
 		if (newbie == true) {
 			companionpreview.AddClass("CompanionNew");
 		}
@@ -581,8 +636,16 @@ function GenerateCompanionPanel(companions, player, panel, retainSubTab) {
 		if (!retainSubTab) {
 			SwitchDonatorWrapper(panel);
 		}
-		
 	}
+}
+
+function CompanionSkin(unit, j) {
+	$.Msg(unit, j)
+	GameEvents.SendCustomGameEventToServer("change_companion_skin", {
+		ID : Players.GetLocalPlayer(),
+		unit : unit,
+		skin : j
+	})
 }
 
 function ToggleCompanion() {

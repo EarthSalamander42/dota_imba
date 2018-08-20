@@ -72,6 +72,7 @@ function GameMode:InitGameMode()
 	-- Store day/night time clientside
 	StoreCurrentDayCycle()
 	CustomGameEventManager:RegisterListener("change_companion", Dynamic_Wrap(self, "DonatorCompanionJS"))
+	CustomGameEventManager:RegisterListener("change_companion_skin", Dynamic_Wrap(self, "DonatorCompanionSkinJS"))
 
 	self:SetUpFountains()
 	self:_InitGameMode()
@@ -95,4 +96,8 @@ end
 
 function GameMode:DonatorCompanionJS(event)
 	DonatorCompanion(event.ID, event.unit, event.js)
+end
+
+function GameMode:DonatorCompanionSkinJS(event)
+	DonatorCompanionSkin(event.ID, event.unit, event.skin)
 end

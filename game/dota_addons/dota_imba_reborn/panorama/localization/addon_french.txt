@@ -310,6 +310,7 @@
 	"swap_vanilla_to_custom" "Choisir un héros Vanilla"
 	"team_title_dire" "Le Dire"
 	"team_title_radiant" "Le Radiant"
+	"toggle_companion" "Toggle Companion"
 	"unassigned" "Non Assignés"
 	"vanilla_hero" "Lazy"
 	"welcome_label" "Bienvenue dans Dota IMBA!"

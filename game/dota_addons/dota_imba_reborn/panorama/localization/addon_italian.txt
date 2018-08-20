@@ -310,6 +310,7 @@
 	"swap_vanilla_to_custom" "Swap to Vanilla Heroes"
 	"team_title_dire" "The Dire"
 	"team_title_radiant" "The Radiant"
+	"toggle_companion" "Toggle Companion"
 	"unassigned" "Squadra Non Assegnati"
 	"vanilla_hero" "Lazy"
 	"welcome_label" "Welcome to Dota IMBA!"

@@ -1102,3 +1102,9 @@ function TopBarColor(args) {
 }
 
 GameEvents.Subscribe("top_bar_colors", TopBarColor);
+
+function HidePause(args) {
+	FindDotaHudElement("PausedInfo").style.opacity = args.show;
+}
+
+GameEvents.Subscribe("hide_pause", HidePause);

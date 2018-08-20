@@ -310,6 +310,7 @@
 	"swap_vanilla_to_custom" "Cambiar a héroes ordinarios"
 	"team_title_dire" "Los Dire"
 	"team_title_radiant" "Los Radiant"
+	"toggle_companion" "Toggle Companion"
 	"unassigned" "Equipo sin asignar"
 	"vanilla_hero" "Perezoso"
 	"welcome_label" "¡Bienvenido a Dota IMBA!"

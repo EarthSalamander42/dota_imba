@@ -97,15 +97,29 @@ function DonatorStatue(ID, statue_unit)
 end
 
 function DonatorCompanion(ID, unit_name, js)
-if IMBA_DONATOR_COMPANION[tostring(PlayerResource:GetSteamID(ID))] and not js then 
-	unit_name = IMBA_DONATOR_COMPANION[tostring(PlayerResource:GetSteamID(ID))]
-end
+	for _, steamid in pairs(IMBA_COMPANION_DISABLED) do
+		if steamid == tostring(PlayerResource:GetSteamID(ID)) then
+			return
+		end
+	end
 
-if unit_name == nil then return end
-local hero = PlayerResource:GetPlayer(ID):GetAssignedHero()
-local color = hero:GetFittingColor()
-local model = GetKeyValueByHeroName(unit_name, "Model")
-local model_scale = GetKeyValueByHeroName(unit_name, "ModelScale")
+	if IMBA_DONATOR_COMPANION[PlayerResource:GetSteamID(ID)] and not js then 
+		unit_name = IMBA_DONATOR_COMPANION[PlayerResource:GetSteamID(ID)]
+	end
+
+	if unit_name == nil then return end
+	local hero = PlayerResource:GetPlayer(ID):GetAssignedHero()
+	local color = hero:GetFittingColor()
+	local model
+	local model_scale
+
+	for key, value in pairs(LoadKeyValues("scripts/npc/units/companions.txt")) do
+		if key == unit_name then
+			model = value["Model"]
+			model_scale = value["ModelScale"]
+			break
+		end
+	end
 
 --	print(unit_name, model, model_scale)
 
@@ -159,6 +173,9 @@ local model_scale = GetKeyValueByHeroName(unit_name, "ModelScale")
 	elseif model == "models/items/io/io_ti7/io_ti7.vmdl" then
 		local particle = ParticleManager:CreateParticle("particles/econ/items/wisp/wisp_ambient_ti7.vpcf", PATTACH_ABSORIGIN_FOLLOW, companion)
 		ParticleManager:ReleaseParticleIndex(particle)
+	elseif unit_name == "npc_imba_donator_companion_golem" then
+		local particle = ParticleManager:CreateParticle("particles/econ/courier/courier_greevil_orange/courier_greevil_orange_ambient_3.vpcf", PATTACH_ABSORIGIN_FOLLOW, companion)
+		ParticleManager:ReleaseParticleIndex(particle)
 	end
 
 	companion:SetModelScale(model_scale)
@@ -172,4 +189,14 @@ local model_scale = GetKeyValueByHeroName(unit_name, "ModelScale")
 --		ab:SetLevel(1)
 --		ab:CastAbility()		
 --	end
+end
+
+function DonatorCompanionSkin(id, unit, skin)
+	local hero = PlayerResource:GetPlayer(id):GetAssignedHero()
+
+	print("Material Group:", skin)
+	print(hero.companion, hero.companion:GetUnitName(), unit)
+	if hero.companion and hero.companion:GetUnitName() == unit then
+		hero.companion:SetMaterialGroup(tostring(skin))
+	end
 end

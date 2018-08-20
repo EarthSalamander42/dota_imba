@@ -114,7 +114,12 @@ function modifier_companion:OnIntervalThink()
 		elseif hero_distance < min_distance then
 			companion:Stop()
 		elseif hero_distance > blink_distance then
+			local blink_pfx = ParticleManager:CreateParticleForTeam(hero.blink_effect, PATTACH_ABSORIGIN, companion, companion:GetTeamNumber())
+			ParticleManager:ReleaseParticleIndex(blink_pfx)
+			EmitSoundOnLocationForAllies(companion:GetAbsOrigin(), "DOTA_Item.BlinkDagger.Activate", companion)
 			FindClearSpaceForUnit(companion, hero_origin + RandomVector(RandomFloat(200, 300)), false)
+			local blink_end_pfx = ParticleManager:CreateParticleForTeam(hero.blink_effect_end, PATTACH_ABSORIGIN, companion, companion:GetTeamNumber())
+			ParticleManager:ReleaseParticleIndex(blink_end_pfx)
 			companion:Stop()
 		elseif hero_distance > min_distance then
 			if not companion:IsMoving() then

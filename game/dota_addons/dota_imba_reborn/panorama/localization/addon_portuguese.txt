@@ -310,6 +310,7 @@
 	"swap_vanilla_to_custom" "Troque por heróis originais "
 	"team_title_dire" "Os Temidos"
 	"team_title_radiant" "Os Iluminados"
+	"toggle_companion" "Toggle Companion"
 	"unassigned" "Equipe não atribuída"
 	"vanilla_hero" "Preguiçoso"
 	"welcome_label" "Bem vindo ao Dota IMBA!"

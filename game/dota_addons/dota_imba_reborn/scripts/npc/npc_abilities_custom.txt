@@ -28139,7 +28139,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
-		"ScriptFile"				"components/abilities/heroes/hero_juggernaut.lua"
+		"ScriptFile"					"components/abilities/heroes/hero_juggernaut.lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityTextureName"			"juggernaut_blade_fury"
 
@@ -28176,19 +28176,38 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_per_sec"		"80 105 130 155"
-				"LinkedSpecialBonus"	"special_bonus_unique_juggernaut_3"
+				"deflect_radius"		"800"
 			}
 			"03"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"damage_tick"			"0.2"
+				"var_type"				"FIELD_INTEGER"
+				"deflect_chance"		"22 22 22 22 28 34 40"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
+				"damage_per_sec"		"80 105 130 155"
+				"LinkedSpecialBonus"	"special_bonus_unique_juggernaut_3"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"damage_tick"			"0.2"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"succ_tick"				"0.2"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"evasion"				"10 10 10 10 20 30 40"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
 				"duration"				"5"
-				"LinkedSpecialBonus"	"special_bonus_unique_juggernaut"
 			}
 		}
 	}
@@ -28201,7 +28220,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
-		"ScriptFile"				"components/abilities/heroes/hero_juggernaut.lua"
+		"ScriptFile"					"components/abilities/heroes/hero_juggernaut.lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AbilityTextureName"			"juggernaut_healing_ward"
 		"AOERadius"						"%heal_radius"
@@ -28308,6 +28327,21 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"health"				"3 6 6 9"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"heal_radius_totem"		"600 600 600 600 650 700 750"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"heal_per_sec_totem"	"4 5 6 7 7 7 7"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"health_totem"			"9 9 9 9 12 15 18"
 			}
 		}
 	}
@@ -34876,7 +34910,7 @@
 			"01"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"range"								"700 950 1200"
+				"range"								"900 1200 1500"
 			}
 			"02"
 			{

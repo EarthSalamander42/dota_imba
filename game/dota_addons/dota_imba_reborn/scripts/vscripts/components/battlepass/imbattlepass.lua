@@ -424,6 +424,9 @@ end
 function Imbattlepass:GetHeroEffect(hero)
 	if hero:GetUnitName() == "npc_dota_hero_juggernaut" then
 		if next_reward == true and Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_JUGGERNAUT["juggernaut_arcana"] then
+			for i = 24, 28 do
+				hero:HideWearables(i)
+			end
 			Imbattlepass:GetJuggernautArcanaEffect(hero:GetPlayerID(), HasJuggernautArcana(hero:GetPlayerID()))
 		end
 	elseif hero:GetUnitName() == "npc_dota_hero_pudge" then
@@ -528,17 +531,17 @@ function Imbattlepass:GetJuggernautArcanaEffect(ID, arcana_type)
 		hero.head:FollowEntity(hero, true)
 		hero.head:SetMaterialGroup(tostring(arcana_type))
 
-		hero.back = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/juggernaut/armor_for_the_favorite_back/armor_for_the_favorite_back.vmdl"})
-		hero.back:FollowEntity(hero, true)
+--		hero.back = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/juggernaut/armor_for_the_favorite_back/armor_for_the_favorite_back.vmdl"})
+--		hero.back:FollowEntity(hero, true)
 
-		hero.arms = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/juggernaut/armor_for_the_favorite_arms/armor_for_the_favorite_arms.vmdl"})
-		hero.arms:FollowEntity(hero, true)
+--		hero.arms = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/juggernaut/armor_for_the_favorite_arms/armor_for_the_favorite_arms.vmdl"})
+--		hero.arms:FollowEntity(hero, true)
 
-		hero.legs = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/juggernaut/armor_for_the_favorite_legs/armor_for_the_favorite_legs.vmdl"})
-		hero.legs:FollowEntity(hero, true)
+--		hero.legs = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/juggernaut/armor_for_the_favorite_legs/armor_for_the_favorite_legs.vmdl"})
+--		hero.legs:FollowEntity(hero, true)
 
-		hero.weapon = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/juggernaut/thousand_faces_katana/thousand_faces_katana.vmdl"})
-		hero.weapon:FollowEntity(hero, true)
+--		hero.weapon = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/juggernaut/thousand_faces_katana/thousand_faces_katana.vmdl"})
+--		hero.weapon:FollowEntity(hero, true)
 
 		hero.blade_fury_effect = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_blade_fury.vpcf"
 

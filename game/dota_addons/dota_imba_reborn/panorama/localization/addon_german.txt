@@ -310,6 +310,7 @@
 	"swap_vanilla_to_custom" "Wechsle zu normalen Helden"
 	"team_title_dire" "Die Dire"
 	"team_title_radiant" "Die Radiant"
+	"toggle_companion" "Toggle Companion"
 	"unassigned" "Nicht zugewiesen"
 	"vanilla_hero" "Faul"
 	"welcome_label" "Willkommen zu Dota IMBA!"
