@@ -97,7 +97,7 @@ end
 function modifier_imba_octarine_core_basic:OnDestroy()
 	if IsServer() then
 		-- Remove the unique modifier if no other cores were found
-		if not self.caster:HasModifier(self.modifier_self) then
+		if not self:IsNull() and not self.caster:HasModifier(self.modifier_self) then
 			self.caster:RemoveModifierByName(self.uniqueModifier)
 		end
 	end
@@ -160,6 +160,9 @@ function modifier_imba_octarine_core_unique:OnSpentMana( keys )
 			local blast_damage = ability:GetSpecialValueFor("blast_damage")
 
 			if unit == parent and ability:IsCooldownReady() and cost > 0 then
+				
+				ability:UseResources(false, false, true)
+			
 				-- Blast geometry
 				local blast_duration = 0.75 * 0.75
 				local blast_speed = blast_radius / blast_duration
