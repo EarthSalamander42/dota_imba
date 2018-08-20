@@ -58,15 +58,17 @@ function GameMode:OnHeroDeath(killer, killed_unit)
 		end
 
 		if killed_unit:HasModifier("modifier_imba_reapers_scythe_respawn") then
-			local reaper_scythe = killer:FindAbilityByName("imba_necrolyte_reapers_scythe"):GetSpecialValueFor("respawn_increase")
-			-- Sometimes the killer is not actually Necrophos due to the respawn modifier lingering on a target, which makes reaper_scythe nil and causes massive problems
---			print("Killed by Reaper Scythe!", reaper_scythe, _G.HERO_RESPAWN_TIME_PER_LEVEL[hero_level] + reaper_scythe)
-			if not reaper_scythe then
-				reaper_scythe = 0
+			if killer:HasAbility("imba_necrolyte_reapers_scythe") then
+				local reaper_scythe = killer:FindAbilityByName("imba_necrolyte_reapers_scythe"):GetSpecialValueFor("respawn_increase")
+				-- Sometimes the killer is not actually Necrophos due to the respawn modifier lingering on a target, which makes reaper_scythe nil and causes massive problems
+	--			print("Killed by Reaper Scythe!", reaper_scythe, _G.HERO_RESPAWN_TIME_PER_LEVEL[hero_level] + reaper_scythe)
+				if not reaper_scythe then
+					reaper_scythe = 0
+				end
+				respawn_time = _G.HERO_RESPAWN_TIME_PER_LEVEL[hero_level] + reaper_scythe
+				killed_unit:SetTimeUntilRespawn(respawn_time)
+				return
 			end
-			respawn_time = _G.HERO_RESPAWN_TIME_PER_LEVEL[hero_level] + reaper_scythe
-			killed_unit:SetTimeUntilRespawn(respawn_time)
-			return
 		end
 		
 		if respawn_time == nil or not respawn_time then
