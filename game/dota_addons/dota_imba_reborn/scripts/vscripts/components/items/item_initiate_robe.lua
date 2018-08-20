@@ -14,6 +14,7 @@
 --
 -- Editors:
 --	   Naowin, 18.08.2018
+--	   AltiV, 19.08.2018
 
 -- Author:  Firetoad
 -- Date:	14.11.2016
@@ -34,26 +35,26 @@ function item_imba_initiate_robe:GetAbilityTextureName()
 end
 
 modifier_imba_initiate_robe_passive = modifier_imba_initiate_robe_passive or class({})
-function modifier_imba_initiate_robe_passive:IsDebuff() return false end
-function modifier_imba_initiate_robe_passive:IsHidden() return false end
-function modifier_imba_initiate_robe_passive:IsPermanent() return true end
-function modifier_imba_initiate_robe_passive:IsPurgable() return false end
+function modifier_imba_initiate_robe_passive:IsDebuff() 		return false end
+function modifier_imba_initiate_robe_passive:IsHidden() 		return false end
+function modifier_imba_initiate_robe_passive:IsPermanent() 		return true end
+function modifier_imba_initiate_robe_passive:IsPurgable() 		return false end
 function modifier_imba_initiate_robe_passive:IsPurgeException() return false end
-function modifier_imba_initiate_robe_passive:IsStunDebuff() return false end
-function modifier_imba_initiate_robe_passive:RemoveOnDeath() return false end
-function modifier_imba_initiate_robe_passive:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_imba_initiate_robe_passive:IsStunDebuff() 	return false end
+function modifier_imba_initiate_robe_passive:RemoveOnDeath() 	return false end
+function modifier_imba_initiate_robe_passive:GetAttributes() 	return MODIFIER_ATTRIBUTE_MULTIPLE end
 function modifier_imba_initiate_robe_passive:DeclareFunctions()
 	local decFuns = {
-		MODIFIER_EVENT_ON_SPENT_MANA,
 		MODIFIER_PROPERTY_MANA_REGEN_CONSTANT,
 		MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS,
-		MODIFIER_EVENT_ON_TAKEDAMAGE,
+		MODIFIER_PROPERTY_TOTAL_CONSTANT_BLOCK
 	}	
 
 	return decFuns
 end
 
 function modifier_imba_initiate_robe_passive:OnCreated()
+	if not IsServer() then return end
 	local item = self:GetAbility()
 	self.parent = self:GetParent()
 	if self.parent:IsHero() and item then
@@ -63,47 +64,25 @@ function modifier_imba_initiate_robe_passive:OnCreated()
 		self.max_stacks = item:GetSpecialValueFor("max_stacks")
 		self.shield_pfx = nil
 		self:CheckUnique(true)
+		
+		-- Start tracking mana percentages and mana values to determine if mana was lost
+		self.mana_pct = self:GetParent():GetManaPercent()
+		self.mana_raw = self:GetParent():GetMana()
+		
+		self:StartIntervalThink(0.03)
 	end
 end
 
-
-function modifier_imba_initiate_robe_passive:OnSpentMana(keys)
-	if IsServer() then
-		if keys.unit == self:GetParent() then 
-			local stacks = self:GetStackCount()
-			stacks = stacks + keys.cost
-			if stacks > self.max_stacks then
-				stacks = self.max_stacks
-			end
-
-			local parent = self:GetParent()	
-			-- Play the mana shield particle
-			self.shield_pfx = ParticleManager:CreateParticle("particles/item/initiate_robe/initiate_robe_shield.vpcf", PATTACH_ABSORIGIN_FOLLOW, parent)
-			ParticleManager:SetParticleControl(self.shield_pfx, 0, parent:GetAbsOrigin())
-			ParticleManager:ReleaseParticleIndex(self.shield_pfx)
-
-			self:SetStackCount(stacks)
-		end
+function modifier_imba_initiate_robe_passive:OnIntervalThink()
+	if not IsServer() then return end
+	
+	-- If mana percentage at any frame is lower than the frame before it, set stacks
+	if self.parent:GetManaPercent() < self.mana_pct and self:GetParent():GetMana() < self.mana_raw then
+		self:SetStackCount(min(self:GetStackCount() + (self.mana_raw - self:GetParent():GetMana()) * (self.mana_conversion_rate * 0.01), self.max_stacks))
 	end
-end
 
-function modifier_imba_initiate_robe_passive:OnTakeDamage(keys)
-	if IsServer() then 
-		if self:GetParent() == keys.unit then
-			local current_stacks = self:GetStackCount()
-			if current_stacks > 0 then 
-				if current_stacks > keys.damage then
-					self:GetParent():Heal(keys.damage, self)
-					self:SetStackCount(math.ceil(current_stacks - keys.damage))
-					SendOverheadEventMessage(self:GetParent(), OVERHEAD_ALERT_MAGICAL_BLOCK , self:GetParent(), keys.damage, self:GetParent())
-				else
-					self:GetParent():Heal(current_stacks, self)
-					self:SetStackCount(0)
-					SendOverheadEventMessage(self:GetParent(), OVERHEAD_ALERT_MAGICAL_BLOCK , self:GetParent(), current_stacks, self:GetParent())
-				end
-			end
-		end
-	end
+	self.mana_raw = self:GetParent():GetMana()
+	self.mana_pct = self:GetParent():GetManaPercent()
 end
 
 function modifier_imba_initiate_robe_passive:GetModifierConstantManaRegen()
@@ -112,4 +91,16 @@ end
 
 function modifier_imba_initiate_robe_passive:GetModifierMagicalResistanceBonus()
 	return self.bonus_magic_resistance
+end
+
+function modifier_imba_initiate_robe_passive:GetModifierTotal_ConstantBlock(keys)
+	local blocked = self:GetStackCount()
+	
+	-- Block for the smaller value between total current stacks and total damage
+	if blocked > 0 then 
+		SendOverheadEventMessage(self:GetParent(), OVERHEAD_ALERT_MAGICAL_BLOCK , self:GetParent(), min(self:GetStackCount(), keys.damage), self:GetParent())
+		self:SetStackCount(max(self:GetStackCount() - keys.damage, 0))
+	end
+
+	return blocked
 end
