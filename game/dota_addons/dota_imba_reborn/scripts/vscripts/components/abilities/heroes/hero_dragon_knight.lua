@@ -410,6 +410,13 @@ function imba_dragon_knight_elder_dragon_charge:OnUpgrade()
 	self:SetActivated(false)
 end
 
+function imba_dragon_knight_elder_dragon_charge:OnOwnerSpawned()
+	if not IsServer() then return end
+	if not self:GetCaster():HasModifier("modifier_dragon_knight_dragon_form") then
+		self:SetActivated(false)
+	end
+end
+
 function imba_dragon_knight_elder_dragon_charge:OnSpellStart()
 local caster_loc = self:GetCaster():GetAbsOrigin()
 local direction =  self:GetCaster():GetForwardVector()
@@ -489,10 +496,11 @@ function imba_dragon_knight_elder_dragon_charge:OnProjectileHit(target, location
 
 		if self:GetCaster():HasTalent("special_bonus_imba_dragon_knight_1") then
 			health_as_damage = self:GetCaster():GetMaxHealth() / 100 * breathe_fire:GetSpecialValueFor("health_as_damage")
-			ApplyDamage({attacker = self:GetCaster(), victim = target, damage = breathe_fire:GetSpecialValueFor("damage") + health_as_damage, damage_type = dmg_type, ability = breathe_fire})	
-			SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, target, health_as_damage, nil)
-			target:AddNewModifier(self:GetCaster(), breathe_fire, "modifier_imba_breathe_fire_debuff", {duration = breathe_fire:GetSpecialValueFor("duration")})
 		end
+		
+		ApplyDamage({attacker = self:GetCaster(), victim = target, damage = breathe_fire:GetSpecialValueFor("damage") + health_as_damage, damage_type = dmg_type, ability = breathe_fire})	
+		SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, target, health_as_damage, nil)
+		target:AddNewModifier(self:GetCaster(), breathe_fire, "modifier_imba_breathe_fire_debuff", {duration = breathe_fire:GetSpecialValueFor("duration")})
 
 		if dragon_tail then
 			ApplyDamage({attacker = self:GetCaster(), victim = target, damage = dragon_tail:GetAbilityDamage(), damage_type = dragon_tail:GetAbilityDamageType(), ability = dragon_tail})
@@ -654,10 +662,8 @@ end
 
 function modifier_imba_elder_dragon_form:DeclareFunctions()
 	local funcs = {
-		MODIFIER_EVENT_ON_ATTACK_LANDED,
 		MODIFIER_EVENT_ON_RESPAWN,
-		MODIFIER_EVENT_ON_DEATH,
-		MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT,
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT
 	}
 
 	return funcs
@@ -673,13 +679,13 @@ function modifier_imba_elder_dragon_form:OnRespawn( event )
 end
 
 function modifier_imba_elder_dragon_form:OnIntervalThink()
-	if IsServer() then 
-		if self:GetParent().HasModifier and self:GetParent():HasModifier("modifier_dragon_knight_dragon_form") then
-			if self:GetParent():HasAbility("imba_dragon_knight_elder_dragon_charge") then
+	if IsServer() then
+		
+		-- Only allow EDC to be usable if parent is in Dragon Form
+		if self:GetParent():HasAbility("imba_dragon_knight_elder_dragon_charge") then
+			if self:GetParent():HasModifier("modifier_dragon_knight_dragon_form") then
 				self:GetParent():FindAbilityByName("imba_dragon_knight_elder_dragon_charge"):SetActivated(true)
-			end
-		else
-			if self:GetParent():HasAbility("imba_dragon_knight_elder_dragon_charge") then
+			else
 				self:GetParent():FindAbilityByName("imba_dragon_knight_elder_dragon_charge"):SetActivated(false)
 			end
 		end
