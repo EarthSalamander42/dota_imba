@@ -95,7 +95,7 @@
 	"winter_wyvern_splinter_blast"
 	{
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
-		"AbilityCooldown"				"7.0 6.5 5.0 5.5"
+		"AbilityCooldown"				"7.0 6.5 5.0 4.5"
 		"AbilityDamage"					"150 300 450 600"
 
 		"AbilitySpecial"
