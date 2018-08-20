@@ -658,8 +658,8 @@
 "DOTA_Tooltip_ability_item_imba_initiate_robe_mana_regen"                   "+$mana_regen"
 "DOTA_Tooltip_ability_item_imba_initiate_robe_max_stacks"                   "MAGIC SHIELD CAP:"
 
-"DOTA_Tooltip_modifier_item_imba_initiate_robe_stacks"            "Magic Shield"
-"DOTA_Tooltip_modifier_item_imba_initiate_robe_stacks_Description"      "Absorbs incoming damage"
+"DOTA_Tooltip_modifier_imba_initiate_robe_passive"                  "Magic Shield"
+"DOTA_Tooltip_modifier_imba_initiate_robe_passive_Description"      "Absorbing incoming damage based on stacks."
 
 // Ironleaf Boots
 "DOTA_Tooltip_Ability_item_imba_ironleaf_boots"              "Ironleaf Boots"
