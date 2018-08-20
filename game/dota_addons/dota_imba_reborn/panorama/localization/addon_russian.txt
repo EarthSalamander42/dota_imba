@@ -310,7 +310,7 @@
 	"swap_vanilla_to_custom" "Показать обычных героев"
 	"team_title_dire" "Тьма"
 	"team_title_radiant" "Свет"
-	"toggle_companion" "Toggle Companion"
+	"toggle_companion" "Включить/Выключить Компаньона"
 	"unassigned" "Не определившиеся"
 	"vanilla_hero" "Обычный"
 	"welcome_label" "Добро пожаловать в Дота ИМБА!"

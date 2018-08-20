@@ -1517,7 +1517,6 @@ function imba_juggernaut_omni_slash:OnSpellStart()
 	-- #7 Talent: Omnislash sends an image to commit the slashes, Juggernaut is free to continue as normal
 	-- Senbonzakura Kageyoshi
 	if self.caster:HasTalent("special_bonus_imba_juggernaut_7") then
-
 		-- Superclone Credits: igo95862 & Freeman322
 		local omnislash_image = CreateUnitByName(self.caster:GetUnitName(), self.caster:GetAbsOrigin(), true, self.caster, self.caster:GetOwner(), self.caster:GetTeamNumber())
 
@@ -1942,6 +1941,8 @@ end
 function modifier_imba_omni_slash_caster:OnDestroy()
 	if IsServer() then
 		PlayerResource:SetCameraTarget(self.caster:GetPlayerID(), nil)
+
+		self:GetAbility():SetActivated(true)
 
 		if self.bounce_amt > 1 then
 			local rand = RandomInt(1, 2)

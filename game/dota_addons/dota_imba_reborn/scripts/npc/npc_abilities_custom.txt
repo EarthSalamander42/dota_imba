@@ -28181,7 +28181,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"deflect_chance"		"22 22 22 22 28 34 40"
+				"deflect_chance"		"22 28 34 40"
 			}
 			"04"
 			{
@@ -28202,7 +28202,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"evasion"				"10 10 10 10 20 30 40"
+				"evasion"				"10 20 30 40"
 			}
 			"08"
 			{
@@ -28268,7 +28268,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health"				"3 6 6 9"
+				"health"				"3 5 7 9"
 			}
 			"04"
 			{
@@ -28288,7 +28288,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health_bonus_totem"	"6 6 9 9"
+				"health_bonus_totem"	"6 7 8 9"
 			}
 		}
 	}
@@ -28326,17 +28326,17 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health"				"3 6 6 9"
+				"health"				"3 5 7 9"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"heal_radius_totem"		"600 600 600 600 650 700 750"
+				"heal_radius_totem"		"600 650 700 750"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"heal_per_sec_totem"	"4 5 6 7 7 7 7"
+				"heal_per_sec_totem"	"4 5 6 7"
 			}
 			"06"
 			{
@@ -28501,7 +28501,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"scepter_cooldown"		"60"
+				"scepter_bounce_range"	"700"
 			}
 			"07"
 			{
