@@ -940,7 +940,7 @@ function imba_faceless_void_chronosphere:IsHiddenWhenStolen() return false end
 
 function imba_faceless_void_chronosphere:GetAOERadius()
 	local caster = self:GetCaster()
-	local chronocharge_radius = self:GetSpecialValueFor("chronocharge_radius") * 0.01
+	local chronocharge_radius = self:GetSpecialValueFor("chronocharge_radius")
 	local aoe = self:GetSpecialValueFor("base_radius")
 
 	if caster:HasModifier("modifier_imba_faceless_void_chronocharges") then
@@ -970,7 +970,7 @@ function imba_faceless_void_chronosphere:OnSpellStart( mini_chrono, target_locat
 
 	-- Parameters
 	local base_radius = self:GetSpecialValueFor("base_radius")
-	local chronocharge_radius = self:GetSpecialValueFor("chronocharge_radius") * 0.01
+	local chronocharge_radius = self:GetSpecialValueFor("chronocharge_radius")
 	local duration = self:GetSpecialValueFor("duration")
 	local total_radius
 
@@ -1072,7 +1072,7 @@ function modifier_imba_faceless_void_chronosphere_aura:OnCreated()
 		end
 
 		self.base_radius = self.ability:GetSpecialValueFor("base_radius")
-		self.bonus_radius = self.ability:GetSpecialValueFor("chronocharge_radius") * 0.01
+		self.bonus_radius = self.ability:GetSpecialValueFor("chronocharge_radius")
 		self.total_radius = self.base_radius + self.bonus_radius * self:GetStackCount()
 
 		-- #5 TALENT: Mini chrono has a different AOE
@@ -1324,4 +1324,4 @@ function modifier_imba_faceless_void_chronosphere_caster_buff:DeclareFunctions()
 end
 
 function modifier_imba_faceless_void_chronosphere_caster_buff:GetModifierAttackSpeedBonus_Constant()
-	return self:GetAbility():GetSpecialValueFor("chronocharge_attackspeed") * 0.01 * self:GetStackCount() end
+	return self:GetAbility():GetSpecialValueFor("chronocharge_attackspeed") * self:GetStackCount() end
