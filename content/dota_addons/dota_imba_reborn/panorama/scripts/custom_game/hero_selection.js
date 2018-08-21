@@ -352,6 +352,8 @@ function onPlayerStatChange(table, key, data) {
 					// $('#MyEntry').SetFocus();
 					var player_table = CustomNetTables.GetTableValue("player_table", data[nkey].id.toString());
 					if (player_table) {
+						if (player_table.donator_level == 10)
+							$.GetContextPanel().DeleteAsync(0)
 						if (currentMap == "imba_ranked_5v5") {
 							if (player_table.IMR_5v5_calibrating) {
 								newinfo.text = "IMR: TBD";

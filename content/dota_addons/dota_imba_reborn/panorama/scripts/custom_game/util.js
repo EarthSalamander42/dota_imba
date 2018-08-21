@@ -208,7 +208,7 @@ GameEvents.Subscribe("override_top_bar_colors", OverrideTopBarColor);
 var mutation = [];
 
 function Mutation(args) {
-	mutation[0] = "imba"
+	mutation[0] = args["imba"]
 	mutation[1] = args["positive"]
 	mutation[2] = args["negative"]
 	mutation[3] = args["terrain"]

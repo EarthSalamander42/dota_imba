@@ -8,6 +8,7 @@
 "imba_donator_label_7"		"Salamander Donator"
 "imba_donator_label_8"		"Icefrog Donator"
 "imba_donator_label_9"		"Gaben Donator"
+"imba_donator_label_10"		"Banned Player"
 
 // Donator companions
 "npc_imba_donator_companion_cookies"					"Coook-shan"

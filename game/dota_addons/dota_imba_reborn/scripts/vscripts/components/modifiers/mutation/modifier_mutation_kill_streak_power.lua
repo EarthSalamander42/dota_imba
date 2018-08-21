@@ -27,15 +27,15 @@ function modifier_mutation_kill_streak_power:DeclareFunctions()
 end
 
 function modifier_mutation_kill_streak_power:OnCreated()
-	self.damage_increase = 20 -- %
-	self.maximum_size = 100
+	self.damage_increase = CustomNetTables:GetTableValue("mutation_info", "killstreak_power")["1"]
+	self.maximum_size = _G.IMBA_MUTATION_KILLSTREAK_POWER_MAX_SIZE
 
-	if IsServer() then
-		self.particle = ParticleManager:CreateParticle("particles/hw_fx/candy_carrying_stack.vpcf", PATTACH_OVERHEAD_FOLLOW, self:GetParent())
-		ParticleManager:SetParticleControl(self.particle, 0, self:GetParent():GetAbsOrigin())
-		ParticleManager:SetParticleControl(self.particle, 2, Vector(0, 0, 0))
-		ParticleManager:SetParticleControl(self.particle, 3, Vector(0, 0, 0))
-	end
+	self:StartIntervalThink(1.0)
+
+	self.particle = ParticleManager:CreateParticle("particles/hw_fx/candy_carrying_stack.vpcf", PATTACH_OVERHEAD_FOLLOW, self:GetParent())
+	ParticleManager:SetParticleControl(self.particle, 0, self:GetParent():GetAbsOrigin())
+	ParticleManager:SetParticleControl(self.particle, 2, Vector(0, 0, 0))
+	ParticleManager:SetParticleControl(self.particle, 3, Vector(0, 0, 0))
 end
 
 function modifier_mutation_kill_streak_power:OnHeroKilled(params)
@@ -68,7 +68,7 @@ function modifier_mutation_kill_streak_power:OnHeroKilled(params)
 
 	self:SetStackCount(self:GetStackCount() + 1)
 
-	local stack = self:GetStackCount() * 20
+	local stack = self:GetStackCount() * self.damage_increase
 	local stack_100 = math.floor(stack / 100)
 
 	if stack_100 > 0 then

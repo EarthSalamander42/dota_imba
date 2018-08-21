@@ -47,3 +47,7 @@
 	color: #ede5da;
 	text-shadow: 1px 0px 2px 2.0 #000000ca;
 }
+
+#Mutation3Label.alert {
+	color: red;
+}

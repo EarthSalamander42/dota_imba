@@ -155,6 +155,7 @@ function GetPlayerInfoIXP() -- yet it has too much useless loops, format later. 
 			IMR_10v10_calibrating = api.imba.get_player_info(PlayerResource:GetSteamID(ID)).imr10v10_calibrating,
 			XP_change = 0,
 			IMR_5v5_change = 0,
+			donator_level = api.imba.is_donator(tostring(PlayerResource:GetSteamID(ID))),
 		})
 	end
 

@@ -14,17 +14,12 @@ function modifier_mutation_speed_freaks:DeclareFunctions()
 	return funcs
 end
 
-function modifier_mutation_speed_freaks:OnCreated(keys)
---	self.projectile_speed = keys.projectile_speed
---	self.movespeed_pct = keys.movespeed_pct
---	self.max_movespeed = keys.max_movespeed
-	self.projectile_speed = 500
-	self:SetStackCount(50)
-	self.max_movespeed = 1000
+function modifier_mutation_speed_freaks:OnCreated()
+	self:SetStackCount(CustomNetTables:GetTableValue("mutation_info", "speed_freaks")["1"])
 end
 
 function modifier_mutation_speed_freaks:GetModifierProjectileSpeedBonus()
-	return self.projectile_speed
+	return _G.IMBA_MUTATION_SPEED_FREAKS_PROJECTILE_SPEED
 end
 
 function modifier_mutation_speed_freaks:GetModifierMoveSpeedBonus_Percentage()
@@ -32,7 +27,7 @@ function modifier_mutation_speed_freaks:GetModifierMoveSpeedBonus_Percentage()
 end
 
 function modifier_mutation_speed_freaks:GetModifierMoveSpeed_Max()
-	return self.max_movespeed
+	return _G.IMBA_MUTATION_SPEED_FREAKS_MAX_MOVESPEED
 end
 
 function modifier_mutation_speed_freaks:GetPriority()

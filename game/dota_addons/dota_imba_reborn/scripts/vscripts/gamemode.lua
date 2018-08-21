@@ -19,7 +19,10 @@ require('libraries/timers')
 require('internal/gamemode')
 require('internal/events')
 
+-- add components below the api
 require('components/api/imba')
+
+require('components/abandon')
 require('components/battlepass/donator')
 require('components/battlepass/experience')
 require('components/battlepass/imbattlepass')
@@ -73,6 +76,7 @@ function GameMode:InitGameMode()
 	StoreCurrentDayCycle()
 	CustomGameEventManager:RegisterListener("change_companion", Dynamic_Wrap(self, "DonatorCompanionJS"))
 	CustomGameEventManager:RegisterListener("change_companion_skin", Dynamic_Wrap(self, "DonatorCompanionSkinJS"))
+	CustomGameEventManager:RegisterListener("send_gg_vote", Dynamic_Wrap(GoodGame, 'Call'))
 
 	self:SetUpFountains()
 	self:_InitGameMode()

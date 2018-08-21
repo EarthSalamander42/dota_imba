@@ -33,7 +33,7 @@ NEGATIVE_MUTATION_LIST[4] = "monkey_business"
 -- Terrain Mutations
 TERRAIN_MUTATION_LIST = {}
 TERRAIN_MUTATION_LIST[1] = "fast_runes"
-TERRAIN_MUTATION_LIST[2] = "gift_exchange"
+TERRAIN_MUTATION_LIST[2] = "airdrop"
 TERRAIN_MUTATION_LIST[3] = "speed_freaks"
 TERRAIN_MUTATION_LIST[4] = "river_flows"
 TERRAIN_MUTATION_LIST[5] = "wormhole"

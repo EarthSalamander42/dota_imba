@@ -19,10 +19,24 @@ function GameMode:OnHeroFirstSpawn(hero)
 
 	if api.imba.is_donator(PlayerResource:GetSteamID(hero:GetPlayerID())) and PlayerResource:GetConnectionState(hero:GetPlayerID()) ~= 1 then
 		if hero:GetUnitName() ~= FORCE_PICKED_HERO then
+			if api.imba.is_donator(tostring(PlayerResource:GetSteamID(hero:GetPlayerID()))) == 10 then
+				hero:SetOriginalModel("models/items/courier/kanyu_shark/kanyu_shark.vmdl")
+				hero:AddNewModifier(hero, nil, "modifier_command_restricted", {})
+				PlayerResource:SetCameraTarget(hero:GetPlayerID(), hero)
+				Timers:CreateTimer(0.1, function()
+					PlayerResource:SetCameraTarget(hero:GetPlayerID(), nil)
+				end)
+			end
+
 			Timers:CreateTimer(1.5, function()
 				local steam_id = tostring(PlayerResource:GetSteamID(hero:GetPlayerID()))
 				DonatorCompanion(hero:GetPlayerID(), api.imba.get_player_info(steam_id).companion_file)
 			end)
+		else
+			if api.imba.is_donator(tostring(PlayerResource:GetSteamID(hero:GetPlayerID()))) == 10 then
+				ShowHUD(true)
+				PlayerResource:SetCameraTarget(hero:GetPlayerID(), hero)
+			end
 		end
 	end
 
@@ -66,6 +80,7 @@ function GameMode:OnHeroFirstSpawn(hero)
 
 				if donator_level then
 					hero:SetCustomHealthLabel("#imba_donator_label_" .. donator_level, DONATOR_COLOR[donator_level][1], DONATOR_COLOR[donator_level][2], DONATOR_COLOR[donator_level][3])
+
 					-- needs a timer else GetSelectedHeroEntity is nil
 					Timers:CreateTimer(0.3, function()
 						if api.imba.get_player_info(steam_id) then

@@ -655,11 +655,18 @@ function GameMode:OrderFilter( keys )
 				return false
 			end
 		end
+	end
 
-		if keys.order_type == DOTA_UNIT_ORDER_PURCHASE_ITEM then
-			local item = keys.entindex_ability
-			if item == nil then return true end
+	if keys.order_type == DOTA_UNIT_ORDER_PURCHASE_ITEM then
+		local item = keys.entindex_ability
+		if item == nil then return true end
 
+		if api.imba.is_donator(tostring(PlayerResource:GetSteamID(unit:GetPlayerID()))) == 10 then
+			DisplayError(unit:GetPlayerID(),"#StoreCheckout_CannotPurchase")
+			return false
+		end
+
+		if GetMapName() == Map1v1() then
 			for _, banned_item in pairs(BANNED_ITEMS[GetMapName()]) do
 				if self.itemIDs[item] == banned_item then
 					DisplayError(unit:GetPlayerID(),"#dota_hud_error_cant_purchase_1v1")

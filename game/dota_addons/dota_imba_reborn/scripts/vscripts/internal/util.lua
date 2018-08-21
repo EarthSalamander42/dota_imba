@@ -677,85 +677,41 @@ function ReconnectPlayer(player_id)
 --	print("Player is reconnecting:", player_id)
 
 	-- Reinitialize the player's pick screen panorama, if necessary
-	Timers:CreateTimer(1.0, function()
+	Timers:CreateTimer(function()
 --		print(PlayerResource:GetSelectedHeroEntity(player_id))
-			if PlayerResource:GetSelectedHeroEntity(player_id) then
-				CustomGameEventManager:Send_ServerToAllClients("player_reconnected", {PlayerID = player_id, PickedHeroes = HeroSelection.picked_heroes, pickState = pick_state, repickState = repick_state})
 
---			Timers:CreateTimer(3.0, function()
---				local table = {
---					ID = player_id,
---					team = PlayerResource:GetTeam(player_id),
---					disconnect = 2,
---				}
+		if PlayerResource:GetSelectedHeroEntity(player_id) then
+			CustomGameEventManager:Send_ServerToAllClients("player_reconnected", {PlayerID = player_id, PickedHeroes = HeroSelection.picked_heroes, pickState = pick_state, repickState = repick_state})
 
---				print("Decrease GG Amount!")
---				GameMode:GG(table)
---			end)
+			Timers:CreateTimer(3.0, function()
+				local table = {
+					ID = player_id,
+					team = PlayerResource:GetTeam(player_id),
+					disconnect = 2,
+				}
 
-				local hero = PlayerResource:GetSelectedHeroEntity(player_id)
+				GoodGame:Call(table)
+			end)
 
---			print(hero:GetUnitName())
+			local hero = PlayerResource:GetSelectedHeroEntity(player_id)
 
---			if GameRules:IsCheatMode() then
---				Notifications:TopToAll({text = "Player "..player_id.. " has reconnected with hero: "..hero:GetUnitName(), duration = 10.0, style = {color = "DodgerBlue"}})
---			end
-
---				print(PICKING_SCREEN_OVER)
---			if GameRules:IsCheatMode() then
---				if PICKING_SCREEN_OVER then
---					Notifications:TopToAll({text = "Pick Screen is over!", duration = 10.0, style = {color = "DodgerBlue"}})
---				else
---					Notifications:TopToAll({text = "Pick Screen is not over yet!", duration = 10.0, style = {color = "DodgerBlue"}})
---				end
---			end
-
-				if PICKING_SCREEN_OVER == true then
-					if hero:GetUnitName() == FORCE_PICKED_HERO then
---				if not lockedHeroes[player_id] or hero:GetUnitName() == FORCE_PICKED_HERO then
-						-- we don't care if they haven't locked in yet
---					if GameRules:IsCheatMode() then
---						Notifications:TopToAll({text = "Player "..player_id.. ": NO HERO LOCKED IN, RANDOM A HERO!", duration = 10.0, style = {color = "DodgerBlue"}})
---					end
-
-						print('Giving player ' .. player_id .. ' a random hero! (reconnected)')
---					if GameRules:IsCheatMode() then
---						Notifications:TopToAll({text = 'Giving player ' .. player_id .. ' a random hero: '..HeroSelection:RandomHero()..' (reconnected)', duration = 10.0, style = {color = "DodgerBlue"}})
---					end
-
-						local random_hero = HeroSelection:RandomHero()
-						print("Random Hero:", random_hero)
-						HeroSelection:GiveStartingHero(player_id, random_hero, true)
-					else
---					print('Reconnecting... ' .. hero .. ' ' .. loadedHeroes[lockedHeroes[player_id]])
---					print(loadedHeroes)
---					if GameRules:IsCheatMode() then
---						Notifications:TopToAll({text = 'Reconnecting... ' .. hero .. ' ' .. loadedHeroes[lockedHeroes[player_id]], duration = 10.0, style = {color = "DodgerBlue"}})
---					end
---					if not hero or hero:GetUnitName() == FORCE_PICKED_HERO and loadedHeroes[lockedHeroes[player_id]] then
---						if GameRules:IsCheatMode() then
---							Notifications:TopToAll({text = 'Giving player ' .. player_id .. ' ' .. lockedHeroes[player_id] .. '(reconnected)', duration = 10.0, style = {color = "DodgerBlue"}})
---						end
---						print('Giving player ' .. player_id .. ' ' .. lockedHeroes[player_id] .. '(reconnected)')
---						HeroSelection:GiveStartingHero(player_id, lockedHeroes[player_id])
---					end
-					end
-
-					if IsMutationMap() then
-						CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(player_id), "send_mutations", IMBA_MUTATION)
-					end
+			if PICKING_SCREEN_OVER == true then
+				if hero:GetUnitName() == FORCE_PICKED_HERO then
+					print('Giving player ' .. player_id .. ' a random hero! (reconnected)')
+					local random_hero = HeroSelection:RandomHero()
+					print("Random Hero:", random_hero)
+					HeroSelection:GiveStartingHero(player_id, random_hero, true)
 				end
-			else
---			print("Not fully reconnected yet:", player_id)
-				return 0.1
-			end
 
-			if GetMapName() == "imba_overthrow" then
-				CustomGameEventManager:Send_ServerToAllClients("imbathrow_topbar", {imbathrow = true})
-			else
-				CustomGameEventManager:Send_ServerToAllClients("imbathrow_topbar", {imbathrow = false})
+				if IsMutationMap() then
+					Mutation:OnReconnect()
+				end
 			end
-		end)
+		else
+--			print("Not fully reconnected yet:", player_id)
+			return 0.1
+		end
+	end)
 
 	-- If this is a reconnect from abandonment due to a long disconnect, remove the abandon state
 	if PlayerResource:GetHasAbandonedDueToLongDisconnect(player_id) then
@@ -816,7 +772,7 @@ function StoreCurrentDayCycle()
 		local is_day = GameRules:IsDaytime()		
 
 		-- Set in the table
-		CustomNetTables:SetTableValue("game_options", "isdaytime", {is_day = is_day} )		
+		CustomNetTables:SetTableValue("game_options", "isdaytime", {is_day = is_day} )
 
 		-- Repeat
 		return 0.5

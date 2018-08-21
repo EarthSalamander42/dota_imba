@@ -1,39 +1,32 @@
 require('components/mutation/mutation_list')
+require('components/settings/settings_mutation')
 
--- Airdrop Mutation Variables
-local MAP_SIZE = 7000
-local MAP_SIZE_AIRDROP = 5000
 local validItems = {} -- Empty table to fill with full list of valid airdrop items
-local minValue = 1000 -- Minimum cost of items that can spawn
 local tier1 = {} -- 1000 to 2000 gold cost up to 5 minutes
-local t1cap = 2000
-local t1time = 5 * 60
 local tier2 = {} -- 2000 to 3500 gold cost up to 10 minutes
-local t2cap = 3500
-local t2time = 10 * 60
 local tier3 = {} -- 3500 to 5000 gold cost up to 15 minutes
-local t3cap = 5000
-local t3time = 15 * 60
 local tier4 = {} -- 5000 to 99998 gold cost beyond 15 minutes
 local counter = 1 -- Slowly increments as time goes on to expand list of cost-valid items
 local varFlag = 0 -- Flag to stop the repeat until loop for tier iterations
-local SPEED_FREAKS_PROJECTILE_SPEED = 500
-local SPEED_FREAKS_MOVESPEED_PCT = 50
-local SPEED_FREAKS_MAX_MOVESPEED = 1000
 
 function Mutation:Init()
-	LinkLuaModifier("modifier_frantic", "components/modifiers/mutation/modifier_frantic.lua", LUA_MODIFIER_MOTION_NONE )
-
 	-- Selecting Mutations (Take out if statement for IsInToolsMode if you want to test randomized)
+
+	IMBA_MUTATION["imba"] = "frantic"
+
 	if IsInToolsMode() then
-		IMBA_MUTATION["positive"] = "ultimate_level"
-		IMBA_MUTATION["negative"] = "periodic_spellcast"
-		IMBA_MUTATION["terrain"] = "super_runes"
+		IMBA_MUTATION["positive"] = POSITIVE_MUTATION_LIST[3]
+		IMBA_MUTATION["negative"] = NEGATIVE_MUTATION_LIST[3]
+		IMBA_MUTATION["terrain"] = TERRAIN_MUTATION_LIST[4]
 	else
 		Mutation:ChooseMutation("positive", POSITIVE_MUTATION_LIST)
 		Mutation:ChooseMutation("negative", NEGATIVE_MUTATION_LIST)
 		Mutation:ChooseMutation("terrain", TERRAIN_MUTATION_LIST)
 	end
+
+	CustomNetTables:SetTableValue("mutations", "mutation", {IMBA_MUTATION})
+
+	LinkLuaModifier("modifier_frantic", "components/modifiers/mutation/modifier_frantic.lua", LUA_MODIFIER_MOTION_NONE )
 
 	if IMBA_MUTATION["positive"] == "killstreak_power" then
 		LinkLuaModifier("modifier_mutation_kill_streak_power", "components/modifiers/mutation/modifier_mutation_kill_streak_power.lua", LUA_MODIFIER_MOTION_NONE )
@@ -83,158 +76,37 @@ function Mutation:Init()
 	elseif IMBA_MUTATION["terrain"] == "sticky_river" then
 		LinkLuaModifier("modifier_sticky_river", "components/modifiers/mutation/modifier_sticky_river.lua", LUA_MODIFIER_MOTION_NONE )
 	end
-
-	IMBA_MUTATION_PERIODIC_SPELLS = {}
-	IMBA_MUTATION_PERIODIC_SPELLS[1] = {"sun_strike", "Sunstrike", "Red", -1}
-	IMBA_MUTATION_PERIODIC_SPELLS[2] = {"thundergods_wrath", "Thundergod's Wrath", "Red", 3.5}
-	IMBA_MUTATION_PERIODIC_SPELLS[3] = {"rupture", "Rupture", "Red", 10.0}
-	IMBA_MUTATION_PERIODIC_SPELLS[4] = {"torrent", "Torrent", "Red", 10}
-	IMBA_MUTATION_PERIODIC_SPELLS[5] = {"cold_feet", "Cold Feet", "Red", 4.0}
-	IMBA_MUTATION_PERIODIC_SPELLS[6] = {"stampede", "Stampede", "Green", 5.0}
-	IMBA_MUTATION_PERIODIC_SPELLS[7] = {"bloodlust", "Bloodlust", "Green", 30.0}
-	IMBA_MUTATION_PERIODIC_SPELLS[8] = {"aphotic_shield", "Aphotic Shield", "Green", 15.0}
-	--IMBA_MUTATION_PERIODIC_SPELLS[9] = {"track", "Track", "Red", 20.0}
-
-	-- Negative Spellcasts
-	IMBA_MUTATION_PERIODIC_SPELLS[1] = {}
-	IMBA_MUTATION_PERIODIC_SPELLS[1][1] = {"sun_strike", "Sunstrike", "Red", -1}
-	IMBA_MUTATION_PERIODIC_SPELLS[1][2] = {"thundergods_wrath", "Thundergod's Wrath", "Red", -1}
-	IMBA_MUTATION_PERIODIC_SPELLS[1][3] = {"rupture", "Rupture", "Red", 10.0}
-	IMBA_MUTATION_PERIODIC_SPELLS[1][4] = {"torrent", "Torrent", "Red", 45}
-	IMBA_MUTATION_PERIODIC_SPELLS[1][5] = {"cold_feet", "Cold Feet", "Red", 4.0}
-
-	-- Positive Spellcasts
-	IMBA_MUTATION_PERIODIC_SPELLS[2] = {}
-	IMBA_MUTATION_PERIODIC_SPELLS[2][1] = {"stampede", "Stampede", "Green", 5.0}
-	IMBA_MUTATION_PERIODIC_SPELLS[2][2] = {"bloodlust", "Bloodlust", "Green", 30.0}
-	IMBA_MUTATION_PERIODIC_SPELLS[2][3] = {"aphotic_shield", "Aphotic Shield", "Green", 15.0}
-
--- TO DO
--- "telekinesis",
--- "glimpse",
-
--- "shallow_grave",
--- "false_promise",
--- "bloodrage",
-
-	IMBA_MUTATION_WORMHOLE_COLORS = {}
-	IMBA_MUTATION_WORMHOLE_COLORS[1] = Vector(100, 0, 0)
-	IMBA_MUTATION_WORMHOLE_COLORS[2] = Vector(0, 100, 0)
-	IMBA_MUTATION_WORMHOLE_COLORS[3] = Vector(0, 0, 100)
-	IMBA_MUTATION_WORMHOLE_COLORS[4] = Vector(100, 100, 0)
-	IMBA_MUTATION_WORMHOLE_COLORS[5] = Vector(100, 0, 100)
-	IMBA_MUTATION_WORMHOLE_COLORS[6] = Vector(0, 100, 100)
-	IMBA_MUTATION_WORMHOLE_COLORS[7] = Vector(0, 100, 100)
-	IMBA_MUTATION_WORMHOLE_COLORS[8] = Vector(100, 0, 100)
-	IMBA_MUTATION_WORMHOLE_COLORS[9] = Vector(100, 100, 0)
-	IMBA_MUTATION_WORMHOLE_COLORS[10] = Vector(0, 0, 100)
-	IMBA_MUTATION_WORMHOLE_COLORS[11] = Vector(0, 100, 0)
-	IMBA_MUTATION_WORMHOLE_COLORS[12] = Vector(100, 0, 0)
-
-	IMBA_MUTATION_WORMHOLE_POSITIONS = {}
-	IMBA_MUTATION_WORMHOLE_POSITIONS[1] = Vector(-2471, -5025, 0)
-	IMBA_MUTATION_WORMHOLE_POSITIONS[2] = Vector(-576, -4320, 0)
-	IMBA_MUTATION_WORMHOLE_POSITIONS[3] = Vector(794, -3902, 0)
-	IMBA_MUTATION_WORMHOLE_POSITIONS[4] = Vector(2630, -3700, 0)
-	IMBA_MUTATION_WORMHOLE_POSITIONS[5] = Vector(3203, -6064, 0) -- Bot Lane Wormhole
-	IMBA_MUTATION_WORMHOLE_POSITIONS[6] = Vector(1111, -5804, 0)
-	IMBA_MUTATION_WORMHOLE_POSITIONS[7] = Vector(4419, -5114, 0)
-	IMBA_MUTATION_WORMHOLE_POSITIONS[8] = Vector(6156, -4831, 0) -- Bot Lane Wormhole
-	IMBA_MUTATION_WORMHOLE_POSITIONS[9] = Vector(6084, -3022, 0) -- Bone Lane Wormhole
-	IMBA_MUTATION_WORMHOLE_POSITIONS[10] = Vector(4422, -1765, 0)
-	IMBA_MUTATION_WORMHOLE_POSITIONS[11] = Vector(6186, -654, 0) -- Bot Lane Wormhole
-	IMBA_MUTATION_WORMHOLE_POSITIONS[12] = Vector(4754, -84, 0)
-	IMBA_MUTATION_WORMHOLE_POSITIONS[13] = Vector(3318, -58, 0)
-	IMBA_MUTATION_WORMHOLE_POSITIONS[14] = Vector(5008, 1799, 0)
-	IMBA_MUTATION_WORMHOLE_POSITIONS[15] = Vector(1534, -649, 0)
-	IMBA_MUTATION_WORMHOLE_POSITIONS[16] = Vector(2641, -2003, 0)
-	IMBA_MUTATION_WORMHOLE_POSITIONS[17] = Vector(3939, 2279, 0)
-	IMBA_MUTATION_WORMHOLE_POSITIONS[18] = Vector(2309, 4643, 0)
-	IMBA_MUTATION_WORMHOLE_POSITIONS[19] = Vector(843, 2300, 0)
-	IMBA_MUTATION_WORMHOLE_POSITIONS[20] = Vector(-544, -361, 0) -- Mid Lane Wormhole (Center)
-	IMBA_MUTATION_WORMHOLE_POSITIONS[21] = Vector(354, -1349, 0)
-	IMBA_MUTATION_WORMHOLE_POSITIONS[22] = Vector(289, -2559, 0)
-	IMBA_MUTATION_WORMHOLE_POSITIONS[23] = Vector(-1534, -2893, 0)
-	IMBA_MUTATION_WORMHOLE_POSITIONS[24] = Vector(-5366, -2570, 0)
-	IMBA_MUTATION_WORMHOLE_POSITIONS[25] = Vector(-5238, -1727, 0)
-	IMBA_MUTATION_WORMHOLE_POSITIONS[26] = Vector(-3363, -1210, 0)
-	IMBA_MUTATION_WORMHOLE_POSITIONS[27] = Vector(-4535, 10, 0)
-	IMBA_MUTATION_WORMHOLE_POSITIONS[28] = Vector(-4420, 1351, 0)
-	IMBA_MUTATION_WORMHOLE_POSITIONS[29] = Vector(-6161, 440, 0) -- Top Lane Wormhole
-	IMBA_MUTATION_WORMHOLE_POSITIONS[30] = Vector(-2110, 376, 0)
-	IMBA_MUTATION_WORMHOLE_POSITIONS[31] = Vector(-840, 1384, 0)
-	IMBA_MUTATION_WORMHOLE_POSITIONS[32] = Vector(-388, 2537, 0)
-	IMBA_MUTATION_WORMHOLE_POSITIONS[33] = Vector(-36, 4042, 0)
-	IMBA_MUTATION_WORMHOLE_POSITIONS[34] = Vector(-1389, 4325, 0)
-	IMBA_MUTATION_WORMHOLE_POSITIONS[35] = Vector(-2812, 3633, 0)
-	IMBA_MUTATION_WORMHOLE_POSITIONS[36] = Vector(-4574, 4804, 0)
-	IMBA_MUTATION_WORMHOLE_POSITIONS[37] = Vector(-6339, 3841, 0) -- Top Lane Wormhole
-	IMBA_MUTATION_WORMHOLE_POSITIONS[38] = Vector(-5971, 5455, 0) -- Top Lane Wormhole
-	IMBA_MUTATION_WORMHOLE_POSITIONS[39] = Vector(-3099, 6112, 0) -- Top Lane Wormhole
-	IMBA_MUTATION_WORMHOLE_POSITIONS[40] = Vector(-1606, 6103, 0) -- Top Lane Wormhole
-
-	--IMBA_MUTATION_WORMHOLE_INTERVAL = 600
-	--IMBA_MUTATION_WORMHOLE_DURATION = 600
-	IMBA_MUTATION_WORMHOLE_PREVENT_DURATION = 3
-
-	IMBA_MUTATION_TUG_OF_WAR_START = {}
-	IMBA_MUTATION_TUG_OF_WAR_START[DOTA_TEAM_BADGUYS] = Vector(4037, 3521, 0)
-	IMBA_MUTATION_TUG_OF_WAR_START[DOTA_TEAM_GOODGUYS] = Vector(-4448, -3936, 0)
-	IMBA_MUTATION_TUG_OF_WAR_TARGET = {}
-	IMBA_MUTATION_TUG_OF_WAR_TARGET[DOTA_TEAM_BADGUYS] = Vector(-5864, -5340, 0)
-	IMBA_MUTATION_TUG_OF_WAR_TARGET[DOTA_TEAM_GOODGUYS] = Vector(5654, 4939, 0)
-
-	self.restricted_items = {
-		"item_imba_ironleaf_boots",
-		"item_imba_travel_boots",
-		"item_imba_travel_boots_2",
-
-		-- Removed items!
-		"item_imba_triumvirate",
-		"item_imba_sange_azura",
-		"item_imba_azura_yasha",
-		"item_imba_travel_boots",
-		"item_imba_travel_boots_2",
-		"item_imba_cyclone",
-		"item_imba_recipe_cyclone",
-		"item_imba_plancks_artifact",
-		"item_recipe_imba_plancks_artifact",
-		"item_nokrash_blade",
-		"item_recipe_nokrash_blade",
-	}
-
-	self.item_spawn_delay = 10
-	self.item_spawn_vision_linger = 10
-	self.item_spawn_radius = 300
 end
 
 function Mutation:Precache(context)
 	-- Death Gold Drop
 --	PrecacheItemByNameSync("item_bag_of_gold", context)
 
-	-- Killstreak Power
-	PrecacheResource("particle", "particles/hw_fx/candy_carrying_stack.vpcf", context)
+	if IMBA_MUTATION["positive"] == "killstreak_power" then
+		PrecacheResource("particle", "particles/hw_fx/candy_carrying_stack.vpcf", context)
+	end
 
-	-- Periodic Spellcast
-	PrecacheResource("particle", "particles/econ/items/zeus/arcana_chariot/zeus_arcana_thundergods_wrath_start_bolt_parent.vpcf", context)
-	PrecacheResource("particle", "particles/ambient/wormhole_circle.vpcf", context)
-	PrecacheResource("particle", "particles/ambient/tug_of_war_team_dire.vpcf", context)
-	PrecacheResource("particle", "particles/ambient/tug_of_war_team_radiant.vpcf", context)
+	if IMBA_MUTATION["negative"] == "periodic_spellcast" then
+		PrecacheResource("particle", "particles/econ/items/zeus/arcana_chariot/zeus_arcana_thundergods_wrath_start_bolt_parent.vpcf", context)
+		PrecacheResource("particle", "particles/ambient/wormhole_circle.vpcf", context)
+		PrecacheResource("particle", "particles/ambient/tug_of_war_team_dire.vpcf", context)
+		PrecacheResource("particle", "particles/ambient/tug_of_war_team_radiant.vpcf", context)
 
-	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts", context)
-	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_ancient_apparition.vsndevts", context)
-	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_bloodseeker.vsndevts", context)
-	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_bounty_hunter.vsndevts", context)
-	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_centaur.vsndevts", context)
-	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_gyrocopter.vsndevts", context)
-	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_kunkka.vsndevts", context)
-	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_monkey_king.vsndevts", context)
-	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_ogre_magi.vsndevts", context)
-	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_pugna.vsndevts", context)
-	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_techies.vsndevts", context)
-	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_troll_warlord.vsndevts", context)
-	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_warlock.vsndevts", context)
-	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_zuus.vsndevts", context)
+		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts", context)
+		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_ancient_apparition.vsndevts", context)
+		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_bloodseeker.vsndevts", context)
+		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_bounty_hunter.vsndevts", context)
+		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_centaur.vsndevts", context)
+		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_gyrocopter.vsndevts", context)
+		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_kunkka.vsndevts", context)
+		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_monkey_king.vsndevts", context)
+		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_ogre_magi.vsndevts", context)
+		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_pugna.vsndevts", context)
+		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_techies.vsndevts", context)
+		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_troll_warlord.vsndevts", context)
+		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_warlock.vsndevts", context)
+		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_zuus.vsndevts", context)
+	end
 end
 
 function Mutation:ChooseMutation(mType, mList)
@@ -260,6 +132,8 @@ function Mutation:OnGameRulesStateChange(keys)
 			RUNE_SPAWN_TIME = 30.0
 			BOUNTY_RUNE_SPAWN_TIME = 60.0
 		end
+
+		Mutation:UpdatePanorama()
 	elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
 		if IMBA_MUTATION["negative"] == "periodic_spellcast" then
 			local buildings = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, Vector(0,0,0), nil, 20000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
@@ -280,6 +154,9 @@ function Mutation:OnGameRulesStateChange(keys)
 			local varSwap -- Switches between 1 and 2 based on counter for negative and positive spellcasts
 			local caster
 
+			-- initialize to negative
+			CustomNetTables:SetTableValue("mutation_info", IMBA_MUTATION["negative"], {0})
+
 			Timers:CreateTimer(55.0, function()
 				varSwap = (counter % 2) + 1
 				random_int = RandomInt(1, #IMBA_MUTATION_PERIODIC_SPELLS[varSwap])
@@ -289,6 +166,7 @@ function Mutation:OnGameRulesStateChange(keys)
 			end)
 
 			Timers:CreateTimer(60.0, function()
+				CustomNetTables:SetTableValue("mutation_info", IMBA_MUTATION["negative"], {varSwap})
 				if bad_fountain == nil or good_fountain == nil then
 					log.error("nao cucekd up!!! ")
 					return 60.0 
@@ -309,12 +187,12 @@ function Mutation:OnGameRulesStateChange(keys)
 			end)
 		end
 
-		if IMBA_MUTATION["terrain"] == "gift_exchange" then
+		if IMBA_MUTATION["terrain"] == "airdrop" then
 			for k, v in pairs(KeyValues.ItemKV) do -- Go through all the items in KeyValues.ItemKV and store valid items in validItems table
 				varFlag = 0 -- Let's borrow this memory to suss out the forbidden items first...
 
-				if v["ItemCost"] and v["ItemCost"] >= minValue and v["ItemCost"] ~= 99999 and not string.find(k, "recipe") and not string.find(k, "cheese") then
-					for _, item in pairs(self.restricted_items) do -- Make sure item isn't a restricted item
+				if v["ItemCost"] and v["ItemCost"] >= IMBA_MUTATION_AIRDROP_ITEM_MINIMUM_GOLD_COST and v["ItemCost"] ~= 99999 and not string.find(k, "recipe") and not string.find(k, "cheese") then
+					for _, item in pairs(IMBA_MUTATION_RESTRICTED_ITEMS) do -- Make sure item isn't a restricted item
 						if k == item then
 							varFlag = 1
 						end
@@ -343,7 +221,7 @@ function Mutation:OnGameRulesStateChange(keys)
 
 			-- Create Tier 1 Table
 			repeat
-				if validItems[counter].v <= t1cap then
+				if validItems[counter].v <= IMBA_MUTATION_AIRDROP_ITEM_TIER_1_GOLD_COST then
 					tier1[#tier1 + 1] = {k = validItems[counter].k, v = validItems[counter].v}
 					counter = counter + 1
 				else
@@ -355,7 +233,7 @@ function Mutation:OnGameRulesStateChange(keys)
 
 			-- Create Tier 2 Table
 			repeat
-				if validItems[counter].v <= t2cap then
+				if validItems[counter].v <= IMBA_MUTATION_AIRDROP_ITEM_TIER_2_GOLD_COST then
 					tier2[#tier2 + 1] = {k = validItems[counter].k, v = validItems[counter].v}
 					counter = counter + 1
 				else
@@ -367,7 +245,7 @@ function Mutation:OnGameRulesStateChange(keys)
 
 			-- Create Tier 3 Table
 			repeat
-				if validItems[counter].v <= t3cap then
+				if validItems[counter].v <= IMBA_MUTATION_AIRDROP_ITEM_TIER_3_GOLD_COST then
 					tier3[#tier3 + 1] = {k = validItems[counter].k, v = validItems[counter].v}
 					counter = counter + 1
 				else
@@ -547,7 +425,7 @@ function Mutation:OnGameRulesStateChange(keys)
 
 				if mine_count < max_mine_count then
 					for i = 1, 10 do
-						local mine = CreateUnitByName(mines[RandomInt(1, #mines)], RandomVector(MAP_SIZE), true, nil, nil, DOTA_TEAM_NEUTRALS)
+						local mine = CreateUnitByName(mines[RandomInt(1, #mines)], RandomVector(IMBA_MUTATION_MINEFIELD_MAP_SIZE), true, nil, nil, DOTA_TEAM_NEUTRALS)
 						mine:AddNewModifier(mine, nil, "modifier_invulnerable", {})
 					end
 				end
@@ -558,6 +436,12 @@ function Mutation:OnGameRulesStateChange(keys)
 		end
 		]]
 	end
+end
+
+function Mutation:OnReconnect()
+	CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(player_id), "send_mutations", IMBA_MUTATION)
+	-- in order to refresh the whole "mutation_info" table for the player
+	CustomNetTables:SetTableValue("mutation_info", IMBA_MUTATION["imba"], {_G.IMBA_FRANTIC_VALUE, "%"})
 end
 
 function Mutation:OnHeroFirstSpawn(hero)
@@ -571,8 +455,6 @@ function Mutation:OnHeroFirstSpawn(hero)
 
 	if IMBA_MUTATION["positive"] == "killstreak_power" then
 		hero:AddNewModifier(hero, nil, "modifier_mutation_kill_streak_power", {})
---	elseif IMBA_MUTATION["positive"] == "jump_start" then
---		hero:AddExperience(XP_PER_LEVEL_TABLE[6], DOTA_ModifyXP_CreepKill, false, true)
 	elseif IMBA_MUTATION["positive"] == "super_blink" then
 		if hero:IsIllusion() then return end
 		hero:AddItemByName("item_imba_blink"):SetSellable(false)
@@ -641,7 +523,7 @@ function Mutation:OnUnitSpawn(hero)
 	end
 
 	if IMBA_MUTATION["terrain"] == "speed_freaks" then
-		hero:AddNewModifier(hero, nil, "modifier_mutation_speed_freaks", {projectile_speed = SPEED_FREAKS_PROJECTILE_SPEED, movespeed_pct = SPEED_FREAKS_MOVESPEED_PCT, max_movespeed = SPEED_FREAKS_MAX_MOVESPEED})
+		hero:AddNewModifier(hero, nil, "modifier_mutation_speed_freaks", {projectile_speed = IMBA_MUTATION_SPEED_FREAKS_PROJECTILE_SPEED, movespeed_pct = _G.IMBA_MUTATION_SPEED_FREAKS_MOVESPEED_PCT, max_movespeed = IMBA_MUTATION_SPEED_FREAKS_MAX_MOVESPEED})
 	end
 end
 
@@ -708,32 +590,32 @@ end
 function Mutation:SpawnRandomItem()
 	local selectedItem 
 
-	if GameRules:GetDOTATime(false, false) > t3time then
+	if GameRules:GetDOTATime(false, false) > IMBA_MUTATION_AIRDROP_ITEM_TIER_3_MINUTES * 60 then
 		selectedItem = tier4[RandomInt(1, #tier4)].k
-	elseif GameRules:GetDOTATime(false, false) > t2time then
+	elseif GameRules:GetDOTATime(false, false) > IMBA_MUTATION_AIRDROP_ITEM_TIER_2_MINUTES * 60 then
 		selectedItem = tier3[RandomInt(1, #tier3)].k
-	elseif GameRules:GetDOTATime(false, false) > t1time then
+	elseif GameRules:GetDOTATime(false, false) > IMBA_MUTATION_AIRDROP_ITEM_TIER_1_MINUTES * 60 then
 		selectedItem = tier2[RandomInt(1, #tier2)].k
 	else
 		selectedItem = tier1[RandomInt(1, #tier1)].k
 	end
 
-	local pos = RandomVector(MAP_SIZE_AIRDROP)
-	AddFOWViewer(2, pos, self.item_spawn_radius, self.item_spawn_delay + self.item_spawn_vision_linger, false)
-	AddFOWViewer(3, pos, self.item_spawn_radius, self.item_spawn_delay + self.item_spawn_vision_linger, false)
-	GridNav:DestroyTreesAroundPoint(pos, self.item_spawn_radius, false)
+	local pos = RandomVector(IMBA_MUTATION_AIRDROP_MAP_SIZE)
+	AddFOWViewer(2, pos, IMBA_MUTATION_AIRDROP_ITEM_SPAWN_RADIUS, IMBA_MUTATION_AIRDROP_ITEM_SPAWN_DELAY + IMBA_MUTATION_AIRDROP_ITEM_VISION_LINGER, false)
+	AddFOWViewer(3, pos, IMBA_MUTATION_AIRDROP_ITEM_SPAWN_RADIUS, IMBA_MUTATION_AIRDROP_ITEM_SPAWN_DELAY + IMBA_MUTATION_AIRDROP_ITEM_VISION_LINGER, false)
+	GridNav:DestroyTreesAroundPoint(pos, IMBA_MUTATION_AIRDROP_ITEM_SPAWN_RADIUS, false)
 
 	local particle_dummy = CreateUnitByName("npc_dummy_unit", pos, true, nil, nil, 6)
 	local particle_arena_fx = ParticleManager:CreateParticle("particles/hero/centaur/centaur_hoof_stomp_arena.vpcf", PATTACH_ABSORIGIN_FOLLOW, particle_dummy)
 	ParticleManager:SetParticleControl(particle_arena_fx, 0, pos)
-	ParticleManager:SetParticleControl(particle_arena_fx, 1, Vector(self.item_spawn_radius + 45, 1, 1))
+	ParticleManager:SetParticleControl(particle_arena_fx, 1, Vector(IMBA_MUTATION_AIRDROP_ITEM_SPAWN_RADIUS + 45, 1, 1))
 
 	local particle = ParticleManager:CreateParticle("particles/items_fx/aegis_respawn_timer.vpcf", PATTACH_ABSORIGIN_FOLLOW, particle_dummy)
-	ParticleManager:SetParticleControl(particle, 1, Vector(self.item_spawn_delay, 0, 0))
+	ParticleManager:SetParticleControl(particle, 1, Vector(IMBA_MUTATION_AIRDROP_ITEM_SPAWN_DELAY, 0, 0))
 	ParticleManager:SetParticleControl(particle, 3, pos)
 	ParticleManager:ReleaseParticleIndex(particle)
 
-	Timers:CreateTimer(self.item_spawn_delay, function()
+	Timers:CreateTimer(IMBA_MUTATION_AIRDROP_ITEM_SPAWN_DELAY, function()
 			local item = CreateItem(selectedItem, nil, nil)
 			item.airdrop = true
 			-- print("Item Name:", selectedItem, pos)
@@ -761,4 +643,73 @@ function Mutation:IsEligibleHero(hero)
 	end
 
 	return true
+end
+
+function Mutation:UpdatePanorama()
+	local var_swap = 1
+
+--	CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(playerId), "send_mutations", IMBA_MUTATION) -- doesn't work for some players
+	CustomGameEventManager:Send_ServerToAllClients("send_mutations", IMBA_MUTATION)
+
+--	if IMBA_MUTATION["imba"] == "frantic" then
+		CustomNetTables:SetTableValue("mutation_info", IMBA_MUTATION["imba"], {_G.IMBA_FRANTIC_VALUE, "%"})
+--	end
+
+	if IMBA_MUTATION["positive"] == "killstreak_power" then
+		CustomNetTables:SetTableValue("mutation_info", IMBA_MUTATION["positive"], {_G.IMBA_MUTATION_KILLSTREAK_POWER, "%"})
+	elseif IMBA_MUTATION["positive"] == "ultimate_level" then
+		CustomNetTables:SetTableValue("mutation_info", IMBA_MUTATION["positive"], {IMBA_MUTATION_ULTIMATE_LEVEL})
+	end
+
+	if IMBA_MUTATION["negative"] == "death_explosion" then
+		Timers:CreateTimer(function()
+			local damage = _G.IMBA_MUTATION_DEATH_EXPLOSION_DAMAGE
+			local game_time = math.min(GameRules:GetDOTATime(false, false) / 60, 30)
+			game_time = game_time * _G.IMBA_MUTATION_DEATH_EXPLOSION_DAMAGE_INCREASE_PER_MIN
+			CustomNetTables:SetTableValue("mutation_info", IMBA_MUTATION["negative"], {damage + game_time})
+			return 15.0
+		end)
+	end
+
+	if IMBA_MUTATION["terrain"] == "airdrop" then
+		Timers:CreateTimer(function()
+			Mutation:AirdropTimer()
+			return 1.0
+		end)
+	elseif IMBA_MUTATION["terrain"] == "fast_runes" then
+		CustomNetTables:SetTableValue("mutation_info", IMBA_MUTATION["terrain"], {RUNE_SPAWN_TIME, BOUNTY_RUNE_SPAWN_TIME})
+	elseif IMBA_MUTATION["terrain"] == "speed_freaks" then
+		CustomNetTables:SetTableValue("mutation_info", IMBA_MUTATION["terrain"], {_G.IMBA_MUTATION_SPEED_FREAKS_MOVESPEED_PCT, "%"})
+	end
+end
+
+function Mutation:AirdropTimer()
+	if GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
+		IMBA_MUTATION_AIRDROP_TIMER_COUNTER = IMBA_MUTATION_AIRDROP_TIMER_COUNTER - 1
+	end
+
+	if IMBA_MUTATION_AIRDROP_TIMER_COUNTER == 10 + 1 then
+		CustomGameEventManager:Send_ServerToAllClients("airdrop_alert", {true})
+	elseif IMBA_MUTATION_AIRDROP_TIMER_COUNTER == 1 then
+		CustomGameEventManager:Send_ServerToAllClients("airdrop_alert", {false})
+	elseif IMBA_MUTATION_AIRDROP_TIMER_COUNTER == 0 then
+		IMBA_MUTATION_AIRDROP_TIMER_COUNTER = IMBA_MUTATION_AIRDROP_TIMER - 1
+	end
+
+	local t = IMBA_MUTATION_AIRDROP_TIMER_COUNTER
+	local minutes = math.floor(t / 60)
+	local seconds = t - (minutes * 60)
+	local m10 = math.floor(minutes / 10)
+	local m01 = minutes - (m10 * 10)
+	local s10 = math.floor(seconds / 10)
+	local s01 = seconds - (s10 * 10)
+	local broadcast_gametimer = 
+	{
+		timer_minute_10 = m10,
+		timer_minute_01 = m01,
+		timer_second_10 = s10,
+		timer_second_01 = s01,
+	}
+
+	CustomNetTables:SetTableValue("mutation_info", IMBA_MUTATION["terrain"], broadcast_gametimer)
 end

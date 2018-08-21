@@ -11,7 +11,7 @@
 		"game_state",
 		"hero_selection",
 		"battlepass",
-		"rosh_tracker",
-		"eliminated_players",
+		"mutations",
+		"mutation_info",
 	]
 }

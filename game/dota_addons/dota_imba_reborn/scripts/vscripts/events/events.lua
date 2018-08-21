@@ -75,6 +75,9 @@ function GameMode:OnGameRulesStateChange(keys)
 			-- Initialize base shrines
 			SetupShrines()
 
+			-- Initialize gg panel
+			GoodGame:Init()
+
 			-- Setup topbar player colors
 			CustomGameEventManager:Send_ServerToAllClients("override_top_bar_colors", {})
 		end)
@@ -256,13 +259,12 @@ function GameMode:OnDisconnect(keys)
 			end
 		end)
 
---		print("Increase GG amount!")
---		local table = {
---			ID = player_id,
---			team = PlayerResource:GetTeam(player_id),
---			disconnect = 1
---		}
---		GameMode:GG(table)
+		local table = {
+			ID = player_id,
+			team = PlayerResource:GetTeam(player_id),
+			disconnect = 1
+		}
+		GoodGame:Call(table)
 	end
 end
 
@@ -567,10 +569,9 @@ function GameMode:OnPlayerChat(keys)
 			end
 		end
 
---		if str == "-gg" then
---			log.info("Player has GG!")
---			CustomGameEventManager:Send_ServerToPlayer(caster:GetPlayerOwner(), "gg_init_by_local", {})
---		end
+		if str == "-gg" then
+			CustomGameEventManager:Send_ServerToPlayer(caster:GetPlayerOwner(), "gg_init_by_local", {})
+		end
 	end
 end
 

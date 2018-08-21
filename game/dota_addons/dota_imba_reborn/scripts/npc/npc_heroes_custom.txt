@@ -2604,7 +2604,6 @@
 		"Ability16"                 "special_bonus_sohei_dash_recharge"             // Dash charges cool down all at once
 		"Ability17"                 "special_bonus_sohei_fob_radius"             // Increases Flurry of Blows' AOE radius
 
-
 		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
 		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
 		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_HERO"

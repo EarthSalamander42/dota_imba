@@ -112,6 +112,9 @@ function HeroSelection:StartSelection()
 
 	PlayerResource:GetAllTeamPlayerIDs():each(function(playerID)
 		HeroSelection:UpdateTable(playerID, "empty")
+		if api.imba.is_donator(tostring(PlayerResource:GetSteamID(playerID))) == 10 then
+			ShowHUD(true)
+		end
 	end)
 
 	CustomGameEventManager:RegisterListener('cm_become_captain', Dynamic_Wrap(HeroSelection, 'CMBecomeCaptain'))
@@ -339,8 +342,7 @@ function HeroSelection:SelectHero(playerId, hero)
 			GameRules:GetGameModeEntity():SetPauseEnabled(true)
 			CustomGameEventManager:Send_ServerToAllClients("hide_pause", {show = true})			
 			if IsMutationMap() then
---				CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(playerId), "send_mutations", IMBA_MUTATION) -- doesn't work for some players
-				CustomGameEventManager:Send_ServerToAllClients("send_mutations", IMBA_MUTATION)
+				Mutation:UpdatePanorama()
 			end
 			GameRules:GetGameModeEntity():SetCameraDistanceOverride(1134) -- default: 1134
 

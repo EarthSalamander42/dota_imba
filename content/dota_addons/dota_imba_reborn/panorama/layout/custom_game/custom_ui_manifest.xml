@@ -94,6 +94,7 @@
 	<Panel>
 		<!-- CustomUIElements go here.-->
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/barebones_notifications.xml" /> 
+		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/gg.xml" /> 
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/combat_events.xml" /> 
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/hero_selection.xml" /> 
 		<CustomUIElement type="GameInfo" layoutfile="file://{resources}/layout/custom_game/imba_game_info.xml" /> 
