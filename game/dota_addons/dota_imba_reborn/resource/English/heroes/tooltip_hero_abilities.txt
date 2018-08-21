@@ -1215,7 +1215,7 @@
 "DOTA_Tooltip_modifier_imba_breathe_fire_debuff_Description"            "Base damage reduced."
 
 "DOTA_Tooltip_ability_imba_dragon_knight_dragon_tail"               "Dragon Tail"
-"DOTA_Tooltip_ability_imba_dragon_knight_dragon_tail_Description"         "Dragon Knight smites an enemy unit in melee range with his shield, stunning it while dealing minor damage.  When in Elder Dragon Form, the cast range increases to %dragon_cast_range%.\n<font color='#FF7800'>My Shield as Weapon:</font> When used during Human Form, grants %instances% Instances of Physical Damage Block for %duration_instances% secs.\n<font color='#FF7800'>Tail Whip:</font> When used during Elder Dragon Form, also stuns enemies in a cone facing the target with a width starting from %starting_radius% ending at %ending_radius% and up to a range %dragon_cast_range%. Lasts for half the duration."
+"DOTA_Tooltip_ability_imba_dragon_knight_dragon_tail_Description"         "Dragon Knight smites an enemy unit in melee range with his shield, stunning it while dealing minor damage.  When in Elder Dragon Form, the cast range increases to %dragon_cast_range%.\n<font color='#FF7800'>My Shield as Weapon:</font> When used during Human Form, grants %instances% instances of physical damage block for %duration_instances% seconds. Some physical damage can be blocked without losing any instances.\n<font color='#FF7800'>Tail Whip:</font> When used during Elder Dragon Form, also stuns enemies in a cone facing the target with a width starting from %starting_radius% ending at %ending_radius% and up to a range %dragon_cast_range%. Lasts for half the duration."
 "DOTA_Tooltip_ability_imba_dragon_knight_dragon_tail_Lore"              "Davion's combination of dragon talents and knightly skills makes him a vicious opponent in melee combat."
 "DOTA_Tooltip_ability_imba_dragon_knight_dragon_tail_stun_duration"         "STUN DURATION:"
 "DOTA_Tooltip_ability_imba_dragon_knight_dragon_tail_instances"           "HUMAN FORM INSTANCES:"
@@ -1223,6 +1223,9 @@
 "DOTA_Tooltip_ability_imba_dragon_knight_dragon_tail_dragon_cast_range"       "DRAGON FORM CAST RANGE:"
 "DOTA_Tooltip_ability_imba_dragon_knight_dragon_tail_start_width"         "DRAGON FORM START WIDTH:"
 "DOTA_Tooltip_ability_imba_dragon_knight_dragon_tail_end_width"           "DRAGON FORM END WIDTH:"
+
+"DOTA_Tooltip_modifier_imba_dragon_tail"							"My Shield as Weapon"
+"DOTA_Tooltip_modifier_imba_dragon_tail_Description"				"Blocking physical attacks."
 
 "DOTA_Tooltip_modifier_imba_dragon_tail_debuff"                   "Dragon Tail"
 "DOTA_Tooltip_modifier_imba_dragon_tail_debuff_Description"             "Stunned!"
