@@ -114,10 +114,6 @@ function imba_abaddon_mist_coil:OnSpellStart(unit, special_cast)
 		-- Use up overchannel
 		self.overchannel_damage_increase	=	getOverChannelDamageIncrease(caster)
 		self.overchannel_mist_increase		=	getOverChannelMistIncrease(caster)
-		local over_channel_modifier = caster:FindModifierByName("modifier_over_channel_handler")
-		if over_channel_modifier then
-			over_channel_modifier:Destroy()
-		end
 
 		-- Create the projectile
 		local info = {
@@ -442,11 +438,6 @@ function modifier_imba_aphotic_shield_buff_block:OnCreated()
 			over_channel_particle = ParticleManager:CreateParticle("particles/econ/courier/courier_baekho/courier_baekho_ambient_swirl.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
 			ParticleManager:SetParticleControlEnt(over_channel_particle, 0, target, PATTACH_POINT_FOLLOW, attach_hitloc, target_origin, true)
 			self:AddParticle(over_channel_particle, false, false, -1, false, false)
-
-			local over_channel_modifier = caster:FindModifierByName("modifier_over_channel_handler")
-			if over_channel_modifier then
-				over_channel_modifier:Destroy()
-			end
 		end
 	end
 end
@@ -735,7 +726,6 @@ function modifier_imba_curse_of_avernus_passive:OnAttack(kv)
 			if over_channel_modifier then
 				-- if we have overchannel, double the health lost and damage (+50% Overchannel strength also applies multiplicatively, for maximum lols)
 				health_lost = health_lost * over_channel_modifier:GetAbility():GetSpecialValueFor("curse_of_avernus_multiplier") * (1 + caster:FindTalentValue("special_bonus_imba_abaddon_6"))
-				over_channel_modifier:Destroy()
 			end
 
 			self.damage = health_lost * caster:FindTalentValue("special_bonus_imba_abaddon_4", "health_to_damage_ratio")
