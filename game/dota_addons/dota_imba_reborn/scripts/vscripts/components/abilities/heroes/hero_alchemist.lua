@@ -251,15 +251,14 @@ function modifier_imba_acid_spray_debuff_dot:OnCreated()
 	self.caster = self:GetCaster()
 	local ability = self:GetAbility()
 
-
+	self.armor_reduction = ability:GetSpecialValueFor("armor_reduction")
+	self.stack_armor_reduction = ability:GetSpecialValueFor("stack_armor_reduction")
+	
 	if IsServer() then
 		self:SetStackCount(1)
 		local tick_rate = ability:GetSpecialValueFor("tick_rate")
 		self:StartIntervalThink(tick_rate)
 	end
-	self.armor_reduction = ability:GetSpecialValueFor("armor_reduction")
-	self.stack_armor_reduction = ability:GetSpecialValueFor("stack_armor_reduction")
-
 end
 
 function modifier_imba_acid_spray_debuff_dot:OnIntervalThink(aura_tick, consume_stacks)
