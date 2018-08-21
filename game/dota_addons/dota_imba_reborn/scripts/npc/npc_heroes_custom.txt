@@ -629,8 +629,6 @@
 		"Ability4"					"imba_ember_spirit_activate_fire_remnant"
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_ember_spirit_fire_remnant"
-		"Ability7"					"ember_spirit_activate_fire_remnant"
-		"Ability8"					"ember_spirit_fire_remnant"
 
 		"Ability10"					"special_bonus_ember_chains_on_attack"
 		"Ability11"					"special_bonus_truestrike"
