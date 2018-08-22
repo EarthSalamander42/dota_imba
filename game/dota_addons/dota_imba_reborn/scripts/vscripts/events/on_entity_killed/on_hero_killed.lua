@@ -26,6 +26,12 @@ function GameMode:OnHeroDeath(killer, killed_unit)
 	PlayerResource:SetCustomBuybackCost(player_id, buyback_cost)
 	PlayerResource:SetCustomBuybackCooldown(player_id, buyback_cooldown)
 
+	if killer:IsBuilding() then
+		if killed_unit:IsRealHero() then
+			CombatEvents("generic", "tower_kill_hero", killed_unit, killer)
+		end
+	end
+
 	-- undying reincarnation talent fix
 	if killed_unit:HasModifier("modifier_special_bonus_reincarnation") then
 		if not killed_unit.undying_respawn_timer or killed_unit.undying_respawn_timer == 0 then

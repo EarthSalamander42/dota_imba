@@ -397,6 +397,7 @@ end
 
 function SetupTower(tower)
 	if tower.initialized then return end
+--	if tower.initialized or GetMapName() == Map1v1() then return end
 	for i = 1, 4 do
 		for _, ability in pairs(TOWER_ABILITIES["tower"..i]) do
 			if string.find(tower:GetUnitName(), "tower"..i) then
@@ -874,5 +875,48 @@ function Greeviling(unit)
 		end
 
 		return
+	end
+end
+
+function Setup1v1()
+	local removed_ents = {
+		"lane_top_goodguys_melee_spawner",
+		"lane_bot_goodguys_melee_spawner",
+		"lane_top_badguys_melee_spawner",
+		"lane_bot_badguys_melee_spawner",
+	}
+
+	for _, ent_name in pairs(removed_ents) do
+		local ent = Entities:FindByName(nil, ent_name)
+		ent:RemoveSelf()
+	end
+
+	BlockJungleCamps()
+end
+
+function BlockJungleCamps()
+	local blocked_camps = {}
+	blocked_camps[1] = {"neutralcamp_evil_1", Vector(-4170, 3670, 512)}
+	blocked_camps[2] = {"neutralcamp_evil_2", Vector(-3030, 4500, 512)}
+	blocked_camps[3] = {"neutralcamp_evil_3", Vector(-2000, 4220, 384)}
+	blocked_camps[4] = {"neutralcamp_evil_4", Vector(-10, 3300, 512)}
+	blocked_camps[5] = {"neutralcamp_evil_5", Vector(1315, 3520, 512)}
+	blocked_camps[6] = {"neutralcamp_evil_6", Vector(-675, 2280, 1151)}
+	blocked_camps[7] = {"neutralcamp_evil_7", Vector(2400, 360, 520)}
+	blocked_camps[8] = {"neutralcamp_evil_8", Vector(4060, -620, 384)}
+	blocked_camps[9] = {"neutralcamp_evil_9", Vector(4100, 1050, 1288)}
+	blocked_camps[10] = {"neutralcamp_good_1", Vector(3010, -4430, 512)}
+	blocked_camps[11] = {"neutralcamp_good_2", Vector(4810, -4200, 512)}
+	blocked_camps[12] = {"neutralcamp_good_3", Vector(787, -4500, 512)}
+	blocked_camps[13] = {"neutralcamp_good_4", Vector(-430, -3100, 384)}
+	blocked_camps[14] = {"neutralcamp_good_5", Vector(-1500, -4290, 384)}
+	blocked_camps[15] = {"neutralcamp_good_6", Vector(-3040, 100, 512)}
+	blocked_camps[16] = {"neutralcamp_good_7", Vector(-3700, 890, 512)}
+	blocked_camps[17] = {"neutralcamp_good_8", Vector(-4780, -190, 512)}
+	blocked_camps[18] = {"neutralcamp_good_9", Vector(256, -1717, 1280)}
+
+	for i = 1, #blocked_camps do
+		local ent = Entities:FindByName(nil, blocked_camps[i][1])
+		local dummy = CreateUnitByName("npc_dummy_unit_perma", blocked_camps[i][2], true, nil, nil, DOTA_TEAM_NEUTRALS)
 	end
 end

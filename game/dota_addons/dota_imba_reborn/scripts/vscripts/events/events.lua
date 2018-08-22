@@ -85,7 +85,9 @@ function GameMode:OnGameRulesStateChange(keys)
 		api.imba.event(api.events.started_game)
 
 		-- start rune timers
-		if GetMapName() ~= "imba_1v1" then
+		if GetMapName() == Map1v1() then
+			Setup1v1()
+		else
 			ImbaRunes:Spawn()
 		end
 
@@ -382,18 +384,13 @@ function GameMode:OnEntityKilled( keys )
 			return
 		elseif killed_unit:IsCourier() then
 			CombatEvents("generic", "courier_dead", killed_unit)
-
 			return
 		elseif killed_unit:GetUnitName() == "npc_imba_roshan" then
 			CombatEvents("kill", "roshan_dead", killed_unit, killer)
-
 			return
 		else
 			if IsMutationMap() then
 				Mutation:OnUnitDeath(killed_unit)
-				return
-			else
-				return
 			end
 		end
 
@@ -404,20 +401,9 @@ function GameMode:OnEntityKilled( keys )
 
 			if killer == killed_unit then
 				CombatEvents("kill", "hero_suicide", killed_unit)
-				return
 			elseif killed_unit:IsRealHero() and killer:GetTeamNumber() == killed_unit:GetTeamNumber() then
 				CombatEvents("kill", "hero_deny_hero", killed_unit, killer)
-				return
 			end
-
-			return
-		elseif killer:IsBuilding() then
-			if killed_unit:IsRealHero() then
-				CombatEvents("generic", "tower_kill_hero", killed_unit, killer)
-				return
-			end
-
-			return
 		end
 
 		if killed_unit.pedestal then
@@ -760,7 +746,7 @@ function GameMode:OnTeamKillCredit(keys)
 	local killer_team = keys.teamnumber
 	local nTeamKills = keys.herokills
 
-	if GetMapName() == "imba_1v1" then
+	if GetMapName() == Map1v1() then
 		if nTeamKills == IMBA_1V1_SCORE then
 			GAME_WINNER_TEAM = killer_team
 			GameRules:SetGameWinner( killer_team )

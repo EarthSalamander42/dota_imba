@@ -370,7 +370,8 @@ function HeroSelection:SelectHero(playerId, hero)
 					end
 				end)
 			elseif IsMutationMap() then
-				CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(playerId), "send_mutations", IMBA_MUTATION)
+--				CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(playerId), "send_mutations", IMBA_MUTATION) -- WHY THE FUCK IT DOESN'T WORK FOR EVERY PLAYERS
+				CustomGameEventManager:Send_ServerToAllClients("send_mutations", IMBA_MUTATION)
 				CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(playerId), "update_mutations", {})
 			end
 		end
@@ -466,6 +467,7 @@ function HeroSelection:GiveStartingHero(playerId, heroName, dev)
 	-- Initialize Invoker's innate invoke buff
 	-- TODO: This should be removed when another solution is found, like giving Invoker a hidden passive ability to apply the modifier
 	if hero:HasAbility("invoker_invoke") then
+        LinkLuaModifier("modifier_imba_invoke_buff", "components/modifiers/modifier_imba_invoke_buff.lua", LUA_MODIFIER_MOTION_NONE)
 		hero:AddNewModifier(hero, hero:FindAbilityByName("invoker_invoke"), "modifier_imba_invoke_buff", {})
 	end
 
