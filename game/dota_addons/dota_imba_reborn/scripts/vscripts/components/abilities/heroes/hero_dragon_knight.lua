@@ -214,16 +214,11 @@ end
 
 modifier_imba_dragon_tail = modifier_imba_dragon_tail or class({})
 
-function modifier_imba_dragon_tail:IsHidden() return false end
-function modifier_imba_dragon_tail:IsPurgable() return false end
-function modifier_imba_dragon_tail:IsPermanent() return true end
-function modifier_imba_dragon_tail:RemoveOnDeath() return false end
-function modifier_imba_dragon_tail:IsDebuff() return false end
+function modifier_imba_dragon_tail:IsHidden() 		return false end
+function modifier_imba_dragon_tail:IsDebuff() 		return false end
 
 function modifier_imba_dragon_tail:OnCreated()
 	if IsServer() then
-		self.attackers = self.attackers or {}
-
 		--SORRY RUBICK!
 		if self:GetAbility():IsStolen() then
 			self:Destroy()
@@ -234,93 +229,35 @@ function modifier_imba_dragon_tail:OnCreated()
 	end
 end
 
-function modifier_imba_dragon_tail:DeclareFunctions()
-	local funcs = {MODIFIER_EVENT_ON_ATTACK_START,
-		MODIFIER_EVENT_ON_ATTACK_FINISHED,
-		MODIFIER_PROPERTY_EVASION_CONSTANT,
-	}
+function modifier_imba_dragon_tail:OnRefresh()
+	if IsServer() then
+		self:OnCreated()
+	end
+end
 
+function modifier_imba_dragon_tail:DeclareFunctions()
+	local funcs = {
+	MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK,
+	MODIFIER_EVENT_ON_ATTACK_LANDED
+	}
+	
 	return funcs
 end
 
-function modifier_imba_dragon_tail:GetModifierEvasion_Constant(params)
-	--If the attack is to be parried, maximize evasion
-	local parried = false
-
-	for k,v in pairs(self.attackers) do
-		if v == params.attacker then --has the attacker launched an attack to parry?
-			parried = true
-			break
-		end
-	end
-
-	if parried then
-		return 100
-	else
-		return 0
-	end
+function modifier_imba_dragon_tail:GetModifierPhysical_ConstantBlock(keys)
+	return keys.damage
 end
 
-function modifier_imba_dragon_tail:OnAttackStart(keys)
-	if IsServer() then
-		local attacker = keys.attacker
-		local target = keys.target
-		--proceed only if the target is Pangolier and the attacker is an hero
-		if target == self:GetCaster() and attacker:GetTeam() ~= target:GetTeam() then
-			--if no parry stacks remains, do nothing
-			local stacks = self:GetStackCount()
-
-			if stacks == 0 then
-				--clears the attackers table to avoid inconsistencies
-				self.attackers = {}
-				target:RemoveModifierByName("modifier_imba_dragon_tail")
-				return nil
-			end
-
-			--Makes the attacking hero ignore true strike
-			attacker:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_dragon_tail_miss", {})
-
-			--Register the attacker
-			table.insert(self.attackers, attacker)
+function modifier_imba_dragon_tail:OnAttackLanded(keys)
+	if self:GetParent() == keys.target and not self:IsNull() then
+		self:DecrementStackCount()
+		SendOverheadEventMessage(nil, OVERHEAD_ALERT_BLOCK, self:GetParent(), keys.damage, nil)
+		if self:GetStackCount() <= 0 then
+			Timers:CreateTimer(FrameTime(), function()
+				self:Destroy()
+			end)
 		end
 	end
-end
-
-function modifier_imba_dragon_tail:OnAttackFinished(keys)
-	if IsServer() then
-		local attacker = keys.attacker
-		local target = keys.target
-
-		--Proceed only if the target is Pangolier and the attacker is an hero
-		if target == self:GetCaster() and attacker:IsHero() then
-			--Remove debuff on attacker and remove him from table
-			if attacker:HasModifier("modifier_imba_dragon_tail_miss") then
-				attacker:RemoveModifierByName("modifier_imba_dragon_tail_miss")
-				for k,v in pairs(self.attackers) do
-					if v == attacker then
-						table.remove(self.attackers, k)
-					end
-				end
-			end
-
-			self:SetStackCount(self:GetStackCount() -1)
-		end
-	end
-end
-
---Attackers debuff: deny their true strike effect while Pangolier is parrying their attack
-modifier_imba_dragon_tail_miss = modifier_imba_dragon_tail_miss or class({})
-
-function modifier_imba_dragon_tail_miss:IsHidden() return true end
-function modifier_imba_dragon_tail_miss:IsDebuff() return true end
-function modifier_imba_dragon_tail_miss:IsPurgable() return false end
-function modifier_imba_dragon_tail_miss:RemoveOnDeath() return true end
-function modifier_imba_dragon_tail_miss:StatusEffectPriority() return MODIFIER_PRIORITY_SUPER_ULTRA end
-
-function modifier_imba_dragon_tail_miss:CheckState()
-	state = {[MODIFIER_STATE_CANNOT_MISS] = false}
-
-	return state
 end
 
 modifier_imba_dragon_tail_debuff = class({})
@@ -504,7 +441,6 @@ function imba_dragon_knight_elder_dragon_charge:OnProjectileHit(target, location
 
 		if dragon_tail then
 			ApplyDamage({attacker = self:GetCaster(), victim = target, damage = dragon_tail:GetAbilityDamage(), damage_type = dragon_tail:GetAbilityDamageType(), ability = dragon_tail})
-			self:GetCaster():AddNewModifier(self:GetCaster(), dragon_tail, "modifier_imba_dragon_tail", {duration = dragon_tail:GetSpecialValueFor("duration_instances")})
 			target:AddNewModifier(self:GetCaster(), dragon_tail, "modifier_imba_dragon_tail_debuff", {duration = dragon_tail:GetSpecialValueFor("stun_duration")})
 		end
 
@@ -635,9 +571,10 @@ end
 
 modifier_imba_elder_dragon_form = class({})
 
-function modifier_imba_elder_dragon_form:IsHidden() return true end
-function modifier_imba_elder_dragon_form:IsDebuff() return false end
-function modifier_imba_elder_dragon_form:IsPurgable() return false end
+function modifier_imba_elder_dragon_form:IsHidden() 		return true end
+function modifier_imba_elder_dragon_form:IsDebuff() 		return false end
+function modifier_imba_elder_dragon_form:IsPurgable() 		return false end
+function modifier_imba_elder_dragon_form:RemoveOnDeath() 	return false end
 
 function modifier_imba_elder_dragon_form:OnCreated( event )
 	if IsServer() then
@@ -711,9 +648,9 @@ function modifier_imba_elder_dragon_form:OnIntervalThink()
 				self:AddElderForm(self:GetParent(), self:GetAbility(), self:GetAbility():GetLevel())
 			end
 		end
-
+		
 		if self:GetParent():HasTalent("special_bonus_imba_dragon_knight_8") and self:GetParent():HasModifier("modifier_dragon_knight_dragon_form") then
-			self.bonus_ms = self:GetCaster():GetHealthPercent() * self:GetParent():FindTalentValue("special_bonus_imba_dragon_knight_8")
+			self.bonus_ms = self:GetCaster():GetHealth() * 0.01 * self:GetParent():FindTalentValue("special_bonus_imba_dragon_knight_8")
 			self:SetStackCount(self.bonus_ms)
 		else
 			self:SetStackCount(0)
@@ -746,6 +683,11 @@ function modifier_imba_elder_dragon_form:AddElderForm(hero, ability, level, dura
 		end
 
 		self.level = level
+		
+		-- Remove human form blocks if they exist
+		if hero:HasModifier("modifier_imba_dragon_tail") then
+			hero:RemoveModifierByName("modifier_imba_dragon_tail")
+		end
 	end
 end
 
