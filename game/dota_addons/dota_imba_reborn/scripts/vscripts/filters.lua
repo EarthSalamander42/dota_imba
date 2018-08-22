@@ -103,10 +103,6 @@ function GameMode:ModifierFilter( keys )
 
 		if keys.entindex_caster_const then
 			modifier_caster = EntIndexToHScript(keys.entindex_caster_const)
-
-			if IsMutationMap() then
-				Mutation:ModifierFilter(keys)
-			end
 		else
 			return true
 		end

@@ -16,15 +16,7 @@
 -- first time a real hero spawn
 function GameMode:OnUnitFirstSpawn(unit)
 	if IsMutationMap() then
-		-- Speed Freaks mutation modifier
-		if IMBA_MUTATION["terrain"] == "speed_freaks" then
-			unit:AddNewModifier(unit, nil, "modifier_mutation_speed_freaks", {})
-		end
-
-		-- Alien Incubation mutation modifier
-		if IMBA_MUTATION["negative"] == "alien_incubation" then
-			unit:AddNewModifier(unit, nil, "modifier_mutation_alien_incubation", {})
-		end
+		Mutation:OnUnitFirstSpawn(unit)
 	end
 
 	if unit:IsIllusion() and not unit:HasModifier("modifier_illusion_manager_out_of_world") and not unit:HasModifier("modifier_illusion_manager") then
@@ -60,53 +52,12 @@ end
 function GameMode:OnUnitSpawned(unit)
 	local greeviling = false
 
-	if greeviling == true and RandomInt(1, 100) > 85 then
-		if string.find(unit:GetUnitName(), "dota_creep") then
-			local material_group = tostring(RandomInt(0, 8))
-			unit.is_greevil = true
-			if string.find(unit:GetUnitName(), "ranged") then
-				unit:SetModel("models/courier/greevil/greevil_flying.vmdl")
-				unit:SetOriginalModel("models/courier/greevil/greevil_flying.vmdl")
-			else
-				unit:SetModel("models/courier/greevil/greevil.vmdl")
-				unit:SetOriginalModel("models/courier/greevil/greevil.vmdl")
-			end
-			unit:SetMaterialGroup(material_group)
-			unit.eyes = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/courier/greevil/greevil_eyes.vmdl"})
-			unit.ears = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/courier/greevil/greevil_ears"..RandomInt(1, 2)..".vmdl"})
-			if RandomInt(1, 100) > 80 then
-				unit.feathers = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/courier/greevil/greevil_feathers.vmdl"})
-				unit.feathers:FollowEntity(unit, true)
-			end
-			unit.hair = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/courier/greevil/greevil_hair"..RandomInt(1, 2)..".vmdl"})
-			unit.horns = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/courier/greevil/greevil_horns"..RandomInt(1, 4)..".vmdl"})
-			unit.nose = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/courier/greevil/greevil_nose"..RandomInt(1, 3)..".vmdl"})
-			unit.tail = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/courier/greevil/greevil_tail"..RandomInt(1, 4)..".vmdl"})
-			unit.teeth = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/courier/greevil/greevil_teeth"..RandomInt(1, 4)..".vmdl"})
-			unit.wings = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/courier/greevil/greevil_wings"..RandomInt(1, 4)..".vmdl"})
+	if IsMutationMap() then
+		Mutation:OnUnitSpawn(npc)
+	end
 
-			-- lock to bone
-			unit.eyes:SetMaterialGroup(material_group)
-			unit.eyes:FollowEntity(unit, true)
-			unit.ears:SetMaterialGroup(material_group)
-			unit.ears:FollowEntity(unit, true)
-			unit.hair:FollowEntity(unit, true)
-			unit.horns:SetMaterialGroup(material_group)
-			unit.horns:FollowEntity(unit, true)
-			unit.nose:SetMaterialGroup(material_group)
-			unit.nose:FollowEntity(unit, true)
-			unit.tail:SetMaterialGroup(material_group)
-			unit.tail:FollowEntity(unit, true)
-			unit.teeth:SetMaterialGroup(material_group)
-			unit.teeth:FollowEntity(unit, true)
-			unit.wings:SetMaterialGroup(material_group)
-			unit.wings:FollowEntity(unit, true)
-		elseif string.find(unit:GetUnitName(), "_siege") then
-			unit:SetModel("models/creeps/mega_greevil/mega_greevil.vmdl")
-			unit:SetOriginalModel("models/creeps/mega_greevil/mega_greevil.vmdl")
-			unit:SetModelScale(2.75)
-		end
-
+	if greeviling == true then
+		Greeviling(unit)
 		return
 	end
 

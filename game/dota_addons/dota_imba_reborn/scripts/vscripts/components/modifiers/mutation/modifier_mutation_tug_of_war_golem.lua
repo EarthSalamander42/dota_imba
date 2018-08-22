@@ -125,6 +125,7 @@ function modifier_mutation_tug_of_war_golem:OnDeath(keys)
 				if original_team == DOTA_TEAM_GOODGUYS then
 					golem = CreateUnitByName("npc_dota_mutation_golem", death_position, false, nil, nil, DOTA_TEAM_BADGUYS)
 					golem.ambient_pfx = ParticleManager:CreateParticle("particles/ambient/tug_of_war_team_dire.vpcf", PATTACH_ABSORIGIN_FOLLOW, golem)
+
 					ParticleManager:SetParticleControl(golem.ambient_pfx, 0, golem:GetAbsOrigin())
 					Timers:CreateTimer(0.1, function()
 						golem:MoveToPositionAggressive(IMBA_MUTATION_TUG_OF_WAR_TARGET[DOTA_TEAM_BADGUYS])
@@ -137,6 +138,9 @@ function modifier_mutation_tug_of_war_golem:OnDeath(keys)
 						golem:MoveToPositionAggressive(IMBA_MUTATION_TUG_OF_WAR_TARGET[DOTA_TEAM_GOODGUYS])
 					return 2 end) -- Recall the command every 2 seconds so AI doesn't get bricked
 				end
+
+				local particle = ParticleManager:CreateParticle("particles/econ/courier/courier_greevil_orange/courier_greevil_orange_ambient_3.vpcf", PATTACH_ABSORIGIN_FOLLOW, golem)
+				ParticleManager:ReleaseParticleIndex(particle)
 
 				-- Spawn logic
 				golem:AddNewModifier(golem, nil, "modifier_mutation_tug_of_war_golem", {}):SetStackCount(previous_stacks + 1)

@@ -15,9 +15,9 @@ function Mutation:Init()
 	IMBA_MUTATION["imba"] = "frantic"
 
 	if IsInToolsMode() then
-		IMBA_MUTATION["positive"] = POSITIVE_MUTATION_LIST[3]
-		IMBA_MUTATION["negative"] = NEGATIVE_MUTATION_LIST[3]
-		IMBA_MUTATION["terrain"] = TERRAIN_MUTATION_LIST[4]
+		IMBA_MUTATION["positive"] = POSITIVE_MUTATION_LIST[6]
+		IMBA_MUTATION["negative"] = NEGATIVE_MUTATION_LIST[1]
+		IMBA_MUTATION["terrain"] = TERRAIN_MUTATION_LIST[2]
 	else
 		Mutation:ChooseMutation("positive", POSITIVE_MUTATION_LIST)
 		Mutation:ChooseMutation("negative", NEGATIVE_MUTATION_LIST)
@@ -438,14 +438,13 @@ function Mutation:OnGameRulesStateChange(keys)
 	end
 end
 
-function Mutation:OnReconnect()
-	CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(player_id), "send_mutations", IMBA_MUTATION)
-	-- in order to refresh the whole "mutation_info" table for the player
-	CustomNetTables:SetTableValue("mutation_info", IMBA_MUTATION["imba"], {_G.IMBA_FRANTIC_VALUE, "%"})
+function Mutation:OnReconnect(id)
+	CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(id), "send_mutations", IMBA_MUTATION)
+	CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(id), "update_mutations", {})
 end
 
 function Mutation:OnHeroFirstSpawn(hero)
---	print("Mutation: On Hero Respawned")
+--	print("Mutation: On Hero First Spawn")
 
 	-- Check if we can add modifiers to hero
 	if not Mutation:IsEligibleHero(hero) then return end
@@ -464,6 +463,12 @@ function Mutation:OnHeroFirstSpawn(hero)
 		hero:AddNewModifier(hero, nil, "modifier_mutation_greed_is_good", {})
 	elseif IMBA_MUTATION["positive"] == "teammate_resurrection" then
 		hero.reincarnating = false
+	elseif IMBA_MUTATION["positive"] == "super_fervor" then
+		hero:AddNewModifier(hero, nil, "modifier_mutation_super_fervor", {})
+	elseif IMBA_MUTATION["positive"] == "slark_mode" then
+		hero:AddNewModifier(hero, nil, "modifier_mutation_shadow_dance", {})
+--	elseif IMBA_MUTATION["positive"] == "damage_reduction" then
+--		hero:AddNewModifier(hero, nil, "modifier_mutation_damage_reduction", {})
 	end
 
 	if IMBA_MUTATION["negative"] == "death_explosion" then
@@ -476,54 +481,45 @@ function Mutation:OnHeroFirstSpawn(hero)
 		hero:AddNewModifier(hero, nil, "modifier_mutation_stay_frosty", {})
 	elseif IMBA_MUTATION["negative"] == "monkey_business" then
 		hero:AddNewModifier(hero, nil, "modifier_mutation_monkey_business", {})
+	elseif IMBA_MUTATION["negative"] == "alien_incubation" then
+		hero:AddNewModifier(hero, nil, "modifier_mutation_alien_incubation", {})
+	end
+
+	if IMBA_MUTATION["terrain"] == "speed_freaks" then
+		hero:AddNewModifier(hero, nil, "modifier_mutation_speed_freaks", {projectile_speed = IMBA_MUTATION_SPEED_FREAKS_PROJECTILE_SPEED, movespeed_pct = _G.IMBA_MUTATION_SPEED_FREAKS_MOVESPEED_PCT, max_movespeed = IMBA_MUTATION_SPEED_FREAKS_MAX_MOVESPEED})
+	elseif IMBA_MUTATION["terrain"] == "river_flows" then
+		hero:AddNewModifier(hero, nil, "modifier_mutation_river_flows", {})
 	end
 end
 
-function Mutation:OnUnitSpawn(hero)
+function Mutation:OnHeroSpawn(hero)
 --	print("Mutation: On Hero Respawned")
 
 	-- Check if we can add modifiers to hero
 	if not Mutation:IsEligibleHero(hero) then return end
 
-	if hero:IsRealHero() then
-		if IMBA_MUTATION["positive"] == "damage_reduction" then
-			hero:AddNewModifier(hero, nil, "modifier_mutation_damage_reduction", {})
-		elseif IMBA_MUTATION["positive"] == "slark_mode" then
-			hero:AddNewModifier(hero, nil, "modifier_mutation_shadow_dance", {})
+	-- Super Fervor mutation modifier
+	
+	if IMBA_MUTATION["positive"] == "teammate_resurrection" then
+		if hero.tombstone_fx then
+			ParticleManager:DestroyParticle(hero.tombstone_fx, false)
+			ParticleManager:ReleaseParticleIndex(hero.tombstone_fx)
+			hero.tombstone_fx = nil
 		end
 
-		if IMBA_MUTATION["terrain"] == "sleepy_river" then
-			hero:AddNewModifier(hero, nil, "modifier_river", {})
-		end
-
-		if IMBA_MUTATION["terrain"] == "river_flows" then
-			hero:AddNewModifier(hero, nil, "modifier_mutation_river_flows", {})
-		end
-
-		if IMBA_MUTATION["terrain"] == "sticky_river" then
-			hero:AddNewModifier(hero, nil, "modifier_sticky_river", {})
-		end
-
-		if IMBA_MUTATION["positive"] == "teammate_resurrection" then
-			if hero.tombstone_fx then
-				ParticleManager:DestroyParticle(hero.tombstone_fx, false)
-				ParticleManager:ReleaseParticleIndex(hero.tombstone_fx)
-				hero.tombstone_fx = nil
+		Timers:CreateTimer(FrameTime(), function()
+			if IsNearFountain(hero:GetAbsOrigin(), 1200) == false and hero.reincarnating == false then
+				hero:SetHealth(hero:GetHealth() * 50 / 100)
+				hero:SetMana(hero:GetMana() * 50 / 100)
 			end
 
-			Timers:CreateTimer(FrameTime(), function()
-				if IsNearFountain(hero:GetAbsOrigin(), 1200) == false and hero.reincarnating == false then
-					hero:SetHealth(hero:GetHealth() * 50 / 100)
-					hero:SetMana(hero:GetMana() * 50 / 100)
-				end
-
-				hero.reincarnating = false
+			PlayerResource:SetCameraTarget(unit:GetPlayerID(), hero)
+			Timers:CreateTimer(0.1, function()
+				PlayerResource:SetCameraTarget(hero:GetPlayerID(), nil)
 			end)
-		end
-	end
 
-	if IMBA_MUTATION["terrain"] == "speed_freaks" then
-		hero:AddNewModifier(hero, nil, "modifier_mutation_speed_freaks", {projectile_speed = IMBA_MUTATION_SPEED_FREAKS_PROJECTILE_SPEED, movespeed_pct = _G.IMBA_MUTATION_SPEED_FREAKS_MOVESPEED_PCT, max_movespeed = IMBA_MUTATION_SPEED_FREAKS_MAX_MOVESPEED})
+			hero.reincarnating = false
+		end)
 	end
 end
 
@@ -562,17 +558,42 @@ function Mutation:OnHeroDeath(hero)
 --	end
 end
 
-function Mutation:ModifierFilter(keys)
-	local modifier_owner = EntIndexToHScript(keys.entindex_parent_const)
-	local modifier_name = keys.name_const
-	local modifier_caster = EntIndexToHScript(keys.entindex_caster_const)
+function Mutation:OnUnitFirstSpawn(unit)
+	if IMBA_MUTATION["terrain"] == "speed_freaks" then
+		unit:AddNewModifier(unit, nil, "modifier_mutation_speed_freaks", {projectile_speed = IMBA_MUTATION_SPEED_FREAKS_PROJECTILE_SPEED, movespeed_pct = _G.IMBA_MUTATION_SPEED_FREAKS_MOVESPEED_PCT, max_movespeed = IMBA_MUTATION_SPEED_FREAKS_MAX_MOVESPEED})
+	end
+end
 
+function Mutation:OnUnitSpawn(hero)
+--	print("Mutation: On Unit Respawned")
+end
 
+function Mutation:OnUnitDeath(unit)
+	if IMBA_MUTATION["terrain"] == "tug_of_war" then
+		if unit:GetUnitName() == "npc_dota_mutation_golem" then
+			IMBA_MUTATION_TUG_OF_WAR_DEATH_COUNT = IMBA_MUTATION_TUG_OF_WAR_DEATH_COUNT + 1
+			CustomNetTables:SetTableValue("mutation_info", IMBA_MUTATION["terrain"], {IMBA_MUTATION_TUG_OF_WAR_DEATH_COUNT})
+			CustomGameEventManager:Send_ServerToAllClients("update_mutations", {})
+		end
+	end
 end
 
 function Mutation:OnThink()
 --	print("Mutation: On Think")
 
+	if GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
+		if IMBA_MUTATION["terrain"] == "airdrop" or IMBA_MUTATION["terrain"] == "danger_zone" then
+			Mutation:MutationTimer()
+		end
+	end
+end
+
+function Mutation:OnSlowThink() -- 60 seconds
+	if GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
+		if IMBA_MUTATION["negative"] == "death_explosion" then
+			Mutation:DeathExplosionDamage()
+		end
+	end
 end
 
 -- Mutation: Utilities
@@ -582,8 +603,8 @@ function Mutation:RevealAllMap(duration)
 
 	if duration then
 		Timers:CreateTimer(duration, function()
-				GameRules:GetGameModeEntity():SetFogOfWarDisabled(false)
-			end)
+			GameRules:GetGameModeEntity():SetFogOfWarDisabled(false)
+		end)
 	end
 end
 
@@ -616,20 +637,20 @@ function Mutation:SpawnRandomItem()
 	ParticleManager:ReleaseParticleIndex(particle)
 
 	Timers:CreateTimer(IMBA_MUTATION_AIRDROP_ITEM_SPAWN_DELAY, function()
-			local item = CreateItem(selectedItem, nil, nil)
-			item.airdrop = true
-			-- print("Item Name:", selectedItem, pos)
+		local item = CreateItem(selectedItem, nil, nil)
+		item.airdrop = true
+		-- print("Item Name:", selectedItem, pos)
 
-			local drop = CreateItemOnPositionSync(pos, item)
+		local drop = CreateItemOnPositionSync(pos, item)
 
-			CustomGameEventManager:Send_ServerToAllClients("item_has_spawned", {spawn_location = pos})
-			EmitGlobalSound( "powerup_05" )
+		CustomGameEventManager:Send_ServerToAllClients("item_has_spawned", {spawn_location = pos})
+		EmitGlobalSound( "powerup_05" )
 
-			ParticleManager:DestroyParticle(particle_arena_fx, false)
-			ParticleManager:ReleaseParticleIndex(particle_arena_fx)
+		ParticleManager:DestroyParticle(particle_arena_fx, false)
+		ParticleManager:ReleaseParticleIndex(particle_arena_fx)
 
-			particle_dummy:ForceKill(false)
-		end)
+		particle_dummy:ForceKill(false)
+	end)
 
 	CustomGameEventManager:Send_ServerToAllClients("item_will_spawn", {spawn_location = pos})
 	EmitGlobalSound("powerup_03")
@@ -648,55 +669,80 @@ end
 function Mutation:UpdatePanorama()
 	local var_swap = 1
 
---	CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(playerId), "send_mutations", IMBA_MUTATION) -- doesn't work for some players
-	CustomGameEventManager:Send_ServerToAllClients("send_mutations", IMBA_MUTATION)
-
+	-- unique update
 --	if IMBA_MUTATION["imba"] == "frantic" then
 		CustomNetTables:SetTableValue("mutation_info", IMBA_MUTATION["imba"], {_G.IMBA_FRANTIC_VALUE, "%"})
 --	end
 
 	if IMBA_MUTATION["positive"] == "killstreak_power" then
 		CustomNetTables:SetTableValue("mutation_info", IMBA_MUTATION["positive"], {_G.IMBA_MUTATION_KILLSTREAK_POWER, "%"})
+	elseif IMBA_MUTATION["positive"] == "slark_mode" then
+		CustomNetTables:SetTableValue("mutation_info", IMBA_MUTATION["positive"], {_G.IMBA_MUTATION_SLARK_MODE_HEALTH_REGEN, _G.IMBA_MUTATION_SLARK_MODE_MANA_REGEN})
 	elseif IMBA_MUTATION["positive"] == "ultimate_level" then
 		CustomNetTables:SetTableValue("mutation_info", IMBA_MUTATION["positive"], {IMBA_MUTATION_ULTIMATE_LEVEL})
 	end
 
 	if IMBA_MUTATION["negative"] == "death_explosion" then
-		Timers:CreateTimer(function()
-			local damage = _G.IMBA_MUTATION_DEATH_EXPLOSION_DAMAGE
-			local game_time = math.min(GameRules:GetDOTATime(false, false) / 60, 30)
-			game_time = game_time * _G.IMBA_MUTATION_DEATH_EXPLOSION_DAMAGE_INCREASE_PER_MIN
-			CustomNetTables:SetTableValue("mutation_info", IMBA_MUTATION["negative"], {damage + game_time})
-			return 15.0
-		end)
+		CustomNetTables:SetTableValue("mutation_info", IMBA_MUTATION["negative"], {_G.IMBA_MUTATION_DEATH_EXPLOSION_DAMAGE})
+	elseif IMBA_MUTATION["negative"] == "defense_of_the_ants" then
+		CustomNetTables:SetTableValue("mutation_info", IMBA_MUTATION["negative"], {_G.IMBA_MUTATION_DEFENSE_OF_THE_ANTS_SCALE, "%"})
+	elseif IMBA_MUTATION["negative"] == "monkey_business" then
+		CustomNetTables:SetTableValue("mutation_info", IMBA_MUTATION["negative"], {_G.IMBA_MUTATION_MONKEY_BUSINESS_DELAY, "s"})
 	end
 
-	if IMBA_MUTATION["terrain"] == "airdrop" then
-		Timers:CreateTimer(function()
-			Mutation:AirdropTimer()
-			return 1.0
-		end)
-	elseif IMBA_MUTATION["terrain"] == "fast_runes" then
+	-- shows undefined on panorama for reasons
+--	if IMBA_MUTATION["terrain"] == "airdrop" then
+--		CustomNetTables:SetTableValue("mutation_info", IMBA_MUTATION["terrain"], {IMBA_MUTATION_AIRDROP_TIMER})
+--	elseif IMBA_MUTATION["terrain"] == "danger_zone" then
+--		CustomNetTables:SetTableValue("mutation_info", IMBA_MUTATION["terrain"], {IMBA_MUTATION_DANGER_ZONE_TIMER})
+--	elseif IMBA_MUTATION["terrain"] == "fast_runes" then
+	if IMBA_MUTATION["terrain"] == "fast_runes" then
 		CustomNetTables:SetTableValue("mutation_info", IMBA_MUTATION["terrain"], {RUNE_SPAWN_TIME, BOUNTY_RUNE_SPAWN_TIME})
+	elseif IMBA_MUTATION["terrain"] == "river_flows" then
+		CustomNetTables:SetTableValue("mutation_info", IMBA_MUTATION["terrain"], {_G.IMBA_MUTATION_RIVER_FLOWS_MOVESPEED})
 	elseif IMBA_MUTATION["terrain"] == "speed_freaks" then
 		CustomNetTables:SetTableValue("mutation_info", IMBA_MUTATION["terrain"], {_G.IMBA_MUTATION_SPEED_FREAKS_MOVESPEED_PCT, "%"})
+	elseif IMBA_MUTATION["terrain"] == "tug_of_war" then
+		CustomNetTables:SetTableValue("mutation_info", IMBA_MUTATION["terrain"], {IMBA_MUTATION_TUG_OF_WAR_DEATH_COUNT})
 	end
+
+	CustomGameEventManager:Send_ServerToAllClients("update_mutations", {})
 end
 
-function Mutation:AirdropTimer()
-	if GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
-		IMBA_MUTATION_AIRDROP_TIMER_COUNTER = IMBA_MUTATION_AIRDROP_TIMER_COUNTER - 1
+function Mutation:DeathExplosionDamage()
+	local damage = _G.IMBA_MUTATION_DEATH_EXPLOSION_DAMAGE
+	local game_time = math.min(GameRules:GetDOTATime(false, false) / 60, _G.IMBA_MUTATION_DEATH_EXPLOSION_MAX_MINUTES)
+
+	game_time = game_time * _G.IMBA_MUTATION_DEATH_EXPLOSION_DAMAGE_INCREASE_PER_MIN
+	CustomNetTables:SetTableValue("mutation_info", IMBA_MUTATION["negative"], {damage + game_time})
+	CustomGameEventManager:Send_ServerToAllClients("update_mutations", {})
+end
+
+function Mutation:MutationTimer()
+	if IMBA_MUTATION_TIMER == nil then
+		if IMBA_MUTATION["terrain"] == "danger_zone" then
+			IMBA_MUTATION_TIMER = IMBA_MUTATION_DANGER_ZONE_TIMER
+		elseif IMBA_MUTATION["terrain"] == "airdrop" then
+			IMBA_MUTATION_TIMER = IMBA_MUTATION_AIRDROP_TIMER
+		end
 	end
 
-	if IMBA_MUTATION_AIRDROP_TIMER_COUNTER == 10 + 1 then
-		CustomGameEventManager:Send_ServerToAllClients("airdrop_alert", {true})
-	elseif IMBA_MUTATION_AIRDROP_TIMER_COUNTER == 1 then
-		CustomGameEventManager:Send_ServerToAllClients("airdrop_alert", {false})
-	elseif IMBA_MUTATION_AIRDROP_TIMER_COUNTER == 0 then
-		IMBA_MUTATION_AIRDROP_TIMER_COUNTER = IMBA_MUTATION_AIRDROP_TIMER - 1
+	IMBA_MUTATION_TIMER = IMBA_MUTATION_TIMER - 1
+
+	if IMBA_MUTATION_TIMER == 10 then
+		if IMBA_MUTATION["terrain"] == "airdrop" then
+			CustomGameEventManager:Send_ServerToAllClients("timer_alert", {true})
+		end
+	elseif IMBA_MUTATION_TIMER == 0 then
+		if IMBA_MUTATION["terrain"] == "danger_zone" then
+			IMBA_MUTATION_TIMER = IMBA_MUTATION_DANGER_ZONE_TIMER - 1
+		elseif IMBA_MUTATION["terrain"] == "airdrop" then
+			IMBA_MUTATION_TIMER = IMBA_MUTATION_AIRDROP_TIMER - 1
+			CustomGameEventManager:Send_ServerToAllClients("timer_alert", {false})
+		end
 	end
 
-	local t = IMBA_MUTATION_AIRDROP_TIMER_COUNTER
+	local t = IMBA_MUTATION_TIMER
 	local minutes = math.floor(t / 60)
 	local seconds = t - (minutes * 60)
 	local m10 = math.floor(minutes / 10)
@@ -712,4 +758,5 @@ function Mutation:AirdropTimer()
 	}
 
 	CustomNetTables:SetTableValue("mutation_info", IMBA_MUTATION["terrain"], broadcast_gametimer)
+	CustomGameEventManager:Send_ServerToAllClients("update_mutations", {})
 end

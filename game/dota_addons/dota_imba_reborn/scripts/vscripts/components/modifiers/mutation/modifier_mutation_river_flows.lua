@@ -60,5 +60,5 @@ function modifier_mutation_river_flows_boost:DeclareFunctions()
 end
 
 function modifier_mutation_river_flows_boost:GetModifierMoveSpeed_AbsoluteMin()
-	return 1000 -- OSFrog
+	return _G.IMBA_MUTATION_RIVER_FLOWS_MOVESPEED
 end

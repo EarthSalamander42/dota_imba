@@ -15,9 +15,9 @@ POSITIVE_MUTATION_LIST[3] = "pocket_tower"
 POSITIVE_MUTATION_LIST[4] = "super_fervor"
 POSITIVE_MUTATION_LIST[5] = "slark_mode"
 POSITIVE_MUTATION_LIST[6] = "ultimate_level"
--- POSITIVE_MUTATION_LIST[5] = "super_blink" -- nofun
+-- POSITIVE_MUTATION_LIST[7] = "super_blink" -- nofun
 
--- POSITIVE_MUTATION_LIST["greed_is_good"] = false
+-- POSITIVE_MUTATION_LIST[8] = "greed_is_good"
 
 -- Negative Mutations
 NEGATIVE_MUTATION_LIST = {}
@@ -56,7 +56,6 @@ end
 -- POSITIVE_MUTATION_LIST["greedisgood"] = false
 -- POSITIVE_MUTATION_LIST["angel_arena"] = false
 
--- NEGATIVE_MUTATION_LIST["monkey_business"] = false
 -- NEGATIVE_MUTATION_LIST["the_walking_dead"] = false
 
 -- TERRAIN_MUTATION_LIST["danger_zone"] = false -- add archer's music danger zone

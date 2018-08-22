@@ -15,7 +15,7 @@ function modifier_mutation_ants:DeclareFunctions()
 end
 
 function modifier_mutation_ants:OnCreated()
-	self.minimum_cap = -75
+	self.minimum_cap = IMBA_MUTATION_DEFENSE_OF_THE_ANTS_MIN_SCALE
 	self:SetStackCount(0)
 end
 
@@ -61,5 +61,5 @@ function modifier_mutation_ants:OnHeroKilled(params)
 end
 
 function modifier_mutation_ants:GetModifierModelScale()
-	return math.max(-5 * self:GetStackCount(), self.minimum_cap)
+	return math.max(-IMBA_MUTATION_DEFENSE_OF_THE_ANTS_SCALE * self:GetStackCount(), self.minimum_cap)
 end

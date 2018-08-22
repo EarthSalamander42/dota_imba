@@ -66,7 +66,7 @@
 "mutation_periodic_spellcast_Description"		"Every minute, a random spell will be cast on everyone."
 
 "mutation_defense_of_the_ants"					"Defense of the Feeders"
-"mutation_defense_of_the_ants_Description"		"Every time you kill a hero or die, you become 5% smaller/bigger. Min/Max size caps at -75%/75%."
+"mutation_defense_of_the_ants_Description"		"Every time you kill a hero or die, you become 5% smaller/bigger. Minimum size capped at -75%."
 
 "mutation_alien_incubation"						"Alien Incubation"
 "mutation_alien_incubation_Description"			"Every units spawn uncontrollable Broodlings upon death."
@@ -130,7 +130,7 @@
 
 // Negative
 "mutation_monkey_business"						"Monkey Business"
-"mutation_monkey_business_Description"			"Standing still and uninterrupted for 5 seconds changes your shape, taking inspiration from certain surroundings. Taking damage, attacking, or using any item or ability breaks the disguise."
+"mutation_monkey_business_Description"			"Standing still and uninterrupted for 3 seconds changes your shape, taking inspiration from certain surroundings. Taking damage, attacking, or using any item or ability breaks the disguise."
 
 "mutation_the_walking_dead"						"The Walking Dead"
 "mutation_the_walking_dead_Description"			"During night, zombies spawns in Jungle and attack the closest hero."

@@ -95,6 +95,13 @@ function GameMode:OnGameRulesStateChange(keys)
 		for _, tower in pairs(towers) do
 			SetupTower(tower)
 		end
+
+		if IsMutationMap() then
+			Timers:CreateTimer(function()
+				Mutation:OnSlowThink()
+				return 60.0
+			end)
+		end
 	elseif newState == DOTA_GAMERULES_STATE_POST_GAME then
 		api.imba.event(api.events.entered_post_game)
 		api.imba.complete(function (error, players)
@@ -157,20 +164,8 @@ function GameMode:OnNPCSpawned(keys)
 				npc:AddNewModifier(npc, nil, "modifier_imba_donator", {})
 			end
 
-			if IsMutationMap() then
-				if npc:GetUnitName() ~= FORCE_PICKED_HERO then
-					Mutation:OnUnitSpawn(npc)
-				end
-			end
-
 			if npc.first_spawn ~= true then
 				npc.first_spawn = true
-
-				if IsMutationMap() then
-					if npc:GetUnitName() ~= FORCE_PICKED_HERO then
-						Mutation:OnHeroFirstSpawn(npc)
-					end
-				end
 
 				GameMode:OnHeroFirstSpawn(npc)
 
@@ -393,6 +388,13 @@ function GameMode:OnEntityKilled( keys )
 			CombatEvents("kill", "roshan_dead", killed_unit, killer)
 
 			return
+		else
+			if IsMutationMap() then
+				Mutation:OnUnitDeath(killed_unit)
+				return
+			else
+				return
+			end
 		end
 
 		if killer:IsRealHero() then

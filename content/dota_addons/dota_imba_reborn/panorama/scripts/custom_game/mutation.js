@@ -23,9 +23,8 @@ function ClearItemSpawnMessage()
 
 var mutation = []
 
-function OnMutationUpdated(data)
+function OnMutationUpdated()
 {
-//	$.Msg(data);
 	var mutations = CustomNetTables.GetTableValue("mutations", "mutation")["1"]
 	mutation[0] = mutations["imba"]
 	mutation[1] = mutations["positive"]
@@ -36,23 +35,24 @@ function OnMutationUpdated(data)
 
 	for (var j = 0; j <= 3; j++) {
 		mutation_info[j] = CustomNetTables.GetTableValue("mutation_info", mutation[j])
-		if (mutation_info[j] == undefined)
-			mutation_info[j] = "";
-		else {
-			if (mutation[j] == "airdrop")
-				AirdropTimer(mutation_info[j], $("#Mutation" + j + "Label"))
-			else if (mutation[j] == "periodic_spellcast")
-				PeriodicSpellcast(mutation_info[j], $("#Mutation" + j + "Label"))
-			else {
-				if (mutation_info[j]["2"]) {
-					if (mutation_info[j]["2"] == "%")
-						$("#Mutation" + j + "Label").text = $.Localize("mutation_" + mutation[j]) + ": " + mutation_info[j]["1"].toFixed(0) + "%";
-					else
-						$("#Mutation" + j + "Label").text = $.Localize("mutation_" + mutation[j]) + ": " + mutation_info[j]["1"].toFixed(0) + "/" + mutation_info[j]["2"].toFixed(0);
-				} else {
-					if (mutation_info[j]["1"])
-						$("#Mutation" + j + "Label").text = $.Localize("mutation_" + mutation[j]) + ": " + mutation_info[j]["1"].toFixed(0);
-				}
+		if (mutation_info[j] != undefined) {
+			if (mutation[j] == "periodic_spellcast")
+				PeriodicSpellcast(mutation_info[j], $("#Mutation2Label"))
+			if (mutation[j] == "airdrop" || mutation[j] == "danger_zone") {
+				MutationTimer(mutation_info[j], $("#Mutation3Label"))
+				break; // Don't need to setup anything after this, better end the script
+			}
+			if (mutation_info[j]["2"]) {
+				if (mutation_info[j]["2"] == "%")
+					$("#Mutation" + j + "Label").text = $.Localize("mutation_" + mutation[j]) + ": " + mutation_info[j]["1"].toFixed(0) + "%";
+				else if (mutation_info[j]["2"] == "s")
+					$("#Mutation" + j + "Label").text = $.Localize("mutation_" + mutation[j]) + ": " + mutation_info[j]["1"].toFixed(0) + "seconds";
+				else
+					$("#Mutation" + j + "Label").text = $.Localize("mutation_" + mutation[j]) + ": " + mutation_info[j]["1"].toFixed(0) + " / " + mutation_info[j]["2"].toFixed(0);
+			}
+			else if (mutation_info[j]["1"] && !mutation_info[j]["2"]) {
+				if (mutation_info[j]["1"])
+					$("#Mutation" + j + "Label").text = $.Localize("mutation_" + mutation[j]) + ": " + mutation_info[j]["1"].toFixed(0);
 			}
 		}
 	}
@@ -71,11 +71,11 @@ function PeriodicSpellcast(data, panel) {
 }
 
 var alert = 0
-function AirdropAlert(data) {
+function TimerAlert(data) {
 	alert = data["1"]
 }
 
-function AirdropTimer(data, panel)
+function MutationTimer(data, panel)
 {
 	var timerText = "";
 	timerText += data.timer_minute_10;
@@ -96,7 +96,7 @@ function AirdropTimer(data, panel)
 }
 
 (function () {
-	CustomNetTables.SubscribeNetTableListener("mutation_info", OnMutationUpdated);
-	GameEvents.Subscribe("airdrop_alert", AirdropAlert);
+	GameEvents.Subscribe("update_mutations", OnMutationUpdated);
+	GameEvents.Subscribe("timer_alert", TimerAlert);
 	GameEvents.Subscribe("item_will_spawn", OnItemWillSpawn);
 })();

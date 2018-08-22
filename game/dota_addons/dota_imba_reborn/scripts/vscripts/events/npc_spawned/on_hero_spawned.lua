@@ -26,6 +26,9 @@ function GameMode:OnHeroFirstSpawn(hero)
 				Timers:CreateTimer(0.1, function()
 					PlayerResource:SetCameraTarget(hero:GetPlayerID(), nil)
 				end)
+				Timers:CreateTimer(1.0, function()
+					PlayerResource:SetCameraTarget(hero:GetPlayerID(), nil)
+				end)
 			end
 
 			Timers:CreateTimer(1.5, function()
@@ -205,19 +208,8 @@ function GameMode:OnHeroFirstSpawn(hero)
 	end
 
 	if IsMutationMap() then
-		-- Speed Freaks mutation modifier
-		if IMBA_MUTATION["terrain"] == "speed_freaks" then
-			hero:AddNewModifier(hero, nil, "modifier_mutation_speed_freaks", {})
-		end
-
-		-- Super Fervor mutation modifier
-		if IMBA_MUTATION["positive"] == "super_fervor" then
-			hero:AddNewModifier(hero, nil, "modifier_mutation_super_fervor", {})
-		end
-
-		-- Alien Incubation mutation modifier
-		if IMBA_MUTATION["negative"] == "alien_incubation" then
-			hero:AddNewModifier(hero, nil, "modifier_mutation_alien_incubation", {})
+		if hero:GetUnitName() ~= FORCE_PICKED_HERO then
+			Mutation:OnHeroFirstSpawn(hero)
 		end
 	end
 end
@@ -249,4 +241,8 @@ function GameMode:OnHeroSpawned(hero)
 			hero:RemoveModifierByName("modifier_silencer_int_steal")
 		end
 	end)
+
+	if IsMutationMap() then
+		Mutation:OnHeroSpawn(hero)
+	end
 end

@@ -3,6 +3,7 @@ LinkLuaModifier("modifier_mutation_shadow_dance_buff", "components/modifiers/mut
 modifier_mutation_shadow_dance = modifier_mutation_shadow_dance or class({})
 
 function modifier_mutation_shadow_dance:IsPurgable() return false end
+function modifier_mutation_shadow_dance:RemoveOnDeath() return false end
 function modifier_mutation_shadow_dance:IsHidden() return true end
 
 if IsServer() then
@@ -24,6 +25,8 @@ if IsServer() then
 
 	function modifier_mutation_shadow_dance:OnIntervalThink()
 --		print("last seen "..self:GetParent():GetUnitName().." :", self:GetParent().last_seen)
+
+		if not self:GetParent():IsAlive() then return end
 
 		if self:GetParent():GetTeamNumber() == 2 then
 			for _, hero in pairs(HeroList:GetAllHeroes()) do
@@ -75,11 +78,6 @@ end
 
 modifier_mutation_shadow_dance_buff = modifier_mutation_shadow_dance_buff or class({})
 
-function modifier_mutation_shadow_dance_buff:OnCreated()
-	self.health_regen = 5
-	self.mana_regen = 2
-end
-
 function modifier_mutation_shadow_dance_buff:DeclareFunctions()
 	local funcs = {
 		MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE,
@@ -94,11 +92,11 @@ function modifier_mutation_shadow_dance_buff:GetEffectName()
 end
 
 function modifier_mutation_shadow_dance_buff:GetModifierHealthRegenPercentage()
-	return self.health_regen
+	return CustomNetTables:GetTableValue("mutation_info", "slark_mode")["1"]
 end
 
 function modifier_mutation_shadow_dance_buff:GetModifierTotalPercentageManaRegen( params )
-	return self.mana_regen
+	return CustomNetTables:GetTableValue("mutation_info", "slark_mode")["2"]
 end
 
 function modifier_mutation_shadow_dance_buff:GetTexture()

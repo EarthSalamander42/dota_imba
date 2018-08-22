@@ -108,8 +108,7 @@ function modifier_mutation_monkey_business:GetTexture()	return "monkey_king_untr
 
 function modifier_mutation_monkey_business:OnCreated()
 	if not IsServer() then return end
-	self.tick_rate 		= 0.1	-- Set tick rate for timer
-	self.transform_time = 3.0		-- Amount of time to wait (in seconds) before transforming
+	self.tick_rate		= 0.1	-- Set tick rate for timer
 
 	if IsServer() then
 		self:StartIntervalThink(self.tick_rate)
@@ -121,7 +120,7 @@ function modifier_mutation_monkey_business:OnIntervalThink()
 	if not self:GetParent():HasModifier("modifier_mutation_monkey_business_transform") and not self:GetParent():HasModifier("modifier_monkey_king_transform") then
 		if not self:GetParent():IsMoving() then
 			if self:GetDuration() == -1 then
-				self:SetDuration(self.transform_time, true)
+				self:SetDuration(_G.IMBA_MUTATION_MONKEY_BUSINESS_DELAY, true)
 			end
 		else
 			self:SetDuration(-1, true)
@@ -153,7 +152,7 @@ end
 
 -- Separate helper function that resets internal timer and removes the transform modifiers if they exist
 function modifier_mutation_monkey_business:Exposed()
-	self:SetDuration(self.transform_time, true)
+	self:SetDuration(_G.IMBA_MUTATION_MONKEY_BUSINESS_DELAY, true)
 	if self:GetParent():HasModifier("modifier_mutation_monkey_business_transform") then
 		self:GetParent():RemoveModifierByName("modifier_mutation_monkey_business_transform")
 		self:GetParent():RemoveModifierByName("modifier_mutation_monkey_business_transform_extra")
