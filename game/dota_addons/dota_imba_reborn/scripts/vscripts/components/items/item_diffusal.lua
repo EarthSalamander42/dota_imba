@@ -120,7 +120,7 @@ end
 function modifier_item_imba_diffusal:OnDestroy()
 	if IsServer() then
 		-- If this was the last diffusal in the inventory, remove the unique effect
-		if not self.caster:HasModifier(self.modifier_self) then
+		if not self.caster:IsNull() and not self.caster:HasModifier(self.modifier_self) then
 			self.caster:RemoveModifierByName(self.modifier_unique)
 		end
 	end
@@ -451,7 +451,7 @@ end
 function modifier_item_imba_diffusal_2:OnDestroy()
 	if IsServer() then
 		-- If this was the last diffusal in the inventory, remove the unique effect
-		if not self.caster:HasModifier(self.modifier_self) then
+		if not self.caster:IsNull() and not self.caster:HasModifier(self.modifier_self) then
 			self.caster:RemoveModifierByName(self.modifier_unique)
 		end
 	end
