@@ -4567,6 +4567,7 @@
 		"ScriptFile"				"components/abilities/heroes/hero_elder_titan.lua"
 		"AbilityTextureName"			"elder_titan_earth_splitter"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
@@ -4629,11 +4630,11 @@
 				"damage_pct"					"35 45 55"
 				"CalculateSpellDamageTooltip"	"0"
 			}
-//			"08"
-//			{
-//				"var_type"					"FIELD_FLOAT"
-//				"slow_duration_scepter"		"4.0 6.0 8.0"
-//			}
+			"08"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"slow_duration_scepter"		"4.0 6.0 8.0"
+			}
 		}
 	}
 
