@@ -1,5 +1,3 @@
-LinkLuaModifier("modifier_imba_invoke_buff", "components/modifiers/modifier_imba_invoke_buff.lua", LUA_MODIFIER_MOTION_NONE)
-
 if HeroSelection == nil then
 	require('libraries/hero_selection/event')
 	require('libraries/hero_selection/fun')()
