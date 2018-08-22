@@ -722,6 +722,44 @@
 		"Ability16"					"special_bonus_unique_gyrocopter_1"
 		"Ability17"					"special_bonus_unique_gyrocopter_5"
 	}
+	
+	//=================================================================================================================
+	// HERO: Invoker
+	//=================================================================================================================
+	"npc_dota_hero_invoker"
+	{
+		"override_hero"				"npc_dota_hero_invoker"
+
+		//Picking Screen
+		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
+
+		"Ability1"					"invoker_quas"
+		"Ability2"					"invoker_wex"
+		"Ability3"					"invoker_exort"
+		"Ability4"					"invoker_empty1"
+		"Ability5"					"invoker_empty2"
+		"Ability6"					"invoker_invoke"
+
+		"Ability7"					"invoker_cold_snap"
+		"Ability8"					"invoker_ghost_walk"
+		"Ability9"					"invoker_tornado"
+		"Ability10"					"invoker_emp"
+		"Ability11"					"invoker_alacrity"
+		"Ability12"					"invoker_chaos_meteor"
+		"Ability13"					"invoker_sun_strike"
+		"Ability14"					"invoker_forge_spirit"
+		"Ability15"					"invoker_ice_wall"
+		"Ability16"					"invoker_deafening_blast" 
+		
+		"Ability17" 				"special_bonus_unique_invoker_8"
+		"Ability18"					"special_bonus_unique_invoker_6"
+		"Ability19"					"special_bonus_unique_invoker_1"
+		"Ability20"					"special_bonus_unique_invoker_7"
+		"Ability21"					"special_bonus_unique_invoker_4"
+		"Ability22"					"special_bonus_unique_invoker_5"
+		"Ability23"					"special_bonus_unique_invoker_2"
+		"Ability24"					"special_bonus_unique_invoker_3"
+	}
 
 	//=================================================================================================================
 	// HERO: Jakiro

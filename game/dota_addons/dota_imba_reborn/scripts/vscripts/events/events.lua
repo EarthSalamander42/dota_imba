@@ -462,12 +462,9 @@ function GameMode:OnPlayerLevelUp(keys)
 
 		hero:SetAbilityPoints(hero:GetAbilityPoints() - 1)
 	end
-
+	
 	if hero:GetUnitName() == "npc_dota_hero_invoker" then
-		if hero_level == 6 or hero_level == 12 or hero_level == 18 then
-			local invoke_ability = hero:FindAbilityByName("invoker_invoke")
-			invoke_ability:SetLevel(invoke_ability:GetLevel() + 1)
-		end
+		hero:FindAbilityByName("invoker_invoke"):SetLevel(min(math.floor(level/6 + 1), 4))
 	end
 end
 
