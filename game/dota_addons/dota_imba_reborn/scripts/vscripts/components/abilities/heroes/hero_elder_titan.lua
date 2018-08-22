@@ -14,6 +14,8 @@
 --
 -- Editors:
 --     EarthSalamander #42, 03.12.2017
+--     suthernfriend, 03.02.2018
+--	   AltiV, 07.08.2018
 
 local function FindNearestPointFromLine(caster, dir, affected)
 	local castertoaffected = affected - caster
@@ -186,6 +188,10 @@ function imba_elder_titan_ancestral_spirit:GetAbilityTextureName()
 	return "elder_titan_ancestral_spirit"
 end
 
+function imba_elder_titan_ancestral_spirit:GetAssociatedSecondaryAbilities()
+	return "imba_elder_titan_return_spirit"
+end
+
 function imba_elder_titan_ancestral_spirit:GetCastRange(location, target)
 	if self:GetCaster():HasTalent("special_bonus_imba_elder_titan_1") then
 		return self:GetCaster():FindTalentValue("special_bonus_imba_elder_titan_1")
@@ -230,8 +236,13 @@ function imba_elder_titan_ancestral_spirit:OnSpellStart()
 	astral_spirit:AddNewModifier(astral_spirit, nil, "modifier_imba_haste_rune_speed_limit_break", {})
 	astral_spirit:SetBaseMoveSpeed(spirit_movespeed)
 
-	astral_spirit:FindAbilityByName("imba_elder_titan_echo_stomp_spirit"):SetLevel(caster:FindAbilityByName("imba_elder_titan_echo_stomp"):GetLevel())
-	astral_spirit:FindAbilityByName("imba_elder_titan_natural_order"):SetLevel(caster:FindAbilityByName("imba_elder_titan_natural_order"):GetLevel())
+	if caster:FindAbilityByName("imba_elder_titan_echo_stomp") ~= nil then
+		astral_spirit:FindAbilityByName("imba_elder_titan_echo_stomp_spirit"):SetLevel(caster:FindAbilityByName("imba_elder_titan_echo_stomp"):GetLevel())
+	end
+	
+	if caster:FindAbilityByName("imba_elder_titan_natural_order") ~= nil then
+		astral_spirit:FindAbilityByName("imba_elder_titan_natural_order"):SetLevel(caster:FindAbilityByName("imba_elder_titan_natural_order"):GetLevel())
+	end
 end
 
 -- Return Spirit
@@ -245,7 +256,13 @@ function imba_elder_titan_return_spirit:IsInnateAbility()
 	return true
 end
 
+function imba_elder_titan_return_spirit:IsStealable() return false end
+function imba_elder_titan_return_spirit:IsHiddenWhenStolen() return true end
 function imba_elder_titan_return_spirit:IsNetherWardStealable() return false end
+
+function imba_elder_titan_return_spirit:GetAssociatedPrimaryAbilities()
+	return "imba_elder_titan_ancestral_spirit"
+end
 
 function imba_elder_titan_return_spirit:OnSpellStart()
 	if not astral_spirit.is_returning then
@@ -346,8 +363,9 @@ function modifier_imba_elder_titan_ancestral_spirit_self:OnIntervalThink()
 		if not enemy_has_been_hit then
 			-- Play hit particle
 			local hit_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_elder_titan/elder_titan_ancestral_spirit_touch.vpcf", PATTACH_CUSTOMORIGIN, enemy)
-			ParticleManager:SetParticleControlEnt(hit_pfx, 0, enemy, PATTACH_POINT_FOLLOW, "attach_hitloc", enemy:GetAbsOrigin(), true)
-			ParticleManager:SetParticleControlEnt(hit_pfx, 1, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
+			ParticleManager:SetParticleControl(hit_pfx, 0, self:GetParent():GetOwner():GetAbsOrigin())
+			ParticleManager:SetParticleControlEnt(hit_pfx, 1, enemy, PATTACH_POINT_FOLLOW, "attach_hitloc", enemy:GetAbsOrigin(), true)
+
 			ParticleManager:ReleaseParticleIndex(hit_pfx)
 
 			EmitSoundOn("Hero_ElderTitan.AncestralSpirit.Buff", enemy)
@@ -541,32 +559,16 @@ function modifier_imba_elder_titan_natural_order:DeclareFunctions()
 end
 
 function modifier_imba_elder_titan_natural_order:GetModifierPhysicalArmorBonus()
-	if self:GetCaster() and self:GetCaster():GetUnitName() == "npc_dota_hero_elder_titan" then
-		return self.base_armor_reduction * 0.01 * self:GetParent():GetPhysicalArmorBaseValue()
-	else
-		if self:GetCaster():GetOwner():HasTalent("special_bonus_imba_elder_titan_8") then
-			return self.base_armor_reduction * 0.01 * self:GetParent():GetPhysicalArmorBaseValue()
-		else
-			return 0
-		end
-	end
+	return self.base_armor_reduction * 0.01 * self:GetParent():GetPhysicalArmorBaseValue()
 end
 
 function modifier_imba_elder_titan_natural_order:GetModifierMagicalResistanceBonus()
-	if self:GetCaster():GetUnitName() == "npc_dota_hero_elder_titan" then
-		if self:GetCaster():HasTalent("special_bonus_imba_elder_titan_8") then
-			return self.magic_resist_reduction
-		else
-			return 0
-		end
-	else
-		return 0
-	end
+	return self.magic_resist_reduction * 0.01 * self:GetParent():GetBaseMagicalResistanceValue()
 end
 
 function modifier_imba_elder_titan_natural_order:GetModifierBaseAttack_BonusDamage()
-	if self:GetCaster():HasTalent("special_bonus_imba_elder_titan_4") then
-		if self:GetCaster():GetUnitName() == "npc_dota_elder_titan_ancestral_spirit" then
+	if self:GetCaster() ~= nil and self:GetCaster():HasTalent("special_bonus_imba_elder_titan_4") then
+		if self:GetCaster():GetName() == "npc_dota_elder_titan_ancestral_spirit" then -- This line doesn't pick up the Ancestral Spirit
 			return self:GetCaster():GetOwner():FindTalentValue("special_bonus_imba_elder_titan_4") * (-1)
 		else
 			return self:GetCaster():FindTalentValue("special_bonus_imba_elder_titan_4") * (-1)
@@ -577,8 +579,8 @@ function modifier_imba_elder_titan_natural_order:GetModifierBaseAttack_BonusDama
 end
 
 function modifier_imba_elder_titan_natural_order:GetModifierStatusResistanceStacking()
-	if self:GetCaster():HasTalent("special_bonus_imba_elder_titan_5") then
-		if self:GetCaster():GetUnitName() == "npc_dota_elder_titan_ancestral_spirit" then
+	if self:GetCaster() ~= nil and self:GetCaster():HasTalent("special_bonus_imba_elder_titan_5") then
+		if self:GetCaster():GetUnitName() == "npc_dota_elder_titan_ancestral_spirit" then -- This line doesn't pick up the Ancestral Spirit
 			return self:GetCaster():GetOwner():FindTalentValue("special_bonus_imba_elder_titan_5") * (-1)
 		else
 			return self:GetCaster():FindTalentValue("special_bonus_imba_elder_titan_5") * (-1)
@@ -673,6 +675,7 @@ end
 -----------------------------
 imba_elder_titan_earth_splitter = class({})
 LinkLuaModifier("modifier_imba_earth_splitter", "components/abilities/heroes/hero_elder_titan.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_earth_splitter_scepter", "hero/hero_elder_titan.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_elder_titan_earth_splitter:GetAbilityTextureName()
 	return "elder_titan_earth_splitter"
@@ -706,9 +709,9 @@ function imba_elder_titan_earth_splitter:OnSpellStart()
 	local radius = self:GetSpecialValueFor("radius")
 	local duration = self:GetSpecialValueFor("duration")
 	local slow_duration = self:GetSpecialValueFor("slow_duration")
-	--	if scepter then
-	--		slow_duration = self:GetSpecialValueFor("slow_duration_scepter")
-	--	end
+	if scepter then
+		slow_duration = self:GetSpecialValueFor("slow_duration_scepter")
+	end
 	local bonus_hp_per_str = self:GetSpecialValueFor("bonus_hp_per_str")
 	local effect_delay = self:GetSpecialValueFor("crack_time")
 	local crack_width = self:GetSpecialValueFor("crack_width")
@@ -739,6 +742,9 @@ function imba_elder_titan_earth_splitter:OnSpellStart()
 		for _, enemy in pairs(enemies) do
 			enemy:Interrupt()
 			enemy:AddNewModifier(caster, self, "modifier_imba_earth_splitter", {duration = slow_duration})
+			if caster:HasScepter() then
+				enemy:AddNewModifier(caster, self, "modifier_imba_earth_splitter_scepter", {duration = slow_duration})
+			end
 			ApplyDamage({victim = enemy, attacker = caster, damage = enemy:GetMaxHealth() * crack_damage * 0.01, damage_type = DAMAGE_TYPE_PHYSICAL, ability = self})
 			ApplyDamage({victim = enemy, attacker = caster, damage = enemy:GetMaxHealth() * crack_damage * 0.01, damage_type = DAMAGE_TYPE_MAGICAL, ability = self})
 			local closest_point = FindNearestPointFromLine(caster_position, caster_fw, enemy:GetAbsOrigin())
@@ -753,8 +759,7 @@ end
 modifier_imba_earth_splitter = class({})
 
 function modifier_imba_earth_splitter:IsHidden() return false end
-function modifier_imba_earth_splitter:IsPurgeException() return true end
-function modifier_imba_earth_splitter:IsStunDebuff() return true end
+function modifier_imba_earth_splitter:IsPurgable() return true end
 
 function modifier_imba_earth_splitter:DeclareFunctions()
 	local decFuncs = {
@@ -773,4 +778,17 @@ end
 
 function modifier_imba_earth_splitter:GetModifierMoveSpeedBonus_Percentage()
 	return self:GetAbility():GetSpecialValueFor("slow_pct")
+end
+
+-- Earth Splitter Scepter modifier
+modifier_imba_earth_splitter_scepter = class({})
+
+function modifier_imba_earth_splitter_scepter:IsHidden() return false end
+function modifier_imba_earth_splitter_scepter:IsPurgable() return true end
+
+function modifier_imba_earth_splitter_scepter:CheckState()
+	local state = {
+		[MODIFIER_STATE_DISARMED] = true,
+	}
+	return state
 end

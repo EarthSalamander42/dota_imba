@@ -82,8 +82,7 @@ function imba_witch_doctor_paralyzing_cask:OnProjectileHit_ExtraData(hTarget, vL
 	if hTarget then
 		if hTarget:IsRealHero() or hTarget:IsConsideredHero() or hTarget:IsRoshan() then
 			if hTarget:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then
-				if not hTarget:IsMagicImmune() and not hTarget:TriggerSpellAbsorb(self) then
-
+				if not hTarget:IsMagicImmune() and (ExtraData.bFirstCast == 0 or not hTarget:TriggerSpellAbsorb(self)) then
 					-- #4 TALENT: Casket applies maledict if previous target was maledicted
 					if IsServer() and self:GetCaster():HasTalent("special_bonus_imba_witch_doctor_4") then
 						local maledict_ability	=	self:GetCaster():FindAbilityByName("imba_witch_doctor_maledict")
@@ -106,7 +105,8 @@ function imba_witch_doctor_paralyzing_cask:OnProjectileHit_ExtraData(hTarget, vL
 			end
 		else
 			if hTarget:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then
-				if not hTarget:IsMagicImmune() and not hTarget:TriggerSpellAbsorb(self) then
+				if not hTarget:IsMagicImmune() and (ExtraData.bFirstCast == 0 or not hTarget:TriggerSpellAbsorb(self)) then
+
 					hTarget:AddNewModifier(hTarget, self, "modifier_stunned", {duration = ExtraData.creep_duration})
 					ApplyDamage({victim = hTarget, attacker = self:GetCaster(), damage = ExtraData.creep_damage, damage_type = self:GetAbilityDamageType()})
 				end
