@@ -17,7 +17,8 @@ function item_imba_bottle:OnSpellStart()
 	local caster = self:GetCaster()
 	if self.RuneStorage then
 		-- Safe env. so the rune still gets consumed even if it errors
-		pcall(PickupRune, self.RuneStorage, caster, true)
+		--pcall(PickupRune, self.RuneStorage, caster, true)
+		ImbaRunes:PickupRune(self.RuneStorage, caster, true)
 		self:SetCurrentCharges(3)
 		self.RuneStorage = nil
 	else
@@ -146,11 +147,15 @@ function modifier_item_imba_bottle_heal:DeclareFunctions()
 end
 
 function modifier_item_imba_bottle_heal:GetModifierConstantHealthRegen()
-	return self:GetAbility():GetSpecialValueFor("health_restore") / self:GetAbility():GetSpecialValueFor("restore_time")
+	if self:GetAbility() ~= nil then
+		return self:GetAbility():GetSpecialValueFor("health_restore") / self:GetAbility():GetSpecialValueFor("restore_time")
+	end
 end
 
 function modifier_item_imba_bottle_heal:GetModifierConstantManaRegen()
-	return self:GetAbility():GetSpecialValueFor("mana_restore") / self:GetAbility():GetSpecialValueFor("restore_time")
+	if self:GetAbility() ~= nil then
+		return self:GetAbility():GetSpecialValueFor("mana_restore") / self:GetAbility():GetSpecialValueFor("restore_time")
+	end
 end
 
 function modifier_item_imba_bottle_heal:OnCreated()
