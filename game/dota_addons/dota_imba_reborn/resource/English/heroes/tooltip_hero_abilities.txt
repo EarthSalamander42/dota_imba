@@ -1107,7 +1107,7 @@
 // Disruptor's Thunder Strike
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_disruptor_thunder_strike"                    "Thunder Strike"
-"DOTA_Tooltip_ability_imba_disruptor_thunder_strike_Description"                    "Repeatedly strikes the target enemy with lightning. Each strike damages nearby enemy units in %radius% radius. Provides vision of its target.\n<font color='#FF7800'>Lightning Rod:</font> strikes one additional time for each enemy hero in the effect radius."
+"DOTA_Tooltip_ability_imba_disruptor_thunder_strike_Description"                    "Repeatedly strikes the target enemy with lightning. Each strike damages nearby enemy units in %radius% radius. Provides vision of its target.\n<font color='#FF7800'>Lightning Rod:</font> Strikes one additional time for each enemy hero in the effect radius."
 "DOTA_Tooltip_ability_imba_disruptor_thunder_strike_Note0"              "Creeps and magic immune heroes are not counted."
 "DOTA_Tooltip_ability_imba_disruptor_thunder_strike_Lore"              "Disruptor's charged coils occasionally overload, and a singed armor plate or tuft of fur is the result on the enemy."
 "DOTA_Tooltip_ability_imba_disruptor_thunder_strike_damage"            "DAMAGE:"
@@ -1121,7 +1121,7 @@
 // Disruptor's Glimpse
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_disruptor_glimpse"                          "Glimpse"
-"DOTA_Tooltip_ability_imba_disruptor_glimpse_Description"              "Teleports the target hero back to where it was %backtrack_time% seconds ago. Instantly kills illusions.\n<font color='#FF7800'>Glimpse Storm:</font> rips the space and time continuum, creating an electrical storm at the target's landing location. Enemies inside the storm are silenced."
+"DOTA_Tooltip_ability_imba_disruptor_glimpse_Description"              "Teleports the target hero back to where it was %backtrack_time% seconds ago. Instantly kills illusions.\n<font color='#FF7800'>Glimpse Storm:</font> Rips the space and time continuum, creating an electrical storm at the target's landing location. Enemies inside the storm are silenced."
 "DOTA_Tooltip_ability_imba_disruptor_glimpse_Note0"                    "Glimpse storm damages enemies in it area of effect every 0.25 seconds."
 "DOTA_Tooltip_ability_imba_disruptor_glimpse_Lore"                      "Playing with electricity can have unexpected results."
 "DOTA_Tooltip_ability_imba_disruptor_glimpse_cast_range"                "CAST RANGE:"
@@ -1136,7 +1136,7 @@
 // Disruptor's Kinetic Field
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_disruptor_kinetic_field"                    "Kinetic Field"
-"DOTA_Tooltip_ability_imba_disruptor_kinetic_field_Description"                     "After a formation time of %formation_delay% seconds, creates a circular barrier of kinetic energy that enemies can't pass.\n<font color='#FF7800'>Chargeback:</font> enemies that touch the kinetic field's edge are knocked back and damaged. Creeps take considerably lower damage from this effect.\n<font color='#FF7800'>Recharge:</font> when Chargeback is triggered by enemy heroes, Kinetic Field's cooldown is reduced by %cooldown_reduction% seconds."
+"DOTA_Tooltip_ability_imba_disruptor_kinetic_field_Description"                     "After a formation time of %formation_delay% seconds, creates a circular barrier of kinetic energy that enemies can't pass.\n<font color='#FF7800'>Chargeback:</font> Enemies that touch the kinetic field's edge are knocked back and damaged. Creeps take less damage from this effect.\n<font color='#FF7800'>Recharge:</font> When Chargeback is triggered by enemy heroes, Kinetic Field's cooldown is reduced by %cooldown_reduction% seconds."
 "DOTA_Tooltip_ability_imba_disruptor_kinetic_field_Note0"              "Cooldown reduction can only trigger once every 0.2 seconds."
 "DOTA_Tooltip_ability_imba_disruptor_kinetic_field_Lore"                "Electrical or Kinetic energy are simply faces of the same coin for the Disruptor."
 "DOTA_Tooltip_ability_imba_disruptor_kinetic_field_field_radius"                    "RADIUS:"
@@ -1148,7 +1148,7 @@
 // Disruptor's Static Storm
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_disruptor_static_storm"                      "Static Storm"
-"DOTA_Tooltip_ability_imba_disruptor_static_storm_Description"          "Creates a static storm that damages and silences all enemy units in the area. The damage starts off weak, but increases over the duration.\n\n<font color='#FF7800'>Resonance:</font> each enemy inside the storm makes its damage ramp up faster.\n<font color='#FF7800'>Electrocution:</font> the storm's effect linger shortly after exiting its area of effect.\n<font color='#FF7800'>Stormcrafter:</font> consumes all Stormbearer stacks upon cast, increasing the initial damage of Static Storm by %stormbearer_stack_damage% per stack consumed.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
+"DOTA_Tooltip_ability_imba_disruptor_static_storm_Description"          "Creates a static storm that damages and silences all enemy units in the area. The damage starts off weak, but increases over the duration.\n\n<font color='#FF7800'>Resonance:</font> Each enemy inside the storm makes its damage ramp up faster.\n<font color='#FF7800'>Electrocution:</font> The storm's effect lingers shortly after exiting its area of effect.\n<font color='#FF7800'>Stormcrafter:</font> Consumes all Stormbearer stacks upon cast, increasing the initial damage of Static Storm by %stormbearer_stack_damage% per stack consumed.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
 "DOTA_Tooltip_ability_imba_disruptor_static_storm_Lore"                "A summer squall in Druud is a hardship that only an Oglodi can survive."
 "DOTA_Tooltip_ability_imba_disruptor_static_storm_radius"              "RADIUS:"
 "DOTA_Tooltip_ability_imba_disruptor_static_storm_duration"            "DURATION:"
@@ -1162,20 +1162,30 @@
 "DOTA_Tooltip_modifier_imba_static_storm_debuff"                        "Static Storm"
 "DOTA_Tooltip_modifier_imba_static_storm_debuff_Description"            "Silenced and taking damage."
 
-"DOTA_Tooltip_modifier_imba_static_storm_debuff_linger"                "Electrocution"
-"DOTA_Tooltip_modifier_imba_static_storm_debuff_linger_Description"                 "Suffering the aftereffects of static storm."
+"DOTA_Tooltip_modifier_imba_static_storm_debuff_linger"					"Electrocution"
+"DOTA_Tooltip_modifier_imba_static_storm_debuff_linger_Description"		"Suffering the aftereffects of static storm."
+
+"DOTA_Tooltip_modifier_imba_static_storm_talent"						"Intense Currents"
+"DOTA_Tooltip_modifier_imba_static_storm_talent_Description"			"Absorbing dangerous amounts of electricity. Exiting Static Storm will mini-stun for the amount of stacks gathered over a short period of time."
+
+"DOTA_Tooltip_modifier_imba_static_storm_talent_ministun"				"Intense Currents"
+"DOTA_Tooltip_modifier_imba_static_storm_talent_ministun_Description"	"Being mini-stunned."
 
 ////===============================================================================================================
 // Disruptor's Custom Talents
 ////===============================================================================================================
 "DOTA_Tooltip_ability_special_bonus_imba_disruptor_1"                   "Kinetic Field now always pulls units inside it"
 "DOTA_Tooltip_ability_special_bonus_imba_disruptor_2"                   "+1.25 Glimpse Storm linger duration"
-"DOTA_Tooltip_ability_special_bonus_imba_disruptor_3"                   "+0.5 move speed per Stormbearer stack"
-"DOTA_Tooltip_ability_special_bonus_imba_disruptor_4"                   "Thunder Strike slows the main target briefly"
-"DOTA_Tooltip_ability_special_bonus_imba_disruptor_5"                   "+50 maximum Static Storm damage"
-"DOTA_Tooltip_ability_special_bonus_imba_disruptor_6"                   "+1.5 Kinetic Field duration"
-"DOTA_Tooltip_ability_special_bonus_imba_disruptor_7"                   "+1.25 Static Storm damage per pulse"
-"DOTA_Tooltip_ability_special_bonus_imba_disruptor_8"                   "+4 Thunder Strike duration, strikes occur 20% faster"
+"DOTA_Tooltip_ability_special_bonus_imba_disruptor_3"                   "Thunder Strike Chain Lightning"
+"DOTA_Tooltip_ability_special_bonus_imba_disruptor_3_Description"		"Grants a %value%%  chance to release a Chain Lightning per pulse, which bounces between up to %max_targets% enemies within %bounce_radius% range."
+"DOTA_Tooltip_ability_special_bonus_imba_disruptor_4"                   "Thunder Strike Slow"
+"DOTA_Tooltip_ability_special_bonus_imba_disruptor_4_Description" 		"Inflicts 100% movespeed reduction for 0.25 seconds per pulse."
+"DOTA_Tooltip_ability_special_bonus_imba_disruptor_5"                   "Glimpse Storm Expansion"
+"DOTA_Tooltip_ability_special_bonus_imba_disruptor_5_Description"		"Glimpsing an enemy into an already formed Kinetic Field expands Glimpse Storm's size to match."
+"DOTA_Tooltip_ability_special_bonus_imba_disruptor_6"                   "Static Storm builds stacks of mini-stun (applies upon exit)"
+"DOTA_Tooltip_ability_special_bonus_imba_disruptor_7"                   "Doubles Thunder Strike pulses in Static Storm"
+"DOTA_Tooltip_ability_special_bonus_imba_disruptor_8"                   "Enhanced Thunder Strike"
+"DOTA_Tooltip_ability_special_bonus_imba_disruptor_8_Description"       "Increases duration by %value% seconds, and reduces pulse interval by %value2% seconds."
 
 ////===============================================================================================================
 // Doom Bringer's DOOM
