@@ -117,8 +117,8 @@ function DonatorCompanion(ID, unit_name, js)
 		end
 	end
 
-	if IMBA_DONATOR_COMPANION[PlayerResource:GetSteamID(ID)] and not js then 
-		unit_name = IMBA_DONATOR_COMPANION[PlayerResource:GetSteamID(ID)]
+	if IMBA_DONATOR_COMPANION[tostring(PlayerResource:GetSteamID(ID))] and not js then 
+		unit_name = IMBA_DONATOR_COMPANION[tostring(PlayerResource:GetSteamID(ID))]
 	end
 
 	if unit_name == nil then return end

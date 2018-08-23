@@ -12,6 +12,8 @@
 -- See the License for the specific language governing permissions and
 -- limitations under the License.
 
+require('components/settings/settings_donator')
+
 -- Picking screen constants
 PICKING_SCREEN_OVER = false
 CAPTAINS_MODE_CAPTAIN_TIME = 20		-- how long players have to claim the captain chair
@@ -517,5 +519,3 @@ IMBA_DISABLED_SKULL_BASHER = {
 
 IMBA_WEATHER_EFFECT = {}
 IMBA_WEATHER_EFFECT[1] = "particles/rain_fx/econ_snow.vpcf"
-
-require('components/settings/settings_donator')
