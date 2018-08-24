@@ -1,3 +1,4 @@
+require('components/scoreboard_events')
 require('internal/util')
 require('gamemode')
 
@@ -29,4 +30,6 @@ end
 function Activate()
 	GameRules.GameMode = GameMode()
 	GameRules.GameMode:InitGameMode()
+	-- Run the scoreboard functions that handle share unit / share hero / disable help
+	initScoreBoardEvents()
 end
