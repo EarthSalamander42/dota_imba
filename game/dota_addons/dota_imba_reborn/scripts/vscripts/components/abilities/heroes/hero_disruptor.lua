@@ -963,8 +963,8 @@ function modifier_imba_kinetic_field:OnIntervalThink()
 		enemy:AddNewModifier(self.caster, self.ability, "modifier_imba_kinetic_field_check_position", {duration = self:GetRemainingTime(), target_point_x = self.target_point.x, target_point_y = self.target_point.y, target_point_z = self.target_point.z})
 	end
 	
-		-- #5 Talent: Glimpse into Kinetic Field expands Glimpse Storm inside the Kinetic Field
-		if self.caster:HasTalent("special_bonus_imba_disruptor_5") then
+	-- #5 Talent: Glimpse into Kinetic Field expands Glimpse Storm inside the Kinetic Field
+	if self.caster:HasTalent("special_bonus_imba_disruptor_5") then
 	
 		-- Scan and indicator for all enemies in the field, preventing Glimpse from generate the original storm
 		local enemies_inside_field = FindUnitsInRadius(self.caster:GetTeamNumber(),
@@ -978,38 +978,38 @@ function modifier_imba_kinetic_field:OnIntervalThink()
 									false)
 		for _,enemy_in_field in pairs(enemies_inside_field) do
 		
-		enemy_in_field:AddNewModifier(self.caster, self.ability, "modifier_imba_kinetic_field_check_inside_field", {duration = 0.01})
+			enemy_in_field:AddNewModifier(self.caster, self.ability, "modifier_imba_kinetic_field_check_inside_field", {duration = 0.01})
 			
 			-- Check if the target is Glimpsed into here.
 			if enemy_in_field:HasModifier("modifier_glimpse_talent_indicator") then
 			
-			-- Get Glimpse's ability specials
-			glimpse_ability = self.caster:FindAbilityByName("imba_disruptor_glimpse")
-			self.storm_radius = glimpse_ability:GetSpecialValueFor("storm_radius")		
-			self.storm_duration = glimpse_ability:GetSpecialValueFor("storm_duration")
-			self.modifier_storm = "modifier_imba_glimpse_storm_aura"
+				-- Get Glimpse's ability specials
+				glimpse_ability = self.caster:FindAbilityByName("imba_disruptor_glimpse")
+				self.storm_radius = glimpse_ability:GetSpecialValueFor("storm_radius")		
+				self.storm_duration = glimpse_ability:GetSpecialValueFor("storm_duration")
+				self.modifier_storm = "modifier_imba_glimpse_storm_aura"
+				
+				-- Get the enemy's vector where the storm is generated.
+				enemy_origin = enemy_in_field:GetAbsOrigin()
+				
+				-- Simple methemethecs
+				self.distance = (enemy_origin - self.target_point):Length2D()
+				self.storm_overlap_radius = self.storm_radius - self.field_radius
 			
-			-- Get the enemy's vector where the storm is generated.
-			enemy_origin = enemy_in_field:GetAbsOrigin()
+				-- If the distance is more than the overlap radius, create the storm with a new radius
+				if self.distance >= self.storm_overlap_radius then
+					-- New radius = Kinetic Field radius + distance
+					self.storm_radius = self.field_radius + self.distance
+				else
+					-- Give it a condition for generating secondary Glimpse Storm
+					self.storm_radius = self.storm_radius + 1
+				end
 			
-			-- Simple methemethecs
-			self.distance = (enemy_origin - self.target_point):Length2D()
-			self.storm_overlap_radius = self.storm_radius - self.field_radius
-			
-			-- If the distance is more than the overlap radius, create the storm with a new radius
-			if self.distance >= self.storm_overlap_radius then
-			-- New radius = Kinetic Field radius + distance
-			self.storm_radius = self.field_radius + self.distance
-			else
-			-- Give it a condition for generating secondary Glimpse Storm
-			self.storm_radius = self.storm_radius + 1
-			end
-			
-			-- Here comes the Storm!
-			CreateModifierThinker(self.caster, glimpse_ability, self.modifier_storm, {duration = self.storm_duration, storm_radius = self.storm_radius}, enemy_origin, self.caster:GetTeamNumber(), false) 
+				-- Here comes the Storm!
+				CreateModifierThinker(self.caster, glimpse_ability, self.modifier_storm, {duration = self.storm_duration, storm_radius = self.storm_radius}, enemy_origin, self.caster:GetTeamNumber(), false) 
 		
-			-- Remove the indicator from the target
-			enemy_in_field:RemoveModifierByName("modifier_glimpse_talent_indicator")
+				-- Remove the indicator from the target
+				enemy_in_field:RemoveModifierByName("modifier_glimpse_talent_indicator")
 			end
 		end
 	end
@@ -1581,10 +1581,8 @@ for LinkedModifier, MotionController in pairs(LinkedModifiers) do
 	LinkLuaModifier(LinkedModifier, "components/abilities/heroes/hero_disruptor", MotionController)
 end
 
-
-
 ---------------------------------------------------
---	Static Storm talent ministun debuff
+--	Static Storm talent ministun debuff ("special_bonus_imba_disruptor_6")
 ---------------------------------------------------
 
 modifier_imba_static_storm_talent = modifier_imba_static_storm_talent or class({})
@@ -1594,14 +1592,16 @@ function modifier_imba_static_storm_talent:IsDebuff() return true end
 function modifier_imba_static_storm_talent:IsPurgable() return false end
 
 function modifier_imba_static_storm_talent:OnCreated()
+	if not IsServer() then return end
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
 	self.parent = self:GetParent()
-	
-	self:StartIntervalThink(self.caster:FindTalentValue("special_bonus_imba_disruptor_6")+0.01)
+
+	self:StartIntervalThink(self.caster:FindTalentValue("special_bonus_imba_disruptor_6"))
 end
 
 function modifier_imba_static_storm_talent:OnIntervalThink()
+	if not IsServer() then return end
 	self.stack_count = self:GetStackCount()
 	if self.parent:HasModifier("modifier_imba_static_storm_debuff") then
 		self:IncrementStackCount()
@@ -1611,9 +1611,10 @@ function modifier_imba_static_storm_talent:OnIntervalThink()
 end
 
 function modifier_imba_static_storm_talent:OnDestroy()
+	if not IsServer() then return end
 	if self.stack_count == nil then
 		return nil
-	end
+	end	
 	if self.stack_count > 0 then
 		self.duration = self.caster:FindTalentValue("special_bonus_imba_disruptor_6","interval") * self.stack_count
 		modifier_talent_stun = self.parent:AddNewModifier(self.caster,self.ability,"modifier_imba_static_storm_talent_ministun",{duration = self.duration})
@@ -1633,6 +1634,7 @@ function modifier_imba_static_storm_talent_ministun:IsDebuff() return true end
 function modifier_imba_static_storm_talent_ministun:IsPurgable() return false end
 
 function modifier_imba_static_storm_talent_ministun:OnCreated()
+	if not IsServer() then return end
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
 	self.parent = self:GetParent()
@@ -1641,7 +1643,7 @@ function modifier_imba_static_storm_talent_ministun:OnCreated()
 end
 
 function modifier_imba_static_storm_talent_ministun:OnIntervalThink()
-	
+	if not IsServer() then return end
 	if self:GetStackCount() > 1 then
 		self:DecrementStackCount()
 	else
