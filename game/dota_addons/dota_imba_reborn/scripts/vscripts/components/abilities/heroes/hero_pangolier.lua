@@ -19,7 +19,8 @@ LinkLuaModifier("modifier_special_bonus_imba_pangolier_3", "components/abilities
 
 modifier_special_bonus_imba_pangolier_3 = modifier_special_bonus_imba_pangolier_3 or class({})
 
-function modifier_special_bonus_imba_pangolier_3:IsHidden() return false end
+function modifier_special_bonus_imba_pangolier_3:IsHidden() return true end
+function modifier_special_bonus_imba_pangolier_3:IsPurgable() return false end
 function modifier_special_bonus_imba_pangolier_3:RemoveOnDeath() return false end
 
 --Talent #3: Grants Pangolier a parry modifier that will gain stacks through Shield Crash
@@ -529,6 +530,14 @@ end
 function imba_pangolier_shield_crash:IsHiddenWhenStolen()  return false end
 function imba_pangolier_shield_crash:IsStealable() return true end
 function imba_pangolier_shield_crash:IsNetherWardStealable() return false end
+
+-- Should close out problems with Pangolier not getting the specific talent if skilled while dead
+function imba_pangolier_shield_crash:OnOwnerSpawned()
+	if not IsServer() then return end
+	if self:GetCaster():HasAbility("special_bonus_imba_pangolier_3") and self:GetCaster():FindAbilityByName("special_bonus_imba_pangolier_3"):IsTrained() and not self:GetCaster():HasModifier("modifier_special_bonus_imba_pangolier_3") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_special_bonus_imba_pangolier_3", {})
+	end
+end
 
 function imba_pangolier_shield_crash:GetManaCost(level)
 	local manacost = self.BaseClass.GetManaCost(self, level)
@@ -1062,7 +1071,7 @@ function modifier_imba_shield_crash_block:OnAttack(keys)
 			local caster_loc = self:GetCaster():GetAbsOrigin()
 			local attacker_loc = attacker:GetAbsOrigin()
 			local distance = (attacker_loc - caster_loc):Length2D()
-
+			
 			--counter if Pangolier has stacks, the attacker is an enemy and is in range
 			if stacks > 0 and attacker:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() and distance < self.counter_range then
 				local old_direction = self:GetCaster():GetForwardVector()
@@ -1652,7 +1661,8 @@ function modifier_imba_gyroshell_impact_check:OnCreated()
 		self.hit_radius = self:GetAbility():GetSpecialValueFor("hit_radius")
 		self.talent_duration = self:GetCaster():FindTalentValue("special_bonus_imba_pangolier_4")
 
-		self:StartIntervalThink(FrameTime())
+		-- Increase think time so the talent damage hopefully doesn't stack in one instance
+		self:StartIntervalThink(0.05)
 	end
 end
 
@@ -1723,7 +1733,7 @@ function modifier_imba_gyroshell_impact_check:OnIntervalThink()
 
 
 
-							ApplyDamage(damageTable)
+							print(ApplyDamage(damageTable))
 
 							enemy.hit_times = enemy.hit_times + 1 --increase hit count
 
