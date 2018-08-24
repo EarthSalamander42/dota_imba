@@ -210,7 +210,7 @@
 	"mutation_danger_zone" "Danger Zone"
 	"mutation_danger_zone_description" "10 Gyrocopter Call Down are casted on random positions all over the map every 10 seconds."
 	"mutation_death_explosion" "Death Explosion"
-	"mutation_death_explosion_description" "Deal 600 + (150 * minutes) damage in a 400 radius on death afer a 0.9 seconds delay."
+	"mutation_death_explosion_description" "Deal 600 + (100 * minutes) damage in a 400 radius on death afer a 0.9 seconds delay."
 	"mutation_death_gold_drop" "Death Gold Drop"
 	"mutation_death_gold_drop_description" "Whenever a hero is killed, they drop a gold sack."
 	"mutation_defense_of_the_ants" "Defense of the Feeders"

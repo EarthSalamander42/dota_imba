@@ -113,7 +113,7 @@ function imba_tinker_rearm:OnChannelFinish( bInterrupted )
 				"item_imba_arcane_boots",
 				"item_black_king_bar",
 				"item_imba_bloodstone",
---				"item_imba_guardian_greaves",
+				"item_imba_guardian_greaves",
 				"item_imba_hand_of_midas",
 				"item_imba_mekansm",
 				"item_meteor_hammer",

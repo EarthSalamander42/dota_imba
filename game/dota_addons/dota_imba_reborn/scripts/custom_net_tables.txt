@@ -8,6 +8,7 @@
 		"netgraph",
 		"top_xp",
 		"top_imr5v5",
+		"top_imr10v10",
 		"game_state",
 		"hero_selection",
 		"battlepass",

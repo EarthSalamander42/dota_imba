@@ -210,7 +210,7 @@
 	"mutation_danger_zone" "Опасная местность"
 	"mutation_danger_zone_description" "10 Call Down Gyrocopter'а появляются в случайных местах карты каждые 10 секунд."
 	"mutation_death_explosion" "Посмертный взрыв"
-	"mutation_death_explosion_description" "Наносит 600 + (150 * минуту) урона в радиусе 400 возле места своей гибели с задержкой в 0.9 секунды."
+	"mutation_death_explosion_description" "Deal 600 + (100 * minutes) damage in a 400 radius on death afer a 0.9 seconds delay."
 	"mutation_death_gold_drop" "Посмертное золотишко"
 	"mutation_death_gold_drop_description" "Убитый герой оставляет после себя золото."
 	"mutation_defense_of_the_ants" "Defense of the Feeders"

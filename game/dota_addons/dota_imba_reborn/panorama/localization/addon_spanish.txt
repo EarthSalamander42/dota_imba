@@ -210,7 +210,7 @@
 	"mutation_danger_zone" "Zona de peligro"
 	"mutation_danger_zone_description" "10 Bombardeos de Gyrocopter son liberados en posiciones aleatorias alrededor del mapa cada 10 segundos."
 	"mutation_death_explosion" "Explosión mortal"
-	"mutation_death_explosion_description" "Hace 600 + (150 * minutos) de daño en un radio de 400 unidades al morir tras un retraso de 0,9 segundos."
+	"mutation_death_explosion_description" "Deal 600 + (100 * minutes) damage in a 400 radius on death afer a 0.9 seconds delay."
 	"mutation_death_gold_drop" "Caída de oro al morir"
 	"mutation_death_gold_drop_description" "Cuando un héroe muere, suelta un saco de dinero."
 	"mutation_defense_of_the_ants" "Defensa de los feeders"

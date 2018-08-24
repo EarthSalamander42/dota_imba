@@ -1,5 +1,5 @@
 require('components/mutation/mutation_list')
-require('components/settings/settings_mutation')
+require('components/mutation/mutation_settings')
 
 local validItems = {} -- Empty table to fill with full list of valid airdrop items
 local tier1 = {} -- 1000 to 2000 gold cost up to 5 minutes
@@ -15,9 +15,9 @@ function Mutation:Init()
 	IMBA_MUTATION["imba"] = "frantic"
 
 	if IsInToolsMode() then
-		IMBA_MUTATION["positive"] = POSITIVE_MUTATION_LIST[6]
-		IMBA_MUTATION["negative"] = NEGATIVE_MUTATION_LIST[1]
-		IMBA_MUTATION["terrain"] = TERRAIN_MUTATION_LIST[2]
+		IMBA_MUTATION["positive"] = "killstreak_power"
+		IMBA_MUTATION["negative"] = "periodic_spellcast"
+		IMBA_MUTATION["terrain"] = "speed_freaks"
 	else
 		Mutation:ChooseMutation("positive", POSITIVE_MUTATION_LIST)
 		Mutation:ChooseMutation("negative", NEGATIVE_MUTATION_LIST)
@@ -28,18 +28,27 @@ function Mutation:Init()
 
 	LinkLuaModifier("modifier_frantic", "components/modifiers/mutation/modifier_frantic.lua", LUA_MODIFIER_MOTION_NONE )
 
+	--	if IMBA_MUTATION["positive"] == "greed_is_good" then
+--		LinkLuaModifier("modifier_mutation_greed_is_good", "components/modifiers/mutation/modifier_mutation_greed_is_good.lua", LUA_MODIFIER_MOTION_NONE )
+--	end
 	if IMBA_MUTATION["positive"] == "killstreak_power" then
 		LinkLuaModifier("modifier_mutation_kill_streak_power", "components/modifiers/mutation/modifier_mutation_kill_streak_power.lua", LUA_MODIFIER_MOTION_NONE )
-	elseif IMBA_MUTATION["positive"] == "super_fervor" then
-		LinkLuaModifier("modifier_mutation_super_fervor", "components/modifiers/mutation/modifier_mutation_super_fervor.lua", LUA_MODIFIER_MOTION_NONE )
 	elseif IMBA_MUTATION["positive"] == "slark_mode" then
 		LinkLuaModifier("modifier_mutation_shadow_dance", "components/modifiers/mutation/modifier_mutation_shadow_dance.lua", LUA_MODIFIER_MOTION_NONE )
-	elseif IMBA_MUTATION["positive"] == "greed_is_good" then
-		LinkLuaModifier("modifier_mutation_greed_is_good", "components/modifiers/mutation/modifier_mutation_greed_is_good.lua", LUA_MODIFIER_MOTION_NONE )
+	elseif IMBA_MUTATION["positive"] == "super_fervor" then
+		LinkLuaModifier("modifier_mutation_super_fervor", "components/modifiers/mutation/modifier_mutation_super_fervor.lua", LUA_MODIFIER_MOTION_NONE )
 	end
 
+	--	if IMBA_MUTATION["negative"] == "alien_incubation" then
+--		LinkLuaModifier("modifier_mutation_alien_incubation", "components/modifiers/mutation/modifier_mutation_alien_incubation.lua", LUA_MODIFIER_MOTION_NONE )
 	if IMBA_MUTATION["negative"] == "death_explosion" then
 		LinkLuaModifier("modifier_mutation_death_explosion", "components/modifiers/mutation/modifier_mutation_death_explosion.lua", LUA_MODIFIER_MOTION_NONE )
+	elseif IMBA_MUTATION["negative"] == "defense_of_the_ants" then
+		LinkLuaModifier("modifier_mutation_ants", "components/modifiers/mutation/modifier_mutation_ants.lua", LUA_MODIFIER_MOTION_NONE )
+	elseif IMBA_MUTATION["negative"] == "monkey_business" then
+		LinkLuaModifier("modifier_mutation_monkey_business", "components/modifiers/mutation/modifier_mutation_monkey_business.lua", LUA_MODIFIER_MOTION_NONE )
+	elseif IMBA_MUTATION["negative"] == "no_health_bar" then
+		LinkLuaModifier("modifier_no_health_bar", "components/modifiers/mutation/modifier_no_health_bar.lua", LUA_MODIFIER_MOTION_NONE )
 	elseif IMBA_MUTATION["negative"] == "periodic_spellcast" then
 		LinkLuaModifier("modifier_mutation_thundergods_wrath", "components/modifiers/mutation/periodic_spellcast/modifier_mutation_thundergods_wrath.lua", LUA_MODIFIER_MOTION_NONE )
 		LinkLuaModifier("modifier_mutation_track", "components/modifiers/mutation/periodic_spellcast/modifier_mutation_track.lua", LUA_MODIFIER_MOTION_NONE )
@@ -50,31 +59,23 @@ function Mutation:Init()
 		LinkLuaModifier("modifier_mutation_bloodlust", "components/modifiers/mutation/periodic_spellcast/modifier_mutation_bloodlust.lua", LUA_MODIFIER_MOTION_NONE )
 		LinkLuaModifier("modifier_mutation_aphotic_shield", "components/modifiers/mutation/periodic_spellcast/modifier_mutation_aphotic_shield.lua", LUA_MODIFIER_MOTION_NONE )
 		LinkLuaModifier("modifier_mutation_sun_strike", "components/modifiers/mutation/periodic_spellcast/modifier_mutation_sun_strike.lua", LUA_MODIFIER_MOTION_NONE )
-	elseif IMBA_MUTATION["negative"] == "defense_of_the_ants" then
-		LinkLuaModifier("modifier_mutation_ants", "components/modifiers/mutation/modifier_mutation_ants.lua", LUA_MODIFIER_MOTION_NONE )
-	elseif IMBA_MUTATION["negative"] == "monkey_business" then
-		LinkLuaModifier("modifier_mutation_monkey_business", "components/modifiers/mutation/modifier_mutation_monkey_business.lua", LUA_MODIFIER_MOTION_NONE )
-	elseif IMBA_MUTATION["negative"] == "no_health_bar" then
-		LinkLuaModifier("modifier_no_health_bar", "components/modifiers/mutation/modifier_no_health_bar.lua", LUA_MODIFIER_MOTION_NONE )
-	elseif IMBA_MUTATION["negative"] == "stay_frosty" then
-		LinkLuaModifier("modifier_disable_healing", "components/modifiers/mutation/modifier_disable_healing.lua", LUA_MODIFIER_MOTION_NONE )
-		LinkLuaModifier("modifier_mutation_stay_frosty", "components/modifiers/mutation/modifier_mutation_stay_frosty.lua", LUA_MODIFIER_MOTION_NONE )
-	elseif IMBA_MUTATION["negative"] == "alien_incubation" then
-		LinkLuaModifier("modifier_mutation_alien_incubation", "components/modifiers/mutation/modifier_mutation_alien_incubation.lua", LUA_MODIFIER_MOTION_NONE )
+--	elseif IMBA_MUTATION["negative"] == "stay_frosty" then
+--		LinkLuaModifier("modifier_disable_healing", "components/modifiers/mutation/modifier_disable_healing.lua", LUA_MODIFIER_MOTION_NONE )
+--		LinkLuaModifier("modifier_mutation_stay_frosty", "components/modifiers/mutation/modifier_mutation_stay_frosty.lua", LUA_MODIFIER_MOTION_NONE )
 	end
 
-	if IMBA_MUTATION["terrain"] == "speed_freaks" then
-		LinkLuaModifier("modifier_mutation_speed_freaks", "components/modifiers/mutation/modifier_mutation_speed_freaks.lua", LUA_MODIFIER_MOTION_NONE )
+	if IMBA_MUTATION["terrain"] == "danger_zone" then
+		LinkLuaModifier("modifier_mutation_danger_zone", "components/modifiers/mutation/modifier_mutation_danger_zone.lua", LUA_MODIFIER_MOTION_NONE )
 	elseif IMBA_MUTATION["terrain"] == "river_flows" then
 		LinkLuaModifier("modifier_mutation_river_flows", "components/modifiers/mutation/modifier_mutation_river_flows.lua", LUA_MODIFIER_MOTION_NONE )
-	elseif IMBA_MUTATION["terrain"] == "danger_zone" then
-		LinkLuaModifier("modifier_mutation_danger_zone", "components/modifiers/mutation/modifier_mutation_danger_zone.lua", LUA_MODIFIER_MOTION_NONE )
-	elseif IMBA_MUTATION["terrain"] == "wormhole" then
-		LinkLuaModifier("modifier_mutation_wormhole_cooldown", "components/modifiers/mutation/modifier_mutation_wormhole_cooldown.lua", LUA_MODIFIER_MOTION_NONE )
-	elseif IMBA_MUTATION["terrain"] == "tug_of_war" then
-		LinkLuaModifier("modifier_mutation_tug_of_war_golem", "components/modifiers/mutation/modifier_mutation_tug_of_war_golem.lua", LUA_MODIFIER_MOTION_NONE )
+	elseif IMBA_MUTATION["terrain"] == "speed_freaks" then
+		LinkLuaModifier("modifier_mutation_speed_freaks", "components/modifiers/mutation/modifier_mutation_speed_freaks.lua", LUA_MODIFIER_MOTION_NONE )
 	elseif IMBA_MUTATION["terrain"] == "sticky_river" then
 		LinkLuaModifier("modifier_sticky_river", "components/modifiers/mutation/modifier_sticky_river.lua", LUA_MODIFIER_MOTION_NONE )
+	elseif IMBA_MUTATION["terrain"] == "tug_of_war" then
+		LinkLuaModifier("modifier_mutation_tug_of_war_golem", "components/modifiers/mutation/modifier_mutation_tug_of_war_golem.lua", LUA_MODIFIER_MOTION_NONE )
+	elseif IMBA_MUTATION["terrain"] == "wormhole" then
+		LinkLuaModifier("modifier_mutation_wormhole_cooldown", "components/modifiers/mutation/modifier_mutation_wormhole_cooldown.lua", LUA_MODIFIER_MOTION_NONE )
 	end
 end
 
@@ -84,28 +85,34 @@ function Mutation:Precache(context)
 
 	if IMBA_MUTATION["positive"] == "killstreak_power" then
 		PrecacheResource("particle", "particles/hw_fx/candy_carrying_stack.vpcf", context)
+	elseif IMBA_MUTATION["positive"] == "super_fervor" then
+		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_troll_warlord.vsndevts", context)
 	end
 
-	if IMBA_MUTATION["negative"] == "periodic_spellcast" then
-		PrecacheResource("particle", "particles/econ/items/zeus/arcana_chariot/zeus_arcana_thundergods_wrath_start_bolt_parent.vpcf", context)
-		PrecacheResource("particle", "particles/ambient/wormhole_circle.vpcf", context)
+	if IMBA_MUTATION["negative"] == "death_explosion" then
+		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_pugna.vsndevts", context)
+	elseif IMBA_MUTATION["negative"] == "monkey_business" then
+		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_monkey_king.vsndevts", context)
+	elseif IMBA_MUTATION["negative"] == "periodic_spellcast" then
+		PrecacheResource("particle", "particles/econ/items/zeus/arcana_chariot/zeus_arcana_thundergods_wrath_start_bolt_parent.vpcf", context) -- Thundergod's Wrath
+		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts", context) -- Shield
+		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_ancient_apparition.vsndevts", context) -- Cold Feet
+		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_bloodseeker.vsndevts", context) -- Rupture
+--		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_bounty_hunter.vsndevts", context) -- Track
+		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_centaur.vsndevts", context) -- Stampede
+		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_kunkka.vsndevts", context) -- Torrent
+		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_ogre_magi.vsndevts", context) -- Bloodlust
+--		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_warlock.vsndevts", context)
+		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_zuus.vsndevts", context) -- Thundergod's Wrath
+	end
+
+	if IMBA_MUTATION["terrain"] == "danger_zone" then
+		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_gyrocopter.vsndevts", context)
+	elseif IMBA_MUTATION["terrain"] == "tug_of_war" then
 		PrecacheResource("particle", "particles/ambient/tug_of_war_team_dire.vpcf", context)
 		PrecacheResource("particle", "particles/ambient/tug_of_war_team_radiant.vpcf", context)
-
-		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts", context)
-		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_ancient_apparition.vsndevts", context)
-		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_bloodseeker.vsndevts", context)
-		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_bounty_hunter.vsndevts", context)
-		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_centaur.vsndevts", context)
-		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_gyrocopter.vsndevts", context)
-		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_kunkka.vsndevts", context)
-		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_monkey_king.vsndevts", context)
-		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_ogre_magi.vsndevts", context)
-		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_pugna.vsndevts", context)
-		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_techies.vsndevts", context)
-		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_troll_warlord.vsndevts", context)
-		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_warlock.vsndevts", context)
-		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_zuus.vsndevts", context)
+	elseif IMBA_MUTATION["terrain"] == "wormhole" then
+		PrecacheResource("particle", "particles/ambient/wormhole_circle.vpcf", context)
 	end
 end
 

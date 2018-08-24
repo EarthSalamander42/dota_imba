@@ -657,9 +657,11 @@ function GameMode:OrderFilter( keys )
 		local item = keys.entindex_ability
 		if item == nil then return true end
 
-		if api.imba.is_donator(tostring(PlayerResource:GetSteamID(unit:GetPlayerID()))) == 10 then
-			DisplayError(unit:GetPlayerID(),"#StoreCheckout_CannotPurchase")
-			return false
+		if unit:IsRealHero() then
+			if api.imba.is_donator(tostring(PlayerResource:GetSteamID(unit:GetPlayerID()))) == 10 then
+				DisplayError(unit:GetPlayerID(),"#StoreCheckout_CannotPurchase")
+				return false
+			end
 		end
 
 		if GetMapName() == Map1v1() then
