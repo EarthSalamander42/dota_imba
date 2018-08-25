@@ -205,6 +205,7 @@ function modifier_imba_bloodrage_blood_frenzy:IsDebuff() return false end
 MergeTables(LinkedModifiers,{
 	["modifier_imba_blood_bath_buff_stats"] = LUA_MODIFIER_MOTION_NONE,
 	["modifier_imba_blood_bath_debuff_silence"] = LUA_MODIFIER_MOTION_NONE,
+	["modifier_special_bonus_imba_bloodseeker_9"] = LUA_MODIFIER_MOTION_NONE
 })
 imba_bloodseeker_blood_bath = imba_bloodseeker_blood_bath or class({})
 
@@ -222,6 +223,22 @@ function imba_bloodseeker_blood_bath:GetAOERadius()
 	return radius
 end
 
+function imba_bloodseeker_blood_bath:GetCooldown(level)
+	local talent_reduction = 0
+	if self:GetCaster():HasModifier("modifier_special_bonus_imba_bloodseeker_9") then
+		talent_reduction = self:GetSpecialValueFor("cooldown_reduction_talent")
+	end
+	return self.BaseClass.GetCooldown(self, level) - talent_reduction
+end
+
+-- Needed for the CD reduction talent
+function imba_bloodseeker_blood_bath:OnOwnerSpawned()
+	if not IsServer() then return end
+	if self:GetCaster():HasAbility("special_bonus_imba_bloodseeker_9") and self:GetCaster():FindAbilityByName("special_bonus_imba_bloodseeker_9"):IsTrained() and not self:GetCaster():HasModifier("modifier_special_bonus_imba_bloodseeker_9") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_special_bonus_imba_bloodseeker_9", {})
+	end
+end
+	
 function imba_bloodseeker_blood_bath:OnSpellStart()
 	local vPos = self:GetCursorPosition()
 	local caster = self:GetCaster()
@@ -248,9 +265,9 @@ function imba_bloodseeker_blood_bath:OnSpellStart()
 			-- Rotate the direction clockwise or counter-clockwise
 			local vector_direction
 			if i%2 == 0 then
-				vector_direction = Orthogonal(direction, false)
+				vector_direction = self:Orthogonal(direction, false)
 			else
-				vector_direction = Orthogonal(direction, true)
+				vector_direction = self:Orthogonal(direction, true)
 			end
 
 			-- Claim position in the distance of the main target point
@@ -312,6 +329,15 @@ function imba_bloodseeker_blood_bath:FormBloodRiteCircle(caster, vPos)
 	end)
 end
 
+function imba_bloodseeker_blood_bath:Orthogonal(vec, clockwise)
+	local vector = Vector(-vec.y, vec.x, 0)
+
+	if not clockwise then
+		vector = vector * (-1)
+	end
+
+	return vector
+end
 
 modifier_imba_blood_bath_debuff_silence = modifier_imba_blood_bath_debuff_silence or class({})
 
@@ -406,6 +432,15 @@ end
 function modifier_imba_blood_bath_buff_stats:GetModifierExtraHealthBonus(params)
 	return self:GetStackCount()
 end
+
+-- Blood Rite's CD reduction talent (-6 seconds default)
+-- Separate modifier is needed to pass relevant information for client-side viewing
+modifier_special_bonus_imba_bloodseeker_9 = class ({})
+
+function modifier_special_bonus_imba_bloodseeker_9:IsHidden()		return true end
+function modifier_special_bonus_imba_bloodseeker_9:IsPurgable()		return false end
+function modifier_special_bonus_imba_bloodseeker_9:RemoveOnDeath()	return false end
+
 -------------------------------------------
 --				THIRST
 -------------------------------------------
