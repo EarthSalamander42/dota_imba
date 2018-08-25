@@ -512,10 +512,10 @@
 "DOTA_Tooltip_ability_special_bonus_imba_bloodseeker_2_Description"   	"Enemies hit by Blood Rite are pushed away from the circle and take Rupture damage for 0.3 seconds."
 "DOTA_Tooltip_ability_special_bonus_imba_bloodseeker_3"                 "Rupture heals for 100% of the damage dealt"
 "DOTA_Tooltip_ability_special_bonus_imba_bloodseeker_4"                 "Blood Rite's silence debuff becomes unpurgable"
-"DOTA_Tooltip_ability_special_bonus_imba_bloodseeker_5"                 "Blood Rite casts itself in a form of glasses"
+"DOTA_Tooltip_ability_special_bonus_imba_bloodseeker_5"                 "Blood Rite Triplicate (left, right, and front of cast area)"
 "DOTA_Tooltip_ability_special_bonus_imba_bloodseeker_6"                 "+1700 Rupture Distance Trigger Cap"
 "DOTA_Tooltip_ability_special_bonus_imba_bloodseeker_7"                 "Blood Frenzy"
-"DOTA_Tooltip_ability_special_bonus_imba_bloodseeker_7_Description"   	"Killing or dying with Bloodrage active grants the killer a %ms_bonus_pct%%   movespeed bonus for %duration% seconds."
+"DOTA_Tooltip_ability_special_bonus_imba_bloodseeker_7_Description"   	"Killing or dying with Bloodrage active grants the killer a %ms_bonus_pct%%  movespeed bonus for %duration% seconds."
 "DOTA_Tooltip_ability_special_bonus_imba_bloodseeker_8"                 "Bloodrage Bonus +%value%%  Amp per %value2%%  Missing Health"
 "DOTA_Tooltip_ability_special_bonus_imba_bloodseeker_9"					"-%value%s Blood Rite Cooldown"
 
