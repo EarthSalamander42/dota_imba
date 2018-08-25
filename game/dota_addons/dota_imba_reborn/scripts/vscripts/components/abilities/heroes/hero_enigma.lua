@@ -187,11 +187,19 @@ end
 imba_enigma_malefice = imba_enigma_malefice or class({})
 
 LinkLuaModifier("modifier_imba_enigma_malefice","components/abilities/heroes/hero_enigma", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_enigma_2","components/abilities/heroes/hero_enigma", LUA_MODIFIER_MOTION_NONE)
 
 function imba_enigma_malefice:IsHiddenWhenStolen() 		return false end
 function imba_enigma_malefice:IsRefreshable() 			return true  end
 function imba_enigma_malefice:IsStealable() 			return true  end
 function imba_enigma_malefice:IsNetherWardStealable() 	return false end
+
+function imba_enigma_malefice:OnOwnerSpawned()
+	if not IsServer() then return end
+	if self:GetCaster():HasAbility("special_bonus_imba_enigma_2") and self:GetCaster():FindAbilityByName("special_bonus_imba_enigma_2"):IsTrained() and not self:GetCaster():HasModifier("modifier_special_bonus_imba_enigma_2") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_special_bonus_imba_enigma_2", {})
+	end
+end
 
 function imba_enigma_malefice:GetAOERadius()
 	if self:GetCaster():HasTalent("special_bonus_imba_enigma_2") then
@@ -556,11 +564,23 @@ LinkLuaModifier("modifier_imba_enigma_black_hole_thinker","components/abilities/
 LinkLuaModifier("modifier_imba_enigma_black_hole","components/abilities/heroes/hero_enigma", LUA_MODIFIER_MOTION_NONE) --Auctually enemies' buff
 LinkLuaModifier("modifier_imba_enigma_black_hole_pull","components/abilities/heroes/hero_enigma", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_singularity","components/abilities/heroes/hero_enigma", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_enigma_1","components/abilities/heroes/hero_enigma", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_enigma_5","components/abilities/heroes/hero_enigma", LUA_MODIFIER_MOTION_NONE)
 
 function imba_enigma_black_hole:IsHiddenWhenStolen() 		return false end
 function imba_enigma_black_hole:IsRefreshable() 			return true end
 function imba_enigma_black_hole:IsStealable() 				return true end
 function imba_enigma_black_hole:IsNetherWardStealable() 	return true end
+
+function imba_enigma_black_hole:OnOwnerSpawned()
+	if not IsServer() then return end
+	if self:GetCaster():HasAbility("special_bonus_imba_enigma_1") and self:GetCaster():FindAbilityByName("special_bonus_imba_enigma_1"):IsTrained() and not self:GetCaster():HasModifier("modifier_special_bonus_imba_enigma_1") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_special_bonus_imba_enigma_1", {})
+	end
+	if self:GetCaster():HasAbility("special_bonus_imba_enigma_5") and self:GetCaster():FindAbilityByName("special_bonus_imba_enigma_5"):IsTrained() and not self:GetCaster():HasModifier("modifier_special_bonus_imba_enigma_5") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_special_bonus_imba_enigma_5", {})
+	end
+end
 
 function imba_enigma_black_hole:GetCastRange(vLocation, hTarget)
 	return self:GetSpecialValueFor("cast_range") + self:GetCaster():FindTalentValue("special_bonus_imba_enigma_5") end
@@ -692,6 +712,7 @@ function modifier_imba_enigma_black_hole_thinker:OnCreated(keys)
 end
 
 function modifier_imba_enigma_black_hole_thinker:OnIntervalThink()
+	if not IsServer() then return end
 	self.think_time = self.think_time + FrameTime()
 	
 	-- Create an FoW viewer for all teams so everyone sees it
@@ -762,6 +783,7 @@ function modifier_imba_enigma_black_hole:IsMotionController()  return true end
 function modifier_imba_enigma_black_hole:GetMotionControllerPriority()  return DOTA_MOTION_CONTROLLER_PRIORITY_HIGHEST end
 
 function modifier_imba_enigma_black_hole:CheckState()
+	if not IsServer() then return end
 	local state = {}
 	--Does not affect Roshan
 	if not self:GetParent():IsRoshan() then
@@ -894,3 +916,25 @@ function modifier_imba_singularity:OnDeath(keys)
 		ability.thinker = CreateModifierThinker(keys.unit, ability, "modifier_imba_enigma_black_hole_thinker", {duration = duration, talent = 1}, keys.unit:GetAbsOrigin(), keys.unit:GetTeamNumber(), false)
 	end
 end
+
+---------------------------------------------------------------------------------------------------------
+-- Adding separate modifier initializations here for talents that need client-side interaction as well --
+---------------------------------------------------------------------------------------------------------
+
+modifier_special_bonus_imba_enigma_1 = class ({})
+
+function modifier_special_bonus_imba_enigma_1:IsHidden()		return true end
+function modifier_special_bonus_imba_enigma_1:IsPurgable()		return false end
+function modifier_special_bonus_imba_enigma_1:RemoveOnDeath()	return false end
+
+modifier_special_bonus_imba_enigma_2 = class ({})
+
+function modifier_special_bonus_imba_enigma_2:IsHidden()		return true end
+function modifier_special_bonus_imba_enigma_2:IsPurgable()		return false end
+function modifier_special_bonus_imba_enigma_2:RemoveOnDeath()	return false end
+
+modifier_special_bonus_imba_enigma_5 = class ({})
+
+function modifier_special_bonus_imba_enigma_5:IsHidden()		return true end
+function modifier_special_bonus_imba_enigma_5:IsPurgable()		return false end
+function modifier_special_bonus_imba_enigma_5:RemoveOnDeath()	return false end
