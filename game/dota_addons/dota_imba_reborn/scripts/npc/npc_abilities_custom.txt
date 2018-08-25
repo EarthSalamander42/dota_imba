@@ -24240,6 +24240,11 @@
 				"var_type"						"FIELD_FLOAT"
 				"vision_duration"				"6.0"
 			}
+			"11"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"cooldown_reduction_talent"		"6"
+			}
 		}
 	}
 
@@ -24637,6 +24642,31 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"value2"				"5"
+			}
+		}
+	}
+	
+	"special_bonus_imba_bloodseeker_9"	// -6s Blood Rite Cooldown
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_bloodseeker_blood_bath"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"6"
 			}
 		}
 	}	
