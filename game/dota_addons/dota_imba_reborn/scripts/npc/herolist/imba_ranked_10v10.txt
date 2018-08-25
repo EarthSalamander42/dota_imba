@@ -40,6 +40,7 @@
 	"npc_dota_hero_faceless_void" 		"1"
 	"npc_dota_hero_furion" 				"0" // ultimate lags
 	"npc_dota_hero_ghost_revenant" 		"1"
+	"npc_dota_hero_grimstroke"	 		"1"
 	"npc_dota_hero_gyrocopter" 			"1"
 	"npc_dota_hero_hell_empress" 		"1"
 	"npc_dota_hero_huskar" 				"1"

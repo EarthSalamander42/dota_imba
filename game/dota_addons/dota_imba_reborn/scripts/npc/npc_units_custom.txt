@@ -11988,98 +11988,98 @@
 	//=================================================================================================================
 	// HERO: Storegga // Need to be duplicated in npc_units_custom.txt
 	//=================================================================================================================
-	"npc_dota_hero_storegga"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"					"npc_dota_hero_tiny"
-		"HeroID"					"121"
-		"Model"						"models/heroes/tiny_01/tiny_01.vmdl"
-		"ModelScale"				"1.10000"
-		"SoundSet"					"Hero_Tiny"
-
-		// Armor
-		//-------------------------------------------------------------------------------------------------------------
-		"ArmorPhysical"				"8"									// Physical protection.
-		"MagicalResistance"			"25"								// Magical protection (percentage).
-
-		// Abilities
-		//-------------------------------------------------------------------------------------------------------------
-		"Ability1"			"storegga_arm_slam"
-		"Ability2"			"storegga_grab"
-		"Ability3"			"storegga_grab_throw"
-		"Ability4"			"generic_hidden"
-		"Ability5"			"generic_hidden"
-		"Ability6"			"storegga_avalanche"
-
-		// Talents
-		//-------------------------------------------------------------------------------------------------------------
-		"Ability10"					"special_bonus_magic_resistance_15"
-		"Ability11"					"special_bonus_exp_boost_10"
-		"Ability12"					"special_bonus_attack_damage_40"
-		"Ability13"					"special_bonus_mp_300"
-		"Ability14"					"special_bonus_cast_range_150" 
-		"Ability15"					"special_bonus_spell_amplify_10"
-		"Ability16"					"special_bonus_cooldown_reduction_15"
-		"Ability17"					"special_bonus_gold_income_50"
-
-		// Attack
-		//-------------------------------------------------------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
-		"AttackDamageMin"			"59"							// Damage range min.
-		"AttackDamageMax"			"75"							// Damage range max.
-		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"		// Type of damage dealt. 
-		"AttackRate"				"1.700"							// Speed of attack.
-		"AttackAnimationPoint"		"1.000"							// Normalized time in animation cycle to attack.
-		"AttackAcquisitionRange"	"800"							// Range within a target can be acquired.
-		"AttackRange"				"150"							// Range within a target can be attacked.
-		"ProjectileModel"			""								// Particle system model for projectile.
-		"ProjectileSpeed"			"0"							// Speed of projectile.
-		"HasInventory"				"1"
-
-		// Attributes
-		//-------------------------------------------------------------------------------------------------------------
-		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"	// Primary Attribute
-		"AttributeBaseStrength"		"26"
-		"AttributeStrengthGain"		"4.400000"
-		"AttributeBaseAgility"		"19"
-		"AttributeAgilityGain"		"2.900000"
-		"AttributeBaseIntelligence"	"16"
-		"AttributeIntelligenceGain"	"2.600000"
-
-		// Bounds
-		//-------------------------------------------------------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
-		"RingRadius"				"70"
-		"HealthBarOffset"			"240"
-
-		// Movement
-		//-------------------------------------------------------------------------------------------------------------
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"				"285"									// Speed.
-		"MovementTurnRate"			"0.5"									// Turning rate.
-
-		// Status
-		//-------------------------------------------------------------------------------------------------------------
-		"StatusHealth"				"200"									// Base health.
-		"StatusHealthRegen"			"3.0"									// Health regeneration rate.
-		"StatusMana"				"50"									// Base mana.
-		"StatusManaRegen"			"1.0"									// Mana regeneration rate.
-
-		// Team
-		//-------------------------------------------------------------------------------------------------------------
-		"TeamName"					"DOTA_TEAM_GOODGUYS"
-		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
-		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_HERO"
-
-		// Vision
-		//-------------------------------------------------------------------------------------------------------------
-		"VisionDaytimeRange"		"1800"									// Range of vision during day light.
-		"VisionNighttimeRange"		"800"									// Range of vision at night time.
-
-		"GameSoundsFile"			"soundevents/game_sounds_heroes_custom/game_sounds_tiny.vsndevts"
-	}
+//	"npc_dota_hero_storegga"
+//	{
+//		// General
+//		//-------------------------------------------------------------------------------------------------------------
+//		"BaseClass"					"npc_dota_hero_tiny"
+//		"HeroID"					"121"
+//		"Model"						"models/heroes/tiny_01/tiny_01.vmdl"
+//		"ModelScale"				"1.10000"
+//		"SoundSet"					"Hero_Tiny"
+//
+//		// Armor
+//		//-------------------------------------------------------------------------------------------------------------
+//		"ArmorPhysical"				"8"									// Physical protection.
+//		"MagicalResistance"			"25"								// Magical protection (percentage).
+//
+//		// Abilities
+//		//-------------------------------------------------------------------------------------------------------------
+//		"Ability1"			"storegga_arm_slam"
+//		"Ability2"			"storegga_grab"
+//		"Ability3"			"storegga_grab_throw"
+//		"Ability4"			"generic_hidden"
+//		"Ability5"			"generic_hidden"
+//		"Ability6"			"storegga_avalanche"
+//
+//		// Talents
+//		//-------------------------------------------------------------------------------------------------------------
+//		"Ability10"					"special_bonus_magic_resistance_15"
+//		"Ability11"					"special_bonus_exp_boost_10"
+//		"Ability12"					"special_bonus_attack_damage_40"
+//		"Ability13"					"special_bonus_mp_300"
+//		"Ability14"					"special_bonus_cast_range_150" 
+//		"Ability15"					"special_bonus_spell_amplify_10"
+//		"Ability16"					"special_bonus_cooldown_reduction_15"
+//		"Ability17"					"special_bonus_gold_income_50"
+//
+//		// Attack
+//		//-------------------------------------------------------------------------------------------------------------
+//		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+//		"AttackDamageMin"			"59"							// Damage range min.
+//		"AttackDamageMax"			"75"							// Damage range max.
+//		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"		// Type of damage dealt. 
+//		"AttackRate"				"1.700"							// Speed of attack.
+//		"AttackAnimationPoint"		"1.000"							// Normalized time in animation cycle to attack.
+//		"AttackAcquisitionRange"	"800"							// Range within a target can be acquired.
+//		"AttackRange"				"150"							// Range within a target can be attacked.
+//		"ProjectileModel"			""								// Particle system model for projectile.
+//		"ProjectileSpeed"			"0"							// Speed of projectile.
+//		"HasInventory"				"1"
+//
+//		// Attributes
+//		//-------------------------------------------------------------------------------------------------------------
+//		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"	// Primary Attribute
+//		"AttributeBaseStrength"		"26"
+//		"AttributeStrengthGain"		"4.400000"
+//		"AttributeBaseAgility"		"19"
+//		"AttributeAgilityGain"		"2.900000"
+//		"AttributeBaseIntelligence"	"16"
+//		"AttributeIntelligenceGain"	"2.600000"
+//
+//		// Bounds
+//		//-------------------------------------------------------------------------------------------------------------
+//		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+//		"RingRadius"				"70"
+//		"HealthBarOffset"			"240"
+//
+//		// Movement
+//		//-------------------------------------------------------------------------------------------------------------
+//		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+//		"MovementSpeed"				"285"									// Speed.
+//		"MovementTurnRate"			"0.5"									// Turning rate.
+//
+//		// Status
+//		//-------------------------------------------------------------------------------------------------------------
+//		"StatusHealth"				"200"									// Base health.
+//		"StatusHealthRegen"			"3.0"									// Health regeneration rate.
+//		"StatusMana"				"50"									// Base mana.
+//		"StatusManaRegen"			"1.0"									// Mana regeneration rate.
+//
+//		// Team
+//		//-------------------------------------------------------------------------------------------------------------
+//		"TeamName"					"DOTA_TEAM_GOODGUYS"
+//		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+//		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+//		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_HERO"
+//
+//		// Vision
+//		//-------------------------------------------------------------------------------------------------------------
+//		"VisionDaytimeRange"		"1800"									// Range of vision during day light.
+//		"VisionNighttimeRange"		"800"									// Range of vision at night time.
+//
+//		"GameSoundsFile"			"soundevents/game_sounds_heroes_custom/game_sounds_tiny.vsndevts"
+//	}
 
 	"npc_dota_broodmother_spiderling"
 	{
