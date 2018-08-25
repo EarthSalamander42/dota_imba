@@ -136,14 +136,14 @@ function _ScoreboardUpdater_UpdatePlayerPanel(scoreboardConfig, playersContainer
 		}
 	}
 
-	playerPanel.SetHasClass("is_local_player", (playerId == Game.GetLocalPlayerID()));
+//	playerPanel.SetHasClass("is_local_player", (playerId == Game.GetLocalPlayerID()));
 
-	if (IsDeveloper !== undefined && IsDeveloper(playerId)) {
-		playerPanel.AddClass("is_developer");
-	}
-
-	if (IsDonator !== undefined && IsDonator(playerId) && !playerPanel.BHasClass("is_developer")) {
-		playerPanel.AddClass("is_donator");
+	var player_table = CustomNetTables.GetTableValue("player_table", playerId.toString());
+	if (player_table) {
+		if (player_table.donator_level >= 0 && player_table.donator_level <= 10) {
+			playerPanel.style.backgroundColor = player_table.donator_color;
+//			playerPanel.backgroundColor = 'gradient( linear, 100% 0, 0 0, from( ' + player_table.donator_color + ' ), color-stop( 0.4, #FFFFFF ), to( #FFFFFF ) )';
+		}
 	}
 
 	// values > 0 mean on on cooldown for x seconds

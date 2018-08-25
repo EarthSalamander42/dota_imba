@@ -80,20 +80,19 @@ function Mutation:Init()
 end
 
 function Mutation:Precache(context)
-	-- Death Gold Drop
---	PrecacheItemByNameSync("item_bag_of_gold", context)
-
-	if IMBA_MUTATION["positive"] == "killstreak_power" then
+--	if IMBA_MUTATION["positive"] == "killstreak_power" then
 		PrecacheResource("particle", "particles/hw_fx/candy_carrying_stack.vpcf", context)
-	elseif IMBA_MUTATION["positive"] == "super_fervor" then
+--	elseif IMBA_MUTATION["positive"] == "super_fervor" then
 		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_troll_warlord.vsndevts", context)
-	end
+--	end
 
-	if IMBA_MUTATION["negative"] == "death_explosion" then
+--	if IMBA_MUTATION["negative"] == "death_explosion" then
 		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_pugna.vsndevts", context)
-	elseif IMBA_MUTATION["negative"] == "monkey_business" then
+--	elseif IMBA_MUTATION["negative"] == "death_gold_drop" then
+--		PrecacheItemByNameSync("item_bag_of_gold", context)
+--	elseif IMBA_MUTATION["negative"] == "monkey_business" then
 		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_monkey_king.vsndevts", context)
-	elseif IMBA_MUTATION["negative"] == "periodic_spellcast" then
+--	elseif IMBA_MUTATION["negative"] == "periodic_spellcast" then
 		PrecacheResource("particle", "particles/econ/items/zeus/arcana_chariot/zeus_arcana_thundergods_wrath_start_bolt_parent.vpcf", context) -- Thundergod's Wrath
 		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts", context) -- Shield
 		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_ancient_apparition.vsndevts", context) -- Cold Feet
@@ -104,16 +103,16 @@ function Mutation:Precache(context)
 		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_ogre_magi.vsndevts", context) -- Bloodlust
 --		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_warlock.vsndevts", context)
 		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_zuus.vsndevts", context) -- Thundergod's Wrath
-	end
+--	end
 
-	if IMBA_MUTATION["terrain"] == "danger_zone" then
+--	if IMBA_MUTATION["terrain"] == "danger_zone" then
 		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_gyrocopter.vsndevts", context)
-	elseif IMBA_MUTATION["terrain"] == "tug_of_war" then
+--	elseif IMBA_MUTATION["terrain"] == "tug_of_war" then
 		PrecacheResource("particle", "particles/ambient/tug_of_war_team_dire.vpcf", context)
 		PrecacheResource("particle", "particles/ambient/tug_of_war_team_radiant.vpcf", context)
-	elseif IMBA_MUTATION["terrain"] == "wormhole" then
+--	elseif IMBA_MUTATION["terrain"] == "wormhole" then
 		PrecacheResource("particle", "particles/ambient/wormhole_circle.vpcf", context)
-	end
+--	end
 end
 
 function Mutation:ChooseMutation(mType, mList)

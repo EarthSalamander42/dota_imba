@@ -257,6 +257,13 @@ function EndScoreboard() {
 				values.xp.booster.text = " (" + multiplier + "%)";
 				values.xp.booster.style.color = "white";
 
+				var player_table = CustomNetTables.GetTableValue("player_table", player.id.toString());
+				if (player_table) {
+					if (player_table.donator_level >= 0 && player_table.donator_level <= 10) {
+						values.xp.booster.style.color = player_table.donator_color;
+					}
+				}
+
 				values.xp.level.text = $.Localize("#battlepass_level") + player.result.xp_level;
 				values.xp.rank_name.text = player.result.xp_rank_title;
 				values.xp.rank_name.style.color = "#" + player.result.xp_rank_color;

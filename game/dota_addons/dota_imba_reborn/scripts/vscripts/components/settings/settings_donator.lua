@@ -1,13 +1,13 @@
 DONATOR_COLOR = {}
-DONATOR_COLOR[1] = {160, 20, 20}
-DONATOR_COLOR[2] = {100, 20, 20}
-DONATOR_COLOR[3] = {0, 102, 255}
-DONATOR_COLOR[4] = {240, 50, 50}
-DONATOR_COLOR[5] = {218, 165, 32}
-DONATOR_COLOR[6] = {45, 200, 45}
-DONATOR_COLOR[7] = {47, 91, 151}
-DONATOR_COLOR[8] = {153, 51, 153}
-DONATOR_COLOR[9] = {255, 135, 42}
+DONATOR_COLOR[1] = {135, 20, 20} -- IMBA Lead-Developer
+DONATOR_COLOR[2] = {100, 20, 20} -- IMBA Developer
+DONATOR_COLOR[3] = {0, 102, 255} -- Administrator
+DONATOR_COLOR[4] = {220, 40, 40} -- Ember Donator
+DONATOR_COLOR[5] = {218, 165, 32} -- Golden Donator
+DONATOR_COLOR[6] = {0, 204, 0} -- Green Donator (basic)
+DONATOR_COLOR[7] = {47, 91, 151} -- Salamander Donator (blue)
+DONATOR_COLOR[8] = {153, 51, 153} -- Icefrog Donator (purple)
+DONATOR_COLOR[9] = {185, 75, 10} -- Gaben Donator
 DONATOR_COLOR[10] = {255, 255, 255}
 
 IMBA_COMPANION_DISABLED = {}
