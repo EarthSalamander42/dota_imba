@@ -409,9 +409,9 @@ function GameMode:OnEntityKilled( keys )
 			end
 		end
 
-		if killer:GetOwnerEntity() then
-			SendOverheadEventMessage(killer:GetPlayerOwner(), OVERHEAD_ALERT_GOLD, killed_unit, killed_unit:GetGoldBounty(), nil)
-		end
+--		if killer:GetOwnerEntity() then
+--			SendOverheadEventMessage(killer:GetPlayerOwner(), OVERHEAD_ALERT_GOLD, killed_unit, killed_unit:GetGoldBounty(), nil)
+--		end
 
 		if killed_unit.pedestal then
 			killed_unit.pedestal:ForceKill(false)

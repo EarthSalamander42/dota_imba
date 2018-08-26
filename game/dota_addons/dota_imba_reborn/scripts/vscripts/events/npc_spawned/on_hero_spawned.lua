@@ -31,12 +31,12 @@ function GameMode:OnHeroFirstSpawn(hero)
 			if api.imba.is_donator(tostring(PlayerResource:GetSteamID(hero:GetPlayerID()))) == 10 then
 				hero:SetOriginalModel("models/items/courier/kanyu_shark/kanyu_shark.vmdl")
 				hero:AddNewModifier(hero, nil, "modifier_command_restricted", {})
-				PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), hero)
+				PlayerResource:SetCameraTarget(hero:GetPlayerID(), hero)
 				Timers:CreateTimer(0.1, function()
-					PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), nil)
+					PlayerResource:SetCameraTarget(hero:GetPlayerID(), nil)
 				end)
 				Timers:CreateTimer(1.0, function()
-					PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), nil)
+					PlayerResource:SetCameraTarget(hero:GetPlayerID(), nil)
 				end)
 			end
 
@@ -47,7 +47,7 @@ function GameMode:OnHeroFirstSpawn(hero)
 		else
 			if api.imba.is_donator(tostring(PlayerResource:GetSteamID(hero:GetPlayerID()))) == 10 then
 				ShowHUD(true)
-				PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), hero)
+				PlayerResource:SetCameraTarget(hero:GetPlayerID(), hero)
 			end
 		end
 	end
@@ -64,20 +64,20 @@ function GameMode:OnHeroFirstSpawn(hero)
 		hero:SetNightTimeVisionRange(0)
 
 		if hero:GetTeamNumber() == DOTA_TEAM_GOODGUYS then
-			PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), GoodCamera)
+			PlayerResource:SetCameraTarget(hero:GetPlayerID(), GoodCamera)
 		else
-			PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), BadCamera)
+			PlayerResource:SetCameraTarget(hero:GetPlayerID(), BadCamera)
 		end
 	else
 		hero.picked = true
 
 		-- remove camera focused pick screen
-		PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), hero)
+		PlayerResource:SetCameraTarget(hero:GetPlayerID(), hero)
 		Timers:CreateTimer(0.1, function()
-			PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), nil)
+			PlayerResource:SetCameraTarget(hero:GetPlayerID(), nil)
 		end)
 		Timers:CreateTimer(1.0, function()
-			PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), nil)
+			PlayerResource:SetCameraTarget(hero:GetPlayerID(), nil)
 		end)
 
 		if api.imba.is_developer(PlayerResource:GetSteamID(hero:GetPlayerID())) then

@@ -14,12 +14,12 @@ POSITIVE_MUTATION_LIST[2] = "teammate_resurrection"
 POSITIVE_MUTATION_LIST[3] = "super_fervor"
 POSITIVE_MUTATION_LIST[4] = "slark_mode"
 POSITIVE_MUTATION_LIST[5] = "ultimate_level"
-POSITIVE_MUTATION_LIST[6] = "death_healplosion"
--- POSITIVE_MUTATION_LIST[6] = "super_blink" -- nofun
+-- POSITIVE_MUTATION_LIST[6] = "death_healplosion"
+-- POSITIVE_MUTATION_LIST[7] = "super_blink" -- nofun
 
--- POSITIVE_MUTATION_LIST[7] = "pocket_tower" -- patreon poll disable vote
+-- POSITIVE_MUTATION_LIST[8] = "pocket_tower" -- patreon poll disable vote
 
--- POSITIVE_MUTATION_LIST[8] = "greed_is_good"
+-- POSITIVE_MUTATION_LIST[9] = "greed_is_good"
 
 -- Negative Mutations
 NEGATIVE_MUTATION_LIST = {}
