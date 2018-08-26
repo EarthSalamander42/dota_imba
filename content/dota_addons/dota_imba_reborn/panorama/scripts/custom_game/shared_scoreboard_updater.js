@@ -139,8 +139,10 @@ function _ScoreboardUpdater_UpdatePlayerPanel(scoreboardConfig, playersContainer
 //	playerPanel.SetHasClass("is_local_player", (playerId == Game.GetLocalPlayerID()));
 
 	var player_table = CustomNetTables.GetTableValue("player_table", playerId.toString());
-	if (player_table) {
-		if (player_table.donator_level >= 0 && player_table.donator_level <= 10) {
+//		$.Msg(player_table.donator_level)
+//		$.Msg(player_table.donator_color)
+	if (player_table && player_table.donator_level && player_table.donator_color) {
+		if (player_table.donator_level < 10) {
 			playerPanel.style.backgroundColor = player_table.donator_color;
 //			playerPanel.backgroundColor = 'gradient( linear, 100% 0, 0 0, from( ' + player_table.donator_color + ' ), color-stop( 0.4, #FFFFFF ), to( #FFFFFF ) )';
 		}

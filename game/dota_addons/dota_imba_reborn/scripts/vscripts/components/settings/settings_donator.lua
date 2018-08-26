@@ -1,4 +1,5 @@
 DONATOR_COLOR = {}
+DONATOR_COLOR[0] = {33, 39, 47} -- Not a donator
 DONATOR_COLOR[1] = {135, 20, 20} -- IMBA Lead-Developer
 DONATOR_COLOR[2] = {100, 20, 20} -- IMBA Developer
 DONATOR_COLOR[3] = {0, 102, 255} -- Administrator
