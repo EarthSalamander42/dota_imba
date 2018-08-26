@@ -142,7 +142,7 @@ function GetPlayerInfoIXP() -- yet it has too much useless loops, format later. 
 
 		local color = PLAYER_COLORS[ID]
 		local donator_color = {33, 39, 47} -- set basic background flyout scoreboard color, rgbtohex don't handle nil
-		if api.imba.is_donator(tostring(PlayerResource:GetSteamID(ID))) ~= 10 then
+		if api.imba.is_donator(tostring(PlayerResource:GetSteamID(ID))) ~= 0 and api.imba.is_donator(tostring(PlayerResource:GetSteamID(ID))) ~= 10 then
 			donator_color = DONATOR_COLOR[api.imba.is_donator(tostring(PlayerResource:GetSteamID(ID)))]
 		end
 
