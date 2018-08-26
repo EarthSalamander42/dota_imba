@@ -113,11 +113,8 @@
 "mutation_omni_vision"							""
 "mutation_omni_vision_Description"				""
 
-"modifier_sticky_river"							"Sticky River"
-"modifier_sticky_river_Description"				"the river is sticky, you are slowed while wading through water."
-
-"modifier_super_runes"							"Super Runes"
-"modifier_super_runes_Description"				"Runes are unusually effective"
+"mutation_super_runes"							"Super Runes"
+"mutation_super_runes_Description"				"Runes are unusually effective"
 
 // Not implemented yet
 

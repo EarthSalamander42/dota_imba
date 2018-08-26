@@ -15,19 +15,28 @@
 
 -- first time a real hero spawn
 function GameMode:OnHeroFirstSpawn(hero)
-	if hero:IsIllusion() or hero:HasModifier("modifier_illusion_manager_out_of_world") or hero:HasModifier("modifier_illusion_manager") then return end
+	if IsMutationMap() then
+		if hero:GetUnitName() ~= FORCE_PICKED_HERO then
+			Mutation:OnHeroFirstSpawn(hero)
+		end
+	end
+
+	if hero:IsIllusion() then
+		hero:SetupHealthBarLabel(hero:GetPlayerID())
+		return
+	end -- Illusions will not be affected by scripts written under this line
 
 	if api.imba.is_donator(PlayerResource:GetSteamID(hero:GetPlayerID())) and PlayerResource:GetConnectionState(hero:GetPlayerID()) ~= 1 then
 		if hero:GetUnitName() ~= FORCE_PICKED_HERO then
 			if api.imba.is_donator(tostring(PlayerResource:GetSteamID(hero:GetPlayerID()))) == 10 then
 				hero:SetOriginalModel("models/items/courier/kanyu_shark/kanyu_shark.vmdl")
 				hero:AddNewModifier(hero, nil, "modifier_command_restricted", {})
-				PlayerResource:SetCameraTarget(hero:GetPlayerID(), hero)
+				PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), hero)
 				Timers:CreateTimer(0.1, function()
-					PlayerResource:SetCameraTarget(hero:GetPlayerID(), nil)
+					PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), nil)
 				end)
 				Timers:CreateTimer(1.0, function()
-					PlayerResource:SetCameraTarget(hero:GetPlayerID(), nil)
+					PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), nil)
 				end)
 			end
 
@@ -38,7 +47,7 @@ function GameMode:OnHeroFirstSpawn(hero)
 		else
 			if api.imba.is_donator(tostring(PlayerResource:GetSteamID(hero:GetPlayerID()))) == 10 then
 				ShowHUD(true)
-				PlayerResource:SetCameraTarget(hero:GetPlayerID(), hero)
+				PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), hero)
 			end
 		end
 	end
@@ -63,11 +72,14 @@ function GameMode:OnHeroFirstSpawn(hero)
 		hero.picked = true
 
 		-- remove camera focused pick screen
-		PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), nil)
+		PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), hero)
 		Timers:CreateTimer(0.1, function()
 			PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), nil)
 		end)
-		
+		Timers:CreateTimer(1.0, function()
+			PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), nil)
+		end)
+
 		if api.imba.is_developer(PlayerResource:GetSteamID(hero:GetPlayerID())) then
 			hero.has_graph = true
 			CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "show_netgraph", {})
@@ -75,23 +87,7 @@ function GameMode:OnHeroFirstSpawn(hero)
 		end
 
 --		if not IsInToolsMode() then
-			local steam_id = tostring(PlayerResource:GetSteamID(hero:GetPlayerID()))
-			if steam_id ~= "0" and api.imba.is_donator(steam_id) ~= false then
---			print("set player original team of ID "..hero:GetPlayerID().." to "..hero:GetTeamNumber())
---			PLAYER_TEAM[hero:GetPlayerID()] = hero:GetTeamNumber()
-				local donator_level = api.imba.is_donator(steam_id)
-
-				if donator_level then
-					hero:SetCustomHealthLabel("#imba_donator_label_" .. donator_level, DONATOR_COLOR[donator_level][1], DONATOR_COLOR[donator_level][2], DONATOR_COLOR[donator_level][3])
-
-					-- needs a timer else GetSelectedHeroEntity is nil
-					Timers:CreateTimer(0.3, function()
-						if api.imba.get_player_info(steam_id) then
-							DonatorStatue(hero:GetPlayerID(), api.imba.get_player_info(steam_id).ingame_statue_file)
-						end
-					end)
-				end
-			end
+			hero:SetupHealthBarLabel(hero:GetPlayerID())
 --		end
 	end
 
@@ -205,12 +201,6 @@ function GameMode:OnHeroFirstSpawn(hero)
 	if hero.vengeance_aura_target then
 		hero.vengeance_aura_target:RemoveModifierByName("modifier_imba_command_aura_negative_aura")
 		hero.vengeance_aura_target = nil
-	end
-
-	if IsMutationMap() then
-		if hero:GetUnitName() ~= FORCE_PICKED_HERO then
-			Mutation:OnHeroFirstSpawn(hero)
-		end
 	end
 end
 

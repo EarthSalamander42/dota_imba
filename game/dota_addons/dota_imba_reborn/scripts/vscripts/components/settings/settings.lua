@@ -31,13 +31,13 @@ BOUNTY_RUNE_SPAWN_TIME = 300
 AUTO_LAUNCH_DELAY = 5.0					-- How long should we wait for the host to setup the game, after all players have loaded in?
 STRATEGY_TIME = 0.0						-- How long should strategy time last?
 SHOWCASE_TIME = 0.0						-- How long should showcase time last?
-if IsInToolsMode() then
-	AP_GAME_TIME = 10.0
-	PRE_GAME_TIME = 5.0 + AP_GAME_TIME
-else
+--if IsInToolsMode() then
+--	AP_GAME_TIME = 10.0
+--	PRE_GAME_TIME = 5.0 + AP_GAME_TIME
+--else
 	AP_GAME_TIME = 60.0					-- How long should we let people select their hero?
 	PRE_GAME_TIME = 90 + AP_GAME_TIME	-- How long after people select their heroes should the horn blow and the game start?
-end
+--end
 TREE_REGROW_TIME = 180.0				-- How long should it take individual trees to respawn after being cut down/destroyed?
 POST_GAME_TIME = 600.0					-- How long should we let people look at the scoreboard before closing the server automatically?
 CAMERA_DISTANCE_OVERRIDE = -1

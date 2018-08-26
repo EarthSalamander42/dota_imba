@@ -202,10 +202,6 @@ function modifier_item_imba_diffusal_unique:GetModifierProcAttack_BonusDamage_Ph
 				return nil
 			end
 
-			if attacker:IsIllusion() then
-				return nil
-			end
-
 			-- Apply mana burn particle effect
 			local particle_manaburn_fx = ParticleManager:CreateParticle(self.particle_manaburn, PATTACH_ABSORIGIN_FOLLOW, target)
 			ParticleManager:SetParticleControl(particle_manaburn_fx, 0, target:GetAbsOrigin())
@@ -533,10 +529,6 @@ function modifier_item_imba_diffusal_2_unique:GetModifierProcAttack_BonusDamage_
 
 			-- Don't apply on spell immune targets
 			if target:IsMagicImmune() then
-				return nil
-			end
-
-			if attacker:IsIllusion() then
 				return nil
 			end
 

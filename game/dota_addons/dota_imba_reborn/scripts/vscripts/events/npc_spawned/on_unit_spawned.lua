@@ -19,36 +19,35 @@ function GameMode:OnUnitFirstSpawn(unit)
 		Mutation:OnUnitFirstSpawn(unit)
 	end
 
-	if unit:IsIllusion() and not unit:HasModifier("modifier_illusion_manager_out_of_world") and not unit:HasModifier("modifier_illusion_manager") then
-		HeroSelection:Attachments(unit)
-		return
-	else
-		Timers:CreateTimer(FrameTime(), function()
-			if not unit:IsNull() and UNIT_EQUIPMENT[unit:GetModelName()] then
-				for _, wearable in pairs(UNIT_EQUIPMENT[unit:GetModelName()]) do
-					local cosmetic = SpawnEntityFromTableSynchronous("prop_dynamic", {model = wearable})
-					cosmetic:FollowEntity(unit, true)
-					if wearable == "models/items/pudge/scorching_talon/scorching_talon.vmdl" then
-						local particle = ParticleManager:CreateParticle("particles/econ/items/pudge/pudge_scorching_talon/pudge_scorching_talon_ambient.vpcf", PATTACH_ABSORIGIN_FOLLOW, unit)
-						ParticleManager:ReleaseParticleIndex(particle)
-					elseif wearable == "models/items/pudge/immortal_arm/immortal_arm.vmdl" then
-						cosmetic:SetMaterialGroup("1")
-					elseif wearable == "models/items/pudge/arcana/pudge_arcana_back.vmdl" then
-						unit:SetMaterialGroup("1") -- zonnoz pet
-						cosmetic:SetMaterialGroup("1") -- zonnoz pet
+	if string.find(unit:GetUnitName(), "npc_dota_lone_druid_bear") then
+		unit:SetupHealthBarLabel(unit:GetPlayerOwnerID())
+	end
 
-						ParticleManager:CreateParticle("particles/econ/items/pudge/pudge_arcana/pudge_arcana_back_ambient.vpcf", PATTACH_ABSORIGIN_FOLLOW, cosmetic)
-						ParticleManager:CreateParticle("particles/econ/items/pudge/pudge_arcana/pudge_arcana_back_ambient_beam.vpcf", PATTACH_ABSORIGIN_FOLLOW, cosmetic)
-						ParticleManager:CreateParticle("particles/econ/items/pudge/pudge_arcana/pudge_arcana_ambient_flies.vpcf", PATTACH_ABSORIGIN_FOLLOW, unit)
-					end
+	Timers:CreateTimer(FrameTime(), function()
+		if not unit:IsNull() and UNIT_EQUIPMENT[unit:GetModelName()] then
+			for _, wearable in pairs(UNIT_EQUIPMENT[unit:GetModelName()]) do
+				local cosmetic = SpawnEntityFromTableSynchronous("prop_dynamic", {model = wearable})
+				cosmetic:FollowEntity(unit, true)
+				if wearable == "models/items/pudge/scorching_talon/scorching_talon.vmdl" then
+					local particle = ParticleManager:CreateParticle("particles/econ/items/pudge/pudge_scorching_talon/pudge_scorching_talon_ambient.vpcf", PATTACH_ABSORIGIN_FOLLOW, unit)
+					ParticleManager:ReleaseParticleIndex(particle)
+				elseif wearable == "models/items/pudge/immortal_arm/immortal_arm.vmdl" then
+					cosmetic:SetMaterialGroup("1")
+				elseif wearable == "models/items/pudge/arcana/pudge_arcana_back.vmdl" then
+					unit:SetMaterialGroup("1") -- zonnoz pet
+					cosmetic:SetMaterialGroup("1") -- zonnoz pet
+
+					ParticleManager:CreateParticle("particles/econ/items/pudge/pudge_arcana/pudge_arcana_back_ambient.vpcf", PATTACH_ABSORIGIN_FOLLOW, cosmetic)
+					ParticleManager:CreateParticle("particles/econ/items/pudge/pudge_arcana/pudge_arcana_back_ambient_beam.vpcf", PATTACH_ABSORIGIN_FOLLOW, cosmetic)
+					ParticleManager:CreateParticle("particles/econ/items/pudge/pudge_arcana/pudge_arcana_ambient_flies.vpcf", PATTACH_ABSORIGIN_FOLLOW, unit)
 				end
 			end
-		end)
-		return
-	end
+		end
+	end)
+	return
 end
 
--- everytime a real hero respawn
+-- everytime an unit respawn
 function GameMode:OnUnitSpawned(unit)
 	local greeviling = false
 

@@ -169,7 +169,10 @@ function GameMode:OnNPCSpawned(keys)
 			if npc.first_spawn ~= true then
 				npc.first_spawn = true
 
-				GameMode:OnHeroFirstSpawn(npc)
+				-- Need a frame time to detect illusions
+				Timers:CreateTimer(FrameTime(), function()
+					GameMode:OnHeroFirstSpawn(npc)
+				end)
 
 				return
 			end
@@ -404,6 +407,10 @@ function GameMode:OnEntityKilled( keys )
 			elseif killed_unit:IsRealHero() and killer:GetTeamNumber() == killed_unit:GetTeamNumber() then
 				CombatEvents("kill", "hero_deny_hero", killed_unit, killer)
 			end
+		end
+
+		if killer:GetOwnerEntity() then
+			SendOverheadEventMessage(killer:GetPlayerOwner(), OVERHEAD_ALERT_GOLD, killed_unit, killed_unit:GetGoldBounty(), nil)
 		end
 
 		if killed_unit.pedestal then

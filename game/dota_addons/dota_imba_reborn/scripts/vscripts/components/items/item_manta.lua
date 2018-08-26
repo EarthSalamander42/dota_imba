@@ -69,7 +69,7 @@ function item_imba_manta:OnSpellStart()
 
 		for i = 1, images_count do
 			if string.find(self:GetCaster():GetUnitName(), "npc_dota_lone_druid_bear") then print("NO BEAR") break end
-			self:GetCaster():CreateIllusion(duration, incomingDamage, outcomingDamage)
+			local illusion = self:GetCaster():CreateIllusion(duration, incomingDamage, outcomingDamage)
 			table.insert(self:GetCaster().manta, illusion)
 		end
 

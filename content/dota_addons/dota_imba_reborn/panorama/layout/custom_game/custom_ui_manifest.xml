@@ -71,6 +71,9 @@
 			}
 		}
 
+		// Unit Side Tab visible in mutation mod
+		Parent.FindChildTraverse("HeroDisplay").style.zIndex = "1";
+
 		// Nice topbar colors
 		var topbar = hudElements.FindChildTraverse("topbar");
 		var topbarRadiant = topbar.FindChildTraverse("TopBarRadiantTeam");

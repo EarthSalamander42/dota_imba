@@ -29,23 +29,25 @@ function item_imba_shivas_guard:GetIntrinsicModifierName()
 end
 
 function item_imba_shivas_guard:OnSpellStart()
-	local caster = self:GetCaster()
-	local ability = self
-
 	-- Parameters
-	local blast_radius = ability:GetSpecialValueFor("blast_radius")
-	local blast_speed = ability:GetSpecialValueFor("blast_speed")
-	local damage = ability:GetSpecialValueFor("damage")
-	local slow_initial_stacks = ability:GetSpecialValueFor("slow_initial_stacks")
+	local blast_radius = self:GetSpecialValueFor("blast_radius")
+	local blast_speed = self:GetSpecialValueFor("blast_speed")
+	local damage = self:GetSpecialValueFor("damage")
+	local slow_initial_stacks = self:GetSpecialValueFor("slow_initial_stacks")
 	local blast_duration = blast_radius / blast_speed
-	local current_loc = caster:GetAbsOrigin()
+	local current_loc = self:GetCaster():GetAbsOrigin()
 
 	-- Play cast sound
-	caster:EmitSound("DOTA_Item.ShivasGuard.Activate")
+	self:GetCaster():EmitSound("DOTA_Item.ShivasGuard.Activate")
 
 	-- Play particle
-	local blast_pfx = ParticleManager:CreateParticle(caster.shiva_blast_effect, PATTACH_ABSORIGIN_FOLLOW, caster)
-	ParticleManager:SetParticleControl(blast_pfx, 0, caster:GetAbsOrigin())
+	local blast_pfx
+	if string.find(self:GetParent():GetUnitName(), "npc_dota_lone_druid_bear") then
+		blast_pfx = ParticleManager:CreateParticle(self:GetCaster():GetOwnerEntity().shiva_blast_effect, PATTACH_ABSORIGIN_FOLLOW, self:GetCaster():GetOwnerEntity())
+	else
+		blast_pfx = ParticleManager:CreateParticle(self:GetCaster().shiva_blast_effect, PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
+	end
+	ParticleManager:SetParticleControl(blast_pfx, 0, self:GetCaster():GetAbsOrigin())
 	ParticleManager:SetParticleControl(blast_pfx, 1, Vector(blast_radius, blast_duration * 1.33, blast_speed))
 	ParticleManager:ReleaseParticleIndex(blast_pfx)
 
@@ -57,15 +59,15 @@ function item_imba_shivas_guard:OnSpellStart()
 	local tick_interval = 0.1
 	Timers:CreateTimer(tick_interval, function()
 		-- Give vision
-		AddFOWViewer(caster:GetTeamNumber(), current_loc, current_radius, 0.1, false)
+		AddFOWViewer(self:GetCaster():GetTeamNumber(), current_loc, current_radius, 0.1, false)
 
 		-- Update current radius and location
 		current_radius = current_radius + blast_speed * tick_interval
-		current_loc = caster:GetAbsOrigin()
+		current_loc = self:GetCaster():GetAbsOrigin()
 		--vision_dummy:SetAbsOrigin(current_loc)
 
 		-- Iterate through enemies in the radius
-		local nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), current_loc, nil, current_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+		local nearby_enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), current_loc, nil, current_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 		for _,enemy in pairs(nearby_enemies) do
 			-- Check if this enemy was already hit
 			local enemy_has_been_hit = false
@@ -76,17 +78,22 @@ function item_imba_shivas_guard:OnSpellStart()
 			-- If not, blast it
 			if not enemy_has_been_hit then
 				-- Play hit particle
-				local hit_pfx = ParticleManager:CreateParticle(caster.shiva_hit_effect, PATTACH_ABSORIGIN_FOLLOW, enemy)
+				local hit_pfx
+				if string.find(self:GetParent():GetUnitName(), "npc_dota_lone_druid_bear") then
+					hit_pfx = ParticleManager:CreateParticle(self:GetCaster():GetOwnerEntity().shiva_hit_effect, PATTACH_ABSORIGIN_FOLLOW, enemy)
+				else
+					hit_pfx = ParticleManager:CreateParticle(self:GetCaster().shiva_hit_effect, PATTACH_ABSORIGIN_FOLLOW, enemy)
+				end
 				ParticleManager:SetParticleControl(hit_pfx, 0, enemy:GetAbsOrigin())
 				ParticleManager:SetParticleControl(hit_pfx, 1, enemy:GetAbsOrigin())
 				ParticleManager:ReleaseParticleIndex(hit_pfx)
 
 				-- Deal damage
-				ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
+				ApplyDamage({attacker = self:GetCaster(), victim = enemy, ability = self, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
 
 				-- Apply slow modifier
-				enemy:AddNewModifier(caster, ability, "modifier_item_imba_shivas_blast_slow", {})
-				enemy:SetModifierStackCount("modifier_item_imba_shivas_blast_slow", caster, slow_initial_stacks)
+				enemy:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_shivas_blast_slow", {})
+				enemy:SetModifierStackCount("modifier_item_imba_shivas_blast_slow", self:GetCaster(), slow_initial_stacks)
 
 				-- Add enemy to the targets hit table
 				targets_hit[#targets_hit + 1] = enemy
@@ -102,16 +109,16 @@ end
 
 function item_imba_shivas_guard:GetAbilityTextureName()
 	if not IsClient() then return end
-	local caster = self:GetCaster()
-	if not caster.shiva_icon_client then return "custom/imba_shiva" end
-	return "custom/imba_shiva"..caster.shiva_icon_client
+--	print("shiva_icon_client:", self:GetCaster().shiva_icon_client)
+	if not self:GetCaster().shiva_icon_client then return "custom/imba_shiva" end
+	return "custom/imba_shiva"..self:GetCaster().shiva_icon_client
 end
 
 -----------------------------------------------------------------------------------------------------------
 --	Shiva Handler
 -----------------------------------------------------------------------------------------------------------
 if modifier_imba_shiva_handler == nil then modifier_imba_shiva_handler = class({}) end
-function modifier_imba_shiva_handler:IsHidden() return true end
+function modifier_imba_shiva_handler:IsHidden() return false end
 function modifier_imba_shiva_handler:IsDebuff() return false end
 function modifier_imba_shiva_handler:IsPurgable() return false end
 function modifier_imba_shiva_handler:RemoveOnDeath() return false end
@@ -125,18 +132,24 @@ function modifier_imba_shiva_handler:OnCreated()
 end
 
 function modifier_imba_shiva_handler:OnIntervalThink()
-	local caster = self:GetCaster()
-	if caster:IsIllusion() then return end
+	if self:GetCaster():IsIllusion() then return end
 	if IsServer() then
-		self:SetStackCount(caster.shiva_icon)
+		if string.find(self:GetParent():GetUnitName(), "npc_dota_lone_druid_bear") then
+			self:SetStackCount(self:GetCaster():GetOwnerEntity().shiva_icon)
+--			print("SetStackCount:", self:GetCaster():GetOwnerEntity().shiva_icon)
+		else
+--			print("SetStackCount:", self:GetCaster().shiva_icon)
+			self:SetStackCount(self:GetCaster().shiva_icon)
+		end
 	end
 
 	if IsClient() then
 		local icon = self:GetStackCount()
 		if icon == 0 then
-			caster.shiva_icon_client = nil
+--			print("icon:", icon)
+			self:GetCaster().shiva_icon_client = nil
 		else
-			caster.shiva_icon_client = icon
+			self:GetCaster().shiva_icon_client = icon
 		end
 	end
 end
@@ -212,7 +225,6 @@ end
 function modifier_imba_shiva_debuff:OnCreated()
 	if not IsServer() then return end
 	self.parent = self:GetParent()
-	self.ability = self:GetAbility()
 	
 	self:OnIntervalThink()
 	self:StartIntervalThink(0.5)
@@ -225,7 +237,7 @@ function modifier_imba_shiva_debuff:OnIntervalThink()
 	-- Attack speed formula: 
 	-- Attacks per second = [(100 + IAS) × 0.01] / BAT
 	-- Tooltip Attack Speed ~= (IAS + 100) = Attacks per second * BAT * 100
-	local attack_speed_slow = (self.parent:GetAttacksPerSecond() * self.parent:GetBaseAttackTime() * 100) * (self.ability:GetSpecialValueFor("aura_as_reduction") / 100)
+	local attack_speed_slow = (self.parent:GetAttacksPerSecond() * self.parent:GetBaseAttackTime() * 100) * (self:GetAbility():GetSpecialValueFor("aura_as_reduction") / 100)
 	-- Use stack system to display how much attack speed is reduced (also allows this to update tooltip)
 	self:SetStackCount(attack_speed_slow)
 end
@@ -262,12 +274,9 @@ end
 
 function modifier_item_imba_shivas_blast_slow:OnIntervalThink()
 	if IsClient() then return end
-	local caster = self:GetCaster()
-	local target = self:GetParent()
-	local ability = self:GetAbility()
 
 	-- Fetch current stacks
-	local current_stacks = target:GetModifierStackCount("modifier_item_imba_shivas_blast_slow", caster)
+	local current_stacks = self:GetParent():GetModifierStackCount("modifier_item_imba_shivas_blast_slow", self:GetCaster())
 
 	-- If this is the last stack, remove the modifier
 	if current_stacks <= 1 then

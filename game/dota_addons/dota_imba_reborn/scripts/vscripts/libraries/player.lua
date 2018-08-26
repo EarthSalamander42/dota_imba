@@ -19,10 +19,10 @@ function CDOTA_BaseNPC:CreateIllusion(duration, inc, out, pos, mod, ab)
 	if self:IsRealHero() then
 		illusion:SetPlayerID(player:GetPlayerID())
 		illusion:SetOwner(player)
-		--local targetLevel = self:GetLevel()
-		--for i=1,targetLevel-1 do
-		--	illusion:HeroLevelUp(false)
-		--end
+		local targetLevel = self:GetLevel()
+		for i=1,targetLevel-1 do
+			illusion:HeroLevelUp(false)
+		end
 		illusion:SetAbilityPoints(0)
 	end
 
@@ -51,7 +51,24 @@ function CDOTA_BaseNPC:CreateIllusion(duration, inc, out, pos, mod, ab)
 		end
 	end
 
+	if IsMutationMap() then
+		if self:HasModifier("modifier_mutation_kill_streak_power") then
+			illusion:AddNewModifier(illusion, nil, "modifier_mutation_kill_streak_power", {}):SetStackCount(self:FindModifierByName("modifier_mutation_kill_streak_power"):GetStackCount())
+		end
+	end
+
 	return illusion
+end
+
+function CDOTA_BaseNPC:SetupHealthBarLabel(id)
+	local steam_id = tostring(PlayerResource:GetSteamID(id))
+
+	if steam_id ~= "0" and api.imba.is_donator(steam_id) ~= false then
+		local donator_level = api.imba.is_donator(steam_id)
+		if donator_level then
+			self:SetCustomHealthLabel("#imba_donator_label_" .. donator_level, DONATOR_COLOR[donator_level][1], DONATOR_COLOR[donator_level][2], DONATOR_COLOR[donator_level][3])
+		end
+	end
 end
 
 -- Serversided function only

@@ -14,8 +14,10 @@ POSITIVE_MUTATION_LIST[2] = "teammate_resurrection"
 POSITIVE_MUTATION_LIST[3] = "super_fervor"
 POSITIVE_MUTATION_LIST[4] = "slark_mode"
 POSITIVE_MUTATION_LIST[5] = "ultimate_level"
--- POSITIVE_MUTATION_LIST[3] = "pocket_tower" -- patreon poll disable vote
--- POSITIVE_MUTATION_LIST[7] = "super_blink" -- nofun
+POSITIVE_MUTATION_LIST[6] = "death_healplosion"
+-- POSITIVE_MUTATION_LIST[6] = "super_blink" -- nofun
+
+-- POSITIVE_MUTATION_LIST[7] = "pocket_tower" -- patreon poll disable vote
 
 -- POSITIVE_MUTATION_LIST[8] = "greed_is_good"
 
@@ -32,16 +34,18 @@ NEGATIVE_MUTATION_LIST[4] = "monkey_business"
 
 -- Terrain Mutations
 TERRAIN_MUTATION_LIST = {}
-TERRAIN_MUTATION_LIST[1] = "fast_runes"
-TERRAIN_MUTATION_LIST[2] = "airdrop"
-TERRAIN_MUTATION_LIST[3] = "speed_freaks"
-TERRAIN_MUTATION_LIST[4] = "river_flows"
-TERRAIN_MUTATION_LIST[5] = "wormhole"
-TERRAIN_MUTATION_LIST[6] = "tug_of_war"
-TERRAIN_MUTATION_LIST[7] = "danger_zone"
+TERRAIN_MUTATION_LIST[1] = "airdrop"
+TERRAIN_MUTATION_LIST[2] = "river_flows"
+TERRAIN_MUTATION_LIST[3] = "wormhole"
+TERRAIN_MUTATION_LIST[4] = "tug_of_war"
+TERRAIN_MUTATION_LIST[5] = "danger_zone"
 if IsInToolsMode() then
-	TERRAIN_MUTATION_LIST[8] = "super_runes"
+	TERRAIN_MUTATION_LIST[6] = "super_runes"
 end
+
+-- TERRAIN_MUTATION_LIST[1] = "fast_runes" -- patreon poll disable vote
+-- TERRAIN_MUTATION_LIST[3] = "speed_freaks" -- patreon poll disable vote
+
 -- TERRAIN_MUTATION_LIST[9] = "minefield" -- nofun
 
 -- TERRAIN_MUTATION_LIST["sleepy_river"] = false
@@ -58,7 +62,6 @@ end
 
 -- NEGATIVE_MUTATION_LIST["the_walking_dead"] = false
 
--- TERRAIN_MUTATION_LIST["danger_zone"] = false -- add archer's music danger zone
 -- TERRAIN_MUTATION_LIST["river_fag"] = false
 -- TERRAIN_MUTATION_LIST["diretide"] = false
 -- TERRAIN_MUTATION_LIST["void_path"] = false
