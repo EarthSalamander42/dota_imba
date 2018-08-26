@@ -531,20 +531,12 @@ function modifier_item_imba_kaya:IsPermanent() return true end
 -- Declare modifier events/properties
 function modifier_item_imba_kaya:DeclareFunctions()
 	local funcs = {
-		MODIFIER_PROPERTY_MANACOST_PERCENTAGE,
 		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
+		MODIFIER_PROPERTY_MANACOST_PERCENTAGE,
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
+		MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE
 	}
 	return funcs
-end
-
-function modifier_item_imba_kaya:GetModifierBonusStats_Intellect()
-	if not self:GetAbility() then return end
-	return self:GetAbility():GetSpecialValueFor("bonus_int")
-end
-
-function modifier_item_imba_kaya:GetCustomCooldownReductionStacking()
-	return self:GetAbility():GetSpecialValueFor("bonus_cdr")
 end
 
 function modifier_item_imba_kaya:GetModifierSpellAmplify_Percentage()
@@ -554,6 +546,15 @@ end
 
 function modifier_item_imba_kaya:GetModifierPercentageManacost()
 	if not self:GetAbility() then return end
+	return self:GetAbility():GetSpecialValueFor("bonus_cdr")
+end
+
+function modifier_item_imba_kaya:GetModifierBonusStats_Intellect()
+	if not self:GetAbility() then return end
+	return self:GetAbility():GetSpecialValueFor("bonus_int")
+end
+
+function modifier_item_imba_kaya:GetModifierPercentageCooldown()
 	return self:GetAbility():GetSpecialValueFor("bonus_cdr")
 end
 
