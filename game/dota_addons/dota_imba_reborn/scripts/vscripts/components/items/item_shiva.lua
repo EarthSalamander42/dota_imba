@@ -43,7 +43,7 @@ function item_imba_shivas_guard:OnSpellStart()
 	-- Play particle
 	local blast_pfx
 	if string.find(self:GetParent():GetUnitName(), "npc_dota_lone_druid_bear") then
-		blast_pfx = ParticleManager:CreateParticle(self:GetCaster():GetOwnerEntity().shiva_blast_effect, PATTACH_ABSORIGIN_FOLLOW, self:GetCaster():GetOwnerEntity())
+		blast_pfx = ParticleManager:CreateParticle(self:GetCaster():GetOwnerEntity().shiva_blast_effect, PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
 	else
 		blast_pfx = ParticleManager:CreateParticle(self:GetCaster().shiva_blast_effect, PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
 	end

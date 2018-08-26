@@ -307,7 +307,6 @@ function Imbattlepass:GetShivaEffect(hero)
 		icon = 1
 	end
 
---	print(effect, effect2, icon)
 	hero.shiva_blast_effect = effect
 	hero.shiva_hit_effect = effect2
 	hero.shiva_icon = icon

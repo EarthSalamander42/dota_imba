@@ -141,11 +141,6 @@ function GetPlayerInfoIXP() -- yet it has too much useless loops, format later. 
 		end
 
 		local color = PLAYER_COLORS[ID]
-		local donator_color = {33, 39, 47} -- set basic background flyout scoreboard color, rgbtohex don't handle nil
-		if api.imba.is_donator(tostring(PlayerResource:GetSteamID(ID))) ~= 0 and api.imba.is_donator(tostring(PlayerResource:GetSteamID(ID))) ~= 10 then
-			donator_color = DONATOR_COLOR[api.imba.is_donator(tostring(PlayerResource:GetSteamID(ID)))]
-		end
-
 		CustomNetTables:SetTableValue("player_table", tostring(ID),
 		{
 			XP = current_xp_in_level,
@@ -161,7 +156,6 @@ function GetPlayerInfoIXP() -- yet it has too much useless loops, format later. 
 			XP_change = 0,
 			IMR_5v5_change = 0,
 			donator_level = api.imba.is_donator(tostring(PlayerResource:GetSteamID(ID))),
-			donator_color = rgbToHex(donator_color),
 		})
 	end
 
