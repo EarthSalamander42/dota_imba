@@ -1,15 +1,15 @@
 <root>
-    <styles>
-        <include src="file://{resources}/styles/custom_game/shared_scoreboard_styles.css" />
-        <include src="file://{resources}/styles/custom_game/multiteam_flyout_scoreboard.css" />
-    </styles>
+	<styles>
+		<include src="file://{resources}/styles/custom_game/shared_scoreboard_styles.css" />
+		<include src="file://{resources}/styles/custom_game/multiteam_flyout_scoreboard.css" />
+	</styles>
 
-    <scripts>
+	<scripts>
 		<include src="file://{resources}/scripts/custom_game/api.js" />
-        <include src="file://{resources}/scripts/custom_game/util.js" />
-        <include src="file://{resources}/scripts/custom_game/shared_scoreboard_updater.js" />
-        <include src="file://{resources}/scripts/custom_game/multiteam_flyout_scoreboard.js" />
-    </scripts>
+		<include src="file://{resources}/scripts/custom_game/util.js" />
+		<include src="file://{resources}/scripts/custom_game/shared_scoreboard_updater.js" />
+		<include src="file://{resources}/scripts/custom_game/multiteam_flyout_scoreboard.js" />
+	</scripts>
 
   <Panel hittest="false" class="FlyoutScoreboardRoot">
 		<Panel class="Legend">

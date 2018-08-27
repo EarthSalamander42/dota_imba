@@ -45,7 +45,6 @@ function _ScoreboardUpdater_UpdatePlayerPanelImr(playerId, playerPanel) {
 	var steamid = Game.GetPlayerInfo(playerId).player_steamid;
 	
 	LoadPlayerInfo(function (playerInfo) {
-
 		var thisPlayerInfo = null;
 		playerInfo.forEach(function (i) {
 			if (i.username == steamid)

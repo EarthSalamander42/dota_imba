@@ -13,7 +13,6 @@
 .addon-root {
 	width: 100%;
 	height: 100%;
-//	z-index: 1;
 }
 
 .down {
@@ -155,6 +154,7 @@
 	flow-children: down;
 	background-color: #002239da;
 	border: 2px solid COLOR_INFO_BACKGROUND_DARK_BLUE;
+	z-index: 1;
 } 
 
 #ImbaLoadingSocial Panel {

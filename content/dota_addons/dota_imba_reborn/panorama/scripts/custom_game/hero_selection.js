@@ -156,6 +156,7 @@ $('#ARDMLoading').style.opacity = 0;
 
 function HidePickingScreen() {
 	$.GetContextPanel().DeleteAsync(0)
+	ReturnChatWindow()
 }
 
 function changeHilariousLoadingText () {
@@ -202,9 +203,13 @@ function onPlayerStatChange(table, key, data) {
 
 		var ply_battlepass = CustomNetTables.GetTableValue("battlepass", Game.GetLocalPlayerID());
 
-		if (Game.GetMapInfo().map_display_name == "imba_mutation_5v5" || Game.GetMapInfo().map_display_name == "imba_mutation_10v10")
+		if (Game.GetMapInfo().map_display_name == "imba_mutation_5v5" || Game.GetMapInfo().map_display_name == "imba_mutation_10v10") {
+			if (data.mutation["negative"] == "all_random_deathmatch") {
+				HidePickingScreen()
+				return;
+			}
 			Mutation(data.mutation)
-		else
+		} else
 			FindDotaHudElement('MainContent').AddClass("Ranked")
 
 		Object.keys(data.herolist).sort().forEach(function (heroName) {
@@ -276,32 +281,10 @@ function onPlayerStatChange(table, key, data) {
 		if (panelscreated !== length) {
 			var teamdire = FindDotaHudElement('TeamDire');
 			var teamradiant = FindDotaHudElement('TeamRadiant');
-			var teamcustom1 = FindDotaHudElement('TeamCustom1');
-			var teamcustom2 = FindDotaHudElement('TeamCustom2');
-			var teamcustom3 = FindDotaHudElement('TeamCustom3');
-			var teamcustom4 = FindDotaHudElement('TeamCustom4');
-			var teamcustom5 = FindDotaHudElement('TeamCustom5');
-			var teamcustom6 = FindDotaHudElement('TeamCustom6');
-			var teamcustom7 = FindDotaHudElement('TeamCustom7');
-			var teamcustom8 = FindDotaHudElement('TeamCustom8');
 			var dummyClock = FindDotaHudElement('DummyClock');
 			panelscreated = length;
 			teamdire.RemoveAndDeleteChildren();
 			teamradiant.RemoveAndDeleteChildren();
-			if (currentMap == "cavern") {
-				teamdire.DeleteAsync(0)
-				teamradiant.DeleteAsync(0)
-			} else {
-				teamcustom1.DeleteAsync(0)
-				teamcustom2.DeleteAsync(0)
-				teamcustom3.DeleteAsync(0)
-				teamcustom4.DeleteAsync(0)
-				teamcustom5.DeleteAsync(0)
-				teamcustom6.DeleteAsync(0)
-				teamcustom7.DeleteAsync(0)
-				teamcustom8.DeleteAsync(0)
-				dummyClock.DeleteAsync(0)
-			}
 
 			Object.keys(data).forEach(function (nkey) {
 				var currentteam = null;
@@ -311,30 +294,6 @@ function onPlayerStatChange(table, key, data) {
 						break;
 					case 3:
 						currentteam = teamdire;
-						break;
-					case 6:
-						currentteam = teamcustom1;
-						break;
-					case 7:
-						currentteam = teamcustom2;
-						break;
-					case 8:
-						currentteam = teamcustom3;
-						break;
-					case 9:
-						currentteam = teamcustom4;
-						break;
-					case 10:
-						currentteam = teamcustom5;
-						break;
-					case 11:
-						currentteam = teamcustom6;
-						break;
-					case 12:
-						currentteam = teamcustom7;
-						break;
-					case 13:
-						currentteam = teamcustom8;
 						break;
 				}
 				var newelement = $.CreatePanel('Panel', currentteam, '');
@@ -379,7 +338,8 @@ function onPlayerStatChange(table, key, data) {
 
 				var newcolorbar = $.CreatePanel('Panel', newelement, 'PlayerColorBar' + data[nkey].id);
 				newcolorbar.AddClass('PlayerColorBar');
-				newcolorbar.style.backgroundColor = player_color;
+				if (player_color != undefined)
+					newcolorbar.style.backgroundColor = player_color;
 
 				var newcolorbaroverlay = $.CreatePanel('Panel', newcolorbar, '');
 				newcolorbaroverlay.AddClass('PlayerColorBarOverlay');
