@@ -80,6 +80,9 @@
 "mutation_stay_frosty"							"Stay Frosty"
 "mutation_stay_frosty_Description"				"Health regeneration is disabled."
 
+"mutation_all_random_deathmatch"				"All Random Deathmatch"
+"mutation_all_random_deathmatch_Description"	"Everytime you die, you respawn with a new hero."
+
 // Terrain
 
 "mutation_sleepy_river"							"Slippery River"

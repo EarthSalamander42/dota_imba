@@ -20,7 +20,7 @@ function GameMode:OnUnitFirstSpawn(unit)
 	end
 
 	if string.find(unit:GetUnitName(), "npc_dota_lone_druid_bear") then
-		unit:SetupHealthBarLabel(unit:GetPlayerOwnerID())
+		unit:SetupHealthBarLabel()
 	end
 
 	Timers:CreateTimer(FrameTime(), function()

@@ -22,7 +22,7 @@ function GameMode:OnHeroFirstSpawn(hero)
 	end
 
 	if hero:IsIllusion() then
-		hero:SetupHealthBarLabel(hero:GetPlayerID())
+		hero:SetupHealthBarLabel()
 		return
 	end -- Illusions will not be affected by scripts written under this line
 
@@ -87,7 +87,7 @@ function GameMode:OnHeroFirstSpawn(hero)
 		end
 
 --		if not IsInToolsMode() then
-			hero:SetupHealthBarLabel(hero:GetPlayerID())
+			hero:SetupHealthBarLabel()
 --		end
 	end
 

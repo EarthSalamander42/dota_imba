@@ -141,8 +141,13 @@ function GetPlayerInfoIXP() -- yet it has too much useless loops, format later. 
 		end
 
 		local color = PLAYER_COLORS[ID]
+--		print("Donator Status:", api.imba.is_donator(tostring(PlayerResource:GetSteamID(ID))))
 		if api.imba.is_donator(tostring(PlayerResource:GetSteamID(ID))) ~= 10 then
 			donator_color = DONATOR_COLOR[api.imba.is_donator(tostring(PlayerResource:GetSteamID(ID)))]
+		end
+--		print("Donator Color:", donator_color)
+		if donator_color == nil then
+			donator_color = DONATOR_COLOR[0]
 		end
 
 		CustomNetTables:SetTableValue("player_table", tostring(ID),

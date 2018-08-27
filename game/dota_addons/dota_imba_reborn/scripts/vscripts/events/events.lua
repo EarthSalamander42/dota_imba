@@ -335,11 +335,11 @@ function GameMode:OnEntityKilled( keys )
 				killed_unit.killstreak = 0
 			end
 
+			GameMode:OnHeroDeath(killer, killed_unit)
+
 			if IsMutationMap() then
 				Mutation:OnHeroDeath(killed_unit)
 			end
-
-			GameMode:OnHeroDeath(killer, killed_unit)
 
 			return
 		elseif killed_unit:IsBuilding() then

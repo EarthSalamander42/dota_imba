@@ -405,7 +405,7 @@ function HeroSelection:GiveStartingHero(playerId, heroName, dev)
 	if hero and hero:GetUnitName() ~= FORCE_PICKED_HERO then
 		table.insert(self.spawnedHeroes, hero)
 		self.spawnedPlayers[playerId] = true
-	elseif hero and hero:GetUnitName() == "npc_dota_hero_dummy_dummy" then
+	elseif hero and hero:GetUnitName() == FORCE_PICKED_HERO then
 		hero:AddNewModifier(hero, nil, "modifier_dummy_dummy", {})
 		self.attemptedSpawnPlayers[playerId] = heroName
 		Timers:CreateTimer(5, function ()
@@ -462,12 +462,12 @@ function HeroSelection:GiveStartingHero(playerId, heroName, dev)
 	PlayerResource:SetCustomPlayerColor(playerId, PLAYER_COLORS[playerId][1], PLAYER_COLORS[playerId][2], PLAYER_COLORS[playerId][3])
 
 	-- Initialize innate hero abilities
-	InitializeInnateAbilities(hero)
+	hero:InitializeInnateAbilities()
 
 	-- Initialize Invoker's innate invoke buff
 	-- TODO: This should be removed when another solution is found, like giving Invoker a hidden passive ability to apply the modifier
 	if hero:HasAbility("invoker_invoke") then
-        LinkLuaModifier("modifier_imba_invoke_buff", "components/modifiers/modifier_imba_invoke_buff.lua", LUA_MODIFIER_MOTION_NONE)
+		LinkLuaModifier("modifier_imba_invoke_buff", "components/modifiers/modifier_imba_invoke_buff.lua", LUA_MODIFIER_MOTION_NONE)
 		hero:AddNewModifier(hero, hero:FindAbilityByName("invoker_invoke"), "modifier_imba_invoke_buff", {})
 	end
 

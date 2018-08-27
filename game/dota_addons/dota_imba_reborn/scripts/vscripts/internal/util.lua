@@ -104,21 +104,6 @@ function CBaseEntity:IsItemContainer()
 	return false
 end
 
--- hero utils
-
--- Initializes heroes' innate abilities
-function InitializeInnateAbilities( hero )	
-	-- Cycle through all of the heroes' abilities, and upgrade the innates ones
-	for i = 0, 15 do		
-		local current_ability = hero:GetAbilityByIndex(i)		
-		if current_ability and current_ability.IsInnateAbility then
-			if current_ability:IsInnateAbility() then
-				current_ability:SetLevel(1)
-			end
-		end
-	end
-end
-
 -- Copy shallow copy given input
 function ShallowCopy(orig)
 	local copy = {}

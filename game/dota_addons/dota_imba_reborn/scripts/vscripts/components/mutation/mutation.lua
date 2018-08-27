@@ -14,15 +14,15 @@ function Mutation:Init()
 
 	IMBA_MUTATION["imba"] = "frantic"
 
-	if IsInToolsMode() then
-		IMBA_MUTATION["positive"] = "killstreak_power"
-		IMBA_MUTATION["negative"] = "periodic_spellcast"
-		IMBA_MUTATION["terrain"] = "super_runes"
-	else
+--	if IsInToolsMode() then
+--		IMBA_MUTATION["positive"] = "killstreak_power"
+		IMBA_MUTATION["negative"] = "all_random_deathmatch"
+--		IMBA_MUTATION["terrain"] = "super_runes"
+--	else
 		Mutation:ChooseMutation("positive", POSITIVE_MUTATION_LIST)
-		Mutation:ChooseMutation("negative", NEGATIVE_MUTATION_LIST)
+--		Mutation:ChooseMutation("negative", NEGATIVE_MUTATION_LIST)
 		Mutation:ChooseMutation("terrain", TERRAIN_MUTATION_LIST)
-	end
+--	end
 
 	CustomNetTables:SetTableValue("mutations", "mutation", {IMBA_MUTATION})
 
@@ -41,7 +41,9 @@ function Mutation:Init()
 
 	--	if IMBA_MUTATION["negative"] == "alien_incubation" then
 --		LinkLuaModifier("modifier_mutation_alien_incubation", "components/modifiers/mutation/modifier_mutation_alien_incubation.lua", LUA_MODIFIER_MOTION_NONE )
-	if IMBA_MUTATION["negative"] == "death_explosion" then
+	if IMBA_MUTATION["negative"] == "all_random_deathmatch" then
+		require('components/mutation/mutators/negative/ardm')
+	elseif IMBA_MUTATION["negative"] == "death_explosion" then
 		LinkLuaModifier("modifier_mutation_death_explosion", "components/modifiers/mutation/modifier_mutation_death_explosion.lua", LUA_MODIFIER_MOTION_NONE )
 	elseif IMBA_MUTATION["negative"] == "defense_of_the_ants" then
 		LinkLuaModifier("modifier_mutation_ants", "components/modifiers/mutation/modifier_mutation_ants.lua", LUA_MODIFIER_MOTION_NONE )
@@ -128,6 +130,10 @@ function Mutation:OnGameRulesStateChange(keys)
 	if GameRules:State_Get() == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
 		Mutation:Init()
 	elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_PRE_GAME then
+		if IMBA_MUTATION["negative"] == "all_random_deathmatch" then
+			Mutation:ARDM()
+		end
+
 		if IMBA_MUTATION["terrain"] == "no_trees" then
 			GameRules:SetTreeRegrowTime(99999)
 			GridNav:DestroyTreesAroundPoint(Vector(0, 0, 0), 50000, false)
@@ -450,7 +456,7 @@ function Mutation:OnReconnect(id)
 end
 
 function Mutation:OnHeroFirstSpawn(hero)
---	print("Mutation: On Hero First Spawn")
+	print("Mutation: On Hero First Spawn")
 
 	-- Check if we can add modifiers to hero
 	if not Mutation:IsEligibleHero(hero) then return end
@@ -499,13 +505,16 @@ function Mutation:OnHeroFirstSpawn(hero)
 end
 
 function Mutation:OnHeroSpawn(hero)
---	print("Mutation: On Hero Respawned")
+	print("Mutation: On Hero Respawned")
 
 	-- Check if we can add modifiers to hero
 	if not Mutation:IsEligibleHero(hero) then return end
 
-	-- Super Fervor mutation modifier
-	
+	if IMBA_MUTATION["negative"] == "all_random_deathmatch" then
+		Mutation:ARDMReplacehero(hero)
+		return
+	end
+
 	if IMBA_MUTATION["positive"] == "teammate_resurrection" then
 		if hero.tombstone_fx then
 			ParticleManager:DestroyParticle(hero.tombstone_fx, false)
@@ -548,6 +557,48 @@ function Mutation:OnHeroDeath(hero)
 			print("Hero is reincarnating!")
 			hero.reincarnation = true
 		end
+	end
+
+	if IMBA_MUTATION["negative"] == "all_random_deathmatch" then
+		IMBA_MUTATION_ARDM_RESPAWN_SCORE[hero:GetTeamNumber()] = IMBA_MUTATION_ARDM_RESPAWN_SCORE[hero:GetTeamNumber()] - 1
+
+		if IMBA_MUTATION_ARDM_RESPAWN_SCORE[hero:GetTeamNumber()] < 0 then
+			IMBA_MUTATION_ARDM_RESPAWN_SCORE[hero:GetTeamNumber()] = 0
+		end
+
+		if IMBA_MUTATION_ARDM_RESPAWN_SCORE[hero:GetTeamNumber()] == 0 then
+			print("hero respawn disabled!")
+			hero:SetRespawnsDisabled(true)
+			hero:SetTimeUntilRespawn(-1)
+
+			local end_game = true
+			Timers:CreateTimer(1.0, function()
+				for _, alive_hero in pairs(HeroList:GetAllHeroes()) do
+					if hero:GetTeamNumber() == alive_hero:GetTeamNumber() then
+						print(alive_hero:GetUnitName(), alive_hero:GetTimeUntilRespawn())
+						if alive_hero:GetTimeUntilRespawn() ~= 0 then
+							print("A survivor is still there!")
+							end_game = false
+							break
+						end
+					end
+				end
+
+				-- if everyone is dead, end the game
+				if end_game == true then
+					if hero:GetTeamNumber() == 2 then
+						GAME_WINNER_TEAM = 3
+						GameRules:SetGameWinner(3)
+					elseif hero:GetTeamNumber() == 3 then
+						GAME_WINNER_TEAM = 2
+						GameRules:SetGameWinner(2)
+					end
+				end
+			end)
+		end
+
+		CustomNetTables:SetTableValue("mutation_info", IMBA_MUTATION["negative"], {IMBA_MUTATION_ARDM_RESPAWN_SCORE[2], IMBA_MUTATION_ARDM_RESPAWN_SCORE[3]})
+		CustomGameEventManager:Send_ServerToAllClients("update_mutations", {})
 	end
 
 --	if IMBA_MUTATION["negative"] == "death_gold_drop" then
@@ -694,6 +745,8 @@ function Mutation:UpdatePanorama()
 		CustomNetTables:SetTableValue("mutation_info", IMBA_MUTATION["negative"], {_G.IMBA_MUTATION_DEFENSE_OF_THE_ANTS_SCALE, "%"})
 	elseif IMBA_MUTATION["negative"] == "monkey_business" then
 		CustomNetTables:SetTableValue("mutation_info", IMBA_MUTATION["negative"], {_G.IMBA_MUTATION_MONKEY_BUSINESS_DELAY, "s"})
+	elseif IMBA_MUTATION["negative"] == "all_random_deathmatch" then
+		CustomNetTables:SetTableValue("mutation_info", IMBA_MUTATION["negative"], {IMBA_MUTATION_ARDM_RESPAWN_SCORE[2], IMBA_MUTATION_ARDM_RESPAWN_SCORE[3]})
 	end
 
 	-- shows undefined on panorama for reasons

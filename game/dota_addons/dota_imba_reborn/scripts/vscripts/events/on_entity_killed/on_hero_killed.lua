@@ -35,7 +35,7 @@ function GameMode:OnHeroDeath(killer, killed_unit)
 	-- undying reincarnation talent fix
 	if killed_unit:HasModifier("modifier_special_bonus_reincarnation") then
 		if not killed_unit.undying_respawn_timer or killed_unit.undying_respawn_timer == 0 then
-			print(killed_unit:FindModifierByName("modifier_special_bonus_reincarnation"):GetDuration())
+--			print(killed_unit:FindModifierByName("modifier_special_bonus_reincarnation"):GetDuration())
 			killed_unit:SetTimeUntilRespawn(IMBA_REINCARNATION_TIME)
 			killed_unit.undying_respawn_timer = 200
 			return
@@ -78,11 +78,11 @@ function GameMode:OnHeroDeath(killer, killed_unit)
 		end
 		
 		if respawn_time == nil or not respawn_time then
-			log.info("Something terrible has happened...set respawn timer to something reasonable.")
+--			log.info("Something terrible has happened...set respawn timer to something reasonable.")
 			respawn_time = _G.HERO_RESPAWN_TIME_PER_LEVEL[hero_level]
 		end
 
-		log.info("Set time until respawn for unit " .. tostring(killed_unit:GetUnitName()) .. " to " .. tostring(respawn_time) .. " seconds")
+--		log.info("Set time until respawn for unit " .. tostring(killed_unit:GetUnitName()) .. " to " .. tostring(respawn_time) .. " seconds")
 		killed_unit:SetTimeUntilRespawn(math.min(respawn_time, 60))
 		return
 	end
