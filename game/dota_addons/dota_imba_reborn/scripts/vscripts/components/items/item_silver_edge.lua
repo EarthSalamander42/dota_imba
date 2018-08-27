@@ -321,7 +321,7 @@ function modifier_item_imba_silver_edge_invis_flying_disabled:OnCreated()
 		-- Destroy trees to not get stuck
 		GridNav:DestroyTreesAroundPoint(self:GetParent():GetAbsOrigin(), 175, false)
 		-- Find a clear space to stand on
-		self:GetParent():SetUnitOnClearGround()
+		ResolveNPCPositions(self:GetParent():GetAbsOrigin(), 64)
 	end
 end
 
