@@ -14,9 +14,9 @@ IMBA_MUTATION_PERIODIC_SPELLS[8] = {"aphotic_shield", "Aphotic Shield", "Green",
 -- Negative Spellcasts
 IMBA_MUTATION_PERIODIC_SPELLS[1] = {}
 IMBA_MUTATION_PERIODIC_SPELLS[1][1] = {"sun_strike", "Sunstrike", "Red", -1}
-IMBA_MUTATION_PERIODIC_SPELLS[1][2] = {"thundergods_wrath", "Thundergod's Wrath", "Red", -1}
+IMBA_MUTATION_PERIODIC_SPELLS[1][2] = {"thundergods_wrath", "Thundergod's Wrath", "Red", 3.5}
 IMBA_MUTATION_PERIODIC_SPELLS[1][3] = {"rupture", "Rupture", "Red", 10.0}
-IMBA_MUTATION_PERIODIC_SPELLS[1][4] = {"torrent", "Torrent", "Red", 45}
+IMBA_MUTATION_PERIODIC_SPELLS[1][4] = {"torrent", "Torrent", "Red", 10}
 IMBA_MUTATION_PERIODIC_SPELLS[1][5] = {"cold_feet", "Cold Feet", "Red", 4.0}
 
 -- Positive Spellcasts
