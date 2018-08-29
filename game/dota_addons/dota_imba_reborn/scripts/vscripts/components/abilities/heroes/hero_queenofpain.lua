@@ -36,8 +36,7 @@ end
 -------------------------------------------
 
 function imba_queenofpain_delightful_torment:GetIntrinsicModifierName()
-	if self:GetCaster():IsRealHero() then return "modifier_imba_delightful_torment_thinker" end
-	return nil
+	return "modifier_imba_delightful_torment_thinker"
 end
 
 -------------------------------------------
