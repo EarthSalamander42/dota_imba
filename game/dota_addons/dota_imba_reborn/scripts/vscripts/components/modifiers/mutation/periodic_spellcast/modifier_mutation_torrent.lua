@@ -53,18 +53,19 @@ function modifier_mutation_torrent:OnCreated()
 				center_y = (self.pos + torrent_border).y + randomness_y,
 				center_z = (self.pos + torrent_border).z
 			}
-
-			-- Apply knockback on enemies hit
-			enemy:RemoveModifierByName("modifier_knockback")
-			enemy:AddNewModifier(self:GetCaster(), self, "modifier_knockback", knockback)
-			enemy:AddNewModifier(self:GetCaster(), self, "modifier_phased", {duration = self.stun_duration})
-
-			-- Add dot dealing damage every sec for 10 sec (if target is alive)
-			enemy:AddNewModifier(self:GetCaster(), self, "modifier_mutation_torrent_dot", {duration = 3, damage = (self.tick_damage / 10), damage_interval = (self.stun_duration / 10)})
-			enemy:AddNewModifier(self:GetCaster(), self, "modifier_mutation_torrent_slow", {duration = 8.0})
-
-			-- Lastly deal initial hit damage
-			ApplyDamage({victim = enemy, attacker = self:GetCaster(), damage = self.damage, damage_type = DAMAGE_TYPE_MAGICAL})
+            if not enemy:IsMagicImmune() then
+    			-- Apply knockback on enemies hit
+    			enemy:RemoveModifierByName("modifier_knockback")
+    			enemy:AddNewModifier(self:GetCaster(), self, "modifier_knockback", knockback)
+    			enemy:AddNewModifier(self:GetCaster(), self, "modifier_phased", {duration = self.stun_duration})
+    
+    			-- Add dot dealing damage every sec for 10 sec (if target is alive)
+    			enemy:AddNewModifier(self:GetCaster(), self, "modifier_mutation_torrent_dot", {duration = 3, damage = (self.tick_damage / 10), damage_interval = (self.stun_duration / 10)})
+    			enemy:AddNewModifier(self:GetCaster(), self, "modifier_mutation_torrent_slow", {duration = 8.0})
+    
+    			-- Lastly deal initial hit damage
+    			ApplyDamage({victim = enemy, attacker = self:GetCaster(), damage = self.damage, damage_type = DAMAGE_TYPE_MAGICAL})
+    		end
 		end
 
 		-- Creates the post-ability sound effect
