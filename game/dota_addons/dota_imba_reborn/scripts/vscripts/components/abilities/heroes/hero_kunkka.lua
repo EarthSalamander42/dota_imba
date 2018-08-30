@@ -1655,7 +1655,7 @@ function imba_kunkka_ghostship:OnSpellStart()
 						-- Stunning and rooting all hit enemies
 						local enemies = FindUnitsInRadius(caster:GetTeam(), target, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, self:GetAbilityTargetType(), 0, 0, false)
 						for k, enemy in pairs(enemies) do
-							enemy:AddNewModifier(caster, self, "modifier_stunned", {duration = stun_duration})
+							enemy:AddNewModifier(caster, self, "modifier_stunned", {duration = travel_time})
 							enemy:AddNewModifier(caster, self, "modifier_rooted", { duration = travel_time})
 
 							-- Deal crash damage to enemies hit
@@ -1769,6 +1769,8 @@ end
 function imba_kunkka_ghostship:OnProjectileHit_ExtraData(target, location, ExtraData)
 	if target then
 		local caster = self:GetCaster()
+		
+		-- If the target hit is on the same team as the caster, give them the rum buff and do nothing else
 		if caster:GetTeam() == target:GetTeam() then
 			local duration = self:GetSpecialValueFor("buff_duration")
 			target:AddNewModifier(caster, self, "modifier_imba_ghostship_rum", { duration = duration })
@@ -1782,9 +1784,16 @@ function imba_kunkka_ghostship:OnProjectileHit_ExtraData(target, location, Extra
 				return false
 			end
 		end
+		
+		-- Rest of this code is for enemy interaction
+		
+		-- The exact location where the boat is going to finish impact
 		local crash_pos =  Vector(ExtraData.crash_x,ExtraData.crash_y,ExtraData.crash_z)
+		-- The exact location where the enemy makes contact with the boat
 		local target_pos = target:GetAbsOrigin()
+		-- 
 		local knockback_origin = target_pos + (target_pos - crash_pos):Normalized() * 100
+		-- Distnace between target and crash location
 		local distance = (crash_pos - target_pos ):Length2D()
 		local duration = ((location - crash_pos ):Length2D() - ExtraData.radius) / ExtraData.speed
 		if IsNearFountain(target_pos, 1200) or IsNearFountain(crash_pos, 1200) then
