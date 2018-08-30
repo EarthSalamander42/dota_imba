@@ -54,22 +54,26 @@ function modifier_imba_initiate_robe_passive:DeclareFunctions()
 end
 
 function modifier_imba_initiate_robe_passive:OnCreated()
-	if not IsServer() then return end
-	local item = self:GetAbility()
-	self.parent = self:GetParent()
-	if self.parent:IsHero() and item then
-		self.bonus_mana_regen = item:GetSpecialValueFor("mana_regen")
-		self.bonus_magic_resistance = item:GetSpecialValueFor("magic_resist")
-		self.mana_conversion_rate = item:GetSpecialValueFor("mana_conversion_rate")
-		self.max_stacks = item:GetSpecialValueFor("max_stacks")
-		self.shield_pfx = nil
-		self:CheckUnique(true)
-		
-		-- Start tracking mana percentages and mana values to determine if mana was lost
-		self.mana_pct = self:GetParent():GetManaPercent()
-		self.mana_raw = self:GetParent():GetMana()
-		
-		self:StartIntervalThink(0.03)
+	if IsServer() then 
+		local item = self:GetAbility()
+		self.parent = self:GetParent()
+		if self.parent:IsHero() and item then
+			self.bonus_mana_regen = item:GetSpecialValueFor("mana_regen")
+			self.bonus_magic_resistance = item:GetSpecialValueFor("magic_resist")
+			self.mana_conversion_rate = item:GetSpecialValueFor("mana_conversion_rate")
+			self.max_stacks = item:GetSpecialValueFor("max_stacks")
+			self.shield_pfx = nil
+			self:CheckUnique(true)
+			
+			-- Start tracking mana percentages and mana values to determine if mana was lost
+			self.mana_pct = self:GetParent():GetManaPercent()
+			self.mana_raw = self:GetParent():GetMana()
+			
+			self:StartIntervalThink(0.03)
+		end
+	else 
+		self.bonus_magic_resistance = 20
+		self.bonus_mana_regen = 1.0
 	end
 end
 
