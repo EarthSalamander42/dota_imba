@@ -281,6 +281,11 @@ function imba_zuus_lightning_bolt:CastLightningBolt(caster, ability, target, tar
 
 		-- Spell was used on the ground search for invisible hero to target
 		if target == nil then 
+			local target_flags = DOTA_UNIT_TARGET_FLAG_NONE
+			if pierce_spellimmunity == true then 
+				target_flags = DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES
+			end
+
 			-- Finds all heroes in the radius (the closest hero takes priority over the closest creep)
 			local nearby_enemy_units = FindUnitsInRadius(
 				caster:GetTeamNumber(), 
@@ -289,7 +294,7 @@ function imba_zuus_lightning_bolt:CastLightningBolt(caster, ability, target, tar
 				spread_aoe, 
 				DOTA_UNIT_TARGET_TEAM_ENEMY, 
 				DOTA_UNIT_TARGET_HERO, 
-				DOTA_UNIT_TARGET_FLAG_NONE, 
+				target_flags, 
 				FIND_CLOSEST, 
 				false
 			)
@@ -324,9 +329,14 @@ function imba_zuus_lightning_bolt:CastLightningBolt(caster, ability, target, tar
 			end
 		end
 
-		if target == nil or not target:IsMagicImmune() or pierce_spellimmunity then 
+		local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_lightning_bolt.vpcf", PATTACH_WORLDORIGIN, target)
+		if target == nil then 
 			-- Renders the particle on the ground target
-			local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_lightning_bolt.vpcf", PATTACH_WORLDORIGIN, target)
+			ParticleManager:SetParticleControl(particle, 0, Vector(target_point.x, target_point.y, target_point.z))
+			ParticleManager:SetParticleControl(particle, 1, Vector(target_point.x, target_point.y, z_pos))
+			ParticleManager:SetParticleControl(particle, 2, Vector(target_point.x, target_point.y, target_point.z))
+		elseif target:IsMagicImmune() == false or pierce_spellimmunity then  
+			target_point = target:GetAbsOrigin()
 			ParticleManager:SetParticleControl(particle, 0, Vector(target_point.x, target_point.y, target_point.z))
 			ParticleManager:SetParticleControl(particle, 1, Vector(target_point.x, target_point.y, z_pos))
 			ParticleManager:SetParticleControl(particle, 2, Vector(target_point.x, target_point.y, target_point.z))
