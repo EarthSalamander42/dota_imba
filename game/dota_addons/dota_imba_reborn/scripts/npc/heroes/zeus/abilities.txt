@@ -147,12 +147,17 @@
 			"07"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"thundergods_focus_duration"	"10"
+				"thundergods_focus_duration"	"15"
 			}
 			"08"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"stun_duration"					"0.1"
+				"stun_duration"					"0.2"
+			}
+			"09"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"static_charge_stacks"			"2"
 			}
 		}
 		"AbilityCastAnimation"      "ACT_DOTA_CAST_ABILITY_2"
@@ -177,7 +182,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"                  "1200 1400 1600 1800"
+		"AbilityCastRange"                  "1200"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -186,18 +191,34 @@
 			"01"
 			{
 				"var_type"                  "FIELD_INTEGER"
-				"radius"                    "1200 1400 1600 1800"
+				"radius"                    "1200"
 			}
 			"02"
 			{
 				"var_type"                  "FIELD_FLOAT"
-				"damage_health_pct"         "4 6 8 10"
+				"damage_health_pct"         "5 7 9 11"
 				"LinkedSpecialBonus"        "special_bonus_unique_zeus"
 			}
 			"03"
 			{
 				"var_type"                  "FIELD_FLOAT"
 				"reduced_magic_resistance"  "1.75 2.50 3.25 4"
+				"LinkedSpecialBonus"		"special_bonus_imba_zuus_3"
+			}
+			"04"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"duration"  				"5"
+			}
+			"05"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"stacks_to_reveal"  		"5"
+			}
+			"06"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"stacks_to_mute"  			"9"
 			}
 		}
 		"AbilityCastAnimation"      "ACT_DOTA_CAST_ABILITY_3"
@@ -238,7 +259,7 @@
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityModifierSupportValue"   "0.1"   // just a ministun
+		"AbilityModifierSupportValue"   "0.2"   // just a ministun
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -252,7 +273,7 @@
 			"02"
 			{
 				"var_type"              "FIELD_FLOAT"
-				"cloud_bolt_interval"   "2.5"
+				"cloud_bolt_interval"   "2.25"
 			}
 			"03"
 			{
@@ -278,7 +299,7 @@
 	}
 
 	//=================================================================================================================
-	// Storm Spirit's Ball Lightning
+	// Zuus: Ascend
 	//=================================================================================================================
 	"imba_zuus_nimbus_zap"
 	{
@@ -286,14 +307,14 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"                     "ability_lua"
 		"ScriptFile"                    "components/abilities/heroes/hero_zuus.lua"
-//		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-		"AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_OPTIONAL_POINT | DOTA_ABILITY_BEHAVIOR_OPTIONAL_NO_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
+		"AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"         "DOTA_UNIT_TARGET_ALL"
 		"AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_4"
 		"AbilityTextureName"            "storm_spirit_ball_lightning"
 		"MaxLevel"                      "1"
-		"AbilityCooldown"				"5.0"
+		"AbilityCooldown"				"25.0"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -313,47 +334,22 @@
 			"01"
 			{
 				"var_type"                              "FIELD_INTEGER"
-				"initial_mana_cost_base"                "30"        
-			}
-			"02"
-			{
-				"var_type"                              "FIELD_INTEGER"
-				"initial_mana_cost_pct"                 "8"     
-			}
-			"03"
-			{
-				"var_type"                              "FIELD_INTEGER"
-				"travel_mana_cost_base"                 "30"        
-			}
-			"04"
-			{
-				"var_type"                              "FIELD_FLOAT"
-				"travel_mana_cost_pct"                  "0.7"       
+				"mana_cost_pct"                         "25"       
 			}
 			"05"
 			{
 				"var_type"                              "FIELD_INTEGER"
-				"ball_speed"                            "1200 2500 3500"        
+				"ball_speed"                            "2000"        
 			}
 			"06"
 			{
 				"var_type"                              "FIELD_INTEGER"
 				"damage_radius"                         "200"       
 			}
-			"07"
-			{
-				"var_type"                              "FIELD_INTEGER"
-				"damage_per_100_units"                  "12 16 20"
-			}
 			"08"
 			{
 				"var_type"                              "FIELD_INTEGER"
-				"ball_vision_radius"                    "1000"      
-			}
-			"09"
-			{
-				"var_type"                              "FIELD_INTEGER"
-				"max_spell_amp_range"                   "2500"
+				"ball_vision_radius"                    "100"      
 			}
 		}
 	}
@@ -367,6 +363,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"                     "ability_lua"
 		"ScriptFile"                    "components/abilities/heroes/hero_zuus.lua"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ULTIMATE"
 		"AbilityTextureName"            "wisp_tether_break"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 		"MaxLevel"                      "1"
@@ -448,6 +445,22 @@
 			{
 				"var_type"              "FIELD_INTEGER"
 				"damage"                "250 350 450"
+			}
+			"07"
+			{
+				"var_type"              "FIELD_INTEGER"
+				"stacks_to_awaken"      "6"
+			}
+			"08"
+			{
+				"var_type"              	"FIELD_INTEGER"
+				"cast_time_increase_pct"	"50"
+			}
+			"09"
+			{
+				"var_type"              "FIELD_INTEGER"
+				"vision_increase_pct"	"50"
+			
 			}
 		}
 	}
@@ -532,7 +545,7 @@
 			"01"
 			{
 				"var_type"                      "FIELD_FLOAT"
-				"reduced_magic_resistance"                         "1.5"
+				"reduced_magic_resistance"      "1.5"
 			}
 		}
 	}
@@ -560,12 +573,12 @@
 			"01"
 			{
 				"var_type"                      "FIELD_FLOAT"
-				"movement_speed"                         "20"
+				"movement_speed"				"10"
 			}
 			"02"
 			{
 				"var_type"                      "FIELD_FLOAT"
-				"turn_rate"                         "1"
+				"turn_rate"						"1"
 			}
 		}
 	}
@@ -639,7 +652,8 @@
 
 		"LinkedAbility"
 		{
-			"01"    "invoker_cold_snap"
+			"01"    "imba_zuus_lightning_bolt"
+			"02"	"imba_zuus_thundergods_wrath"
 		}
 
 		// Special
@@ -649,7 +663,7 @@
 			"01"
 			{
 				"var_type"                      "FIELD_FLOAT"
-				"value"                         "12"
+				"value"                         "6"
 			}
 		}
 	}
@@ -676,8 +690,35 @@
 		{
 			"01"
 			{
-				"var_type"                      "FIELD_FLOAT"
+				"var_type"                      "FIELD_INTEGER"
 				"additional_hits"               "3"
+			}
+		}
+	}
+	//=================================================================================================================
+	// Zuus: Talent 9 ("Kill Secure" (Killing enemies with Thundergod's Wrath refreshes Nimbus cooldown))
+	//=================================================================================================================
+	"special_bonus_imba_zuus_9"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                     "special_bonus_undefined"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"    "imba_zuus_thundergods_wrath"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                      "FIELD_INTEGER"
+				"value"							"1"
 			}
 		}
 	}
