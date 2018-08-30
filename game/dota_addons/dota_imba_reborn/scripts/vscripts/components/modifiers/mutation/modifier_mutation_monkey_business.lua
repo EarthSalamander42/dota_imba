@@ -118,7 +118,7 @@ end
 function modifier_mutation_monkey_business:OnIntervalThink()
 	-- Don't tick down if unit already has the transform modifier or standard monkey_business
 	if not self:GetParent():HasModifier("modifier_mutation_monkey_business_transform") and not self:GetParent():HasModifier("modifier_monkey_king_transform") then
-		if not self:GetParent():IsMoving() then
+		if not self:GetParent():IsMoving() and self:GetParent():IsAlive() then
 			if self:GetDuration() == -1 then
 				self:SetDuration(_G.IMBA_MUTATION_MONKEY_BUSINESS_DELAY, true)
 			end

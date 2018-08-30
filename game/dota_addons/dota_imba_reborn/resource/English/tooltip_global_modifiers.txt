@@ -47,6 +47,11 @@
 "DOTA_Tooltip_modifier_mutation_bloodlust"						"Bloodlust"
 "DOTA_Tooltip_modifier_mutation_bloodlust_Description"			"Increased movement speed, attack speed, and cast speed."
 
+"DOTA_Tooltip_modifier_mutation_cold_feet"						"Cold Feet"
+"DOTA_Tooltip_modifier_mutation_cold_feet_Description"			"Taking periodic damage. If you don't move more than 740 distance from the original cast area, you will be frozen in place."
+
+"DOTA_Tooltip_modifier_mutation_cold_feet_stun"					"Frozen"
+
 "DOTA_Tooltip_modifier_mutation_aphotic_shield"					"Aphotic Shield"
 "DOTA_Tooltip_modifier_mutation_aphotic_shield_Description"		"Incoming damage blocked by Aphotic Shield's protection. Shield health and damage scale with game time."
 
@@ -73,7 +78,7 @@
 "DOTA_Tooltip_modifier_mutation_tug_of_war_golem_Description"	"Grows stronger with each revival. Each stack grants additional health, attack, movement speed, attack speed, armor, magic resistance, health regeneration, attack range, tenacity, physical block, damage reduction, model size, and exp/gold when killed. Some parameters have a maximum to prevent infinite scaling."
 
 "DOTA_Tooltip_modifier_mutation_monkey_business"				"Disguise Pending"
-"DOTA_Tooltip_modifier_mutation_monkey_business_Description"	"Standing still and uninterrupted for 5 seconds will transform you into a different entity."
+"DOTA_Tooltip_modifier_mutation_monkey_business_Description"	"Standing still and uninterrupted for 3 seconds will transform you into a different entity."
 
 "DOTA_Tooltip_modifier_mutation_monkey_business_transform"				"Monkey Business"
 "DOTA_Tooltip_modifier_mutation_monkey_business_transform_Description"	"This unit is disguised."

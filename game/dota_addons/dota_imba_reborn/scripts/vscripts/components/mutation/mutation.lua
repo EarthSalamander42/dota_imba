@@ -715,7 +715,7 @@ end
 
 -- Currently only checks stuff for monkey king
 function Mutation:IsEligibleHero(hero)	
-	if(hero:GetName() == "npc_dota_hero_monkey_king" or hero:GetName() == "npc_dota_hero_rubick") and hero:GetAbsOrigin() ~= Vector(0,0,0) then 
+	if hero:HasModifier("modifier_monkey_king_fur_army_soldier") or hero:HasModifier("modifier_monkey_king_fur_army_soldier_hidden") then 
 --		print("fake hero entered the game, ignoring mutation!", hero:GetEntityIndex(), hero:GetName())
 		return false
 	end
