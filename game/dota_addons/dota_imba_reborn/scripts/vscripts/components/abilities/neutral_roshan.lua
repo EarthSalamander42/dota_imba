@@ -50,7 +50,8 @@ function modifier_imba_roshan_ai_diretide:DeclareFunctions()
 		MODIFIER_EVENT_ON_ATTACK_LANDED,
 		MODIFIER_EVENT_ON_ATTACK_START,
 		MODIFIER_EVENT_ON_TAKEDAMAGE,
-		MODIFIER_EVENT_ON_UNIT_MOVED
+		MODIFIER_EVENT_ON_UNIT_MOVED,
+		MODIFIER_EVENT_ON_DEATH
 	}
 end
 
@@ -136,7 +137,7 @@ function modifier_imba_roshan_ai_diretide:OnUnitMoved(keys)
 end
 
 function modifier_imba_roshan_ai_diretide:OnIntervalThink()
-local nearbyHeroes = FindUnitsInRadius(self.roshan:GetTeamNumber(), self.roshan:GetAbsOrigin(), nil, self.leashDistance, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
+	local nearbyHeroes = FindUnitsInRadius(self.roshan:GetTeamNumber(), self.roshan:GetAbsOrigin(), nil, self.leashDistance, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
 	if #nearbyHeroes == 0 then
 		return
 	else
@@ -150,61 +151,52 @@ local nearbyHeroes = FindUnitsInRadius(self.roshan:GetTeamNumber(), self.roshan:
 			UpdateRoshanBar(self.roshan)
 		end
 	end
-	local pos = self.roshan:GetAbsOrigin()
-	if self.roshan:IsAlive() then
-		-- When back from the dead, respawns Rosh at his death point
-		if self.isDead then
-			self.isDead = false
+end
+
+function modifier_imba_roshan_ai_diretide:OnDeath( keys )
+	if keys.unit ~= self.roshan then return end
+	-- Spawn death particle, start the respawn timer, index death point
+	GAME_ROSHAN_KILLS = GAME_ROSHAN_KILLS + 1
+
+	-- Play sounds
+	self.roshan:EmitSound("Diretide.RoshanDeathLava")
+	self.roshan:EmitSound("Diretide.RoshanDeath1")
+
+	Timers:CreateTimer(self.deathRoar, function()
+		self.roshan:EmitSound("Diretide.RoshanDeath2")
+	end)
+
+	-- Play particle
+	local deathParticle = ParticleManager:CreateParticle("particles/hw_fx/hw_roshan_death.vpcf", PATTACH_CUSTOMORIGIN, nil)
+	ParticleManager:SetParticleControl(deathParticle, 0, self.roshan:GetAbsOrigin())
+	ParticleManager:ReleaseParticleIndex(deathParticle)
+
+	Timers:CreateTimer(self.animDeath, function()
+		local item = CreateItem("item_imba_aegis", nil, nil)
+		local pos = self.roshan:GetAbsOrigin()
+		local drop = CreateItemOnPositionSync(pos, item)
+		item:LaunchLoot(false, 300, 0.5, pos)
+
+		if GAME_ROSHAN_KILLS >= 2 then
+			for i = 1, GAME_ROSHAN_KILLS -1 do
+				local item = CreateItem("item_imba_cheese", nil, nil)
+				local drop = CreateItemOnPositionSync(pos, item)
+				item:LaunchLoot(false, 300, 0.5, pos + RandomVector(RandomInt(100, 150)))
+			end
 		end
-	else
-		-- Spawn death particle, start the respawn timer, index death point
-		if not self.isDead then
-			self.isDead = true
-			GAME_ROSHAN_KILLS = GAME_ROSHAN_KILLS + 1
-
-			-- Play sounds
-			self.roshan:EmitSound("Diretide.RoshanDeathLava")
-			self.roshan:EmitSound("Diretide.RoshanDeath1")
-
-			Timers:CreateTimer(self.deathRoar, function()
-				self.roshan:EmitSound("Diretide.RoshanDeath2")
-			end)
-
-			-- Play particle
-			local deathParticle = ParticleManager:CreateParticle("particles/hw_fx/hw_roshan_death.vpcf", PATTACH_CUSTOMORIGIN, nil)
-			ParticleManager:SetParticleControl(deathParticle, 0, self.roshan:GetAbsOrigin())
-			ParticleManager:ReleaseParticleIndex(deathParticle)
-
-			Timers:CreateTimer(self.animDeath, function()
-				if self.isDead then
-					local item = CreateItem("item_imba_aegis", nil, nil)
-					local drop = CreateItemOnPositionSync(pos, item)
-					item:LaunchLoot(false, 300, 0.5, pos)
-
-					if GAME_ROSHAN_KILLS >= 2 then
-						for i = 1, GAME_ROSHAN_KILLS -1 do
-							local item = CreateItem("item_imba_cheese", nil, nil)
-							local pos = self.roshan:GetAbsOrigin()
-							local drop = CreateItemOnPositionSync(pos, item)
-							item:LaunchLoot(false, 300, 0.5, pos + RandomVector(RandomInt(100, 150)))
-						end
-					end
-					if GAME_ROSHAN_KILLS >= 3 then
-						for i = 1, GAME_ROSHAN_KILLS -2 do
-							local item = CreateItem("item_refresher_shard", nil, nil)
-							local pos = self.roshan:GetAbsOrigin()
-							local drop = CreateItemOnPositionSync(pos, item)
-							item:LaunchLoot(false, 300, 0.5, pos + RandomVector(RandomInt(100, 150)))
-						end
-					end
-
-					Timers:CreateTimer(ROSHAN_RESPAWN_TIME, function()
-						local roshan = CreateUnitByName("npc_imba_roshan", ROSHAN_SPAWN_LOC, true, nil, nil, DOTA_TEAM_NEUTRALS)
-					end)
-				end
-			end)
+		
+		if GAME_ROSHAN_KILLS >= 3 then
+			for i = 1, GAME_ROSHAN_KILLS -2 do
+				local item = CreateItem("item_refresher_shard", nil, nil)
+				local drop = CreateItemOnPositionSync(pos, item)
+				item:LaunchLoot(false, 300, 0.5, pos + RandomVector(RandomInt(100, 150)))
+			end
 		end
-	end
+
+		Timers:CreateTimer(ROSHAN_RESPAWN_TIME, function()
+			local roshan = CreateUnitByName("npc_imba_roshan", ROSHAN_SPAWN_LOC, true, nil, nil, DOTA_TEAM_NEUTRALS)
+		end)
+	end)
 end
 
 function modifier_imba_roshan_ai_diretide:StartPhase(phase)
@@ -212,11 +204,6 @@ function modifier_imba_roshan_ai_diretide:StartPhase(phase)
 	self.AItarget = nil
 	self.atStartPoint = false
 	self.leashPoint = nil
-
-	if self.isDead then
-		self.isDead = false
-		self.roshan:RespawnUnit()
-	end
 
 	-- Reset behavior
 	self.roshan:SetAcquisitionRange(-1000)
