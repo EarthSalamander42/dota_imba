@@ -12,7 +12,7 @@
 	border: 1px solid #222;
 	box-shadow: 0 0 5px 0 #00000022 inset;
 	flow-children: none;
-	visibility: visible;
+	visibility: collapse;
 }
 
 #precache-label {

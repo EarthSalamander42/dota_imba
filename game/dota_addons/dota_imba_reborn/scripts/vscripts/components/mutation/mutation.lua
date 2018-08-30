@@ -17,11 +17,11 @@ function Mutation:Init()
 --	if IsInToolsMode() then
 --		IMBA_MUTATION["positive"] = "killstreak_power"
 		IMBA_MUTATION["negative"] = "all_random_deathmatch"
---		IMBA_MUTATION["terrain"] = "super_runes"
+		IMBA_MUTATION["terrain"] = "danger_zone"
 --	else
 		Mutation:ChooseMutation("positive", POSITIVE_MUTATION_LIST)
 --		Mutation:ChooseMutation("negative", NEGATIVE_MUTATION_LIST)
-		Mutation:ChooseMutation("terrain", TERRAIN_MUTATION_LIST)
+--		Mutation:ChooseMutation("terrain", TERRAIN_MUTATION_LIST)
 --	end
 
 	CustomNetTables:SetTableValue("mutations", "mutation", {IMBA_MUTATION})
