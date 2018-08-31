@@ -14,7 +14,7 @@
 "DOTA_Tooltip_modifier_imba_lycan_wolf_charge_Description"              "Whenever a wolf dies, a stack is consumed and another wolf joins Lycan."
 
 "DOTA_Tooltip_ability_imba_lycan_wolfsbane"									"Wolfsbane"
-"DOTA_Tooltip_ability_imba_lycan_wolfsbane_Description"						"Passively increases Lycan and his wolves' damage whenever Lycan is near a kill with at least %minimum_allies_required% allies in a %radius% radius. This effect can only occur once every %prevent_modifier_duration% seconds.\n<font color='#FF7800'>Full Moon:</font> Also decreases Shapeshift's cooldown with each stack of Wolfsbane.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
+"DOTA_Tooltip_ability_imba_lycan_wolfsbane_Description"						"Passively increases Lycan and his wolves' damage whenever Lycan is near an enemy hero kill with at least %minimum_allies_required% allies in a %radius% radius. This effect can only occur once every %prevent_modifier_duration% seconds.\n<font color='#FF7800'>Full Moon:</font> Also decreases Shapeshift's cooldown with each stack of Wolfsbane.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
 "DOTA_Tooltip_ability_imba_lycan_wolfsbane_Note0"							"Lycan himself is ignored for the minimum ally count requirement, even when he holds a scepter."
 "DOTA_Tooltip_ability_imba_lycan_wolfsbane_Note1"							"If Lycan is Broken, Wolfsbane's damage bonus is removed from everyone benefitting it."
 "DOTA_Tooltip_ability_imba_lycan_wolfsbane_Lore"							"Lycan has devoted his life to the wolves that adopted him into their pack. Adapting his tactics to the neverending hunt in the Ancients' battlefield was a trivial matter."
