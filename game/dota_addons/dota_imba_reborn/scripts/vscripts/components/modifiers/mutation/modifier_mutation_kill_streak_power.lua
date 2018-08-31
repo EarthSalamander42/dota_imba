@@ -32,6 +32,7 @@ function modifier_mutation_kill_streak_power:OnCreated()
 
 	self:StartIntervalThink(1.0)
 
+	if not IsServer() then return end
 	self.particle = ParticleManager:CreateParticle("particles/hw_fx/candy_carrying_stack.vpcf", PATTACH_OVERHEAD_FOLLOW, self:GetParent())
 	ParticleManager:SetParticleControl(self.particle, 0, self:GetParent():GetAbsOrigin())
 	ParticleManager:SetParticleControl(self.particle, 2, Vector(0, 0, 0))
@@ -70,8 +71,8 @@ function modifier_mutation_kill_streak_power:OnHeroKilled(params)
 		ParticleManager:SetParticleControl(self.particle, 2, Vector(stack_100, (stack / 10) - (stack_100 * 10), 0))
 		ParticleManager:SetParticleControl(self.particle, 3, Vector(1, 1, 1))
 	else
-		ParticleManager:SetParticleControl(self.particle, 2, Vector(0, stack / 10, 0))
-		ParticleManager:SetParticleControl(self.particle, 3, Vector(1, 1, 0))
+		ParticleManager:SetParticleControl(self.particle, 2, Vector(stack / 10, 0, 0))
+		ParticleManager:SetParticleControl(self.particle, 3, Vector(0, 0, 0))
 	end
 end
 
@@ -91,7 +92,7 @@ function modifier_mutation_kill_streak_power:OnDeath(keys)
 	if keys.unit == self:GetParent() then
 		self:SetStackCount(0)
 		ParticleManager:SetParticleControl(self.particle, 2, Vector(0, 0, 0))
-		ParticleManager:SetParticleControl(self.particle, 3, Vector(0, 1, 1))
+		ParticleManager:SetParticleControl(self.particle, 3, Vector(0, 0, 0))
 	end
 end
 
