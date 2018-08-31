@@ -17,7 +17,7 @@ function Mutation:Init()
 --	if IsInToolsMode() then
 --		IMBA_MUTATION["positive"] = "killstreak_power"
 		IMBA_MUTATION["negative"] = "all_random_deathmatch"
-		IMBA_MUTATION["terrain"] = "danger_zone"
+		IMBA_MUTATION["terrain"] = "super_runes"
 --	else
 		Mutation:ChooseMutation("positive", POSITIVE_MUTATION_LIST)
 --		Mutation:ChooseMutation("negative", NEGATIVE_MUTATION_LIST)
@@ -511,8 +511,13 @@ function Mutation:OnHeroSpawn(hero)
 	if not Mutation:IsEligibleHero(hero) then return end
 
 	if IMBA_MUTATION["negative"] == "all_random_deathmatch" then
-		Mutation:ARDMReplacehero(hero)
+		if not hero:IsImbaReincarnating() then
+			Mutation:ARDMReplacehero(hero)
 		return
+		else
+			print("hero is reincarnating, don't change hero!")
+			return
+		end
 	end
 
 	if IMBA_MUTATION["positive"] == "teammate_resurrection" then
@@ -560,6 +565,7 @@ function Mutation:OnHeroDeath(hero)
 	end
 
 	if IMBA_MUTATION["negative"] == "all_random_deathmatch" then
+		if hero:IsImbaReincarnating() then print("hero is reincarnating, don't count down respawn count!") return end
 		IMBA_MUTATION_ARDM_RESPAWN_SCORE[hero:GetTeamNumber()] = IMBA_MUTATION_ARDM_RESPAWN_SCORE[hero:GetTeamNumber()] - 1
 
 		if IMBA_MUTATION_ARDM_RESPAWN_SCORE[hero:GetTeamNumber()] < 0 then
@@ -575,9 +581,8 @@ function Mutation:OnHeroDeath(hero)
 			Timers:CreateTimer(1.0, function()
 				for _, alive_hero in pairs(HeroList:GetAllHeroes()) do
 					if hero:GetTeamNumber() == alive_hero:GetTeamNumber() then
-						print(alive_hero:GetUnitName(), alive_hero:GetTimeUntilRespawn())
-						if alive_hero:GetTimeUntilRespawn() ~= 0 then
-							print("A survivor is still there!")
+						if alive_hero:IsAlive() then
+							print("A hero is still alive!")
 							end_game = false
 							break
 						end

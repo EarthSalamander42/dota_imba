@@ -56,7 +56,9 @@ end
 
 -- Spawns runes on the map
 function ImbaRunes:Spawn()
+	require("components/settings/settings_runes")
 	-- List of powerup rune types
+	-- item name, particle name
 	local powerup_rune_types = {
 		{"item_imba_rune_arcane", "particles/generic_gameplay/rune_arcane.vpcf", "particles/generic_gameplay/rune_arcane_super.vpcf"},
 		{"item_imba_rune_double_damage", "particles/generic_gameplay/rune_doubledamage.vpcf", "particles/generic_gameplay/rune_quadrupledamage.vpcf"},
@@ -69,6 +71,12 @@ function ImbaRunes:Spawn()
 --		{"item_imba_rune_stone", "particles/econ/items/natures_prophet/natures_prophet_flower_treant/natures_prophet_flower_treant_ambient.vpcf"},
 	}
 
+	local powerup_super_rune_colors = {}
+	powerup_super_rune_colors[2] = {204, 51, 255}
+
+	local powerup_super_rune_particles = {}
+	powerup_super_rune_particles[2] = "particles/generic_gameplay/rune_quadrupledamage.vpcf",
+
 	Timers:CreateTimer(function()
 		ImbaRunes:RemoveRunes(1)
 
@@ -77,7 +85,15 @@ function ImbaRunes:Spawn()
 			local rune = CreateItemOnPositionForLaunch(powerup_rune_locations[k], CreateItem(powerup_rune_types[random_int][1], nil, nil))
 			ImbaRunes:RegisterRune(rune, 1)
 			if IMBA_MUTATION and IMBA_MUTATION["terrain"] == "super_runes" then
-				ImbaRunes:SpawnRuneParticle(rune, powerup_rune_types[random_int][3])
+				if powerup_super_rune_colors[random_int] then
+					rune:SetRenderColor(powerup_super_rune_colors[random_int][1], powerup_super_rune_colors[random_int][2], powerup_super_rune_colors[random_int][3])
+				end
+
+				if powerup_super_rune_particles[random_int] then
+					ImbaRunes:SpawnRuneParticle(rune, powerup_super_rune_particles[random_int])
+				else
+					ImbaRunes:SpawnRuneParticle(rune, powerup_rune_types[random_int][2])
+				end
 			else
 				ImbaRunes:SpawnRuneParticle(rune, powerup_rune_types[random_int][2])
 			end
@@ -185,11 +201,9 @@ function ImbaRunes:PickupRune(rune_name, unit, bActiveByBottle)
 			local custom_gold_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "bounty_multiplier")["1"])
 			current_bounty = current_bounty * (1 + custom_gold_bonus * 0.01)
 
-			if IsMutationMap() then
-				if IMBA_MUTATION["terrain"] == "super_runes" then
-					current_bounty = current_bounty * GetAbilitySpecial("item_imba_rune_bounty", "super_runes_multiplier")
-					current_xp = current_xp * GetAbilitySpecial("item_imba_rune_bounty", "super_runes_multiplier")
-				end
+			if IMBA_MUTATION and IMBA_MUTATION["terrain"] == "super_runes" then
+				current_bounty = current_bounty * GetAbilitySpecial("item_imba_rune_bounty", "super_runes_multiplier")
+				current_xp = current_xp * GetAbilitySpecial("item_imba_rune_bounty", "super_runes_multiplier")
 			end
 
 			-- Grant the unit experience

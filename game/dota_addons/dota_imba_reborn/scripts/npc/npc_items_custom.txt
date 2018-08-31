@@ -11511,30 +11511,6 @@
 		"ItemSellable"					"0"
 		"ItemKillable"					"1"
 		"ItemCastOnPickup"				"1"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"900"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"movespeed_pct"			"60"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_attack_speed"	"80"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"absolute_min_speed"	"550"
-			}
-		}
 	}
 
 	//=================================================================================================================

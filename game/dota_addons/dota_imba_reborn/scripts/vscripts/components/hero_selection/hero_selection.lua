@@ -372,7 +372,7 @@ function HeroSelection:SelectHero(playerId, hero)
 			elseif IsMutationMap() then
 --				CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(playerId), "send_mutations", IMBA_MUTATION) -- WHY THE FUCK IT DOESN'T WORK FOR EVERY PLAYERS
 				CustomGameEventManager:Send_ServerToAllClients("send_mutations", IMBA_MUTATION)
-				CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(playerId), "update_mutations", {})
+				CustomGameEventManager:Send_ServerToAllClients("update_mutations", {})
 			end
 		end
 
@@ -401,6 +401,10 @@ function HeroSelection:GiveStartingHero(playerId, heroName, dev)
 
 	local wisp = PlayerResource:GetSelectedHeroEntity(playerId)
 	local hero = PlayerResource:ReplaceHeroWith(playerId, heroName, 0, 0)
+
+	if IMBA_MUTATION and IMBA_MUTATION["negative"] == "all_random_deathmatch" then
+		Mutation:ARDMRemoveHeroFromTable(hero:GetUnitName())
+	end
 
 	if hero and hero:GetUnitName() ~= FORCE_PICKED_HERO then
 		table.insert(self.spawnedHeroes, hero)

@@ -1,6 +1,7 @@
 .ARDM
 {
 	align: center center;
+	z-index: 10;
 }
 
 #precache

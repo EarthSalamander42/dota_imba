@@ -7,7 +7,7 @@ function modifier_imba_regen_rune:IsDebuff() return false end
 function modifier_imba_regen_rune:IsPurgable() return true end
 -- Aura stuff
 function modifier_imba_regen_rune:IsAura() return true end
-function modifier_imba_regen_rune:GetAuraRadius() return self.aura_radius end
+function modifier_imba_regen_rune:GetAuraRadius() return CustomNetTables:GetTableValue("game_options", "runes").rune_radius_effect end
 function modifier_imba_regen_rune:GetAuraSearchTeam() return DOTA_UNIT_TARGET_TEAM_FRIENDLY end
 function modifier_imba_regen_rune:GetAuraSearchType() return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC end
 function modifier_imba_regen_rune:GetAuraSearchFlags() return DOTA_UNIT_TARGET_FLAG_NONE end
@@ -36,13 +36,7 @@ end
 function modifier_imba_regen_rune:OnCreated()
 
 	-- Set the amount of damage instances we can take as stacks
-	self:SetStackCount(25)
-
-	self.aura_radius = 900
-	self.hp_regen_base_owner = 50
-	self.hp_regen_perc_owner = 5
-	self.mp_regen_base_owner = 20
-	self.mp_regen_perc_owner = 2
+	self:SetStackCount(CustomNetTables:GetTableValue("game_options", "runes").regen_rune_stacks)
 end
 
 function modifier_imba_regen_rune:DeclareFunctions()
@@ -55,19 +49,19 @@ function modifier_imba_regen_rune:DeclareFunctions()
 end
 
 function modifier_imba_regen_rune:GetModifierConstantHealthRegen()
-	return self.hp_regen_base_owner
+	return CustomNetTables:GetTableValue("game_options", "runes").regen_rune_heal_base
 end
 
 function modifier_imba_regen_rune:GetModifierHealthRegenPercentage()
-	return self.hp_regen_perc_owner
+	return CustomNetTables:GetTableValue("game_options", "runes").regen_rune_heal_pct
 end
 
 function modifier_imba_regen_rune:GetModifierConstantManaRegen()
-	return self.mp_regen_base_owner
+	return CustomNetTables:GetTableValue("game_options", "runes").regen_rune_mana_base
 end
 
 function modifier_imba_regen_rune:GetModifierTotalPercentageManaRegen()
-	return self.mp_regen_perc_owner
+	return CustomNetTables:GetTableValue("game_options", "runes").regen_rune_mana_pct
 end
 
 -- Decrease damage instance stacks on hero damage recieved, if we lose all stacks, remove modifier
@@ -123,17 +117,17 @@ function modifier_imba_regen_rune_aura:DeclareFunctions()
 end
 
 function modifier_imba_regen_rune_aura:GetModifierConstantHealthRegen()
-	return self.hp_regen_base_aura
+	return _G.IMBA_RUNE_REGEN_HEAL_BASE / 2
 end
 
 function modifier_imba_regen_rune_aura:GetModifierHealthRegenPercentage()
-	return self.hp_regen_perc_aura
+	return _G.IMBA_RUNE_REGEN_HEAL_PCT / 2
 end
 
 function modifier_imba_regen_rune_aura:GetModifierConstantManaRegen()
-	return self.mp_regen_base_aura
+	return _G.IMBA_RUNE_REGEN_MANA_BASE / 2
 end
 
 function modifier_imba_regen_rune_aura:GetModifierTotalPercentageManaRegen()
-	return self.mp_regen_perc_aura
+	return _G.IMBA_RUNE_REGEN_MANA_PCT / 2
 end

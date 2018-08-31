@@ -16,10 +16,8 @@ function modifier_imba_frost_rune:GetTexture()
 	return "custom/imba_rune_frost"
 end
 
-function modifier_imba_frost_rune:OnCreated()
-	self.caster = self:GetCaster()
-	self.radius = 900
-	self.slow_duration = 3.0
+function modifier_imba_frost_rune:OnCreated(keys)
+	self.slow_duration = CustomNetTables:GetTableValue("game_options", "runes").frost_rune_slow_duration
 end
 
 -- Function declarations
@@ -52,7 +50,7 @@ end
 
 -- Aura properties
 function modifier_imba_frost_rune:IsAura() return true end
-function modifier_imba_frost_rune:GetAuraRadius() return self.radius end
+function modifier_imba_frost_rune:GetAuraRadius() return CustomNetTables:GetTableValue("game_options", "runes").rune_radius_effect end
 function modifier_imba_frost_rune:GetAuraSearchTeam() return DOTA_UNIT_TARGET_TEAM_FRIENDLY end
 function modifier_imba_frost_rune:GetAuraSearchType() return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC end
 function modifier_imba_frost_rune:GetAuraSearchFlags() return DOTA_UNIT_TARGET_FLAG_NONE end
@@ -62,7 +60,7 @@ function modifier_imba_frost_rune:GetModifierAura()
 end
 
 function modifier_imba_frost_rune:GetAuraEntityReject(target)
-	if target == self.caster then
+	if target == self:GetCaster() then
         return true
     end
 	return false
@@ -88,10 +86,6 @@ function modifier_imba_frost_rune_aura:GetTextureName()
 	return "custom/imba_rune_frost"
 end
 
-function modifier_imba_frost_rune_aura:OnCreated()
-	self.slow_duration = 3.0
-end
-
 -- Function declarations
 function modifier_imba_frost_rune_aura:DeclareFunctions()
 	local funcs	=	{
@@ -103,7 +97,6 @@ end
 
 function modifier_imba_frost_rune_aura:OnAttackLanded(kv)
 	if (kv.attacker == self:GetParent()) and (kv.target:GetTeamNumber() ~= self:GetParent():GetTeamNumber()) and (kv.attacker:GetTeam() ~= self:GetParent():GetTeam()) then
-		print("rune aura attack landed", kv.target:GetName())
 		kv.target:AddNewModifier(kv.attacker, nil, "modifier_imba_frost_rune_slow", {duration = self.slow_duration})
 	end
 end
@@ -144,12 +137,6 @@ function modifier_imba_frost_rune_slow:StatusEffectPriority()
 	return 10
 end
 
--- Ability KV storage
-function modifier_imba_frost_rune_slow:OnCreated(keys)
-	self.slow_as = -100
-	self.slow_ms = -20
-end
-
 -- Declare modifier events/properties
 function modifier_imba_frost_rune_slow:DeclareFunctions()
 	local funcs = {
@@ -160,9 +147,9 @@ function modifier_imba_frost_rune_slow:DeclareFunctions()
 end
 
 function modifier_imba_frost_rune_slow:GetModifierAttackSpeedBonus_Constant()
-	return self.slow_as
+	return CustomNetTables:GetTableValue("game_options", "runes").frost_rune_attack_slow
 end
 
 function modifier_imba_frost_rune_slow:GetModifierMoveSpeedBonus_Percentage()
-	return self.slow_ms
+	return CustomNetTables:GetTableValue("game_options", "runes").frost_rune_move_speed_slow
 end

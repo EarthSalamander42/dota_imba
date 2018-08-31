@@ -15,9 +15,35 @@ function Precache( context )
 	LinkLuaModifier("modifier_imba_war_veteran_1", "components/modifiers/modifier_imba_war_veteran.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_imba_war_veteran_2", "components/modifiers/modifier_imba_war_veteran.lua", LUA_MODIFIER_MOTION_NONE )
 
-	-- Battlepass
+	-- Battlepass Pudge Arcana
 	PrecacheResource("model_folder", "models/items/pudge/arcana", context)
 	PrecacheResource("particle_folder", "particles/econ/items/pudge/pudge_arcana", context)
+
+	-- Battlepass Blink effects
+	PrecacheResource("particle", "particles/econ/events/ti8/blink_dagger_ti8_start_lvl2.vpcf", context)
+	PrecacheResource("particle", "particles/econ/events/ti8/blink_dagger_ti8_end_lvl2.vpcf", context)
+	PrecacheResource("particle", "particles/econ/events/ti8/blink_dagger_ti8_start.vpcf", context)
+	PrecacheResource("particle", "particles/econ/events/ti8/blink_dagger_ti8_end.vpcf", context)
+	PrecacheResource("particle", "particles/econ/events/ti5/blink_dagger_start_lvl2_ti5.vpcf", context)
+	PrecacheResource("particle", "particles/econ/events/ti5/blink_dagger_end_lvl2_ti5.vpcf", context)
+	PrecacheResource("particle", "particles/econ/events/ti5/blink_dagger_start_ti5.vpcf", context)
+	PrecacheResource("particle", "particles/econ/events/ti5/blink_dagger_end_ti5.vpcf", context)
+	PrecacheResource("particle", "particles/econ/events/ti6/blink_dagger_start_ti6_lvl2.vpcf", context)
+	PrecacheResource("particle", "particles/econ/events/ti6/blink_dagger_end_ti6_lvl2.vpcf", context)
+	PrecacheResource("particle", "particles/econ/events/ti6/blink_dagger_start_ti6.vpcf", context)
+	PrecacheResource("particle", "particles/econ/events/ti6/blink_dagger_end_ti6.vpcf", context)
+	PrecacheResource("particle", "particles/econ/events/ti4/blink_dagger_start_ti4.vpcf", context)
+	PrecacheResource("particle", "particles/econ/events/ti4/blink_dagger_end_ti4.vpcf", context)
+	PrecacheResource("particle", "particles/econ/events/winter_major_2017/blink_dagger_start_wm07.vpcf", context)
+	PrecacheResource("particle", "particles/econ/events/winter_major_2017/blink_dagger_end_wm07.vpcf", context)
+	PrecacheResource("particle", "particles/econ/events/ti7/blink_dagger_start_ti7_lvl2.vpcf", context)
+	PrecacheResource("particle", "particles/econ/events/ti7/blink_dagger_end_ti7_lvl2.vpcf", context)
+	PrecacheResource("particle", "particles/econ/events/ti7/blink_dagger_start_ti7.vpcf", context)
+	PrecacheResource("particle", "particles/econ/events/ti7/blink_dagger_end_ti7.vpcf", context)
+	PrecacheResource("particle", "particles/econ/events/nexon_hero_compendium_2014/blink_dagger_start_nexon_hero_cp_2014.vpcf", context)
+	PrecacheResource("particle", "particles/econ/events/nexon_hero_compendium_2014/blink_dagger_end_nexon_hero_cp_2014.vpcf", context)
+	PrecacheResource("particle", "particles/econ/events/fall_major_2016/blink_dagger_start_fm06.vpcf", context)
+	PrecacheResource("particle", "particles/econ/events/fall_major_2016/blink_dagger_end_fm06.vpcf", context)
 
 	-- Sounds
 	PrecacheResource("soundfile", "soundevents/imba_soundevents.vsndevts", context)

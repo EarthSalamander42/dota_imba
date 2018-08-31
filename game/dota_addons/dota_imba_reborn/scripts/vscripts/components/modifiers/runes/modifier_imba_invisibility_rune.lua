@@ -50,13 +50,12 @@ function modifier_imba_invisibility_rune:CheckState()
 	return state
 end
 
-function modifier_imba_invisibility_rune:OnCreated()
-	if not IsServer() then return end
-	self.critical_mult = 200
-	self.movespeed_bonus = 20
+function modifier_imba_invisibility_rune:GetEffectName()
+	return "particles/generic_hero_status/status_invisibility_start.vpcf"
+end
 
-	local particle = ParticleManager:CreateParticle("particles/generic_hero_status/status_invisibility_start.vpcf", PATTACH_ABSORIGIN, self:GetParent())
-	ParticleManager:ReleaseParticleIndex(particle)
+function modifier_imba_invisibility_rune:GetEffectAttachType()
+	return PATTACH_ABSORIGIN
 end
 
 function modifier_imba_invisibility_rune:DeclareFunctions()
@@ -81,19 +80,17 @@ function modifier_imba_invisibility_rune:GetModifierPreAttack_CriticalStrike(kv)
 	--Doesn't work on buildings
 	if kv.target:IsBuilding() then return 0 end
 
-	return self.critical_mult
+	return CustomNetTables:GetTableValue("game_options", "runes").invis_rune_critical_damage
 end
 
 function modifier_imba_invisibility_rune:GetModifierMoveSpeedBonus_Percentage()
-	return self.movespeed_bonus
-
+	return CustomNetTables:GetTableValue("game_options", "runes").invis_rune_move_speed
 end
 
 function modifier_imba_invisibility_rune:OnAttackLanded(kv)
 	if not IsServer() then return end
 	--Proceed only if the attacker is the parent
 	if self:GetParent() == kv.attacker then
-		print("Attack Landed!")
 		self:Destroy()
 		return
 	end
@@ -103,7 +100,6 @@ function modifier_imba_invisibility_rune:OnAbilityStart(kv)
 	if not IsServer() then return end
 	--proceed only if the caster is the parent
 	if self:GetParent() == kv.attacker then
-		print("Ability Start!")
 		self:Destroy()
 		return
 	end

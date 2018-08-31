@@ -66,6 +66,14 @@ function Is1v1Map()
 	return false
 end
 
+function Is10v10Map()
+	if GetMapName() == MapRanked10v10() or GetMapName() == MapMutation10v10() then
+		return true
+	end
+
+	return false
+end
+
 function IsTournamentMap()
 	if GetMapName() == MapTournament() then
 		return true

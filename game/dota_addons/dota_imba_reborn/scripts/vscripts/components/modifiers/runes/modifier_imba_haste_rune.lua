@@ -18,12 +18,6 @@ function modifier_imba_haste_rune:GetTexture()
 	return "rune_haste"	-- "custom/imba_rune_haste"
 end
 
-function modifier_imba_haste_rune:OnCreated()
-	if IsServer() then
-		self:SetStackCount(GetAbilitySpecial("item_imba_rune_haste", "movespeed_pct"))
-	end
-end
-
 -- Function declarations
 function modifier_imba_haste_rune:DeclareFunctions()
 	local funcs	=	{
@@ -36,19 +30,17 @@ end
 
 -- Bonus movespeed
 function modifier_imba_haste_rune:GetModifierMoveSpeedBonus_Percentage()
-	return self:GetStackCount()
+	return CustomNetTables:GetTableValue("game_options", "runes").haste_rune_move_speed
 end
 
 -- Bonus attackspeed
 function modifier_imba_haste_rune:GetModifierAttackSpeedBonus_Constant()
-	if IsClient() then return end
-	return GetAbilitySpecial("item_imba_rune_haste", "bonus_attack_speed")
+	return CustomNetTables:GetTableValue("game_options", "runes").haste_rune_attack_speed
 end
 
 -- Minimum unslowable movement speed
 function modifier_imba_haste_rune:GetModifierMoveSpeed_AbsoluteMin()
-	if IsClient() then return end
-	return GetAbilitySpecial("item_imba_rune_haste", "absolute_min_speed")
+	return CustomNetTables:GetTableValue("game_options", "runes").haste_rune_move_speed_min
 end
 
 -- Aura properties
@@ -57,8 +49,7 @@ function modifier_imba_haste_rune:IsAura()
 end
 
 function modifier_imba_haste_rune:GetAuraRadius()
-	if IsClient() then return end
-	return GetAbilitySpecial("item_imba_rune_haste", "radius")
+	return CustomNetTables:GetTableValue("game_options", "runes").rune_radius_effect
 end
 
 function modifier_imba_haste_rune:GetAuraSearchTeam()
@@ -106,12 +97,6 @@ function modifier_imba_haste_rune_aura:GetTextureName()
 	return "rune_haste"
 end
 
-function modifier_imba_haste_rune_aura:OnCreated()
-	-- Ability parameters
-	self.movespeed_pct	=	60	/2
-	self.attackspeed	=	80	/2
-end
-
 -- Function declarations
 function modifier_imba_haste_rune_aura:DeclareFunctions()
 	local funcs	=	{
@@ -123,12 +108,12 @@ end
 
 -- Bonus movespeed
 function modifier_imba_haste_rune_aura:GetModifierMoveSpeedBonus_Percentage()
-	return self.movespeed_pct
+	return CustomNetTables:GetTableValue("game_options", "runes").haste_rune_move_speed / 2
 end
 
 -- Bonus attackspeed
 function modifier_imba_haste_rune_aura:GetModifierAttackSpeedBonus_Constant()
-	return self.attackspeed
+	return CustomNetTables:GetTableValue("game_options", "runes").haste_rune_attack_speed / 2
 end
 
 -- Haste particle
