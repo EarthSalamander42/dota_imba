@@ -543,9 +543,7 @@ function imba_dragon_knight_elder_dragon_form:OnSpellStart()
 end
 
 function imba_dragon_knight_elder_dragon_form:GetIntrinsicModifierName()
-	if self:GetCaster():HasScepter() then
-		return "modifier_imba_elder_dragon_form"
-	end
+	return "modifier_imba_elder_dragon_form"
 end
 
 function imba_dragon_knight_elder_dragon_form:OnUpgrade()

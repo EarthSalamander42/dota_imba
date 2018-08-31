@@ -398,7 +398,7 @@ function modifier_imba_enigma_eidolon:OnAttackLanded(keys)
 			if not target:HasModifier("modifier_imba_enigma_eidolon_attack_counter") then
 				target:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_enigma_eidolon_attack_counter", {})
 			end
-			if self.last_target:FindModifierByNameAndCaster("modifier_imba_enigma_eidolon_attacks_debuff", self:GetParent()) then
+	    	if not self:GetParent():IsNull() and not self.last_target:IsNull() and self.last_target:FindModifierByNameAndCaster("modifier_imba_enigma_eidolon_attacks_debuff", self:GetParent()) then
 				self.last_target:FindModifierByNameAndCaster("modifier_imba_enigma_eidolon_attacks_debuff", self:GetParent()):Destroy()
 			end
 			self.last_target = target
