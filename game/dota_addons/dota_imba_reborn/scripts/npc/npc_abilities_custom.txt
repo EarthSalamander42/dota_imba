@@ -9014,33 +9014,33 @@
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"wolf_type"						"1 2 3 4"
-				"LinkedSpecialBonus"			"special_bonus_imba_lycan_1"
+				"wolf_type"						"1 2 3 4 5 6"
+				//"LinkedSpecialBonus"			"special_bonus_imba_lycan_1"
 			}
 			"04"
 			{
 				"var_type" 						"FIELD_INTEGER"
-				"wolf_damage_tooltip"			"12 24 36 48"
+				"wolf_damage_tooltip"			"17 27 36 45 54 70"
 			}
 			"05"
 			{
 				"var_type" 						"FIELD_FLOAT"
-				"wolf_bat_tooltip"				"1.2 1.1 1.0 0.9"
+				"wolf_bat_tooltip"				"1.25 1.2 1.15 1.1 0.9 0.8"
 			}
 			"06"
 			{
 				"var_type" 						"FIELD_INTEGER"
-				"wolf_health_tooltip"			"200 280 320 360"
+				"wolf_health_tooltip"			"200 240 280 320 360 400"
 			}
 			"07"
 			{
 				"var_type" 						"FIELD_INTEGER"
-				"wolf_speed_tooltip"			"400 440 460 480"
+				"wolf_speed_tooltip"			"400 420 440 460 480 500"
 			}
 			"08"
 			{
 				"var_type" 						"FIELD_INTEGER"
-				"wolf_armor_tooltip"			"1 2 3 4"
+				"wolf_armor_tooltip"			"1 2 3 4 5 6"
 			}
 			"04"
 			{
@@ -9258,14 +9258,14 @@
 
 			"03"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"damage_inc_per_unit"		"1 2 3 4"
+				"var_type"					"FIELD_FLOAT"
+				"damage_inc_per_unit"		"1.0 1.5 2.0 2.5"
 			}
 
 			"04"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"regen_inc_per_unit"		"1 2 3 4"
+				"var_type"					"FIELD_FLOAT"
+				"regen_inc_per_unit"		"1.0 1.5 2.0 2.5"
 			}
 
 			"05"
@@ -9302,7 +9302,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"120 60 50"
+		"AbilityCooldown"				"110 90 70"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -9396,7 +9396,7 @@
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"attack_speed_reduction"		"4 12 20"
+				"attack_speed_reduction"		"12"
 			}
 			"04"
 			{
@@ -9487,7 +9487,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"value"					"1"
+				"value"					"2"
 			}
 		}
 	}
@@ -9515,7 +9515,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"value"					"10"
+				"value"					"12"
 			}
 		}
 	}
