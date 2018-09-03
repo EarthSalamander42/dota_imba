@@ -78,7 +78,7 @@ function modifier_imba_pipe_passive:OnCreated( params )
 end
 
 function modifier_imba_pipe_passive:OnDestroy( params )
-	if not self.parent:HasModifier("modifier_imba_pipe_passive") and IsServer() then
+	if not self:IsNull() and not self.parent:IsNull() and not self.parent:HasModifier("modifier_imba_pipe_passive") and IsServer() then
 		self.parent:RemoveModifierByName("modifier_imba_pipe_aura_emitter")
 	end
 end
