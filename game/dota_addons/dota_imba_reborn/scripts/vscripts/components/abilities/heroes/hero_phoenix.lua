@@ -1123,7 +1123,7 @@ function imba_phoenix_sun_ray:OnSpellStart()
 			local casterForward	= caster:GetForwardVector()
 
 			-- Move forward
-			if caster.sun_ray_is_moving then
+			if caster.sun_ray_is_moving and not GameRules:IsGamePaused() then
 				casterOrigin = casterOrigin + casterForward * forwardMoveSpeed * deltaTime
 				casterOrigin = GetGroundPosition( casterOrigin, caster )
 				caster:SetAbsOrigin( casterOrigin )
