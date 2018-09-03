@@ -97,7 +97,7 @@ end
 function modifier_imba_octarine_core_basic:OnDestroy()
 	if IsServer() then
 		-- Remove the unique modifier if no other cores were found
-		if not self:IsNull() and not self.caster:HasModifier(self.modifier_self) then
+		if not self:IsNull() and not self.caster:IsNull() and not self.caster:HasModifier(self.modifier_self) then
 			self.caster:RemoveModifierByName(self.uniqueModifier)
 		end
 	end
