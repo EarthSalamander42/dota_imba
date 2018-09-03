@@ -780,6 +780,14 @@ function imba_witch_doctor_death_ward:CreateWard(vPosition, bIsMiniWard)
 	end
 	-- Removing the bonus damage from items
 	local damageOffset = death_ward:GetAverageTrueAttackDamage(death_ward)
+	-- Hacky method of bypassing critical strike modifiers that remove more attack damage than it should
+	for iteration = 1, 100 do
+		local temp = death_ward:GetAverageTrueAttackDamage(death_ward)
+		if temp < damageOffset then
+			damageOffset = temp
+		end
+	end
+	
 	death_ward:SetBaseDamageMax( damage - damageOffset )
 	death_ward:SetBaseDamageMin( damage - damageOffset )
 	-- For Attack-order

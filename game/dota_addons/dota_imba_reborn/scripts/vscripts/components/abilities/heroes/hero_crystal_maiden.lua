@@ -155,6 +155,7 @@ LinkLuaModifier("modifier_imba_crystal_nova_snowfield_ally_aura", "components/ab
 LinkLuaModifier("modifier_imba_crystal_nova_snowfield_enemy_aura", "components/abilities/heroes/hero_crystal_maiden.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_crystal_nova_snowfield_debuff", "components/abilities/heroes/hero_crystal_maiden.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_crystal_nova_snowfield_buff", "components/abilities/heroes/hero_crystal_maiden.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_crystal_maiden_3", "components/abilities/heroes/hero_crystal_maiden.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_crystal_maiden_crystal_nova:GetAbilityTextureName()
 	return "crystal_maiden_crystal_nova"
@@ -164,6 +165,22 @@ function imba_crystal_maiden_crystal_nova:GetAOERadius()
 	return self:GetSpecialValueFor("nova_radius")
 end
 
+-- Mini section here to ensure the Snowfield Protection talent shows health regen on client-side
+
+modifier_special_bonus_imba_crystal_maiden_3 = class({})
+
+function modifier_special_bonus_imba_crystal_maiden_3:IsHidden() 		return true end
+function modifier_special_bonus_imba_crystal_maiden_3:IsPurgable() 		return false end
+function modifier_special_bonus_imba_crystal_maiden_3:RemoveOnDeath() 	return false end
+
+function imba_crystal_maiden_crystal_nova:OnOwnerSpawned()
+	if not IsServer() then return end
+	if self:GetCaster():HasAbility("special_bonus_imba_crystal_maiden_3") and self:GetCaster():FindAbilityByName("special_bonus_imba_crystal_maiden_3"):IsTrained() and not self:GetCaster():HasModifier("modifier_special_bonus_imba_crystal_maiden_3") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_special_bonus_imba_crystal_maiden_3", {})
+	end
+end
+
+------------------------------------------------------------------------------------------
 
 function imba_crystal_maiden_crystal_nova:OnSpellStart()
 	-- Ability properties
