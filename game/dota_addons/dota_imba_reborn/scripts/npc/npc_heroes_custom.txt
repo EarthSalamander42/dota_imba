@@ -1309,8 +1309,9 @@
 		"Ability13"					"special_bonus_imba_obsidian_destroyer_4"
 		"Ability14"					"special_bonus_imba_obsidian_destroyer_5"
 		"Ability15"					"special_bonus_imba_obsidian_destroyer_6"
-		"Ability16"					"special_bonus_imba_obsidian_destroyer_7"
-		"Ability17"					"special_bonus_imba_obsidian_destroyer_8"
+		//"Ability16"					"special_bonus_imba_obsidian_destroyer_7"
+		"Ability16"					"special_bonus_imba_obsidian_destroyer_8"
+		"Ability17"					"special_bonus_spell_lifesteal_15"
 	}
 
 	//=================================================================================================================
