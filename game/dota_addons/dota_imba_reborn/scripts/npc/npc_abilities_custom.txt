@@ -11315,7 +11315,7 @@
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"int_multiplier"				"10 13 16"
+				"int_multiplier"				"11 12 13"
 			}
 
 			"03"
