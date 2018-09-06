@@ -819,14 +819,20 @@
 "DOTA_Tooltip_ability_item_imba_monkey_king_bar_bonus_damage"               "+$damage"
 
 // Moon Shard
-"DOTA_Tooltip_Ability_item_imba_moon_shard"                    "Moon Shard"
-"DOTA_Tooltip_ability_item_imba_moon_shard_Description"                     "<h1>Use: Consume</h1> Consume the Moon Shard to permanently gain %consumed_bonus% attack speed and %consumed_bonus_night_vision% bonus night vision.<font color='#FF7800'>Stacks diminishingly.</font>\n<font color='#00FF40'>1st shard: +%consume_as_1% AS, +%consume_vision_1% vision<br><br>2nd shard: +%consume_as_2% AS, +%consume_vision_2% vision<br><br>3rd shard and beyond: +%consume_as_3% AS</font>\n<h1>Passive: Shade Sight</h1>Grants %bonus_night_vision% bonus night vision."
+"DOTA_Tooltip_Ability_item_imba_moon_shard"						"Moon Shard"
+"DOTA_Tooltip_ability_item_imba_moon_shard_Description"			"<h1>Use: Consume</h1> Consume the Moon Shard to permanently gain %consumed_bonus% attack speed and %consumed_bonus_night_vision% bonus night vision.<font color='#FF7800'> Can be used multiple times, but stacks at diminishing values.</font>\n<font color='#00FF40'>1st shard: +%consume_as_1% AS, +%consume_vision_1% vision<br><br>2nd shard: +%consume_as_2% AS, +%consume_vision_2% vision<br><br>3rd shard and beyond: +%consume_as_3% AS</font>\n<h1>Passive: Shade Sight</h1>Grants %bonus_night_vision% bonus night vision."
+"DOTA_Tooltip_ability_item_imba_moon_shard_Note0"				"The bonus night vision works during Night Stalker's Darkness ability."
+"DOTA_Tooltip_ability_item_imba_moon_shard_Note1"				"Moon Shard stacks in inventory, but only applies its effects if individual item slots are available."
+"DOTA_Tooltip_ability_item_imba_moon_shard_Note2"				"Using Moon Shard on yourself consumes all shards in inventory, while using it on allies consumes one shard each."
+"DOTA_Tooltip_ability_item_imba_moon_shard_Note3"				"Using Moon Shard anywhere else drops a shard from your inventory at your location."
 "DOTA_Tooltip_ability_item_imba_moon_shard_Lore"                "Said to be a tear from the lunar goddess Selemene."
 "DOTA_Tooltip_ability_item_imba_moon_shard_bonus_attack_speed"              "+$attack"
-"DOTA_Tooltip_ability_item_imba_moon_shard_bonus_night_vision"              "BONUS NIGHT VISION:"
 
 "DOTA_Tooltip_modifier_imba_moon_shard_stacks_dummy"            "Moon Shard"
 "DOTA_Tooltip_modifier_imba_moon_shard_stacks_dummy_Description"            "Increased attack speed and night vision"
+
+"DOTA_Tooltip_modifier_item_imba_moon_shard_active"					"Moon Shard"
+"DOTA_Tooltip_modifier_item_imba_moon_shard_active_Description"		"Attack speed increased by %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT% and night vision increased by %dMODIFIER_PROPERTY_BONUS_NIGHT_VISION% after consuming Moon Shard(s)."
 
 // Morbid Mask
 "DOTA_Tooltip_Ability_item_imba_morbid_mask"                    "Morbid Mask"
