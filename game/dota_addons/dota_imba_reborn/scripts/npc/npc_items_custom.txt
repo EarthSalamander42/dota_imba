@@ -5592,6 +5592,11 @@
 				"var_type"				"FIELD_FLOAT"
 				"static_slow_duration"	"1.25"
 			}
+			"14"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"static_cooldown"		"0.5"
+			}
 		}
 	}
 
@@ -10904,6 +10909,11 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"cleave_end"			"330"
+			}
+			"21"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"static_cooldown"		"0.5"
 			}
 		}
 	}
