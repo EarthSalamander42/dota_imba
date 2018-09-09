@@ -209,7 +209,13 @@ function modifier_item_imba_mjollnir_static:GetEffectAttachType()
 function modifier_item_imba_mjollnir_static:OnCreated()
 	if IsServer() then
 		self:GetParent():EmitSound("DOTA_Item.Mjollnir.Loop")
+		self.static_cooldown = false
 	end
+end
+
+function modifier_item_imba_mjollnir_static:OnIntervalThink()
+	self.static_cooldown = false
+	self:StartIntervalThink(-1)
 end
 
 -- Stop playing sound and destroy the proc counter
@@ -240,7 +246,7 @@ function modifier_item_imba_mjollnir_static:OnTakeDamage( keys )
 		-- If the attacker is invalid, do nothing either
 		if keys.attacker:GetTeam() == shield_owner:GetTeam() then
 			return end
-
+			
 		-- All conditions met, stack the proc counter up
 		local ability = self:GetAbility()
 		-- If enough stacks accumulated, reset them and zap nearby enemies
@@ -248,8 +254,11 @@ function modifier_item_imba_mjollnir_static:OnTakeDamage( keys )
 		local static_damage = ability:GetSpecialValueFor("static_damage")
 		local static_radius = ability:GetSpecialValueFor("static_radius")
 		local static_slow_duration = ability:GetSpecialValueFor("static_slow_duration")
-		if RollPseudoRandom(static_proc_chance, ability) then
-
+		
+		if not self.static_cooldown and keys.damage >= 5 and RollPseudoRandom(static_proc_chance, ability) then
+			self.static_cooldown = true
+			self:StartIntervalThink(ability:GetSpecialValueFor("static_cooldown"))
+			
 			-- Iterate through nearby enemies
 			local static_origin = shield_owner:GetAbsOrigin() + Vector(0, 0, 100)
 			local nearby_enemies = FindUnitsInRadius(shield_owner:GetTeamNumber(), shield_owner:GetAbsOrigin(), nil, static_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)
@@ -457,7 +466,13 @@ function modifier_item_imba_jarnbjorn_static:GetEffectAttachType()
 function modifier_item_imba_jarnbjorn_static:OnCreated()
 	if IsServer() then
 		self:GetParent():EmitSound("DOTA_Item.Mjollnir.Loop")
+		self.static_cooldown = false
 	end
+end
+
+function modifier_item_imba_jarnbjorn_static:OnIntervalThink()
+	self.static_cooldown = false
+	self:StartIntervalThink(-1)
 end
 
 -- Stop playing sound and destroy the proc counter
@@ -496,7 +511,9 @@ function modifier_item_imba_jarnbjorn_static:OnTakeDamage( keys )
 		local static_damage = ability:GetSpecialValueFor("static_damage")
 		local static_radius = ability:GetSpecialValueFor("static_radius")
 		local static_slow_duration = ability:GetSpecialValueFor("static_slow_duration")
-		if RollPseudoRandom(static_proc_chance, ability) then
+		if not self.static_cooldown and keys.damage >= 5 and RollPseudoRandom(static_proc_chance, ability) then
+			self.static_cooldown = true
+			self:StartIntervalThink(ability:GetSpecialValueFor("static_cooldown"))
 
 			-- Iterate through nearby enemies
 			local static_origin = shield_owner:GetAbsOrigin() + Vector(0, 0, 100)
