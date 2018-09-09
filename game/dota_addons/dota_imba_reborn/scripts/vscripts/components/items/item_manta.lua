@@ -33,6 +33,14 @@ function item_imba_manta:GetIntrinsicModifierName()
 	return "modifier_item_manta_passive"
 end
 
+function item_imba_manta:GetCooldown()
+	if self:GetCaster():IsRangedAttacker() then
+		return self:GetSpecialValueFor("cooldown_ranged_tooltip")
+	else
+		return self:GetSpecialValueFor("cooldown_melee")
+	end
+end
+
 function item_imba_manta:OnSpellStart()
 	local caster_entid = self:GetCaster():entindex()
 	local duration = self:GetSpecialValueFor("tooltip_illusion_duration")
@@ -43,8 +51,8 @@ function item_imba_manta:OnSpellStart()
 	local incomingDamage = self:GetSpecialValueFor("images_take_damage_percent_ranged")
 
 	if not self:GetCaster():IsRangedAttacker() then  --Manta Style's cooldown is less for melee heroes.
-		self:EndCooldown()
-		self:StartCooldown(cooldown_melee)
+		--self:EndCooldown()
+		--self:StartCooldown(cooldown_melee)
 		outgoingDamage = self:GetSpecialValueFor("images_do_damage_percent_melee")
 		incomingDamage = self:GetSpecialValueFor("images_take_damage_percent_melee")
 	end
@@ -69,7 +77,7 @@ function item_imba_manta:OnSpellStart()
 
 		for i = 1, images_count do
 			if string.find(self:GetCaster():GetUnitName(), "npc_dota_lone_druid_bear") then print("NO BEAR") break end
-			local illusion = self:GetCaster():CreateIllusion(duration, incomingDamage, outcomingDamage)
+			local illusion = self:GetCaster():CreateIllusion(duration, incomingDamage, outgoingDamage)
 			table.insert(self:GetCaster().manta, illusion)
 		end
 
