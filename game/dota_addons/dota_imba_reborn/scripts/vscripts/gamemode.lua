@@ -15,6 +15,7 @@ require('libraries/player_resource')
 require('libraries/projectiles')
 require('libraries/rgb_to_hex')
 require('libraries/timers')
+require('libraries/wearables')
 
 require('internal/gamemode')
 require('internal/events')

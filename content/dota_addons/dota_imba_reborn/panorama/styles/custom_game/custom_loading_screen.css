@@ -46,6 +46,7 @@
 	background-position: center center;
 	background-size: cover;
 	background-image: url("file://{images}/custom_game/loading_screen/frantic_thunder.png");
+	z-index: 1; /* Doesn't work.. Does it need to be on root? */
 }
 
 #imba-loading-title,
@@ -154,7 +155,6 @@
 	flow-children: down;
 	background-color: #002239da;
 	border: 2px solid COLOR_INFO_BACKGROUND_DARK_BLUE;
-	z-index: 1;
 } 
 
 #ImbaLoadingSocial Panel {

@@ -45,6 +45,9 @@
 "mutation_pocket_tower"							"Pocket Tower"
 "mutation_pocket_tower_Description"				"All heroes start with a consumable that will spawn a tower."
 
+"mutation_pocket_roshan"						"Pocket Roshan"
+"mutation_pocket_roshan_Description"			"All heroes start with a consumable that will summon a Roshan for 60 seconds."
+
 "mutation_super_fervor"							"Super Fervor"
 "mutation_super_fervor_Description"				"Killing enemy units decreases cooldowns and grants increased attack speed for a short duration. Killing heroes gives greater effects."
 
@@ -60,7 +63,7 @@
 
 // Negative
 "mutation_death_explosion"						"Death Explosion"
-"mutation_death_explosion_Description"			"Deal 600 + (100 * minutes) damage in a 400 radius on death afer a 0.9 seconds delay."
+"mutation_death_explosion_Description"			"Deal 500 + (80 * minutes) damage in a 400 radius on death afer a 0.9 seconds delay."
 
 "mutation_periodic_spellcast"					"Periodic Spellcast"
 "mutation_periodic_spellcast_Description"		"Every minute, a random spell will be cast on everyone."
@@ -105,7 +108,7 @@
 "mutation_wormhole_Description"					"Wormholes spawn on the map. Activating one will bring you to another random wormhole."
 
 "mutation_tug_of_war"							"Tug of War"
-"mutation_tug_of_war_Description"				"Spawns a big BOB (warlock golem) on the mid lane. Every time BOB dies, he comes back stronger (more HP/damage) and he switches to the opposite team."
+"mutation_tug_of_war_Description"				"Spawns a big BOB (warlock golem) on the mid lane. Every time BOB dies, he comes back stronger (more HP/damage) and he switches to the opposite team. Credits: ArcTangent (BOB Wars creator)"
 
 "mutation_minefield"							"Minefield"
 "mutation_minefield_Description"				"All kinds of mines spawn randomly across the entire map."

@@ -1,6 +1,6 @@
 modifier_mutation_death_explosion = class({})
 
-function modifier_mutation_death_explosion:IsHidden() return false end
+function modifier_mutation_death_explosion:IsHidden() return true end
 function modifier_mutation_death_explosion:IsPurgable() return false end
 function modifier_mutation_death_explosion:RemoveOnDeath() return false end
 

@@ -1016,3 +1016,15 @@
 .blue {
 	color: dodgerblue;
 }
+
+#rank_1 {
+	color: gold;
+}
+
+#rank_2 {
+	color: grey;
+}
+
+#rank_3 {
+	color: darkorange;
+}

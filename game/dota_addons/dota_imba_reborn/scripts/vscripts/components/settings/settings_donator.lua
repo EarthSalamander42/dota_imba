@@ -6,8 +6,8 @@ DONATOR_COLOR[3] = {0, 102, 255} -- Administrator
 DONATOR_COLOR[4] = {220, 40, 40} -- Ember Donator
 DONATOR_COLOR[5] = {218, 165, 32} -- Golden Donator
 DONATOR_COLOR[6] = {0, 204, 0} -- Green Donator (basic)
-DONATOR_COLOR[7] = {47, 91, 151} -- Salamander Donator (blue)
-DONATOR_COLOR[8] = {153, 51, 153} -- Icefrog Donator (purple)
+DONATOR_COLOR[8] = {153, 51, 153} -- Salamander Donator (blue)
+DONATOR_COLOR[7] = {47, 91, 151} -- Icefrog Donator (purple)
 DONATOR_COLOR[9] = {185, 75, 10} -- Gaben Donator
 DONATOR_COLOR[10] = {255, 255, 255}
 

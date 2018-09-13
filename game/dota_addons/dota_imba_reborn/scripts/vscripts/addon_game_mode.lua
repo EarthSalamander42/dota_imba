@@ -15,10 +15,11 @@ function Precache( context )
 	LinkLuaModifier("modifier_imba_war_veteran_1", "components/modifiers/modifier_imba_war_veteran.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_imba_war_veteran_2", "components/modifiers/modifier_imba_war_veteran.lua", LUA_MODIFIER_MOTION_NONE )
 
-	-- Battlepass Pudge Arcana
-	PrecacheResource("model_folder", "models/items/pudge/arcana", context)
-	PrecacheResource("particle_folder", "particles/econ/items/pudge/pudge_arcana", context)
-
+	-- Battlepass precaching
+	Wearables:PrecacheWearables(context)
+	PrecacheResource("particle", "particles/econ/items/pudge/pudge_arcana", context)
+	PrecacheResource("particle_folder", "particles/econ/items/juggernaut/jugg_arcana", context)
+	
 	-- Battlepass Blink effects
 	PrecacheResource("particle", "particles/econ/events/ti8/blink_dagger_ti8_start_lvl2.vpcf", context)
 	PrecacheResource("particle", "particles/econ/events/ti8/blink_dagger_ti8_end_lvl2.vpcf", context)

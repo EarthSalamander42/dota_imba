@@ -29,9 +29,6 @@
 "DOTA_Tooltip_modifier_mutation_river_flows_boost"				"River Flows"
 "DOTA_Tooltip_modifier_mutation_river_flows_boost_Description"	"Movement speed greatly increased in the river."
 
-"DOTA_Tooltip_modifier_mutation_death_explosion"				"Death Explosion"
-"DOTA_Tooltip_modifier_mutation_death_explosion_Description"	"Deal 600 + (100 * minutes) damage in a 400 radius on death afer a 0.9 seconds delay."
-
 "DOTA_Tooltip_modifier_mutation_kill_streak_power"				"#{DOTA_Tooltip_modifier_mutation_killstreak_power}"
 "DOTA_Tooltip_modifier_mutation_kill_streak_power_Description"	"#{DOTA_Tooltip_modifier_mutation_killstreak_power_Description}"
 

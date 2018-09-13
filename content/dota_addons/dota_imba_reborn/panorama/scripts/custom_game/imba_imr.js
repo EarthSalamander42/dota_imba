@@ -365,9 +365,28 @@ function HallOfFame(type) {
 		var steam_id = $.CreatePanel("DOTAAvatarImage", player, "player_steamid_" + i);
 		steam_id.AddClass("LeaderboardAvatar");
 		steam_id.steamid = top_users.SteamID64;
-		steam_id.style.width = "15%";
-		steam_id.style.height = "80%";
+		steam_id.style.width = "38px";
+		steam_id.style.height = "38px";
+		steam_id.style.marginLeft = "40px";
+		steam_id.style.marginRight = "40px";
 		steam_id.style.align = "center center";
+
+		var leaderboard_border = []
+		leaderboard_border[1] = "darkred"
+		leaderboard_border[2] = "red"
+		leaderboard_border[3] = "blue"
+		leaderboard_border[4] = "darkred"
+		leaderboard_border[5] = "gold"
+		leaderboard_border[6] = "green"
+		leaderboard_border[7] = "purple"
+		leaderboard_border[8] = "dodgerblue"
+		leaderboard_border[9] = "brown"
+
+//		if (top_users.donator_level)
+//			steam_id.style.border = "2px solid " + leaderboard_border[top_users.donator_level];
+			steam_id.style.border = "2px solid " + leaderboard_border[i];
+//		else
+//			steam_id.style.border = "2px solid #3f464ecc";
 
 		var imbar_container = $.CreatePanel("Panel", player, "imbar_container_" + i);
 		imbar_container.AddClass("LeaderboardXP");

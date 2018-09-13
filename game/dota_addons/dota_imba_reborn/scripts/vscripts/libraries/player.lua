@@ -158,30 +158,6 @@ function CDOTA_BaseNPC:IsHeroDamage(damage)
 	return false
 end
 
---[[Author: Noya
-	Editor: EarthSalamander #42
-	Date: 09.08.2015.
-	Hides all dem hats
-]]
-function CDOTA_BaseNPC:HideWearables(number)
-	local model = self:FirstMoveChild()
-	local i = 0
-
-	Timers:CreateTimer(3.0, function()
-		while model do
---			print("model count/classname:", i, model:GetClassname())
-			if model:GetClassname() == "dota_item_wearable" and i == number then
-				print("Model has been hidden:", model)
-				model:AddEffects(EF_NODRAW) -- Set model hidden
-			end
-
-			i = i + 1
-			model = model:NextMovePeer()
-		end
-		return 1.0
-	end)
-end
-
 -- Checks if a given unit is Roshan
 function CDOTA_BaseNPC:IsRoshan()
 	if self:GetName() == "npc_imba_roshan" or self:GetName() == "npc_dota_roshan" then

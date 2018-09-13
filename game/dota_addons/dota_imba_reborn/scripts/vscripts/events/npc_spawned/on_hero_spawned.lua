@@ -30,25 +30,13 @@ function GameMode:OnHeroFirstSpawn(hero)
 		if hero:GetUnitName() ~= FORCE_PICKED_HERO then
 			if api.imba.is_donator(tostring(PlayerResource:GetSteamID(hero:GetPlayerID()))) == 10 then
 				hero:SetOriginalModel("models/items/courier/kanyu_shark/kanyu_shark.vmdl")
-				hero:AddNewModifier(hero, nil, "modifier_command_restricted", {})
 				PlayerResource:SetCameraTarget(hero:GetPlayerID(), hero)
-				Timers:CreateTimer(0.1, function()
-					PlayerResource:SetCameraTarget(hero:GetPlayerID(), nil)
-				end)
-				Timers:CreateTimer(1.0, function()
-					PlayerResource:SetCameraTarget(hero:GetPlayerID(), nil)
-				end)
 			end
 
 			Timers:CreateTimer(1.5, function()
 				local steam_id = tostring(PlayerResource:GetSteamID(hero:GetPlayerID()))
 				DonatorCompanion(hero:GetPlayerID(), api.imba.get_player_info(steam_id).companion_file)
 			end)
-		else
-			if api.imba.is_donator(tostring(PlayerResource:GetSteamID(hero:GetPlayerID()))) == 10 then
-				ShowHUD(true)
-				PlayerResource:SetCameraTarget(hero:GetPlayerID(), hero)
-			end
 		end
 	end
 

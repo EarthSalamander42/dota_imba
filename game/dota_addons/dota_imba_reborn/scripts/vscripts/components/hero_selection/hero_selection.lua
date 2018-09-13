@@ -112,9 +112,6 @@ function HeroSelection:StartSelection()
 
 	PlayerResource:GetAllTeamPlayerIDs():each(function(playerID)
 		HeroSelection:UpdateTable(playerID, "empty")
-		if api.imba.is_donator(tostring(PlayerResource:GetSteamID(playerID))) == 10 then
-			ShowHUD(true)
-		end
 	end)
 
 	CustomGameEventManager:RegisterListener('cm_become_captain', Dynamic_Wrap(HeroSelection, 'CMBecomeCaptain'))

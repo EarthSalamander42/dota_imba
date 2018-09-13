@@ -311,8 +311,6 @@ function onPlayerStatChange(table, key, data) {
 					// $('#MyEntry').SetFocus();
 					var player_table = CustomNetTables.GetTableValue("player_table", data[nkey].id.toString());
 					if (player_table) {
-						if (player_table.donator_level == 10)
-							$.GetContextPanel().DeleteAsync(0)
 						if (currentMap == "imba_ranked_5v5") {
 							if (player_table.IMR_5v5_calibrating) {
 								newinfo.text = "IMR: TBD";
@@ -849,6 +847,11 @@ function PreviewHeroCM (name) {
 }
 
 function SelectHero(hero) {
+	var player_table = CustomNetTables.GetTableValue("player_table", Game.GetLocalPlayerID().toString());
+	if (player_table)
+		if (player_table.donator_level == 10)
+			return;
+
 	if (hero) {
 		if (iscm) {
 			selectedherocm = hero;

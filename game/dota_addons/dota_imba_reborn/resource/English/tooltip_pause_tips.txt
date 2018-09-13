@@ -27,7 +27,7 @@
 "dota_tip_universal_26"				"Accidentally canceled your Town Portal Scroll? The settings menu has an option to require a Stop command when cancelling a Teleport."
 "dota_tip_universal_27"				"Holding Alt and clicking on an item in an enemy hero's inventory will alert your team that the enemy has that item."
 "dota_tip_universal_28"				"Holding Alt and clicking on your Buyback button, or on your gold, will alert your team of your Buyback status."
-"dota_tip_universal_29"				"In All Pick, players who have not chosen a Hero before the timer expires will begin to lose their starting gold."
+"dota_tip_universal_29"				"In All Pick, players who have not chosen a Hero before the timer expires will be forced to random." // "In All Pick, players who have not chosen a Hero before the timer expires will begin to lose their starting gold."
 "dota_tip_universal_30"				"Dota 2 is always evolving. New features are added, new Heroes are introduced, and existing Heroes and mechanics may see adjustments. Keep up with the latest changes at the Dota 2 blog!"
 "dota_tip_universal_31"				"Be careful not to make more enemies than the five you are already facing."
 "dota_tip_universal_33"				"If needed, a Color Blind option is available in the settings menu."

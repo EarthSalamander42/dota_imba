@@ -439,6 +439,11 @@ end
 function GameMode:OnAbilityUsed(keys)
 	local player = PlayerResource:GetPlayer(keys.PlayerID)
 	local abilityname = keys.abilityname
+
+	if abilityname == "item_pocket_roshan" then
+		Entities:FindByName(nil, "npc_dota_roshan"):RemoveSelf()
+		local roshan = CreateUnitByName("npc_imba_roshan", player:GetAssignedHero():GetAbsOrigin(), true, nil, nil, player:GetTeam())
+	end
 end
 
 function GameMode:OnPlayerLevelUp(keys)
@@ -521,7 +526,6 @@ function GameMode:OnPlayerChat(keys)
 
 	local text = keys.text
 
-	-- I dont know exactly where to put this so ill put here
 	local steamid = tostring(PlayerResource:GetSteamID(keys.playerid))
 	local _text = tostring(text)
 	api.imba.event(api.events.chat, {
@@ -533,10 +537,11 @@ function GameMode:OnPlayerChat(keys)
 	if not (string.byte(text) == 45) then
 		return nil
 	end
+
 	local caster = PlayerResource:GetPlayer(keys.playerid):GetAssignedHero()
 
 	for str in string.gmatch(text, "%S+") do
-		if IsInToolsMode() or GameRules:IsCheatMode() or api.imba.is_developer(steamid) then
+		if IsInToolsMode() or GameRules:IsCheatMode() and api.imba.is_developer(steamid) then
 			if str == "-dev_remove_units" then
 				GameMode:RemoveUnits(true, true, true)
 			end
@@ -558,6 +563,10 @@ function GameMode:OnPlayerChat(keys)
 						HeroSelection:GiveStartingHero(caster:GetPlayerID(), "npc_dota_hero_"..text, true)
 					end)
 				end
+			end
+
+			if str == "-getwearable" then
+				Wearables:PrintWearables(caster)
 			end
 		end
 
@@ -581,9 +590,19 @@ function GameMode:OnThink()
 	end
 
 	for _, hero in pairs(HeroList:GetAllHeroes()) do
+		if api.imba.is_donator(tostring(PlayerResource:GetSteamID(hero:GetPlayerID()))) == 10 then
+			if not IsNearFountain(hero:GetAbsOrigin(), 1200) then
+				local pos = Vector(-6700, -7165, 1509)
+				if hero:GetTeamNumber() == 3 then
+					pos = Vector(7168, 5750, 1431)
+				end
+				hero:SetAbsOrigin(pos)
+			end
+		end
+
 		-- Make courier controllable, repeat every second to avoid uncontrollable issues
 		if COURIER_TEAM then
-			if COURIER_TEAM[hero:GetTeamNumber()] and not COURIER_TEAM[hero:GetTeamNumber()]:IsControllableByAnyPlayer() and api.imba.is_donator(PlayerResource:GetSteamID(hero:GetPlayerID())) ~= 10 then
+			if COURIER_TEAM[hero:GetTeamNumber()] and not COURIER_TEAM[hero:GetTeamNumber()]:IsControllableByAnyPlayer() then
 				COURIER_TEAM[hero:GetTeamNumber()]:SetControllableByPlayer(hero:GetPlayerID(), true)
 			end
 		end

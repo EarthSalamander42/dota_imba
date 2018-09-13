@@ -117,17 +117,17 @@ function modifier_imba_regen_rune_aura:DeclareFunctions()
 end
 
 function modifier_imba_regen_rune_aura:GetModifierConstantHealthRegen()
-	return _G.IMBA_RUNE_REGEN_HEAL_BASE / 2
+	return CustomNetTables:GetTableValue("game_options", "runes").regen_rune_heal_base / 2
 end
 
 function modifier_imba_regen_rune_aura:GetModifierHealthRegenPercentage()
-	return _G.IMBA_RUNE_REGEN_HEAL_PCT / 2
+	return CustomNetTables:GetTableValue("game_options", "runes").regen_rune_heal_pct / 2
 end
 
 function modifier_imba_regen_rune_aura:GetModifierConstantManaRegen()
-	return _G.IMBA_RUNE_REGEN_MANA_BASE / 2
+	return _CustomNetTables:GetTableValue("game_options", "runes").regen_rune_mana_base / 2
 end
 
 function modifier_imba_regen_rune_aura:GetModifierTotalPercentageManaRegen()
-	return _G.IMBA_RUNE_REGEN_MANA_PCT / 2
+	return CustomNetTables:GetTableValue("game_options", "runes").regen_rune_mana_pct / 2
 end

@@ -14,15 +14,15 @@ function Mutation:Init()
 
 	IMBA_MUTATION["imba"] = "frantic"
 
---	if IsInToolsMode() then
---		IMBA_MUTATION["positive"] = "killstreak_power"
-		IMBA_MUTATION["negative"] = "all_random_deathmatch"
+	if IsInToolsMode() then
+		IMBA_MUTATION["positive"] = "pocket_roshan"
+		IMBA_MUTATION["negative"] = "periodic_spellcast"
 		IMBA_MUTATION["terrain"] = "super_runes"
---	else
+	else
 		Mutation:ChooseMutation("positive", POSITIVE_MUTATION_LIST)
---		Mutation:ChooseMutation("negative", NEGATIVE_MUTATION_LIST)
---		Mutation:ChooseMutation("terrain", TERRAIN_MUTATION_LIST)
---	end
+		Mutation:ChooseMutation("negative", NEGATIVE_MUTATION_LIST)
+		Mutation:ChooseMutation("terrain", TERRAIN_MUTATION_LIST)
+	end
 
 	CustomNetTables:SetTableValue("mutations", "mutation", {IMBA_MUTATION})
 
@@ -468,9 +468,17 @@ function Mutation:OnHeroFirstSpawn(hero)
 		hero:AddNewModifier(hero, nil, "modifier_mutation_kill_streak_power", {})
 	elseif IMBA_MUTATION["positive"] == "super_blink" then
 		if hero:IsIllusion() then return end
-		hero:AddItemByName("item_imba_blink"):SetSellable(false)
+		if not hero:IsIllusion() then
+			hero:AddItemByName("item_imba_blink"):SetSellable(false)
+		end
+	elseif IMBA_MUTATION["positive"] == "pocket_roshan" then
+		if not hero:IsIllusion() then
+			hero:AddItemByName("item_pocket_roshan")
+		end
 	elseif IMBA_MUTATION["positive"] == "pocket_tower" then
-		hero:AddItemByName("item_pocket_tower")
+		if not hero:IsIllusion() then
+			hero:AddItemByName("item_pocket_tower")
+		end
 	elseif IMBA_MUTATION["positive"] == "greed_is_good" then
 		hero:AddNewModifier(hero, nil, "modifier_mutation_greed_is_good", {})
 	elseif IMBA_MUTATION["positive"] == "teammate_resurrection" then
