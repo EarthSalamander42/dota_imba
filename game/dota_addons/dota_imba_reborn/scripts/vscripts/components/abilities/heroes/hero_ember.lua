@@ -12,6 +12,7 @@ LinkLuaModifier("modifier_imba_fire_remnant_state", "components/abilities/heroes
 LinkLuaModifier("modifier_imba_fire_remnant_charges", "components/abilities/heroes/hero_ember.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_fire_remnant_cooldown", "components/abilities/heroes/hero_ember.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_fire_remnant_dash", "components/abilities/heroes/hero_ember.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_fire_remnant_timer", "components/abilities/heroes/hero_ember.lua", LUA_MODIFIER_MOTION_NONE)
 
 --------------------------------------------------------------------------------
 
@@ -451,8 +452,10 @@ function modifier_imba_fire_remnant_state:OnIntervalThink()
 			-- Animate the slash
 			remnant:StartGestureWithPlaybackRate(ACT_DOTA_ATTACK , 1)
 
+			print(caster:GetAttackRange())
+			
 			-- Pick a random enemy in range
-			local nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), remnant:GetAbsOrigin(), nil, self:GetAbility():GetSpecialValueFor("effect_radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ATTACK_IMMUNE, FIND_ANY_ORDER, false)
+			local nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), remnant:GetAbsOrigin(), nil, caster:GetAttackRange(), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ATTACK_IMMUNE, FIND_ANY_ORDER, false)
 			if nearby_enemies[1] then
 				caster:PerformAttack(nearby_enemies[1], true, true, true, false, false, false, true)
 			end
@@ -628,7 +631,7 @@ function imba_ember_spirit_sleight_of_fist:OnSpellStart()
 		local active_remnants = FindActiveRemnants(caster)
 		if active_remnants then
 			for _, remnant in pairs(active_remnants) do
-				nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), remnant:GetAbsOrigin(), nil, effect_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ATTACK_IMMUNE + DOTA_UNIT_TARGET_FLAG_NO_INVIS, FIND_ANY_ORDER, false)
+				nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), remnant:GetAbsOrigin(), nil, effect_radius / 2, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ATTACK_IMMUNE + DOTA_UNIT_TARGET_FLAG_NO_INVIS, FIND_ANY_ORDER, false)
 				for _, enemy in pairs(nearby_enemies) do
 					sleight_targets[#sleight_targets + 1] = enemy:GetEntityIndex()
 					enemy:AddNewModifier(caster, self, "modifier_imba_sleight_of_fist_marker", {duration = (#sleight_targets - 1) * attack_interval})
@@ -638,7 +641,7 @@ function imba_ember_spirit_sleight_of_fist:OnSpellStart()
 				remnant:EmitSound("Hero_EmberSpirit.SleightOfFist.Cast")
 				local remnant_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_ember_spirit/ember_spirit_sleight_of_fist_cast.vpcf", PATTACH_CUSTOMORIGIN, nil)
 				ParticleManager:SetParticleControl(remnant_pfx, 0, remnant:GetAbsOrigin())
-				ParticleManager:SetParticleControl(remnant_pfx, 1, Vector(effect_radius, 1, 1))
+				ParticleManager:SetParticleControl(remnant_pfx, 1, Vector(effect_radius / 2, 1, 1))
 				ParticleManager:ReleaseParticleIndex(remnant_pfx)
 			end
 		end
@@ -658,7 +661,7 @@ function imba_ember_spirit_sleight_of_fist:OnSpellStart()
 			local current_count = 1
 			local current_target = EntIndexToHScript(sleight_targets[current_count])
 			caster:AddNewModifier(caster, self, "modifier_imba_sleight_of_fist_caster", {})
-			ProjectileManager:ProjectileDodge(caster)
+			--ProjectileManager:ProjectileDodge(caster)
 			Timers:CreateTimer(FrameTime(), function()
 				if current_target:IsAlive() then
 					-- Particles and sound
@@ -758,6 +761,8 @@ function imba_ember_spirit_fire_remnant:OnSpellStart()
 				self:SetActivated(false)
 			end
 
+			self:GetCaster():AddNewModifier(caster, self, "modifier_imba_fire_remnant_timer", {duration = self:GetSpecialValueFor("duration")})
+			
 			-- Remnant Flame Guard logic
 			local ability_flame_guard = caster:FindAbilityByName("imba_ember_spirit_flame_guard")
 			if ability_flame_guard then
@@ -854,18 +859,35 @@ function imba_ember_spirit_activate_fire_remnant:OnSpellStart()
 				for _, enemy in pairs(nearby_enemies) do
 					ApplyDamage({victim = enemy, attacker = caster, damage = self:GetSpecialValueFor("damage"), damage_type = DAMAGE_TYPE_MAGICAL, ability = self})
 				end
+				
 				remnant:EmitSound("Hero_EmberSpirit.FireRemnant.Explode")
+				
+				GridNav:DestroyTreesAroundPoint(remnant:GetAbsOrigin(), self:GetSpecialValueFor("effect_radius"), false)
+				
 				if remnant ~= caster then
 					remnant:ForceKill(false)
+				end
+				
+				if caster:HasModifier("modifier_imba_fire_remnant_timer") then
+					caster:RemoveModifierByName("modifier_imba_fire_remnant_timer")
 				end
 			end
 
 			ProjectileManager:ProjectileDodge(caster)
 			caster:RemoveModifierByName("modifier_imba_sleight_of_fist_caster")
 			FindClearSpaceForUnit(caster, closest_remnant_position, true)
-			GridNav:DestroyTreesAroundPoint(closest_remnant_position, self:GetSpecialValueFor("effect_radius"), false)
 			caster:EmitSound("Hero_EmberSpirit.FireRemnant.Stop")
 			self:SetActivated(false)
 		end
 	end
 end
+
+--------------------------------------------------------------------------------
+
+-- Fire Remnant Expiry Timer (for caster)
+modifier_imba_fire_remnant_timer = modifier_imba_fire_remnant_timer or class({})
+
+function modifier_imba_fire_remnant_timer:IsHidden()		return false end
+function modifier_imba_fire_remnant_timer:IsPurgable()		return false end
+function modifier_imba_fire_remnant_timer:RemoveOnDeath()	return false end
+function modifier_imba_fire_remnant_timer:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end

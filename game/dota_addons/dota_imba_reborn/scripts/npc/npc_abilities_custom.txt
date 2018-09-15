@@ -37726,7 +37726,7 @@
 			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"remnant_recharge"			"5.0"
+				"remnant_recharge"			"8.0"
 			}
 			"06"
 			{
@@ -37804,7 +37804,7 @@
 			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"remnant_recharge"			"5.0"
+				"remnant_recharge"			"8.0"
 			}
 			"06"
 			{
