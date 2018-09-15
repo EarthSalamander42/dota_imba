@@ -736,6 +736,7 @@ end
 -------------------------------
 
 imba_mirana_leap = class({})
+LinkLuaModifier("modifier_imba_mirana_leap", "components/abilities/heroes/hero_mirana", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_leap_movement", "components/abilities/heroes/hero_mirana", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_leap_aura", "components/abilities/heroes/hero_mirana", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_leap_speed_boost", "components/abilities/heroes/hero_mirana", LUA_MODIFIER_MOTION_NONE)
@@ -743,6 +744,10 @@ LinkLuaModifier("modifier_imba_leap_talent_cast_angle_handler", "components/abil
 
 function imba_mirana_leap:GetAbilityTextureName()
 	return "mirana_leap"
+end
+
+function imba_mirana_leap:GetIntrinsicModifierName()
+	return "modifier_imba_mirana_leap"
 end
 
 function imba_mirana_leap:GetCastRange(location, target)
@@ -782,7 +787,7 @@ function imba_mirana_leap:OnSpellStart()
 
 	-- Make Mirana face the target (relevant with #7 Talent)
 	caster:FaceTowards(target_point)
-
+	
 	-- Start moving
 	local modifier_movement_handler = caster:AddNewModifier(caster, self, modifier_movement, {})
 
@@ -826,6 +831,39 @@ function imba_mirana_leap:OnSpellStart()
 	end
 end
 
+function imba_mirana_leap:OnUpgrade()
+	if self:GetCaster():HasModifier("modifier_imba_mirana_leap") then
+		if self:GetCaster():FindModifierByName("modifier_imba_mirana_leap"):GetDuration() == -1 and self:GetCaster():FindModifierByName("modifier_imba_mirana_leap"):GetStackCount() < self:GetSpecialValueFor("max_charges") then
+			self:GetCaster():FindModifierByName("modifier_imba_mirana_leap"):SetDuration(self:GetSpecialValueFor("charge_restore_time"), true)
+			self:GetCaster():FindModifierByName("modifier_imba_mirana_leap"):StartIntervalThink(self:GetSpecialValueFor("charge_restore_time"))
+		end
+	end
+end
+
+-- Charges modifier
+modifier_imba_mirana_leap = class ({})
+
+function modifier_imba_mirana_leap:IsHidden()			return false end
+function modifier_imba_mirana_leap:DestroyOnExpire() 	return false end
+function modifier_imba_mirana_leap:IsPurgable() 		return false end
+function modifier_imba_mirana_leap:RemoveOnDeath() 		return false end
+
+function modifier_imba_mirana_leap:OnCreated()
+	self:SetStackCount(self:GetAbility():GetSpecialValueFor("max_charges"))
+end
+
+-- This function should run whenever the modifier duration ends
+function modifier_imba_mirana_leap:OnIntervalThink()
+	self:IncrementStackCount()
+
+	if self:GetStackCount() < self:GetAbility():GetSpecialValueFor("max_charges") then
+		self:SetDuration(self:GetAbility():GetSpecialValueFor("charge_restore_time"), true)
+	else
+		self:SetDuration(-1, true)
+		self:StartIntervalThink(-1)
+	end
+end
+
 -- Leap movement modifier
 modifier_imba_leap_movement = class({})
 
@@ -861,7 +899,7 @@ end
 
 function modifier_imba_leap_movement:OnIntervalThink()
 	-- Check motion controllers
-	if not self:CheckMotionControllers() then
+	if not self:CheckMotionControllers() then		
 		self:Destroy()
 		return nil
 	end
@@ -871,6 +909,8 @@ function modifier_imba_leap_movement:OnIntervalThink()
 
 	-- Horizontal Motion
 	self:HorizontalMotion(self.caster, self.frametime)
+	
+	self.ability:StartCooldown(0)
 end
 
 function modifier_imba_leap_movement:IsHidden() return true end
@@ -915,6 +955,22 @@ function modifier_imba_leap_movement:HorizontalMotion(me, dt)
 			local new_location = self.caster:GetAbsOrigin() + self.direction * self.jump_speed * dt
 			self.caster:SetAbsOrigin(new_location)
 		else
+			-- This should always be true
+			if self:GetCaster():HasModifier("modifier_imba_mirana_leap") then
+				-- Start by ending cooldown before checking for remaining charges
+				self.ability:EndCooldown()
+				-- If charges are at max, start the modifier countdown
+				if self:GetCaster():FindModifierByName("modifier_imba_mirana_leap"):GetStackCount() == self.ability:GetSpecialValueFor("max_charges") then
+					self:GetCaster():FindModifierByName("modifier_imba_mirana_leap"):SetDuration(self.ability:GetSpecialValueFor("charge_restore_time"), true)
+					self:GetCaster():FindModifierByName("modifier_imba_mirana_leap"):StartIntervalThink(self.ability:GetSpecialValueFor("charge_restore_time"))
+				-- If only one charge left, start the cooldown equivalent to remaining modifier time
+				elseif self:GetCaster():FindModifierByName("modifier_imba_mirana_leap"):GetStackCount() <= 1 then
+					self.ability:StartCooldown(self:GetCaster():FindModifierByName("modifier_imba_mirana_leap"):GetRemainingTime())
+				end
+				
+				-- Consume a charge
+				self:GetCaster():FindModifierByName("modifier_imba_mirana_leap"):DecrementStackCount()
+			end
 			self:Destroy()
 		end
 	end

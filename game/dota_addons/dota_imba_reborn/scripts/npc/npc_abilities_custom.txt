@@ -27116,7 +27116,7 @@
 			"09"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"scepter_starfall_cd"		"10"
+				"scepter_starfall_cd"		"5"
 			}
 		}
 	}
@@ -27249,7 +27249,7 @@
 		}
 	}
 
-	//=================================================================================================================
+    //=================================================================================================================
 	// Mirana's Leap
 	//=================================================================================================================
 	"imba_mirana_leap"
@@ -27272,11 +27272,11 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"30 26 22 18"
+		"AbilityCooldown"				"0"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"40 35 30 25"
+		"AbilityManaCost"				"40"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -27290,7 +27290,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"night_leap_range_bonus"	"400 600 800 1000"
+				"night_leap_range_bonus"	"550"
 			}
 			"03"
 			{
@@ -27300,27 +27300,37 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"move_speed_pct"		"8 12 16 20"
+				"move_speed_pct"		"8 16 24 32"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"attack_speed"			"16 32 48 64"				
+				"attack_speed"			"110 130 150 170"				
 			}
 			"06"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"aura_duration"			"5"
+				"var_type"				"FIELD_FLOAT"
+				"aura_duration"			"2.5"
 			}
 			"07"
 			{
+				"var_type"				"FIELD_FLOAT"
+				"aura_linger_duration"	"2.5"				
+			}
+			"08"
+			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_linger_duration"	"3"				
+				"leap_range"			"550"
 			}
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"leap_range"			"600 700 800 900"
+				"max_charges"			"3 4 5 6"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"charge_restore_time"	"30"
 			}
 		}
 	}

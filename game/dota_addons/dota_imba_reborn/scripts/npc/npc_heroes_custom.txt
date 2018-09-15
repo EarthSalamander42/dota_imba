@@ -1044,7 +1044,8 @@
 		"Ability10"					"special_bonus_imba_mirana_3" // Moonlight Shadow grants bonus move speed to invisible allies.
 		"Ability11"					"special_bonus_imba_mirana_7" // Leap can now be cast without needing to turn. Makes Mirana invisible for the duration of the jump, causing her to dodge projectiles. 
 		"Ability12"					"special_bonus_imba_mirana_4" // Two additional Sacred Arrows to the sides
-		"Ability13"					"special_bonus_imba_mirana_5" // Standing in the same spot for a few seconds grants Mirana invisibility until she moves or attack. Casting spells does not break the invisibility.
+		//"Ability13"					"special_bonus_imba_mirana_5" // Standing in the same spot for a few seconds grants Mirana invisibility until she moves or attack. Casting spells does not break the invisibility.
+		"Ability13"					"special_bonus_mana_break_25"
 		"Ability14"					"special_bonus_imba_mirana_2" // Sacred Arrows allow allies to trigger On The Prowls' critical as long as there is at least enough seconds remaining to the stun.
 		"Ability15"					"special_bonus_imba_mirana_6" // Free Sacred Arrow after Leap ends
 		"Ability16"					"special_bonus_imba_mirana_1" // Upon using Moonlight Shadow, allies are given a stack of Starstorm which will proc when they go out of invisibility near an enemy unit.
