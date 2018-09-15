@@ -41,14 +41,14 @@
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_abaddon_borrowed_time"
 
-		"Ability10"					"special_bonus_imba_abaddon_8" //Heals that heal above maximum health threshold during Borrowed Time grants a mist shield (25% ratio) that is released after Borrowed Time expires for 5 seconds, healing Abaddon.
-		"Ability11"					"special_bonus_imba_abaddon_6" //+50% Overchannel power
-		"Ability12"					"special_bonus_imba_abaddon_5" //Curse of Avernus Abbadon buff now apply as an aura around him in 900 AoE, affecting all allies in range.
-		"Ability13"					"special_bonus_imba_abaddon_2" //Consecutives hits of Curse of Avernus refreshes the buff/debuff and increases the duration of the buff/debuff by 1 second.
-		"Ability14"					"special_bonus_imba_abaddon_4" //Curse of Avernus can now be activated to sacrifice a 10% of your current health, and deal it as extra damage on the next attack. Has a 8 seconds cooldown.
-		"Ability15"					"special_bonus_imba_abaddon_3" //During the first second of Aphotic Shield, it absorbs all damage done to it and adds it to it's health/damage.
-		"Ability16"					"special_bonus_imba_abaddon_1" //When the shield breaks, applies Mist Coil to all allies and enemies within 350 radius
-		"Ability17"					"special_bonus_imba_abaddon_7" //Borrowed Time Strong Purges all allies in 900 AoE on cast.
+		"Ability10"					"special_bonus_imba_abaddon_5" //Curse of Avernus Abbadon buff now apply as an aura around him in 900 AoE, affecting all allies in range.
+		"Ability11"					"special_bonus_imba_abaddon_2" //+10% Curse of Avernus MS/AS shift; Curse of Avernus buff/debuff refresh increases duration by 1 second each hit.
+		"Ability12"					"special_bonus_imba_abaddon_7" //Borrowed Time Strong Purges all allies on cast.
+		"Ability13"					"special_bonus_imba_abaddon_4" //(Curse of Avernus can be activated to sacrifice 10% of your max health as extra physical damage on attack. Cooldown of 5 seconds.
+		"Ability14"					"special_bonus_imba_abaddon_8" //Heals during Borrowed Time grant a health regen buff upon end (15% of heals as health regen for 5s).
+		"Ability15"					"special_bonus_imba_abaddon_6" //+50% Overchannel power
+		"Ability16"					"special_bonus_imba_abaddon_1" //When the shield breaks, applies Mist Coil to all allies and enemies within 425 radius
+		"Ability17"					"special_bonus_imba_abaddon_3" //During the first second of Aphotic Shield, it absorbs all damage done to it and adds it to it's health/damage.
 	}
 
 	//=================================================================================================================

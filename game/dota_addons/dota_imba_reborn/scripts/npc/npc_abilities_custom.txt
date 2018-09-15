@@ -383,7 +383,7 @@
 			"04"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"cast_range"							"800 800 875 1025"
+				"cast_range"							"800"
 			}
 			"05"
 			{
@@ -393,12 +393,12 @@
 			"06"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"on_hit_damage"							"10 12 15 19 24 30 37 45"
+				"on_hit_damage"							"10 15 20 25"
 			}
 			"07"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"damage_heal_pct"						"10 11 12 15 18 22 26 30"
+				"damage_heal_pct"						"10"
 			}
 			"08"
 			{
@@ -419,7 +419,7 @@
 			"11"
 			{
 				"var_type"								"FIELD_FLOAT"
-				"self_damage"							"50 100 140 160"
+				"self_damage"							"75 100 125 150"
 			}
 		}
 
@@ -474,7 +474,7 @@
 			"02"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"shield"								"110 170 240 320"
+				"shield"								"110 165 220 275"
 			}
 			"03"
 			{
@@ -527,11 +527,13 @@
 			{
 				"var_type"								"FIELD_INTEGER"
 				"move_slow"								"8 12 16 20"
+				"LinkedSpecialBonus"					"special_bonus_imba_abaddon_2"
 			}
 			"03"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"attack_slow"							"8 12 16 20"
+				"attack_slow"							"10 20 30 40"
+				"LinkedSpecialBonus"					"special_bonus_imba_abaddon_2"
 			}
 			"04"
 			{
@@ -542,11 +544,13 @@
 			{
 				"var_type"								"FIELD_INTEGER"
 				"move_increase"							"15"
+				"LinkedSpecialBonus"					"special_bonus_imba_abaddon_2"
 			}
 			"06"
 			{
 				"var_type"								"FIELD_INTEGER"
 				"attack_increase"						"10 20 30 40"
+				"LinkedSpecialBonus"					"special_bonus_imba_abaddon_2"
 			}
 			"07"
 			{
@@ -629,7 +633,8 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"								"0.0"
-
+		"AbilityCastRange"								"900"
+		
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"								"60.0 50.0 40.0"
@@ -675,7 +680,7 @@
 	}
 
 	//=================================================================================================================
-	// Abaddon Talent 1 (Level 10): When the shield breaks, applies Mist Coil to all allies and enemies within a radius
+	// Abaddon Talent 1: When the shield breaks, applies Mist Coil to all allies and enemies within a radius
 	//=================================================================================================================
 	"special_bonus_imba_abaddon_1" // Coil Unleashed
 	{
@@ -703,7 +708,7 @@
 	}
 
 	//=================================================================================================================
-	// Abaddon Talent 2 (Level 10): Consecutives hits of Curse of Avernus refreshes the buff/debuff and increases the duration of the buff/debuff by 1 second.
+	// Abaddon Talent 2: Consecutives hits of Curse of Avernus refreshes the buff/debuff and increases the duration of the buff/debuff by 1 second.
 	//=================================================================================================================
 	"special_bonus_imba_abaddon_2"
 	{
@@ -725,14 +730,19 @@
 		{
 			"01"
 			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"10"
+			}
+			"02"
+			{
 				"var_type"					"FIELD_FLOAT"
-				"value"						"1.0"
+				"extend_duration"			"1.0"
 			}
 		}
 	}
 
 	//=================================================================================================================
-	// Abaddon Talent 3 (Level 20): During the first second of Aphotic Shield, it absorbs all damage done to it and adds it to it's health/damage.
+	// Abaddon Talent 3: During the first second of Aphotic Shield, it absorbs all damage done to it and adds it to it's health/damage.
 	//=================================================================================================================
 	"special_bonus_imba_abaddon_3"
 	{
@@ -760,7 +770,7 @@
 	}
 
 	//=================================================================================================================
-	// Abaddon Talent 4 (Level 20): Curse of Avernus can now be activated to sacrifice a 10% of your current health, and deal it as extra damage on the next attack. Has a 8 seconds cooldown.
+	// Abaddon Talent 4: Curse of Avernus can now be activated to sacrifice 10% of your max health, and deal it as extra damage on the next attack. Has a 5 second cooldown.
 	//=================================================================================================================
 	"special_bonus_imba_abaddon_4"
 	{
@@ -782,7 +792,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"active_cooldown"			"8"
+				"active_cooldown"			"5"
 			}
 			"02"
 			{
@@ -798,7 +808,7 @@
 	}
 
 	//=================================================================================================================
-	// Abaddon Talent 5 (Level 30): Curse of Avernus Abbadon buff now apply as an aura around him in 900 AoE, affecting all allies in range.
+	// Abaddon Talent 5: Curse of Avernus Abbadon buff now apply as an aura around him in 900 AoE, affecting all allies in range.
 	//=================================================================================================================
 	"special_bonus_imba_abaddon_5"
 	{
@@ -826,7 +836,7 @@
 	}
 
 	//=================================================================================================================
-	// Abaddon Talent 6 (Level 30): +50% Overchannel power
+	// Abaddon Talent 6: +50% Overchannel power
 	//=================================================================================================================
 	"special_bonus_imba_abaddon_6"
 	{
@@ -854,7 +864,7 @@
 	}
 
 	//=================================================================================================================
-	// Abaddon Talent 7 (Level 40): Borrowed Time Strong Purges all allies in 900 AoE on cast.
+	// Abaddon Talent 7: Borrowed Time Strong Purges all allies in 900 AoE on cast.
 	//=================================================================================================================
 	"special_bonus_imba_abaddon_7"
 	{
@@ -882,7 +892,7 @@
 	}
 
 	//=================================================================================================================
-	// Abaddon Talent 8 (Level 40): Heals that heal above maximum health threshold during Borrowed Time grants a mist shield (25% ratio) that is released after Borrowed Time expires for 5 seconds, healing Abaddon.
+	// Abaddon Talent 8: Heals that heal above maximum health threshold during Borrowed Time grants a mist shield (25% ratio) that is released after Borrowed Time expires for 5 seconds, healing Abaddon.
 	//=================================================================================================================
 	"special_bonus_imba_abaddon_8"
 	{
@@ -904,7 +914,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"ratio_pct"					"25"
+				"ratio_pct"					"15"
 			}
 			"02"
 			{
