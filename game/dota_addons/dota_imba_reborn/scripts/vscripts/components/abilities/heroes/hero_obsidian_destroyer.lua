@@ -838,9 +838,9 @@ function imba_obsidian_destroyer_astral_imprisonment:GetCooldown(level)
 --		return 0
 --	end
 
-	if IsServer() then
-		return self.BaseClass.GetCooldown(self, level) - prison_duration
-	end
+	-- if IsServer() then
+		-- return self.BaseClass.GetCooldown(self, level) - prison_duration
+	-- end
 
 	-- Make the client see the full cooldown
 	return self.BaseClass.GetCooldown(self, level)
@@ -977,19 +977,19 @@ function modifier_imba_astral_imprisonment:CheckState()
 	local state 
 	
 	-- Prevent the caster from being stunned, so he will able to move his prison
-	if self.parent == self.caster then
-	state = {[MODIFIER_STATE_INVULNERABLE] = true,
-			 [MODIFIER_STATE_OUT_OF_GAME] = true,
-			 [MODIFIER_STATE_NO_HEALTH_BAR] = true,
-			 [MODIFIER_STATE_ROOTED] = true,
-			 [MODIFIER_STATE_MUTED] = true,
-			 [MODIFIER_STATE_DISARMED] = true}
-	else
+	-- if self.parent == self.caster then
+	-- state = {[MODIFIER_STATE_INVULNERABLE] = true,
+			 -- [MODIFIER_STATE_OUT_OF_GAME] = true,
+			 -- [MODIFIER_STATE_NO_HEALTH_BAR] = true,
+			 -- [MODIFIER_STATE_ROOTED] = true,
+			 -- [MODIFIER_STATE_MUTED] = true,
+			 -- [MODIFIER_STATE_DISARMED] = true}
+	-- else
 	state = {[MODIFIER_STATE_INVULNERABLE] = true,
 			 [MODIFIER_STATE_OUT_OF_GAME] = true,
 			 [MODIFIER_STATE_NO_HEALTH_BAR] = true,
 			 [MODIFIER_STATE_STUNNED] = true}
-	end
+	-- end
 			 
 	return state
 end

@@ -2026,7 +2026,7 @@
 "DOTA_Tooltip_ability_imba_obsidian_destroyer_astral_imprisonment_radius"           "IMPLOSION RADIUS:"
 "DOTA_Tooltip_ability_imba_obsidian_destroyer_astral_imprisonment_damage"           "DAMAGE:"
 "DOTA_Tooltip_ability_imba_obsidian_destroyer_astral_imprisonment_prison_duration"  "PRISON DURATION:"
-"DOTA_Tooltip_ability_imba_obsidian_destroyer_astral_imprisonment_prison_movespeed" "PRISON MOVE SPEED:"
+//"DOTA_Tooltip_ability_imba_obsidian_destroyer_astral_imprisonment_prison_movespeed" "PRISON MOVE SPEED:"
 "DOTA_Tooltip_ability_imba_obsidian_destroyer_astral_imprisonment_aghanim_description"  "Astral Imprisonment now steals 5 intelligence when it is applied on an enemy target."
 "DOTA_Tooltip_ability_imba_obsidian_destroyer_astral_imprisonment_cast_range"       "CAST RANGE:"
 
@@ -2038,7 +2038,7 @@
 ////===============================================================================================================
 
 "DOTA_Tooltip_ability_imba_obsidian_destroyer_essence_aura"            "Essence Aura"
-"DOTA_Tooltip_ability_imba_obsidian_destroyer_essence_aura_Description"             "Has %restore_chance_pct%% chance to restore a percentage of nearby allies' mana pool whenever they cast a spell.\n<font color='#FF7800'>Essence Synergy:</font> Whenever an ally triggers Essence Aura, its owner will temporarily gain bonus intelligence."
+"DOTA_Tooltip_ability_imba_obsidian_destroyer_essence_aura_Description"             "Has a %restore_chance_pct%%% chance to restore a percentage of nearby allies' mana pool whenever they cast a spell.\n<font color='#FF7800'>Essence Synergy:</font> Whenever an ally triggers Essence Aura, its owner will temporarily gain bonus intelligence."
 "DOTA_Tooltip_ability_imba_obsidian_destroyer_essence_aura_Note0"                   "Each of Essence Synergy's stacks has independent durations."
 "DOTA_Tooltip_ability_imba_obsidian_destroyer_essence_aura_Note1"                   "The aura owner cannot get Essence Synergy stacks from triggering Essence Aura."
 "DOTA_Tooltip_ability_imba_obsidian_destroyer_essence_aura_Note2"                   "Cannot proc spells that have no mana cost or no cooldown, except for Arcane Orb. Also does not proc on items."
@@ -2089,7 +2089,7 @@
 "DOTA_Tooltip_ability_special_bonus_imba_obsidian_destroyer_6_Description"	"Sanity's Eclipse applies 2x the Mana Burn and 50% more damage towards enemies with INT less than 50% of Outworld Devourer's."
 "DOTA_Tooltip_ability_special_bonus_imba_obsidian_destroyer_7"				"Sanity's Eclipse pierces magic immunity"
 "DOTA_Tooltip_ability_special_bonus_imba_obsidian_destroyer_8"				"Essence Aura Overflow"
-"DOTA_Tooltip_ability_special_bonus_imba_obsidian_destroyer_8_Description"	"Excess Mana gained from Essence Aura is converted into Max Mana for 6 seconds."
+"DOTA_Tooltip_ability_special_bonus_imba_obsidian_destroyer_8_Description"	"Excess Mana gained from Essence Aura is converted into Max Mana for 10 seconds."
 
 // Phantom Lancer
 ////===============================================================================================================

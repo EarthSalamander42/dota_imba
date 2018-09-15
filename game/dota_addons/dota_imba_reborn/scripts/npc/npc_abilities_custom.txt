@@ -11105,7 +11105,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"AbilityTextureName"			"obsidian_destroyer_astral_imprisonment"
 		"MaxLevel"						"4"
@@ -11128,7 +11128,7 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------		
 		"AbilityCastPoint"				"0.25"
-		"AbilityCastRange"				"300 600 900 1200"
+		"AbilityCastRange"				"525 600 675 750"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -11153,7 +11153,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"100 250 350 450"
+				"damage"				"150 250 350 450"
 			}
 
 			"04"
@@ -11177,7 +11177,7 @@
 			"07"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"cast_range"					"300 600 900 1200"
+				"cast_range"					"525 600 675 750"
 			}
 		}
 	}
@@ -11295,7 +11295,7 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"						"175 325 375"
+		"AbilityManaCost"						"175 250 325"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -11310,7 +11310,7 @@
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"int_multiplier"				"10 13 16"
+				"int_multiplier"				"11 12 13"
 			}
 
 			"03"
@@ -11541,7 +11541,7 @@
 			"01"
 			{
 				"var_type"                  "FIELD_INTEGER"
-				"value"						"6"
+				"value"						"10"
 			}
 		}
 	}
