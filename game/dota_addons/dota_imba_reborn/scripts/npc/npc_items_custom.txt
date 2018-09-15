@@ -5595,7 +5595,7 @@
 			"14"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"static_cooldown"		"0.5"
+				"static_cooldown"		"0.1"
 			}
 		}
 	}
@@ -10913,7 +10913,7 @@
 			"21"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"static_cooldown"		"0.5"
+				"static_cooldown"		"0.1"
 			}
 		}
 	}
