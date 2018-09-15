@@ -4052,7 +4052,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"1350"
+		"ItemCost"						"0"
 		"ItemShopTags"					""
 
 		// Recipe
@@ -4061,7 +4061,7 @@
 		"ItemResult"					"item_imba_radiance"
 		"ItemRequirements"
 		{
-			"01"						"item_relic"
+			"01"						"item_relic;item_cloak_of_flames"
 		}
 	}
 
@@ -12032,5 +12032,97 @@
 		}
 	}
 
-	//next free ID: 2288
+	//========================================================================================================
+	// Cloak of Flames
+	//========================================================================================================
+	"item_cloak_of_flames" 
+	{
+		"ID"							"2288"
+		"BaseClass"						"item_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastRange"				"375"
+		"Model"							"models/props_gameplay/red_box.vmdl" 
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"ItemCost"						"1350"
+		"ItemKillable"					"1" 
+		"ItemSellable"					"1"
+		"ItemPurchasable"				"1"
+		"ItemDroppable"					"1"
+		"AbilityTextureName"			"custom/cloak_of_flames"
+
+		"SecretShop"					"1"
+
+		"ItemShopTags"					"artifact"
+		"ItemQuality"					"artifact"
+
+		"ItemStackable"					"0"
+		"ItemPermanent"					"1"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"375"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"damage_per_tick"	"60"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"tick_time"			"1.0"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_immolation"
+			{
+				"IsHidden"			"0"
+				"Passive"			"1"
+				"ThinkInterval"		"%tick_time"
+				"TextureName"		"modifiers/cloak_of_flames"
+				
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"Target"			"CASTER"
+						"EffectName"		"particles/units/heroes/hero_ember_spirit/ember_spirit_flameguard.vpcf"
+						"EffectAttachType"	"follow_origin"
+	
+						"ControlPoints"
+						{
+							"00"	"0 0 0"
+							"01"	"%radius 1 1"
+						}
+					}
+				}
+
+				"OnIntervalThink"
+				{
+					"Damage"
+					{
+						"Type"			"DAMAGE_TYPE_MAGICAL"
+						"Damage"		"%damage_per_tick"
+						
+						"Target"
+						{
+							"Center"	"TARGET"
+							"Radius"	"%radius"
+							"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+							"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+						}
+					}
+				}
+			}
+		}
+	}
+
+	//next free ID: 2289
 }

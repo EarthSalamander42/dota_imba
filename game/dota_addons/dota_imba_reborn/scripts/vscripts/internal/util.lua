@@ -49,6 +49,7 @@ function MapMutation5v5() return "imba_mutation_5v5" end
 function MapMutation10v10() return "imba_mutation_10v10" end
 function Map1v1() return "imba_1v1" end
 function MapTournament() return "map_tournament" end
+function MapOverthrow() return "imba_overthrow" end
 
 function IsRankedMap()
 	if GetMapName() == MapRanked5v5() or GetMapName() == MapRanked10v10() then

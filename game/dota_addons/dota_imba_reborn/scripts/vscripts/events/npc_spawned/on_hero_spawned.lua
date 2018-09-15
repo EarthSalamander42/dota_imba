@@ -59,141 +59,150 @@ function GameMode:OnHeroFirstSpawn(hero)
 	else
 		hero.picked = true
 
-		-- remove camera focused pick screen
-		PlayerResource:SetCameraTarget(hero:GetPlayerID(), hero)
-		Timers:CreateTimer(0.1, function()
-			PlayerResource:SetCameraTarget(hero:GetPlayerID(), nil)
-		end)
-		Timers:CreateTimer(1.0, function()
-			PlayerResource:SetCameraTarget(hero:GetPlayerID(), nil)
-		end)
+		if hero:IsClone() then
+			hero:SetRespawnsDisabled(true)
 
-		if api.imba.is_developer(PlayerResource:GetSteamID(hero:GetPlayerID())) then
-			hero.has_graph = true
-			CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "show_netgraph", {})
---			CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "show_netgraph_heronames", {})
+			-- add war veteran modifier to the clone if a new clone spawn after main hero gets level 26
+			if hero:GetCloneSource():HasModifier("modifier_imba_war_veteran_"..hero:GetCloneSource():GetPrimaryAttribute()) then
+				hero:AddNewModifier(hero, nil, "modifier_imba_war_veteran_"..hero:GetCloneSource():GetPrimaryAttribute(), {}):SetStackCount(math.min(hero:GetCloneSource():GetLevel() -25, 17))
+			end
+		else
+			-- remove camera focused pick screen
+			PlayerResource:SetCameraTarget(hero:GetPlayerID(), hero)
+			Timers:CreateTimer(0.1, function()
+				PlayerResource:SetCameraTarget(hero:GetPlayerID(), nil)
+			end)
+			Timers:CreateTimer(1.0, function()
+				PlayerResource:SetCameraTarget(hero:GetPlayerID(), nil)
+			end)
+
+--			if api.imba.is_developer(PlayerResource:GetSteamID(hero:GetPlayerID())) then
+--				hero.has_graph = true
+--				CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "show_netgraph", {})
+--				CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "show_netgraph_heronames", {})
+--			end
+
+			if hero:GetUnitName() == "npc_dota_hero_arc_warden" then
+				-- Arc Warden clone handling
+				if hero:FindAbilityByName("arc_warden_tempest_double") and not hero.first_tempest_double_cast and hero:IsRealHero() then
+					hero.first_tempest_double_cast = true
+					local tempest_double_ability = hero:FindAbilityByName("arc_warden_tempest_double")
+					tempest_double_ability:SetLevel(4)
+					Timers:CreateTimer(0.1, function()
+						if not hero:HasModifier("modifier_arc_warden_tempest_double") then
+							tempest_double_ability:CastAbility()
+							tempest_double_ability:SetLevel(1)
+						end
+					end)
+				end
+
+				if hero:HasModifier("modifier_arc_warden_tempest_double") then
+					-- List of modifiers which carry over from the main hero to the clone
+					local clone_shared_buffs = {
+						"modifier_imba_moon_shard_stacks_dummy",
+						"modifier_imba_moon_shard_consume_1",
+						"modifier_imba_moon_shard_consume_2",
+						"modifier_imba_moon_shard_consume_3",
+						"modifier_item_imba_soul_of_truth"
+					}
+
+					-- Iterate through the main hero's potential modifiers
+					local main_hero = hero:GetOwner():GetAssignedHero()
+					for _, shared_buff in pairs(clone_shared_buffs) do
+						-- If the main hero has this modifier, copy it to the clone
+						if main_hero:HasModifier(shared_buff) then
+							local shared_buff_modifier = main_hero:FindModifierByName(shared_buff)
+							local shared_buff_ability = shared_buff_modifier:GetAbility()
+
+							-- If a source ability was found, use it
+							if shared_buff_ability then
+								shared_buff_ability:ApplyDataDrivenModifier(main_hero, hero, shared_buff, {})
+
+								-- Else, it's a consumable item modifier. Create a dummy item to use the ability from.
+							else
+								-- Moon Shard
+								if string.find(shared_buff, "moon_shard") then
+									-- Create dummy item
+									local dummy_item = CreateItem("item_imba_moon_shard", hero, hero)
+									main_hero:AddItem(dummy_item)
+
+									-- Fetch dummy item's ability handle
+									for i = 0, 11 do
+										local current_item = main_hero:GetItemInSlot(i)
+										if current_item and current_item:GetName() == "item_imba_moon_shard" then
+											current_item:ApplyDataDrivenModifier(main_hero, hero, shared_buff, {})
+											break
+										end
+									end
+									main_hero:RemoveItem(dummy_item)
+								end
+
+								-- Soul of Truth
+								if shared_buff == "modifier_item_imba_soul_of_truth" then
+									-- Create dummy item
+									local dummy_item = CreateItem("item_imba_soul_of_truth", hero, hero)
+									main_hero:AddItem(dummy_item)
+
+									-- Fetch dummy item's ability handle
+									for i = 0, 11 do
+										local current_item = main_hero:GetItemInSlot(i)
+										if current_item and current_item:GetName() == "item_imba_soul_of_truth" then
+											current_item:ApplyDataDrivenModifier(main_hero, hero, shared_buff, {})
+											break
+										end
+									end
+									main_hero:RemoveItem(dummy_item)
+								end
+							end
+
+							-- Apply any stacks if relevant
+							if main_hero:GetModifierStackCount(shared_buff, nil) > 0 then
+								hero:SetModifierStackCount(shared_buff, main_hero, main_hero:GetModifierStackCount(shared_buff, nil))
+							end
+						end
+					end
+				end
+			elseif hero:GetUnitName() == "npc_dota_hero_monkey_king" then
+				if TRUE_MK_HAS_SPAWNED then
+					return
+				else
+					hero.is_real_mk = true
+					TRUE_MK_HAS_SPAWNED = true
+				end
+			elseif hero:GetUnitName() == "npc_dota_hero_pudge" then
+				local flesh_heap_ability = hero:FindAbilityByName("imba_pudge_flesh_heap")
+				hero:AddNewModifier(hero, flesh_heap_ability, "modifier_imba_pudge_flesh_heap_handler", {})
+			elseif hero:GetUnitName() == "npc_dota_hero_troll_warlord" then -- troll warlord weird fix needed
+				hero:SwapAbilities("imba_troll_warlord_whirling_axes_ranged", "imba_troll_warlord_whirling_axes_melee", true, false)
+				hero:SwapAbilities("imba_troll_warlord_whirling_axes_ranged", "imba_troll_warlord_whirling_axes_melee", false, true)
+				hero:SwapAbilities("imba_troll_warlord_whirling_axes_ranged", "imba_troll_warlord_whirling_axes_melee", true, false)
+			elseif hero:GetUnitName() == "npc_dota_hero_witch_doctor" then
+				if hero:IsAlive() and hero:HasTalent("special_bonus_imba_witch_doctor_6") then
+					if not hero:HasModifier("modifier_imba_voodoo_restoration") then
+						hero:AddNewModifier(hero, hero:GetAbilityByIndex(1), "modifier_imba_voodoo_restoration", {})
+					end
+				end
+			end
+
+			-- IMBA: Negative Vengeance Aura removal
+			if hero.vengeance_aura_target then
+				hero.vengeance_aura_target:RemoveModifierByName("modifier_imba_command_aura_negative_aura")
+				hero.vengeance_aura_target = nil
+			end
 		end
 
 --		if not IsInToolsMode() then
 			hero:SetupHealthBarLabel()
 --		end
 	end
-
-	if hero:GetUnitName() == "npc_dota_hero_arc_warden" then
-		-- Arc Warden clone handling
-		if hero:FindAbilityByName("arc_warden_tempest_double") and not hero.first_tempest_double_cast and hero:IsRealHero() then
-			hero.first_tempest_double_cast = true
-			local tempest_double_ability = hero:FindAbilityByName("arc_warden_tempest_double")
-			tempest_double_ability:SetLevel(4)
-			Timers:CreateTimer(0.1, function()
-				if not hero:HasModifier("modifier_arc_warden_tempest_double") then
-					tempest_double_ability:CastAbility()
-					tempest_double_ability:SetLevel(1)
-				end
-			end)
-		end
-
-		if hero:HasModifier("modifier_arc_warden_tempest_double") then
-			-- List of modifiers which carry over from the main hero to the clone
-			local clone_shared_buffs = {
-				"modifier_imba_moon_shard_stacks_dummy",
-				"modifier_imba_moon_shard_consume_1",
-				"modifier_imba_moon_shard_consume_2",
-				"modifier_imba_moon_shard_consume_3",
-				"modifier_item_imba_soul_of_truth"
-			}
-
-			-- Iterate through the main hero's potential modifiers
-			local main_hero = hero:GetOwner():GetAssignedHero()
-			for _, shared_buff in pairs(clone_shared_buffs) do
-				-- If the main hero has this modifier, copy it to the clone
-				if main_hero:HasModifier(shared_buff) then
-					local shared_buff_modifier = main_hero:FindModifierByName(shared_buff)
-					local shared_buff_ability = shared_buff_modifier:GetAbility()
-
-					-- If a source ability was found, use it
-					if shared_buff_ability then
-						shared_buff_ability:ApplyDataDrivenModifier(main_hero, hero, shared_buff, {})
-
-						-- Else, it's a consumable item modifier. Create a dummy item to use the ability from.
-					else
-						-- Moon Shard
-						if string.find(shared_buff, "moon_shard") then
-							-- Create dummy item
-							local dummy_item = CreateItem("item_imba_moon_shard", hero, hero)
-							main_hero:AddItem(dummy_item)
-
-							-- Fetch dummy item's ability handle
-							for i = 0, 11 do
-								local current_item = main_hero:GetItemInSlot(i)
-								if current_item and current_item:GetName() == "item_imba_moon_shard" then
-									current_item:ApplyDataDrivenModifier(main_hero, hero, shared_buff, {})
-									break
-								end
-							end
-							main_hero:RemoveItem(dummy_item)
-						end
-
-						-- Soul of Truth
-						if shared_buff == "modifier_item_imba_soul_of_truth" then
-							-- Create dummy item
-							local dummy_item = CreateItem("item_imba_soul_of_truth", hero, hero)
-							main_hero:AddItem(dummy_item)
-
-							-- Fetch dummy item's ability handle
-							for i = 0, 11 do
-								local current_item = main_hero:GetItemInSlot(i)
-								if current_item and current_item:GetName() == "item_imba_soul_of_truth" then
-									current_item:ApplyDataDrivenModifier(main_hero, hero, shared_buff, {})
-									break
-								end
-							end
-							main_hero:RemoveItem(dummy_item)
-						end
-					end
-
-					-- Apply any stacks if relevant
-					if main_hero:GetModifierStackCount(shared_buff, nil) > 0 then
-						hero:SetModifierStackCount(shared_buff, main_hero, main_hero:GetModifierStackCount(shared_buff, nil))
-					end
-				end
-			end
-		end
-	elseif hero:GetUnitName() == "npc_dota_hero_meepo" then
-		if not hero:IsClone() then
-			hero.is_real_meepo = true
-		end
-	elseif hero:GetUnitName() == "npc_dota_hero_monkey_king" then
-		if TRUE_MK_HAS_SPAWNED then
-			return
-		else
-			hero.is_real_mk = true
-			TRUE_MK_HAS_SPAWNED = true
-		end
-	elseif hero:GetUnitName() == "npc_dota_hero_pudge" then
-		local flesh_heap_ability = hero:FindAbilityByName("imba_pudge_flesh_heap")
-		hero:AddNewModifier(hero, flesh_heap_ability, "modifier_imba_pudge_flesh_heap_handler", {})
-	elseif hero:GetUnitName() == "npc_dota_hero_troll_warlord" then -- troll warlord weird fix needed
-		hero:SwapAbilities("imba_troll_warlord_whirling_axes_ranged", "imba_troll_warlord_whirling_axes_melee", true, false)
-		hero:SwapAbilities("imba_troll_warlord_whirling_axes_ranged", "imba_troll_warlord_whirling_axes_melee", false, true)
-		hero:SwapAbilities("imba_troll_warlord_whirling_axes_ranged", "imba_troll_warlord_whirling_axes_melee", true, false)
-	elseif hero:GetUnitName() == "npc_dota_hero_witch_doctor" then
-		if hero:IsAlive() and hero:HasTalent("special_bonus_imba_witch_doctor_6") then
-			if not hero:HasModifier("modifier_imba_voodoo_restoration") then
-				hero:AddNewModifier(hero, hero:GetAbilityByIndex(1), "modifier_imba_voodoo_restoration", {})
-			end
-		end
-	end
-
-	-- IMBA: Negative Vengeance Aura removal
-	if hero.vengeance_aura_target then
-		hero.vengeance_aura_target:RemoveModifierByName("modifier_imba_command_aura_negative_aura")
-		hero.vengeance_aura_target = nil
-	end
 end
 
 -- everytime a real hero respawn
 function GameMode:OnHeroSpawned(hero)
+	if IsMutationMap() then
+		Mutation:OnHeroSpawn(hero)
+	end
+
 	-- fix for killed with Ghost Revenant immolation
 	if hero:HasModifier("modifier_ghost_revenant_ghost_immolation_debuff") then
 		hero:RemoveModifierByName("modifier_ghost_revenant_ghost_immolation_debuff")
@@ -202,25 +211,9 @@ function GameMode:OnHeroSpawned(hero)
 		end)
 	end
 
-	if hero:GetUnitName() == "npc_dota_hero_meepo" then
-		if hero:GetCloneSource() then
-			if hero:GetCloneSource():IsAlive() then
-				hero:RemoveModifierByName("modifier_command_restricted")
-				hero:RemoveModifierByName("modifier_invulnerable")
-			else
-				hero:AddNewModifier(hero, nil, "modifier_command_restricted", {})
-				hero:AddNewModifier(hero, nil, "modifier_invulnerable", {})
-			end
-		end
-	end
-
 	Timers:CreateTimer(1.0, function() -- Silencer fix
 		if hero:HasModifier("modifier_silencer_int_steal") then
 			hero:RemoveModifierByName("modifier_silencer_int_steal")
 		end
 	end)
-
-	if IsMutationMap() then
-		Mutation:OnHeroSpawn(hero)
-	end
 end

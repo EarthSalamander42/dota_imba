@@ -89,6 +89,7 @@ IMBATTLEPASS_LEVEL_REWARD[130]	= "fountain15"
 IMBATTLEPASS_LEVEL_REWARD[132]	= "radiance3"
 IMBATTLEPASS_LEVEL_REWARD[146]	= "fountain18"
 IMBATTLEPASS_LEVEL_REWARD[150]	= "shiva2"
+IMBATTLEPASS_LEVEL_REWARD[175]	= "pudge_dragonclaw"
 IMBATTLEPASS_LEVEL_REWARD[200]	= "shiva3"
 
 CustomNetTables:SetTableValue("game_options", "battlepass", {battlepass = IMBATTLEPASS_LEVEL_REWARD})
@@ -151,6 +152,7 @@ function Imbattlepass:AddItemEffects(hero)
 end
 
 function Imbattlepass:GetRewardUnlocked(ID)
+	if IsInToolsMode() then return 500 end
 	if CustomNetTables:GetTableValue("player_table", tostring(ID)) then
 		return CustomNetTables:GetTableValue("player_table", tostring(ID)).Lvl
 	end
@@ -423,61 +425,63 @@ end
 
 function Imbattlepass:GetHeroEffect(hero)
 	if hero:GetUnitName() == "npc_dota_hero_juggernaut" then
-		if next_reward == true and Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_JUGGERNAUT["juggernaut_arcana"] then
-			Imbattlepass:GetJuggernautArcanaEffect(hero:GetPlayerID(), HasJuggernautArcana(hero:GetPlayerID()))
+		if next_reward_shown == true and Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_JUGGERNAUT["juggernaut_arcana"] then
+			Imbattlepass:SetupArcana(hero:GetPlayerID(), "models/items/juggernaut/arcana/juggernaut_arcana_mask.vmdl", "models/heroes/juggernaut/juggernaut_arcana.vmdl", HasJuggernautArcana(hero:GetPlayerID()))
+			hero.blade_fury_effect = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_blade_fury.vpcf"
 		end
 	elseif hero:GetUnitName() == "npc_dota_hero_pudge" then
+		hero.hook_pfx = "particles/units/heroes/hero_pudge/pudge_meathook.vpcf"
+
 		if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_PUDGE["pudge_arcana"] then
-			Imbattlepass:GetPudgeArcanaEffect(hero:GetPlayerID(), HasPudgeArcana(hero:GetPlayerID()))
+			Imbattlepass:SetupArcana(hero:GetPlayerID(), "models/items/pudge/arcana/pudge_arcana_back.vmdl", "models/items/pudge/arcana/pudge_arcana_base.vmdl", HasPudgeArcana(hero:GetPlayerID()))
+		end
+
+		if next_reward_shown == true and Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_PUDGE["pudge_dragonclaw"] then
+			Imbattlepass:SetupImmortal(hero:GetPlayerID(), "models/items/pudge/pudge_skeleton_hook_body.vmdl")
+			hero.hook_pfx = "particles/econ/items/pudge/pudge_dragonclaw/pudge_meathook_dragonclaw_imba.vpcf"
 		end
 	elseif hero:GetUnitName() == "npc_dota_hero_vengefulspirit" then
 		if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_VENGEFULSPIRIT["vengefulspirit_immortal"] then
-			Imbattlepass:GetVengefulspiritEffect(hero:GetPlayerID())
+			Imbattlepass:SetupImmortal(hero:GetPlayerID(), "models/items/vengefulspirit/vs_ti8_immortal_shoulder/vs_ti8_immortal_shoulder.vmdl")
+			hero.magic_missile_effect = "particles/econ/items/vengeful/vs_ti8_immortal_shoulder/vs_ti8_immortal_magic_missle.vpcf"
+			hero.magic_missile_icon = 1
+			hero.magic_missile_sound = "Hero_VengefulSpirit.MagicMissile.TI8"
+			hero.magic_missile_sound_hit = "Hero_VengefulSpirit.MagicMissileImpact.TI8"
 		end
 	end
 end
 
-function Imbattlepass:GetVengefulspiritEffect(ID)
+function Imbattlepass:SetupImmortal(ID, wearable_model)
 	if PlayerResource:GetSelectedHeroEntity(ID) == nil then
 		Timers:CreateTimer(0.1, function()
-			Imbattlepass:GetVengefulspiritEffect(ID)
+			Imbattlepass:SetupImmortal(ID, wearable_model)
 		end)
 
 		return
 	end
 
 	local hero = PlayerResource:GetSelectedHeroEntity(ID)
-
-	Wearables:SwapWearableSlot(hero, "shoulder", "models/items/vengefulspirit/vs_ti8_immortal_shoulder/vs_ti8_immortal_shoulder.vmdl")
-
-	hero.magic_missile_effect = "particles/econ/items/vengeful/vs_ti8_immortal_shoulder/vs_ti8_immortal_magic_missle.vpcf"
-	hero.magic_missile_icon = 1
-	hero.magic_missile_sound = "Hero_VengefulSpirit.MagicMissile.TI8"
-	hero.magic_missile_sound_hit = "Hero_VengefulSpirit.MagicMissileImpact.TI8"
-
-	local particle = "vs_ti8_immortal_shoulder_ambient"	
-	ParticleManager:CreateParticle(particle, PATTACH_ABSORIGIN_FOLLOW, hero.back)
+	print("Run immortal swap cosmetic:", wearable_model)
+	Wearables:SwapWearableSlot(hero, wearable_model)
 end
 
-function Imbattlepass:GetPudgeArcanaEffect(ID, arcana_type)
+function Imbattlepass:SetupArcana(ID, wearable_model, arcana_model, arcana_type)
 	if PlayerResource:GetSelectedHeroEntity(ID) == nil then
 		Timers:CreateTimer(0.1, function()
-			Imbattlepass:GetPudgeArcanaEffect(ID, arcana_type)
+			Imbattlepass:SetupArcana(ID, wearable_model, arcana_model, arcana_type)
 		end)
 
 		return
 	end
 
 	local hero = PlayerResource:GetSelectedHeroEntity(ID)
+	Wearables:SwapWearableSlot(hero, wearable_model, tostring(arcana_type))
 
-	if arcana_type then
-		hero:SetModel("models/items/pudge/arcana/pudge_arcana_base.vmdl")
-		hero:SetOriginalModel("models/items/pudge/arcana/pudge_arcana_base.vmdl")
-		hero:SetMaterialGroup(tostring(arcana_type))
-		hero.pudge_arcana = arcana_type
-		Wearables:SwapWearableSlot(hero, "back", "models/items/pudge/arcana/pudge_arcana_back.vmdl", tostring(arcana_type))
-		CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "override_hero_image", {arcana = arcana_type, hero_name = string.gsub(hero:GetUnitName(), "npc_dota_hero_", "")})
-	end
+	hero:SetModel(arcana_model)
+	hero:SetOriginalModel(arcana_model)
+	hero:SetMaterialGroup(tostring(arcana_type))
+	hero.battlepass_arcana = arcana_type
+	CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "override_hero_image", {arcana = arcana_type, hero_name = string.gsub(hero:GetUnitName(), "npc_dota_hero_", "")})
 end
 
 function HasPudgeArcana(ID)
@@ -487,28 +491,6 @@ function HasPudgeArcana(ID)
 		return 0
 	else
 		return nil
-	end
-end
-
-function Imbattlepass:GetJuggernautArcanaEffect(ID, arcana_type)
-	local hero = PlayerResource:GetSelectedHeroEntity(ID)
-
-	if hero == nil then
-		Timers:CreateTimer(0.1, function()
-			Imbattlepass:GetJuggernautArcanaEffect(ID, arcana_type)
-		end)
-
-		return
-	end
-
-	if arcana_type and next_reward_shown then
-		hero:SetModel("models/heroes/juggernaut/juggernaut_arcana.vmdl")
-		hero:SetOriginalModel("models/heroes/juggernaut/juggernaut_arcana.vmdl")
-		hero:SetMaterialGroup(tostring(arcana_type))
-		hero.juggernaut_arcana = arcana_type
-		hero.blade_fury_effect = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_blade_fury.vpcf"
-		Wearables:SwapWearableSlot(hero, "mask", "models/items/juggernaut/arcana/juggernaut_arcana_mask.vmdl", tostring(arcana_type))
-		CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "override_hero_image", {arcana = arcana_type, hero_name = string.gsub(hero:GetUnitName(), "npc_dota_hero_", "")})
 	end
 end
 

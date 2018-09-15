@@ -45,14 +45,20 @@ function GameMode:OnGameRulesStateChange(keys)
 	elseif newState == DOTA_GAMERULES_STATE_PRE_GAME then
 		api.imba.event(api.events.entered_pre_game)
 
-		CustomNetTables:SetTableValue("game_options", "donators", api.imba.get_donators())
-		CustomNetTables:SetTableValue("game_options", "developers", api.imba.get_developers())
+		if api.imba.data.donators then
+			CustomNetTables:SetTableValue("game_options", "donators", api.imba.get_donators())
+		end
+		if api.imba.data.developers then
+			CustomNetTables:SetTableValue("game_options", "developers", api.imba.get_developers())
+		end
 
 		-- Create a timer to avoid lag spike entering pick screen
 		Timers:CreateTimer(3.0, function()
-			COURIER_TEAM = {}
-			COURIER_TEAM[2] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_radiant"):GetAbsOrigin(), true, nil, nil, 2)
-			COURIER_TEAM[3] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_dire"):GetAbsOrigin(), true, nil, nil, 3)
+			if USE_TEAM_COURIER == true then
+				COURIER_TEAM = {}
+				COURIER_TEAM[2] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_radiant"):GetAbsOrigin(), true, nil, nil, 2)
+				COURIER_TEAM[3] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_dire"):GetAbsOrigin(), true, nil, nil, 3)
+			end
 
 			-- IMBA: Custom maximum level EXP tables adjustment
 			local max_level = tonumber(CustomNetTables:GetTableValue("game_options", "max_level")["1"])
@@ -119,14 +125,6 @@ function GameMode:OnGameRulesStateChange(keys)
 					id = game_id,
 					radiant_score = GetTeamHeroKills(2),
 					dire_score = GetTeamHeroKills(3),
-					custom1_score = GetTeamHeroKills(6),
-					custom2_score = GetTeamHeroKills(7),
-					custom3_score = GetTeamHeroKills(8),
-					custom4_score = GetTeamHeroKills(9),
-					custom5_score = GetTeamHeroKills(10),
-					custom6_score = GetTeamHeroKills(11),
-					custom7_score = GetTeamHeroKills(12),
-					custom8_score = GetTeamHeroKills(13),
 				},
 			})
 		end)
@@ -162,7 +160,7 @@ function GameMode:OnNPCSpawned(keys)
 
 			return
 		elseif npc:IsRealHero() then
-			if api.imba.is_donator(PlayerResource:GetSteamID(npc:GetPlayerID())) then
+			if api.imba.is_donator(PlayerResource:GetSteamID(npc:GetPlayerOwnerID())) then
 				npc:AddNewModifier(npc, nil, "modifier_imba_donator", {})
 			end
 
@@ -441,7 +439,9 @@ function GameMode:OnAbilityUsed(keys)
 	local abilityname = keys.abilityname
 
 	if abilityname == "item_pocket_roshan" then
-		Entities:FindByName(nil, "npc_dota_roshan"):RemoveSelf()
+		if Entities:FindByName(nil, "npc_dota_roshan"):GetUnitName() ~= "npc_imba_roshan" then
+			Entities:FindByName(nil, "npc_dota_roshan"):RemoveSelf()
+		end
 		local roshan = CreateUnitByName("npc_imba_roshan", player:GetAssignedHero():GetAbsOrigin(), true, nil, nil, player:GetTeam())
 	end
 end
@@ -452,8 +452,20 @@ function GameMode:OnPlayerLevelUp(keys)
 	local level = keys.level
 
 	if hero:GetLevel() > 25 then
+		if hero:GetUnitName() == "npc_dota_hero_meepo" then
+			for _, hero in pairs(HeroList:GetAllHeroes()) do
+				if hero:GetUnitName() == "npc_dota_hero_meepo" and hero:IsClone() then
+					if not hero:HasModifier("modifier_imba_war_veteran_"..hero:GetPrimaryAttribute()) then
+						hero:AddNewModifier(hero, nil, "modifier_imba_war_veteran_"..hero:GetCloneSource():GetPrimaryAttribute(), {}):SetStackCount(math.min(hero:GetCloneSource():GetLevel() -25, 17))
+					else
+						hero:FindModifierByName("modifier_imba_war_veteran_"..hero:GetCloneSource():GetPrimaryAttribute()):SetStackCount(math.min(hero:GetCloneSource():GetLevel() -25, 17))
+					end
+				end
+			end
+		end
+
 		if not hero:HasModifier("modifier_imba_war_veteran_"..hero:GetPrimaryAttribute()) then
-			hero:AddNewModifier(hero, nil, "modifier_imba_war_veteran_"..hero:GetPrimaryAttribute(), {})
+			hero:AddNewModifier(hero, nil, "modifier_imba_war_veteran_"..hero:GetPrimaryAttribute(), {}):SetStackCount(1)
 		else
 			hero:FindModifierByName("modifier_imba_war_veteran_"..hero:GetPrimaryAttribute()):SetStackCount(math.min(hero:GetLevel() -25, 17))
 		end

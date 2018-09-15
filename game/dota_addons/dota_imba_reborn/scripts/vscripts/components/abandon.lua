@@ -25,7 +25,7 @@ function GoodGame:Call(event)
 		GG_TABLE[event.ID][2] = false
 	elseif event.vote == 1 then -- call '-gg' chat command
 		if GG_TABLE[event.ID][1] == false then
-			Notifications:BottomToTeam(PlayerResource:GetTeam(event.ID), {text = PlayerResource:GetPlayerName(event.ID).." called GG through the GG Panel!", duration = 4.0, style = {color = "DodgerBlue"} })
+			Notifications:BottomToTeam(PlayerResource:GetTeam(event.ID), {text = PlayerResource:GetPlayerName(event.ID).." called GG through the -gg chat command!", duration = 4.0, style = {color = "DodgerBlue"} })
 			GG_TABLE[event.ID][1] = true
 		end
 	end

@@ -235,6 +235,7 @@
 		"item"		"item_relic"
 		"item"		"item_imba_moon_shard"
 		"item"		"item_imba_nether_wand"
+		"item"		"item_cloak_of_flames"
 	}
 
 	"pregame"

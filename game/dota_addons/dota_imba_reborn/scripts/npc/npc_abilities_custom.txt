@@ -80,10 +80,10 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-		"ScriptFile"					"components/abilities/courier.lua"
-		"MaxLevel"						"1"
+		"BaseClass"                     "ability_lua"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"ScriptFile"                    "components/courier/abilities.lua"
+		"MaxLevel"                      "1"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -91,13 +91,8 @@
 		{
 			"01"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"ground_movespeed"				"900"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"flying_movespeed"				"2000"
+				"var_type"				"FIELD_INTEGER"
+				"movespeed"				"1500"
 			}
 		}
 	}
@@ -12960,7 +12955,7 @@
 
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"pudge_meat_hook"
-		"ScriptFile"				"components/abilities/heroes/hero_pudge.lua"
+		"ScriptFile"					"components/abilities/heroes/hero_pudge.lua"
 		"HasScepterUpgrade"				"1"
 
 		// Casting
@@ -13222,23 +13217,23 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"					"30 25 20"
+		"AbilityCooldown"					"30.0 25.0 20.0"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"					"100 170 190"
+		"AbilityManaCost"					"100 130 160"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"dismember_damage"			"60 120 140"
+				"dismember_damage"			"60 120 180"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"strength_damage"			"30 60 100"
+				"strength_damage"			"30 60 90"
 			}
 			"03"
 			{
@@ -13260,7 +13255,7 @@
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"spell_lifesteal"			"100 130 160"
+				"spell_lifesteal"			"100 125 150"
 			}
 		}
 	}
@@ -13294,7 +13289,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"stack_damage"				"7"
+				"stack_damage"				"5"
 			}
 		}
 	}
@@ -13329,12 +13324,12 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"stack_speed"				"7"
+				"stack_speed"				"10"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"stack_range"				"7"
+				"stack_range"				"10"
 			}
 		}
 	}

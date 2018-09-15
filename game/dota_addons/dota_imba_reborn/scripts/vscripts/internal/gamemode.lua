@@ -9,7 +9,6 @@ function GameMode:_InitGameMode()
 	end
 
 	-- Setup rules
-	GameRules:SetHeroRespawnEnabled( ENABLE_HERO_RESPAWN )
 	GameRules:SetUseUniversalShopMode( UNIVERSAL_SHOP_MODE )
 	GameRules:SetSameHeroSelectionEnabled( true ) -- Let server handle hero duplicates
 	GameRules:SetPreGameTime( PRE_GAME_TIME )

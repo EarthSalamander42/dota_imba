@@ -125,7 +125,7 @@ function modifier_imba_regen_rune_aura:GetModifierHealthRegenPercentage()
 end
 
 function modifier_imba_regen_rune_aura:GetModifierConstantManaRegen()
-	return _CustomNetTables:GetTableValue("game_options", "runes").regen_rune_mana_base / 2
+	return CustomNetTables:GetTableValue("game_options", "runes").regen_rune_mana_base / 2
 end
 
 function modifier_imba_regen_rune_aura:GetModifierTotalPercentageManaRegen()

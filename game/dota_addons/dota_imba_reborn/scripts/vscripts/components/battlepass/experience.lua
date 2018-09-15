@@ -105,8 +105,8 @@ end
 
 function GetPlayerInfoIXP() -- yet it has too much useless loops, format later. Need to be loaded in game setup
 	if not api.imba.ready then
-		print("IMBA API not ready! Retry...")
-		Timers:CreateTimer(0.1, function()
+--		print("IMBA API not ready! Retry...")
+		Timers:CreateTimer(1.0, function()
 			GetPlayerInfoIXP()
 		end)
 

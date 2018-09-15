@@ -109,7 +109,6 @@ end
 
 function item_imba_shivas_guard:GetAbilityTextureName()
 	if not IsClient() then return end
---	print("shiva_icon_client:", self:GetCaster().shiva_icon_client)
 	if not self:GetCaster().shiva_icon_client then return "custom/imba_shiva" end
 	return "custom/imba_shiva"..self:GetCaster().shiva_icon_client
 end
@@ -118,17 +117,19 @@ end
 --	Shiva Handler
 -----------------------------------------------------------------------------------------------------------
 if modifier_imba_shiva_handler == nil then modifier_imba_shiva_handler = class({}) end
-function modifier_imba_shiva_handler:IsHidden() return false end
+function modifier_imba_shiva_handler:IsHidden() return true end
 function modifier_imba_shiva_handler:IsDebuff() return false end
 function modifier_imba_shiva_handler:IsPurgable() return false end
 function modifier_imba_shiva_handler:RemoveOnDeath() return false end
 function modifier_imba_shiva_handler:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_shiva_handler:OnCreated()
-	if not IsServer() then return end
-	self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_shiva_aura", {})
-	self:OnIntervalThink()
 	self:StartIntervalThink(1.0)
+	self:OnIntervalThink()
+
+	if IsServer() then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_shiva_aura", {})
+	end
 end
 
 function modifier_imba_shiva_handler:OnIntervalThink()
@@ -136,9 +137,7 @@ function modifier_imba_shiva_handler:OnIntervalThink()
 	if IsServer() then
 		if string.find(self:GetParent():GetUnitName(), "npc_dota_lone_druid_bear") then
 			self:SetStackCount(self:GetCaster():GetOwnerEntity().shiva_icon)
---			print("SetStackCount:", self:GetCaster():GetOwnerEntity().shiva_icon)
 		else
---			print("SetStackCount:", self:GetCaster().shiva_icon)
 			self:SetStackCount(self:GetCaster().shiva_icon)
 		end
 	end
@@ -146,7 +145,6 @@ function modifier_imba_shiva_handler:OnIntervalThink()
 	if IsClient() then
 		local icon = self:GetStackCount()
 		if icon == 0 then
---			print("icon:", icon)
 			self:GetCaster().shiva_icon_client = nil
 		else
 			self:GetCaster().shiva_icon_client = icon

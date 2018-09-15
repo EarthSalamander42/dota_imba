@@ -17,7 +17,7 @@ function Precache( context )
 
 	-- Battlepass precaching
 	Wearables:PrecacheWearables(context)
-	PrecacheResource("particle", "particles/econ/items/pudge/pudge_arcana", context)
+	PrecacheResource("particle_folder", "particles/econ/items/pudge/pudge_arcana", context)
 	PrecacheResource("particle_folder", "particles/econ/items/juggernaut/jugg_arcana", context)
 	
 	-- Battlepass Blink effects
@@ -46,7 +46,11 @@ function Precache( context )
 	PrecacheResource("particle", "particles/econ/events/fall_major_2016/blink_dagger_start_fm06.vpcf", context)
 	PrecacheResource("particle", "particles/econ/events/fall_major_2016/blink_dagger_end_fm06.vpcf", context)
 
+	-- Fountain Circle
+	PrecacheResource("particle", "particles/ambient/fountain_danger_circle.vpcf", context)
+
 	-- Sounds
+	PrecacheResource("soundfile", "soundevents/diretide_soundevents.vsndevts", context)
 	PrecacheResource("soundfile", "soundevents/imba_soundevents.vsndevts", context)
 
 	if IsMutationMap() then

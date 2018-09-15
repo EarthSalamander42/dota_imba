@@ -474,6 +474,10 @@ function HeroSelection:GiveStartingHero(playerId, heroName, dev)
 
 	Imbattlepass:AddItemEffects(hero)
 
+	if USE_TEAM_COURIER == false then
+		TurboCourier:Init(hero)
+	end
+
 	Timers:CreateTimer(1.0, function()
 		if wisp then
 			UTIL_Remove(wisp)

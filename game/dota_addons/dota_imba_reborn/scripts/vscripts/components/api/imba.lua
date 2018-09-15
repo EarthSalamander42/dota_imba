@@ -252,7 +252,7 @@ end
 
 function api.imba.is_donator(steamid)
 	if api.imba.data.donators == nil then
-		log.warn("is_donator called but donators are not available. yet?")
+--		log.warn("is_donator called but donators are not available. yet?")
 		return false
 	end
 
@@ -270,8 +270,9 @@ end
 
 function api.imba.get_developers()
 	if api.imba.data.developers == nil then
-		log.warn("is_developer called but developers are not available. yet?")
-		return false
+--		log.warn("is_developer called but developers are not available. yet?")
+--		return false
+		return {}
 	end
 
 	return api.imba.data.developers

@@ -17,7 +17,7 @@ function Mutation:Init()
 	if IsInToolsMode() then
 		IMBA_MUTATION["positive"] = "pocket_roshan"
 		IMBA_MUTATION["negative"] = "periodic_spellcast"
-		IMBA_MUTATION["terrain"] = "super_runes"
+		IMBA_MUTATION["terrain"] = "tug_of_war"
 	else
 		Mutation:ChooseMutation("positive", POSITIVE_MUTATION_LIST)
 		Mutation:ChooseMutation("negative", NEGATIVE_MUTATION_LIST)
@@ -112,6 +112,7 @@ function Mutation:Precache(context)
 --	elseif IMBA_MUTATION["terrain"] == "tug_of_war" then
 		PrecacheResource("particle", "particles/ambient/tug_of_war_team_dire.vpcf", context)
 		PrecacheResource("particle", "particles/ambient/tug_of_war_team_radiant.vpcf", context)
+		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_warlock.vsndevts", context) -- Thundergod's Wrath
 --	elseif IMBA_MUTATION["terrain"] == "wormhole" then
 		PrecacheResource("particle", "particles/ambient/wormhole_circle.vpcf", context)
 --	end
@@ -467,16 +468,15 @@ function Mutation:OnHeroFirstSpawn(hero)
 	if IMBA_MUTATION["positive"] == "killstreak_power" then
 		hero:AddNewModifier(hero, nil, "modifier_mutation_kill_streak_power", {})
 	elseif IMBA_MUTATION["positive"] == "super_blink" then
-		if hero:IsIllusion() then return end
-		if not hero:IsIllusion() then
+		if not hero:IsIllusion() and not hero:IsClone() then
 			hero:AddItemByName("item_imba_blink"):SetSellable(false)
 		end
 	elseif IMBA_MUTATION["positive"] == "pocket_roshan" then
-		if not hero:IsIllusion() then
+		if not hero:IsIllusion() and not hero:IsClone() then
 			hero:AddItemByName("item_pocket_roshan")
 		end
 	elseif IMBA_MUTATION["positive"] == "pocket_tower" then
-		if not hero:IsIllusion() then
+		if not hero:IsIllusion() and not hero:IsClone() then
 			hero:AddItemByName("item_pocket_tower")
 		end
 	elseif IMBA_MUTATION["positive"] == "greed_is_good" then

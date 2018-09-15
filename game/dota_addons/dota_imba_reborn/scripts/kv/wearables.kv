@@ -2,13 +2,60 @@
 
 "wearables"
 {
-	// Cosmetic attached to the hero
-	"models/items/pudge/arcana/pudge_arcana_back.vmdl"
+	// IMMORTALS
+	"models/items/vengefulspirit/vs_ti8_immortal_shoulder/vs_ti8_immortal_shoulder.vmdl"
 	{
+		// Different string.find possibilities to find the wearable in slot
+		"wearable_slot"
+		{
+			"0"			"lowerbody"
+			"1"			"shoulder"
+		}
+
 		// Particles attached to the cosmetic
 		"cosmetic_particle"
 		{
-			// Different particles based on the material group
+			// Different particles based on the material group (default = 0)
+			"material_group"
+			{
+				"0"
+				{
+					"0"		"particles/econ/items/vengeful/vs_ti8_immortal_shoulder/vs_ti8_immortal_shoulder_ambient.vpcf"
+				}
+			}
+		}
+	}
+
+	"models/items/pudge/pudge_skeleton_hook_body.vmdl"
+	{
+		// Different string.find possibilities to find the wearable in slot
+		"wearable_slot"
+		{
+			"0"			"hook"
+		}
+
+		// Particle attached to the base model
+		"precache_particle"
+		{
+			"0"		"particles/econ/items/pudge/pudge_dragonclaw/pudge_meathook_dragonclaw_imba.vpcf"
+		}
+	}
+
+	// ARCANAS
+
+	// Cosmetic attached to the hero
+	"models/items/pudge/arcana/pudge_arcana_back.vmdl"
+	{
+		// Different string.find possibilities to find the wearable in slot
+		"wearable_slot"
+		{
+			"0"			"back"
+		}
+
+		// Particles attached to the cosmetic
+		"cosmetic_particle"
+		{
+			// Different particles based on the material group (default = 0)
 			"material_group"
 			{
 				"0"
@@ -33,10 +80,16 @@
 
 	"models/items/juggernaut/arcana/juggernaut_arcana_mask.vmdl"
 	{
+		// Different string.find possibilities to find the wearable in slot
+		"wearable_slot"
+		{
+			"0"			"mask"
+		}
+
 		// Particles attached to the cosmetic
 		"cosmetic_particle"
 		{
-			// Different particles based on the material group
+			// Different particles based on the material group (default = 0)
 			"material_group"
 			{
 				"0"

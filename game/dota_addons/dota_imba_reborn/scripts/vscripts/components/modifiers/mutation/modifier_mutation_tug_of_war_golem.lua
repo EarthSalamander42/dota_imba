@@ -5,25 +5,25 @@ function modifier_mutation_tug_of_war_golem:RemoveOnDeath() return false end
 function modifier_mutation_tug_of_war_golem:IsPurgable() return false end
 
 -- Golem Parameters (per stack, unless variable ends in Max)
-healthBonus = 300
-attackBonus = 30
-moveSpeedBonus = 5
-aspdBonus = 10
-pArmorBonus = 2
-mResistBonus = 2
-healthRegen = 2.5
-rangeBonus = 10
-rangeBonusMax = 190
-tenacity = 7.5
-tenacityMax = 75
-pBlock = 3
-pBlockMax = 60
-mitigation = 2.5
-mitigationMax = 40
-modelScaleMax = 150
-modelScale = 10
-expBonus = 50
-goldBonus = 50
+local healthBonus = 300
+local attackBonus = 50
+local moveSpeedBonus = 5
+local aspdBonus = 10
+local pArmorBonus = 5
+local mResistBonus = 2
+local healthRegen = 2.5
+local rangeBonus = 10
+local rangeBonusMax = 190
+local tenacity = 7.5
+local tenacityMax = 75
+local pBlock = 3
+local pBlockMax = 60
+local mitigation = 2.5
+local mitigationMax = 40
+local modelScaleMax = 150
+local modelScale = 10
+local expBonus = 50
+local goldBonus = 50
 
 function modifier_mutation_tug_of_war_golem:OnCreated()
 	if IsServer() then
@@ -145,9 +145,15 @@ function modifier_mutation_tug_of_war_golem:OnDeath(keys)
 				-- Spawn logic
 				golem:AddNewModifier(golem, nil, "modifier_mutation_tug_of_war_golem", {}):SetStackCount(previous_stacks + 1)
 				FindClearSpaceForUnit(golem, golem:GetAbsOrigin(), true)
-				golem:SetDeathXP(expBonus * (1 + previous_stacks))
-				golem:SetMinimumGoldBounty(goldBonus * (1 + previous_stacks))
-				golem:SetMaximumGoldBounty(goldBonus * (1 + previous_stacks))
+
+				for _, hero in pairs(HeroList:GetAllHeroes()) do
+					if keys.attacker:GetTeam() == hero:GetTeam() and not hero:IsClone() then
+						hero:ModifyGold(goldBonus * (1 + previous_stacks), false, DOTA_ModifyGold_Unspecified)
+						hero:AddExperience(expBonus * (1 + previous_stacks), DOTA_ModifyXP_CreepKill, false, true)
+						SendOverheadEventMessage(PlayerResource:GetPlayer(hero:GetPlayerOwnerID()), OVERHEAD_ALERT_GOLD, hero, goldBonus * (1 + previous_stacks), nil)
+						SendOverheadEventMessage(PlayerResource:GetPlayer(hero:GetPlayerOwnerID()), OVERHEAD_ALERT_MANA_ADD, hero, expBonus * (1 + previous_stacks), nil)
+					end
+				end
 			end)
 		end
 	end

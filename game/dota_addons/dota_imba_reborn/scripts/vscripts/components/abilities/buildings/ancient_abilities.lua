@@ -173,6 +173,10 @@ end
 function modifier_imba_fountain_danger_zone:OnCreated()
 	if IsServer() then
 		self:StartIntervalThink(0.2)
+		print("Danger Zone particle created!")
+		-- TODO: Not working for reasons
+--		local danger_zone_pfx = ParticleManager:CreateParticle("particles/ambient/fountain_danger_circle.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+--		ParticleManager:ReleaseParticleIndex(danger_zone_pfx)
 	end
 end
 

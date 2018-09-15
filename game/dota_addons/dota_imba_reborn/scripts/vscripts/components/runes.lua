@@ -194,20 +194,17 @@ function ImbaRunes:PickupRune(rune_name, unit, bActiveByBottle)
 			local bounty_per_minute = GetAbilitySpecial("item_imba_rune_bounty", "bounty_increase_per_minute")
 			local xp_per_minute = GetAbilitySpecial("item_imba_rune_bounty", "xp_increase_per_minute")
 			local game_time = GameRules:GetDOTATime(false, false)
-			local current_bounty = base_bounty + bounty_per_minute * game_time / 60
+			local current_bounty = base_bounty + (bounty_per_minute * game_time / 60)
 			local current_xp = xp_per_minute * game_time / 60
 
 			-- Adjust value for lobby options
 			local custom_gold_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "bounty_multiplier")["1"])
-			current_bounty = current_bounty * (1 + custom_gold_bonus * 0.01)
+			current_bounty = current_bounty * (custom_gold_bonus * 0.01)
 
 			if IMBA_MUTATION and IMBA_MUTATION["terrain"] == "super_runes" then
 				current_bounty = current_bounty * GetAbilitySpecial("item_imba_rune_bounty", "super_runes_multiplier")
 				current_xp = current_xp * GetAbilitySpecial("item_imba_rune_bounty", "super_runes_multiplier")
 			end
-
-			-- Grant the unit experience
-			unit:AddExperience(current_xp, DOTA_ModifyXP_CreepKill, false, true)
 
 			-- #3 Talent: Bounty runes give gold bags
 			if unit:HasTalent("special_bonus_imba_alchemist_3") then
@@ -253,10 +250,18 @@ function ImbaRunes:PickupRune(rune_name, unit, bActiveByBottle)
 						end
 						
 						hero:ModifyGold(alchemy_bounty, false, DOTA_ModifyGold_Unspecified)
-						SendOverheadEventMessage(PlayerResource:GetPlayer(hero:GetPlayerOwnerID()), OVERHEAD_ALERT_GOLD, hero, alchemy_bounty, nil)
+						SendOverheadEventMessage(PlayerResource:GetPlayer(hero:GetPlayerOwnerID()), OVERHEAD_ALERT_GOLD, hero, current_bounty, nil)
+
+						-- Grant the unit experience
+						hero:AddExperience(current_xp, DOTA_ModifyXP_CreepKill, false, true)
+						SendOverheadEventMessage(PlayerResource:GetPlayer(hero:GetPlayerOwnerID()), OVERHEAD_ALERT_MANA_ADD, hero, current_xp, nil)
 					else
 						hero:ModifyGold(current_bounty, false, DOTA_ModifyGold_Unspecified)
 						SendOverheadEventMessage(PlayerResource:GetPlayer(hero:GetPlayerOwnerID()), OVERHEAD_ALERT_GOLD, hero, current_bounty, nil)
+
+						-- Grant the unit experience
+						hero:AddExperience(current_xp, DOTA_ModifyXP_CreepKill, false, true)
+						SendOverheadEventMessage(PlayerResource:GetPlayer(hero:GetPlayerOwnerID()), OVERHEAD_ALERT_MANA_ADD, hero, current_xp, nil)
 					end
 				end
 			end

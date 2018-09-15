@@ -22,10 +22,15 @@ CAPTAINS_MODE_HERO_PICK_TIME = 30	-- time to choose which hero you're going to p
 CAPTAINS_MODE_RESERVE_TIME = 130	-- total bonus time that can be used throughout any selection
 
 -- IMBA constants
-USE_TEAM_COURIER = true
+USE_TEAM_COURIER = false
 IMBA_REINCARNATION_TIME = 3.0
 RUNE_SPAWN_TIME = 120					-- How long in seconds should we wait between rune spawns?
 BOUNTY_RUNE_SPAWN_TIME = 300
+if IsInToolsMode() then
+	BOTS_ENABLED = true
+else
+	BOTS_ENABLED = false
+end
 
 -- Barebones constants
 AUTO_LAUNCH_DELAY = 5.0					-- How long should we wait for the host to setup the game, after all players have loaded in?
@@ -43,7 +48,6 @@ POST_GAME_TIME = 600.0					-- How long should we let people look at the scoreboa
 CAMERA_DISTANCE_OVERRIDE = -1
 GOLD_PER_TICK = 1
 
-ENABLE_HERO_RESPAWN = true
 USE_AUTOMATIC_PLAYERS_PER_TEAM = false	-- Should we set the number of players to 10 / MAX_NUMBER_OF_TEAMS?
 UNIVERSAL_SHOP_MODE = false				-- Should the main shop contain Secret Shop items as well as regular items
 if IsInToolsMode() then

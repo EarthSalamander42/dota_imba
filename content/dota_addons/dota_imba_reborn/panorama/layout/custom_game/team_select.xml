@@ -11,10 +11,6 @@
 	</scripts>
 
 	<Panel hittest="false" class="TeamSelect">
-		<Panel hittest="false" id="auto_team_select_container" class="invisible">
-			<Label id="auto_team_select_label" text="Powered by IMBA Matchmaking™" />
-			<Label id="auto_team_select_time" text="Loading . . ."/> 
-		</Panel>
 		<Panel hittest="false" id="TeamSelectContainer" class="invisible" selectionpos="auto">
 			<!--Empty space to let the loading screen and chat be visible -->
 			<Panel hittest="false" id="TeamsSelectEmptySpace" />
