@@ -637,11 +637,12 @@
 		"Ability10"					"special_bonus_ember_chains_on_attack"
 		"Ability11"					"special_bonus_truestrike"
 		"Ability12"					"special_bonus_ember_chains_duration"
-		"Ability13"					"special_bonus_ember_guard_damage"
+		"Ability13"					"special_bonus_spell_amplify_20"
 		"Ability14"					"special_bonus_attack_damage_50"
-		"Ability15"					"special_bonus_all_stats_15"
+		"Ability15"					"special_bonus_ember_guard_damage"
 		"Ability16"					"special_bonus_ember_permanent_guard"
-		"Ability17"					"special_bonus_ember_remnant_charges"
+		//"Ability17"					"special_bonus_ember_remnant_charges"
+		"Ability17"					"special_bonus_all_stats_20"
 	}
 
 	//=================================================================================================================
