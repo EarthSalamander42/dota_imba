@@ -538,15 +538,8 @@ function imba_lycan_howl:OnSpellStart()
 									FIND_ANY_ORDER,
 									false)
 									
-	for _, ally in pairs(allies) do		
+	for _, ally in pairs(allies) do
 		ally:AddNewModifier(caster, ability, buff, {duration = duration})	
-		--Heroes gain max HP, but current HP stays the same, which makes it seems like they were damaged.
-		if day then
-			ally:Heal(bonus_health_heroes, caster) 
-		else
-			ally:Heal(bonus_health_heroes * 2, caster)
-		end
-		
 	end
 end
 
@@ -576,15 +569,17 @@ function modifier_imba_howl_buff:OnCreated()
     self.caster = self:GetCaster()
     self.ability = self:GetAbility()
     self.parent = self:GetParent()
-
-    -- Ability specials
-    self.bonus_damage_hero = self.ability:GetSpecialValueFor("bonus_damage_hero")
-    self.bonus_damage_units = self.ability:GetSpecialValueFor("bonus_damage_units")     
-    self.bonus_health_heroes = self.ability:GetSpecialValueFor("bonus_health_heroes")
-    self.bonus_health_units = self.ability:GetSpecialValueFor("bonus_health_units")                        
-    self.bonus_ms_heroes = self.ability:GetSpecialValueFor("bonus_ms_heroes")
-    self.bonus_ms_units = self.ability:GetSpecialValueFor("bonus_ms_units")                             
-  
+	
+	-- Only need to put bonus health value up here because this one doesn't change on day-night cycle
+	if self.parent:IsHero() then
+		self.bonus_health	=	self.ability:GetSpecialValueFor("bonus_health_heroes")
+	else
+		self.bonus_health	=	self.ability:GetSpecialValueFor("bonus_health_units")
+	end
+	
+	if not IsDaytime() then
+		self.bonus_health	=	self.bonus_health * 2
+	end
 end
 
 function modifier_imba_howl_buff:GetEffectName()
@@ -598,73 +593,47 @@ end
 function modifier_imba_howl_buff:DeclareFunctions()		
 		local decFuncs = {MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE ,
 						  MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT,
-						  MODIFIER_PROPERTY_EXTRA_HEALTH_BONUS						  
+						  MODIFIER_PROPERTY_HEALTH_BONUS						  
 						  }		
 		return decFuncs			
 end
 
 function modifier_imba_howl_buff:GetModifierPreAttack_BonusDamage()
-
-	-- Ability properties		
-	local day = GameRules:IsDaytime()
-		
-	-- If hero, give appropriate hero damage bonus, else creep damage
+	-- Check if unit is hero or not
 	if self.parent:IsHero() then
-		if day then
-			return self.bonus_damage_hero
-		else
-			return self.bonus_damage_hero * 2		
-		end
+		self.bonus_damage	= self.ability:GetSpecialValueFor("bonus_damage_hero")
+	else
+		self.bonus_damage	= self.ability:GetSpecialValueFor("bonus_damage_units")
+	end
+	
+	-- Check if night time (double bonus)
+	if not IsDaytime() then
+		self.bonus_damage	= self.bonus_damage * 2
 	end
 		
-	if day then
-		return self.bonus_damage_units
-	end
-		
-	return self.bonus_damage_units * 2	
+	return self.bonus_damage
 end
 
-function modifier_imba_howl_buff:GetModifierExtraHealthBonus()
-	-- Ability properties		
-	local day = GameRules:IsDaytime()
-		
-	-- If hero, give appropriate hero health bonus based on current day cycle
-	if self.parent:IsHero() then
-		if day then
-			return self.bonus_health_heroes
-		else
-			return self.bonus_health_heroes * 2
-		end
-	end
-		
-	if day then
-		return self.bonus_health_units	
-	end
-		
-	return self.bonus_health_units * 2
+function modifier_imba_howl_buff:GetModifierHealthBonus()
+	return self.bonus_health
 end
 
 
 function modifier_imba_howl_buff:GetModifierMoveSpeedBonus_Constant()
-	-- Get daytime value
-	local day = GameRules:IsDaytime()
+	-- Check if unit is hero or not
+	if self.parent:IsHero() then
+		self.bonus_ms	= self.ability:GetSpecialValueFor("bonus_ms_heroes")
+	else
+		self.bonus_ms	= self.ability:GetSpecialValueFor("bonus_ms_units")
+	end
+	
+	-- Check if night time (double bonus)
+	if not IsDaytime() then
+		self.bonus_ms	= self.bonus_ms * 2
+	end
 
-	-- If hero, give appropriate hero move speed bonus based on current day cycle
-	if self.parent:IsHero() then					
-		if day then									
-			return self.bonus_ms_heroes
-		else									
-			return self.bonus_ms_heroes * 2
-		end		
-	end
-	
-	if day then		
-		return self.bonus_ms_units		
-	end
-	
-	return self.bonus_ms_units * 2		
+	return self.bonus_ms
 end
-
 
 
 function modifier_imba_howl_buff:CheckState()
@@ -909,9 +878,18 @@ LinkLuaModifier("modifier_imba_shapeshift_transform", "components/abilities/hero
 LinkLuaModifier("modifier_imba_shapeshift_aura", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_shapeshift", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_shapeshift_certain_crit", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_lycan_7", "components/abilities/heroes/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 
 function imba_lycan_shapeshift:GetAbilityTextureName()
    return "lycan_shapeshift"
+end
+
+-- Need this if player skills talent while dead
+function imba_lycan_shapeshift:OnOwnerSpawned()
+	if not IsServer() then return end
+	if self:GetCaster():HasAbility("special_bonus_imba_lycan_7") and self:GetCaster():FindAbilityByName("special_bonus_imba_lycan_7"):IsTrained() and not self:GetCaster():HasModifier("modifier_special_bonus_imba_lycan_7") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_special_bonus_imba_lycan_7", {})
+	end
 end
 
 function imba_lycan_shapeshift:OnSpellStart()
@@ -1169,10 +1147,9 @@ end
 
 function modifier_imba_shapeshift:DeclareFunctions()
 		local decFuncs = {MODIFIER_PROPERTY_BONUS_NIGHT_VISION,
-						  MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE,
-						  MODIFIER_PROPERTY_MOVESPEED_MAX,
+						  MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE_MIN,
 						  MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE,
-						  MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT  -- #7 TALENT: Bonus movespeed property
+						  --MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT  -- #7 TALENT: Bonus movespeed property
 						}		
 		return decFuncs	
 end
@@ -1181,17 +1158,13 @@ function modifier_imba_shapeshift:GetBonusNightVision()
 	return self.night_vision_bonus
 end
 
-function modifier_imba_shapeshift:GetModifierMoveSpeed_Max()
+function modifier_imba_shapeshift:GetModifierMoveSpeed_AbsoluteMin()
 	-- #7 TALENT: Increases the movement speed cap of units affected by Shapeshift further
 	if self.caster:HasTalent("special_bonus_imba_lycan_7") then
 		return self.caster:FindTalentValue("special_bonus_imba_lycan_7", "max_movespeed")
 	else  	
 		return self.absolute_speed
 	end
-end
-
-function modifier_imba_shapeshift:GetModifierMoveSpeed_Absolute()
-	return self.absolute_speed
 end
 
 function modifier_imba_shapeshift:GetModifierPreAttack_CriticalStrike()
@@ -1216,15 +1189,6 @@ function modifier_imba_shapeshift:GetModifierPreAttack_CriticalStrike()
 		end
 		
 		return nil
-	end
-end
-
-function modifier_imba_shapeshift:GetModifierMoveSpeedBonus_Constant()
-	-- #7 TALENT: Increases base movement speed
-	if self.caster:HasTalent("special_bonus_imba_lycan_7") then
-		return self.caster:FindTalentValue("special_bonus_imba_lycan_7", "base_movespeed_bonus")
-	else  	
-		return
 	end
 end
 
@@ -1400,7 +1364,6 @@ function modifier_imba_wolfsbane_wolves:OnCreated()
         self.caster = self:GetCaster()
         self.ability = self:GetAbility()
         self.wolf = self:GetParent()		
-        self.aura = "modifier_imba_wolfsbane_aura"     
 
         -- Ability specials
         self.damage_bonus = self.ability:GetSpecialValueFor("damage_bonus")
@@ -1415,18 +1378,9 @@ function modifier_imba_wolfsbane_wolves:OnRefresh()
     self:OnCreated()
 end
 
-function modifier_imba_wolfsbane_wolves:OnIntervalThink()
-	if IsServer() then						
-		local aura_handler = self.caster:FindModifierByName(self.aura)
-
-		if aura_handler then
-			local aura_stacks = aura_handler:GetStackCount()
-			local wolf_stacks = self:GetStackCount()		
-			
-			if wolf_stacks ~= aura_stacks then -- Aura stacks are higher, set stacks
-				self:SetStackCount(aura_stacks)
-			end	
-		end
+function modifier_imba_wolfsbane_wolves:OnIntervalThink()				
+	if self.caster:HasModifier("modifier_imba_wolfsbane_lycan") then
+		self:SetStackCount(self.caster:FindModifierByName("modifier_imba_wolfsbane_lycan"):GetStackCount())
 	end
 end
 
@@ -1479,18 +1433,6 @@ function modifier_imba_wolfsbane_lycan:OnCreated()
 
     -- Start thinking
     self:StartIntervalThink(0.5)
-end
-
-function modifier_imba_wolfsbane_lycan:OnIntervalThink()
-    if IsServer() then                
-        local aura_handler = self.caster:FindModifierByName(self.aura)
-        local aura_stacks = aura_handler:GetStackCount()
-        local lycan_stacks = self:GetStackCount()       
-        
-        if aura_handler and lycan_stacks ~= aura_stacks then -- Aura stacks are higher, set stacks
-            self:SetStackCount(aura_stacks)
-        end 
-    end
 end
 
 function modifier_imba_wolfsbane_lycan:DeclareFunctions()	
@@ -1559,7 +1501,7 @@ function modifier_imba_wolfsbane_lycan:OnHeroKilled( keys )
 			if should_grants_stacks then
 				-- Play howl sound
 				EmitSoundOn(self.sound_howl, self.caster)				
-				AddStacksLua(self.ability, self.caster, self.caster, self.aura, 1, false)				
+				self:IncrementStackCount()
 				self.caster:AddNewModifier(self.caster, self.ability, self.prevent_modifier, {duration = self.prevent_modifier_duration})
 
 				-- #8 TALENT: Searches through all of Lycan's unit and gives them a buff modifier
@@ -2324,3 +2266,10 @@ end
 function modifier_imba_talent_wolf_packleader:GetModifierBaseDamageOutgoing_Percentage()
 	return self.bonus_damage_pct
 end
+
+-- Talent #7: Shapeshift Move Speed Cap Increase (need this modifier for client-side viewing)
+modifier_special_bonus_imba_lycan_7 = class ({})
+
+function modifier_special_bonus_imba_lycan_7:IsHidden() 		return true end
+function modifier_special_bonus_imba_lycan_7:IsPurgable()		return false end
+function modifier_special_bonus_imba_lycan_7:RemoveOnDeath()	return false end
