@@ -73,7 +73,7 @@ var OnFailure = function(data) {
 		return;
 
 	if (Game.GetLocalPlayerInfo().player_has_host_privileges) {
-		Game.SetAutoLaunchEnabled(false);
+		Game.SetAutoLaunchEnabled(true);
 		GameEvents.Subscribe(events.compute, OnCompute);
 		GameEvents.Subscribe(events.complete, OnComplete);
 		GameEvents.Subscribe(events.failure, OnFailure);
