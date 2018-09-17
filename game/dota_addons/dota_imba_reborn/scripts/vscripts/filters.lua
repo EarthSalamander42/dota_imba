@@ -448,7 +448,7 @@ function GameMode:OrderFilter( keys )
 
 	if USE_TEAM_COURIER == false then
 		if unit:IsCourier() then
-			if keys.order_type == DOTA_UNIT_ORDER_CAST_NO_TARGET then
+			if keys.order_type == DOTA_UNIT_ORDER_CAST_NO_TARGET or keys.order_type == DOTA_UNIT_ORDER_PURCHASE_ITEM then
 				return true
 			else
 				return false
