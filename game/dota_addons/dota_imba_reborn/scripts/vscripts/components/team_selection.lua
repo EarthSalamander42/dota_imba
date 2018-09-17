@@ -16,10 +16,6 @@
 --     suthernfriend
 --
 
-if TeamSelection == nil then
-	TeamSelection = class({})
-end
-
 -----------------------------------
 -- Utility and configuration
 -----------------------------------
@@ -35,7 +31,7 @@ local TeamSelectionEvents = {
 }
 
 -- Utility function to recieve a list of all player steamids
-local function TeamSelectionGetAllPlayers()
+function TeamSelectionGetAllPlayers()
 	local playerIds = {}
 	for i = 0, PlayerResource:GetPlayerCount() - 1 do
 		table.insert(playerIds, tostring(PlayerResource:GetSteamID(i)))
@@ -44,7 +40,7 @@ local function TeamSelectionGetAllPlayers()
 end
 
 -- set all players to no team
-function TeamSelection:TeamSelectionUnassignTeams()
+function TeamSelectionUnassignTeams()
 	for i = 0, PlayerResource:GetPlayerCount() - 1 do
 		local player = PlayerResource:GetPlayer(i)
 		-- set team to no_team
@@ -57,7 +53,7 @@ end
 -----------------------------------
 
 -- Called in DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP
-function TeamSelection:InitializeTeamSelection()
+function InitializeTeamSelection()
 
 	log.info("Initializing team selection")
 
@@ -66,11 +62,11 @@ function TeamSelection:InitializeTeamSelection()
 	-- mutation, imbathrow normal manual procedure
 
 	if GetMapName() == MapRanked5v5() then
-		TeamSelection:Random5v5TeamSelection()
+		Random5v5TeamSelection()
 	elseif GetMapName() == MapRanked10v10() then
-		TeamSelection:KeepTeams10v10TeamSelection()
+		KeepTeams10v10TeamSelection()
 	else
-		TeamSelection:ManualTeamSelection()
+		ManualTeamSelection()
 	end
 end
 
@@ -78,7 +74,7 @@ end
 -- Manual Selection
 -----------------------------------
 
-function TeamSelection:ManualTeamSelection()
+function ManualTeamSelection()
 	log.info("Initializing manual team selection")
 	log.info("Skipping. Manual Team Selection is performed by legacy code")
 end
@@ -90,14 +86,39 @@ end
 local PlayerWithHostPrivileges = nil
 local TeamSelectionListeners = {}
 
-local function Random5v5TeamSelectionFinalize(response)
+function Random5v5TeamSelection()
+
+	log.info("Initializing 5v5 random team selection")
+
+	-- wait until the player with host privileges notifies us that he is ready
+	-- register the host-ready event
+	TeamSelectionListeners.hostReady = CustomGameEventManager:RegisterListener(
+		TeamSelectionEvents.hostReady,
+		Random5v5TeamSelectionReady
+	)
+
+end
+
+function Random5v5TeamSelectionReady(obj, event)
+
+	-- unregister host-ready listener
+	CustomGameEventManager:UnregisterListener(TeamSelectionListeners.hostReady)
+
+	-- Make request
+	api.imba.matchmaking.imr_5v5_random(
+		TeamSelectionGetAllPlayers(),
+		Random5v5TeamSelectionFinalize
+	)
+end
+
+function Random5v5TeamSelectionFinalize(response)
 
 	log.info("recieved response from server")
 
 	-- catch errors
 	if not response.ok then
 		log.error("error")
-		TeamSelection:TeamSelectionFallbackAssignment()
+		TeamSelectionFallbackAssignment()
 		return
 	end
 
@@ -127,39 +148,15 @@ local function Random5v5TeamSelectionFinalize(response)
 	CustomGameEventManager:Send_ServerToAllClients(TeamSelectionEvents.complete, nil)
 end
 
-local function Random5v5TeamSelectionReady(obj, event)
-
-	-- unregister host-ready listener
-	CustomGameEventManager:UnregisterListener(TeamSelectionListeners.hostReady)
-
-	-- Make request
-	api.imba.matchmaking.imr_5v5_random(
-		TeamSelectionGetAllPlayers,
-		Random5v5TeamSelectionFinalize
-	)
-end
-
-function TeamSelection:Random5v5TeamSelection()
-
-	log.info("Initializing 5v5 random team selection")
-
-	-- wait until the player with host privileges notifies us that he is ready
-	-- register the host-ready event
-	TeamSelectionListeners.hostReady = CustomGameEventManager:RegisterListener(
-		TeamSelectionEvents.hostReady,
-		Random5v5TeamSelectionReady
-	)
-end
-
 -----------------------------------
 -- 10v10 Keep Teams
 -----------------------------------
 
 local TeamSelectionComputed = {}
 local TeamSelectionComputedCount = 0
-local TeamSelectionComputedTotal = 4
+local TeamSelectionComputedTotal = 10
 
-function TeamSelection:KeepTeams10v10TeamSelection()
+function KeepTeams10v10TeamSelection()
 
 	log.info("Initializing keep-teams 10v10 team selection")
 
@@ -169,6 +166,7 @@ function TeamSelection:KeepTeams10v10TeamSelection()
 		TeamSelectionEvents.hostReady,
 		KeepTeams10v10TeamSelectionReady
 	)
+
 end
 
 function KeepTeams10v10TeamSelectionReady(obj, event)
@@ -184,17 +182,17 @@ function KeepTeams10v10TeamSelectionReady(obj, event)
 	-- register the compute-complete event listener
 	TeamSelectionListeners.computeComplete = CustomGameEventManager:RegisterListener(
 		TeamSelectionEvents.computeComplete,
-		TeamSelection:KeepTeams10v10TeamSelectionComputeRound()
+		KeepTeams10v10TeamSelectionComputeRound
 	)
 
 	-- unassign the teams
-	TeamSelection:TeamSelectionUnassignTeams()
+	TeamSelectionUnassignTeams()
 
 	-- fire the first compute request
 	CustomGameEventManager:Send_ServerToPlayer(player, TeamSelectionEvents.compute, nil)
 end
 
-function TeamSelection:KeepTeams10v10TeamSelectionGetTeamComposition()
+function KeepTeams10v10TeamSelectionGetTeamComposition()
 
 	local composition = {}
 
@@ -218,39 +216,109 @@ function TeamSelection:KeepTeams10v10TeamSelectionGetTeamComposition()
 	return composition
 end
 
-function TeamSelection:KeepTeams10v10TeamSelectionComputeRound(obj, event)
+PreAssignPlayersSchema = {
+	{ radiant = 0, dire = 10 },
+	{ radiant = 14, dire = 6 },
+	{ radiant = 2, dire = 8 },
+	{ radiant = 11, dire = 18 },
+	{ radiant = 6, dire = 0 },
+	
+	{ radiant = 19, dire = 2 },
+	{ radiant = 4, dire = 12 },
+	{ radiant = 14, dire = 18 },
+	{ radiant = 3, dire = 19 },
+	{ radiant = 9, dire = 15 }
+}
+
+function PreAssignPlayers(iteration)
+	
+	local radiantPlayerId = PreAssignPlayersSchema[iteration + 1].radiant
+	local direPlayerId = PreAssignPlayersSchema[iteration + 1].dire
+	
+	log.debug("Pre assigning players: radiant id is: " .. radiantPlayerId .. ", dire id is: " .. direPlayerId)
+	log.debug("Player count is: " .. tostring(PlayerResource:GetPlayerCount()))
+	
+	-- skip if the player ids are stupid
+	if (radiantPlayerId > PlayerResource:GetPlayerCount() or direPlayerId > PlayerResource:GetPlayerCount()) then
+		log.debug("Skipping team pre assignment cause player count is too low")
+		return
+	end
+	
+	local radiantPlayer = PlayerResource:GetPlayer(radiantPlayerId)
+	local direPlayer = PlayerResource:GetPlayer(direPlayerId)
+	
+	-- set team to radiant and dire
+	radiantPlayer:SetTeam(DOTA_TEAM_GOODGUYS)
+	direPlayer:SetTeam(DOTA_TEAM_BADGUYS)
+	
+end
+
+function KeepTeams10v10TeamSelectionComputeRound(obj, event)
 
 	log.info("Compute complete")
 
 	-- gather team composition by creating a snapshot
-	local comp = TeamSelection:KeepTeams10v10TeamSelectionGetTeamComposition();
+	local comp = KeepTeams10v10TeamSelectionGetTeamComposition();
 	table.insert(TeamSelectionComputed, comp)
 
-	-- increment our count
-	TeamSelectionComputedCount = TeamSelectionComputedCount + 1
-
 	-- unassign the teams
-	TeamSelection:TeamSelectionUnassignTeams()
+	TeamSelectionUnassignTeams()
 
 	-- if we dont have enough data fire next event
 	if TeamSelectionComputedCount < TeamSelectionComputedTotal then
 
 		-- send another compute request to the privileged client
 		local player = PlayerResource:GetPlayer(PlayerWithHostPrivileges)
+		
+		PreAssignPlayers(TeamSelectionComputedCount);
+		
+		-- this does nothing else then to run Game.AutoAssignPlayersToTeams() on the host
+		-- damn volvo doesn't give us this function on servers
 		CustomGameEventManager:Send_ServerToPlayer(player, TeamSelectionEvents.compute, nil)
+	
+		-- increment our count
+		TeamSelectionComputedCount = TeamSelectionComputedCount + 1
+
 	else
 		-- we are done and dont need more computations
-		TeamSelection:KeepTeams10v10TeamSelectionDone()
+		KeepTeams10v10TeamSelectionDone()
 	end
 end
 
-local function KeepTeams10v10TeamSelectionFinalize(response)
+function KeepTeams10v10TeamSelectionDone()
+
+	log.info("Team selection complete")
+
+	-- unregister listener and send complete event
+	CustomGameEventManager:UnregisterListener(TeamSelectionListeners.computeComplete)
+
+	-- perform api request
+	api.imba.matchmaking.imr_10v10_teams(
+		TeamSelectionGetAllPlayers(),
+		TeamSelectionComputed,
+		KeepTeams10v10TeamSelectionFinalize
+	)
+end
+
+function TeamSelectionFallbackAssignment()
+
+	-- unassign teams
+	log.info("Unassigning teams")
+	TeamSelectionUnassignTeams()
+
+	-- send failure event
+	log.info("Sending failure event to clients")
+	CustomGameEventManager:Send_ServerToAllClients(TeamSelectionEvents.failure, nil)
+end
+
+function KeepTeams10v10TeamSelectionFinalize(response)
+
 	log.info("recieved response from server")
 
 	-- catch errors
 	if not response.ok then
 		log.error("error")
-		TeamSelection:TeamSelectionFallbackAssignment()
+		TeamSelectionFallbackAssignment()
 		return
 	end
 
@@ -278,28 +346,4 @@ local function KeepTeams10v10TeamSelectionFinalize(response)
 	-- send the complete event
 	-- will cleanup event handlers on the client / ui changes
 	CustomGameEventManager:Send_ServerToAllClients(TeamSelectionEvents.complete, nil)
-end
-
-function TeamSelection:KeepTeams10v10TeamSelectionDone()
-	log.info("Team selection complete")
-
-	-- unregister listener and send complete event
-	CustomGameEventManager:UnregisterListener(TeamSelectionListeners.computeComplete)
-
-	-- perform api request
-	api.imba.matchmaking.imr_10v10_teams(
-		TeamSelectionGetAllPlayers,
-		TeamSelectionComputed,
-		KeepTeams10v10TeamSelectionFinalize
-	)
-end
-
-function TeamSelection:TeamSelectionFallbackAssignment()
-	-- unassign teams
-	log.info("Unassigning teams")
-	TeamSelection:TeamSelectionUnassignTeams()
-
-	-- send failure event
-	log.info("Sending failure event to clients")
-	CustomGameEventManager:Send_ServerToAllClients(TeamSelectionEvents.failure, nil)
 end

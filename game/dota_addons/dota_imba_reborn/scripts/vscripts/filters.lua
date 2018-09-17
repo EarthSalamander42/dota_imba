@@ -446,6 +446,16 @@ function GameMode:OrderFilter( keys )
 		CombatEvents("generic", "glyph", unit)
 	end
 
+	if USE_TEAM_COURIER == false then
+		if unit:IsCourier() then
+			if keys.order_type == DOTA_UNIT_ORDER_CAST_NO_TARGET then
+				return true
+			else
+				return false
+			end
+		end
+	end
+
 	------------------------------------------------------------------------------------
 	-- Prevent Buyback during reincarnation
 	------------------------------------------------------------------------------------

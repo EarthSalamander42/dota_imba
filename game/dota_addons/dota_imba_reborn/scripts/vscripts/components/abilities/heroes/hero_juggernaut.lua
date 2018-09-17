@@ -1828,7 +1828,6 @@ function modifier_imba_omni_slash_caster:BounceAndSlaughter()
 
 	if self.bounce_amt >= 1 and #self.nearby_enemies >= 1 then
 		for _,enemy in pairs(self.nearby_enemies) do
-
 			local previous_position = self.caster:GetAbsOrigin()
 			FindClearSpaceForUnit(self.caster, enemy:GetAbsOrigin() + RandomVector(128), false)
 
@@ -1845,7 +1844,8 @@ function modifier_imba_omni_slash_caster:BounceAndSlaughter()
 			self.caster:PerformAttack(enemy, true, true, true, true, true, false, false)
 
 			-- If the target is not Roshan or a hero, instantly kill it
-			if not enemy:IsHero() or enemy:IsRoshan() or enemy:GetUnitName() ~= "npc_dota_mutation_golem" then
+			if enemy:IsHero() or enemy:IsRoshan() or enemy:GetUnitName() == "npc_dota_mutation_golem" then
+			else
 				enemy:Kill(self:GetAbility(), self.original_caster)
 			end
 

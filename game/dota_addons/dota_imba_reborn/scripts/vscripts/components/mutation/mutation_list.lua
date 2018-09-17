@@ -14,7 +14,7 @@ POSITIVE_MUTATION_LIST[2] = "teammate_resurrection"
 POSITIVE_MUTATION_LIST[3] = "super_fervor"
 POSITIVE_MUTATION_LIST[4] = "slark_mode"
 POSITIVE_MUTATION_LIST[5] = "ultimate_level"
-POSITIVE_MUTATION_LIST[6] = "pocket_roshan"
+-- POSITIVE_MUTATION_LIST[6] = "pocket_roshan"
 -- POSITIVE_MUTATION_LIST[6] = "death_healplosion"
 -- POSITIVE_MUTATION_LIST[7] = "super_blink" -- nofun
 

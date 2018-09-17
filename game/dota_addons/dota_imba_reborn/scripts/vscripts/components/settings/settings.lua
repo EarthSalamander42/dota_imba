@@ -27,7 +27,7 @@ IMBA_REINCARNATION_TIME = 3.0
 RUNE_SPAWN_TIME = 120					-- How long in seconds should we wait between rune spawns?
 BOUNTY_RUNE_SPAWN_TIME = 300
 if IsInToolsMode() then
-	BOTS_ENABLED = true
+	BOTS_ENABLED = false
 else
 	BOTS_ENABLED = false
 end

@@ -41,14 +41,17 @@ function TurboCourier:Init(hero)
 				end
 			end
 		end
---]]		
+--]]
 	end
 end
 
 function TurboCourier:Spawn(hero, pos)
+	print(hero:GetPlayerID(), "Set courier controllable for "..hero:GetUnitName())
 	self.COURIER_PLAYER[hero:GetPlayerID()] = CreateUnitByName("npc_dota_courier", pos, true, nil, nil, hero:GetTeam())
 	self.COURIER_PLAYER[hero:GetPlayerID()]:SetControllableByPlayer(hero:GetPlayerID(), true)
 	self.COURIER_PLAYER[hero:GetPlayerID()]:RemoveAbility("courier_morph")
 	self.COURIER_PLAYER[hero:GetPlayerID()]:RemoveAbility("courier_shield")
 	self.COURIER_PLAYER[hero:GetPlayerID()]:AddAbility("courier_movespeed"):SetLevel(1)
+
+	PrintTable(self.COURIER_PLAYER)
 end

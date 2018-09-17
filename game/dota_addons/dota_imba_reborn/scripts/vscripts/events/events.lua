@@ -28,7 +28,7 @@ function GameMode:OnGameRulesStateChange(keys)
 		InitItemIds()
 		HeroSelection:Init() -- init picking screen kv (this function is a bit heavy to run)
 		GameMode:OnSetGameMode() -- setup gamemode rules
-		TeamSelection:InitializeTeamSelection()
+		InitializeTeamSelection()
 		GetPlayerInfoIXP() -- Add a class later
 		Imbattlepass:Init() -- Initialize Battle Pass
 
@@ -615,6 +615,7 @@ function GameMode:OnThink()
 		-- Make courier controllable, repeat every second to avoid uncontrollable issues
 		if COURIER_TEAM then
 			if COURIER_TEAM[hero:GetTeamNumber()] and not COURIER_TEAM[hero:GetTeamNumber()]:IsControllableByAnyPlayer() then
+				print("Set team courier controllable!")
 				COURIER_TEAM[hero:GetTeamNumber()]:SetControllableByPlayer(hero:GetPlayerID(), true)
 			end
 		end

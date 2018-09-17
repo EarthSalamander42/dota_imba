@@ -16,7 +16,7 @@ function Mutation:Init()
 
 	if IsInToolsMode() then
 		IMBA_MUTATION["positive"] = "pocket_roshan"
-		IMBA_MUTATION["negative"] = "periodic_spellcast"
+		IMBA_MUTATION["negative"] = "death_explosion"
 		IMBA_MUTATION["terrain"] = "tug_of_war"
 	else
 		Mutation:ChooseMutation("positive", POSITIVE_MUTATION_LIST)
@@ -28,7 +28,7 @@ function Mutation:Init()
 
 	LinkLuaModifier("modifier_frantic", "components/modifiers/mutation/modifier_frantic.lua", LUA_MODIFIER_MOTION_NONE )
 
-	--	if IMBA_MUTATION["positive"] == "greed_is_good" then
+--	if IMBA_MUTATION["positive"] == "greed_is_good" then
 --		LinkLuaModifier("modifier_mutation_greed_is_good", "components/modifiers/mutation/modifier_mutation_greed_is_good.lua", LUA_MODIFIER_MOTION_NONE )
 --	end
 	if IMBA_MUTATION["positive"] == "killstreak_power" then
@@ -39,7 +39,7 @@ function Mutation:Init()
 		LinkLuaModifier("modifier_mutation_super_fervor", "components/modifiers/mutation/modifier_mutation_super_fervor.lua", LUA_MODIFIER_MOTION_NONE )
 	end
 
-	--	if IMBA_MUTATION["negative"] == "alien_incubation" then
+--	if IMBA_MUTATION["negative"] == "alien_incubation" then
 --		LinkLuaModifier("modifier_mutation_alien_incubation", "components/modifiers/mutation/modifier_mutation_alien_incubation.lua", LUA_MODIFIER_MOTION_NONE )
 	if IMBA_MUTATION["negative"] == "all_random_deathmatch" then
 		require('components/mutation/mutators/negative/ardm')
@@ -112,7 +112,7 @@ function Mutation:Precache(context)
 --	elseif IMBA_MUTATION["terrain"] == "tug_of_war" then
 		PrecacheResource("particle", "particles/ambient/tug_of_war_team_dire.vpcf", context)
 		PrecacheResource("particle", "particles/ambient/tug_of_war_team_radiant.vpcf", context)
-		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_warlock.vsndevts", context) -- Thundergod's Wrath
+		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_warlock.vsndevts", context) -- BOB Golem
 --	elseif IMBA_MUTATION["terrain"] == "wormhole" then
 		PrecacheResource("particle", "particles/ambient/wormhole_circle.vpcf", context)
 --	end
