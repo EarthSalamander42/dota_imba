@@ -28,7 +28,7 @@ function GameMode:OnGameRulesStateChange(keys)
 		InitItemIds()
 		HeroSelection:Init() -- init picking screen kv (this function is a bit heavy to run)
 		GameMode:OnSetGameMode() -- setup gamemode rules
-		TeamSelection:InitializeTeamSelection()
+		InitializeTeamSelection()
 		GetPlayerInfoIXP() -- Add a class later
 		Imbattlepass:Init() -- Initialize Battle Pass
 
