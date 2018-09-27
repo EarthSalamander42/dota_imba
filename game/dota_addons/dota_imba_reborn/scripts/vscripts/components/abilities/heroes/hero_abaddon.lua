@@ -731,20 +731,7 @@ function modifier_imba_curse_of_avernus_passive:OnAttack(kv)
 			self.damage = health_lost * caster:FindTalentValue("special_bonus_imba_abaddon_4", "health_to_damage_ratio")
 			self.ability.curse_of_avernus_target = kv.target
 			
-			-- Manually manipulate health instead of dealing damage to self since things get stupid with spell amp
-			if caster:HasModifier("modifier_imba_borrowed_time_buff_hot_caster") then
-				caster:Heal(self.damage, caster)
-			elseif self.damage > caster:GetHealth() then 
-				caster:Kill(self:GetAbility(), caster)
-			else
-				SendOverheadEventMessage(nil, OVERHEAD_ALERT_DAMAGE, caster, self.damage, nil)
-				caster:SetHealth(caster:GetHealth() - self.damage)
-			end
-			
-			-- Might as well make this try to activate Borrowed Time if applicable...there's enough messed up interaction as is
-			if caster:HasModifier("modifier_imba_borrowed_time_handler") then
-				caster:FindModifierByName("modifier_imba_borrowed_time_handler"):_CheckHealth(0)
-			end
+			ApplyDamage({ victim = caster, attacker = caster, damage = self.damage, damage_type = DAMAGE_TYPE_PURE, damage_flags = DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION})
 			
 			-- Start cooldown
 			self.ability:UseResources(false, false, true)

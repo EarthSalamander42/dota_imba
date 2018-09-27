@@ -773,7 +773,9 @@ function imba_slardar_bash_of_the_deep:GetAbilityTextureName()
 end
 
 function imba_slardar_bash_of_the_deep:GetIntrinsicModifierName()
-	return "modifier_imba_bash_of_the_deep_attack"
+	if not self:GetCaster():IsIllusion() then
+		return "modifier_imba_bash_of_the_deep_attack"
+	end
 end
 
 -- Bash attacks modifier
@@ -900,8 +902,7 @@ function modifier_imba_bash_of_the_deep_attack:GetModifierProcAttack_BonusDamage
 			-- A normal bash is rolled
 			if not smack_target then
 				-- Roll for chance
-				local rand = RandomInt(1, 100)
-				if rand <= bash_chance_pct then
+				if RollPseudoRandom(bash_chance_pct, self) then
 					-- Play bash sound
 					EmitSoundOn(sound_bash, target)
 
@@ -1007,7 +1008,6 @@ function imba_slardar_corrosive_haze:OnInventoryContentsChanged()
 		end
 	end
 end
-
 
 function imba_slardar_corrosive_haze:GetAOERadius()
 	local caster = self:GetCaster()
@@ -1486,6 +1486,23 @@ end
 function imba_slardar_rain_cloud:GetIntrinsicModifierName()
 	return "modifier_imba_rain_cloud_slardar"
 end
+
+-- Specific exception logic for Morphling (preventing permanent Rain Clouds)
+function imba_slardar_rain_cloud:OnUnStolen()
+	if not IsServer() then return end
+	
+	if self.particle_rain_fx then
+		-- Release rain effects
+		ParticleManager:DestroyParticle(self.particle_rain_fx, false)
+		ParticleManager:ReleaseParticleIndex(self.particle_rain_fx)
+	end
+	
+	if self.dummy then
+		self.dummy:Destroy()
+		self.dummy = nil
+	end
+end
+
 
 -- Slardar modifier
 modifier_imba_rain_cloud_slardar = class({})
