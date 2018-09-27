@@ -49,7 +49,7 @@ var OnComplete = function(data) {
 var OnCompute = function(data) {
 	// auto assign teams and fire event
 	if (Game.GetLocalPlayerInfo().player_has_host_privileges) {
-	
+		$.Msg("OnCompute...")
 		Game.AutoAssignPlayersToTeams();
 		GameEvents.SendCustomGameEventToServer(events.computeComplete, {});
 	}
