@@ -89,7 +89,7 @@ IMBATTLEPASS_LEVEL_REWARD[130]	= "fountain15"
 IMBATTLEPASS_LEVEL_REWARD[132]	= "radiance3"
 IMBATTLEPASS_LEVEL_REWARD[146]	= "fountain18"
 IMBATTLEPASS_LEVEL_REWARD[150]	= "shiva2"
-IMBATTLEPASS_LEVEL_REWARD[175]	= "pudge_dragonclaw"
+-- IMBATTLEPASS_LEVEL_REWARD[175]	= "pudge_dragonclaw"
 IMBATTLEPASS_LEVEL_REWARD[200]	= "shiva3"
 
 CustomNetTables:SetTableValue("game_options", "battlepass", {battlepass = IMBATTLEPASS_LEVEL_REWARD})
@@ -430,6 +430,21 @@ function Imbattlepass:GetHeroEffect(hero)
 			hero.blade_fury_effect = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_blade_fury.vpcf"
 		end
 	elseif hero:GetUnitName() == "npc_dota_hero_pudge" then
+		-- TODO: Temporary, later replace dragonclaw hook model name by "pudge_hook_string_finders" in wearables.kv
+		local string_finders = Wearables:GetModelStringFinders("models/items/pudge/pudge_skeleton_hook_body.vmdl")
+		for _, string in pairs(string_finders) do
+			if Wearables:GetWearable(hero, string) then
+				hero.hook_wearable = Wearables:GetWearable(hero, string)
+				print(hero.hook_wearable:GetModelName())
+				break
+			end
+		end
+
+		if hero.hook_wearable == nil then
+			print("Couldn't find hook wearable, string finder missing in table for 1 of these models:")
+			Wearables:PrintWearables(hero)
+		end
+
 		hero.hook_pfx = "particles/units/heroes/hero_pudge/pudge_meathook.vpcf"
 
 		if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_PUDGE["pudge_arcana"] then
@@ -437,8 +452,8 @@ function Imbattlepass:GetHeroEffect(hero)
 		end
 
 		if next_reward_shown == true and Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_PUDGE["pudge_dragonclaw"] then
-			Imbattlepass:SetupImmortal(hero:GetPlayerID(), "models/items/pudge/pudge_skeleton_hook_body.vmdl")
 			hero.hook_pfx = "particles/econ/items/pudge/pudge_dragonclaw/pudge_meathook_dragonclaw_imba.vpcf"
+			Imbattlepass:SetupImmortal(hero:GetPlayerID(), "models/items/pudge/pudge_skeleton_hook_body.vmdl")
 		end
 	elseif hero:GetUnitName() == "npc_dota_hero_vengefulspirit" then
 		if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_VENGEFULSPIRIT["vengefulspirit_immortal"] then

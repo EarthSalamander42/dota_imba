@@ -168,11 +168,11 @@
 "npc_dota_hero_wisp"                                        "Wisp (IMBA)"
 "npc_dota_hero_witch_doctor"                                "Witch Doctor (IMBA)"
 "npc_dota_hero_zuus"                                        "Zeus (IMBA)"
-"npc_dota_hero_ghost_revenant"                            "Ghost Revenant"
 "npc_dota_hero_storegga"                                    "Storegga"
-"npc_dota_hero_sly_king"                              "Sly King"
-"npc_dota_hero_pangolier"                             "Pangolier (IMBA)"
-"npc_dota_hero_dummy_dummy"								"Selecting Hero..."
+"npc_dota_hero_sly_king"									"Sly King"
+"npc_dota_hero_pangolier"									"Pangolier (IMBA)"
+"npc_dota_hero_dummy_dummy"									"Selecting Hero..."
+"npc_dota_hero_malfurion"									"Malfurion"
 
 //=================================================================================================================
 // Dummy units and hero units

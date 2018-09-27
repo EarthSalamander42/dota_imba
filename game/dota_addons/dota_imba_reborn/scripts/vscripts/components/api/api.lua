@@ -74,28 +74,31 @@ function api.request(endpoint, data, callback)
 
 	if callback == nil then
 		callback = (function (error, data)
-				if (error) then
-					log.error("Error during request to " .. endpoint)
-				else
-					log.info("Request to " .. endpoint .. " successful")
-				end
-			end)
+			if (error) then
+				log.error("Error during request to " .. endpoint)
+			else
+				log.info("Request to " .. endpoint .. " successful")
+			end
+		end)
 	end
 
 	if data ~= nil then
 		method = "POST"
 		payload = json.encode({
-				agent = api.config.agent,
-				version = api.config.version,
-				time = {
-					frames = tonumber(GetFrameCount()),
-					server_time = tonumber(Time()),
-					dota_time = tonumber(GameRules:GetDOTATime(true, true)),
-					game_time = tonumber(GameRules:GetGameTime()),
-					server_system_date_time = tostring(GetSystemDate()) .. " " .. tostring(GetSystemTime()),
-				},
-				data = data
-			})
+			agent = api.config.agent,
+			version = api.config.version,
+			time = {
+				frames = tonumber(GetFrameCount()),
+				server_time = tonumber(Time()),
+				dota_time = tonumber(GameRules:GetDOTATime(true, true)),
+				game_time = tonumber(GameRules:GetGameTime()),
+				server_system_date_time = tostring(GetSystemDate()) .. " " .. tostring(GetSystemTime()),
+			},
+			data = data
+		})
+	else
+		log.debug("data == nil, end api.request")
+		return
 	end
 
 	request = CreateHTTPRequestScriptVM(method, url)

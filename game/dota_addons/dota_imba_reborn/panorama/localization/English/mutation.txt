@@ -63,7 +63,7 @@
 
 // Negative
 "mutation_death_explosion"						"Death Explosion"
-"mutation_death_explosion_Description"			"Deal 500 + (80 * minutes) damage in a 400 radius on death afer a 0.9 seconds delay."
+"mutation_death_explosion_Description"			"Deal 400 + (50 * minutes) damage in a 400 radius on death afer a delay of 1 second."
 
 "mutation_periodic_spellcast"					"Periodic Spellcast"
 "mutation_periodic_spellcast_Description"		"Every minute, a random spell will be cast on everyone."

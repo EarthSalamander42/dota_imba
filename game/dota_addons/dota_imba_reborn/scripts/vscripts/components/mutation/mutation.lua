@@ -15,9 +15,9 @@ function Mutation:Init()
 	IMBA_MUTATION["imba"] = "frantic"
 
 	if IsInToolsMode() then
-		IMBA_MUTATION["positive"] = "pocket_roshan"
+		IMBA_MUTATION["positive"] = "teammate_resurrection"
 		IMBA_MUTATION["negative"] = "death_explosion"
-		IMBA_MUTATION["terrain"] = "tug_of_war"
+		IMBA_MUTATION["terrain"] = "danger_zone"
 	else
 		Mutation:ChooseMutation("positive", POSITIVE_MUTATION_LIST)
 		Mutation:ChooseMutation("negative", NEGATIVE_MUTATION_LIST)

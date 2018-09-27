@@ -3,6 +3,9 @@
 #base heroes/silencer/hero.txt
 #base heroes/shadow_shaman/hero.txt
 
+#base custom_heroes/malfurion/hero.txt
+#base custom_heroes/sohei/hero.txt
+
 "DOTAHeroes"
 {
 	//=================================================================================================================
@@ -2115,106 +2118,6 @@
 	}
 
 	//=================================================================================================================
-	// HERO: Ghost Revenant // Need to be duplicated in npc_units_custom.txt
-	//=================================================================================================================
-	"npc_dota_hero_ghost_revenant"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"					"npc_dota_hero_razor"
-		"HeroID"					"115"
-		"Model"						"models/heroes/razor/razor.vmdl"
-		"ModelScale"				"1.080000"
-		"SoundSet"					"Hero_Razor"
-
-		//Picking Screen
-		"IsCustom"					"1"
-
-		// Armor
-		//-------------------------------------------------------------------------------------------------------------
-		"ArmorPhysical"				"-1"									// Physical protection.
-		"MagicalResistance"			"25"									// Magical protection (percentage).
-
-		// Attack
-		//-------------------------------------------------------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackDamageMin"			"30"										// Damage range min.
-		"AttackDamageMax"			"40"										// Damage range max.
-		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"				// Type of damage dealt. 
-		"AttackRate"				"1.700"									// Speed of attack.
-		"AttackAnimationPoint"		"0.300"									// Normalized time in animation cycle to attack.
-		"AttackAcquisitionRange"	"600"									// Range within a target can be acquired.
-		"AttackRange"				"150"									// Range within a target can be attacked.
-
-		// Attributes
-		//-------------------------------------------------------------------------------------------------------------
-		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"	// Primary Attribute
-		"AttributeBaseStrength"		"23"						// Base strength
-		"AttributeStrengthGain"		"2.3"						// Strength bonus per level.
-		"AttributeBaseIntelligence"	"24"							// Base intelligence
-		"AttributeIntelligenceGain"	"3.3"						// Intelligence bonus per level.
-		"AttributeBaseAgility"		"21"						// Base agility
-		"AttributeAgilityGain"		"2.4"						// Agility bonus per level.
-
-		// Abilities
-		//-------------------------------------------------------------------------------------------------------------
-		"Ability1"					"ghost_revenant_blackjack"
-		"Ability2"					"ghost_revenant_wraith"
-		"Ability3"					"ghost_revenant_miasma"
-		"Ability4"					"ghost_revenant_ghost_immolation"
-		"Ability5"					"generic_hidden"
-		"Ability6"					"ghost_revenant_exhaustion"
-		"Ability7"					"generic_hidden"
-		"Ability8"					"generic_hidden"
-		"Ability9"					"generic_hidden"
-
-		// Talents
-		//-------------------------------------------------------------------------------------------------------------
-		"Ability10"					"special_bonus_magic_resistance_15"
-		"Ability11"					"special_bonus_exp_boost_10"
-		"Ability12"					"special_bonus_attack_damage_40"
-//		"Ability13"					"special_bonus_imba_ghost_revenant_1" // Increase Blackjack projectile number
-		"Ability13"					"special_bonus_mp_300"
-		"Ability14"					"special_bonus_cast_range_150" 
-		"Ability15"					"special_bonus_spell_amplify_10"
-		"Ability16"					"special_bonus_cooldown_reduction_15"
-		"Ability17"					"special_bonus_gold_income_50"
-
-		// Bounds
-		//-------------------------------------------------------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
-		"RingRadius"				"70"
-		"HealthBarOffset"            "260"
-
-		// Movement
-		//-------------------------------------------------------------------------------------------------------------
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"				"310"									// Speed.
-		"MovementTurnRate"			"0.4"									// Turning rate.
-
-		// Status
-		//-------------------------------------------------------------------------------------------------------------
-		"StatusHealth"				"200"									// Base health.
-		"StatusHealthRegen"			"3.0"									// Health regeneration rate.
-		"StatusMana"				"50"									// Base mana.
-		"StatusManaRegen"			"1.0"									// Mana regeneration rate.
-
-		// Team
-		//-------------------------------------------------------------------------------------------------------------
-		"TeamName"					"DOTA_TEAM_GOODGUYS"
-		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
-		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_HERO"
-
-		// Vision
-		//-------------------------------------------------------------------------------------------------------------
-		"VisionDaytimeRange"		"1800"									// Range of vision during day light.
-		"VisionNighttimeRange"		"800"									// Range of vision at night time.
-
-		"GameSoundsFile"			"soundevents/game_sounds_heroes_custom/game_sounds_razor.vsndevts"
-	}
-
-	//=================================================================================================================
 	// HERO: Hell Empress // Need to be duplicated in npc_units_custom.txt
 	//=================================================================================================================
 	"npc_dota_hero_hell_empress"
@@ -2280,7 +2183,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"RingRadius"				"70"
-		"HealthBarOffset"            "240"
+		"HealthBarOffset"			"240"
 
 		// Movement
 		//-------------------------------------------------------------------------------------------------------------
@@ -2306,7 +2209,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"VisionDaytimeRange"		"1800"									// Range of vision during day light.
 		"VisionNighttimeRange"		"800"									// Range of vision at night time.
-	
+
 		"GameSoundsFile"			"soundevents/game_sounds_heroes_custom/game_sounds_hell_empress.vsndevts"
 	}
 
@@ -2608,60 +2511,6 @@
 //
 //		"GameSoundsFile"			"soundevents/game_sounds_heroes_custom/game_sounds_tiny.vsndevts"
 //	}
-
-	//=================================================================================================================
-	// HERO: Ronin
-	//=================================================================================================================
-	"npc_dota_hero_sohei"
-	{
-		"BaseClass"					"npc_dota_hero_juggernaut"
-		"HeroID"					"122"
-		"Model"						"models/heroes/sohei/sohei.vmdl"
-
-		//Picking Screen
-		"IsCustom"					"1"
-//		"IsNew"						"1"
-
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementTurnRate"			"1.5"
-		"MovementSpeed"				"325"
-
-		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackDamageMin"			"31"
-		"AttackDamageMax"			"33"
-		"AttackRate"				"1.7"
-
-		"ArmorPhysical"				"5"
-		"StatusHealthRegen"			"3.25"
-
-		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
-		"AttributeBaseStrength"		"23"
-		"AttributeStrengthGain"		"4.0"
-		"AttributeBaseAgility"		"18"
-		"AttributeAgilityGain"		"1.5"
-		"AttributeBaseIntelligence"	"17"
-		"AttributeIntelligenceGain"	"1.5"
-
-		"Ability1"                  "sohei_dash"
-		"Ability2"                  "sohei_guard"
-		"Ability3"                  "sohei_momentum"
-		"Ability4"                  "sohei_palm_of_life"
-		"Ability5"                  "generic_hidden"
-		"Ability6"                  "sohei_flurry_of_blows"
-
-		"Ability10"                 "special_bonus_sohei_stun"             // Momentum inflicts a brief stun if the target collides with an obstacle
-		"Ability11"                 "special_bonus_cleave_15"
-		"Ability12"                 "special_bonus_strength_20"
-		"Ability13"                 "special_bonus_sohei_guard_knockback"             // Guard also knockbacks enemies until they are 300 units away
-		"Ability14"                 "special_bonus_sohei_momentum_guard_cooldown"             // Momentum hits reduce the cooldown on Guard
-		"Ability15"                 "special_bonus_movement_speed_75"
-		"Ability16"                 "special_bonus_sohei_dash_recharge"             // Dash charges cool down all at once
-		"Ability17"                 "special_bonus_sohei_fob_radius"             // Increases Flurry of Blows' AOE radius
-
-		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
-		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_HERO"
-	}
 
 	//=================================================================================================================
 	// HERO: Dummy

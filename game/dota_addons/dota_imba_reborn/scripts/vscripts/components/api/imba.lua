@@ -65,27 +65,28 @@ function api.imba.register(callback)
 	}
 
 	-- register game
-	api.request(api.endpoints.imba.game.register, register_data, function (error, data)
-		if error then
-			log.error("Critical API error: Cannot register game!")
-			if callback ~= nil then
-				callback(true)
+	if data ~= nil then
+		api.request(api.endpoints.imba.game.register, register_data, function (error, data)
+			if error then
+				log.error("Critical API error: Cannot register game!")
+				if callback ~= nil then
+					callback(true)
+				end
+			else
+				api.imba.data = data
+
+				log.debug("Register with server successful, Game ID: #" .. tostring(api.imba.data.id))
+				if callback ~= nil then
+					callback(false)
+				end
+
+				api.imba.ready = true
+
+				-- start events system
+				api.imba.events.initialize()
 			end
-		else
-			api.imba.data = data
-
-			log.debug("Register with server successful, Game ID: #" .. tostring(api.imba.data.id))
-			if callback ~= nil then
-				callback(false)
-			end
-
-			api.imba.ready = true
-
-			-- start events system
-			api.imba.events.initialize()
-		end
-	end)
-
+		end)
+	end
 end
 
 function api.imba.event(code, data, quiet)
@@ -251,7 +252,7 @@ function api.imba.get_donators()
 end
 
 function api.imba.is_donator(steamid)
-	if api.imba.data.donators == nil then
+	if data == nil or api.imba.data.donators == nil then
 --		log.warn("is_donator called but donators are not available. yet?")
 		return false
 	end
@@ -269,7 +270,7 @@ function api.imba.is_donator(steamid)
 end
 
 function api.imba.get_developers()
-	if api.imba.data.developers == nil then
+	if data == nil or api.imba.data.developers == nil then
 --		log.warn("is_developer called but developers are not available. yet?")
 --		return false
 		return {}
@@ -279,7 +280,7 @@ function api.imba.get_developers()
 end
 
 function api.imba.is_developer(steamid)
-	if api.imba.data.developers == nil then
+	if data == nil or api.imba.data.developers == nil then
 		log.warn("is_developer called but developers are not available. yet?")
 		return false
 	end

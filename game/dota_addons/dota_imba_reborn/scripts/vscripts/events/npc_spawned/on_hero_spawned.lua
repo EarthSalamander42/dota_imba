@@ -203,14 +203,6 @@ function GameMode:OnHeroSpawned(hero)
 		Mutation:OnHeroSpawn(hero)
 	end
 
-	-- fix for killed with Ghost Revenant immolation
-	if hero:HasModifier("modifier_ghost_revenant_ghost_immolation_debuff") then
-		hero:RemoveModifierByName("modifier_ghost_revenant_ghost_immolation_debuff")
-		Timers:CreateTimer(0.2, function()
-			hero:SetHealth(100000)
-		end)
-	end
-
 	Timers:CreateTimer(1.0, function() -- Silencer fix
 		if hero:HasModifier("modifier_silencer_int_steal") then
 			hero:RemoveModifierByName("modifier_silencer_int_steal")

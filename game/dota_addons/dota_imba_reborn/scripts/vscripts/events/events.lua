@@ -318,8 +318,10 @@ function GameMode:OnEntityKilled( keys )
 		-------------------------------------------------------------------------------------------------
 		if killed_unit:GetUnitName() == "npc_dota_badguys_fort" then
 			GAME_WINNER_TEAM = 2
+			return
 		elseif killed_unit:GetUnitName() == "npc_dota_goodguys_fort" then
 			GAME_WINNER_TEAM = 3
+			return
 		end
 
 		-- Check if the dying unit was a player-controlled hero
@@ -359,6 +361,7 @@ function GameMode:OnEntityKilled( keys )
 			end
 
 			if killer:IsRealHero() then
+				print("Killer is a hero! (Building)")
 				CombatEvents("kill", "hero_kill_tower", killed_unit, killer)
 				if killer:GetTeam() ~= killed_unit:GetTeam() then
 					if killed_unit:GetUnitName() == "npc_dota_goodguys_healers" or killed_unit:GetUnitName() == "npc_dota_badguys_healers" then
@@ -368,6 +371,7 @@ function GameMode:OnEntityKilled( keys )
 					end
 				end
 			else
+				print("Killer is not a hero! (Building)")
 				CombatEvents("generic", "tower", killed_unit, killer)
 			end
 

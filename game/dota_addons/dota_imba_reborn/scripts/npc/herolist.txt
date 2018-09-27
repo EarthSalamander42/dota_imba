@@ -119,7 +119,6 @@
 	"npc_dota_hero_monkey_king" 		"1"
 	"npc_dota_hero_pangolier" 			"1"
 	"npc_dota_hero_dark_willow" 		"1"
-	"npc_dota_hero_ghost_revenant" 		"1"
 	"npc_dota_hero_hell_empress" 		"1"
 	"npc_dota_hero_sly_king"			"1"
 	"npc_dota_hero_scaldris"			"1"

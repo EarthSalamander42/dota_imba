@@ -708,24 +708,7 @@ function HeroSelection:Attachments(hero)
 
 	hero_name = string.gsub(hero:GetUnitName(), "npc_dota_hero_", "")
 
-	if hero_name == "ghost_revenant" then
-		hero:SetRenderColor(128, 255, 0)
-		hero.head = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/razor/apostle_of_the_tempest_head/apostle_of_the_tempest_head.vmdl"})
-		hero.head:FollowEntity(hero, true)
-		hero.head:SetRenderColor(128, 255, 0)
-		hero.arms = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/razor/apostle_of_the_tempest_arms/apostle_of_the_tempest_arms.vmdl"})
-		hero.arms:FollowEntity(hero, true)
-		hero.arms:SetRenderColor(128, 255, 0)
-		hero.body = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/razor/apostle_of_the_tempest_armor/apostle_of_the_tempest_armor.vmdl"})
-		hero.body:FollowEntity(hero, true)
-		hero.body:SetRenderColor(128, 255, 0)
-		hero.belt = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/razor/empire_of_the_lightning_lord_belt/empire_of_the_lightning_lord_belt.vmdl"})
-		hero.belt:FollowEntity(hero, true)
-		hero.belt:SetRenderColor(128, 255, 0)
-		hero.weapon = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/razor/severing_lash/mesh/severing_lash.vmdl"})
-		hero.weapon:FollowEntity(hero, true)
-		hero.weapon:SetRenderColor(128, 255, 0)
-	elseif hero_name == "sohei" then
+	if hero_name == "sohei" then
 		-- hero.hand = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/heroes/sohei/so_weapon.vmdl"})
 		hero.hand = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/heroes/sohei/weapon/immortal/thunderlord.vmdl"})
 

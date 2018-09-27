@@ -53,6 +53,9 @@ function Precache( context )
 	PrecacheResource("soundfile", "soundevents/diretide_soundevents.vsndevts", context)
 	PrecacheResource("soundfile", "soundevents/imba_soundevents.vsndevts", context)
 
+	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_abyssal_underlord.vsndevts", context) -- Hellion
+	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_ursa.vsndevts", context) -- Malfurion
+
 	if IsMutationMap() then
 		Mutation:Precache(context)
 	end

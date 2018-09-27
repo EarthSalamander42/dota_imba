@@ -230,13 +230,13 @@ function imba_pudge_meat_hook:GetCastRange()
 	local hook_range = self:GetSpecialValueFor("base_range") + self:GetCaster():FindTalentValue("special_bonus_imba_pudge_5")
 
 	-- volvo?
-	-- This is not working because GetCastRange is clientside
+	-- TODO: This is not working because GetCastRange is clientside
 	if self:GetCaster() and self:GetCaster().FindAbilityByName and self:GetCaster():FindAbilityByName("imba_pudge_light_hook") then
 		hook_range = hook_range + (self:GetCaster():FindAbilityByName("imba_pudge_light_hook"):GetSpecialValueFor("stack_range") * charges)
 	end
 
 	if IsClient() then
-		print(charges, hook_range, hook_range)
+		print(charges, hook_range)
 	end
 
 	return hook_range
@@ -359,7 +359,7 @@ function imba_pudge_meat_hook:OnSpellStart()
 	self.hook_go = ProjectileManager:CreateLinearProjectile(projectile_info)
 
 	if self:GetCaster() and self:GetCaster():IsHero() then
-		local hHook = self:GetCaster():GetTogglableWearable( DOTA_LOADOUT_TYPE_WEAPON )
+		local hHook = self:GetCaster().hook_wearable
 		if hHook ~= nil then
 			hHook:AddEffects( EF_NODRAW )
 		end
@@ -576,7 +576,7 @@ function imba_pudge_meat_hook:OnProjectileHit_ExtraData(hTarget, vLocation, Extr
 		self:GetCaster():FadeGesture(ACT_DOTA_CHANNEL_ABILITY_1)
 
 		if self:GetCaster() and self:GetCaster():IsHero() then
-			local hHook = self:GetCaster():GetTogglableWearable( DOTA_LOADOUT_TYPE_WEAPON )
+			local hHook = self:GetCaster().hook_wearable
 			if hHook ~= nil then
 				hHook:RemoveEffects( EF_NODRAW )
 			end

@@ -7,6 +7,7 @@
 #base heroes/bane/abilities.txt
 #base heroes/bloodseeker/abilities.txt
 #base heroes/earth_spirit/abilities.txt
+#base heroes/malfurion/abilities.txt
 #base heroes/night_stalker/abilities.txt
 #base heroes/silencer/abilities.txt
 #base heroes/shadow_shaman/abilities.txt
@@ -20716,7 +20717,7 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
 		"MaxLevel"						"4"
-		"ScriptFile"				"components/abilities/heroes/hero_warlock.lua"
+		"ScriptFile"					"components/abilities/heroes/hero_warlock.lua"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -20750,39 +20751,33 @@
 				"var_type"				"FIELD_INTEGER"
 				"radius"				"275 350 425 500"
 			}
-
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"tick_value"			"15 35 48 54"
 			}
-
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"golem_bonus_ms_pct"	"10 15 20 25"
 			}
-
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"golem_bonus_as"		"30 45 60 75"
 				"LinkedSpecialBonus"	"special_bonus_imba_warlock_1"
 			}
-
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"duration"				"12"
 				"LinkedSpecialBonus"	"special_bonus_imba_warlock_5"
 			}
-
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"tick_interval"			"1"
 			}
-
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
@@ -34222,292 +34217,6 @@
 	//=================================================================================================================
 	//=================================================================================================================
 	//=================================================================================================================
-	//=================================================================================================================
-
-	//=================================================================================================================
-	// Ghost Revenant: Blackjack
-	//=================================================================================================================
-	"ghost_revenant_blackjack"
-	{
-		"BaseClass"					"ability_lua"
-		"ScriptFile"				"components/abilities/heroes/hero_ghost_revenant.lua"
-		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_POINT"
-		"AbilityCastRange"			"1600"
-		"AbilityTextureName"    	"custom/ghost_revenant_blackjack"
-		"MaxLevel"					"4"
-		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.3"
-
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"11.0"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"80 100 120 140"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"stun_duration"				"2.0 2.5 3.0 3.5"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"damage"					"160 250 340 430"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"projectile_radius"			"120"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"projectile_length"			"1600"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"projectile_speed"			"800"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"projectile_cone"			"60"
-			}
-			"07"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"projectile_amount"			"3"
-				"LinkedSpecialBonus"		"special_bonus_imba_ghost_revenant_1"
-			}
-			"08"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"projectile_vision"			"300"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Ghost Revenant: Wraith
-	//=================================================================================================================
-	"ghost_revenant_wraith"
-	{
-		"BaseClass"					"ability_lua"
-		"ScriptFile"				"components/abilities/heroes/hero_ghost_revenant.lua"
-		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
-		"AbilityTextureName"    	"custom/ghost_revenant_wraith"
-		"MaxLevel"					"4"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.0"
-
-		// Time
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"13.0"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"60 70 80 90"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"3.0 4.0 5.0 6.0"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"res_reduction_pct"		"25"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_ms_pct"			"8 12 16 20"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Ghost Revenant: Miasma (Deal damage to all enemy units in an AoE and applies a buff. Buff reveals invis units and burn damage over time)
-	//=================================================================================================================
-	"ghost_revenant_miasma"
-	{
-		"BaseClass"					"ability_lua"
-		"ScriptFile"				"components/abilities/heroes/hero_ghost_revenant.lua"
-		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
-		"AbilityCastRange"			"900"
-		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
-		"AbilityTextureName"		"custom/ghost_revenant_miasma"
-		"MaxLevel"					"4"
-		"AOERadius"					"%area_of_effect"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.3"
-
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"17.0"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"130"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"area_of_effect"			"500"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"tick"						"1.0"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"dmg_per_sec"				"20 40 60 80"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"dmg_pct_per_sec"			"3"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"duration"					"10.0"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Ghost Revenant: Ghost Immolation (necro aura but reduces max hp)
-	//=================================================================================================================
-	"ghost_revenant_ghost_immolation"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"					"ability_lua"
-		"ScriptFile"				"components/abilities/heroes/hero_ghost_revenant.lua"
-		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityCastRange"			"900"
-		"AbilityTextureName"    	"custom/ghost_revenant_ghost_immolation"
-		"MaxLevel"					"1"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"radius"			"900"
-			}
-			"02"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"tick_time"			"1"
-			}
-			"03"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"hp_loss_pct"		"3"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Ghost Revenant: Exhaustion (Aghanim: Remove positive buffs)
-	//=================================================================================================================
-	"ghost_revenant_exhaustion"
-	{
-		"BaseClass"					"ability_lua"
-		"ScriptFile"				"components/abilities/heroes/hero_ghost_revenant.lua"
-		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityTextureName"    	"custom/ghost_revenant_exhaustion"
-		"AbilityType"				"DOTA_ABILITY_TYPE_ULTIMATE"
-		"MaxLevel"					"3"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.5"
-
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"110.0"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"150 210 270"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"ms_reduction_pct"			"-25 -55 -85"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"duration"					"7.0"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Ghost Revenant Talents
-	//=================================================================================================================
-	"special_bonus_imba_ghost_revenant_1"	// Increase number of projectiles
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"special_bonus_undefined"                                                        
-		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01"		"ghost_revenant_blackjack"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"		"FIELD_FLOAT"
-				"value"			"2"
-			}
-		}
-	}
 
 	//=================================================================================================================
 	// Hell Empress: Eleven Curses

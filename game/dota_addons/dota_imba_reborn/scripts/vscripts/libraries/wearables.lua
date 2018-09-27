@@ -31,6 +31,7 @@ function Wearables:SwapWearableSlot(unit, new_model, material_group)
 									old_wearable = wearable
 									if wearable_slot == "hook" then
 										wearable:SetModel(new_model)
+										unit.hook_wearable = wearable
 --										if material_group then -- disabled because useless for pudge hook
 --											wearable:SetMaterialGroup(material_group)
 --										end
@@ -85,11 +86,11 @@ function Wearables:SwapWearableSlot(unit, new_model, material_group)
 end
 
 -- Returns a wearable handle if its the passed target_model
-function Wearables:GetWearable( unit, target_model )
+function Wearables:GetWearable(unit, model_find)
 	local wearable = unit:FirstMoveChild()
 	while wearable ~= nil do
 		if wearable:GetClassname() == "dota_item_wearable" then
-			if wearable:GetModelName() == target_model then
+			if string.find(wearable:GetModelName(), model_find) then
 				return wearable
 			end
 		end
@@ -168,6 +169,19 @@ function Wearables:PrecacheWearables(context)
 							end
 						end
 					end
+				end
+			end
+		end
+	end
+end
+
+function Wearables:GetModelStringFinders(target_model)
+	local table = {}
+	for model_name, model_table in pairs(hats) do
+		if target_model == model_name then
+			for particle_type, particle_table in pairs(model_table) do
+				if particle_type == "wearable_slot" then
+					return particle_table
 				end
 			end
 		end
