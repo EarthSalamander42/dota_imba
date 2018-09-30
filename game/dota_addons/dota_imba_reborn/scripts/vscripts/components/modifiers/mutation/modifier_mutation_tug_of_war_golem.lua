@@ -120,6 +120,17 @@ function modifier_mutation_tug_of_war_golem:OnDeath(keys)
 				ParticleManager:ReleaseParticleIndex(old_golem.ambient_pfx)
 			end
 
+			for _, hero in pairs(HeroList:GetAllHeroes()) do
+				if keys.attacker:GetTeam() == hero:GetTeam() and not hero:IsClone() then
+					if hero:IsRealHero() and not hero:HasModifier("modifier_monkey_king_fur_army_soldier") and not hero:HasModifier("modifier_monkey_king_fur_army_soldier_hidden") then
+						hero:ModifyGold(goldBonus * (1 + previous_stacks), false, DOTA_ModifyGold_Unspecified)
+						hero:AddExperience(expBonus * (1 + previous_stacks), DOTA_ModifyXP_CreepKill, false, true)
+						SendOverheadEventMessage(PlayerResource:GetPlayer(hero:GetPlayerOwnerID()), OVERHEAD_ALERT_GOLD, hero, goldBonus * (1 + previous_stacks), nil)
+						SendOverheadEventMessage(PlayerResource:GetPlayer(hero:GetPlayerOwnerID()), OVERHEAD_ALERT_MANA_ADD, hero, expBonus * (1 + previous_stacks), nil)
+					end
+				end
+			end
+			
 			-- New golem
 			Timers:CreateTimer(4.5, function()
 				if original_team == DOTA_TEAM_GOODGUYS then
@@ -128,14 +139,18 @@ function modifier_mutation_tug_of_war_golem:OnDeath(keys)
 
 					ParticleManager:SetParticleControl(golem.ambient_pfx, 0, golem:GetAbsOrigin())
 					Timers:CreateTimer(0.1, function()
-						golem:MoveToPositionAggressive(IMBA_MUTATION_TUG_OF_WAR_TARGET[DOTA_TEAM_BADGUYS])
+						if not golem:IsNull() then
+							golem:MoveToPositionAggressive(IMBA_MUTATION_TUG_OF_WAR_TARGET[DOTA_TEAM_BADGUYS])
+						end
 					return 2 end) -- Recall the command every 2 seconds so AI doesn't get bricked
 				elseif original_team == DOTA_TEAM_BADGUYS then
 					golem = CreateUnitByName("npc_dota_mutation_golem", death_position, false, nil, nil, DOTA_TEAM_GOODGUYS)
 					golem.ambient_pfx = ParticleManager:CreateParticle("particles/ambient/tug_of_war_team_radiant.vpcf", PATTACH_ABSORIGIN_FOLLOW, golem)
 					ParticleManager:SetParticleControl(golem.ambient_pfx, 0, golem:GetAbsOrigin())
 					Timers:CreateTimer(0.1, function()
-						golem:MoveToPositionAggressive(IMBA_MUTATION_TUG_OF_WAR_TARGET[DOTA_TEAM_GOODGUYS])
+						if not golem:IsNull() then
+							golem:MoveToPositionAggressive(IMBA_MUTATION_TUG_OF_WAR_TARGET[DOTA_TEAM_GOODGUYS])
+						end
 					return 2 end) -- Recall the command every 2 seconds so AI doesn't get bricked
 				end
 
@@ -145,15 +160,6 @@ function modifier_mutation_tug_of_war_golem:OnDeath(keys)
 				-- Spawn logic
 				golem:AddNewModifier(golem, nil, "modifier_mutation_tug_of_war_golem", {}):SetStackCount(previous_stacks + 1)
 				FindClearSpaceForUnit(golem, golem:GetAbsOrigin(), true)
-
-				for _, hero in pairs(HeroList:GetAllHeroes()) do
-					if keys.attacker:GetTeam() == hero:GetTeam() and not hero:IsClone() then
-						hero:ModifyGold(goldBonus * (1 + previous_stacks), false, DOTA_ModifyGold_Unspecified)
-						hero:AddExperience(expBonus * (1 + previous_stacks), DOTA_ModifyXP_CreepKill, false, true)
-						SendOverheadEventMessage(PlayerResource:GetPlayer(hero:GetPlayerOwnerID()), OVERHEAD_ALERT_GOLD, hero, goldBonus * (1 + previous_stacks), nil)
-						SendOverheadEventMessage(PlayerResource:GetPlayer(hero:GetPlayerOwnerID()), OVERHEAD_ALERT_MANA_ADD, hero, expBonus * (1 + previous_stacks), nil)
-					end
-				end
 			end)
 		end
 	end
