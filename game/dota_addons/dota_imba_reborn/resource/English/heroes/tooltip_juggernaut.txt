@@ -90,7 +90,7 @@
 "Dota_Tooltip_Ability_special_bonus_imba_juggernaut_6"                  "Dance of Fury"
 "Dota_Tooltip_Ability_special_bonus_imba_juggernaut_6_Description"		"Blade Fury can apply criticals based on Blade Dance's values, and gains an extra 10 damage per second per Wind Dance stack."
 "Dota_Tooltip_Ability_special_bonus_imba_juggernaut_7"                  "Omnislash Doppelgänger Replacement"
-"Dota_Tooltip_Ability_special_bonus_imba_juggernaut_7_Description"		"Juggernaut still gains invulernability during the slashes, but attack damage is reduced by 75%%. Omnislash damage is reduced by 25%%."
+"Dota_Tooltip_Ability_special_bonus_imba_juggernaut_7_Description"		"Juggernaut still gains invulnerability during the slashes, but attack damage is reduced by 75%%. Omnislash damage is reduced by 25%%."
 "Dota_Tooltip_Ability_special_bonus_imba_juggernaut_8"                  "Landing Blade Dance critical grants a stack of Jade Blossom"
 "Dota_Tooltip_Ability_special_bonus_imba_juggernaut_8_Description"		"Each stack lasts for 6 seconds (does not refresh itself) and adds 1 extra bonus damage while Omnislashing."
 "Dota_Tooltip_Ability_special_bonus_imba_juggernaut_9"                  "Omnislash EX"
