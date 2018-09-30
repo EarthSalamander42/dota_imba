@@ -41,7 +41,7 @@ end
 
 function modifier_mutation_death_explosion:OnDeath(keys)
 	if keys.unit == self:GetParent() then
-		if self:GetParent():IsIllusion() then return end
+		if self:GetParent():IsIllusion() or self:GetParent():IsImbaReincarnating() then return end
 		EmitSoundOn("Hero_Pugna.NetherBlastPreCast", self:GetParent())
 
 		local particle_pre_blast_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_pugna/pugna_netherblast_pre.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
@@ -73,6 +73,7 @@ function modifier_mutation_death_explosion:OnDeath(keys)
 					damage = damage,
 					damage_type = DAMAGE_TYPE_PURE,
 					attacker = self:GetParent(),
+					damage_flags = DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION
 				}
 
 				ApplyDamage(damageTable)
