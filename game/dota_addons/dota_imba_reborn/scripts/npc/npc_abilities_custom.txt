@@ -113,6 +113,86 @@
 		"MaxLevel"						"1"
 	}
 
+	//=================================================================================================================
+	// Creeps: Super Creeps Stats (those values are added additionally every minutes after minute 30)
+	//=================================================================================================================
+	"creeps_stats_super"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"			""
+		"ScriptFile"					"components/abilities/creeps.lua"
+		"MaxLevel"						"1"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"melee_damage"					"50"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"melee_armor"					"2.0"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"ranged_damage"					"75"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"ranged_armor"					"1.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Creeps: Mega Creeps Stats (those values are added additionally every minutes after minute 30)
+	//=================================================================================================================
+	"creeps_stats_mega"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"			""
+		"ScriptFile"					"components/abilities/creeps.lua"
+		"MaxLevel"						"1"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"melee_damage"					"100"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"melee_armor"					"4.0"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"ranged_damage"					"150"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"ranged_armor"					"2.0"
+			}
+		}
+	}
+
 	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	//	[BUFF]		UNIT BUFFS
 	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

@@ -2643,13 +2643,13 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"dodge_chance"				"15 25 35 45"
+				"dodge_chance"				"20 25 30 35"
 				"LinkedSpecialBonus"		"special_bonus_unique_brewmaster_4"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"crit_chance"				"15 25 35 45"
+				"crit_chance"				"20 25 30 35"
 				"LinkedSpecialBonus"		"special_bonus_unique_brewmaster_4"
 			}
 			"03"
@@ -12994,7 +12994,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"-30"
+				"value"						"30"
 			}
 		}
 	}
