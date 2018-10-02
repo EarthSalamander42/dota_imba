@@ -89,7 +89,7 @@ function modifier_mutation_kill_streak_power:GetModifierSpellAmplify_Percentage(
 end
 
 function modifier_mutation_kill_streak_power:OnDeath(keys)
-	if keys.unit == self:GetParent() then
+	if keys.unit == self:GetParent() and not keys.unit:IsImbaReincarnating() then
 		self:SetStackCount(0)
 		ParticleManager:SetParticleControl(self.particle, 2, Vector(0, 0, 0))
 		ParticleManager:SetParticleControl(self.particle, 3, Vector(0, 0, 0))

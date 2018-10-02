@@ -536,17 +536,17 @@ function Mutation:OnHeroSpawn(hero)
 		end
 
 		Timers:CreateTimer(FrameTime(), function()
-			if IsNearFountain(hero:GetAbsOrigin(), 1200) == false and hero.reincarnating == false then
+			if IsNearFountain(hero:GetAbsOrigin(), 1200) == false and hero.reincarnation == false then
 				hero:SetHealth(hero:GetHealth() * 50 / 100)
 				hero:SetMana(hero:GetMana() * 50 / 100)
 			end
 
-			PlayerResource:SetCameraTarget(unit:GetPlayerID(), hero)
+			PlayerResource:SetCameraTarget(hero:GetPlayerID(), hero)
 			Timers:CreateTimer(0.1, function()
 				PlayerResource:SetCameraTarget(hero:GetPlayerID(), nil)
 			end)
 
-			hero.reincarnating = false
+			hero.reincarnation = false
 		end)
 	end
 end
