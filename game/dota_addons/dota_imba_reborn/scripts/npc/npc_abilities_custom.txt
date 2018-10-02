@@ -26922,7 +26922,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"jump_amount"			"3 6 9"
-				"LinkedSpecialBonus"	"special_bonus_unique_juggernaut_2"
+				"LinkedSpecialBonus"	"special_bonus_imba_juggernaut_9"
 			}
 			"03"
 			{
@@ -26948,7 +26948,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"scepter_jump_amt"  	"6 9 12"
-				"LinkedSpecialBonus"	"special_bonus_unique_juggernaut_2"
+				"LinkedSpecialBonus"	"special_bonus_imba_juggernaut_9"
 			}
 			"08"
 			{
@@ -27208,6 +27208,44 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"duration"					"6"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Juggernaut Talent 9: Omnislash EX
+	//=================================================================================================================
+	"special_bonus_imba_juggernaut_9"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_juggernaut_omni_slash"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"4"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cast_point"				"0"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"bounce_delay_reduction"	"0.2"
 			}
 		}
 	}
