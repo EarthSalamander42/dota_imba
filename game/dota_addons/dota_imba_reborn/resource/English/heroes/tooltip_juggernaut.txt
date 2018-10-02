@@ -45,8 +45,9 @@
 "DOTA_Tooltip_ability_imba_juggernaut_blade_dance"						"#{DOTA_Tooltip_ability_juggernaut_blade_dance}"
 "DOTA_Tooltip_ability_imba_juggernaut_blade_dance_Description"			"#{DOTA_Tooltip_ability_juggernaut_blade_dance_Description}\n<font color='#FF7800'>Wind Dance:</font> Landing a critical hit grants a stack of Wind Dance, gaining %bonus_agi% bonus agility and %bonus_ms%%% move speed per stack for %bonus_duration% seconds. Attacking refreshes the bonus, even if a critical hit wasn't landed.\n<font color='#FF7800'>Secret Blade:</font> Attacking an enemy grants a stack of Secret Blade for %secret_blade_duration% seconds, refreshing duration on each hit. Reaching %active_min_stacks% stacks of Secret Blade allows Blade Dance to be activated to dash towards a target point up to %active_distance% distance. All stacks of Secret Blade are consumed and converted into attack counts, which are used to attack enemies once each during the dash, as well as multiple times at dash end. Each unit can be hit up to a total of %secret_blade_max_hits% times. Juggernaut is invulnerable while dashing."
 
-"DOTA_Tooltip_ability_imba_juggernaut_blade_dance_Note0"				"Cannot gain Wind Dance stacks while Secret Blade is in effect."
-"DOTA_Tooltip_ability_imba_juggernaut_blade_dance_Note1"				"Secret Blade's dash can end prematurely if all attack counts are consumed before the target point is reached."
+"DOTA_Tooltip_ability_imba_juggernaut_blade_dance_Note0"				"Secret Blade cannot be used while disarmed."
+"DOTA_Tooltip_ability_imba_juggernaut_blade_dance_Note1"				"Cannot gain Wind Dance stacks while Secret Blade is in effect."
+"DOTA_Tooltip_ability_imba_juggernaut_blade_dance_Note2"				"Secret Blade's dash can end prematurely if all attack counts are consumed before the target point is reached."
 "DOTA_Tooltip_ability_imba_juggernaut_blade_dance_Lore"					"#{DOTA_Tooltip_ability_juggernaut_blade_dance_Lore}"
 "DOTA_Tooltip_ability_imba_juggernaut_blade_dance_crit_chance"			"#{DOTA_Tooltip_ability_juggernaut_blade_dance_blade_dance_crit_chance}"
 "DOTA_Tooltip_ability_imba_juggernaut_blade_dance_crit_damage"			"#{DOTA_Tooltip_ability_juggernaut_blade_dance_blade_dance_crit_mult}"
@@ -81,7 +82,7 @@
 // Juggernaut's Custom Talents
 "Dota_Tooltip_Ability_special_bonus_imba_juggernaut_1"                  "Blade Fury Vacuum"
 "Dota_Tooltip_Ability_special_bonus_imba_juggernaut_1_Description"      "Slowly sucks enemies within Blade Fury's radius + 250 towards Juggernaut. Enemies within Blade Fury are pulled in twice as fast."
-"Dota_Tooltip_Ability_special_bonus_imba_juggernaut_2"                  "Blade Fury radius increases by 20 every 0.2 seconds"
+"Dota_Tooltip_Ability_special_bonus_imba_juggernaut_2"                  "Blade Fury radius increases by 100 every second"
 "Dota_Tooltip_Ability_special_bonus_imba_juggernaut_3"                  "Healing Ward gives 50/100 (base/totem) attack speed"
 "Dota_Tooltip_Ability_special_bonus_imba_juggernaut_4"                  "Secret Blade Triplicate"
 "Dota_Tooltip_Ability_special_bonus_imba_juggernaut_4_Description"		"Adds two consecutive dashes to the sides, resetting attack counts each dash."
