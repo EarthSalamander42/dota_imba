@@ -20696,7 +20696,7 @@
 			}
 		}
 	}
-	//=================================================================================================================
+		//=================================================================================================================
 	// Warlock's Fatal Bonds
 	//=================================================================================================================
 	"imba_warlock_fatal_bonds"
@@ -20834,7 +20834,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"tick_value"			"15 35 48 54"
+				"tick_value"			"15 30 45 60"
 			}
 			"03"
 			{
@@ -20917,13 +20917,13 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"650 675 700 725"
+				"radius"				"650 750 850 950"
 			}
 
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"ms_slow_pct_per_tick"	"7 21 30 34"
+				"ms_slow_pct_per_tick"	"10 20 30 40"
 			}
 
 			"03"
@@ -21016,7 +21016,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"base_health"			"1000 2000 2500"
+				"base_health"			"1000 2000 3000"
 			}
 
 			"05"
@@ -21028,7 +21028,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"armor"					"6 12 14"
+				"armor"					"6 10 14"
 				"LinkedSpecialBonus"	"special_bonus_imba_warlock_4"
 			}
 
@@ -21065,7 +21065,7 @@
 			"12"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_hp_per_str"		"10 15 20"
+				"bonus_hp_per_str"		"10"
 			}
 
 			"13"
@@ -21077,13 +21077,13 @@
 			"14"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"bonus_aspeed_per_agi"	"1.25"
+				"bonus_aspeed_per_agi"	"1"
 			}
 
 			"15"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"bonus_damage_per_int"	"1 1.5 2 2.5"
+				"bonus_damage_per_int"	"1.25"
 			}
 
 			"14"
