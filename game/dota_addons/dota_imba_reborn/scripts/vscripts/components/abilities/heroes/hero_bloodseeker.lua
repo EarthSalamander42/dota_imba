@@ -136,8 +136,7 @@ if IsServer() then
 
 		-- If the caster has #7 Talent, grant a Blood Frenzy to it
 		if self:GetCaster():HasTalent("special_bonus_imba_bloodseeker_7") then
-			-- Only apply on units killing the buff holder
-			if params.unit == self:GetParent() then
+			if params.unit == self:GetParent() or params.attacker == self:GetParent() then
 				-- Gather duration from talent
 				local frenzy_duration = self:GetCaster():FindTalentValue("special_bonus_imba_bloodseeker_7", "duration")
 
@@ -693,7 +692,7 @@ function imba_bloodseeker_rupture:OnSpellStart(target)
 		end
 	end
 
-	if hTarget:GetHealthPercent() > self:GetSpecialValueFor("damage_initial_pct") then
+	if not target and hTarget:GetHealthPercent() > self:GetSpecialValueFor("damage_initial_pct") then
 		local hpBurn = hTarget:GetHealthPercent() - self:GetSpecialValueFor("damage_initial_pct")
 		local damage = hTarget:GetMaxHealth() * hpBurn * 0.01
 
