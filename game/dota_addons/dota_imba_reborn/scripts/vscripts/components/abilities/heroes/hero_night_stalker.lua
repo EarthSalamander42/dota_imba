@@ -374,6 +374,14 @@ function imba_night_stalker_crippling_fear:GetCooldown(level)
 	return cooldown
 end
 
+function imba_night_stalker_crippling_fear:OnOwnerSpawned()
+	if not IsServer() then return end
+	
+	if self:GetCaster():HasAbility("special_bonus_imba_night_stalker_8") and self:GetCaster():FindAbilityByName("special_bonus_imba_night_stalker_8"):IsTrained() and not self:GetCaster():HasModifier("modifier_special_bonus_imba_night_stalker_8") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_special_bonus_imba_night_stalker_8", {})
+	end
+end
+
 function imba_night_stalker_crippling_fear:OnSpellStart()
 	-- Ability properties
 	local caster = self:GetCaster()
@@ -523,9 +531,14 @@ function modifier_imba_crippling_fear_silence:GetEffectAttachType()
 	return PATTACH_OVERHEAD_FOLLOW
 end
 
+-- Need this modifier to show Crippling Fear cooldown reduction talent on client-side
+LinkLuaModifier("modifier_special_bonus_imba_night_stalker_8", "components/abilities/heroes/hero_night_stalker", LUA_MODIFIER_MOTION_NONE)
 
+modifier_special_bonus_imba_night_stalker_8 = class({})
 
-
+function modifier_special_bonus_imba_night_stalker_8:IsHidden() 		return true end
+function modifier_special_bonus_imba_night_stalker_8:IsPurgable() 		return false end
+function modifier_special_bonus_imba_night_stalker_8:RemoveOnDeath() 	return false end
 
 ----------------------------------
 --      Hunter in the Night     --
@@ -994,22 +1007,16 @@ function modifier_imba_darkness_vision:OnCreated()
 		self.parent = self:GetParent()
 
 		-- Ability specials
-		self.vision_radius = self.ability:GetSpecialValueFor("vision_radius")
-		self.ward_vision = self.ability:GetSpecialValueFor("ward_vision")
+		self.vision_reduction_pct = self.ability:GetSpecialValueFor("vision_reduction_pct")
 
 		-- #7 Talent: Darkness maximum vision range reduction
-		self.vision_radius = self.vision_radius - self.caster:FindTalentValue("special_bonus_imba_night_stalker_7")
+		--self.vision_radius = self.vision_radius - self.caster:FindTalentValue("special_bonus_imba_night_stalker_7")
 
 		-- Keep the original base night vision
 		self.original_base_night_vision = self.parent:GetBaseNightTimeVisionRange()
 
-		-- If this is a ward, set the vision as the ward vision.
-		if self.parent:IsOther() then
-			self.vision_radius = self.ward_vision
-		end
-
 		-- Override the base night vision
-		self.parent:SetNightTimeVisionRange(self.vision_radius)
+		self.parent:SetNightTimeVisionRange(self.original_base_night_vision * (100 - self.vision_reduction_pct) / 100)
 	end
 end
 
