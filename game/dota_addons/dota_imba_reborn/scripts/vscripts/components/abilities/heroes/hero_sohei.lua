@@ -389,6 +389,23 @@ end
 sohei_flurry_of_blows = sohei_flurry_of_blows or class ({})
 
 LinkLuaModifier( "modifier_sohei_flurry_self", "components/abilities/heroes/hero_sohei.lua", LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier( "modifier_special_bonus_sohei_fob_radius", "components/abilities/heroes/hero_sohei.lua", LUA_MODIFIER_MOTION_NONE )
+
+-- Required to change behaviour on client-side
+modifier_special_bonus_sohei_fob_radius = class ({})
+
+function modifier_special_bonus_sohei_fob_radius:IsHidden() 		return true end
+function modifier_special_bonus_sohei_fob_radius:IsPurgable() 		return false end
+function modifier_special_bonus_sohei_fob_radius:RemoveOnDeath() 	return false end
+
+-- Should close out talent behavior change problems
+function sohei_flurry_of_blows:OnOwnerSpawned()
+	if not IsServer() then return end
+	if self:GetCaster():HasAbility("special_bonus_sohei_fob_radius") and self:GetCaster():FindAbilityByName("special_bonus_sohei_fob_radius"):IsTrained() and not self:GetCaster():HasModifier("modifier_special_bonus_sohei_fob_radius") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_special_bonus_sohei_fob_radius", {})
+	end
+end
+
 
 function sohei_flurry_of_blows:GetAssociatedPrimaryAbilities()
 	return "sohei_momentum"
@@ -462,6 +479,7 @@ if IsServer() then
     end
     caster.flurry_ground_pfx = ParticleManager:CreateParticle( "particles/hero/sohei/flurry_of_blows_ground.vpcf", PATTACH_CUSTOMORIGIN, nil )
     ParticleManager:SetParticleControl( caster.flurry_ground_pfx, 0, target_loc )
+	ParticleManager:SetParticleControl( caster.flurry_ground_pfx, 10, Vector(flurry_radius, 0, 0) )
 
     -- Start the spell
     caster:SetAbsOrigin( target_loc + Vector(0, 0, 200) )
@@ -488,13 +506,9 @@ function sohei_flurry_of_blows:GetAOERadius()
   local caster = self:GetCaster()
   local additionalRadius = 0
 
-  if IsServer() then
-    local talent = caster:FindAbilityByName( "special_bonus_sohei_fob_radius" )
-
-    if talent and talent:GetLevel() > 0 then
-      additionalRadius = talent:GetSpecialValueFor( "value" )
+	if self:GetCaster():HasTalent("special_bonus_sohei_fob_radius") then
+		additionalRadius = self:GetCaster():FindTalentValue("special_bonus_sohei_fob_radius")
     end
-  end
 
   return self:GetSpecialValueFor( "flurry_radius" ) + additionalRadius
 end
