@@ -4240,7 +4240,7 @@
 			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"wind_song_active_stacks"	"5"
+				"wind_song_active_stacks"	"4"
 			}
 			"09"
 			{
@@ -4260,7 +4260,7 @@
 			"12"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"wind_song_duration"	"3"
+				"wind_song_duration"	"4"
 			}
 			"13"
 			{
