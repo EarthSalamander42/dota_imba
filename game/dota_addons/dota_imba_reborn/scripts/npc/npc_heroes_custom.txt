@@ -1658,9 +1658,9 @@
 		"Ability12"					"special_bonus_imba_nevermore_3"
 		"Ability13"					"special_bonus_imba_nevermore_4"
 		"Ability14"					"special_bonus_imba_nevermore_5"
-		"Ability15"					"special_bonus_imba_nevermore_6"
+		"Ability15"					"special_bonus_imba_nevermore_8"
 		"Ability16"					"special_bonus_imba_nevermore_7"
-		"Ability17"					"special_bonus_imba_nevermore_8"
+		"Ability17"					"special_bonus_cooldown_reduction_40"
 	}
 
 	//=================================================================================================================

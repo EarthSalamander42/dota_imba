@@ -28002,7 +28002,7 @@
 			"07"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"damage_per_soul"				"2"
+				"damage_per_soul"				"1"
 			}
 
 			"08"
@@ -28015,6 +28015,18 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"soul_projectile_speed"			"1500"
+			}
+
+			"10"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"stack_bonus_damage" "50 60 70 80"
+			}
+			
+			"11"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"duration"						"8"
 			}
 		}
 	}
@@ -28116,7 +28128,7 @@
 			"09"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"damage_per_soul"				"2"
+				"damage_per_soul"				"1"
 			}
 
 			"10"
@@ -28129,6 +28141,18 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"soul_projectile_speed"			"1500"
+			}
+
+			"12"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"stack_bonus_damage" "50 60 70 80"
+			}
+			
+			"13"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"duration"						"8"
 			}
 		}
 	}
@@ -28254,7 +28278,7 @@
 			"13"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"damage_per_soul"				"2"
+				"damage_per_soul"				"1"
 			}
 
 			"14"
@@ -28267,6 +28291,18 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"soul_projectile_speed"			"1500"
+			}
+			
+			"16"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"stack_bonus_damage" "50 60 70 80"
+			}
+			
+			"17"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"duration"						"8"
 			}
 		}
 	}
@@ -28328,7 +28364,7 @@
 			"05"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"damage_per_soul"				"2"
+				"damage_per_soul"				"3"
 			}
 
 			"06"
@@ -28408,7 +28444,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"armor_reduction"			"3 4 5 6"
+				"armor_reduction"			"5 6 7 8"
 			}
 
 			"03"
@@ -28446,7 +28482,8 @@
 		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_NO"
 		"AbilityType"						"DOTA_ABILITY_TYPE_ULTIMATE"
 		"AbilityTextureName"				"nevermore_requiem"
-		"ScriptFile"				"components/abilities/heroes/hero_nevermore.lua"
+		"ScriptFile"						"components/abilities/heroes/hero_nevermore.lua"
+		"HasScepterUpgrade" 				"1"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -28678,7 +28715,7 @@
 			"01"
 			{
 				"var_type"                  "FIELD_FLOAT"
-				"value"	                    "0.4"
+				"value"	                    "0.5"
 			}
 		}
 	}
