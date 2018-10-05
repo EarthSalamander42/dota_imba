@@ -194,6 +194,9 @@ function GameMode:OnHeroFirstSpawn(hero)
 --		if not IsInToolsMode() then
 			hero:SetupHealthBarLabel()
 --		end
+
+		-- Add Frantic modifier on every maps
+		hero:AddNewModifier(hero, nil, "modifier_frantic", {})
 	end
 end
 

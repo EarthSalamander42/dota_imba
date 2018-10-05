@@ -7,7 +7,7 @@
 #base heroes/bane/abilities.txt
 #base heroes/bloodseeker/abilities.txt
 #base heroes/earth_spirit/abilities.txt
-#base heroes/malfurion/abilities.txt
+#base custom_heroes/malfurion/abilities.txt
 #base heroes/night_stalker/abilities.txt
 #base heroes/silencer/abilities.txt
 #base heroes/shadow_shaman/abilities.txt
@@ -70,6 +70,34 @@
 					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_OUT_OF_GAME"		"MODIFIER_STATE_VALUE_ENABLED"
 				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Courier: Auto-deliver
+	//=================================================================================================================
+	"imba_courier_autodeliver"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                     "ability_lua"
+		"ScriptFile"                    "components/courier/abilities.lua"
+		"AbilityTextureName"			"courier_autodeliver"
+		"AbilityType"					"DOTA_ABILITY_TYPE_BASIC"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_TOGGLE"
+
+		"MaxLevel"						"1"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_7"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"delay"					"3.0"
 			}
 		}
 	}
@@ -26922,7 +26950,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"jump_amount"			"3 6 9"
-				"LinkedSpecialBonus"	"special_bonus_imba_juggernaut_9"
+				"LinkedSpecialBonus"	"special_bonus_unique_juggernaut_2"
 			}
 			"03"
 			{
@@ -26948,7 +26976,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"scepter_jump_amt"  	"6 9 12"
-				"LinkedSpecialBonus"	"special_bonus_imba_juggernaut_9"
+				"LinkedSpecialBonus"	"special_bonus_unique_juggernaut_2"
 			}
 			"08"
 			{
@@ -27208,44 +27236,6 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"duration"					"6"
-			}
-		}
-	}
-	
-	//=================================================================================================================
-	// Juggernaut Talent 9: Omnislash EX
-	//=================================================================================================================
-	"special_bonus_imba_juggernaut_9"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_undefined"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_juggernaut_omni_slash"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"4"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"cast_point"				"0"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"bounce_delay_reduction"	"0.2"
 			}
 		}
 	}

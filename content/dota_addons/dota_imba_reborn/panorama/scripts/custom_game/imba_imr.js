@@ -166,10 +166,6 @@ function RefreshBattlepass() {
 		e.DeleteAsync(0);
 	});
 
-
-
-	
-
 	$("#RefreshBattlepass").AddClass("Active");
 
 	$.Schedule(1.0, function() {
@@ -238,8 +234,6 @@ function Battlepass(retainSubTab) {
 			GenerateCompanionPanel(companions, Players.GetLocalPlayer(), "Companion", retainSubTab);
 		}
 	});
-
-	
 }
 
 var companion_changed = false;
@@ -431,7 +425,7 @@ function GenerateBattlepassPanel(BattlepassRewards, player) {
 	var reward_row = $.CreatePanel("Panel", $('#BattlepassInfoContainer'), "BattlepassRow" + class_option_count + "_" + player);
 	reward_row.AddClass("BattlepassRow");
 
-	for (var i = 1; i <= 200; i++) {
+	for (var i = 1; i <= 500; i++) {
 		if (BattlepassRewards[i] != undefined) {
 			var is_arcana = false;
 			var is_immortal = false;

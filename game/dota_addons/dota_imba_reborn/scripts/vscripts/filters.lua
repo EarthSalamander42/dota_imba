@@ -41,7 +41,7 @@ function GameMode:GoldFilter(keys)
 				CustomNetTables:SetTableValue("player_table", tostring(keys.player_id_const), {hero_kill_bounty = keys.gold + hero.kill_hero_bounty})
 			end
 		else
-			keys.gold = (custom_gold_bonus / 100) + (1 + game_time / 25) * keys.gold
+			keys.gold = keys.gold * custom_gold_bonus / 100
 		end
 
 		local reliable = false
@@ -49,9 +49,8 @@ function GameMode:GoldFilter(keys)
 			reliable = true
 		end
 
-		-- Show gold earned message??
-		hero:ModifyGold(keys.gold, reliable, keys.reason_const)
 		if keys.reason_const == DOTA_ModifyGold_Unspecified then return true end
+
 		-- TODO: Find a way to call this message on the killed unit
 --		SendOverheadEventMessage(PlayerResource:GetPlayer(keys.player_id_const), OVERHEAD_ALERT_GOLD, hero, keys.gold, nil)
 	end
@@ -185,11 +184,6 @@ function GameMode:ModifierFilter( keys )
 				end
 			end
 		end
-
---		if modifier_name == "modifier_courier_shield" then
---			modifier_caster:RemoveModifierByName(modifier_name)
---			modifier_caster:FindAbilityByName("courier_burst"):CastAbility()
---		end
 
 		-- disarm immune
 		local jarnbjorn_immunity = {
@@ -448,10 +442,16 @@ function GameMode:OrderFilter( keys )
 
 	if USE_TEAM_COURIER == false then
 		if unit:IsCourier() then
-			if keys.order_type == DOTA_UNIT_ORDER_MOVE_TO_POSITION or keys.order_type == DOTA_UNIT_ORDER_MOVE_TO_TARGET then
-				return false
+			if unit == TurboCourier.COURIER_PLAYER[unit:GetPlayerOwnerID()] then
+				print("this courier is under your exclusive control!")
+				if keys.order_type == DOTA_UNIT_ORDER_MOVE_TO_POSITION or keys.order_type == DOTA_UNIT_ORDER_MOVE_TO_TARGET or keys.order_type == DOTA_UNIT_ORDER_HOLD_POSITION then
+					return false
+				else
+					return true
+				end
 			else
-				return true
+				print("This courier is not under your control!")
+				return false
 			end
 		end
 	end
@@ -678,6 +678,10 @@ function GameMode:OrderFilter( keys )
 					return false
 				end
 			end
+		end
+
+		if USE_TEAM_COURIER == false then
+			unit.reset_turbo_deliver = true
 		end
 	end
 

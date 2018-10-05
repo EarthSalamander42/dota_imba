@@ -94,6 +94,10 @@ function GameMode:OnGameRulesStateChange(keys)
 		if GetMapName() == Map1v1() then
 			Setup1v1()
 		else
+			if IsMutationMap() then
+				SpawnEasterEgg()
+			end
+
 			ImbaRunes:Spawn()
 		end
 
@@ -401,7 +405,27 @@ function GameMode:OnEntityKilled( keys )
 
 		if killer:IsRealHero() then
 			if killer:GetTeam() ~= killed_unit:GetTeam() and killed_unit:GetGoldBounty() > 0 then
-				SendOverheadEventMessage(killer:GetPlayerOwner(), OVERHEAD_ALERT_GOLD, killed_unit, killed_unit:GetGoldBounty(), nil)
+				local custom_gold_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "bounty_multiplier")["1"]) or 100
+				local gold_bounty = killed_unit:GetGoldBounty()
+
+				local gold_reliable = true
+				local gold_reason = DOTA_ModifyGold_CreepKill
+
+				if killed_unit:IsRealHero() then
+					gold_reason = DOTA_ModifyGold_HeroKill
+				elseif killed_unit:IsRoshan() then
+					gold_bounty = gold_bounty * custom_gold_bonus / 100
+					gold_reason = DOTA_ModifyGold_RoshanKill
+				elseif killed_unit:IsCourier() then
+					gold_bounty = gold_bounty * custom_gold_bonus / 100
+					gold_reason = DOTA_ModifyGold_CourierKill
+				else -- creeps + all other units
+					gold_bounty = gold_bounty * custom_gold_bonus / 100
+					gold_reliable = false
+				end
+
+				SendOverheadEventMessage(killer:GetPlayerOwner(), OVERHEAD_ALERT_GOLD, killed_unit, gold_bounty, nil)
+				killer:ModifyGold(gold_bounty, gold_reliable, gold_reason)
 			end
 
 			if killer == killed_unit then

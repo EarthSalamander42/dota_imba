@@ -6855,7 +6855,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"illusion_dmg_pct"		"100"
+				"illusion_dmg_pct"		"40"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"05"

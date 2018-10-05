@@ -10062,7 +10062,6 @@
 		}
 	}	
 
-
 	//=================================================================================================================
 	// Recipe : Blade Mail
 	//=================================================================================================================
@@ -10131,26 +10130,22 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"bonus_int"						"10"
-			}			
-
+			}
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"bonus_damage"					"22"
 			}	
-
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"bonus_armor"					"6"
 			}
-
 			"04"
 			{
 				"var_type"						"FIELD_FLOAT"
 				"return_duration"				"4.5"
 			}
-
 			"05"
 			{
 				"var_type"						"FIELD_INTEGER"
@@ -10158,7 +10153,6 @@
 			}
 		}
 	}
-
 
 	//=================================================================================================================
 	// Recipe : Occult Mask
@@ -10210,7 +10204,6 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -10225,27 +10218,23 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"bonus_damage"					"12"
-			}						
-
+			}
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"bonus_strength"				"6"
 			}
-
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"damage_per_second"				"15"
 			}
-
-			"02"
+			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"radius"						"300"
 			}
-
-			"02"
+			"05"
 			{
 				"var_type"						"FIELD_FLOAT"
 				"interval"						"0.5"
@@ -10409,7 +10398,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-		
+
 		"AbilityCastRange"				"200"
 		"AbilityCooldown"				"35"
 

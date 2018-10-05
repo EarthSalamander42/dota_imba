@@ -235,12 +235,12 @@ IMBA_ALL_RANDOM_HERO_SELECTION_TIME = 5.0									-- Time we need to wait before
 
 -- Global Gold earning, values are doubled with Hyper for non-custom maps
 CUSTOM_GOLD_BONUS = {} -- 1 = Normal, 2 = Hyper
-CUSTOM_GOLD_BONUS[Map1v1()] = 300
-CUSTOM_GOLD_BONUS[MapRanked5v5()] = 300
-CUSTOM_GOLD_BONUS[MapRanked10v10()] = 300
-CUSTOM_GOLD_BONUS[MapTournament()] = 300
-CUSTOM_GOLD_BONUS[MapMutation5v5()] = 300
-CUSTOM_GOLD_BONUS[MapMutation10v10()] = 300
+CUSTOM_GOLD_BONUS[Map1v1()] = 200
+CUSTOM_GOLD_BONUS[MapRanked5v5()] = 200
+CUSTOM_GOLD_BONUS[MapRanked10v10()] = 200
+CUSTOM_GOLD_BONUS[MapTournament()] = 200
+CUSTOM_GOLD_BONUS[MapMutation5v5()] = 200
+CUSTOM_GOLD_BONUS[MapMutation10v10()] = 200
 
 -- Global XP earning, values are doubled with Hyper for non-custom maps (right now this is not used anymore, but i'll keep it there just in case)
 CUSTOM_XP_BONUS = {} -- 1 = Normal, 2 = Hyper

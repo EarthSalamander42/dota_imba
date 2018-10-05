@@ -650,7 +650,7 @@ local function SpellReflect(parent, params)
 			["imba_alchemist_greevils_greed"] = true,
 			["imba_alchemist_unstable_concoction"] = true,
 			["imba_disruptor_glimpse"] = true,
-            ["legion_commander_duel"] = true
+			["legion_commander_duel"] = true,
 		}
 
 	local reflected_spell_name = params.ability:GetAbilityName()

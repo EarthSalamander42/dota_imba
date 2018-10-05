@@ -102,6 +102,16 @@ function IsNearFountain(location, distance)
 	return false
 end
 
+function IsNearEntity(entity, location, distance)
+	for _, fountain in pairs(Entities:FindAllByClassname(entity)) do
+		if (fountain:GetAbsOrigin() - location):Length2D() <= distance then
+			return true
+		end
+	end
+
+	return false
+end
+
 -- Finds whether or not an entity is an item container (the box on the game ground)
 function CBaseEntity:IsItemContainer()
 	if self.GetContainedItem then
@@ -912,5 +922,22 @@ function BlockJungleCamps()
 	for i = 1, #blocked_camps do
 		local ent = Entities:FindByName(nil, blocked_camps[i][1])
 		local dummy = CreateUnitByName("npc_dummy_unit_perma", blocked_camps[i][2], true, nil, nil, DOTA_TEAM_NEUTRALS)
+	end
+end
+
+function SpawnEasterEgg()
+	if RandomInt(1, 100) > 20 then
+		Timers:CreateTimer((RandomInt(15, 25) * 60) + RandomInt(0, 60), function()
+			local pos = {}
+			pos[1] = Vector(6446, -6979, 1496)
+			pos[2] = Vector(RandomInt(-6000, 0), RandomInt(7150, 7300), 1423)
+			pos[3] = Vector(RandomInt(-1000, 2000), RandomInt(6900, 7200), 1440)
+			pos[4] = Vector(7041, -6263, 1461)
+			local pos = pos[RandomInt(1, 4)]
+
+			GridNav:DestroyTreesAroundPoint(pos, 80, false)
+			local item = CreateItem("item_the_caustic_finale", nil, nil)
+			local drop = CreateItemOnPositionSync(pos, item)
+		end)
 	end
 end

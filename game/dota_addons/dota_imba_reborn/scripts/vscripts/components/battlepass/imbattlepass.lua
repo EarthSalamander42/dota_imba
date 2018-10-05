@@ -89,8 +89,8 @@ IMBATTLEPASS_LEVEL_REWARD[130]	= "fountain15"
 IMBATTLEPASS_LEVEL_REWARD[132]	= "radiance3"
 IMBATTLEPASS_LEVEL_REWARD[146]	= "fountain18"
 IMBATTLEPASS_LEVEL_REWARD[150]	= "shiva2"
--- IMBATTLEPASS_LEVEL_REWARD[175]	= "pudge_dragonclaw"
 IMBATTLEPASS_LEVEL_REWARD[200]	= "shiva3"
+IMBATTLEPASS_LEVEL_REWARD[275]	= "pudge_dragonclaw"
 
 CustomNetTables:SetTableValue("game_options", "battlepass", {battlepass = IMBATTLEPASS_LEVEL_REWARD})
 
