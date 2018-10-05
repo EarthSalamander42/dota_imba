@@ -2779,34 +2779,46 @@
 ////===============================================================================================================
 // Shadow Fiend's Shadowrazes
 ////===============================================================================================================
-"DOTA_Tooltip_ability_imba_nevermore_shadowraze_close"                  "Shadowraze"
-"DOTA_Tooltip_ability_imba_nevermore_shadowraze_close_Description"                  "Shadow Fiend razes the area in front of him, dealing damage to enemy units in an area.\n<font color='#FF7800'>Mastery of the Darkness:</font> Shadow Fiend masters the shadows at high levels, and can manipulate them to his will.\n(close): Shadowraze gets closer and larger at higher levels\n(medium): Shadowraze forms a semi-circle pattern at higher levels\n(far): Shadowraze forms a line, getting farther every level\n<font color='#FF7800'>Shadow Combo:</font> If all three razes hit within %shadow_combo_duration% seconds, the cooldowns are reset. This effect can only trigger once every %combo_prevention_duration% seconds.\n<font color='#FF7800'>Soul Raze:</font> Damage increases with each soul that Shadow Fiend possesses."
-"DOTA_Tooltip_ability_imba_nevermore_shadowraze_close_Lore"            "Nevermore's trademark for harvesting souls."
-"DOTA_Tooltip_ability_imba_nevermore_shadowraze_close_Note0"            "When upgrading one of the three Shadowrazes, the other two levels up with it as well."
-"DOTA_Tooltip_ability_imba_nevermore_shadowraze_close_Note1"            "Although the raze comes closer, the initial area of effect is always included."
-"DOTA_Tooltip_ability_imba_nevermore_shadowraze_close_damage"          "BASE DAMAGE:"
-"DOTA_Tooltip_ability_imba_nevermore_shadowraze_close_raze_radius"                  "RADIUS:"
-"DOTA_Tooltip_ability_imba_nevermore_shadowraze_close_raze_distance"                "DISTANCE:"
-"DOTA_Tooltip_ability_imba_nevermore_shadowraze_close_damage_per_soul"              "BONUS DAMAGE PER SOUL:"
+"DOTA_Tooltip_ability_imba_nevermore_shadowraze_close"					"Shadowraze"
+"DOTA_Tooltip_ability_imba_nevermore_shadowraze_close_Description"		"Shadow Fiend razes the ground directly in front of him, dealing damage to enemy units in the area. Adds a stacking damage amplifier on the target that causes the enemy to take bonus Shadow Raze damage per stack.\n<font color='#FF7800'>Mastery of the Darkness:</font> Shadow Fiend masters the shadows at high levels, and can manipulate them to his will.\n(Close): Shadowraze radius increases, while range decreases.\n<font color='#FF7800'>Shadow Combo:</font> Landing %combo_threshold% razes within %shadow_combo_duration% (refreshes each successful Shadowraze) resets the cooldown of all Shadowrazes. This effect can only trigger once every %combo_prevention_duration% seconds.\n<font color='#FF7800'>Soul Raze:</font> Increases damage by %damage_per_soul% per Necromastery soul."
+"DOTA_Tooltip_ability_imba_nevermore_shadowraze_close_Lore"						"Nevermore's trademark for harvesting souls."
+"DOTA_Tooltip_ability_imba_nevermore_shadowraze_close_Note0"					"Stack duration refreshes on stack gain."
+"DOTA_Tooltip_ability_imba_nevermore_shadowraze_close_damage"					"BASE DAMAGE:"
+"DOTA_Tooltip_ability_imba_nevermore_shadowraze_close_raze_distance"			"RANGE:"
+"DOTA_Tooltip_ability_imba_nevermore_shadowraze_close_stack_bonus_damage"		"BONUS PER STACK:"
+"DOTA_Tooltip_ability_imba_nevermore_shadowraze_close_duration"					"STACK DURATION:"
+"DOTA_Tooltip_ability_imba_nevermore_shadowraze_close_raze_radius"				"RADIUS:"
 
-"DOTA_Tooltip_ability_imba_nevermore_shadowraze_medium"                "Shadowraze"
-"DOTA_Tooltip_ability_imba_nevermore_shadowraze_medium_Description"                 "Shadow Fiend razes the area in front of him, dealing damage to enemy units in an area.\n<font color='#FF7800'>Mastery of the Darkness:</font> Shadow Fiend masters the shadows at high levels, and can manipulate them to his will.\n(close): Shadowraze gets closer and larger at higher levels\n(medium): Shadowraze forms a semi-circle pattern at higher levels\n(far): Shadowraze forms a line, getting farther every level\n<font color='#FF7800'>Shadow Combo:</font> If all three razes hit within %shadow_combo_duration% seconds, the cooldowns are reset. This effect can only trigger once every %combo_prevention_duration% seconds.\n<font color='#FF7800'>Soul Raze:</font> Damage increases with each soul that Shadow Fiend possesses."
+"DOTA_Tooltip_ability_imba_nevermore_shadowraze_medium"					"Shadowraze"
+"DOTA_Tooltip_ability_imba_nevermore_shadowraze_medium_Description"		"Shadow Fiend razes the ground a short distance away from him, dealing damage to enemy units in the area. Adds a stacking damage amplifier on the target that causes the enemy to take bonus Shadow Raze damage per stack.\n<font color='#FF7800'>Mastery of the Darkness:</font> Shadow Fiend masters the shadows at high levels, and can manipulate them to his will.\n(Medium): Shadowraze gains %additional_raze_count% additional razes in a semi-circular pattern.\n<font color='#FF7800'>Shadow Combo:</font> Landing %combo_threshold% razes within %shadow_combo_duration% (refreshes each successful Shadowraze) resets the cooldown of all Shadowrazes. This effect can only trigger once every %combo_prevention_duration% seconds.\n<font color='#FF7800'>Soul Raze:</font> Increases damage by %damage_per_soul% per Necromastery soul."
 "DOTA_Tooltip_ability_imba_nevermore_shadowraze_medium_Lore"            "Nevermore's trademark for harvesting souls."
-"DOTA_Tooltip_ability_imba_nevermore_shadowraze_medium_Note0"          "When upgrading one of the three Shadowrazes, the other two levels up with it as well."
+"DOTA_Tooltip_ability_imba_nevermore_shadowraze_medium_Note0"          "Stack duration refreshes on stack gain."
 "DOTA_Tooltip_ability_imba_nevermore_shadowraze_medium_Note1"          "Each raze is formed 35 degrees to the left or right of the raze before it."
-"DOTA_Tooltip_ability_imba_nevermore_shadowraze_medium_damage"          "BASE DAMAGE:"
+"DOTA_Tooltip_ability_imba_nevermore_shadowraze_medium_damage"          			"BASE DAMAGE:"
+"DOTA_Tooltip_ability_imba_nevermore_shadowraze_medium_raze_distance"               "RANGE:"
+"DOTA_Tooltip_ability_imba_nevermore_shadowraze_medium_stack_bonus_damage"			"BONUS PER STACK:"
+"DOTA_Tooltip_ability_imba_nevermore_shadowraze_medium_duration"			"STACK DURATION:"
 "DOTA_Tooltip_ability_imba_nevermore_shadowraze_medium_raze_radius"                 "RADIUS:"
-"DOTA_Tooltip_ability_imba_nevermore_shadowraze_medium_raze_distance"               "DISTANCE:"
-"DOTA_Tooltip_ability_imba_nevermore_shadowraze_medium_damage_per_soul"             "BONUS DAMAGE PER SOUL:"
-"DOTA_Tooltip_ability_imba_nevermore_shadowraze_medium_additional_raze_count"       "ADDITIONAL RAZES:"
 
-"DOTA_Tooltip_ability_imba_nevermore_shadowraze_far"                    "Shadowraze"
-"DOTA_Tooltip_ability_imba_nevermore_shadowraze_far_Description"                    "Shadow Fiend razes the area in front of him, dealing damage to enemy units in an area.\n<font color='#FF7800'>Mastery of the Darkness:</font> Shadow Fiend masters the shadows at high levels, and can manipulate them to his will.\n(close): Shadowraze gets closer and larger at higher levels\n(medium): Shadowraze forms a semi-circle pattern at higher levels\n(far): Shadowraze forms a line, getting farther every level\n<font color='#FF7800'>Shadow Combo:</font> If all three razes hit within %shadow_combo_duration% seconds, the cooldowns are reset. This effect can only trigger once every %combo_prevention_duration% seconds.\n<font color='#FF7800'>Soul Raze:</font> Damage increases with each soul that Shadow Fiend possesses."
+"DOTA_Tooltip_ability_imba_nevermore_shadowraze_far"					"Shadowraze"
+"DOTA_Tooltip_ability_imba_nevermore_shadowraze_far_Description"		"Shadow Fiend razes the ground a longer distance away from him, dealing damage to enemy units in the area. Adds a stacking damage amplifier on the target that causes the enemy to take bonus Shadow Raze damage per stack.\n<font color='#FF7800'>Mastery of the Darkness:</font> Shadow Fiend masters the shadows at high levels, and can manipulate them to his will.\n(Far): Shadowraze gains an additional raze each level, forming a line:\nLevel 2: %level_5_raze_distance% range, %level_5_raze_radius% radius\nLevel 3: -%level_6_raze_distance% range, %level_6_raze_radius% radius\nLevel 4: %level_7_raze_distance% range, %level_7_raze_radius% radius\n<font color='#FF7800'>Shadow Combo:</font> Landing %combo_threshold% razes within %shadow_combo_duration% (refreshes each successful Shadowraze) resets the cooldown of all Shadowrazes. This effect can only trigger once every %combo_prevention_duration% seconds.\n<font color='#FF7800'>Soul Raze:</font> Increases damage by %damage_per_soul% per Necromastery soul."
 "DOTA_Tooltip_ability_imba_nevermore_shadowraze_far_Lore"              "Nevermore's trademark for harvesting souls."
-"DOTA_Tooltip_ability_imba_nevermore_shadowraze_far_Note0"              "When upgrading one of the three Shadowrazes, the other two levels up with it as well."
-"DOTA_Tooltip_ability_imba_nevermore_shadowraze_far_Note1"              "The additional razes appear in addition to the usual one."
-"DOTA_Tooltip_ability_imba_nevermore_shadowraze_far_damage"            "BASE DAMAGE:"
-"DOTA_Tooltip_ability_imba_nevermore_shadowraze_far_damage_per_soul"                "BONUS DAMAGE PER SOUL:"
+"DOTA_Tooltip_ability_imba_nevermore_shadowraze_far_Note0"				"Stack duration refreshes on stack gain."
+
+"DOTA_Tooltip_ability_imba_nevermore_shadowraze_far_damage"					"BASE DAMAGE:"
+"DOTA_Tooltip_ability_imba_nevermore_shadowraze_far_main_raze_distance"		"RANGE:"
+"DOTA_Tooltip_ability_imba_nevermore_shadowraze_far_stack_bonus_damage"		"BONUS PER STACK:"
+"DOTA_Tooltip_ability_imba_nevermore_shadowraze_far_duration"				"STACK DURATION:"
+"DOTA_Tooltip_ability_imba_nevermore_shadowraze_far_main_raze_radius"		"RADIUS:"
+
+"DOTA_Tooltip_modifier_shadow_raze_combo"								"Shadow Combo"
+"DOTA_Tooltip_modifier_shadow_raze_combo_Description"					"Successfully hit an enemy with Shadowraze. Upon reaching three or more stacks, all Shadowraze cooldowns are reset."
+
+"DOTA_Tooltip_modifier_shadow_raze_prevention"							"Shadow Combo Prevention"
+"DOTA_Tooltip_modifier_shadow_raze_prevention_Description"				"Shadow Combo has been recently triggered, and is currently on cooldown."
+
+"DOTA_Tooltip_modifier_imba_shadowraze_debuff"							"Shadowraze"
+"DOTA_Tooltip_modifier_imba_shadowraze_debuff_Description"				"Adding bonus damage to each Shadowraze attack per stack."
 
 ////===============================================================================================================
 // Shadow Fiend's Necromastery
@@ -2820,17 +2832,20 @@
 "DOTA_Tooltip_ability_imba_nevermore_necromastery_max_temporary_souls_pct"          "%TEMPORARY SOULS:"
 
 "DOTA_Tooltip_modifier_imba_necromastery_souls"					"Necromastery"
-"DOTA_Tooltip_modifier_imba_necromastery_souls_Description"		"Stored souls grants additional bonus damage."
+"DOTA_Tooltip_modifier_imba_necromastery_souls_Description"		"Stored souls granting an additional %dMODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE% bonus damage."
 
 ////===============================================================================================================
 // Shadow Fiend's Presence of the Dark Lord
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_nevermore_dark_lord"                        "Presence of the Dark Lord"
-"DOTA_Tooltip_ability_imba_nevermore_dark_lord_Description"            "Shadow Fiend's presence reduces the armor and vision range of nearby enemies.\n<font color='#FF7800'>Creeping Presence:</font> Enemy heroes hit by razes under this aura will have their armor reduced for %raze_reduction_duration% seconds, which refreshes when another raze hits, up to %max_stacks% times."
+"DOTA_Tooltip_ability_imba_nevermore_dark_lord_Description"            "Shadow Fiend's presence reduces the armor of nearby enemies.\n<font color='#FF7800'>Even Stone Trembles: </font> Affects buildings.\n<font color='#FF7800'>Creeping Presence:</font> Enemy heroes hit by Shadowraze under the effects of this aura gain a stack of Presence, and have their armor reduced by an additional %raze_armor_reduction% per stack for %raze_reduction_duration% seconds. Refreshes when another raze hits, and stacks up to %max_stacks% times."
 "DOTA_Tooltip_ability_imba_nevermore_dark_lord_Lore"                    "Even being near Nevermore eats away at one's soul."
 "DOTA_Tooltip_ability_imba_nevermore_dark_lord_aura_radius"            "AURA RADIUS:"
 "DOTA_Tooltip_ability_imba_nevermore_dark_lord_armor_reduction"                     "ARMOR REDUCTION:"
-"DOTA_Tooltip_ability_imba_nevermore_dark_lord_raze_armor_reduction"                "RAZE ARMOR REDUCTION:"
+"DOTA_Tooltip_ability_imba_nevermore_dark_lord_"                "RAZE ARMOR REDUCTION:"
+
+"DOTA_Tooltip_modifier_imba_dark_lord_debuff"							"Presence of the Dark Lord"
+"DOTA_Tooltip_modifier_imba_dark_lord_debuff_Description"				"Shadow Fiend's presence reduces your armor by %dMODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS%."
 
 ////===============================================================================================================
 // Shadow Fiend's Requiem of Souls
@@ -2846,6 +2861,12 @@
 "DOTA_Tooltip_ability_imba_nevermore_requiem_slow_duration"            "SLOW DURATION:"
 "DOTA_Tooltip_ability_imba_nevermore_requiem_scepter_line_damage_pct"               "%SCEPTER RETURNING LINES DAMAGE:"
 "DOTA_Tooltip_ability_imba_nevermore_requiem_aghanim_description"                   "Souls now return to Shadow Fiend, damaging enemies again on their return, and healing him for all damage dealt. Also darkens the screens of enemy players hit by Requiem of Souls for the duration of the slow."
+
+"DOTA_Tooltip_modifier_imba_reqiuem_debuff"								"Requiem of Souls"
+"DOTA_Tooltip_modifier_imba_reqiuem_debuff_Description"					"Movement speed reduced by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%, damage reduced by %dMODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE%%%."
+
+"DOTA_Tooltip_modifier_imba_reqiuem_harvest"						"Soul Frenzy"
+"DOTA_Tooltip_modifier_imba_reqiuem_harvest_Description"			"Shadowrazes have no cooldown. Effect ends if a Shadowraze hits no enemies."
 ////===============================================================================================================
 // Shadow Fiend's Custom Talents
 ////===============================================================================================================
@@ -2855,8 +2876,8 @@
 "DOTA_Tooltip_ability_special_bonus_imba_nevermore_2_Description"		"Necromastery can be activated to consume souls and heal 80 hp/soul. Will spare souls if he don't need them all to heal completely. Has a 12s cooldown."
 "DOTA_Tooltip_ability_special_bonus_imba_nevermore_3"					"Necromastery Stack Cap Increase on Hero Kill"
 "DOTA_Tooltip_ability_special_bonus_imba_nevermore_3_Description"       "Permanently increases your soul stacks cap on Necromastery by 1 each time you kill an enemy hero."
-"DOTA_Tooltip_ability_special_bonus_imba_nevermore_4"                   "+0.4% lifesteal per Necromastery soul"
-"DOTA_Tooltip_ability_special_bonus_imba_nevermore_5"                   "Presence gains a soul from all heroes affected"
+"DOTA_Tooltip_ability_special_bonus_imba_nevermore_4"                   "+0.5% lifesteal per Necromastery soul"
+"DOTA_Tooltip_ability_special_bonus_imba_nevermore_5"                   "Presence gains a soul from affected heroes per second"
 "DOTA_Tooltip_ability_special_bonus_imba_nevermore_6"                   "Shadowraze refreshes Requiem of Souls' debuff"
 "DOTA_Tooltip_ability_special_bonus_imba_nevermore_7"                   "Necromastery souls are not lost when dying"
 "DOTA_Tooltip_ability_special_bonus_imba_nevermore_8"                   "Shadowraze cast point halved during Soul Frenzy"
