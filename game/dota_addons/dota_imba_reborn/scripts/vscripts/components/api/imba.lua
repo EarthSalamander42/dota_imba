@@ -253,7 +253,7 @@ end
 
 function api.imba.is_donator(steamid)
 	if data == nil or api.imba.data.donators == nil then
-		log.warn("is_donator called but donators are not available. yet?")
+--		log.warn("is_donator called but donators are not available. yet?")
 		return false
 	end
 

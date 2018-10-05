@@ -443,14 +443,12 @@ function GameMode:OrderFilter( keys )
 	if USE_TEAM_COURIER == false then
 		if unit:IsCourier() then
 			if unit == TurboCourier.COURIER_PLAYER[unit:GetPlayerOwnerID()] then
-				print("this courier is under your exclusive control!")
 				if keys.order_type == DOTA_UNIT_ORDER_MOVE_TO_POSITION or keys.order_type == DOTA_UNIT_ORDER_MOVE_TO_TARGET or keys.order_type == DOTA_UNIT_ORDER_HOLD_POSITION then
 					return false
 				else
 					return true
 				end
 			else
-				print("This courier is not under your control!")
 				return false
 			end
 		end

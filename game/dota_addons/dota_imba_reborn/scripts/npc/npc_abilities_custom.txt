@@ -9,6 +9,7 @@
 #base heroes/earth_spirit/abilities.txt
 #base custom_heroes/malfurion/abilities.txt
 #base heroes/night_stalker/abilities.txt
+#base heroes/rubick/abilities.txt
 #base heroes/silencer/abilities.txt
 #base heroes/shadow_shaman/abilities.txt
 #base heroes/sven/abilities.txt

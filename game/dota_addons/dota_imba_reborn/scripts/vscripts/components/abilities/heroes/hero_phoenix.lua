@@ -106,67 +106,68 @@ function imba_phoenix_icarus_dive:OnSpellStart()
 	local pfx = ParticleManager:CreateParticle( "particles/units/heroes/hero_phoenix/phoenix_icarus_dive.vpcf", PATTACH_WORLDORIGIN, nil )
 
 	caster:SetContextThink( DoUniqueString("updateIcarusDive"), function ( )
+		ParticleManager:SetParticleControl(pfx, 0, caster:GetAbsOrigin() + caster:GetRightVector() * 32 )
 
-			ParticleManager:SetParticleControl(pfx, 0, caster:GetAbsOrigin() + caster:GetRightVector() * 32 )
+		local elapsedTime = GameRules:GetGameTime() - startTime
+		local progress = elapsedTime / dashDuration
+		self.progress = progress
 
-			local elapsedTime = GameRules:GetGameTime() - startTime
-			local progress = elapsedTime / dashDuration
-			self.progress = progress
+		-- Check the Debuff that can interrupt spell
+		if imba_phoenix_check_for_canceled( caster ) then
+			caster:RemoveModifierByName("modifier_imba_phoenix_icarus_dive_dash_dummy")
+		end
 
-			-- Check the Debuff that can interrupt spell
-			if imba_phoenix_check_for_canceled( caster ) then
-				caster:RemoveModifierByName("modifier_imba_phoenix_icarus_dive_dash_dummy")
-			end
+		-- check for interrupted
+		if not caster:HasModifier( dummy_modifier ) then
+			ParticleManager:DestroyParticle(pfx, false)
+			ParticleManager:ReleaseParticleIndex(pfx)
+			return nil
+		end
 
-			-- check for interrupted
-			if not caster:HasModifier( dummy_modifier ) then
-				ParticleManager:DestroyParticle(pfx, false)
-				ParticleManager:ReleaseParticleIndex(pfx)
-				return nil
-			end
+		-- Calculate potision
+		local theta = -2 * math.pi * progress
+		local x =  math.sin( theta ) * dashWidth * 0.5
+		local y = -math.cos( theta ) * dashLength * 0.5
 
-			-- Calculate potision
-			local theta = -2 * math.pi * progress
-			local x =  math.sin( theta ) * dashWidth * 0.5
-			local y = -math.cos( theta ) * dashLength * 0.5
+		local pos = ellipseCenter + rightDir * x + forwardDir * y
+		local yaw = casterAngles.y + 90 + progress * -360
 
-			local pos = ellipseCenter + rightDir * x + forwardDir * y
-			local yaw = casterAngles.y + 90 + progress * -360
+		pos = GetGroundPosition( pos, caster )
+		caster:SetAbsOrigin( pos )
+		caster:SetAngles( casterAngles.x, yaw, casterAngles.z )
 
-			pos = GetGroundPosition( pos, caster )
-			caster:SetAbsOrigin( pos )
-			caster:SetAngles( casterAngles.x, yaw, casterAngles.z )
+		-- Cut Trees
+		GridNav:DestroyTreesAroundPoint(pos, 80, false)
 
-			-- Cut Trees
-			GridNav:DestroyTreesAroundPoint(pos, 80, false)
+		-- Find Enemies apply the debuff
+		local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
+			caster:GetAbsOrigin(),
+			nil,
+			effect_radius,
+			DOTA_UNIT_TARGET_TEAM_BOTH,
+			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+			DOTA_UNIT_TARGET_FLAG_NONE,
+			FIND_ANY_ORDER,
+			false
+		)
 
-			-- Find Enemies apply the debuff
-			local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
-				caster:GetAbsOrigin(),
-				nil,
-				effect_radius,
-				DOTA_UNIT_TARGET_TEAM_BOTH,
-				DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-				DOTA_UNIT_TARGET_FLAG_NONE,
-				FIND_ANY_ORDER,
-				false)
-			for _,enemy in pairs(enemies) do
-				if enemy ~= caster then
-					if enemy:GetTeamNumber() ~= caster:GetTeamNumber() then
-						enemy:AddNewModifier(caster, self, "modifier_imba_phoenix_icarus_dive_slow_debuff", {duration = self:GetSpecialValueFor("burn_duration")} )
-					else
-						enemy:AddNewModifier(caster, self, "modifier_imba_phoenix_burning_wings_ally_buff", {duration = 0.2})
-					end
-					if caster:HasTalent("special_bonus_imba_phoenix_2") and caster:GetTeamNumber() ~= enemy:GetTeamNumber() then
-						local item = CreateItem( "item_imba_dummy", caster, caster)
-						item:ApplyDataDrivenModifier( caster, enemy, "modifier_stunned", {duration = caster:FindTalentValue("special_bonus_imba_phoenix_2","stun_duration")} )
-						UTIL_Remove(item)
-					end
+		for _,enemy in pairs(enemies) do
+			if enemy ~= caster then
+				if enemy:GetTeamNumber() ~= caster:GetTeamNumber() then
+					enemy:AddNewModifier(caster, self, "modifier_imba_phoenix_icarus_dive_slow_debuff", {duration = self:GetSpecialValueFor("burn_duration")} )
+				else
+					enemy:AddNewModifier(caster, self, "modifier_imba_phoenix_burning_wings_ally_buff", {duration = 0.2})
+				end
+				if caster:HasTalent("special_bonus_imba_phoenix_2") and caster:GetTeamNumber() ~= enemy:GetTeamNumber() then
+					local item = CreateItem( "item_imba_dummy", caster, caster)
+					item:ApplyDataDrivenModifier( caster, enemy, "modifier_stunned", {duration = caster:FindTalentValue("special_bonus_imba_phoenix_2","stun_duration")} )
+					UTIL_Remove(item)
 				end
 			end
-			enemies = {}
+		end
+		enemies = {}
 
-			return 0.03
+		return 0.03
 	end, 0 )
 
 	-- Spend HP cost
@@ -486,6 +487,8 @@ function imba_phoenix_icarus_dive_stop:OnSpellStart()
 
 	-- IMBA: Stop diving by cast will reduce the CD, which is 50% of diving progress
 	local ability = caster:FindAbilityByName("imba_phoenix_icarus_dive")
+	-- Rubick steal fix
+	if not ability.progress then return end
 	local cdr_pct = ability.progress / 2
 	local cd_now = ability:GetCooldownTimeRemaining()
 	local cd_toSet = cd_now * (1 - cdr_pct)
@@ -693,8 +696,13 @@ function imba_phoenix_launch_fire_spirit:OnSpellStart()
 
 	if not caster:HasTalent("special_bonus_imba_phoenix_7") then
 		-- Update spirits count
-		iModifier:DecrementStackCount()
-		local currentStack = iModifier:GetStackCount()
+		local currentStack
+		if iModifier then
+			iModifier:DecrementStackCount()
+			currentStack = iModifier:GetStackCount()
+		else
+			return
+		end
 
 		-- Update the particle FX
 		local pfx = caster.fire_spirits_pfx
