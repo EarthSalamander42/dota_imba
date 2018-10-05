@@ -49,7 +49,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"damage_per_second"	"26 34 42 50"
+				"damage_per_second"	"12 24 36 48"
 			}
 			"02"
 			{
@@ -64,7 +64,7 @@
 			"04"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"penalty_duration"	"5"
+				"penalty_duration"	"4"
 			}
 			"05"
 			{
@@ -134,7 +134,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"intellect_damage_pct"		"45 60 75 90"
+				"intellect_damage_pct"		"30 50 70 90"
 			}
 			"02"
 			{
@@ -208,7 +208,7 @@
 
 		// Time
 		//---------------------------------------------
-		"AbilityCooldown"				"28 22 16 10"
+		"AbilityCooldown"				"21 18 15 12"
 		"AbilityDuration"				"4.0"
 
 		// Cost
@@ -239,11 +239,6 @@
 				"var_type"			"FIELD_FLOAT"
 				"duration"			"4"
 			}
-			"05"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"m_regen_reduct_pct"	"5.0"
-			}
 		}
 	}
 
@@ -272,7 +267,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"int_steal_amount"		"2"
-				"LinkedSpecialBonus" 	"special_bonus_imba_silencer_9"
 			}
 			"03"
 			{
@@ -284,7 +278,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"global_silence_steal"	"1"
-				"LinkedSpecialBonus" 	"special_bonus_imba_silencer_9"
 			}
 		}
 	}
@@ -317,7 +310,7 @@
 
 		// Time
 		//---------------------------------------------
-		"AbilityDuration"			"4.5 5.5 6.5"
+		"AbilityDuration"			"4 6 6.7"
 
 		// Precache
 		//---------------------------------------------
@@ -329,7 +322,7 @@
 
 		// Cost
 		//--------------------------------------------
-		"AbilityManaCost" 			"300 450 600"
+		"AbilityManaCost" 			"250 400 500"
 
 		// Special
 		//--------------------------------------------
@@ -337,8 +330,8 @@
 		{
 			"01"
 			{
-				"var_type"			"FIELD_FLOAT"
-				"duration"			"4.5 5.5 6.5"
+				"var_type"			"FIELD_INTEGER"
+				"duration"			"4 6 6.7"
 			}
 		}
 	}
@@ -447,7 +440,7 @@
 		}
 	}
 
-	"special_bonus_imba_silencer_5" // Increase Global Silence debuff duration by 0.2 sec every hit
+	"special_bonus_imba_silencer_5" // In rease Global Silence debuff duration by 0.2 sec every hit
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -556,56 +549,6 @@
 			{
 				"var_type"                  "FIELD_INTEGER"
 				"value"	                    "6"
-			}
-		}
-	}
-	
-	"special_bonus_imba_silencer_9" // +1 Arcane Supremacy Steal
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_undefined"
-		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01"	"imba_silencer_arcane_supremacy"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"                  "FIELD_INTEGER"
-				"value"	                    "1"
-			}
-		}
-	}
-	
-	"special_bonus_imba_silencer_10" // Enemies take +15% extra damage during Global Silence
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_undefined"
-		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01"	"imba_silencer_global_silence"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"                  "FIELD_INTEGER"
-				"value"	                    "15"
 			}
 		}
 	}

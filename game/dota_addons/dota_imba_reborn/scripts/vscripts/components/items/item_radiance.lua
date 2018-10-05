@@ -25,6 +25,110 @@
 -----------------------------------------------------------------------------------------------------------
 --	Item Definition
 -----------------------------------------------------------------------------------------------------------
+if item_imba_cloak_of_flames == nil then item_imba_cloak_of_flames = class({}) end
+LinkLuaModifier( "modifier_imba_cloak_of_flames_basic", "components/items/item_radiance.lua", LUA_MODIFIER_MOTION_NONE )			-- Item stats
+LinkLuaModifier( "modifier_imba_cloak_of_flames_aura", "components/items/item_radiance.lua", LUA_MODIFIER_MOTION_NONE )			-- Aura
+LinkLuaModifier( "modifier_imba_cloak_of_flames_burn", "components/items/item_radiance.lua", LUA_MODIFIER_MOTION_NONE )			-- Damage + blind effect
+
+function item_imba_cloak_of_flames:GetIntrinsicModifierName()
+	return "modifier_imba_cloak_of_flames_basic" end
+
+function item_imba_cloak_of_flames:OnSpellStart()
+	if IsServer() then
+		if self:GetCaster():HasModifier("modifier_imba_cloak_of_flames_aura") then
+			self:GetCaster():RemoveModifierByName("modifier_imba_cloak_of_flames_aura")
+		else
+			self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_cloak_of_flames_aura", {})
+		end
+	end
+end
+
+-----------------------------------------------------------------------------------------------------------
+--	Basic modifier definition
+-----------------------------------------------------------------------------------------------------------
+if modifier_imba_cloak_of_flames_basic == nil then modifier_imba_cloak_of_flames_basic = class({}) end
+function modifier_imba_cloak_of_flames_basic:IsHidden() return true end
+function modifier_imba_cloak_of_flames_basic:IsDebuff() return false end
+function modifier_imba_cloak_of_flames_basic:IsPurgable() return false end
+function modifier_imba_cloak_of_flames_basic:IsPermanent() return true end
+function modifier_imba_cloak_of_flames_basic:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+-- Adds the unique modifier to the owner when created
+function modifier_imba_cloak_of_flames_basic:OnCreated(keys)
+	if IsServer() then
+		if not self:GetParent():HasModifier("modifier_imba_cloak_of_flames_aura") then
+			self:GetParent():AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_cloak_of_flames_aura", {})
+		end
+	end
+end
+
+-- Removes the unique modifier from the owner if this is the last Radiance in its inventory
+function modifier_imba_cloak_of_flames_basic:OnDestroy(keys)
+	if IsServer() then
+		if not self:GetParent():HasModifier("modifier_imba_cloak_of_flames_basic") then
+			self:GetParent():RemoveModifierByName("modifier_imba_cloak_of_flames_aura")
+		end
+	end
+end
+
+-----------------------------------------------------------------------------------------------------------
+--	Aura definition
+-----------------------------------------------------------------------------------------------------------
+if modifier_imba_cloak_of_flames_aura == nil then modifier_imba_cloak_of_flames_aura = class({}) end
+function modifier_imba_cloak_of_flames_aura:IsAura() return true end
+function modifier_imba_cloak_of_flames_aura:IsHidden() return true end
+function modifier_imba_cloak_of_flames_aura:IsDebuff() return false end
+function modifier_imba_cloak_of_flames_aura:IsPurgable() return false end
+
+function modifier_imba_cloak_of_flames_aura:GetAuraSearchTeam()
+	return DOTA_UNIT_TARGET_TEAM_ENEMY end
+
+function modifier_imba_cloak_of_flames_aura:GetAuraSearchType()
+	return DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO
+end
+
+function modifier_imba_cloak_of_flames_aura:GetModifierAura()
+	return "modifier_imba_cloak_of_flames_burn"
+end
+
+function modifier_imba_cloak_of_flames_aura:GetAuraRadius()
+	return self:GetAbility():GetSpecialValueFor("aura_radius")
+end
+
+function modifier_imba_cloak_of_flames_aura:GetEffectName()
+	return "particles/units/heroes/hero_ember_spirit/ember_spirit_flameguard.vpcf"
+end
+
+function modifier_imba_cloak_of_flames_aura:GetEffectAttachType()
+	return PATTACH_ABSORIGIN_FOLLOW
+end
+
+-----------------------------------------------------------------------------------------------------------
+--	Aura effect (damage)
+-----------------------------------------------------------------------------------------------------------
+if modifier_imba_cloak_of_flames_burn == nil then modifier_imba_cloak_of_flames_burn = class({}) end
+function modifier_imba_cloak_of_flames_burn:IsHidden() return false end
+function modifier_imba_cloak_of_flames_burn:IsDebuff() return true end
+function modifier_imba_cloak_of_flames_burn:IsPurgable() return false end
+
+function modifier_imba_cloak_of_flames_burn:OnCreated()
+	if IsServer() then
+		self:StartIntervalThink(self:GetAbility():GetSpecialValueFor("think_interval"))
+	end
+end
+
+function modifier_imba_cloak_of_flames_burn:OnIntervalThink()
+	if IsServer() then
+		ApplyDamage({
+			victim = self:GetParent(),
+			attacker = self:GetCaster(),
+			ability = self:GetAbility(),
+			damage = self:GetAbility():GetSpecialValueFor("base_damage"),
+			damage_type = DAMAGE_TYPE_MAGICAL
+		})
+	end
+end
+
 if item_imba_radiance == nil then item_imba_radiance = class({}) end
 LinkLuaModifier( "modifier_imba_radiance_basic", "components/items/item_radiance.lua", LUA_MODIFIER_MOTION_NONE )			-- Item stats
 LinkLuaModifier( "modifier_imba_radiance_aura", "components/items/item_radiance.lua", LUA_MODIFIER_MOTION_NONE )			-- Aura
@@ -323,7 +427,9 @@ function modifier_imba_radiance_afterburn:OnIntervalThink()
 end
 
 function modifier_imba_radiance_afterburn:DeclareFunctions()
-	return { MODIFIER_PROPERTY_MISS_PERCENTAGE, } end
+	return { MODIFIER_PROPERTY_MISS_PERCENTAGE, }
+end
 
 function modifier_imba_radiance_afterburn:GetModifierMiss_Percentage()
-	return self.miss_chance end
+	return self.miss_chance
+end
