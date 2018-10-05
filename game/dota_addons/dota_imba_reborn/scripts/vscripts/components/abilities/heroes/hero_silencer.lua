@@ -14,7 +14,6 @@
 --
 -- Editors:
 --     naowin, 10.07.2018
---     AltiV, 02.10.2018
 
 ----------------------------------------------------
 -- Arcane Curse
@@ -252,6 +251,10 @@ end
 
 function imba_silencer_glaives_of_wisdom:IsNetherWardStealable() return false end
 function imba_silencer_glaives_of_wisdom:IsStealable() return false end
+
+function imba_silencer_glaives_of_wisdom:GetCastRange()
+	return self:GetCaster():GetAttackRange()
+end
 
 function imba_silencer_glaives_of_wisdom:GetIntrinsicModifierName()
 	return "modifier_imba_silencer_glaives_of_wisdom"
@@ -631,7 +634,9 @@ end
 function modifier_imba_silencer_glaives_int_damage:OnStackCountChanged(old_stack_count)
 	if IsServer() then
 		local target = self:GetParent()
-		if target:IsRealHero() and target:GetIntellect() > 1 then
+		if target:GetIntellect() == nil then return end
+
+		if target:GetIntellect() > 1 then
 			local int_to_steal = math.max(1, math.floor(self.target_intelligence * self.int_reduction_pct / 100))
 			local int_taken
 			if ( (self.target_intelligence - int_to_steal) >= 1 ) then
@@ -866,13 +871,11 @@ function modifier_imba_silencer_last_word_debuff:IsPurgable() return true end
 
 function modifier_imba_silencer_last_word_debuff:OnCreated( kv )
 	self.caster = self:GetCaster()
-	self.m_regen_reduct_pct = self:GetAbility():GetSpecialValueFor("m_regen_reduct_pct")
-	
+
 	if IsServer() then
 		EmitSoundOn("Hero_Silencer.LastWord.Target", self:GetParent())
 		self.damage = self:GetAbility():GetAbilityDamage()
 		self.silence_duration = self:GetAbility():GetSpecialValueFor("silence_duration")
-		
 		self:StartIntervalThink(self:GetAbility():GetDuration())
 	end
 end
@@ -895,7 +898,7 @@ end
 
 function modifier_imba_silencer_last_word_debuff:CheckState()
 	local state = {
-		--[MODIFIER_STATE_DISARMED] = true,
+		[MODIFIER_STATE_DISARMED] = true,
 		[MODIFIER_STATE_PROVIDES_VISION] = true,
 	}
 
@@ -905,7 +908,6 @@ end
 function modifier_imba_silencer_last_word_debuff:DeclareFunctions()
 	local funcs = {
 		MODIFIER_EVENT_ON_ABILITY_EXECUTED,
-		MODIFIER_PROPERTY_MANA_REGEN_TOTAL_PERCENTAGE
 	}
 
 	return funcs
@@ -925,11 +927,6 @@ function modifier_imba_silencer_last_word_debuff:OnAbilityExecuted( params )
 		end
 	end
 end
-
-function modifier_imba_silencer_last_word_debuff:GetModifierTotalPercentageManaRegen( params )
-	return self.m_regen_reduct_pct * (-1)
-end
-
 
 function modifier_imba_silencer_last_word_debuff:OnIntervalThink()
 	local target = self:GetParent()
@@ -951,7 +948,6 @@ function CheckExceptions(ability)
 		["imba_silencer_glaives_of_wisdom"] = true,
 		["imba_drow_ranger_frost_arrows"] = true,
 		["imba_clinkz_searing_arrows"] = true,
-		["imba_obsidian_destroyer_arcane_orb"] = true
 	}
 
 	if exceptions[ability:GetName()] then
@@ -1028,24 +1024,6 @@ function modifier_imba_silencer_arcane_supremacy:OnCreated( kv )
 	self.global_silence_steal = self:GetAbility():GetSpecialValueFor("global_silence_steal")
 	self.silence_reduction_pct = self:GetAbility():GetSpecialValueFor("silence_reduction_pct")
 	self.caster = self:GetCaster()
-	
-	if not IsServer() then return end
-	
-	-- Add the check for removing vanilla intelligence steal modifier
-	if self.caster:GetUnitName() == "npc_dota_hero_silencer" then
-		self:StartIntervalThink(FrameTime())
-	else
-		print("Arcane Supremacy was stolen. Do not enter think function.")
-	end
-end
-
-function modifier_imba_silencer_arcane_supremacy:OnIntervalThink()
-	if not IsServer() then return end
-	if self.caster:HasModifier("modifier_silencer_int_steal") then
-		self.caster:RemoveModifierByName("modifier_silencer_int_steal")
-		print("Silencer: Vanilla intelligence steal modifier removed.")
-		self:StartIntervalThink(-1)
-	end
 end
 
 function modifier_imba_silencer_arcane_supremacy:GetSilenceReductionPct()
@@ -1063,12 +1041,9 @@ end
 
 function modifier_imba_silencer_arcane_supremacy:OnDeath( params )
 	if IsServer() then
-		-- Re-instantiate functions in case the intelligence steal talent is leveled
-		self.steal_amount = self:GetAbility():GetTalentSpecialValueFor("int_steal_amount")
-		self.global_silence_steal = self:GetAbility():GetTalentSpecialValueFor("global_silence_steal")
-	
-		if self.caster:GetUnitName() == "npc_dota_hero_silencer" then
-			if params.unit:IsRealHero() and params.unit ~= self.caster and params.unit:GetTeam() ~= self.caster:GetTeam() and not params.reincarnate then			
+		if not self.caster:PassivesDisabled() then
+			if params.unit:IsRealHero() and params.unit ~= self.caster and params.unit:GetTeam() ~= self.caster:GetTeam() and not params.reincarnate then
+
 				local stealType = nil
 				local distance = (self.caster:GetAbsOrigin() - params.unit:GetAbsOrigin()):Length2D()
 				if distance <= self.steal_range or params.attacker == self.caster then
@@ -1230,9 +1205,7 @@ function modifier_imba_silencer_global_silence:OnIntervalThink()
 end
 
 function modifier_imba_silencer_global_silence:DeclareFunctions()
-	local funcs = { MODIFIER_EVENT_ON_ORDER,
-	MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE
-	}
+	local funcs = { MODIFIER_EVENT_ON_ORDER, }
 	return funcs
 end
 
@@ -1279,16 +1252,6 @@ function modifier_imba_silencer_global_silence:OnOrder(keys)
 				end
 			end
 		end
-	end
-end
-
-function modifier_imba_silencer_global_silence:GetModifierIncomingDamage_Percentage()
-	if not IsServer() then return end
-	
-	if self:GetAbility():GetCaster():HasTalent("special_bonus_imba_silencer_10") then
-		return self:GetAbility():GetCaster():FindTalentValue("special_bonus_imba_silencer_10")
-	else
-		return 0
 	end
 end
 
