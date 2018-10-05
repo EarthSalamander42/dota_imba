@@ -92,13 +92,16 @@
 ////===============================================================================================================
 "DOTA_Tooltip_ability_special_bonus_imba_alchemist_1"                   "+15% Sticky Acid Slow"
 "DOTA_Tooltip_ability_special_bonus_imba_alchemist_2"                   "Unstable Concoction can grant allies Chemical Rage"
+"DOTA_Tooltip_ability_special_bonus_imba_alchemist_2_Description"		"Chemical Rage duration is equal to triple the amount of time concoction is brewed."
 "DOTA_Tooltip_ability_special_bonus_imba_alchemist_3"                   "Bounty runes spawn gold bags"
 "DOTA_Tooltip_ability_special_bonus_imba_alchemist_4"                   "Acid Spray victims drops gold bags"
 "DOTA_Tooltip_ability_special_bonus_imba_alchemist_5"                   "Greed stacks increase Acid Spray damage"
+"DOTA_Tooltip_ability_special_bonus_imba_alchemist_5_Description"		"Extra damage is equal to 40% of Greevil's Greed stacks."
 "DOTA_Tooltip_ability_special_bonus_imba_alchemist_6"                   "Volatile Flask"
 "DOTA_Tooltip_ability_special_bonus_imba_alchemist_6_Description"		"When in Chemical Rage, Alchemist brews Unstable Concoction twice as fast."
 "DOTA_Tooltip_ability_special_bonus_imba_alchemist_7"                   "+150% gold from bounty runes for Goblin's Greed"
-"DOTA_Tooltip_ability_special_bonus_imba_alchemist_8"                   "Chemical Rage grants a damage aura"
+"DOTA_Tooltip_ability_special_bonus_imba_alchemist_8"                   "Chemical Rage grants a 700 radius damage aura"
+"DOTA_Tooltip_ability_special_bonus_imba_alchemist_8_Description"		"Damage granted is equal to Alchemist's Greevil's Greed stacks."
 
 // Anti Mage
 ////===============================================================================================================
