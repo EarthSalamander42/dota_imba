@@ -236,12 +236,12 @@
 
 		"Ability10"					"special_bonus_imba_bloodseeker_2" //Blood Rite applies Rupture on targets and pushes them out of the circle
 		"Ability11"					"special_bonus_imba_bloodseeker_1" //Blood Amp shift
-		"Ability12"					"special_bonus_imba_bloodseeker_5" //Blood Rite is cast in three overlapping circles
+		"Ability12"					"special_bonus_imba_bloodseeker_8" //Bloodrage's damage amplification increases the less health the target has
 		"Ability13"					"special_bonus_imba_bloodseeker_7" //Killing a Bloodraged unit grants the killer huge speed buff
 		"Ability14"					"special_bonus_imba_bloodseeker_4" //Blood Rite's silence becomes unpurgable
 		"Ability15"					"special_bonus_lifesteal_25"
 		"Ability16"					"special_bonus_imba_bloodseeker_9" //-6s Blood Rite Cooldown
-		"Ability17"					"special_bonus_imba_bloodseeker_8" //Bloodrage's damage amplification increases the less health the target has
+		"Ability17"					"special_bonus_imba_bloodseeker_5" //Blood Rite is cast in three overlapping circles
 		
 //		Removed Abilities
 //		"Ability11"					"special_bonus_imba_bloodseeker_6" //Rupture's distance cap increase		
