@@ -150,6 +150,7 @@
 		"item"		"item_imba_angelic_alliance"
 		"item"		"item_imba_greatwyrm_plate"
 		"item"		"item_imba_guardian_greaves"
+		"item"		"item_imba_lifesteal_boots"
 	}
 	
 	"weapons"
