@@ -100,12 +100,6 @@ function modifier_item_imba_butterfly:GetModifierPreAttack_BonusDamage()
 end
 
 function modifier_item_imba_butterfly:GetModifierEvasion_Constant()
-
-	-- If the caster has Flutter activated, he cannot evade, no matter what
-	if self.caster:HasModifier(self.modifier_flutter) then
-		return nil
-	end
-
 	-- If the caster has Wind Song active, his evasion is perfect
 	if self.caster:HasModifier(self.modifier_active_song) then
 		return self.wind_song_evasion

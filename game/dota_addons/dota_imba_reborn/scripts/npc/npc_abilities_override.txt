@@ -4110,7 +4110,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"damage_pct"			"1.0 4.0 5.75 6.25"
+				"damage_pct"			"2.0 3.5 5.0 6.5"
 				"LinkedSpecialBonus"	"special_bonus_unique_death_prophet_3"
 			}
 			"03"
@@ -4136,7 +4136,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"charge_restore_time"	"45"
+				"charge_restore_time"	"40"
 			}
 		}
 	}
