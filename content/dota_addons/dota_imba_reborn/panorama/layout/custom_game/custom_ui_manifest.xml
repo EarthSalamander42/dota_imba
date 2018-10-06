@@ -102,7 +102,7 @@
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/combat_events.xml" /> 
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/hero_selection.xml" /> 
 		<CustomUIElement type="GameInfo" layoutfile="file://{resources}/layout/custom_game/imba_game_info.xml" /> 
-		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/diretide.xml" /> 
+<!--		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/diretide.xml" /> -->
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/imba_imr.xml" /> 
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/mutation.xml" /> 
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/precache.xml" /> 

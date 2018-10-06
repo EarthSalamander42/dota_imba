@@ -433,10 +433,11 @@ function GenerateBattlepassPanel(BattlepassRewards, player) {
 			i_count = i_count + 1;
 
 			var arcana = BattlepassRewards[i].search("arcana");
+			var immortal = BattlepassRewards[i].search("immortal");
+
 			if (arcana != -1)
 				is_arcana = true;
-			var immortal = BattlepassRewards[i].search("immortal");
-			if (immortal != -1)
+			else if (immortal != -1)
 				is_immortal = true;
 
 			if (i_count > 10) {

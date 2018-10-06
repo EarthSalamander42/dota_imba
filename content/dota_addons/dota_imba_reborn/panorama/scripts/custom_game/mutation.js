@@ -36,8 +36,8 @@ function OnMutationUpdated()
 	for (var j = 0; j <= 3; j++) {
 		mutation_info[j] = CustomNetTables.GetTableValue("mutation_info", mutation[j])
 		if (mutation_info[j] != undefined) {
-			if (mutation[j] == "periodic_spellcast")
-				PeriodicSpellcast(mutation_info[j], $("#Mutation2Label"))
+//			if (mutation[j] == "periodic_spellcast")
+//				PeriodicSpellcast(mutation_info[j], $("#Mutation2Label"))
 			if (mutation[j] == "airdrop" || mutation[j] == "danger_zone") {
 				MutationTimer(mutation_info[j], $("#Mutation3Label"))
 				break; // Don't need to setup anything after this, better end the script
@@ -46,7 +46,7 @@ function OnMutationUpdated()
 				if (mutation_info[j]["2"] == "%")
 					$("#Mutation" + j + "Label").text = $.Localize("mutation_" + mutation[j]) + ": " + mutation_info[j]["1"].toFixed(0) + "%";
 				else if (mutation_info[j]["2"] == "s")
-					$("#Mutation" + j + "Label").text = $.Localize("mutation_" + mutation[j]) + ": " + mutation_info[j]["1"].toFixed(0) + "seconds";
+					$("#Mutation" + j + "Label").text = $.Localize("mutation_" + mutation[j]) + ": " + mutation_info[j]["1"].toFixed(0) + " seconds";
 				else
 					$("#Mutation" + j + "Label").text = $.Localize("mutation_" + mutation[j]) + ": " + mutation_info[j]["1"].toFixed(0) + " / " + mutation_info[j]["2"].toFixed(0);
 			}
@@ -62,12 +62,16 @@ function OnMutationUpdated()
 }
 
 function PeriodicSpellcast(data, panel) {
-	var text = "Negative";
+	var spellcast_text = "Negative";
 
-	if (data["1"] == 1)
-		text = "Positive";
+	$.Msg(data["1"])
 
-	panel.text = $.Localize("mutation_" + mutation[2]) + ": " + text;
+	if (data["1"] == "1")
+		spellcast_text = "Positive";
+
+	$.Msg(spellcast_text)
+
+	panel.text = $.Localize("mutation_" + mutation[2]) + ": " + spellcast_text;
 }
 
 var alert = 0
