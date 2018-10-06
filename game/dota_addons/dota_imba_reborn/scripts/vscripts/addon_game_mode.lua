@@ -14,6 +14,8 @@ function Precache( context )
 	LinkLuaModifier("modifier_imba_war_veteran_0", "components/modifiers/modifier_imba_war_veteran.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_imba_war_veteran_1", "components/modifiers/modifier_imba_war_veteran.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_imba_war_veteran_2", "components/modifiers/modifier_imba_war_veteran.lua", LUA_MODIFIER_MOTION_NONE )
+	LinkLuaModifier("modifier_imba_roshan_ai", "components/modifiers/modifier_imba_roshan_ai.lua", LUA_MODIFIER_MOTION_NONE )
+	LinkLuaModifier("modifier_meepo_divided_we_stand_lua","components/abilities/heroes/hero_meepo.lua",LUA_MODIFIER_MOTION_NONE)
 
 	-- Battlepass precaching
 	Wearables:PrecacheWearables(context)
@@ -50,7 +52,7 @@ function Precache( context )
 	PrecacheResource("particle", "particles/ambient/fountain_danger_circle.vpcf", context)
 
 	-- Sounds
-	PrecacheResource("soundfile", "soundevents/diretide_soundevents.vsndevts", context)
+--	PrecacheResource("soundfile", "soundevents/diretide_soundevents.vsndevts", context)
 	PrecacheResource("soundfile", "soundevents/imba_soundevents.vsndevts", context)
 
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_abyssal_underlord.vsndevts", context) -- Hellion

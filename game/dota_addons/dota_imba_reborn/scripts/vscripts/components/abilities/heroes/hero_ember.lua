@@ -240,7 +240,6 @@ end
 function modifier_imba_sleight_of_fist_caster:DeclareFunctions()
 	local funcs = {
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
-		MODIFIER_EVENT_ON_ATTACK_LANDED
 	}
 
 	return funcs
@@ -248,18 +247,6 @@ end
 
 function modifier_imba_sleight_of_fist_caster:GetModifierPreAttack_BonusDamage()
 	return self:GetAbility():GetSpecialValueFor("bonus_damage")
-end
-
-function modifier_imba_sleight_of_fist_caster:OnAttackLanded(keys)
-	if IsServer() then
-		if keys.attacker == self:GetParent() then
-			if keys.target:IsRealHero() then
-				keys.attacker:Heal(keys.damage * self:GetAbility():GetSpecialValueFor("hero_lifesteal") * 0.01, keys.attacker)
-			else
-				keys.attacker:Heal(keys.damage * self:GetAbility():GetSpecialValueFor("creep_lifesteal") * 0.01, keys.attacker)
-			end
-		end
-	end
 end
 
 --------------------------------------------------------------------------------

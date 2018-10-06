@@ -30326,6 +30326,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_pangolier.vsndevts"
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_phantom_assassin.vsndevts"
 			"soundfile"					"soundevents/imba_soundevents.vsndevts"
 			"particle"					"particles/units/heroes/hero_phantom_assassin/phantom_assassin_crit_impact.vpcf"
@@ -30361,7 +30362,12 @@
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"fatality_chance"			"1"
+				"fatality_chance"			"1" // %
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"fatality_threshold"		"50" // %
 			}
 		}
 	}
@@ -35298,7 +35304,7 @@
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"travel_distance"			"700 900 1050 1150"
+				"travel_distance"			"700 800 900 1000"
 			}
 			"06"
 			{
@@ -35426,7 +35432,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"channel_time"				"10"		
+				"duration"					"10"		
 			}
 			"02"
 			{
@@ -37406,16 +37412,6 @@
 			}
 			"03"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"creep_lifesteal"			"10"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"hero_lifesteal"			"20"
-			}
-			"05"
-			{
 				"var_type"					"FIELD_FLOAT"
 				"attack_interval"			"0.2"
 			}
@@ -37438,7 +37434,6 @@
 		"SpellImmunityType"			"SPELL_IMMUNITY_ENEMIES_NO"
 		"AbilityTextureName"		"ember_spirit_flame_guard"
 		"ScriptFile"				"components/abilities/heroes/hero_ember.lua"
-
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------

@@ -394,9 +394,6 @@ function GameMode:OnEntityKilled( keys )
 		elseif killed_unit:IsCourier() then
 			CombatEvents("generic", "courier_dead", killed_unit)
 			return
-		elseif killed_unit:GetUnitName() == "npc_imba_roshan" then
-			CombatEvents("kill", "roshan_dead", killed_unit, killer)
-			return
 		else
 			if IsMutationMap() then
 				Mutation:OnUnitDeath(killed_unit)
@@ -414,8 +411,32 @@ function GameMode:OnEntityKilled( keys )
 				if killed_unit:IsRealHero() then
 					gold_reason = DOTA_ModifyGold_HeroKill
 				elseif killed_unit:IsRoshan() then
-					gold_bounty = gold_bounty * custom_gold_bonus / 100
+					gold_bounty = RandomInt(IMBA_ROSHAN_GOLD_KILL_MIN, IMBA_ROSHAN_GOLD_KILL_MAX) * custom_gold_bonus / 100
+					gold_bounty_assist = IMBA_ROSHAN_GOLD_ASSIST * custom_gold_bonus / 100
 					gold_reason = DOTA_ModifyGold_RoshanKill
+
+					for _, hero in pairs(HeroList:GetAllHeroes()) do
+						if hero:GetTeam() == killer:GetTeam() then
+							SendOverheadEventMessage(hero:GetPlayerOwner(), OVERHEAD_ALERT_GOLD, killed_unit, gold_bounty_assist, nil)
+							hero:ModifyGold(gold_bounty_assist, gold_reliable, gold_reason)
+
+							if hero == killer then
+								SendOverheadEventMessage(hero:GetPlayerOwner(), OVERHEAD_ALERT_GOLD, killed_unit, gold_bounty, nil)
+								hero:ModifyGold(gold_bounty, gold_reliable, gold_reason)
+							end
+						end
+					end
+
+					-- Respawn time for Roshan
+					local respawn_time = RandomInt(ROSHAN_RESPAWN_TIME_MIN, ROSHAN_RESPAWN_TIME_MAX) * 60
+					Timers:CreateTimer(respawn_time, function()
+						local roshan = CreateUnitByName("npc_dota_roshan", _G.ROSHAN_SPAWN_LOC, true, nil, nil, DOTA_TEAM_NEUTRALS)
+						roshan:AddNewModifier(roshan, nil, "modifier_imba_roshan_ai", {})
+					end)
+
+					CombatEvents("kill", "roshan_dead", killed_unit, killer)
+
+					return
 				elseif killed_unit:IsCourier() then
 					gold_bounty = gold_bounty * custom_gold_bonus / 100
 					gold_reason = DOTA_ModifyGold_CourierKill
@@ -466,12 +487,6 @@ function GameMode:OnAbilityUsed(keys)
 	local player = PlayerResource:GetPlayer(keys.PlayerID)
 	local abilityname = keys.abilityname
 
-	if abilityname == "item_pocket_roshan" then
-		if Entities:FindByName(nil, "npc_dota_roshan"):GetUnitName() ~= "npc_imba_roshan" then
-			Entities:FindByName(nil, "npc_dota_roshan"):RemoveSelf()
-		end
-		local roshan = CreateUnitByName("npc_imba_roshan", player:GetAssignedHero():GetAbsOrigin(), true, nil, nil, player:GetTeam())
-	end
 end
 
 function GameMode:OnPlayerLevelUp(keys)

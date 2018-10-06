@@ -629,7 +629,7 @@ LinkLuaModifier("modifier_special_bonus_imba_ursa_8", "components/abilities/hero
 
 modifier_special_bonus_imba_ursa_8 = modifier_special_bonus_imba_ursa_8 or class({})
 
-function modifier_special_bonus_imba_ursa_8:IsHidden() return false end
+function modifier_special_bonus_imba_ursa_8:IsHidden() return true end
 function modifier_special_bonus_imba_ursa_8:RemoveOnDeath() return false end
 
 function modifier_special_bonus_imba_ursa_8:OnCreated()
@@ -1135,7 +1135,7 @@ LinkLuaModifier("modifier_special_bonus_imba_ursa_1", "components/abilities/hero
 
 modifier_special_bonus_imba_ursa_1 = modifier_special_bonus_imba_ursa_1 or class({})
 
-function modifier_special_bonus_imba_ursa_1:IsHidden() return false end
+function modifier_special_bonus_imba_ursa_1:IsHidden() return true end
 function modifier_special_bonus_imba_ursa_1:RemoveOnDeath() return false end
 
 function modifier_special_bonus_imba_ursa_1:OnCreated()
@@ -1478,10 +1478,18 @@ function modifier_terrorital_hunter_talent_tenacity:IsHidden() return false end
 function modifier_terrorital_hunter_talent_tenacity:IsPurgable() return false end
 function modifier_terrorital_hunter_talent_tenacity:IsDebuff() return false end
 
+function modifier_terrorital_hunter_talent_tenacity:DeclareFunctions()
+	local decFuncs = {
+		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING
+	}
+
+	return decFuncs
+end
+
 function modifier_terrorital_hunter_talent_tenacity:OnCreated()
 	self.tenacity_bonus = self:GetCaster():FindTalentValue("special_bonus_imba_ursa_3", "tenacity_bonus")
 end
 
-function modifier_terrorital_hunter_talent_tenacity:GetCustomTenacity()
+function modifier_terrorital_hunter_talent_tenacity:GetModifierStatusResistanceStacking()
 	return self.tenacity_bonus
 end

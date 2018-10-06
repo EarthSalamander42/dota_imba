@@ -53,10 +53,11 @@ function GameMode:OnFirstPlayerLoaded()
 	BadCamera = Entities:FindByName(nil, "bad_healer_6")
 
 	if GetMapName() ~= Map1v1() then
-		ROSHAN_SPAWN_LOC = Entities:FindByClassname(nil, "npc_dota_roshan_spawner"):GetAbsOrigin()
+		_G.ROSHAN_SPAWN_LOC = Entities:FindByClassname(nil, "npc_dota_roshan_spawner"):GetAbsOrigin()
 		Entities:FindByClassname(nil, "npc_dota_roshan_spawner"):RemoveSelf()
 		if GetMapName() ~= Map1v1() then
-			local roshan = CreateUnitByName("npc_imba_roshan", ROSHAN_SPAWN_LOC, true, nil, nil, DOTA_TEAM_NEUTRALS)
+			local roshan = CreateUnitByName("npc_dota_roshan", _G.ROSHAN_SPAWN_LOC, true, nil, nil, DOTA_TEAM_NEUTRALS)
+			roshan:AddNewModifier(roshan, nil, "modifier_imba_roshan_ai", {})
 		end
 	end
 end

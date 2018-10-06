@@ -136,15 +136,12 @@ function modifier_imba_frost_gale_setin:OnCreated()
 
 	--Ability properties
 	self.root_modifier = "modifier_imba_frost_gale_debuff"
-	self.caster = self:GetCaster()
-	self.ability = self:GetAbility()
-	self.parent = self:GetParent()
 
 	--Ability specials
-	self.chill_damage = self.ability:GetSpecialValueFor("chill_damage")
-	self.minimum_slow = self.ability:GetSpecialValueFor("minimum_slow")
-	self.maximum_slow = self.ability:GetSpecialValueFor("maximum_slow")
-	self.chill_duration = self.ability:GetSpecialValueFor("chill_duration")
+	self.chill_damage = self:GetAbility():GetSpecialValueFor("chill_damage")
+	self.minimum_slow = self:GetAbility():GetSpecialValueFor("minimum_slow")
+	self.maximum_slow = self:GetAbility():GetSpecialValueFor("maximum_slow")
+	self.chill_duration = self:GetAbility():GetSpecialValueFor("chill_duration")
 
 	if IsServer() then
 		self:StartIntervalThink(1)
@@ -154,9 +151,9 @@ end
 function modifier_imba_frost_gale_setin:OnDestroy()
 	if IsServer() then
 		--if victim isn't dead and isn't magic immune, apply the root debuff
-		if self.parent:IsAlive() and not self.parent:IsMagicImmune() then
+		if self:GetParent():IsAlive() and not self:GetParent():IsMagicImmune() then
 
-			local mod = self.parent:AddNewModifier(self.ability:GetCaster(), self.ability, "modifier_imba_frost_gale_debuff", {duration = self.chill_duration})
+			local mod = self:GetParent():AddNewModifier(self:GetAbility():GetCaster(), self:GetAbility(), "modifier_imba_frost_gale_debuff", {duration = self.chill_duration})
 			mod:SetStackCount(self:GetStackCount())
 		end
 	end
@@ -172,8 +169,8 @@ function modifier_imba_frost_gale_setin:OnIntervalThink()
 	if IsServer() then
 		--play chill tick sound and apply a tick of damage
 		EmitSoundOn("Hero_Ancient_Apparition.ColdFeetTick", self:GetParent())
-		local damage = ApplyDamage({victim = self.parent, attacker = self.caster, damage = self.chill_damage, damage_type = DAMAGE_TYPE_MAGICAL, ability = self.ability})
-		SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, self.parent, damage, nil)
+		local damage = ApplyDamage({victim = self:GetParent(), attacker = self:GetCaster(), damage = self.chill_damage, damage_type = DAMAGE_TYPE_MAGICAL, ability = self:GetAbility()})
+		SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, self:GetParent(), damage, nil)
 	end
 end
 
@@ -218,20 +215,14 @@ function modifier_imba_frost_gale_debuff:CheckState()
 end
 
 function modifier_imba_frost_gale_debuff:OnCreated()
-
-	--Ability properties
-	self.caster = self:GetCaster()
-	self.ability = self:GetAbility()
-	self.parent = self:GetParent()
-
 	--Ability Specials
-	self.chill_damage = self.ability:GetSpecialValueFor("chill_damage")
-	self.tick_interval = self.ability:GetSpecialValueFor("tick_interval") --currently it's 0.5
+	self.chill_damage = self:GetAbility():GetSpecialValueFor("chill_damage")
+	self.tick_interval = self:GetAbility():GetSpecialValueFor("tick_interval") --currently it's 0.5
 
 	if IsServer() then
 		self:StartIntervalThink(self.tick_interval)
-		self.parent:AddNewModifier(self.caster, nil, "modifier_rooted", {duration = self:GetAbility():GetSpecialValueFor("chill_duration")})
-		self.parent:EmitSound("Hero_Crystal.Frostbite")
+		self:GetParent():AddNewModifier(self:GetCaster(), nil, "modifier_rooted", {duration = self:GetAbility():GetSpecialValueFor("chill_duration")})
+		self:GetParent():EmitSound("Hero_Crystal.Frostbite")
 	end
 end
 
@@ -240,8 +231,8 @@ function modifier_imba_frost_gale_debuff:OnIntervalThink()
 		--apply damage proportional to the tick interval
 		local damage_per_tick = self.chill_damage * self.tick_interval
 
-		ApplyDamage({victim = self.parent, attacker = self.caster, damage = damage_per_tick, damage_type = DAMAGE_TYPE_MAGICAL})
-		SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, self.parent, damage_per_tick, nil)
+		ApplyDamage({victim = self:GetParent(), attacker = self:GetCaster(), damage = damage_per_tick, damage_type = DAMAGE_TYPE_MAGICAL})
+		SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, self:GetParent(), damage_per_tick, nil)
 	end
 end
 
@@ -436,10 +427,8 @@ modifier_imba_burrowblast_burrow = class({})
 
 function modifier_imba_burrowblast_burrow:OnCreated()
 	if IsServer() then
-		self.caster = self:GetCaster()
-
 		-- Remove caster's model
-		self.caster:AddNoDraw()
+		self:GetCaster():AddNoDraw()
 	end
 end
 
@@ -454,7 +443,7 @@ end
 function modifier_imba_burrowblast_burrow:OnDestroy()
 	if IsServer() then
 		-- Redraw caster's model
-		self.caster:RemoveNoDraw()
+		self:GetCaster():RemoveNoDraw()
 	end
 end
 
@@ -483,15 +472,12 @@ modifier_imba_frozen_skin_passive = class({})
 function modifier_imba_frozen_skin_passive:OnCreated()
 
 	--Ability properties
-	self.caster = self:GetCaster()
-	self.ability = self:GetAbility()
-	self.parent = self:GetParent()
 	self.frostbite_modifier = "modifier_imba_frozen_skin_debuff"
 
 	--Ability Specials
-	self.chance = self.ability:GetSpecialValueFor("chance")
-	self.duration = self.ability:GetSpecialValueFor("duration")
-	self.stun_duration = self.ability:GetSpecialValueFor("stun_duration")
+	self.chance = self:GetAbility():GetSpecialValueFor("chance")
+	self.duration = self:GetAbility():GetSpecialValueFor("duration")
+	self.stun_duration = self:GetAbility():GetSpecialValueFor("stun_duration")
 	self.prng = -10
 end
 
@@ -516,17 +502,17 @@ end
 
 function modifier_imba_frozen_skin_passive:OnAttackLanded(params)
 	if IsServer() then
-		if params.target == self.parent then
+		if params.target == self:GetParent() then
 
-			if self.caster:PassivesDisabled() or                                              -- if Sly King is broken, do nothing.
+			if self:GetCaster():PassivesDisabled() or                                              -- if Sly King is broken, do nothing.
 				params.attacker:IsBuilding() or	params.attacker:IsMagicImmune() then         -- if the guy attacking Sly King is a tower or spell immune, do nothing.
 				return nil
 			end
 
 			--roll for a pseudo random chance: each fail will slightly increase the successive roll success chance
 			if RollPseudoRandom(self.chance, self) then
-				params.attacker:AddNewModifier(self.parent, self.ability, "modifier_stunned", {duration = self.stun_duration}) --mini-stun
-				params.attacker:AddNewModifier(self.parent, self.ability, self.frostbite_modifier, {duration = self.duration}) --frostbite
+				params.attacker:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_stunned", {duration = self.stun_duration}) --mini-stun
+				params.attacker:AddNewModifier(self:GetParent(), self:GetAbility(), self.frostbite_modifier, {duration = self.duration}) --frostbite
 			end
 		end
 	end
@@ -547,14 +533,9 @@ function modifier_imba_frozen_skin_debuff:CheckState()			return {[MODIFIER_STATE
 
 function modifier_imba_frozen_skin_debuff:OnCreated( kv )
 	if IsServer() then
-		--Ability properties
-		self.caster = self:GetCaster()
-		self.ability = self:GetAbility()
-		self.parent = self:GetParent()
-
 		--Ability Specials
-		self.damage_interval = self.ability:GetSpecialValueFor("damage_interval")
-		self.damage_per_second = self.ability:GetSpecialValueFor("damage_per_second")
+		self.damage_interval = self:GetAbility():GetSpecialValueFor("damage_interval")
+		self.damage_per_second = self:GetAbility():GetSpecialValueFor("damage_per_second")
 
 		-- Immediately proc the first damage instance
 		self:OnIntervalThink()
@@ -564,14 +545,14 @@ function modifier_imba_frozen_skin_debuff:OnCreated( kv )
 
 		-- Get thinkin
 		self:StartIntervalThink(self.damage_interval)
-		self:GetParent():AddNewModifier(self.caster, nil, "modifier_rooted", {duration = self:GetAbility():GetSpecialValueFor("duration")})
+		self:GetParent():AddNewModifier(self:GetCaster(), nil, "modifier_rooted", {duration = self:GetAbility():GetSpecialValueFor("duration")})
 	end
 end
 
 function modifier_imba_frozen_skin_debuff:OnIntervalThink()
 	if IsServer() then
 		local tick_damage = self.damage_per_second * self.damage_interval
-		ApplyDamage({attacker = self.caster, victim = self.parent, ability = self.ability, damage = tick_damage, damage_type = DAMAGE_TYPE_MAGICAL})
+		ApplyDamage({attacker = self:GetCaster(), victim = self:GetParent(), ability = self:GetAbility(), damage = tick_damage, damage_type = DAMAGE_TYPE_MAGICAL})
 	end
 end
 
@@ -591,55 +572,37 @@ function imba_sly_king_winterbringer:IsHiddenWhenStolen()
 	return false
 end
 
-function imba_sly_king_winterbringer:GetChannelTime()
-	local ability = self
-	local channel_time = ability:GetSpecialValueFor("channel_time")
-
-	return channel_time
-end
-
 function imba_sly_king_winterbringer:OnSpellStart()
 	-- Ability properties
-	local caster = self:GetCaster()
-	local ability = self
 	local sound_cast = "Hero_KeeperOfTheLight.Illuminate.Charge"
-	local modifier_pulse = "modifier_imba_winterbringer_pulse"
-	local radius = ability:GetSpecialValueFor("radius")
+	local duration = self:GetSpecialValueFor("duration") - self:GetSpecialValueFor("pulse_interval") -- Remove 1 instance because the cast begins at 0:00
+	local radius = self:GetSpecialValueFor("radius")
 
 	-- Play cast sound
-	EmitSoundOnLocationWithCaster(caster:GetAbsOrigin(), sound_cast, caster)
+	EmitSoundOnLocationWithCaster(self:GetCaster():GetAbsOrigin(), sound_cast, self:GetCaster())
 
 	--Add the pulse modifier to the caster
-	caster:AddNewModifier(caster, ability, modifier_pulse, {})
+	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_winterbringer_pulse", {duration = duration})
 
 	-- Make Sly King perform perform the animation over and over
 	Timers:CreateTimer(1.85, function()
-		if caster:IsChanneling() then
-			caster:StartGesture(ACT_DOTA_CAST_ABILITY_4)
+		if self:GetCaster():IsChanneling() then
+			self:GetCaster():StartGesture(ACT_DOTA_CAST_ABILITY_4)
 			return FrameTime()
 		else
-			caster:FadeGesture(ACT_DOTA_CAST_ABILITY_4)
+			self:GetCaster():FadeGesture(ACT_DOTA_CAST_ABILITY_4)
 			return nil
 		end
 	end)
 
 	-- Nether Ward handling
-	if string.find(caster:GetUnitName(), "npc_imba_pugna_nether_ward") then
+	if string.find(self:GetCaster():GetUnitName(), "npc_imba_pugna_nether_ward") then
 		-- Wait two seconds, then apply it like it had succeeded
 		Timers:CreateTimer(2, function()
 			-- Start pulsing
-			caster:AddNewModifier(caster, ability, modifier_pulse, {})
+			self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_winterbringer_pulse", {})
 		end)
 	end
-end
-
-function imba_sly_king_winterbringer:OnChannelFinish(interrupted)
-
-	local caster = self:GetCaster()
-	local modifier_pulse = "modifier_imba_winterbringer_pulse"
-
-	--Stop pulsing
-	caster:RemoveModifierByName(modifier_pulse)
 end
 
 ---------------------------------------------------
@@ -651,8 +614,6 @@ modifier_imba_winterbringer_pulse = modifier_imba_winterbringer_pulse or class({
 function modifier_imba_winterbringer_pulse:OnCreated()
 	if IsServer() then
 		-- Ability properties
-		self.caster = self:GetCaster()
-		self.ability = self:GetAbility()
 		self.sound_channeling = "Hero_KeeperOfTheLight.Illuminate.Charge"
 		self.sound_wave_1 = "Hero_Crystal.CrystalNova"
 		self.sound_wave_2 = "Hero_Crystal.CrystalNova.Yulsaria"
@@ -660,23 +621,25 @@ function modifier_imba_winterbringer_pulse:OnCreated()
 		self.modifier_slow = "modifier_imba_winterbringer_slow"
 
 		-- Ability specials
-		self.damage = self.ability:GetSpecialValueFor("damage")
-		self.slow_duration = self.ability:GetSpecialValueFor("slow_duration")
-		self.radius = self.ability:GetSpecialValueFor("radius")
-		self.pull_speed = self.ability:GetSpecialValueFor("pull_speed")
-		self.pulse_interval = self.ability:GetSpecialValueFor("pulse_interval")
+		self.damage = self:GetAbility():GetSpecialValueFor("damage")
+		self.slow_duration = self:GetAbility():GetSpecialValueFor("slow_duration")
+		self.radius = self:GetAbility():GetSpecialValueFor("radius")
+		self.pull_speed = self:GetAbility():GetSpecialValueFor("pull_speed")
+		self.pulse_interval = self:GetAbility():GetSpecialValueFor("pulse_interval")
+		self.pos = self:GetCaster():GetAbsOrigin()
 
 		self.wave_fx_played = 0 --will be used to alternate the sound effects on the waves: 0 -> sound_wave_1 will be played; 1 -> sound_wave_2 will be played
 
 		-- Play channeling sound
-		EmitSoundOn(self.sound_channeling, self.caster)
+		EmitSoundOn(self.sound_channeling, self:GetCaster())
 
 		-- Start thinking
+		self:OnIntervalThink()
 		self:StartIntervalThink(self.pulse_interval)
 
 		--Replay channeling sound after 5 seconds
 		Timers:CreateTimer(5, function()
-			EmitSoundOn(self.sound_channeling, self.caster)
+			EmitSoundOn(self.sound_channeling, self:GetCaster())
 		end)
 	end
 end
@@ -687,20 +650,20 @@ function modifier_imba_winterbringer_pulse:OnIntervalThink()
 		self.pull_radius = self.radius
 
 		-- Add particle
-		local particle = ParticleManager:CreateParticle("particles/heroes/hero_slyli/ice_route.vpcf", PATTACH_CUSTOMORIGIN, self.caster)
-		ParticleManager:SetParticleControl(particle, 0, self.caster:GetAbsOrigin())
+		local particle = ParticleManager:CreateParticle("particles/heroes/hero_slyli/ice_route.vpcf", PATTACH_CUSTOMORIGIN, self:GetCaster())
+		ParticleManager:SetParticleControl(particle, 0, self.pos)
 		ParticleManager:SetParticleControl(particle, 1, Vector(self.radius, self.radius, self.radius))
 
 		--play wave sound
 		if self.wave_fx_played then --sound_wave_2 will be played
-			EmitSoundOn(self.sound_wave_2, self.caster)
+			EmitSoundOn(self.sound_wave_2, self:GetCaster())
 		else --sound_wave_1 will be played
-			EmitSoundOn(self.sound_wave_1, self.caster)
+			EmitSoundOn(self.sound_wave_1, self:GetCaster())
 		end
 
 		-- Find all nearby enemies in the damage radius
-		local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(),
-			self.caster:GetAbsOrigin(),
+		local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(),
+			self.pos,
 			nil,
 			self.radius,
 			DOTA_UNIT_TARGET_TEAM_ENEMY,
@@ -713,39 +676,39 @@ function modifier_imba_winterbringer_pulse:OnIntervalThink()
 
 			-- Deal damage
 			local damageTable = {victim = enemy,
-				attacker = self.caster,
+				attacker = self:GetCaster(),
 				damage = self.damage,
 				damage_type = DAMAGE_TYPE_MAGICAL,
-				ability = self.ability
+				ability = self:GetAbility()
 			}
 
 			ApplyDamage(damageTable)
 
 			-- Apply slow
-			enemy:AddNewModifier(self.caster, self.ability, self.modifier_slow, {duration = self.slow_duration})
+			enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), self.modifier_slow, {duration = self.slow_duration})
 		end
 
 		-- Find all nearby enemies in the pull radius
-		local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(),
-			self.caster:GetAbsOrigin(),
+		local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(),
+			self:GetCaster():GetAbsOrigin(),
 			nil,
 			self.pull_radius,
 			DOTA_UNIT_TARGET_TEAM_ENEMY,
 			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
 			DOTA_UNIT_TARGET_FLAG_NONE,
 			FIND_ANY_ORDER,
-			false)
+			false
+		)
 
 		for _,enemy in pairs(enemies) do
-
 			-- Pull enemy towards Sand King
 			-- Calculate distance and direction between SK and the enemy
-			local distance = (enemy:GetAbsOrigin() - self.caster:GetAbsOrigin()):Length2D()
-			local direction = (enemy:GetAbsOrigin() - self.caster:GetAbsOrigin()):Normalized()
+			local distance = (enemy:GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Length2D()
+			local direction = (enemy:GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Normalized()
 
 			-- If the target is not too close, calculate the pull point
 			if (distance - self.pull_speed) > 50 then
-				local pull_point = self.caster:GetAbsOrigin() + direction * (distance - self.pull_speed)
+				local pull_point = self:GetCaster():GetAbsOrigin() + direction * (distance - self.pull_speed)
 
 				-- Set the enemy at the pull point
 				enemy:SetAbsOrigin(pull_point)
@@ -762,6 +725,7 @@ end
 function modifier_imba_winterbringer_pulse:IsHidden() return false end
 function modifier_imba_winterbringer_pulse:IsPurgable() return false end
 function modifier_imba_winterbringer_pulse:IsDebuff() return false end
+function modifier_imba_winterbringer_pulse:RemoveOnDeath() return false end
 
 -----------------------------------------------
 -------- Winterbringer Slow modifier ----------
@@ -769,14 +733,9 @@ function modifier_imba_winterbringer_pulse:IsDebuff() return false end
 modifier_imba_winterbringer_slow = modifier_imba_winterbringer_slow or class({})
 
 function modifier_imba_winterbringer_slow:OnCreated()
-	-- Ability properties
-	self.caster = self:GetCaster()
-	self.ability = self:GetAbility()
-	self.parent = self:GetParent()
-
 	-- Ability specials
-	self.ms_slow_pct = self.ability:GetSpecialValueFor("ms_slow_pct")
-	self.as_slow = self.ability:GetSpecialValueFor("as_slow")
+	self.ms_slow_pct = self:GetAbility():GetSpecialValueFor("ms_slow_pct")
+	self.as_slow = self:GetAbility():GetSpecialValueFor("as_slow")
 end
 
 function modifier_imba_winterbringer_slow:IsHidden() return false end

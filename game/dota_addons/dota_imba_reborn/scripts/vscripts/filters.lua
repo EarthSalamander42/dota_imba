@@ -490,7 +490,14 @@ function GameMode:OrderFilter( keys )
 	if keys.order_type == DOTA_UNIT_ORDER_CAST_TARGET then
 		if EntIndexToHScript(keys["entindex_ability"]) == nil then return end
 		local ability = EntIndexToHScript(keys["entindex_ability"])
-		if ability:GetAbilityName() == "imba_riki_blink_strike" then
+		local target = EntIndexToHScript(keys["entindex_target"])
+
+		if ability:GetAbilityName() == "life_stealer_infest" then
+			if target:GetUnitName() == "npc_dota_mutation_golem" then
+				DisplayError(unit:GetPlayerID(),"#dota_hud_error_cant_infest_bob")
+				return false
+			end
+		elseif ability:GetAbilityName() == "imba_riki_blink_strike" then
 			ability.thinker = unit:AddNewModifier(unit, ability, "modifier_imba_blink_strike_thinker", {target = keys.entindex_target})
 		end
 	end

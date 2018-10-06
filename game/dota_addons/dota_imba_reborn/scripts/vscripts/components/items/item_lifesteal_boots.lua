@@ -55,6 +55,10 @@ end
 -- Stats modifier (stackable)
 modifier_imba_lifesteal_boots = modifier_imba_lifesteal_boots or class({})
 
+function modifier_imba_lifesteal_boots:GetTexture()
+	return "custom/imba_lifesteal_boots"
+end
+
 function modifier_imba_lifesteal_boots:OnCreated()
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()

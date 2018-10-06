@@ -352,8 +352,7 @@ function modifier_imba_stifling_dagger_bonus_damage:IsHidden() 	  return true en
 modifier_imba_stifling_dagger_dmg_reduction = class({})
 
 function modifier_imba_stifling_dagger_dmg_reduction:OnCreated()
-	self.ability = self:GetAbility()
-	self.damage_reduction = self.ability:GetSpecialValueFor("damage_reduction")
+	self.damage_reduction = self:GetAbility():GetSpecialValueFor("damage_reduction")
 end
 
 function modifier_imba_stifling_dagger_dmg_reduction:DeclareFunctions()
@@ -404,21 +403,20 @@ end
 function imba_phantom_assassin_phantom_strike:OnSpellStart()
 	if IsServer() then
 		self.caster 	= self:GetCaster()
-		self.ability	= self
 		self.target 	= self:GetCursorTarget()
 
 		--ability specials
-		self.bonus_attack_speed =	self.ability:GetSpecialValueFor("bonus_attack_speed")
-		self.buff_duration 		=	self.ability:GetSpecialValueFor("buff_duration")
-		self.projectile_speed 	=	self.ability:GetSpecialValueFor("projectile_speed")
-		self.projectile_width 	=	self.ability:GetSpecialValueFor("projectile_width")
-		self.attacks 			= 	self.ability:GetSpecialValueFor("attacks")
+		self.bonus_attack_speed =	self:GetSpecialValueFor("bonus_attack_speed")
+		self.buff_duration 		=	self:GetSpecialValueFor("buff_duration")
+		self.projectile_speed 	=	self:GetSpecialValueFor("projectile_speed")
+		self.projectile_width 	=	self:GetSpecialValueFor("projectile_width")
+		self.attacks 			= 	self:GetSpecialValueFor("attacks")
 
 		--TALENT: +30 Phantom Strike bonus attack speed
 		if self.caster:HasTalent("special_bonus_imba_phantom_assassin_2") then
-			self.bonus_attack_speed	=	self.ability:GetSpecialValueFor("bonus_attack_speed") + self.caster:FindTalentValue("special_bonus_imba_phantom_assassin_2")
+			self.bonus_attack_speed	=	self:GetSpecialValueFor("bonus_attack_speed") + self.caster:FindTalentValue("special_bonus_imba_phantom_assassin_2")
 		else
-			self.bonus_attack_speed =	self.ability:GetSpecialValueFor("bonus_attack_speed")
+			self.bonus_attack_speed =	self:GetSpecialValueFor("bonus_attack_speed")
 		end
 
 		-- Trajectory calculations
@@ -429,13 +427,13 @@ function imba_phantom_assassin_phantom_strike:OnSpellStart()
 
 		-- If the target possesses a ready Linken's Sphere, do nothing else
 		if self.target:GetTeamNumber() ~= self.caster:GetTeamNumber() then
-			if self.target:TriggerSpellAbsorb(self.ability) then
+			if self.target:TriggerSpellAbsorb(self) then
 				return nil
 			end
 		end
 
 		self.blink_projectile = {
-			Ability				= self.ability,
+			Ability				= self,
 			vSpawnOrigin		= self.caster_pos,
 			fDistance			= self.distance,
 			fStartRadius		= self.projectile_width,
@@ -600,16 +598,15 @@ function modifier_imba_blur:OnCreated()
 	if IsServer() then
 		-- Ability properties
 		self.caster = self:GetCaster()
-		self.ability = self:GetAbility()
 		self.parent = self:GetParent()
 		self.modifier_aura = "modifier_imba_blur_blur"
 		self.modifier_blur_transparent = "modifier_imba_blur_opacity"
 		self.modifier_speed = "modifier_imba_blur_speed"
 
 		-- Ability specials
-		self.radius = self.ability:GetSpecialValueFor("radius")
-		self.evasion = self.ability:GetSpecialValueFor("evasion")
-		self.ms_duration = self.ability:GetSpecialValueFor("speed_bonus_duration")
+		self.radius = self:GetAbility():GetSpecialValueFor("radius")
+		self.evasion = self:GetAbility():GetSpecialValueFor("evasion")
+		self.ms_duration = self:GetAbility():GetSpecialValueFor("speed_bonus_duration")
 
 		-- Start thinking
 		self:StartIntervalThink(0.2)
@@ -635,7 +632,7 @@ function modifier_imba_blur:OnIntervalThink()
 
 			-- Else, if there are no enemies, remove the modifier
 		elseif #nearby_enemies == 0 and not self.caster:HasModifier(self.modifier_aura) then
-			self.caster:AddNewModifier(self.caster, self.ability, self.modifier_aura, {})
+			self.caster:AddNewModifier(self.caster, self:GetAbility(), self.modifier_aura, {})
 
 			-- Make mortred not transparent (wtf firetoad)
 			self.caster:RemoveModifierByName(self.modifier_blur_transparent)
@@ -677,7 +674,7 @@ function modifier_imba_blur:OnAttackFail(keys)
 			
 			-- If the caster doesn't have the evasion speed modifier yet, give it to him
 			if not self.caster:HasModifier(self.modifier_speed) then
-				self.caster:AddNewModifier(self.caster, self.ability, self.modifier_speed, {duration = self.ms_duration})
+				self.caster:AddNewModifier(self.caster, self:GetAbility(), self.modifier_speed, {duration = self.ms_duration})
 			end
 
 			-- Increment a stack and refresh
@@ -701,12 +698,11 @@ modifier_imba_blur_speed = class({})
 function modifier_imba_blur_speed:OnCreated()
 	-- Ability properties
 	self.caster = self:GetCaster()
-	self.ability = self:GetAbility()
 	self.parent = self:GetParent()
 
 	-- Ability specials
-	self.speed_bonus_duration = self.ability:GetSpecialValueFor("speed_bonus_duration")
-	self.blur_ms = self.ability:GetSpecialValueFor("blur_ms")
+	self.speed_bonus_duration = self:GetAbility():GetSpecialValueFor("speed_bonus_duration")
+	self.blur_ms = self:GetAbility():GetSpecialValueFor("blur_ms")
 
 	if IsServer() then
 
@@ -941,15 +937,14 @@ function modifier_imba_coup_de_grace:OnCreated()
 	-- Ability properties
 	self.caster = self:GetCaster()
 	if self.caster:IsIllusion() then return end
-	self.ability = self:GetAbility()
 	self.parent = self:GetParent()
 	self.ps_coup_modifier = "modifier_imba_phantom_strike_coup_de_grace"
 	self.modifier_stacks = "modifier_imba_coup_de_grace_crit"
 
 	-- Ability specials
-	self.crit_chance = self.ability:GetSpecialValueFor("crit_chance")
-	self.crit_increase_duration = self.ability:GetSpecialValueFor("crit_increase_duration")
-	self.crit_bonus = self.ability:GetSpecialValueFor("crit_bonus")
+	self.crit_chance = self:GetAbility():GetSpecialValueFor("crit_chance")
+	self.crit_increase_duration = self:GetAbility():GetSpecialValueFor("crit_increase_duration")
+	self.crit_bonus = self:GetAbility():GetSpecialValueFor("crit_bonus")
 end
 
 function modifier_imba_coup_de_grace:OnRefresh()
@@ -997,7 +992,7 @@ function modifier_imba_coup_de_grace:GetModifierPreAttack_CriticalStrike(keys)
 
 			-- If the caster doesn't have the stacks modifier, give it to him
 			if not self.caster:HasModifier(self.modifier_stacks) then
-				self.caster:AddNewModifier(self.caster, self.ability, self.modifier_stacks, {duration = crit_duration})
+				self.caster:AddNewModifier(self.caster, self:GetAbility(), self.modifier_stacks, {duration = crit_duration})
 			end
 
 			-- Find the modifier, increase a stack and refresh it
@@ -1026,13 +1021,23 @@ function modifier_imba_coup_de_grace:OnAttackLanded(keys)
 	if IsServer() then
 		local target = keys.target
 		local attacker = keys.attacker
-		local fatality = self.ability:GetSpecialValueFor("fatality_chance")
+		local fatality = self:GetAbility():GetSpecialValueFor("fatality_chance")
+		if IsInToolsMode() then fatality = 25 end
 
 		-- Only apply if the attacker is the caster and it was a critical strike
 		if self:GetCaster() == attacker then
+			-- Prevent Fatality on buildings
+			if target:IsBuilding() then return end
+
 			-- Roll for fatality
 			if RandomInt(1, 100) <= fatality then
-				TrueKill(self.caster, target, self.ability)
+				if target:GetHealthPercent() >= self:GetAbility():GetSpecialValueFor("fatality_threshold") then
+					target:EmitSound("Hero_Pangolier.TailThump.Shield")
+					SendOverheadEventMessage(nil, OVERHEAD_ALERT_BLOCK, target, 999999, nil)
+					return
+				end
+
+				TrueKill(self.caster, target, self:GetAbility())
 				SendOverheadEventMessage(nil, OVERHEAD_ALERT_CRITICAL, target, 999999, nil)
 
 				-- Global effect when killing a real hero
@@ -1078,12 +1083,11 @@ modifier_imba_coup_de_grace_crit = class({})
 function modifier_imba_coup_de_grace_crit:OnCreated(params)
 	-- Ability properties
 	self.caster = self:GetCaster()
-	self.ability = self:GetAbility()
 	self.parent = self:GetParent()
 
 	-- Ability specials
 	self.crit_increase_duration = params.duration
-	self.crit_increase_damage = self.ability:GetSpecialValueFor("crit_increase_damage")
+	self.crit_increase_damage = self:GetAbility():GetSpecialValueFor("crit_increase_damage")
 
 	if IsServer() then
 		-- Initialize table

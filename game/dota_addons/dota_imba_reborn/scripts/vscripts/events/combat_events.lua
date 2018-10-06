@@ -93,7 +93,7 @@ function CombatEvents(event_type, reason, victim, attacker)
 			team = attacker:GetTeam()
 			victim_name = victim:GetUnitName()
 			roshan = true
-			gold = 150
+			gold = 150 * (tonumber(CustomNetTables:GetTableValue("game_options", "bounty_multiplier")["1"]) / 100)
 		elseif reason == "hero_suicide" then
 			victim_name = victim:GetUnitName()
 			suicide = true

@@ -31,6 +31,14 @@ LinkLuaModifier( "modifier_item_imba_arcane_boots", "components/items/item_mekan
 function item_imba_arcane_boots:GetIntrinsicModifierName()
 	return "modifier_item_imba_arcane_boots" end
 
+function item_imba_arcane_boots:OnAbilityPhaseStart()
+	if self:GetCaster():IsClone() then
+		return false
+	end
+
+	return true
+end
+
 function item_imba_arcane_boots:OnSpellStart()
 	if IsServer() then
 		-- Parameters
@@ -325,6 +333,14 @@ end
 function item_imba_guardian_greaves:GetIntrinsicModifierName()
 	return "modifier_item_imba_guardian_greaves" end
 
+function item_imba_guardian_greaves:OnAbilityPhaseStart()
+	if self:GetCaster():IsClone() then
+		return false
+	end
+
+	return true
+end
+
 function item_imba_guardian_greaves:OnSpellStart()
 	if IsServer() then
 
@@ -366,7 +382,9 @@ end
 function modifier_item_imba_guardian_greaves:OnIntervalThink()
 	if self:GetCaster():IsIllusion() then return end
 	if IsServer() then
-		self:SetStackCount(self:GetCaster().mekansm_icon)
+		local server_icon = self:GetCaster().mekansm_icon
+		if self:GetCaster():IsClone() then server_icon = self:GetCaster():GetCloneSource().mekansm_icon end
+		self:SetStackCount(server_icon)
 	end
 	if IsClient() then
 		local icon = self:GetStackCount()
@@ -608,6 +626,19 @@ function GreavesActivate(caster, ability, heal_amount, mana_amount, heal_radius,
 		-- Apply heal over time buff
 		ally:AddNewModifier(caster, ability, "modifier_item_imba_guardian_greaves_heal", {duration = heal_duration})
 
-		ability:StartCooldown(ability:GetCooldown(ability:GetLevel()))
+		-- start cooldown of GG boots for every meepoes
+		if caster:GetUnitName() == "npc_dota_hero_meepo" then
+			for _, hero in pairs(HeroList:GetAllHeroes()) do
+				for i = 0, 5 do
+					local item = hero:GetItemInSlot(i)
+					if item and item:GetAbilityName() == "item_imba_guardian_greaves" then
+						item:StartCooldown(item:GetCooldown(item:GetLevel()))
+						break
+					end
+				end
+			end
+		else
+			ability:StartCooldown(ability:GetCooldown(ability:GetLevel()))
+		end
 	end
 end

@@ -10,8 +10,8 @@
 "DOTA_Tooltip_Ability_imba_ember_spirit_searing_chains_total_damage"     "TOTAL DAMAGE:"
 
 "DOTA_Tooltip_Ability_imba_ember_spirit_sleight_of_fist"                    "Sleight of Fist"
-"DOTA_Tooltip_Ability_imba_ember_spirit_sleight_of_fist_description"        "Ember Spirit dashes around with blazing speed, attacking all enemies in the targeted area of effect, then returning to his start location.\n<font color='#FF7800'>Feed the Flame:</font> Attacks during Sleight of fist benefit from bonus damage and lifesteal.\n<font color='#FF7800'>Blaze Connection:</font> Also attacks enemies around your remnants at half effect radius. Enemies in reach of more than one remnant can be attacked more than once."
-"DOTA_Tooltip_Ability_imba_ember_spirit_sleight_of_fist_note0"              "Lifesteal is halved when hitting creeps."
+"DOTA_Tooltip_Ability_imba_ember_spirit_sleight_of_fist_description"        "Ember Spirit dashes around with blazing speed, attacking all enemies in the targeted area of effect, then returning to his start location.\n<font color='#FF7800'>Feed the Flame:</font> Attacks during Sleight of fist benefit from bonus damage.\n<font color='#FF7800'>Blaze Connection:</font> Also attacks enemies around your remnants at half effect radius. Enemies in reach of more than one remnant can be attacked more than once."
+// "DOTA_Tooltip_Ability_imba_ember_spirit_sleight_of_fist_note0"              "Lifesteal is halved when hitting creeps."
 "DOTA_Tooltip_Ability_imba_ember_spirit_sleight_of_fist_lore"               "The cuts rain down!"
 "DOTA_Tooltip_Ability_imba_ember_spirit_sleight_of_fist_effect_radius"      "EFFECT RADIUS:"
 "DOTA_Tooltip_Ability_imba_ember_spirit_sleight_of_fist_bonus_damage"       "BONUS DAMAGE:"

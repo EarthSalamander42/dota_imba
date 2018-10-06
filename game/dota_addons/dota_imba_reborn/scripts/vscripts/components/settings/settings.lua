@@ -96,8 +96,12 @@ ABANDON_TIME = 180															-- Time for a player to be considered as having
 FULL_ABANDON_TIME = 15														-- Time for a team to be considered as having abandoned the game (in seconds)
 
 GAME_ROSHAN_KILLS = 0														-- Tracks amount of Roshan kills
-ROSHAN_RESPAWN_TIME = RandomInt(2, 4) * 60									-- Roshan respawn timer (in seconds)
+ROSHAN_RESPAWN_TIME_MIN = 3
+ROSHAN_RESPAWN_TIME_MAX = 6													-- Roshan respawn timer (in minutes)
 AEGIS_DURATION = 300														-- Aegis expiration timer (in seconds)
+IMBA_ROSHAN_GOLD_KILL_MIN = 150
+IMBA_ROSHAN_GOLD_KILL_MAX = 400
+IMBA_ROSHAN_GOLD_ASSIST = 150
 
 IMBA_DAMAGE_EFFECTS_DISTANCE_CUTOFF = 2500									-- Range at which most on-damage effects no longer trigger
 

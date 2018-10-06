@@ -14,8 +14,8 @@ POSITIVE_MUTATION_LIST[2] = "teammate_resurrection"
 POSITIVE_MUTATION_LIST[3] = "super_fervor"
 POSITIVE_MUTATION_LIST[4] = "slark_mode"
 POSITIVE_MUTATION_LIST[5] = "ultimate_level"
--- POSITIVE_MUTATION_LIST[6] = "pocket_roshan"
--- POSITIVE_MUTATION_LIST[6] = "death_healplosion"
+-- POSITIVE_MUTATION_LIST[6] = "pocket_roshan" -- not finished
+-- POSITIVE_MUTATION_LIST[6] = "death_healplosion" -- not finished
 -- POSITIVE_MUTATION_LIST[7] = "super_blink" -- nofun
 
 -- POSITIVE_MUTATION_LIST[8] = "pocket_tower" -- patreon poll disable vote
@@ -40,11 +40,9 @@ TERRAIN_MUTATION_LIST[1] = "airdrop"
 TERRAIN_MUTATION_LIST[2] = "river_flows"
 TERRAIN_MUTATION_LIST[3] = "wormhole"
 TERRAIN_MUTATION_LIST[4] = "tug_of_war"
-TERRAIN_MUTATION_LIST[5] = "danger_zone"
-if IsInToolsMode() then
-	TERRAIN_MUTATION_LIST[6] = "super_runes"
-end
+TERRAIN_MUTATION_LIST[5] = "super_runes"
 
+-- TERRAIN_MUTATION_LIST[5] = "danger_zone" -- nofun
 -- TERRAIN_MUTATION_LIST[1] = "fast_runes" -- patreon poll disable vote
 -- TERRAIN_MUTATION_LIST[3] = "speed_freaks" -- patreon poll disable vote
 

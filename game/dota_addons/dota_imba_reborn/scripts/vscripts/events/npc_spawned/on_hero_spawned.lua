@@ -59,6 +59,13 @@ function GameMode:OnHeroFirstSpawn(hero)
 	else
 		hero.picked = true
 
+		-- fix for custom boots not copied in inventory
+		if hero:GetUnitName() == "npc_dota_hero_meepo" then
+			local caster = hero
+			if hero:IsClone() then caster = hero:GetCloneSource() end
+			hero:AddNewModifier(caster, nil, "modifier_meepo_divided_we_stand_lua", {})
+		end
+
 		if hero:IsClone() then
 			hero:SetRespawnsDisabled(true)
 

@@ -727,3 +727,18 @@ function CDOTA_BaseNPC_Hero:GetHeroColorSecondary()
 	end
 	return false
 end
+
+function CDOTA_BaseNPC:AddRangeIndicator(hCaster, hAbility, sAttribute, iRange, iRed, iGreen, iBlue, bShowOnCooldown, bShowAlways, bWithCastRangeIncrease, bRemoveOnDeath)
+	local modifier = self:AddNewModifier(hCaster or self,hAbility, "modifier_imba_range_indicator", {
+		sAttribute = sAttribute,
+		iRange = iRange,
+		iRed = iRed,
+		iGreen = iGreen,
+		iBlue = iBlue,
+		bShowOnCooldown = bShowOnCooldown,
+		bShowAlways = bShowAlways,
+		bWithCastRangeIncrease = bWithCastRangeIncrease,
+		bRemoveOnDeath = bRemoveOnDeath
+	})
+	return modifier
+end

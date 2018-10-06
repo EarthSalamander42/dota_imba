@@ -16,7 +16,7 @@
 		"AbilityTextureName"			"custom/malfurion/entrangling_roots"
 		"AbilityCastRange"				"750"
 		"AbilityCastPoint"				"0.35"
-		"AbilityCooldown"				"9.0"
+		"AbilityCooldown"				"13.0"
 		"AbilityManaCost"				"95"
 
 		"precache"
