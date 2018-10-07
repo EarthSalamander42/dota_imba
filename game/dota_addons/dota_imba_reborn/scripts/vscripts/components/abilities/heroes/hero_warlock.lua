@@ -619,6 +619,7 @@ function imba_warlock_upheaval:OnSpellStart()
 
 			-- Find the demon's Upheaval ability
 			local ability_demon = demon:FindAbilityByName("imba_warlock_upheaval")
+			ability_demon:SetLevel(self:GetLevel())
 			ability_demon:SetActivated(true)
 			ExecuteOrderFromTable({ UnitIndex = demon:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_CAST_POSITION, Position = demon:GetAbsOrigin(), AbilityIndex = ability_demon:GetEntityIndex(), Queue = queue})
 
@@ -825,6 +826,7 @@ LinkLuaModifier("modifier_imba_rain_of_chaos_stun", "components/abilities/heroes
 LinkLuaModifier("modifier_imba_rain_of_chaos_golem_as", "components/abilities/heroes/hero_warlock.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_rain_of_chaos_golem_ms", "components/abilities/heroes/hero_warlock.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_rain_of_chaos_demon_link", "components/abilities/heroes/hero_warlock.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_rain_of_chaos_demon_visible", "components/abilities/heroes/hero_warlock.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_warlock_rain_of_chaos:GetAbilityTextureName()
 	return "warlock_rain_of_chaos"
@@ -1034,6 +1036,8 @@ function imba_warlock_rain_of_chaos:OnSpellStart()
 					demon:SetBaseMaxHealth(scepter_demon_hp)
 					demon:SetHealth(scepter_demon_hp)
 
+					demon:AddNewModifier(caster, ability, "modifier_imba_rain_of_chaos_demon_visible", {})
+					
 					-- Assign the demons to that golem
 					if demon_link_modifier then
 						if not demon_link_modifier.demon_table then
@@ -1261,6 +1265,27 @@ function modifier_imba_rain_of_chaos_demon_link:OnRemoved()
 	end
 end
 
+-- Visbility modifier (placed on demons)
+modifier_imba_rain_of_chaos_demon_visible = class ({})
+
+function modifier_imba_rain_of_chaos_demon_visible:IsPurgable()		return false end
+function modifier_imba_rain_of_chaos_demon_visible:IsHidden()		return true end
+
+function modifier_imba_rain_of_chaos_demon_visible:DeclareFunctions()
+	local decFuncs = {MODIFIER_PROPERTY_PROVIDES_FOW_POSITION}
+
+	return decFuncs
+end
+
+function modifier_imba_rain_of_chaos_demon_visible:DeclareFunctions()
+	local decFuncs = {MODIFIER_PROPERTY_PROVIDES_FOW_POSITION}
+
+	return decFuncs
+end
+
+function modifier_imba_rain_of_chaos_demon_visible:GetModifierProvidesFOWVision()
+	return 1
+end
 
 -----------------------------
 --      FLAMING FISTS      --
@@ -1566,8 +1591,3 @@ end
 function modifier_imba_golem_spell_immunity:IsHidden() return false end
 function modifier_imba_golem_spell_immunity:IsPurgable() return false end
 function modifier_imba_golem_spell_immunity:IsDebuff() return false end
-	
-
-
-
-
