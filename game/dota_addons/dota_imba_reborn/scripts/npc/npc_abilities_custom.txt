@@ -35204,7 +35204,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"chill_duration"		"1 2 3 4.0"
+				"chill_duration"		"1.0 2.0 3.0 4.0"
 			}
 			"05"
 			{
@@ -35394,7 +35394,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
 		"ScriptFile" 					"components/abilities/heroes/hero_sly_king.lua"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitDamageType"  		"DAMAGE_TYPE_MAGICAL"
 		"AbilityTextureName"			"custom/sly_king_winterbringer"
 		"MaxLevel"						"3"
