@@ -9780,7 +9780,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
 		"AbilityCastRange"				"950"
-		"AbilityCooldown"				"22"
+		"AbilityCooldown"				"25"
 		"AbilitySharedCooldown"			"bkb"
 
 		// Precache

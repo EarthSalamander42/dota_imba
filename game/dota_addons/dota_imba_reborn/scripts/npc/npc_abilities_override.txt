@@ -15032,6 +15032,131 @@
 			"01"						"item_imba_urn_of_shadows;item_vitality_booster;item_wind_lace"
 		}
 	}
+	
+		//=================================================================================================================
+	// Spirit Vessel
+	//=================================================================================================================
+	"item_spirit_vessel"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"267"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"950"
+
+		// Stats		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"7.0"
+		"AbilitySharedCooldown"			"urn"
+
+		// Items
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRequiresCharges"			"1"
+		"ItemDisplayCharges"			"1"
+		"ItemStackable"					"0"
+		"ItemPermanent"					"1"
+		"ItemDisassembleRule"				"DOTA_ITEM_DISASSEMBLE_NEVER"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"2975"
+		"ItemQuality"					"rare"
+		"ItemAliases"					"sv;spirit vessel"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
+		"ShouldBeSuggested"				"1"
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_health"			"325"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_movement_speed"	"20"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"bonus_mana_regen"		"1.0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_all_stats"		"2"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"bonus_armor"			"2"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"soul_radius"			"1400"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"soul_initial_charge"	"2"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"soul_additional_charges"	"1"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"soul_heal_amount"		"40"
+			}			
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"soul_damage_amount"	"40"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"			"8.0"
+			}
+			"12"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"soul_release_range_tooltip"	"950"
+			}
+			"13"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"hp_regen_reduction_enemy"	"80"
+			}
+			"14"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"hp_regen_increase_allies"	"25"
+			}
+			"15"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"enemy_hp_drain"		"5.5"
+			}
+			"16"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"ally_hp_gain"		"1.0"
+			}
+		}
+	}
 
 	//=================================================================================================================
 	// Ability: Courier Burst
