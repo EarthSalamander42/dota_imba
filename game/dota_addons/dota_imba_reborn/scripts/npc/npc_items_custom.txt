@@ -1073,7 +1073,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"800"
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"25"
+		"AbilityCooldown"				"22"
 		"AbilityManaCost"				"100"
 
 		// Item Info
@@ -1128,13 +1128,18 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"self_move_speed"		"550"
+				"self_move_speed"		"700"
 			}
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"tree_radius"			"175"
-			}			
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"self_debuff_radius"	"300"
+			}
 		}
 	}
 

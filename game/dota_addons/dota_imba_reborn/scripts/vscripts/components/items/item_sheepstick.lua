@@ -107,6 +107,13 @@ function item_imba_sheepstick:OnSpellStart()
 		if caster == target then
 			target:AddNewModifier(caster, self, "modifier_item_imba_sheepstick_buff", {duration = hex_duration})
 			target:Purge(false, true, false, false, false)
+			
+			-- Find targets in range
+			local nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, self:GetSpecialValueFor("self_debuff_radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+
+			for _,enemy in pairs(nearby_enemies) do
+				enemy:AddNewModifier(caster, self, "modifier_item_imba_sheepstick_debuff", {duration = modified_duration})
+			end
 		else
 
 			target:AddNewModifier(caster, self, "modifier_item_imba_sheepstick_debuff", {duration = modified_duration})
@@ -137,6 +144,10 @@ function modifier_item_imba_sheepstick:DeclareFunctions()
 end
 
 function modifier_item_imba_sheepstick:OnCreated()
+	if self:GetParent().sheepstick_model == nil then
+		self:GetParent().sheepstick_model = "models/props_gameplay/pig.vmdl"
+	end
+	
 	self:OnIntervalThink()
 	self:StartIntervalThink(1.0)
 end
@@ -144,7 +155,7 @@ end
 function modifier_item_imba_sheepstick:OnIntervalThink()
 	local caster = self:GetCaster()
 	if caster:IsIllusion() then return end
-	if IsServer() then
+	if IsServer() and caster.sheepstick_icon ~= nil then
 		self:SetStackCount(caster.sheepstick_icon)
 	end
 	if IsClient() then
@@ -225,15 +236,15 @@ end
 -- Base movement speed override
 function modifier_item_imba_sheepstick_buff:DeclareFunctions()
 	local funcs = {
-		MODIFIER_PROPERTY_MOVESPEED_BASE_OVERRIDE,
+		MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE_MIN,
 		MODIFIER_PROPERTY_MODEL_CHANGE,
 	}
 	return funcs
 end
 
-function modifier_item_imba_sheepstick_buff:GetModifierMoveSpeedOverride()
+function modifier_item_imba_sheepstick_buff:GetModifierMoveSpeed_AbsoluteMin()
 	return self:GetAbility():GetSpecialValueFor("self_move_speed") end
-
+	
 function modifier_item_imba_sheepstick_buff:GetModifierModelChange()
 	return "models/items/courier/mighty_chicken/mighty_chicken_flying.vmdl" end
 
