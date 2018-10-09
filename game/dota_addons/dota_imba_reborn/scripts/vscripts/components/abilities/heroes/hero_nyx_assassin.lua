@@ -249,7 +249,7 @@ function imba_nyx_assassin_impale:OnProjectileHit_ExtraData(target, location, Ex
 				local damageTable = {victim = target,
 					attacker = caster,
 					damage = suffering_damage,
-					damage_type = DAMAGE_TYPE_MAGICAL,
+					damage_type = DAMAGE_TYPE_PURE,
 					damgae_flags = DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION,
 					ability = ability,
 				}
@@ -1116,7 +1116,7 @@ function modifier_imba_spiked_carapace:OnTakeDamage(keys)
 				local damageTable = {victim = attacker,
 					attacker = self.caster,
 					damage = damage,
-					damage_type = DAMAGE_TYPE_MAGICAL,
+					damage_type = keys.damage_type,
 					damage_flags = DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION,
 					ability = self.ability
 				}
