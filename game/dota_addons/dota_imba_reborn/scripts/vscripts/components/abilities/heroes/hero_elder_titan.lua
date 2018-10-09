@@ -698,6 +698,8 @@ function imba_elder_titan_earth_splitter:GetCastRange(location, target)
 end
 
 function imba_elder_titan_earth_splitter:OnSpellStart()
+    if not IsServer() then return end
+    
 	-- Ability properties
 	local caster = self:GetCaster()
 	local caster_position = caster:GetAbsOrigin()
