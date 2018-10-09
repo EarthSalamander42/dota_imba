@@ -116,7 +116,7 @@ end
 
 function modifier_imba_assault_cuirass_aura_positive:GetAuraEntityReject(target)
 	-- If the target has Siege Aura from Siege Cuirass, ignore it
-	if target:HasModifier("modifier_imba_siege_cuirass_aura_positive_effect") then
+	if target:HasModifier("modifier_imba_siege_cuirass_aura_positive_effect") or target:HasModifier("modifier_imba_sogat_cuirass_aura_positive") then
 		return true
 	end
 
@@ -208,7 +208,7 @@ end
 
 function modifier_imba_assault_cuirass_aura_negative:GetAuraEntityReject(target)
 	-- If the target has Siege Aura from Siege Cuirass, ignore it
-	if target:HasModifier("modifier_imba_siege_cuirass_aura_negative_effect") then
+	if target:HasModifier("modifier_imba_siege_cuirass_aura_negative_effect") or target:HasModifier("modifier_imba_sogat_cuirass_aura_negative") then
 		return true
 	end
 

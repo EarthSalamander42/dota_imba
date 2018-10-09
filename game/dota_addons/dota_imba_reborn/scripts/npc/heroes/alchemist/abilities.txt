@@ -359,7 +359,12 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_movespeed"		"40 60 80"
-			}			
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_strength"		"15 30 45"
+			}
 		}		
 	}
 

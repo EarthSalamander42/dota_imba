@@ -2782,31 +2782,26 @@
 				"var_type"				"FIELD_INTEGER"
 				"bonus_as"				"30"
 			}
-
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_armor"			"10"
 			}
-
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"aura_as_ally"			"25"
 			}
-
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"aura_armor_ally"		"5"
 			}
-
 			"05"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"aura_armor_reduction_enemy"	"5"
 			}
-
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
@@ -3793,7 +3788,7 @@
 	//=================================================================================================================
 	// Recipe: Greatwyrm Plate
 	//=================================================================================================================
-	"item_recipe_imba_greatwyrm_plate"
+	"item_recipe_imba_sogat_cuirass"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -3804,29 +3799,29 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"1100"
+		"ItemCost"						"0"
 		"ItemShopTags"					""
 
 		// Recipe
 		//-------------------------------------------------------------------------------------------------------------
 		"ItemRecipe"					"1"
-		"ItemResult"					"item_imba_greatwyrm_plate"
+		"ItemResult"					"item_imba_sogat_cuirass"
 		"ItemRequirements"
 		{
-			"01"						"item_imba_crimson_guard;item_reaver"
+			"01"						"item_imba_crimson_guard;item_imba_assault"
 		}
 	}
 
 	//=================================================================================================================
-	// Greatwyrm Plate
+	// Heracle's Armor
 	//=================================================================================================================
-	"item_imba_greatwyrm_plate"
+	"item_imba_sogat_cuirass"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2184"
 		"BaseClass"						"item_lua"
-		"ScriptFile"					"components/items/item_vanguard.lua"
+		"ScriptFile"					"components/items/item_sogat_cuirass.lua"
 		"AbilityTextureName"			"custom/imba_greatwyrm_plate"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
@@ -3837,17 +3832,17 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"900"
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"45"
+		"AbilityCooldown"				"30.0"
 		"AbilitySharedCooldown"			"vanguard"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"7500"
+		"ItemCost"						"7950"
 		"ItemShopTags"					"armor;boost_armor;regen_health;block;health_pool"
 		"ItemQuality"					"epic"
 		"ItemAlertable"					"1"
 		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
-		"ItemAliases"					"calaminhs tutela plate;calaminh;tutela;turtle plate;nutella plate"
+		"ItemAliases"					"heracle armor;heracle;armor;tide skin;tide;skin"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -3856,12 +3851,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health"				"525"
+				"bonus_health"			"350"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health_regen"			"13"
+				"bonus_health_regen"	"11"
 			}
 			"03"
 			{
@@ -3871,44 +3866,54 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_strength"		"25"
+				"bonus_as"				"30"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"armor"					"8"
+				"bonus_armor"			"15"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_block"			"60"
-				"CalculateSpellDamageTooltip"	"0"
+				"aura_as_ally"			"25"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"active_armor"			"5"
+				"aura_armor_ally"		"5"
 			}
 			"08"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"duration"				"10"
+				"var_type"						"FIELD_INTEGER"
+				"aura_armor_reduction_enemy"	"5"
 			}
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"active_radius"			"900"
+				"radius"				"900"
 			}
 			"10"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_reduction"		"10"
+				"damage_block"			"50"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"11"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"tenacity"				"20"
+				"active_armor"			"2"
+			}
+			"12"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"10"
+			}
+			"13"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_reduction_pct"	"25"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 		}
 	}

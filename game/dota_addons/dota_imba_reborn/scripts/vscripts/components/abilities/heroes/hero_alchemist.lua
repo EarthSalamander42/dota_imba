@@ -1268,7 +1268,6 @@ function modifier_imba_chemical_rage_buff_haste:OnCreated()
 		local particle_acid_aura = "particles/hero/alchemist/chemical_rage_acid_aura.vpcf"
 		-- Ability paramaters
 		self.ability			= 	caster:FindAbilityByName("imba_alchemist_acid_spray")
-		self.bat_change			=	self:GetAbility():GetSpecialValueFor("base_attack_time")
 		self.radius				=	self.ability:GetSpecialValueFor("radius")
 
 		local particle_acid_aura_fx = ParticleManager:CreateParticle(particle_acid_aura, PATTACH_ABSORIGIN_FOLLOW, parent)
@@ -1320,7 +1319,8 @@ function modifier_imba_chemical_rage_buff_haste:DeclareFunctions()
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT,
 		MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS,
 		MODIFIER_PROPERTY_TRANSLATE_ATTACK_SOUND,
-		MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT
+		MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT,
+		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
 	}
 	return table
 end
@@ -1333,24 +1333,24 @@ function modifier_imba_chemical_rage_buff_haste:GetAttackSound()
 	return "Hero_Alchemist.ChemicalRage.Attack"
 end
 
+function modifier_imba_abyssal_blade:GetModifierBonusStats_Strength()
+	return self:GetAbility():GetSpecialValueFor("bonus_strength")
+end
+
 function modifier_imba_chemical_rage_buff_haste:GetModifierBaseManaRegen()
-	local ability = self:GetAbility()
-	return ability:GetSpecialValueFor("bonus_mana_regen")
+	return self:GetAbility():GetSpecialValueFor("bonus_mana_regen")
 end
 
 function modifier_imba_chemical_rage_buff_haste:GetModifierConstantHealthRegen()
-	local ability = self:GetAbility()
-	local regen = ability:GetSpecialValueFor("bonus_health_regen")
-	return regen
+	return self:GetAbility():GetSpecialValueFor("bonus_health_regen")
 end
 
 function modifier_imba_chemical_rage_buff_haste:GetModifierMoveSpeedBonus_Constant()
-	local ability = self:GetAbility()
-	return ability:GetSpecialValueFor("bonus_movespeed")
+	return self:GetAbility():GetSpecialValueFor("bonus_movespeed")
 end
 
 function modifier_imba_chemical_rage_buff_haste:GetModifierBaseAttackTimeConstant()
-	return self.bat_change
+	return self:GetAbility():GetSpecialValueFor("base_attack_time")
 end
 
 function modifier_imba_chemical_rage_buff_haste:GetEffectName()

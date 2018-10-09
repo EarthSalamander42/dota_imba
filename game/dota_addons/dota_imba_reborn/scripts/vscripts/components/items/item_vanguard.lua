@@ -150,10 +150,6 @@ if item_imba_crimson_guard == nil then item_imba_crimson_guard = class({}) end
 LinkLuaModifier( "modifier_item_imba_crimson_guard", "components/items/item_vanguard.lua", LUA_MODIFIER_MOTION_NONE )			-- Owner's bonus attributes, stackable
 LinkLuaModifier( "modifier_item_imba_crimson_guard_buff", "components/items/item_vanguard.lua", LUA_MODIFIER_MOTION_NONE )		-- Active allied buff
 
-function item_imba_crimson_guard:GetAbilityTextureName()
-	return "custom/imba_crimson_guard"
-end
-
 function item_imba_crimson_guard:GetIntrinsicModifierName()
 	return "modifier_item_imba_crimson_guard" end
 
@@ -181,7 +177,7 @@ function item_imba_crimson_guard:OnSpellStart(keys)
 		-- Apply the active buff to nearby allies
 		local nearby_allies = FindUnitsInRadius(caster:GetTeamNumber(), caster_loc, nil, active_radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
 		for _,ally in pairs(nearby_allies) do
-			if not ally:HasModifier("modifier_item_imba_greatwyrm_plate_buff") then
+			if not ally:HasModifier("modifier_item_imba_sogat_cuirass_buff") then
 				if not non_relevant_units[ally:GetUnitName()] then
 					ally:AddNewModifier(caster, self, "modifier_item_imba_crimson_guard_buff", {duration = duration})
 				end
