@@ -273,10 +273,15 @@ function modifier_item_imba_sogat_cuirass_buff:IsPurgable() return false end
 -- Particle creation and value storage
 function modifier_item_imba_sogat_cuirass_buff:OnCreated(keys)
 	if IsServer() then
-		local owner = self:GetParent()
-		self.crimson_guard_pfx = ParticleManager:CreateParticle("particles/items2_fx/sogat_cuirass_active.vpcf", PATTACH_OVERHEAD_FOLLOW, owner)
-		ParticleManager:SetParticleControl(self.crimson_guard_pfx, 0, owner:GetAbsOrigin())
-		ParticleManager:SetParticleControlEnt(self.crimson_guard_pfx, 1, owner, PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", owner:GetAbsOrigin(), true)
+		self.damage_reduction_pct = self:GetAbility():GetSpecialValueFor("damage_reduction_pct")
+
+		if self:GetParent():IsRangedAttacker() then
+			self.damage_reduction_pct = self:GetAbility():GetSpecialValueFor("damage_reduction_ranged_pct")
+		end
+
+		self.crimson_guard_pfx = ParticleManager:CreateParticle("particles/items2_fx/sogat_cuirass_active.vpcf", PATTACH_OVERHEAD_FOLLOW, self:GetParent())
+		ParticleManager:SetParticleControl(self.crimson_guard_pfx, 0, self:GetParent():GetAbsOrigin())
+		ParticleManager:SetParticleControlEnt(self.crimson_guard_pfx, 1, self:GetParent(), PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
 	end
 end
 
@@ -315,14 +320,9 @@ function modifier_item_imba_sogat_cuirass_buff:OnAttackLanded(keys)
 	end
 end
 
--- Custom unique damage block property
-function modifier_item_imba_sogat_cuirass_buff:GetCustomDamageBlockUnique()
-	return self:GetAbility():GetSpecialValueFor("damage_block")
-end
-
 -- Custom unique damage reduction property
 function modifier_item_imba_sogat_cuirass_buff:GetCustomIncomingDamageReductionUnique()
-	return self:GetAbility():GetSpecialValueFor("damage_reduction_pct")
+	return self.damage_reduction_pct
 end
 
 -- Declare modifier events/properties

@@ -1,0 +1,26 @@
+// Rubick's Telekinesis
+"DOTA_Tooltip_ability_imba_rubick_telekinesis"							"Telekinesis"
+"DOTA_Tooltip_ability_imba_rubick_telekinesis_Description"				"Rubick uses his telekinetic powers to lift an unit into the air briefly, then hurls them back at the ground. The unit lands on the ground with such force that it stuns nearby enemies.\n<font color='#FF7800'>Mind the drop:</font> Also damages all enemies in the impact radius.\n<font color='#FF7800'>Puppeteer:</font> Transposition can also be used on allies. When used in this manner, its cooldown will be shortened to %ally_cooldown% seconds. Allies are rooted instead of stunned, and can be hurled a greater distance away."
+"DOTA_Tooltip_ability_imba_rubick_telekinesis_Lore"						"All living beings are Rubick's playthings."
+"DOTA_Tooltip_ability_imba_rubick_telekinesis_enemy_lift_duration"		"ENEMY LIFT TIME:"
+"DOTA_Tooltip_ability_imba_rubick_telekinesis_ally_lift_duration"		"ALLY LIFT TIME:"
+"DOTA_Tooltip_ability_imba_rubick_telekinesis_impact_radius"			"LANDING RADIUS:"
+"DOTA_Tooltip_ability_imba_rubick_telekinesis_impact_stun_duration"		"STUN DURATION:"
+"DOTA_Tooltip_ability_imba_rubick_telekinesis_enemy_range"				"ENEMY HURL DISTANCE:"
+"DOTA_Tooltip_ability_imba_rubick_telekinesis_ally_range"				"ALLY HURL DISTANCE:"
+"DOTA_Tooltip_ability_imba_rubick_telekinesis_damage"					"LANDING DAMAGE:"
+"DOTA_Tooltip_ability_imba_rubick_telekinesis_cast_range"				"CAST RANGE:"
+
+"DOTA_Tooltip_ability_imba_rubick_spellsteal"							"#{DOTA_Tooltip_ability_rubick_spell_steal}"
+"DOTA_Tooltip_ability_imba_rubick_spellsteal_Description"				"#{DOTA_Tooltip_ability_rubick_spell_steal_Description}\n<font color='#FF7800'>Eidetic memory:</font> Stolen spells don't expire."
+
+"DOTA_Tooltip_ability_imba_rubick_clandestine_librarian"				"Clandestine Librarian"
+"DOTA_Tooltip_ability_imba_rubick_clandestine_librarian_Description"	"Grants %spell_amp_per_cast%% spell amp every time Spell Steal is cast."
+
+"DOTA_Tooltip_ability_special_bonus_imba_rubick_1"					"Spell Steal can target creeps"
+"DOTA_Tooltip_ability_special_bonus_imba_rubick_2"					"-0.5s Tekekinesis ally lift time"
+"DOTA_Tooltip_ability_special_bonus_imba_rubick_3"					"" // Fade bolt applies break for 5 seconds
+"DOTA_Tooltip_ability_special_bonus_imba_rubick_4"					"+200 Telekinesis hurl distance"
+"DOTA_Tooltip_ability_special_bonus_imba_rubick_5"					"" // Fade Bolt no longer have jump reduction
+"DOTA_Tooltip_ability_special_bonus_imba_rubick_6"					"Telekinesis is now an AoE lifting every enemies in 325 radius"
+"DOTA_Tooltip_ability_special_bonus_imba_rubick_7"					"" // Fade bolt causes its last target to explode (use current Fade Bolt damage)

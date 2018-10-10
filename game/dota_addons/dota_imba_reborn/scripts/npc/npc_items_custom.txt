@@ -3912,7 +3912,13 @@
 			"13"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_reduction_pct"	"25"
+				"damage_reduction_pct"	"50"
+				"CalculateSpellDamageTooltip"	"0"
+			}
+			"14"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_reduction_ranged_pct"	"25"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 		}
@@ -4071,7 +4077,7 @@
 		"ItemResult"					"item_imba_radiance"
 		"ItemRequirements"
 		{
-			"01"						"item_relic;item_cloak_of_flames"
+			"01"						"item_relic;item_imba_cloak_of_flames"
 		}
 	}
 

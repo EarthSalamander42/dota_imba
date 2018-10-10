@@ -17,18 +17,18 @@
 		"Ability4"					"rubick_empty1"
 		"Ability5"					"rubick_empty2"
 		"Ability6"					"imba_rubick_spellsteal"
-		"Ability7"					"generic_hidden"
+		"Ability7"					"imba_rubick_clandestine_librarian"
 		"Ability8"					"rubick_hidden1"
 		"Ability9"					"rubick_hidden2"
 		"Ability10"					"rubick_hidden3"
 
-		"Ability11"					"special_bonus_hp_200"
-		"Ability12"					"special_bonus_attack_damage_60"
-		"Ability13"					"special_bonus_cast_range_100"
-		"Ability14"					"special_bonus_unique_rubick_2"
-		"Ability15"					"special_bonus_unique_rubick_3"
-		"Ability16"					"special_bonus_unique_rubick"
-		"Ability17"					"special_bonus_unique_rubick_4"
-		"Ability18"					"special_bonus_unique_rubick_5"
+		"Ability11"					"special_bonus_imba_rubick_1" // Can steal creeps spells
+		"Ability12"					"special_bonus_hp_200"
+		"Ability13"					"special_bonus_imba_rubick_2" // Reduce telekinesis ally lift time
+		"Ability14"					"special_bonus_imba_rubick_3" // Fade bolt applies break for 5 seconds (red particle)
+		"Ability15"					"special_bonus_imba_rubick_4" // Telekinesis Cast Range is Longer & Further
+		"Ability16"					"special_bonus_imba_rubick_5" // Fade Bolt damage increases with bounces (yellow particle, purple if previously red)
+		"Ability17"					"special_bonus_imba_rubick_6" // Telekinesis is now a AoE lifting everyone in the air
+		"Ability18"					"special_bonus_imba_rubick_7" // Fade bolt causes its last target to explode (use current Fade Bolt damage)
 	}
 }

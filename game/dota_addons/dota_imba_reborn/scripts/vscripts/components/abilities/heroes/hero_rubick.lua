@@ -131,9 +131,9 @@ function imba_rubick_telekinesis:OnSpellStart( params )
 		-- Parameters
 		local maximum_distance
 		if self.target:GetTeam() == caster:GetTeam() then
-			maximum_distance = self:GetSpecialValueFor("ally_range") + GetCastRangeIncrease(caster) + caster:FindTalentValue("special_bonus_unique_rubick")
+			maximum_distance = self:GetSpecialValueFor("ally_range") + GetCastRangeIncrease(caster) + caster:FindTalentValue("special_bonus_imba_rubick_4")
 		else
-			maximum_distance = self:GetSpecialValueFor("enemy_range") + GetCastRangeIncrease(caster) + caster:FindTalentValue("special_bonus_unique_rubick")
+			maximum_distance = self:GetSpecialValueFor("enemy_range") + GetCastRangeIncrease(caster) + caster:FindTalentValue("special_bonus_imba_rubick_4")
 		end
 
 		if self.telekinesis_marker_pfx then
@@ -176,7 +176,7 @@ function imba_rubick_telekinesis:OnSpellStart( params )
 			self.target:AddNewModifier(caster, self, "modifier_imba_telekinesis_stun", { duration = duration })
 			is_ally = false
 		else
-			duration = self:GetSpecialValueFor("ally_lift_duration")
+			duration = self:GetSpecialValueFor("ally_lift_duration") + caster:FindTalentValue("special_bonus_imba_rubick_2")
 			self.target:AddNewModifier(caster, self, "modifier_imba_telekinesis_root", { duration = duration})
 		end
 
@@ -483,7 +483,149 @@ function modifier_imba_telekinesis_root:CheckState()
 	return state
 end
 
+-------------------------------------------
+--			CLANDESTINE LIBRARIAN
+-------------------------------------------
 
+LinkLuaModifier("modifier_imba_rubick_clandestine_librarian", "components/abilities/heroes/hero_rubick", LUA_MODIFIER_MOTION_NONE)
+
+imba_rubick_clandestine_librarian = class({})
+
+function imba_rubick_clandestine_librarian:IsInnateAbility()
+	return true
+end
+
+function imba_rubick_clandestine_librarian:GetIntrinsicModifierName()
+	return "modifier_imba_rubick_clandestine_librarian"
+end
+
+modifier_imba_rubick_clandestine_librarian = class({})
+
+function modifier_imba_rubick_clandestine_librarian:IsDebuff() return false end
+function modifier_imba_rubick_clandestine_librarian:IsHidden() return false end
+function modifier_imba_rubick_clandestine_librarian:IsPurgable() return false end
+function modifier_imba_rubick_clandestine_librarian:IsPurgeException() return false end
+
+function modifier_imba_rubick_clandestine_librarian:DeclareFunctions()
+	local funcs = {
+		MODIFIER_EVENT_ON_ABILITY_FULLY_CAST,
+		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
+	}
+
+	return funcs
+end
+
+function modifier_imba_rubick_clandestine_librarian:OnAbilityFullyCast( keys )
+	if keys.unit == self:GetParent() then
+		if keys.ability:GetAbilityName() == "imba_rubick_spellsteal" then
+			self:SetStackCount(self:GetStackCount() + self:GetAbility():GetSpecialValueFor("spell_amp_per_cast"))
+		end
+	end
+end
+
+function modifier_imba_rubick_clandestine_librarian:GetModifierSpellAmplify_Percentage()
+	return self:GetStackCount()
+end
+
+imba_rubick_fade_bolt = imba_rubick_fade_bolt or class({})
+LinkLuaModifier("modifier_tower_healing_think", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
+
+function imba_rubick_fade_bolt:GetIntrinsicModifierName()
+	return "modifier_tower_healing_think"
+end
+
+function imba_rubick_fade_bolt:OnSpellStart()
+	if IsServer() then
+		-- Start bouncing with bounce delay
+		Timers:CreateTimer(function()
+			local heroes_need_healing = false
+			local previous_hero = self:GetCaster()
+
+			EmitSoundOn("Hero_Rubick.FadeBolt.Cast", self:GetCaster())
+
+			-- Look for enemy heroes
+			local heroes = FindUnitsInRadius(self:GetCaster():GetTeamNumber(),
+				self:GetCursorTarget():GetAbsOrigin(),
+				nil,
+				self:GetSpecialValueFor("radius"),
+				self:GetAbilityTargetTeam(),
+				self:GetAbilityType(),
+				self:GetAbilityTargetFlags(),
+				FIND_CLOSEST,
+				false
+			)
+
+			-- Search for a hero
+			for _, hero in pairs(heroes) do
+				if hero.damaged_by_fade_bolt ~= true then
+					heroes_need_healing = true
+
+					self.self.fade_bolt_particle = "particles/units/heroes/hero_rubick/rubick_fade_bolt.vpcf"
+
+					-- turn particle to red if break talent is levelup
+					if self:GetCaster():HasTalent("special_bonus_imba_rubick_3") then
+						self.self.fade_bolt_particle = ""
+					end
+
+					-- Mark hero as damaged
+					hero.damaged_by_fade_bolt = true
+
+					-- Apply particle effect
+					local particle = ParticleManager:CreateParticle(self.fade_bolt_particle, PATTACH_CUSTOMORIGIN, previous_hero)
+					ParticleManager:SetParticleControlEnt(particle, 0, previous_hero, PATTACH_POINT_FOLLOW, "attach_hitloc", previous_hero:GetAbsOrigin(), true)
+					ParticleManager:SetParticleControlEnt(particle, 1, hero, PATTACH_POINT_FOLLOW, "attach_hitloc", hero:GetAbsOrigin(), true)
+
+					-- Play cast sound
+					EmitSoundOn("Hero_Rubick.FadeBolt.Target", hero)
+
+					-- Heal target
+					ApplyDamage({
+						attacker = self:GetCaster(),
+						victim = hero,
+						ability = self,
+						damage = self:GetSpecialValueFor("damage"),
+						damage_type = self:GetAbilityDamageType()}
+					)
+
+					-- keep the last hero hit to play the particle for the next bounce
+					previous_hero = hero
+					break
+				end
+			end
+
+			-- If a hero was found, there might be more: repeat operation
+			if heroes_need_healing then
+				return self:GetSpecialValueFor("jump_delay")
+			else
+				return nil
+			end
+		end)
+	end
+end
+--[[
+modifier_tower_healing_think = modifier_tower_healing_think or class({})
+
+function modifier_tower_healing_think:OnCreated()
+	if IsServer() then
+		-- Ability properties
+		self.particle_heal = "particles/hero/tower/tower_healing_wave.vpcf"
+
+		self:StartIntervalThink(0.2)
+	end
+end
+
+function modifier_tower_healing_think:OnRefresh()
+	self:OnCreated()
+end
+
+function modifier_tower_healing_think:IsHidden()
+	return true
+end
+
+function modifier_tower_healing_think:IsPurgable()
+	return false
+end
+--]]
 -------------------------------------------
 --			SPELL STEAL
 -------------------------------------------
@@ -493,9 +635,6 @@ LinkLuaModifier("imba_rubick_spellsteal", "components/abilities/heroes/hero_rubi
 LinkLuaModifier("modifier_imba_rubick_spellsteal", "components/abilities/heroes/hero_rubick", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_rubick_spellsteal_animation", "components/abilities/heroes/hero_rubick", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_rubick_spellsteal_hidden", "components/abilities/heroes/hero_rubick", LUA_MODIFIER_MOTION_NONE)
-
-
-
 
 --------------------------------------------------------------------------------
 -- Passive Modifier
@@ -522,13 +661,15 @@ function imba_rubick_spellsteal:CastFilterResultTarget( hTarget )
 	local nResult = UnitFilter(
 		hTarget,
 		DOTA_UNIT_TARGET_TEAM_ENEMY,
-		DOTA_UNIT_TARGET_HERO,
+		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP,
 		DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO,
 		self:GetCaster():GetTeamNumber()
 	)
+
 	if nResult ~= UF_SUCCESS then
 		return nResult
 	end
+
 	return UF_SUCCESS
 end
 
@@ -543,6 +684,16 @@ end
 --------------------------------------------------------------------------------
 -- Ability Start
 --------------------------------------------------------------------------------
+
+function imba_rubick_spellsteal:OnAbilityPhaseStart()
+	-- Has Talent not working in CastFilterResultTarget for whatever reasons, ez fix
+	if self:GetCursorTarget():IsCreep() and self:GetCaster():HasTalent("special_bonus_imba_rubick_1") == false then
+		DisplayError(self:GetCaster():GetPlayerID(), "#dota_hud_error_cant_cast_on_creep")
+		return false
+	end
+
+	return true
+end
 
 imba_rubick_spellsteal.stolenSpell = nil
 function imba_rubick_spellsteal:OnSpellStart()
@@ -592,12 +743,11 @@ function imba_rubick_spellsteal:OnProjectileHit( target, location )
 	self.stolenSpell = nil
 
 	-- Add modifier
-	local steal_duration = self:GetSpecialValueFor("duration")
 	target:AddNewModifier(
 		self:GetCaster(), -- player source
 		self, -- ability source
 		"modifier_imba_rubick_spellsteal", -- modifier name
-		{ duration = steal_duration } -- kv
+		{} -- kv
 	)
 
 	local sound_cast = "Hero_Rubick.SpellSteal.Complete"
@@ -699,7 +849,10 @@ function imba_rubick_spellsteal:SetStolenSpell( spellData )
 	self:ForgetSpell()
 
 	print("Stolen spell: "..primarySpell:GetAbilityName())
-	print("Stolen secondary spell: "..secondarySpell:GetAbilityName())
+
+	if secondarySpell then
+		print("Stolen secondary spell: "..secondarySpell:GetAbilityName())
+	end
 
 	--phoenix is a meme
 	if self.CurrentSpellOwner == "npc_dota_hero_phoenix" then

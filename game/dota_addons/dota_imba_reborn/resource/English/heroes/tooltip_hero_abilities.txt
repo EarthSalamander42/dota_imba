@@ -2570,25 +2570,6 @@
 "DOTA_Tooltip_Ability_special_bonus_imba_riki_8"				"Blink Strike Passive"
 "DOTA_Tooltip_Ability_special_bonus_imba_riki_8"           		"Riki gains 20% chance on attack to cast Blink Strike on the target, backstabbing it."
 
-// Rubick
-////===============================================================================================================
-// Rubick's Telekinesis
-////===============================================================================================================
-"DOTA_Tooltip_ability_imba_rubick_telekinesis"                          "Telekinesis"
-"DOTA_Tooltip_ability_imba_rubick_telekinesis_Description"              "Rubick uses his telekinetic powers to lift an unit into the air briefly, then hurls them back at the ground. The unit lands on the ground with such force that it stuns nearby enemies.\n<font color='#FF7800'>Mind the drop:</font> Also damages all enemies in the impact radius.\n<font color='#FF7800'>Puppeteer:</font> Transposition can also be used on allies. When used in this manner, its cooldown will be shortened to %ally_cooldown% seconds. Allies are rooted instead of stunned, and can be hurled a greater distance away."
-"DOTA_Tooltip_ability_imba_rubick_telekinesis_Lore"                    "All living beings are Rubick's playthings."
-"DOTA_Tooltip_ability_imba_rubick_telekinesis_enemy_lift_duration"                  "ENEMY LIFT TIME:"
-"DOTA_Tooltip_ability_imba_rubick_telekinesis_ally_lift_duration"                   "ALLY LIFT TIME:"
-"DOTA_Tooltip_ability_imba_rubick_telekinesis_impact_radius"            "LANDING RADIUS:"
-"DOTA_Tooltip_ability_imba_rubick_telekinesis_impact_stun_duration"                 "STUN DURATION:"
-"DOTA_Tooltip_ability_imba_rubick_telekinesis_enemy_range"              "ENEMY HURL DISTANCE:"
-"DOTA_Tooltip_ability_imba_rubick_telekinesis_ally_range"              "ALLY HURL DISTANCE:"
-"DOTA_Tooltip_ability_imba_rubick_telekinesis_damage"                  "LANDING DAMAGE:"
-"DOTA_Tooltip_ability_imba_rubick_telekinesis_cast_range"              "CAST RANGE:"
-
-
-
-
 // Sand King
 ////===============================================================================================================
 // Sand King's Burrowstrike
