@@ -402,30 +402,32 @@ function GameMode:OnEntityKilled( keys )
 
 		if killer:IsRealHero() then
 			if killer:GetTeam() ~= killed_unit:GetTeam() and killed_unit:GetGoldBounty() > 0 then
-				local custom_gold_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "bounty_multiplier")["1"]) or 100
-				local gold_bounty = killed_unit:GetGoldBounty()
+--				local custom_gold_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "bounty_multiplier")["1"]) or 100
+--				local gold_bounty = killed_unit:GetGoldBounty()
 
-				local gold_reliable = true
-				local gold_reason = DOTA_ModifyGold_CreepKill
+--				local gold_reliable = true
+--				local gold_reason = DOTA_ModifyGold_CreepKill
 
-				if killed_unit:IsRealHero() then
-					gold_reason = DOTA_ModifyGold_HeroKill
-				elseif killed_unit:IsRoshan() then
-					gold_bounty = RandomInt(IMBA_ROSHAN_GOLD_KILL_MIN, IMBA_ROSHAN_GOLD_KILL_MAX) * custom_gold_bonus / 100
-					gold_bounty_assist = IMBA_ROSHAN_GOLD_ASSIST * custom_gold_bonus / 100
-					gold_reason = DOTA_ModifyGold_RoshanKill
+--				if killed_unit:IsRealHero() then
+--					gold_reason = DOTA_ModifyGold_HeroKill
+--					print(killed_unit:GetNumAttackers())
+				if killed_unit:IsRoshan() then
+--				elseif killed_unit:IsRoshan() then
+--					gold_bounty = RandomInt(IMBA_ROSHAN_GOLD_KILL_MIN, IMBA_ROSHAN_GOLD_KILL_MAX) * custom_gold_bonus / 100
+--					gold_bounty_assist = IMBA_ROSHAN_GOLD_ASSIST * custom_gold_bonus / 100
+--					gold_reason = DOTA_ModifyGold_RoshanKill
 
-					for _, hero in pairs(HeroList:GetAllHeroes()) do
-						if hero:GetTeam() == killer:GetTeam() then
-							SendOverheadEventMessage(hero:GetPlayerOwner(), OVERHEAD_ALERT_GOLD, killed_unit, gold_bounty_assist, nil)
-							hero:ModifyGold(gold_bounty_assist, gold_reliable, gold_reason)
+--					for _, hero in pairs(HeroList:GetAllHeroes()) do
+--						if hero:GetTeam() == killer:GetTeam() then
+--							SendOverheadEventMessage(hero:GetPlayerOwner(), OVERHEAD_ALERT_GOLD, killed_unit, gold_bounty_assist, nil)
+--							hero:ModifyGold(gold_bounty_assist, gold_reliable, gold_reason)
 
-							if hero == killer then
-								SendOverheadEventMessage(hero:GetPlayerOwner(), OVERHEAD_ALERT_GOLD, killed_unit, gold_bounty, nil)
-								hero:ModifyGold(gold_bounty, gold_reliable, gold_reason)
-							end
-						end
-					end
+--							if hero == killer then
+--								SendOverheadEventMessage(hero:GetPlayerOwner(), OVERHEAD_ALERT_GOLD, killed_unit, gold_bounty, nil)
+--								hero:ModifyGold(gold_bounty, gold_reliable, gold_reason)
+--							end
+--						end
+--					end
 
 					-- Respawn time for Roshan
 					local respawn_time = RandomInt(ROSHAN_RESPAWN_TIME_MIN, ROSHAN_RESPAWN_TIME_MAX) * 60
@@ -437,16 +439,16 @@ function GameMode:OnEntityKilled( keys )
 					CombatEvents("kill", "roshan_dead", killed_unit, killer)
 
 					return
-				elseif killed_unit:IsCourier() then
-					gold_bounty = gold_bounty * custom_gold_bonus / 100
-					gold_reason = DOTA_ModifyGold_CourierKill
-				else -- creeps + all other units
-					gold_bounty = gold_bounty * custom_gold_bonus / 100
-					gold_reliable = false
+--				elseif killed_unit:IsCourier() then
+--					gold_bounty = gold_bounty * custom_gold_bonus / 100
+--					gold_reason = DOTA_ModifyGold_CourierKill
+--				else -- creeps + all other units
+--					gold_bounty = gold_bounty * custom_gold_bonus / 100
+--					gold_reliable = false
 				end
 
-				SendOverheadEventMessage(killer:GetPlayerOwner(), OVERHEAD_ALERT_GOLD, killed_unit, gold_bounty, nil)
-				killer:ModifyGold(gold_bounty, gold_reliable, gold_reason)
+--				SendOverheadEventMessage(killer:GetPlayerOwner(), OVERHEAD_ALERT_GOLD, killed_unit, gold_bounty, nil)
+--				killer:ModifyGold(gold_bounty, gold_reliable, gold_reason)
 			end
 
 			if killer == killed_unit then

@@ -363,7 +363,9 @@ function modifier_imba_telekinesis_root:IsDebuff() return false end
 function modifier_imba_telekinesis_root:IsHidden() return true end
 function modifier_imba_telekinesis_root:IsPurgable() return false end
 function modifier_imba_telekinesis_root:IsPurgeException() return false end
+
 -------------------------------------------
+
 function modifier_imba_telekinesis_root:CheckState()
 	local state =
 		{
@@ -426,16 +428,15 @@ function imba_rubick_fade_bolt:OnSpellStart()
 				EmitSoundOn("ParticleDriven.Rocket.Explode", current_target)
 
 				for _, unit in pairs(units) do
-					if unit ~= current_target then
-						ApplyDamage({
-							attacker = self:GetCaster(),
-							victim = unit,
-							ability = self,
-							damage = damage,
-							damage_type = self:GetAbilityDamageType()
-						})
-					end
+					ApplyDamage({
+						attacker = self:GetCaster(),
+						victim = unit,
+						ability = self,
+						damage = damage / (100 / self:GetCaster():FindTalentValue("special_bonus_imba_rubick_7")),
+						damage_type = self:GetAbilityDamageType()
+					})
 				end
+
 				return nil
 			end
 
@@ -483,7 +484,7 @@ function imba_rubick_fade_bolt:OnSpellStart()
 			if previous_unit ~= current_target then
 				return self:GetSpecialValueFor("jump_delay")
 			else
-				if self:GetCaster():HasTalent("special_bonus_imba_rubick_5") then
+				if self:GetCaster():HasTalent("special_bonus_imba_rubick_7") then
 					kaboom = true
 					return FrameTime()
 				end
@@ -546,6 +547,171 @@ function modifier_imba_rubick_fade_bolt_break:CheckState()
 
 	return state
 end
+
+------------------------------------
+
+LinkLuaModifier("modifier_imba_rubick_null_field_aura", "components/abilities/heroes/hero_rubick", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_rubick_null_field_aura_debuff", "components/abilities/heroes/hero_rubick", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_rubick_null_field", "components/abilities/heroes/hero_rubick", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_rubick_null_field_debuff", "components/abilities/heroes/hero_rubick", LUA_MODIFIER_MOTION_NONE)
+
+imba_rubick_null_field = imba_rubick_null_field or class({})
+
+function imba_rubick_null_field:GetIntrinsicModifierName()
+	return "modifier_imba_rubick_null_field_aura"
+end
+
+function imba_rubick_null_field:OnSpellStart()
+	if IsServer() then
+		if self:GetCaster():HasModifier("modifier_imba_rubick_null_field_aura") then
+			self:GetCaster():RemoveModifierByName("modifier_imba_rubick_null_field_aura")
+			self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_rubick_null_field_aura_debuff", {})
+		elseif self:GetCaster():HasModifier("modifier_imba_rubick_null_field_aura_debuff") then
+			self:GetCaster():RemoveModifierByName("modifier_imba_rubick_null_field_aura_debuff")
+			self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_rubick_null_field_aura", {})
+		end
+	end
+end
+
+function imba_rubick_null_field:GetAbilityTextureName()
+	local offensive = self:GetCaster():HasModifier("modifier_imba_rubick_null_field_aura_debuff")
+
+	if offensive then
+		return "rubick_null_field_offensive"
+	end
+
+	return "rubick_null_field"
+end
+
+modifier_imba_rubick_null_field_aura = modifier_imba_rubick_null_field_aura or class({})
+
+-- Modifier properties
+function modifier_imba_rubick_null_field_aura:IsAura() return true end
+function modifier_imba_rubick_null_field_aura:IsAuraActiveOnDeath() return false end
+function modifier_imba_rubick_null_field_aura:IsDebuff() return false end
+function modifier_imba_rubick_null_field_aura:IsHidden() return true end
+function modifier_imba_rubick_null_field_aura:IsPermanent() return true end
+function modifier_imba_rubick_null_field_aura:IsPurgable() return false end
+
+-- Aura properties
+function modifier_imba_rubick_null_field_aura:GetAuraRadius()
+	return self:GetAbility():GetSpecialValueFor("radius") + self:GetCaster():FindTalentValue("special_bonus_imba_rubick_6")
+end
+
+function modifier_imba_rubick_null_field_aura:GetAuraSearchFlags()
+	return self:GetAbility():GetAbilityTargetFlags()
+end
+
+function modifier_imba_rubick_null_field_aura:GetAuraSearchTeam()
+	return DOTA_UNIT_TARGET_TEAM_FRIENDLY
+end
+
+function modifier_imba_rubick_null_field_aura:GetAuraSearchType()
+	return self:GetAbility():GetAbilityTargetType()
+end
+
+function modifier_imba_rubick_null_field_aura:GetModifierAura()
+	return "modifier_imba_rubick_null_field"
+end
+
+modifier_imba_rubick_null_field_aura_debuff = modifier_imba_rubick_null_field_aura_debuff or class({})
+
+-- Modifier properties
+function modifier_imba_rubick_null_field_aura_debuff:IsAura() return true end
+function modifier_imba_rubick_null_field_aura_debuff:IsAuraActiveOnDeath() return false end
+function modifier_imba_rubick_null_field_aura_debuff:IsDebuff() return false end
+function modifier_imba_rubick_null_field_aura_debuff:IsHidden() return true end
+function modifier_imba_rubick_null_field_aura_debuff:IsPermanent() return true end
+function modifier_imba_rubick_null_field_aura_debuff:IsPurgable() return false end
+
+-- Aura properties
+function modifier_imba_rubick_null_field_aura_debuff:GetAuraRadius()
+	return self:GetAbility():GetSpecialValueFor("radius") + self:GetCaster():FindTalentValue("special_bonus_imba_rubick_6")
+end
+
+function modifier_imba_rubick_null_field_aura_debuff:GetAuraSearchFlags()
+	return self:GetAbility():GetAbilityTargetFlags()
+end
+
+function modifier_imba_rubick_null_field_aura_debuff:GetAuraSearchTeam()
+	return DOTA_UNIT_TARGET_TEAM_ENEMY
+end
+
+function modifier_imba_rubick_null_field_aura_debuff:GetAuraSearchType()
+	return self:GetAbility():GetAbilityTargetType()
+end
+
+function modifier_imba_rubick_null_field_aura_debuff:GetModifierAura()
+	return "modifier_imba_rubick_null_field_debuff"
+end
+
+modifier_imba_rubick_null_field = modifier_imba_rubick_null_field or class({})
+
+-- Modifier properties
+function modifier_imba_rubick_null_field:IsHidden() return false end
+function modifier_imba_rubick_null_field:IsPurgable() return false end
+
+function modifier_imba_rubick_null_field:OnCreated()
+	self.bonus_magic_resist = self:GetAbility():GetSpecialValueFor("magic_damage_reduction_pct")
+	self.bonus_spell_amp = self:GetAbility():GetSpecialValueFor("spell_amp_reduction_pct")
+end
+
+function modifier_imba_rubick_null_field:DeclareFunctions()
+	local funcs = {
+		MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS,
+		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
+	}
+
+	return funcs
+end
+
+function modifier_imba_rubick_null_field:GetModifierMagicalResistanceBonus()
+	return self.bonus_magic_resist
+end
+
+function modifier_imba_rubick_null_field:GetModifierSpellAmplify_Percentage()
+	return self.bonus_spell_amp
+end
+
+--[[ -- talent idea
+function modifier_imba_rubick_null_field:GetModifierStatusResistanceStacking()
+	return self.bonus_status_resistance * 0.01 * self:GetParent():GetBaseMagicalResistanceValue()
+end
+--]]
+
+modifier_imba_rubick_null_field_debuff = modifier_imba_rubick_null_field_debuff or class({})
+
+-- Modifier properties
+function modifier_imba_rubick_null_field_debuff:IsHidden() return false end
+function modifier_imba_rubick_null_field_debuff:IsPurgable() return false end
+
+function modifier_imba_rubick_null_field_debuff:OnCreated()
+	self.bonus_magic_resist = self:GetAbility():GetSpecialValueFor("magic_damage_reduction_pct") * (-1)
+	self.bonus_spell_amp = self:GetAbility():GetSpecialValueFor("spell_amp_reduction_pct") * (-1)
+end
+
+function modifier_imba_rubick_null_field_debuff:DeclareFunctions()
+	local funcs = {
+		MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS,
+		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
+	}
+
+	return funcs
+end
+
+function modifier_imba_rubick_null_field_debuff:GetModifierMagicalResistanceBonus()
+	return self.bonus_magic_resist
+end
+
+function modifier_imba_rubick_null_field_debuff:GetModifierSpellAmplify_Percentage()
+	return self.bonus_spell_amp
+end
+
+--[[ -- talent idea
+function modifier_imba_rubick_null_field_debuff:GetModifierStatusResistanceStacking()
+	return self.bonus_status_resistance * 0.01 * self:GetParent():GetBaseMagicalResistanceValue()
+end
+--]]
 
 -------------------------------------------
 --			CLANDESTINE LIBRARIAN
@@ -1057,7 +1223,7 @@ end
 -------------------------------------------
 modifier_imba_rubick_spellsteal = class({})
 
-function modifier_imba_rubick_spellsteal:IsHidden() return false end
+function modifier_imba_rubick_spellsteal:IsHidden() return true end
 function modifier_imba_rubick_spellsteal:IsDebuff()	return false end
 function modifier_imba_rubick_spellsteal:IsPurgable() return false end
 

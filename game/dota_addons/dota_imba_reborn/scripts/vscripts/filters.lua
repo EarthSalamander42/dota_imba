@@ -52,7 +52,8 @@ function GameMode:GoldFilter(keys)
 		if keys.reason_const == DOTA_ModifyGold_Unspecified then return true end
 
 		-- TODO: Find a way to call this message on the killed unit
---		SendOverheadEventMessage(PlayerResource:GetPlayer(keys.player_id_const), OVERHEAD_ALERT_GOLD, hero, keys.gold, nil)
+		SendOverheadEventMessage(PlayerResource:GetPlayer(keys.player_id_const), OVERHEAD_ALERT_GOLD, hero, keys.gold, nil)
+		hero:ModifyGold(keys.gold, reliable, keys.reason_const)
 	end
 
 	return false

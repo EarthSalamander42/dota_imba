@@ -185,6 +185,48 @@
 	}
 
 	//=================================================================================================================
+	// Rubick: Null Field
+	//=================================================================================================================
+	"imba_rubick_null_field"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_rubick"
+		"AbilityTextureName"			"rubick_null_field"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
+		"AbilityCastRange"				"900"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"30.0"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"magic_damage_reduction_pct"	"15 25 35 45"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"spell_amp_reduction_pct"		"15 25 35 45"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"radius"						"900"
+				"LinkedSpecialBonus"			"special_bonus_imba_rubick_6"
+			}
+		}
+	}
+
+	//=================================================================================================================
 	// Rubick Spell Steal Contorller
 	//=================================================================================================================
 	"imba_rubick_spell_steal_controller"
@@ -205,20 +247,12 @@
 	//=================================================================================================================
 	"imba_rubick_spellsteal"
 	{
-		// Ability Technical Aspect
-		// base script folder	: scripts/vscripts
-		// base texture folder	: resource/flash3/images/spellicons
+		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
 		"ScriptFile"					"components/abilities/heroes/hero_rubick"
 		"AbilityTextureName"			"rubick_spell_steal"
 		"FightRecapLevel"				"1"
-
-	//	"precache"
-	//	{
-	//		"soundfile"	"soundevents/game_sounds_heroes/game_sounds_<hero>.vsndevts"
-	//		"particle"	"particles/units/heroes/hero_<hero>/<hero>_<ability>.vpcf"
-	//	}
 		
 		// Ability General
 		//-------------------------------------------------------------------------------------------------------------
@@ -238,7 +272,7 @@
 
 		// Ability Resource
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"16.0 12.0 8.0"
+		"AbilityCooldown"				"20.0 18.0 16.0"
 		"AbilityManaCost"				"25"
 
 		// Special
@@ -430,7 +464,7 @@
 	}
 
 	//=================================================================================================================
-	// Rubick Talent 6: Telekinesis is now a AoE lifting everyone in the air
+	// Rubick Talent 6: +X radius for Null Field
 	//=================================================================================================================
 	"special_bonus_imba_rubick_6"
 	{
@@ -452,7 +486,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"value"						"325" // AoE
+				"value"						"300" // radius
 			}
 		}
 	}
@@ -471,6 +505,17 @@
 		"LinkedAbility"
 		{
 			"01" 	"imba_rubick_fade_bolt"			
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"value"						"50" // % damage of current fade bolt level as explosion damage
+			}
 		}
 	}
 }

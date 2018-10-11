@@ -13,7 +13,7 @@
 
 		"Ability1"					"imba_rubick_telekinesis"
 		"Ability2"					"imba_rubick_fade_bolt"
-		"Ability3"					"rubick_null_field"
+		"Ability3"					"imba_rubick_null_field"
 		"Ability4"					"rubick_empty1"
 		"Ability5"					"rubick_empty2"
 		"Ability6"					"imba_rubick_spellsteal"

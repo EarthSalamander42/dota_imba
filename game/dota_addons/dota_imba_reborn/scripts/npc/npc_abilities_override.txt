@@ -14686,7 +14686,7 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"bonus_damage"			"20.0 50.0 72.5 87.5"
-				"LinkedSpecialBonus"		"special_bonus_unique_spectre_2"
+				"LinkedSpecialBonus"	"special_bonus_unique_spectre_2"
 			}
 			"03"
 			{
