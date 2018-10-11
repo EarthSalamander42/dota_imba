@@ -1333,7 +1333,7 @@ function modifier_imba_chemical_rage_buff_haste:GetAttackSound()
 	return "Hero_Alchemist.ChemicalRage.Attack"
 end
 
-function modifier_imba_abyssal_blade:GetModifierBonusStats_Strength()
+function modifier_imba_chemical_rage_buff_haste:GetModifierBonusStats_Strength()
 	return self:GetAbility():GetSpecialValueFor("bonus_strength")
 end
 

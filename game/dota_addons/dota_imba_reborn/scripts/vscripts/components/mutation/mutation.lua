@@ -26,8 +26,6 @@ function Mutation:Init()
 
 	CustomNetTables:SetTableValue("mutations", "mutation", {IMBA_MUTATION})
 
-	LinkLuaModifier("modifier_frantic", "components/modifiers/mutation/modifier_frantic.lua", LUA_MODIFIER_MOTION_NONE )
-
 --	if IMBA_MUTATION["positive"] == "greed_is_good" then
 --		LinkLuaModifier("modifier_mutation_greed_is_good", "components/modifiers/mutation/modifier_mutation_greed_is_good.lua", LUA_MODIFIER_MOTION_NONE )
 --	end

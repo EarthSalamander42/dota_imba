@@ -12,7 +12,7 @@
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
 
 		"Ability1"					"imba_rubick_telekinesis"
-		"Ability2"					"rubick_fade_bolt"
+		"Ability2"					"imba_rubick_fade_bolt"
 		"Ability3"					"rubick_null_field"
 		"Ability4"					"rubick_empty1"
 		"Ability5"					"rubick_empty2"

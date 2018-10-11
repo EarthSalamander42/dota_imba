@@ -1,112 +1,4 @@
--- Created by Elfansoer: https://github.com/Elfansoer/dota-2-lua-abilities/tree/master/scripts/vscripts/lua_abilities/rubick_spell_steal_lua
-
--------------------------------------------
--- SPELL STEAL ANIMATIONS REFERENCES
--------------------------------------------
-imba_rubick_animations_reference = {}
-
-imba_rubick_animations_reference.animations = {
--- AbilityName, bNormalWhenStolen, nActivity, nTranslate, fPlaybackRate
-    {"default", nil, ACT_DOTA_CAST_ABILITY_5, "bolt"},
-
-    {"abaddon_mist_coil_lua", false, ACT_DOTA_CAST_ABILITY_3, "", 1.4},
-
-    {"antimage_blink_lua", nil, nil, "am_blink"},
-    {"antimage_mana_void_lua", false, ACT_DOTA_CAST_ABILITY_5, "mana_void"},
-
-    {"bane_brain_sap_lua", false, ACT_DOTA_CAST_ABILITY_5,"brain_sap"},
-    {"bane_fiends_grip_lua", false, ACT_DOTA_CHANNEL_ABILITY_5,"fiends_grip"},
-
-    {"bristleback_viscous_nasal_goo_lua", false, ACT_DOTA_ATTACK,"",2.0},
-
-    {"chaos_knight_chaos_bolt_lua", false, ACT_DOTA_ATTACK,"", 2.0},
-    {"chaos_knight_reality_rift_lua", true, ACT_DOTA_CAST_ABILITY_5, "strike", 2.0},
-    {"chaos_knight_phantasm_lua", true, ACT_DOTA_CAST_ABILITY_5, "remnant"},
-
-    {"centaur_warrunner_hoof_stomp_lua", false, ACT_DOTA_CAST_ABILITY_5, "slam", 2.0},
-    {"centaur_warrunner_double_edge_lua", false, ACT_DOTA_ATTACK, "", 2.0},
-    {"centaur_warrunner_stampede_lua", false, ACT_DOTA_OVERRIDE_ABILITY_4, "strength"},
-
-    {"crystal_maiden_crystal_nova_lua", false, ACT_DOTA_CAST_ABILITY_5, "crystal_nova"},
-    {"crystal_maiden_frostbite_lua", false, ACT_DOTA_CAST_ABILITY_5, "frostbite"},
-    {"crystal_maiden_freezing_field_lua", false, ACT_DOTA_CHANNEL_ABILITY_5, "freezing_field"},
-
-    {"dazzle_shallow_grave_lua", false, ACT_DOTA_CAST_ABILITY_5, "repel"},
-    {"dazzle_shadow_wave_lua", false, ACT_DOTA_CAST_ABILITY_3, ""},
-    {"dazzle_weave_lua", false, ACT_DOTA_CAST_ABILITY_5, "crystal_nova"},
-
-    {"furion_sprout_lua", false, ACT_DOTA_CAST_ABILITY_5, "sprout"},
-    {"furion_teleportation_lua", true, ACT_DOTA_CAST_ABILITY_5, "teleport"},
-    {"furion_force_of_nature_lua", false, ACT_DOTA_CAST_ABILITY_5, "summon"},
-    {"furion_wrath_of_nature_lua", false, ACT_DOTA_CAST_ABILITY_5, "wrath"},
-
-    {"lina_dragon_slave_lua", false, nil, "wave"},
-    {"lina_light_strike_array_lua", false, nil, "lsa"},
-    {"lina_laguna_blade_lua", false, nil, "laguna"},
-
-    {"ogre_magi_fireblast_lua", false, nil, "frostbite"},
-
-    {"omniknight_purification_lua", true, nil, "purification", 1.4},
-    {"omniknight_repel_lua", false, nil, "repel"},
-    {"omniknight_guardian_angel_lua", true, nil, "guardian_angel", 1.3},
-
-    {"phantom_assassin_stifling_dagger_lua", false, ACT_DOTA_ATTACK,"", 2.0},
-    {"phantom_assassin_shadow_strike_lua", false, nil, "qop_blink"},
-
-    {"queen_of_pain_shadow_strike_lua", false, nil, "shadow_strike"},
-    {"queen_of_pain_blink_lua", false, nil, "qop_blink"},
-    {"queen_of_pain_scream_of_pain_lua", false, nil, "scream"},
-    {"queen_of_pain_sonic_wave_lua", false, nil, "sonic_wave"},
-
-    {"shadow_fiend_shadowraze_a_lua", false, ACT_DOTA_CAST_ABILITY_5, "shadowraze", 2.0},
-    {"shadow_fiend_shadowraze_b_lua", false, ACT_DOTA_CAST_ABILITY_5, "shadowraze", 2.0},
-    {"shadow_fiend_shadowraze_c_lua", false, ACT_DOTA_CAST_ABILITY_5, "shadowraze", 2.0},
-    {"shadow_fiend_requiem_of_souls_lua", true, ACT_DOTA_CAST_ABILITY_5, "requiem"},
-
-    {"sven_warcry_lua", nil, ACT_DOTA_OVERRIDE_ABILITY_3, "strength"},
-    {"sven_gods_strength_lua", nil, ACT_DOTA_OVERRIDE_ABILITY_4, "strength"},
-
-    {"slardar_slithereen_crush_lua", false, ACT_DOTA_MK_SPRING_END, nil},
-
-    {"ursa_earthshock_lua", true, ACT_DOTA_CAST_ABILITY_5, "earthshock", 1.7},
-    {"ursa_overpower_lua", true, ACT_DOTA_OVERRIDE_ABILITY_3, "overpower"},
-    {"ursa_enrage_lua", true, ACT_DOTA_OVERRIDE_ABILITY_4, "enrage"},
-
-    {"vengefulspirit_wave_of_terror_lua", nil, nil, "roar"},
-    {"vengefulspirit_nether_swap_lua", nil, nil, "qop_blink"},
-}
-
-imba_rubick_animations_reference.current = 1
-function imba_rubick_animations_reference:SetCurrentReference( spellName )
-	self.imba_rubick_animations_reference = self:FindReference( spellName )
-end
-function imba_rubick_animations_reference:SetCurrentReferenceIndex( index )
-	imba_rubick_animations_reference.current = index
-end
-function imba_rubick_animations_reference:GetCurrentReference()
-	return self.current
-end
-
-function imba_rubick_animations_reference:FindReference( spellName )
-	for k,v in pairs(self.animations) do
-		if v[1]==spellName then
-			return k
-		end
-	end
-	return 1
-end
-function imba_rubick_animations_reference:IsNormal()
-	return self.animations[self.current][2] or false
-end
-function imba_rubick_animations_reference:GetActivity()
-	return self.animations[self.current][3] or ACT_DOTA_CAST_ABILITY_5
-end
-function imba_rubick_animations_reference:GetTranslate()
-	return self.animations[self.current][4] or ""
-end
-function imba_rubick_animations_reference:GetPlaybackRate()
-	return self.animations[self.current][5] or 1
-end
+-- Spell Steal Lua created by Elfansoer: https://github.com/Elfansoer/dota-2-lua-abilities/tree/master/scripts/vscripts/lua_abilities/rubick_spell_steal_lua
 
 -------------------------------------------
 --			TRANSPOSITION
@@ -167,7 +59,6 @@ function imba_rubick_telekinesis:OnSpellStart( params )
 		local is_ally = true
 		-- Create modifier and check Linken
 		if self.target:GetTeam() ~= caster:GetTeam() then
-
 			if self.target:TriggerSpellAbsorb(self) then
 				return nil
 			end
@@ -467,8 +358,6 @@ function modifier_imba_telekinesis_stun:CheckState()
 	return state
 end
 
-
-
 modifier_imba_telekinesis_root = class({})
 function modifier_imba_telekinesis_root:IsDebuff() return false end
 function modifier_imba_telekinesis_root:IsHidden() return true end
@@ -480,6 +369,181 @@ function modifier_imba_telekinesis_root:CheckState()
 		{
 			[MODIFIER_STATE_ROOTED] = true
 		}
+	return state
+end
+
+------------------------------------------------------------------------
+
+imba_rubick_fade_bolt = imba_rubick_fade_bolt or class({})
+
+LinkLuaModifier("modifier_imba_rubick_fade_bolt", "components/abilities/heroes/hero_rubick", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_rubick_fade_bolt_break", "components/abilities/heroes/hero_rubick", LUA_MODIFIER_MOTION_NONE)
+
+function imba_rubick_fade_bolt:OnSpellStart()
+	if IsServer() then
+		local previous_unit = self:GetCaster()
+		local current_target = self:GetCursorTarget()
+		local entities_damaged = {}
+		local damage = self:GetSpecialValueFor("damage")
+		local kaboom = false
+
+		EmitSoundOn("Hero_Rubick.FadeBolt.Cast", self:GetCaster())
+
+		-- Start bouncing with bounce delay
+		Timers:CreateTimer(function()
+			-- add entity in a table to not hit it twice!
+			table.insert(entities_damaged, current_target)
+
+			-- Look for enemy heroes
+			local units = FindUnitsInRadius(self:GetCaster():GetTeamNumber(),
+				current_target:GetAbsOrigin(),
+				nil,
+				self:GetSpecialValueFor("radius"),
+				self:GetAbilityTargetTeam(),
+				self:GetAbilityTargetType(),
+				self:GetAbilityTargetFlags(),
+				FIND_CLOSEST,
+				false
+			)
+
+			-- if this jump is below the first one, increase damage
+			if previous_unit ~= self:GetCaster() then
+				local damage_increase = self:GetSpecialValueFor("jump_damage_bonus_pct") *  (damage / 100)
+				if self:GetCaster():HasTalent("special_bonus_imba_rubick_5") then
+					damage_increase = (self:GetSpecialValueFor("jump_damage_bonus_pct") + self:GetCaster():FindTalentValue("special_bonus_imba_rubick_5")) *  (damage / 100)
+				end
+				damage = damage + damage_increase
+			end
+
+			-- if talent 6 is level-up, kaboom the target and end the function
+			if kaboom == true then
+				local particle_explosion_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_techies/techies_land_mine_explode.vpcf", PATTACH_WORLDORIGIN, current_target)
+				ParticleManager:SetParticleControl(particle_explosion_fx, 0, current_target:GetAbsOrigin())
+				ParticleManager:SetParticleControl(particle_explosion_fx, 1, current_target:GetAbsOrigin())
+				ParticleManager:SetParticleControl(particle_explosion_fx, 2, Vector(self:GetSpecialValueFor("radius"), 1, 1))
+				ParticleManager:ReleaseParticleIndex(particle_explosion_fx)
+
+				EmitSoundOn("ParticleDriven.Rocket.Explode", current_target)
+
+				for _, unit in pairs(units) do
+					if unit ~= current_target then
+						ApplyDamage({
+							attacker = self:GetCaster(),
+							victim = unit,
+							ability = self,
+							damage = damage,
+							damage_type = self:GetAbilityDamageType()
+						})
+					end
+				end
+				return nil
+			end
+
+			-- Damage target
+			ApplyDamage({
+				attacker = self:GetCaster(),
+				victim = current_target,
+				ability = self,
+				damage = damage,
+				damage_type = self:GetAbilityDamageType()
+			})
+
+			self.fade_bolt_particle = "particles/units/heroes/hero_rubick/rubick_fade_bolt.vpcf"
+
+			-- turn particle to red if break talent is levelup
+			if self:GetCaster():HasTalent("special_bonus_imba_rubick_3") then
+				current_target:AddNewModifier(self:GetCaster(), self, "modifier_imba_rubick_fade_bolt_break", {duration = self:GetCaster():FindTalentValue("special_bonus_imba_rubick_3")})
+--				self.fade_bolt_particle = "particles/units/heroes/hero_rubick/rubick_fade_bolt_red.vpcf"
+			end
+
+			-- play Fade Bolt particle
+			local particle = ParticleManager:CreateParticle(self.fade_bolt_particle, PATTACH_CUSTOMORIGIN, previous_unit)
+			ParticleManager:SetParticleControlEnt(particle, 0, previous_unit, PATTACH_POINT_FOLLOW, "attach_hitloc", previous_unit:GetAbsOrigin(), true)
+			ParticleManager:SetParticleControlEnt(particle, 1, current_target, PATTACH_POINT_FOLLOW, "attach_hitloc", current_target:GetAbsOrigin(), true)
+
+			-- Play cast sound
+			EmitSoundOn("Hero_Rubick.FadeBolt.Target", current_target)
+
+			current_target:AddNewModifier(self:GetCaster(), self, "modifier_imba_rubick_fade_bolt", {duration = self:GetSpecialValueFor("duration")})
+			current_target.damaged_by_fade_bolt = true
+
+			-- keep the last hero hit to play the particle for the next bounce
+			previous_unit = current_target
+
+			-- Search for a unit
+			for _, unit in pairs(units) do
+				if unit ~= previous_unit and unit.damaged_by_fade_bolt ~= true then
+					-- update the new target
+					current_target = unit
+					break
+				end
+			end
+
+			-- If a new target was found, wait and jump again
+			if previous_unit ~= current_target then
+				return self:GetSpecialValueFor("jump_delay")
+			else
+				if self:GetCaster():HasTalent("special_bonus_imba_rubick_5") then
+					kaboom = true
+					return FrameTime()
+				end
+				-- reset fade bolt hit counter
+				for _, damaged in pairs(entities_damaged) do
+					damaged.damaged_by_fade_bolt = nil
+				end
+				entities_damaged = nil
+				return nil
+			end
+		end)
+	end
+end
+
+modifier_imba_rubick_fade_bolt = modifier_imba_rubick_fade_bolt or class({})
+
+function modifier_imba_rubick_fade_bolt:IsDebuff()
+	return true
+end
+
+function modifier_imba_rubick_fade_bolt:GetEffectName()
+	return self.effect_name
+end
+
+function modifier_imba_rubick_fade_bolt:GetEffectAttachType()
+	return PATTACH_ABSORIGIN_FOLLOW
+end
+
+function modifier_imba_rubick_fade_bolt:OnCreated()
+	if IsServer() then
+		self.effect_name = "particles/units/heroes/hero_rubick/rubick_fade_bolt_debuff.vpcf"
+
+--		if self:GetAbility():GetCaster():HasTalent("special_bonus_imba_rubick_3") then
+--			self.effect_name = "particles/units/heroes/hero_rubick/rubick_fade_bolt_debuff_red.vpcf"
+--		end
+	end
+end
+
+function modifier_imba_rubick_fade_bolt:DeclareFunctions()
+	local funcs = {
+		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
+	}
+	return funcs
+end
+
+function modifier_imba_rubick_fade_bolt:GetModifierPreAttack_BonusDamage()
+	if self:GetParent():IsHero() or self:GetParent():IsRoshan() then
+		return -self:GetAbility():GetSpecialValueFor("hero_attack_damage_reduction")
+	else
+		return -self:GetAbility():GetSpecialValueFor("creep_attack_damage_reduction")
+	end
+end
+
+modifier_imba_rubick_fade_bolt_break = class({})
+
+function modifier_imba_rubick_fade_bolt_break:CheckState()
+	local state = {
+		[MODIFIER_STATE_PASSIVES_DISABLED] = true
+	}
+
 	return state
 end
 
@@ -527,105 +591,114 @@ function modifier_imba_rubick_clandestine_librarian:GetModifierSpellAmplify_Perc
 	return self:GetStackCount()
 end
 
-imba_rubick_fade_bolt = imba_rubick_fade_bolt or class({})
-LinkLuaModifier("modifier_tower_healing_think", "components/abilities/buildings/tower_abilities", LUA_MODIFIER_MOTION_NONE)
+-------------------------------------------
+-- SPELL STEAL ANIMATIONS REFERENCES
+-------------------------------------------
+imba_rubick_animations_reference = {}
 
-function imba_rubick_fade_bolt:GetIntrinsicModifierName()
-	return "modifier_tower_healing_think"
+imba_rubick_animations_reference.animations = {
+-- AbilityName, bNormalWhenStolen, nActivity, nTranslate, fPlaybackRate
+    {"default", nil, ACT_DOTA_CAST_ABILITY_5, "bolt"},
+
+    {"imba_abaddon_mist_coil", false, ACT_DOTA_CAST_ABILITY_3, "", 1.4},
+
+    {"imba_antimage_blink", nil, nil, "am_blink"},
+    {"imba_antimage_mana_void", false, ACT_DOTA_CAST_ABILITY_5, "mana_void"},
+
+    {"imba_bane_brain_sap", false, ACT_DOTA_CAST_ABILITY_5,"brain_sap"},
+    {"imba_bane_fiends_grip", false, ACT_DOTA_CHANNEL_ABILITY_5,"fiends_grip"},
+
+    {"bristleback_viscous_nasal_goo", false, ACT_DOTA_ATTACK,"",2.0},
+
+    {"chaos_knight_chaos_bolt", false, ACT_DOTA_ATTACK,"", 2.0},
+    {"chaos_knight_reality_rift", true, ACT_DOTA_CAST_ABILITY_5, "strike", 2.0},
+    {"chaos_knight_phantasm", true, ACT_DOTA_CAST_ABILITY_5, "remnant"},
+
+    {"imba_centaur_warrunner_hoof_stomp", false, ACT_DOTA_CAST_ABILITY_5, "slam", 2.0},
+    {"imba_centaur_warrunner_double_edge", false, ACT_DOTA_ATTACK, "", 2.0},
+    {"imba_centaur_warrunner_stampede", false, ACT_DOTA_OVERRIDE_ABILITY_4, "strength"},
+
+    {"imba_crystal_maiden_crystal_nova", false, ACT_DOTA_CAST_ABILITY_5, "crystal_nova"},
+    {"imba_crystal_maiden_frostbite", false, ACT_DOTA_CAST_ABILITY_5, "frostbite"},
+    {"imba_crystal_maiden_freezing_field", false, ACT_DOTA_CHANNEL_ABILITY_5, "freezing_field"},
+
+    {"imba_dazzle_shallow_grave", false, ACT_DOTA_CAST_ABILITY_5, "repel"},
+    {"imba_dazzle_shadow_wave", false, ACT_DOTA_CAST_ABILITY_3, ""},
+    {"imba_dazzle_weave", false, ACT_DOTA_CAST_ABILITY_5, "crystal_nova"},
+
+    {"furion_sprout", false, ACT_DOTA_CAST_ABILITY_5, "sprout"},
+    {"furion_teleportation", true, ACT_DOTA_CAST_ABILITY_5, "teleport"},
+    {"furion_force_of_nature", false, ACT_DOTA_CAST_ABILITY_5, "summon"},
+    {"furion_wrath_of_nature", false, ACT_DOTA_CAST_ABILITY_5, "wrath"},
+
+    {"imba_lina_dragon_slave", false, nil, "wave"},
+    {"imba_lina_light_strike_array", false, nil, "lsa"},
+    {"imba_lina_laguna_blade", false, nil, "laguna"},
+
+    {"ogre_magi_fireblast", false, nil, "frostbite"},
+
+    {"imba_omniknight_purification", true, nil, "purification", 1.4},
+    {"imba_omniknight_repel", false, nil, "repel"},
+    {"imba_omniknight_guardian_angel", true, nil, "guardian_angel", 1.3},
+
+    {"imba_phantom_assassin_stifling_dagger", false, ACT_DOTA_ATTACK,"", 2.0},
+    {"imba_phantom_assassin_shadow_strike", false, nil, "qop_blink"},
+
+    {"imba_queen_of_pain_shadow_strike", false, nil, "shadow_strike"},
+    {"imba_queen_of_pain_blink", false, nil, "qop_blink"},
+    {"imba_queen_of_pain_scream_of_pain", false, nil, "scream"},
+    {"imba_queen_of_pain_sonic_wave", false, nil, "sonic_wave"},
+
+    {"imba_nevermore_shadowraze_close", false, ACT_DOTA_CAST_ABILITY_5, "shadowraze", 2.0},
+    {"imba_nevermore_shadowraze_medium", false, ACT_DOTA_CAST_ABILITY_5, "shadowraze", 2.0},
+    {"imba_nevermore_shadowraze_far", false, ACT_DOTA_CAST_ABILITY_5, "shadowraze", 2.0},
+    {"imba_nevermore_requiem_of_souls", true, ACT_DOTA_CAST_ABILITY_5, "requiem"},
+
+    {"imba_sven_warcry", nil, ACT_DOTA_OVERRIDE_ABILITY_3, "strength"},
+    {"imba_sven_gods_strength", nil, ACT_DOTA_OVERRIDE_ABILITY_4, "strength"},
+
+    {"imba_slardar_slithereen_crush", false, ACT_DOTA_MK_SPRING_END, nil},
+
+    {"imba_ursa_earthshock", true, ACT_DOTA_CAST_ABILITY_5, "earthshock", 1.7},
+    {"imba_ursa_overpower", true, ACT_DOTA_OVERRIDE_ABILITY_3, "overpower"},
+    {"imba_ursa_enrage", true, ACT_DOTA_OVERRIDE_ABILITY_4, "enrage"},
+
+    {"imba_vengefulspirit_wave_of_terror", nil, nil, "roar"},
+    {"imba_vengefulspirit_nether_swap", nil, nil, "qop_blink"},
+}
+
+imba_rubick_animations_reference.current = 1
+function imba_rubick_animations_reference:SetCurrentReference( spellName )
+	self.imba_rubick_animations_reference = self:FindReference( spellName )
+end
+function imba_rubick_animations_reference:SetCurrentReferenceIndex( index )
+	imba_rubick_animations_reference.current = index
+end
+function imba_rubick_animations_reference:GetCurrentReference()
+	return self.current
 end
 
-function imba_rubick_fade_bolt:OnSpellStart()
-	if IsServer() then
-		-- Start bouncing with bounce delay
-		Timers:CreateTimer(function()
-			local heroes_need_healing = false
-			local previous_hero = self:GetCaster()
-
-			EmitSoundOn("Hero_Rubick.FadeBolt.Cast", self:GetCaster())
-
-			-- Look for enemy heroes
-			local heroes = FindUnitsInRadius(self:GetCaster():GetTeamNumber(),
-				self:GetCursorTarget():GetAbsOrigin(),
-				nil,
-				self:GetSpecialValueFor("radius"),
-				self:GetAbilityTargetTeam(),
-				self:GetAbilityType(),
-				self:GetAbilityTargetFlags(),
-				FIND_CLOSEST,
-				false
-			)
-
-			-- Search for a hero
-			for _, hero in pairs(heroes) do
-				if hero.damaged_by_fade_bolt ~= true then
-					heroes_need_healing = true
-
-					self.self.fade_bolt_particle = "particles/units/heroes/hero_rubick/rubick_fade_bolt.vpcf"
-
-					-- turn particle to red if break talent is levelup
-					if self:GetCaster():HasTalent("special_bonus_imba_rubick_3") then
-						self.self.fade_bolt_particle = ""
-					end
-
-					-- Mark hero as damaged
-					hero.damaged_by_fade_bolt = true
-
-					-- Apply particle effect
-					local particle = ParticleManager:CreateParticle(self.fade_bolt_particle, PATTACH_CUSTOMORIGIN, previous_hero)
-					ParticleManager:SetParticleControlEnt(particle, 0, previous_hero, PATTACH_POINT_FOLLOW, "attach_hitloc", previous_hero:GetAbsOrigin(), true)
-					ParticleManager:SetParticleControlEnt(particle, 1, hero, PATTACH_POINT_FOLLOW, "attach_hitloc", hero:GetAbsOrigin(), true)
-
-					-- Play cast sound
-					EmitSoundOn("Hero_Rubick.FadeBolt.Target", hero)
-
-					-- Heal target
-					ApplyDamage({
-						attacker = self:GetCaster(),
-						victim = hero,
-						ability = self,
-						damage = self:GetSpecialValueFor("damage"),
-						damage_type = self:GetAbilityDamageType()}
-					)
-
-					-- keep the last hero hit to play the particle for the next bounce
-					previous_hero = hero
-					break
-				end
-			end
-
-			-- If a hero was found, there might be more: repeat operation
-			if heroes_need_healing then
-				return self:GetSpecialValueFor("jump_delay")
-			else
-				return nil
-			end
-		end)
+function imba_rubick_animations_reference:FindReference( spellName )
+	for k,v in pairs(self.animations) do
+		if v[1]==spellName then
+			return k
+		end
 	end
+	return 1
 end
---[[
-modifier_tower_healing_think = modifier_tower_healing_think or class({})
-
-function modifier_tower_healing_think:OnCreated()
-	if IsServer() then
-		-- Ability properties
-		self.particle_heal = "particles/hero/tower/tower_healing_wave.vpcf"
-
-		self:StartIntervalThink(0.2)
-	end
+function imba_rubick_animations_reference:IsNormal()
+	return self.animations[self.current][2] or false
 end
-
-function modifier_tower_healing_think:OnRefresh()
-	self:OnCreated()
+function imba_rubick_animations_reference:GetActivity()
+	return self.animations[self.current][3] or ACT_DOTA_CAST_ABILITY_5
+end
+function imba_rubick_animations_reference:GetTranslate()
+	return self.animations[self.current][4] or ""
+end
+function imba_rubick_animations_reference:GetPlaybackRate()
+	return self.animations[self.current][5] or 1
 end
 
-function modifier_tower_healing_think:IsHidden()
-	return true
-end
-
-function modifier_tower_healing_think:IsPurgable()
-	return false
-end
---]]
 -------------------------------------------
 --			SPELL STEAL
 -------------------------------------------

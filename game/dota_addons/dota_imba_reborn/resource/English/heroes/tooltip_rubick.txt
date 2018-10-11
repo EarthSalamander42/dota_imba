@@ -11,16 +11,23 @@
 "DOTA_Tooltip_ability_imba_rubick_telekinesis_damage"					"LANDING DAMAGE:"
 "DOTA_Tooltip_ability_imba_rubick_telekinesis_cast_range"				"CAST RANGE:"
 
+"DOTA_Tooltip_ability_imba_rubick_fade_bolt"							"#{DOTA_Tooltip_ability_rubick_fade_bolt}"
+"DOTA_Tooltip_ability_imba_rubick_fade_bolt_Description"				"#{DOTA_Tooltip_ability_rubick_fade_bolt_Description}"
+
 "DOTA_Tooltip_ability_imba_rubick_spellsteal"							"#{DOTA_Tooltip_ability_rubick_spell_steal}"
 "DOTA_Tooltip_ability_imba_rubick_spellsteal_Description"				"#{DOTA_Tooltip_ability_rubick_spell_steal_Description}\n<font color='#FF7800'>Eidetic memory:</font> Stolen spells don't expire."
 
 "DOTA_Tooltip_ability_imba_rubick_clandestine_librarian"				"Clandestine Librarian"
 "DOTA_Tooltip_ability_imba_rubick_clandestine_librarian_Description"	"Grants %spell_amp_per_cast%% spell amp every time Spell Steal is cast."
 
+"DOTA_Tooltip_modifier_imba_rubick_clandestine_librarian"				"Clandestine Librarian"
+"DOTA_Tooltip_modifier_imba_rubick_clandestine_librarian_Description"	"Spell Amp increased by %dMODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE%%%."
+
 "DOTA_Tooltip_ability_special_bonus_imba_rubick_1"					"Spell Steal can target creeps"
 "DOTA_Tooltip_ability_special_bonus_imba_rubick_2"					"-0.5s Tekekinesis ally lift time"
-"DOTA_Tooltip_ability_special_bonus_imba_rubick_3"					"" // Fade bolt applies break for 5 seconds
+"DOTA_Tooltip_ability_special_bonus_imba_rubick_3"					"Fade Bolt applies Break for 5 seconds"
 "DOTA_Tooltip_ability_special_bonus_imba_rubick_4"					"+200 Telekinesis hurl distance"
-"DOTA_Tooltip_ability_special_bonus_imba_rubick_5"					"" // Fade Bolt no longer have jump reduction
-"DOTA_Tooltip_ability_special_bonus_imba_rubick_6"					"Telekinesis is now an AoE lifting every enemies in 325 radius"
-"DOTA_Tooltip_ability_special_bonus_imba_rubick_7"					"" // Fade bolt causes its last target to explode (use current Fade Bolt damage)
+"DOTA_Tooltip_ability_special_bonus_imba_rubick_5"					"+5% damage per bounces for Fade Bolt"
+"DOTA_Tooltip_ability_special_bonus_imba_rubick_6"					"+300 radius for Null Field"
+"DOTA_Tooltip_ability_special_bonus_imba_rubick_7"					"Explosive bolt"
+"DOTA_Tooltip_ability_special_bonus_imba_rubick_7_Description"		"Fade bolt causes its last target to explode using current Fade Bolt damage and radius"

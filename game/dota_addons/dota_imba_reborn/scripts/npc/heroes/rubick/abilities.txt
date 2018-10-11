@@ -120,22 +120,22 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"								"ability_lua"
-		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"					"custom/tower_healing_wave"
-		"MaxLevel"								"3"
-		"AbilitySharedWithTeammates"			"1"
-		"AbilityCastRange"						"900"
-		"AbilityCooldown"						"16.0 14.0 12.0 10.0"
+		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"					"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"					"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"ScriptFile"							"components/abilities/buildings/tower_abilities"
+		"AbilityUnitDamageType"					"DAMAGE_TYPE_MAGICAL"	
+		"AbilityTextureName"					"rubick_fade_bolt"
+		"AbilityCastPoint"						"0.1"
+		"AbilityCooldown"						"16.0 14.0 12.0 10.0"
+		"AbilityCastRange"						"800"
+		"ScriptFile"							"components/abilities/heroes/hero_rubick"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
 //			"particle"							"particles/hero/tower/tower_healing_wave.vpcf"
-//			"soundfile"							"soundevents/game_sounds_greevils.vsndevts"
+//			"soundfile"							"soundevents/game_sounds_techies.vsndevts"
 		}
 
 		// Special
@@ -150,8 +150,8 @@
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"jump_damage_reduction_pct"		"0"
-				"LinkedSpecialBonus"			"special_bonus_imba_rubick_2"
+				"jump_damage_bonus_pct"			"0"
+				"LinkedSpecialBonus"			"special_bonus_imba_rubick_5"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"03"
@@ -402,7 +402,7 @@
 	}
 
 	//=================================================================================================================
-	// Rubick Talent 5: Fade Bolt no longer has jump reduction
+	// Rubick Talent 5: Fade Bolt damage increased on each jumps
 	//=================================================================================================================
 	"special_bonus_imba_rubick_5"
 	{
@@ -415,6 +415,17 @@
 		"LinkedAbility"
 		{
 			"01" 	"imba_rubick_fade_bolt"			
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"value"						"5" // % damage increase per jump
+			}
 		}
 	}
 
