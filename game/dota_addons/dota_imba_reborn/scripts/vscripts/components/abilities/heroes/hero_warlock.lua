@@ -1205,13 +1205,13 @@ function modifier_imba_rain_of_chaos_demon_link:OnTakeDamage(keys)
 				ParticleManager:ReleaseParticleIndex(particle_link_damage_fx)
 			end)
 
-			-- Adjust damage according to armor or magic resist, if damage types match.
-			if damage_type == DAMAGE_TYPE_PHYSICAL then
-				damage = damage * (1 - self.parent:GetPhysicalArmorReduction() * 0.01)
+			-- Adjust damage according to armor or magic resist, if damage types match. (COMMENTED OUT DUE TO GAME-BREAKING SCRIPT ERROR)
+			-- if damage_type == DAMAGE_TYPE_PHYSICAL then
+				-- damage = damage * (1 - self.parent:GetPhysicalArmorReduction() * 0.01)
 
-			elseif damage_type == DAMAGE_TYPE_MAGICAL then
-				damage = damage * (1- self.parent:GetMagicalArmorValue() * 0.01)
-			end
+			-- elseif damage_type == DAMAGE_TYPE_MAGICAL then
+				-- damage = damage * (1- self.parent:GetMagicalArmorValue() * 0.01)
+			-- end
 
 			-- Decrease damage to the demon
 			damage = damage * self.scepter_damage_transfer_pct * 0.01
