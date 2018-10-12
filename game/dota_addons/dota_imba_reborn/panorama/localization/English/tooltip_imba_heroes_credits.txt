@@ -8,13 +8,14 @@
 
 "code_credits_npc_dota_hero_abaddon"					"" // Broccoli
 "code_credits_npc_dota_hero_alchemist"					"76561198087803933" // Hewdraw
+"code_credits_npc_dota_hero_antimage"					"76561198025685495" // AtroCty
 "code_credits_npc_dota_hero_axe"						"76561197994094469" // sercankd
 "code_credits_npc_dota_hero_bane"						"76561197973712418" // Seinken
-// "code_credits_npc_dota_hero_beastmaster"				"76561198098263374" // Fudge
+// "code_credits_npc_dota_hero_beastmaster"				"76561198098263374" // Fudge (luafied ability. not used atm)
 "code_credits_npc_dota_hero_bloodseeker"				"76561197973712418" // Seinken
 "code_credits_npc_dota_hero_bounty_hunter"				"76561197994333648" // Shush
 "code_credits_npc_dota_hero_centaur"					"76561197973712418" // Seinken
-"code_credits_npc_dota_hero_chaos_knight"				"76561198015161808" // EarthSalamander #42
+// "code_credits_npc_dota_hero_chaos_knight"				"76561198015161808" // EarthSalamander #42 (luafied ability. not used atm)
 "code_credits_npc_dota_hero_clinkz"						"76561197994333648" // Shush
 "code_credits_npc_dota_hero_crystal_maiden"				"76561198087803933" // Hewdraw
 "code_credits_npc_dota_hero_crystal_maiden_editor_1"	"76561198026254554" // Noobsauce
@@ -55,7 +56,6 @@
 "code_credits_npc_dota_hero_pangolier"					"76561198043373050" // Lindbrum
 "code_credits_npc_dota_hero_phantom_assassin"			"76561197994094469" // sercankd
 "code_credits_npc_dota_hero_phantom_assassin_editor_1"	"76561198055762111" // zimberzimber
-"code_credits_npc_dota_hero_phantom_assassin_editor_2"	"76561198015161808" // EarthSalamander #42
 "code_credits_npc_dota_hero_phoenix"					"76561198097609945" // MouJiaoZi
 "code_credits_npc_dota_hero_pudge"						"76561198097609945" // MouJiaoZi
 "code_credits_npc_dota_hero_pugna"						"76561197994333648" // Shush
@@ -74,23 +74,23 @@
 "code_credits_npc_dota_hero_skywrath_mage"				"76561197994333648" // Shush
 "code_credits_npc_dota_hero_slardar"					"76561197994333648" // Shush
 "code_credits_npc_dota_hero_sly_king"					"76561198020031655" // Champi Suicidaire
-"code_credits_npc_dota_hero_sly_king_editor_1"			"76561198015161808" // EarthSalamander #42
-"code_credits_npc_dota_hero_sly_king_editor_2"			"76561198043373050" // Lindbrum
+"code_credits_npc_dota_hero_sly_king_editor_1"			"76561198043373050" // Lindbrum
+"code_credits_npc_dota_hero_sly_king_editor_2"			"76561198015161808" // EarthSalamander #42
 "code_credits_npc_dota_hero_sniper"						"76561197994333648" // Shush
-"code_credits_npc_dota_hero_sohei"						"76561198007141460" // Firetoad
-"code_credits_npc_dota_hero_sohei_editor_1"				"76561198003571172" // Baumi
-"code_credits_npc_dota_hero_sohei_editor_2"				"76561198015161808" // EarthSalamander #42
-"code_credits_npc_dota_hero_sohei_editor_3"				"" // 
-"code_credits_npc_dota_hero_sohei_editor_4"				"" // 
-"code_credits_npc_dota_hero_sohei_editor_5"				"" // 
+// "code_credits_npc_dota_hero_sohei"						"76561198007141460" // Firetoad (Credits for all contributors not finished yet)
+// "code_credits_npc_dota_hero_sohei_editor_1"				"76561198003571172" // Baumi (Credits for all contributors not finished yet)
+// "code_credits_npc_dota_hero_sohei_editor_2"				"76561198015161808" // EarthSalamander #42 (Credits for all contributors not finished yet)
+// "code_credits_npc_dota_hero_sohei_editor_3"				"" //  (Credits for all contributors not finished yet)
+// "code_credits_npc_dota_hero_sohei_editor_4"				"" //  (Credits for all contributors not finished yet)
+// "code_credits_npc_dota_hero_sohei_editor_5"				"" //  (Credits for all contributors not finished yet)
 "code_credits_npc_dota_hero_storegga"					"76561198015161808" // EarthSalamander #42
 "code_credits_npc_dota_hero_storm_spirit"				"76561198098263374" // Fudge
 "code_credits_npc_dota_hero_sven"						"76561198007141460" // Firetoad
 "code_credits_npc_dota_hero_sven_editor_1"				"76561198025685495" // AtroCty
-"code_credits_npc_dota_hero_techies"					"76561197994333648" // Shush
-"code_credits_npc_dota_hero_tidehunter"					"76561198098263374" // Fudge
-"code_credits_npc_dota_hero_tinker"						"76561198007141460" // Firetoad
-"code_credits_npc_dota_hero_tinker_editor_1"			"76561198025685495" // AtroCty
+// "code_credits_npc_dota_hero_techies"					"76561197994333648" // Shush (IMBAfication disabled atm)
+// "code_credits_npc_dota_hero_tidehunter"					"76561198098263374" // Fudge (luafied ability)
+// "code_credits_npc_dota_hero_tinker"						"76561198007141460" // Firetoad (IMBAfication disabled atm)
+// "code_credits_npc_dota_hero_tinker_editor_1"			"76561198025685495" // AtroCty (IMBAfication disabled atm)
 "code_credits_npc_dota_hero_tiny"						"76561197996377179" // yahnich
 "code_credits_npc_dota_hero_tiny_editor_1"				"76561198044195452" // naowin
 "code_credits_npc_dota_hero_troll_warlord"				"76561198007141460" // Firetoad
@@ -98,8 +98,8 @@
 "code_credits_npc_dota_hero_ursa"						"76561197973712418" // Seinken
 "code_credits_npc_dota_hero_vengefulspirit"				"76561198007141460" // Firetoad
 "code_credits_npc_dota_hero_vengefulspirit_editor_1"	"76561198025685495" // AtroCty
-"code_credits_npc_dota_hero_venomancer"					"76561198007141460" // Firetoad
-"code_credits_npc_dota_hero_venomancer_editor_1"		"76561198025685495" // AtroCty
+// "code_credits_npc_dota_hero_venomancer"					"76561198007141460" // Firetoad (IMBAfication disabled atm)
+// "code_credits_npc_dota_hero_venomancer_editor_1"		"76561198025685495" // AtroCty (IMBAfication disabled atm)
 "code_credits_npc_dota_hero_warlock"					"76561197994333648" // Shush
 "code_credits_npc_dota_hero_warlock_editor_1"			"76561198044195452" // naowin
 "code_credits_npc_dota_hero_witch_doctor"				"76561197996377179" // yahnich

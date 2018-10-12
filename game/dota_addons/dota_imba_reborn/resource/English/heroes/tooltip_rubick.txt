@@ -41,7 +41,7 @@
 
 "DOTA_Tooltip_ability_imba_rubick_spellsteal"							"#{DOTA_Tooltip_ability_rubick_spell_steal}"
 "DOTA_Tooltip_ability_imba_rubick_spellsteal_Description"				"#{DOTA_Tooltip_ability_rubick_spell_steal_Description}\n<font color='#FF7800'>Eidetic memory:</font> Stolen spells don't expire."
-"DOTA_Tooltip_ability_imba_rubick_spellsteal_aghanim_description"		"Copy the target base spell amplification. Expire on death or when another spell is stolen."
+"DOTA_Tooltip_ability_imba_rubick_spellsteal_aghanim_description"		"Copy the target spell amplification. Expire on death or when another spell is stolen."
 
 "DOTA_Tooltip_ability_imba_rubick_clandestine_librarian"				"Clandestine Librarian"
 "DOTA_Tooltip_ability_imba_rubick_clandestine_librarian_Description"	"Grants %spell_amp_per_cast%% spell amp every time Spell Steal is cast."

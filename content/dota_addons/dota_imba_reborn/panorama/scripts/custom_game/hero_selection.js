@@ -1018,6 +1018,8 @@ function UpdateAbilities(abilityList) {
 	abilityParentPanel.SetHasClass("five_abilities", ability_count == 5);
 	abilityParentPanel.SetHasClass("four_abilities", ability_count == 4);
 
+	// Credits panel
+
 	if ($("#credits_coder_panel"))
 		$("#credits_coder_panel").DeleteAsync(0)
 
@@ -1049,7 +1051,6 @@ function UpdateAbilities(abilityList) {
 	while (editor_steamid.search("7") != -1) {
 
 		if (i == 1) {
-			$.Msg("Create editor label!")
 			var editor_label = $.CreatePanel('Label', coder_panel, "credits_editor_label");
 			editor_label.text = "Contributors: "
 		}
@@ -1066,9 +1067,7 @@ function UpdateAbilities(abilityList) {
 
 		i++;
 
-		$.Msg("old SteamID: " + editor_steamid)
 		editor_steamid = $.Localize("#code_credits_" + abilityList[0] + "_editor_" + i)
-		$.Msg("new SteamID: " + editor_steamid)
 	}
 }
 

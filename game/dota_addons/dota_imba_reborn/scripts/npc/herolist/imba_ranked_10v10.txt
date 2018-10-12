@@ -124,7 +124,7 @@
 
 	// Custom Heroes
 	"npc_dota_hero_hell_empress" 		"1"
-	"npc_dota_hero_malfurion"			"1"
+//	"npc_dota_hero_malfurion"			"0"
 	"npc_dota_hero_scaldris"			"1"
 //	"npc_dota_hero_storegga"			"0" // not implemented
 }

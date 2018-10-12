@@ -488,11 +488,12 @@ function imba_rubick_fade_bolt:OnSpellStart()
 					kaboom = true
 					return FrameTime()
 				end
+
 				-- reset fade bolt hit counter
 				for _, damaged in pairs(entities_damaged) do
-					damaged.damaged_by_fade_bolt = nil
+					damaged.damaged_by_fade_bolt = false
 				end
-				entities_damaged = nil
+
 				return nil
 			end
 		end)
@@ -570,9 +571,11 @@ function imba_rubick_null_field:OnSpellStart()
 		if self:GetCaster():HasModifier("modifier_imba_rubick_null_field_aura") then
 			self:GetCaster():RemoveModifierByName("modifier_imba_rubick_null_field_aura")
 			self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_rubick_null_field_aura_debuff", {})
+			self:GetCaster():EmitSound("Hero_Rubick.NullField.Offense")
 		elseif self:GetCaster():HasModifier("modifier_imba_rubick_null_field_aura_debuff") then
 			self:GetCaster():RemoveModifierByName("modifier_imba_rubick_null_field_aura_debuff")
 			self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_rubick_null_field_aura", {})
+			self:GetCaster():EmitSound("Hero_Rubick.NullField.Defense")
 		end
 	end
 end
@@ -751,7 +754,7 @@ end
 
 function modifier_imba_rubick_clandestine_librarian:OnAbilityFullyCast( keys )
 	if keys.unit == self:GetParent() then
-		if keys.ability:GetAbilityName() == "imba_rubick_spellsteal" then
+		if keys.ability:GetAbilityName() == "imba_rubick_spellsteal" and self:GetStackCount() < self:GetAbility():GetSpecialValueFor("max_spell_amp") then
 			self:SetStackCount(self:GetStackCount() + self:GetAbility():GetSpecialValueFor("spell_amp_per_cast"))
 		end
 	end
@@ -996,7 +999,7 @@ function imba_rubick_spellsteal:OnProjectileHit( target, location )
 		self:GetCaster(), -- player source
 		self, -- ability source
 		"modifier_imba_rubick_spellsteal", -- modifier name
-		{spell_amp = self.spell_target:GetSpellAmplification(true)} -- kv
+		{spell_amp = self.spell_target:GetSpellAmplification(false)} -- kv
 	)
 
 	local sound_cast = "Hero_Rubick.SpellSteal.Complete"

@@ -127,7 +127,7 @@
 					</Button>
 				</Panel>
 -->
-				<Button id="CompanionNotification" onactivate="DOTADisplayURL('https://www.patreon.com/earthsalamander42');">
+				<Button id="CompanionNotification" onactivate="DOTADisplayURL('https://www.patreon.com/bePatron?u=2533325');">
 					<Label id="CompanionNotificationLabel"/>
 				</Button>
 	
