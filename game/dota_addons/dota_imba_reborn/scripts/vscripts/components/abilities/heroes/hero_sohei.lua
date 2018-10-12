@@ -1,5 +1,14 @@
+-- Author:
+--		Firetoad
+
 -- Editors:
---     Seinken, 16.03.2017
+--     Baumi
+
+-- Custom hero system
+--		EarthSalamander #42
+
+-- Model:
+--		Carlos RPG
 
 sohei_dash = sohei_dash or class ({})
 

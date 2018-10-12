@@ -739,6 +739,9 @@ function HeroSelection:GetPickScreenAbilities(hero_name)
 		end
 	end
 
+	-- send the hero name at index 0
+	hero_abilities[0] = hero_name
+
 	for i = 1, 24 do
 		if custom_hero == true then
 			ability = GetKeyValue(hero_name, "Ability"..i)

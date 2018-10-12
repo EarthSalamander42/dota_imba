@@ -41,10 +41,10 @@ function imba_alchemist_acid_spray:GetCastRange(location, target)
 end
 
 function imba_alchemist_acid_spray:IsHiddenWhenStolen()
-	local caster = self:GetCaster()
-	if caster:HasAbility("imba_alchemist_chemical_rage") then
-		return true
-	end
+--	local caster = self:GetCaster()
+--	if caster:HasAbility("imba_alchemist_chemical_rage") then
+--		return true
+--	end
 	return false
 end
 

@@ -28,7 +28,14 @@ function FindActiveRemnants(caster)
 	end
 
 	if #remnants > 0 then
-		return remnants
+		local available_remnants = {}
+		for _, remnant in pairs(remnants) do
+			if remnant:GetTeam() == caster:GetTeam() then
+				table.insert(available_remnants, remnant)
+			end
+		end
+
+		return available_remnants
 	else
 		return nil
 	end

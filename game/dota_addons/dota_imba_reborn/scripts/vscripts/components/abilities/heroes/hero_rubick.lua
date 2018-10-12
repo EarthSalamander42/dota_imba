@@ -561,6 +561,10 @@ function imba_rubick_null_field:GetIntrinsicModifierName()
 	return "modifier_imba_rubick_null_field_aura"
 end
 
+function imba_rubick_null_field:GetCastRange(location, target)
+	return self.BaseClass.GetCastRange(self, location, target) + self:GetCaster():FindTalentValue("special_bonus_imba_rubick_6");
+end
+
 function imba_rubick_null_field:OnSpellStart()
 	if IsServer() then
 		if self:GetCaster():HasModifier("modifier_imba_rubick_null_field_aura") then
@@ -653,13 +657,13 @@ function modifier_imba_rubick_null_field:IsPurgable() return false end
 
 function modifier_imba_rubick_null_field:OnCreated()
 	self.bonus_magic_resist = self:GetAbility():GetSpecialValueFor("magic_damage_reduction_pct")
-	self.bonus_spell_amp = self:GetAbility():GetSpecialValueFor("spell_amp_reduction_pct")
+	self.bonus_status_resistance = self:GetAbility():GetSpecialValueFor("status_resistance_reduction_pct")
 end
 
 function modifier_imba_rubick_null_field:DeclareFunctions()
 	local funcs = {
 		MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS,
-		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
+		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING,
 	}
 
 	return funcs
@@ -669,8 +673,8 @@ function modifier_imba_rubick_null_field:GetModifierMagicalResistanceBonus()
 	return self.bonus_magic_resist
 end
 
-function modifier_imba_rubick_null_field:GetModifierSpellAmplify_Percentage()
-	return self.bonus_spell_amp
+function modifier_imba_rubick_null_field:GetModifierStatusResistanceStacking()
+	return self.bonus_status_resistance
 end
 
 --[[ -- talent idea
@@ -687,13 +691,13 @@ function modifier_imba_rubick_null_field_debuff:IsPurgable() return false end
 
 function modifier_imba_rubick_null_field_debuff:OnCreated()
 	self.bonus_magic_resist = self:GetAbility():GetSpecialValueFor("magic_damage_reduction_pct") * (-1)
-	self.bonus_spell_amp = self:GetAbility():GetSpecialValueFor("spell_amp_reduction_pct") * (-1)
+	self.bonus_status_resistance = self:GetAbility():GetSpecialValueFor("status_resistance_reduction_pct") * (-1)
 end
 
 function modifier_imba_rubick_null_field_debuff:DeclareFunctions()
 	local funcs = {
 		MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS,
-		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
+		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING,
 	}
 
 	return funcs
@@ -703,8 +707,8 @@ function modifier_imba_rubick_null_field_debuff:GetModifierMagicalResistanceBonu
 	return self.bonus_magic_resist
 end
 
-function modifier_imba_rubick_null_field_debuff:GetModifierSpellAmplify_Percentage()
-	return self.bonus_spell_amp
+function modifier_imba_rubick_null_field_debuff:GetModifierStatusResistanceStacking()
+	return self.bonus_status_resistance
 end
 
 --[[ -- talent idea
@@ -764,73 +768,75 @@ imba_rubick_animations_reference = {}
 
 imba_rubick_animations_reference.animations = {
 -- AbilityName, bNormalWhenStolen, nActivity, nTranslate, fPlaybackRate
-    {"default", nil, ACT_DOTA_CAST_ABILITY_5, "bolt"},
+	{"default", nil, ACT_DOTA_CAST_ABILITY_5, "bolt"},
 
-    {"imba_abaddon_mist_coil", false, ACT_DOTA_CAST_ABILITY_3, "", 1.4},
+	{"imba_abaddon_mist_coil", false, ACT_DOTA_CAST_ABILITY_3, "", 1.4},
 
-    {"imba_antimage_blink", nil, nil, "am_blink"},
-    {"imba_antimage_mana_void", false, ACT_DOTA_CAST_ABILITY_5, "mana_void"},
+	{"imba_axe_berserkers_call", false, ACT_DOTA_CAST_ABILITY_3, "", 1.0},
 
-    {"imba_bane_brain_sap", false, ACT_DOTA_CAST_ABILITY_5,"brain_sap"},
-    {"imba_bane_fiends_grip", false, ACT_DOTA_CHANNEL_ABILITY_5,"fiends_grip"},
+	{"imba_antimage_blink", nil, nil, "am_blink"},
+	{"imba_antimage_mana_void", false, ACT_DOTA_CAST_ABILITY_5, "mana_void"},
 
-    {"bristleback_viscous_nasal_goo", false, ACT_DOTA_ATTACK,"",2.0},
+	{"imba_bane_brain_sap", false, ACT_DOTA_CAST_ABILITY_5,"brain_sap"},
+	{"imba_bane_fiends_grip", false, ACT_DOTA_CHANNEL_ABILITY_5,"fiends_grip"},
 
-    {"chaos_knight_chaos_bolt", false, ACT_DOTA_ATTACK,"", 2.0},
-    {"chaos_knight_reality_rift", true, ACT_DOTA_CAST_ABILITY_5, "strike", 2.0},
-    {"chaos_knight_phantasm", true, ACT_DOTA_CAST_ABILITY_5, "remnant"},
+	{"bristleback_viscous_nasal_goo", false, ACT_DOTA_ATTACK,"",2.0},
 
-    {"imba_centaur_warrunner_hoof_stomp", false, ACT_DOTA_CAST_ABILITY_5, "slam", 2.0},
-    {"imba_centaur_warrunner_double_edge", false, ACT_DOTA_ATTACK, "", 2.0},
-    {"imba_centaur_warrunner_stampede", false, ACT_DOTA_OVERRIDE_ABILITY_4, "strength"},
+	{"chaos_knight_chaos_bolt", false, ACT_DOTA_ATTACK,"", 2.0},
+	{"chaos_knight_reality_rift", true, ACT_DOTA_CAST_ABILITY_5, "strike", 2.0},
+	{"chaos_knight_phantasm", true, ACT_DOTA_CAST_ABILITY_5, "remnant"},
 
-    {"imba_crystal_maiden_crystal_nova", false, ACT_DOTA_CAST_ABILITY_5, "crystal_nova"},
-    {"imba_crystal_maiden_frostbite", false, ACT_DOTA_CAST_ABILITY_5, "frostbite"},
-    {"imba_crystal_maiden_freezing_field", false, ACT_DOTA_CHANNEL_ABILITY_5, "freezing_field"},
+	{"imba_centaur_warrunner_hoof_stomp", false, ACT_DOTA_CAST_ABILITY_5, "slam", 2.0},
+	{"imba_centaur_warrunner_double_edge", false, ACT_DOTA_ATTACK, "", 2.0},
+	{"imba_centaur_warrunner_stampede", false, ACT_DOTA_OVERRIDE_ABILITY_4, "strength"},
 
-    {"imba_dazzle_shallow_grave", false, ACT_DOTA_CAST_ABILITY_5, "repel"},
-    {"imba_dazzle_shadow_wave", false, ACT_DOTA_CAST_ABILITY_3, ""},
-    {"imba_dazzle_weave", false, ACT_DOTA_CAST_ABILITY_5, "crystal_nova"},
+	{"imba_crystal_maiden_crystal_nova", false, ACT_DOTA_CAST_ABILITY_5, "crystal_nova"},
+	{"imba_crystal_maiden_frostbite", false, ACT_DOTA_CAST_ABILITY_5, "frostbite"},
+	{"imba_crystal_maiden_freezing_field", false, ACT_DOTA_CHANNEL_ABILITY_5, "freezing_field"},
 
-    {"furion_sprout", false, ACT_DOTA_CAST_ABILITY_5, "sprout"},
-    {"furion_teleportation", true, ACT_DOTA_CAST_ABILITY_5, "teleport"},
-    {"furion_force_of_nature", false, ACT_DOTA_CAST_ABILITY_5, "summon"},
-    {"furion_wrath_of_nature", false, ACT_DOTA_CAST_ABILITY_5, "wrath"},
+	{"imba_dazzle_shallow_grave", false, ACT_DOTA_CAST_ABILITY_5, "repel"},
+	{"imba_dazzle_shadow_wave", false, ACT_DOTA_CAST_ABILITY_3, ""},
+	{"imba_dazzle_weave", false, ACT_DOTA_CAST_ABILITY_5, "crystal_nova"},
 
-    {"imba_lina_dragon_slave", false, nil, "wave"},
-    {"imba_lina_light_strike_array", false, nil, "lsa"},
-    {"imba_lina_laguna_blade", false, nil, "laguna"},
+	{"furion_sprout", false, ACT_DOTA_CAST_ABILITY_5, "sprout"},
+	{"furion_teleportation", true, ACT_DOTA_CAST_ABILITY_5, "teleport"},
+	{"furion_force_of_nature", false, ACT_DOTA_CAST_ABILITY_5, "summon"},
+	{"furion_wrath_of_nature", false, ACT_DOTA_CAST_ABILITY_5, "wrath"},
 
-    {"ogre_magi_fireblast", false, nil, "frostbite"},
+	{"imba_lina_dragon_slave", false, nil, "wave"},
+	{"imba_lina_light_strike_array", false, nil, "lsa"},
+	{"imba_lina_laguna_blade", false, nil, "laguna"},
 
-    {"imba_omniknight_purification", true, nil, "purification", 1.4},
-    {"imba_omniknight_repel", false, nil, "repel"},
-    {"imba_omniknight_guardian_angel", true, nil, "guardian_angel", 1.3},
+	{"ogre_magi_fireblast", false, nil, "frostbite"},
 
-    {"imba_phantom_assassin_stifling_dagger", false, ACT_DOTA_ATTACK,"", 2.0},
-    {"imba_phantom_assassin_shadow_strike", false, nil, "qop_blink"},
+	{"imba_omniknight_purification", true, nil, "purification", 1.4},
+	{"imba_omniknight_repel", false, nil, "repel"},
+	{"imba_omniknight_guardian_angel", true, nil, "guardian_angel", 1.3},
 
-    {"imba_queen_of_pain_shadow_strike", false, nil, "shadow_strike"},
-    {"imba_queen_of_pain_blink", false, nil, "qop_blink"},
-    {"imba_queen_of_pain_scream_of_pain", false, nil, "scream"},
-    {"imba_queen_of_pain_sonic_wave", false, nil, "sonic_wave"},
+	{"imba_phantom_assassin_stifling_dagger", false, ACT_DOTA_ATTACK,"", 2.0},
+	{"imba_phantom_assassin_shadow_strike", false, nil, "qop_blink"},
 
-    {"imba_nevermore_shadowraze_close", false, ACT_DOTA_CAST_ABILITY_5, "shadowraze", 2.0},
-    {"imba_nevermore_shadowraze_medium", false, ACT_DOTA_CAST_ABILITY_5, "shadowraze", 2.0},
-    {"imba_nevermore_shadowraze_far", false, ACT_DOTA_CAST_ABILITY_5, "shadowraze", 2.0},
-    {"imba_nevermore_requiem_of_souls", true, ACT_DOTA_CAST_ABILITY_5, "requiem"},
+	{"imba_queen_of_pain_shadow_strike", false, nil, "shadow_strike"},
+	{"imba_queen_of_pain_blink", false, nil, "qop_blink"},
+	{"imba_queen_of_pain_scream_of_pain", false, nil, "scream"},
+	{"imba_queen_of_pain_sonic_wave", false, nil, "sonic_wave"},
 
-    {"imba_sven_warcry", nil, ACT_DOTA_OVERRIDE_ABILITY_3, "strength"},
-    {"imba_sven_gods_strength", nil, ACT_DOTA_OVERRIDE_ABILITY_4, "strength"},
+	{"imba_nevermore_shadowraze_close", false, ACT_DOTA_CAST_ABILITY_5, "shadowraze", 2.0},
+	{"imba_nevermore_shadowraze_medium", false, ACT_DOTA_CAST_ABILITY_5, "shadowraze", 2.0},
+	{"imba_nevermore_shadowraze_far", false, ACT_DOTA_CAST_ABILITY_5, "shadowraze", 2.0},
+	{"imba_nevermore_requiem_of_souls", true, ACT_DOTA_CAST_ABILITY_5, "requiem"},
 
-    {"imba_slardar_slithereen_crush", false, ACT_DOTA_MK_SPRING_END, nil},
+	{"imba_sven_warcry", nil, ACT_DOTA_OVERRIDE_ABILITY_3, "strength"},
+	{"imba_sven_gods_strength", nil, ACT_DOTA_OVERRIDE_ABILITY_4, "strength"},
 
-    {"imba_ursa_earthshock", true, ACT_DOTA_CAST_ABILITY_5, "earthshock", 1.7},
-    {"imba_ursa_overpower", true, ACT_DOTA_OVERRIDE_ABILITY_3, "overpower"},
-    {"imba_ursa_enrage", true, ACT_DOTA_OVERRIDE_ABILITY_4, "enrage"},
+	{"imba_slardar_slithereen_crush", false, ACT_DOTA_MK_SPRING_END, nil},
 
-    {"imba_vengefulspirit_wave_of_terror", nil, nil, "roar"},
-    {"imba_vengefulspirit_nether_swap", nil, nil, "qop_blink"},
+	{"imba_ursa_earthshock", true, ACT_DOTA_CAST_ABILITY_5, "earthshock", 1.7},
+	{"imba_ursa_overpower", true, ACT_DOTA_OVERRIDE_ABILITY_3, "overpower"},
+	{"imba_ursa_enrage", true, ACT_DOTA_OVERRIDE_ABILITY_4, "enrage"},
+
+	{"imba_vengefulspirit_wave_of_terror", nil, nil, "roar"},
+	{"imba_vengefulspirit_nether_swap", nil, nil, "qop_blink"},
 }
 
 imba_rubick_animations_reference.current = 1
@@ -937,31 +943,30 @@ end
 imba_rubick_spellsteal.stolenSpell = nil
 function imba_rubick_spellsteal:OnSpellStart()
 	-- unit identifier
-	local caster = self:GetCaster()
-	local target = self:GetCursorTarget()
+	self.spell_target = self:GetCursorTarget()
 
 	-- Cancel if blocked
-	if target:TriggerSpellAbsorb( self ) then
+	if self.spell_target:TriggerSpellAbsorb( self ) then
 		return
 	end
 
 	-- Get last used spell
 	self.stolenSpell = {}
-	self.stolenSpell.stolenFrom = self:GetLastSpell( target ).handle:GetUnitName()
-	self.stolenSpell.primarySpell = self:GetLastSpell( target ).primarySpell
-	self.stolenSpell.secondarySpell = self:GetLastSpell( target ).secondarySpell
+	self.stolenSpell.stolenFrom = self:GetLastSpell( self.spell_target ).handle:GetUnitName()
+	self.stolenSpell.primarySpell = self:GetLastSpell( self.spell_target ).primarySpell
+	self.stolenSpell.secondarySpell = self:GetLastSpell( self.spell_target ).secondarySpell
 	-- load data
 	local projectile_name = "particles/units/heroes/hero_rubick/rubick_spell_steal.vpcf"
 	local projectile_speed = self:GetSpecialValueFor("projectile_speed")
 
 	-- Create Projectile
 	local info = {
-		Target = caster,
-		Source = target,
+		Target = self:GetCaster(),
+		Source = self.spell_target,
 		Ability = self,	
 		EffectName = projectile_name,
 		iMoveSpeed = projectile_speed,
-		vSourceLoc = target:GetAbsOrigin(),                -- Optional (HOW)
+		vSourceLoc = self.spell_target:GetAbsOrigin(),                -- Optional (HOW)
 		bDrawsOnMinimap = false,                          -- Optional
 		bDodgeable = false,                                -- Optional
 		bVisibleToEnemies = true,                         -- Optional
@@ -971,9 +976,14 @@ function imba_rubick_spellsteal:OnSpellStart()
 
 	-- Play effects
 	local sound_cast = "Hero_Rubick.SpellSteal.Cast"
-	EmitSoundOn( sound_cast, caster )
+	EmitSoundOn( sound_cast, self:GetCaster() )
 	local sound_target = "Hero_Rubick.SpellSteal.Target"
-	EmitSoundOn( sound_target, target )
+	EmitSoundOn( sound_target, self.spell_target )
+
+	-- need to remove it to send the right spell amp stolen with aghanim
+	if self:GetCaster():HasModifier("modifier_imba_rubick_spellsteal") then
+		self:GetCaster():RemoveModifierByName("modifier_imba_rubick_spellsteal")
+	end
 end
 
 function imba_rubick_spellsteal:OnProjectileHit( target, location )
@@ -986,7 +996,7 @@ function imba_rubick_spellsteal:OnProjectileHit( target, location )
 		self:GetCaster(), -- player source
 		self, -- ability source
 		"modifier_imba_rubick_spellsteal", -- modifier name
-		{} -- kv
+		{spell_amp = self.spell_target:GetSpellAmplification(true)} -- kv
 	)
 
 	local sound_cast = "Hero_Rubick.SpellSteal.Complete"
@@ -1120,7 +1130,7 @@ function imba_rubick_spellsteal:SetStolenSpell( spellData )
 		self:GetCaster():SwapAbilities( self.slot2, self.CurrentSecondarySpell:GetAbilityName(), false, true )
 	end
 
- 	-- Animations override
+	-- Animations override
 	self.animations:SetCurrentReference( self.CurrentPrimarySpell:GetAbilityName() )
 	if not self.animations:IsNormal() then
 		self.CurrentPrimarySpell:SetOverrideCastPoint( 0.1 )
@@ -1132,8 +1142,8 @@ function imba_rubick_spellsteal:ForgetSpell()
 	if self.CurrentSpellOwner ~= nil then
 		for i = 0, self:GetCaster():GetModifierCount() -1 do
 			if string.find(self:GetCaster():GetModifierNameByIndex(i),string.gsub(self.CurrentSpellOwner, "npc_dota_hero_","")) then
-            	self:GetCaster():RemoveModifierByName(self:GetCaster():GetModifierNameByIndex(i))
-        	end	
+				self:GetCaster():RemoveModifierByName(self:GetCaster():GetModifierNameByIndex(i))
+			end	
 		end
 	end
 	if self.CurrentPrimarySpell~=nil and not self.CurrentPrimarySpell:IsNull() then
@@ -1227,8 +1237,24 @@ function modifier_imba_rubick_spellsteal:IsHidden() return true end
 function modifier_imba_rubick_spellsteal:IsDebuff()	return false end
 function modifier_imba_rubick_spellsteal:IsPurgable() return false end
 
-function modifier_imba_rubick_spellsteal:OnCreated( kv ) end
-function modifier_imba_rubick_spellsteal:OnRefresh( kv ) end
+function modifier_imba_rubick_spellsteal:OnCreated( kv )
+	if IsClient() then return end
+	self.stolen_spell_amp = kv.spell_amp * 100
+
+	if self:GetParent():HasScepter() then
+		print("Spell Amp:", self.stolen_spell_amp)
+		self:SetStackCount(self.stolen_spell_amp)
+	end
+end
+
+function modifier_imba_rubick_spellsteal:OnRefresh( kv )
+	if IsClient() then return end
+	if self:GetParent():HasScepter() then
+		print("Spell Amp (refresh):", self.stolen_spell_amp)
+		self:SetStackCount(self.stolen_spell_amp)
+	end
+end
+
 function modifier_imba_rubick_spellsteal:OnDestroy( kv ) 
 	self:GetAbility():ForgetSpell() 
 end
@@ -1239,6 +1265,7 @@ end
 function modifier_imba_rubick_spellsteal:DeclareFunctions()
 	local funcs = {
 		MODIFIER_EVENT_ON_ABILITY_START,
+		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
 	}
 
 	return funcs
@@ -1270,28 +1297,32 @@ function modifier_imba_rubick_spellsteal:OnAbilityStart( params )
 		end
 	end
 end
+
+function modifier_imba_rubick_spellsteal:GetModifierSpellAmplify_Percentage()
+	return self:GetStackCount()
+end
+
 -------------------------------------------
 --	modifier_imba_rubick_spellsteal_animation
 -------------------------------------------
 modifier_imba_rubick_spellsteal_animation = class({})
-
 
 function modifier_imba_rubick_spellsteal_animation:IsHidden() return false end
 function modifier_imba_rubick_spellsteal_animation:IsDebuff() return false end
 function modifier_imba_rubick_spellsteal_animation:IsPurgable() return false end
 
 function modifier_imba_rubick_spellsteal_animation:OnCreated( kv )
-    if IsServer() then
-        -- Get SpellName
-        self.spellName = kv.spellName
+	if IsServer() then
+		-- Get SpellName
+		self.spellName = kv.spellName
 
-        -- Set stack to current reference
-        self:SetStackCount( self:GetAbility().animations:GetCurrentReference() )
-    end
-    if not IsServer() then
-        -- Retrieve current reference
-        self:GetAbility().animations:SetCurrentReferenceIndex( self:GetStackCount() )
-    end
+		-- Set stack to current reference
+		self:SetStackCount( self:GetAbility().animations:GetCurrentReference() )
+	end
+	if not IsServer() then
+		-- Retrieve current reference
+		self:GetAbility().animations:SetCurrentReferenceIndex( self:GetStackCount() )
+	end
 end
 
 function modifier_imba_rubick_spellsteal_animation:OnRefresh( kv ) end
@@ -1299,32 +1330,32 @@ function modifier_imba_rubick_spellsteal_animation:OnDestroy( kv ) end
 
 function modifier_imba_rubick_spellsteal_animation:DeclareFunctions() 
   local funcs = {
-    MODIFIER_PROPERTY_OVERRIDE_ANIMATION,
-    MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE,
-    -- MODIFIER_PROPERTY_OVERRIDE_ANIMATION_WEIGHT,
-    MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS,
-    MODIFIER_EVENT_ON_ORDER,
+	MODIFIER_PROPERTY_OVERRIDE_ANIMATION,
+	MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE,
+	-- MODIFIER_PROPERTY_OVERRIDE_ANIMATION_WEIGHT,
+	MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS,
+	MODIFIER_EVENT_ON_ORDER,
   }
  
   return funcs
 end
 
 function modifier_imba_rubick_spellsteal_animation:GetOverrideAnimation()
-    return self:GetAbility().animations:GetActivity()
+	return self:GetAbility().animations:GetActivity()
 end
 
 function modifier_imba_rubick_spellsteal_animation:GetOverrideAnimationRate()
-    return self:GetAbility().animations:GetPlaybackRate()
+	return self:GetAbility().animations:GetPlaybackRate()
 end
 
 function modifier_imba_rubick_spellsteal_animation:GetActivityTranslationModifiers()
-    return self:GetAbility().animations:GetTranslate()
+	return self:GetAbility().animations:GetTranslate()
 end
 
 function modifier_imba_rubick_spellsteal_animation:OnOrder( params )
-    if IsServer() then
-        if params.unit==self:GetParent() then
-            self:Destroy()
-        end
-    end
+	if IsServer() then
+		if params.unit==self:GetParent() then
+			self:Destroy()
+		end
+	end
 end

@@ -238,6 +238,10 @@
 								<Panel id="AghanimPreview" class="PickedHeroAbility" onmouseover="CustomTooltip('aghanim', true)" onmouseout="CustomTooltip('aghanim', false)" itemname="item_ultimate_scepter"/>
 							</Panel>
 
+							<Panel id="HeroPreviewCredits">
+								
+							</Panel>
+
 							<!-- <Panel id="HeroPreview">
 								<DOTAScenePanel hittest="false" unit="" />
 							</Panel> -->

@@ -15,9 +15,10 @@
 -- Editors:
 --     EarthSalamander #42, 03.02.2018
 
--------------------------------------------
---			GOD'S STRENGTH
--------------------------------------------
+------------------------------
+--			DOOM
+------------------------------
+
 LinkLuaModifier("modifier_imba_doom_bringer_doom", "components/abilities/heroes/hero_doom_bringer", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_doom_bringer_doom_enemies", "components/abilities/heroes/hero_doom_bringer", LUA_MODIFIER_MOTION_NONE)
 

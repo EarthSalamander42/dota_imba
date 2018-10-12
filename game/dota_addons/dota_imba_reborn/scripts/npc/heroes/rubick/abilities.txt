@@ -214,8 +214,8 @@
 			}
 			"02"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"spell_amp_reduction_pct"		"15 25 35 45"
+				"var_type"							"FIELD_INTEGER"
+				"status_resistance_reduction_pct"	"10 15 20 25"
 			}
 			"03"
 			{
@@ -232,7 +232,7 @@
 	"imba_rubick_spell_steal_controller"
 	{
 		"BaseClass"						"ability_lua"
-		"ScriptFile"				"components/abilities/heroes/hero_rubick.lua"
+		"ScriptFile"					"components/abilities/heroes/hero_rubick.lua"
 		
 		"AbilityTextureName"			"rubick_empty1"
 		"MaxLevel"						"1"
@@ -263,6 +263,7 @@
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"HasScepterUpgrade"				"1"		
 
 		// Ability Casting
 		//-------------------------------------------------------------------------------------------------------------

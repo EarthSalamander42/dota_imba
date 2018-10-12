@@ -239,12 +239,12 @@ IMBA_ALL_RANDOM_HERO_SELECTION_TIME = 5.0									-- Time we need to wait before
 
 -- Global Gold earning, values are doubled with Hyper for non-custom maps
 CUSTOM_GOLD_BONUS = {} -- 1 = Normal, 2 = Hyper
-CUSTOM_GOLD_BONUS[Map1v1()] = 200
-CUSTOM_GOLD_BONUS[MapRanked5v5()] = 200
-CUSTOM_GOLD_BONUS[MapRanked10v10()] = 200
-CUSTOM_GOLD_BONUS[MapTournament()] = 200
-CUSTOM_GOLD_BONUS[MapMutation5v5()] = 200
-CUSTOM_GOLD_BONUS[MapMutation10v10()] = 200
+CUSTOM_GOLD_BONUS[Map1v1()] = 300
+CUSTOM_GOLD_BONUS[MapRanked5v5()] = 300
+CUSTOM_GOLD_BONUS[MapRanked10v10()] = 300
+CUSTOM_GOLD_BONUS[MapTournament()] = 300
+CUSTOM_GOLD_BONUS[MapMutation5v5()] = 300
+CUSTOM_GOLD_BONUS[MapMutation10v10()] = 300
 
 -- Global XP earning, values are doubled with Hyper for non-custom maps (right now this is not used anymore, but i'll keep it there just in case)
 CUSTOM_XP_BONUS = {} -- 1 = Normal, 2 = Hyper
@@ -258,9 +258,9 @@ CUSTOM_XP_BONUS[MapMutation10v10()] = 200
 -- Hero base level, values are doubled with Hyper for non-custom maps
 HERO_STARTING_LEVEL = {} -- 1 = Normal, 2 = Hyper
 HERO_STARTING_LEVEL[Map1v1()] = 1
-HERO_STARTING_LEVEL[MapRanked5v5()] = 3
-HERO_STARTING_LEVEL[MapRanked10v10()] = 3
-HERO_STARTING_LEVEL[MapTournament()] = 3
+HERO_STARTING_LEVEL[MapRanked5v5()] = 5
+HERO_STARTING_LEVEL[MapRanked10v10()] = 5
+HERO_STARTING_LEVEL[MapTournament()] = 5
 HERO_STARTING_LEVEL[MapMutation5v5()] = 5
 HERO_STARTING_LEVEL[MapMutation10v10()] = 5
 

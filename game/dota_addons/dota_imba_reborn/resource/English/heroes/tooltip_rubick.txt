@@ -12,7 +12,7 @@
 "DOTA_Tooltip_ability_imba_rubick_telekinesis_cast_range"				"CAST RANGE:"
 
 "DOTA_Tooltip_ability_imba_rubick_fade_bolt"								"#{DOTA_Tooltip_ability_rubick_fade_bolt}"
-"DOTA_Tooltip_ability_imba_rubick_fade_bolt_Description"					"#{DOTA_Tooltip_ability_rubick_fade_bolt_Description}"
+"DOTA_Tooltip_ability_imba_rubick_fade_bolt_Description"					"#{DOTA_Tooltip_ability_rubick_fade_bolt_Description}\n<font color='#FF7800'>Light bolt:</font> Damage are not reduced while jumping."
 "DOTA_Tooltip_ability_imba_rubick_fade_bolt_damage"							"#{DOTA_Tooltip_ability_rubick_fade_bolt_damage}"
 "DOTA_Tooltip_ability_imba_rubick_fade_bolt_jump_damage_bonus_pct"			"%BONUS DAMAGE PER JUMPS:"
 "DOTA_Tooltip_ability_imba_rubick_fade_bolt_hero_attack_damage_reduction"	"#{DOTA_Tooltip_ability_rubick_fade_bolt_hero_attack_damage_reduction}"
@@ -27,20 +27,21 @@
 "DOTA_Tooltip_modifier_imba_rubick_fade_bolt_break"						"Break Bolt"
 "DOTA_Tooltip_modifier_imba_rubick_fade_bolt_break_Description"			"Passives disabled!"
 
-"DOTA_Tooltip_ability_imba_rubick_null_field"								"#{DOTA_Tooltip_ability_rubick_null_field}"
-"DOTA_Tooltip_ability_imba_rubick_null_field_Description"					"#{DOTA_Tooltip_ability_rubick_null_field_Description}\n<font color='#FF7800'>Magus path:</font> Grants %spell_amp_reduction_pct%% bonus spell amplification."
-"DOTA_Tooltip_ability_imba_rubick_null_field_magic_damage_reduction_pct"	"#{DOTA_Tooltip_ability_rubick_null_field_magic_damage_reduction_pct}"
-"DOTA_Tooltip_ability_imba_rubick_null_field_spell_amp_reduction_pct"		"%SPELL AMP:"
-"DOTA_Tooltip_ability_imba_rubick_null_field_radius"						"#{DOTA_Tooltip_ability_rubick_null_field_radius}"
+"DOTA_Tooltip_ability_imba_rubick_null_field"									"#{DOTA_Tooltip_ability_rubick_null_field}"
+"DOTA_Tooltip_ability_imba_rubick_null_field_Description"						"#{DOTA_Tooltip_ability_rubick_null_field_Description}\n<font color='#FF7800'>Magus path:</font> Grants %status_resistance_reduction_pct%% bonus status resistance."
+"DOTA_Tooltip_ability_imba_rubick_null_field_magic_damage_reduction_pct"		"#{DOTA_Tooltip_ability_rubick_null_field_magic_damage_reduction_pct}"
+"DOTA_Tooltip_ability_imba_rubick_null_field_status_resistance_reduction_pct"	"%STATUS RESISTANCE:"
+"DOTA_Tooltip_ability_imba_rubick_null_field_radius"							"#{DOTA_Tooltip_ability_rubick_null_field_radius}"
 
-"DOTA_Tooltip_modifier_imba_rubick_null_field"							"Null Field"
-"DOTA_Tooltip_modifier_imba_rubick_null_field_Description"				"Magical resistance increased by %dMODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS%%%. Spell amp increased by %dMODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE%%%."
+"DOTA_Tooltip_modifier_imba_rubick_null_field"							"Null Field (Defensive)"
+"DOTA_Tooltip_modifier_imba_rubick_null_field_Description"				"Magical resistance increased by %dMODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING%%%. Status Resistance increased by %dMODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE%%%."
 
-"DOTA_Tooltip_modifier_imba_rubick_null_field_debuff"					"Null Field"
-"DOTA_Tooltip_modifier_imba_rubick_null_field_debuff_Description"		"Magical resistance reduced by %dMODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS%%%. Spell amp reduced by %dMODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE%%%."
+"DOTA_Tooltip_modifier_imba_rubick_null_field_debuff"					"Null Field (Offensive)"
+"DOTA_Tooltip_modifier_imba_rubick_null_field_debuff_Description"		"Magical resistance reduced by %dMODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING%%%. Status Resistance reduced by %dMODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE%%%."
 
 "DOTA_Tooltip_ability_imba_rubick_spellsteal"							"#{DOTA_Tooltip_ability_rubick_spell_steal}"
 "DOTA_Tooltip_ability_imba_rubick_spellsteal_Description"				"#{DOTA_Tooltip_ability_rubick_spell_steal_Description}\n<font color='#FF7800'>Eidetic memory:</font> Stolen spells don't expire."
+"DOTA_Tooltip_ability_imba_rubick_spellsteal_aghanim_description"		"Copy the target base spell amplification. Expire on death or when another spell is stolen."
 
 "DOTA_Tooltip_ability_imba_rubick_clandestine_librarian"				"Clandestine Librarian"
 "DOTA_Tooltip_ability_imba_rubick_clandestine_librarian_Description"	"Grants %spell_amp_per_cast%% spell amp every time Spell Steal is cast."

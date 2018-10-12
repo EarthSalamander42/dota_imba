@@ -1017,6 +1017,59 @@ function UpdateAbilities(abilityList) {
 	abilityParentPanel.SetHasClass("six_abilities", ability_count >= 6);
 	abilityParentPanel.SetHasClass("five_abilities", ability_count == 5);
 	abilityParentPanel.SetHasClass("four_abilities", ability_count == 4);
+
+	if ($("#credits_coder_panel"))
+		$("#credits_coder_panel").DeleteAsync(0)
+
+	var coder_steamid = $.Localize("#code_credits_" + abilityList[0])
+
+	if (coder_steamid.search("7") != -1) {
+
+		var coder_panel = $.CreatePanel("Panel", $("#HeroPreviewCredits"), "credits_coder_panel");
+
+		var coder_label = $.CreatePanel('Label', coder_panel, 'credits_coder_label');
+		coder_label.text = "Author: "
+
+		// Show coder steam profile
+		var steam_id = $.CreatePanel("DOTAAvatarImage", coder_panel, "credits_coder");
+		steam_id.steamid = coder_steamid;
+		steam_id.style.width = "38px";
+		steam_id.style.height = "38px";
+		steam_id.style.marginLeft = "20px";
+		steam_id.style.marginRight = "20px";
+		steam_id.style.align = "left center";
+		steam_id.style.border = "2px solid darkred";
+	}
+
+	if ($("#credits_editors_panel"))
+		$("#credits_editors_panel").DeleteAsync(0)
+
+	var i = 1;
+	var editor_steamid = $.Localize("#code_credits_" + abilityList[0] + "_editor_" + i)
+	while (editor_steamid.search("7") != -1) {
+
+		if (i == 1) {
+			$.Msg("Create editor label!")
+			var editor_label = $.CreatePanel('Label', coder_panel, "credits_editor_label");
+			editor_label.text = "Contributors: "
+		}
+
+		// Show coder steam profile
+		var steam_id = $.CreatePanel("DOTAAvatarImage", coder_panel, "credits_editor_" + i);
+		steam_id.steamid = editor_steamid;
+		steam_id.style.width = "38px";
+		steam_id.style.height = "38px";
+		steam_id.style.marginLeft = "5px";
+		steam_id.style.marginRight = "5px";
+		steam_id.style.align = "left center";
+		steam_id.style.border = "2px solid gold";
+
+		i++;
+
+		$.Msg("old SteamID: " + editor_steamid)
+		editor_steamid = $.Localize("#code_credits_" + abilityList[0] + "_editor_" + i)
+		$.Msg("new SteamID: " + editor_steamid)
+	}
 }
 
 function CustomTooltip(type, boolean){
