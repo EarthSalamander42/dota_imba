@@ -531,7 +531,7 @@ function Mutation:OnHeroSpawn(hero)
 		end
 
 		Timers:CreateTimer(FrameTime(), function()
-			if IsNearFountain(hero:GetAbsOrigin(), 1200) == false and hero.reincarnation == false then
+			if IsNearFountain(hero:GetAbsOrigin(), 1200) == false and hero.reincarnation == false and not hero:IsTempestDouble() then
 				hero:SetHealth(hero:GetHealth() * 50 / 100)
 				hero:SetMana(hero:GetMana() * 50 / 100)
 			end

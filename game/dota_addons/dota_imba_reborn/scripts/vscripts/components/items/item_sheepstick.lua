@@ -144,8 +144,9 @@ function modifier_item_imba_sheepstick:DeclareFunctions()
 end
 
 function modifier_item_imba_sheepstick:OnCreated()
-	if self:GetParent().sheepstick_model == nil then
-		self:GetParent().sheepstick_model = "models/props_gameplay/pig.vmdl"
+	if self:GetCaster().sheepstick_model == nil then
+		print("ERROR: NO MODEL STRING RETRIEVED FOR SCYTHE OF VYSE. DEFAULTING TO BASE MODEL.")
+		self:GetCaster().sheepstick_model = "models/props_gameplay/pig.vmdl"
 	end
 	
 	self:OnIntervalThink()
