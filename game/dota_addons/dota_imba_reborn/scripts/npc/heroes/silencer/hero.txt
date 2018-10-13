@@ -21,12 +21,12 @@
 		"Ability6"					"imba_silencer_global_silence"
 		
 		"Ability10"					"special_bonus_imba_silencer_1"
-		"Ability11"					"special_bonus_imba_silencer_2"
-		"Ability12"					"special_bonus_imba_silencer_3"
-		"Ability13"					"special_bonus_imba_silencer_6"
-		"Ability14"					"special_bonus_imba_silencer_5"
+		"Ability11"					"special_bonus_attack_speed_30"
+		"Ability12"					"special_bonus_gold_income_20"
+		"Ability13"					"special_bonus_imba_silencer_9"
+		"Ability14"					"special_bonus_attack_range_125"
 		"Ability15"					"special_bonus_imba_silencer_4"
-		"Ability16"					"special_bonus_imba_silencer_7"
+		"Ability16"					"special_bonus_imba_silencer_10"
 		"Ability17"					"special_bonus_imba_silencer_8"
 	}
 }
