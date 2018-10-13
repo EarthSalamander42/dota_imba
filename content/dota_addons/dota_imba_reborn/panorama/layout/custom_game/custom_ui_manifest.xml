@@ -58,7 +58,7 @@
 			if (Parent.FindChildTraverse("GameAndPlayersRoot") == undefined || Parent.FindChildTraverse("TeamsList") == undefined || Parent.FindChildTraverse("TeamsListGroup") == undefined || Parent.FindChildTraverse("CancelAndUnlockButton") == undefined || Parent.FindChildTraverse("UnassignedPlayerPanel") == undefined || Parent.FindChildTraverse("ShuffleTeamAssignmentButton") == undefined)
 				$.Schedule(0.25, SetupLoadingScreen);
 			else {
-				Parent.FindChildTraverse("GameAndPlayersRoot").style.backgroundColor = "rgba(50, 90, 128, 0.3)";
+				Parent.FindChildTraverse("GameAndPlayersRoot").style.backgroundColor = "rgba(50, 128, 50, 0.2)";
 				Parent.FindChildTraverse("GameAndPlayersRoot").style.borderRadius = "3px";
 				Parent.FindChildTraverse("GameAndPlayersRoot").style.boxShadow = "black -4px -4px 8px 8px";
 				Parent.FindChildTraverse("TeamsList").style.visibility = "collapse";

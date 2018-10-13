@@ -3,6 +3,7 @@
 @define COLOR_INFO_TEXT_BLUE: #66aaff;
 
 @define COLOR_INFO_BACKGROUND_GREEN: #004d1ada;
+@define COLOR_INFO_BACKGROUND_GREEN_SOCIAL: #003800da;
 @define COLOR_INFO_BACKGROUND_DARK_GREEN: #003312;
 @define COLOR_INFO_TEXT_GREEN: #00e64d;
 
@@ -45,7 +46,7 @@
 	background-color: black;
 	background-position: center center;
 	background-size: cover;
-	background-image: url("file://{images}/custom_game/loading_screen/frantic_thunder.png");
+	background-image: url("file://{images}/custom_game/loading_screen/the_grand_magus.jpg");
 	z-index: 1; /* Doesn't work.. Does it need to be on root? */
 }
 
@@ -59,8 +60,8 @@
 }
 
 #imba-loading-title {
-	background-color: COLOR_INFO_BACKGROUND_BLUE;
-	border: 2px solid COLOR_INFO_BACKGROUND_DARK_BLUE;
+	background-color: COLOR_INFO_BACKGROUND_GREEN;
+	border: 2px solid COLOR_INFO_BACKGROUND_DARK_GREEN;
 }
 
 #imba-loading-title-patreon {
@@ -80,7 +81,7 @@
 }
 
 #imba-loading-title-text {
-	color: COLOR_INFO_TEXT_BLUE;
+	color: COLOR_INFO_TEXT_GREEN;
 }
 
 #imba-loading-title-text-patreon {
@@ -106,8 +107,8 @@
 }
 
 #imba-loading-link {
-	background-color: COLOR_INFO_BACKGROUND_DARK_BLUE;
-	border: 2px solid COLOR_INFO_BACKGROUND_DARK_BLUE;
+	background-color: COLOR_INFO_BACKGROUND_DARK_GREEN;
+	border: 2px solid COLOR_INFO_BACKGROUND_DARK_GREEN;
 	box-shadow: 0 0 10px #111;
 }
 
@@ -153,8 +154,8 @@
 	margin-left: 260px;
 	overflow: scroll;
 	flow-children: down;
-	background-color: #002239da;
-	border: 2px solid COLOR_INFO_BACKGROUND_DARK_BLUE;
+	background-color: COLOR_INFO_BACKGROUND_GREEN_SOCIAL;
+	border: 2px solid COLOR_INFO_BACKGROUND_DARK_GREEN;
 } 
 
 #ImbaLoadingSocial Panel {

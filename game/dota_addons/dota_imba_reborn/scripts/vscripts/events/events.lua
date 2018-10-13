@@ -26,7 +26,6 @@ function GameMode:OnGameRulesStateChange(keys)
 
 	if newState == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
 		InitItemIds()
-		HeroSelection:Init() -- init picking screen kv (this function is a bit heavy to run)
 		GameMode:OnSetGameMode() -- setup gamemode rules
 		InitializeTeamSelection()
 		GetPlayerInfoIXP() -- Add a class later
@@ -39,6 +38,10 @@ function GameMode:OnGameRulesStateChange(keys)
 		end
 
 		CustomNetTables:SetTableValue("game_options", "player_colors", hex_colors)
+
+		Timers:CreateTimer(3.0, function()
+			HeroSelection:Init() -- init picking screen kv (this function is a bit heavy to run)
+		end)
 	elseif newState == DOTA_GAMERULES_STATE_HERO_SELECTION then
 		api.imba.event(api.events.entered_hero_selection)
 		HeroSelection:StartSelection()

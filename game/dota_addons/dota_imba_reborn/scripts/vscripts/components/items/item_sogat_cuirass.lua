@@ -76,10 +76,6 @@ function modifier_imba_sogat_cuirass:GetCustomDamageBlockUnique()
 	return self:GetAbility():GetSpecialValueFor("damage_block")
 end
 
-function modifier_imba_sogat_cuirass:GetCustomIncomingDamageReductionUnique()
-	return self:GetAbility():GetSpecialValueFor("damage_reduction_pct")
-end
-
 function modifier_imba_sogat_cuirass:GetModifierHealthBonus()
 	return self:GetAbility():GetSpecialValueFor("bonus_health")
 end

@@ -65,28 +65,26 @@ function api.imba.register(callback)
 	}
 
 	-- register game
-	if data ~= nil then
-		api.request(api.endpoints.imba.game.register, register_data, function (error, data)
-			if error then
-				log.error("Critical API error: Cannot register game!")
-				if callback ~= nil then
-					callback(true)
-				end
-			else
-				api.imba.data = data
-
-				log.debug("Register with server successful, Game ID: #" .. tostring(api.imba.data.id))
-				if callback ~= nil then
-					callback(false)
-				end
-
-				api.imba.ready = true
-
-				-- start events system
-				api.imba.events.initialize()
+	api.request(api.endpoints.imba.game.register, register_data, function (error, data)
+		if error then
+			log.error("Critical API error: Cannot register game!")
+			if callback ~= nil then
+				callback(true)
 			end
-		end)
-	end
+		else
+			api.imba.data = data
+
+			log.debug("Register with server successful, Game ID: #" .. tostring(api.imba.data.id))
+			if callback ~= nil then
+				callback(false)
+			end
+
+			api.imba.ready = true
+
+			-- start events system
+			api.imba.events.initialize()
+		end
+	end)
 end
 
 function api.imba.event(code, data, quiet)
