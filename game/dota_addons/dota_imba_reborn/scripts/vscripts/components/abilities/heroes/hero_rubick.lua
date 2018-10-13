@@ -486,12 +486,13 @@ function imba_rubick_fade_bolt:OnSpellStart()
 			else
 				if self:GetCaster():HasTalent("special_bonus_imba_rubick_7") then
 					kaboom = true
+					
+					-- reset fade bolt hit counter
+					for _, damaged in pairs(entities_damaged) do
+						damaged.damaged_by_fade_bolt = false
+					end
+					
 					return FrameTime()
-				end
-
-				-- reset fade bolt hit counter
-				for _, damaged in pairs(entities_damaged) do
-					damaged.damaged_by_fade_bolt = false
 				end
 
 				return nil
