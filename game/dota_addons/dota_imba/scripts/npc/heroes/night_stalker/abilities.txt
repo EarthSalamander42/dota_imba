@@ -11,7 +11,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 		"AbilityTextureName"			"custom/stalker_in_the_night"
 		"MaxLevel"						"1"
-		"ScriptFile"					"hero/hero_night_stalker.lua"
+		"ScriptFile"					"components/abilities/heroes/hero_night_stalker.lua"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -50,7 +50,7 @@
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"night_stalker_void"
 		"MaxLevel"						"4"
-		"ScriptFile"					"hero/hero_night_stalker.lua"
+		"ScriptFile"					"components/abilities/heroes/hero_night_stalker.lua"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -141,7 +141,7 @@
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"night_stalker_crippling_fear"
 		"MaxLevel"						"4"
-		"ScriptFile"					"hero/hero_night_stalker.lua"
+		"ScriptFile"					"components/abilities/heroes/hero_night_stalker.lua"
 
 		// Unit Targeting
 		//-------------------------------------------------------------------------------------------------------------
@@ -220,7 +220,7 @@
 		"BaseClass"						"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"			"night_stalker_hunter_in_the_night"
-		"ScriptFile"					"hero/hero_night_stalker.lua"
+		"ScriptFile"					"components/abilities/heroes/hero_night_stalker.lua"
 //		"AbilityManaCost"				"80"
 		"AbilityCooldown"				"30 26 22 18"
 
@@ -284,7 +284,7 @@
 		"AbilityTextureName"			"night_stalker_darkness"
 		"MaxLevel"						"3"
 		"LevelsBetweenUpgrades"			"6"
-		"ScriptFile"					"hero/hero_night_stalker.lua"
+		"ScriptFile"					"components/abilities/heroes/hero_night_stalker.lua"
 		"HasScepterUpgrade"				"1"
 
 		// Unit Targeting
@@ -319,17 +319,12 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"vision_radius"				"675"
+				"vision_reduction_pct"		"25"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"enemy_vision_duration"		"3 5 7"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"ward_vision"				"675"
+				"enemy_vision_duration"		"3"
 			}
 		}
 	}

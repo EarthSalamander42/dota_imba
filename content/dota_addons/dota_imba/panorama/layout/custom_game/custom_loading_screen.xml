@@ -1,18 +1,17 @@
 <root>
 	<styles>
 		<include src="file://{resources}/styles/dotastyles.vcss_c"/>
-		<include src="file://{resources}/styles/custom_game/loading_screen.css"/>
+		<include src="file://{resources}/styles/custom_game/custom_loading_screen.css"/>
 	</styles>
 
 	<scripts>
 		<include src="file://{resources}/scripts/custom_game/api.js"/>
-		<include src="file://{resources}/scripts/custom_game/loading_screen.js"/>
+		<include src="file://{resources}/scripts/custom_game/custom_loading_screen.js"/>
 	</scripts>
 
 	<Panel class="addon-root">
 		<Panel id="imba-loading">
 			<Panel id="imba-loading-title">
-				<Image id="imba-loading-title-logo" src="file://{images}/custom_game/imba-blue.png"/>
 				<Panel class="down">
 					<Label id="imba-loading-title-text" text="Dota IMBA 7.06 - The Fundamental Awakening"/>
 					<Label id="imba-loading-map-text" text="Loading ..."/>
@@ -22,30 +21,46 @@
 					</Button>
 				</Panel>
 			</Panel>
+
 			<Panel id="ImbaLoadingSocial">
 				<Panel class="Row">
-					<Button id="ImbaLoadingSocialOfficialWebsite" onactivate="DOTADisplayURL('https://preview.dota2imba.org/statistics/rankings');">
+					<Button id="ImbaLoadingSocialOfficialWebsite" class="SocialButtons" onactivate="DOTADisplayURL('https://preview.dota2imba.org/statistics/rankings');">
 						<Label text="Official Website" />
 					</Button>
-					<Button id="ImbaLoadingSocialFacebook" onactivate="DOTADisplayURL('https://www.facebook.com/D2IMBA/');">
+					<Button id="ImbaLoadingSocialFacebook" class="SocialButtons" onactivate="DOTADisplayURL('https://www.facebook.com/D2IMBA/');">
 						<Label text="Facebook" />
 					</Button>
-					<Button id="ImbaLoadingSocialTwitter" onactivate="DOTADisplayURL('https://twitter.com/dota2imba');">
+					<Button id="ImbaLoadingSocialTwitter" class="SocialButtons" onactivate="DOTADisplayURL('https://twitter.com/dota2imba');">
 						<Label text="Twitter" />
 					</Button>
-					<Button id="ImbaLoadingSocialDiscordEn" onactivate="DOTADisplayURL('http://tinyurl.com/imba-discord');">
+					<Button id="ImbaLoadingSocialDiscordEn" class="SocialButtons" onactivate="DOTADisplayURL('http://tinyurl.com/imba-discord');">
 						<Label text="English Discord" />
 					</Button>
-					<Button id="ImbaLoadingSocialDiscordRu" onactivate="DOTADisplayURL('https://discord.gg/HcybJKt');">
+					<Button id="ImbaLoadingSocialDiscordRu" class="SocialButtons" onactivate="DOTADisplayURL('https://discord.gg/HcybJKt');">
 						<Label text="Русский Дискорд" />
 					</Button>
-					<Button id="ImbaLoadingSocialTencent" onactivate="DOTADisplayURL('https://www.bilibiliduang.cn/imbagroup');">
+					<Button id="ImbaLoadingSocialTencent" class="SocialButtons" onactivate="DOTADisplayURL('https://www.bilibiliduang.cn/imbagroup');">
 						<Label text="Tencent" />
 					</Button>
 				</Panel>
-				<Panel class="Row">
-					<Button id="ImbaLoadingSocialPatreon" onactivate="DOTADisplayURL('https://www.patreon.com/earthsalamander42');">
-						<Label text="Get your XP Booster, Companion and Statue by becoming a Donator on Patreon!" />
+			</Panel>
+<!--
+			<Panel id="imba-loading-title-promote">
+				<Panel class="down">
+					<Label id="imba-loading-title-text-promote" text="Promoting this shit!"/>
+					<Label id="imba-loading-content-text-promote" html="true" text="Opelgang and Dota IMBA are launching a partnership with nice t-shirts and sweatshirts! An alternate way to support Dota IMBA!" />
+					<Button id="imba-loading-link-promote" onactivate="DOTADisplayURL('https://www.facebook.com/D2IMBA/');">
+						<Label id="imba-loading-link-text-promote" text="Click here to get nice shit!" />
+					</Button>
+				</Panel>
+			</Panel>
+-->
+			<Panel id="imba-loading-title-patreon">
+				<Panel class="down">
+					<Label id="imba-loading-title-text-patreon" text="Patreon"/>
+					<Label id="imba-loading-content-text-patreon" html="true" text="Earthsalamander #42 is developing IMBA at full time! We also have to pay servers for Battlepass, donator system and Imba XP. Feel free to donate, even small amounts matters :)" />
+					<Button id="imba-loading-link-patreon" onactivate="DOTADisplayURL('https://www.patreon.com/bePatron?u=2533325');">
+						<Label id="imba-loading-link-text-patreon" text="Click here to become a donator!" />
 					</Button>
 				</Panel>
 			</Panel>

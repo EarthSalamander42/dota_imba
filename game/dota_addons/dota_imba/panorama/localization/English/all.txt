@@ -28,6 +28,7 @@
 "scoreboard_tool_tip_active_disable_help"		"(DISABLED)"
 "custom_end_screen_legend_imr"					"IMR"
 "custom_end_screen_legend_imr10v10"				"IMR 10v10"
+"custom_end_screen_legend_imr1v1"				"IMR 1v1"
 
 //Combat Events
 "custom_toast_PlayerDenied"								"{killer_name} {denied_icon} Denied {victim_name}"
@@ -154,6 +155,7 @@
 "companion_success"				"Companion changed with: "
 "companion_error"				"Oops! Something went wrong."
 "companion_not_donator"			"This feature is only for Patreon donators. Click here to pledge!"
+"toggle_companion"				"Toggle Companion"
 
 "statue_success"				"Statue changed with: "
 
@@ -163,107 +165,6 @@
 "leaderboard_rank"				"Rank"
 "leaderboard_steam_avatar"		"Steam"
 "leaderboard_xp"				"Experience (click to sort)"
-
-//blue
-//nature
-//water
-//snow
-//gold
-//red/Fire
-//purple
-
-//Battlepass
-"imba_safe_to_leave"			"Game is safe to leave"
-"imba_game_info_close"			"Close"
-"battlepass"					"Battlepass"
-"coming_soon"					"Upcoming feature: being able to choose reward"
-"battlepass_reward_locked"		"Locked!"
-"battlepass_level"				"Level: "
-"battlepass_refresh"			"Refresh"
-
-"battlepass_blink"						"Light Blue Blink"
-"battlepass_blink2"						"Nature Blink"
-"battlepass_blink3"						"Water Blink"
-"battlepass_blink4"						"Water Blink 2"
-"battlepass_blink5"						"Snow Blink"
-"battlepass_blink6"						"Purple Blink"
-"battlepass_blink7"						"Red Blink"
-"battlepass_blink8"						"Red Blink 2"
-"battlepass_blink9"						"Gold Blink"
-"battlepass_blink10"					"Gold Blink 2"
-"battlepass_blink11"					"Emerald Blink"
-"battlepass_blink12"					"Emerald Blink 2"
-"battlepass_force_staff"				"Nature Force Staff"
-"battlepass_force_staff2"				"Water Force Staff"
-"battlepass_force_staff3"				"Snow Force Staff"
-"battlepass_force_staff4"				"Red Force Staff"
-"battlepass_force_staff5"				"Emerald Force Staff"
-"battlepass_radiance"					"Water Radiance"
-"battlepass_radiance2"					"Red Radiance"
-"battlepass_radiance3"					"Emerald Radiance"
-"battlepass_sheepstick"					"Blue Pig Sheepstick"
-"battlepass_sheepstick2"				"Bird Sheepstick"
-"battlepass_shiva"						"Water Shiva"
-"battlepass_shiva2"						"Fire Shiva"
-"battlepass_shiva3"						"Emerald Shiva"
-"battlepass_mekansm"					"Water Mekansm"
-"battlepass_mekansm2"					"Red Mekansm"
-"battlepass_mekansm3"					"Emerald Mekansm"
-"battlepass_fountain"					"Nature Fountain"
-"battlepass_fountain2"					"Nature Fountain 2"
-"battlepass_fountain3"					"Nature Fountain 3"
-"battlepass_fountain4"					"Water Fountain"
-"battlepass_fountain5"					"Water Fountain 2"
-"battlepass_fountain6"					"Water Fountain 3"
-"battlepass_fountain7"					"Snow Fountain"
-"battlepass_fountain8"					"Snow Fountain 2"
-"battlepass_fountain9"					"Snow Fountain 3"
-"battlepass_fountain10"					"Purple Fountain"
-"battlepass_fountain11"					"Red Fountain"
-"battlepass_fountain12"					"Red Fountain 2"
-"battlepass_fountain13"					"Red Fountain 3"
-"battlepass_fountain14"					"Gold Fountain"
-"battlepass_fountain15"					"Gold Fountain 2"
-"battlepass_fountain16"					"Emerald Fountain"
-"battlepass_fountain17"					"Emerald Fountain 2"
-"battlepass_fountain18"					"Emerald Fountain 3"
-"battlepass_bottle"						"Water Bottle"
-"battlepass_bottle2"					"Purple Bottle"
-"battlepass_bottle3"					"Red Bottle"
-"battlepass_bottle4"					"Gold Bottle"
-"battlepass_bottle5"					"Emerald Bottle"
-"battlepass_vengefulspirit_immortal"	"Vengeful Spirit Immortal"
-"battlepass_pudge_arcana"				"Pudge Arcana (red)"
-"battlepass_pudge_arcana2"				"Pudge Arcana (green)"
-"battlepass_juggernaut_arcana"			"Juggernaut Arcana (blue)"
-"battlepass_juggernaut_arcana2"			"Juggernaut Arcana (red)"
-
-// Overthrow
-"PointsToWin"									"+{d:points_to_win} more"
-"PointsToWin_CloseToVictory"					"+{d:points_to_win} more"
-"PointsToWin_VeryCloseToVictory"				"+{d:points_to_win} more!"
-"PointsToWin_Victory"							"Victory!"
-
-"InstructionsTitle"								"OVERTHROW"
-"InstructionsObjective"							"OBJECTIVE"
-"InstructionsObjectiveText"						"Slay your enemies! Be the first to earn the goal number of kills, or the team with the most kills when the round ends, and you will be victorious."
-"InstructionsHowToPlay"							"HOW TO PLAY"
-"InstructionsLines"								"-Approach the Midas Throne to earn bonus gold and experience.<br>
--Snatch up any giant coins the Over Boss tosses to earn even more gold.<br>
--Keep an eye out for item deliveries. An icon will appear on your map where an item will appear.<br>
--The fewer kills your team has, the better the item you will receive from a delivery.<br>
--Slay anyone who isn't on your team."
-
-"Chest"											"ITEM"
-"ItemWillSpawn"									"IS ABOUT TO BE DELIVERED IN 10 SECONDS!"
-"ItemHasSpawned"								"IS ON ITS WAY!"
-
-"RecentScore"									"+{d:score}"
-
-"Unassigned"      								"Unassigned Team"
-"Spectator"       								"Spectator Team"
-"Neutrals"        								"Neutral Team"
-"NoTeam"          								"No Team"
 
 //	"DOTA_GoodGuys"   								"Teal Tiger"
 //	"DOTA_BadGuys"    								"Yellow Monkey"
@@ -276,180 +177,7 @@
 "DOTA_Custom7"    								"Olive Snake"
 "DOTA_Custom8"    								"Purple Horse"
 
-"OverthrowHeroPickup"							"{s:hero_id}"
-"OverthrowTextPickup"							"HAS PICKED UP"
-"OverthrowItemPickup"							"{s:item_id}!"
-
-"Remaining"										"REMAINING"
-
-"Overtime"										"OVERTIME!"
-"OvertimeInstructions"							"SCORE TO WIN"
-
-"KillMessageHero"								"{s:hero_id}"
-"KillMessageText"								"HAS KILLED THE LEADER"
-"KillMessageBounty"								"FOR 500 BONUS GOLD!"
-
-"imba_tutorial_intro_02"						"Welcome to IMBA Mutation mode! Dota 2's mutation mode, but crazier!"
-
-"imba_tutorial_heroes_title"					"Mutation Info:"
-"imba_tutorial_heroes_01"						"Mutation is a mod where 3 mutators will take place in a regular match, 1 positive, 1 negative and 1 terrain-based."
-"imba_tutorial_heroes_02"						"The 3 mutators are chosen randomly on each games! Mutation replace Frantic maps, but Frantic is in the Mutator list."
-"imba_tutorial_heroes_03"						"Some mutators can be added/removed at anytime, we will keep a list of the active mutators on Dota IMBA's website. (Wiki section)"
-
-"imba_tutorial_items_title"						"Tips:"
-"imba_tutorial_items_01"						"add some text"
-"imba_tutorial_items_02"						"add more text"
-
-"overthrow_game_info_tip03"						"You may need to coordinate with an opposing team to take out a strong opponent."
-"overthrow_game_info_tip04"						"The fewer kills your team has, the stronger items you will recieve from a delivery."
-
 // GG Panel
 "gg_panel"										"GG Panel"
 "gg_count"										"GG player count: "
 "gg_call"										"GG player count: "
-
-// -------------------------------------
-// Mutation
-// -------------------------------------
-
-// Positive
-"mutation_imba"									"Frantic Mutation"
-"mutation_imba_Description"						"25% Cooldown Reduction, Mana Cost and Status Resistance."
-
-"mutation_killstreak_power"						"Killstreak Power"
-"mutation_killstreak_power_Description"			"Each kill increases damage done and taken by 20%%. Resets on death."
-
-"mutation_teammate_resurrection"				"Teammate Resurrection"
-"mutation_teammate_resurrection_Description"	"Players can resurrect teammates by clicking on their tombstone and channeling."
-
-"mutation_super_blink"							"Super Blink"
-"mutation_super_blink_Description"				"All players start with a Blink Dagger that is not disabled on damage."
-
-"mutation_pocket_tower"							"Pocket Tower"
-"mutation_pocket_tower_Description"				"All heroes start with a consumable that will spawn a tower."
-
-"mutation_super_fervor"							"Super Fervor"
-"mutation_super_fervor_Description"				"Killing enemy units decreases cooldowns and grants increased attack speed for a short duration. Killing heroes gives greater effects."
-
-"mutation_ultimate_level"						"Ultimate Level"
-"mutation_ultimate_level_Description" "Max hero level increased to 500. Max health regen capped at 300 (600 with heart of tarrasque)."
-
-"mutation_greed_is_good"						"Greed is Good"
-"mutation_greed_is_good_Description"			"Bonus gold is granted each minute!"
-
-//	"mutation_frantic"							"Frantic"
-//	"mutation_frantic_Description"				"50% Cooldown Reduction, Mana Cost, Respawn Time and Status Resistance."
-
-"mutation_slark_mode"							"Shadow Dance"
-"mutation_slark_mode_Description"				"Regenerate health and mana slightly faster when not in vision of the enemy."
-"mutation_slark_mode_author"					"76561198015161808"
-
-"mutation_jump_start"							"Jump Start"
-"mutation_jump_start_Description"				"Heroes start at level 6."
-
-// Negative
-"mutation_death_explosion"						"Death Explosion"
-"mutation_death_explosion_Description"			"Deal 600 + (150 * minutes) damage in a 400 radius on death afer a 0.9 seconds delay."
-
-"mutation_periodic_spellcast"					"Periodic Spellcast"
-"mutation_periodic_spellcast_Description"		"Every minute, a random spell will be cast on everyone."
-
-"mutation_defense_of_the_ants"					"Defense of the Feeders"
-"mutation_defense_of_the_ants_Description"		"Every time you kill a hero or die, you become 5% smaller/bigger. Min/Max size caps at -75%/75%."
-
-"mutation_alien_incubation"						"Alien Incubation"
-"mutation_alien_incubation_Description"			"Every units spawn uncontrollable Broodlings upon death."
-
-"mutation_death_gold_drop"						"Death Gold Drop"
-"mutation_death_gold_drop_Description"			"Whenever a hero is killed, they drop a gold sack."
-
-"mutation_no_health_bar"						"No Health Bar"
-"mutation_no_health_bar_Description"			"Heroes don't have health bars."
-
-"mutation_stay_frosty"							"Stay Frosty"
-"mutation_stay_frosty_Description"				"Health regeneration is disabled."
-
-// Terrain
-
-"mutation_sleepy_river"							"Slippery River"
-"mutation_sleepy_river_Description"				"the river is icy, you can drift on it."
-"mutation_sleepy_river_author"					"76561198015161808"
-
-"mutation_fast_runes"							"Fast Runes"
-"mutation_fast_runes_Description"				"Powerup Runes spawn every 30 seconds. Bounty Runes spawn every 60 seconds."
-
-"mutation_call_down"							"Call Down"
-"mutation_call_down_Description"				"Nuclear missiles launched across the entire map every 10 seconds."
-
-"mutation_gift_exchange"						"Airdrop"
-"mutation_gift_exchange_Description"			"Gifts are periodically deployed around the map every 2 minutes."
-
-"mutation_speed_freaks"							"Speed Freaks"
-"mutation_speed_freaks_Description"				"Movement and projectile speed increased."
-
-"mutation_river_flows"					        "River Flows"
-"mutation_river_flows_Description"	        	"The river flows. Movement speed greatly increased on the water."
-
-"mutation_wormhole"								"Wormholes"
-"mutation_wormhole_Description"					"Wormholes spawn on the map. Activating one will bring you to another random wormhole."
-
-"mutation_tug_of_war"							"Tug of War"
-"mutation_tug_of_war_Description"				"Spawns a big BOB (warlock golem) on the mid lane. Every time BOB dies, he comes back stronger (more HP/damage) and he switches to the opposite team."
-
-"mutation_minefield"							"Minefield"
-"mutation_minefield_Description"				"All kinds of mines spawn randomly across the entire map."
-
-"mutation_no_trees"								"No Trees"
-"mutation_no_trees_Description"					"All trees are cut and do not respawn."
-
-"mutation_omni_vision"							""
-"mutation_omni_vision_Description"				""
-
-"modifier_sticky_river"							"Sticky River"
-"modifier_sticky_river_Description"				"the river is sticky, you are slowed while wading through water."
-
-// Not implemented yet
-
-// Positive
-"mutation_fire_sales"							"Fire Sales"
-"mutation_fire_sales_Description"				"Every {minutes} minutes, items cost {cost_percent}% of their current price for {seconds} seconds."
-
-"mutation_battle_hunger"						"Battle Hunger"
-"mutation_battle_hunger_Description"			"Everytime you kill an enemy's hero your team get troll ult."
-
-//"mutation_speed_freaks"						"Speed Freaks"
-//"mutation_speed_freaks_Description"			"Enemy units have double their normal movement speed."
-
-// Negative
-"mutation_monkey_business"						"Monkey Business"
-"mutation_monkey_business_Description"			"Every hero gets the mischief ability passively when not attacking or being attacked for 5 seconds."
-
-"mutation_the_walking_dead"						"The Walking Dead"
-"mutation_the_walking_dead_Description"			"During night, zombies spawns in Jungle and attack the closest hero."
-
-"mutation_angel_arena"							"Angel Arena"
-"mutation_angel_arena_Description"				"Every 5 minutes, duels will occur. Winner team gets 2000 extra gold."
-
-// Terrain
-
-"mutation_river_fag"							"River Fag"
-"mutation_river_fag_Description"				"makes the river impassable without forced movement for heroes."
-
-"mutation_diretide"								"Diretide"
-"mutation_diretide_Description"					"Roshan roams around finding targets, killing the enemy if no candies is given (Candies are dropped from lane/neutral creeps, 30% chance)."
-"mutation_diretide_author"						"76561198015161808"
-
-"mutation_void_path"							"Void Path"
-"mutation_void_path_Description"				""
-
-"mutation_danger_zone"							"Danger Zone"
-"mutation_danger_zone_Description"				"Gyrocopter Call Down is casted on random positions all over the map."
-
-"mutation_reality_rift"							"Reality Rift"
-"mutation_reality_rift_Description"				""
-
-"mutation_blizzard"								"Blizzard"
-"mutation_blizzard_Description"					""
-
-"mutation_twister"								"Twister"
-"mutation_twister_Description"					""

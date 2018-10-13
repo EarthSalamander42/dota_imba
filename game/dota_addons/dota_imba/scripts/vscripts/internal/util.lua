@@ -1,37 +1,3 @@
--- Copyright (C) 2018  The Dota IMBA Development Team
---
--- Licensed under the Apache License, Version 2.0 (the "License");
--- you may not use this file except in compliance with the License.
--- You may obtain a copy of the License at
---
--- http://www.apache.org/licenses/LICENSE-2.0
---
--- Unless required by applicable law or agreed to in writing, software
--- distributed under the License is distributed on an "AS IS" BASIS,
--- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
--- See the License for the specific language governing permissions and
--- limitations under the License.
---
--- Editors: 
---     EarthSalamander #42
---
-
-function PrintAll(t)
-	log.debug(t)
-end
-
-function MergeTables( t1, t2 )
-	for name,info in pairs(t2) do
-		t1[name] = info
-	end
-end
-
-function AddTableToTable( t1, t2)
-	for k,v in pairs(t2) do
-		table.insert(t1, v)
-	end
-end
-
 function PrintTable(t, indent, done)
 	--print ( string.format ('PrintTable type %s', type(keys)) )
 	if type(t) ~= "table" then return end
@@ -70,37 +36,719 @@ function PrintTable(t, indent, done)
 	end
 end
 
--- Colors
-COLOR_NONE = '\x06'
-COLOR_GRAY = '\x06'
-COLOR_GREY = '\x06'
-COLOR_GREEN = '\x0C'
-COLOR_DPURPLE = '\x0D'
-COLOR_SPINK = '\x0E'
-COLOR_DYELLOW = '\x10'
-COLOR_PINK = '\x11'
-COLOR_RED = '\x12'
-COLOR_LGREEN = '\x15'
-COLOR_BLUE = '\x16'
-COLOR_DGREEN = '\x18'
-COLOR_SBLUE = '\x19'
-COLOR_PURPLE = '\x1A'
-COLOR_ORANGE = '\x1B'
-COLOR_LRED = '\x1C'
-COLOR_GOLD = '\x1D'
+function MergeTables( t1, t2 )
+	for name,info in pairs(t2) do
+		t1[name] = info
+	end
+end
 
--- Returns a random value from a non-array table
-function RandomFromTable(table)
-	local array = {}
-	local n = 0
-	for _,v in pairs(table) do
-		array[#array+1] = v
-		n = n + 1
+-- Map utils
+function MapRanked5v5() return "imba_ranked_5v5" end
+function MapRanked10v10() return "imba_ranked_10v10" end
+function MapMutation5v5() return "imba_mutation_5v5" end
+function MapMutation10v10() return "imba_mutation_10v10" end
+function Map1v1() return "imba_1v1" end
+function MapTournament() return "map_tournament" end
+function MapOverthrow() return "imba_overthrow" end
+
+function IsRankedMap()
+	if GetMapName() == MapRanked5v5() or GetMapName() == MapRanked10v10() then
+		return true
 	end
 
-	if n == 0 then return nil end
+	return false
+end
 
-	return array[RandomInt(1,n)]
+function Is1v1Map()
+	if GetMapName() == Map1v1() then
+		return true
+	end
+
+	return false
+end
+
+function Is10v10Map()
+	if GetMapName() == MapRanked10v10() or GetMapName() == MapMutation10v10() then
+		return true
+	end
+
+	return false
+end
+
+function IsTournamentMap()
+	if GetMapName() == MapTournament() then
+		return true
+	end
+
+	return false
+end
+
+function IsMutationMap()
+	if GetMapName() == MapMutation5v5() or GetMapName() == MapMutation10v10() then
+		return true
+	end
+
+	return false
+end
+
+-- Check if an unit is near the enemy fountain
+function IsNearFountain(location, distance)
+	for _, fountain in pairs(Entities:FindAllByClassname("ent_dota_fountain")) do
+		if (fountain:GetAbsOrigin() - location):Length2D() <= distance then
+			return true
+		end
+	end
+
+	return false
+end
+
+function IsNearEntity(entity, location, distance)
+	for _, fountain in pairs(Entities:FindAllByClassname(entity)) do
+		if (fountain:GetAbsOrigin() - location):Length2D() <= distance then
+			return true
+		end
+	end
+
+	return false
+end
+
+-- Finds whether or not an entity is an item container (the box on the game ground)
+function CBaseEntity:IsItemContainer()
+	if self.GetContainedItem then
+		if self:GetContainedItem() then
+			return true
+		end
+	end
+
+	return false
+end
+
+-- Copy shallow copy given input
+function ShallowCopy(orig)
+	local copy = {}
+	for orig_key, orig_value in pairs(orig) do
+		copy[orig_key] = orig_value
+	end
+	return copy
+end
+
+function ShowHUD(bool)
+-- 0, Clock
+-- 1, Top Bar
+-- 2, ???
+-- 3, Action Panel
+-- 4, Minimap
+-- 5, Inventory
+-- 6, Courier + Shop Button Area
+
+	for i = 0, 6 do
+		if GameRules:GetGameModeEntity():GetHUDVisible(i) ~= bool then
+			GameRules:GetGameModeEntity():SetHUDVisible(i, bool)
+		end
+	end
+end
+
+function UpdateRoshanBar(roshan)
+	CustomNetTables:SetTableValue("game_options", "roshan", {
+			level = GAME_ROSHAN_KILLS +1,
+			HP = roshan:GetHealth(),
+			HP_alt = roshan:GetHealthPercent(),
+			maxHP = roshan:GetMaxHealth()
+		})
+	return time
+end
+
+function CheatDetector()
+	if CustomNetTables:GetTableValue("game_options", "game_count").value == 1 then
+		if Convars:GetBool("sv_cheats") == true or GameRules:IsCheatMode() then
+--			if not IsInToolsMode() then
+			print("Cheats have been enabled, game don't count.")
+			CustomNetTables:SetTableValue("game_options", "game_count", {value = 0})
+			CustomGameEventManager:Send_ServerToAllClients("safe_to_leave", {})
+--			end
+		end
+	end
+end
+
+-- TODO: Maybe this is laggy, format it later
+function InitItemIds()
+	GameMode.itemIDs = {}
+	for k,v in pairs(KeyValues.ItemKV) do
+		if type(v) == "table" and v.ID then
+			GameMode.itemIDs[v.ID] = k
+		end
+	end
+end
+
+-- Yahnich's calculate distance and direction functions
+function CalculateDistance(ent1, ent2)
+	local pos1 = ent1
+	local pos2 = ent2
+	if ent1.GetAbsOrigin then pos1 = ent1:GetAbsOrigin() end
+	if ent2.GetAbsOrigin then pos2 = ent2:GetAbsOrigin() end
+	local distance = (pos1 - pos2):Length2D()
+	return distance
+end
+
+-- Rolls a Psuedo Random chance. If failed, chances increases, otherwise chances are reset
+function RollPseudoRandom(base_chance, entity)
+	local chances_table = {
+		{5, 0.38},
+		{10, 1.48},
+		{15, 3.22},
+		{16, 3.65},
+		{17, 4.09},
+		{19, 5.06},
+		{20, 5.57},
+		{21, 6.11},
+		{22, 6.67},
+		{24, 7.85},
+		{25, 8.48},
+		{27, 9.78},
+		{30, 11.9},
+		{35, 15.8},
+		{40, 20.20},
+		{50, 30.20},
+		{60, 42.30},
+		{70, 57.10},
+		{100, 100}
+	}
+
+	entity.pseudoRandomModifier = entity.pseudoRandomModifier or 0
+	local prngBase
+	for i = 1, #chances_table do
+		if base_chance == chances_table[i][1] then		  
+			prngBase = chances_table[i][2]
+		end	 
+	end
+
+	if not prngBase then
+--		log.warn("The chance was not found! Make sure to add it to the table or change the value.")
+		return false
+	end
+	
+	if RollPercentage( prngBase + entity.pseudoRandomModifier ) then
+		entity.pseudoRandomModifier = 0
+		return true
+	else
+		entity.pseudoRandomModifier = entity.pseudoRandomModifier + prngBase		
+		return false
+	end
+end
+
+-- 100% kills a unit. Activates death-preventing modifiers, then removes them. Does not killsteal from Reaper's Scythe.
+function TrueKill(caster, target, ability)
+
+	-- Extremely specific blademail interaction because fuck everything
+	if caster:HasModifier("modifier_item_blade_mail_reflect") then
+		target:RemoveModifierByName("modifier_imba_purification_passive")
+	end
+
+	local nothlProtection = target:FindModifierByName("modifier_imba_dazzle_nothl_protection")
+	if nothlProtection and nothlProtection:GetStackCount() < 1 then
+		nothlProtection:SetStackCount(1)
+		nothlProtection:StartIntervalThink(1)
+	end
+
+	-- Deals lethal damage in order to trigger death-preventing abilities... Except for Reincarnation
+	if not ( target:HasModifier("modifier_imba_reincarnation") or target:HasModifier("modifier_imba_reincarnation_wraith_form_buff") or target:HasModifier("modifier_imba_reincarnation_wraith_form") ) then
+		target:Kill(ability, caster)
+	end
+
+	-- Removes the relevant modifiers
+	target:RemoveModifierByName("modifier_invulnerable")
+	target:RemoveModifierByName("modifier_imba_dazzle_shallow_grave")
+	target:RemoveModifierByName("modifier_imba_aphotic_shield_buff_block")
+	target:RemoveModifierByName("modifier_imba_spiked_carapace")
+	target:RemoveModifierByName("modifier_borrowed_time")
+	target:RemoveModifierByName("modifier_imba_centaur_return")
+	target:RemoveModifierByName("modifier_item_greatwyrm_plate_unique")
+	target:RemoveModifierByName("modifier_item_greatwyrm_plate_active")
+	target:RemoveModifierByName("modifier_item_crimson_guard_unique")
+	target:RemoveModifierByName("modifier_item_crimson_guard_active")	
+	target:RemoveModifierByName("modifier_item_vanguard_unique")
+	target:RemoveModifierByName("modifier_item_imba_initiate_robe_stacks")
+	target:RemoveModifierByName("modifier_imba_cheese_death_prevention")
+	target:RemoveModifierByName("modifier_imba_rapier_cursed")
+	target:RemoveModifierByName("modifier_imba_dazzle_nothl_protection_aura_talent")
+	
+
+	-- Kills the target
+	if not target:HasModifier("modifier_imba_reincarnation_wraith_form") then
+		target:Kill(ability, caster)
+	end
+end
+
+-- Checks if a unit is near units of a certain class on the same team
+function IsNearFriendlyClass(unit, radius, class)
+	local class_units = Entities:FindAllByClassnameWithin(class, unit:GetAbsOrigin(), radius)
+
+	for _,found_unit in pairs(class_units) do
+		if found_unit:GetTeam() == unit:GetTeam() then
+			return true
+		end
+	end
+	
+	return false
+end
+
+function ChangeAttackProjectileImba(unit)
+
+	local particle_deso = "particles/items_fx/desolator_projectile.vpcf"
+	local particle_skadi = "particles/items2_fx/skadi_projectile.vpcf"
+	local particle_lifesteal = "particles/item/lifesteal_mask/lifesteal_particle.vpcf"
+	local particle_deso_skadi = "particles/item/desolator/desolator_skadi_projectile_2.vpcf"
+	local particle_clinkz_arrows = "particles/units/heroes/hero_clinkz/clinkz_searing_arrow.vpcf"
+	local particle_dragon_form_green = "particles/units/heroes/hero_dragon_knight/dragon_knight_elder_dragon_corrosive.vpcf"
+	local particle_dragon_form_red = "particles/units/heroes/hero_dragon_knight/dragon_knight_elder_dragon_fire.vpcf"
+	local particle_dragon_form_blue = "particles/units/heroes/hero_dragon_knight/dragon_knight_elder_dragon_frost.vpcf"
+	local particle_terrorblade_transform = "particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis_base_attack.vpcf"
+
+	-- If the unit has a Desolator and a Skadi, use the special projectile
+	if unit:HasModifier("modifier_item_imba_desolator") or unit:HasModifier("modifier_item_imba_desolator_2") then
+		if unit:HasModifier("modifier_item_imba_skadi") then
+			unit:SetRangedProjectileName(particle_deso_skadi)
+		-- If only a Desolator, use its attack projectile instead
+		else
+			unit:SetRangedProjectileName(particle_deso)
+		end
+	-- If only a Skadi, use its attack projectile instead
+	elseif unit:HasModifier("modifier_item_imba_skadi") then
+		unit:SetRangedProjectileName(particle_skadi)
+
+	-- If the unit has any form of lifesteal, use the lifesteal projectile
+	elseif unit:HasModifier("modifier_imba_morbid_mask") or unit:HasModifier("modifier_imba_mask_of_madness") or unit:HasModifier("modifier_imba_satanic") or unit:HasModifier("modifier_item_imba_vladmir") or unit:HasModifier("modifier_item_imba_vladmir_blood") then		
+		unit:SetRangedProjectileName(particle_lifesteal)	
+
+	-- If it's one of Dragon Knight's forms, use its attack projectile instead
+	elseif unit:HasModifier("modifier_dragon_knight_corrosive_breath") then
+		unit:SetRangedProjectileName(particle_dragon_form_green)
+	elseif unit:HasModifier("modifier_dragon_knight_splash_attack") then
+		unit:SetRangedProjectileName(particle_dragon_form_red)
+	elseif unit:HasModifier("modifier_dragon_knight_frost_breath") then
+		unit:SetRangedProjectileName(particle_dragon_form_blue)
+
+	-- If it's a metamorphosed Terrorblade, use its attack projectile instead
+	elseif unit:HasModifier("modifier_terrorblade_metamorphosis") then
+		unit:SetRangedProjectileName(particle_terrorblade_transform)
+
+	-- Else, default to the base ranged projectile
+	else
+		log.debug(unit:GetKeyValue("ProjectileModel"))
+		unit:SetRangedProjectileName(unit:GetKeyValue("ProjectileModel"))
+	end
+end
+
+-- Sets a creature's max health to [health]
+function SetCreatureHealth(unit, health, update_current_health)
+
+	unit:SetBaseMaxHealth(health)
+	unit:SetMaxHealth(health)
+
+	if update_current_health then
+		unit:SetHealth(health)
+	end
+end
+
+--[[
+-- Items and abilities that have uninterruptable forced movement
+function IsUninterruptableForcedMovement( unit )
+	
+	-- List of uninterruptable movement modifiers
+	local modifier_list = {
+		"modifier_spirit_breaker_charge_of_darkness",
+		"modifier_magnataur_skewer_movement",
+		"modifier_invoker_deafening_blast_knockback",
+		"modifier_knockback",
+		"modifier_item_forcestaff_active",
+		"modifier_shredder_timber_chain",
+		"modifier_batrider_flaming_lasso",
+		"modifier_imba_leap_self_root",
+		"modifier_faceless_void_chronosphere_freeze",
+		"modifier_storm_spirit_ball_lightning",
+		"modifier_morphling_waveform"
+	}
+
+	-- Iterate through the list
+	for _,modifier_name in pairs(modifier_list) do
+		if unit:HasModifier(modifier_name) then
+			return true
+		end
+	end
+
+	return false
+end
+--]]
+
+-- Returns an unit's existing increased cast range modifiers
+function GetCastRangeIncrease( unit )
+	local cast_range_increase = 0
+	-- Only the greatefd st increase counts for items, they do not stack
+	for _, parent_modifier in pairs(unit:FindAllModifiers()) do        
+		if parent_modifier.GetModifierCastRangeBonus then
+			cast_range_increase = math.max(cast_range_increase,parent_modifier:GetModifierCastRangeBonus())
+		end
+	end
+
+	for _, parent_modifier in pairs(unit:FindAllModifiers()) do        
+		if parent_modifier.GetModifierCastRangeBonusStacking then
+			cast_range_increase = cast_range_increase + parent_modifier:GetModifierCastRangeBonusStacking()
+		end
+	end
+
+	return cast_range_increase
+end
+
+function SetupTower(tower)
+	if tower.initialized then return end
+--	if tower.initialized or GetMapName() == Map1v1() then return end
+	for i = 1, 4 do
+		for _, ability in pairs(TOWER_ABILITIES["tower"..i]) do
+			if string.find(tower:GetUnitName(), "tower"..i) then
+--				print("Tower found:", ability) -- tower spawned from pocket tower mutation are found and print well, abilities are not given for reasons
+				tower:AddAbility(ability):SetLevel(1)
+				tower.initialized = true
+			end
+		end
+	end
+end
+
+function GetReductionFromArmor(armor)
+	local m = 0.06 * armor
+
+	return 100 * (1 - m / ( 1 + math.abs(m)))
+end
+
+function CalculateReductionFromArmor_Percentage(armorOffset, armor)
+	return -GetReductionFromArmor(armor) + GetReductionFromArmor(armorOffset)
+end
+
+-- if isDegree = true, entered angle is degree, else radians
+function RotateVector2D(v,angle,bIsDegree)
+	if bIsDegree then angle = math.rad(angle) end
+	local xp = v.x * math.cos(angle) - v.y * math.sin(angle)
+	local yp = v.x * math.sin(angle) + v.y * math.cos(angle)
+
+	return Vector(xp,yp,v.z):Normalized()
+end
+
+-- Returns true if a value is in a table, false if it is not.
+function CheckIfInTable(table, searched_value, optional_number_of_table_rows_to_search_through)
+	-- Searches through the ENTIRE table
+	if not optional_number_of_table_rows_to_search_through then
+		for _,table_value in pairs(table) do
+			if table_value == searched_value then
+				return true
+			end
+		end
+	else
+		-- Searches through the first few rows
+		for i=1, optional_number_of_table_rows_to_search_through do
+			if i <= #table then
+				if table[i] == searched_value then
+					return true
+				end
+			end
+		end
+	end
+
+	return false
+end
+
+function IsVanillaSilence(modifier_name)
+	local vanilla_silences = 
+	{["modifier_silence"] = true,
+	["modifier_earth_spirit_geomagnetic_grip"] = true}
+
+	if vanilla_silences[modifier_name] then
+		return true
+	end
+
+	return false
+end
+
+function IsImbaSilence(modifier_name)
+	local silence_modifiers = 		
+		{["modifier_imba_blood_bath_debuff_silence"] = true,							 
+		 ["modifier_imba_gust_silence"] = true,
+		 ["modifier_imba_crippling_fear_silence"] = true,
+		 ["modifier_imba_stifling_dagger_silence"] = true,		 
+		 ["modifier_imba_silencer_last_word_repeat_thinker"] = true,
+		 ["modifier_imba_silencer_global_silence"] = true,
+		 ["modifier_imba_ancient_seal_main"] = true,				 		 
+		 ["modifier_imba_blast_off_silence"] = true,
+		 ["modifier_item_imba_orchid_debuff"] = true,
+		 ["modifier_item_imba_bloodthorn_debuff"] = true,
+		 ["modifier_item_imba_kaya_silence"] = true,
+		 ["modifier_item_imba_sange_kaya_proc"] = true,
+		 ["modifier_item_imba_kaya_yasha_silence"] = true,
+		 ["modifier_item_imba_triumvirate_proc_debuff"] = true}
+
+
+	if silence_modifiers[modifier_name] then
+		return true
+	end
+
+	return false
+end
+
+function IsSilentSilence(modifier_name)
+	local silence_modifiers = 		
+		{["modifier_imba_ancient_seal_secondary"] = true}
+
+
+	if silence_modifiers[modifier_name] then
+		return true
+	end
+
+	return false
+end
+
+function IsVanillaDebuff(modifier_name)		
+local vanilla_debuffs = 
+	{["modifier_cold_feet"] = true,
+	["modifier_arc_warden_flux"] = true,
+	["modifier_batrider_sticky_napalm"] = true,
+	["modifier_flamebreak_damage"] = true,
+	["modifier_beastmaster_primal_roar_slow"] = true,
+	["modifier_brewmaster_thunder_clap"] = true,
+	["modifier_brewmaster_drunken_haze"] = true,
+	["modifier_bristleback_viscous_nasal_goo"] = true,
+	["modifier_broodmother_spawn_spiderlings"] = true,
+	["modifier_broodmother_incapacitating_bite_orb"] = true,
+	["modifier_chaos_knight_reality_rift"] = true,
+	["modifier_chen_penitence"] = true, 	 
+	["modifier_silence"] = true,
+	["modifier_doom_bringer_infernal_blade_burn"] = true,
+	["modifier_dragonknight_breathefire_reduction"] = true,
+	["modifier_dragon_knight_corrosive_breath_dot"] = true,
+	["modifier_dragon_knight_frost_breath_slow"] = true,
+	["modifier_earth_spirit_rolling_boulder_slow"] = true,
+	["modifier_earth_spirit_geomagnetic_grip_debuff"] = true,
+	["modifier_earth_spirit_magnetize"] = true,
+	["modifier_elder_titan_earth_splitter"] = true,
+	["modifier_ember_spirit_searing_chains"] = true,
+	["modifier_enchantress_untouchable_slow"] = true,
+	["modifier_enchantress_enchant_slow"] = true,
+	["modifier_gyrocopter_call_down_slow"] = true,
+	["modifier_huskar_life_break_slow"] = true,
+	["modifier_invoker_cold_snap"] = true,
+	["modifier_invoker_tornado"] = true,
+	["modifier_invoker_chaos_meteor_burn"] = true,
+	["modifier_wisp_tether_slow"] = true,
+	["modifier_keeper_of_the_light_mana_leak"] = true,
+	["modifier_keeper_of_the_light_blinding_light"] = true,
+	["modifier_leshrac_lightning_storm_slow"] = true,
+	["modifier_life_stealer_open_wounds"] = true,
+	["modifier_lone_druid_savage_roar"] = true,
+	["modifier_meepo_earthbind"] = true,
+	["modifier_meepo_geostrike_debuff"] = true,
+	["modifier_monkey_king_spring_slow"] = true,
+	["modifier_naga_siren_ensnare"] = true,
+	["modifier_naga_siren_rip_tide"] = true,
+	["modifier_furion_wrathofnature_spawn"] = true,
+	["modifier_ogre_magi_ignite"] = true,
+	["modifier_oracle_fates_edict"] = true,
+	["modifier_oracle_fortunes_end_purge"] = true,
+	["modifier_phantom_lancer_spirit_lance"] = true,
+	["modifier_phoenix_icarus_dive_burn"] = true,
+	["modifier_phoenix_fire_spirit_burn"] = true,
+	["modifier_razor_unstablecurrent_slow"] = true,
+	["modifier_rubick_fade_bolt_debuff"] = true,
+	["modifier_shadow_demon_soul_catcher"] = true,
+	["modifier_shadow_demon_shadow_poison"] = true,
+	["modifier_shadow_shaman_voodoo"] = true,
+	["modifier_templar_assassin_meld_armor"] = true,
+	["modifier_templar_assassin_trap_slow"] = true,
+	["modifier_terrorblade_reflection_slow"] = true,
+	["modifier_tidehunter_gush"] = true,
+	["modifier_tidehunter_anchor_smash"] = true,
+	["modifier_whirling_death_debuff"] = true,
+	["modifier_shredder_chakram_debuff"] = true,
+	["modifier_tinker_laser_blind"] = true,
+	["modifier_treant_natures_guise_root"] = true,
+	["modifier_greevil_leech_seed"] = true,
+	["modifier_treant_overgrowth"] = true,
+	["modifier_tusk_walrus_punch_slow"] = true,
+	["modifier_tusk_walrus_kick_slow"] = true,
+	["modifier_abyssal_underlord_pit_of_malice_ensare"] = true,
+	["modifier_viper_poison_attack_slow"] = true,
+	["modifier_viper_corrosive_skin_slow"] = true,
+	["modifier_visage_grave_chill_debuff"] = true,
+	["modifier_winter_wyvern_arctic_burn_slow"] = true,
+	["modifier_winter_wyvern_splinter_blast_slow"] = true,
+	["modifier_big_thunder_lizard_slam"] = true,
+	["modifier_dark_troll_warlord_ensnare"] = true,
+	["modifier_ghost_frost_attack_slow"] = true,
+	["modifier_polar_furbolg_ursa_warrior_thunder_clap"] = true,
+	["modifier_ogre_magi_frost_armor_slow"] = true,
+	["modifier_imba_roshan_slam"] = true,
+	["modifier_imba_roshan_slam_armor"] = true,
+	["modifier_satyr_trickster_purge"] = true,
+	["modifier_broodmother_poison_sting_debuff"] = true,
+	["modifier_broodmother_poison_sting_dps_debuff"] = true,
+	["modifier_lone_druid_spirit_bear_entangle_effect"] = true,
+	["modifier_brewmaster_storm_cyclone"] = true,
+	["modifier_undying_tombstone_zombie_deathlust"] = true,
+	["modifier_gnoll_assassin_envenomed_weapon_poison"] = true,
+	["modifier_item_ethereal_blade_ethereal"] = true,
+	["modifier_item_ethereal_blade_slow"] = true,
+	["modifier_cyclone"] = true,
+	["modifier_item_medallion_of_courage_armor_reduction"] = true,
+	["modifier_item_orb_of_venom_slow"] = true,
+	["modifier_rod_of_atos_debuff"] = true,
+	["modifier_item_imba_shivas_blast_slow"] = true,
+	["modifier_item_solar_crest_armor_reduction"] = true}
+
+	if vanilla_debuffs[modifier_name] then
+		return true
+	end
+
+	return false
+end
+
+-- Finds units only on the outer layer of a ring
+function FindUnitsInRing(teamNumber, position, cacheUnit, ring_radius, ring_width, teamFilter, typeFilter, flagFilter, order, canGrowCache)
+	-- First checks all of the units in a radius
+	local all_units	= FindUnitsInRadius(teamNumber, position, cacheUnit, ring_radius, teamFilter, typeFilter, flagFilter, order, canGrowCache)
+	
+	-- Then builds a table composed of the units that are in the outer ring, but not in the inner one.
+	local outer_ring_units	=	{}
+
+	for _,unit in pairs(all_units) do
+		-- Custom function, checks if the unit is far enough away from the inner radius
+		if CalculateDistance(unit:GetAbsOrigin(), position) >= ring_radius - ring_width then
+			table.insert(outer_ring_units, unit)
+		end
+	end
+
+	return outer_ring_units
+end
+
+-- Cleave-like cone search - returns the units in front of the caster in a cone.
+function FindUnitsInCone(teamNumber, vDirection, vPosition, startRadius, endRadius, flLength, hCacheUnit, targetTeam, targetUnit, targetFlags, findOrder, bCache)
+	local vDirectionCone = Vector( vDirection.y, -vDirection.x, 0.0 )
+	local enemies = FindUnitsInRadius(teamNumber, vPosition, hCacheUnit, endRadius + flLength, targetTeam, targetUnit, targetFlags, findOrder, bCache )
+	local unitTable = {}
+	if #enemies > 0 then
+		for _,enemy in pairs(enemies) do
+			if enemy ~= nil then
+				local vToPotentialTarget = enemy:GetOrigin() - vPosition
+				local flSideAmount = math.abs( vToPotentialTarget.x * vDirectionCone.x + vToPotentialTarget.y * vDirectionCone.y + vToPotentialTarget.z * vDirectionCone.z )
+				local enemy_distance_from_caster = ( vToPotentialTarget.x * vDirection.x + vToPotentialTarget.y * vDirection.y + vToPotentialTarget.z * vDirection.z )
+				
+				-- Author of this "increase over distance": Fudge, pretty proud of this :D 
+				
+				-- Calculate how much the width of the check can be higher than the starting point
+				local max_increased_radius_from_distance = endRadius - startRadius
+				
+				-- Calculate how close the enemy is to the caster, in comparison to the total distance
+				local pct_distance = enemy_distance_from_caster / flLength
+				
+				-- Calculate how much the width should be higher due to the distance of the enemy to the caster.
+				local radius_increase_from_distance = max_increased_radius_from_distance * pct_distance
+				
+				if ( flSideAmount < startRadius + radius_increase_from_distance ) and ( enemy_distance_from_caster > 0.0 ) and ( enemy_distance_from_caster < flLength ) then
+					table.insert(unitTable, enemy)
+				end
+			end
+		end
+	end
+	return unitTable
+end
+
+function CalculateDirection(ent1, ent2)
+	local pos1 = ent1
+	local pos2 = ent2
+	if ent1.GetAbsOrigin then pos1 = ent1:GetAbsOrigin() end
+	if ent2.GetAbsOrigin then pos2 = ent2:GetAbsOrigin() end
+	local direction = (pos1 - pos2):Normalized()
+	return direction
+end
+
+-- Thanks to LoD-Redux & darklord for this!
+function DisplayError(playerID, message)
+	local player = PlayerResource:GetPlayer(playerID)
+	if player then
+		CustomGameEventManager:Send_ServerToPlayer(player, "CreateIngameErrorMessage", {message=message})
+	end
+end
+
+-- TODO: FORMAT THIS SHIT
+function ReconnectPlayer(player_id)
+	if not player_id then player_id = 0 end
+	if player_id == "test_reconnect" then player_id = 0 end
+
+--	print("Player is reconnecting:", player_id)
+
+	-- Reinitialize the player's pick screen panorama, if necessary
+	Timers:CreateTimer(function()
+--		print(PlayerResource:GetSelectedHeroEntity(player_id))
+
+		if PlayerResource:GetSelectedHeroEntity(player_id) then
+			CustomGameEventManager:Send_ServerToAllClients("player_reconnected", {PlayerID = player_id, PickedHeroes = HeroSelection.picked_heroes, pickState = pick_state, repickState = repick_state})
+
+			Timers:CreateTimer(3.0, function()
+				local table = {
+					ID = player_id,
+					team = PlayerResource:GetTeam(player_id),
+					disconnect = 2,
+				}
+
+				GoodGame:Call(table)
+			end)
+
+			local hero = PlayerResource:GetSelectedHeroEntity(player_id)
+
+			if PICKING_SCREEN_OVER == true then
+				if hero:GetUnitName() == FORCE_PICKED_HERO then
+					print('Giving player ' .. player_id .. ' a random hero! (reconnected)')
+					local random_hero = HeroSelection:RandomHero()
+					print("Random Hero:", random_hero)
+					HeroSelection:GiveStartingHero(player_id, random_hero, true)
+				end
+
+				if IsMutationMap() then
+					Mutation:OnReconnect(player_id)
+				end
+			end
+		else
+--			print("Not fully reconnected yet:", player_id)
+			return 0.1
+		end
+	end)
+
+	-- If this is a reconnect from abandonment due to a long disconnect, remove the abandon state
+	if PlayerResource:GetHasAbandonedDueToLongDisconnect(player_id) then
+		local player_name = PlayerResource:GetPlayerName(player_id)
+		local hero = PlayerResource:GetPlayer(player_id):GetAssignedHero()
+		local hero_name = hero:GetUnitName()
+		local line_duration = 7
+		Notifications:BottomToAll({hero = hero_name, duration = line_duration})
+		Notifications:BottomToAll({text = player_name.." ", duration = line_duration, continue = true})
+		Notifications:BottomToAll({text = "#imba_player_reconnect_message", duration = line_duration, style = {color = "DodgerBlue"}, continue = true})
+
+		-- Stop redistributing gold to allies, if applicable
+		PlayerResource:StopAbandonGoldRedistribution(player_id)
+	end
+end
+
+-- Turns a table of entity handles into entindex string separated by commas.
+function TableToStringCommaEnt(table)	
+	local string = ""
+	local first_value = true
+
+	for _,handle in pairs(table) do
+		if first_value then
+			string = string..tostring(handle:entindex())	
+			first_value = false
+		else
+			string = string..","
+			string = string..tostring(handle:entindex())	
+		end		
+	end
+
+	return string
 end
 
 -- Turns an entindex string into a table and returns a table of handles.
@@ -123,279 +771,17 @@ function StringToTableEnt(string, separator)
 	return return_table
 end
 
--- Turns a table of entity handles into entindex string separated by commas.
-function TableToStringCommaEnt(table)	
-	local string = ""
-	local first_value = true
-
-	for _,handle in pairs(table) do
-		if first_value then
-			string = string..tostring(handle:entindex())	
-			first_value = false
-		else
-			string = string..","
-			string = string..tostring(handle:entindex())	
-		end		
-	end
-
-	return string
-end
-
-function FindNearestPointFromLine(caster, dir, affected)
-	local castertoaffected = affected - caster
-	local len = castertoaffected:Dot(dir)
-	local ntgt = Vector(dir.x * len, dir.y * len, caster.z)
-	return caster + ntgt
-end
-
--------------------------------------------------------------------------------------------------
--- IMBA: custom utility functions
--------------------------------------------------------------------------------------------------
-
--- Returns the killstreak/deathstreak bonus gold for this hero
-function GetKillstreakGold( hero )
-	local base_bounty = HERO_KILL_GOLD_BASE + hero:GetLevel() * HERO_KILL_GOLD_PER_LEVEL
-	local gold = ( hero.kill_streak_count ^ KILLSTREAK_EXP_FACTOR ) * HERO_KILL_GOLD_PER_KILLSTREAK - hero.death_streak_count * HERO_KILL_GOLD_PER_DEATHSTREAK
-
-	-- Limits to maximum and minimum kill/deathstreak values
-	gold = math.max(gold, (-1) * base_bounty * HERO_KILL_GOLD_DEATHSTREAK_CAP / 100 )
-	gold = math.min(gold, base_bounty * ( HERO_KILL_GOLD_KILLSTREAK_CAP - 100 ) / 100)
-
-	return gold
-end
-
--- Precaches an unit, or, if something else is being precached, enters it into the precache queue
-function PrecacheUnitWithQueue( unit_name )
-	Timers:CreateTimer(function()
-			-- If something else is being precached, wait two seconds
-			if UNIT_BEING_PRECACHED then
-				return 2
-
-				-- Otherwise, start precaching and block other calls from doing so
-			else
-				UNIT_BEING_PRECACHED = true
-				PrecacheUnitByNameAsync(unit_name, function(...) end)
-
-				-- Release the queue after one second
-				Timers:CreateTimer(2, function()
-						UNIT_BEING_PRECACHED = false
-					end)
-			end
-		end)
-
---	print("Precached", unit_name)
-end
-
--- Initializes heroes' innate abilities
-function InitializeInnateAbilities( hero )	
-	-- Cycle through all of the heroes' abilities, and upgrade the innates ones
-	for i = 0, 15 do		
-		local current_ability = hero:GetAbilityByIndex(i)		
-		if current_ability and current_ability.IsInnateAbility then
-			if current_ability:IsInnateAbility() then
-				current_ability:SetLevel(1)
-			end
-		end
-	end
-end
-
--- Upgrades a tower's abilities
-function UpgradeTower(tower)
-	for i = 0, tower:GetAbilityCount() -1 do
-		local ability = tower:GetAbilityByIndex(i)
-		if ability and ability:GetLevel() < ability:GetMaxLevel() then			
-			ability:SetLevel(ability:GetLevel() + 1)
-		end
-	end
-end
-
--- Initialize Physics library on this target
-function InitializePhysicsParameters(unit)
-
-	if not IsPhysicsUnit(unit) then
-		Physics:Unit(unit)
-		unit:SetPhysicsVelocityMax(600)
-		unit:PreventDI()
-	end
-end
-
--- Gold bag pickup event function
-function GoldPickup(event)
-	if IsServer() then
-		local item = EntIndexToHScript( event.ItemEntityIndex )
-		local owner = EntIndexToHScript( event.HeroEntityIndex )
-		local gold_per_bag = item:GetCurrentCharges()
-
-		PlayerResource:ModifyGold( owner:GetPlayerID(), gold_per_bag, true, 0 )
-		SendOverheadEventMessage( owner, OVERHEAD_ALERT_GOLD, owner, gold_per_bag, nil )
-		UTIL_Remove( item ) -- otherwise it pollutes the player inventory
-	end
-end
-
--- Talents modifier function
-function ApplyAllTalentModifiers()
-	Timers:CreateTimer(0.1,function()
-			local current_hero_list = HeroList:GetAllHeroes()
-			for k,v in pairs(current_hero_list) do
-				local hero_name = string.match(v:GetName(),"npc_dota_hero_(.*)")
-
-				-- TODO: This is odd, please do something better bro
-				if hero_name == nil or hero_name == "npc_dota_hero_ghost_revenant" or hero_name == "npc_dota_hero_hell_empress" then 
-					log.info("Custom Hero, ignoring talents for now.") 
-					return 
-				end
-
-				for i = 1, 8 do
-					local talent_name = "special_bonus_imba_"..hero_name.."_"..i
-					local modifier_name = "modifier_special_bonus_imba_"..hero_name.."_"..i
-					if v:HasTalent(talent_name) and not v:HasModifier(modifier_name) then
-						v:AddNewModifier(v,v,modifier_name,{})
-					end
-				end
-			end
-			return 0.5
-		end)
-end
-
-function NetTableM(tablename,keyname,...) 
-	local values = {...}                                                                  -- Our user input
-	local returnvalues = {}                                                               -- table that will be unpacked for result                                                    
-	for k,v in ipairs(values) do  
-		local keyname = keyname..v[1]                                                       -- should be 1-8, but probably can be extrapolated later on to be any number
-		if IsServer() then
-			local netTableKey = netTableCmd(false,tablename,keyname)                              -- Command to grab our key set
-			local my_key = createNetTableKey(v)                                               -- key = 250,444,111 as table, stored in key as 1 2 3
-			if not netTableKey then                                                           -- No key with requested name exists
-				netTableCmd(true,tablename,keyname,my_key)                                          -- create database key with "tablename","myHealth1","1=250,2=444,3=111"
-			elseif type(netTableKey) == 'boolean' then                                        -- Our check returned that a key exists but that it is empty, we need to populate it for clients
-				netTableCmd(true,tablename,keyname,my_key)                                          -- create database key with "tablename","myHealth1","1=250,2=444,3=111"
-			else                                                                              -- Our key exists and we got some values, now we need to check the key against the requested value from other scripts  
-				if #v > 1 then
-					for i=1,#netTableKey do
-						if netTableKey[i] ~= v[i-1] then                                              -- compare each value, does server 1 = our 250? does server 2 = our 444? 
-							netTableCmd(true,tablename,keyname,my_key)                                      -- If our key is different from the sent value, rewrite it ONCE and break execution to main loop again
-							break
-						end
-					end
-				end
-			end      
-		end
-		local allkeys = netTableCmd(false,tablename,keyname)
-		if allkeys and type(allkeys) ~= 'boolean' then
-			for i=1,#allkeys do
-				table.insert(returnvalues, allkeys[i])    
-			end
-		else
-			for i=1,#v do
-				table.insert(returnvalues, 0)
-			end
-		end
-	end
-	return unpack(returnvalues)
-end
-
-function netTableCmd(send,readtable,key,tabletosend)
-	if send == false then
-		local finalresulttable = {}
-		local nettabletemp = CustomNetTables:GetTableValue(readtable,key)
-		if not nettabletemp then return false end
-		for key,value in pairs(nettabletemp) do
-			table.insert(finalresulttable,value)
-		end          
-		if #finalresulttable > 0 then 
-			return finalresulttable
-		else
-			return true
-		end
-	else
-		CustomNetTables:SetTableValue(readtable, key, tabletosend)
-	end
-end
-
-function createNetTableKey(v)
-	local valuePair = {}
-	if #v > 1 then
-		for i=2,#v do
-			table.insert(valuePair,v[i])                                              -- returns just numbers 2-x from sent value...
-		end    
-	end
-	return valuePair  
-end
-
-function getkvValues(tEntity, ...) -- KV Values look hideous in finished code, so this function will parse through all sent KV's for tEntity (typically self)
-	local values = {...}
-	local data = {}
-	for i,v in ipairs(values) do
-		table.insert(data,tEntity:GetSpecialValueFor(v))
-	end
-	return unpack(data)
-end
-
-function TalentManager(tEntity, nameScheme, ...)
-	local talents = {...}
-	local return_values = {}
-	for k,v in pairs(talents) do    
-		if #v > 1 then
-			for i=1,#v do
-				table.insert(return_values, tEntity:FindSpecificTalentValue(nameScheme..v[1],v[i]))
-			end
-		else
-			table.insert(return_values, tEntity:FindTalentValue(nameScheme..v[1]))
-		end
-	end    
-	return unpack(return_values)
-end
-
-function findtarget(source) -- simple list return function for finding a players current target entity
-	local t = source:GetCursorTarget()
-	local c = source:GetCaster()
-	if t and c then return t,c end
-end
-
--- Controls comeback gold
-function UpdateComebackBonus(points, team)
-
-	-- Calculate both teams' networths
-	local team_networth = {}
-	team_networth[DOTA_TEAM_GOODGUYS] = 0
-	team_networth[DOTA_TEAM_BADGUYS] = 0
-	for player_id = 0, 19 do
-		if PlayerResource:IsImbaPlayer(player_id) and PlayerResource:GetConnectionState(player_id) <= 2 and (not PlayerResource:GetHasAbandonedDueToLongDisconnect(player_id)) then
-			team_networth[PlayerResource:GetTeam(player_id)] = team_networth[PlayerResource:GetTeam(player_id)] + PlayerResource:GetTotalEarnedGold(player_id)
-		end
-	end
-
-	-- Update teams' score
-	if COMEBACK_BOUNTY_SCORE[team] == nil then
-		COMEBACK_BOUNTY_SCORE[team] = 0
-	end
-
-	COMEBACK_BOUNTY_SCORE[team] = COMEBACK_BOUNTY_SCORE[team] + points
-
-	-- If one of the teams is eligible, apply the bonus
-	if (COMEBACK_BOUNTY_SCORE[DOTA_TEAM_GOODGUYS] < COMEBACK_BOUNTY_SCORE[DOTA_TEAM_BADGUYS]) and (team_networth[DOTA_TEAM_GOODGUYS] < team_networth[DOTA_TEAM_BADGUYS]) then
-		COMEBACK_BOUNTY_BONUS[DOTA_TEAM_GOODGUYS] = (COMEBACK_BOUNTY_SCORE[DOTA_TEAM_BADGUYS] - COMEBACK_BOUNTY_SCORE[DOTA_TEAM_GOODGUYS]) / ( COMEBACK_BOUNTY_SCORE[DOTA_TEAM_GOODGUYS] + 60 - GameRules:GetDOTATime(false, false) / 60 )
-	elseif (COMEBACK_BOUNTY_SCORE[DOTA_TEAM_BADGUYS] < COMEBACK_BOUNTY_SCORE[DOTA_TEAM_GOODGUYS]) and (team_networth[DOTA_TEAM_BADGUYS] < team_networth[DOTA_TEAM_GOODGUYS]) then
-		COMEBACK_BOUNTY_BONUS[DOTA_TEAM_BADGUYS] = (COMEBACK_BOUNTY_SCORE[DOTA_TEAM_GOODGUYS] - COMEBACK_BOUNTY_SCORE[DOTA_TEAM_BADGUYS]) / ( COMEBACK_BOUNTY_SCORE[DOTA_TEAM_BADGUYS] + 60 - GameRules:GetDOTATime(false, false) / 60 )
-	end
-end
-
--------------------------------------------------------------------------------------------------------
--- Client side daytime tracking system
--------------------------------------------------------------------------------------------------------
-
 function StoreCurrentDayCycle()	
 	Timers:CreateTimer(function()		
+		-- Get current daytime cycle
+		local is_day = GameRules:IsDaytime()		
 
-			-- Get current daytime cycle
-			local is_day = GameRules:IsDaytime()		
+		-- Set in the table
+		CustomNetTables:SetTableValue("game_options", "isdaytime", {is_day = is_day} )
 
-			-- Set in the table
-			CustomNetTables:SetTableValue("game_options", "isdaytime", {is_day = is_day} )		
-
-			-- Repeat
-			return 0.5
-		end)	
+		-- Repeat
+		return 0.5
+	end)	
 end
 
 function IsDaytime()
@@ -414,1329 +800,102 @@ function IsDaytime()
 	return true   
 end
 
-function SystemMessage(token, vars)
-	CustomGameEventManager:Send_ServerToAllClients("custom_system_message", { token = token or "", vars = vars or {}})
-end
-
--- This function is responsible for cleaning dummy units and wisps that may have accumulated
-function StartGarbageCollector()	
---	print("started collector")
-
-	-- Find all dummy units in the game
-	local dummies = FindUnitsInRadius(DOTA_TEAM_BADGUYS, Vector(0,0,0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)		
-
-	-- Cycle each dummy. If it is alive for more than 1 minute, delete it.
-	local gametime = GameRules:GetGameTime()
-	for _, dummy in pairs(dummies) do
-		if dummy:GetUnitName() == "npc_dummy_unit" then			
-			local dummy_creation_time = dummy:GetCreationTime()
-			if gametime - dummy_creation_time > 60 then
-				log.warn("NUKING A LOST DUMMY!")
-				UTIL_Remove(dummy)
-			else
-				log.warn("dummy is still kinda new. Not removing it!")
-			end
-		end
-	end
-
---	local particle_removed = 0
-
---	for _, particle in pairs(PARTICLE_TABLE) do
---		print("Particle:", particle)
---		print("Amount:", gametime - particle.lifetime)
-
---		if gametime - particle.lifetime > 0 then
---			if particle then
---				particle_removed = particle_removed +1
---				table.remove(PARTICLE_TABLE, particle.name)
---			end
---		end
---	end
-
---	for i = 1, #PARTICLE_TABLE do
---		if manager == PARTICLE_TABLE[i] then
---			particle_removed = particle_removed+1		
---			table.remove(PARTICLE_TABLE, i)
---			break
---		end
---	end
-
---	if particle_removed > 0 then
---		print("Removed "..particle_removed.." particle.")			
---	end
-end
---[[
--- This function is responsible for deciding which team is behind, if any, and store it at a nettable.
-function DefineLosingTeam()
--- Losing team is defined as a team that is both behind in both the sums of networth and levels.
-local radiant_networth = 0
-local radiant_levels = 0
-local dire_networth = 0
-local dire_levels = 0
-
-	for i = 0, DOTA_MAX_TEAM_PLAYERS-1 do
-		if PlayerResource:IsValidPlayer(i) then
-
-			-- Only count connected players or bots
-			if PlayerResource:GetConnectionState(i) == 1 or PlayerResource:GetConnectionState(i) == 2 then
-
-			-- Get player
-			local player = PlayerResource:GetPlayer(i)
-			
-				if player then				
-					-- Get team
-					local team = player:GetTeam()				
-
-					-- Get level, add it to the sum
-					local level = player:GetAssignedHero():GetLevel()				
-
-					-- Get networth
-					local hero_networth = 0
-					for i = 0, 8 do
-						local item = player:GetAssignedHero():GetItemInSlot(i)
-						if item then
-							hero_networth = hero_networth + GetItemCost(item:GetName())						
-						end
-					end
-
-					-- Add to the relevant team
-					if team == DOTA_TEAM_GOODGUYS then					
-						radiant_networth = radiant_networth + hero_networth					
-						radiant_levels = radiant_levels + level					
-					else					
-						dire_networth = dire_networth + hero_networth					
-						dire_levels = dire_levels + level					
-					end				
-				end
-			end
-		end
-	end	
-
-	-- Check for the losing team. A team must be behind in both levels and networth.
-	if (radiant_networth < dire_networth) and (radiant_levels < dire_levels) then
-		-- Radiant is losing		
-		CustomNetTables:SetTableValue("game_options", "losing_team", {losing_team = DOTA_TEAM_GOODGUYS})
-
-	elseif (radiant_networth > dire_networth) and (radiant_levels > dire_levels) then
-		-- Dire is losing		
-		CustomNetTables:SetTableValue("game_options", "losing_team", {losing_team = DOTA_TEAM_BADGUYS})
-
-	else -- No team is losing - one of the team is better on levels, the other on gold. No experience bonus in this case		
-		CustomNetTables:SetTableValue("game_options", "losing_team", {losing_team = 0})		
-	end
-end
---]]
-hero_particles = {}
-hero_particles[0] = 0
-hero_particles[1] = 0
-hero_particles[2] = 0
-hero_particles[3] = 0
-hero_particles[4] = 0
-hero_particles[5] = 0
-hero_particles[6] = 0
-hero_particles[7] = 0
-hero_particles[8] = 0
-hero_particles[9] = 0
-hero_particles[10] = 0
-hero_particles[11] = 0
-hero_particles[12] = 0
-hero_particles[13] = 0
-hero_particles[14] = 0
-hero_particles[15] = 0
-hero_particles[16] = 0
-hero_particles[17] = 0
-hero_particles[18] = 0
-hero_particles[19] = 0
-
-total_hero_particles = {}
-total_hero_particles[0] = 0
-total_hero_particles[1] = 0
-total_hero_particles[2] = 0
-total_hero_particles[3] = 0
-total_hero_particles[4] = 0
-total_hero_particles[5] = 0
-total_hero_particles[6] = 0
-total_hero_particles[7] = 0
-total_hero_particles[8] = 0
-total_hero_particles[9] = 0
-total_hero_particles[10] = 0
-total_hero_particles[11] = 0
-total_hero_particles[12] = 0
-total_hero_particles[13] = 0
-total_hero_particles[14] = 0
-total_hero_particles[15] = 0
-total_hero_particles[16] = 0
-total_hero_particles[17] = 0
-total_hero_particles[18] = 0
-
-total_particles = 0
-total_particles_created = 0
-function OverrideCreateParticle()
-	local CreateParticleFunc = ParticleManager.CreateParticle
-
-	ParticleManager.CreateParticle = 
-	function(manager, path, int, handle) 		 
-		local particle = CreateParticleFunc(manager, path, int, handle)
-		local time = GameRules:GetGameTime()
-
-		manager.lifetime = time
-		manager.name = path
-
---		print("Manager:", manager)
---		print("Manager Time:", manager.lifetime)
---		print("Path:", path)
---		print("Int:", int)
---		print("Handle:", handle)
---		print("------------------------")
-
-		-- Index in a big, fat table. Only works in tools mode!
---		if IsInToolsMode() then
-		PARTICLE_TABLE = PARTICLE_TABLE or {}
-		table.insert(PARTICLE_TABLE, manager)
---		end
-
---		if path == "particles/units/heroes/hero_pudge/pudge_meathook.vpcf" then
---			print("HOOK!")
---			print("Manager:", manager)
---			print("Int:", int)
---			print("Handle:", handle)
---			return particle
---		end
-
-		if handle and handle:IsRealHero() then
-			if handle.pID then
---				print("Valid pID")
---				hero_particles[handle.pID] = hero_particles[handle.pID] +1 -- Need to filter ReleaseParticleIndex for hero to get only active particles
-				total_hero_particles[handle.pID] = total_hero_particles[handle.pID] +1
-			end
-		else
---			print("non-Hero Handle:", handle)
-		end
-
-		total_particles = total_particles +1
-		total_particles_created = total_particles_created +1
-
-		return particle
-	end
-end
-
-function OverrideCreateLinearProjectile()
-	local CreateProjectileFunc = ProjectileManager.CreateLinearProjectile
-
-	ProjectileManager.CreateProjectileFunc = 
-	function(manager, handle)                  
-
-		-- Do things here to override
-
-		return CreateProjectileFunc(manager, handle)
-	end
-end
-
-function OverrideReleaseIndex()
-	local ReleaseIndexFunc = ParticleManager.ReleaseParticleIndex
-	local released_particles = 0
-
-	ParticleManager.ReleaseParticleIndex = 
-	function(manager, int)		
-		-- Find handle in table
---		print(#PARTICLE_TABLE)
-		for i = 1, #PARTICLE_TABLE do
-			if manager == PARTICLE_TABLE[i] then
-				released_particles = released_particles+1		
-				table.remove(PARTICLE_TABLE, i)
-				break
-			end
-		end
-
-		-- Release normally
-		total_particles = total_particles -1
-		ReleaseIndexFunc(manager, int)
-	end
---	print("Released "..released_particles.." particles.")
-end
-
-function PrintParticleTable()
-	PrintTable(PARTICLE_TABLE)	
-end
-
--- Custom NetGraph. Creator: Cookies [Earth Salamander]
-function ImbaNetGraph(tick)
-	Timers:CreateTimer(function()
-			local units = FindUnitsInRadius(DOTA_TEAM_BADGUYS, Vector(0,0,0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)		
-			local good_unit_count = 0
-			local bad_unit_count = 0
-			local good_build_count = 0
-			local bad_build_count = 0
-			local dummy_count = 0
-
-			for _, unit in pairs(units) do
-				if unit:GetTeamNumber() == 2 then
-					if unit:IsBuilding() then
-						good_build_count = good_build_count+1
-					else
-						good_unit_count = good_unit_count +1
-					end
-				elseif unit:GetTeamNumber() == 3 then
-					if unit:IsBuilding() then
-						bad_build_count = bad_build_count+1
-					else
-						bad_unit_count = bad_unit_count +1
-					end
-				end
-				if unit:GetUnitName() == "npc_dummy_unit" or unit:GetUnitName() == "npc_dummy_unit_perma" then			
-					dummy_count = dummy_count +1
-				end
-			end
-
-			CustomNetTables:SetTableValue("netgraph", "hero_number", {value = PlayerResource:GetPlayerCount()})
-			CustomNetTables:SetTableValue("netgraph", "good_unit_number", {value = good_unit_count -4}) -- developer statues
-			CustomNetTables:SetTableValue("netgraph", "bad_unit_number", {value = bad_unit_count -4}) -- developer statues
-			CustomNetTables:SetTableValue("netgraph", "good_build_number", {value = good_build_count})
-			CustomNetTables:SetTableValue("netgraph", "bad_build_number", {value = bad_build_count})
-			CustomNetTables:SetTableValue("netgraph", "total_unit_number", {value = #units})
-			CustomNetTables:SetTableValue("netgraph", "total_dummy_number", {value = dummy_count})
-			CustomNetTables:SetTableValue("netgraph", "total_dummy_created_number", {value = dummy_created_count})
---		CustomNetTables:SetTableValue("netgraph", "total_particle_number", {value = total_particles})
---		CustomNetTables:SetTableValue("netgraph", "total_particle_created_number", {value = total_particles_created})
-
---		for i = 0, PlayerResource:GetPlayerCount() -1 do
---			CustomNetTables:SetTableValue("netgraph", "hero_particle_"..i-1, {particle = hero_particles[i-1], pID = i-1})
---			CustomNetTables:SetTableValue("netgraph", "hero_total_particle_"..i-1, {particle = total_hero_particles[i-1], pID = i-1})
---		end
-			return tick
-		end)
-end
-
-function table.deepmerge(t1, t2)
-	for k,v in pairs(t2) do
-		if type(v) == "table" then
-			if type(t1[k] or false) == "table" then
-				tableMerge(t1[k] or {}, t2[k] or {})
-			else
-				t1[k] = v
-			end
-		else
-			t1[k] = v
-		end
-	end
-	return t1
-end
-
-function ReconnectPlayer(player_id)
-	if not player_id then player_id = 0 end
-	if player_id == "test_reconnect" then player_id = 0 end
-
-	print("Player is reconnecting:", player_id)
-
-	-- Reinitialize the player's pick screen panorama, if necessary
-	Timers:CreateTimer(1.0, function()
---		print(PlayerResource:GetSelectedHeroEntity(player_id))
-			if PlayerResource:GetSelectedHeroEntity(player_id) then
-				CustomGameEventManager:Send_ServerToAllClients("player_reconnected", {PlayerID = player_id, PickedHeroes = HeroSelection.picked_heroes, pickState = pick_state, repickState = repick_state})
-
---			Timers:CreateTimer(3.0, function()
---				local table = {
---					ID = player_id,
---					team = PlayerResource:GetTeam(player_id),
---					disconnect = 2,
---				}
-
---				print("Decrease GG Amount!")
---				GameMode:GG(table)
---			end)
-
-				local hero = PlayerResource:GetSelectedHeroEntity(player_id)
-
---			print(hero:GetUnitName())
-
---			if GameRules:IsCheatMode() then
---				Notifications:TopToAll({text = "Player "..player_id.. " has reconnected with hero: "..hero:GetUnitName(), duration = 10.0, style = {color = "DodgerBlue"}})
---			end
-
-				print(PICKING_SCREEN_OVER)
---			if GameRules:IsCheatMode() then
---				if PICKING_SCREEN_OVER then
---					Notifications:TopToAll({text = "Pick Screen is over!", duration = 10.0, style = {color = "DodgerBlue"}})
---				else
---					Notifications:TopToAll({text = "Pick Screen is not over yet!", duration = 10.0, style = {color = "DodgerBlue"}})
---				end
---			end
-
-				if PICKING_SCREEN_OVER == true then
-					if hero:GetUnitName() == FORCE_PICKED_HERO then
---				if not lockedHeroes[player_id] or hero:GetUnitName() == FORCE_PICKED_HERO then
-						-- we don't care if they haven't locked in yet
---					if GameRules:IsCheatMode() then
---						Notifications:TopToAll({text = "Player "..player_id.. ": NO HERO LOCKED IN, RANDOM A HERO!", duration = 10.0, style = {color = "DodgerBlue"}})
---					end
-
-						print('Giving player ' .. player_id .. ' a random hero! (reconnected)')
---					if GameRules:IsCheatMode() then
---						Notifications:TopToAll({text = 'Giving player ' .. player_id .. ' a random hero: '..HeroSelection:RandomHero()..' (reconnected)', duration = 10.0, style = {color = "DodgerBlue"}})
---					end
-
-						local random_hero = HeroSelection:RandomHero()
-						print("Random Hero:", random_hero)
-						HeroSelection:GiveStartingHero(player_id, random_hero, true)
-					else
---					print('Reconnecting... ' .. hero .. ' ' .. loadedHeroes[lockedHeroes[player_id]])
---					print(loadedHeroes)
---					if GameRules:IsCheatMode() then
---						Notifications:TopToAll({text = 'Reconnecting... ' .. hero .. ' ' .. loadedHeroes[lockedHeroes[player_id]], duration = 10.0, style = {color = "DodgerBlue"}})
---					end
---					if not hero or hero:GetUnitName() == FORCE_PICKED_HERO and loadedHeroes[lockedHeroes[player_id]] then
---						if GameRules:IsCheatMode() then
---							Notifications:TopToAll({text = 'Giving player ' .. player_id .. ' ' .. lockedHeroes[player_id] .. '(reconnected)', duration = 10.0, style = {color = "DodgerBlue"}})
---						end
---						print('Giving player ' .. player_id .. ' ' .. lockedHeroes[player_id] .. '(reconnected)')
---						HeroSelection:GiveStartingHero(player_id, lockedHeroes[player_id])
---					end
-					end
-
-					CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(player_id), "send_mutations", IMBA_MUTATION)
-				end
-			else
---			print("Not fully reconnected yet:", player_id)
-				return 0.1
-			end
-
-			if GetMapName() == "imba_overthrow" then
-				CustomGameEventManager:Send_ServerToAllClients("imbathrow_topbar", {imbathrow = true})
-			else
-				CustomGameEventManager:Send_ServerToAllClients("imbathrow_topbar", {imbathrow = false})
-			end
-		end)
-
-	-- If this is a reconnect from abandonment due to a long disconnect, remove the abandon state
-	if PlayerResource:GetHasAbandonedDueToLongDisconnect(player_id) then
-		local player_name = PlayerResource:GetPlayerName(player_id)
-		local hero = PlayerResource:GetPickedHero(player_id)
-		local hero_name = PlayerResource:GetPickedHeroName(player_id)
-		local line_duration = 7
-		Notifications:BottomToAll({hero = hero_name, duration = line_duration})
-		Notifications:BottomToAll({text = player_name.." ", duration = line_duration, continue = true})
-		Notifications:BottomToAll({text = "#imba_player_reconnect_message", duration = line_duration, style = {color = "DodgerBlue"}, continue = true})
-
-		-- Stop redistributing gold to allies, if applicable
-		PlayerResource:StopAbandonGoldRedistribution(player_id)
-	end
-end
-
-function UpdateRoshanBar(roshan)
-	CustomNetTables:SetTableValue("game_options", "roshan", {
-			level = GAME_ROSHAN_KILLS +1,
-			HP = roshan:GetHealth(),
-			HP_alt = roshan:GetHealthPercent(),
-			maxHP = roshan:GetMaxHealth()
-		})
-	return time
-end
-
--- Checks if this ability is casted by someone with Spell Steal (i.e. Rubick)
-function IsStolenSpell(caster)
-
-	-- If the caster has the Spell Steal ability, return true
-	if caster:FindAbilityByName("rubick_spell_steal") then
-		return true
-	end
-
-	return false
-end
-
-function InitRunes()
-	bounty_rune_spawners = {}
-	bounty_rune_locations = {}
-	powerup_rune_spawners = {}
-	powerup_rune_locations = {}
-
-	bounty_rune_spawners = Entities:FindAllByName("dota_item_rune_spawner_bounty")
-
-	if GetMapName() == "imba_overthrow" then
-		powerup_rune_spawners = Entities:FindAllByName("dota_item_rune_spawner")
-	else
-		powerup_rune_spawners = Entities:FindAllByClassname("dota_item_rune_spawner_powerup")
-	end
-
-	for i = 1, #powerup_rune_spawners do
-		powerup_rune_locations[i] = powerup_rune_spawners[i]:GetAbsOrigin()
-		powerup_rune_spawners[i]:RemoveSelf()
-	end
-
-	for i = 1, #bounty_rune_spawners do
-		bounty_rune_locations[i] = bounty_rune_spawners[i]:GetAbsOrigin()
-		bounty_rune_spawners[i]:RemoveSelf()
-	end
-end
-
--- Spawns runes on the map
-function SpawnImbaRunes()
-
-	-- List of powerup rune types
-	local powerup_rune_types = {
-		{"item_imba_rune_arcane", "particles/generic_gameplay/rune_arcane.vpcf"},
-		{"item_imba_rune_double_damage", "particles/generic_gameplay/rune_doubledamage.vpcf"},
-		{"item_imba_rune_haste", "particles/generic_gameplay/rune_haste.vpcf"},
-		{"item_imba_rune_regeneration", "particles/generic_gameplay/rune_regeneration.vpcf"},
-		{"item_imba_rune_illusion", "particles/generic_gameplay/rune_illusion.vpcf"},
-		{"item_imba_rune_invisibility", "particles/generic_gameplay/rune_invisibility.vpcf"},
-		{"item_imba_rune_frost", "particles/econ/items/puck/puck_snowflake/puck_snowflake_ambient.vpcf"},
-		-- {"item_imba_rune_ember", "particles/econ/items/shadow_fiend/sf_fire_arcana/sf_fire_arcana_trail.vpcf"},
-		-- {"item_imba_rune_stone", "particles/econ/items/natures_prophet/natures_prophet_flower_treant/natures_prophet_flower_treant_ambient.vpcf"},
+function SetupShrines()
+	local good_fillers = {
+		"good_filler_1",
+		"good_filler_3",
+		"good_filler_5",
 	}
 
-	Timers:CreateTimer(function()
-			local random_int = RandomInt(1, #powerup_rune_types)
-
-			RemoveRunes(1)
-
-			for k, v in pairs(powerup_rune_locations) do
-				local rune = CreateItemOnPositionForLaunch(powerup_rune_locations[k], CreateItem(powerup_rune_types[random_int][1], nil, nil))
-				RegisterRune(rune, 1)
-				SpawnRuneParticle(rune, powerup_rune_types[random_int][2])
-			end
-
-			return RUNE_SPAWN_TIME
-		end)
-
-	Timers:CreateTimer(function()
-			RemoveRunes(2)
-
-			for k, v in pairs(bounty_rune_locations) do
-				local bounty_rune = CreateItem("item_imba_rune_bounty", nil, nil)
-				local rune = CreateItemOnPositionForLaunch(bounty_rune_locations[k], bounty_rune)		
-				RegisterRune(rune, 2)
-				SpawnRuneParticle(rune, "particles/generic_gameplay/rune_bounty_first.vpcf")
-			end
-
-			return BOUNTY_RUNE_SPAWN_TIME
-		end)
-end
-
-function SpawnRuneParticle(rune, particle)
-	local rune_particle = ParticleManager:CreateParticle(particle, PATTACH_CUSTOMORIGIN, rune)
-	ParticleManager:SetParticleControl(rune_particle, 0, rune:GetAbsOrigin())
-	ParticleManager:ReleaseParticleIndex(rune_particle)
-end
-
-function RegisterRune(rune, rune_type)
-	AddFOWViewer(2, rune:GetAbsOrigin(), 100, 0.02, false)
-	AddFOWViewer(3, rune:GetAbsOrigin(), 100, 0.02, false)
-
-	-- Initialize table
-	if not rune_spawn_table then
-		rune_spawn_table = {}
-	end
-
-	if not bounty_rune_spawn_table then
-		bounty_rune_spawn_table = {}
-	end
-
-	-- Register rune into table
-	if rune_type == 1 then
-		table.insert(rune_spawn_table, rune)
-	elseif rune_type == 2 then
-		table.insert(bounty_rune_spawn_table, rune)
-	end
-end
-
-function RemoveRunes(rune_type)
-	local rune_table
-
-	if rune_type == 1 then
-		rune_table = rune_spawn_table
-	elseif rune_type == 2 then
-		rune_table = bounty_rune_spawn_table
-	end
-
-	if rune_table then
-		-- Remove existing runes
-		for _, rune in pairs(rune_table) do
-			if not rune:IsNull() then								
-				local item = rune:GetContainedItem()
-				UTIL_Remove(item)
-				UTIL_Remove(rune)
-			end
-		end
-
-		-- Clear the table
-		rune_table = {}
-	end
-end
-
-function PickupRune(rune_name, unit, bActiveByBottle)
-	if string.find(rune_name, "item_imba_rune_") then
-		rune_name = string.gsub(rune_name, "item_imba_rune_", "")
-	end
-
-	local bottle = bActiveByBottle or false
-	local store_in_bottle = false
-	local duration = GetItemKV("item_imba_rune_"..rune_name, "RuneDuration")
-
-	for i = 0, 5 do
-		local item = unit:GetItemInSlot(i)
-		if item and not bottle then
-			if item:GetAbilityName() == "item_imba_bottle" and not item.RuneStorage then
-				item:SetStorageRune(rune_name)
-				store_in_bottle = true
-				break
-			end
-		end
-	end
-
-	if store_in_bottle == false then
-		if rune_name == "bounty" then
-			-- Bounty rune parameters
-			local base_bounty = 100
-			local bounty_per_minute = 4
-			local xp_per_minute = 10
-			local game_time = GameRules:GetDOTATime(false, false)
-			local current_bounty = base_bounty + bounty_per_minute * game_time / 60
-			local current_xp = xp_per_minute * game_time / 60
-
-			-- Adjust value for lobby options
-			local custom_gold_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "bounty_multiplier")["1"])
-			current_bounty = current_bounty * (1 + custom_gold_bonus * 0.01)
-
-			-- Grant the unit experience
-			unit:AddExperience(current_xp, DOTA_ModifyXP_CreepKill, false, true)
-
-			-- #3 Talent: Bounty runes give gold bags
-			if unit:HasTalent("special_bonus_imba_alchemist_3") then
-				local stacks_to_gold =( unit:FindTalentValue("special_bonus_imba_alchemist_3") / 100 )  / 5
-				local gold_per_bag = unit:FindModifierByName("modifier_imba_goblins_greed_passive"):GetStackCount() + (current_bounty * stacks_to_gold)
-				print("gold_per_bag", gold_per_bag, stacks_to_gold)
-				for i=1, 5 do
-					-- Drop gold bags
-					local newItem = CreateItem( "item_bag_of_gold", nil, nil )
-					newItem:SetPurchaseTime( 0 )
-					newItem:SetCurrentCharges( gold_per_bag )
-
-					local drop = CreateItemOnPositionSync( unit:GetAbsOrigin(), newItem )
-					local dropTarget = unit:GetAbsOrigin() + RandomVector( RandomFloat( 300, 450 ) )
-					newItem:LaunchLoot( true, 300, 0.75, dropTarget )
-					EmitSoundOn( "Dungeon.TreasureItemDrop", unit )
-				end
-			end
-
-			-- global bounty rune
-			for _, hero in pairs(HeroList:GetAllHeroes()) do
-				if hero:GetTeam() == unit:GetTeam() then					
-				    -- Do not give gold to illusions or monkey king clones (has to check for two separate modifiers)
-					if not hero:IsRealHero() or hero:IsClone() or hero:HasModifier("modifier_monkey_king_fur_army_soldier") or hero:HasModifier("modifier_monkey_king_fur_army_soldier_hidden") then
-
-					elseif hero:GetUnitName() == "npc_dota_hero_alchemist" then 
-						local alchemy_bounty = 0
-						if unit:FindAbilityByName("imba_alchemist_goblins_greed") and unit:FindAbilityByName("imba_alchemist_goblins_greed"):GetLevel() > 0 then
-							alchemy_bounty = current_bounty * (unit:FindAbilityByName("imba_alchemist_goblins_greed"):GetSpecialValueFor("bounty_multiplier") / 100)
-
-							-- #7 Talent: Moar gold from bounty runes
-							if unit:HasTalent("special_bonus_imba_alchemist_7") then
-								alchemy_bounty = alchemy_bounty * (unit:FindTalentValue("special_bonus_imba_alchemist_7") / 100)
-							end		
-						else 
-							alchemy_bounty = current_bounty
-						end
-
-						-- Balancing for stacking gold multipliers to not go out of control in mutation/frantic maps
-						if(IsMutationMap() or IsFranticMap()) then
-							local bountyReductionPct = 0.5 -- 0.0 to 1.0, with 0.0 being reduce nothing, and 1.0 being remove greevil's greed effect
-							-- Set variable to number between current_bounty and alchemy_bounty based on bountyReductionPct
-							alchemy_bounty = max(current_bounty, alchemy_bounty - ((alchemy_bounty - current_bounty) * bountyReductionPct))
-						end
-						
-						hero:ModifyGold(alchemy_bounty, false, DOTA_ModifyGold_Unspecified)
-						SendOverheadEventMessage(PlayerResource:GetPlayer(hero:GetPlayerOwnerID()), OVERHEAD_ALERT_GOLD, hero, alchemy_bounty, nil)
-					else
-						hero:ModifyGold(current_bounty, false, DOTA_ModifyGold_Unspecified)
-						SendOverheadEventMessage(PlayerResource:GetPlayer(hero:GetPlayerOwnerID()), OVERHEAD_ALERT_GOLD, hero, current_bounty, nil)
-					end
-				end
-			end
-
---			EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "General.Coins", unit)
-			EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Bounty", unit)
-		elseif rune_name == "arcane" then
-			unit:AddNewModifier(unit, item, "modifier_imba_arcane_rune", {duration=duration})
-			EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Arcane", unit)
-		elseif rune_name == "double_damage" then
-			unit:AddNewModifier(unit, item, "modifier_imba_double_damage_rune", {duration=duration})
-			EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.DD", unit)
-		elseif rune_name == "haste" then
-			unit:AddNewModifier(unit, item, "modifier_imba_haste_rune", {duration=duration})
-			EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Haste", unit)
-		elseif rune_name == "illusion" then
-			local images_count = 3
-			local vRandomSpawnPos = {
-				Vector( 72, 0, 0 ),		-- North
-				Vector( 0, 72, 0 ),		-- East
-				Vector( -72, 0, 0 ),	-- South
-				Vector( 0, -72, 0 ),	-- West
-			}
-
-			for i = #vRandomSpawnPos, 2, -1 do	-- Simply shuffle them
-				local j = RandomInt( 1, i )
-				vRandomSpawnPos[i], vRandomSpawnPos[j] = vRandomSpawnPos[j], vRandomSpawnPos[i]
-			end
-
-			table.insert( vRandomSpawnPos, RandomInt( 1, images_count+1 ), Vector( 0, 0, 0 ) )
-			FindClearSpaceForUnit(unit, unit:GetAbsOrigin() + table.remove( vRandomSpawnPos, 1 ), true)
-
-			for i = 1, images_count do
-				local origin = unit:GetAbsOrigin() + table.remove( vRandomSpawnPos, 1 )
-				local illusion = IllusionManager:CreateIllusion(unit, self, origin, unit, {damagein=incomingDamage, damageout=outcomingDamage, unique=unit:entindex().."_rune_illusion_"..i, duration=duration})
-			end
-
-			EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Illusion", unit)
-		elseif rune_name == "invisibility" then
-			unit:AddNewModifier(unit, nil, "modifier_imba_invisibility_rune_handler", {duration=2.0, rune_duration=duration})
-			EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Invis", unit)
-		elseif rune_name == "regeneration" then
-			unit:AddNewModifier(unit, nil, "modifier_imba_regen_rune", {duration=duration})
-			EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Regen", unit)
-		elseif rune_name == "frost" then
-			unit:AddNewModifier(unit, nil, "modifier_imba_frost_rune", {duration=duration})
-			EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Frost", unit)
-		elseif rune_name == "ember" then
-			unit:AddNewModifier(unit, nil, "modifier_imba_ember_rune", {duration=duration})
-			EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Frost", unit)
-		elseif rune_name == "stone" then
-			unit:AddNewModifier(unit, nil, "modifier_imba_stone_rune", {duration=duration})
-			EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Frost", unit)
-		end
-
-		CustomGameEventManager:Send_ServerToTeam(unit:GetTeam(), "create_custom_toast", {
-				type = "generic",
-				text = "#custom_toast_ActivatedRune",
-				player = unit:GetPlayerID(),
-				runeType = rune_name,
-				runeFirst = true, -- every bounty runes are global now
-			})
-	end
-end
-
-function CBaseEntity:IsRune()
-	local runes = {
-		"models/props_gameplay/rune_goldxp.vmdl",
-		"models/props_gameplay/rune_haste01.vmdl",
-		"models/props_gameplay/rune_doubledamage01.vmdl",
-		"models/props_gameplay/rune_regeneration01.vmdl",
-		"models/props_gameplay/rune_arcane.vmdl",
-		"models/props_gameplay/rune_invisibility01.vmdl",
-		"models/props_gameplay/rune_illusion01.vmdl",
-		"models/props_gameplay/rune_frost.vmdl",
-		"models/props_gameplay/gold_coin001.vmdl",	-- Overthrow coin
+	local bad_fillers = {
+		"bad_filler_1",
+		"bad_filler_3",
+		"bad_filler_5",
 	}
 
-	for _, model in pairs(runes) do
-		if self:GetModelName() == model then
-			return true
-		end
+	for _, ent_name in pairs(good_fillers) do
+		local filler = Entities:FindByName(nil, ent_name)
+		local abs = filler:GetAbsOrigin()
+		filler:RemoveSelf()
+		local shrine = CreateUnitByName("npc_dota_goodguys_healers", abs, true, nil, nil, 2)
+		shrine:SetAbsOrigin(abs)
 	end
 
-	return false
-end
-
--- Overthrow
-function PickRandomShuffle( reference_list, bucket )
-	if ( #reference_list == 0 ) then
-		return nil
-	end
-
-	if ( #bucket == 0 ) then
-		-- ran out of options, refill the bucket from the reference
-		for k, v in pairs(reference_list) do
-			bucket[k] = v
-		end
-	end
-
-	-- pick a value from the bucket and remove it
-	local pick_index = RandomInt( 1, #bucket )
-	local result = bucket[ pick_index ]
-	table.remove( bucket, pick_index )
-	return result
-end
-
-function shallowcopy(orig)
-	local orig_type = type(orig)
-	local copy
-	if orig_type == 'table' then
-		copy = {}
-		for orig_key, orig_value in pairs(orig) do
-			copy[orig_key] = orig_value
-		end
-	else -- number, string, boolean, etc
-		copy = orig
-	end
-	return copy
-end
-
-function ShuffledList( orig_list )
-	local list = shallowcopy( orig_list )
-	local result = {}
-	local count = #list
-	for i = 1, count do
-		local pick = RandomInt( 1, #list )
-		result[ #result + 1 ] = list[ pick ]
-		table.remove( list, pick )
-	end
-	return result
-end
-
-function TableCount( t )
-	local n = 0
-	for _ in pairs( t ) do
-		n = n + 1
-	end
-	return n
-end
-
-function TableFindKey( table, val )
-	if table == nil then
-		print( "nil" )
-		return nil
-	end
-
-	for k, v in pairs( table ) do
-		if v == val then
-			return k
-		end
-	end
-	return nil
-end
-
-function CountdownTimer()
-	nCOUNTDOWNTIMER = nCOUNTDOWNTIMER - 1
-	local t = nCOUNTDOWNTIMER
-	-- print( t )
-	local minutes = math.floor(t / 60)
-	local seconds = t - (minutes * 60)
-	local m10 = math.floor(minutes / 10)
-	local m01 = minutes - (m10 * 10)
-	local s10 = math.floor(seconds / 10)
-	local s01 = seconds - (s10 * 10)
-	local broadcast_gametimer = 
-	{
-		timer_minute_10 = m10,
-		timer_minute_01 = m01,
-		timer_second_10 = s10,
-		timer_second_01 = s01,
-	}
-	CustomGameEventManager:Send_ServerToAllClients( "countdown", broadcast_gametimer )
-	if t <= 120 then
-		CustomGameEventManager:Send_ServerToAllClients( "time_remaining", broadcast_gametimer )
+	for _, ent_name in pairs(bad_fillers) do
+		local filler = Entities:FindByName(nil, ent_name)
+		local abs = filler:GetAbsOrigin()
+		filler:RemoveSelf()
+		local shrine = CreateUnitByName("npc_dota_badguys_healers", abs, true, nil, nil, 3)
+		shrine:SetAbsOrigin(abs)
 	end
 end
 
-function InitializeTalentsOverride(hero)
-	linked_abilities = {}
-	local non_talent_abilities = 0
-	for i = 0, 16 do
-		local ability = hero:GetAbilityByIndex(i)
-
-		if ability then
-			if not string.find(ability:GetAbilityName(), "_bonus_") then
-				non_talent_abilities = non_talent_abilities +1
+function Greeviling(unit)
+	if RandomInt(1, 100) > 85 then
+		if string.find(unit:GetUnitName(), "dota_creep") then
+			local material_group = tostring(RandomInt(0, 8))
+			unit.is_greevil = true
+			if string.find(unit:GetUnitName(), "ranged") then
+				unit:SetModel("models/courier/greevil/greevil_flying.vmdl")
+				unit:SetOriginalModel("models/courier/greevil/greevil_flying.vmdl")
 			else
---				print(ability, ability:GetAbilityName())
-				for k, v in pairs(ability:GetAbilityKeyValues()) do
-					if k == "LinkedAbility" then
-						for l, m in pairs(v) do
---							print(l, m)
-							table.insert(linked_abilities, i - non_talent_abilities + 1, m)
-						end
-						break
-					end
-				end
+				unit:SetModel("models/courier/greevil/greevil.vmdl")
+				unit:SetOriginalModel("models/courier/greevil/greevil.vmdl")
 			end
-		end
-	end
+			unit:SetMaterialGroup(material_group)
+			unit.eyes = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/courier/greevil/greevil_eyes.vmdl"})
+			unit.ears = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/courier/greevil/greevil_ears"..RandomInt(1, 2)..".vmdl"})
+			if RandomInt(1, 100) > 80 then
+				unit.feathers = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/courier/greevil/greevil_feathers.vmdl"})
+				unit.feathers:FollowEntity(unit, true)
+			end
+			unit.hair = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/courier/greevil/greevil_hair"..RandomInt(1, 2)..".vmdl"})
+			unit.horns = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/courier/greevil/greevil_horns"..RandomInt(1, 4)..".vmdl"})
+			unit.nose = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/courier/greevil/greevil_nose"..RandomInt(1, 3)..".vmdl"})
+			unit.tail = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/courier/greevil/greevil_tail"..RandomInt(1, 4)..".vmdl"})
+			unit.teeth = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/courier/greevil/greevil_teeth"..RandomInt(1, 4)..".vmdl"})
+			unit.wings = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/courier/greevil/greevil_wings"..RandomInt(1, 4)..".vmdl"})
 
---	print(linked_abilities)
---	PrintTable(linked_abilities)
-	CustomGameEventManager:Send_ServerToAllClients("init_talent_window", {linked_abilities})
-end
-
-function RestrictAndHideHero(hero)
-	if not hero:HasModifier("modifier_command_restricted") then
-		hero:AddNewModifier(hero, nil, "modifier_command_restricted", {})
-		hero:AddNewModifier(hero, nil, "modifier_phased", {})
-		hero:AddEffects(EF_NODRAW)
-		hero:SetDayTimeVisionRange(0)
-		hero:SetNightTimeVisionRange(0)
-
-		if hero:GetTeamNumber() == DOTA_TEAM_GOODGUYS then
-			PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), GoodCamera)
---			PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), hero)
---			FindClearSpaceForUnit(hero, GoodCamera:GetAbsOrigin() + Vector(0, 150, 0), false)
-		else
-			PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), BadCamera)
---			PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), hero)
---			FindClearSpaceForUnit(hero, BadCamera:GetAbsOrigin() + Vector(0, 150, 0), false)
-		end
-	end
-end
-
--- not working: team kill tower, courier dead, courier respawn, 
--- hero kill tower says hero denied
-function CombatEvents(event_type, reason, victim, attacker)
-	local text = ""
-	local team
-	local atacker_name
-	local victim_name
-	local courier = false
-	local first_blood = false
-	local glyph = false
-	local neutral = false
-	local roshan = false
-	local suicide = false
-	local tower = false
-	local gold = 0
-	if victim then
-		if victim:IsBuilding() then gold = 200 end
-		if victim:GetUnitName() == "npc_dota_badguys_healers" then gold = 125 end
-	end
-	local attacker_id
-	local victim_id
-	local variables
-
-	local streak = {}
-	streak[3] = "Killing spree"
-	streak[4] = "Dominating"
-	streak[5] = "Mega kill"
-	streak[6] = "Unstoppable"
-	streak[7] = "Wicked sick"
-	streak[8] = "Monster kill"
-	streak[9] = "Godlike"
-	streak[10] = "Beyond Godlike"
-
-	if event_type == "generic" then
-		if reason == "courier_respawn" then
-			text = "#custom_toast_CourierRespawned"
-			team = victim:GetTeam()
-			victim_id = victim.owner_id
-			courier = true
-		elseif reason == "courier_dead" then
-			text = "#custom_toast_CourierKilled"
-			team = victim:GetTeam()
-			victim_id = victim.owner_id
-			courier = true
-		elseif reason == "tower_kill_hero" then
-			text = "#custom_toast_TeamKilled"
-			team = attacker:GetTeam()
-			victim_name = victim:GetUnitName()
-			tower = true
-		elseif reason == "tower_dead" then
-			text = "#custom_toast_TeamKilled"
-			team = attacker:GetTeam()
-			victim_name = victim:GetUnitName()
-		elseif reason == "glyph" then
-			text = "#custom_toast_GlyphUsed"
-			team = victim:GetTeam()
-			glyph = true
+			-- lock to bone
+			unit.eyes:SetMaterialGroup(material_group)
+			unit.eyes:FollowEntity(unit, true)
+			unit.ears:SetMaterialGroup(material_group)
+			unit.ears:FollowEntity(unit, true)
+			unit.hair:FollowEntity(unit, true)
+			unit.horns:SetMaterialGroup(material_group)
+			unit.horns:FollowEntity(unit, true)
+			unit.nose:SetMaterialGroup(material_group)
+			unit.nose:FollowEntity(unit, true)
+			unit.tail:SetMaterialGroup(material_group)
+			unit.tail:FollowEntity(unit, true)
+			unit.teeth:SetMaterialGroup(material_group)
+			unit.teeth:FollowEntity(unit, true)
+			unit.wings:SetMaterialGroup(material_group)
+			unit.wings:FollowEntity(unit, true)
+		elseif string.find(unit:GetUnitName(), "_siege") then
+			unit:SetModel("models/creeps/mega_greevil/mega_greevil.vmdl")
+			unit:SetOriginalModel("models/creeps/mega_greevil/mega_greevil.vmdl")
+			unit:SetModelScale(2.75)
 		end
 
-		CustomGameEventManager:Send_ServerToAllClients("create_custom_toast", {
-				type = "generic",
-				text = text,
-				teamColor = team,
-				teamPlayer = team,
-				team = team,
-				victimUnitName = victim_name,
-				courier = courier,
-				gold = gold,
-				tower = tower,
-				glyph = glyph,
-				victimPlayer = victim_id,			
-			})
-	elseif event_type == "kill" then
-		if reason == "first_blood" then
-			attacker_id = attacker:GetPlayerID()
-			victim_id = victim:GetPlayerID()
-			first_blood = true
-			gold = CustomNetTables:GetTableValue("player_table", tostring(attacker_id)).hero_kill_bounty
-		elseif reason == "hero_kill" then
-			attacker_id = attacker:GetPlayerID()
-			victim_id = victim:GetPlayerID()
-			gold = CustomNetTables:GetTableValue("player_table", tostring(attacker_id)).hero_kill_bounty
-			variables = {
-				["{kill_streak}"] = streak[math.min(attacker.killstreak, 10)]
-			}
-		elseif reason == "hero_kill_tower" then
-			attacker_id = attacker:GetPlayerID()
-			victim_name = victim:GetUnitName()
-			gold = gold
-		elseif reason == "roshan_dead" then
-			team = attacker:GetTeam()
-			victim_name = victim:GetUnitName()
-			roshan = true
-			gold = 150
-		elseif reason == "hero_suicide" then
-			victim_name = victim:GetUnitName()
-			suicide = true
-		elseif reason == "hero_deny_hero" then
-			attacker_id = attacker:GetPlayerID()
-			victim_id = victim:GetPlayerID()
-			victim_name = victim:GetUnitName()
-		elseif reason == "neutrals_kill_hero" then
-			victim_name = victim:GetUnitName()
-			neutral = true
-		end
-
-		CustomGameEventManager:Send_ServerToAllClients("create_custom_toast", {
-				type = "kill",
-				teamColor = team,
-				team = team,
-				killerPlayer = attacker_id,
-				victimPlayer = victim_id,
-				victimUnitName = victim_name,
-				courier = courier,
-				gold = gold,
-				tower = tower,
-				variables = variables,
-				roshan = roshan,
-				neutral = neutral,
-				suicide = suicide,
-			})
-	end
-end
-
-function HeroVoiceLine(hero, event, extra) -- extra can be victim for kill event, or item purchased for purch event
-	if not hero:GetKeyValue("ShortName") then return end
-	local ID = hero:GetPlayerID()
-	local hero_name = string.gsub(hero:GetUnitName(), "npc_dota_hero_", "")
-	local short_hero_name = hero:GetKeyValue("ShortName")
-	local max_line = 2
-	local voice_line
-
-	if event == "blink" or event == "firstblood" then
-		max_line = 1
-	else
-		max_line = hero:GetKeyValue(event)
-	end
-
-	local random_int = RandomInt(1, max_line)
-
-	if not VOICELINE_IN_CD then
-		VOICELINE_IN_CD = {} -- move/cast/attack cd, 
-		VOICELINE_IN_CD[ID] = {false, false, false}
-	end
-
-	-- NOT ADDED YET:
-	-- notyet
-	-- failure
-	-- anger
-	-- happy
-	-- rare
-	-- nomana
-	-- RIVAL MEETING SYSTEM
-	-- ITEM PURCHASED SYSTEM
-	-- FIRST BLOOD SYSTEM (always 2 voicelines)
-
-	-- Later on, finish this to play specific sounds from the ability
---	if event == "cast" then
---		if RandomInt(1, 100) >= 20 then
---			event = hero:GetKeyValue("OnAbility"..ab.."Used")
---			print("play specific ab sound")
---		else
---			print("play global ab sound")
---		end
---	end
-
-	if random_int >= 10 then
-		voice_line = hero_name.."_"..short_hero_name.."_"..event.."_"..random_int
---		print(hero_name.."_"..short_hero_name.."_"..event.."_"..random_int)
-	else
-		voice_line = hero_name.."_"..short_hero_name.."_"..event.."_0"..random_int
---		print(hero_name.."_"..short_hero_name.."_"..event.."_0"..random_int)
-	end
-
-	EmitAnnouncerSoundForPlayer(voice_line, ID)
-
-	-- no timer required, play the voicelines everytime
-	if event == "blink" or event == "purch" or event == "battlebegins" or event == "win" or event == "lose" or event == "kill" or event == "death" or event == "level_voiceline" or event == "laugh" or event == "thanks" then
-		if event == "level_voiceline" then event = string.gsub(event, "_voiceline", "") end
-		if event == "purch" and RandomInt(1, 100) <= 50 then return end -- 50% chance to play purchase voice line
 		return
-	elseif event == "move" or event == "cast" or event == "attack" then
-		if event == "cast" and RandomInt(1, 100) <= 50 then return end -- 50% chance to play purchase voice line
---		print("Move/Attack/Cast cd:", VOICELINE_IN_CD[ID][1])
-		if VOICELINE_IN_CD[ID][1] == false then
-
-			VOICELINE_IN_CD[ID][1] = true
-			Timers:CreateTimer(6.0, function()
-					VOICELINE_IN_CD[ID][1] = false
-				end)
-		end
-		return
-	elseif event == "lasthit" or event == "deny" then
---		print("Last hit/Deny cd:", VOICELINE_IN_CD[ID][2])
-		if VOICELINE_IN_CD[ID][2] == false then
-			if event == "deny" then
-				-- detect if enemy hero in 1000 radius and visible, if not return end
-				return
-			end
-
-
-			VOICELINE_IN_CD[ID][2] = true
-			Timers:CreateTimer(60.0, function()
-					VOICELINE_IN_CD[ID][2] = false
-				end)
-		end
-		return
-	elseif event == "pain" then
-		if VOICELINE_IN_CD[ID][3] == false then
-
-			VOICELINE_IN_CD[ID][3] = true
-			Timers:CreateTimer(3.0, function()
-					VOICELINE_IN_CD[ID][3] = false
-				end)
-		end
-		return
---	elseif event == "notyet" or event == "nomana" then
---		if VOICELINE_IN_CD[ID][4] == false then
-
-		-- make hero play anger voice lines if he click within 10 seconds
---		end
 	end
 end
 
-GameEvents = GameEvents or {}
+function Setup1v1()
+	local removed_ents = {
+		"lane_top_goodguys_melee_spawner",
+		"lane_bot_goodguys_melee_spawner",
+		"lane_top_badguys_melee_spawner",
+		"lane_bot_badguys_melee_spawner",
+	}
 
-function CreateGameEvent(name) --luacheck: ignore CreateGameEvent
-	local event = Event()
-
-	GameEvents[name] = (function (self, fn)
-			return event.listen(fn)
-		end)
-
-	return event.broadcast
-end
-
-function CheatDetector()
-	if CustomNetTables:GetTableValue("game_options", "game_count").value == 1 then
-		if Convars:GetBool("sv_cheats") == true or GameRules:IsCheatMode() then
---			if not IsInToolsMode() then
-			log.info("Cheats have been enabled, game don't count.")
-			CustomNetTables:SetTableValue("game_options", "game_count", {value = 0})
-			CustomGameEventManager:Send_ServerToAllClients("safe_to_leave", {})
---			end
-		end
-	end
-end
-
-function AntiDevCheat(ID)
-	Notifications:BottomToAll({hero = hero:GetName(), duration = 10.0})
-	Notifications:BottomToAll({text = PlayerResource:GetPlayerName(ID).." ", duration = 5.0, continue = true})
-	Notifications:BottomToAll({text = "is trying to cheat using dev tool! GET HIM!", duration = 5.0, style = {color = "Red"}, continue = true})
-end
-
-function GetHeroType(hero)
-	-- default, electric, ethereal, fire, goo, ice, motor, stone, wood
-	local hero_name = string.gsub(hero:GetUnitName(), "npc_dota_hero_", "")
-	local effect_type = "default"
-	local hero_effects = {}
-	hero_effects[1] = {"ethereal", "abaddon"}
-	hero_effects[2] = {"ethereal", "arc_warden"}
-	hero_effects[3] = {"ethereal", "bane"}
-	hero_effects[4] = {"ethereal", "chaos_knight"}
-	hero_effects[5] = {"ethereal", "death_prophet"}
-	hero_effects[6] = {"ethereal", "enigma"}
-	hero_effects[7] = {"ethereal", "wisp"}
-	hero_effects[8] = {"ethereal", "morphling"}
-	hero_effects[9] = {"ethereal", "necrolyte"}
-	hero_effects[10] = {"ethereal", "obsidian_destroyer"}
-	hero_effects[11] = {"ethereal", "shadow_demon"}
-	hero_effects[12] = {"ethereal", "nevermore"}
-	hero_effects[13] = {"ethereal", "spectre"}
-	hero_effects[14] = {"ethereal", "spirit_breaker"}
-	hero_effects[15] = {"ethereal", "terrorblade"}
-	hero_effects[16] = {"ethereal", "vengeful_spirit"}
-	hero_effects[17] = {"ethereal", "visage"}
-	hero_effects[18] = {"ethereal", "skeleton_king"}
-	hero_effects[19] = {"goo", "bristleback"}
-	hero_effects[20] = {"goo", "broodmother"}
-	hero_effects[21] = {"goo", "nyx_assassin"}
-	hero_effects[22] = {"goo", "undying"}
-	hero_effects[23] = {"goo", "venomancer"}
-	hero_effects[24] = {"goo", "viper"}
-	hero_effects[25] = {"goo", "weaver"}
-	hero_effects[26] = {"motor", "clockwerk"}
-	hero_effects[27] = {"motor", "gyrocopter"}
-	hero_effects[28] = {"motor", "shredder"}
-	hero_effects[29] = {"motor", "tinker"}
-	hero_effects[30] = {"ice", "ancient_apparition"}
-	hero_effects[31] = {"ice", "crystal_maiden"}
-	hero_effects[32] = {"ice", "lich"}
-	hero_effects[33] = {"ice", "winter_wyvern"}
-	hero_effects[34] = {"fire", "ember_spirit"}
-	hero_effects[35] = {"fire", "lina"}
-	hero_effects[36] = {"fire", "phoenix"}
-	hero_effects[37] = {"electric", "razor"}
-	hero_effects[38] = {"electric", "storm_spirit"}
-	hero_effects[39] = {"electric", "zuus"}
-	hero_effects[40] = {"wood", "furion"}
-	hero_effects[41] = {"wood", "treant"}
-	hero_effects[42] = {"stone", "earth_spirit"}
-	hero_effects[43] = {"stone", "tiny"}
-
-	for _, effect in pairs(hero_effects) do
---		print(hero_name, effect[2], effect[1])
-		if effect[2] == hero_name then
-			effect_type =  effect[1]
-		end
+	for _, ent_name in pairs(removed_ents) do
+		local ent = Entities:FindByName(nil, ent_name)
+		ent:RemoveSelf()
 	end
 
-	return effect_type
-end
-
-function HideWearable(hero, item)
-	Timers:CreateTimer(function()
-			print("Check for cosmetic to hide...")
-
-			for i = 0, 44 do
-				if hero:GetTogglableWearable(i) then
-					print("WEARABLE:", i)
-				end
-			end
-
-			local wearable = hero:GetTogglableWearable(item)
-			if wearable then
-				wearable:AddEffects(EF_NODRAW)
---			print("Hide default wearable!")
-			end
-
-			return 2.0
-		end)
-end
-
---[[Author: Noya
-	Editor: EarthSalamander #42
-	Date: 09.08.2015.
-	Hides all dem hats
-]]
-function HideWearables(hero, number)
-	local model = hero:FirstMoveChild()
-	local i = 0
-
-	hero.hiddenWearables = {} -- Keep every wearable handle in a table to show them later
-
-	Timers:CreateTimer(3.0, function()
-			while model do
-				print("model count/classname:", i, model:GetClassname())
-				if model:GetClassname() == "dota_item_wearable" then
---			if model:GetClassname() == "dota_item_wearable" and i == number then
-					print("Model has been hidden:", model:GetClassname())
-					model:AddEffects(EF_NODRAW) -- Set model hidden
-					table.insert(hero.hiddenWearables, model)
-				end
-
-				i = i + 1
-				model = model:NextMovePeer()
-			end
-		end)
-end
-
-function SwapWearable( unit, target_model, new_model )
-	local wearable = unit:FirstMoveChild()
-	while wearable ~= nil do
-		if wearable:GetClassname() == "dota_item_wearable" then
-			if wearable:GetModelName() == target_model then
-				wearable:SetModel( new_model )
-				return
-			end
-		end
-		wearable = wearable:NextMovePeer()
-	end
-end
-
--- Returns a wearable handle if its the passed target_model
-function GetWearable( unit, target_model )
-	local wearable = unit:FirstMoveChild()
-	while wearable ~= nil do
-		if wearable:GetClassname() == "dota_item_wearable" then
-			if wearable:GetModelName() == target_model then
-				return wearable
-			end
-		end
-		wearable = wearable:NextMovePeer()
-	end
-	return false
-end
-
-function HideWearable( unit, target_model )
-	local wearable = unit:FirstMoveChild()
-	while wearable ~= nil do
-		if wearable:GetClassname() == "dota_item_wearable" then
-			if wearable:GetModelName() == target_model then
-				wearable:AddEffects(EF_NODRAW)
-				return
-			end
-		end
-		wearable = wearable:NextMovePeer()
-	end
-end
-
-function ShowWearable( unit, target_model )
-	local wearable = unit:FirstMoveChild()
-	while wearable ~= nil do
-		if wearable:GetClassname() == "dota_item_wearable" then
-			if wearable:GetModelName() == target_model then
-				wearable:RemoveEffects(EF_NODRAW)
-				return
-			end
-		end
-		wearable = wearable:NextMovePeer()
-	end
-end
-
---[[
-function PrintWearables( unit )
-    print("---------------------")
-    print("Wearable List of "..unit:GetUnitName())
-    print("Main Model: "..unit:GetModelName())
-    local wearable = unit:FirstMoveChild()
-    while wearable ~= nil do
-        if wearable:GetClassname() == "dota_item_wearable" then
-            local model_name = wearable:GetModelName()
-            if model_name ~= "" then print(model_name) end
-        end
-        wearable = wearable:NextMovePeer()
-    end
-end
-
-function PrecacheWearables( context )
-    local hats = LoadKeyValues("scripts/kv/wearables.kv")
-    for k1,unit_table in pairs(hats) do
-        for k2,sub_table in pairs(unit_table) do
-            for k3,wearables in pairs(sub_table) do
-                for k4,v in pairs (wearables) do
-                    if type(v) == "string" and v ~= "" then
-                        PrecacheResource("particle", v, context)
-                    else
-                        PrecacheModel(model, context)
-                    end
-                end
-            end
-        end
-    end
-end
---]]
-
-function SpawnEasterEgg()
-	if RandomInt(1, 100) > 20 then
-		Timers:CreateTimer((RandomInt(10, 20) * 60) + RandomInt(0, 60), function()
-				local pos = {}
-				pos[1] = Vector(6446, -6979, 1496)
-				pos[2] = Vector(RandomInt(-6000, 0), RandomInt(7150, 7300), 1423)
-				pos[3] = Vector(RandomInt(-1000, 2000), RandomInt(6900, 7200), 1440)
-				pos[4] = Vector(7041, -6263, 1461)
-				local pos = pos[RandomInt(1, 4)]
-
-				GridNav:DestroyTreesAroundPoint(pos, 80, false)
-				local item = CreateItem("item_the_caustic_finale", nil, nil)
-				local drop = CreateItemOnPositionSync(pos, item)
-			end)
-	end
+	BlockJungleCamps()
 end
 
 function BlockJungleCamps()
@@ -1766,93 +925,19 @@ function BlockJungleCamps()
 	end
 end
 
-function CreateImbaIllusion(hero, pos, ability, duration, out_damage, in_damage, special_modifiers, swap)
-	local position = pos
+function SpawnEasterEgg()
+	if RandomInt(1, 100) > 20 then
+		Timers:CreateTimer((RandomInt(15, 25) * 60) + RandomInt(0, 60), function()
+			local pos = {}
+			pos[1] = Vector(6446, -6979, 1496)
+			pos[2] = Vector(RandomInt(-6000, 0), RandomInt(7150, 7300), 1423)
+			pos[3] = Vector(RandomInt(-1000, 2000), RandomInt(6900, 7200), 1440)
+			pos[4] = Vector(7041, -6263, 1461)
+			local pos = pos[RandomInt(1, 4)]
 
-	if position == nil then
-		position = hero:GetAbsOrigin()
-	end
-
-	local illusion = CreateUnitByName(hero:GetUnitName(), pos, true, hero, hero, hero:GetTeamNumber())
-
-	-- Turn into an illusion with the correct properties
-	illusion:AddNewModifier(hero, ability, "modifier_illusion", {duration = duration, outgoing_damage = outgoing_damage, incoming_damage = in_damage})
-	illusion:MakeIllusion()
-	illusion:SetRespawnsDisabled(true)
-
-	-- Set the illusion as controllable by the player
-	illusion:SetControllableByPlayer(hero:GetPlayerID(), false)
-	illusion:SetPlayerID(hero:GetPlayerID())
-
-	-- Set the illusion's level to the parent's
-	for i = 1, hero:GetLevel() - 1 do
-		illusion:HeroLevelUp(false)
-	end
-
-	-- Set the skill points to 0 and learn the skills of the caster
-	illusion:SetAbilityPoints(0)
-
-	for abilitySlot=0,15 do
-		local ability = hero:GetAbilityByIndex(abilitySlot)
-		if ability then
-			local abilityLevel = ability:GetLevel()
-			local abilityName = ability:GetAbilityName()
-			local illusionAbility = illusion:FindAbilityByName(abilityName)
-			illusionAbility:SetLevel(abilityLevel)
-		end
-	end
-
-	-- Recreate the items of the caster
-	for itemSlot=0,5 do
-		local item = hero:GetItemInSlot(itemSlot)
-		if item then
-			local itemName = item:GetName()
-			local newItem = CreateItem(itemName, illusion, illusion)
-			illusion:AddItem(newItem)
-		end
-	end
-
-	-- Set Forward Vector the same as the player
-	illusion:SetForwardVector(hero:GetForwardVector())
-
-	if swap then
-		-- Roll a chance to swap positions with the illusion
-		local swap_change = math.random(1,2)
-		if swap_change == 2 then
-			local parent_loc = hero:GetAbsOrigin()
-			local illusion_loc = illusion:GetAbsOrigin()
-			hero:SetAbsOrigin(illusion_loc)
-			illusion:SetAbsOrigin(parent_loc)
-		end
-	end
-
-	-- Set Custom label if there's one
-	if not IsInToolsMode() then
-		local steam_id = tostring(PlayerResource:GetSteamID(hero:GetPlayerID()))
-		illusion:SetCustomHealthLabel("#imba_donator_label_"..api.imba.is_donator(steam_id), DONATOR_COLOR[api.imba.is_donator(steam_id)][1], DONATOR_COLOR[api.imba.is_donator(steam_id)][2], DONATOR_COLOR[api.imba.is_donator(steam_id)][3])
-	end
-
-	-- Stop the attacker, since it still auto attacks the original (will force it to attack the closest target)
-	hero:Stop()
-
-	-- Stop the illusion, since it automatically attacks everything, then decide the next step
-	illusion:Stop()
-
-	-- Imitate target attack location
-	if hero:IsAttacking() then
-		local attack_target = hero:GetAttackTarget()
-		illusion:MoveToTargetToAttack(attack_target)
-	end
-
-	if hero:IsChanneling() then
-		local current_ability = hero:GetCurrentActiveAbility()
-		local ability_name = current_ability:GetName()
-		StartChannelingAnimation(hero, illusion, ability_name) -- custom function
-	end
-
-	if special_modifiers then
-		for _, modifier in pairs(special_modifiers) do
-			illusion:AddNewModifier(hero, ability, modifier, {})
-		end
+			GridNav:DestroyTreesAroundPoint(pos, 80, false)
+			local item = CreateItem("item_the_caustic_finale", nil, nil)
+			local drop = CreateItemOnPositionSync(pos, item)
+		end)
 	end
 end

@@ -1,631 +1,192 @@
+@define COLOR_INFO_BACKGROUND_BLUE: #224470dd;
+@define COLOR_INFO_BACKGROUND_DARK_BLUE: #002233;
+@define COLOR_INFO_TEXT_BLUE: #66aaff;
+
+@define COLOR_INFO_BACKGROUND_GREEN: #004d1ada;
+@define COLOR_INFO_BACKGROUND_GREEN_SOCIAL: #003800da;
+@define COLOR_INFO_BACKGROUND_DARK_GREEN: #003312;
+@define COLOR_INFO_TEXT_GREEN: #00e64d;
+
+@define COLOR_INFO_BACKGROUND_ORANGE: #994d00ee;
+@define COLOR_INFO_BACKGROUND_DARK_ORANGE: #663300;
+@define COLOR_INFO_TEXT_ORANGE: #ffb366;
+
 .addon-root {
 	width: 100%;
 	height: 100%;
 }
 
-/* Overthrow */
-#overthrow-loading {
+.down {
+	flow-children: down;
 	width: 100%;
-	height: 100%;
-	flow-children: down;
-	visibility: collapse;
-}
-
-@define TotalLength: 30s;
-@define TimingFunc: linear;
-@define IterationCount: 1;
-@define COLOR_INFO_BACKGROUND: #4d4d4dda;
-@define COLOR_INFO_BACKGROUND_DARK: #404040;
-@define COLOR_INFO_TEXT: #bfbfbf;
-
-// green background translucent: #004d1ada
-// green background dark translucent: #001a09
-// green text: #00e64d
-// red background translucent: #922c30ee
-// red background dark translucent: #4f1719
-// red text: #b67f7f
-// blue background translucent: #224470dd
-// blue background dark translucent: #002233
-// blue text: #66aaff
-
-#GameModeDescription
-{
-    font-size: 27px;
-	text-transform: uppercase;
-	color: #cccccc;
-}
-
-#GameModeHints
-{
-	margin: 10px;
-	font-size: 18px;
-	color: #8f9092;
-}
-
-#GameModeImage
-{
-	horizontal-align: center;
-	width: 200px;
-	height: 150px;
-
-	box-shadow: inset black 5px 5px 10px 10px;
-}
-
-#TitlePanel
-{
-	horizontal-align: left;
-	vertical-align: bottom;
-	margin-bottom: 150px;
-	margin-left: 100px;
-	flow-children: right;
-}
-
-#OverthrowIcon
-{
-	width: 80px;
-	height: 80px;
-	vertical-align: center;
-	margin-right: 15px;
-}
-
-#OverthrowTitle
-{
-	margin-bottom: -15px;
-	vertical-align: center;
-	text-transform: uppercase;
-	font-size: 80px;
-	color: #cccccc;
-	text-shadow: 2px 2px 2px #000000;
-}
-
-.SeqImg
-{
-	background-repeat: no-repeat;
-	background-position: 50% 50%;
-	background-size: 100% 100%;
-}
-
-.SeqBg
-{
-	background-repeat: no-repeat;
-	background-position: 50% 50%;
-	background-size: 100% 100%;
-}
-
-#seq
-{
-    overflow: clip;
-	pre-transform-scale2d: 1.35, 1.35;
-}
-
-@keyframes 'x' {}
-
-#seq_bg
-{
-	animation-name: seq_bg_anim;
-	animation-duration: TotalLength;
-	animation-timing-function: TimingFunc;
-	animation-iteration-count: IterationCount;
-    margin-left: 0px;
-}
-
-@keyframes 'seq_bg_anim'
-{
-	0%
-	{
-	}
-
-	100%
-	{
-	}
-}
-
-#seq_beastmaster_pets
-{
-	margin-left: 1015px;
-	margin-top: 120px;
-	animation-name: seq_beastmaster_pets_anim;
-	animation-duration: TotalLength;
-	animation-timing-function: TimingFunc;
-	animation-iteration-count: IterationCount;
-}
-
-@keyframes 'seq_beastmaster_pets_anim'
-{
-	0%
-	{
-		transform: translateX( 50px ) translateY( 10px );
-        pre-transform-scale2d: 0.90;
-	}
-
-	100%
-	{
-	}
-}
-
-#seq_beastmaster
-{
-	margin-left: 435px;
-	margin-top: 140px;
-	animation-name: seq_beastmaster_anim;
-	animation-duration: TotalLength;
-	animation-timing-function: TimingFunc;
-	animation-iteration-count: IterationCount;
-}
-
-@keyframes 'seq_beastmaster_anim'
-{
-	0%
-	{
-		transform: translateX( 80px ) translateY( -20px );
-	}
-
-	100%
-	{
-	}
-}
-
-#seq_juggernaut
-{
-	margin-left: 400px;
-	margin-top: 325px;
-	animation-name: seq_juggernaut_anim;
-	animation-duration: TotalLength;
-	animation-timing-function: TimingFunc;
-	animation-iteration-count: IterationCount;
-	pre-transform-scale2d: 0.90;
-}
-
-@keyframes 'seq_juggernaut_anim'
-{
-	0%
-	{
-		transform: translateX( 120px ) translateY( 20px );
-	}
-
-	100%
-	{
-	}
-}
-
-#seq_luna
-{
-	margin-left: 8px;
-	margin-top: 0px;
-	animation-name: seq_luna_anim;
-	animation-duration: TotalLength;
-	animation-timing-function: TimingFunc;
-	animation-iteration-count: IterationCount;
-	pre-transform-scale2d: 1.05;
-}
-
-@keyframes 'seq_luna_anim'
-{
-	0%
-	{
-		transform: translateX( 120px ) translateY( 50px );
-	}
-
-	100%
-	{
-	}
-}
-
-#seq_coins
-{
-	margin-left: -150px;
-	margin-top: 200px;
-	animation-name: seq_coins_anim;
-	animation-duration: TotalLength;
-	animation-timing-function: TimingFunc;
-	animation-iteration-count: IterationCount;
-}
-
-@keyframes 'seq_coins_anim'
-{
-	0%
-	{
-		transform: translateX( 200px ) translateY( -100px );
-	}
-
-	100%
-	{
-	}
-}
-
-/* IMBA */
-#imba-loading {
-	width: 100%;
-	height: 100%;
-	background-color: black;
-	background-image: url("file://{images}/custom_game/loading_screen/three_spirits.jpg");
-	background-position: 65% 0%;
-	background-size: cover;
-	overflow: clip;
-	flow-children: down;
-}
-
-#imba-admin
-{
-	width: 40%;
-	height: fit-children;
-	margin-top: 5%;
-	margin-left: 4%;
-	background-color: #0008;
-	flow-children: down;
-	visibility: collapse;
-}
-
-#imba-news {
-	margin-left: 4%;
-	align: left center;
-	width: 50%;
-	background-color: COLOR_INFO_BACKGROUND;
-	padding: 20px 40px;
-	height: fit-children;
-	flow-children: down;
-	border: 2px solid COLOR_INFO_BACKGROUND_DARK;
 	box-shadow: 0 0 10px #111;
+	padding: 20px 40px;
 }
 
-.AspectRatio4x3 #imba-news {
-	width: 40%;
-	margin-bottom: 220px;
+.large {
+	font-size: 28px;
 }
 
-#additional-news-panel {
-	width: 100%;
-	margin-bottom: 10px;
-	margin-top: 20px;
-	padding-top: 20px;
-	border-top: 1px solid COLOR_INFO_BACKGROUND_DARK;
-	flow-children: right;
+.huge {
+	font-size: 36px;
 }
 
-#additional-news-text {
-	width: 600px;
-	flow-children: down;
-}
-
-#additional-news-text {
-	font-size: 18px;
-	color: #ddd;
-	text-shadow: 0 0 2px #000;
-}
-
-#additional-news-title {
-	font-size: 26px;
-	color: COLOR_INFO_TEXT;
-	font-weight: bold;
-	text-shadow: 0 0 5px #000;
-}
-
-.#additional-news-link {
-	color: #fff;
+.normal {
 	font-size: 20px;
 }
 
-.#additional-news-link:hover {
-	text-decoration: underline;
+.small {
+	font-size: 12px;
 }
 
-#additional-news-image {
-	background-image: url("file://{images}/custom_game/loading_screen/pudge_wars.jpg");
+#imba-loading {
+	flow-children: down;
+	width: 100%;
+	height: 100%;
+	background-color: black;
+	background-position: center center;
 	background-size: cover;
-	overflow: clip;
-	height: 160px;
-	align: right bottom;
+	background-image: url("file://{images}/custom_game/loading_screen/the_grand_magus.jpg");
+	z-index: 1; /* Doesn't work.. Does it need to be on root? */
 }
 
-#imba-news-title {
-	font-size: 32px;
-	color: COLOR_INFO_TEXT;
-	font-weight: bold;
+#imba-loading-title,
+#imba-loading-title-patreon,
+#imba-loading-title-promote, {
+	width: 1250px;
+	margin-top: 30px;
+	margin-left: 120px;
+	flow-children: right;
+}
+
+#imba-loading-title {
+	background-color: COLOR_INFO_BACKGROUND_GREEN;
+	border: 2px solid COLOR_INFO_BACKGROUND_DARK_GREEN;
+}
+
+#imba-loading-title-patreon {
+	background-color: COLOR_INFO_BACKGROUND_ORANGE;
+	border: 2px solid COLOR_INFO_BACKGROUND_DARK_ORANGE;
+}
+
+#imba-loading-title-promote, {
+	background-color: COLOR_INFO_BACKGROUND_GREEN;
+	border: 2px solid COLOR_INFO_BACKGROUND_DARK_GREEN;
+}
+
+#imba-loading-title-text,
+#imba-loading-title-text-patreon,
+#imba-loading-title-text-promote {
+	font-size: 36px;
+}
+
+#imba-loading-title-text {
+	color: COLOR_INFO_TEXT_GREEN;
+}
+
+#imba-loading-title-text-patreon {
+	color: COLOR_INFO_TEXT_ORANGE;
+}
+
+#imba-loading-title-text-promote {
+	color: COLOR_INFO_TEXT_GREEN;
+}
+
+#imba-loading-content-text,
+#imba-loading-content-text-patreon,
+#imba-loading-content-text-promote, {
+	font-size: 20px;
+	color: #cccccc;
+	width: 100%;
+}
+
+#imba-loading-map-text {
+	margin: 20px 0px;
+	color: #ddddff;
+	font-size: 24px;
+}
+
+#imba-loading-link {
+	background-color: COLOR_INFO_BACKGROUND_DARK_GREEN;
+	border: 2px solid COLOR_INFO_BACKGROUND_DARK_GREEN;
+	box-shadow: 0 0 10px #111;
+}
+
+#imba-loading-link-promote {
+	background-color: COLOR_INFO_BACKGROUND_DARK_GREEN;
+	border: 2px solid COLOR_INFO_BACKGROUND_DARK_GREEN;
+	box-shadow: 0 0 10px #111;
+	margin-top: 40px;
+}
+
+#imba-loading-link-patreon {
+	background-color: COLOR_INFO_BACKGROUND_DARK_ORANGE;
+	border: 2px solid COLOR_INFO_BACKGROUND_DARK_ORANGE;
+	box-shadow: 0 0 10px #111;
+	margin-top: 40px;
+}
+
+#imba-loading-link-text,
+#imba-loading-link-text-patreon,
+#imba-loading-link-text-promote {
+	padding: 0px 10px;
+	font-size: 24px;
 	text-shadow: 0 0 5px #000;
+	color: #cccccc;	
 }
 
-#imba-news-text {
-	font-size: 18px;
-	color: #ddd;
-	text-shadow: 0 0 2px #000;
-}
-
-#imba-news-link {
-	color: #fff;
-	font-size: 22px;
-	text-shadow: 0 0 2px #000;
-	margin-top: 10px;
-}
-
-#imba-news-link:hover {
+#imba-loading-link-text:hover {
 	text-decoration: underline;
+	background-color: #003339;
 }
 
-#imba-logo {
-	margin-bottom: 80px;
-	margin-left: 40px;
-	vertical-align: bottom;
-	background-image: url("file://{images}/custom_game/loading_screen/imba-logo.png");
-	width: 300px;
-	height: 200px;
+#imba-loading-link-text-patreon:hover {
+	text-decoration: underline;
+	background-color: #4d2600;
 }
 
-#imba-logo:hover {
-	opacity: 0.9;
+#imba-loading-link-text-promote:hover {
+	text-decoration: underline;
+	background-color: #003339;
+}
+
+#ImbaLoadingSocial {
+	margin-left: 260px;
+	overflow: scroll;
+	flow-children: down;
+	background-color: COLOR_INFO_BACKGROUND_GREEN_SOCIAL;
+	border: 2px solid COLOR_INFO_BACKGROUND_DARK_GREEN;
 } 
 
-#imba-social {
-	flow-children: down;
-	margin-top: 4%;
-	margin-left: 4%;
-	vertical-align: bottom;
-	padding: 10px;
-}
-
-.imba-social-buttons {
-	margin-bottom: 20px;
+#ImbaLoadingSocial Panel {
+	padding: 0px 20px;
 	flow-children: right;
 }
 
-.imba-social-buttons Button {
-	width: 200px;
-	height: 65px;
-	box-shadow: #000 0 0 10px 0; 
-	background-position: center center;
+#ImbaLoadingSocial Button:hover {
+	box-shadow: 0 0 7px #333;
 }
 
-.AspectRatio4x3 .imba-social-buttons Button {
-	width: 180px;
-	height: 59px;
-	box-shadow: #000 0 0 10px 0; 
-	background-position: center center;
+#ImbaLoadingSocial Button {
+	border: 1px solid #333;
+	padding: 5px 20px 3px;
+	margin: 4px 12px 4px 0px;
+	box-shadow: 0 0 5px  #222;
 }
 
-.imba-social-buttons Button:hover {
-	box-shadow: #111 0 0 15px 0;
+#ImbaLoadingSocial Label {
+	font-size: 20px;
+	color: #fff;
 }
 
-.imba-social-buttons Button:active {
-	box-shadow: #333 0 0 15px 0;
-	width: 198px; 
+.SocialButtons:hover {
+	pre-transform-scale2d: 1.1;
 }
 
-.AspectRatio4x3 .imba-social-buttons Button:active {
-	width: 178px; 
-}
-/*
-.imba-social-button {
-	margin-left: 12px;
-	background-size: contain;
-	saturation: 0.9;
-}
-
-.imba-social-button:hover {
-	saturation: 1.0;
-}
-
-#imba-social-button-discord-en {
-	background-image: url("file://{images}/custom_game/loading_screen/community_discord_header.png"); 
-}
-
-#imba-social-button-discord-ru {
-	background-image: url("file://{images}/custom_game/loading_screen/community_discord_header_ru.png"); 
-}
-
-#imba-social-button-tencent {
-	background-image: url("file://{images}/custom_game/loading_screen/community_chinese_blog.png"); 
-}
-
-#imba-social-button-reddit {
-	background-image: url("file://{images}/custom_game/loading_screen/community_reddit_header.png");
-}
-
-#imba-social-button-patreon {
-	background-image: url("file://{images}/custom_game/loading_screen/patreon.png");
-	background-size: 200px 65px;
-}
-
-#imba-social-button-facebook {
-	background-image: url("file://{images}/custom_game/loading_screen/facebook_banner.jpg");
-	background-size: 200px 65px;
-}
-
-#imba-social-button-twitter {
-	background-image: url("file://{images}/custom_game/loading_screen/twitter_banner.png");
-	background-size: 200px 65px;
-}
-*/
-#GameOptionsPanel
-{
-	width: 100%;
-	height: fit-children;
-	flow-children: down;
-	padding: 10px;
-	visibility: collapse;
-}
-
-#game_options_game_mode_title
-{
-	font-size: 32px;
-	color: #FFF;
-	margin-top: 5px;
-	text-align: center;
-	font-weight: bold;
-	horizontal-align: center;
-}
-
-.GameOptionsSubPanel,
-.GameOptionsLongSubPanel
-{
-	width: 100%;
-	height: 60px;
-}
-
-.GameOptionsSubPanel
-{
-	flow-children: right;
-}
-
-.GameOptionsLongSubPanel
-{
-    flow-children: down;
-}
-
-#KillsToEndOptionsPanel {
-	visibility: collapse;
-}
-
-.GameOptionsSubPanel_alt
-{
-	margin-top: 20px;
-	width: 100%;
-	flow-children: right;
-}
-
-#QuickOptionsPanel {
-	margin-top: 30px;
-}
-
-#QuickOptionsNormalBtn
-{
-	width: 45%;
-	height: 40px;
-	margin-left: 2%;
-	horizontal-align: left;
-	background-size: 300% 100%;
-	background-color: gradient( linear, 0% 0%, 0% 100%, from( #207020FF ), to( #28B028FF ) );
-	box-shadow: #000000 0px 0px 15px 0px;
-	transition-property: background-color;
-	transition-duration: 0.2s;
-}
-
-#QuickOptionsNormalBtn:hover
-{
-	background-color: gradient( linear, 0% 0%, 0% 100%, from( #28B028FF ), to( #40F040FF ) );
-	box-shadow: #000000 0px 0px 20px 0px;
-}
-
-#QuickOptionsNormalBtn:active
-{
-	transform: translate3d(1px, 1px, 0px);
-	sound: "ui_team_select_lock_and_start";
-}
-
-#QuickOptionsHighBtn
-{
-	width: 45%;
-	height: 40px;
-	margin-right: 2%;
-	horizontal-align: right;
-	background-size: 300% 100%;
-	background-color: gradient( linear, 0% 0%, 0% 100%, from( #702020FF ), to( #B02828FF ) );
-	box-shadow: #000000 0px 0px 15px 0px;
-	transition-property: background-color;
-	transition-duration: 0.2s;
-}
-
-#QuickOptionsHighBtn:hover
-{
-	background-color: gradient( linear, 0% 0%, 0% 100%, from( #B02828FF ), to( #F04040FF ) );
-	box-shadow: #000000 0px 0px 20px 0px;
-}
-
-#QuickOptionsHighBtn:active
-{
-	transform: translate3d(1px, 1px, 0px);
-	sound: "ui_team_select_lock_and_start";
-}
-
-.QuickOptionsBtnLabel
-{
-	font-size: 28px;
-	color: #FFFFFF;
-	text-align: center;
-	font-weight: bold;
-	horizontal-align: center;
-	vertical-align: center;
-}
-
-.GameOptionsLabel
-{
-	width: 30%;
-	margin-left: 5%;
-	text-align: left;
-	horizontal-align: left;
-	vertical-align: center;
-}
-
-.GameOptionsToggle
-{
-	width: 30%;
-	text-align: center;
-	horizontal-align: left;
-	vertical-align: center;
-}
-
-#TowerUpgradesToggle {
-	margin-left: 5%;
-}
-
-#FranticToggle {
-	visibility: collapse;
-}
-
-.GameOptionsSubPanel .GameOptionsDropdown
-{
-	margin-left: 10px;
-	width: 120px;
-}
-
-.GameOptionsLongSubPanel .GameOptionsDropdown
-{
-    margin-top: 5px;
-    width: 100%;
-}
-
-#ConfirmOptionsBtn
-{
-	margin: 20px 40px;
-	width: 400px;
-	height: 40px;
-	background-size: 100% 100%;
-	background-color: gradient( linear, 0% 0%, 0% 100%, from( #292e2e ), to( #191e1e ) );
-	box-shadow: #000000 0px 0px 18px 0px;
-	transition-property: background-color;
-	transition-duration: 0.2s;
-}
-
-#ConfirmOptionsBtn:hover
-{
-	background-color: gradient( linear, 0% 0%, 0% 100%, from( #24248f ), to( #1717e8 ) );
-	box-shadow: #000000 0px 0px 25px 0px;
-}
-
-#ConfirmOptionsBtn:active
-{
-	transform: translate3d(1px, 1px, 0px);
-	sound: "ui_team_select_lock_and_start";
-}
-
-#ConfirmOptionsBtn Label
-{
-	font-size: 24px;
-	horizontal-align: center;
-	vertical-align: center;
-	color: #ffffff;
-}
-
-#AllPickToggle {
-	margin-left: 5%;
-}
-
-#FranticInfo
-{
-	width: 100%;
-	margin-left: 5%;
-	text-align: left;  /* */
-	horizontal-align: left;
-	vertical-align: center;
-}
-
-
+#ImbaLoadingSocialOfficialWebsite { background-color: gradient(linear, 0% 0%, 0% 100%, from(#333), to(#111)); }
+#ImbaLoadingSocialFacebook { background-color: gradient(linear, 0% 0%, 0% 100%, from(#22e), to(#111)); }
+#ImbaLoadingSocialTwitter { background-color: gradient(linear, 0% 0%, 0% 100%, from(#0D91E2), to(#111)); }
+#ImbaLoadingSocialTwitter Label { color: #fff; }
+#ImbaLoadingSocialDiscordEn { background-color: gradient(linear, 0% 0%, 0% 100%, from(#7289DA), to(#111)); }
+#ImbaLoadingSocialDiscordRu { background-color: gradient(linear, 0% 0%, 0% 100%, from(#7289DA), to(#111)); }
+#ImbaLoadingSocialTencent { background-color: gradient(linear, 0% 0%, 0% 100%, from(#f00), to(#111)); }

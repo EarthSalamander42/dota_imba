@@ -361,7 +361,7 @@
 
 // Healing Tower
 "DOTA_Tooltip_Ability_imba_tower_healing_tower"                        "Healing Tower"
-"DOTA_Tooltip_Ability_imba_tower_healing_tower_Description"            "Periodically checks heroes that have their health percentage lower than a certain threshold. Triggers a healing effect that bounces between heroes. Bounces have a small delay between each one."
+"DOTA_Tooltip_Ability_imba_tower_healing_tower_Description"            "Periodically checks heroes that have their health percentage lower than a certain threshold. Triggers a healing and purge effect that bounces between heroes, removing basic debuffs and stuns. Bounces have a small delay between each one."
 "DOTA_Tooltip_Ability_imba_tower_healing_tower_Note0"                  "Search radius for the first trigger is higher than the bounce radius."
 "DOTA_Tooltip_Ability_imba_tower_healing_tower_Lore"                    "Dazzle's evil twin have take ahold in his tower, supporting the heroes from the top room in the tower."
 "DOTA_Tooltip_Ability_imba_tower_healing_tower_heal_amount"            "HEAL PER BOUNCE:"

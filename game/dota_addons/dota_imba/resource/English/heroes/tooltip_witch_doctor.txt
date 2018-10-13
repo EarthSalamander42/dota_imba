@@ -46,12 +46,12 @@
 
 // Witch Doctor's Death Ward
 "DOTA_Tooltip_ability_imba_witch_doctor_death_ward"                    "Death Ward"
-"DOTA_Tooltip_ability_imba_witch_doctor_death_ward_Description"                     "Summons a deadly ward to attack enemy heroes. <font color='#FF7800'>Spirit double:</font> Death Ward benefits from most of Witch Doctor's on-hit effects.\n<font color='#FF7800'>Deadly mind:</font> Death Ward deals bonus damage equal to Witch Doctor's intelligence.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
+"DOTA_Tooltip_ability_imba_witch_doctor_death_ward_Description"                     "Summons a deadly ward to attack enemy heroes.\n <font color='#FF7800'>Spirit Double:</font> Death Ward benefits from most of Witch Doctor's on-hit effects, but does not inherit the raw damage from items.\n<font color='#FF7800'>Deadly Mind:</font> Death Ward deals bonus damage equal to a percentage of Witch Doctor's intelligence.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
 "DOTA_Tooltip_ability_imba_witch_doctor_death_ward_Note0"              "Effects that Death Ward does not receive are: Battle Fury, Butterfly, Starfury, Echo Sabre, or Reverb Sabre."
 "DOTA_Tooltip_ability_imba_witch_doctor_death_ward_aghanim_description"             "Allows the Death Ward's attacks to bounce between enemy units."
 "DOTA_Tooltip_ability_imba_witch_doctor_death_ward_Lore"                "The Witch Doctor recycles the bones of fallen friends and foes, using the powder as part of his arsenal of charms and alchemy."
 "DOTA_Tooltip_ability_imba_witch_doctor_death_ward_damage"              "WARD DAMAGE:"
-"DOTA_Tooltip_ability_imba_witch_doctor_death_ward_int_to_damage_pct"               "%INT TO WARD DAMAGE:"
+"DOTA_Tooltip_ability_imba_witch_doctor_death_ward_int_to_dmg_pct"               	"%INT TO WARD DAMAGE:"
 "DOTA_Tooltip_ability_imba_witch_doctor_death_ward_base_attack_time"                "WARD BASE ATTACK TIME:"
 "DOTA_Tooltip_ability_imba_witch_doctor_death_ward_attack_range"                    "WARD ATTACK RANGE:"
 "DOTA_Tooltip_ability_imba_witch_doctor_death_ward_channel_time_tooltip"            "MAX. CHANNEL TIME:"

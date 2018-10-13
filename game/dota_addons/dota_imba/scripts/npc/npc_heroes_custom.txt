@@ -1,6 +1,11 @@
+#base heroes/rubick/hero.txt
+#base heroes/shadow_shaman/hero.txt
+#base heroes/silencer/hero.txt
 #base heroes/wisp/hero.txt
 #base heroes/zeus/hero.txt
-#base heroes/shadow_shaman/hero.txt
+
+#base custom_heroes/malfurion/hero.txt
+#base custom_heroes/sohei/hero.txt
 
 "DOTAHeroes"
 {
@@ -40,14 +45,14 @@
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_abaddon_borrowed_time"
 
-		"Ability10"					"special_bonus_imba_abaddon_8" //Heals that heal above maximum health threshold during Borrowed Time grants a mist shield (25% ratio) that is released after Borrowed Time expires for 5 seconds, healing Abaddon.
-		"Ability11"					"special_bonus_imba_abaddon_6" //+50% Overchannel power
-		"Ability12"					"special_bonus_imba_abaddon_5" //Curse of Avernus Abbadon buff now apply as an aura around him in 900 AoE, affecting all allies in range.
-		"Ability13"					"special_bonus_imba_abaddon_2" //Consecutives hits of Curse of Avernus refreshes the buff/debuff and increases the duration of the buff/debuff by 1 second.
-		"Ability14"					"special_bonus_imba_abaddon_4" //Curse of Avernus can now be activated to sacrifice a 10% of your current health, and deal it as extra damage on the next attack. Has a 8 seconds cooldown.
-		"Ability15"					"special_bonus_imba_abaddon_3" //During the first second of Aphotic Shield, it absorbs all damage done to it and adds it to it's health/damage.
-		"Ability16"					"special_bonus_imba_abaddon_1" //When the shield breaks, applies Mist Coil to all allies and enemies within 350 radius
-		"Ability17"					"special_bonus_imba_abaddon_7" //Borrowed Time Strong Purges all allies in 900 AoE on cast.
+		"Ability10"					"special_bonus_imba_abaddon_5" //Curse of Avernus Abbadon buff now apply as an aura around him in 900 AoE, affecting all allies in range.
+		"Ability11"					"special_bonus_imba_abaddon_2" //+10% Curse of Avernus MS/AS shift; Curse of Avernus buff/debuff refresh increases duration by 1 second each hit.
+		"Ability12"					"special_bonus_imba_abaddon_7" //Borrowed Time Strong Purges all allies on cast.
+		"Ability13"					"special_bonus_imba_abaddon_4" //(Curse of Avernus can be activated to sacrifice 10% of your max health as extra physical damage on attack. Cooldown of 5 seconds.
+		"Ability14"					"special_bonus_imba_abaddon_8" //Heals during Borrowed Time grant a health regen buff upon end (15% of heals as health regen for 5s).
+		"Ability15"					"special_bonus_imba_abaddon_6" //+50% Overchannel power
+		"Ability16"					"special_bonus_imba_abaddon_1" //When the shield breaks, applies Mist Coil to all allies and enemies within 425 radius
+		"Ability17"					"special_bonus_imba_abaddon_3" //During the first second of Aphotic Shield, it absorbs all damage done to it and adds it to it's health/damage.
 	}
 
 	//=================================================================================================================
@@ -68,14 +73,19 @@
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_alchemist_chemical_rage"
 
-		"Ability10"					"special_bonus_imba_alchemist_7" // Alchemist now gains 4x gold from bounty runes
+		"Ability10"					"special_bonus_imba_alchemist_7" // Alchemist now gains +150% gold (additive) from bounty runes
 		"Ability11"					"special_bonus_imba_alchemist_1" // Sticky Acid slows by 15%
-		"Ability12"					"special_bonus_imba_alchemist_3" // Bounty runes spawn gold bags
-		"Ability13"					"special_bonus_imba_alchemist_4" // Enemies affected by Acid Spray have a chance to drop gold bags on death.
-		"Ability14"					"special_bonus_imba_alchemist_6" // When in Chemical Rage, Alchemist brews Unstable Concoction faster.
-		"Ability15"					"special_bonus_imba_alchemist_2" // Unstable Concoction can grant allies Chemical Rage
-		"Ability16"					"special_bonus_imba_alchemist_5" // Greed stacks increase Acid Spray damage
+		"Ability12"					"special_bonus_hp_500"
+		"Ability13"					"special_bonus_attack_damage_50"
+		"Ability14"					"special_bonus_cleave_30"
+		"Ability15"					"special_bonus_imba_alchemist_5" // Greed stacks increase Acid Spray damage
+		"Ability16"					"special_bonus_imba_alchemist_2" // Unstable Concoction can grant allies Chemical Rage
 		"Ability17"					"special_bonus_imba_alchemist_8" // Chemical Rage grants a damage aura
+		
+		// Removed Talents
+		// "Ability12"					"special_bonus_imba_alchemist_3" // Bounty runes spawn gold bags
+		// "Ability13"					"special_bonus_imba_alchemist_4" // Enemies affected by Acid Spray have a chance to drop gold bags on death.
+		//"Ability14"					"special_bonus_imba_alchemist_6" // When in Chemical Rage, Alchemist brews Unstable Concoction faster.
 	}
 
 	//=================================================================================================================
@@ -230,14 +240,18 @@
 		"Ability4"					"generic_hidden"
 		"Ability6"					"imba_bloodseeker_rupture"
 
-		"Ability10"					"special_bonus_imba_bloodseeker_1" //Blood Amp shift
-		"Ability11"					"special_bonus_imba_bloodseeker_6" //Rupture's distance cap increase
-		"Ability12"					"special_bonus_imba_bloodseeker_2" //Blood Rite applies Rupture on targets and pushes them out of the circle
+		"Ability10"					"special_bonus_imba_bloodseeker_2" //Blood Rite applies Rupture on targets and pushes them out of the circle
+		"Ability11"					"special_bonus_imba_bloodseeker_1" //Blood Amp shift
+		"Ability12"					"special_bonus_imba_bloodseeker_8" //Bloodrage's damage amplification increases the less health the target has
 		"Ability13"					"special_bonus_imba_bloodseeker_7" //Killing a Bloodraged unit grants the killer huge speed buff
 		"Ability14"					"special_bonus_imba_bloodseeker_4" //Blood Rite's silence becomes unpurgable
-		"Ability15"					"special_bonus_imba_bloodseeker_3" //Rupture Damage Heals Bloodseeker
-		"Ability16"					"special_bonus_imba_bloodseeker_5" //Blood Rite is cast in three overlapping circles
-		"Ability17"					"special_bonus_imba_bloodseeker_8" //Bloodrage's damage amplification increases the less health the target has
+		"Ability15"					"special_bonus_lifesteal_25"
+		"Ability16"					"special_bonus_imba_bloodseeker_9" //-6s Blood Rite Cooldown
+		"Ability17"					"special_bonus_imba_bloodseeker_5" //Blood Rite is cast in three overlapping circles
+		
+//		Removed Abilities
+//		"Ability11"					"special_bonus_imba_bloodseeker_6" //Rupture's distance cap increase		
+//		"Ability15"					"special_bonus_imba_bloodseeker_3" //Rupture Damage Heals Bloodseeker	
 	}
 
 	//=================================================================================================================
@@ -632,11 +646,12 @@
 		"Ability10"					"special_bonus_ember_chains_on_attack"
 		"Ability11"					"special_bonus_truestrike"
 		"Ability12"					"special_bonus_ember_chains_duration"
-		"Ability13"					"special_bonus_ember_guard_damage"
+		"Ability13"					"special_bonus_spell_amplify_20"
 		"Ability14"					"special_bonus_attack_damage_50"
-		"Ability15"					"special_bonus_all_stats_15"
+		"Ability15"					"special_bonus_ember_guard_damage"
 		"Ability16"					"special_bonus_ember_permanent_guard"
-		"Ability17"					"special_bonus_ember_remnant_charges"
+		//"Ability17"					"special_bonus_ember_remnant_charges"
+		"Ability17"					"special_bonus_all_stats_20"
 	}
 
 	//=================================================================================================================
@@ -721,6 +736,44 @@
 		"Ability16"					"special_bonus_unique_gyrocopter_1"
 		"Ability17"					"special_bonus_unique_gyrocopter_5"
 	}
+	
+	//=================================================================================================================
+	// HERO: Invoker
+	//=================================================================================================================
+	"npc_dota_hero_invoker"
+	{
+		"override_hero"				"npc_dota_hero_invoker"
+
+		//Picking Screen
+		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
+
+		"Ability1"					"invoker_quas"
+		"Ability2"					"invoker_wex"
+		"Ability3"					"invoker_exort"
+		"Ability4"					"invoker_empty1"
+		"Ability5"					"invoker_empty2"
+		"Ability6"					"invoker_invoke"
+
+		"Ability7"					"invoker_cold_snap"
+		"Ability8"					"invoker_ghost_walk"
+		"Ability9"					"invoker_tornado"
+		"Ability10"					"invoker_emp"
+		"Ability11"					"invoker_alacrity"
+		"Ability12"					"invoker_chaos_meteor"
+		"Ability13"					"invoker_sun_strike"
+		"Ability14"					"invoker_forge_spirit"
+		"Ability15"					"invoker_ice_wall"
+		"Ability16"					"invoker_deafening_blast" 
+		
+		"Ability17" 				"special_bonus_unique_invoker_8"
+		"Ability18"					"special_bonus_unique_invoker_6"
+		"Ability19"					"special_bonus_unique_invoker_1"
+		"Ability20"					"special_bonus_unique_invoker_7"
+		"Ability21"					"special_bonus_unique_invoker_4"
+		"Ability22"					"special_bonus_unique_invoker_5"
+		"Ability23"					"special_bonus_unique_invoker_2"
+		"Ability24"					"special_bonus_unique_invoker_3"
+	}
 
 	//=================================================================================================================
 	// HERO: Jakiro
@@ -744,11 +797,11 @@
 		"Ability10"					"special_bonus_imba_jakiro_1"
 		"Ability11"					"special_bonus_imba_jakiro_2"
 		"Ability12"					"special_bonus_imba_jakiro_3"
-		"Ability13"					"special_bonus_imba_jakiro_4"
-		"Ability14"					"special_bonus_imba_jakiro_5"
+		"Ability13"					"special_bonus_spell_amplify_12"
+		"Ability14"					"special_bonus_imba_jakiro_7"
 		"Ability15"					"special_bonus_imba_jakiro_6"
-		"Ability16"					"special_bonus_imba_jakiro_7"
-		"Ability17"					"special_bonus_imba_jakiro_8"
+		"Ability16"					"special_bonus_imba_jakiro_5"
+		"Ability17"					"special_bonus_imba_jakiro_9"
 	}
 
 	//=================================================================================================================
@@ -758,25 +811,25 @@
 	{
 		"override_hero"				"npc_dota_hero_juggernaut"
 
-//		//Picking Screen
-//		"IsImba"					"1"
+		//Picking Screen
+		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
 
-		"Ability1"					"juggernaut_blade_fury"
-		"Ability2"					"juggernaut_healing_ward"
-		"Ability3"					"juggernaut_blade_dance"
+		"Ability1"					"imba_juggernaut_blade_fury"
+		"Ability2"					"imba_juggernaut_healing_ward"
+		"Ability3"					"imba_juggernaut_blade_dance"
 		"Ability4"					"generic_hidden"
 		"Ability5"					"generic_hidden"
-		"Ability6"					"juggernaut_omni_slash"
+		"Ability6"					"imba_juggernaut_omni_slash"
 
-		"Ability10"					"special_bonus_all_stats_5"
-		"Ability11"					"special_bonus_movement_speed_20"
-		"Ability12"					"special_bonus_unique_juggernaut"
-		"Ability13"					"special_bonus_attack_speed_25"
-		"Ability14"					"special_bonus_armor_10"
-		"Ability15"					"special_bonus_unique_juggernaut_3"
-		"Ability16"					"special_bonus_hp_600"
-		"Ability17"					"special_bonus_unique_juggernaut_2"
+		"Ability10"					"special_bonus_imba_juggernaut_2" // Blade Fury radius increases by 20 every 0.2 seconds
+		"Ability11"					"special_bonus_imba_juggernaut_5" // Enhanced Blade
+		"Ability12"					"special_bonus_imba_juggernaut_6" // Dance of Fury
+		"Ability13"					"special_bonus_imba_juggernaut_3" // Healing Ward gives 50/100 (base/totem) attack speed
+		"Ability14"					"special_bonus_imba_juggernaut_7" // Omnislash Doppelgänger Replacement
+		"Ability15"					"special_bonus_imba_juggernaut_1" // Blade Fury Vacuum
+		"Ability16"					"special_bonus_imba_juggernaut_9" // Omnislash EX
+		"Ability17"					"special_bonus_imba_juggernaut_4" // Secret Blade Triplicate
 	}
 
 	//=================================================================================================================
@@ -910,11 +963,11 @@
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_lycan_shapeshift"
 
-		"Ability10"					"special_bonus_imba_lycan_1"
-		"Ability11"					"special_bonus_imba_lycan_2"
+		"Ability10"					"special_bonus_imba_lycan_5"
+		"Ability11"					"special_bonus_attack_damage_20"
 		"Ability12"					"special_bonus_imba_lycan_3"
-		"Ability13"					"special_bonus_strength_10"
-		"Ability14"					"special_bonus_imba_lycan_5"
+		"Ability13"					"special_bonus_imba_lycan_1"
+		"Ability14"					"special_bonus_imba_lycan_2"
 		"Ability15"					"special_bonus_imba_lycan_6"
 		"Ability16"					"special_bonus_imba_lycan_7"
 		"Ability17"					"special_bonus_imba_lycan_8"
@@ -1001,7 +1054,8 @@
 		"Ability10"					"special_bonus_imba_mirana_3" // Moonlight Shadow grants bonus move speed to invisible allies.
 		"Ability11"					"special_bonus_imba_mirana_7" // Leap can now be cast without needing to turn. Makes Mirana invisible for the duration of the jump, causing her to dodge projectiles. 
 		"Ability12"					"special_bonus_imba_mirana_4" // Two additional Sacred Arrows to the sides
-		"Ability13"					"special_bonus_imba_mirana_5" // Standing in the same spot for a few seconds grants Mirana invisibility until she moves or attack. Casting spells does not break the invisibility.
+		//"Ability13"					"special_bonus_imba_mirana_5" // Standing in the same spot for a few seconds grants Mirana invisibility until she moves or attack. Casting spells does not break the invisibility.
+		"Ability13"					"special_bonus_mana_break_25"
 		"Ability14"					"special_bonus_imba_mirana_2" // Sacred Arrows allow allies to trigger On The Prowls' critical as long as there is at least enough seconds remaining to the stun.
 		"Ability15"					"special_bonus_imba_mirana_6" // Free Sacred Arrow after Leap ends
 		"Ability16"					"special_bonus_imba_mirana_1" // Upon using Moonlight Shadow, allies are given a stack of Starstorm which will proc when they go out of invisibility near an enemy unit.
@@ -1179,10 +1233,10 @@
 		"Ability10"					"special_bonus_imba_night_stalker_1"
 		"Ability11"					"special_bonus_imba_night_stalker_2"
 		"Ability12"					"special_bonus_imba_night_stalker_3"
-		"Ability13"					"special_bonus_imba_night_stalker_4"
-		"Ability14"					"special_bonus_imba_night_stalker_5"
-		"Ability15"					"special_bonus_imba_night_stalker_6"
-		"Ability16"					"special_bonus_imba_night_stalker_7"
+		"Ability13"					"special_bonus_cast_range_200"
+		"Ability14"					"special_bonus_movement_speed_45"
+		"Ability15"					"special_bonus_attack_damage_50"
+		"Ability16"					"special_bonus_lifesteal_25"
 		"Ability17"					"special_bonus_imba_night_stalker_8"
 	}
 
@@ -1266,8 +1320,9 @@
 		"Ability13"					"special_bonus_imba_obsidian_destroyer_4"
 		"Ability14"					"special_bonus_imba_obsidian_destroyer_5"
 		"Ability15"					"special_bonus_imba_obsidian_destroyer_6"
-		"Ability16"					"special_bonus_imba_obsidian_destroyer_7"
-		"Ability17"					"special_bonus_imba_obsidian_destroyer_8"
+		//"Ability16"					"special_bonus_imba_obsidian_destroyer_7"
+		"Ability16"					"special_bonus_imba_obsidian_destroyer_8"
+		"Ability17"					"special_bonus_spell_lifesteal_15"
 	}
 
 	//=================================================================================================================
@@ -1528,37 +1583,6 @@
 	}
 
 	//=================================================================================================================
-	// HERO: Rubick
-	//=================================================================================================================
-	"npc_dota_hero_rubick"
-	{
-		"override_hero"				"npc_dota_hero_rubick"
-
-		//Picking Screen
-		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
-
-		"Ability1"					"imba_rubick_telekinesis"
-		"Ability2"					"rubick_fade_bolt"
-		"Ability3"					"rubick_null_field"
-		"Ability4"					"rubick_empty1"
-		"Ability5"					"rubick_empty2"
-		"Ability6"					"rubick_spell_steal"
-		"Ability7"					"imba_rubick_spell_steal_controller"
-		"Ability8"					"rubick_hidden1"
-		"Ability9"					"rubick_hidden2"
-		"Ability10"					"rubick_hidden3"
-
-		"Ability11"					"special_bonus_hp_200"
-		"Ability12"					"special_bonus_attack_damage_60"
-		"Ability13"					"special_bonus_cast_range_100"
-		"Ability14"					"special_bonus_unique_rubick_2"
-		"Ability15"					"special_bonus_unique_rubick_3"
-		"Ability16"					"special_bonus_unique_rubick"
-		"Ability17"					"special_bonus_unique_rubick_4"
-		"Ability18"					"special_bonus_unique_rubick_5"
-	}
-
-	//=================================================================================================================
 	// HERO: Sand King
 	//=================================================================================================================
 	"npc_dota_hero_sand_king"
@@ -1609,37 +1633,9 @@
 		"Ability12"					"special_bonus_imba_nevermore_3"
 		"Ability13"					"special_bonus_imba_nevermore_4"
 		"Ability14"					"special_bonus_imba_nevermore_5"
-		"Ability15"					"special_bonus_imba_nevermore_6"
+		"Ability15"					"special_bonus_imba_nevermore_8"
 		"Ability16"					"special_bonus_imba_nevermore_7"
-		"Ability17"					"special_bonus_imba_nevermore_8"
-	}
-
-	//=================================================================================================================
-	// HERO: Silencer
-	//=================================================================================================================
-	"npc_dota_hero_silencer"
-	{
-		"override_hero"				"npc_dota_hero_silencer"		
-
-		//Picking Screen
-		"IsImba"					"1"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
-
-		"Ability1"					"imba_silencer_arcane_curse"
-		"Ability2"					"imba_silencer_glaives_of_wisdom"
-		"Ability3"					"imba_silencer_last_word"
-		"Ability4"					"imba_silencer_arcane_supremacy"
-		"Ability5"					"generic_hidden"
-		"Ability6"					"imba_silencer_global_silence"
-		
-		"Ability10"					"special_bonus_imba_silencer_1"
-		"Ability11"					"special_bonus_imba_silencer_2"
-		"Ability12"					"special_bonus_imba_silencer_3"
-		"Ability13"					"special_bonus_imba_silencer_6"
-		"Ability14"					"special_bonus_imba_silencer_5"
-		"Ability15"					"special_bonus_imba_silencer_4"
-		"Ability16"					"special_bonus_imba_silencer_7"
-		"Ability17"					"special_bonus_imba_silencer_8"
+		"Ability17"					"special_bonus_cooldown_reduction_40"
 	}
 
 	//=================================================================================================================
@@ -1716,14 +1712,23 @@
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_slardar_corrosive_haze"
 		
-		"Ability10"					"special_bonus_imba_slardar_1"
-		"Ability11"					"special_bonus_imba_slardar_2"
-		"Ability12"					"special_bonus_imba_slardar_3"
-		"Ability13"					"special_bonus_imba_slardar_4"
-		"Ability14"					"special_bonus_imba_slardar_5"
-		"Ability15"					"special_bonus_imba_slardar_6"
-		"Ability16"					"special_bonus_imba_slardar_7"
-		"Ability17"					"special_bonus_imba_slardar_8"
+		//"Ability10"					"special_bonus_imba_slardar_1"
+		//"Ability11"					"special_bonus_imba_slardar_2"
+		//"Ability12"					"special_bonus_imba_slardar_3"
+		//"Ability13"					"special_bonus_imba_slardar_4"
+		//"Ability14"					"special_bonus_imba_slardar_5"
+		//"Ability15"					"special_bonus_imba_slardar_6"
+		//"Ability16"					"special_bonus_imba_slardar_7"
+		//"Ability17"					"special_bonus_imba_slardar_8"
+		
+		"Ability10"					"special_bonus_imba_slardar_1" // 2x radius and damage to Rip Current
+		"Ability11"					"special_bonus_imba_slardar_4" // +10% Slipstream miss/trigger chance
+		"Ability12"					"special_bonus_imba_slardar_9" // Bash of the Deep affects buildings
+		"Ability13"					"special_bonus_night_vision_1000"
+		"Ability14"					"special_bonus_imba_slardar_10" // Depression
+		"Ability15"					"special_bonus_imba_slardar_11" // Corrosive Haze Armor Transfer
+		"Ability16"					"special_bonus_imba_slardar_6" // Casts a second free Slithereen Crush
+		"Ability17"					"special_bonus_imba_slardar_12" // Corrosive Haze Undispellable
 	}
 
 	//=================================================================================================================
@@ -2088,106 +2093,6 @@
 	}
 
 	//=================================================================================================================
-	// HERO: Ghost Revenant // Need to be duplicated in npc_units_custom.txt
-	//=================================================================================================================
-	"npc_dota_hero_ghost_revenant"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"					"npc_dota_hero_razor"
-		"HeroID"					"115"
-		"Model"						"models/heroes/razor/razor.vmdl"
-		"ModelScale"				"1.080000"
-		"SoundSet"					"Hero_Razor"
-
-		//Picking Screen
-		"IsCustom"					"1"
-
-		// Armor
-		//-------------------------------------------------------------------------------------------------------------
-		"ArmorPhysical"				"-1"									// Physical protection.
-		"MagicalResistance"			"25"									// Magical protection (percentage).
-
-		// Attack
-		//-------------------------------------------------------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackDamageMin"			"30"										// Damage range min.
-		"AttackDamageMax"			"40"										// Damage range max.
-		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"				// Type of damage dealt. 
-		"AttackRate"				"1.700"									// Speed of attack.
-		"AttackAnimationPoint"		"0.300"									// Normalized time in animation cycle to attack.
-		"AttackAcquisitionRange"	"600"									// Range within a target can be acquired.
-		"AttackRange"				"150"									// Range within a target can be attacked.
-
-		// Attributes
-		//-------------------------------------------------------------------------------------------------------------
-		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"	// Primary Attribute
-		"AttributeBaseStrength"		"23"						// Base strength
-		"AttributeStrengthGain"		"2.3"						// Strength bonus per level.
-		"AttributeBaseIntelligence"	"24"							// Base intelligence
-		"AttributeIntelligenceGain"	"3.3"						// Intelligence bonus per level.
-		"AttributeBaseAgility"		"21"						// Base agility
-		"AttributeAgilityGain"		"2.4"						// Agility bonus per level.
-
-		// Abilities
-		//-------------------------------------------------------------------------------------------------------------
-		"Ability1"					"ghost_revenant_blackjack"
-		"Ability2"					"ghost_revenant_wraith"
-		"Ability3"					"ghost_revenant_miasma"
-		"Ability4"					"ghost_revenant_ghost_immolation"
-		"Ability5"					"generic_hidden"
-		"Ability6"					"ghost_revenant_exhaustion"
-		"Ability7"					"generic_hidden"
-		"Ability8"					"generic_hidden"
-		"Ability9"					"generic_hidden"
-
-		// Talents
-		//-------------------------------------------------------------------------------------------------------------
-		"Ability10"					"special_bonus_magic_resistance_15"
-		"Ability11"					"special_bonus_exp_boost_10"
-		"Ability12"					"special_bonus_attack_damage_40"
-//		"Ability13"					"special_bonus_imba_ghost_revenant_1" // Increase Blackjack projectile number
-		"Ability13"					"special_bonus_mp_300"
-		"Ability14"					"special_bonus_cast_range_150" 
-		"Ability15"					"special_bonus_spell_amplify_10"
-		"Ability16"					"special_bonus_cooldown_reduction_15"
-		"Ability17"					"special_bonus_gold_income_50"
-
-		// Bounds
-		//-------------------------------------------------------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
-		"RingRadius"				"70"
-		"HealthBarOffset"            "260"
-
-		// Movement
-		//-------------------------------------------------------------------------------------------------------------
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"				"310"									// Speed.
-		"MovementTurnRate"			"0.4"									// Turning rate.
-
-		// Status
-		//-------------------------------------------------------------------------------------------------------------
-		"StatusHealth"				"200"									// Base health.
-		"StatusHealthRegen"			"3.0"									// Health regeneration rate.
-		"StatusMana"				"50"									// Base mana.
-		"StatusManaRegen"			"1.0"									// Mana regeneration rate.
-
-		// Team
-		//-------------------------------------------------------------------------------------------------------------
-		"TeamName"					"DOTA_TEAM_GOODGUYS"
-		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
-		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_HERO"
-
-		// Vision
-		//-------------------------------------------------------------------------------------------------------------
-		"VisionDaytimeRange"		"1800"									// Range of vision during day light.
-		"VisionNighttimeRange"		"800"									// Range of vision at night time.
-
-		"GameSoundsFile"			"soundevents/game_sounds_heroes_custom/game_sounds_razor.vsndevts"
-	}
-
-	//=================================================================================================================
 	// HERO: Hell Empress // Need to be duplicated in npc_units_custom.txt
 	//=================================================================================================================
 	"npc_dota_hero_hell_empress"
@@ -2253,7 +2158,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"RingRadius"				"70"
-		"HealthBarOffset"            "240"
+		"HealthBarOffset"			"240"
 
 		// Movement
 		//-------------------------------------------------------------------------------------------------------------
@@ -2279,7 +2184,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"VisionDaytimeRange"		"1800"									// Range of vision during day light.
 		"VisionNighttimeRange"		"800"									// Range of vision at night time.
-	
+
 		"GameSoundsFile"			"soundevents/game_sounds_heroes_custom/game_sounds_hell_empress.vsndevts"
 	}
 
@@ -2486,156 +2391,101 @@
 	//=================================================================================================================
 	// HERO: Storegga // Need to be duplicated in npc_units_custom.txt
 	//=================================================================================================================
-	"npc_dota_hero_storegga"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"					"npc_dota_hero_tiny"
-		"HeroID"					"121"
-		"Model"						"models/heroes/tiny_01/tiny_01.vmdl"
-		"ModelScale"				"1.10000"
-		"SoundSet"					"Hero_Tiny"
-
-		//Picking Screen
-		"IsCustom"					"1"
-		"IsNew"						"1"
-
-		// Armor
-		//-------------------------------------------------------------------------------------------------------------
-		"ArmorPhysical"				"8"									// Physical protection.
-		"MagicalResistance"			"25"								// Magical protection (percentage).
-
-		// Attack
-		//-------------------------------------------------------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
-		"AttackDamageMin"			"59"							// Damage range min.
-		"AttackDamageMax"			"75"							// Damage range max.
-		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"		// Type of damage dealt. 
-		"AttackRate"				"1.700"							// Speed of attack.
-		"AttackAnimationPoint"		"1.000"							// Normalized time in animation cycle to attack.
-		"AttackAcquisitionRange"	"800"							// Range within a target can be acquired.
-		"AttackRange"				"150"							// Range within a target can be attacked.
-		"ProjectileModel"			""								// Particle system model for projectile.
-		"ProjectileSpeed"			"0"								// Speed of projectile.
-
-		// Attributes
-		//-------------------------------------------------------------------------------------------------------------
-		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"	// Primary Attribute
-		"AttributeBaseStrength"		"26"
-		"AttributeStrengthGain"		"4.400000"
-		"AttributeBaseAgility"		"19"
-		"AttributeAgilityGain"		"2.900000"
-		"AttributeBaseIntelligence"	"16"
-		"AttributeIntelligenceGain"	"2.600000"
-
-		// Abilities
-		//-------------------------------------------------------------------------------------------------------------
-		"Ability1"			"storegga_arm_slam"
-		"Ability2"			"storegga_grab"
-		"Ability3"			"storegga_grab_throw"
-		"Ability4"			"generic_hidden"
-		"Ability5"			"generic_hidden"
-		"Ability6"			"storegga_avalanche"
-
-		// Talents
-		//-------------------------------------------------------------------------------------------------------------
-		"Ability10"					"special_bonus_magic_resistance_15"
-		"Ability11"					"special_bonus_exp_boost_10"
-		"Ability12"					"special_bonus_attack_damage_40"
-		"Ability13"					"special_bonus_mp_300"
-		"Ability14"					"special_bonus_cast_range_150" 
-		"Ability15"					"special_bonus_spell_amplify_10"
-		"Ability16"					"special_bonus_cooldown_reduction_15"
-		"Ability17"					"special_bonus_gold_income_50"
-
-		// Bounds
-		//-------------------------------------------------------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
-		"RingRadius"				"70"
-		"HealthBarOffset"			"240"
-
-		// Movement
-		//-------------------------------------------------------------------------------------------------------------
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"				"285"									// Speed.
-		"MovementTurnRate"			"0.5"									// Turning rate.
-
-		// Status
-		//-------------------------------------------------------------------------------------------------------------
-		"StatusHealth"				"200"									// Base health.
-		"StatusHealthRegen"			"3.0"									// Health regeneration rate.
-		"StatusMana"				"50"									// Base mana.
-		"StatusManaRegen"			"1.0"									// Mana regeneration rate.
-
-		// Team
-		//-------------------------------------------------------------------------------------------------------------
-		"TeamName"					"DOTA_TEAM_GOODGUYS"
-		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
-		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_HERO"
-
-		// Vision
-		//-------------------------------------------------------------------------------------------------------------
-		"VisionDaytimeRange"		"1800"									// Range of vision during day light.
-		"VisionNighttimeRange"		"800"									// Range of vision at night time.
-
-		"GameSoundsFile"			"soundevents/game_sounds_heroes_custom/game_sounds_tiny.vsndevts"
-	}
-
-	//=================================================================================================================
-	// HERO: Ronin
-	//=================================================================================================================
-	"npc_dota_hero_sohei"
-	{
-		"BaseClass"					"npc_dota_hero_juggernaut"
-		"HeroID"					"122"
-		"Model"						"models/heroes/sohei/sohei.vmdl"
-
-		//Picking Screen
-		"IsCustom"					"1"
+//	"npc_dota_hero_storegga"
+//	{
+//		// General
+//		//-------------------------------------------------------------------------------------------------------------
+//		"BaseClass"					"npc_dota_hero_tiny"
+//		"HeroID"					"121"
+//		"Model"						"models/heroes/tiny_01/tiny_01.vmdl"
+//		"ModelScale"				"1.10000"
+//		"SoundSet"					"Hero_Tiny"
+//
+//		//Picking Screen
+//		"IsCustom"					"1"
 //		"IsNew"						"1"
-
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementTurnRate"			"1.5"
-		"MovementSpeed"				"325"
-
-		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackDamageMin"			"31"
-		"AttackDamageMax"			"33"
-		"AttackRate"				"1.7"
-
-		"ArmorPhysical"				"5"
-		"StatusHealthRegen"			"3.25"
-
-		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
-		"AttributeBaseStrength"		"23"
-		"AttributeStrengthGain"		"4.0"
-		"AttributeBaseAgility"		"18"
-		"AttributeAgilityGain"		"1.5"
-		"AttributeBaseIntelligence"	"17"
-		"AttributeIntelligenceGain"	"1.5"
-
-		"Ability1"                  "sohei_dash"
-		"Ability2"                  "sohei_guard"
-		"Ability3"                  "sohei_momentum"
-		"Ability4"                  "sohei_palm_of_life"
-		"Ability5"                  "generic_hidden"
-		"Ability6"                  "sohei_flurry_of_blows"
-
-		"Ability10"                 "special_bonus_sohei_stun"             // Momentum inflicts a brief stun if the target collides with an obstacle
-		"Ability11"                 "special_bonus_cleave_15"
-		"Ability12"                 "special_bonus_strength_20"
-		"Ability13"                 "special_bonus_sohei_guard_knockback"             // Guard also knockbacks enemies until they are 300 units away
-		"Ability14"                 "special_bonus_sohei_momentum_guard_cooldown"             // Momentum hits reduce the cooldown on Guard
-		"Ability15"                 "special_bonus_movement_speed_75"
-		"Ability16"                 "special_bonus_sohei_dash_recharge"             // Dash charges cool down all at once
-		"Ability17"                 "special_bonus_sohei_fob_radius"             // Increases Flurry of Blows' AOE radius
-
-
-		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
-		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_HERO"
-	}
+//
+//		// Armor
+//		//-------------------------------------------------------------------------------------------------------------
+//		"ArmorPhysical"				"8"									// Physical protection.
+//		"MagicalResistance"			"25"								// Magical protection (percentage).
+//
+//		// Attack
+//		//-------------------------------------------------------------------------------------------------------------
+//		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+//		"AttackDamageMin"			"59"							// Damage range min.
+//		"AttackDamageMax"			"75"							// Damage range max.
+//		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"		// Type of damage dealt. 
+//		"AttackRate"				"1.700"							// Speed of attack.
+//		"AttackAnimationPoint"		"1.000"							// Normalized time in animation cycle to attack.
+//		"AttackAcquisitionRange"	"800"							// Range within a target can be acquired.
+//		"AttackRange"				"150"							// Range within a target can be attacked.
+//		"ProjectileModel"			""								// Particle system model for projectile.
+//		"ProjectileSpeed"			"0"								// Speed of projectile.
+//
+//		// Attributes
+//		//-------------------------------------------------------------------------------------------------------------
+//		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"	// Primary Attribute
+//		"AttributeBaseStrength"		"26"
+//		"AttributeStrengthGain"		"4.400000"
+//		"AttributeBaseAgility"		"19"
+//		"AttributeAgilityGain"		"2.900000"
+//		"AttributeBaseIntelligence"	"16"
+//		"AttributeIntelligenceGain"	"2.600000"
+//
+//		// Abilities
+//		//-------------------------------------------------------------------------------------------------------------
+//		"Ability1"			"storegga_arm_slam"
+//		"Ability2"			"storegga_grab"
+//		"Ability3"			"storegga_grab_throw"
+//		"Ability4"			"generic_hidden"
+//		"Ability5"			"generic_hidden"
+//		"Ability6"			"storegga_avalanche"
+//
+//		// Talents
+//		//-------------------------------------------------------------------------------------------------------------
+//		"Ability10"					"special_bonus_magic_resistance_15"
+//		"Ability11"					"special_bonus_exp_boost_10"
+//		"Ability12"					"special_bonus_attack_damage_40"
+//		"Ability13"					"special_bonus_mp_300"
+//		"Ability14"					"special_bonus_cast_range_150" 
+//		"Ability15"					"special_bonus_spell_amplify_10"
+//		"Ability16"					"special_bonus_cooldown_reduction_15"
+//		"Ability17"					"special_bonus_gold_income_50"
+//
+//		// Bounds
+//		//-------------------------------------------------------------------------------------------------------------
+//		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+//		"RingRadius"				"70"
+//		"HealthBarOffset"			"240"
+//
+//		// Movement
+//		//-------------------------------------------------------------------------------------------------------------
+//		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+//		"MovementSpeed"				"285"									// Speed.
+//		"MovementTurnRate"			"0.5"									// Turning rate.
+//
+//		// Status
+//		//-------------------------------------------------------------------------------------------------------------
+//		"StatusHealth"				"200"									// Base health.
+//		"StatusHealthRegen"			"3.0"									// Health regeneration rate.
+//		"StatusMana"				"50"									// Base mana.
+//		"StatusManaRegen"			"1.0"									// Mana regeneration rate.
+//
+//		// Team
+//		//-------------------------------------------------------------------------------------------------------------
+//		"TeamName"					"DOTA_TEAM_GOODGUYS"
+//		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+//		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+//		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_HERO"
+//
+//		// Vision
+//		//-------------------------------------------------------------------------------------------------------------
+//		"VisionDaytimeRange"		"1800"									// Range of vision during day light.
+//		"VisionNighttimeRange"		"800"									// Range of vision at night time.
+//
+//		"GameSoundsFile"			"soundevents/game_sounds_heroes_custom/game_sounds_tiny.vsndevts"
+//	}
 
 	//=================================================================================================================
 	// HERO: Dummy

@@ -8,8 +8,8 @@
 "DOTA_Tooltip_ability_imba_enigma_malefice_total_duration"              "TOTAL DURATION:"
 "DOTA_Tooltip_ability_imba_enigma_malefice_well_pull_strength"          "PULL POWER:"
 
-"DOTA_Tooltip_modifier_imba_enigma_malefice_stun"                      "Malefice"
-"DOTA_Tooltip_modifier_imba_enigma_malefice_stun_Description"          "Stunned, being pulled to the strongest gravity source."
+"DOTA_Tooltip_modifier_imba_enigma_malefice"                      		"Malefice"
+"DOTA_Tooltip_modifier_imba_enigma_malefice_Description"          		"Taking instances of damage and stun, and being pulled to the strongest gravity source."
 
 // Enigma's Demonic Conversion
 "DOTA_Tooltip_ability_imba_enigma_demonic_conversion"                  "Demonic Conversion"

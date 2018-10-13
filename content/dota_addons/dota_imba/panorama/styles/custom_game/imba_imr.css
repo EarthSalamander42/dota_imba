@@ -174,8 +174,9 @@
 
 #BattlepassButtons {
 	margin-top:  -40px;
+	margin-right:  10px;
 	margin-bottom: 15px;
-	width: 30%;
+	width: 50%;
 	flow-children: right;
 	align:  right top;
 }
@@ -653,8 +654,9 @@
 	line-height: 16px;
 	/* color: #A3B5D0dd; */
 }
+
 #ComingSoonPanel, #TabTitlePanel {
-	width: 75%;
+	width: 50%;
 	height: 40px;
 	background-color: #39404855;
 	align: left top;
@@ -694,7 +696,7 @@
 	box-shadow: 0px 2px 6px 0px #000000a5;
 	vertical-align: top;
 	background-position: 0px 0px;
-//	background-size: 74px 64px;
+	background-size: 74px 64px;
 }
 
 .BattlepassRewardIcon_locked {
@@ -739,9 +741,8 @@
 	text-transform: uppercase;
 	text-align: center center;
 	text-shadow: 0px 0px 3px 3 #000000a5;
-	color: #fff;
+	color: red;
 	brightness:  1.5;
-	/* brightness:  1.5; */
 }
 
 .BattlepassRewardPanelUnlocked {
@@ -938,9 +939,11 @@
 }
 
 .BattlepassButton {
+	width: 190px;
 	height: 40px;
+	margin-left: 10px;
 	margin-bottom: 5px;
-	align:  right center;
+	align:  left center;
 	border-bottom: 1px solid #333333;
 	border-right: 1px solid #333333;
 	border-top: 1px solid #555555;
@@ -986,4 +989,42 @@
 	animation-timing-function: ease-in-out;
 	animation-iteration-count: 1;
 	animation-direction: reverse;
+}
+
+/* colors */
+
+.arcana_border {
+	border: 1px solid #88ff4d;
+}
+
+.immortal_border {
+	border: 1px solid #e6b800;
+}
+
+.arcana_text {
+	color:#88ff4d;
+}
+
+.immortal_text {
+	color:#e6b800;
+}
+
+.gold {
+	color: gold;
+}
+
+.blue {
+	color: dodgerblue;
+}
+
+#rank_1 {
+	color: gold;
+}
+
+#rank_2 {
+	color: grey;
+}
+
+#rank_3 {
+	color: darkorange;
 }

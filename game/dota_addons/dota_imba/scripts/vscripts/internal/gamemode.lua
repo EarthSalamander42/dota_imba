@@ -1,13 +1,17 @@
 -- This function initializes the game mode and is called before anyone loads into the game
 -- It can be used to pre-initialize any values/tables that will be needed later
 
+require('internal/constants')
+
 function GameMode:_InitGameMode()
+	if self._reentrantCheck then
+		return
+	end
 
 	-- Setup rules
-	GameRules:SetHeroRespawnEnabled( ENABLE_HERO_RESPAWN )
 	GameRules:SetUseUniversalShopMode( UNIVERSAL_SHOP_MODE )
 	GameRules:SetSameHeroSelectionEnabled( true ) -- Let server handle hero duplicates
-	GameRules:SetPreGameTime( PRE_GAME_TIME)
+	GameRules:SetPreGameTime( PRE_GAME_TIME )
 	GameRules:SetPostGameTime( POST_GAME_TIME )
 	GameRules:SetShowcaseTime( SHOWCASE_TIME )
 	GameRules:SetStrategyTime( STRATEGY_TIME )
@@ -21,57 +25,60 @@ function GameMode:_InitGameMode()
 	GameRules:SetFirstBloodActive( ENABLE_FIRST_BLOOD )
 	GameRules:SetHideKillMessageHeaders( HIDE_KILL_BANNERS )
 	GameRules:SetCustomGameSetupAutoLaunchDelay( AUTO_LAUNCH_DELAY )
-	GameRules:SetStartingGold( MAP_INITIAL_GOLD )
+	GameRules:SetStartingGold( 0 )
 	GameRules:LockCustomGameSetupTeamAssignment(true)
 
 	-- This is multiteam configuration stuff
-	local count = 0
-	for team,number in pairs(CUSTOM_TEAM_PLAYER_COUNT) do
-		if count >= MAX_NUMBER_OF_TEAMS then
-			GameRules:SetCustomGameTeamMaxPlayers(team, 0)
-		else
-			GameRules:SetCustomGameTeamMaxPlayers(team, number)
+	if USE_AUTOMATIC_PLAYERS_PER_TEAM then
+		local num = math.floor(10 / MAX_NUMBER_OF_TEAMS)
+		local count = 0
+		for team,number in pairs(TEAM_COLORS) do
+			if count >= MAX_NUMBER_OF_TEAMS then
+				GameRules:SetCustomGameTeamMaxPlayers(team, 0)
+			else
+				GameRules:SetCustomGameTeamMaxPlayers(team, num)
+			end
+			count = count + 1
 		end
-
-		count = count + 1
-	end
-
-	if USE_CUSTOM_TEAM_COLORS then
-		for team,color in pairs(TEAM_COLORS) do
-			SetTeamCustomHealthbarColor(team, color[1], color[2], color[3])
+	else
+		local count = 0
+		for team,number in pairs(CUSTOM_TEAM_PLAYER_COUNT) do
+			if count >= MAX_NUMBER_OF_TEAMS then
+				GameRules:SetCustomGameTeamMaxPlayers(team, 0)
+			else
+				GameRules:SetCustomGameTeamMaxPlayers(team, number)
+			end
+			count = count + 1
 		end
 	end
-
-	--InitLogFile( "log/barebones.txt","")
 
 	-- Event Hooks
-	-- All of these events can potentially be fired by the game, though only the uncommented ones have had
-	-- Functions supplied for them.  If you are interested in the other events, you can uncomment the
-	-- ListenToGameEvent line and add a function to handle the event
-	ListenToGameEvent('dota_player_gained_level', Dynamic_Wrap(GameMode, 'OnPlayerLevelUp'), self)
-	ListenToGameEvent('dota_player_learned_ability', Dynamic_Wrap(GameMode, 'OnPlayerLearnedAbility'), self)
-	ListenToGameEvent('entity_killed', Dynamic_Wrap(GameMode, 'OnEntityKilled'), self)
-	ListenToGameEvent('player_connect_full', Dynamic_Wrap(GameMode, 'OnConnectFull'), self)
-	ListenToGameEvent('player_disconnect', Dynamic_Wrap(GameMode, 'OnDisconnect'), self)
-	ListenToGameEvent('dota_item_purchased', Dynamic_Wrap(GameMode, 'OnItemPurchased'), self)
-	ListenToGameEvent('dota_item_picked_up', Dynamic_Wrap(GameMode, 'OnItemPickedUp'), self)
+	ListenToGameEvent('dota_player_gained_level', Dynamic_Wrap(self, 'OnPlayerLevelUp'), self)
+	ListenToGameEvent('entity_killed', Dynamic_Wrap(self, '_OnEntityKilled'), self)
+	ListenToGameEvent('player_connect_full', Dynamic_Wrap(self, '_OnConnectFull'), self)
+	ListenToGameEvent('player_disconnect', Dynamic_Wrap(self, 'OnDisconnect'), self)
+	ListenToGameEvent('dota_item_picked_up', Dynamic_Wrap(self, 'OnItemPickedUp'), self)
+--	ListenToGameEvent('player_connect', Dynamic_Wrap(self, 'PlayerConnect'), self)
+	ListenToGameEvent('dota_player_used_ability', Dynamic_Wrap(self, 'OnAbilityUsed'), self)
+	ListenToGameEvent('game_rules_state_change', Dynamic_Wrap(self, '_OnGameRulesStateChange'), self)
+	ListenToGameEvent('npc_spawned', Dynamic_Wrap(self, '_OnNPCSpawned'), self)
+	ListenToGameEvent("player_reconnected", Dynamic_Wrap(self, 'OnPlayerReconnect'), self)
+	ListenToGameEvent("player_chat", Dynamic_Wrap(self, 'OnPlayerChat'), self)
+	ListenToGameEvent('dota_player_learned_ability', Dynamic_Wrap(self, 'OnPlayerLearnedAbility'), self)
 	ListenToGameEvent('last_hit', Dynamic_Wrap(GameMode, 'OnLastHit'), self)
-	ListenToGameEvent('dota_player_used_ability', Dynamic_Wrap(GameMode, 'OnAbilityUsed'), self)
-	ListenToGameEvent('game_rules_state_change', Dynamic_Wrap(GameMode, 'OnGameRulesStateChange'), self)
-	ListenToGameEvent('npc_spawned', Dynamic_Wrap(GameMode, 'OnNPCSpawned'), self)
 	ListenToGameEvent('dota_team_kill_credit', Dynamic_Wrap(GameMode, 'OnTeamKillCredit'), self)
-	ListenToGameEvent("player_chat", Dynamic_Wrap(GameMode, 'OnPlayerChat'), self)
-
-	ListenToGameEvent("dota_item_combined", Dynamic_Wrap(GameMode, 'OnItemCombined'), self)
-	ListenToGameEvent("dota_tower_kill", Dynamic_Wrap(GameMode, 'OnTowerKill'), self)
---	ListenToGameEvent('player_team', Dynamic_Wrap(GameMode, 'OnPlayerTeam'), self)
 
 	-- Change random seed
-	local timeTxt = string.gsub(string.gsub(GetSystemTime(), ':', ''), '0','')
+	local timeTxt = string.gsub(string.gsub(GetSystemTime(), ':', ''), '^0+','')
 	math.randomseed(tonumber(timeTxt))
 
 	-- Initialized tables for tracking state
 	self.bSeenWaitForPlayers = false
+	self.vUserIds = {}
+
+	self._reentrantCheck = true
+	self:InitGameMode()
+	self._reentrantCheck = false
 end
 
 local mode = nil
@@ -79,66 +86,50 @@ local mode = nil
 -- This function is called as the first player loads and sets up the GameMode parameters
 function GameMode:_CaptureGameMode()
 	if mode == nil then
-
 		-- Set GameMode parameters
 		mode = GameRules:GetGameModeEntity()
-		mode:SetRecommendedItemsDisabled( RECOMMENDED_BUILDS_DISABLED )
+		mode:SetRecommendedItemsDisabled( false )
 		mode:SetCustomBuybackCostEnabled( CUSTOM_BUYBACK_COST_ENABLED )
 		mode:SetCustomBuybackCooldownEnabled( CUSTOM_BUYBACK_COOLDOWN_ENABLED )
 		mode:SetBuybackEnabled( BUYBACK_ENABLED )
-		mode:SetTopBarTeamValuesOverride ( USE_CUSTOM_TOP_BAR_VALUES )
-		mode:SetTopBarTeamValuesVisible( TOP_BAR_VISIBLE )
+		mode:SetTopBarTeamValuesOverride ( false )
+		mode:SetTopBarTeamValuesVisible( true )
 		mode:SetUseCustomHeroLevels ( USE_CUSTOM_HERO_LEVELS )
 		mode:SetCustomXPRequiredToReachNextLevel( XP_PER_LEVEL_TABLE )
 
-		mode:SetBotThinkingEnabled( USE_STANDARD_DOTA_BOT_THINKING )
+		mode:SetBotThinkingEnabled( false )
 		mode:SetTowerBackdoorProtectionEnabled( ENABLE_TOWER_BACKDOOR_PROTECTION )
 
 		mode:SetGoldSoundDisabled( DISABLE_GOLD_SOUNDS )
 		mode:SetRemoveIllusionsOnDeath( REMOVE_ILLUSIONS_ON_DEATH )
 
 		if FORCE_PICKED_HERO ~= nil then
-			print("Force picked hero:", FORCE_PICKED_HERO)
 			mode:SetCustomGameForceHero( FORCE_PICKED_HERO )
 		end
 
-		mode:SetFixedRespawnTime( FIXED_RESPAWN_TIME ) 
-		mode:SetFountainConstantManaRegen( FOUNTAIN_CONSTANT_MANA_REGEN )
-		mode:SetFountainPercentageHealthRegen( FOUNTAIN_PERCENTAGE_HEALTH_REGEN )
-		mode:SetFountainPercentageManaRegen( FOUNTAIN_PERCENTAGE_MANA_REGEN )
+		mode:SetFixedRespawnTime( -1 ) 
+--		mode:SetFountainConstantManaRegen( FOUNTAIN_CONSTANT_MANA_REGEN )
+--		mode:SetFountainPercentageHealthRegen( FOUNTAIN_PERCENTAGE_HEALTH_REGEN )
+--		mode:SetFountainPercentageManaRegen( FOUNTAIN_PERCENTAGE_MANA_REGEN )
 		mode:SetLoseGoldOnDeath( LOSE_GOLD_ON_DEATH )
 		mode:SetMinimumAttackSpeed( MINIMUM_ATTACK_SPEED )
 		mode:SetMaximumAttackSpeed( MAXIMUM_ATTACK_SPEED )
 
+		mode:SetHudCombatEventsDisabled(true)
+		mode:SetCustomTerrainWeatherEffect(IMBA_WEATHER_EFFECT[RandomInt(1, #IMBA_WEATHER_EFFECT)])
+
 		self:OnFirstPlayerLoaded()
-	end 
+	end
 end
 
 -- This function captures the game mode options when they are set
-function OnSetGameMode()
-	-- Bounty multiplier increase
+function GameMode:OnSetGameMode()
 	CustomNetTables:SetTableValue("game_options", "bounty_multiplier", {CUSTOM_GOLD_BONUS[GetMapName()]})
-
-	-- XP multiplier increase
 	CustomNetTables:SetTableValue("game_options", "exp_multiplier", {CUSTOM_XP_BONUS[GetMapName()]})
-
-	-- Tower power increase
---	if mode_info.exp_multiplier == 1 then
-		TOWER_POWER_FACTOR = 1
---	elseif mode_info.tower_power == 2 then
---		if IsFranticMap() == false then
---			TOWER_POWER_FACTOR = 2
---		else
---			TOWER_POWER_FACTOR = 3
---		end
---	end
-
-	CustomNetTables:SetTableValue("game_options", "tower_power", {TOWER_POWER_FACTOR})
-
 	CustomNetTables:SetTableValue("game_options", "initial_gold", {HERO_INITIAL_GOLD[GetMapName()]})
 	CustomNetTables:SetTableValue("game_options", "initial_level", {HERO_STARTING_LEVEL[GetMapName()]})
 	if IsMutationMap() and IMBA_MUTATION["positive"] == "ultimate_level" then
-		MAX_LEVEL[GetMapName()] = 500
+		MAX_LEVEL[GetMapName()] = IMBA_MUTATION_ULTIMATE_LEVEL
 	end
 	CustomNetTables:SetTableValue("game_options", "max_level", {MAX_LEVEL[GetMapName()]})
 end

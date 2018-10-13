@@ -45,7 +45,6 @@ function _ScoreboardUpdater_UpdatePlayerPanelImr(playerId, playerPanel) {
 	var steamid = Game.GetPlayerInfo(playerId).player_steamid;
 	
 	LoadPlayerInfo(function (playerInfo) {
-
 		var thisPlayerInfo = null;
 		playerInfo.forEach(function (i) {
 			if (i.username == steamid)
@@ -136,14 +135,16 @@ function _ScoreboardUpdater_UpdatePlayerPanel(scoreboardConfig, playersContainer
 		}
 	}
 
-	playerPanel.SetHasClass("is_local_player", (playerId == Game.GetLocalPlayerID()));
+//	playerPanel.SetHasClass("is_local_player", (playerId == Game.GetLocalPlayerID()));
 
-	if (IsDeveloper !== undefined && IsDeveloper(playerId)) {
-		playerPanel.AddClass("is_developer");
-	}
-
-	if (IsDonator !== undefined && IsDonator(playerId) && !playerPanel.BHasClass("is_developer")) {
-		playerPanel.AddClass("is_donator");
+	var player_table = CustomNetTables.GetTableValue("player_table", playerId.toString());
+//		$.Msg(player_table.donator_level)
+//		$.Msg(player_table.donator_color)
+	if (player_table && player_table.donator_level && player_table.donator_color) {
+		if (player_table.donator_level < 10) {
+			playerPanel.style.backgroundColor = player_table.donator_color;
+//			playerPanel.backgroundColor = 'gradient( linear, 100% 0, 0 0, from( ' + player_table.donator_color + ' ), color-stop( 0.4, #FFFFFF ), to( #FFFFFF ) )';
+		}
 	}
 
 	// values > 0 mean on on cooldown for x seconds
@@ -234,8 +235,12 @@ function _ScoreboardUpdater_UpdatePlayerPanel(scoreboardConfig, playersContainer
 
 		var playerColorBar = playerPanel.FindChildInLayoutFile("PlayerColorBar");
 		if (playerColorBar !== null) {
-			var playerColor = GameUI.CustomUIConfig().player_colors[playerInfo.player_id]
-			playerColorBar.style.backgroundColor = playerColor;
+			var PlyColors = CustomNetTables.GetTableValue("game_options", "player_colors");
+			if (PlyColors != undefined)
+			{
+				if (PlyColors[playerId] != undefined)
+					playerColorBar.style.backgroundColor = PlyColors[playerId];
+			}
 		}
 	}
 

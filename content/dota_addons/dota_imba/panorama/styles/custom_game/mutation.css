@@ -13,11 +13,11 @@
 	margin-top: 4px;
 	margin-left: 0;
 	padding-left: 10px;
-	padding-top: 9px;
+	padding-top: 12px;
 	font-size: 16px;
 	color: #A3FDCC;
 	height: 42px;
-	width: 195px;
+	width: 230px;
 }
 
 #Mutation0Label {	
@@ -46,4 +46,8 @@
 	background-size: cover;
 	color: #ede5da;
 	text-shadow: 1px 0px 2px 2.0 #000000ca;
+}
+
+#Mutation3Label.alert {
+	color: red;
 }

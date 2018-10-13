@@ -34,6 +34,7 @@
 "dota_hud_error_cast_only_pumpkin"							"You can't target towers!"
 "dota_hud_error_cant_purchase_1v1"							"This item is not allowed in 1v1!"
 "dota_hud_error_cant_shrine_1v1"							"You can't use shrines in 1v1!"
+"dota_hud_error_cant_infest_bob"							"You can't infest BOB!"
 
 //=================================================================================================================
 //=================================================================================================================
@@ -81,21 +82,21 @@
 "npc_dota_hero_death_prophet"                              "Death Prophet"
 "npc_dota_hero_disruptor"                                  "Dickraptor (IMBA)"
 "npc_dota_hero_doom_bringer"                                "Doombringer"
-"npc_dota_hero_dragon_knight"                              "Dragon Knight"
+"npc_dota_hero_dragon_knight"                              "Dragon Knight (IMBA)"
 "npc_dota_hero_drow_ranger"                                "Drow Ranger (IMBA)"
 "npc_dota_hero_earthshaker"                                "Earthshaker"
 "npc_dota_hero_earth_spirit"                                "Earth Spirit (IMBA)"
 "npc_dota_hero_elder_titan"                                "Elder Titan (IMBA)"
 "npc_dota_hero_enchantress"                                "Enchantress"
 "npc_dota_hero_enigma"                                      "Enigma (IMBA)"
-"npc_dota_hero_ember_spirit"                                "Ember Spirit"
+"npc_dota_hero_ember_spirit"                                "Ember Spirit (IMBA)"
 "npc_dota_hero_faceless_void"                              "Faceless Void (IMBA)"
 "npc_dota_hero_furion"                                      "Nature's Prophet"
 "npc_dota_hero_gyrocopter"                                  "Gyrocopter"
 "npc_dota_hero_huskar"                                      "Huskar"
 "npc_dota_hero_invoker"                                    "Invoker"
 "npc_dota_hero_jakiro"                                      "Jakiro (IMBA)"
-"npc_dota_hero_juggernaut"                                  "Juggernaut"
+"npc_dota_hero_juggernaut"                                  "Juggernaut (IMBA)"
 "npc_dota_hero_keeper_of_the_light"                        "Keeper of the Light"
 "npc_dota_hero_kunkka"                                      "Kunkka (IMBA)"
 "npc_dota_hero_legion_commander"                            "Legion Commander"
@@ -141,7 +142,7 @@
 "npc_dota_hero_sniper"                                      "Sniper (IMBA)"
 "npc_dota_hero_spectre"                                    "Spectre"
 "npc_dota_hero_spirit_breaker"                              "Randy Orton"
-"npc_dota_hero_storm_spirit"                                "Storm Spirit"
+"npc_dota_hero_storm_spirit"                                "Storm Spirit (IMBA)"
 "npc_dota_hero_sven"                                        "Sven (IMBA)"
 "npc_dota_hero_techies"                                    "Techies"
 "npc_dota_hero_templar_assassin"                            "Templar Assassin"
@@ -165,14 +166,14 @@
 "npc_dota_hero_skeleton_king"                              "Wraith King (IMBA)"
 "npc_dota_hero_windrunner"                                  "Windrunner"
 "npc_dota_hero_winter_wyvern"                              "Winter Wyvern"
-"npc_dota_hero_wisp"                                        "Wisp"
+"npc_dota_hero_wisp"                                        "Wisp (IMBA)"
 "npc_dota_hero_witch_doctor"                                "Witch Doctor (IMBA)"
-"npc_dota_hero_zuus"                                        "Zeus"
-"npc_dota_hero_ghost_revenant"                            "Ghost Revenant"
+"npc_dota_hero_zuus"                                        "Zeus (IMBA)"
 "npc_dota_hero_storegga"                                    "Storegga"
-"npc_dota_hero_sly_king"                              "Sly King"
-"npc_dota_hero_pangolier"                             "Pangolier (IMBA)"
-"npc_dota_hero_dummy_dummy"								"Selecting Hero..."
+"npc_dota_hero_sly_king"									"Sly King"
+"npc_dota_hero_pangolier"									"Pangolier (IMBA)"
+"npc_dota_hero_dummy_dummy"									"Selecting Hero..."
+"npc_dota_hero_malfurion"									"Malfurion"
 
 //=================================================================================================================
 // Dummy units and hero units
@@ -449,8 +450,8 @@
 //"DOTA_Tooltip_Ability_special_bonus_unique_phantom_lancer"          "+3000 Phantom Rush Range"
 //"DOTA_Tooltip_Ability_special_bonus_unique_slark"                   "+3s Pounce Leash"
 //"DOTA_Tooltip_Ability_special_bonus_unique_spectre"                 "-10s Spectral Dagger Cooldown"
-//"DOTA_Tooltip_Ability_special_bonus_unique_spirit_breaker_1"        "+17% Greater Bash chance"
-//"DOTA_Tooltip_Ability_special_bonus_unique_spirit_breaker_2"        "+1000 Charge Speed"
+"DOTA_Tooltip_Ability_special_bonus_unique_spirit_breaker_1"        "+17% Greater Bash chance"
+"DOTA_Tooltip_Ability_special_bonus_unique_spirit_breaker_2"        "+1000 Charge Speed"
 //"DOTA_Tooltip_Ability_special_bonus_unique_storm_spirit"            "+1s Electric Vortex duration"
 //"DOTA_Tooltip_Ability_special_bonus_unique_tidehunter"              "+6 Gush armor reduction"
 //"DOTA_Tooltip_Ability_special_bonus_unique_undying"                 "+80 Tombstone Zombie Damage"
@@ -618,43 +619,6 @@
 
 "DOTA_Tooltip_modifier_imba_hurl_through_hell_break"              "Hurl Through Hell"
 "DOTA_Tooltip_modifier_imba_hurl_through_hell_break_Description"        "Passives disabled"
-
-// Sly King
-////===============================================================================================================
-// Sly King: all abilities
-////===============================================================================================================
-"DOTA_Tooltip_ability_imba_sly_king_burrow_blast"         "Burrowblast"
-"DOTA_Tooltip_ability_imba_sly_king_burrow_blast_Description"   "Sly King burrows into the ground and tunnels forward, damaging and stunning enemy units above him as he resurfaces. Disjoints projectiles."
-"DOTA_Tooltip_ability_imba_sly_king_burrow_blast_travel_distance" "DISTANCE:"
-"DOTA_Tooltip_ability_imba_sly_king_burrow_blast_stun_duration"   "STUN DURATION:"
-"DOTA_Tooltip_ability_imba_sly_king_burrow_blast_damage"      "DAMAGE:"
-
-"DOTA_Tooltip_ability_imba_sly_king_frost_gale"           "Frost Gale"
-"DOTA_Tooltip_ability_imba_sly_king_frost_gale_Description"     "Launches multiple balls of frost around Sly King, slowing enemy units until they froze, as well as suffering from dot damage. Frost Gale deals damage every %tick_interval% seconds over its duration."
-"DOTA_Tooltip_ability_imba_sly_king_frost_gale_minimum_slow"    "MIN SLOW:"
-"DOTA_Tooltip_ability_imba_sly_king_frost_gale_maximum_slow"    "MAX SLOW:"
-"DOTA_Tooltip_ability_imba_sly_king_frost_gale_projectile_count"  "PROJECTILE COUNT:"
-"DOTA_Tooltip_ability_imba_sly_king_frost_gale_set_in_time"     "ROOT DELAY:"
-"DOTA_Tooltip_ability_imba_sly_king_frost_gale_chill_duraiton"    "ROOT DURATION:"
-"DOTA_Tooltip_ability_imba_sly_king_frost_gale_chill_damage"    "DMG PER TICK:"
-
-"DOTA_Tooltip_ability_imba_sly_king_frozen_skin"          "Frozen Skin"
-"DOTA_Tooltip_ability_imba_sly_king_frozen_skin_Description"    "Attackers have a chance of being mini-bashed and rooted when attacking Sly King."
-"DOTA_Tooltip_ability_imba_sly_king_frozen_skin_chance"       "%CHANCE:"
-"DOTA_Tooltip_ability_imba_sly_king_frozen_skin_stun_duration"    "BASH DURATION:"
-"DOTA_Tooltip_ability_imba_sly_king_frozen_skin_duration"     "ROOT DURATION:"
-"DOTA_Tooltip_ability_imba_sly_king_frozen_skin_damage_per_second"  "DMG PER TICK:"
-
-"DOTA_Tooltip_ability_imba_sly_king_winterbringer"          "Winterbringer"
-"DOTA_Tooltip_ability_imba_sly_king_winterbringer_Description"    "Sly King calls the winds of winter, dealing insane damage in a small area, pulling heroes over him slowing their attack and movespeed.\nCan be interrupted."
-"DOTA_Tooltip_ability_imba_sly_king_winterbringer_channel_time"   "CHANNEL TIME:"
-"DOTA_Tooltip_ability_imba_sly_king_winterbringer_radius"     "RADIUS:"
-"DOTA_Tooltip_ability_imba_sly_king_winterbringer_pull_speed"   "PULL SPEED:"
-"DOTA_Tooltip_ability_imba_sly_king_winterbringer_pulse_interval" "PULSE INTERVAL:"
-"DOTA_Tooltip_ability_imba_sly_king_winterbringer_ms_slow_pct"    "%MOVEMENT SPEED SLOW:"
-"DOTA_Tooltip_ability_imba_sly_king_winterbringer_as_slow"      "ATTACK SPEED SLOW:"
-"DOTA_Tooltip_ability_imba_sly_king_winterbringer_slow_duration"  "SLOW DURATION:"
-"DOTA_Tooltip_ability_imba_sly_king_winterbringer_damage"     "DMG PER TICK:"
 
 // Scaldris, the Antipode
 ////===============================================================================================================

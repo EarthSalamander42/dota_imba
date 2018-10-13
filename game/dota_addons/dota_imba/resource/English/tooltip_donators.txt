@@ -8,6 +8,7 @@
 "imba_donator_label_7"		"Salamander Donator"
 "imba_donator_label_8"		"Icefrog Donator"
 "imba_donator_label_9"		"Gaben Donator"
+"imba_donator_label_10"		"Banned Player"
 
 // Donator companions
 "npc_imba_donator_companion_cookies"					"Coook-shan"
@@ -25,6 +26,9 @@
 "npc_imba_donator_statue_brewmaster_ember_spirit"		"Fire Spirit (Brewmaster)"
 "npc_imba_donator_statue_brewmaster_storm_spirit"		"Storm Spirit (Brewmaster)"
 "npc_imba_donator_statue_grillhound"					"Grillhound"
+"npc_imba_donator_statue_llama"							"Llama"
+"npc_imba_donator_statue_roshan"						"Roshan"
+"npc_imba_donator_statue_crystal_maiden_arcana"			"Crystal Maiden (Arcana)"
 
 "npc_imba_donator_statue_cookies"						"EarthSalamander's Chocobo"
 "npc_imba_donator_statue_suthernfriend"					"suthernfriend's Dog"

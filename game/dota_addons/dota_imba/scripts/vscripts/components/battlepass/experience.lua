@@ -1,7 +1,7 @@
 -- Experience System
 CustomNetTables:SetTableValue("game_options", "game_count", {value = 1})
 
-XP_level_table = {}
+local XP_level_table = {}
 XP_level_table[0] = 0
 
 -- xp needed increased by 500 every 25 levels
@@ -105,12 +105,15 @@ end
 
 function GetPlayerInfoIXP() -- yet it has too much useless loops, format later. Need to be loaded in game setup
 	if not api.imba.ready then
+		print("IMBA API not ready! Retry...")
 		Timers:CreateTimer(1.0, function()
 			GetPlayerInfoIXP()
 		end)
 
 		return
 	end
+
+	print("IMBA API ready!")
 
 	local current_xp_in_level = {}
 
@@ -139,11 +142,24 @@ function GetPlayerInfoIXP() -- yet it has too much useless loops, format later. 
 			end
 		end
 
+		log.info("Battlepass for ID "..ID..": "..level)
+
+		local color = PLAYER_COLORS[ID]
+
+		if api.imba.is_donator(tostring(PlayerResource:GetSteamID(ID))) ~= 10 then
+			donator_color = DONATOR_COLOR[api.imba.is_donator(tostring(PlayerResource:GetSteamID(ID)))]
+		end
+
+		if donator_color == nil then
+			donator_color = DONATOR_COLOR[0]
+		end
+
 		CustomNetTables:SetTableValue("player_table", tostring(ID),
 		{
 			XP = current_xp_in_level,
 			MaxXP = max_xp,
 			Lvl = level,
+			ply_color = rgbToHex(color),
 			title = GetTitleIXP(level),
 			title_color = rgbToHex(GetTitleColorIXP(GetTitleIXP(level))),
 			IMR_5v5 = api.imba.get_player_info(PlayerResource:GetSteamID(ID)).imr5v5,
@@ -152,14 +168,13 @@ function GetPlayerInfoIXP() -- yet it has too much useless loops, format later. 
 			IMR_10v10_calibrating = api.imba.get_player_info(PlayerResource:GetSteamID(ID)).imr10v10_calibrating,
 			XP_change = 0,
 			IMR_5v5_change = 0,
+			donator_level = api.imba.is_donator(tostring(PlayerResource:GetSteamID(ID))),
+			donator_color = rgbToHex(donator_color),
 		})
 	end
 
 	GetTopPlayersIXP()
 	GetTopPlayersIMR()
-
-	-- Initialize Battle Pass
-	Imbattlepass:Init()
 end
 
 function GetTopPlayersIXP()

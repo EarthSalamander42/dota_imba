@@ -5,14 +5,14 @@
 		"game_options",
 		"player_table",
 		"shared_unit_control",
-		"imba_talent_manager",
 		"netgraph",
 		"top_xp",
 		"top_imr5v5",
+		"top_imr10v10",
 		"game_state",
 		"hero_selection",
 		"battlepass",
-		"rosh_tracker",
-		"eliminated_players",
+		"mutations",
+		"mutation_info",
 	]
 }

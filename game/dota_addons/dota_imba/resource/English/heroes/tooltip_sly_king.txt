@@ -1,0 +1,52 @@
+// Burrowblast
+"DOTA_Tooltip_ability_imba_sly_king_burrow_blast"					"Burrowblast"
+"DOTA_Tooltip_ability_imba_sly_king_burrow_blast_Description"		"Sly King burrows into the ground and tunnels forward, damaging and stunning enemy units along the path. Disjoints projectiles."
+"DOTA_Tooltip_ability_imba_sly_king_burrow_blast_travel_distance"	"DISTANCE:"
+"DOTA_Tooltip_ability_imba_sly_king_burrow_blast_stun_duration"		"STUN DURATION:"
+"DOTA_Tooltip_ability_imba_sly_king_burrow_blast_damage"			"DAMAGE:"
+
+// Frost Gale
+"DOTA_Tooltip_ability_imba_sly_king_frost_gale"						"Frost Gale"
+"DOTA_Tooltip_ability_imba_sly_king_frost_gale_Description"			"Launches multiple balls of frost around Sly King, applying an increasing move speed slow and dealing tick damage every second. As the frost settles in, the enemy is rooted for a period of time, taking tick damage every %tick_interval% seconds."
+"DOTA_Tooltip_ability_imba_sly_king_frost_gale_Note0"				"Multiple balls of Frost Gale do not stack."
+"DOTA_Tooltip_ability_imba_sly_king_frost_gale_projectile_count"	"PROJECTILE COUNT:"
+"DOTA_Tooltip_ability_imba_sly_king_frost_gale_set_in_time"			"FROST SETTLE TIME:"
+"DOTA_Tooltip_ability_imba_sly_king_frost_gale_minimum_slow"		"%MIN MOVE SPEED SLOW:"
+"DOTA_Tooltip_ability_imba_sly_king_frost_gale_maximum_slow"		"%MAX MOVE SPEED SLOW:"
+"DOTA_Tooltip_ability_imba_sly_king_frost_gale_chill_duration"		"ROOT DURATION:"
+"DOTA_Tooltip_ability_imba_sly_king_frost_gale_chill_damage"		"DMG PER TICK:"
+
+"DOTA_Tooltip_modifier_imba_frost_gale_setin"						"Frost Gale Settling"
+"DOTA_Tooltip_modifier_imba_frost_gale_setin_Description"			"Afflicted with Sly King's Frost Gale. Taking damage every second until the frost settles in."
+"DOTA_Tooltip_modifier_imba_frost_gale_debuff"						"Frost Gale Settles"
+"DOTA_Tooltip_modifier_imba_frost_gale_debuff_Description"			"The frost has settled in. Rooted and taking accelerated damage over time."
+
+// Frozen Skin
+"DOTA_Tooltip_ability_imba_sly_king_frozen_skin"					"Frozen Skin"
+"DOTA_Tooltip_ability_imba_sly_king_frozen_skin_Description"		"Attackers have a chance of being mini-stunned and rooted when attacking Sly King, taking tick damage every %damage_interval% seconds."
+"DOTA_Tooltip_ability_imba_sly_king_frozen_skin_Note0"				"Frozen Skin uses psuedo-random chance."
+"DOTA_Tooltip_ability_imba_sly_king_frozen_skin_chance"				"%CHANCE:"
+"DOTA_Tooltip_ability_imba_sly_king_frozen_skin_duration"			"ROOT DURATION:"
+"DOTA_Tooltip_ability_imba_sly_king_frozen_skin_damage_per_second"	"DMG PER TICK:"
+
+"DOTA_Tooltip_modifier_imba_frozen_skin_debuff"						"Frozen Skin"
+"DOTA_Tooltip_modifier_imba_frozen_skin_debuff_Description"			"The chill of Sly King envelops. Rooted and taking damage over time."
+
+// Winterbringer
+"DOTA_Tooltip_ability_imba_sly_king_winterbringer"					"Winterbringer"
+"DOTA_Tooltip_ability_imba_sly_king_winterbringer_Description"		"Sly King calls the winds of winter, creating a frozen realm of violent reverberation. Enemies caught in the area suffer from strong attack and move speed slow, take heavy damage every %pulse_interval% seconds, and are pulled towards Sly King each pulse."
+"DOTA_Tooltip_ability_imba_sly_king_winterbringer_Note0"			"Can only have one instance of Winterbringer up at a time."
+"DOTA_Tooltip_ability_imba_sly_king_winterbringer_duration"			"DURATION:"
+"DOTA_Tooltip_ability_imba_sly_king_winterbringer_damage"			"DMG PER TICK:"
+"DOTA_Tooltip_ability_imba_sly_king_winterbringer_radius"			"RADIUS:"
+"DOTA_Tooltip_ability_imba_sly_king_winterbringer_pull_speed"		"PULL SPEED:"
+"DOTA_Tooltip_ability_imba_sly_king_winterbringer_pulse_interval"	"PULSE INTERVAL:"
+"DOTA_Tooltip_ability_imba_sly_king_winterbringer_ms_slow_pct"		"%MOVE SPEED SLOW:"
+"DOTA_Tooltip_ability_imba_sly_king_winterbringer_as_slow"			"ATTACK SPEED SLOW:"
+"DOTA_Tooltip_ability_imba_sly_king_winterbringer_slow_duration"	"SLOW DURATION:"
+
+"DOTA_Tooltip_modifier_imba_winterbringer_pulse"					"Winterbringer"
+"DOTA_Tooltip_modifier_imba_winterbringer_pulse_Description"		"Calling the winds of winter."
+
+"DOTA_Tooltip_modifier_imba_winterbringer_slow"						"Winterbringer"
+"DOTA_Tooltip_modifier_imba_winterbringer_slow_Description"			"Caught in Winterbringer, slowing move speed by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%% and attack speed by %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT%."

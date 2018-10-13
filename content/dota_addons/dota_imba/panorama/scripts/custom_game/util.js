@@ -1,10 +1,7 @@
 /* global $ */
 'use strict';
 
-/*
- * Author: Angel Arena Blackstar Credits: Angel Arena Blackstar
- */
-
+/* Author: Angel Arena Blackstar Credits: Angel Arena Blackstar */
 if (typeof module !== 'undefined' && module.exports) {
 	module.exports.FindDotaHudElement = FindDotaHudElement;
 	module.exports.ColorToHexCode = ColorToHexCode;
@@ -84,10 +81,7 @@ function IsDonator(ID) {
 }
 */
 
-/*
- * Credits: EarthSalamander #42
- */
-
+/* Credits: EarthSalamander #42 */
 function IsDonator(ID) {
 	var i = 0
 	if (CustomNetTables.GetTableValue("game_options", "donators") == undefined) {
@@ -128,26 +122,26 @@ function HideIMR(panel) {
 	var map_info = Game.GetMapInfo();
 	var imr_panel = panel.FindChildrenWithClassTraverse("ScoreCol_ImbaImr5v5");
 	var imr_panel_10v10 = panel.FindChildrenWithClassTraverse("ScoreCol_ImbaImr10v10");
+	var imr_panel_1v1 = panel.FindChildrenWithClassTraverse("ScoreCol_ImbaImr1v1");
 
 	var end_imr5v5 = panel.FindChildrenWithClassTraverse("es-legend-imr");
 	var end_imr10v10 = panel.FindChildrenWithClassTraverse("es-legend-imr10v10");
+	var end_imr1v1 = panel.FindChildrenWithClassTraverse("es-legend-imr1v1");
 
-	var hide = function(panels) {
+	var show = function(panels) {
 		for ( var i in panels)
-			panels[i].style.visibility = "collapse";
+			panels[i].style.visibility = "visible";
 	};
 
 	if (map_info.map_display_name == "imba_ranked_5v5") {
-		hide(imr_panel_10v10);
-		hide(end_imr10v10);
+		show(imr_panel);
+		show(end_imr5v5);
 	} else if (map_info.map_display_name == "imba_ranked_10v10") {
-		hide(imr_panel);
-		hide(end_imr5v5);
-	} else {
-		hide(imr_panel_10v10);
-		hide(imr_panel);
-		hide(end_imr5v5);
-		hide(end_imr10v10);
+		show(imr_panel_10v10);
+		show(end_imr10v10);
+	} else if (map_info.map_display_name == "imba_1v1") {
+		show(imr_panel_1v1);
+		show(end_imr1v1);
 	}
 }
 
@@ -214,15 +208,18 @@ GameEvents.Subscribe("override_top_bar_colors", OverrideTopBarColor);
 var mutation = [];
 
 function Mutation(args) {
-	mutation[0] = "imba"
+	mutation[0] = args["imba"]
 	mutation[1] = args["positive"]
 	mutation[2] = args["negative"]
 	mutation[3] = args["terrain"]
 
-	$("#Mutations").style.visibility = "visible";
+	if ($("#Mutations"))
+	{
+		$("#Mutations").style.visibility = "visible";
 
-	for (var j = 0; j <= 3; j++) {
-		SetMutationTooltip(j)
+		for (var j = 0; j <= 3; j++) {
+			SetMutationTooltip(j)
+		}
 	}
 }
 

@@ -36,29 +36,20 @@ var OnJoinTeam = function() {
 	GameEvents.SendCustomGameEventToServer(events.joinTeam, {})
 }
 
-var UpdateLoadingText = function (text) {
-	$("#auto_team_select_time").text = text;
-}
-
 var OnComplete = function(data) {
 	// we are finally done
 	if (Game.GetLocalPlayerInfo().player_has_host_privileges) {
 		$.Msg("Team selection completed");
 		// start game in 5 secs
 		$.Msg("Starting game in 5 seconds")
-		Game.SetRemainingSetupTime(5);
+//		Game.SetRemainingSetupTime(5);
 	}
-
-	UpdateLoadingText("Starting game in 5 seconds");
-	$.Schedule(5, function () {
-		$("#auto_team_select_container").visible = false;
-	});
 };
 
 var OnCompute = function(data) {
 	// auto assign teams and fire event
 	if (Game.GetLocalPlayerInfo().player_has_host_privileges) {
-	
+		$.Msg("OnCompute...")
 		Game.AutoAssignPlayersToTeams();
 		GameEvents.SendCustomGameEventToServer(events.computeComplete, {});
 	}
@@ -72,47 +63,20 @@ var OnFailure = function(data) {
 		OnComplete();
 	}
 };
- 
-var LegacyCompatSetupUI = function() {
-
-	$.Msg("Setup UI for legacy compatibility");
-	$("#auto_team_select_container").visible = true;
- 
-	var mapInfo = Game.GetMapInfo();
-	var map_name = mapInfo.map_display_name.replace('_', " ")
-	$("#MapInfo").SetDialogVariable("map_name", map_name);
-};
 
 (function() {
 
-	if (Game.GetState() != 2)
+	var mapsWithAutoSelect = [ "imba_ranked_5v5", "imba_ranked_10v10" ];
+
+	// dont run this script on normal maps or when state is not team-select
+	if (mapsWithAutoSelect.indexOf(Game.GetMapInfo().map_display_name) == -1 || Game.GetState() != 2)
 		return;
 
-		// only operate on 5v5 and 10v10
-	if (
-		(Game.GetMapInfo().map_display_name == "imba_ranked_5v5") || 
-		(Game.GetMapInfo().map_display_name == "imba_ranked_10v10")
-	) {
-
-		LegacyCompatSetupUI();
-
-		if (Game.GetLocalPlayerInfo().player_has_host_privileges) {
-		
-			Game.SetAutoLaunchEnabled(false);
-			GameEvents.Subscribe(events.compute, OnCompute);
-			GameEvents.Subscribe(events.complete, OnComplete);
-			GameEvents.Subscribe(events.failure, OnFailure);
-			GameEvents.SendCustomGameEventToServer(events.hostReady, {});
-		
-		}
-	} else {
-		if (Game.GetMapInfo().map_display_name == "cavern") {
-			$("#LockAndStartButton").visible = true;
-		} else {
-			$("#LockAndStartButton").visible = false;
-		}
-
-		$("#CancelAndUnlockButton").visible = false;
-		$("#ShuffleTeamAssignmentButton").visible = false;
+	if (Game.GetLocalPlayerInfo().player_has_host_privileges) {
+		Game.SetAutoLaunchEnabled(true);
+		GameEvents.Subscribe(events.compute, OnCompute);
+		GameEvents.Subscribe(events.complete, OnComplete);
+		GameEvents.Subscribe(events.failure, OnFailure);
+		GameEvents.SendCustomGameEventToServer(events.hostReady, {});
 	}
 })();

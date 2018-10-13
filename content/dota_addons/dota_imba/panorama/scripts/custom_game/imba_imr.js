@@ -166,10 +166,6 @@ function RefreshBattlepass() {
 		e.DeleteAsync(0);
 	});
 
-
-
-	
-
 	$("#RefreshBattlepass").AddClass("Active");
 
 	$.Schedule(1.0, function() {
@@ -199,7 +195,7 @@ function SwitchTab(tab) {
 
 function SwitchDonatorWrapper(type) {
 	if (current_sub_tab == type) {
-		$.Msg("Bro don't reload you're fine!");
+//		$.Msg("Bro don't reload you're fine!");
 		return;
 	}
 
@@ -238,8 +234,6 @@ function Battlepass(retainSubTab) {
 			GenerateCompanionPanel(companions, Players.GetLocalPlayer(), "Companion", retainSubTab);
 		}
 	});
-
-	
 }
 
 var companion_changed = false;
@@ -335,7 +329,7 @@ var current_type = "";
 function HallOfFame(type) {
 
 	if (current_type == type) {
-		$.Msg("Bro don't reload you're fine!");
+//		$.Msg("Bro don't reload you're fine!");
 		return;
 	}
 
@@ -365,9 +359,28 @@ function HallOfFame(type) {
 		var steam_id = $.CreatePanel("DOTAAvatarImage", player, "player_steamid_" + i);
 		steam_id.AddClass("LeaderboardAvatar");
 		steam_id.steamid = top_users.SteamID64;
-		steam_id.style.width = "15%";
-		steam_id.style.height = "80%";
+		steam_id.style.width = "38px";
+		steam_id.style.height = "38px";
+		steam_id.style.marginLeft = "40px";
+		steam_id.style.marginRight = "40px";
 		steam_id.style.align = "center center";
+
+		var leaderboard_border = []
+		leaderboard_border[1] = "darkred"
+		leaderboard_border[2] = "red"
+		leaderboard_border[3] = "blue"
+		leaderboard_border[4] = "darkred"
+		leaderboard_border[5] = "gold"
+		leaderboard_border[6] = "green"
+		leaderboard_border[7] = "purple"
+		leaderboard_border[8] = "dodgerblue"
+		leaderboard_border[9] = "brown"
+
+//		if (top_users.donator_level)
+//			steam_id.style.border = "2px solid " + leaderboard_border[top_users.donator_level];
+			steam_id.style.border = "2px solid " + leaderboard_border[i];
+//		else
+//			steam_id.style.border = "2px solid #3f464ecc";
 
 		var imbar_container = $.CreatePanel("Panel", player, "imbar_container_" + i);
 		imbar_container.AddClass("LeaderboardXP");
@@ -412,10 +425,20 @@ function GenerateBattlepassPanel(BattlepassRewards, player) {
 	var reward_row = $.CreatePanel("Panel", $('#BattlepassInfoContainer'), "BattlepassRow" + class_option_count + "_" + player);
 	reward_row.AddClass("BattlepassRow");
 
-	for (var i = 1; i <= 200; i++) {
+	for (var i = 1; i <= 500; i++) {
 		if (BattlepassRewards[i] != undefined) {
+			var is_arcana = false;
+			var is_immortal = false;
 
 			i_count = i_count + 1;
+
+			var arcana = BattlepassRewards[i].search("arcana");
+			var immortal = BattlepassRewards[i].search("immortal");
+
+			if (arcana != -1)
+				is_arcana = true;
+			else if (immortal != -1)
+				is_immortal = true;
 
 			if (i_count > 10) {
 				class_option_count = class_option_count + 1;
@@ -426,14 +449,21 @@ function GenerateBattlepassPanel(BattlepassRewards, player) {
 
 			var reward = $.CreatePanel("Panel", $("#BattlepassRow" + class_option_count + "_" + player), BattlepassRewards[i]);
 			reward.AddClass("BattlepassReward");
-
 			var reward_icon = $.CreatePanel("Panel", reward, BattlepassRewards[i] + "_icon");
 			reward_icon.AddClass("BattlepassRewardIcon");
 			reward_icon.style.backgroundImage = 'url("file://{images}/custom_game/battlepass/' + BattlepassRewards[i] + '.png")';
+			if (is_arcana == true)
+				reward_icon.AddClass("arcana_border");
+			if (is_immortal == true)
+				reward_icon.AddClass("immortal_border");
 
 			var reward_label = $.CreatePanel("Label", reward, BattlepassRewards[i] + "_label");
 			reward_label.AddClass("BattlepassRewardLabel");
 			reward_label.text = $.Localize("battlepass_level") + i;
+			if (is_arcana == true)
+				reward_label.AddClass("arcana_text");
+			if (is_immortal == true)
+				reward_label.AddClass("immortal_text");
 
 			if (plyData != null) {
 				if (i <= plyData.Lvl) {
@@ -449,13 +479,13 @@ function GenerateBattlepassPanel(BattlepassRewards, player) {
 					reward_icon.AddClass("BattlepassRewardIcon_locked")
 					var reward_label_locked = $.CreatePanel("Label", reward_icon, BattlepassRewards[i] + "_label");
 					reward_label_locked.AddClass("BattlepassRewardLabelLocked");
-					reward_label_locked.text = $.Localize("battlepass_reward_locked");
+					reward_label_locked.text = $.Localize("battlepass_reward_locked") + $.Localize("#battlepass_" + BattlepassRewards[i]);
 				}
 			} else {
 				reward_icon.AddClass("BattlepassRewardIcon_locked")
 				var reward_label_locked = $.CreatePanel("Label", reward_icon, BattlepassRewards[i] + "_label");
 				reward_label_locked.AddClass("BattlepassRewardLabelLocked");
-				reward_label_locked.text = $.Localize("battlepass_reward_locked");
+				reward_label_locked.text = $.Localize("battlepass_reward_locked") + $.Localize("#battlepass_" + "\n" +  BattlepassRewards[i]);
 			}
 		}
 	}
@@ -486,6 +516,7 @@ function GenerateCompanionPanel(companions, player, panel, retainSubTab) {
 	var companion_unit = [];
 	var companion_name = [];
 	var companion_id = [];
+	var companion_skin = [];
 
 	// +1 for unique companion (e.g: cookies, baumi,
 	// bulldog, icefrog)
@@ -502,6 +533,8 @@ function GenerateCompanionPanel(companions, player, panel, retainSubTab) {
 			companion_unit[i] = companions[i].file;
 			companion_name[i] = companions[i].name;
 			companion_id[i] = companions[i].id;
+			if (companions[i].file == "npc_imba_donator_companion_sappling")
+				companion_skin[i] = 3;
 		} else {
 			var steamId = Game.GetLocalPlayerInfo().player_steamid;
 			if (steamId == "76561198015161808") {
@@ -540,8 +573,44 @@ function GenerateCompanionPanel(companions, player, panel, retainSubTab) {
 		companionpreview.style.width = "132px";
 		companionpreview.style.height = "135px";
 		companionpreview.BLoadLayoutFromString('<root><Panel><DOTAScenePanel style="width:100%; height:153px; margin-top: -45px;" particleonly="false" unit="' + companion_unit[i.toString()] + '"/></Panel></root>', false, false);
-		// companionpreview.style.opacityMask = 'url("s2r://panorama/images/masks/hero_model_opacity_mask_png.vtex");'
+		companionpreview.style.opacityMask = 'url("s2r://panorama/images/masks/hero_model_opacity_mask_png.vtex");'
+/*
+		var companionskin = $.CreatePanel("Panel", companionpreview, "CompanionSkinPanel_" + i);
+		companionskin.style.width = "100%";
+		companionskin.style.height = "25px";
+		companionskin.style.align = "center bottom";
+		companionskin.style.flowChildren = "right";
 
+		for (var j = 0; j <= companion_skin[i]; j++) {
+			var companionskinbutton = $.CreatePanel("Button", companionskin, "CompanionSkin_" + i + "_" + j);
+			companionskinbutton.style.width = "20%";
+			companionskinbutton.style.height = "25px";
+			companionskinbutton.style.margin = "1px";
+			companionskinbutton.style.align = "center bottom";
+			companionskinbutton.style.zIndex = "100";
+			companionskinbutton.style.backgroundColor = "grey";
+			var event = function(unit, j) {
+				return function() {
+					CompanionSkin(unit, j);
+				}
+			};
+			companionskinbutton.SetPanelEvent("onactivate", event(companion_unit_name, j));
+
+			var label = $.CreatePanel("Label", companionskinbutton, companion_name[i] + "_label");
+			label.text = j + 1;
+
+			label.style.horizontalAlign = "left";
+			label.style.fontSize = "12px";
+			label.style.verticalAlign = "top";
+			label.style.letterSpacing = "1px";
+			label.style.align = "center center";
+			label.style.textTransform = "uppercase";
+			label.style.textAlign = "center center";
+			label.style.textShadow = "0px 0px 3px 3 #00000070";
+			label.style.color = "#99a8ad";
+			label.style.width = "100%";
+		}
+*/
 		if (newbie == true) {
 			companionpreview.AddClass("CompanionNew");
 		}
@@ -581,8 +650,16 @@ function GenerateCompanionPanel(companions, player, panel, retainSubTab) {
 		if (!retainSubTab) {
 			SwitchDonatorWrapper(panel);
 		}
-		
 	}
+}
+
+function CompanionSkin(unit, j) {
+	$.Msg(unit, j)
+	GameEvents.SendCustomGameEventToServer("change_companion_skin", {
+		ID : Players.GetLocalPlayer(),
+		unit : unit,
+		skin : j
+	})
 }
 
 function ToggleCompanion() {
@@ -628,7 +705,6 @@ function ToggleCompanion() {
 	// Update the game options display
 	var bounty_multiplier = CustomNetTables.GetTableValue("game_options", "bounty_multiplier");
 	var exp_multiplier = CustomNetTables.GetTableValue("game_options", "exp_multiplier");
-	var tower_power = CustomNetTables.GetTableValue("game_options", "tower_power");
 	var initial_gold = CustomNetTables.GetTableValue("game_options", "initial_gold");
 	var initial_level = CustomNetTables.GetTableValue("game_options", "initial_level");
 	var max_level = CustomNetTables.GetTableValue("game_options", "max_level");
@@ -641,7 +717,6 @@ function ToggleCompanion() {
 	$("#InitialLevelValue").text = initial_level[1];
 	$("#MaxLevelValue").text = max_level[1];
 	$("#GoldTickValue").text = gold_tick[1].toFixed(1);
-	$("#TowerPowerValue").text = tower_power[1];
 
 	GameEvents.Subscribe("hall_of_fame", HallOfFame);
 	GameEvents.Subscribe("safe_to_leave", SafeToLeave);

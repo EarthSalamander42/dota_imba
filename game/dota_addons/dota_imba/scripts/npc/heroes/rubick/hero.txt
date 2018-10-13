@@ -1,0 +1,34 @@
+"DOTAHeroes"
+{
+	//=================================================================================================================
+	// HERO: Rubick
+	//=================================================================================================================
+	"npc_dota_hero_rubick"
+	{
+		"override_hero"				"npc_dota_hero_rubick"
+
+		//Picking Screen
+		"IsImba"					"1"
+		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
+
+		"Ability1"					"imba_rubick_telekinesis"
+		"Ability2"					"imba_rubick_fade_bolt"
+		"Ability3"					"imba_rubick_null_field"
+		"Ability4"					"rubick_empty1"
+		"Ability5"					"rubick_empty2"
+		"Ability6"					"imba_rubick_spellsteal"
+		"Ability7"					"imba_rubick_clandestine_librarian"
+		"Ability8"					"rubick_hidden1"
+		"Ability9"					"rubick_hidden2"
+		"Ability10"					"rubick_hidden3"
+
+		"Ability11"					"special_bonus_imba_rubick_1"	// Can steal creeps spells
+		"Ability12"					"special_bonus_imba_rubick_4"	// Telekinesis Cast Range is Longer & Further
+		"Ability13"					"special_bonus_imba_rubick_2"	// Reduce telekinesis ally lift time
+		"Ability14"					"special_bonus_imba_rubick_6"	// +300 radius for Null Field
+		"Ability15"					"special_bonus_hp_500"			// +500 health
+		"Ability16"					"special_bonus_imba_rubick_5"	// Fade Bolt damage increases with bounces (yellow particle, purple if previously red)
+		"Ability17"					"special_bonus_imba_rubick_3"	// Fade bolt applies break for 5 seconds (red particle)
+		"Ability18"					"special_bonus_imba_rubick_7"	// Fade bolt causes its last target to explode (use current Fade Bolt damage)
+	}
+}

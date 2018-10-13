@@ -6,7 +6,7 @@
 	"imba_wisp_tether"
 	{
 		"BaseClass"						"ability_lua"
-		"ScriptFile"					"hero/hero_wisp.lua"
+		"ScriptFile"					"components/abilities/heroes/hero_wisp.lua"
 		"AbilityTextureName"			"wisp_tether"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
@@ -93,7 +93,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
-		"ScriptFile"					"hero/hero_wisp.lua"
+		"ScriptFile"					"components/abilities/heroes/hero_wisp.lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
@@ -208,7 +208,7 @@
 			"16"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"spirit_debuff_duration"	"1.5"
+				"spirit_debuff_duration"	"0.6 0.9 1.2 1.5"
 			}
 			"17"
 			{
@@ -226,7 +226,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
-		"ScriptFile"					"hero/hero_wisp.lua"
+		"ScriptFile"					"components/abilities/heroes/hero_wisp.lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
 		"AbilityTextureName"			"wisp_overcharge"
@@ -313,7 +313,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"                     "ability_lua" 
-		"ScriptFile"					"hero/hero_wisp.lua"
+		"ScriptFile"					"components/abilities/heroes/hero_wisp.lua"
 		"AbilityTextureName"			"custom/kunnka_tide_high"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
@@ -338,7 +338,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
-		"ScriptFile"					"hero/hero_wisp.lua"
+		"ScriptFile"					"components/abilities/heroes/hero_wisp.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
@@ -411,7 +411,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
-		"ScriptFile"					"hero/hero_wisp.lua"
+		"ScriptFile"					"components/abilities/heroes/hero_wisp.lua"
 		"AbilityTextureName"			"wisp_tether_break"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"MaxLevel"						"1"
@@ -434,7 +434,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
-		"ScriptFile"					"hero/hero_wisp.lua"
+		"ScriptFile"					"components/abilities/heroes/hero_wisp.lua"
 		"AbilityTextureName"			"wisp_tether_break"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"MaxLevel"						"1"
@@ -457,7 +457,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
-		"ScriptFile"					"hero/hero_wisp.lua"
+		"ScriptFile"					"components/abilities/heroes/hero_wisp.lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
 		"MaxLevel"						"1"
 		"AbilityTextureName"			"wisp_spirits_in"

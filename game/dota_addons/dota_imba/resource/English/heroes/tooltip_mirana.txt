@@ -7,7 +7,7 @@
 "DOTA_Tooltip_ability_imba_mirana_starfall_damage"                      "DAMAGE:"
 "DOTA_Tooltip_ability_imba_mirana_starfall_radius"                      "EFFECT RADIUS:"
 "DOTA_Tooltip_ability_imba_mirana_starfall_additional_waves_count"                  "ADDITIONAL WAVES:"
-"DOTA_Tooltip_ability_imba_mirana_starfall_aghanim_description"                     "Causes Starstorm to passively activate whenever there are nearby enemies, and you are not invisible. This effect has a 10 second cooldown."
+"DOTA_Tooltip_ability_imba_mirana_starfall_aghanim_description"                     "Causes Starstorm to passively activate whenever there are nearby enemies, and you are not invisible. This effect has a %scepter_starfall_cd% second cooldown."
 
 "DOTA_Tooltip_modifier_imba_starfall_scepter_thinker"                  "Starstorm Cooldown"
 "DOTA_Tooltip_modifier_imba_starfall_scepter_thinker_Description"                   "Passively casts Starstorm on nearby enemies when recharged."
@@ -34,20 +34,24 @@
 "DOTA_Tooltip_modifier_imba_sacred_arrow_haste_Description"            "Moving at %dMODIFIER_PROPERTY_MOVESPEED_BASE_OVERRIDE% speed. First hit on the arrowed enemy will be an automatic critical hit."
 
 // Mirana's Leap
-"DOTA_Tooltip_ability_imba_mirana_leap"                    "Leap"
-"DOTA_Tooltip_ability_imba_mirana_leap_Description"                    "Mirana leaps forward into battle, empowering allies with a mighty roar.\n<font color='#FF7800'>Sagan's Cunning:</font> Jumps to a target point, instead of always forward.\n<font color='#FF7800'>Through the Night:</font> Increased jump range during the night.\n<font color='#FF7800'>Roar of the Stars:</font> After jumping, emanates a %aura_aoe% radius aura which grants allies bonus movement and attack speed. The aura lasts for %aura_duration% seconds, and its efects linger for %aura_linger_duration% seconds."
+"DOTA_Tooltip_ability_imba_mirana_leap"                                 "Leap"
+"DOTA_Tooltip_ability_imba_mirana_leap_Description"                    "Mirana leaps forward into battle, empowering herself with a ferocious roar that grants bonus attack and movement speed. Speed bonus lasts %aura_duration% seconds.\n<font color='#FF7800'>Sagan's Cunning:</font> Jumps to a target point, instead of always forward.\n<font color='#FF7800'>Through the Night:</font> Increases jump range during the night by an additional %night_leap_range_bonus%.\n<font color='#FF7800'>Roar of the Stars:</font> After jumping, emanates a %aura_aoe% radius aura which grants allies bonus movement and attack speed. The aura lasts for %aura_duration% seconds, and its efects linger for %aura_linger_duration% seconds."
 "DOTA_Tooltip_ability_imba_mirana_leap_Note0"                          "Disjoints projectiles on cast."
-"DOTA_Tooltip_ability_imba_mirana_leap_Lore"                            "Both friend and foe alike recognize Mirana's iconic white beast in the heat of battle."
-"DOTA_Tooltip_ability_imba_mirana_leap_leap_range"                      "LEAP RANGE:"
-"DOTA_Tooltip_ability_imba_mirana_leap_night_leap_range_bonus"          "NIGHT BONUS LEAP RANGE:"
-"DOTA_Tooltip_ability_imba_mirana_leap_move_speed_pct"                  "%MOVE SPEED BONUS:"
+"DOTA_Tooltip_ability_imba_mirana_leap_Lore"                            "None can fail to recognize Mirana's iconic white beast in the heat of battle."
+"DOTA_Tooltip_ability_imba_mirana_leap_leap_range"                      "RANGE:"
+"DOTA_Tooltip_ability_imba_mirana_leap_move_speed_pct"                  "%MOVEMENT BONUS:"
 "DOTA_Tooltip_ability_imba_mirana_leap_attack_speed"                    "ATTACK SPEED BONUS:"
+"DOTA_Tooltip_ability_imba_mirana_leap_max_charges"						"MAX CHARGES:"
+"DOTA_Tooltip_ability_imba_mirana_leap_charge_restore_time"				"CHARGE REPLENISH TIME:"
 
-"DOTA_Tooltip_modifier_imba_leap_aura"                      "Roar of the Stars"
+"DOTA_Tooltip_modifier_imba_leap_aura"                      			"Roar of the Stars"
 "DOTA_Tooltip_modifier_imba_leap_aura_Description"                      "Granting nearby allies bonus movement and attack speed."
 
 "DOTA_Tooltip_modifier_imba_leap_speed_boost"                          "Roar of the Stars"
 "DOTA_Tooltip_modifier_imba_leap_speed_boost_Description"              "Hastened by Leap."
+
+"DOTA_Tooltip_modifier_imba_mirana_leap"								"Leap Charges"
+"DOTA_Tooltip_modifier_imba_mirana_leap_Description"					"Number of charges left on Leap."
 
 // Mirana's Moonlight Shadow
 "DOTA_Tooltip_ability_imba_mirana_moonlight_shadow"                    "Moonlight Shadow"

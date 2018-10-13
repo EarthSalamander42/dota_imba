@@ -53,6 +53,9 @@
 "DOTA_Tooltip_ability_imba_night_stalker_hunter_in_the_night_night_vision_bonus"    "NIGHT VISION BONUS:"
 "DOTA_Tooltip_ability_imba_night_stalker_hunter_in_the_night_flying_duration"		"FLYING MOVEMENT DURATION:"
 
+"DOTA_Tooltip_modifier_imba_hunter_in_the_night_flying"								"Flight"
+"DOTA_Tooltip_modifier_imba_hunter_in_the_night_flying_Description"					"Flying unobstructed."
+
 "DOTA_Tooltip_modifier_imba_hunter_in_the_night"                        "Hunter in the Night"
 "DOTA_Tooltip_modifier_imba_hunter_in_the_night_Description"            "Increased attackspeed, movespeed, and vision range. Becomes stronger with more stacks in Stalker in the Night."
 
@@ -80,4 +83,4 @@
 "DOTA_Tooltip_ability_special_bonus_imba_night_stalker_5"               "+400 Stalker in the Night night vision bonus"
 "DOTA_Tooltip_ability_special_bonus_imba_night_stalker_6"               "Crippling Fear now also mutes the target"
 "DOTA_Tooltip_ability_special_bonus_imba_night_stalker_7"               "-150 vision range to enemies in Darkness"
-"DOTA_Tooltip_ability_special_bonus_imba_night_stalker_8"               "-8s Crippling Fear cooldown"
+"DOTA_Tooltip_ability_special_bonus_imba_night_stalker_8"               "-8s Crippling Fear Cooldown"

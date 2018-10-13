@@ -19,7 +19,6 @@ function OnLeaveTeamPressed() {
 	Game.PlayerJoinTeam(DOTATeam_t.DOTA_TEAM_NOTEAM);
 }
 
-
 // --------------------------------------------------------------------------------------------------
 // Handler for when the Lock and Start button is pressed
 // --------------------------------------------------------------------------------------------------
@@ -37,7 +36,6 @@ function OnLockAndStartPressed() {
 	// Set the remaining time before the game starts
 	Game.SetRemainingSetupTime(1);
 }
-
 
 // --------------------------------------------------------------------------------------------------
 // Handler for when the Cancel and Unlock button is pressed
@@ -223,7 +221,6 @@ function OnPlayerSelectedTeam(nPlayerId, nTeamId, bSuccess) {
 	}
 }
 
-
 // --------------------------------------------------------------------------------------------------
 // Check to see if the local player has host privileges and set the
 // 'player_has_host_privileges' on
@@ -300,16 +297,15 @@ function UpdateGameState() {
 // --------------------------------------------------------------------------------------------------
 (function () {
 
+	$.Msg("Init Team Selection...")
+	$.Msg(Game.GetState())
 	if (Game.GetState() != 2)
 		return;
 	
 	// -------------------------
 	// auto_team_select is used on 5v5 and 10v10
 	// -------------------------
-	if (
-		(Game.GetMapInfo().map_display_name == "imba_ranked_5v5") ||
-		(Game.GetMapInfo().map_display_name == "imba_ranked_10v10")
-	) {
+	if ((Game.GetMapInfo().map_display_name == "imba_ranked_5v5") || (Game.GetMapInfo().map_display_name == "imba_ranked_10v10")) {
 		$.Msg("Skipping legacy team select on map " + Game.GetMapInfo().map_display_name + ", Imba Matchmaking enabled.");
 		return;
 	}

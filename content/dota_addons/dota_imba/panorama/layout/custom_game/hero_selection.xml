@@ -18,14 +18,10 @@
 		<Panel id="TeamRow1" class="TeamStatus">
 			<Panel id="TeamRow_sub">
 				<Panel id="TeamRadiant"/>
-				<Panel id="TeamCustom1"/>
-				<Panel id="TeamCustom2"/>
 				<Panel id="Clock">
 					<Label id="TimeLeft" text="WAIT"/>
 					<Label id="GameMode" text="WAIT"/>
 				</Panel>
-				<Panel id="TeamCustom3"/>
-				<Panel id="TeamCustom4"/>
 				<Panel id="TeamDire"/>
 			</Panel>
 			<Panel id="TeamRow_imr">
@@ -40,11 +36,7 @@
 
 		<Panel id="TeamRow2" class="TeamStatus">
 			<Panel id="TeamRow_sub">
-				<Panel id="TeamCustom5"/>
-				<Panel id="TeamCustom6"/>
 				<Panel id="DummyClock"/>
-				<Panel id="TeamCustom7"/>
-				<Panel id="TeamCustom8"/>
 			</Panel>
 		</Panel>
 		<Panel id="MainContent">
@@ -244,6 +236,10 @@
 								<DOTAAbilityImage id="PickedHeroAbility9" class="PickedHeroAbility" onmouseout="DOTAHideAbilityTooltip()" abilityname="" />
 								<Panel id="TalentPreview" class="PickedHeroAbility" onmouseover="CustomTooltip('talent', true)" onmouseout="CustomTooltip('talent', false)"/>
 								<Panel id="AghanimPreview" class="PickedHeroAbility" onmouseover="CustomTooltip('aghanim', true)" onmouseout="CustomTooltip('aghanim', false)" itemname="item_ultimate_scepter"/>
+							</Panel>
+
+							<Panel id="HeroPreviewCredits">
+								
 							</Panel>
 
 							<!-- <Panel id="HeroPreview">

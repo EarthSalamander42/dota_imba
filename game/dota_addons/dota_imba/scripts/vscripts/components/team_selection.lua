@@ -347,28 +347,3 @@ function KeepTeams10v10TeamSelectionFinalize(response)
 	-- will cleanup event handlers on the client / ui changes
 	CustomGameEventManager:Send_ServerToAllClients(TeamSelectionEvents.complete, nil)
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

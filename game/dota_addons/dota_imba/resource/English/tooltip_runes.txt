@@ -74,43 +74,46 @@
 "DOTA_HUD_Rune_Bounty"				"<font color='#FF7800'>Bounty</font> rune"
 
 "DOTA_Tooltip_modifier_imba_frost_rune"								"Greevil Soul"
-"DOTA_Tooltip_modifier_imba_frost_rune_Description"					"Enemies attacking the hero get their attack and movespeed reduced by 20%%/100 (respectively) for 3 seconds. Hero attacks reduce attack and movespeed of the target by 20%%/100 (respectively) for 3 seconds."
+"DOTA_Tooltip_modifier_imba_frost_rune_Description"					"Enemies attacking the hero get their attack and move speed reduced by 100/20%% (respectively) for 3 seconds. Hero attacks reduce attack and movespeed of the target by 100/20%% (respectively) for 3 seconds."
 
 "DOTA_Tooltip_modifier_imba_frost_rune_aura"						"Greevil Soul"
-"DOTA_Tooltip_modifier_imba_frost_rune_aura_Description"			"Enemies attacking the hero get their attack and movespeed reduced by 20%%/100 (respectively) for 3 seconds. Hero attacks reduce attack and movespeed of the target by 20%%/100 (respectively) for 3 seconds."
+"DOTA_Tooltip_modifier_imba_frost_rune_aura_Description"			"Enemies attacking the hero get their attack and movespeed reduced by 100/20%% (respectively) for 3 seconds. Hero attacks reduce attack and movespeed of the target by 100/20%% (respectively) for 3 seconds."
+
+"DOTA_Tooltip_modifier_imba_frost_rune_slow"						"Greevil Soul"
+"DOTA_Tooltip_modifier_imba_frost_rune_slow_Description"			"Attack and movespeed slowed by 100/20%%."
 
 "DOTA_Tooltip_modifier_imba_arcane_rune"							"Archmage Soul"
-"DOTA_Tooltip_modifier_imba_arcane_rune_Description"				"Increase Spell Amp by 50%%.Reduce mana cost by 40%% .Reduce cooldowns by 30%%."
+"DOTA_Tooltip_modifier_imba_arcane_rune_Description"				"Spell Amp increased by 50%%, mana costs reduced by 40%%, and cooldowns reduced by 30%%."
 
 "DOTA_Tooltip_modifier_imba_arcane_rune_aura"						"Archmage Soul"
-"DOTA_Tooltip_modifier_imba_arcane_rune_aura_Description"			"Increase Spell Amp by 50%%.Reduce mana cost by 40%% .Reduce cooldowns by 30%%."
+"DOTA_Tooltip_modifier_imba_arcane_rune_aura_Description"			"Spell Amp increased by 50%%, mana costs reduced by 40%%, and cooldowns reduced by 30%%."
 
 "DOTA_Tooltip_modifier_imba_regen_rune"								"Boundless Energy"
-"DOTA_Tooltip_modifier_imba_regen_rune_Description"					"Constantly regenerating health and mana by 50 + 5%%/20 + 2%% (respectively).Effect is loss if you lose all your instances.Effect is loss if you lose all your instances."
+"DOTA_Tooltip_modifier_imba_regen_rune_Description"					"Constantly regenerating health and mana by 50 + 5%%/20 + 2%% (respectively). Effect is lost upon losing all instances."
 
 "DOTA_Tooltip_modifier_imba_regen_rune_aura"						"Boundless Energy"
-"DOTA_Tooltip_modifier_imba_regen_rune_aura_Description"			"Constantly regenerating health and mana by 25 + 2.5%%/10 + 1%% (respectively).Effect is loss if you lose all your instances."
+"DOTA_Tooltip_modifier_imba_regen_rune_aura_Description"			"Constantly regenerating health and mana by 25 + 2.5%%/10 + 1%% (respectively). Effect is lost upon losing all instances."
 
 "DOTA_Tooltip_modifier_imba_haste_rune"								"Nightmare Shadow"
-"DOTA_Tooltip_modifier_imba_haste_rune_Description"					"Attack speed increased by 80.Movement speed increased by 60%%.No movement speed limit!"
+"DOTA_Tooltip_modifier_imba_haste_rune_Description"					"Attack speed increased by 80. Movement speed increased by 60%%. No movement speed limit!"
 
 "DOTA_Tooltip_modifier_imba_haste_rune_aura"						"Nightmare Shadow"
-"DOTA_Tooltip_modifier_imba_haste_rune_aura_Description"			"Attack speed increased by 40.Movement speed increased by 30%%."
+"DOTA_Tooltip_modifier_imba_haste_rune_aura_Description"			"Attack speed increased by 40. Movement speed increased by 30%%."
 
 "DOTA_Tooltip_modifier_imba_double_damage_rune"						"Power Surge"
-"DOTA_Tooltip_modifier_imba_double_damage_rune_Description"			"Base damage multiplied by 2.Main attribute multiplied by 2."
+"DOTA_Tooltip_modifier_imba_double_damage_rune_Description"			"Base damage multiplied by 2. Main attribute multiplied by 2."
 
 "DOTA_Tooltip_modifier_imba_double_damage_rune_aura"				"Power Surge"
-"DOTA_Tooltip_modifier_imba_double_damage_rune_aura_Description"	"Base damage multiplied by 1.5.Main attribute multiplied by 1.5."
+"DOTA_Tooltip_modifier_imba_double_damage_rune_aura_Description"	"Base damage multiplied by 1.5. Main attribute multiplied by 1.5."
 
 "DOTA_Tooltip_modifier_imba_ember_rune"								"Ember Rune"
-"DOTA_Tooltip_modifier_imba_ember_rune_Description"					"Grants immolation, dealing 80 + 2%% of the target's health as damage over time around you, also adding fire to your attacks, burning targets."
+"DOTA_Tooltip_modifier_imba_ember_rune_Description"					"Grants immolation, dealing 80 + 2%% of the target's health as damage over time around you. Also adding fire to your attacks, burning targets."
 
 "DOTA_Tooltip_modifier_imba_ember_rune_burn"						"Ember Burn"
-"DOTA_Tooltip_modifier_imba_ember_rune_burn_Description"			"Deal 80 + 2%% of the target's health as damage over time, 20%% chance to miss attacks."
+"DOTA_Tooltip_modifier_imba_ember_rune_burn_Description"			"Deal 80 + 2%% of the target's health as damage over time, with a 20%% chance to the target to miss attacks."
 
 "DOTA_Tooltip_modifier_imba_stone_rune"								"Stone Artifact"
-"DOTA_Tooltip_modifier_imba_stone_rune_Description"					"On 7 successful hit turns the unit into a stone, making it magic immune but stunned for 1 second."
+"DOTA_Tooltip_modifier_imba_stone_rune_Description"					"Upon landing 7 successful hits on a target, they are turned into stone, granting magic immunity but stunning for 1 second."
 
 "DOTA_Tooltip_modifier_imba_invisibility_rune"						"Invisibility Rune"
 "DOTA_Tooltip_modifier_imba_invisibility_rune_Description"			"Invisible with +20%% movement speed. Attacking removes invisibility, dealing 200%% damage."

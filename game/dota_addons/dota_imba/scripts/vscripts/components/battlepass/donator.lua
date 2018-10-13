@@ -31,6 +31,18 @@ function DonatorStatue(ID, statue_unit)
 		team.."_filler_7",
 	}
 
+	local model_scale = nil
+
+	for key, value in pairs(LoadKeyValues("scripts/npc/units/statues.txt")) do
+		if key == statue_unit then
+			model_scale = value["ModelScale"]
+			break
+		end
+	end
+
+	if model_scale == nil then model_scale = 1.0 end
+
+	if statue_unit == nil then return end
 	for _, ent_name in pairs(fillers) do
 		local filler = Entities:FindByName(nil, ent_name)
 		if filler then
@@ -39,8 +51,10 @@ function DonatorStatue(ID, statue_unit)
 			filler:RemoveSelf()
 
 			local unit = CreateUnitByName(statue_unit, abs, true, nil, nil, PlayerResource:GetPlayer(ID):GetTeam())
+			if unit == nil then return end
+			unit:SetModelScale(model_scale)
 			unit:SetAbsOrigin(abs + Vector(0, 0, 45))
-			unit:AddNewModifier(unit, nil, "modifier_imba_donator_statue", {})
+--			unit:AddNewModifier(unit, nil, "modifier_imba_donator_statue", {})
 			unit:AddNewModifier(unit, nil, "modifier_invulnerable", {})
 			hero.donator_statue = unit
 
@@ -75,10 +89,11 @@ function DonatorStatue(ID, statue_unit)
 				unit:SetMaterialGroup("1")
 			elseif statue_unit == "npc_imba_donator_statue_tabisama" then
 				unit:SetAbsOrigin(unit:GetAbsOrigin() + Vector(0, 0, 40))
-			end
-
-			if statue_unit == "npc_imba_donator_statue_zonnoz" then
+			elseif statue_unit == "npc_imba_donator_statue_zonnoz" then
 				pedestal_name = "npc_imba_donator_pedestal_pudge_arcana"
+			elseif statue_unit == "npc_imba_donator_statue_crystal_maiden_arcana" then
+				local particle = ParticleManager:CreateParticle("particles/econ/items/crystal_maiden/crystal_maiden_maiden_of_icewrack/maiden_arcana_base_ambient.vpcf", PATTACH_ABSORIGIN_FOLLOW, unit)
+				ParticleManager:ReleaseParticleIndex(particle)
 			end
 
 			local pedestal = CreateUnitByName(pedestal_name, abs, true, nil, nil, PlayerResource:GetPlayer(ID):GetTeam())
@@ -96,15 +111,29 @@ function DonatorStatue(ID, statue_unit)
 end
 
 function DonatorCompanion(ID, unit_name, js)
-if IMBA_DONATOR_COMPANION[tostring(PlayerResource:GetSteamID(ID))] and not js then 
-	unit_name = IMBA_DONATOR_COMPANION[tostring(PlayerResource:GetSteamID(ID))]
-end
+	for _, steamid in pairs(IMBA_COMPANION_DISABLED) do
+		if steamid == tostring(PlayerResource:GetSteamID(ID)) then
+			return
+		end
+	end
 
-if unit_name == nil then return end
-local hero = PlayerResource:GetPlayer(ID):GetAssignedHero()
-local color = hero:GetFittingColor()
-local model = GetKeyValueByHeroName(unit_name, "Model")
-local model_scale = GetKeyValueByHeroName(unit_name, "ModelScale")
+	if IMBA_DONATOR_COMPANION[tostring(PlayerResource:GetSteamID(ID))] and not js then 
+		unit_name = IMBA_DONATOR_COMPANION[tostring(PlayerResource:GetSteamID(ID))]
+	end
+
+	if unit_name == nil then return end
+	local hero = PlayerResource:GetPlayer(ID):GetAssignedHero()
+	local color = hero:GetFittingColor()
+	local model
+	local model_scale
+
+	for key, value in pairs(LoadKeyValues("scripts/npc/units/companions.txt")) do
+		if key == unit_name then
+			model = value["Model"]
+			model_scale = value["ModelScale"]
+			break
+		end
+	end
 
 --	print(unit_name, model, model_scale)
 
@@ -158,6 +187,9 @@ local model_scale = GetKeyValueByHeroName(unit_name, "ModelScale")
 	elseif model == "models/items/io/io_ti7/io_ti7.vmdl" then
 		local particle = ParticleManager:CreateParticle("particles/econ/items/wisp/wisp_ambient_ti7.vpcf", PATTACH_ABSORIGIN_FOLLOW, companion)
 		ParticleManager:ReleaseParticleIndex(particle)
+	elseif unit_name == "npc_imba_donator_companion_golem" then
+		local particle = ParticleManager:CreateParticle("particles/econ/courier/courier_greevil_orange/courier_greevil_orange_ambient_3.vpcf", PATTACH_ABSORIGIN_FOLLOW, companion)
+		ParticleManager:ReleaseParticleIndex(particle)
 	end
 
 	companion:SetModelScale(model_scale)
@@ -171,4 +203,14 @@ local model_scale = GetKeyValueByHeroName(unit_name, "ModelScale")
 --		ab:SetLevel(1)
 --		ab:CastAbility()		
 --	end
+end
+
+function DonatorCompanionSkin(id, unit, skin)
+	local hero = PlayerResource:GetPlayer(id):GetAssignedHero()
+
+	print("Material Group:", skin)
+	print(hero.companion, hero.companion:GetUnitName(), unit)
+	if hero.companion and hero.companion:GetUnitName() == unit then
+		hero.companion:SetMaterialGroup(tostring(skin))
+	end
 end

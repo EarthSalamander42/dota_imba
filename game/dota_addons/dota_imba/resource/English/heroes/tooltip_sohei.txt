@@ -11,7 +11,7 @@
 "DOTA_Tooltip_Ability_sohei_guard_guard_duration"         "DURATION:"
 
 "DOTA_Tooltip_Ability_sohei_momentum"                     "Momentum"
-"DOTA_Tooltip_Ability_sohei_momentum_description"         "After moving 300 units your next attack is a critical strike and pushes your target 300 units. If the enemy is pushed into a cliff or tree then they are slowed and the knockback stops. If colliding with another enemy hero, both heroes are slowed."
+"DOTA_Tooltip_Ability_sohei_momentum_description"         "When toggled on, after moving 300 units your next attack is a critical strike and pushes your target 300 units. If the enemy is pushed into a cliff or tree then they are slowed and the knockback stops. If colliding with another enemy hero, both heroes are slowed."
 "DOTA_Tooltip_Ability_sohei_momentum_crit_damage"         "%CRIT DAMAGE:"
 "DOTA_Tooltip_Ability_sohei_momentum_movement_slow"       "%MOVEMENT SLOW:"
 "DOTA_Tooltip_Ability_sohei_momentum_slow_duration"       "DURATION:"
@@ -19,6 +19,7 @@
 
 "DOTA_Tooltip_Ability_sohei_flurry_of_blows"              "Flurry of Blows"
 "DOTA_Tooltip_Ability_sohei_flurry_of_blows_description"  "CHANNELED - Sohei becomes invulnerable, randomly attacking all targets in the AOE, one at a time with the intention of pushing them back into the AOE. Each hit triggers Momentum. Ends after either the duration or the maximum amount of attacks have run out."
+"DOTA_Tooltip_Ability_sohei_flurry_of_blows_flurry_radius"  		"RADIUS:"
 "DOTA_Tooltip_Ability_sohei_flurry_of_blows_max_attacks"             "ATTACKS:"
 "DOTA_Tooltip_Ability_sohei_flurry_of_blows_attack_interval"         "ATTACK INTERVAL:"
 "DOTA_Tooltip_Ability_sohei_flurry_of_blows_max_duration"            "MAX DURATION:"
@@ -29,13 +30,13 @@
 "DOTA_Tooltip_Ability_sohei_palm_of_life_dash_speed"                 "DASH SPEED:"
 
 // modifiers
-"modifier_sohei_dash_charges"               "Dash Charges"
+"DOTA_Tooltip_modifier_sohei_dash_charges"               "Dash Charges"
 
-"modifier_sohei_guard_reflect"              "Guard"
-"modifier_sohei_guard_reflect_description"  "Reflect incoming projectiles"
+"DOTA_Tooltip_modifier_sohei_guard_reflect"              "Guard"
+"DOTA_Tooltip_modifier_sohei_guard_reflect_description"  "Reflecting incoming projectiles."
 
-"modifier_sohei_momentum_passive"              "Momentum"
-"modifier_sohei_momentum_passive_description"  "The next attack will deal bonus damage and knockback"
+"DOTA_Tooltip_modifier_sohei_momentum_passive"              "Momentum"
+"DOTA_Tooltip_modifier_sohei_momentum_passive_description"  "The next attack will deal bonus damage and knockback."
 
 // talents
 "DOTA_Tooltip_Ability_special_bonus_sohei_stun"                                 "Momentum Collision Stun"
@@ -48,5 +49,5 @@
 "DOTA_Tooltip_Ability_special_bonus_sohei_momentum_guard_cooldown_description"  "Each time Momentum is used, Guard's current cooldown is reduced by %value% second."
 "DOTA_Tooltip_Ability_special_bonus_sohei_dash_recharge"                        "-%value%s Dash Charge Recovery"
 //"DOTA_Tooltip_Ability_special_bonus_sohei_dash_recharge_description"            ""
-"DOTA_Tooltip_Ability_special_bonus_sohei_fob_radius"                           "+%value% Flurry of Blows AOE"
+"DOTA_Tooltip_Ability_special_bonus_sohei_fob_radius"                           "+%value% Flurry of Blows Radius"
 //"DOTA_Tooltip_Ability_special_bonus_sohei_fob_radius_description"               ""

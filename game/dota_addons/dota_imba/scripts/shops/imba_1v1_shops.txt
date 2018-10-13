@@ -144,7 +144,7 @@
 		"item"		"item_imba_bloodstone"
 		"item"		"item_imba_heart"
 		"item"		"item_imba_angelic_alliance"
-		"item"		"item_imba_greatwyrm_plate"
+		"item"		"item_imba_sogat_cuirass"
 		"item"		"item_imba_guardian_greaves"
 	}
 	
@@ -235,6 +235,7 @@
 		"item"		"item_relic"
 		"item"		"item_imba_moon_shard"
 		"item"		"item_imba_nether_wand"
+		"item"		"item_imba_cloak_of_flames"
 	}
 
 	"pregame"
@@ -268,7 +269,6 @@
 		"item"		"item_gloves"
 		"item"		"item_iron_talon"
 		"item"		"item_cloak"
-		"item"		"item_imba_magic_wand"
 		"item"		"item_recipe_soul_ring"
 	}
 }

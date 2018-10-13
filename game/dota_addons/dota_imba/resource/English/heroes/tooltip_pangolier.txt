@@ -3,7 +3,7 @@
 "DOTA_Tooltip_ability_imba_pangolier_swashbuckle_Note0"				"You just need to point where to dash, the rest is handled by Pangolier."
 "DOTA_Tooltip_ability_imba_pangolier_swashbuckle_Note1"				"Pangolier can't detect invisible enemies, however they can still be damaged."
 "DOTA_Tooltip_ability_imba_pangolier_swashbuckle_Note2"				"Apply on-hit effects and can critically strike."
- "DOTA_Tooltip_ability_imba_pangolier_swashbuckle_Note3"			"Pangolier can't act while the ability is playing."
+"DOTA_Tooltip_ability_imba_pangolier_swashbuckle_Note3"				"Pangolier can't act while the ability is playing."
 "DOTA_Tooltip_ability_imba_pangolier_swashbuckle_Lore"				"#{DOTA_Tooltip_ability_pangolier_swashbuckle_Lore}"
 "DOTA_Tooltip_ability_imba_pangolier_swashbuckle_dash_range"		"#{DOTA_Tooltip_ability_pangolier_swashbuckle_dash_range}"
 "DOTA_Tooltip_ability_imba_pangolier_swashbuckle_range"				"#{DOTA_Tooltip_ability_pangolier_swashbuckle_range}"
@@ -24,6 +24,10 @@
 "DOTA_Tooltip_ability_imba_pangolier_shield_crash_radius"			"RADIUS:"
 "DOTA_Tooltip_ability_imba_pangolier_shield_crash_hero_stacks"		"#{DOTA_Tooltip_ability_pangolier_shield_crash_hero_stacks}"
 "DOTA_Tooltip_ability_imba_pangolier_shield_crash_duration"			"#{DOTA_Tooltip_ability_pangolier_shield_crash_duration}"
+
+"DOTA_Tooltip_modifier_imba_shield_crash_buff"						"Shield Crash"	
+//"DOTA_Tooltip_modifier_imba_shield_crash_buff_Description"			"Blocking %dMODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE%%.0 of incoming damage."
+"DOTA_Tooltip_modifier_imba_shield_crash_buff_Description"			"Blocking a percentage of incoming damage."
 
 "DOTA_Tooltip_modifier_imba_shield_crash_block"						"En Guarde!"
 "DOTA_Tooltip_modifier_imba_shield_crash_block_Description"			"Pangolier will parry basic attacks from heroes and counterattack when it's an enemy."

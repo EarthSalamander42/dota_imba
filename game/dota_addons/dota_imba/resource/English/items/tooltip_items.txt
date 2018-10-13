@@ -167,6 +167,9 @@
 "DOTA_Tooltip_ability_item_imba_blade_mail_bonus_damage"                    "+$damage"
 "DOTA_Tooltip_ability_item_imba_blade_mail_bonus_armor"                     "+$armor"
 
+"DOTA_Tooltip_modifier_imba_blade_mail_active"					"Blade Mail Reflection"
+"DOTA_Tooltip_modifier_imba_blade_mail_active_Description"		"Returning damage to attacking units."
+
 // Blight Stone
 "DOTA_Tooltip_Ability_item_imba_blight_stone"                  "Blight Stone"
 "DOTA_Tooltip_ability_item_imba_blight_stone_Description"                   "<h1>Passive: Blight</h1> Your attacks reduce the target's armor by %armor_reduction% and vision range by %vision_reduction% for %duration% seconds."
@@ -229,7 +232,7 @@
 
 // Butterfly
 "DOTA_Tooltip_Ability_item_imba_butterfly"                      "Butterfly"
-"DOTA_Tooltip_ability_item_imba_butterfly_Description"          "<h1>Active: Flutter</h1> Trades evasion for %flutter_movespeed_pct%%% additional movement speed for %flutter_duration% seconds.\n<h1><font color='#FF7800'>Passive: Wind Song</font></h1> Every time the wielder evades an attack, it gets a stack of Wind Song. Accumulating %wind_song_active_stacks% stacks of Wind Song activates it, granting %wind_song_bonus_ms_pct%%% bonus move speed, %wind_song_bonus_as% attack speed, and %wind_song_evasion%%% evasion for %wind_song_duration% seconds. While Wind Song is active, nearby enemies in %wind_song_slow_radius% radius have their move speed slowed by %wind_song_ms_slow_pct%%%."
+"DOTA_Tooltip_ability_item_imba_butterfly_Description"          "<h1>Active: Flutter</h1>Grants %flutter_movespeed_pct%%% additional movement speed for %flutter_duration% seconds.\n<h1><font color='#FF7800'>Passive: Wind Song</font></h1> Every time the wielder evades an attack, it gets a stack of Wind Song. Accumulating %wind_song_active_stacks% stacks of Wind Song activates it, granting %wind_song_bonus_ms_pct%%% bonus move speed, %wind_song_bonus_as% attack speed, and %wind_song_evasion%%% evasion for %wind_song_duration% seconds. While Wind Song is active, nearby enemies in %wind_song_slow_radius% radius have their move speed slowed by %wind_song_ms_slow_pct%%%."
 "DOTA_Tooltip_ability_item_imba_butterfly_Lore"                "Only the mightiest and most experienced of warriors can wield the Butterfly, but it provides incredible dexterity in combat."
 "DOTA_Tooltip_ability_item_imba_butterfly_Note0"                "When both Flutter and Wind Song are active, their bonuses stack. However, as long as Flutter is active, the caster cannot evade attacks."
 "DOTA_Tooltip_ability_item_imba_butterfly_bonus_agility"                    "+$agi"
@@ -248,25 +251,6 @@
 
 "DOTA_Tooltip_modifier_item_imba_butterfly_wind_song_slow"                  "Wind Song Slow"
 "DOTA_Tooltip_modifier_item_imba_butterfly_wind_song_slow_Description"      "Being slowed by an enemy with an active Wind Song."
-
-// Calaminh's Tutela Plate // Tutela // Nutella // Greatwyrm // Turtle
-"DOTA_Tooltip_Ability_item_imba_greatwyrm_plate"                "Calaminh's Tutela Plate"
-"DOTA_Tooltip_ability_item_imba_greatwyrm_plate_Description"                "<h1>Active: Bulwark</h1> Temporarily grants nearby allies %active_armor% bonus armor, %damage_block% damage block,<font color='#FF7800'> %damage_reduction%%% damage reduction, and %tenacity%%% tenacity.</font> Does not stack with the passive bonuses.\n<h1>Passive: Block</h1>Blocks part of all incoming physical damage. Ranged heroes can only utilize 60%% of the damage block.\n<h1><font color='#FF7800'>Passive: Greater Parry</font></h1> Also reduces all incoming damage by %damage_reduction%%% and grants %tenacity%%% tenacity."
-"DOTA_Tooltip_ability_item_imba_greatwyrm_plate_Lore"          "With great power comes great responsibility, but they also say absolute power corrupts absolutely. The 87th and missing king of Ulmarain knew the end of times were coming with the clashing of heroes and took a gamble by forging Tutela, the guardian plate - indestructible, unconquerable, and eternal. Even when the world crumbles into ash and cinders, a lone survivor will remain."
-"DOTA_Tooltip_ability_item_imba_greatwyrm_plate_Note0"          "\nTenacity reduces the duration of debuffs inflicted on you by enemies."
-"DOTA_Tooltip_ability_item_imba_greatwyrm_plate_Note1"          "\nDamage block, damage reduction and tenacity from Stout Shield, Poor Man's Shield, Vanguard, Crimson Guard or Tutela Plate do not stack with themselves or each other."
-"DOTA_Tooltip_ability_item_imba_greatwyrm_plate_Note2"          "\nBulwark overrides and does not stack with Crimson Guard's active Guard ability."
-"DOTA_Tooltip_ability_item_imba_greatwyrm_plate_health"                     "+$health"
-"DOTA_Tooltip_ability_item_imba_greatwyrm_plate_health_regen"               "+$hp_regen"
-"DOTA_Tooltip_ability_item_imba_greatwyrm_plate_bonus_stats"                "+$all"
-"DOTA_Tooltip_ability_item_imba_greatwyrm_plate_armor"          "+$armor"
-"DOTA_Tooltip_ability_item_imba_greatwyrm_plate_bonus_strength"             "+$str"
-"DOTA_Tooltip_ability_item_imba_greatwyrm_plate_damage_block"               "DAMAGE BLOCK:"
-"DOTA_Tooltip_ability_item_imba_greatwyrm_plate_duration"                   "BULWARK DURATION:"
-"DOTA_Tooltip_ability_item_imba_greatwyrm_plate_active_radius"              "BULWARK RANGE:"
-
-"DOTA_Tooltip_modifier_item_imba_greatwyrm_plate_buff"          "Bulwark"
-"DOTA_Tooltip_modifier_item_imba_greatwyrm_plate_buff_Description"          "Gaining increased armor, damage block, and tenacity. All incoming damage is reduced."
 
 // Cheese
 "DOTA_Tooltip_Ability_item_imba_cheese"                        "Cheese"
@@ -658,8 +642,8 @@
 "DOTA_Tooltip_ability_item_imba_initiate_robe_mana_regen"                   "+$mana_regen"
 "DOTA_Tooltip_ability_item_imba_initiate_robe_max_stacks"                   "MAGIC SHIELD CAP:"
 
-"DOTA_Tooltip_modifier_item_imba_initiate_robe_stacks"            "Magic Shield"
-"DOTA_Tooltip_modifier_item_imba_initiate_robe_stacks_Description"      "Absorbs incoming damage"
+"DOTA_Tooltip_modifier_imba_initiate_robe_passive"                  "Magic Shield"
+"DOTA_Tooltip_modifier_imba_initiate_robe_passive_Description"      "Absorbing incoming damage based on stacks."
 
 // Ironleaf Boots
 "DOTA_Tooltip_Ability_item_imba_ironleaf_boots"              "Ironleaf Boots"
@@ -819,14 +803,20 @@
 "DOTA_Tooltip_ability_item_imba_monkey_king_bar_bonus_damage"               "+$damage"
 
 // Moon Shard
-"DOTA_Tooltip_Ability_item_imba_moon_shard"                    "Moon Shard"
-"DOTA_Tooltip_ability_item_imba_moon_shard_Description"                     "<h1>Use: Consume</h1> Consume the Moon Shard to permanently gain %consumed_bonus% attack speed and %consumed_bonus_night_vision% bonus night vision.<font color='#FF7800'>Stacks diminishingly.</font>\n<font color='#00FF40'>1st shard: +%consume_as_1% AS, +%consume_vision_1% vision<br><br>2nd shard: +%consume_as_2% AS, +%consume_vision_2% vision<br><br>3rd shard and beyond: +%consume_as_3% AS</font>\n<h1>Passive: Shade Sight</h1>Grants %bonus_night_vision% bonus night vision."
+"DOTA_Tooltip_Ability_item_imba_moon_shard"						"Moon Shard"
+"DOTA_Tooltip_ability_item_imba_moon_shard_Description"			"<h1>Use: Consume</h1> Consume the Moon Shard to permanently gain %consumed_bonus% attack speed and %consumed_bonus_night_vision% bonus night vision.<font color='#FF7800'> Can be used multiple times, but stacks at diminishing values.</font>\n<font color='#00FF40'>1st shard: +%consume_as_1% AS, +%consume_vision_1% vision<br><br>2nd shard: +%consume_as_2% AS, +%consume_vision_2% vision<br><br>3rd shard and beyond: +%consume_as_3% AS</font>\n<h1>Passive: Shade Sight</h1>Grants %bonus_night_vision% bonus night vision."
+"DOTA_Tooltip_ability_item_imba_moon_shard_Note0"				"The bonus night vision works during Night Stalker's Darkness ability."
+"DOTA_Tooltip_ability_item_imba_moon_shard_Note1"				"Moon Shard stacks in inventory, but only applies its effects if individual item slots are available."
+"DOTA_Tooltip_ability_item_imba_moon_shard_Note2"				"Using Moon Shard on yourself consumes all shards in inventory, while using it on allies consumes one shard each."
+"DOTA_Tooltip_ability_item_imba_moon_shard_Note3"				"Using Moon Shard anywhere else drops a shard from your inventory at your location."
 "DOTA_Tooltip_ability_item_imba_moon_shard_Lore"                "Said to be a tear from the lunar goddess Selemene."
 "DOTA_Tooltip_ability_item_imba_moon_shard_bonus_attack_speed"              "+$attack"
-"DOTA_Tooltip_ability_item_imba_moon_shard_bonus_night_vision"              "BONUS NIGHT VISION:"
 
 "DOTA_Tooltip_modifier_imba_moon_shard_stacks_dummy"            "Moon Shard"
 "DOTA_Tooltip_modifier_imba_moon_shard_stacks_dummy_Description"            "Increased attack speed and night vision"
+
+"DOTA_Tooltip_modifier_item_imba_moon_shard_active"					"Moon Shard"
+"DOTA_Tooltip_modifier_item_imba_moon_shard_active_Description"		"Attack speed increased by %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT% and night vision increased by %dMODIFIER_PROPERTY_BONUS_NIGHT_VISION% after consuming Moon Shard(s)."
 
 // Morbid Mask
 "DOTA_Tooltip_Ability_item_imba_morbid_mask"                    "Morbid Mask"
@@ -1082,9 +1072,10 @@
 
 // Scythe of Vyse
 "DOTA_Tooltip_Ability_item_imba_sheepstick"                    "Scythe of Vyse"
-"DOTA_Tooltip_ability_item_imba_sheepstick_Description"                     "<h1>Active: Hex</h1> Transforms the target unit into a harmless critter for %hex_duration% seconds. Destroys illusions.\n<h1><font color='#FF7800'>Passive: Expeditious Retreat</font></h1> Can be used on yourself; applies a basic dispel, transforms you into a harmless critter, and grants fast flying movement. Lasts for %hex_duration% seconds.<br><font color='#00FF40'>While hexed by yourself, you are immune to being hexed by enemies.</font>"
+"DOTA_Tooltip_ability_item_imba_sheepstick_Description"                     "<h1>Active: Hex</h1> Transforms the target unit into a harmless critter for %hex_duration% seconds. The target has a base movement speed of 140 and will be silenced, muted, and disarmed. Destroys illusions.\n<h1><font color='#FF7800'>Passive: Expeditious Retreat</font></h1> Can be used on yourself; applies a basic dispel, transforms you into a harmless critter, and grants %self_move_speed% flying move speed. Additionally, all enemies within %self_debuff_radius% range will also have the standard Hex applied. Lasts for %hex_duration% seconds."
 "DOTA_Tooltip_ability_item_imba_sheepstick_Note0"              "Instantly destroys illusions."
 "DOTA_Tooltip_ability_item_imba_sheepstick_Note1"              "Does not slow, but instead overrides the hexed unit's movement speed."
+"DOTA_Tooltip_ability_item_imba_sheepstick_Note2"				"Units are immune to being hexed while already hexed."
 "DOTA_Tooltip_ability_item_imba_sheepstick_Lore"                "The most guarded relic among the cult of Vyse, it is the most coveted weapon among magi."
 "DOTA_Tooltip_ability_item_imba_sheepstick_bonus_strength"                  "+$str"
 "DOTA_Tooltip_ability_item_imba_sheepstick_bonus_agility"                   "+$agi"

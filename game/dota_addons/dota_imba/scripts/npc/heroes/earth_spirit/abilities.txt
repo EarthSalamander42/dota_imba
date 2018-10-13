@@ -8,7 +8,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
-		"ScriptFile"					"hero/hero_earth_spirit.lua"
+		"ScriptFile"					"components/abilities/heroes/hero_earth_spirit.lua"
 		
 		"AbilityTextureName"			"earth_spirit_stone_caller"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
@@ -90,7 +90,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
-		"ScriptFile"					"hero/hero_earth_spirit.lua"
+		"ScriptFile"					"components/abilities/heroes/hero_earth_spirit.lua"
 		
 		"AbilityTextureName"			"earth_spirit_boulder_smash"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_OPTIONAL_POINT"
@@ -173,7 +173,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
-		"ScriptFile"					"hero/hero_earth_spirit.lua"
+		"ScriptFile"					"components/abilities/heroes/hero_earth_spirit.lua"
 		"AbilityTextureName"			"earth_spirit_rolling_boulder"
 		
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT_TARGET"
@@ -273,7 +273,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
-		"ScriptFile"					"hero/hero_earth_spirit.lua"
+		"ScriptFile"					"components/abilities/heroes/hero_earth_spirit.lua"
 		"AbilityTextureName"			"earth_spirit_geomagnetic_grip"
 		
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_OPTIONAL_POINT"
@@ -352,7 +352,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
-		"ScriptFile"					"hero/hero_earth_spirit.lua"
+		"ScriptFile"					"components/abilities/heroes/hero_earth_spirit.lua"
 		"AbilityTextureName"			"earth_spirit_magnetize"
 		"HasScepterUpgrade"				"1"
 		
@@ -444,7 +444,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
-		"ScriptFile"					"hero/hero_earth_spirit.lua"
+		"ScriptFile"					"components/abilities/heroes/hero_earth_spirit.lua"
 		
 		"AbilityTextureName"			"earth_spirit_petrify"
 		

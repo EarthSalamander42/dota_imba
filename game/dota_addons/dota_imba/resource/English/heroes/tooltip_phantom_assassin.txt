@@ -40,12 +40,14 @@
 
 // Phantom Assassin's Coup de Grace
 "DOTA_Tooltip_ability_imba_phantom_assassin_coup_de_grace"							"#{DOTA_Tooltip_ability_phantom_assassin_coup_de_grace}"
-"DOTA_Tooltip_ability_imba_phantom_assassin_coup_de_grace_Description"              "#{DOTA_Tooltip_ability_phantom_assassin_coup_de_grace_Description}\n<font color='#FF7800'>Die Hard:</font> After every crit on an enemy hero, Mortred's killing instinct sharpens, increasing her damage."
+"DOTA_Tooltip_ability_imba_phantom_assassin_coup_de_grace_Description"              "#{DOTA_Tooltip_ability_phantom_assassin_coup_de_grace_Description}\n<font color='#FF7800'>Die Hard:</font> After every crit on an enemy hero, Mortred's killing instinct sharpens, increasing her damage.\n<font color='#FF7800'>Fatality:</font> Gives %fatality_chance%% chance to insta-kill the target if it's health is lower than %fatality_threshold%%."
 "DOTA_Tooltip_ability_imba_phantom_assassin_coup_de_grace_Lore"                     "#{DOTA_Tooltip_ability_phantom_assassin_coup_de_grace_Lore}"
 "DOTA_Tooltip_ability_imba_phantom_assassin_coup_de_grace_crit_bonus"               "#{DOTA_Tooltip_ability_phantom_assassin_coup_de_grace_crit_bonus}"
 "DOTA_Tooltip_ability_imba_phantom_assassin_coup_de_grace_crit_chance"              "#{DOTA_Tooltip_ability_phantom_assassin_coup_de_grace_crit_chance}"
 "DOTA_Tooltip_ability_imba_phantom_assassin_coup_de_grace_crit_increase_damage"     "DIE HARD BONUS DAMAGE:"
 "DOTA_Tooltip_ability_imba_phantom_assassin_coup_de_grace_crit_increase_duration"   "DIE HARD DURATION:"
+"DOTA_Tooltip_ability_imba_phantom_assassin_coup_de_grace_fatality_chance"			"%FATALITY CHANCE:"
+"DOTA_Tooltip_ability_imba_phantom_assassin_coup_de_grace_fatality_threshold"		"%FATALITY THRESHOLD:"
 
 "DOTA_Tooltip_modifier_imba_phantom_strike_coup_de_grace"							"Dance of Death"
 "DOTA_Tooltip_modifier_imba_phantom_strike_coup_de_grace_Description"               "Increased Coup de Grace chance."

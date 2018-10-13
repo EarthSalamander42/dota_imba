@@ -1,105 +1,3 @@
-// Alchemist
-////===============================================================================================================
-// Alchemist's Acid Spray
-////===============================================================================================================
-
-"DOTA_Tooltip_ability_imba_alchemist_acid_spray"                        "Acid Spray"
-"DOTA_Tooltip_ability_imba_alchemist_acid_spray_Description"            "Sprays high-pressure acid across a target area. Enemy units who step across the contaminated terrain take damage per second and have their armor reduced.\n<font color='#FF7800'>Sticky Acid:</font> Enemies inside the Acid Spray area of effect gain stacks of Sticky Acid every second, up to a maximum. Each stack increases Acid Spray's damage by %stack_damage% and further reduces the target's armor by %stack_armor_reduction%. When enemies are not inside the acid or the effect ends, they lose a stack of Sticky Acid every second."
-"DOTA_Tooltip_ability_imba_alchemist_acid_spray_Lore"                  "Using traditional Alchemy from the Darkbrew family, Razzil concocts an acid that dissolves even the toughest metals."
-"DOTA_Tooltip_ability_imba_alchemist_acid_spray_Note0"                  "The aura lingers for 0.5 seconds."
-"DOTA_Tooltip_ability_imba_alchemist_acid_spray_Note1"                  "The damage from Sticky Acid is the same as Acid Spray's, even without the Acid Spray itself to deal the damage."
-"DOTA_Tooltip_ability_imba_alchemist_acid_spray_radius"                "RADIUS:"
-"DOTA_Tooltip_ability_imba_alchemist_acid_spray_duration"              "DURATION:"
-"DOTA_Tooltip_ability_imba_alchemist_acid_spray_damage"                "DAMAGE PER SECOND:"
-"DOTA_Tooltip_ability_imba_alchemist_acid_spray_armor_reduction"                    "ARMOR REDUCTION"
-"DOTA_Tooltip_ability_imba_alchemist_acid_spray_max_stacks"            "MAX STACKS:"
-
-"DOTA_Tooltip_modifier_imba_acid_spray_debuff_dot"                      "Sticky Acid"
-"DOTA_Tooltip_modifier_imba_acid_spray_debuff_dot_Description"          "Taking damage every second and losing armor. Stacks decay every second when outside Acid Spray's area of effect."
-
-////===============================================================================================================
-// Alchemist's Unstable Concoction
-////===============================================================================================================
-"DOTA_Tooltip_ability_imba_alchemist_unstable_concoction"              "Unstable Concoction"
-"DOTA_Tooltip_ability_imba_alchemist_unstable_concoction_Description"               "Alchemist brews up an unstable concoction that he can throw at an enemy hero, to stun and deal damage in an area around the explosion. The longer the concoction brews, the more damage it deals and the longer the stun. In time, the brew reaches its maximum damage and stun time. However, %extra_brew_time% seconds after the duration, the concoction will explode on Alchemist himself if not thrown.\n<font color='#FF7800'>Bigger Bottles:</font> Increases the radius when thrown after the base duration.\n<font color='#FF7800'>Golden Substance:</font> Each stack of Greevil's Greed adds 0.02 seconds to the brew duration.\n<font color='#FF7800'>Highly Combustible:</font> If Unstable Concoction hits an enemy inside the Acid Spray pool, it explodes violently, burning the whole Acid Spray AoE, dealing a portion of the damage to all enemies in its range.\n<font color='#FF7800'>Instant Repulsion:</font> All stacks of Sticky Acid on the main target are consumed, dealing their damage instantly."
-"DOTA_Tooltip_ability_imba_alchemist_unstable_concoction_Lore"          "A silver lining to the failure of turning a mountain into gold, this volatile solution has destructive potential."
-"DOTA_Tooltip_ability_imba_alchemist_unstable_concoction_Note0"                     "If Alchemist himself is hit by the explosion of the concoction, he still deals damage to enemy units in the explosion radius."
-"DOTA_Tooltip_ability_imba_alchemist_unstable_concoction_Note1"                     "Base brew damage refer to the base brewing duration. The damage can increase further when brewing for longer."
-"DOTA_Tooltip_ability_imba_alchemist_unstable_concoction_brew_time"                 "BASE BREW DURATION:"
-"DOTA_Tooltip_ability_imba_alchemist_unstable_concoction_stun"          "MAX STUN DURATION:"
-"DOTA_Tooltip_ability_imba_alchemist_unstable_concoction_damage"                    "BASE BREW DAMAGE:"
-"DOTA_Tooltip_ability_imba_alchemist_unstable_concoction_radius"                    "RADIUS:"
-"DOTA_Tooltip_ability_imba_alchemist_unstable_concoction_radius_increase"           "BIGGER BOTTLES RADIUS:"
-"DOTA_Tooltip_ability_imba_alchemist_unstable_concoction_acid_spray_damage"         "%HIGHLY COMBUSTIBLE DAMAGE:"
-
-"DOTA_Tooltip_modifier_imba_unstable_concoction_stunned"                "Unstable Concoction"
-"DOTA_Tooltip_modifier_imba_unstable_concoction_stunned_Description"                "Stunned."
-
-////===============================================================================================================
-// Alchemist's Goblin's Greed
-////===============================================================================================================
-"DOTA_Tooltip_ability_imba_alchemist_goblins_greed"                    "Greevil's Greed"
-"DOTA_Tooltip_ability_imba_alchemist_goblins_greed_Description"                     "Alchemist synthesizes additional gold from his enemies. With each kill, Alchemist earns base bonus gold and extra bonus gold. If Alchemist kills another unit which yields gold within the next %duration% seconds, an additional instance of Extra Bonus Gold is added to the total. Additionally, causes bounty runes to yield %bounty_multiplier% times their normal gold. \n<font color='#FF7800'>Pocketful of Gold:</font> Landing a last hit on enemy heroes grant a multiplication of the bonus gold.\n<font color='#FF7800'>Goldenfinger:</font> Alchemist converts target allied or enemy creep into pure gold, gaining x%gold_multiplier% its bounty and exp, and permanently gaining %bonus_stacks% stacks of Greevil's Greed. \n<font color='#FF7800'>Golden Greevil:</font> Upon consuming a creep, a Golden Greevil spawns from its corpse. The Golden Greevil follows Alchemist and grants it gold every 2 seconds equal to a portion of your Greed stacks. "
-"DOTA_Tooltip_ability_imba_alchemist_goblins_greed_Lore"                "While it is not a mountain, Razzil has mastered the conversion of smaller compounds to line his pockets."
-"DOTA_Tooltip_ability_imba_alchemist_goblins_greed_Note0"              "The pet greevil is a flying unit, and it follows Alchemist. It doesn't teleport automatically with Alchemist, and needs to travel to him."
-"DOTA_Tooltip_ability_imba_alchemist_goblins_greed_bonus_gold"          "BASE GOLD BONUS:"
-"DOTA_Tooltip_ability_imba_alchemist_goblins_greed_bonus_bonus_gold"                "GOLD PER KILL:"
-"DOTA_Tooltip_ability_imba_alchemist_goblins_greed_bounty_multiplier"               "%BOUNTY RUNE GOLD MULTIPLIER:"
-"DOTA_Tooltip_ability_imba_alchemist_goblins_greed_hero_multiplier"                 "HERO KILL MULTIPLIER:"
-"DOTA_Tooltip_ability_imba_alchemist_goblins_greed_greevil_duration"                "GREEVIL DURATION:"
-"DOTA_Tooltip_ability_imba_alchemist_goblins_greed_periodic_gold_percentage"        "%GREED STACKS TO GOLD FROM GREEVIL:"
-"DOTA_Tooltip_ability_imba_alchemist_goblins_greed_aghanim_description"             "Can melt scepters and grant them to allies permanently."
-
-"DOTA_Tooltip_modifier_imba_goblins_greed_passive"                      "Greevil's Greed"
-"DOTA_Tooltip_modifier_imba_goblins_greed_passive_Description"          "Last hits will net you bonus gold."
-
-"DOTA_Tooltip_modifier_imba_goblins_greed_mark"                        "Golden Greevil's Mark"
-"DOTA_Tooltip_modifier_imba_goblins_greed_mark_Description"            "Marked by the Golden Greevil. Dying by any source will earn Alchemist bonus gold."
-
-////===============================================================================================================
-// Alchemist's Chemical Rage
-////===============================================================================================================
-"DOTA_Tooltip_ability_imba_alchemist_chemical_rage"                    "Chemical Rage"
-"DOTA_Tooltip_ability_imba_alchemist_chemical_rage_Description"                     "Alchemist causes his Ogre to enter a chemically induced rage, reducing base attack cooldown and increasing movement speed and regeneration.\n<font color='#FF7800'>Acidic Emanation:</font> While Alchemist is under the effects of Chemical Rage, he becomes enveloped in an aura of acid. The aura only applies on units with at least one stack of Sticky Acid, and has the same radius as Acid Spray. Units affected by aura have their stack limit of Sticky Acid doubled. Damage fully stacks with Acid Spray's stacks, while armor reduction does not. Does nothing to units that have no stacks of Sticky Acid, but prevents Acid Spray stack degeneration while in range of a unit affected by it."
-"DOTA_Tooltip_ability_imba_alchemist_chemical_rage_Lore"                "The brew Razzil gave to the Ogre during their prison bust has become a useful potion in the midst of combat."
-"DOTA_Tooltip_ability_imba_alchemist_chemical_rage_Note0"              "Acidic Emanations behaves similar to Acid Spray by all means: deals damage, reduces armor and grants stacks of Sticky Acid."
-"DOTA_Tooltip_ability_imba_alchemist_chemical_rage_duration"            "DURATION:"
-"DOTA_Tooltip_ability_imba_alchemist_chemical_rage_base_attack_time"                "BASE ATTACK TIME:"
-"DOTA_Tooltip_ability_imba_alchemist_chemical_rage_bonus_health_regen"              "BONUS HEALTH REGEN:"
-"DOTA_Tooltip_ability_imba_alchemist_chemical_rage_bonus_mana_regen"                "BONUS MANA REGEN:"
-"DOTA_Tooltip_ability_imba_alchemist_chemical_rage_bonus_movespeed"                 "BONUS MOVESPEED:"
-"DOTA_Tooltip_ability_imba_alchemist_chemical_rage_scepter_gold_damage"             "%SCEPTER GOLD TO DAMAGE:"
-
-"DOTA_Tooltip_modifier_imba_chemical_rage_buff_haste"                  "Chemical Rage"
-"DOTA_Tooltip_modifier_imba_chemical_rage_buff_haste_Description"                   "Grants lower Base attack time, bonus health and mana regeneration and bonus move speed. Emitting Acid Aura on nearby enemies."
-
-"DOTA_Tooltip_modifier_imba_chemical_rage_aura_buff"                    "Extra Incentive"
-"DOTA_Tooltip_modifier_imba_chemical_rage_aura_buff_Description"                    "Damage increased based on Alchemist Greevil's Greed's stacks."
-
-////===============================================================================================================
-// Alchemist's Mammonite
-////===============================================================================================================
-"DOTA_Tooltip_ability_imba_alchemist_mammonite"                        "Mammonite"
-"DOTA_Tooltip_ability_imba_alchemist_mammonite_Description"            "Can be toggled on and off freely. When toggled on, Alchemist uses some of the gold he has accumulated, covering his punches with gold, causing Alchemist's attacks to drain a portion of its current gold and deal that amount as bonus damage."
-"DOTA_Tooltip_ability_imba_alchemist_mammonite_Note0"                  "The gold is spent when the attack lands."
-"DOTA_Tooltip_ability_imba_alchemist_mammonite_Note1"                  "The amount of gold spent is based on your current gold, so the more gold you have, the more gold spent. This amount is added to your attacks. It uses unreliable gold first, if possible."
-"DOTA_Tooltip_ability_imba_alchemist_mammonite_Lore"                    "You can use money to do other things than just buy items."
-"DOTA_Tooltip_ability_imba_alchemist_mammonite_gold_damage"            "%CURRENT GOLD TO DAMAGE:"
-"DOTA_Tooltip_ability_imba_alchemist_mammonite_aghanim_description"                 "Adds a new ability: Mammonite. Deals a portion of your current gold as damage, but spends that amount of gold on every attack."
-
-////===============================================================================================================
-// Alchemist's Custom Talents
-////===============================================================================================================
-"DOTA_Tooltip_ability_special_bonus_imba_alchemist_1"                   "+15% Sticky Acid Slow"
-"DOTA_Tooltip_ability_special_bonus_imba_alchemist_2"                   "Unstable Concoction can grant allies Chemical Rage"
-"DOTA_Tooltip_ability_special_bonus_imba_alchemist_3"                   "Bounty runes spawn gold bags"
-"DOTA_Tooltip_ability_special_bonus_imba_alchemist_4"                   "Acid Spray victims drops gold bags"
-"DOTA_Tooltip_ability_special_bonus_imba_alchemist_5"                   "Greed stacks increase Acid Spray damage"
-"DOTA_Tooltip_ability_special_bonus_imba_alchemist_6"                   "Volatile Flask"
-"DOTA_Tooltip_ability_special_bonus_imba_alchemist_6_Description"		"When in Chemical Rage, Alchemist brews Unstable Concoction twice as fast."
-"DOTA_Tooltip_ability_special_bonus_imba_alchemist_7"                   "+150% gold from bounty runes for Goblin's Greed"
-"DOTA_Tooltip_ability_special_bonus_imba_alchemist_8"                   "Chemical Rage grants a damage aura"
-
 // Anti Mage
 ////===============================================================================================================
 // Anti Mage's Mana Break
@@ -436,7 +334,7 @@
 // Bloodseeker's Bloodrage
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_bloodseeker_bloodrage"                      "Bloodrage"
-"DOTA_Tooltip_ability_imba_bloodseeker_bloodrage_Description"          "Drives a unit into a bloodthirsty rage during which it deals, and receives, increased damage. Killing bloodraged units or killing units while bloodraged results in the killer being healed by a percentage of the victim's maximum health.\n<font color='#FF7800'>Boiling blood:</font> units affected by Bloodrage take damage every second, and also deal this damage to all units within %aoe_radius% radius. Bloodseeker's allies only take %allied_damage%%% of the damage. Denying allies triggers the kill heal."
+"DOTA_Tooltip_ability_imba_bloodseeker_bloodrage_Description"          "Drives a unit into a bloodthirsty rage during which it deals, and receives, increased damage. Killing bloodraged units or killing units while bloodraged results in the killer being healed by a percentage of the victim's maximum health.\n<font color='#FF7800'>Boiling Blood:</font> Units affected by Bloodrage take damage every second, and also deal this damage to all units within %aoe_radius% radius. Bloodseeker's allies only take %allied_damage%%% of the damage. Denying allies triggers the kill heal."
 "DOTA_Tooltip_ability_imba_bloodseeker_bloodrage_Lore"                  "Strygwyr shares his animalistic thirst for bloodshed."
 "DOTA_Tooltip_ability_imba_bloodseeker_bloodrage_Note0"                "Amplifies all damage, regardless of type."
 "DOTA_Tooltip_ability_imba_bloodseeker_bloodrage_Note1"                "Amplification is halved whenever damage dealer and receiver are further than 2200 units apart."
@@ -457,7 +355,7 @@
 // Bloodseeker's Blood Rite
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_bloodseeker_blood_bath"                      "Blood Rite"
-"DOTA_Tooltip_ability_imba_bloodseeker_blood_bath_Description"          "Bloodseeker baptizes an area in sacred blood. After %delay_plus_castpoint_tooltip% seconds, the ritual completes, causing any enemies caught in its area to take damage and become silenced.\n<font color='#FF7800'>Sacrificial lamb:</font> heroes that die while silenced by Blood Rite will reduce Bloodseeker's cooldowns by %cooldown_reduction%%%.\n<font color='#FF7800'>Nanauatzin:</font> Bloodseeker gains %dmg_to_overheal%% of the total damage dealt by Blood Rite as maximum and current health for %overheal_duration% seconds."
+"DOTA_Tooltip_ability_imba_bloodseeker_blood_bath_Description"          "Bloodseeker baptizes an area in sacred blood. After %delay_plus_castpoint_tooltip% seconds, the ritual completes, causing any enemies caught in its area to take damage and become silenced.\n<font color='#FF7800'>Sacrificial Lamb:</font> Heroes that die while silenced by Blood Rite will reduce Bloodseeker's cooldowns by %cooldown_reduction%%%.\n<font color='#FF7800'>Nanauatzin:</font> Bloodseeker gains %dmg_to_overheal%%  of the total damage dealt by Blood Rite as maximum and current health for %overheal_duration% seconds."
 "DOTA_Tooltip_ability_imba_bloodseeker_blood_bath_Lore"                "The Flayed Twins are ever willing to aid those who spill blood upon the field of battle."
 "DOTA_Tooltip_ability_imba_bloodseeker_blood_bath_radius"              "RADIUS:"
 "DOTA_Tooltip_ability_imba_bloodseeker_blood_bath_silence_duration"                 "SILENCE DURATION:"
@@ -473,7 +371,7 @@
 // Bloodseeker's Thirst
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_bloodseeker_thirst"                          "Thirst"
-"DOTA_Tooltip_ability_imba_bloodseeker_thirst_Description"              "Bloodseeker is invigorated by the wounds of his enemies, gaining bonus movement speed and attack damage whenever an enemy hero's health falls below %max_threshold_pct%%%, with the bonuses increasing as their health falls further. If an enemy hero's health falls below %visibility_threshold_pct%%%, he will also gain vision and True Sight of that hero. Bonuses stack per hero.\n<font color='#FF7800'>Sanguinary:</font> whenever an enemy hero is damaged, Bloodseeker also gains a smaller amount of damage and movement speed for %atk_buff_duration% seconds. These bonuses are doubled when the attacker is Bloodseeker himself. Those bonuses stack when attacking different heroes, and will override if the new damage bonus is higher."
+"DOTA_Tooltip_ability_imba_bloodseeker_thirst_Description"              "Bloodseeker is invigorated by the wounds of his enemies, gaining bonus movement speed and attack damage whenever an enemy hero's health falls below %max_threshold_pct%%%, with the bonuses increasing as their health falls further. If an enemy hero's health falls below %visibility_threshold_pct%%%, he will also gain vision and True Sight of that hero. Bonuses stack per hero.\n<font color='#FF7800'>Sanguinary:</font> Whenever an enemy hero is damaged, Bloodseeker also gains a smaller amount of damage and movement speed for %atk_buff_duration% seconds. These bonuses are doubled when the attacker is Bloodseeker himself. Those bonuses stack when attacking different heroes, and will override if the new damage bonus is higher."
 "DOTA_Tooltip_ability_imba_bloodseeker_thirst_Lore"                    "Strygwyr becomes frenzied when blood is spilled."
 "DOTA_Tooltip_ability_imba_bloodseeker_thirst_bonus_movement_speed"                 "%MAX MOVE SPEED PER HERO:"
 "DOTA_Tooltip_ability_imba_bloodseeker_thirst_bonus_damage"            "MAX DAMAGE PER HERO:"
@@ -487,7 +385,7 @@
 // Bloodseeker's Rupture
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_bloodseeker_rupture"                        "Rupture"
-"DOTA_Tooltip_ability_imba_bloodseeker_rupture_Description"            "Causes an enemy unit's skin to rupture. If the unit moves, it takes a percentage of the distance traveled as pure damage.\n<font color='#FF7800'>Haemophilia:</font> when Rupture is applied to a unit above %damage_initial_pct%%% health, it will instantly drop them down to %damage_initial_pct%%%.\n<font color='#FF7800'>Varicose veins:</font> Rupture will deal damage whenever the afflicted unit starts casting an ability or starts attacking.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
+"DOTA_Tooltip_ability_imba_bloodseeker_rupture_Description"            "Causes an enemy unit's skin to rupture. If the unit moves, it takes a percentage of the distance traveled as pure damage.\n<font color='#FF7800'>Haemophilia:</font> When Rupture is applied to a unit above %damage_initial_pct%%% health, it will instantly drop them down to %damage_initial_pct%%%.\n<font color='#FF7800'>Varicose Veins:</font> Rupture will deal damage whenever the afflicted unit starts casting an ability or starts attacking.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
 "DOTA_Tooltip_ability_imba_bloodseeker_rupture_Lore"                    "When the Bloodseeker hunts you, injuries become fatalities."
 "DOTA_Tooltip_ability_imba_bloodseeker_rupture_Note0"                  "Moving more than 1300 units in under 0.25 seconds will cause Rupture to ignore that movement."
 "DOTA_Tooltip_ability_imba_bloodseeker_rupture_Note1"                  "Scepter Rupture charges can be fully refreshed by using a Refresher."
@@ -506,16 +404,18 @@
 ////===============================================================================================================
 // Bloodseeker's Custom Talents
 ////===============================================================================================================
-"DOTA_Tooltip_ability_special_bonus_imba_bloodseeker_1"                 "10% Bloodrage Amplification Shift"
+"DOTA_Tooltip_ability_special_bonus_imba_bloodseeker_1"                 "%value%%  Bloodrage Amplification Shift"
+"DOTA_Tooltip_ability_special_bonus_imba_bloodseeker_1_Description"		"Increases outgoing damage and reduces incoming damage for allies by %value%%, and vice-versa for enemies."
 "DOTA_Tooltip_ability_special_bonus_imba_bloodseeker_2"                 "Bleeding Your Way Out"
-"DOTA_Tooltip_ability_special_bonus_imba_bloodseeker_2_Description"   "Blood Rite applies Rupture on targets hit and pushes them away from circle."
+"DOTA_Tooltip_ability_special_bonus_imba_bloodseeker_2_Description"   	"Enemies hit by Blood Rite are pushed away from the circle and take Rupture damage for 0.3 seconds."
 "DOTA_Tooltip_ability_special_bonus_imba_bloodseeker_3"                 "Rupture heals for 100% of the damage dealt"
 "DOTA_Tooltip_ability_special_bonus_imba_bloodseeker_4"                 "Blood Rite's silence debuff becomes unpurgable"
-"DOTA_Tooltip_ability_special_bonus_imba_bloodseeker_5"                 "Blood Rite casts itself in a form of glasses"
+"DOTA_Tooltip_ability_special_bonus_imba_bloodseeker_5"                 "Blood Rite Triplicate (left, right, and front of cast area)"
 "DOTA_Tooltip_ability_special_bonus_imba_bloodseeker_6"                 "+1700 Rupture Distance Trigger Cap"
 "DOTA_Tooltip_ability_special_bonus_imba_bloodseeker_7"                 "Blood Frenzy"
-"DOTA_Tooltip_ability_special_bonus_imba_bloodseeker_7_Description"   "Killing a Bloodraged unit grants the killer huge speed buff for 3.5 seconds."
-"DOTA_Tooltip_ability_special_bonus_imba_bloodseeker_8"                 "Bloodrage +3% Bonus Amp Per 5% Missing Health"
+"DOTA_Tooltip_ability_special_bonus_imba_bloodseeker_7_Description"   	"Killing or dying with Bloodrage active grants the killer a %ms_bonus_pct%%  movespeed bonus for %duration% seconds."
+"DOTA_Tooltip_ability_special_bonus_imba_bloodseeker_8"                 "Bloodrage Bonus +%value%%  Amp per %value2%%  Missing Health"
+"DOTA_Tooltip_ability_special_bonus_imba_bloodseeker_9"					"-%value%s Blood Rite Cooldown"
 
 // Bounty Hunter
 ////===============================================================================================================
@@ -1107,7 +1007,7 @@
 // Disruptor's Thunder Strike
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_disruptor_thunder_strike"                    "Thunder Strike"
-"DOTA_Tooltip_ability_imba_disruptor_thunder_strike_Description"                    "Repeatedly strikes the target enemy with lightning. Each strike damages nearby enemy units in %radius% radius. Provides vision of its target.\n<font color='#FF7800'>Lightning Rod:</font> strikes one additional time for each enemy hero in the effect radius."
+"DOTA_Tooltip_ability_imba_disruptor_thunder_strike_Description"                    "Repeatedly strikes the target enemy with lightning. Each strike damages nearby enemy units in %radius% radius. Provides vision of its target.\n<font color='#FF7800'>Lightning Rod:</font> Strikes one additional time for each enemy hero in the effect radius."
 "DOTA_Tooltip_ability_imba_disruptor_thunder_strike_Note0"              "Creeps and magic immune heroes are not counted."
 "DOTA_Tooltip_ability_imba_disruptor_thunder_strike_Lore"              "Disruptor's charged coils occasionally overload, and a singed armor plate or tuft of fur is the result on the enemy."
 "DOTA_Tooltip_ability_imba_disruptor_thunder_strike_damage"            "DAMAGE:"
@@ -1121,7 +1021,7 @@
 // Disruptor's Glimpse
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_disruptor_glimpse"                          "Glimpse"
-"DOTA_Tooltip_ability_imba_disruptor_glimpse_Description"              "Teleports the target hero back to where it was %backtrack_time% seconds ago. Instantly kills illusions.\n<font color='#FF7800'>Glimpse Storm:</font> rips the space and time continuum, creating an electrical storm at the target's landing location. Enemies inside the storm are silenced."
+"DOTA_Tooltip_ability_imba_disruptor_glimpse_Description"              "Teleports the target hero back to where it was %backtrack_time% seconds ago. Instantly kills illusions.\n<font color='#FF7800'>Glimpse Storm:</font> Rips the space and time continuum, creating an electrical storm at the target's landing location. Enemies inside the storm are silenced."
 "DOTA_Tooltip_ability_imba_disruptor_glimpse_Note0"                    "Glimpse storm damages enemies in it area of effect every 0.25 seconds."
 "DOTA_Tooltip_ability_imba_disruptor_glimpse_Lore"                      "Playing with electricity can have unexpected results."
 "DOTA_Tooltip_ability_imba_disruptor_glimpse_cast_range"                "CAST RANGE:"
@@ -1136,7 +1036,7 @@
 // Disruptor's Kinetic Field
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_disruptor_kinetic_field"                    "Kinetic Field"
-"DOTA_Tooltip_ability_imba_disruptor_kinetic_field_Description"                     "After a formation time of %formation_delay% seconds, creates a circular barrier of kinetic energy that enemies can't pass.\n<font color='#FF7800'>Chargeback:</font> enemies that touch the kinetic field's edge are knocked back and damaged. Creeps take considerably lower damage from this effect.\n<font color='#FF7800'>Recharge:</font> when Chargeback is triggered by enemy heroes, Kinetic Field's cooldown is reduced by %cooldown_reduction% seconds."
+"DOTA_Tooltip_ability_imba_disruptor_kinetic_field_Description"                     "After a formation time of %formation_delay% seconds, creates a circular barrier of kinetic energy that enemies can't pass.\n<font color='#FF7800'>Chargeback:</font> Enemies that touch the kinetic field's edge are knocked back and damaged. Creeps take less damage from this effect.\n<font color='#FF7800'>Recharge:</font> When Chargeback is triggered by enemy heroes, Kinetic Field's cooldown is reduced by %cooldown_reduction% seconds."
 "DOTA_Tooltip_ability_imba_disruptor_kinetic_field_Note0"              "Cooldown reduction can only trigger once every 0.2 seconds."
 "DOTA_Tooltip_ability_imba_disruptor_kinetic_field_Lore"                "Electrical or Kinetic energy are simply faces of the same coin for the Disruptor."
 "DOTA_Tooltip_ability_imba_disruptor_kinetic_field_field_radius"                    "RADIUS:"
@@ -1148,7 +1048,7 @@
 // Disruptor's Static Storm
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_disruptor_static_storm"                      "Static Storm"
-"DOTA_Tooltip_ability_imba_disruptor_static_storm_Description"          "Creates a static storm that damages and silences all enemy units in the area. The damage starts off weak, but increases over the duration.\n\n<font color='#FF7800'>Resonance:</font> each enemy inside the storm makes its damage ramp up faster.\n<font color='#FF7800'>Electrocution:</font> the storm's effect linger shortly after exiting its area of effect.\n<font color='#FF7800'>Stormcrafter:</font> consumes all Stormbearer stacks upon cast, increasing the initial damage of Static Storm by %stormbearer_stack_damage% per stack consumed.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
+"DOTA_Tooltip_ability_imba_disruptor_static_storm_Description"          "Creates a static storm that damages and silences all enemy units in the area. The damage starts off weak, but increases over the duration.\n\n<font color='#FF7800'>Resonance:</font> Each enemy inside the storm makes its damage ramp up faster.\n<font color='#FF7800'>Electrocution:</font> The storm's effect lingers shortly after exiting its area of effect.\n<font color='#FF7800'>Stormcrafter:</font> Consumes all Stormbearer stacks upon cast, increasing the initial damage of Static Storm by %stormbearer_stack_damage% per stack consumed.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
 "DOTA_Tooltip_ability_imba_disruptor_static_storm_Lore"                "A summer squall in Druud is a hardship that only an Oglodi can survive."
 "DOTA_Tooltip_ability_imba_disruptor_static_storm_radius"              "RADIUS:"
 "DOTA_Tooltip_ability_imba_disruptor_static_storm_duration"            "DURATION:"
@@ -1162,20 +1062,30 @@
 "DOTA_Tooltip_modifier_imba_static_storm_debuff"                        "Static Storm"
 "DOTA_Tooltip_modifier_imba_static_storm_debuff_Description"            "Silenced and taking damage."
 
-"DOTA_Tooltip_modifier_imba_static_storm_debuff_linger"                "Electrocution"
-"DOTA_Tooltip_modifier_imba_static_storm_debuff_linger_Description"                 "Suffering the aftereffects of static storm."
+"DOTA_Tooltip_modifier_imba_static_storm_debuff_linger"					"Electrocution"
+"DOTA_Tooltip_modifier_imba_static_storm_debuff_linger_Description"		"Suffering the aftereffects of static storm."
+
+"DOTA_Tooltip_modifier_imba_static_storm_talent"						"Intense Currents"
+"DOTA_Tooltip_modifier_imba_static_storm_talent_Description"			"Absorbing dangerous amounts of electricity. Exiting Static Storm will mini-stun for the amount of stacks gathered over a short period of time."
+
+"DOTA_Tooltip_modifier_imba_static_storm_talent_ministun"				"Intense Currents"
+"DOTA_Tooltip_modifier_imba_static_storm_talent_ministun_Description"	"Being mini-stunned."
 
 ////===============================================================================================================
 // Disruptor's Custom Talents
 ////===============================================================================================================
 "DOTA_Tooltip_ability_special_bonus_imba_disruptor_1"                   "Kinetic Field now always pulls units inside it"
 "DOTA_Tooltip_ability_special_bonus_imba_disruptor_2"                   "+1.25 Glimpse Storm linger duration"
-"DOTA_Tooltip_ability_special_bonus_imba_disruptor_3"                   "+0.5 move speed per Stormbearer stack"
-"DOTA_Tooltip_ability_special_bonus_imba_disruptor_4"                   "Thunder Strike slows the main target briefly"
-"DOTA_Tooltip_ability_special_bonus_imba_disruptor_5"                   "+50 maximum Static Storm damage"
-"DOTA_Tooltip_ability_special_bonus_imba_disruptor_6"                   "+1.5 Kinetic Field duration"
-"DOTA_Tooltip_ability_special_bonus_imba_disruptor_7"                   "+1.25 Static Storm damage per pulse"
-"DOTA_Tooltip_ability_special_bonus_imba_disruptor_8"                   "+4 Thunder Strike duration, strikes occur 20% faster"
+"DOTA_Tooltip_ability_special_bonus_imba_disruptor_3"                   "Thunder Strike Chain Lightning"
+"DOTA_Tooltip_ability_special_bonus_imba_disruptor_3_Description"		"Grants a %value%%  chance to release a Chain Lightning per pulse, which bounces between up to %max_targets% enemies within %bounce_radius% range."
+"DOTA_Tooltip_ability_special_bonus_imba_disruptor_4"                   "Thunder Strike Slow"
+"DOTA_Tooltip_ability_special_bonus_imba_disruptor_4_Description" 		"Inflicts 100% movespeed reduction for 0.25 seconds per pulse."
+"DOTA_Tooltip_ability_special_bonus_imba_disruptor_5"                   "Glimpse Storm Expansion"
+"DOTA_Tooltip_ability_special_bonus_imba_disruptor_5_Description"		"Glimpsing an enemy into an already formed Kinetic Field expands Glimpse Storm's size to match."
+"DOTA_Tooltip_ability_special_bonus_imba_disruptor_6"                   "Static Storm builds stacks of mini-stun (applies upon exit)"
+"DOTA_Tooltip_ability_special_bonus_imba_disruptor_7"                   "Doubles Thunder Strike pulses in Static Storm"
+"DOTA_Tooltip_ability_special_bonus_imba_disruptor_8"                   "Enhanced Thunder Strike"
+"DOTA_Tooltip_ability_special_bonus_imba_disruptor_8_Description"       "Increases duration by %value% seconds, and reduces pulse interval by %value2% seconds."
 
 ////===============================================================================================================
 // Doom Bringer's DOOM
@@ -1215,7 +1125,7 @@
 "DOTA_Tooltip_modifier_imba_breathe_fire_debuff_Description"            "Base damage reduced."
 
 "DOTA_Tooltip_ability_imba_dragon_knight_dragon_tail"               "Dragon Tail"
-"DOTA_Tooltip_ability_imba_dragon_knight_dragon_tail_Description"         "Dragon Knight smites an enemy unit in melee range with his shield, stunning it while dealing minor damage.  When in Elder Dragon Form, the cast range increases to %dragon_cast_range%.\n<font color='#FF7800'>My Shield as Weapon:</font> When used during Human Form, grants %instances% Instances of Physical Damage Block for %duration_instances% secs.\n<font color='#FF7800'>Tail Whip:</font> When used during Elder Dragon Form, also stuns enemies in a cone facing the target with a width starting from %starting_radius% ending at %ending_radius% and up to a range %dragon_cast_range%. Lasts for half the duration."
+"DOTA_Tooltip_ability_imba_dragon_knight_dragon_tail_Description"         "Dragon Knight smites an enemy unit in melee range with his shield, stunning it while dealing minor damage.  When in Elder Dragon Form, the cast range increases to %dragon_cast_range%.\n<font color='#FF7800'>My Shield as Weapon:</font> When used during Human Form, grants %instances% instances of physical damage block for %duration_instances% seconds. Some physical damage can be blocked without losing any instances.\n<font color='#FF7800'>Tail Whip:</font> When used during Elder Dragon Form, also stuns enemies in a cone facing the target with a width starting from %starting_radius% ending at %ending_radius% and up to a range %dragon_cast_range%. Lasts for half the duration."
 "DOTA_Tooltip_ability_imba_dragon_knight_dragon_tail_Lore"              "Davion's combination of dragon talents and knightly skills makes him a vicious opponent in melee combat."
 "DOTA_Tooltip_ability_imba_dragon_knight_dragon_tail_stun_duration"         "STUN DURATION:"
 "DOTA_Tooltip_ability_imba_dragon_knight_dragon_tail_instances"           "HUMAN FORM INSTANCES:"
@@ -1223,6 +1133,9 @@
 "DOTA_Tooltip_ability_imba_dragon_knight_dragon_tail_dragon_cast_range"       "DRAGON FORM CAST RANGE:"
 "DOTA_Tooltip_ability_imba_dragon_knight_dragon_tail_start_width"         "DRAGON FORM START WIDTH:"
 "DOTA_Tooltip_ability_imba_dragon_knight_dragon_tail_end_width"           "DRAGON FORM END WIDTH:"
+
+"DOTA_Tooltip_modifier_imba_dragon_tail"							"My Shield as Weapon"
+"DOTA_Tooltip_modifier_imba_dragon_tail_Description"				"Blocking physical attacks."
 
 "DOTA_Tooltip_modifier_imba_dragon_tail_debuff"                   "Dragon Tail"
 "DOTA_Tooltip_modifier_imba_dragon_tail_debuff_Description"             "Stunned!"
@@ -1551,13 +1464,14 @@
 // Lion's Custom Talents
 ////===============================================================================================================
 
-"DOTA_Tooltip_ability_special_bonus_imba_lion_1"            	"Earth Spikes branches off creeps as well"
-"DOTA_Tooltip_ability_special_bonus_imba_lion_2"            	"Hexed targets have Break applied"
-"DOTA_Tooltip_ability_special_bonus_imba_lion_3"            	"Mana Drain Overcharge"
-"DOTA_Tooltip_ability_special_bonus_imba_lion_4"            	"Mana Drain slows target based on missing mana"
-"DOTA_Tooltip_ability_special_bonus_imba_lion_5"            	"FoD refresh if last-hit hero"
-"DOTA_Tooltip_ability_special_bonus_imba_lion_6"            	"Chain Hex spreads to two enemies simultaneously"
-"DOTA_Tooltip_ability_special_bonus_imba_lion_7"            	"Death Spike debuff"
+"DOTA_Tooltip_ability_special_bonus_imba_lion_1"                "Earth Spikes branches off creeps as well"
+"DOTA_Tooltip_ability_special_bonus_imba_lion_2"                "Hexed targets have Break applied"
+"DOTA_Tooltip_ability_special_bonus_imba_lion_3"                "Mana Drain Overcharge"
+"DOTA_Tooltip_ability_special_bonus_imba_lion_3_Description"    "Any mana absorbed beyond full feeds into a separate pool for %duration% seconds, adding to Finger of Death's damage."
+"DOTA_Tooltip_ability_special_bonus_imba_lion_4"                "Mana Drain slows target based on missing mana"
+"DOTA_Tooltip_ability_special_bonus_imba_lion_5"                "FoD's Trigger Finger no longer requires kills"
+"DOTA_Tooltip_ability_special_bonus_imba_lion_6"                "Chain Hex spreads to two enemies simultaneously"
+"DOTA_Tooltip_ability_special_bonus_imba_lion_7"                "Death Spike debuff"
 "DOTA_Tooltip_ability_special_bonus_imba_lion_7_Description"  	"Earth Spike slows targets by 25% and increases damage taken from Finger of Death by 30% for 3 seconds."
 "DOTA_Tooltip_ability_special_bonus_imba_lion_8"            	"Mana Drain targets all enemies in aura range"
 
@@ -1741,11 +1655,11 @@
 // Necrophos's Reaper's Scythe
 ////===============================================================================================================
 
-"DOTA_Tooltip_ability_imba_necrolyte_reapers_scythe"                    "Reaper's Scythe"
+"DOTA_Tooltip_ability_imba_necrolyte_reapers_scythe"								"Reaper's Scythe"
 "DOTA_Tooltip_ability_imba_necrolyte_reapers_scythe_Description"                    "Stuns the target enemy hero for %stun_duration% seconds, then deals damage based on how much life it is missing. Heroes killed by Reaper's Scythe will have a few seconds added to their respawn timer. Any kill under this effect is credited to Necrophos.\n<font color='#FF7800'>Death and Decay:</font> Enemies killed by Reaper's Scythe will still be sick for %debuff_duration% seconds after they respawn or buy back, reducing their attack damage and spell amp.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
-"DOTA_Tooltip_ability_imba_necrolyte_reapers_scythe_aghanim_description"            "Reduces the cooldown of Reaper's Scythe to 55/40/25/25/25/25 seconds."
-"DOTA_Tooltip_ability_imba_necrolyte_reapers_scythe_Lore"              "The amount of death and suffering in the air increases the power of the Necrophos's plague magic."
-"DOTA_Tooltip_ability_imba_necrolyte_reapers_scythe_damage"            "DAMAGE PER MISSING HEALTH:"
+"DOTA_Tooltip_ability_imba_necrolyte_reapers_scythe_aghanim_description"            "Reduces the cooldown of Reaper's Scythe to %scepter_cooldown% seconds."
+"DOTA_Tooltip_ability_imba_necrolyte_reapers_scythe_Lore"							"The amount of death and suffering in the air increases the power of the Necrophos's plague magic."
+"DOTA_Tooltip_ability_imba_necrolyte_reapers_scythe_damage"							"DAMAGE PER MISSING HEALTH:"
 "DOTA_Tooltip_ability_imba_necrolyte_reapers_scythe_damage_reduction_pct"           "%DAMAGE REDUCTION:"
 "DOTA_Tooltip_ability_imba_necrolyte_reapers_scythe_spellpower_reduction"           "%spell amp REDUCTION:"
 "DOTA_Tooltip_ability_imba_necrolyte_reapers_scythe_respawn_increase"               "RESPAWN TIMER SECONDS:"
@@ -2010,7 +1924,7 @@
 "DOTA_Tooltip_ability_imba_obsidian_destroyer_astral_imprisonment_radius"           "IMPLOSION RADIUS:"
 "DOTA_Tooltip_ability_imba_obsidian_destroyer_astral_imprisonment_damage"           "DAMAGE:"
 "DOTA_Tooltip_ability_imba_obsidian_destroyer_astral_imprisonment_prison_duration"  "PRISON DURATION:"
-"DOTA_Tooltip_ability_imba_obsidian_destroyer_astral_imprisonment_prison_movespeed" "PRISON MOVE SPEED:"
+//"DOTA_Tooltip_ability_imba_obsidian_destroyer_astral_imprisonment_prison_movespeed" "PRISON MOVE SPEED:"
 "DOTA_Tooltip_ability_imba_obsidian_destroyer_astral_imprisonment_aghanim_description"  "Astral Imprisonment now steals 5 intelligence when it is applied on an enemy target."
 "DOTA_Tooltip_ability_imba_obsidian_destroyer_astral_imprisonment_cast_range"       "CAST RANGE:"
 
@@ -2022,7 +1936,7 @@
 ////===============================================================================================================
 
 "DOTA_Tooltip_ability_imba_obsidian_destroyer_essence_aura"            "Essence Aura"
-"DOTA_Tooltip_ability_imba_obsidian_destroyer_essence_aura_Description"             "Has %restore_chance_pct%% chance to restore a percentage of nearby allies' mana pool whenever they cast a spell.\n<font color='#FF7800'>Essence Synergy:</font> Whenever an ally triggers Essence Aura, its owner will temporarily gain bonus intelligence."
+"DOTA_Tooltip_ability_imba_obsidian_destroyer_essence_aura_Description"             "Has a %restore_chance_pct%%% chance to restore a percentage of nearby allies' mana pool whenever they cast a spell.\n<font color='#FF7800'>Essence Synergy:</font> Whenever an ally triggers Essence Aura, its owner will temporarily gain bonus intelligence."
 "DOTA_Tooltip_ability_imba_obsidian_destroyer_essence_aura_Note0"                   "Each of Essence Synergy's stacks has independent durations."
 "DOTA_Tooltip_ability_imba_obsidian_destroyer_essence_aura_Note1"                   "The aura owner cannot get Essence Synergy stacks from triggering Essence Aura."
 "DOTA_Tooltip_ability_imba_obsidian_destroyer_essence_aura_Note2"                   "Cannot proc spells that have no mana cost or no cooldown, except for Arcane Orb. Also does not proc on items."
@@ -2073,7 +1987,7 @@
 "DOTA_Tooltip_ability_special_bonus_imba_obsidian_destroyer_6_Description"	"Sanity's Eclipse applies 2x the Mana Burn and 50% more damage towards enemies with INT less than 50% of Outworld Devourer's."
 "DOTA_Tooltip_ability_special_bonus_imba_obsidian_destroyer_7"				"Sanity's Eclipse pierces magic immunity"
 "DOTA_Tooltip_ability_special_bonus_imba_obsidian_destroyer_8"				"Essence Aura Overflow"
-"DOTA_Tooltip_ability_special_bonus_imba_obsidian_destroyer_8_Description"	"Excess Mana gained from Essence Aura is converted into Max Mana for 6 seconds."
+"DOTA_Tooltip_ability_special_bonus_imba_obsidian_destroyer_8_Description"	"Excess Mana gained from Essence Aura is converted into Max Mana for 10 seconds."
 
 // Phantom Lancer
 ////===============================================================================================================
@@ -2656,25 +2570,6 @@
 "DOTA_Tooltip_Ability_special_bonus_imba_riki_8"				"Blink Strike Passive"
 "DOTA_Tooltip_Ability_special_bonus_imba_riki_8"           		"Riki gains 20% chance on attack to cast Blink Strike on the target, backstabbing it."
 
-// Rubick
-////===============================================================================================================
-// Rubick's Telekinesis
-////===============================================================================================================
-"DOTA_Tooltip_ability_imba_rubick_telekinesis"                          "Telekinesis"
-"DOTA_Tooltip_ability_imba_rubick_telekinesis_Description"              "Rubick uses his telekinetic powers to lift an unit into the air briefly, then hurls them back at the ground. The unit lands on the ground with such force that it stuns nearby enemies.\n<font color='#FF7800'>Mind the drop:</font> Also damages all enemies in the impact radius.\n<font color='#FF7800'>Puppeteer:</font> Transposition can also be used on allies. When used in this manner, its cooldown will be shortened to %ally_cooldown% seconds. Allies are rooted instead of stunned, and can be hurled a greater distance away."
-"DOTA_Tooltip_ability_imba_rubick_telekinesis_Lore"                    "All living beings are Rubick's playthings."
-"DOTA_Tooltip_ability_imba_rubick_telekinesis_enemy_lift_duration"                  "ENEMY LIFT TIME:"
-"DOTA_Tooltip_ability_imba_rubick_telekinesis_ally_lift_duration"                   "ALLY LIFT TIME:"
-"DOTA_Tooltip_ability_imba_rubick_telekinesis_impact_radius"            "LANDING RADIUS:"
-"DOTA_Tooltip_ability_imba_rubick_telekinesis_impact_stun_duration"                 "STUN DURATION:"
-"DOTA_Tooltip_ability_imba_rubick_telekinesis_enemy_range"              "ENEMY HURL DISTANCE:"
-"DOTA_Tooltip_ability_imba_rubick_telekinesis_ally_range"              "ALLY HURL DISTANCE:"
-"DOTA_Tooltip_ability_imba_rubick_telekinesis_damage"                  "LANDING DAMAGE:"
-"DOTA_Tooltip_ability_imba_rubick_telekinesis_cast_range"              "CAST RANGE:"
-
-
-
-
 // Sand King
 ////===============================================================================================================
 // Sand King's Burrowstrike
@@ -2763,34 +2658,46 @@
 ////===============================================================================================================
 // Shadow Fiend's Shadowrazes
 ////===============================================================================================================
-"DOTA_Tooltip_ability_imba_nevermore_shadowraze_close"                  "Shadowraze"
-"DOTA_Tooltip_ability_imba_nevermore_shadowraze_close_Description"                  "Shadow Fiend razes the area in front of him, dealing damage to enemy units in an area.\n<font color='#FF7800'>Mastery of the Darkness:</font> Shadow Fiend masters the shadows at high levels, and can manipulate them to his will.\n(close): Shadowraze gets closer and larger at higher levels\n(medium): Shadowraze forms a semi-circle pattern at higher levels\n(far): Shadowraze forms a line, getting farther every level\n<font color='#FF7800'>Shadow Combo:</font> If all three razes hit within %shadow_combo_duration% seconds, the cooldowns are reset. This effect can only trigger once every %combo_prevention_duration% seconds.\n<font color='#FF7800'>Soul Raze:</font> Damage increases with each soul that Shadow Fiend possesses."
-"DOTA_Tooltip_ability_imba_nevermore_shadowraze_close_Lore"            "Nevermore's trademark for harvesting souls."
-"DOTA_Tooltip_ability_imba_nevermore_shadowraze_close_Note0"            "When upgrading one of the three Shadowrazes, the other two levels up with it as well."
-"DOTA_Tooltip_ability_imba_nevermore_shadowraze_close_Note1"            "Although the raze comes closer, the initial area of effect is always included."
-"DOTA_Tooltip_ability_imba_nevermore_shadowraze_close_damage"          "BASE DAMAGE:"
-"DOTA_Tooltip_ability_imba_nevermore_shadowraze_close_raze_radius"                  "RADIUS:"
-"DOTA_Tooltip_ability_imba_nevermore_shadowraze_close_raze_distance"                "DISTANCE:"
-"DOTA_Tooltip_ability_imba_nevermore_shadowraze_close_damage_per_soul"              "BONUS DAMAGE PER SOUL:"
+"DOTA_Tooltip_ability_imba_nevermore_shadowraze_close"					"Shadowraze"
+"DOTA_Tooltip_ability_imba_nevermore_shadowraze_close_Description"		"Shadow Fiend razes the ground directly in front of him, dealing damage to enemy units in the area. Adds a stacking damage amplifier on the target that causes the enemy to take bonus Shadow Raze damage per stack.\n<font color='#FF7800'>Mastery of the Darkness:</font> Shadow Fiend masters the shadows at high levels, and can manipulate them to his will.\n(Close): Shadowraze radius increases, while range decreases.\n<font color='#FF7800'>Shadow Combo:</font> Landing %combo_threshold% razes within %shadow_combo_duration% (refreshes each successful Shadowraze) resets the cooldown of all Shadowrazes. This effect can only trigger once every %combo_prevention_duration% seconds.\n<font color='#FF7800'>Soul Raze:</font> Increases damage by %damage_per_soul% per Necromastery soul."
+"DOTA_Tooltip_ability_imba_nevermore_shadowraze_close_Lore"						"Nevermore's trademark for harvesting souls."
+"DOTA_Tooltip_ability_imba_nevermore_shadowraze_close_Note0"					"Stack duration refreshes on stack gain."
+"DOTA_Tooltip_ability_imba_nevermore_shadowraze_close_damage"					"BASE DAMAGE:"
+"DOTA_Tooltip_ability_imba_nevermore_shadowraze_close_raze_distance"			"RANGE:"
+"DOTA_Tooltip_ability_imba_nevermore_shadowraze_close_stack_bonus_damage"		"BONUS PER STACK:"
+"DOTA_Tooltip_ability_imba_nevermore_shadowraze_close_duration"					"STACK DURATION:"
+"DOTA_Tooltip_ability_imba_nevermore_shadowraze_close_raze_radius"				"RADIUS:"
 
-"DOTA_Tooltip_ability_imba_nevermore_shadowraze_medium"                "Shadowraze"
-"DOTA_Tooltip_ability_imba_nevermore_shadowraze_medium_Description"                 "Shadow Fiend razes the area in front of him, dealing damage to enemy units in an area.\n<font color='#FF7800'>Mastery of the Darkness:</font> Shadow Fiend masters the shadows at high levels, and can manipulate them to his will.\n(close): Shadowraze gets closer and larger at higher levels\n(medium): Shadowraze forms a semi-circle pattern at higher levels\n(far): Shadowraze forms a line, getting farther every level\n<font color='#FF7800'>Shadow Combo:</font> If all three razes hit within %shadow_combo_duration% seconds, the cooldowns are reset. This effect can only trigger once every %combo_prevention_duration% seconds.\n<font color='#FF7800'>Soul Raze:</font> Damage increases with each soul that Shadow Fiend possesses."
+"DOTA_Tooltip_ability_imba_nevermore_shadowraze_medium"					"Shadowraze"
+"DOTA_Tooltip_ability_imba_nevermore_shadowraze_medium_Description"		"Shadow Fiend razes the ground a short distance away from him, dealing damage to enemy units in the area. Adds a stacking damage amplifier on the target that causes the enemy to take bonus Shadow Raze damage per stack.\n<font color='#FF7800'>Mastery of the Darkness:</font> Shadow Fiend masters the shadows at high levels, and can manipulate them to his will.\n(Medium): Shadowraze gains %additional_raze_count% additional razes in a semi-circular pattern.\n<font color='#FF7800'>Shadow Combo:</font> Landing %combo_threshold% razes within %shadow_combo_duration% (refreshes each successful Shadowraze) resets the cooldown of all Shadowrazes. This effect can only trigger once every %combo_prevention_duration% seconds.\n<font color='#FF7800'>Soul Raze:</font> Increases damage by %damage_per_soul% per Necromastery soul."
 "DOTA_Tooltip_ability_imba_nevermore_shadowraze_medium_Lore"            "Nevermore's trademark for harvesting souls."
-"DOTA_Tooltip_ability_imba_nevermore_shadowraze_medium_Note0"          "When upgrading one of the three Shadowrazes, the other two levels up with it as well."
+"DOTA_Tooltip_ability_imba_nevermore_shadowraze_medium_Note0"          "Stack duration refreshes on stack gain."
 "DOTA_Tooltip_ability_imba_nevermore_shadowraze_medium_Note1"          "Each raze is formed 35 degrees to the left or right of the raze before it."
-"DOTA_Tooltip_ability_imba_nevermore_shadowraze_medium_damage"          "BASE DAMAGE:"
+"DOTA_Tooltip_ability_imba_nevermore_shadowraze_medium_damage"          			"BASE DAMAGE:"
+"DOTA_Tooltip_ability_imba_nevermore_shadowraze_medium_raze_distance"               "RANGE:"
+"DOTA_Tooltip_ability_imba_nevermore_shadowraze_medium_stack_bonus_damage"			"BONUS PER STACK:"
+"DOTA_Tooltip_ability_imba_nevermore_shadowraze_medium_duration"			"STACK DURATION:"
 "DOTA_Tooltip_ability_imba_nevermore_shadowraze_medium_raze_radius"                 "RADIUS:"
-"DOTA_Tooltip_ability_imba_nevermore_shadowraze_medium_raze_distance"               "DISTANCE:"
-"DOTA_Tooltip_ability_imba_nevermore_shadowraze_medium_damage_per_soul"             "BONUS DAMAGE PER SOUL:"
-"DOTA_Tooltip_ability_imba_nevermore_shadowraze_medium_additional_raze_count"       "ADDITIONAL RAZES:"
 
-"DOTA_Tooltip_ability_imba_nevermore_shadowraze_far"                    "Shadowraze"
-"DOTA_Tooltip_ability_imba_nevermore_shadowraze_far_Description"                    "Shadow Fiend razes the area in front of him, dealing damage to enemy units in an area.\n<font color='#FF7800'>Mastery of the Darkness:</font> Shadow Fiend masters the shadows at high levels, and can manipulate them to his will.\n(close): Shadowraze gets closer and larger at higher levels\n(medium): Shadowraze forms a semi-circle pattern at higher levels\n(far): Shadowraze forms a line, getting farther every level\n<font color='#FF7800'>Shadow Combo:</font> If all three razes hit within %shadow_combo_duration% seconds, the cooldowns are reset. This effect can only trigger once every %combo_prevention_duration% seconds.\n<font color='#FF7800'>Soul Raze:</font> Damage increases with each soul that Shadow Fiend possesses."
+"DOTA_Tooltip_ability_imba_nevermore_shadowraze_far"					"Shadowraze"
+"DOTA_Tooltip_ability_imba_nevermore_shadowraze_far_Description"		"Shadow Fiend razes the ground a longer distance away from him, dealing damage to enemy units in the area. Adds a stacking damage amplifier on the target that causes the enemy to take bonus Shadow Raze damage per stack.\n<font color='#FF7800'>Mastery of the Darkness:</font> Shadow Fiend masters the shadows at high levels, and can manipulate them to his will.\n(Far): Shadowraze gains an additional raze each level, forming a line:\nLevel 2: %level_5_raze_distance% range, %level_5_raze_radius% radius\nLevel 3: -%level_6_raze_distance% range, %level_6_raze_radius% radius\nLevel 4: %level_7_raze_distance% range, %level_7_raze_radius% radius\n<font color='#FF7800'>Shadow Combo:</font> Landing %combo_threshold% razes within %shadow_combo_duration% (refreshes each successful Shadowraze) resets the cooldown of all Shadowrazes. This effect can only trigger once every %combo_prevention_duration% seconds.\n<font color='#FF7800'>Soul Raze:</font> Increases damage by %damage_per_soul% per Necromastery soul."
 "DOTA_Tooltip_ability_imba_nevermore_shadowraze_far_Lore"              "Nevermore's trademark for harvesting souls."
-"DOTA_Tooltip_ability_imba_nevermore_shadowraze_far_Note0"              "When upgrading one of the three Shadowrazes, the other two levels up with it as well."
-"DOTA_Tooltip_ability_imba_nevermore_shadowraze_far_Note1"              "The additional razes appear in addition to the usual one."
-"DOTA_Tooltip_ability_imba_nevermore_shadowraze_far_damage"            "BASE DAMAGE:"
-"DOTA_Tooltip_ability_imba_nevermore_shadowraze_far_damage_per_soul"                "BONUS DAMAGE PER SOUL:"
+"DOTA_Tooltip_ability_imba_nevermore_shadowraze_far_Note0"				"Stack duration refreshes on stack gain."
+
+"DOTA_Tooltip_ability_imba_nevermore_shadowraze_far_damage"					"BASE DAMAGE:"
+"DOTA_Tooltip_ability_imba_nevermore_shadowraze_far_main_raze_distance"		"RANGE:"
+"DOTA_Tooltip_ability_imba_nevermore_shadowraze_far_stack_bonus_damage"		"BONUS PER STACK:"
+"DOTA_Tooltip_ability_imba_nevermore_shadowraze_far_duration"				"STACK DURATION:"
+"DOTA_Tooltip_ability_imba_nevermore_shadowraze_far_main_raze_radius"		"RADIUS:"
+
+"DOTA_Tooltip_modifier_shadow_raze_combo"								"Shadow Combo"
+"DOTA_Tooltip_modifier_shadow_raze_combo_Description"					"Successfully hit an enemy with Shadowraze. Upon reaching three or more stacks, all Shadowraze cooldowns are reset."
+
+"DOTA_Tooltip_modifier_shadow_raze_prevention"							"Shadow Combo Prevention"
+"DOTA_Tooltip_modifier_shadow_raze_prevention_Description"				"Shadow Combo has been recently triggered, and is currently on cooldown."
+
+"DOTA_Tooltip_modifier_imba_shadowraze_debuff"							"Shadowraze"
+"DOTA_Tooltip_modifier_imba_shadowraze_debuff_Description"				"Adding bonus damage to each Shadowraze attack per stack."
 
 ////===============================================================================================================
 // Shadow Fiend's Necromastery
@@ -2804,17 +2711,20 @@
 "DOTA_Tooltip_ability_imba_nevermore_necromastery_max_temporary_souls_pct"          "%TEMPORARY SOULS:"
 
 "DOTA_Tooltip_modifier_imba_necromastery_souls"					"Necromastery"
-"DOTA_Tooltip_modifier_imba_necromastery_souls_Description"		"Stored souls grants additional bonus damage."
+"DOTA_Tooltip_modifier_imba_necromastery_souls_Description"		"Stored souls granting an additional %dMODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE% bonus damage."
 
 ////===============================================================================================================
 // Shadow Fiend's Presence of the Dark Lord
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_nevermore_dark_lord"                        "Presence of the Dark Lord"
-"DOTA_Tooltip_ability_imba_nevermore_dark_lord_Description"            "Shadow Fiend's presence reduces the armor and vision range of nearby enemies.\n<font color='#FF7800'>Creeping Presence:</font> Enemy heroes hit by razes under this aura will have their armor reduced for %raze_reduction_duration% seconds, which refreshes when another raze hits, up to %max_stacks% times."
+"DOTA_Tooltip_ability_imba_nevermore_dark_lord_Description"            "Shadow Fiend's presence reduces the armor of nearby enemies.\n<font color='#FF7800'>Even Stone Trembles: </font> Affects buildings.\n<font color='#FF7800'>Creeping Presence:</font> Enemy heroes hit by Shadowraze under the effects of this aura gain a stack of Presence, and have their armor reduced by an additional %raze_armor_reduction% per stack for %raze_reduction_duration% seconds. Refreshes when another raze hits, and stacks up to %max_stacks% times."
 "DOTA_Tooltip_ability_imba_nevermore_dark_lord_Lore"                    "Even being near Nevermore eats away at one's soul."
 "DOTA_Tooltip_ability_imba_nevermore_dark_lord_aura_radius"            "AURA RADIUS:"
 "DOTA_Tooltip_ability_imba_nevermore_dark_lord_armor_reduction"                     "ARMOR REDUCTION:"
-"DOTA_Tooltip_ability_imba_nevermore_dark_lord_raze_armor_reduction"                "RAZE ARMOR REDUCTION:"
+"DOTA_Tooltip_ability_imba_nevermore_dark_lord_"                "RAZE ARMOR REDUCTION:"
+
+"DOTA_Tooltip_modifier_imba_dark_lord_debuff"							"Presence of the Dark Lord"
+"DOTA_Tooltip_modifier_imba_dark_lord_debuff_Description"				"Shadow Fiend's presence reduces your armor by %dMODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS%."
 
 ////===============================================================================================================
 // Shadow Fiend's Requiem of Souls
@@ -2830,6 +2740,12 @@
 "DOTA_Tooltip_ability_imba_nevermore_requiem_slow_duration"            "SLOW DURATION:"
 "DOTA_Tooltip_ability_imba_nevermore_requiem_scepter_line_damage_pct"               "%SCEPTER RETURNING LINES DAMAGE:"
 "DOTA_Tooltip_ability_imba_nevermore_requiem_aghanim_description"                   "Souls now return to Shadow Fiend, damaging enemies again on their return, and healing him for all damage dealt. Also darkens the screens of enemy players hit by Requiem of Souls for the duration of the slow."
+
+"DOTA_Tooltip_modifier_imba_reqiuem_debuff"								"Requiem of Souls"
+"DOTA_Tooltip_modifier_imba_reqiuem_debuff_Description"					"Movement speed reduced by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%, damage reduced by %dMODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE%%%."
+
+"DOTA_Tooltip_modifier_imba_reqiuem_harvest"						"Soul Frenzy"
+"DOTA_Tooltip_modifier_imba_reqiuem_harvest_Description"			"Shadowrazes have no cooldown. Effect ends if a Shadowraze hits no enemies."
 ////===============================================================================================================
 // Shadow Fiend's Custom Talents
 ////===============================================================================================================
@@ -2839,8 +2755,8 @@
 "DOTA_Tooltip_ability_special_bonus_imba_nevermore_2_Description"		"Necromastery can be activated to consume souls and heal 80 hp/soul. Will spare souls if he don't need them all to heal completely. Has a 12s cooldown."
 "DOTA_Tooltip_ability_special_bonus_imba_nevermore_3"					"Necromastery Stack Cap Increase on Hero Kill"
 "DOTA_Tooltip_ability_special_bonus_imba_nevermore_3_Description"       "Permanently increases your soul stacks cap on Necromastery by 1 each time you kill an enemy hero."
-"DOTA_Tooltip_ability_special_bonus_imba_nevermore_4"                   "+0.4% lifesteal per Necromastery soul"
-"DOTA_Tooltip_ability_special_bonus_imba_nevermore_5"                   "Presence gains a soul from all heroes affected"
+"DOTA_Tooltip_ability_special_bonus_imba_nevermore_4"                   "+0.5% lifesteal per Necromastery soul"
+"DOTA_Tooltip_ability_special_bonus_imba_nevermore_5"                   "Presence gains a soul from affected heroes per second"
 "DOTA_Tooltip_ability_special_bonus_imba_nevermore_6"                   "Shadowraze refreshes Requiem of Souls' debuff"
 "DOTA_Tooltip_ability_special_bonus_imba_nevermore_7"                   "Necromastery souls are not lost when dying"
 "DOTA_Tooltip_ability_special_bonus_imba_nevermore_8"                   "Shadowraze cast point halved during Soul Frenzy"
@@ -3025,40 +2941,41 @@
 ////===============================================================================================================
 // Slardar's Guardian Sprint
 ////===============================================================================================================
-"DOTA_Tooltip_ability_imba_slardar_guardian_sprint"                    "Guardian Sprint"
-"DOTA_Tooltip_ability_imba_slardar_guardian_sprint_Description"                     "Slardar slithers to the van. For %duration% seconds, Slardar moves significantly faster and phases through units, but becomes more vulnerable to damage.\n<font color='#FF7800'>Rip Current:</font> while sprinting, Guardian Sprint is replaced by Rip Current, a skill that allows Slardar to propel himself forward. Can only be used while moving through an unit. Enemy units in %radius% radius of the landing point are stunned for %stun_duration% seconds, take damage, and are slowed for %slow_duration% seconds.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
-"DOTA_Tooltip_ability_imba_slardar_guardian_sprint_Lore"                "As Slardar has made the transition from the Deeps, it has been necessary to use his powerful tail for sprinting instead of swimming."
-"DOTA_Tooltip_ability_imba_slardar_guardian_sprint_Note0"              "While Slardar is using Rip Current and is being pushed forward, he cannot act and is fully invulnerable."
-"DOTA_Tooltip_ability_imba_slardar_guardian_sprint_ms_bonus_pct"                    "%INCREASED MOVE SPEED:"
-"DOTA_Tooltip_ability_imba_slardar_guardian_sprint_damage_amp_pct"                  "%DAMAGE AMPLIFICATION:"
-"DOTA_Tooltip_ability_imba_slardar_guardian_sprint_ms_slow_pct"                     "%RIP CURRENT SLOW:"
-"DOTA_Tooltip_ability_imba_slardar_guardian_sprint_damage"              "RIP CURRENT DAMAGE:"
-"DOTA_Tooltip_ability_imba_slardar_guardian_sprint_aghanim_description"             "While inside your Rain Cloud, gain 15% movement speed and decrease damage taken by 10%."
+"DOTA_Tooltip_ability_imba_slardar_guardian_sprint"							"Guardian Sprint"
+"DOTA_Tooltip_ability_imba_slardar_guardian_sprint_Description"				"Slardar slithers ahead, moving significantly faster and passing through units. At ability level 4, Slardar may move at 700 speed while in the river.\n<font color='#FF7800'>Rip Current:</font> While sprinting, Guardian Sprint is replaced by Rip Current, a skill that allows Slardar to propel himself forward %distance% units. Enemy units around the landing point are stunned for %stun_duration% seconds, take damage, and are slowed for %slow_duration% seconds.\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
+"DOTA_Tooltip_ability_imba_slardar_guardian_sprint_Lore"                	"As Slardar has made the transition from the Deeps, it has been necessary to use his powerful tail for sprinting instead of swimming."
 
-"DOTA_Tooltip_modifier_imba_guardian_sprint_buff"                      "Guardian Sprint"
-"DOTA_Tooltip_modifier_imba_guardian_sprint_buff_Description"          "Phased and gaining bonus move speed."
+"DOTA_Tooltip_ability_imba_slardar_guardian_sprint_ms_bonus_pct"			"%BONUS MOVE SPEED:"
+"DOTA_Tooltip_ability_imba_slardar_guardian_sprint_duration"				"DURATION:"
+"DOTA_Tooltip_ability_imba_slardar_guardian_sprint_radius"					"RIP TIDE RADIUS:"
+"DOTA_Tooltip_ability_imba_slardar_guardian_sprint_damage"					"RIP TIDE DAMAGE:"
+"DOTA_Tooltip_ability_imba_slardar_guardian_sprint_aghanim_description"		"While inside your Rain Cloud, gain 15% additional movement speed and decrease damage taken by 10%."
 
-"DOTA_Tooltip_modifier_imba_rip_current_stun"                          "Rip Current"
-"DOTA_Tooltip_modifier_imba_rip_current_stun_Description"              "Stunned."
+"DOTA_Tooltip_modifier_imba_guardian_sprint_buff"							"Guardian Sprint"
+"DOTA_Tooltip_modifier_imba_guardian_sprint_buff_Description"				"Phased and gaining bonus move speed."
 
-"DOTA_Tooltip_modifier_imba_rip_current_slow"                          "Rip Current"
-"DOTA_Tooltip_modifier_imba_rip_current_slow_Description"              "Slowed by Rip Current."
+"DOTA_Tooltip_modifier_imba_guardian_sprint_river"							"River Haste"
+"DOTA_Tooltip_modifier_imba_guardian_sprint_river_Description"				"Moving at %dMODIFIER_PROPERTY_MOVESPEED_ABSOLUTE_MIN% hasted speed in the river."
+
+"DOTA_Tooltip_modifier_imba_rip_current_stun"								"Rip Current"
+"DOTA_Tooltip_modifier_imba_rip_current_stun_Description"					"Stunned."
+
+"DOTA_Tooltip_modifier_imba_rip_current_slow"								"Rip Current"
+"DOTA_Tooltip_modifier_imba_rip_current_slow_Description"					"Slowed by Rip Current."
 
 ////===============================================================================================================
 // Slardar's Slithereen Crush
 ////===============================================================================================================
-"DOTA_Tooltip_ability_imba_slardar_slithereen_crush"                    "Slithereen Crush"
-"DOTA_Tooltip_ability_imba_slardar_slithereen_crush_Description"                    "Slams the ground, stunning and damaging nearby enemies. After the stun, the affected units are slowed.\n<font color='#FF7800'>Royal Break:</font> enemies hit by Slithereen Crush are affected by Royal Break, becoming unable to block or evade the next few attacks.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
-"DOTA_Tooltip_ability_imba_slardar_slithereen_crush_aghanim_description"            "While inside your Rain Cloud, Slithereen Crush's radius is increased by 50%."
-"DOTA_Tooltip_ability_imba_slardar_slithereen_crush_Lore"              "A swift crush of might and water breaks even the toughest of defenses."
-"DOTA_Tooltip_ability_imba_slardar_slithereen_crush_radius"            "RADIUS:"
-"DOTA_Tooltip_ability_imba_slardar_slithereen_crush_stun_duration"                  "STUN DURATION:"
-"DOTA_Tooltip_ability_imba_slardar_slithereen_crush_slow_duration"                  "SLOW DURATION:"
-"DOTA_Tooltip_ability_imba_slardar_slithereen_crush_ms_slow_pct"                    "%MOVE SLOW:"
-"DOTA_Tooltip_ability_imba_slardar_slithereen_crush_as_slow"            "ATTACK SLOW:"
-"DOTA_Tooltip_ability_imba_slardar_slithereen_crush_damage"            "DAMAGE:"
-"DOTA_Tooltip_ability_imba_slardar_slithereen_crush_royal_break_duration"           "ROYAL BREAK DURATION:"
-"DOTA_Tooltip_ability_imba_slardar_slithereen_crush_royal_break_attacks"            "ROYAL BREAK ATTACKS:"
+"DOTA_Tooltip_ability_imba_slardar_slithereen_crush"						"Slithereen Crush"
+"DOTA_Tooltip_ability_imba_slardar_slithereen_crush_Description"			"Slams the ground, stunning and damaging nearby enemies. After the stun, the affected units are slowed.\n<font color='#FF7800'>Royal Break:</font> Enemies hit by Slithereen Crush are affected by Royal Break for %royal_break_duration% seconds, becoming unable to block or evade the next %royal_break_attacks% attacks.\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
+"DOTA_Tooltip_ability_imba_slardar_slithereen_crush_aghanim_description"	"While inside your Rain Cloud, Slithereen Crush's radius is increased by 50%."
+"DOTA_Tooltip_ability_imba_slardar_slithereen_crush_Lore"					"A swift crush of might and water breaks even the toughest of defenses."
+"DOTA_Tooltip_ability_imba_slardar_slithereen_crush_radius"					"RADIUS:"
+"DOTA_Tooltip_ability_imba_slardar_slithereen_crush_ms_slow_pct"			"%MOVE SLOW:"
+"DOTA_Tooltip_ability_imba_slardar_slithereen_crush_as_slow"				"ATTACK SLOW:"
+"DOTA_Tooltip_ability_imba_slardar_slithereen_crush_stun_duration"			"STUN DURATION:"
+"DOTA_Tooltip_ability_imba_slardar_slithereen_crush_slow_duration"			"SLOW DURATION:"
+"DOTA_Tooltip_ability_imba_slardar_slithereen_crush_damage"					"DAMAGE:"
 
 "DOTA_Tooltip_modifier_imba_slithereen_crush_stun"                      "Slithereen Crush"
 "DOTA_Tooltip_modifier_imba_slithereen_crush_stun_Description"          "Stunned."
@@ -3066,20 +2983,20 @@
 "DOTA_Tooltip_modifier_imba_slithereen_crush_slow"                      "Slithereen Crush"
 "DOTA_Tooltip_modifier_imba_slithereen_crush_slow_Description"          "Movement speed slowed."
 
-"DOTA_Tooltip_modifier_imba_slithereen_crush_royal_break"              "Royal Break"
-"DOTA_Tooltip_modifier_imba_slithereen_crush_royal_break_Description"               "Unable to evade or block attacks."
+"DOTA_Tooltip_modifier_imba_slithereen_crush_royal_break"				"Royal Break"
+"DOTA_Tooltip_modifier_imba_slithereen_crush_royal_break_Description"	"Unable to evade or block attacks."
 
 ////===============================================================================================================
 // Slardar's Bash of the Deep
 ////===============================================================================================================
-"DOTA_Tooltip_ability_imba_slardar_bash_of_the_deep"                    "Bash of the Deep"
-"DOTA_Tooltip_ability_imba_slardar_bash_of_the_deep_Description"                    "Grants a chance that your attacks will do bonus damage and stun the enemy for %hero_stun_duration% second. Duration is doubled against creeps.\n<font color='#FF7800'>Forceful Smack:</font> attacking an enemy that is already stunned (from any source) results in increased damage and extends the stun's duration by %extend_duration% second. Can only extend each source of stun once."
-"DOTA_Tooltip_ability_imba_slardar_bash_of_the_deep_Note0"              "Cannot extend stuns from passive bashes, including Abyssal's active."
-"DOTA_Tooltip_ability_imba_slardar_bash_of_the_deep_Note1"              "Stun extension and bonus damage happen in place of a bash, not in addition to it."
-"DOTA_Tooltip_ability_imba_slardar_bash_of_the_deep_Lore"              "Thieves of the wealth of the Deep Ones meet the brutality of the Slithereen Guard in melee combat."
-"DOTA_Tooltip_ability_imba_slardar_bash_of_the_deep_bash_chance_pct"                "%BASH CHANCE:"
-"DOTA_Tooltip_ability_imba_slardar_bash_of_the_deep_bash_damage"                    "BASH DAMAGE:"
-"DOTA_Tooltip_ability_imba_slardar_bash_of_the_deep_damage_smack"                   "SARDINE SLAP DAMAGE:"
+"DOTA_Tooltip_ability_imba_slardar_bash_of_the_deep"					"Bash of the Deep"
+"DOTA_Tooltip_ability_imba_slardar_bash_of_the_deep_Description"		"Grants a chance that an attack will do bonus damage and stun an enemy. The duration is doubled against creeps.\n<font color='#FF7800'>Forceful Smack:</font> Attacking an enemy that is already stunned deals an additional %damage_smack% damage and extends the stun's duration by %extend_duration% second. Can only extend each source of stun once."
+"DOTA_Tooltip_ability_imba_slardar_bash_of_the_deep_Note0"				"Does not stack with Skull Basher."
+"DOTA_Tooltip_ability_imba_slardar_bash_of_the_deep_Note1"				"Forceful Smack does not extend stun duration of passive bashes."
+"DOTA_Tooltip_ability_imba_slardar_bash_of_the_deep_Lore"				"Thieves of the wealth of the Deep Ones meet the brutality of the Slithereen Guard in melee combat."
+"DOTA_Tooltip_ability_imba_slardar_bash_of_the_deep_bash_chance_pct"	"%CHANCE:"
+"DOTA_Tooltip_ability_imba_slardar_bash_of_the_deep_bash_damage"		"BONUS DAMAGE:"
+"DOTA_Tooltip_ability_imba_slardar_bash_of_the_deep_duration" 			"DURATION:"
 
 "DOTA_Tooltip_modifier_imba_bash_of_the_deep_stun"                      "Bash of The Deep"
 "DOTA_Tooltip_modifier_imba_bash_of_the_deep_stun_Description"          "Stunned, bashed, IN YOUR FACE!"
@@ -3087,47 +3004,61 @@
 ////===============================================================================================================
 // Slardar's Corrosive Haze
 ////===============================================================================================================
-"DOTA_Tooltip_ability_imba_slardar_corrosive_haze"                      "Corrosive Haze"
-"DOTA_Tooltip_ability_imba_slardar_corrosive_haze_Description"          "Reduces enemy armor to amplify physical damage and provides True Sight of the targeted unit, revealing invisibility.\n<font color='#FF7800'>Slipstream:</font> enemies are affected by Slipstream, gaining a chance to slip on every attack, completely negating that attack's damage and slowing their movement by %slip_up_ms_loss_pct%%% for %slip_up_duration% seconds. Enemies already affected by Slipstream cannot proc it again.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
-"DOTA_Tooltip_ability_imba_slardar_corrosive_haze_aghanim_description"              "Adds a new ability: <font color='#FF7800'>Rain Cloud:</font> Passively creates a cloud that follows Slardar around. While the cloud soakes Slardar in rainwater, all his skills improve, using their full potential. While inside your Rain Cloud, enemies affected by Corrosive Haze take 30% increased damage from any source while they are stunned."
-"DOTA_Tooltip_ability_imba_slardar_corrosive_haze_Lore"                "Even the strongest armor counts for little when left to the brine of the sea."
-"DOTA_Tooltip_ability_imba_slardar_corrosive_haze_duration"            "DURATION:"
-"DOTA_Tooltip_ability_imba_slardar_corrosive_haze_armor_reduction"                  "ARMOR REDUCTION:"
-"DOTA_Tooltip_ability_imba_slardar_corrosive_haze_slip_up_chance_pct"               "%SLIPSTREAM CHANCE:"
-"DOTA_Tooltip_ability_imba_slardar_corrosive_haze_slip_up_duration"                 "SLIPSTREAM DURATION:"
+"DOTA_Tooltip_ability_imba_slardar_corrosive_haze"							"Corrosive Haze"
+"DOTA_Tooltip_ability_imba_slardar_corrosive_haze_Description"				"Reduces enemy armor to amplify physical damage and provides True Sight of the targeted unit, revealing invisibility.\n<font color='#FF7800'>Slipstream:</font> Enemies are additionally affected by Slipstream, granting a chance to slip on every attack. Slipping completely negates that attack's damage and slows the target's movement speed by %slip_up_ms_loss_pct%%% for %slip_up_duration% seconds. Enemies already affected by Slipstream cannot proc it again.\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
+"DOTA_Tooltip_ability_imba_slardar_corrosive_haze_aghanim_description"		"Adds a new ability: Rain Cloud. Passively creates a cloud that follows Slardar around. While the cloud soaks Slardar in rainwater, many of his skills are improved. While inside your Rain Cloud, enemies affected by Corrosive Haze take 30% increased damage from any source while they are stunned."
+"DOTA_Tooltip_ability_imba_slardar_corrosive_haze_Lore"						"Even the strongest armor counts for little when left to the brine of the sea."
+"DOTA_Tooltip_ability_imba_slardar_corrosive_haze_armor_reduction"			"ARMOR REDUCTION:"
+"DOTA_Tooltip_ability_imba_slardar_corrosive_haze_duration"					"DURATION:"
+"DOTA_Tooltip_ability_imba_slardar_corrosive_haze_slip_up_chance_pct"		"%SLIPSTREAM CHANCE:"
 
-"DOTA_Tooltip_modifier_imba_corrosive_haze_debuff"                      "Corrosive Haze"
-"DOTA_Tooltip_modifier_imba_corrosive_haze_debuff_Description"          "Reduced armor. Visible to the enemy team."
+"DOTA_Tooltip_modifier_imba_corrosive_haze_debuff"                      	"Corrosive Haze"
+"DOTA_Tooltip_modifier_imba_corrosive_haze_debuff_Description"				"Armor reduced by %dMODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS%.\nProvides True Sight to Slardar."
 
-"DOTA_Tooltip_modifier_imba_corrosive_haze_debuff_secondary"            "Corrosive Haze"
-"DOTA_Tooltip_modifier_imba_corrosive_haze_debuff_secondary_Description"            "Reduced armor. Visible to the enemy team."
+"DOTA_Tooltip_modifier_imba_corrosive_haze_debuff_secondary"				"Corrosive Haze"
+"DOTA_Tooltip_modifier_imba_corrosive_haze_debuff_secondary_Description"	"Reduced armor. Visible to the enemy team."
 
-"DOTA_Tooltip_modifier_imba_corrosive_haze_slip_debuff"                "Slipstream"
-"DOTA_Tooltip_modifier_imba_corrosive_haze_slip_debuff_Description"                 "Movement speed greatly slowed."
+"DOTA_Tooltip_modifier_imba_corrosive_haze_slip_debuff"						"Slipstream"
+"DOTA_Tooltip_modifier_imba_corrosive_haze_slip_debuff_Description"			"Movement speed slowed by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%."
+
+"DOTA_Tooltip_modifier_imba_corrosive_haze_talent_buff"						"Scaling Up"
+"DOTA_Tooltip_modifier_imba_corrosive_haze_talent_buff_Description"			"Stealing %dMODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS% armor through Corrosive Haze."
 
 ////===============================================================================================================
 // Slardar's Rain Cloud
 ////===============================================================================================================
-"DOTA_Tooltip_ability_imba_slardar_rain_cloud"                          "Rain Cloud"
-"DOTA_Tooltip_ability_imba_slardar_rain_cloud_Description"              "A rain cloud passively chases Slardar, drenching him in seawater that restores his full potential. Slardar's skills become stronger when below the Rain Cloud. Its movement speed is %velocity_pct%% of Slardar's. If Slardar wanders too far away from the Rain Cloud, it will speed up to catch up with him."
-"DOTA_Tooltip_ability_imba_slardar_rain_cloud_Note0"                    "If Slardar wanders even further away (through a teleport scroll, for example), the Rain Cloud becomes even faster, until it nears him again."
-"DOTA_Tooltip_ability_imba_slardar_rain_cloud_Lore"                    "Merfolk are greatly disadvantaged when fighting on dry land, but even a few drops of water can be enough to restore their full potential."
-"DOTA_Tooltip_ability_imba_slardar_rain_cloud_aura_radius"              "EFFECT RADIUS:"
+"DOTA_Tooltip_ability_imba_slardar_rain_cloud"							"Rain Cloud"
+"DOTA_Tooltip_ability_imba_slardar_rain_cloud_Description"				"A rain cloud passively chases Slardar at a percentage of his base movement speed, drenching him in seawater that restores his full potential, amplifying many of his skills. If Slardar wanders too far away from the Rain Cloud, it will speed up to catch up with him."
+"DOTA_Tooltip_ability_imba_slardar_rain_cloud_Note0"					"Rain Cloud acts like an aura, with effects lingering for 0.5 seconds after leaving the cloud."
+"DOTA_Tooltip_ability_imba_slardar_rain_cloud_Note1"					"Speed multipliers stack."
+"DOTA_Tooltip_ability_imba_slardar_rain_cloud_Lore"						"Merfolk are greatly disadvantaged when fighting on dry land, but even a few drops of water can be enough to restore their full potential."
+"DOTA_Tooltip_ability_imba_slardar_rain_cloud_velocity_pct"				"% CLOUD SPEED (% OF BASE SPEED):"
+"DOTA_Tooltip_ability_imba_slardar_rain_cloud_aura_radius"				"EFFECT RADIUS:"
+"DOTA_Tooltip_ability_imba_slardar_rain_cloud_distance_speed_up_1"		"DISTANCE CAP 1:"
+"DOTA_Tooltip_ability_imba_slardar_rain_cloud_speed_up_1_multiplier"	"SPEED MULTIPLIER 1:"
+"DOTA_Tooltip_ability_imba_slardar_rain_cloud_distance_speed_up_2"		"DISTANCE CAP 2:"
+"DOTA_Tooltip_ability_imba_slardar_rain_cloud_speed_up_2_multiplier"	"SPEED MULTIPLIER 2:"
 
-"DOTA_Tooltip_modifier_imba_rain_cloud_buff"                            "Rain Cloud"
-"DOTA_Tooltip_modifier_imba_rain_cloud_buff_Description"                "Slardar's skills are stronger under the Rain Cloud."
+"DOTA_Tooltip_modifier_imba_rain_cloud_buff"							"Rain Cloud"
+"DOTA_Tooltip_modifier_imba_rain_cloud_buff_Description"				"Slardar's skills are stronger under the Rain Cloud."
 
 ////===============================================================================================================
 // Slardar's Custom Talents
 ////===============================================================================================================
-"DOTA_Tooltip_ability_special_bonus_imba_slardar_1"                     "+125 radius and +50 damage to Rip Current"
+"DOTA_Tooltip_ability_special_bonus_imba_slardar_1"                     "2x radius and damage to Rip Current"
 "DOTA_Tooltip_ability_special_bonus_imba_slardar_2"                     "-60 attack speed when Sprinting on enemies"
 "DOTA_Tooltip_ability_special_bonus_imba_slardar_3"                     "+0.25 Forceful Smack duration"
-"DOTA_Tooltip_ability_special_bonus_imba_slardar_4"                     "+12% Slipstream miss/trigger chance"
+"DOTA_Tooltip_ability_special_bonus_imba_slardar_4"                     "10% Slipstream miss/trigger chance"
 "DOTA_Tooltip_ability_special_bonus_imba_slardar_5"                     "Rip Current can always be cast when sprinting"
 "DOTA_Tooltip_ability_special_bonus_imba_slardar_6"                     "Casts a second free Slithereen Crush"
 "DOTA_Tooltip_ability_special_bonus_imba_slardar_7"                     "Corrosive Haze applies in AoE for half armor"
 "DOTA_Tooltip_ability_special_bonus_imba_slardar_8"                     "-3 armor per physical damage on Corrosive Haze"
+"DOTA_Tooltip_ability_special_bonus_imba_slardar_9"						"Bash of the Deep affects buildings"
+"DOTA_Tooltip_ability_special_bonus_imba_slardar_10"                    "Depression"
+"DOTA_Tooltip_ability_special_bonus_imba_slardar_10_Description" 		"Rain Cloud moves twice as fast, and passively applies Slithereen Crush's slow and Corrosive Haze (at 1/4 the duration)."
+"DOTA_Tooltip_ability_special_bonus_imba_slardar_11"                    "Corrosive Haze Armor Transfer"
+"DOTA_Tooltip_ability_special_bonus_imba_slardar_11_Description" 		"Each instance of physical damage on affected enemy heroes temporarily transfers one armor to the caster, up to the original reduction value."
+"DOTA_Tooltip_ability_special_bonus_imba_slardar_12"                    "Corrosive Haze Undispellable"
 
 // Sniper
 ////===============================================================================================================
@@ -4138,7 +4069,7 @@
 ////===============================================================================================================
 
 "DOTA_Tooltip_ability_imba_wraith_king_mortal_strike"                  "Mortal Strike"
-"DOTA_Tooltip_ability_imba_wraith_king_mortal_strike_Description"                   "The King's strikes have a chance to crit, increasing damage signifcantly. Deals higher damage to creeps.\n<font color='#FF7800'>Behold Your King:</font> Whenever a critical strike occurs, Wraith King gains bonus health based on damage dealt to the enemy. Bonus health stacks infinitely, but each stack has its own duration. Critting a hero multiplies the stacks gained."
+"DOTA_Tooltip_ability_imba_wraith_king_mortal_strike_Description"		"The King's strikes have a chance to crit, increasing damage signifcantly. Deals higher damage to creeps.\n<font color='#FF7800'>Behold Your King:</font> Whenever a critical strike occurs, Wraith King gains bonus health based on damage dealt to the enemy. Bonus health stacks infinitely, but each stack has its own duration. Critting a hero multiplies the stacks gained.\n<font color='#FF7800'>Guillotine:</font> Instantly kills non-ancient creeps on critical strike, dealing their health as pure damage."
 "DOTA_Tooltip_ability_imba_wraith_king_mortal_strike_Note0"            "Each stack represents 10 health, and it is also rounded up when calculating stacks."
 "DOTA_Tooltip_ability_imba_wraith_king_mortal_strike_Lore"              "One blow to crush a foe."
 "DOTA_Tooltip_ability_imba_wraith_king_mortal_strike_crit_chance"                   "%CRIT CHANCE:"
@@ -4235,60 +4166,3 @@
 ////===============================================================================================================
 
 "npc_imba_wraith_king_wraith"                              "Wraith"
-
-// Ghost Revenant
-////===============================================================================================================
-// Ghost Revenant: Wraith
-////===============================================================================================================
-
-"DOTA_Tooltip_ability_ghost_revenant_blackjack"             "Blackjack"
-"DOTA_Tooltip_ability_ghost_revenant_blackjack_Description"       "Fires 3 orbs in parralel line that each move at 800 units per second. These orbs deal damage and stun any units caught at the tip of the AoE."
-"DOTA_Tooltip_ability_ghost_revenant_blackjack_stun_duration"     "STUN DURATION:"
-"DOTA_Tooltip_ability_ghost_revenant_blackjack_damage"          "DAMAGE:"
-"DOTA_Tooltip_ability_ghost_revenant_blackjack_projectile_radius"   "PROJECTILE RADIUS:"
-"DOTA_Tooltip_ability_ghost_revenant_blackjack_projectile_length"   "PROJECTILE LENGTH:"
-"DOTA_Tooltip_ability_ghost_revenant_blackjack_projectile_speed"    "PROJECTILE SPEED:"
-"DOTA_Tooltip_ability_ghost_revenant_blackjack_projectile_amount"   "NUMBER OF PROJECTILES:"
-"DOTA_Tooltip_ability_ghost_revenant_blackjack_projectile_vision"   "PROJECTILE VISION:"
-
-"DOTA_Tooltip_modifier_ghost_revenant_blackjack_debuff"         "Blackjack"
-"DOTA_Tooltip_modifier_ghost_revenant_blackjack_debuff_Description"   "Stunned by a Blackjack orb."
-
-"DOTA_Tooltip_ability_ghost_revenant_wraith"              "Wraith"
-"DOTA_Tooltip_ability_ghost_revenant_wraith_Description"        "Puts the hero into the Ethereal state for x seconds, at the same time increasing MS."
-"DOTA_Tooltip_ability_ghost_revenant_wraith_res_reduction_pct"      "%MAGIC RESIST REDUCTION:"
-"DOTA_Tooltip_ability_ghost_revenant_wraith_bonus_ms_pct"       "%BONUS MOVEMENT SPEED:"
-"DOTA_Tooltip_ability_ghost_revenant_wraith_duration"         "DURATION:"
-
-"DOTA_Tooltip_modifier_ghost_revenant_wraith"             "Wraith"
-"DOTA_Tooltip_modifier_ghost_revenant_wraith_Description"       "Immune to physical damage."
-
-"DOTA_Tooltip_ability_ghost_revenant_miasma"              "Miasma"
-"DOTA_Tooltip_ability_ghost_revenant_miasma_Description"        "Deals damage to all enemy units in an x AoE and applies a buff. This buff reveals invisible units and deals damage over time."
-"DOTA_Tooltip_ability_ghost_revenant_miasma_area_of_effect"       "AREA OF EFFECT:"
-"DOTA_Tooltip_ability_ghost_revenant_miasma_tick"           "TICK TIME:"
-"DOTA_Tooltip_ability_ghost_revenant_miasma_duration"         "DURATION:"
-"DOTA_Tooltip_ability_ghost_revenant_miasma_dmg_per_sec"        "DAMAGE PER SEC:"
-"DOTA_Tooltip_ability_ghost_revenant_miasma_dmg_pct_per_sec"      "%HEALTH AS DAMAGE PER SEC:"
-
-"DOTA_Tooltip_modifier_ghost_revenant_miasma"             "Miasma"
-"DOTA_Tooltip_modifier_ghost_revenant_miasma_Description"       "Taking %dmg_per_sec% damage over time, and revealed to enemies."
-
-"DOTA_Tooltip_ability_ghost_revenant_ghost_immolation"          "Ghost Immolation"
-"DOTA_Tooltip_ability_ghost_revenant_ghost_immolation_Description"    "Reduces enemies maximum's health every second. Enemies recover their max health slowly after running away from the Ghost Revenant."
-"DOTA_Tooltip_ability_ghost_revenant_ghost_immolation_radius"     "RADIUS:"
-"DOTA_Tooltip_ability_ghost_revenant_ghost_immolation_tick_time"    "TICK TIME:"
-"DOTA_Tooltip_ability_ghost_revenant_ghost_immolation_hp_loss_pct"    "%HP LOSS:"
-
-"DOTA_Tooltip_modifier_ghost_revenant_ghost_immolation_debuff"        "Ghost Immolation"
-"DOTA_Tooltip_modifier_ghost_revenant_ghost_immolation_debuff_Description"  "Losing a percent of your max health."
-
-"DOTA_Tooltip_ability_ghost_revenant_exhaustion"            "Exhaustion"
-"DOTA_Tooltip_ability_ghost_revenant_exhaustion_Description"      "Reduces the movement speed of every enemy units on the map."
-"DOTA_Tooltip_ability_ghost_revenant_exhaustion_ms_reduction_pct"   "%MOVEMENT SPEED:"
-"DOTA_Tooltip_ability_ghost_revenant_exhaustion_duration"       "DURATION:"
-
-"DOTA_Tooltip_modifier_ghost_revenant_exhaustion"           "Exhaustion"
-"DOTA_Tooltip_modifier_ghost_revenant_exhaustion_Description"     "Movespeed reduced by %ms_reduction_pct% ."
-
-"DOTA_Tooltip_ability_special_bonus_imba_ghost_revenant_1"       "+2 Blackjack projectiles"

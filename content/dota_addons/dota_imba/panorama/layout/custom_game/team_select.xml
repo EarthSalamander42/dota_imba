@@ -1,9 +1,8 @@
 <root>
 	<styles>
-		<include src="file://{resources}/styles/dotastyles.css" />
-		<include src="file://{resources}/styles/play.css" />
+		<include src="file://{resources}/styles/dotastyles.vcss_c" />
+		<include src="file://{resources}/styles/play.vcss_c" />
 		<include src="file://{resources}/styles/custom_game/team_select.css" />
-		<include src="file://{resources}/styles/custom_game/auto_team_select.css" />
 	</styles>
 
 	<scripts>
@@ -12,13 +11,7 @@
 	</scripts>
 
 	<Panel hittest="false" class="TeamSelect">
-		<Panel hittest="false" id="auto_team_select_container" class="invisible">
-			<Label id="auto_team_select_label" text="Powered by IMBA Matchmaking™" />
-			<Label id="auto_team_select_time" text="Loading . . ."/> 
-		</Panel>
-		<Panel hittest="false" id="TeamSelectContainer" class="invisible"
-			selectionpos="auto">
-			`
+		<Panel hittest="false" id="TeamSelectContainer" class="invisible" selectionpos="auto">
 			<!--Empty space to let the loading screen and chat be visible -->
 			<Panel hittest="false" id="TeamsSelectEmptySpace" />
 

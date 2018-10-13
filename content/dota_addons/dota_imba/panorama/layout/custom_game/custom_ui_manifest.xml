@@ -1,31 +1,25 @@
-<root>
-
-	<scripts>
-		<include src="file://{resources}/scripts/custom_game/leveldots.js" />
-	</scripts>
-
+<root> 
 	<script>
-		// Uncomment any of the following lines in order to disable that portion of the default UI
-		//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_TOP_TIMEOFDAY, false );				//Time of day (clock).
-		//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_ACTION_PANEL, false );					//Hero actions UI.
-		//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_ACTION_MINIMAP, false );				//Minimap.
-		//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_INVENTORY_PANEL, false );				//Entire Inventory UI
-		//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_INVENTORY_SHOP, false );				//Shop portion of the Inventory.
-		//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_INVENTORY_ITEMS, false );				//Player items.
-		//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_INVENTORY_QUICKBUY, false );			//Quickbuy.
-		//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_INVENTORY_COURIER, false );			//Courier controls.
-		//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_INVENTORY_PROTECT, false );			//Glyph.
-		//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_INVENTORY_GOLD, false );				//Gold display.
-		//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_SHOP_SUGGESTEDITEMS, false );			//Suggested items shop panel.
-		//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_TOP_MENU_BUTTONS, false );				//Top-left menu buttons in the HUD.
-		//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_TOP_BAR_BACKGROUND, false );			//Top-left menu buttons in the HUD.
+		//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_TOP_TIMEOFDAY, false );      //Time of day (clock).
+		//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_TOP_HEROES, false );     //Heroes and team score at the top of the HUD.
+		//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_ACTION_PANEL, false );     //Hero actions UI.
+		//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_ACTION_MINIMAP, false );     //Minimap.
+		//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_INVENTORY_PANEL, false );      //Entire Inventory UI
+		//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_INVENTORY_SHOP, false );     //Shop portion of the Inventory. 
+		//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_INVENTORY_ITEMS, false );      //Player items.
+		//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_INVENTORY_QUICKBUY, false );     //Quickbuy.
+		//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_INVENTORY_COURIER, false );      //Courier controls.
+		//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_INVENTORY_PROTECT, false );      //Glyph.
+		//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_INVENTORY_GOLD, false );     //Gold display.
+		//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_SHOP_SUGGESTEDITEMS, false );      //Suggested items shop panel.
+		//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_HERO_SELECTION_TEAMS, false );     //Hero selection Radiant and Dire player lists.
+		//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_HERO_SELECTION_GAME_NAME, false );     //Hero selection game mode name display.
+		//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_HERO_SELECTION_CLOCK, false );     //Hero selection clock.
+		//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_TOP_MENU_BUTTONS, false );     //Top-left menu buttons in the HUD.
+		//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_TOP_BAR_BACKGROUND, false );     //Top-left menu buttons in the HUD.
 
-		//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_TOP_HEROES, false );						//Heroes and team score at the top of the HUD.
-		GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_FLYOUT_SCOREBOARD, false );				//Lefthand flyout scoreboard.
-		GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_HERO_SELECTION_TEAMS, false );			//Hero selection Radiant and Dire player lists.
-		GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_HERO_SELECTION_GAME_NAME, false );		//Hero selection game mode name display.
-		GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_HERO_SELECTION_CLOCK, false );			//Hero selection clock.
-		GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_ENDGAME, false );						//Endgame scoreboard.
+		GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_FLYOUT_SCOREBOARD, false );      //Lefthand flyout scoreboard.
+		GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_ENDGAME, false );      //Endgame scoreboard.    
 
 		GameEvents.Subscribe("CreateIngameErrorMessage", function(data) 
 		{
@@ -37,182 +31,85 @@
 			})
 		})
 
-		// These lines set up the panorama colors used by each team (for game select/setup, etc)
 		GameUI.CustomUIConfig().team_colors = {}
 		GameUI.CustomUIConfig().team_names = {}
-		GameUI.CustomUIConfig().team_icons = {}
 
-		var map_info = Game.GetMapInfo();
-		if (map_info.map_display_name == "imba_overthrow") {
-			GameUI.CustomUIConfig().multiteam_top_scoreboard =
-			{
-				reorder_team_scores: true,
-				LeftInjectXMLFile: "file://{resources}/layout/custom_game/overthrow_scoreboard_left.xml",
-				TeamOverlayXMLFile: "file://{resources}/layout/custom_game/overthrow_scoreboard_team_overlay.xml"
-			};
-			GameUI.CustomUIConfig().team_logo_xml = "file://{resources}/layout/custom_game/overthrow_team_icon.xml";
-			GameUI.CustomUIConfig().team_logo_large_xml = "file://{resources}/layout/custom_game/overthrow_team_icon_large.xml";
+		GameUI.CustomUIConfig().team_colors[DOTATeam_t.DOTA_TEAM_GOODGUYS] = "#08640E;"; // Format this later using rgbtohex lib, and taking team color in settings.lua
+		GameUI.CustomUIConfig().team_colors[DOTATeam_t.DOTA_TEAM_BADGUYS ] = "#640808;"; // Format this later using rgbtohex lib, and taking team color in settings.lua
 
-			GameUI.CustomUIConfig().team_names[DOTATeam_t.DOTA_TEAM_GOODGUYS] = "Teal Tiger";
-			GameUI.CustomUIConfig().team_names[DOTATeam_t.DOTA_TEAM_BADGUYS] = "Dire";
-			GameUI.CustomUIConfig().team_names[DOTATeam_t.DOTA_TEAM_CUSTOM_1] = "Pink Dragon";
-			GameUI.CustomUIConfig().team_names[DOTATeam_t.DOTA_TEAM_CUSTOM_2] = "Orange Dog";
-			GameUI.CustomUIConfig().team_names[DOTATeam_t.DOTA_TEAM_CUSTOM_3] = "Blue Rooster";
-			GameUI.CustomUIConfig().team_colors[DOTATeam_t.DOTA_TEAM_GOODGUYS] = "#3dd296;"; // { 61, 210, 150 }	--		Teal
-			GameUI.CustomUIConfig().team_colors[DOTATeam_t.DOTA_TEAM_BADGUYS ] = "#F3C909;"; // { 243, 201, 9 }		--		Yellow
-			GameUI.CustomUIConfig().team_colors[DOTATeam_t.DOTA_TEAM_CUSTOM_1] = "#c54da8;"; // { 197, 77, 168 }	--		Pink
-			GameUI.CustomUIConfig().team_colors[DOTATeam_t.DOTA_TEAM_CUSTOM_2] = "#FF6C00;"; // { 255, 108, 0 }		--		Orange
-			GameUI.CustomUIConfig().team_colors[DOTATeam_t.DOTA_TEAM_CUSTOM_3] = "#3455FF;"; // { 52, 85, 255 }		--		Blue
-			GameUI.CustomUIConfig().team_icons[DOTATeam_t.DOTA_TEAM_GOODGUYS] = "file://{images}/custom_game/team_icons/team_icon_tiger_01.png";
-			GameUI.CustomUIConfig().team_icons[DOTATeam_t.DOTA_TEAM_BADGUYS ] = "file://{images}/custom_game/team_icons/team_icon_monkey_01.png";
-			GameUI.CustomUIConfig().team_icons[DOTATeam_t.DOTA_TEAM_CUSTOM_1] = "file://{images}/custom_game/team_icons/team_icon_dragon_01.png";
-			GameUI.CustomUIConfig().team_icons[DOTATeam_t.DOTA_TEAM_CUSTOM_2] = "file://{images}/custom_game/team_icons/team_icon_dog_01.png";
-			GameUI.CustomUIConfig().team_icons[DOTATeam_t.DOTA_TEAM_CUSTOM_3] = "file://{images}/custom_game/team_icons/team_icon_rooster_01.png";
-		} else if (map_info.map_display_name == "cavern") {
-			GameUI.CustomUIConfig().team_colors[DOTATeam_t.DOTA_TEAM_GOODGUYS] = "#08640E;";
-			GameUI.CustomUIConfig().team_colors[DOTATeam_t.DOTA_TEAM_BADGUYS ] = "#640808;";
-			GameUI.CustomUIConfig().team_colors[DOTATeam_t.DOTA_TEAM_CUSTOM_1] = "#f3c909;"; // { 243, 201, 9 }		--		Yellow
-			GameUI.CustomUIConfig().team_colors[DOTATeam_t.DOTA_TEAM_CUSTOM_2] = "#FF6C00;"; // { 255, 108, 0 }		--		Orange
-			GameUI.CustomUIConfig().team_colors[DOTATeam_t.DOTA_TEAM_CUSTOM_3] = "#3455FF;"; // { 52, 85, 255 }		--		Blue
-			GameUI.CustomUIConfig().team_colors[DOTATeam_t.DOTA_TEAM_CUSTOM_4] = "#65d413;"; // { 101, 212, 19 }	--		Green
-			GameUI.CustomUIConfig().team_colors[DOTATeam_t.DOTA_TEAM_CUSTOM_5] = "#815336;"; // { 129, 83, 54 }		--		Brown
-			GameUI.CustomUIConfig().team_colors[DOTATeam_t.DOTA_TEAM_CUSTOM_6] = "#1bc0d8;"; // { 27, 192, 216 }	--		Cyan
-			GameUI.CustomUIConfig().team_colors[DOTATeam_t.DOTA_TEAM_CUSTOM_7] = "#c7e40d;"; // { 199, 228, 13 }	--		Olive
-			GameUI.CustomUIConfig().team_colors[DOTATeam_t.DOTA_TEAM_CUSTOM_8] = "#8c2af4;"; // { 140, 42, 244 }	--		Purple
+		GameUI.CustomUIConfig().team_names[DOTATeam_t.DOTA_TEAM_GOODGUYS] = "Radiant";
+		GameUI.CustomUIConfig().team_names[DOTATeam_t.DOTA_TEAM_BADGUYS] = "Dire";
 
-			GameUI.CustomUIConfig().team_icons[DOTATeam_t.DOTA_TEAM_CUSTOM_1] = "s2r://panorama/images/team_icons/team_icon_dragon_01_png.vtex";
-			GameUI.CustomUIConfig().team_icons[DOTATeam_t.DOTA_TEAM_CUSTOM_2] = "s2r://panorama/images/team_icons/team_icon_dog_01_png.vtex";
-			GameUI.CustomUIConfig().team_icons[DOTATeam_t.DOTA_TEAM_CUSTOM_3] = "s2r://panorama/images/team_icons/team_icon_rooster_01_png.vtex";
-			GameUI.CustomUIConfig().team_icons[DOTATeam_t.DOTA_TEAM_CUSTOM_4] = "s2r://panorama/images/team_icons/team_icon_ram_01_png.vtex";
-			GameUI.CustomUIConfig().team_icons[DOTATeam_t.DOTA_TEAM_CUSTOM_5] = "s2r://panorama/images/team_icons/team_icon_rat_01_png.vtex";
-			GameUI.CustomUIConfig().team_icons[DOTATeam_t.DOTA_TEAM_CUSTOM_6] = "s2r://panorama/images/team_icons/team_icon_boar_01_png.vtex";
-			GameUI.CustomUIConfig().team_icons[DOTATeam_t.DOTA_TEAM_CUSTOM_7] = "s2r://panorama/images/team_icons/team_icon_snake_01_png.vtex";
-			GameUI.CustomUIConfig().team_icons[DOTATeam_t.DOTA_TEAM_CUSTOM_8] = "s2r://panorama/images/team_icons/team_icon_horse_01_png.vtex";
-		} else {
-			GameUI.CustomUIConfig().team_names[DOTATeam_t.DOTA_TEAM_GOODGUYS] = "Radiant";
-			GameUI.CustomUIConfig().team_names[DOTATeam_t.DOTA_TEAM_BADGUYS] = "Dire";
-			GameUI.CustomUIConfig().team_colors[DOTATeam_t.DOTA_TEAM_GOODGUYS] = "#08640E;";
-			GameUI.CustomUIConfig().team_colors[DOTATeam_t.DOTA_TEAM_BADGUYS ] = "#640808;";
-			GameUI.CustomUIConfig().team_colors[DOTATeam_t.DOTA_TEAM_CUSTOM_1] = "#c54da8;"; // { 197, 77, 168 }	--		Pink
-			GameUI.CustomUIConfig().team_colors[DOTATeam_t.DOTA_TEAM_CUSTOM_2] = "#FF6C00;"; // { 255, 108, 0 }		--		Orange
-			GameUI.CustomUIConfig().team_colors[DOTATeam_t.DOTA_TEAM_CUSTOM_3] = "#3455FF;"; // { 52, 85, 255 }		--		Blue
-		}
-
-		// These lines set up the panorama colors used by each player on the top scoreboard
-		GameUI.CustomUIConfig().player_colors = {}
-		GameUI.CustomUIConfig().player_colors[0] = "#4385FF;";
-		GameUI.CustomUIConfig().player_colors[1] = "#AAFFC3;";
-		GameUI.CustomUIConfig().player_colors[2] = "#820096;";
-		GameUI.CustomUIConfig().player_colors[3] = "#FFEA00;";
-		GameUI.CustomUIConfig().player_colors[4] = "#FF9900;";
-		GameUI.CustomUIConfig().player_colors[5] = "#BEFF00;";
-		GameUI.CustomUIConfig().player_colors[6] = "#FF0000;";
-		GameUI.CustomUIConfig().player_colors[7] = "#008080;";
-		GameUI.CustomUIConfig().player_colors[8] = "#FFFAC8;";
-		GameUI.CustomUIConfig().player_colors[9] = "#313131;";
-		GameUI.CustomUIConfig().player_colors[10] = "#FF00FF;";
-		GameUI.CustomUIConfig().player_colors[11] = "#808000;";
-		GameUI.CustomUIConfig().player_colors[12] = "#64FFFF;";
-		GameUI.CustomUIConfig().player_colors[13] = "#00BE00;";
-		GameUI.CustomUIConfig().player_colors[14] = "#AA6E28;";
-		GameUI.CustomUIConfig().player_colors[15] = "#000080;";
-		GameUI.CustomUIConfig().player_colors[16] = "#E6BEFF;";
-		GameUI.CustomUIConfig().player_colors[17] = "#800000;";
-		GameUI.CustomUIConfig().player_colors[18] = "#909090;";
-		GameUI.CustomUIConfig().player_colors[19] = "#FEFEFE;";
-		GameUI.CustomUIConfig().player_colors[20] = "#A6A6A6;";
-		GameUI.CustomUIConfig().player_colors[21] = "#FF59FF;";
-		GameUI.CustomUIConfig().player_colors[22] = "#CBFF59;";
-		GameUI.CustomUIConfig().player_colors[23] = "#6CA7FF;";
-
-		// HUD Hack, made by Cookies #42 [Earth Salamander]
-		// Hide normal picking screen
+		// fix for battlepass button being in middle of the way of clock time until
 		var Parent = $.GetContextPanel().GetParent().GetParent()
-		var hudElements = Parent.FindChildTraverse("HUDElements");
-		var CustomUIRoot = Parent.FindChildTraverse("CustomUIRoot");
-		Parent.FindChildTraverse("PreGame").style.visibility = "collapse";
-		hudElements.FindChildTraverse("combat_events").style.visibility = "collapse";
-
-		// DISABLED UNTIL A FIX IS FOUND FOR RIGHT MINIMAP BUG
-		//Buff Bar
-//		var BuffBar = hudElements.FindChildTraverse("lower_hud").FindChildTraverse("buffs")
-//		BuffBar.style.width = "30%";
-//		BuffBar.style.marginLeft = "40%";
-
-		//DeBuff Bar
-//		var DeBuffBar = hudElements.FindChildTraverse("lower_hud").FindChildTraverse("debuffs")
-//		DeBuffBar.style.width = "30%";
-//		DeBuffBar.style.marginBottom = "40.5%";
-//		DeBuffBar.style.marginRight = "30%";
-//		DeBuffBar.style.flowChildren = "right";
-
-		//Recommended Talent
-		var TalentGuide = hudElements.FindChildTraverse("lower_hud").FindChildTraverse("center_with_stats")
-//		TalentGuide.FindChildTraverse("RecommendedUpgradeOverlay").style.visibility = "collapse";
-
-		//Fix 4 digits levels
-		var LevelLabel = TalentGuide.FindChildTraverse("center_block").FindChildTraverse("xp").FindChildTraverse("LevelLabel")
-		LevelLabel.style.width = "50px";
-
-		//Tooltips Background change, need to be setup after pre-game state
-//		var Tooltips = Parent.FindChildTraverse("Tooltips");
-//		var TooltipsAB = Tooltips.FindChildTraverse("DOTAAbilityTooltip");
-//		var TooltipsBG = TooltipsAB.FindChildTraverse("Contents")
-//		TooltipsBG.style.backgroundColor = "#101010ga";
-
-		//TopBar
-		var topbar = hudElements.FindChildTraverse("topbar");
-		var topbarRadiant = topbar.FindChildTraverse("TopBarRadiantTeam");
-		var topbarRadiantContainer = topbarRadiant.FindChildTraverse("TopBarRadiantPlayersContainer");
-		var topbarDire = topbar.FindChildTraverse("TopBarDireTeam");
-		var topbarDireContainer = topbarDire.FindChildTraverse("TopBarDirePlayersContainer");
-		var TimeUntil = hudElements.FindChildTraverse("topbar").FindChildTraverse("TimeUntil");
-
+		var hudElements = Parent.FindChildTraverse("HUDElements")
+		var TimeUntil = hudElements.FindChildTraverse("TimeUntil");
 		TimeUntil.style.marginBottom = "0px";
 
-		if (map_info.map_display_name == "imba_overthrow") {
-			topbar.style.visibility = "collapse";
-		} else {
-			for (var tbg of topbarRadiant.FindChildrenWithClassTraverse("TeamBackground")) {
-				for (var tbbg of tbg.FindChildrenWithClassTraverse("TopBarBackground")) {
-					tbbg.style.backgroundSize = '0%';
-					tbbg.style.backgroundColor = '#000000da';
-				}
-			}
+		//Fix 3 digits levels (up to 4)
+		var Parent = $.GetContextPanel().GetParent().GetParent()
+		Parent.FindChildTraverse("LevelLabel").style.width = "50px";
 
-			for (var tbg of topbarDire.FindChildrenWithClassTraverse("TeamBackground")) {
-				for (var tbbg of tbg.FindChildrenWithClassTraverse("TopBarBackground")) {
-					tbbg.style.backgroundSize = '0%';
-					tbbg.style.backgroundColor = '#000000da';
-				}
+		// setup modified vanilla HUD in loading screen
+//		if (Game.GetMapInfo().map_display_name == "imba_mutation_5v5" || Game.GetMapInfo().map_display_name == "imba_mutation_10v10")
+			SetupLoadingScreen()
+
+		function SetupLoadingScreen() {
+			if (Parent.FindChildTraverse("GameAndPlayersRoot") == undefined || Parent.FindChildTraverse("TeamsList") == undefined || Parent.FindChildTraverse("TeamsListGroup") == undefined || Parent.FindChildTraverse("CancelAndUnlockButton") == undefined || Parent.FindChildTraverse("UnassignedPlayerPanel") == undefined || Parent.FindChildTraverse("ShuffleTeamAssignmentButton") == undefined)
+				$.Schedule(0.25, SetupLoadingScreen);
+			else {
+				Parent.FindChildTraverse("GameAndPlayersRoot").style.backgroundColor = "rgba(50, 128, 50, 0.2)";
+				Parent.FindChildTraverse("GameAndPlayersRoot").style.borderRadius = "3px";
+				Parent.FindChildTraverse("GameAndPlayersRoot").style.boxShadow = "black -4px -4px 8px 8px";
+				Parent.FindChildTraverse("TeamsList").style.visibility = "collapse";
+				Parent.FindChildTraverse("TeamsListGroup").SetParent(Parent.FindChildTraverse("GameAndPlayersRoot"))
+				Parent.FindChildTraverse("TeamsListGroup").style.verticalAlign = "top";
+				Parent.FindChildTraverse("TeamsListGroup").style.width = "99%";
+				Parent.FindChildTraverse("UnassignedPlayerPanel").style.visibility = "collapse";
+				Parent.FindChildTraverse("CancelAndUnlockButton").style.visibility = "collapse";
+				Parent.FindChildTraverse("ShuffleTeamAssignmentButton").style.visibility = "collapse";
 			}
 		}
 
-		// CUSTOM HUD
-//		hudElements.FindChildTraverse("lower_hud").style.visibility = "collapse"		
+		// Unit Side Tab visible in mutation mod
+		Parent.FindChildTraverse("HeroDisplay").style.zIndex = "1";
+
+		// Nice topbar colors
+		var topbar = hudElements.FindChildTraverse("topbar");
+		var topbarRadiant = topbar.FindChildTraverse("TopBarRadiantTeam");
+		var topbarDire = topbar.FindChildTraverse("TopBarDireTeam");
+
+		for (var tbg of topbarRadiant.FindChildrenWithClassTraverse("TeamBackground")) {
+			for (var tbbg of tbg.FindChildrenWithClassTraverse("TopBarBackground")) {
+				tbbg.style.backgroundSize = '0%';
+				tbbg.style.backgroundColor = '#000000da';
+			}
+		}
+
+		for (var tbg of topbarDire.FindChildrenWithClassTraverse("TeamBackground")) {
+			for (var tbbg of tbg.FindChildrenWithClassTraverse("TopBarBackground")) {
+				tbbg.style.backgroundSize = '0%';
+				tbbg.style.backgroundColor = '#000000da';
+			}
+		}
 	</script>
 
 	<Panel>
-	<!-- CustomUIElements go here.  They are not provided currently as valve's parser reads commented lines and attempts to link them in.-->
-<!--	<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/hud_main.xml" /> -->
-		<CustomUIElement type="Hud" 				layoutfile="file://{resources}/layout/custom_game/hud_main.xml" />
-		<CustomUIElement type="HudTopBar"			layoutfile="file://{resources}/layout/custom_game/cavern_top_bar.xml" />
-		<CustomUIElement type="FlyoutScoreboard"	layoutfile="file://{resources}/layout/custom_game/cavern_scoreboard.xml" />
-		<CustomUIElement type="GameInfo" layoutfile="file://{resources}/layout/custom_game/imba_game_info.xml" />
-		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/mutation.xml" />
-		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/gg.xml" />
-		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/worldpanels.xml" />
-		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/overthrow_item_notification.xml" />
-		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/combat_events.xml" />
-		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/imba_imr.xml" />
-		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/hero_selection.xml" />
-<!--		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/netgraph.xml" /> -->
-		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/diretide.xml" />
-		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/precache.xml" />
-		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/team_select.xml" />
-		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/game_mode.xml" />
-		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/barebones_notifications.xml" />
-		<CustomUIElement type="EndScreen" layoutfile="file://{resources}/layout/custom_game/multiteam_end_screen.xml" />
+		<!-- CustomUIElements go here.-->
+		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/barebones_notifications.xml" /> 
+		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/ardm_precache.xml" /> 
+		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/gg.xml" /> 
+		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/combat_events.xml" /> 
+		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/hero_selection.xml" /> 
+		<CustomUIElement type="GameInfo" layoutfile="file://{resources}/layout/custom_game/imba_game_info.xml" /> 
+<!--		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/diretide.xml" /> -->
+		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/imba_imr.xml" /> 
+		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/mutation.xml" /> 
+		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/precache.xml" /> 
+		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/overthrow_item_notification.xml" /> 
+		<CustomUIElement type="EndScreen" layoutfile="file://{resources}/layout/custom_game/imba_end_screen.xml" />
 		<CustomUIElement type="FlyoutScoreboard" layoutfile="file://{resources}/layout/custom_game/multiteam_flyout_scoreboard.xml" />
+
+<!--		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/team_select.xml" /> -->
 	</Panel>
 </root>

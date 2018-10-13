@@ -18,7 +18,7 @@
 
 // Abaddon's Aphotic Shield
 "DOTA_Tooltip_ability_imba_abaddon_aphotic_shield"                      "Aphotic Shield"
-"DOTA_Tooltip_ability_imba_abaddon_aphotic_shield_Description"          "Creates a shield around an allied unit that absorbs a set amount of damage (<font color='#FF7800'>blocks damage after reductions.</font>) before expiring. When destroyed, the shield will burst, dealing damage equal to the amount it could absorb to an area around it, <font color='#FF7800'>in addition to applying a basic dispel to all allies and enemies in the burst area.</font> Removes most debuffs and disables on cast.\n<font color='#FF7800'>Cursed Shield:</font> Applies Curse of Avernus on enemies hit by the explosion."
+"DOTA_Tooltip_ability_imba_abaddon_aphotic_shield_Description"          "Creates a shield around an allied unit that absorbs a set amount of damage (<font color='#FF7800'>blocks damage after reductions</font>) before expiring. When destroyed, the shield will burst, dealing damage equal to the amount it could absorb to an area around it. Removes most debuffs and disables on cast.\n<font color='#FF7800'>Cursed Shield:</font> Applies Curse of Avernus on enemies hit by the explosion."
 "DOTA_Tooltip_ability_imba_abaddon_aphotic_shield_Note0"                "Self-castable, can be casted on buildings."
 "DOTA_Tooltip_ability_imba_abaddon_aphotic_shield_Lore"                "The powers of the black mist rise to absorb attacks like the black mist absorbs light."
 "DOTA_Tooltip_ability_imba_abaddon_aphotic_shield_duration"            "DURATION:"
@@ -30,7 +30,7 @@
 
 // Abaddon's Curse of Avernus
 "DOTA_Tooltip_ability_imba_abaddon_curse_of_avernus"                    "Curse of Avernus"
-"DOTA_Tooltip_ability_imba_abaddon_curse_of_avernus_Description"                    "Abaddon strikes enemies with a chilling curse on every attack, causing all units who attack the slowed enemy to gain increased movement and attack speed.\n<font color='#FF7800'>Health Hex:</font> Damaging enemies with this debuff will heal a %% of the damage to abaddon."
+"DOTA_Tooltip_ability_imba_abaddon_curse_of_avernus_Description"                    "Abaddon strikes enemies with a chilling curse on every attack, causing all units who attack the slowed enemy to gain increased movement and attack speed.\n<font color='#FF7800'>Health Hex:</font> Damaging enemies with this debuff will heal a %% of the damage to Abaddon."
 "DOTA_Tooltip_ability_imba_abaddon_mist_coil_Note0"                    "Illusions do not apply this debuff."
 "DOTA_Tooltip_ability_imba_abaddon_curse_of_avernus_Lore"              "The curse that slows an enemy, speeds an ally."
 "DOTA_Tooltip_ability_imba_abaddon_curse_of_avernus_buff_duration"                  "BUFF DURATION:"
@@ -42,10 +42,10 @@
 "DOTA_Tooltip_ability_imba_abaddon_curse_of_avernus_attack_increase"                "BONUS ATTACK SPEED:"
 
 "DOTA_Tooltip_modifier_imba_curse_of_avernus_debuff_slow"              "Curse of Avernus"
-"DOTA_Tooltip_modifier_imba_curse_of_avernus_debuff_slow_Description"               "Slowed and granting bonus speed to attackers"
+"DOTA_Tooltip_modifier_imba_curse_of_avernus_debuff_slow_Description"               "Slowed and granting bonus speed to attackers."
 
 "DOTA_Tooltip_modifier_imba_curse_of_avernus_buff_haste"                "Curse of Avernus"
-"DOTA_Tooltip_modifier_imba_curse_of_avernus_buff_haste_Description"                "Gaining bonus move and attack speed due to attacking Abaddon's target"
+"DOTA_Tooltip_modifier_imba_curse_of_avernus_buff_haste_Description"                "Gaining bonus move and attack speed due to attacking Abaddon's target."
 
 "DOTA_Tooltip_modifier_imba_curse_of_avernus_buff_haste_aura"          "Blessing of Avernus"
 "DOTA_Tooltip_modifier_imba_curse_of_avernus_buff_haste_aura_Description"           "Attack speed and move speed increased."
@@ -66,37 +66,37 @@
 // Abaddon's Borrowed Time
 "DOTA_Tooltip_ability_imba_abaddon_borrowed_time"                      "Borrowed Time"
 "DOTA_Tooltip_ability_imba_abaddon_borrowed_time_Description"          "When activated, all damage dealt to you will heal instead of harm. Most negative buffs will also be removed. If not on cooldown, Borrowed Time will activate whenever your hitpoints drop below %hp_threshold%.\n<font color='#FF7800'>Borrowed Pain:</font> A %% of the damage taken by Abaddon's nearby allies will be redirected to him when Borrowed Time is active.</font>\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
-"DOTA_Tooltip_ability_imba_abaddon_borrowed_time_aghanim_description"               "Curse of Avernus's healing will heal all allies in Borrowed Pain radius."
+"DOTA_Tooltip_ability_imba_abaddon_borrowed_time_aghanim_description"  "Curse of Avernus's Health Hex applies to all allies in Borrowed Pain radius while Borrowed Time is active."
 "DOTA_Tooltip_ability_imba_abaddon_borrowed_time_Note0"                "Damage redirected from allies will heal Abaddon normally."
-"DOTA_Tooltip_ability_imba_abaddon_borrowed_time_Note1"                "Borrowed Time will activate if the incoming damage is more than abaddon's current health"
-"DOTA_Tooltip_ability_imba_abaddon_borrowed_time_Lore"                  "The most unnatural of all the gifts of the Font of Avernus, this power defies mortal understanding. What should hurt, instead heals; and what should kill gives strength anew."
-"DOTA_Tooltip_ability_imba_abaddon_borrowed_time_duration"              "DURATION:"
-"DOTA_Tooltip_ability_imba_abaddon_borrowed_time_redirect_range"                    "BORROWED PAIN RANGE:"
-"DOTA_Tooltip_ability_imba_abaddon_borrowed_time_redirect"              "%DAMAGE REDIRECTED:"
+"DOTA_Tooltip_ability_imba_abaddon_borrowed_time_Note1"                "Borrowed Time will not activate if the incoming damage is more than Abaddon's current health."
+"DOTA_Tooltip_ability_imba_abaddon_borrowed_time_Lore"                 "The most unnatural of all the gifts of the Font of Avernus, this power defies mortal understanding. What should hurt, instead heals; and what should kill gives strength anew."
+"DOTA_Tooltip_ability_imba_abaddon_borrowed_time_duration"             "DURATION:"
+"DOTA_Tooltip_ability_imba_abaddon_borrowed_time_redirect_range"       "BORROWED PAIN RANGE:"
+"DOTA_Tooltip_ability_imba_abaddon_borrowed_time_redirect"             "%DAMAGE REDIRECTED:"
 
 "DOTA_Tooltip_modifier_imba_borrowed_time_buff_hot_caster"              "Borrowed Time"
-"DOTA_Tooltip_modifier_imba_borrowed_time_buff_hot_caster_Description"              "Being healed by all incoming damage"
+"DOTA_Tooltip_modifier_imba_borrowed_time_buff_hot_caster_Description"	"Being healed by all incoming damage."
 
 "DOTA_Tooltip_modifier_imba_borrowed_time_buff_hot_ally"                "Borrowed Time"
-"DOTA_Tooltip_modifier_imba_borrowed_time_buff_hot_ally_Description"                "Redirecting part of incoming damage to Abaddon"
+"DOTA_Tooltip_modifier_imba_borrowed_time_buff_hot_ally_Description"	"Redirecting part of incoming damage to Abaddon."
 
 "DOTA_Tooltip_modifier_imba_borrowed_time_buff_mist"                    "Mist of Borrowed Time"
-"DOTA_Tooltip_modifier_imba_borrowed_time_buff_mist_Description"                    "Your health regeneration is increased."
+"DOTA_Tooltip_modifier_imba_borrowed_time_buff_mist_Description"        "Health regeneration increased by %dMODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT%."
 
 // Abaddon's Custom Talents
 "DOTA_Tooltip_Ability_special_bonus_imba_abaddon_1"						"Coil Unleashed"
 "DOTA_Tooltip_Ability_special_bonus_imba_abaddon_1_Description"			"When Aphotic Shield breaks, applies Mist Coil to all allies and enemies within 425 radius."
 "DOTA_Tooltip_Ability_special_bonus_imba_abaddon_2"						"Curse of the Seer"
-"DOTA_Tooltip_Ability_special_bonus_imba_abaddon_2_Description"			"Consecutives hits of Curse of Avernus refreshes the buff/debuff and increases the duration of the buff/debuff by 1 second."
+"DOTA_Tooltip_Ability_special_bonus_imba_abaddon_2_Description"			"+%value%%% Curse of Avernus MS/AS shift; Curse of Avernus buff/debuff refresh increases duration by 1 second each hit."
 "DOTA_Tooltip_Ability_special_bonus_imba_abaddon_3"						"Aphotic Bulwark"
 "DOTA_Tooltip_Ability_special_bonus_imba_abaddon_3_Description"			"During the first second of Aphotic Shield, all damage done to it is absorbed and added to its health and damage."
 "DOTA_Tooltip_Ability_special_bonus_imba_abaddon_4"						"Smiting of Avernus"
-"DOTA_Tooltip_Ability_special_bonus_imba_abaddon_4_Description"			"Curse of Avernus can now be activated to sacrifice 10% of your current health, and deal it as extra physical damage on the next attack."
+"DOTA_Tooltip_Ability_special_bonus_imba_abaddon_4_Description"			"Curse of Avernus can be activated to sacrifice %health_cost_pct%%% of max health as extra physical damage on attack. Cooldown of %active_cooldown% seconds."
 "DOTA_Tooltip_Ability_special_bonus_imba_abaddon_5"						"Blessing of Avernus"
 "DOTA_Tooltip_Ability_special_bonus_imba_abaddon_5_Description"			"Curse of Avernus buff now applies as an aura around Abaddon, affecting all allies in 900 range."
 "DOTA_Tooltip_Ability_special_bonus_imba_abaddon_6"						"Perfect Vessel"
 "DOTA_Tooltip_Ability_special_bonus_imba_abaddon_6_Description"			"Increases Overchannel's health drain by 50%, and the bonus to spells affected by it by the same amount."
 "DOTA_Tooltip_Ability_special_bonus_imba_abaddon_7"						"Purging Mist"
-"DOTA_Tooltip_Ability_special_bonus_imba_abaddon_7_Description"			"Borrowed Time applies a strong purge on all allies in the redirect range on cast."
+"DOTA_Tooltip_Ability_special_bonus_imba_abaddon_7_Description"			"Borrowed Time applies a strong purge on all allies on cast."
 "DOTA_Tooltip_Ability_special_bonus_imba_abaddon_8"						"Overflowing Redirection"
-"DOTA_Tooltip_Ability_special_bonus_imba_abaddon_8_Description"			"Heals beyond full health during Borrowed Time grants a health regen buff upon end (25% of heals as health regen for 5s)."
+"DOTA_Tooltip_Ability_special_bonus_imba_abaddon_8_Description"			"Damage taken during Borrowed Time grants a health regen buff upon end (15% of damage as health regen for 5s)."

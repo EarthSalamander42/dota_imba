@@ -1,7 +1,15 @@
 <root>
 	<Panel style="visibility:collapse;">
 		<Panel id="container" style="visibility:collapse;">
+			<!-- Those selection icons are not used, but Valve calls them, increasing loading time if they don't exist. -->
 			<!--
+			<Image src="file://panorama/images/heroes/selection/npc_dota_hero_malfurion.png" hittest="false" />
+			<Image src="file://panorama/images/heroes/selection/npc_dota_hero_sohei.png" hittest="false" />
+			<Image src="file://panorama/images/heroes/selection/npc_dota_hero_hell_empress.png" hittest="false" />
+			<Image src="file://panorama/images/heroes/selection/npc_dota_hero_scaldris.png" hittest="false" />
+			<Image src="file://panorama/images/heroes/selection/npc_dota_hero_sly_king.png" hittest="false" />
+			<Image src="file://panorama/images/heroes/selection/npc_dota_hero_storegga.png" hittest="false" />
+
 			<Image src="file://panorama/images/custom_game/overthrow_background_01.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/overthrow_victory_trophy.psd" hittest="false" />
 			<Image src="file://panorama/images/custom_game/imba_random.png" hittest="false" />
@@ -58,6 +66,7 @@
 			<Image src="file://panorama/images/custom_game/battlepass/mekansm.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/mekansm2.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/mekansm3.png" hittest="false" />
+			<Image src="file://panorama/images/custom_game/battlepass/pudge_dragonclaw.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/radiance.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/radiance2.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/radiance3.png" hittest="false" />
@@ -73,7 +82,8 @@
 			<Image src="file://panorama/images/custom_game/battlepass/hurricane_pike4.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/hurricane_pike5.png" hittest="false" />
 
-			<Image src="file://panorama/images/heroes/npc_dota_hero_ghost_revenant.png" hittest="false" />
+			<Image src="file://panorama/images/heroes/npc_dota_hero_malfurion.png" hittest="false" />
+			<Image src="file://panorama/images/heroes/npc_dota_hero_sohei.png" hittest="false" />
 			<Image src="file://panorama/images/heroes/npc_dota_hero_hell_empress.png" hittest="false" />
 			<Image src="file://panorama/images/heroes/npc_dota_hero_scaldris.png" hittest="false" />
 			<Image src="file://panorama/images/heroes/npc_dota_hero_sly_king.png" hittest="false" />
@@ -84,7 +94,7 @@
 			<Image src="file://panorama/images/heroes/npc_dota_hero_juggernaut_arcana0.png" hittest="false" />
 			<Image src="file://panorama/images/heroes/npc_dota_hero_juggernaut_arcana1.png" hittest="false" />
 
-			<Image src="file://panorama/images/heroes/icons/npc_dota_hero_ghost_revenant.png" hittest="false" />
+			<Image src="file://panorama/images/heroes/icons/npc_dota_hero_hell_malfurion.png" hittest="false" />
 			<Image src="file://panorama/images/heroes/icons/npc_dota_hero_hell_empress.png" hittest="false" />
 			<Image src="file://panorama/images/heroes/icons/npc_dota_hero_scaldris.png" hittest="false" />
 			<Image src="file://panorama/images/heroes/icons/npc_dota_hero_sly_king.png" hittest="false" />
@@ -101,6 +111,8 @@
 			<Image src="file://panorama/images/custom_game/picking_screen/radiant3.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/picking_screen/dire.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/picking_screen/dire2.png" hittest="false" />
+
+			<Image src="file://panorama/images/custom_game/loading_screen/frantic_thunder.png" hittest="false" />
 		-->
 		</Panel>
 	</Panel>

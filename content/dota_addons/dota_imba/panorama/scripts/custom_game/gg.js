@@ -2,9 +2,7 @@
 
 var gg_state = true;
 
-function GenerateGGTopBar(player, team, has_gg, has_dc) {
-	// Don't need the following line anymore if event is sending team id
-	// var team = Game.GetPlayerInfo(player).player_team_id;
+function GenerateGGTopBar(player, team, has_gg) {
 	var team_string;
 	if (team == 2) {
 		team_string = "Radiant";
@@ -53,7 +51,6 @@ function GenerateGGTopBar(player, team, has_gg, has_dc) {
 }
 
 function GGLocal() {
-	$.Msg("GG!")
 	gg_state = true;
 	GGInitCountDown();
 	$.GetContextPanel().FindChildTraverse('Root').AddClass("visible");
@@ -62,7 +59,8 @@ function GGLocal() {
 		if (gg_state) {
 			GameEvents.SendCustomGameEventToServer("send_gg_vote", {
 				ID: Game.GetLocalPlayerID(),
-				Vote: true
+				team: Players.GetTeam(Game.GetLocalPlayerID()),
+				vote: true
 			});
 
 			$.GetContextPanel().FindChildTraverse('Root').RemoveClass("visible");
@@ -84,7 +82,11 @@ function GGInitCountDown() {
 function GGCalled(event) {
 	$.Msg("GG Called...")
 
-	GenerateGGTopBar(event.ID, event.team, event.gg_table[event.ID]["1"], event.gg_table[event.ID]["2"]);
+	var has_gg = false
+	if (event.has_gg[1] == true || event.has_gg[2] == true)
+		has_gg = true
+
+	GenerateGGTopBar(event.ID, event.team, has_gg);
 }
 
 function CancelGG() {
