@@ -6926,7 +6926,8 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2166"
-		"BaseClass"						"item_datadriven"
+		"BaseClass"						"item_lua"
+		"ScriptFile"					"components/items/item_cheese.lua"
 		"AbilityTextureName" 			"item_cheese"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
@@ -6953,30 +6954,6 @@
 		"ItemKillable"					"1"
 		"ItemPurchasable"				"0"
 		"ItemSellable"					"1"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"components/items/item_cheese.lua"
-				"Function"				"Cheese"
-
-				"sound_cast"			"DOTA_Item.Cheese.Activate"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_cheese_death_prevention"
-			{
-				"Passive"				"1"
-				"IsHidden"				"1"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"				
-			}
-		}
 	}
 
 	//=================================================================================================================

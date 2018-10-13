@@ -4367,50 +4367,6 @@
 	}
 
 	//=================================================================================================================
-	// Doom Bringer: Doom
-	//=================================================================================================================
-	"doom_bringer_doom"
-	{
-		"MaxLevel"						"3"
-
-		"AbilityCastRange"				"666"
-
-		"AbilityCooldown"				"145 125 105"
-
-		"AbilityManaCost"				"150 200 250"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"duration"				"15 17 19"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"30 60 80"
-				"LinkedSpecialBonus"	"special_bonus_unique_doom_5"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"duration_scepter"		"20"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_scepter"		"30 60 80"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"deniable_pct"			"1"
-			}
-		}
-	}
-
-	//=================================================================================================================
 	//	Doom: bonus Doom DPS
 	//=================================================================================================================
 	"special_bonus_unique_doom_5"

@@ -1,40 +1,76 @@
--- Copyright (C) 2018  The Dota IMBA Development Team
---
--- Licensed under the Apache License, Version 2.0 (the "License");
--- you may not use this file except in compliance with the License.
--- You may obtain a copy of the License at
---
--- http://www.apache.org/licenses/LICENSE-2.0
---
--- Unless required by applicable law or agreed to in writing, software
--- distributed under the License is distributed on an "AS IS" BASIS,
--- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
--- See the License for the specific language governing permissions and
--- limitations under the License.
---
--- Editors:
---
+--[[Author:
+		-- d2imba: 13.08.2015 (datadriven)
+	Editors:
+		-- EarthSalamander #42: 13.10.2018 (luafied)
+--	]]
 
---[[	Author: d2imba
-		Date:	13.08.2015	]]
+------------------------------
+--			CHEESE
+------------------------------
 
-function Cheese( keys )
-	local caster = keys.caster
-	local ability = keys.ability
-	local sound_cast = keys.sound_cast
+-- Utilities
 
+local function ConsumeCheese(parent, item)
 	-- Play sound
-	caster:EmitSound(sound_cast)
+	parent:EmitSound("DOTA_Item.Cheese.Activate")
 
-	-- Fully heal the caster
-	caster:Heal(caster:GetMaxHealth(), caster)
-	caster:GiveMana(caster:GetMaxMana())
+	-- Fully heal yourself
+	parent:Heal(parent:GetMaxHealth(), parent)
+	parent:GiveMana(parent:GetMaxMana())
 
 	-- Spend a charge
-	ability:SetCurrentCharges( ability:GetCurrentCharges() - 1 )
+	item:SetCurrentCharges(item:GetCurrentCharges() - 1)
 
 	-- If this was the last charge, remove the item
-	if ability:GetCurrentCharges() == 0 then
-		caster:RemoveItem(ability)
+	if item:GetCurrentCharges() == 0 then
+		parent:RemoveItem(item)
+	else -- starting the cooldown manually is required for the auto-use
+		item:StartCooldown(item:GetCooldown(item:GetLevel()))
 	end
+end
+
+LinkLuaModifier("modifier_item_imba_cheese_death_prevention", "components/items/item_cheese.lua", LUA_MODIFIER_MOTION_NONE)
+
+item_imba_cheese = item_imba_cheese or class({})
+
+function item_imba_cheese:GetIntrinsicModifierName()
+	return "modifier_item_imba_cheese_death_prevention"
+end
+
+function item_imba_cheese:OnSpellStart()
+	if IsServer() then
+		ConsumeCheese(self:GetParent(), self)
+	end
+end
+
+modifier_item_imba_cheese_death_prevention = modifier_item_imba_cheese_death_prevention or class({})
+
+function modifier_item_imba_cheese_death_prevention:IsHidden() return true end
+function modifier_item_imba_cheese_death_prevention:IsPurgable() return false end
+function modifier_item_imba_cheese_death_prevention:IsPurgeException() return false end
+function modifier_item_imba_cheese_death_prevention:RemoveOnDeath() return false end
+
+function modifier_item_imba_cheese_death_prevention:DeclareFunctions()
+	local state =
+	{
+		MODIFIER_PROPERTY_MIN_HEALTH,
+		MODIFIER_EVENT_ON_TAKEDAMAGE,
+	}
+
+	return state
+end
+
+function modifier_item_imba_cheese_death_prevention:OnTakeDamage(keys)
+	if keys.unit == self:GetParent() and keys.damage >= keys.unit:GetHealth() and not (keys.unit:HasModifier("modifier_imba_dazzle_shallow_grave") or keys.unit:HasModifier("modifier_imba_dazzle_nothl_protection")) and self:GetAbility():IsCooldownReady() then
+		ConsumeCheese(keys.unit, self:GetAbility())
+	end
+end
+
+function modifier_item_imba_cheese_death_prevention:GetMinHealth()
+	-- if the cooldown is ready, set the unit minimum health to 1 (invincible)
+	if self:GetAbility():IsCooldownReady() then
+		return 1
+	end
+
+	return nil
 end

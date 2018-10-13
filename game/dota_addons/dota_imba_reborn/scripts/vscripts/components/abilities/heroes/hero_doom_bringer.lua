@@ -166,6 +166,6 @@ end
 
 function modifier_imba_doom_bringer_doom_enemies:OnIntervalThink()
 	if IsServer() then
-		ApplyDamage({victim = self:GetParent(), attacker = self:GetCaster(), damage = self:GetAbility():GetSpecialValueFor("damage"), damage_type = self:GetAbility():GetAbilityDamageType(), ability = self:GetAbility()})
+		ApplyDamage({victim = self:GetParent(), attacker = self:GetCaster(), damage = self:GetAbility():GetSpecialValueFor("damage") + self:GetCaster():FindTalentValue("special_bonus_unique_doom_5"), damage_type = self:GetAbility():GetAbilityDamageType(), ability = self:GetAbility()})
 	end
 end

@@ -844,45 +844,6 @@ function GameMode:DamageFilter( keys )
 			end
 		end
 
-		-- Cheese auto-healing
-		if victim:HasModifier("modifier_imba_cheese_death_prevention") then
-			-- Only apply if it was a real hero
-			if victim:IsRealHero() then
-
-				-- Check if death is imminent
-				local victim_health = victim:GetHealth()
-				if keys.damage >= victim_health and not ( victim:HasModifier("modifier_imba_dazzle_shallow_grave") or victim:HasModifier("modifier_imba_dazzle_nothl_protection") ) then
-
-					-- Find the cheese item handle
-					local cheese_modifier = victim:FindModifierByName("modifier_imba_cheese_death_prevention")
-					local item = cheese_modifier:GetAbility()
-
-					-- Spend a charge of Cheese if the cooldown is ready
-					if item:IsCooldownReady() then
-
-						-- Reduce damage by your remaining amount of health
-						keys.damage = keys.damage - victim_health
-
-						-- Play sound
-						victim:EmitSound("DOTA_Item.Cheese.Activate")
-
-						-- Fully heal yourself
-						victim:Heal(victim:GetMaxHealth(), victim)
-						victim:GiveMana(victim:GetMaxMana())
-
-						-- Spend a charge
-						item:SetCurrentCharges( item:GetCurrentCharges() - 1 )
-
-						-- If this was the last charge, remove the item
-						if item:GetCurrentCharges() == 0 then
-							victim:RemoveItem(item)
-						end
-					end
-				end
-			end
-
-		end
-
 		-- Mirana's Sacred Arrow On The Prowl guaranteed critical
 		if victim:HasModifier("modifier_imba_sacred_arrow_stun") then
 			local modifier_stun_handler = victim:FindModifierByName("modifier_imba_sacred_arrow_stun")

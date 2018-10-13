@@ -38,13 +38,12 @@ function GameMode:OnGameRulesStateChange(keys)
 		end
 
 		CustomNetTables:SetTableValue("game_options", "player_colors", hex_colors)
-
-		Timers:CreateTimer(3.0, function()
-			HeroSelection:Init() -- init picking screen kv (this function is a bit heavy to run)
-		end)
 	elseif newState == DOTA_GAMERULES_STATE_HERO_SELECTION then
+		HeroSelection:Init() -- init picking screen kv (this function is a bit heavy to run)
 		api.imba.event(api.events.entered_hero_selection)
-		HeroSelection:StartSelection()
+		Timers:CreateTimer(0.5, function()
+			HeroSelection:StartSelection()
+		end)
 	elseif newState == DOTA_GAMERULES_STATE_PRE_GAME then
 		api.imba.event(api.events.entered_pre_game)
 

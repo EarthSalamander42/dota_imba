@@ -31,6 +31,7 @@ function item_the_caustic_finale:OnOwnerDied(params)
 		return nil
 	end
 	hOwner:DropItemAtPositionImmediate(self, hOwner:GetAbsOrigin())
+	hOwner:LaunchLoot(false, 250, 0.5, hOwner:GetAbsOrigin() + RandomVector(RandomInt(50, 200)))
 end
 
 modifier_item_the_caustic_finale = class({})
