@@ -443,8 +443,8 @@ function GameMode:OrderFilter( keys )
 
 	if USE_TEAM_COURIER == false then
 		if unit:IsCourier() then
-			if unit == TurboCourier.COURIER_PLAYER[unit:GetPlayerOwnerID()] then
-				if keys.order_type == DOTA_UNIT_ORDER_MOVE_TO_POSITION or keys.order_type == DOTA_UNIT_ORDER_MOVE_TO_TARGET or keys.order_type == DOTA_UNIT_ORDER_HOLD_POSITION then
+			if unit:GetPlayerOwnerID() == unit:GetMainControllingPlayer() then
+				if keys.order_type == DOTA_UNIT_ORDER_MOVE_TO_POSITION or keys.order_type == DOTA_UNIT_ORDER_MOVE_TO_TARGET or keys.order_type == DOTA_UNIT_ORDER_HOLD_POSITION or keys.order_type == DOTA_UNIT_ORDER_DROP_ITEM or keys.order_type == DOTA_UNIT_ORDER_GIVE_ITEM then
 					return false
 				else
 					return true
