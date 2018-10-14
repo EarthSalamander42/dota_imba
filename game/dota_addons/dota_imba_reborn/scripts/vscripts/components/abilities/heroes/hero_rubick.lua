@@ -486,13 +486,12 @@ function imba_rubick_fade_bolt:OnSpellStart()
 			else
 				if self:GetCaster():HasTalent("special_bonus_imba_rubick_7") then
 					kaboom = true
-					
-					-- reset fade bolt hit counter
-					for _, damaged in pairs(entities_damaged) do
-						damaged.damaged_by_fade_bolt = false
-					end
-					
 					return FrameTime()
+				end
+
+				-- reset fade bolt hit counter
+				for _, damaged in pairs(entities_damaged) do
+					damaged.damaged_by_fade_bolt = false
 				end
 
 				return nil
@@ -875,15 +874,22 @@ function imba_rubick_animations_reference:GetPlaybackRate()
 	return self.animations[self.current][5] or 1
 end
 
+
+
 -------------------------------------------
 --			SPELL STEAL
 -------------------------------------------
-
 imba_rubick_spellsteal = imba_rubick_spellsteal or class({})
 LinkLuaModifier("imba_rubick_spellsteal", "components/abilities/heroes/hero_rubick", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_rubick_spellsteal", "components/abilities/heroes/hero_rubick", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_rubick_spellsteal_animation", "components/abilities/heroes/hero_rubick", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_rubick_spellsteal_hidden", "components/abilities/heroes/hero_rubick", LUA_MODIFIER_MOTION_NONE)
+
+-------------------------------------------
+--	BANNED ABILITIES
+-------------------------------------------
+
+imba_rubick_spellsteal.banned_abilities = {"imba_sniper_headshot", "imba_phoenix_sun_ray", "imba_phoenix_sun_ray_toggle_move"}
 
 --------------------------------------------------------------------------------
 -- Passive Modifier
@@ -959,10 +965,11 @@ function imba_rubick_spellsteal:OnSpellStart()
 	self.stolenSpell.stolenFrom = self:GetLastSpell( self.spell_target ).handle:GetUnitName()
 	self.stolenSpell.primarySpell = self:GetLastSpell( self.spell_target ).primarySpell
 	self.stolenSpell.secondarySpell = self:GetLastSpell( self.spell_target ).secondarySpell
+	self.stolenSpell.linkedTalents = self:GetLastSpell( self.spell_target ).linkedTalents
 	-- load data
 	local projectile_name = "particles/units/heroes/hero_rubick/rubick_spell_steal.vpcf"
 	local projectile_speed = self:GetSpecialValueFor("projectile_speed")
-
+	
 	-- Create Projectile
 	local info = {
 		Target = self:GetCaster(),
@@ -984,13 +991,16 @@ function imba_rubick_spellsteal:OnSpellStart()
 	local sound_target = "Hero_Rubick.SpellSteal.Target"
 	EmitSoundOn( sound_target, self.spell_target )
 
+
+end
+
+function imba_rubick_spellsteal:OnProjectileHit( target, location )
+
 	-- need to remove it to send the right spell amp stolen with aghanim
 	if self:GetCaster():HasModifier("modifier_imba_rubick_spellsteal") then
 		self:GetCaster():RemoveModifierByName("modifier_imba_rubick_spellsteal")
 	end
-end
-
-function imba_rubick_spellsteal:OnProjectileHit( target, location )
+	
 	-- Add ability
 	self:SetStolenSpell( self.stolenSpell )
 	self.stolenSpell = nil
@@ -1015,6 +1025,8 @@ function imba_rubick_spellsteal:SetLastSpell( hHero, hSpell )
 	local secondary_ability = nil
 	local secondary = nil
 	local primary = nil
+	local linked_talents = {}
+	local hero_name = (string.gsub(hHero:GetUnitName(), "npc_dota_hero_",""))
 	primary_ability = hSpell:GetAssociatedPrimaryAbilities()
 	secondary_ability = hSpell:GetAssociatedSecondaryAbilities()
 
@@ -1026,10 +1038,39 @@ function imba_rubick_spellsteal:SetLastSpell( hHero, hSpell )
 	else
 		primary = hSpell
 	end
+	--print(primary:GetStolenActivityModifier())
+	--special_bonus_imba_sniper_1
+	--PrintTable(hHero:FindAbilityByName("special_bonus_imba_sniper_1"))
+	
+	-- loop thru poop thru talent table
+	for i=1,8 do 
+		talent = hHero:FindAbilityByName("special_bonus_imba_"..hero_name.."_"..i)
+		if talent and talent:IsTrained() then
+			for k,v in pairs(talent:GetAbilityKeyValues()) do
+				if k == "LinkedAbility" then 
+					if ( primary and v["01"] == primary:GetAbilityName() ) or ( secondary and v["01"] == secondary:GetAbilityName() ) then
+						--print("we can haz this talent: "..talent:GetAbilityName())
+						table.insert( linked_talents, talent:GetAbilityName() )
+					end
+				end
+			end
+		end
+	end
+
 	if secondary_ability ~= nil then
 		secondary = hHero:FindAbilityByName(secondary_ability)
 	end
 
+	-- banned abilities from being stolen somehow
+	for _,banned_ability in pairs(self.banned_abilities) do
+		if primary ~= nil and primary:GetAbilityName() == banned_ability then
+			primary = nil
+		end
+		if secondary ~= nil and secondary:GetAbilityName() == banned_ability then
+			secondary = nil
+		end
+	end
+	
 	-- find hero in list
 	local heroData = nil
 	for _,data in pairs(imba_rubick_spellsteal.heroesData) do
@@ -1043,16 +1084,17 @@ function imba_rubick_spellsteal:SetLastSpell( hHero, hSpell )
 	if heroData then
 		heroData.primarySpell = primary
 		heroData.secondarySpell = secondary
+		heroData.linkedTalents = linked_talents
 	else
 		local newData = {}
 		newData.handle = hHero
 		newData.primarySpell = primary
 		newData.secondarySpell = secondary
+		newData.linkedTalents = linked_talents
 		table.insert( imba_rubick_spellsteal.heroesData, newData )
 	end
-	--self:PrintStatus()
-	-- self:PrintStatus()
 end
+
 function imba_rubick_spellsteal:GetLastSpell(hHero)
 	-- find hero in list
 	local heroData = nil
@@ -1098,14 +1140,14 @@ imba_rubick_spellsteal.slot2 = "rubick_empty2"
 function imba_rubick_spellsteal:SetStolenSpell( spellData )
 	local primarySpell = spellData.primarySpell
 	local secondarySpell = spellData.secondarySpell
+	local linkedTalents = spellData.linkedTalents
 	-- Forget previous one
 	self:ForgetSpell()
+	-- print("Stolen spell: "..primarySpell:GetAbilityName())
 
-	print("Stolen spell: "..primarySpell:GetAbilityName())
-
-	if secondarySpell then
-		print("Stolen secondary spell: "..secondarySpell:GetAbilityName())
-	end
+	-- if secondarySpell then
+		-- print("Stolen secondary spell: "..secondarySpell:GetAbilityName())
+	-- end
 
 	--phoenix is a meme
 	if self.CurrentSpellOwner == "npc_dota_hero_phoenix" then
@@ -1113,7 +1155,7 @@ function imba_rubick_spellsteal:SetStolenSpell( spellData )
 			secondarySpell:SetHidden(true)
 		end
 
---		self:GetCaster():AddAbility( "imba_phoenix_sun_ray_stop" )
+		self:GetCaster():AddAbility( "imba_phoenix_sun_ray_stop" )
 	elseif self.CurrentSpellOwner == "npc_dota_hero_storm_spirit" then
 		self.vortex = self:GetCaster():AddAbility( "imba_storm_spirit_electric_vortex" )
 		self.vortex:SetLevel( 4 )
@@ -1121,25 +1163,46 @@ function imba_rubick_spellsteal:SetStolenSpell( spellData )
 	end
 
 	-- Add new spell
-	if not primarySpell:IsNull() then
-	self.CurrentPrimarySpell = self:GetCaster():AddAbility( primarySpell:GetAbilityName() )
-	self.CurrentPrimarySpell:SetLevel( primarySpell:GetLevel() )
-	self.CurrentPrimarySpell:SetStolen( true )
-	self:GetCaster():SwapAbilities( self.slot1, self.CurrentPrimarySpell:GetAbilityName(), false, true )
+	if primarySpell~=nil and not primarySpell:IsNull() then
+		self.CurrentPrimarySpell = self:GetCaster():AddAbility( primarySpell:GetAbilityName() )
+		self.CurrentPrimarySpell:SetLevel( primarySpell:GetLevel() )
+		self.CurrentPrimarySpell:SetStolen( true )
+		
+		-- respect IsHiddenWhenStolen()
+		if self.CurrentPrimarySpell:IsHiddenWhenStolen() then
+			self.CurrentPrimarySpell:SetHidden(true)
+		else
+			self:GetCaster():SwapAbilities( self.slot1, self.CurrentPrimarySpell:GetAbilityName(), false, true )
+		end
 	end
 	if secondarySpell~=nil and not secondarySpell:IsNull() then
 		self.CurrentSecondarySpell = self:GetCaster():AddAbility( secondarySpell:GetAbilityName() )
 		self.CurrentSecondarySpell:SetLevel( secondarySpell:GetLevel() )
 		self.CurrentSecondarySpell:SetStolen( true )
-		self:GetCaster():SwapAbilities( self.slot2, self.CurrentSecondarySpell:GetAbilityName(), false, true )
+		
+		-- respect IsHiddenWhenStolen()
+		if self.CurrentSecondarySpell:IsHiddenWhenStolen() then
+			self.CurrentSecondarySpell:SetHidden(true)
+		else
+			self:GetCaster():SwapAbilities( self.slot2, self.CurrentSecondarySpell:GetAbilityName(), false, true )
+		end
 	end
-
+	
+	-- Add Linked Talents 
+	for _,talent in pairs(linkedTalents) do
+		local talent_handle = self:GetCaster():AddAbility( talent )
+		talent_handle:SetLevel( 1 )
+		talent_handle:SetStolen( true )
+	end
+	
 	-- Animations override
-	self.animations:SetCurrentReference( self.CurrentPrimarySpell:GetAbilityName() )
-	if not self.animations:IsNormal() then
-		self.CurrentPrimarySpell:SetOverrideCastPoint( 0.1 )
+	if self.CurrentPrimarySpell ~= nil then
+		self.animations:SetCurrentReference( self.CurrentPrimarySpell:GetAbilityName() )
+		if not self.animations:IsNormal() then
+			--self.CurrentPrimarySpell:SetOverrideCastPoint( 0.1 )
+		end
+		self.CurrentSpellOwner = spellData.stolenFrom
 	end
-	self.CurrentSpellOwner = spellData.stolenFrom
 end
 -- Remove currently stolen spell
 function imba_rubick_spellsteal:ForgetSpell()
@@ -1149,6 +1212,16 @@ function imba_rubick_spellsteal:ForgetSpell()
 				self:GetCaster():RemoveModifierByName(self:GetCaster():GetModifierNameByIndex(i))
 			end	
 		end
+		-- remove stolen talents
+		-- print("special_bonus_imba_"..string.gsub(self.CurrentSpellOwner, "npc_dota_hero_","").."_1")
+		for i = 0, self:GetCaster():GetAbilityCount() -1 do
+			local talent = self:GetCaster():FindAbilityByName("special_bonus_imba_"..string.gsub(self.CurrentSpellOwner, "npc_dota_hero_","").."_"..i)
+			if talent then
+				print(talent:GetAbilityName())
+				self:GetCaster():RemoveAbility( talent:GetAbilityName() )
+			end
+		end
+			
 	end
 	if self.CurrentPrimarySpell~=nil and not self.CurrentPrimarySpell:IsNull() then
 		--print("forgetting primary")
@@ -1228,12 +1301,6 @@ function modifier_rubick_spellsteal_hidden:OnAbilityFullyCast( params )
 		if not params.ability:IsStealable() then
 			return
 		end
-
-		-- ignore if item
-		if string.find(params.ability:GetAbilityName(), "item") then
-			return
-		end
-
 		self:GetAbility():SetLastSpell( params.unit, params.ability )
 	end
 end

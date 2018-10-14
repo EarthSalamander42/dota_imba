@@ -131,7 +131,9 @@ end
 
 function modifier_imba_antipode_passive:OnIntervalThink()
 	if IsServer() then
-		self:GetParent():SetRenderColor(63 + math.min(self.fire_strength, 4) * 48, 64, 63 + math.min(self.ice_strength, 4) * 48)
+		if not self:GetAbility():IsStolen() then
+			self:GetParent():SetRenderColor(63 + math.min(self.fire_strength, 4) * 48, 64, 63 + math.min(self.ice_strength, 4) * 48)
+		end
 	end
 end
 

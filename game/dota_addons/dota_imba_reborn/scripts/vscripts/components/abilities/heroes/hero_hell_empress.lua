@@ -477,7 +477,9 @@ end
 
 function modifier_hell_empress_ambient_effects:OnCreated()
 	if IsServer() then
-		self:GetParent():SetRenderColor(200, 55, 55)
+		if not self:GetAbility():IsStolen() then
+			self:GetParent():SetRenderColor(200, 55, 55)
+		end
 	end
 end
 
