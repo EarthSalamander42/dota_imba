@@ -11555,7 +11555,7 @@
 		// Abilities
 		//----------------------------------------------------------------
 		"Ability1"					"imba_elder_titan_echo_stomp_spirit"	// Ability 1
-		"Ability2"					"generic_hidden"						// Ability 2
+		"Ability2"					"imba_elder_titan_return_spirit"		// Ability 2
 		"Ability3"					"imba_elder_titan_natural_order"		// Ability 3
 
 		// Armor

@@ -55,7 +55,7 @@ function imba_elder_titan_echo_stomp:OnChannelFinish(interrupted)
 
 	if IsServer() then
 		if interrupted then
-			if astral_spirit then
+			if astral_spirit and not astral_spirit:IsNull() and not astral_spirit.is_returning then
 				astral_spirit:Interrupt()
 			end
 			StopSoundOn("Hero_ElderTitan.EchoStomp.Channel.ti7_layer", self:GetCaster())
@@ -223,12 +223,19 @@ function imba_elder_titan_ancestral_spirit:OnSpellStart()
 	astral_spirit:AddNewModifier(astral_spirit, nil, "modifier_imba_haste_rune_speed_limit_break", {})
 	astral_spirit:SetBaseMoveSpeed(spirit_movespeed)
 
-	if caster:FindAbilityByName("imba_elder_titan_echo_stomp") ~= nil then
-		astral_spirit:FindAbilityByName("imba_elder_titan_echo_stomp_spirit"):SetLevel(caster:FindAbilityByName("imba_elder_titan_echo_stomp"):GetLevel())
-	end
-	
-	if caster:FindAbilityByName("imba_elder_titan_natural_order") ~= nil then
-		astral_spirit:FindAbilityByName("imba_elder_titan_natural_order"):SetLevel(caster:FindAbilityByName("imba_elder_titan_natural_order"):GetLevel())
+	if not astral_spirit:IsNull() then
+		if caster:FindAbilityByName("imba_elder_titan_echo_stomp") ~= nil then
+			astral_spirit:FindAbilityByName("imba_elder_titan_echo_stomp_spirit"):SetLevel(caster:FindAbilityByName("imba_elder_titan_echo_stomp"):GetLevel())
+		end
+		
+		if caster:FindAbilityByName("imba_elder_titan_return_spirit") ~= nil then
+			astral_spirit:FindAbilityByName("imba_elder_titan_return_spirit"):SetHidden(false)
+			astral_spirit:FindAbilityByName("imba_elder_titan_return_spirit"):SetLevel(caster:FindAbilityByName("imba_elder_titan_return_spirit"):GetLevel())
+		end
+		
+		if caster:FindAbilityByName("imba_elder_titan_natural_order") ~= nil then
+			astral_spirit:FindAbilityByName("imba_elder_titan_natural_order"):SetLevel(caster:FindAbilityByName("imba_elder_titan_natural_order"):GetLevel())
+		end
 	end
 end
 
@@ -334,6 +341,12 @@ function modifier_imba_elder_titan_ancestral_spirit_self:OnCreated()
 end
 
 function modifier_imba_elder_titan_ancestral_spirit_self:OnIntervalThink()
+	
+	-- Stupid exception for if the hero is changed / deleted while the Astral Spirit is up; remove it
+	if self:GetAbility() == nil then
+		self:GetParent():RemoveSelf()
+	end
+
 	local duration = self:GetAbility():GetCaster():FindTalentValue("special_bonus_imba_elder_titan_3")
 	local nearby_enemies = FindUnitsInRadius(self:GetParent():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 
