@@ -27,7 +27,7 @@ function item_imba_sogat_cuirass:OnSpellStart(keys)
 		ParticleManager:ReleaseParticleIndex(cast_pfx)
 
 		-- Apply the active buff to nearby allies
-		local nearby_allies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, self:GetSpecialValueFor("active_radius"), DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
+		local nearby_allies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, self:GetSpecialValueFor("radius"), DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
 		for _,ally in pairs(nearby_allies) do
 			if not non_relevant_units[ally:GetUnitName()] then
 				ally:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_sogat_cuirass_buff", {duration = self:GetSpecialValueFor("duration")})
@@ -262,7 +262,7 @@ function modifier_imba_sogat_cuirass_aura_negative_effect:GetModifierPhysicalArm
 end
 
 if modifier_item_imba_sogat_cuirass_buff == nil then modifier_item_imba_sogat_cuirass_buff = class({}) end
-function modifier_item_imba_sogat_cuirass_buff:IsHidden() return true end
+function modifier_item_imba_sogat_cuirass_buff:IsHidden() return false end
 function modifier_item_imba_sogat_cuirass_buff:IsDebuff() return false end
 function modifier_item_imba_sogat_cuirass_buff:IsPurgable() return false end
 
@@ -271,48 +271,17 @@ function modifier_item_imba_sogat_cuirass_buff:OnCreated(keys)
 	if IsServer() then
 		self.damage_reduction_pct = self:GetAbility():GetSpecialValueFor("damage_reduction_pct")
 
-		if self:GetParent():IsRangedAttacker() then
-			self.damage_reduction_pct = self:GetAbility():GetSpecialValueFor("damage_reduction_ranged_pct")
-		end
-
-		self.crimson_guard_pfx = ParticleManager:CreateParticle("particles/items2_fx/sogat_cuirass_active.vpcf", PATTACH_OVERHEAD_FOLLOW, self:GetParent())
-		ParticleManager:SetParticleControl(self.crimson_guard_pfx, 0, self:GetParent():GetAbsOrigin())
-		ParticleManager:SetParticleControlEnt(self.crimson_guard_pfx, 1, self:GetParent(), PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
+		self.sogat_active_pfx = ParticleManager:CreateParticle("particles/items2_fx/sogat_cuirass_active.vpcf", PATTACH_OVERHEAD_FOLLOW, self:GetParent())
+		ParticleManager:SetParticleControl(self.sogat_active_pfx, 0, self:GetParent():GetAbsOrigin())
+		ParticleManager:SetParticleControlEnt(self.sogat_active_pfx, 1, self:GetParent(), PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
 	end
 end
 
 -- Particle destruction
 function modifier_item_imba_sogat_cuirass_buff:OnDestroy()
 	if IsServer() then
-		ParticleManager:DestroyParticle(self.crimson_guard_pfx, false)
-		ParticleManager:ReleaseParticleIndex(self.crimson_guard_pfx)
-	end
-end
-
-function modifier_item_imba_sogat_cuirass_buff:CheckState()
-	local states = {
-		MODIFIER_EVENT_ON_ATTACK_LANDED
-	}
-
-	return states
-end
-
-function modifier_item_imba_sogat_cuirass_buff:OnAttackLanded(keys)
-	if IsServer() then
-		local attacker = keys.attacker
-		local target = keys.target
-
-		-- Only apply if the parent is the victim and the attacker is on the opposite team
-		if self:GetParent() == target and attacker:GetTeamNumber() ~= target:GetTeamNumber() then
-			-- Apply effect
-			local particle_beam_fx = ParticleManager:CreateParticle(self.particle_beam, PATTACH_ABSORIGIN_FOLLOW, target)
-			ParticleManager:SetParticleControl(particle_beam_fx, 0, target:GetAbsOrigin())
-			ParticleManager:SetParticleControl(particle_beam_fx, 1, target:GetAbsOrigin())
-			ParticleManager:ReleaseParticleIndex(particle_beam_fx)
-
-			-- Add blindness modifier
-			target:AddNewModifier(self.caster, self.ability, self.modifier_blind, {duration = self.blind_duration})
-		end
+		ParticleManager:DestroyParticle(self.sogat_active_pfx, false)
+		ParticleManager:ReleaseParticleIndex(self.sogat_active_pfx)
 	end
 end
 
