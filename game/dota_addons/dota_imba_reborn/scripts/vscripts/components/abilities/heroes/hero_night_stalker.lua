@@ -716,9 +716,13 @@ function modifier_imba_hunter_in_the_night:OnCreated()
 		ParticleManager:SetParticleControl(self.particle_buff_fx, 1, Vector(1,0,0))
 		self:AddParticle(self.particle_buff_fx, false, false, -1, false, false)
 
-		-- Apply night model
-		self.caster:SetModel(self.night_model)
-		self.caster:SetOriginalModel(self.night_model)
+		
+		if not self:GetAbility():IsStolen() then
+			-- Apply night model
+			self.caster:SetModel(self.night_model)
+			self.caster:SetOriginalModel(self.night_model)
+		end
+
 	end
 end
 
@@ -792,9 +796,12 @@ function modifier_imba_hunter_in_the_night:OnDestroy()
 		ParticleManager:SetParticleControl(self.particle_change_fx, 1, self.caster:GetAbsOrigin())    
 		ParticleManager:ReleaseParticleIndex(self.particle_change_fx)        
 
-		-- Revert Models
-		self.caster:SetModel(self.normal_model)
-		self.caster:SetOriginalModel(self.normal_model)
+		if not self:GetAbility():IsStolen() then
+			-- Revert Models
+			self.caster:SetModel(self.normal_model)
+			self.caster:SetOriginalModel(self.normal_model)
+		end
+
 	end
 end
 

@@ -295,6 +295,8 @@ function modifier_imba_shrapnel_charges:OnCreated()
 		-- #4 Talent: Double max Shrapnel charges. Each recharge grants twice as much
 		if self.caster:HasAbility("special_bonus_imba_sniper_4") and self.caster:FindAbilityByName("special_bonus_imba_sniper_4"):GetLevel() == 1 then
 			self.max_charge_count = self.max_charge_count * self.caster:FindTalentValue("special_bonus_imba_sniper_4", "max_charge_mult")
+		else
+			self.max_charge_count = self.max_charge_count
 		end
 
 		-- If it the real one, set max charges
@@ -325,6 +327,8 @@ function modifier_imba_shrapnel_charges:OnIntervalThink()
 		
 		if self.caster:HasAbility("special_bonus_imba_sniper_4") and self.caster:FindAbilityByName("special_bonus_imba_sniper_4"):GetLevel() == 1 then
 			self.max_charge_count = self.ability:GetSpecialValueFor("max_charge_count") * self.caster:FindTalentValue("special_bonus_imba_sniper_4", "max_charge_mult")
+		else
+			self.max_charge_count = self.ability:GetSpecialValueFor("max_charge_count")
 		end
 		
 		-- If we have at least one stack, set ability to active, otherwise disable it
@@ -333,7 +337,6 @@ function modifier_imba_shrapnel_charges:OnIntervalThink()
 		else
 			self.ability:SetActivated(false)
 		end
-
 		-- If we're at max charges, do nothing else
 		if stacks == self.max_charge_count then
 			return nil
@@ -362,7 +365,7 @@ function modifier_imba_shrapnel_charges:OnStackCountChanged(old_stack_count)
 	if IsServer() then
 		-- Current stacks
 		local stacks = self:GetStackCount()
-		local true_replenish_cooldown = self.charge_replenish_rate
+		local true_replenish_cooldown = self.ability:GetSpecialValueFor("charge_replenish_rate")
 
 		-- If the stacks are now 0, start the ability's cooldown
 		if stacks < 1 then
