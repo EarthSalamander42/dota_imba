@@ -268,7 +268,7 @@
 			"01"
 			{
 				"var_type"              "FIELD_INTEGER"
-				"cloud_duration"        "40"
+				"cloud_duration"        "35"
 			}
 			"02"
 			{

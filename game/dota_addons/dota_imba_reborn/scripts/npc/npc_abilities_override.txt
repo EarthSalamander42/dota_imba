@@ -2938,7 +2938,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"quill_base_damage"		"20 60 90 110"
+				"quill_base_damage"		"20 40 60 80"
 			}
 			"03"
 			{
@@ -2984,12 +2984,12 @@
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"side_angle"					"140"
+				"side_angle"					"110"
 			}
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"back_angle"					"80"
+				"back_angle"					"70"
 			}
 			"05"
 			{
@@ -3009,7 +3009,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"damage_per_stack"				"20 25 35"
+				"damage_per_stack"				"25 30 35"
 				"LinkedSpecialBonus"			"special_bonus_unique_bristleback_3"
 			}
 			"02"
