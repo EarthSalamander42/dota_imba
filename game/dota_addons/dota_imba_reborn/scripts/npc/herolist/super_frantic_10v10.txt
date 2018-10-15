@@ -56,7 +56,7 @@
 	"npc_dota_hero_lone_druid" 			"1"
 	"npc_dota_hero_luna" 				"1"
 	"npc_dota_hero_lycan" 				"1"
-	"npc_dota_hero_magnataur" 			"0" // he lags, but no idea why
+	"npc_dota_hero_magnataur" 			"1"
 	"npc_dota_hero_medusa" 				"1"
 	"npc_dota_hero_meepo" 				"1"
 	"npc_dota_hero_mirana" 				"1"
