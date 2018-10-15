@@ -202,8 +202,11 @@ function GameMode:OnHeroFirstSpawn(hero)
 			hero:SetupHealthBarLabel()
 --		end
 
-		-- Add Frantic modifier on every maps
-		hero:AddNewModifier(hero, nil, "modifier_frantic", {})
+		if IsMutationMap() then
+			hero:AddNewModifier(hero, nil, "modifier_frantic", {}):SetStackCount(IMBA_FRANTIC_VALUE)
+		elseif IsSuperFranticMap() then
+			hero:AddNewModifier(hero, nil, "modifier_frantic", {}):SetStackCount(IMBA_SUPER_FRANTIC_VALUE)
+		end
 	end
 end
 

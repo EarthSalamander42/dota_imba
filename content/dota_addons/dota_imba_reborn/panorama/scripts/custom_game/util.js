@@ -133,13 +133,13 @@ function HideIMR(panel) {
 			panels[i].style.visibility = "visible";
 	};
 
-	if (map_info.map_display_name == "imba_ranked_5v5") {
+	if (map_info.map_display_name == "ranked_5v5") {
 		show(imr_panel);
 		show(end_imr5v5);
-	} else if (map_info.map_display_name == "imba_ranked_10v10") {
+	} else if (map_info.map_display_name == "ranked_10v10") {
 		show(imr_panel_10v10);
 		show(end_imr10v10);
-	} else if (map_info.map_display_name == "imba_1v1") {
+	} else if (map_info.map_display_name == "ranked_1v1") {
 		show(imr_panel_1v1);
 		show(end_imr1v1);
 	}

@@ -13,58 +13,17 @@
 	"HeroGuidesSupported"			"1"
 	"PenaltiesEnabled"				"1"
 
-	"maps"							"imba_ranked_5v5 imba_ranked_10v10 imba_mutation_5v5 imba_mutation_10v10 imba_1v1"
-//	"maps"							"imba_mutation_5v5 imba_mutation_10v10 imba_1v1"
+	"maps"							"ranked_5v5 mutation_10v10 super_frantic_5v5 super_frantic_10v10"
 
 	"IsPlayable"					"1"
 
-	"imba_overthrow"
-	{
-		"MaxPlayers"				"16"
-	}
-
-	"imba_1v1"
-	{
-		"MaxPlayers"				"2"
-	}
-
-	"imba_ranked_5v5"
-	{
-		"MaxPlayers"				"10"
-	}
-
-	"imba_ranked_10v10"
+	"super_frantic_10v10"
 	{
 		"MaxPlayers"				"20"
 	}
 
-	"imba_frantic_5v5"
-	{
-		"MaxPlayers"				"10"
-	}
-
-	"imba_frantic_10v10"
+	"mutation_10v10"
 	{
 		"MaxPlayers"				"20"
-	}
-
-	"imba_mutation_10v10"
-	{
-		"MaxPlayers"				"20"
-	}
-
-	"imba_tournament"
-	{
-		"MaxPlayers"				"10"
-	}
-
-//	"imba_12v12"
-//	{
-//		"MaxPlayers"				"24"
-//	}
-
-	"cavern"
-	{
-		"MaxPlayers"				"24"
 	}
 }

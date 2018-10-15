@@ -66,7 +66,7 @@ var OnFailure = function(data) {
 
 (function() {
 
-	var mapsWithAutoSelect = [ "imba_ranked_5v5", "imba_ranked_10v10" ];
+	var mapsWithAutoSelect = [ "ranked_5v5" ];
 
 	// dont run this script on normal maps or when state is not team-select
 	if (mapsWithAutoSelect.indexOf(Game.GetMapInfo().map_display_name) == -1 || Game.GetState() != 2)

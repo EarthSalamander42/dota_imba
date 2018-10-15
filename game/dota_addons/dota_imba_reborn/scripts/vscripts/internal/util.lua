@@ -43,16 +43,26 @@ function MergeTables( t1, t2 )
 end
 
 -- Map utils
-function MapRanked5v5() return "imba_ranked_5v5" end
-function MapRanked10v10() return "imba_ranked_10v10" end
-function MapMutation5v5() return "imba_mutation_5v5" end
-function MapMutation10v10() return "imba_mutation_10v10" end
+function MapRanked5v5() return "ranked_5v5" end
+function MapRanked10v10() return "ranked_10v10" end
+function MapMutation5v5() return "mutation_5v5" end
+function MapMutation10v10() return "mutation_10v10" end
+function MapSuperFrantic5v5() return "super_frantic_5v5" end
+function MapSuperFrantic10v10() return "super_frantic_10v10" end
 function Map1v1() return "imba_1v1" end
 function MapTournament() return "map_tournament" end
-function MapOverthrow() return "imba_overthrow" end
+function MapOverthrow() return "imbathrow" end
 
 function IsRankedMap()
 	if GetMapName() == MapRanked5v5() or GetMapName() == MapRanked10v10() then
+		return true
+	end
+
+	return false
+end
+
+function IsSuperFranticMap()
+	if GetMapName() == MapSuperFrantic5v5() or GetMapName() == MapSuperFrantic10v10() then
 		return true
 	end
 
@@ -68,7 +78,7 @@ function Is1v1Map()
 end
 
 function Is10v10Map()
-	if GetMapName() == MapRanked10v10() or GetMapName() == MapMutation10v10() then
+	if GetMapName() == MapRanked10v10() or GetMapName() == MapMutation10v10() or GetMapName() == MapSuperFrantic10v10() then
 		return true
 	end
 

@@ -140,15 +140,15 @@ if (localTeam != 2 && localTeam != 3 && localTeam != 6 && localTeam != 7 && loca
 	changeHilariousLoadingText();
 }
 
-if (currentMap == "imba_1v1") {
+if (currentMap == "ranked_1v1") {
 	Setup1v1();
-} else if (currentMap == 'imba_ranked_10v10' || currentMap == 'imba_frantic_10v10' || currentMap == 'imba_mutation_10v10') {
+} else if (currentMap == 'ranked_10v10' || currentMap == 'super_frantic_10v10' || currentMap == 'mutation_10v10') {
 	SetupTopBar();
 } else if (currentMap == 'cavern') {
 	$.GetContextPanel().SetHasClass('Cavern', true);
 }
 
-if (currentMap == "imba_ranked_5v5" || currentMap == "imba_ranked_10v10") {
+if (currentMap == "ranked_5v5" || currentMap == "ranked_10v10") {
 	SetupIMRAverage()
 }
 
@@ -203,7 +203,7 @@ function onPlayerStatChange(table, key, data) {
 
 		var ply_battlepass = CustomNetTables.GetTableValue("battlepass", Game.GetLocalPlayerID());
 
-		if (Game.GetMapInfo().map_display_name == "imba_mutation_5v5" || Game.GetMapInfo().map_display_name == "imba_mutation_10v10") {
+		if (Game.GetMapInfo().map_display_name == "mutation_5v5" || Game.GetMapInfo().map_display_name == "mutation_10v10") {
 			if (data.mutation["negative"] == "all_random_deathmatch") {
 				HidePickingScreen()
 				return;
@@ -311,13 +311,13 @@ function onPlayerStatChange(table, key, data) {
 					// $('#MyEntry').SetFocus();
 					var player_table = CustomNetTables.GetTableValue("player_table", data[nkey].id.toString());
 					if (player_table) {
-						if (currentMap == "imba_ranked_5v5") {
+						if (currentMap == "ranked_5v5") {
 							if (player_table.IMR_5v5_calibrating) {
 								newinfo.text = "IMR: TBD";
 							} else if (player_table.IMR_5v5) {
 								newinfo.text = "IMR: " + Math.floor(player_table.IMR_5v5);
 							}
-						} else if (currentMap == "imba_ranked_10v10") {
+						} else if (currentMap == "ranked_10v10") {
 							if (player_table.IMR_10v10_calibrating) {
 								newinfo.text = "IMR: TBD";
 							} else if (player_table.IMR_10v10) {
@@ -382,7 +382,7 @@ function onPlayerStatChange(table, key, data) {
 				currentplayer.heroname = data[nkey].selectedhero;
 				currentplayer.RemoveClass('PreviewHero');
 
-				if (currentMap != "imba_1v1") {
+				if (currentMap != "ranked_1v1") {
 					DisableHero(data[nkey].selectedhero);
 				}
 
@@ -519,7 +519,7 @@ function onPlayerStatChange(table, key, data) {
 		} else {
 			// CM Hides the chat on last pick, before selecting plyer hero
 			// ARDM don't have pick screen chat
-//			if (currentMap === 'imba_ranked_5v5' || currentMap === 'imba_ranked_10v10') {
+//			if (currentMap === 'ranked_5v5' || currentMap === 'ranked_10v10') {
 				ReturnChatWindow();
 //			}
 
@@ -534,7 +534,7 @@ function SetupIMRAverage() {
 
 	$.Each( radiantPlayers, function( player ) {
 		var plyData = CustomNetTables.GetTableValue("player_table", player)
-		if (currentMap == "imba_ranked_5v5") {
+		if (currentMap == "ranked_5v5") {
 			radiant_imr = radiant_imr + plyData.IMR_5v5
 			radiant_count = radiant_count + 1
 		} else {
@@ -545,7 +545,7 @@ function SetupIMRAverage() {
 
 	$.Each( direPlayers, function( player ) {
 		var plyData = CustomNetTables.GetTableValue("player_table", player)
-		if (currentMap == "imba_ranked_5v5") {
+		if (currentMap == "ranked_5v5") {
 			dire_imr = dire_imr + plyData.IMR_5v5
 			dire_count = dire_count + 1
 		} else {

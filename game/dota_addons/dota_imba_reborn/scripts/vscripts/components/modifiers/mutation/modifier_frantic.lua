@@ -27,7 +27,6 @@ end
 
 function modifier_frantic:OnCreated()
 	if not IsServer() then return end
-	self:SetStackCount(_G.IMBA_FRANTIC_VALUE)
 	self:StartIntervalThink(0.2)
 	self.current_effect_name = ""
 	self.effect_name = ""

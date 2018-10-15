@@ -282,7 +282,7 @@ CustomNetTables.SubscribeNetTableListener("game_options", OnGameStateUpdated)
 function UpdateGameState() {
 
 	// do nothing on ranked maps
-	if (Game.GetMapInfo().map_display_name == "imba_ranked_5v5" || Game.GetMapInfo().map_display_name == "imba_ranked_10v10")
+	if (Game.GetMapInfo().map_display_name == "ranked_5v5" || Game.GetMapInfo().map_display_name == "imba_ranked_10v10")
 		return;
 
 	if (Game.GameStateIsBefore(DOTA_GameState.DOTA_GAMERULES_STATE_PRE_GAME)) {
@@ -305,7 +305,7 @@ function UpdateGameState() {
 	// -------------------------
 	// auto_team_select is used on 5v5 and 10v10
 	// -------------------------
-	if ((Game.GetMapInfo().map_display_name == "imba_ranked_5v5") || (Game.GetMapInfo().map_display_name == "imba_ranked_10v10")) {
+	if ((Game.GetMapInfo().map_display_name == "ranked_5v5") || (Game.GetMapInfo().map_display_name == "imba_ranked_10v10")) {
 		$.Msg("Skipping legacy team select on map " + Game.GetMapInfo().map_display_name + ", Imba Matchmaking enabled.");
 		return;
 	}

@@ -736,7 +736,7 @@ function Mutation:UpdatePanorama()
 
 	-- unique update
 --	if IMBA_MUTATION["imba"] == "frantic" then
-		CustomNetTables:SetTableValue("mutation_info", IMBA_MUTATION["imba"], {_G.IMBA_FRANTIC_VALUE, "%"})
+		CustomNetTables:SetTableValue("mutation_info", IMBA_MUTATION["imba"], {IMBA_FRANTIC_VALUE, "%"})
 --	end
 
 	if IMBA_MUTATION["positive"] == "killstreak_power" then

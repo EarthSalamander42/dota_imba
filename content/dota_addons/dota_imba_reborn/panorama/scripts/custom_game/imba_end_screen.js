@@ -171,7 +171,7 @@ function EndScoreboard() {
 
 			// IMR
 			if (player.result != null) {
-				if (mapInfo.map_display_name == "imba_ranked_5v5") {
+				if (mapInfo.map_display_name == "ranked_5v5") {
 					values.imr.style.visibility = "visible";
 
 					if (player.result.imr5v5_calibrating)
