@@ -31,6 +31,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"radius"					"900 1000 1100 1200"
+				"LinkedSpecialBonus"		"special_bonus_imba_wisp_5"
 			}
 			"02"
 			{
@@ -100,6 +101,7 @@
 		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
 		"AbilitySound"					"Hero_Wisp.Spirits.Cast"
 		"AbilityTextureName"			"wisp_spirits"
+		"HasScepterUpgrade"				"1"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -230,6 +232,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
 		"AbilityTextureName"			"wisp_overcharge"
+		"HasScepterUpgrade"				"1"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -295,12 +298,12 @@
 			"09"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"sceptre_radius"			"900"
+				"scepter_radius"			"900"
 			}
 			"10"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"sceptre_efficiency"		"0.25"
+				"scepter_efficiency"		"0.25"
 			}
 		}
 	}	
@@ -319,15 +322,6 @@
 		"AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"MaxLevel"						"1"
 		"AbilityCooldown"				"5.0"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"              "FIELD_INTEGER"
-				"spirit_debuff_duration"  "3"
-			}
-		}
 	}
 
 	//=================================================================================================================
@@ -607,7 +601,7 @@
 			"01"
 			{
 				"var_type"		"FIELD_INTEGER"
-				"bonus_range"			"500"
+				"value"			"500"
 			}
 		}
 	}
@@ -669,7 +663,7 @@
 	}
 
 	//=================================================================================================================
-	// Wisp Talent 8 (Level 25): Overcharge regen 5% max health and mana per second
+	// Wisp Talent 8 (Level 25): Overcharge regen 3% max mana per second to caster
 	//=================================================================================================================
 	"special_bonus_imba_wisp_8"
 	{
@@ -690,8 +684,8 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"bonus_regen"			"5.0"
+				"var_type"				"FIELD_INTEGER"
+				"bonus_regen"			"3"
 			}
 		}
 	}

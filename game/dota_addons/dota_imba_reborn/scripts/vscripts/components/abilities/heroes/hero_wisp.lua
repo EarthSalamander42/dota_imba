@@ -18,6 +18,8 @@ LinkLuaModifier("modifier_imba_wisp_tether_bonus_regen", "components/abilities/h
 function imba_wisp_tether:GetCustomCastErrorTarget(target)
 	if target == self:GetCaster() then
 		return "dota_hud_error_cant_cast_on_self"
+	elseif target:HasModifier("modifier_imba_wisp_tether") and self:GetCaster():HasModifier("modifier_imba_wisp_tether_ally") then
+		return "WHY WOULD YOU DO THIS"
 	end
 end
 
@@ -39,10 +41,20 @@ function imba_wisp_tether:CastFilterResultTarget(target)
 			return UF_FAIL_DISABLE_HELP
 		end
 
+		if target:HasModifier("modifier_imba_wisp_tether") and self:GetCaster():HasModifier("modifier_imba_wisp_tether_ally") then
+			return UF_FAIL_CUSTOM
+		end
+		
 		local nResult = UnitFilter(target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), caster:GetTeamNumber())
 		return nResult
 	end
 end
+
+function imba_wisp_tether:GetCastRange(location, target)
+	local cast_range = self.BaseClass.GetCastRange(self,location,target) + self:GetCaster():FindTalentValue("special_bonus_imba_wisp_5")
+	return cast_range
+end
+
 
 function imba_wisp_tether:OnSpellStart()
 	local ability 				= self:GetCaster():FindAbilityByName("imba_wisp_tether")
@@ -53,7 +65,7 @@ function imba_wisp_tether:OnSpellStart()
 	local latch_distance 		= self:GetSpecialValueFor("latch_distance")
 
 	if caster:HasTalent("special_bonus_imba_wisp_5") then 
-		ability.bonus_range 	= caster:FindTalentValue("special_bonus_imba_wisp_5", "bonus_range")
+		ability.bonus_range 	= caster:FindTalentValue("special_bonus_imba_wisp_5")
 		latch_distance 			= latch_distance + ability.bonus_range
 	end	
 
@@ -97,8 +109,20 @@ function imba_wisp_tether:OnSpellStart()
 		caster:AddNewModifier(caster, self, "modifier_imba_wisp_tether_latch", { destroy_tree_radius =  destroy_tree_radius})
 	end
 
+	-- Let's manually add Tether Break for Rubick and Morphling so they can use the skill properly
+	if not caster:HasAbility("imba_wisp_tether_break") then
+		caster:AddAbility("imba_wisp_tether_break")
+	end
+	
 	caster:SwapAbilities("imba_wisp_tether", "imba_wisp_tether_break", false, true)
 	caster:FindAbilityByName("imba_wisp_tether_break"):SetLevel(1)
+end
+
+-- Remove Tether Break for Rubick and Morphling when skill is lost
+function imba_wisp_tether:OnUnStolen()
+	if self:GetCaster():HasAbility("imba_wisp_tether_break") then
+		self:GetCaster():RemoveAbility("imba_wisp_tether_break")
+	end
 end
 
 modifier_imba_wisp_tether = class({})
@@ -112,7 +136,7 @@ function modifier_imba_wisp_tether:OnCreated(params)
 		self.tether_heal_amp 	= self:GetAbility():GetSpecialValueFor("tether_heal_amp")
 
 		if self:GetCaster():HasTalent("special_bonus_imba_wisp_5") then 
-		local bonus_range 		= self:GetCaster():FindTalentValue("special_bonus_imba_wisp_5", "bonus_range")
+		local bonus_range 		= self:GetCaster():FindTalentValue("special_bonus_imba_wisp_5")
 		self.radius 			= self.radius + bonus_range
 		end	
 		
@@ -133,7 +157,7 @@ function modifier_imba_wisp_tether:DeclareFunctions()
 		MODIFIER_EVENT_ON_HEALTH_GAINED,
 		MODIFIER_EVENT_ON_MANA_GAINED,
 		MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE,
-		MODIFIER_PROPERTY_MOVESPEED_LIMIT
+		MODIFIER_PROPERTY_MOVESPEED_MAX
 	}
 
 	return decFuncs
@@ -204,7 +228,7 @@ function modifier_imba_wisp_tether:GetModifierMoveSpeed_Absolute()
 	return net_table.tether_movement_speed or 0
 end
 
-function modifier_imba_wisp_tether:GetModifierMoveSpeed_Limit()
+function modifier_imba_wisp_tether:GetModifierMoveSpeed_Max()
 	return 3000
 end
 
@@ -279,40 +303,6 @@ function modifier_imba_wisp_tether_ally:OnCreated()
 
 		EmitSoundOn("Hero_Wisp.Tether.Target", self:GetParent())
 
-		local movement_speed_cap = self:GetCaster():FindTalentValue("special_bonus_imba_wisp_8", "movement_speed_cap")
-
-		CustomNetTables:SetTableValue(
-		"player_table", 
-		tostring(self:GetCaster():GetPlayerOwnerID()), 
-		{ 	
-			tether_limit 			= movement_speed_cap,
-			tether_minimum_speed 	= self:GetParent():GetIdealSpeed(),
-		})
-
-        --[[
-        if self:GetCaster():HasTalent("special_bonus_imba_wisp_8") then
-			-- modify absolute movement speed to never go down
-			self:GetParent():AddNewModifier(
-				self:GetCaster(), 
-				self, 
-				"modifier_imba_wisp_tether_slow_immune", 
-				{
-					limit 			= movement_speed_cap,
-					minimum_speed 	= self:GetParent():GetIdealSpeed()
-				})
-
-			-- modify absolute movement speed to never go down
-			self:GetCaster():AddNewModifier(
-				self:GetCaster(), 
-				self, 
-				"modifier_imba_wisp_tether_slow_immune", 
-				{
-					limit 			= movement_speed_cap,
-					minimum_speed 	= self:GetParent():GetIdealSpeed()
-				})
-		end
-		]]
-		
 		self:StartIntervalThink(FrameTime())
 	end
 end
@@ -512,12 +502,28 @@ end
 ------------------------------
 imba_wisp_tether_break = class({})
 function imba_wisp_tether_break:IsInnateAbility() return true end
+function imba_wisp_tether_break:IsStealable() return false end
 
 function imba_wisp_tether_break:OnSpellStart()
+
+	-- Let's manually add Tether for Morphling so they can use the skill properly (super bootleg)
+	if not self:GetCaster():HasAbility("imba_wisp_tether") then
+		local stolenAbility = self:GetCaster():AddAbility("imba_wisp_tether")
+		stolenAbility:SetLevel(min((self:GetCaster():GetLevel() / 2) - 1, 4))
+		self:GetCaster():SwapAbilities("imba_wisp_tether_break", "imba_wisp_tether", false, true)
+	end
+
 	self:GetCaster():RemoveModifierByName("modifier_imba_wisp_tether")
 	local target = self:GetCaster():FindAbilityByName("imba_wisp_tether").target
 	if target ~= nil and target:HasModifier("modifier_imba_wisp_overcharge") then
 		target:RemoveModifierByName("modifier_imba_wisp_overcharge")
+	end
+end
+
+-- ugh
+function imba_wisp_tether_break:OnUnStolen()
+	if self:GetCaster():HasAbility("imba_wisp_tether") then
+		self:GetCaster():RemoveAbility("imba_wisp_tether")
 	end
 end
 
@@ -532,6 +538,7 @@ LinkLuaModifier("modifier_imba_wisp_spirits_creep_hit", "components/abilities/he
 LinkLuaModifier("modifier_imba_wisp_spirits_slow", "components/abilities/heroes/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_wisp_spirit_damage_handler", "components/abilities/heroes/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_wisp_spirits_true_sight", "components/abilities/heroes/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
+
 function imba_wisp_spirits:OnSpellStart()
 	if IsServer() then
 		self.caster 					= self:GetCaster()
@@ -560,6 +567,16 @@ function imba_wisp_spirits:OnSpellStart()
 
 		EmitSoundOn("Hero_Wisp.Spirits.Cast", self.caster)	
 
+		-- Exception for naughty Morphlings...
+		if self.caster:HasModifier("modifier_imba_wisp_spirits") then
+			self.caster:RemoveModifierByName("modifier_imba_wisp_spirits")
+		end
+		
+		-- Let's manually add Toggle Spirits for Rubick and Morphling so they can use the skill properly
+		if not self.caster:HasAbility("imba_wisp_spirits_toggle") then
+			self.caster:AddAbility("imba_wisp_spirits_toggle")
+		end
+		
 		self.caster:SwapAbilities("imba_wisp_spirits", "imba_wisp_spirits_toggle", false, true )
 		self.caster:FindAbilityByName("imba_wisp_spirits_toggle"):SetLevel(1)
 		self.caster:AddNewModifier(
@@ -586,6 +603,13 @@ function imba_wisp_spirits:OnSpellStart()
 			}) 
 
 		self.caster:AddNewModifier(self.caster, self.ability, "modifier_imba_wisp_spirit_damage_handler", {duration = -1, damage_interval = damage_interval})
+	end
+end
+
+-- Remove Toggle Spirits for Rubick and Morphling when skill is lost
+function imba_wisp_spirits:OnUnStolen()
+	if self:GetCaster():HasAbility("imba_wisp_spirits_toggle") then
+		self:GetCaster():RemoveAbility("imba_wisp_spirits_toggle")
 	end
 end
 
@@ -658,10 +682,6 @@ function modifier_imba_wisp_spirits:OnIntervalThink()
 
 			-- Spawn a new spirit
 			local newSpirit = CreateUnitByName("npc_dota_wisp_spirit", caster_position, false, caster, caster, caster:GetTeam())
-			if caster:HasScepter() then
-				newSpirit:SetDayTimeVisionRange(300)
-				newSpirit:SetNightTimeVisionRange(300)
-            end
 
 			-- Create particle FX
 			local pfx = ParticleManager:CreateParticle(particle, PATTACH_ABSORIGIN_FOLLOW, newSpirit)
@@ -670,6 +690,9 @@ function modifier_imba_wisp_spirits:OnIntervalThink()
 				newSpirit.spirit_pfx_disarm = pfx
 			elseif caster:HasModifier("modifier_imba_wisp_swap_spirits_silence") then
 				local pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_wisp/wisp_guardian_silence_a.vpcf", PATTACH_ABSORIGIN_FOLLOW, newSpirit)
+				newSpirit.spirit_pfx_silence = pfx
+			else -- Just for Rubick...since he's not stealing the silence/disarm skill right now
+				local pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_wisp/wisp_guardian_.vpcf", PATTACH_ABSORIGIN_FOLLOW, newSpirit)
 				newSpirit.spirit_pfx_silence = pfx
 			end
 
@@ -807,6 +830,12 @@ function modifier_imba_wisp_spirits:Explode(caster, spirit, explosion_radius, ex
 			end
 		end
 
+		-- Let's just have another one here for Rubick to "properly" destroy Spirit particles
+		if spirit_pfx_silence ~= nil then
+			ParticleManager:DestroyParticle(spirit.spirit_pfx_silence, true)
+			ParticleManager:ReleaseParticleIndex(spirit.spirit_pfx_silence)
+		end
+		
 		ability.spirits_spiritsSpawned[spirit.spirit_index] = nil
 	end
 end
@@ -943,10 +972,6 @@ function modifier_imba_wisp_spirit_handler:CheckState()
 		[MODIFIER_STATE_NO_HEALTH_BAR] 		= true,
 	}
 
-	if self:GetCaster():HasScepter() then
-		state[MODIFIER_STATE_FLYING] = true
-	end
-
 	return state
 end
 
@@ -1069,8 +1094,19 @@ end
 --		SPIRITS	TOGGLE	Near/Far	--
 --------------------------------------
 imba_wisp_spirits_toggle = class({})
+
+function imba_wisp_spirits_toggle:IsStealable() return false end
+
 function imba_wisp_spirits_toggle:OnSpellStart()
 	if IsServer() then
+		
+		-- Let's manually add Spirits for Morphling so they can use the skill properly (super bootleg)
+		if not self:GetCaster():HasAbility("imba_wisp_spirits") then
+			local stolenAbility = self:GetCaster():AddAbility("imba_wisp_spirits")
+			stolenAbility:SetLevel(min((self:GetCaster():GetLevel() / 2) - 1, 4))
+			self:GetCaster():SwapAbilities("imba_wisp_spirits_toggle", "imba_wisp_spirits", false, true)
+		end
+	
 		local caster 					= self:GetCaster()
 		local ability 					= caster:FindAbilityByName("imba_wisp_spirits")
 		local spirits_movementFactor 	= ability.spirits_movementFactor
@@ -1083,19 +1119,31 @@ function imba_wisp_spirits_toggle:OnSpellStart()
 	end
 end
 
+-- ugh
+function imba_wisp_spirits_toggle:OnUnStolen()
+	if self:GetCaster():HasAbility("imba_wisp_spirits") then
+		self:GetCaster():RemoveAbility("imba_wisp_spirits")
+	end
+end
+
 ------------------------------------------
 --		SPIRITS	Swap silence/disarm		--
 ------------------------------------------
 LinkLuaModifier("modifier_imba_wisp_swap_spirits_disarm", "components/abilities/heroes/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_wisp_swap_spirits_silence", "components/abilities/heroes/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
 imba_wisp_swap_spirits = class({})
-function imba_wisp_swap_spirits:IsInnateAbility()
-	return true
+
+function imba_wisp_swap_spirits:IsInnateAbility() return true end
+function imba_wisp_swap_spirits:IsStealable() return false end
+
+function imba_wisp_swap_spirits:GetIntrinsicModifierName()
+	return "modifier_imba_wisp_swap_spirits_silence"
 end
 
 function imba_wisp_swap_spirits:GetIntrinsicModifierName()
 	return "modifier_imba_wisp_swap_spirits_silence"
 end
+
 
 function imba_wisp_swap_spirits:GetAbilityTextureName()
 	if self:GetCaster():HasModifier("modifier_imba_wisp_swap_spirits_silence") then
@@ -1107,12 +1155,17 @@ end
 
 function imba_wisp_swap_spirits:OnSpellStart()
 	if IsServer() then
-
 		local caster 					= self:GetCaster()
 		local ability 					= caster:FindAbilityByName("imba_wisp_spirits")
-		local spirits_movementFactor 	= ability.spirits_movementFactor
+		--local spirits_movementFactor 	= ability.spirits_movementFactor
 		local particle 					= nil
-
+		local silence 					= false
+		local disarm 					= false
+		
+		if not self.particles then
+			self.particles = {}
+		end
+		
 		if caster:HasModifier("modifier_imba_wisp_swap_spirits_disarm") then
 			caster:RemoveModifierByName("modifier_imba_wisp_swap_spirits_disarm")
 			caster:AddNewModifier(self:GetCaster(), self, "modifier_imba_wisp_swap_spirits_silence", {})
@@ -1120,13 +1173,6 @@ function imba_wisp_swap_spirits:OnSpellStart()
 			caster:RemoveModifierByName("modifier_imba_wisp_swap_spirits_silence")
 			caster:AddNewModifier(self:GetCaster(), self, "modifier_imba_wisp_swap_spirits_disarm", {})
 		end
-
-		local caster 					= self:GetCaster()
-		local ability 					= caster:FindAbilityByName("imba_wisp_spirits")
-		local spirits_movementFactor 	= ability.spirits_movementFactor
-		local particle 					= nil
-		local silence 					= false
-		local disarm 					= false
 
 		if caster:HasModifier("modifier_imba_wisp_swap_spirits_silence") then
 			particle = "particles/units/heroes/hero_wisp/wisp_guardian_silence_a.vpcf"
@@ -1137,17 +1183,24 @@ function imba_wisp_swap_spirits:OnSpellStart()
 			silence  = false
 			disarm 	 = true
 		end
-
-		for k,spirit in pairs( ability.spirits_spiritsSpawned ) do
-			if not spirit:IsNull() then
-				local pfx = ParticleManager:CreateParticle(particle, PATTACH_ABSORIGIN_FOLLOW, spirit)
-				if silence then
-					spirit.spirit_pfx_silence = pfx
-				elseif disarm then
-					spirit.spirit_pfx_disarm = pfx
+	
+		if ability.spirits_spiritsSpawned then
+			for k,spirit in pairs( ability.spirits_spiritsSpawned ) do
+				if not spirit:IsNull() then					
+					if self.particles[k] then
+						ParticleManager:DestroyParticle(self.particles[k], false)
+						ParticleManager:ReleaseParticleIndex(self.particles[k])
+					end
+					
+					self.particles[k] = ParticleManager:CreateParticle(particle, PATTACH_ABSORIGIN_FOLLOW, spirit)
+					if silence then
+						spirit.spirit_pfx_silence = self.particles[k]
+					elseif disarm then
+						spirit.spirit_pfx_disarm = self.particles[k]
+					end
 				end
 			end
-		end		
+		end
 	end 
 end
 
@@ -1289,7 +1342,7 @@ end
 --	Overchargge Aura modifier	--
 ----------------------------------
 modifier_imba_wisp_overcharge_aura = class({})
-function modifier_imba_wisp_overcharge_aura:IsHidden() return true end
+function modifier_imba_wisp_overcharge_aura:IsHidden() return false end
 function modifier_imba_wisp_overcharge_aura:IsPurgable() return false end
 function modifier_imba_wisp_overcharge_aura:IsNetherWardStealable()
 	return false
@@ -1298,8 +1351,8 @@ function modifier_imba_wisp_overcharge_aura:OnCreated()
 	if IsServer() then 
 		self.ability 				= self:GetAbility()
 		self.tether_ability 		= self:GetCaster():FindAbilityByName("imba_wisp_tether")
-		self.sceptre_radius			= self.ability:GetSpecialValueFor("sceptre_radius")
-		self.sceptre_efficiency		= self.ability:GetSpecialValueFor("sceptre_efficiency")
+		self.scepter_radius			= self.ability:GetSpecialValueFor("scepter_radius")
+		self.scepter_efficiency		= self.ability:GetSpecialValueFor("scepter_efficiency")
 
 		self:StartIntervalThink(0.1)
 	end
@@ -1312,7 +1365,7 @@ function modifier_imba_wisp_overcharge_aura:OnIntervalThink()
 				caster:GetTeam(), 
 				caster:GetAbsOrigin(), 
 				nil, 
-				self.sceptre_radius, 
+				self.scepter_radius, 
 				DOTA_UNIT_TARGET_TEAM_FRIENDLY,
 				DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
 				DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS, 
@@ -1321,7 +1374,7 @@ function modifier_imba_wisp_overcharge_aura:OnIntervalThink()
 
 		for _,unit in pairs(nearby_friendly_units) do
 			if unit ~= caster and unit ~= self.tether_ability.target and unit ~= "npc_dota_hero" then 
-				imba_wisp_overcharge:AddOvercharge(caster, unit, self.sceptre_efficiency, 1)
+				imba_wisp_overcharge:AddOvercharge(caster, unit, self.scepter_efficiency, 1)
 			end
 		end
 	end
@@ -1422,22 +1475,17 @@ end
 --	Overcharge Talent	    --
 ------------------------------
 modifier_imba_wisp_overcharge_regen_talent = class({})
-function modifier_imba_wisp_overcharge_regen_talent:IsHidden() return false end
+function modifier_imba_wisp_overcharge_regen_talent:IsHidden() return true end
 function modifier_imba_wisp_overcharge_regen_talent:IsPurgable() return false end
 function modifier_imba_wisp_overcharge_regen_talent:DeclareFunctions()
 	local decFuncs = {
-		MODIFIER_PROPERTY_MANA_REGEN_CONSTANT,
-		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT
+		MODIFIER_PROPERTY_MANA_REGEN_TOTAL_PERCENTAGE
 	}
 
 	return decFuncs
 end
 
-function modifier_imba_wisp_overcharge_regen_talent:GetModifierConstantManaRegen()
-	return self:GetStackCount()
-end
-
-function modifier_imba_wisp_overcharge_regen_talent:GetModifierConstantHealthRegen()
+function modifier_imba_wisp_overcharge_regen_talent:GetModifierTotalPercentageManaRegen()
 	return self:GetStackCount()
 end
 
@@ -1467,6 +1515,8 @@ function imba_wisp_relocate:OnSpellStart()
 		local cast_delay 			= ability:GetSpecialValueFor("cast_delay")
 		local return_time 			= ability:GetSpecialValueFor("return_time")
 		local destroy_tree_radius	= ability:GetSpecialValueFor("destroy_tree_radius")
+	
+		EmitSoundOn("Hero_Wisp.Relocate", self:GetCaster())
 	
 		if unit == caster then
 			if caster:GetTeam() == DOTA_TEAM_GOODGUYS then
@@ -1505,8 +1555,15 @@ function imba_wisp_relocate:OnSpellStart()
 			callback = function()
 				ParticleManager:DestroyParticle(pfx, false)
 				if not imba_wisp_relocate:InterruptRelocate(caster, ability, tether_ability) then
+					EmitSoundOn("Hero_Wisp.Return", self:GetCaster())
+					
 					GridNav:DestroyTreesAroundPoint(target_point, destroy_tree_radius, false)
 
+					-- Here we go again (Rubick)
+					if not caster:HasAbility("imba_wisp_relocate_break") then
+						caster:AddAbility("imba_wisp_relocate_break")
+					end
+					
 					caster:SwapAbilities("imba_wisp_relocate", "imba_wisp_relocate_break", false, true)
 					local break_ability = caster:FindAbilityByName("imba_wisp_relocate_break")
 					break_ability:SetLevel(1)
@@ -1534,6 +1591,13 @@ function imba_wisp_relocate:InterruptRelocate(caster, ability, tether_ability)
 	end
 
 	return false
+end
+
+-- Remove Relocate Break for Rubick when skill is lost
+function imba_wisp_relocate:OnUnStolen()
+	if self:GetCaster():HasAbility("imba_wisp_relocate_break") then
+		self:GetCaster():RemoveAbility("imba_wisp_relocate_break")
+	end
 end
 
 ----------------------
@@ -1597,6 +1661,8 @@ function modifier_imba_wisp_relocate:OnRemoved()
 		local caster = self:GetCaster()
 		local ability = self:GetAbility();
 
+		EmitSoundOn("Hero_Wisp.Return", self:GetCaster())
+		
 		-- Add teleport effect
 		self.caster_teleport_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_wisp/wisp_relocate_teleport.vpcf", PATTACH_CUSTOMORIGIN, caster)
 		ParticleManager:SetParticleControlEnt(self.caster_teleport_pfx, 0, caster, PATTACH_POINT, "attach_hitloc", caster:GetAbsOrigin(), true)
@@ -1647,6 +1713,9 @@ end
 --		RELOCATE BREAK		--
 ------------------------------
 imba_wisp_relocate_break = class({})
+
+function imba_wisp_relocate_break:IsStealable() return false end
+
 function imba_wisp_relocate_break:OnSpellStart() 
 	if IsServer() then
 		local caster = self:GetCaster()

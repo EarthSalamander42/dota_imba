@@ -6,7 +6,7 @@
 "dota_tooltip_ability_sohei_dash_dash_speed"                   "DASH SPEED:"
 
 "DOTA_Tooltip_Ability_sohei_guard"                        "Guard"
-"DOTA_Tooltip_Ability_sohei_guard_description"            "Hard dispels you. Reflects all projectiles that would hit you for the next 2 seconds. Can be used while stunned but consumes 2 charges of Dash if used while stunned."
+"DOTA_Tooltip_Ability_sohei_guard_description"            "Hard dispels you. Reflects all ranged attacks and targeted projectiles (similar to Lotus Orb) that would hit you for the next 2 seconds. Can be used while stunned but consumes 2 charges of Dash if used while stunned."
 "DOTA_Tooltip_Ability_sohei_guard_note1"                  "Can be activated while stunned but not while silenced."
 "DOTA_Tooltip_Ability_sohei_guard_guard_duration"         "DURATION:"
 

@@ -130,7 +130,7 @@
 "npc_dota_hero_rattletrap"                                  "Clockwerk"
 "npc_dota_hero_razor"                                      "Razor"
 "npc_dota_hero_riki"                                        "Riki (IMBA)"
-"npc_dota_hero_rubick"                                      "Rubick"
+"npc_dota_hero_rubick"                                      "Rubick (IMBA)"
 "npc_dota_hero_sand_king"                                  "Sand King (IMBA)"
 "npc_dota_hero_shadow_demon"                                "Shadow Demon"
 "npc_dota_hero_nevermore"                                  "Shadow Fiend (IMBA)"

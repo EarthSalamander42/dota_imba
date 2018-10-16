@@ -466,6 +466,7 @@ function modifier_imba_elder_titan_ancestral_spirit_self:CheckState()
 			[MODIFIER_STATE_FLYING] = true,
 			[MODIFIER_STATE_INVULNERABLE] = true,
 			[MODIFIER_STATE_NO_UNIT_COLLISION] = true,
+			[MODIFIER_STATE_COMMAND_RESTRICTED] = false
 		}
 
 		if self:GetStackCount() == 1 then
@@ -475,6 +476,7 @@ function modifier_imba_elder_titan_ancestral_spirit_self:CheckState()
 				[MODIFIER_STATE_FLYING] = true,
 				[MODIFIER_STATE_INVULNERABLE] = true,
 				[MODIFIER_STATE_NO_UNIT_COLLISION] = true,
+				[MODIFIER_STATE_COMMAND_RESTRICTED] = true
 			}
 		end
 		return state

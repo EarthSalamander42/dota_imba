@@ -69,13 +69,17 @@ function item_imba_angelic_alliance:OnSpellStart()
 		target:EmitSound("Imba.AngelicAllianceCast")
 		target:AddNewModifier(caster, self, "modifier_imba_angelic_alliance_buff", {duration = duration})
 		target:RemoveModifierByName("modifier_imba_angelic_alliance_haste_decaying")
-		AddStacksLua(self, caster, target, "modifier_imba_angelic_alliance_haste_decaying", duration*2)
+
+		local hasteBuff = target:AddNewModifier(caster, self, "modifier_imba_angelic_alliance_haste_decaying", {})
+		hasteBuff:SetStackCount(duration*2)
 	else
 		if target:TriggerSpellAbsorb(self) then return nil end
 		target:EmitSound("Imba.AngelicAllianceCast")
 		target:AddNewModifier(caster, self, "modifier_imba_angelic_alliance_debuff", {duration = duration})
 		target:RemoveModifierByName("modifier_imba_angelic_alliance_slow_decaying")
-		AddStacksLua(self, caster, target, "modifier_imba_angelic_alliance_slow_decaying", duration*2)
+
+		local slowDebuff = target:AddNewModifier(caster, self, "modifier_imba_angelic_alliance_slow_decaying", {})
+		slowDebuff:SetStackCount(duration*2)
 	end
 
 	caster:AddNewModifier(caster, self, "modifier_imba_angelic_alliance_debuff_caster", {duration = duration})
@@ -256,7 +260,7 @@ function modifier_imba_angelic_alliance_slow_decaying:OnIntervalThink()
 		if current_stacks <= 1 then
 			target:RemoveModifierByName(modifier)
 		else
-			target:SetModifierStackCount(modifier, caster, current_stacks - 1 )
+			self:DecrementStackCount()
 		end
 	end
 end
@@ -335,7 +339,7 @@ function modifier_imba_angelic_alliance_haste_decaying:OnIntervalThink()
 		if current_stacks <= 1 then
 			target:RemoveModifierByName(modifier)
 		else
-			target:SetModifierStackCount(modifier, caster, current_stacks - 1 )
+			self:DecrementStackCount()
 		end
 	end
 end

@@ -159,7 +159,13 @@ function imba_centaur_hoof_stomp:OnSpellStart()
 				end
 			end
 		end
-
+	
+		-- Prevents overlapping permanent particle effects from Hoof Stomp spam
+		if self.particle_arena_fx then
+			ParticleManager:DestroyParticle(self.particle_arena_fx, false)
+			ParticleManager:ReleaseParticleIndex(self.particle_arena_fx)
+		end
+		
 		-- Add arena particles for the duration
 		self.particle_arena_fx = ParticleManager:CreateParticle(particle_arena, PATTACH_ABSORIGIN, caster)
 		ParticleManager:SetParticleControl(self.particle_arena_fx, 0, caster:GetAbsOrigin())
