@@ -1301,6 +1301,10 @@ function modifier_rubick_spellsteal_hidden:OnAbilityFullyCast( params )
 		if not params.ability:IsStealable() then
 			return
 		end
+		-- Not sure why this is needed since it checks for being an item on top, maybe custom items?
+		if string.find(params.ability:GetAbilityName(), "item") then
+			return
+		end
 		self:GetAbility():SetLastSpell( params.unit, params.ability )
 	end
 end

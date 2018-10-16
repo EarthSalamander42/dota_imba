@@ -250,8 +250,8 @@ function api.imba.get_donators()
 end
 
 function api.imba.is_donator(steamid)
-	if data == nil or api.imba.data.donators == nil then
---		log.warn("is_donator called but donators are not available. yet?")
+	if api.imba.data == nil or api.imba.data.donators == nil then
+		log.warn("is_donator called but donators are not available. yet?")
 		return false
 	end
 
@@ -268,7 +268,7 @@ function api.imba.is_donator(steamid)
 end
 
 function api.imba.get_developers()
-	if data == nil or api.imba.data.developers == nil then
+	if api.imba.data == nil or api.imba.data.developers == nil then
 --		log.warn("is_developer called but developers are not available. yet?")
 --		return false
 		return {}
@@ -278,7 +278,7 @@ function api.imba.get_developers()
 end
 
 function api.imba.is_developer(steamid)
-	if data == nil or api.imba.data.developers == nil then
+	if api.imba.data == nil or api.imba.data.developers == nil then
 		log.warn("is_developer called but developers are not available. yet?")
 		return false
 	end
@@ -291,7 +291,7 @@ function api.imba.is_developer(steamid)
 end
 
 function api.imba.get_player_info(steamid)
-	if api.imba.data.players == nil then
+	if api.imba.data == nil or api.imba.data.players == nil then
 		log.warn("get_player_info called but players are not available. yet?")
 		return nil
 	end
@@ -306,7 +306,7 @@ function api.imba.get_player_info(steamid)
 end
 
 function api.imba.hero_is_disabled(entity)
-	if api.imba.data.disabled_heroes == nil then
+	if api.imba.data == nil or api.imba.data.disabled_heroes == nil then
 		log.warn("hero_is_disabled called but disabled_heroes are not available. yet?")
 		return false
 	end
@@ -321,7 +321,7 @@ function api.imba.hero_is_disabled(entity)
 end
 
 function api.imba.get_rankings_xp()
-	if api.imba.data.rankings == nil then
+	if api.imba.data == nil or api.imba.data.rankings == nil then
 		log.warn("get_rankings_xp called but rankings are not available. yet?")
 		return nil
 	end
@@ -330,7 +330,7 @@ function api.imba.get_rankings_xp()
 end
 
 function api.imba.get_rankings_imr5v5()
-	if api.imba.data.rankings == nil then
+	if api.imba.data == nil or api.imba.data.rankings == nil then
 		log.warn("get_rankings_imr5v5 called but rankings are not available. yet?")
 		return nil
 	end
@@ -339,7 +339,7 @@ function api.imba.get_rankings_imr5v5()
 end
 
 function api.imba.get_rankings_imr10v10()
-	if api.imba.data.rankings == nil then
+	if api.imba.data == nil or api.imba.data.rankings == nil then
 		log.warn("get_rankings_imr10v10 called but rankings are not available. yet?")
 		return nil
 	end
@@ -348,7 +348,7 @@ function api.imba.get_rankings_imr10v10()
 end
 
 function api.imba.get_rankings_level1v1()
-	if api.imba.data.rankings == nil then
+	if api.imba.data == nil or api.imba.data.rankings == nil then
 		log.warn("get_rankings_level1v1 called but rankings are not available. yet?")
 		return nil
 	end
@@ -357,7 +357,7 @@ function api.imba.get_rankings_level1v1()
 end
 
 function api.imba.get_companions()
-	if api.imba.data.companions == nil then
+	if api.imba.data == nil or api.imba.data.companions == nil then
 		log.warn("get_companions called but companions are not available. yet?")
 	end
 
