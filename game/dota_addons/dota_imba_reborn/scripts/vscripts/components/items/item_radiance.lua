@@ -59,6 +59,12 @@ function modifier_imba_cloak_of_flames_basic:OnCreated(keys)
 		if not self:GetParent():HasModifier("modifier_imba_cloak_of_flames_aura") then
 			self:GetParent():AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_cloak_of_flames_aura", {})
 		end
+
+		if self.particle == nil then
+			self.particle = ParticleManager:CreateParticle("particles/units/heroes/hero_ember_spirit/ember_spirit_flameguard.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+			ParticleManager:SetParticleControl(self.particle, 0, Vector(0, 0, 0))
+			ParticleManager:SetParticleControl(self.particle, 1, Vector(self:GetAbility():GetSpecialValueFor("aura_radius"), 1, 1))
+		end
 	end
 end
 
@@ -68,6 +74,14 @@ function modifier_imba_cloak_of_flames_basic:OnDestroy(keys)
 		if not self:GetParent():HasModifier("modifier_imba_cloak_of_flames_basic") then
 			self:GetParent():RemoveModifierByName("modifier_imba_cloak_of_flames_aura")
 		end
+	end
+end
+
+function modifier_imba_cloak_of_flames_basic:OnDestroy()
+	if self.particle ~= nil then
+		ParticleManager:DestroyParticle(self.particle, false)
+		ParticleManager:ReleaseParticleIndex(self.particle)
+		self.particle = nil
 	end
 end
 
@@ -93,14 +107,6 @@ end
 
 function modifier_imba_cloak_of_flames_aura:GetAuraRadius()
 	return self:GetAbility():GetSpecialValueFor("aura_radius")
-end
-
-function modifier_imba_cloak_of_flames_aura:GetEffectName()
-	return "particles/units/heroes/hero_ember_spirit/ember_spirit_flameguard.vpcf"
-end
-
-function modifier_imba_cloak_of_flames_aura:GetEffectAttachType()
-	return PATTACH_ABSORIGIN_FOLLOW
 end
 
 -----------------------------------------------------------------------------------------------------------

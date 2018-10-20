@@ -1,17 +1,18 @@
 "AddonInfo"
 {
-	"addonSteamAppID"				"816"
+	"addonSteamAppID"				"570"
 	"addontitle"					"Dota IMBA"
 	"addon_game_name"				"Dota IMBA"
-	"addonversion"					"7.04"
+	"addonversion"					"7.08"
 	"addontagline"					"IMBA"
-	"addonauthor"					"Firetoad and Hewdraw"
+	"addonauthor"					"EarthSalamander #42"
 	"addonSteamGroupName"			""
 	"addonauthorSteamID"			"fcalife"
 	"addonContent_Campaign"			"0"
 	"addonDescription"				"A modified version of Dota, where everything is insanely powerful."
 	"HeroGuidesSupported"			"1"
 	"PenaltiesEnabled"				"1"
+	"CheckAFKPlayers"				"1"
 
 	"maps"							"ranked_5v5 mutation_10v10 super_frantic_5v5 super_frantic_10v10"
 
