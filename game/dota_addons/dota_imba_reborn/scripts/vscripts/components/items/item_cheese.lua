@@ -61,7 +61,7 @@ function modifier_item_imba_cheese_death_prevention:DeclareFunctions()
 end
 
 function modifier_item_imba_cheese_death_prevention:OnTakeDamage(keys)
-	if keys.unit == self:GetParent() and keys.damage >= keys.unit:GetHealth() and not (keys.unit:HasModifier("modifier_imba_dazzle_shallow_grave") or keys.unit:HasModifier("modifier_imba_dazzle_nothl_protection")) and self:GetAbility():IsCooldownReady() then
+	if not keys.unit:IsIllusion() and keys.unit == self:GetParent() and keys.damage >= keys.unit:GetHealth() and not (keys.unit:HasModifier("modifier_imba_dazzle_shallow_grave") or keys.unit:HasModifier("modifier_imba_dazzle_nothl_protection")) and self:GetAbility():IsCooldownReady() then
 		ConsumeCheese(keys.unit, self:GetAbility())
 	end
 end

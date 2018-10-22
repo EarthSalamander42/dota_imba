@@ -1133,6 +1133,8 @@ function modifier_imba_kinetic_field_barrier:OnCreated()
 				damage_type = DAMAGE_TYPE_MAGICAL,
 				ability = ability
 				}
+				
+				IncrementStormbearerStacks(caster, ability:GetSpecialValueFor("stormbearer_stack_amount"))
 			else
 				damageTable = {
 				victim = target,

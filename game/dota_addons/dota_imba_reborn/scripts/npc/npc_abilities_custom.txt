@@ -10814,7 +10814,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"heal_reduce_pct"			"30 45 60 75"
+				"heal_reduce_pct"			"20 30 40 50"
 				"LinkedSpecialBonus"		"special_bonus_imba_necrolyte_4"
 			}
 		}
@@ -10909,7 +10909,7 @@
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"scepter_cooldown"			"55 40 25"
+				"scepter_cooldown"			"60 50 40"
 			}
 		}
 	}

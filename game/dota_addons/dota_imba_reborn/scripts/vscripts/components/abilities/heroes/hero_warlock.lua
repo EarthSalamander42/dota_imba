@@ -33,10 +33,11 @@ function imba_warlock_fatal_bonds:OnSpellStart()
 
 	-- Play cast sound
 	EmitSoundOn(sound_cast, caster)
-
+	
 	-- Initialize variables
 	local targets_linked = 0
 	local bond_table = {}
+
 	local modifier_table = {}
 
 	-- If target has Linken's Sphere off cooldown, do nothing
@@ -107,8 +108,11 @@ function modifier_imba_fatal_bonds:OnCreated()
 	self.modifier_word = "modifier_imba_shadow_word"
 	self.ability_word = "imba_warlock_shadow_word"
 
-	self.fatal_bonds_accumulated_magic_damage = 0
-	self.fatal_bonds_accumulated_phys_damage = 0
+	-- The code dealing with this is broken...
+	-- self.fatal_bonds_accumulated_magic_damage = 0
+	-- self.fatal_bonds_accumulated_phys_damage = 0
+	
+	self.accumulated_damage = 0
 
 	-- Ability specials
 	self.link_damage_share_pct = self.ability:GetSpecialValueFor("link_damage_share_pct")
@@ -133,7 +137,7 @@ function modifier_imba_fatal_bonds:OnCreated()
 		end
 
 		-- Start thinking (update table)
-		self:StartIntervalThink(0.25)
+		self:StartIntervalThink(FrameTime())
 	end
 end
 
@@ -149,35 +153,47 @@ function modifier_imba_fatal_bonds:OnIntervalThink()
 		for _,bonded_enemy in pairs(self.bond_table) do
 			if not bonded_enemy:IsNull() and bonded_enemy:IsAlive() and bonded_enemy ~= self.parent then
 
-				if self.fatal_bonds_accumulated_phys_damage > 0 then
+				-- if self.fatal_bonds_accumulated_phys_damage > 0 then
+					-- local damageTable = {victim = bonded_enemy,
+						-- damage = self.fatal_bonds_accumulated_phys_damage,
+						-- damage_type = DAMAGE_TYPE_PHYSICAL,
+						-- attacker = self.caster,
+						-- ability = self.ability,
+						-- damage_flags = DOTA_DAMAGE_FLAG_REFLECTION
+					-- }
+
+					-- ApplyDamage(damageTable)
+				-- end
+
+				-- if self.fatal_bonds_accumulated_magic_damage > 0 then 
+					-- local damageTable = {victim = bonded_enemy,
+						-- damage = self.fatal_bonds_accumulated_magic_damage,
+						-- damage_type = DAMAGE_TYPE_MAGICAL,
+						-- attacker = self.caster,
+						-- ability = self.ability,
+						-- damage_flags = DOTA_DAMAGE_FLAG_REFLECTION
+					-- }
+
+					-- ApplyDamage(damageTable)
+				-- end
+
+				if self.accumulated_damage > 0 then
 					local damageTable = {victim = bonded_enemy,
-						damage = self.fatal_bonds_accumulated_phys_damage,
-						damage_type = DAMAGE_TYPE_PHYSICAL,
+						damage = self.accumulated_damage,
+						damage_type = self.fatal_bonds_damage_type,
 						attacker = self.caster,
 						ability = self.ability,
 						damage_flags = DOTA_DAMAGE_FLAG_REFLECTION
 					}
 
-					ApplyDamage(damageTable)
+				ApplyDamage(damageTable)
+				
+					-- Add particle hit effect
+					local particle_hit_fx = ParticleManager:CreateParticle(self.particle_hit, PATTACH_CUSTOMORIGIN_FOLLOW, self.parent)
+					ParticleManager:SetParticleControlEnt(particle_hit_fx, 0, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)
+					ParticleManager:SetParticleControlEnt(particle_hit_fx, 1, bonded_enemy, PATTACH_POINT_FOLLOW, "attach_hitloc", bonded_enemy:GetAbsOrigin(), true)
+					ParticleManager:ReleaseParticleIndex(particle_hit_fx)
 				end
-
-				if self.fatal_bonds_accumulated_magic_damage > 0 then 
-					local damageTable = {victim = bonded_enemy,
-						damage = self.fatal_bonds_accumulated_magic_damage,
-						damage_type = DAMAGE_TYPE_MAGICAL,
-						attacker = self.caster,
-						ability = self.ability,
-						damage_flags = DOTA_DAMAGE_FLAG_REFLECTION
-					}
-
-					ApplyDamage(damageTable)
-				end
-
-				-- Add particle hit effect
-				local particle_hit_fx = ParticleManager:CreateParticle(self.particle_hit, PATTACH_CUSTOMORIGIN_FOLLOW, self.parent)
-				ParticleManager:SetParticleControlEnt(particle_hit_fx, 0, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)
-				ParticleManager:SetParticleControlEnt(particle_hit_fx, 1, bonded_enemy, PATTACH_POINT_FOLLOW, "attach_hitloc", bonded_enemy:GetAbsOrigin(), true)
-				ParticleManager:ReleaseParticleIndex(particle_hit_fx)
 
 				-- If the parent has Shadow Word but the bonded unit doesn't, apply it on the unit as well
 				if self.parent:HasModifier(self.modifier_word) and not bonded_enemy:HasModifier(self.modifier_word) then
@@ -199,8 +215,11 @@ function modifier_imba_fatal_bonds:OnIntervalThink()
 			end
 		end
 
-		self.fatal_bonds_accumulated_magic_damage = 0
-		self.fatal_bonds_accumulated_phys_damage = 0
+		-- self.fatal_bonds_accumulated_magic_damage = 0
+		-- self.fatal_bonds_accumulated_phys_damage = 0
+		
+		self.accumulated_damage = 0
+		self.fatal_bonds_damage_type = 0
 
 		--[[
 		-- i dont htink this is needed... but just in case
@@ -244,17 +263,21 @@ function modifier_imba_fatal_bonds:OnTakeDamage(keys)
 			if inflictor and inflictor == self.ability then
 				return nil
 			end
-
+			
 			-- Calculate damage post reductions, but before any other changes (illusions, borrowed time etc)
-			local damage = original_damage
-			if damage_type == DAMAGE_TYPE_PHYSICAL then
-				damage = damage * (1 - self.parent:GetPhysicalArmorReduction() * 0.01)
-				self.fatal_bonds_accumulated_phys_damage = damage * self.link_damage_share_pct * 0.01
+			-- This block doesn't even work properly
+			-- if damage_type == DAMAGE_TYPE_PHYSICAL then
+				-- damage = damage * (1 - self.parent:GetPhysicalArmorReduction() * 0.01)
+				-- self.fatal_bonds_accumulated_phys_damage = damage * self.link_damage_share_pct * 0.01
 
-			elseif damage_type == DAMAGE_TYPE_MAGICAL then
-				damage = damage * (1- self.parent:GetMagicalArmorValue() * 0.01)
-				self.fatal_bonds_accumulated_magic_damage = damage * self.link_damage_share_pct * 0.01
-			end
+			-- elseif damage_type == DAMAGE_TYPE_MAGICAL then
+				-- damage = damage * (1- self.parent:GetMagicalArmorValue() * 0.01)
+				-- self.fatal_bonds_accumulated_magic_damage = damage * self.link_damage_share_pct * 0.01
+			-- end
+			
+			-- Just send the original damage and damage type values over to the IntervalThink function for spreading
+			self.accumulated_damage = original_damage * self.link_damage_share_pct * 0.01
+			self.fatal_bonds_damage_type = keys.damage_type
 		end
 
 		-- Instead, if it was an friendly Chaotic Golem that took damage, check if the debuffed unit is in its range
@@ -268,12 +291,12 @@ function modifier_imba_fatal_bonds:OnTakeDamage(keys)
 
 				-- Adjust damage
 				local damage = original_damage
-				if damage_type == DAMAGE_TYPE_PHYSICAL then
-					damage = damage * (1 - self.parent:GetPhysicalArmorReduction() * 0.01)
+				-- if damage_type == DAMAGE_TYPE_PHYSICAL then
+					-- damage = damage * (1 - self.parent:GetPhysicalArmorReduction() * 0.01)
 
-				elseif damage_type == DAMAGE_TYPE_MAGICAL then
-					damage = damage * (1- self.parent:GetMagicalArmorValue() * 0.01)
-				end
+				-- elseif damage_type == DAMAGE_TYPE_MAGICAL then
+					-- damage = damage * (1- self.parent:GetMagicalArmorValue() * 0.01)
+				-- end
 
 				-- Calculate damage
 				damage = damage * self.golem_link_damage_pct * 0.01

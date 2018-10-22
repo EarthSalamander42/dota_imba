@@ -479,7 +479,7 @@ function imba_bounty_hunter_jinada:ShadowJaunt(caster, ability, target)
 	caster:SetForwardVector((target:GetAbsOrigin() - caster:GetAbsOrigin()):Normalized())
 
 	-- Start skill cooldown.
-	ability:StartCooldown(ability:GetCooldown(ability:GetLevel()-1))
+	ability:UseResources(false, false, true)
 
 	-- Wait for one second. If crit buff is still not used, remove it.
 	Timers:CreateTimer(1, function()
@@ -682,7 +682,7 @@ function modifier_imba_jinada_buff_crit:OnAttackLanded(keys)
 
 			-- Start the skill's cooldown if it's ready (might not be because of active)
 			if self.ability:IsCooldownReady() then
-				self.ability:StartCooldown(self.ability:GetCooldown(self.ability:GetLevel()-1))
+				self.ability:UseResources(false, false, true)
 			end
 
 			-- Remove the critical strike modifier from the caster

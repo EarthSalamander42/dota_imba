@@ -181,7 +181,7 @@ function modifier_imba_royal_wrath:OnTakeDamage( keys )
 			local attacker = keys.attacker
 			local ability = self:GetAbility()
 			local ability_curse = parent:FindAbilityByName("imba_empress_eleven_curses")
-			if attacker:IsRealHero() and attacker:IsAlive() and ability:IsCooldownReady() and ability_curse and ability_curse:GetLevel() > 0 and not parent:PassivesDisabled() and not attacker:IsMagicImmune() then
+			if attacker:IsRealHero() and attacker:IsAlive() and ability:IsCooldownReady() and attacker:GetTeam() ~= parent:GetTeam() and ability_curse and ability_curse:GetLevel() > 0 and not parent:PassivesDisabled() and not attacker:IsMagicImmune() then
 
 				-- Trigger the curse ability
 				ability_curse:OnSpellStart(attacker:GetAbsOrigin(), 1)
