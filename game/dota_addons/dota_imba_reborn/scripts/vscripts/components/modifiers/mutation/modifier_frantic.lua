@@ -17,6 +17,7 @@ end
 
 function modifier_frantic:DeclareFunctions()
 	local funcs = {
+		MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE,
 		MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE_STACKING,
 		MODIFIER_PROPERTY_MANACOST_PERCENTAGE,
 		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING,
@@ -25,41 +26,28 @@ function modifier_frantic:DeclareFunctions()
 	return funcs
 end
 
-function modifier_frantic:OnCreated()
-	if not IsServer() then return end
-	self:StartIntervalThink(0.2)
-	self.current_effect_name = ""
-	self.effect_name = ""
+function modifier_frantic:GetEffectName()
+	return "particles/generic_gameplay/frantic.vpcf"
 end
 
-function modifier_frantic:OnIntervalThink()
-	for _, v in ipairs(SHARED_NODRAW_MODIFIERS) do
-		if self:GetParent():HasModifier(v) then
---			print("hide donator effect...")
-			self.effect_name = ""
-			self:RefreshEffect()
-			return
-		end
-	end
-
-	self.effect_name = "particles/generic_gameplay/frantic.vpcf"
-	self:RefreshEffect()
-end
-
-function modifier_frantic:RefreshEffect()
-	if self.current_effect_name ~= self.effect_name then
-		if self.pfx then
-			ParticleManager:DestroyParticle(self.pfx, false)
-			ParticleManager:ReleaseParticleIndex(self.pfx)
-		end
-
-		self.pfx = ParticleManager:CreateParticle(self.effect_name, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
-		self.current_effect_name = self.effect_name
-	end
+function modifier_frantic:GetEffectAttachType()
+	return PATTACH_ABSORIGIN_FOLLOW
 end
 
 function modifier_frantic:GetModifierPercentageCooldownStacking()
-	return self:GetStackCount()
+	if self:GetStackCount() == CustomNetTables:GetTableValue("game_options", "frantic").frantic then
+		return self:GetStackCount()
+	else
+		return nil
+	end
+end
+
+function modifier_frantic:GetModifierPercentageCooldown()
+	if self:GetStackCount() == CustomNetTables:GetTableValue("game_options", "frantic").super_frantic then
+		return self:GetStackCount()
+	else
+		return nil
+	end
 end
 
 function modifier_frantic:GetModifierPercentageManacost()

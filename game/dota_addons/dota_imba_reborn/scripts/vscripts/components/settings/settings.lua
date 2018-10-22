@@ -224,14 +224,20 @@ GG_TEAM = {}
 GG_TEAM[2] = 0
 GG_TEAM[3] = 0
 
-if IsMutationMap() then
+if IsMutationMap() or IsSuperFranticMap() then
 	IMBA_FRANTIC_MODE_ON = true
 else
 	IMBA_FRANTIC_MODE_ON = false
 end
 
-IMBA_FRANTIC_VALUE = 25
+IMBA_BASE_FRANTIC_VALUE = 25
 IMBA_SUPER_FRANTIC_VALUE = 50
+CustomNetTables:SetTableValue("game_options", "frantic", {frantic = IMBA_BASE_FRANTIC_VALUE, super_frantic = IMBA_SUPER_FRANTIC_VALUE})
+
+IMBA_FRANTIC_VALUE = IMBA_BASE_FRANTIC_VALUE
+if IsSuperFranticMap() then
+	IMBA_FRANTIC_VALUE = IMBA_SUPER_FRANTIC_VALUE
+end
 
 IMBA_PICK_MODE_ALL_PICK = true												-- Activates All Pick mode when true
 IMBA_PICK_MODE_ALL_RANDOM = false											-- Activates All Random mode when true

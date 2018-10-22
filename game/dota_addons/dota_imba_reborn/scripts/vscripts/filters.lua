@@ -40,10 +40,6 @@ function GameMode:GoldFilter(keys)
 		end
 
 		if keys.reason_const == DOTA_ModifyGold_Unspecified then return true end
-
-		-- TODO: Find a way to call this message on the killed unit
---		SendOverheadEventMessage(PlayerResource:GetPlayer(keys.player_id_const), OVERHEAD_ALERT_GOLD, hero, keys.gold, nil)
---		hero:ModifyGold(keys.gold, reliable, keys.reason_const)
 	end
 
 	return true
@@ -83,6 +79,27 @@ function GameMode:ModifierFilter( keys )
 		local modifier_owner = EntIndexToHScript(keys.entindex_parent_const)
 		local modifier_name = keys.name_const
 		local modifier_caster
+		local modifier_class
+
+		if modifier_owner ~= nil and IsMutationMap() or IsSuperFranticMap() then
+			modifier_class = modifier_owner:FindModifierByName(modifier_name)
+			if string.find(modifier_name, "imba") and modifier_class.IsDebuff and modifier_class:IsDebuff() == true and modifier_class.IgnoreTenacity == nil or (modifier_class.IgnoreTenacity and modifier_class:IgnoreTenacity() == false) then
+				if keys.duration > 0 then						
+					local original_duration = keys.duration
+					local actual_duration = original_duration
+					local status_resistance = modifier_owner:GetStatusResistance()
+					print("Old duration:", actual_duration)
+
+--					if modifier_owner:GetTeam() ~= modifier_caster:GetTeam() then			
+						actual_duration = actual_duration * (1 - status_resistance)
+--					end
+
+					print("New duration:", actual_duration)
+
+					keys.duration = actual_duration
+				end
+			end
+		end
 
 		if keys.entindex_caster_const then
 			modifier_caster = EntIndexToHScript(keys.entindex_caster_const)

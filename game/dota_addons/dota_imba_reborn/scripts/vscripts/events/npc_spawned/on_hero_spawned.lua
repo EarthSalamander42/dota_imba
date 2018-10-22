@@ -202,10 +202,8 @@ function GameMode:OnHeroFirstSpawn(hero)
 			hero:SetupHealthBarLabel()
 --		end
 
-		if IsMutationMap() then
+		if IsMutationMap() or IsSuperFranticMap() then
 			hero:AddNewModifier(hero, nil, "modifier_frantic", {}):SetStackCount(IMBA_FRANTIC_VALUE)
-		elseif IsSuperFranticMap() then
-			hero:AddNewModifier(hero, nil, "modifier_frantic", {}):SetStackCount(IMBA_SUPER_FRANTIC_VALUE)
 		end
 	end
 end
