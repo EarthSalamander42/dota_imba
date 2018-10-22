@@ -1,4 +1,4 @@
-"DOTAAbilities"
+"DOTAHeroes"
 {
 	//=================================================================================================================
 	// HERO: Hell Empress // Need to be duplicated in npc_units_custom.txt
