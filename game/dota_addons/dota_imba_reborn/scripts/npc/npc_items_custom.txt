@@ -5200,12 +5200,12 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"amp_stack"				"-3"
+				"amp_stack"				"-5"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"max_stacks"			"7"
+				"max_stacks"			"10"
 			}
 			"06"
 			{
