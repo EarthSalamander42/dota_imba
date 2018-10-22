@@ -413,6 +413,9 @@ function FrostNova(caster, ability, target, cold_front)
 
 					-- Determine location of nova
 					local location = caster_loc + direction * distance_per_nova * i
+					
+					-- Might save this for a future update (makes a circle instead of a line)
+					-- local location = target:GetAbsOrigin() + Vector(math.cos(math.rad(45 * i)), math.sin(math.rad(45 * i))) * (damage_radius + distance_per_nova)
 
 					-- Apply particle effect
 					local particle_nova_flower_fx = ParticleManager:CreateParticle(particle_nova_flower, PATTACH_WORLDORIGIN, nil)
@@ -572,6 +575,13 @@ function imba_lich_frost_armor:OnUpgrade()
 	end
 end
 
+-- Function to ensure the talent that gives INT to armor applies if leveled when dead
+function imba_lich_frost_armor:OnOwnerSpawned()
+	if self:GetCaster():HasTalent("special_bonus_imba_lich_5") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_lich_5") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_special_bonus_imba_lich_5", {})
+	end
+end
+
 function imba_lich_frost_armor:OnSpellStart()
 	-- Ability properties
 	local caster = self:GetCaster()
@@ -597,9 +607,13 @@ function imba_lich_frost_armor:OnSpellStart()
 end
 
 -- #5 Talent: Frost Armor adds a portion of the Lich's intelligence to the armor bonus
+LinkLuaModifier("modifier_special_bonus_imba_lich_5", "components/abilities/heroes/hero_lich", LUA_MODIFIER_MOTION_NONE)
+
 modifier_special_bonus_imba_lich_5 = modifier_special_bonus_imba_lich_5 or class({})
-function modifier_special_bonus_imba_lich_5:IsPurgable() return false end
+function modifier_special_bonus_imba_lich_5:IsHidden() 		return true end
+function modifier_special_bonus_imba_lich_5:IsPurgable() 	return false end
 function modifier_special_bonus_imba_lich_5:RemoveOnDeath() return false end
+
 function modifier_special_bonus_imba_lich_5:OnCreated()
 	if IsServer() then
 		self:StartIntervalThink(1)
@@ -638,7 +652,8 @@ function modifier_imba_frost_armor_buff:OnCreated()
 	self.particle_frost_armor_fx = ParticleManager:CreateParticle(self.particle_frost_armor, PATTACH_OVERHEAD_FOLLOW, self.parent)
 	ParticleManager:SetParticleControl(self.particle_frost_armor_fx, 0, self.parent:GetAbsOrigin())
 	ParticleManager:SetParticleControl(self.particle_frost_armor_fx, 1, Vector(1,1,1))
-	ParticleManager:SetParticleControlEnt(self.particle_frost_armor_fx, 2, self.parent, PATTACH_ABSORIGIN_FOLLOW, "attach_origin", self.parent:GetAbsOrigin(), true)
+	-- Commenting this line out because it isn't properly attaching the particle
+	--ParticleManager:SetParticleControlEnt(self.particle_frost_armor_fx, 2, self.parent, PATTACH_ABSORIGIN_FOLLOW, "attach_origin", self.parent:GetAbsOrigin(), true)
 	self:AddParticle(self.particle_frost_armor_fx, false, false, -1, false, false)
 
 	-- #8 Talent: Frost Armor is now an aura that slows nearby enemies in a small range around the target. The slow gets stronger each time the target is attacked.
@@ -660,6 +675,12 @@ end
 function modifier_imba_frost_armor_buff:OnIntervalThink()
 	-- #8 Talent: Frost Armor is now an aura that slows nearby enemies in a small range around the target. The slow gets stronger each time the target is attacked.
 	-- Thinks updates stack counts for nearby enemies
+	
+	if self:GetCaster():IsNull() then
+		self:StartIntervalThink(-1)
+		return
+	end
+	
 	local enemies = FindUnitsInRadius(self.parent:GetTeamNumber(),
 		self.parent:GetAbsOrigin(),
 		nil,
@@ -705,6 +726,7 @@ function modifier_imba_frost_armor_buff:GetModifierPhysicalArmorBonus()
 	local armor_bonus = self.armor_bonus
 	if self.caster:HasModifier("modifier_special_bonus_imba_lich_5") then
 		local armor_bonus_talent = self.caster:GetModifierStackCount("modifier_special_bonus_imba_lich_5", self.caster)
+		
 		armor_bonus = armor_bonus + armor_bonus_talent
 	end
 

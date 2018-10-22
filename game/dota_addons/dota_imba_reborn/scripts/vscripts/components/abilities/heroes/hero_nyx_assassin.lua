@@ -324,7 +324,7 @@ function modifier_imba_impale_suffering:OnTakeDamage(keys)
 		local damage = keys.damage
 
 		-- Only apply if the unit taking damage is the parent of the modifier
-		if self.parent == unit then
+		if self.parent == unit and self.parent:IsAlive() then
 			if damage > 0 then
 				local buff = self.parent:AddNewModifier(self.parent, self.ability, "modifier_imba_impale_suffering_damage_counter", {duration = self.damage_duration})
 				buff:SetStackCount(math.floor(damage+0.5))
@@ -1050,7 +1050,12 @@ function modifier_imba_spiked_carapace:OnTakeDamage(keys)
 			if attacker:IsBuilding() then
 				return nil
 			end
-
+	
+			-- If the unit dealing damage is on the same team, do nothing (ex. Bloodseeker's Bloodrage)
+			if attacker:GetTeam() == unit:GetTeam() then
+				return nil
+			end
+			
 			-- If the attacking unit has Nyx's Carapace as well, do nothing
 			if attacker:HasModifier("modifier_imba_spiked_carapace") then
 				return nil

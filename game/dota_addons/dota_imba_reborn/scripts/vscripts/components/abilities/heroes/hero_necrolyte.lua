@@ -18,8 +18,7 @@ function imba_necrolyte_sadist:GetAbilityTextureName()
 end
 
 function imba_necrolyte_sadist:GetIntrinsicModifierName()
-	if self:GetCaster():IsRealHero() then return "modifier_imba_sadist" end
-	return false
+	return "modifier_imba_sadist"
 end
 
 function imba_necrolyte_sadist:IsInnateAbility()

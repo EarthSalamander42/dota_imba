@@ -826,10 +826,8 @@ function modifier_imba_liquid_fire_caster:OnAttack(keys)
 				self.apply_aoe_modifier_debuff_on_hit[target] = self.apply_aoe_modifier_debuff_on_hit[target] + 1;
 			end
 
-			local cooldown = ability:GetCooldown(ability:GetLevel() - 1)
-
 			-- Start cooldown
-			ability:StartCooldown( cooldown )
+			ability:UseResources(false, false, true)
 		end
 	end
 end

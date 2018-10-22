@@ -3769,7 +3769,7 @@
 ////===============================================================================================================
 
 "DOTA_Tooltip_ability_imba_warlock_fatal_bonds"                        "Fatal Bonds"
-"DOTA_Tooltip_ability_imba_warlock_fatal_bonds_Description"            "Binds several enemy units together, causing some of the damage dealt to one of them to be felt by the others.\n<font color='#FF7800'>Dangerous Relationships:</font> Attacking an enemy Chaotic Golem links it to nearby enemy units in a radius around it, making them also feel a portion of the damage."
+"DOTA_Tooltip_ability_imba_warlock_fatal_bonds_Description"            "Binds several enemy units together, causing some of the damage dealt to one of them to be felt by the others.\n<font color='#FF7800'>Dangerous Relationships:</font> Attacking an enemy Chaotic Golem while inflicted with Fatal Bonds causes them to deal a portion of that damage to themselves."
 "DOTA_Tooltip_ability_imba_warlock_fatal_bonds_Lore"                    "An ancient incantation that links the vital energies of multiple lifeforms into one collective body."
 "DOTA_Tooltip_ability_imba_warlock_fatal_bonds_Note0"                  "Links enemies around the main target, from the closest to the farthest, until reaching the maximum unit count."
 "DOTA_Tooltip_ability_imba_warlock_fatal_bonds_Note1"                  "Dispelling Fatal Bonds makes a unit stop transferring damage, but it still recieves the damage from units it was linked to."

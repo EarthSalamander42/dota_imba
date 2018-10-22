@@ -101,8 +101,8 @@
 			}
 			"11"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"ally_cooldown"				"10"
+				"var_type"					"FIELD_FLOAT"
+				"ally_cooldown"				"0.5"
 			}
 			"12"
 			{
@@ -196,7 +196,7 @@
 		"ScriptFile"					"components/abilities/heroes/hero_rubick"
 		"AbilityTextureName"			"rubick_null_field"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
 		"AbilityCastRange"				"900"
 
@@ -221,7 +221,7 @@
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"radius"						"900"
+				"radius"						"1200"
 				"LinkedSpecialBonus"			"special_bonus_imba_rubick_6"
 			}
 		}
@@ -300,7 +300,7 @@
 	}
 
 	//=================================================================================================================
-	// Rubick Spell Steal Contorller
+	// Rubick Clandestine_Librarian
 	//=================================================================================================================
 	"imba_rubick_clandestine_librarian"
 	{
@@ -324,6 +324,11 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"max_spell_amp"				"100"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"loss_pct"					"33"
 			}
 		}
 	}
@@ -437,7 +442,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"value"						"200"
+				"value"						"300"
 			}
 		}
 	}
@@ -465,7 +470,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"value"						"5" // % damage increase per jump
+				"value"						"8" // % damage increase per jump
 			}
 		}
 	}
@@ -521,7 +526,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"value"						"50" // % damage of current fade bolt level as explosion damage
+				"value"						"150" // % damage of current fade bolt level as explosion damage
 			}
 		}
 	}

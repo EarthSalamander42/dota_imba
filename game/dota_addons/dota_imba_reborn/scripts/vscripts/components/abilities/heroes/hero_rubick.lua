@@ -217,9 +217,11 @@ function modifier_imba_telekinesis:EndTransition()
 		local caster = self:GetCaster()
 		local parent = self:GetParent()
 		local ability = self:GetAbility()
-
+		local ally_cooldown_reduction = ability:GetSpecialValueFor("ally_cooldown")
+		
 		-- Set the thrown unit on the ground
 		parent:SetUnitOnClearGround()
+		ResolveNPCPositions(parent:GetAbsOrigin(), 64)
 
 		-- Remove the stun/root modifier
 		parent:RemoveModifierByName("modifier_imba_telekinesis_stun")
@@ -236,14 +238,6 @@ function modifier_imba_telekinesis:EndTransition()
 		local damage = ability:GetSpecialValueFor("damage")
 		local impact_stun_duration = ability:GetSpecialValueFor("impact_stun_duration")
 		local impact_radius = ability:GetSpecialValueFor("impact_radius")
-		local cooldown
-		if self.is_ally then
-			cooldown = ability:GetSpecialValueFor("ally_cooldown")
-		else
-			cooldown = ability.BaseClass.GetCooldown( ability, ability:GetLevel() )
-		end
-
-		cooldown = (cooldown - caster:FindTalentValue("special_bonus_unique_rubick_4"))  - self:GetDuration()
 
 		parent:StopSound("Hero_Rubick.Telekinesis.Target")
 		parent:EmitSound("Hero_Rubick.Telekinesis.Target.Land")
@@ -268,7 +262,15 @@ function modifier_imba_telekinesis:EndTransition()
 		elseif #enemies > 1 and not self.is_ally then
 			parent:EmitSound("Hero_Rubick.Telekinesis.Target.Stun")
 		end
-		ability:StartCooldown(cooldown)
+		
+		ability:UseResources(true, false, true)
+		
+		-- Special considerations for ally telekinesis		
+		if self.is_ally then
+			local current_cooldown = ability:GetCooldownTime()
+			ability:EndCooldown()
+			ability:StartCooldown(current_cooldown * ally_cooldown_reduction)
+		end
 	end
 end
 
@@ -484,14 +486,14 @@ function imba_rubick_fade_bolt:OnSpellStart()
 			if previous_unit ~= current_target then
 				return self:GetSpecialValueFor("jump_delay")
 			else
-				if self:GetCaster():HasTalent("special_bonus_imba_rubick_7") then
-					kaboom = true
-					return FrameTime()
-				end
-
 				-- reset fade bolt hit counter
 				for _, damaged in pairs(entities_damaged) do
 					damaged.damaged_by_fade_bolt = false
+				end
+				
+				if self:GetCaster():HasTalent("special_bonus_imba_rubick_7") then
+					kaboom = true
+					return FrameTime()
 				end
 
 				return nil
@@ -747,6 +749,7 @@ function modifier_imba_rubick_clandestine_librarian:DeclareFunctions()
 	local funcs = {
 		MODIFIER_EVENT_ON_ABILITY_FULLY_CAST,
 		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
+		MODIFIER_EVENT_ON_DEATH
 	}
 
 	return funcs
@@ -762,6 +765,12 @@ end
 
 function modifier_imba_rubick_clandestine_librarian:GetModifierSpellAmplify_Percentage()
 	return self:GetStackCount()
+end
+
+function modifier_imba_rubick_clandestine_librarian:OnDeath( keys )
+	if keys.unit == self:GetParent() and not self:GetParent():IsImbaReincarnating() then
+		self:SetStackCount(math.ceil(self:GetStackCount() * self:GetAbility():GetSpecialValueFor("loss_pct") / 100))
+	end
 end
 
 -------------------------------------------
@@ -889,7 +898,7 @@ LinkLuaModifier("modifier_rubick_spellsteal_hidden", "components/abilities/heroe
 --	BANNED ABILITIES
 -------------------------------------------
 
-imba_rubick_spellsteal.banned_abilities = {"imba_sniper_headshot", "imba_phoenix_sun_ray", "imba_phoenix_sun_ray_toggle_move"}
+imba_rubick_spellsteal.banned_abilities = {"imba_sniper_headshot", "imba_phoenix_sun_ray", "imba_phoenix_sun_ray_toggle_move", "imba_rubick_spellsteal"}
 
 --------------------------------------------------------------------------------
 -- Passive Modifier
@@ -948,6 +957,22 @@ function imba_rubick_spellsteal:OnAbilityPhaseStart()
 	end
 
 	return true
+end
+
+function imba_rubick_spellsteal:GetCastRange( vLocation, hTarget )
+	if self:GetCaster():HasScepter() then 
+		return self:GetSpecialValueFor("cast_range_scepter")
+	else
+		return self.BaseClass.GetCastRange( self, vLocation, hTarget )
+	end
+end
+
+function imba_rubick_spellsteal:GetCooldown( iLevel )
+	if self:GetCaster():HasScepter() then 
+		return self:GetSpecialValueFor("cooldown_scepter")
+	else
+		return self.BaseClass.GetCooldown( self, iLevel )
+	end
 end
 
 imba_rubick_spellsteal.stolenSpell = nil
@@ -1354,27 +1379,32 @@ end
 
 function modifier_imba_rubick_spellsteal:OnAbilityStart( params )
 	if IsServer() then
-		if params.unit==self:GetParent() and params.ability==self:GetAbility().currentSpell then
-			-- Destroy previous animation
-			local modifier = self:GetParent():FindModifierByNameAndCaster( "modifier_imba_rubick_spellsteal_animation", self:GetParent() )
-			if modifier then
-				modifier:Destroy()
-			end
+		if params.unit==self:GetParent() then
+			-- No cast point is what Rubick is known for...
+			params.ability:SetOverrideCastPoint(0)
+			
+			if params.ability==self:GetAbility().currentSpell then
+				-- Destroy previous animation
+				local modifier = self:GetParent():FindModifierByNameAndCaster( "modifier_imba_rubick_spellsteal_animation", self:GetParent() )
+				if modifier then
+					modifier:Destroy()
+				end
 
-			-- Animate
-			local anim_duration = math.max( 1.5, params.ability:GetCastPoint() )
-			if params.ability:GetChannelTime()>0 then
-				anim_duration = params.ability:GetChannelTime()
+				-- Animate
+				local anim_duration = math.max( 1.5, params.ability:GetCastPoint() )
+				if params.ability:GetChannelTime()>0 then
+					anim_duration = params.ability:GetChannelTime()
+				end
+				local animate = self:GetParent():AddNewModifier(
+					self:GetParent(),
+					self:GetAbility(),
+					"modifier_imba_rubick_spellsteal_animation",
+					{
+						duration = anim_duration,
+						spellName = params.ability:GetAbilityName(),
+					}
+				)
 			end
-			local animate = self:GetParent():AddNewModifier(
-				self:GetParent(),
-				self:GetAbility(),
-				"modifier_imba_rubick_spellsteal_animation",
-				{
-					duration = anim_duration,
-					spellName = params.ability:GetAbilityName(),
-				}
-			)
 		end
 	end
 end
