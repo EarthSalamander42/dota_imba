@@ -5,6 +5,7 @@ LinkLuaModifier("modifier_imba_sogat_cuirass_aura_positive_effect", "components/
 LinkLuaModifier("modifier_imba_sogat_cuirass_aura_negative", "components/items/item_sogat_cuirass.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_sogat_cuirass_aura_negative_effect", "components/items/item_sogat_cuirass.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_item_imba_sogat_cuirass_buff", "components/items/item_sogat_cuirass.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_item_imba_sogat_cuirass_nostack", "components/items/item_sogat_cuirass.lua", LUA_MODIFIER_MOTION_NONE)
 
 function item_imba_sogat_cuirass:GetIntrinsicModifierName()
 	return "modifier_imba_sogat_cuirass"
@@ -29,8 +30,9 @@ function item_imba_sogat_cuirass:OnSpellStart(keys)
 		-- Apply the active buff to nearby allies
 		local nearby_allies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, self:GetSpecialValueFor("radius"), DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
 		for _,ally in pairs(nearby_allies) do
-			if not non_relevant_units[ally:GetUnitName()] then
+			if not non_relevant_units[ally:GetUnitName()] and not ally:HasModifier("modifier_item_imba_sogat_cuirass_nostack") then
 				ally:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_sogat_cuirass_buff", {duration = self:GetSpecialValueFor("duration")})
+				ally:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_sogat_cuirass_nostack", {duration = self:GetSpecialValueFor("tooltip_reapply_time")})
 			end
 		end
 	end
@@ -307,3 +309,14 @@ end
 function modifier_item_imba_sogat_cuirass_buff:GetModifierPhysical_ConstantBlock()
 	return self:GetAbility():GetSpecialValueFor("damage_block")
 end
+
+----------------------------------
+--	Bulwark Modifier Cooldown	--
+----------------------------------
+
+modifier_item_imba_sogat_cuirass_nostack = class ({})
+
+function modifier_item_imba_sogat_cuirass_nostack:IsHidden() 		return false end
+function modifier_item_imba_sogat_cuirass_nostack:IsDebuff() 		return false end
+function modifier_item_imba_sogat_cuirass_nostack:IsPurgable() 		return false end
+function modifier_item_imba_sogat_cuirass_nostack:RemoveOnDeath() 	return false end
