@@ -8,8 +8,9 @@ api.config = {
 	server = "api.dota2imba.org",
 	version = "2",
 	game = "imba",
-	agent = "imba_705",
-	timeout = 15000
+	agent = "imba_708",
+	timeout = 15000,
+	serverKeyVersion = 1
 }
 
 api.endpoints = {
@@ -103,6 +104,9 @@ function api.request(endpoint, data, callback)
 
 	request = CreateHTTPRequestScriptVM(method, url)
 	request:SetHTTPRequestAbsoluteTimeoutMS(api.config.timeout)
+
+	-- security
+    request:SetHTTPRequestHeaderValue("X-Dota-Server-Key", GetDedicatedServerKey(api.config.serverKeyVersion))
 
 	if payload ~= nil then
 		request:SetHTTPRequestRawPostBody("application/json", payload)
