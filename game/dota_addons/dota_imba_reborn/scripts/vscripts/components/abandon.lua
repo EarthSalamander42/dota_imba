@@ -17,8 +17,6 @@ function GoodGame:Call(event)
 	if GameRules:State_Get() == DOTA_GAMERULES_STATE_POST_GAME then return end
 	if PlayerResource:GetPlayerCountForTeam(2) == 0 or PlayerResource:GetPlayerCountForTeam(3) == 0 then return end
 
-	CustomGameEventManager:Send_ServerToAllClients("gg_called", {ID = event.ID, team = event.team, has_gg = GG_TABLE[event.ID]})
-
 	if event.disconnect == 1 then -- disconnect
 		GG_TABLE[event.ID][2] = true
 	elseif event.disconnect == 2 then -- reconnect
@@ -29,6 +27,8 @@ function GoodGame:Call(event)
 			GG_TABLE[event.ID][1] = true
 		end
 	end
+
+	CustomGameEventManager:Send_ServerToAllClients("gg_called", {ID = event.ID, team = event.team, has_gg = GG_TABLE[event.ID]})
 
 	local abandon_team = nil
 	local team_counter = 0

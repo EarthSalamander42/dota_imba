@@ -12,8 +12,8 @@ function GameMode:GoldFilter(keys)
 		return true
 	end
 
-	-- Ignore negative experience values
-	if keys.gold < 0 then
+	-- Ignore negative gold values and hero kills (handled in another function)
+	if keys.gold <= 0 or keys.reason_const == DOTA_ModifyGold_HeroKill then
 		return false
 	end
 
@@ -25,38 +25,28 @@ function GameMode:GoldFilter(keys)
 		local hero = player:GetAssignedHero()
 
 		-- Hand of Midas gold bonus
-		if hero:HasModifier("modifier_item_imba_hand_of_midas") and keys.gold > 0 then
+		if hero:HasModifier("modifier_item_imba_hand_of_midas") then
 			keys.gold = keys.gold * 1.1
 		end
 
 		-- Lobby options adjustment
-		local game_time = math.min(GameRules:GetDOTATime(false, false) / 60, 30) -- minutes
 		local custom_gold_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "bounty_multiplier")["1"]) or 100
 
-		if keys.reason_const == DOTA_ModifyGold_HeroKill then
-			keys.gold = keys.gold * (custom_gold_bonus / 100)
-			if not hero.kill_hero_bounty then hero.kill_hero_bounty = 0 end
-			if hero.kill_hero_bounty == 0 then hero.kill_hero_bounty = keys.gold end
-			if hero.kill_hero_bounty ~= 0 and hero.kill_hero_bounty ~= keys.gold then
-				CustomNetTables:SetTableValue("player_table", tostring(keys.player_id_const), {hero_kill_bounty = keys.gold + hero.kill_hero_bounty})
-			end
-		else
-			keys.gold = keys.gold * custom_gold_bonus / 100
-		end
+		keys.gold = keys.gold * custom_gold_bonus / 100
 
 		local reliable = false
-		if keys.reason_const == DOTA_ModifyGold_HeroKill or keys.reason_const == DOTA_ModifyGold_RoshanKill or keys.reason_const == DOTA_ModifyGold_CourierKill or keys.reason_const == DOTA_ModifyGold_Building then
+		if keys.reason_const == DOTA_ModifyGold_RoshanKill or keys.reason_const == DOTA_ModifyGold_CourierKill or keys.reason_const == DOTA_ModifyGold_Building then
 			reliable = true
 		end
 
 		if keys.reason_const == DOTA_ModifyGold_Unspecified then return true end
 
 		-- TODO: Find a way to call this message on the killed unit
-		SendOverheadEventMessage(PlayerResource:GetPlayer(keys.player_id_const), OVERHEAD_ALERT_GOLD, hero, keys.gold, nil)
-		hero:ModifyGold(keys.gold, reliable, keys.reason_const)
+--		SendOverheadEventMessage(PlayerResource:GetPlayer(keys.player_id_const), OVERHEAD_ALERT_GOLD, hero, keys.gold, nil)
+--		hero:ModifyGold(keys.gold, reliable, keys.reason_const)
 	end
 
-	return false
+	return true
 end
 
 -- Experience gain filter function
@@ -74,16 +64,9 @@ function GameMode:ExperienceFilter( keys )
 		return false
 	end
 
-	local game_time = math.max(GameRules:GetDOTATime(false, false), 0)
 	local custom_xp_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "exp_multiplier")["1"])
 
-	if keys.reason_const == DOTA_ModifyXP_HeroKill then
-		keys.experience = keys.experience * (custom_xp_bonus / 100)
-	else
-		if GetMapName() ~= Map1v1() then
-			keys.experience = keys.experience * (custom_xp_bonus / 100) * (1 + game_time / 200)
-		end
-	end
+	keys.experience = keys.experience * (custom_xp_bonus / 100)
 
 	return true
 end

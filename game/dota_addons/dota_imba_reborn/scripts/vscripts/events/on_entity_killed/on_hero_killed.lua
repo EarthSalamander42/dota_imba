@@ -1,7 +1,7 @@
-function GameMode:OnHeroDeath(killer, killed_unit)
+function GameMode:OnHeroDeath(killer, victim)
 	-- Buyback parameters
-	local player_id = killed_unit:GetPlayerID()
-	local hero_level = killed_unit:GetLevel()
+	local player_id = victim:GetPlayerID()
+	local hero_level = victim:GetLevel()
 	local game_time = GameRules:GetDOTATime(false, true)
 
 	-- Calculate buyback cost
@@ -17,9 +17,9 @@ function GameMode:OnHeroDeath(killer, killed_unit)
 	buyback_cost = buyback_cost * (custom_gold_bonus / 100)
 
 	-- #7 Talent Vengeful Spirit - Decreased respawn time & cost
-	if killed_unit:HasTalent("special_bonus_imba_vengefulspirit_7") then
-		buyback_cost = buyback_cost * (1 - (killed_unit:FindTalentValue("special_bonus_imba_vengefulspirit_7", "buyback_cost_pct") * 0.01))
-		buyback_cooldown = buyback_cooldown * (1 - (killed_unit:FindTalentValue("special_bonus_imba_vengefulspirit_7", "buyback_cooldown_pct") * 0.01))
+	if victim:HasTalent("special_bonus_imba_vengefulspirit_7") then
+		buyback_cost = buyback_cost * (1 - (victim:FindTalentValue("special_bonus_imba_vengefulspirit_7", "buyback_cost_pct") * 0.01))
+		buyback_cooldown = buyback_cooldown * (1 - (victim:FindTalentValue("special_bonus_imba_vengefulspirit_7", "buyback_cooldown_pct") * 0.01))
 	end
 
 	-- Update buyback cost
@@ -27,24 +27,24 @@ function GameMode:OnHeroDeath(killer, killed_unit)
 	PlayerResource:SetCustomBuybackCooldown(player_id, buyback_cooldown)
 
 	if killer:IsBuilding() then
-		if killed_unit:IsRealHero() then
-			CombatEvents("generic", "tower_kill_hero", killed_unit, killer)
+		if victim:IsRealHero() then
+			CombatEvents("generic", "tower_kill_hero", victim, killer)
 		end
 	end
 
 	-- undying reincarnation talent fix
-	if killed_unit:HasModifier("modifier_special_bonus_reincarnation") then
-		if not killed_unit.undying_respawn_timer or killed_unit.undying_respawn_timer == 0 then
---			print(killed_unit:FindModifierByName("modifier_special_bonus_reincarnation"):GetDuration())
-			killed_unit:SetTimeUntilRespawn(IMBA_REINCARNATION_TIME)
-			killed_unit.undying_respawn_timer = 200
+	if victim:HasModifier("modifier_special_bonus_reincarnation") then
+		if not victim.undying_respawn_timer or victim.undying_respawn_timer == 0 then
+--			print(victim:FindModifierByName("modifier_special_bonus_reincarnation"):GetDuration())
+			victim:SetTimeUntilRespawn(IMBA_REINCARNATION_TIME)
+			victim.undying_respawn_timer = 200
 			return
 		end
 	end
 
-	local hero = killed_unit
-	if killed_unit:IsClone() then
-		hero = killed_unit:GetCloneSource()
+	local hero = victim
+	if victim:IsClone() then
+		hero = victim:GetCloneSource()
 	end
 
 	local respawn_time = 0

@@ -789,30 +789,20 @@ function GameMode:OnLastHit(keys)
 	local isHeroKill = keys.HeroKill == 1
 	local isTowerKill = keys.TowerKill == 1
 	local player = PlayerResource:GetPlayer(keys.PlayerID)
+	if player == nil then return end
 	local killedEnt = EntIndexToHScript(keys.EntKilled)
 
-	if isFirstBlood and player ~= nil then
-		player:GetAssignedHero().kill_hero_bounty = 0
-		Timers:CreateTimer(FrameTime() * 2, function()
-				CombatEvents("kill", "first_blood", killedEnt, player:GetAssignedHero())
-			end)
-		return
-	elseif isHeroKill and player ~= nil then
+	if isFirstBlood or isHeroKill then
 		if not player:GetAssignedHero().killstreak then player:GetAssignedHero().killstreak = 0 end
-		player:GetAssignedHero().killstreak = player:GetAssignedHero().killstreak +1
+		player:GetAssignedHero().killstreak = player:GetAssignedHero().killstreak + 1
 
---		for _,attacker in pairs(HeroList:GetAllHeroes()) do
---			for i = 0, killedEnt:GetNumAttackers() -1 do
---				if attacker == killedEnt:GetAttacker(i) then
---					log.debug(attacker:GetUnitName())
---				end
---			end
---		end
+		GoldSystem:OnHeroDeath(killer, victim, isFirstBlood)
 
-		player:GetAssignedHero().kill_hero_bounty = 0
-		Timers:CreateTimer(0.1, function()
-			CombatEvents("kill", "hero_kill", killedEnt, player:GetAssignedHero())
-		end)
+		if isFirstBlood then
+			CombatEvents("kill", "first_blood", victim, killer)
+		else
+			CombatEvents("kill", "hero_kill", victim, killer)
+		end
 	end
 end
 

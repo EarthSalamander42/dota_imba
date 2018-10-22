@@ -10,7 +10,7 @@ api.config = {
 	game = "imba",
 	agent = "imba_708",
 	timeout = 15000,
-	serverKeyVersion = 1
+	serverKeyVersion = "1"
 }
 
 api.endpoints = {
