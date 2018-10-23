@@ -3,6 +3,7 @@
 
 -- Editors:
 --	   EarthSalamander #42, ??.07.2018
+--     AltiV, ??.08.2018
 
 --------------------------------------
 --			Arc Lightning			--
@@ -15,6 +16,7 @@ function imba_zuus_arc_lightning:OnSpellStart()
 	local max_jump_count 	= ability:GetSpecialValueFor("jump_count")
 	local radius 			= ability:GetSpecialValueFor("radius")
 	local damage 			= ability:GetSpecialValueFor("arc_damage")
+	local static_chain_mult	= ability:GetSpecialValueFor("static_chain_mult")
 	local target 			= self:GetCursorTarget()
 
 	caster:EmitSound("Hero_Zuus.ArcLightning.Cast")
@@ -30,7 +32,8 @@ function imba_zuus_arc_lightning:OnSpellStart()
 		radius, 
 		DOTA_UNIT_TARGET_TEAM_ENEMY,
 		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
-		DOTA_UNIT_TARGET_FLAG_NONE, 
+		--DOTA_UNIT_TARGET_FLAG_NONE, 
+		DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS,
 		FIND_CLOSEST, 
 		false
 	)
@@ -51,7 +54,7 @@ function imba_zuus_arc_lightning:OnSpellStart()
 		-- Find targets to chain too
 		for _,enemy in pairs(nearby_enemy_units) do 
 			if not enemy:IsNull() and enemy:IsAlive() and not enemy:IsMagicImmune() and target ~= enemy then
-				imba_zuus_arc_lightning:Chain(caster, target, enemy, ability, damage, radius, jump_delay, max_jump_count, 0, hit_list)
+				imba_zuus_arc_lightning:Chain(caster, target, enemy, ability, damage, radius, jump_delay, max_jump_count, 0, hit_list, static_chain_mult)
 				-- Abort when we find something to chain too
 				break
 			end
@@ -59,7 +62,7 @@ function imba_zuus_arc_lightning:OnSpellStart()
 	end)
 end
 
-function imba_zuus_arc_lightning:Chain(caster, origin_target, chained_target, ability, damage, radius, jump_delay, max_jump_count, num_jumps_done, hit_list)
+function imba_zuus_arc_lightning:Chain(caster, origin_target, chained_target, ability, damage, radius, jump_delay, max_jump_count, num_jumps_done, hit_list, static_chain_mult)
 	if IsServer() then 
 		num_jumps_done 			 = num_jumps_done + 1
 		if hit_list[chained_target] == nil then
@@ -83,7 +86,8 @@ function imba_zuus_arc_lightning:Chain(caster, origin_target, chained_target, ab
 			radius, 
 			DOTA_UNIT_TARGET_TEAM_ENEMY, 
 			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 
-			DOTA_UNIT_TARGET_FLAG_NONE, 
+			--DOTA_UNIT_TARGET_FLAG_NONE, 
+			DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS,
 			FIND_CLOSEST, 
 			false
 		)
@@ -99,11 +103,11 @@ function imba_zuus_arc_lightning:Chain(caster, origin_target, chained_target, ab
 		if num_jumps_done < max_jump_count then
 			Timers:CreateTimer(jump_delay, function() 
 				local has_chained = false
-				-- Find targets to chain too
+				-- Find targets to chain to
 				for _,enemy in pairs(nearby_enemy_units) do 
 					if origin_target ~= enemy and chained_target ~= enemy then
 						if imba_zuus_arc_lightning:HitCheck(caster, enemy, hit_list) then 
-							imba_zuus_arc_lightning:Chain(caster, chained_target, enemy, ability, damage, radius, jump_delay, max_jump_count, num_jumps_done, hit_list)
+							imba_zuus_arc_lightning:Chain(caster, chained_target, enemy, ability, damage, radius, jump_delay, max_jump_count, num_jumps_done, hit_list, static_chain_mult)
 							has_chained = true
 						end
 
@@ -112,13 +116,14 @@ function imba_zuus_arc_lightning:Chain(caster, origin_target, chained_target, ab
 					end
 				end
 
-				-- If there are no targets left to chain too... but we have not hit max_jump cap...
+				-- If there are no targets left to chain to... but we have not hit max_jump cap...
 				if (#nearby_enemy_units == 0 or has_chained == false) then 
 					-- Get list of all heroes!
 					local heroes = HeroList:GetAllHeroes() 
 					local dist_ref = {
 						hero = nil,
-						distance = 9999999
+						-- Let's try and make this a bit more reasonable
+						distance = radius * static_chain_mult
 					}
 
 					-- Check if any of them heroes have a static charge... (and havent been hit yet)
@@ -137,7 +142,7 @@ function imba_zuus_arc_lightning:Chain(caster, origin_target, chained_target, ab
 
 					-- Did we find an enemy?
 					if dist_ref.hero ~= nil then
-						imba_zuus_arc_lightning:Chain(caster, chained_target, dist_ref.hero, ability, damage, radius, jump_delay, max_jump_count, num_jumps_done, hit_list)
+						imba_zuus_arc_lightning:Chain(caster, chained_target, dist_ref.hero, ability, damage, radius, jump_delay, max_jump_count, num_jumps_done, hit_list, static_chain_mult)
 					end
 				end
 			end)
@@ -1149,13 +1154,13 @@ function imba_zuus_thundergods_wrath:OnSpellStart()
 					damage_table.damage_type = DAMAGE_TYPE_PURE
 				end
 				
-				if (not hero:IsMagicImmune() or pierce_spellimmunity) and (not hero:IsInvisible()) then
+				if (not hero:IsMagicImmune() or pierce_spellimmunity) and (not hero:IsInvisible() or caster:CanEntityBeSeenByMyTeam(hero)) then
 					damage_table.damage	 = self:GetAbilityDamage()
 					damage_table.victim  = hero
 					ApplyDamage(damage_table)
 				end
 				
-				hero:EmitSound("Hero_Zuus.LightningBolt")
+				hero:EmitSound("Hero_Zuus.GodsWrath.Target")
 				hero:AddNewModifier(caster, ability, "modifier_imba_zuus_lightning_fow", {duration = sight_duration, radius = true_sight_radius})
 				
 				local true_sight = hero:AddNewModifier(caster, self, "modifier_imba_zuus_lightning_true_sight", {duration = sight_duration})

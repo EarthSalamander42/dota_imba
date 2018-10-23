@@ -169,13 +169,9 @@ function GameMode:OnHeroFirstSpawn(hero)
 						end
 					end
 				end
+			-- Not a big deal, but don't give the MK ult clones frantic modifier (blue auras)
 			elseif hero:GetUnitName() == "npc_dota_hero_monkey_king" then
-				if TRUE_MK_HAS_SPAWNED then
-					return
-				else
-					hero.is_real_mk = true
-					TRUE_MK_HAS_SPAWNED = true
-				end
+				if hero:HasModifier("modifier_monkey_king_fur_army_soldier") or hero:HasModifier("modifier_monkey_king_fur_army_soldier_hidden") then return end
 			elseif hero:GetUnitName() == "npc_dota_hero_pudge" then
 				local flesh_heap_ability = hero:FindAbilityByName("imba_pudge_flesh_heap")
 				hero:AddNewModifier(hero, flesh_heap_ability, "modifier_imba_pudge_flesh_heap_handler", {})
@@ -213,10 +209,4 @@ function GameMode:OnHeroSpawned(hero)
 	if IsMutationMap() then
 		Mutation:OnHeroSpawn(hero)
 	end
-
-	Timers:CreateTimer(1.0, function() -- Silencer fix
-		if hero:HasModifier("modifier_silencer_int_steal") then
-			hero:RemoveModifierByName("modifier_silencer_int_steal")
-		end
-	end)
 end
