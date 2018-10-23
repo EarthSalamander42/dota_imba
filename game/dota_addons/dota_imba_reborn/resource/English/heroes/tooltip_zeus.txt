@@ -6,7 +6,7 @@
 //      Zeus: Arc Lightning
 //---------------------------------------------------------------------------
 "DOTA_Tooltip_Ability_imba_zuus_arc_lightning"					"Arc Lightning"
-"DOTA_Tooltip_Ability_imba_zuus_arc_lightning_description"		"Hurls a bolt of lightning that leaps through nearby enemy units.\n<font color='#FF7800'>Static Chain:</font> When Arc Lightning runs out of targets, it will jump to the nearest enemy hero with at least one stack of <font color='#FFFFFF'>Static Charge</font> within %static_chain_mult%x chain radius of the previous unit.
+"DOTA_Tooltip_Ability_imba_zuus_arc_lightning_description"		"Hurls a bolt of lightning that leaps through nearby enemy units.\n<font color='#FF7800'>Static Chain:</font> When Arc Lightning runs out of targets, it will jump to the nearest enemy hero with at least one stack of <font color='#FFFFFF'>Static Charge</font> within %static_chain_mult%x chain radius of the previous unit."
 "DOTA_Tooltip_Ability_imba_zuus_arc_lightning_lore"				"Arc Lightning is Zeus' favorite spell to use against puny mortals."
 "DOTA_Tooltip_Ability_imba_zuus_arc_lightning_arc_damage"		"DAMAGE:"
 "DOTA_Tooltip_Ability_imba_zuus_arc_lightning_jump_count"		"JUMPS:"
