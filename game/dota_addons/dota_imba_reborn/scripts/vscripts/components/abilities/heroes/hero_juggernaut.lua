@@ -93,6 +93,11 @@ function modifier_imba_juggernaut_blade_fury:OnCreated()
 			if self:GetCaster():HasAbility("imba_juggernaut_omni_slash") then
 				self:GetCaster():FindAbilityByName("imba_juggernaut_omni_slash"):SetActivated(false)
 			end
+			
+			-- Disable Blade Dance during Blade Fury
+			if self:GetCaster():HasAbility("imba_juggernaut_blade_dance") then
+				self:GetCaster():FindAbilityByName("imba_juggernaut_blade_dance"):SetActivated(false)
+			end
 		end
 	end
 end
@@ -160,6 +165,11 @@ function modifier_imba_juggernaut_blade_fury:OnRemoved()
 		-- Re-enable Omnislash during Blade Fury (vanilla)
 		if self:GetCaster():HasAbility("imba_juggernaut_omni_slash") then
 			self:GetCaster():FindAbilityByName("imba_juggernaut_omni_slash"):SetActivated(true)
+		end
+		
+		-- Re-enable Blade Dance at the end of Blade Fury
+		if self:GetCaster():HasAbility("imba_juggernaut_blade_dance") then
+			self:GetCaster():FindAbilityByName("imba_juggernaut_blade_dance"):SetActivated(true)
 		end
 		
 		if self:GetCaster():HasModifier("modifier_imba_omni_slash_caster") then
@@ -293,7 +303,7 @@ function modifier_imba_juggernaut_blade_fury_succ:IsPurgable() return true end
 function modifier_imba_juggernaut_blade_fury_succ:IsPurgeException()return true end
 function modifier_imba_juggernaut_blade_fury_succ:IsStunDebuff() return false end
 function modifier_imba_juggernaut_blade_fury_succ:IsMotionController()  return true end
-function modifier_imba_juggernaut_blade_fury_succ:GetMotionControllerPriority()  return DOTA_MOTION_CONTROLLER_PRIORITY_HIGH end
+function modifier_imba_juggernaut_blade_fury_succ:GetMotionControllerPriority()  return DOTA_MOTION_CONTROLLER_PRIORITY_LOWEST end
 
 function modifier_imba_juggernaut_blade_fury_succ:OnCreated()
 	self.caster = self:GetCaster()
@@ -1250,7 +1260,10 @@ if IsServer() then
 		if params.attacker == self:GetParent() then
 			-- Split Wind Dance and Secret Blade
 			self:HandleWindDance(self.critProc)
-			self:HandleSecretBlade()
+			
+			-- Cannot gain secret blade stacks during Blade Fury or Omnislash
+			if self:GetAbility():IsActivated() then self:HandleSecretBlade() end
+			
 			self:HandleJadeBlossom(self.critProc)
 --			self.critProc = false
 
@@ -1614,6 +1627,11 @@ function imba_juggernaut_omni_slash:OnSpellStart()
 			self.caster:FindAbilityByName("imba_juggernaut_blade_fury"):SetActivated(false)
 		end
 		
+		-- Disable Blade Dance during Omnislash 
+		if self.caster:HasAbility("imba_juggernaut_blade_dance") then
+			self.caster:FindAbilityByName("imba_juggernaut_blade_dance"):SetActivated(false)
+		end
+		
 		--if not self.caster:HasTalent("special_bonus_imba_juggernaut_7") then
 			PlayerResource:SetCameraTarget(self.caster:GetPlayerID(), self.caster)
 		--end
@@ -1961,6 +1979,11 @@ function modifier_imba_omni_slash_caster:OnDestroy()
 		-- Re-enable Blade Fury during Omnislash (vanilla)
 		if self.caster:HasAbility("imba_juggernaut_blade_fury") then
 			self.caster:FindAbilityByName("imba_juggernaut_blade_fury"):SetActivated(true)
+		end
+		
+		-- Re-enable Blade Dance during Omnislash
+		if self.caster:HasAbility("imba_juggernaut_blade_dance") then
+			self.caster:FindAbilityByName("imba_juggernaut_blade_dance"):SetActivated(true)
 		end
 		
 		if self.bounce_amt > 1 then
