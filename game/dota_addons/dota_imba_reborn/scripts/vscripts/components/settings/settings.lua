@@ -546,3 +546,5 @@ IMBA_DISABLED_SKULL_BASHER = {
 
 IMBA_WEATHER_EFFECT = {}
 IMBA_WEATHER_EFFECT[1] = "particles/rain_fx/econ_snow.vpcf"
+
+IMBA_FIRST_BLOOD = false

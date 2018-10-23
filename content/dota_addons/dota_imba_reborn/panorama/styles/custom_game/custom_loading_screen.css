@@ -70,8 +70,8 @@
 }
 
 #imba-loading-title-promote, {
-	background-color: COLOR_INFO_BACKGROUND_GREEN;
-	border: 2px solid COLOR_INFO_BACKGROUND_DARK_GREEN;
+	background-color: COLOR_INFO_BACKGROUND_BLUE;
+	border: 2px solid COLOR_INFO_BACKGROUND_DARK_BLUE;
 }
 
 #imba-loading-title-text,
@@ -89,7 +89,7 @@
 }
 
 #imba-loading-title-text-promote {
-	color: COLOR_INFO_TEXT_GREEN;
+	color: COLOR_INFO_TEXT_BLUE;
 }
 
 #imba-loading-content-text,
@@ -113,8 +113,8 @@
 }
 
 #imba-loading-link-promote {
-	background-color: COLOR_INFO_BACKGROUND_DARK_GREEN;
-	border: 2px solid COLOR_INFO_BACKGROUND_DARK_GREEN;
+	background-color: COLOR_INFO_BACKGROUND_DARK_BLUE;
+	border: 2px solid COLOR_INFO_BACKGROUND_DARK_BLUE;
 	box-shadow: 0 0 10px #111;
 	margin-top: 40px;
 }

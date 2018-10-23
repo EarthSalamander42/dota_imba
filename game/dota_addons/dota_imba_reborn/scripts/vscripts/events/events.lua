@@ -336,16 +336,13 @@ function GameMode:OnEntityKilled( keys )
 				CombatEvents("kill", "neutrals_kill_hero", killed_unit)
 			end
 
-			-- reset killstreak if not comitted suicide
-			if killer ~= killed_unit then
-				killed_unit.killstreak = 0
-			end
-
 			GameMode:OnHeroDeath(killer, killed_unit)
 
 			if IsMutationMap() then
 				Mutation:OnHeroDeath(killed_unit)
 			end
+
+			GoldSystem:OnHeroDeath(killer, killed_unit)
 
 			return
 		elseif killed_unit:IsBuilding() then
@@ -792,18 +789,6 @@ function GameMode:OnLastHit(keys)
 	if player == nil then return end
 	local killedEnt = EntIndexToHScript(keys.EntKilled)
 
-	if isFirstBlood or isHeroKill then
-		if not player:GetAssignedHero().killstreak then player:GetAssignedHero().killstreak = 0 end
-		player:GetAssignedHero().killstreak = player:GetAssignedHero().killstreak + 1
-
-		GoldSystem:OnHeroDeath(killer, victim, isFirstBlood)
-
-		if isFirstBlood then
-			CombatEvents("kill", "first_blood", victim, killer)
-		else
-			CombatEvents("kill", "hero_kill", victim, killer)
-		end
-	end
 end
 
 -- A player killed another player in a multi-team context

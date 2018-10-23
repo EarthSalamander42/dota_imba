@@ -88,13 +88,13 @@ function GameMode:ModifierFilter( keys )
 					local original_duration = keys.duration
 					local actual_duration = original_duration
 					local status_resistance = modifier_owner:GetStatusResistance()
-					print("Old duration:", actual_duration)
+--					print("Old duration:", actual_duration)
 
 --					if modifier_owner:GetTeam() ~= modifier_caster:GetTeam() then			
 						actual_duration = actual_duration * (1 - status_resistance)
 --					end
 
-					print("New duration:", actual_duration)
+--					print("New duration:", actual_duration)
 
 					keys.duration = actual_duration
 				end

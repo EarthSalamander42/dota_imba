@@ -44,6 +44,16 @@
 					</Button>
 				</Panel>
 			</Panel>
+
+			<Panel id="imba-loading-title-patreon">
+				<Panel class="down">
+					<Label id="imba-loading-title-text-patreon" text="Patreon"/>
+					<Label id="imba-loading-content-text-patreon" html="true" text="Earthsalamander #42 is developing IMBA at full time! We also have to pay servers for the Battlepass, Statistics and XP System. Feel free to donate, even small amounts matter!" />
+					<Button id="imba-loading-link-patreon" onactivate="DOTADisplayURL('https://www.patreon.com/bePatron?u=2533325');">
+						<Label id="imba-loading-link-text-patreon" text="Click here to become a donator!" />
+					</Button>
+				</Panel>
+			</Panel>
 <!--
 			<Panel id="imba-loading-title-promote">
 				<Panel class="down">
@@ -55,12 +65,12 @@
 				</Panel>
 			</Panel>
 -->
-			<Panel id="imba-loading-title-patreon">
+			<Panel id="imba-loading-title-promote">
 				<Panel class="down">
-					<Label id="imba-loading-title-text-patreon" text="Patreon"/>
-					<Label id="imba-loading-content-text-patreon" html="true" text="<p>Earthsalamander #42 is developing IMBA at full time! We also have to pay servers for the Battlepass, Statistics and XP System.</p><p>Feel free to donate, even small amounts matter!</p>" />
-					<Button id="imba-loading-link-patreon" onactivate="DOTADisplayURL('https://www.patreon.com/bePatron?u=2533325');">
-						<Label id="imba-loading-link-text-patreon" text="Click here to become a donator!" />
+					<Label id="imba-loading-title-text-promote" text="X Hero Siege now have an experience system!"/>
+					<Label id="imba-loading-content-text-promote" html="true" text="You can now earn experience when playing X Hero Siege! A custom battlepass will be implented soon to unlock cosmetics." />
+					<Button id="imba-loading-link-promote" onactivate="DOTADisplayURL('https://www.facebook.com/D2IMBA/');">
+						<Label id="imba-loading-link-text-promote" text="Click here to download X Hero Siege!" />
 					</Button>
 				</Panel>
 			</Panel>

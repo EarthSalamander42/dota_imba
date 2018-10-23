@@ -1,6 +1,6 @@
 -- not working: team kill tower, courier dead, courier respawn, 
 -- hero kill tower says hero denied
-function CombatEvents(event_type, reason, victim, attacker)
+function CombatEvents(event_type, reason, victim, attacker, custom_gold)
 	local text = ""
 	local team
 	local atacker_name
@@ -77,11 +77,11 @@ function CombatEvents(event_type, reason, victim, attacker)
 			attacker_id = attacker:GetPlayerID()
 			victim_id = victim:GetPlayerID()
 			first_blood = true
-			gold = CustomNetTables:GetTableValue("player_table", tostring(attacker_id)).hero_kill_bounty
+			gold = custom_gold
 		elseif reason == "hero_kill" then
 			attacker_id = attacker:GetPlayerID()
 			victim_id = victim:GetPlayerID()
-			gold = CustomNetTables:GetTableValue("player_table", tostring(attacker_id)).hero_kill_bounty
+			gold = custom_gold
 			variables = {
 				["{kill_streak}"] = streak[math.min(attacker.killstreak, 10)]
 			}
