@@ -1523,6 +1523,10 @@ function modifier_imba_skewer_motion_controller:IsMotionController()
 	return true
 end
 
+function modifier_imba_skewer_motion_controller:IsPurgable()
+	return false
+end
+
 function modifier_imba_skewer_motion_controller:GetMotionControllerPriority()
 	return DOTA_MOTION_CONTROLLER_PRIORITY_HIGH
 end

@@ -1822,7 +1822,7 @@
 			}
 			"04"
 			{
-				"var_type"				"FIELD_FLOAT"
+				"var_type"				"FIELD_INTEGER"
 				"move_speed_pct"		"30"
 			}
 			"05"
@@ -4360,7 +4360,7 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_FLOAT"
+				"var_type"				"FIELD_INTEGER"
 				"value"					"3"
 			}
 		}

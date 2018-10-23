@@ -1319,7 +1319,7 @@ function imba_riki_tricks_of_the_trade:OnSpellStart()
 		local cast_particle = "particles/units/heroes/hero_riki/riki_tricks_cast.vpcf"
 		local tricks_particle = "particles/units/heroes/hero_riki/riki_tricks.vpcf"
 		local cast_sound = "Hero_Riki.TricksOfTheTrade.Cast"
-		local continuos_sound = "Hero_Riki.TricksOfTheTrade"
+		local continous_sound = "Hero_Riki.TricksOfTheTrade"
 		local buttsecks_sound = "Imba.RikiSurpriseButtsex"
 
 		local heroes = FindUnitsInRadius(caster:GetTeamNumber(), origin, nil, aoe, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS, FIND_ANY_ORDER, false)
@@ -1329,7 +1329,7 @@ function imba_riki_tricks_of_the_trade:OnSpellStart()
 		end
 
 		EmitSoundOnLocationWithCaster(origin, cast_sound, caster)
-		EmitSoundOn(continuos_sound, caster)
+		EmitSoundOn(continous_sound, caster)
 
 		local caster_loc = caster:GetAbsOrigin()
 
@@ -1396,7 +1396,7 @@ function imba_riki_tricks_of_the_trade:OnChannelFinish()
 			end
 			local portion_refunded = channel_time/channel_duration
 			local new_cooldown = self:GetCooldownTimeRemaining() * (portion_refunded)
-			if new_cooldown < caster:FindTalentValue("special_bonus_imba_riki_6") then
+			if new_cooldown < caster:FindTalentValue("special_bonus_imba_riki_6") and new_cooldown ~= 0 then
 				new_cooldown = caster:FindTalentValue("special_bonus_imba_riki_6")
 			end
 			self:EndCooldown()
@@ -1450,6 +1450,7 @@ function modifier_imba_riki_tricks_of_the_trade_primary:OnCreated()
 	if IsServer() then
 		local ability = self:GetAbility()
 		local interval = ability:GetSpecialValueFor("attack_interval")
+		self:OnIntervalThink()
 		self:StartIntervalThink(interval)
 	end
 end
@@ -1473,9 +1474,10 @@ function modifier_imba_riki_tricks_of_the_trade_primary:OnIntervalThink()
 		local backstab_sound = "Hero_Riki.Backstab"
 
 		local targets = FindUnitsInRadius(caster:GetTeamNumber(), origin, nil, aoe, DOTA_UNIT_TARGET_TEAM_ENEMY , DOTA_UNIT_TARGET_HERO , DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, FIND_ANY_ORDER , false)
+
 		for _,unit in pairs(targets) do
 			if unit:IsAlive() and not unit:IsAttackImmune() then
-				caster:PerformAttack(target, true, true, true, false, false, false, false)
+				caster:PerformAttack(unit, true, true, true, false, false, false, false)
 
 				if backstab_ability and backstab_ability:GetLevel() > 0 and not self:GetParent():PassivesDisabled() then
 					local agility_damage_multiplier = backstab_ability:GetSpecialValueFor("agility_damage_multiplier")
@@ -1498,6 +1500,8 @@ function modifier_imba_riki_tricks_of_the_trade_primary:OnIntervalThink()
 					end
 				end
 			end
+			
+			return
 		end
 	end
 end

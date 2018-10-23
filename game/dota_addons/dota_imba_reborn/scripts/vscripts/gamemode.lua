@@ -38,6 +38,9 @@ require('components/team_selection')
 require('events/events')
 require('filters')
 
+-- A*-Path-finding logic (RIKI NEEDS THIS FOR HIS BLINK STRIKE)
+require('libraries/astar')
+
 -- Use this function as much as possible over the regular Precache (this is Async Precache)
 function GameMode:PostLoadPrecache()
 
