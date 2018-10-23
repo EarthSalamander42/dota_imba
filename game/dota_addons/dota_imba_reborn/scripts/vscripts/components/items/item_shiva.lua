@@ -44,8 +44,10 @@ function item_imba_shivas_guard:OnSpellStart()
 	local blast_pfx
 	if string.find(self:GetParent():GetUnitName(), "npc_dota_lone_druid_bear") then
 		blast_pfx = ParticleManager:CreateParticle(self:GetCaster():GetOwnerEntity().shiva_blast_effect, PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
-	else
+	elseif self:GetCaster().shiva_blast_effect then 
 		blast_pfx = ParticleManager:CreateParticle(self:GetCaster().shiva_blast_effect, PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
+	else
+		blast_pfx = ParticleManager:CreateParticle("particles/items2_fx/shivas_guard_active.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
 	end
 	ParticleManager:SetParticleControl(blast_pfx, 0, self:GetCaster():GetAbsOrigin())
 	ParticleManager:SetParticleControl(blast_pfx, 1, Vector(blast_radius, blast_duration * 1.33, blast_speed))
@@ -133,7 +135,7 @@ function modifier_imba_shiva_handler:OnCreated()
 end
 
 function modifier_imba_shiva_handler:OnIntervalThink()
-	if self:GetCaster():IsIllusion() then return end
+	if self:GetCaster():IsIllusion() or not self:GetCaster().shiva_icon then return end
 	if IsServer() then
 		if string.find(self:GetParent():GetUnitName(), "npc_dota_lone_druid_bear") then
 			self:SetStackCount(self:GetCaster():GetOwnerEntity().shiva_icon)

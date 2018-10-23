@@ -30881,7 +30881,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"attack_interval"		"1.0"
+				"attack_interval"		"0.6 0.55 0.5"
 			}			
 
 			"03"

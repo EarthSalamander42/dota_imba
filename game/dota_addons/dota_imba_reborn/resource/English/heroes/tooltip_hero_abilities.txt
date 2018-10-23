@@ -2477,7 +2477,7 @@
 // Riki's Smoke Screen
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_riki_smoke_screen"                          "Smoke Screen"
-"DOTA_Tooltip_ability_imba_riki_smoke_screen_Description"              "Throws down a smoke bomb, silencing enemies, causing them to miss attacks, and slowing their movement.\n<font color='#FF7800'>Solid fog:</font> Also slows enemies' turn rate, and reduces their vision range. Vision reduction is stronger on the center of the cloud."
+"DOTA_Tooltip_ability_imba_riki_smoke_screen_Description"              "Throws down a smoke bomb, silencing enemies, causing them to miss attacks, and slowing their movement.\n<font color='#FF7800'>Solid Fog:</font> Also slows enemies' turn rate, and reduces their vision range. Vision reduction is stronger at the center of the cloud."
 "DOTA_Tooltip_ability_imba_riki_smoke_screen_Note0"                    "Multiple smoke screens do not stack."
 "DOTA_Tooltip_ability_imba_riki_smoke_screen_Lore"                      "Since his escape during the night of his betrayal, Riki has valued the use of a simple smoke screen to confuse his opponents"
 "DOTA_Tooltip_ability_imba_riki_smoke_screen_duration"                  "DURATION:"
@@ -2485,44 +2485,43 @@
 "DOTA_Tooltip_ability_imba_riki_smoke_screen_miss_chance"              "%MISS CHANCE:"
 "DOTA_Tooltip_ability_imba_riki_smoke_screen_slow"                      "%MOVEMENT SLOW:"
 "DOTA_Tooltip_ability_imba_riki_smoke_screen_turn_rate_slow"            "%TURN RATE SLOW:"
-"DOTA_Tooltip_ability_imba_riki_smoke_screen_max_vision_reduction_pcnt"             "%MAXIMUM VISION REDUCTION:"
+"DOTA_Tooltip_ability_imba_riki_smoke_screen_max_vision_reduction_pcnt"	"%MAXIMUM VISION REDUCTION:"
 
-"DOTA_Tooltip_modifier_imba_smoke_screen_debuff_miss"                  "Smoke Screen"
-"DOTA_Tooltip_modifier_imba_smoke_screen_debuff_miss_Description"                   "Silenced, with a chance to miss attacks, and reduced turn rate, movement slowed, and vision range."
+"DOTA_Tooltip_modifier_imba_smoke_screen_debuff_miss"					"Smoke Screen"
+"DOTA_Tooltip_modifier_imba_smoke_screen_debuff_miss_Description"		"Silenced, with a chance to miss attacks, and reduced turn rate, movement slowed, and vision range."
 
-"DOTA_Tooltip_modifier_imba_smoke_screen_invi_indicator"                "Stealth Smoke"
-"DOTA_Tooltip_modifier_imba_smoke_screen_invi_indicator_Description"                "Gaining Invisibility from Smoke Screen."
+"DOTA_Tooltip_modifier_imba_smoke_screen_invi_indicator"				"Stealth Smoke"
+"DOTA_Tooltip_modifier_imba_smoke_screen_invi_indicator_Description"	"Gaining Invisibility from Smoke Screen."
 
 ////===============================================================================================================
 // Riki's Blink Strike
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_riki_blink_strike"                          "Blink Strike"
-"DOTA_Tooltip_ability_imba_riki_blink_strike_Description"              "Teleports behind the target unit, striking it with bonus damage.\n<font color='#FF7800'>Shadowstruck:</font> If the target is an enemy, its turn rate is reduced for %duration% seconds.\n<font color='#FF7800'>Through the Ball Room:</font> If the target is out of reach, attempts to use units on the way as platforms to jump off of in order to reach it."
+"DOTA_Tooltip_ability_imba_riki_blink_strike_Description"              "Teleports behind the target unit, striking it with bonus damage.\n<font color='#FF7800'>Shadowstruck:</font> If the target is an enemy, its turn rate is reduced for %duration% seconds.\n<font color='#FF7800'>Through the Ball Room:</font> If the target is out of reach, Blink Strike will attempt to use units on the way as platforms to jump off of in order to reach it."
 "DOTA_Tooltip_ability_imba_riki_blink_strike_Note0"                    "Will always try to find the shortest path possible."
-"DOTA_Tooltip_ability_imba_riki_blink_strike_Note1"                    "During the Strike Phase the caster is invulnerable"
+"DOTA_Tooltip_ability_imba_riki_blink_strike_Note1"                    "While travelling through the ball room, the caster is invulnerable."
 "DOTA_Tooltip_ability_imba_riki_blink_strike_Lore"                      "The Stealth Assassin's agile movement makes him impossible to escape."
 "DOTA_Tooltip_ability_imba_riki_blink_strike_damage"                    "DAMAGE:"
-"DOTA_Tooltip_ability_imba_riki_blink_strike_turn_rate_slow_pct"                    "%TURN RATE SLOW:"
-"DOTA_Tooltip_ability_imba_riki_blink_strike_turn_rate_slow_pct"                    "%TURN RATE SLOW:"
+"DOTA_Tooltip_ability_imba_riki_blink_strike_turn_rate_slow_pct"		"%TURN RATE SLOW:"
 "DOTA_Tooltip_ability_imba_riki_blink_strike_duration"                  "SLOW DURATION:"
 "DOTA_Tooltip_ability_imba_riki_blink_strike_jump_range"                "JUMP RANGE:"
-"DOTA_Tooltip_ability_imba_riki_blink_strike_max_jumps"                "MAXIMUM TARGET JUMPS:"
+"DOTA_Tooltip_ability_imba_riki_blink_strike_max_jumps"					"MAXIMUM TARGET JUMPS:"
 
-"DOTA_Tooltip_modifier_imba_blink_strike_debuff_turn"                  "Blink Struck"
-"DOTA_Tooltip_modifier_imba_blink_strike_debuff_turn_Description"                   "Decreased turn rate."
+"DOTA_Tooltip_modifier_imba_blink_strike_debuff_turn"					"Blink Struck"
+"DOTA_Tooltip_modifier_imba_blink_strike_debuff_turn_Description"		"Turn rate decreased by %dMODIFIER_PROPERTY_TURN_RATE_PERCENTAGE%."
 
 
 ////===============================================================================================================
 // Riki's Cloak and Dagger
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_riki_cloak_and_dagger"                      "Cloak and Dagger"
-"DOTA_Tooltip_ability_imba_riki_cloak_and_dagger_Description"          "Riki fades into the shadows, becoming invisible. Every time he strikes an enemy from behind, he deals bonus damage based on his agility. Becomes visible after attacking.\n<font color='#FF7800'>Sucker punch:</font> breaking invisibility with an attack will increase the bonus damage by %invis_break_agility_multiplier% for that attack.\n<font color='#FF7800'>Facestab:</font> enemies inside Riki's Smoke Screen can be backstabbed from any angle, although at a lower damage bonus."
+"DOTA_Tooltip_ability_imba_riki_cloak_and_dagger_Description"          "Riki fades into the shadows, becoming invisible. Every time he strikes an enemy from behind, he deals bonus damage based on his agility. Becomes visible after attacking.\n<font color='#FF7800'>Sucker Punch:</font> Breaking invisibility with an attack will increase the bonus damage by %invis_break_agility_multiplier% for that attack.\n<font color='#FF7800'>Facestab:</font> Enemies inside Riki's Smoke Screen can be backstabbed from any angle, although at a lower damage bonus."
 "DOTA_Tooltip_ability_imba_riki_cloak_and_dagger_Note0"                "Only breaking the invisibility provided by Cloak and Dagger will provide an increased damage bonus. Other sources of invisibility do not provide this effect."
-"DOTA_Tooltip_ability_imba_riki_cloak_and_dagger_Note1"                "Attacking from the back inside smoke cloud will still apply the full damage bonus."
+"DOTA_Tooltip_ability_imba_riki_cloak_and_dagger_Note1"                "Attacking from the back inside Smoke Screen will still apply the full damage bonus."
 "DOTA_Tooltip_ability_imba_riki_cloak_and_dagger_Lore"                  "The Stealth Assassin is not afraid to fight dirty, and specializes in attacking his opponents from behind."
-"DOTA_Tooltip_ability_imba_riki_cloak_and_dagger_fade_time"            "FADE TIME:"
-"DOTA_Tooltip_ability_imba_riki_cloak_and_dagger_agility_damage_multiplier"         "AGILITY MULTIPLIER:"
-"DOTA_Tooltip_ability_imba_riki_cloak_and_dagger_agility_damage_multiplier_smoke"   "SMOKE AGILITY MULTIPLIER:"
+"DOTA_Tooltip_ability_imba_riki_cloak_and_dagger_fade_time"							"FADE TIME:"
+"DOTA_Tooltip_ability_imba_riki_cloak_and_dagger_agility_damage_multiplier"			"AGILITY MULTIPLIER:"
+"DOTA_Tooltip_ability_imba_riki_cloak_and_dagger_agility_damage_multiplier_smoke"	"SMOKE AGILITY MULTIPLIER:"
 
 "DOTA_Tooltip_modifier_imba_riki_invisibility"                          "Invisible"
 "DOTA_Tooltip_modifier_imba_riki_invisibility_Description"              "You are invisible. Breaking invisibility with a backstab will increase its agility multiplier."
@@ -2539,16 +2538,17 @@
 ////===============================================================================================================
 // Riki's Tricks of the Trade
 ////===============================================================================================================
-"DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade"                    "Tricks of the Trade"
-"DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_Description"                    "Phase out of this world to attack all enemies around you every %attack_interval% seconds.\n<font color='#FF7800'>Martyr Strikes:</font> also strikes extra random units inside the area, based on your attack speed.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
+"DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade"								"Tricks of the Trade"
+"DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_Description"                    "Riki phases out of the world while striking random enemy heroes from behind in an area around him.\n<font color='#FF7800'>Martyr Strikes:</font> Also strikes extra random units inside the area, based on the caster's attack speed.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
 "DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_Lore"              "What the eye doesn't see, the heart is pierced by."
 "DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_area_of_effect"                 "RADIUS:"
 "DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_channel_duration"               "DURATION:"
+"DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_attack_interval"				"ATTACK INTERVAL:"
 "DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_scepter_duration"               "SCEPTER DURATION:"
 "DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_aghanim_description"            "Increases Tricks of the Trade's duration to 9 seconds, and allows Riki to target an allied hero, centering Tricks of the Trade on it."
 
-"DOTA_Tooltip_modifier_imba_riki_tricks_of_the_trade_primary"          "Tricks of the Trade"
-"DOTA_Tooltip_modifier_imba_riki_tricks_of_the_trade_primary_Description"           "Invulnerable and slashing enemies in the area."
+"DOTA_Tooltip_modifier_imba_riki_tricks_of_the_trade_primary"						"Tricks of the Trade"
+"DOTA_Tooltip_modifier_imba_riki_tricks_of_the_trade_primary_Description"			"Invulnerable and slashing enemies in the area."
 
 "DOTA_Tooltip_modifier_imba_martyrs_mark"                              "Martyr's Mark"
 "DOTA_Tooltip_modifier_imba_martyrs_mark_Description"                  "Increased chances of getting strike by Martyr's Strike."
@@ -2558,17 +2558,17 @@
 ////===============================================================================================================
 "DOTA_Tooltip_Ability_special_bonus_imba_riki_1"            	"Creates Smokescreens on Blink Strikes"
 "DOTA_Tooltip_Ability_special_bonus_imba_riki_2"				"Martyr Strike's Marks"
-"DOTA_Tooltip_Ability_special_bonus_imba_riki_2_Description"	"Tricks of the Trade's Martyr Strikes mark its targets, becoming more likely to get hit by it."
+"DOTA_Tooltip_Ability_special_bonus_imba_riki_2_Description"	"Tricks of the Trade's Martyr Strikes mark struck targets for 6 seconds, making them more likely to be targetted by other Martyr Strikes."
 "DOTA_Tooltip_Ability_special_bonus_imba_riki_3"            	"Cloak and Dagger Reveal"
-"DOTA_Tooltip_Ability_special_bonus_imba_riki_3_Description"	"Cloak and Dagger can be activated to gain bonus agility multiplier, trading in invisibility for 6 seconds."
+"DOTA_Tooltip_Ability_special_bonus_imba_riki_3_Description"	"Cloak and Dagger can be activated to multiply the Backstab bonus agility multiplier by 2x, trading in invisibility for 6 seconds."
 "DOTA_Tooltip_Ability_special_bonus_imba_riki_4"            	"Riki can apply Sidestab with reduced Agi multiplier bonus"
 "DOTA_Tooltip_Ability_special_bonus_imba_riki_5"           		"Smokescreen grants Riki another form of Invisibility"
-"DOTA_Tooltip_Ability_special_bonus_imba_riki_6" 				"Trick of the Trade cooldown storage"
-"DOTA_Tooltip_Ability_special_bonus_imba_riki_6_Description"    "Ending Tricks of the Trade early reduces its cooldown proportionally to the remaining time."
+"DOTA_Tooltip_Ability_special_bonus_imba_riki_6" 				"Tricks of the Trade cooldown storage"
+"DOTA_Tooltip_Ability_special_bonus_imba_riki_6_Description"    "Ending Tricks of the Trade early reduces its cooldown proportionally to the remaining time, up to a minimum of 6 seconds."
 "DOTA_Tooltip_Ability_special_bonus_imba_riki_7"           		"Broken Back"
-"DOTA_Tooltip_Ability_special_bonus_imba_riki_7_Description"	"4 successive Backstabs apply Break on the target for 5 seconds."
+"DOTA_Tooltip_Ability_special_bonus_imba_riki_7_Description"	"Landing four successive Backstabs on a target applies Break for 5 seconds."
 "DOTA_Tooltip_Ability_special_bonus_imba_riki_8"				"Blink Strike Passive"
-"DOTA_Tooltip_Ability_special_bonus_imba_riki_8"           		"Riki gains 20% chance on attack to cast Blink Strike on the target, backstabbing it."
+"DOTA_Tooltip_Ability_special_bonus_imba_riki_8_Description"    "Riki gains a 20% chance on attack to cast Blink Strike on the target, backstabbing it."
 
 // Sand King
 ////===============================================================================================================
