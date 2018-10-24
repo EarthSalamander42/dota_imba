@@ -16,6 +16,13 @@ function GoldSystem:OnHeroDeath(killer, victim)
 	streak_table[9] = 420
 	streak_table[10] = 480
 
+	local assist_gold = {}
+	assist_gold[1] = {126, 4.5}
+	assist_gold[2] = {63, 3.6}
+	assist_gold[3] = {31.5, 2.7}
+	assist_gold[4] = {22.5, 1.8}
+	assist_gold[5] = {18, 0.9}
+
 	-- TODO list:
 	-- split formula gold between all enemy heroes if the victim was not hit by any enemy hero in the last 20 seconds
 
@@ -42,6 +49,63 @@ function GoldSystem:OnHeroDeath(killer, victim)
 		SendOverheadEventMessage(killer:GetPlayerOwner(), OVERHEAD_ALERT_GOLD, victim, formula, nil)
 		killer:ModifyGold(formula, true, DOTA_ModifyGold_HeroKill)
 		CombatEvents("kill", "hero_kill", victim, killer, formula)
+
+		-- comeback factor is defined to the team wich has the less net worth
+		-- set default comeback factor on dire
+		local comeback_factor = 3
+		local team_networth = {}
+		team_networth[2] = 0
+		team_networth[3] = 0
+
+		-- poor factor (amount of gold multiplied based on victim networth rank in it's team. poorest to richest)
+		local networth_poor_factor = {0.6, 0.7, 0.9, 1.05, 1.2}
+
+		-- rank factor (amount of gold multiplied based on killer networth rank in it's team. poorest to richest. args means number of assisters to share with)
+		local networth_rank_factor = {}
+		networth_rank_factor[1] = {1}
+		networth_rank_factor[2] = {1.3, 0.7}
+		networth_rank_factor[3] = {1.3, 1, 0.7}
+		networth_rank_factor[4] = {1.3, 1.1, 0.9, 0.7}
+		networth_rank_factor[5] = {1.3, 1.15, 1, 0.85, 0.7}
+
+		-- player networth rank in radiant/dire teams
+		local networth_rank[2] = {}
+		local networth_rank[3] = {}
+
+		-- save player's networth
+		for _, hero in pairs(HeroList:GetAllHeroes()) do
+			team_networth[hero:GetTeamNumber()] = team_networth[hero:GetTeamNumber()] + hero:GetNetWorth()
+			table.insert(networth_rank[hero:GetTeamNumber()], hero:GetPlayerID(), hero:GetNetWorth())
+		end
+
+		-- sort player's networth by team
+		bubbleSort(networth_rank[2])
+		bubbleSort(networth_rank[3])
+
+		for i, lul in ipairs(networth_rank[2]) do
+			print(i, lul)
+		end
+
+		for i, lul in ipairs(networth_rank[3]) do
+			print(i, lul)
+		end
+
+		if team_networth[2] < team_networth[3] then
+			comeback_factor = 2
+		end
+
+		if victim:GetTeamNumber() == comeback_factor then
+			comeback_factor = 1
+		end
+
+		print("Team networth:", team_networth[2], team_networth[3])
+
+		local assisters = FindUnitsInRadius(killer:GetTeamNumber(), killer:GetAbsOrigin(), nil, 1300, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+		local assist_formula = (assist_gold[1][math.min(#assisters, 5)] + assist_gold[2][math.min(#assisters, 5)] * victim:GetLevel() + comeback_factor * (victim:GetNetWorth() * 0.026 + 70) / #assisters) * math.min(networth_poor_factor[math.min(networth_rank[victim:GetTeamNumber()], 5)], 5) * 
+
+		for _, assister in pairs(assisters) do
+
+		end
 	else
 		print("Attackers: "..victim_attacker_count)
 		if victim_attacker_count == 0 then
