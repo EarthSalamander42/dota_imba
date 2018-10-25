@@ -66,7 +66,7 @@ function MapSuperFrantic5v5() return "super_frantic_5v5" end
 function MapSuperFrantic10v10() return "super_frantic_10v10" end
 function Map1v1() return "imba_1v1" end
 function MapTournament() return "map_tournament" end
-function MapOverthrow() return "imbathrow" end
+function MapOverthrow() return "imbathrow_3v3v3v3" end
 
 function IsRankedMap()
 	if GetMapName() == MapRanked5v5() or GetMapName() == MapRanked10v10() then

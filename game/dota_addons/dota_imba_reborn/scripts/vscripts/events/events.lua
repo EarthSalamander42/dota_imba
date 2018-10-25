@@ -50,8 +50,14 @@ function GameMode:OnGameRulesStateChange(keys)
 		if api.imba.data.donators then
 			CustomNetTables:SetTableValue("game_options", "donators", api.imba.get_donators())
 		end
+
 		if api.imba.data.developers then
 			CustomNetTables:SetTableValue("game_options", "developers", api.imba.get_developers())
+		end
+
+		if GetMapName() == MapOverthrow() then
+			GoodCamera:AddNewModifier(GoodCamera, nil, "modifier_overthrow_gold_xp_granter", {})
+			GoodCamera:AddNewModifier(GoodCamera, nil, "modifier_overthrow_gold_xp_granter_global", {})
 		end
 
 		-- Create a timer to avoid lag spike entering pick screen
@@ -81,7 +87,9 @@ function GameMode:OnGameRulesStateChange(keys)
 			ImbaRunes:Init()
 
 			-- Initialize base shrines
-			SetupShrines()
+			if not GetMapName() == MapOverthrow() then
+				SetupShrines()
+			end
 
 			-- Initialize gg panel
 			GoodGame:Init()
@@ -342,7 +350,13 @@ function GameMode:OnEntityKilled( keys )
 				Mutation:OnHeroDeath(killed_unit)
 			end
 
-			GoldSystem:OnHeroDeath(killer, killed_unit)
+			if killer == killed_unit then
+				CombatEvents("kill", "hero_suicide", killed_unit)
+			elseif killer:IsRealHero() and killer:GetTeamNumber() == killed_unit:GetTeamNumber() then
+				CombatEvents("kill", "hero_deny_hero", killed_unit, killer)
+			else
+				GoldSystem:OnHeroDeath(killer, killed_unit)
+			end
 
 			return
 		elseif killed_unit:IsBuilding() then
@@ -448,12 +462,6 @@ function GameMode:OnEntityKilled( keys )
 
 --				SendOverheadEventMessage(killer:GetPlayerOwner(), OVERHEAD_ALERT_GOLD, killed_unit, gold_bounty, nil)
 --				killer:ModifyGold(gold_bounty, gold_reliable, gold_reason)
-			end
-
-			if killer == killed_unit then
-				CombatEvents("kill", "hero_suicide", killed_unit)
-			elseif killed_unit:IsRealHero() and killer:GetTeamNumber() == killed_unit:GetTeamNumber() then
-				CombatEvents("kill", "hero_deny_hero", killed_unit, killer)
 			end
 		end
 

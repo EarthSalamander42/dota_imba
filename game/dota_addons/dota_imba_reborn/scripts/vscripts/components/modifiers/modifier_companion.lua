@@ -73,7 +73,7 @@ function modifier_companion:OnIntervalThink()
 		hero.companion = companion
 		local fountain
 
-		if GetMapName() == "imba_overthrow" then
+		if GetMapName() == MapOverthrow() then
 			fountain = Entities:FindByName(nil, "@overboss")
 		else
 			if hero:GetTeamNumber() == 2 then

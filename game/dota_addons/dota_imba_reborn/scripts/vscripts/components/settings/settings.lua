@@ -36,13 +36,13 @@ end
 AUTO_LAUNCH_DELAY = 5.0					-- How long should we wait for the host to setup the game, after all players have loaded in?
 STRATEGY_TIME = 0.0						-- How long should strategy time last?
 SHOWCASE_TIME = 0.0						-- How long should showcase time last?
---if IsInToolsMode() then
---	AP_GAME_TIME = 10.0
---	PRE_GAME_TIME = 5.0 + AP_GAME_TIME
---else
+if MapOverthrow() then
+	AP_GAME_TIME = 45.0
+	PRE_GAME_TIME = 10.0 + AP_GAME_TIME
+else
 	AP_GAME_TIME = 60.0					-- How long should we let people select their hero?
 	PRE_GAME_TIME = 90 + AP_GAME_TIME	-- How long after people select their heroes should the horn blow and the game start?
---end
+end
 TREE_REGROW_TIME = 180.0				-- How long should it take individual trees to respawn after being cut down/destroyed?
 POST_GAME_TIME = 600.0					-- How long should we let people look at the scoreboard before closing the server automatically?
 CAMERA_DISTANCE_OVERRIDE = -1
@@ -254,6 +254,7 @@ CUSTOM_GOLD_BONUS[MapMutation5v5()] = 200
 CUSTOM_GOLD_BONUS[MapMutation10v10()] = 200
 CUSTOM_GOLD_BONUS[MapSuperFrantic5v5()] = 200
 CUSTOM_GOLD_BONUS[MapSuperFrantic10v10()] = 200
+CUSTOM_GOLD_BONUS[MapOverthrow()] = 200
 
 -- Global XP earning, values are doubled with Hyper for non-custom maps (right now this is not used anymore, but i'll keep it there just in case)
 CUSTOM_XP_BONUS = {} -- 1 = Normal, 2 = Hyper
@@ -265,6 +266,7 @@ CUSTOM_XP_BONUS[MapMutation5v5()] = 200
 CUSTOM_XP_BONUS[MapMutation10v10()] = 200
 CUSTOM_XP_BONUS[MapSuperFrantic5v5()] = 200
 CUSTOM_XP_BONUS[MapSuperFrantic10v10()] = 200
+CUSTOM_XP_BONUS[MapOverthrow()] = 200
 
 -- Hero base level, values are doubled with Hyper for non-custom maps
 HERO_STARTING_LEVEL = {} -- 1 = Normal, 2 = Hyper
@@ -276,6 +278,7 @@ HERO_STARTING_LEVEL[MapMutation5v5()] = 5
 HERO_STARTING_LEVEL[MapMutation10v10()] = 5
 HERO_STARTING_LEVEL[MapSuperFrantic5v5()] = 5
 HERO_STARTING_LEVEL[MapSuperFrantic10v10()] = 5
+HERO_STARTING_LEVEL[MapOverthrow()] = 5
 
 MAX_LEVEL = {}
 MAX_LEVEL[Map1v1()] = 42
@@ -286,6 +289,7 @@ MAX_LEVEL[MapMutation5v5()] = 42
 MAX_LEVEL[MapMutation10v10()] = 42
 MAX_LEVEL[MapSuperFrantic5v5()] = 42
 MAX_LEVEL[MapSuperFrantic10v10()] = 42
+MAX_LEVEL[MapOverthrow()] = 42
 
 HERO_INITIAL_GOLD = {}
 HERO_INITIAL_GOLD[Map1v1()] = 1400
@@ -296,6 +300,7 @@ HERO_INITIAL_GOLD[MapMutation5v5()] = 2500
 HERO_INITIAL_GOLD[MapMutation10v10()] = 2500
 HERO_INITIAL_GOLD[MapSuperFrantic5v5()] = 2500
 HERO_INITIAL_GOLD[MapSuperFrantic10v10()] = 2500
+HERO_INITIAL_GOLD[MapOverthrow()] = 2500
 
 GOLD_TICK_TIME = {}
 GOLD_TICK_TIME[Map1v1()] = 0.6
@@ -306,6 +311,7 @@ GOLD_TICK_TIME[MapMutation5v5()] = 0.6
 GOLD_TICK_TIME[MapMutation10v10()] = 0.4
 GOLD_TICK_TIME[MapSuperFrantic5v5()] = 0.6
 GOLD_TICK_TIME[MapSuperFrantic10v10()] = 0.4
+GOLD_TICK_TIME[MapOverthrow()] = 0.4
 
 BANNED_ITEMS = {}
 BANNED_ITEMS[Map1v1()] = {
@@ -548,3 +554,9 @@ IMBA_WEATHER_EFFECT = {}
 IMBA_WEATHER_EFFECT[1] = "particles/rain_fx/econ_snow.vpcf"
 
 IMBA_FIRST_BLOOD = false
+
+-- files requirements
+
+if GetMapName() == MapOverthrow() then
+	require("components/settings/settings_imbathrow")
+end

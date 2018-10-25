@@ -53,10 +53,25 @@ function GameMode:OnFirstPlayerLoaded()
 		Log:ConfigureFromApi()
 	end)
 
-	GoodCamera = Entities:FindByName(nil, "good_healer_6")
-	BadCamera = Entities:FindByName(nil, "bad_healer_6")
+	if GetMapName() == MapOverthrow() then
+		require("components/overthrow/imbathrow")
+		GoodCamera = Entities:FindByName(nil, "@overboss")
+		BadCamera = Entities:FindByName(nil, "@overboss")
 
-	if GetMapName() ~= Map1v1() then
+		local xp_granters = FindUnitsInRadius(DOTA_TEAM_NEUTRALS, Entities:FindByName(nil, "@overboss"):GetAbsOrigin(), nil, 200, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+
+		for _, granter in pairs(xp_granters) do
+			if string.find(granter:GetUnitName(), "npc_dota_xp_granter") then
+				granter:RemoveSelf()
+				break
+			end
+		end
+	else
+		GoodCamera = Entities:FindByName(nil, "good_healer_6")
+		BadCamera = Entities:FindByName(nil, "bad_healer_6")
+	end
+
+	if GetMapName() ~= Map1v1() and GetMapName() ~= MapOverthrow() then
 		_G.ROSHAN_SPAWN_LOC = Entities:FindByClassname(nil, "npc_dota_roshan_spawner"):GetAbsOrigin()
 		Entities:FindByClassname(nil, "npc_dota_roshan_spawner"):RemoveSelf()
 		if GetMapName() ~= Map1v1() then

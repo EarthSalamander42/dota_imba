@@ -63,13 +63,27 @@ end
 function CDOTA_BaseNPC:SetupHealthBarLabel()
 	local steam_id = tostring(PlayerResource:GetSteamID(self:GetPlayerOwnerID()))
 
-	print("Donator level:", api.imba.is_donator(steam_id))
+--	print("Donator level:", api.imba.is_donator(steam_id))
 	if steam_id ~= "0" and api.imba.is_donator(steam_id) ~= false then
 		local donator_level = api.imba.is_donator(steam_id)
 		if donator_level and donator_level > 0 then
 			self:SetCustomHealthLabel("#imba_donator_label_" .. donator_level, DONATOR_COLOR[donator_level][1], DONATOR_COLOR[donator_level][2], DONATOR_COLOR[donator_level][3])
 		end
 	end
+end
+
+function CDOTA_BaseNPC_Hero:GetNetWorth()
+    local gold = self:GetGold()
+
+    -- Iterate over item slots adding up its gold cost
+    for i = 0, 15 do
+        local item = self:GetItemInSlot(i)
+        if item then
+            gold = gold + item:GetCost()
+        end
+    end
+
+    return gold
 end
 
 -- Initializes heroes' innate abilities

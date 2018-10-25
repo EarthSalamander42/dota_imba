@@ -37,7 +37,7 @@ function ImbaRunes:Init()
 
 	bounty_rune_spawners = Entities:FindAllByName("dota_item_rune_spawner_bounty")
 
-	if GetMapName() == "imba_overthrow" then
+	if GetMapName() == MapOverthrow() then
 		powerup_rune_spawners = Entities:FindAllByName("dota_item_rune_spawner")
 	else
 		powerup_rune_spawners = Entities:FindAllByClassname("dota_item_rune_spawner_powerup")
