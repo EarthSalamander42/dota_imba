@@ -5379,6 +5379,31 @@
 				"var_type"				"FIELD_INTEGER"
 				"singularity_cap"		"50"
 			}
+			"12"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"interrupt_disable_loss_pct"	"70"
+			}
+			"13"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"interrupt_manual_loss_pct"		"40"			
+			}
+			"14"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"death_loss_pct"				"10"			
+			}
+			"15"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"cdr_pct_per_stack"				"2"
+			}
+			"16"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"min_cd_cap"					"15"
+			}
 		}
 	}
 

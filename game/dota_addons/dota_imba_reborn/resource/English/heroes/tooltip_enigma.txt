@@ -47,24 +47,25 @@
 
 // Enigma's Black Hole
 "DOTA_Tooltip_ability_imba_enigma_black_hole"							"Black Hole"
-"DOTA_Tooltip_ability_imba_enigma_black_hole_Description"				"Summons a vortex that sucks in nearby enemy units, Enemies affected by Black Hole cannot move, attack, or cast spells.\n<font color='#FF7800'>Singularity:</font> Each hero caught in the Black Hole grants a stack of Singularity. Singularity stacks are accumulated infinitely, increasing Black Hole's radius. If a Black Hole is interrupted, all Singularity stacks are immediately lost.\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
+"DOTA_Tooltip_ability_imba_enigma_black_hole_Description"				"Summons a vortex that sucks in nearby enemy units, Enemies affected by Black Hole cannot move, attack, or cast spells.\n<font color='#FF7800'>Light Cannot Escape Me:</font> Black Hole also exhibits a %pull_radius% base radius gravitational field, destroying all trees, granting vision, and pulling enemies towards it at a speed of %pull_strength%. \n<font color='#FF7800'>Singularity:</font> Each hero caught in the Black Hole grants a stack of Singularity. Singularity stacks are accumulated infinitely, increasing Black Hole's radius and pull radius, and reducing Black Hole's cooldown, up to a minimum of %min_cd_cap% seconds. Singularity stacks are lost in the following ways (rounded up):\nDisabled during channel: %interrupt_disable_loss_pct%%% of stacks<br>Manual interruption of channel: %interrupt_manual_loss_pct%%% of stacks<br>Death: %death_loss_pct%%% of stacks\n<font color='#FF7800'>Event Horizon: </font>Upon reaching %singularity_cap% or more stacks of Singularity, Black Hole begins to damage and stun all enemy's vulnerable buildings on the field.\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
 "DOTA_Tooltip_ability_imba_enigma_black_hole_Lore"						"The ground trembles as Enigma channels his ultimate vortex of destruction, a singularity with the power to end worlds."
 "DOTA_Tooltip_ability_imba_enigma_black_hole_Note0"						"Completely disables all enemies in the radius, even through Spell Immunity."
 "DOTA_Tooltip_ability_imba_enigma_black_hole_Note1"						"Doesn't affect Roshan."
+"DOTA_Tooltip_ability_imba_enigma_black_hole_Note2"						"Enigma must be at least 2500 range away from either fountain for Event Horizon to take effect."
 "DOTA_Tooltip_ability_imba_enigma_black_hole_radius"					"RADIUS:"
 "DOTA_Tooltip_ability_imba_enigma_black_hole_damage_per_tick"			"DAMAGE PER SECOND:"
 "DOTA_Tooltip_ability_imba_enigma_black_hole_well_pull_strength"		"PULL POWER:"
 "DOTA_Tooltip_ability_imba_enigma_black_hole_duration"					"MAX CHANNEL TIME:"
 "DOTA_Tooltip_ability_imba_enigma_black_hole_singularity_stun_radius_increment_per_stack"  "STUN RADIUS INCREASE PER STACK:"
 "DOTA_Tooltip_ability_imba_enigma_black_hole_singularity_pull_radius_increment_per_stack"  "PULL RADIUS INCREASE PER STACK:"
-"DOTA_Tooltip_ability_imba_enigma_black_hole_singularity_cap"			"MAX SINGULARITY STACKS:"
-"DOTA_Tooltip_ability_imba_enigma_black_hole_aghanim_description"		"Adds Midnight Pulse to Black Hole."
+"DOTA_Tooltip_ability_imba_enigma_black_hole_cdr_pct_per_stack"			"%COOLDOWN REDUCTION PER STACK:"
+"DOTA_Tooltip_ability_imba_enigma_black_hole_aghanim_description"		"Adds the current level of Midnight Pulse to Black Hole."
 
 "DOTA_Tooltip_modifier_imba_enigma_black_hole"                          "Black Hole"
 "DOTA_Tooltip_modifier_imba_enigma_black_hole_Description"              "Disabled, being pulled in and taking damage."
 
 "DOTA_Tooltip_modifier_imba_singularity"								"Singularity"
-"DOTA_Tooltip_modifier_imba_singularity_Description"					"Increases stacks for every enemy hero caught directly in your Black Hole. Stacks accumulate up to 50, increasing the stun and pull radius of Black Hole for each stack, and are lost if interrupted."
+"DOTA_Tooltip_modifier_imba_singularity_Description"					"Increases stacks for every enemy hero caught directly in your Black Hole. Increasing the stun and pull radius of Black Hole, and reducing Black Hole's cooldown for each stack."
 
 // Enigma's Custom Talents
 "DOTA_Tooltip_ability_special_bonus_imba_enigma_1"						"Perfect Black Hole"
@@ -78,6 +79,7 @@
 "DOTA_Tooltip_ability_special_bonus_imba_enigma_7"						"Void of Magic"
 "DOTA_Tooltip_ability_special_bonus_imba_enigma_7_Description"			"Enigma gets 1 second of magic immunity whenever he casts a spell, which stacks with itself."
 "DOTA_Tooltip_ability_special_bonus_imba_enigma_8"						"Heroes can be used as sources for Eidolons"
+"DOTA_Tooltip_ability_special_bonus_imba_enigma_8_Description"			"They become the target of Primordial Shard, using their stats to fuel the Eidolons."
 
 "DOTA_Tooltip_modifier_enigma_magic_immunity"                          "Void of Magic"
 "DOTA_Tooltip_modifier_enigma_magic_immunity_Description"              "Void of Magic gives you spell immunity."
