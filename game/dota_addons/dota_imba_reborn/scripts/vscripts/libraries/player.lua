@@ -32,7 +32,9 @@ function CDOTA_BaseNPC:CreateIllusion(duration, inc, out, pos, mod, ab)
 			local abilityLevel = ability:GetLevel()
 			local abilityName = ability:GetAbilityName()
 			local illusionAbility = illusion:FindAbilityByName(abilityName)
-			illusionAbility:SetLevel(abilityLevel)
+			if illusionAbility then
+				illusionAbility:SetLevel(abilityLevel)
+			end
 		end
 	end
 
