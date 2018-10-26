@@ -23,6 +23,7 @@ function GameMode:GoldFilter(keys)
 	-- player can be nil for some reason
 	if player then
 		local hero = player:GetAssignedHero()
+		if hero == nil then return end
 
 		-- Hand of Midas gold bonus
 		if hero:HasModifier("modifier_item_imba_hand_of_midas") then
@@ -83,7 +84,8 @@ function GameMode:ModifierFilter( keys )
 
 		if modifier_owner ~= nil and IsMutationMap() or IsSuperFranticMap() then
 			modifier_class = modifier_owner:FindModifierByName(modifier_name)
-			if string.find(modifier_name, "imba") and modifier_class and modifier_class.IsDebuff and modifier_class:IsDebuff() == true and modifier_class.IgnoreTenacity == nil or (modifier_class.IgnoreTenacity and modifier_class:IgnoreTenacity() == false) then
+			if modifier_class == nil then return end
+			if string.find(modifier_name, "imba") and modifier_class.IsDebuff and modifier_class:IsDebuff() == true and modifier_class.IgnoreTenacity == nil or (modifier_class.IgnoreTenacity and modifier_class:IgnoreTenacity() == false) then
 				if keys.duration > 0 then						
 					local original_duration = keys.duration
 					local actual_duration = original_duration

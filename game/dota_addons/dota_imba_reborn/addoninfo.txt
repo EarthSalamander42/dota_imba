@@ -14,7 +14,7 @@
 	"PenaltiesEnabled"				"1"
 	"CheckAFKPlayers"				"1"
 
-	"maps"							"ranked_5v5 mutation_10v10 super_frantic_5v5 super_frantic_10v10"
+	"maps"							"ranked_5v5 imba_5v5 mutation_10v10 super_frantic_10v10"
 
 	"IsPlayable"					"1"
 

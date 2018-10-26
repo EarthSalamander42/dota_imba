@@ -309,6 +309,7 @@ function GameMode:OnDisconnect(keys)
 			team = PlayerResource:GetTeam(player_id),
 			disconnect = 1
 		}
+
 		GoodGame:Call(table)
 	end
 end
@@ -387,13 +388,7 @@ function GameMode:OnEntityKilled( keys )
 				Mutation:OnHeroDeath(killed_unit)
 			end
 
-			if killer == killed_unit then
-				CombatEvents("kill", "hero_suicide", killed_unit)
-			elseif killer:IsRealHero() and killer:GetTeamNumber() == killed_unit:GetTeamNumber() then
-				CombatEvents("kill", "hero_deny_hero", killed_unit, killer)
-			else
-				GoldSystem:OnHeroDeath(killer, killed_unit)
-			end
+			GoldSystem:OnHeroDeath(killer, killed_unit)
 
 			return
 		elseif killed_unit:IsBuilding() then
@@ -872,14 +867,14 @@ function GameMode:OnTeamKillCredit(keys)
 		PlayerResource:IncrementDeathstreak(victim_id)
 
 		-- Show Deathstreak message
-		local victim_hero_name = PlayerResource:GetPlayer(victim_id):GetAssignedHero()
+		local victim_hero = PlayerResource:GetPlayer(victim_id):GetAssignedHero()
 		local victim_player_name = PlayerResource:GetPlayerName(victim_id)
 		local victim_death_streak = PlayerResource:GetDeathstreak(victim_id)
 		local line_duration = 7
 
 		if victim_death_streak then
 			if victim_death_streak >= 3 then
-				Notifications:BottomToAll({hero = victim_hero_name, duration = line_duration})
+				Notifications:BottomToAll({hero = victim_hero:GetUnitName(), duration = line_duration})
 				Notifications:BottomToAll({text = victim_player_name.." ", duration = line_duration, continue = true})
 			end
 
@@ -909,7 +904,6 @@ function GameMode:OnTeamKillCredit(keys)
 
 	-- TODO: Format this into venge's hero file
 	-- Victim stack loss
-	local victim_hero = PlayerResource:GetPlayer(victim_id):GetAssignedHero()
 	if victim_hero and victim_hero:HasModifier("modifier_imba_rancor") then
 		local current_stacks = victim_hero:GetModifierStackCount("modifier_imba_rancor", VENGEFUL_RANCOR_CASTER)
 		if current_stacks <= 2 then

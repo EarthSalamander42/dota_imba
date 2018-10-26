@@ -19,6 +19,16 @@ function GoldSystem:OnHeroDeath(killer, victim)
 		if not killer.killstreak then killer.killstreak = 0 end
 		killer.killstreak = killer.killstreak + 1
 
+		if killer == victim then
+			CombatEvents("kill", "hero_suicide", victim)
+
+			return
+		elseif killer:IsRealHero() and killer:GetTeamNumber() == victim:GetTeamNumber() then
+			CombatEvents("kill", "hero_deny_hero", killed_unit, killer)
+
+			return
+		end
+
 		if IMBA_FIRST_BLOOD == false then
 			print("First Blood!")
 			IMBA_FIRST_BLOOD = true
@@ -34,13 +44,19 @@ function GoldSystem:OnHeroDeath(killer, victim)
 		end
 
 		local average_victim_team_networth = victim_team_networth / PlayerResource:GetPlayerCountForTeam(victim:GetTeamNumber())
-		local assisters = FindUnitsInRadius(killer:GetTeamNumber(), killer:GetAbsOrigin(), nil, 1300, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, FIND_ANY_ORDER, false)
+		local assisters = FindUnitsInRadius(killer:GetTeamNumber(), victim:GetAbsOrigin(), nil, 1300, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, FIND_ANY_ORDER, false)
 
-		local aoe_gold_for_player
+		print(#assisters)
+
+		local aoe_gold_for_player = 0
 		for _, assister in pairs(assisters) do
 			local base_aoe_gold = kill_gold / #assisters
 			local networth_bonus = math.max(average_victim_team_networth - assister:GetNetWorth(), 0) * 0.05
 			aoe_gold_for_player = math.floor(base_aoe_gold + networth_bonus)
+
+			print(base_aoe_gold)
+			print(networth_bonus)
+			print(aoe_gold_for_player)
 
 			if assister == killer then
 				SendOverheadEventMessage(killer:GetPlayerOwner(), OVERHEAD_ALERT_GOLD, victim, kill_gold + aoe_gold_for_player, nil)

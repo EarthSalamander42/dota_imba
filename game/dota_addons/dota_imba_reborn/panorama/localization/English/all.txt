@@ -32,6 +32,7 @@
 
 //Combat Events
 "custom_toast_PlayerDenied"								"{killer_name} {denied_icon} Denied {victim_name}"
+"custom_toast_PlayerDeniedSelf"							"{victim_name} {denied_icon} Denied"
 //	"custom_toast_CourierKilled"							"{courier_icon} {victim_name} courier is dead" // 1 courier per player
 "custom_toast_CourierKilled"							"{courier_icon} {team_name} courier is dead" // Team couriers
 "custom_toast_CourierRespawned"							"{courier_icon} {team_name} courier has respawned" // Team couriers

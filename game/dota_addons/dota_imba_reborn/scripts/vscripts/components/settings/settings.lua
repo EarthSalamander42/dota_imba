@@ -247,6 +247,7 @@ IMBA_ALL_RANDOM_HERO_SELECTION_TIME = 5.0									-- Time we need to wait before
 -- Global Gold earning, values are doubled with Hyper for non-custom maps
 CUSTOM_GOLD_BONUS = {} -- 1 = Normal, 2 = Hyper
 CUSTOM_GOLD_BONUS[Map1v1()] = 200
+CUSTOM_GOLD_BONUS["imba_5v5"] = 200
 CUSTOM_GOLD_BONUS[MapRanked5v5()] = 200
 CUSTOM_GOLD_BONUS[MapRanked10v10()] = 200
 CUSTOM_GOLD_BONUS[MapTournament()] = 200
@@ -259,6 +260,7 @@ CUSTOM_GOLD_BONUS[MapOverthrow()] = 200
 -- Global XP earning, values are doubled with Hyper for non-custom maps (right now this is not used anymore, but i'll keep it there just in case)
 CUSTOM_XP_BONUS = {} -- 1 = Normal, 2 = Hyper
 CUSTOM_XP_BONUS[Map1v1()] = 200
+CUSTOM_XP_BONUS["imba_5v5"] = 200
 CUSTOM_XP_BONUS[MapRanked5v5()] = 200
 CUSTOM_XP_BONUS[MapRanked10v10()] = 200
 CUSTOM_XP_BONUS[MapTournament()] = 200
@@ -271,6 +273,7 @@ CUSTOM_XP_BONUS[MapOverthrow()] = 200
 -- Hero base level, values are doubled with Hyper for non-custom maps
 HERO_STARTING_LEVEL = {} -- 1 = Normal, 2 = Hyper
 HERO_STARTING_LEVEL[Map1v1()] = 1
+HERO_STARTING_LEVEL["imba_5v5"] = 5
 HERO_STARTING_LEVEL[MapRanked5v5()] = 5
 HERO_STARTING_LEVEL[MapRanked10v10()] = 5
 HERO_STARTING_LEVEL[MapTournament()] = 5
@@ -282,6 +285,7 @@ HERO_STARTING_LEVEL[MapOverthrow()] = 5
 
 MAX_LEVEL = {}
 MAX_LEVEL[Map1v1()] = 42
+MAX_LEVEL["imba_5v5"] = 42
 MAX_LEVEL[MapRanked5v5()] = 42
 MAX_LEVEL[MapRanked10v10()] = 42
 MAX_LEVEL[MapTournament()] = 42
@@ -293,6 +297,7 @@ MAX_LEVEL[MapOverthrow()] = 42
 
 HERO_INITIAL_GOLD = {}
 HERO_INITIAL_GOLD[Map1v1()] = 1400
+HERO_INITIAL_GOLD["imba_5v5"] = 1400
 HERO_INITIAL_GOLD[MapRanked5v5()] = 1400
 HERO_INITIAL_GOLD[MapRanked10v10()] = 1400
 HERO_INITIAL_GOLD[MapTournament()] = 1400
@@ -304,6 +309,7 @@ HERO_INITIAL_GOLD[MapOverthrow()] = 2500
 
 GOLD_TICK_TIME = {}
 GOLD_TICK_TIME[Map1v1()] = 0.6
+GOLD_TICK_TIME["imba_5v5"] = 0.6
 GOLD_TICK_TIME[MapRanked5v5()] = 0.6
 GOLD_TICK_TIME[MapRanked10v10()] = 0.4
 GOLD_TICK_TIME[MapTournament()] = 0.6
