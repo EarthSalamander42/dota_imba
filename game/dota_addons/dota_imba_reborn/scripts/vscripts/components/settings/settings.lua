@@ -555,8 +555,16 @@ IMBA_WEATHER_EFFECT[1] = "particles/rain_fx/econ_snow.vpcf"
 
 IMBA_FIRST_BLOOD = false
 
+IMBA_DIRETIDE_EASTER_EGG = true
+IMBA_DIRETIDE = false
+
 -- files requirements
 
 if GetMapName() == MapOverthrow() then
 	require("components/settings/settings_imbathrow")
+end
+
+if IMBA_DIRETIDE == true then
+	IMBA_DIRETIDE_EASTER_EGG = false
+	require("components/settings/settings_diretide")
 end

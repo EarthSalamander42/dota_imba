@@ -1,0 +1,168 @@
+.Diretide
+{
+	width: 100%;
+	height: 100%;
+	z-index: -10;
+}
+
+#DiretidePanel
+{
+	margin-top: 8%;
+	horizontal-align: center;
+	flow-children: down;
+	z-index: -1000;
+}
+
+.QuestGenericText
+{
+	font-family: TH Sarabun New,YDYGO 540,Gulim,MingLiU;
+	text-shadow: 2px 2px 1px 3.0 #333333b0;
+	text-transform: uppercase;
+	font-weight: bold;
+	font-size: 40px;
+	text-align: center;
+}
+
+//XHS BOSS BARS
+.HoldoutLabelSmall
+{
+	color: white;
+	font-weight: bold;
+	text-align: center;
+	text-shadow: 1px 1px 2px 2.0 #00000011;
+
+	font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
+	font-size: 14px;
+	letter-spacing: 2px;
+	text-overflow: clip;
+
+	horizontal-align: center;
+	text-align: center;	
+	margin-top: 12px;
+	text-shadow: 1px 1px 2px 3.0 #000000;
+	font-size: 16px;
+}
+
+.HoldoutLabelSmall_alt
+{
+	color: white;
+	font-weight: bold;
+	text-align: center;
+	text-shadow: 1px 1px 2px 2.0 #00000011;
+
+	font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
+	font-size: 14px;
+	letter-spacing: 2px;
+	text-overflow: clip;
+
+	horizontal-align: center;
+	text-align: center;	
+	margin-bottom: 12px;
+	text-shadow: 1px 1px 2px 3.0 #000000;
+	font-size: 16px;
+}
+
+.HoldoutLabelSmall.Header
+{
+	width: 95px;
+}
+
+#RoshanHP
+{
+	width: 750px;
+	height: 64px;
+	visibility: collapse;
+}
+
+#RoshanProgressBar
+{
+	width: 90%;
+	height: 24px;
+	border-radius: 1px;
+	border: 0px;
+	background-color: black;
+	vertical-align: middle;
+	horizontal-align: right;
+	box-shadow: fill #000 -3px -3px 6px 6px;	
+}
+
+#RoshanProgressBar_Left
+{
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #326114 ), color-stop( 0.3, #54BA07 ), color-stop( .5, #54BA07 ), to( #326114 ) );
+	box-shadow: inset #000 1px 1px 3px 3px;	
+	border-radius: 2px;
+}
+
+#RoshanProgressBar_Left
+{
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #320000 ), color-stop( 0.3, #D71414 ), color-stop( .5, #D71414 ), to( #320000 ) );
+}
+
+#RoshanProgressBar_Right
+{
+	background-color: gradient( linear, 0% 0%, 100% 0%, from( #222222FF ), to( black ) );
+}
+
+#RoshanProgressBarContainer
+{
+	width: 100%;
+	height: 40px;
+	margin-right: 6%;
+	vertical-align: bottom;
+}
+
+#BossIcon
+{
+	width: 48px;
+	height: 48px;
+	margin-left: 5%;	
+	background-image: url("file://{images}/custom_game/game_info/roshan.png");
+	background-repeat: no-repeat;
+	background-position: 50% 0%;
+	background-size: 90% 90%;
+	z-index: 10;
+}
+
+#RoshanHealth
+{
+	margin-left: 6%;
+}
+
+#RoshanLevel
+{
+	margin-left: 6%;
+	horizontal-align: left;
+	color: white;
+	font-weight: bold;
+	text-align: center;
+	text-shadow: 1px 1px 2px 2.0 #00000011;
+
+	font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
+	font-size: 14px;
+	letter-spacing: 2px;
+	text-overflow: clip;
+
+	text-align: center;
+	text-shadow: 1px 1px 2px 3.0 #000000;
+	font-size: 18px;
+}
+
+#RoshanLevel_alt
+{
+	margin-top: 5%;
+	margin-left: 2%;
+	horizontal-align: left;
+	color: white;
+	font-weight: bold;
+	text-align: center;
+	text-shadow: 1px 1px 2px 2.0 #00000011;
+
+	font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
+	font-size: 14px;
+	letter-spacing: 2px;
+	text-overflow: clip;
+
+	text-align: center;
+	text-shadow: 1px 1px 2px 3.0 #000000;
+	font-size: 18px;
+}

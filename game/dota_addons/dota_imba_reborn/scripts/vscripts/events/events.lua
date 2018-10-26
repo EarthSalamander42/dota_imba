@@ -37,6 +37,35 @@ function GameMode:OnGameRulesStateChange(keys)
 			table.insert(hex_colors, i, rgbToHex(PLAYER_COLORS[i]))
 		end
 
+		if IMBA_DIRETIDE == true then
+			Diretide:Init()
+		end
+
+		Timers:CreateTimer(2.0, function()
+			if GetMapName() == MapOverthrow() then
+				require("components/overthrow/imbathrow")
+				GoodCamera = Entities:FindByName(nil, "@overboss")
+				BadCamera = Entities:FindByName(nil, "@overboss")
+
+				local xp_granters = FindUnitsInRadius(DOTA_TEAM_NEUTRALS, Entities:FindByName(nil, "@overboss"):GetAbsOrigin(), nil, 200, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+
+				for _, granter in pairs(xp_granters) do
+					if string.find(granter:GetUnitName(), "npc_dota_xp_granter") then
+						granter:RemoveSelf()
+						break
+					end
+				end
+			else
+				if IMBA_DIRETIDE == true then
+					GoodCamera = good_pumpkin
+					BadCamera = bad_pumpkin
+				else
+					GoodCamera = Entities:FindByName(nil, "good_healer_6")
+					BadCamera = Entities:FindByName(nil, "bad_healer_6")
+				end
+			end
+		end)
+
 		CustomNetTables:SetTableValue("game_options", "player_colors", hex_colors)
 	elseif newState == DOTA_GAMERULES_STATE_HERO_SELECTION then
 		HeroSelection:Init() -- init picking screen kv (this function is a bit heavy to run)
@@ -104,8 +133,12 @@ function GameMode:OnGameRulesStateChange(keys)
 		if GetMapName() == Map1v1() then
 			Setup1v1()
 		else
-			if IsMutationMap() then
+			if IsMutationMap() or IsSuperFranticMap() then
 				SpawnEasterEgg()
+			end
+
+			if IMBA_DIRETIDE == true then
+				Diretide:Start()
 			end
 
 			ImbaRunes:Spawn()
@@ -336,6 +369,10 @@ function GameMode:OnEntityKilled( keys )
 		elseif killed_unit:GetUnitName() == "npc_dota_goodguys_fort" then
 			GAME_WINNER_TEAM = 3
 			return
+		end
+
+		if IMBA_DIRETIDE == true then
+			Diretide:OnEntityKilled(killer, killed_unit)
 		end
 
 		-- Check if the dying unit was a player-controlled hero

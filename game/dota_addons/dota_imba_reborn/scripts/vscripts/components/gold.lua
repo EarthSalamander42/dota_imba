@@ -3,25 +3,17 @@ if GoldSystem == nil then
 end
 
 function GoldSystem:OnHeroDeath(killer, victim)
-	local assist_gold = {}
-	assist_gold[1] = {126, 4.5}
-	assist_gold[2] = {63, 3.6}
-	assist_gold[3] = {31.5, 2.7}
-	assist_gold[4] = {22.5, 1.8}
-	assist_gold[5] = {18, 0.9}
-
-	-- TODO list:
-	-- split formula gold between all enemy heroes if the victim was not hit by any enemy hero in the last 20 seconds
-	local base_gold_bounty = 110
-	if not victim.killstreak then victim.killstreak = 0 end
-	local base_gold_bounty = 250
+	local custom_gold_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "bounty_multiplier")["1"])
+	local base_gold_bounty = 110 * (custom_gold_bonus / 100)
 	local level_difference = killer:GetLevel() - victim:GetLevel()
-	local level_bonus = 100 * math.max(level_difference, 0) 
+	local level_bonus = 100 * math.max(level_difference, 0)
+	if killer:GetLevel() >= victim:GetLevel() then level_bonus = 0 end
+	if not victim.killstreak then victim.killstreak = 0 end
 	local kill_streak_with_limit = math.min(victim.killstreak, 15)
 	local streak_bonus = 100 * math.sqrt(kill_streak_with_limit) * kill_streak_with_limit
 	local kill_gold = math.floor(base_gold_bounty + level_bonus + streak_bonus)
 
-	print(base_gold_bounty, streak_value, streak_diff, formula)
+	print(base_gold_bounty, streak_value, streak_diff, kill_gold)
 
 	if not killer:IsRealHero() then killer = nil end
 
@@ -47,12 +39,11 @@ function GoldSystem:OnHeroDeath(killer, victim)
 		end
 
 		local average_victim_team_networth = victim_team_networth / PlayerResource:GetPlayerCountForTeam(victim:GetTeamNumber())
-
-		local assisters = FindUnitsInRadius(killer:GetTeamNumber(), killer:GetAbsOrigin(), nil, 1300, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+		local assisters = FindUnitsInRadius(killer:GetTeamNumber(), killer:GetAbsOrigin(), nil, 1300, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, FIND_ANY_ORDER, false)
 
 		for _, assister in pairs(assisters) do
-			local base_aoe_gold = 1000 / #assisters
-			local networth_bonus = math.max(average_victim_team_networth - victim:GetNetWorth(), 0) * 0.05
+			local base_aoe_gold = kill_gold / #assisters
+			local networth_bonus = math.max(average_victim_team_networth - assister:GetNetWorth(), 0) * 0.05
 			local aoe_gold_for_player = math.floor(base_aoe_gold + networth_bonus)
 		end
 

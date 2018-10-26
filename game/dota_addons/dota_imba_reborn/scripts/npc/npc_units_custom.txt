@@ -16236,4 +16236,366 @@
 		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
 		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
 	}
+
+	//=================================================================================
+	// Building: Radiant Candy Pumpkin
+	//=================================================================================
+	"npc_dota_good_candy_pumpkin"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_tower"	// Class of entity of link to.
+		"Model"						"models/props_gameplay/pumpkin_bucket.vmdl"// Model.
+		"SoundSet"					"0"
+		"MinimapIcon"				"minimap_candybucket"
+		"MinimapIconSize"			"500"
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
+		"VisionDaytimeRange"		"400"		// Range of vision during day light.
+		"VisionNighttimeRange"		"400"		// Range of vision at night time.
+		"ModelScale"				"1"
+		"MovementSpeed"				"0"			// Speed
+		"MovementTurnRate"			"1.0"		// Turning rate.
+
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"diretide_pumpkin_immune"			// Ability 1.
+
+		// Bounds
+		//----------------------------------------------------------------
+		"ProjectileCollisionSize"	"50"
+		"RingRadius"				"120"
+		"HealthBarOffset"			"150"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"150"			// Base health.
+		"StatusHealthRegen"			"0.0"			// Health regeneration rate.
+		"StatusMana"				"0.0"			// Base mana.
+		"StatusStartingMana"		"0.0"			// Base mana.
+		"StatusManaRegen"			"0.0"			// Mana regeneration rate.
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_GOODGUYS"			// Team name.
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_SIEGE"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
+	}
+
+	//=================================================================================
+	// Building: Dire Candy Pumpkin
+	//=================================================================================
+	"npc_dota_bad_candy_pumpkin"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_tower"	// Class of entity of link to.
+		"Model"						"models/props_gameplay/pumpkin_bucket.vmdl"// Model.
+		"SoundSet"					"0"
+		"MinimapIcon"				"minimap_candybucket"
+		"MinimapIconSize"			"500"
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
+		"VisionDaytimeRange"		"400"		// Range of vision during day light.
+		"VisionNighttimeRange"		"400"		// Range of vision at night time.
+		"ModelScale"				"1"
+		"MovementSpeed"				"0"			// Speed
+		"MovementTurnRate"			"1.0"		// Turning rate.
+
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"diretide_pumpkin_immune"			// Ability 1.
+
+		// Bounds
+		//----------------------------------------------------------------
+		"ProjectileCollisionSize"	"50"
+		"RingRadius"				"120"
+		"HealthBarOffset"			"150"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"150"			// Base health.
+		"StatusHealthRegen"			"0.0"			// Health regeneration rate.
+		"StatusMana"				"0.0"			// Base mana.
+		"StatusStartingMana"		"0.0"			// Base mana.
+		"StatusManaRegen"			"0.0"			// Mana regeneration rate.
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_GOODGUYS"			// Team name.
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_SIEGE"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
+	}
+
+	//=================================================================================
+	// Diretide Roshan
+	//=================================================================================
+	"npc_diretide_roshan"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/rosh/roshan_halloween.vmdl"
+		"GameSoundsFile"			"soundevents/diretide_soundevents.vsndevts"
+		"SoundSet"					"Roshan"
+		"IdleSoundLoop"				"Roshan.Idle"
+		"ModelScale"				"1.1"
+		"Level"						"1"
+		"IsAncient"					"1"
+		"UnitLabel"					"npc_diretide_roshan"
+		"MinimapIcon"				"minimap_roshancamp"
+		"MinimapIconSize"			"400"
+
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"imba_roshan_diretide_apocalypse" //Apocalypse
+		"Ability2"					"roshan_deafening_blast" //Wave of Force - imba_roshan_diretide_force_wave
+		"Ability3"					"tiny_toss" //Toss
+		"Ability4"					"creature_fire_breath" //Fire Breath
+		"Ability5"					"imba_roshan_diretide_summon_roshlings"
+		"Ability6"					"roshan_spell_block"
+		"Ability7"					"necronomicon_warrior_sight"
+		"Ability8"					"imba_roshan_ai_diretide"
+		"Ability9"					"special_bonus_unique_invoker_2"
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"0"
+		"MagicalResistance"			"0"
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"300"
+		"AttackDamageMax"			"300"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+		"AttackRate"				"1.25"
+		"AttackAnimationPoint"		"0.2"
+		"AttackAcquisitionRange"	"600"
+		"AttackRange"				"200"
+		"ProjectileModel"			"ranged_goodguy"
+		"ProjectileSpeed"			"1000"
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"0"
+		"BountyGoldMin"				"0"
+		"BountyGoldMax"				"0"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"RingRadius"				"110"
+		"HealthBarOffset"			"400"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"450"
+		"MovementTurnRate"			"1.0"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"15000"
+		"StatusHealthRegen"			"50.0"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0.0"
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1400"
+		"VisionNighttimeRange"		"1400"
+
+		// Inventory
+		//----------------------------------------------------------------
+		"HasInventory"				"1"
+
+		"Creature"
+		{
+		   "AttachWearables"   
+			{
+//				"Wearable1" { "ItemDef" "10092" } // Roshan's Costume - Frankenstein
+//				"Wearable2" { "ItemDef" "10093" } // Roshan's Costume - Dracula
+//				"Wearable3" { "ItemDef" "10094" } // Roshan's Costume - Angel
+			} 
+		}
+	}
+
+	//=================================================================================
+	// Roshling
+	//=================================================================================
+	"npc_imba_roshling"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creep"
+		"Model"						"models/creeps/baby_rosh_halloween/baby_rosh_dire/baby_rosh_dire.vmdl"
+		"SoundSet"					"Undying_Zombie"
+		"MinimapIcon"				"minimap_siege"
+		"MinimapIconSize"			"250"
+		"ModelScale" 				"1.35"
+		"Level"						"20"
+		"IsAncient"					"1"
+		"UnitLabel"					"npc_imba_roshling"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"imba_roshling_bash"
+		"Ability2"					"imba_roshling_aura"
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"10"
+		"MagicalResistance"			"50"
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"50"
+		"AttackDamageMax"			"50"
+		"AttackRate"				"1.0"
+		"AttackAnimationPoint"		"0.26"
+		"AttackAcquisitionRange"	"500"
+		"AttackRange"				"150"
+		"ProjectileModel"			"ranged_goodguy"
+		"ProjectileSpeed"			"1000"   
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"0"
+		"BountyGoldMin"				"0"
+		"BountyGoldMax"				"0"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"RingRadius"				"80"
+		"HealthBarOffset"			"160"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"490"
+		"MovementTurnRate"			"0.5"
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"2500"
+		"StatusHealthRegen"			"25.0"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1400"
+		"VisionNighttimeRange"		"1400"
+	}
+
+	//=================================================================================
+	// Diretide Easter Egg
+	//=================================================================================
+	"npc_dota_diretide_easter_egg"
+	{
+		// General
+		//----------------------------------------------------------------
+
+		"BaseClass"					"npc_dota_ward_base"
+		"Model"						"models/props_gameplay/pumpkin_bucket.vmdl"
+		"SoundSet"					"Creep_Good_Melee"
+		"ModelScale" 				"1.0"
+		"Level"						"2013"
+		"IsAncient"					"1"
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					""
+		"Ability2"					""
+		"Ability3"					""
+		"Ability4"					""
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"0"
+		"MagicalResistance"			"0"
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+		"AttackDamageMin"			"0"
+		"AttackDamageMax"			"0"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+		"AttackRate"				"1"
+		"AttackAnimationPoint"		"0.467"
+		"AttackAcquisitionRange"	"600"
+		"AttackRange"				"100"
+		"ProjectileModel"			""
+		"ProjectileSpeed"			""
+
+		// Attributes
+		//----------------------------------------------------------------
+		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
+		"AttributeBaseStrength"		"0"
+		"AttributeStrengthGain"		"0"
+		"AttributeBaseIntelligence"	"0"
+		"AttributeIntelligenceGain"	"0"
+		"AttributeBaseAgility"		"0"
+		"AttributeAgilityGain"		"0"
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"20"
+		"BountyGoldMin"				"35"
+		"BountyGoldMax"				"40"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_REGULAR"
+		"RingRadius"				"45"
+		"HealthBarOffset"			"150"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"0"
+		"MovementTurnRate"			"0"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"100"
+		"StatusHealthRegen"			"0.0"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"3"
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1000"
+		"VisionNighttimeRange"		"800"
+	}
 }

@@ -82,9 +82,6 @@ function modifier_imba_roshan_ai_diretide:OnCreated()
 		self.last_movement		= 0.0
 
 		-- Sound delays to sync with animation
-		self.candyEat		= 0.15
-		self.candySniff		= 3.33
-		self.candyRoar		= 5.9
 		self.deathRoar		= 1.9
 
 		-- Animation durations
@@ -214,43 +211,6 @@ function modifier_imba_roshan_ai_diretide:StartPhase(phase)
 
 	self:StartIntervalThink(0.1)
 	UpdateRoshanBar(self.roshan, FrameTime()*2)
-end
-
--- example of item used on roshan for later
-function modifier_imba_roshan_ai_diretide:Candy(roshan)
-	self.isEatingCandy = true
-	roshan:SetForceAttackTarget(nil)
-	roshan:Interrupt()
-	
-	local begMod = roshan:FindModifierByName("modifier_imba_roshan_ai_beg")
-	if begMod then begMod:DestroyNoAggro() end
-
-	-- Timer because if an animation modifying modifier gets removed and another gets added at the same moment, the new animation will not apply
-	Timers:CreateTimer(FrameTime(), function()
-		roshan:AddNewModifier(roshan, nil, "modifier_imba_roshan_ai_eat", {duration = 7})
-		Announcer("Diretide.Announcer.Roshan.Fed")
---		print("ROSHAN ATE CANDY")
-
-		-- Sounds
-		Timers:CreateTimer(self.candyEat, function()
-			roshan:EmitSound("Diretide.RoshanEatCandy")
-		end)
-		
-		Timers:CreateTimer(self.candySniff, function()
-			roshan:EmitSound("Diretide.RoshanSniff")
-		end)
-		
-		Timers:CreateTimer(self.candyRoar, function()
-			roshan:EmitSound("Diretide.RoshanRoar")
-		end)
-	end)
-
-	local candyMod = roshan:FindModifierByName("modifier_imba_roshan_eaten_candy")
-	if not candyMod then
-		candyMod = roshan:AddNewModifier(roshan, self:GetAbility(), "modifier_imba_roshan_eaten_candy", {})
-	end
-
-	candyMod:IncrementStackCount()
 end
 
 --	PHASE III

@@ -75,6 +75,44 @@
 		}
 	}
 
+	//=====================================================================================================
+	// Candy Box: Immune
+	//=====================================================================================================
+	"diretide_pumpkin_immune"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityTextureName"			"roshan_bash"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"MaxLevel"						"1"
+
+		"Modifiers"
+		{
+			"modifier_pumpkin_immune"
+			{
+				"Passive"	"1"
+				"IsHidden"	"1"
+
+				"OnAttacked"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"components/diretide/diretide.lua"
+						"Function"		"Pumpkin"
+					}
+				}
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL"		"1"
+					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_MAGICAL"		"1"
+					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE"			"1"
+				}
+			}
+		}
+	}
+
 	//=================================================================================================================
 	// Courier: Auto-deliver
 	//=================================================================================================================
@@ -34567,7 +34605,7 @@
 		"BaseClass"						"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"			"rubick_empty1"
-		"ScriptFile"				"components/abilities/neutral_roshan.lua"
+		"ScriptFile"					"components/modifiers/diretide/roshan_diretide.lua"
 		"MaxLevel"						"1"
 		
 		

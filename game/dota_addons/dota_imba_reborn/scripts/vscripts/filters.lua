@@ -83,7 +83,7 @@ function GameMode:ModifierFilter( keys )
 
 		if modifier_owner ~= nil and IsMutationMap() or IsSuperFranticMap() then
 			modifier_class = modifier_owner:FindModifierByName(modifier_name)
-			if string.find(modifier_name, "imba") and modifier_class.IsDebuff and modifier_class:IsDebuff() == true and modifier_class.IgnoreTenacity == nil or (modifier_class.IgnoreTenacity and modifier_class:IgnoreTenacity() == false) then
+			if string.find(modifier_name, "imba") and modifier_class and modifier_class.IsDebuff and modifier_class:IsDebuff() == true and modifier_class.IgnoreTenacity == nil or (modifier_class.IgnoreTenacity and modifier_class:IgnoreTenacity() == false) then
 				if keys.duration > 0 then						
 					local original_duration = keys.duration
 					local actual_duration = original_duration
@@ -941,6 +941,17 @@ function GameMode:DamageFilter( keys )
 			end
 		end
 	end
+
+	if IMBA_DIRETIDE == true and DIRETIDE_PHASE == 3 then
+		if attacker == victim then return end
+		if attacker:IsRealHero() or attacker:GetPlayerOwner() then
+			if victim:IsRealHero() then
+				print("Attacker and victim are heroes, don't damage them!")
+				keys.damage = 0
+			end
+		end
+	end
+
 	return true
 end
 
