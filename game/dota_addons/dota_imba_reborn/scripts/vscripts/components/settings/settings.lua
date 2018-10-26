@@ -36,7 +36,7 @@ end
 AUTO_LAUNCH_DELAY = 5.0					-- How long should we wait for the host to setup the game, after all players have loaded in?
 STRATEGY_TIME = 0.0						-- How long should strategy time last?
 SHOWCASE_TIME = 0.0						-- How long should showcase time last?
-if MapOverthrow() then
+if GetMapName() == MapOverthrow() then
 	AP_GAME_TIME = 45.0
 	PRE_GAME_TIME = 10.0 + AP_GAME_TIME
 else
