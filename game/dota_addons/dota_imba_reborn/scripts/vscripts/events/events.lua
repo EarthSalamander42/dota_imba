@@ -533,6 +533,7 @@ end
 function GameMode:OnPlayerLevelUp(keys)
 	local player = EntIndexToHScript(keys.player)
 	local hero = player:GetAssignedHero()
+	if not hero then return end
 	local level = keys.level
 
 	if hero:GetLevel() > 25 then

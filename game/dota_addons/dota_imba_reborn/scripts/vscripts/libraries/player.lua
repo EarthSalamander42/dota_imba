@@ -74,7 +74,7 @@ function CDOTA_BaseNPC:SetupHealthBarLabel()
 	end
 end
 
-function CDOTA_BaseNPC_Hero:GetNetWorth()
+function CDOTA_BaseNPC:GetNetWorth()
     local gold = self:GetGold()
 
     -- Iterate over item slots adding up its gold cost
