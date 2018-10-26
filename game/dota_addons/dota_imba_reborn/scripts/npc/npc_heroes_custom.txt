@@ -646,9 +646,9 @@
 		"Ability10"					"special_bonus_ember_chains_on_attack"
 		"Ability11"					"special_bonus_truestrike"
 		"Ability12"					"special_bonus_ember_chains_duration"
-		"Ability13"					"special_bonus_spell_amplify_20"
+		"Ability13"					"special_bonus_ember_guard_damage"
 		"Ability14"					"special_bonus_attack_damage_50"
-		"Ability15"					"special_bonus_ember_guard_damage"
+		"Ability15"					"special_bonus_spell_amplify_20"
 		"Ability16"					"special_bonus_ember_permanent_guard"
 		//"Ability17"					"special_bonus_ember_remnant_charges"
 		"Ability17"					"special_bonus_all_stats_20"
@@ -2130,7 +2130,7 @@
 		// Attributes
 		//-------------------------------------------------------------------------------------------------------------
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"	// Primary Attribute
-		"AttributeBaseStrength"		"40"						// Base strength
+		"AttributeBaseStrength"		"24"						// Base strength
 		"AttributeStrengthGain"		"2.1"						// Strength bonus per level.
 		"AttributeBaseIntelligence"	"19"							// Base intelligence
 		"AttributeIntelligenceGain"	"3.6"						// Intelligence bonus per level.
@@ -2226,7 +2226,7 @@
 		// Attributes
 		//-------------------------------------------------------------------------------------------------------------
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"	// Primary Attribute
-		"AttributeBaseStrength"		"40"						// Base strength
+		"AttributeBaseStrength"		"20"						// Base strength
 		"AttributeStrengthGain"		"2.4"						// Strength bonus per level.
 		"AttributeBaseIntelligence"	"24"							// Base intelligence
 		"AttributeIntelligenceGain"	"4.1"						// Intelligence bonus per level.
@@ -2327,11 +2327,11 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"	// Primary Attribute
 		"AttributeBaseStrength"		"20"
-		"AttributeStrengthGain"		"3.000000"
+		"AttributeStrengthGain"		"2.200000"
 		"AttributeBaseAgility"		"14"
 		"AttributeAgilityGain"		"1.900000"
 		"AttributeBaseIntelligence"	"20"
-		"AttributeIntelligenceGain"	"5.000000"
+		"AttributeIntelligenceGain"	"4.000000"
 
 		// Abilities
 		//-------------------------------------------------------------------------------------------------------------

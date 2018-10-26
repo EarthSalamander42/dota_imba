@@ -11212,7 +11212,7 @@
 		// Attributes
 		//-------------------------------------------------------------------------------------------------------------
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"	// Primary Attribute
-		"AttributeBaseStrength"		"40"						// Base strength
+		"AttributeBaseStrength"		"24"						// Base strength
 		"AttributeStrengthGain"		"2.1"						// Strength bonus per level.
 		"AttributeBaseIntelligence"	"19"							// Base intelligence
 		"AttributeIntelligenceGain"	"3.6"						// Intelligence bonus per level.
@@ -11293,7 +11293,7 @@
 		// Attributes
 		//-------------------------------------------------------------------------------------------------------------
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"	// Primary Attribute
-		"AttributeBaseStrength"		"40"						// Base strength
+		"AttributeBaseStrength"		"20"						// Base strength
 		"AttributeStrengthGain"		"2.4"						// Strength bonus per level.
 		"AttributeBaseIntelligence"	"24"							// Base intelligence
 		"AttributeIntelligenceGain"	"4.1"						// Intelligence bonus per level.
@@ -11843,11 +11843,11 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"	// Primary Attribute
 		"AttributeBaseStrength"		"20"
-		"AttributeStrengthGain"		"3.000000"
+		"AttributeStrengthGain"		"2.200000"
 		"AttributeBaseAgility"		"14"
 		"AttributeAgilityGain"		"1.900000"
 		"AttributeBaseIntelligence"	"20"
-		"AttributeIntelligenceGain"	"5.000000"
+		"AttributeIntelligenceGain"	"4.000000"
 
 		// Bounds
 		//-------------------------------------------------------------------------------------------------------------

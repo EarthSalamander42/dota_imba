@@ -14431,7 +14431,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"cooldown_reduction"		"0.2"
+				"cooldown_reduction"		"0.15"
 			}
 		}
 	}
@@ -14732,7 +14732,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"absorb_pct"			"30 50 70"
+				"absorb_pct"			"30"
 			}
 			"06"
 			{
@@ -35156,8 +35156,8 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"set_in_time"			"3"
+				"var_type"				"FIELD_FLOAT"
+				"set_in_time"			"1.5 2.0 2.5 3.0"
 			}
 			"02"
 			{
@@ -35172,7 +35172,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"chill_duration"		"1.0 2.0 3.0 4.0"
+				"chill_duration"		"1.0 1.5 2.0 2.5"
 			}
 			"05"
 			{

@@ -685,6 +685,8 @@ function modifier_imba_nightmare_dot:OnAttackStart(t)
 			-- Apply Nightmare debuff to attackers
 			t.attacker:AddNewModifier(caster, ability, "modifier_imba_nightmare_dot", {duration = nightmare_duration})
 			t.attacker:AddNewModifier(caster, ability, "modifier_imba_nightmare_invul", {duration = nightmare_invuln_duration})
+			
+			self:Destroy()
 		end
 	end
 end
