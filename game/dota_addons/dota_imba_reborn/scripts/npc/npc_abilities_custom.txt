@@ -23611,7 +23611,7 @@
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------		
 		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"9"
+		"AbilityCooldown"				"10"
 		"AbilityManaCost"				"120 130 140 150"
 
 		// Special
@@ -23621,7 +23621,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"150 225 300 375"				
+				"damage"				"200 275 350 425"				
 			}
 			"02"
 			{
@@ -23730,6 +23730,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"crit_damage"			"150 175 200 225"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"02"
 			{
@@ -23739,7 +23740,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"ms_slow_pct"			"15 20 25 30"				
+				"ms_slow_pct"			"15 20 25 30"
 			}
 			"04"
 			{
@@ -24026,7 +24027,7 @@
 		}
 	}
 
-	"special_bonus_imba_bounty_hunter_2"	// Tracked enemies grant normal vision instead of fogvision for the duration. The vision has a 600 AoE radius.
+	"special_bonus_imba_bounty_hunter_2"	// Tracked enemies grant normal vision instead of fogvision for the duration. The vision has a 450 AoE radius.
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -24046,7 +24047,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"value"					"600"
+				"value"					"450"
 			}
 		}
 	}
