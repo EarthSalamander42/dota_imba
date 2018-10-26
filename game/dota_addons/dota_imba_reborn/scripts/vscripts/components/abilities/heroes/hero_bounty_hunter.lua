@@ -157,7 +157,7 @@ function imba_bounty_hunter_shuriken_toss:OnProjectileHit_ExtraData(target, loca
 
 			if jinada_ability and jinada_ability:GetLevel() > 0 then
 				-- Get Jinada's critical rate and maim duration
-				local crit_damage = jinada_ability:GetSpecialValueFor("crit_damage") /2
+				local crit_damage = jinada_ability:GetSpecialValueFor("crit_damage")
 				local slow_duration = jinada_ability:GetSpecialValueFor("slow_duration")
 
 				damage = damage * crit_damage * 0.01
@@ -1050,9 +1050,6 @@ function imba_bounty_hunter_track:OnSpellStart()
 		local projectile_speed = ability:GetSpecialValueFor("projectile_speed")
 		local duration = ability:GetSpecialValueFor("duration")
 
-		-- #6 Talent: Track duration increase
-		duration = duration + caster:FindTalentValue("special_bonus_imba_bounty_hunter_6")
-
 		-- Cast responses
 		local cast_response_chance = 10
 		local cast_response_roll = RandomInt(1, 100)
@@ -1136,11 +1133,8 @@ function modifier_imba_track_debuff_mark:OnCreated()
 			self.has_talent_2 = true
 			self.talent_2_vision_radius = self.caster:FindTalentValue("special_bonus_imba_bounty_hunter_2")
 		end
-
-		-- If Bounty has the talent, start thinking
-		if self.has_talent_2 then
-			self:StartIntervalThink(FrameTime())
-		end
+		
+		self:StartIntervalThink(FrameTime())
 	end
 end
 
@@ -1149,7 +1143,12 @@ function modifier_imba_track_debuff_mark:OnRefresh()
 end
 
 function modifier_imba_track_debuff_mark:OnIntervalThink()
-	AddFOWViewer(self.caster:GetTeamNumber(), self.parent:GetAbsOrigin(), self.talent_2_vision_radius, FrameTime(), false)
+	self:SetStackCount(self.parent:GetGold())
+	
+	-- If Bounty has the talent, add extra vision
+	if self.has_talent_2 then
+		AddFOWViewer(self.caster:GetTeamNumber(), self.parent:GetAbsOrigin(), self.talent_2_vision_radius, FrameTime(), false)
+	end
 end
 
 function modifier_imba_track_debuff_mark:CheckState()
@@ -1217,7 +1216,8 @@ end
 function modifier_imba_track_debuff_mark:DeclareFunctions()
 	local decFuncs = {MODIFIER_PROPERTY_PROVIDES_FOW_POSITION,
 		MODIFIER_EVENT_ON_HERO_KILLED,
-		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE}
+		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
+		MODIFIER_PROPERTY_TOOLTIP }
 
 	return decFuncs
 end
@@ -1278,6 +1278,10 @@ function modifier_imba_track_debuff_mark:OnHeroKilled(keys)
 			self:Destroy()
 		end
 	end
+end
+
+function modifier_imba_track_debuff_mark:OnTooltip()
+	return self:GetStackCount()
 end
 
 function modifier_imba_track_debuff_mark:GetModifierProvidesFOWVision()
