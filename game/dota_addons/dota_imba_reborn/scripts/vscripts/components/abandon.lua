@@ -8,7 +8,9 @@ function GoodGame:Init()
 	local count = PlayerResource:GetPlayerCount()
 	if IsInToolsMode() then count = 20 end
 
-	for i = 0, count - 1 do
+	-- temporary
+	for i = 0, 24 - 1 do
+--	for i = 0, count - 1 do
 		GG_TABLE[i] = {false, false, PlayerResource:GetTeam(i)}
 	end
 end

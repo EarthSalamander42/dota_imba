@@ -15,6 +15,9 @@ function GoldSystem:OnHeroDeath(killer, victim)
 
 	if not killer:IsRealHero() then killer = nil end
 
+	-- temporary condition to ignore reincarnations
+	if victim:GetTimeUntilRespawn() < 4 then return end
+
 	if killer then
 		if not killer.killstreak then killer.killstreak = 0 end
 		killer.killstreak = killer.killstreak + 1

@@ -1,8 +1,8 @@
 function CDOTA_BaseNPC:CreateIllusion(duration, inc, out, pos, mod, ab)
 	if pos == nil then
-		pos = self:GetAbsOrigin() + RandomVector(100)
+		pos = self:GetAbsOrigin() + RandomVector(RandomInt(50, 100))
 	else
-		pos = pos + RandomVector(100)
+		pos = pos + RandomVector(RandomInt(50, 100))
 	end
 
 	local player = self:GetPlayerOwner()
@@ -75,6 +75,7 @@ function CDOTA_BaseNPC:SetupHealthBarLabel()
 end
 
 function CDOTA_BaseNPC:GetNetWorth()
+	if not self:IsRealHero() then return 0 end
     local gold = self:GetGold()
 
     -- Iterate over item slots adding up its gold cost
