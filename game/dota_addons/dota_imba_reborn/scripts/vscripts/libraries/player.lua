@@ -1,11 +1,13 @@
 function CDOTA_BaseNPC:CreateIllusion(duration, inc, out, pos, mod, ab)
+	local player = self:GetPlayerOwner()
+	if player == nil then return end
+
 	if pos == nil then
 		pos = self:GetAbsOrigin() + RandomVector(RandomInt(50, 100))
 	else
 		pos = pos + RandomVector(RandomInt(50, 100))
 	end
 
-	local player = self:GetPlayerOwner()
 	local illusion = CreateUnitByName(self:GetUnitName(), pos, true, self, nil, self:GetTeamNumber())
 	illusion:SetHealth(self:GetHealth())
 	illusion:SetMana(self:GetMana())

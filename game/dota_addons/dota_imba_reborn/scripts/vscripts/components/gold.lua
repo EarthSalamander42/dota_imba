@@ -61,12 +61,14 @@ function GoldSystem:OnHeroDeath(killer, victim)
 			print(networth_bonus)
 			print(aoe_gold_for_player)
 
-			if assister == killer then
-				SendOverheadEventMessage(killer:GetPlayerOwner(), OVERHEAD_ALERT_GOLD, victim, kill_gold + aoe_gold_for_player, nil)
-				killer:ModifyGold(kill_gold + aoe_gold_for_player, true, DOTA_ModifyGold_HeroKill)
-			else
-				SendOverheadEventMessage(assister:GetPlayerOwner(), OVERHEAD_ALERT_GOLD, victim, aoe_gold_for_player, nil)
-				assister:ModifyGold(aoe_gold_for_player, true, DOTA_ModifyGold_HeroKill)
+			if assister:IsRealHero() then
+				if assister == killer then
+					SendOverheadEventMessage(killer:GetPlayerOwner(), OVERHEAD_ALERT_GOLD, victim, kill_gold + aoe_gold_for_player, nil)
+					killer:ModifyGold(kill_gold + aoe_gold_for_player, true, DOTA_ModifyGold_HeroKill)
+				else
+					SendOverheadEventMessage(assister:GetPlayerOwner(), OVERHEAD_ALERT_GOLD, victim, aoe_gold_for_player, nil)
+					assister:ModifyGold(aoe_gold_for_player, true, DOTA_ModifyGold_HeroKill)
+				end
 			end
 		end
 

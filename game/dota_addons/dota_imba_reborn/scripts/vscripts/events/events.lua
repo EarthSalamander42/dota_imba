@@ -270,6 +270,7 @@ function GameMode:OnDisconnect(keys)
 		local player_id = keys.PlayerID
 		local player_name = keys.name
 		local hero = PlayerResource:GetPlayer(player_id):GetAssignedHero()
+		if hero == nil then return end
 		local line_duration = 7
 
 		-- Start tracking
@@ -421,7 +422,7 @@ function GameMode:OnEntityKilled( keys )
 				end
 			else
 				print("Killer is not a hero! (Building)")
-				CombatEvents("generic", "tower", killed_unit, killer)
+				CombatEvents("generic", "tower_dead", killed_unit, killer)
 			end
 
 			if GetMapName() == Map1v1() then
@@ -533,14 +534,16 @@ end
 function GameMode:OnPlayerLevelUp(keys)
 	local player = EntIndexToHScript(keys.player)
 	local hero = player:GetAssignedHero()
-	if not hero then return end
+	if hero == nil then return end
 	local level = keys.level
+	local hero_attribute = hero:GetPrimaryAttribute()
+	if hero_attribute == nil then return end
 
 	if hero:GetLevel() > 25 then
 		if hero:GetUnitName() == "npc_dota_hero_meepo" then
 			for _, hero in pairs(HeroList:GetAllHeroes()) do
 				if hero:GetUnitName() == "npc_dota_hero_meepo" and hero:IsClone() then
-					if not hero:HasModifier("modifier_imba_war_veteran_"..hero:GetPrimaryAttribute()) then
+					if not hero:HasModifier("modifier_imba_war_veteran_"..hero_attribute) then
 						hero:AddNewModifier(hero, nil, "modifier_imba_war_veteran_"..hero:GetCloneSource():GetPrimaryAttribute(), {}):SetStackCount(math.min(hero:GetCloneSource():GetLevel() -25, 17))
 					else
 						hero:FindModifierByName("modifier_imba_war_veteran_"..hero:GetCloneSource():GetPrimaryAttribute()):SetStackCount(math.min(hero:GetCloneSource():GetLevel() -25, 17))
@@ -549,10 +552,10 @@ function GameMode:OnPlayerLevelUp(keys)
 			end
 		end
 
-		if not hero:HasModifier("modifier_imba_war_veteran_"..hero:GetPrimaryAttribute()) then
-			hero:AddNewModifier(hero, nil, "modifier_imba_war_veteran_"..hero:GetPrimaryAttribute(), {}):SetStackCount(1)
+		if not hero:HasModifier("modifier_imba_war_veteran_"..hero_attribute) then
+			hero:AddNewModifier(hero, nil, "modifier_imba_war_veteran_"..hero_attribute, {}):SetStackCount(1)
 		else
-			hero:FindModifierByName("modifier_imba_war_veteran_"..hero:GetPrimaryAttribute()):SetStackCount(math.min(hero:GetLevel() -25, 17))
+			hero:FindModifierByName("modifier_imba_war_veteran_"..hero_attribute):SetStackCount(math.min(hero:GetLevel() -25, 17))
 		end
 
 		hero:SetAbilityPoints(hero:GetAbilityPoints() - 1)
@@ -863,38 +866,40 @@ function GameMode:OnTeamKillCredit(keys)
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Deathstreak logic
 	-------------------------------------------------------------------------------------------------
-	if PlayerResource:IsValidPlayerID(killer_id) and PlayerResource:IsValidPlayerID(victim_id) then
-		PlayerResource:ResetDeathstreak(killer_id)
-		PlayerResource:IncrementDeathstreak(victim_id)
+	if killer_id ~= nil and victim_id ~= nil then
+		if PlayerResource:IsValidPlayerID(killer_id) and PlayerResource:IsValidPlayerID(victim_id) then
+			PlayerResource:ResetDeathstreak(killer_id)
+			PlayerResource:IncrementDeathstreak(victim_id)
 
-		-- Show Deathstreak message
-		local victim_hero = PlayerResource:GetPlayer(victim_id):GetAssignedHero()
-		local victim_player_name = PlayerResource:GetPlayerName(victim_id)
-		local victim_death_streak = PlayerResource:GetDeathstreak(victim_id)
-		local line_duration = 7
+			-- Show Deathstreak message
+			local victim_hero = PlayerResource:GetPlayer(victim_id):GetAssignedHero()
+			local victim_player_name = PlayerResource:GetPlayerName(victim_id)
+			local victim_death_streak = PlayerResource:GetDeathstreak(victim_id)
+			local line_duration = 7
 
-		if victim_death_streak then
-			if victim_death_streak >= 3 then
-				Notifications:BottomToAll({hero = victim_hero:GetUnitName(), duration = line_duration})
-				Notifications:BottomToAll({text = victim_player_name.." ", duration = line_duration, continue = true})
-			end
+			if victim_death_streak then
+				if victim_death_streak >= 3 then
+					Notifications:BottomToAll({hero = victim_hero:GetUnitName(), duration = line_duration})
+					Notifications:BottomToAll({text = victim_player_name.." ", duration = line_duration, continue = true})
+				end
 
-			if victim_death_streak == 3 then
-				Notifications:BottomToAll({text = "#imba_deathstreak_3", duration = line_duration, continue = true})
-			elseif victim_death_streak == 4 then
-				Notifications:BottomToAll({text = "#imba_deathstreak_4", duration = line_duration, continue = true})
-			elseif victim_death_streak == 5 then
-				Notifications:BottomToAll({text = "#imba_deathstreak_5", duration = line_duration, continue = true})
-			elseif victim_death_streak == 6 then
-				Notifications:BottomToAll({text = "#imba_deathstreak_6", duration = line_duration, continue = true})
-			elseif victim_death_streak == 7 then
-				Notifications:BottomToAll({text = "#imba_deathstreak_7", duration = line_duration, continue = true})
-			elseif victim_death_streak == 8 then
-				Notifications:BottomToAll({text = "#imba_deathstreak_8", duration = line_duration, continue = true})
-			elseif victim_death_streak == 9 then
-				Notifications:BottomToAll({text = "#imba_deathstreak_9", duration = line_duration, continue = true})
-			elseif victim_death_streak >= 10 then
-				Notifications:BottomToAll({text = "#imba_deathstreak_10", duration = line_duration, continue = true})
+				if victim_death_streak == 3 then
+					Notifications:BottomToAll({text = "#imba_deathstreak_3", duration = line_duration, continue = true})
+				elseif victim_death_streak == 4 then
+					Notifications:BottomToAll({text = "#imba_deathstreak_4", duration = line_duration, continue = true})
+				elseif victim_death_streak == 5 then
+					Notifications:BottomToAll({text = "#imba_deathstreak_5", duration = line_duration, continue = true})
+				elseif victim_death_streak == 6 then
+					Notifications:BottomToAll({text = "#imba_deathstreak_6", duration = line_duration, continue = true})
+				elseif victim_death_streak == 7 then
+					Notifications:BottomToAll({text = "#imba_deathstreak_7", duration = line_duration, continue = true})
+				elseif victim_death_streak == 8 then
+					Notifications:BottomToAll({text = "#imba_deathstreak_8", duration = line_duration, continue = true})
+				elseif victim_death_streak == 9 then
+					Notifications:BottomToAll({text = "#imba_deathstreak_9", duration = line_duration, continue = true})
+				elseif victim_death_streak >= 10 then
+					Notifications:BottomToAll({text = "#imba_deathstreak_10", duration = line_duration, continue = true})
+				end
 			end
 		end
 	end
