@@ -97,9 +97,6 @@ function api.request(endpoint, data, callback)
 			},
 			data = data
 		})
-	else
-		log.debug("data == nil, end api.request")
-		return
 	end
 
 	request = CreateHTTPRequestScriptVM(method, url)
