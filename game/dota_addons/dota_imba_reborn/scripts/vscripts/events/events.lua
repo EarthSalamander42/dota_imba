@@ -267,10 +267,11 @@ function GameMode:OnDisconnect(keys)
 			-- Else, start tracking player's reconnect/abandon state
 	else
 		-- Fetch player's player and hero information
+		if keys.PlayerID == nil or keys.PlayerID == -1 then return end
 		local player_id = keys.PlayerID
 		local player_name = keys.name
+		if PlayerResource:GetPlayer(player_id):GetAssignedHero() == nil then return end
 		local hero = PlayerResource:GetPlayer(player_id):GetAssignedHero()
-		if hero == nil then return end
 		local line_duration = 7
 
 		-- Start tracking
@@ -421,7 +422,6 @@ function GameMode:OnEntityKilled( keys )
 					end
 				end
 			else
-				print("Killer is not a hero! (Building)")
 				CombatEvents("generic", "tower_dead", killed_unit, killer)
 			end
 
@@ -552,9 +552,10 @@ function GameMode:OnPlayerLevelUp(keys)
 			end
 		end
 
+		-- TODO: error sometimes on this line: "hero:AddNewModifier(hero, nil, "modifier_imba_war_veteran_"..hero_attribute, {}):SetStackCount(1)""
 		if not hero:HasModifier("modifier_imba_war_veteran_"..hero_attribute) then
 			hero:AddNewModifier(hero, nil, "modifier_imba_war_veteran_"..hero_attribute, {}):SetStackCount(1)
-		else
+		elseif hero:HasModifier("modifier_imba_war_veteran_"..hero_attribute) then
 			hero:FindModifierByName("modifier_imba_war_veteran_"..hero_attribute):SetStackCount(math.min(hero:GetLevel() -25, 17))
 		end
 
@@ -859,19 +860,18 @@ function GameMode:OnTeamKillCredit(keys)
 	end
 
 	-------------------------------------------------------------------------------------------------
-	-- IMBA: Comeback gold logic
-	-------------------------------------------------------------------------------------------------
-	--	UpdateComebackBonus(1, killer_team)
-
-	-------------------------------------------------------------------------------------------------
 	-- IMBA: Deathstreak logic
 	-------------------------------------------------------------------------------------------------
-	if killer_id ~= nil and victim_id ~= nil then
+	if victim_id ~= nil and victim_id ~= -1 then
 		if PlayerResource:IsValidPlayerID(killer_id) and PlayerResource:IsValidPlayerID(victim_id) then
-			PlayerResource:ResetDeathstreak(killer_id)
+			if killer_id ~= -1 then
+				PlayerResource:ResetDeathstreak(killer_id)
+			end
+
 			PlayerResource:IncrementDeathstreak(victim_id)
 
 			-- Show Deathstreak message
+			if PlayerResource:GetPlayer(victim_id):GetAssignedHero() == nil then return end
 			local victim_hero = PlayerResource:GetPlayer(victim_id):GetAssignedHero()
 			local victim_player_name = PlayerResource:GetPlayerName(victim_id)
 			local victim_death_streak = PlayerResource:GetDeathstreak(victim_id)

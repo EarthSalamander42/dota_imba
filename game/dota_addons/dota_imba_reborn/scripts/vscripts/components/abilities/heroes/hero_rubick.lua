@@ -421,7 +421,7 @@ function imba_rubick_fade_bolt:OnSpellStart()
 
 			-- if talent 6 is level-up, kaboom the target and end the function
 			if kaboom == true then
-				local particle_explosion_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_techies/techies_land_mine_explode.vpcf", PATTACH_WORLDORIGIN, current_target)
+				local particle_explosion_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_rubick/rubick_fade_bolt_explode.vpcf", PATTACH_WORLDORIGIN, current_target)
 				ParticleManager:SetParticleControl(particle_explosion_fx, 0, current_target:GetAbsOrigin())
 				ParticleManager:SetParticleControl(particle_explosion_fx, 1, current_target:GetAbsOrigin())
 				ParticleManager:SetParticleControl(particle_explosion_fx, 2, Vector(self:GetSpecialValueFor("radius"), 1, 1))

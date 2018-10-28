@@ -644,9 +644,11 @@ function GameMode:OrderFilter( keys )
 	end
 
 	-- Meepo item handle
-	local meepo_table = Entities:FindAllByName("npc_dota_hero_meepo")
-	local ability = EntIndexToHScript(keys.entindex_ability)
 	if unit:GetUnitName() == "npc_dota_hero_meepo" then
+		local meepo_table = Entities:FindAllByName("npc_dota_hero_meepo")
+		local ability = EntIndexToHScript(keys.entindex_ability)
+		if ability == nil then return end
+
 		for m = 1, #meepo_table do
 			if keys.order_type == DOTA_UNIT_ORDER_CAST_NO_TARGET then
 				if ability:GetName() == "item_black_king_bar" then
@@ -698,9 +700,13 @@ function GameMode:OrderFilter( keys )
 		if unit == nil then return false end
 		local drop = EntIndexToHScript(keys["entindex_target"])
 		local item
+
 		if drop ~= nil then
-			item = drop:GetContainedItem()
+			if drop:GetContainedItem() ~= nil then
+				item = drop:GetContainedItem()
+			end
 		end
+
 		if item == nil then return false end
 
 		-- Make sure non-heroes cannot pick up runes and make them do nothing
