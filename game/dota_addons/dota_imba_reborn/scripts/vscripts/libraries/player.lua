@@ -140,12 +140,17 @@ function CDOTA_BaseNPC:DropRapier(hItem, sNewItemName)
 	hRapier:LaunchLoot(false, 250, 0.5, vLocation + vRandomVector)
 end
 
---[[
-function CDOTA_BaseNPC:FindItemByName(item_name)
-	for slot = 0, 8 do
+function CDOTA_BaseNPC:FindItemByName(ItemName, bStash)
+	local count = 8
+
+	if bStash == true then
+		count = 14
+	end
+
+	for slot = 0, count do
 		local item = self:GetItemInSlot(slot)
 		if item then
-			if item:GetName() == item_name then
+			if item:GetName() == ItemName then
 				return item
 			end
 		end
@@ -154,18 +159,23 @@ function CDOTA_BaseNPC:FindItemByName(item_name)
 	return nil
 end
 
-function CDOTA_BaseNPC:RemoveItemByName(item_name)
-	for slot = 0, 8 do
+function CDOTA_BaseNPC:RemoveItemByName(ItemName, bStash)
+	local count = 8
+
+	if bStash == true then
+		count = 14
+	end
+
+	for slot = 0, count do
 		local item = self:GetItemInSlot(slot)
 		if item then
-			if item:GetName() == item_name then
+			if item:GetName() == ItemName then
 				self:RemoveItem(item)
 				break
 			end
 		end
 	end
 end
---]]
 
 -- Checks if the attacker's damage is classified as "hero damage".	 More `or`s may need to be added.
 function CDOTA_BaseNPC:IsHeroDamage(damage)

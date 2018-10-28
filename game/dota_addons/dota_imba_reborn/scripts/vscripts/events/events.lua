@@ -24,6 +24,10 @@ function GameMode:OnGameRulesStateChange(keys)
 		Mutation:OnGameRulesStateChange(keys)
 	end
 
+	if IMBA_DIRETIDE == true then
+		Diretide:OnGameRulesStateChange(newState)
+	end
+
 	if newState == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
 		InitItemIds()
 		GameMode:OnSetGameMode() -- setup gamemode rules
@@ -135,10 +139,6 @@ function GameMode:OnGameRulesStateChange(keys)
 		else
 			if IsMutationMap() or IsSuperFranticMap() then
 				SpawnEasterEgg()
-			end
-
-			if IMBA_DIRETIDE == true then
-				Diretide:Start()
 			end
 
 			ImbaRunes:Spawn()
@@ -380,10 +380,6 @@ function GameMode:OnEntityKilled( keys )
 
 		-- Check if the dying unit was a player-controlled hero
 		if killed_unit:IsRealHero() and killed_unit:GetPlayerID() then
-			if killer:GetTeamNumber() == 4 then
-				CombatEvents("kill", "neutrals_kill_hero", killed_unit)
-			end
-
 			GameMode:OnHeroDeath(killer, killed_unit)
 
 			if IsMutationMap() then

@@ -20,17 +20,21 @@ function Diretide:Init()
 	bad_pumpkin:RemoveModifierByName("modifier_invulnerable")
 end
 
-function Diretide:Start()
-	Diretide:Announcer("diretide", "game_in_progress")
-	nCOUNTDOWNTIMER = PHASE_TIME -- 481 / 8 Min
-	DIRETIDE_PHASE = 1
-	Diretide:Phase(DIRETIDE_PHASE)
-	Diretide:Countdown()
+function Diretide:OnGameRulesStateChange(new_state)
+	if newState == DOTA_GAMERULES_STATE_PRE_GAME then
+		nCOUNTDOWNTIMER = PHASE_TIME -- 481 / 8 Min
+		DIRETIDE_PHASE = 1
+		Diretide:Phase(DIRETIDE_PHASE)
+	elseif newState == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
+		Diretide:Countdown()
+		Diretide:Announcer("diretide", "game_in_progress")
 
-	local buildings = FindUnitsInRadius(1, Vector(0,0,0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
-	for _, building in pairs(buildings) do
-		if string.find(building:GetName(), "tower") or string.find(building:GetName(), "pumpkin") then
-			building:AddAbility("diretide_pumpkin_immune"):SetLevel(1)
+		local buildings = FindUnitsInRadius(1, Vector(0,0,0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
+
+		for _, building in pairs(buildings) do
+			if string.find(building:GetName(), "tower") or string.find(building:GetName(), "pumpkin") then
+				building:AddAbility("diretide_pumpkin_immune"):SetLevel(1)
+			end
 		end
 	end
 end
@@ -43,7 +47,7 @@ local units = FindUnitsInRadius(1, Vector(0,0,0), nil, FIND_UNITS_EVERYWHERE, DO
 		nCOUNTDOWNTIMER = PHASE_TIME
 	elseif DIRETIDE_PHASE == 3 then
 		nCOUNTDOWNTIMER = 120
-		EnableCountdown(false)
+		Diretide:EnableCountdown(false)
 
 		local buildings = FindUnitsInRadius(1, Vector(0,0,0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
 		for _, building in pairs(buildings) do
@@ -67,8 +71,8 @@ local units = FindUnitsInRadius(1, Vector(0,0,0), nil, FIND_UNITS_EVERYWHERE, DO
 		good_checkpoint:SetAbsOrigin(Entities:FindByName(nil, "good_checkpoint_"..DIRETIDE_WINNER):GetAbsOrigin())
 		bad_checkpoint:AddNewModifier(bad_checkpoint, nil, "modifier_invulnerable", {})
 		bad_checkpoint:SetAbsOrigin(Entities:FindByName(nil, "bad_checkpoint_"..DIRETIDE_WINNER):GetAbsOrigin())
-		AddFOWViewer(2, Entities:FindByName(nil, "roshan_arena_"..DIRETIDE_WINNER):GetAbsOrigin(), 550, 99999, false)
-		AddFOWViewer(3, Entities:FindByName(nil, "roshan_arena_"..DIRETIDE_WINNER):GetAbsOrigin(), 550, 99999, false)
+--		AddFOWViewer(2, Entities:FindByName(nil, "roshan_arena_"..DIRETIDE_WINNER):GetAbsOrigin(), 550, 99999, false)
+--		AddFOWViewer(3, Entities:FindByName(nil, "roshan_arena_"..DIRETIDE_WINNER):GetAbsOrigin(), 550, 99999, false)
 		GameRules:SetUseUniversalShopMode(true)
 
 		local ents = Entities:FindAllByName("lane_*")
@@ -108,7 +112,7 @@ end
 
 function Diretide:Countdown()
 	Timers:CreateTimer(function()
-		if COUNT_DOWN == 1 then
+		if COUNT_DOWN == 1 and GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
 			nCOUNTDOWNTIMER = nCOUNTDOWNTIMER - 1
 		else
 		end
@@ -128,7 +132,7 @@ function Diretide:Countdown()
 		}
 
 		CustomGameEventManager:Send_ServerToAllClients("countdown", broadcast_gametimer)
---		if t <= 120 then
+--		if t <= 30 then
 --			CustomGameEventManager:Send_ServerToAllClients("time_remaining", broadcast_gametimer)
 --		end
 
@@ -137,7 +141,7 @@ function Diretide:Countdown()
 				nCOUNTDOWNTIMER = 1 -- TIE!
 			elseif DIRETIDE_REINCARNATING == true then
 				print("Game doesn't end, roshan is reincarnating...")
-				nCOUNTDOWNTIMER = nCOUNTDOWNTIMER +1
+				nCOUNTDOWNTIMER = nCOUNTDOWNTIMER + 1
 			else
 				Diretide:Phase(DIRETIDE_PHASE)
 			end
@@ -151,7 +155,7 @@ function DiretideIncreaseTimer(time)
 	nCOUNTDOWNTIMER = nCOUNTDOWNTIMER + time
 end
 
-function EnableCountdown(bool)
+function Diretide:EnableCountdown(bool)
 	if bool == true then
 		COUNT_DOWN = 1
 	else
@@ -235,7 +239,7 @@ local i = 1
 end
 
 function Diretide:End()
-	EnableCountdown(false)
+	Diretide:EnableCountdown(false)
 	ROSHAN_ENT:AddNewModifier(ROSHAN_ENT, nil, "modifier_invulnerable", {})
 	ROSHAN_ENT:AddNewModifier(ROSHAN_ENT, nil, "modifier_command_restricted", {})
 
@@ -269,6 +273,18 @@ function Diretide:OnEntityKilled(killer, victim)
 		if chance > 90 then -- 10% chance
 			Diretide:CreateCandy(victim:GetAbsOrigin())
 		end
+	else
+		if victim:IsRealHero() then
+			if victim:FindItemByName("item_diretide_candy", false) then
+				for i = 1, victim:FindItemByName("item_diretide_candy", false):GetCurrentCharges() do
+					Timers:CreateTimer(FrameTime(), function()
+						Diretide:CreateCandy(victim:GetAbsOrigin())
+					end)
+				end
+
+				victim:RemoveItem(victim:FindItemByName("item_diretide_candy", false))
+			end
+		end
 	end
 end
 
@@ -290,20 +306,10 @@ local ability = keys.ability
 		HIT_COUNT[caster:GetTeamNumber()] = 0
 		StartAnimation(caster, {duration=1.0, activity=ACT_DOTA_FLINCH, rate=1.0})
 		if caster:GetUnitName() == "npc_dota_good_candy_pumpkin" and CustomNetTables:GetTableValue("game_options", "radiant").score > 0 then
-			local item = CreateItem( "item_diretide_candy", nil, nil)
-			local pos = caster:GetAbsOrigin()
-			local drop = CreateItemOnPositionSync(pos, item)
-			local pos_launch = pos+RandomVector(RandomFloat(150,200))
-			item:LaunchLoot(false, 200, 0.75, pos_launch)
-			item:EmitSound("Item.DropGemWorld")
+			Diretide:CreateCandy(caster:GetAbsOrigin())
 			CustomNetTables:SetTableValue("game_options", "radiant", {score = CustomNetTables:GetTableValue("game_options", "radiant").score -1})
 		elseif caster:GetUnitName() == "npc_dota_bad_candy_pumpkin" and CustomNetTables:GetTableValue("game_options", "dire").score > 0 then
-			local item = CreateItem("item_diretide_candy", nil, nil)
-			local pos = caster:GetAbsOrigin()
-			local drop = CreateItemOnPositionSync( pos, item )
-			local pos_launch = pos+RandomVector(RandomFloat(150,200))
-			item:LaunchLoot(false, 200, 0.75, pos_launch)
-			item:EmitSound("Item.DropGemWorld")
+			Diretide:CreateCandy(caster:GetAbsOrigin())
 			CustomNetTables:SetTableValue("game_options", "dire", {score = CustomNetTables:GetTableValue("game_options", "dire").score -1})
 		elseif caster:GetName() == "npc_dota_candy_pumpkin_good" and CustomNetTables:GetTableValue("game_options", "radiant").score <= 0 then
 			CustomNetTables:SetTableValue("game_options", "radiant", {score = 0})
@@ -319,4 +325,5 @@ function Diretide:CreateCandy(pos)
 	local item = CreateItem("item_diretide_candy", nil, nil)
 	CreateItemOnPositionSync(pos, item)
 	item:LaunchLoot(false, 300, 0.5, pos + RandomVector(RandomInt(50, 200)))
+	item:EmitSound("Item.DropGemWorld")
 end

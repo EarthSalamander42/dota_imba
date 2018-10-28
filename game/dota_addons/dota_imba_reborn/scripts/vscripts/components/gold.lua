@@ -26,6 +26,10 @@ function GoldSystem:OnHeroDeath(killer, victim)
 			CombatEvents("kill", "hero_suicide", victim)
 
 			return
+		elseif killer:GetTeamNumber() == 4 then
+			CombatEvents("kill", "neutrals_kill_hero", killed_unit)
+
+			return
 		elseif killer:IsRealHero() and killer:GetTeamNumber() == victim:GetTeamNumber() then
 			CombatEvents("kill", "hero_deny_hero", victim, killer)
 
