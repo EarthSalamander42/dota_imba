@@ -48,10 +48,8 @@ function GameMode:PostLoadPrecache()
 end
 
 function GameMode:OnFirstPlayerLoaded()
-	api.imba.register(function()
-		-- configure log from api
-		Log:ConfigureFromApi()
-	end)
+	Log:ConfigureFromApi()
+	api.imba.register()
 
 	if GetMapName() ~= Map1v1() and GetMapName() ~= MapOverthrow() then
 		_G.ROSHAN_SPAWN_LOC = Entities:FindByClassname(nil, "npc_dota_roshan_spawner"):GetAbsOrigin()
