@@ -6,28 +6,21 @@ function GoldSystem:OnHeroDeath(killer, victim)
 	local custom_gold_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "bounty_multiplier")["1"])
 	local base_gold_bounty = 110 * (custom_gold_bonus / 100)
 	local level_difference = victim:GetLevel() - killer:GetLevel()
-	print(level_difference)
 	local level_bonus = 100 * math.max(level_difference, 0)
 	if not victim.killstreak then victim.killstreak = 0 end
 	local kill_streak_with_limit = math.min(victim.killstreak, 15)
 	local streak_bonus = 100 * math.sqrt(kill_streak_with_limit) * kill_streak_with_limit
 	local kill_gold = math.floor(base_gold_bounty + level_bonus + streak_bonus)
 
-	if not killer:IsRealHero() then killer = nil end
-
 	-- temporary condition to ignore reincarnations
 	if victim:GetTimeUntilRespawn() < 4 then return end
 
-	if killer then
+	if killer:IsRealHero() then
 		if not killer.killstreak then killer.killstreak = 0 end
 		killer.killstreak = killer.killstreak + 1
 
 		if killer == victim then
 			CombatEvents("kill", "hero_suicide", victim)
-
-			return
-		elseif killer:GetTeamNumber() == 4 then
-			CombatEvents("kill", "neutrals_kill_hero", killed_unit)
 
 			return
 		elseif killer:IsRealHero() and killer:GetTeamNumber() == victim:GetTeamNumber() then
@@ -65,7 +58,7 @@ function GoldSystem:OnHeroDeath(killer, victim)
 			print(networth_bonus)
 			print(aoe_gold_for_player)
 
-			if assister:IsRealHero() then
+			if assister:IsAlive() and assister:IsRealHero() then
 				if assister == killer then
 					SendOverheadEventMessage(killer:GetPlayerOwner(), OVERHEAD_ALERT_GOLD, victim, kill_gold + aoe_gold_for_player, nil)
 					killer:ModifyGold(kill_gold + aoe_gold_for_player, true, DOTA_ModifyGold_HeroKill)
@@ -84,6 +77,12 @@ function GoldSystem:OnHeroDeath(killer, victim)
 
 		CombatEvents("kill", "hero_kill", victim, killer, kill_gold + aoe_gold_for_player)
 	else
+		if killer:GetTeamNumber() == 4 then
+			CombatEvents("kill", "neutrals_kill_hero", victim)
+
+			return
+		end
+
 		local victim_attacker_count = victim:GetNumAttackers()
 
 		print("Attackers: "..victim_attacker_count)

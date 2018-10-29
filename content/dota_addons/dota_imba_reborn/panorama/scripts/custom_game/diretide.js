@@ -63,10 +63,12 @@ function Phase(args)
 		$("#Diretide2").style.visibility = "visible";
 		//Chat
 		var Chat = hudElements.FindChildTraverse("HudChat");
-		Chat.style.marginBottom = "11%";
-//		Chat.style.width = "35%";
-//		Chat.FindChildTraverse("ChatControls").style.opacity = "1";
-		Chat.style.zIndex = "10";
+		if (Chat != undefined) {
+			Chat.style.marginBottom = "11%";
+//			Chat.style.width = "35%";
+//			Chat.FindChildTraverse("ChatControls").style.opacity = "1";
+			Chat.style.zIndex = "10";
+		}
 
 		//Channel Bar
 		var ChannelBar = Parent.FindChildTraverse("ChannelBar");

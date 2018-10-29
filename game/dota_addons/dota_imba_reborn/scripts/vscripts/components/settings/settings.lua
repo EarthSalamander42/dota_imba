@@ -562,7 +562,10 @@ IMBA_WEATHER_EFFECT[1] = "particles/rain_fx/econ_snow.vpcf"
 IMBA_FIRST_BLOOD = false
 
 IMBA_DIRETIDE_EASTER_EGG = true
-IMBA_DIRETIDE = true
+IMBA_DIRETIDE = false
+if IsInToolsMode() then
+	IMBA_DIRETIDE = true
+end
 
 -- files requirements
 

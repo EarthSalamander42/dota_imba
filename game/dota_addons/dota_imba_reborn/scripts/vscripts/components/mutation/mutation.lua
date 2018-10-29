@@ -125,7 +125,7 @@ function Mutation:ChooseMutation(mType, mList)
 end
 
 -- Mutation: Events
-function Mutation:OnGameRulesStateChange(keys)
+ListenToGameEvent('game_rules_state_change', function(keys)
 	if GameRules:State_Get() == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
 		Mutation:Init()
 	elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_PRE_GAME then
@@ -447,7 +447,7 @@ function Mutation:OnGameRulesStateChange(keys)
 		end
 		]]
 	end
-end
+end, nil)
 
 function Mutation:OnReconnect(id)
 	CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(id), "send_mutations", IMBA_MUTATION)

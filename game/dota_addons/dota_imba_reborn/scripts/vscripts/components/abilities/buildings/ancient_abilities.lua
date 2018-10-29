@@ -186,7 +186,7 @@ function modifier_imba_fountain_danger_zone:OnIntervalThink()
 		local fountain_pos = fountain:GetAbsOrigin() 
 		local nearby_enemies = FindUnitsInRadius(fountain:GetTeamNumber(), fountain_pos, nil, self:GetAbility():GetSpecialValueFor("kill_radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
 		for _, enemy in pairs(nearby_enemies) do
-			if enemy:GetUnitName() == "ent_dota_halloffame" then return end
+			if enemy:GetUnitName() == "ent_dota_halloffame" or string.find(enemy:GetUnitName(), "roshan") then return end
 
 			if enemy:IsIllusion() or enemy:HasModifier("modifier_illusion_manager_out_of_world") or enemy:HasModifier("modifier_illusion_manager") then enemy:ForceKill(false) return end
 

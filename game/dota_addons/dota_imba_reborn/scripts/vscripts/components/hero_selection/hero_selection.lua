@@ -480,6 +480,12 @@ function HeroSelection:GiveStartingHero(playerId, heroName, dev)
 			UTIL_Remove(wisp)
 		end
 	end)
+
+	Timers:CreateTimer(5.0, function()
+		if IMBA_DIRETIDE == true then
+			CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(playerId), "diretide_phase", {Phase = DIRETIDE_PHASE})
+		end
+	end)
 end
 
 function HeroSelection:IsHeroDisabled(hero)

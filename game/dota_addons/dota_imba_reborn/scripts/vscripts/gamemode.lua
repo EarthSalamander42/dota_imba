@@ -31,7 +31,9 @@ require('components/courier/abilities')
 require('components/courier/courier')
 require('components/gold')
 require('components/hero_selection/hero_selection')
-require('components/mutation/mutation')
+if IsMutationMap() then
+	require('components/mutation/mutation')
+end
 require('components/runes')
 require('components/settings/settings')
 require('components/team_selection')

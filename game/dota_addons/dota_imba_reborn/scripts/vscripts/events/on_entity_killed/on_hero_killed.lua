@@ -76,12 +76,12 @@ function GameMode:OnHeroDeath(killer, victim)
 				if not reaper_scythe then
 					reaper_scythe = 0
 				end
-				respawn_time = _G.HERO_RESPAWN_TIME_PER_LEVEL[hero_level] + reaper_scythe
-				hero:SetTimeUntilRespawn(respawn_time)
+				respawn_time = respawn_time + reaper_scythe
+				hero:SetTimeUntilRespawn(math.min(respawn_time, 60))
 				return
 			end
 		end
-		
+
 		if respawn_time == nil or not respawn_time then
 --			log.info("Something terrible has happened...set respawn timer to something reasonable.")
 			respawn_time = _G.HERO_RESPAWN_TIME_PER_LEVEL[hero_level]

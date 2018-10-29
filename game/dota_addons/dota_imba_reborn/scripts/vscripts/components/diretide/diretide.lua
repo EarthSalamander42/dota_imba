@@ -5,8 +5,8 @@ end
 require("components/diretide/announcer")
 
 function Diretide:Init()
-	good_pumpkin = CreateUnitByName("npc_dota_good_candy_pumpkin", Vector(0, 0, 0), true, nil, nil, DOTA_TEAM_GOODGUYS)
-	bad_pumpkin = CreateUnitByName("npc_dota_bad_candy_pumpkin", Vector(0, 0, 0), true, nil, nil, DOTA_TEAM_BADGUYS)
+	GoodCamera = CreateUnitByName("npc_dota_good_candy_pumpkin", Vector(0, 0, 0), true, nil, nil, DOTA_TEAM_GOODGUYS)
+	BadCamera = CreateUnitByName("npc_dota_bad_candy_pumpkin", Vector(0, 0, 0), true, nil, nil, DOTA_TEAM_BADGUYS)
 
 	local radiant_top_shrine_pos = Entities:FindByName(nil, "good_healer_6"):GetAbsOrigin()
 	local dire_top_shrine_pos = Entities:FindByName(nil, "bad_healer_6"):GetAbsOrigin()
@@ -14,19 +14,24 @@ function Diretide:Init()
 	Entities:FindByName(nil, "good_healer_6"):RemoveSelf()
 	Entities:FindByName(nil, "bad_healer_6"):RemoveSelf()
 
-	good_pumpkin:SetAbsOrigin(radiant_top_shrine_pos)
-	good_pumpkin:RemoveModifierByName("modifier_invulnerable")
-	bad_pumpkin:SetAbsOrigin(dire_top_shrine_pos)
-	bad_pumpkin:RemoveModifierByName("modifier_invulnerable")
+	GoodCamera:SetAbsOrigin(radiant_top_shrine_pos)
+	GoodCamera:RemoveModifierByName("modifier_invulnerable")
+	BadCamera:SetAbsOrigin(dire_top_shrine_pos)
+	BadCamera:RemoveModifierByName("modifier_invulnerable")
 end
 
-function Diretide:OnGameRulesStateChange(new_state)
-	if newState == DOTA_GAMERULES_STATE_PRE_GAME then
-		nCOUNTDOWNTIMER = PHASE_TIME -- 481 / 8 Min
-		DIRETIDE_PHASE = 1
-		Diretide:Phase(DIRETIDE_PHASE)
-	elseif newState == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
+ListenToGameEvent('game_rules_state_change', function(keys)
+	if GameRules:State_Get() == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
+		Diretide:Init()
+	elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_PRE_GAME then
 		Diretide:Countdown()
+
+		-- failsafe in case hero selection didn't enabled the HUD after hero pick
+		Timers:CreateTimer(AP_GAME_TIME + 5.0, function()
+			CustomGameEventManager:Send_ServerToAllClients("diretide_phase", {Phase = DIRETIDE_PHASE})
+		end)
+	elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
+		Diretide:EnableCountdown(true)
 		Diretide:Announcer("diretide", "game_in_progress")
 
 		local buildings = FindUnitsInRadius(1, Vector(0,0,0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
@@ -37,16 +42,18 @@ function Diretide:OnGameRulesStateChange(new_state)
 			end
 		end
 	end
-end
+end, nil)
 
-function Diretide:Phase(DIRETIDE_PHASE)
-local units = FindUnitsInRadius(1, Vector(0,0,0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
+function Diretide:Phase()
+	local units = FindUnitsInRadius(1, Vector(0,0,0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
 
-	if DIRETIDE_PHASE == 2 then
+	if DIRETIDE_PHASE + 1 == 2 then
+		print(nCOUNTDOWNTIMER, PHASE_TIME)
+		Diretide:IncreaseTimer(PHASE_TIME)
+		print(nCOUNTDOWNTIMER, PHASE_TIME)
 		Diretide:Announcer("diretide", "phase_2")
-		nCOUNTDOWNTIMER = PHASE_TIME
-	elseif DIRETIDE_PHASE == 3 then
-		nCOUNTDOWNTIMER = 120
+	elseif DIRETIDE_PHASE + 1 == 3 then
+		Diretide:IncreaseTimer(120)
 		Diretide:EnableCountdown(false)
 
 		local buildings = FindUnitsInRadius(1, Vector(0,0,0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
@@ -65,15 +72,25 @@ local units = FindUnitsInRadius(1, Vector(0,0,0), nil, FIND_UNITS_EVERYWHERE, DO
 
 		SwapTeam(DIRETIDE_WINNER)
 
+		local checkpoint_positions = {}
+		checkpoint_positions[2] = Vector(615, -5110, 1360)
+		checkpoint_positions[3] = Vector(1990, -4300, 1350)
+
 		local good_checkpoint = CreateUnitByName("npc_dota_good_candy_pumpkin", Vector(0, 0, 0), true, nil, nil, DOTA_TEAM_GOODGUYS)
 		local bad_checkpoint = CreateUnitByName("npc_dota_bad_candy_pumpkin", Vector(0, 0, 0), true, nil, nil, DOTA_TEAM_BADGUYS)
 		good_checkpoint:AddNewModifier(good_checkpoint, nil, "modifier_invulnerable", {})
-		good_checkpoint:SetAbsOrigin(Entities:FindByName(nil, "good_checkpoint_"..DIRETIDE_WINNER):GetAbsOrigin())
+		good_checkpoint:SetAbsOrigin(checkpoint_positions[2])
 		bad_checkpoint:AddNewModifier(bad_checkpoint, nil, "modifier_invulnerable", {})
-		bad_checkpoint:SetAbsOrigin(Entities:FindByName(nil, "bad_checkpoint_"..DIRETIDE_WINNER):GetAbsOrigin())
---		AddFOWViewer(2, Entities:FindByName(nil, "roshan_arena_"..DIRETIDE_WINNER):GetAbsOrigin(), 550, 99999, false)
---		AddFOWViewer(3, Entities:FindByName(nil, "roshan_arena_"..DIRETIDE_WINNER):GetAbsOrigin(), 550, 99999, false)
+		bad_checkpoint:SetAbsOrigin(checkpoint_positions[3])
+		AddFOWViewer(2, Entities:FindByName(nil, "good_healer_7"):GetAbsOrigin(), 550, 99999, false)
+		AddFOWViewer(3, Entities:FindByName(nil, "good_healer_7"):GetAbsOrigin(), 550, 99999, false)
 		GameRules:SetUseUniversalShopMode(true)
+
+		local find_trees = GridNav:GetAllTreesAroundPoint(Entities:FindByName(nil, "good_healer_7"):GetAbsOrigin(), 1200, true)
+
+		for _, tree in pairs(find_trees) do
+			TargetTree:CutDownRegrowAfter(99999, -1)
+		end
 
 		local ents = Entities:FindAllByName("lane_*")
 		for _, ent in pairs(ents) do
@@ -84,9 +101,20 @@ local units = FindUnitsInRadius(1, Vector(0,0,0), nil, FIND_UNITS_EVERYWHERE, DO
 		for _, ent in pairs(jungles) do
 			ent:RemoveSelf()
 		end
-	elseif DIRETIDE_PHASE == 4 then
+
+		for _, unit in pairs(units) do
+			if unit:GetUnitLabel() == "npc_diretide_roshan" then
+				print("Hi rosh!")
+			elseif unit:IsCreep() then
+				unit:RemoveSelf()						
+			end
+		end
+	elseif DIRETIDE_PHASE + 1 == 4 then
 		Diretide:End()
 	end
+
+	DIRETIDE_PHASE = DIRETIDE_PHASE + 1
+	print("Diretide Phase: "..DIRETIDE_PHASE)
 
 	local AImod = ROSHAN_ENT:FindModifierByName("modifier_imba_roshan_ai_diretide")
 	if AImod then
@@ -94,65 +122,62 @@ local units = FindUnitsInRadius(1, Vector(0,0,0), nil, FIND_UNITS_EVERYWHERE, DO
 		ROSHAN_ENT:Interrupt()
 	end
 
-	for _, unit in pairs(units) do
-		if DIRETIDE_PHASE == 3 then
-			if unit:GetUnitLabel() == "npc_diretide_roshan" then
-				print("Hi rosh!")
-			elseif unit:IsCreep() then
-				unit:RemoveSelf()						
-			end
-		end
-	end
-
-	DIRETIDE_PHASE = DIRETIDE_PHASE + 1
-	print("Diretide Phase: "..DIRETIDE_PHASE)
-
 	CustomGameEventManager:Send_ServerToAllClients("diretide_phase", {Phase = DIRETIDE_PHASE})
 end
 
 function Diretide:Countdown()
 	Timers:CreateTimer(function()
-		if COUNT_DOWN == 1 and GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
-			nCOUNTDOWNTIMER = nCOUNTDOWNTIMER - 1
-		else
-		end
-		local t = nCOUNTDOWNTIMER
-		local minutes = math.floor(t / 60)
-		local seconds = t - (minutes * 60)
-		local m10 = math.floor(minutes / 10)
-		local m01 = minutes - (m10 * 10)
-		local s10 = math.floor(seconds / 10)
-		local s01 = seconds - (s10 * 10)
-		local broadcast_gametimer = 
-		{
-			timer_minute_10 = m10,
-			timer_minute_01 = m01,
-			timer_second_10 = s10,
-			timer_second_01 = s01,
-		}
+		if COUNT_DOWN == 0 then
+			print("Timer is disabled!")
+			CustomGameEventManager:Send_ServerToAllClients("countdown", Diretide:ConvertTimer(nCOUNTDOWNTIMER))
 
-		CustomGameEventManager:Send_ServerToAllClients("countdown", broadcast_gametimer)
---		if t <= 30 then
+			return 1.0
+		end
+
+--		if nCOUNTDOWNTIMER <= 30 then
 --			CustomGameEventManager:Send_ServerToAllClients("time_remaining", broadcast_gametimer)
 --		end
 
-		if nCOUNTDOWNTIMER < 1 then
-			if CustomNetTables:GetTableValue("game_options", "radiant").score == CustomNetTables:GetTableValue("game_options", "dire").score then -- TIE
-				nCOUNTDOWNTIMER = 1 -- TIE!
-			elseif DIRETIDE_REINCARNATING == true then
-				print("Game doesn't end, roshan is reincarnating...")
-				nCOUNTDOWNTIMER = nCOUNTDOWNTIMER + 1
-			else
-				Diretide:Phase(DIRETIDE_PHASE)
+		if nCOUNTDOWNTIMER <= 0 then
+			print(DIRETIDE_REINCARNATING)
+			print(CustomNetTables:GetTableValue("game_options", "radiant").score)
+			print(CustomNetTables:GetTableValue("game_options", "dire").score)
+			if DIRETIDE_REINCARNATING == false and CustomNetTables:GetTableValue("game_options", "radiant").score ~= CustomNetTables:GetTableValue("game_options", "dire").score then -- TIE
+				Diretide:Phase()
 			end
+		else
+			nCOUNTDOWNTIMER = nCOUNTDOWNTIMER - 1
 		end
+
+		print("Diretime: "..nCOUNTDOWNTIMER)
+		CustomGameEventManager:Send_ServerToAllClients("countdown", Diretide:ConvertTimer(nCOUNTDOWNTIMER))
 
 		return 1.0
 	end)
 end
 
-function DiretideIncreaseTimer(time)
+function Diretide:ConvertTimer(time)
+	local minutes = math.floor(time / 60)
+	local seconds = time - (minutes * 60)
+	local m10 = math.floor(minutes / 10)
+	local m01 = minutes - (m10 * 10)
+	local s10 = math.floor(seconds / 10)
+	local s01 = seconds - (s10 * 10)
+	local broadcast_gametimer = 
+	{
+		timer_minute_10 = m10,
+		timer_minute_01 = m01,
+		timer_second_10 = s10,
+		timer_second_01 = s01,
+	}
+
+	return broadcast_gametimer
+end
+
+function Diretide:IncreaseTimer(time)
 	nCOUNTDOWNTIMER = nCOUNTDOWNTIMER + time
+
+	CustomGameEventManager:Send_ServerToAllClients("countdown", Diretide:ConvertTimer(nCOUNTDOWNTIMER))
 end
 
 function Diretide:EnableCountdown(bool)
@@ -294,7 +319,7 @@ local caster = keys.caster
 local attacker = keys.attacker
 local ability = keys.ability
 
-	if attacker:IsRealHero() then
+	if attacker:IsRealHero() or attacker:IsConsideredHero() then
 		HIT_COUNT[caster:GetTeamNumber()] = HIT_COUNT[caster:GetTeamNumber()] + 1
 		if attacker:HasModifier("modifier_earthshaker_enchant_totem") then
 			print("Earthshaker angry!")
