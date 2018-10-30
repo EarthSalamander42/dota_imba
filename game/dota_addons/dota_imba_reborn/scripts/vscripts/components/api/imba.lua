@@ -249,6 +249,40 @@ function api.imba.get_donators()
 	return api.imba.data.donators
 end
 
+--
+-- player_ids is a table with the players steamids
+-- { "76561197960287930", "76561197960287936", "76561197960287940" }
+--
+-- callback gets called with a table like this:
+-- { "76561197960287930" = 3, "76561197960287936" = 17, "76561197960287940" = 2 }
+--
+function api.imba.get_diretide_levels(player_ids, callback) 
+	api.request(api.endpoints.imba.meta.diretide_levels, player_ids, function (error, data) 
+		if not error then
+			callback(data)
+		else
+			log.warn("Get diretide levels failed", error)
+		end
+	end)
+end
+
+-- 
+-- levels is a table with the NEW levels
+-- { "76561197960287930" = 3, "76561197960287936" = 17, "76561197960287940" = 2 }
+-- callback(ok) is called with true on success, and false on failure
+--
+function api.imba.diretide_update_levels(levels, callback)
+	api.request(api.endpoints.imba.meta.diretide_update, levels, function (error, data)
+		if not error then
+			log.info("All good. Diretide high-scores saved")
+			callback(true)
+		else
+			log.info("Saving diretide levels failed", error)
+			callback(false)
+		end
+	end)
+end
+
 function api.imba.is_donator(steamid)
 	if api.imba.data == nil or api.imba.data.donators == nil then
 		log.warn("is_donator called but donators are not available. yet?")

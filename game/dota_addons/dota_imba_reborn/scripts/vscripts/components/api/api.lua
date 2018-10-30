@@ -23,6 +23,8 @@ api.endpoints = {
 			rankings_imr_10v10 = "/imba/meta/rankings/imr-10v10",
 			rankings_xp = "/imba/meta/rankings/xp",
 			rankings_level_1v1 = "/imba/meta/rankings/level-1v1",
+			diretide_update = "/imba/meta/diretide/update",
+			diretide_levels = "/imba/meta/diretide/levels",
 		},
 		matchmaking = {
 			imr_5v5_random = "/imba/matchmaking/imr-5v5-random",
