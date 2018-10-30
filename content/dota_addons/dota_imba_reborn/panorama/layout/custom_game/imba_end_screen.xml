@@ -4,7 +4,8 @@
 	</styles>
 
 	<scripts>
-        <include src="file://{resources}/scripts/custom_game/util.js" />
+		<include src="file://{resources}/scripts/custom_game/api.js" />
+		<include src="file://{resources}/scripts/custom_game/util.js" />
 		<include src="file://{resources}/scripts/custom_game/imba_end_screen.js" />
 	</scripts>
 

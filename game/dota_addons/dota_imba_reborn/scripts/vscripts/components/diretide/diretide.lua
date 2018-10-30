@@ -68,8 +68,8 @@ function Diretide:Phase()
 		Diretide:SwapTeam(DIRETIDE_WINNER)
 
 		local checkpoint_positions = {}
-		checkpoint_positions[2] = Vector(615, -5110, 360)
-		checkpoint_positions[3] = Vector(1990, -4300, 350)
+		checkpoint_positions[2] = Vector(615, -5110, 365)
+		checkpoint_positions[3] = Vector(2100, -4100, 365)
 
 		local good_checkpoint = CreateUnitByName("npc_dota_good_candy_pumpkin", Vector(0, 0, 0), true, nil, nil, DOTA_TEAM_GOODGUYS)
 		local bad_checkpoint = CreateUnitByName("npc_dota_bad_candy_pumpkin", Vector(0, 0, 0), true, nil, nil, DOTA_TEAM_BADGUYS)
@@ -224,6 +224,7 @@ function Diretide:SwapTeam(team)
 		hero:Stop()
 		hero:ModifyGold(DIRETIDE_BONUS_GOLD, true, 0)
 		hero:AddExperience(100000, false, false)
+		hero:AddNewModifier(hero, nil, "modifier_no_pvp", {})
 	end
 
 	GameRules:SetGoldPerTick(0)
@@ -263,8 +264,9 @@ function Diretide:End()
 	ROSHAN_ENT:AddNewModifier(ROSHAN_ENT, nil, "modifier_invulnerable", {})
 	ROSHAN_ENT:AddNewModifier(ROSHAN_ENT, nil, "modifier_command_restricted", {})
 
-	print("Roshan level: "..ROSHAN_ENT:GetLevel())
-	api.imba.diretide_update_levels(ROSHAN_ENT:GetLevel())
+	local level = ROSHAN_ENT:GetLevel()
+
+	api.imba.diretide_update_levels(level)
 
 	if DIRETIDE_WINNER == 2 then
 		Entities:FindByName(nil, "dota_badguys_fort"):ForceKill(false)
@@ -345,6 +347,13 @@ end
 function Diretide:CreateCandy(pos)
 	local item = CreateItem("item_diretide_candy", nil, nil)
 	CreateItemOnPositionSync(pos, item)
-	item:LaunchLoot(false, 300, 0.5, pos + RandomVector(RandomInt(150, 300)))
+	local random_pos = pos + RandomVector(RandomInt(150, 300))
+	item:LaunchLoot(false, 300, 0.5, random_pos)
 	item:EmitSound("Item.DropGemWorld")
+
+	local find_trees = GridNav:GetAllTreesAroundPoint(random_pos, 150, true)
+
+	for _, tree in pairs(find_trees) do
+		tree:CutDownRegrowAfter(99999, -1)
+	end
 end

@@ -345,6 +345,17 @@ function EndScoreboard() {
 		$("#es-team-score-dire").text = new String(serverInfo.dire_score);
 		$("#es-game-time-text").text = RawTimetoGameTime(Game.GetDOTATime(false, false));
 	});
+
+	api.diretide_highscores().then(function (data) {
+		// data is array of {
+		//		level: 123,
+		//		players: [ steamid, steamid, steamid ]
+		// }
+
+		data.forEach(function (result) {
+			$.Msg("players: " + result.users.join(", ") + " made it to level " + result.level);
+		});
+	});
 }
 
 function RawTimetoGameTime(time) {

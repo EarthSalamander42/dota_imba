@@ -1014,7 +1014,7 @@ function modifier_imba_coup_de_grace:OnAttackLanded(keys)
 		-- Only apply if the attacker is the caster and it was a critical strike
 		if self:GetCaster() == attacker then
 			-- Prevent Fatality on buildings
-			if target:IsBuilding() then return end
+			if target:IsBuilding() or target:IsRoshan() then return end
 
 			-- Roll for fatality
 			if RandomInt(1, 100) <= fatality then
