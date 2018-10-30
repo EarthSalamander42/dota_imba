@@ -273,9 +273,10 @@ end
 function api.imba.diretide_update_levels(level, callback)
 
 	local data = {
-		players = api.imba.internals.get_all_valid_players(),
-		level = level
-	}
+        players = api.imba.internals.get_all_valid_players(),
+        game = api.imba.data.id,
+        level = level
+    }
 
 	api.request(api.endpoints.imba.meta.diretide_update, data, function (error, data)
 		if not error then

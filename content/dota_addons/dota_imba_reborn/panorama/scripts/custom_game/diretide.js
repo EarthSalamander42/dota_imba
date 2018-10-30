@@ -57,6 +57,8 @@ function Phase(args)
 	$("#PhaseLabel").text = $.Localize("#diretide_phase_" + args.Phase);
 	JS_PHASE = args.Phase
 
+	$.Msg(args.Phase)
+
 	if (args.Phase == 1)
 	{
 		$("#Diretide").style.visibility = "visible";

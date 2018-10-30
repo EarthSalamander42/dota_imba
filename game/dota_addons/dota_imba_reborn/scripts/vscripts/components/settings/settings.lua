@@ -569,7 +569,7 @@ end
 
 
 IMBA_DIRETIDE_EASTER_EGG = true
-IMBA_DIRETIDE = false
+IMBA_DIRETIDE = true
 if IsInToolsMode() then
 	IMBA_DIRETIDE = true
 end
