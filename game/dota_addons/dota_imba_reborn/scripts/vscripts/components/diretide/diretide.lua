@@ -29,7 +29,7 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 
 		-- failsafe in case hero selection didn't enabled the HUD after hero pick
 		Timers:CreateTimer(AP_GAME_TIME + 5.0, function()
-			CustomGameEventManager:Send_ServerToAllClients("diretide_phase", {Phase = DIRETIDE_PHASE})
+			CustomGameEventManager:Send_ServerToAllClients("Diretide.DIRETIDE_PHASE", {Phase = Diretide.DIRETIDE_PHASE})
 		end)
 	elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
 		Diretide.COUNT_DOWN = true
@@ -48,9 +48,9 @@ end, nil)
 function Diretide:Phase()
 	local units = FindUnitsInRadius(1, Vector(0,0,0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
 
-	if DIRETIDE_PHASE == 2 then
+	if Diretide.DIRETIDE_PHASE == 2 then
 		Diretide:Announcer("diretide", "phase_2")
-	elseif DIRETIDE_PHASE == 3 then
+	elseif Diretide.DIRETIDE_PHASE == 3 then
 		local buildings = FindUnitsInRadius(1, Vector(0,0,0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
 		for _, building in pairs(buildings) do
 			if string.find(building:GetName(), "tower") or string.find(building:GetName(), "pumpkin") then
@@ -104,18 +104,18 @@ function Diretide:Phase()
 				unit:RemoveSelf()						
 			end
 		end
-	elseif DIRETIDE_PHASE == 4 then
+	elseif Diretide.DIRETIDE_PHASE == 4 then
 		Diretide:End()
 	end
 
 	local AImod = ROSHAN_ENT:FindModifierByName("modifier_imba_roshan_ai_diretide")
 	if AImod then
-		AImod:SetStackCount(DIRETIDE_PHASE)
+		AImod:SetStackCount(Diretide.DIRETIDE_PHASE)
 		ROSHAN_ENT:Interrupt()
 	end
 
 
-	CustomGameEventManager:Send_ServerToAllClients("diretide_phase", {Phase = DIRETIDE_PHASE})
+	CustomGameEventManager:Send_ServerToAllClients("Diretide.DIRETIDE_PHASE", {Phase = Diretide.DIRETIDE_PHASE})
 end
 
 function Diretide:Countdown()
@@ -136,11 +136,11 @@ function Diretide:Countdown()
 
 		if Diretide.nCOUNTDOWNTIMER <= 0 then
 			if Diretide.DIRETIDE_REINCARNATING == false and CustomNetTables:GetTableValue("game_options", "radiant").score ~= CustomNetTables:GetTableValue("game_options", "dire").score then -- TIE
-				DIRETIDE_PHASE = DIRETIDE_PHASE + 1
+				Diretide.DIRETIDE_PHASE = Diretide.DIRETIDE_PHASE + 1
 
-				if DIRETIDE_PHASE == 2 then
+				if Diretide.DIRETIDE_PHASE == 2 then
 					Diretide.nCOUNTDOWNTIMER = Diretide.nCOUNTDOWNTIMER + PHASE_TIME
-				elseif DIRETIDE_PHASE == 3 then
+				elseif Diretide.DIRETIDE_PHASE == 3 then
 					Diretide.COUNT_DOWN = false
 					Diretide.nCOUNTDOWNTIMER = Diretide.nCOUNTDOWNTIMER + 120
 				end
@@ -263,13 +263,13 @@ function Diretide:End()
 	ROSHAN_ENT:AddNewModifier(ROSHAN_ENT, nil, "modifier_invulnerable", {})
 	ROSHAN_ENT:AddNewModifier(ROSHAN_ENT, nil, "modifier_command_restricted", {})
 
+	api.imba.diretide_update_levels(ROSHAN_ENT:GetLevel())
+
 	if DIRETIDE_WINNER == 2 then
 		Entities:FindByName(nil, "dota_badguys_fort"):ForceKill(false)
 	else
 		Entities:FindByName(nil, "dota_goodguys_fort"):ForceKill(false)
 	end
---	Server_CalculateXPForWinnerAndAll(DIRETIDE_WINNER)
---	GameRules:SetGameWinner(DIRETIDE_WINNER)
 
 --	for _, hero in pairs(HeroList:GetAllHeroes()) do
 --		hero:AddNewModifier(hero, nil, "modifier_invulnerable", {})

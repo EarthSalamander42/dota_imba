@@ -7,6 +7,12 @@ function GameMode:GoldFilter(keys)
 	-- player_id_const	0
 	-- gold				141
 
+	if IMBA_DIRETIDE == true then
+		if Diretide.DIRETIDE_PHASE >= 3 then
+			return false
+		end
+	end
+
 	-- Gold from abandoning players does not get multiplied
 	if keys.reason_const == DOTA_ModifyGold_AbandonedRedistribute or keys.reason_const == DOTA_ModifyGold_GameTick then
 		return true
@@ -130,12 +136,19 @@ function GameMode:ModifierFilter( keys )
 
 			-- Halve the duration of everything else
 			if modifier_caster ~= modifier_owner and keys.duration > 0 then
-				keys.duration = keys.duration / (100/50)
+				keys.duration = keys.duration / (100 / 50)
 			end
 
 			-- Fury swipes capping
 			if modifier_owner:GetModifierStackCount("modifier_ursa_fury_swipes_damage_increase", nil) > 5 then
 				modifier_owner:SetModifierStackCount("modifier_ursa_fury_swipes_damage_increase", nil, 5)
+			end
+		end
+
+		if modifier_owner:GetUnitLabel() == "npc_diretide_roshan" then
+			-- Ignore stuns
+			if modifier_name == "modifier_stunned" then
+				return false
 			end
 		end
 
@@ -952,7 +965,7 @@ function GameMode:DamageFilter( keys )
 		end
 	end
 
---	if IMBA_DIRETIDE == true and DIRETIDE_PHASE == 3 then
+--	if IMBA_DIRETIDE == true and Diretide.DIRETIDE_PHASE == 3 then
 --		if attacker == victim then return true end
 --		if attacker:IsRealHero() or attacker:GetPlayerOwner() then
 --			if victim:IsRealHero() then

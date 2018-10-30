@@ -534,7 +534,7 @@ function modifier_imba_roshan_ai_diretide:ThinkPhase3(roshan)
 				roshan:CastAbilityNoTarget(self.roshlings, 1)
 			end
 		end
-		
+
 		-- Cast Force Wave if its available
 		if self.forceWave and self.forceWave:IsCooldownReady() then
 			print("Casting Wave of Force...")

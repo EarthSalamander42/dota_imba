@@ -483,7 +483,7 @@ function HeroSelection:GiveStartingHero(playerId, heroName, dev)
 
 	Timers:CreateTimer(5.0, function()
 		if IMBA_DIRETIDE == true then
-			CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(playerId), "diretide_phase", {Phase = DIRETIDE_PHASE})
+			CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(playerId), "diretide_phase", {Phase = Diretide.DIRETIDE_PHASE})
 		end
 	end)
 end

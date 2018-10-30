@@ -4,7 +4,7 @@ if IsInToolsMode() then
 	PHASE_TIME = 31
 end
 Diretide.nCOUNTDOWNTIMER = PHASE_TIME
-DIRETIDE_PHASE = 1
+Diretide.DIRETIDE_PHASE = 1
 DIRETIDE_WINNER = 2
 Diretide.COUNT_DOWN = false
 Diretide.DIRETIDE_REINCARNATING = false

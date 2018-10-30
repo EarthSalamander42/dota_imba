@@ -16352,10 +16352,10 @@
 
 		// Abilities
 		//----------------------------------------------------------------
-		"Ability1"					"imba_roshan_diretide_apocalypse" //Apocalypse
-		"Ability2"					"imba_roshan_diretide_force_wave" //Wave of Force - imba_roshan_diretide_force_wave
-		"Ability3"					"tiny_toss" //Toss
-		"Ability4"					"creature_fire_breath" //Fire Breath
+		"Ability1"					"imba_roshan_diretide_apocalypse" // Apocalypse
+		"Ability2"					"imba_roshan_diretide_force_wave" // Wave of Force - imba_roshan_diretide_force_wave
+		"Ability3"					"tiny_toss" // Toss
+		"Ability4"					"creature_fire_breath" // Fire Breath
 		"Ability5"					"imba_roshan_diretide_summon_roshlings"
 		"Ability6"					"roshan_spell_block"
 		"Ability7"					"necronomicon_warrior_sight"

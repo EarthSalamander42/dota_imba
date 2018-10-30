@@ -272,7 +272,7 @@ end
 -- callback(ok) is called with true on success, and false on failure
 --
 function api.imba.diretide_update_levels(levels, callback)
-	api.request(api.endpoints.imba.meta.diretide_update, levels, function (error, data)
+	api.request(api.endpoints.imba.meta.diretide_update, tostring(levels), function (error, data)
 		if not error then
 			log.info("All good. Diretide high-scores saved")
 			callback(true)
