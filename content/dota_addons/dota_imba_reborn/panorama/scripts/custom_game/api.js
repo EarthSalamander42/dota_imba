@@ -14,7 +14,8 @@ var api = {
 			multi_player_info: "meta/multi-player-info",
 			game_info: "meta/game-info",
 			loading_screen: "meta/loading-screen",
-			resolve_map_name: "meta/resolve-map-name"
+			resolve_map_name: "meta/resolve-map-name",
+			diretide_highscores: "meta/diretide/high-scores",
 		}
 	},
 
@@ -48,6 +49,10 @@ var api = {
 
 	game_info: function () {
 		return this.request(this.get_url(this.endpoints.meta.game_info));
+	},
+
+	diretide_highscores: function () {
+		return this.request(this.get_url(this.endpoints.meta.diretide_highscores));
 	},
 
 	request: function (url, data) {
