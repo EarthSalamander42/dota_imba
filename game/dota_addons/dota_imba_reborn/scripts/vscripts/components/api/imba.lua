@@ -267,18 +267,23 @@ function api.imba.get_diretide_levels(player_ids, callback)
 end
 
 -- 
--- levels is a table with the NEW levels
--- { "76561197960287930" = 3, "76561197960287936" = 17, "76561197960287940" = 2 }
+-- level is the number of rosh kills.
 -- callback(ok) is called with true on success, and false on failure
 --
-function api.imba.diretide_update_levels(levels, callback)
-	api.request(api.endpoints.imba.meta.diretide_update, tostring(levels), function (error, data)
+function api.imba.diretide_update_levels(level, callback)
+
+	local data = {
+		players = api.imba.internals.get_all_valid_players(),
+		level = level
+	}
+
+	api.request(api.endpoints.imba.meta.diretide_update, data, function (error, data)
 		if not error then
 			log.info("All good. Diretide high-scores saved")
-			callback(true)
+			if callback ~= nil then callback(true) end
 		else
 			log.info("Saving diretide levels failed", error)
-			callback(false)
+			if callback ~= nil then callback(false) end
 		end
 	end)
 end

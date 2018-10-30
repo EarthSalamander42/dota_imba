@@ -32,11 +32,11 @@ function modifier_imba_roshan_ai_diretide:GetPriority()
     return MODIFIER_PRIORITY_SUPER_ULTRA end
 
 function modifier_imba_roshan_ai_diretide:GetModifierProvidesFOWVision()
-	if self:GetStackCount() == 3 then
-		return 0
-	else
+--	if self:GetStackCount() == 3 then
+--		return 0
+--	else
 		return 1
-	end
+--	end
 end
 	
 function modifier_imba_roshan_ai_diretide:GetActivityTranslationModifiers()
@@ -55,7 +55,7 @@ end
 
 function modifier_imba_roshan_ai_diretide:CheckState()
 	local state = {}
-	
+
 	if self:GetStackCount() == 1 then
 		state = {
 			[MODIFIER_STATE_ATTACK_IMMUNE]	= true,
@@ -68,7 +68,8 @@ function modifier_imba_roshan_ai_diretide:CheckState()
 			[MODIFIER_STATE_MUTED]			= false,
 			[MODIFIER_STATE_STUNNED]		= false,
 			[MODIFIER_STATE_HEXED]			= false,
-			[MODIFIER_STATE_INVISIBLE]		= false, }
+			[MODIFIER_STATE_INVISIBLE]		= false,
+			[MODIFIER_STATE_UNSELECTABLE]	= true }
 	elseif self:GetStackCount() == 2 then
 		state = {
 			[MODIFIER_STATE_ATTACK_IMMUNE]	= true,
@@ -539,7 +540,8 @@ function modifier_imba_roshan_ai_diretide:ThinkPhase3(roshan)
 		if self.forceWave and self.forceWave:IsCooldownReady() then
 			print("Casting Wave of Force...")
 			local radius = self.forceWave:GetSpecialValueFor("radius")
-			local minTargets = self.forceWave:GetSpecialValueFor("min_targets")
+--			local minTargets = self.forceWave:GetSpecialValueFor("min_targets")
+			local minTargets = 1
 			
 			local nearbyHeroes = FindUnitsInRadius(roshan:GetTeamNumber(), roshan:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
 			if #nearbyHeroes >= minTargets then

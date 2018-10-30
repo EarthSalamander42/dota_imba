@@ -143,11 +143,8 @@ function GameMode:ModifierFilter( keys )
 			if modifier_owner:GetModifierStackCount("modifier_ursa_fury_swipes_damage_increase", nil) > 5 then
 				modifier_owner:SetModifierStackCount("modifier_ursa_fury_swipes_damage_increase", nil, 5)
 			end
-		end
 
-		if modifier_owner:GetUnitLabel() == "npc_diretide_roshan" then
-			-- Ignore stuns
-			if modifier_name == "modifier_stunned" then
+			if modifier_name == "modifier_doom_bringer_infernal_blade_burn" then
 				return false
 			end
 		end
@@ -508,7 +505,12 @@ function GameMode:OrderFilter( keys )
 		local ability = EntIndexToHScript(keys["entindex_ability"])
 		local target = EntIndexToHScript(keys["entindex_target"])
 
-		if ability:GetAbilityName() == "life_stealer_infest" then
+		if ability:GetAbilityName() == "doom_bringer_devour" then
+			if target:IsRoshan() then
+				DisplayError(unit:GetPlayerID(), "#dota_hud_error_cant_devour_roshan")
+				return false
+			end
+		elseif ability:GetAbilityName() == "life_stealer_infest" then
 			if target:GetUnitName() == "npc_dota_mutation_golem" then
 				DisplayError(unit:GetPlayerID(),"#dota_hud_error_cant_infest_bob")
 				return false

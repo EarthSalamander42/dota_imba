@@ -29,7 +29,7 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 
 		-- failsafe in case hero selection didn't enabled the HUD after hero pick
 		Timers:CreateTimer(AP_GAME_TIME + 5.0, function()
-			CustomGameEventManager:Send_ServerToAllClients("Diretide.DIRETIDE_PHASE", {Phase = Diretide.DIRETIDE_PHASE})
+			CustomGameEventManager:Send_ServerToAllClients("diretide_phase", {Phase = Diretide.DIRETIDE_PHASE})
 		end)
 	elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
 		Diretide.COUNT_DOWN = true
@@ -115,7 +115,7 @@ function Diretide:Phase()
 	end
 
 
-	CustomGameEventManager:Send_ServerToAllClients("Diretide.DIRETIDE_PHASE", {Phase = Diretide.DIRETIDE_PHASE})
+	CustomGameEventManager:Send_ServerToAllClients("diretide_phase", {Phase = Diretide.DIRETIDE_PHASE})
 end
 
 function Diretide:Countdown()
@@ -263,6 +263,7 @@ function Diretide:End()
 	ROSHAN_ENT:AddNewModifier(ROSHAN_ENT, nil, "modifier_invulnerable", {})
 	ROSHAN_ENT:AddNewModifier(ROSHAN_ENT, nil, "modifier_command_restricted", {})
 
+	print("Roshan level: "..ROSHAN_ENT:GetLevel())
 	api.imba.diretide_update_levels(ROSHAN_ENT:GetLevel())
 
 	if DIRETIDE_WINNER == 2 then

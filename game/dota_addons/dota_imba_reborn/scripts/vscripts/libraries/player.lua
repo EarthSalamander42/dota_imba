@@ -190,7 +190,7 @@ end
 
 -- Checks if a given unit is Roshan
 function CDOTA_BaseNPC:IsRoshan()
-	if self:GetName() == "npc_imba_roshan" or self:GetName() == "npc_dota_roshan" then
+	if self:GetName() == "npc_imba_roshan" or self:GetName() == "npc_dota_roshan" or self:GetUnitLabel() == "npc_diretide_roshan" then
 		return true
 	else
 		return false
