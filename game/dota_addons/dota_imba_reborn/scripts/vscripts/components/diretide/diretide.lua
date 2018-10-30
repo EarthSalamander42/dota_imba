@@ -3,6 +3,7 @@ if Diretide == nil then
 end
 
 require("components/diretide/announcer")
+require("components/settings/settings_diretide")
 
 function Diretide:Init()
 	GoodCamera = CreateUnitByName("npc_dota_good_candy_pumpkin", Vector(0, 0, 0), true, nil, nil, DOTA_TEAM_GOODGUYS)
@@ -31,7 +32,7 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 			CustomGameEventManager:Send_ServerToAllClients("diretide_phase", {Phase = DIRETIDE_PHASE})
 		end)
 	elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
-		Diretide:EnableCountdown(true)
+		Diretide.COUNT_DOWN = true
 		Diretide:Announcer("diretide", "game_in_progress")
 
 		local buildings = FindUnitsInRadius(1, Vector(0,0,0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
@@ -47,15 +48,9 @@ end, nil)
 function Diretide:Phase()
 	local units = FindUnitsInRadius(1, Vector(0,0,0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
 
-	if DIRETIDE_PHASE + 1 == 2 then
-		print(nCOUNTDOWNTIMER, PHASE_TIME)
-		Diretide:IncreaseTimer(PHASE_TIME)
-		print(nCOUNTDOWNTIMER, PHASE_TIME)
+	if DIRETIDE_PHASE == 2 then
 		Diretide:Announcer("diretide", "phase_2")
-	elseif DIRETIDE_PHASE + 1 == 3 then
-		Diretide:IncreaseTimer(120)
-		Diretide:EnableCountdown(false)
-
+	elseif DIRETIDE_PHASE == 3 then
 		local buildings = FindUnitsInRadius(1, Vector(0,0,0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
 		for _, building in pairs(buildings) do
 			if string.find(building:GetName(), "tower") or string.find(building:GetName(), "pumpkin") then
@@ -70,11 +65,11 @@ function Diretide:Phase()
 			Diretide:Announcer("diretide", "winner_radiant")
 		end
 
-		SwapTeam(DIRETIDE_WINNER)
+		Diretide:SwapTeam(DIRETIDE_WINNER)
 
 		local checkpoint_positions = {}
-		checkpoint_positions[2] = Vector(615, -5110, 1360)
-		checkpoint_positions[3] = Vector(1990, -4300, 1350)
+		checkpoint_positions[2] = Vector(615, -5110, 360)
+		checkpoint_positions[3] = Vector(1990, -4300, 350)
 
 		local good_checkpoint = CreateUnitByName("npc_dota_good_candy_pumpkin", Vector(0, 0, 0), true, nil, nil, DOTA_TEAM_GOODGUYS)
 		local bad_checkpoint = CreateUnitByName("npc_dota_bad_candy_pumpkin", Vector(0, 0, 0), true, nil, nil, DOTA_TEAM_BADGUYS)
@@ -89,7 +84,7 @@ function Diretide:Phase()
 		local find_trees = GridNav:GetAllTreesAroundPoint(Entities:FindByName(nil, "good_healer_7"):GetAbsOrigin(), 1200, true)
 
 		for _, tree in pairs(find_trees) do
-			TargetTree:CutDownRegrowAfter(99999, -1)
+			tree:CutDownRegrowAfter(99999, -1)
 		end
 
 		local ents = Entities:FindAllByName("lane_*")
@@ -109,12 +104,9 @@ function Diretide:Phase()
 				unit:RemoveSelf()						
 			end
 		end
-	elseif DIRETIDE_PHASE + 1 == 4 then
+	elseif DIRETIDE_PHASE == 4 then
 		Diretide:End()
 	end
-
-	DIRETIDE_PHASE = DIRETIDE_PHASE + 1
-	print("Diretide Phase: "..DIRETIDE_PHASE)
 
 	local AImod = ROSHAN_ENT:FindModifierByName("modifier_imba_roshan_ai_diretide")
 	if AImod then
@@ -122,35 +114,44 @@ function Diretide:Phase()
 		ROSHAN_ENT:Interrupt()
 	end
 
+
 	CustomGameEventManager:Send_ServerToAllClients("diretide_phase", {Phase = DIRETIDE_PHASE})
 end
 
 function Diretide:Countdown()
 	Timers:CreateTimer(function()
-		if COUNT_DOWN == 0 then
-			print("Timer is disabled!")
-			CustomGameEventManager:Send_ServerToAllClients("countdown", Diretide:ConvertTimer(nCOUNTDOWNTIMER))
+		if Diretide.COUNT_DOWN == false then
+			CustomGameEventManager:Send_ServerToAllClients("countdown", Diretide:ConvertTimer(Diretide.nCOUNTDOWNTIMER))
 
 			return 1.0
 		end
 
---		if nCOUNTDOWNTIMER <= 30 then
+		if GameRules:State_Get() > DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
+			return nil
+		end
+
+--		if Diretide.nCOUNTDOWNTIMER <= 30 then
 --			CustomGameEventManager:Send_ServerToAllClients("time_remaining", broadcast_gametimer)
 --		end
 
-		if nCOUNTDOWNTIMER <= 0 then
-			print(DIRETIDE_REINCARNATING)
-			print(CustomNetTables:GetTableValue("game_options", "radiant").score)
-			print(CustomNetTables:GetTableValue("game_options", "dire").score)
-			if DIRETIDE_REINCARNATING == false and CustomNetTables:GetTableValue("game_options", "radiant").score ~= CustomNetTables:GetTableValue("game_options", "dire").score then -- TIE
+		if Diretide.nCOUNTDOWNTIMER <= 0 then
+			if Diretide.DIRETIDE_REINCARNATING == false and CustomNetTables:GetTableValue("game_options", "radiant").score ~= CustomNetTables:GetTableValue("game_options", "dire").score then -- TIE
+				DIRETIDE_PHASE = DIRETIDE_PHASE + 1
+
+				if DIRETIDE_PHASE == 2 then
+					Diretide.nCOUNTDOWNTIMER = Diretide.nCOUNTDOWNTIMER + PHASE_TIME
+				elseif DIRETIDE_PHASE == 3 then
+					Diretide.COUNT_DOWN = false
+					Diretide.nCOUNTDOWNTIMER = Diretide.nCOUNTDOWNTIMER + 120
+				end
+
 				Diretide:Phase()
 			end
 		else
-			nCOUNTDOWNTIMER = nCOUNTDOWNTIMER - 1
+			Diretide.nCOUNTDOWNTIMER = Diretide.nCOUNTDOWNTIMER - 1
 		end
 
-		print("Diretime: "..nCOUNTDOWNTIMER)
-		CustomGameEventManager:Send_ServerToAllClients("countdown", Diretide:ConvertTimer(nCOUNTDOWNTIMER))
+		CustomGameEventManager:Send_ServerToAllClients("countdown", Diretide:ConvertTimer(Diretide.nCOUNTDOWNTIMER))
 
 		return 1.0
 	end)
@@ -173,21 +174,6 @@ function Diretide:ConvertTimer(time)
 
 	return broadcast_gametimer
 end
-
-function Diretide:IncreaseTimer(time)
-	nCOUNTDOWNTIMER = nCOUNTDOWNTIMER + time
-
-	CustomGameEventManager:Send_ServerToAllClients("countdown", Diretide:ConvertTimer(nCOUNTDOWNTIMER))
-end
-
-function Diretide:EnableCountdown(bool)
-	if bool == true then
-		COUNT_DOWN = 1
-	else
-		COUNT_DOWN = 0
-	end
-end
-
 
 function UpdateRoshanBar(roshan, time)
 	if GameRules:IsGamePaused() then
@@ -214,7 +200,7 @@ end
 --		end, nil)
 --	end
 
-function SwapTeam(team)
+function Diretide:SwapTeam(team)
 	for _, hero in pairs(HeroList:GetAllHeroes()) do
 		hero:AddNewModifier(hero, nil, "modifier_command_restricted", {})
 		PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), ROSHAN_ENT)
@@ -228,7 +214,7 @@ function SwapTeam(team)
 		end
 
 		if not hero:IsAlive() then
-			hero:RespawnHero(false, false, false)
+			hero:RespawnHero(false, false)
 		end
 
 		hero:SetHealth(hero:GetMaxHealth())
@@ -239,9 +225,18 @@ function SwapTeam(team)
 		hero:ModifyGold(DIRETIDE_BONUS_GOLD, true, 0)
 		hero:AddExperience(100000, false, false)
 	end
+
+	GameRules:SetGoldPerTick(0)
+	GameRules:SetGoldTickTime(0)
 end
 
-function EndRoshanCamera()
+function Diretide:IncreaseTimer(time)
+	Diretide.nCOUNTDOWNTIMER = Diretide.nCOUNTDOWNTIMER + time
+
+	CustomGameEventManager:Send_ServerToAllClients("countdown", Diretide:ConvertTimer(Diretide.nCOUNTDOWNTIMER))
+end
+
+function Diretide:EndRoshanCamera()
 local i = 1
 
 --	ROSHAN_ENT:SetTeam(4)
@@ -264,7 +259,7 @@ local i = 1
 end
 
 function Diretide:End()
-	Diretide:EnableCountdown(false)
+	Diretide.COUNT_DOWN = false
 	ROSHAN_ENT:AddNewModifier(ROSHAN_ENT, nil, "modifier_invulnerable", {})
 	ROSHAN_ENT:AddNewModifier(ROSHAN_ENT, nil, "modifier_command_restricted", {})
 
@@ -288,7 +283,7 @@ end
 
 function Diretide:OnEntityKilled(killer, victim)
 	if victim:GetTeamNumber() == 4 then
-		if victim:GetUnitLabel() == "npc_diretide_roshan" then return end
+		if victim:GetUnitLabel() == "npc_diretide_roshan" or victim:GetUnitName() == "npc_imba_roshling" then return end
 		local chance = RandomInt(1, 100)
 		if chance > 50 then -- 50% chance
 			Diretide:CreateCandy(victim:GetAbsOrigin())
@@ -349,6 +344,6 @@ end
 function Diretide:CreateCandy(pos)
 	local item = CreateItem("item_diretide_candy", nil, nil)
 	CreateItemOnPositionSync(pos, item)
-	item:LaunchLoot(false, 300, 0.5, pos + RandomVector(RandomInt(50, 200)))
+	item:LaunchLoot(false, 300, 0.5, pos + RandomVector(RandomInt(150, 300)))
 	item:EmitSound("Item.DropGemWorld")
 end

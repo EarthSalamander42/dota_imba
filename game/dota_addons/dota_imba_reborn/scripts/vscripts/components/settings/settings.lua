@@ -245,17 +245,18 @@ IMBA_PICK_MODE_ALL_RANDOM_SAME_HERO = false									-- Activates All Random Same
 IMBA_ALL_RANDOM_HERO_SELECTION_TIME = 5.0									-- Time we need to wait before the game starts when all heroes are randomed
 
 -- Global Gold earning, values are doubled with Hyper for non-custom maps
+local global_gold = 200
 CUSTOM_GOLD_BONUS = {} -- 1 = Normal, 2 = Hyper
-CUSTOM_GOLD_BONUS[Map1v1()] = 200
-CUSTOM_GOLD_BONUS["imba_5v5"] = 200
-CUSTOM_GOLD_BONUS[MapRanked5v5()] = 200
-CUSTOM_GOLD_BONUS[MapRanked10v10()] = 200
-CUSTOM_GOLD_BONUS[MapTournament()] = 200
-CUSTOM_GOLD_BONUS[MapMutation5v5()] = 200
-CUSTOM_GOLD_BONUS[MapMutation10v10()] = 200
-CUSTOM_GOLD_BONUS[MapSuperFrantic5v5()] = 200
-CUSTOM_GOLD_BONUS[MapSuperFrantic10v10()] = 200
-CUSTOM_GOLD_BONUS[MapOverthrow()] = 200
+CUSTOM_GOLD_BONUS[Map1v1()] = global_gold
+CUSTOM_GOLD_BONUS["imba_5v5"] = global_gold
+CUSTOM_GOLD_BONUS[MapRanked5v5()] = global_gold
+CUSTOM_GOLD_BONUS[MapRanked10v10()] = global_gold
+CUSTOM_GOLD_BONUS[MapTournament()] = global_gold
+CUSTOM_GOLD_BONUS[MapMutation5v5()] = global_gold
+CUSTOM_GOLD_BONUS[MapMutation10v10()] = global_gold
+CUSTOM_GOLD_BONUS[MapSuperFrantic5v5()] = global_gold
+CUSTOM_GOLD_BONUS[MapSuperFrantic10v10()] = global_gold
+CUSTOM_GOLD_BONUS[MapOverthrow()] = global_gold
 
 -- Global XP earning, values are doubled with Hyper for non-custom maps (right now this is not used anymore, but i'll keep it there just in case)
 CUSTOM_XP_BONUS = {} -- 1 = Normal, 2 = Hyper
@@ -561,19 +562,19 @@ IMBA_WEATHER_EFFECT[1] = "particles/rain_fx/econ_snow.vpcf"
 
 IMBA_FIRST_BLOOD = false
 
+-- files requirements
+if GetMapName() == MapOverthrow() then
+	require("components/settings/settings_imbathrow")
+end
+
+
 IMBA_DIRETIDE_EASTER_EGG = true
 IMBA_DIRETIDE = false
 if IsInToolsMode() then
 	IMBA_DIRETIDE = true
 end
 
--- files requirements
-
-if GetMapName() == MapOverthrow() then
-	require("components/settings/settings_imbathrow")
-end
-
 if IMBA_DIRETIDE == true then
 	IMBA_DIRETIDE_EASTER_EGG = false
-	require("components/settings/settings_diretide")
+	require("components/diretide/diretide")
 end

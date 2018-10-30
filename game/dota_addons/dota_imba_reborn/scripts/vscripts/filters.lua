@@ -702,8 +702,10 @@ function GameMode:OrderFilter( keys )
 		local item
 
 		if drop ~= nil then
-			if drop:GetContainedItem() ~= nil then
-				item = drop:GetContainedItem()
+			if drop.GetContainedItem ~= nil then
+				if drop:GetContainedItem() ~= nil then
+					item = drop:GetContainedItem()
+				end
 			end
 		end
 
@@ -722,7 +724,7 @@ function GameMode:OrderFilter( keys )
 			end
 
 			return true
-		end		
+		end
 	end
 
 	return true
@@ -950,15 +952,15 @@ function GameMode:DamageFilter( keys )
 		end
 	end
 
-	if IMBA_DIRETIDE == true and DIRETIDE_PHASE == 3 then
-		if attacker == victim then return end
-		if attacker:IsRealHero() or attacker:GetPlayerOwner() then
-			if victim:IsRealHero() then
-				print("Attacker and victim are heroes, don't damage them!")
-				keys.damage = 0
-			end
-		end
-	end
+--	if IMBA_DIRETIDE == true and DIRETIDE_PHASE == 3 then
+--		if attacker == victim then return true end
+--		if attacker:IsRealHero() or attacker:GetPlayerOwner() then
+--			if victim:IsRealHero() then
+--				print("Attacker and victim are heroes, don't damage them!")
+--				keys.damage = 0
+--			end
+--		end
+--	end
 
 	return true
 end

@@ -15717,4 +15717,55 @@
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
 	}
+
+	//=================================================================================================================
+	// Tiny: Toss
+	//=================================================================================================================
+	"tiny_toss"
+	{
+		"AbilityCastRange"				"1300"
+		"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
+		"AbilityCooldown"				"11.0"
+		"AbilityManaCost"				"0"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"2.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"grab_radius"			"400"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"400"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage_pct"		"30"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"tooltip_range"		"1300"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"toss_damage"				"250"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"charge_restore_time"	"11"
+			}
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+	}
 }

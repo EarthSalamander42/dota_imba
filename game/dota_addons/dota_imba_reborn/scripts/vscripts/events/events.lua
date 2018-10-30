@@ -20,10 +20,6 @@ require('events/on_entity_killed/on_hero_killed')
 function GameMode:OnGameRulesStateChange(keys)
 	local newState = GameRules:State_Get()
 
-	if IsMutationMap() then
-		Mutation:OnGameRulesStateChange(keys)
-	end
-
 	if newState == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
 		InitItemIds()
 		GameMode:OnSetGameMode() -- setup gamemode rules

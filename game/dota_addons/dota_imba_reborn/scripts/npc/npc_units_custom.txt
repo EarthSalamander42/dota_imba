@@ -16353,7 +16353,7 @@
 		// Abilities
 		//----------------------------------------------------------------
 		"Ability1"					"imba_roshan_diretide_apocalypse" //Apocalypse
-		"Ability2"					"roshan_deafening_blast" //Wave of Force - imba_roshan_diretide_force_wave
+		"Ability2"					"imba_roshan_diretide_force_wave" //Wave of Force - imba_roshan_diretide_force_wave
 		"Ability3"					"tiny_toss" //Toss
 		"Ability4"					"creature_fire_breath" //Fire Breath
 		"Ability5"					"imba_roshan_diretide_summon_roshlings"

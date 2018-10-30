@@ -4,10 +4,6 @@
 -- Author:	zimberzimber
 -- Date:	30.8.2017
 
--- Use these if roshan can't reach a target
--- self.roshan:AddNewModifier(roshan, self:GetAbility(), "modifier_imba_skywrath_flying_movement", {})
--- self.roshan:RemoveModifierByName("modifier_imba_skywrath_flying_movement")
-
 if imba_roshan_ai_diretide == nil then imba_roshan_ai_diretide = class({}) end
 LinkLuaModifier("modifier_imba_roshan_ai_diretide", "components/modifiers/diretide/roshan_diretide", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_roshan_ai_beg", "components/modifiers/diretide/roshan_diretide", LUA_MODIFIER_MOTION_NONE)
@@ -36,11 +32,11 @@ function modifier_imba_roshan_ai_diretide:GetPriority()
     return MODIFIER_PRIORITY_SUPER_ULTRA end
 
 function modifier_imba_roshan_ai_diretide:GetModifierProvidesFOWVision()
---	if self:GetStackCount() == 3 then
---		return 0
---	else
+	if self:GetStackCount() == 3 then
+		return 0
+	else
 		return 1
---	end
+	end
 end
 	
 function modifier_imba_roshan_ai_diretide:GetActivityTranslationModifiers()
@@ -62,8 +58,9 @@ function modifier_imba_roshan_ai_diretide:CheckState()
 	
 	if self:GetStackCount() == 1 then
 		state = {
-			[MODIFIER_STATE_UNSELECTABLE]	= true,
+			[MODIFIER_STATE_ATTACK_IMMUNE]	= true,
 			[MODIFIER_STATE_INVULNERABLE]	= true,
+			[MODIFIER_STATE_MAGIC_IMMUNE]	= true,
 			[MODIFIER_STATE_CANNOT_MISS]	= true,
 			[MODIFIER_STATE_ROOTED]			= true,
 			[MODIFIER_STATE_DISARMED]		= true,
@@ -74,7 +71,9 @@ function modifier_imba_roshan_ai_diretide:CheckState()
 			[MODIFIER_STATE_INVISIBLE]		= false, }
 	elseif self:GetStackCount() == 2 then
 		state = {
+			[MODIFIER_STATE_ATTACK_IMMUNE]	= true,
 			[MODIFIER_STATE_INVULNERABLE]	= true,
+			[MODIFIER_STATE_MAGIC_IMMUNE]	= true,
 			[MODIFIER_STATE_CANNOT_MISS]	= true,
 			[MODIFIER_STATE_ROOTED]			= false,
 			[MODIFIER_STATE_DISARMED]		= false,
@@ -151,7 +150,7 @@ function modifier_imba_roshan_ai_diretide:OnCreated()
 		self.animDeath		= 10
 		
 		-- Ability handlers
-		self.forceWave	= self.roshan:FindAbilityByName("roshan_deafening_blast")
+		self.forceWave	= self.roshan:FindAbilityByName("imba_roshan_diretide_force_wave")
 		self.roshlings	= self.roshan:FindAbilityByName("imba_roshan_diretide_summon_roshlings")
 		self.breath		= self.roshan:FindAbilityByName("creature_fire_breath")
 		self.apocalypse	= self.roshan:FindAbilityByName("imba_roshan_diretide_apocalypse")
@@ -208,6 +207,7 @@ local stacks = self:GetStackCount()
 			self.deathPoint = self.roshan:GetAbsOrigin()
 			self.isDead = true
 			self.deathCounter = self.deathCounter + 1
+			Diretide.DIRETIDE_REINCARNATING = true
 
 			-- Play sounds
 			self.roshan:EmitSound("Diretide.RoshanDeathLava")
@@ -226,7 +226,7 @@ local stacks = self:GetStackCount()
 				if self.isDead then
 					self.roshan:RespawnUnit()
 					self.roshan:CreatureLevelUp(1)
-					DiretideIncreaseTimer(30.0)
+					Diretide.nCOUNTDOWNTIMER = Diretide.nCOUNTDOWNTIMER + 30.0
 
 					if self.forceWave	then self.forceWave:EndCooldown()	end
 					if self.roshlings	then self.roshlings:EndCooldown()	end
@@ -245,6 +245,8 @@ local stacks = self:GetStackCount()
 					else
 						print("ERROR - DEATH COUNTING MODIFIER MISSING AND FAILED TO APPLY TO ROSHAN")
 					end
+
+					Diretide.DIRETIDE_REINCARNATING = false
 				end
 			end)
 		end
@@ -346,7 +348,7 @@ function modifier_imba_roshan_ai_diretide:ThinkPhase2(roshan)
 					self.roshan:SetForceAttackTarget(self.AItarget)
 				end
 			else
-				self:ChangeTagret(self.roshan)
+				self:ChangeTarget(self.roshan)
 			end
 		end
 	end
@@ -388,7 +390,7 @@ function modifier_imba_roshan_ai_diretide:Candy(roshan)
 	candyMod:IncrementStackCount()
 end
 
-function modifier_imba_roshan_ai_diretide:ChangeTagret(roshan)
+function modifier_imba_roshan_ai_diretide:ChangeTarget(roshan)
 	self.AItarget = nil
 	self.begState = 0
 	self.isEatingCandy = false
@@ -436,7 +438,7 @@ function modifier_imba_roshan_ai_diretide:ThinkPhase3(roshan)
 	end
 
 	if not self.leashPoint then
-		self.leashPoint = Entities:FindByName(nil, "roshan_arena_"..DIRETIDE_WINNER):GetAbsOrigin()		-- Pick arena based on phase 2 winner
+		self.leashPoint = Entities:FindByName(nil, "good_healer_7"):GetAbsOrigin()		-- Pick arena based on phase 2 winner
 	end
 
 	-- Transitioning from Phase 2 to 3
@@ -447,6 +449,10 @@ function modifier_imba_roshan_ai_diretide:ThinkPhase3(roshan)
 		if distanceFromLeash > 100 then
 			roshan:SetForceAttackTarget(nil)
 			roshan:MoveToPosition(self.leashPoint)
+
+			if distanceFromLeash < 250 then
+				Entities:FindByName(nil, "good_healer_7"):ForceKill(false)
+			end
 		else
 			self.atStartPoint = true
 			EmitSoundOnLocationWithCaster(roshan:GetAbsOrigin(), "RoshanDT.", roshan)
@@ -472,14 +478,14 @@ function modifier_imba_roshan_ai_diretide:ThinkPhase3(roshan)
 				self.isTransitioning = false
 				roshan:RemoveGesture(ACT_TRANSITION)
 				roshan:SetAcquisitionRange(self.acquisition_range)
-				EndRoshanCamera()
+				Diretide:EndRoshanCamera()
 			end)
 		end
 	
 		return
 	end
 	
-	if COUNT_DOWN and COUNT_DOWN == 0 then
+	if Diretide.COUNT_DOWN and Diretide.COUNT_DOWN == false then
 		local heroDetector = FindUnitsInRadius(roshan:GetTeamNumber(), roshan:GetAbsOrigin(), nil, 700, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
 		if #heroDetector > 0 then
 --			EnableCountdown(true)
@@ -532,19 +538,14 @@ function modifier_imba_roshan_ai_diretide:ThinkPhase3(roshan)
 		-- Cast Force Wave if its available
 		if self.forceWave and self.forceWave:IsCooldownReady() then
 			print("Casting Wave of Force...")
-			local radius = 1000
+			local radius = self.forceWave:GetSpecialValueFor("radius")
 			local minTargets = self.forceWave:GetSpecialValueFor("min_targets")
-
+			
 			local nearbyHeroes = FindUnitsInRadius(roshan:GetTeamNumber(), roshan:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
-			for _, hero in ipairs(nearbyHeroes) do
-				roshan:CastAbilityOnPosition(hero:GetAbsOrigin(), self.forceWave, 1)
+			if #nearbyHeroes >= minTargets then
+				roshan:CastAbilityNoTarget(self.apocalypse, 1)
 				return
 			end
---			local nearbyHeroes = FindUnitsInRadius(roshan:GetTeamNumber(), roshan:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
---			if #nearbyHeroes >= minTargets then
---				roshan:CastAbilityNoTarget(self.apocalypse, 1)
---				return
---			end
 		end
 
 		-- Cast apocalypse if its available
@@ -629,15 +630,15 @@ function modifier_imba_roshan_ai_diretide:OnTakeDamage(keys)
 
 		-- Only apply if the unit taking damage is the caster
 		if unit == self.roshan then
-			if COUNT_DOWN == 0 then
-				EnableCountdown(true)
-				print("PHASE 3")
-				Diretide:Announcer("diretide", "phase_3")
-			end
-
 			-- If the damage came from ourselves (e.g. Rot, Double Edge), do nothing
 			if attacker == unit then
 				return nil
+			end
+
+			if Diretide.COUNT_DOWN == false then
+				Diretide.COUNT_DOWN = true
+				print("PHASE 3")
+				Diretide:Announcer("diretide", "phase_3")
 			end
 		end
 	end
@@ -812,9 +813,7 @@ function modifier_imba_roshan_death_buff:GetModifierMagicalResistanceBonus()
 	return self.bonusResist * self:GetStackCount() end
 
 function modifier_imba_roshan_death_buff:GetCustomTenacityUnique()
---	return self.bonusTenacity * self:GetStackCount()
-	return 100
-end
+	return self.bonusTenacity * self:GetStackCount() end
 
 ---------- Modifier for handling begging
 if modifier_imba_roshan_ai_beg == nil then modifier_imba_roshan_ai_beg = class({}) end
@@ -833,7 +832,7 @@ function modifier_imba_roshan_ai_beg:GetEffectAttachType()
 
 function modifier_imba_roshan_ai_beg:OnDestroy()
 	if IsServer() then
-		if not self.noAggro then	-- Go ape shit if the modifier expired on its own (not by candy-ing Roshan or through 'ChangeTagret)
+		if not self.noAggro then	-- Go ape shit if the modifier expired on its own (not by candy-ing Roshan or through 'ChangeTarget)
 			local roshan = self:GetParent()
 			local AImod = roshan:FindModifierByName("modifier_imba_roshan_ai_diretide")
 			if AImod then
@@ -881,7 +880,7 @@ function modifier_imba_roshan_ai_eat:OnDestroy()
 		local AImod = roshan:FindModifierByName("modifier_imba_roshan_ai_diretide")
 		
 		if AImod then
-			AImod:ChangeTagret(roshan)
+			AImod:ChangeTarget(roshan)
 		end
 	end
 end
