@@ -106,51 +106,6 @@ function DiretideInfo()
 	$.DispatchEvent("UIShowTextTooltip", $("#PhaseLabel"), $.Localize("#diretide_phase_" + JS_PHASE + "_desc"));
 }
 
-function HallOfFame()
-{
-	hudElements.FindChildTraverse("topbar").style.visibility = "collapse";
-	hudElements.FindChildTraverse("shop").style.visibility = "collapse";
-	hudElements.FindChildTraverse("minimap_container").style.visibility = "collapse";
-	hudElements.FindChildTraverse("lower_hud").style.visibility = "collapse";
-
-	$("#RoshanHP").style.visibility = "collapse";
-	$("#HallOfFame").style.visibility = "visible";
-
-	/* Remove later, only tools testing */
-	$("#Diretide").style.visibility = "collapse";
-	$("#Diretide2").style.visibility = "collapse";
-
-	var RoshanTable = CustomNetTables.GetTableValue("game_options", "roshan");
-	var RoshanLvl = RoshanTable.level;
-	$("#RoshanLevel_alt").text = "Level: " + RoshanLvl
-
-	//Get the players for both teams
-	var radiantPlayers = Game.GetPlayerIDsOnTeam( DOTATeam_t.DOTA_TEAM_GOODGUYS );
-	var direPlayers = Game.GetPlayerIDsOnTeam( DOTATeam_t.DOTA_TEAM_BADGUYS );
-
-	//Assign radiant players
-	$.Each( radiantPlayers, function( player ) {
-		var playerPanel = Modular.Spawn( "picking_player", $("#RadiantPlayers"), "HoF" );
-		var playerInfo = Game.GetPlayerInfo( player )
-
-		playerPanels[player] = playerPanel;
-
-		playerPanels[player].SetHero(playerInfo.player_selected_hero);
-		playerPanel.SetPlayer( player );
-	});
-
-	//Assign dire players
-	$.Each( direPlayers, function( player ) {
-		var playerPanel = Modular.Spawn( "picking_player", $("#DirePlayers"), "HoF" );
-		var playerInfo = Game.GetPlayerInfo( player )
-
-		playerPanels[player] = playerPanel;
-
-		playerPanels[player].SetHero(playerInfo.player_selected_hero);
-		playerPanel.SetPlayer( player );
-	});
-}
-
 function OnPlayerReconnect( data ) {
 	$.Msg("DIRETIDE: Player has reconnected!")
 	var phase = data.Phase;
@@ -163,6 +118,5 @@ function OnPlayerReconnect( data ) {
 	GameEvents.Subscribe("update_score", UpdateScoreUI);
 	GameEvents.Subscribe("diretide_phase", Phase);
 	GameEvents.Subscribe("roshan_target", RoshanTarget);
-	GameEvents.Subscribe("hall_of_fame", HallOfFame);
 	GameEvents.Subscribe("diretide_player_reconnected", OnPlayerReconnect);
 })();

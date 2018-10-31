@@ -2,6 +2,8 @@
 
 (function () {
 
+GameEvents.Subscribe("hall_of_fame", HallOfFame);
+
 var placeholder = false
 
 if (placeholder == true) {
@@ -344,17 +346,8 @@ function EndScoreboard() {
 		$("#es-team-score-radiant").text = new String(serverInfo.radiant_score);
 		$("#es-team-score-dire").text = new String(serverInfo.dire_score);
 		$("#es-game-time-text").text = RawTimetoGameTime(Game.GetDOTATime(false, false));
-	});
 
-	api.diretide_highscores().then(function (data) {
-		// data is array of {
-		//		level: 123,
-		//		players: [ steamid, steamid, steamid ]
-		// }
-
-		data.forEach(function (result) {
-			$.Msg("players: " + result.users.join(", ") + " made it to level " + result.level);
-		});
+		HallOfFame()
 	});
 }
 
@@ -373,6 +366,64 @@ function RawTimetoGameTime(time) {
 	timerText += sec;
 	return timerText;
 }
+
+function CloseHallOfFame() {
+	$("#HallOfFame").style.visibility = "collapse";
+}
+
+function HallOfFame() {
+	var i = 1;
+	var j = 0;
+
+	api.diretide_highscores().then(function (data) {
+		// data is array of {
+		//		level: 123,
+		//		players: [ steamid, steamid, steamid ]
+		// }
+
+		data.forEach(function (result) {
+			if ($("#game_" + i)) {
+				$("#game_" + i).DeleteAsync(0);
+			}
+
+			$.Msg("players: " + result.users.join(", ") + " made it to level " + result.level);
+
+			var game = $.CreatePanel("Panel", $('#Tops'), "game_" + i);
+			game.AddClass("LeaderboardGames");
+
+			var rank = $.CreatePanel("Label", game, "rank_" + i);
+			rank.AddClass("LeaderboardRank");
+			rank.text = i;
+
+			var steamid_container = $.CreatePanel("Panel", game, "steamid_container_" + i);
+			steamid_container.AddClass("LeaderboardXP");
+			steamid_container.text = i;
+
+			while (result.users[j] != undefined) {
+				$.Msg(result.users[j])
+
+				var steam_id = $.CreatePanel("DOTAAvatarImage", steamid_container, "");
+				steam_id.AddClass("LeaderboardAvatar");
+				steam_id.steamid = result.users[j];
+				steam_id.style.width = "38px";
+				steam_id.style.height = "38px";
+				steam_id.style.marginLeft = "40px";
+				steam_id.style.marginRight = "40px";
+				steam_id.style.align = "center center";
+
+				j++;
+			}
+
+			var level = $.CreatePanel("Label", game, "level_" + i);
+			level.AddClass("LeaderboardIMR");
+			level.text = result.level;
+
+			i++;
+			j = 0;
+		});
+	});
+}
+
 /*
 function UpdateTimer( data )
 {
