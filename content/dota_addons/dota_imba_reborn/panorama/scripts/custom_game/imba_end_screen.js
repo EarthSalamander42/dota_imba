@@ -348,6 +348,8 @@ function EndScoreboard() {
 		$("#es-game-time-text").text = RawTimetoGameTime(Game.GetDOTATime(false, false));
 
 		HallOfFame()
+		$.Schedule(2.0, HallOfFame);
+		$.Schedule(5.0, HallOfFame);
 	});
 }
 
@@ -407,7 +409,7 @@ function HallOfFame() {
 				steam_id.steamid = result.users[j];
 				steam_id.style.width = "38px";
 				steam_id.style.height = "38px";
-				steam_id.style.marginRight = "5px";
+				steam_id.style.marginRight = "7px";
 
 				j++;
 			}

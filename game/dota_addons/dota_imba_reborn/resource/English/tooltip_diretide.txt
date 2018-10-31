@@ -5,9 +5,9 @@
 "diretide_phase_1"						"Candy Chaos"
 "diretide_phase_1_desc"					"Compete against the enemy team in collecting the most candy. Collect candy from Roshlings and deposit it in your Candy Bucket. Go on a raid and steal the enemy's candy from their bucket. When the timer expires the team with the most candy wins!"
 "diretide_phase_2"						"The Trickster Awakens"
-"diretide_phase_2_desc"					"All this ruckus has awoken Rosan from his slumber. He will target a random hero and bully tem for candy. Keeping a piece of candy in your inventory is recommended as failure to feed Roshan will result in death."
+"diretide_phase_2_desc"					"All this ruckus has awoken Roshan from his slumber. He will target a random hero and bully tem for candy. Keeping a piece of candy in your inventory is recommended as failure to feed Roshan will result in death."
 "diretide_phase_3"						"Sugar Rush"
-"diretide_phase_3_desc"					"After 20 minutes Roshan will be stuffed and you will be left candyless. You must team up with the enemy and go after Roshan to reclaim your candy. Defeating Roshan will reward you with items and delicious candy. The fastest Roshan slayers will be immortalized in the Diretide Hall of Fame!"
+"diretide_phase_3_desc"					"After 12 minutes Roshan will be stuffed and you will be left candyless. You must team up with the enemy and go after Roshan to reclaim your candy. Defeating Roshan will reward you with items and delicious candy. The fastest Roshan slayers will be immortalized in the Diretide Hall of Fame!"
 "diretide_advert"						"DIRETIDE: Roshan has awoken and wants your sweets!"
 
 //=================================================================================================================

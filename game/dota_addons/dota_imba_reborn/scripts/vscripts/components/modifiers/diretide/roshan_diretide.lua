@@ -832,7 +832,8 @@ function modifier_imba_roshan_death_buff:DeclareFunctions()
 			 MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
 			 MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 			 MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
-			 MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS }
+			 MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS,
+			 MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING }
 end
 
 function modifier_imba_roshan_death_buff:GetModifierExtraHealthBonus()
@@ -853,7 +854,7 @@ function modifier_imba_roshan_death_buff:GetModifierPhysicalArmorBonus()
 function modifier_imba_roshan_death_buff:GetModifierMagicalResistanceBonus()
 	return self.bonusResist * self:GetStackCount() end
 
-function modifier_imba_roshan_death_buff:GetCustomTenacityUnique()
+function modifier_imba_roshan_death_buff:GetModifierStatusResistanceStacking()
 	return self.bonusTenacity * self:GetStackCount() end
 
 ---------- Modifier for handling begging

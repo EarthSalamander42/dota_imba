@@ -772,23 +772,22 @@
 }
 
 .LeaderboardRank {
-	width: 10%;	
+	width: 20%;	
 	align:  right center;
 }
 
 .LeaderboardAvatar {
-	width: 80%;
-	border: 0;
+	width: 60%;
 	align:  center center;
 }
 
 .LeaderboardXP {
-	width: 80%;	
+	width: 60%;	
 	align:  center center;
 }
 
 .LeaderboardIMR {
-	width: 10%;	
+	width: 20%;	
 	align:  right center;
 }
 

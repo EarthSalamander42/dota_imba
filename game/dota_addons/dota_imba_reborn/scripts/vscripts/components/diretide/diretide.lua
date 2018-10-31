@@ -45,7 +45,7 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 		local buildings = FindUnitsInRadius(1, Vector(0,0,0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
 
 		for _, building in pairs(buildings) do
-			if string.find(building:GetName(), "tower") or string.find(building:GetName(), "pumpkin") then
+			if string.find(building:GetName(), "tower2") or string.find(building:GetName(), "pumpkin") then
 				building:AddAbility("diretide_pumpkin_immune"):SetLevel(1)
 			end
 		end
@@ -214,20 +214,9 @@ function Diretide:SwapTeam(team)
 	end
 
 	for _, hero in pairs(HeroList:GetAllHeroes()) do
-		local pos = Entities:FindByClassname(nil, "info_courier_spawn_radiant"):GetAbsOrigin()
-
-		if hero:GetTeamNumber() == 3 then
-			pos = Entities:FindByClassname(nil, "info_courier_spawn_dire"):GetAbsOrigin()
-		end
-
-		if not hero:IsAlive() then
-			hero:RespawnHero(false, false)
-		end
-
+		hero:RespawnHero(false, false)
 		hero:SetHealth(hero:GetMaxHealth())
 		hero:SetMana(hero:GetMaxMana())
---		ROSHAN_ENT:SetTeam(team)
-		FindClearSpaceForUnit(hero, pos, true)
 		hero:Stop()
 		hero:ModifyGold(DIRETIDE_BONUS_GOLD, true, 0)
 		hero:AddExperience(100000, false, false)
@@ -252,16 +241,10 @@ local i = 1
 	for _, hero in pairs(HeroList:GetAllHeroes()) do
 		PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), hero)
 		hero:RemoveModifierByName("modifier_command_restricted")
-		Timers:CreateTimer(0.1, function()
-			i = i + 1
-			if i < 10 then
---				print("Unlock camera!")
-				PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), nil)
-				return 0.1
-			else
---				print("Camera unlocked.")
-				return
-			end
+
+		Timers:CreateTimer(1.0, function()
+			PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), nil)
+			return 1.0
 		end)
 	end
 end
