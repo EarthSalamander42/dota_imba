@@ -65,7 +65,7 @@ function modifier_imba_echo_sabre_passive:DeclareFunctions()
 			MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 			MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
 			MODIFIER_PROPERTY_MANA_REGEN_CONSTANT,
-			MODIFIER_EVENT_ON_ATTACK_START
+			MODIFIER_EVENT_ON_ATTACK
 		}
 	return decFuns
 end
@@ -79,6 +79,7 @@ function modifier_imba_echo_sabre_passive:OnCreated()
 		self.bonus_attack_speed = item:GetSpecialValueFor("bonus_attack_speed")
 		self.bonus_damage = item:GetSpecialValueFor("bonus_damage")
 		self.bonus_mana_regen = item:GetSpecialValueFor("bonus_mana_regen")
+		self.slow_duration = item:GetSpecialValueFor("slow_duration")
 		self:CheckUnique(true)
 	end
 end
@@ -103,7 +104,7 @@ function modifier_imba_echo_sabre_passive:GetModifierConstantManaRegen()
 	return self.bonus_mana_regen
 end
 
-function modifier_imba_echo_sabre_passive:OnAttackStart(keys)
+function modifier_imba_echo_sabre_passive:OnAttack(keys)
 	local item = self:GetAbility()
 	local parent = self:GetParent()
 	if parent:IsRangedAttacker() then return nil end
@@ -112,18 +113,28 @@ function modifier_imba_echo_sabre_passive:OnAttackStart(keys)
 			if item:IsCooldownReady() then
 				if self:CheckUniqueValue(1,{"modifier_imba_reverb_rapier_passive"}) == 1 then
 					item:UseResources(false,false,true)
-					if (item:GetCooldownTime() > 0) then
-						-- Adds modifier duration equal to cooldown so echo effect resets appropriately
-						parent:AddNewModifier(parent, item, "modifier_imba_echo_rapier_haste", {duration = item:GetCooldownTime()})
-					else
-						-- Line to allow echo to work in WTF mode
-						parent:AddNewModifier(parent, item, "modifier_imba_echo_rapier_haste", {})
-					end
+					parent:AddNewModifier(parent, item, "modifier_imba_echo_rapier_haste", {})
+					keys.target:AddNewModifier(self.parent, self:GetAbility(), "modifier_imba_echo_rapier_debuff_slow", {duration = self.slow_duration})
+				end
+			end
+			
+			if parent:HasModifier("modifier_imba_echo_rapier_haste") then
+				local mod = parent:FindModifierByName("modifier_imba_echo_rapier_haste")
+				mod:DecrementStackCount()
+				if mod:GetStackCount() < 1 then
+					mod:Destroy()
 				end
 			end
 		end
 	end
 end
+
+function modifier_imba_echo_sabre_passive:OnRemoved()
+	if (self:GetParent():FindModifierByName("modifier_imba_echo_rapier_haste")) then
+		self:GetParent():FindModifierByName("modifier_imba_echo_rapier_haste"):Destroy()
+	end
+end
+
 -------------------------------------------
 --				REVERB RAPIER
 -------------------------------------------
@@ -165,7 +176,7 @@ function modifier_imba_reverb_rapier_passive:DeclareFunctions()
 			MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 			MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
 			MODIFIER_PROPERTY_MANA_REGEN_CONSTANT,
-			MODIFIER_EVENT_ON_ATTACK_START
+			MODIFIER_EVENT_ON_ATTACK
 		}
 	return decFuns
 end
@@ -179,6 +190,7 @@ function modifier_imba_reverb_rapier_passive:OnCreated()
 		self.bonus_attack_speed = item:GetSpecialValueFor("bonus_attack_speed")
 		self.bonus_damage = item:GetSpecialValueFor("bonus_damage")
 		self.bonus_mana_regen = item:GetSpecialValueFor("bonus_mana_regen")
+		self.slow_duration = item:GetSpecialValueFor("slow_duration")
 		self:CheckUnique(true)
 	end
 end
@@ -203,7 +215,7 @@ function modifier_imba_reverb_rapier_passive:GetModifierConstantManaRegen()
 	return self.bonus_mana_regen
 end
 
-function modifier_imba_reverb_rapier_passive:OnAttackStart(keys)
+function modifier_imba_reverb_rapier_passive:OnAttack(keys)
 	local item = self:GetAbility()
 	local parent = self:GetParent()
 	if parent:IsRangedAttacker() then return nil end
@@ -212,18 +224,28 @@ function modifier_imba_reverb_rapier_passive:OnAttackStart(keys)
 			if item:IsCooldownReady() then
 				if self:CheckUniqueValue(1,nil) == 1 then
 					item:UseResources(false,false,true)
-					if (item:GetCooldownTime() > 0) then
-						-- Adds modifier duration equal to cooldown so reverb effect resets appropriately
-						parent:AddNewModifier(parent, item, "modifier_imba_echo_rapier_haste", {duration = item:GetCooldownTime()})
-					else
-						-- Line to allow reverb to work in WTF mode
-						parent:AddNewModifier(parent, item, "modifier_imba_echo_rapier_haste", {})
-					end
+					parent:AddNewModifier(parent, item, "modifier_imba_echo_rapier_haste", {})
+					keys.target:AddNewModifier(self.parent, self:GetAbility(), "modifier_imba_echo_rapier_debuff_slow", {duration = self.slow_duration})
+				end
+			end
+			
+			if parent:HasModifier("modifier_imba_echo_rapier_haste") then
+				local mod = parent:FindModifierByName("modifier_imba_echo_rapier_haste")
+				mod:DecrementStackCount()
+				if mod:GetStackCount() < 1 then
+					mod:Destroy()
 				end
 			end
 		end
 	end
 end
+
+function modifier_imba_reverb_rapier_passive:OnRemoved()
+	if (self:GetParent():FindModifierByName("modifier_imba_echo_rapier_haste")) then
+		self:GetParent():FindModifierByName("modifier_imba_echo_rapier_haste"):Destroy()
+	end
+end
+
 -------------------------------------------
 modifier_imba_echo_rapier_haste = modifier_imba_echo_rapier_haste or class({})
 function modifier_imba_echo_rapier_haste:IsDebuff() return false end
@@ -250,6 +272,10 @@ function modifier_imba_echo_rapier_haste:OnCreated()
 	end
 end
 
+function modifier_imba_echo_rapier_haste:OnRefresh()
+	self:OnCreated()
+end
+
 function modifier_imba_echo_rapier_haste:DeclareFunctions()
 	local decFuns =
 		{
@@ -261,19 +287,9 @@ end
 
 function modifier_imba_echo_rapier_haste:OnAttack(keys)
 	if self.parent == keys.attacker then
-
 		keys.target:AddNewModifier(self.parent, self:GetAbility(), "modifier_imba_echo_rapier_debuff_slow", {duration = self.slow_duration})
-
-		if self:GetStackCount() == 1 then
-			self:Destroy()
-			return nil
-		end
-
-		self:DecrementStackCount()
 	end
 end
-
-
 
 function modifier_imba_echo_rapier_haste:GetModifierAttackSpeedBonus_Constant()
 	return self.attack_speed_buff

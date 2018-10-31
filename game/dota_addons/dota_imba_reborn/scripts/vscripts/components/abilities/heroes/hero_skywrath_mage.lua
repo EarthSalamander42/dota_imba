@@ -391,10 +391,10 @@ function imba_skywrath_mage_concussive_shot:OnProjectileHit_ExtraData(target, lo
 		return nil
 	end
 
-	-- If the target is not a hero (scepter aiming allows this), do nothing
-	if not target:IsHero() then
-		return nil
-	end
+	-- If the target is not a hero (scepter aiming allows this), do nothing (why would you make it do nothing if they can be targetted in the first place -_-)
+	-- if not target:IsHero() then
+		-- return nil
+	-- end
 
 
 	-- Add FOW Viewer
@@ -448,16 +448,16 @@ function imba_skywrath_mage_concussive_shot:OnProjectileHit_ExtraData(target, lo
 		Timers:CreateTimer(ghastly_delay, function()
 
 			-- Search for the closest nearby friendly hero (of the enemy)
-			local enemies = FindUnitsInRadius(target:GetTeamNumber(),
+			local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
 											  target_pos,
 											  nil,
 											  search_radius,
-											  DOTA_UNIT_TARGET_TEAM_FRIENDLY,
+											  DOTA_UNIT_TARGET_TEAM_ENEMY,
 											  DOTA_UNIT_TARGET_HERO,
-											  DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS,
+											  DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS,
 											  FIND_CLOSEST,
 											  false)
-
+											  
 			-- If no heroes were found, do nothing            
 			if #enemies == 0 then                
 				return nil

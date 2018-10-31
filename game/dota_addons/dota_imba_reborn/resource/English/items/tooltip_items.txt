@@ -1018,7 +1018,7 @@
 "DOTA_Tooltip_Ability_item_imba_reverb_rapier"                  "Reverb Sabre"
 "DOTA_Tooltip_ability_item_imba_reverb_rapier_Description"        "<h1>Passive: Superb Reverb</h1> When off-cooldown, causes your attacks to hit <font color='#FF7800'>three</font> times in quick succession. Tri-attacks apply a %slow_duration% second %movement_slow%%% movement and attack speed slow.<br><br><font color='#00FF40'>Does not work on ranged heroes.</font>"
 "DOTA_Tooltip_ability_item_imba_reverb_rapier_Lore"           "Faced with the challenge of combining two Echo Sabres' magic into a single blade, the runesmiths of the Ruined City asked themselves only if they could - never if they should."
-"DOTA_Tooltip_ability_item_imba_reverb_rapier_Note0"          "Upon proccing, grants the user 720 attack speed or triples your current bonus, whichever is higher, until the next attack."
+"DOTA_Tooltip_ability_item_imba_reverb_rapier_Note0"          "Upon proccing, grants the user 490 attack speed or triples your current bonus, whichever is higher, until the next attack."
 "DOTA_Tooltip_ability_item_imba_reverb_rapier_bonus_intellect"      "+$int"
 "DOTA_Tooltip_ability_item_imba_reverb_rapier_bonus_strength"     "+$str"
 "DOTA_Tooltip_ability_item_imba_reverb_rapier_bonus_attack_speed"   "+$attack"
