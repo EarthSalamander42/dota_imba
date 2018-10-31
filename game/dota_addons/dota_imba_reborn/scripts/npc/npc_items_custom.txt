@@ -7913,7 +7913,7 @@
 			"08"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"slow_duration"			"0.7"
+				"slow_duration"			"0.8"
 			}
 			"09"
 			{
@@ -8028,7 +8028,7 @@
 			"08"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"slow_duration"			"0.7"
+				"slow_duration"			"0.8"
 			}
 			"09"
 			{
@@ -8038,7 +8038,7 @@
 			"10"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"attack_speed_buff"		"720"
+				"attack_speed_buff"		"490"
 			}
 		}
 	}

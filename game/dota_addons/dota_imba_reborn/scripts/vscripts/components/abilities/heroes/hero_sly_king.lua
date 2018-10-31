@@ -568,18 +568,21 @@ function imba_sly_king_winterbringer:OnSpellStart()
 	EmitSoundOnLocationWithCaster(self:GetCaster():GetAbsOrigin(), sound_cast, self:GetCaster())
 
 	--Add the pulse modifier to the caster
-	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_winterbringer_pulse", {duration = duration})
-
-	-- Make Sly King perform perform the animation over and over
-	Timers:CreateTimer(1.85, function()
-		if self:GetCaster():IsChanneling() then
-			self:GetCaster():StartGesture(ACT_DOTA_CAST_ABILITY_4)
-			return FrameTime()
-		else
-			self:GetCaster():FadeGesture(ACT_DOTA_CAST_ABILITY_4)
-			return nil
-		end
-	end)
+	--self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_winterbringer_pulse", {duration = duration})
+	
+	-- This allows for multiple Winterbringers
+	CreateModifierThinker(self:GetCaster(), self, "modifier_imba_winterbringer_pulse", {duration = duration}, self:GetCaster():GetAbsOrigin(), self:GetCaster():GetTeamNumber(), false)
+	
+	-- Make Sly King perform perform the animation over and over (doesn't do anything now)
+	-- Timers:CreateTimer(1.85, function()
+		-- if self:GetCaster():IsChanneling() then
+			-- self:GetCaster():StartGesture(ACT_DOTA_CAST_ABILITY_4)
+			-- return FrameTime()
+		-- else
+			-- self:GetCaster():FadeGesture(ACT_DOTA_CAST_ABILITY_4)
+			-- return nil
+		-- end
+	-- end)
 
 	-- Nether Ward handling
 	if string.find(self:GetCaster():GetUnitName(), "npc_imba_pugna_nether_ward") then
@@ -636,7 +639,11 @@ function modifier_imba_winterbringer_pulse:OnIntervalThink()
 		self.pull_radius = self.radius
 
 		-- Add particle
-		local particle = ParticleManager:CreateParticle("particles/heroes/hero_slyli/ice_route.vpcf", PATTACH_CUSTOMORIGIN, self:GetCaster())
+		
+		-- This one has screenshake, but turns invisible if you lose sight of Sly King...
+		--local particle = ParticleManager:CreateParticle("particles/heroes/hero_slyli/ice_route.vpcf", PATTACH_CUSTOMORIGIN, self:GetCaster())
+		
+		local particle = ParticleManager:CreateParticle("particles/heroes/hero_slyli/ice_route.vpcf", PATTACH_WORLDORIGIN, self:GetCaster())
 		ParticleManager:SetParticleControl(particle, 0, self.pos)
 		ParticleManager:SetParticleControl(particle, 1, Vector(self.radius, self.radius, self.radius))
 
@@ -676,7 +683,7 @@ function modifier_imba_winterbringer_pulse:OnIntervalThink()
 
 		-- Find all nearby enemies in the pull radius
 		local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(),
-			self:GetCaster():GetAbsOrigin(),
+			self.pos,
 			nil,
 			self.pull_radius,
 			DOTA_UNIT_TARGET_TEAM_ENEMY,
@@ -689,12 +696,12 @@ function modifier_imba_winterbringer_pulse:OnIntervalThink()
 		for _,enemy in pairs(enemies) do
 			-- Pull enemy towards Sand King
 			-- Calculate distance and direction between SK and the enemy
-			local distance = (enemy:GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Length2D()
-			local direction = (enemy:GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Normalized()
+			local distance = (enemy:GetAbsOrigin() - self.pos):Length2D()
+			local direction = (enemy:GetAbsOrigin() - self.pos):Normalized()
 
 			-- If the target is not too close, calculate the pull point
 			if (distance - self.pull_speed) > 50 then
-				local pull_point = self:GetCaster():GetAbsOrigin() + direction * (distance - self.pull_speed)
+				local pull_point = self.pos + direction * (distance - self.pull_speed)
 
 				-- Set the enemy at the pull point
 				enemy:SetAbsOrigin(pull_point)

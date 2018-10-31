@@ -694,11 +694,11 @@ function imba_troll_warlord_battle_trance:OnSpellStart()
 
 		-- Decide which cast sound to play
 		local sound = "troll_warlord_troll_battletrance_0"..math.random(1,6)
-		if (math.random(1,100) <= 30) then
-			local heroes = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, 3000, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, FIND_ANY_ORDER, false)
-			if #heroes >= PlayerResource:GetPlayerCount() * 0.6666 then
+		if (math.random(1,100) <= 10) then
+			-- local heroes = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, 3000, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, FIND_ANY_ORDER, false)
+			--if #heroes >= PlayerResource:GetPlayerCount() * 0.6666 then
 				sound = "Imba.TrollAK47"
-			end
+			--end
 		end
 		local allies = FindUnitsInRadius(caster:GetTeamNumber(), Vector(0,0,0), nil, 25000, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), FIND_ANY_ORDER, false)
 		caster:EmitSound(sound)
@@ -736,17 +736,12 @@ function modifier_imba_battle_trance:OnCreated()
 	local ability = self:GetAbility()
 	local parent = self:GetParent()
 	self.bonus_as = ability:GetTalentSpecialValueFor("bonus_as")
-	local bonus_bat = ability:GetTalentSpecialValueFor("bonus_bat")
+	self.bonus_bat = min(ability:GetTalentSpecialValueFor("bonus_bat"), parent:GetBaseAttackTime())
 	if parent:IsRealHero() and IsServer() then
 		EmitSoundOnClient("Hero_TrollWarlord.BattleTrance.Cast.Team", parent:GetPlayerOwner())
 		if self.sound == "Imba.TrollAK47" then
 			EmitSoundOnClient("Imba.TrollAK47.Team", parent:GetPlayerOwner())
 		end
-	end
-	if parent:GetBaseAttackTime() <= bonus_bat then
-		self.bonus_bat = bonus_bat
-	else
-		self.bonus_bat = 0
 	end
 end
 

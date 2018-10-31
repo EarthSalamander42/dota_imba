@@ -2682,8 +2682,8 @@
 "DOTA_Tooltip_ability_imba_skywrath_mage_concussive_shot"              "Concussive Shot"
 "DOTA_Tooltip_ability_imba_skywrath_mage_concussive_shot_Description"               "Skywrath Mage sets off a long range shot that hits the closest hero within %search_radius% range. Upon impact, it deals damage and slows in %impact_radius% radius.\n<font color='#FF7800'>Ghastly Pulse:</font> When Concussive Shot hits its target, the target is forced to cast a half-damage Concussive Shot, aimed at its closest ally. Ghastly Pulse keeps triggering on enemies, up to a maximum, or if there are no targets to bounce to.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
 "DOTA_Tooltip_ability_imba_skywrath_mage_concussive_shot_Lore"          "Those who serve the court of the Ghastly Eyrie are ever locked in covert war. One must always know where danger lurks nearest."
-"DOTA_Tooltip_ability_imba_skywrath_mage_concussive_shot_Note0"                     "The slow debuff is always refreshed, and does not stacks with itself."
-"DOTA_Tooltip_ability_imba_skywrath_mage_concussive_shot_Note1"                     "Scepter secondary shot is fully overridden by the level 40 Concussive Shot talent."
+"DOTA_Tooltip_ability_imba_skywrath_mage_concussive_shot_Note0"                     "Does not work when no heroes are in range or heroes are in fog."
+"DOTA_Tooltip_ability_imba_skywrath_mage_concussive_shot_Note1"                     "Scepter secondary shot is fully overridden by the level 25 Concussive Shot talent."
 "DOTA_Tooltip_ability_imba_skywrath_mage_concussive_shot_Note2"                     "Concussive Shot will try to hit the nearest enemy, even if it magic immune."
 "DOTA_Tooltip_ability_imba_skywrath_mage_concussive_shot_damage"                    "DAMAGE:"
 "DOTA_Tooltip_ability_imba_skywrath_mage_concussive_shot_ms_slow_pct"               "%MOVE SPEED SLOW:"
@@ -2716,7 +2716,7 @@
 // Skywrath Mage's Mystic Flare
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_skywrath_mage_mystic_flare"                  "Mystic Flare"
-"DOTA_Tooltip_ability_imba_skywrath_mage_mystic_flare_Description"                  "Skywrath Mage uses his ultimate magical ability to conjure a precise and violent mystical field that lays waste to his adversaries. Deals massive damage distributed evenly among any Heroes in the area over %damage_duration% seconds.\n<font color='#FF7800'>Mystic Nova:</font> %explosion_delay% seconds after Mystic Flare ends, huge amounts of arcane energy is unleashed, damaging nearby enemies. The damage is based on Skywrath's intelligence, and is increased by %int_increase_per_stack%% for each Arcane Wrath stack he has at the moment of explosion.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
+"DOTA_Tooltip_ability_imba_skywrath_mage_mystic_flare_Description"                  "Skywrath Mage uses his ultimate magical ability to conjure a precise and violent mystical field that lays waste to his adversaries. Deals massive damage distributed evenly among any Heroes in the area over %damage_duration% seconds.\n<font color='#FF7800'>Mystic Nova:</font> %explosion_delay% seconds after Mystic Flare ends, huge amounts of arcane energy is unleashed, damaging nearby enemies. The damage is based on Skywrath's intelligence, and is increased by %int_increase_per_stack%%% for each Arcane Wrath stack he has at the moment of explosion.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
 "DOTA_Tooltip_ability_imba_skywrath_mage_mystic_flare_Lore"            "Only the most practiced of Skywrath sorcerers could hope to shape the skies into such a storm."
 "DOTA_Tooltip_ability_imba_skywrath_mage_mystic_flare_damage_radius"                "FLARE RADIUS:"
 "DOTA_Tooltip_ability_imba_skywrath_mage_mystic_flare_damage"          "DAMAGE:"
