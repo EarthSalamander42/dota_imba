@@ -34634,7 +34634,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
-		"ScriptFile"					"hero/neutral_roshan.lua"
+		"ScriptFile"					"components/modifiers/diretide/roshan_diretide.lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 		"MaxLevel"						"1"

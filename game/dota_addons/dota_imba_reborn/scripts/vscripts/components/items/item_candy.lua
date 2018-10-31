@@ -12,17 +12,22 @@ function item_diretide_candy:OnSpellStart()
 		local modifier_candy = caster:FindModifierByName("modifier_diretide_candy_hp_loss")
 
 		if target:GetUnitName() == "npc_dota_good_candy_pumpkin" then
+			if caster:GetTeamNumber() == 3 then return end
+
 			for _, hero in pairs(HeroList:GetAllHeroes()) do
 				hero:AddExperience(75, false, false)
 				hero:ModifyGold(50, true, 0)
 			end
+
 			StartAnimation(target, {duration=1.0, activity=ACT_DOTA_ATTACK, rate=1.0})
 			CustomNetTables:SetTableValue("game_options", "radiant", {score = CustomNetTables:GetTableValue("game_options", "radiant").score +1})
 		elseif target:GetUnitName() == "npc_dota_bad_candy_pumpkin" then
+			if caster:GetTeamNumber() == 2 then return end
 			for _, hero in pairs(HeroList:GetAllHeroes()) do
 				hero:AddExperience(75, false, false)
 				hero:ModifyGold(50, true, 0)
 			end
+
 			StartAnimation(target, {duration=1.0, activity=ACT_DOTA_ATTACK, rate=1.0})
 			CustomNetTables:SetTableValue("game_options", "dire", {score = CustomNetTables:GetTableValue("game_options", "dire").score +1})
 		elseif target:GetUnitLabel() == "npc_diretide_roshan" then

@@ -407,9 +407,7 @@ function HallOfFame() {
 				steam_id.steamid = result.users[j];
 				steam_id.style.width = "38px";
 				steam_id.style.height = "38px";
-				steam_id.style.marginLeft = "40px";
-				steam_id.style.marginRight = "40px";
-				steam_id.style.align = "center center";
+				steam_id.style.marginRight = "5px";
 
 				j++;
 			}

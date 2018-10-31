@@ -134,7 +134,8 @@ function modifier_imba_roshan_ai_diretide:OnCreated()
 		self.isDead				= false												-- Is Roshan 'dead'?
 		self.deathPoint			= Vector(0,0,0)										-- Roshans last death point to which he will return upon respawn
 		self.deathCounter		= 0													-- Times Roshan died
-		
+		self.refreshed_heroes	= false
+
 		-- Sound delays to sync with animation
 		self.candyBeg		= 0.5
 		self.candyEat		= 0.15
@@ -144,14 +145,14 @@ function modifier_imba_roshan_ai_diretide:OnCreated()
 		self.candyGobble	= 0.5
 		self.gobbleRoar		= 4.7
 		self.deathRoar		= 1.9
-		
+
 		-- Aimation durations
 		self.animBeg		= 5
 		self.animGobble		= 6
 		self.animDeath		= 10
-		
+
 		-- Ability handlers
-		self.forceWave	= self.roshan:FindAbilityByName("imba_roshan_diretide_force_wave")
+		self.forceWave	= self.roshan:FindAbilityByName("roshan_deafening_blast")
 		self.roshlings	= self.roshan:FindAbilityByName("imba_roshan_diretide_summon_roshlings")
 		self.breath		= self.roshan:FindAbilityByName("creature_fire_breath")
 		self.apocalypse	= self.roshan:FindAbilityByName("imba_roshan_diretide_apocalypse")
@@ -228,6 +229,7 @@ local stacks = self:GetStackCount()
 					self.roshan:RespawnUnit()
 					self.roshan:CreatureLevelUp(1)
 					Diretide.nCOUNTDOWNTIMER = Diretide.nCOUNTDOWNTIMER + 30.0
+					self.refreshed_heroes = false
 
 					if self.forceWave	then self.forceWave:EndCooldown()	end
 					if self.roshlings	then self.roshlings:EndCooldown()	end
@@ -514,6 +516,46 @@ function modifier_imba_roshan_ai_diretide:ThinkPhase3(roshan)
 		GridNav:DestroyTreesAroundPoint(roshan:GetAbsOrigin(), 150, false)
 		return
 	end
+
+	if self.refreshed_heroes == false then
+		if roshan:GetHealthPercent() <= 50 then
+			self.refreshed_heroes = true
+			for _, hero in pairs(HeroList:GetAllHeroes()) do
+				for i=0, 23, 1 do  --The maximum number of abilities a unit can have is currently 16.
+					local current_ability = hero:GetAbilityByIndex(i)
+					if current_ability ~= nil then
+						current_ability:EndCooldown()
+					end
+				end
+
+				for i=0, 8, 1 do
+					local current_item = hero:GetItemInSlot(i)
+					if current_item ~= nil then
+						if current_item:GetName() ~= "item_refresher_datadriven" then  --Refresher Orb does not refresh itself.
+							current_item:EndCooldown()
+						end
+					end
+				end
+
+				ParticleManager:SetParticleControlEnt(ParticleManager:CreateParticle("particles/items2_fx/refresher.vpcf", PATTACH_ABSORIGIN_FOLLOW, hero), 0, hero, PATTACH_POINT_FOLLOW, "attach_hitloc", hero:GetAbsOrigin(), true)
+			end
+			roshan:EmitSound("DOTA_Item.Refresher.Activate")
+		end
+	end
+
+	local ability_count = roshan:GetAbilityCount()
+	for ability_index = 0, ability_count - 1 do
+		local ability = roshan:GetAbilityByIndex( ability_index ) 
+		if ability and ability:IsInAbilityPhase() then
+--			print("Cast Time:", ability:GetCastPoint())
+			if not roshan:HasModifier("modifier_black_king_bar_immune") then
+				roshan:EmitSound("DOTA_Item.BlackKingBar.Activate")
+			else
+				roshan:RemoveModifierByName("modifier_black_king_bar_immune")
+			end
+			roshan:AddNewModifier(roshan, self.ability, "modifier_black_king_bar_immune", {duration=0.2})
+		end
+	end
 	
 	-- Don't attempt casting spells if Silenced
 	if not roshan:IsSilenced() then
@@ -538,14 +580,11 @@ function modifier_imba_roshan_ai_diretide:ThinkPhase3(roshan)
 
 		-- Cast Force Wave if its available
 		if self.forceWave and self.forceWave:IsCooldownReady() then
-			print("Casting Wave of Force...")
-			local radius = self.forceWave:GetSpecialValueFor("radius")
---			local minTargets = self.forceWave:GetSpecialValueFor("min_targets")
-			local minTargets = 1
-			
+			local radius = self.forceWave:GetSpecialValueFor("travel_distance")
+
 			local nearbyHeroes = FindUnitsInRadius(roshan:GetTeamNumber(), roshan:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
-			if #nearbyHeroes >= minTargets then
-				roshan:CastAbilityNoTarget(self.apocalypse, 1)
+			if #nearbyHeroes >= 1 then
+				roshan:CastAbilityNoTarget(self.forceWave, 1)
 				return
 			end
 		end
@@ -1008,9 +1047,8 @@ function imba_roshan_diretide_force_wave:OnSpellStart()	-- Parameters
 
 	roshan:EmitSound("RoshanDT.WaveOfForce.Cast")
 
-	print(waveDistance)
-	print(waveRadius)
-	print()
+	print(waveSpeed)
+	print(angleStep)
 	
 	-- Base projectile information
 	local waveProjectile = {
@@ -1021,10 +1059,10 @@ function imba_roshan_diretide_force_wave:OnSpellStart()	-- Parameters
 		fStartRadius		= waveRadius,
 		fEndRadius			= waveRadius,
 		Source				= roshan,
-		bHasFrontalCone		= false,
+		bHasFrontalCone		= true,
 		bReplaceExisting	= false,
 		iUnitTargetTeam		= DOTA_UNIT_TARGET_TEAM_ENEMY,
-		iUnitTargetFlags	= DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
+		iUnitTargetFlags	= DOTA_UNIT_TARGET_FLAG_NONE,
 		iUnitTargetType		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
 		bDeleteOnHit		= false,
 		vVelocity			= roshan:GetForwardVector() * waveSpeed,
@@ -1043,7 +1081,6 @@ end
 function imba_roshan_diretide_force_wave:OnProjectileHit(unit, unitPos)
 	print("Target hit!")
 end
-
 
 ------------------------------------------
 --				ROSHLINGS				--
