@@ -19,6 +19,13 @@ function Diretide:Init()
 	GoodCamera:RemoveModifierByName("modifier_invulnerable")
 	BadCamera:SetAbsOrigin(dire_top_shrine_pos)
 	BadCamera:RemoveModifierByName("modifier_invulnerable")
+
+
+	Convars:RegisterCommand("hall_of_fame", function(keys) return TestEndScreenDiretide() end, "Test Duel Event", FCVAR_CHEAT)
+end
+
+function TestEndScreenDiretide()
+	CustomGameEventManager:Send_ServerToAllClients("hall_of_fame", {})
 end
 
 ListenToGameEvent('game_rules_state_change', function(keys)
@@ -69,7 +76,7 @@ function Diretide:Phase()
 
 		local checkpoint_positions = {}
 		checkpoint_positions[2] = Vector(615, -5110, 365)
-		checkpoint_positions[3] = Vector(2100, -4100, 365)
+		checkpoint_positions[3] = Vector(2300, -4100, 365)
 
 		local good_checkpoint = CreateUnitByName("npc_dota_good_candy_pumpkin", Vector(0, 0, 0), true, nil, nil, DOTA_TEAM_GOODGUYS)
 		local bad_checkpoint = CreateUnitByName("npc_dota_bad_candy_pumpkin", Vector(0, 0, 0), true, nil, nil, DOTA_TEAM_BADGUYS)
@@ -266,7 +273,9 @@ function Diretide:End()
 
 	local level = ROSHAN_ENT:GetLevel()
 
-	api.imba.diretide_update_levels(level)
+	if CustomNetTables:GetTableValue("game_options", "game_count").value == 1 then
+		api.imba.diretide_update_levels(level)
+	end
 
 	if DIRETIDE_WINNER == 2 then
 		Entities:FindByName(nil, "dota_badguys_fort"):ForceKill(false)
@@ -281,7 +290,11 @@ function Diretide:End()
 --		PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), ROSHAN_ENT)
 --	end
 
---	CustomGameEventManager:Send_ServerToAllClients("hall_of_fame", {})
+--	Timers:CreateTimer(function()
+--		CustomGameEventManager:Send_ServerToAllClients("hall_of_fame", {})
+--
+--		return 1.0
+--	end)
 end
 
 function Diretide:OnEntityKilled(killer, victim)
@@ -307,6 +320,8 @@ function Diretide:OnEntityKilled(killer, victim)
 
 				victim:RemoveItem(victim:FindItemByName("item_diretide_candy", false))
 			end
+
+			victim:SetTimeUntilRespawn(victim:GetTimeUntilRespawn() / 2)
 		end
 	end
 end
@@ -351,7 +366,7 @@ function Diretide:CreateCandy(pos)
 	item:LaunchLoot(false, 300, 0.5, random_pos)
 	item:EmitSound("Item.DropGemWorld")
 
-	local find_trees = GridNav:GetAllTreesAroundPoint(random_pos, 150, true)
+	local find_trees = GridNav:GetAllTreesAroundPoint(random_pos, 100, true)
 
 	for _, tree in pairs(find_trees) do
 		tree:CutDownRegrowAfter(99999, -1)

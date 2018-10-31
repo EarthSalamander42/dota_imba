@@ -55,6 +55,7 @@ function modifier_fountain_aura_effect_lua:OnCreated()
 end
 
 function modifier_fountain_aura_effect_lua:OnIntervalThink()
+	if GetMapName() == MapDiretide() then return end
 	if IsNearFountain(self:GetParent():GetAbsOrigin(), 1200) then
 		self:GetParent():AddNewModifier(self:GetParent(), nil, "modifier_fountain_invulnerable", {})
 	else
