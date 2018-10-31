@@ -499,15 +499,17 @@ function modifier_imba_enigma_midnight_pulse_thinker:OnIntervalThink()
 		FIND_ANY_ORDER,
 		false)
 	for _, enemy in pairs(enemies) do
-		local dmg = enemy:GetMaxHealth() * dmg_pct
-		local damageTable = {victim = enemy,
-			attacker = caster,
-			damage = dmg,
-			damage_type = DAMAGE_TYPE_PURE,
-			damage_flags = DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION,
-			ability = ability}
-		ApplyDamage(damageTable)
-		SearchForEngimaThinker(caster, enemy, self.pull_length)
+	    if not enemy:IsRoshan() then
+	    	local dmg = enemy:GetMaxHealth() * dmg_pct
+		    local damageTable = {victim = enemy,
+	    		attacker = caster,
+		    	damage = dmg,
+		    	damage_type = DAMAGE_TYPE_PURE,
+		    	damage_flags = DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION,
+		    	ability = ability}
+	    	ApplyDamage(damageTable)
+	    	SearchForEngimaThinker(caster, enemy, self.pull_length)
+	    end
 	end
 	local eidolons = FindUnitsInRadius(caster:GetTeamNumber(),
 		parent:GetAbsOrigin(),
