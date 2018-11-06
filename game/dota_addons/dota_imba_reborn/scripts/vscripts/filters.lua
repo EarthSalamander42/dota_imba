@@ -58,7 +58,7 @@ function GameMode:ExperienceFilter( keys )
 	-- experience		130
 	-- player_id_const	0
 
-	if PlayerResource:GetPlayer(keys.player_id_const) == nil then return end
+	if PlayerResource:GetPlayer(keys.player_id_const) == nil then return false end
 	local player = PlayerResource:GetPlayer(keys.player_id_const)
 	local hero = player:GetAssignedHero()
 
@@ -696,8 +696,10 @@ function GameMode:OrderFilter( keys )
 		local item = keys.entindex_ability
 		if item == nil then return true end
 
-		if GetMapName() == Map1v1() then
+		if BANNED_ITEMS[GetMapName()] then
 			for _, banned_item in pairs(BANNED_ITEMS[GetMapName()]) do
+				print(banned_item)
+				print(self.itemIDs[item])
 				if self.itemIDs[item] == banned_item then
 					DisplayError(unit:GetPlayerID(),"#dota_hud_error_cant_purchase_1v1")
 					return false

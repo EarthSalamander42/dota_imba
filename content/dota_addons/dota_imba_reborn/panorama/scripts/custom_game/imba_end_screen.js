@@ -347,9 +347,9 @@ function EndScoreboard() {
 		$("#es-team-score-dire").text = new String(serverInfo.dire_score);
 		$("#es-game-time-text").text = RawTimetoGameTime(Game.GetDOTATime(false, false));
 
-		HallOfFame()
-		$.Schedule(2.0, HallOfFame);
-		$.Schedule(5.0, HallOfFame);
+//		HallOfFame()
+//		$.Schedule(2.0, HallOfFame);
+//		$.Schedule(5.0, HallOfFame);
 	});
 }
 

@@ -35,6 +35,7 @@
 // Winterbringer
 "DOTA_Tooltip_ability_imba_sly_king_winterbringer"					"Winterbringer"
 "DOTA_Tooltip_ability_imba_sly_king_winterbringer_Description"		"Sly King calls the winds of winter, creating a frozen realm of violent reverberation. Enemies caught in the area suffer from strong attack and move speed slow, take heavy damage every %pulse_interval% seconds, and are pulled towards Sly King each pulse."
+"DOTA_Tooltip_ability_imba_sly_king_winterbringer_Note0"			"Can only have one instance of Winterbringer up at a time."
 "DOTA_Tooltip_ability_imba_sly_king_winterbringer_duration"			"DURATION:"
 "DOTA_Tooltip_ability_imba_sly_king_winterbringer_damage"			"DMG PER TICK:"
 "DOTA_Tooltip_ability_imba_sly_king_winterbringer_radius"			"RADIUS:"

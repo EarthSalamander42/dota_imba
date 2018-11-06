@@ -14,6 +14,8 @@
 
 require('components/settings/settings_donator')
 
+IMBA_VERSION = "7.08c"
+
 -- Picking screen constants
 PICKING_SCREEN_OVER = false
 CAPTAINS_MODE_CAPTAIN_TIME = 20		-- how long players have to claim the captain chair
@@ -335,6 +337,11 @@ BANNED_ITEMS[Map1v1()] = {
 	"item_tome_of_knowledge",
 }
 
+BANNED_ITEMS[MapDiretide()] = {
+	"item_recipe_imba_jarnbjorn",
+	"item_imba_jarnbjorn",
+}
+
 TOWER_ABILITIES = {}
 TOWER_ABILITIES["tower1"] = {
 	"imba_tower_healing_tower",
@@ -575,7 +582,7 @@ if GetMapName() == MapOverthrow() then
 end
 
 
-IMBA_DIRETIDE_EASTER_EGG = true
+IMBA_DIRETIDE_EASTER_EGG = false
 
 IMBA_DIRETIDE = false
 

@@ -10,6 +10,7 @@
 	</scripts>
 
 	<Panel class="es-root">
+<!--
 		<Panel id="HallOfFame" hittest="false">
 			<Panel id="InfoHeader" hittest="false">
 				<Button id="CloseButton" onactivate="CloseHallOfFame();">
@@ -27,10 +28,9 @@
 			</Panel>
 
 			<Panel id="Tops" hittest="false">
-				<!-- JS Inserts records here -->
 			</Panel>
 		</Panel>
-
+-->
 		<Panel class="end-screen">
 			<Panel id="es-victory-info">
 				<Label id="es-victory-info-text" text="The many face god Victory!" />

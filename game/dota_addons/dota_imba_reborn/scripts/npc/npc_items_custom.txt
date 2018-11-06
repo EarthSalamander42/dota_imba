@@ -472,7 +472,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"xp_multiplier"			"1.85"
+				"xp_multiplier"			"2.1"
 			}
 			"03"
 			{
@@ -659,7 +659,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"heal_amount"			"325"
+				"heal_amount"			"400"
 			}
 			"06"
 			{
@@ -794,7 +794,7 @@
 			"10"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"mend_base_health"		"400"
+				"mend_base_health"		"500"
 			}
 			"11"
 			{
@@ -920,7 +920,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"vampiric_aura"			"15"
+				"vampiric_aura"			"17"
 			}
 			"03"
 			{
@@ -994,7 +994,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"vampiric_aura"			"20"
+				"vampiric_aura"			"22"
 			}
 			"03"
 			{
@@ -1353,7 +1353,7 @@
 			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"crit_damage"				"175"
+				"crit_damage"				"200"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"09"
@@ -2352,12 +2352,12 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"warrior_health"		"900"
+				"warrior_health"		"800"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"archer_health"			"900"
+				"archer_health"			"800"
 			}
 		}
 
@@ -2459,12 +2459,12 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"warrior_health"		"1200"
+				"warrior_health"		"900"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"archer_health"			"1200"
+				"archer_health"			"900"
 			}
 		}
 
@@ -2566,12 +2566,12 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"warrior_health"		"1500"
+				"warrior_health"		"1000"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"archer_health"			"1500"
+				"archer_health"			"1000"
 			}
 		}
 
@@ -2670,12 +2670,12 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"warrior_health"		"1800"
+				"warrior_health"		"1100"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"archer_health"			"1800"
+				"archer_health"			"1100"
 			}
 		}
 
@@ -3067,7 +3067,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"noncombat_regen"		"5.0"
+				"noncombat_regen"		"6.0"
 			}
 			"07"
 			{
@@ -3079,7 +3079,7 @@
 				"var_type"				"FIELD_INTEGER"
 				"regen_cooldown_ranged"	"7"
 			}
-		}		
+		}
 	}
 
 	//=================================================================================================================
@@ -3205,24 +3205,6 @@
 				"aura_linger_duration"	"1.0"
 			}
 		}
-
-//		"Modifiers"
-//		{
-//			"modifier_item_imba_shivas_aura_slow_stack"
-//			{
-//				"Passive"				"0"
-//				"IsHidden"				"1"
-//				"IsDebuff"				"1"
-//				"IsPurgable"			"0"
-
-//				"Duration"				"%aura_linger_duration"
-
-//				"Properties"
-//				{
-//					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"-1"
-//				}
-//			}
-//		}
 	}
 
 	//=================================================================================================================
@@ -3596,7 +3578,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_block"			"20"
+				"damage_block"			"25"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 		}
@@ -4275,7 +4257,7 @@
 			"12"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"wind_song_duration"	"4"
+				"wind_song_duration"	"3"
 			}
 			"13"
 			{
@@ -4345,7 +4327,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"76"
+				"bonus_damage"			"90"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"02"
@@ -4904,7 +4886,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_strength"		"16"
+				"bonus_strength"		"21"
 			}
 		}
 	}
@@ -4951,7 +4933,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"proc_ms"				"16"
+				"proc_ms"				"21"
 			}
 			"04"
 			{
@@ -4971,12 +4953,12 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_attack_speed"	"16"
+				"bonus_attack_speed"	"21"
 			}
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_agility"			"16"
+				"bonus_agility"			"21"
 			}
 			"09"
 			{
@@ -5013,7 +4995,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"spell_amp"				"16"
+				"spell_amp"				"21"
 			}
 			"02"
 			{
@@ -5023,7 +5005,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_int"				"16"
+				"bonus_int"				"21"
 			}
 		}
 	}
@@ -5077,7 +5059,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"proc_ms"				"15"
+				"proc_ms"				"21"
 			}
 			"05"
 			{
@@ -5102,28 +5084,28 @@
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"20"
+				"bonus_damage"			"21"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"10"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_strength"		"20"
+				"bonus_strength"		"21"
 			}
 			"11"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_attack_speed"	"20"
+				"bonus_attack_speed"	"21"
 			}
 			"12"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_agility"			"20"
+				"bonus_agility"			"21"
 			}
 			"13"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_ms"				"20"
+				"bonus_ms"				"21"
 			}
 		}
 	}
@@ -5215,12 +5197,12 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_cdr"				"10"
+				"bonus_cdr"				"15"
 			}
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_int"				"26"
+				"bonus_int"				"31"
 			}
 			"09"
 			{
@@ -5246,7 +5228,7 @@
 			"13"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"spell_amp"				"16"
+				"spell_amp"				"21"
 			}
 		}
 	}
@@ -6498,7 +6480,7 @@
 			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_strength"			"20"
+				"bonus_strength"			"21"
 			}
 			"09"
 			{
@@ -6604,8 +6586,6 @@
 			}
 		}
 	}
-
-
 
 	//=================================================================================================================
 	// Moon Shard
@@ -6838,12 +6818,12 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_health"			"725"
+				"bonus_health"			"625"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_mana"			"725"
+				"bonus_mana"			"625"
 			}
 			"04"
 			{
@@ -6863,7 +6843,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"blast_damage"			"40"
+				"blast_damage"			"70"
 				"CalculateSpellDamageTooltip"	"1"
 			}
 		}
@@ -7029,55 +7009,46 @@
 				"bonus_damage"					"15"
 				"CalculateSpellDamageTooltip"	"0"
 			}
-
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"bonus_as"						"15"
 			}
-
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"bonus_agi"						"28"
 			}
-
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"projectile_speed"				"1200"
 			}
-
 			"05"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"agility_pct_ranged"			"25"
 			}
-
 			"06"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"agility_pct_melee"				"50"
 			}			
-
 			"07"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"ranged_proj_radius"			"100"
 			}
-
 			"08"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"ranged_proj_angle"				"25"
 			}
-
 			"09"
 			{
 				"var_type"						"FIELD_FLOAT"
 				"ranged_proj_stun"				"0.25"
 			}
-
 			"10"
 			{
 				"var_type"						"FIELD_INTEGER"
@@ -7159,49 +7130,41 @@
 				"bonus_damage"			"75"
 				"CalculateSpellDamageTooltip"	"0"
 			}
-
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_as"				"20"
 			}
-
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_agi"				"65"
 			}
-
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"proc_chance"			"10"
 			}
-
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"proc_bonus"			"30"
 			}
-
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"proc_duration"			"3"
 			}
-
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"range"					"700"
 			}
-
 			"08"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"projectile_speed"		"1200"
 			}
-
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
@@ -7913,7 +7876,7 @@
 			"08"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"slow_duration"			"0.8"
+				"slow_duration"			"0.7"
 			}
 			"09"
 			{
@@ -8028,7 +7991,7 @@
 			"08"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"slow_duration"			"0.8"
+				"slow_duration"			"0.7"
 			}
 			"09"
 			{
@@ -8038,7 +8001,7 @@
 			"10"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"attack_speed_buff"		"490"
+				"attack_speed_buff"		"720"
 			}
 		}
 	}
@@ -8377,7 +8340,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"0"
+		"ItemCost"						"1250"
 		"ItemShopTags"					""
 
 		// Recipe
@@ -8386,7 +8349,7 @@
 		"ItemResult"					"item_imba_arcane_nexus"
 		"ItemRequirements"
 		{
-			"01"						"item_imba_nether_wand;item_imba_nether_wand;item_imba_kaya"
+			"01"						"item_imba_nether_wand;item_imba_kaya"
 		}
 	}
 
@@ -8418,17 +8381,17 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"16"
+				"bonus_intellect"		"21"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"spell_amp"				"22"
+				"spell_amp"				"28"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER" // also mana cost reduction
-				"bonus_cdr"				"16"
+				"bonus_cdr"				"15"
 			}
 		}
 	}
@@ -10647,7 +10610,7 @@
 			"23"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"proc_ms"					"15"
+				"proc_ms"					"21"
 			}
 			"24"
 			{

@@ -730,7 +730,7 @@ function modifier_imba_faceless_void_time_lock:GetModifierProcAttack_BonusDamage
 		local bonus_damage_to_main_target = 0
 
 		-- See if the passive owner is the attacker, and that they're not broken
-		if parent == attacker and not target:IsBuilding() and not parent:PassivesDisabled() and parent:GetTeamNumber() ~= target:GetTeamNumber() then
+		if parent == attacker and not target:IsRoshan() and not target:IsBuilding() and not parent:PassivesDisabled() and parent:GetTeamNumber() ~= target:GetTeamNumber() then
 			local bashChance = ability:GetSpecialValueFor("bash_chance")
 			local bashDamage = ability:GetSpecialValueFor("bash_damage")
 			local bashDuration = ability:GetSpecialValueFor("bash_duration")
@@ -745,7 +745,6 @@ function modifier_imba_faceless_void_time_lock:GetModifierProcAttack_BonusDamage
 
 				-- If the target is not in a Chronosphere, apply bash normally.
 				if not target:FindModifierByName("modifier_imba_faceless_void_chronosphere_handler") then
-
 					-- #4 TALENT: Increases the cd increase on bash on enemies affected by time dilation and reduces his own
 					if target:FindModifierByName("modifier_imba_faceless_void_time_dilation_slow") then
 						talent_cd_increase			=	attacker:FindTalentValue("special_bonus_imba_faceless_void_4", "target_increase")

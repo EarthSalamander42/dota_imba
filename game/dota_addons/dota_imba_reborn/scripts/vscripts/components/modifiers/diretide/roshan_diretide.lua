@@ -313,7 +313,7 @@ function modifier_imba_roshan_ai_diretide:StartPhase(phase)
 			self.isTransitioning = true
 			self:StartIntervalThink(0.1)
 
-			UpdateRoshanBar(self.roshan, FrameTime()*2)
+			UpdateRoshanBar(self.roshan, FrameTime() * 2)
 		end
 	end
 end
@@ -323,16 +323,26 @@ function modifier_imba_roshan_ai_diretide:ThinkPhase2(roshan)
 	if not self.AItarget then		-- If no target
 		local heroes = FindUnitsInRadius(roshan:GetTeamNumber(), roshan:GetAbsOrigin(), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
 		for _, hero in ipairs(heroes) do
-			if hero:GetTeamNumber() == self.targetTeam and hero:IsAlive() then
-				self.AItarget = hero
-				self.roshan:SetForceAttackTarget(hero)
-				roshan:AddNewModifier(roshan, self:GetAbility(), "modifier_imba_roshan_acceleration", {})
-				EmitSoundOnClient("diretide_select_target_Stinger", hero:GetPlayerOwner())
-				CustomGameEventManager:Send_ServerToAllClients("roshan_target", {target = hero:GetUnitName(), team_target = hero:GetTeamNumber()})
-				break
+			if hero:GetTeamNumber() == self.targetTeam then
+				if hero:IsAlive() then
+					self.AItarget = hero
+					self.roshan:SetForceAttackTarget(hero)
+					roshan:AddNewModifier(roshan, self:GetAbility(), "modifier_imba_roshan_acceleration", {})
+					EmitSoundOnClient("diretide_select_target_Stinger", hero:GetPlayerOwner())
+					CustomGameEventManager:Send_ServerToAllClients("roshan_target", {target = hero:GetUnitName(), team_target = hero:GetTeamNumber()})
+					break
+				end
 			end
 		end
 	else
+		if self.AItarget and self.AItarget:IsAlive() then 
+			if not self.roshan:IsAttackingEntity(self.AItarget) then
+				self.roshan:SetForceAttackTarget(self.AItarget)
+			end
+		else
+			self:ChangeTarget(self.roshan)
+		end
+
 		if self.begState == 0 then -- If haven't begged
 			if CalcDistanceBetweenEntityOBB(roshan, self.AItarget) <= self.begDistance then
 				self.begState = 1
@@ -346,13 +356,7 @@ function modifier_imba_roshan_ai_diretide:ThinkPhase2(roshan)
 		elseif self.begState == 1 then
 
 		else -- If has begged
-			if self.AItarget and self.AItarget:IsAlive() then 
-				if not self.roshan:IsAttackingEntity(self.AItarget) then
-					self.roshan:SetForceAttackTarget(self.AItarget)
-				end
-			else
-				self:ChangeTarget(self.roshan)
-			end
+
 		end
 	end
 end

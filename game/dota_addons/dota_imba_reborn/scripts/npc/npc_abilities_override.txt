@@ -1385,12 +1385,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_health"			"700"
+				"bonus_health"			"625"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_mana"			"700"
+				"bonus_mana"			"625"
 			}
 		}
 	}

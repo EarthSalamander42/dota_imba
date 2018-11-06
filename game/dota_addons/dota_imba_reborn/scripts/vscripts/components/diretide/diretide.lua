@@ -214,13 +214,15 @@ function Diretide:SwapTeam(team)
 	end
 
 	for _, hero in pairs(HeroList:GetAllHeroes()) do
-		hero:RespawnHero(false, false)
-		hero:SetHealth(hero:GetMaxHealth())
-		hero:SetMana(hero:GetMaxMana())
-		hero:Stop()
-		hero:ModifyGold(DIRETIDE_BONUS_GOLD, true, 0)
-		hero:AddExperience(100000, false, false)
-		hero:AddNewModifier(hero, nil, "modifier_no_pvp", {})
+		if not hero:IsIllusion() then
+			hero:RespawnHero(false, false)
+			hero:SetHealth(hero:GetMaxHealth())
+			hero:SetMana(hero:GetMaxMana())
+			hero:Stop()
+			hero:ModifyGold(DIRETIDE_BONUS_GOLD, true, 0)
+			hero:AddExperience(100000, false, false)
+			hero:AddNewModifier(hero, nil, "modifier_no_pvp", {})
+		end
 	end
 
 	GameRules:SetGoldPerTick(0)
