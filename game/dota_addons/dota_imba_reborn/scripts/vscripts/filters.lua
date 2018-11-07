@@ -58,7 +58,7 @@ function GameMode:ExperienceFilter( keys )
 	-- experience		130
 	-- player_id_const	0
 
-	if PlayerResource:GetPlayer(keys.player_id_const) == nil then return false end
+	if PlayerResource:GetPlayer(keys.player_id_const) == nil then return true end
 	local player = PlayerResource:GetPlayer(keys.player_id_const)
 	local hero = player:GetAssignedHero()
 
