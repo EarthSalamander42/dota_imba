@@ -581,7 +581,6 @@ if GetMapName() == MapOverthrow() then
 	require("components/settings/settings_imbathrow")
 end
 
-
 IMBA_DIRETIDE_EASTER_EGG = false
 
 IMBA_DIRETIDE = false
