@@ -70,9 +70,6 @@ function GameMode:OnUnitSpawned(unit)
 		end
 
 		return
-	elseif unit:GetUnitName() == "npc_dummy_unit" or unit:GetUnitName() == "npc_dummy_unit_perma" then
-		dummy_created_count = dummy_created_count + 1
-		return
 	elseif unit:IsIllusion() and not unit:HasModifier("modifier_illusion_manager_out_of_world") and not unit:HasModifier("modifier_illusion_manager") then
 		-- Valve Illusion bug to prevent respawning
 		UTIL_Remove(unit)

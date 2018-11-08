@@ -161,8 +161,6 @@ function GameMode:OnGameRulesStateChange(keys)
 	end
 end
 
-dummy_created_count = 0
-
 function GameMode:OnNPCSpawned(keys)
 	GameMode:_OnNPCSpawned(keys)
 	local npc = EntIndexToHScript(keys.entindex)
@@ -391,7 +389,6 @@ function GameMode:OnEntityKilled( keys )
 			end
 
 			if killer:IsRealHero() then
-				print("Killer is a hero! (Building)")
 				CombatEvents("kill", "hero_kill_tower", killed_unit, killer)
 				if killer:GetTeam() ~= killed_unit:GetTeam() then
 					if killed_unit:GetUnitName() == "npc_dota_goodguys_healers" or killed_unit:GetUnitName() == "npc_dota_badguys_healers" then

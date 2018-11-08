@@ -73,11 +73,6 @@ function modifier_imba_roshan_ai:OnDeath( keys )
 		end
 	end
 
-	RoshanRespawnTime()
-end
-
--- utils
-local function RoshanRespawnTime()
 	-- Respawn time for Roshan
 	local respawn_time = RandomInt(ROSHAN_RESPAWN_TIME_MIN, ROSHAN_RESPAWN_TIME_MAX) * 60
 	Timers:CreateTimer(respawn_time, function()
@@ -85,5 +80,5 @@ local function RoshanRespawnTime()
 		roshan:AddNewModifier(roshan, nil, "modifier_imba_roshan_ai", {})
 	end)
 
-	CombatEvents("kill", "roshan_dead", killed_unit, killer)
+	CombatEvents("kill", "roshan_dead", keys.unit, keys.attacker)
 end

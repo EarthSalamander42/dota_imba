@@ -7,11 +7,11 @@ function GameMode:GoldFilter(keys)
 	-- player_id_const	0
 	-- gold				141
 
-	if IMBA_DIRETIDE == true then
-		if Diretide.DIRETIDE_PHASE >= 3 then
-			return false
-		end
-	end
+--	if IMBA_DIRETIDE == true then
+--		if Diretide.DIRETIDE_PHASE >= 3 then
+--			return false
+--		end
+--	end
 
 	-- Gold from abandoning players does not get multiplied
 	if keys.reason_const == DOTA_ModifyGold_AbandonedRedistribute or keys.reason_const == DOTA_ModifyGold_GameTick then
@@ -58,10 +58,6 @@ function GameMode:ExperienceFilter( keys )
 	-- experience		130
 	-- player_id_const	0
 
-	if PlayerResource:GetPlayer(keys.player_id_const) == nil then return true end
-	local player = PlayerResource:GetPlayer(keys.player_id_const)
-	local hero = player:GetAssignedHero()
-
 	-- Ignore negative experience values
 	if keys.experience < 0 then
 		return false
@@ -69,7 +65,13 @@ function GameMode:ExperienceFilter( keys )
 
 	local custom_xp_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "exp_multiplier")["1"])
 
-	keys.experience = keys.experience * (custom_xp_bonus / 100)
+	if custom_xp_bonus ~= nil then
+		keys.experience = keys.experience * (custom_xp_bonus / 100)
+	end
+
+	if PlayerResource:GetPlayer(keys.player_id_const) == nil then return true end
+	local player = PlayerResource:GetPlayer(keys.player_id_const)
+	local hero = player:GetAssignedHero()
 
 	return true
 end
@@ -454,15 +456,17 @@ function GameMode:OrderFilter( keys )
 	end
 
 	if USE_TEAM_COURIER == false then
-		if unit:IsCourier() then
-			if unit:GetPlayerOwnerID() == unit:GetMainControllingPlayer() then
-				if keys.order_type == DOTA_UNIT_ORDER_MOVE_TO_POSITION or keys.order_type == DOTA_UNIT_ORDER_MOVE_TO_TARGET or keys.order_type == DOTA_UNIT_ORDER_HOLD_POSITION or keys.order_type == DOTA_UNIT_ORDER_DROP_ITEM or keys.order_type == DOTA_UNIT_ORDER_GIVE_ITEM then
-					return false
+		for _, ent_id in pairs(units) do
+			if EntIndexToHScript(ent_id):IsCourier() then
+				if EntIndexToHScript(ent_id):GetPlayerOwnerID() == EntIndexToHScript(ent_id):GetMainControllingPlayer() then
+					if keys.order_type == DOTA_UNIT_ORDER_MOVE_TO_POSITION or keys.order_type == DOTA_UNIT_ORDER_MOVE_TO_TARGET or keys.order_type == DOTA_UNIT_ORDER_HOLD_POSITION or keys.order_type == DOTA_UNIT_ORDER_DROP_ITEM or keys.order_type == DOTA_UNIT_ORDER_GIVE_ITEM then
+						return false
+					else
+						return true
+					end
 				else
-					return true
+					return false
 				end
-			else
-				return false
 			end
 		end
 	end

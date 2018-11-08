@@ -632,12 +632,12 @@ local function SpellReflect(parent, params)
 	-- If some spells shouldn't be reflected, enter it into this spell-list
 	local exception_spell =
 		{
-			["rubick_spell_steal"] = true,
-			["imba_alchemist_greevils_greed"] = true,
-			["imba_alchemist_unstable_concoction"] = true,
-			["imba_disruptor_glimpse"] = true,
-			["legion_commander_duel"] = true,
-		}
+		["rubick_spell_steal"] = true,
+		["imba_alchemist_greevils_greed"] = true,
+		["imba_alchemist_unstable_concoction"] = true,
+		["imba_disruptor_glimpse"] = true,
+		["legion_commander_duel"] = true,
+	}
 
 	local reflected_spell_name = params.ability:GetAbilityName()
 	local target = params.ability:GetCaster()
@@ -692,6 +692,7 @@ local function SpellReflect(parent, params)
 		ability:OnSpellStart()
 		target:EmitSound("Hero_Antimage.SpellShield.Reflect")
 	end
+
 	return false
 end
 
@@ -833,7 +834,7 @@ end
 
 function modifier_imba_spell_shield_buff_reflect:GetReflectSpell( params )
 	if IsServer() then
-		if not self:GetParent():PassivesDisabled() then
+		if not self:GetParent():PassivesDisabled() and not params.ability:GetAbilityName() == "item_cyclone" then
 			return SpellReflect(self:GetParent(), params)
 		end
 	end
@@ -841,7 +842,7 @@ end
 
 function modifier_imba_spell_shield_buff_reflect:GetAbsorbSpell( params )
 	if IsServer() then
-		if not self:GetParent():PassivesDisabled() then
+		if not self:GetParent():PassivesDisabled() and not params.ability:GetAbilityName() == "item_cyclone" then
 			return SpellAbsorb(self:GetParent())
 		end
 	end

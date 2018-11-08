@@ -15,6 +15,12 @@ function GoldSystem:OnHeroDeath(killer, victim)
 	-- temporary condition to ignore reincarnations
 	if victim:GetTimeUntilRespawn() < 4 then return end
 
+	if not killer:IsRealHero() then
+		if killer:GetMainControllingPlayer() then
+			killer = PlayerResource:GetPlayer(killer:GetMainControllingPlayer()):GetAssignedHero()
+		end
+	end
+
 	if killer:IsRealHero() then
 		if not killer.killstreak then killer.killstreak = 0 end
 		killer.killstreak = killer.killstreak + 1
