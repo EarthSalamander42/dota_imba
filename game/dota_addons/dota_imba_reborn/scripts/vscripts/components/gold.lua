@@ -17,8 +17,12 @@ function GoldSystem:OnHeroDeath(killer, victim)
 
 	if not killer:IsRealHero() then
 		if killer:GetMainControllingPlayer() ~= -1 then
-			if PlayerResource:GetPlayer(killer:GetMainControllingPlayer()):GetAssignedHero() then
-				killer = PlayerResource:GetPlayer(killer:GetMainControllingPlayer()):GetAssignedHero()
+			if PlayerResource.GetPlayer then
+				if PlayerResource:GetPlayer(killer:GetMainControllingPlayer()) then
+					if PlayerResource:GetPlayer(killer:GetMainControllingPlayer()):GetAssignedHero() then
+						killer = PlayerResource:GetPlayer(killer:GetMainControllingPlayer()):GetAssignedHero()
+					end
+				end
 			end
 		end
 	end
@@ -104,7 +108,7 @@ function GoldSystem:OnHeroDeath(killer, victim)
 			-- if there are assisters but no killer (e.g: dead by tower) then grant gold to assisters
 			for _, attacker in pairs(HeroList:GetAllHeroes()) do
 				for i = 0, victim_attacker_count -1 do
-					if attacker:GetPlayerID() == victim:GetAttacker(i) and not hero:IsClone() and not hero:HasModifier("modifier_monkey_king_fur_army_soldier") and not hero:HasModifier("modifier_monkey_king_fur_army_soldier_hidden") then
+					if attacker:GetPlayerID() == victim:GetAttacker(i) and not attacker:IsClone() and not attacker:HasModifier("modifier_monkey_king_fur_army_soldier") and not attacker:HasModifier("modifier_monkey_king_fur_army_soldier_hidden") then
 --						print("Attacker:", attacker:GetUnitName())
 --						print("Gold:", kill_gold / victim_attacker_count, kill_gold)
 						SendOverheadEventMessage(attacker:GetPlayerOwner(), OVERHEAD_ALERT_GOLD, victim, kill_gold / victim_attacker_count, nil)
