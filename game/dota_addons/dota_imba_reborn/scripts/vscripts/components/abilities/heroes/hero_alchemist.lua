@@ -1060,6 +1060,7 @@ function modifier_imba_goblins_greed_passive:OnDeath(keys)
 		self:SetStackCount(stacks + stack_bonus)
 
 		Timers:CreateTimer(duration, function()
+			if stacks:IsNull() then return nil end
 			stacks = self:GetStackCount()
 			self:SetStackCount(stacks - stack_bonus)
 		end)
