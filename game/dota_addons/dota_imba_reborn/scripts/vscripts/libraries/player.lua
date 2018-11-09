@@ -46,6 +46,8 @@ function CDOTA_BaseNPC:CreateIllusion(duration, inc, out, pos, mod, ab)
 			local itemName = item:GetName()
 			local newItem = CreateItem(itemName, illusion, illusion)
 			illusion:AddItem(newItem)
+			newItem:SetPurchaser(nil)
+			newItem:SetStacksWithOtherOwners(true)
 		end
 	end
 
