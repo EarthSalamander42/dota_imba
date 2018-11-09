@@ -392,7 +392,7 @@ function imba_riki_blink_strike:OnAbilityPhaseStart()
 		Timers:CreateTimer(FrameTime(), function()
 			if self.trail_pfx then
 				-- To make sure its the same cast
-				if (index == self.index and current_target:IsAlive()) then
+				if (index == self.index and not current_target:IsNull()) then
 					ParticleManager:SetParticleControl(self.trail_pfx, 0, last_position+Vector(0,0,35))
 					counter = counter + 1
 					local target_loc = current_target:GetAbsOrigin()
