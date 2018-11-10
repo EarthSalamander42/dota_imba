@@ -96,6 +96,7 @@
 
 	<Panel>
 		<!-- CustomUIElements go here.-->
+		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/statcollection.xml"/>
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/barebones_notifications.xml" /> 
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/ardm_precache.xml" /> 
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/gg.xml" /> 

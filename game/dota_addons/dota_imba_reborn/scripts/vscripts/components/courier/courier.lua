@@ -32,6 +32,7 @@ function TurboCourier:Spawn(hero, pos)
 	self.COURIER_PLAYER[hero:GetPlayerID()] = CreateUnitByName("npc_dota_courier", pos, true, nil, nil, hero:GetTeam())
 	self.COURIER_PLAYER[hero:GetPlayerID()]:SetControllableByPlayer(hero:GetPlayerID(), true)
 	self.COURIER_PLAYER[hero:GetPlayerID()]:SetOwner(hero)
+	self.COURIER_PLAYER[hero:GetPlayerID()]:RemoveModifierByName("modifier_magic_immune")
 	self.COURIER_PLAYER[hero:GetPlayerID()]:RemoveAbility("courier_morph")
 	self.COURIER_PLAYER[hero:GetPlayerID()]:RemoveAbility("courier_shield")
 	local autodeliver = self.COURIER_PLAYER[hero:GetPlayerID()]:AddAbility("imba_courier_autodeliver")
@@ -39,4 +40,12 @@ function TurboCourier:Spawn(hero, pos)
 --	autodeliver:ToggleAbility()
 	self.COURIER_PLAYER[hero:GetPlayerID()]:AddAbility("courier_movespeed"):SetLevel(1)
 	self.COURIER_PLAYER[hero:GetPlayerID()]:AddNewModifier(self.COURIER_PLAYER[hero:GetPlayerID()], nil, "modifier_invulnerable", {})
+
+--	Timers:CreateTimer(function()
+--		for i = 0, self.COURIER_PLAYER[hero:GetPlayerID()]:GetModifierCount() - 1 do
+--			print(self.COURIER_PLAYER[hero:GetPlayerID()]:GetModifierNameByIndex(i))
+--		end
+--
+--		return 60.0
+--	end)
 end

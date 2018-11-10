@@ -57,7 +57,7 @@ function GoldSystem:_OnHeroDeath(killer, victim)
 
 		for _, hero in pairs(HeroList:GetAllHeroes()) do
 			if hero:GetTeamNumber() == victim:GetTeamNumber() then
-				victim_team_networth = victim_team_networth + hero:GetNetWorth()
+				victim_team_networth = victim_team_networth + hero:GetNetworth()
 			end
 		end
 
@@ -67,7 +67,7 @@ function GoldSystem:_OnHeroDeath(killer, victim)
 		local aoe_gold_for_player = 0
 		for _, assister in pairs(assisters) do
 			local base_aoe_gold = 1000 / #assisters
-			local networth_bonus = math.max(average_victim_team_networth - assister:GetNetWorth(), 0) * 0.05
+			local networth_bonus = math.max(average_victim_team_networth - assister:GetNetworth(), 0) * 0.05
 			aoe_gold_for_player = math.floor(base_aoe_gold + networth_bonus)
 
 --			print(base_aoe_gold)

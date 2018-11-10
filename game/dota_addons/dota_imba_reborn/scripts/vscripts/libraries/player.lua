@@ -78,7 +78,7 @@ function CDOTA_BaseNPC:SetupHealthBarLabel()
 	end
 end
 
-function CDOTA_BaseNPC:GetNetWorth()
+function CDOTA_BaseNPC:GetNetworth()
 	if not self:IsRealHero() then return 0 end
     local gold = self:GetGold()
 
