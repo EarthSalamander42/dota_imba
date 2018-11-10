@@ -536,7 +536,7 @@ function GameMode:OnConnectFull(keys)
 	
 	ReconnectPlayer(playerID)
 	
-	PlayerResource:InitPlayerData(playerID)
+--	PlayerResource:InitPlayerData(playerID)
 end
 
 -- This function is called whenever any player sends a chat message to team or All

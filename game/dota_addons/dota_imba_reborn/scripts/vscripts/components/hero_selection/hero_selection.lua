@@ -421,8 +421,8 @@ function HeroSelection:GiveStartingHero(playerId, heroName, dev)
 
 	HeroSelection:Attachments(hero)
 
-	-- Initializes player data if this is a bot
-	if PlayerResource:GetConnectionState(playerId) == 1 then
+	-- Initializes player data if this is not a bot
+	if PlayerResource:GetConnectionState(playerId) == 2 then
 		PlayerResource:InitPlayerData(playerId)
 	end
 
