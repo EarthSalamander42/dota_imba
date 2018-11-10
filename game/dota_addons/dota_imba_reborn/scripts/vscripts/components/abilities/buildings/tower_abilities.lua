@@ -4482,6 +4482,10 @@ function modifier_tower_healing_think:OnIntervalThink()
 
 		-- Start bouncing with bounce delay
 		Timers:CreateTimer(self.bounce_delay, function()
+			-- If those are null then the tower most likely died during self.bounce_delay... 
+			if self.caster:IsNull() or self.bounce_radius:IsNull() or self.ability:IsNull() then 
+				return nil
+			end
 			-- Still don't know if other heroes need healing, assumes doesn't unless found
 			local heroes_need_healing = false
 
