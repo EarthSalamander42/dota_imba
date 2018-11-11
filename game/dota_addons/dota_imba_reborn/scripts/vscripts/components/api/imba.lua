@@ -18,7 +18,7 @@ api.imba = {
 }
 
 function api.imba.events.initialize()
-	log.info("Initializing events system")
+	print("Initializing events system")
 	Timers:CreateTimer(api.imba.config.event_timer_interval, function ()
 		api.imba.events.cycle()
 		return api.imba.config.event_timer_interval
@@ -26,29 +26,29 @@ function api.imba.events.initialize()
 end
 
 function api.imba.events.cycle()
-	log.debug("Flushing event queue")
+	print("Flushing event queue")
 
 	-- copy and clear queue
 	local queue = api.imba.events.queue
 	api.imba.events.queue = {}
 
-	log.debug("Sending " .. tostring(table.getn(queue)) .. " events")
+	print("Sending " .. tostring(table.getn(queue)) .. " events")
 
 	api.request(api.endpoints.imba.game.events, {
 		id = api.imba.data.id,
 		events = queue
 	}, function (error, data)
 		if not error then
-			log.debug("Events successfully saved")
+			print("Events successfully saved")
 		else
-			log.warn("Saving events failed")
+			print("Saving events failed")
 		end
 	end)
 end
 
 function api.imba.register(callback)
 
-	log.info("Initializing IMBA Api")
+	print("Initializing IMBA Api")
 
 	local cheat_enabled = false
 	if CustomNetTables:GetTableValue("game_options", "game_count").value == 0 then
@@ -67,14 +67,14 @@ function api.imba.register(callback)
 	-- register game
 	api.request(api.endpoints.imba.game.register, register_data, function (error, data)
 		if error then
-			log.error("Critical API error: Cannot register game!")
+			print("Critical API error: Cannot register game!")
 			if callback ~= nil then
 				callback(true)
 			end
 		else
 			api.imba.data = data
 
-			log.debug("Register with server successful, Game ID: #" .. tostring(api.imba.data.id))
+			print("Register with server successful, Game ID: #" .. tostring(api.imba.data.id))
 			if callback ~= nil then
 				callback(false)
 			end
@@ -89,7 +89,7 @@ end
 
 function api.imba.event(code, data, quiet)
 	if quiet == nil then
-		log.debug("Queueing event #" .. code)
+--		print("Queueing event #" .. code)
 	end
 
 	local real_content = json.null
@@ -113,7 +113,7 @@ end
 function api.imba.complete(callback)
 
 	if not api.imba.ready then
-		log.error("Cannot complete game which is not registered correctly")
+		print("Cannot complete game which is not registered correctly")
 		callback(true)
 	end
 
@@ -126,7 +126,7 @@ function api.imba.complete(callback)
 
 	-- print a stack trace if we dont have a winner
 	if complete_data.winner == 0 then
-		log.error("Winner is 0")
+		print("Winner is 0")
 	end
 
 	-- results
@@ -143,7 +143,7 @@ function api.imba.complete(callback)
 
 			-- hero entity and items
 			if data.hero == nil then
-				log.warn("Hero for player " .. data.steamid .. " is nil")
+				print("Hero for player " .. data.steamid .. " is nil")
 			else
 				data.hero_name = tostring(data.hero:GetUnitName())
 
@@ -213,13 +213,13 @@ function api.imba.complete(callback)
 	end
 
 	-- complete game
-	log.info("Completing game " .. tostring(api.imba.data.id))
+	print("Completing game " .. tostring(api.imba.data.id))
 	api.request(api.endpoints.imba.game.complete, complete_data, function (error, data)
 		if error then
-			log.error("Game cannot be completed!")
+			print("Game cannot be completed!")
 			callback(true)
 		else
-			log.info("Game successfully completed")
+			print("Game successfully completed")
 			callback(false, data.players)
 		end
 	end)
@@ -261,7 +261,7 @@ function api.imba.get_diretide_levels(player_ids, callback)
 		if not error then
 			callback(data)
 		else
-			log.warn("Get diretide levels failed", error)
+			print("Get diretide levels failed", error)
 		end
 	end)
 end
@@ -280,10 +280,10 @@ function api.imba.diretide_update_levels(level, callback)
 
 	api.request(api.endpoints.imba.meta.diretide_update, data, function (error, data)
 		if not error then
-			log.info("All good. Diretide high-scores saved")
+			print("All good. Diretide high-scores saved")
 			if callback ~= nil then callback(true) end
 		else
-			log.info("Saving diretide levels failed", error)
+			print("Saving diretide levels failed", error)
 			if callback ~= nil then callback(false) end
 		end
 	end)
@@ -291,7 +291,7 @@ end
 
 function api.imba.is_donator(steamid)
 	if api.imba.data == nil or api.imba.data.donators == nil then
-		log.warn("is_donator called but donators are not available. yet?")
+--		print("is_donator called but donators are not available. yet?")
 		return false
 	end
 
@@ -309,7 +309,7 @@ end
 
 function api.imba.get_developers()
 	if api.imba.data == nil or api.imba.data.developers == nil then
---		log.warn("is_developer called but developers are not available. yet?")
+--		print("is_developer called but developers are not available. yet?")
 --		return false
 		return {}
 	end
@@ -319,7 +319,7 @@ end
 
 function api.imba.is_developer(steamid)
 	if api.imba.data == nil or api.imba.data.developers == nil then
-		log.warn("is_developer called but developers are not available. yet?")
+		print("is_developer called but developers are not available. yet?")
 		return false
 	end
 
@@ -332,7 +332,7 @@ end
 
 function api.imba.get_player_info(steamid)
 	if api.imba.data == nil or api.imba.data.players == nil then
-		log.warn("get_player_info called but players are not available. yet?")
+		print("get_player_info called but players are not available. yet?")
 		return nil
 	end
 
@@ -347,7 +347,7 @@ end
 
 function api.imba.hero_is_disabled(entity)
 	if api.imba.data == nil or api.imba.data.disabled_heroes == nil then
-		log.warn("hero_is_disabled called but disabled_heroes are not available. yet?")
+		print("hero_is_disabled called but disabled_heroes are not available. yet?")
 		return false
 	end
 
@@ -362,7 +362,7 @@ end
 
 function api.imba.get_rankings_xp()
 	if api.imba.data == nil or api.imba.data.rankings == nil then
-		log.warn("get_rankings_xp called but rankings are not available. yet?")
+		print("get_rankings_xp called but rankings are not available. yet?")
 		return nil
 	end
 
@@ -371,7 +371,7 @@ end
 
 function api.imba.get_rankings_imr5v5()
 	if api.imba.data == nil or api.imba.data.rankings == nil then
-		log.warn("get_rankings_imr5v5 called but rankings are not available. yet?")
+		print("get_rankings_imr5v5 called but rankings are not available. yet?")
 		return nil
 	end
 
@@ -380,7 +380,7 @@ end
 
 function api.imba.get_rankings_imr10v10()
 	if api.imba.data == nil or api.imba.data.rankings == nil then
-		log.warn("get_rankings_imr10v10 called but rankings are not available. yet?")
+		print("get_rankings_imr10v10 called but rankings are not available. yet?")
 		return nil
 	end
 
@@ -389,7 +389,7 @@ end
 
 function api.imba.get_rankings_level1v1()
 	if api.imba.data == nil or api.imba.data.rankings == nil then
-		log.warn("get_rankings_level1v1 called but rankings are not available. yet?")
+		print("get_rankings_level1v1 called but rankings are not available. yet?")
 		return nil
 	end
 
@@ -398,7 +398,7 @@ end
 
 function api.imba.get_companions()
 	if api.imba.data == nil or api.imba.data.companions == nil then
-		log.warn("get_companions called but companions are not available. yet?")
+		print("get_companions called but companions are not available. yet?")
 	end
 
 	return api.imba.data.companions
@@ -412,16 +412,16 @@ function api.imba.matchmaking.imr_5v5_random(players, callback)
 		players = players
 	}
 
-	log.info("Sending Matchmaking Request for 5v5 Random")
+	print("Sending Matchmaking Request for 5v5 Random")
 	api.request(api.endpoints.imba.matchmaking.imr_5v5_random, data, function (error, data)
 		if error then
-			log.error("Matchmaking Request failed")
+			print("Matchmaking Request failed")
 			callback({
 				ok = false,
 				data = data
 			})
 		else
-			log.info("Matchmaking Request for 5v5 Random successful")
+			print("Matchmaking Request for 5v5 Random successful")
 			callback({
 				ok = true,
 				data = data
@@ -439,13 +439,13 @@ function api.imba.matchmaking.imr_10v10_teams(players, combinations, callback)
 
 	api.request(api.endpoints.imba.matchmaking.imr_10v10_teams, data, function (error, data)
 		if error then
-			log.error("Matchmaking Request failed")
+			print("Matchmaking Request failed")
 			callback({
 				ok = false,
 				data = data
 			})
 		else
-			log.info("Matchmaking Request for 10v10 Teams successful")
+			print("Matchmaking Request for 10v10 Teams successful")
 			callback({
 				ok = true,
 				data = data

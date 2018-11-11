@@ -179,7 +179,7 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 			Timers:CreateTimer(60.0, function()
 				CustomNetTables:SetTableValue("mutation_info", IMBA_MUTATION["negative"], {varSwap})
 				if bad_fountain == nil or good_fountain == nil then
-					log.error("nao cucekd up!!! ")
+					print("nao cucekd up!!! ")
 					return 60.0 
 				end
 

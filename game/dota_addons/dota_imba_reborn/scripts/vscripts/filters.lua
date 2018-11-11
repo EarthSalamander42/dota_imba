@@ -19,8 +19,12 @@ function GameMode:GoldFilter(keys)
 	end
 
 	-- Ignore negative gold values and hero kills (handled in another function)
-	if keys.gold <= 0 or keys.reason_const == DOTA_ModifyGold_HeroKill then
+	if keys.gold <= 0 then
 		return false
+	end
+
+	if keys.reason_const == DOTA_ModifyGold_HeroKill then
+		return not IMBA_GOLD_SYSTEM
 	end
 
 	if PlayerResource:GetPlayer(keys.player_id_const) == nil then return end
@@ -243,6 +247,15 @@ function GameMode:ModifierFilter( keys )
 
 		if modifier_owner:GetUnitName() == "npc_imba_warlock_demonic_ascension" then
 			if modifier_name == "modifier_fountain_aura_effect_lua" then
+				return false
+			end
+		end
+
+		if IMBA_RUNE_SYSTEM == false then
+			if string.find(modifier_name, "modifier_rune_") then
+				local rune_name = string.gsub(modifier_name, "modifier_rune_", "")
+				ImbaRunes:PickupRune(rune_name, modifier_owner, false)
+
 				return false
 			end
 		end

@@ -78,9 +78,9 @@ function api.request(endpoint, data, callback)
 	if callback == nil then
 		callback = (function (error, data)
 			if (error) then
-				log.error("Error during request to " .. endpoint)
+				print("Error during request to " .. endpoint)
 			else
-				log.info("Request to " .. endpoint .. " successful")
+				print("Request to " .. endpoint .. " successful")
 			end
 		end)
 	end
@@ -111,70 +111,68 @@ function api.request(endpoint, data, callback)
 		request:SetHTTPRequestRawPostBody("application/json", payload)
 	end
 
-	log.debug("Performing request to " .. endpoint)
-	log.debug("Method: " .. method)
+	print("Performing request to " .. endpoint)
+	print("Method: " .. method)
 
 	if payload ~= nil then
-		log.debug("Payload: " .. payload:sub(1, 20))
+		print("Payload: " .. payload:sub(1, 20))
 	end
 
 	request:Send(function (raw_result)
-			local result = {
-				code = raw_result.StatusCode,
-				body = raw_result.Body,
-			}
+		local result = {
+			code = raw_result.StatusCode,
+			body = raw_result.Body,
+		}
 
-			if result.code == 0 then
-				log.error("Request to " .. endpoint .. " timed out")
-				callback(true, "Request to " .. endpoint .. " timed out")
-				return
-			end
+		if result.code == 0 then
+			print("Request to " .. endpoint .. " timed out")
+			callback(true, "Request to " .. endpoint .. " timed out")
+			return
+		end
 
-			if result.body ~= nil then
-				log.debug(result.body)
+		if result.body ~= nil then
+			print(result.body)
 
-				local decoded = json.decode(result.body)
+			local decoded = json.decode(result.body)
 
-				if decoded ~= nil then
-					result.data = decoded.data
-					result.error = decoded.error
-					result.server = decoded.server
-					result.version = decoded.version
-					result.message = decoded.message
-				else
-					log.error("Request failed with status code: " .. tostring(result.code))
-				end
-
-				safe(function ()
-
-						if result.code == 503 then
-							log.error("Server unavailable")
-							callback(true, "Server unavailable")
-						elseif result.code == 500 then
-							if result.message ~= nil then
-								log.error("Internal Server Error: " .. tostring(result.message))
-								callback(true, "Internal Server Error: " .. tostring(result.message))
-							else
-								log.error("Internal Server Error")
-								callback(true, "Internal Server Error")
-							end
-						elseif result.code == 405 then
-							log.error("Used invalid method on endpoint" .. endpoint)
-							callback(true, "Used invalid method on endpoint" .. endpoint)
-						elseif result.code == 404 then
-							log.error("Tried to access unknown endpoint " .. endpoint)
-							callback(true, "Tried to access unknown endpoint " .. endpoint)
-						elseif result.code ~= 200 then
-							log.error("Unknown Error: " .. tostring(result.code))
-							callback(true, "Unknown Error: " .. tostring(result.code))
-						else
-							log.debug("Request to " .. endpoint .. " successful")
-							callback(false, result.data)
-						end
-
-					end)
+			if decoded ~= nil then
+				result.data = decoded.data
+				result.error = decoded.error
+				result.server = decoded.server
+				result.version = decoded.version
+				result.message = decoded.message
 			else
-				log.error("Warning: Recieved response for request " .. endpoint .. " without body!")
+				print("Request failed with status code: " .. tostring(result.code))
 			end
-		end)
+
+--			safe(function ()
+				if result.code == 503 then
+					print("Server unavailable")
+					callback(true, "Server unavailable")
+				elseif result.code == 500 then
+					if result.message ~= nil then
+						print("Internal Server Error: " .. tostring(result.message))
+						callback(true, "Internal Server Error: " .. tostring(result.message))
+					else
+						print("Internal Server Error")
+						callback(true, "Internal Server Error")
+					end
+				elseif result.code == 405 then
+					print("Used invalid method on endpoint" .. endpoint)
+					callback(true, "Used invalid method on endpoint" .. endpoint)
+				elseif result.code == 404 then
+					print("Tried to access unknown endpoint " .. endpoint)
+					callback(true, "Tried to access unknown endpoint " .. endpoint)
+				elseif result.code ~= 200 then
+					print("Unknown Error: " .. tostring(result.code))
+					callback(true, "Unknown Error: " .. tostring(result.code))
+				else
+					print("Request to " .. endpoint .. " successful")
+					callback(false, result.data)
+				end
+--			end)
+		else
+			print("Warning: Recieved response for request " .. endpoint .. " without body!")
+		end
+	end)
 end

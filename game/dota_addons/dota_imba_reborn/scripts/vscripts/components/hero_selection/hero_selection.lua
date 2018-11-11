@@ -41,7 +41,7 @@ function HeroSelection:Init()
 
 	for key,value in pairs(LoadKeyValues(herolistFile)) do
 		if KeyValues.HeroKV[key] == nil then -- Cookies: If the hero is not in custom file, load vanilla KV's
---			log.debug(key .. " is not in custom file!")
+--			print(key .. " is not in custom file!")
 			local data = LoadKeyValues("scripts/npc/npc_heroes.txt")
 			if data and data[key] then
 				KeyValues.HeroKV[key] = data[key]
@@ -58,9 +58,9 @@ function HeroSelection:Init()
 			customlist[key] = KeyValues.HeroKV[key].IsCustom
 		end
 
-		if api.imba.hero_is_disabled(key) then
-			hotdisabledlist[key] = 1
-		end
+--		if api.imba.hero_is_disabled(key) then
+--			hotdisabledlist[key] = 1
+--		end
 
 		if value == 0 then
 			hotdisabledlist[key] = 1
@@ -167,7 +167,7 @@ function HeroSelection:CMManager(event)
 			HeroSelection:CMTimer(CAPTAINS_MODE_PICK_BAN_TIME, "CAPTAINS MODE")
 		elseif cmpickorder["currentstage"] <= cmpickorder["totalstages"] then
 			--random if not selected
---			log.debug(event)
+--			print(event)
 			if event.hero == "random" then
 				event.hero = HeroSelection:RandomHero()
 			elseif HeroSelection:IsHeroDisabled(event.hero) then
@@ -183,7 +183,7 @@ function HeroSelection:CMManager(event)
 				end
 			end
 
---			log.info('Got a CM pick ' .. cmpickorder["order"][cmpickorder["currentstage"]].side)
+--			print('Got a CM pick ' .. cmpickorder["order"][cmpickorder["currentstage"]].side)
 
 			Timers:RemoveTimer(cmtimer)
 
@@ -194,8 +194,8 @@ function HeroSelection:CMManager(event)
 			CustomNetTables:SetTableValue( 'hero_selection', 'CMdata', cmpickorder)
 			cmpickorder["currentstage"] = cmpickorder["currentstage"] + 1
 
---			log.info('--')
---			log.debug(event)
+--			print('--')
+--			print(event)
 
 			if cmpickorder["currentstage"] <= cmpickorder["totalstages"] then
 				HeroSelection:CMTimer(CAPTAINS_MODE_PICK_BAN_TIME, "CAPTAINS MODE")
@@ -262,8 +262,8 @@ end
 
 -- become a captain, go to next stage, if both captains are selected
 function HeroSelection:CMBecomeCaptain (event)
---	log.debug("Selecting captain")
---	log.debug(event)
+--	print("Selecting captain")
+--	print(event)
 	if PlayerResource:GetTeam(event.PlayerID) == 2 then
 		cmpickorder["captainradiant"] = event.PlayerID
 		CustomNetTables:SetTableValue( 'hero_selection', 'CMdata', cmpickorder)
@@ -295,6 +295,15 @@ function HeroSelection:APTimer(time, message)
 			HeroSelection:SelectHero(key, selectedtable[key].selectedhero)
 			CustomGameEventManager:Send_ServerToAllClients("hide_pause", {show = false})			
 			PauseGame(true)
+
+			Timers:CreateTimer({
+				useGameTime = false,
+				endTime = 20, -- when this timer should first execute, you can omit this if you want it to run first on the next frame
+				callback = function()
+					print("Force unpause, loading is too long!")
+					PauseGame(false)
+				end
+			})
 		end
 
 		PlayerResource:GetAllTeamPlayerIDs():each(function (playerId)
@@ -336,6 +345,7 @@ function HeroSelection:SelectHero(playerId, hero)
 			LoadFinishEvent.broadcast()
 			PauseGame(false)
 			ShowHUD(true)
+
 			GameRules:GetGameModeEntity():SetPauseEnabled(true)
 			CustomGameEventManager:Send_ServerToAllClients("hide_pause", {show = true})
 			GameRules:GetGameModeEntity():SetCameraDistanceOverride(1134) -- default: 1134
@@ -380,7 +390,7 @@ function HeroSelection:SelectHero(playerId, hero)
 		end
 
 		self:GiveStartingHero(playerId, hero)
---		log.debug('Giving player ' .. playerId .. ' ' .. hero)
+--		print('Giving player ' .. playerId .. ' ' .. hero)
 	end)
 end
 
@@ -419,7 +429,10 @@ function HeroSelection:GiveStartingHero(playerId, heroName, dev)
 		end)
 	end
 
-	HeroSelection:Attachments(hero)
+	-- temporary fix
+	if not hero:GetUnitName() == "npc_dota_hero_monkey_king" then
+		HeroSelection:Attachments(hero)
+	end
 
 	-- Initializes player data if this is not a bot
 	if PlayerResource:GetConnectionState(playerId) == 2 then
@@ -489,11 +502,11 @@ function HeroSelection:GiveStartingHero(playerId, heroName, dev)
 end
 
 function HeroSelection:IsHeroDisabled(hero)
-	if hero then
-		if api.imba.hero_is_disabled(hero) then
-			return true
-		end
-	end
+--	if hero then
+--		if api.imba.hero_is_disabled(hero) then
+--			return true
+--		end
+--	end
 
 	if IsTournamentMap() then
 		for _,data in ipairs(cmpickorder["order"]) do
@@ -536,7 +549,7 @@ function HeroSelection:RandomImbaHero()
 		local choice = HeroSelection:UnsafeRandomHero()
 
 		for key, value in pairs(imbalist) do
---			log.debug(key, choice, self:IsHeroDisabled(choice))
+--			print(key, choice, self:IsHeroDisabled(choice))
 			if key == choice and not self:IsHeroDisabled(choice) then
 				return choice
 			end
@@ -553,7 +566,7 @@ function HeroSelection:UnsafeRandomHero()
 		if curstate == rndhero then
 			for k, v in pairs(hotdisabledlist) do
 				if k == name then
---					log.info("Hero disabled! Try again!")
+--					print("Hero disabled! Try again!")
 					return HeroSelection:UnsafeRandomHero()
 				end
 			end
@@ -586,7 +599,7 @@ end
 function HeroSelection:StrategyTimer(time)
 	if time < 0 then
 		if finishedLoading then
---			log.debug("PICK SCREEN IS OVER!")
+--			print("PICK SCREEN IS OVER!")
 			PICKING_SCREEN_OVER = true
 			HeroSelection:EndStrategyTime()
 		else
@@ -637,12 +650,12 @@ function HeroSelection:UpdateTable(playerID, hero)
 	end
 
 	if selectedtable[playerID] and selectedtable[playerID].selectedhero == hero then
---		log.info('Player re-selected their hero again ' .. hero)
+--		print('Player re-selected their hero again ' .. hero)
 		return
 	end
 
 	if self:IsHeroChosen(hero) then
---		log.info('That hero is already disabled ' .. hero)
+--		print('That hero is already disabled ' .. hero)
 		hero = "empty"
 	end
 
@@ -656,7 +669,7 @@ function HeroSelection:UpdateTable(playerID, hero)
 				end
 			end
 			if not cmFound then
---				log.info('Couldnt find that hero in the CM pool ' .. tostring(hero))
+--				print('Couldnt find that hero in the CM pool ' .. tostring(hero))
 				hero = "empty"
 			end
 		end

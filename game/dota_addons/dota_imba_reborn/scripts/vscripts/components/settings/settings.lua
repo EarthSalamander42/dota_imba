@@ -24,7 +24,6 @@ CAPTAINS_MODE_HERO_PICK_TIME = 30	-- time to choose which hero you're going to p
 CAPTAINS_MODE_RESERVE_TIME = 130	-- total bonus time that can be used throughout any selection
 
 -- IMBA constants
-USE_TEAM_COURIER = false
 IMBA_REINCARNATION_TIME = 3.0
 RUNE_SPAWN_TIME = 120					-- How long in seconds should we wait between rune spawns?
 BOUNTY_RUNE_SPAWN_TIME = 300
@@ -107,24 +106,13 @@ IMBA_ROSHAN_GOLD_ASSIST = 150
 
 IMBA_DAMAGE_EFFECTS_DISTANCE_CUTOFF = 2500									-- Range at which most on-damage effects no longer trigger
 
-COMEBACK_BOUNTY_SCORE = {}													-- Extra comeback gold based on hero and tower kills
-COMEBACK_BOUNTY_SCORE[DOTA_TEAM_GOODGUYS] = 0
-COMEBACK_BOUNTY_SCORE[DOTA_TEAM_BADGUYS] = 0
-COMEBACK_BOUNTY_BONUS = {}													-- Extra comeback gold based on hero and tower kills
-COMEBACK_BOUNTY_BONUS[DOTA_TEAM_GOODGUYS] = 0
-COMEBACK_BOUNTY_BONUS[DOTA_TEAM_BADGUYS] = 0
-
-COMEBACK_EXP_BONUS = 100
-
 -- Hero respawn time per level
--- Formula: (42/srqt(50)) * (-1*(50-sqrt(lvl))+50)
-
 _G.HERO_RESPAWN_TIME_PER_LEVEL = {}
 _G.HERO_RESPAWN_TIME_PER_LEVEL[1] = 5
-_G.HERO_RESPAWN_TIME_PER_LEVEL[2] = 10
-_G.HERO_RESPAWN_TIME_PER_LEVEL[3] = 13
-_G.HERO_RESPAWN_TIME_PER_LEVEL[4] = 15
-_G.HERO_RESPAWN_TIME_PER_LEVEL[5] = 18
+_G.HERO_RESPAWN_TIME_PER_LEVEL[2] = 7
+_G.HERO_RESPAWN_TIME_PER_LEVEL[3] = 9
+_G.HERO_RESPAWN_TIME_PER_LEVEL[4] = 13
+_G.HERO_RESPAWN_TIME_PER_LEVEL[5] = 16
 _G.HERO_RESPAWN_TIME_PER_LEVEL[6] = 20
 _G.HERO_RESPAWN_TIME_PER_LEVEL[7] = 22
 _G.HERO_RESPAWN_TIME_PER_LEVEL[8] = 24
@@ -253,6 +241,7 @@ CUSTOM_GOLD_BONUS[Map1v1()] = global_gold
 CUSTOM_GOLD_BONUS["imba_5v5"] = global_gold
 CUSTOM_GOLD_BONUS[MapRanked5v5()] = global_gold
 CUSTOM_GOLD_BONUS[MapRanked10v10()] = global_gold
+CUSTOM_GOLD_BONUS["imba_10v10"] = global_gold
 CUSTOM_GOLD_BONUS[MapTournament()] = global_gold
 CUSTOM_GOLD_BONUS[MapMutation5v5()] = global_gold
 CUSTOM_GOLD_BONUS[MapMutation10v10()] = global_gold
@@ -268,6 +257,7 @@ CUSTOM_XP_BONUS[Map1v1()] = global_xp
 CUSTOM_XP_BONUS["imba_5v5"] = global_xp
 CUSTOM_XP_BONUS[MapRanked5v5()] = global_xp
 CUSTOM_XP_BONUS[MapRanked10v10()] = global_xp
+CUSTOM_XP_BONUS["imba_10v10"] = global_xp
 CUSTOM_XP_BONUS[MapTournament()] = global_xp
 CUSTOM_XP_BONUS[MapMutation5v5()] = global_xp
 CUSTOM_XP_BONUS[MapMutation10v10()] = global_xp
@@ -282,6 +272,7 @@ HERO_STARTING_LEVEL[Map1v1()] = 1
 HERO_STARTING_LEVEL["imba_5v5"] = 5
 HERO_STARTING_LEVEL[MapRanked5v5()] = 5
 HERO_STARTING_LEVEL[MapRanked10v10()] = 5
+HERO_STARTING_LEVEL["imba_10v10"] = 5
 HERO_STARTING_LEVEL[MapTournament()] = 5
 HERO_STARTING_LEVEL[MapMutation5v5()] = 5
 HERO_STARTING_LEVEL[MapMutation10v10()] = 5
@@ -295,6 +286,7 @@ MAX_LEVEL[Map1v1()] = 42
 MAX_LEVEL["imba_5v5"] = 42
 MAX_LEVEL[MapRanked5v5()] = 42
 MAX_LEVEL[MapRanked10v10()] = 42
+MAX_LEVEL["imba_10v10"] = 42
 MAX_LEVEL[MapTournament()] = 42
 MAX_LEVEL[MapMutation5v5()] = 42
 MAX_LEVEL[MapMutation10v10()] = 42
@@ -308,6 +300,7 @@ HERO_INITIAL_GOLD[Map1v1()] = 1400
 HERO_INITIAL_GOLD["imba_5v5"] = 1400
 HERO_INITIAL_GOLD[MapRanked5v5()] = 1400
 HERO_INITIAL_GOLD[MapRanked10v10()] = 1400
+HERO_INITIAL_GOLD["imba_10v10"] = 1400
 HERO_INITIAL_GOLD[MapTournament()] = 1400
 HERO_INITIAL_GOLD[MapMutation5v5()] = 2500
 HERO_INITIAL_GOLD[MapMutation10v10()] = 2500
@@ -321,6 +314,7 @@ GOLD_TICK_TIME[Map1v1()] = 0.6
 GOLD_TICK_TIME["imba_5v5"] = 0.6
 GOLD_TICK_TIME[MapRanked5v5()] = 0.6
 GOLD_TICK_TIME[MapRanked10v10()] = 0.4
+GOLD_TICK_TIME["imba_10v10"] = 0.4
 GOLD_TICK_TIME[MapTournament()] = 0.6
 GOLD_TICK_TIME[MapMutation5v5()] = 0.6
 GOLD_TICK_TIME[MapMutation10v10()] = 0.4
@@ -331,7 +325,7 @@ GOLD_TICK_TIME[MapDiretide()] = 0.4
 
 BANNED_ITEMS = {}
 BANNED_ITEMS[Map1v1()] = {
-	"item_imba_bottle",
+	"item_bottle",
 	"item_infused_raindrop",
 	"item_soul_ring",
 	"item_tome_of_knowledge",
@@ -581,13 +575,18 @@ if GetMapName() == MapOverthrow() then
 	require("components/settings/settings_imbathrow")
 end
 
-IMBA_DIRETIDE_EASTER_EGG = false
-
-IMBA_DIRETIDE = false
+-- IMBA override vanilla systems
+USE_TEAM_COURIER = true -- Should we use vanilla couriers?
+IMBA_RUNE_SYSTEM = false -- Should we use custom runes script spawner?
+IMBA_COMBAT_EVENTS = false -- Should we use custom combat events notifications?
+IMBA_GOLD_SYSTEM = false -- Should we use custom gold system?
+IMBA_DIRETIDE = false -- Should we enable diretide?
 
 if GetMapName() == MapDiretide() then
 	IMBA_DIRETIDE = true
 end
+
+IMBA_DIRETIDE_EASTER_EGG = false
 
 if IMBA_DIRETIDE == true then
 	IMBA_DIRETIDE_EASTER_EGG = false

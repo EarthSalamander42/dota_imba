@@ -4,10 +4,10 @@ local ardm_heroes = {}
 function Mutation:ARDM()
 	for hero, keys in pairs(KeyValues.HeroKV) do
 		if hero ~= "Version" and hero ~= FORCE_PICKED_HERO and hero ~= "npc_dota_hero_arc_warden" and hero ~= "npc_dota_hero_lone_druid" and hero ~= "npc_dota_hero_meepo" and hero ~= "npc_dota_hero_monkey_king" then
-			if api.imba.hero_is_disabled(hero) == false then
-				table.insert(ardm_heroes, hero)
-				i = i + 1
-			end
+--			if api.imba.hero_is_disabled(hero) == false then
+--				table.insert(ardm_heroes, hero)
+--				i = i + 1
+--			end
 		end
 	end
 

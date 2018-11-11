@@ -14,7 +14,7 @@
 		"item"		"item_ward_observer"
 		"item"		"item_ward_sentry"
 		"item"		"item_tome_of_knowledge"
-		"item"		"item_imba_bottle"
+		"item"		"item_bottle"
 		"item"		"item_imba_soul_of_truth"
 	}
 
@@ -89,6 +89,7 @@
 		"item"		"item_imba_nether_wand"
 		"item"		"item_ultimate_scepter"
 		"item"		"item_imba_blink_boots"
+		"item"		"item_imba_lifesteal_boots"
 	}
 
 	// Level 2 - Blue Recipes
@@ -137,7 +138,7 @@
 	{
 		"item"		"item_imba_hood_of_defiance"
 		"item"		"item_imba_vanguard"
-		"item"		"item_imba_blade_mail"
+		"item"		"item_blade_mail"
 		"item"		"item_black_king_bar"
 		"item"		"item_imba_black_queen_cape"
 		"item"		"item_imba_assault"
@@ -150,7 +151,6 @@
 		"item"		"item_imba_angelic_alliance"
 		"item"		"item_imba_sogat_cuirass"
 		"item"		"item_imba_guardian_greaves"
-		"item"		"item_imba_lifesteal_boots"
 	}
 	
 	"weapons"
@@ -219,7 +219,7 @@
 //		"item"		"item_blades_of_attack"
 		"item"		"item_gloves"
 		"item"		"item_chainmail"
-//		"item"		"item_imba_bottle"
+//		"item"		"item_bottle"
 //		"item"		"item_quarterstaff"
 		"item"		"item_vitality_booster"
 		"item"		"item_broadsword"
@@ -257,7 +257,7 @@
 		"item"		"item_courier"
 		"item"		"item_ward_observer"
 		"item"		"item_ward_sentry"
-		"item"		"item_imba_bottle"
+		"item"		"item_bottle"
 		"item"		"item_branches"
 		"item"		"item_gauntlets"
 		"item"		"item_slippers"

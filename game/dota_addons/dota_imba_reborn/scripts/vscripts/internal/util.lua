@@ -249,7 +249,7 @@ function RollPseudoRandom(base_chance, entity)
 	end
 
 	if not prngBase then
---		log.warn("The chance was not found! Make sure to add it to the table or change the value.")
+--		print("The chance was not found! Make sure to add it to the table or change the value.")
 		return false
 	end
 	
@@ -360,7 +360,7 @@ function ChangeAttackProjectileImba(unit)
 
 	-- Else, default to the base ranged projectile
 	else
-		log.debug(unit:GetKeyValue("ProjectileModel"))
+		print(unit:GetKeyValue("ProjectileModel"))
 		unit:SetRangedProjectileName(unit:GetKeyValue("ProjectileModel"))
 	end
 end
@@ -840,19 +840,23 @@ function SetupShrines()
 	}
 
 	for _, ent_name in pairs(good_fillers) do
-		local filler = Entities:FindByName(nil, ent_name)
-		local abs = filler:GetAbsOrigin()
-		filler:RemoveSelf()
-		local shrine = CreateUnitByName("npc_dota_goodguys_healers", abs, true, nil, nil, 2)
-		shrine:SetAbsOrigin(abs)
+		if Entities:FindByName(nil, ent_name) then
+			local filler = Entities:FindByName(nil, ent_name)
+			local abs = filler:GetAbsOrigin()
+			filler:RemoveSelf()
+			local shrine = CreateUnitByName("npc_dota_goodguys_healers", abs, true, nil, nil, 2)
+			shrine:SetAbsOrigin(abs)
+		end
 	end
 
 	for _, ent_name in pairs(bad_fillers) do
-		local filler = Entities:FindByName(nil, ent_name)
-		local abs = filler:GetAbsOrigin()
-		filler:RemoveSelf()
-		local shrine = CreateUnitByName("npc_dota_badguys_healers", abs, true, nil, nil, 3)
-		shrine:SetAbsOrigin(abs)
+		if Entities:FindByName(nil, ent_name) then
+			local filler = Entities:FindByName(nil, ent_name)
+			local abs = filler:GetAbsOrigin()
+			filler:RemoveSelf()
+			local shrine = CreateUnitByName("npc_dota_badguys_healers", abs, true, nil, nil, 3)
+			shrine:SetAbsOrigin(abs)
+		end
 	end
 end
 

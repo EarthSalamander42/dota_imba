@@ -19,17 +19,19 @@ if ImbaRunes == nil then
 	ImbaRunes = class({})
 end
 
-function ImbaRunes:Init()
-	LinkLuaModifier("modifier_imba_arcane_rune", "components/modifiers/runes/modifier_imba_arcane_rune.lua", LUA_MODIFIER_MOTION_NONE)
-	LinkLuaModifier("modifier_imba_double_damage_rune", "components/modifiers/runes/modifier_imba_double_damage_rune.lua", LUA_MODIFIER_MOTION_NONE)
-	LinkLuaModifier("modifier_imba_haste_rune", "components/modifiers/runes/modifier_imba_haste_rune", LUA_MODIFIER_MOTION_NONE)
-	LinkLuaModifier("modifier_imba_haste_rune_speed_limit_break", "components/modifiers/runes/modifier_imba_haste_rune_speed_limit_break.lua", LUA_MODIFIER_MOTION_NONE )
-	LinkLuaModifier("modifier_imba_regen_rune", "components/modifiers/runes/modifier_imba_regen_rune", LUA_MODIFIER_MOTION_NONE)
-	LinkLuaModifier("modifier_imba_frost_rune", "components/modifiers/runes/modifier_imba_frost_rune", LUA_MODIFIER_MOTION_NONE)
-	LinkLuaModifier("modifier_imba_ember_rune", "components/modifiers/runes/modifier_imba_ember_rune", LUA_MODIFIER_MOTION_NONE)
-	LinkLuaModifier("modifier_imba_stone_rune", "components/modifiers/runes/modifier_imba_stone_rune", LUA_MODIFIER_MOTION_NONE)
-	LinkLuaModifier("modifier_imba_invisibility_rune_handler", "components/modifiers/runes/modifier_imba_invisibility_rune", LUA_MODIFIER_MOTION_NONE)
+require("components/settings/settings_runes")
 
+LinkLuaModifier("modifier_imba_arcane_rune", "components/modifiers/runes/modifier_imba_arcane_rune.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_double_damage_rune", "components/modifiers/runes/modifier_imba_double_damage_rune.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_haste_rune", "components/modifiers/runes/modifier_imba_haste_rune", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_haste_rune_speed_limit_break", "components/modifiers/runes/modifier_imba_haste_rune_speed_limit_break.lua", LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier("modifier_imba_regen_rune", "components/modifiers/runes/modifier_imba_regen_rune", LUA_MODIFIER_MOTION_NONE)
+--	LinkLuaModifier("modifier_imba_frost_rune", "components/modifiers/runes/modifier_imba_frost_rune", LUA_MODIFIER_MOTION_NONE)
+--	LinkLuaModifier("modifier_imba_ember_rune", "components/modifiers/runes/modifier_imba_ember_rune", LUA_MODIFIER_MOTION_NONE)
+--	LinkLuaModifier("modifier_imba_stone_rune", "components/modifiers/runes/modifier_imba_stone_rune", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_invisibility_rune_handler", "components/modifiers/runes/modifier_imba_invisibility_rune", LUA_MODIFIER_MOTION_NONE)
+
+function ImbaRunes:Init()
 	bounty_rune_spawners = {}
 	bounty_rune_locations = {}
 	powerup_rune_spawners = {}
@@ -56,16 +58,16 @@ end
 
 -- Spawns runes on the map
 function ImbaRunes:Spawn()
-	require("components/settings/settings_runes")
+	if IMBA_RUNE_SYSTEM == false then return end
 	-- List of powerup rune types
 	-- item name, particle name
 	local powerup_rune_types = {
 		{"item_imba_rune_arcane", "particles/generic_gameplay/rune_arcane.vpcf", "particles/generic_gameplay/rune_arcane_super.vpcf"},
-		{"item_imba_rune_double_damage", "particles/generic_gameplay/rune_doubledamage.vpcf", "particles/generic_gameplay/rune_quadrupledamage.vpcf"},
+		{"item_imba_rune_doubledamage", "particles/generic_gameplay/rune_doubledamage.vpcf", "particles/generic_gameplay/rune_quadrupledamage.vpcf"},
 		{"item_imba_rune_haste", "particles/generic_gameplay/rune_haste.vpcf", "particles/generic_gameplay/rune_haste_super.vpcf"},
-		{"item_imba_rune_regeneration", "particles/generic_gameplay/rune_regeneration.vpcf", "particles/generic_gameplay/rune_regeneration_super.vpcf"},
+		{"item_imba_rune_regen", "particles/generic_gameplay/rune_regeneration.vpcf", "particles/generic_gameplay/rune_regeneration_super.vpcf"},
 		{"item_imba_rune_illusion", "particles/generic_gameplay/rune_illusion.vpcf", "particles/generic_gameplay/rune_illusion_super.vpcf"},
-		{"item_imba_rune_invisibility", "particles/generic_gameplay/rune_invisibility.vpcf", "particles/generic_gameplay/rune_invisibility_super.vpcf"},
+		{"item_imba_rune_invis", "particles/generic_gameplay/rune_invisibility.vpcf", "particles/generic_gameplay/rune_invisibility_super.vpcf"},
 		{"item_imba_rune_frost", "particles/econ/items/puck/puck_snowflake/puck_snowflake_ambient.vpcf", "particles/econ/items/puck/puck_snowflake/puck_snowflake_ambient.vpcf"},
 --		{"item_imba_rune_ember", "particles/econ/items/shadow_fiend/sf_fire_arcana/sf_fire_arcana_trail.vpcf"},
 --		{"item_imba_rune_stone", "particles/econ/items/natures_prophet/natures_prophet_flower_treant/natures_prophet_flower_treant_ambient.vpcf"},
@@ -248,7 +250,7 @@ function ImbaRunes:PickupRune(rune_name, unit, bActiveByBottle)
 							-- Set variable to number between current_bounty and alchemy_bounty based on bountyReductionPct
 							alchemy_bounty = max(current_bounty, alchemy_bounty - ((alchemy_bounty - current_bounty) * bountyReductionPct))
 						end
-						
+
 						hero:ModifyGold(alchemy_bounty, false, DOTA_ModifyGold_Unspecified)
 						SendOverheadEventMessage(PlayerResource:GetPlayer(hero:GetPlayerOwnerID()), OVERHEAD_ALERT_GOLD, hero, current_bounty, nil)
 
@@ -268,9 +270,10 @@ function ImbaRunes:PickupRune(rune_name, unit, bActiveByBottle)
 
 			EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Bounty", unit)
 		elseif rune_name == "arcane" then
+			print("ADD ARCANE MODIFIER: "..duration)
 			unit:AddNewModifier(unit, item, "modifier_imba_arcane_rune", {duration=duration})
 			EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Arcane", unit)
-		elseif rune_name == "double_damage" then
+		elseif rune_name == "doubledamage" then
 			unit:AddNewModifier(unit, item, "modifier_imba_double_damage_rune", {duration=duration})
 			EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.DD", unit)
 		elseif rune_name == "haste" then
@@ -288,10 +291,10 @@ function ImbaRunes:PickupRune(rune_name, unit, bActiveByBottle)
 
 			FindClearSpaceForUnit(unit, unit:GetAbsOrigin() + RandomVector(72), true)
 			EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Illusion", unit)
-		elseif rune_name == "invisibility" then
+		elseif rune_name == "invis" then
 			unit:AddNewModifier(unit, nil, "modifier_imba_invisibility_rune_handler", {duration=2.0, rune_duration=duration})
 			EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Invis", unit)
-		elseif rune_name == "regeneration" then
+		elseif rune_name == "regen" then
 			unit:AddNewModifier(unit, nil, "modifier_imba_regen_rune", {duration=duration})
 			EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Regen", unit)
 		elseif rune_name == "frost" then
@@ -305,13 +308,16 @@ function ImbaRunes:PickupRune(rune_name, unit, bActiveByBottle)
 			EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Frost", unit)
 		end
 
-		CustomGameEventManager:Send_ServerToTeam(unit:GetTeam(), "create_custom_toast", {
-			type = "generic",
-			text = "#custom_toast_ActivatedRune",
-			player = unit:GetPlayerID(),
-			runeType = rune_name,
-			runeFirst = true, -- every bounty runes are global now
-		})
+		-- send a custom combat event if custom message is enabled
+		if IMBA_COMBAT_EVENTS == true then
+			CustomGameEventManager:Send_ServerToTeam(unit:GetTeam(), "create_custom_toast", {
+				type = "generic",
+				text = "#custom_toast_ActivatedRune",
+				player = unit:GetPlayerID(),
+				runeType = rune_name,
+				runeFirst = true, -- every bounty runes are global now
+			})
+		end
 	end
 end
 

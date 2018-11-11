@@ -11470,7 +11470,7 @@
 	//=================================================================================================================
 	// Power Surge (double damage rune)
 	//=================================================================================================================
-	"item_imba_rune_double_damage"
+	"item_imba_rune_doubledamage"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -11492,7 +11492,7 @@
 	//=================================================================================================================
 	// Boundless Energy (regeneration rune)
 	//=================================================================================================================
-	"item_imba_rune_regeneration"
+	"item_imba_rune_regen"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -11536,7 +11536,7 @@
 	//=================================================================================================================
 	// Invisibility Rune (invis rune)
 	//=================================================================================================================
-	"item_imba_rune_invisibility"
+	"item_imba_rune_invis"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -11597,56 +11597,6 @@
 		"ItemSellable"							"0"
 		"ItemKillable"							"1"
 		"ItemCastOnPickup"						"1"
-	}
-
-	//=================================================================================================================
-	// Bottle
-	//=================================================================================================================
-	"item_imba_bottle"
-	{
-		"BaseClass"						"item_lua"
-		"ID"							"2281"
-		"ScriptFile"					"components/items/item_bottle.lua"
-		"AbilityTextureName"			"custom/bottle_0_3"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"Model"							"models/props_gameplay/bottle_blue.vmdl"
-
-		"AbilityCooldown"				"0.5"
-		"AbilityCastRange"				"350"
-		"AbilityCastPoint"				"0.0"
-		"ItemCost"						"650"
-
-		"ItemQuality"					"consumable"
-		"ItemAliases"					"bottle"
-		"ItemStackable"					"0"
-		"ItemShareability"				"ITEM_PARTIALLY_SHAREABLE"
-		"ItemInitialCharges"			"3"
-		"ItemDisplayCharges"			"1"
-		"IsTempestDoubleClonable"		"0"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"health_restore"		"120"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"mana_restore"			"60"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"restore_time"			"2.5"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"tooltip_range"			"350"
-			}
-		}
 	}
 
 	//=================================================================================================================

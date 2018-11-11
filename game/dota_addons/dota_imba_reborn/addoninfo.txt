@@ -7,14 +7,14 @@
 	"addontagline"					"IMBA"
 	"addonauthor"					"EarthSalamander #42"
 	"addonSteamGroupName"			""
-	"addonauthorSteamID"			"fcalife"
+	"addonauthorSteamID"			"76561198015161808"
 	"addonContent_Campaign"			"0"
 	"addonDescription"				"A modified version of Dota, where everything is insanely powerful."
 	"HeroGuidesSupported"			"1"
-	"PenaltiesEnabled"				"0"
+	"PenaltiesEnabled"				"1"
 	"CheckAFKPlayers"				"1"
 
-	"maps"							"ranked_5v5 imba_5v5 mutation_10v10 super_frantic_10v10"
+	"maps"							"imba_5v5 imba_10v10 super_frantic_10v10"
 
 	"IsPlayable"					"1"
 
@@ -24,6 +24,11 @@
 	}
 
 	"mutation_10v10"
+	{
+		"MaxPlayers"				"20"
+	}
+
+	"imba_10v10"
 	{
 		"MaxPlayers"				"20"
 	}

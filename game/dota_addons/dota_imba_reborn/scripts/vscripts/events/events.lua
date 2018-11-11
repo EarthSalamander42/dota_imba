@@ -74,6 +74,9 @@ function GameMode:OnGameRulesStateChange(keys)
 		if GetMapName() == MapOverthrow() then
 			GoodCamera:AddNewModifier(GoodCamera, nil, "modifier_overthrow_gold_xp_granter", {})
 			GoodCamera:AddNewModifier(GoodCamera, nil, "modifier_overthrow_gold_xp_granter_global", {})
+		else
+			-- Initialize base shrines
+			SetupShrines()
 		end
 
 		-- Create a timer to avoid lag spike entering pick screen
@@ -100,11 +103,8 @@ function GameMode:OnGameRulesStateChange(keys)
 			end
 
 			-- Initialize IMBA Runes system
-			ImbaRunes:Init()
-
-			-- Initialize base shrines
-			if not GetMapName() == MapOverthrow() then
-				SetupShrines()
+			if IMBA_RUNE_SYSTEM == true then
+				ImbaRunes:Init()
 			end
 
 			-- Initialize gg panel
@@ -141,23 +141,29 @@ function GameMode:OnGameRulesStateChange(keys)
 			end)
 		end
 	elseif newState == DOTA_GAMERULES_STATE_POST_GAME then
-		api.imba.event(api.events.entered_post_game)
-		api.imba.complete(function (error, players)
-			local game_id = 0
-			if api.imba.data ~= nil then
-				game_id = api.imba.data.id or 0
+--		api.imba.event(api.events.entered_post_game)
+--		api.imba.complete(function (error, players)
+--			local game_id = 0
+--			if api.imba.data ~= nil then
+--				game_id = api.imba.data.id or 0
+--			end
+
+			local players = {}
+
+			for i = 0, PlayerResource:GetPlayerCount() - 1 do
+				players.id = i
 			end
 
 			CustomGameEventManager:Send_ServerToAllClients("end_game", {
 				players = players,
 				info = {
 					winner = GAME_WINNER_TEAM,
-					id = game_id,
+					id = 0,
 					radiant_score = GetTeamHeroKills(2),
 					dire_score = GetTeamHeroKills(3),
 				},
 			})
-		end)
+--		end)
 	end
 end
 
@@ -256,7 +262,7 @@ function GameMode:OnDisconnect(keys)
 		local line_duration = 7
 
 		-- Start tracking
---		log.info("started keeping track of player "..player_id.."'s connection state")
+--		print("started keeping track of player "..player_id.."'s connection state")
 		api.imba.event(api.events.player_disconnected, { tostring(PlayerResource:GetSteamID(player_id)) })
 
 		local disconnect_time = 0
@@ -271,7 +277,7 @@ function GameMode:OnDisconnect(keys)
 				Notifications:BottomToAll({text = player_name.." ", duration = line_duration, continue = true})
 				Notifications:BottomToAll({text = "#imba_player_abandon_message", duration = line_duration, style = {color = "DodgerBlue"}, continue = true})
 				PlayerResource:SetHasAbandonedDueToLongDisconnect(player_id, true)
-				log.info("player "..player_id.." has abandoned the game.")
+				print("player "..player_id.." has abandoned the game.")
 
 				api.imba.event(api.events.player_abandoned, { tostring(PlayerResource:GetSteamID(player_id)) })
 
@@ -282,7 +288,7 @@ function GameMode:OnDisconnect(keys)
 
 			-- Else, keep tracking connection state
 			else
---				log.info("tracking player "..player_id.."'s connection state, disconnected for "..disconnect_time.." seconds.")
+--				print("tracking player "..player_id.."'s connection state, disconnected for "..disconnect_time.." seconds.")
 				return 1
 			end
 		end)
@@ -367,7 +373,9 @@ function GameMode:OnEntityKilled( keys )
 				Mutation:OnHeroDeath(killed_unit)
 			end
 
-			GoldSystem:OnHeroDeath(killer, killed_unit)
+			if IMBA_GOLD_SYSTEM == true then
+				GoldSystem:OnHeroDeath(killer, killed_unit)
+			end
 
 			return
 		elseif killed_unit:IsBuilding() then
@@ -533,9 +541,9 @@ function GameMode:OnConnectFull(keys)
 	local entIndex = keys.index + 1
 	local ply = EntIndexToHScript(entIndex)
 	local playerID = ply:GetPlayerID()
-	
+
 	ReconnectPlayer(playerID)
-	
+
 --	PlayerResource:InitPlayerData(playerID)
 end
 
@@ -624,7 +632,6 @@ function GameMode:OnThink()
 		-- Make courier controllable, repeat every second to avoid uncontrollable issues
 		if COURIER_TEAM then
 			if COURIER_TEAM[hero:GetTeamNumber()] and not COURIER_TEAM[hero:GetTeamNumber()]:IsControllableByAnyPlayer() then
-				print("Set team courier controllable!")
 				COURIER_TEAM[hero:GetTeamNumber()]:SetControllableByPlayer(hero:GetPlayerID(), true)
 			end
 		end
@@ -869,5 +876,14 @@ function GameMode:OnTeamKillCredit(keys)
 			vengeance_aura_ability:ApplyDataDrivenModifier(victim_hero, killer_hero, "modifier_imba_command_aura_negative_aura", {})
 			victim_hero.vengeance_aura_target = killer_hero
 		end
+	end
+end
+
+-- A rune was activated by a player
+function GameMode:OnRuneActivated(keys)
+	local hero = PlayerResource:GetPlayer(keys.PlayerID):GetAssignedHero()
+
+	if keys.rune == DOTA_RUNE_ILLUSION then
+		ImbaRunes:PickupRune("illusion", hero, false)
 	end
 end

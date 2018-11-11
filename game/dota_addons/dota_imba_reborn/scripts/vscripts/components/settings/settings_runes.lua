@@ -1,5 +1,7 @@
 -- Double Damage
 if IMBA_MUTATION and IMBA_MUTATION["terrain"] == "super_runes" then
+	-- TODO: add illusion rune incoming and outgoing damage + duration in parameters here
+
 	-- Arcane
 	IMBA_RUNE_ARCANE_CDR = 50 -- %
 	IMBA_RUNE_ARCANE_SPELL_AMP = 100 -- %

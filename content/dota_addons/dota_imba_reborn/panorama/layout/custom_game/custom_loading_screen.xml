@@ -13,7 +13,7 @@
 		<Panel id="imba-loading">
 			<Panel id="imba-loading-title">
 				<Panel class="down">
-					<Label id="imba-loading-title-text" text="Dota IMBA 7.06 - The Fundamental Awakening"/>
+					<Label id="imba-loading-title-text" text="Dota IMBA 7.08d - The Fundamental Awakening"/>
 					<Label id="imba-loading-map-text" text="Loading ..."/>
 					<Label id="imba-loading-content-text" html="true" text="Loading ..." />
 					<Button id="imba-loading-link" onactivate="link_clicked();">

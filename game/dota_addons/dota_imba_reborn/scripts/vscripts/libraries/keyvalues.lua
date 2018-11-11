@@ -100,7 +100,7 @@ function LoadGameKeyValues()
 				file[k] = v
 			end
 		else
---			log.error("[KeyValues] Critical Error on "..v.custom..".txt")
+--			print("[KeyValues] Critical Error on "..v.custom..".txt")
 			return
 		end
 		
@@ -124,7 +124,7 @@ function LoadGameKeyValues()
 			KeyValues.UnitKV[key] = value
 		else
 			if type(KeyValues.All[key]) == "table" then
---				log.error("[KeyValues] Warning: Duplicated unit/hero entry for "..key)
+--				print("[KeyValues] Warning: Duplicated unit/hero entry for "..key)
 			end
 		end
 	end
@@ -134,7 +134,7 @@ function LoadGameKeyValues()
 			KeyValues.UnitKV[key] = value
 		else
 			if type(KeyValues.All[key]) == "table" then
---				log.error("[KeyValues] Warning: Duplicated unit/hero entry for "..key)
+--				print("[KeyValues] Warning: Duplicated unit/hero entry for "..key)
 			end
 		end
 	end
@@ -144,7 +144,7 @@ function LoadGameKeyValues()
 			KeyValues.AbilityKV[key] = value
 		else
 			if type(KeyValues.All[key]) == "table" then
---				log.error("[KeyValues] Warning: Duplicated unit/hero entry for "..key)
+--				print("[KeyValues] Warning: Duplicated unit/hero entry for "..key)
 			end
 		end
 	end

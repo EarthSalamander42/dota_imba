@@ -5,7 +5,7 @@ end
 -- clientside KV loading
 require('addon_init')
 
-require('libraries/adv_log')
+-- require('libraries/adv_log')
 require('libraries/animations')
 require('libraries/keyvalues')
 require('libraries/modifiers')
@@ -50,8 +50,8 @@ function GameMode:PostLoadPrecache()
 end
 
 function GameMode:OnFirstPlayerLoaded()
-	Log:ConfigureFromApi()
-	api.imba.register()
+--	Log:ConfigureFromApi()
+--	api.imba.register()
 
 	if GetMapName() ~= Map1v1() and GetMapName() ~= MapOverthrow() then
 		_G.ROSHAN_SPAWN_LOC = Entities:FindByClassname(nil, "npc_dota_roshan_spawner"):GetAbsOrigin()
@@ -81,6 +81,7 @@ function GameMode:OnAllPlayersLoaded()
 	GameRules:GetGameModeEntity():SetModifyExperienceFilter( Dynamic_Wrap(GameMode, "ExperienceFilter"), self )
 	GameRules:GetGameModeEntity():SetModifierGainedFilter( Dynamic_Wrap(GameMode, "ModifierFilter"), self )
 	GameRules:GetGameModeEntity():SetItemAddedToInventoryFilter( Dynamic_Wrap(GameMode, "ItemAddedFilter"), self )
+	GameRules:GetGameModeEntity():SetBountyRunePickupFilter(Dynamic_Wrap(GameMode, "BountyRuneFilter"), self)
 	GameRules:GetGameModeEntity():SetThink( "OnThink", self, 1 )
 	GameRules:GetGameModeEntity():SetPauseEnabled(false)
 end
@@ -92,24 +93,11 @@ function GameMode:InitGameMode()
 	CustomGameEventManager:RegisterListener("change_companion_skin", Dynamic_Wrap(self, "DonatorCompanionSkinJS"))
 	CustomGameEventManager:RegisterListener("send_gg_vote", Dynamic_Wrap(GoodGame, 'Call'))
 
-	self:SetUpFountains()
-	self:_InitGameMode()
-end
-
--- Set up fountain regen
-function GameMode:SetUpFountains()
-
-	local fountainEntities = Entities:FindAllByClassname( "ent_dota_fountain")
-	for _,fountainEnt in pairs( fountainEntities ) do
-		fountainEnt:AddNewModifier( fountainEnt, fountainEnt, "modifier_fountain_aura_lua", {} )
-		fountainEnt:AddAbility("imba_fountain_danger_zone"):SetLevel(1)
-
-		-- remove vanilla fountain healing
-		if fountainEnt:HasModifier("modifier_fountain_aura") then
-			fountainEnt:RemoveModifierByName("modifier_fountain_aura")
-			fountainEnt:AddNewModifier(fountainEnt, nil, "modifier_fountain_aura_lua", {})
-		end
+	if GetMapName() == MapOverthrow() then
+		self:SetUpFountains()
 	end
+
+	self:_InitGameMode()
 end
 
 function GameMode:DonatorCompanionJS(event)
@@ -118,4 +106,31 @@ end
 
 function GameMode:DonatorCompanionSkinJS(event)
 	DonatorCompanionSkin(event.ID, event.unit, event.skin)
+end
+
+function GameMode:BountyRuneFilter(keys)
+	local hero = PlayerResource:GetPlayer(keys.player_id_const):GetAssignedHero()
+
+	if hero:GetUnitName() == "npc_dota_hero_alchemist" then 
+		local alchemy_bounty = 0
+		if hero:FindAbilityByName("imba_alchemist_goblins_greed") and hero:FindAbilityByName("imba_alchemist_goblins_greed"):GetLevel() > 0 then
+			alchemy_bounty = keys.gold_bounty * (hero:FindAbilityByName("imba_alchemist_goblins_greed"):GetSpecialValueFor("bounty_multiplier") / 100)
+
+			-- #7 Talent: Moar gold from bounty runes
+			if hero:HasTalent("special_bonus_imba_alchemist_7") then
+				alchemy_bounty = (alchemy_bounty * (hero:FindTalentValue("special_bonus_imba_alchemist_7") / 100)) - keys.gold_bounty
+			end		
+
+			hero:ModifyGold(alchemy_bounty, false, DOTA_ModifyGold_Unspecified)
+			SendOverheadEventMessage(PlayerResource:GetPlayer(hero:GetPlayerOwnerID()), OVERHEAD_ALERT_GOLD, hero, alchemy_bounty, nil)
+		end
+	end
+
+	local custom_gold_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "bounty_multiplier")["1"])
+	local custom_xp_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "exp_multiplier")["1"])
+
+	keys.gold_bounty = keys.gold_bounty * (custom_gold_bonus / 100)
+	keys.xp_bounty = keys.xp_bounty * (custom_xp_bonus / 100)
+
+	return true
 end

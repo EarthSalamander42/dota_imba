@@ -55,7 +55,7 @@ end
 -- Called in DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP
 function InitializeTeamSelection()
 
-	log.info("Initializing team selection")
+	print("Initializing team selection")
 
 	-- 5v5                will use complete random
 	-- 10v10              parties will be kept
@@ -75,8 +75,8 @@ end
 -----------------------------------
 
 function ManualTeamSelection()
-	log.info("Initializing manual team selection")
-	log.info("Skipping. Manual Team Selection is performed by legacy code")
+	print("Initializing manual team selection")
+	print("Skipping. Manual Team Selection is performed by legacy code")
 end
 
 -----------------------------------
@@ -88,7 +88,7 @@ local TeamSelectionListeners = {}
 
 function Random5v5TeamSelection()
 
-	log.info("Initializing 5v5 random team selection")
+	print("Initializing 5v5 random team selection")
 
 	-- wait until the player with host privileges notifies us that he is ready
 	-- register the host-ready event
@@ -113,11 +113,11 @@ end
 
 function Random5v5TeamSelectionFinalize(response)
 
-	log.info("recieved response from server")
+	print("recieved response from server")
 
 	-- catch errors
 	if not response.ok then
-		log.error("error")
+		print("error")
 		TeamSelectionFallbackAssignment()
 		return
 	end
@@ -158,7 +158,7 @@ local TeamSelectionComputedTotal = 10
 
 function KeepTeams10v10TeamSelection()
 
-	log.info("Initializing keep-teams 10v10 team selection")
+	print("Initializing keep-teams 10v10 team selection")
 
 	-- wait until the player with host privileges notifies us that he is ready
 	-- register the host-ready event
@@ -170,7 +170,7 @@ function KeepTeams10v10TeamSelection()
 end
 
 function KeepTeams10v10TeamSelectionReady(obj, event)
-	log.info("We got notification from host")
+	print("We got notification from host")
 
 	-- save the playerid of the privileged client / volvos function is unreliable
 	PlayerWithHostPrivileges = event.PlayerID
@@ -235,12 +235,12 @@ function PreAssignPlayers(iteration)
 	local radiantPlayerId = PreAssignPlayersSchema[iteration + 1].radiant
 	local direPlayerId = PreAssignPlayersSchema[iteration + 1].dire
 	
-	log.debug("Pre assigning players: radiant id is: " .. radiantPlayerId .. ", dire id is: " .. direPlayerId)
-	log.debug("Player count is: " .. tostring(PlayerResource:GetPlayerCount()))
+	print("Pre assigning players: radiant id is: " .. radiantPlayerId .. ", dire id is: " .. direPlayerId)
+	print("Player count is: " .. tostring(PlayerResource:GetPlayerCount()))
 	
 	-- skip if the player ids are stupid
 	if (radiantPlayerId > PlayerResource:GetPlayerCount() or direPlayerId > PlayerResource:GetPlayerCount()) then
-		log.debug("Skipping team pre assignment cause player count is too low")
+		print("Skipping team pre assignment cause player count is too low")
 		return
 	end
 	
@@ -255,7 +255,7 @@ end
 
 function KeepTeams10v10TeamSelectionComputeRound(obj, event)
 
-	log.info("Compute complete")
+	print("Compute complete")
 
 	-- gather team composition by creating a snapshot
 	local comp = KeepTeams10v10TeamSelectionGetTeamComposition();
@@ -287,7 +287,7 @@ end
 
 function KeepTeams10v10TeamSelectionDone()
 
-	log.info("Team selection complete")
+	print("Team selection complete")
 
 	-- unregister listener and send complete event
 	CustomGameEventManager:UnregisterListener(TeamSelectionListeners.computeComplete)
@@ -303,21 +303,21 @@ end
 function TeamSelectionFallbackAssignment()
 
 	-- unassign teams
-	log.info("Unassigning teams")
+	print("Unassigning teams")
 	TeamSelectionUnassignTeams()
 
 	-- send failure event
-	log.info("Sending failure event to clients")
+	print("Sending failure event to clients")
 	CustomGameEventManager:Send_ServerToAllClients(TeamSelectionEvents.failure, nil)
 end
 
 function KeepTeams10v10TeamSelectionFinalize(response)
 
-	log.info("recieved response from server")
+	print("recieved response from server")
 
 	-- catch errors
 	if not response.ok then
-		log.error("error")
+		print("error")
 		TeamSelectionFallbackAssignment()
 		return
 	end

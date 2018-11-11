@@ -67,6 +67,7 @@ function GameMode:_InitGameMode()
 	ListenToGameEvent('dota_player_learned_ability', Dynamic_Wrap(self, 'OnPlayerLearnedAbility'), self)
 	ListenToGameEvent('last_hit', Dynamic_Wrap(GameMode, 'OnLastHit'), self)
 	ListenToGameEvent('dota_team_kill_credit', Dynamic_Wrap(GameMode, 'OnTeamKillCredit'), self)
+	ListenToGameEvent('dota_rune_activated_server', Dynamic_Wrap(GameMode, 'OnRuneActivated'), self)
 
 	-- Change random seed
 	local timeTxt = string.gsub(string.gsub(GetSystemTime(), ':', ''), '^0+','')
@@ -115,7 +116,7 @@ function GameMode:_CaptureGameMode()
 		mode:SetMinimumAttackSpeed( MINIMUM_ATTACK_SPEED )
 		mode:SetMaximumAttackSpeed( MAXIMUM_ATTACK_SPEED )
 
-		mode:SetHudCombatEventsDisabled(true)
+		mode:SetHudCombatEventsDisabled(IMBA_COMBAT_EVENTS)
 		mode:SetCustomTerrainWeatherEffect(IMBA_WEATHER_EFFECT[RandomInt(1, #IMBA_WEATHER_EFFECT)])
 
 		self:OnFirstPlayerLoaded()

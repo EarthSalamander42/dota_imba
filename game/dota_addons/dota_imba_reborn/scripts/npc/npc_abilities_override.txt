@@ -51,8 +51,6 @@
 	"item_bloodstone"						"REMOVE"
 	"item_recipe_vanguard"					"REMOVE"
 	"item_vanguard"							"REMOVE"
-	"item_recipe_blade_mail"				"REMOVE"
-	"item_blade_mail"						"REMOVE"
 	"item_recipe_hood_of_defiance"			"REMOVE"
 	"item_hood_of_defiance"					"REMOVE"
 	"item_recipe_rapier"					"REMOVE"
@@ -148,7 +146,6 @@
 	"item_kaya"								"REMOVE"
 	"item_force_staff"						"REMOVE"
 	"item_hurricane_pike"					"REMOVE"
-	"item_bottle"							"REMOVE"
 //	"item_travel_boots"						"REMOVE"
 //	"item_travel_boots_2"					"REMOVE"
 //	"item_cyclone"							"REMOVE"
@@ -171,6 +168,9 @@
 	"item_recipe_nokrash_blade"				"REMOVE"
 	"item_imba_haste_boots"					"REMOVE"
 	"item_recipe_imba_haste_boots"			"REMOVE"
+	"item_imba_bottle"						"REMOVE"
+	"item_recipe_imba_blade_mail"			"REMOVE"
+	"item_imba_blade_mail"					"REMOVE"
 
 	//=================================================================================================================
 	//-----------------------------------------------------------------------------------------------------------------
@@ -7875,7 +7875,7 @@
 	"monkey_king_boundless_strike"
 	{
 		"MaxLevel"							"4"
-		"AbilityCastRange"					"1200 1400 1600 1800"
+		"AbilityCastRange"					"1200 1300 1400 1500"
 		"AbilityCooldown"					"25 22 19 16"
 
 		"AbilitySpecial"
@@ -7899,7 +7899,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"strike_cast_range"			"1200 1400 1600 1800"
+				"strike_cast_range"			"1200 1300 1400 1500"
 			}
 		}
 	}
@@ -8087,13 +8087,13 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_damage"				"80 140 180 200"
+				"bonus_damage"				"80 120 160 200"
 				"LinkedSpecialBonus"		"special_bonus_unique_monkey_king_2"
 			}
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"lifesteal"					"25 55 80 100"
+				"lifesteal"					"25 50 75 100"
 			}
 			"06"
 			{
@@ -15767,5 +15767,60 @@
 			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+	}
+
+	//=================================================================================================================
+	// Bottle
+	//=================================================================================================================
+	"item_bottle"
+	{
+
+		"ItemCost"						"600"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"health_restore"		"120"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mana_restore"			"60"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"restore_time"			"2.5"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tooltip_range"			"350"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_charges"			"3"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Blade Mail
+	//=================================================================================================================
+	"item_blade_mail"
+	{
+		"AbilityCooldown"				"20.0"
+		
+		"AbilitySpecial"
+		{
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_armor"			"6"
+			}
+		}
 	}
 }
