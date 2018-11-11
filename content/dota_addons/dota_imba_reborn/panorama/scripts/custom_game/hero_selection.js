@@ -142,7 +142,7 @@ if (localTeam != 2 && localTeam != 3 && localTeam != 6 && localTeam != 7 && loca
 
 if (currentMap == "ranked_1v1") {
 	Setup1v1();
-} else if (currentMap == 'ranked_10v10' || currentMap == 'super_frantic_10v10' || currentMap == 'mutation_10v10') {
+} else if (currentMap == 'imba_10v10' || currentMap == 'ranked_10v10' ||  currentMap == 'super_frantic_10v10' || currentMap == 'mutation_10v10') {
 	SetupTopBar();
 } else if (currentMap == 'cavern') {
 	$.GetContextPanel().SetHasClass('Cavern', true);

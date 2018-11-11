@@ -94,7 +94,7 @@ function Is1v1Map()
 end
 
 function Is10v10Map()
-	if GetMapName() == MapRanked10v10() or GetMapName() == MapMutation10v10() or GetMapName() == MapSuperFrantic10v10() then
+	if GetMapName() == "imba_10v10" or GetMapName() == MapRanked10v10() or GetMapName() == MapMutation10v10() or GetMapName() == MapSuperFrantic10v10() then
 		return true
 	end
 

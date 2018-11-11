@@ -73,6 +73,7 @@ function Precache( context )
 end
 
 function Activate()
+	print("Activate()")
 	GameRules.GameMode = GameMode()
 	GameRules.GameMode:InitGameMode()
 	-- Run the scoreboard functions that handle share unit / share hero / disable help
