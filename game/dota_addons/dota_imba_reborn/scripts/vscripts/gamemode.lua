@@ -86,14 +86,8 @@ function GameMode:OnAllPlayersLoaded()
 	GameRules:GetGameModeEntity():SetPauseEnabled(false)
 end
 
+-- CAREFUL, FOR REASONS THIS FUNCTION IS ALWAYS CALLED TWICE
 function GameMode:InitGameMode()
-	-- Store day/night time clientside
-	StoreCurrentDayCycle()
-	CustomGameEventManager:RegisterListener("change_companion", Dynamic_Wrap(self, "DonatorCompanionJS"))
-	CustomGameEventManager:RegisterListener("change_companion_skin", Dynamic_Wrap(self, "DonatorCompanionSkinJS"))
-	CustomGameEventManager:RegisterListener("send_gg_vote", Dynamic_Wrap(GoodGame, 'Call'))
-
-	self:SetUpFountains()
 	self:_InitGameMode()
 end
 
@@ -108,7 +102,7 @@ end
 -- Set up fountain regen
 function GameMode:SetUpFountains()
 
-	local fountainEntities = Entities:FindAllByClassname( "ent_dota_fountain")
+	local fountainEntities = Entities:FindAllByClassname("ent_dota_fountain")
 	for _,fountainEnt in pairs( fountainEntities ) do
 		fountainEnt:AddNewModifier( fountainEnt, fountainEnt, "modifier_fountain_aura_lua", {} )
 		fountainEnt:AddAbility("imba_fountain_danger_zone"):SetLevel(1)

@@ -42,8 +42,6 @@ function item_imba_blink:OnSpellStart()
 	local distance = (target_point - origin_point):Length2D()
 	local max_blink_range = self:GetSpecialValueFor("max_blink_range")
 
-	caster:Blink(target_point, false, true)
-
 	-- Set distance if targeted destiny is beyond range
 	if distance > max_blink_range then
 		-- Extra parameters
@@ -65,6 +63,8 @@ function item_imba_blink:OnSpellStart()
 			end)
 		end
 	end
+
+	caster:Blink(target_point, false, true)
 end
 
 function item_imba_blink:GetAbilityTextureName()
@@ -154,8 +154,6 @@ function item_imba_blink_boots:OnSpellStart()
 	local distance = (target_point - origin_point):Length2D()
 	local max_blink_range = self:GetSpecialValueFor("max_blink_range")
 
-	caster:Blink(target_point, false, true)
-
 	-- Set distance if targeted destiny is beyond range
 	if distance > max_blink_range then
 		-- Extra parameters
@@ -177,6 +175,8 @@ function item_imba_blink_boots:OnSpellStart()
 			end)
 		end
 	end
+
+	caster:Blink(target_point, false, true)
 end
 
 -----------------------------------------------------------------------------------------------------------

@@ -476,6 +476,8 @@ RESTRICT_FOUNTAIN_UNITS = {
 	"npc_imba_techies_proximity_mine_big_boom",
 	"npc_imba_techies_stasis_trap",
 	"npc_dota_zeus_cloud",
+	"npc_dota_observer_wards",
+	"npc_dota_sentry_wards",
 }
 
 MORPHLING_RESTRICTED_MODIFIERS = {

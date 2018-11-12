@@ -8,6 +8,14 @@ function GameMode:_InitGameMode()
 		return
 	end
 
+	-- Store day/night time clientside
+	StoreCurrentDayCycle()
+	CustomGameEventManager:RegisterListener("change_companion", Dynamic_Wrap(self, "DonatorCompanionJS"))
+	CustomGameEventManager:RegisterListener("change_companion_skin", Dynamic_Wrap(self, "DonatorCompanionSkinJS"))
+	CustomGameEventManager:RegisterListener("send_gg_vote", Dynamic_Wrap(GoodGame, 'Call'))
+
+	self:SetUpFountains()
+
 	-- Setup rules
 	GameRules:SetUseUniversalShopMode( UNIVERSAL_SHOP_MODE )
 	GameRules:SetSameHeroSelectionEnabled( true ) -- Let server handle hero duplicates

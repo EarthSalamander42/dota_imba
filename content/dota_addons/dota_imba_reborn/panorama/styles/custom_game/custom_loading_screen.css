@@ -14,7 +14,7 @@
 .addon-root {
 	width: 39%;
 	height: 100%;
-	z-index: 1; /* disable if loading players are no longer visible */
+/*	z-index: 1; /* disable if loading players are no longer visible */
 }
 
 .down {
