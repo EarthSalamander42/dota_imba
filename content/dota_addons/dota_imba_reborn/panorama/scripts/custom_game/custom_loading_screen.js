@@ -21,8 +21,9 @@ function info_already_available() {
 }
 
 function fetch() {
-
-	view.title.text = "Dota IMBA 7.06 - The Fundamental Awakening";
+	view.title.text = "Dota IMBA 7.08d - The Grand Magus";
+	view.text.text = "We're currently migrating the server, Imba XP will be down for few days. Experience Boosters will be multiplied by 2 for a limited time once the server is working again! (Non donators will get 200% xp boost instead of 100%, Ember donators will get 600% instead of 300%, etc...)";
+	view.link_text.text = "Dota 2 IMBA website is currently unavailable.";
 
 	// if data is not available yet, reschedule
 	if (!info_already_available()) {
@@ -45,7 +46,6 @@ function fetch() {
 	view.map.text = map_name;
 
 	api.loading_screen().then(function (data) {
-		
 		var lang = $.Language();
 		var rdata = data.languages["en"];
 

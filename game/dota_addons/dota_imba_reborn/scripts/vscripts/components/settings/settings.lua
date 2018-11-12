@@ -14,7 +14,7 @@
 
 require('components/settings/settings_donator')
 
-IMBA_VERSION = "7.08c"
+IMBA_VERSION = "7.08d"
 
 -- Picking screen constants
 PICKING_SCREEN_OVER = false
@@ -576,7 +576,7 @@ if GetMapName() == MapOverthrow() then
 end
 
 -- IMBA override vanilla systems
-USE_TEAM_COURIER = true -- Should we use vanilla couriers?
+USE_TEAM_COURIER = false -- Should we use vanilla couriers?
 IMBA_RUNE_SYSTEM = false -- Should we use custom runes script spawner?
 IMBA_COMBAT_EVENTS = false -- Should we use custom combat events notifications?
 IMBA_GOLD_SYSTEM = false -- Should we use custom gold system?

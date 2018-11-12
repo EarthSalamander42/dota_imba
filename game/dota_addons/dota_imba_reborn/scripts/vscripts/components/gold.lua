@@ -105,7 +105,7 @@ function GoldSystem:_OnHeroDeath(killer, victim)
 		if victim_attacker_count == 0 then
 			-- If there's no attackers and the hero didn't suicided or denied himself, grant gold to the enemy team
 			for _, hero in pairs(HeroList:GetAllHeroes()) do
-				if not hero == victim and not hero:IsClone() and not hero:HasModifier("modifier_monkey_king_fur_army_soldier") and not hero:HasModifier("modifier_monkey_king_fur_army_soldier_hidden") then
+				if not hero == victim and not hero:IsFakeHero() then
 --					print(kill_gold / PlayerResource:GetPlayerCountForTeam(hero:GetTeamNumber()), kill_gold)
 					SendOverheadEventMessage(hero:GetPlayerOwner(), OVERHEAD_ALERT_GOLD, victim, kill_gold / PlayerResource:GetPlayerCountForTeam(hero:GetTeamNumber()), nil)
 					hero:ModifyGold(kill_gold / PlayerResource:GetPlayerCountForTeam(hero:GetTeamNumber()), true, DOTA_ModifyGold_HeroKill)
@@ -115,7 +115,7 @@ function GoldSystem:_OnHeroDeath(killer, victim)
 			-- if there are assisters but no killer (e.g: dead by tower) then grant gold to assisters
 			for _, attacker in pairs(HeroList:GetAllHeroes()) do
 				for i = 0, victim_attacker_count -1 do
-					if attacker:GetPlayerID() == victim:GetAttacker(i) and not attacker:IsClone() and not attacker:HasModifier("modifier_monkey_king_fur_army_soldier") and not attacker:HasModifier("modifier_monkey_king_fur_army_soldier_hidden") then
+					if attacker:GetPlayerID() == victim:GetAttacker(i) and not attacker:IsFakeHero() then
 --						print("Attacker:", attacker:GetUnitName())
 --						print("Gold:", kill_gold / victim_attacker_count, kill_gold)
 						SendOverheadEventMessage(attacker:GetPlayerOwner(), OVERHEAD_ALERT_GOLD, victim, kill_gold / victim_attacker_count, nil)

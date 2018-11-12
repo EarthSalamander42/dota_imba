@@ -228,9 +228,8 @@ function ImbaRunes:PickupRune(rune_name, unit, bActiveByBottle)
 			-- global bounty rune
 			for _, hero in pairs(HeroList:GetAllHeroes()) do
 				if hero:GetTeam() == unit:GetTeam() then					
-				    -- Do not give gold to illusions or monkey king clones (has to check for two separate modifiers)
-					if not hero:IsRealHero() or hero:IsClone() or hero:HasModifier("modifier_monkey_king_fur_army_soldier") or hero:HasModifier("modifier_monkey_king_fur_army_soldier_hidden") then
-
+					if hero:IsFakeHero() then
+						-- don't give gold to mk and meepo clones or illusions
 					elseif hero:GetUnitName() == "npc_dota_hero_alchemist" then 
 						local alchemy_bounty = 0
 						if unit:FindAbilityByName("imba_alchemist_goblins_greed") and unit:FindAbilityByName("imba_alchemist_goblins_greed"):GetLevel() > 0 then

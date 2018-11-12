@@ -117,8 +117,8 @@ function modifier_imba_rune_doubledamage_aura:OnCreated()
 	self:SetStackCount((100 * CustomNetTables:GetTableValue("game_options", "runes").double_damage_rune_multiplier) / 2)
 	self.bonus_main_attribute_multiplier = (1 * CustomNetTables:GetTableValue("game_options", "runes").double_damage_rune_multiplier)	/ 2
     
-    -- Don't calculate all this stuff for MK clones cause it can cause lag problems
-	if self:GetParent():IsRealHero() and not self:GetParent():HasModifier("modifier_monkey_king_fur_army_soldier") and not self:GetParent():HasModifier("modifier_monkey_king_fur_army_soldier_hidden") then
+	-- Don't calculate all this stuff for MK clones cause it can cause lag problems
+	if self:GetParent():IsRealHero() then
 		self.strength_bonus = 0
 		self.agility_bonus = 0
 		self.intellect_bonus = 0

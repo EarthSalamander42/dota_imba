@@ -300,8 +300,10 @@ function HeroSelection:APTimer(time, message)
 				useGameTime = false,
 				endTime = 20, -- when this timer should first execute, you can omit this if you want it to run first on the next frame
 				callback = function()
-					print("Force unpause, loading is too long!")
-					PauseGame(false)
+					if GameRules:IsGamePaused() then
+						print("Force unpause, loading is too long!")
+						PauseGame(false)
+					end
 				end
 			})
 		end

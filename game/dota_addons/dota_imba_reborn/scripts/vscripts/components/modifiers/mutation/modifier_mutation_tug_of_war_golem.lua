@@ -121,8 +121,8 @@ function modifier_mutation_tug_of_war_golem:OnDeath(keys)
 			end
 
 			for _, hero in pairs(HeroList:GetAllHeroes()) do
-				if keys.attacker:GetTeam() == hero:GetTeam() and not hero:IsClone() then
-					if hero:IsRealHero() and not hero:HasModifier("modifier_monkey_king_fur_army_soldier") and not hero:HasModifier("modifier_monkey_king_fur_army_soldier_hidden") then
+				if keys.attacker:GetTeam() == hero:GetTeam() then
+					if hero:IsRealHero() then
 						hero:ModifyGold(goldBonus * (1 + previous_stacks), false, DOTA_ModifyGold_Unspecified)
 						hero:AddExperience(expBonus * (1 + previous_stacks), DOTA_ModifyXP_CreepKill, false, true)
 						SendOverheadEventMessage(PlayerResource:GetPlayer(hero:GetPlayerOwnerID()), OVERHEAD_ALERT_GOLD, hero, goldBonus * (1 + previous_stacks), nil)

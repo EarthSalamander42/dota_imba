@@ -42,13 +42,7 @@ function item_imba_blink:OnSpellStart()
 	local distance = (target_point - origin_point):Length2D()
 	local max_blink_range = self:GetSpecialValueFor("max_blink_range")
 
-	-- Disjointing everything
-	ProjectileManager:ProjectileDodge(caster)
-
-	-- Creating the particle & sound at the start-location
-	local blink_pfx = ParticleManager:CreateParticle(caster.blink_effect, PATTACH_ABSORIGIN, caster)
-	ParticleManager:ReleaseParticleIndex(blink_pfx)
-	caster:EmitSound("DOTA_Item.BlinkDagger.Activate")
+	caster:Blink(target_point, false, true)
 
 	-- Set distance if targeted destiny is beyond range
 	if distance > max_blink_range then
@@ -71,16 +65,6 @@ function item_imba_blink:OnSpellStart()
 			end)
 		end
 	end
-
-	-- Adding an extremely small timer for the particles, else they will only appear at the dest
-	Timers:CreateTimer(0.01, function()
-		caster:SetAbsOrigin(target_point)
-		FindClearSpaceForUnit(caster, target_point, true)
-
-		-- Create Particle on end-point
-		local blink_end_pfx = ParticleManager:CreateParticle(caster.blink_effect_end, PATTACH_ABSORIGIN, caster)
-		ParticleManager:ReleaseParticleIndex(blink_end_pfx)
-	end)
 end
 
 function item_imba_blink:GetAbilityTextureName()
@@ -170,13 +154,7 @@ function item_imba_blink_boots:OnSpellStart()
 	local distance = (target_point - origin_point):Length2D()
 	local max_blink_range = self:GetSpecialValueFor("max_blink_range")
 
-	-- Disjointing everything
-	ProjectileManager:ProjectileDodge(caster)
-
-	-- Creating the particle & sound at the start-location
-	local blink_pfx = ParticleManager:CreateParticle(caster.blink_effect, PATTACH_ABSORIGIN, caster)
-	ParticleManager:ReleaseParticleIndex(blink_pfx)
-	caster:EmitSound("DOTA_Item.BlinkDagger.Activate")
+	caster:Blink(target_point, false, true)
 
 	-- Set distance if targeted destiny is beyond range
 	if distance > max_blink_range then
@@ -199,16 +177,6 @@ function item_imba_blink_boots:OnSpellStart()
 			end)
 		end
 	end
-
-	-- Adding an extremely small timer for the particles, else they will only appear at the dest
-	Timers:CreateTimer(0.01, function()
-		caster:SetAbsOrigin(target_point)
-		FindClearSpaceForUnit(caster, target_point, true)
-
-		-- Create Particle on end-point
-		local blink_end_pfx = ParticleManager:CreateParticle(caster.blink_effect_end, PATTACH_ABSORIGIN, caster)
-		ParticleManager:ReleaseParticleIndex(blink_end_pfx)
-	end)
 end
 
 -----------------------------------------------------------------------------------------------------------

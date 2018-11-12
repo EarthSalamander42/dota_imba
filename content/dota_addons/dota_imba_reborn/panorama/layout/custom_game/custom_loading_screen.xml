@@ -50,7 +50,6 @@
 					<Label id="imba-loading-title-text-patreon" text="Patreon"/>
 					<Label id="imba-loading-content-text-patreon" html="true" text="Earthsalamander #42 is developing IMBA at full time! We also have to pay servers for the Battlepass, Statistics and XP System. Feel free to donate, even small amounts matter!" />
 					<Button id="imba-loading-link-patreon" onactivate="DOTADisplayURL('https://www.patreon.com/bePatron?u=2533325');">
-						<Label id="imba-loading-link-text-patreon" text="Click here to become a donator!" />
 					</Button>
 				</Panel>
 			</Panel>
@@ -65,6 +64,7 @@
 				</Panel>
 			</Panel>
 -->
+<!--
 			<Panel id="imba-loading-title-promote">
 				<Panel class="down">
 					<Label id="imba-loading-title-text-promote" text="X Hero Siege now have an experience system!"/>
@@ -74,6 +74,7 @@
 					</Button>
 				</Panel>
 			</Panel>
+-->
 		</Panel>
 	</Panel>
 </root>

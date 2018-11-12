@@ -43,7 +43,7 @@ function BuildGameArray()
 	local game = {}
 
 	-- Add game values here as game.someValue = GetSomeGameValue()
-	game.gl = GameRules:GetDOTATime(false, false) -- Game length, from the horn sound, in seconds
+	game.gl = GetGameTimeAverage() -- Game length, from the horn sound (string)
 	game.wt = GAME_WINNER_TEAM -- Winning team
 
 	return game
@@ -142,6 +142,40 @@ end
 -------------------------------------
 -- MY CUSTOM FUNCTIONS
 -------------------------------------
+
+function GetGameTimeAverage()
+	local game_time = 0
+	local minutes = math.floor(GameRules:GetDOTATime(false, false) / 60)
+
+	local i = 5
+
+	while i < minutes do
+		game_time = game_time + 5
+		i = i + 5
+	end
+
+	print("Game time in minutes:", minutes)
+	print(tostring(game_time).."-"..tostring(i))
+
+	return tostring(game_time).."-"..tostring(i)
+end
+
+function GetItemSlotIMBA(hero, slot)
+	local item = hero:GetItemInSlot(slot)
+	local itemName = ""
+
+	if item then
+		if string.find(item:GetAbilityName(), "imba") then
+			itemName = string.gsub(item:GetAbilityName(), "item_imba_", "")
+		else
+			itemName = string.gsub(item:GetAbilityName(), "item_", "")
+		end
+	end
+
+	return itemName
+end
+
+--[[
 function GetItemListImba(hero)
 	local itemTable = {}
 
@@ -163,17 +197,4 @@ function GetItemListImba(hero)
 
 	return itemList
 end
-
-function GetItemSlotIMBA(hero, slot)
-	local item = hero:GetItemInSlot(slot)
-
-	if item then
-		if string.find(item:GetAbilityName(), "imba") then
-			local itemName = string.gsub(item:GetAbilityName(), "item_imba_", "")
-		else
-			local itemName = string.gsub(item:GetAbilityName(), "item_", "")
-		end
-	end
-
-	return itemName
-end
+--]]

@@ -2,7 +2,7 @@
 	<Panel style="visibility:collapse;">
 		<Panel id="container" style="visibility:collapse;">
 			<!-- Those selection icons are not used, but Valve calls them, increasing loading time if they don't exist. -->
-			<!--
+
 			<Image src="file://panorama/images/heroes/selection/npc_dota_hero_malfurion.png" hittest="false" />
 			<Image src="file://panorama/images/heroes/selection/npc_dota_hero_sohei.png" hittest="false" />
 			<Image src="file://panorama/images/heroes/selection/npc_dota_hero_hell_empress.png" hittest="false" />
@@ -113,6 +113,8 @@
 			<Image src="file://panorama/images/custom_game/picking_screen/dire2.png" hittest="false" />
 
 			<Image src="file://panorama/images/custom_game/loading_screen/frantic_thunder.png" hittest="false" />
+
+			<Image src="file://panorama/images/custom_game/patreon.png" hittest="false" />
 		-->
 		</Panel>
 	</Panel>

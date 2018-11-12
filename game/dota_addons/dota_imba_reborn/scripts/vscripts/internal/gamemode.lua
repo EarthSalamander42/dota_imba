@@ -26,7 +26,7 @@ function GameMode:_InitGameMode()
 	GameRules:SetHideKillMessageHeaders( HIDE_KILL_BANNERS )
 	GameRules:SetCustomGameSetupAutoLaunchDelay( AUTO_LAUNCH_DELAY )
 	GameRules:SetStartingGold( 0 )
-	GameRules:LockCustomGameSetupTeamAssignment(true)
+	GameRules:LockCustomGameSetupTeamAssignment(not IsInToolsMode())
 
 	-- This is multiteam configuration stuff
 	if USE_AUTOMATIC_PLAYERS_PER_TEAM then

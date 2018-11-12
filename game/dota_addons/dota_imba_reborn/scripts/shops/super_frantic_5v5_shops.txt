@@ -227,6 +227,7 @@
 	
 	"secretshop"
 	{
+		"item"		"item_bottle"
 		"item"		"item_energy_booster"
 		"item"		"item_vitality_booster"
 		"item"		"item_point_booster"
