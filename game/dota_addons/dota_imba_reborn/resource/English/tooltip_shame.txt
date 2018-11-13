@@ -371,6 +371,8 @@
 "DOTA_Tooltip_ability_invoker_invoke_spell_lifesteal"                  "%SPELL LIFESTEAL:"
 "DOTA_Tooltip_ability_invoker_invoke_cooldown_reduction_pct"            "%COOLDOWN REDUCTION:"
 
+"DOTA_tooltip_ability_ogre_magi_unrefined_fireblast_description"		"Blasts an enemy unit with a wave of fire, dealing damage and stunning the target. Its mana cost is <font color='#FF7800'>%scepter_mana%x</font> of the hero's current mana."
+
 "DOTA_Tooltip_ability_slark_dark_pact_Description"                      "After a short delay, Slark sacrifices some of his life blood, purging most negative debuffs and dealing damage to enemy units around him and to himself.  Slark only takes 50%% of the damage.\n<font color='#FF7800'>Burn the fish oil:</font> applies 10/10/10/10/12/14/16 instances of Dispel, over 1/1/1/1/1.2/1.4/1.6 seconds.\n\nDISPEL TYPE: Strong Dispel"
 
 //    "DOTA_Tooltip_ability_templar_assassin_psionic_trap_Description"                    "Templar Assassin places mystical traps that invisibly monitor enemy movement. When sprung at her command, they exert a slowing influence of 30%% in the area. Traps charge up to slow an additional <font color='#FF7800'>10%%</font> every second, up to <font color='#FF7800'>90%%.</font>"
@@ -437,7 +439,7 @@
 //"DOTA_Tooltip_Ability_special_bonus_unique_invoker_1"               "+2 Forged Spirit Summoned"
 //"DOTA_Tooltip_Ability_special_bonus_unique_invoker_2"               "AoE Deafening Blast"
 //"DOTA_Tooltip_Ability_special_bonus_unique_invoker_3"               "-18s Tornado Cooldown"
-//"DOTA_Tooltip_Ability_special_bonus_unique_beastmaster"             "+240 Wild Axes Damage"
+"DOTA_Tooltip_Ability_special_bonus_unique_beastmaster"             "+240 Wild Axes Damage"
 //"DOTA_Tooltip_Ability_special_bonus_unique_beastmaster_2"           "+2 Boars summoned"
 //"DOTA_Tooltip_Ability_special_bonus_unique_winter_wyvern_1"         "+25% Arctic Burn Slow"
 //"DOTA_Tooltip_Ability_special_bonus_unique_winter_wyvern_2"         "-3s Splinter Blast Cooldown"
