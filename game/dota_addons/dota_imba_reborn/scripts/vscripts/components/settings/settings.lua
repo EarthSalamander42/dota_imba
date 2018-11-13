@@ -582,7 +582,13 @@ USE_TEAM_COURIER = false -- Should we use vanilla couriers?
 IMBA_RUNE_SYSTEM = false -- Should we use custom runes script spawner?
 IMBA_COMBAT_EVENTS = false -- Should we use custom combat events notifications?
 IMBA_GOLD_SYSTEM = false -- Should we use custom gold system?
+IMBA_PICK_SCREEN = false
+
 IMBA_DIRETIDE = false -- Should we enable diretide?
+
+if IMBA_PICK_SCREEN == false then
+	STRATEGY_TIME = 30.0
+end
 
 if GetMapName() == MapDiretide() then
 	IMBA_DIRETIDE = true

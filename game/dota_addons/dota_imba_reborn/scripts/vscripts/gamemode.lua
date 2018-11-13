@@ -30,7 +30,7 @@ require('components/battlepass/imbattlepass')
 require('components/courier/abilities')
 require('components/courier/courier')
 require('components/gold')
-require('components/hero_selection/hero_selection')
+require('components/hero_selection/init')
 if IsMutationMap() then
 	require('components/mutation/mutation')
 end

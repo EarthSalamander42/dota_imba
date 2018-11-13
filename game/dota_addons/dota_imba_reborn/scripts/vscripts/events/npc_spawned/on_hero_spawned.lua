@@ -15,6 +15,8 @@
 
 -- first time a real hero spawn
 function GameMode:OnHeroFirstSpawn(hero)
+	if hero == nil then return end
+
 	if IsMutationMap() then
 		if hero:GetUnitName() ~= FORCE_PICKED_HERO then
 			Mutation:OnHeroFirstSpawn(hero)
