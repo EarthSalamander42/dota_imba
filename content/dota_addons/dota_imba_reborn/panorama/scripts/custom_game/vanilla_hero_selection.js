@@ -39,13 +39,13 @@ function UpdateHeroCard()
 			}
 		}
 
-//		for (hero in herolist.hotdisabledlist) {
-//			if (hero == "npc_dota_hero_" + heroIMG.heroname) {
-//				$.Msg(heroIMG.GetParent())
-//				heroIMG.GetParent().style.visibility = "visible"
-//				break;
-//			}
-//		}
+		for (hero in herolist.hotdisabledlist) {
+			if (hero == "npc_dota_hero_" + heroIMG.heroname) {
+				$.Msg(heroIMG.GetParent())
+				heroIMG.GetParent().style.opacity = "0";
+				break;
+			}
+		}
 	}
 
 	current++;
