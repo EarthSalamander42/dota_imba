@@ -712,8 +712,6 @@ function ReconnectPlayer(player_id)
 --		print(PlayerResource:GetSelectedHeroEntity(player_id))
 
 		if PlayerResource:GetSelectedHeroEntity(player_id) then
-			CustomGameEventManager:Send_ServerToAllClients("player_reconnected", {PlayerID = player_id, PickedHeroes = HeroSelection.picked_heroes, pickState = pick_state, repickState = repick_state})
-
 			Timers:CreateTimer(3.0, function()
 				local table = {
 					ID = player_id,
@@ -724,14 +722,20 @@ function ReconnectPlayer(player_id)
 				GoodGame:Call(table)
 			end)
 
+			if IMBA_PICK_SCREEN == true then
+				CustomGameEventManager:Send_ServerToAllClients("player_reconnected", {PlayerID = player_id, PickedHeroes = HeroSelection.picked_heroes, pickState = pick_state, repickState = repick_state})
+			end
+
 			local hero = PlayerResource:GetSelectedHeroEntity(player_id)
 
 			if PICKING_SCREEN_OVER == true then
-				if hero:GetUnitName() == FORCE_PICKED_HERO then
-					print('Giving player ' .. player_id .. ' a random hero! (reconnected)')
-					local random_hero = HeroSelection:RandomHero()
-					print("Random Hero:", random_hero)
-					HeroSelection:GiveStartingHero(player_id, random_hero, true)
+				if IMBA_PICK_SCREEN == true then
+					if hero:GetUnitName() == FORCE_PICKED_HERO then
+						print('Giving player ' .. player_id .. ' a random hero! (reconnected)')
+						local random_hero = HeroSelection:RandomHero()
+						print("Random Hero:", random_hero)
+						HeroSelection:GiveStartingHero(player_id, random_hero, true)
+					end
 				end
 
 				if IsMutationMap() then

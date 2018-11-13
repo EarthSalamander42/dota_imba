@@ -13,6 +13,7 @@
 	"HeroGuidesSupported"			"1"
 	"PenaltiesEnabled"				"1"
 	"CheckAFKPlayers"				"1"
+	"EnablePickRules"				"1"
 
 	"maps"							"imba_5v5 imba_10v10 super_frantic_10v10"
 

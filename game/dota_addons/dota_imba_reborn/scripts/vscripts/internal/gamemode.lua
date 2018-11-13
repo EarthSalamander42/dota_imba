@@ -33,8 +33,15 @@ function GameMode:_InitGameMode()
 	GameRules:SetFirstBloodActive( ENABLE_FIRST_BLOOD )
 	GameRules:SetHideKillMessageHeaders( HIDE_KILL_BANNERS )
 	GameRules:SetCustomGameSetupAutoLaunchDelay( AUTO_LAUNCH_DELAY )
-	GameRules:SetStartingGold( 0 )
+	if IMBA_PICK_SCREEN == false then
+		GameRules:SetStartingGold(HERO_INITIAL_GOLD[GetMapName()])
+	else
+		GameRules:SetStartingGold(0)
+	end
 	GameRules:LockCustomGameSetupTeamAssignment(not IsInToolsMode())
+	if IMBA_PICK_SCREEN == false then
+		GameRules:SetHeroSelectionTime(AP_GAME_TIME)
+	end
 
 	-- This is multiteam configuration stuff
 	if USE_AUTOMATIC_PLAYERS_PER_TEAM then
@@ -112,7 +119,7 @@ function GameMode:_CaptureGameMode()
 		mode:SetGoldSoundDisabled( DISABLE_GOLD_SOUNDS )
 		mode:SetRemoveIllusionsOnDeath( REMOVE_ILLUSIONS_ON_DEATH )
 
-		if FORCE_PICKED_HERO ~= nil then
+		if FORCE_PICKED_HERO ~= nil and IMBA_PICK_SCREEN == true then
 			mode:SetCustomGameForceHero( FORCE_PICKED_HERO )
 		end
 

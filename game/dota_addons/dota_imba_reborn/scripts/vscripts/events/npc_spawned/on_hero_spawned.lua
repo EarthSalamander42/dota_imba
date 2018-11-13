@@ -15,6 +15,52 @@
 
 -- first time a real hero spawn
 function GameMode:OnHeroFirstSpawn(hero)
+	if hero == nil then return end
+
+	if IMBA_PICK_SCREEN == false then
+		-- Set up initial level 1 experience bounty
+		hero:SetCustomDeathXP(HERO_XP_BOUNTY_PER_LEVEL[1])
+
+		-- Set up initial level
+		local starting_level = tonumber(CustomNetTables:GetTableValue("game_options", "initial_level")["1"])
+		if starting_level == nil then starting_level = 1 end
+		if starting_level and starting_level > 1 then
+			hero:AddExperience(XP_PER_LEVEL_TABLE[starting_level], DOTA_ModifyXP_CreepKill, false, true)
+		end
+
+		-- add modifier for custom mechanics handling
+		hero:AddNewModifier(hero, nil, "modifier_custom_mechanics", {})
+
+		-- set player colors (literally the same code i use in XHS, but it doesn't work in imba? in chat)
+		PlayerResource:SetCustomPlayerColor(hero:GetPlayerID(), PLAYER_COLORS[hero:GetPlayerID()][1], PLAYER_COLORS[hero:GetPlayerID()][2], PLAYER_COLORS[hero:GetPlayerID()][3])
+
+		-- Initialize innate hero abilities
+		hero:InitializeInnateAbilities()
+
+		-- Initialize Invoker's innate invoke buff
+		-- TODO: This should be removed when another solution is found, like giving Invoker a hidden passive ability to apply the modifier
+		if hero:HasAbility("invoker_invoke") then
+			LinkLuaModifier("modifier_imba_invoke_buff", "components/modifiers/modifier_imba_invoke_buff.lua", LUA_MODIFIER_MOTION_NONE)
+			hero:AddNewModifier(hero, hero:FindAbilityByName("invoker_invoke"), "modifier_imba_invoke_buff", {})
+		end
+
+		Imbattlepass:AddItemEffects(hero)
+
+		if USE_TEAM_COURIER == false then
+			TurboCourier:Init(hero)
+		end
+
+		-- temporary fix
+		if not hero:GetUnitName() == "npc_dota_hero_monkey_king" then
+			HeroSelection:Attachments(hero)
+		end
+
+		-- Initializes player data if this is not a bot
+		if PlayerResource:GetConnectionState(hero:GetPlayerID()) == 2 then
+			PlayerResource:InitPlayerData(hero:GetPlayerID())
+		end
+	end
+
 	if IsMutationMap() then
 		if hero:GetUnitName() ~= FORCE_PICKED_HERO then
 			Mutation:OnHeroFirstSpawn(hero)

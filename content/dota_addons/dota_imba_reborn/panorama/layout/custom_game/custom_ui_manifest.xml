@@ -94,10 +94,37 @@
 				tbbg.style.backgroundColor = '#000000da';
 			}
 		}
+
+		<!-- Vanilla pick screen -->
+		var PreGame = $.GetContextPanel().GetParent().GetParent().FindChildTraverse("PreGame")
+		var PregameBG = PreGame.FindChildTraverse("PregameBG")
+		var AmbientFX = PreGame.FindChildTraverse("AmbientFXContainer")
+		var MainContents = PreGame.FindChildTraverse("MainContents")
+		var MainHeroPickScreenContents = PreGame.FindChildTraverse("MainHeroPickScreenContents")
+		var HeroPickLeftColumn = PreGame.FindChildTraverse("HeroPickLeftColumn")
+		var HeroGrid = PreGame.FindChildTraverse("HeroGrid")
+		var GridCore = PreGame.FindChildTraverse("GridCore")
+		var PreMinimapContainer = PreGame.FindChildTraverse("PreMinimapContainer")
+
+		PreGame.style.backgroundColor = "none";
+//		Minimap.style.visibility = "collapse";
+//		BattlePass.style.visibility = "collapse";
+//		GridTeam.style.visibility = "collapse";
+//		HeroInspect.style.visibility = "collapse";
+//		HeroFilters.style.visibility = "collapse";
+		PregameBG.style.opacity = "0";
+		AmbientFX.style.backgroundColor = "#000000fa";
+		MainHeroPickScreenContents.style.height = "87%";
+		HeroPickLeftColumn.style.height = "100%";
+		HeroGrid.style.height = "92%";
+		GridCore.style.height = "605px";
+		PreMinimapContainer.style.height = "270px";
 	</script>
 
 	<Panel>
 		<!-- CustomUIElements go here.-->
+		<CustomUIElement type="HeroSelection" layoutfile="file://{resources}/layout/custom_game/multiteam_hero_select_overlay.xml" />
+		<CustomUIElement type="HeroSelection" layoutfile="file://{resources}/layout/custom_game/vanilla_hero_selection.xml" /> 
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/statcollection.xml"/>
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/barebones_notifications.xml" /> 
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/ardm_precache.xml" /> 

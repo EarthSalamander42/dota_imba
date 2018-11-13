@@ -51,15 +51,28 @@ function GameMode:OnGameRulesStateChange(keys)
 				GoodCamera = Entities:FindByName(nil, "good_healer_6")
 				BadCamera = Entities:FindByName(nil, "bad_healer_6")
 			end
+
+			HeroSelection:Init()
 		end)
 
 		CustomNetTables:SetTableValue("game_options", "player_colors", hex_colors)
 	elseif newState == DOTA_GAMERULES_STATE_HERO_SELECTION then
-		HeroSelection:Init() -- init picking screen kv (this function is a bit heavy to run)
-		api.imba.event(api.events.entered_hero_selection)
-		Timers:CreateTimer(0.5, function()
-			HeroSelection:StartSelection()
-		end)
+		if IMBA_PICK_SCREEN == false then
+			for i = 0, PlayerResource:GetPlayerCount() - 1 do
+				if PlayerResource:GetTeam(i) == DOTA_TEAM_GOODGUYS then
+					PlayerResource:SetCameraTarget(i, GoodCamera)
+				else
+					PlayerResource:SetCameraTarget(i, BadCamera)
+				end
+			end
+		end
+	elseif newState == DOTA_GAMERULES_STATE_STRATEGY_TIME then
+		for i = 0, PlayerResource:GetPlayerCount() - 1 do
+			if PlayerResource:IsValidPlayer(i) and not PlayerResource:HasSelectedHero(i) and PlayerResource:GetConnectionState(i) == DOTA_CONNECTION_STATE_CONNECTED then
+				PlayerResource:GetPlayer(i):MakeRandomHeroSelection()
+				PlayerResource:SetCanRepick(i, false)
+			end
+		end
 	elseif newState == DOTA_GAMERULES_STATE_PRE_GAME then
 		api.imba.event(api.events.entered_pre_game)
 
