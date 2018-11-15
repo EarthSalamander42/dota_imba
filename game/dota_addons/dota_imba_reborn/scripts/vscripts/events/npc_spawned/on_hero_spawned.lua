@@ -15,7 +15,7 @@
 
 -- first time a real hero spawn
 function GameMode:OnHeroFirstSpawn(hero)
-	if hero == nil then return end
+	if hero == nil or hero:IsFakeHero() then return end
 
 	if IMBA_PICK_SCREEN == false then
 		-- Set up initial level 1 experience bounty

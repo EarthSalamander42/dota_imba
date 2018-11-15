@@ -68,7 +68,7 @@ end
 
 function modifier_item_imba_cheese_death_prevention:GetMinHealth()
 	-- if the cooldown is ready, set the unit minimum health to 1 (invincible)
-	if self:GetAbility():IsCooldownReady() then
+	if self:GetAbility():IsCooldownReady() and self:GetParent():IsRealHero() then
 		return 1
 	end
 

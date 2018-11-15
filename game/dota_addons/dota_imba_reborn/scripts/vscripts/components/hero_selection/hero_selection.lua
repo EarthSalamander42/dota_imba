@@ -378,7 +378,7 @@ function HeroSelection:GiveStartingHero(playerId, heroName, dev)
 	-- Set up initial gold
 	-- local has_randomed = PlayerResource:HasRandomed(playerId)
 	--	local has_randomed = HeroSelection.playerPickState[playerId].random_state
-	local initial_gold = tonumber(CustomNetTables:GetTableValue("game_options", "initial_gold")["1"]) or 1200
+	local initial_gold = tonumber(CustomNetTables:GetTableValue("game_options", "initial_gold")["1"]) or 1400
 
 	if has_randomed or IMBA_PICK_MODE_ALL_RANDOM or IMBA_PICK_MODE_ALL_RANDOM_SAME_HERO then
 		PlayerResource:SetGold(playerId, initial_gold + 200, false)

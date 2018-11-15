@@ -65,6 +65,15 @@ function GameMode:OnGameRulesStateChange(keys)
 					PlayerResource:SetCameraTarget(i, BadCamera)
 				end
 			end
+
+			if IsInToolsMode() then
+				for i = 1, PlayerResource:GetPlayerCount() - 1 do
+					if PlayerResource:IsValidPlayer(i) then
+						PlayerResource:GetPlayer(i):MakeRandomHeroSelection()
+						PlayerResource:SetCanRepick(i, false)
+					end
+				end
+			end
 		end
 	elseif newState == DOTA_GAMERULES_STATE_STRATEGY_TIME then
 		for i = 0, PlayerResource:GetPlayerCount() - 1 do
@@ -90,6 +99,13 @@ function GameMode:OnGameRulesStateChange(keys)
 		else
 			-- Initialize base shrines
 			SetupShrines()
+		end
+
+		local fountainEntities = Entities:FindAllByClassname("ent_dota_fountain")
+		for _,fountainEnt in pairs( fountainEntities ) do
+			local danger_zone_pfx = ParticleManager:CreateParticle("particles/ambient/fountain_danger_circle.vpcf", PATTACH_CUSTOMORIGIN, nil)
+			ParticleManager:SetParticleControl(danger_zone_pfx, 0, fountainEnt:GetAbsOrigin())
+			ParticleManager:ReleaseParticleIndex(danger_zone_pfx)
 		end
 
 		-- Create a timer to avoid lag spike entering pick screen

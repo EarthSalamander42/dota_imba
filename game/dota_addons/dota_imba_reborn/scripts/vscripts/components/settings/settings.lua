@@ -587,6 +587,7 @@ IMBA_PICK_SCREEN = false
 IMBA_DIRETIDE = false -- Should we enable diretide?
 
 if IMBA_PICK_SCREEN == false then
+	PRE_GAME_TIME = 90.0
 	STRATEGY_TIME = 30.0
 end
 
