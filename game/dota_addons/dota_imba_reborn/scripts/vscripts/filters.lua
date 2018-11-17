@@ -18,14 +18,15 @@ function GameMode:GoldFilter(keys)
 		return true
 	end
 
-	-- Ignore negative gold values and hero kills (handled in another function)
+	-- Ignore negative gold values
 	if keys.gold <= 0 then
 		return false
 	end
 
-	if keys.reason_const == DOTA_ModifyGold_HeroKill then
-		return not IMBA_GOLD_SYSTEM
-	end
+	-- Hero kills should be multiplied by map bonus now so this block is commented out
+	-- if keys.reason_const == DOTA_ModifyGold_HeroKill then
+		-- return not IMBA_GOLD_SYSTEM
+	-- end
 
 	if PlayerResource:GetPlayer(keys.player_id_const) == nil then return end
 	local player = PlayerResource:GetPlayer(keys.player_id_const)
@@ -35,8 +36,8 @@ function GameMode:GoldFilter(keys)
 		local hero = player:GetAssignedHero()
 		if hero == nil then return end
 
-		-- Hand of Midas gold bonus
-		if hero:HasModifier("modifier_item_imba_hand_of_midas") then
+		-- Hand of Midas gold bonus (let's make it not affect hero kills)
+		if hero:HasModifier("modifier_item_imba_hand_of_midas") and keys.reason_const ~= DOTA_ModifyGold_HeroKill then
 			keys.gold = keys.gold * 1.1
 		end
 

@@ -232,7 +232,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_gold"			"8 10 12 14"
+				"bonus_gold"			"4 6 8 10"
 			}
 			"03"
 			{
@@ -247,7 +247,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"gold_multiplier"		"2.2"
+				"gold_multiplier"		"1.5"
 			}
 			"06"
 			{
@@ -359,11 +359,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_movespeed"		"40 60 80"
-			}
-			"08"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_strength"		"15 30 45"
 			}
 		}		
 	}
