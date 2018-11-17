@@ -17,7 +17,7 @@
 	"npc_dota_hero_bounty_hunter" 		"1"
 	"npc_dota_hero_brewmaster" 			"1"
 	"npc_dota_hero_bristleback" 		"1"
-	"npc_dota_hero_broodmother" 		"0" // creep hero lag
+	"npc_dota_hero_broodmother" 		"1" // creep hero lag
 	"npc_dota_hero_centaur" 			"1"
 	"npc_dota_hero_chaos_knight" 		"1"
 	"npc_dota_hero_chen" 				"1"
@@ -38,7 +38,7 @@
 	"npc_dota_hero_enchantress" 		"1"
 	"npc_dota_hero_enigma" 				"1"
 	"npc_dota_hero_faceless_void" 		"1"
-	"npc_dota_hero_furion" 				"0" // ultimate lags
+	"npc_dota_hero_furion" 				"1" // ultimate lags
 	"npc_dota_hero_grimstroke"	 		"1"
 	"npc_dota_hero_gyrocopter" 			"1"
 	"npc_dota_hero_huskar" 				"1"
@@ -73,7 +73,7 @@
 	"npc_dota_hero_oracle" 				"1"
 	"npc_dota_hero_pangolier" 			"1"
 	"npc_dota_hero_phantom_assassin" 	"1"
-	"npc_dota_hero_phantom_lancer" 		"0" // illusions lag
+	"npc_dota_hero_phantom_lancer" 		"1" // illusions lag
 	"npc_dota_hero_phoenix" 			"1"
 	"npc_dota_hero_puck" 				"1"
 	"npc_dota_hero_pudge" 				"1"
@@ -84,7 +84,7 @@
 	"npc_dota_hero_riki" 				"1"
 	"npc_dota_hero_rubick" 				"1"
 	"npc_dota_hero_sand_king" 			"1"
-	"npc_dota_hero_shadow_demon" 		"0" // illusion unit cap abuse
+	"npc_dota_hero_shadow_demon" 		"1" // illusion unit cap abuse
 	"npc_dota_hero_shadow_shaman" 		"1"
 	"npc_dota_hero_shredder" 			"1"
 	"npc_dota_hero_silencer" 			"1"

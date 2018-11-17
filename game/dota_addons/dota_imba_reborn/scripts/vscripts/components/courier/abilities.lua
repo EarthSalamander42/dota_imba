@@ -56,6 +56,9 @@ function modifier_courier_turbo:OnCreated()
 					ParticleManager:SetParticleControl(pfx, 0, self:GetParent():GetAbsOrigin())
 					ParticleManager:ReleaseParticleIndex(pfx)
 				end)
+			else
+				self:GetParent():SetModel("models/props_gameplay/donkey_wings.vmdl")
+				self:GetParent():SetOriginalModel("models/props_gameplay/donkey_wings.vmdl")
 			end
 		end)
 

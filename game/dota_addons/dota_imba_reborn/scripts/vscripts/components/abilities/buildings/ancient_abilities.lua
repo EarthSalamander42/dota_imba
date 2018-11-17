@@ -173,10 +173,6 @@ end
 function modifier_imba_fountain_danger_zone:OnCreated()
 	if IsServer() then
 		self:StartIntervalThink(0.2)
-		print("Danger Zone particle created!")
-		-- TODO: Not working for reasons
---		local danger_zone_pfx = ParticleManager:CreateParticle("particles/ambient/fountain_danger_circle.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
---		ParticleManager:ReleaseParticleIndex(danger_zone_pfx)
 	end
 end
 
@@ -213,12 +209,12 @@ function modifier_imba_fountain_danger_zone:OnIntervalThink()
 				ApplyDamage({attacker = fountain, victim = enemy, damage = damage, damage_type = DAMAGE_TYPE_PURE})
 			end
 
-			local damage_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_tinker/tinker_laser.vpcf", PATTACH_CUSTOMORIGIN, enemy)
-			ParticleManager:SetParticleControl(damage_pfx, 0, fountain_pos)
-			ParticleManager:SetParticleControlEnt(damage_pfx, 1, enemy, PATTACH_POINT_FOLLOW, "attach_hitloc", enemy:GetAbsOrigin(), true)
-			ParticleManager:SetParticleControl(damage_pfx, 3, fountain_pos)
-			ParticleManager:SetParticleControl(damage_pfx, 9, fountain_pos)
-			ParticleManager:ReleaseParticleIndex(damage_pfx)
+--			local damage_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_tinker/tinker_laser.vpcf", PATTACH_CUSTOMORIGIN, enemy)
+--			ParticleManager:SetParticleControl(damage_pfx, 0, fountain_pos)
+--			ParticleManager:SetParticleControlEnt(damage_pfx, 1, enemy, PATTACH_POINT_FOLLOW, "attach_hitloc", enemy:GetAbsOrigin(), true)
+--			ParticleManager:SetParticleControl(damage_pfx, 3, fountain_pos)
+--			ParticleManager:SetParticleControl(damage_pfx, 9, fountain_pos)
+--			ParticleManager:ReleaseParticleIndex(damage_pfx)
 			enemy:AddNewModifier(fountain, self:GetAbility(), "modifier_doom_bringer_doom", {duration = aura_linger})
 			enemy:AddNewModifier(fountain, self:GetAbility(), "modifier_imba_fountain_danger_zone_debuff", {duration = aura_linger})
 		end

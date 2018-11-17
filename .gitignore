@@ -3,3 +3,6 @@ game/dota_addons/dota_imba_reborn/tools_asset_info.bin
 game/dota_addons/dota_imba_reborn/panorama_debugger.cfg
 game/dota_addons/dota_imba_reborn/network_measurement.txt
 game/dota_addons/dota_imba_reborn/scripts/vscripts/components/statcollection/settings.kv
+
+content/dota_addons/dota_imba_reborn/materials/models/courier/lockjaw/lockjaw_color.psd
+content/dota_addons/dota_imba_reborn/materials/models/courier/lockjaw/lockjaw_normal.psd

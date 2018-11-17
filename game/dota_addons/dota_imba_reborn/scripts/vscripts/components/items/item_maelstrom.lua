@@ -330,10 +330,6 @@ function item_imba_jarnbjorn:GetAbilityTextureName()
 	return "custom/imba_jarnbjorn"
 end
 
-function item_imba_jarnbjorn:GetTexture()
-	return "custom/imba_jarnbjorn"
-end
-
 function item_imba_jarnbjorn:OnSpellStart()
 	if IsServer() then
 		local target = self:GetCursorTarget()
@@ -361,6 +357,10 @@ function modifier_item_imba_jarnbjorn:IsHidden() return true end
 function modifier_item_imba_jarnbjorn:IsDebuff() return false end
 function modifier_item_imba_jarnbjorn:IsPurgable() return false end
 function modifier_item_imba_jarnbjorn:IsPermanent() return true end
+
+function modifier_item_imba_jarnbjorn:GetTexture()
+	return "modifiers/imba_jarnbjorn"
+end
 
 function modifier_item_imba_jarnbjorn:GetAttributes()
 	return MODIFIER_ATTRIBUTE_MULTIPLE
@@ -454,6 +454,10 @@ if modifier_item_imba_jarnbjorn_static == nil then modifier_item_imba_jarnbjorn_
 function modifier_item_imba_jarnbjorn_static:IsHidden() return false end
 function modifier_item_imba_jarnbjorn_static:IsDebuff() return false end
 function modifier_item_imba_jarnbjorn_static:IsPurgable() return true end
+
+function modifier_item_imba_jarnbjorn_static:GetTexture()
+	return "modifiers/imba_jarnbjorn"
+end
 
 -- Modifier particle
 function modifier_item_imba_jarnbjorn_static:GetEffectName()
@@ -549,6 +553,10 @@ if modifier_item_imba_jarnbjorn_slow == nil then modifier_item_imba_jarnbjorn_sl
 function modifier_item_imba_jarnbjorn_slow:IsHidden() return false end
 function modifier_item_imba_jarnbjorn_slow:IsDebuff() return true end
 function modifier_item_imba_jarnbjorn_slow:IsPurgable() return true end
+
+function modifier_item_imba_jarnbjorn_slow:GetTexture()
+	return "modifiers/imba_jarnbjorn"
+end
 
 -- Declare modifier events/properties
 function modifier_item_imba_jarnbjorn_slow:DeclareFunctions()

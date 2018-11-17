@@ -136,7 +136,7 @@ function imba_venomancer_venomous_gale:GetAbilityTextureName()
 end
 -------------------------------------------
 
-function imba_venomancer_venomous_gale:GetCastRange( location , target)
+function imba_venomancer_venomous_gale:GetCastRange(location , target)
 	local range = self:GetSpecialValueFor("cast_range")
 	if IsServer() then
 		local caster = self:GetCaster()
@@ -170,6 +170,18 @@ function imba_venomancer_venomous_gale:OnSpellStart()
 		local caster = self:GetCaster()
 		local target_loc = self:GetCursorPosition()
 		local caster_loc
+		local cast_range = self:GetSpecialValueFor("cast_range")
+		local ward_range = self:GetSpecialValueFor("ward_range") + GetCastRangeIncrease(caster)
+
+		if (caster:GetAbsOrigin() - target_loc):Length2D() >= (cast_range + GetCastRangeIncrease(caster)) then
+			local wards = FindUnitsInRadius(caster:GetTeamNumber(), target_loc, nil, ward_range, DOTA_UNIT_TARGET_TEAM_FRIENDLY,  DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
+			for _, ward in pairs(wards) do
+				if ward:GetUnitName() == "npc_imba_venomancer_scourge_ward" then
+					self.bWardCaster = ward
+					break
+				end
+			end
+		end
 
 		local mouth_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_venomancer/venomancer_venomous_gale_mouth.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
 		if self.bWardCaster then
@@ -191,8 +203,8 @@ function imba_venomancer_venomous_gale:OnSpellStart()
 		local strike_damage = self:GetSpecialValueFor("strike_damage")
 		local tick_damage = self:GetSpecialValueFor("tick_damage")
 		local tick_interval = self:GetSpecialValueFor("tick_interval")
-		local radius = self:GetSpecialValueFor("radius")
 		local projectile_speed = self:GetSpecialValueFor("speed")
+		local radius = self:GetSpecialValueFor("radius")
 
 		local direction
 		if target_loc == caster_loc then
