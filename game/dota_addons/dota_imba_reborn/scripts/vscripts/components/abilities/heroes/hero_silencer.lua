@@ -1055,7 +1055,7 @@ function modifier_imba_silencer_arcane_supremacy:OnDeath( params )
 		self.steal_amount = self:GetAbility():GetTalentSpecialValueFor("int_steal_amount")
 		self.global_silence_steal = self:GetAbility():GetTalentSpecialValueFor("global_silence_steal")
 	
-		if self.caster:GetUnitName() == "npc_dota_hero_silencer" then
+		if self.caster:GetUnitName() == "npc_dota_hero_silencer" and self.caster:IsRealHero() then
 			if params.unit:IsRealHero() and params.unit ~= self.caster and params.unit:GetTeam() ~= self.caster:GetTeam() and not params.reincarnate then			
 				local stealType = nil
 				local distance = (self.caster:GetAbsOrigin() - params.unit:GetAbsOrigin()):Length2D()

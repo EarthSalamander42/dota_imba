@@ -48,7 +48,8 @@ function GoodGame:Call(event)
 
 --			print("Team left counter: "..team_counter)
 --			print("Team left max counter: "..PlayerResource:GetPlayerCountForTeam(event.team))
-			if team_counter == PlayerResource:GetPlayerCountForTeam(event.team) then
+			-- GG end activates when at least 80% of the team GGs
+			if team_counter / PlayerResource:GetPlayerCountForTeam(event.team) >= 0.8 then
 --				print("Full team has gg: "..event.team)
 				abandon_team = event.team
 			end
@@ -59,11 +60,21 @@ function GoodGame:Call(event)
 		local text = {}
 		text[2] = "#imba_team_good_gg_message"
 		text[3] = "#imba_team_bad_gg_message"
+		
+		local winner
+		
+		-- The team that DIDN'T call GG is the winner...obviously
+		if abandon_team == 2 then
+			winner = 3
+		elseif abandon_team == 3 then
+			winner = 2
+		end
+		
 		Notifications:BottomToAll({text = text[abandon_team], duration = 5.0, style = {color = "DodgerBlue"}})
 
 		Timers:CreateTimer(5.0, function()
-			GAME_WINNER_TEAM = abandon_team
-			GameRules:SetGameWinner(abandon_team)
+			GAME_WINNER_TEAM = winner
+			GameRules:SetGameWinner(winner)
 		end)
 
 		abandon_team = true

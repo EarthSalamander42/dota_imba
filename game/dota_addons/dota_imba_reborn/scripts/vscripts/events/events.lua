@@ -425,18 +425,18 @@ function GameMode:OnEntityKilled( keys )
 				end
 			end
 
-			if killer:IsRealHero() then
-				CombatEvents("kill", "hero_kill_tower", killed_unit, killer)
-				if killer:GetTeam() ~= killed_unit:GetTeam() then
-					if killed_unit:GetUnitName() == "npc_dota_goodguys_healers" or killed_unit:GetUnitName() == "npc_dota_badguys_healers" then
-						SendOverheadEventMessage(killer:GetPlayerOwner(), OVERHEAD_ALERT_GOLD, killed_unit, 125, nil)
-					else
-						SendOverheadEventMessage(killer:GetPlayerOwner(), OVERHEAD_ALERT_GOLD, killed_unit, 200, nil)
-					end
-				end
-			else
-				CombatEvents("generic", "tower_dead", killed_unit, killer)
-			end
+			-- if killer:IsRealHero() then
+				-- CombatEvents("kill", "hero_kill_tower", killed_unit, killer)
+				-- if killer:GetTeam() ~= killed_unit:GetTeam() then
+					-- if killed_unit:GetUnitName() == "npc_dota_goodguys_healers" or killed_unit:GetUnitName() == "npc_dota_badguys_healers" then
+						-- SendOverheadEventMessage(killer:GetPlayerOwner(), OVERHEAD_ALERT_GOLD, killed_unit, 125, nil)
+					-- else
+						-- SendOverheadEventMessage(killer:GetPlayerOwner(), OVERHEAD_ALERT_GOLD, killed_unit, 200, nil)
+					-- end
+				-- end
+			-- else
+				-- CombatEvents("generic", "tower_dead", killed_unit, killer)
+			-- end
 
 			if GetMapName() == Map1v1() then
 				local winner = 2
@@ -538,9 +538,6 @@ function GameMode:OnPlayerLearnedAbility(keys)
 				modifier_charges:SetStackCount(3)
 			end
 		end)
-	elseif abilityname == "special_bonus_imba_mirana_5" then -- fix for mirana stand still talent not working
-		hero:AddNewModifier(hero, nil, "modifier_imba_mirana_silence_stance", {})
-		hero:AddNewModifier(hero, nil, "modifier_imba_mirana_silence_stance_visible", {})
 	end
 
 	-- initiate talent!
