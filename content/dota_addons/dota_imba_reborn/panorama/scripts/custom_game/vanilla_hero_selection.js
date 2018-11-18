@@ -23,17 +23,19 @@ function UpdateHero() {
 
 	if (hero_image_panel != undefined) {
 		hero_image_panel.GetParent().style.visibility = "visible";
-		for (hero in herolist.hotdisabledlist) {
-			if (hero == "npc_dota_hero_" + hero_image_panel.heroname) {
-				if (hero_image_panel.GetParent()) {
-					hero_image_panel.GetParent().GetParent().FindChildTraverse("BannedOverlay").style.opacity = "1";
-					hero_image_panel.GetParent().GetParent().AddClass("Unavailable")
-					hero_image_panel.GetParent().GetParent().AddClass("Banned")
-					hero_image_panel.GetParent().GetParent().SetPanelEvent("onmouseover", function(){});
-					hero_image_panel.GetParent().GetParent().SetPanelEvent("onactivate", function(){});
-					CheckForBannedHero();
-					count++;
-					return;
+		if (herolist.hotdisabledlist) {
+			for (hero in herolist.hotdisabledlist) {
+				if (hero == "npc_dota_hero_" + hero_image_panel.heroname) {
+					if (hero_image_panel.GetParent()) {
+						hero_image_panel.GetParent().GetParent().FindChildTraverse("BannedOverlay").style.opacity = "1";
+						hero_image_panel.GetParent().GetParent().AddClass("Unavailable")
+						hero_image_panel.GetParent().GetParent().AddClass("Banned")
+						hero_image_panel.GetParent().GetParent().SetPanelEvent("onmouseover", function(){});
+						hero_image_panel.GetParent().GetParent().SetPanelEvent("onactivate", function(){});
+						CheckForBannedHero();
+						count++;
+						return;
+					}
 				}
 			}
 		}
@@ -166,7 +168,7 @@ function CheckForBannedHero() {
 	PreGame.style.opacity = "1";
 
 	$.Schedule(1.0, InitHeroSelection);
-	$.Schedule(1.0, OnUpdateHeroSelection);
+//	$.Schedule(1.0, OnUpdateHeroSelection);
 
 //	GameEvents.Subscribe("dota_player_hero_selection_dirty", OnUpdateHeroSelectionDirty);
 //	GameEvents.Subscribe("dota_player_update_hero_selection", OnUpdateHeroSelectionRepeat);
