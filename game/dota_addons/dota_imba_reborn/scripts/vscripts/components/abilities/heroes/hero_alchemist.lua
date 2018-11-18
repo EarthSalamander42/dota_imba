@@ -1321,7 +1321,6 @@ function modifier_imba_chemical_rage_buff_haste:DeclareFunctions()
 		MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS,
 		MODIFIER_PROPERTY_TRANSLATE_ATTACK_SOUND,
 		MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT,
-		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
 	}
 	return table
 end
@@ -1332,10 +1331,6 @@ end
 
 function modifier_imba_chemical_rage_buff_haste:GetAttackSound()
 	return "Hero_Alchemist.ChemicalRage.Attack"
-end
-
-function modifier_imba_chemical_rage_buff_haste:GetModifierBonusStats_Strength()
-	return self:GetAbility():GetSpecialValueFor("bonus_strength")
 end
 
 function modifier_imba_chemical_rage_buff_haste:GetModifierBaseManaRegen()

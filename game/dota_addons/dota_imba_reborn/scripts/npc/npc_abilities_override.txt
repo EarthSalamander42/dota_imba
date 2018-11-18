@@ -8858,7 +8858,6 @@
 		"MaxLevel"					"4"
 		"AbilityCastRange"			"475 525 575 625"
 		"AbilityCooldown"			"12 11 10 9"
-		"AbilityDamage"				"70 210 300 340"
 
 		"AbilitySpecial"
 		{
@@ -8872,6 +8871,12 @@
 				"var_type"			"FIELD_FLOAT"
 				"multicast_delay"	"0.5"
 			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"fireblast_damage"		"70 210 300 340"
+				"LinkedSpecialBonus"	"special_bonus_unique_ogre_magi_2"
+			}
 		}
 	}
 
@@ -8881,12 +8886,8 @@
 	"ogre_magi_unrefined_fireblast"
 	{
 		"AbilityCastRange"			"625"
-		
 		"AbilityCooldown"			"6"
-
 		"AbilityManaCost"			"400"
-		
-		"AbilityDamage"				"340"
 		
 		"AbilitySpecial"
 		{
@@ -8904,6 +8905,11 @@
 			{
 				"var_type"			"FIELD_FLOAT"
 				"scepter_mana"		"0.35"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"fireblast_damage"		"340"
 			}
 		}
 	}

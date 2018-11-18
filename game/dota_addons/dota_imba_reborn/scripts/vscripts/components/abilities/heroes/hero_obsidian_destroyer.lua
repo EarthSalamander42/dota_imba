@@ -40,7 +40,7 @@ function imba_obsidian_destroyer_arcane_orb:OnSpellStart()
 		caster:MoveToTargetToAttack(target)
 
 		-- Replenish mana cost (since it's spent on the OnAttack function)
-		ability:RefundManaCost()                
+		ability:RefundManaCost()
 	end
 end
 
@@ -161,8 +161,8 @@ function modifier_imba_arcane_orb_thinker:OnAttack(keys)
 			EmitSoundOn(self.sound_cast, self.caster)
 
 			-- Spend mana
-			self.caster:SpendMana(self.mana_cost, self.ability)         
-
+			self.ability:UseResources(true, false, false)        
+			
 			-- If the caster has the Essence Aura buff, roll for a proc
 			if self.caster:HasModifier(self.modifier_essence) then
 				local modifier_essence_handler = self.caster:FindModifierByName(self.modifier_essence)
@@ -1389,7 +1389,7 @@ function modifier_imba_essence_aura_buff:ProcEssenceAura()
 				-- Restore % of maximum mana to the parent
 				local max_mana = self.parent:GetMaxMana()
 				local mana_restore = max_mana * (self.restore_mana_pct * 0.01)
-
+				
 				-- #5 Talent: Essence Aura now heals when proccing
 				if self.caster:HasTalent("special_bonus_imba_obsidian_destroyer_5") then
 					local heal_amount = self.caster:GetIntellect()

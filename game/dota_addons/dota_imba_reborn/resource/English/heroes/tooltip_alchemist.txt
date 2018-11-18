@@ -58,7 +58,6 @@
 "DOTA_Tooltip_ability_imba_alchemist_chemical_rage_bonus_health_regen"	"BONUS HEALTH REGEN:"
 "DOTA_Tooltip_ability_imba_alchemist_chemical_rage_bonus_mana_regen"	"BONUS MANA REGEN:"
 "DOTA_Tooltip_ability_imba_alchemist_chemical_rage_bonus_movespeed"		"BONUS MOVESPEED:"
-"DOTA_Tooltip_ability_imba_alchemist_chemical_rage_bonus_strength"		"BONUS STRENGTH:"
 "DOTA_Tooltip_ability_imba_alchemist_chemical_rage_scepter_gold_damage"	"%SCEPTER GOLD TO DAMAGE:"
 
 "DOTA_Tooltip_modifier_imba_chemical_rage_buff_haste"                  "Chemical Rage"

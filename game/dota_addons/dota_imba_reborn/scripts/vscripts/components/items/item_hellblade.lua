@@ -161,6 +161,10 @@ function modifier_imba_helldrain:OnIntervalThink()
 		local heal_per_enemy		= 	item:GetSpecialValueFor("aura_damage_per_second")
 		local heal_interval			=	item:GetSpecialValueFor("aura_damage_heal_interval")
 
+		if caster:IsIllusion() then
+			heal_per_enemy = heal_per_enemy / 2
+		end
+		
 		--Search for nearby enemies
 		local enemies 				= 	FindUnitsInRadius(caster:GetTeamNumber(), location, nil, radius, item:GetAbilityTargetTeam(), item:GetAbilityTargetType(), item:GetAbilityTargetFlags(), FIND_ANY_ORDER, false)
 

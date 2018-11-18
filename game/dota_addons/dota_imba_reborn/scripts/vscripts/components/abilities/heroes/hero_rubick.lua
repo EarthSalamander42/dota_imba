@@ -769,7 +769,7 @@ end
 
 function modifier_imba_rubick_clandestine_librarian:OnDeath( keys )
 	if keys.unit == self:GetParent() and not self:GetParent():IsImbaReincarnating() then
-		self:SetStackCount(math.ceil(self:GetStackCount() * self:GetAbility():GetSpecialValueFor("loss_pct") / 100))
+		self:SetStackCount(math.ceil(self:GetStackCount() * (100 - self:GetAbility():GetSpecialValueFor("loss_pct")) / 100))
 	end
 end
 
