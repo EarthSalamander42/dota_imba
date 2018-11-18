@@ -27,6 +27,46 @@ function GameMode:OnGameRulesStateChange(keys)
 		GetPlayerInfoIXP() -- Add a class later
 		Imbattlepass:Init() -- Initialize Battle Pass
 
+		-- temporary (from stat-collection)
+		-- Build players array
+		local players = {}
+		for playerID = 0, PlayerResource:GetPlayerCount() - 1 do
+			if PlayerResource:IsValidPlayerID(playerID) then
+				players.steamID64 = PlayerResource:GetSteamID(playerID)
+			end
+		end
+
+--		local req = CreateHTTPRequestScriptVM("GET", "http://51.75.249.243/file_name.php")
+--		local req = CreateHTTPRequestScriptVM("GET", "http://51.75.249.243/opt/lampp/htdocs/dota2imba/db_scripts/fichier.php")
+--		local encoded = json.encode(payload)
+--		if self.TESTING then
+--			statCollection:print(encoded)
+--		end
+
+--		-- Add the data
+--		req:SetHTTPRequestGetOrPostParameter('payload', encoded)
+
+--		-- Send the request
+--		req:Send(function(res)
+--			print(res.StatusCode)
+--			if res.StatusCode ~= 200 then
+--				return
+--			end
+
+--			print(res.Body)
+--			if not res.Body then
+--				print(errorEmptyServerResponse)
+--				print("Status Code", res.StatusCode)
+--				return
+--			end
+
+--			-- Try to decode the result
+--			local obj, pos, err = json.decode(res.Body, 1, nil)
+
+--			-- Feed the result into our callback
+--			callback(err, obj)
+--		end)
+
 		-- setup Player colors into hex for panorama
 		local hex_colors = {}
 		for i = 0, PlayerResource:GetPlayerCount() - 1 do

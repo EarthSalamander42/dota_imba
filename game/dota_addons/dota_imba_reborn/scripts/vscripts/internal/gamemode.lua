@@ -18,7 +18,7 @@ function GameMode:_InitGameMode()
 
 	-- Setup rules
 	GameRules:SetUseUniversalShopMode( UNIVERSAL_SHOP_MODE )
-	GameRules:SetSameHeroSelectionEnabled( true ) -- Let server handle hero duplicates
+	GameRules:SetSameHeroSelectionEnabled( IMBA_PICK_SCREEN ) -- Let server handle hero duplicates
 	GameRules:SetPreGameTime( PRE_GAME_TIME )
 	GameRules:SetPostGameTime( POST_GAME_TIME )
 	GameRules:SetShowcaseTime( SHOWCASE_TIME )

@@ -2,10 +2,10 @@ var count = 0;
 var herolist = CustomNetTables.GetTableValue('hero_selection', 'herolist')
 var herocard = FindDotaHudElement('GridCore');
 var total = herocard.GetChildCount();
-var picked_heroes = []
+var picked_heroes = [];
 
-function FindDotaHudElement(sElement) {
-	return $.GetContextPanel().GetParent().GetParent().GetParent().FindChildTraverse(sElement);
+function FindDotaHudElement(panel) {
+	return $.GetContextPanel().GetParent().GetParent().GetParent().FindChildTraverse(panel);
 }
 
 function InitHeroSelection()  {
@@ -57,7 +57,7 @@ function UpdateHero() {
 
 	count++;
 }
-
+/*
 function OnUpdateHeroSelectionDirty() {
 	CheckForBannedHero();
 }
@@ -117,7 +117,7 @@ function UpdatePickedHeroes() {
 
 	count++;
 }
-
+*/
 /*
 [PanoramaScript] Start hero picked update...
 [PanoramaScript] Start hero picked update...
@@ -168,6 +168,6 @@ function CheckForBannedHero() {
 	$.Schedule(1.0, InitHeroSelection);
 	$.Schedule(1.0, OnUpdateHeroSelection);
 
-	GameEvents.Subscribe("dota_player_hero_selection_dirty", OnUpdateHeroSelectionDirty);
-	GameEvents.Subscribe("dota_player_update_hero_selection", OnUpdateHeroSelectionRepeat);
+//	GameEvents.Subscribe("dota_player_hero_selection_dirty", OnUpdateHeroSelectionDirty);
+//	GameEvents.Subscribe("dota_player_update_hero_selection", OnUpdateHeroSelectionRepeat);
 })();

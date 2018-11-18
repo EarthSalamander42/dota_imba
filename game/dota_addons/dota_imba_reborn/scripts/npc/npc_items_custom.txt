@@ -7501,109 +7501,91 @@
 				"var_type"				"FIELD_INTEGER"
 				"base_move_speed"		"100"
 			}
-
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"base_health_regen"		"16"
 			}
-
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"mana_regen"			"1"
 			}
-
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"attack_speed"			"25"
 			}
-
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"base_magic_resistance"	"25"
 			}
-
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"meditate_interval"		"1"
 			}
-
 			"07"
 			{
 				"var_type"						"FIELD_FLOAT"
 				"meditate_movespeed_bonus_pct"	"1.25"
 			}
-
 			"08"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"meditate_health_regen"		"4.5"
+				"meditate_health_regen"		"2.5"
 			}
-
 			"09"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"leafwalk_magic_res"		"80"
 			}
-
 			"10"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"max_stacks"			"25"
+				"max_stacks"			"21"
 			}
-
 			"11"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"meditate_stacks_loss_creep"	"3"
 			}			
-
 			"12"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"iron_body_thrshold"		"150"
 			}
-
 			"13"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"iron_body_high_reduction"		"150"
 			}
-
 			"14"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"iron_body_normal_reduction"	"40"
 			}
-
 			"15"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"iron_body_min_stacks_req"		"1"
 			}
-
 			"16"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"leafwalk_hold_time"		"2.25"
 			}
-
 			"17"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"leafwalk_duration"			"12"
 			}
-
 			"18"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"meditate_stacks_loss_hero"	"5"
+				"meditate_stacks_loss_hero"	"7"
 			}
-
 			"19"
 			{
 				"var_type"					 		"FIELD_INTEGER"

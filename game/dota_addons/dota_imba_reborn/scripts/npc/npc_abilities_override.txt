@@ -152,7 +152,7 @@
 //	"item_recipe_cyclone"					"REMOVE"
 
 	//Banned items
-	"item_imba_ironleaf_boots"				"REMOVE"
+//	"item_imba_ironleaf_boots"				"REMOVE"
 
 	//Imba Removed Items
 	"item_imba_triumvirate"					"REMOVE"
