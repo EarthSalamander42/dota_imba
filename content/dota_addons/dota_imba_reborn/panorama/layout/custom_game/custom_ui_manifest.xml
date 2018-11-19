@@ -119,6 +119,15 @@
 		HeroGrid.style.height = "92%";
 		GridCore.style.height = "605px";
 		PreMinimapContainer.style.height = "270px";
+
+		function HidePickScreen() {
+			if (Game.GameStateIsBefore(3))
+				PreGame.style.opacity = "0";
+			else {
+				if (Game.GameStateIsAfter(3))
+					PreGame.style.opacity = "1";
+			}
+		}
 	</script>
 
 	<Panel>
