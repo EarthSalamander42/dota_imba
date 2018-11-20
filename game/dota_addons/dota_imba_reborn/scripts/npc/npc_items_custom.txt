@@ -7490,7 +7490,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"13"
+		"AbilityCooldown"				"5"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -7529,17 +7529,17 @@
 			"07"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"meditate_movespeed_bonus_pct"	"0.5"
+				"meditate_movespeed_bonus_pct"	"1.25"
 			}
 			"08"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"meditate_health_regen"		"1.0"
+				"meditate_health_regen"		"2.5"
 			}
 			"09"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"leafwalk_magic_res"		"25"
+				"leafwalk_magic_res"		"80"
 			}
 			"10"
 			{
@@ -7574,7 +7574,7 @@
 			"16"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"leafwalk_hold_time"		"5.0"
+				"leafwalk_hold_time"		"2.25"
 			}
 			"17"
 			{
