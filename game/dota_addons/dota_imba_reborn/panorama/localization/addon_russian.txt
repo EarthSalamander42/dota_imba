@@ -170,6 +170,7 @@
 	"custom_toast_killstreak" "{player_name} {kill_streak}"
 	"custom_toast_killstreak_ended" "{victim_name} {kill_streak}x серия убийств прервана"
 	"custom_toast_playerdenied" "{killer_name} {denied_icon} добил(а) {victim_name}"
+	"custom_toast_playerdeniedself" "{victim_name} {denied_icon} Denied"
 	"custom_toast_teamkilled" "{team_name} {killed_icon} {victim_name}"
 	"disabled_hero" "Недоступен"
 	"disabled_hero_10v10" "Недоступен в 10 на 10"

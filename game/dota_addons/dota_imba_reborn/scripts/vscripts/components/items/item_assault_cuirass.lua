@@ -184,6 +184,14 @@ function modifier_imba_assault_cuirass_aura_positive_effect:GetModifierPhysicalA
 	return self.aura_armor_ally
 end
 
+function modifier_imba_assault_cuirass_aura_positive_effect:GetEffectName()
+	return "particles/items_fx/aura_assault.vpcf"
+end
+
+function modifier_imba_assault_cuirass_aura_positive_effect:GetEffectAttachType()
+	return PATTACH_ABSORIGIN_FOLLOW
+end
+
 
 -- Assault Cuirass negative aura
 modifier_imba_assault_cuirass_aura_negative = class({})

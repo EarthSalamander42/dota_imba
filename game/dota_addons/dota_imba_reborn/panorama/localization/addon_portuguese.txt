@@ -170,6 +170,7 @@
 	"custom_toast_killstreak" "{player_name} está {kill_streak}"
 	"custom_toast_killstreak_ended" "{victim_name} {kill_streak}x Serie de matança terminou "
 	"custom_toast_playerdenied" "{killer_name} {denied_icon} Negado {victim_name}"
+	"custom_toast_playerdeniedself" "{victim_name} {denied_icon} Denied"
 	"custom_toast_teamkilled" "{team_name} {killed_icon} {victim_name}"
 	"disabled_hero" "Desativado"
 	"disabled_hero_10v10" "10v10 Desativado"

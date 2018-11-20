@@ -9775,7 +9775,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"value"				"1000"
+				"value"				"7"
 			}
 		}
 	}
@@ -15272,7 +15272,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"movement_speed"		"150"
-				"LinkedSpecialBonus"	"special_bonus_unique_spirit_breaker_2"
 			}
 			"02"
 			{

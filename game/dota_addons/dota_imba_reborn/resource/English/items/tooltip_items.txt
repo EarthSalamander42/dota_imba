@@ -565,18 +565,6 @@
 "DOTA_Tooltip_modifier_item_imba_heart_aura_buff"              "Tarrasque Breath"
 "DOTA_Tooltip_modifier_item_imba_heart_aura_buff_Description"               "Increased Strength"
 
-// Heaven's Halberd
-"DOTA_Tooltip_ability_item_imba_heavens_halberd"                "Heaven's Halberd"
-"DOTA_Tooltip_ability_item_imba_heavens_halberd_Description"                "<h1>Active: Disarm</h1> Prevents a target from attacking for %disarm_melee_duration% seconds. Duration increases to %disarm_range_duration% seconds if the target is ranged.\n<h1>Passive: Maim</h1> Attacking enemies slows their movement and attack speed.<font color='#FF7800'>Stacks up to %max_stacks% times.</font>\n<h1><font color='#FF7800'>Passive: Disarm Strike</font></h1> %disarm_chance%%% chance to disarm your target for %passive_disarm_duration% seconds with each attack. This effect can trigger on each enemy only once every %disarm_cooldown% seconds."
-"DOTA_Tooltip_ability_item_imba_heavens_halberd_Lore"          "This halberd moves with the speed of a smaller weapon, allowing the bearer to win duels that a heavy edge would not."
-"DOTA_Tooltip_ability_item_imba_heavens_halberd_Note0"          "Disarm cannot be purged."
-"DOTA_Tooltip_ability_item_imba_heavens_halberd_Note1"          "Maim from different sources does not stack."
-"DOTA_Tooltip_ability_item_imba_heavens_halberd_maim_stack"                 "%MAIM SLOW:"
-"DOTA_Tooltip_ability_item_imba_heavens_halberd_maim_duration"              "MAIM DURATION:"
-"DOTA_Tooltip_ability_item_imba_heavens_halberd_bonus_damage"               "+$damage"
-"DOTA_Tooltip_ability_item_imba_heavens_halberd_bonus_strength"             "+$str"
-"DOTA_Tooltip_ability_item_imba_heavens_halberd_bonus_evasion"              "%+$evasion"
-
 
 // Hellblade
 "DOTA_Tooltip_Ability_item_imba_hellblade"                      "Hellblade"
@@ -1040,20 +1028,6 @@
 "DOTA_Tooltip_ability_item_imba_shotgun_bonus_as"              "+$attack"
 "DOTA_Tooltip_ability_item_imba_shotgun_bonus_agi"              "+$agi"
 
-// Sange
-"DOTA_Tooltip_Ability_item_imba_sange"                          "Sange"
-"DOTA_Tooltip_ability_item_imba_sange_Description"              "<h1>Passive: Maim</h1> Attacking enemies slows their movement and attack speed. Stacks up to %max_stacks% times.\n<h1>Passive: Disarm Strike</h1> %proc_chance%%% chance to disarm your target for %proc_duration_enemy% seconds with each attack."
-"DOTA_Tooltip_ability_item_imba_sange_Lore"                    "Sange is an unusually accurate weapon, seeking weak points automatically."
-"DOTA_Tooltip_ability_item_imba_sange_Note0"                    "Procs from Sange, Yasha, and their upgrades all share the same cooldown."
-"DOTA_Tooltip_ability_item_imba_sange_Note1"                    "Maim from different sources does not stack."
-"DOTA_Tooltip_ability_item_imba_sange_maim_stack"              "%MAIM SLOW:"
-"DOTA_Tooltip_ability_item_imba_sange_stack_duration"          "MAIM DURATION:"
-"DOTA_Tooltip_ability_item_imba_sange_bonus_damage"            "+$damage"
-"DOTA_Tooltip_ability_item_imba_sange_bonus_strength"          "+$str"
-
-"DOTA_Tooltip_modifier_item_imba_sange_maim"                    "Maim"
-"DOTA_Tooltip_modifier_item_imba_sange_maim_Description"                    "Slowed by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%% move and %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT% attack speed."
-
 // Satanic
 "DOTA_Tooltip_Ability_item_imba_satanic"                        "Satanic"
 "DOTA_Tooltip_Ability_item_imba_satanic_Description"            "<h1>Active: Unholy Rage</h1> Increases lifesteal percentage by %unholy_rage_lifesteal_bonus%%% for %unholy_rage_duration% seconds.\n<h1>Passive: Lifesteal</h1> heals the attacker for a percentage of attack damage dealt.\n<h1><font color='#FF7800'>Passive: Soul Slaughter</font></h1> Last hitting an enemy with an attack grants stacks of Soul Slaughter equal to %soul_slaughter_hp_increase_pct%%% of the target's maximum health, up to a maximum of stacks equal to %soul_slaughter_max_hp_pct%% of your original maximum health. Each stack increases your maximum health and damage for the duration.<br>Stacks have independent durations, and they do not refresh each other."
@@ -1346,7 +1320,6 @@
 "DOTA_Tooltip_modifier_item_imba_vladmir_blood_aura_Description"            "Benefitting from Vladmir's blood's auras"
 
 // Vladmir's Offering
-
 "DOTA_Tooltip_Ability_item_imba_vladmir"                        "Vladmir's Offering"
 "DOTA_Tooltip_ability_item_imba_vladmir_Description"            "<h1>Passive: Vladmir's aura</h1> grants bonus damage, health and mana regeneration, and armor to nearby allies, and allows them to lifesteal from regular attacks."
 "DOTA_Tooltip_ability_item_imba_vladmir_Lore"                  "An eerie mask that is haunted with the malice of a fallen vampire."
@@ -1362,7 +1335,6 @@
 "DOTA_Tooltip_modifier_item_imba_vladmir_aura_Description"                  "Benefitting from Vladmir's offering's auras"
 
 // White Queen's Cape
-
 "DOTA_Tooltip_Ability_item_imba_white_queen_cape"              "White Queen's Cape"
 "DOTA_Tooltip_ability_item_imba_white_queen_cape_Description"               "<h1>Active: Lesser Avatar</h1> Grants Spell Immunity and 100% Magic Damage Resistance for a short duration.<br> Some Ultimate abilities are able to disable through White Queen Cape."
 "DOTA_Tooltip_ability_item_imba_white_queen_cape_Lore"          "A heavy cape imbued with a thick layer of protective enchantments."
@@ -1371,24 +1343,7 @@
 "DOTA_Tooltip_ability_item_imba_white_queen_cape_bonus_damage"              "+$damage"
 "DOTA_Tooltip_ability_item_imba_white_queen_cape_duration"                  "DURATION:"
 
-// Yasha
-
-"DOTA_Tooltip_Ability_item_imba_yasha"                          "Yasha"
-"DOTA_Tooltip_ability_item_imba_yasha_Description"              "<h1>Passive: Battle Rhythm </h1> Each attack grants you %as_stack% attack speed. Stacks up to %max_stacks% times.\n<h1>Passive: Swift Strike</h1> %proc_chance%%% chance to gain %proc_ms%%% movement speed for %proc_duration_self% seconds with each attack."
-"DOTA_Tooltip_ability_item_imba_yasha_Lore"                    "Yasha is regarded as the swiftest weapon ever created."
-"DOTA_Tooltip_ability_item_imba_yasha_Note0"                    "Procs from Sange, Yasha, and their upgrades all share the same cooldown."
-"DOTA_Tooltip_ability_item_imba_yasha_Note1"                    "Battle Rhythm from different sources does not stack."
-"DOTA_Tooltip_ability_item_imba_yasha_Note2"                    "Movement speed bonus does not stack with itself or other Yasha upgrades."
-"DOTA_Tooltip_ability_item_imba_yasha_stack_duration"          "BATTLE RHYTHM DURATION:"
-"DOTA_Tooltip_ability_item_imba_yasha_bonus_attack_speed"                   "+$attack"
-"DOTA_Tooltip_ability_item_imba_yasha_bonus_agility"            "+$agi"
-"DOTA_Tooltip_ability_item_imba_yasha_bonus_ms"                "%+$move_speed"
-
-"DOTA_Tooltip_modifier_item_imba_yasha_stacks"                  "Battle Rhythm"
-"DOTA_Tooltip_modifier_item_imba_yasha_stacks_Description"                  "Gaining %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT% bonus attack speed."
-
 // Vanilla Items
-
 "DOTA_Tooltip_modifier_item_imba_medallion_buff"                "Valor"
 "DOTA_Tooltip_modifier_item_imba_medallion_buff_Description"                "Armor increased by %dMODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS%."
 

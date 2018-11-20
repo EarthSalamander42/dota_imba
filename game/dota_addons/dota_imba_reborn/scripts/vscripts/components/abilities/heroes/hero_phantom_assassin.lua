@@ -632,7 +632,6 @@ function modifier_imba_blur:OnIntervalThink()
 	end
 end
 
-
 function modifier_imba_blur:DeclareFunctions()
 	local funcs = { MODIFIER_PROPERTY_EVASION_CONSTANT,
 		MODIFIER_EVENT_ON_ATTACK_FAIL,

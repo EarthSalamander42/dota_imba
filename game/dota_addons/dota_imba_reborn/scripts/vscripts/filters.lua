@@ -95,32 +95,31 @@ function GameMode:ModifierFilter( keys )
 		local modifier_caster
 		local modifier_class
 
-		if keys.entindex_caster_const then
-			modifier_caster = EntIndexToHScript(keys.entindex_caster_const)
-		else
-			return true
-		end
-		
 		if modifier_owner ~= nil and IsMutationMap() or IsSuperFranticMap() then
 			modifier_class = modifier_owner:FindModifierByName(modifier_name)
 			if modifier_class == nil then return end
-
-			if keys.entindex_ability_const and EntIndexToHScript(keys.entindex_ability_const).GetAbilityName then
-				if string.find(EntIndexToHScript(keys.entindex_ability_const):GetAbilityName(), "imba") and keys.duration > 0 and modifier_owner:GetTeam() ~= modifier_caster:GetTeam() then				
+			if string.find(modifier_name, "imba") and modifier_class.IsDebuff and modifier_class:IsDebuff() == true and modifier_class.IgnoreTenacity == nil or (modifier_class.IgnoreTenacity and modifier_class:IgnoreTenacity() == false) then
+				if keys.duration > 0 then	
 					local original_duration = keys.duration
 					local actual_duration = original_duration
 					local status_resistance = modifier_owner:GetStatusResistance()
 --					print("Old duration:", actual_duration)
 
-					if not (modifier_class.IgnoreTenacity and modifier_class:IgnoreTenacity()) then
+--					if modifier_owner:GetTeam() ~= modifier_caster:GetTeam() then			
 						actual_duration = actual_duration * (1 - status_resistance)
-					end
+--					end
 
 --					print("New duration:", actual_duration)
 
 					keys.duration = actual_duration
 				end
 			end
+		end
+
+		if keys.entindex_caster_const then
+			modifier_caster = EntIndexToHScript(keys.entindex_caster_const)
+		else
+			return true
 		end
 
 		-- volvo bugfix
@@ -206,29 +205,9 @@ function GameMode:ModifierFilter( keys )
 			end
 		end
 
-		-- disarm immune
-		local jarnbjorn_immunity = {
-			"modifier_disarmed",
-			"modifier_item_imba_triumvirate_proc_debuff",
-			"modifier_item_imba_sange_kaya_proc",
-			"modifier_item_imba_sange_yasha_disarm",
-			"modifier_item_imba_heavens_halberd_active_disarm",
-			"modifier_item_imba_sange_disarm",
-			"modifier_imba_angelic_alliance_debuff",
-			"modifier_imba_overpower_disarm",
-			"modifier_imba_silencer_last_word_debuff",
-			"modifier_imba_hurl_through_hell_disarm",
-			"modifier_imba_frost_armor_freeze",
-			"modifier_dismember_disarm",
-			"modifier_imba_decrepify",
-
---			"modifier_imba_faceless_void_time_lock_stun",
---			"modifier_bashed",
-		}
-
 		-- add particle or sound playing to notify
-		if modifier_owner:HasModifier("modifier_item_imba_jarnbjorn_static") then
-			for _, modifier in pairs(jarnbjorn_immunity) do
+		if modifier_owner:HasModifier("modifier_item_imba_jarnbjorn_static") or modifier_owner:HasModifier("modifier_item_imba_heavens_halberd_ally_buff") then
+			for _, modifier in pairs(IMBA_DISARM_IMMUNITY) do
 				if modifier_name == modifier then
 					SendOverheadEventMessage(nil, OVERHEAD_ALERT_EVADE, modifier_owner, 0, nil)
 					return false

@@ -4834,12 +4834,12 @@
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"components/items/item_swords.lua"
 		"AbilityTextureName"			"item_sange"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"5"
-		"AbilitySharedCooldown"			"sword"
+		"AbilityCooldown"				"42.0"
+		"AbilityManaCost"				"50"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -4855,38 +4855,28 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"proc_chance"			"30"
+				"bonus_damage"			"10"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"02"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"proc_duration_enemy"	"1.0"
+				"var_type"				"FIELD_INTEGER"
+				"bonus_strength"		"21"
 			}
 			"03"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"maim_stack"			"-7"
+				"var_type"					"FIELD_INTEGER"
+				"bonus_status_resistance"	"12"
 			}
 			"04"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"max_stacks"			"3"
+				"var_type"							"FIELD_INTEGER"
+				"bonus_status_resistance_active"	"100"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"stack_duration"		"5.0"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"10"
-				"CalculateSpellDamageTooltip"	"0"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_strength"		"21"
+				"active_duration"		"3.0"
 			}
 		}
 	}
@@ -4902,12 +4892,12 @@
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"components/items/item_swords.lua"
 		"AbilityTextureName"			"item_yasha"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"5"
-		"AbilitySharedCooldown"			"sword"
+		"AbilityCooldown"				"42.0"
+		"AbilityManaCost"				"50"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -4923,47 +4913,32 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"proc_chance"			"30"
+				"bonus_attack_speed"	"21"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"proc_duration_self"	"3"
+				"bonus_agility"			"21"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"proc_ms"				"21"
+				"bonus_ms"				"8"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"as_stack"				"5"
+				"bonus_evasion"			"12"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"max_stacks"			"3"
+				"bonus_evasion_active"	"100"
 			}
 			"06"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"stack_duration"		"5"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_attack_speed"	"21"
-			}
-			"08"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_agility"			"21"
-			}
-			"09"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_ms"				"8"
+				"var_type"				"FIELD_FLOAT"
+				"active_duration"		"3.0"
 			}
 		}
 	}
@@ -4979,7 +4954,12 @@
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"components/items/item_swords.lua"
 		"AbilityTextureName"			"item_kaya"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"21.0"
+		"AbilityManaCost"				"50"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -5021,12 +5001,12 @@
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"components/items/item_swords.lua"
 		"AbilityTextureName"			"item_sange_and_yasha"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"5"
-		"AbilitySharedCooldown"			"sword"
+		"AbilityCooldown"				"42.0"
+		"AbilityManaCost"				"50"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -5044,68 +5024,53 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"proc_chance"			"30"
+				"bonus_damage"			"21"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"proc_duration_enemy"	"1"
+				"bonus_strength"		"21"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"proc_duration_self"	"3"
+				"bonus_attack_speed"	"21"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"proc_ms"				"21"
+				"bonus_agility"			"21"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"maim_stack"			"-7"
+				"bonus_ms"				"21"
 			}
 			"06"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"as_stack"				"5"
+				"var_type"					"FIELD_INTEGER"
+				"bonus_status_resistance"	"16"
 			}
 			"07"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"max_stacks"			"4"
+				"var_type"							"FIELD_INTEGER"
+				"bonus_status_resistance_active"	"100"
 			}
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"stack_duration"		"5"
+				"bonus_evasion"			"16"
 			}
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"21"
-				"CalculateSpellDamageTooltip"	"0"
+				"bonus_evasion_active"	"100"
 			}
 			"10"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_strength"		"21"
-			}
-			"11"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_attack_speed"	"21"
-			}
-			"12"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_agility"			"21"
-			}
-			"13"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_ms"				"21"
+				"var_type"				"FIELD_FLOAT"
+				"active_duration"		"5.0"
 			}
 		}
 	}
@@ -6418,13 +6383,13 @@
 		"ScriptFile"					"components/items/item_swords.lua"
 		"AbilityTextureName"			"item_heavens_halberd"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"FightRecapLevel"				"1"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"18"
+		"AbilityCooldown"				"18.0"
 		"AbilityManaCost"				"100"
 		"AbilityCastRange"				"600"
 
@@ -6443,59 +6408,44 @@
 		{
 			"01"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"disarm_chance"				"30"
+				"var_type"						"FIELD_INTEGER"
+				"bonus_damage"					"25"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"disarm_cooldown"			"10"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"passive_disarm_duration"	"1.0"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"maim_stack"				"-7"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"max_stacks"				"3"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"maim_duration"				"5.0"
-			}
-			"07"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"bonus_damage"				"25"
-				"CalculateSpellDamageTooltip"	"0"
-			}
-			"08"
-			{
-				"var_type"					"FIELD_INTEGER"
 				"bonus_strength"			"21"
 			}
-			"09"
+			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"bonus_evasion"				"25"
 			}
-			"10"
+			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"disarm_range_duration"		"5.0"
 			}
-			"11"
+			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"disarm_melee_duration"		"3.0"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"bonus_status_resisatnce"	"3.0"
+			}
+			"07"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"bonus_status_resisatnce_active"	"3.0"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"buff_duration"			"5.0"
 			}
 		}
 	}

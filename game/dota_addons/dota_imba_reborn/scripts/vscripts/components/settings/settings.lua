@@ -578,6 +578,25 @@ IMBA_ABILITIES_IGNORE_CDR = {
 	"imba_venomancer_plague_ward",
 }
 
+IMBA_DISARM_IMMUNITY = {
+	"modifier_disarmed",
+	"modifier_item_imba_triumvirate_proc_debuff",
+	"modifier_item_imba_sange_kaya_proc",
+	"modifier_item_imba_sange_yasha_disarm",
+	"modifier_item_imba_heavens_halberd_active_disarm",
+	"modifier_item_imba_sange_disarm",
+	"modifier_imba_angelic_alliance_debuff",
+	"modifier_imba_overpower_disarm",
+	"modifier_imba_silencer_last_word_debuff",
+	"modifier_imba_hurl_through_hell_disarm",
+	"modifier_imba_frost_armor_freeze",
+	"modifier_dismember_disarm",
+	"modifier_imba_decrepify",
+
+--	"modifier_imba_faceless_void_time_lock_stun",
+--	"modifier_bashed",
+}
+
 IMBA_FIRST_BLOOD = false
 
 -- files requirements
