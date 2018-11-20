@@ -134,7 +134,7 @@ function imba_tiny_tree_modifier:OnCreated()
 	local caster = self:GetCaster()
 	if caster ~= nil then 
 		local attack_range = self:GetAbility():GetSpecialValueFor("attack_range");
-		local caster_range = caster:GetAttackRange()
+		local caster_range = caster:Script_GetAttackRange()
 		-- Override cast_range. it should be fixed when holding a tree
 		if caster_range > attack_range then
 			self.attack_range = (caster_range - attack_range)

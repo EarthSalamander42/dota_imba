@@ -623,6 +623,7 @@ function imba_venomancer_plague_ward:IsNetherWardStealable() return false end
 function imba_venomancer_plague_ward:GetAbilityTextureName()
 	return "venomancer_plague_ward"
 end
+
 -------------------------------------------
 
 function imba_venomancer_plague_ward:OnSpellStart()
@@ -698,10 +699,13 @@ function imba_venomancer_plague_ward:OnSpellStart()
 				plague_ward:SetForwardVector(direction)
 				local mod_kill = plague_ward:AddNewModifier(caster, self, "modifier_kill", {duration = duration})
 				plague_ward:AddNewModifier(caster, self, "modifier_magic_immune", {duration = duration})
-				local link_fx = ParticleManager:CreateParticle("particles/hero/venomancer/ward_link.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
-				ParticleManager:SetParticleControlEnt(link_fx, 0, scourge_ward, PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", scourge_ward:GetAbsOrigin(), true)
-				ParticleManager:SetParticleControlEnt(link_fx, 1, plague_ward, PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", plague_ward:GetAbsOrigin(), true)
-				mod_kill:AddParticle(link_fx,false,false,-1,false,false)
+
+				-- causing lag!
+--				local link_fx = ParticleManager:CreateParticle("particles/hero/venomancer/ward_link.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+--				ParticleManager:SetParticleControlEnt(link_fx, 0, scourge_ward, PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", scourge_ward:GetAbsOrigin(), true)
+--				ParticleManager:SetParticleControlEnt(link_fx, 1, plague_ward, PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", plague_ward:GetAbsOrigin(), true)
+--				mod_kill:AddParticle(link_fx,false,false,-1,false,false)
+
 				plague_ward:SetBaseMaxHealth(plague_hp)
 				plague_ward:SetMaxHealth(plague_hp)
 				plague_ward:SetHealth(plague_hp)

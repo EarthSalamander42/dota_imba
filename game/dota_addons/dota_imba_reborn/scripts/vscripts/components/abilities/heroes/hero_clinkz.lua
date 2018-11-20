@@ -295,7 +295,7 @@ end
 
 function imba_clinkz_searing_arrows:GetCastRange(location, target)
 	 local caster = self:GetCaster()
-	 return caster:GetAttackRange()
+	 return caster:Script_GetAttackRange()
 end 
 
 function imba_clinkz_searing_arrows:IsHiddenWhenStolen()
@@ -1578,7 +1578,7 @@ function modifier_imba_death_pact_spirit_attack_range:OnCreated()
   -- Ability properties
  if IsServer() then
 	
-	self.spirit_attack_range = self:GetCaster():GetAttackRange()
+	self.spirit_attack_range = self:GetCaster():Script_GetAttackRange()
 	self.spirit_damage = self:GetCaster():GetAttackDamage() -- GetBaseDamageMax
 	
 	self:StartIntervalThink(1)
@@ -1587,7 +1587,7 @@ end
 
 function modifier_imba_death_pact_spirit_attack_range:OnIntervalThink()
  if IsServer() then
-	self.spirit_attack_range = self:GetCaster():GetAttackRange()
+	self.spirit_attack_range = self:GetCaster():Script_GetAttackRange()
  end
 end
 

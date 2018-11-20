@@ -3001,7 +3001,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"0"
+		"ItemCost"						"400"
 		"ItemShopTags"					""
 
 		// Recipe
@@ -3010,7 +3010,7 @@
 		"ItemResult"					"item_imba_heart"
 		"ItemRequirements"
 		{
-			"01"						"item_reaver;item_vitality_booster;item_vitality_booster"
+			"01"						"item_reaver;item_vitality_booster;item_ring_of_tarrasque"
 		}
 	}
 

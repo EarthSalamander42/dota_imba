@@ -496,6 +496,10 @@ MORPHLING_RESTRICTED_MODIFIERS = {
 	"modifier_imba_tidebringer_cleave_hit_target",
 }
 
+STATUS_RESISTANCE_IGNORE_MODIFIERS = {
+	""
+}
+
 SHARED_NODRAW_MODIFIERS = {
 	"modifier_item_shadow_amulet_fade",
 	"modifier_monkey_king_tree_dance_hidden",
@@ -569,6 +573,10 @@ IMBA_DISABLED_SKULL_BASHER = {
 
 IMBA_WEATHER_EFFECT = {}
 IMBA_WEATHER_EFFECT[1] = "particles/rain_fx/econ_snow.vpcf"
+
+IMBA_ABILITIES_IGNORE_CDR = {
+	"imba_venomancer_plague_ward",
+}
 
 IMBA_FIRST_BLOOD = false
 

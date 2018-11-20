@@ -252,7 +252,7 @@ function modifier_imba_shrapnel_attack:GetModifierDamageOutgoing_Percentage()
 		end
 
 		-- Get the caster's attack range
-		local caster_attack_range = self.caster:GetAttackRange()
+		local caster_attack_range = self.caster:Script_GetAttackRange()
 
 		-- If the caster's range isn't buffed, do nothing
 		if caster_attack_range < self.global_fire_distance then
@@ -1105,7 +1105,7 @@ end
 function modifier_imba_take_aim_range:OnIntervalThink()
 	if IsServer() then
 
-		self.caster:SetAcquisitionRange(self.caster:GetAttackRange() + 100)
+		self.caster:SetAcquisitionRange(self.caster:Script_GetAttackRange() + 100)
 
 		-- If the next shot should be an Aimed Shot, set stacks to 0, otherwise set to 1
 		if self.ability:IsCooldownReady() and self.ability:GetAutoCastState() and self.caster:IsRealHero() then

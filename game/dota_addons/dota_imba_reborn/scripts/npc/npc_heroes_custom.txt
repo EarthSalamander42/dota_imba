@@ -293,7 +293,7 @@
 		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
 
 		"Ability1"					"brewmaster_thunder_clap"
-		"Ability2"					"brewmaster_drunken_haze"
+		"Ability2"					"brewmaster_cinder_brew"
 		"Ability3"					"brewmaster_drunken_brawler"
 		"Ability4"					"generic_hidden"
 		"Ability5"					"generic_hidden"

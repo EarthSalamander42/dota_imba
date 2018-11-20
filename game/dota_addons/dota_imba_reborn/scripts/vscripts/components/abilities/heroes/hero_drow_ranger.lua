@@ -37,7 +37,7 @@ end
 function imba_drow_ranger_frost_arrows:GetCastRange(Location, Target)
 	-- Get caster's cast range
 	local caster = self:GetCaster()
-	return caster:GetAttackRange()
+	return caster:Script_GetAttackRange()
 end
 
 function imba_drow_ranger_frost_arrows:IsStealable()

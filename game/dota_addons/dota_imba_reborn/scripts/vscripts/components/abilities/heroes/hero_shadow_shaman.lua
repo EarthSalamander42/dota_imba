@@ -163,7 +163,7 @@ function modifier_imba_mass_serpent_ward:OnAttack(params)
 				local enemies = FindUnitsInRadius(parent:GetTeamNumber(),
 					parent:GetAbsOrigin(),
 					nil,
-					parent:GetAttackRange(),
+					parent:Script_GetAttackRange(),
 					DOTA_UNIT_TARGET_TEAM_ENEMY,
 					DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_BUILDING,
 					DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE +DOTA_UNIT_TARGET_FLAG_NO_INVIS,

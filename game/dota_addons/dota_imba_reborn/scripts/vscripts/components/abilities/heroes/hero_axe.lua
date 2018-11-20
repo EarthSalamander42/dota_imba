@@ -550,7 +550,7 @@ function modifier_imba_battle_hunger_debuff_dot:OnAttackStart(keys)
 		if keys.attacker == self.parent and self.parent:IsHero() and keys.target ~= self.caster then
 
 			if not self.cmd_restricted and RollPseudoRandom(self.maddening_chance_pct, self) then
-				local targets = FindUnitsInRadius(self.parent:GetTeamNumber(), self.parent:GetAbsOrigin(), nil, self.parent:GetAttackRange() + self.maddening_buffer_distance, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
+				local targets = FindUnitsInRadius(self.parent:GetTeamNumber(), self.parent:GetAbsOrigin(), nil, self.parent:Script_GetAttackRange() + self.maddening_buffer_distance, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 
 				-- If no one but us or us + current target are around, do nothing
 				if #targets <= 2 then

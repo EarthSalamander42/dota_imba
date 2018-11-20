@@ -11254,25 +11254,21 @@
 				"mana_pool_damage_pct"		"6 7 8 9"
 				"LinkedSpecialBonus"		"special_bonus_imba_obsidian_destroyer_1"
 			}
-
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"illusion_bonus_dmg"		"100 300 500 700"
 			}
-
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"int_steal_count"			"1 2 3 4"
 			}
-
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"int_steal_duration"		"80"
 			}
-
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -11297,7 +11293,7 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"AbilityTextureName"			"obsidian_destroyer_astral_imprisonment"
 		"MaxLevel"						"4"
-		"ScriptFile"				"components/abilities/heroes/hero_obsidian_destroyer.lua"
+		"ScriptFile"					"components/abilities/heroes/hero_obsidian_destroyer.lua"
 		"HasScepterUpgrade"				"1"
 
 		// Precache
@@ -11331,37 +11327,31 @@
 				"var_type"				"FIELD_INTEGER"
 				"prison_duration"		"4"
 			}
-
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"radius"				"400 450 500 550"
 			}
-
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"damage"				"150 250 350 450"
 			}
-
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"prison_movespeed"		"300 360 420 480"
+				"prison_movespeed"		"200 250 300 350"
 			}
-
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"scepter_int_steal_count"	"5"
 			}
-
 			"06"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"scepter_int_steal_duration"	"80"
 			}
-
 			"07"
 			{
 				"var_type"						"FIELD_INTEGER"
@@ -11383,7 +11373,7 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
 		"AbilityTextureName"			"obsidian_destroyer_essence_aura"
 		"MaxLevel"						"4"
-		"ScriptFile"				"components/abilities/heroes/hero_obsidian_destroyer.lua"
+		"ScriptFile"					"components/abilities/heroes/hero_obsidian_destroyer.lua"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -11402,37 +11392,31 @@
 				"var_type"				"FIELD_INTEGER"
 				"radius"				"900"
 			}
-
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"restore_chance_pct"	"40"
 			}
-
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"restore_mana_pct"		"15 20 25 30"
 			}
-
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"base_bonus_mana"		"125 200 275 350"
 			}
-
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"int_bonus_mana_mult"	"2 3 4 5"
 			}
-
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_int_on_proc"		"2 3 4 5"
 			}
-
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"

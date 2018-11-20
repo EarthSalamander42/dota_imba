@@ -47,7 +47,7 @@ end
 function imba_obsidian_destroyer_arcane_orb:GetCastRange(location, target)
 	-- Get caster's cast range
 	local caster = self:GetCaster()
-	return caster:GetAttackRange()
+	return caster:Script_GetAttackRange()
 end
 
 
@@ -102,7 +102,7 @@ function modifier_imba_arcane_orb_thinker:OnAttackStart(keys)
 			-- Get variables
 			self.auto_cast = self.ability:GetAutoCastState()
 			self.current_mana = self.caster:GetMana()
-			self.mana_cost = self.ability:GetManaCost(-1)           
+			self.mana_cost = self.ability:GetManaCost(-1) * attacker:GetStatusResistance()
 
 			-- If the caster is silenced, mark attack as non-orb
 			if self.caster:IsSilenced() then
@@ -766,9 +766,9 @@ function imba_obsidian_destroyer_astral_imprisonment:GetBehavior()
 	local modifier_self = "modifier_imba_astral_imprisonment_buff"
 
 	-- If a prison is ongoing, change the spell to a point target
---	if caster:HasModifier(modifier_self) then
---		return DOTA_ABILITY_BEHAVIOR_POINT + DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK        
---	end
+	if caster:HasModifier(modifier_self) then
+		return DOTA_ABILITY_BEHAVIOR_POINT + DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK        
+	end
 
 	return DOTA_ABILITY_BEHAVIOR_UNIT_TARGET + DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK
 end
@@ -789,25 +789,19 @@ function imba_obsidian_destroyer_astral_imprisonment:CastFilterResultTarget(targ
 end
 
 function imba_obsidian_destroyer_astral_imprisonment:GetCastPoint()
-	local caster = self:GetCaster()
-	local modifier_self = "modifier_imba_astral_imprisonment_buff"
-
 	-- If a prison is ongoing, remove the cast point
---	if caster:HasModifier(modifier_self) then
---		return 0
---	end
+	if self:GetCaster():HasModifier("modifier_imba_astral_imprisonment_buff") then
+		return 0
+	end
 
 	return self.BaseClass.GetCastPoint(self)
 end
 
 function imba_obsidian_destroyer_astral_imprisonment:GetCastRange(location, target)
-	local caster = self:GetCaster()
-	local modifier_self = "modifier_imba_astral_imprisonment_buff"
-
 	-- If a prison is ongoing, allow it to be cast globally
---	if caster:HasModifier(modifier_self) then
---		return 25000
---	end   
+	if self:GetCaster():HasModifier("modifier_imba_astral_imprisonment_buff") then
+		return 25000
+	end   
 
 	-- Otherwise, normal cast range
 	local cast_range = self:GetSpecialValueFor("cast_range")
@@ -816,31 +810,25 @@ function imba_obsidian_destroyer_astral_imprisonment:GetCastRange(location, targ
 end
 
 function imba_obsidian_destroyer_astral_imprisonment:GetManaCost(level)
-	local caster = self:GetCaster()
-	local modifier_self = "modifier_imba_astral_imprisonment_buff"
-
 	-- If a prison is ongoing, remove the mana cost
---	if caster:HasModifier(modifier_self) then
---		return 0
---	end
+	if self:GetCaster():HasModifier("modifier_imba_astral_imprisonment_buff") then
+		return 0
+	end
 
 	return self.BaseClass.GetManaCost(self, level)
 end
 
 function imba_obsidian_destroyer_astral_imprisonment:GetCooldown(level)
-	local caster = self:GetCaster()
-	local ability = self
-	local modifier_self = "modifier_imba_astral_imprisonment_buff"
-	local prison_duration = ability:GetSpecialValueFor("prison_duration")
+	local prison_duration = self:GetSpecialValueFor("prison_duration")
 
 	-- If a prison is ongoing, remove the cooldown
---	if caster:HasModifier(modifier_self) then
---		return 0
---	end
+	if self:GetCaster():HasModifier("modifier_imba_astral_imprisonment_buff") then
+		return 0
+	end
 
-	-- if IsServer() then
-		-- return self.BaseClass.GetCooldown(self, level) - prison_duration
-	-- end
+	if IsServer() then
+		return self.BaseClass.GetCooldown(self, level) - prison_duration
+	end
 
 	-- Make the client see the full cooldown
 	return self.BaseClass.GetCooldown(self, level)
@@ -858,11 +846,10 @@ end
 function imba_obsidian_destroyer_astral_imprisonment:OnSpellStart()    
 	-- Ability properties    
 	local caster = self:GetCaster()
-	local ability = self    
 	local modifier_self = "modifier_imba_astral_imprisonment_buff"
 
 	-- ASTRAL PRISON
---	if not caster:HasModifier(modifier_self) then
+	if not caster:HasModifier(modifier_self) then
 		-- Ability properties
 		local target = self:GetCursorTarget()    
 		local sound_cast = "Hero_ObsidianDestroyer.AstralImprisonment.Cast"     
@@ -870,7 +857,7 @@ function imba_obsidian_destroyer_astral_imprisonment:OnSpellStart()
 		local modifier_essence = "modifier_imba_essence_aura_buff"
 
 		-- Ability specials
-		local prison_duration = ability:GetSpecialValueFor("prison_duration")    
+		local prison_duration = self:GetSpecialValueFor("prison_duration")    
 
 		-- Play cast sound
 		EmitSoundOn(sound_cast, caster)  
@@ -882,23 +869,23 @@ function imba_obsidian_destroyer_astral_imprisonment:OnSpellStart()
 
 		-- If target has Linken's sphere ready, do nothing
 		if caster:GetTeamNumber() ~= target:GetTeamNumber() then
-			if target:TriggerSpellAbsorb(ability) then
+			if target:TriggerSpellAbsorb(self) then
 				return nil
 			end
 		end
 
 		-- Restart cooldown
-		ability:EndCooldown()
+		self:EndCooldown()
 
 		-- Give self a buff that would allow the spell to move the prison
-		local modifier_self_handler = caster:AddNewModifier(caster, ability, modifier_self, {duration = prison_duration})
+		local modifier_self_handler = caster:AddNewModifier(caster, self, modifier_self, {duration = prison_duration})
 		if modifier_self_handler then
 			modifier_self_handler.target = target
 			modifier_self_handler.target_point = target:GetAbsOrigin()
 		end
 
 		-- Apply the imprisonment modifier on the target
-		target:AddNewModifier(caster, ability, modifier_prison, {duration = prison_duration})
+		target:AddNewModifier(caster, self, modifier_prison, {duration = prison_duration})
 
 		-- If the caster has Essence Aura, roll for a proc
 		if caster:HasModifier(modifier_essence) then
@@ -909,17 +896,17 @@ function imba_obsidian_destroyer_astral_imprisonment:OnSpellStart()
 		end
 
 		self:UseResources(false, false, true)
---	else
+	else
 	-- MOVE ACTIVE PRISON
 		-- Ability properties
---		local target_point = self:GetCursorPosition()    
+		local target_point = self:GetCursorPosition()    
 
---		-- Find the self buff, and assign a new target point
---		local modifier_self_handler = caster:FindModifierByName(modifier_self)
---		if modifier_self_handler then
---			modifier_self_handler.target_point = target_point
---		end
---	end
+		-- Find the self buff, and assign a new target point
+		local modifier_self_handler = caster:FindModifierByName(modifier_self)
+		if modifier_self_handler then
+			modifier_self_handler.target_point = target_point
+		end
+	end
 end
 
 -- Prison modifier 
@@ -977,19 +964,21 @@ function modifier_imba_astral_imprisonment:CheckState()
 	local state 
 	
 	-- Prevent the caster from being stunned, so he will able to move his prison
-	-- if self.parent == self.caster then
-	-- state = {[MODIFIER_STATE_INVULNERABLE] = true,
-			 -- [MODIFIER_STATE_OUT_OF_GAME] = true,
-			 -- [MODIFIER_STATE_NO_HEALTH_BAR] = true,
-			 -- [MODIFIER_STATE_ROOTED] = true,
-			 -- [MODIFIER_STATE_MUTED] = true,
-			 -- [MODIFIER_STATE_DISARMED] = true}
-	-- else
-	state = {[MODIFIER_STATE_INVULNERABLE] = true,
-			 [MODIFIER_STATE_OUT_OF_GAME] = true,
-			 [MODIFIER_STATE_NO_HEALTH_BAR] = true,
-			 [MODIFIER_STATE_STUNNED] = true}
-	-- end
+	if self.parent == self.caster then
+		state = {[MODIFIER_STATE_INVULNERABLE] = true,
+			[MODIFIER_STATE_OUT_OF_GAME] = true,
+			[MODIFIER_STATE_NO_HEALTH_BAR] = true,
+			[MODIFIER_STATE_ROOTED] = true,
+			[MODIFIER_STATE_MUTED] = true,
+			[MODIFIER_STATE_DISARMED] = true
+		}
+	else
+		state = {[MODIFIER_STATE_INVULNERABLE] = true,
+			[MODIFIER_STATE_OUT_OF_GAME] = true,
+			[MODIFIER_STATE_NO_HEALTH_BAR] = true,
+			[MODIFIER_STATE_STUNNED] = true
+		}
+	end
 			 
 	return state
 end
@@ -997,53 +986,55 @@ end
 function modifier_imba_astral_imprisonment:OnDestroy()
 	if IsServer() then
 		-- Play end sound
+		self.parent:StopSound(self.sound_astral)
 		EmitSoundOn(self.sound_end, self.parent)
 
 		-- Bring the model back
 		self.parent:RemoveNoDraw()
 
 		Timers:CreateTimer(FrameTime(), function()
-		-- Find all units in radius
-		local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(),
-										  self.parent:GetAbsOrigin(),
-										  nil,
-										  self.radius,
-										  DOTA_UNIT_TARGET_TEAM_ENEMY,
-										  DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-										  DOTA_UNIT_TARGET_FLAG_NONE,
-										  FIND_ANY_ORDER,
-										  false)
+			-- Find all units in radius
+			local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(),
+				self.parent:GetAbsOrigin(),
+				nil,
+				self.radius,
+				DOTA_UNIT_TARGET_TEAM_ENEMY,
+				DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+				DOTA_UNIT_TARGET_FLAG_NONE,
+				FIND_ANY_ORDER,
+				false
+			)
 
-		for _,enemy in pairs(enemies) do
-			-- Remove the Talent modifier from nearby enemies, if any.
-			if not enemy:IsMagicImmune() and not enemy.astral_imprisonment_immunity then
-				-- Add prison end particle on each enemy
-				self.particle_prison_end_fx = ParticleManager:CreateParticle(self.particle_prison_end, PATTACH_ABSORIGIN, self.caster)
-				ParticleManager:SetParticleControl(self.particle_prison_end_fx, 0, enemy:GetAbsOrigin())
-				
-				-- Deal damage
-				local damageTable = {victim = enemy,
-									damage = self.damage,
-									damage_type = DAMAGE_TYPE_MAGICAL,
-									attacker = self.caster,
-									ability = self.ability
-									}
-									
-				ApplyDamage(damageTable)
+			for _,enemy in pairs(enemies) do
+				-- Remove the Talent modifier from nearby enemies, if any.
+				if not enemy:IsMagicImmune() and not enemy.astral_imprisonment_immunity then
+					-- Add prison end particle on each enemy
+					self.particle_prison_end_fx = ParticleManager:CreateParticle(self.particle_prison_end, PATTACH_ABSORIGIN, self.caster)
+					ParticleManager:SetParticleControl(self.particle_prison_end_fx, 0, enemy:GetAbsOrigin())
+					
+					-- Deal damage
+					local damageTable = {victim = enemy,
+						damage = self.damage,
+						damage_type = DAMAGE_TYPE_MAGICAL,
+						attacker = self.caster,
+						ability = self.ability
+					}
+										
+					ApplyDamage(damageTable)
 
-				-- Protect this enemy from astral further Astral Imprisonments in the vicinity
-				enemy.astral_imprisonment_immunity = true
+					-- Protect this enemy from astral further Astral Imprisonments in the vicinity
+					enemy.astral_imprisonment_immunity = true
 
-				-- Immunity goes down after a small delay
-				Timers:CreateTimer(0.2, function()
-					enemy.astral_imprisonment_immunity = false
-				end)
+					-- Immunity goes down after a small delay
+					Timers:CreateTimer(0.2, function()
+						enemy.astral_imprisonment_immunity = false
+					end)
+				end
 			end
-		end
 		end)
 
 		-- Resolve positions for everyone so they won't get stuck
-		ResolveNPCPositions(self.parent:GetAbsOrigin(), self.radius)
+		self.parent:AddNewModifier(self.parent, nil, "modifier_phased", {duration=FrameTime()})
 	end
 end
 
@@ -1084,28 +1075,29 @@ function modifier_imba_astral_imprisonment_buff:OnIntervalThink()
 			
 		-- Find all units in radius
 		local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(),
-										  self.target:GetAbsOrigin(),
-										  nil,
-										  self.caster:FindTalentValue("special_bonus_imba_obsidian_destroyer_4") + self.caster:GetIntellect(),
-										  DOTA_UNIT_TARGET_TEAM_ENEMY,
-										  DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-										  DOTA_UNIT_TARGET_FLAG_NONE,
-										  FIND_ANY_ORDER,
-										  false)
+			self.target:GetAbsOrigin(),
+			nil,
+			self.caster:FindTalentValue("special_bonus_imba_obsidian_destroyer_4") + self.caster:GetIntellect(),
+			DOTA_UNIT_TARGET_TEAM_ENEMY,
+			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+			DOTA_UNIT_TARGET_FLAG_NONE,
+			FIND_ANY_ORDER,
+			false
+		)
 
 		for _,enemy in pairs(enemies) do
 			-- Only applies to enemies near the target
 			if enemy == self.target then
 			else
-			if (not enemy:HasModifier("modifier_imba_astral_imprisonment_sucked")) then
-				-- Add prison end particle on each enemy
-				local particle_prison_end_fx = ParticleManager:CreateParticle(self.particle_prison_end, PATTACH_ABSORIGIN, self.caster)
-				ParticleManager:SetParticleControl(particle_prison_end_fx, 0, enemy:GetAbsOrigin())
-				
-				-- Remove the model and apply the sucked modifier
-				enemy:AddNoDraw()
-				enemy:AddNewModifier(self.caster,self.ability,"modifier_imba_astral_imprisonment_sucked",{duration = self:GetRemainingTime()}) -- Reduce the duration by a minimal delay to apply the damage
-			end
+				if (not enemy:HasModifier("modifier_imba_astral_imprisonment_sucked")) then
+					-- Add prison end particle on each enemy
+					local particle_prison_end_fx = ParticleManager:CreateParticle(self.particle_prison_end, PATTACH_ABSORIGIN, self.caster)
+					ParticleManager:SetParticleControl(particle_prison_end_fx, 0, enemy:GetAbsOrigin())
+					
+					-- Remove the model and apply the sucked modifier
+					enemy:AddNoDraw()
+					enemy:AddNewModifier(self.caster,self.ability,"modifier_imba_astral_imprisonment_sucked",{duration = self:GetRemainingTime()}) -- Reduce the duration by a minimal delay to apply the damage
+				end
 			end
 		end                
 				
@@ -1147,14 +1139,15 @@ function modifier_imba_astral_imprisonment_buff:OnIntervalThink()
 			
 		-- Find all units in radius
 		local enemies_sucked = FindUnitsInRadius(self.caster:GetTeamNumber(),
-										  self.target:GetAbsOrigin(),
-										  nil,
-										  FIND_UNITS_EVERYWHERE,
-										  DOTA_UNIT_TARGET_TEAM_ENEMY,
-										  DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-										  DOTA_UNIT_TARGET_FLAG_INVULNERABLE,
-										  FIND_ANY_ORDER,
-										  false)
+			self.target:GetAbsOrigin(),
+			nil,
+			FIND_UNITS_EVERYWHERE,
+			DOTA_UNIT_TARGET_TEAM_ENEMY,
+			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+			DOTA_UNIT_TARGET_FLAG_INVULNERABLE,
+			FIND_ANY_ORDER,
+			false
+		)
 
 		-- Set the new path
 		for _,enemy in pairs(enemies_sucked) do
@@ -1165,16 +1158,16 @@ function modifier_imba_astral_imprisonment_buff:OnIntervalThink()
 	end
 end
 
---	function modifier_imba_astral_imprisonment_buff:OnDestroy()
---		if IsServer() then
---			-- Spend the cooldown of the ability
---			self.ability:UseResources(false, false, true)
---		end
---	end
+function modifier_imba_astral_imprisonment_buff:OnDestroy()
+	if IsServer() then
+		-- Spend the cooldown of the ability
+		self.ability:UseResources(false, false, true)
+	end
+end
 
 function modifier_imba_astral_imprisonment_buff:IsHidden() return true end
 function modifier_imba_astral_imprisonment_buff:IsPurgable() return false end
-function modifier_imba_astral_imprisonment_buff:IsDebuff() return false end
+function modifier_imba_astral_imprisonment_buff:IsDebuff() return true end
 
 modifier_imba_astral_imprisonment_sucked = class({})
 

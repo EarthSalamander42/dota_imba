@@ -628,7 +628,7 @@ function imba_omniknight_hammer_of_virtue:IsStealable()
 end
 
 function imba_omniknight_hammer_of_virtue:GetCastRange(location, target)
-    return self:GetCaster():GetAttackRange()
+    return self:GetCaster():Script_Script_GetAttackRange() 
 end
 
 function imba_omniknight_hammer_of_virtue:GetAbilityTextureName()

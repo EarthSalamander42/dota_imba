@@ -19,14 +19,14 @@ function CDOTA_BaseNPC:CreateIllusion(duration, inc, out, pos, mod, ab)
 
 	if self:IsRealHero() then
 		illusion:SetPlayerID(player:GetPlayerID())
---		illusion:SetOwner(player)
+		illusion:SetOwner(player)
 		local targetLevel = self:GetLevel()
 		for i=1,targetLevel-1 do
 			illusion:HeroLevelUp(false)
 		end
 		illusion:SetAbilityPoints(0)
 	else
---		illusion:SetOwner(self)
+		illusion:SetOwner(self)
 	end
 
 	for abilitySlot=0,15 do

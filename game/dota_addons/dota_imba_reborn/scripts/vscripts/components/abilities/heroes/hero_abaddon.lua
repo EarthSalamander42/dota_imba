@@ -628,7 +628,7 @@ function imba_abaddon_curse_of_avernus:GetCooldown()
 end
 
 function imba_abaddon_curse_of_avernus:GetCastRange()
-	return self:GetCaster():GetAttackRange()
+	return self:GetCaster():Script_GetAttackRange()
 end
 
 function imba_abaddon_curse_of_avernus:OnSpellStart()

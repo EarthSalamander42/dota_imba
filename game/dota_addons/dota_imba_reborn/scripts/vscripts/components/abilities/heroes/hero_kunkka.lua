@@ -780,7 +780,7 @@ function imba_kunkka_tidebringer:GetIntrinsicModifierName()
 end
 
 function imba_kunkka_tidebringer:GetCastRange(location, target)
-	return self:GetCaster():GetAttackRange()
+	return self:GetCaster():Script_GetAttackRange()
 end
 
 function imba_kunkka_tidebringer:IsStealable()

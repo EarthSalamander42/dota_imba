@@ -883,7 +883,7 @@ function modifier_imba_death_ward:OnCreated()
 	ParticleManager:SetParticleControlEnt(self.wardParticle, 0, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_attack1", self:GetParent():GetAbsOrigin(), true)
 	ParticleManager:SetParticleControl(self.wardParticle, 2, self:GetParent():GetAbsOrigin())
 
-	self.attack_range_bonus	=	self:GetAbility():GetSpecialValueFor("attack_range") - self:GetParent():GetAttackRange()
+	self.attack_range_bonus	=	self:GetAbility():GetSpecialValueFor("attack_range") - self:GetParent():Script_GetAttackRange()
 
 	if IsServer() then
 		self:StartIntervalThink( self:GetParent():GetBaseAttackTime() )
@@ -904,7 +904,7 @@ function modifier_imba_death_ward:OnIntervalThink()
 		if self:GetCaster():HasScepter() then
 			bounces = hAbility:GetSpecialValueFor("bounces_scepter") + 1
 		end
-		local range = hParent:GetAttackRange()
+		local range = hParent:Script_GetAttackRange()
 		if self.attack_target then
 			if not ((((self.attack_target:GetAbsOrigin() - hParent:GetAbsOrigin()):Length2D()) <= range) and UnitFilter( self.attack_target, hAbility:GetAbilityTargetTeam(), hAbility:GetAbilityTargetType(), hAbility:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber()) == 0) then
 				self.attack_target = nil

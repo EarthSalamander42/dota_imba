@@ -711,7 +711,7 @@ end
 function imba_jakiro_liquid_fire:GetCastRange(Location, Target)
 	local caster = self:GetCaster()
 	-- #4 Talent: Liquid Fire Cast Range Increase
-	return caster:GetAttackRange() + self:GetSpecialValueFor("extra_cast_range") + caster:FindTalentValue("special_bonus_imba_jakiro_4")
+	return caster:Script_GetAttackRange() + self:GetSpecialValueFor("extra_cast_range") + caster:FindTalentValue("special_bonus_imba_jakiro_4")
 end
 
 function imba_jakiro_liquid_fire:OnAbilityPhaseStart()

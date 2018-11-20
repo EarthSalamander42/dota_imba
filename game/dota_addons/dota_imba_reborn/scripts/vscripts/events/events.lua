@@ -526,6 +526,18 @@ function GameMode:OnAbilityUsed(keys)
 	local player = PlayerResource:GetPlayer(keys.PlayerID)
 	local abilityname = keys.abilityname
 
+	for _, ability in pairs(IMBA_ABILITIES_IGNORE_CDR) do
+		if ability == abilityname then
+			if player:GetAssignedHero() then
+				if player:GetAssignedHero():FindAbilityByName(ability) then
+					local ab = player:GetAssignedHero():FindAbilityByName(ability)
+					ab:StartCooldown(ab:GetCooldown(ab:GetLevel()))
+				end
+			end
+
+			break
+		end
+	end
 end
 
 function GameMode:OnPlayerLevelUp(keys)
