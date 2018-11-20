@@ -95,31 +95,32 @@ function GameMode:ModifierFilter( keys )
 		local modifier_caster
 		local modifier_class
 
+		if keys.entindex_caster_const then
+			modifier_caster = EntIndexToHScript(keys.entindex_caster_const)
+		else
+			return true
+		end
+		
 		if modifier_owner ~= nil and IsMutationMap() or IsSuperFranticMap() then
 			modifier_class = modifier_owner:FindModifierByName(modifier_name)
 			if modifier_class == nil then return end
-			if string.find(modifier_name, "imba") and modifier_class.IsDebuff and modifier_class:IsDebuff() == true and modifier_class.IgnoreTenacity == nil or (modifier_class.IgnoreTenacity and modifier_class:IgnoreTenacity() == false) then
-				if keys.duration > 0 then						
+
+			if keys.entindex_ability_const and EntIndexToHScript(keys.entindex_ability_const).GetAbilityName then
+				if string.find(EntIndexToHScript(keys.entindex_ability_const):GetAbilityName(), "imba") and keys.duration > 0 and modifier_owner:GetTeam() ~= modifier_caster:GetTeam() then				
 					local original_duration = keys.duration
 					local actual_duration = original_duration
 					local status_resistance = modifier_owner:GetStatusResistance()
 --					print("Old duration:", actual_duration)
 
---					if modifier_owner:GetTeam() ~= modifier_caster:GetTeam() then			
+					if not (modifier_class.IgnoreTenacity and modifier_class:IgnoreTenacity()) then
 						actual_duration = actual_duration * (1 - status_resistance)
---					end
+					end
 
 --					print("New duration:", actual_duration)
 
 					keys.duration = actual_duration
 				end
 			end
-		end
-
-		if keys.entindex_caster_const then
-			modifier_caster = EntIndexToHScript(keys.entindex_caster_const)
-		else
-			return true
 		end
 
 		-- volvo bugfix
