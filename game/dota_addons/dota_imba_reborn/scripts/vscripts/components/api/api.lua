@@ -4,7 +4,7 @@
 api = {}
 
 api.config = {
-	protocol = "http://",
+	protocol = "https://",
 	server = "api.dota2imba.org",
 	version = "2",
 	game = "imba",

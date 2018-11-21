@@ -150,6 +150,10 @@
 //	"item_travel_boots_2"					"REMOVE"
 //	"item_cyclone"							"REMOVE"
 //	"item_recipe_cyclone"					"REMOVE"
+	"item_recipe_kaya_and_sange"			"REMOVE"
+	"item_kaya_and_sange"					"REMOVE"
+	"item_recipe_yasha_and_kaya"			"REMOVE"
+	"item_yasha_and_kaya"					"REMOVE"
 
 	//Banned items
 //	"item_imba_ironleaf_boots"				"REMOVE"
@@ -340,7 +344,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"movement_speed"			"25"
+				"movement_speed"		"6"
 			}
 			"02"
 			{
@@ -350,7 +354,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"duration"			"5"
+				"duration"				"5"
 			}
 		}
 	}
@@ -570,7 +574,7 @@
 			"10"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"broken_movement_speed"	"65"
+				"broken_movement_speed"	"20"
 			}
 		}
 	}
@@ -6749,7 +6753,7 @@
 			}
 		}
 	}
-	
+
 	//=================================================================================================================
 	// Lifestealer: Feast
 	//=================================================================================================================
@@ -6760,7 +6764,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"hp_leech_percent"		"4.5 5.75 7.0 8.25"
+				"hp_leech_percent"		"2 3 4 5"
 				"LinkedSpecialBonus"	"special_bonus_unique_lifestealer_3"
 			}
 		}
@@ -15400,169 +15404,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_armor"			"6"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Recipe: Yasha and Kaya
-	//=================================================================================================================
-	"item_recipe_yasha_and_kaya"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"274"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
-		
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"0"	
-		"ItemShopTags"					""
-		
-		// Recipe
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemRecipe"					"1"
-		"ItemResult"					"item_yasha_and_kaya"
-		"ItemRequirements"
-		{
-			"01"						"item_imba_kaya;item_imba_yasha"
-		}
-	}
-	
-	//=================================================================================================================
-	// Yasha and Kaya
-	//=================================================================================================================
-	"item_yasha_and_kaya"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
-
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"4200"
-		"ItemShopTags"					"damage;str;agi;attack_speed;unique"
-		"ItemQuality"					"artifact"
-		"ItemAliases"					"ynk;y&k;sk;yasha and kaya"
-		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_ALWAYS"
-		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
-		"ShouldBeSuggested"				"1"
-		
-		// Special	
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_agility"			"21"
-			}		
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"			"21"
-			}			
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_attack_speed"	"21"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"manacost_reduction"			"16"
-			}
-			"05"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"movement_speed_percent_bonus"	"12"
-			}		
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"spell_amp"			"21"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Recipe: Kaya and Sange
-	//=================================================================================================================
-	"item_recipe_kaya_and_sange"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"272"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
-		
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"0"	
-		"ItemShopTags"					""
-		
-		// Recipe
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemRecipe"					"1"
-		"ItemResult"					"item_kaya_and_sange"
-		"ItemRequirements"
-		{
-			"01"						"item_imba_sange;item_imba_kaya"
-		}
-	}
-	
-	//=================================================================================================================
-	// Kaya and Sange
-	//=================================================================================================================
-	"item_kaya_and_sange"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"273"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
-
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"4200"
-		"ItemShopTags"					"damage;str;agi;attack_speed;unique"
-		"ItemQuality"					"artifact"
-		"ItemAliases"					"snk;s&k;sk;sange and kaya"
-		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_ALWAYS"
-		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
-		"ShouldBeSuggested"				"1"
-		
-		// Special	
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_strength"		"21"
-			}		
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"			"21"
-			}		
-			"03"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"status_resistance"				"16"
-			}		
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"manacost_reduction"			"16"
-			}	
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"spell_amp"			"21"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"12"
 			}
 		}
 	}

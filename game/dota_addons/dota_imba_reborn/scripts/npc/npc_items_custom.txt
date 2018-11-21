@@ -550,7 +550,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_ms"				"50"
+				"bonus_ms"				"15"
 			}
 			"02"
 			{
@@ -749,7 +749,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_ms"				"65"
+				"bonus_ms"				"17"
 			}
 			"02"
 			{
@@ -4840,6 +4840,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"42.0"
 		"AbilityManaCost"				"50"
+		"AbilitySharedCooldown"			"swords"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -4876,7 +4877,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"active_duration"		"3.0"
+				"active_duration"		"5.0"
 			}
 		}
 	}
@@ -4898,6 +4899,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"42.0"
 		"AbilityManaCost"				"50"
+		"AbilitySharedCooldown"			"swords"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -4938,7 +4940,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"active_duration"		"3.0"
+				"active_duration"		"5.0"
 			}
 		}
 	}
@@ -4958,8 +4960,9 @@
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"21.0"
+		"AbilityCooldown"				"42.0"
 		"AbilityManaCost"				"50"
+		"AbilitySharedCooldown"			"swords"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -4987,6 +4990,16 @@
 				"var_type"				"FIELD_INTEGER"
 				"bonus_int"				"21"
 			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER" // also mana cost reduction
+				"bonus_cdr_active"		"25"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"active_duration"		"5.0"
+			}
 		}
 	}
 
@@ -5007,6 +5020,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"42.0"
 		"AbilityManaCost"				"50"
+		"AbilitySharedCooldown"			"swords"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -5023,8 +5037,8 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"21"
+				"var_type"						"FIELD_INTEGER"
+				"bonus_damage"					"21"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"02"
@@ -5045,7 +5059,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_ms"				"21"
+				"bonus_ms"				"16"
 			}
 			"06"
 			{
@@ -6150,72 +6164,61 @@
 				"var_type"				"FIELD_INTEGER"
 				"bonus_int"				"6"
 			}
-
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_str"				"6"
 			}
-
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_agi"				"3"
 			}
-
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_damage"			"3"
 				"CalculateSpellDamageTooltip"	"0"
 			}
-
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"bonus_mana_regen"		"0.75"
 			}
-
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_ms"				"20"
+				"aura_ms"				"6"
 			}
-
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"aura_as"				"20"
 			}
-
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"hero_multiplier"		"3"
 			}
-
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"active_as_per_ally"	"5"
 			}
-
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"active_ms_per_ally"	"5"
+				"active_ms_per_ally"	"1"
 			}
-
 			"10"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"duration"				"7"
 			}
-
 			"11"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"900"
+				"radius"				"1200"
 			}
 		}
 	}
@@ -7246,33 +7249,28 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_movement_speed"		"60"
+				"bonus_movement_speed"		"20"
 			}
-
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"bonus_stat"				"30"
 			}
-
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"bonus_attackspeed"			"35"
 			}
-
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"str_mode_tenacity"			"20"
 			}
-
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"agi_mode_evasion"			"20"
 			}
-
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -7449,7 +7447,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"base_move_speed"		"100"
+				"base_move_speed"		"28"
 			}
 			"02"
 			{
@@ -11979,7 +11977,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_movement_speed"	"65"
+				"bonus_movement_speed"	"20"
 			}
 			"02"
 			{
@@ -12019,5 +12017,233 @@
 			}
 		}
 	}
-	//next free ID: 2291
+
+	//=================================================================================================================
+	// Recipe: Kaya & Sange
+	//=================================================================================================================
+	"item_recipe_imba_kaya_and_sange"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2291"
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"custom/imba_recipe"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"0"
+		"ItemShopTags"					""
+
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_kaya_and_sange"
+		"ItemRequirements"
+		{
+			"01"						"item_imba_kaya;item_imba_sange"
+		}
+	}
+
+	//=================================================================================================================
+	// Kaya & Sange
+	//=================================================================================================================
+	"item_imba_kaya_and_sange"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2292"
+		"BaseClass"						"item_lua"
+		"ScriptFile"					"components/items/item_swords.lua"
+		"AbilityTextureName"			"item_kaya_and_sange"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"42.0"
+		"AbilityManaCost"				"50"
+		"AbilitySharedCooldown"			"swords"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"3500"
+		"ItemShopTags"					"damage;str;agi;attack_speed;unique"
+		"ItemQuality"					"artifact"
+		"ItemAliases"					"kns;k&s;ks;kaya and sange;snk;s&k;sk;sange and kaya"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_ALWAYS"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_damage"					"12"
+				"CalculateSpellDamageTooltip"	"0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_strength"		"21"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_intellect"		"21"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_status_resistance"	"16"
+			}
+			"05"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"bonus_status_resistance_active"	"100"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"spell_amp"				"21"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER" // also mana cost reduction
+				"bonus_cdr"				"16"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER" // also mana cost reduction
+				"bonus_cdr_active"		"25"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"manacost_reduction"	"16"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"active_duration"		"5.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Recipe: Kaya & Sange
+	//=================================================================================================================
+	"item_recipe_imba_yasha_and_kaya"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2293"
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"custom/imba_recipe"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"0"
+		"ItemShopTags"					""
+
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_yasha_and_kaya"
+		"ItemRequirements"
+		{
+			"01"						"item_imba_kaya;item_imba_kaya"
+		}
+	}
+
+	//=================================================================================================================
+	// Kaya & Sange
+	//=================================================================================================================
+	"item_imba_yasha_and_kaya"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2294"
+		"BaseClass"						"item_lua"
+		"ScriptFile"					"components/items/item_swords.lua"
+		"AbilityTextureName"			"item_yasha_and_kaya"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"42.0"
+		"AbilityManaCost"				"50"
+		"AbilitySharedCooldown"			"swords"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"3500"
+		"ItemShopTags"					"damage;str;agi;attack_speed;unique"
+		"ItemQuality"					"artifact"
+		"ItemAliases"					"sny;s&y;sy;sange and yasha"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_ALWAYS"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_agility"			"21"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_intellect"		"21"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_attack_speed"	"21"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_ms"				"16"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"spell_amp"				"21"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER" // also mana cost reduction
+				"bonus_cdr"				"16"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER" // also mana cost reduction
+				"bonus_cdr_active"		"25"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"manacost_reduction"	"16"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_evasion"			"16"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_evasion_active"	"100"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"active_duration"		"5.0"
+			}
+		}
+	}
+	//next free ID: 2295
 }

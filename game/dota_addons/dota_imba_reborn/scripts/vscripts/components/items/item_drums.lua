@@ -106,13 +106,15 @@ function modifier_imba_drums_active:OnCreated()
 end
 
 function modifier_imba_drums_active:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT,
-		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT}
+	local decFuncs = {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+	}
 
 	return decFuncs
 end
 
-function modifier_imba_drums_active:GetModifierMoveSpeedBonus_Constant()
+function modifier_imba_drums_active:GetModifierMoveSpeedBonus_Percentage()
 	return self.active_ms_per_ally * self:GetStackCount()
 end
 
@@ -233,7 +235,6 @@ function modifier_imba_drums_aura:GetAuraEntityReject(target)
 	return false
 end
 
-
 -- Drum aura modifier effect
 modifier_imba_drums_aura_effect = class({})
 
@@ -248,13 +249,15 @@ function modifier_imba_drums_aura_effect:IsPurgable() return false end
 function modifier_imba_drums_aura_effect:IsDebuff() return false end
 
 function modifier_imba_drums_aura_effect:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT,
-		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT}
+	local decFuncs = {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+	}
 
 	return decFuncs
 end
 
-function modifier_imba_drums_aura_effect:GetModifierMoveSpeedBonus_Constant()
+function modifier_imba_drums_aura_effect:GetModifierMoveSpeedBonus_Percentage()
 	return self.aura_ms
 end
 

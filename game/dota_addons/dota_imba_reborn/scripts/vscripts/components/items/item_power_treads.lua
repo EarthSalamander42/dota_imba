@@ -80,11 +80,12 @@ function modifier_imba_power_treads_2:RemoveOnDeath() return false end
 function modifier_imba_power_treads_2:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_power_treads_2:DeclareFunctions()
-	local funcs = {	MODIFIER_PROPERTY_MOVESPEED_BONUS_UNIQUE,
+	local funcs = {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_UNIQUE,
 		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
 		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
-		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 	}
 	return funcs
 end
@@ -173,7 +174,7 @@ function modifier_imba_power_treads_2:OnDestroy()
 	end
 end
 
-function modifier_imba_power_treads_2:GetModifierMoveSpeedBonus_Special_Boots()
+function modifier_imba_power_treads_2:GetModifierMoveSpeedBonus_Percentage()
 	local ability = self:GetAbility()
 	local speed_bonus = ability:GetSpecialValueFor("bonus_movement_speed")
 	return speed_bonus

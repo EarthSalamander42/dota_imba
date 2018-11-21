@@ -79,13 +79,13 @@ function modifier_item_imba_arcane_boots:GetAttributes() return MODIFIER_ATTRIBU
 -- Declare modifier events/properties
 function modifier_item_imba_arcane_boots:DeclareFunctions()
 	local funcs = {
-		MODIFIER_PROPERTY_MOVESPEED_BONUS_UNIQUE,
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 		MODIFIER_PROPERTY_MANA_BONUS,
 	}
 	return funcs
 end
 
-function modifier_item_imba_arcane_boots:GetModifierMoveSpeedBonus_Special_Boots()
+function modifier_item_imba_arcane_boots:GetModifierMoveSpeedBonus_Percentage()
 	return self:GetAbility():GetSpecialValueFor("bonus_ms")
 end
 
@@ -413,13 +413,13 @@ function modifier_item_imba_guardian_greaves:DeclareFunctions()
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
 		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
 		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
-		MODIFIER_PROPERTY_MOVESPEED_BONUS_UNIQUE,
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 		MODIFIER_PROPERTY_MANA_BONUS,
 	}
 	return funcs
 end
 
-function modifier_item_imba_guardian_greaves:GetModifierMoveSpeedBonus_Special_Boots()
+function modifier_item_imba_guardian_greaves:GetModifierMoveSpeedBonus_Percentage()
 	return self:GetAbility():GetSpecialValueFor("bonus_ms") end
 
 function modifier_item_imba_guardian_greaves:GetModifierManaBonus()

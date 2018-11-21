@@ -96,8 +96,10 @@ function modifier_imba_lifesteal_boots:RemoveOnDeath() return false end
 function modifier_imba_lifesteal_boots:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_lifesteal_boots:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
-		MODIFIER_PROPERTY_MOVESPEED_BONUS_UNIQUE}
+	local decFuncs = {
+		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+	}
 
 	return decFuncs
 end
@@ -106,7 +108,7 @@ function modifier_imba_lifesteal_boots:GetModifierPreAttack_BonusDamage()
 	return self.bonus_damage
 end
 
-function modifier_imba_lifesteal_boots:GetModifierMoveSpeedBonus_Special_Boots()
+function modifier_imba_lifesteal_boots:GetModifierMoveSpeedBonus_Percentage()
 	return self.bonus_movement_speed
 end
 

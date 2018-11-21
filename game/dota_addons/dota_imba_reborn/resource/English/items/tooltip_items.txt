@@ -414,27 +414,6 @@
 "DOTA_Tooltip_ability_item_imba_rapier_Lore"                    "So powerful, it cannot have a single owner."
 "DOTA_Tooltip_ability_item_imba_rapier_bonus_damage"            "+$damage"
 
-// Drums of Endurance
-"DOTA_Tooltip_Ability_item_imba_ancient_janggo"                "Drum of Endurance"
-"DOTA_Tooltip_Ability_item_imba_ancient_janggo_Description"                 "<h1><font color='#FF7800'>Active: Strength in Numbers </font></h1> Grants every ally in range bonus attack and movement speed, based on the amount of nearby allies. Heroes grant stronger bonuses.\n<h1>Passive: Swiftness Aura</h1> Grants bonus attack and movement speed to nearby allies."
-"DOTA_Tooltip_Ability_item_imba_ancient_janggo_Lore"            "A relic that enchants the bodies of those around it for swifter movement in times of crisis."
-"DOTA_Tooltip_Ability_item_imba_ancient_janggo_Note0"          "Swiftness Aura does not stack with itself, and is overridden by Siege Aura."
-"DOTA_Tooltip_Ability_item_imba_ancient_janggo_Note1"          "Strength in Numbers does not stack with itself - using it while it's still active will result either in extending the current bonus, or overwriting it with a stronger one."
-"DOTA_Tooltip_Ability_item_imba_ancient_janggo_Note2"          "Drum of Endurance's Strength in Numbers and Siege Cuirass's Hellish Siege can both extend the duration or overwrite each other's effects with a stronger one, but never stack."
-"DOTA_Tooltip_Ability_item_imba_ancient_janggo_aura_as"                     "AURA ATTACK SPEED:"
-"DOTA_Tooltip_Ability_item_imba_ancient_janggo_aura_ms"                     "AURA MOVE SPEED:"
-"DOTA_Tooltip_Ability_item_imba_ancient_janggo_active_as_per_hero"          "MOVE/ATTACK SPEED PER HERO:"
-"DOTA_Tooltip_Ability_item_imba_ancient_janggo_active_as_per_creep"         "MOVE/ATTACK SPEED PER CREEP:"
-"DOTA_Tooltip_Ability_item_imba_ancient_janggo_bonus_int"                   "+$all"
-"DOTA_Tooltip_Ability_item_imba_ancient_janggo_bonus_damage"                "+$damage"
-"DOTA_Tooltip_Ability_item_imba_ancient_janggo_bonus_mana_regen"            "+$mana_regen"
-
-"DOTA_Tooltip_modifier_imba_drums_aura_effect"                  "Endurance Aura"
-"DOTA_Tooltip_modifier_imba_drums_aura_effect_Description"                  "Increased move and attack speed."
-
-"DOTA_Tooltip_modifier_imba_drums_active"                      "Strength in Numbers"
-"DOTA_Tooltip_modifier_imba_drums_active_Description"          "Gaining bonus move and attack speed."
-
 // Dust of Appearance
 "DOTA_Tooltip_ability_item_imba_dust_of_appearance"            "Dust of Appearance"
 "DOTA_Tooltip_ability_item_imba_dust_of_appearance_Description"             "<h1>Use: Reveal</h1> spreads a special dust on enemies around the user that slows and reveals invisible enemy units, even through the fog of war. Has 3 charges.\n<h1><font color='#FF7800'>Passive: Dust Fortune</font></h1> If at least one invisible unit was found by using Dust of Appearance, no charge is spent. All other cases spends a charge normally."

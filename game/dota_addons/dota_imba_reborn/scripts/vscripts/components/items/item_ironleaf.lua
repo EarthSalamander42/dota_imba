@@ -71,7 +71,7 @@ function modifier_imba_ironleaf_boots:OnDestroy()
 end
 
 function modifier_imba_ironleaf_boots:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_UNIQUE,
+	local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
 		MODIFIER_PROPERTY_MANA_REGEN_CONSTANT,
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
@@ -80,7 +80,7 @@ function modifier_imba_ironleaf_boots:DeclareFunctions()
 	return decFuncs
 end
 
-function modifier_imba_ironleaf_boots:GetModifierMoveSpeedBonus_Special_Boots()
+function modifier_imba_ironleaf_boots:GetModifierMoveSpeedBonus_Percentage()
 	return self.base_move_speed
 end
 
