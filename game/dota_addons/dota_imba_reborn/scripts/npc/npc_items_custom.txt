@@ -6437,13 +6437,13 @@
 			}
 			"06"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"bonus_status_resisatnce"	"3.0"
+				"var_type"					"FIELD_INTEGER"
+				"bonus_status_resistance"	"16"
 			}
 			"07"
 			{
-				"var_type"							"FIELD_FLOAT"
-				"bonus_status_resisatnce_active"	"3.0"
+				"var_type"							"FIELD_INTEGER"
+				"bonus_status_resistance_active"	"100"
 			}
 			"08"
 			{
@@ -12152,7 +12152,7 @@
 		"ItemResult"					"item_imba_yasha_and_kaya"
 		"ItemRequirements"
 		{
-			"01"						"item_imba_kaya;item_imba_kaya"
+			"01"						"item_imba_yasha;item_imba_kaya"
 		}
 	}
 

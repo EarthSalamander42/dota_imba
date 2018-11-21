@@ -478,6 +478,9 @@ RESTRICT_FOUNTAIN_UNITS = {
 	"npc_dota_zeus_cloud",
 	"npc_dota_observer_wards",
 	"npc_dota_sentry_wards",
+	"npc_imba_venomancer_plague_ward",
+	"npc_imba_venomancer_scourge_ward",
+	"npc_dota_weaver_swarm",
 }
 
 MORPHLING_RESTRICTED_MODIFIERS = {

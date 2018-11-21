@@ -504,8 +504,9 @@ function modifier_imba_thirst_passive:DeclareFunctions()
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 		MODIFIER_EVENT_ON_TAKEDAMAGE,
-		MODIFIER_PROPERTY_MOVESPEED_MAX
+		MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE_MIN,
 	}
+
 	return funcs
 end
 
@@ -517,7 +518,7 @@ function modifier_imba_thirst_passive:GetModifierMoveSpeedBonus_Percentage(param
 	return self:GetStackCount() * self.movespeed
 end
 
-function modifier_imba_thirst_passive:GetModifierMoveSpeed_Max()
+function modifier_imba_thirst_passive:GetModifierMoveSpeed_AbsoluteMin()
 	return 5000
 end
 

@@ -80,11 +80,11 @@
 
 // Arcane Boots
 "DOTA_Tooltip_Ability_item_imba_arcane_boots"                  "Arcane Boots"
-"DOTA_Tooltip_ability_item_imba_arcane_boots_Description"                   "<h1>Active: Replenish Mana</h1>Replenishes the mana of allies in %replenish_radius% radius by %base_replenish_mana% + %replenish_mana_pct%%% of your own maximum mana."
+"DOTA_Tooltip_ability_item_imba_arcane_boots_Description"		"<h1>Active: Replenish Mana</h1>Replenishes the mana of allies in %replenish_radius% radius by %base_replenish_mana% + %replenish_mana_pct%%% of your own maximum mana."
 "DOTA_Tooltip_ability_item_imba_arcane_boots_Lore"              "Magi equipped with these boots are valued in battle."
 "DOTA_Tooltip_ability_item_imba_arcane_boots_Note0"            "Does not work on Meepo clones."
-"DOTA_Tooltip_ability_item_imba_arcane_boots_bonus_ms"          "+$move_speed"
-"DOTA_Tooltip_ability_item_imba_arcane_boots_bonus_mana"                    "+$mana"
+"DOTA_Tooltip_ability_item_imba_arcane_boots_bonus_ms"          "%+$move_speed"
+"DOTA_Tooltip_ability_item_imba_arcane_boots_bonus_mana"		"+$mana"
 
 // Arcane Rapier
 "DOTA_Tooltip_Ability_item_imba_rapier_magic"                  "Arcane Rapier"
@@ -180,12 +180,12 @@
 "DOTA_Tooltip_modifier_item_imba_blight_stone_debuff_Description"           "Armor reduced by %dMODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS%, vision range reduced by %dMODIFIER_PROPERTY_BONUS_DAY_VISION%."
 
 // Blink Boots
-"DOTA_Tooltip_Ability_item_imba_blink_boots"                    "Blink Boots"
-"DOTA_Tooltip_ability_item_imba_blink_boots_Description"                    "Grants the wearer unbelievable mobility.\n<h1>Active: Blink</h1> Instantly teleport to a target point up to %max_blink_range% units away. If hero-based damage is taken, Blink Boots cannot be used for %blink_damage_cooldown% seconds.\n<h1><font color='#FF7800'>Active: Space suppression</font></h1>can blink up to %max_extra_tooltip% units above the normal maximum range, but doing so will incur an increased cooldown."
-"DOTA_Tooltip_ability_item_imba_blink_boots_Lore"              "Blink, and you'll miss it."
-"DOTA_Tooltip_ability_item_imba_blink_boots_Note0"              "You can modify the color of your blink with <font color='#FF4A4A'>-blink XXX YYY ZZZ</font> in RGB-Code."
-"DOTA_Tooltip_ability_item_imba_blink_boots_max_blink_range"                "RANGE:"
-"DOTA_Tooltip_ability_item_imba_blink_boots_bonus_movement_speed"           "+$move_speed"
+"DOTA_Tooltip_Ability_item_imba_blink_boots"						"Blink Boots"
+"DOTA_Tooltip_ability_item_imba_blink_boots_Description"			"Grants the wearer unbelievable mobility.\n<h1>Active: Blink</h1> Instantly teleport to a target point up to %max_blink_range% units away. If hero-based damage is taken, Blink Boots cannot be used for %blink_damage_cooldown% seconds.\n<h1><font color='#FF7800'>Active: Space suppression</font></h1>can blink up to %max_extra_tooltip% units above the normal maximum range, but doing so will incur an increased cooldown."
+"DOTA_Tooltip_ability_item_imba_blink_boots_Lore"					"Blink, and you'll miss it."
+"DOTA_Tooltip_ability_item_imba_blink_boots_Note0"					"You can modify the color of your blink with <font color='#FF4A4A'>-blink XXX YYY ZZZ</font> in RGB-Code."
+"DOTA_Tooltip_ability_item_imba_blink_boots_max_blink_range"		"RANGE:"
+"DOTA_Tooltip_ability_item_imba_blink_boots_bonus_movement_speed"	"%+$move_speed"
 
 // Blink Dagger
 "DOTA_Tooltip_Ability_item_imba_blink"                          "Blink Dagger"
@@ -492,11 +492,11 @@
 "DOTA_Tooltip_Ability_item_bag_of_gold"                        "Sack of Gold"
 
 // Guardian Greaves
-"DOTA_Tooltip_Ability_item_imba_guardian_greaves"              "Guardian Greaves"
+"DOTA_Tooltip_Ability_item_imba_guardian_greaves"							"Guardian Greaves"
 "DOTA_Tooltip_ability_item_imba_guardian_greaves_Description"               "<h1>Active: Mend</h1> Applies a strong dispel on the caster, then revitalizes allies in %aura_radius% radius, restoring %mend_base_health% health and %mend_base_mana% <font color='#FF7800'>+ %mend_mana_pct%%% of your mana pool in mana, then grants them %mend_regen%%% maximum health regeneration for %mend_duration% seconds.</font>\n<h1>Passive: Guardian Aura</h1> Increases nearby allies' health regeneration and armor. Grants bonus regeneration and armor to allies as their health goes down, up to %aura_max_regen_bonus% health regen and %aura_max_armor_bonus% armor when below %min_health_threshold%%% health.\n<h1><font color='#FF7800'>Passive: Undying Guardian</font></h1> Passively casts Mend if the owner's HP drops below %min_health_threshold%%% and it is off cooldown."
-"DOTA_Tooltip_ability_item_imba_guardian_greaves_Lore"          "One of many holy instruments constructed to honor the Omniscience."
+"DOTA_Tooltip_ability_item_imba_guardian_greaves_Lore"						"One of many holy instruments constructed to honor the Omniscience."
 "DOTA_Tooltip_ability_item_imba_guardian_greaves_Note0"                     "Guardian Aura's health-based bonuses apply only to heroes."
-"DOTA_Tooltip_ability_item_imba_guardian_greaves_bonus_ms"                  "+$move_speed"
+"DOTA_Tooltip_ability_item_imba_guardian_greaves_bonus_ms"                  "%+$move_speed"
 "DOTA_Tooltip_ability_item_imba_guardian_greaves_bonus_mana"                "+$mana"
 "DOTA_Tooltip_ability_item_imba_guardian_greaves_bonus_all_stats"           "+$all"
 "DOTA_Tooltip_ability_item_imba_guardian_greaves_bonus_armor"               "+$armor"
@@ -614,13 +614,13 @@
 "DOTA_Tooltip_modifier_imba_initiate_robe_passive_Description"      "Absorbing incoming damage based on stacks."
 
 // Ironleaf Boots
-"DOTA_Tooltip_Ability_item_imba_ironleaf_boots"              "Ironleaf Boots"
+"DOTA_Tooltip_Ability_item_imba_ironleaf_boots"							"Ironleaf Boots"
 "DOTA_Tooltip_ability_item_imba_ironleaf_boots_Description"               "<h1><font color='#FF7800'>Passive: Meditate</font></h1> Accumulates up to %max_stacks% stacks of Meditate at a rate of one stack per second. Each stack increases the wielder's movement speed by %meditate_movespeed_bonus_pct%%% and its health regen by %meditate_health_regen%. Being attacked by a hero removes %meditate_stacks_loss_hero% Meditate stacks (creeps remove %meditate_stacks_loss_creep%) and puts the boots on cooldown. While the boots are broken, Meditate stacks are not generated.\n<h1><font color='#FF7800'>Passive: Iron Body</font></h1> As long as the wielder has at least one stack of Meditate, Iron Body blocks a certain amount of damage. If the damage is above %iron_body_thrshold%, it is reduced by %iron_body_high_reduction% points of damage. Otherwise, it is reduced by %iron_body_normal_reduction% instead.\n<h1><font color='#FF7800'>Passive: Leafwalk</font></h1> While the boots are not broken, staying completely still for %leafwalk_hold_time% seconds causes the wielder to become invisible and gain the Cloak of the Leaf buff for %leafwalk_duration% seconds. Cloak of the Leaf grants %leafwalk_magic_res%% magic resistance for its duration, and is a separate buff from Leafwalk. If the boots become broken while invisible, the invisiblity is immediately lost."
 "DOTA_Tooltip_Ability_item_imba_ironleaf_boots_Note0"                     "The cooldown of Ironleaf boots scales with cooldown reductions."
 "DOTA_Tooltip_Ability_item_imba_ironleaf_boots_Note1"                     "In order to enter Leafwalk, one must absolutely stay still: attacking and casting count as moving and restarts the timer."
 "DOTA_Tooltip_Ability_item_imba_ironleaf_boots_Note2"                     "Cloak of the Leaf is purgable, while Meditate, Iron Body and Leafwalk are not."
 "DOTA_Tooltip_ability_item_imba_ironleaf_boots_Lore"          "The ironleaf boots grant the one wearing them true peace, allowing it to connect with nature itself."
-"DOTA_Tooltip_ability_item_imba_ironleaf_boots_base_move_speed"           "+$move_speed"
+"DOTA_Tooltip_ability_item_imba_ironleaf_boots_base_move_speed"           "%+$move_speed"
 "DOTA_Tooltip_ability_item_imba_ironleaf_boots_base_health_regen"         "+$hp_regen"
 "DOTA_Tooltip_ability_item_imba_ironleaf_boots_mana_regen"                "+$mana_regen"
 "DOTA_Tooltip_ability_item_imba_ironleaf_boots_attack_speed"              "+$attack"
@@ -724,11 +724,11 @@
 "DOTA_Tooltip_modifier_imba_mask_of_madness_rage_Description"               "Forced to attack your current target, but gaining immense physical prowess in return."
 
 // Mega Treads
-"DOTA_Tooltip_Ability_item_imba_power_treads_2"                "Mega Treads"
+"DOTA_Tooltip_Ability_item_imba_power_treads_2"								"Mega Treads"
 "DOTA_Tooltip_ability_item_imba_power_treads_2_Description"                 "<h1>Active: Switch Attribute</h1> Changes the selected attribute between Strength, Agility and Intelligence.\n<h1><font color='#FF7800'>Passive: Source Boost</font></h1> Grants a specific bonus based on the currently selected attribute: <font color='#cc0000'>Strength</font> grants %str_mode_tenacity%% Tenacity, <font color='#00802b'>Agility</font> Grants %agi_mode_evasion%% evasion, and <font color='#007acc'>Intelligence</font> Grants %int_mode_cast_range% cast range.\n\nFlat movement speed bonuses from multiple pairs of boots do not stack."
-"DOTA_Tooltip_ability_item_imba_power_treads_2_Note0"          "You can have more than one effect applied by getting a second Mega Treads, but not a duplicate of the same effect."
-"DOTA_Tooltip_ability_item_imba_power_treads_2_Lore"            "A pair of magic leather boots whose enchantment is flexible enough to cover any situation."
-"DOTA_Tooltip_ability_item_imba_power_treads_2_bonus_movement_speed"        "+$move_speed"
+"DOTA_Tooltip_ability_item_imba_power_treads_2_Note0"						"You can have more than one effect applied by getting a second Mega Treads, but not a duplicate of the same effect."
+"DOTA_Tooltip_ability_item_imba_power_treads_2_Lore"						"A pair of magic leather boots whose enchantment is flexible enough to cover any situation."
+"DOTA_Tooltip_ability_item_imba_power_treads_2_bonus_movement_speed"        "%+$move_speed"
 "DOTA_Tooltip_ability_item_imba_power_treads_2_bonus_stat"                  "+$selected_attrib"
 "DOTA_Tooltip_Ability_item_imba_power_treads_2_bonus_attackspeed"           "+$attack"
 

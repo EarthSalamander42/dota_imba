@@ -81,10 +81,17 @@ function item_imba_arcane_nexus:GetIntrinsicModifierName()
 	return "modifier_item_imba_arcane_nexus_passive"
 end
 
-function item_imba_arcane_nexus:GetAbilityTextureName()
-	return "custom/imba_arcane_nexus"
+LinkLuaModifier( "modifier_item_imba_kaya_active", "components/items/item_swords.lua", LUA_MODIFIER_MOTION_NONE )			-- Owner's bonus attributes, stackable
+
+function item_imba_arcane_nexus:OnSpellStart()
+	if IsServer() then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_item_imba_kaya_active", {duration=self:GetSpecialValueFor("active_duration")})
+		self:GetCaster():EmitSound("DOTA_Item.Pipe.Activate")
+	end
 end
+
 -------------------------------------------
+
 modifier_item_imba_arcane_nexus_passive = modifier_item_imba_arcane_nexus_passive or class({})
 function modifier_item_imba_arcane_nexus_passive:IsDebuff() return false end
 function modifier_item_imba_arcane_nexus_passive:IsHidden() return true end

@@ -67,6 +67,17 @@ function GameMode:_InitGameMode()
 		end
 	end
 
+	-- team colors are not working in chat, so use team colors instead
+	SetTeamCustomHealthbarColor(DOTA_TEAM_GOODGUYS, 0, 128, 0)
+	SetTeamCustomHealthbarColor(DOTA_TEAM_BADGUYS, 128, 0, 0)
+
+	-- WHY DON'T YOU WORK FOR CHAT PLAYER COLORS, WHAT HAPPENED TO YOU BUDDY
+	for ID = 0, PlayerResource:GetPlayerCount() - 1 do
+		if PlayerResource:IsValidPlayer(ID) then
+			PlayerResource:SetCustomPlayerColor(ID, PLAYER_COLORS[ID][1], PLAYER_COLORS[ID][2], PLAYER_COLORS[ID][3])
+		end
+	end
+
 	-- Event Hooks
 	ListenToGameEvent('dota_player_gained_level', Dynamic_Wrap(self, 'OnPlayerLevelUp'), self)
 	ListenToGameEvent('entity_killed', Dynamic_Wrap(self, '_OnEntityKilled'), self)

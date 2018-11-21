@@ -389,9 +389,6 @@ function HeroSelection:GiveStartingHero(playerId, heroName, dev)
 	-- add modifier for custom mechanics handling
 	hero:AddNewModifier(hero, nil, "modifier_custom_mechanics", {})
 
-	-- set player colors (literally the same code i use in XHS, but it doesn't work in imba? in chat)
-	PlayerResource:SetCustomPlayerColor(playerId, PLAYER_COLORS[playerId][1], PLAYER_COLORS[playerId][2], PLAYER_COLORS[playerId][3])
-
 	-- Initialize innate hero abilities
 	hero:InitializeInnateAbilities()
 

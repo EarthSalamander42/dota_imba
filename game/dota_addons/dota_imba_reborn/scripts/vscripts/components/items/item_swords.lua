@@ -584,9 +584,15 @@ function modifier_item_imba_kaya_and_sange:DeclareFunctions()
 		MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE,
 		MODIFIER_PROPERTY_MANACOST_PERCENTAGE,
 		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING,
+		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
 	}
 
 	return funcs
+end
+
+function modifier_item_imba_kaya_and_sange:GetModifierSpellAmplify_Percentage()
+	if not self:GetAbility() then return end
+	return self:GetAbility():GetSpecialValueFor("spell_amp")
 end
 
 function modifier_item_imba_kaya_and_sange:GetModifierBonusStats_Intellect()
@@ -697,12 +703,27 @@ function modifier_item_imba_yasha_and_kaya:DeclareFunctions()
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE_UNIQUE,
 		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
+		MODIFIER_PROPERTY_MANACOST_PERCENTAGE,
+		MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE,
 		MODIFIER_PROPERTY_EVASION_CONSTANT,
+		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
 	}
+
 	return funcs
 end
 
+function modifier_item_imba_yasha_and_kaya:GetModifierSpellAmplify_Percentage()
+	if not self:GetAbility() then return end
+	return self:GetAbility():GetSpecialValueFor("spell_amp")
+end
+
 function modifier_item_imba_yasha_and_kaya:GetModifierPercentageCooldown()
+	if not self:GetAbility() then return end
+	return self:GetAbility():GetSpecialValueFor("bonus_cdr")
+end
+
+function modifier_item_imba_yasha_and_kaya:GetModifierPercentageManacost()
+	if not self:GetAbility() then return end
 	return self:GetAbility():GetSpecialValueFor("bonus_cdr")
 end
 
