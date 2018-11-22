@@ -688,28 +688,6 @@
 "DOTA_Tooltip_ability_item_imba_magic_wand_bonus_all_stats"                 "+$all"
 "DOTA_Tooltip_ability_item_imba_magic_wand_restore_per_charge"              "RESTORE PER CHARGE:"
 
-// Manta Style
-"DOTA_Tooltip_ability_item_imba_manta"                    "Manta Style"
-"DOTA_Tooltip_ability_item_imba_manta_Description"              "<h1>Active: Mirror Image</h1>Creates %images_count% images of your hero that last %tooltip_illusion_duration% seconds. <br><br>Melee images deal %tooltip_damage_outgoing_melee%%% damage and take %tooltip_damage_incoming_melee_total_pct%%% damage, while Ranged images deal %tooltip_damage_outgoing_ranged%%% and take %tooltip_damage_incoming_ranged_total_pct%%% damage. <br><br>Cooldown increased by %tooltip_ranged_cooldown_increase% seconds on ranged heroes.<br><br>Dispel Type: <span class=\'GameplayValues GameplayVariable\'>Basic Dispel</span>\n<h1>Passive: Battle Rhythm </h1> Each attack grants you %as_stack% attack speed. Stacks up to %max_stacks% times."
-"DOTA_Tooltip_ability_item_imba_manta_Lore"                 "An axe made of reflective materials that causes confusion amongst enemy ranks."
-"DOTA_Tooltip_ability_item_imba_manta_Note0"                "Has a 0.1 second cast time during which you are invulnerable."
-"DOTA_Tooltip_ability_item_imba_manta_Note1"                "Many effects are removed upon using Manta."
-"DOTA_Tooltip_ability_item_imba_manta_Note2"                "Yasha based movement speed bonuses from multiple items do not stack."
-"DOTA_Tooltip_ability_item_imba_manta_bonus_agility"            "+$agi"
-"DOTA_Tooltip_ability_item_imba_manta_bonus_strength"           "+$str"
-"DOTA_Tooltip_ability_item_imba_manta_bonus_intellect"            "+$int"
-"DOTA_Tooltip_ability_item_imba_manta_bonus_attack_speed"         "+$attack"
-"DOTA_Tooltip_ability_item_imba_manta_bonus_movement_speed"         "%+$move_speed"
-//    "DOTA_Tooltip_ability_item_manta_images_count"                "NUMBER OF IMAGES:"
-//    "DOTA_Tooltip_ability_item_manta_tooltip_damage_incoming_melee_total_pct" "%MELEE IMAGE DAMAGE TAKEN:"
-//    "DOTA_Tooltip_ability_item_manta_tooltip_damage_outgoing_melee"       "%MELEE IMAGE DAMAGE:"
-//    "DOTA_Tooltip_ability_item_manta_tooltip_damage_incoming_ranged_total_pct"  "%RANGED IMAGE DAMAGE TAKEN:"
-//    "DOTA_Tooltip_ability_item_manta_tooltip_damage_outgoing_ranged"      "%RANGED IMAGE DAMAGE:"
-//    "DOTA_Tooltip_ability_item_manta_tooltip_illusion_duration"         "IMAGE DURATION:"
-
-"DOTA_Tooltip_modifier_item_imba_manta_stacks"                  "Battle Rhythm"
-"DOTA_Tooltip_modifier_item_imba_manta_stacks_Description"                  "Gaining %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT% bonus attack speed."
-
 // Mask of Madness
 "DOTA_Tooltip_Ability_item_imba_mask_of_madness"                "Mask of Madness"
 "DOTA_Tooltip_Ability_item_imba_mask_of_madness_Description"                "<h1>Active: Berserk</h1> Silences you and reduces your armor by %berserk_armor_reduction%, but grants %berserk_ms_bonus_pct%%% move and %berserk_attack_speed% attack speed. Lasts for %berserk_duration% seconds.\n<h1>Passive: Lifesteal</h1> heals the attacker for a percentage of attack damage dealt."

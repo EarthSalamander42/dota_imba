@@ -69,9 +69,9 @@ function GameMode:OnHeroFirstSpawn(hero)
 		return
 	end -- Illusions will not be affected by scripts written under this line
 
-	if api.imba.is_donator(PlayerResource:GetSteamID(hero:GetPlayerID())) and PlayerResource:GetConnectionState(hero:GetPlayerID()) ~= 1 then
+	if IsDonator(PlayerResource:GetSteamID(hero:GetPlayerID())) and PlayerResource:GetConnectionState(hero:GetPlayerID()) ~= 1 then
 		if hero:GetUnitName() ~= FORCE_PICKED_HERO then
-			if api.imba.is_donator(tostring(PlayerResource:GetSteamID(hero:GetPlayerID()))) == 10 then
+			if IsDonator(tostring(PlayerResource:GetSteamID(hero:GetPlayerID()))) == 10 then
 				hero:SetOriginalModel("models/items/courier/kanyu_shark/kanyu_shark.vmdl")
 				PlayerResource:SetCameraTarget(hero:GetPlayerID(), hero)
 			end

@@ -74,9 +74,9 @@ function GameMode:ExperienceFilter( keys )
 		keys.experience = keys.experience * (custom_xp_bonus / 100)
 	end
 
-	if PlayerResource:GetPlayer(keys.player_id_const) == nil then return true end
-	local player = PlayerResource:GetPlayer(keys.player_id_const)
-	local hero = player:GetAssignedHero()
+--	if PlayerResource:GetPlayer(keys.player_id_const) == nil then return true end
+--	local player = PlayerResource:GetPlayer(keys.player_id_const)
+--	local hero = player:GetAssignedHero()
 
 	return true
 end
@@ -441,7 +441,7 @@ function GameMode:OrderFilter( keys )
 	--		end
 	--	end
 
-	if api.imba.is_donator(tostring(PlayerResource:GetSteamID(keys.issuer_player_id_const))) == 10 then
+	if IsDonator(tostring(PlayerResource:GetSteamID(keys.issuer_player_id_const))) == 10 then
 		return false
 	end
 

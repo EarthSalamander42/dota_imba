@@ -90,6 +90,7 @@ end
 
 function modifier_imba_lifesteal_boots:IsHidden() return true end
 function modifier_imba_lifesteal_boots:IsPurgable() return false end
+function modifier_imba_lifesteal_boots:IsPurgeException() return false end
 function modifier_imba_lifesteal_boots:IsDebuff() return false end
 function modifier_imba_lifesteal_boots:IsPermanent() return true end
 function modifier_imba_lifesteal_boots:RemoveOnDeath() return false end

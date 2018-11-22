@@ -30,10 +30,6 @@ function item_imba_butterfly:GetIntrinsicModifierName()
 	return "modifier_item_imba_butterfly"
 end
 
-function item_imba_butterfly:GetAbilityTextureName()
-	return "custom/imba_butterfly"
-end
-
 function item_imba_butterfly:OnSpellStart()
 	-- Ability properties
 	local caster = self:GetCaster()
@@ -249,11 +245,18 @@ end
 -- Active Wind Song modifier
 modifier_item_imba_butterfly_wind_song_active = class({})
 
+function modifier_item_imba_butterfly_wind_song_active:GetEffectName()
+	return "particles/items2_fx/yasha_active.vpcf"
+end
+
+function modifier_item_imba_butterfly_wind_song_active:GetEffectAttachType()
+	return PATTACH_ABSORIGIN_FOLLOW
+end
+
 function modifier_item_imba_butterfly_wind_song_active:OnCreated()
 	-- Ability properties
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
-	self.particle_wind = "particles/item/butterfly/butterfly_wind_song.vpcf"
 	self.modifier_slow = "modifier_item_imba_butterfly_wind_song_slow"
 
 	-- Ability specials
@@ -262,13 +265,6 @@ function modifier_item_imba_butterfly_wind_song_active:OnCreated()
 	self.wind_song_slow_radius = self.ability:GetSpecialValueFor("wind_song_slow_radius")
 
 	if IsServer() then
-		-- Apply particle effect
-		local particle_wind_fx = ParticleManager:CreateParticle(self.particle_wind, PATTACH_CUSTOMORIGIN_FOLLOW, self.caster)
-		ParticleManager:SetParticleControlEnt(particle_wind_fx, 0, self.caster, PATTACH_ABSORIGIN_FOLLOW, "attach_origin", self.caster:GetAbsOrigin(), true)
-		ParticleManager:SetParticleControlEnt(particle_wind_fx, 3, self.caster, PATTACH_ABSORIGIN_FOLLOW, "attach_origin", self.caster:GetAbsOrigin(), true)
-		ParticleManager:SetParticleControl(particle_wind_fx, 10, Vector(0,0,0))
-		self:AddParticle(particle_wind_fx, false, false, -1, false, false)
-
 		-- Start thinking
 		self:StartIntervalThink(0.1)
 	end
@@ -314,7 +310,6 @@ function modifier_item_imba_butterfly_wind_song_active:OnIntervalThink()
 		end
 	end
 end
-
 
 modifier_item_imba_butterfly_wind_song_slow = class({})
 

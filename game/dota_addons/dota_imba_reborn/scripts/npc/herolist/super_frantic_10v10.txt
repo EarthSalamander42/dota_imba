@@ -111,7 +111,7 @@
 	"npc_dota_hero_undying" 			"1"
 	"npc_dota_hero_ursa" 				"1"
 	"npc_dota_hero_vengefulspirit" 		"1"
-	"npc_dota_hero_venomancer"  		"1"
+	"npc_dota_hero_venomancer"  		"0" // ultimate lags
 	"npc_dota_hero_viper" 				"1"
 	"npc_dota_hero_visage" 				"1"
 	"npc_dota_hero_warlock" 			"1"

@@ -877,16 +877,16 @@ function imba_obsidian_destroyer_astral_imprisonment:OnSpellStart()
 		-- Restart cooldown
 		self:EndCooldown()
 
-		-- Apply the imprisonment modifier on the target
-		local prison_modifier = target:AddNewModifier(caster, self, modifier_prison, {duration = prison_duration})
-
 		-- Give self a buff that would allow the spell to move the prison
-		local modifier_self_handler = caster:AddNewModifier(caster, self, modifier_self, {duration = prison_modifier:GetRemainingTime()})
+		local modifier_self_handler = caster:AddNewModifier(caster, self, modifier_self, {duration = prison_duration})
 		if modifier_self_handler then
 			modifier_self_handler.target = target
 			modifier_self_handler.target_point = target:GetAbsOrigin()
 		end
-		
+
+		-- Apply the imprisonment modifier on the target
+		target:AddNewModifier(caster, self, modifier_prison, {duration = prison_duration})
+
 		-- If the caster has Essence Aura, roll for a proc
 		if caster:HasModifier(modifier_essence) then
 			modifier_essence_handler = caster:FindModifierByName(modifier_essence)

@@ -61,27 +61,27 @@ function DonatorStatue(ID, statue_unit)
 			local steam_id = tostring(PlayerResource:GetSteamID(hero:GetPlayerID()))
 			local name = PlayerResource:GetPlayerName(ID)
 
-			if api.imba.is_donator(steam_id) == 1 then
+			if IsDonator(steam_id) == 1 then
 				unit:SetCustomHealthLabel(name, 160, 20, 20)
 				pedestal_name = "npc_imba_donator_pedestal_cookies"
-			elseif api.imba.is_donator(steam_id) == 2 then
+			elseif IsDonator(steam_id) == 2 then
 				unit:SetCustomHealthLabel("sutherncuck", 0, 204, 255)
 				pedestal_name = "npc_imba_donator_pedestal_developer_"..team
-			elseif api.imba.is_donator(steam_id) == 3 then
+			elseif IsDonator(steam_id) == 3 then
 				unit:SetCustomHealthLabel(name, 160, 20, 20)
-			elseif api.imba.is_donator(steam_id) == 4 then
+			elseif IsDonator(steam_id) == 4 then
 				unit:SetCustomHealthLabel(name, 240, 50, 50)
 				pedestal_name = "npc_imba_donator_pedestal_ember_"..team
-			elseif api.imba.is_donator(steam_id) == 5 then
+			elseif IsDonator(steam_id) == 5 then
 				unit:SetCustomHealthLabel(name, 218, 165, 32)
 				pedestal_name = "npc_imba_donator_pedestal_golden_"..team
-			elseif api.imba.is_donator(steam_id) == 7 then
+			elseif IsDonator(steam_id) == 7 then
 				unit:SetCustomHealthLabel(name, 47, 91, 151)
 				pedestal_name = "npc_imba_donator_pedestal_salamander_"..team
-			elseif api.imba.is_donator(steam_id) == 8 then
+			elseif IsDonator(steam_id) == 8 then
 				unit:SetCustomHealthLabel(name, 153, 51, 153)
 				pedestal_name = "npc_imba_donator_pedestal_icefrog"
-			elseif api.imba.is_donator(steam_id) then -- 6: donator, 0: lesser donator
+			elseif IsDonator(steam_id) then -- 6: donator, 0: lesser donator
 				unit:SetCustomHealthLabel(name, 45, 200, 45)
 			end
 

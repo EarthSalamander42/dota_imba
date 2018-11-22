@@ -26,6 +26,7 @@ function GameMode:OnGameRulesStateChange(keys)
 		InitializeTeamSelection()
 		GetPlayerInfoIXP() -- Add a class later
 		Imbattlepass:Init() -- Initialize Battle Pass
+		ApiLoad() -- temporary
 
 		-- temporary (from stat-collection)
 		-- Build players array
@@ -263,7 +264,7 @@ function GameMode:OnNPCSpawned(keys)
 
 			return
 		elseif npc:IsRealHero() then
-			if api.imba.is_donator(PlayerResource:GetSteamID(npc:GetPlayerOwnerID())) then
+			if IsDonator(PlayerResource:GetSteamID(npc:GetPlayerOwnerID())) then
 				npc:AddNewModifier(npc, nil, "modifier_imba_donator", {})
 			end
 
@@ -697,7 +698,7 @@ function GameMode:OnThink()
 	end
 
 	for _, hero in pairs(HeroList:GetAllHeroes()) do
-		if api.imba.is_donator(tostring(PlayerResource:GetSteamID(hero:GetPlayerID()))) == 10 then
+		if IsDonator(tostring(PlayerResource:GetSteamID(hero:GetPlayerID()))) == 10 then
 			if not IsNearFountain(hero:GetAbsOrigin(), 1200) then
 				local pos = Vector(-6700, -7165, 1509)
 				if hero:GetTeamNumber() == 3 then

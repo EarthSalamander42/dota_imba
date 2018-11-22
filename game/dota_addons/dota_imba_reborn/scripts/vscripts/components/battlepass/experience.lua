@@ -146,8 +146,8 @@ function GetPlayerInfoIXP() -- yet it has too much useless loops, format later. 
 
 		local color = PLAYER_COLORS[ID]
 
-		if api.imba.is_donator(tostring(PlayerResource:GetSteamID(ID))) ~= 10 then
-			donator_color = DONATOR_COLOR[api.imba.is_donator(tostring(PlayerResource:GetSteamID(ID)))]
+		if IsDonator(tostring(PlayerResource:GetSteamID(ID))) ~= 10 then
+			donator_color = DONATOR_COLOR[IsDonator(tostring(PlayerResource:GetSteamID(ID)))]
 		end
 
 		if donator_color == nil then
@@ -168,7 +168,7 @@ function GetPlayerInfoIXP() -- yet it has too much useless loops, format later. 
 			IMR_10v10_calibrating = api.imba.get_player_info(PlayerResource:GetSteamID(ID)).imr10v10_calibrating,
 			XP_change = 0,
 			IMR_5v5_change = 0,
-			donator_level = api.imba.is_donator(tostring(PlayerResource:GetSteamID(ID))),
+			donator_level = IsDonator(tostring(PlayerResource:GetSteamID(ID))),
 			donator_color = rgbToHex(donator_color),
 		})
 	end

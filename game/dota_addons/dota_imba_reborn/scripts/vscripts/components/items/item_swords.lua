@@ -197,10 +197,19 @@ function modifier_item_imba_heavens_halberd_ally_buff:IsHidden() return false en
 function modifier_item_imba_heavens_halberd_ally_buff:IsDebuff() return false end
 function modifier_item_imba_heavens_halberd_ally_buff:IsPurgable() return true end
 
+function modifier_item_imba_heavens_halberd_ally_buff:GetEffectName()
+	return "particles/items2_fx/sange_active.vpcf"
+end
+
+function modifier_item_imba_heavens_halberd_ally_buff:GetEffectAttachType()
+	return PATTACH_ABSORIGIN_FOLLOW
+end
+
 function modifier_item_imba_heavens_halberd_ally_buff:DeclareFunctions()
 	local funcs = {
 		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING,
 	}
+
 	return funcs
 end
 
@@ -758,7 +767,7 @@ end
 
 if modifier_item_imba_yasha_and_kaya_active == nil then modifier_item_imba_yasha_and_kaya_active = class({}) end
 function modifier_item_imba_yasha_and_kaya_active:IsHidden() return false end
-function modifier_item_imba_yasha_and_kaya_active:IsDebuff() return true end
+function modifier_item_imba_yasha_and_kaya_active:IsDebuff() return false end
 function modifier_item_imba_yasha_and_kaya_active:IsPurgable() return true end
 
 -- Modifier particle

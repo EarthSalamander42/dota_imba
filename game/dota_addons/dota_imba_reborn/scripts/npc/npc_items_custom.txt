@@ -8277,6 +8277,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ItemRecipe"					"1"
 		"ItemResult"					"item_imba_arcane_nexus"
+
 		"ItemRequirements"
 		{
 			"01"						"item_imba_nether_wand;item_imba_kaya"
@@ -8292,9 +8293,15 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2206"
 		"BaseClass"						"item_lua"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 		"AbilityTextureName"			"custom/imba_arcane_nexus"
 		"ScriptFile"					"components/items/item_nether_wand.lua"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"42.0"
+		"AbilityManaCost"				"50"
+		"AbilitySharedCooldown"			"swords"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -8322,6 +8329,16 @@
 			{
 				"var_type"				"FIELD_INTEGER" // also mana cost reduction
 				"bonus_cdr"				"15"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER" // also mana cost reduction
+				"bonus_cdr_active"		"25"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"active_duration"		"5.0"
 			}
 		}
 	}
@@ -9206,7 +9223,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost" 						"1100"
+		"ItemCost" 						"900"
 		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
 		"ItemShopTags"					"damage;hard_to_tag"
 		"ItemQuality"					"common"
@@ -10556,6 +10573,16 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"stack_duration"			"5"
+			}
+			"27"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_evasion_active"		"100"
+			}
+			"28"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"active_duration"			"5"
 			}
 		}
 	}

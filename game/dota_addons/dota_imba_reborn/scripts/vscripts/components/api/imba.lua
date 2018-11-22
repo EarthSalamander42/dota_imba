@@ -1,7 +1,7 @@
 -- Copyright (C) 2018  The Dota IMBA Development Team
 -- Api Interface for Dota IMBA
 
-require('components/api/api')
+require('components/api/api_old')
 require('components/api/json')
 
 api.imba = {

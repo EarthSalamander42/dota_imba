@@ -251,7 +251,7 @@ CUSTOM_GOLD_BONUS[MapOverthrow()] = global_gold
 CUSTOM_GOLD_BONUS[MapDiretide()] = global_gold
 
 -- Global XP earning, values are doubled with Hyper for non-custom maps (right now this is not used anymore, but i'll keep it there just in case)
-local global_xp = 250
+local global_xp = 300
 CUSTOM_XP_BONUS = {} -- 1 = Normal, 2 = Hyper
 CUSTOM_XP_BONUS[Map1v1()] = global_xp
 CUSTOM_XP_BONUS["imba_5v5"] = global_xp

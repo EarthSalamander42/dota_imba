@@ -21,7 +21,7 @@ require('internal/gamemode')
 require('internal/events')
 
 -- add components below the api
-require('components/api/imba')
+require('components/api/api_temporary')
 
 require('components/abandon')
 require('components/battlepass/donator')
@@ -99,8 +99,22 @@ function GameMode:DonatorCompanionSkinJS(event)
 	DonatorCompanionSkin(event.ID, event.unit, event.skin)
 end
 
+function GameMode:SetupAncients()
+	local forts = Entities:FindAllByClassname('npc_dota_fort')
+
+	for _, ancient in pairs(forts) do
+		if Is10v10Map() then
+			ancient:AddAbility("imba_ancient_defense"):SetLevel(2)
+		else
+			ancient:AddAbility("imba_ancient_defense"):SetLevel(1)
+		end
+
+		ancient:AddAbility("imba_tower_regeneration"):SetLevel(4)
+	end
+end
+
 -- Set up fountain regen
-function GameMode:SetUpFountains()
+function GameMode:SetupFountains()
 
 	local fountainEntities = Entities:FindAllByClassname("ent_dota_fountain")
 	for _,fountainEnt in pairs( fountainEntities ) do

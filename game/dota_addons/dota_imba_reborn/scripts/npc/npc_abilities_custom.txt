@@ -300,22 +300,12 @@
 			"03"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"max_stacks"					"5"
+				"max_stacks"					"5 10"
 			}
 			"04"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"max_stacks_10v10"				"10"
-			}
-			"05"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"incoming_damage_tooltip"		"25"
-			}
-			"06"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"incoming_damage_10v10_tooltip"	"50"
+				"incoming_damage_tooltip"		"25 50"
 			}
 		}
 	}

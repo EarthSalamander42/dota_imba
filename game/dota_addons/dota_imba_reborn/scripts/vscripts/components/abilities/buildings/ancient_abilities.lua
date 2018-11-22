@@ -45,10 +45,6 @@ function modifier_imba_ancient_defense:IsStunDebuff() return false end
 
 function modifier_imba_ancient_defense:OnCreated()
 	if IsServer() then
-		self.max_stacks = self:GetAbility():GetSpecialValueFor("max_stacks")
-		if PlayerResource:GetPlayerCount() > 10 then
-			self.max_stacks = self:GetAbility():GetSpecialValueFor("max_stacks_10v10")
-		end
 		self:StartIntervalThink(0.5)
 	end
 end
@@ -57,7 +53,7 @@ function modifier_imba_ancient_defense:OnIntervalThink()
 	if IsServer() then
 		local ancient = self:GetParent()
 		local nearby_enemies = FindUnitsInRadius(ancient:GetTeamNumber(), ancient:GetAbsOrigin(), nil, self:GetAbility():GetSpecialValueFor("aura_radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
-		self:SetStackCount(math.max(self.max_stacks - #nearby_enemies, 0))
+		self:SetStackCount(math.max(self:GetAbility():GetSpecialValueFor("max_stacks") - #nearby_enemies, 0))
 	end
 end
 

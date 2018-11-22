@@ -14,7 +14,8 @@ function GameMode:_InitGameMode()
 	CustomGameEventManager:RegisterListener("change_companion_skin", Dynamic_Wrap(self, "DonatorCompanionSkinJS"))
 	CustomGameEventManager:RegisterListener("send_gg_vote", Dynamic_Wrap(GoodGame, 'Call'))
 
-	self:SetUpFountains()
+	self:SetupAncients()
+	self:SetupFountains()
 
 	-- Setup rules
 	GameRules:SetUseUniversalShopMode( UNIVERSAL_SHOP_MODE )
