@@ -1690,18 +1690,12 @@
 	//=================================================================================================================
 	"ancient_apparition_chilling_touch"
 	{
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityCastRange"				"800"
-		"AbilityCooldown"				"50 40 30 20"
-		"AbilityManaCost"				"100 115 130 145"
-		"MaxLevel"						"4"
-
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"40 80 120 160"
+				"damage"				"50 85 120 155"
 				"LinkedSpecialBonus"	"special_bonus_unique_ancient_apparition_2"
 			}
 			"02"
@@ -1712,27 +1706,12 @@
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"duration"				"0.5"
+				"duration"				"0.8"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"attack_range_bonus"	"60 120 180 240"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Ancient Apparition: bonus Chilling Touch damage
-	//=================================================================================================================
-	"special_bonus_unique_ancient_apparition_2"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"value"					"100"
 			}
 		}
 	}

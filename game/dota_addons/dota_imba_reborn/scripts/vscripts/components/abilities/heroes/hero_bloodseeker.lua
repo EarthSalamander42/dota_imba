@@ -164,8 +164,10 @@ function modifier_imba_bloodrage_blood_frenzy:OnCreated()
 end
 
 function modifier_imba_bloodrage_blood_frenzy:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-		MODIFIER_PROPERTY_MOVESPEED_MAX}
+	local decFuncs = {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		MODIFIER_PROPERTY_MOVESPEED_MAX
+	}
 
 	return decFuncs
 end
@@ -504,7 +506,7 @@ function modifier_imba_thirst_passive:DeclareFunctions()
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 		MODIFIER_EVENT_ON_TAKEDAMAGE,
-		MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE_MIN,
+		MODIFIER_PROPERTY_MOVESPEED_MAX,
 	}
 
 	return funcs
@@ -517,11 +519,11 @@ end
 function modifier_imba_thirst_passive:GetModifierMoveSpeedBonus_Percentage(params)
 	return self:GetStackCount() * self.movespeed
 end
-
-function modifier_imba_thirst_passive:GetModifierMoveSpeed_AbsoluteMin()
+--[[
+function modifier_imba_thirst_passive:GetModifierMoveSpeed_Max()
 	return 5000
 end
-
+--]]
 function modifier_imba_thirst_passive:GetEffectName()
 	return "particles/units/heroes/hero_bloodseeker/bloodseeker_thirst_owner.vpcf"
 end

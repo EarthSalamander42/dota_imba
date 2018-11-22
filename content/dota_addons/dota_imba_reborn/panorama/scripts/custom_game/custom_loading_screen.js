@@ -21,7 +21,7 @@ function info_already_available() {
 }
 
 function fetch() {
-	view.title.text = "Dota IMBA 7.08e - The Grand Magus";
+	view.title.text = "Dota IMBA 7.08f - The Grand Magus";
 	view.text.text = "Dota IMBA 7.09 will be released as soon as possible, including Dota 2 7.20 changes, be patient! We're currently migrating the server, Imba XP will be down for few days. Experience Boosters will be multiplied by 2 for a limited time once the server is working again! (Non donators will get 200% xp boost instead of 100%, Ember donators will get 600% instead of 300%, etc...)";
 	view.link_text.text = "Dota 2 IMBA website is currently unavailable.";
 

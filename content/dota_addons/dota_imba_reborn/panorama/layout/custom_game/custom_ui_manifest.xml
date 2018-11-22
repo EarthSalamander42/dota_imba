@@ -120,12 +120,16 @@
 		GridCore.style.height = "605px";
 		PreMinimapContainer.style.height = "270px";
 
+		HidePickScreen()
+
 		function HidePickScreen() {
-			if (Game.GameStateIsBefore(3))
+			if (!Game.GameStateIs(3)) {
+//				$.Msg("Hide Pick Screen and Repeat!")
 				PreGame.style.opacity = "0";
+				$.Schedule(1.0, HidePickScreen)
+			}
 			else {
-				if (Game.GameStateIsAfter(3))
-					PreGame.style.opacity = "1";
+				PreGame.style.opacity = "1";				
 			}
 		}
 	</script>
