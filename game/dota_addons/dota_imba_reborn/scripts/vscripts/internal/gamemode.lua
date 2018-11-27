@@ -69,8 +69,8 @@ function GameMode:_InitGameMode()
 	end
 
 	-- team colors are not working in chat, so use team colors instead
-	SetTeamCustomHealthbarColor(DOTA_TEAM_GOODGUYS, 0, 128, 0)
-	SetTeamCustomHealthbarColor(DOTA_TEAM_BADGUYS, 128, 0, 0)
+--	SetTeamCustomHealthbarColor(DOTA_TEAM_GOODGUYS, 0, 128, 0)
+--	SetTeamCustomHealthbarColor(DOTA_TEAM_BADGUYS, 128, 0, 0)
 
 	-- WHY DON'T YOU WORK FOR CHAT PLAYER COLORS, WHAT HAPPENED TO YOU BUDDY
 	for ID = 0, PlayerResource:GetPlayerCount() - 1 do
