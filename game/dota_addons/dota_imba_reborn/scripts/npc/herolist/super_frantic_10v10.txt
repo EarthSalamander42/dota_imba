@@ -84,7 +84,7 @@
 	"npc_dota_hero_riki" 				"1"
 	"npc_dota_hero_rubick" 				"1"
 	"npc_dota_hero_sand_king" 			"1"
-	"npc_dota_hero_shadow_demon" 		"1" // illusion unit cap abuse
+	"npc_dota_hero_shadow_demon" 		"1"
 	"npc_dota_hero_shadow_shaman" 		"1"
 	"npc_dota_hero_shredder" 			"1"
 	"npc_dota_hero_silencer" 			"1"
@@ -124,7 +124,7 @@
 
 	// Custom Heroes
 	"npc_dota_hero_hell_empress" 		"1"
-//	"npc_dota_hero_malfurion"			"0"
 	"npc_dota_hero_scaldris"			"1"
 //	"npc_dota_hero_storegga"			"0" // not implemented
+//	"npc_dota_hero_malfurion"			"0" // not implemented
 }

@@ -3427,33 +3427,34 @@
 
 				"OnDeath"
 				{
-					"FireEffect"
-					{
-						"EffectName"        "particles/items_fx/bloodstone_glyph.vpcf"
-						"EffectAttachType"  "start_at_customorigin"
+					// Particles stay forever and cause massive lag (not confirmed)
+//					"FireEffect"
+//					{
+//						"EffectName"        "particles/items_fx/bloodstone_glyph.vpcf"
+//						"EffectAttachType"  "start_at_customorigin"
 
-						"Target"
-						{
-							"Center"		"CASTER"
-							"Teams"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-							"Types"			"DOTA_UNIT_TARGET_HERO"
-							"Flags"			"DOTA_UNIT_TARGET_FLAG_DEAD"
-						}
-					}
+//						"Target"
+//						{
+//							"Center"		"CASTER"
+//							"Teams"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+//							"Types"			"DOTA_UNIT_TARGET_HERO"
+//							"Flags"			"DOTA_UNIT_TARGET_FLAG_DEAD"
+//						}
+//					}
 
-					"FireEffect"
-					{
-						"EffectName"        "particles/items_fx/bloodstone_heal.vpcf"
-						"EffectAttachType"  "follow_origin"
+//					"FireEffect"
+//					{
+//						"EffectName"        "particles/items_fx/bloodstone_heal.vpcf"
+//						"EffectAttachType"  "follow_origin"
 
-						"Target"
-						{
-							"Center"		"CASTER"
-							"Teams"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-							"Radius"		"%effect_radius"
-							"Types"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-						}
-					}
+//						"Target"
+//						{
+//							"Center"		"CASTER"
+//							"Teams"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+//							"Radius"		"%effect_radius"
+//							"Types"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+//						}
+//					}
 
 					"RunScript"
 					{
