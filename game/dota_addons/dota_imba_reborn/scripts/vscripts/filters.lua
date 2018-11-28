@@ -441,7 +441,7 @@ function GameMode:OrderFilter( keys )
 	--		end
 	--	end
 
-	if IsDonator(tostring(PlayerResource:GetSteamID(keys.issuer_player_id_const))) == 10 then
+	if api:IsDonator(keys.issuer_player_id_const) == 10 then
 		return false
 	end
 

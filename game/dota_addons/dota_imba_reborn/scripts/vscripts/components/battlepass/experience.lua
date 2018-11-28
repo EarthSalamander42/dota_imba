@@ -104,14 +104,14 @@ function GetTitleColorIXP(title)
 end
 
 function GetPlayerInfoIXP() -- yet it has too much useless loops, format later. Need to be loaded in game setup
-	if not api.imba.ready then
+--	if not api.imba.ready then
 --		print("IMBA API not ready! Retry...")
-		Timers:CreateTimer(1.0, function()
-			GetPlayerInfoIXP()
-		end)
+--		Timers:CreateTimer(1.0, function()
+--			GetPlayerInfoIXP()
+--		end)
 
-		return
-	end
+--		return
+--	end
 
 	print("IMBA API ready!")
 
@@ -146,8 +146,8 @@ function GetPlayerInfoIXP() -- yet it has too much useless loops, format later. 
 
 		local color = PLAYER_COLORS[ID]
 
-		if IsDonator(tostring(PlayerResource:GetSteamID(ID))) ~= 10 then
-			donator_color = DONATOR_COLOR[IsDonator(tostring(PlayerResource:GetSteamID(ID)))]
+		if api:IsDonator(ID) ~= 10 then
+			donator_color = DONATOR_COLOR[api:IsDonator(ID)]
 		end
 
 		if donator_color == nil then
@@ -168,7 +168,7 @@ function GetPlayerInfoIXP() -- yet it has too much useless loops, format later. 
 			IMR_10v10_calibrating = api.imba.get_player_info(PlayerResource:GetSteamID(ID)).imr10v10_calibrating,
 			XP_change = 0,
 			IMR_5v5_change = 0,
-			donator_level = IsDonator(tostring(PlayerResource:GetSteamID(ID))),
+			donator_level = api:IsDonator(ID),
 			donator_color = rgbToHex(donator_color),
 		})
 	end

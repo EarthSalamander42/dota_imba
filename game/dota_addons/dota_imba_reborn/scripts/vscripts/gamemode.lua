@@ -21,7 +21,7 @@ require('internal/gamemode')
 require('internal/events')
 
 -- add components below the api
-require('components/api/api_temporary')
+require('components/api/imba')
 
 require('components/abandon')
 require('components/battlepass/donator')
@@ -52,6 +52,7 @@ end
 function GameMode:OnFirstPlayerLoaded()
 --	Log:ConfigureFromApi()
 --	api.imba.register()
+	api:RegisterGame()
 
 	if GetMapName() ~= Map1v1() and GetMapName() ~= MapOverthrow() then
 		_G.ROSHAN_SPAWN_LOC = Entities:FindByClassname(nil, "npc_dota_roshan_spawner"):GetAbsOrigin()

@@ -24,9 +24,8 @@ function GameMode:OnGameRulesStateChange(keys)
 		InitItemIds()
 		GameMode:OnSetGameMode() -- setup gamemode rules
 		InitializeTeamSelection()
-		GetPlayerInfoIXP() -- Add a class later
+--		GetPlayerInfoIXP() -- Add a class later
 		Imbattlepass:Init() -- Initialize Battle Pass
-		ApiLoad() -- temporary
 
 		-- temporary (from stat-collection)
 		-- Build players array
@@ -124,15 +123,15 @@ function GameMode:OnGameRulesStateChange(keys)
 			end
 		end
 	elseif newState == DOTA_GAMERULES_STATE_PRE_GAME then
-		api.imba.event(api.events.entered_pre_game)
+--		api.imba.event(api.events.entered_pre_game)
 
-		if api.imba.data.donators then
-			CustomNetTables:SetTableValue("game_options", "donators", api.imba.get_donators())
-		end
+--		if api.imba.data.donators then
+--			CustomNetTables:SetTableValue("game_options", "donators", api.imba.get_donators())
+--		end
 
-		if api.imba.data.developers then
-			CustomNetTables:SetTableValue("game_options", "developers", api.imba.get_developers())
-		end
+--		if api.imba.data.developers then
+--			CustomNetTables:SetTableValue("game_options", "developers", api.imba.get_developers())
+--		end
 
 		if GetMapName() == MapOverthrow() then
 			GoodCamera:AddNewModifier(GoodCamera, nil, "modifier_overthrow_gold_xp_granter", {})
@@ -184,7 +183,7 @@ function GameMode:OnGameRulesStateChange(keys)
 			CustomGameEventManager:Send_ServerToAllClients("override_top_bar_colors", {})
 		end)
 	elseif newState == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
-		api.imba.event(api.events.started_game)
+--		api.imba.event(api.events.started_game)
 
 		-- start rune timers
 		if GetMapName() == Map1v1() then
@@ -224,15 +223,17 @@ function GameMode:OnGameRulesStateChange(keys)
 				players.id = i
 			end
 
-			CustomGameEventManager:Send_ServerToAllClients("end_game", {
-				players = players,
-				info = {
-					winner = GAME_WINNER_TEAM,
-					id = 0,
-					radiant_score = GetTeamHeroKills(2),
-					dire_score = GetTeamHeroKills(3),
-				},
-			})
+			api:CompleteGame()
+
+--			CustomGameEventManager:Send_ServerToAllClients("end_game", {
+--				players = players,
+--				info = {
+--					winner = GAME_WINNER_TEAM,
+--					id = 0,
+--					radiant_score = GetTeamHeroKills(2),
+--					dire_score = GetTeamHeroKills(3),
+--				},
+--			})
 --		end)
 	end
 end
@@ -249,10 +250,10 @@ function GameMode:OnNPCSpawned(keys)
 			player = PlayerResource:GetSteamID(npc:GetPlayerID())
 		end
 
-		api.imba.event(api.events.unit_spawned, {
-			tostring(npc:GetUnitName()),
-			tostring(player)
-		})
+--		api.imba.event(api.events.unit_spawned, {
+--			tostring(npc:GetUnitName()),
+--			tostring(player)
+--		})
 
 		if npc:IsCourier() then
 			if npc.first_spawn == true then
@@ -264,7 +265,7 @@ function GameMode:OnNPCSpawned(keys)
 
 			return
 		elseif npc:IsRealHero() then
-			if IsDonator(PlayerResource:GetSteamID(npc:GetPlayerOwnerID())) then
+			if api:IsDonator(npc:GetPlayerOwnerID()) then
 				npc:AddNewModifier(npc, nil, "modifier_imba_donator", {})
 			end
 
@@ -333,7 +334,7 @@ function GameMode:OnDisconnect(keys)
 
 		-- Start tracking
 --		print("started keeping track of player "..player_id.."'s connection state")
-		api.imba.event(api.events.player_disconnected, { tostring(PlayerResource:GetSteamID(player_id)) })
+--		api.imba.event(api.events.player_disconnected, { tostring(PlayerResource:GetSteamID(player_id)) })
 
 		local disconnect_time = 0
 		Timers:CreateTimer(1, function()
@@ -349,7 +350,7 @@ function GameMode:OnDisconnect(keys)
 				PlayerResource:SetHasAbandonedDueToLongDisconnect(player_id, true)
 				print("player "..player_id.." has abandoned the game.")
 
-				api.imba.event(api.events.player_abandoned, { tostring(PlayerResource:GetSteamID(player_id)) })
+--				api.imba.event(api.events.player_abandoned, { tostring(PlayerResource:GetSteamID(player_id)) })
 
 				-- Start redistributing this player's gold to its allies
 				PlayerResource:StartAbandonGoldRedistribution(player_id)
@@ -412,12 +413,12 @@ function GameMode:OnEntityKilled( keys )
 				end
 			end
 
-			api.imba.event(api.events.unit_killed, {
-				tostring(killerUnitName),
-				tostring(killerPlayer),
-				tostring(killedUnitName),
-				tostring(killedPlayer)
-			})
+--			api.imba.event(api.events.unit_killed, {
+--				tostring(killerUnitName),
+--				tostring(killerPlayer),
+--				tostring(killedUnitName),
+--				tostring(killedPlayer)
+--			})
 		end
 
 		-------------------------------------------------------------------------------------------------
@@ -602,13 +603,13 @@ function GameMode:OnPlayerLearnedAbility(keys)
 		hero.savage_roar = true
 	end
 
-	if hero then
-		api.imba.event(api.events.ability_learned, {
-			tostring(abilityname),
-			tostring(hero:GetUnitName()),
-			tostring(PlayerResource:GetSteamID(player:GetPlayerID()))
-		})
-	end
+--	if hero then
+--		api.imba.event(api.events.ability_learned, {
+--			tostring(abilityname),
+--			tostring(hero:GetUnitName()),
+--			tostring(PlayerResource:GetSteamID(player:GetPlayerID()))
+--		})
+--	end
 end
 --[[
 function GameMode:PlayerConnect(keys)
@@ -635,11 +636,11 @@ function GameMode:OnPlayerChat(keys)
 	local text = keys.text
 
 	local steamid = tostring(PlayerResource:GetSteamID(keys.playerid))
-	local _text = tostring(text)
-	api.imba.event(api.events.chat, {
-		steamid,
-		_text
-	})
+--	local _text = tostring(text)
+--	api.imba.event(api.events.chat, {
+--		steamid,
+--		_text
+--	})
 
 	-- This Handler is only for commands, ends the function if first character is not "-"
 	if not (string.byte(text) == 45) then
@@ -698,7 +699,7 @@ function GameMode:OnThink()
 	end
 
 	for _, hero in pairs(HeroList:GetAllHeroes()) do
-		if IsDonator(tostring(PlayerResource:GetSteamID(hero:GetPlayerID()))) == 10 then
+		if api:IsDonator(hero:GetPlayerID()) == 10 then
 			if not IsNearFountain(hero:GetAbsOrigin(), 1200) then
 				local pos = Vector(-6700, -7165, 1509)
 				if hero:GetTeamNumber() == 3 then
