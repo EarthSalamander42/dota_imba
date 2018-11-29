@@ -90,23 +90,32 @@ function _ScoreboardUpdater_UpdatePlayerPanelXP(playerId, playerPanel, ImbaXP_Pa
 	var steamid = Game.GetPlayerInfo(playerId).player_steamid;
 
 	// load player data from api
-	LoadPlayerInfo(function (data) {
-		var thisPlayerInfo = null;
-		playerInfo.forEach(function (i) {
-			if (i.username == steamid)
-				thisPlayerInfo = i;
-		});
+//	LoadPlayerInfo(function (data) {
+//		var thisPlayerInfo = null;
+//		playerInfo.forEach(function (i) {
+//			if (i.steamid == steamid)
+//				thisPlayerInfo = i;
+//		});
 
-		if (thisPlayerInfo == null) // wtf
-			return;
-		
-		_ScoreboardUpdater_SetTextSafe(playerPanel, ids.xpRank, thisPlayerInfo.xp_rank_title);
-		_ScoreboardUpdater_SetTextSafe(playerPanel, ids.xp, thisPlayerInfo.xp_in_current_level + "/" + thisPlayerInfo.total_xp_for_current_level);
-		_ScoreboardUpdater_SetTextSafe(playerPanel, ids.level, thisPlayerInfo.xp_level);
-		_ScoreboardUpdater_SetValueSafe(playerPanel, ids.progress_bar, thisPlayerInfo.xp_in_current_level / thisPlayerInfo.total_xp_for_current_level);
-		playerPanel.FindChildTraverse(ids.xpRank).style.color = "#" + thisPlayerInfo.xp_rank_color;
+//		if (thisPlayerInfo == null) // wtf
+//			return;
 
-	});
+//		_ScoreboardUpdater_SetTextSafe(playerPanel, ids.xpRank, thisPlayerInfo.xp_rank_title);
+//		_ScoreboardUpdater_SetTextSafe(playerPanel, ids.xp, thisPlayerInfo.xp_in_current_level + "/" + thisPlayerInfo.total_xp_for_current_level);
+//		_ScoreboardUpdater_SetTextSafe(playerPanel, ids.level, thisPlayerInfo.xp_level);
+//		_ScoreboardUpdater_SetValueSafe(playerPanel, ids.progress_bar, thisPlayerInfo.xp_in_current_level / thisPlayerInfo.total_xp_for_current_level);
+//		playerPanel.FindChildTraverse(ids.xpRank).style.color = "#" + thisPlayerInfo.xp_rank_color;
+
+//	});
+
+	// xp shown fix (temporary?)
+	var player_info = CustomNetTables.GetTableValue("player_table", playerId)
+	_ScoreboardUpdater_SetTextSafe(playerPanel, ids.xpRank, player_info.title);
+	_ScoreboardUpdater_SetTextSafe(playerPanel, ids.xp, player_info.XP + "/" + player_info.MaxXP);
+	_ScoreboardUpdater_SetTextSafe(playerPanel, ids.level, player_info.Lvl);
+	_ScoreboardUpdater_SetValueSafe(playerPanel, ids.progress_bar, player_info.XP / player_info.MaxXP);
+	playerPanel.FindChildTraverse(ids.xpRank).style.color = player_info.title_color;
+
 }
 // =============================================================================
 // =============================================================================

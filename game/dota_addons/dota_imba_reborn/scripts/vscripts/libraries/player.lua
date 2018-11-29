@@ -70,9 +70,9 @@ function CDOTA_BaseNPC:CreateIllusion(duration, inc, out, pos, mod, ab)
 end
 
 function CDOTA_BaseNPC:SetupHealthBarLabel()
-	print("Donator level:", api:IsDonator(self:GetPlayerOwnerID()))
+	print("Donator level:", api:GetDonatorStatus(self:GetPlayerOwnerID()))
 	if api:IsDonator(self:GetPlayerOwnerID()) ~= false then
-		local donator_level = api:IsDonator(self:GetPlayerOwnerID())
+		local donator_level = api:GetDonatorStatus(self:GetPlayerOwnerID())
 		if donator_level and donator_level > 0 then
 			self:SetCustomHealthLabel("#imba_donator_label_" .. donator_level, DONATOR_COLOR[donator_level][1], DONATOR_COLOR[donator_level][2], DONATOR_COLOR[donator_level][3])
 		end

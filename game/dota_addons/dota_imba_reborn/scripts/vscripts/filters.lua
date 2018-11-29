@@ -441,7 +441,7 @@ function GameMode:OrderFilter( keys )
 	--		end
 	--	end
 
-	if api:IsDonator(keys.issuer_player_id_const) == 10 then
+	if api:GetDonatorStatus(keys.issuer_player_id_const) == 10 then
 		return false
 	end
 

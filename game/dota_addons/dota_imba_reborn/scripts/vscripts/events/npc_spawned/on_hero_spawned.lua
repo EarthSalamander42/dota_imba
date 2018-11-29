@@ -71,7 +71,7 @@ function GameMode:OnHeroFirstSpawn(hero)
 
 	if api:IsDonator(hero:GetPlayerID()) and PlayerResource:GetConnectionState(hero:GetPlayerID()) ~= 1 then
 		if hero:GetUnitName() ~= FORCE_PICKED_HERO then
-			if api:IsDonator(hero:GetPlayerID()) == 10 then
+			if api:GetDonatorStatus(hero:GetPlayerID()) == 10 then
 				hero:SetOriginalModel("models/items/courier/kanyu_shark/kanyu_shark.vmdl")
 				PlayerResource:SetCameraTarget(hero:GetPlayerID(), hero)
 			end
@@ -103,12 +103,12 @@ function GameMode:OnHeroFirstSpawn(hero)
 	else
 		hero.picked = true
 
-		-- fix for custom boots not copied in inventory
-		if hero:GetUnitName() == "npc_dota_hero_meepo" then
-			local caster = hero
-			if hero:IsClone() then caster = hero:GetCloneSource() end
-			hero:AddNewModifier(caster, nil, "modifier_meepo_divided_we_stand_lua", {})
-		end
+		-- fix for custom boots not copied in inventory (not working if another item than the boots are in inventory)
+--		if hero:GetUnitName() == "npc_dota_hero_meepo" then
+--			local caster = hero
+--			if hero:IsClone() then caster = hero:GetCloneSource() end
+--			hero:AddNewModifier(caster, nil, "modifier_meepo_divided_we_stand_lua", {})
+--		end
 
 		if hero:IsClone() then
 			hero:SetRespawnsDisabled(true)

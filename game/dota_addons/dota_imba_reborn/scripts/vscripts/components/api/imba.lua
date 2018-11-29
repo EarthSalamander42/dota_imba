@@ -2,46 +2,45 @@
 -- Api Interface for Dota IMBA
 
 api = class({});
- 
+
 local baseUrl = "http://api.dota2imba.org/imba/"
 local timeout = 5000
- 
+
 function api:GetUrl(endpoint)
 	return baseUrl .. endpoint
 end
- 
+
 function api:Request(endpoint, okCallback, failCallback, method, payload)
- 
 	if okCallback == nil then
 		okCallback = function()
 		end
 	end
- 
+
 	if failCallback == nil then
 		failCallback = function()
 		end
 	end
- 
+
 	if method == nil then
 		method = "GET"
 	end
- 
+
 	local request = CreateHTTPRequestScriptVM(method, self:GetUrl(endpoint))
 	request:SetHTTPRequestAbsoluteTimeoutMS(timeout)
 	request:SetHTTPRequestHeaderValue("X-Dota-Server-Key", GetDedicatedServerKey("2"))
- 
+
 	-- encode payload
 	if payload ~= nil then
 		local encoded = json.encode(payload)
 		request:SetHTTPRequestRawPostBody("application/json", encoded)
 	end
- 
+
 	print("Performing request to " .. endpoint)
- 
+
 	request:Send(function(result)
- 
+
 		local code = result.StatusCode;
- 
+
 		local fail = function(message)
 			if (code == nil) then
 				code = 0
@@ -49,7 +48,7 @@ function api:Request(endpoint, okCallback, failCallback, method, payload)
 			print("Request to " .. endpoint .. " failed with message " .. message .. " (" .. tostring(code) .. ")")
 			failCallback();
 		end
- 
+
 		if code == 0 then
 			return fail("Request timeout")
 		elseif code >= 500 then
@@ -101,39 +100,59 @@ end
 
 function api:GetDonatorStatus(player_id)
 	if not PlayerResource:IsValidPlayerID(player_id) then
-		print("ID not valid!")
+		print("api:GetDonatorStatus: Player ID not valid!")
 		return 0
 	end
 
-	local steamid = PlayerResource:GetSteamID(player_id);
+	local steamid = tostring(PlayerResource:GetSteamID(player_id));
 
 	-- if the game isnt registered yet, we have no way to know if the player is a donator
 	if self.players == nil then
-		print("api players not valid!")
 		return 0
 	end
 
 	if self.players[steamid] ~= nil then
 		return self.players[steamid].status
 	else
-		print("api players steamid not valid!")
+--		print("api:GetDonatorStatus: api players steamid not valid!")
 		return 0
 	end
 end
- 
+
+function api:GetPlayerXP(player_id)
+	if not PlayerResource:IsValidPlayerID(player_id) then
+		print("api:GetPlayerXP: Player ID not valid!")
+		return 0
+	end
+
+	local steamid = tostring(PlayerResource:GetSteamID(player_id));
+
+	-- if the game isnt registered yet, we have no way to know player xp
+	if self.players == nil then
+		print("api:GetPlayerXP() self.players == nil")
+		return 0
+	end
+
+	if self.players[steamid] ~= nil then
+		return self.players[steamid].xp
+	else
+		print("api:GetPlayerXP: api players steamid not valid!")
+		return 0
+	end
+end
+
 function api:IsCheatGame()
 	-- TODO: cookies implement this
 	return false
 end
 
 function api:GetWinnerTeam()
-	-- TODO: cookies implement this
-	return 0
+	return GAME_WINNER_TEAM
 end
 
 function api:GetAllPlayerSteamIds()
 	local players = {}
-	for id = 0, DOTA_MAX_TEAM_PLAYERS do
+	for id = 0, PlayerResource:GetPlayerCount() - 1 do
 		if PlayerResource:IsValidPlayerID(id) then
 			table.insert(players, tostring(PlayerResource:GetSteamID(id)))
 		end
@@ -141,23 +160,30 @@ function api:GetAllPlayerSteamIds()
  
 	return players
 end
- 
+
+function api:GetGameID()
+	if IsInToolsMode() then
+		return "5786014685" + RandomInt(1, 100000) -- random to make it work
+	end
+
+	return tonumber(tostring(GameRules:GetMatchID()))
+end
+
 function api:RegisterGame()
 	self:Request("game-register", function(data)
 		self.game_id = data.game_id
 		self.players = data.players
 	end, nil, "POST", {
 		map = GetMapName(),
-		match_id = tonumber(tostring(GameRules:GetMatchID())),
+		match_id = self:GetGameID(),
 		players = self:GetAllPlayerSteamIds(),
 		cheat_mode = self:IsCheatGame()
 	});
 end
- 
+
 function api:CompleteGame(successCallback, failCallback)
- 
 	local players = {}
- 
+
 	for id = 0, DOTA_MAX_TEAM_PLAYERS do
 		if PlayerResource:IsValidPlayerID(id) then
  
@@ -169,7 +195,7 @@ function api:CompleteGame(successCallback, failCallback)
 					table.insert(items, tostring(item:GetAbilityName()))
 				end
 			end
- 
+
 			local player = {
 				kills = tonumber(PlayerResource:GetKills(id)),
 				deaths = tonumber(PlayerResource:GetDeaths(id)),
@@ -178,22 +204,22 @@ function api:CompleteGame(successCallback, failCallback)
 				team = tonumber(PlayerResource:GetTeam(id)),
 				items = items
 			}
- 
+
 			local hero = PlayerResource:GetSelectedHeroEntity(id)
 			if hero ~= nil then
 				player.hero = hero:GetUnitName()
 			end
- 
+
 			local steamid = PlayerResource:GetSteamID(id)
- 
+
 			if steamid == 0 then
 				steamid = id
 			end
- 
+
 			players[steamid] = player
 		end
 	end
- 
+
 	self:Request("game-complete", function(data)
 		-- this code is executed when a game is completed
 		successCallback(data);

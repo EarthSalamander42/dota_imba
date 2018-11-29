@@ -5,7 +5,7 @@ function modifier_imba_donator:IsPurgable() return false end
 
 function modifier_imba_donator:OnCreated()
 	if IsServer() then
-		self:SetStackCount(api:IsDonator(self:GetParent():GetPlayerID()))
+		self:SetStackCount(api:GetDonatorStatus(self:GetParent():GetPlayerID()))
 		self:StartIntervalThink(0.2)
 		self.current_effect_name = ""
 		self.effect_name = ""

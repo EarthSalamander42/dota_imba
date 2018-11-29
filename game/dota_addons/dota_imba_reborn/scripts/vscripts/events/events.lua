@@ -24,7 +24,7 @@ function GameMode:OnGameRulesStateChange(keys)
 		InitItemIds()
 		GameMode:OnSetGameMode() -- setup gamemode rules
 		InitializeTeamSelection()
---		GetPlayerInfoIXP() -- Add a class later
+		GetPlayerInfoIXP() -- Add a class later
 		Imbattlepass:Init() -- Initialize Battle Pass
 
 		-- temporary (from stat-collection)
@@ -699,7 +699,7 @@ function GameMode:OnThink()
 	end
 
 	for _, hero in pairs(HeroList:GetAllHeroes()) do
-		if api:IsDonator(hero:GetPlayerID()) == 10 then
+		if api:GetDonatorStatus(hero:GetPlayerID()) == 10 then
 			if not IsNearFountain(hero:GetAbsOrigin(), 1200) then
 				local pos = Vector(-6700, -7165, 1509)
 				if hero:GetTeamNumber() == 3 then

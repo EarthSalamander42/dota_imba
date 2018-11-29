@@ -104,22 +104,24 @@ function GetTitleColorIXP(title)
 end
 
 function GetPlayerInfoIXP() -- yet it has too much useless loops, format later. Need to be loaded in game setup
---	if not api.imba.ready then
---		print("IMBA API not ready! Retry...")
---		Timers:CreateTimer(1.0, function()
---			GetPlayerInfoIXP()
---		end)
+	if not api.players then
+		print("IMBA API not ready! Retry...")
+		Timers:CreateTimer(1.0, function()
+			GetPlayerInfoIXP()
+		end)
 
---		return
---	end
+		return
+	end
 
 	print("IMBA API ready!")
 
 	local current_xp_in_level = {}
 
 	for ID = 0, PlayerResource:GetPlayerCount() -1 do
-		local global_xp = api.imba.get_player_info(PlayerResource:GetSteamID(ID)).xp
+		local global_xp = tonumber(api:GetPlayerXP(ID))
+--		print("Player "..ID.." XP: "..global_xp)
 		local level = GetXPLevelByXp(global_xp)
+		print("Battlepass for ID "..ID..": "..level)
 		local previous_xp = XP_level_table[level - 1]
 		local current_xp_in_level
 		local max_xp
@@ -142,12 +144,10 @@ function GetPlayerInfoIXP() -- yet it has too much useless loops, format later. 
 			end
 		end
 
-		print("Battlepass for ID "..ID..": "..level)
-
 		local color = PLAYER_COLORS[ID]
 
 		if api:IsDonator(ID) ~= 10 then
-			donator_color = DONATOR_COLOR[api:IsDonator(ID)]
+			donator_color = DONATOR_COLOR[api:GetDonatorStatus(ID)]
 		end
 
 		if donator_color == nil then
@@ -162,13 +162,13 @@ function GetPlayerInfoIXP() -- yet it has too much useless loops, format later. 
 			ply_color = rgbToHex(color),
 			title = GetTitleIXP(level),
 			title_color = rgbToHex(GetTitleColorIXP(GetTitleIXP(level))),
-			IMR_5v5 = api.imba.get_player_info(PlayerResource:GetSteamID(ID)).imr5v5,
-			IMR_10v10 = api.imba.get_player_info(PlayerResource:GetSteamID(ID)).imr10v10,
-			IMR_5v5_calibrating = api.imba.get_player_info(PlayerResource:GetSteamID(ID)).imr5v5_calibrating,
-			IMR_10v10_calibrating = api.imba.get_player_info(PlayerResource:GetSteamID(ID)).imr10v10_calibrating,
+--			IMR_5v5 = api.imba.get_player_info(PlayerResource:GetSteamID(ID)).imr5v5,
+--			IMR_10v10 = api.imba.get_player_info(PlayerResource:GetSteamID(ID)).imr10v10,
+--			IMR_5v5_calibrating = api.imba.get_player_info(PlayerResource:GetSteamID(ID)).imr5v5_calibrating,
+--			IMR_10v10_calibrating = api.imba.get_player_info(PlayerResource:GetSteamID(ID)).imr10v10_calibrating,
 			XP_change = 0,
 			IMR_5v5_change = 0,
-			donator_level = api:IsDonator(ID),
+			donator_level = api:GetDonatorStatus(ID),
 			donator_color = rgbToHex(donator_color),
 		})
 	end
