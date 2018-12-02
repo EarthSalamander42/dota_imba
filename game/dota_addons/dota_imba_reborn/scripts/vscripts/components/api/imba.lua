@@ -57,15 +57,15 @@ function api:Request(endpoint, okCallback, failCallback, method, payload)
 			return okCallback();
 		else
 			local obj, pos, err = json.decode(result.Body)
- 
+
 			if err then
 				return fail("Json error: " .. tostring(err))
 			end
- 
+
 			if obj == nil then
 				return fail("Unknown Server error")
 			end
- 
+
 			if obj.error == nil then
 				return fail("Invalid response from server")
 			elseif obj.error == true and obj.message ~= nil then
@@ -114,7 +114,7 @@ function api:GetDonatorStatus(player_id)
 	if self.players[steamid] ~= nil then
 		return self.players[steamid].status
 	else
---		print("api:GetDonatorStatus: api players steamid not valid!")
+		--		print("api:GetDonatorStatus: api players steamid not valid!")
 		return 0
 	end
 end
@@ -141,6 +141,10 @@ function api:GetPlayerXP(player_id)
 	end
 end
 
+function api:GetApiGameId()
+	return self.game_id
+end
+
 function api:IsCheatGame()
 	-- TODO: cookies implement this
 	return false
@@ -150,6 +154,10 @@ function api:GetWinnerTeam()
 	return GAME_WINNER_TEAM
 end
 
+function api:GetKillsForTeam(team)
+	return GetTeamHeroKills(team)
+end
+
 function api:GetAllPlayerSteamIds()
 	local players = {}
 	for id = 0, PlayerResource:GetPlayerCount() - 1 do
@@ -157,16 +165,8 @@ function api:GetAllPlayerSteamIds()
 			table.insert(players, tostring(PlayerResource:GetSteamID(id)))
 		end
 	end
- 
+
 	return players
-end
-
-function api:GetGameID()
-	if IsInToolsMode() then
-		return "5786014685" + RandomInt(1, 100000) -- random to make it work in tools
-	end
-
-	return tonumber(tostring(GameRules:GetMatchID()))
 end
 
 function api:RegisterGame()
@@ -175,7 +175,7 @@ function api:RegisterGame()
 		self.players = data.players
 	end, nil, "POST", {
 		map = GetMapName(),
-		match_id = self:GetGameID(),
+		match_id = tostring(GameRules:GetMatchID()),
 		players = self:GetAllPlayerSteamIds(),
 		cheat_mode = self:IsCheatGame()
 	});
@@ -187,12 +187,14 @@ function api:CompleteGame(successCallback, failCallback)
 	for id = 0, PlayerResource:GetPlayerCount() - 1 do
 		if PlayerResource:IsValidPlayerID(id) then
 			local items = {}
-			local hero = PlayerResource:GetSelectedHeroEntity(id)
-			if hero ~= nil then
---				player.hero = hero:GetUnitName()
+			local heroEntity = PlayerResource:GetSelectedHeroEntity(id)
+			local hero = json.null
+
+			if heroEntity ~= nil then
+				hero = tostring(heroEntity:GetUnitName())
 
 				for slot = 0, 15 do
-					local item = hero:GetItemInSlot(slot)
+					local item = heroEntity:GetItemInSlot(slot)
 					if item ~= nil then
 						table.insert(items, tostring(item:GetAbilityName()))
 					end
@@ -203,7 +205,7 @@ function api:CompleteGame(successCallback, failCallback)
 				kills = tonumber(PlayerResource:GetKills(id)),
 				deaths = tonumber(PlayerResource:GetDeaths(id)),
 				assists = tonumber(PlayerResource:GetAssists(id)),
-				hero = json.null,
+				hero = hero,
 				team = tonumber(PlayerResource:GetTeam(id)),
 				items = items
 			}
@@ -218,35 +220,48 @@ function api:CompleteGame(successCallback, failCallback)
 		end
 	end
 
+	local winnerTeam = self:GetWinnerTeam()
+	if winnerTeam == nil or winnerTeam == 0 then
+		winnerTeam = json.null
+	end
+
+	local payload = {
+		winner = winnerTeam,
+		game_id = self.game_id,
+		players = players,
+		radiant_score = self:GetKillsForTeam(2),
+		dire_score = self:GetKillsForTeam(3)
+	}
+
 	self:Request("game-complete", function(data)
 		-- this code is executed when a game is completed
-		successCallback(data);
-	end, failCallback, "POST", {
-		winner = self:GetWinnerTeam(),
-		game_id = self.game_id,
-		players = players
-	});
+		successCallback(data, payload);
+	end, failCallback, "POST", payload);
 
-	CustomGameEventManager:Send_ServerToAllClients("end_game", {
-		players = players,
-		info = {
-			winner = api:GetWinnerTeam(),
-			id = api:GetGameID(),
-			radiant_score = GetTeamHeroKills(2),
-			dire_score = GetTeamHeroKills(3),
-		},
-	})
+end
+
+function api:GetLoggingConfiguration(callback)
+	-- TODO: implement this; do nothing for now
 end
 
 function api:Message(message)
-	self:Request("game-event", nil, nil, "POST", {
-		type = 1,
-		game_id = self.data.game_id,
-		message = tostring(message)
-	})
-end
 
--- temporary (not working)
-api.imba = {
-	event = function () end
-}
+	local data = json.null
+	local messageType = type(message)
+
+	if messageType == "string" or messageType == "boolean" or messageType == "number" or messageType == "table" then
+		data = message
+	elseif messageType == "function" or messageType == "userdata" then
+		data = tostring(message)
+	end
+
+	safe(function ()
+
+		self:Request("game-event", nil, nil, "POST", {
+			type = 1,
+			game_id = self.data.game_id,
+			message = data
+		})
+
+	end)
+end

@@ -41,7 +41,7 @@ if Log == nil then
 				"api",
 				"console"
 			}
-			}, {
+		}, {
 			matcher = ".*",
 			level = Log.Levels.INFO,
 			targets = {
@@ -55,12 +55,19 @@ if Log == nil then
 	-- Utility
 	---------------------------------------------
 	function Log:_LevelToString(lvl)
-		if lvl == 1 then return "debug"
-		elseif lvl == 2 then return "info"
-		elseif lvl == 3 then return "warn"
-		elseif lvl == 4 then return "critical"
-		elseif lvl == 5 then return "error"
-		else return "invalid" end
+		if lvl == 1 then
+			return "debug"
+		elseif lvl == 2 then
+			return "info"
+		elseif lvl == 3 then
+			return "warn"
+		elseif lvl == 4 then
+			return "critical"
+		elseif lvl == 5 then
+			return "error"
+		else
+			return "invalid"
+		end
 	end
 
 	function Log:_LinesSplit(str)
@@ -80,9 +87,9 @@ if Log == nil then
 		local s, e, cap = str:find(fpat, 1)
 		while s do
 			if s ~= 1 or cap ~= "" then
-				table.insert(t,cap)
+				table.insert(t, cap)
 			end
-			last_end = e+1
+			last_end = e + 1
 			s, e, cap = str:find(fpat, last_end)
 		end
 		if last_end <= #str then
@@ -100,64 +107,64 @@ if Log == nil then
 		-- to make output beautiful
 		local function tab(amt)
 			local str = ""
-			for i=1,amt do
+			for i = 1, amt do
 				str = str .. "\t"
 			end
 			return str
 		end
 
-		local cache, stack, output = {},{},{}
+		local cache, stack, output = {}, {}, {}
 		local depth = 1
 		local output_str = "{\n"
 
 		while true do
 			local size = 0
-			for k,v in pairs(node) do
+			for k, v in pairs(node) do
 				size = size + 1
 			end
 
 			local cur_index = 1
-			for k,v in pairs(node) do
+			for k, v in pairs(node) do
 				if (cache[node] == nil) or (cur_index >= cache[node]) then
 
-					if (string.find(output_str,"}",output_str:len())) then
+					if (string.find(output_str, "}", output_str:len())) then
 						output_str = output_str .. ",\n"
-					elseif not (string.find(output_str,"\n",output_str:len())) then
+					elseif not (string.find(output_str, "\n", output_str:len())) then
 						output_str = output_str .. "\n"
 					end
 
 					-- This is necessary for working with HUGE tables otherwise we run out of memory using concat on huge strings
-					table.insert(output,output_str)
+					table.insert(output, output_str)
 					output_str = ""
 
 					local key
 					if (type(k) == "number" or type(k) == "boolean") then
-						key = "["..tostring(k).."]"
+						key = "[" .. tostring(k) .. "]"
 					else
-						key = "['"..tostring(k).."']"
+						key = "['" .. tostring(k) .. "']"
 					end
 
 					if (type(v) == "number" or type(v) == "boolean") then
-						output_str = output_str .. tab(depth) .. key .. " = "..tostring(v)
+						output_str = output_str .. tab(depth) .. key .. " = " .. tostring(v)
 					elseif (type(v) == "table") then
 						output_str = output_str .. tab(depth) .. key .. " = {\n"
-						table.insert(stack,node)
-						table.insert(stack,v)
-						cache[node] = cur_index+1
+						table.insert(stack, node)
+						table.insert(stack, v)
+						cache[node] = cur_index + 1
 						break
 					else
-						output_str = output_str .. tab(depth) .. key .. " = '"..tostring(v).."'"
+						output_str = output_str .. tab(depth) .. key .. " = '" .. tostring(v) .. "'"
 					end
 
 					if (cur_index == size) then
-						output_str = output_str .. "\n" .. tab(depth-1) .. "}"
+						output_str = output_str .. "\n" .. tab(depth - 1) .. "}"
 					else
 						output_str = output_str .. ","
 					end
 				else
 					-- close the table
 					if (cur_index == size) then
-						output_str = output_str .. "\n" .. tab(depth-1) .. "}"
+						output_str = output_str .. "\n" .. tab(depth - 1) .. "}"
 					end
 				end
 
@@ -165,7 +172,7 @@ if Log == nil then
 			end
 
 			if (size == 0) then
-				output_str = output_str .. "\n" .. tab(depth-1) .. "}"
+				output_str = output_str .. "\n" .. tab(depth - 1) .. "}"
 			end
 
 			if (#stack > 0) then
@@ -178,7 +185,7 @@ if Log == nil then
 		end
 
 		-- This is necessary for working with HUGE tables otherwise we run out of memory using concat on huge strings
-		table.insert(output,output_str)
+		table.insert(output, output_str)
 		return table.concat(output)
 	end
 
@@ -268,24 +275,24 @@ if Log == nil then
 	-- and logs errors
 	---------------------------------------------
 	function Log:ExecuteInSafeContext(fun, args)
-		
+
 		if args == nil then
 			args = {}
 		end
-		
-		local status, err = xpcall(fun, function (err)
 
-				if err == nil then
-					err = "Unknown Error"
-				end
+		local status, err = xpcall(fun, function(err)
 
-				-- dont filter errors
-				local levelString = self:_LevelToString(Log.Levels.ERROR)
+			if err == nil then
+				err = "Unknown Error"
+			end
 
-				for i = 1, #self.targets do
-					self.targets[i]:print(levelString, "Error occured while executing in safe context: " .. err, self:_GetStackTrace(4))
-				end
-			end, unpack(args))
+			-- dont filter errors
+			local levelString = self:_LevelToString(Log.Levels.ERROR)
+
+			for i = 1, #self.targets do
+				self.targets[i]:print(levelString, "Error occured while executing in safe context: " .. err, self:_GetStackTrace(4))
+			end
+		end, unpack(args))
 
 		return status, err
 	end
@@ -301,10 +308,10 @@ if Log == nil then
 	-- Load the logger config from api
 	---------------------------------------------
 	function Log:ConfigureFromApi()
-		api.imba.load_logging_configuration(function (data)
-				log.info("Loaded new Logging configuration from server")
-				self.config = data.rules
-			end)
+		api:GetLoggingConfiguration(function(data)
+			log.info("Loaded new Logging configuration from server")
+			self.config = data.rules
+		end)
 	end
 
 	---------------------------------------------
@@ -317,13 +324,27 @@ if Log == nil then
 	---------------------------------------------
 	-- General purpose log shortcut functions
 	---------------------------------------------
-	function log.debug(obj) Log:Print(obj, Log.Levels.DEBUG) end
-	function log.info(obj) Log:Print(obj, Log.Levels.INFO) end
-	function log.warn(obj) Log:Print(obj, Log.Levels.WARN) end
-	function log.warning(obj) Log:Print(obj, Log.Levels.WARN) end
-	function log.critical(obj) Log:Print(obj, Log.Levels.CRITICAL) end
-	function log.crit(obj) Log:Print(obj, Log.Levels.CRITICAL) end
-	function log.error(obj) Log:Print(obj, Log.Levels.ERROR) end
+	function log.debug(obj)
+		Log:Print(obj, Log.Levels.DEBUG)
+	end
+	function log.info(obj)
+		Log:Print(obj, Log.Levels.INFO)
+	end
+	function log.warn(obj)
+		Log:Print(obj, Log.Levels.WARN)
+	end
+	function log.warning(obj)
+		Log:Print(obj, Log.Levels.WARN)
+	end
+	function log.critical(obj)
+		Log:Print(obj, Log.Levels.CRITICAL)
+	end
+	function log.crit(obj)
+		Log:Print(obj, Log.Levels.CRITICAL)
+	end
+	function log.error(obj)
+		Log:Print(obj, Log.Levels.ERROR)
+	end
 
 	---------------------------------------------
 	-- Safe shortcut
@@ -342,17 +363,17 @@ if Log == nil then
 
 	function ApiLogTarget:print(level, content, trace)
 
-		local data = {}
-		table.insert(data, level)
-		table.insert(data, content)
+		local trace = ""
 		for i = 1, #trace do
-			table.insert(data, json.encode(trace[i]))
+			trace = trace .. ", " .. json.encode(trace[i])
 		end
 
 		-- prepare api request
-		if api ~= nil and api.imba ~= nil then
-			api.imba.event(api.events.log, data, true)
-		end
+		api:Message({
+			level = level,
+			content = tostring(content),
+			trace = trace
+		})
 	end
 
 	ConsoleLogTarget = {
@@ -376,15 +397,15 @@ if Log == nil then
 	NativePrint = print
 	print = nil
 
-	function print(...) 
+	function print(...)
 
-		local args = {...}
+		local args = { ... }
 
 		if #args == 1 then
 			args = args[1]
 		end
 
-		Log:Print(args, Log.Levels.INFO) 
+		Log:Print(args, Log.Levels.INFO)
 	end
 
 	-----------------------------------------------------------------
@@ -397,14 +418,14 @@ if Log == nil then
 		Dynamic_Wrap = nil
 	end
 
-	function Dynamic_Wrap(mt, name) 
+	function Dynamic_Wrap(mt, name)
 		local function wrapper(...)
 
-			local args = {...}
+			local args = { ... }
 
-			local status, v = safe(function () 
-					return mt[name](unpack(args))
-				end)
+			local status, v = safe(function()
+				return mt[name](unpack(args))
+			end)
 
 			if status then
 				return v
@@ -466,21 +487,21 @@ if Log == nil then
 	}
 
 	function AdvLogRegisterLuaModifier(modifier)
-		
+
 		-- check if a covered function is defined
 		for _, name in pairs(coveredByProxy) do
-			
+
 			print("Checking modifier for " .. name)
-			
+
 			if modifier[name] ~= nil then
 				print("Modifier defines method " .. name .. ": " .. tostring(modifier[name]))
-				
+
 				-- create proxy
 				local original = modifier[name]
-				local function proxy(...) 
+				local function proxy(...)
 					print("Running Proxy")
-					return Log:ExecuteInSafeContext(original, {...})
-				end			
+					return Log:ExecuteInSafeContext(original, { ... })
+				end
 				modifier[name] = proxy
 			end
 		end

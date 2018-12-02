@@ -29,43 +29,43 @@ function GameMode:OnGameRulesStateChange(keys)
 
 		-- temporary (from stat-collection)
 		-- Build players array
---		local players = {}
---		for playerID = 0, PlayerResource:GetPlayerCount() - 1 do
---			if PlayerResource:IsValidPlayerID(playerID) then
---				players.steamID64 = PlayerResource:GetSteamID(playerID)
---			end
---		end
+		--		local players = {}
+		--		for playerID = 0, PlayerResource:GetPlayerCount() - 1 do
+		--			if PlayerResource:IsValidPlayerID(playerID) then
+		--				players.steamID64 = PlayerResource:GetSteamID(playerID)
+		--			end
+		--		end
 
---		local req = CreateHTTPRequestScriptVM("GET", "http://51.75.249.243/file_name.php")
---		local req = CreateHTTPRequestScriptVM("GET", "http://51.75.249.243/opt/lampp/htdocs/dota2imba/db_scripts/fichier.php")
---		local encoded = json.encode(payload)
---		if self.TESTING then
---			statCollection:print(encoded)
---		end
+		--		local req = CreateHTTPRequestScriptVM("GET", "http://51.75.249.243/file_name.php")
+		--		local req = CreateHTTPRequestScriptVM("GET", "http://51.75.249.243/opt/lampp/htdocs/dota2imba/db_scripts/fichier.php")
+		--		local encoded = json.encode(payload)
+		--		if self.TESTING then
+		--			statCollection:print(encoded)
+		--		end
 
---		-- Add the data
---		req:SetHTTPRequestGetOrPostParameter('payload', encoded)
+		--		-- Add the data
+		--		req:SetHTTPRequestGetOrPostParameter('payload', encoded)
 
---		-- Send the request
---		req:Send(function(res)
---			print(res.StatusCode)
---			if res.StatusCode ~= 200 then
---				return
---			end
+		--		-- Send the request
+		--		req:Send(function(res)
+		--			print(res.StatusCode)
+		--			if res.StatusCode ~= 200 then
+		--				return
+		--			end
 
---			print(res.Body)
---			if not res.Body then
---				print(errorEmptyServerResponse)
---				print("Status Code", res.StatusCode)
---				return
---			end
+		--			print(res.Body)
+		--			if not res.Body then
+		--				print(errorEmptyServerResponse)
+		--				print("Status Code", res.StatusCode)
+		--				return
+		--			end
 
---			-- Try to decode the result
---			local obj, pos, err = json.decode(res.Body, 1, nil)
+		--			-- Try to decode the result
+		--			local obj, pos, err = json.decode(res.Body, 1, nil)
 
---			-- Feed the result into our callback
---			callback(err, obj)
---		end)
+		--			-- Feed the result into our callback
+		--			callback(err, obj)
+		--		end)
 
 		-- setup Player colors into hex for panorama
 		local hex_colors = {}
@@ -123,15 +123,15 @@ function GameMode:OnGameRulesStateChange(keys)
 			end
 		end
 	elseif newState == DOTA_GAMERULES_STATE_PRE_GAME then
---		api.imba.event(api.events.entered_pre_game)
+		--		api.imba.event(api.events.entered_pre_game)
 
---		if api.imba.data.donators then
---			CustomNetTables:SetTableValue("game_options", "donators", api.imba.get_donators())
---		end
+		--		if api.imba.data.donators then
+		--			CustomNetTables:SetTableValue("game_options", "donators", api.imba.get_donators())
+		--		end
 
---		if api.imba.data.developers then
---			CustomNetTables:SetTableValue("game_options", "developers", api.imba.get_developers())
---		end
+		--		if api.imba.data.developers then
+		--			CustomNetTables:SetTableValue("game_options", "developers", api.imba.get_developers())
+		--		end
 
 		if GetMapName() == MapOverthrow() then
 			GoodCamera:AddNewModifier(GoodCamera, nil, "modifier_overthrow_gold_xp_granter", {})
@@ -142,7 +142,7 @@ function GameMode:OnGameRulesStateChange(keys)
 		end
 
 		local fountainEntities = Entities:FindAllByClassname("ent_dota_fountain")
-		for _,fountainEnt in pairs( fountainEntities ) do
+		for _, fountainEnt in pairs(fountainEntities) do
 			local danger_zone_pfx = ParticleManager:CreateParticle("particles/ambient/fountain_danger_circle.vpcf", PATTACH_CUSTOMORIGIN, nil)
 			ParticleManager:SetParticleControl(danger_zone_pfx, 0, fountainEnt:GetAbsOrigin())
 			ParticleManager:ReleaseParticleIndex(danger_zone_pfx)
@@ -161,10 +161,12 @@ function GameMode:OnGameRulesStateChange(keys)
 			if max_level and max_level > 25 then
 				local j = 26
 				Timers:CreateTimer(function()
-					if j >= max_level then return end
+					if j >= max_level then
+						return
+					end
 					for i = j, j + 2 do
-						XP_PER_LEVEL_TABLE[i] = XP_PER_LEVEL_TABLE[i-1] + 3500
-						GameRules:GetGameModeEntity():SetCustomXPRequiredToReachNextLevel( XP_PER_LEVEL_TABLE )
+						XP_PER_LEVEL_TABLE[i] = XP_PER_LEVEL_TABLE[i - 1] + 3500
+						GameRules:GetGameModeEntity():SetCustomXPRequiredToReachNextLevel(XP_PER_LEVEL_TABLE)
 					end
 					j = j + 2
 					return 1.0
@@ -183,7 +185,7 @@ function GameMode:OnGameRulesStateChange(keys)
 			CustomGameEventManager:Send_ServerToAllClients("override_top_bar_colors", {})
 		end)
 	elseif newState == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
---		api.imba.event(api.events.started_game)
+		--		api.imba.event(api.events.started_game)
 
 		-- start rune timers
 		if GetMapName() == Map1v1() then
@@ -210,20 +212,32 @@ function GameMode:OnGameRulesStateChange(keys)
 			end)
 		end
 	elseif newState == DOTA_GAMERULES_STATE_POST_GAME then
---		api.imba.event(api.events.entered_post_game)
---		api.imba.complete(function (error, players)
---			local game_id = 0
---			if api.imba.data ~= nil then
---				game_id = api.imba.data.id or 0
---			end
+		--		api.imba.event(api.events.entered_post_game)
+		--		api.imba.complete(function (error, players)
+		--			local game_id = 0
+		--			if api.imba.data ~= nil then
+		--				game_id = api.imba.data.id or 0
+		--			end
 
-			local players = {}
+		local players = {}
 
-			for i = 0, PlayerResource:GetPlayerCount() - 1 do
-				players.id = i
-			end
+		for i = 0, PlayerResource:GetPlayerCount() - 1 do
+			players.id = i
+		end
 
-			api:CompleteGame()
+		api:CompleteGame(function(data, payload)
+
+			CustomGameEventManager:Send_ServerToAllClients("end_game", {
+				players = payload.players,
+				data = data,
+				info = {
+					winner = GAME_WINNER_TEAM,
+					id = api:GetGameID(),
+					radiant_score = GetTeamHeroKills(2),
+					dire_score = GetTeamHeroKills(3),
+				},
+			})
+		end)
 	end
 end
 
@@ -239,10 +253,10 @@ function GameMode:OnNPCSpawned(keys)
 			player = PlayerResource:GetSteamID(npc:GetPlayerID())
 		end
 
---		api.imba.event(api.events.unit_spawned, {
---			tostring(npc:GetUnitName()),
---			tostring(player)
---		})
+		--		api.imba.event(api.events.unit_spawned, {
+		--			tostring(npc:GetUnitName()),
+		--			tostring(player)
+		--		})
 
 		if npc:IsCourier() then
 			if npc.first_spawn == true then
@@ -307,19 +321,23 @@ function GameMode:OnDisconnect(keys)
 	-- If the game hasn't started, or has already ended, do nothing
 	if (GameRules:State_Get() >= DOTA_GAMERULES_STATE_POST_GAME) or (GameRules:State_Get() < DOTA_GAMERULES_STATE_PRE_GAME) then
 		return nil
-			-- Else, start tracking player's reconnect/abandon state
+		-- Else, start tracking player's reconnect/abandon state
 	else
 		-- Fetch player's player and hero information
-		if keys.PlayerID == nil or keys.PlayerID == -1 then return end
+		if keys.PlayerID == nil or keys.PlayerID == -1 then
+			return
+		end
 		local player_id = keys.PlayerID
 		local player_name = keys.name
-		if PlayerResource:GetPlayer(player_id):GetAssignedHero() == nil then return end
+		if PlayerResource:GetPlayer(player_id):GetAssignedHero() == nil then
+			return
+		end
 		local hero = PlayerResource:GetPlayer(player_id):GetAssignedHero()
 		local line_duration = 7
 
 		-- Start tracking
---		print("started keeping track of player "..player_id.."'s connection state")
---		api.imba.event(api.events.player_disconnected, { tostring(PlayerResource:GetSteamID(player_id)) })
+		--		print("started keeping track of player "..player_id.."'s connection state")
+		--		api.imba.event(api.events.player_disconnected, { tostring(PlayerResource:GetSteamID(player_id)) })
 
 		local disconnect_time = 0
 		Timers:CreateTimer(1, function()
@@ -329,22 +347,22 @@ function GameMode:OnDisconnect(keys)
 			-- If the player has abandoned the game, set his gold to zero and distribute passive gold towards its allies
 			if disconnect_time >= ABANDON_TIME then
 				-- Abandon message
-				Notifications:BottomToAll({hero = hero:GetUnitName(), duration = line_duration})
-				Notifications:BottomToAll({text = player_name.." ", duration = line_duration, continue = true})
-				Notifications:BottomToAll({text = "#imba_player_abandon_message", duration = line_duration, style = {color = "DodgerBlue"}, continue = true})
+				Notifications:BottomToAll({ hero = hero:GetUnitName(), duration = line_duration })
+				Notifications:BottomToAll({ text = player_name .. " ", duration = line_duration, continue = true })
+				Notifications:BottomToAll({ text = "#imba_player_abandon_message", duration = line_duration, style = { color = "DodgerBlue" }, continue = true })
 				PlayerResource:SetHasAbandonedDueToLongDisconnect(player_id, true)
-				print("player "..player_id.." has abandoned the game.")
+				print("player " .. player_id .. " has abandoned the game.")
 
---				api.imba.event(api.events.player_abandoned, { tostring(PlayerResource:GetSteamID(player_id)) })
+				--				api.imba.event(api.events.player_abandoned, { tostring(PlayerResource:GetSteamID(player_id)) })
 
 				-- Start redistributing this player's gold to its allies
 				PlayerResource:StartAbandonGoldRedistribution(player_id)
 				-- If the player has reconnected, stop tracking connection state every second
 			elseif PlayerResource:GetConnectionState(player_id) == 2 then
 
-			-- Else, keep tracking connection state
+				-- Else, keep tracking connection state
 			else
---				print("tracking player "..player_id.."'s connection state, disconnected for "..disconnect_time.." seconds.")
+				--				print("tracking player "..player_id.."'s connection state, disconnected for "..disconnect_time.." seconds.")
 				return 1
 			end
 		end)
@@ -360,17 +378,17 @@ function GameMode:OnDisconnect(keys)
 end
 
 -- An entity died
-function GameMode:OnEntityKilled( keys )
-	GameMode:_OnEntityKilled( keys )
+function GameMode:OnEntityKilled(keys)
+	GameMode:_OnEntityKilled(keys)
 
 	-- The Unit that was killed
-	local killed_unit = EntIndexToHScript( keys.entindex_killed )
+	local killed_unit = EntIndexToHScript(keys.entindex_killed)
 
 	-- The Killing entity
 	local killer = nil
 
 	if keys.entindex_attacker then
-		killer = EntIndexToHScript( keys.entindex_attacker )
+		killer = EntIndexToHScript(keys.entindex_attacker)
 	end
 
 	if killed_unit then
@@ -398,12 +416,12 @@ function GameMode:OnEntityKilled( keys )
 				end
 			end
 
---			api.imba.event(api.events.unit_killed, {
---				tostring(killerUnitName),
---				tostring(killerPlayer),
---				tostring(killedUnitName),
---				tostring(killedPlayer)
---			})
+			--			api.imba.event(api.events.unit_killed, {
+			--				tostring(killerUnitName),
+			--				tostring(killerPlayer),
+			--				tostring(killedUnitName),
+			--				tostring(killedPlayer)
+			--			})
 		end
 
 		-------------------------------------------------------------------------------------------------
@@ -453,16 +471,16 @@ function GameMode:OnEntityKilled( keys )
 			end
 
 			-- if killer:IsRealHero() then
-				-- CombatEvents("kill", "hero_kill_tower", killed_unit, killer)
-				-- if killer:GetTeam() ~= killed_unit:GetTeam() then
-					-- if killed_unit:GetUnitName() == "npc_dota_goodguys_healers" or killed_unit:GetUnitName() == "npc_dota_badguys_healers" then
-						-- SendOverheadEventMessage(killer:GetPlayerOwner(), OVERHEAD_ALERT_GOLD, killed_unit, 125, nil)
-					-- else
-						-- SendOverheadEventMessage(killer:GetPlayerOwner(), OVERHEAD_ALERT_GOLD, killed_unit, 200, nil)
-					-- end
-				-- end
+			-- CombatEvents("kill", "hero_kill_tower", killed_unit, killer)
+			-- if killer:GetTeam() ~= killed_unit:GetTeam() then
+			-- if killed_unit:GetUnitName() == "npc_dota_goodguys_healers" or killed_unit:GetUnitName() == "npc_dota_badguys_healers" then
+			-- SendOverheadEventMessage(killer:GetPlayerOwner(), OVERHEAD_ALERT_GOLD, killed_unit, 125, nil)
 			-- else
-				-- CombatEvents("generic", "tower_dead", killed_unit, killer)
+			-- SendOverheadEventMessage(killer:GetPlayerOwner(), OVERHEAD_ALERT_GOLD, killed_unit, 200, nil)
+			-- end
+			-- end
+			-- else
+			-- CombatEvents("generic", "tower_dead", killed_unit, killer)
 			-- end
 
 			if GetMapName() == Map1v1() then
@@ -513,10 +531,14 @@ end
 function GameMode:OnPlayerLevelUp(keys)
 	local player = EntIndexToHScript(keys.player)
 	local hero = player:GetAssignedHero()
-	if hero == nil then return end
+	if hero == nil then
+		return
+	end
 	local level = keys.level
 	local hero_attribute = hero:GetPrimaryAttribute()
-	if hero_attribute == nil or hero:IsFakeHero() then return end
+	if hero_attribute == nil or hero:IsFakeHero() then
+		return
+	end
 
 	hero:SetCustomDeathXP(HERO_XP_BOUNTY_PER_LEVEL[level])
 
@@ -524,27 +546,27 @@ function GameMode:OnPlayerLevelUp(keys)
 		if hero:GetUnitName() == "npc_dota_hero_meepo" then
 			for _, hero in pairs(HeroList:GetAllHeroes()) do
 				if hero:GetUnitName() == "npc_dota_hero_meepo" and hero:IsClone() then
-					if not hero:HasModifier("modifier_imba_war_veteran_"..hero_attribute) then
-						hero:AddNewModifier(hero, nil, "modifier_imba_war_veteran_"..hero:GetCloneSource():GetPrimaryAttribute(), {}):SetStackCount(math.min(hero:GetCloneSource():GetLevel() -25, 17))
+					if not hero:HasModifier("modifier_imba_war_veteran_" .. hero_attribute) then
+						hero:AddNewModifier(hero, nil, "modifier_imba_war_veteran_" .. hero:GetCloneSource():GetPrimaryAttribute(), {}):SetStackCount(math.min(hero:GetCloneSource():GetLevel() - 25, 17))
 					else
-						hero:FindModifierByName("modifier_imba_war_veteran_"..hero:GetCloneSource():GetPrimaryAttribute()):SetStackCount(math.min(hero:GetCloneSource():GetLevel() -25, 17))
+						hero:FindModifierByName("modifier_imba_war_veteran_" .. hero:GetCloneSource():GetPrimaryAttribute()):SetStackCount(math.min(hero:GetCloneSource():GetLevel() - 25, 17))
 					end
 				end
 			end
 		end
 
 		-- TODO: error sometimes on this line: "hero:AddNewModifier(hero, nil, "modifier_imba_war_veteran_"..hero_attribute, {}):SetStackCount(1)""
-		if not hero:HasModifier("modifier_imba_war_veteran_"..hero_attribute) then
-			hero:AddNewModifier(hero, nil, "modifier_imba_war_veteran_"..hero_attribute, {}):SetStackCount(1)
-		elseif hero:HasModifier("modifier_imba_war_veteran_"..hero_attribute) then
-			hero:FindModifierByName("modifier_imba_war_veteran_"..hero_attribute):SetStackCount(math.min(hero:GetLevel() -25, 17))
+		if not hero:HasModifier("modifier_imba_war_veteran_" .. hero_attribute) then
+			hero:AddNewModifier(hero, nil, "modifier_imba_war_veteran_" .. hero_attribute, {}):SetStackCount(1)
+		elseif hero:HasModifier("modifier_imba_war_veteran_" .. hero_attribute) then
+			hero:FindModifierByName("modifier_imba_war_veteran_" .. hero_attribute):SetStackCount(math.min(hero:GetLevel() - 25, 17))
 		end
 
 		hero:SetAbilityPoints(hero:GetAbilityPoints() - 1)
 	end
-	
+
 	if hero:GetUnitName() == "npc_dota_hero_invoker" then
-		hero:FindAbilityByName("invoker_invoke"):SetLevel(min(math.floor(level/6 + 1), 4))
+		hero:FindAbilityByName("invoker_invoke"):SetLevel(min(math.floor(level / 6 + 1), 4))
 	end
 end
 
@@ -566,20 +588,20 @@ function GameMode:OnPlayerLearnedAbility(keys)
 
 	-- initiate talent!
 	if abilityname:find("special_bonus_imba_") == 1 then
-		hero:AddNewModifier(hero, nil, "modifier_"..abilityname, {})
+		hero:AddNewModifier(hero, nil, "modifier_" .. abilityname, {})
 	end
 
 	if abilityname == "lone_druid_savage_roar" and not hero.savage_roar then
 		hero.savage_roar = true
 	end
 
---	if hero then
---		api.imba.event(api.events.ability_learned, {
---			tostring(abilityname),
---			tostring(hero:GetUnitName()),
---			tostring(PlayerResource:GetSteamID(player:GetPlayerID()))
---		})
---	end
+	--	if hero then
+	--		api.imba.event(api.events.ability_learned, {
+	--			tostring(abilityname),
+	--			tostring(hero:GetUnitName()),
+	--			tostring(PlayerResource:GetSteamID(player:GetPlayerID()))
+	--		})
+	--	end
 end
 --[[
 function GameMode:PlayerConnect(keys)
@@ -594,23 +616,19 @@ function GameMode:OnConnectFull(keys)
 
 	ReconnectPlayer(playerID)
 
---	PlayerResource:InitPlayerData(playerID)
+	--	PlayerResource:InitPlayerData(playerID)
 end
 
 -- This function is called whenever any player sends a chat message to team or All
 function GameMode:OnPlayerChat(keys)
 	local teamonly = keys.teamonly
 	local userID = keys.userid
---	local playerID = self.vUserIds[userID]:GetPlayerID()
+	--	local playerID = self.vUserIds[userID]:GetPlayerID()
 
 	local text = keys.text
 
 	local steamid = tostring(PlayerResource:GetSteamID(keys.playerid))
---	local _text = tostring(text)
---	api.imba.event(api.events.chat, {
---		steamid,
---		_text
---	})
+	api.Message("C[" .. steamid .. "] " .. tostring(text))
 
 	-- This Handler is only for commands, ends the function if first character is not "-"
 	if not (string.byte(text) == 45) then
@@ -632,14 +650,14 @@ function GameMode:OnPlayerChat(keys)
 			if str == "-replaceherowith" then
 				text = string.gsub(text, str, "")
 				text = string.gsub(text, " ", "")
-				if PlayerResource:GetSelectedHeroName(caster:GetPlayerID()) ~= "npc_dota_hero_"..text then
+				if PlayerResource:GetSelectedHeroName(caster:GetPlayerID()) ~= "npc_dota_hero_" .. text then
 					if caster.companion then
 						caster.companion:ForceKill(false)
 						caster.companion = nil
 					end
 
-					PrecacheUnitByNameAsync("npc_dota_hero_"..text, function()
-						HeroSelection:GiveStartingHero(caster:GetPlayerID(), "npc_dota_hero_"..text, true)
+					PrecacheUnitByNameAsync("npc_dota_hero_" .. text, function()
+						HeroSelection:GiveStartingHero(caster:GetPlayerID(), "npc_dota_hero_" .. text, true)
 					end)
 				end
 			end
@@ -657,8 +675,12 @@ end
 
 -- TODO: FORMAT THIS GARBAGE
 function GameMode:OnThink()
-	if GameRules:State_Get() == DOTA_GAMERULES_STATE_POST_GAME then return nil end
-	if GameRules:IsGamePaused() then return 1 end
+	if GameRules:State_Get() == DOTA_GAMERULES_STATE_POST_GAME then
+		return nil
+	end
+	if GameRules:IsGamePaused() then
+		return 1
+	end
 
 	CheatDetector()
 
@@ -689,7 +711,7 @@ function GameMode:OnThink()
 		-- Undying talent fix
 		if hero.undying_respawn_timer then
 			if hero.undying_respawn_timer > 0 then
-				hero.undying_respawn_timer = hero.undying_respawn_timer -1
+				hero.undying_respawn_timer = hero.undying_respawn_timer - 1
 			end
 
 			break
@@ -732,11 +754,11 @@ function GameMode:OnThink()
 		end
 
 		-- Find hidden modifiers
---		if hero:GetUnitName() == "npc_dota_hero_skeleton_king" then
---			for i = 0, hero:GetModifierCount() -1 do
---				print(hero:GetUnitName(), hero:GetModifierNameByIndex(i))
---			end
---		end
+		--		if hero:GetUnitName() == "npc_dota_hero_skeleton_king" then
+		--			for i = 0, hero:GetModifierCount() -1 do
+		--				print(hero:GetUnitName(), hero:GetModifierNameByIndex(i))
+		--			end
+		--		end
 	end
 
 	if GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
@@ -744,18 +766,19 @@ function GameMode:OnThink()
 		if CustomNetTables:GetTableValue("game_options", "game_count").value == 1 then
 			if not TEAM_ABANDON then
 				TEAM_ABANDON = {} -- 15 second to abandon, is_abandoning?, player_count.
-				TEAM_ABANDON[2] = {FULL_ABANDON_TIME, false, 0}
-				TEAM_ABANDON[3] = {FULL_ABANDON_TIME, false, 0}
+				TEAM_ABANDON[2] = { FULL_ABANDON_TIME, false, 0 }
+				TEAM_ABANDON[3] = { FULL_ABANDON_TIME, false, 0 }
 			end
 
 			TEAM_ABANDON[2][3] = PlayerResource:GetPlayerCountForTeam(2)
 			TEAM_ABANDON[3][3] = PlayerResource:GetPlayerCountForTeam(3)
 
-			for ID = 0, PlayerResource:GetPlayerCount() -1 do
+			for ID = 0, PlayerResource:GetPlayerCount() - 1 do
 				local team = PlayerResource:GetTeam(ID)
 
-				if PlayerResource:GetConnectionState(ID) ~= 2 then -- if disconnected then
-					TEAM_ABANDON[team][3] = TEAM_ABANDON[team][3] -1
+				if PlayerResource:GetConnectionState(ID) ~= 2 then
+					-- if disconnected then
+					TEAM_ABANDON[team][3] = TEAM_ABANDON[team][3] - 1
 				end
 
 				if TEAM_ABANDON[team][3] > 0 then
@@ -766,11 +789,11 @@ function GameMode:OnThink()
 						if team == 3 then
 							abandon_text = "#imba_team_bad_abandon_message"
 						end
-						Notifications:BottomToAll({text = abandon_text.." ("..tostring(TEAM_ABANDON[team][1])..")", duration = 1.0, style = {color = "DodgerBlue"} })
+						Notifications:BottomToAll({ text = abandon_text .. " (" .. tostring(TEAM_ABANDON[team][1]) .. ")", duration = 1.0, style = { color = "DodgerBlue" } })
 					end
 
 					TEAM_ABANDON[team][2] = true
-					TEAM_ABANDON[team][1] = TEAM_ABANDON[team][1] -1
+					TEAM_ABANDON[team][1] = TEAM_ABANDON[team][1] - 1
 
 					if TEAM_ABANDON[2][1] <= 0 then
 						GAME_WINNER_TEAM = 3
@@ -784,7 +807,8 @@ function GameMode:OnThink()
 		end
 	end
 
-	if i == nil then i = AP_GAME_TIME -1
+	if i == nil then
+		i = AP_GAME_TIME - 1
 	elseif i < 0 then
 		if PICKING_SCREEN_OVER == false then
 			PICKING_SCREEN_OVER = true
@@ -795,7 +819,7 @@ function GameMode:OnThink()
 		i = i - 1
 	end
 
---	print("i = "..i)
+	--	print("i = "..i)
 
 	return 1
 end
@@ -819,7 +843,7 @@ function GameMode:OnTeamKillCredit(keys)
 	if GetMapName() == Map1v1() then
 		if nTeamKills == IMBA_1V1_SCORE then
 			GAME_WINNER_TEAM = killer_team
-			GameRules:SetGameWinner( killer_team )
+			GameRules:SetGameWinner(killer_team)
 		end
 	end
 
@@ -835,7 +859,9 @@ function GameMode:OnTeamKillCredit(keys)
 			PlayerResource:IncrementDeathstreak(victim_id)
 
 			-- Show Deathstreak message
-			if PlayerResource:GetPlayer(victim_id):GetAssignedHero() == nil then return end
+			if PlayerResource:GetPlayer(victim_id):GetAssignedHero() == nil then
+				return
+			end
 			local victim_hero = PlayerResource:GetPlayer(victim_id):GetAssignedHero()
 			local victim_player_name = PlayerResource:GetPlayerName(victim_id)
 			local victim_death_streak = PlayerResource:GetDeathstreak(victim_id)
@@ -843,26 +869,26 @@ function GameMode:OnTeamKillCredit(keys)
 
 			if victim_death_streak then
 				if victim_death_streak >= 3 then
-					Notifications:BottomToAll({hero = victim_hero:GetUnitName(), duration = line_duration})
-					Notifications:BottomToAll({text = victim_player_name.." ", duration = line_duration, continue = true})
+					Notifications:BottomToAll({ hero = victim_hero:GetUnitName(), duration = line_duration })
+					Notifications:BottomToAll({ text = victim_player_name .. " ", duration = line_duration, continue = true })
 				end
 
 				if victim_death_streak == 3 then
-					Notifications:BottomToAll({text = "#imba_deathstreak_3", duration = line_duration, continue = true})
+					Notifications:BottomToAll({ text = "#imba_deathstreak_3", duration = line_duration, continue = true })
 				elseif victim_death_streak == 4 then
-					Notifications:BottomToAll({text = "#imba_deathstreak_4", duration = line_duration, continue = true})
+					Notifications:BottomToAll({ text = "#imba_deathstreak_4", duration = line_duration, continue = true })
 				elseif victim_death_streak == 5 then
-					Notifications:BottomToAll({text = "#imba_deathstreak_5", duration = line_duration, continue = true})
+					Notifications:BottomToAll({ text = "#imba_deathstreak_5", duration = line_duration, continue = true })
 				elseif victim_death_streak == 6 then
-					Notifications:BottomToAll({text = "#imba_deathstreak_6", duration = line_duration, continue = true})
+					Notifications:BottomToAll({ text = "#imba_deathstreak_6", duration = line_duration, continue = true })
 				elseif victim_death_streak == 7 then
-					Notifications:BottomToAll({text = "#imba_deathstreak_7", duration = line_duration, continue = true})
+					Notifications:BottomToAll({ text = "#imba_deathstreak_7", duration = line_duration, continue = true })
 				elseif victim_death_streak == 8 then
-					Notifications:BottomToAll({text = "#imba_deathstreak_8", duration = line_duration, continue = true})
+					Notifications:BottomToAll({ text = "#imba_deathstreak_8", duration = line_duration, continue = true })
 				elseif victim_death_streak == 9 then
-					Notifications:BottomToAll({text = "#imba_deathstreak_9", duration = line_duration, continue = true})
+					Notifications:BottomToAll({ text = "#imba_deathstreak_9", duration = line_duration, continue = true })
 				elseif victim_death_streak >= 10 then
-					Notifications:BottomToAll({text = "#imba_deathstreak_10", duration = line_duration, continue = true})
+					Notifications:BottomToAll({ text = "#imba_deathstreak_10", duration = line_duration, continue = true })
 				end
 			end
 		end
