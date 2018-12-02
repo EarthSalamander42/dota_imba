@@ -57,6 +57,7 @@ function GameMode:OnFirstPlayerLoaded()
 	if GetMapName() ~= Map1v1() and GetMapName() ~= MapOverthrow() then
 		_G.ROSHAN_SPAWN_LOC = Entities:FindByClassname(nil, "npc_dota_roshan_spawner"):GetAbsOrigin()
 		Entities:FindByClassname(nil, "npc_dota_roshan_spawner"):RemoveSelf()
+
 		if GetMapName() ~= Map1v1() then
 			if IMBA_DIRETIDE == true then
 				ROSHAN_ENT = CreateUnitByName("npc_diretide_roshan", _G.ROSHAN_SPAWN_LOC, true, nil, nil, DOTA_TEAM_NEUTRALS)

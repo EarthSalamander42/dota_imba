@@ -125,3 +125,25 @@ function HeroSelection:UnsafeRandomHero()
 		curstate = curstate + 1
 	end
 end
+
+local load_attachment_modifier = false
+function HeroSelection:Attachments(hero)
+	if load_attachment_modifier == false then
+		load_attachment_modifier = true
+		LinkLuaModifier( "modifier_animation_translate_permanent_string", "libraries/modifiers/modifier_animation_translate_permanent_string.lua", LUA_MODIFIER_MOTION_NONE )
+	end
+
+	hero_name = string.gsub(hero:GetUnitName(), "npc_dota_hero_", "")
+
+	if hero_name == "sohei" then
+		-- hero.hand = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/heroes/sohei/so_weapon.vmdl"})
+		hero.hand = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/heroes/sohei/weapon/immortal/thunderlord.vmdl"})
+
+		-- lock to bone
+		hero.hand:FollowEntity(hero, true)
+
+		-- hero:AddNewModifier(hero, nil, 'modifier_animation_translate_permanent_string', {translate = 'walk'})
+		-- hero:AddNewModifier(hero, nil, 'modifier_animation_translate_permanent_string', {translate = 'odachi'})
+		-- hero:AddNewModifier(hero, nil, 'modifier_animation_translate_permanent_string', {translate = 'aggressive'})
+	end
+end

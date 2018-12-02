@@ -34,6 +34,15 @@ function GameMode:_InitGameMode()
 	GameRules:SetFirstBloodActive( ENABLE_FIRST_BLOOD )
 	GameRules:SetHideKillMessageHeaders( HIDE_KILL_BANNERS )
 	GameRules:SetCustomGameSetupAutoLaunchDelay( AUTO_LAUNCH_DELAY )
+
+	GameRules:GetGameModeEntity():SetRuneEnabled(DOTA_RUNE_DOUBLEDAMAGE , true) --Double Damage
+	GameRules:GetGameModeEntity():SetRuneEnabled(DOTA_RUNE_HASTE, true) --Haste
+	GameRules:GetGameModeEntity():SetRuneEnabled(DOTA_RUNE_ILLUSION, true) --Illusion
+	GameRules:GetGameModeEntity():SetRuneEnabled(DOTA_RUNE_INVISIBILITY, true) --Invis
+	GameRules:GetGameModeEntity():SetRuneEnabled(DOTA_RUNE_REGENERATION, true) --Regen
+	GameRules:GetGameModeEntity():SetRuneEnabled(DOTA_RUNE_ARCANE, true) --Arcane
+--	GameRules:GetGameModeEntity():SetRuneEnabled(DOTA_RUNE_BOUNTY, false) --Bounty
+
 	if IMBA_PICK_SCREEN == false then
 		GameRules:SetStartingGold(HERO_INITIAL_GOLD[GetMapName()])
 	else
@@ -92,7 +101,6 @@ function GameMode:_InitGameMode()
 	ListenToGameEvent("player_reconnected", Dynamic_Wrap(self, 'OnPlayerReconnect'), self)
 	ListenToGameEvent("player_chat", Dynamic_Wrap(self, 'OnPlayerChat'), self)
 	ListenToGameEvent('dota_player_learned_ability', Dynamic_Wrap(self, 'OnPlayerLearnedAbility'), self)
-	ListenToGameEvent('last_hit', Dynamic_Wrap(self, 'OnLastHit'), self)
 	ListenToGameEvent('dota_team_kill_credit', Dynamic_Wrap(self, 'OnTeamKillCredit'), self)
 	ListenToGameEvent('dota_rune_activated_server', Dynamic_Wrap(self, 'OnRuneActivated'), self)
 

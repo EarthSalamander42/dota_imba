@@ -365,9 +365,6 @@ function HeroSelection:GiveStartingHero(playerId, heroName, dev)
 		hero:MakeVisibleToTeam(DOTA_TEAM_BADGUYS, 0.5)
 	end)
 
-	-- Set up initial level 1 experience bounty
-	hero:SetCustomDeathXP(HERO_XP_BOUNTY_PER_LEVEL[1])
-
 	-- Set up initial level
 	local starting_level = tonumber(CustomNetTables:GetTableValue("game_options", "initial_level")["1"])
 	if starting_level == nil then starting_level = 1 end
@@ -596,28 +593,6 @@ function HeroSelection:GetSteamAccountID(playerID)
 		end
 	end
 	return tostring(steamid)
-end
-
-local load_attachment_modifier = false
-function HeroSelection:Attachments(hero)
-	if load_attachment_modifier == false then
-		load_attachment_modifier = true
-		LinkLuaModifier( "modifier_animation_translate_permanent_string", "libraries/modifiers/modifier_animation_translate_permanent_string.lua", LUA_MODIFIER_MOTION_NONE )
-	end
-
-	hero_name = string.gsub(hero:GetUnitName(), "npc_dota_hero_", "")
-
-	if hero_name == "sohei" then
-		-- hero.hand = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/heroes/sohei/so_weapon.vmdl"})
-		hero.hand = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/heroes/sohei/weapon/immortal/thunderlord.vmdl"})
-
-		-- lock to bone
-		hero.hand:FollowEntity(hero, true)
-
-		-- hero:AddNewModifier(hero, nil, 'modifier_animation_translate_permanent_string', {translate = 'walk'})
-		-- hero:AddNewModifier(hero, nil, 'modifier_animation_translate_permanent_string', {translate = 'odachi'})
-		-- hero:AddNewModifier(hero, nil, 'modifier_animation_translate_permanent_string', {translate = 'aggressive'})
-	end
 end
 
 -- Sends this hero's nonhidden abilities to the client

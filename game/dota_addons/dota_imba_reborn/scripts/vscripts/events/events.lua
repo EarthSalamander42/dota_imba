@@ -29,12 +29,12 @@ function GameMode:OnGameRulesStateChange(keys)
 
 		-- temporary (from stat-collection)
 		-- Build players array
-		local players = {}
-		for playerID = 0, PlayerResource:GetPlayerCount() - 1 do
-			if PlayerResource:IsValidPlayerID(playerID) then
-				players.steamID64 = PlayerResource:GetSteamID(playerID)
-			end
-		end
+--		local players = {}
+--		for playerID = 0, PlayerResource:GetPlayerCount() - 1 do
+--			if PlayerResource:IsValidPlayerID(playerID) then
+--				players.steamID64 = PlayerResource:GetSteamID(playerID)
+--			end
+--		end
 
 --		local req = CreateHTTPRequestScriptVM("GET", "http://51.75.249.243/file_name.php")
 --		local req = CreateHTTPRequestScriptVM("GET", "http://51.75.249.243/opt/lampp/htdocs/dota2imba/db_scripts/fichier.php")
@@ -224,17 +224,6 @@ function GameMode:OnGameRulesStateChange(keys)
 			end
 
 			api:CompleteGame()
-
---			CustomGameEventManager:Send_ServerToAllClients("end_game", {
---				players = players,
---				info = {
---					winner = GAME_WINNER_TEAM,
---					id = 0,
---					radiant_score = GetTeamHeroKills(2),
---					dire_score = GetTeamHeroKills(3),
---				},
---			})
---		end)
 	end
 end
 
@@ -264,11 +253,7 @@ function GameMode:OnNPCSpawned(keys)
 			end
 
 			return
-		elseif npc:IsRealHero() then
-			if api:IsDonator(npc:GetPlayerOwnerID()) then
-				npc:AddNewModifier(npc, nil, "modifier_imba_donator", {})
-			end
-
+		elseif npc:IsRealHero() or npc:IsFakeHero() then
 			if npc.first_spawn ~= true then
 				npc.first_spawn = true
 
@@ -507,23 +492,6 @@ function GameMode:OnEntityKilled( keys )
 	end
 end
 
-function GameMode:OnItemPickedUp(keys)
-	local unitEntity = nil
-	if keys.UnitEntitIndex then
-		unitEntity = EntIndexToHScript(keys.UnitEntitIndex)
-	elseif keys.HeroEntityIndex then
-		unitEntity = EntIndexToHScript(keys.HeroEntityIndex)
-	end
-
-	local itemEntity = EntIndexToHScript(keys.ItemEntityIndex)
-	local player = PlayerResource:GetPlayer(keys.PlayerID)
-	local itemname = keys.itemname
-end
-
-function GameMode:OnPlayerReconnect(keys)
-	
-end
-
 function GameMode:OnAbilityUsed(keys)
 	local player = PlayerResource:GetPlayer(keys.PlayerID)
 	local abilityname = keys.abilityname
@@ -548,7 +516,9 @@ function GameMode:OnPlayerLevelUp(keys)
 	if hero == nil then return end
 	local level = keys.level
 	local hero_attribute = hero:GetPrimaryAttribute()
-	if hero_attribute == nil then return end
+	if hero_attribute == nil or hero:IsFakeHero() then return end
+
+	hero:SetCustomDeathXP(HERO_XP_BOUNTY_PER_LEVEL[level])
 
 	if hero:GetLevel() > 25 then
 		if hero:GetUnitName() == "npc_dota_hero_meepo" then
@@ -828,19 +798,6 @@ function GameMode:OnThink()
 --	print("i = "..i)
 
 	return 1
-end
-
--- TODO: FORMAT LATER
--- A player last hit a creep, a tower, or a hero
-function GameMode:OnLastHit(keys)
-	if keys.PlayerID == -1 then return end
-	local isFirstBlood = keys.FirstBlood == 1
-	local isHeroKill = keys.HeroKill == 1
-	local isTowerKill = keys.TowerKill == 1
-	local player = PlayerResource:GetPlayer(keys.PlayerID)
-	if player == nil then return end
-	local killedEnt = EntIndexToHScript(keys.EntKilled)
-
 end
 
 -- A player killed another player in a multi-team context

@@ -62,7 +62,7 @@ else
 	IMBA_RUNE_REGEN_MANA_BASE = 20
 	IMBA_RUNE_REGEN_MANA_PCT = 2 -- %
 
-	IMBA_RUNE_ALLIES_RADIUS_EFFECT = 900
+	IMBA_RUNE_ALLIES_RADIUS_EFFECT = 1800
 end
 
 CustomNetTables:SetTableValue("game_options", "runes",

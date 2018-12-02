@@ -690,6 +690,9 @@ function imba_zuus_cloud:OnSpellStart()
 end
 
 modifier_zuus_nimbus_storm = class({})
+
+function modifier_zuus_nimbus_storm:IsHidden() return true end
+
 function modifier_zuus_nimbus_storm:OnCreated(keys)
 	if IsServer() then
 		self.caster 				= self:GetCaster()

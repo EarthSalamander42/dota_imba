@@ -114,7 +114,7 @@ function modifier_companion:OnIntervalThink()
 		elseif hero_distance < min_distance then
 			companion:Stop()
 		elseif hero_distance > blink_distance then
-			companion:Blink(hero_origin + RandomVector(RandomFloat(200, 300), true, false)
+			companion:Blink(hero_origin + RandomVector(RandomInt(150, 300)), true, false)
 			companion:Stop()
 		elseif hero_distance > min_distance then
 			if not companion:IsMoving() then

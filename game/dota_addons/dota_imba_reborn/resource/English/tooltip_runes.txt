@@ -117,3 +117,19 @@
 
 "DOTA_Tooltip_modifier_imba_invisibility_rune"						"Invisibility Rune"
 "DOTA_Tooltip_modifier_imba_invisibility_rune_Description"			"Invisible with +20%% movement speed. Attacking removes invisibility, dealing 200%% damage."
+
+// Vanilla runes override
+"DOTA_Tooltip_rune_doubledamage"				"Double Damage"
+"DOTA_Tooltip_rune_doubledamage_description"	"Increases base damage <font color='#FF7800'>and main attribute</font> by 100%. 50% of the effect is shared with allies in 1800 radius."
+"DOTA_Tooltip_rune_arcane"						"Arcane"
+"DOTA_Tooltip_rune_arcane_description"			"Reduces cooldowns by 30%. <font color='#FF7800'>IMBA: </font> Reduces mana costs by 40%, increases spell amplification by 50%. 50% of the effect is shared with allies in 1800 radius."
+"DOTA_Tooltip_rune_haste"						"Haste"
+"DOTA_Tooltip_rune_haste_description"			"Increases movement speed <font color='#FF7800'>by 100% and remove the 550 movement speed limit.</font><font color='#FF7800'>IMBA: </font> Increase attack speed by 160. 50% of the effect is shared with allies in 1800 radius."
+"DOTA_Tooltip_rune_illusion"					"Illusion"
+"DOTA_Tooltip_rune_illusion_description"		"Conjures <font color='#FF7800'>5 </font> illusions of your hero which deal <font color='#FF7800'>100%</font> damage.  Melee illusions take 200% damage.  Ranged illusions take 300% damage.  Illusions last 75 seconds."
+"DOTA_Tooltip_rune_invisibility"				"Invisibility"
+"DOTA_Tooltip_rune_invisibility_description"	"Become invisible for 45 seconds. This invisibility is broken by attacking or by using an ability or item. <font color='#FF7800'>IMBA: </font> Next attack deals 200% damage. Movement speed increased by 20%."
+"DOTA_Tooltip_rune_regeneration"				"Regeneration"
+"DOTA_Tooltip_rune_regeneration_description"	"Regenerates health and mana to maximum. <font color='#FF7800'>IMBA: </font> Grants 25 stacks, the regen stops only if stacks reach 0. 50% of the effect is shared with allies in 1800 radius."
+"DOTA_Tooltip_rune_bounty"						"Bounty"
+"DOTA_Tooltip_rune_bounty_description"			"Grants bonus Gold. <font color='#FF7800'>IMBA: </font> Multiplied by IMBA global gold multiplier."

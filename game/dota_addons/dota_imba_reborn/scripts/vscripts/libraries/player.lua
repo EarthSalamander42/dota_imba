@@ -1,7 +1,7 @@
-function CDOTA_BaseNPC:CreateIllusion(duration, inc, out, pos, mod, ab)
-	local player = self:GetPlayerOwner()
-	if player == nil then return end
+-- Extension of CDOTA_BaseNPC class.
 
+-- some of the code is based on yahnich's version of Boss Hunters illusion system
+function CDOTA_BaseNPC:CreateIllusion(duration, inc, out, pos, mod, ab)
 	if pos == nil then
 		pos = self:GetAbsOrigin() + RandomVector(RandomInt(50, 100))
 	else
@@ -11,23 +11,76 @@ function CDOTA_BaseNPC:CreateIllusion(duration, inc, out, pos, mod, ab)
 	local illusion = CreateUnitByName(self:GetUnitName(), pos, true, self, nil, self:GetTeamNumber())
 	FindClearSpaceForUnit(self, self:GetAbsOrigin() + RandomVector(RandomInt(10, 100)), true)
 	FindClearSpaceForUnit(illusion, illusion:GetAbsOrigin(), true)
+
+	illusion:SetBaseMaxHealth(self:GetMaxHealth())
+	illusion:SetMaxHealth(self:GetMaxHealth())
 	illusion:SetHealth(self:GetHealth())
-	illusion:SetMana(self:GetMana())
+
+--	illusion:SetAverageBaseDamage(self:GetAverageBaseDamage(), 15)
+--	illusion:SetPhysicalArmorBaseValue(self:GetPhysicalArmorValue())
+	illusion:SetBaseAttackTime(self:GetBaseAttackTime())
+	illusion:SetBaseMoveSpeed(self:GetIdealSpeed())
+
+	illusion:SetOriginalModel(self:GetModelName())
+	illusion:SetModel(self:GetModelName())
+	illusion:SetModelScale(self:GetModelScale())
+
+--	local moveCap = DOTA_UNIT_CAP_MOVE_NONE
+--	if self:HasMovementCapability() then
+--		moveCap = DOTA_UNIT_CAP_MOVE_GROUND
+--		if self:HasFlyMovementCapability() then
+--			moveCap = DOTA_UNIT_CAP_MOVE_FLY
+--		end
+--	end
+--	illusion:SetMoveCapability( moveCap )
+--	illusion:SetAttackCapability(self:GetOriginalAttackCapability())
+	illusion:SetUnitName(self:GetUnitName())
+	if self:IsRangedAttacker() then
+		illusion:SetRangedProjectileName(self:GetRangedProjectileName())
+	end
+
+--	illusion:SetMana(self:GetMana())
+
+	-- billion thanks for that to yahnich
+	for _, wearable in ipairs(self:GetChildren()) do
+		if wearable:GetClassname() == "dota_item_wearable" and wearable:GetModelName() ~= "" then
+			local newWearable = CreateUnitByName("wearable_dummy", illusion:GetAbsOrigin(), false, nil, nil, self:GetTeam())
+			newWearable:SetOriginalModel(wearable:GetModelName())
+			newWearable:SetModel(wearable:GetModelName())
+			newWearable:AddNewModifier(nil, nil, "modifier_wearable", {})
+			newWearable:AddNewModifier(self, ability, "modifier_kill", { duration = duration })
+			newWearable:AddNewModifier(self, ability, "modifier_illusion", { duration = duration })
+			if specIllusionModifier then
+				newWearable:AddNewModifier(self, ability, specIllusionModifier, { duration = duration })
+			end
+			newWearable:MakeIllusion()
+			newWearable:SetParent(illusion, nil)
+			newWearable:FollowEntity(illusion, true)
+			-- newWearable:SetRenderColor(100,100,255)
+			Timers:CreateTimer(1, function()
+				if illusion and not illusion:IsNull() and illusion:IsAlive() then
+					return 0.25
+				else
+					UTIL_Remove( newWearable )
+				end
+			end)
+		end
+	end
+
 	illusion:SetForwardVector(self:GetForwardVector())
+	illusion:AddNewModifier(self, ability, "modifier_kill", {duration = duration}) -- I'm not sure this is needed, but just in case
 	illusion:AddNewModifier(self, nil, "modifier_illusion", {duration = duration, outgoing_damage = out, incoming_damage = inc})
 	illusion:SetControllableByPlayer(self:GetPlayerID(), true)
 
-	if self:IsRealHero() then
-		illusion:SetPlayerID(player:GetPlayerID())
-		illusion:SetOwner(player)
-		local targetLevel = self:GetLevel()
-		for i=1,targetLevel-1 do
-			illusion:HeroLevelUp(false)
-		end
-		illusion:SetAbilityPoints(0)
-	else
-		illusion:SetOwner(self)
+	illusion:SetPlayerID(self:GetPlayerID())
+	illusion:SetOwner(self:GetPlayerOwner())
+
+	local targetLevel = self:GetLevel()
+	for i=1,targetLevel-1 do
+		illusion:HeroLevelUp(false)
 	end
+
+	illusion:SetAbilityPoints(0)
 
 	for abilitySlot=0,15 do
 		local ability = self:GetAbilityByIndex(abilitySlot)
@@ -70,7 +123,7 @@ function CDOTA_BaseNPC:CreateIllusion(duration, inc, out, pos, mod, ab)
 end
 
 function CDOTA_BaseNPC:SetupHealthBarLabel()
-	print("Donator level:", api:GetDonatorStatus(self:GetPlayerOwnerID()))
+	print("Donator Player ID / status:", self:GetPlayerOwnerID(), api:GetDonatorStatus(self:GetPlayerOwnerID()))
 	if api:IsDonator(self:GetPlayerOwnerID()) ~= false then
 		local donator_level = api:GetDonatorStatus(self:GetPlayerOwnerID())
 		if donator_level and donator_level > 0 then
@@ -796,7 +849,7 @@ function CDOTA_BaseNPC:Blink(position, bTeamOnlyParticle, bPlaySound)
 	if self.blink_end_effect or self:GetPlayerOwner().blink_end_effect then blink_end_effect = self.blink_end_effect end
 	if bPlaySound == true then EmitSoundOn("DOTA_Item.BlinkDagger.Activate", self) end
 	if bTeamOnlyParticle == true then
-		local blink_pfx = ParticleManager:CreateParticleForTeam(blink_effect, PATTACH_ABSORIGIN, companion, companion:GetTeamNumber())
+		local blink_pfx = ParticleManager:CreateParticleForTeam(blink_effect, PATTACH_ABSORIGIN, self, self:GetTeamNumber())
 		ParticleManager:ReleaseParticleIndex(blink_pfx)
 	else
 		ParticleManager:FireParticle(blink_effect, PATTACH_ABSORIGIN, self, {[0] = self:GetAbsOrigin()})
@@ -804,10 +857,20 @@ function CDOTA_BaseNPC:Blink(position, bTeamOnlyParticle, bPlaySound)
 	FindClearSpaceForUnit(self, position, true)
 	ProjectileManager:ProjectileDodge( self )
 	if bTeamOnlyParticle == true then
-		local blink_end_pfx = ParticleManager:CreateParticleForTeam(blink_end_effect, PATTACH_ABSORIGIN, companion, companion:GetTeamNumber())
+		local blink_end_pfx = ParticleManager:CreateParticleForTeam(blink_end_effect, PATTACH_ABSORIGIN, self, self:GetTeamNumber())
 		ParticleManager:ReleaseParticleIndex(blink_end_pfx)
 	else
 		ParticleManager:FireParticle(blink_end_effect, PATTACH_ABSORIGIN, self, {[0] = self:GetAbsOrigin()})
 	end
 	if bPlaySound == true then EmitSoundOn("DOTA_Item.BlinkDagger.NailedIt", self) end
+end
+
+function CDOTA_BaseNPC:GetAverageBaseDamage()
+	return (self:GetBaseDamageMax() + self:GetBaseDamageMin())/2
+end
+
+function CDOTA_BaseNPC:SetAverageBaseDamage(average, variance) -- variance is in percent (50 not 0.5)
+	local var = variance or ((self:GetBaseDamageMax() / self:GetBaseDamageMin()) * 100 )
+	self:SetBaseDamageMax(math.ceil(average*(1+(var/100))))
+	self:SetBaseDamageMin(math.floor(average*(1-(var/100))))
 end

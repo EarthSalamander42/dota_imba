@@ -70,7 +70,6 @@ function Mutation:ARDMReplacehero(old_hero)
 
 	hero:ModifyGold(old_gold, true, DOTA_ModifyGold_Unspecified)
 	hero:AddExperience(old_hero:GetCurrentXP(), false, false)
-	hero:SetCustomDeathXP(HERO_XP_BOUNTY_PER_LEVEL[1])
 	hero.killstreak = 0
 	hero:AddNewModifier(hero, nil, "modifier_custom_mechanics", {})
 --	PlayerResource:SetCustomPlayerColor(old_hero:GetPlayerID(), PLAYER_COLORS[old_hero:GetPlayerID()][1], PLAYER_COLORS[old_hero:GetPlayerID()][2], PLAYER_COLORS[old_hero:GetPlayerID()][3])

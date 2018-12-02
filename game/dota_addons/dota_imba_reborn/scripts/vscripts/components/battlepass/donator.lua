@@ -117,11 +117,15 @@ function DonatorCompanion(ID, unit_name, js)
 		end
 	end
 
+	-- set mini doom as default companion if something goes wrong
+	if unit_name == nil then
+		unit_name = "npc_imba_donator_companion_demi_doom"
+	end
+
 	if IMBA_DONATOR_COMPANION[tostring(PlayerResource:GetSteamID(ID))] and not js then 
 		unit_name = IMBA_DONATOR_COMPANION[tostring(PlayerResource:GetSteamID(ID))]
 	end
 
-	if unit_name == nil then return end
 	local hero = PlayerResource:GetPlayer(ID):GetAssignedHero()
 	local color = hero:GetFittingColor()
 	local model

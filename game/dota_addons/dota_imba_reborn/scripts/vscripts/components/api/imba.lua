@@ -163,7 +163,7 @@ end
 
 function api:GetGameID()
 	if IsInToolsMode() then
-		return "5786014685" + RandomInt(1, 100000) -- random to make it work
+		return "5786014685" + RandomInt(1, 100000) -- random to make it work in tools
 	end
 
 	return tonumber(tostring(GameRules:GetMatchID()))
@@ -184,15 +184,18 @@ end
 function api:CompleteGame(successCallback, failCallback)
 	local players = {}
 
-	for id = 0, DOTA_MAX_TEAM_PLAYERS do
+	for id = 0, PlayerResource:GetPlayerCount() - 1 do
 		if PlayerResource:IsValidPlayerID(id) then
- 
 			local items = {}
- 
-			for slot = 0, 15 do
-				local item = data.hero:GetItemInSlot(slot)
-				if item ~= nil then
-					table.insert(items, tostring(item:GetAbilityName()))
+			local hero = PlayerResource:GetSelectedHeroEntity(id)
+			if hero ~= nil then
+--				player.hero = hero:GetUnitName()
+
+				for slot = 0, 15 do
+					local item = hero:GetItemInSlot(slot)
+					if item ~= nil then
+						table.insert(items, tostring(item:GetAbilityName()))
+					end
 				end
 			end
 
@@ -204,11 +207,6 @@ function api:CompleteGame(successCallback, failCallback)
 				team = tonumber(PlayerResource:GetTeam(id)),
 				items = items
 			}
-
-			local hero = PlayerResource:GetSelectedHeroEntity(id)
-			if hero ~= nil then
-				player.hero = hero:GetUnitName()
-			end
 
 			local steamid = PlayerResource:GetSteamID(id)
 
@@ -228,6 +226,16 @@ function api:CompleteGame(successCallback, failCallback)
 		game_id = self.game_id,
 		players = players
 	});
+
+	CustomGameEventManager:Send_ServerToAllClients("end_game", {
+		players = players,
+		info = {
+			winner = api:GetWinnerTeam(),
+			id = api:GetGameID(),
+			radiant_score = GetTeamHeroKills(2),
+			dire_score = GetTeamHeroKills(3),
+		},
+	})
 end
 
 function api:Message(message)

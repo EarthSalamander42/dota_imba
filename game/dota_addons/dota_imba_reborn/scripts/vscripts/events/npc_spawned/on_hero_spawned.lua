@@ -15,17 +15,24 @@
 
 -- first time a real hero spawn
 function GameMode:OnHeroFirstSpawn(hero)
+	hero:AddNewModifier(hero, nil, "modifier_imba_donator", {})
+
+	if hero:IsIllusion() then
+		hero:SetupHealthBarLabel()
+		return
+	end -- Illusions will not be affected by scripts written under this line
+
 	if hero == nil or hero:IsFakeHero() then return end
 
 	if IMBA_PICK_SCREEN == false then
-		-- Set up initial level 1 experience bounty
-		hero:SetCustomDeathXP(HERO_XP_BOUNTY_PER_LEVEL[1])
-
 		-- Set up initial level
 		local starting_level = tonumber(CustomNetTables:GetTableValue("game_options", "initial_level")["1"])
 		if starting_level == nil then starting_level = 1 end
 		if starting_level and starting_level > 1 then
 			hero:AddExperience(XP_PER_LEVEL_TABLE[starting_level], DOTA_ModifyXP_CreepKill, false, true)
+			hero:SetCustomDeathXP(HERO_XP_BOUNTY_PER_LEVEL[starting_level])
+		else
+			hero:SetCustomDeathXP(HERO_XP_BOUNTY_PER_LEVEL[1])
 		end
 
 		-- add modifier for custom mechanics handling
@@ -47,8 +54,7 @@ function GameMode:OnHeroFirstSpawn(hero)
 			TurboCourier:Init(hero)
 		end
 
-		-- temporary fix
-		if not hero:GetUnitName() == "npc_dota_hero_monkey_king" then
+		if hero:GetUnitName() == "npc_dota_hero_sohei" then
 			HeroSelection:Attachments(hero)
 		end
 
@@ -64,23 +70,20 @@ function GameMode:OnHeroFirstSpawn(hero)
 		end
 	end
 
-	if hero:IsIllusion() then
-		hero:SetupHealthBarLabel()
-		return
-	end -- Illusions will not be affected by scripts written under this line
-
 	if api:IsDonator(hero:GetPlayerID()) and PlayerResource:GetConnectionState(hero:GetPlayerID()) ~= 1 then
 		if hero:GetUnitName() ~= FORCE_PICKED_HERO then
 			if api:GetDonatorStatus(hero:GetPlayerID()) == 10 then
 				hero:SetOriginalModel("models/items/courier/kanyu_shark/kanyu_shark.vmdl")
 				PlayerResource:SetCameraTarget(hero:GetPlayerID(), hero)
+			else
+				if api:GetDonatorStatus(hero:GetPlayerID()) ~= 6 then
+					-- TODO: fixdishit
+					Timers:CreateTimer(1.5, function()
+						local steam_id = tostring(PlayerResource:GetSteamID(hero:GetPlayerID()))
+						DonatorCompanion(hero:GetPlayerID(), nil)
+					end)
+				end
 			end
-
-			-- TODO: fixdishit
---			Timers:CreateTimer(1.5, function()
---				local steam_id = tostring(PlayerResource:GetSteamID(hero:GetPlayerID()))
---				DonatorCompanion(hero:GetPlayerID(), api.imba.get_player_info(steam_id).companion_file)
---			end)
 		end
 	end
 

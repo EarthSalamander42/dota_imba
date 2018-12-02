@@ -26,10 +26,6 @@ LinkLuaModifier("modifier_imba_lifesteal_boots", "components/items/item_lifestea
 LinkLuaModifier("modifier_imba_lifesteal_boots_unique", "components/items/item_lifesteal_boots", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_lifesteal_boots_buff", "components/items/item_lifesteal_boots", LUA_MODIFIER_MOTION_NONE)
 
-function item_imba_lifesteal_boots:GetAbilityTextureName()
-	return "custom/imba_lifesteal_boots"
-end
-
 function item_imba_lifesteal_boots:GetIntrinsicModifierName()
 	return "modifier_imba_lifesteal_boots"
 end
@@ -118,6 +114,9 @@ modifier_imba_lifesteal_boots_unique = class ({})
 function modifier_imba_lifesteal_boots_unique:IsHidden() 	return true end
 function modifier_imba_lifesteal_boots_unique:IsPurgable() 	return false end
 function modifier_imba_lifesteal_boots_unique:IsDebuff() 	return false end
+function modifier_imba_lifesteal_boots_unique:IsPurgeException() return false end
+function modifier_imba_lifesteal_boots_unique:IsPermanent() return true end
+function modifier_imba_lifesteal_boots_unique:RemoveOnDeath() return false end
 
 function modifier_imba_lifesteal_boots_unique:OnCreated()
 	-- Ability specials

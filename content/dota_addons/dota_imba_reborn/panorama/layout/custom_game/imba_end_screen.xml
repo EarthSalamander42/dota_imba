@@ -33,7 +33,7 @@
 -->
 		<Panel class="end-screen">
 			<Panel id="es-victory-info">
-				<Label id="es-victory-info-text" text="The many face god Victory!" />
+				<Label id="es-victory-info-text" text="Whoops! Something went wrong with the server." />
 				<Label id="es-game-time-text" text="00:00" />
 			</Panel>
 			<Panel id="es-teams">

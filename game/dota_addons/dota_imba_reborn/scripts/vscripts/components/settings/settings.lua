@@ -221,7 +221,7 @@ else
 end
 
 IMBA_BASE_FRANTIC_VALUE = 25
-IMBA_SUPER_FRANTIC_VALUE = 50
+IMBA_SUPER_FRANTIC_VALUE = 40 -- Do not exceed 40% EVER, causing many broken spells to be used permanently
 CustomNetTables:SetTableValue("game_options", "frantic", {frantic = IMBA_BASE_FRANTIC_VALUE, super_frantic = IMBA_SUPER_FRANTIC_VALUE})
 
 IMBA_FRANTIC_VALUE = IMBA_BASE_FRANTIC_VALUE
@@ -401,16 +401,10 @@ XP_PER_LEVEL_TABLE[25] =	26905	-- +2500
 
 -- XP AWARDED per level table (how much bounty heroes are worth beyond level 25)
 HERO_XP_BOUNTY_PER_LEVEL = {}
-HERO_XP_BOUNTY_PER_LEVEL[1] = 125
-HERO_XP_BOUNTY_PER_LEVEL[2] = 170
-HERO_XP_BOUNTY_PER_LEVEL[3] = 215
-HERO_XP_BOUNTY_PER_LEVEL[4] = 260
-HERO_XP_BOUNTY_PER_LEVEL[5] = 305
-HERO_XP_BOUNTY_PER_LEVEL[6] = 350
-HERO_XP_BOUNTY_PER_LEVEL[7] = 395
+HERO_XP_BOUNTY_PER_LEVEL[1] = 100
 
-for i = 8, 500 do
-	HERO_XP_BOUNTY_PER_LEVEL[i] = HERO_XP_BOUNTY_PER_LEVEL[i-1] + 135
+for i = 2, 500 do
+	HERO_XP_BOUNTY_PER_LEVEL[i] = HERO_XP_BOUNTY_PER_LEVEL[i-1] + 40
 end
 
 USE_MEME_SOUNDS = true														-- Should we use meme/fun sounds on abilities occasionally?
@@ -579,6 +573,10 @@ IMBA_WEATHER_EFFECT[1] = "particles/rain_fx/econ_snow.vpcf"
 
 IMBA_ABILITIES_IGNORE_CDR = {
 	"imba_venomancer_plague_ward",
+}
+
+IMBA_MODIFIER_IGNORE_FRANTIC = {
+	"modifier_legion_commander_duel",
 }
 
 IMBA_DISARM_IMMUNITY = {

@@ -98,7 +98,15 @@ function GameMode:ModifierFilter( keys )
 		if modifier_owner ~= nil and IsMutationMap() or IsSuperFranticMap() then
 			modifier_class = modifier_owner:FindModifierByName(modifier_name)
 			if modifier_class == nil then return end
-			if string.find(modifier_name, "imba") and modifier_class.IsDebuff and modifier_class:IsDebuff() == true and modifier_class.IgnoreTenacity == nil or (modifier_class.IgnoreTenacity and modifier_class:IgnoreTenacity() == false) then
+			local ignore_frantic = false
+
+			for _, modifier in pairs(IMBA_MODIFIER_IGNORE_FRANTIC) do
+				if modifier == modifier_name then
+					ignore_frantic = true
+				end
+			end
+
+			if ignore_frantic == false and string.find(modifier_name, "imba") and modifier_class.IsDebuff and modifier_class:IsDebuff() == true and modifier_class.IgnoreTenacity == nil or (modifier_class.IgnoreTenacity and modifier_class:IgnoreTenacity() == false) then
 				if keys.duration > 0 then	
 					local original_duration = keys.duration
 					local actual_duration = original_duration
@@ -111,6 +119,16 @@ function GameMode:ModifierFilter( keys )
 
 --					print("New duration:", actual_duration)
 
+					keys.duration = actual_duration
+				end
+			else
+				-- works fine for legion commander's duel, imba modifiers are using IgnoreTenacity
+				if ignore_frantic == true then
+					local original_duration = keys.duration
+					local actual_duration = original_duration
+					local status_resistance = modifier_owner:GetStatusResistance()
+
+					actual_duration = actual_duration / ((100 - (status_resistance * 100)) / 100)
 					keys.duration = actual_duration
 				end
 			end

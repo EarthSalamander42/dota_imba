@@ -45,6 +45,16 @@
 				</Panel>
 			</Panel>
 
+			<Panel id="imba-loading-title-promote">
+				<Panel class="down">
+					<Label id="imba-loading-title-text-promote" text="Translate Dota IMBA in your native language!"/>
+					<Label id="imba-loading-content-text-promote" html="true" text="You can translate Dota IMBA on Transifex website, it's easy! Just create an account and subscribe to a language. Give it a try!" />
+					<Button id="imba-loading-link-promote" onactivate="DOTADisplayURL('https://www.transifex.com/dota-imba/dota-imba/dashboard/');">
+						<Label id="imba-loading-link-text-promote" text="Click here to redirect to Transifex!" />
+					</Button>
+				</Panel>
+			</Panel>
+
 			<Panel id="imba-loading-title-patreon">
 				<Panel class="down">
 					<Label id="imba-loading-title-text-patreon" text="Patreon"/>
