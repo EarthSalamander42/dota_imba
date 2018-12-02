@@ -244,8 +244,9 @@ function api:GetLoggingConfiguration(callback)
 	-- TODO: implement this; do nothing for now
 end
 
-function api:Message(message)
+function api:Message(message, type)
 
+	type = type or 1
 	local data = json.null
 	local messageType = type(message)
 
@@ -258,7 +259,7 @@ function api:Message(message)
 	safe(function ()
 
 		self:Request("game-event", nil, nil, "POST", {
-			type = 1,
+			type = type,
 			game_id = self.data.game_id,
 			message = data
 		})

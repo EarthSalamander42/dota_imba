@@ -373,7 +373,7 @@ if Log == nil then
 			level = level,
 			content = tostring(content),
 			trace = trace
-		})
+		}, 2)
 	end
 
 	ConsoleLogTarget = {
