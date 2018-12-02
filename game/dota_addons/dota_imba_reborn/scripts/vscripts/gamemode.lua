@@ -5,7 +5,7 @@ end
 -- clientside KV loading
 require('addon_init')
 
--- require('libraries/adv_log')
+require('libraries/adv_log')
 require('libraries/animations')
 require('libraries/keyvalues')
 require('libraries/modifiers')
