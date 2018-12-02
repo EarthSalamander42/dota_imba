@@ -2,7 +2,7 @@
 
 (function () {
 
-GameEvents.Subscribe("hall_of_fame", HallOfFame);
+// GameEvents.Subscribe("hall_of_fame", HallOfFame);
 
 var placeholder = false
 
@@ -52,6 +52,7 @@ if (placeholder == true) {
 
 function EndScoreboard() {
 	GameEvents.Subscribe("end_game", function (args) {
+		$.Msg(args)
 
 		HideIMR($.GetContextPanel())
 
@@ -368,7 +369,7 @@ function RawTimetoGameTime(time) {
 	timerText += sec;
 	return timerText;
 }
-
+/*
 function CloseHallOfFame() {
 	$("#HallOfFame").style.visibility = "collapse";
 }
@@ -423,6 +424,6 @@ function HallOfFame() {
 		});
 	});
 }
-
+*/
 EndScoreboard()
 })();

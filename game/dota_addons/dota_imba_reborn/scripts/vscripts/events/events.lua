@@ -218,26 +218,6 @@ function GameMode:OnGameRulesStateChange(keys)
 		--			if api.imba.data ~= nil then
 		--				game_id = api.imba.data.id or 0
 		--			end
-
-		local players = {}
-
-		for i = 0, PlayerResource:GetPlayerCount() - 1 do
-			players.id = i
-		end
-
-		api:CompleteGame(function(data, payload)
-
-			CustomGameEventManager:Send_ServerToAllClients("end_game", {
-				players = payload.players,
-				data = data,
-				info = {
-					winner = GAME_WINNER_TEAM,
-					id = api:GetGameID(),
-					radiant_score = GetTeamHeroKills(2),
-					dire_score = GetTeamHeroKills(3),
-				},
-			})
-		end)
 	end
 end
 

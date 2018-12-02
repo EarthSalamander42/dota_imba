@@ -169,76 +169,96 @@ function api:GetAllPlayerSteamIds()
 	return players
 end
 
-function api:RegisterGame()
-	self:Request("game-register", function(data)
-		self.game_id = data.game_id
-		self.players = data.players
+function api:GetMatchID()
+	if IsInToolsMode() then
+		return tostring(RandomInt(1000000000, 9000000000))
+	end
+
+	return tostring(GameRules:GetMatchID())
+end
+
+ListenToGameEvent('player_connect_full', function(keys)
+	api:Request("game-register", function(data)
+		api.game_id = data.game_id
+		api.players = data.players
 	end, nil, "POST", {
 		map = GetMapName(),
-		match_id = tostring(GameRules:GetMatchID()),
-		players = self:GetAllPlayerSteamIds(),
-		cheat_mode = self:IsCheatGame()
+		match_id = api:GetMatchID(),
+		players = api:GetAllPlayerSteamIds(),
+		cheat_mode = api:IsCheatGame()
 	});
-end
+end, nil)
 
-function api:CompleteGame(successCallback, failCallback)
-	local players = {}
+ListenToGameEvent('game_rules_state_change', function(keys)
+	if GameRules:State_Get() == DOTA_GAMERULES_STATE_POST_GAME then
+		local players = {}
 
-	for id = 0, PlayerResource:GetPlayerCount() - 1 do
-		if PlayerResource:IsValidPlayerID(id) then
-			local items = {}
-			local heroEntity = PlayerResource:GetSelectedHeroEntity(id)
-			local hero = json.null
+		for id = 0, PlayerResource:GetPlayerCount() - 1 do
+			if PlayerResource:IsValidPlayerID(id) then
+				local items = {}
+				local heroEntity = PlayerResource:GetSelectedHeroEntity(id)
+				local hero = json.null
 
-			if heroEntity ~= nil then
-				hero = tostring(heroEntity:GetUnitName())
+				if heroEntity ~= nil then
+					hero = tostring(heroEntity:GetUnitName())
 
-				for slot = 0, 15 do
-					local item = heroEntity:GetItemInSlot(slot)
-					if item ~= nil then
-						table.insert(items, tostring(item:GetAbilityName()))
+					for slot = 0, 15 do
+						local item = heroEntity:GetItemInSlot(slot)
+						if item ~= nil then
+							table.insert(items, tostring(item:GetAbilityName()))
+						end
 					end
 				end
+
+				local player = {
+					kills = tonumber(PlayerResource:GetKills(id)),
+					deaths = tonumber(PlayerResource:GetDeaths(id)),
+					assists = tonumber(PlayerResource:GetAssists(id)),
+					hero = hero,
+					team = tonumber(PlayerResource:GetTeam(id)),
+					items = items
+				}
+
+				local steamid = PlayerResource:GetSteamID(id)
+
+				if steamid == 0 then
+					steamid = id
+				end
+
+				players[steamid] = player
+				players.id = i
 			end
-
-			local player = {
-				kills = tonumber(PlayerResource:GetKills(id)),
-				deaths = tonumber(PlayerResource:GetDeaths(id)),
-				assists = tonumber(PlayerResource:GetAssists(id)),
-				hero = hero,
-				team = tonumber(PlayerResource:GetTeam(id)),
-				items = items
-			}
-
-			local steamid = PlayerResource:GetSteamID(id)
-
-			if steamid == 0 then
-				steamid = id
-			end
-
-			players[steamid] = player
 		end
+
+		local winnerTeam = api:GetWinnerTeam()
+		if winnerTeam == nil or winnerTeam == 0 then
+			winnerTeam = json.null
+		end
+
+		local payload = {
+			winner = winnerTeam,
+			game_id = api.game_id,
+			players = players,
+			radiant_score = api:GetKillsForTeam(2),
+			dire_score = api:GetKillsForTeam(3)
+		}
+
+		api:Request("game-complete", function(data)
+			CustomGameEventManager:Send_ServerToAllClients("end_game", {
+				players = players,
+				data = data,
+				info = {
+					winner = api:GetWinnerTeam(),
+					id = api:GetApiGameId(),
+					radiant_score = api:GetTeamHeroKills(2),
+					dire_score = api:GetTeamHeroKills(3),
+				},
+			})
+
+			successCallback(data, payload);
+		end, failCallback, "POST", payload);
 	end
-
-	local winnerTeam = self:GetWinnerTeam()
-	if winnerTeam == nil or winnerTeam == 0 then
-		winnerTeam = json.null
-	end
-
-	local payload = {
-		winner = winnerTeam,
-		game_id = self.game_id,
-		players = players,
-		radiant_score = self:GetKillsForTeam(2),
-		dire_score = self:GetKillsForTeam(3)
-	}
-
-	self:Request("game-complete", function(data)
-		-- this code is executed when a game is completed
-		successCallback(data, payload);
-	end, failCallback, "POST", payload);
-
-end
+end, nil)
 
 function api:GetLoggingConfiguration(callback)
 	-- TODO: implement this; do nothing for now
@@ -256,7 +276,7 @@ function api:Message(message, type)
 		data = tostring(message)
 	end
 
-	safe(function ()
+	xpcall(function ()
 
 		self:Request("game-event", nil, nil, "POST", {
 			type = type,
@@ -264,5 +284,5 @@ function api:Message(message, type)
 			message = data
 		})
 
-	end)
+	end, debug.traceback)
 end

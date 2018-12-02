@@ -156,7 +156,7 @@
 	"item_yasha_and_kaya"					"REMOVE"
 
 	//Banned items
-//	"item_imba_ironleaf_boots"				"REMOVE"
+	"item_imba_ironleaf_boots"				"REMOVE"
 
 	//Imba Removed Items
 	"item_imba_triumvirate"					"REMOVE"
@@ -177,7 +177,6 @@
 	"item_imba_blade_mail"					"REMOVE"
 	"item_recipe_imba_spell_fencer"			"REMOVE"
 	"item_imba_spell_fencer"				"REMOVE"
-
 
 	//=================================================================================================================
 	//-----------------------------------------------------------------------------------------------------------------
