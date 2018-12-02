@@ -127,6 +127,7 @@ function EndScoreboard() {
 		$.Each(direPlayerIds, function (id) { direPlayers.push(loadPlayer(id)); });
 
 		var createPanelForPlayer = function (player, parent) {
+			$.Msg(player)
 			// Create a new Panel for this player
 			var pp = $.CreatePanel("Panel", parent, "es-player-" + player.id);
 			pp.AddClass("es-player");
@@ -335,6 +336,8 @@ function EndScoreboard() {
 		};
 
 		// Create the panels for the players
+		$.Msg(radiantPlayers)
+		$.Msg(player)
 		$.Each(radiantPlayers, function (player) {
 			createPanelForPlayer(player, panels.radiantPlayers);
 		});

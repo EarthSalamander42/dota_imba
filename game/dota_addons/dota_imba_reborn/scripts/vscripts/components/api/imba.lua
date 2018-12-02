@@ -211,6 +211,7 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 				end
 
 				local player = {
+					id = id,
 					kills = tonumber(PlayerResource:GetKills(id)),
 					deaths = tonumber(PlayerResource:GetDeaths(id)),
 					assists = tonumber(PlayerResource:GetAssists(id)),
@@ -219,14 +220,13 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 					items = items
 				}
 
-				local steamid = PlayerResource:GetSteamID(id)
+				local steamid = tostring(PlayerResource:GetSteamID(id))
 
 				if steamid == 0 then
-					steamid = id
+					steamid = tostring(id)
 				end
 
 				players[steamid] = player
-				players.id = i
 			end
 		end
 
@@ -246,16 +246,16 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 		api:Request("game-complete", function(data)
 			CustomGameEventManager:Send_ServerToAllClients("end_game", {
 				players = players,
-				data = data,
+--				data = data,
 				info = {
 					winner = api:GetWinnerTeam(),
 					id = api:GetApiGameId(),
-					radiant_score = api:GetTeamHeroKills(2),
-					dire_score = api:GetTeamHeroKills(3),
+					radiant_score = api:GetKillsForTeam(2),
+					dire_score = api:GetKillsForTeam(3),
 				},
 			})
 
-			successCallback(data, payload);
+--			successCallback(data, payload);
 		end, failCallback, "POST", payload);
 	end
 end, nil)
