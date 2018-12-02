@@ -173,8 +173,9 @@ function GetPlayerInfoIXP() -- yet it has too much useless loops, format later. 
 		})
 	end
 
-	GetTopPlayersIXP()
-	GetTopPlayersIMR()
+	-- TODO: fixdishit
+--	GetTopPlayersIXP()
+--	GetTopPlayersIMR()
 end
 
 function GetTopPlayersIXP()
