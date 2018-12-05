@@ -6,26 +6,7 @@ api = class({});
 local baseUrl = "http://api.dota2imba.org/imba/"
 local timeout = 5000
 
--- Listeners
-ListenToGameEvent('player_connect_full', function(keys)
-	api:Request("game-register", function(data)
-		api.game_id = data.game_id
-		api.players = data.players
-	end, nil, "POST", {
-		map = GetMapName(),
-		match_id = api:GetMatchID(),
-		players = api:GetAllPlayerSteamIds(),
-		cheat_mode = api:IsCheatGame()
-	});
-end, nil)
-
-ListenToGameEvent('game_rules_state_change', function(keys)
-	if GameRules:State_Get() == DOTA_GAMERULES_STATE_POST_GAME then
-		api:CompleteGame(function(data, payload)
-
-		end)
-	end
-end, nil)
+local native_print = print
 
 -- Utils
 function api:GetUrl(endpoint)
@@ -51,7 +32,7 @@ end
 
 function api:GetDonatorStatus(player_id)
 	if not PlayerResource:IsValidPlayerID(player_id) then
-		print("api:GetDonatorStatus: Player ID not valid!")
+		native_print("api:GetDonatorStatus: Player ID not valid!")
 		return 0
 	end
 
@@ -65,14 +46,14 @@ function api:GetDonatorStatus(player_id)
 	if self.players[steamid] ~= nil then
 		return self.players[steamid].status
 	else
-		--		print("api:GetDonatorStatus: api players steamid not valid!")
+		--		native_print("api:GetDonatorStatus: api players steamid not valid!")
 		return 0
 	end
 end
 
 function api:GetPlayerXP(player_id)
 	if not PlayerResource:IsValidPlayerID(player_id) then
-		print("api:GetPlayerXP: Player ID not valid!")
+		native_print("api:GetPlayerXP: Player ID not valid!")
 		return 0
 	end
 
@@ -80,14 +61,14 @@ function api:GetPlayerXP(player_id)
 
 	-- if the game isnt registered yet, we have no way to know player xp
 	if self.players == nil then
-		print("api:GetPlayerXP() self.players == nil")
+		native_print("api:GetPlayerXP() self.players == nil")
 		return 0
 	end
 
 	if self.players[steamid] ~= nil then
 		return self.players[steamid].xp
 	else
-		print("api:GetPlayerXP: api players steamid not valid!")
+		native_print("api:GetPlayerXP: api players steamid not valid!")
 		return 0
 	end
 end
@@ -121,10 +102,6 @@ function api:GetAllPlayerSteamIds()
 end
 
 function api:GetMatchID()
-	if IsInToolsMode() then
-		return tostring(RandomInt(1000000000, 90000000000))
-	end
-
 	return tostring(GameRules:GetMatchID())
 end
 
@@ -132,9 +109,9 @@ function api:GetLoggingConfiguration(callback)
 	-- TODO: implement this; do nothing for now
 end
 
-function api:Message(message, type)
+function api:Message(message, _type)
 
-	type = type or 1
+	_type = _type or 1
 	local data = json.null
 	local messageType = type(message)
 
@@ -144,19 +121,25 @@ function api:Message(message, type)
 		data = tostring(message)
 	end
 
-	xpcall(function ()
-
-		self:Request("game-event", nil, nil, "POST", {
-			type = type,
-			game_id = self.data.game_id,
+	local status, err = xpcall(function ()
+		api:Request("game-event", nil, nil, "POST", {
+			type = _type,
+			game_id = api.game_id or 0,
 			message = data
 		})
+	end , function(err)
 
-	end, debug.traceback)
+		if err == nil then
+			err = "Unknown Error"
+		end
+
+		native_print(err)
+	end)
 end
 
 -- Core
 function api:Request(endpoint, okCallback, failCallback, method, payload)
+
 	if okCallback == nil then
 		okCallback = function()
 		end
@@ -170,8 +153,14 @@ function api:Request(endpoint, okCallback, failCallback, method, payload)
 	if method == nil then
 		method = "GET"
 	end
-
+	
 	local request = CreateHTTPRequestScriptVM(method, self:GetUrl(endpoint))
+
+	if request == nil then
+		native_print("Failed to create http request. skipping")
+		return failCallback()
+	end
+
 	request:SetHTTPRequestAbsoluteTimeoutMS(timeout)
 	request:SetHTTPRequestHeaderValue("X-Dota-Server-Key", GetDedicatedServerKey("2"))
 
@@ -181,8 +170,6 @@ function api:Request(endpoint, okCallback, failCallback, method, payload)
 		request:SetHTTPRequestRawPostBody("application/json", encoded)
 	end
 
-	print("Performing request to " .. endpoint)
-
 	request:Send(function(result)
 
 		local code = result.StatusCode;
@@ -191,7 +178,7 @@ function api:Request(endpoint, okCallback, failCallback, method, payload)
 			if (code == nil) then
 				code = 0
 			end
-			print("Request to " .. endpoint .. " failed with message " .. message .. " (" .. tostring(code) .. ")")
+			native_print("Request to " .. endpoint .. " failed with message " .. message .. " (" .. tostring(code) .. ")")
 			failCallback();
 		end
 
@@ -225,6 +212,22 @@ function api:Request(endpoint, okCallback, failCallback, method, payload)
 			end
 		end
 	end);
+end
+
+function api:RegisterGame(callback)
+
+	self:Request("game-register", function(data)
+		api.game_id = data.game_id
+		api.players = data.players
+		if callback ~= nil then
+			callback()
+		end
+	end, nil, "POST", {
+		map = GetMapName(),
+		match_id = self:GetMatchID(),
+		players = self:GetAllPlayerSteamIds(),
+		cheat_mode = self:IsCheatGame()
+	});
 end
 
 function api:CompleteGame(successCallback, failCallback)
@@ -275,26 +278,15 @@ function api:CompleteGame(successCallback, failCallback)
 
 	local payload = {
 		winner = winnerTeam,
-		game_id = api.game_id,
+		game_id = self.game_id,
 		players = players,
-		radiant_score = api:GetKillsForTeam(2),
-		dire_score = api:GetKillsForTeam(3)
+		radiant_score = self:GetKillsForTeam(2),
+		dire_score = self:GetKillsForTeam(3)
 	}
 
-	api:Request("game-complete", function(data)
-		print(players)
-		print(data)
-		CustomGameEventManager:Send_ServerToAllClients("end_game", {
-			players = players,
-			data = data,
-			info = {
-				winner = self:GetWinnerTeam(),
-				id = self:GetApiGameId(),
-				radiant_score = self:GetKillsForTeam(2),
-				dire_score = self:GetKillsForTeam(3),
-			},
-		})
-
-		successCallback(data, payload);
+	self:Request("game-complete", function(data)
+		if successCallback ~= nil then
+			successCallback(data, payload);
+		end
 	end, failCallback, "POST", payload);
 end
