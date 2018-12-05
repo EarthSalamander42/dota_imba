@@ -365,43 +365,6 @@ function HeroSelection:GiveStartingHero(playerId, heroName, dev)
 		hero:MakeVisibleToTeam(DOTA_TEAM_BADGUYS, 0.5)
 	end)
 
-	-- Set up initial level
-	local starting_level = tonumber(CustomNetTables:GetTableValue("game_options", "initial_level")["1"])
-	if starting_level == nil then starting_level = 1 end
-	if starting_level and starting_level > 1 then
-		hero:AddExperience(XP_PER_LEVEL_TABLE[starting_level], DOTA_ModifyXP_CreepKill, false, true)
-	end
-
-	-- Set up initial gold
-	-- local has_randomed = PlayerResource:HasRandomed(playerId)
-	--	local has_randomed = HeroSelection.playerPickState[playerId].random_state
-	local initial_gold = tonumber(CustomNetTables:GetTableValue("game_options", "initial_gold")["1"]) or 1400
-
-	if has_randomed or IMBA_PICK_MODE_ALL_RANDOM or IMBA_PICK_MODE_ALL_RANDOM_SAME_HERO then
-		PlayerResource:SetGold(playerId, initial_gold + 200, false)
-	else
-		PlayerResource:SetGold(playerId, initial_gold, false)
-	end
-
-	-- add modifier for custom mechanics handling
-	hero:AddNewModifier(hero, nil, "modifier_custom_mechanics", {})
-
-	-- Initialize innate hero abilities
-	hero:InitializeInnateAbilities()
-
-	-- Initialize Invoker's innate invoke buff
-	-- TODO: This should be removed when another solution is found, like giving Invoker a hidden passive ability to apply the modifier
-	if hero:HasAbility("invoker_invoke") then
-		LinkLuaModifier("modifier_imba_invoke_buff", "components/modifiers/modifier_imba_invoke_buff.lua", LUA_MODIFIER_MOTION_NONE)
-		hero:AddNewModifier(hero, hero:FindAbilityByName("invoker_invoke"), "modifier_imba_invoke_buff", {})
-	end
-
-	Imbattlepass:AddItemEffects(hero)
-
-	if USE_TEAM_COURIER == false then
-		TurboCourier:Init(hero)
-	end
-
 	Timers:CreateTimer(1.0, function()
 		if wisp then
 			UTIL_Remove(wisp)

@@ -1633,7 +1633,7 @@ function imba_juggernaut_omni_slash:OnSpellStart()
 		end
 		
 		--if not self.caster:HasTalent("special_bonus_imba_juggernaut_7") then
-			PlayerResource:SetCameraTarget(self.caster:GetPlayerID(), self.caster)
+			self.caster:CenterCameraOnEntity(self.caster)
 		--end
 
 		FindClearSpaceForUnit(self.caster, self.target:GetAbsOrigin() + RandomVector(128), false)
@@ -1659,10 +1659,6 @@ function imba_juggernaut_omni_slash:OnSpellStart()
 		ParticleManager:SetParticleControl(trail_pfx, 0, self.previous_position)
 		ParticleManager:SetParticleControl(trail_pfx, 1, self.current_position)
 		ParticleManager:ReleaseParticleIndex(trail_pfx)
-		
-		Timers:CreateTimer(FrameTime(), function()
-			PlayerResource:SetCameraTarget(self.caster:GetPlayerID(), nil)
-		end)
 		
 		if self.target:TriggerSpellAbsorb(self) then
 			return nil
@@ -1971,9 +1967,7 @@ function modifier_imba_omni_slash_caster:GetModifierProcAttack_BonusDamage_Physi
 end
 
 function modifier_imba_omni_slash_caster:OnDestroy()
-	if IsServer() then
-		PlayerResource:SetCameraTarget(self.caster:GetPlayerID(), nil)
-		
+	if IsServer() then		
 		self:GetAbility():SetActivated(true)
 
 		-- Re-enable Blade Fury during Omnislash (vanilla)

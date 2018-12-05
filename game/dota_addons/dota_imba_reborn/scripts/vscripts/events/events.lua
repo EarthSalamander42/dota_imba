@@ -123,15 +123,15 @@ function GameMode:OnGameRulesStateChange(keys)
 			end
 		end
 	elseif newState == DOTA_GAMERULES_STATE_PRE_GAME then
-		--		api.imba.event(api.events.entered_pre_game)
+--		api.imba.event(api.events.entered_pre_game)
 
-		--		if api.imba.data.donators then
-		--			CustomNetTables:SetTableValue("game_options", "donators", api.imba.get_donators())
-		--		end
+--		if api.imba.data.donators then
+--			CustomNetTables:SetTableValue("game_options", "donators", api.imba.get_donators())
+--		end
 
-		--		if api.imba.data.developers then
-		--			CustomNetTables:SetTableValue("game_options", "developers", api.imba.get_developers())
-		--		end
+--		if api.imba.data.developers then
+--			CustomNetTables:SetTableValue("game_options", "developers", api.imba.get_developers())
+--		end
 
 		if GetMapName() == MapOverthrow() then
 			GoodCamera:AddNewModifier(GoodCamera, nil, "modifier_overthrow_gold_xp_granter", {})

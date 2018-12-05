@@ -367,10 +367,7 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 							unit:AddNewModifier(unit, nil, "modifier_mutation_wormhole_cooldown", {duration = IMBA_MUTATION_WORMHOLE_PREVENT_DURATION})
 							FindClearSpaceForUnit(unit, current_wormholes[13-i], true)
 							if unit.GetPlayerID and unit:GetPlayerID() then
-								PlayerResource:SetCameraTarget(unit:GetPlayerID(), unit)
-								Timers:CreateTimer(0.1, function()
-									PlayerResource:SetCameraTarget(unit:GetPlayerID(), nil)
-								end)
+								unit:CenterCameraOnEntity(unit)
 							end
 						end
 					end
@@ -536,10 +533,7 @@ function Mutation:OnHeroSpawn(hero)
 				hero:SetMana(hero:GetMana() * 50 / 100)
 			end
 
-			PlayerResource:SetCameraTarget(hero:GetPlayerID(), hero)
-			Timers:CreateTimer(0.1, function()
-				PlayerResource:SetCameraTarget(hero:GetPlayerID(), nil)
-			end)
+			hero:CenterCameraOnEntity(hero)
 
 			hero.reincarnation = false
 		end)

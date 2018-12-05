@@ -78,7 +78,10 @@ function api:GetApiGameId()
 end
 
 function api:IsCheatGame()
-	-- TODO: cookies implement this
+	if CustomNetTables:GetTableValue("game_options", "game_count").value == 1 then
+		return true
+	end
+
 	return false
 end
 

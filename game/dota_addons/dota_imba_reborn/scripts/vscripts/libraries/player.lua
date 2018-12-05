@@ -123,7 +123,7 @@ function CDOTA_BaseNPC:CreateIllusion(duration, inc, out, pos, mod, ab)
 end
 
 function CDOTA_BaseNPC:SetupHealthBarLabel()
-	print("Donator Player ID / status:", self:GetPlayerOwnerID(), api:GetDonatorStatus(self:GetPlayerOwnerID()))
+--	print("Donator Player ID / status:", self:GetPlayerOwnerID(), api:GetDonatorStatus(self:GetPlayerOwnerID()))
 	if api:IsDonator(self:GetPlayerOwnerID()) ~= false then
 		local donator_level = api:GetDonatorStatus(self:GetPlayerOwnerID())
 		if donator_level and donator_level > 0 then
@@ -826,6 +826,19 @@ function CDOTA_BaseNPC:AddRangeIndicator(hCaster, hAbility, sAttribute, iRange, 
 		bRemoveOnDeath = bRemoveOnDeath
 	})
 	return modifier
+end
+
+function CDOTA_BaseNPC:CenterCameraOnEntity(hTarget, iDuration)
+	PlayerResource:SetCameraTarget(self:GetPlayerID(), hTarget)
+	if iDuration == nil then iDuration = FrameTime() end
+	if iDuration ~= -1 then
+		Timers:CreateTimer(iDuration, function()
+			PlayerResource:SetCameraTarget(self:GetPlayerID(), nil)
+--			Timers:CreateTimer(0.1, function() --fail-safe
+--				PlayerResource:SetCameraTarget(self:GetPlayerID(), nil)
+--			end)
+		end)
+	end
 end
 
 -- credits to yahnich for the following
