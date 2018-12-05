@@ -440,9 +440,7 @@ function SetupTower(tower)
 end
 
 function GetReductionFromArmor(armor)
-	local m = 0.06 * armor
-
-	return 100 * (1 - m / ( 1 + math.abs(m)))
+	return ( 0.052 * armor ) / ( 0.9 + 0.048 * armor)
 end
 
 function CalculateReductionFromArmor_Percentage(armorOffset, armor)

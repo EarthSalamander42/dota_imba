@@ -48,9 +48,12 @@ function GameMode:_InitGameMode()
 	else
 		GameRules:SetStartingGold(0)
 	end
+
 	GameRules:LockCustomGameSetupTeamAssignment(not IsInToolsMode())
+
 	if IMBA_PICK_SCREEN == false then
-		GameRules:SetHeroSelectionTime(AP_GAME_TIME)
+		GameRules:GetGameModeEntity():SetDraftingHeroPickSelectTimeOverride(AP_GAME_TIME)
+		GameRules:GetGameModeEntity():SetDraftingBanningTimeOverride(AP_BAN_TIME)
 	end
 
 	-- This is multiteam configuration stuff

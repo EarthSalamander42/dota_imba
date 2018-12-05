@@ -211,13 +211,6 @@ function GameMode:OnGameRulesStateChange(keys)
 				return 60.0
 			end)
 		end
-	elseif newState == DOTA_GAMERULES_STATE_POST_GAME then
-		--		api.imba.event(api.events.entered_post_game)
-		--		api.imba.complete(function (error, players)
-		--			local game_id = 0
-		--			if api.imba.data ~= nil then
-		--				game_id = api.imba.data.id or 0
-		--			end
 	end
 end
 

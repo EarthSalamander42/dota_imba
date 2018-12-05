@@ -14,7 +14,7 @@
 
 require('components/settings/settings_donator')
 
-IMBA_VERSION = "7.08d"
+IMBA_VERSION = "7.08f"
 
 -- Picking screen constants
 PICKING_SCREEN_OVER = false
@@ -37,11 +37,15 @@ end
 AUTO_LAUNCH_DELAY = 5.0					-- How long should we wait for the host to setup the game, after all players have loaded in?
 STRATEGY_TIME = 0.0						-- How long should strategy time last?
 SHOWCASE_TIME = 0.0						-- How long should showcase time last?
+AP_BAN_TIME = 10.0
+if IsInToolsMode() then
+	AP_BAN_TIME = 0.0
+end
 if GetMapName() == MapOverthrow() then
 	AP_GAME_TIME = 45.0
 	PRE_GAME_TIME = 10.0 + AP_GAME_TIME
 else
-	AP_GAME_TIME = 60.0					-- How long should we let people select their hero?
+	AP_GAME_TIME = 45.0					-- How long should we let people select their hero?
 	PRE_GAME_TIME = 90 + AP_GAME_TIME	-- How long after people select their heroes should the horn blow and the game start?
 end
 TREE_REGROW_TIME = 180.0				-- How long should it take individual trees to respawn after being cut down/destroyed?
@@ -616,7 +620,10 @@ IMBA_DIRETIDE = false -- Should we enable diretide?
 
 if IMBA_PICK_SCREEN == false then
 	PRE_GAME_TIME = 90.0
-	STRATEGY_TIME = 30.0
+
+	if not IsInToolsMode() then
+		STRATEGY_TIME = 30.0
+	end
 end
 
 if GetMapName() == MapDiretide() then

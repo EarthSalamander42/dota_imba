@@ -188,7 +188,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"32.5 25 17.5 10"
+		"AbilityCooldown"				"36 32 28 24"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -211,13 +211,13 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"ms_bonus_pct"			"12"
+				"ms_bonus_pct"			"10 15 20 25"
 				"LinkedSpecialBonus"	"special_bonus_imba_sven_3"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"armor_bonus"			"5 10 15 20"
+				"hp_shield"				"110 220 330 440"
 			}
 			"03"
 			{
@@ -227,18 +227,12 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"tenacity_self_pct"		"20 28 36 44"
+				"radius"				"900"
 			}
 			"05"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"900"
-			}
-
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"duration"				"8"
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"10.0"
 			}
 		}
 	}

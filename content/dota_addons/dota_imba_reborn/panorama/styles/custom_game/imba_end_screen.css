@@ -23,14 +23,9 @@
 		border: 0px solid gold;
 	}
 
-	50%
-	{
-		border: 2px solid gold;
-	}
-
 	100%
 	{
-		border: 0px solid gold;
+		border: 2px solid gold;
 	}
 }
 
@@ -334,7 +329,7 @@
 	background-color: gradient( linear, 0% 0%, 0% 100%, from( #006E2E ),  to( #00540E ) );
 	border-radius: 1px;
 	width: 0%;
-	height: 22px;
+	height: 24px;
 	transition-property: width;
 	transition-duration: 2s;
 }

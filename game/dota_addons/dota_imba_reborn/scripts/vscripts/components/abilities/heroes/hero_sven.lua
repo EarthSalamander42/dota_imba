@@ -351,60 +351,74 @@ function modifier_imba_warcry:RemoveOnDeath() return true end
 -------------------------------------------
 
 function modifier_imba_warcry:DeclareFunctions()
-	local decFuns =
-		{
-			MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-			MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
-			MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS,
-			MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING
-		}
-	return decFuns
+	return {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
+		MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS,
+		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING,
+		MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK,
+	}
 end
 
 function modifier_imba_warcry:GetActivityTranslationModifiers()
 	if self:GetParent():GetName() == "npc_dota_hero_sven" then
 		return "sven_warcry"
 	end
+
 	return 0
 end
 
 function modifier_imba_warcry:OnCreated()
-	local ability = self:GetAbility()
-	local caster = self:GetCaster()
-	local parent = self:GetParent()
+	self.ms_bonus_pct = self:GetAbility():GetTalentSpecialValueFor("ms_bonus_pct")
+	self.armor_bonus = self:GetAbility():GetSpecialValueFor("armor_bonus")
+	self.tenacity_pct = self:GetAbility():GetSpecialValueFor("tenacity_bonus_pct")
+	self.hp_shield = self:GetAbility():GetSpecialValueFor("hp_shield")
 
-	self.ms_bonus_pct = ability:GetTalentSpecialValueFor("ms_bonus_pct")
-	self.armor_bonus = ability:GetSpecialValueFor("armor_bonus")
-	if parent == caster then
-		if IsServer() then
-			caster:EmitSound("Hero_Sven.WarCry")
-			if caster:GetName() == "npc_dota_hero_sven" then
-				caster:EmitSound("sven_sven_ability_warcry_0"..math.random(1,6))
+	if IsServer() then
+		self.shield_size = 100
+
+		if self:GetParent() == self:GetCaster() then
+			self:GetCaster():EmitSound("Hero_Sven.WarCry")
+
+			if self:GetCaster():GetName() == "npc_dota_hero_sven" then
+				self:GetCaster():EmitSound("sven_sven_ability_warcry_0"..math.random(1,6))
 			end
+
+			if self.cast_fx then
+				ParticleManager:DestroyParticle(self.cast_fx, false)
+				ParticleManager:ReleaseParticleIndex(self.cast_fx)
+			end
+
+			self.cast_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_sven/sven_spell_warcry.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
+			ParticleManager:SetParticleControlEnt(self.cast_fx, 0, self:GetCaster(), PATTACH_POINT_FOLLOW, nil, self:GetCaster():GetAbsOrigin(), true)
+			ParticleManager:SetParticleControlEnt(self.cast_fx, 1, self:GetCaster(), PATTACH_POINT_FOLLOW, nil, self:GetCaster():GetAbsOrigin(), true)
+			ParticleManager:SetParticleControlEnt(self.cast_fx, 2, self:GetCaster(), PATTACH_POINT_FOLLOW, nil, self:GetCaster():GetAbsOrigin(), true)
+			ParticleManager:SetParticleControlEnt(self.cast_fx, 4, self:GetCaster(), PATTACH_POINT_FOLLOW, nil, self:GetCaster():GetAbsOrigin(), true)
+			self:AddParticle(self.cast_fx, false, false, -1, false, false)
 		end
-		local caster_loc = caster:GetAbsOrigin()
-		self.tenacity_pct = ability:GetSpecialValueFor("tenacity_self_pct")
-		if self.cast_fx then
-			ParticleManager:DestroyParticle(self.cast_fx, false)
-			ParticleManager:ReleaseParticleIndex(self.cast_fx)
+
+		if self.buff_fx then
+			ParticleManager:DestroyParticle(self.buff_fx, false)
+			ParticleManager:ReleaseParticleIndex(self.buff_fx)
 		end
-		self.cast_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_sven/sven_spell_warcry.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
-		ParticleManager:SetParticleControlEnt(self.cast_fx, 0, caster, PATTACH_POINT_FOLLOW, nil, caster_loc, true)
-		ParticleManager:SetParticleControlEnt(self.cast_fx, 1, caster, PATTACH_POINT_FOLLOW, nil, caster_loc, true)
-		ParticleManager:SetParticleControlEnt(self.cast_fx, 2, caster, PATTACH_POINT_FOLLOW, nil, caster_loc, true)
-		ParticleManager:SetParticleControlEnt(self.cast_fx, 4, caster, PATTACH_POINT_FOLLOW, nil, caster_loc, true)
-		self:AddParticle(self.cast_fx, false, false, -1, false, false)
-	else
-		self.tenacity_pct = ability:GetSpecialValueFor("tenacity_bonus_pct")
+
+		self.buff_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_sven/sven_warcry_buff.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+		-- Proper Particle attachment courtesy of BMD. Only PATTACH_POINT_FOLLOW will give the proper shield position
+		ParticleManager:SetParticleControlEnt(self.buff_fx, 0, self:GetParent(), PATTACH_POINT_FOLLOW, nil, self:GetParent():GetAbsOrigin(), true)
+		ParticleManager:SetParticleControlEnt(self.buff_fx, 1, self:GetParent(), PATTACH_OVERHEAD_FOLLOW, nil, self:GetParent():GetAbsOrigin(), true)
+		self:AddParticle(self.buff_fx, false, false, -1, false, false)
+
+		if self.buff2_fx then
+			ParticleManager:DestroyParticle(self.buff_fx, false)
+			ParticleManager:ReleaseParticleIndex(self.buff_fx)
+		end
+
+		self.buff2_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_sven/sven_warcry_buff_shield.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
+		ParticleManager:SetParticleControl(self.buff2_fx, 0, self:GetParent():GetAbsOrigin() + Vector(0, 0, 0))
+		ParticleManager:SetParticleControl(self.buff2_fx, 1, Vector(self.shield_size, 0, 0))
+		ParticleManager:SetParticleControlEnt(self.buff2_fx, 0, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
+		self:AddParticle(self.buff2_fx, false, false, -1, false, false)
 	end
-	if self.buff_fx then
-		ParticleManager:DestroyParticle(self.buff_fx, false)
-		ParticleManager:ReleaseParticleIndex(self.buff_fx)
-	end
-	self.buff_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_sven/sven_warcry_buff.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
-	ParticleManager:SetParticleControlEnt(self.buff_fx, 0, parent, PATTACH_POINT_FOLLOW, nil, parent:GetAbsOrigin(), true)
-	ParticleManager:SetParticleControlEnt(self.buff_fx, 1, parent, PATTACH_OVERHEAD_FOLLOW, nil, parent:GetAbsOrigin(), true)
-	self:AddParticle(self.buff_fx, false, false, -1, false, false)
 end
 
 function modifier_imba_warcry:OnRefresh()
@@ -421,6 +435,47 @@ end
 
 function modifier_imba_warcry:GetModifierPhysicalArmorBonus()
 	return self.armor_bonus
+end
+
+function modifier_imba_warcry:GetModifierPhysical_ConstantBlock(keys)	
+	-- Block for the smaller value between total current stacks and total damage
+
+--	local real_damage = keys.damage - (keys.damage * GetReductionFromArmor(self:GetParent():GetPhysicalArmorValue()))
+
+	if keys.damage >= self.hp_shield then
+		if self.cast_fx then
+			ParticleManager:DestroyParticle(self.cast_fx, false)
+			ParticleManager:ReleaseParticleIndex(self.cast_fx)
+		end
+
+		if self.buff_fx then
+			ParticleManager:DestroyParticle(self.buff_fx, false)
+			ParticleManager:ReleaseParticleIndex(self.buff_fx)
+		end
+
+		if self.buff2_fx then
+			ParticleManager:DestroyParticle(self.buff2_fx, false)
+			ParticleManager:ReleaseParticleIndex(self.buff2_fx)
+		end
+
+		if self:GetParent():HasModifier("modifier_imba_warcry") then
+			self:GetParent():RemoveModifierByName("modifier_imba_warcry")
+		end
+
+		return self.hp_shield
+	end
+
+	local hit_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_sven/sven_warcry_buff_shield_hit.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
+--	ParticleManager:SetParticleControlEnt(hit_pfx, 0, self:GetParent(), PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
+--	ParticleManager:SetParticleControlEnt(hit_pfx, 1, self:GetParent(), PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", Vector(100, 0, 0), true)
+	ParticleManager:SetParticleControl(hit_pfx, 0, self:GetParent():GetAbsOrigin())
+	ParticleManager:SetParticleControl(hit_pfx, 1, Vector(self.shield_size, 0, 0))
+	self:AddParticle(hit_pfx, false, false, -1, false, false)
+
+	self.hp_shield = self.hp_shield - keys.damage
+	SendOverheadEventMessage(self:GetParent(), OVERHEAD_ALERT_BLOCK , self:GetParent(), math.min(self.hp_shield, keys.damage), self:GetParent())
+
+	return keys.damage
 end
 
 -------------------------------------------

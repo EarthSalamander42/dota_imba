@@ -4,55 +4,9 @@
 
 // GameEvents.Subscribe("hall_of_fame", HallOfFame);
 
-var placeholder = false
-
-if (placeholder == true) {
-	// PLACEHOLDERS: testing purpose only
-	var args = {
-		players: {
-			0: {
-				steamid: 76561198015161808,
-				imr5v5_calibrating: false,
-				imr5v5: 4500,
-				imr5v5_difference: 12,
-				xp: 5000,
-				xp_difference: 100,
-				xp_booster: 10.0, // already includes donator allies 20% share
-				donator_status: 10.0,
-				// GetPlayer lua thing
-			}
-		},
-
-		xp_info: {
-			0: {
-				level: 12,
-				title: 'Legend',
-				earned: 17,
-				steamid: 76561198015161808,
-			},
-
-			1: {
-				level: 12,
-				title: 'Legend',
-				earned: 17,
-				steamid: 76561198015161808,
-			},
-		},
-
-		info: {
-			radiant_score: 100,
-			dire_score: 99,
-			winner: 2,
-
-			ids1: [0],
-			ids2: [1]
-		}
-	};
-}
-
 function EndScoreboard() {
 	GameEvents.Subscribe("end_game", function (args) {
-		$.Msg(args)
+//		$.Msg(args)
 
 		HideIMR($.GetContextPanel())
 
@@ -104,17 +58,18 @@ function EndScoreboard() {
 			var info = Game.GetPlayerInfo(id);
 
 			var result = null;
-			for (var k in playerResults) {
-				if (playerResults[k].steamid == info.player_steamid)
-					return {
-						id: id,
-						info: info,
-						result: playerResults[k]
-					};
+			for (var k in args.data.players) {
+                if (k == info.player_steamid)
+//                	$.Msg(args.data.players[k])
+                    return {
+                        id: id,
+                        info: info,
+                        result: args.data.players[k]
+                    };
 			}
-	
-			$.Msg("WTF");
-			$.Msg(playerResults);
+
+//			$.Msg("WTF");
+//			$.Msg(playerResults);
 
 			return null;
 		};
@@ -127,8 +82,8 @@ function EndScoreboard() {
 		$.Each(direPlayerIds, function (id) { direPlayers.push(loadPlayer(id)); });
 
 		var createPanelForPlayer = function (player, parent) {
-			$.Msg(player)
 			// Create a new Panel for this player
+//			$.Msg(player)
 			var pp = $.CreatePanel("Panel", parent, "es-player-" + player.id);
 			pp.AddClass("es-player");
 			pp.BLoadLayout(playerXmlFile, false, false);
@@ -172,6 +127,23 @@ function EndScoreboard() {
 			values.assists.text = player.info.player_assists;
 			values.gold.text = player.info.player_gold;
 			values.level.text = player.info.player_level;
+
+			// XP
+			var player_table = CustomNetTables.GetTableValue("player_table", player.id.toString());
+			if (player_table) {
+				values.xp.rank.text = Math.floor(player_table.XP) + "/" + Math.floor(player_table.MaxXP);
+				values.xp.level.text = $.Localize("#battlepass_level") + player_table.Lvl;
+				values.xp.rank_name.text = player_table.title;
+				values.xp.rank_name.style.color = player_table.ply_color;
+				values.xp.booster.style.color = player_table.donator_color;
+//				$.Msg(Math.floor(player_table.XP) / Math.floor(player_table.MaxXP))
+//				if (Math.floor(player_table.XP) / Math.floor(player_table.MaxXP) >= 1) {
+//					$.Msg("Level Up!")
+//					values.xp.bar[0].AddClass("level-up");
+//				}
+				var progress = Math.round((100.0 * Math.floor(player_table.XP)) / Math.floor(player_table.MaxXP));
+				values.xp.progress.style.width = progress + "%";
+			}
 
 			// IMR
 			if (player.result != null) {
@@ -239,11 +211,9 @@ function EndScoreboard() {
 				values.rank1v1.text = "N/A";
 			}
 
-			var diff = player.result.xp_difference;
-
+//			$.Msg(player)
 			if (player.result != null) {
-				var xp = Math.floor(player.result.xp);
-				var xpDiff = Math.floor(diff);
+				var xpDiff = Math.floor(player.result.xp_change);
 
 				if (xpDiff > 0) {
 					values.xp.earned.text = "+" + xpDiff;
@@ -260,84 +230,12 @@ function EndScoreboard() {
 
 				values.xp.booster.text = " (" + multiplier + "%)";
 				values.xp.booster.style.color = "white";
-
-				var player_table = CustomNetTables.GetTableValue("player_table", player.id.toString());
-				if (player_table) {
-					if (player_table.donator_level >= 0 && player_table.donator_level <= 10) {
-						values.xp.booster.style.color = player_table.donator_color;
-					}
-				}
-
-				values.xp.level.text = $.Localize("#battlepass_level") + player.result.xp_level;
-				values.xp.rank_name.text = player.result.xp_rank_title;
-				values.xp.rank_name.style.color = "#" + player.result.xp_rank_color;
-
-				values.xp.rank.text = Math.floor(player.result.xp_in_current_level) + "/" + Math.floor(player.result.total_xp_for_current_level);
-
-//				$.Msg(player.result.xp_in_current_level / player.result.total_xp_for_current_level)
-//				if (player.result.xp_in_current_level / player.result.total_xp_for_current_level >= 1) {
-//					values.xp.bar[0].AddClass("level-up");
-//				}
-				var progress = Math.round((100.0 * player.result.xp_in_current_level) / player.result.total_xp_for_current_level);
-
-				values.xp.progress.style.width = progress + "%";
-
-				// TODO: WILL REWORK THIS SOON
-				/*
-				// if not leveling up
-				else if (progress_bar >= 0 && progress_bar < 100) {
-						values.xp.progress.style.width = progress_bar + "%";
-					values.xp.rank.text = new_xp + "/" + max_xp;
-				// else if leveling down
-				} else if (progress_bar < 0) {
-					values.xp.rank.text = max_xp + "/" + max_xp;
-					values.xp.progress.style.width = "100%";
-
-					if (values.xp.bar[0].BHasClass("level-down")) {
-						values.xp.bar[0].RemoveClass("level-down")
-					}
-					values.xp.bar[0].AddClass("level-down")
-					values.xp.level.text = "Level down..";
-					values.xp.rank.text = "";
-					progress_bar = progress_bar + 100;
-					values.xp.progress.style.width = progress_bar + "%";
-					$.Schedule(2.0, function() {
-						var levelup_level = player.xp.level - 1
-						var levelup_xp = progress_bar * max_xp / 100 // BUG: max_xp should be the max xp of previous level.
-						values.xp.level.text = $.Localize("#battlepass_level") + levelup_level;
-//						$.Msg(progress_bar * max_xp / 100)
-//						$.Msg(levelup_xp.toFixed(0))
-						values.xp.rank.text = levelup_xp.toFixed(0) + "/" + max_xp; // BUG: max_xp should be the max xp of previous level.
-					});
-				// else if leveling up
-				} else {
-					values.xp.rank.text = max_xp + "/" + max_xp;
-					values.xp.progress.style.width = "100%";
-
-					if (values.xp.bar[0].BHasClass("level-up")) {
-						values.xp.bar[0].RemoveClass("level-up")
-					}
-					values.xp.bar[0].AddClass("level-up")
-					values.xp.level.text = "Level up!";
-					values.xp.rank.text = "";
-					progress_bar = progress_bar -100;
-					values.xp.progress.style.width = progress_bar + "%";
-					$.Schedule(2.0, function() {
-						var levelup_level = player.xp.level + 1
-						var levelup_xp = old_xp + diff - max_xp // BUG: max_xp should be the max xp of previous level.
-						values.xp.level.text = $.Localize("#battlepass_level") + levelup_level;
-						values.xp.rank.text = levelup_xp.toFixed(0) + "/" + max_xp; // BUG: max_xp should be the max xp of previous level.
-					});
-				}
-				*/
 			} else {
 				values.xp.earned.text = "N/A";
 			}
 		};
 
 		// Create the panels for the players
-		$.Msg(radiantPlayers)
-		$.Msg(player)
 		$.Each(radiantPlayers, function (player) {
 			createPanelForPlayer(player, panels.radiantPlayers);
 		});
