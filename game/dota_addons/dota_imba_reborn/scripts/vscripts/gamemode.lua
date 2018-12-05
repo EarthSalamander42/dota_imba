@@ -5,7 +5,9 @@ end
 -- clientside KV loading
 require('addon_init')
 
+require('components/api/imba')
 require('libraries/adv_log')
+
 require('libraries/animations')
 require('libraries/keyvalues')
 require('libraries/modifiers')
@@ -21,8 +23,6 @@ require('internal/gamemode')
 require('internal/events')
 
 -- add components below the api
-require('components/api/imba')
-
 require('components/abandon')
 require('components/battlepass/donator')
 require('components/battlepass/experience')
@@ -50,8 +50,8 @@ function GameMode:PostLoadPrecache()
 end
 
 function GameMode:OnFirstPlayerLoaded()
---	Log:ConfigureFromApi()
---	api.imba.register()
+	--	Log:ConfigureFromApi()
+
 	api:RegisterGame()
 
 	if GetMapName() ~= Map1v1() and GetMapName() ~= MapOverthrow() then
@@ -76,15 +76,15 @@ end
 
 function GameMode:OnAllPlayersLoaded()
 	-- Setup filters
---	GameRules:GetGameModeEntity():SetHealingFilter( Dynamic_Wrap(GameMode, "HealingFilter"), self )
-	GameRules:GetGameModeEntity():SetExecuteOrderFilter( Dynamic_Wrap(GameMode, "OrderFilter"), self )
-	GameRules:GetGameModeEntity():SetDamageFilter( Dynamic_Wrap(GameMode, "DamageFilter"), self )
-	GameRules:GetGameModeEntity():SetModifyGoldFilter( Dynamic_Wrap(GameMode, "GoldFilter"), self )
-	GameRules:GetGameModeEntity():SetModifyExperienceFilter( Dynamic_Wrap(GameMode, "ExperienceFilter"), self )
-	GameRules:GetGameModeEntity():SetModifierGainedFilter( Dynamic_Wrap(GameMode, "ModifierFilter"), self )
-	GameRules:GetGameModeEntity():SetItemAddedToInventoryFilter( Dynamic_Wrap(GameMode, "ItemAddedFilter"), self )
+	--	GameRules:GetGameModeEntity():SetHealingFilter( Dynamic_Wrap(GameMode, "HealingFilter"), self )
+	GameRules:GetGameModeEntity():SetExecuteOrderFilter(Dynamic_Wrap(GameMode, "OrderFilter"), self)
+	GameRules:GetGameModeEntity():SetDamageFilter(Dynamic_Wrap(GameMode, "DamageFilter"), self)
+	GameRules:GetGameModeEntity():SetModifyGoldFilter(Dynamic_Wrap(GameMode, "GoldFilter"), self)
+	GameRules:GetGameModeEntity():SetModifyExperienceFilter(Dynamic_Wrap(GameMode, "ExperienceFilter"), self)
+	GameRules:GetGameModeEntity():SetModifierGainedFilter(Dynamic_Wrap(GameMode, "ModifierFilter"), self)
+	GameRules:GetGameModeEntity():SetItemAddedToInventoryFilter(Dynamic_Wrap(GameMode, "ItemAddedFilter"), self)
 	GameRules:GetGameModeEntity():SetBountyRunePickupFilter(Dynamic_Wrap(GameMode, "BountyRuneFilter"), self)
-	GameRules:GetGameModeEntity():SetThink( "OnThink", self, 1 )
+	GameRules:GetGameModeEntity():SetThink("OnThink", self, 1)
 	GameRules:GetGameModeEntity():SetPauseEnabled(not IMBA_PICK_SCREEN)
 end
 
@@ -119,8 +119,8 @@ end
 function GameMode:SetupFountains()
 
 	local fountainEntities = Entities:FindAllByClassname("ent_dota_fountain")
-	for _,fountainEnt in pairs( fountainEntities ) do
-		fountainEnt:AddNewModifier( fountainEnt, fountainEnt, "modifier_fountain_aura_lua", {} )
+	for _, fountainEnt in pairs(fountainEntities) do
+		fountainEnt:AddNewModifier(fountainEnt, fountainEnt, "modifier_fountain_aura_lua", {})
 		fountainEnt:AddAbility("imba_fountain_danger_zone"):SetLevel(1)
 
 		-- remove vanilla fountain healing
@@ -134,7 +134,7 @@ end
 function GameMode:BountyRuneFilter(keys)
 	local hero = PlayerResource:GetPlayer(keys.player_id_const):GetAssignedHero()
 
-	if hero:GetUnitName() == "npc_dota_hero_alchemist" then 
+	if hero:GetUnitName() == "npc_dota_hero_alchemist" then
 		local alchemy_bounty = 0
 		if hero:FindAbilityByName("imba_alchemist_goblins_greed") and hero:FindAbilityByName("imba_alchemist_goblins_greed"):GetLevel() > 0 then
 			alchemy_bounty = keys.gold_bounty * (hero:FindAbilityByName("imba_alchemist_goblins_greed"):GetSpecialValueFor("bounty_multiplier") / 100)
@@ -142,7 +142,7 @@ function GameMode:BountyRuneFilter(keys)
 			-- #7 Talent: Moar gold from bounty runes
 			if hero:HasTalent("special_bonus_imba_alchemist_7") then
 				alchemy_bounty = (alchemy_bounty * (hero:FindTalentValue("special_bonus_imba_alchemist_7") / 100)) - keys.gold_bounty
-			end		
+			end
 
 			hero:ModifyGold(alchemy_bounty, false, DOTA_ModifyGold_Unspecified)
 			SendOverheadEventMessage(PlayerResource:GetPlayer(hero:GetPlayerOwnerID()), OVERHEAD_ALERT_GOLD, hero, alchemy_bounty, nil)
