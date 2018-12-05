@@ -1239,7 +1239,7 @@ function imba_techies_blast_off:OnSpellStart()
 		pig:SetForwardVector(caster:GetForwardVector())
 
 		-- Roll a chance for meme sound, if applicable
-		if USE_MEME_SOUNDS and RollPercentage(5) then
+		if USE_MEME_SOUNDS and RollPercentage(MEME_SOUNDS_CHANCE) then
 			EmitSoundOn(piggy_response, caster)
 		end
 

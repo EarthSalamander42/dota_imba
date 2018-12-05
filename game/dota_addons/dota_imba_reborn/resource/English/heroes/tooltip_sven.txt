@@ -1,0 +1,81 @@
+// Sven's Storm Hammer / SVEN Bolt
+"DOTA_Tooltip_ability_imba_sven_storm_bolt"                            "SVEN Bolt"
+"DOTA_Tooltip_ability_imba_sven_storm_bolt_Description"                "Sven launches <font color='#FF7800'>HIMSELF</font> towards the enemy, damaging and stunning nearby units.\n<font color='#FF7800'>Momentum:</font> Sven can use his gained momentum to deal a critical hit if he strikes the target shortly after launching."
+"DOTA_Tooltip_ability_imba_sven_storm_bolt_Lore"                        "The Rogue Knight's stunning presence is always felt on the battlefield."
+"DOTA_Tooltip_ability_imba_sven_storm_bolt_Note0"                      "While the projectile is traveling, Sven will be completely invulnerable."
+"DOTA_Tooltip_ability_imba_sven_storm_bolt_Note1"                      "Does not crit if you change the target."
+"DOTA_Tooltip_ability_imba_sven_storm_bolt_damage"                      "DAMAGE:"
+"DOTA_Tooltip_ability_imba_sven_storm_bolt_radius"                      "DAMAGE RADIUS:"
+"DOTA_Tooltip_ability_imba_sven_storm_bolt_stun_duration"              "STUN DURATION:"
+"DOTA_Tooltip_ability_imba_sven_storm_bolt_crit_pct"                    "%CRITICAL DAMAGE:"
+
+"DOTA_Tooltip_modifier_imba_storm_bolt_crit"                            "MANmentum"
+"DOTA_Tooltip_modifier_imba_storm_bolt_crit_Description"                "The next attack is a guaranteed critical hit."
+
+// Sven's Great Cleave
+"DOTA_Tooltip_ability_imba_sven_great_cleave"                          "Great Cleave"
+"DOTA_Tooltip_ability_imba_sven_great_cleave_Description"              "Sven strikes with great force, cleaving all nearby enemy units with his attack.\n<font color='#FF7800'>Overkill:</font> Can be activated to focus all of Sven's considerable strength on a single target. In this state, the cleave attack is lost, but Sven gains true strike, and each of his attacks can ignore part of the enemy armor."
+"DOTA_Tooltip_ability_imba_sven_great_cleave_Lore"                      "The Vigil Knights still seek to reclaim the stolen Outcast Blade from Sven, a weapon capable of cutting wide swaths through lesser warriors."
+"DOTA_Tooltip_ability_imba_sven_great_cleave_cleave_starting_width"                 "CLEAVE STARTING RADIUS:"
+"DOTA_Tooltip_ability_imba_sven_great_cleave_cleave_ending_width"                   "CLEAVE END RADIUS:"
+"DOTA_Tooltip_ability_imba_sven_great_cleave_cleave_distance"          "CLEAVE DISTANCE:"
+"DOTA_Tooltip_ability_imba_sven_great_cleave_great_cleave_damage"                   "%CLEAVE DAMAGE:"
+"DOTA_Tooltip_ability_imba_sven_great_cleave_armor_ignore"              "OVERKILL ARMOR PENETRATION"
+"DOTA_Tooltip_ability_imba_sven_great_cleave_duration"                  "OVERKILL DURATION:"
+
+"DOTA_Tooltip_modifier_imba_great_cleave_active"                        "Overkill"
+"DOTA_Tooltip_modifier_imba_great_cleave_active_Description"            "Losing cleave to gain True Strike and ignore part of enemies' armor."
+
+// Sven's Warcry
+"DOTA_Tooltip_ability_imba_sven_warcry"									"Warcry"
+"DOTA_Tooltip_ability_imba_sven_warcry_Description"						"Sven's Warcry heartens his allies for battle, increasing their movement speed and armor. Lasts 8 seconds.\n<font color='#FF7800'>WAAARGH!:</font> Activating Warcry applies a basic dispel on Sven.\n<font color='#FF7800'>Knightly presence:</font> Warcry also increases allies status resistance."
+"DOTA_Tooltip_ability_imba_sven_warcry_Lore"							"Calling a few lines from the Vigil Codex fortifies Sven's obedience to his rogue code. So poetic!"
+"DOTA_Tooltip_ability_imba_sven_warcry_Note0"							"Status Resistance decreases the duration of most debuffs."
+"DOTA_Tooltip_ability_imba_sven_warcry_ms_bonus_pct"					"%MOVEMENT SPEED:"
+"DOTA_Tooltip_ability_imba_sven_warcry_armor_bonus"						"BONUS ARMOR:"
+"DOTA_Tooltip_ability_imba_sven_warcry_tenacity_bonus_pct"				"%STATUS RESISTANCE:"
+"DOTA_Tooltip_ability_imba_sven_warcry_radius"							"EFFECT RADIUS:"
+"DOTA_Tooltip_ability_imba_sven_warcry_duration"						"DURATION:"
+
+"DOTA_Tooltip_modifier_imba_warcry"                        "Warcry!!!"
+"DOTA_Tooltip_modifier_imba_warcry_Description"                        "Sven's here to pump you up! Increased armor, move speed and status resistance."
+
+"DOTA_Tooltip_modifier_imba_warcry_immunity"                            "Magic Immune"
+"DOTA_Tooltip_modifier_imba_warcry_immunity_Description"                "You're so pumped up, you're actually immune to magic."
+
+// Sven's God's Strength
+"DOTA_Tooltip_ability_imba_sven_gods_strength"                          "God's Strength"
+"DOTA_Tooltip_ability_imba_sven_gods_strength_Description"              "Sven channels his rogue strength, granting himself bonus damage.\n<font color='#FF7800'>Colossal Slash:</font> While Gods Strength is active Sven can use Colossal Slash.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
+"DOTA_Tooltip_ability_imba_sven_gods_strength_Lore"                    "With the strength that shattered the Sacred Helm, the Rogue Knight stands unopposed in melee combat."
+"DOTA_Tooltip_ability_imba_sven_gods_strength_Note0"                    "Only increases base damage and that given by the primary attribute. Raw bonus damage is not increased."
+"DOTA_Tooltip_ability_imba_sven_gods_strength_aghanim_description"                  "God's Strength grants bonus damage to allies. This effect is an Aura."
+"DOTA_Tooltip_ability_imba_sven_gods_strength_bonus_dmg_pct"            "%DAMAGE BONUS:"
+"DOTA_Tooltip_ability_imba_sven_gods_strength_duration"                "DURATION:"
+"DOTA_Tooltip_ability_imba_sven_gods_strength_radius"                  "EFFECT RADIUS:"
+"DOTA_Tooltip_ability_imba_sven_gods_strength_ally_bonus_dmg_pct_scepter"           "%DAMAGE BONUS (ALLIES):"
+"DOTA_Tooltip_ability_imba_sven_gods_strength_aura_radius_scepter"                  "AURA RADIUS:"
+
+"DOTA_Tooltip_modifier_imba_god_strength"                              "God's Strength"
+"DOTA_Tooltip_modifier_imba_god_strength_Description"                  "PUMPED UP!!! Increased damage."
+
+"DOTA_Tooltip_modifier_imba_god_strength_allies"                        "God's Strength"
+"DOTA_Tooltip_modifier_imba_god_strength_allies_Description"            "PUMPED UP!!! Increased damage."
+
+// Sven's Colossal Slash
+"DOTA_Tooltip_ability_imba_sven_colossal_slash"                        "Colossal Slash"
+"DOTA_Tooltip_ability_imba_sven_colossal_slash_Description"            "Can only be used during God's Strength.\nChannels all your remaining power to end God's Strength with an enormous destructive shockwave. The wave travels further the earlier God's Strength is ended. Deals a guaranteed critical hit to enemies in the way."
+"DOTA_Tooltip_ability_imba_sven_colossal_slash_Lore"                    "SVEN SMASH!!!"
+"DOTA_Tooltip_ability_imba_sven_colossal_slash_radius"                  "RADIUS:"
+"DOTA_Tooltip_ability_imba_sven_colossal_slash_crit_bonus_pct"          "%CRITICAL DAMAGE:"
+"DOTA_Tooltip_ability_imba_sven_colossal_slash_base_range"              "BASE RANGE:"
+"DOTA_Tooltip_ability_imba_sven_colossal_slash_range_multiplier"                    "RANGE PER REMAINING SECOND:"
+
+// Sven's Custom Talents
+"DOTA_Tooltip_ability_special_bonus_imba_sven_1"            "+70 Storm Hammer effect radius"
+"DOTA_Tooltip_ability_special_bonus_imba_sven_2"            "+100 Great Cleave length/end radius"
+"DOTA_Tooltip_ability_special_bonus_imba_sven_3"            "+9% Warcry movement speed"
+"DOTA_Tooltip_ability_special_bonus_imba_sven_4"            "-15 God's Strength cooldown"
+"DOTA_Tooltip_ability_special_bonus_imba_sven_5"            "-8 SVEN Bolt cooldown"
+"DOTA_Tooltip_ability_special_bonus_imba_sven_6"            "+15 Great Cleave armor ignore"
+"DOTA_Tooltip_ability_special_bonus_imba_sven_7"            "Warcry grants spell immunity for 4 seconds"
+"DOTA_Tooltip_ability_special_bonus_imba_sven_8"            "+100% God's Strength self damage bonus"

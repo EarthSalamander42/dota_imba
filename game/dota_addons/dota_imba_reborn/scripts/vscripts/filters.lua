@@ -106,8 +106,6 @@ function GameMode:ModifierFilter( keys )
 				end
 			end
 
-			print(ignore_frantic)
-
 			if ignore_frantic == false and string.find(modifier_name, "imba") and modifier_class.IsDebuff and modifier_class:IsDebuff() == true and modifier_class.IgnoreTenacity == nil or (modifier_class.IgnoreTenacity and modifier_class:IgnoreTenacity() == false) then
 				if keys.duration > 0 then	
 					local original_duration = keys.duration

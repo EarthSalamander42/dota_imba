@@ -71,7 +71,7 @@ function item_imba_skadi:OnSpellStart()
 		end
 
 		-- Play sound
-		if USE_MEME_SOUNDS and RollPercentage(5) then
+		if USE_MEME_SOUNDS and RollPercentage(MEME_SOUNDS_CHANCE) then
 			caster:EmitSound("Imba.SkadiDeadWinter")
 		else
 			caster:EmitSound("Imba.SkadiCast")

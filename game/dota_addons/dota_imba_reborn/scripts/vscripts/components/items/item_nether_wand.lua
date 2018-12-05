@@ -100,7 +100,6 @@ function modifier_item_imba_arcane_nexus_passive:IsPurgable() return false end
 function modifier_item_imba_arcane_nexus_passive:IsPurgeException() return false end
 function modifier_item_imba_arcane_nexus_passive:IsStunDebuff() return false end
 function modifier_item_imba_arcane_nexus_passive:RemoveOnDeath() return false end
-function modifier_item_imba_arcane_nexus_passive:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 function modifier_item_imba_arcane_nexus_passive:OnDestroy()
 	self:CheckUnique(false)
 end

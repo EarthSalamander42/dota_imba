@@ -16560,31 +16560,26 @@
 				"damage"				"40 80 110 130"
 				"LinkedSpecialBonus"	"special_bonus_imba_sand_king_2"
 			}
-
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"radius"				"525 560 595 630"
 			}
-
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"pull_speed"			"20 60 120 200"
+				"pull_speed"			"40 70 100 130"
 			}
-
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"pull_prevent_radius"	"100"
 			}
-
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"invis_extend_time"		"1.0 1.15 1.3 1.45"
 			}
-
 			"07"
 			{
 				"var_type"				"FIELD_FLOAT"

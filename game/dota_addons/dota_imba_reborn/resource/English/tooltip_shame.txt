@@ -354,6 +354,11 @@
 //=================================================================================================================
 //=================================================================================================================
 
+// Non-affected by CDR
+"DOTA_Tooltip_ability_life_stealer_rage_Description"					"#{DOTA_Tooltip_ability_life_stealer_rage_Description}\n<font color='#E03E2E'>This ability is not affected by Cooldown Reductions.</font>"
+"DOTA_Tooltip_ability_weaver_shukuchi_Description"						"#{DOTA_Tooltip_ability_weaver_shukuchi_Description}\n<font color='#E03E2E'>This ability is not affected by Cooldown Reductions.</font>"
+"DOTA_Tooltip_ability_dark_willow_shadow_realm_Description"				"#{DOTA_Tooltip_ability_dark_willow_shadow_realm_Description}\n<font color='#E03E2E'>This ability is not affected by Cooldown Reductions.</font>"
+
 "DOTA_Tooltip_ability_arc_warden_tempest_double_Description"            "Briefly refocusing its fractured elements into a single form, the Arc Warden is able to create a perfect electrical duplication of itself. The duplicate can use all of Arc Warden's current items and spells, except for <font color='#FF0000'>any consumables, Gem of True Sight, Soul of Truth, Moon Shards, Divine Rapiers, or Refresher Orb.</font> The duplicate has seperate item and ability cooldowns."
 
 "DOTA_Tooltip_ability_chen_test_of_faith_teleport_Description"          "Teleports an allied or enemy unit back to its base. Creeps are teleported instantly, while Heroes have a delay before teleporting. If cast on Chen, all units controlled by Chen through Holy Persuasion will be teleported to him after a delay."
@@ -483,8 +488,8 @@
 //"DOTA_Tooltip_Ability_special_bonus_unique_ancient_apparition_3"    "-1s Ice Vortex cooldown"
 //"DOTA_Tooltip_Ability_special_bonus_unique_ancient_apparition_4"    "+12% Ice Vortex slow/resistance"
 //"DOTA_Tooltip_Ability_special_bonus_unique_gyrocopter_1"        "Homing Missile gains 3 charges"
-//"DOTA_Tooltip_Ability_special_bonus_unique_keeper_of_the_light"   "+250 Illuminate damage/heal"
-//"DOTA_Tooltip_Ability_special_bonus_unique_keeper_of_the_light_2"   "+375 Chakra Magic mana"
+"DOTA_Tooltip_Ability_special_bonus_unique_keeper_of_the_light"		"+250 Illuminate damage/heal"
+"DOTA_Tooltip_Ability_special_bonus_unique_keeper_of_the_light_2"	"+375 Chakra Magic mana"
 //"DOTA_Tooltip_Ability_special_bonus_unique_legion_commander"      "+40 Duel damage bonus"
 //"DOTA_Tooltip_Ability_special_bonus_unique_puck"            "+50% Illusory Orb distance/speed"
 //"DOTA_Tooltip_Ability_special_bonus_unique_puck_2"          "-3s Waning Rift cooldown"

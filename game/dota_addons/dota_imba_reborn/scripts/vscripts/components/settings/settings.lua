@@ -14,7 +14,7 @@
 
 require('components/settings/settings_donator')
 
-IMBA_VERSION = "7.08f"
+IMBA_VERSION = "7.08g"
 
 -- Picking screen constants
 PICKING_SCREEN_OVER = false
@@ -412,6 +412,7 @@ for i = 2, 500 do
 end
 
 USE_MEME_SOUNDS = true														-- Should we use meme/fun sounds on abilities occasionally?
+MEME_SOUNDS_CHANCE = 50
 
 -------------------------------------------------------------------------------------------------
 -- IMBA: Keyvalue tables
@@ -577,10 +578,14 @@ IMBA_WEATHER_EFFECT[1] = "particles/rain_fx/econ_snow.vpcf"
 
 IMBA_ABILITIES_IGNORE_CDR = {
 	"imba_venomancer_plague_ward",
+	"life_stealer_rage",
+	"weaver_shukuchi",
+	"dark_willow_shadow_realm",
 }
 
 IMBA_MODIFIER_IGNORE_FRANTIC = {
 	"modifier_legion_commander_duel",
+	"modifier_imba_strafe_self_root",
 }
 
 IMBA_DISARM_IMMUNITY = {

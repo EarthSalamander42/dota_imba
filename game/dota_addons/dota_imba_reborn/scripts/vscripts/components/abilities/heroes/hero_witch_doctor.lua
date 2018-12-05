@@ -714,7 +714,7 @@ function imba_witch_doctor_death_ward:OnSpellStart()
 			talent_ward:EmitSound("Hero_WitchDoctor.Death_WardBuild")
 		end
 		self.death_ward = self:CreateWard(vPosition)
-		if (math.random(1,100) <= 15) then
+		if USE_MEME_SOUNDS == true and RollPercentage(MEME_SOUNDS_CHANCE) then
 			self.dance = true
 			self.death_ward:EmitSound("Imba.WitchDoctorSingsASong")
 		else

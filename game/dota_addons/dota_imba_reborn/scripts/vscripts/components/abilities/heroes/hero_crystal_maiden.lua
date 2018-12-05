@@ -879,7 +879,7 @@ function imba_crystal_maiden_freezing_field:OnSpellStart()
 		ParticleManager:SetParticleControl(self.freezing_field_particle, 5, Vector (1000, 0, 0))
 
 		-- Let it go?
-		if USE_MEME_SOUNDS and RollPercentage(10) then
+		if USE_MEME_SOUNDS and RollPercentage(MEME_SOUNDS_CHANCE) then
 			--LET IT GO
 			EmitSoundOnLocationWithCaster(self.freezing_field_center , "Hero_Crystal.CrystalNova", self.caster)
 			self:EmitSound("Imba.CrystalMaidenLetItGo0"..RandomInt(1, 3))

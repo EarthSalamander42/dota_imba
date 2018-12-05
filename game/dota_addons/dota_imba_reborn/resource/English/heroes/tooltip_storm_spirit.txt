@@ -64,7 +64,7 @@
 "DOTA_Tooltip_ability_imba_storm_spirit_ball_lightning_travel_mana_cost_pct"	"#{DOTA_Tooltip_ability_storm_spirit_ball_lightning_ball_lightning_travel_cost_percent}"
 
 "DOTA_Tooltip_modifier_ball_lightning"					"#{DOTA_Tooltip_modifier_storm_spirit_ball_lightning}"
-"DOTA_Tooltip_modifier_ball_lightning_Description"		"#{DOTA_Tooltip_modifier_storm_spirit_ball_lightning_Description}"
+"DOTA_Tooltip_modifier_storm_spirit_ball_lightning_Description"		"#{DOTA_Tooltip_modifier_storm_spirit_ball_lightning_Description}"
 
 // Storm Spirit's Talents
 "DOTA_Tooltip_ability_special_bonus_imba_storm_spirit_1"					"+0.75 Electric Vortex duration"

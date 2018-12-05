@@ -288,7 +288,7 @@ function imba_sandking_sand_storm:OnSpellStart()
     EmitSoundOn(sound_cast, caster)   
 
     -- Roll for Darude Sandstorm meme, if applicable, or use the usual loop sound
-    if USE_MEME_SOUNDS and RollPercentage(20) then
+    if USE_MEME_SOUNDS and RollPercentage(MEME_SOUNDS_CHANCE) then
         EmitSoundOn(sound_darude, caster)
     else
         EmitSoundOn(sound_loop, caster)
