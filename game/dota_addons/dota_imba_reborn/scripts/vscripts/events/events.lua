@@ -178,9 +178,6 @@ function GameMode:OnGameRulesStateChange(keys)
 				ImbaRunes:Init()
 			end
 
-			-- Initialize gg panel
-			GoodGame:Init()
-
 			-- Setup topbar player colors
 			CustomGameEventManager:Send_ServerToAllClients("override_top_bar_colors", {})
 		end)

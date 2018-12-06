@@ -4483,6 +4483,7 @@ function modifier_tower_healing_think:OnIntervalThink()
 		-- Start bouncing with bounce delay
 		Timers:CreateTimer(self.bounce_delay, function()
 			-- If those are null then the tower most likely died during self.bounce_delay... 
+			if self == nil then return nil end
 			if self.caster:IsNull() or self.bounce_radius:IsNull() or self.ability:IsNull() then 
 				return nil
 			end

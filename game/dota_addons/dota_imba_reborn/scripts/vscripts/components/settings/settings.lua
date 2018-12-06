@@ -641,3 +641,14 @@ if IMBA_DIRETIDE == true then
 	IMBA_DIRETIDE_EASTER_EGG = false
 	require("components/diretide/diretide")
 end
+
+GG_TABLE = {}
+
+local count = PlayerResource:GetPlayerCount()
+if IsInToolsMode() then count = 20 end
+
+-- temporary
+for i = 0, 24 - 1 do
+--for i = 0, count - 1 do
+	GG_TABLE[i] = {false, false, PlayerResource:GetTeam(i)}
+end

@@ -41,6 +41,11 @@ end
 function PlayerResource:StartAbandonGoldRedistribution(player_id)
 
 	-- Set redistribution as active
+	if self.PlayerData[player_id] == nil then
+		print(self.PlayerData, player_id)
+		return
+	end
+
 	self.PlayerData[player_id]["distribute_gold_to_allies"] = true -- TODO: nil sometimes
 	print("player "..player_id.." is now redistributing gold to its allies.")
 
@@ -52,7 +57,7 @@ function PlayerResource:StartAbandonGoldRedistribution(player_id)
 	local custom_gold_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "bounty_multiplier")["1"])
 	local gold_per_interval = 3 * (custom_gold_bonus / 100 ) / GOLD_TICK_TIME[GetMapName()]
 
-	if self:GetPlayerCount() ~= nil then 
+	if self.GetPlayerCount then 
 		-- Distribute initial gold
 		for id = 0, self:GetPlayerCount() -1 do
 			if self:IsImbaPlayer(id) and (not self.PlayerData[id]["distribute_gold_to_allies"]) and self:GetTeam(id) == player_team then
@@ -84,9 +89,11 @@ function PlayerResource:StartAbandonGoldRedistribution(player_id)
 		current_gold = current_gold + gold_per_interval
 
 		-- Update active ally amount
-		for id = 0, PlayerResource:GetPlayerCount() -1 do
-			if self:IsImbaPlayer(id) and (not self.PlayerData[id]["distribute_gold_to_allies"]) and self:GetTeam(id) == player_team then
-				current_allies[#current_allies + 1] = id
+		if self.GetPlayerCount then 
+			for id = 0, self:GetPlayerCount() -1 do
+				if self:IsImbaPlayer(id) and (not self.PlayerData[id]["distribute_gold_to_allies"]) and self:GetTeam(id) == player_team then
+					current_allies[#current_allies + 1] = id
+				end
 			end
 		end
 
