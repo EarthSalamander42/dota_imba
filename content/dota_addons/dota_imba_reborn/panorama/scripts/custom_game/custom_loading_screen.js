@@ -78,4 +78,14 @@ function fetch() {
 	*/
 };
 
-fetch();
+function HoverableLoadingScreen() {
+	if (Game.GameStateIs(2))
+		$.GetContextPanel().style.zIndex = "1";
+	else
+		$.Schedule(1.0, HoverableLoadingScreen)
+}
+
+(function(){
+	HoverableLoadingScreen()
+	fetch();
+})();
