@@ -27,6 +27,22 @@ function GameMode:OnGameRulesStateChange(keys)
 		GetPlayerInfoIXP() -- Add a class later
 		Imbattlepass:Init() -- Initialize Battle Pass
 
+		if GetMapName() == "imba_demo" then
+			require('components/demo/init')
+			self:InitDemo()
+		end
+
+		-- fix coming from Dota 12v12
+		local playerId = 0
+		for team = DOTA_TEAM_FIRST, DOTA_TEAM_CUSTOM_MAX do
+			for i = 1, GameRules:GetCustomGameTeamMaxPlayers(team) do
+				if PlayerResource:IsValidPlayerID(playerId) then
+					PlayerResource:SetCustomTeamAssignment(playerId, team)
+					playerId = playerId + 1
+				end
+			end
+		end
+
 		-- temporary (from stat-collection)
 		-- Build players array
 		--		local players = {}

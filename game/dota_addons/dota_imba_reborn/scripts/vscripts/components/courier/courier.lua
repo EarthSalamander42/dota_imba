@@ -48,6 +48,7 @@ function TurboCourier:Init(hero)
 			TurboCourier:Spawn(hero, pos)
 		end
 	else
+		if Entities:FindByClassname(nil, "info_courier_spawn_radiant") == nil then return end
 		local pos = Entities:FindByClassname(nil, "info_courier_spawn_radiant"):GetAbsOrigin()
 
 		if hero:GetTeamNumber() == 3 then

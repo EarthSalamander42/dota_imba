@@ -41,7 +41,7 @@ AP_BAN_TIME = 10.0
 if IsInToolsMode() then
 	AP_BAN_TIME = 0.0
 end
-if GetMapName() == MapOverthrow() then
+if GetMapName() == MapOverthrow() or GetMapName() == "imba_demo" then
 	AP_GAME_TIME = 45.0
 	PRE_GAME_TIME = 10.0 + AP_GAME_TIME
 else
@@ -253,6 +253,7 @@ CUSTOM_GOLD_BONUS[MapSuperFrantic5v5()] = global_gold
 CUSTOM_GOLD_BONUS[MapSuperFrantic10v10()] = global_gold
 CUSTOM_GOLD_BONUS[MapOverthrow()] = global_gold
 CUSTOM_GOLD_BONUS[MapDiretide()] = global_gold
+CUSTOM_GOLD_BONUS["imba_demo"] = global_gold
 
 -- Global XP earning, values are doubled with Hyper for non-custom maps (right now this is not used anymore, but i'll keep it there just in case)
 local global_xp = 300
@@ -269,6 +270,7 @@ CUSTOM_XP_BONUS[MapSuperFrantic5v5()] = global_xp
 CUSTOM_XP_BONUS[MapSuperFrantic10v10()] = global_xp
 CUSTOM_XP_BONUS[MapOverthrow()] = global_xp
 CUSTOM_XP_BONUS[MapDiretide()] = global_xp
+CUSTOM_XP_BONUS["imba_demo"] = global_xp
 
 -- Hero base level, values are doubled with Hyper for non-custom maps
 HERO_STARTING_LEVEL = {} -- 1 = Normal, 2 = Hyper
@@ -284,6 +286,7 @@ HERO_STARTING_LEVEL[MapSuperFrantic5v5()] = 5
 HERO_STARTING_LEVEL[MapSuperFrantic10v10()] = 5
 HERO_STARTING_LEVEL[MapOverthrow()] = 5
 HERO_STARTING_LEVEL[MapDiretide()] = 5
+HERO_STARTING_LEVEL["imba_demo"] = 1
 
 MAX_LEVEL = {}
 MAX_LEVEL[Map1v1()] = 42
@@ -298,6 +301,7 @@ MAX_LEVEL[MapSuperFrantic5v5()] = 42
 MAX_LEVEL[MapSuperFrantic10v10()] = 42
 MAX_LEVEL[MapOverthrow()] = 42
 MAX_LEVEL[MapDiretide()] = 42
+MAX_LEVEL["imba_demo"] = 42
 
 HERO_INITIAL_GOLD = {}
 HERO_INITIAL_GOLD[Map1v1()] = 1400
@@ -312,6 +316,7 @@ HERO_INITIAL_GOLD[MapSuperFrantic5v5()] = 2500
 HERO_INITIAL_GOLD[MapSuperFrantic10v10()] = 2500
 HERO_INITIAL_GOLD[MapOverthrow()] = 2500
 HERO_INITIAL_GOLD[MapDiretide()] = 2500
+HERO_INITIAL_GOLD["imba_demo"] = 99999
 
 GOLD_TICK_TIME = {}
 GOLD_TICK_TIME[Map1v1()] = 0.6
@@ -326,6 +331,7 @@ GOLD_TICK_TIME[MapSuperFrantic5v5()] = 0.6
 GOLD_TICK_TIME[MapSuperFrantic10v10()] = 0.4
 GOLD_TICK_TIME[MapOverthrow()] = 0.4
 GOLD_TICK_TIME[MapDiretide()] = 0.4
+GOLD_TICK_TIME["imba_demo"] = 0.4
 
 BANNED_ITEMS = {}
 BANNED_ITEMS[Map1v1()] = {
@@ -640,15 +646,4 @@ IMBA_DIRETIDE_EASTER_EGG = false
 if IMBA_DIRETIDE == true then
 	IMBA_DIRETIDE_EASTER_EGG = false
 	require("components/diretide/diretide")
-end
-
-GG_TABLE = {}
-
-local count = PlayerResource:GetPlayerCount()
-if IsInToolsMode() then count = 20 end
-
--- temporary
-for i = 0, 24 - 1 do
---for i = 0, count - 1 do
-	GG_TABLE[i] = {false, false, PlayerResource:GetTeam(i)}
 end

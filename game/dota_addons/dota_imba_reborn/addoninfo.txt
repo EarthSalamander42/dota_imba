@@ -15,7 +15,7 @@
 	"CheckAFKPlayers"				"1"
 	"EnablePickRules"				"1"
 
-	"maps"							"imba_5v5 imba_10v10 super_frantic_10v10"
+	"maps"							"imba_5v5 imba_10v10 super_frantic_10v10 imba_demo"
 
 	"IsPlayable"					"1"
 
@@ -32,5 +32,10 @@
 	"imba_10v10"
 	{
 		"MaxPlayers"				"20"
+	}
+
+	"imba_demo"
+	{
+		"MaxPlayers"				"1"
 	}
 }

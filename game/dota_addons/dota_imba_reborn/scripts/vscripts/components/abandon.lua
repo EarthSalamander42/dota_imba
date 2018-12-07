@@ -2,9 +2,25 @@ if GoodGame == nil then
 	GoodGame = class({})
 end
 
+local init = false
+
 function GoodGame:Call(event)
 	if GameRules:State_Get() == DOTA_GAMERULES_STATE_POST_GAME then return end
 	if PlayerResource:GetPlayerCountForTeam(2) == 0 or PlayerResource:GetPlayerCountForTeam(3) == 0 then return end
+
+	if init == false then
+		GG_TABLE = {}
+
+		-- if IsInToolsMode() then PlayerResource:GetPlayerCount() = 20 end
+
+		-- temporary
+		for i = 0, 24 - 1 do
+		--for i = 0, count - 1 do
+			GG_TABLE[i] = {false, false, PlayerResource:GetTeam(i)}
+		end
+
+		init = true
+	end
 
 	if event.disconnect == 1 then -- disconnect
 		GG_TABLE[event.ID][2] = true

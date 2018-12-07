@@ -75,6 +75,13 @@ function modifier_companion:OnIntervalThink()
 
 		if GetMapName() == MapOverthrow() then
 			fountain = Entities:FindByName(nil, "@overboss")
+		elseif GetMapName() == "imba_demo" then
+			for _, ent in pairs(Entities:FindAllByClassname("ent_dota_fountain")) do
+				if ent:GetTeamNumber() == companion:GetTeamNumber() then
+					fountain = ent
+					break
+				end
+			end
 		else
 			if hero:GetTeamNumber() == 2 then
 				fountain = GoodCamera
