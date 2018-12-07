@@ -32,6 +32,11 @@ function GameMode:OnGameRulesStateChange(keys)
 			self:InitDemo()
 		end
 
+		Timers:CreateTimer(2.0, function()
+			-- fix for last dota 2 update
+			GameRules:FinishCustomGameSetup()
+		end)
+
 		-- Credits to Dota 12v12 for the fix
 		local playerId = 0
 		for team = DOTA_TEAM_FIRST, DOTA_TEAM_CUSTOM_MAX do

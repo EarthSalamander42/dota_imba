@@ -51,9 +51,6 @@ function GameMode:_InitGameMode()
 
 	GameRules:LockCustomGameSetupTeamAssignment(not IsInToolsMode())
 
-	-- fix for last dota 2 update
-	GameRules:FinishCustomGameSetup()
-
 	if IMBA_PICK_SCREEN == false then
 		GameRules:GetGameModeEntity():SetDraftingHeroPickSelectTimeOverride(AP_GAME_TIME)
 		GameRules:GetGameModeEntity():SetDraftingBanningTimeOverride(AP_BAN_TIME)
