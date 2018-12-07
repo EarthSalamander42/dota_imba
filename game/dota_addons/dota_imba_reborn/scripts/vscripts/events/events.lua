@@ -32,7 +32,7 @@ function GameMode:OnGameRulesStateChange(keys)
 			self:InitDemo()
 		end
 
-		-- fix coming from Dota 12v12
+		-- Credits to Dota 12v12 for the fix
 		local playerId = 0
 		for team = DOTA_TEAM_FIRST, DOTA_TEAM_CUSTOM_MAX do
 			for i = 1, GameRules:GetCustomGameTeamMaxPlayers(team) do

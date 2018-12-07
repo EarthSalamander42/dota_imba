@@ -6,10 +6,10 @@ function GameMode:InitDemo()
 --	GameRules:GetGameModeEntity():SetBotThinkingEnabled( true ) -- the ConVar is currently disabled in C++
 	-- Set bot mode difficulty: can try GameRules:GetGameModeEntity():SetCustomGameDifficulty( 1 )
 
---	All these not working, called too early?
 	GameRules:SetUseUniversalShopMode( true )
 	GameRules:SetPreGameTime( 0 )
 	GameRules:SetCustomGameSetupTimeout( 0 ) -- skip the custom team UI with 0, or do indefinite duration with -1
+	GameRules:SetSafeToLeave(true)
 	PRE_GAME_TIME = 10.0
 
 	-- Events
@@ -29,6 +29,9 @@ function GameMode:InitDemo()
 	CustomGameEventManager:RegisterListener( "ChangeCosmeticsButtonPressed", function(...) return self:OnChangeCosmeticsButtonPressed( ... ) end )
 	CustomGameEventManager:RegisterListener( "PauseButtonPressed", function(...) return self:OnPauseButtonPressed( ... ) end )
 	CustomGameEventManager:RegisterListener( "LeaveButtonPressed", function(...) return self:OnLeaveButtonPressed( ... ) end )
+
+	GameRules:SetCustomGameTeamMaxPlayers(2, 1)
+	GameRules:SetCustomGameTeamMaxPlayers(3, 0)
 
 	SendToServerConsole( "sv_cheats 1" )
 	SendToServerConsole( "dota_hero_god_mode 0" )
