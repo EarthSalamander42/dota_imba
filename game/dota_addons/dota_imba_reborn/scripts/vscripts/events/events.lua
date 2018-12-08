@@ -32,22 +32,6 @@ function GameMode:OnGameRulesStateChange(keys)
 			self:InitDemo()
 		end
 
-		Timers:CreateTimer(2.0, function()
-			-- fix for last dota 2 update
-			GameRules:FinishCustomGameSetup()
-		end)
-
-		-- Credits to Dota 12v12 for the fix
-		local playerId = 0
-		for team = DOTA_TEAM_FIRST, DOTA_TEAM_CUSTOM_MAX do
-			for i = 1, GameRules:GetCustomGameTeamMaxPlayers(team) do
-				if PlayerResource:IsValidPlayerID(playerId) then
-					PlayerResource:SetCustomTeamAssignment(playerId, team)
-					playerId = playerId + 1
-				end
-			end
-		end
-
 		-- temporary (from stat-collection)
 		-- Build players array
 		--		local players = {}

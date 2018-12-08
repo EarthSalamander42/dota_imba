@@ -1,15 +1,15 @@
-LinkLuaModifier("components/modifiers/demo/lm_take_no_damage", LUA_MODIFIER_MOTION_NONE)
-
 function GameMode:InitDemo()
 	GameRules:GetGameModeEntity():SetTowerBackdoorProtectionEnabled( true )
 	GameRules:GetGameModeEntity():SetFixedRespawnTime( 4 )
 --	GameRules:GetGameModeEntity():SetBotThinkingEnabled( true ) -- the ConVar is currently disabled in C++
 	-- Set bot mode difficulty: can try GameRules:GetGameModeEntity():SetCustomGameDifficulty( 1 )
 
-	GameRules:SetUseUniversalShopMode( true )
-	GameRules:SetPreGameTime( 0 )
-	GameRules:SetCustomGameSetupTimeout( 0 ) -- skip the custom team UI with 0, or do indefinite duration with -1
+	GameRules:SetUseUniversalShopMode(true)
+	GameRules:SetPreGameTime(0.0)
+	GameRules:SetStrategyTime(0.0)
+	GameRules:SetCustomGameSetupTimeout(0.0) -- skip the custom team UI with 0, or do indefinite duration with -1
 	GameRules:SetSafeToLeave(true)
+	GameRules:GetGameModeEntity():SetFixedRespawnTime(5.0)
 	PRE_GAME_TIME = 10.0
 
 	-- Events
@@ -29,6 +29,7 @@ function GameMode:InitDemo()
 	CustomGameEventManager:RegisterListener( "ChangeCosmeticsButtonPressed", function(...) return self:OnChangeCosmeticsButtonPressed( ... ) end )
 	CustomGameEventManager:RegisterListener( "PauseButtonPressed", function(...) return self:OnPauseButtonPressed( ... ) end )
 	CustomGameEventManager:RegisterListener( "LeaveButtonPressed", function(...) return self:OnLeaveButtonPressed( ... ) end )
+	CustomGameEventManager:RegisterListener("fix_newly_picked_hero", Dynamic_Wrap(self, 'OnNewHeroChosen'))
 
 	GameRules:SetCustomGameTeamMaxPlayers(2, 1)
 	GameRules:SetCustomGameTeamMaxPlayers(3, 0)
@@ -59,16 +60,18 @@ function GameMode:InitDemo()
 
 	self.i_broadcast_message_duration = 5.0
 
---	local hNeutralSpawn = Entities:FindByName( nil, "neutral_caster_spawn" )
---	if ( hNeutralSpawn == NIL ) then
---		hNeutralSpawn = Entities:CreateByClassname( "info_target" );
---	end
-
---	self.hNeutralCaster = CreateUnitByName( "npc_dota_neutral_caster", hNeutralSpawn:GetAbsOrigin(), false, nil, nil, NEUTRAL_TEAM )
+	local hNeutralSpawn = Entities:FindByName( nil, "neutral_caster_spawn" )
+	self.hNeutralCaster = CreateUnitByName( "npc_dota_neutral_caster", hNeutralSpawn:GetAbsOrigin(), false, nil, nil, DOTA_TEAM_GOODGUYS )
 end
 
-function GameMode:BroadcastMsg(message)
-	Notifications:BottomToAll({ text = message, duration = GameMode.i_broadcast_message_duration, style = {color = "white"}})
+function GameMode:BroadcastMsg(message, iDuration)
+	if iDuration == nil then
+		iDuration = GameMode.i_broadcast_message_duration
+	elseif iDuration == -1 then
+		iDuration = 99999
+	end
+
+	Notifications:BottomToAll({ text = message, duration = iDuration, style = {color = "white"}})
 end
 
 require("components/demo/events")

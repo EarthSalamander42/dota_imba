@@ -70,7 +70,7 @@
 					</Button>
 				</Panel>
 			</Panel>
-
+<!--
 			<Panel class="Category">
 				<Label text="#Misc_ButtonCategory"/>
 				<Panel class="Row">    
@@ -79,12 +79,12 @@
 					</Button>
 				</Panel>
 				<Panel class="Row">
-					<Button class="DemoButton" onactivate="DOTAShowDashboardPage( DOTAShowHeroesPage() )">
+					<Button class="DemoButton" onactivate="FireCustomGameEvent_Str( ChangeHeroButtonPressed )">
 						<Label text="#ChangeHero_Button"/>
 					</Button>
 				</Panel>
 			</Panel>
-
+-->
 			<Panel class="Category">
 				<Label text="#Playback_ButtonCategory"/>
 				<Panel class="QuitPausePanel">

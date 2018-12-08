@@ -7,9 +7,31 @@ ListenToGameEvent('game_rules_state_change', function()
 	local state = GameRules:State_Get()
 
 	if state >= DOTA_GAMERULES_STATE_PRE_GAME then
-		SendToServerConsole( "dota_dev forcegamestart" )
+--		SendToServerConsole( "dota_dev forcegamestart" )
+	elseif state >= DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
+		GameMode:BroadcastMsg("Do not abandon the game, click the red QUIT button bottom left to avoid custom game ban.", -1)
 	end
 end, nil)
+
+--------------------------------------------------------------------------------
+-- GameEvent: OnItemPurchased
+--------------------------------------------------------------------------------
+ListenToGameEvent('dota_item_purchased', function(event)
+	local hBuyer = PlayerResource:GetPlayer( event.PlayerID )
+	local hBuyerHero = hBuyer:GetAssignedHero()
+	hBuyerHero:ModifyGold( event.itemcost, true, 0 )
+end, nil)
+
+--------------------------------------------------------------------------------
+-- GameEvent: OnNPCReplaced
+--------------------------------------------------------------------------------
+--[[
+ListenToGameEvent('npc_replaced', function(event)
+	local sNewHeroName = PlayerResource:GetSelectedHeroName( event.new_entindex )
+	--print( "sNewHeroName == " .. sNewHeroName ) -- we fail to get in here
+	self:BroadcastMsg( "Changed hero to " .. sNewHeroName )
+end, nil)
+--]]
 
 --------------------------------------------------------------------------------
 -- GameEvent: OnNPCSpawned
@@ -28,6 +50,58 @@ ListenToGameEvent('npc_spawned', function(event)
 		spawnedUnit:SetContextThink( "Think_InitializeNeutralCaster", function() return Think_InitializeNeutralCaster( spawnedUnit ) end, 0 )
 	end
 end, nil)
+
+ListenToGameEvent('dota_player_used_ability', function(event)
+	local player = PlayerResource:GetPlayer(event.PlayerID)
+	local abilityname = event.abilityname
+
+	if GameMode.m_bFreeSpellsEnabled == true then
+		if player:GetAssignedHero() then
+			for i = 0, 24 - 1 do
+				if player:GetAssignedHero():GetAbilityByIndex(i) then
+					local ability = player:GetAssignedHero():GetAbilityByIndex(i)
+					ability:EndCooldown()
+					ability:RefundManaCost()
+					ability:RefreshCharges()
+				end
+			end
+		end
+	end
+end, nil)
+
+function GameMode:RefreshPlayers()
+	for nPlayerID = 0, PlayerResource:GetPlayerCount() -1 do
+		if PlayerResource:HasSelectedHero(nPlayerID) then
+			local hero = PlayerResource:GetSelectedHeroEntity(nPlayerID)
+
+			if not hero:IsAlive() then
+				hero:RespawnHero(false, false)
+			end
+
+			for i = 0, 24 - 1 do
+				local ability = hero:GetAbilityByIndex(i)
+				if ability then
+					if not ability:IsCooldownReady() then
+						ability:EndCooldown()
+					end
+				end
+			end
+
+			hero:SetHealth(hero:GetMaxHealth())
+			hero:SetMana(hero:GetMaxMana())
+		end
+	end
+end
+
+function GameMode:OnNewHeroChosen(event)
+	local old_hero = PlayerResource:GetAssignedHero()
+--	local hero = PlayerResource:ReplaceHeroWith(event.PlayerID, event.hero, 99999, 0)
+	local hero = CreateHeroForPlayer(event.hero, PlayerResource:GetPlayer(event.PlayerID))
+
+	Timers:CreateTimer(1.0, function()
+		old_hero:RemoveSelf()
+	end)
+end
 
 --------------------------------------------------------------------------------
 -- Think_InitializePlayerHero
@@ -51,7 +125,7 @@ function Think_InitializePlayerHero( hPlayerHero )
 		hAllPlayerUnits[ #hAllPlayerUnits + 1 ] = hPlayerHero
 
 		for _, hUnit in pairs( hAllPlayerUnits ) do
-			hUnit:AddNewModifier( hPlayerHero, nil, "lm_take_no_damage", nil )
+			hUnit:AddNewModifier( hPlayerHero, nil, "modifier_invulnerable", nil )
 		end
 	end
 
@@ -72,24 +146,6 @@ function Think_InitializeNeutralCaster( neutralCaster )
 end
 
 --------------------------------------------------------------------------------
--- GameEvent: OnItemPurchased
---------------------------------------------------------------------------------
-ListenToGameEvent('dota_item_purchased', function(event)
-	local hBuyer = PlayerResource:GetPlayer( event.PlayerID )
-	local hBuyerHero = hBuyer:GetAssignedHero()
-	hBuyerHero:ModifyGold( event.itemcost, true, 0 )
-end, nil)
-
---------------------------------------------------------------------------------
--- GameEvent: OnNPCReplaced
---------------------------------------------------------------------------------
-ListenToGameEvent('npc_replaced', function(event)
-	local sNewHeroName = PlayerResource:GetSelectedHeroName( event.new_entindex )
-	--print( "sNewHeroName == " .. sNewHeroName ) -- we fail to get in here
-	self:BroadcastMsg( "Changed hero to " .. sNewHeroName )
-end, nil)
-
---------------------------------------------------------------------------------
 -- ButtonEvent: OnWelcomePanelDismissed
 --------------------------------------------------------------------------------
 function GameMode:OnWelcomePanelDismissed( event )
@@ -100,7 +156,8 @@ end
 -- ButtonEvent: OnRefreshButtonPressed
 --------------------------------------------------------------------------------
 function GameMode:OnRefreshButtonPressed( eventSourceIndex )
-	SendToServerConsole( "dota_dev hero_refresh" )
+	self:RefreshPlayers()
+
 	self:BroadcastMsg( "#Refresh_Msg" )
 end
 
@@ -108,16 +165,18 @@ end
 -- ButtonEvent: OnLevelUpButtonPressed
 --------------------------------------------------------------------------------
 function GameMode:OnLevelUpButtonPressed( eventSourceIndex )
-	SendToServerConsole( "dota_dev hero_level 1" )
-	self:BroadcastMsg( "#LevelUp_Msg" )
+	local hPlayerHero = PlayerResource:GetSelectedHeroEntity(0)
+	if hPlayerHero:GetLevel() < MAX_LEVEL[GetMapName()] then
+		hPlayerHero:HeroLevelUp( false )
+		self:BroadcastMsg( "#LevelUp_Msg" )
+	end
 end
-
 --------------------------------------------------------------------------------
 -- ButtonEvent: OnMaxLevelButtonPressed
 --------------------------------------------------------------------------------
 function GameMode:OnMaxLevelButtonPressed( eventSourceIndex, data )
 	local hPlayerHero = PlayerResource:GetSelectedHeroEntity( data.PlayerID )
-	hPlayerHero:AddExperience( 32400, false, false ) -- for some reason maxing your level this way fixes the bad interaction with OnHeroReplaced
+	hPlayerHero:AddExperience( 100000, false, false ) -- for some reason maxing your level this way fixes the bad interaction with OnHeroReplaced
 	--while hPlayerHero:GetLevel() < 25 do
 		--hPlayerHero:HeroLevelUp( false )
 	--end
@@ -139,10 +198,9 @@ end
 -- ButtonEvent: OnFreeSpellsButtonPressed
 --------------------------------------------------------------------------------
 function GameMode:OnFreeSpellsButtonPressed( eventSourceIndex )
-	SendToServerConsole( "toggle dota_ability_debug" )
 	if self.m_bFreeSpellsEnabled == false then
 		self.m_bFreeSpellsEnabled = true
-		SendToServerConsole( "dota_dev hero_refresh" )
+		self:RefreshPlayers()
 		self:BroadcastMsg( "#FreeSpellsOn_Msg" )
 	elseif self.m_bFreeSpellsEnabled == true then
 		self.m_bFreeSpellsEnabled = false
@@ -161,13 +219,13 @@ function GameMode:OnInvulnerabilityButtonPressed( eventSourceIndex, data )
 
 	if self.m_bInvulnerabilityEnabled == false then
 		for _, hUnit in pairs( hAllPlayerUnits ) do
-			hUnit:AddNewModifier( hPlayerHero, nil, "lm_take_no_damage", nil )
+			hUnit:AddNewModifier( hPlayerHero, nil, "modifier_invulnerable", {} )
 		end
 		self.m_bInvulnerabilityEnabled = true
 		self:BroadcastMsg( "#InvulnerabilityOn_Msg" )
 	elseif self.m_bInvulnerabilityEnabled == true then
 		for _, hUnit in pairs( hAllPlayerUnits ) do
-			hUnit:RemoveModifierByName( "lm_take_no_damage" )
+			hUnit:RemoveModifierByName( "modifier_invulnerable" )
 		end
 		self.m_bInvulnerabilityEnabled = false
 		self:BroadcastMsg( "#InvulnerabilityOff_Msg" )
@@ -286,21 +344,22 @@ end
 -- GameEvent: OnChangeHeroButtonPressed
 --------------------------------------------------------------------------------
 function GameMode:OnChangeHeroButtonPressed( eventSourceIndex, data )
-	-- currently running the command directly in XML, should run it here if possible
-	local nHeroID = PlayerResource:GetSelectedHeroID( data.PlayerID )
-	print( "PlayerResource:GetSelectedHeroID( data.PlayerID ) == " .. nHeroID )
+	print("Select a new hero!")
+	GameRules:ResetToHeroSelection()
 end
 
 --------------------------------------------------------------------------------
 -- GameEvent: OnPauseButtonPressed
 --------------------------------------------------------------------------------
 function GameMode:OnPauseButtonPressed( eventSourceIndex )
-	SendToServerConsole( "dota_pause" )
+	PauseGame(not GameRules:IsGamePaused())
 end
 
 --------------------------------------------------------------------------------
 -- GameEvent: OnLeaveButtonPressed
 --------------------------------------------------------------------------------
 function GameMode:OnLeaveButtonPressed( eventSourceIndex )
-	SendToServerConsole( "disconnect" )
+	GAME_WINNER_TEAM = 2
+	GameRules:SetGameWinner(GAME_WINNER_TEAM)
+	GameRules:SetSafeToLeave(true)
 end

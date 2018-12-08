@@ -87,8 +87,8 @@ function GameMode:OnHeroFirstSpawn(hero)
 				hero:SetOriginalModel("models/items/courier/kanyu_shark/kanyu_shark.vmdl")
 				hero:CenterCameraOnEntity(hero, -1)
 			else
+				if GetMapName() == "imba_demo" then return end
 				if api:GetDonatorStatus(hero:GetPlayerID()) ~= 6 then
-					-- TODO: fixdishit
 					Timers:CreateTimer(1.5, function()
 						local steam_id = tostring(PlayerResource:GetSteamID(hero:GetPlayerID()))
 						DonatorCompanion(hero:GetPlayerID(), nil)

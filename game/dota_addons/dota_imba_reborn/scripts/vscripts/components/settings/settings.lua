@@ -34,7 +34,7 @@ else
 end
 
 -- Barebones constants
-AUTO_LAUNCH_DELAY = 0.0		-- last valve update doesn't start the game if it's not 0
+AUTO_LAUNCH_DELAY = 5.0
 STRATEGY_TIME = 0.0						-- How long should strategy time last?
 SHOWCASE_TIME = 0.0						-- How long should showcase time last?
 AP_BAN_TIME = 10.0

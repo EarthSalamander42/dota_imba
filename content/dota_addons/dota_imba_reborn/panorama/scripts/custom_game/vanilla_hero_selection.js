@@ -57,6 +57,37 @@ function UpdateHero() {
 
 	count++;
 }
+
+function OnUpdateHeroSelection() {
+//	picked_heroes = []
+
+//	for(var i = 0; i < 19; i++)
+//	{
+//		if (Game.GetPlayerInfo(i)) {
+//			$.Msg(Game.GetPlayerInfo(i).player_selected_hero);
+//			picked_heroes[i] = Game.GetPlayerInfo(i).player_selected_hero;
+//		}
+//	}
+
+//	$.Msg("Start hero picked update...")
+
+//	count = 0;
+
+//	for(var i = 0; i < total; i++)
+//	{
+//		UpdatePickedHeroes();
+//	}
+
+//	count = 0;
+
+	if (Game.GetMapInfo().map_display_name == "imba_demo") {
+		$.Msg(Game.GetPlayerInfo(0).player_selected_hero);
+		GameEvents.SendCustomGameEventToServer("fix_newly_picked_hero", {
+			hero : Game.GetPlayerInfo(0).player_selected_hero,
+		});
+	}
+}
+
 /*
 function OnUpdateHeroSelectionDirty() {
 	CheckForBannedHero();
@@ -66,28 +97,6 @@ function OnUpdateHeroSelectionRepeat() {
 	OnUpdateHeroSelection();
 	CheckForBannedHero();
 //	$.Schedule(1.0, OnUpdateHeroSelection); // iteration last longer, find another way
-}
-
-function OnUpdateHeroSelection() {
-	picked_heroes = []
-
-	for(var i = 0; i < 19; i++)
-	{
-		if (Game.GetPlayerInfo(i)) {
-			picked_heroes[i] = Game.GetPlayerInfo(i).player_selected_hero;
-		}
-	}
-
-	$.Msg("Start hero picked update...")
-
-	count = 0;
-
-	for(var i = 0; i < total; i++)
-	{
-		UpdatePickedHeroes();
-	}
-
-	count = 0;
 }
 
 function UpdatePickedHeroes() {
@@ -117,15 +126,6 @@ function UpdatePickedHeroes() {
 
 	count++;
 }
-*/
-/*
-[PanoramaScript] Start hero picked update...
-[PanoramaScript] Start hero picked update...
-[PanoramaScript] npc_dota_hero_gyrocopter Has been disabled!
-[PanoramaScript] Start hero picked update...
-[PanoramaScript] npc_dota_hero_gyrocopter Has been disabled!
-[PanoramaScript] Start hero picked update...
-[PanoramaScript] npc_dota_hero_gyrocopter Has been disabled!
 */
 
 function CheckForBannedHero() {
@@ -169,5 +169,5 @@ function CheckForBannedHero() {
 //	$.Schedule(1.0, OnUpdateHeroSelection);
 
 //	GameEvents.Subscribe("dota_player_hero_selection_dirty", OnUpdateHeroSelectionDirty);
-//	GameEvents.Subscribe("dota_player_update_hero_selection", OnUpdateHeroSelectionRepeat);
+	GameEvents.Subscribe("dota_player_update_hero_selection", OnUpdateHeroSelection);
 })();
