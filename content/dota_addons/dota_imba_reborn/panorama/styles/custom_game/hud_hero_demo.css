@@ -1,55 +1,55 @@
 .CustomHudRoot
 {
-    width: 100%;
-    height: 100%;
+	width: 100%;
+	height: 100%;
 }
 
 .DemoHud
 {
-    flow-children: right;
-    height: 100%;
-    width: 100%;
+	flow-children: right;
+	height: 100%;
+	width: 100%;
 }
 
 .ControlPanel
 {
-    transform: translateX( 0% ) translateY( -100px );
-    vertical-align: middle;
-    horizontal-align: left;
-    padding: 4px;
-    padding-left: 0px;
+	transform: translateX( 0% ) translateY( -100px );
+	vertical-align: middle;
+	horizontal-align: left;
+	padding: 4px;
+	padding-left: 0px;
 	padding-top: 60px;
 
-    transition-property: background-color, transform;
+	transition-property: background-color, transform;
 	transition-duration: 0.35s;
 	transition-timing-function: ease-in-out;
 }
 
 .HUDFlipped .ControlPanel
 {
-    horizontal-align: right;
-    flow-children: left;
-    transform: translateX( 0% ) translateY( -100px );
-    margin-right: -4px;
+	horizontal-align: right;
+	flow-children: left;
+	transform: translateX( 0% ) translateY( -100px );
+	margin-right: -4px;
 }
 
 .ControlPanelContainer
 {
-    flow-children: right;
-    vertical-align: middle;
-    horizontal-align: left;
-    height: 690px;
-    width: 160px;
-    font-size: 16;
-    background-color: #181818dd;
-    border: 2px solid #222222;
-   	box-shadow: #000000aa -4px -4px 8px 8px;
+	flow-children: right;
+	vertical-align: middle;
+	horizontal-align: left;
+	height: 690px;
+	width: 160px;
+	font-size: 16;
+	background-color: #181818dd;
+	border: 2px solid #222222;
+	box-shadow: #000000aa -4px -4px 8px 8px;
 }
 
 .HUDFlipped .ControlPanelContainer
 {
-    horizontal-align: right;
-    box-shadow: #000000aa -4px -4px 8px 8px;
+	horizontal-align: right;
+	box-shadow: #000000aa -4px -4px 8px 8px;
 }
 
 #ControlPanelSlideThumb
@@ -57,16 +57,16 @@
 	width: 32px;
 	height: 96px;
 	transform: translateX( 0px );
-    background-color: #181818cc;
-    border-top-right-radius: 12px;
-    border-bottom-right-radius: 12px;
-   	box-shadow: #00000055 -4px -4px 8px 8px;
+	background-color: #181818cc;
+	border-top-right-radius: 12px;
+	border-bottom-right-radius: 12px;
+	box-shadow: #00000055 -4px -4px 8px 8px;
 	vertical-align: middle;
 }
 
 .HUDFlipped #ControlPanelSlideThumb
 {
-    transform: scaleX(-1);
+	transform: scaleX(-1);
 }
 
 .RightArrowButtonIcon
@@ -76,7 +76,7 @@
 	vertical-align: middle;
 	horizontal-align: right;
 	background-image: url("s2r://panorama/images/control_icons/double_arrow_left_png.vtex");
-    background-position: 0% 50%;
+	background-position: 0% 50%;
 	background-size: contain;
 	background-repeat: no-repeat;
 	wash-color: #91aba6;
@@ -113,36 +113,36 @@
 
 .ControlPanel. #ControlPanelSlideThumb:hover .RightArrowButtonIcon
 {
-    transform: translateX( 3px ) rotateZ(180deg);
-    wash-color: white;
+	transform: translateX( 3px ) rotateZ(180deg);
+	wash-color: white;
 }
 
 .ControlPanel.Minimized
 {
-    transform: translateX( -160px ) translateY( -100px );
+	transform: translateX( -160px ) translateY( -100px );
 }
 
 .HUDFlipped .ControlPanel.Minimized
 {
-    transform: translateX( 160px ) translateY( -100px );
+	transform: translateX( 160px ) translateY( -100px );
 }
 
 .QuitPausePanel
 {
 	flow-children: right;
 	transform: translateX( 0px ) translateY( 0px );
-    vertical-align: top;
-    horizontal-align: right;
-    height: 45px;
-    width: 100%;
-    background-color: #181818;
-    border: 2px solid #222222;	
+	vertical-align: top;
+	horizontal-align: right;
+	height: 45px;
+	width: 100%;
+	background-color: #181818;
+	border: 2px solid #222222;	
 }
 
 .QuitPausePanel .DemoButton
 {
 	height: 100%;
-    width: 48%;
+	width: 48%;
 }
 
 .Category .QuitPausePanel
@@ -160,34 +160,34 @@
 .QuitPausePanel .QuitButton
 {
 	background-color: gradient( linear, 0% 0%, 0% 100%, from( #441111), to( #662222 ) );
-    height: 100%;
-    width: 48%;
+	height: 100%;
+	width: 48%;
 
 	margin-top: 3px;
 	margin-bottom: 3px;
 	margin-left: 3px;
 	margin-right: 3px;
 
-    border-style: solid;
-    border-width: 2px;	
+	border-style: solid;
+	border-width: 2px;	
 
-    border-top-color: #661111;
-    border-left-color: #591111;
-    border-bottom-color: #441111;
-    border-right-color: #502222;
+	border-top-color: #661111;
+	border-left-color: #591111;
+	border-bottom-color: #441111;
+	border-right-color: #502222;
 
-    transition-property: background-color;
+	transition-property: background-color;
 	transition-duration: 0.15s;
 	transition-timing-function: ease-in-out;
 }
 
 .Category .QuitPausePanel .QuitButton Label
 {
-    margin-top: 5px;
-    margin-left: 5px;
-    color: #ffffff;
-    font-size: 16;
-    vertical-align: middle;
+	margin-top: 5px;
+	margin-left: 5px;
+	color: #ffffff;
+	font-size: 16;
+	vertical-align: middle;
 }
 
 .QuitPausePanel .QuitButton:hover
@@ -197,7 +197,7 @@
 
 .QuitPausePanel.QuitButton:active
 {
-    background-color: gradient( linear, 0% 0%, 0% 100%, from( #aa8888 ), to( #ffaaaa ) );
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #aa8888 ), to( #ffaaaa ) );
 	pre-transform-scale2d: 1.02;
 }
 
@@ -241,12 +241,12 @@
 .ControlPanelContainer #Maximized #MinimizeButton
 {
 	flow-children: down;
-    transform: translateX( 0% ) translateY( 0% );
-    vertical-align: middle;
-    horizontal-align: left;
-    width: 100%;
-    background-color: #181818;
-    border: 2px solid #111111;
+	transform: translateX( 0% ) translateY( 0% );
+	vertical-align: middle;
+	horizontal-align: left;
+	width: 100%;
+	background-color: #181818;
+	border: 2px solid #111111;
 	visibility:visible;
 }
 
@@ -317,28 +317,28 @@
 	border: 1px solid baseBorder;
 	
 	color: lightgrey;
-    font-size: 16;
+	font-size: 16;
 
-    margin-top: 3px;
+	margin-top: 3px;
 	margin-bottom: 3px;
 	margin-left: 3px;
 	margin-right: 3px;
 
-    height: 20px;
+	height: 20px;
 	width: 40px;
 
-    padding-top: 5px;
-    padding-left: 5px;
+	padding-top: 5px;
+	padding-left: 5px;
 }
 
 .Row TextEntry #PlaceholderText
 {
-    opacity: 1.0;
+	opacity: 1.0;
 
-    transition-property: opacity;
-    transition-duration: 0.1s;
+	transition-property: opacity;
+	transition-duration: 0.1s;
 
-    vertical-align: middle;
+	vertical-align: middle;
 
 	color: #444444;
 	font-size: 16;
@@ -352,7 +352,7 @@
 
 .Row TextEntry:focus #PlaceholderText, TextEntry.HasInput #PlaceholderText
 {
-    opacity: 0.0;
+	opacity: 0.0;
 }
 
 .DemoButton
@@ -367,17 +367,17 @@
 	margin-left: 3px;
 	margin-right: 3px;
 
-    border-style: solid;
-    border-width: 1px;
+	border-style: solid;
+	border-width: 1px;
 
-    border-top-color: #444444;
-    border-left-color: #494949;
-    border-bottom-color: #111111;
-    border-right-color: #404040;
+	border-top-color: #444444;
+	border-left-color: #494949;
+	border-bottom-color: #111111;
+	border-right-color: #404040;
 
-    transition-property: background-color;
-    transition-duration: 0.15s;
-    transition-timing-function: linear;
+	transition-property: background-color;
+	transition-duration: 0.15s;
+	transition-timing-function: linear;
 }
 
 .Category .Row .DemoButton#FieldButton
@@ -388,35 +388,35 @@
 
 .Category .DemoButton Label
 {
-    margin-top: 5px;
+	margin-top: 5px;
 /*	padding: 6% 12% 6% 3%;*/
-    color: #cccccc;
-    font-size: 15;
-    font-weight: thin;
-    vertical-align: middle;
-    text-transform: none;
-    letter-spacing: 0px;
+	color: #cccccc;
+	font-size: 15;
+	font-weight: thin;
+	vertical-align: middle;
+	text-transform: none;
+	letter-spacing: 0px;
 }
 
 .Category .DemoButton:hover
 {
-    background-color: gradient( linear, 0% 0%, 0% 100%, from( #444444 ), to( #555555 ) );
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #444444 ), to( #555555 ) );
 }
 
 .Category .DemoButton:hover Label
 {
-    //color: #cccccc;
+	//color: #cccccc;
 }
 
 .Category .DemoButton:active
 {
-    background-color: gradient( linear, 0% 0%, 0% 100%, from( #888888 ), to( #aaaaaa ) );
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #888888 ), to( #aaaaaa ) );
 	pre-transform-scale2d: 1.02;
 }
 
 .Category .DemoButton:active Label
 {
-    //color: #eeeeee;
+	//color: #eeeeee;
 }
 
 .Category .DemoButton:selected
@@ -426,10 +426,40 @@
 
 .Category ToggleButton.DemoButton:active Label
 {
-    //color: #eeeeee;
+	//color: #eeeeee;
 }
 
 .Category ToggleButton:selected Label
 {
-    //color: #cccccc;
+	//color: #cccccc;
+}
+
+#PickScreen {
+	flow-children: down;
+    vertical-align: middle;
+    horizontal-align: left;
+    height: 690px;
+    width: 655px;
+    font-size: 16;
+    background-color: #181818dd;
+    border: 2px solid #222222;
+   	box-shadow: #000000aa -4px -4px 8px 8px;
+   	visibility: collapse;
+}
+
+.HeroContainer {
+	margin: 2px;
+	width: 65px;
+	height: 40px;
+}
+
+.HeroContainer:hover {
+	pre-transform-scale2d: 1.6;
+	z-index: 1;
+}
+
+.Attribute {
+	padding: 5px;
+	align: center center;
+	flow-children: right-wrap;
 }

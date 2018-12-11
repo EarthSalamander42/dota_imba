@@ -79,13 +79,14 @@ function OnUpdateHeroSelection() {
 //	}
 
 //	count = 0;
-
+/*
 	if (Game.GetMapInfo().map_display_name == "imba_demo") {
 		$.Msg(Game.GetPlayerInfo(0).player_selected_hero);
 		GameEvents.SendCustomGameEventToServer("fix_newly_picked_hero", {
 			hero : Game.GetPlayerInfo(0).player_selected_hero,
 		});
 	}
+*/
 }
 
 /*

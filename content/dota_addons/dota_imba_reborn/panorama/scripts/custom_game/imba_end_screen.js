@@ -134,7 +134,7 @@ function EndScoreboard() {
 				values.xp.rank.text = Math.floor(player_table.XP) + "/" + Math.floor(player_table.MaxXP);
 				values.xp.level.text = $.Localize("#battlepass_level") + player_table.Lvl;
 				values.xp.rank_name.text = player_table.title;
-				values.xp.rank_name.style.color = player_table.ply_color;
+				values.xp.rank_name.style.color = player_table.title_color;
 				values.xp.booster.style.color = player_table.donator_color;
 //				$.Msg(Math.floor(player_table.XP) / Math.floor(player_table.MaxXP))
 //				if (Math.floor(player_table.XP) / Math.floor(player_table.MaxXP) >= 1) {
