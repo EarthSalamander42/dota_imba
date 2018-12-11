@@ -14,16 +14,16 @@ var toggle = false;
 var first_time = false;
 
 var api = {
-	base : "http://api.dota2imba.org",
+	base : "http://api.dota2imba.org/imba/",
 	urls : {
-		companions : "/imba/meta/companions",
-		statues : "/imba/meta/ingame-statues",
-		modifyCompanion : "/imba/meta/modify-companion",
-		modifyStatue : "/imba/meta/modify-ingame-statue",
-//		rankingsImr5v5 : "/imba/meta/rankings/imr-5v5",
-//		rankingsImr10v10 : "/imba/meta/rankings/imr-10v10",
-//		rankingsXp : "/imba/meta/rankings/xp",
-//		rankingsLevel1v1 : "/imba/meta/rankings/level-1v1"
+		companions : "meta/companions",
+		statues : "meta/ingame-statues",
+		modifyCompanion : "meta/modify-companion",
+		modifyStatue : "meta/modify-ingame-statue",
+//		rankingsImr5v5 : "meta/rankings/imr-5v5",
+//		rankingsImr10v10 : "meta/rankings/imr-10v10",
+//		rankingsXp : "meta/rankings/xp",
+//		rankingsLevel1v1 : "meta/rankings/level-1v1"
 	},
 	loadCompanions : function(callback) {
 		$.AsyncWebRequest(api.base + api.urls.companions, {
@@ -192,7 +192,6 @@ function SwitchTab(tab) {
 	}
 }
 
-
 function SwitchDonatorWrapper(type) {
 	if (current_sub_tab == type) {
 //		$.Msg("Bro don't reload you're fine!");
@@ -201,15 +200,17 @@ function SwitchDonatorWrapper(type) {
 
 	current_sub_tab = type;
 
+//	$("#PatreonTableWrapper").style.visibility = "collapse";
 	$("#CompanionTableWrapper").style.visibility = "collapse";
 	$("#StatueTableWrapper").style.visibility = "collapse";
+//	$("#PatreonTabButton").RemoveClass('active');
 	$("#CompanionTabButton").RemoveClass('active');
 	$("#StatueTabButton").RemoveClass('active');
 
 	$("#" + type + "TableWrapper").style.visibility = "visible";
 	$("#" + type + "TabButton").AddClass('active');
 
-	$('#DonatorTabTitle').text = "SELECT A " + type.toUpperCase();
+	$('#DonatorTabTitle').text = "#donator_" + type + "_wrapper_label";
 }
 
 var companions = null;
@@ -223,6 +224,8 @@ function Battlepass(retainSubTab) {
 		GenerateCompanionPanel(statues, Players.GetLocalPlayer(), "Statue", retainSubTab);
 	});
 
+	GenerateBattlepassPanel(BattlepassRewards, Players.GetLocalPlayer());
+
 	api.loadCompanions(function(companions) {
 		if (BattlepassRewards === undefined) {
 			$.Msg("Battlepass undefined..");
@@ -230,7 +233,6 @@ function Battlepass(retainSubTab) {
 			return;
 		} else {
 			$.Msg("Companions and Battlepass information available");
-			GenerateBattlepassPanel(BattlepassRewards, Players.GetLocalPlayer());
 			GenerateCompanionPanel(companions, Players.GetLocalPlayer(), "Companion", retainSubTab);
 		}
 	});
@@ -430,7 +432,7 @@ function GenerateBattlepassPanel(BattlepassRewards, player) {
 			var is_arcana = false;
 			var is_immortal = false;
 
-			i_count = i_count + 1;
+			i_count++;
 
 			var arcana = BattlepassRewards[i].search("arcana");
 			var immortal = BattlepassRewards[i].search("immortal");

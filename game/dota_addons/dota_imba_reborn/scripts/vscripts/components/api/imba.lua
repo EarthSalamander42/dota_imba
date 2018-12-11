@@ -78,7 +78,7 @@ function api:GetApiGameId()
 end
 
 function api:IsCheatGame()
-	if CustomNetTables:GetTableValue("game_options", "game_count").value == 1 then
+	if CustomNetTables:GetTableValue("game_options", "game_count").value == 0 then
 		return true
 	end
 

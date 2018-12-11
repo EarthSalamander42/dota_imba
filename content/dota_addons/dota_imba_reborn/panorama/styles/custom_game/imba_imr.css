@@ -765,19 +765,18 @@
 	line-height: 14px;
 }
 
-#CompanionTableWrapper {
-	overflow: squish scroll;
-	flow-children: down;
-	height: 470px;
-	width: 100%;
-}
-
+#PatreonTableWrapper,
+#CompanionTableWrapper,
 #StatueTableWrapper {
 	overflow: squish scroll;
 	flow-children: down;
 	height: 470px;
 	width: 100%;
 	visibility: collapse;
+}
+
+#CompanionTableWrapper {
+	visibility: visible;
 }
 
 .DonatorRow {
@@ -822,8 +821,6 @@
 .DonatorReward:active {
 	background-color: #000000aa;
 }
-
-
 
 #CompanionNotification {
 	width: 100%;
@@ -1027,4 +1024,31 @@
 
 #rank_3 {
 	color: darkorange;
+}
+
+.patreon_donator_row {
+	margin-top: 1px;
+	margin-bottom: 1px;
+	width: 100%;
+	height: 150px;
+	flow-children: right;
+	background-color: #000000aa;
+	border-radius: 5px;
+	border: 1px solid #1d2126;
+}
+
+.patreon_donator_row Image {
+	margin: 10px;
+	width: 25%;
+	height: 100%;
+	align: left center;
+	border-radius: 5px;
+	border: 1px solid #1d2126;
+}
+
+.patreon_donator_row_center {
+	margin: 10px;
+	width: 50%;
+	height: 100%;
+	background-color: #000000aa;
 }

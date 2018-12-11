@@ -75,6 +75,14 @@
 					</Panel>
 
 					<Panel id="MiniTabButtonContainer" hittest="false">
+<!--						<Button class="sub_nav_tab" id="PatreonTabButton" onactivate="SwitchDonatorWrapper('Patreon');">
+							<Label class="text" text="#donator_patreon" />
+						</Button>
+
+						<Panel hittest="false" class="tab_separator">
+							<Label text="/" />
+						</Panel> -->
+
 						<Button class="sub_nav_tab" id="CompanionTabButton" onactivate="SwitchDonatorWrapper('Companion');">
 							<Label class="text" text="#donator_companion" />
 						</Button>
@@ -130,8 +138,40 @@
 				<Button id="CompanionNotification" onactivate="DOTADisplayURL('https://www.patreon.com/bePatron?u=2533325');">
 					<Label id="CompanionNotificationLabel"/>
 				</Button>
-	
-				
+<!--
+				<Panel id="PatreonTableWrapper" hittest="false">
+					<Panel id="Donator1" class="patreon_donator_row" hittest="false">
+						<Image src="file://{images}/custom_game/patreon/tiers/1.png" />
+						<Panel id="Donator1Center" class="patreon_donator_row_center" hittest="false">
+
+						</Panel>
+					</Panel>
+					<Panel id="Donator2" class="patreon_donator_row" hittest="false">
+						<Image src="file://{images}/custom_game/patreon/tiers/2.png" />
+					</Panel>
+					<Panel id="Donator3" class="patreon_donator_row" hittest="false">
+						<Image src="file://{images}/custom_game/patreon/tiers/3.png" />
+					</Panel>
+					<Panel id="Donator4" class="patreon_donator_row" hittest="false">
+						<Image src="file://{images}/custom_game/patreon/tiers/4.png" />
+					</Panel>
+					<Panel id="Donator5" class="patreon_donator_row" hittest="false">
+						<Image src="file://{images}/custom_game/patreon/tiers/5.jpg" />
+					</Panel>
+					<Panel id="Donator6" class="patreon_donator_row" hittest="false">
+						<Image src="file://{images}/custom_game/patreon/tiers/6.jpg" />
+					</Panel>
+					<Panel id="Donator7" class="patreon_donator_row" hittest="false">
+						<Image src="file://{images}/custom_game/patreon/tiers/7.png" />
+					</Panel>
+					<Panel id="Donator8" class="patreon_donator_row" hittest="false">
+						<Image src="file://{images}/custom_game/patreon/tiers/8.jpg" />
+					</Panel>
+					<Panel id="Donator9" class="patreon_donator_row" hittest="false">
+						<Image src="file://{images}/custom_game/patreon/tiers/9.png" />
+					</Panel>
+				</Panel>
+-->
 				<Panel id="CompanionTableWrapper" hittest="false">
 					<!-- JS Inserts records here -->
 				</Panel>

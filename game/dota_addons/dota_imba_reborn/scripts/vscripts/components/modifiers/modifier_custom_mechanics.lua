@@ -124,12 +124,13 @@ function modifier_custom_mechanics:OnAttackLanded( keys )
 		
 		-- If there's no valid target, or lifesteal amount, do nothing
 		if target:IsBuilding() or target:IsIllusion() or (target:GetTeam() == attacker:GetTeam()) or lifesteal_amount <= 0 then
-			return end
+			return
+		end
 
 		-- Calculate actual lifesteal amount
-		local damage = keys.damage
-		local target_armor = target:GetPhysicalArmorValue()
-		local heal = damage * lifesteal_amount * 0.01 * GetReductionFromArmor(target_armor) * 0.01
+		local damage = parent:GetRealDamageDone(target)
+		local heal = damage * lifesteal_amount / 100
+
 
 		-- Choose the particle to draw
 		local lifesteal_particle = "particles/generic_gameplay/generic_lifesteal.vpcf"

@@ -385,6 +385,12 @@ function CDOTA_BaseNPC:EmitCasterSound(sCasterName, tSoundNames, fChancePct, fla
 	return true
 end
 
+function CDOTA_BaseNPC:GetRealDamageDone(hTarget)
+	local base_damage = self:GetAverageTrueAttackDamage(hTarget)
+	local armor_reduction = GetReductionFromArmor(hTarget:GetPhysicalArmorValue())
+	return base_damage - (base_damage * armor_reduction)
+end
+
 -- Health regeneration % amplification
 function CDOTA_BaseNPC:GetHealthRegenAmp()
 	local regen_increase = 0
