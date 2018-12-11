@@ -120,7 +120,7 @@ function LoadGameKeyValues()
 
 	-- Merge units and heroes (due to them sharing the same class CDOTA_BaseNPC)
 	for key,value in pairs(KeyValues.HeroKV) do
-		if not KeyValues.UnitKV[key] then
+		if KeyValues.UnitKV[key] ~= key then
 			KeyValues.UnitKV[key] = value
 		else
 			if type(KeyValues.All[key]) == "table" then
@@ -130,7 +130,7 @@ function LoadGameKeyValues()
 	end
 
 	for key,value in pairs(KeyValues.HeroKV2) do
-		if not KeyValues.UnitKV[key] then
+		if KeyValues.UnitKV[key] ~= key then
 			KeyValues.UnitKV[key] = value
 		else
 			if type(KeyValues.All[key]) == "table" then

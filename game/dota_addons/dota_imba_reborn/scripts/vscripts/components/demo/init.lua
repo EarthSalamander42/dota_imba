@@ -5,18 +5,17 @@ function GameMode:InitDemo()
 	-- Set bot mode difficulty: can try GameRules:GetGameModeEntity():SetCustomGameDifficulty( 1 )
 
 	GameRules:SetUseUniversalShopMode(true)
-	GameRules:SetPreGameTime(0.0)
+	GameRules:SetPreGameTime(10.0)
 	GameRules:SetStrategyTime(0.0)
 	GameRules:SetCustomGameSetupTimeout(0.0) -- skip the custom team UI with 0, or do indefinite duration with -1
 	GameRules:SetSafeToLeave(true)
-	GameRules:GetGameModeEntity():SetFixedRespawnTime(5.0)
-	PRE_GAME_TIME = 10.0
 
 	-- Events
 	CustomGameEventManager:RegisterListener( "WelcomePanelDismissed", function(...) return self:OnWelcomePanelDismissed( ... ) end )
 	CustomGameEventManager:RegisterListener( "RefreshButtonPressed", function(...) return self:OnRefreshButtonPressed( ... ) end )
 	CustomGameEventManager:RegisterListener( "LevelUpButtonPressed", function(...) return self:OnLevelUpButtonPressed( ... ) end )
 	CustomGameEventManager:RegisterListener( "MaxLevelButtonPressed", function(...) return self:OnMaxLevelButtonPressed( ... ) end )
+	CustomGameEventManager:RegisterListener( "FranticButtonPressed", function(...) return self:OnFranticButtonPressed( ... ) end )
 	CustomGameEventManager:RegisterListener( "FreeSpellsButtonPressed", function(...) return self:OnFreeSpellsButtonPressed( ... ) end )
 	CustomGameEventManager:RegisterListener( "InvulnerabilityButtonPressed", function(...) return self:OnInvulnerabilityButtonPressed( ... ) end )
 	CustomGameEventManager:RegisterListener( "SpawnAllyButtonPressed", function(...) return self:OnSpawnAllyButtonPressed( ... ) end ) -- deprecated
@@ -29,7 +28,8 @@ function GameMode:InitDemo()
 	CustomGameEventManager:RegisterListener( "ChangeCosmeticsButtonPressed", function(...) return self:OnChangeCosmeticsButtonPressed( ... ) end )
 	CustomGameEventManager:RegisterListener( "PauseButtonPressed", function(...) return self:OnPauseButtonPressed( ... ) end )
 	CustomGameEventManager:RegisterListener( "LeaveButtonPressed", function(...) return self:OnLeaveButtonPressed( ... ) end )
-	CustomGameEventManager:RegisterListener("fix_newly_picked_hero", Dynamic_Wrap(self, 'OnNewHeroChosen'))
+--	CustomGameEventManager:RegisterListener("fix_newly_picked_hero", Dynamic_Wrap(self, 'OnNewHeroChosen'))
+	CustomGameEventManager:RegisterListener("demo_select_hero", Dynamic_Wrap(self, 'OnNewHeroSelected'))
 
 	GameRules:SetCustomGameTeamMaxPlayers(2, 1)
 	GameRules:SetCustomGameTeamMaxPlayers(3, 0)

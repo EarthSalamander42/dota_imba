@@ -6,10 +6,11 @@
 ListenToGameEvent('game_rules_state_change', function()
 	local state = GameRules:State_Get()
 
-	if state >= DOTA_GAMERULES_STATE_PRE_GAME then
+	print(state == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS)
+	if state == DOTA_GAMERULES_STATE_PRE_GAME then
 --		SendToServerConsole( "dota_dev forcegamestart" )
-	elseif state >= DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
-		GameMode:BroadcastMsg("Do not abandon the game, click the red QUIT button bottom left to avoid custom game ban.", -1)
+	elseif state == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
+		Notifications:TopToAll({text = "Do not abandon the game, click the red QUIT button bottom left to avoid custom game ban.", duration = 3600.0, style = {color = "Red"}})
 	end
 end, nil)
 
@@ -52,14 +53,14 @@ ListenToGameEvent('npc_spawned', function(event)
 end, nil)
 
 ListenToGameEvent('dota_player_used_ability', function(event)
-	local player = PlayerResource:GetPlayer(event.PlayerID)
-	local abilityname = event.abilityname
+--	local player = PlayerResource:GetPlayer(event.PlayerID)
+--	local abilityname = event.abilityname
 
 	if GameMode.m_bFreeSpellsEnabled == true then
-		if player:GetAssignedHero() then
+		for _, hero in pairs(HeroList:GetAllHeroes()) do
 			for i = 0, 24 - 1 do
-				if player:GetAssignedHero():GetAbilityByIndex(i) then
-					local ability = player:GetAssignedHero():GetAbilityByIndex(i)
+				if hero:GetAbilityByIndex(i) then
+					local ability = hero:GetAbilityByIndex(i)
 					ability:EndCooldown()
 					ability:RefundManaCost()
 					ability:RefreshCharges()
@@ -70,36 +71,44 @@ ListenToGameEvent('dota_player_used_ability', function(event)
 end, nil)
 
 function GameMode:RefreshPlayers()
-	for nPlayerID = 0, PlayerResource:GetPlayerCount() -1 do
-		if PlayerResource:HasSelectedHero(nPlayerID) then
-			local hero = PlayerResource:GetSelectedHeroEntity(nPlayerID)
+	for _, hero in pairs(HeroList:GetAllHeroes()) do
+		if not hero:IsAlive() then
+			hero:RespawnHero(false, false)
+		end
 
-			if not hero:IsAlive() then
-				hero:RespawnHero(false, false)
-			end
-
-			for i = 0, 24 - 1 do
-				local ability = hero:GetAbilityByIndex(i)
-				if ability then
-					if not ability:IsCooldownReady() then
-						ability:EndCooldown()
-					end
+		for i = 0, 24 - 1 do
+			local ability = hero:GetAbilityByIndex(i)
+			if ability then
+				if not ability:IsCooldownReady() then
+					ability:EndCooldown()
 				end
 			end
-
-			hero:SetHealth(hero:GetMaxHealth())
-			hero:SetMana(hero:GetMaxMana())
 		end
+
+		hero:SetHealth(hero:GetMaxHealth())
+		hero:SetMana(hero:GetMaxMana())
 	end
 end
 
+-- Disabled!
 function GameMode:OnNewHeroChosen(event)
-	local old_hero = PlayerResource:GetAssignedHero()
+	local old_hero = PlayerResource:GetSelectedHeroEntity(event.PlayerID)
 --	local hero = PlayerResource:ReplaceHeroWith(event.PlayerID, event.hero, 99999, 0)
 	local hero = CreateHeroForPlayer(event.hero, PlayerResource:GetPlayer(event.PlayerID))
 
 	Timers:CreateTimer(1.0, function()
 		old_hero:RemoveSelf()
+	end)
+end
+
+function GameMode:OnNewHeroSelected(event)
+	PrecacheUnitByNameAsync(event.hero, function()
+		local old_hero = PlayerResource:GetSelectedHeroEntity(event.PlayerID)
+		local hero = PlayerResource:ReplaceHeroWith(event.PlayerID, event.hero, 99999, 0)
+
+		Timers:CreateTimer(1.0, function()
+			old_hero:RemoveSelf()
+		end)
 	end)
 end
 
@@ -164,8 +173,8 @@ end
 --------------------------------------------------------------------------------
 -- ButtonEvent: OnLevelUpButtonPressed
 --------------------------------------------------------------------------------
-function GameMode:OnLevelUpButtonPressed( eventSourceIndex )
-	local hPlayerHero = PlayerResource:GetSelectedHeroEntity(0)
+function GameMode:OnLevelUpButtonPressed( eventSourceIndex, data )
+	local hPlayerHero = PlayerResource:GetSelectedHeroEntity(data.PlayerID)
 	if hPlayerHero:GetLevel() < MAX_LEVEL[GetMapName()] then
 		hPlayerHero:HeroLevelUp( false )
 		self:BroadcastMsg( "#LevelUp_Msg" )
@@ -192,6 +201,21 @@ function GameMode:OnMaxLevelButtonPressed( eventSourceIndex, data )
 
 	hPlayerHero:SetAbilityPoints( 4 )
 	self:BroadcastMsg( "#MaxLevel_Msg" )
+end
+
+--------------------------------------------------------------------------------
+-- ButtonEvent: OnFranticButtonPressed
+--------------------------------------------------------------------------------
+function GameMode:OnFranticButtonPressed( eventSourceIndex, data )
+	local hPlayerHero = PlayerResource:GetSelectedHeroEntity( data.PlayerID )
+
+	if hPlayerHero:HasModifier("modifier_frantic") then
+		hPlayerHero:RemoveModifierByName("modifier_frantic")
+		self:BroadcastMsg( "#FranticOff_Msg" )
+	else
+		hPlayerHero:AddNewModifier(hPlayerHero, nil, "modifier_frantic", {}):SetStackCount(IMBA_SUPER_FRANTIC_VALUE)
+		self:BroadcastMsg( "#FranticOn_Msg" )
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -253,7 +277,7 @@ end
 -- ButtonEvent: SpawnEnemyButtonPressed
 --------------------------------------------------------------------------------
 function GameMode:OnSpawnEnemyButtonPressed( eventSourceIndex, data )
-	if #self.m_tEnemiesList >= 100 then
+	if #self.m_tEnemiesList >= 50 then
 		self:BroadcastMsg( "#MaxEnemies_Msg" )
 		return
 	end
@@ -344,7 +368,6 @@ end
 -- GameEvent: OnChangeHeroButtonPressed
 --------------------------------------------------------------------------------
 function GameMode:OnChangeHeroButtonPressed( eventSourceIndex, data )
-	print("Select a new hero!")
 	GameRules:ResetToHeroSelection()
 end
 
