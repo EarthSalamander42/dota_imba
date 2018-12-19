@@ -98,6 +98,14 @@ function GameMode:ModifierFilter( keys )
 		if modifier_owner ~= nil and IsMutationMap() or IsSuperFranticMap() then
 			modifier_class = modifier_owner:FindModifierByName(modifier_name)
 			if modifier_class == nil then return end
+
+			if keys.entindex_caster_const then
+				modifier_caster = EntIndexToHScript(keys.entindex_caster_const)
+			else
+				return true
+			end
+			
+			-- Check for skills (typically vanilla) that are explicitly flagged to not account for frantic's status resistance
 			local ignore_frantic = false
 
 			for _, modifier in pairs(IMBA_MODIFIER_IGNORE_FRANTIC) do
@@ -106,40 +114,33 @@ function GameMode:ModifierFilter( keys )
 				end
 			end
 
-			if ignore_frantic == false and string.find(modifier_name, "imba") and modifier_class.IsDebuff and modifier_class:IsDebuff() == true and modifier_class.IgnoreTenacity == nil or (modifier_class.IgnoreTenacity and modifier_class:IgnoreTenacity() == false) then
-				if keys.duration > 0 then	
+			if keys.entindex_ability_const and EntIndexToHScript(keys.entindex_ability_const).GetAbilityName then
+				if ignore_frantic == false and string.find(EntIndexToHScript(keys.entindex_ability_const):GetAbilityName(), "imba") and keys.duration > 0 and modifier_owner:GetTeam() ~= modifier_caster:GetTeam() then
 					local original_duration = keys.duration
 					local actual_duration = original_duration
 					local status_resistance = modifier_owner:GetStatusResistance()
 --					print("Old duration:", actual_duration)
 
---					if modifier_owner:GetTeam() ~= modifier_caster:GetTeam() then			
+					if not (modifier_class.IgnoreTenacity and modifier_class:IgnoreTenacity()) then
 						actual_duration = actual_duration * (1 - status_resistance)
---					end
+					end
 
 --					print("New duration:", actual_duration)
 
 					keys.duration = actual_duration
-				end
-			else
-				-- works fine for legion commander's duel, imba modifiers are using IgnoreTenacity
-				if ignore_frantic == true then
-					local original_duration = keys.duration
-					local actual_duration = original_duration
-					local status_resistance = modifier_owner:GetStatusResistance()
+				else
+					-- works fine for legion commander's duel, imba modifiers are using IgnoreTenacity
+					if ignore_frantic == true then
+						local original_duration = keys.duration
+						local actual_duration = original_duration
+						local status_resistance = modifier_owner:GetStatusResistance()
 
-					actual_duration = actual_duration / ((100 - (status_resistance * 100)) / 100)
-					keys.duration = actual_duration
+						actual_duration = actual_duration / ((100 - (status_resistance * 100)) / 100)
+						keys.duration = actual_duration
+					end
 				end
 			end
 		end
-
-		if keys.entindex_caster_const then
-			modifier_caster = EntIndexToHScript(keys.entindex_caster_const)
-		else
-			return true
-		end
-
 		-- volvo bugfix
 		if modifier_name == "modifier_datadriven" then
 			return false
@@ -829,24 +830,6 @@ function GameMode:DamageFilter( keys )
 				-- Note that stacking this with arcane rapiers basically turns your global damage into absolute garbage
 				keys.damage = keys.damage / ((ksp.damage_increase * ksp:GetStackCount() * 0.01) + 1)
 				SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, victim, keys.damage, nil)
-			end
-		end
-
-		-- Magic shield damage prevention
-		if victim:HasModifier("modifier_item_imba_initiate_robe_stacks") and victim:GetTeam() ~= attacker:GetTeam() then
-
-			-- Parameters
-			local shield_stacks = victim:GetModifierStackCount("modifier_item_imba_initiate_robe_stacks", nil)
-
-			-- Ignore part of incoming damage
-			if keys.damage > shield_stacks then
-				SendOverheadEventMessage(nil, OVERHEAD_ALERT_MAGICAL_BLOCK, victim, shield_stacks, nil)
-				victim:RemoveModifierByName("modifier_item_imba_initiate_robe_stacks")
-				keys.damage = keys.damage - shield_stacks
-			else
-				SendOverheadEventMessage(nil, OVERHEAD_ALERT_MAGICAL_BLOCK, victim, keys.damage, nil)
-				victim:SetModifierStackCount("modifier_item_imba_initiate_robe_stacks", victim, math.floor(shield_stacks - keys.damage))
-				keys.damage = 0
 			end
 		end
 
