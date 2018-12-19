@@ -103,6 +103,7 @@
 				<Panel id="ComingSoonPanel">
 					<Label id="ComingSoon" text="#coming_soon" />
 				</Panel>
+
 				<Panel id="BattlepassButtons" hittest="false">
 					<Button class="BattlepassButton" onactivate="RefreshBattlepass();">
 						<Panel id="RefreshBattlepass" onactivate="RefreshBattlepass();"/>

@@ -1,0 +1,10 @@
+"game_version_name"						"The Grand Magus"
+"loading_screen_description"			"Dota IMBA 6.88 will be released from December 21th to January 5th, Merry Christmas!. Dota IMBA 7.09 will be released after christmas, including Dota 2 7.20 changes, be patient!"
+"loading_screen_button"					"Dota 2 IMBA website is currently unavailable."
+
+"loading_screen_promote"				"Translate Dota IMBA in your native language!"
+"loading_screen_promote_description"	"You can translate Dota IMBA on Transifex website, it's easy! Just create an account and subscribe to a language. Give it a try! Don't forgot to request your Discord role! (English Discord only)"
+"loading_screen_promote_button"			"Click here to redirect to Transifex!"
+
+"loading_screen_patreon"				"Patreon"
+"loading_screen_patreon_description"	"Earthsalamander #42 is developing IMBA at full time! We also have to pay servers for the Battlepass, Statistics and XP System. Feel free to donate, even small amounts matter!"

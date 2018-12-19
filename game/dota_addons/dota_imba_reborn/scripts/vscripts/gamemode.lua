@@ -16,6 +16,7 @@ require('libraries/player')
 require('libraries/player_resource')
 require('libraries/projectiles')
 require('libraries/rgb_to_hex')
+require('libraries/selection')
 require('libraries/timers')
 require('libraries/wearables')
 
@@ -131,29 +132,102 @@ function GameMode:SetupFountains()
 	end
 end
 
-function GameMode:BountyRuneFilter(keys)
-	local hero = PlayerResource:GetPlayer(keys.player_id_const):GetAssignedHero()
+function GameMode:SetupShrines()
+	local good_fillers = {
+		"good_filler_1",
+		"good_filler_3",
+		"good_filler_5",
+	}
 
-	if hero:GetUnitName() == "npc_dota_hero_alchemist" then
-		local alchemy_bounty = 0
-		if hero:FindAbilityByName("imba_alchemist_goblins_greed") and hero:FindAbilityByName("imba_alchemist_goblins_greed"):GetLevel() > 0 then
-			alchemy_bounty = keys.gold_bounty * (hero:FindAbilityByName("imba_alchemist_goblins_greed"):GetSpecialValueFor("bounty_multiplier") / 100)
+	local bad_fillers = {
+		"bad_filler_1",
+		"bad_filler_3",
+		"bad_filler_5",
+	}
 
-			-- #7 Talent: Moar gold from bounty runes
-			if hero:HasTalent("special_bonus_imba_alchemist_7") then
-				alchemy_bounty = (alchemy_bounty * (hero:FindTalentValue("special_bonus_imba_alchemist_7") / 100)) - keys.gold_bounty
-			end
-
-			hero:ModifyGold(alchemy_bounty, false, DOTA_ModifyGold_Unspecified)
-			SendOverheadEventMessage(PlayerResource:GetPlayer(hero:GetPlayerOwnerID()), OVERHEAD_ALERT_GOLD, hero, alchemy_bounty, nil)
+	for _, ent_name in pairs(good_fillers) do
+		if Entities:FindByName(nil, ent_name) then
+			local filler = Entities:FindByName(nil, ent_name)
+			local abs = filler:GetAbsOrigin()
+			filler:RemoveSelf()
+			local shrine = CreateUnitByName("npc_dota_goodguys_healers", abs, true, nil, nil, 2)
+			shrine:SetAbsOrigin(abs)
 		end
 	end
 
-	local custom_gold_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "bounty_multiplier")["1"])
-	local custom_xp_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "exp_multiplier")["1"])
+	for _, ent_name in pairs(bad_fillers) do
+		if Entities:FindByName(nil, ent_name) then
+			local filler = Entities:FindByName(nil, ent_name)
+			local abs = filler:GetAbsOrigin()
+			filler:RemoveSelf()
+			local shrine = CreateUnitByName("npc_dota_badguys_healers", abs, true, nil, nil, 3)
+			shrine:SetAbsOrigin(abs)
+		end
+	end
+end
 
-	keys.gold_bounty = keys.gold_bounty * (custom_gold_bonus / 100)
-	keys.xp_bounty = keys.xp_bounty * (custom_xp_bonus / 100)
+function GameMode:SetupContributors()
+	local i = 0
+	local j = 0
+	local team
+	local distance_between = 100
 
-	return true
+	local contributor_position_radiant_x = Vector(-6300, -6450, 256)
+	local contributor_position_radiant_y = Vector(-6950, -5650, 256)
+	local contributor_position_dire_x = Vector(6200, 6300, 256)
+	local contributor_position_dire_y = Vector(6950, 5500, 256)
+
+--	local contributor_position_radiant_x = Vector(0, 0, 256)
+--	local contributor_position_radiant_y = Vector(0, 0, 256)
+--	local contributor_position_dire_x = Vector(0, 0, 256)
+--	local contributor_position_dire_y = Vector(0, 0, 256)
+
+	for key, value in pairs(LoadKeyValues("scripts/npc/units/contributors.txt")) do
+		if string.find(key, "npc_imba_contributor_") or string.find(key, "npc_imba_developer_") then
+			local ang = {}
+			local pos
+
+			if i % 2 == 0 then
+				j = j + 1
+				if j % 2 == 0 then
+					ang = {0, 90, 0}
+					pos = contributor_position_radiant_x + (Vector(distance_between * j, 0, 0))
+				else
+					ang = {0, 0, 0}
+					pos = contributor_position_radiant_y + (Vector(0, distance_between * j, 0))
+				end
+				team = 2
+			else
+				if j % 2 == 0 then
+					ang = {0, 270, 0}
+					pos = contributor_position_dire_x + (Vector(-distance_between * j, 0, 0))
+				else
+					ang = {0, 180, 0}
+					pos = contributor_position_dire_y + (Vector(0, -distance_between * j, 0))
+				end
+				team = 3
+			end
+
+			local contributor = CreateUnitByName(key, pos, true, nil, nil, team)
+			contributor:SetAngles(ang[1], ang[2], ang[3])
+			contributor:AddAbility("contributor_dummy_unit_state"):SetLevel(1)
+			if string.find(key, "npc_imba_developer_") then
+				local pfx = ParticleManager:CreateParticle("particles/econ/courier/courier_wyvern_hatchling/courier_wyvern_hatchling_fire.vpcf", PATTACH_ABSORIGIN, contributor)
+				ParticleManager:SetParticleControl(pfx, 0, contributor:GetAbsOrigin())
+				ParticleManager:ReleaseParticleIndex(pfx)
+			end
+
+			i = i + 1
+		end
+	end
+end
+
+function GameMode:SetupFrostivus()
+	if Entities:FindByName(nil, "radiant_greevil") then
+		local greevil = CreateUnitByName("npc_imba_greevil_radiant", Entities:FindByName(nil, "radiant_greevil"):GetAbsOrigin(), true, nil, nil, 2)
+	end
+
+	if Entities:FindByName(nil, "dire_greevil") then
+		local greevil = CreateUnitByName("npc_imba_greevil_dire", Entities:FindByName(nil, "dire_greevil"):GetAbsOrigin(), true, nil, nil, 3)
+	end
 end

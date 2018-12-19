@@ -51,6 +51,26 @@ function api:GetDonatorStatus(player_id)
 	end
 end
 
+function api:InitDonatorTableJS()
+	local developers = {}
+	local donators = {}
+
+	for i = 0, PlayerResource:GetPlayerCount() - 1 do
+		local donator_status = api:GetDonatorStatus(i)
+		if donator_status ~= 0 then
+			if donator_status <= 2 then
+				table.insert(developers, tostring(PlayerResource:GetSteamID(i)))
+			end
+			if donator_status <= 9 then
+				table.insert(donators, tostring(PlayerResource:GetSteamID(i)))
+			end
+		end
+	end
+
+	CustomNetTables:SetTableValue("game_options", "developers", developers)
+	CustomNetTables:SetTableValue("game_options", "donators", donators)
+end
+
 function api:GetPlayerXP(player_id)
 	if not PlayerResource:IsValidPlayerID(player_id) then
 		native_print("api:GetPlayerXP: Player ID not valid!")

@@ -90,6 +90,7 @@ function IsDonator(ID) {
 
 	var local_steamid = Game.GetPlayerInfo(ID).player_steamid;
 	var donators = CustomNetTables.GetTableValue("game_options", "donators");
+	$.Msg(donators)
 
 	for (var key in donators) {
 		var steamid = donators[key];

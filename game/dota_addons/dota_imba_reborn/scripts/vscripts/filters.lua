@@ -470,13 +470,25 @@ function GameMode:OrderFilter( keys )
 	if USE_TEAM_COURIER == false then
 		for _, ent_id in pairs(units) do
 			if EntIndexToHScript(ent_id):IsCourier() then
-				if EntIndexToHScript(ent_id):GetPlayerOwnerID() == EntIndexToHScript(ent_id):GetMainControllingPlayer() then
+				if EntIndexToHScript(ent_id):GetPlayerOwnerID() == keys.issuer_player_id_const then
 					if keys.order_type == DOTA_UNIT_ORDER_MOVE_TO_POSITION or keys.order_type == DOTA_UNIT_ORDER_MOVE_TO_TARGET or keys.order_type == DOTA_UNIT_ORDER_HOLD_POSITION or keys.order_type == DOTA_UNIT_ORDER_DROP_ITEM or keys.order_type == DOTA_UNIT_ORDER_GIVE_ITEM then
 						return false
 					else
 						return true
 					end
 				else
+					local ability = EntIndexToHScript(keys["entindex_ability"])
+					if ability then
+						if ability:GetAbilityName() then
+							if TurboCourier.COURIER_PLAYER[keys.issuer_player_id_const] then
+								TurboCourier.COURIER_PLAYER[keys.issuer_player_id_const]:FindAbilityByName(ability:GetAbilityName()):CastAbility()
+								if PlayerResource:IsUnitSelected(keys.issuer_player_id_const, EntIndexToHScript(ent_id)) then
+									PlayerResource:NewSelection(keys.issuer_player_id_const, TurboCourier.COURIER_PLAYER[keys.issuer_player_id_const])
+								end
+							end
+						end
+					end
+
 					return false
 				end
 			end
@@ -994,6 +1006,33 @@ function GameMode:DamageFilter( keys )
 --			end
 --		end
 --	end
+
+	return true
+end
+
+function GameMode:BountyRuneFilter(keys)
+	local hero = PlayerResource:GetPlayer(keys.player_id_const):GetAssignedHero()
+
+	if hero:GetUnitName() == "npc_dota_hero_alchemist" then
+		local alchemy_bounty = 0
+		if hero:FindAbilityByName("imba_alchemist_goblins_greed") and hero:FindAbilityByName("imba_alchemist_goblins_greed"):GetLevel() > 0 then
+			alchemy_bounty = keys.gold_bounty * (hero:FindAbilityByName("imba_alchemist_goblins_greed"):GetSpecialValueFor("bounty_multiplier") / 100)
+
+			-- #7 Talent: Moar gold from bounty runes
+			if hero:HasTalent("special_bonus_imba_alchemist_7") then
+				alchemy_bounty = (alchemy_bounty * (hero:FindTalentValue("special_bonus_imba_alchemist_7") / 100)) - keys.gold_bounty
+			end
+
+			hero:ModifyGold(alchemy_bounty, false, DOTA_ModifyGold_Unspecified)
+			SendOverheadEventMessage(PlayerResource:GetPlayer(hero:GetPlayerOwnerID()), OVERHEAD_ALERT_GOLD, hero, alchemy_bounty, nil)
+		end
+	end
+
+	local custom_gold_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "bounty_multiplier")["1"])
+	local custom_xp_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "exp_multiplier")["1"])
+
+	keys.gold_bounty = keys.gold_bounty * (custom_gold_bonus / 100)
+	keys.xp_bounty = keys.xp_bounty * (custom_xp_bonus / 100)
 
 	return true
 end

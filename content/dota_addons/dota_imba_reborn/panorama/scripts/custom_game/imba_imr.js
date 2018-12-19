@@ -16,10 +16,10 @@ var first_time = false;
 var api = {
 	base : "http://api.dota2imba.org/imba/",
 	urls : {
-		companions : "meta/companions",
-		statues : "meta/ingame-statues",
-		modifyCompanion : "meta/modify-companion",
-		modifyStatue : "meta/modify-ingame-statue",
+		companions : "companions",
+		statues : "statues",
+		modifyCompanion : "modify-companion",
+		modifyStatue : "modify-statue",
 //		rankingsImr5v5 : "meta/rankings/imr-5v5",
 //		rankingsImr10v10 : "meta/rankings/imr-10v10",
 //		rankingsXp : "meta/rankings/xp",
@@ -31,11 +31,11 @@ var api = {
 			dataType : "json",
 			timeout : 5000,
 			success : function(obj) {
-				if (obj.error || !obj.data || !obj.data.companions)
+				if (obj.error || !obj.data)
 					$.Msg("Error Loading Companions! " + JSON.stringify(obj.message));
 				else {
-					$.Msg("Loaded " + obj.data.companions.length + " companions.");
-					callback(obj.data.companions);
+					$.Msg("Loaded " + obj.data.length + " companions.");
+					callback(obj.data);
 				}
 			},
 			error : function(err) {
@@ -210,7 +210,7 @@ function SwitchDonatorWrapper(type) {
 	$("#" + type + "TableWrapper").style.visibility = "visible";
 	$("#" + type + "TabButton").AddClass('active');
 
-	$('#DonatorTabTitle').text = "#donator_" + type + "_wrapper_label";
+	$('#DonatorTabTitle').text = $.Localize("#donator_" + type.toLowerCase() + "_wrapper_label").toUpperCase();
 }
 
 var companions = null;
@@ -452,8 +452,8 @@ function GenerateBattlepassPanel(BattlepassRewards, player) {
 			var reward = $.CreatePanel("Panel", $("#BattlepassRow" + class_option_count + "_" + player), BattlepassRewards[i]);
 			reward.AddClass("BattlepassReward");
 			var reward_icon = $.CreatePanel("Panel", reward, BattlepassRewards[i] + "_icon");
-			reward_icon.AddClass("BattlepassRewardIcon");
 			reward_icon.style.backgroundImage = 'url("file://{images}/custom_game/battlepass/' + BattlepassRewards[i] + '.png")';
+			reward_icon.AddClass("BattlepassRewardIcon");
 			if (is_arcana == true)
 				reward_icon.AddClass("arcana_border");
 			if (is_immortal == true)

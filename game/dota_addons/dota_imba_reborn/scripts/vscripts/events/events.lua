@@ -79,6 +79,11 @@ function GameMode:OnGameRulesStateChange(keys)
 		end
 
 		Timers:CreateTimer(2.0, function()
+			if BOTS_ENABLED == true then
+				SendToServerConsole('sm_gmode 1')
+				SendToServerConsole('dota_bot_populate')
+			end
+
 			if GetMapName() == MapOverthrow() then
 				require("components/overthrow/imbathrow")
 				GoodCamera = Entities:FindByName(nil, "@overboss")
@@ -130,20 +135,22 @@ function GameMode:OnGameRulesStateChange(keys)
 	elseif newState == DOTA_GAMERULES_STATE_PRE_GAME then
 --		api.imba.event(api.events.entered_pre_game)
 
---		if api.imba.data.donators then
---			CustomNetTables:SetTableValue("game_options", "donators", api.imba.get_donators())
---		end
-
---		if api.imba.data.developers then
---			CustomNetTables:SetTableValue("game_options", "developers", api.imba.get_developers())
---		end
+		api:InitDonatorTableJS()
 
 		if GetMapName() == MapOverthrow() then
 			GoodCamera:AddNewModifier(GoodCamera, nil, "modifier_overthrow_gold_xp_granter", {})
 			GoodCamera:AddNewModifier(GoodCamera, nil, "modifier_overthrow_gold_xp_granter_global", {})
 		else
-			-- Initialize base shrines
-			SetupShrines()
+			self:SetupContributors()
+			self:SetupFrostivus()
+			self:SetupShrines()
+
+			-- attempt to fix courier uncontrollable until manually selected
+			for _, hero in pairs(HeroList:GetAllHeroes()) do
+				for _, courier in pairs(TurboCourier.COURIER_PLAYER[hero:GetPlayerID()]) do
+					courier:SetControllableByPlayer(hero:GetPlayerID(), true)
+				end
+			end
 		end
 
 		local fountainEntities = Entities:FindAllByClassname("ent_dota_fountain")

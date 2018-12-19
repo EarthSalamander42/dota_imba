@@ -176,7 +176,7 @@
 	margin-top:  -40px;
 	margin-right:  10px;
 	margin-bottom: 15px;
-	width: 50%;
+	width: 30%;
 	flow-children: right;
 	align:  right top;
 }
@@ -656,7 +656,7 @@
 }
 
 #ComingSoonPanel, #TabTitlePanel {
-	width: 50%;
+	width: 70%;
 	height: 40px;
 	background-color: #39404855;
 	align: left top;

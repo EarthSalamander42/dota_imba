@@ -138,6 +138,16 @@ function IsNearEntity(entity, location, distance)
 	return false
 end
 
+function IsNearPosition(location, distance)
+	for _, fountain in pairs(Entities:FindAllByClassname(entity)) do
+		if (fountain:GetAbsOrigin() - location):Length2D() <= distance then
+			return true
+		end
+	end
+
+	return false
+end
+
 -- Finds whether or not an entity is an item container (the box on the game ground)
 function CBaseEntity:IsItemContainer()
 	if self.GetContainedItem then
@@ -829,40 +839,6 @@ function IsDaytime()
 	return true   
 end
 
-function SetupShrines()
-	local good_fillers = {
-		"good_filler_1",
-		"good_filler_3",
-		"good_filler_5",
-	}
-
-	local bad_fillers = {
-		"bad_filler_1",
-		"bad_filler_3",
-		"bad_filler_5",
-	}
-
-	for _, ent_name in pairs(good_fillers) do
-		if Entities:FindByName(nil, ent_name) then
-			local filler = Entities:FindByName(nil, ent_name)
-			local abs = filler:GetAbsOrigin()
-			filler:RemoveSelf()
-			local shrine = CreateUnitByName("npc_dota_goodguys_healers", abs, true, nil, nil, 2)
-			shrine:SetAbsOrigin(abs)
-		end
-	end
-
-	for _, ent_name in pairs(bad_fillers) do
-		if Entities:FindByName(nil, ent_name) then
-			local filler = Entities:FindByName(nil, ent_name)
-			local abs = filler:GetAbsOrigin()
-			filler:RemoveSelf()
-			local shrine = CreateUnitByName("npc_dota_badguys_healers", abs, true, nil, nil, 3)
-			shrine:SetAbsOrigin(abs)
-		end
-	end
-end
-
 function Greeviling(unit)
 	if RandomInt(1, 100) > 85 then
 		if string.find(unit:GetUnitName(), "dota_creep") then
@@ -875,13 +851,16 @@ function Greeviling(unit)
 				unit:SetModel("models/courier/greevil/greevil.vmdl")
 				unit:SetOriginalModel("models/courier/greevil/greevil.vmdl")
 			end
+
 			unit:SetMaterialGroup(material_group)
 			unit.eyes = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/courier/greevil/greevil_eyes.vmdl"})
 			unit.ears = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/courier/greevil/greevil_ears"..RandomInt(1, 2)..".vmdl"})
+
 			if RandomInt(1, 100) > 80 then
 				unit.feathers = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/courier/greevil/greevil_feathers.vmdl"})
 				unit.feathers:FollowEntity(unit, true)
 			end
+
 			unit.hair = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/courier/greevil/greevil_hair"..RandomInt(1, 2)..".vmdl"})
 			unit.horns = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/courier/greevil/greevil_horns"..RandomInt(1, 4)..".vmdl"})
 			unit.nose = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/courier/greevil/greevil_nose"..RandomInt(1, 3)..".vmdl"})
