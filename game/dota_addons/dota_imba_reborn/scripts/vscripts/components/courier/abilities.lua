@@ -34,6 +34,7 @@ function modifier_courier_turbo:DeclareFunctions()
 		MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE,
 		MODIFIER_PROPERTY_MOVESPEED_MAX,
 		MODIFIER_PROPERTY_VISUAL_Z_DELTA,
+--		MODIFIER_EVENT_ON_MODEL_CHANGED,
 	}
 
 	return funcs
@@ -45,23 +46,6 @@ end
 
 function modifier_courier_turbo:OnCreated()
 	if IsServer() then
-		Timers:CreateTimer(1.0, function()
-			if PlayerResource.GetSteamID == nil then return end
-			if tostring(PlayerResource:GetSteamID(self:GetParent():GetOwner():GetPlayerID())) == "76561198015161808" then
-				self:GetParent():SetModel("models/items/courier/chocobo/chocobo_flying.vmdl")
-				self:GetParent():SetOriginalModel("models/items/courier/chocobo/chocobo_flying.vmdl")
-
-				Timers:CreateTimer(1.0, function()
-					local pfx = ParticleManager:CreateParticle("particles/econ/courier/courier_wyvern_hatchling/courier_wyvern_hatchling_fire.vpcf", PATTACH_ABSORIGIN, self:GetParent())
-					ParticleManager:SetParticleControl(pfx, 0, self:GetParent():GetAbsOrigin())
-					ParticleManager:ReleaseParticleIndex(pfx)
-				end)
-			else
-				self:GetParent():SetModel("models/props_gameplay/donkey_wings.vmdl")
-				self:GetParent():SetOriginalModel("models/props_gameplay/donkey_wings.vmdl")
-			end
-		end)
-
 		self.fv_set = false
 		self:StartIntervalThink(0.1)
 	end
@@ -112,7 +96,26 @@ end
 function modifier_courier_turbo:GetModifierMoveSpeed_Max()
 	return self:GetAbility():GetSpecialValueFor("movespeed")
 end
+--[[
+function modifier_courier_turbo:OnModelChanged()
+	Timers:CreateTimer(1.0, function()
+		if PlayerResource.GetSteamID == nil then return end
+		if tostring(PlayerResource:GetSteamID(self:GetParent():GetOwner():GetPlayerID())) == "76561198015161808" then
+			self:GetParent():SetModel("models/items/courier/chocobo/chocobo_flying.vmdl")
+			self:GetParent():SetOriginalModel("models/items/courier/chocobo/chocobo_flying.vmdl")
 
+			Timers:CreateTimer(1.0, function()
+				local pfx = ParticleManager:CreateParticle("particles/econ/courier/courier_wyvern_hatchling/courier_wyvern_hatchling_fire.vpcf", PATTACH_ABSORIGIN, self:GetParent())
+				ParticleManager:SetParticleControl(pfx, 0, self:GetParent():GetAbsOrigin())
+				ParticleManager:ReleaseParticleIndex(pfx)
+			end)
+		else
+			self:GetParent():SetModel("models/props_gameplay/donkey_wings.vmdl")
+			self:GetParent():SetOriginalModel("models/props_gameplay/donkey_wings.vmdl")
+		end
+	end)
+end
+--]]
 --------------------------------------------
 
 imba_courier_autodeliver = class({})

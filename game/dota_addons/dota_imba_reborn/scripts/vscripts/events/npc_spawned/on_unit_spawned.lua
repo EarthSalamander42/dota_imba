@@ -11,7 +11,6 @@
 -- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 -- See the License for the specific language governing permissions and
 -- limitations under the License.
---
 
 -- first time a real hero spawn
 function GameMode:OnUnitFirstSpawn(unit)
@@ -21,6 +20,13 @@ function GameMode:OnUnitFirstSpawn(unit)
 
 	if string.find(unit:GetUnitName(), "npc_dota_lone_druid_bear") then
 		unit:SetupHealthBarLabel()
+	end
+
+	if unit:GetClassname() == "npc_dota_creep_lane" then
+		if IMBA_GREEVILING == true then
+			Greeviling(unit)
+			return
+		end
 	end
 
 	Timers:CreateTimer(FrameTime(), function()
@@ -44,20 +50,14 @@ function GameMode:OnUnitFirstSpawn(unit)
 			end
 		end
 	end)
+
 	return
 end
 
 -- everytime an unit respawn
 function GameMode:OnUnitSpawned(unit)
-	local greeviling = false
-
 	if IsMutationMap() then
 		Mutation:OnUnitSpawn(npc)
-	end
-
-	if greeviling == true then
-		Greeviling(unit)
-		return
 	end
 
 	-- levelup bear ability based on his level

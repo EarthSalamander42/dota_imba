@@ -15,6 +15,7 @@
 require('components/settings/settings_donator')
 
 IMBA_VERSION = "7.08g"
+CustomNetTables:SetTableValue("game_options", "game_version", {value = IMBA_VERSION})
 
 -- Picking screen constants
 PICKING_SCREEN_OVER = false
@@ -626,6 +627,7 @@ IMBA_RUNE_SYSTEM = false -- Should we use custom runes script spawner?
 IMBA_COMBAT_EVENTS = false -- Should we use custom combat events notifications?
 IMBA_GOLD_SYSTEM = false -- Should we use custom gold system?
 IMBA_PICK_SCREEN = false
+IMBA_GREEVILING = true
 
 IMBA_DIRETIDE = false -- Should we enable diretide?
 

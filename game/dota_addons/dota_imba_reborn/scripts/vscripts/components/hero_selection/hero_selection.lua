@@ -270,11 +270,6 @@ function HeroSelection:SelectHero(playerId, hero)
 			CustomGameEventManager:Send_ServerToAllClients("hide_pause", {show = true})
 			GameRules:GetGameModeEntity():SetCameraDistanceOverride(1134) -- default: 1134
 
-			if BOTS_ENABLED == true then
-				SendToServerConsole('sm_gmode 1')
-				SendToServerConsole('dota_bot_populate')
-			end
-
 			if IsRankedMap() then
 				Timers:CreateTimer(3.0, function()
 					for i = 1, 25 do

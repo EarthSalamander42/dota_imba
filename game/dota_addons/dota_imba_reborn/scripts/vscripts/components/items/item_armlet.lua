@@ -33,11 +33,9 @@ function item_imba_armlet:GetAbilityTextureName()
 	return "custom/imba_armlet"
 end
 
-function item_imba_armlet:GetBehavior()
-	return DOTA_ABILITY_BEHAVIOR_IMMEDIATE + DOTA_ABILITY_BEHAVIOR_NO_TARGET + DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL + DOTA_ABILITY_BEHAVIOR_ITEM end
-
 function item_imba_armlet:GetIntrinsicModifierName()
-	return "modifier_imba_armlet_basic" end
+	return "modifier_imba_armlet_basic"
+end
 
 function item_imba_armlet:OnSpellStart()
 	if IsServer() then
@@ -198,7 +196,6 @@ end
 function modifier_imba_armlet_unholy_strength:GetModifierAttackSpeedBonus_Constant()	-- Stacks only
 	return self:GetStackCount() * self:GetAbility():GetSpecialValueFor("stack_as")
 end
-
 
 -- Toggle prevention
 modifier_imba_armlet_toggle_prevention = modifier_imba_armlet_toggle_prevention or class({})

@@ -61,6 +61,8 @@ end
 
 function TurboCourier:Spawn(hero, pos)
 	self.COURIER_PLAYER[hero:GetPlayerID()] = CreateUnitByName("npc_dota_courier", pos, true, nil, nil, hero:GetTeam())
+	self.COURIER_PLAYER[hero:GetPlayerID()]:UpgradeToFlyingCourier()
+
 	self.COURIER_PLAYER[hero:GetPlayerID()]:SetControllableByPlayer(hero:GetPlayerID(), true)
 	self.COURIER_PLAYER[hero:GetPlayerID()]:SetOwner(hero)
 	self.COURIER_PLAYER[hero:GetPlayerID()]:RemoveModifierByName("modifier_magic_immune")
@@ -75,12 +77,4 @@ function TurboCourier:Spawn(hero, pos)
 	self.COURIER_PLAYER[hero:GetPlayerID()]:SetNightTimeVisionRange(0)
 	self.COURIER_PLAYER[hero:GetPlayerID()].courier_count = self.courier_counter[hero:GetTeamNumber()]
 	self.courier_counter[hero:GetTeamNumber()] = self.courier_counter[hero:GetTeamNumber()] + 1
-
---	Timers:CreateTimer(function()
---		for i = 0, self.COURIER_PLAYER[hero:GetPlayerID()]:GetModifierCount() - 1 do
---			print(self.COURIER_PLAYER[hero:GetPlayerID()]:GetModifierNameByIndex(i))
---		end
---
---		return 60.0
---	end)
 end

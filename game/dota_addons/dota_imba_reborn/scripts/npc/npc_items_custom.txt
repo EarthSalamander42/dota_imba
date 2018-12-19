@@ -4388,8 +4388,9 @@
 		"AbilityTextureName"			"item_armlet"
 		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
 		"ScriptFile"                    "components/items/item_armlet.lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
 
-		"AbilityCooldown"				"0"
+		"AbilityCooldown"				"0.0"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------

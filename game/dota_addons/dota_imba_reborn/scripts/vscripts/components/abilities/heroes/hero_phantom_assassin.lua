@@ -21,26 +21,19 @@ end
 function imba_phantom_assassin_stifling_dagger:OnSpellStart()
 
 	local caster 	= self:GetCaster()
-	local ability 	= self
 	local target 	= self:GetCursorTarget()
 	local scepter 	= caster:HasScepter()
 
 	--ability specials
-	move_slow 				=	ability:GetSpecialValueFor("move_slow")
-	dagger_speed 			=	ability:GetSpecialValueFor("dagger_speed")
-	slow_duration 			=	ability:GetSpecialValueFor("slow_duration")
-	silence_duration 		= 	ability:GetSpecialValueFor("silence_duration")
-	damage_reduction 		=	ability:GetSpecialValueFor("damage_reduction")
-	dagger_vision 			=	ability:GetSpecialValueFor("dagger_vision")
-	scepter_knives_interval =	0.3
-	cast_range				=	ability:GetCastRange() + GetCastRangeIncrease(caster)
-	playbackrate			=	1 + scepter_knives_interval
+	self.scepter_knives_interval 	=	0.3
+	self.cast_range					=	self:GetCastRange() + GetCastRangeIncrease(caster)
+	self.playbackrate				=	1 + self.scepter_knives_interval
 
 	--TALENT: +35 Stifling Dagger bonus damage
 	if caster:HasTalent("special_bonus_imba_phantom_assassin_1") then
-		bonus_damage	=	ability:GetSpecialValueFor("bonus_damage") + self:GetCaster():FindTalentValue("special_bonus_imba_phantom_assassin_1")
+		bonus_damage	=	self:GetSpecialValueFor("bonus_damage") + self:GetCaster():FindTalentValue("special_bonus_imba_phantom_assassin_1")
 	else
-		bonus_damage	=	ability:GetSpecialValueFor("bonus_damage")
+		bonus_damage	=	self:GetSpecialValueFor("bonus_damage")
 	end
 
 	--coup de grace variables
@@ -51,29 +44,10 @@ function imba_phantom_assassin_stifling_dagger:OnSpellStart()
 
 	local extra_data = {main_dagger = true}
 
-	local dagger_projectile
-
-	dagger_projectile = {
-		EffectName = "particles/units/heroes/hero_phantom_assassin/phantom_assassin_stifling_dagger.vpcf",
-		Dodgeable = true,
-		Ability = ability,
-		ProvidesVision = true,
-		VisionRadius = 600,
-		bVisibleToEnemies = true,
-		iMoveSpeed = dagger_speed,
-		Source = caster,
-		iVisionTeamNumber = caster:GetTeamNumber(),
-		Target = target,
-		iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_ATTACK_1,
-		bReplaceExisting = false,
-		ExtraData = extra_data
-	}
-	ProjectileManager:CreateTrackingProjectile( dagger_projectile )
-
+	self:LaunchDagger(target, extra_data)
 
 	-- Secondary knives
 	if scepter or caster:HasTalent("special_bonus_imba_phantom_assassin_3") then
-
 		local secondary_knives_thrown = 0
 
 		-- TALENT: +1 Stifling Dagger bonus dagger (like aghs)
@@ -81,9 +55,9 @@ function imba_phantom_assassin_stifling_dagger:OnSpellStart()
 			scepter_dagger_count = self:GetCaster():FindTalentValue("special_bonus_imba_phantom_assassin_3")
 			secondary_knives_thrown = scepter_dagger_count
 		elseif scepter and caster:HasTalent("special_bonus_imba_phantom_assassin_3") then
-			scepter_dagger_count = ability:GetSpecialValueFor("scepter_dagger_count") + self:GetCaster():FindTalentValue("special_bonus_imba_phantom_assassin_3")
+			scepter_dagger_count = self:GetSpecialValueFor("scepter_dagger_count") + self:GetCaster():FindTalentValue("special_bonus_imba_phantom_assassin_3")
 		else
-			scepter_dagger_count = ability:GetSpecialValueFor("scepter_dagger_count")
+			scepter_dagger_count = self:GetSpecialValueFor("scepter_dagger_count")
 		end
 
 		-- Prepare extra_data
@@ -93,12 +67,14 @@ function imba_phantom_assassin_stifling_dagger:OnSpellStart()
 		local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
 			caster:GetAbsOrigin(),
 			nil,
-			cast_range,
+			self.cast_range,
 			DOTA_UNIT_TARGET_TEAM_ENEMY,
 			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
 			DOTA_UNIT_TARGET_FLAG_NONE,
 			FIND_UNITS_EVERYWHERE,
-			false)
+			false
+		)
+
 		for _, enemy in pairs (enemies) do
 			enemy.hit_by_pa_dagger = false
 		end
@@ -108,7 +84,7 @@ function imba_phantom_assassin_stifling_dagger:OnSpellStart()
 		local dagger_target_found
 
 		-- Look for a secondary target to throw a knife at
-		Timers:CreateTimer(scepter_knives_interval, function()
+		Timers:CreateTimer(self.scepter_knives_interval, function()
 			-- Set variable for clear action
 			dagger_target_found = false
 
@@ -116,7 +92,7 @@ function imba_phantom_assassin_stifling_dagger:OnSpellStart()
 			local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
 				caster:GetAbsOrigin(),
 				nil,
-				cast_range,
+				self.cast_range,
 				DOTA_UNIT_TARGET_TEAM_ENEMY,
 				DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
 				DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE,
@@ -129,25 +105,9 @@ function imba_phantom_assassin_stifling_dagger:OnSpellStart()
 					enemy.hit_by_pa_dagger = true
 					dagger_target_found = true
 
-					caster:StartGestureWithPlaybackRate(ACT_DOTA_CAST_ABILITY_1, playbackrate)
+					caster:StartGestureWithPlaybackRate(ACT_DOTA_CAST_ABILITY_1, self.playbackrate)
 
-					dagger_projectile = {
-						EffectName = "particles/units/heroes/hero_phantom_assassin/phantom_assassin_stifling_dagger.vpcf",
-						Dodgeable = true,
-						Ability = ability,
-						ProvidesVision = true,
-						VisionRadius = 600,
-						bVisibleToEnemies = true,
-						iMoveSpeed = dagger_speed,
-						Source = caster,
-						iVisionTeamNumber = caster:GetTeamNumber(),
-						Target = enemy,
-						iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_ATTACK_1,
-						bReplaceExisting = false,
-						ExtraData = extra_data
-					}
-
-					ProjectileManager:CreateTrackingProjectile(dagger_projectile)
+					self:LaunchDagger(enemy, extra_data)
 					break -- only hit the first enemy found
 				end
 			end
@@ -161,34 +121,40 @@ function imba_phantom_assassin_stifling_dagger:OnSpellStart()
 				-- Throw dagger at a random enemy
 				local enemy = enemies[RandomInt(1, #enemies)]
 
-				dagger_projectile = {
-					EffectName = "particles/units/heroes/hero_phantom_assassin/phantom_assassin_stifling_dagger.vpcf",
-					Dodgeable = true,
-					Ability = ability,
-					ProvidesVision = true,
-					VisionRadius = 600,
-					bVisibleToEnemies = true,
-					iMoveSpeed = dagger_speed,
-					Source = caster,
-					iVisionTeamNumber = caster:GetTeamNumber(),
-					Target = enemy,
-					iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_ATTACK_1,
-					bReplaceExisting = false,
-					ExtraData = extra_data
-				}
-
-				ProjectileManager:CreateTrackingProjectile(dagger_projectile)
+				self:LaunchDagger(enemy, extra_data)
 			end
 
 			-- Check if there are knives remaining
 			secondary_knives_thrown = secondary_knives_thrown + 1
 			if secondary_knives_thrown < scepter_dagger_count then
-				return scepter_knives_interval
+				return self.scepter_knives_interval
 			else
 				return nil
 			end
 		end)
 	end
+end
+
+function imba_phantom_assassin_stifling_dagger:LaunchDagger(enemy)
+	if enemy == nil then return end
+
+	local dagger_projectile = {
+		EffectName = "particles/units/heroes/hero_phantom_assassin/phantom_assassin_stifling_dagger.vpcf",
+		Dodgeable = true,
+		Ability = self,
+		ProvidesVision = true,
+		VisionRadius = 600,
+		bVisibleToEnemies = true,
+		iMoveSpeed = self:GetSpecialValueFor("dagger_speed"),
+		Source = self:GetCaster(),
+		iVisionTeamNumber = self:GetCaster():GetTeamNumber(),
+		Target = enemy,
+		iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_ATTACK_1,
+		bReplaceExisting = false,
+		ExtraData = extra_data
+	}
+
+	ProjectileManager:CreateTrackingProjectile(dagger_projectile)
 end
 
 function imba_phantom_assassin_stifling_dagger:OnProjectileHit( target, location )
@@ -212,8 +178,8 @@ function imba_phantom_assassin_stifling_dagger:OnProjectileHit( target, location
 
 	-- Apply slow and silence modifiers
 	if not target:IsMagicImmune() then
-		target:AddNewModifier(caster, self, "modifier_imba_stifling_dagger_silence", {duration = silence_duration})
-		target:AddNewModifier(caster, self, "modifier_imba_stifling_dagger_slow", {duration = slow_duration})
+		target:AddNewModifier(caster, self, "modifier_imba_stifling_dagger_silence", {duration = self:GetSpecialValueFor("silence_duration")})
+		target:AddNewModifier(caster, self, "modifier_imba_stifling_dagger_slow", {duration = self:GetSpecialValueFor("slow_duration")})
 	end
 
 	caster:AddNewModifier(caster, self, "modifier_imba_stifling_dagger_dmg_reduction", {})
@@ -262,9 +228,8 @@ modifier_imba_stifling_dagger_slow = class({})
 function modifier_imba_stifling_dagger_slow:OnCreated()
 	if IsServer() then
 		local caster = self:GetCaster()
-		local ability = self:GetAbility()
-		local dagger_vision = ability:GetSpecialValueFor("dagger_vision")
-		local duration = ability:GetSpecialValueFor("slow_duration")
+		local dagger_vision = self:GetAbility():GetSpecialValueFor("dagger_vision")
+		local duration = self:GetAbility():GetSpecialValueFor("slow_duration")
 		local stifling_dagger_modifier_slow_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_phantom_assassin/phantom_assassin_stifling_dagger_debuff.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.target)
 		ParticleManager:ReleaseParticleIndex(stifling_dagger_modifier_slow_particle)
 
@@ -322,8 +287,7 @@ function modifier_imba_stifling_dagger_bonus_damage:DeclareFunctions()
 end
 
 function modifier_imba_stifling_dagger_bonus_damage:GetModifierPreAttack_BonusDamage()
-	local ability = self:GetAbility()
-	return ability:GetSpecialValueFor("bonus_damage");
+	return self:GetAbility():GetSpecialValueFor("bonus_damage")
 end
 
 function modifier_imba_stifling_dagger_bonus_damage:IsBuff()			return true end
@@ -498,8 +462,7 @@ end
 
 function modifier_imba_phantom_strike:GetModifierAttackSpeedBonus_Constant()
 	local caster = self:GetCaster()
-	local ability = self:GetAbility()
-	self.speed_bonus = ability:GetSpecialValueFor("bonus_attack_speed")
+	self.speed_bonus = self:GetAbility():GetSpecialValueFor("bonus_attack_speed")
 	return self.speed_bonus
 end
 
@@ -521,7 +484,6 @@ end
 function modifier_imba_phantom_strike_coup_de_grace:OnAttackLanded(keys)
 	if IsServer() then
 		local caster = self:GetCaster()
-		local ability = self:GetAbility()
 		local owner = self:GetParent()
 		local modifier_speed = "modifier_imba_phantom_strike"
 		local stackcount = self:GetStackCount()

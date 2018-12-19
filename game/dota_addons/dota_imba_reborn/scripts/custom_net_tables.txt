@@ -11,8 +11,7 @@
 		"top_imr10v10",
 		"game_state",
 		"hero_selection",
+		"selection",
 		"battlepass",
-		"mutations",
-		"mutation_info",
 	]
 }
