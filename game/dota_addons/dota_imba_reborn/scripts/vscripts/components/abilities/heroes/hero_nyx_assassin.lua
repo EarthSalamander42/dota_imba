@@ -1108,7 +1108,7 @@ function modifier_imba_spiked_carapace:OnTakeDamage(keys)
 					attacker = self.caster,
 					damage = damage,
 					damage_type = keys.damage_type,
-					damage_flags = DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION,
+					damage_flags = DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION + DOTA_DAMAGE_FLAG_REFLECTION,
 					ability = self.ability
 				}
 
