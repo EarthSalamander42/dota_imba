@@ -9971,7 +9971,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"secondary_damage"			"25 50 75 100"
+				"secondary_damage"			"25 25 50 50"
 			}
 			"03"
 			{
