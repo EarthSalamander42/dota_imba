@@ -1456,7 +1456,12 @@ function imba_lich_chain_frost:OnProjectileHit_ExtraData(target, location, extra
 
 			-- Bounce to a random enemy
 			local bounce_target = enemies[1]
-
+			
+			-- Add a check to heavily reduce bounces if near fountain for scepter ult to prevent massive chaining lag
+			if caster:HasScepter() and IsNearFountain(enemies[1]:GetAbsOrigin(), 1200) then
+				bounces_left = bounces_left - 10000
+			end
+			
 			local chain_frost_projectile
 			chain_frost_projectile = {Target = bounce_target,
 				Source = target,
