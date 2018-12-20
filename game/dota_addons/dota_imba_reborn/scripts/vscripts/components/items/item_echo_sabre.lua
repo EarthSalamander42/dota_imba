@@ -130,6 +130,7 @@ function modifier_imba_echo_sabre_passive:OnAttack(keys)
 end
 
 function modifier_imba_echo_sabre_passive:OnRemoved()
+	if not IsServer() then return end
 	if (self:GetParent():FindModifierByName("modifier_imba_echo_rapier_haste")) then
 		self:GetParent():FindModifierByName("modifier_imba_echo_rapier_haste"):Destroy()
 	end
@@ -241,6 +242,7 @@ function modifier_imba_reverb_rapier_passive:OnAttack(keys)
 end
 
 function modifier_imba_reverb_rapier_passive:OnRemoved()
+	if not IsServer() then return end
 	if (self:GetParent():FindModifierByName("modifier_imba_echo_rapier_haste")) then
 		self:GetParent():FindModifierByName("modifier_imba_echo_rapier_haste"):Destroy()
 	end
