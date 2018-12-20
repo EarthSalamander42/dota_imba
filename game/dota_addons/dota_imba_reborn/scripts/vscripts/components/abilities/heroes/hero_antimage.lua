@@ -611,7 +611,7 @@ function imba_antimage_spell_shield:OnSpellStart()
 		-- Run visual + sound
 		local shield_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_antimage/antimage_blink_end_glow.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
 		ParticleManager:ReleaseParticleIndex(shield_pfx)
-		caster:EmitSound("Hero_Antimage.SpellShield.Block")
+		caster:EmitSound("Hero_Antimage.Counterspell.Cast")
 	end
 end
 
@@ -690,7 +690,7 @@ local function SpellReflect(parent, params)
 		-- Set target & fire spell
 		parent:SetCursorCastTarget(target)
 		ability:OnSpellStart()
-		target:EmitSound("Hero_Antimage.SpellShield.Reflect")
+		target:EmitSound("Hero_Antimage.Counterspell.Target")
 	end
 
 	return false
@@ -834,7 +834,7 @@ end
 
 function modifier_imba_spell_shield_buff_reflect:GetReflectSpell( params )
 	if IsServer() then
-		if not self:GetParent():PassivesDisabled() and not params.ability:GetAbilityName() == "item_cyclone" then
+		if not self:GetParent():PassivesDisabled() then
 			return SpellReflect(self:GetParent(), params)
 		end
 	end
@@ -842,7 +842,7 @@ end
 
 function modifier_imba_spell_shield_buff_reflect:GetAbsorbSpell( params )
 	if IsServer() then
-		if not self:GetParent():PassivesDisabled() and not params.ability:GetAbilityName() == "item_cyclone" then
+		if not self:GetParent():PassivesDisabled() then
 			return SpellAbsorb(self:GetParent())
 		end
 	end
