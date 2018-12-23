@@ -939,14 +939,19 @@
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_lion_finger_of_death"
 		
-		"Ability10"					"special_bonus_imba_lion_1"
-		"Ability11"					"special_bonus_imba_lion_2"
-		"Ability12"					"special_bonus_imba_lion_3"
-		"Ability13"					"special_bonus_imba_lion_4"
-		"Ability14"					"special_bonus_imba_lion_5"
-		"Ability15"					"special_bonus_imba_lion_6"
-		"Ability16"					"special_bonus_imba_lion_7"
-		"Ability17"					"special_bonus_imba_lion_8"
+		"Ability10"					"special_bonus_imba_lion_3"
+		"Ability11"					"special_bonus_attack_damage_90"
+		"Ability12"					"special_bonus_imba_lion_5"
+		"Ability13"					"special_bonus_imba_lion_8"
+		"Ability14"					"special_bonus_imba_lion_7"
+		"Ability15"					"special_bonus_imba_lion_2"
+		"Ability16"					"special_bonus_imba_lion_9"
+		"Ability17"					"special_bonus_imba_lion_10"
+		
+		// Removed Talents
+		//"Ability10"					"special_bonus_imba_lion_1" // Earth Spikes branches off creeps as well
+		//"Ability13"					"special_bonus_imba_lion_4" // Mana Drain slows target based on missing mana
+		//"Ability15"					"special_bonus_imba_lion_6" // Chain Hex spreads to two enemies simultaneously		
 	}
 
 	//=================================================================================================================
