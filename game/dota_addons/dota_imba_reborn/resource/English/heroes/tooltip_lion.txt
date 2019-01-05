@@ -1,0 +1,115 @@
+// Lion
+////===============================================================================================================
+// Lion's Earth Spike
+////===============================================================================================================
+
+"DOTA_Tooltip_ability_imba_lion_earth_spike"							"Earth Spike"
+"DOTA_Tooltip_ability_imba_lion_earth_spike_Description"				"Rock spikes burst from the earth along a straight path. Enemy units are hurled into the air, then are stunned and take damage when they fall.\n<font color='#FF7800'>Hell Spike:</font> Each enemy hero that has been hit by Earth Spike creates a new Earth Spike that attacks the closest enemy to it. Each enemy can only be hit once per cast. This effect can only trigger up to a maximum occurances per cast."
+"DOTA_Tooltip_ability_imba_lion_earth_spike_Lore"						"The Demon Witch exercises his demonic covenant, opening a fissure from hell."
+"DOTA_Tooltip_ability_imba_lion_earth_spike_damage"						"DAMAGE:"
+"DOTA_Tooltip_ability_imba_lion_earth_spike_stun_duration"				"STUN DURATION:"
+"DOTA_Tooltip_ability_imba_lion_earth_spike_extra_spike_AOE"			"HELL SPIKE RANGE:"
+"DOTA_Tooltip_ability_imba_lion_earth_spike_max_bounces_per_cast"		"MAX HELL SPIKES PER CAST:"
+
+"DOTA_Tooltip_modifier_imba_earthspike_stun"							"Earth Spike"
+"DOTA_Tooltip_modifier_imba_earthspike_stun_Description"				"Stunned."
+
+"DOTA_Tooltip_modifier_imba_earthspike_death_spike"						"Death Spike"
+"DOTA_Tooltip_modifier_imba_earthspike_death_spike_Description"			"Slowed. Receives additional damage from Finger of Death."
+
+////===============================================================================================================
+// Lion's Hex
+////===============================================================================================================
+
+"DOTA_Tooltip_ability_imba_lion_hex"									"Hex"
+"DOTA_Tooltip_ability_imba_lion_hex_Description"						"Transforms an enemy unit into a harmless beast, with all special abilities disabled.\n<font color='#FF7800'>Chain Hex:</font> After %bounce_interval% seconds or whenever Hex expires (whichever comes sooner), a random enemy in a radius around the target will be hexed. Chain Hex continues until there is no longer a valid target in the area."
+"DOTA_Tooltip_ability_imba_lion_hex_Note0"								"Chain Hex cannot bounce to already-hexed, hexed within 2.5 seconds, or spell immune enemies."
+"DOTA_Tooltip_ability_imba_lion_hex_Lore"								"Lion is compelled to share his transfiguration, twisting the essence of those who oppose him."
+"DOTA_Tooltip_ability_imba_lion_hex_duration"							"DURATION:"
+"DOTA_Tooltip_ability_imba_lion_hex_hex_bounce_radius"					"CHAIN HEX RADIUS:"
+"DOTA_Tooltip_ability_imba_lion_hex_maximum_hex_enemies"				"MAXIMUM ENEMIES PER CHAIN HEX:"
+
+"DOTA_Tooltip_modifier_imba_lion_hex"									"Hex"
+"DOTA_Tooltip_modifier_imba_lion_hex_Description"						"Transformed into a frog! After a short duration, hex spreads to nearby teammates."
+
+"DOTA_Tooltip_modifier_imba_lion_hex"									"Hex"
+"DOTA_Tooltip_modifier_imba_lion_hex_Description"						"Transformed into a frog! After a short duration, hex spreads to nearby teammates."
+
+"DOTA_Tooltip_modifier_imba_lion_hex_chain_cooldown"					"Chain Hex Cooldown"
+"DOTA_Tooltip_modifier_imba_lion_hex_chain_cooldown_Description"		"You have developed resistance to Chain Hex for a short duration."
+
+////===============================================================================================================
+// Lion's Mana Drain
+////===============================================================================================================
+
+"DOTA_Tooltip_ability_imba_lion_mana_drain"								"Mana Drain"
+"DOTA_Tooltip_ability_imba_lion_mana_drain_Description"					"Absorbs the magical energies of a target enemy unit by taking mana from it every second.\n<font color='#FF7800'>Drain Aura:</font> Passively drains mana from every enemy in %aura_radius% radius. Drains a portion of the all targets' mana pool per second.\n<font color='#FF7800'>Essence Rip:</font> Targeted enemies take damage equal to the mana drained from them.\n<font color='#FF7800'>Mana Pump:</font> Lion can target an ally, feeding him his own mana for the same values."
+"DOTA_Tooltip_ability_imba_lion_mana_drain_Lore"						"Lesser magi are nothing more than a source of magical restoration for the Demon Witch."
+"DOTA_Tooltip_ability_imba_lion_mana_drain_mana_drain_sec"				"DRAIN PER SECOND:"
+"DOTA_Tooltip_ability_imba_lion_mana_drain_movespeed"					"%MOVEMENT SLOW:"
+"DOTA_Tooltip_ability_imba_lion_mana_drain_mana_pct_as_damage"			"%DAMAGE PER MANA DRAINED:"
+"DOTA_Tooltip_ability_imba_lion_mana_drain_aura_mana_drain_pct"			"%AURA MANA DRAIN:"
+"DOTA_Tooltip_ability_imba_lion_mana_drain_aura_radius"					"AURA RADIUS:"
+
+"DOTA_Tooltip_modifier_imba_manadrain_manaovercharge"					"Mana Overcharge"
+"DOTA_Tooltip_modifier_imba_manadrain_manaovercharge_Description"		"Sucking in extra Mana, pumped up for the next Finger of Death."
+
+"DOTA_Tooltip_modifier_imba_manadrain_aura_debuff"						"Mana Drain Aura"
+"DOTA_Tooltip_modifier_imba_manadrain_aura_debuff_Description"			"Your magical energies are being sucked out over time."
+
+"DOTA_Tooltip_modifier_imba_manadrain_debuff"							"Mana Drain"
+"DOTA_Tooltip_modifier_imba_manadrain_debuff_Description"				"Being drained %dMODIFIER_PROPERTY_TOOLTIP% mana per second, and taking damage equal to lost mana."
+
+"DOTA_Tooltip_modifier_imba_manadrain_buff"								"Mana Pump"
+"DOTA_Tooltip_modifier_imba_manadrain_buff_Description"					"Being pumped with mana over time."
+
+////===============================================================================================================
+// Lion's Finger of Death
+////===============================================================================================================
+
+"DOTA_Tooltip_ability_imba_lion_finger_of_death"						"Finger of Death"
+"DOTA_Tooltip_ability_imba_lion_finger_of_death_Description"			"Rips at an enemy unit, trying to turn it inside-out. Deals massive damage and grows stronger with each life it consumes.\n<font color='#FF7800'>Frog Panic:</font> Enemies close to the main target panic, becoming hexed briefly.\n<font color='#FF7800'>Trigger Finger:</font> Killing an enemy with this skill resets its cooldown, but increases its mana cost by %triggerfinger_mana_inc_pct%%% for %triggerfinger_duration% seconds.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
+"DOTA_Tooltip_ability_imba_lion_finger_of_death_Lore"					"Lion's disfigured hand is also the source of his greatest power, capable of flooding victims with malefic force."
+"DOTA_Tooltip_ability_imba_lion_finger_of_death_Note0"					"Finger of Death has a 0.25 delay before the damage is applied after the spell is cast, allowing certain abilities to avoid the damage."
+"DOTA_Tooltip_ability_imba_lion_finger_of_death_Note1"					"Only gains damage from kills on real heroes or clones."
+"DOTA_Tooltip_ability_imba_lion_finger_of_death_Note2"					"There is a 3 second grace period (affected by status resistance) after Finger of Death lands, during which the enemy dying still grants the damage increase."
+"DOTA_Tooltip_ability_imba_lion_finger_of_death_Note3"					"Stolen Finger of Deaths do not gain damage stacks."
+"DOTA_Tooltip_ability_imba_lion_finger_of_death_damage"					"DAMAGE:"
+"DOTA_Tooltip_ability_imba_lion_finger_of_death_damage_per_kill"		"DAMAGE PER KILL:"
+"DOTA_Tooltip_ability_imba_lion_finger_of_death_mana_add_duration"		"TRIGGER FINGER DURATION:"
+"DOTA_Tooltip_ability_imba_lion_finger_of_death_enemies_frog_radius"	"FROG PANIC RADIUS:"
+"DOTA_Tooltip_ability_imba_lion_finger_of_death_enemies_frog_duration"	"FROG PANIC DURATION:"
+"DOTA_Tooltip_ability_imba_lion_finger_of_death_scepter_damage"			"SCEPTER DAMAGE:"
+"DOTA_Tooltip_ability_imba_lion_finger_of_death_scepter_radius"			"SCEPTER RADIUS:"
+"DOTA_Tooltip_ability_imba_lion_finger_of_death_cooldown_scepter"		"SCEPTER COOLDOWN:"
+"DOTA_Tooltip_ability_imba_lion_finger_of_death_aghanim_description"	"Lowers cooldown, increases damage, and causes Finger of Death to hit every enemy in 900 radius that is either stunned or hexed."
+
+"DOTA_Tooltip_modifier_imba_trigger_finger_debuff"						"Trigger Finger"
+"DOTA_Tooltip_modifier_imba_trigger_finger_debuff_Description"			"Recharged from killing an enemy. Casting Finger of Death again will cost more mana."
+
+"DOTA_Tooltip_modifier_imba_finger_of_death_hex"						"Frog Panic"
+"DOTA_Tooltip_modifier_imba_finger_of_death_hex_Description"			"Transformed very briefly into a frog."
+
+"DOTA_Tooltip_modifier_imba_finger_of_death_delay"						"Finger of Death Grace Period"
+"DOTA_Tooltip_modifier_imba_finger_of_death_delay_Description"			"Dying under this debuff grants the caster bonus damage for Finger of Death."
+
+"DOTA_Tooltip_modifier_imba_finger_of_death_counter"					"Finger of Death Kills"
+"DOTA_Tooltip_modifier_imba_finger_of_death_counter_Description"		"Finger of Death gaining +%dMODIFIER_PROPERTY_TOOLTIP% damage from hero kills."
+
+////===============================================================================================================
+// Lion's Custom Talents
+////===============================================================================================================
+
+"DOTA_Tooltip_ability_special_bonus_imba_lion_1"                "Earth Spikes branches off creeps as well"
+"DOTA_Tooltip_ability_special_bonus_imba_lion_2"                "Hexed targets have Break applied"
+"DOTA_Tooltip_ability_special_bonus_imba_lion_3"                "Mana Drain Overcharge"
+"DOTA_Tooltip_ability_special_bonus_imba_lion_3_Description"    "Any mana absorbed beyond full feeds into a separate pool for %duration% seconds, adding to Finger of Death's damage."
+"DOTA_Tooltip_ability_special_bonus_imba_lion_4"                "Mana Drain slows target based on missing mana"
+"DOTA_Tooltip_ability_special_bonus_imba_lion_5"                "FoD's Trigger Finger no longer requires kills"
+"DOTA_Tooltip_ability_special_bonus_imba_lion_6"                "Chain Hex spreads to two enemies simultaneously"
+"DOTA_Tooltip_ability_special_bonus_imba_lion_7"                "Death Spike debuff"
+"DOTA_Tooltip_ability_special_bonus_imba_lion_7_Description"  	"Earth Spike slows targets by 25% and increases damage taken from Finger of Death by 20% for 3 seconds."
+"DOTA_Tooltip_ability_special_bonus_imba_lion_8"            	"Mana Drain targets all enemies in aura range"
+"DOTA_Tooltip_ability_special_bonus_imba_lion_9"            	"+1000 Earth Spike Range"
+"DOTA_Tooltip_ability_special_bonus_imba_lion_9_Description"	"Does not increase Hell Spike search radius. Note that cast range indicators are inaccurate."
+"DOTA_Tooltip_ability_special_bonus_imba_lion_10"            	"+325 AoE Hex"

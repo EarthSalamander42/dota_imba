@@ -661,7 +661,7 @@ end
 function modifier_imba_nightmare_dot:OnTakeDamage(t)
 	if IsServer() then
 		-- Stop Nightmare when hit (by anything other than an auto attack)
-		if t.unit == self:GetParent() then
+		if t.unit == self:GetParent() and t.attacker ~= self:GetCaster() then
 			self:Destroy()
 		end
 	end
@@ -677,7 +677,7 @@ function modifier_imba_nightmare_dot:OnAttackStart(t)
 		local nightmare_invuln_duration	= ability:GetSpecialValueFor("nightmare_invuln_duration")
 
 		-- Redirect Nightmare to auto-attackers
-		if t.target == self:GetParent() then
+		if t.target == self:GetParent() and t.attacker ~= self:GetCaster() then
 			--Don't Nightmare buildings lul
 			if t.attacker:IsBuilding() then
 				return nil

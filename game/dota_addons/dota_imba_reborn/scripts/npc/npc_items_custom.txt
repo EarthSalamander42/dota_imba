@@ -1113,7 +1113,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"bonus_mana_regen"		"2.5"
+				"bonus_mana_regen"		"9.0"
 			}
 			"05"
 			{
@@ -3282,7 +3282,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"bonus_mana_regen"			"3.0"
+				"bonus_mana_regen"			"4.5"
 			}
 			"04"
 			{
@@ -3312,7 +3312,17 @@
 			"09"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"mana_regen_per_charge"		"0.5"
+				"mana_regen_per_charge"		"1.0"
+			}
+			"09"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"bonus_health_regen"		"8.0"
+			}
+			"09"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_mana_regen_pct"		"200"
 			}
 		}
 
@@ -3361,8 +3371,10 @@
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_HEALTH_BONUS" 					"%bonus_health"
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"			"%bonus_health_regen"
 					"MODIFIER_PROPERTY_MANA_BONUS" 						"%bonus_mana"
 					"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT" 			"%bonus_mana_regen"
+					//"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"			"%bonus_mana_regen_pct" // Doesn't work
 				}
 			}
 
@@ -7256,12 +7268,12 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_stat"				"30"
+				"bonus_stat"				"34"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_attackspeed"			"35"
+				"bonus_damage"				"32"
 			}
 			"04"
 			{
@@ -8217,7 +8229,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"cast_range_bonus"		"250"
+				"cast_range_bonus"		"300"
 			}
 			"04"
 			{

@@ -8705,6 +8705,12 @@
 				"maximum_hex_enemies"	"1"
 				"LinkedSpecialBonus"	"special_bonus_imba_lion_6"
 			}
+			
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"chain_hex_cooldown"	"2.5"
+			}
 		}
 	}
 
@@ -8789,6 +8795,11 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"mana_pct_as_damage"	"100"
+			}
+			"07"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"movespeed"			"20 24 28 32"
 			}
 		}
 	}
@@ -8904,6 +8915,16 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"hex_move_speed"				"140"
+			}
+			"12"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"damage_per_kill"				"20"
+			}
+			"13"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"kill_grace_duration"			"3"
 			}
 		}
 	}
@@ -9096,7 +9117,7 @@
 			"03"
 			{
 				"var_type"                  "FIELD_FLOAT"
-				"bonus_damage"	            "30"
+				"bonus_damage"	            "20"
 			}
 			"04"
 			{
@@ -9131,6 +9152,56 @@
 		}
 	}
 
+	"special_bonus_imba_lion_9" // +1000 Earth Spike Range
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_lion_earth_spike"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"	                    "1000"
+			}
+		}
+	}
+	
+	"special_bonus_imba_lion_10" // +325 AoE Hex
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_lion_hex"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"	                    "325"
+			}
+		}
+	}
+	
 	//=================================================================================================================
 	// Lycan's Summon Wolves
 	//=================================================================================================================
@@ -9971,7 +10042,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"secondary_damage"			"25 50 75 100"
+				"secondary_damage"			"25 25 50 50"
 			}
 			"03"
 			{

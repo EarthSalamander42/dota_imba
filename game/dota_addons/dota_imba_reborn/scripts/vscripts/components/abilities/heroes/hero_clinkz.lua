@@ -26,6 +26,7 @@ function imba_clinkz_strafe:GetCooldown(level)
 		if self.time_remaining ~= nil then  
 			local time_remaining = self.time_remaining
 			self.time_remaining = nil
+			
 			return self.BaseClass.GetCooldown(self, level) - (duration - math.max(time_remaining,0))            
 		end
 	end
@@ -38,7 +39,7 @@ function imba_clinkz_strafe:GetBehavior()
 	local modifier_mount = "modifier_imba_strafe_mount"
 	local modifier_self_root = "modifier_imba_strafe_self_root"
 
-	if caster:HasModifier(modifier_mount) then
+	if caster:HasModifier(modifier_mount) or caster:HasModifier(modifier_self_root) then
 		return DOTA_ABILITY_BEHAVIOR_NO_TARGET
 	else
 		return DOTA_ABILITY_BEHAVIOR_UNIT_TARGET
@@ -59,21 +60,33 @@ end
 
 function imba_clinkz_strafe:OnSpellStart()
 	if IsServer() then        
-			-- Ability properties
-			local caster = self:GetCaster()
-			local ability = self
-			local target = self:GetCursorTarget()
-			local sound_cast = "Hero_Clinkz.Strafe"    
-			local modifier_aspd = "modifier_imba_strafe_aspd"
-			local modifier_mount = "modifier_imba_strafe_mount"
+		-- Ability properties
+		local caster = self:GetCaster()
+		local ability = self
+		local target = self:GetCursorTarget()
+		local sound_cast = "Hero_Clinkz.Strafe"    
+		local modifier_aspd = "modifier_imba_strafe_aspd"
+		local modifier_mount = "modifier_imba_strafe_mount"
 
-			-- Ability specials
-			local duration = ability:GetSpecialValueFor("duration")
+		-- Ability specials
+		local duration = ability:GetSpecialValueFor("duration")
 
-			-----------------------
-			--    NORMAL CAST    --
-			-----------------------
-
+		-----------------------
+		--    CANCEL ROOT    --
+		-----------------------
+		if caster:HasModifier("modifier_imba_strafe_self_root") then
+			caster:RemoveModifierByName("modifier_imba_strafe_self_root")
+			
+			-- Renew cooldown so it would use the new time remaining variable
+			ability:EndCooldown()
+			ability:UseResources(false, false, true)
+			
+			return 0
+		end
+		
+		-----------------------
+		--    NORMAL CAST    --
+		-----------------------
 		if not caster:HasModifier(modifier_mount) then
 
 			-- Play cast sound
@@ -85,6 +98,7 @@ function imba_clinkz_strafe:OnSpellStart()
 			-- If used on ally, apply mount modifier
 			if caster ~= target then            
 				ability:EndCooldown()
+				
 				local modifier = caster:AddNewModifier(caster, ability, modifier_mount, {duration = duration})
 				if modifier then
 					modifier.target = target
@@ -93,7 +107,11 @@ function imba_clinkz_strafe:OnSpellStart()
 			
 			if caster:HasTalent("special_bonus_imba_clinkz_5") then
 				if target == caster then
+					ability:EndCooldown()
 					local modifier_self_root = "modifier_imba_strafe_self_root"
+					
+					print("Root duration: ", duration)
+					
 					caster:AddNewModifier(caster, ability, modifier_self_root, {duration = duration})
 				end
 			end
@@ -101,15 +119,15 @@ function imba_clinkz_strafe:OnSpellStart()
 			-----------------------
 			--     DISMOUNT      --
 			-----------------------
-		else            
+		else  
 			-- Assign the time remaining to the ability and remove modifier
-			local modifier_mount_handler = caster:FindModifierByName(modifier_mount)            
+			local modifier_mount_handler = caster:FindModifierByName(modifier_mount)
 			ability.time_remaining = modifier_mount_handler:GetRemainingTime()
 			caster:RemoveModifierByName(modifier_mount)   
 
 			-- Renew cooldown so it would use the new time remaining variable
 			ability:EndCooldown()
-			ability:UseResources(false, false, true)         
+			ability:UseResources(false, false, true)
 		end
 	end
 end
@@ -162,12 +180,11 @@ function modifier_imba_strafe_aspd:GetModifierAttackRangeBonus()
 	if self:GetCaster():HasModifier(self.modifier_mount) then 
 		return self.bonus_attack_range + self.bonus_attack_range
 	else
-
 		-- 7.01, talent grants buff when not mounted, also 4x the bonus when casted on self		
 		if self:GetCaster():HasModifier("modifier_imba_strafe_self_root") then
-		return self.bonus_attack_range * self:GetCaster():FindTalentValue("special_bonus_imba_clinkz_5")
+			return self.bonus_attack_range * self:GetCaster():FindTalentValue("special_bonus_imba_clinkz_5")
 		else
-		return self.bonus_attack_range
+			return self.bonus_attack_range
 		end
 	end
 	return nil 
@@ -264,9 +281,9 @@ end
 
 modifier_imba_strafe_self_root = class({})
 
-function modifier_imba_strafe_self_root:IsHidden() return false end
-function modifier_imba_strafe_self_root:IsPurgable() return true end
-function modifier_imba_strafe_self_root:IsDebuff() return true end
+function modifier_imba_strafe_self_root:IsHidden() 		return false end
+function modifier_imba_strafe_self_root:IsPurgable() 	return true end
+function modifier_imba_strafe_self_root:IsDebuff() 		return false end
 
 function modifier_imba_strafe_self_root:CheckState()
 	local state = {[MODIFIER_STATE_ROOTED] = true}
@@ -274,7 +291,15 @@ function modifier_imba_strafe_self_root:CheckState()
 	return state
 end
 
-
+function modifier_imba_strafe_self_root:OnRemoved()
+	if IsServer() then
+		-- Start cooldown, reduce it by the duration of the skill
+		if self:GetAbility():IsCooldownReady() then
+			self:GetAbility().time_remaining = self:GetRemainingTime()
+			self:GetAbility():UseResources(false, false, true)
+		end
+	end
+end
 
 
 -----------------------------
@@ -1894,4 +1919,21 @@ function modifier_imba_death_pact_talent_buff:GetModifierExtraHealthBonus()
 	local bonus_hp = self.hero_bonus_hp_dmg_mult * stacks
 
 	return bonus_hp    
+end
+
+-- Client-side helper functions --
+
+-- #5 Talent: Frost Armor adds a portion of the Lich's intelligence to the armor bonus
+LinkLuaModifier("modifier_special_bonus_imba_clinkz_5", "components/abilities/heroes/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_clinkz_5 = class({})
+function modifier_special_bonus_imba_clinkz_5:IsHidden() 		return true end
+function modifier_special_bonus_imba_clinkz_5:IsPurgable() 		return false end
+function modifier_special_bonus_imba_clinkz_5:RemoveOnDeath() 	return false end
+
+-- Function to ensure the talent that gives root + bonus attack range shows in UI
+function imba_clinkz_strafe:OnOwnerSpawned()
+	if self:GetCaster():HasTalent("special_bonus_imba_clinkz_5") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_clinkz_5") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_special_bonus_imba_clinkz_5", {})
+	end
 end

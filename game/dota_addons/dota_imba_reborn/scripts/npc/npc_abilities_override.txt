@@ -489,7 +489,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"bonus_mana_regen"		"1.5"
+				"bonus_mana_regen"		"2.25"
 			}
 		}
 	}
@@ -1378,12 +1378,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_health_regen"	"12"
+				"bonus_health_regen"	"13"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"bonus_mana_regen"		"3.0"
+				"bonus_mana_regen"		"12.0"
 			}
 		}
 	}
@@ -1497,7 +1497,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"bonus_mana_regen"		"2.5"
+				"bonus_mana_regen"		"5.0"
 			}
 			"04"
 			{
@@ -4023,7 +4023,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"charge_restore_time"	"40"
+				"charge_restore_time"	"45 40 35 30"
 			}
 		}
 	}
@@ -4067,12 +4067,12 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"min_damage"			"55 75 95"
+				"min_damage"			"60 80 100"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"max_damage"			"55 75 95"
+				"max_damage"			"60 80 100"
 			}
 			"08"
 			{
@@ -4082,7 +4082,7 @@
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"average_damage"		"55 75 95"
+				"average_damage"		"60 80 100"
 			}
 			"10"
 			{
@@ -9130,7 +9130,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_max"			"180 320 420 480"
+				"damage_max"			"180 220 260 300"
 			}
 			"03"
 			{
@@ -14638,22 +14638,22 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"bonus_health_regen"	"5.5"
+				"bonus_health_regen"	"6.5"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"bonus_mana_regen"		"1.75"
+				"bonus_mana_regen"		"4.0"
 			}			
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_mana"			"250"
+				"bonus_mana"			"325"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"active_duration"		"8"
+				"active_duration"		"7"
 			}
 			"06"
 			{
@@ -14675,12 +14675,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_health"			"250"
+				"bonus_health"			"375"
 			}			
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_mana"			"250"
+				"bonus_mana"			"375"
 			}
 			"03"
 			{
@@ -14690,12 +14690,12 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"status_resistance"		"25"
+				"status_resistance"		"50"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"buff_duration"			"3.0"
+				"buff_duration"			"2.5"
 			}
 		}
 	}
@@ -15354,6 +15354,81 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_armor"			"6"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Holy Locket
+	//=================================================================================================================
+	"item_holy_locket"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_health"			"200"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"health_regen"		"4"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"mana_regen"		"3"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"magic_resist"		"15"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"heal_increase"		"33"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Cyclone
+	//=================================================================================================================
+	"item_cyclone"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_intellect"		"10"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"bonus_mana_regen"		"5.0"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_movement_speed"	"6"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"cyclone_duration"		"2.5"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cast_range_tooltip"		"575"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tooltip_drop_damage"	"250"
 			}
 		}
 	}

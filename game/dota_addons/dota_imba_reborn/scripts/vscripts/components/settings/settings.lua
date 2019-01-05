@@ -591,8 +591,7 @@ IMBA_ABILITIES_IGNORE_CDR = {
 }
 
 IMBA_MODIFIER_IGNORE_FRANTIC = {
-	"modifier_legion_commander_duel",
-	"modifier_imba_strafe_self_root",
+	"modifier_legion_commander_duel"
 }
 
 IMBA_DISARM_IMMUNITY = {
