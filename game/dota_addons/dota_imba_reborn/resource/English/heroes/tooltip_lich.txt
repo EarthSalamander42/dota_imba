@@ -72,7 +72,7 @@
 "DOTA_Tooltip_ability_imba_lich_chain_frost_damage"                    "DAMAGE:"
 "DOTA_Tooltip_ability_imba_lich_chain_frost_num_bounces"                "BOUNCES:"
 "DOTA_Tooltip_ability_imba_lich_chain_frost_speed_increase_per_bounce"              "SPEED INCREASE PER BOUNCE:"
-"DOTA_Tooltip_ability_imba_lich_chain_frost_aghanim_description"                    "Causes Chain Frost to bounce infinitely."
+"DOTA_Tooltip_ability_imba_lich_chain_frost_aghanim_description"                    "Causes Chain Frost to bounce infinitely, except when inside the fountain."
 "DOTA_Tooltip_ability_imba_lich_chain_frost_scepter_bonus_projectiles"              "MINI CHAIN FROSTS COUNT:"
 "DOTA_Tooltip_ability_imba_lich_chain_frost_scepter_projectiles_damage_pct"         "%MINI CHAIN FROST DAMAGE:"
 
