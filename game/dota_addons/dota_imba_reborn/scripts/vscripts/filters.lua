@@ -95,15 +95,15 @@ function GameMode:ModifierFilter( keys )
 		local modifier_caster
 		local modifier_class
 
+		if keys.entindex_caster_const then
+			modifier_caster = EntIndexToHScript(keys.entindex_caster_const)
+		else
+			return true
+		end
+
 		if modifier_owner ~= nil and IsMutationMap() or IsSuperFranticMap() then
 			modifier_class = modifier_owner:FindModifierByName(modifier_name)
 			if modifier_class == nil then return end
-
-			if keys.entindex_caster_const then
-				modifier_caster = EntIndexToHScript(keys.entindex_caster_const)
-			else
-				return true
-			end
 			
 			-- Check for skills (typically vanilla) that are explicitly flagged to not account for frantic's status resistance
 			local ignore_frantic = false

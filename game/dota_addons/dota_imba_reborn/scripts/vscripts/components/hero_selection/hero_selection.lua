@@ -355,10 +355,10 @@ function HeroSelection:GiveStartingHero(playerId, heroName, dev)
 	end
 
 	-- Make heroes briefly visible on spawn (to prevent bad fog interactions)
-	Timers:CreateTimer(0.5, function()
-		hero:MakeVisibleToTeam(DOTA_TEAM_GOODGUYS, 0.5)
-		hero:MakeVisibleToTeam(DOTA_TEAM_BADGUYS, 0.5)
-	end)
+--	Timers:CreateTimer(0.5, function()
+--		hero:MakeVisibleToTeam(DOTA_TEAM_GOODGUYS, 0.5)
+--		hero:MakeVisibleToTeam(DOTA_TEAM_BADGUYS, 0.5)
+--	end)
 
 	Timers:CreateTimer(1.0, function()
 		if wisp then

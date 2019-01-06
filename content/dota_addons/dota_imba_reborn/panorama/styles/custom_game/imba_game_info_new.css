@@ -1,0 +1,95 @@
+.ImbaGameInfo
+{
+	width: 100%;
+	margin-top: -50px;
+	flow-children: down;
+}
+
+Label
+{
+	font-size: 18px;
+	color: #999999;
+	vertical-align: top;
+	margin-top: 8px;
+}
+
+#Intro01,
+#Intro02
+{
+	width: 95%;
+	horizontal-align: left;
+}
+
+#ImbaTitle
+{
+	horizontal-align: center;
+}
+
+.HeaderSpecial
+{
+	font-size: 30px;
+	font-weight: bold;
+	margin-top: 24px;
+	horizontal-align: center;
+	color: #FF7800;
+}
+
+.Header
+{
+	font-size: 18px;
+	font-weight: bold;
+	margin-top: 24px;
+}
+
+.InfoBox
+{
+	flow-children: right;
+	width: 95%;
+	horizontal-align: left;
+}
+
+#HeroesTextBox
+{
+	flow-children: down;
+	horizontal-align: left;
+	width: 60%;
+}
+
+#HeroesImage
+{
+	margin-top: 2px;
+	margin-right: 40px;
+	horizontal-align: right;
+	vertical-align: center;
+}
+
+#AbilitiesImage
+{
+	margin-top: 24px;
+	width: 93%;
+	height: 52px;
+	horizontal-align: left;
+}
+
+#ItemsTextBox,
+#CreepsTextBox,
+#RoshanTextBox,
+#PowerBalanceTextBox,
+#ContributorsTextBox
+{
+	flow-children: down;
+	width: 100%;
+}
+
+#ItemsImage
+{
+	margin-top: 24px;
+	width: 93%;
+	height: 48px;
+	horizontal-align: left;
+}
+
+#End
+{
+	font-size: 24;
+}

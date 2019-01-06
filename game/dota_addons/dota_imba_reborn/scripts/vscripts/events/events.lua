@@ -652,9 +652,20 @@ function GameMode:OnPlayerChat(keys)
 						caster.companion = nil
 					end
 
-					PrecacheUnitByNameAsync("npc_dota_hero_" .. text, function()
-						HeroSelection:GiveStartingHero(caster:GetPlayerID(), "npc_dota_hero_" .. text, true)
-					end)
+					if IMBA_PICK_SCREEN == true then
+						PrecacheUnitByNameAsync("npc_dota_hero_" .. text, function()
+							HeroSelection:GiveStartingHero(caster:GetPlayerID(), "npc_dota_hero_" .. text, true)
+						end)
+					else
+						local old_hero = PlayerResource:GetSelectedHeroEntity(playerId)
+						PlayerResource:ReplaceHeroWith(caster:GetPlayerID(), "npc_dota_hero_" .. text, 0, 0)
+
+						Timers:CreateTimer(1.0, function()
+							if old_hero then
+								UTIL_Remove(old_hero)
+							end
+						end)
+					end
 				end
 			end
 

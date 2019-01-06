@@ -4,7 +4,7 @@
 // "code_credits_npc_dota_hero_abaddon_editor_2"	"<steam_id_64>"
 // etc... credits are granted for ability rework or full code formatting for at least 1 ability, not bugfixing!
 
-// TODO: List is not 100% accurate, check first commit of hero files in Github
+// TODO: List is not 100% accurate, checked first commit of hero files in Github (wich may not relate to the right credits in some cases)
 
 "code_credits_npc_dota_hero_abaddon"					"" // Broccoli
 "code_credits_npc_dota_hero_alchemist"					"76561198087803933" // Hewdraw
@@ -98,10 +98,12 @@
 "code_credits_npc_dota_hero_ursa"						"76561197973712418" // Seinken
 "code_credits_npc_dota_hero_vengefulspirit"				"76561198007141460" // Firetoad
 "code_credits_npc_dota_hero_vengefulspirit_editor_1"	"76561198025685495" // AtroCty
-// "code_credits_npc_dota_hero_venomancer"					"76561198007141460" // Firetoad (IMBAfication disabled atm)
-// "code_credits_npc_dota_hero_venomancer_editor_1"		"76561198025685495" // AtroCty (IMBAfication disabled atm)
+"code_credits_npc_dota_hero_venomancer"					"76561198007141460" // Firetoad (IMBAfication disabled atm)
+"code_credits_npc_dota_hero_venomancer_editor_1"		"76561198025685495" // AtroCty (IMBAfication disabled atm)
 "code_credits_npc_dota_hero_warlock"					"76561197994333648" // Shush
 "code_credits_npc_dota_hero_warlock_editor_1"			"76561198044195452" // naowin
+"code_credits_npc_dota_hero_winter_wyvern"				"76561198044195452" // naowin
+"code_credits_npc_dota_hero_winter_wyvern_editor_1"		"76561198015161808" // EarthSalamander #42
 "code_credits_npc_dota_hero_witch_doctor"				"76561197996377179" // yahnich
 "code_credits_npc_dota_hero_witch_doctor_editor_1"		"76561198025685495" // AtroCty
 "code_credits_npc_dota_hero_wisp"						"76561198044195452" // naowin

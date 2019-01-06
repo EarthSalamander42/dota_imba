@@ -14,7 +14,7 @@
 
 require('components/settings/settings_donator')
 
-IMBA_VERSION = "7.08g"
+IMBA_VERSION = "7.09"
 CustomNetTables:SetTableValue("game_options", "game_version", {value = IMBA_VERSION})
 
 -- Picking screen constants
@@ -447,6 +447,8 @@ IMBA_INVISIBLE_MODIFIERS = {
 	"modifier_imba_riki_invisibility",
 	"modifier_imba_shadow_walk_buff_invis",
 	"modifier_imba_invisibility_rune",
+	"modifier_imba_blur_smoke",
+	"modifier_windrunner_windrun_invis"
 }
 
 IMBA_REINCARNATION_MODIFIERS = {

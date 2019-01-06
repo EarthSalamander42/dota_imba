@@ -77,7 +77,7 @@ function GameMode:OnHeroDeath(killer, victim)
 					reaper_scythe = 0
 				end
 				respawn_time = respawn_time + reaper_scythe
-				hero:SetTimeUntilRespawn(math.min(respawn_time, 60))
+				hero:SetTimeUntilRespawn(math.min(respawn_time, 60 + reaper_scythe))
 				return
 			end
 		end
@@ -89,6 +89,9 @@ function GameMode:OnHeroDeath(killer, victim)
 
 --		print("Set time until respawn for unit " .. tostring(hero:GetUnitName()) .. " to " .. tostring(respawn_time) .. " seconds")
 		hero:SetTimeUntilRespawn(math.min(respawn_time, 60))
+
+		-- 50% of vanilla respawn time
+--		hero:SetTimeUntilRespawn(hero:GetRespawnTime() / 100 * 50)
 		return
 	end
 end

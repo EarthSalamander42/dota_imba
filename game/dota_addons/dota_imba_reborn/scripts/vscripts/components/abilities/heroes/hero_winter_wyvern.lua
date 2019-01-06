@@ -73,8 +73,6 @@ function imba_winter_wyvern_arctic_burn:ToggleOn(caster, ability)
 	arctic_burn_modifier:SetStackCount(attack_range_bonus);
 end
 
-
-
 --------------------------------------------------------------
 --  			Arctic Burn (handle modifier) 				--
 --------------------------------------------------------------
@@ -122,19 +120,19 @@ function modifier_imba_winter_wyvern_arctic_burn:GetModifierAttackRangeBonus()
 end
 
 function modifier_imba_winter_wyvern_arctic_burn:endGetModifierProjectileSpeedBonus()
-	return 1350
+	return self:GetAbility():GetSpecialValueFor("bonus_projectile_speed")
 end
 
 function modifier_imba_winter_wyvern_arctic_burn:GetModifierMoveSpeedBonus_Percentage()
-	return 15
+	return self:GetAbility():GetSpecialValueFor("bonus_movespeed")
 end
 
 function modifier_imba_winter_wyvern_arctic_burn:GetModifierAttackPointConstant()
-	return 0.1
+	return self:GetAbility():GetSpecialValueFor("attack_point")
 end
 
 function modifier_imba_winter_wyvern_arctic_burn:GetModifierBaseAttackTimeConstant()
-	return 1.2
+	return self:GetAbility():GetSpecialValueFor("bat_constant")
 end
 
 --------------------------------------------------------------
@@ -153,8 +151,6 @@ end
 function modifier_imba_winter_wyvern_arctic_burn_slow:GetModifierMoveSpeedBonus_Percentage()
 	return -self:GetStackCount();
 end
-
-
 
 --------------------------------------------------------------
 --  			Arctic Burn (Damage modifier) 				--
@@ -206,8 +202,6 @@ function modifier_imba_winter_wyvern_arctic_burn_damage:OnRemoved()
 	end
 end
 
-
-
 ------------------------------------------------------------------
 --			  			Splinter Blast  						--
 ------------------------------------------------------------------
@@ -229,6 +223,7 @@ function imba_winter_wyvern_splinter_blast:OnSpellStart()
 		local splinter_dmg_efficiency		= self:GetSpecialValueFor("splinter_dmg_efficiency");
 		local splinter_aoe_efficiency		= self:GetSpecialValueFor("splinter_aoe_efficiency");
 		local damage 						= self:GetAbilityDamage();
+		local speed							= self:GetSpecialValueFor("projectile_speed")
 
 		caster:EmitSound("Hero_Winter_Wyvern.SplinterBlast.Cast");
 
@@ -237,7 +232,7 @@ function imba_winter_wyvern_splinter_blast:OnSpellStart()
 			target 						= target,
 			caster 						= caster,
 			ability 					= self,
-			iMoveSpeed 					= 650,
+			iMoveSpeed 					= speed,
 			iSourceAttachment 			= self:GetCaster():ScriptLookupAttachment("attach_attack1"),
 			EffectName 					= "particles/units/heroes/hero_winter_wyvern/wyvern_splinter.vpcf",
 			secondary_projectile_speed 	= secondary_projectile_speed,
@@ -433,8 +428,6 @@ function imba_winter_wyvern_splinter_blast:OnProjectileHit_ExtraData(target, loc
 	end
 end
 
-
-
 --------------------------------------------------------------
 --  			Splinter Blast (Slow modifier) 				--
 --------------------------------------------------------------
@@ -473,8 +466,6 @@ end
 function modifier_imba_winter_wyvern_splinter_blast_slow:GetModifierAttackSpeedBonus_Constant()
 	return self.attack_slow;
 end
-
-
 
 ------------------------------------------------------------------
 --			  			Cold Embrace	  						--
@@ -593,8 +584,6 @@ function modifier_imba_winter_wyvern_cold_embrace:OnRefreshed(keys)
 	end
 end
 
-
-
 ---------------------------------------------------------------------------------------------------------------------
 --	Cold Embrace -- Resistance
 ---------------------------------------------------------------------------------------------------------------------
@@ -612,8 +601,6 @@ function modifier_imba_winter_wyvern_cold_embrace_resistance:GetModifierMagicalR
 	return self:GetStackCount();
 end
 
-
-
 ---------------------------------------------------------------------------------------------------------------------
 --	Cold Embrace -- Freeze
 ---------------------------------------------------------------------------------------------------------------------
@@ -629,7 +616,17 @@ function modifier_imba_winter_wyvern_cold_embrace_freeze:CheckState()
 	return state
 end
 
+function modifier_imba_winter_wyvern_cold_embrace_freeze:OnCreated()
+	EmitSoundOn("Hero_Ancient_Apparition.ColdFeetCast", self:GetParent())
+end
 
+function modifier_imba_winter_wyvern_cold_embrace_freeze:GetEffectName()
+	return "particles/units/heroes/hero_ancient_apparition/ancient_apparition_cold_feet_frozen.vpcf"
+end
+
+function modifier_imba_winter_wyvern_cold_embrace_freeze:GetEffectAttachType()
+	return PATTACH_ABSORIGIN_FOLLOW
+end
 
 ------------------------------------------------------------------
 --						Winters Curse 							--
@@ -687,93 +684,6 @@ function modifier_imba_winter_wyvern_winters_curse:CheckState()
 	}
 	return state
 end
-
-
-
-----------------------------------------------------------------------
---				Winter Wyvern Talent 1 (mana regen) 				--
-----------------------------------------------------------------------
-LinkLuaModifier("modifier_special_bonus_imba_winter_wyvern_1", "components/abilities/heroes/hero_winter_wyvern.lua", LUA_MODIFIER_MOTION_NONE)
-modifier_special_bonus_imba_winter_wyvern_1 = class({})
-function modifier_special_bonus_imba_winter_wyvern_1:IsHidden() return true end
-function modifier_special_bonus_imba_winter_wyvern_1:RemoveOnDeath() return false end
-function modifier_special_bonus_imba_winter_wyvern_1:DeclareFunctions() 
-	decFuncs = {
-		MODIFIER_PROPERTY_MANA_REGEN_CONSTANT,
-	}
-
-	return decFuncs
-end
-
-function modifier_special_bonus_imba_winter_wyvern_1:OnCreated()
-	if IsServer() then 
-		self.regen = self:GetParent():FindTalentValue("special_bonus_imba_winter_wyvern_1", "mana_regen");
-	else
-		self.regen = 1.75;
-	end
-end
-
-function modifier_special_bonus_imba_winter_wyvern_1:GetModifierConstantManaRegen()
-	return self.regen;
-end
-
-
-
-----------------------------------------------------------------------
---				Winter Wyvern Talent 2 (bonus damage) 				--
-----------------------------------------------------------------------
-LinkLuaModifier("modifier_special_bonus_imba_winter_wyvern_2", "components/abilities/heroes/hero_winter_wyvern.lua", LUA_MODIFIER_MOTION_NONE)
-modifier_special_bonus_imba_winter_wyvern_2 = class({})
-function modifier_special_bonus_imba_winter_wyvern_2:IsHidden() return true end
-function modifier_special_bonus_imba_winter_wyvern_2:RemoveOnDeath() return false end
-function modifier_special_bonus_imba_winter_wyvern_2:DeclareFunctions() 
-	decFuncs = {
-		MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE,
-	}
-
-	return decFuncs
-end
-
-function modifier_special_bonus_imba_winter_wyvern_2:OnCreated()
-	if IsServer() then 
-		self.bonus_damage = self:GetParent():FindTalentValue("special_bonus_imba_winter_wyvern_2", "bonus_damage");
-	else
-		self.bonus_damage = 60;
-	end
-end
-
-function modifier_special_bonus_imba_winter_wyvern_2:GetModifierBaseAttack_BonusDamage()
-	return self.bonus_damage;
-end
-
-
-
-----------------------------------------------------------------------
---				Winter Wyvern Talent 3 (bonus damage) 				--
-----------------------------------------------------------------------
-LinkLuaModifier("modifier_special_bonus_imba_winter_wyvern_3", "components/abilities/heroes/hero_winter_wyvern.lua", LUA_MODIFIER_MOTION_NONE)
-modifier_special_bonus_imba_winter_wyvern_3 = class({})
-function modifier_special_bonus_imba_winter_wyvern_3:IsHidden() return true end
-function modifier_special_bonus_imba_winter_wyvern_3:RemoveOnDeath() return false end
-function modifier_special_bonus_imba_winter_wyvern_3:DeclareFunctions() 
-	decFuncs = {
-		MODIFIER_PROPERTY_EXTRA_HEALTH_BONUS,
-	}
-
-	return decFuncs
-end
-
-function modifier_special_bonus_imba_winter_wyvern_3:OnCreated()
-	if IsServer() then 
-		self.bonus_health = self:GetParent():FindTalentValue("special_bonus_imba_winter_wyvern_2", "bonus_health");
-	end
-end
-
-function modifier_special_bonus_imba_winter_wyvern_3:GetModifierExtraHealthBonus()
-	return self.bonus_health;
-end
-
-
 
 ------------------------------------------------------------------------------
 --		Winter Wyvern Talent 4 (Magic Resistance during cold Embrace) 		--

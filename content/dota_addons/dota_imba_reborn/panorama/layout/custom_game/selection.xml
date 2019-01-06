@@ -1,0 +1,8 @@
+<root> 
+	<scripts>
+		<include src="file://{resources}/scripts/custom_game/selection/selection.js" />
+		<include src="file://{resources}/scripts/custom_game/selection/selection_filter.js" />
+	</scripts>
+
+	<Panel></Panel>
+</root>

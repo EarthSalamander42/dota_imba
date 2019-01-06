@@ -18,13 +18,13 @@
 		"Ability3"					"imba_winter_wyvern_cold_embrace"
 		"Ability6"					"imba_winter_wyvern_winters_curse"
 
-		"Ability10"					"special_bonus_gold_income_15"//"special_bonus_imba_winter_wyvern_1" 	// +1.75 mana regen
-		"Ability11"					"special_bonus_imba_winter_wyvern_2" 	// +60 damage
-		"Ability12"					"special_bonus_imba_winter_wyvern_3"	// +350 hp
+		"Ability10"					"special_bonus_mp_regen_175"			// +1.75 mana regen
+		"Ability11"					"special_bonus_attack_damage_60" 		// +60 damage
+		"Ability12"					"special_bonus_hp_350"					// +350 hp
 		"Ability13"					"special_bonus_imba_winter_wyvern_4"	// 15% magic resistance during cold embrace
 		"Ability14"					"special_bonus_imba_winter_wyvern_5"	// Pure Arctic Burn
-		"Ability15"					"special_bonus_imba_winter_wyvern_6" 	// -5sec cold embrace cd	
+		"Ability15"					"special_bonus_imba_winter_wyvern_6"	// -5sec cold embrace cd	
 		"Ability16"					"special_bonus_imba_winter_wyvern_7"	// IMBA Winter's Curse
-		"Ability17" 				"special_bonus_unique_winter_wyvern_4"  // Splinter Blast 2s stun
+		"Ability17" 				"special_bonus_unique_winter_wyvern_4"	// Splinter Blast 2s stun
 	}
 }

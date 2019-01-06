@@ -30263,15 +30263,23 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"							"ability_lua"
-		"ScriptFile"				"components/abilities/heroes/hero_phantom_assassin"
-		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"ScriptFile"						"components/abilities/heroes/hero_phantom_assassin"
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityTextureName"				"phantom_assassin_blur"
-		"AbilityCastRange"					"1600"
+		"AbilityCastRange"					"600"
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"					"25 20 15 10"
-		
+		"AbilityCooldown"					"60.0 55.0 50.0 45.0"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.4"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"50"
+
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
@@ -30307,17 +30315,17 @@
 			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"jump_duration"				"1"
+				"duration"					"25.0"
 			}
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"jump_height"				"250"
+				"vanish_radius"				"600"
 			}
 			"07"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"jump_anim_playback_rate"	"0.75"
+				"fade_duration"				"0.75"
 			}
 		}
 	}

@@ -166,7 +166,7 @@
 "npc_dota_hero_weaver"                                      "Weaver"
 "npc_dota_hero_skeleton_king"                              "Wraith King (IMBA)"
 "npc_dota_hero_windrunner"                                  "Windrunner"
-"npc_dota_hero_winter_wyvern"                              "Winter Wyvern"
+"npc_dota_hero_winter_wyvern"                              "Winter Wyvern (IMBA)"
 "npc_dota_hero_wisp"                                        "Wisp (IMBA)"
 "npc_dota_hero_witch_doctor"                                "Witch Doctor (IMBA)"
 "npc_dota_hero_zuus"                                        "Zeus (IMBA)"

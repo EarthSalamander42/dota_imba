@@ -19,11 +19,11 @@
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
+		"AbilityCastPoint"				"0.0"
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"32 26 20 14"
+		"AbilityCooldown"				"32.0 26.0 20.0 14.0"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -61,7 +61,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"move_slow"				"-25 -30 -35 -40"
+				"move_slow"				"-25 -35 -45 -55"
 			}
 			"07"
 			{
@@ -97,7 +97,22 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"scepter_dmg_pct"		"1"
-			}		
+			}
+			"14"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_movespeed"		"10" // %
+			}
+			"15"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_projectile_speed"	"1350"
+			}
+			"16"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"bat_constant"				"1.2"
+			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
 	}
@@ -123,15 +138,15 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"1200"
-		"AbilityCastPoint"				"0.3 0.3 0.25 0.2"
+		"AbilityCastPoint"				"0.3 0.28 0.26 0.24"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"7.0 6.5 5.0 4.5"
+		"AbilityCooldown"				"6.0"
 
 		// Damage.
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"					"250 300 450 650"
+		"AbilityDamage"					"150 250 350 450"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -144,7 +159,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"projectile_speed"		"650"
+				"projectile_speed"		"700"
 			}
 			"02"
 			{
@@ -174,7 +189,7 @@
 			"07"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"secondary_projectile_speed"	"750"
+				"secondary_projectile_speed"	"800"
 			}
 			"08"
 			{
@@ -237,24 +252,30 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"1000"
-		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
-		
+		"AbilityCastPoint"				"0.3"
+
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"24 19 14 9"
+		"AbilityCooldown"				"21.0 18.0 15.0 12.0"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"75 75 75 75"
-				
+		"AbilityManaCost"				"75"
+
+		"precache"
+		{
+			"particle"		"particles/units/heroes/hero_ancient_apparition/ancient_apparition_cold_feet_frozen.vpcf"
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_ancient_apparition.vsndevts"
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"duration"				"4"
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"4.0"
 				"LinkedSpecialBonus"	"special_bonus_unique_winter_wyvern_3"
 			}
 			"02"
@@ -269,13 +290,19 @@
 			}
 			"04"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"damage_treshold_pct_hp"		"100 85 65 55"
+				"var_type"					"FIELD_INTEGER"
+				"damage_treshold_pct_hp"	"50 40 30 20"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"freeze_duration"		"1.5"
+				"freeze_duration"		"1.0 1.2 1.4 1.6"
+			}
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_magical_resistance"		"0"
+				"LinkedSpecialBonus"			"special_bonus_imba_winter_wyvern_4"
 			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_3"
@@ -322,97 +349,28 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"500 550 650"
+				"radius"				"500 600 700"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_reduction"		"100 80 60"
+				"damage_reduction"		"100 90 80"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"damage_amplification"	"15"
+				"damage_amplification"	"20"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_attack_speed"	"100 150 200"
+				"bonus_attack_speed"	"80 120 160"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"duration"				"3.25 4.0 4.75"
+				"duration"				"4.0 4.75 5.5"
 				"LinkedSpecialBonus"	"special_bonus_unique_winter_wyvern_3"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	//	Winter Wyvern Talent: Bonus Mana Regen
-	//=================================================================================================================
-	"special_bonus_imba_winter_wyvern_1"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_undefined"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"mana_regen"			"1.75"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	//	Winter Wyvern Talent: Bonus Damage 
-	//=================================================================================================================
-	"special_bonus_imba_winter_wyvern_2"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_undefined"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"60"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	//	Winter Wyvern Talent: Bonus HP
-	//=================================================================================================================
-	"special_bonus_imba_winter_wyvern_3"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_undefined"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_health"			"350"
 			}
 		}
 	}

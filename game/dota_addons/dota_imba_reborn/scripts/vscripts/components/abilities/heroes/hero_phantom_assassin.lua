@@ -519,8 +519,7 @@ imba_phantom_assassin_blur = class({})
 LinkLuaModifier("modifier_imba_blur", "components/abilities/heroes/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_blur_blur", "components/abilities/heroes/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE) --wat
 LinkLuaModifier("modifier_imba_blur_speed", "components/abilities/heroes/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_blur_opacity", "components/abilities/heroes/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_blur_invuln", "components/abilities/heroes/hero_phantom_assassin", LUA_MODIFIER_MOTION_VERTICAL)
+LinkLuaModifier("modifier_imba_blur_smoke", "components/abilities/heroes/hero_phantom_assassin", LUA_MODIFIER_MOTION_VERTICAL)
 
 function imba_phantom_assassin_blur:GetAbilityTextureName()
 	return "phantom_assassin_blur"
@@ -533,7 +532,7 @@ end
 function imba_phantom_assassin_blur:OnSpellStart()
 	if IsServer() then
 		ProjectileManager:ProjectileDodge(self:GetCaster())
-		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_blur_invuln", { duration = self:GetSpecialValueFor("jump_duration")})
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_blur_smoke", { duration = self:GetSpecialValueFor("duration")})
 	end
 end
 
@@ -549,7 +548,6 @@ function modifier_imba_blur:OnCreated()
 		self.caster = self:GetCaster()
 		self.parent = self:GetParent()
 		self.modifier_aura = "modifier_imba_blur_blur"
-		self.modifier_blur_transparent = "modifier_imba_blur_opacity"
 		self.modifier_speed = "modifier_imba_blur_speed"
 
 		-- Ability specials
@@ -576,15 +574,10 @@ function modifier_imba_blur:OnIntervalThink()
 		if #nearby_enemies > 0 and self.caster:HasModifier(self.modifier_aura) then
 			self.caster:RemoveModifierByName(self.modifier_aura)
 
-			-- Make mortred transparent (wtf firetoad)
-			self.caster:AddNewModifier(self.caster, self, self.modifier_blur_transparent, {})
-
 			-- Else, if there are no enemies, remove the modifier
 		elseif #nearby_enemies == 0 and not self.caster:HasModifier(self.modifier_aura) then
 			self.caster:AddNewModifier(self.caster, self:GetAbility(), self.modifier_aura, {})
 
-			-- Make mortred not transparent (wtf firetoad)
-			self.caster:RemoveModifierByName(self.modifier_blur_transparent)
 			local responses = {"phantom_assassin_phass_ability_blur_01",
 				"phantom_assassin_phass_ability_blur_02",
 				"phantom_assassin_phass_ability_blur_03"
@@ -751,108 +744,66 @@ function modifier_imba_blur_blur:IsDebuff() return false end
 function modifier_imba_blur_blur:IsPurgable() return false end
 
 -------------------------------------------
--- Blur opacity modifier
--------------------------------------------
-
-modifier_imba_blur_opacity = class({})
-
-function modifier_imba_blur_opacity:IsHidden()	return false end
-function modifier_imba_blur_opacity:IsDebuff()	return false end
-function modifier_imba_blur_opacity:IsPurgable()return false end
-
-function modifier_imba_blur_opacity:DeclareFunctions()
-	return {MODIFIER_PROPERTY_INVISIBILITY_LEVEL}
-end
-
-function modifier_imba_blur_opacity:GetModifierInvisibilityLevel()
-	return 1
-end
-
-function modifier_imba_blur_opacity:IsHidden()
-	return true
-end
-
--------------------------------------------
 -- Blur invuln modifier
 -------------------------------------------
 
-modifier_imba_blur_invuln = class({})
-function modifier_imba_blur_invuln:IsHidden()	return false end
-function modifier_imba_blur_invuln:IsDebuff()	return false end
-function modifier_imba_blur_invuln:IsPurgable() return false end
+modifier_imba_blur_smoke = class({})
+function modifier_imba_blur_smoke:IsHidden()	return false end
+function modifier_imba_blur_smoke:IsDebuff()	return false end
+function modifier_imba_blur_smoke:IsPurgable() return false end
 
-function modifier_imba_blur_invuln:DeclareFunctions()
-	local funcs = {
-		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING,
+function modifier_imba_blur_smoke:DeclareFunctions()
+	return {
+		MODIFIER_PROPERTY_INVISIBILITY_LEVEL
 	}
-	return funcs
 end
 
-function modifier_imba_blur_invuln:GetModifierStatusResistanceStacking()
-	return 100
+function modifier_imba_blur_smoke:GetEffectName()
+	return "particles/units/heroes/hero_phantom_assassin/phantom_assassin_active_blur.vpcf"
 end
 
-function modifier_imba_blur_invuln:CheckState()
-	return { [MODIFIER_STATE_NO_HEALTH_BAR] = true,
-			 [MODIFIER_STATE_STUNNED] = true,
-			 [MODIFIER_STATE_ATTACK_IMMUNE] = true,
-			 [MODIFIER_STATE_LOW_ATTACK_PRIORITY] = true,
-			 [MODIFIER_STATE_NO_UNIT_COLLISION] = true,
-			 [MODIFIER_STATE_INVULNERABLE] = true}
+function modifier_imba_blur_smoke:GetEffectAttachType()
+	return PATTACH_ABSORIGIN_FOLLOW
 end
 
-function modifier_imba_blur_invuln:OnCreated()
+function modifier_imba_blur_smoke:CheckState()
+	return {
+		[MODIFIER_STATE_INVISIBLE] = true,
+	}
+end
+
+function modifier_imba_blur_smoke:GetPriority()
+	return MODIFIER_PRIORITY_NORMAL
+end
+
+function modifier_imba_blur_smoke:GetModifierInvisibilityLevel()
+	return 1
+end
+
+function modifier_imba_blur_smoke:OnCreated()
 	if IsServer() then
-		local duration = self:GetDuration() - FrameTime()
-		local height = self:GetAbility():GetSpecialValueFor("jump_height")
-		
-		self.airTime = duration * 0.5
-		self.origAirTime = self.airTime
-		self.durationUp = (duration - self.airTime) * 0.33
-		self.durationDown = (duration - self.airTime) * 0.67
-		self.speedUp = (height / self.durationUp) * FrameTime()
-		self.speedDown = (height / self.durationDown) * FrameTime()
-		
+		self:GetParent():EmitSound("Hero_PhantomAssassin.Blur")
 		self:StartIntervalThink(FrameTime())
-		self:GetParent():StartGestureWithPlaybackRate(ACT_DOTA_SPAWN, self:GetAbility():GetSpecialValueFor("jump_anim_playback_rate"))
 	end
 end
 
-function modifier_imba_blur_invuln:OnIntervalThink()
-	self:UpdateVerticalMotion(self:GetParent(), FrameTime())
-end
+function modifier_imba_blur_smoke:OnIntervalThink()
+	if self.linger == true then return end
 
-function modifier_imba_blur_invuln:UpdateVerticalMotion(parent, dt)
-	if IsServer() then
-		if self.durationUp > 0 then
-			parent:SetAbsOrigin(parent:GetAbsOrigin() + Vector(0,0,self.speedUp))
-			self.durationUp = self.durationUp - dt
-			if self.durationUp <= 0 then self:UpdateVerticalMotion(parent, dt) end
-			
-		elseif self.airTime > 0 then
-			if self.airTime >= self.origAirTime * 0.5 then
-				parent:SetAbsOrigin(parent:GetAbsOrigin() + Vector(0,0, (self.speedDown + self.speedUp) * 0.5 * 0.25))
-			else
-				parent:SetAbsOrigin(parent:GetAbsOrigin() - Vector(0,0, (self.speedDown + self.speedUp) * 0.5 * 0.25))
-			end
-			
-			self.airTime = self.airTime - dt
-			if self.airTime <= 0 then self:UpdateVerticalMotion(parent, dt) end
-		elseif self.durationDown > 0 then
-			parent:SetAbsOrigin(parent:GetAbsOrigin() - Vector(0, 0, self.speedDown))
-			self.durationDown = self.durationDown - dt
-		end
+	local enemies = FindUnitsInRadius(self:GetParent():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self:GetAbility():GetSpecialValueFor("vanish_radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+
+	if #enemies > 0 then
+		self.linger = true
+		self:StartIntervalThink(-1)
+		Timers:CreateTimer(self:GetAbility():GetSpecialValueFor("fade_duration"), function()
+			self:Destroy()
+		end)
 	end
 end
 
-function modifier_imba_blur_invuln:OnDestroy()
+function modifier_imba_blur_smoke:OnRemoved()
 	if IsServer() then
-		local parent = self:GetParent()
-		local pos = parent:GetAbsOrigin()
-		parent:SetAbsOrigin(Vector(pos.x, pos.y, GetGroundHeight(pos, parent)))
-		FindClearSpaceForUnit(self:GetParent(), self:GetParent():GetAbsOrigin(), false)
-		
-		self:GetParent():RemoveGesture(ACT_DOTA_SPAWN)
+		self:GetParent():EmitSound("Hero_PhantomAssassin.Blur.Break")
 	end
 end
 

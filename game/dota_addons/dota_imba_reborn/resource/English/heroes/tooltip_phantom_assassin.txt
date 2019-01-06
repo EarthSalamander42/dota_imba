@@ -25,18 +25,21 @@
 
 // Phantom Assassin's Blur
 "DOTA_Tooltip_ability_imba_phantom_assassin_blur"						"#{DOTA_Tooltip_ability_phantom_assassin_blur}"
-"DOTA_Tooltip_ability_imba_phantom_assassin_blur_Description"			"#{DOTA_Tooltip_ability_phantom_assassin_blur_Description}\n<font color='#FF7800'>Swift and Silent:</font> Phantom Assassin gains bonus move speed each time she dodges an attack.\n<font color='#FF7800'>Immaterial Girl:</font> Whenever she detects an enemy hero in %radius% range, Mortred becomes less visible."
+"DOTA_Tooltip_ability_imba_phantom_assassin_blur_Description"			"#{DOTA_Tooltip_ability_phantom_assassin_blur_Description}\n<font color='#FF7800'>Swift and Silent:</font> Phantom Assassin gains bonus move speed each time she dodges an attack."
 "DOTA_Tooltip_ability_imba_phantom_assassin_blur_Lore"					"#{DOTA_Tooltip_ability_phantom_assassin_blur_Lore}"
 "DOTA_Tooltip_ability_imba_phantom_assassin_blur_evasion"				"#{DOTA_Tooltip_ability_phantom_assassin_blur_bonus_evasion}"
 "DOTA_Tooltip_ability_imba_phantom_assassin_blur_radius"				"#{DOTA_Tooltip_ability_phantom_assassin_blur_radius}"
 "DOTA_Tooltip_ability_imba_phantom_assassin_blur_blur_ms"				"BONUS MOVE SPEED:"
 "DOTA_Tooltip_ability_imba_phantom_assassin_blur_speed_bonus_duration"	"SPEED BONUS DURATION:"
+"DOTA_Tooltip_ability_imba_phantom_assassin_blur_vanish_radius"			"VANISH RADIUS:"
+"DOTA_Tooltip_ability_imba_phantom_assassin_blur_fade_duration"			"VANISH FADE DURATION:"
+"DOTA_Tooltip_ability_imba_phantom_assassin_blur_duration"				"VANISH DURATION:"
 
 "DOTA_Tooltip_modifier_imba_blur_speed"									"Swift and Silent"
 "DOTA_Tooltip_modifier_imba_blur_speed_Description"						"Gaining bonus movement speed for a short duration for each stack."
 
-"DOTA_Tooltip_modifier_imba_blur_invuln"								"Phantom Dodge"
-"DOTA_Tooltip_modifier_imba_blur_invuln_Description"					"Invulnerable and unable to move."
+"DOTA_Tooltip_modifier_imba_blur_smoke"								"#{DOTA_Tooltip_modifier_phantom_assassin_blur_active}"
+"DOTA_Tooltip_modifier_imba_blur_smoke_Description"					"#{DOTA_Tooltip_modifier_phantom_assassin_blur_active_Description}"
 
 // Phantom Assassin's Coup de Grace
 "DOTA_Tooltip_ability_imba_phantom_assassin_coup_de_grace"							"#{DOTA_Tooltip_ability_phantom_assassin_coup_de_grace}"
