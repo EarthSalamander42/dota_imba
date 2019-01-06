@@ -3,6 +3,7 @@
 #base heroes/silencer/hero.txt
 #base heroes/wisp/hero.txt
 #base heroes/zeus/hero.txt
+#base heroes/winter_wyvern/hero.txt
 
 #base custom_heroes/malfurion/hero.txt
 #base custom_heroes/sohei/hero.txt

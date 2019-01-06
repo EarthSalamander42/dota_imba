@@ -1,0 +1,61 @@
+--------------------------------------------
+--       Auroth: the Winter Wyvern        --
+--------------------------------------------
+--     Primary Attribute: Intelligence    --
+--------------------------------------------
+
+
+Spells:
+--------------------------------------------
+Q: Arctic Burn            Active            Gives flying movement and +400 night vision, increases attack range to 775/850/925/1000, 
+                                            projectile speed to 1200, and reduces attack point to 0.1 Each attack adds an instance 
+                                            of Arctic Burn. Arctic burn adds 7%/8%/9%/10% of the targets current hp as magic damage.
+
+                          Arctic Flight     Winter Wyvern gains 10% movement speed while soaring through the skies.
+			  
+                          AGHS              Aghs makes Arctic Burn flight toggleable on / off, while active it adds a constant mana 
+                                            cost of 40/35/30/25 mana per second. Aghs also adds 1% of targets Max HP as aditional 
+                                            damage to Arctic burn DoT. (this enables the dot to kill since the standard % of current 
+                                            hp never will)
+
+
+W: Splinter Blast         Active            Launches a tracking projectile of ice towards an enemy. The ice shatters on impact, 
+                                            leaving the primary target completely unaffected, while hurling damaging splinters into 
+                                            nearby enemies in a 500/625/750/875 radius. Enemies struck by the splinters take 
+                                            150/300/450/650 damage and are slowed by 40%.
+
+                          Heart of Ice      Winter Wyvern siphons the life force from the heart of her enemies. Each enemy hit by 
+                                            Splinter Blast reduces the cooldown timer of Winter's Curse by 1s (0.25s when hitting creeps or 
+                                            illusions).
+
+                          Chain Reaction	Splinter Blast triggers a second volley uppon impact with 50% reduced aoe, dealing 75% reduced damage.
+
+
+E: Cold Embrace           Active            Encases an ally in an icy cocoon, freezing them solid while healing a base amount 
+                                            (20/30/40/50) as well as a percentage (3%/5%/7%/9%) of their maximum health each second. 
+                                            The cocoon blocks all physical damage.
+
+                          Icy Overload      If the icy coccon suffers (100%/85%/65%/55%) of the targets MAX_HP as physical damage 
+                                            it will explode instantly healing the encased target to full.
+                        
+                          Protective Shell  The icy cocoon is protected by cold magic. Any physical attacker will be frozen for 1.5s 
+                                            during Icy Overload.
+
+
+
+R: Winter's Curse         Active            Winter Wyvern freezes an enemy in place while striking those nearby with a maddening 
+                                            curse which causes them to attack their frozen ally with increased attack speed. The 
+                                            frozen ally and those cursed to attack their ally take 100%/75%/50% reduced damage take 
+                                            from their enemies. 
+
+                          Queen's Resolve   Winter's Curse ignores tenacity. (rebalanced the curse duration to take this into account)
+
+
+
+
+Talents:
+--------------------------------------------
+Lvl 10: +60 damage                                 | +90 Gold/Min
+Lvl 15: +15% Magic Resistance durng Cold Embrace   | +350 Health
+Lvl 20: -5s Cold Embrace Cooldown                  | Pure Arctic Burn (Changes damage type of Arctic Burn to PURE)
+Lvl 25: Spolinter blast 2s Stun                    | Winter's Curse (duration increased by 1.5s, Cursed enemies have their passives dissabled)  
