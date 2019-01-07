@@ -21,7 +21,7 @@
 // Bounty Hunter's Jinada
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_bounty_hunter_jinada"								"Jinada"
-"DOTA_Tooltip_ability_imba_bounty_hunter_jinada_Description"					"Bounty Hunter plans his next attack, passively adding a critical strike and maim to it.\n<font color='#FF7800'>Shadow Jaunt:</font> Activating Jinada on a Tracked enemy within range allows Bounty Hunter to blink to its location, putting it on cooldown and preserving the critical strike for the next attack or 1 second, whichever comes first."
+"DOTA_Tooltip_ability_imba_bounty_hunter_jinada_Description"					"Bounty Hunter plans his next attack, passively adding a critical strike and maim to it.\n<font color='#FF7800'>Shadow Jaunt:</font> Activating Jinada on a Tracked enemy within range allows Bounty Hunter to blink to its location, putting it on cooldown and preserving the critical strike for the next attack or 1 second, whichever comes first.\n<font color='#FF7800'>Critical Strike:</font> Jinada deals critical damage instead of flat bonus damage."
 "DOTA_Tooltip_ability_imba_bounty_hunter_jinada_Note0"							"Activating Jinada requires mana, but the passive does not."
 "DOTA_Tooltip_ability_imba_bounty_hunter_jinada_Lore"							"Whispering an enchantment he learned from Soruq to his faithful blades, Gondar targets vital tendons and joints to disable his opponents."
 "DOTA_Tooltip_ability_imba_bounty_hunter_jinada_crit_damage"					"%CRITICAL DAMAGE:"
@@ -29,6 +29,8 @@
 "DOTA_Tooltip_ability_imba_bounty_hunter_jinada_ms_slow_pct"					"%MOVE SPEED SLOW:"
 "DOTA_Tooltip_ability_imba_bounty_hunter_jinada_as_slow"						"ATTACK SPEED SLOW:"
 "DOTA_Tooltip_ability_imba_bounty_hunter_jinada_cast_range"						"SHADOW JAUNT CAST RANGE:"
+"DOTA_Tooltip_ability_imba_bounty_hunter_jinada_bonus_gold"						"GOLD STOLEN:"
+"DOTA_Tooltip_ability_imba_bounty_hunter_jinada_bonus_damage"					"BONUS DAMAGE:"
 
 "Dota_Tooltip_modifier_imba_jinada_debuff_slow"									"Jinada"
 "Dota_Tooltip_modifier_imba_jinada_debuff_slow_Description"						"Movement and attack speed slowed."

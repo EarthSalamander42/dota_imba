@@ -1,0 +1,73 @@
+// Omniknight's Purification
+"DOTA_Tooltip_ability_imba_omniknight_purification"                    "Purification"
+"DOTA_Tooltip_ability_imba_omniknight_purification_Description"                     "Instantly heals a friendly unit and damaging all nearby enemy units.\n<font color='#FF7800'>Purifiception:</font> Blesses the target with a buff that amplifies all heals and health regeneration it receives by %purifiception_heal_amp_pct%% for each stack of the buff. Can stack with itself up to a maximum. Whenever the target recovers %purifiception_stack_threshold% or more of its health from any source, it gains a stack. However, only successive casts of Purification can refresh the duration."
+"DOTA_Tooltip_ability_imba_omniknight_purification_Note0"              "Can be cast on spell immune allies."
+"DOTA_Tooltip_ability_imba_omniknight_purification_Note1"              "Stacks of Purifiception can only be gained through actual healing done."
+"DOTA_Tooltip_ability_imba_omniknight_purification_Lore"                "Priests of the Omniscience are adept at removing impurities from fellow warriors."
+"DOTA_Tooltip_ability_imba_omniknight_purification_heal_amount"                     "HEAL/DAMAGE:"
+"DOTA_Tooltip_ability_imba_omniknight_purification_radius"              "RADIUS:"
+"DOTA_Tooltip_ability_imba_omniknight_purification_purifiception_duration"          "PURIFICEPTION DURATION:"
+"DOTA_Tooltip_ability_imba_omniknight_purification_purifiception_max_stacks"        "MAX PURIFICEPTION STACKS:"
+
+"DOTA_Tooltip_modifier_imba_purification_buff"                          "Purifiception"
+"DOTA_Tooltip_modifier_imba_purification_buff_Description"              "Gains increased health from all sources. Further heals can increase stacks."
+
+"DOTA_Tooltip_modifier_imba_purification_omniguard_ready"              "Omniguard Ready"
+"DOTA_Tooltip_modifier_imba_purification_omniguard_ready_Description"               "Triggers Purification automatically when reaching critical health."
+
+"DOTA_Tooltip_modifier_imba_purification_omniguard_recharging"          "Omniguard Recharging"
+"DOTA_Tooltip_modifier_imba_purification_omniguard_recharging_Description"          "Omniguard is recharging."
+
+// Omniknight's Repel
+"DOTA_Tooltip_ability_imba_omniknight_repel"                            "Repel"
+"DOTA_Tooltip_ability_imba_omniknight_repel_Description"                "Creates a divine barrier around a target unit which grants it Spell Immunity and 100% resistance to Magic Damage.\n<font color='#FF7800'>Degen Aura:</font> Greatly degenerates the movement and attack capabilities of enemy units that stray too near. Lingers briefly after going out of range or aura ends.\n<font color='#FF7800'>Chosen of the Omniscience:</font> Units blessed with Repel temporarily get a Degen Aura of their own for the duration. Auras does not stack with itself.\n<font color='#FF7800'>Be fearless:</font> Purification can be cast on Repelled targets."
+"DOTA_Tooltip_ability_imba_omniknight_repel_Note0"                      "Degen Aura has been combined with Repel and those two skills now act as one."
+"DOTA_Tooltip_ability_imba_omniknight_repel_Lore"                      "When faced with the pit of sacrifice, Purist's resilience to magic was tested and affirmed."
+"DOTA_Tooltip_ability_imba_omniknight_repel_duration"                  "DURATION:"
+"DOTA_Tooltip_ability_imba_omniknight_repel_aura_radius"                "DEGEN AURA RADIUS:"
+"DOTA_Tooltip_ability_imba_omniknight_repel_ms_slow_pct"                "%MOVE SPEED SLOW:"
+"DOTA_Tooltip_ability_imba_omniknight_repel_as_slow"                    "ATTACK SPEED SLOW:"
+"DOTA_Tooltip_ability_imba_omniknight_repel_linger_duration"            "DEGEN AURA LINGER DURATION:"
+
+"DOTA_Tooltip_modifier_imba_repel"                          "Repel"
+"DOTA_Tooltip_modifier_imba_repel_Description"                          "Grants Spell Immunity and 100% Magic Resistance."
+
+"DOTA_Tooltip_modifier_imba_degen_debuff"                              "Degen Aura Slow"
+"DOTA_Tooltip_modifier_imba_degen_debuff_Description"                  "Slowed. Attack and move speed decreased."
+
+// Omniknight's Hammer of Virtue
+"DOTA_Tooltip_ability_imba_omniknight_hammer_of_virtue"                "Hammer of Virtue"
+"DOTA_Tooltip_ability_imba_omniknight_hammer_of_virtue_Description"                 "Imbues the hammer with holy power, converting your next attack to pure damage. The pure energy bounces off the enemy and scatters, healing yourself and all nearby allied heroes for a percentage of the attack damage. Goes into a cooldown after landing a successful attack."
+"DOTA_Tooltip_ability_imba_omniknight_hammer_of_virtue_Note0"          "While afflicted with Break, this skill does not proc and won't go into cooldown."
+"DOTA_Tooltip_ability_imba_omniknight_hammer_of_virtue_Lore"            "The holy hammer of a true Omniknight provides the connection from a pure entity to the All Seeing One."
+"DOTA_Tooltip_ability_imba_omniknight_hammer_of_virtue_radius"          "HEAL RADIUS:"
+"DOTA_Tooltip_ability_imba_omniknight_hammer_of_virtue_damage_as_heal_pct"          "%DAMAGE CONVERTED TO HEAL:"
+
+// Omniknight's Guardian Angel
+"DOTA_Tooltip_ability_imba_omniknight_guardian_angel"                  "Guardian Angel"
+"DOTA_Tooltip_ability_imba_omniknight_guardian_angel_Description"                   "Grants nearby allies complete immunity from physical damage.\n<font color='#FF7800'>Wings of Omniscience:</font> When Guardian Angel ends, a holy shield wraps the affected allies, protecting them from all damage. The shield health is equal to a percentage of the target's maximum health.\n<font color='#FF7800'>Guardian of us all:</font> Also affects buildings.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
+"DOTA_Tooltip_ability_imba_omniknight_guardian_angel_Note0"            "Can be purged."
+"DOTA_Tooltip_ability_imba_omniknight_guardian_angel_Note1"            "Wings of Omniscience trigger whenever Guardian Angel ends, even if it was purged."
+"DOTA_Tooltip_ability_imba_omniknight_guardian_angel_Lore"              "The All Seeing One casts down his protection over those that Purist calls friend."
+"DOTA_Tooltip_ability_imba_omniknight_guardian_angel_duration"          "DURATION:"
+"DOTA_Tooltip_ability_imba_omniknight_guardian_angel_scepter_duration"              "SCEPTER DURATION:"
+"DOTA_Tooltip_ability_imba_omniknight_guardian_angel_shield_duration"               "SHIELD DURATION:"
+"DOTA_Tooltip_ability_imba_omniknight_guardian_angel_max_hp_shield_health_pct"      "%MAX HP AS SHIELD HEALTH:"
+"DOTA_Tooltip_ability_imba_omniknight_guardian_angel_radius"            "EFFECT RADIUS:"
+"DOTA_Tooltip_ability_imba_omniknight_guardian_angel_aghanim_description"           "Increases duration, and causes Guardian Angel to affect allies globally."
+
+"DOTA_Tooltip_modifier_imba_guardian_angel"                            "Guardian Angel"
+"DOTA_Tooltip_modifier_imba_guardian_angel_Description"                "Immune to physical damage."
+
+"DOTA_Tooltip_modifier_imba_guardian_angel_shield"                      "Wings of the Omniscience"
+"DOTA_Tooltip_modifier_imba_guardian_angel_shield_Description"          "A holy shield that protects you from all damage until it breaks or the duration ends."
+
+// Omniknight's Custom Talents
+"DOTA_Tooltip_ability_special_bonus_imba_omniknight_1"                  "+75% Hammer of Virtue damage to heal"
+"DOTA_Tooltip_ability_special_bonus_imba_omniknight_2"                  "Purification autocasts when in below 20% health"
+"DOTA_Tooltip_ability_special_bonus_imba_omniknight_3"                  "+10/10% Degen Aura attackspeed/movespeed"
+"DOTA_Tooltip_ability_special_bonus_imba_omniknight_4"                  "Purification automatically applies on a second target"
+"DOTA_Tooltip_ability_special_bonus_imba_omniknight_5"                  "+15% Guardian Angel shield health"
+"DOTA_Tooltip_ability_special_bonus_imba_omniknight_6"                  "Repel affects all nearby allies in 600 AoE"
+"DOTA_Tooltip_ability_special_bonus_imba_omniknight_7"                  "-40s Guardian Angel cooldown"
+"DOTA_Tooltip_ability_special_bonus_imba_omniknight_8"                  "+230 Purification heal/damage increase"

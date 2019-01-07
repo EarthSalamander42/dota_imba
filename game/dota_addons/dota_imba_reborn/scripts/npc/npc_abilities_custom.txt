@@ -2028,12 +2028,18 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_3"
+		"AbilityCastGestureSlot"		"DEFAULT"
 		"AbilityTextureName"			"centaur_return"
-		"ScriptFile"				"components/abilities/heroes/hero_centaur.lua"
+		"ScriptFile"					"components/abilities/heroes/hero_centaur.lua"
 		"MaxLevel"						"4"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"55.0 50.0 45.0 40.0"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -2070,6 +2076,21 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"aura_radius"			"900"				
+			}
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"20.0"				
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_stacks"			"13"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"6 9 12 15" // %
 			}
 		}
 	}
@@ -23765,7 +23786,7 @@
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------		
 		"AbilityCastPoint"				"0.1"
-		"AbilityCooldown"				"12 10 8 6"
+		"AbilityCooldown"				"12 9 6 3"
 		"AbilityManaCost"				"65"
 
 		// Special
@@ -23797,6 +23818,16 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"cast_range"			"600 700 800 900"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"80 110 140 170"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_gold"			"15 25 35 45"
 			}
 		}
 	}

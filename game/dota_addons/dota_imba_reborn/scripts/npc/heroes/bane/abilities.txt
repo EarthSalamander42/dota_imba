@@ -22,8 +22,8 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"1000"
 		"AbilityCastPoint"				"0.5"
-		"AbilityCooldown"				"4"
-		"AbilityManaCost"				"95"
+		"AbilityCooldown"				"12.0 10.0 8.0 6.0"
+		"AbilityManaCost"				"70 90 110 130"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -50,7 +50,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_reduction"			"-30 -60 -90 -120"
+				"as_reduction"				"-40 -60 -80 -100"
 			}
 			"04"
 			{
@@ -66,6 +66,11 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"stack_vision_efficiency"	"33"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_status_resistance"	"-36 -44 -52 -60"
 			}
 		}
 	}
