@@ -192,6 +192,25 @@ function GameMode:OnGameRulesStateChange(keys)
 
 			-- Setup topbar player colors
 			CustomGameEventManager:Send_ServerToAllClients("override_top_bar_colors", {})
+
+			if IMBA_PICK_SCREEN == false then
+				local line_duration = 5
+	
+				-- First line
+				Notifications:BottomToAll( {text = "#imba_introduction_line_01", duration = line_duration, style = {color = "DodgerBlue"} } )
+				Notifications:BottomToAll( {text = "#imba_introduction_line_02", duration = line_duration, style = {color = "Orange"}, continue = true})
+				Notifications:BottomToAll( {text = "("..IMBA_VERSION..")", duration = line_duration, style = {color = "Orange"}, continue = true})
+
+				-- Second line
+				Timers:CreateTimer(line_duration, function()
+					Notifications:BottomToAll( {text = "#imba_introduction_line_03", duration = line_duration, style = {color = "DodgerBlue"} }	)
+
+					-- Third line
+					Timers:CreateTimer(line_duration, function()
+						Notifications:BottomToAll( {text = "#imba_introduction_line_04", duration = line_duration, style = {["font-size"] = "30px", color = "Orange"} }	)
+					end)
+				end)
+			end
 		end)
 	elseif newState == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
 		--		api.imba.event(api.events.started_game)
@@ -657,13 +676,15 @@ function GameMode:OnPlayerChat(keys)
 							HeroSelection:GiveStartingHero(caster:GetPlayerID(), "npc_dota_hero_" .. text, true)
 						end)
 					else
-						local old_hero = PlayerResource:GetSelectedHeroEntity(playerId)
-						PlayerResource:ReplaceHeroWith(caster:GetPlayerID(), "npc_dota_hero_" .. text, 0, 0)
+						local old_hero = PlayerResource:GetSelectedHeroEntity(caster:GetPlayerID())
+						PrecacheUnitByNameAsync("npc_dota_hero_" .. text, function()
+							PlayerResource:ReplaceHeroWith(caster:GetPlayerID(), "npc_dota_hero_" .. text, 0, 0)
 
-						Timers:CreateTimer(1.0, function()
-							if old_hero then
-								UTIL_Remove(old_hero)
-							end
+							Timers:CreateTimer(1.0, function()
+								if old_hero then
+									UTIL_Remove(old_hero)
+								end
+							end)
 						end)
 					end
 				end

@@ -4404,19 +4404,17 @@ modifier_tower_healing_think = modifier_tower_healing_think or class({})
 function modifier_tower_healing_think:OnCreated()
 	if IsServer() then
 		-- Ability properties
-		self.caster = self:GetCaster()
-		self.ability = self:GetAbility()
-		if not self.ability then
+		if not self:GetAbility() then
 			self:Destroy()
 			return nil
 		end
 		self.particle_heal = "particles/hero/tower/tower_healing_wave.vpcf"
 
 		-- Ability specials
-		self.search_radius = self.ability:GetSpecialValueFor("search_radius")
-		self.bounce_delay = self.ability:GetSpecialValueFor("bounce_delay")
-		self.hp_threshold = self.ability:GetSpecialValueFor("hp_threshold")
-		self.bounce_radius = self.ability:GetSpecialValueFor("bounce_radius")
+		self.search_radius = self:GetAbility():GetSpecialValueFor("search_radius")
+		self.bounce_delay = self:GetAbility():GetSpecialValueFor("bounce_delay")
+		self.hp_threshold = self:GetAbility():GetSpecialValueFor("hp_threshold")
+		self.bounce_radius = self:GetAbility():GetSpecialValueFor("bounce_radius")
 
 		self:StartIntervalThink(0.2)
 	end
@@ -4430,7 +4428,7 @@ function modifier_tower_healing_think:OnIntervalThink()
 	if IsServer() then
 
 		-- If ability is on cooldown, do nothing
-		if not self.ability:IsCooldownReady() then
+		if not self:GetAbility():IsCooldownReady() then
 			return nil
 		end
 
@@ -4439,8 +4437,8 @@ function modifier_tower_healing_think:OnIntervalThink()
 		local current_healed_hero
 
 		-- Clear heroes healed marker
-		local heroes = FindUnitsInRadius(self.caster:GetTeamNumber(),
-			self.caster:GetAbsOrigin(),
+		local heroes = FindUnitsInRadius(self:GetParent():GetTeamNumber(),
+			self:GetParent():GetAbsOrigin(),
 			nil,
 			25000, --global
 			DOTA_UNIT_TARGET_TEAM_FRIENDLY,
@@ -4454,8 +4452,8 @@ function modifier_tower_healing_think:OnIntervalThink()
 		end
 
 		-- Look for heroes that need healing
-		heroes = FindUnitsInRadius(self.caster:GetTeamNumber(),
-			self.caster:GetAbsOrigin(),
+		heroes = FindUnitsInRadius(self:GetParent():GetTeamNumber(),
+			self:GetParent():GetAbsOrigin(),
 			nil,
 			self.search_radius,
 			DOTA_UNIT_TARGET_TEAM_FRIENDLY,
@@ -4469,8 +4467,8 @@ function modifier_tower_healing_think:OnIntervalThink()
 			local hero_hp_percent = hero:GetHealthPercent()
 			if hero_hp_percent <= self.hp_threshold then
 				current_healed_hero = hero
-				HealingWaveBounce(self.caster, self.caster, self.ability, hero)
-				self.ability:StartCooldown(self.ability:GetCooldown(-1))
+				HealingWaveBounce(self:GetParent(), self:GetParent(), self:GetAbility(), hero)
+				self:GetAbility():StartCooldown(self:GetAbility():GetCooldown(-1))
 				break
 			end
 		end
@@ -4484,7 +4482,7 @@ function modifier_tower_healing_think:OnIntervalThink()
 		Timers:CreateTimer(self.bounce_delay, function()
 			-- If those are null then the tower most likely died during self.bounce_delay... 
 			if self == nil then return nil end
-			if self.caster:IsNull() or self.bounce_radius:IsNull() or self.ability:IsNull() then 
+			if not self:GetParent() or not self.bounce_radius or not self:GetAbility() then 
 				return nil
 			end
 			-- Still don't know if other heroes need healing, assumes doesn't unless found
@@ -4492,7 +4490,7 @@ function modifier_tower_healing_think:OnIntervalThink()
 
 			-- Look for other heroes nearby, regardless of if they need healing
 			heroes = FindUnitsInRadius(
-				self.caster:GetTeamNumber(),
+				self:GetParent():GetTeamNumber(),
 				current_healed_hero:GetAbsOrigin(),
 				nil,
 				self.bounce_radius,
@@ -4507,7 +4505,7 @@ function modifier_tower_healing_think:OnIntervalThink()
 			for _, hero in pairs(heroes) do
 				if not hero.healed_by_healing_wave and current_healed_hero ~= hero then
 					heroes_need_healing = true
-					HealingWaveBounce(self.caster, current_healed_hero, self.ability, hero)
+					HealingWaveBounce(self:GetParent(), current_healed_hero, self:GetAbility(), hero)
 					current_healed_hero = hero
 					break
 				end

@@ -54,11 +54,8 @@ POST_GAME_TIME = 600.0					-- How long should we let people look at the scoreboa
 CAMERA_DISTANCE_OVERRIDE = -1
 GOLD_PER_TICK = 1
 
-USE_AUTOMATIC_PLAYERS_PER_TEAM = false	-- Should we set the number of players to 10 / MAX_NUMBER_OF_TEAMS?
-UNIVERSAL_SHOP_MODE = false				-- Should the main shop contain Secret Shop items as well as regular items
-if IsInToolsMode() then
-	UNIVERSAL_SHOP_MODE = true
-end
+USE_AUTOMATIC_PLAYERS_PER_TEAM = false		-- Should we set the number of players to 10 / MAX_NUMBER_OF_TEAMS?
+UNIVERSAL_SHOP_MODE = IsInToolsMode()	-- Should the main shop contain Secret Shop items as well as regular items
 USE_STANDARD_HERO_GOLD_BOUNTY = false
 
 MINIMAP_ICON_SIZE = 1						-- What icon size should we use for our heroes?

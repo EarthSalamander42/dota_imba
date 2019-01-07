@@ -166,7 +166,7 @@
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"13"
+		"AbilityCooldown"				"13.0"
 		"AbilitySharedCooldown"			"magicwand"
 
 		// Item Info
@@ -415,7 +415,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"1550"
+		"ItemCost"						"1500"
 		"ItemShopTags"					""
 		"ItemAliases"					"midas; hand of midas; hom"
 
@@ -454,7 +454,7 @@
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"0"
-		"ItemCost"						"2050"
+		"ItemCost"						"2000"
 		"ItemShopTags"					"attack_speed;hard_to_tag"
 		"ItemQuality"					"common"
 		"ItemAliases"					"midas; hand of midas; hom"
@@ -529,8 +529,8 @@
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"900"
-		"AbilityCooldown"				"55.0"
+		"AbilityCastRange"				"1800"
+		"AbilityCooldown"				"45.0"
 		"AbilityManaCost"				"0"
 
 		// Item Info
@@ -560,7 +560,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"replenish_radius"		"900"
+				"replenish_radius"		"1800"
 			}
 			"04"
 			{
@@ -618,7 +618,7 @@
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"900"
+		"AbilityCastRange"				"1800"
 		"AbilityCooldown"				"65"
 		"AbilityManaCost"				"225"
 		"AbilitySharedCooldown"			"mekansm"
@@ -649,7 +649,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_radius"			"900"
+				"aura_radius"			"1800"
 			}
 			"04"
 			{
@@ -728,7 +728,7 @@
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"900"
+		"AbilityCastRange"				"1800"
 		"AbilityCooldown"				"40"
 		"AbilityManaCost"				"0"
 		"AbilitySharedCooldown"			"mekansm"
@@ -789,7 +789,7 @@
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_radius"			"900"
+				"aura_radius"			"1800"
 			}
 			"10"
 			{
@@ -1118,7 +1118,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"hex_duration"			"3.5"
+				"hex_duration"			"4.0"
 			}
 			"06"
 			{
@@ -3067,7 +3067,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"noncombat_regen"		"6.0"
+				"noncombat_regen"		"7.0"
 			}
 			"07"
 			{
@@ -3161,7 +3161,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_as_reduction"		"30"
+				"aura_as_reduction"		"40"
 			}
 			"05"
 			{
@@ -3253,7 +3253,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"200"
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"240"
+		"AbilityCooldown"				"240.0"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -3526,7 +3526,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_block"			"10"
+				"damage_block"			"20"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 		}
@@ -3591,7 +3591,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_block"			"25"
+				"damage_block"			"30"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 		}
@@ -5617,7 +5617,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"armor_reduction"		"2"
+				"armor_reduction"		"3"
 			}
 			"02"
 			{

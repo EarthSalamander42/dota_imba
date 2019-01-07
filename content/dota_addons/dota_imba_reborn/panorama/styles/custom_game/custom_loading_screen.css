@@ -191,9 +191,9 @@
 }
 
 #ImbaLoadingSocialOfficialWebsite { background-color: gradient(linear, 0% 0%, 0% 100%, from(#333), to(#111)); }
+#ImbaLoadingSocialSteamChat { background-color: gradient(linear, 0% 0%, 0% 100%, from(#336), to(#111)); }
 #ImbaLoadingSocialFacebook { background-color: gradient(linear, 0% 0%, 0% 100%, from(#22e), to(#111)); }
 #ImbaLoadingSocialTwitter { background-color: gradient(linear, 0% 0%, 0% 100%, from(#0D91E2), to(#111)); }
 #ImbaLoadingSocialTwitter Label { color: #fff; }
 #ImbaLoadingSocialDiscordEn { background-color: gradient(linear, 0% 0%, 0% 100%, from(#7289DA), to(#111)); }
 #ImbaLoadingSocialDiscordRu { background-color: gradient(linear, 0% 0%, 0% 100%, from(#7289DA), to(#111)); }
-#ImbaLoadingSocialTencent { background-color: gradient(linear, 0% 0%, 0% 100%, from(#f00), to(#111)); }

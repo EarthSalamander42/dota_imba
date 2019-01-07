@@ -657,6 +657,7 @@ function imba_centaur_return:OnSpellStart()
 	if IsServer() then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_return_bonus_damage", {duration=self:GetSpecialValueFor("duration")}):SetStackCount(self:GetCaster():FindModifierByName("modifier_imba_return_passive"):GetStackCount())
 		self:GetCaster():FindModifierByName("modifier_imba_return_passive"):SetStackCount(0)
+		self:GetCaster():EmitSound("Hero_Centaur.Retaliate.Cast")
 	end
 end
 

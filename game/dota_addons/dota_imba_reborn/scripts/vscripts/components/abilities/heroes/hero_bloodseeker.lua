@@ -461,6 +461,11 @@ function modifier_imba_thirst_passive:OnCreated()
 	self.movespeed = self:GetAbility():GetSpecialValueFor("bonus_movement_speed") / (self.minhp - self.maxhp)
 	self.damage = self:GetAbility():GetSpecialValueFor("bonus_damage") / (self.minhp - self.maxhp)
 	self.deathstick = self:GetAbility():GetSpecialValueFor("stick_time")
+
+	if not self:GetCaster():HasModifier("modifier_bloodseeker_thirst") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_bloodseeker_thirst", {})
+	end
+
 	self:StartIntervalThink(0.1)
 end
 

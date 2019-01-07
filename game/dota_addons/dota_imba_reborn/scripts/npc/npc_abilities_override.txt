@@ -15308,7 +15308,7 @@
 	"item_bottle"
 	{
 
-		"ItemCost"						"600"
+		"ItemCost"						"500"
 		"ItemInitialCharges"			"4"
 		
 		"AbilitySpecial"

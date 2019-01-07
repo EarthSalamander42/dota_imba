@@ -15,6 +15,7 @@ function CDOTA_BaseNPC:CreateIllusion(duration, inc, out, pos, mod, ab)
 	illusion:SetBaseMaxHealth(self:GetMaxHealth())
 	illusion:SetMaxHealth(self:GetMaxHealth())
 	illusion:SetHealth(self:GetHealth())
+	illusion:SetMana(self:GetMana())
 
 --	illusion:SetAverageBaseDamage(self:GetAverageBaseDamage(), 15)
 --	illusion:SetPhysicalArmorBaseValue(self:GetPhysicalArmorValue())
@@ -38,8 +39,6 @@ function CDOTA_BaseNPC:CreateIllusion(duration, inc, out, pos, mod, ab)
 	if self:IsRangedAttacker() then
 		illusion:SetRangedProjectileName(self:GetRangedProjectileName())
 	end
-
---	illusion:SetMana(self:GetMana())
 
 	-- billion thanks for that to yahnich
 	for _, wearable in ipairs(self:GetChildren()) do

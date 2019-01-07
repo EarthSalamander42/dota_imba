@@ -1,5 +1,5 @@
-"imba_introduction_line_01"															"Welcome to "
-"imba_introduction_line_02"															"Dota IMBA v6.88!"
+"imba_introduction_line_01"															" Welcome to "
+"imba_introduction_line_02"															" Dota IMBA! "
 "imba_introduction_line_03"															"Click the information panel on the top left if you are playing for the first time."
 "imba_introduction_line_04"															"HAVE FUN!"
 
@@ -21,7 +21,7 @@
 
 "imba_tutorial_items_title"															"ITEMS"
 "imba_tutorial_items_01"															"Most items will have increased power, but some will also have extra passive or active abilities. Those will also be written <font color='#FF7800'>in this color.</font>"
-"imba_tutorial_items_02"															"\nThere are also plenty of IMBA-exclusive items, and upgrades to existing items. You can peruse the shop and discover some of those, like the Boomstick or the Triumvirate, on your own!"
+"imba_tutorial_items_02"															"\nThere are also plenty of IMBA-exclusive items, and upgrades to existing items. You can peruse the shop and discover some of those, like the Boomstick, on your own!"
 
 "imba_tutorial_creeps_title"														"CREEPS AND BUILDINGS"
 "imba_tutorial_creeps_01"															"Creeps and buildings will grow more powerful as time passes. Do not be discouraged, however, as the reward for slaying them will also become greater!"

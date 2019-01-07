@@ -13,17 +13,16 @@ function GameMode:GoldFilter(keys)
 --		end
 --	end
 
-	-- Gold from abandoning players does not get multiplied
-	if keys.reason_const == DOTA_ModifyGold_AbandonedRedistribute or keys.reason_const == DOTA_ModifyGold_GameTick then
-		return true
-	end
-
 	-- Ignore negative gold values
 	if keys.gold <= 0 then
 		return false
 	end
 
-	-- Hero kills should be multiplied by map bonus now so this block is commented out
+	-- Gold from abandoning players does not get multiplied
+	if keys.reason_const == DOTA_ModifyGold_AbandonedRedistribute or keys.reason_const == DOTA_ModifyGold_GameTick then
+		return true
+	end
+
 	-- if keys.reason_const == DOTA_ModifyGold_HeroKill then
 		-- return not IMBA_GOLD_SYSTEM
 	-- end

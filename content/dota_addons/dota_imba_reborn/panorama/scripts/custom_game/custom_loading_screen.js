@@ -21,9 +21,15 @@ function info_already_available() {
 }
 
 function fetch() {
-	view.title.text = "Dota IMBA 7.08f - The Grand Magus";
-	view.text.text = "Dota IMBA 7.09 will be released as soon as possible, including Dota 2 7.20 changes, be patient! We're currently migrating the server, Imba XP will be down for few days. Experience Boosters will be multiplied by 2 for a limited time once the server is working again! (Non donators will get 200% xp boost instead of 100%, Ember donators will get 600% instead of 300%, etc...)";
-	view.link_text.text = "Dota 2 IMBA website is currently unavailable.";
+	var game_options = CustomNetTables.GetTableValue("game_options", "game_version");
+	if (game_options == undefined) {
+		$.Schedule(1.0, fetch);
+		return;
+	}
+
+	view.title.text = "Dota IMBA " + game_options.value + " - " + $.Localize("#game_version_name");
+	view.text.text = $.Localize("#loading_screen_description");
+	view.link_text.text = $.Localize("#loading_screen_button");
 
 	// if data is not available yet, reschedule
 	if (!info_already_available()) {

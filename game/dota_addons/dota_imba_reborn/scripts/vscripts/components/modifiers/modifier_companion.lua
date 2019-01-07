@@ -38,6 +38,10 @@ function modifier_companion:OnCreated()
 			self:GetParent().base_model = self:GetParent():GetModelName()
 		end
 
+		if not self:GetParent():HasModifier("modifier_bloodseeker_thirst") then
+			self:GetParent():AddNewModifier(self:GetParent(), nil, "modifier_bloodseeker_thirst", {})
+		end
+
 		self:SetStackCount(0)
 	end
 end
