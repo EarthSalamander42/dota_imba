@@ -222,7 +222,7 @@ function imba_pudge_meat_hook:GetCastRange()
 	end
 
 	if IsClient() then
-		print(charges, hook_range)
+		--print(charges, hook_range)
 	end
 
 	return hook_range
@@ -346,7 +346,7 @@ function imba_pudge_meat_hook:OnSpellStart()
 
 	if self:GetCaster() and self:GetCaster():IsHero() then
 		local hHook = self:GetCaster().hook_wearable
-		if hHook ~= nil then
+		if hHook ~= nil and not hHook:IsNull() then
 			hHook:AddEffects( EF_NODRAW )
 		end
 	end
@@ -563,7 +563,7 @@ function imba_pudge_meat_hook:OnProjectileHit_ExtraData(hTarget, vLocation, Extr
 
 		if self:GetCaster() and self:GetCaster():IsHero() then
 			local hHook = self:GetCaster().hook_wearable
-			if hHook ~= nil then
+			if hHook ~= nil and not hHook:IsNull() then
 				hHook:RemoveEffects( EF_NODRAW )
 			end
 
@@ -995,6 +995,11 @@ function modifier_imba_pudge_flesh_heap_handler:OnCreated()
 		else
 			self:SetStackCount(self:GetCaster().battlepass_arcana + 1)
 		end
+		
+		-- Let's not give random unfair advantages now, shall we?
+		Timers:CreateTimer(FrameTime(), function()           
+			self:SetStackCount(0)
+		end)    
 	end
 
 	if IsClient() then
@@ -1033,7 +1038,8 @@ end
 
 function modifier_imba_flesh_heap_stacks:DeclareFunctions()
 	local funcs = {
-		MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS,
+		--MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS,
+		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
 		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
 		MODIFIER_PROPERTY_MODEL_SCALE,
 	}
@@ -1041,14 +1047,24 @@ function modifier_imba_flesh_heap_stacks:DeclareFunctions()
 	return funcs
 end
 
-function modifier_imba_flesh_heap_stacks:GetModifierMagicalResistanceBonus()
+-- function modifier_imba_flesh_heap_stacks:GetModifierMagicalResistanceBonus()
+	-- if self:GetCaster():PassivesDisabled() then return end
+	-- local base = self:GetAbility():GetSpecialValueFor("base_magic_resist")
+	-- local stack_magic_resist = self:GetAbility():GetSpecialValueFor("stack_magic_resist")
+	-- local stacks = self:GetStackCount()
+	-- local max_stack = self:GetAbility():GetSpecialValueFor("max_stacks") + self:GetCaster():FindTalentValue("special_bonus_imba_pudge_4")
+	-- if stacks > max_stack then stacks = max_stack end
+	-- return base + stack_magic_resist * stacks
+-- end
+
+function modifier_imba_flesh_heap_stacks:GetModifierConstantHealthRegen()
 	if self:GetCaster():PassivesDisabled() then return end
-	local base = self:GetAbility():GetSpecialValueFor("base_magic_resist")
-	local stack_magic_resist = self:GetAbility():GetSpecialValueFor("stack_magic_resist")
+	local base = self:GetAbility():GetSpecialValueFor("base_health_regen")
+	local stack_health_regen = self:GetAbility():GetSpecialValueFor("stack_health_regen")
 	local stacks = self:GetStackCount()
 	local max_stack = self:GetAbility():GetSpecialValueFor("max_stacks") + self:GetCaster():FindTalentValue("special_bonus_imba_pudge_4")
 	if stacks > max_stack then stacks = max_stack end
-	return base + stack_magic_resist * stacks
+	return base + stack_health_regen * stacks
 end
 
 function modifier_imba_flesh_heap_stacks:GetModifierBonusStats_Strength()

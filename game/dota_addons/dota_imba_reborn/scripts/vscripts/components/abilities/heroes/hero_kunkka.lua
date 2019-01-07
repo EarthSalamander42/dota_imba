@@ -286,7 +286,7 @@ function imba_kunkka_torrent:OnSpellStart()
 
 		-- Parameters
 		local vision_duration = 4
-		local first_delay = 1.6
+		local first_delay = self:GetSpecialValueFor("launch_delay")
 
 		local radius = self:GetTalentSpecialValueFor("radius")
 		local slow_duration = self:GetSpecialValueFor("slow_duration")
@@ -308,7 +308,7 @@ function imba_kunkka_torrent:OnSpellStart()
 			radius = radius + self:GetSpecialValueFor("tide_high_radius")
 		end
 		if caster:HasModifier("modifier_imba_ebb_and_flow_tide_wave") or tsunami then
-			first_delay = 0
+			first_delay = first_delay / 2
 		end
 		local extra_slow = false
 		if caster:HasModifier("modifier_imba_ebb_and_flow_tide_red") or tsunami then
@@ -985,7 +985,10 @@ function modifier_imba_tidebringer:OnAttackLanded( params )
 			if target ~= nil and target:GetTeamNumber() ~= self:GetParent():GetTeamNumber() then
 
 				self:TidebringerEffects( target, ability )
-				local cleaveDamage = params.damage
+                
+                -- Calculate bonus damage to be used for cleave
+                local cleaveDamage = params.damage * (ability:GetSpecialValueFor("cleave_damage") / 100)
+                
 				local enemies_to_cleave = FindUnitsInCone(self:GetParent():GetTeamNumber(),CalculateDirection(params.target, self:GetParent()),self:GetParent():GetAbsOrigin(), radius_start, radius_end, range, nil, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 0, FIND_ANY_ORDER, false)
 
 				-- #7 Talent: Tidebringer will always hit enemies with Torrent debuff
@@ -1010,7 +1013,7 @@ function modifier_imba_tidebringer:OnAttackLanded( params )
 								ParticleManager:SetParticleControlEnt(tidebringer_hit_fx, 2, enemy, PATTACH_POINT_FOLLOW, "attach_hitloc", enemy:GetAbsOrigin(), true)
 
 								-- Deal the cleave damage
-								ApplyDamage({attacker = self:GetParent(), victim = enemy, ability = ability, damage = params.damage, damage_type = DAMAGE_TYPE_PURE})
+								ApplyDamage({attacker = self:GetParent(), victim = enemy, ability = ability, damage = cleaveDamage, damage_type = DAMAGE_TYPE_PHYSICAL})
 							end
 						end
 					end
@@ -1032,10 +1035,10 @@ function modifier_imba_tidebringer:OnAttackLanded( params )
 							end
 						end
 					else
-						DoCleaveAttack( params.attacker, params.target, ability, params.damage, radius_start, radius_end, range, "particles/units/heroes/hero_kunkka/kunkka_spell_tidebringer.vpcf" )
+						DoCleaveAttack( params.attacker, params.target, ability, cleaveDamage, radius_start, radius_end, range, "particles/units/heroes/hero_kunkka/kunkka_spell_tidebringer.vpcf" )
 					end
 				else
-					DoCleaveAttack( params.attacker, params.target, ability, params.damage, radius_start, radius_end, range, "particles/units/heroes/hero_kunkka/kunkka_spell_tidebringer.vpcf" )
+					DoCleaveAttack( params.attacker, params.target, ability, cleaveDamage, radius_start, radius_end, range, "particles/units/heroes/hero_kunkka/kunkka_spell_tidebringer.vpcf" )
 				end
 
 				if not ((self.tide_index == 6) or (self.tide_index == 1)) then
@@ -1181,7 +1184,7 @@ end
 
 function modifier_imba_tidebringer_cleave_hit_target:OnDestroy()
 	if IsServer() then
-		ApplyDamage({attacker = self:GetCaster(), victim = self:GetParent(), ability = self:GetAbility(), damage = self.cleave_damage, damage_type = DAMAGE_TYPE_PURE})
+		ApplyDamage({attacker = self:GetCaster(), victim = self:GetParent(), ability = self:GetAbility(), damage = self.cleave_damage, damage_type = DAMAGE_TYPE_PHYSICAL})
 	end
 end
 
@@ -1641,8 +1644,8 @@ function imba_kunkka_ghostship:OnSpellStart()
 						-- Stunning and rooting all hit enemies
 						local enemies = FindUnitsInRadius(caster:GetTeam(), target, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, self:GetAbilityTargetType(), 0, 0, false)
 						for k, enemy in pairs(enemies) do
-							enemy:AddNewModifier(caster, self, "modifier_stunned", {duration = travel_time})
-							enemy:AddNewModifier(caster, self, "modifier_rooted", { duration = travel_time})
+							--enemy:AddNewModifier(caster, self, "modifier_stunned", {duration = travel_time})
+							--enemy:AddNewModifier(caster, self, "modifier_rooted", { duration = travel_time})
 
 							-- Deal crash damage to enemies hit
 							ApplyDamage({victim = enemy, attacker = caster, ability = self, damage = damage, damage_type = self:GetAbilityDamageType()})

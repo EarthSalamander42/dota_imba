@@ -18,10 +18,10 @@
 "DOTA_Tooltip_modifier_imba_ebb_and_flow_tide_high_Description"		"Increases the effect radius of all spells"
 
 "DOTA_Tooltip_modifier_imba_ebb_and_flow_tide_wave"					"Wave Break"
-"DOTA_Tooltip_modifier_imba_ebb_and_flow_tide_wave_Description"		"Torrent launches instantly; Tidebringer's cooldown isn't triggered; Ghost Ship speed is increased"
+"DOTA_Tooltip_modifier_imba_ebb_and_flow_tide_wave_Description"		"Torrent launches faster; Tidebringer's cooldown isn't triggered; Ghost Ship speed is increased"
 
 "DOTA_Tooltip_ability_imba_kunkka_torrent"							"#{DOTA_Tooltip_ability_kunkka_torrent}"
-"DOTA_Tooltip_ability_imba_kunkka_torrent_Description"				"#{DOTA_Tooltip_ability_kunkka_torrent_Description}\n<font color='#FF7800'>Salty Geyser:</font> Secondary torrents spawn every %secondary_delay% seconds after the initial Torrent. They only have %sec_torrent_radius% radius, deal %sec_torrent_damage% damage, stun for %sec_torrent_stun% seconds, and slow for %sec_torrent_slow_duration% seconds.\n\n<font color='#00ccff'>Low Tide:</font> Cast range increased by %tide_low_range%.\n<font color='#ff0000'>Red Tide:</font> Slow increased by %tide_red_slow%%%.\n<font color='#333399'>Flood Tide:</font> Damage increased by %tide_flood_damage%.\n<font color='#ff00ff'>High Tide:</font> Radius increased by %tide_high_radius%.\n<font color='#00ff00'>Wave Break:</font> Torrent is launched instantly.\n<font color='#FF7800'>TSUNAMI:</font> Launches affected enemies towards the center of the Torrent."
+"DOTA_Tooltip_ability_imba_kunkka_torrent_Description"                "#{DOTA_Tooltip_ability_kunkka_torrent_Description}\n<font color='#FF7800'>Salty Geyser:</font> Secondary torrents spawn every %secondary_delay% seconds after the initial Torrent. They only have %sec_torrent_radius% radius, deal %sec_torrent_damage% damage, stun for %sec_torrent_stun% seconds, and slow for %sec_torrent_slow_duration% seconds.\n\n<font color='#00ccff'>Low Tide:</font> Cast range increased by %tide_low_range%.\n<font color='#ff0000'>Red Tide:</font> Slow increased by %tide_red_slow%%%.\n<font color='#333399'>Flood Tide:</font> Damage increased by %tide_flood_damage%.\n<font color='#ff00ff'>High Tide:</font> Radius increased by %tide_high_radius%.\n<font color='#00ff00'>Wave Break:</font> Torrent launch delay is halved.\n<font color='#FF7800'>TSUNAMI:</font> Launches affected enemies towards the center of the Torrent."
 "DOTA_Tooltip_ability_imba_kunkka_torrent_Note0"					"Bonus effects are only triggered if Kunkka is currently affected by one of Tidebringer's buffs."
 "DOTA_Tooltip_ability_imba_kunkka_torrent_Lore"						"#{DOTA_Tooltip_ability_kunkka_torrent_Lore}"
 "DOTA_Tooltip_ability_imba_kunkka_torrent_sec_torrent_count"		"SECONDARY TORRENTS:"
@@ -32,12 +32,13 @@
 "DOTA_Tooltip_modifier_imba_torrent_slow_Description"				"#{DOTA_Tooltip_modifier_kunkka_torrent_slow_Description}"
 
 "DOTA_Tooltip_ability_imba_kunkka_tidebringer"						"#{DOTA_Tooltip_ability_kunkka_tidebringer}"
-"DOTA_Tooltip_ability_imba_kunkka_tidebringer_Description"			"Kunkka's legendary sword grants increased damage and cleaves a large area of effect in front of him for a single strike.\n<font color='#FF7800'>Tidal Resonance:</font> Reduces the cooldown of Ebb and Flow for each enemy hit.\n\n<font color='#00ccff'>Low Tide:</font> Cleave length increased by %tide_low_range%.\n<font color='#ff0000'>Red Tide:</font> Slows enemies hit by %tide_red_slow%%% for %tide_red_slow_duration% seconds.\n<font color='#333399'>Flood Tide:</font> Damage increased by %tide_flood_damage%.\n<font color='#ff00ff'>High Tide:</font> Initial and final cleave radius increased by %tide_high_radius%.\n<font color='#00ff00'>Wave Break:</font> Next hit will not trigger the cooldown.\n<font color='#FF7800'>TSUNAMI:</font> bashes enemies hit by Tidebringer for %tsunami_stun% seconds."
+"DOTA_Tooltip_ability_imba_kunkka_tidebringer_Description"            "Kunkka's legendary sword grants increased damage and cleaves a large area of effect in front of him for a single strike.\n<font color='#FF7800'>Tidal Resonance:</font> Reduces the cooldown of Ebb and Flow for each enemy hit.\n\n<font color='#00ccff'>Low Tide:</font> Cleave length increased by %tide_low_range%.\n<font color='#ff0000'>Red Tide:</font> Slows enemies hit by %tide_red_slow%%% for %tide_red_slow_duration% seconds.\n<font color='#333399'>Flood Tide:</font> Damage increased by %tide_flood_damage%.\n<font color='#ff00ff'>High Tide:</font> Initial and final cleave radius increased by %tide_high_radius%.\n<font color='#00ff00'>Wave Break:</font> Next hit will not trigger the cooldown.\n<font color='#FF7800'>TSUNAMI:</font> Bashes enemies hit by Tidebringer for %tsunami_stun% seconds."
 "DOTA_Tooltip_ability_imba_kunkka_tidebringer_Note0"				"#{DOTA_Tooltip_ability_kunkka_tidebringer_Note0}"
 "DOTA_Tooltip_ability_imba_kunkka_tidebringer_Note1"				"The cleave starts with 150 radius and grows to the end radius in the form of a trapezoid."
 "DOTA_Tooltip_ability_imba_kunkka_tidebringer_Lore"					"#{DOTA_Tooltip_ability_kunkka_tidebringer_Lore}"
 "DOTA_Tooltip_ability_imba_kunkka_tidebringer_range"				"DISTANCE:"
 "DOTA_Tooltip_ability_imba_kunkka_tidebringer_radius_end"			"END RADIUS:"
+"DOTA_Tooltip_ability_imba_kunkka_tidebringer_cleave_damage"        "%CLEAVE DAMAGE:"
 "DOTA_Tooltip_ability_imba_kunkka_tidebringer_bonus_damage"			"#{DOTA_Tooltip_ability_kunkka_tidebringer_damage_bonus}"
 "DOTA_Tooltip_ability_imba_kunkka_tidebringer_cdr_per_hit"			"COOLDOWN REDUCTION PER ENEMY:"
 
@@ -66,7 +67,7 @@
 "DOTA_Tooltip_ability_imba_kunkka_ghostship_rum_reduce_pct"			"%RUM DAMAGE REDUCTION:"
 "DOTA_Tooltip_ability_imba_kunkka_ghostship_buff_duration"			"#{DOTA_Tooltip_ability_kunkka_ghostship_buff_duration}"
 "DOTA_Tooltip_ability_imba_kunkka_ghostship_start_distance"			"SHIP SPAWN DISTANCE:"
-"DOTA_Tooltip_ability_imba_kunkka_ghostship_aghanim_description"	"Causes the ship to drop from the sky on the targeted area, landing after a 1 second delay and travelling towards Kunkka. Enemies caught directly on the landing take impact damage, while also becoming stunned and rooted. <font color='#00ccff'>Low Tide</font> now increases cast range by 300, and <font color='#00ff00'>Wave Break</font> causes the ship to crash down almost instantly."
+"DOTA_Tooltip_ability_imba_kunkka_ghostship_aghanim_description"    "Causes the ship to drop from the sky on the targeted area, landing after a 1 second delay and travelling towards Kunkka. Enemies caught directly on the landing take impact damage. <font color='#00ccff'>Low Tide</font> now increases cast range by 300, and <font color='#00ff00'>Wave Break</font> causes the ship to crash down almost instantly."
 
 "DOTA_Tooltip_modifier_imba_ghostship_rum"							"The Admiral's Rum"
 "DOTA_Tooltip_modifier_imba_ghostship_rum_Description"				"Inebriated by Kunkka's rum. Part of the damage you take will only be felt later."

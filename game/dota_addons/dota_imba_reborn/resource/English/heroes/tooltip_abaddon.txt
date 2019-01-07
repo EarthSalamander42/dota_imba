@@ -1,6 +1,6 @@
 // Abaddon's Mist Coil
 "DOTA_Tooltip_ability_imba_abaddon_mist_coil"                          "Mist Coil"
-"DOTA_Tooltip_ability_imba_abaddon_mist_coil_Description"              "Abaddon releases a coil of deathly mist that can damage an enemy unit or heal a friendly unit at the cost of some of Abaddon's health. On death, Mist Coil is cast on all allies and enemies in cast range.\n<font color='#FF7800'>Cursed Coil:</font> Applies Curse of Avernus on enemy target.\n<font color='#FF7800'>Volatile Mist:</font> Enemies receive a debuff that causes additional magic damage on each damage instance above %damage_threshold% (before reductions).\n<font color='#FF7800'>Shrouding Mist:</font> Allies receive a buff that heals the target for a portion of the damage received after the buff expires.\n<font color='#FF7800'>Shield Renewal:</font> If the affected unit has Aphotic Shield, renew the shield and extend duration by %shield_duration_extend% seconds."
+"DOTA_Tooltip_ability_imba_abaddon_mist_coil_Description"              "Abaddon releases a coil of deathly mist that can damage an enemy unit or heal a friendly unit at the cost of some of Abaddon's health. On death, Mist Coil is cast on all allies in cast range.\n<font color='#FF7800'>Cursed Coil:</font> Applies Curse of Avernus on enemy target.\n<font color='#FF7800'>Volatile Mist:</font> Enemies receive a debuff that causes additional magic damage on each damage instance above %damage_threshold% (before reductions).\n<font color='#FF7800'>Shrouding Mist:</font> Allies receive a buff that heals the target for a portion of the damage received after the buff expires.\n<font color='#FF7800'>Shield Renewal:</font> If the affected unit has Aphotic Shield, renew the shield and extend duration by %shield_duration_extend% seconds."
 "DOTA_Tooltip_ability_imba_abaddon_mist_coil_Note0"                    "Self-castable."
 "DOTA_Tooltip_ability_imba_abaddon_mist_coil_Lore"                      "A mysterious vapor from the Curse of Avernus now infuses the breath of Abaddon, who releases it at will."
 "DOTA_Tooltip_ability_imba_abaddon_mist_coil_heal"                      "TARGET DAMAGE/HEAL:"
@@ -52,7 +52,7 @@
 
 // Abaddon's Overchannel
 "DOTA_Tooltip_ability_imba_abaddon_over_channel"                        "Overchannel"
-"DOTA_Tooltip_ability_imba_abaddon_over_channel_Description"            "Abaddon channels a dangerously large amount of mist through his body, empowering Mist Coil (and increasing Mist duration) and Aphotic Shield, but causing those spells to cost health to cast. Also applies to Curse of Avernus active."
+"DOTA_Tooltip_ability_imba_abaddon_over_channel_Description"            "Abaddon channels a dangerously large amount of mist through his body, empowering Mist Coil (and increasing Mist duration) and Aphotic Shield, but causing those spells to cost health to cast. Also applies to Curse of Avernus active. Each spell cast under the effects of Overchannel also introduces a debuff that increases cooldown of all abilities and items by %reduction_multiplier%%% per stack. The debuff lasts %reduction_duration% seconds, and is refreshed and incremented with successive casts under Overchannel."
 "DOTA_Tooltip_ability_imba_abaddon_over_channel_Note0"                  "Health costs are lethal."
 "DOTA_Tooltip_ability_imba_abaddon_over_channel_Note1"                  "Level upgrades with Borrowed Time."
 "DOTA_Tooltip_ability_imba_abaddon_over_channel_extra_dmg"              "DAMAGE/HEALTH COST:"
@@ -62,6 +62,9 @@
 
 "DOTA_Tooltip_modifier_over_channel_handler"                            "Overchannel"
 "DOTA_Tooltip_modifier_over_channel_handler_Description"                "Your next spell is strengtened at the cost of your health."
+
+"DOTA_Tooltip_modifier_over_channel_reduction"							"Mist Overwhelming"
+"DOTA_Tooltip_modifier_over_channel_reduction_Description"				"Overchanneling mist lessens your grip of the physical realm. Cooldown of all spells and items is increased by %dMODIFIER_PROPERTY_COOLDOWN_PERCENTAGE_STACKING%%%."
 
 // Abaddon's Borrowed Time
 "DOTA_Tooltip_ability_imba_abaddon_borrowed_time"                      "Borrowed Time"
