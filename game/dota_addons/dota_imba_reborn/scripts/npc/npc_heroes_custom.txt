@@ -475,10 +475,14 @@
 		"Ability11"					"special_bonus_imba_disruptor_2"
 		"Ability12"					"special_bonus_imba_disruptor_3"
 		"Ability13"					"special_bonus_imba_disruptor_4"
-		"Ability14"					"special_bonus_imba_disruptor_5"
-		"Ability15"					"special_bonus_imba_disruptor_6"
+		"Ability14"					"special_bonus_imba_disruptor_9"
+		"Ability15"					"special_bonus_imba_disruptor_10"
 		"Ability16"					"special_bonus_imba_disruptor_7"
 		"Ability17"					"special_bonus_imba_disruptor_8"
+		
+		// Removed Talents (they're...bad.)
+		//"Ability14"					"special_bonus_imba_disruptor_5" (Glimpse Storm Expansion - Glimpsing an enemy into an already formed Kinetic Field expands Glimpse Storm's size to match.)
+		//"Ability15"					"special_bonus_imba_disruptor_6" (Static Storm builds stacks of mini-stun (applies upon exit))
 	}
 
 	//=================================================================================================================

@@ -44,7 +44,7 @@ function modifier_imba_stormbearer:OnCreated()
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()	
 	self.ms_per_stack = self.ability:GetSpecialValueFor("ms_per_stack") 
-	self.scepter_ms_per_stack = self.ability:GetSpecialValueFor("scepter_ms_per_stack")
+	--self.scepter_ms_per_stack = self.ability:GetSpecialValueFor("scepter_ms_per_stack")
 end
 
 function modifier_imba_stormbearer:DeclareFunctions()	
@@ -62,11 +62,11 @@ function modifier_imba_stormbearer:GetModifierMoveSpeedBonus_Constant()
 	local stacks = self:GetStackCount()		
 	local move_speed_increase
 
-	if self.scepter then
-		move_speed_increase = (self.scepter_ms_per_stack) * stacks				
-	else
+	--if self.scepter then
+	--	move_speed_increase = (self.scepter_ms_per_stack) * stacks				
+	--else
 		move_speed_increase = (self.ms_per_stack) * stacks					
-	end
+	--end
 	return move_speed_increase			
 end
 
@@ -426,7 +426,7 @@ MergeTables(LinkedModifiers,{
 imba_disruptor_glimpse = imba_disruptor_glimpse or class({})
 
 function imba_disruptor_glimpse:GetCastRange(location, target)
-    return self:GetSpecialValueFor("cast_range")
+    return self:GetSpecialValueFor("cast_range") + self:GetCaster():FindTalentValue("special_bonus_imba_disruptor_9")
 end
 
 function imba_disruptor_glimpse:GetIntrinsicModifierName()
@@ -875,6 +875,10 @@ function imba_disruptor_kinetic_field:OnSpellStart()
 		local field_radius = ability:GetSpecialValueFor("field_radius")
 		local duration = ability:GetSpecialValueFor("duration")
 		local vision_aoe = ability:GetSpecialValueFor("vision_aoe")
+		
+		if caster:HasTalent("special_bonus_imba_disruptor_10") then
+			formation_delay = formation_delay * caster:FindTalentValue("special_bonus_imba_disruptor_10")
+		end
 		
 		-- Roll for cast response
 		if RollPercentage(50) then
@@ -1391,11 +1395,11 @@ function modifier_imba_static_storm:OnCreated(keys)
 		self.scepter_duration = self.ability:GetSpecialValueFor("scepter_duration")	
 		--fuck you vectors
 		self.target_point = Vector(keys.target_point_x, keys.target_point_y, keys.target_point_z)
-		local particle_storm = "particles/units/heroes/hero_disruptor/disruptor_static_storm.vpcf"
+		self.particle_storm = "particles/units/heroes/hero_disruptor/disruptor_static_storm.vpcf"
 
 		EmitSoundOn(self.sound_cast, self.caster)
 
-		self.particle_storm_fx = ParticleManager:CreateParticle(particle_storm, PATTACH_WORLDORIGIN, self.caster)
+		self.particle_storm_fx = ParticleManager:CreateParticle(self.particle_storm, PATTACH_WORLDORIGIN, self.caster)
 		ParticleManager:SetParticleControl(self.particle_storm_fx, 0,self.target_point)
 		ParticleManager:SetParticleControl(self.particle_storm_fx, 1, Vector(self.radius, 0, 0))
 		ParticleManager:SetParticleControl(self.particle_storm_fx, 2, Vector(self.duration, 0, 0))
@@ -1425,6 +1429,9 @@ function modifier_imba_static_storm:OnCreated(keys)
 		self.damage_increase_from_enemies = 0
 		self.pulse_num = 0
 		self.max_pulses = self.duration / self.interval
+		
+		-- Bootleg check for allowing longer particle effects
+		self.particle_timer = 0
 
 		CreateModifierThinker(self.caster, self.ability, self.debuff_aura, {duration = self.duration}, self.target_point, self.caster:GetTeamNumber(), false)
 		self:StartIntervalThink(self.interval)
@@ -1432,6 +1439,19 @@ function modifier_imba_static_storm:OnCreated(keys)
 end
 
 function modifier_imba_static_storm:OnIntervalThink()
+
+	self.particle_timer = self.particle_timer + self.interval
+	
+	if self.particle_timer >= 7 then -- seems like default particle duration?
+		-- Destroy and recreate
+		--ParticleManager:DestroyParticle(self.particle_storm_fx, false)
+		self.particle_storm_fx = ParticleManager:CreateParticle(self.particle_storm, PATTACH_WORLDORIGIN, self.caster)
+		ParticleManager:SetParticleControl(self.particle_storm_fx, 0,self.target_point)
+		ParticleManager:SetParticleControl(self.particle_storm_fx, 1, Vector(self.radius, 0, 0))
+		ParticleManager:SetParticleControl(self.particle_storm_fx, 2, Vector(self.duration, 0, 0))
+		self.particle_timer = 0
+	end
+
 	local enemies_in_field = FindUnitsInRadius(self.caster:GetTeamNumber(),
 									self.target_point,
 									nil,
@@ -1680,4 +1700,19 @@ end
 
 function modifier_imba_static_storm_talent_ministun_trigger:IsHidden()
 	return true
+end
+
+-- Client-side helper functions --
+
+LinkLuaModifier("modifier_special_bonus_imba_disruptor_9", "components/abilities/heroes/hero_disruptor", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_disruptor_9 = class({})
+function modifier_special_bonus_imba_disruptor_9:IsHidden() 		return true end
+function modifier_special_bonus_imba_disruptor_9:IsPurgable() 		return false end
+function modifier_special_bonus_imba_disruptor_9:RemoveOnDeath() 	return false end
+
+function imba_disruptor_glimpse:OnOwnerSpawned()
+	if self:GetCaster():HasTalent("special_bonus_imba_disruptor_9") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_disruptor_9") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_special_bonus_imba_disruptor_9", {})
+	end
 end

@@ -1355,9 +1355,9 @@ end
 modifier_imba_finger_of_death_delay = class({})
 function modifier_imba_finger_of_death_delay:IsPurgable() 		return false end
 
-function modifier_imba_finger_of_death_delay:OnCreated()
-	print("delay created.")
-end
+-- function modifier_imba_finger_of_death_delay:OnCreated()
+	-- print("delay created.")
+-- end
 
 function modifier_imba_finger_of_death_delay:OnRemoved()
 	if not IsServer() then return end

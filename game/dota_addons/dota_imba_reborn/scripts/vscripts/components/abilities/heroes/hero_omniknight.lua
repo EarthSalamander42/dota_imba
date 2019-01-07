@@ -373,6 +373,14 @@ function imba_omniknight_repel:OnUnStolen()
     end
 end
 
+function imba_omniknight_repel:GetAOERadius()
+	if self:GetCaster():HasTalent("special_bonus_imba_omniknight_6") then
+		return self:GetCaster():FindTalentValue("special_bonus_imba_omniknight_6", "radius")
+	else
+		return 0
+	end
+end
+
 function imba_omniknight_repel:OnSpellStart()
     -- Ability properties
     local caster = self:GetCaster()
@@ -419,7 +427,9 @@ function imba_omniknight_repel:OnSpellStart()
         -- Repel all allies except the target
         for _, ally in pairs(allies) do
             if ally ~= target then
-                Repel(caster, ability, ally, talent_duration)
+                --Repel(caster, ability, ally, talent_duration)
+				-- Lets make it just last for whole duration cause no one gets this thing otherwise
+				Repel(caster, ability, ally, duration)
             end
         end
     end
@@ -627,9 +637,9 @@ function imba_omniknight_hammer_of_virtue:IsStealable()
 	return false
 end
 
-function imba_omniknight_hammer_of_virtue:GetCastRange(location, target)
-    return self:GetCaster():Script_Script_GetAttackRange() 
-end
+-- function imba_omniknight_hammer_of_virtue:GetCastRange(location, target)
+    -- return self:GetCaster():Script_Script_GetAttackRange() 
+-- end
 
 function imba_omniknight_hammer_of_virtue:GetAbilityTextureName()
    return "custom/omniknight_hammer_of_virtue"
@@ -818,6 +828,10 @@ local cooldown = self.BaseClass.GetCooldown(self, level)
     return cooldown    
 end
 
+function imba_omniknight_guardian_angel:GetCastAnimation()
+	return ACT_DOTA_CAST_ABILITY_4
+end
+
 function imba_omniknight_guardian_angel:OnSpellStart()
     -- Ability properties
     local caster = self:GetCaster()
@@ -898,6 +912,10 @@ function modifier_imba_guardian_angel:OnCreated()
     end    
 end
 
+function modifier_imba_guardian_angel:OnRefresh()
+	self:OnCreated()
+end
+
 function modifier_imba_guardian_angel:GetStatusEffectName()
     return "particles/status_fx/status_effect_guardian_angel.vpcf"
 end
@@ -917,7 +935,7 @@ function modifier_imba_guardian_angel:IsPurgable() return true end
 function modifier_imba_guardian_angel:IsDebuff() return false end
 
 function modifier_imba_guardian_angel:OnDestroy()
-    if IsServer() then
+    if IsServer() and (self:GetElapsedTime() >= self.shield_duration) then
         self.parent:AddNewModifier(self.caster, self.ability, self.modifier_shield, {duration = self.shield_duration})
     end
 end
@@ -1016,5 +1034,32 @@ function modifier_imba_guardian_angel_shield:OnTakeDamage(keys)
 end
 
 function modifier_imba_guardian_angel_shield:IsHidden() return false end
-function modifier_imba_guardian_angel_shield:IsPurgable() return false end
+function modifier_imba_guardian_angel_shield:IsPurgable() return true end
 function modifier_imba_guardian_angel_shield:IsDebuff() return false end
+
+-- Client-side helper functions --
+
+LinkLuaModifier("modifier_special_bonus_imba_omniknight_6", "components/abilities/heroes/hero_omniknight", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_omniknight_7", "components/abilities/heroes/hero_omniknight", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_omniknight_6 = class({})
+function modifier_special_bonus_imba_omniknight_6:IsHidden() 		return true end
+function modifier_special_bonus_imba_omniknight_6:IsPurgable() 		return false end
+function modifier_special_bonus_imba_omniknight_6:RemoveOnDeath() 	return false end
+
+modifier_special_bonus_imba_omniknight_7 = class({})
+function modifier_special_bonus_imba_omniknight_7:IsHidden() 		return true end
+function modifier_special_bonus_imba_omniknight_7:IsPurgable() 		return false end
+function modifier_special_bonus_imba_omniknight_7:RemoveOnDeath() 	return false end
+
+function imba_omniknight_repel:OnOwnerSpawned()
+	if self:GetCaster():HasTalent("special_bonus_imba_omniknight_6") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_omniknight_6") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_special_bonus_imba_omniknight_6", {})
+	end
+end
+
+function imba_omniknight_guardian_angel:OnOwnerSpawned()
+	if self:GetCaster():HasTalent("special_bonus_imba_omniknight_7") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_omniknight_7") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_special_bonus_imba_omniknight_7", {})
+	end
+end

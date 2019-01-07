@@ -296,9 +296,9 @@
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"freeze_duration"		"1.0 1.2 1.4 1.6"
+				"freeze_duration"		"1.25 1.5 1.75 2.0"
 			}
-			"05"
+			"06"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"bonus_magical_resistance"		"0"
@@ -358,7 +358,7 @@
 			}
 			"03"
 			{
-				"var_type"				"FIELD_FLOAT"
+				"var_type"				"FIELD_INTEGER"
 				"damage_amplification"	"20"
 			}
 			"04"

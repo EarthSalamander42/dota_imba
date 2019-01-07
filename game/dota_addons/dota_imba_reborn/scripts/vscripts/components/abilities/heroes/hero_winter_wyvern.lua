@@ -61,7 +61,7 @@ function imba_winter_wyvern_arctic_burn:ToggleOn(caster, ability)
 		duration = -1;
 	end
 
-	caster:EmitSound("Hero_WinterWyvern.ArcticBurn.Cast");
+	caster:EmitSound("Hero_Winter_Wyvern.ArcticBurn.Cast");
 
 	caster:AddNewModifier(caster, ability, "modifier_winter_wyvern_arctic_burn_flight", {duration = duration});
 	local start_flight_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_winter_wyvern/wyvern_arctic_burn_start.vpcf", PATTACH_ABSORIGIN, caster);
@@ -119,7 +119,7 @@ function modifier_imba_winter_wyvern_arctic_burn:GetModifierAttackRangeBonus()
 	return self:GetStackCount();
 end
 
-function modifier_imba_winter_wyvern_arctic_burn:endGetModifierProjectileSpeedBonus()
+function modifier_imba_winter_wyvern_arctic_burn:GetModifierProjectileSpeedBonus()
 	return self:GetAbility():GetSpecialValueFor("bonus_projectile_speed")
 end
 
@@ -460,11 +460,13 @@ function modifier_imba_winter_wyvern_splinter_blast_slow:OnRemoved()
 end
 
 function modifier_imba_winter_wyvern_splinter_blast_slow:GetModifierMoveSpeedBonus_Percentage()
-	return self.slow;
+	--return self.slow;
+	return self:GetAbility():GetSpecialValueFor("bonus_movespeed");
 end
 
 function modifier_imba_winter_wyvern_splinter_blast_slow:GetModifierAttackSpeedBonus_Constant()
-	return self.attack_slow;
+	--return self.attack_slow;
+	return self:GetAbility():GetSpecialValueFor("attack_slow");
 end
 
 ------------------------------------------------------------------
@@ -474,6 +476,11 @@ LinkLuaModifier("modifier_imba_winter_wyvern_cold_embrace", "components/abilitie
 LinkLuaModifier("modifier_imba_winter_wyvern_cold_embrace_freeze", "components/abilities/heroes/hero_winter_wyvern.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_winter_wyvern_cold_embrace_resistance", "components/abilities/heroes/hero_winter_wyvern.lua", LUA_MODIFIER_MOTION_NONE)
 imba_winter_wyvern_cold_embrace = class({})
+
+function imba_winter_wyvern_cold_embrace:GetCooldown(nLevel)
+	return self.BaseClass.GetCooldown( self, nLevel ) - self:GetCaster():FindTalentValue("special_bonus_imba_winter_wyvern_6", "cooldown_reduction")
+end
+
 function imba_winter_wyvern_cold_embrace:OnSpellStart()
 	if IsServer() then 
 		local caster 					= self:GetCaster();
@@ -496,12 +503,13 @@ function imba_winter_wyvern_cold_embrace:OnSpellStart()
 				cold_embrace_modifier:SetStackCount(magic_resistance);
 			end
 
-			if caster:HasTalent("special_bonus_imba_winter_wyvern_6") then 
-				local cooldown_reduction = caster:FindTalentValue("special_bonus_imba_winter_wyvern_6", "cooldown_reduction");
-				local cooldown_remaining = ability:GetCooldownTimeRemaining();
-				ability:EndCooldown();
-				ability:StartCooldown(cooldown_remaining - cooldown_reduction);
-			end
+			-- Handled properly in the GetCooldown function block
+			-- if caster:HasTalent("special_bonus_imba_winter_wyvern_6") then 
+				-- local cooldown_reduction = caster:FindTalentValue("special_bonus_imba_winter_wyvern_6", "cooldown_reduction");
+				-- local cooldown_remaining = ability:GetCooldownTimeRemaining();
+				-- ability:EndCooldown();
+				-- ability:StartCooldown(math.max(cooldown_remaining - cooldown_reduction, 0));
+			-- end
 
 			local cold_embrace_start_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_winter_wyvern/wyvern_cold_embrace_start.vpcf", PATTACH_POINT, caster);
 			ParticleManager:SetParticleControl(cold_embrace_start_particle, 0, caster:GetAbsOrigin());
@@ -536,29 +544,71 @@ function modifier_imba_winter_wyvern_cold_embrace:OnAttackLanded(keys)
 		local parent = self:GetParent();
 		if keys.target == parent then
 			self.damage_taken = self.damage_taken + keys.damage;
+			
+			if self.damage_taken >= self.damage_treshold then
+				-- Eh...this seems super bootleg. If you want to do this properly use the IgnoreTenacity() function. Removing for now though
+				-- if parent:HasModifier("modifier_frantic") then
+					-- self.freeze_duration = self.freeze_duration * 2;
+				-- end
 
-			if self.damage_taken >= self.damage_treshold then 
-				if parent:HasModifier("modifier_frantic") then
-					self.freeze_duration = self.freeze_duration * 2;
-				end
-
-				if keys.attacker:IsHero() then
-					keys.attacker:AddNewModifier(parent, nil, "modifier_imba_winter_wyvern_cold_embrace_freeze", {duration = self.freeze_duration});
-				end
-
-				if self:GetElapsedTime() > (self:GetDuration() * 0.75) and self.triggered == false then 
-					self.triggered = true;
+				-- Removing weird elapsed time constraint for now
+				--if self:GetElapsedTime() > (self:GetDuration() * 0.75) and self.triggered == false then 
+					--self.triggered = true;
+					
+					if not keys.attacker:IsMagicImmune() then
+						keys.attacker:AddNewModifier(parent, nil, "modifier_imba_winter_wyvern_cold_embrace_freeze", {duration = self.freeze_duration});
+					end
+					
 					-- Heal to max
-					parent:Heal(parent:GetMaxHealth(), parent);
+					--parent:Heal(parent:GetMaxHealth(), parent);
+					
+					parent:Heal(self.damage_treshold, parent);
+					
 					-- Escape particle
 					local curse_blast = ParticleManager:CreateParticle("particles/units/heroes/hero_winter_wyvern/wyvern_winters_curse_blast.vpcf", PATTACH_ABSORIGIN, parent);
 					ParticleManager:SetParticleControl(curse_blast, 2, Vector(1,1,1000));
 					ParticleManager:ReleaseParticleIndex(curse_blast);
+					
+					if self:GetCaster():HasAbility("imba_winter_wyvern_splinter_blast") then
+						local splinter_blast = self:GetCaster():FindAbilityByName("imba_winter_wyvern_splinter_blast")
+					
+						if splinter_blast:IsTrained() then
+							
+							imba_winter_wyvern_splinter_blast:CreateTrackingProjectile(
+								{
+									target 						= self:GetCaster(),
+									caster 						= self:GetCaster(),
+									ability 					= splinter_blast,
+									iMoveSpeed 					= splinter_blast:GetSpecialValueFor("projectile_speed"),
+									iSourceAttachment 			= self:GetCaster():ScriptLookupAttachment("attach_attack1"),
+									EffectName 					= "particles/units/heroes/hero_winter_wyvern/wyvern_splinter.vpcf",
+									secondary_projectile_speed 	= splinter_blast:GetSpecialValueFor("secondary_projectile_speed"),
+									split_radius 				= splinter_blast:GetSpecialValueFor("split_radius"),
+									slow_duration 				= splinter_blast:GetSpecialValueFor("duration"),
+									slow						= splinter_blast:GetSpecialValueFor("bonus_movespeed"),
+									attack_slow 				= splinter_blast:GetSpecialValueFor("attack_slow"),
+									hero_cdr 					= splinter_blast:GetSpecialValueFor("hero_cdr"),
+									cdr_units 					= splinter_blast:GetSpecialValueFor("cdr_units"),
+									splinter_threshold 			= splinter_blast:GetSpecialValueFor("threshold"),
+									splinter_dmg_efficiency 	= splinter_blast:GetSpecialValueFor("splinter_dmg_efficiency"),
+									splinter_aoe_efficiency 	= splinter_blast:GetSpecialValueFor("splinter_aoe_efficiency"),
+									damage 						= splinter_blast:GetAbilityDamage() + self.damage_taken,
+									splinter_proc 				= 1
+								});
+						end
+					end
+					
+					-- Reset damage taken
+					self.damage_taken = 0
+					
+					-- Gonna make it not remove for now
+					
 					-- Remove Cold Embrace, could not get healing to work without delay.
-					Timers:CreateTimer(0.03, function()
-						parent:RemoveModifierByName("modifier_winter_wyvern_cold_embrace");
-					end)
-				end
+					-- Timers:CreateTimer(0.03, function()
+						-- parent:RemoveModifierByName("modifier_winter_wyvern_cold_embrace");
+						-- parent:RemoveModifierByName("modifier_imba_winter_wyvern_cold_embrace");
+					-- end)
+				--end
 			end
 		end
 	end
@@ -676,7 +726,7 @@ end
 --			Winters Curse (dissable passives modifier) 			--
 ------------------------------------------------------------------
 modifier_imba_winter_wyvern_winters_curse = class({})
-function modifier_imba_winter_wyvern_winters_curse:IsHidden() return false end
+function modifier_imba_winter_wyvern_winters_curse:IsHidden() return true end
 function modifier_imba_winter_wyvern_winters_curse:IsDebuff() return false end
 function modifier_imba_winter_wyvern_winters_curse:CheckState()
 	local state = {
@@ -692,6 +742,7 @@ LinkLuaModifier("modifier_special_bonus_imba_winter_wyvern_4", "components/abili
 modifier_special_bonus_imba_winter_wyvern_4 = class({})
 function modifier_special_bonus_imba_winter_wyvern_4:IsHidden() return true end
 function modifier_special_bonus_imba_winter_wyvern_4:RemoveOnDeath() return false end
+function modifier_special_bonus_imba_winter_wyvern_4:IsPurgable() return false end
 
 
 
@@ -702,7 +753,7 @@ LinkLuaModifier("modifier_special_bonus_imba_winter_wyvern_5", "components/abili
 modifier_special_bonus_imba_winter_wyvern_5 = class({})
 function modifier_special_bonus_imba_winter_wyvern_5:IsHidden() return true end
 function modifier_special_bonus_imba_winter_wyvern_5:RemoveOnDeath() return false end
-
+function modifier_special_bonus_imba_winter_wyvern_5:IsPurgable() return false end
 
 
 ------------------------------------------------------------------------------
@@ -712,8 +763,13 @@ LinkLuaModifier("modifier_special_bonus_imba_winter_wyvern_6", "components/abili
 modifier_special_bonus_imba_winter_wyvern_6 = class({})
 function modifier_special_bonus_imba_winter_wyvern_6:IsHidden() return true end
 function modifier_special_bonus_imba_winter_wyvern_6:RemoveOnDeath() return false end
+function modifier_special_bonus_imba_winter_wyvern_6:IsPurgable() return false end
 
-
+function imba_winter_wyvern_cold_embrace:OnOwnerSpawned()
+	if self:GetCaster():HasTalent("special_bonus_imba_winter_wyvern_6") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_winter_wyvern_6") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_special_bonus_imba_winter_wyvern_6", {})
+	end
+end
 
 ----------------------------------------------------------------------
 --			Winter Wyvern Talent 8 (IMBA Winter's Curse) 			--
@@ -722,3 +778,4 @@ LinkLuaModifier("modifier_special_bonus_imba_winter_wyvern_7", "components/abili
 modifier_special_bonus_imba_winter_wyvern_7 = class({})
 function modifier_special_bonus_imba_winter_wyvern_7:IsHidden() return true end
 function modifier_special_bonus_imba_winter_wyvern_7:RemoveOnDeath() return false end
+function modifier_special_bonus_imba_winter_wyvern_7:IsPurgable() return false end

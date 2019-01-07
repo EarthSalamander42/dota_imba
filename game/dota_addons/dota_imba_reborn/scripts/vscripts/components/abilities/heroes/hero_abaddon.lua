@@ -222,7 +222,7 @@ end
 
 function imba_abaddon_mist_coil:OnOwnerDied()
 	if self:GetCaster():IsRealHero() then
-		local units = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, self:GetSpecialValueFor("cast_range"), self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), FIND_ANY_ORDER, false)
+		local units = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, self:GetSpecialValueFor("cast_range"), DOTA_UNIT_TARGET_TEAM_FRIENDLY, self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), FIND_ANY_ORDER, false)
 		for _, unit in pairs(units) do
 			if unit ~= self:GetCaster() then
 				self:OnSpellStart(unit, true)
@@ -965,6 +965,7 @@ modifier_imba_curse_of_avernus_buff_haste_aura = ShallowCopy(modifier_imba_curse
 -- Hidden Modifiers:
 MergeTables(LinkedModifiers,{
 	["modifier_over_channel_handler"] = LUA_MODIFIER_MOTION_NONE,
+	["modifier_over_channel_reduction"] = LUA_MODIFIER_MOTION_NONE
 })
 imba_abaddon_over_channel = imba_abaddon_over_channel or class({
 	IsStealable 			= function(self) return false end,
@@ -1007,6 +1008,43 @@ function modifier_over_channel_handler:OnCreated()
 	particle = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN, target)
 	ParticleManager:SetParticleControlEnt(particle, 0, target, PATTACH_POINT_FOLLOW, "attach_attack1", target_origin, true)
 	self:AddParticle(particle, false, false, -1, false, false)
+end
+
+function modifier_over_channel_handler:DeclareFunctions()
+    local funcs = {
+        MODIFIER_EVENT_ON_ABILITY_EXECUTED
+    }
+    return funcs
+end
+
+function modifier_over_channel_handler:OnAbilityExecuted( keys )
+    if not IsServer() then return end
+	
+    if keys.unit == self:GetParent() and not keys.ability:IsItem() and keys.ability:GetName() ~= "imba_abaddon_over_channel" then
+        self:GetParent():AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_over_channel_reduction", {duration = self:GetAbility():GetSpecialValueFor("reduction_duration") + 15})
+    end
+end
+
+modifier_over_channel_reduction = modifier_over_channel_reduction or class({
+    IsHidden                = function(self) return false end,
+    IsPurgable                  = function(self) return false end,
+    IsDebuff                  = function(self) return true end,
+    RemoveOnDeath            = function(self) return true end
+})
+
+function modifier_over_channel_reduction:OnRefresh()
+    self:IncrementStackCount()
+end
+
+function modifier_over_channel_reduction:DeclareFunctions()
+    local funcs    =    {
+		MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE_STACKING
+    }
+    return funcs
+end
+
+function modifier_over_channel_reduction:GetModifierPercentageCooldownStacking()
+    return -self:GetStackCount() * self:GetAbility():GetSpecialValueFor("reduction_multiplier")
 end
 
 -----------------------------
