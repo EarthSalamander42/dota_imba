@@ -616,11 +616,16 @@ function modifier_imba_jinada_buff_crit:OnCreated()
 end
 
 function modifier_imba_jinada_buff_crit:DeclareFunctions()
-	local decFuncs = {MODIFIER_EVENT_ON_ATTACK,
+	return {
+		MODIFIER_EVENT_ON_ATTACK,
 		MODIFIER_EVENT_ON_ATTACK_LANDED,
-		MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE}
+		MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE,
+		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
+	}
+end
 
-	return decFuncs
+function modifier_imba_jinada_buff_crit:GetModifierPreAttack_BonusDamage()
+	return self:GetAbility():GetSpecialValueFor("bonus_damage")
 end
 
 function modifier_imba_jinada_buff_crit:OnAttack(keys)
@@ -671,7 +676,6 @@ function modifier_imba_jinada_buff_crit:OnAttackLanded(keys)
 
 		-- Only apply on caster attacking enemies
 		if self.parent == attacker and target:GetTeamNumber() ~= self.parent:GetTeamNumber() then
-
 			-- Add hit particle effects
 			self.particle_hit_fx = ParticleManager:CreateParticle(self.particle_hit, PATTACH_ABSORIGIN, self.parent)
 			ParticleManager:SetParticleControl(self.particle_hit_fx, 0, target:GetAbsOrigin())
@@ -683,6 +687,13 @@ function modifier_imba_jinada_buff_crit:OnAttackLanded(keys)
 			-- Start the skill's cooldown if it's ready (might not be because of active)
 			if self.ability:IsCooldownReady() then
 				self.ability:UseResources(false, false, true)
+			end
+
+			-- transfer gold from target to caster
+			if target:IsRealHero() then
+				target:ModifyGold(-self:GetAbility():GetSpecialValueFor("bonus_gold"), false, 0)
+				attacker:ModifyGold(self:GetAbility():GetSpecialValueFor("bonus_gold"), false, 0)
+				SendOverheadEventMessage(attacker, OVERHEAD_ALERT_GOLD, attacker, self:GetAbility():GetSpecialValueFor("bonus_gold"), nil)
 			end
 
 			-- Remove the critical strike modifier from the caster

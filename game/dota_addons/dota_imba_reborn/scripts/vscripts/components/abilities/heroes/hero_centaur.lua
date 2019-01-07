@@ -635,6 +635,7 @@ LinkLuaModifier("modifier_imba_return_aura", "components/abilities/heroes/hero_c
 LinkLuaModifier("modifier_imba_return_passive", "components/abilities/heroes/hero_centaur", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_return_damage_block", "components/abilities/heroes/hero_centaur", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_return_damage_block_buff", "components/abilities/heroes/hero_centaur", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_return_bonus_damage", "components/abilities/heroes/hero_centaur", LUA_MODIFIER_MOTION_NONE)
 
 function imba_centaur_return:GetAbilityTextureName()
 	return "centaur_return"
@@ -642,6 +643,21 @@ end
 
 function imba_centaur_return:GetIntrinsicModifierName()
 	return "modifier_imba_return_aura"
+end
+
+function imba_centaur_return:OnAbilityPhaseStart()
+	if self:GetCaster():FindModifierByName("modifier_imba_return_passive"):GetStackCount() == 0 then
+		return false
+	end
+
+	return true
+end
+
+function imba_centaur_return:OnSpellStart()
+	if IsServer() then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_return_bonus_damage", {duration=self:GetSpecialValueFor("duration")}):SetStackCount(self:GetCaster():FindModifierByName("modifier_imba_return_passive"):GetStackCount())
+		self:GetCaster():FindModifierByName("modifier_imba_return_passive"):SetStackCount(0)
+	end
 end
 
 -- Return Aura
@@ -714,9 +730,10 @@ end
 modifier_imba_return_passive = class({})
 
 function modifier_imba_return_passive:DeclareFunctions()
-	local decFuncs = {MODIFIER_EVENT_ON_TAKEDAMAGE}
-
-	return decFuncs
+	return {
+		MODIFIER_EVENT_ON_TAKEDAMAGE,
+		MODIFIER_EVENT_ON_ATTACK_LANDED,
+	}
 end
 
 function modifier_imba_return_passive:OnTakeDamage(keys)
@@ -807,6 +824,24 @@ function modifier_imba_return_passive:OnTakeDamage(keys)
 	end
 end
 
+function modifier_imba_return_passive:OnAttackLanded(keys)
+	if IsServer() then
+		local attacker = keys.attacker
+		local target = keys.target
+
+		if self:GetStackCount() >= self:GetAbility():GetSpecialValueFor("max_stacks") then
+			return nil
+		end
+
+		-- Only apply if the parent is the victim and the attacker is on the opposite team
+		if self:GetParent() == target and attacker:GetTeamNumber() ~= target:GetTeamNumber() then
+			if attacker:IsHero() or attacker:IsTower() then
+				self:SetStackCount(self:GetStackCount() + 1)
+			end
+		end
+	end
+end
+
 function modifier_imba_return_passive:IsHidden()
 	return false
 end
@@ -863,10 +898,29 @@ function modifier_imba_return_damage_block_buff:IsStunDebuff() 		return false en
 function modifier_imba_return_damage_block_buff:RemoveOnDeath() 	return true end
 function modifier_imba_return_damage_block_buff:GetAttributes() 	return MODIFIER_ATTRIBUTE_MULTIPLE end
 
+modifier_imba_return_bonus_damage = class({})
+
+function modifier_imba_return_bonus_damage:GetEffectName()
+	return "particles/units/heroes/hero_centaur/centaur_return_buff.vpcf"
+end
+
+function modifier_imba_return_bonus_damage:GetEffectAttachType()
+	return "attach_attack1"
+end
+
+function modifier_imba_return_bonus_damage:DeclareFunctions()
+	return {
+		MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE,
+	}
+end
+
+function modifier_imba_return_bonus_damage:GetModifierBaseDamageOutgoing_Percentage()
+	return self:GetAbility():GetSpecialValueFor("bonus_damage") * self:GetStackCount()
+end
+
 ---------------------------------
 -- 		   Stampede            --
 ---------------------------------
-
 
 imba_centaur_stampede = class({})
 LinkLuaModifier("modifier_imba_stampede_haste", "components/abilities/heroes/hero_centaur", LUA_MODIFIER_MOTION_NONE)

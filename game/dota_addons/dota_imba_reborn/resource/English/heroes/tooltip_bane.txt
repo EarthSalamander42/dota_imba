@@ -1,0 +1,80 @@
+// Bane's Enfeeble
+"DOTA_Tooltip_ability_imba_bane_enfeeble"								"Enfeeble"
+"DOTA_Tooltip_ability_imba_bane_enfeeble_Description"					"Weakens an enemy unit, reducing its physical damage. Lasts %enfeeble_duration% seconds. Can stack up to %max_stacks% times.\n<font color='#FF7800'>The Terror Within:</font> Affected enemies have their vision reduced for every stack of enfeeble. The vision reduction has diminishing returns, and is weaker with each additional stack."
+"DOTA_Tooltip_ability_imba_bane_enfeeble_Lore"                          "Even the mightiest of warriors crumble before the terror of Atropos."
+"DOTA_Tooltip_ability_imba_bane_enfeeble_as_reduction"					"ATTACK SPEED REDUCTION:"
+"DOTA_Tooltip_ability_imba_bane_enfeeble_max_stacks"                    "MAX STACKS:"
+"DOTA_Tooltip_ability_imba_bane_enfeeble_vision_reduction"              "BASE VISION REDUCTION:"
+"DOTA_Tooltip_ability_imba_bane_enfeeble_stack_vision_efficiency"		"%VISION DEGRADE PER STACK:"
+"DOTA_Tooltip_ability_imba_bane_enfeeble_bonus_status_resistance"		"%STATUS RESISTANCE REDUCTION:"
+
+"DOTA_Tooltip_modifier_imba_enfeeble_debuff"                            "Enfeeble"
+"DOTA_Tooltip_modifier_imba_enfeeble_debuff_Description"                "Losing attack damage and vision."
+
+// Bane's Brain Sap
+"DOTA_Tooltip_ability_imba_bane_brain_sap"                              "Brain Sap"
+"DOTA_Tooltip_ability_imba_bane_brain_sap_Description"                  "Feasts on the vital energies of an enemy unit, healing Bane and dealing damage.\n<font color='#FF7800'>Addlebrain:</font> Sets the target unit's intelligence and mana to 0.\n<font color='#FF7800'>Mind Feast:</font> Using Brain Sap on an enfeebled target consumes Enfeeble stacks on the target, and deals bonus damage to it depending on the stack count.\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
+"DOTA_Tooltip_ability_imba_bane_brain_sap_Lore"                        "Atropos finds no greater pleasure than to harvest the fear he creates."
+"DOTA_Tooltip_ability_imba_bane_brain_sap_Note0"                        "Self heal from Brain Sap is always the stated value, regardless of actual damage dealt."
+"DOTA_Tooltip_ability_imba_bane_brain_sap_Note1"                        "Both damage and self heal scale with Spell Amp."
+"DOTA_Tooltip_ability_imba_bane_brain_sap_brain_sap_duration"          "ADDLEBRAIN DURATION:"
+"DOTA_Tooltip_ability_imba_bane_brain_sap_brain_sap_damage"            "DAMAGE/HEAL:"
+"DOTA_Tooltip_ability_imba_bane_brain_sap_enfeeble_stack_to_damage"                 "ENFEEBLE STACKS TO DAMAGE:"
+"DOTA_Tooltip_ability_imba_bane_brain_sap_aghanim_description"          "Improves cooldown to 1.5 seconds, and causes Brain Sap to pierce spell immunity."
+
+"DOTA_Tooltip_modifier_imba_brain_sap_mana"                            "Addlebrain"
+"DOTA_Tooltip_modifier_imba_brain_sap_mana_Description"                "Losing your mana pool and int."
+
+// Bane's Nightmare / Nightmare End
+"DOTA_Tooltip_ability_imba_bane_nightmare"                              "Nightmare"
+"DOTA_Tooltip_ability_imba_bane_nightmare_Description"                  "Puts the target enemy or friendly Hero to sleep and deals damage per second. Sleeping units are awakened when attacked, but the Nightmare passes to the attacking unit. The nightmared unit instantly wakes up if it takes damage.\n<font color='#FF7800'>Baleful Visions:</font> Upon waking up from Nightmare, the target is still foggy and dazed, having 0 vision range for a moderate duration, and cannot see anything himself."
+"DOTA_Tooltip_ability_imba_bane_nightmare_Lore"                        "A stolen prowess from the goddess Nyctasha is to put prey into forever sleep."
+"DOTA_Tooltip_ability_imba_bane_nightmare_Note0"                        "The target becomes briefly invulnerable upon being Nightmared."
+"DOTA_Tooltip_ability_imba_bane_nightmare_nightmare_duration"          "DURATION:"
+"DOTA_Tooltip_ability_imba_bane_nightmare_nightmare_damage"            "DAMAGE PER SECOND:"
+"DOTA_Tooltip_ability_imba_bane_nightmare_nightmare_invuln_duration"                "INVULNERABILITY DURATION:"
+"DOTA_Tooltip_ability_imba_bane_nightmare_nightmare_baleful_visions_duration"       "BALEFUL VISIONS DURATION:"
+"DOTA_Tooltip_ability_imba_bane_nightmare_cast_range"                  "CAST RANGE:"
+
+"DOTA_Tooltip_ability_imba_bane_nightmare_end"                          "Nightmare End"
+"DOTA_Tooltip_ability_imba_bane_nightmare_end_Description"              "Wakes up the target from its Nightmare."
+
+"DOTA_Tooltip_modifier_imba_nightmare_dot"                              "Nightmare"
+"DOTA_Tooltip_modifier_imba_nightmare_dot_Description"                  "Cannot act. Taking damage will wake you up. Units attacking you will transfer Nightmare to them."
+
+"DOTA_Tooltip_modifier_imba_nightmare_invul"                            "Nightmare Invulnerability"
+"DOTA_Tooltip_modifier_imba_nightmare_invul_Description"                "Invulnerable."
+
+"DOTA_Tooltip_modifier_imba_nightmare_vision"                          "Baleful Visions"
+"DOTA_Tooltip_modifier_imba_nightmare_vision_Description"              "Can't see shit."
+
+"DOTA_Tooltip_modifier_imba_nightmare_talent"                          "Undesired Awakening"
+"DOTA_Tooltip_modifier_imba_nightmare_talent_Description"              "Muted."
+
+// Bane's Fiend's Grip
+"DOTA_Tooltip_ability_imba_bane_fiends_grip"                            "Fiend's Grip"
+"DOTA_Tooltip_ability_imba_bane_fiends_grip_Description"                "Grips an enemy unit, disabling it and causing heavy damage over time, while stealing mana every second based on the unit's maximum mana.\n<font color='#FF7800'>Neverending Suffering:</font> After the channeling ends (whether finished or interrupted), the grip continues afflicting the main target for an additional duration.\n<font color='#FF7800'>Terror Demons:</font> Each tick consumes one stack of Enfeeble. Each consumption of Enfeeble summons a demon.They tether themselves to the target and each steal health and mana from it."
+"DOTA_Tooltip_ability_imba_bane_fiends_grip_Lore"                      "Victims of Atropos are frequently torn apart by vivid conjurations of their own nightmares."
+"DOTA_Tooltip_ability_imba_bane_fiends_grip_fiends_grip_duration"                   "CHANNEL DURATION:"
+"DOTA_Tooltip_ability_imba_bane_fiends_grip_fiends_grip_linger_duration"            "NEVERENDING SUFFERING DURATION:"
+"DOTA_Tooltip_ability_imba_bane_fiends_grip_fiends_grip_damage"                     "DAMAGE:"
+"DOTA_Tooltip_ability_imba_bane_fiends_grip_fiends_grip_mana_damage"                "%MANA STEAL:"
+"DOTA_Tooltip_ability_imba_bane_fiends_grip_demon_damage"              "DEMON DAMAGE:"
+"DOTA_Tooltip_ability_imba_bane_fiends_grip_demon_mana_drain"          "%DEMON MANA DRAIN:"
+"DOTA_Tooltip_ability_imba_bane_fiends_grip_cast_range"                "CAST RANGE:"
+
+"DOTA_Tooltip_modifier_imba_fiends_grip_handler"                        "Fiend's Grip"
+"DOTA_Tooltip_modifier_imba_fiends_grip_handler_Description"            "Cannot move, taking damage and being drained of mana every second."
+
+"DOTA_Tooltip_modifier_imba_fiends_grip_talent"                        "Fiend's Grip"
+"DOTA_Tooltip_modifier_imba_fiends_grip_talent_Description"            "Enemies looking at you will be Fiend's Gripped."
+
+// Bane's Custom Talents
+"DOTA_Tooltip_ability_special_bonus_imba_bane_1"            "3 Enfeeble stacks on Nightmare targets"
+"DOTA_Tooltip_ability_special_bonus_imba_bane_2"            "Enfeeble is 450 aoe"
+"DOTA_Tooltip_ability_special_bonus_imba_bane_3"            "Fiend's Grip is no longer channeled"
+"DOTA_Tooltip_ability_special_bonus_imba_bane_4"            "Enfeeble reduces 10% of stats for each stack"
+"DOTA_Tooltip_ability_special_bonus_imba_bane_5"            "Brain Sap casts Fiend's Grip for 0.5 seconds"
+"DOTA_Tooltip_ability_special_bonus_imba_bane_6"            "Nightmare applies mute for 2 seconds"
+"DOTA_Tooltip_ability_special_bonus_imba_bane_7"            "+6s invulnerability duration on allies"
+"DOTA_Tooltip_ability_special_bonus_imba_bane_8"            "Fiend's Grip now also affects enemies looking at its channeling"

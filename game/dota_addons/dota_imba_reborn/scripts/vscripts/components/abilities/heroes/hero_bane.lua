@@ -185,20 +185,21 @@ end
 
 function modifier_imba_enfeeble_debuff:DeclareFunctions()
 	local funcs = {
-		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
 		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
+		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING,
 	}
 	return funcs
 end
 
-function modifier_imba_enfeeble_debuff:GetModifierPreAttack_BonusDamage()
+function modifier_imba_enfeeble_debuff:GetModifierAttackSpeedBonus_Constant()
 	-- Keep working if the stacks were consumed
 	if self:GetStackCount() > 0 then
-		return self:GetAbility():GetSpecialValueFor("damage_reduction")  * (self:GetStackCount())
+		return self:GetAbility():GetSpecialValueFor("as_reduction")  * (self:GetStackCount())
 	else
-		return self:GetAbility():GetSpecialValueFor("damage_reduction")
+		return self:GetAbility():GetSpecialValueFor("as_reduction")
 	end
 end
 
@@ -241,6 +242,10 @@ function modifier_imba_enfeeble_debuff:GetModifierBonusStats_Intellect()
 	else
 		return 0
 	end
+end
+
+function modifier_imba_enfeeble_debuff:GetModifierStatusResistanceStacking()
+	return self:GetAbility():GetSpecialValueFor("bonus_status_resistance")
 end
 
 -- Enfeeble vision debuff applier
