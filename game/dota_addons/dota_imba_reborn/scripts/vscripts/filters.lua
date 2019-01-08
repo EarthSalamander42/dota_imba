@@ -479,12 +479,14 @@ function GameMode:OrderFilter( keys )
 				else
 					local ability = EntIndexToHScript(keys["entindex_ability"])
 					if ability then
-						if ability:GetName() ~= "" and ability:GetAbilityName() then
-							if TurboCourier.COURIER_PLAYER[keys.issuer_player_id_const] then
-								if TurboCourier.COURIER_PLAYER[keys.issuer_player_id_const]:FindAbilityByName(ability:GetAbilityName()) then
-									TurboCourier.COURIER_PLAYER[keys.issuer_player_id_const]:FindAbilityByName(ability:GetAbilityName()):CastAbility()
-									if PlayerResource:IsUnitSelected(keys.issuer_player_id_const, EntIndexToHScript(ent_id)) then
-										PlayerResource:NewSelection(keys.issuer_player_id_const, TurboCourier.COURIER_PLAYER[keys.issuer_player_id_const])
+						if ability.GetName then
+							if ability:GetName() ~= "" and ability:GetAbilityName() then
+								if TurboCourier.COURIER_PLAYER[keys.issuer_player_id_const] then
+									if TurboCourier.COURIER_PLAYER[keys.issuer_player_id_const]:FindAbilityByName(ability:GetAbilityName()) then
+										TurboCourier.COURIER_PLAYER[keys.issuer_player_id_const]:FindAbilityByName(ability:GetAbilityName()):CastAbility()
+										if PlayerResource:IsUnitSelected(keys.issuer_player_id_const, EntIndexToHScript(ent_id)) then
+											PlayerResource:NewSelection(keys.issuer_player_id_const, TurboCourier.COURIER_PLAYER[keys.issuer_player_id_const])
+										end
 									end
 								end
 							end

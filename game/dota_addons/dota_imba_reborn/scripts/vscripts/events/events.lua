@@ -882,9 +882,18 @@ function GameMode:OnTeamKillCredit(keys)
 			PlayerResource:IncrementDeathstreak(victim_id)
 
 			-- Show Deathstreak message
-			if PlayerResource.GetPlayer == nil or PlayerResource:GetPlayer(victim_id).GetAssignedHero == nil or PlayerResource:GetPlayer(victim_id):GetAssignedHero() == nil then
+			if PlayerResource.GetPlayer == nil then
 				return
 			end
+
+			if PlayerResource:GetPlayer(victim_id).GetAssignedHero == nil then
+				return
+			end
+
+			if PlayerResource:GetPlayer(victim_id):GetAssignedHero() == nil then
+				return
+			end
+
 			local victim_hero = PlayerResource:GetPlayer(victim_id):GetAssignedHero()
 			local victim_player_name = PlayerResource:GetPlayerName(victim_id)
 			local victim_death_streak = PlayerResource:GetDeathstreak(victim_id)
