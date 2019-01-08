@@ -405,18 +405,19 @@ function imba_winter_wyvern_splinter_blast:OnProjectileHit_ExtraData(target, loc
 		
 		caster:EmitSound("Hero_Winter_Wyvern.SplinterBlast.Splinter");
 
-		local ability_winters_curse = caster:FindAbilityByName("imba_winter_wyvern_winters_curse");
-		if ability_winters_curse and not ability_winters_curse:IsCooldownReady() then
-			local cdr
-			if target:IsHero() and not target:IsIllusion() then
-				cdr = ExtraData.cdr_hero;
-			else
-				cdr = ExtraData.cdr_units;
-			end
-			local current_cooldown = ability_winters_curse:GetCooldownTimeRemaining();
-			ability_winters_curse:EndCooldown();
-			ability_winters_curse:StartCooldown(current_cooldown - cdr);
-		end
+		-- This wasn't talked about in the ability description -_-
+		-- local ability_winters_curse = caster:FindAbilityByName("imba_winter_wyvern_winters_curse");
+		-- if ability_winters_curse and not ability_winters_curse:IsCooldownReady() then
+			-- local cdr
+			-- if target:IsHero() and not target:IsIllusion() then
+				-- cdr = ExtraData.cdr_hero;
+			-- else
+				-- cdr = ExtraData.cdr_units;
+			-- end
+			-- local current_cooldown = ability_winters_curse:GetCooldownTimeRemaining();
+			-- ability_winters_curse:EndCooldown();
+			-- ability_winters_curse:StartCooldown(current_cooldown - cdr);
+		-- end
 
 		local damage_table 			= {};
 		damage_table.attacker 		= caster;
