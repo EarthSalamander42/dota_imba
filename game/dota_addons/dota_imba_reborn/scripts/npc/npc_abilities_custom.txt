@@ -750,6 +750,16 @@
 				"var_type"								"FIELD_FLOAT"
 				"curse_of_avernus_multiplier"			"2"
 			}
+			"05"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"reduction_duration"					"20"
+			}
+			"06"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"reduction_multiplier"					"20"
+			}
 		}
 
 		"precache"
@@ -4003,6 +4013,7 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"cast_range"			"1000 1500 2000 2500"
+				"LinkedSpecialBonus"	"special_bonus_imba_disruptor_9"
 			}
 
 			"12"
@@ -4067,8 +4078,9 @@
 			}
 			"02"
 			{
-				"var_type"			"FIELD_FLOAT"
-				"formation_delay"	"1.2"
+				"var_type"				"FIELD_FLOAT"
+				"formation_delay"		"1.2"
+				"LinkedSpecialBonus"	"special_bonus_imba_disruptor_10"
 			}
 			"03"
 			{
@@ -4170,12 +4182,12 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"duration"				"5"
+				"duration"				"7"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"scepter_duration"		"7"
+				"scepter_duration"		"10"
 			}
 			"04"
 			{
@@ -4446,6 +4458,56 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"value2"				"0.35"
+			}
+		}
+	}
+
+	"special_bonus_imba_disruptor_9"	// +1500 Glimpse Cast Range
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_disruptor_glimpse"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"1500"
+			}
+		}
+	}
+	
+	"special_bonus_imba_disruptor_10"	// Kinetic Field formation delay halved
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_disruptor_kinetic_field"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"value"					"0.5"
 			}
 		}
 	}
@@ -6682,6 +6744,11 @@
 				"var_type"					"FIELD_INTEGER"
 				"tsunami_stun"				"1"
 			}
+			"12"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cleave_damage"				"175"
+			}
 		}
 	}
 
@@ -6842,12 +6909,12 @@
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"ghostship_speed"				"650 750 850"
+				"ghostship_speed"				"650"
 			}
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"start_distance"				"1000 1400 1800"
+				"start_distance"				"1000"
 			}
 			"05"
 			{
@@ -6908,7 +6975,7 @@
 			"16"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"tide_wave_speed"				"500"
+				"tide_wave_speed"				"200"
 			}
 			"17"
 			{
@@ -6938,7 +7005,7 @@
 			"22"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"scepter_cast_range"			"2000"
+				"scepter_cast_range"			"1500"
 			}
 		}
 	}
@@ -8660,7 +8727,7 @@
 		//General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"              	"ability_lua"
-		"AbilityBehavior"        	"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityBehavior"        	"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AbilityUnitTargetTeam"	 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"  	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetFlags" 	"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
@@ -13434,6 +13501,18 @@
 				"max_stacks"			"25"
 				"LinkedSpecialBonus"	"special_bonus_imba_pudge_4"
 			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"base_health_regen"		"6 9 12 15"
+				"LinkedSpecialBonus"	"special_bonus_imba_pudge_4"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"stack_health_regen"	"3"
+				"LinkedSpecialBonus"	"special_bonus_imba_pudge_4"
+			}
 		}
 	}
 
@@ -14503,7 +14582,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"cooldown_reduction"		"0.15"
+				"cooldown_reduction"		"0.1"
 			}
 		}
 	}
@@ -14721,7 +14800,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"pain_reflect_pct"		"20 30 40 50"
+				"pain_reflect_pct"		"10 15 20 25"
 			}
 			"05"
 			{
@@ -31996,7 +32075,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"base_attack_time"		"1.50"
+				"base_attack_time"		"1.45"
 			}	
 			"08"
 			{

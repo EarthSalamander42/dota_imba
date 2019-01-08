@@ -839,9 +839,12 @@ function CDOTA_BaseNPC:CenterCameraOnEntity(hTarget, iDuration)
 	if iDuration ~= -1 then
 		Timers:CreateTimer(iDuration, function()
 			PlayerResource:SetCameraTarget(self:GetPlayerID(), nil)
---			Timers:CreateTimer(0.1, function() --fail-safe
---				PlayerResource:SetCameraTarget(self:GetPlayerID(), nil)
---			end)
+			Timers:CreateTimer(FrameTime(), function() --fail-safe
+				PlayerResource:SetCameraTarget(self:GetPlayerID(), nil)
+			end)
+			Timers:CreateTimer(FrameTime() * 3, function() --fail-safe
+				PlayerResource:SetCameraTarget(self:GetPlayerID(), nil)
+			end)
 		end)
 	end
 end

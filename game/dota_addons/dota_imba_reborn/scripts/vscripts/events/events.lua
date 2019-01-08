@@ -109,10 +109,12 @@ function GameMode:OnGameRulesStateChange(keys)
 	elseif newState == DOTA_GAMERULES_STATE_HERO_SELECTION then
 		if IMBA_PICK_SCREEN == false then
 			for i = 0, PlayerResource:GetPlayerCount() - 1 do
-				if PlayerResource:GetTeam(i) == DOTA_TEAM_GOODGUYS then
-					PlayerResource:SetCameraTarget(i, GoodCamera)
-				else
-					PlayerResource:SetCameraTarget(i, BadCamera)
+				if PlayerResource:IsValidPlayer(i) then
+					if PlayerResource:GetTeam(i) == DOTA_TEAM_GOODGUYS then
+						PlayerResource:SetCameraTarget(i, GoodCamera)
+					else
+						PlayerResource:SetCameraTarget(i, BadCamera)
+					end
 				end
 			end
 
