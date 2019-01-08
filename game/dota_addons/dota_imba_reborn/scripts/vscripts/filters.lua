@@ -479,7 +479,7 @@ function GameMode:OrderFilter( keys )
 				else
 					local ability = EntIndexToHScript(keys["entindex_ability"])
 					if ability then
-						if ability:GetAbilityName() then
+						if ability:GetName() ~= "" and ability:GetAbilityName() then
 							if TurboCourier.COURIER_PLAYER[keys.issuer_player_id_const] then
 								if TurboCourier.COURIER_PLAYER[keys.issuer_player_id_const]:FindAbilityByName(ability:GetAbilityName()) then
 									TurboCourier.COURIER_PLAYER[keys.issuer_player_id_const]:FindAbilityByName(ability:GetAbilityName()):CastAbility()

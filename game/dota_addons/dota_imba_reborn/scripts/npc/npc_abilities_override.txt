@@ -6829,6 +6829,7 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"bear_bat"					"1.65 1.45 1.25 1.05"
+				"LinkedSpecialBonus"		"special_bonus_unique_lone_druid_10"
 			}
 			"04"
 			{
@@ -6838,13 +6839,13 @@
 			}
 			"05"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"backlash_damage"			"10"
+				"var_type"					"FIELD_FLOAT"
+				"backlash_damage"			"10.0"
 			}
 			"06"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"cooldown_scepter"			"60"
+				"var_type"					"FIELD_FLOAT"
+				"cooldown_scepter"			"60.0"
 			}
 		}
 	}
@@ -14059,17 +14060,17 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"bash_chance"		"15"
+				"bash_chance"		"20"
 			}
 			"02"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"bonus_damage"		"50"
+				"bonus_damage"		"100"
 			}
 			"03"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"stun_duration"		"1.2"
+				"stun_duration"		"1.65"
 			}
 		}
 	}
@@ -14204,21 +14205,6 @@
 	"roshan_spell_block"
 	{
 		"AbilityCooldown"				"10.0"
-	}
-
-	//=================================================================================================================
-	// Roshan: Bash
-	//=================================================================================================================
-	"roshan_bash"
-	{
-		"AbilitySpecial"
-		{
-			"02"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"bonus_damage"		"250"
-			}
-		}
 	}
 
 	//=================================================================================================================

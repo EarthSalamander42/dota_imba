@@ -1455,11 +1455,13 @@ function modifier_imba_moonlight_shadow_talent_starstorm:OnCreated()
 
 		-- Wait for the delay time before starting to think
 		Timers:CreateTimer(self.delay_time, function()
-			-- Think immediately
-			self:OnIntervalThink()
+			if not self:IsNull() then
+				-- Think immediately
+				self:OnIntervalThink()
 
-			-- Set thinker to think every second
-			self:StartIntervalThink(1)
+				-- Set thinker to think every second
+				self:StartIntervalThink(1)
+			end
 		end)
 	end
 end

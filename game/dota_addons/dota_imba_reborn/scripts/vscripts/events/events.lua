@@ -655,7 +655,7 @@ function GameMode:OnPlayerChat(keys)
 	local caster = PlayerResource:GetPlayer(keys.playerid):GetAssignedHero()
 
 	for str in string.gmatch(text, "%S+") do
-		if IsInToolsMode() or GameRules:IsCheatMode() and api.imba.is_developer(steamid) then
+		if IsInToolsMode() or GameRules:IsCheatMode() and (api.imba ~= nil and api.imba.is_developer(steamid)) then
 			if str == "-dev_remove_units" then
 				GameMode:RemoveUnits(true, true, true)
 			end
