@@ -209,7 +209,7 @@ function imba_elder_titan_ancestral_spirit:OnSpellStart()
 	if caster:HasTalent("special_bonus_imba_elder_titan_2") then
 		spirit_movespeed = self:GetSpecialValueFor("speed") + self:GetCaster():FindTalentValue("special_bonus_imba_elder_titan_2")
 	end
-
+	
 	EmitSoundOn("Hero_ElderTitan.AncestralSpirit.Cast", caster)
 	caster:SwapAbilities("imba_elder_titan_ancestral_spirit", "imba_elder_titan_return_spirit", false, true)
 
@@ -220,8 +220,8 @@ function imba_elder_titan_ancestral_spirit:OnSpellStart()
 	astral_spirit = CreateUnitByName("npc_dota_elder_titan_ancestral_spirit", target_point, true, caster, caster, caster:GetTeamNumber())
 	astral_spirit:SetControllableByPlayer(caster:GetPlayerID(), true)
 	astral_spirit:AddNewModifier(astral_spirit, self, "modifier_imba_elder_titan_ancestral_spirit_self", {})
-	astral_spirit:AddNewModifier(astral_spirit, nil, "modifier_imba_haste_rune_speed_limit_break", {})
-	astral_spirit:SetBaseMoveSpeed(spirit_movespeed)
+	--astral_spirit:AddNewModifier(astral_spirit, nil, "modifier_imba_haste_rune_speed_limit_break", {})
+	astral_spirit.basemovespeed = spirit_movespeed
 
 	if not astral_spirit:IsNull() then
 		if caster:FindAbilityByName("imba_elder_titan_echo_stomp") ~= nil then
@@ -337,6 +337,10 @@ function modifier_imba_elder_titan_ancestral_spirit_self:OnCreated()
 	if IsServer() then
 		EmitSoundOn("Hero_ElderTitan.AncestralSpirit.Spawn", self:GetParent())
 		self:StartIntervalThink(0.1)
+		
+		Timers:CreateTimer(FrameTime(), function()
+			self:GetParent():SetBaseMoveSpeed(self:GetParent().basemovespeed)
+		end)
 	end
 end
 
@@ -481,6 +485,18 @@ function modifier_imba_elder_titan_ancestral_spirit_self:CheckState()
 		end
 		return state
 	end
+end
+
+function modifier_imba_elder_titan_ancestral_spirit_self:DeclareFunctions()
+	local funcs =
+		{
+			MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE_MIN,
+		}
+	return funcs
+end
+
+function modifier_imba_elder_titan_ancestral_spirit_self:GetModifierMoveSpeed_AbsoluteMin (keys)
+	return self:GetParent().basemovespeed
 end
 
 -- Natural Order
