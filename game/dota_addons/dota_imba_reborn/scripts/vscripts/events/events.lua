@@ -108,15 +108,15 @@ function GameMode:OnGameRulesStateChange(keys)
 		CustomNetTables:SetTableValue("game_options", "player_colors", hex_colors)
 	elseif newState == DOTA_GAMERULES_STATE_HERO_SELECTION then
 		if IMBA_PICK_SCREEN == false then
-			for i = 0, PlayerResource:GetPlayerCount() - 1 do
-				if PlayerResource:IsValidPlayer(i) then
-					if PlayerResource:GetTeam(i) == DOTA_TEAM_GOODGUYS then
-						PlayerResource:SetCameraTarget(i, GoodCamera)
-					else
-						PlayerResource:SetCameraTarget(i, BadCamera)
-					end
-				end
-			end
+--			for i = 0, PlayerResource:GetPlayerCount() - 1 do
+--				if PlayerResource:IsValidPlayer(i) then
+--					if PlayerResource:GetTeam(i) == DOTA_TEAM_GOODGUYS then
+--						PlayerResource:SetCameraTarget(i, GoodCamera)
+--					else
+--						PlayerResource:SetCameraTarget(i, BadCamera)
+--					end
+--				end
+--			end
 
 			if IsInToolsMode() then
 				for i = 1, PlayerResource:GetPlayerCount() - 1 do
@@ -146,13 +146,6 @@ function GameMode:OnGameRulesStateChange(keys)
 			self:SetupContributors()
 			self:SetupFrostivus()
 			self:SetupShrines()
-
-			-- attempt to fix courier uncontrollable until manually selected
-			for _, hero in pairs(HeroList:GetAllHeroes()) do
-				for _, courier in pairs(TurboCourier.COURIER_PLAYER[hero:GetPlayerID()]) do
-					courier:SetControllableByPlayer(hero:GetPlayerID(), true)
-				end
-			end
 		end
 
 		local fountainEntities = Entities:FindAllByClassname("ent_dota_fountain")
@@ -889,7 +882,7 @@ function GameMode:OnTeamKillCredit(keys)
 			PlayerResource:IncrementDeathstreak(victim_id)
 
 			-- Show Deathstreak message
-			if PlayerResource:GetPlayer(victim_id):GetAssignedHero() == nil then
+			if PlayerResource.GetPlayer == nil or PlayerResource:GetPlayer(victim_id).GetAssignedHero == nil or PlayerResource:GetPlayer(victim_id):GetAssignedHero() == nil then
 				return
 			end
 			local victim_hero = PlayerResource:GetPlayer(victim_id):GetAssignedHero()

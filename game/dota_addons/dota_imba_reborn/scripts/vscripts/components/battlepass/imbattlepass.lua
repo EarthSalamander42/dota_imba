@@ -165,6 +165,8 @@ function Imbattlepass:GetBlinkEffect(hero)
 	local effect2 = "particles/items_fx/blink_dagger_end.vpcf"
 	local icon = 0
 
+	if hero.GetPlayerID == nil then return end
+
 	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BLINK["blink12"] then
 		effect = "particles/econ/events/ti8/blink_dagger_ti8_start_lvl2.vpcf"
 		effect2 = "particles/econ/events/ti8/blink_dagger_ti8_end_lvl2.vpcf"

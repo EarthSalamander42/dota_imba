@@ -105,7 +105,7 @@ end
 
 function GetPlayerInfoIXP() -- yet it has too much useless loops, format later. Need to be loaded in game setup
 	if not api.players then
-		print("IMBA API not ready! Retry...")
+--		print("IMBA API not ready! Retry...")
 		Timers:CreateTimer(1.0, function()
 			GetPlayerInfoIXP()
 		end)
@@ -113,7 +113,7 @@ function GetPlayerInfoIXP() -- yet it has too much useless loops, format later. 
 		return
 	end
 
-	print("IMBA API ready!")
+--	print("IMBA API ready!")
 
 	local current_xp_in_level = {}
 
@@ -121,7 +121,7 @@ function GetPlayerInfoIXP() -- yet it has too much useless loops, format later. 
 		local global_xp = tonumber(api:GetPlayerXP(ID))
 --		print("Player "..ID.." XP: "..global_xp)
 		local level = GetXPLevelByXp(global_xp)
-		print("Battlepass for ID "..ID..": "..level)
+--		print("Battlepass for ID "..ID..": "..level)
 		local previous_xp = XP_level_table[level - 1]
 		local current_xp_in_level
 		local max_xp
