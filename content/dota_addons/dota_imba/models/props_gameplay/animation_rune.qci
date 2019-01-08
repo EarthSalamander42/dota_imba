@@ -1,0 +1,7 @@
+$sequence layer_animation_rune "animation_rune.dmx" fps 24.000000 hidden
+$sequence animation_rune "animation_rune.dmx" fps 24.000000 noanimation {
+	numframes 25
+	blendlayer layer_animation_rune 0 4 20 24
+	event AE_WPN_HIDE 0
+	event AE_WPN_UNHIDE 24
+}

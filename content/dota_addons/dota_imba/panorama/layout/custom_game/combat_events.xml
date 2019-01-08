@@ -1,0 +1,27 @@
+<root>
+	<styles>
+		<include src="file://{resources}/styles/custom_game/combat_events.css" />
+	</styles>
+
+	<scripts>
+		<include src="file://{resources}/scripts/custom_game/combat_events.js" />
+	</scripts>
+
+	<snippets>
+		<snippet name="ToastPanel">
+			<Panel class="ToastPanel">
+				<Panel id="SlashContainer" hittest="false" hittestchildren="false">
+					<Panel id="TeamColorBar" />
+				</Panel>
+
+				<Panel id="ToastElements" >
+					<Label id="ToastLabel" html="true" />
+				</Panel>
+			</Panel>
+		</snippet>
+	</snippets>
+
+	<Panel hittest="false" class="base">
+		<Panel id="CustomToastManager" hittest="false" hittestchildren="false" />
+	</Panel>
+</root>

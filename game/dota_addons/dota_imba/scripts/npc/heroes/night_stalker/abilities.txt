@@ -1,0 +1,540 @@
+"DOTAAbilities"
+{
+	//=================================================================================================================
+	// Night Stalker's Stalker in the Night
+	//=================================================================================================================
+	"imba_night_stalker_stalker_in_the_night"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"AbilityTextureName"			"custom/stalker_in_the_night"
+		"MaxLevel"						"1"
+		"ScriptFile"					"components/abilities/heroes/hero_night_stalker.lua"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"vision_day_loss"		"600"
+			}
+
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"vision_night_gain"		"1000"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Night Stalker's Void
+	//=================================================================================================================
+	"imba_night_stalker_void"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+
+		// Unit Targeting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"night_stalker_void"
+		"MaxLevel"						"4"
+		"ScriptFile"					"components/abilities/heroes/hero_night_stalker.lua"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"525"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8"
+		"AbilityManaCost"				"100 110 120 130"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_nightstalker.vsndevts"
+			"soundfile"					"soundevents/voscripts/game_sounds_vo_night_stalker.vsndevts"
+			"particle"					"particles/units/heroes/hero_night_stalker/nightstalker_void.vpcf"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"100 200 300 400"
+			}
+
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"ministun_duration"		"0.1"
+			}
+
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"ms_slow_pct"			"50"
+			}
+
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"as_slow"				"50"
+			}
+
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"day_duration"			"1.25"
+			}
+
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"night_pull"			"4"
+			}
+
+			"07"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"night_duration"		"2.5 3 3.5 4"
+			}
+
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"night_extend"			"4"
+			}
+
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"vision_reduction"		"100 200 300 400"
+				"LinkedSpecialBonus"	"special_bonus_imba_night_stalker_1"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Night Stalker's Crippling Fear
+	//=================================================================================================================
+	"imba_night_stalker_crippling_fear"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"night_stalker_crippling_fear"
+		"MaxLevel"						"4"
+		"ScriptFile"					"components/abilities/heroes/hero_night_stalker.lua"
+
+		// Unit Targeting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"500"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"12"
+		"AbilityManaCost"				"50"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_nightstalker.vsndevts"
+			"soundfile"					"soundevents/voscripts/game_sounds_vo_night_stalker.vsndevts"
+			"particle"					"particles/units/heroes/hero_night_stalker/nightstalker_crippling_fear.vpcf"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"day_miss_chance_pct"	"10"
+				"LinkedSpecialBonus"	"special_bonus_imba_night_stalker_2"
+			}
+
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"day_duration"			"3"
+			}
+
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"night_miss_chance_pct"	"50"
+				"LinkedSpecialBonus"	"special_bonus_imba_night_stalker_2"
+			}
+
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"night_duration"		"5 6 7 8"
+			}
+
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius_fear"			"900"
+			}
+
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"fear_duartion"			"3 4 5 6"
+				"LinkedSpecialBonus"	"special_bonus_imba_night_stalker_4"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Night Stalker's Hunter in the Night
+	//=================================================================================================================
+	"imba_night_stalker_hunter_in_the_night"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"			"night_stalker_hunter_in_the_night"
+		"ScriptFile"					"components/abilities/heroes/hero_night_stalker.lua"
+//		"AbilityManaCost"				"80"
+		"AbilityCooldown"				"30 26 22 18"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/voscripts/game_sounds_vo_night_stalker.vsndevts"
+			"particle"					"particles/units/heroes/hero_night_stalker/nightstalker_night_buff.vpcf"
+			"particle"					"particles/units/heroes/hero_night_stalker/nightstalker_change.vpcf"
+			"model"						"models/heroes/nightstalker/nightstalker_night.vmdl"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"base_bonus_ms_pct"	"20 25 30 35"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"base_bonus_as"		"40 60 80 100"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"night_vision_bonus"	"100 200 300 400"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"ms_increase_per_stack"	"3"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"as_increase_per_stack"	"10"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"flying_duration"		"3"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Night Stalker's Darkness
+	//=================================================================================================================
+	"imba_night_stalker_darkness"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityTextureName"			"night_stalker_darkness"
+		"MaxLevel"						"3"
+		"LevelsBetweenUpgrades"			"6"
+		"ScriptFile"					"components/abilities/heroes/hero_night_stalker.lua"
+		"HasScepterUpgrade"				"1"
+
+		// Unit Targeting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"160 120 80"
+		"AbilityCastAnimation"			"ACT_DOTA_NIGHTSTALKER_TRANSITION"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_nightstalker.vsndevts"
+			"particle"					"particles/units/heroes/hero_night_stalker/nightstalker_ulti.vpcf"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"duration"					"40"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"vision_reduction_pct"		"25"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"enemy_vision_duration"		"3"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Night Stalker's Talents
+	//=================================================================================================================
+	"special_bonus_imba_night_stalker_1" // Void vision reduction increase
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_night_stalker_void"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"						"200"
+			}
+		}
+	}
+
+	"special_bonus_imba_night_stalker_2" // Crippling Fear miss chance increase
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_night_stalker_crippling_fear"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"						"25"
+			}
+		}
+	}
+
+	"special_bonus_imba_night_stalker_3" // Hunter in the Night bonuses
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_night_stalker_hunter_in_the_night"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"ms_bonus_pct"				"10"
+			}
+
+			"02"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"as_bonus"					"20"
+			}
+		}
+	}
+
+	"special_bonus_imba_night_stalker_4" // Crippling Fear On-kill effect duration
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_night_stalker_crippling_fear"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"						"1"
+			}
+		}
+	}
+
+	"special_bonus_imba_night_stalker_5" // Stalker in the Night night vision bonus
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_night_stalker_stalker_in_the_night"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"						"400"
+			}
+		}
+	}
+
+	"special_bonus_imba_night_stalker_6" // Crippling Fear now mutes the target as well
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_night_stalker_crippling_fear"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"						"1"
+			}
+		}
+	}
+
+	"special_bonus_imba_night_stalker_7" // Darkness maximum vision range reduction
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_night_stalker_darkness"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"						"150"
+			}
+		}
+	}
+
+	"special_bonus_imba_night_stalker_8" // Crippling Fear cooldown decrease
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_night_stalker_crippling_fear"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"						"8"
+			}
+		}
+	}
+}

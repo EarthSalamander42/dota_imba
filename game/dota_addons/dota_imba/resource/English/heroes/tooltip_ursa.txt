@@ -1,0 +1,103 @@
+// Ursa's Earthshock
+"DOTA_Tooltip_ability_imba_ursa_earthshock"                            "Earthshock"
+"DOTA_Tooltip_ability_imba_ursa_earthshock_Description"                "Ursa slams the earth, causing a powerful shock to damage and slow all nearby enemies for %duration% seconds.\n<font color='#FF7800'>Cripple Prey:</font> increases damage and slow the closer targets are to Ursa.\n<font color='#FF7800'>Trembling Steps:</font> for up to %duration% seconds after casting Earthshock, the ground trembles around Ursa, dealing additional damage and slow whenever he moves.\n<font color='#FF7800'>Rage Shock:</font> casting Earthshock while Enraged is active increases its damage."
+"DOTA_Tooltip_ability_imba_ursa_earthshock_Lore"                        "The very steps of a male ursine shake the ground as well as the resolve of opposing warriors."
+"DOTA_Tooltip_ability_imba_ursa_earthshock_Note0"                      "Damage and slow start at base values on the edge of the AoE and increase every 25 units closer to Ursa."
+"DOTA_Tooltip_ability_imba_ursa_earthshock_Note1"                      "Trembling Steps' radius is half the Earthshock radius on cast, meaning it grows when casting while Enraged."
+"DOTA_Tooltip_ability_imba_ursa_earthshock_Note2"                      "Rage Shock grants an additional 100% damage. The slow remains unaffected."
+"DOTA_Tooltip_ability_imba_ursa_earthshock_radius"                      "RADIUS:"
+"DOTA_Tooltip_ability_imba_ursa_earthshock_base_damage"                "BASE DAMAGE:"
+"DOTA_Tooltip_ability_imba_ursa_earthshock_slow_pct"                    "%SLOW:"
+"DOTA_Tooltip_ability_imba_ursa_earthshock_bonus_effects_radius"                    "TREMBLING STEPS RANGE:"
+"DOTA_Tooltip_ability_imba_ursa_earthshock_trembling_steps_damage"                  "TREMBLING STEPS DAMAGE:"
+"DOTA_Tooltip_ability_imba_ursa_earthshock_trembling_steps_cooldown"                "TREMBLING STEPS COOLDOWN:"
+
+"DOTA_Tooltip_modifier_imba_earthshock_slow"                            "Earthshock"
+"DOTA_Tooltip_modifier_imba_earthshock_slow_Description"                "Movement speed slowed."
+
+"DOTA_Tooltip_modifier_imba_trembling_steps_buff"                      "Trembling Steps"
+"DOTA_Tooltip_modifier_imba_trembling_steps_buff_Description"          "Moving will damage and slow nearby enemies."
+
+"DOTA_Tooltip_modifier_imba_trembling_steps_debuff"                    "Trembling Steps"
+"DOTA_Tooltip_modifier_imba_trembling_steps_debuff_Description"                     "Movement speed slowed."
+
+// Ursa's Overpower
+"DOTA_Tooltip_ability_imba_ursa_overpower"                              "Overpower"
+"DOTA_Tooltip_ability_imba_ursa_overpower_Description"                  "Using his skill in combat, Ursa gains massive amounts of attack speed for a number of attacks.\n<font color='#FF7800'>Roar of the Beast:</font> Ursa lets out a terrifying roar which temporarily disarms nearby enemies.\n<font color='#FF7800'>Fear The Ripper:</font> Casting Overpower while Enraged increases the disarm radius."
+"DOTA_Tooltip_ability_imba_ursa_overpower_Lore"                        "For a behemoth of his size, Ursa is deceptively nimble."
+"DOTA_Tooltip_ability_imba_ursa_overpower_Note0"                        "Disarm does not pierce spell immunity and can be dispelled by any purge."
+"DOTA_Tooltip_ability_imba_ursa_overpower_attacks_num"                  "NUMBER OF ATTACKS:"
+"DOTA_Tooltip_ability_imba_ursa_overpower_aspd_duration"                "BUFF DURATION:"
+"DOTA_Tooltip_ability_imba_ursa_overpower_disarm_radius"                "DISARM RADIUS:"
+"DOTA_Tooltip_ability_imba_ursa_overpower_disarm_duration"              "DISARM DURATION:"
+"DOTA_Tooltip_ability_imba_ursa_overpower_attack_speed_bonus"          "ATTACK SPEED BONUS:"
+
+"DOTA_Tooltip_modifier_imba_overpower_buff"                            "Overpower"
+"DOTA_Tooltip_modifier_imba_overpower_buff_Description"                "Attack speed greatly increased."
+
+"DOTA_Tooltip_modifier_imba_overpower_disarm"                          "Roar of the Beast"
+"DOTA_Tooltip_modifier_imba_overpower_disarm_Description"              "Disarmed."
+
+"DOTA_Tooltip_modifier_imba_overpower_talent_fangs"                 "Fangs Bared"
+"DOTA_Tooltip_modifier_imba_overpower_talent_fangs_Description"           "Ursa passively casts Overpower whenever it's off cooldown."
+
+// Ursa's Fury Swipes
+"DOTA_Tooltip_ability_imba_ursa_fury_swipes"                            "Fury Swipes"
+"DOTA_Tooltip_ability_imba_ursa_fury_swipes_Description"                "Ursa's claws dig deeper wounds in the enemy, causing consecutive attacks to the same enemy to deal more damage. If the same target is not attacked for %stack_duration% seconds, the bonus damage is lost.\n<font color='#FF7800'>Devastating Blow:</font> Every third attack on the same enemy, Ursa rips an internal organ apart, increasing that attack's Fury Swipes damage."
+"DOTA_Tooltip_ability_imba_ursa_fury_swipes_Lore"                      "In nature, the wounded rarely survive the attacks of hungry predators."
+"DOTA_Tooltip_ability_imba_ursa_fury_swipes_damage_per_stack"          "DAMAGE PER STACK:"
+"DOTA_Tooltip_ability_imba_ursa_fury_swipes_roshan_stack_duration"                  "ROSHAN DURATION:"
+"DOTA_Tooltip_ability_imba_ursa_fury_swipes_deep_stack_multiplier"                  "%DEEP STRIKE MULTIPLIER:"
+
+"DOTA_Tooltip_modifier_imba_fury_swipes_debuff"                        "Fury Swipes"
+"DOTA_Tooltip_modifier_imba_fury_swipes_debuff_Description"            "Taking increased damage from Ursa."
+
+"DOTA_Tooltip_modifier_imba_fury_swipes_talent_ripper"                "Ripper Claws"
+"DOTA_Tooltip_modifier_imba_fury_swipes_talent_ripper_Description"          "Armor reduced by %dMODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS%."
+
+// Ursa's Enrage
+"DOTA_Tooltip_ability_imba_ursa_enrage"								"Enrage"
+"DOTA_Tooltip_ability_imba_ursa_enrage_Description"					"Ursa goes into a frenzy, multiplying his Fury Swipes damage and causing him to take %damage_reduction%%% less damage. Purges any existing debuffs.\n<font color='#FF7800'>Raw Instincts:</font> While Enraged, Earthshock and Overpower cool down twice as fast, and the radius of those skills increases.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
+"DOTA_Tooltip_ability_imba_ursa_enrage_aghanim_description"			"Reduces cooldown, and allows casting of Enrage while disabled."
+"DOTA_Tooltip_ability_imba_ursa_enrage_Note0"						"Scepter Enrage cannot be used when silenced, hexed, or prevented froma acting."
+"DOTA_Tooltip_ability_imba_ursa_enrage_Lore"						"Ulfsaar succumbs to his ancient spirit, becoming the most ferocious creature on the battlefield."
+"DOTA_Tooltip_ability_imba_ursa_enrage_duration"					"DURATION:"
+"DOTA_Tooltip_ability_imba_ursa_enrage_fury_swipes_multiplier"		"FURY SWIPES MULTIPLIER:"
+"DOTA_Tooltip_ability_imba_ursa_enrage_bonus_radius_skills"			"RAW INSTINCTS BONUS RADIUS:"
+"DOTA_Tooltip_ability_imba_ursa_enrage_damage_reduction"			"BONUS DAMAGE REDUCTION/TENACITY:"
+"DOTA_Tooltip_ability_imba_ursa_enrage_scepter_cooldown"			"SCEPTER COOLDOWN:"
+
+"DOTA_Tooltip_modifier_imba_enrage_buff"							"Enrage"
+"DOTA_Tooltip_modifier_imba_enrage_buff_Description"				"Reducing incoming damage. All skills cool down twice as fast."
+
+"DOTA_Tooltip_modifier_imba_talent_enrage_prevent"                     "Enrage Cooldown"
+"DOTA_Tooltip_modifier_imba_talent_enrage_prevent_Description"                     "Enrage automatic activation is recharging."
+
+"DOTA_Tooltip_modifier_imba_talent_enrage_damage"                     "Enrage Ready"
+"DOTA_Tooltip_modifier_imba_talent_enrage_damage_Description"         "Enrage will automatically activate upon reaching its damage threshold."
+
+// Ursa's Territorial Hunter
+"DOTA_Tooltip_ability_imba_ursa_territorial_hunter"                    "Territorial Hunter"
+"DOTA_Tooltip_ability_imba_ursa_territorial_hunter_Description"                     "Ursa sharpens his claws on a tree, marking the surrounding area as his hunting grounds. His powerful sense of smell grants vision of any enemies in his designated territory, and can even sense the position of invisible enemies inside it, although those still cannot be attacked. Marking a new tree forfeits the previous territory."
+"DOTA_Tooltip_ability_imba_ursa_territorial_hunter_Lore"                "He who enters ursine territory can be many things: reckless, foolish, or overconfident. The Ursa Warrior cares not - fresh meat, willingly given, is a delicacy and a gift."
+"DOTA_Tooltip_ability_imba_ursa_territorial_hunter_Note0"              "The mark is visible to both teams and is destroyed if the marked tree is cut down."
+"DOTA_Tooltip_ability_imba_ursa_territorial_hunter_vision_range"                    "TERRITORY RADIUS:"
+
+"DOTA_Tooltip_modifier_terrorital_hunter_talent_tenacity"             "Home Turf"
+"DOTA_Tooltip_modifier_terrorital_hunter_talent_tenacity_Description"       "Tenacity increased as long as the caster is near his Terrorial Hunter tree mark."
+
+// Ursa's Custom Talents
+"DOTA_Tooltip_ability_special_bonus_imba_ursa_1"				"Auto-Enrage"
+"DOTA_Tooltip_ability_special_bonus_imba_ursa_1_Description"	"Enrage is activated automatically after taking %damage_threshold% damage. Resets after %damage_reset% seconds"
+"DOTA_Tooltip_ability_special_bonus_imba_ursa_2"				"Trembling Steps CDR based on strength"
+"DOTA_Tooltip_ability_special_bonus_imba_ursa_2_Description"	"Every %strength_per_cd% Strength points Ursa has, Trembling Steps cooldown is reduced by %cooldown_improvement%, up to %threshold% seconds"
+"DOTA_Tooltip_ability_special_bonus_imba_ursa_3"				"Territorial Hunter Tenacity"
+"DOTA_Tooltip_ability_special_bonus_imba_ursa_3_Description"	"Territorial Hunter grants %tenacity_bonus%% Tenacity to Ursa, and has its cooldown refreshed if Ursa kills an enemy hero in it"
+"DOTA_Tooltip_ability_special_bonus_imba_ursa_4"				"Fury Swipes reduces armor"
+"DOTA_Tooltip_ability_special_bonus_imba_ursa_4_Description"	"Fury Swipes' Devastating Blow reduces the armor of the target by %armor_reduction% for %duration% seconds. Stackable and refreshable"
+"DOTA_Tooltip_ability_special_bonus_imba_ursa_5"				"Fury Swipes health as damage"
+"DOTA_Tooltip_ability_special_bonus_imba_ursa_5_Description"	"Fury Swipes' Devastating Blow deals %maximum_health_dmg%% of the target's maximum health if the target has more than %health_threshold_pct%% health"
+"DOTA_Tooltip_ability_special_bonus_imba_ursa_6"				"Overpower now also roots affected targets"
+"DOTA_Tooltip_ability_special_bonus_imba_ursa_7"				"Enrage adds %value%% of your current health as damage"
+"DOTA_Tooltip_ability_special_bonus_imba_ursa_8"				"Overpower passive"
+"DOTA_Tooltip_ability_special_bonus_imba_ursa_8_Description"	"Overpower becomes a passive, triggering a %value% seconds attack speed bonus when Ursa starts an attack and it's off cooldown"

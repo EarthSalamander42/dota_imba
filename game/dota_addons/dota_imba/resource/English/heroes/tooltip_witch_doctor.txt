@@ -1,0 +1,78 @@
+// Witch Doctor's Paralyzing Cask
+"DOTA_Tooltip_ability_imba_witch_doctor_paralyzing_cask"                "Paralyzing Cask"
+"DOTA_Tooltip_ability_imba_witch_doctor_paralyzing_cask_Description"                "Launches a cask of paralyzing powder that ricochets between enemy units, stunning and damaging those it hits.\n<font color='#FF7800'>Master splinter:</font> If enough enemies are present, the cask will split in two, and both casks will keep bouncing. This does not increase the bounce limit and inherits its remaining bounces, and can happen only a limited amount of times.\n<font color='#FF7800'>Bad medicine:</font> Paralyzing Cask can be cast on allies, making it only bounce between allies, healing them equal to the Cask's damage."
+"DOTA_Tooltip_ability_imba_witch_doctor_paralyzing_cask_Lore"          "The Witch Doctor recycles the bones of fallen friends and foes, using the powder as part of his arsenal of charms and alchemy."
+"DOTA_Tooltip_ability_imba_witch_doctor_paralyzing_cask_Note0"          "Illusions are considered as creeps in terms of stun duration, damage, and bounce count."
+"DOTA_Tooltip_ability_imba_witch_doctor_paralyzing_cask_Note1"          "The cask travels at a speed of 1000 and cannot be disjointed."
+"DOTA_Tooltip_ability_imba_witch_doctor_paralyzing_cask_Note2"          "Cannot bounce on invisible, invulnerable or hidden units, but can bounce on units in the Fog of War."
+"DOTA_Tooltip_ability_imba_witch_doctor_paralyzing_cask_hero_duration"              "HERO STUN DURATION:"
+"DOTA_Tooltip_ability_imba_witch_doctor_paralyzing_cask_creep_duration"             "CREEP STUN DURATION:"
+"DOTA_Tooltip_ability_imba_witch_doctor_paralyzing_cask_hero_damage"                "HERO DAMAGE/HEAL:"
+"DOTA_Tooltip_ability_imba_witch_doctor_paralyzing_cask_creep_damage"               "CREEP DAMAGE/HEAL:"
+"DOTA_Tooltip_ability_imba_witch_doctor_paralyzing_cask_bounce_range"               "BOUNCE RADIUS:"
+"DOTA_Tooltip_ability_imba_witch_doctor_paralyzing_cask_bounces"                    "MAX BOUNCES:"
+"DOTA_Tooltip_ability_imba_witch_doctor_paralyzing_cask_split_amount"               "MAX SPLITS:"
+
+// Witch Doctor's Voodoo Restoration
+"DOTA_Tooltip_ability_imba_witch_doctor_voodoo_restoration"            "Voodoo Restoration"
+"DOTA_Tooltip_ability_imba_witch_doctor_voodoo_restoration_Description"             "Witch Doctor focuses his magic to heal nearby allied units.\n<font color='#FF7800'>Witch PhD:</font> Healing per second is increased by a percantage of Witch Doctor's intelligence.\n<font color='#FF7800'>Feelsgoodman:</font> The heal is also amplified by spell amp.\n<font color='#FF7800'>Practiced malpractice:</font>  After being continuously healed for %cleanse_interval% seconds, allies will have a basic dispel applied to them."
+"DOTA_Tooltip_ability_imba_witch_doctor_voodoo_restoration_note0"                   "Does not interrupt channeling spells upon toggling."
+"DOTA_Tooltip_ability_imba_witch_doctor_voodoo_restoration_note1"                   "The heal is provided by an aura. Its buff lingers for 0.5 seconds."
+"DOTA_Tooltip_ability_imba_witch_doctor_voodoo_restoration_Lore"                    "Zharvakko's hocus pocus is not limited only hexing his opponents and is quite adept at curing ailments."
+"DOTA_Tooltip_ability_imba_witch_doctor_voodoo_restoration_mana_per_second"         "MANA COST PER SECOND:"
+"DOTA_Tooltip_ability_imba_witch_doctor_voodoo_restoration_radius"                  "HEAL RADIUS:"
+"DOTA_Tooltip_ability_imba_witch_doctor_voodoo_restoration_heal"                    "BASE HEALING PER SECOND:"
+"DOTA_Tooltip_ability_imba_witch_doctor_voodoo_restoration_int_to_heal"             "%BONUS INT-BASED HEALING:"
+
+"DOTA_Tooltip_modifier_imba_voodoo_restoration_heal"                    "Voodoo Restoration Heal"
+"DOTA_Tooltip_modifier_imba_voodoo_restoration_heal_Description"                    "Regenerating health."
+
+// Witch Doctor's Maledict
+"DOTA_Tooltip_ability_imba_witch_doctor_maledict"                      "Maledict"
+"DOTA_Tooltip_ability_imba_witch_doctor_maledict_Description"          "Curses all enemy Heroes in a small area, causing them to take a set amount of damage each second, as well as bursts of damage every %tick_time_sec% seconds based on how much health they have lost since the curse began.\n<font color='#FF7800'>FeelsBadMan:</font> Maledict reduces healing received and health regeneration.\n<font color='#FF7800'>Feel it in your bones:</font> Can be casted on magic immune heroes."
+"DOTA_Tooltip_ability_imba_witch_doctor_maledict_Note0"                "All damage dealt by Maledict is still magical, which does not ignore magic immunity."
+"DOTA_Tooltip_ability_imba_witch_doctor_maledict_Lore"                  "Certain voodoo magics can make an enemy regret engaging the Witch Doctor."
+"DOTA_Tooltip_ability_imba_witch_doctor_maledict_radius"                "RADIUS:"
+"DOTA_Tooltip_ability_imba_witch_doctor_maledict_duration"              "CURSE DURATION:"
+"DOTA_Tooltip_ability_imba_witch_doctor_maledict_main_damage"          "DAMAGE PER SECOND:"
+"DOTA_Tooltip_ability_imba_witch_doctor_maledict_bonus_damage_pct"                  "%LOST HEALTH AS BONUS DAMAGE:"
+"DOTA_Tooltip_ability_imba_witch_doctor_maledict_heal_reduce_pct"                   "%HEAL/REGENERATION REDUCTION:"
+
+"DOTA_Tooltip_modifier_imba_maledict"                      "Malediction"
+"DOTA_Tooltip_modifier_imba_maledict_Description"                      "Taking base damage every second and a percentage of lost health as burst damage every 4 seconds."
+
+"DOTA_Tooltip_modifier_imba_maledict_talent"                            "FeelsSadMan"
+"DOTA_Tooltip_modifier_imba_maledict_talent_Description"                "Healing completely disabled."
+
+// Witch Doctor's Death Ward
+"DOTA_Tooltip_ability_imba_witch_doctor_death_ward"                    "Death Ward"
+"DOTA_Tooltip_ability_imba_witch_doctor_death_ward_Description"                     "Summons a deadly ward to attack enemy heroes.\n <font color='#FF7800'>Spirit Double:</font> Death Ward benefits from most of Witch Doctor's on-hit effects, but does not inherit the raw damage from items.\n<font color='#FF7800'>Deadly Mind:</font> Death Ward deals bonus damage equal to a percentage of Witch Doctor's intelligence.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
+"DOTA_Tooltip_ability_imba_witch_doctor_death_ward_Note0"              "Effects that Death Ward does not receive are: Battle Fury, Butterfly, Starfury, Echo Sabre, or Reverb Sabre."
+"DOTA_Tooltip_ability_imba_witch_doctor_death_ward_aghanim_description"             "Allows the Death Ward's attacks to bounce between enemy units."
+"DOTA_Tooltip_ability_imba_witch_doctor_death_ward_Lore"                "The Witch Doctor recycles the bones of fallen friends and foes, using the powder as part of his arsenal of charms and alchemy."
+"DOTA_Tooltip_ability_imba_witch_doctor_death_ward_damage"              "WARD DAMAGE:"
+"DOTA_Tooltip_ability_imba_witch_doctor_death_ward_int_to_dmg_pct"               	"%INT TO WARD DAMAGE:"
+"DOTA_Tooltip_ability_imba_witch_doctor_death_ward_base_attack_time"                "WARD BASE ATTACK TIME:"
+"DOTA_Tooltip_ability_imba_witch_doctor_death_ward_attack_range"                    "WARD ATTACK RANGE:"
+"DOTA_Tooltip_ability_imba_witch_doctor_death_ward_channel_time_tooltip"            "MAX. CHANNEL TIME:"
+"DOTA_Tooltip_ability_imba_witch_doctor_death_ward_bounces_scepter"                 "SCEPTER BOUNCES:"
+"DOTA_Tooltip_ability_imba_witch_doctor_death_ward_bounce_radius_scepter"           "SCEPTER BOUNCE RADIUS:"
+
+// Witch Doctor's Custom Talents
+"DOTA_Tooltip_Ability_special_bonus_imba_witch_doctor_1"                "Maledict Blast (AoE)"
+"DOTA_Tooltip_Ability_special_bonus_imba_witch_doctor_1_Description"	"Maledict blast damage is dealt to enemies 400 units around the target."
+"DOTA_Tooltip_Ability_special_bonus_imba_witch_doctor_2"                "Voodo Restoration dispel occurs immediately"
+"DOTA_Tooltip_Ability_special_bonus_imba_witch_doctor_3"                "Voodo Restoration dispel is a hard dispel"
+"DOTA_Tooltip_Ability_special_bonus_imba_witch_doctor_4"                "Contagious Maledict"
+"DOTA_Tooltip_Ability_special_bonus_imba_witch_doctor_4_Description"	"Paralyzing Cask applies Maledict if it bounces from Maledict targets."
+"DOTA_Tooltip_Ability_special_bonus_imba_witch_doctor_5"                "Death's Party"
+"DOTA_Tooltip_Ability_special_bonus_imba_witch_doctor_5_Description"	"Dying to Death Ward summons another, weaker death ward."
+"DOTA_Tooltip_Ability_special_bonus_imba_witch_doctor_6"                "Voodoo Aura"
+"DOTA_Tooltip_Ability_special_bonus_imba_witch_doctor_6_Description"	"Voodoo Restoration no longer costs mana."
+"DOTA_Tooltip_Ability_special_bonus_imba_witch_doctor_7"                "FeelsSadMan"
+"DOTA_Tooltip_Ability_special_bonus_imba_witch_doctor_7_Description"	"Maledict disables health regen for 1 second after each tick."
+"DOTA_Tooltip_Ability_special_bonus_imba_witch_doctor_8"                "Death Zone"
+"DOTA_Tooltip_Ability_special_bonus_imba_witch_doctor_8_Description"	"Now spawns two Death Wards. If channeling is broken, only one of them disappears."
+
+// Witch Doctor's summoned unit: Death Ward
+"imba_witch_doctor_death_ward"                              "Death Ward"

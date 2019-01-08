@@ -1,0 +1,5 @@
+"DOTA_Tooltip_Ability_imba_courier_autodeliver"					"#{DOTA_Tooltip_Ability_courier_autodeliver}"
+"DOTA_Tooltip_Ability_imba_courier_autodeliver_Description"		"#{DOTA_Tooltip_Ability_courier_autodeliver_Description}"
+"DOTA_Tooltip_Ability_imba_courier_autodeliver_delay"			"AUTO-DELIVER DELAY:"
+
+"DOTA_Tooltip_modifier_imba_courier_autodeliver"				"#{DOTA_Tooltip_modifier_courier_autodeliver}"

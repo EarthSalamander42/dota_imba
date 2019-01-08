@@ -1,0 +1,24 @@
+<root>
+	<styles>
+		<include src="file://{resources}/styles/custom_game/gg.css" />
+	</styles>
+
+	<scripts>
+		<include src="file://{resources}/scripts/custom_game/util.js" /> 
+		<include src="file://{resources}/scripts/custom_game/gg.js" /> 
+	</scripts>
+	
+	<Panel class="MainGG">
+		<Panel id="Root" class="Root">
+			<Panel id="Title">
+				<Label class="UILabelLarge" html="true" text="#gg_panel_description" />
+			</Panel>
+			<Panel id="Timer">
+				<Label class="GGTimer" id="GGTimer" text="4" />
+			</Panel>
+			<Button id="MainButton" onmouseactivate="CancelGG();">
+				<Label class="GG_button_label" text="Cancel"/>
+			</Button>		
+		</Panel>
+	</Panel>
+</root>

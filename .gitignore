@@ -1,9 +1,61 @@
-game/dota_addons/dota_imba_reborn/tools_thumbnail_cache.bin
-game/dota_addons/dota_imba_reborn/tools_asset_info.bin
-game/dota_addons/dota_imba_reborn/panorama_debugger.cfg
-game/dota_addons/dota_imba_reborn/network_measurement.txt
-game/dota_addons/dota_imba_reborn/scripts/vscripts/components/statcollection/settings.kv
+# Ignore everything
+/*
 
-content/dota_addons/dota_imba_reborn/materials/models/courier/lockjaw/lockjaw_color.psd
-content/dota_addons/dota_imba_reborn/materials/models/courier/lockjaw/lockjaw_normal.psd
+# Except the relevant folders
+!content/
+content/*
+!content/dota_addons/
+content/dota_addons/*
+!content/dota_addons/dota_imba/
+
+!game/
+game/*
+!game/dota_addons/
+game/dota_addons/*
+!game/dota_addons/dota_imba/
+
+# Cache crap that Valve autogenerates
+*.bin
+*.cfg
+*.soc
+*.tmp
+
+# Compiled formats
+*.vagrp_c
+*.vpcf_c
+*.vtex_c
+*.vmdl_c
+*.vsndevts_c
+*.vsnd_c
+*.vmat_c
+*.vjs_c
+*.vxml_c
+*.vcss_c
+*.vmdl_c
+*.vagrp_c
+*.vmesh_c
+
+# Map files
+*.vpk
+
+# Map overviews
+resource/overviews/*
+
+#Github dump
+*.stackdump
+
+game/dota_addons/dota_imba/rich_presence_persistent_data\.txt
+
+game/dota_addons/dota_imba/server_log\.txt
+
+# Roshan
+content/dota_addons/dota_imba/models/rosh*
+game/dota_addons/dota_imba/models/rosh*
+
+# eclipse
+.project
+.settings
+.DS_Store
+content/dota_addons/dota_imba/maps/touhou.vmap
+>>>>>>> ed92032f245f296c48326575ace0abc1adee6c04
 .idea

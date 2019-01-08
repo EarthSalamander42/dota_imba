@@ -1,0 +1,39 @@
+"itembuilds/test_malfurion.txt"
+{
+	"author"		"Cookies #42"
+	"hero"			"npc_dota_hero_malfurion"
+	"Title"			"Recommended items for Malfurion"
+
+	"Items"
+	{
+		"#DOTA_Item_Build_Title"
+		{
+			"item"		""
+		}
+
+		"#DOTA_Item_Build_Hero9"
+		{
+			"item"		""
+		}
+
+		"#DOTA_Item_Build_Starting_Items"
+		{
+			"item"		""
+		}
+
+		"#DOTA_Item_Build_Early_Game"
+		{
+			"item"		""
+		}
+
+		"#DOTA_Item_Build_Core_Items"
+		{
+			"item"		""
+		}
+
+		"#DOTA_Item_Build_Luxury"
+		{
+			"item"		""
+		}
+	}
+}
