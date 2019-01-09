@@ -1,5 +1,0 @@
-"DOTA_Tooltip_ability_earthshaker_enchant_totem_aghanim_description"			"Enchant Totem becomes a %distance_scepter% range ground target ability, causing Earthshaker to jump in the air and land at the target spot, casting Enchant Totem there.  Self-casting the ability will behave in the original form, without jumping."
-
-"DOTA_Tooltip_ability_special_bonus_unique_earthshaker"		"-%value%s Enchant Totem Cooldown"
-"DOTA_Tooltip_ability_special_bonus_unique_earthshaker_2"	"+%value% Echo Damage"
-"DOTA_Tooltip_ability_special_bonus_unique_earthshaker_3"	"+%value% Fissure Range"

@@ -1,7 +1,0 @@
-"DOTA_Tooltip_ability_item_imba_bottle"						"#{DOTA_Tooltip_ability_item_bottle}"
-"DOTA_Tooltip_ability_item_imba_bottle_Description"			"#{DOTA_Tooltip_ability_item_bottle_Description}\n<h1><font color='#FF7800'>Passive: Arcane Water</font></h1> Bottle regeneration can not be interrupted."
-"DOTA_Tooltip_ability_item_imba_bottle_Lore"				"#{DOTA_Tooltip_ability_item_bottle_Lore}"
-"DOTA_Tooltip_ability_item_imba_bottle_Note0"				"#{DOTA_Tooltip_ability_item_bottle_Note0}"
-
-"DOTA_Tooltip_modifier_item_imba_bottle_heal"					"#{DOTA_Tooltip_modifier_bottle_regeneration}"
-"DOTA_Tooltip_modifier_item_imba_bottle_heal_Description"		"#{DOTA_Tooltip_modifier_bottle_regeneration_Description}"

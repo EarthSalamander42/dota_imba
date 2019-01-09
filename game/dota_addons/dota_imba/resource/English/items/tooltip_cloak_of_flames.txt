@@ -1,8 +1,0 @@
-"DOTA_Tooltip_ability_item_imba_cloak_of_flames"					"Cloak of Flames"
-"DOTA_Tooltip_ability_item_imba_cloak_of_flames_Description"		"<h1><font color='#FF7800'>Passive:</font></h1> Engulfs the hero in fire which deals %damage_per_tick% damage per second to nearby enemy units."
-"DOTA_Tooltip_ability_item_imba_cloak_of_flames_Note0"				"Damage stack with Radiance."
-"DOTA_Tooltip_ability_item_imba_cloak_of_flames_radius"				"RADIUS:"
-"DOTA_Tooltip_ability_item_imba_cloak_of_flames_damage_per_tick"	"DAMAGE PER SEC:"
-
-"DOTA_Tooltip_modifier_immolation"									"Immolation"
-"DOTA_Tooltip_modifier_immolation_Description"						"Deals damage over the carrier."
