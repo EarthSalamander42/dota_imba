@@ -60,21 +60,28 @@ function TurboCourier:Init(hero)
 end
 
 function TurboCourier:Spawn(hero, pos)
-	self.COURIER_PLAYER[hero:GetPlayerID()] = CreateUnitByName("npc_dota_courier", pos, true, nil, nil, hero:GetTeam())
-	self.COURIER_PLAYER[hero:GetPlayerID()]:UpgradeToFlyingCourier()
+	local heroID = hero:GetPlayerID()
 
-	self.COURIER_PLAYER[hero:GetPlayerID()]:SetControllableByPlayer(hero:GetPlayerID(), true)
-	self.COURIER_PLAYER[hero:GetPlayerID()]:SetOwner(hero)
-	self.COURIER_PLAYER[hero:GetPlayerID()]:RemoveModifierByName("modifier_magic_immune")
-	self.COURIER_PLAYER[hero:GetPlayerID()]:RemoveAbility("courier_morph")
-	self.COURIER_PLAYER[hero:GetPlayerID()]:RemoveAbility("courier_shield")
-	local autodeliver = self.COURIER_PLAYER[hero:GetPlayerID()]:AddAbility("imba_courier_autodeliver")
+	self.COURIER_PLAYER[heroID] = CreateUnitByName("npc_dota_courier", pos, true, nil, nil, hero:GetTeam())
+	self.COURIER_PLAYER[heroID]:UpgradeToFlyingCourier()
+
+	-- Let's give 'em different colours...
+	if PLAYER_COLORS[heroID] then
+		self.COURIER_PLAYER[heroID]:SetRenderColor(PLAYER_COLORS[heroID][1], PLAYER_COLORS[heroID][2], PLAYER_COLORS[heroID][3])
+	end
+
+	self.COURIER_PLAYER[heroID]:SetControllableByPlayer(hero:GetPlayerID(), true)
+	self.COURIER_PLAYER[heroID]:SetOwner(hero)
+	self.COURIER_PLAYER[heroID]:RemoveModifierByName("modifier_magic_immune")
+	self.COURIER_PLAYER[heroID]:RemoveAbility("courier_morph")
+	self.COURIER_PLAYER[heroID]:RemoveAbility("courier_shield")
+	local autodeliver = self.COURIER_PLAYER[heroID]:AddAbility("imba_courier_autodeliver")
 	autodeliver:SetLevel(1)
 --	autodeliver:ToggleAbility()
-	self.COURIER_PLAYER[hero:GetPlayerID()]:AddAbility("courier_movespeed"):SetLevel(1)
-	self.COURIER_PLAYER[hero:GetPlayerID()]:AddNewModifier(self.COURIER_PLAYER[hero:GetPlayerID()], nil, "modifier_invulnerable", {})
-	self.COURIER_PLAYER[hero:GetPlayerID()]:SetDayTimeVisionRange(0)
-	self.COURIER_PLAYER[hero:GetPlayerID()]:SetNightTimeVisionRange(0)
-	self.COURIER_PLAYER[hero:GetPlayerID()].courier_count = self.courier_counter[hero:GetTeamNumber()]
-	self.courier_counter[hero:GetTeamNumber()] = self.courier_counter[hero:GetTeamNumber()] + 1
+	self.COURIER_PLAYER[heroID]:AddAbility("courier_movespeed"):SetLevel(1)
+	self.COURIER_PLAYER[heroID]:AddNewModifier(self.COURIER_PLAYER[hero:GetPlayerID()], nil, "modifier_invulnerable", {})
+	self.COURIER_PLAYER[heroID]:SetDayTimeVisionRange(0)
+	self.COURIER_PLAYER[heroID]:SetNightTimeVisionRange(0)
+	self.COURIER_PLAYER[heroID].courier_count = self.courier_counter[hero:GetTeamNumber()]
+	self.courier_counter[heroID] = self.courier_counter[hero:GetTeamNumber()] + 1
 end

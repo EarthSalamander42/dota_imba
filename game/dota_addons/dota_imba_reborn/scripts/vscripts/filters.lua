@@ -441,35 +441,51 @@ function GameMode:OrderFilter( keys )
 	end
 
 	if USE_TEAM_COURIER == false then
-		for _, ent_id in pairs(units) do
-			if EntIndexToHScript(ent_id):IsCourier() then
-				if EntIndexToHScript(ent_id):GetPlayerOwnerID() == keys.issuer_player_id_const then
-					if keys.order_type == DOTA_UNIT_ORDER_MOVE_TO_POSITION or keys.order_type == DOTA_UNIT_ORDER_MOVE_TO_TARGET or keys.order_type == DOTA_UNIT_ORDER_HOLD_POSITION or keys.order_type == DOTA_UNIT_ORDER_DROP_ITEM or keys.order_type == DOTA_UNIT_ORDER_GIVE_ITEM then
-						return false
-					else
-						return true
-					end
-				else
-					local ability = EntIndexToHScript(keys["entindex_ability"])
-					if ability then
-						if ability.GetName then
-							if ability:GetName() ~= "" and ability:GetAbilityName() then
-								if TurboCourier.COURIER_PLAYER[keys.issuer_player_id_const] then
-									if TurboCourier.COURIER_PLAYER[keys.issuer_player_id_const]:FindAbilityByName(ability:GetAbilityName()) then
-										TurboCourier.COURIER_PLAYER[keys.issuer_player_id_const]:FindAbilityByName(ability:GetAbilityName()):CastAbility()
-										if PlayerResource:IsUnitSelected(keys.issuer_player_id_const, EntIndexToHScript(ent_id)) then
-											PlayerResource:NewSelection(keys.issuer_player_id_const, TurboCourier.COURIER_PLAYER[keys.issuer_player_id_const])
-										end
-									end
-								end
-							end
-						end
-					end
-
-					return false
+		if unit:IsCourier() then
+			local ability = EntIndexToHScript(keys["entindex_ability"])
+			local player_id = keys.issuer_player_id_const
+			
+			if ability and ability.GetName and ability:GetName() ~= "" and player_id then
+				if TurboCourier.COURIER_PLAYER[player_id] and TurboCourier.COURIER_PLAYER[player_id]:HasAbility(ability:GetName()) then
+					TurboCourier.COURIER_PLAYER[player_id]:FindAbilityByName(ability:GetName()):CastAbility()				
 				end
+			else
+				DisplayError(player_id, "Couriers can only be controlled with ability hotkeys.")
 			end
+			return false
 		end
+		
+		--print("Is this courier 'owned' by order giver? ")
+		-- for _, ent_id in pairs(units) do
+			-- if EntIndexToHScript(ent_id):IsCourier() then
+				-- if EntIndexToHScript(ent_id):GetPlayerOwnerID() == keys.issuer_player_id_const then
+					-- if keys.order_type == DOTA_UNIT_ORDER_MOVE_TO_POSITION or keys.order_type == DOTA_UNIT_ORDER_MOVE_TO_TARGET or keys.order_type == DOTA_UNIT_ORDER_HOLD_POSITION or keys.order_type == DOTA_UNIT_ORDER_DROP_ITEM or keys.order_type == DOTA_UNIT_ORDER_GIVE_ITEM then
+						-- --return false
+						-- return true
+					-- else
+						-- return true
+					-- end
+				-- else
+					-- local ability = EntIndexToHScript(keys["entindex_ability"])
+					-- if ability then
+						-- if ability.GetName then
+							-- if ability:GetName() ~= "" and ability:GetAbilityName() then
+								-- if TurboCourier.COURIER_PLAYER[keys.issuer_player_id_const] then
+									-- if TurboCourier.COURIER_PLAYER[keys.issuer_player_id_const]:FindAbilityByName(ability:GetAbilityName()) then
+										-- TurboCourier.COURIER_PLAYER[keys.issuer_player_id_const]:FindAbilityByName(ability:GetAbilityName()):CastAbility()
+										-- if PlayerResource:IsUnitSelected(keys.issuer_player_id_const, EntIndexToHScript(ent_id)) then
+											-- PlayerResource:NewSelection(keys.issuer_player_id_const, TurboCourier.COURIER_PLAYER[keys.issuer_player_id_const])
+										-- end
+									-- end
+								-- end
+							-- end
+						-- end
+					-- end
+
+					-- return false
+				-- end
+			-- end
+		-- end
 	end
 
 	------------------------------------------------------------------------------------
