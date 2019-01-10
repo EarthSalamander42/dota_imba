@@ -83,5 +83,5 @@ function TurboCourier:Spawn(hero, pos)
 	self.COURIER_PLAYER[heroID]:SetDayTimeVisionRange(0)
 	self.COURIER_PLAYER[heroID]:SetNightTimeVisionRange(0)
 	self.COURIER_PLAYER[heroID].courier_count = self.courier_counter[hero:GetTeamNumber()]
-	self.courier_counter[heroID] = self.courier_counter[hero:GetTeamNumber()] + 1
+	self.courier_counter[hero:GetTeamNumber()] = self.courier_counter[hero:GetTeamNumber()] + 1
 end
