@@ -92,6 +92,19 @@ function GameMode:OnHeroDeath(killer, victim)
 
 		-- 50% of vanilla respawn time
 --		hero:SetTimeUntilRespawn(hero:GetRespawnTime() / 100 * 50)
+
+		-------------------------------------------------------------------------------------------------
+		-- Arc Warden Tempest Double keeping Duel Damage
+		-------------------------------------------------------------------------------------------------
+		if killer:GetName() == "npc_dota_hero_arc_warden" and killer:IsTempestDouble() then
+			Timers:CreateTimer(FrameTime(), function()
+				if killer:HasModifier("modifier_legion_commander_duel_damage_boost") then
+					killer.duel_damage = killer:FindModifierByName("modifier_legion_commander_duel_damage_boost"):GetStackCount()
+					killer.duel_ability = killer:FindModifierByName("modifier_legion_commander_duel_damage_boost"):GetAbility()
+				end
+			end)
+		end
+
 		return
 	end
 end

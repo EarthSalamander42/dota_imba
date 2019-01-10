@@ -380,33 +380,6 @@ function GameMode:ItemAddedFilter( keys )
 		return false
 	end
 
-	-------------------------------------------------------------------------------------------------
-	-- Tempest Double forbidden items
-	-------------------------------------------------------------------------------------------------
-
-	if unit:IsTempestDouble() then
-		-- List of items the clone can't carry
-		local clone_forbidden_items = {
-			"item_imba_rapier",
-			"item_imba_rapier_2",
-			"item_imba_rapier_magic",
-			"item_imba_rapier_magic_2",
-			"item_imba_rapier_cursed",
-			"item_imba_moon_shard",
-			"item_imba_soul_of_truth",
-			"item_imba_mango",
-			"item_imba_refresher",
-			"item_imba_ultimate_scepter_synth"
-		}
-
-		-- If this item is forbidden, delete it
-		for _, forbidden_item in pairs(clone_forbidden_items) do
-			if item_name == forbidden_item then
-				return false
-			end
-		end
-	end
-
 	return true
 end
 

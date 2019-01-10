@@ -633,10 +633,10 @@ IMBA_GREEVILING = true
 IMBA_DIRETIDE = false -- Should we enable diretide?
 
 if IMBA_PICK_SCREEN == false then
-	PRE_GAME_TIME = 90.0
+	PRE_GAME_TIME = 60.0
 
 	if not IsInToolsMode() then
-		STRATEGY_TIME = 30.0
+		STRATEGY_TIME = 10.0
 	end
 end
 

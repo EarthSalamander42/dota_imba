@@ -74,8 +74,5 @@ function GameMode:OnUnitSpawned(unit)
 		-- Valve Illusion bug to prevent respawning
 		UTIL_Remove(unit)
 		return
-	elseif unit:IsTempestDouble() then
-		UTIL_Remove(unit)
-		return
 	end
 end

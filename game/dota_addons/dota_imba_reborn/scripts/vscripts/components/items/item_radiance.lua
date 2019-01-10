@@ -191,9 +191,9 @@ function modifier_imba_radiance_basic:OnIntervalThink()
 	if self:GetCaster():IsIllusion() then return end
 
 	if IsServer() then
-		if string.find(self:GetParent():GetUnitName(), "npc_dota_lone_druid_bear") then
+		if (string.find(self:GetParent():GetUnitName(), "npc_dota_lone_druid_bear") or self:GetParent():IsTempestDouble()) and self:GetParent():GetOwnerEntity().radiance_icon then
 			self:SetStackCount(self:GetParent():GetOwnerEntity().radiance_icon)
-		else
+		elseif self:GetCaster().radiance_icon then
 			self:SetStackCount(self:GetCaster().radiance_icon)
 		end
 	end

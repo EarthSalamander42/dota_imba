@@ -524,9 +524,9 @@ end
 
 function modifier_imba_dazzle_nothl_protection:GetMinHealth()
 	if IsServer() then
-		if self:GetParent():PassivesDisabled() and not self.isActive then
+		if self:IsNull() or (self:GetParent():PassivesDisabled() and not self.isActive) then
 			return 0
-		elseif self:GetStackCount() > 0 then
+		elseif self:GetStackCount() > 0 or self:GetParent():IsIllusion() then
 			return 0
 		else
 			return 1
@@ -566,32 +566,33 @@ function modifier_imba_dazzle_nothl_protection:OnTakeDamage( keys )
 					
 					local nothl_duration = ability:GetSpecialValueFor("nothl_protection_duration")
 					Timers:CreateTimer(nothl_duration, function()
-
-							-- Checking if alive for cases of death that don't care for Nothl Protection
-							if self:GetParent():IsAlive() and self.shallowDamage > 0 and self:GetParent():HasModifier("modifier_imba_dazzle_nothl_protection_particle") then
-								if self.shallowDamageInstances > 0 then
-									local modifier = parent:AddNewModifier(parent, ability, "modifier_imba_dazzle_post_shallow_grave_buff", {duration = ability:GetSpecialValueFor("post_grave_duration")})
-									modifier:SetStackCount(self.shallowDamageInstances)
-								end
-
-								parent:Heal(self.shallowDamage, parent)
-								if parent:HasTalent("special_bonus_imba_dazzle_3") then
-									self.targetsHit = {}
-									table.insert(self.targetsHit, parent:entindex(), true)
-									EmitSoundOn("Hero_Dazzle.Shadow_Wave", parent)
-									self:ShadowWave(ability, parent, parent, self.shallowDamage/2)
-								end
+						if self:IsNull() then return end
+					
+						-- Checking if alive for cases of death that don't care for Nothl Protection
+						if self:GetParent():IsAlive() and self.shallowDamage > 0 and self:GetParent():HasModifier("modifier_imba_dazzle_nothl_protection_particle") then
+							if self.shallowDamageInstances > 0 then
+								local modifier = parent:AddNewModifier(parent, ability, "modifier_imba_dazzle_post_shallow_grave_buff", {duration = ability:GetSpecialValueFor("post_grave_duration")})
+								modifier:SetStackCount(self.shallowDamageInstances)
 							end
 
-							self.isActive = false
-							self.shallowDamage = 0
-							self.shallowDamageInstances = 0
+							parent:Heal(self.shallowDamage, parent)
+							if parent:HasTalent("special_bonus_imba_dazzle_3") then
+								self.targetsHit = {}
+								table.insert(self.targetsHit, parent:entindex(), true)
+								EmitSoundOn("Hero_Dazzle.Shadow_Wave", parent)
+								self:ShadowWave(ability, parent, parent, self.shallowDamage/2)
+							end
+						end
 
-							parent:RemoveModifierByName("modifier_imba_dazzle_nothl_protection_particle")
-							local nothl_cooldown = ability:GetSpecialValueFor("nothl_protection_cooldown")
+						self.isActive = false
+						self.shallowDamage = 0
+						self.shallowDamageInstances = 0
 
-							self:SetStackCount(math.floor(nothl_cooldown))
-							self:StartIntervalThink(1)
+						parent:RemoveModifierByName("modifier_imba_dazzle_nothl_protection_particle")
+						local nothl_cooldown = ability:GetSpecialValueFor("nothl_protection_cooldown")
+
+						self:SetStackCount(math.floor(nothl_cooldown))
+						self:StartIntervalThink(1)
 					end)
 
 					-- If the modifier is active
@@ -666,7 +667,7 @@ function modifier_imba_dazzle_nothl_protection:OnIntervalThink()
 end
 
 function modifier_imba_dazzle_nothl_protection:OnRemoved()
-	if IsServer() then
+	if IsServer() and self.nothl_protection_particle then
 		ParticleManager:DestroyParticle(self.nothl_protection_particle, true)
 	end
 end

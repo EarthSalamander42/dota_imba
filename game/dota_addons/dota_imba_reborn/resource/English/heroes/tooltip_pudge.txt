@@ -1,5 +1,5 @@
 "DOTA_Tooltip_ability_imba_pudge_meat_hook"							"#{DOTA_Tooltip_ability_pudge_meat_hook}"
-"DOTA_Tooltip_ability_imba_pudge_meat_hook_Description"				"#{DOTA_Tooltip_ability_pudge_meat_hook_description}\n<font color='#FF7800'>Runic Hook:</font> Meat Hook can be used on runes.\nEach stack of <font color='#FF7800'>Power Hook</font> makes Meat Hook deal more damage.\nEach stack of <font color='#FF7800'>Swift Hook</font> gives Meat Hook more range and speed.\n<font color='#FF0000'>Can't hit enemies inside their fountain area.</font>"
+"DOTA_Tooltip_ability_imba_pudge_meat_hook_Description"				"#{DOTA_Tooltip_ability_pudge_meat_hook_description}\n<font color='#FF7800'>The International:</font> Meat Hook drags its victims until they reach Pudge's current location, rather than the initial position.\nEach stack of <font color='#FF7800'>Power Hook</font> makes Meat Hook deal more damage.\nEach stack of <font color='#FF7800'>Swift Hook</font> gives Meat Hook more range and speed.\n<font color='#FF0000'>Can't hit enemies inside their fountain area.</font>"
 "DOTA_Tooltip_ability_imba_pudge_meat_hook_Lore"					"#{DOTA_Tooltip_ability_pudge_meat_hook_lore}"
 "DOTA_Tooltip_ability_imba_pudge_meat_hook_Note0"					"Does not stun allied targets, only enemies."
 "DOTA_Tooltip_ability_imba_pudge_meat_hook_Note1"					"Meat Hook hits invisible units."

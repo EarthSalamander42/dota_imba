@@ -1754,6 +1754,11 @@
 				"var_type"				"FIELD_INTEGER"
 				"dot_damage"			"12 24 36"
 			}
+			"07"
+			{	
+				"var_type"				"FIELD_INTEGER"
+				"speed"					"1500 1750 2000"
+			}
 			"08"
 			{	
 				"var_type"				"FIELD_INTEGER"
@@ -1908,8 +1913,6 @@
 	//=================================================================================================================
 	"arc_warden_tempest_double"
 	{
-		"MaxLevel"						"3"
-		"RequiredLevel"					"0"
 		"AbilityCooldown"				"70 55 30"
 
 		"AbilitySpecial"

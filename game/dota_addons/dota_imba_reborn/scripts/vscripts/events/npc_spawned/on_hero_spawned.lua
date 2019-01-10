@@ -140,87 +140,9 @@ function GameMode:OnHeroFirstSpawn(hero)
 --				CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "show_netgraph", {})
 --				CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "show_netgraph_heronames", {})
 --			end
-
-			if hero:GetUnitName() == "npc_dota_hero_arc_warden" then
-				-- Arc Warden clone handling
-				if hero:FindAbilityByName("arc_warden_tempest_double") and not hero.first_tempest_double_cast and hero:IsRealHero() then
-					hero.first_tempest_double_cast = true
-					local tempest_double_ability = hero:FindAbilityByName("arc_warden_tempest_double")
-					tempest_double_ability:SetLevel(4)
-					Timers:CreateTimer(0.1, function()
-						if not hero:HasModifier("modifier_arc_warden_tempest_double") then
-							tempest_double_ability:CastAbility()
-							tempest_double_ability:SetLevel(1)
-						end
-					end)
-				end
-
-				if hero:HasModifier("modifier_arc_warden_tempest_double") then
-					-- List of modifiers which carry over from the main hero to the clone
-					local clone_shared_buffs = {
-						"modifier_imba_moon_shard_stacks_dummy",
-						"modifier_imba_moon_shard_consume_1",
-						"modifier_imba_moon_shard_consume_2",
-						"modifier_imba_moon_shard_consume_3",
-						"modifier_item_imba_soul_of_truth"
-					}
-
-					-- Iterate through the main hero's potential modifiers
-					local main_hero = hero:GetOwner():GetAssignedHero()
-					for _, shared_buff in pairs(clone_shared_buffs) do
-						-- If the main hero has this modifier, copy it to the clone
-						if main_hero:HasModifier(shared_buff) then
-							local shared_buff_modifier = main_hero:FindModifierByName(shared_buff)
-							local shared_buff_ability = shared_buff_modifier:GetAbility()
-
-							-- If a source ability was found, use it
-							if shared_buff_ability then
-								shared_buff_ability:ApplyDataDrivenModifier(main_hero, hero, shared_buff, {})
-
-								-- Else, it's a consumable item modifier. Create a dummy item to use the ability from.
-							else
-								-- Moon Shard
-								if string.find(shared_buff, "moon_shard") then
-									-- Create dummy item
-									local dummy_item = CreateItem("item_imba_moon_shard", hero, hero)
-									main_hero:AddItem(dummy_item)
-
-									-- Fetch dummy item's ability handle
-									for i = 0, 11 do
-										local current_item = main_hero:GetItemInSlot(i)
-										if current_item and current_item:GetName() == "item_imba_moon_shard" then
-											current_item:ApplyDataDrivenModifier(main_hero, hero, shared_buff, {})
-											break
-										end
-									end
-									main_hero:RemoveItem(dummy_item)
-								end
-
-								-- Soul of Truth
-								if shared_buff == "modifier_item_imba_soul_of_truth" then
-									-- Create dummy item
-									local dummy_item = CreateItem("item_imba_soul_of_truth", hero, hero)
-									main_hero:AddItem(dummy_item)
-
-									-- Fetch dummy item's ability handle
-									for i = 0, 11 do
-										local current_item = main_hero:GetItemInSlot(i)
-										if current_item and current_item:GetName() == "item_imba_soul_of_truth" then
-											current_item:ApplyDataDrivenModifier(main_hero, hero, shared_buff, {})
-											break
-										end
-									end
-									main_hero:RemoveItem(dummy_item)
-								end
-							end
-
-							-- Apply any stacks if relevant
-							if main_hero:GetModifierStackCount(shared_buff, nil) > 0 then
-								hero:SetModifierStackCount(shared_buff, main_hero, main_hero:GetModifierStackCount(shared_buff, nil))
-							end
-						end
-					end
-				end
+			
+			if hero:GetUnitName() == "npc_dota_hero_arc_warden" and hero:IsTempestDouble() then
+				GameMode:OnHeroSpawned(hero)
 			-- Not a big deal, but don't give the MK ult clones frantic modifier (blue auras)
 			elseif hero:GetUnitName() == "npc_dota_hero_monkey_king" then
 				if hero:HasModifier("modifier_monkey_king_fur_army_soldier") or hero:HasModifier("modifier_monkey_king_fur_army_soldier_hidden") then return end
@@ -260,5 +182,66 @@ end
 function GameMode:OnHeroSpawned(hero)
 	if IsMutationMap() then
 		Mutation:OnHeroSpawn(hero)
+	end
+	
+	if hero:GetUnitName() == "npc_dota_hero_arc_warden" and hero:IsTempestDouble() then
+		--print("Does double have modifier_legion_commander_duel_damage_boost? ", hero:HasModifier("modifier_legion_commander_duel_damage_boost"))
+		
+		local clone_shared_buffs = {
+			"modifier_item_imba_moon_shard_active",
+			"modifier_imba_soul_of_truth_buff"
+		}
+		
+		-- Iterate through the main hero's potential modifiers
+		local main_hero = hero:GetOwner():GetAssignedHero()
+		
+		for _, shared_buff in pairs(clone_shared_buffs) do
+			-- If the main hero has this modifier, copy it to the clone
+			
+			if main_hero:HasModifier(shared_buff) then
+				local shared_buff_modifier = main_hero:FindModifierByName(shared_buff)
+				local shared_buff_ability = shared_buff_modifier:GetAbility()
+				
+				-- Exception for Soul of Truth; can only be cloned once per instance
+				if not shared_buff_modifier.cloned then
+					local buff_time = shared_buff_modifier:GetRemainingTime()
+					if buff_time <= 0 then
+						buff_time = shared_buff_modifier:GetDuration()
+					end
+					local cloned_modifier = hero:AddNewModifier(main_hero, shared_buff_ability, shared_buff_modifier:GetName(), {duration = buff_time})
+
+					cloned_modifier:SetStackCount(shared_buff_modifier:GetStackCount())
+					-- Once Soul of Truth is cloned, don't allow cloning the same one again
+					if shared_buff == "modifier_imba_soul_of_truth_buff" then
+						shared_buff_modifier.cloned = true
+						
+						local dummy_item = CreateItem("item_imba_soul_of_truth", hero, hero)
+							main_hero:AddItem(dummy_item)
+
+							-- Fetch dummy item's ability handle
+							for i = 0, 14 do
+								local current_item = main_hero:GetItemInSlot(i)
+								if current_item and current_item:GetName() == "item_imba_soul_of_truth" then
+									local cloned_modifier = hero:AddNewModifier(main_hero, current_item, "modifier_item_gem_of_true_sight", {duration = buff_time})
+									-- This code block doesn't work
+									Timers:CreateTimer(FrameTime(), function()
+										hero:RemoveItem(current_item)
+									end)
+									--
+									break
+								end
+							end
+							Timers:CreateTimer(FrameTime(), function()
+								main_hero:RemoveItem(dummy_item)
+							end)
+					end
+				end
+			end
+		end
+
+		if hero.duel_damage and hero.duel_ability then
+			local duel_modifier = hero:AddNewModifier(hero, hero.duel_ability, "modifier_legion_commander_duel_damage_boost" , {})
+			duel_modifier:SetStackCount(hero.duel_damage)
+		end
 	end
 end
