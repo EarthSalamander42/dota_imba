@@ -1,17 +1,13 @@
 // Abaddon's Mist Coil
 "DOTA_Tooltip_ability_imba_abaddon_mist_coil"                          "Mist Coil"
-"DOTA_Tooltip_ability_imba_abaddon_mist_coil_Description"              "Abaddon releases a coil of deathly mist that can damage an enemy unit or heal a friendly unit at the cost of some of Abaddon's health. On death, Mist Coil is cast on all allies in cast range.\n<font color='#FF7800'>Cursed Coil:</font> Applies Curse of Avernus on enemy target.\n<font color='#FF7800'>Volatile Mist:</font> Enemies receive a debuff that causes additional magic damage on each damage instance above %damage_threshold% (before reductions).\n<font color='#FF7800'>Shrouding Mist:</font> Allies receive a buff that heals the target for a portion of the damage received after the buff expires.\n<font color='#FF7800'>Shield Renewal:</font> If the affected unit has Aphotic Shield, renew the shield and extend duration by %shield_duration_extend% seconds."
+"DOTA_Tooltip_ability_imba_abaddon_mist_coil_Description"              "Abaddon releases a coil of deathly mist that can damage an enemy unit or heal a friendly unit at the cost of some of Abaddon's health. On death, Mist Coil is cast on all allies in cast range.\n<font color='#FF7800'>Cursed Coil:</font> Applies Curse of Avernus on enemy target.\n<font color='#FF7800'>Shrouding Mist:</font> Allies receive a buff that heals the target for a portion of the damage received after the buff expires.\n<font color='#FF7800'>Shield Renewal:</font> If the affected unit has Aphotic Shield, renew the shield and extend duration by %shield_duration_extend% seconds."
 "DOTA_Tooltip_ability_imba_abaddon_mist_coil_Note0"                    "Self-castable."
 "DOTA_Tooltip_ability_imba_abaddon_mist_coil_Lore"                      "A mysterious vapor from the Curse of Avernus now infuses the breath of Abaddon, who releases it at will."
 "DOTA_Tooltip_ability_imba_abaddon_mist_coil_heal"                      "TARGET DAMAGE/HEAL:"
 "DOTA_Tooltip_ability_imba_abaddon_mist_coil_self_damage"              "SELF DAMAGE:"
 "DOTA_Tooltip_ability_imba_abaddon_mist_coil_cast_range"                "CAST RANGE:"
 "DOTA_Tooltip_ability_imba_abaddon_mist_coil_mist_duration"            "MIST DURATION:"
-"DOTA_Tooltip_ability_imba_abaddon_mist_coil_on_hit_damage"            "MIST DAMAGE:"
 "DOTA_Tooltip_ability_imba_abaddon_mist_coil_damage_heal_pct"          "%MIST HEAL:"
-
-"DOTA_Tooltip_modifier_imba_mist_coil_mist_enemy"                      "Volatile Mist"
-"DOTA_Tooltip_modifier_imba_mist_coil_mist_enemy_Description"          "Suffer magical damage every time you are attacked."
 
 "DOTA_Tooltip_modifier_imba_mist_coil_mist_ally"                        "Shrouding Mist"
 "DOTA_Tooltip_modifier_imba_mist_coil_mist_ally_Description"            "At the end of the duration, receive a portion of the damage sustained as a heal."

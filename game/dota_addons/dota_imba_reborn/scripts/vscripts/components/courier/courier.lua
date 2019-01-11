@@ -68,6 +68,7 @@ function TurboCourier:Spawn(hero, pos)
 	-- Let's give 'em different colours...
 	if PLAYER_COLORS[heroID] then
 		self.COURIER_PLAYER[heroID]:SetRenderColor(PLAYER_COLORS[heroID][1], PLAYER_COLORS[heroID][2], PLAYER_COLORS[heroID][3])
+		self.COURIER_PLAYER[heroID]:SetCustomHealthLabel(PlayerResource:GetPlayerName(heroID), PLAYER_COLORS[heroID][1], PLAYER_COLORS[heroID][2], PLAYER_COLORS[heroID][3])
 	end
 
 	self.COURIER_PLAYER[heroID]:SetControllableByPlayer(hero:GetPlayerID(), true)
@@ -79,7 +80,6 @@ function TurboCourier:Spawn(hero, pos)
 	autodeliver:SetLevel(1)
 --	autodeliver:ToggleAbility()
 	self.COURIER_PLAYER[heroID]:AddAbility("courier_movespeed"):SetLevel(1)
-	self.COURIER_PLAYER[heroID]:AddNewModifier(self.COURIER_PLAYER[hero:GetPlayerID()], nil, "modifier_invulnerable", {})
 	self.COURIER_PLAYER[heroID]:SetDayTimeVisionRange(0)
 	self.COURIER_PLAYER[heroID]:SetNightTimeVisionRange(0)
 	self.COURIER_PLAYER[heroID].courier_count = self.courier_counter[hero:GetTeamNumber()]

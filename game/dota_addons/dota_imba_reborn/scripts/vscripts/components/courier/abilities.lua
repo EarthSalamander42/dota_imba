@@ -24,6 +24,7 @@ end
 function modifier_courier_turbo:CheckState()
 	local state = {
 		[MODIFIER_STATE_FLYING] = true,
+		[MODIFIER_STATE_INVULNERABLE] = true,
 	}
 
 	return state

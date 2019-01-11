@@ -36,9 +36,6 @@ function imba_dazzle_poison_touch:GetCooldown()
 	return self:GetSpecialValueFor("cooldown")
 end
 
-function imba_dazzle_poison_touch:GetBehavior()
-	return DOTA_ABILITY_BEHAVIOR_UNIT_TARGET end
-
 function imba_dazzle_poison_touch:OnSpellStart()
 	local projectile = {
 		Target = self:GetCursorTarget(),
@@ -1037,9 +1034,6 @@ function imba_dazzle_shadow_wave:GetCastRange()
 	return self:GetSpecialValueFor("cast_range")
 end
 
-function imba_dazzle_shadow_wave:GetBehavior()
-	return DOTA_ABILITY_BEHAVIOR_UNIT_TARGET + DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK end
-
 function imba_dazzle_shadow_wave:OnSpellStart()
 	if IsServer() then
 		local target = self:GetCursorTarget()
@@ -1223,6 +1217,12 @@ function imba_dazzle_shadow_wave:WaveHit(unit, isAlly, poisonTouched)
 			-- If ally, heal and change search type to find enemies
 			unit:Heal(totalHeal, caster)
 			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, unit, totalHeal, nil)
+
+			-- dispel
+			if caster:HasTalent("special_bonus_imba_dazzle_8") then
+				unit:Purge(false, true, false, true, false)
+			end
+
 			targetTeam = DOTA_UNIT_TARGET_TEAM_ENEMY
 		else
 			-- If enemy, deal damage and check for poison
@@ -1437,7 +1437,7 @@ function modifier_imba_dazzle_shadow_wave_delayed_bounce_cooldown:IsPurgable() r
 function modifier_imba_dazzle_shadow_wave_delayed_bounce_cooldown:IsHidden() return true end
 function modifier_imba_dazzle_shadow_wave_delayed_bounce_cooldown:IsDebuff() return true end
 function modifier_imba_dazzle_shadow_wave_delayed_bounce_cooldown:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
-
+--[[
 -------------------------------------------------------------
 -------------------------	Weave	-------------------------
 -------------------------------------------------------------
@@ -1454,9 +1454,6 @@ function imba_dazzle_weave:GetCooldown()
 
 function imba_dazzle_weave:GetCastAnimation()
 	return ACT_DOTA_CAST_ABILITY_4 end
-
-function imba_dazzle_weave:GetBehavior()
-	return DOTA_ABILITY_BEHAVIOR_POINT + DOTA_ABILITY_BEHAVIOR_AOE end
 
 function imba_dazzle_weave:GetAOERadius()
 	return self:GetSpecialValueFor("area_of_effect") end
@@ -1665,7 +1662,7 @@ function modifier_imba_dazzle_weave_debuff:GetModifierPhysicalArmorBonus()
 
 	return (stacked * self:GetStackCount() + base) * -1
 end
-
+--]]
 -------------------------------------------------------------------------
 -------------------------	Ressurection		-------------------------
 -------------------------------------------------------------------------
@@ -1748,6 +1745,122 @@ function modifier_imba_dazzle_ressurection_layout:GetModifierAbilityLayout()
 function modifier_imba_dazzle_ressurection_layout:DeclareFunctions()
 	local decFuncs = {MODIFIER_PROPERTY_ABILITY_LAYOUT}
 	return decFuncs
+end
+
+-------------------------------------------------------------------------
+-------------------------	Bad Juju	-------------------------
+-------------------------------------------------------------------------
+
+if imba_dazzle_bad_juju == nil then imba_dazzle_bad_juju = class({}) end
+
+function imba_dazzle_bad_juju:GetIntrinsicModifierName()
+	return "modifier_imba_dazzle_bad_juju"
+end
+
+LinkLuaModifier("modifier_imba_dazzle_bad_juju", "components/abilities/heroes/hero_dazzle", LUA_MODIFIER_MOTION_NONE)
+
+modifier_imba_dazzle_bad_juju = modifier_imba_dazzle_bad_juju or class({})
+
+function modifier_imba_dazzle_bad_juju:IsHidden() return true end
+function modifier_imba_dazzle_bad_juju:IsDebuff() return false end
+function modifier_imba_dazzle_bad_juju:IsPurgable() return false end
+function modifier_imba_dazzle_bad_juju:IsPurgeException() return false end
+function modifier_imba_dazzle_bad_juju:RemoveOnDeath() return false end
+
+function modifier_imba_dazzle_bad_juju:DeclareFunctions()
+	return {
+		MODIFIER_EVENT_ON_ABILITY_FULLY_CAST,
+		MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE,
+	}
+end
+
+function modifier_imba_dazzle_bad_juju:GetModifierPercentageCooldown()
+	return self:GetAbility():GetSpecialValueFor("cooldown_reduction")
+end
+
+function modifier_imba_dazzle_bad_juju:OnAbilityFullyCast(params)
+	if IsServer() then
+		local ability = params.ability
+		local unit = params.unit
+
+		-- If this was the caster casting Refresher, refresh charges
+		if unit == self:GetCaster() and not ability:IsItem() then
+			local behavior = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
+			if self:GetCaster():HasTalent("special_bonus_imba_dazzle_7") then
+				behavior = behavior + DOTA_UNIT_TARGET_BUILDING
+			end
+
+			local units = FindUnitsInRadius(unit:GetTeamNumber(), unit:GetAbsOrigin(), nil, self:GetAbility():GetSpecialValueFor("radius"), DOTA_UNIT_TARGET_TEAM_BOTH, behavior, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+
+			for _, unit in pairs(units) do
+				local modifier_name = "modifier_imba_dazzle_bad_juju_buff"
+
+				if unit:GetTeamNumber() ~= self:GetParent():GetTeamNumber() then
+					modifier_name = "modifier_imba_dazzle_bad_juju_debuff"
+				end
+
+				if unit:HasModifier(modifier_name) then
+					local modifier = unit:FindModifierByName(modifier_name)
+					modifier:SetStackCount(modifier:GetStackCount() + 1)
+					modifier:SetDuration(self:GetAbility():GetSpecialValueFor("duration"), true)
+				else
+					unit:AddNewModifier(unit, self:GetAbility(), modifier_name, {duration=self:GetAbility():GetSpecialValueFor("duration")}):SetStackCount(1)
+				end
+			end
+		end
+	end
+end
+
+LinkLuaModifier("modifier_imba_dazzle_bad_juju_buff", "components/abilities/heroes/hero_dazzle", LUA_MODIFIER_MOTION_NONE)
+
+modifier_imba_dazzle_bad_juju_buff = modifier_imba_dazzle_bad_juju_buff or class({})
+
+function modifier_imba_dazzle_bad_juju_buff:IsHidden() return false end
+function modifier_imba_dazzle_bad_juju_buff:IsDebuff() return false end
+
+function modifier_imba_dazzle_bad_juju_buff:GetEffectName()
+	return "particles/units/heroes/hero_dazzle/dazzle_armor_friend_shield.vpcf"
+end
+
+function modifier_imba_dazzle_bad_juju_buff:GetEffectAttachType()
+	return PATTACH_OVERHEAD_FOLLOW
+end
+
+function modifier_imba_dazzle_bad_juju_buff:DeclareFunctions()
+	return {
+		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
+	}
+end
+
+function modifier_imba_dazzle_bad_juju_buff:GetModifierPhysicalArmorBonus()
+	local armor_reduction = self:GetAbility():GetSpecialValueFor("armor_reduction")
+	return armor_reduction * self:GetStackCount()
+end
+
+LinkLuaModifier("modifier_imba_dazzle_bad_juju_debuff", "components/abilities/heroes/hero_dazzle", LUA_MODIFIER_MOTION_NONE)
+
+modifier_imba_dazzle_bad_juju_debuff = modifier_imba_dazzle_bad_juju_debuff or class({})
+
+function modifier_imba_dazzle_bad_juju_debuff:IsHidden() return false end
+function modifier_imba_dazzle_bad_juju_debuff:IsDebuff() return true end
+
+function modifier_imba_dazzle_bad_juju_debuff:GetEffectName()
+	return "particles/units/heroes/hero_dazzle/dazzle_armor_enemy.vpcf"
+end
+
+function modifier_imba_dazzle_bad_juju_debuff:GetEffectAttachType()
+	return PATTACH_OVERHEAD_FOLLOW
+end
+
+function modifier_imba_dazzle_bad_juju_debuff:DeclareFunctions()
+	return {
+		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
+	}
+end
+
+function modifier_imba_dazzle_bad_juju_debuff:GetModifierPhysicalArmorBonus()
+	local armor_reduction = self:GetAbility():GetSpecialValueFor("armor_reduction")
+	return armor_reduction * self:GetStackCount() * (-1)
 end
 
 ----------------------

@@ -23,8 +23,8 @@
 "mutation_imba_tutorial_heroes_03"				"Some mutators can be added/removed at anytime, we will keep a list of the active mutators on Dota IMBA's website. (Wiki section)"
 
 "mutation_imba_tutorial_items_title"			"Tips:"
-"mutation_imba_tutorial_items_01"				"add some text"
-"mutation_imba_tutorial_items_02"				"add more text"
+//"mutation_imba_tutorial_items_01"				"add some text"
+//"mutation_imba_tutorial_items_02"				"add more text"
 
 "overthrow_game_info_tip03"						"You may need to coordinate with an opposing team to take out a strong opponent."
 "overthrow_game_info_tip04"						"The fewer kills your team has, the stronger items you will recieve from a delivery."

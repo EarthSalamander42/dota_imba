@@ -441,7 +441,7 @@
 		"Ability3"					"imba_dazzle_shadow_wave"
 		"Ability4"                  "imba_dazzle_ressurection"
 		"Ability5"                  "generic_hidden"
-		"Ability6"					"imba_dazzle_weave"
+		"Ability6"					"imba_dazzle_bad_juju"
 
 		"Ability10"					"special_bonus_imba_dazzle_4" // Poison Touch slows the target after setting in appropriate to damage taken
 		"Ability11"					"special_bonus_imba_dazzle_5" // Enemies that interact with a poisoned touched teammate of their get poison touched as well

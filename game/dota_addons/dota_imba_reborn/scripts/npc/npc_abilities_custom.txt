@@ -537,30 +537,19 @@
 			"06"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"on_hit_damage"							"10 15 20 25"
-			}
-			"07"
-			{
-				"var_type"								"FIELD_INTEGER"
 				"damage_heal_pct"						"10"
 			}
-			"08"
+			"07"
 			{
 				"var_type"								"FIELD_FLOAT"
 				"shield_duration_extend"				"3.0"
 			}
-			"09"
+			"08"
 			{
 				"var_type"								"FIELD_FLOAT"
 				"cooldown"								"4.5"
 			}
-			"10"
-			{
-				"var_type"								"FIELD_FLOAT"
-				"damage_threshold"						"50"
-			}
-
-			"11"
+			"09"
 			{
 				"var_type"								"FIELD_FLOAT"
 				"self_damage"							"75 100 125 150"
@@ -3134,7 +3123,8 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"										"ability_lua"
 		"AbilityTextureName"							"dazzle_poison_touch"
-		"ScriptFile"				"components/abilities/heroes/hero_dazzle.lua"
+		"ScriptFile"									"components/abilities/heroes/hero_dazzle.lua"
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"FightRecapLevel"								"1"
 
 		// Precache
@@ -3352,6 +3342,7 @@
 
 		// Ability
 		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
 		"AbilityUnitTargetTeam"							"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"							"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityManaCost"								"90 100 110 120"
@@ -3412,6 +3403,7 @@
 
 		// Ability
 		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AbilityType"									"DOTA_ABILITY_TYPE_ULTIMATE"
 		"SpellImmunityType"								"SPELL_IMMUNITY_ENEMIES_YES"
 		"AbilityCastRange"								"2000"
@@ -3475,6 +3467,63 @@
 			{
 				"var_type"								"FIELD_INTEGER"
 				"repeat_delay"							"4"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Dazzle's Bad Juju
+	//=================================================================================================================
+	"imba_dazzle_bad_juju"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"										"ability_lua"
+		"AbilityTextureName"							"dazzle_weave"
+		"ScriptFile"									"components/abilities/heroes/hero_dazzle.lua"
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"FightRecapLevel"								"2"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"									"soundevents/game_sounds_heroes/game_sounds_dazzle.vsndevts"
+			"particle"									"particles/units/heroes/hero_dazzle/dazzle_weave.vpcf"
+			"particle"									"particles/units/heroes/hero_dazzle/dazzle_armor_friend.vpcf"
+			"particle"									"particles/units/heroes/hero_dazzle/dazzle_armor_enemy.vpcf"
+		}
+
+		// Ability
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityType"									"DOTA_ABILITY_TYPE_ULTIMATE"
+		"SpellImmunityType"								"SPELL_IMMUNITY_ENEMIES_YES"
+		"AbilityCastRange"								"1200"
+		"MaxLevel"										"3"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{	
+				"var_type"					"FIELD_INTEGER"
+				"cooldown_reduction"		"20 35 50"
+			}
+			"02"
+			{	
+				"var_type"					"FIELD_FLOAT"
+				"armor_reduction"			"2.0 2.5 3.0"
+			}
+			"03"
+			{	
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"8.0"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"1200"
 			}
 		}
 	}

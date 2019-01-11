@@ -412,6 +412,9 @@ if Log == nil then
 	end
 
 	function Dynamic_Wrap(mt, name)
+		-- testing nil value fix on line "return mt[name](unpack(args))" [NOT WORKING]
+--		if mt == nil or name == nil then return end
+
 		local function wrapper(...)
 
 			local args = { ... }
