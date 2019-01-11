@@ -141,7 +141,6 @@ end
 
 function Imbattlepass:AddItemEffects(hero)
 	if hero.GetPlayerID == nil then return end
-	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) == nil then return end
 
 	Imbattlepass:GetBlinkEffect(hero)
 	Imbattlepass:GetForceStaffEffect(hero)
@@ -170,54 +169,56 @@ function Imbattlepass:GetBlinkEffect(hero)
 	local effect2 = "particles/items_fx/blink_dagger_end.vpcf"
 	local icon = 0
 
-	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BLINK["blink12"] then
-		effect = "particles/econ/events/ti8/blink_dagger_ti8_start_lvl2.vpcf"
-		effect2 = "particles/econ/events/ti8/blink_dagger_ti8_end_lvl2.vpcf"
-		icon = 12
-	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BLINK["blink11"] then
-		effect = "particles/econ/events/ti8/blink_dagger_ti8_start.vpcf"
-		effect2 = "particles/econ/events/ti8/blink_dagger_ti8_end.vpcf"
-		icon = 11
-	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BLINK["blink10"] then
-		effect = "particles/econ/events/ti5/blink_dagger_start_lvl2_ti5.vpcf"
-		effect2 = "particles/econ/events/ti5/blink_dagger_end_lvl2_ti5.vpcf"
-		icon = 10
-	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BLINK["blink9"] then
-		effect = "particles/econ/events/ti5/blink_dagger_start_ti5.vpcf"
-		effect2 = "particles/econ/events/ti5/blink_dagger_end_ti5.vpcf"
-		icon = 9
-	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BLINK["blink8"] then
-		effect = "particles/econ/events/ti6/blink_dagger_start_ti6_lvl2.vpcf"
-		effect2 = "particles/econ/events/ti6/blink_dagger_end_ti6_lvl2.vpcf"
-		icon = 8
-	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BLINK["blink7"] then
-		effect = "particles/econ/events/ti6/blink_dagger_start_ti6.vpcf"
-		effect2 = "particles/econ/events/ti6/blink_dagger_end_ti6.vpcf"
-		icon = 7
-	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BLINK["blink6"] then
-		effect = "particles/econ/events/ti4/blink_dagger_start_ti4.vpcf"
-		effect = "particles/econ/events/ti4/blink_dagger_end_ti4.vpcf"
-		icon = 6	
-	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BLINK["blink5"] then
-		effect = "particles/econ/events/winter_major_2017/blink_dagger_start_wm07.vpcf"
-		effect2 = "particles/econ/events/winter_major_2017/blink_dagger_end_wm07.vpcf"
-		icon = 5
-	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BLINK["blink4"] then
-		effect = "particles/econ/events/ti7/blink_dagger_start_ti7_lvl2.vpcf"
-		effect2 = "particles/econ/events/ti7/blink_dagger_end_ti7_lvl2.vpcf"
-		icon = 4
-	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BLINK["blink3"] then
-		effect = "particles/econ/events/ti7/blink_dagger_start_ti7.vpcf"
-		effect2 = "particles/econ/events/ti7/blink_dagger_end_ti7.vpcf"
-		icon = 3
-	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BLINK["blink2"] then
-		effect = "particles/econ/events/nexon_hero_compendium_2014/blink_dagger_start_nexon_hero_cp_2014.vpcf"
-		effect2 = "particles/econ/events/nexon_hero_compendium_2014/blink_dagger_end_nexon_hero_cp_2014.vpcf"
-		icon = 2
-	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BLINK["blink"] then
-		effect = "particles/econ/events/fall_major_2016/blink_dagger_start_fm06.vpcf"
-		effect2 = "particles/econ/events/fall_major_2016/blink_dagger_end_fm06.vpcf"
-		icon = 1
+	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) ~= nil then
+		if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BLINK["blink12"] then
+			effect = "particles/econ/events/ti8/blink_dagger_ti8_start_lvl2.vpcf"
+			effect2 = "particles/econ/events/ti8/blink_dagger_ti8_end_lvl2.vpcf"
+			icon = 12
+		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BLINK["blink11"] then
+			effect = "particles/econ/events/ti8/blink_dagger_ti8_start.vpcf"
+			effect2 = "particles/econ/events/ti8/blink_dagger_ti8_end.vpcf"
+			icon = 11
+		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BLINK["blink10"] then
+			effect = "particles/econ/events/ti5/blink_dagger_start_lvl2_ti5.vpcf"
+			effect2 = "particles/econ/events/ti5/blink_dagger_end_lvl2_ti5.vpcf"
+			icon = 10
+		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BLINK["blink9"] then
+			effect = "particles/econ/events/ti5/blink_dagger_start_ti5.vpcf"
+			effect2 = "particles/econ/events/ti5/blink_dagger_end_ti5.vpcf"
+			icon = 9
+		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BLINK["blink8"] then
+			effect = "particles/econ/events/ti6/blink_dagger_start_ti6_lvl2.vpcf"
+			effect2 = "particles/econ/events/ti6/blink_dagger_end_ti6_lvl2.vpcf"
+			icon = 8
+		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BLINK["blink7"] then
+			effect = "particles/econ/events/ti6/blink_dagger_start_ti6.vpcf"
+			effect2 = "particles/econ/events/ti6/blink_dagger_end_ti6.vpcf"
+			icon = 7
+		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BLINK["blink6"] then
+			effect = "particles/econ/events/ti4/blink_dagger_start_ti4.vpcf"
+			effect = "particles/econ/events/ti4/blink_dagger_end_ti4.vpcf"
+			icon = 6	
+		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BLINK["blink5"] then
+			effect = "particles/econ/events/winter_major_2017/blink_dagger_start_wm07.vpcf"
+			effect2 = "particles/econ/events/winter_major_2017/blink_dagger_end_wm07.vpcf"
+			icon = 5
+		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BLINK["blink4"] then
+			effect = "particles/econ/events/ti7/blink_dagger_start_ti7_lvl2.vpcf"
+			effect2 = "particles/econ/events/ti7/blink_dagger_end_ti7_lvl2.vpcf"
+			icon = 4
+		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BLINK["blink3"] then
+			effect = "particles/econ/events/ti7/blink_dagger_start_ti7.vpcf"
+			effect2 = "particles/econ/events/ti7/blink_dagger_end_ti7.vpcf"
+			icon = 3
+		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BLINK["blink2"] then
+			effect = "particles/econ/events/nexon_hero_compendium_2014/blink_dagger_start_nexon_hero_cp_2014.vpcf"
+			effect2 = "particles/econ/events/nexon_hero_compendium_2014/blink_dagger_end_nexon_hero_cp_2014.vpcf"
+			icon = 2
+		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BLINK["blink"] then
+			effect = "particles/econ/events/fall_major_2016/blink_dagger_start_fm06.vpcf"
+			effect2 = "particles/econ/events/fall_major_2016/blink_dagger_end_fm06.vpcf"
+			icon = 1
+		end
 	end
 
 	hero.blink_effect = effect
@@ -230,21 +231,23 @@ function Imbattlepass:GetForceStaffEffect(hero) -- still not working yet
 	local effect = "particles/items_fx/force_staff.vpcf"
 	local icon = 0
 
-	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FORCE_STAFF["force_staff5"] then
-		effect = "particles/econ/events/ti8/force_staff_ti8.vpcf"
-		icon = 5
-	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FORCE_STAFF["force_staff4"] then
-		effect = "particles/econ/events/ti6/force_staff_ti6.vpcf"
-		icon = 4
-	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FORCE_STAFF["force_staff3"] then
-		effect = "particles/econ/events/winter_major_2017/force_staff_wm07.vpcf"
-		icon = 3
-	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FORCE_STAFF["force_staff2"] then
-		effect = "particles/econ/events/ti7/force_staff_ti7.vpcf"
-		icon = 2
-	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FORCE_STAFF["force_staff"] then
-		effect = "particles/econ/events/fall_major_2016/force_staff_fm06.vpcf"
-		icon = 1
+	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) ~= nil then
+		if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FORCE_STAFF["force_staff5"] then
+			effect = "particles/econ/events/ti8/force_staff_ti8.vpcf"
+			icon = 5
+		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FORCE_STAFF["force_staff4"] then
+			effect = "particles/econ/events/ti6/force_staff_ti6.vpcf"
+			icon = 4
+		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FORCE_STAFF["force_staff3"] then
+			effect = "particles/econ/events/winter_major_2017/force_staff_wm07.vpcf"
+			icon = 3
+		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FORCE_STAFF["force_staff2"] then
+			effect = "particles/econ/events/ti7/force_staff_ti7.vpcf"
+			icon = 2
+		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FORCE_STAFF["force_staff"] then
+			effect = "particles/econ/events/fall_major_2016/force_staff_fm06.vpcf"
+			icon = 1
+		end
 	end
 
 	hero.force_staff_effect = effect
@@ -256,18 +259,20 @@ function Imbattlepass:GetRadianceEffect(hero)
 	local effect2 = "particles/items2_fx/radiance.vpcf"
 	local icon = 0
 
-	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_RADIANCE["radiance3"] then
-		effect = "particles/econ/events/ti8/radiance_owner_ti8.vpcf"
-		effect2 = "particles/econ/events/ti8/radiance_ti8.vpcf"
-		icon = 3
-	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_RADIANCE["radiance2"] then
-		effect = "particles/econ/events/ti6/radiance_owner_ti6.vpcf"
-		effect2 = "particles/econ/events/ti6/radiance_ti6.vpcf"
-		icon = 2
-	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_RADIANCE["radiance"] then
-		effect = "particles/econ/events/ti7/radiance_owner_ti7.vpcf"
-		effect2 = "particles/econ/events/ti7/radiance_ti7.vpcf"
-		icon = 1
+	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) ~= nil then
+		if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_RADIANCE["radiance3"] then
+			effect = "particles/econ/events/ti8/radiance_owner_ti8.vpcf"
+			effect2 = "particles/econ/events/ti8/radiance_ti8.vpcf"
+			icon = 3
+		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_RADIANCE["radiance2"] then
+			effect = "particles/econ/events/ti6/radiance_owner_ti6.vpcf"
+			effect2 = "particles/econ/events/ti6/radiance_ti6.vpcf"
+			icon = 2
+		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_RADIANCE["radiance"] then
+			effect = "particles/econ/events/ti7/radiance_owner_ti7.vpcf"
+			effect2 = "particles/econ/events/ti7/radiance_ti7.vpcf"
+			icon = 1
+		end
 	end
 
 	hero.radiance_effect_owner = effect
@@ -280,14 +285,16 @@ function Imbattlepass:GetSheepstickEffect(hero)
 	local model = "models/props_gameplay/pig.vmdl"
 	local icon = 0
 
-	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_SHEEPSTICK["sheepstick2"] then
-		effect = "particles/econ/items/shadow_shaman/shadow_shaman_sheepstick/shadowshaman_voodoo_sheepstick.vpcf"
-		model = "models/props_gameplay/roquelaire/roquelaire.vmdl"
-		icon = 2
-	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_SHEEPSTICK["sheepstick"] then
-		effect = "particles/econ/events/winter_major_2017/item_sheepstick_wm07.vpcf"
-		model = "models/props_gameplay/pig_blue.vmdl"
-		icon = 1
+	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) ~= nil then
+		if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_SHEEPSTICK["sheepstick2"] then
+			effect = "particles/econ/items/shadow_shaman/shadow_shaman_sheepstick/shadowshaman_voodoo_sheepstick.vpcf"
+			model = "models/props_gameplay/roquelaire/roquelaire.vmdl"
+			icon = 2
+		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_SHEEPSTICK["sheepstick"] then
+			effect = "particles/econ/events/winter_major_2017/item_sheepstick_wm07.vpcf"
+			model = "models/props_gameplay/pig_blue.vmdl"
+			icon = 1
+		end
 	end
 
 	hero.sheepstick_effect = effect
@@ -300,18 +307,20 @@ function Imbattlepass:GetShivaEffect(hero)
 	local effect2 = "particles/items2_fx/shivas_guard_impact.vpcf"
 	local icon = 0
 
-	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_SHIVA["shiva3"] then
-		effect = "particles/econ/events/ti8/shivas_guard_ti8_active.vpcf"
-		effect2 = "particles/econ/events/ti8/shivas_guard_ti8_impact.vpcf"
-		icon = 3
-	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_SHIVA["shiva2"] then
-		effect = "particles/econ/events/newbloom_2015/shivas_guard_active_nian2015.vpcf"
-		effect2 = "particles/econ/events/newbloom_2015/shivas_guard_impact_nian2015.vpcf"
-		icon = 2
-	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_SHIVA["shiva"] then
-		effect = "particles/econ/events/ti7/shivas_guard_active_ti7.vpcf"
-		effect2 = "particles/econ/events/ti7/shivas_guard_impact_ti7.vpcf"
-		icon = 1
+	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) ~= nil then
+		if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_SHIVA["shiva3"] then
+			effect = "particles/econ/events/ti8/shivas_guard_ti8_active.vpcf"
+			effect2 = "particles/econ/events/ti8/shivas_guard_ti8_impact.vpcf"
+			icon = 3
+		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_SHIVA["shiva2"] then
+			effect = "particles/econ/events/newbloom_2015/shivas_guard_active_nian2015.vpcf"
+			effect2 = "particles/econ/events/newbloom_2015/shivas_guard_impact_nian2015.vpcf"
+			icon = 2
+		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_SHIVA["shiva"] then
+			effect = "particles/econ/events/ti7/shivas_guard_active_ti7.vpcf"
+			effect2 = "particles/econ/events/ti7/shivas_guard_impact_ti7.vpcf"
+			icon = 1
+		end
 	end
 
 	hero.shiva_blast_effect = effect
@@ -327,27 +336,29 @@ function Imbattlepass:GetMekansmEffect(hero)
 	local effect5 = "particles/items3_fx/warmage_mana_nonhero.vpcf"
 	local icon = 0
 
-	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_MEKANSM["mekansm3"] then
-		effect = "particles/econ/events/ti8/mekanism_ti8.vpcf"
-		effect2 = "particles/econ/events/ti8/mekanism_recipient_ti8.vpcf"
-		effect3 = "particles/items3_fx/warmage2.vpcf" -- make new effect, placeholder
-		effect4 = "particles/items3_fx/warmage2_recipient.vpcf" -- make new effect, placeholder
-		effect5 = "particles/items3_fx/warmage2_mana_nonhero.vpcf" -- make new effect, placeholder
-		icon = 3
-	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_MEKANSM["mekansm2"] then
-		effect = "particles/econ/events/ti6/mekanism_ti6.vpcf"
-		effect2 = "particles/econ/events/ti6/mekanism_recipient_ti6.vpcf"
-		effect3 = "particles/items3_fx/warmage2.vpcf"
-		effect4 = "particles/items3_fx/warmage2_recipient.vpcf"
-		effect5 = "particles/items3_fx/warmage2_mana_nonhero.vpcf"
-		icon = 2
-	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_MEKANSM["mekansm"] then
-		effect = "particles/econ/events/ti7/mekanism_ti7.vpcf"
-		effect2 = "particles/econ/events/ti7/mekanism_recipient_ti7.vpcf"
-		effect3 = "particles/items3_fx/warmage1.vpcf"
-		effect4 = "particles/items3_fx/warmage1_recipient.vpcf"
-		effect5 = "particles/items3_fx/warmage1_mana_nonhero.vpcf"
-		icon = 1
+	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) ~= nil then
+		if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_MEKANSM["mekansm3"] then
+			effect = "particles/econ/events/ti8/mekanism_ti8.vpcf"
+			effect2 = "particles/econ/events/ti8/mekanism_recipient_ti8.vpcf"
+			effect3 = "particles/items3_fx/warmage2.vpcf" -- make new effect, placeholder
+			effect4 = "particles/items3_fx/warmage2_recipient.vpcf" -- make new effect, placeholder
+			effect5 = "particles/items3_fx/warmage2_mana_nonhero.vpcf" -- make new effect, placeholder
+			icon = 3
+		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_MEKANSM["mekansm2"] then
+			effect = "particles/econ/events/ti6/mekanism_ti6.vpcf"
+			effect2 = "particles/econ/events/ti6/mekanism_recipient_ti6.vpcf"
+			effect3 = "particles/items3_fx/warmage2.vpcf"
+			effect4 = "particles/items3_fx/warmage2_recipient.vpcf"
+			effect5 = "particles/items3_fx/warmage2_mana_nonhero.vpcf"
+			icon = 2
+		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_MEKANSM["mekansm"] then
+			effect = "particles/econ/events/ti7/mekanism_ti7.vpcf"
+			effect2 = "particles/econ/events/ti7/mekanism_recipient_ti7.vpcf"
+			effect3 = "particles/items3_fx/warmage1.vpcf"
+			effect4 = "particles/items3_fx/warmage1_recipient.vpcf"
+			effect5 = "particles/items3_fx/warmage1_mana_nonhero.vpcf"
+			icon = 1
+		end
 	end
 
 	hero.mekansm_effect = effect
@@ -361,42 +372,44 @@ end
 function Imbattlepass:GetFountainEffect(hero)
 	local effect = ""
 
-	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FOUNTAIN["fountain18"] then
-		effect = "particles/econ/events/ti8/fountain_regen_ti8_lvl3.vpcf"
-	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FOUNTAIN["fountain17"] then
-		effect = "particles/econ/events/ti8/fountain_regen_ti8_lvl2.vpcf"
-	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FOUNTAIN["fountain16"] then
-		effect = "particles/econ/events/ti8/fountain_regen_ti8.vpcf"
-	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FOUNTAIN["fountain15"] then
-		effect = "particles/econ/events/ti5/radiant_fountain_regen_lvl2_ti5.vpcf"
-	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FOUNTAIN["fountain14"] then
-		effect = "particles/econ/events/ti5/radiant_fountain_regen_ti5.vpcf"
-	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FOUNTAIN["fountain13"] then
-		effect = "particles/econ/events/ti6/radiant_fountain_regen_ti6_lvl3.vpcf"
-	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FOUNTAIN["fountain12"] then
-		effect = "particles/econ/events/ti6/radiant_fountain_regen_ti6_lvl2.vpcf"
-	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FOUNTAIN["fountain11"] then
-		effect = "particles/econ/events/ti5/radiant_fountain_regen_ti6.vpcf"
-	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FOUNTAIN["fountain10"] then
-		effect = "particles/econ/events/ti4/radiant_fountain_regen_ti4.vpcf"
-	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FOUNTAIN["fountain9"] then
-		effect = "particles/econ/events/winter_major_2017/radiant_fountain_regen_wm07_lvl3.vpcf"
-	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FOUNTAIN["fountain8"] then
-		effect = "particles/econ/events/winter_major_2017/radiant_fountain_regen_wm07_lvl2.vpcf"
-	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FOUNTAIN["fountain7"] then
-		effect = "particles/econ/events/winter_major_2017/radiant_fountain_regen_wm07_lvl1.vpcf"
-	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FOUNTAIN["fountain6"] then
-		effect = "particles/econ/events/ti7/fountain_regen_ti7_lvl3.vpcf"
-	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FOUNTAIN["fountain5"] then
-		effect = "particles/econ/events/ti7/fountain_regen_ti7_lvl2.vpcf"
-	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FOUNTAIN["fountain4"] then
-		effect = "particles/econ/events/ti7/fountain_regen_ti7.vpcf"
-	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FOUNTAIN["fountain3"] then
-		effect = "particles/econ/events/fall_major_2016/radiant_fountain_regen_fm06_lvl3.vpcf"
-	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FOUNTAIN["fountain2"] then
-		effect = "particles/econ/events/fall_major_2016/radiant_fountain_regen_fm06_lvl2.vpcf"
-	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FOUNTAIN["fountain"] then
-		effect = "particles/econ/events/fall_major_2016/radiant_fountain_regen_fm06_lvl1.vpcf"
+	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) ~= nil then
+		if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FOUNTAIN["fountain18"] then
+			effect = "particles/econ/events/ti8/fountain_regen_ti8_lvl3.vpcf"
+		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FOUNTAIN["fountain17"] then
+			effect = "particles/econ/events/ti8/fountain_regen_ti8_lvl2.vpcf"
+		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FOUNTAIN["fountain16"] then
+			effect = "particles/econ/events/ti8/fountain_regen_ti8.vpcf"
+		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FOUNTAIN["fountain15"] then
+			effect = "particles/econ/events/ti5/radiant_fountain_regen_lvl2_ti5.vpcf"
+		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FOUNTAIN["fountain14"] then
+			effect = "particles/econ/events/ti5/radiant_fountain_regen_ti5.vpcf"
+		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FOUNTAIN["fountain13"] then
+			effect = "particles/econ/events/ti6/radiant_fountain_regen_ti6_lvl3.vpcf"
+		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FOUNTAIN["fountain12"] then
+			effect = "particles/econ/events/ti6/radiant_fountain_regen_ti6_lvl2.vpcf"
+		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FOUNTAIN["fountain11"] then
+			effect = "particles/econ/events/ti5/radiant_fountain_regen_ti6.vpcf"
+		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FOUNTAIN["fountain10"] then
+			effect = "particles/econ/events/ti4/radiant_fountain_regen_ti4.vpcf"
+		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FOUNTAIN["fountain9"] then
+			effect = "particles/econ/events/winter_major_2017/radiant_fountain_regen_wm07_lvl3.vpcf"
+		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FOUNTAIN["fountain8"] then
+			effect = "particles/econ/events/winter_major_2017/radiant_fountain_regen_wm07_lvl2.vpcf"
+		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FOUNTAIN["fountain7"] then
+			effect = "particles/econ/events/winter_major_2017/radiant_fountain_regen_wm07_lvl1.vpcf"
+		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FOUNTAIN["fountain6"] then
+			effect = "particles/econ/events/ti7/fountain_regen_ti7_lvl3.vpcf"
+		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FOUNTAIN["fountain5"] then
+			effect = "particles/econ/events/ti7/fountain_regen_ti7_lvl2.vpcf"
+		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FOUNTAIN["fountain4"] then
+			effect = "particles/econ/events/ti7/fountain_regen_ti7.vpcf"
+		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FOUNTAIN["fountain3"] then
+			effect = "particles/econ/events/fall_major_2016/radiant_fountain_regen_fm06_lvl3.vpcf"
+		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FOUNTAIN["fountain2"] then
+			effect = "particles/econ/events/fall_major_2016/radiant_fountain_regen_fm06_lvl2.vpcf"
+		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FOUNTAIN["fountain"] then
+			effect = "particles/econ/events/fall_major_2016/radiant_fountain_regen_fm06_lvl1.vpcf"
+		end
 	end
 
 	hero.fountain_effect = effect
@@ -406,21 +419,23 @@ function Imbattlepass:GetBottleEffect(hero)
 	local effect = "particles/items_fx/bottle.vpcf"
 	local icon = 0
 
-	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BOTTLE["bottle5"] then
-		effect = "particles/econ/events/ti8/bottle_ti8.vpcf"
-		icon = 5
-	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BOTTLE["bottle4"] then
-		effect = "particles/econ/events/ti5/bottle_ti5.vpcf"
-		icon = 4
-	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BOTTLE["bottle3"] then
-		effect = "particles/econ/events/ti6/bottle_ti6.vpcf"
-		icon = 3
-	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BOTTLE["bottle2"] then
-		effect = "particles/econ/events/ti4/bottle_ti4.vpcf"
-		icon = 2
-	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BOTTLE["bottle"] then
-		effect = "particles/econ/events/ti7/bottle_ti7.vpcf"
-		icon = 1
+	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) ~= nil then
+		if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BOTTLE["bottle5"] then
+			effect = "particles/econ/events/ti8/bottle_ti8.vpcf"
+			icon = 5
+		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BOTTLE["bottle4"] then
+			effect = "particles/econ/events/ti5/bottle_ti5.vpcf"
+			icon = 4
+		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BOTTLE["bottle3"] then
+			effect = "particles/econ/events/ti6/bottle_ti6.vpcf"
+			icon = 3
+		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BOTTLE["bottle2"] then
+			effect = "particles/econ/events/ti4/bottle_ti4.vpcf"
+			icon = 2
+		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BOTTLE["bottle"] then
+			effect = "particles/econ/events/ti7/bottle_ti7.vpcf"
+			icon = 1
+		end
 	end
 
 	hero.bottle_effect = effect
@@ -429,44 +444,46 @@ function Imbattlepass:GetBottleEffect(hero)
 end
 
 function Imbattlepass:GetHeroEffect(hero)
-	if hero:GetUnitName() == "npc_dota_hero_juggernaut" then
-		if next_reward_shown == true and Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_JUGGERNAUT["juggernaut_arcana"] then
-			Imbattlepass:SetupArcana(hero:GetPlayerID(), "models/items/juggernaut/arcana/juggernaut_arcana_mask.vmdl", "models/heroes/juggernaut/juggernaut_arcana.vmdl", HasJuggernautArcana(hero:GetPlayerID()))
-			hero.blade_fury_effect = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_blade_fury.vpcf"
-		end
-	elseif hero:GetUnitName() == "npc_dota_hero_pudge" then
-		-- TODO: Temporary, later replace dragonclaw hook model name by "pudge_hook_string_finders" in wearables.kv
-		local string_finders = Wearables:GetModelStringFinders("models/items/pudge/pudge_skeleton_hook_body.vmdl")
-		for _, string in pairs(string_finders) do
-			if Wearables:GetWearable(hero, string) then
-				hero.hook_wearable = Wearables:GetWearable(hero, string)
-				print(hero.hook_wearable:GetModelName())
-				break
+	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) ~= nil then
+		if hero:GetUnitName() == "npc_dota_hero_juggernaut" then
+			if next_reward_shown == true and Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_JUGGERNAUT["juggernaut_arcana"] then
+				Imbattlepass:SetupArcana(hero:GetPlayerID(), "models/items/juggernaut/arcana/juggernaut_arcana_mask.vmdl", "models/heroes/juggernaut/juggernaut_arcana.vmdl", HasJuggernautArcana(hero:GetPlayerID()))
+				hero.blade_fury_effect = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_blade_fury.vpcf"
 			end
-		end
+		elseif hero:GetUnitName() == "npc_dota_hero_pudge" then
+			-- TODO: Temporary, later replace dragonclaw hook model name by "pudge_hook_string_finders" in wearables.kv
+			local string_finders = Wearables:GetModelStringFinders("models/items/pudge/pudge_skeleton_hook_body.vmdl")
+			for _, string in pairs(string_finders) do
+				if Wearables:GetWearable(hero, string) then
+					hero.hook_wearable = Wearables:GetWearable(hero, string)
+					print(hero.hook_wearable:GetModelName())
+					break
+				end
+			end
 
-		if hero.hook_wearable == nil then
-			print("Couldn't find hook wearable, string finder missing in table for 1 of these models:")
-			Wearables:PrintWearables(hero)
-		end
+			if hero.hook_wearable == nil then
+				print("Couldn't find hook wearable, string finder missing in table for 1 of these models:")
+				Wearables:PrintWearables(hero)
+			end
 
-		hero.hook_pfx = "particles/units/heroes/hero_pudge/pudge_meathook.vpcf"
+			hero.hook_pfx = "particles/units/heroes/hero_pudge/pudge_meathook.vpcf"
 
-		if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_PUDGE["pudge_arcana"] then
-			Imbattlepass:SetupArcana(hero:GetPlayerID(), "models/items/pudge/arcana/pudge_arcana_back.vmdl", "models/items/pudge/arcana/pudge_arcana_base.vmdl", HasPudgeArcana(hero:GetPlayerID()))
-		end
+			if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_PUDGE["pudge_arcana"] then
+				Imbattlepass:SetupArcana(hero:GetPlayerID(), "models/items/pudge/arcana/pudge_arcana_back.vmdl", "models/items/pudge/arcana/pudge_arcana_base.vmdl", HasPudgeArcana(hero:GetPlayerID()))
+			end
 
-		if next_reward_shown == true and Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_PUDGE["pudge_dragonclaw"] then
-			hero.hook_pfx = "particles/econ/items/pudge/pudge_dragonclaw/pudge_meathook_dragonclaw_imba.vpcf"
-			Imbattlepass:SetupImmortal(hero:GetPlayerID(), "models/items/pudge/pudge_skeleton_hook_body.vmdl")
-		end
-	elseif hero:GetUnitName() == "npc_dota_hero_vengefulspirit" then
-		if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_VENGEFULSPIRIT["vengefulspirit_immortal"] then
-			Imbattlepass:SetupImmortal(hero:GetPlayerID(), "models/items/vengefulspirit/vs_ti8_immortal_shoulder/vs_ti8_immortal_shoulder.vmdl")
-			hero.magic_missile_effect = "particles/econ/items/vengeful/vs_ti8_immortal_shoulder/vs_ti8_immortal_magic_missle.vpcf"
-			hero.magic_missile_icon = 1
-			hero.magic_missile_sound = "Hero_VengefulSpirit.MagicMissile.TI8"
-			hero.magic_missile_sound_hit = "Hero_VengefulSpirit.MagicMissileImpact.TI8"
+			if next_reward_shown == true and Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_PUDGE["pudge_dragonclaw"] then
+				hero.hook_pfx = "particles/econ/items/pudge/pudge_dragonclaw/pudge_meathook_dragonclaw_imba.vpcf"
+				Imbattlepass:SetupImmortal(hero:GetPlayerID(), "models/items/pudge/pudge_skeleton_hook_body.vmdl")
+			end
+		elseif hero:GetUnitName() == "npc_dota_hero_vengefulspirit" then
+			if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_VENGEFULSPIRIT["vengefulspirit_immortal"] then
+				Imbattlepass:SetupImmortal(hero:GetPlayerID(), "models/items/vengefulspirit/vs_ti8_immortal_shoulder/vs_ti8_immortal_shoulder.vmdl")
+				hero.magic_missile_effect = "particles/econ/items/vengeful/vs_ti8_immortal_shoulder/vs_ti8_immortal_magic_missle.vpcf"
+				hero.magic_missile_icon = 1
+				hero.magic_missile_sound = "Hero_VengefulSpirit.MagicMissile.TI8"
+				hero.magic_missile_sound_hit = "Hero_VengefulSpirit.MagicMissileImpact.TI8"
+			end
 		end
 	end
 end
