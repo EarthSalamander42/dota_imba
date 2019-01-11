@@ -140,6 +140,9 @@ function Imbattlepass:Init()
 end
 
 function Imbattlepass:AddItemEffects(hero)
+	if hero.GetPlayerID == nil then return end
+	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) == nil then return end
+
 	Imbattlepass:GetBlinkEffect(hero)
 	Imbattlepass:GetForceStaffEffect(hero)
 	Imbattlepass:GetRadianceEffect(hero)
@@ -154,7 +157,9 @@ end
 function Imbattlepass:GetRewardUnlocked(ID)
 	if IsInToolsMode() then return 500 end
 	if CustomNetTables:GetTableValue("player_table", tostring(ID)) then
-		return CustomNetTables:GetTableValue("player_table", tostring(ID)).Lvl
+		if CustomNetTables:GetTableValue("player_table", tostring(ID)).Lvl then
+			return CustomNetTables:GetTableValue("player_table", tostring(ID)).Lvl
+		end
 	end
 
 	return 1
@@ -164,8 +169,6 @@ function Imbattlepass:GetBlinkEffect(hero)
 	local effect = "particles/items_fx/blink_dagger_start.vpcf"
 	local effect2 = "particles/items_fx/blink_dagger_end.vpcf"
 	local icon = 0
-
-	if hero.GetPlayerID == nil then return end
 
 	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BLINK["blink12"] then
 		effect = "particles/econ/events/ti8/blink_dagger_ti8_start_lvl2.vpcf"

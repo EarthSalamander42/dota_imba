@@ -2424,11 +2424,9 @@
 	//=================================================================================================================
 	"brewmaster_thunder_clap"
 	{
-		"AbilityCooldown"				"13 12 11 10"
+		"AbilityCooldown"				"13.0 12.0 11.0 10.0"
 		"AbilityCastPoint"				"0.35"
 
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
 			"01"
@@ -2467,42 +2465,54 @@
 	}
 
 	//=================================================================================================================
-	// Brewmaster: Drunken Haze
+	// Brewmaster: Cinder Brew
 	//=================================================================================================================
-	"brewmaster_drunken_haze"	
+	"brewmaster_cinder_brew"
 	{
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0.2"
+		"AbilityCastRange"				"850 850 850 850"
+		"AbilityCooldown"				"20.0 18.0 16.0 14.0"
+		"AbilityManaCost"				"50"		
 
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"8 6.5 5 3.5"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"25"		
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"duration"					"4.5"
+				"duration"					"7"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"movement_slow"				"15 30 45 60"
+				"self_attack_chance"		"20 30 40 50"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"miss_chance"				"70 80 90 100"
+				"ignite_dps"				"20 30 40 50"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"ignite_duration"			"3"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"ignite_threshold"			"80"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"movement_slow"				"25 30 35 40"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"400"
 			}
 		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 	}
 
 	//=================================================================================================================
@@ -2510,19 +2520,19 @@
 	//=================================================================================================================
 	"brewmaster_drunken_brawler"
 	{		
-		"AbilityCooldown"				"12 10 8 6"
+		"AbilityCooldown"				"12.0 10.0 8.0 6.0"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"dodge_chance"				"20 25 30 35"
+				"dodge_chance"				"25 30 35 40"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"crit_chance"				"20 25 30 35"
+				"crit_chance"				"25 30 35 40"
 			}
 			"03"
 			{
@@ -3342,7 +3352,7 @@
 	//=================================================================================================================
 	"chen_penitence"
 	{
-		"AbilityCooldown"				"14 12 10 8"
+		"AbilityCooldown"				"14.0 12.0 10.0 8.0"
 		"AbilityManaCost"				"70"
 
 		"AbilitySpecial"
@@ -3423,6 +3433,42 @@
 				"hero_teleport_delay"	"6.0 4.0 2.75 2.25"
 			}
 		}
+	}
+
+	//=================================================================================================================
+	// Chen: Divine Favor
+	//=================================================================================================================
+	"chen_divine_favor"
+	{
+		"AbilityCastPoint"				"0.3"
+		"AbilityCastRange"				"1000"
+		"AbilityCooldown"				"26.0 24.0 22.0 20.0"
+		"AbilityManaCost"				"110"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"heal_amp"				"50"
+			}
+//			"02"
+//			{
+//				"var_type"				"FIELD_INTEGER"
+//				"heal_rate"				"7 13 19 25"
+//			}
+//			"03"
+//			{
+//				"var_type"				"FIELD_INTEGER"
+//				"damage_bonus"		"10 20 40 80"
+//			}
+//			"04"
+//			{
+//				"var_type"				"FIELD_FLOAT"
+//				"duration"				"12.0"
+//			}
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 	}
 
 	//=================================================================================================================
@@ -4904,7 +4950,7 @@
 		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
 		"FightRecapLevel"				"1"
 
-		"AbilityCastRange"				"1400"
+		"AbilityCastRange"				"1800"
 		"AbilityCastPoint"				"0.8"
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_3"
 
@@ -4935,7 +4981,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"projectile_speed"		"2400"
+				"projectile_speed"		"2600"
 			}
 			"04"
 			{
@@ -4969,7 +5015,7 @@
 			"09"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"range_tooltip"				"1400"
+				"range_tooltip"				"1800"
 				"LinkedSpecialBonus"		"special_bonus_unique_grimstroke_3"
 			}
 		}
@@ -5118,7 +5164,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityModifierSupportValue"	"0.75"
 
-
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -5147,7 +5192,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"max_damage"			"220 280 340 400"
+				"max_damage"			"220 320 420 520"
 			}
 			"06"
 			{
@@ -6875,6 +6920,54 @@
 			{
 				"var_type"			"FIELD_FLOAT"
 				"rabid_duration"	"25"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Lone Druid: Spirit Link
+	//=================================================================================================================
+	"lone_druid_spirit_link"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"					"7309"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+		"FightRecapLevel"				"1"
+		"AbilitySound"					"Hero_LoneDruid.Rabid"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.5"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"35.0 30.0 25.0 20.0"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"50 60 70 80"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_attack_speed"	"25 50 75 100"		
+				"LinkedSpecialBonus"	"special_bonus_unique_lone_druid_6"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lifesteal_percent"		"40 50 60 70"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"10.0 12.0 14.0 16.0"
 			}
 		}
 	}
@@ -8637,7 +8730,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"100 180 260 340"
+				"damage"					"180 230 280 330"
 			}
 			"02"
 			{
@@ -8758,7 +8851,7 @@
 	//=================================================================================================================
 	"oracle_false_promise"
 	{		
-		"AbilityCooldown"				"70 50 30"
+		"AbilityCooldown"				"70.0 50.0 30.0"
 
 		"AbilitySpecial"
 		{
@@ -9691,14 +9784,14 @@
 	//=================================================================================================================
 	"spirit_breaker_charge_of_darkness"
 	{
-		"AbilityCooldown"				"12 11 10 9"
+		"AbilityCooldown"				"12.0 11.0 10.0 9.0"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"movement_speed"		"300 325 350 375"
+				"movement_speed"		"300 350 400 450"
 			}
 			"02"
 			{

@@ -41,7 +41,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"attack_range_bonus"	"400 550 700 850"
+				"attack_range_bonus"	"400 475 550 625"
 			}			
 			"03"
 			{

@@ -15,7 +15,7 @@
 "battlepass_level"					"Level: "
 "battlepass_refresh"				"Refresh"
 "donator_patreon"					"Patreon"
-"donator_Patreon_wrapper_label"		"Become a Patreon"
+"donator_Patreon_wrapper_label"		"Become a Patron"
 "donator_Companion_wrapper_label"	"Select a Companion"
 "donator_Statue_wrapper_label"		"Select a Statue"
 

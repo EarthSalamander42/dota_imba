@@ -187,7 +187,10 @@ function GameMode:OnGameRulesStateChange(keys)
 
 			-- Setup topbar player colors
 			CustomGameEventManager:Send_ServerToAllClients("override_top_bar_colors", {})
+		end)
 
+		Timers:CreateTimer(5.0, function()
+			-- Welcome message
 			if IMBA_PICK_SCREEN == false then
 				local line_duration = 5
 	
@@ -883,10 +886,6 @@ function GameMode:OnTeamKillCredit(keys)
 
 			-- Show Deathstreak message
 			if PlayerResource.GetPlayer == nil then
-				return
-			end
-
-			if PlayerResource:GetPlayer(victim_id).GetAssignedHero == nil then
 				return
 			end
 

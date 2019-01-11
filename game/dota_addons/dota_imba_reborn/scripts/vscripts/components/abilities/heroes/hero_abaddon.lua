@@ -70,7 +70,6 @@ end
 -- Hidden Modifiers:
 MergeTables(LinkedModifiers,{
 	["modifier_imba_mist_coil_passive"] = LUA_MODIFIER_MOTION_NONE,
-	["modifier_imba_mist_coil_mist_enemy"] = LUA_MODIFIER_MOTION_NONE,
 	["modifier_imba_mist_coil_mist_ally"] = LUA_MODIFIER_MOTION_NONE,
 })
 imba_abaddon_mist_coil = imba_abaddon_mist_coil or class({})
@@ -270,31 +269,6 @@ function modifier_imba_mist_coil_passive:OnTakeDamage(keys)
 				self.record = keys.record
 			end
 		end
-	end
-end
-
-modifier_imba_mist_coil_mist_enemy = modifier_imba_mist_coil_mist_enemy or class({})
-function modifier_imba_mist_coil_mist_enemy:IsDebuff() return true end
-function modifier_imba_mist_coil_mist_enemy:IsHidden() return false end
-function modifier_imba_mist_coil_mist_enemy:IsPurgable() return true end
-----------------------------------------------
-function modifier_imba_mist_coil_mist_enemy:DeclareFunctions()
-	local decFuns =
-		{
-			MODIFIER_EVENT_ON_TAKEDAMAGE
-		}
-	return decFuns
-end
-
-function modifier_imba_mist_coil_mist_enemy:OnCreated()
-	self.on_hit_damage = self:GetAbility():GetSpecialValueFor("on_hit_damage")
-	self.damage_threshold = self:GetAbility():GetSpecialValueFor("damage_threshold")
-	self.damage_type = DAMAGE_TYPE_MAGICAL
-end
-
-function modifier_imba_mist_coil_mist_enemy:OnTakeDamage(keys)
-	if keys.unit == self:GetParent() and keys.original_damage > self.damage_threshold then
-		ApplyDamage({victim = keys.unit, attacker = keys.attacker, damage = self.on_hit_damage, damage_type = self.damage_type})
 	end
 end
 
@@ -666,6 +640,7 @@ function modifier_imba_curse_of_avernus_passive:IsAura()
 	if self.caster:HasTalent("special_bonus_imba_abaddon_5") and not self.caster:PassivesDisabled() then
 		return true
 	end
+
 	return false
 end
 
@@ -677,6 +652,7 @@ function modifier_imba_curse_of_avernus_passive:GetAuraEntityReject(hEntity)
 	if hEntity:HasModifier("modifier_imba_curse_of_avernus_buff_haste") then
 		return true
 	end
+
 	return false
 end
 
@@ -697,7 +673,6 @@ function modifier_imba_curse_of_avernus_passive:OnAttack(kv)
 		local caster = self:GetCaster()
 		-- Do not apply curse if avernus if "break"
 		if not caster:PassivesDisabled() then
-
 			local attacker = kv.attacker
 
 			if attacker == caster then
@@ -719,7 +694,6 @@ function modifier_imba_curse_of_avernus_passive:OnAttack(kv)
 		end
 
 		if kv.attacker == caster and self.ability:IsCooldownReady() and ( self.ability.curse_of_avernus_target or self.ability:GetAutoCastState() ) then
-
 			local health_lost = caster:GetMaxHealth() * caster:FindTalentValue("special_bonus_imba_abaddon_4", "health_cost_pct") / 100
 
 			local over_channel_modifier = caster:FindModifierByName("modifier_over_channel_handler")
@@ -763,6 +737,7 @@ function modifier_imba_curse_of_avernus_passive:GetModifierProcAttack_BonusDamag
 	if kv.attacker == self:GetCaster() and self.ability.curse_of_avernus_target == kv.target then
 		return self.damage
 	end
+
 	return 0
 end
 
@@ -798,12 +773,14 @@ function modifier_imba_curse_of_avernus_debuff_slow:OnCreated(kv)
 		-- Give caster the buff immediately, else caster has to hit the target again to gain the buff
 		local buff_name = "modifier_imba_curse_of_avernus_buff_haste"
 		local current_buff = caster:FindModifierByName(buff_name)
+
 		if caster:HasTalent("special_bonus_imba_abaddon_2") then
 			self.has_talent = true
 			self.duration_extend = caster:FindTalentValue("special_bonus_imba_abaddon_2", "extend_duration")
 			self.hits = 0
 			self.base_duration = kv.duration
 		end
+
 		if not current_buff then
 			local ability = self:GetAbility()
 			local buff_duration = ability:GetSpecialValueFor( "buff_duration" ) -- Not possible for this to be 0 here

@@ -442,16 +442,63 @@ function GameMode:OrderFilter( keys )
 
 	if USE_TEAM_COURIER == false then
 		if unit:IsCourier() then
-			local ability = EntIndexToHScript(keys["entindex_ability"])
 			local player_id = keys.issuer_player_id_const
-			
-			if ability and ability.GetName and ability:GetName() ~= "" and player_id then
-				if TurboCourier.COURIER_PLAYER[player_id] and TurboCourier.COURIER_PLAYER[player_id]:HasAbility(ability:GetName()) then
-					TurboCourier.COURIER_PLAYER[player_id]:FindAbilityByName(ability:GetName()):CastAbility()				
+			local rightful_courier = TurboCourier.COURIER_PLAYER[player_id]
+
+--			if rightful_courier then
+				-- fix attempt to move items in courier inventory when giving order to a courier wich is not yours [NOT WORKING]
+--				if keys.order_type == DOTA_UNIT_ORDER_MOVE_ITEM then
+--					print("Move item to the rightful courier inventory!")
+--					local order = {
+--						UnitIndex = rightful_courier:entindex(),
+--						OrderType = DOTA_UNIT_ORDER_MOVE_ITEM,
+--						TargetIndex = nil,
+--						Queue = false
+--					}
+
+--					ExecuteOrderFromTable(order)
+
+--					return false
+--				end
+--			end
+
+			local ability = EntIndexToHScript(keys["entindex_ability"])
+
+			if player_id then
+				if keys.order_type == DOTA_UNIT_ORDER_PURCHASE_ITEM then
+					if unit == rightful_courier then
+--						print("Rightful courier used, everything's okay!")
+						return true
+					end
+
+					PlayerResource:NewSelection(player_id, rightful_courier)
+					DisplayError(player_id, "#dota_hud_error_select_own_courier")
+
+					return false
+				elseif (ability and ability.GetName and ability:GetName() ~= "") then
+					if unit == rightful_courier then
+--						print("Rightful courier used, everything's okay!")
+						return true
+					end
+
+					if rightful_courier and rightful_courier:HasAbility(ability:GetName()) then
+						if ability:IsToggle() then
+							rightful_courier:FindAbilityByName(ability:GetName()):ToggleAbility()
+						else
+							rightful_courier:FindAbilityByName(ability:GetName()):CastAbility()
+						end
+
+						PlayerResource:NewSelection(player_id, rightful_courier)
+
+						return false
+					end
+				else
+					DisplayError(player_id, "#dota_hud_error_control_courier_with_abilities_only")
+
+					return false
 				end
-			else
-				DisplayError(player_id, "Couriers can only be controlled with ability hotkeys.")
 			end
+
 			return false
 		end
 		
@@ -719,8 +766,8 @@ function GameMode:OrderFilter( keys )
 
 		if BANNED_ITEMS[GetMapName()] then
 			for _, banned_item in pairs(BANNED_ITEMS[GetMapName()]) do
-				print(banned_item)
-				print(self.itemIDs[item])
+--				print(banned_item)
+--				print(self.itemIDs[item])
 				if self.itemIDs[item] == banned_item then
 					DisplayError(unit:GetPlayerID(),"#dota_hud_error_cant_purchase_1v1")
 					return false
