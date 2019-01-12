@@ -26,7 +26,12 @@ function AghanimsSynthCast( keys )
 	local sound_cast = keys.sound_cast
 
 	-- If the caster already has the synth buff, do nothing
-	if caster:HasModifier(modifier_synth) or caster:HasModifier("modifier_arc_warden_tempest_double") then
+	if caster:HasModifier(modifier_synth) then
+		return nil
+	end
+	
+	if caster:HasModifier("modifier_arc_warden_tempest_double") then
+		DisplayError(caster:GetPlayerID(),"Tempest Doubles cannot create a divergent synth modifier.")
 		return nil
 	end
 

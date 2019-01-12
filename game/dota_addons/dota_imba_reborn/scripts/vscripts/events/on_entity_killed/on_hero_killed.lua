@@ -96,13 +96,17 @@ function GameMode:OnHeroDeath(killer, victim)
 		-------------------------------------------------------------------------------------------------
 		-- Arc Warden Tempest Double keeping Duel Damage
 		-------------------------------------------------------------------------------------------------
-		if killer:GetName() == "npc_dota_hero_arc_warden" and killer:IsTempestDouble() then
-			Timers:CreateTimer(FrameTime(), function()
-				if killer:HasModifier("modifier_legion_commander_duel_damage_boost") then
-					killer.duel_damage = killer:FindModifierByName("modifier_legion_commander_duel_damage_boost"):GetStackCount()
-					killer.duel_ability = killer:FindModifierByName("modifier_legion_commander_duel_damage_boost"):GetAbility()
+		if killer:HasModifier("modifier_legion_commander_duel") or victim:HasModifier("modifier_legion_commander_duel") then
+			for _, ent in pairs(Entities:FindAllByName("npc_dota_hero_arc_warden")) do
+				if ent:IsTempestDouble() then
+					Timers:CreateTimer(FrameTime(), function()
+						if ent:HasModifier("modifier_legion_commander_duel_damage_boost") then
+							ent.duel_damage = ent:FindModifierByName("modifier_legion_commander_duel_damage_boost"):GetStackCount()
+							ent.duel_ability = ent:FindModifierByName("modifier_legion_commander_duel_damage_boost"):GetAbility()
+						end
+					end)
 				end
-			end)
+			end
 		end
 
 		return

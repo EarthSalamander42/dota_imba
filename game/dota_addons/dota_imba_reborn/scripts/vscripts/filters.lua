@@ -372,7 +372,7 @@ function GameMode:ItemAddedFilter( keys )
 				DisplayError(unit:GetPlayerID(),"#dota_hud_error_cant_item_enough_slots")
 			end
 		end
-		if unit:IsIllusion() or unit:IsTempestDouble() then
+		if unit:IsIllusion() or unit:IsTempestDouble() or unit:IsHero() then
 			return true
 		else
 			unit:DropRapier(nil, item_name)

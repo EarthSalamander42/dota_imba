@@ -141,7 +141,7 @@ function GameMode:OnHeroFirstSpawn(hero)
 --				CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "show_netgraph_heronames", {})
 --			end
 			
-			if hero:GetUnitName() == "npc_dota_hero_arc_warden" and hero:IsTempestDouble() then
+			if hero:IsTempestDouble() then
 				GameMode:OnHeroSpawned(hero)
 			-- Not a big deal, but don't give the MK ult clones frantic modifier (blue auras)
 			elseif hero:GetUnitName() == "npc_dota_hero_monkey_king" then
@@ -184,12 +184,15 @@ function GameMode:OnHeroSpawned(hero)
 		Mutation:OnHeroSpawn(hero)
 	end
 	
-	if hero:GetUnitName() == "npc_dota_hero_arc_warden" and hero:IsTempestDouble() then
+	if hero:IsTempestDouble() then
 		--print("Does double have modifier_legion_commander_duel_damage_boost? ", hero:HasModifier("modifier_legion_commander_duel_damage_boost"))
 		
 		local clone_shared_buffs = {
 			"modifier_item_imba_moon_shard_active",
-			"modifier_imba_soul_of_truth_buff"
+			"modifier_imba_soul_of_truth_buff",
+			"modifier_imba_war_veteran_0",
+			"modifier_imba_war_veteran_1",
+			"modifier_imba_war_veteran_2"
 		}
 		
 		-- Iterate through the main hero's potential modifiers
@@ -223,11 +226,6 @@ function GameMode:OnHeroSpawned(hero)
 								local current_item = main_hero:GetItemInSlot(i)
 								if current_item and current_item:GetName() == "item_imba_soul_of_truth" then
 									local cloned_modifier = hero:AddNewModifier(main_hero, current_item, "modifier_item_gem_of_true_sight", {duration = buff_time})
-									-- This code block doesn't work
-									Timers:CreateTimer(FrameTime(), function()
-										hero:RemoveItem(current_item)
-									end)
-									--
 									break
 								end
 							end
