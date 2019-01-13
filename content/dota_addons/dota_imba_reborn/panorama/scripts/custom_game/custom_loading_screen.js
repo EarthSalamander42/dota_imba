@@ -112,12 +112,14 @@ function OnVotesReceived(data)
 	vote_count[4] = 0;
 	vote_count[5] = 0;
 
+	var map_name_cut = Game.GetMapInfo().map_display_name.replace('imba_', "");
+
 	// Reset tooltips
 	for (var i = 1; i <= 3; i++) {
-		$("#VoteGameModeText" + i).text = $.Localize("#vote_gamemode_" + i);
+		$("#VoteGameModeText" + i).text = map_name_cut + " " + $.Localize("#vote_gamemode_" + i);
 	}
 
-	// Check number of votes for each difficulties
+	// Check number of votes for each gamemodes
 	for (var id in data.table2){
 		var gamemode = data.table2[id]
 		vote_count[gamemode]++;
@@ -128,7 +130,7 @@ function OnVotesReceived(data)
 		var vote_tooltip = "vote"
 		if (vote_count[i] > 1)
 			vote_tooltip = "votes"
-		$("#VoteGameModeText" + i).text = $.Localize("#vote_gamemode_" + i) + " (" + vote_count[i] + " "+ vote_tooltip +")";
+		$("#VoteGameModeText" + i).text = map_name_cut + " " + $.Localize("#vote_gamemode_" + i) + " (" + vote_count[i] + " "+ vote_tooltip +")";
 	}
 
 //	if (data.category == "creep_lanes") {
@@ -136,13 +138,23 @@ function OnVotesReceived(data)
 //	}
 }
 
-(function(){
-	HoverableLoadingScreen()
-	fetch();
-
-	for (var i = 1; i <= 3; i++) {
-		$("#VoteGameModeText" + i).text = $.Localize("#vote_gamemode_" + i) + " (0 vote)";
+function SetGameModeTooltips() {
+	// if data is not available yet, reschedule
+	if (!info_already_available()) {
+		$.Schedule(0.1, SetGameModeTooltips);
+		return;
 	}
+
+	var map_name_cut = Game.GetMapInfo().map_display_name.replace('imba_', "");
+	for (var i = 1; i <= 3; i++) {
+		$("#VoteGameModeText" + i).text = map_name_cut + " " + $.Localize("#vote_gamemode_" + i) + " (0 vote)";
+	}
+}
+
+(function(){
+	HoverableLoadingScreen();
+	fetch();
+	SetGameModeTooltips();
 
 	GameEvents.Subscribe("send_votes", OnVotesReceived);
 })();

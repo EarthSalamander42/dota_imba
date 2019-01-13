@@ -12,15 +12,15 @@ end
 
 function modifier_imba_haste_rune_speed_limit_break:DeclareFunctions()
 	local funcs = {
-	MODIFIER_PROPERTY_MOVESPEED_MAX
+		MODIFIER_PROPERTY_MOVESPEED_MAX
 	}
-
 	return funcs
 end
 
 function modifier_imba_haste_rune_speed_limit_break:GetModifierMoveSpeed_Max()
-	return 10000
+	return math.huge
 end
+
 
 function modifier_imba_haste_rune_speed_limit_break:IsPurgable()
 	return true
