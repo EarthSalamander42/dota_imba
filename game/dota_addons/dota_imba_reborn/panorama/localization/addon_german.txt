@@ -432,8 +432,8 @@
 	"unassigned" "Nicht zugewiesen"
 	"vanilla_hero" "Faul"
 	"vote_gamemode" "Gamemode Vote"
-	"vote_gamemode_1" "IMBA 10v10"
-	"vote_gamemode_2" "IMBA Mutation 10v10"
-	"vote_gamemode_3" "IMBA Super Frantic 10v10"
+	"vote_gamemode_1" "Standard"
+	"vote_gamemode_2" "Mutation"
+	"vote_gamemode_3" "Super Frantic"
 	"welcome_label" "Willkommen zu Dota IMBA!"
 }

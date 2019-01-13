@@ -189,6 +189,14 @@ function GetCustomGameVote()
 	return gamemode[vote]
 end
 
+function GetCustomGoldVote()
+	return tostring(CustomNetTables:GetTableValue("game_options", "bounty_multiplier")["1"]).."%"
+end
+
+function GetCustomExpVote()
+	return tostring(CustomNetTables:GetTableValue("game_options", "exp_multiplier")["1"]).."%"
+end
+
 --[[
 function GetItemListImba(hero)
 	local itemTable = {}

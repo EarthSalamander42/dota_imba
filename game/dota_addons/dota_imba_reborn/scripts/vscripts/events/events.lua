@@ -555,7 +555,10 @@ function GameMode:OnPlayerLevelUp(keys)
 
 		-- TODO: error sometimes on this line: "hero:AddNewModifier(hero, nil, "modifier_imba_war_veteran_"..hero_attribute, {}):SetStackCount(1)""
 		if not hero:HasModifier("modifier_imba_war_veteran_" .. hero_attribute) then
-			hero:AddNewModifier(hero, nil, "modifier_imba_war_veteran_" .. hero_attribute, {}):SetStackCount(1)
+			local mod = hero:AddNewModifier(hero, nil, "modifier_imba_war_veteran_" .. hero_attribute, {})
+			if mod then
+				mod:SetStackCount(1)
+			end
 		elseif hero:HasModifier("modifier_imba_war_veteran_" .. hero_attribute) then
 			hero:FindModifierByName("modifier_imba_war_veteran_" .. hero_attribute):SetStackCount(math.min(hero:GetLevel() - 25, 17))
 		end
