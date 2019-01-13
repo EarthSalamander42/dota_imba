@@ -63,6 +63,9 @@ end
 function GainChargesOnAssist( keys )
 	local target = keys.unit
 	local item = keys.ability
+	
+	if not item then return end
+	
 	local item_level = item:GetLevel() - 1
 
 	-- Parameters

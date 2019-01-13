@@ -51,8 +51,8 @@ function GoodGame:Call(event)
 
 --			print("Team left counter: "..team_counter)
 --			print("Team left max counter: "..PlayerResource:GetPlayerCountForTeam(event.team))
-			-- GG end activates when at least 80% of the team GGs
-			if team_counter / PlayerResource:GetPlayerCountForTeam(event.team) >= 0.8 then
+			-- GG end activates when at least 70% of the team GGs
+			if team_counter / PlayerResource:GetPlayerCountForTeam(event.team) >= 0.7 then
 --				print("Full team has gg: "..event.team)
 				abandon_team = event.team
 			end

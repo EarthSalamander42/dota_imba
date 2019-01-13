@@ -85,7 +85,7 @@ function modifier_imba_winter_wyvern_arctic_burn:DeclareFunctions()
 		MODIFIER_PROPERTY_PROJECTILE_SPEED_BONUS,
 		MODIFIER_PROPERTY_ATTACK_POINT_CONSTANT,
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-		MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT,
+		-- MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT,
 	}
 
 	return decFuncs
@@ -131,9 +131,9 @@ function modifier_imba_winter_wyvern_arctic_burn:GetModifierAttackPointConstant(
 	return self:GetAbility():GetSpecialValueFor("attack_point")
 end
 
-function modifier_imba_winter_wyvern_arctic_burn:GetModifierBaseAttackTimeConstant()
-	return self:GetAbility():GetSpecialValueFor("bat_constant")
-end
+-- function modifier_imba_winter_wyvern_arctic_burn:GetModifierBaseAttackTimeConstant()
+	-- return self:GetAbility():GetSpecialValueFor("bat_constant")
+-- end
 
 --------------------------------------------------------------
 --  			Arctic Burn (Slow modifier) 				--

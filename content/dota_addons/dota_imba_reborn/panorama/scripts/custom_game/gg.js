@@ -55,7 +55,7 @@ function GGLocal() {
 	GGInitCountDown();
 	$.GetContextPanel().FindChildTraverse('Root').AddClass("visible");
 
-	$.Schedule(9, function() {
+	$.Schedule(5, function() {
 		if (gg_state) {
 			GameEvents.SendCustomGameEventToServer("send_gg_vote", {
 				ID: Game.GetLocalPlayerID(),
@@ -69,11 +69,11 @@ function GGLocal() {
 }
 
 function GGInitCountDown() {
-	for (var i = 0; i < 9; i++) {
+	for (var i = 0; i < 5; i++) {
 		// Isolating scope of i to be called later
 		(function(i){
 			$.Schedule(i, function() {
-				$.GetContextPanel().FindChildTraverse('GGTimer').text = 8-i;
+				$.GetContextPanel().FindChildTraverse('GGTimer').text = 4-i;
 			});
 		})(i);		
 	}
