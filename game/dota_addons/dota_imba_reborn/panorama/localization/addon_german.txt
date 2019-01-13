@@ -328,7 +328,7 @@
 	"mutation_danger_zone" "Gefahrenzone"
 	"mutation_danger_zone_description" "Alle 10 Sekunden werden 10 Gyrocopter Call Downs, an zufälligen Orten auf der ganzen Karte verteilt, gezaubert."
 	"mutation_death_explosion" "Todes-Explosion"
-	"mutation_death_explosion_description" "Fügt 1 Sekunde nach dem Tod, in einem Radius von 400 Einheiten, 400 + (50 * Minuten) Schaden zu."
+	"mutation_death_explosion_description" "Deal 300 + (50 * minutes) damage in a 350 radius on death afer a delay of 1 second."
 	"mutation_death_gold_drop" "Todes Gold"
 	"mutation_death_gold_drop_description" "Jedes Mal wenn ein Held stirbt, lässt er einen Goldsack fallen."
 	"mutation_defense_of_the_ants" "Verteidigung der Feeder"
@@ -431,5 +431,9 @@
 	"toggle_companion" "Toggle Companion"
 	"unassigned" "Nicht zugewiesen"
 	"vanilla_hero" "Faul"
+	"vote_gamemode" "Gamemode Vote"
+	"vote_gamemode_1" "Standard"
+	"vote_gamemode_2" "Mutation"
+	"vote_gamemode_3" "Super Frantic"
 	"welcome_label" "Willkommen zu Dota IMBA!"
 }

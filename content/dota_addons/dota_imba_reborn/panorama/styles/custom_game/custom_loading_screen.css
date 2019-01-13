@@ -11,6 +11,10 @@
 @define COLOR_INFO_BACKGROUND_DARK_ORANGE: #663300;
 @define COLOR_INFO_TEXT_ORANGE: #ffb366;
 
+@define COLOR_INFO_BACKGROUND_RED: #660000ee;
+@define COLOR_INFO_BACKGROUND_DARK_RED: #330000;
+@define COLOR_INFO_TEXT_RED: #ff0000;
+
 .addon-root {
 	width: 39%;
 	height: 100%;
@@ -52,7 +56,8 @@
 
 #imba-loading-title,
 #imba-loading-title-patreon,
-#imba-loading-title-promote, {
+#imba-loading-title-promote,
+#imba-loading-title-vote, {
 	width: 1250px;
 	margin-top: 30px;
 	margin-left: 120px;
@@ -74,9 +79,16 @@
 	border: 2px solid COLOR_INFO_BACKGROUND_DARK_BLUE;
 }
 
+#imba-loading-title-vote, {
+	background-color: COLOR_INFO_BACKGROUND_RED;
+	border: 2px solid COLOR_INFO_BACKGROUND_DARK_RED;
+}
+
 #imba-loading-title-text,
 #imba-loading-title-text-patreon,
-#imba-loading-title-text-promote {
+#imba-loading-title-text-promote,
+#imba-loading-title-text-vote {
+	width: 100%;
 	font-size: 36px;
 }
 
@@ -92,9 +104,14 @@
 	color: COLOR_INFO_TEXT_BLUE;
 }
 
+#imba-loading-title-text-vote {
+	color: COLOR_INFO_TEXT_RED;
+}
+
 #imba-loading-content-text,
 #imba-loading-content-text-patreon,
-#imba-loading-content-text-promote, {
+#imba-loading-content-text-promote,
+#imba-loading-content-text-vote, {
 	margin-bottom: 20px;
 	font-size: 20px;
 	color: #cccccc;
@@ -116,6 +133,12 @@
 #imba-loading-link-promote {
 	background-color: COLOR_INFO_BACKGROUND_DARK_BLUE;
 	border: 2px solid COLOR_INFO_BACKGROUND_DARK_BLUE;
+	box-shadow: 0 0 10px #111;
+}
+
+#imba-loading-link-vote {
+	background-color: COLOR_INFO_BACKGROUND_DARK_RED;
+	border: 2px solid COLOR_INFO_BACKGROUND_DARK_RED;
 	box-shadow: 0 0 10px #111;
 }
 
@@ -197,3 +220,41 @@
 #ImbaLoadingSocialTwitter Label { color: #fff; }
 #ImbaLoadingSocialDiscordEn { background-color: gradient(linear, 0% 0%, 0% 100%, from(#7289DA), to(#111)); }
 #ImbaLoadingSocialDiscordRu { background-color: gradient(linear, 0% 0%, 0% 100%, from(#7289DA), to(#111)); }
+
+#vote-content {
+	width: 100%;
+	height: 50px;
+	flow-children: right;
+}
+
+.VoteButton {
+	margin-top: 20px;
+	margin-left: 20px;
+}
+
+.VoteGameModeText {
+	margin-left: 27px;
+	font-size: 16px;
+	letter-spacing: 1px;
+	text-shadow: 2px 2px 2px black;
+}
+
+#VoteGameModeText1
+{
+	color: yellow;
+}
+
+#VoteGameModeText2
+{
+	color: orange;
+}
+
+#VoteGameModeText3
+{
+	color: red;
+}
+
+.CGSRadio
+{
+	width: 100%;
+}

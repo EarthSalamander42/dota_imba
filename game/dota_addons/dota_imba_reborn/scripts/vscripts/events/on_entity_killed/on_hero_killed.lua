@@ -52,15 +52,18 @@ function GameMode:OnHeroDeath(killer, victim)
 		hero:SetTimeUntilRespawn(IMBA_REINCARNATION_TIME)
 		return
 	else
-		-- Calculate base respawn timer, capped at 60 seconds
-		local hero_level = math.min(hero:GetLevel(), #_G.HERO_RESPAWN_TIME_PER_LEVEL)
-		respawn_time = _G.HERO_RESPAWN_TIME_PER_LEVEL[hero_level]
+		-- Calculate base respawn timer, capped at IMBA_MAX_RESPAWN_TIME seconds
+		if hero_level > 25 then
+			respawn_time = IMBA_MAX_RESPAWN_TIME
+		else
+			respawn_time = math.min(hero:GetRespawnTime() / 100 * 50, IMBA_MAX_RESPAWN_TIME)
+		end
 
 		-- Adjust respawn time for Wraith King's Reincarnation Passive Respawn Reduction
 		if hero:HasModifier("modifier_imba_reincarnation") then
 			respawn_time = respawn_time - hero:FindModifierByName("modifier_imba_reincarnation").passive_respawn_haste
 		end
-		
+
 		-- Fetch decreased respawn timer due to Bloodstone charges
 		if hero.bloodstone_respawn_reduction and (respawn_time > 0) then
 			respawn_time = math.max( respawn_time - hero.bloodstone_respawn_reduction, 1)
@@ -72,26 +75,25 @@ function GameMode:OnHeroDeath(killer, victim)
 			if killer:HasAbility("imba_necrolyte_reapers_scythe") then
 				local reaper_scythe = killer:FindAbilityByName("imba_necrolyte_reapers_scythe"):GetSpecialValueFor("respawn_increase")
 				-- Sometimes the killer is not actually Necrophos due to the respawn modifier lingering on a target, which makes reaper_scythe nil and causes massive problems
-	--			print("Killed by Reaper Scythe!", reaper_scythe, _G.HERO_RESPAWN_TIME_PER_LEVEL[hero_level] + reaper_scythe)
+	--			print("Killed by Reaper Scythe!", reaper_scythe, respawn_time + reaper_scythe)
 				if not reaper_scythe then
 					reaper_scythe = 0
 				end
+
 				respawn_time = respawn_time + reaper_scythe
 				hero:SetTimeUntilRespawn(math.min(respawn_time, 60 + reaper_scythe))
+
 				return
 			end
 		end
 
 		if respawn_time == nil or not respawn_time then
 --			print("Something terrible has happened...set respawn timer to something reasonable.")
-			respawn_time = _G.HERO_RESPAWN_TIME_PER_LEVEL[hero_level]
+			respawn_time = math.min(hero:GetRespawnTime() / 100 * 50, 60)
 		end
 
 --		print("Set time until respawn for unit " .. tostring(hero:GetUnitName()) .. " to " .. tostring(respawn_time) .. " seconds")
-		hero:SetTimeUntilRespawn(math.min(respawn_time, 60))
-
-		-- 50% of vanilla respawn time
---		hero:SetTimeUntilRespawn(hero:GetRespawnTime() / 100 * 50)
+		hero:SetTimeUntilRespawn(respawn_time)
 
 		-------------------------------------------------------------------------------------------------
 		-- Arc Warden Tempest Double keeping Duel Damage

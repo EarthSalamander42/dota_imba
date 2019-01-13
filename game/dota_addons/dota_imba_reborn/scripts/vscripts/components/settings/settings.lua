@@ -26,6 +26,8 @@ CAPTAINS_MODE_RESERVE_TIME = 130	-- total bonus time that can be used throughout
 
 -- IMBA constants
 IMBA_REINCARNATION_TIME = 3.0
+IMBA_MAX_RESPAWN_TIME = 50.0
+
 RUNE_SPAWN_TIME = 120					-- How long in seconds should we wait between rune spawns?
 BOUNTY_RUNE_SPAWN_TIME = 300
 if IsInToolsMode() then
@@ -111,51 +113,6 @@ IMBA_ROSHAN_GOLD_ASSIST = 150
 
 IMBA_DAMAGE_EFFECTS_DISTANCE_CUTOFF = 2500									-- Range at which most on-damage effects no longer trigger
 
--- Hero respawn time per level
-_G.HERO_RESPAWN_TIME_PER_LEVEL = {}
-_G.HERO_RESPAWN_TIME_PER_LEVEL[1] = 5
-_G.HERO_RESPAWN_TIME_PER_LEVEL[2] = 7
-_G.HERO_RESPAWN_TIME_PER_LEVEL[3] = 9
-_G.HERO_RESPAWN_TIME_PER_LEVEL[4] = 13
-_G.HERO_RESPAWN_TIME_PER_LEVEL[5] = 16
-_G.HERO_RESPAWN_TIME_PER_LEVEL[6] = 20
-_G.HERO_RESPAWN_TIME_PER_LEVEL[7] = 22
-_G.HERO_RESPAWN_TIME_PER_LEVEL[8] = 24
-_G.HERO_RESPAWN_TIME_PER_LEVEL[9] = 25
-_G.HERO_RESPAWN_TIME_PER_LEVEL[10] = 27
-_G.HERO_RESPAWN_TIME_PER_LEVEL[11] = 29
-_G.HERO_RESPAWN_TIME_PER_LEVEL[12] = 30
-_G.HERO_RESPAWN_TIME_PER_LEVEL[13] = 32
-_G.HERO_RESPAWN_TIME_PER_LEVEL[14] = 33
-_G.HERO_RESPAWN_TIME_PER_LEVEL[15] = 34
-_G.HERO_RESPAWN_TIME_PER_LEVEL[16] = 35
-_G.HERO_RESPAWN_TIME_PER_LEVEL[17] = 37
-_G.HERO_RESPAWN_TIME_PER_LEVEL[18] = 38
-_G.HERO_RESPAWN_TIME_PER_LEVEL[19] = 39
-_G.HERO_RESPAWN_TIME_PER_LEVEL[20] = 40
-_G.HERO_RESPAWN_TIME_PER_LEVEL[21] = 41
-_G.HERO_RESPAWN_TIME_PER_LEVEL[22] = 42
-_G.HERO_RESPAWN_TIME_PER_LEVEL[23] = 43
-_G.HERO_RESPAWN_TIME_PER_LEVEL[24] = 44
-_G.HERO_RESPAWN_TIME_PER_LEVEL[25] = 45
-_G.HERO_RESPAWN_TIME_PER_LEVEL[26] = 46
-_G.HERO_RESPAWN_TIME_PER_LEVEL[27] = 47
-_G.HERO_RESPAWN_TIME_PER_LEVEL[28] = 48
-_G.HERO_RESPAWN_TIME_PER_LEVEL[29] = 49
-_G.HERO_RESPAWN_TIME_PER_LEVEL[30] = 50
-_G.HERO_RESPAWN_TIME_PER_LEVEL[31] = 51
-_G.HERO_RESPAWN_TIME_PER_LEVEL[32] = 52
-_G.HERO_RESPAWN_TIME_PER_LEVEL[33] = 53
-_G.HERO_RESPAWN_TIME_PER_LEVEL[34] = 54
-_G.HERO_RESPAWN_TIME_PER_LEVEL[35] = 55
-_G.HERO_RESPAWN_TIME_PER_LEVEL[36] = 55
-_G.HERO_RESPAWN_TIME_PER_LEVEL[37] = 56
-_G.HERO_RESPAWN_TIME_PER_LEVEL[38] = 57
-_G.HERO_RESPAWN_TIME_PER_LEVEL[39] = 58
-_G.HERO_RESPAWN_TIME_PER_LEVEL[40] = 59
-_G.HERO_RESPAWN_TIME_PER_LEVEL[41] = 60
-_G.HERO_RESPAWN_TIME_PER_LEVEL[42] = 60
-
 -------------------------------------------------------------------------------------------------
 -- IMBA: map-based settings
 -------------------------------------------------------------------------------------------------
@@ -219,20 +176,11 @@ GG_TEAM = {}
 GG_TEAM[2] = 0
 GG_TEAM[3] = 0
 
-if IsMutationMap() or IsSuperFranticMap() then
-	IMBA_FRANTIC_MODE_ON = true
-else
-	IMBA_FRANTIC_MODE_ON = false
-end
-
 IMBA_BASE_FRANTIC_VALUE = 25
 IMBA_SUPER_FRANTIC_VALUE = 40 -- Do not exceed 40% EVER, causing many broken spells to be used permanently
 CustomNetTables:SetTableValue("game_options", "frantic", {frantic = IMBA_BASE_FRANTIC_VALUE, super_frantic = IMBA_SUPER_FRANTIC_VALUE})
 
 IMBA_FRANTIC_VALUE = IMBA_BASE_FRANTIC_VALUE
-if IsSuperFranticMap() then
-	IMBA_FRANTIC_VALUE = IMBA_SUPER_FRANTIC_VALUE
-end
 
 IMBA_PICK_MODE_ALL_PICK = true												-- Activates All Pick mode when true
 IMBA_PICK_MODE_ALL_RANDOM = false											-- Activates All Random mode when true
@@ -248,10 +196,6 @@ CUSTOM_GOLD_BONUS[MapRanked5v5()] = global_gold
 CUSTOM_GOLD_BONUS[MapRanked10v10()] = global_gold
 CUSTOM_GOLD_BONUS["imba_10v10"] = global_gold
 CUSTOM_GOLD_BONUS[MapTournament()] = global_gold
-CUSTOM_GOLD_BONUS[MapMutation5v5()] = global_gold
-CUSTOM_GOLD_BONUS[MapMutation10v10()] = global_gold
-CUSTOM_GOLD_BONUS[MapSuperFrantic5v5()] = global_gold
-CUSTOM_GOLD_BONUS[MapSuperFrantic10v10()] = global_gold
 CUSTOM_GOLD_BONUS[MapOverthrow()] = global_gold
 CUSTOM_GOLD_BONUS[MapDiretide()] = global_gold
 CUSTOM_GOLD_BONUS["imba_demo"] = global_gold
@@ -265,10 +209,6 @@ CUSTOM_XP_BONUS[MapRanked5v5()] = global_xp
 CUSTOM_XP_BONUS[MapRanked10v10()] = global_xp
 CUSTOM_XP_BONUS["imba_10v10"] = global_xp
 CUSTOM_XP_BONUS[MapTournament()] = global_xp
-CUSTOM_XP_BONUS[MapMutation5v5()] = global_xp
-CUSTOM_XP_BONUS[MapMutation10v10()] = global_xp
-CUSTOM_XP_BONUS[MapSuperFrantic5v5()] = global_xp
-CUSTOM_XP_BONUS[MapSuperFrantic10v10()] = global_xp
 CUSTOM_XP_BONUS[MapOverthrow()] = global_xp
 CUSTOM_XP_BONUS[MapDiretide()] = global_xp
 CUSTOM_XP_BONUS["imba_demo"] = global_xp
@@ -281,10 +221,6 @@ HERO_STARTING_LEVEL[MapRanked5v5()] = 5
 HERO_STARTING_LEVEL[MapRanked10v10()] = 5
 HERO_STARTING_LEVEL["imba_10v10"] = 5
 HERO_STARTING_LEVEL[MapTournament()] = 5
-HERO_STARTING_LEVEL[MapMutation5v5()] = 5
-HERO_STARTING_LEVEL[MapMutation10v10()] = 5
-HERO_STARTING_LEVEL[MapSuperFrantic5v5()] = 5
-HERO_STARTING_LEVEL[MapSuperFrantic10v10()] = 5
 HERO_STARTING_LEVEL[MapOverthrow()] = 5
 HERO_STARTING_LEVEL[MapDiretide()] = 5
 HERO_STARTING_LEVEL["imba_demo"] = 1
@@ -296,10 +232,6 @@ MAX_LEVEL[MapRanked5v5()] = 42
 MAX_LEVEL[MapRanked10v10()] = 42
 MAX_LEVEL["imba_10v10"] = 42
 MAX_LEVEL[MapTournament()] = 42
-MAX_LEVEL[MapMutation5v5()] = 42
-MAX_LEVEL[MapMutation10v10()] = 42
-MAX_LEVEL[MapSuperFrantic5v5()] = 42
-MAX_LEVEL[MapSuperFrantic10v10()] = 42
 MAX_LEVEL[MapOverthrow()] = 42
 MAX_LEVEL[MapDiretide()] = 42
 MAX_LEVEL["imba_demo"] = 42
@@ -311,10 +243,6 @@ HERO_INITIAL_GOLD[MapRanked5v5()] = 1400
 HERO_INITIAL_GOLD[MapRanked10v10()] = 1400
 HERO_INITIAL_GOLD["imba_10v10"] = 2500
 HERO_INITIAL_GOLD[MapTournament()] = 1400
-HERO_INITIAL_GOLD[MapMutation5v5()] = 2500
-HERO_INITIAL_GOLD[MapMutation10v10()] = 2500
-HERO_INITIAL_GOLD[MapSuperFrantic5v5()] = 2500
-HERO_INITIAL_GOLD[MapSuperFrantic10v10()] = 2500
 HERO_INITIAL_GOLD[MapOverthrow()] = 2500
 HERO_INITIAL_GOLD[MapDiretide()] = 2500
 HERO_INITIAL_GOLD["imba_demo"] = 99999
@@ -326,10 +254,6 @@ GOLD_TICK_TIME[MapRanked5v5()] = 0.6
 GOLD_TICK_TIME[MapRanked10v10()] = 0.4
 GOLD_TICK_TIME["imba_10v10"] = 0.4
 GOLD_TICK_TIME[MapTournament()] = 0.6
-GOLD_TICK_TIME[MapMutation5v5()] = 0.6
-GOLD_TICK_TIME[MapMutation10v10()] = 0.4
-GOLD_TICK_TIME[MapSuperFrantic5v5()] = 0.6
-GOLD_TICK_TIME[MapSuperFrantic10v10()] = 0.4
 GOLD_TICK_TIME[MapOverthrow()] = 0.4
 GOLD_TICK_TIME[MapDiretide()] = 0.4
 GOLD_TICK_TIME["imba_demo"] = 0.4
@@ -376,7 +300,6 @@ TOWER_ABILITIES["tower4"] = {
 CustomNetTables:SetTableValue("game_options", "all_pick", {IMBA_PICK_MODE_ALL_PICK})
 CustomNetTables:SetTableValue("game_options", "all_random", {IMBA_PICK_MODE_ALL_RANDOM})
 CustomNetTables:SetTableValue("game_options", "all_random_same_hero", {IMBA_PICK_MODE_ALL_RANDOM_SAME_HERO})
-CustomNetTables:SetTableValue("game_options", "frantic_mode", {IMBA_FRANTIC_MODE_ON})
 CustomNetTables:SetTableValue("game_options", "gold_tick", {GOLD_TICK_TIME[GetMapName()]})
 CustomNetTables:SetTableValue("game_options", "max_level", {MAX_LEVEL[GetMapName()]})
 

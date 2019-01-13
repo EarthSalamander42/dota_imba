@@ -1,12 +1,3 @@
-if Mutation == nil then
-	Mutation = class({})
-
-	IMBA_MUTATION = {}
-	IMBA_MUTATION["positive"] = ""
-	IMBA_MUTATION["negative"] = ""
-	IMBA_MUTATION["terrain"] = ""
-end
-
 -- Positive Mutations 
 POSITIVE_MUTATION_LIST = {}
 POSITIVE_MUTATION_LIST[1] = "killstreak_power"

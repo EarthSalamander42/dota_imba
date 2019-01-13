@@ -91,7 +91,70 @@ function HoverableLoadingScreen() {
 		$.Schedule(1.0, HoverableLoadingScreen)
 }
 
+function OnVoteButtonPressed(category, vote)
+{
+//	$.Msg("Category: ", category);
+//	$.Msg("Vote: ", vote);
+	GameEvents.SendCustomGameEventToServer( "setting_vote", { "category":category, "vote":vote } );
+}
+
+function OnVotesReceived(data)
+{
+//	$.Msg(data)
+//	$.Msg(data.vote.toString())
+//	$.Msg(data.table)
+	$.Msg(data.table2)
+
+	var vote_count = []
+	vote_count[1] = 0;
+	vote_count[2] = 0;
+	vote_count[3] = 0;
+	vote_count[4] = 0;
+	vote_count[5] = 0;
+
+	var map_name_cut = Game.GetMapInfo().map_display_name.replace('imba_', "");
+
+	// Reset tooltips
+	for (var i = 1; i <= 3; i++) {
+		$("#VoteGameModeText" + i).text = map_name_cut + " " + $.Localize("#vote_gamemode_" + i);
+	}
+
+	// Check number of votes for each gamemodes
+	for (var id in data.table2){
+		var gamemode = data.table2[id]
+		vote_count[gamemode]++;
+	}
+
+	// Modify tooltips based on voted gamemode
+	for (var i = 1; i <= 3; i++) {
+		var vote_tooltip = "vote"
+		if (vote_count[i] > 1)
+			vote_tooltip = "votes"
+		$("#VoteGameModeText" + i).text = map_name_cut + " " + $.Localize("#vote_gamemode_" + i) + " (" + vote_count[i] + " "+ vote_tooltip +")";
+	}
+
+//	if (data.category == "creep_lanes") {
+
+//	}
+}
+
+function SetGameModeTooltips() {
+	// if data is not available yet, reschedule
+	if (!info_already_available()) {
+		$.Schedule(0.1, SetGameModeTooltips);
+		return;
+	}
+
+	var map_name_cut = Game.GetMapInfo().map_display_name.replace('imba_', "");
+	for (var i = 1; i <= 3; i++) {
+		$("#VoteGameModeText" + i).text = map_name_cut + " " + $.Localize("#vote_gamemode_" + i) + " (0 vote)";
+	}
+}
+
 (function(){
-	HoverableLoadingScreen()
+	HoverableLoadingScreen();
 	fetch();
+	SetGameModeTooltips();
+
+	GameEvents.Subscribe("send_votes", OnVotesReceived);
 })();

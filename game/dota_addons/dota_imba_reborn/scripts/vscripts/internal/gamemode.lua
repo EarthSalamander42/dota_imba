@@ -167,8 +167,5 @@ function GameMode:OnSetGameMode()
 	CustomNetTables:SetTableValue("game_options", "exp_multiplier", {CUSTOM_XP_BONUS[GetMapName()]})
 	CustomNetTables:SetTableValue("game_options", "initial_gold", {HERO_INITIAL_GOLD[GetMapName()]})
 	CustomNetTables:SetTableValue("game_options", "initial_level", {HERO_STARTING_LEVEL[GetMapName()]})
-	if IsMutationMap() and IMBA_MUTATION["positive"] == "ultimate_level" then
-		MAX_LEVEL[GetMapName()] = IMBA_MUTATION_ULTIMATE_LEVEL
-	end
 	CustomNetTables:SetTableValue("game_options", "max_level", {MAX_LEVEL[GetMapName()]})
 end

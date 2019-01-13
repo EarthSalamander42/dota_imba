@@ -75,12 +75,6 @@ function GameMode:OnHeroFirstSpawn(hero)
 		end
 	end
 
-	if IsMutationMap() then
-		if hero:GetUnitName() ~= FORCE_PICKED_HERO then
-			Mutation:OnHeroFirstSpawn(hero)
-		end
-	end
-
 	if api:IsDonator(hero:GetPlayerID()) and PlayerResource:GetConnectionState(hero:GetPlayerID()) ~= 1 then
 		if hero:GetUnitName() ~= FORCE_PICKED_HERO then
 			if api:GetDonatorStatus(hero:GetPlayerID()) == 10 then
@@ -171,10 +165,6 @@ function GameMode:OnHeroFirstSpawn(hero)
 --		if not IsInToolsMode() then
 			hero:SetupHealthBarLabel()
 --		end
-
-		if IsMutationMap() or IsSuperFranticMap() then
-			hero:AddNewModifier(hero, nil, "modifier_frantic", {}):SetStackCount(IMBA_FRANTIC_VALUE)
-		end
 	end
 end
 
@@ -185,8 +175,6 @@ function GameMode:OnHeroSpawned(hero)
 	end
 	
 	if hero:IsTempestDouble() then
-		--print("Does double have modifier_legion_commander_duel_damage_boost? ", hero:HasModifier("modifier_legion_commander_duel_damage_boost"))
-		
 		local clone_shared_buffs = {
 			"modifier_item_imba_moon_shard_active",
 			"modifier_imba_soul_of_truth_buff",

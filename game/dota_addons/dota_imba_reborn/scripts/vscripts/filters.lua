@@ -488,7 +488,10 @@ function GameMode:OrderFilter( keys )
 							rightful_courier:FindAbilityByName(ability:GetName()):CastAbility()
 						end
 
-						PlayerResource:NewSelection(player_id, rightful_courier)
+						if EntIndexToHScript(PlayerResource:GetMainSelectedEntity(player_id)) == unit then
+							print("Select rightful courier!")
+							PlayerResource:NewSelection(player_id, rightful_courier)
+						end
 
 						return false
 					end

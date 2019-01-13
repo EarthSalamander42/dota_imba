@@ -328,7 +328,7 @@
 	"mutation_danger_zone" "Zona de peligro"
 	"mutation_danger_zone_description" "10 Bombardeos de Gyrocopter son liberados en posiciones aleatorias alrededor del mapa cada 10 segundos."
 	"mutation_death_explosion" "Explosión mortal"
-	"mutation_death_explosion_description" "Inflige 400 + (50* minutos) daño en un radio de 400 unidades al morir después de un retraso de 1 segundo."
+	"mutation_death_explosion_description" "Deal 300 + (50 * minutes) damage in a 350 radius on death afer a delay of 1 second."
 	"mutation_death_gold_drop" "Caída de oro al morir"
 	"mutation_death_gold_drop_description" "Cuando un héroe muere, suelta un saco de dinero."
 	"mutation_defense_of_the_ants" "Defensa de los feeders"
@@ -431,5 +431,9 @@
 	"toggle_companion" "Mostrar Compañero"
 	"unassigned" "Equipo sin asignar"
 	"vanilla_hero" "Perezoso"
+	"vote_gamemode" "Gamemode Vote"
+	"vote_gamemode_1" "Standard"
+	"vote_gamemode_2" "Mutation"
+	"vote_gamemode_3" "Super Frantic"
 	"welcome_label" "¡Bienvenido a Dota IMBA!"
 }

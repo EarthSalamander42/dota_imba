@@ -328,7 +328,7 @@
 	"mutation_danger_zone" "危险区域"
 	"mutation_danger_zone_description" "10个矮人直升机按每10秒在地图上的随机位置放置大招，但是会显示技能范围。"
 	"mutation_death_explosion" "死亡爆炸（请出盘子和BKB，别让我教）"
-	"mutation_death_explosion_description" "400 + (50 * 分钟) 的伤害在400半径死亡后延迟1秒。（再次申明，清楚盘子和BKB，别要我教）"
+	"mutation_death_explosion_description" "Deal 300 + (50 * minutes) damage in a 350 radius on death afer a delay of 1 second."
 	"mutation_death_gold_drop" "死亡黄金掉落"
 	"mutation_death_gold_drop_description" "每当一个英雄被杀, 他们就会掉落一个金袋。（没见过，炼金要崛起了！）"
 	"mutation_defense_of_the_ants" "变大？给我变小！"
@@ -431,5 +431,9 @@
 	"toggle_companion" "开关宠物"
 	"unassigned" "未知队伍"
 	"vanilla_hero" "原版英雄"
+	"vote_gamemode" "Gamemode Vote"
+	"vote_gamemode_1" "Standard"
+	"vote_gamemode_2" "Mutation"
+	"vote_gamemode_3" "Super Frantic"
 	"welcome_label" "欢迎来到 Dota IMBA!"
 }
