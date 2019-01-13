@@ -328,7 +328,7 @@
 	"mutation_danger_zone" "Zona de perigo"
 	"mutation_danger_zone_description" "10 Lançamento aéreo do Gyrocopter são lançados em posições aleatórias por todo o mapa a cada 10 segundos."
 	"mutation_death_explosion" "Explosão da Morte"
-	"mutation_death_explosion_description" "Lança 400 + (50 * minutos) de dano em um raio de 400 na morte após um atraso de 1 segundos."
+	"mutation_death_explosion_description" "Deal 300 + (50 * minutes) damage in a 350 radius on death afer a delay of 1 second."
 	"mutation_death_gold_drop" "Solta Ouro na Morte"
 	"mutation_death_gold_drop_description" "Sempre que um herói é morto, ele solta um saco de ouro."
 	"mutation_defense_of_the_ants" "Defesa dos Feeders"
@@ -431,5 +431,9 @@
 	"toggle_companion" "Alternar Companheiro"
 	"unassigned" "Equipe não atribuída"
 	"vanilla_hero" "Preguiçoso"
+	"vote_gamemode" "Gamemode Vote"
+	"vote_gamemode_1" "IMBA 10v10"
+	"vote_gamemode_2" "IMBA Mutation 10v10"
+	"vote_gamemode_3" "IMBA Super Frantic 10v10"
 	"welcome_label" "Bem vindo ao Dota IMBA!"
 }

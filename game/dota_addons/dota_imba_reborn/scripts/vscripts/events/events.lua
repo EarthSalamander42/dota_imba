@@ -230,14 +230,6 @@ function GameMode:OnGameRulesStateChange(keys)
 		for _, tower in pairs(towers) do
 			SetupTower(tower)
 		end
-
-		if IsMutationMap() then
-			Timers:CreateTimer(function()
-				Mutation:OnSlowThink()
-				return 60.0
-			end)
-		end
-
 	elseif newState == DOTA_GAMERULES_STATE_POST_GAME then
 		api:CompleteGame(function(data, payload)
 			CustomGameEventManager:Send_ServerToAllClients("end_game", {
@@ -456,10 +448,6 @@ function GameMode:OnEntityKilled(keys)
 		if killed_unit:IsRealHero() and killed_unit:GetPlayerID() then
 			GameMode:OnHeroDeath(killer, killed_unit)
 
-			if IsMutationMap() then
-				Mutation:OnHeroDeath(killed_unit)
-			end
-
 			if IMBA_GOLD_SYSTEM == true then
 				GoldSystem:OnHeroDeath(killer, killed_unit)
 			end
@@ -510,11 +498,8 @@ function GameMode:OnEntityKilled(keys)
 			return
 		elseif killed_unit:IsCourier() then
 			CombatEvents("generic", "courier_dead", killed_unit)
+
 			return
-		else
-			if IsMutationMap() then
-				Mutation:OnUnitDeath(killed_unit)
-			end
 		end
 
 		if killed_unit.pedestal then
@@ -709,12 +694,6 @@ function GameMode:OnThink()
 	end
 
 	CheatDetector()
-
-	if GameRules:State_Get() == DOTA_GAMERULES_STATE_PRE_GAME or GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
-		if IsMutationMap() then
-			Mutation:OnThink()
-		end
-	end
 
 	for _, hero in pairs(HeroList:GetAllHeroes()) do
 		if api:GetDonatorStatus(hero:GetPlayerID()) == 10 then

@@ -75,12 +75,6 @@ function GameMode:OnHeroFirstSpawn(hero)
 		end
 	end
 
-	if IsMutationMap() then
-		if hero:GetUnitName() ~= FORCE_PICKED_HERO then
-			Mutation:OnHeroFirstSpawn(hero)
-		end
-	end
-
 	if api:IsDonator(hero:GetPlayerID()) and PlayerResource:GetConnectionState(hero:GetPlayerID()) ~= 1 then
 		if hero:GetUnitName() ~= FORCE_PICKED_HERO then
 			if api:GetDonatorStatus(hero:GetPlayerID()) == 10 then
@@ -171,19 +165,11 @@ function GameMode:OnHeroFirstSpawn(hero)
 --		if not IsInToolsMode() then
 			hero:SetupHealthBarLabel()
 --		end
-
-		if IsMutationMap() or IsSuperFranticMap() then
-			hero:AddNewModifier(hero, nil, "modifier_frantic", {}):SetStackCount(IMBA_FRANTIC_VALUE)
-		end
 	end
 end
 
 -- everytime a real hero respawn
 function GameMode:OnHeroSpawned(hero)
-	if IsMutationMap() then
-		Mutation:OnHeroSpawn(hero)
-	end
-	
 	if hero:GetUnitName() == "npc_dota_hero_arc_warden" and hero:IsTempestDouble() then
 		--print("Does double have modifier_legion_commander_duel_damage_boost? ", hero:HasModifier("modifier_legion_commander_duel_damage_boost"))
 		

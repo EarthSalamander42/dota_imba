@@ -737,18 +737,14 @@ function ReconnectPlayer(player_id)
 
 			local hero = PlayerResource:GetSelectedHeroEntity(player_id)
 
-			if PICKING_SCREEN_OVER == true then
-				if IMBA_PICK_SCREEN == true then
+			if IMBA_PICK_SCREEN == true then
+				if PICKING_SCREEN_OVER == true then
 					if hero:GetUnitName() == FORCE_PICKED_HERO then
 						print('Giving player ' .. player_id .. ' a random hero! (reconnected)')
 						local random_hero = HeroSelection:RandomHero()
 						print("Random Hero:", random_hero)
 						HeroSelection:GiveStartingHero(player_id, random_hero, true)
 					end
-				end
-
-				if IsMutationMap() then
-					Mutation:OnReconnect(player_id)
 				end
 			end
 		else

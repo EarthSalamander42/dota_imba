@@ -14,10 +14,6 @@
 
 -- first time a real hero spawn
 function GameMode:OnUnitFirstSpawn(unit)
-	if IsMutationMap() then
-		Mutation:OnUnitFirstSpawn(unit)
-	end
-
 	if string.find(unit:GetUnitName(), "npc_dota_lone_druid_bear") then
 		unit:SetupHealthBarLabel()
 	end
@@ -56,10 +52,6 @@ end
 
 -- everytime an unit respawn
 function GameMode:OnUnitSpawned(unit)
-	if IsMutationMap() then
-		Mutation:OnUnitSpawn(npc)
-	end
-
 	-- levelup bear ability based on his level
 	if string.find(unit:GetUnitName(), "npc_dota_lone_druid_bear") then
 		for i = 0, 23 do

@@ -45,6 +45,9 @@ function BuildGameArray()
 	-- Add game values here as game.someValue = GetSomeGameValue()
 	game.gl = GetGameTimeAverage() -- Game length, from the horn sound (string)
 	game.wt = GAME_WINNER_TEAM -- Winning team
+	game.gm = GetCustomGameVote() -- Gamemode voted
+	game.gv = GetCustomGoldVote() -- Gold voted
+	game.ev = GetCustomExpVote() -- Experience voted
 
 	return game
 end
@@ -173,6 +176,17 @@ function GetItemSlotIMBA(hero, slot)
 	end
 
 	return itemName
+end
+
+function GetCustomGameVote()
+	local vote = GameRules:GetCustomGameDifficulty()
+
+	local gamemode = {}
+	gamemode[1] = "All Pick"
+	gamemode[2] = "Mutation"
+	gamemode[3] = "Super Frantic"
+
+	return gamemode[vote]
 end
 
 --[[

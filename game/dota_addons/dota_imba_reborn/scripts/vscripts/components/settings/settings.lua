@@ -219,20 +219,11 @@ GG_TEAM = {}
 GG_TEAM[2] = 0
 GG_TEAM[3] = 0
 
-if IsMutationMap() or IsSuperFranticMap() then
-	IMBA_FRANTIC_MODE_ON = true
-else
-	IMBA_FRANTIC_MODE_ON = false
-end
-
 IMBA_BASE_FRANTIC_VALUE = 25
 IMBA_SUPER_FRANTIC_VALUE = 40 -- Do not exceed 40% EVER, causing many broken spells to be used permanently
 CustomNetTables:SetTableValue("game_options", "frantic", {frantic = IMBA_BASE_FRANTIC_VALUE, super_frantic = IMBA_SUPER_FRANTIC_VALUE})
 
 IMBA_FRANTIC_VALUE = IMBA_BASE_FRANTIC_VALUE
-if IsSuperFranticMap() then
-	IMBA_FRANTIC_VALUE = IMBA_SUPER_FRANTIC_VALUE
-end
 
 IMBA_PICK_MODE_ALL_PICK = true												-- Activates All Pick mode when true
 IMBA_PICK_MODE_ALL_RANDOM = false											-- Activates All Random mode when true
@@ -248,10 +239,6 @@ CUSTOM_GOLD_BONUS[MapRanked5v5()] = global_gold
 CUSTOM_GOLD_BONUS[MapRanked10v10()] = global_gold
 CUSTOM_GOLD_BONUS["imba_10v10"] = global_gold
 CUSTOM_GOLD_BONUS[MapTournament()] = global_gold
-CUSTOM_GOLD_BONUS[MapMutation5v5()] = global_gold
-CUSTOM_GOLD_BONUS[MapMutation10v10()] = global_gold
-CUSTOM_GOLD_BONUS[MapSuperFrantic5v5()] = global_gold
-CUSTOM_GOLD_BONUS[MapSuperFrantic10v10()] = global_gold
 CUSTOM_GOLD_BONUS[MapOverthrow()] = global_gold
 CUSTOM_GOLD_BONUS[MapDiretide()] = global_gold
 CUSTOM_GOLD_BONUS["imba_demo"] = global_gold
@@ -265,10 +252,6 @@ CUSTOM_XP_BONUS[MapRanked5v5()] = global_xp
 CUSTOM_XP_BONUS[MapRanked10v10()] = global_xp
 CUSTOM_XP_BONUS["imba_10v10"] = global_xp
 CUSTOM_XP_BONUS[MapTournament()] = global_xp
-CUSTOM_XP_BONUS[MapMutation5v5()] = global_xp
-CUSTOM_XP_BONUS[MapMutation10v10()] = global_xp
-CUSTOM_XP_BONUS[MapSuperFrantic5v5()] = global_xp
-CUSTOM_XP_BONUS[MapSuperFrantic10v10()] = global_xp
 CUSTOM_XP_BONUS[MapOverthrow()] = global_xp
 CUSTOM_XP_BONUS[MapDiretide()] = global_xp
 CUSTOM_XP_BONUS["imba_demo"] = global_xp
@@ -281,10 +264,6 @@ HERO_STARTING_LEVEL[MapRanked5v5()] = 5
 HERO_STARTING_LEVEL[MapRanked10v10()] = 5
 HERO_STARTING_LEVEL["imba_10v10"] = 5
 HERO_STARTING_LEVEL[MapTournament()] = 5
-HERO_STARTING_LEVEL[MapMutation5v5()] = 5
-HERO_STARTING_LEVEL[MapMutation10v10()] = 5
-HERO_STARTING_LEVEL[MapSuperFrantic5v5()] = 5
-HERO_STARTING_LEVEL[MapSuperFrantic10v10()] = 5
 HERO_STARTING_LEVEL[MapOverthrow()] = 5
 HERO_STARTING_LEVEL[MapDiretide()] = 5
 HERO_STARTING_LEVEL["imba_demo"] = 1
@@ -296,10 +275,6 @@ MAX_LEVEL[MapRanked5v5()] = 42
 MAX_LEVEL[MapRanked10v10()] = 42
 MAX_LEVEL["imba_10v10"] = 42
 MAX_LEVEL[MapTournament()] = 42
-MAX_LEVEL[MapMutation5v5()] = 42
-MAX_LEVEL[MapMutation10v10()] = 42
-MAX_LEVEL[MapSuperFrantic5v5()] = 42
-MAX_LEVEL[MapSuperFrantic10v10()] = 42
 MAX_LEVEL[MapOverthrow()] = 42
 MAX_LEVEL[MapDiretide()] = 42
 MAX_LEVEL["imba_demo"] = 42
@@ -311,10 +286,6 @@ HERO_INITIAL_GOLD[MapRanked5v5()] = 1400
 HERO_INITIAL_GOLD[MapRanked10v10()] = 1400
 HERO_INITIAL_GOLD["imba_10v10"] = 2500
 HERO_INITIAL_GOLD[MapTournament()] = 1400
-HERO_INITIAL_GOLD[MapMutation5v5()] = 2500
-HERO_INITIAL_GOLD[MapMutation10v10()] = 2500
-HERO_INITIAL_GOLD[MapSuperFrantic5v5()] = 2500
-HERO_INITIAL_GOLD[MapSuperFrantic10v10()] = 2500
 HERO_INITIAL_GOLD[MapOverthrow()] = 2500
 HERO_INITIAL_GOLD[MapDiretide()] = 2500
 HERO_INITIAL_GOLD["imba_demo"] = 99999
@@ -326,10 +297,6 @@ GOLD_TICK_TIME[MapRanked5v5()] = 0.6
 GOLD_TICK_TIME[MapRanked10v10()] = 0.4
 GOLD_TICK_TIME["imba_10v10"] = 0.4
 GOLD_TICK_TIME[MapTournament()] = 0.6
-GOLD_TICK_TIME[MapMutation5v5()] = 0.6
-GOLD_TICK_TIME[MapMutation10v10()] = 0.4
-GOLD_TICK_TIME[MapSuperFrantic5v5()] = 0.6
-GOLD_TICK_TIME[MapSuperFrantic10v10()] = 0.4
 GOLD_TICK_TIME[MapOverthrow()] = 0.4
 GOLD_TICK_TIME[MapDiretide()] = 0.4
 GOLD_TICK_TIME["imba_demo"] = 0.4
@@ -376,7 +343,6 @@ TOWER_ABILITIES["tower4"] = {
 CustomNetTables:SetTableValue("game_options", "all_pick", {IMBA_PICK_MODE_ALL_PICK})
 CustomNetTables:SetTableValue("game_options", "all_random", {IMBA_PICK_MODE_ALL_RANDOM})
 CustomNetTables:SetTableValue("game_options", "all_random_same_hero", {IMBA_PICK_MODE_ALL_RANDOM_SAME_HERO})
-CustomNetTables:SetTableValue("game_options", "frantic_mode", {IMBA_FRANTIC_MODE_ON})
 CustomNetTables:SetTableValue("game_options", "gold_tick", {GOLD_TICK_TIME[GetMapName()]})
 CustomNetTables:SetTableValue("game_options", "max_level", {MAX_LEVEL[GetMapName()]})
 

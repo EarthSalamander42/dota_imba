@@ -8,7 +8,7 @@ function UpdateSharedUnitControlForPlayer(playerID)
     end
 
     -- Change playerID to string
-    CustomNetTables:SetTableValue( "shared_unit_control", ""..playerID, existing_table_value )
+    CustomNetTables:SetTableValue( "shared_unit_control", tostring(playerID), existing_table_value )
 end
 
  -- bitmask; 1 shares heroes, 2 shares units, 4 disables help 

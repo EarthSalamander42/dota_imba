@@ -17,7 +17,6 @@ function Precache( context )
 	LinkLuaModifier("modifier_imba_war_veteran_2", "components/modifiers/modifier_imba_war_veteran.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_imba_roshan_ai", "components/modifiers/modifier_imba_roshan_ai.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_meepo_divided_we_stand_lua","components/abilities/heroes/hero_meepo.lua",LUA_MODIFIER_MOTION_NONE)
-	LinkLuaModifier("modifier_frantic", "components/modifiers/mutation/modifier_frantic.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_overthrow_gold_xp_granter", "components/modifiers/overthrow/modifier_overthrow_gold_xp_granter.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_imba_range_indicator", "components/modifiers/modifier_imba_range_indicator.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_illusion_bonuses", "components/modifiers/modifier_illusion_bonuses.lua", LUA_MODIFIER_MOTION_NONE )
@@ -67,9 +66,42 @@ function Precache( context )
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_sohei.vsndevts", context) -- Sohei
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_ursa.vsndevts", context) -- Malfurion
 
-	if IsMutationMap() then
-		Mutation:Precache(context)
-	end
+--	if IsMutationMap() then
+--		if IMBA_MUTATION["positive"] == "killstreak_power" then
+			PrecacheResource("particle", "particles/hw_fx/candy_carrying_stack.vpcf", context)
+--		elseif IMBA_MUTATION["positive"] == "super_fervor" then
+			PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_troll_warlord.vsndevts", context)
+--		end
+
+--		if IMBA_MUTATION["negative"] == "death_explosion" then
+			PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_pugna.vsndevts", context)
+--		elseif IMBA_MUTATION["negative"] == "death_gold_drop" then
+--			PrecacheItemByNameSync("item_bag_of_gold", context)
+--		elseif IMBA_MUTATION["negative"] == "monkey_business" then
+			PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_monkey_king.vsndevts", context)
+--		elseif IMBA_MUTATION["negative"] == "periodic_spellcast" then
+			PrecacheResource("particle", "particles/econ/items/zeus/arcana_chariot/zeus_arcana_thundergods_wrath_start_bolt_parent.vpcf", context) -- Thundergod's Wrath
+			PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts", context) -- Shield
+			PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_ancient_apparition.vsndevts", context) -- Cold Feet
+			PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_bloodseeker.vsndevts", context) -- Rupture
+--			PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_bounty_hunter.vsndevts", context) -- Track
+			PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_centaur.vsndevts", context) -- Stampede
+			PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_kunkka.vsndevts", context) -- Torrent
+			PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_ogre_magi.vsndevts", context) -- Bloodlust
+--			PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_warlock.vsndevts", context)
+			PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_zuus.vsndevts", context) -- Thundergod's Wrath
+--		end
+
+--		if IMBA_MUTATION["terrain"] == "danger_zone" then
+			PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_gyrocopter.vsndevts", context)
+--		elseif IMBA_MUTATION["terrain"] == "tug_of_war" then
+			PrecacheResource("particle", "particles/ambient/tug_of_war_team_dire.vpcf", context)
+			PrecacheResource("particle", "particles/ambient/tug_of_war_team_radiant.vpcf", context)
+			PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_warlock.vsndevts", context) -- BOB Golem
+--		elseif IMBA_MUTATION["terrain"] == "wormhole" then
+			PrecacheResource("particle", "particles/ambient/wormhole_circle.vpcf", context)
+--		end
+--	end
 
 	if IMBA_DIRETIDE == true then
 		PrecacheResource("soundfile", "soundevents/diretide_soundevents.vsndevts", context) -- Hellion
