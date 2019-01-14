@@ -35,7 +35,7 @@ require('components/gold')
 require('components/hero_selection/init')
 require('components/vote/init')
 require('components/mutation/init')
-require('components/respawn_timer/init') -- Respawn time system override
+require('components/respawn_timer') -- Respawn time system override
 require('components/runes') -- Rune system override
 require('components/settings/settings')
 require('components/team_selection')
