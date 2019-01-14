@@ -11154,7 +11154,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"respawn_increase"			"10 30 34"
+				"respawn_increase"			"10 20 30"
 			}
 			"04"
 			{
