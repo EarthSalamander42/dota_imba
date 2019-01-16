@@ -426,7 +426,7 @@ MergeTables(LinkedModifiers,{
 imba_disruptor_glimpse = imba_disruptor_glimpse or class({})
 
 function imba_disruptor_glimpse:GetCastRange(location, target)
-    return self:GetSpecialValueFor("cast_range") + self:GetCaster():FindTalentValue("special_bonus_imba_disruptor_9")
+	return self:GetSpecialValueFor("cast_range") + self:GetCaster():FindTalentValue("special_bonus_imba_disruptor_9")
 end
 
 function imba_disruptor_glimpse:GetIntrinsicModifierName()
@@ -469,7 +469,7 @@ function imba_disruptor_glimpse:OnSpellStart()
 		local buff = target:FindModifierByName("modifier_imba_glimpse")
 		if buff then		
 			EmitSoundOn(cast_sound, target)	
-            thinkerBuff:BeginGlimpse(target, buff:GetOldestPosition())
+			thinkerBuff:BeginGlimpse(target, buff:GetOldestPosition())
 		end		
 	end
 end
@@ -489,18 +489,18 @@ end
 
 function modifier_imba_glimpse_thinker:OnCreated( kv )
 	if IsServer() then		
-        -- Ability properties
+		-- Ability properties
 		self.caster = self:GetCaster()
 		self.ability = self:GetAbility()
 		self.parent = self:GetParent()
-        self.modifier_storm = "modifier_imba_glimpse_storm_aura"
+		self.modifier_storm = "modifier_imba_glimpse_storm_aura"
 
-        -- Ability specials
+		-- Ability specials
 		self.move_delay = self.ability:GetSpecialValueFor("move_delay")		
 		self.projectile_speed = self.ability:GetSpecialValueFor("projectile_speed")
-        self.vision_radius = self.ability:GetSpecialValueFor("vision_radius")
-        self.vision_duration = self.ability:GetSpecialValueFor("vision_duration")		
-        self.storm_duration = self.ability:GetSpecialValueFor("storm_duration")
+		self.vision_radius = self.ability:GetSpecialValueFor("vision_radius")
+		self.vision_duration = self.ability:GetSpecialValueFor("vision_duration")		
+		self.storm_duration = self.ability:GetSpecialValueFor("storm_duration")
 	end
 end
 
@@ -519,20 +519,20 @@ function modifier_imba_glimpse_thinker:BeginGlimpse(target, old_position)
 			
 			local projectile =
 			{
-                Ability = self:GetAbility(),
+				Ability = self:GetAbility(),
 				EffectName = "particles/units/heroes/hero_disruptor/disruptor_glimpse_travel.vpcf",
 				vSpawnOrigin = hUnit:GetOrigin(), 
-                fDistance = flDist,
+				fDistance = flDist,
 				Source = self:GetCaster(),                				
 				vVelocity = vVelocity * ( flDist / flDuration ),
 				fStartRadius = 0,
-                fEndRadius = 0,				
+				fEndRadius = 0,				
 				bProvidesVision = true,
 				iVisionRadius = self.vision_radius,
 				iVisionTeamNumber = self:GetCaster():GetTeamNumber(),
 			}			  
 
-            ProjectileManager:CreateLinearProjectile(projectile)                      
+			ProjectileManager:CreateLinearProjectile(projectile)                      
 
 			local nFXIndex = ParticleManager:CreateParticle( "particles/units/heroes/hero_disruptor/disruptor_glimpse_travel.vpcf", PATTACH_CUSTOMORIGIN, nil )
 			ParticleManager:SetParticleControlEnt( nFXIndex, 0, hUnit, PATTACH_ABSORIGIN_FOLLOW, nil, hUnit:GetOrigin(), true )
@@ -555,7 +555,7 @@ function modifier_imba_glimpse_thinker:BeginGlimpse(target, old_position)
 			local buff = hUnit:FindModifierByName( "modifier_imba_glimpse" )
 			if buff then
 				buff.hThinker = self						
-                buff:SetGlimpsePosition(old_position)
+				buff:SetGlimpsePosition(old_position)
 				buff:SetExpireTime( GameRules:GetGameTime() + flDuration )						                    
 			end			
 		end		
@@ -586,7 +586,7 @@ function modifier_imba_glimpse_thinker:EndGlimpse(caster, ability, hUnit, old_po
 		end
 		end)
 		
-        self:Destroy()		    	    		
+		self:Destroy()		    	    		
 	end
 end
 
@@ -635,8 +635,8 @@ end
 function modifier_imba_glimpse:OnCreated( kv )
 	if IsServer() then	
 		self.backtrack_time = self:GetAbility():GetSpecialValueFor("backtrack_time")
-        self.interval = 0.1
-        self.possible_positions = self.backtrack_time / 0.1
+		self.interval = 0.1
+		self.possible_positions = self.backtrack_time / 0.1
 
 		self.vPositions = {}
 		for i = 1, self.possible_positions do
@@ -677,7 +677,7 @@ function modifier_imba_glimpse:SetExpireTime( flTime )
 end
 
 function modifier_imba_glimpse:SetGlimpsePosition(old_position)
-    self.glimpse_position = old_position
+	self.glimpse_position = old_position
 end
 
 
@@ -691,79 +691,79 @@ end
 modifier_imba_glimpse_storm_aura = modifier_imba_glimpse_storm_aura or class({})
 
 function modifier_imba_glimpse_storm_aura:OnCreated(keys)
-    if IsServer() then
-        -- Ability properties
-        self.caster = self:GetCaster()
-        self.ability = self:GetAbility()
-        self.parent = self:GetParent()
-        self.parent_pos = self.parent:GetAbsOrigin()
-        self.storm_particle = "particles/hero/disruptor/disruptor_static_storm.vpcf"
-        self.sound_storm = "Hero_Disruptor.StaticStorm"
-        self.sound_storm_end = "Hero_Disruptor.StaticStorm.End"        
+	if IsServer() then
+		-- Ability properties
+		self.caster = self:GetCaster()
+		self.ability = self:GetAbility()
+		self.parent = self:GetParent()
+		self.parent_pos = self.parent:GetAbsOrigin()
+		self.storm_particle = "particles/hero/disruptor/disruptor_static_storm.vpcf"
+		self.sound_storm = "Hero_Disruptor.StaticStorm"
+		self.sound_storm_end = "Hero_Disruptor.StaticStorm.End"        
 
-        -- Ability specials
-        self.storm_linger = self.ability:GetSpecialValueFor("storm_linger") 
+		-- Ability specials
+		self.storm_linger = self.ability:GetSpecialValueFor("storm_linger") 
 		self.storm_radius = keys.storm_radius
 		self.original_radius = self.ability:GetSpecialValueFor("storm_radius") 
-        self.storm_duration = self.ability:GetSpecialValueFor("storm_duration")
+		self.storm_duration = self.ability:GetSpecialValueFor("storm_duration")
 
 		-- Setting the model scale according to its radius
 		if self.storm_radius > self.original_radius then
 		self.scale_factor = 1 + self.storm_radius / self.original_radius
 		end
 		
-        -- Create storm effects
-        local storm_particle = ParticleManager:CreateParticle(self.storm_particle, PATTACH_WORLDORIGIN, nil)
-        ParticleManager:SetParticleControl(storm_particle, 0, self.parent_pos)
+		-- Create storm effects
+		local storm_particle = ParticleManager:CreateParticle(self.storm_particle, PATTACH_WORLDORIGIN, nil)
+		ParticleManager:SetParticleControl(storm_particle, 0, self.parent_pos)
 		ParticleManager:SetParticleControl(storm_particle, 1, Vector(10,10,10))
-        ParticleManager:SetParticleControl(storm_particle, 2, Vector(self.storm_duration,1,1))
-        self:AddParticle(storm_particle, false, false, -1, false, false)
+		ParticleManager:SetParticleControl(storm_particle, 2, Vector(self.storm_duration,1,1))
+		self:AddParticle(storm_particle, false, false, -1, false, false)
 		
-        -- Create secondary storm fx to indicate the expanded radius of the storm
+		-- Create secondary storm fx to indicate the expanded radius of the storm
 		if self.storm_radius > self.original_radius then
-		local storm_particle_second = ParticleManager:CreateParticle(self.storm_particle, PATTACH_WORLDORIGIN, nil)
-        ParticleManager:SetParticleControl(storm_particle_second, 0, self.parent_pos)
-        ParticleManager:SetParticleControl(storm_particle_second, 1, Vector(10*self.scale_factor,10*self.scale_factor,10*self.scale_factor))
-		ParticleManager:SetParticleControl(storm_particle_second, 2, Vector(self.storm_duration,1,1))
-        self:AddParticle(storm_particle_second, false, false, -1, false, false)
+			local storm_particle_second = ParticleManager:CreateParticle(self.storm_particle, PATTACH_WORLDORIGIN, nil)
+			ParticleManager:SetParticleControl(storm_particle_second, 0, self.parent_pos)
+			ParticleManager:SetParticleControl(storm_particle_second, 1, Vector(10*self.scale_factor,10*self.scale_factor,10*self.scale_factor))
+			ParticleManager:SetParticleControl(storm_particle_second, 2, Vector(self.storm_duration,1,1))
+			self:AddParticle(storm_particle_second, false, false, -1, false, false)
 		end
 		
-        -- Play storm sound
-        EmitSoundOn(self.sound_storm, self.parent)        
-    end
+		-- Play storm sound
+		EmitSoundOn(self.sound_storm, self.parent)        
+	end
 end
 function modifier_imba_glimpse_storm_aura:GetAuraRadius()   
-    return self.storm_radius - 50 
+	return self.storm_radius - 50 
 end
 
 function modifier_imba_glimpse_storm_aura:GetAuraDuration()
-    return self.storm_linger + self.caster:FindTalentValue("special_bonus_imba_disruptor_2")
+	return self.storm_linger + self.caster:FindTalentValue("special_bonus_imba_disruptor_2")
 end
 
 function modifier_imba_glimpse_storm_aura:GetAuraSearchFlags()
-    return DOTA_UNIT_TARGET_FLAG_NONE
+	return DOTA_UNIT_TARGET_FLAG_NONE
 end
 
 function modifier_imba_glimpse_storm_aura:GetAuraSearchTeam()
-    return DOTA_UNIT_TARGET_TEAM_ENEMY
+	return DOTA_UNIT_TARGET_TEAM_ENEMY
 end
 
 function modifier_imba_glimpse_storm_aura:GetAuraSearchType()
-    return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
+	return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
 end
 
 function modifier_imba_glimpse_storm_aura:GetModifierAura()
-    return "modifier_imba_glimpse_storm_debuff"
+	return "modifier_imba_glimpse_storm_debuff"
 end
 
 function modifier_imba_glimpse_storm_aura:OnRemoved()
-    if IsServer() then
-        -- Stop storm sound
-        StopSoundOn(self.sound_storm, self.parent)
+	if IsServer() then
+		-- Stop storm sound
+		StopSoundOn(self.sound_storm, self.parent)
 
-        -- Play end sound
-        EmitSoundOnLocationWithCaster(self.parent_pos, self.sound_storm_end, nil)
-    end
+		-- Play end sound
+		EmitSoundOnLocationWithCaster(self.parent_pos, self.sound_storm_end, nil)
+	end
 end
 
 function modifier_imba_glimpse_storm_aura:IsAura()  return true end
@@ -781,18 +781,18 @@ function modifier_imba_glimpse_storm_aura:AllowIllusionDuplicate()  return false
 modifier_imba_glimpse_storm_debuff = modifier_imba_glimpse_storm_debuff or class({})
 
 function modifier_imba_glimpse_storm_debuff:OnCreated() 
-    -- Ability properties
-    self.target = self:GetParent()
-    self.caster = self:GetCaster()
-    self.ability = self:GetAbility()    
+	-- Ability properties
+	self.target = self:GetParent()
+	self.caster = self:GetCaster()
+	self.ability = self:GetAbility()    
 
-    -- Ability specials
+	-- Ability specials
 	self.storm_damage = self.ability:GetSpecialValueFor("storm_damage")
-    self.storm_interval = self.ability:GetSpecialValueFor("storm_interval")
+	self.storm_interval = self.ability:GetSpecialValueFor("storm_interval")
 	self.stormbearer_buff = "modifier_imba_stormbearer"
-    
-    -- Start thinking
-    self:StartIntervalThink(self.storm_interval)    
+	
+	-- Start thinking
+	self:StartIntervalThink(self.storm_interval)    
 end
 
 function modifier_imba_glimpse_storm_debuff:IsDebuff()  return true end
@@ -808,31 +808,31 @@ function modifier_imba_glimpse_storm_debuff:GetEffectName() return "particles/ge
 function modifier_imba_glimpse_storm_debuff:GetEffectAttachType()   return PATTACH_OVERHEAD_FOLLOW end
 
 function modifier_imba_glimpse_storm_debuff:OnIntervalThink()
-    if IsServer() then      
-        if not self.target:IsMagicImmune() or not self.target:IsInvulnerable() then         
-            
+	if IsServer() then      
+		if not self.target:IsMagicImmune() or not self.target:IsInvulnerable() then         
+			
 			local damageTable = {
-                                    victim = self.target,
-                                    attacker = self.caster,
-                                    damage = self.storm_damage,
-                                    damage_type = DAMAGE_TYPE_MAGICAL,      
-                                    ability = self.ability
-                                }
-                                
-            ApplyDamage(damageTable)
+									victim = self.target,
+									attacker = self.caster,
+									damage = self.storm_damage,
+									damage_type = DAMAGE_TYPE_MAGICAL,      
+									ability = self.ability
+								}
+								
+			ApplyDamage(damageTable)
 
-            -- Give a Stormbearer stack to caster           
-            if self.caster:HasModifier(self.stormbearer_buff) and self.target:IsRealHero() then
-                IncrementStormbearerStacks(self.caster)
-            end    
-                   
-        end
-    end
+			-- Give a Stormbearer stack to caster           
+			if self.caster:HasModifier(self.stormbearer_buff) and self.target:IsRealHero() then
+				IncrementStormbearerStacks(self.caster)
+			end    
+				   
+		end
+	end
 end
 
 function modifier_imba_glimpse_storm_debuff:CheckState()            
-    local state = {[MODIFIER_STATE_SILENCED] = true}     
-    return state    
+	local state = {[MODIFIER_STATE_SILENCED] = true}     
+	return state    
 end
 
 ---------------------------------------------------
@@ -948,7 +948,7 @@ function modifier_imba_kinetic_field:OnDestroy()
 		local ability = self:GetAbility()
 		local kinetic_field_sound_end = "Hero_Disruptor.KineticField.End"
 		ParticleManager:DestroyParticle(self.field_particle, true)
-        ParticleManager:ReleaseParticleIndex(self.field_particle)
+		ParticleManager:ReleaseParticleIndex(self.field_particle)
 		StopSoundEvent(self.sound_cast, caster)
 	end
 end
@@ -1170,7 +1170,7 @@ end
 
 function modifier_imba_kinetic_field_barrier:DeclareFunctions()
   local funcs = {
-    MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE
+	MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE
   }
   return funcs
 end
@@ -1214,11 +1214,11 @@ function modifier_imba_kinetic_field_knockback:GetEffectAttachType()
 end
 
 function modifier_imba_kinetic_field_knockback:CheckState()
-    local state = 
+	local state = 
 	{
 		[MODIFIER_STATE_STUNNED] = IsServer()
 	}
-    return state
+	return state
 end
 
 function modifier_imba_kinetic_field_knockback:OnIntervalThink()
@@ -1300,11 +1300,11 @@ function modifier_imba_kinetic_field_pull:HorizontalMotion()
 end
 
 function modifier_imba_kinetic_field_pull:CheckState()
-    local state = 
+	local state = 
 	{
 		[MODIFIER_STATE_STUNNED] = IsServer()
 	}
-    return state
+	return state
 end
 ---------------------------------------------------
 --			Static Storm

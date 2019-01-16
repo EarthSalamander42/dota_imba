@@ -27,11 +27,6 @@ function GameMode:OnGameRulesStateChange(keys)
 		GetPlayerInfoIXP() -- Add a class later
 		Imbattlepass:Init() -- Initialize Battle Pass
 
-		if GetMapName() == "imba_demo" then
-			require('components/demo/init')
-			self:InitDemo()
-		end
-
 		-- temporary (from stat-collection)
 		-- Build players array
 		--		local players = {}

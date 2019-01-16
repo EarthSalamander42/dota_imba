@@ -192,7 +192,8 @@ function imba_bounty_hunter_shuriken_toss:OnProjectileHit_ExtraData(target, loca
 			DOTA_UNIT_TARGET_HERO,
 			DOTA_UNIT_TARGET_FLAG_NONE,
 			FIND_CLOSEST,
-			false)
+			false
+		)
 
 
 		local projectile_fired = false

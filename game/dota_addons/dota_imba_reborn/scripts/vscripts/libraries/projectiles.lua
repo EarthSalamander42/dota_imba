@@ -57,7 +57,6 @@ function TrackingProjectiles:Think(params,projectileID)
     local visionRadius = params.flVisionRadius or 0
     local acceleration = params.flAcceleration or 1
     acceleration = math.pow(acceleration,1/32) -- Converting it to 1/32th second
-    
 
     Timers:CreateTimer(function()
         -- Check if the destroy function has been called
