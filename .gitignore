@@ -6,13 +6,13 @@
 content/*
 !content/dota_addons/
 content/dota_addons/*
-!content/dota_addons/dota_imba/
+!content/dota_addons/dota_imba_reborn/
 
 !game/
 game/*
 !game/dota_addons/
 game/dota_addons/*
-!game/dota_addons/dota_imba/
+!game/dota_addons/dota_imba_reborn/
 
 # Cache crap that Valve autogenerates
 *.bin
@@ -44,9 +44,10 @@ resource/overviews/*
 #Github dump
 *.stackdump
 
-game/dota_addons/dota_imba/rich_presence_persistent_data\.txt
+game/dota_addons/dota_imba_reborn/network_measurement\.txt
+game/dota_addons/dota_imba_reborn/rich_presence_persistent_data\.txt
 
-game/dota_addons/dota_imba/server_log\.txt
+game/dota_addons/dota_imba_reborn/server_log\.txt
 
 # Roshan
 content/dota_addons/dota_imba/models/rosh*
@@ -57,5 +58,4 @@ game/dota_addons/dota_imba/models/rosh*
 .settings
 .DS_Store
 content/dota_addons/dota_imba/maps/touhou.vmap
->>>>>>> ed92032f245f296c48326575ace0abc1adee6c04
 .idea
