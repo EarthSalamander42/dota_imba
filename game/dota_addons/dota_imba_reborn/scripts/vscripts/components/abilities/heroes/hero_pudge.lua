@@ -542,7 +542,6 @@ function imba_pudge_meat_hook:OnProjectileHit_ExtraData(hTarget, vLocation, Extr
 		return true
 	end
 
-
 	if ExtraData.goorback == "back" then
 		ParticleManager:DestroyParticle(ExtraData.pfx_index, true)
 		ParticleManager:ReleaseParticleIndex(ExtraData.pfx_index)

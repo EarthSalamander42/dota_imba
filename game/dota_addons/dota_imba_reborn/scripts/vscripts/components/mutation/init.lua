@@ -85,10 +85,18 @@ function Mutation:Init()
 		Mutation:ChooseMutation("terrain", TERRAIN_MUTATION_LIST)
 	end
 
-	print("Mutations:")
-	print(IMBA_MUTATION)
+	if IsInToolsMode() then
+		print("Mutations:")
+		print(IMBA_MUTATION)
+	end
 
 	CustomNetTables:SetTableValue("mutations", "mutation", {IMBA_MUTATION})
+
+	if IMBA_PICK_SCREEN == false then
+		Timers:CreateTimer(3.0, function()
+			CustomGameEventManager:Send_ServerToAllClients("send_mutations", IMBA_MUTATION)
+		end)
+	end
 
 --	if IMBA_MUTATION["positive"] == "greed_is_good" then
 --		LinkLuaModifier("modifier_mutation_greed_is_good", "components/modifiers/mutation/modifier_mutation_greed_is_good.lua", LUA_MODIFIER_MOTION_NONE )

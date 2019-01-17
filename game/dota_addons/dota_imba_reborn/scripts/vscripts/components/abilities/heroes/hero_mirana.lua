@@ -444,7 +444,8 @@ function FireSacredArrow(caster, ability, spawn_point, direction)
 	end
 
 	-- Fire arrow in the set direction
-	local arrow_projectile = {  Ability = ability,
+	local arrow_projectile = {
+		Ability = ability,
 		EffectName = particle_arrow,
 		vSpawnOrigin = spawn_point,
 		fDistance = arrow_distance,

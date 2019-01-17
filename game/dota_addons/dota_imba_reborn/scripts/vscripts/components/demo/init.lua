@@ -1,3 +1,24 @@
+--------------------------------------------------------------------------------
+-- GameEvent:OnGameRulesStateChange
+--------------------------------------------------------------------------------
+ListenToGameEvent('game_rules_state_change', function()
+	local state = GameRules:State_Get()
+
+	if GameRules:State_Get() >= DOTA_GAMERULES_STATE_HERO_SELECTION then
+--		print("Gamemode:", GameRules:GetCustomGameDifficulty())
+		if GetMapName() ~= "imba_demo" then return end
+	end
+
+	if state == DOTA_GAMERULES_STATE_HERO_SELECTION then
+		print("demo")
+		GameMode:InitDemo()
+	elseif state == DOTA_GAMERULES_STATE_PRE_GAME then
+--		SendToServerConsole( "dota_dev forcegamestart" )
+	elseif state == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
+		Notifications:TopToAll({text = "Do not abandon the game, click the red QUIT button bottom left to avoid custom game ban.", duration = 3600.0, style = {color = "Red"}})
+	end
+end, nil)
+
 function GameMode:InitDemo()
 	GameRules:GetGameModeEntity():SetTowerBackdoorProtectionEnabled( true )
 	GameRules:GetGameModeEntity():SetFixedRespawnTime( 4 )
@@ -56,6 +77,7 @@ function GameMode:InitDemo()
 
 	self.m_bFreeSpellsEnabled = false
 	self.m_bInvulnerabilityEnabled = false
+	self.m_bfranticEnabled = false
 	self.m_bCreepsEnabled = true
 
 	self.i_broadcast_message_duration = 5.0

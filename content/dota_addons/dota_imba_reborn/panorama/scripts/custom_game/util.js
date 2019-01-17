@@ -226,6 +226,7 @@ function Mutation(args) {
 
 function SetMutationTooltip(j) {
 	var panel = $("#Mutation" + j)
+	$.Msg(panel)
 
 	$("#Mutation" + j + "Label").text = $.Localize("mutation_" + mutation[j]);
 

@@ -1,20 +1,6 @@
 --[[ Events ]]
 
 --------------------------------------------------------------------------------
--- GameEvent:OnGameRulesStateChange
---------------------------------------------------------------------------------
-ListenToGameEvent('game_rules_state_change', function()
-	local state = GameRules:State_Get()
-
-	print(state == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS)
-	if state == DOTA_GAMERULES_STATE_PRE_GAME then
---		SendToServerConsole( "dota_dev forcegamestart" )
-	elseif state == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
-		Notifications:TopToAll({text = "Do not abandon the game, click the red QUIT button bottom left to avoid custom game ban.", duration = 3600.0, style = {color = "Red"}})
-	end
-end, nil)
-
---------------------------------------------------------------------------------
 -- GameEvent: OnItemPurchased
 --------------------------------------------------------------------------------
 ListenToGameEvent('dota_item_purchased', function(event)
@@ -138,6 +124,10 @@ function Think_InitializePlayerHero( hPlayerHero )
 		end
 	end
 
+	if GameMode.m_bfranticEnabled then
+		hPlayerHero:AddNewModifier(hPlayerHero, nil, "modifier_frantic", {}):SetStackCount(IMBA_SUPER_FRANTIC_VALUE)
+	end
+
 	return
 end
 
@@ -212,9 +202,11 @@ function GameMode:OnFranticButtonPressed( eventSourceIndex, data )
 	if hPlayerHero:HasModifier("modifier_frantic") then
 		hPlayerHero:RemoveModifierByName("modifier_frantic")
 		self:BroadcastMsg( "#FranticOff_Msg" )
+		self.m_bfranticEnabled = false
 	else
 		hPlayerHero:AddNewModifier(hPlayerHero, nil, "modifier_frantic", {}):SetStackCount(IMBA_SUPER_FRANTIC_VALUE)
 		self:BroadcastMsg( "#FranticOn_Msg" )
+		self.m_bfranticEnabled = true
 	end
 end
 

@@ -20,28 +20,28 @@
 	width: 230px;
 }
 
-#Mutation0Label {	
+#Mutation0Label {
 	background-image: url("file://panorama/images/custom_game/mutation/imba-bg.png");
 	background-size: cover;
 	color: #ccebff;
 	text-shadow: 1px 0px 2px 2.0 #000000ca;
 }
 
-#Mutation1Label {	
+#Mutation1Label {
 	background-image: url("file://panorama/images/custom_game/mutation/positive-bg.png");
 	background-size: cover;
 	color: #ecfef6;
 	text-shadow: 1px 0px 2px 2.0 #000000ca;
 }
 
-#Mutation2Label {	
+#Mutation2Label {
 	background-image: url("file://panorama/images/custom_game/mutation/negative-bg.png");
 	background-size: cover;
 	color: #ffe9eb;
 	text-shadow: 1px 0px 2px 2.0 #000000ca;
 }
 
-#Mutation3Label {	
+#Mutation3Label {
 	background-image: url("file://panorama/images/custom_game/mutation/terrain-bg.png");
 	background-size: cover;
 	color: #ede5da;

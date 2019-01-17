@@ -100,6 +100,7 @@
 		var PregameBG = PreGame.FindChildTraverse("PregameBG")
 		var AmbientFX = PreGame.FindChildTraverse("AmbientFXContainer")
 		var MainContents = PreGame.FindChildTraverse("MainContents")
+		var HeroPickScreen = PreGame.FindChildTraverse("HeroPickScreen")
 		var MainHeroPickScreenContents = PreGame.FindChildTraverse("MainHeroPickScreenContents")
 		var HeroPickLeftColumn = PreGame.FindChildTraverse("HeroPickLeftColumn")
 		var HeroGrid = PreGame.FindChildTraverse("HeroGrid")
@@ -107,6 +108,7 @@
 		var PreMinimapContainer = PreGame.FindChildTraverse("PreMinimapContainer")
 
 		PreGame.style.backgroundColor = "none";
+		HeroPickScreen.style.marginTop = "125px"; // 112px
 //		Minimap.style.visibility = "collapse";
 //		BattlePass.style.visibility = "collapse";
 //		GridTeam.style.visibility = "collapse";
