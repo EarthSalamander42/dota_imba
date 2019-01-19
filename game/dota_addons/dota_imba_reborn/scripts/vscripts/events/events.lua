@@ -674,6 +674,11 @@ function GameMode:OnPlayerChat(keys)
 			if str == "-getwearable" then
 				Wearables:PrintWearables(caster)
 			end
+			
+			-- When you don't want to have random match history...
+			if str == "-crashgame" then
+				caster:AddNewModifier(caster, nil, nil, {})
+			end
 		end
 
 		if str == "-gg" then

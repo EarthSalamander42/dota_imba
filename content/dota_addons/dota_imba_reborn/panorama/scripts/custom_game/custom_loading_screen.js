@@ -103,7 +103,8 @@ function OnVotesReceived(data)
 //	$.Msg(data)
 //	$.Msg(data.vote.toString())
 //	$.Msg(data.table)
-	$.Msg(data.table2)
+
+//	$.Msg(data.table2)
 
 	var vote_count = []
 	vote_count[1] = 0;

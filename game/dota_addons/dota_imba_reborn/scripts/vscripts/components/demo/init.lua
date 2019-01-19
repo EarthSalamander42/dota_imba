@@ -2,12 +2,9 @@
 -- GameEvent:OnGameRulesStateChange
 --------------------------------------------------------------------------------
 ListenToGameEvent('game_rules_state_change', function()
-	local state = GameRules:State_Get()
+	if GetMapName() ~= "imba_demo" then return end
 
-	if GameRules:State_Get() >= DOTA_GAMERULES_STATE_HERO_SELECTION then
---		print("Gamemode:", GameRules:GetCustomGameDifficulty())
-		if GetMapName() ~= "imba_demo" then return end
-	end
+	local state = GameRules:State_Get()
 
 	if state == DOTA_GAMERULES_STATE_HERO_SELECTION then
 		print("demo")
@@ -84,6 +81,8 @@ function GameMode:InitDemo()
 
 	local hNeutralSpawn = Entities:FindByName( nil, "neutral_caster_spawn" )
 	self.hNeutralCaster = CreateUnitByName( "npc_dota_neutral_caster", hNeutralSpawn:GetAbsOrigin(), false, nil, nil, DOTA_TEAM_GOODGUYS )
+
+	require("components/demo/events")
 end
 
 function GameMode:BroadcastMsg(message, iDuration)
@@ -95,5 +94,3 @@ function GameMode:BroadcastMsg(message, iDuration)
 
 	Notifications:BottomToAll({ text = message, duration = iDuration, style = {color = "white"}})
 end
-
-require("components/demo/events")
