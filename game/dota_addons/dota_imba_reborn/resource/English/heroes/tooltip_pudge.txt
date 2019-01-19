@@ -1,5 +1,5 @@
 "DOTA_Tooltip_ability_imba_pudge_meat_hook"							"#{DOTA_Tooltip_ability_pudge_meat_hook}"
-"DOTA_Tooltip_ability_imba_pudge_meat_hook_Description"				"#{DOTA_Tooltip_ability_pudge_meat_hook_description}\n<font color='#FF7800'>The International:</font> Meat Hook drags its victims until they reach Pudge's current location, rather than the initial position.\nEach stack of <font color='#FF7800'>Power Hook</font> makes Meat Hook deal more damage.\nEach stack of <font color='#FF7800'>Swift Hook</font> gives Meat Hook more range and speed.\n<font color='#FF0000'>Can't hit enemies inside their fountain area.</font>"
+"DOTA_Tooltip_ability_imba_pudge_meat_hook_Description"				"#{DOTA_Tooltip_ability_pudge_meat_hook_description}\n<font color='#FF7800'>The International:</font> Meat Hook drags its victims until they reach Pudge's current location, rather than the initial position.\nEach stack of <font color='#FF7800'>Power Hook</font> makes Meat Hook deal more damage.\nEach stack of <font color='#FF7800'>Swift Hook</font> gives Meat Hook more range and speed.\n<font color='#FF0000'>Can't hit enemies if either entity is within the fountain danger zone.</font>"
 "DOTA_Tooltip_ability_imba_pudge_meat_hook_Lore"					"#{DOTA_Tooltip_ability_pudge_meat_hook_lore}"
 "DOTA_Tooltip_ability_imba_pudge_meat_hook_Note0"					"Does not stun allied targets, only enemies."
 "DOTA_Tooltip_ability_imba_pudge_meat_hook_Note1"					"Meat Hook hits invisible units."
@@ -14,7 +14,7 @@
 "DOTA_Tooltip_ability_imba_pudge_meat_hook_aghanim_description"		"Increase sharp and light stack count by %scepter_hook_stacks%."
 
 "DOTA_Tooltip_ability_imba_pudge_rot"					"#{DOTA_Tooltip_ability_pudge_rot}"
-"DOTA_Tooltip_ability_imba_pudge_rot_Description"		"#{DOTA_Tooltip_ability_pudge_rot_description}\n<font color='#FF7800'>Death and Decay:</font> Deals bonus damage per second equal to %bonus_damage%%% of Pudge's maximum health.\n<font color='#FF7800'>Gas giant:</font> Each stack of Flesh Heap increases Rot's radius by %stack_radius%, up to a maximum of %max_radius_tooltip%."
+"DOTA_Tooltip_ability_imba_pudge_rot_Description"		"#{DOTA_Tooltip_ability_pudge_rot_description}\n<font color='#FF7800'>Death and Decay:</font> Deals bonus damage per second equal to %bonus_damage%%% of Pudge's maximum health.\n<font color='#FF7800'>Gas Giant:</font> Each stack of Flesh Heap increases Rot's radius by %stack_radius%, up to a maximum of %max_radius_tooltip%."
 "DOTA_Tooltip_ability_imba_pudge_rot_Lore"				"#{DOTA_Tooltip_ability_pudge_rot_lore}"
 "DOTA_Tooltip_ability_imba_pudge_rot_Note0"				"Using Rot doesn't interrupt channeling."
 "DOTA_Tooltip_ability_imba_pudge_rot_Note1"				"Rot hits invisible units."
@@ -89,5 +89,5 @@
 "DOTA_Tooltip_Ability_special_bonus_imba_pudge_5"				"+1000 Hook Range"
 "DOTA_Tooltip_Ability_special_bonus_imba_pudge_6"				"+75 Rot Damage"
 "DOTA_Tooltip_ability_special_bonus_imba_pudge_7"				"Rupture Hook"
-"DOTA_Tooltip_ability_special_bonus_imba_pudge_7_Description"	"Meat Hook applies Rupture, dealing %movement_damage_pct% damage per distance unit, %damage_cap% distance cap."
+"DOTA_Tooltip_ability_special_bonus_imba_pudge_7_Description"	"Meat Hook applies Rupture, dealing 0.05 damage per distance unit, 1500 distance cap."
 "DOTA_Tooltip_ability_special_bonus_imba_pudge_8"				"+3 sec Dismember Duration"
