@@ -176,6 +176,7 @@ function GameMode:OnHeroSpawned(hero)
 	
 	if hero:IsTempestDouble() then
 		local clone_shared_buffs = {
+			"modifier_frantic",
 			"modifier_item_imba_moon_shard_active",
 			"modifier_imba_soul_of_truth_buff",
 			"modifier_imba_war_veteran_0",

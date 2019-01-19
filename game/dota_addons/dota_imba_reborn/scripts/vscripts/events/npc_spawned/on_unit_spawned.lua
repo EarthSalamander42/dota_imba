@@ -16,6 +16,19 @@
 function GameMode:OnUnitFirstSpawn(unit)
 	if string.find(unit:GetUnitName(), "npc_dota_lone_druid_bear") then
 		unit:SetupHealthBarLabel()
+		
+		if unit:GetOwner() and unit:GetOwner():HasModifier("modifier_frantic") then
+			local main_hero = unit:GetOwner()
+			local shared_buff_modifier = main_hero:FindModifierByName("modifier_frantic")
+			local shared_buff_ability = shared_buff_modifier:GetAbility()
+			local buff_time = shared_buff_modifier:GetRemainingTime()
+			if buff_time <= 0 then
+				buff_time = shared_buff_modifier:GetDuration()
+			end
+			local cloned_modifier = unit:AddNewModifier(main_hero, shared_buff_ability, shared_buff_modifier:GetName(), {duration = buff_time})
+
+			cloned_modifier:SetStackCount(shared_buff_modifier:GetStackCount())
+		end
 	end
 
 	if unit:GetClassname() == "npc_dota_creep_lane" then
