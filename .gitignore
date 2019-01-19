@@ -44,6 +44,7 @@ resource/overviews/*
 #Github dump
 *.stackdump
 
+game/dota_addons/dota_imba_reborn/scripts/vscripts/components/statcollection/settings.kv
 game/dota_addons/dota_imba_reborn/network_measurement\.txt
 game/dota_addons/dota_imba_reborn/rich_presence_persistent_data\.txt
 
@@ -57,5 +58,4 @@ game/dota_addons/dota_imba/models/rosh*
 .project
 .settings
 .DS_Store
-content/dota_addons/dota_imba/maps/touhou.vmap
 .idea
