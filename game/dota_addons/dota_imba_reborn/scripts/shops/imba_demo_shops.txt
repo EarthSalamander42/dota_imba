@@ -1,4 +1,4 @@
-"imba_5v5_shops"
+"imba_demo_shops"
 {
 	"consumables"
 	{

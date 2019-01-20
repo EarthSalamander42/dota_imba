@@ -35,7 +35,7 @@
 "DOTA_Tooltip_ability_item_imba_ultimate_scepter_synth_Lore"                "Fresh from Razzil Darkbrew's workshop, and worth its weight in gold."
 
 "DOTA_Tooltip_modifier_item_ultimate_scepter_consumed"          "Aghanim's Scepter Synth"
-"DOTA_Tooltip_modifier_item_ultimate_scepter_consumed_Description"          "Permanently granted all benefits from Aghanim's Scepter: Ultimate Upgrade, +14 to all attributes, +300 health, +250 mana"
+"DOTA_Tooltip_modifier_item_ultimate_scepter_consumed_Description"          "Permanently granted all benefits from Aghanim's Scepter: Ultimate Upgrade, +10 to all attributes, +250 health, +250 mana"
 
 // Angelic Alliance
 "DOTA_Tooltip_Ability_item_imba_angelic_alliance"                      "Angelic Alliance"
@@ -170,9 +170,8 @@
 
 // Blink Boots
 "DOTA_Tooltip_Ability_item_imba_blink_boots"						"Blink Boots"
-"DOTA_Tooltip_ability_item_imba_blink_boots_Description"			"Grants the wearer unbelievable mobility.\n<h1>Active: Blink</h1> Instantly teleport to a target point up to %max_blink_range% units away. If hero-based damage is taken, Blink Boots cannot be used for %blink_damage_cooldown% seconds.\n<h1><font color='#FF7800'>Active: Space suppression</font></h1>can blink up to %max_extra_tooltip% units above the normal maximum range, but doing so will incur an increased cooldown."
+"DOTA_Tooltip_ability_item_imba_blink_boots_Description"			"Grants the wearer unbelievable mobility.\n<h1>Active: Blink</h1> Instantly teleport to a target point up to %max_blink_range% units away. If hero-based damage is taken, Blink Boots cannot be used for %blink_damage_cooldown% seconds.\n<h1><font color='#FF7800'>Active: Space Suppression</font></h1>Can blink up to %max_extra_tooltip% units above the normal maximum range, but doing so will incur an increased cooldown."
 "DOTA_Tooltip_ability_item_imba_blink_boots_Lore"					"Blink, and you'll miss it."
-"DOTA_Tooltip_ability_item_imba_blink_boots_Note0"					"You can modify the color of your blink with <font color='#FF4A4A'>-blink XXX YYY ZZZ</font> in RGB-Code."
 "DOTA_Tooltip_ability_item_imba_blink_boots_max_blink_range"		"RANGE:"
 "DOTA_Tooltip_ability_item_imba_blink_boots_bonus_movement_speed"	"%+$move_speed"
 
@@ -681,7 +680,7 @@
 
 // Mask of Madness
 "DOTA_Tooltip_Ability_item_imba_mask_of_madness"                "Mask of Madness"
-"DOTA_Tooltip_Ability_item_imba_mask_of_madness_Description"                "<h1>Active: Berserk</h1> Silences you and reduces your armor by %berserk_armor_reduction%, but grants %berserk_ms_bonus_pct%%% move and %berserk_attack_speed% attack speed. Lasts for %berserk_duration% seconds.\n<h1>Passive: Lifesteal</h1> heals the attacker for a percentage of attack damage dealt."
+"DOTA_Tooltip_Ability_item_imba_mask_of_madness_Description"                "<h1>Active: Berserk</h1> Silences you and reduces your armor by %berserk_armor_reduction%, but grants %berserk_ms_bonus_pct%%% move and %berserk_attack_speed% attack speed. Lasts for %berserk_duration% seconds.\n<h1>Passive: Lifesteal</h1> Heals the attacker for a percentage of attack damage dealt."
 "DOTA_Tooltip_Ability_item_imba_mask_of_madness_Note0"          "If the target hero is hidden from sight, the caster will still try to pursue it until the rage ends."
 "DOTA_Tooltip_Ability_item_imba_mask_of_madness_damage_bonus"               "+$damage"
 "DOTA_Tooltip_Ability_item_imba_mask_of_madness_lifesteal_pct"              "%LIFESTEAL:"
@@ -757,7 +756,7 @@
 
 // Morbid Mask
 "DOTA_Tooltip_Ability_item_imba_morbid_mask"                    "Morbid Mask"
-"DOTA_Tooltip_ability_item_imba_morbid_mask_Description"                    "<h1>Passive: Lifesteal</h1> heals the attacker for a percentage of attack damage dealt. Stacks additively with other sources of lifesteal, but not with itself."
+"DOTA_Tooltip_ability_item_imba_morbid_mask_Description"                    "<h1>Passive: Lifesteal</h1> Heals the attacker for a percentage of attack damage dealt. Stacks additively with other sources of lifesteal, but not with itself."
 "DOTA_Tooltip_ability_item_imba_morbid_mask_Lore"              "A mask that drains the energy of those caught in its gaze."
 "DOTA_Tooltip_ability_item_imba_morbid_mask_damage_bonus"                   "+$damage"
 "DOTA_Tooltip_ability_item_imba_morbid_mask_lifesteal_pct"                  "%LIFESTEAL:"
@@ -800,7 +799,7 @@
 "DOTA_Tooltip_ability_item_imba_necronomicon_4_archer_health"               "ARCHER HEALTH:"
 
 "DOTA_Tooltip_Ability_item_imba_necronomicon_5"                "Necronomicon (1st edition)"
-"DOTA_Tooltip_ability_item_imba_necronomicon_5_Description"                 "<h1>Active: Summon elder gods</h1> Summons a durable Necrowarrior and its artillery companion, the Necroarcher.<br><br><font color='#00FF40'>Necrowarrior:</font> Burns mana on every attack, deals high magical damage to its killer, has True Sight, and three supportive auras.<br><br><font color='#00FF40'>Necroarcher:</font> Can burn enemies' mana on command, has three supportive auras, and hits every enemy in range."
+"DOTA_Tooltip_ability_item_imba_necronomicon_5_Description"                 "<h1>Active: Summon Elder Gods</h1> Summons a durable Necrowarrior and its artillery companion, the Necroarcher.<br><br><font color='#00FF40'>Necrowarrior:</font> Burns mana on every attack, deals high magical damage to its killer, has True Sight, and three supportive auras.<br><br><font color='#00FF40'>Necroarcher:</font> Can burn enemies' mana on command, has three supportive auras, and hits every enemy in range."
 "DOTA_Tooltip_ability_item_imba_necronomicon_5_Lore"            "Considered the holy grail of necromancy and demonology, a powerful malefic force is locked within its pages."
 "DOTA_Tooltip_ability_item_imba_necronomicon_5_bonus_intellect"             "+$int"
 "DOTA_Tooltip_ability_item_imba_necronomicon_5_bonus_strength"              "+$str"
@@ -978,7 +977,7 @@
 
 // Satanic
 "DOTA_Tooltip_Ability_item_imba_satanic"                        "Satanic"
-"DOTA_Tooltip_Ability_item_imba_satanic_Description"            "<h1>Active: Unholy Rage</h1> Increases lifesteal percentage by %unholy_rage_lifesteal_bonus%%% for %unholy_rage_duration% seconds.\n<h1>Passive: Lifesteal</h1> heals the attacker for a percentage of attack damage dealt.\n<h1><font color='#FF7800'>Passive: Soul Slaughter</font></h1> Last hitting an enemy with an attack grants stacks of Soul Slaughter equal to %soul_slaughter_hp_increase_pct%%% of the target's maximum health, up to a maximum of stacks equal to %soul_slaughter_max_hp_pct%% of your original maximum health. Each stack increases your maximum health and damage for the duration.<br>Stacks have independent durations, and they do not refresh each other."
+"DOTA_Tooltip_Ability_item_imba_satanic_Description"            "<h1>Active: Unholy Rage</h1> Increases lifesteal percentage by %unholy_rage_lifesteal_bonus%%% for %unholy_rage_duration% seconds.\n<h1>Passive: Lifesteal</h1> Heals the attacker for a percentage of attack damage dealt.\n<h1><font color='#FF7800'>Passive: Soul Slaughter</font></h1> Last hitting an enemy with an attack grants stacks of Soul Slaughter equal to %soul_slaughter_hp_increase_pct%%% of the target's maximum health, up to a maximum of stacks equal to %soul_slaughter_max_hp_pct%% of your original maximum health. Each stack increases your maximum health and damage for the duration.<br>Stacks have independent durations, and they do not refresh each other."
 "DOTA_Tooltip_Ability_item_imba_satanic_Note0"                  "Only gains buffs when directly auto attacking an enemy unit. AoE effects and spells do not count."
 "DOTA_Tooltip_Ability_item_imba_satanic_damage_bonus"          "+$damage"
 "DOTA_Tooltip_Ability_item_imba_satanic_strength_bonus"                     "+$str"
@@ -1254,7 +1253,7 @@
 // Vladmir's Blood
 
 "DOTA_Tooltip_Ability_item_imba_vladmir_2"                      "Vladmir's Blood"
-"DOTA_Tooltip_ability_item_imba_vladmir_2_Description"          "<h1>Passive: Blood aura</h1> Grants an improved version of Vladmir's aura, allowing allies to lifesteal from both attacks<font color='#FF7800'> and spells.</font> <br><br> Overrides and does not stack with Vladmir's aura."
+"DOTA_Tooltip_ability_item_imba_vladmir_2_Description"          "<h1>Passive: Blood Aura</h1> Grants an improved version of Vladmir's Aura, allowing allies to lifesteal from both attacks<font color='#FF7800'> and spells.</font> <br><br> Overrides and does not stack with Vladmir's Aura."
 "DOTA_Tooltip_ability_item_imba_vladmir_2_Lore"                "An eerie mask possessed by a fallen vampire's mighty bloodlust."
 "DOTA_Tooltip_ability_item_imba_vladmir_2_Note0"                "Vladmir's Aura is completely overriden and does not stack with Blood Aura."
 "DOTA_Tooltip_ability_item_imba_vladmir_2_vampiric_aura"                    "%AURA LIFESTEAL:"
@@ -1269,7 +1268,7 @@
 
 // Vladmir's Offering
 "DOTA_Tooltip_Ability_item_imba_vladmir"                        "Vladmir's Offering"
-"DOTA_Tooltip_ability_item_imba_vladmir_Description"            "<h1>Passive: Vladmir's aura</h1> grants bonus damage, health and mana regeneration, and armor to nearby allies, and allows them to lifesteal from regular attacks."
+"DOTA_Tooltip_ability_item_imba_vladmir_Description"            "<h1>Passive: Vladmir's Aura</h1> Grants bonus damage, health and mana regeneration, and armor to nearby allies, and allows them to lifesteal from regular attacks."
 "DOTA_Tooltip_ability_item_imba_vladmir_Lore"                  "An eerie mask that is haunted with the malice of a fallen vampire."
 "DOTA_Tooltip_ability_item_imba_vladmir_Note0"                  "Vladmir's Aura is completely overriden and does not stack with Vladmir's Blood's Blood Aura"
 "DOTA_Tooltip_ability_item_imba_vladmir_vampiric_aura"          "%AURA LIFESTEAL:"

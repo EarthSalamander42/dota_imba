@@ -2739,7 +2739,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"550"
+		"ItemCost"						"1300"
 		"ItemShopTags"					""
 
 		// Recipe
@@ -2767,7 +2767,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"4500"
+		"ItemCost"						"5250"
 		"ItemShopTags"					"attack_speed;armor;hard_to_tag"
 		"ItemQuality"					"epic"
 		"ItemAliases"					"ac;assault cuirass"
@@ -2824,7 +2824,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"1300"
+		"ItemCost"						"125"
 		"ItemShopTags"					""
 
 		// Recipe
@@ -2859,7 +2859,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"7000"
+		"ItemCost"						"6900"
 		"ItemShopTags"					"str;agi;int;damage;move_speed;attack_speed;armor;hard_to_tag"
 		"ItemQuality"					"rare"
 		"ItemAliases"					"siege cuirass"
@@ -4745,7 +4745,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"300"
+		"ItemCost"						"600"
 		"ItemShopTags"					""
 
 		// Recipe
@@ -4771,7 +4771,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"300"
+		"ItemCost"						"600"
 		"ItemShopTags"					""
 
 		// Recipe
@@ -4798,7 +4798,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"300"
+		"ItemCost"						"600"
 		"ItemShopTags"					""
 
 		// Recipe
@@ -4858,7 +4858,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"1750"
+		"ItemCost"						"2050"
 		"ItemShopTags"					"damage;str;unique"
 		"ItemQuality"					"artifact"
 		"ItemAliases"					"sange"
@@ -4917,7 +4917,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"1750"
+		"ItemCost"						"2050"
 		"ItemShopTags"					"agi;attack_speed;move_speed"
 		"ItemQuality"					"artifact"
 		"ItemAliases"					"yasha"
@@ -4980,7 +4980,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"1750"
+		"ItemCost"						"2050"
 		"ItemShopTags"					"int;unique"
 		"ItemQuality"					"artifact"
 		"ItemAliases"					"kaya"
@@ -5038,7 +5038,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"3500"
+		"ItemCost"						"4100"
 		"ItemShopTags"					"damage;str;agi;attack_speed;unique"
 		"ItemQuality"					"artifact"
 		"ItemAliases"					"sny;s&y;sy;sange and yasha"
@@ -6128,7 +6128,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"310"
+		"ItemCost"						"500"
 		"ItemShopTags"					""
 
 		// Recipe
@@ -6137,7 +6137,7 @@
 		"ItemResult"					"item_imba_ancient_janggo"
 		"ItemRequirements"
 		{
-			"01"						"item_sobi_mask;item_bracer;item_wind_lace"
+			"01"						"item_crown;item_sobi_mask;item_wind_lace"
 		}
 	}
 
@@ -6163,7 +6163,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"1200"
+		"ItemCost"						"1525"
 		"ItemShopTags"					"str;agi;int;damage;move_speed;attack_speed;hard_to_tag"
 		"ItemQuality"					"rare"
 		"ItemAliases"					"drum of endurance"
@@ -6470,29 +6470,29 @@
 	//=================================================================================================================
 	// Recipe: White Queen's Cape
 	//=================================================================================================================
-	"item_recipe_imba_white_queen_cape"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"2109"
-		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
-
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"505"
-		"ItemShopTags"					""
-
-		// Recipe
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemRecipe"					"1"
-		"ItemResult"					"item_imba_white_queen_cape"
-		"ItemRequirements"
-		{
-			"01"						"item_belt_of_strength;item_blades_of_attack"
-		}
-	}
+//	"item_recipe_imba_white_queen_cape"
+//	{
+//		// General
+//		//-------------------------------------------------------------------------------------------------------------
+//		"ID"							"2109"
+//		"BaseClass"						"item_datadriven"
+//		"AbilityTextureName" 			"custom/imba_recipe"
+//		"Model"							"models/props_gameplay/recipe.mdl"
+//
+//		// Item Info
+//		//-------------------------------------------------------------------------------------------------------------
+//		"ItemCost"						"570"
+//		"ItemShopTags"					""
+//
+//		// Recipe
+//		//-------------------------------------------------------------------------------------------------------------
+//		"ItemRecipe"					"1"
+//		"ItemResult"					"item_imba_white_queen_cape"
+//		"ItemRequirements"
+//		{
+//			"01"						"item_belt_of_strength;item_blades_of_attack"
+//		}
+//	}
 
 	//=================================================================================================================
 	// White Queen Cape
@@ -6513,7 +6513,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"1375"
+		"ItemCost"						"1450"
 		"ItemShopTags"					"str;damage;hard_to_tag"
 		"ItemQuality"					"epic"
 		"ItemAliases"					"wqc;white queen cape"
@@ -7955,29 +7955,29 @@
 	//=================================================================================================================
 	// Recipe: Initiate's Robe
 	//=================================================================================================================
-	"item_recipe_imba_initiate_robe"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"2158"
-		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
-
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"325"
-		"ItemShopTags"					""
-
-		// Recipe
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemRecipe"					"1"
-		"ItemResult"					"item_imba_initiate_robe"
-		"ItemRequirements"
-		{
-			"01"						"item_cloak;item_infused_raindrop"
-		}
-	}
+//	"item_recipe_imba_initiate_robe"
+//	{
+//		// General
+//		//-------------------------------------------------------------------------------------------------------------
+//		"ID"							"2158"
+//		"BaseClass"						"item_datadriven"
+//		"AbilityTextureName" 			"custom/imba_recipe"
+//		"Model"							"models/props_gameplay/recipe.mdl"
+//
+//		// Item Info
+//		//-------------------------------------------------------------------------------------------------------------
+//		"ItemCost"						"325"
+//		"ItemShopTags"					""
+//
+//		// Recipe
+//		//-------------------------------------------------------------------------------------------------------------
+//		"ItemRecipe"					"1"
+//		"ItemResult"					"item_imba_initiate_robe"
+//		"ItemRequirements"
+//		{
+//			"01"						"item_cloak;item_infused_raindrop"
+//		}
+//	}
 
 	//=================================================================================================================
 	// Initiate's Robe
@@ -9421,7 +9421,7 @@
 		"ItemResult"					"item_imba_satanic"
 		"ItemRequirements"
 		{
-			"01"						"item_reaver;item_imba_morbid_mask;item_mithril_hammer"
+			"01"						"item_reaver;item_imba_morbid_mask;item_claymore"
 		}
 	}
 
@@ -9437,7 +9437,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost" 						"5800"
+		"ItemCost" 						"5300"
 		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
 		"ItemShopTags"					"damage;str;hard_to_tag"
 		"ItemQuality"					"artifact"
@@ -10769,7 +10769,7 @@
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"static_proc_chance"	"35"
+				"static_proc_chance"	"30"
 			}
 			"10"
 			{
@@ -10795,7 +10795,7 @@
 			"14"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"splash_damage_pct"		"40"
+				"splash_damage_pct"		"60"
 			}
 			"15"
 			{
@@ -11926,7 +11926,7 @@
 		"ItemCost"						"1350"
 		"AbilityTextureName"			"custom/cloak_of_flames"
 
-		"SecretShop"					"1"
+		//"SecretShop"					"1"
 
 		"ItemShopTags"					"artifact"
 		"ItemQuality"					"artifact"
@@ -12108,7 +12108,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"3500"
+		"ItemCost"						"4100"
 		"ItemShopTags"					"damage;str;agi;attack_speed;unique"
 		"ItemQuality"					"artifact"
 		"ItemAliases"					"kns;k&s;ks;kaya and sange;snk;s&k;sk;sange and kaya"
@@ -12220,7 +12220,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"3500"
+		"ItemCost"						"4100"
 		"ItemShopTags"					"damage;str;agi;attack_speed;unique"
 		"ItemQuality"					"artifact"
 		"ItemAliases"					"sny;s&y;sy;sange and yasha"

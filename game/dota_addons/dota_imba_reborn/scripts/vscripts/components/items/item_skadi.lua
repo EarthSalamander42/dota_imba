@@ -145,7 +145,7 @@ end
 -- Removes the unique modifier from the caster if this is the last skadi in its inventory
 function modifier_item_imba_skadi:OnDestroy()
 	if IsServer() then
-		if not self.parent:HasModifier("modifier_item_imba_skadi") then
+		if not self.parent:IsNull() and not self.parent:HasModifier("modifier_item_imba_skadi") then
 			self.parent:RemoveModifierByName("modifier_item_imba_skadi_unique")
 		end
 	end

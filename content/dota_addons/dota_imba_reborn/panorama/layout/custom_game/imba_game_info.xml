@@ -41,7 +41,7 @@
 				<Label id="Creeps01" html="true" text="#imba_tutorial_creeps_01" />
 			</Panel>
 		</Panel>
-
+		<!--
 		<Panel id="Roshan" class="InfoBox">
 			<Panel id="RoshanTextBox">
 				<Label id="RoshanTitle" class="Header" html="true" text="#imba_tutorial_roshan_title" />
@@ -58,7 +58,7 @@
 				<Label id="PowerBalance04" html="true" text="#imba_tutorial_power_balance_04" />
 			</Panel>
 		</Panel>
-
+		-->
 		<Panel id="Contributors" class="InfoBox">
 			<Panel id="ContributorsTextBox">
 				<Label id="ContributorsTitle" class="Header" html="true" text="#imba_tutorial_credits_title" />
