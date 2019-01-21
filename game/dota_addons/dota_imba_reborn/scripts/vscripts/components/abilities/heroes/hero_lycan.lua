@@ -2253,7 +2253,9 @@ function modifier_imba_talent_wolf_packleader:IsPurgable()	return false end
 
 function modifier_imba_talent_wolf_packleader:OnCreated() 
 	local ability	=	self:GetAbility()
-	self.bonus_damage_pct	=	ability:GetSpecialValueFor("aura_bonus_damage_pct")
+	if ability then
+		self.bonus_damage_pct	=	ability:GetSpecialValueFor("aura_bonus_damage_pct")
+	end
 end
 
 function modifier_imba_talent_wolf_packleader:DeclareFunctions()

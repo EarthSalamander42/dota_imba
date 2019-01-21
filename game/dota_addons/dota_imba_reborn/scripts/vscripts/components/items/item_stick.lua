@@ -80,3 +80,12 @@ function MagicStickCharge( keys )
 		end
 	end
 end
+
+function MagicWandSetCharges( keys )
+	local ability = keys.ability
+	
+	if not ability.initialized then
+		ability.initialized = true
+		ability:SetCurrentCharges(ability:GetSpecialValueFor("initial_charges"))
+	end
+end

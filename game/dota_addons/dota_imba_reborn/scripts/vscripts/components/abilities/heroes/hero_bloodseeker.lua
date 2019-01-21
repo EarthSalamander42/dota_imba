@@ -847,10 +847,10 @@ end
 function modifier_imba_rupture_charges:OnIntervalThink()
 	if IsServer() then
 		-- If the caster doesn't have scepter, do nothing, and turn off if he dropped it.
-		if not self.caster:HasScepter() then
-			self.turned_on = false
-			return nil
-		end
+		-- if not self.caster:HasScepter() then
+			-- self.turned_on = false
+			-- return nil
+		-- end
 
 		-- If this is the first time the charges are "turned on", set the stack count.
 		if not self.turned_on then

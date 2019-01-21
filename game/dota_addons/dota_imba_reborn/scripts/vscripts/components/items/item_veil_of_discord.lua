@@ -237,7 +237,9 @@ function modifier_veil_buff_aura_modifier:IsHidden() return false end
 function modifier_veil_buff_aura_modifier:IsPurgable() return true end
 
 function modifier_veil_buff_aura_modifier:OnCreated()
-	self.spell_power    =   self:GetAbility():GetSpecialValueFor("aura_spell_power")
+	if self:GetAbility() then
+		self.spell_power    =   self:GetAbility():GetSpecialValueFor("aura_spell_power")
+	end
 end
 
 function modifier_veil_buff_aura_modifier:DeclareFunctions()

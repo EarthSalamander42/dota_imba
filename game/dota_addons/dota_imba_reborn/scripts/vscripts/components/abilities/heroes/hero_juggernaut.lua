@@ -669,10 +669,12 @@ modifier_imba_juggernaut_healing_ward_aura = modifier_imba_juggernaut_healing_wa
 function modifier_imba_juggernaut_healing_ward_aura:OnCreated()
 	self.caster = self:GetCaster()
 
-	if IsTotem(self.caster) then
-		self.healing = self:GetAbility():GetSpecialValueFor("heal_per_sec_totem")
-	else
-		self.healing = self:GetAbility():GetSpecialValueFor("heal_per_sec")
+	if self:GetAbility() then
+		if IsTotem(self.caster) then
+			self.healing = self:GetAbility():GetSpecialValueFor("heal_per_sec_totem")
+		else
+			self.healing = self:GetAbility():GetSpecialValueFor("heal_per_sec")
+		end
 	end
 	
 	if not IsServer() then return end

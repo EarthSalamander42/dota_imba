@@ -303,7 +303,7 @@
 		"ItemShopTags"					"regen_health;regen_mana;boost_health;boost_mana;int;agi;str"
 		"ItemQuality"					"common"
 		"ItemAliases"					"magic wand"
-		"ItemInitialCharges"			"12"
+		//"ItemInitialCharges"			"12"
 		"ItemPermanent"					"1"
 		"ItemRequiresCharges"			"1"
 		"ItemDisplayCharges"			"1"
@@ -331,6 +331,11 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"restore_per_charge"	"15"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"initial_charges"		"12"			
 			}
 		}
 
@@ -362,6 +367,15 @@
 					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%bonus_all_stats"
 					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"			"%bonus_all_stats"
 					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"%bonus_all_stats"
+				}
+				
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"components/items/item_stick.lua"
+						"Function"		"MagicWandSetCharges"
+					}
 				}
 			}
 
@@ -3261,7 +3275,7 @@
 		"ItemShopTags"					"regen_health;regen_mana;mana_pool;health_pool"
 		"ItemQuality"					"epic"
 		"ItemAliases"					"bs;bloodstone"
-		"ItemInitialCharges"			"16"
+		//"ItemInitialCharges"			"16"
 		"ItemDisplayCharges"			"1"
 		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
 
@@ -3324,6 +3338,11 @@
 				"var_type"					"FIELD_INTEGER"
 				"bonus_mana_regen_pct"		"200"
 			}
+			"10"
+			{	
+				"var_type"					"FIELD_INTEGER"
+				"initial_charges"			"16"
+			}
 		}
 
 		"OnSpellStart"
@@ -3375,6 +3394,15 @@
 					"MODIFIER_PROPERTY_MANA_BONUS" 						"%bonus_mana"
 					"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT" 			"%bonus_mana_regen"
 					//"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"			"%bonus_mana_regen_pct" // Doesn't work
+				}
+				
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"components/items/item_bloodstone.lua"
+						"Function"		"SetCharges"
+					}
 				}
 			}
 

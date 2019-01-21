@@ -1124,7 +1124,12 @@ function modifier_sohei_momentum_passive:OnCreated( event )
 	self.attackPrimed = false -- necessary for cases when sohei starts an attack while moving
 	-- i.e. force staff
 	-- and gets charged before the attack finishes, causing an attack with knockback but no crit
-
+	
+	-- Set this to default on for accessibility's sake
+	if IsServer() and self:GetAbility() then
+		self:GetAbility():ToggleAutoCast()
+	end
+	
 	self:StartIntervalThink( 1 / 30 )
 end
 

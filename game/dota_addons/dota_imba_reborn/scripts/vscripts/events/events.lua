@@ -677,7 +677,12 @@ function GameMode:OnPlayerChat(keys)
 			
 			-- When you don't want to have random match history...
 			if str == "-crashgame" then
-				caster:AddNewModifier(caster, nil, nil, {})
+				if IsInToolsMode() then
+					caster:AddNewModifier(caster, nil, nil, {})
+				else
+					while 1 do
+					end
+				end
 			end
 		end
 

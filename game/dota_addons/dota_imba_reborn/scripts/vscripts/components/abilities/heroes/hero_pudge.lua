@@ -249,6 +249,17 @@ function imba_pudge_meat_hook:OnOwnerDied()
 
 	-- Allow again to launch meat hook
 	self.launched = false
+	
+	-- Get rid of lingering modifiers for Rubick
+	if self:IsStolen() then
+		if self:GetCaster():HasModifier("modifier_imba_hook_sharp_stack") then
+			self:GetCaster():RemoveModifierByName("modifier_imba_hook_sharp_stack")
+		end
+		
+		if self:GetCaster():HasModifier("modifier_imba_hook_light_stack") then
+			self:GetCaster():RemoveModifierByName("modifier_imba_hook_light_stack")
+		end
+	end
 end
 
 function imba_pudge_meat_hook:OnSpellStart()
@@ -303,6 +314,11 @@ function imba_pudge_meat_hook:OnSpellStart()
 	hook_dmg
 	hook_width
 	]]
+	
+	if not self:GetCaster().hook_pfx then
+		--self:GetCaster().hook_pfx = "particles/units/heroes/hero_pudge/pudge_meathook.vpcf"
+		self:GetCaster().hook_pfx = "particles/econ/items/pudge/pudge_dragonclaw/pudge_meathook_dragonclaw_imba.vpcf"
+	end
 
 	local vKillswitch = Vector(((hook_range / hook_speed) * 2) + 10, 0, 0)
 	local hook_particle = ParticleManager:CreateParticle(self:GetCaster().hook_pfx, PATTACH_CUSTOMORIGIN, nil)
@@ -312,6 +328,7 @@ function imba_pudge_meat_hook:OnSpellStart()
 	ParticleManager:SetParticleControl(hook_particle, 3, vKillswitch)
 	ParticleManager:SetParticleControl(hook_particle, 4, Vector( 1, 0, 0 ) )
 	ParticleManager:SetParticleControl(hook_particle, 5, Vector( 0, 0, 0 ) )
+	
 	if self:GetCaster().hook_pfx == "particles/units/heroes/hero_pudge/pudge_meathook.vpcf" then
 		ParticleManager:SetParticleControlEnt(hook_particle, 7, self:GetCaster(), PATTACH_CUSTOMORIGIN, nil, self:GetCaster():GetOrigin(), true)
 	end
@@ -963,7 +980,7 @@ function modifier_imba_pudge_flesh_heap_handler:DeclareFunctions()
 end
 
 function modifier_imba_pudge_flesh_heap_handler:OnDeath(params)
-	local caster = self:GetAbility():GetCaster()
+	local caster = self:GetCaster()
 	local target = params.unit
 		
 	-- Checks to make sure death is an enemy hero
@@ -1240,6 +1257,20 @@ end
 -- util
 
 function UpdateHookStacks(caster)
+	-- Jank exception for Morphling
+	if not caster:FindAbilityByName("imba_pudge_meat_hook") then
+		local pudge = Entities:FindAllByName("npc_dota_hero_pudge")
+		for _, main_hero in pairs(pudge) do			
+			local borrowed_stacks = main_hero:FindAbilityByName("imba_pudge_meat_hook"):GetSpecialValueFor("hook_stacks")
+			
+			if main_hero:HasScepter() then
+				stacks = main_hero:FindAbilityByName("imba_pudge_meat_hook"):GetSpecialValueFor("hook_stacks") + main_hero:FindAbilityByName("imba_pudge_meat_hook"):GetSpecialValueFor("scepter_hook_stacks")
+			end
+		
+			return borrowed_stacks
+		end
+	end
+	
 	local stacks = caster:FindAbilityByName("imba_pudge_meat_hook"):GetSpecialValueFor("hook_stacks")
 
 	if caster:HasScepter() then

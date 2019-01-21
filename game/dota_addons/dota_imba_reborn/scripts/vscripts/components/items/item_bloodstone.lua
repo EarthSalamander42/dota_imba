@@ -29,6 +29,15 @@ function Suicide( keys )
 	end
 end
 
+function SetCharges( keys )
+	local ability = keys.ability
+	
+	if not ability.initialized then
+		ability.initialized = true
+		ability:SetCurrentCharges(ability:GetSpecialValueFor("initial_charges"))
+	end
+end
+
 function UpdateCharges( keys )
 	local caster = keys.caster
 	local item = keys.ability

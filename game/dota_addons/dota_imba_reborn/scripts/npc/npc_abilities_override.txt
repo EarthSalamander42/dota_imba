@@ -7389,13 +7389,13 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_INTEGER"
+				"var_type"				"FIELD_FLOAT"
 				"damage_per_mana"		"1.6 2.4 3.5 4.8"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"absorption_tooltip"	"60 62 64 66"
+				"absorption_tooltip"	"60"
 			}
 		}
 	}

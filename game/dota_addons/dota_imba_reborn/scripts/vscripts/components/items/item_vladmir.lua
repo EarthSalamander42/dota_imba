@@ -142,10 +142,12 @@ end
 
 -- Stores the aura's parameters to prevent errors when the item is unequipped
 function modifier_item_imba_vladmir_aura:OnCreated(keys)
-	self.damage_aura = self:GetAbility():GetSpecialValueFor("damage_aura")
-	self.armor_aura = self:GetAbility():GetSpecialValueFor("armor_aura")
-	self.hp_regen_aura = self:GetAbility():GetSpecialValueFor("hp_regen_aura")
-	self.mana_regen_aura = self:GetAbility():GetSpecialValueFor("mana_regen_aura")
+	if self:GetAbility() then
+		self.damage_aura = self:GetAbility():GetSpecialValueFor("damage_aura")
+		self.armor_aura = self:GetAbility():GetSpecialValueFor("armor_aura")
+		self.hp_regen_aura = self:GetAbility():GetSpecialValueFor("hp_regen_aura")
+		self.mana_regen_aura = self:GetAbility():GetSpecialValueFor("mana_regen_aura")
+	end
 
 	if IsServer() and self:GetParent():IsHero() then
 		ChangeAttackProjectileImba(self:GetParent())
