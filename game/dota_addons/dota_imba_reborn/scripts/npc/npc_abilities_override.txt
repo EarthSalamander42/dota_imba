@@ -1160,17 +1160,17 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"15 18 21 24 27"
+				"bonus_intellect"		"18 21 24 27 30"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_all_stats"		"3"
+				"bonus_all_stats"		"5"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"400 500 600 700 800"
+				"damage"				"500 600 700 800 900"
 			}
 			"04"
 			{
@@ -1204,17 +1204,17 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"15 18 21 24 27"
+				"bonus_intellect"		"18 21 24 27 30"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_all_stats"		"3"
+				"bonus_all_stats"		"5"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"400 500 600 700 800"
+				"damage"				"500 600 700 800 900"
 			}
 			"04"
 			{
@@ -1248,17 +1248,17 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"15 18 21 24 27"
+				"bonus_intellect"		"18 21 24 27 30"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_all_stats"		"3"
+				"bonus_all_stats"		"5"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"400 500 600 700 800"
+				"damage"				"500 600 700 800 900"
 			}
 			"04"
 			{
@@ -1292,17 +1292,17 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"15 18 21 24 27"
+				"bonus_intellect"		"18 21 24 27 30"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_all_stats"		"3"
+				"bonus_all_stats"		"5"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"400 500 600 700 800"
+				"damage"				"500 600 700 800 900"
 			}
 			"04"
 			{
@@ -1336,17 +1336,17 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"15 18 21 24 27"
+				"bonus_intellect"		"18 21 24 27 30"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_all_stats"		"3"
+				"bonus_all_stats"		"5"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"400 500 600 700 800"
+				"damage"				"500 600 700 800 900"
 			}
 			"04"
 			{
@@ -1371,14 +1371,14 @@
 	//=================================================================================================================
 	"item_refresher"
 	{
-		"AbilityCooldown"				"90"
+		"AbilityCooldown"				"120"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_health_regen"	"13"
+				"bonus_health_regen"	"16"
 			}
 			"02"
 			{
@@ -1455,12 +1455,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_strength"		"10"
+				"bonus_strength"		"16"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"24"
+				"bonus_damage"			"32"
 			}
 			"03"
 			{
@@ -14720,7 +14720,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"bonus_health_regen"	"6.5"
+				"bonus_health_regen"	"8.0"
 			}
 			"03"
 			{

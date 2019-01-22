@@ -116,14 +116,20 @@ if modifier_imba_angelic_alliance_passive_effect == nil then modifier_imba_angel
 function modifier_imba_angelic_alliance_passive_effect:IsHidden() return true end
 function modifier_imba_angelic_alliance_passive_effect:IsDebuff() return false end
 function modifier_imba_angelic_alliance_passive_effect:IsPurgable() return false end
+function modifier_imba_angelic_alliance_passive_effect:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_angelic_alliance_passive_effect:DeclareFunctions()
 	local funcs = {	MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
+		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
+		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
 		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE_UNIQUE,
 		MODIFIER_PROPERTY_EVASION_CONSTANT,
-		MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE,
+		MODIFIER_PROPERTY_MANA_REGEN_CONSTANT,
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
-		MODIFIER_EVENT_ON_ATTACK_LANDED,			}
+		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING,
+		MODIFIER_EVENT_ON_ATTACK_LANDED
+		}
 	return funcs
 end
 
@@ -133,10 +139,28 @@ function modifier_imba_angelic_alliance_passive_effect:GetModifierBonusStats_Str
 	return strength
 end
 
+function modifier_imba_angelic_alliance_passive_effect:GetModifierBonusStats_Agility()
+	local ability = self:GetAbility()
+	local agility = ability:GetSpecialValueFor("bonus_agility")
+	return agility
+end
+
+function modifier_imba_angelic_alliance_passive_effect:GetModifierBonusStats_Intellect()
+	local ability = self:GetAbility()
+	local intellect = ability:GetSpecialValueFor("bonus_intellect")
+	return intellect
+end
+
 function modifier_imba_angelic_alliance_passive_effect:GetModifierPhysicalArmorBonus()
 	local ability = self:GetAbility()
 	local armor = ability:GetSpecialValueFor("armor_change")
 	return armor
+end
+
+function modifier_imba_angelic_alliance_passive_effect:GetModifierMoveSpeedBonus_Percentage_Unique()
+	local ability = self:GetAbility()
+	local ms = ability:GetSpecialValueFor("movement_speed")
+	return ms
 end
 
 function modifier_imba_angelic_alliance_passive_effect:GetModifierEvasion_Constant()
@@ -148,9 +172,9 @@ function modifier_imba_angelic_alliance_passive_effect:GetModifierEvasion_Consta
 	return evasion
 end
 
-function modifier_imba_angelic_alliance_passive_effect:GetModifierPercentageManaRegen()
+function modifier_imba_angelic_alliance_passive_effect:GetModifierConstantManaRegen()
 	local ability = self:GetAbility()
-	local mana_regen = ability:GetSpecialValueFor("bonus_mana_regen_pcnt")
+	local mana_regen = ability:GetSpecialValueFor("bonus_mana_regen")
 	return mana_regen
 end
 
@@ -158,6 +182,12 @@ function modifier_imba_angelic_alliance_passive_effect:GetModifierPreAttack_Bonu
 	local ability = self:GetAbility()
 	local bonus_damage = ability:GetSpecialValueFor("bonus_damage")
 	return bonus_damage
+end
+
+function modifier_imba_angelic_alliance_passive_effect:GetModifierStatusResistanceStacking()
+	local ability = self:GetAbility()
+	local status_resistance = ability:GetSpecialValueFor("status_resistance")
+	return status_resistance
 end
 
 function modifier_imba_angelic_alliance_passive_effect:OnAttackLanded( keys )

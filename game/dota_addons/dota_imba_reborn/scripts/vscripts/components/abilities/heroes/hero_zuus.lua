@@ -562,7 +562,7 @@ function modifier_imba_zuus_static_field:OnAbilityExecuted(keys)
 					ApplyDamage(damage_table)
 
 					-- Add a static charge 
-					local static_charge_modifier = unit:AddNewModifier(caster, self, "modifier_imba_zuus_static_charge", {duration = duration})
+					local static_charge_modifier = unit:AddNewModifier(caster, ability, "modifier_imba_zuus_static_charge", {duration = duration})
 					if static_charge_modifier ~= nil then
 						static_charge_modifier:SetStackCount(static_charge_modifier:GetStackCount() + 1)	
 					end
@@ -580,21 +580,14 @@ end
 LinkLuaModifier("modifier_imba_zuus_static_charge", "components/abilities/heroes/hero_zuus.lua", LUA_MODIFIER_MOTION_NONE)
 modifier_imba_zuus_static_charge = class({})
 function modifier_imba_zuus_static_charge:IsDebuff() return true end
-function modifier_imba_zuus_static_charge:OnCreated() 
-	if IsServer() then
-		local caster = self:GetCaster()
-		self.reduced_magic_resistance 	= caster:FindAbilityByName("imba_zuus_static_field"):GetSpecialValueFor("reduced_magic_resistance")
-		self.stacks_to_reveal			= caster:FindAbilityByName("imba_zuus_static_field"):GetSpecialValueFor("stacks_to_reveal")
-		self.stacks_to_mute				= caster:FindAbilityByName("imba_zuus_static_field"):GetSpecialValueFor("stacks_to_mute")
-
-		if caster:HasTalent("special_bonus_imba_zuus_3") then 
-			self.reduced_magic_resistance = self.reduced_magic_resistance + caster:FindTalentValue("special_bonus_imba_zuus_3", "reduced_magic_resistance")
-		end
-	else 
-		local net_table = CustomNetTables:GetTableValue("player_table", tostring(self:GetCaster():GetPlayerOwnerID())) or {}
-		self.reduced_magic_resistance 	= net_table.reduced_magic_resistance or 0
-		self.stacks_to_reveal			= 5
-		self.stacks_to_mute				= 9
+function modifier_imba_zuus_static_charge:OnCreated()
+	local caster = self:GetCaster()
+	self.reduced_magic_resistance 	= self:GetAbility():GetSpecialValueFor("reduced_magic_resistance")
+	self.stacks_to_reveal			= self:GetAbility():GetSpecialValueFor("stacks_to_reveal")
+	self.stacks_to_mute				= self:GetAbility():GetSpecialValueFor("stacks_to_mute")
+	
+	if caster:HasTalent("special_bonus_imba_zuus_3") then
+		self.reduced_magic_resistance = self.reduced_magic_resistance + caster:FindTalentValue("special_bonus_imba_zuus_3", "reduced_magic_resistance")
 	end
 end
 
@@ -633,8 +626,6 @@ function modifier_imba_zuus_static_charge:GetModifierMagicalResistanceBonus()
 	-- Each stack reduces magic resistance
 	return self:GetStackCount() * self.reduced_magic_resistance * -1
 end
-
-
 
 --------------------------------------
 --				Nimbus				--
@@ -1335,5 +1326,20 @@ end
 function modifier_imba_zuus_thundergods_awakening:OnRemoved()
 	if IsServer() then
 		ParticleManager:DestroyParticle(self.static_field, true)
+	end
+end
+
+-- Client-side helper functions --
+
+LinkLuaModifier("modifier_special_bonus_imba_zuus_3", "components/abilities/heroes/hero_zuus", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_zuus_3 = class({})
+function modifier_special_bonus_imba_zuus_3:IsHidden() 			return true end
+function modifier_special_bonus_imba_zuus_3:IsPurgable() 		return false end
+function modifier_special_bonus_imba_zuus_3:RemoveOnDeath() 	return false end
+
+function imba_zuus_static_field:OnOwnerSpawned()
+	if self:GetCaster():HasTalent("special_bonus_imba_zuus_3") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_zuus_3") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_special_bonus_imba_zuus_3", {})
 	end
 end

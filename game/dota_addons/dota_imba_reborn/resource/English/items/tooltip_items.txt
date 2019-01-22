@@ -39,7 +39,7 @@
 
 // Angelic Alliance
 "DOTA_Tooltip_Ability_item_imba_angelic_alliance"                      "Angelic Alliance"
-"DOTA_Tooltip_ability_item_imba_angelic_alliance_Description"          "<h1>Active: Angelic Light</h1>Lose the passive armor, evasion and disarm effect, transferring them to the target:<br><font color='#32cd32'>Enemies</font> lose %armor_change% armor, are slowed, disarmed, and revealed to your team.<br><font color='#32cd32'>Allies</font> recieve %armor_change% armor, bonus movement speed, and %active_evasion%%% evasion, but are revealed to the enemy team.<br>This effect cannot be purged.\n<h1><font color='#FF7800'>Passive: Divine Vengeance</font></h1> Being attacked grants a %passive_disarm_chance%%% chance to disarm your target/attacker. This effect cannot trigger more than every %passive_disarm_cooldown% seconds."
+"DOTA_Tooltip_ability_item_imba_angelic_alliance_Description"          "<h1>Active: Angelic Light</h1>Lose the passive armor, evasion and disarm effect, transferring them to the target:<br><font color='#32cd32'>Enemies</font> lose %armor_change% armor, are slowed, disarmed, and revealed to your team.<br><font color='#32cd32'>Allies</font> recieve %armor_change% armor, bonus movement speed, and %active_evasion%%% evasion, but are revealed to the enemy team.<br>This effect cannot be purged.\n<h1>Passive: Divine Vengeance</h1> Being attacked grants a %passive_disarm_chance%%% chance to disarm your target/attacker. This effect cannot trigger more than every %passive_disarm_cooldown% seconds."
 "DOTA_Tooltip_ability_item_imba_angelic_alliance_Lore"                  "An artifact that originated in a world long destroyed. This blade was used to repel a godlike necromancer, who delighted in treachery and fooling heroes into working for him."
 "DOTA_Tooltip_ability_item_imba_angelic_alliance_Note0"                "Illusions do not benefit from this item"
 "DOTA_Tooltip_ability_item_imba_angelic_alliance_Note1"                "The slow/haste wears off over the duration of the (de)buff. The slow is unpurgeable, but will not affect spell immune units."
@@ -47,9 +47,13 @@
 "DOTA_Tooltip_ability_item_imba_angelic_alliance_bonus_evasion"                     "%+$evasion"
 "DOTA_Tooltip_ability_item_imba_angelic_alliance_bonus_armor"          "+$armor"
 "DOTA_Tooltip_ability_item_imba_angelic_alliance_bonus_damage"          "+$damage"
-"DOTA_Tooltip_ability_item_imba_angelic_alliance_bonus_strength"                    "+$str"
-"DOTA_Tooltip_ability_item_imba_angelic_alliance_bonus_mana_regen_pct"              "+$mana_regen"
-"DOTA_Tooltip_ability_item_imba_angelic_alliance_passive_duration"                  "ACTIVE DISARM DURATION:"
+"DOTA_Tooltip_ability_item_imba_angelic_alliance_bonus_strength"		"+$str"
+"DOTA_Tooltip_ability_item_imba_angelic_alliance_bonus_agility"			"+$agi"
+"DOTA_Tooltip_ability_item_imba_angelic_alliance_bonus_intellect"		"+$int"
+"DOTA_Tooltip_ability_item_imba_angelic_alliance_bonus_mana_regen"		"+$mana_regen"
+"DOTA_Tooltip_ability_item_imba_angelic_alliance_bonus_ms"				"%+$move_speed"
+"DOTA_Tooltip_ability_item_imba_angelic_alliance_status_resistance"		"%+Status Resistance"
+"DOTA_Tooltip_ability_item_imba_angelic_alliance_passive_duration"					"ACTIVE DISARM DURATION:"
 "DOTA_Tooltip_ability_item_imba_angelic_alliance_passive_disarm_duration"           "PASSIVE DISARM DURATION:"
 
 "DOTA_Tooltip_modifier_imba_angelic_alliance_debuff"                    "Angelic Light"
@@ -183,7 +187,7 @@
 
 // Bloodstone
 "DOTA_Tooltip_Ability_item_imba_bloodstone"                    "Bloodstone"
-"DOTA_Tooltip_ability_item_imba_bloodstone_Description"                     "<h1>Active: Sudoku</h1> Instantly causes you to die.\n<h1>Passive: Bloodpact</h1> Gains a charge each time an enemy hero dies within %effect_radius% range. Each charge grants +%mana_regen_per_charge% <font color='#FF7800'>base mana regen</font>, and reduces respawn time by %respawn_time_reduction% seconds. If the bearer dies, nearby allies are healed for %heal_on_death_base% + %heal_on_death_per_charge% per charge, and the Bloodstone loses a third of its charges."
+"DOTA_Tooltip_ability_item_imba_bloodstone_Description"                     "<h1>Active: Sudoku</h1> Instantly causes you to die.\n<h1>Passive: Bloodpact</h1> Gains a charge each time an enemy hero dies within %effect_radius% range. Each charge grants %health_regen_per_charge% HP regen and +%mana_regen_per_charge% <font color='#FF7800'>base mana regen</font>, and reduces respawn time by %respawn_time_reduction% seconds. If the bearer dies, nearby allies are healed for %heal_on_death_base% + %heal_on_death_per_charge% per charge, and the Bloodstone loses a third of its charges."
 "DOTA_Tooltip_ability_item_imba_bloodstone_Lore"                "The Bloodstone's bright ruby color is unmistakable on the battlefield, as the owner seems to have infinite vitality and spirit."
 "DOTA_Tooltip_ability_item_imba_bloodstone_Note0"              "Bloodpact grants base mana regen, meaning it can be enhanced by percentage-based mana regeneration items."
 "DOTA_Tooltip_ability_item_imba_bloodstone_bonus_health"			"+$health"
@@ -460,6 +464,8 @@
 "DOTA_Tooltip_ability_item_imba_skadi_base_duration"            "BASE DURATION:"
 "DOTA_Tooltip_ability_item_imba_skadi_base_damage"              "BASE DAMAGE:"
 "DOTA_Tooltip_ability_item_imba_skadi_bonus_all_stats"          "+$all"
+"DOTA_Tooltip_ability_item_imba_skadi_bonus_health"				+$health"
+"DOTA_Tooltip_ability_item_imba_skadi_bonus_mana"				+$mana"
 
 "DOTA_Tooltip_modifier_item_imba_skadi_slow"                    "Wintergrasp"
 "DOTA_Tooltip_modifier_item_imba_skadi_slow_Description"                    "Movement slowed by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%, attack speed slowed by %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT%."
@@ -565,7 +571,7 @@
 "DOTA_Tooltip_ability_item_imba_hood_of_defiance_Note1"                     "Defiance continues applying the magic resistance buff even if the magical shield depletes from magical damage."
 "DOTA_Tooltip_ability_item_imba_hood_of_defiance_Lore"          "A furred, magic resistant headpiece that is feared by wizards."
 "DOTA_Tooltip_ability_item_imba_hood_of_defiance_bonus_health_regen"        "+$hp_regen"
-"DOTA_Tooltip_ability_item_imba_hood_of_defiance_bonus_magic_resist"        "%BONUS MAGIC RESISTANCE:"
+"DOTA_Tooltip_ability_item_imba_hood_of_defiance_bonus_magic_resist"        "%+$spell_resist"
 "DOTA_Tooltip_ability_item_imba_hood_of_defiance_unreducable_magic_resist"  "%DEFIANCE MINIMUM MAGIC RESISTANCE:"
 "DOTA_Tooltip_ability_item_imba_hood_of_defiance_duration"                  "DEFIANCE DURATION:"
 
@@ -758,7 +764,6 @@
 "DOTA_Tooltip_Ability_item_imba_morbid_mask"                    "Morbid Mask"
 "DOTA_Tooltip_ability_item_imba_morbid_mask_Description"                    "<h1>Passive: Lifesteal</h1> Heals the attacker for a percentage of attack damage dealt. Stacks additively with other sources of lifesteal, but not with itself."
 "DOTA_Tooltip_ability_item_imba_morbid_mask_Lore"              "A mask that drains the energy of those caught in its gaze."
-"DOTA_Tooltip_ability_item_imba_morbid_mask_damage_bonus"                   "+$damage"
 "DOTA_Tooltip_ability_item_imba_morbid_mask_lifesteal_pct"                  "%LIFESTEAL:"
 
 // Necronomicon 1-5
@@ -888,10 +893,11 @@
 "DOTA_Tooltip_ability_item_imba_pipe_Description"             "<h1>Active: Greater Defiance</h1> Grants a shield to all allies in %aura_radius% range that absorbs up to %shield_health% magical damage,<font color='#FF7800'>and grants them a buff that prevents their magic resistance being decreased below %unreducable_magic_resist%%%.</font>\n<h1>Passive: Insight Aura</h1> Allies in %aura_range% radius have their magic resistance increased by %aura_bonus_magic_resist%%%, their health regen increased by %aura_bonus_health_regen% <font color='#FF7800'>and their Tenacity increased by %aura_tenacity_pct%%%</font>.<br> While allies are affected by Greater Defiance, the Tenacity bonus increases to %active_tenacity_pct%%%."
 "DOTA_Tooltip_ability_item_imba_pipe_Note0"                   "Barrier and Greater Defiance cannot be dispelled by any means."
 "DOTA_Tooltip_ability_item_imba_pipe_Note1"                   "Defiance continues applying the magic resistance buff even if the magical shield depletes from magical damage."
-"DOTA_Tooltip_ability_item_imba_pipe_Lore"                     "A powerful artifact of mysterious origin, it creates barriers against magical forces."
-"DOTA_Tooltip_ability_item_imba_pipe_bonus_health_regen"                   "+$hp_regen"
-"DOTA_Tooltip_ability_item_imba_pipe_bonus_magic_resist"                   "%BONUS MAGIC RESISTANCE:"
-"DOTA_Tooltip_ability_item_imba_pipe_aura_radius"             "AURA RADIUS:"
+"DOTA_Tooltip_ability_item_imba_pipe_Lore"						"A powerful artifact of mysterious origin, it creates barriers against magical forces."
+"DOTA_Tooltip_ability_item_imba_pipe_stat_bonus"				"+$all"
+"DOTA_Tooltip_ability_item_imba_pipe_bonus_health_regen"		"+$hp_regen"
+"DOTA_Tooltip_ability_item_imba_pipe_bonus_magic_resist"		"%+$spell_resist"
+"DOTA_Tooltip_ability_item_imba_pipe_aura_radius"				"AURA RADIUS:"
 "DOTA_Tooltip_ability_item_imba_pipe_unreducable_magic_resist"             "%GREATER DEFIANCE MINIMUM MAGIC RESISTANCE:"
 "DOTA_Tooltip_ability_item_imba_pipe_duration"                 "GREATER DEFIANCE DURATION:"
 
@@ -979,8 +985,9 @@
 "DOTA_Tooltip_Ability_item_imba_satanic"                        "Satanic"
 "DOTA_Tooltip_Ability_item_imba_satanic_Description"            "<h1>Active: Unholy Rage</h1> Increases lifesteal percentage by %unholy_rage_lifesteal_bonus%%% for %unholy_rage_duration% seconds.\n<h1>Passive: Lifesteal</h1> Heals the attacker for a percentage of attack damage dealt.\n<h1><font color='#FF7800'>Passive: Soul Slaughter</font></h1> Last hitting an enemy with an attack grants stacks of Soul Slaughter equal to %soul_slaughter_hp_increase_pct%%% of the target's maximum health, up to a maximum of stacks equal to %soul_slaughter_max_hp_pct%% of your original maximum health. Each stack increases your maximum health and damage for the duration.<br>Stacks have independent durations, and they do not refresh each other."
 "DOTA_Tooltip_Ability_item_imba_satanic_Note0"                  "Only gains buffs when directly auto attacking an enemy unit. AoE effects and spells do not count."
-"DOTA_Tooltip_Ability_item_imba_satanic_damage_bonus"          "+$damage"
 "DOTA_Tooltip_Ability_item_imba_satanic_strength_bonus"                     "+$str"
+"DOTA_Tooltip_Ability_item_imba_satanic_damage_bonus"          "+$damage"
+"DOTA_Tooltip_Ability_item_imba_satanic_status_resistance"		"%+Status Resistance"
 "DOTA_Tooltip_Ability_item_imba_satanic_lifesteal_pct"          "%LIFESTEAL:"
 "DOTA_Tooltip_Ability_item_imba_satanic_soul_slaughter_duration"            "SOUL SLAUGHTER DURATION:"
 "DOTA_Tooltip_Ability_item_imba_satanic_soul_slaughter_damage_per_stack"    "SOUL SLAUGHTER DAMAGE PER STACK:"

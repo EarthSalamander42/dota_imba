@@ -85,11 +85,23 @@ end
 
 function modifier_imba_pipe_passive:DeclareFunctions()
 	local funcs = {
+		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
+		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
+		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
 		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
 		MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS
 	}
 	return funcs
 end
+
+function modifier_imba_pipe_passive:GetModifierBonusStats_Strength()
+	return self:GetAbility():GetSpecialValueFor("stat_bonus") end
+
+function modifier_imba_pipe_passive:GetModifierBonusStats_Agility()
+	return self:GetAbility():GetSpecialValueFor("stat_bonus") end
+
+function modifier_imba_pipe_passive:GetModifierBonusStats_Intellect()
+	return self:GetAbility():GetSpecialValueFor("stat_bonus") end
 
 function modifier_imba_pipe_passive:GetModifierConstantHealthRegen()
 	return self.bonus_health_regen

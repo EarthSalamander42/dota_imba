@@ -141,8 +141,7 @@ function modifier_veil_passive:DeclareFunctions()
 		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
 		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
 		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
-		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
-		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE
+		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS
 	}
 	return funcs
 end
@@ -153,7 +152,6 @@ function modifier_veil_passive:GetModifierBonusStats_Agility() return self.agi_b
 function modifier_veil_passive:GetModifierBonusStats_Strength() return self.str_bonus end
 function modifier_veil_passive:GetModifierConstantHealthRegen() return self.hp_regen_bonus end
 function modifier_veil_passive:GetModifierPhysicalArmorBonus() return self.armor_bonus end
-function modifier_veil_passive:GetModifierPreAttack_BonusDamage() return self.attack_damage_bonus end
 
 --- DEBUFF AURA
 function modifier_veil_passive:GetAuraSearchTeam()

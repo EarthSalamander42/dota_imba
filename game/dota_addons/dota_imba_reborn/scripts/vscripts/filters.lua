@@ -100,7 +100,7 @@ function GameMode:ModifierFilter( keys )
 			return true
 		end
 
-		if modifier_owner ~= nil and IsMutationMap() or IsSuperFranticMap() then
+		if modifier_owner ~= nil then
 			modifier_class = modifier_owner:FindModifierByName(modifier_name)
 			if modifier_class == nil then return end
 			

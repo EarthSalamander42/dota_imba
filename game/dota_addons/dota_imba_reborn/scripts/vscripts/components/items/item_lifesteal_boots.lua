@@ -61,6 +61,7 @@ function modifier_imba_lifesteal_boots:OnCreated()
 
 	self.bonus_movement_speed = self.ability:GetSpecialValueFor("bonus_movement_speed")
 	self.bonus_damage = self.ability:GetSpecialValueFor("bonus_damage")
+	self.armor = self.ability:GetSpecialValueFor("armor")
 	
 	if IsServer() then
 		if not self.caster:HasModifier("modifier_imba_lifesteal_boots_unique") then
@@ -96,6 +97,7 @@ function modifier_imba_lifesteal_boots:DeclareFunctions()
 	local decFuncs = {
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS
 	}
 
 	return decFuncs
@@ -107,6 +109,10 @@ end
 
 function modifier_imba_lifesteal_boots:GetModifierMoveSpeedBonus_Percentage()
 	return self.bonus_movement_speed
+end
+
+function modifier_imba_lifesteal_boots:GetModifierPhysicalArmorBonus()
+	return self.armor
 end
 
 modifier_imba_lifesteal_boots_unique = class ({})

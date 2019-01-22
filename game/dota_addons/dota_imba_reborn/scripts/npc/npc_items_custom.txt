@@ -1241,7 +1241,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"bonus_mana_regen"			"2.25"
+				"bonus_mana_regen"			"2.5"
 			}
 			"05"
 			{
@@ -1346,7 +1346,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"bonus_mana_regen"			"2.25"
+				"bonus_mana_regen"			"2.5"
 			}
 			"05"
 			{
@@ -1554,12 +1554,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"27"
+				"bonus_intellect"		"33"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_all_stats"		"3"
+				"bonus_all_stats"		"5"
 			}
 			"03"
 			{
@@ -1570,7 +1570,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"800"
+				"damage"				"1000"
 				"CalculateSpellDamageTooltip"	"1"
 			}
 			"05"
@@ -1668,12 +1668,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"29"
+				"bonus_intellect"		"36"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_all_stats"		"3"
+				"bonus_all_stats"		"5"
 			}
 			"03"
 			{
@@ -1684,7 +1684,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"800"
+				"damage"				"1000"
 				"CalculateSpellDamageTooltip"	"1"
 			}
 			"05"
@@ -1782,12 +1782,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"31"
+				"bonus_intellect"		"39"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_all_stats"		"3"
+				"bonus_all_stats"		"5"
 			}
 			"03"
 			{
@@ -1798,7 +1798,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"800"
+				"damage"				"1000"
 				"CalculateSpellDamageTooltip"	"1"
 			}
 			"05"
@@ -1896,12 +1896,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"33"
+				"bonus_intellect"		"42"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_all_stats"		"3"
+				"bonus_all_stats"		"5"
 			}
 			"03"
 			{
@@ -1912,7 +1912,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"800"
+				"damage"				"1000"
 				"CalculateSpellDamageTooltip"	"1"
 			}
 			"05"
@@ -2007,12 +2007,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"35"
+				"bonus_intellect"		"45"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_all_stats"		"3"
+				"bonus_all_stats"		"5"
 			}
 			"03"
 			{
@@ -2023,7 +2023,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"800"
+				"damage"				"1000"
 				"CalculateSpellDamageTooltip"	"1"
 			}
 			"05"
@@ -3343,6 +3343,11 @@
 				"var_type"					"FIELD_INTEGER"
 				"initial_charges"			"16"
 			}
+			"11"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"health_regen_per_charge"	"0.3"
+			}
 		}
 
 		"OnSpellStart"
@@ -3414,6 +3419,7 @@
 
 				"Properties"
 				{
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"			"%health_regen_per_charge"
 					"MODIFIER_PROPERTY_BASE_MANA_REGEN"					"%mana_regen_per_charge"
 				}
 			}
@@ -4919,7 +4925,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"active_duration"		"5.0"
+				"active_duration"		"4.0"
 			}
 		}
 	}
@@ -4982,7 +4988,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"active_duration"		"5.0"
+				"active_duration"		"4.0"
 			}
 		}
 	}
@@ -5040,7 +5046,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"active_duration"		"5.0"
+				"active_duration"		"4.0"
 			}
 		}
 	}
@@ -5126,7 +5132,7 @@
 			"10"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"active_duration"		"5.0"
+				"active_duration"		"4.0"
 			}
 		}
 	}
@@ -5295,7 +5301,7 @@
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"100"
+		"AbilityCooldown"				"80"
 		"AbilityManaCost"				"125"
 
 		// Item Info
@@ -5405,6 +5411,17 @@
 				"var_type"					"FIELD_INTEGER"
 				"max_distance"				"2500"				
 			}
+			"18"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_health"				"250"				
+			}
+			"19"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_mana"				"250"				
+			}
+			
 		}
 	}
 
@@ -6279,7 +6296,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"500"
+		"ItemCost"						"700"
 		"ItemShopTags"					""
 
 		// Recipe
@@ -6288,7 +6305,7 @@
 		"ItemResult"					"item_imba_veil_of_discord"
 		"ItemRequirements"
 		{
-			"01"						"item_helm_of_iron_will;item_null_talisman;item_null_talisman"
+			"01"						"item_helm_of_iron_will;item_crown"
 		}
 	}
 
@@ -6330,7 +6347,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_int"				"14"
+				"bonus_int"				"15"
 			}
 			"02"
 			{
@@ -6345,7 +6362,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_health_regen"	"5"
+				"bonus_health_regen"	"6"
 			}
 			"04"
 			{
@@ -6490,7 +6507,7 @@
 			"08"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"buff_duration"			"5.0"
+				"buff_duration"			"4.0"
 			}
 		}
 	}
@@ -6561,7 +6578,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"9"
+				"bonus_damage"			"8"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"03"
@@ -8382,7 +8399,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"active_duration"		"5.0"
+				"active_duration"		"4.0"
 			}
 		}
 	}
@@ -8872,6 +8889,8 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY | DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityCooldown"				"20"
+		"AbilityManaCost"				"100"
 
 		// Item
 		//-------------------------------------------------------------------------------------------------------------
@@ -8944,7 +8963,7 @@
 			"12"
 			{
 				"var_type"              "FIELD_INTEGER"
-				"bonus_strength"        "30"
+				"bonus_strength"        "31"
 			}
 			"13"
 			{
@@ -8954,17 +8973,37 @@
 			"14"
 			{
 				"var_type"              "FIELD_INTEGER"
-				"bonus_evasion"         "45"
+				"bonus_evasion"         "25"
 			}
 			"15"
 			{
-				"var_type"              "FIELD_INTEGER"
-				"bonus_mana_regen_pcnt" "125"
+				"var_type"              "FIELD_FLOAT"
+				"bonus_mana_regen" 		"1.5"
 			}
 			"16"
 			{
 				"var_type"              "FIELD_INTEGER"
 				"bonus_damage"          "30"
+			}
+			"17"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"status_resistance"		"20"
+			}
+			"18"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_agility"			"10"
+			}
+			"19"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_intellect"		"10"
+			}
+			"20"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"movement_speed"		"6"
 			}
 		}
 	}
@@ -9291,12 +9330,6 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"damage_bonus"					"10"
-				"CalculateSpellDamageTooltip"	"0"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_INTEGER"
 				"lifesteal_pct"					"15"
 			}
 		}
@@ -9490,7 +9523,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"damage_bonus"					"50"
+				"damage_bonus"					"25"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"02"
@@ -9506,7 +9539,7 @@
 			"04"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"unholy_rage_duration"			"4.5"
+				"unholy_rage_duration"			"5.0"
 			}
 			"05"
 			{
@@ -9540,6 +9573,11 @@
 			{
 				"var_type"							"FIELD_INTEGER"
 				"soul_slaughter_max_hp_pct"			"200"
+			}
+			"11"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"status_resistance"					"30"
 			}
 		}
 	}
@@ -9858,7 +9896,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"bonus_health_regen"			"7"
+				"bonus_health_regen"			"10"
 			}
 			"02"
 			{
@@ -10004,6 +10042,11 @@
 			{
 				"var_type"						"FIELD_FLOAT"
 				"duration"						"12"
+			}
+			"11"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"stat_bonus"					"2"
 			}
 		}
 	}	
@@ -10496,7 +10539,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_agility"			"26"
+				"bonus_agility"			"31"
 			}
 			"03"
 			{
@@ -10506,7 +10549,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_attack_speed"	"15"
+				"bonus_attack_speed"	"21"
 			}
 			"05"
 			{
@@ -10626,7 +10669,7 @@
 			"28"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"active_duration"			"5"
+				"active_duration"			"4"
 			}
 		}
 	}
@@ -11036,7 +11079,7 @@
 		
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"0"	
+		"ItemCost"						"450"
 		"ItemShopTags"					""
 		
 		// Recipe
@@ -11045,7 +11088,7 @@
 		"ItemResult"					"item_imba_hurricane_pike"
 		"ItemRequirements"
 		{
-			"01"						"item_wraith_band;item_imba_force_staff;item_dragon_lance"
+			"01"						"item_imba_force_staff;item_dragon_lance"
 		}
 	}
 	
@@ -12086,6 +12129,11 @@
 				"var_type"				"FIELD_INTEGER"
 				"lifesteal_pct"			"20"
 			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"armor"					"5"
+			}
 		}
 	}
 
@@ -12196,7 +12244,7 @@
 			"10"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"active_duration"		"5.0"
+				"active_duration"		"4.0"
 			}
 		}
 	}
@@ -12228,7 +12276,7 @@
 	}
 
 	//=================================================================================================================
-	// Kaya & Sange
+	// Yasha & Kaya
 	//=================================================================================================================
 	"item_imba_yasha_and_kaya"
 	{
@@ -12312,7 +12360,7 @@
 			"11"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"active_duration"		"5.0"
+				"active_duration"		"4.0"
 			}
 		}
 	}
