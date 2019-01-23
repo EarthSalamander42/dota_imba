@@ -428,7 +428,7 @@ function imba_kunkka_torrent:OnSpellStart()
 
 						-- Apply knockback on enemies hit
 						enemy:RemoveModifierByName("modifier_knockback")
-						enemy:AddNewModifier(caster, self, "modifier_knockback", knockback)
+						enemy:AddNewModifier(caster, self, "modifier_knockback", knockback):SetDuration(stun_duration, true)
 						enemy:AddNewModifier(caster, self, "modifier_imba_torrent_phase", {duration = stun_duration})
 
 						-- Deals tick damage tick_count times
@@ -1118,7 +1118,7 @@ function modifier_imba_tidebringer:TidebringerEffects( target, ability )
 
 		-- Apply knockback on enemies hit
 		target:RemoveModifierByName("modifier_knockback")
-		target:AddNewModifier(self:GetParent(), ability, "modifier_knockback", knockback)
+		target:AddNewModifier(self:GetParent(), ability, "modifier_knockback", knockback):SetDuration(ability:GetSpecialValueFor("tsunami_stun"), true)
 	end
 end
 

@@ -887,9 +887,6 @@ function imba_obsidian_destroyer_astral_imprisonment:OnSpellStart()
 			modifier_self_handler.target_point = target:GetAbsOrigin()
 		end
 
-		-- Apply the imprisonment modifier on the target
-		target:AddNewModifier(caster, self, modifier_prison, {duration = prison_duration})
-
 		-- If the caster has Essence Aura, roll for a proc
 		if caster:HasModifier(modifier_essence) then
 			modifier_essence_handler = caster:FindModifierByName(modifier_essence)

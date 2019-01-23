@@ -96,7 +96,8 @@ function modifier_imba_winter_wyvern_arctic_burn:OnAttackLanded(keys)
 		local caster = self:GetCaster();
 		if keys.attacker == caster and not keys.target:IsBuilding() then
 			local damage_duration = self:GetAbility():GetSpecialValueFor("damage_duration");
-			if not keys.target:HasModifier("modifier_imba_winter_wyvern_arctic_burn_damage") or caster:HasScepter() == true then
+			if (not keys.target:HasModifier("modifier_imba_winter_wyvern_arctic_burn_damage") or caster:HasScepter() == true) and not keys.target:IsMagicImmune()
+			then
 				local ability = self:GetAbility();
 				keys.target:AddNewModifier(caster, ability, "modifier_imba_winter_wyvern_arctic_burn_damage", {duration = damage_duration});
 
@@ -713,7 +714,7 @@ function imba_winter_wyvern_winters_curse:OnSpellStart()
 		end
 
 		caster:AddNewModifier(caster, ability, "winter_wyvern_winters_curse_kill_credit", {});
-		target:AddNewModifier(caster, ability, "modifier_winter_wyvern_winters_curse_aura", {duration = duration});
+		target:AddNewModifier(caster, ability, "modifier_winter_wyvern_winters_curse_aura", {duration = duration}):SetDuration(duration, true);
 	end
 end
 

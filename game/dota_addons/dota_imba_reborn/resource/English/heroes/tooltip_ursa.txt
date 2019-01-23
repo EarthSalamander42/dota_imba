@@ -88,7 +88,7 @@
 
 // Ursa's Custom Talents
 "DOTA_Tooltip_ability_special_bonus_imba_ursa_1"				"Auto-Enrage"
-"DOTA_Tooltip_ability_special_bonus_imba_ursa_1_Description"	"Enrage is activated automatically after taking %damage_threshold% damage. Resets after %damage_reset% seconds"
+"DOTA_Tooltip_ability_special_bonus_imba_ursa_1_Description"	"Enrage is activated automatically after taking %damage_threshold% damage. Resets after %damage_reset% seconds, and has an innate cooldown of %enrage_cooldown% seconds."
 "DOTA_Tooltip_ability_special_bonus_imba_ursa_2"				"Trembling Steps CDR based on strength"
 "DOTA_Tooltip_ability_special_bonus_imba_ursa_2_Description"	"Every %strength_per_cd% Strength points Ursa has, Trembling Steps cooldown is reduced by %cooldown_improvement%, up to %threshold% seconds"
 "DOTA_Tooltip_ability_special_bonus_imba_ursa_3"				"Territorial Hunter Tenacity"
