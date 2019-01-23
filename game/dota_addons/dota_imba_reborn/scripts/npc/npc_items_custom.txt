@@ -7686,7 +7686,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"1350"
+		"ItemCost"						"1150"
 		"ItemShopTags"					""
 
 		// Recipe
@@ -7717,12 +7717,12 @@
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"8.0"
+		"AbilityCooldown"				"9.0"
 		"AbilitySharedCooldown"			"blink"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"4150"
+		"ItemCost"						"3800"
 		"ItemShopTags"					"teleport"
 		"ItemQuality"					"common"
 		"ItemAliases"					"blink;boots"
@@ -7763,6 +7763,16 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"max_extra_tooltip"			"300"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"sweet_spot_min"			"960"			
+			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"flash_step_cooldown"		"22"
 			}
 		}
 	}

@@ -317,10 +317,11 @@ end
 
 function modifier_imba_juggernaut_blade_fury_succ:OnIntervalThink()
 	-- Remove the succ if conflicting
-	if not self:CheckMotionControllers() then
-		self:Destroy()
-		return nil
-	end
+	-- Commented out because it's interrupting Slark's Pounce
+	-- if not self:CheckMotionControllers() then
+		-- self:Destroy()
+		-- return nil
+	-- end
 		
 	self:HorizontalMotion(self.target, self.succ_tick)
 end

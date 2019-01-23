@@ -135,6 +135,7 @@ end
 -----------------------------------------------------------------------------------------------------------
 if item_imba_blink_boots == nil then item_imba_blink_boots = class({}) end
 LinkLuaModifier( "modifier_imba_blink_boots_handler", "components/items/item_blink.lua", LUA_MODIFIER_MOTION_NONE ) -- Check if the target was damaged and set cooldown + item bonuses
+LinkLuaModifier( "modifier_imba_blink_boots_flash_step", "components/items/item_blink.lua", LUA_MODIFIER_MOTION_NONE ) -- Check if the target was damaged and set 
 
 function item_imba_blink_boots:GetAbilityTextureName()
 	return "custom/imba_blink_boots"
@@ -153,27 +154,44 @@ function item_imba_blink_boots:OnSpellStart()
 
 	local distance = (target_point - origin_point):Length2D()
 	local max_blink_range = self:GetSpecialValueFor("max_blink_range")
+	local sweet_spot_min = self:GetSpecialValueFor("sweet_spot_min")
 
 	-- Set distance if targeted destiny is beyond range
 	if distance > max_blink_range then
+		-- People don't like this increased CD mechanic so let's remove it
 		-- Extra parameters
-		local max_extra_distance = self:GetSpecialValueFor("max_extra_distance")
-		local max_extra_cooldown = self:GetSpecialValueFor("max_extra_cooldown")
+		--local max_extra_distance = self:GetSpecialValueFor("max_extra_distance")
+		--local max_extra_cooldown = self:GetSpecialValueFor("max_extra_cooldown")
+		
+		-- -- Calculate total overshoot distance
+		-- if distance > max_extra_distance then
+			-- target_point = origin_point + (target_point - origin_point):Normalized() * max_extra_distance
+			-- Timers:CreateTimer(0.03, function()
+				-- self:StartCooldown(self:GetCooldownTimeRemaining() + max_extra_cooldown)
+			-- end)
 
-		-- Calculate total overshoot distance
-		if distance > max_extra_distance then
-			target_point = origin_point + (target_point - origin_point):Normalized() * max_extra_distance
-			Timers:CreateTimer(0.03, function()
-				self:StartCooldown(self:GetCooldownTimeRemaining() + max_extra_cooldown)
-			end)
+			-- -- Calculate cooldown increase if between the two extremes
+		-- else
+			-- local extra_fraction = (distance - max_blink_range) / (max_extra_distance - max_blink_range)
+			-- Timers:CreateTimer(0.03, function()
+				-- self:StartCooldown(self:GetCooldownTimeRemaining() + max_extra_cooldown * extra_fraction)
+			-- end)
+		-- end
+		
+		target_point = origin_point + (target_point - origin_point):Normalized() * max_blink_range
+	end
 
-			-- Calculate cooldown increase if between the two extremes
-		else
-			local extra_fraction = (distance - max_blink_range) / (max_extra_distance - max_blink_range)
-			Timers:CreateTimer(0.03, function()
-				self:StartCooldown(self:GetCooldownTimeRemaining() + max_extra_cooldown * extra_fraction)
-			end)
-		end
+	if distance >= sweet_spot_min and distance <= max_blink_range and not caster:HasModifier("modifier_imba_blink_boots_flash_step") then
+		-- Activate flash step (and use random particle effect)
+		Timers:CreateTimer(FrameTime(), function()
+		local particle = ParticleManager:CreateParticle("particles/econ/items/meepo/meepo_colossal_crystal_chorus/meepo_divining_rod_poof_end_explosion_ring.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+			ParticleManager:SetParticleControl(particle, 0, self:GetParent():GetAbsOrigin())
+			ParticleManager:SetParticleControl(particle, 6, Vector(0, 255, 255))
+			ParticleManager:ReleaseParticleIndex(particle)
+			caster:AddNewModifier(caster, self, "modifier_imba_blink_boots_flash_step", {duration = self:GetSpecialValueFor("flash_step_cooldown")})
+
+			self:EndCooldown()
+		end)
 	end
 
 	caster:Blink(target_point, false, true)
@@ -215,4 +233,13 @@ function modifier_imba_blink_boots_handler:OnTakeDamage( keys )
 			end
 		end
 	end
+end
+
+modifier_imba_blink_boots_flash_step = class ({})
+function modifier_imba_blink_boots_flash_step:IsDebuff() 		return true end
+function modifier_imba_blink_boots_flash_step:IsPurgable() 		return false end
+function modifier_imba_blink_boots_flash_step:IgnoreTenacity()	return true end
+
+function modifier_imba_blink_boots_flash_step:GetTexture()
+	return "modifiers/imba_blink_boots"
 end

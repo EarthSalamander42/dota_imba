@@ -1131,6 +1131,8 @@ function imba_pudge_dismember:OnSpellStart()
 		end
 	end
 
+	self:GetCaster():StartGesture(ACT_DOTA_CHANNEL_ABILITY_4)
+
 	self.target = target
 	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_pudge_dismember_buff", {})
 	target:AddNewModifier(self:GetCaster(), self, "modifier_dismember", {duration = self.channelTime})
@@ -1204,8 +1206,6 @@ modifier_dismember = class({})
 
 function modifier_dismember:IsDebuff() return true end
 function modifier_dismember:IsHidden() return false end
-function modifier_dismember:IsPurgable() return false end
-function modifier_dismember:IsStunDebuff() return false end
 
 function modifier_dismember:OnCreated()
 	self:StartIntervalThink(1.0)
@@ -1235,6 +1235,13 @@ end
 function modifier_dismember:OnDestroy()
 	if IsServer() then
 		self:GetParent():FadeGesture(ACT_DOTA_DISABLED)
+		self:GetCaster():FadeGesture(ACT_DOTA_CHANNEL_ABILITY_4)
+		
+		-- Status Resistance compromise to make Pudge automatically attack the Dismember target on interrupt
+		if self:GetCaster():IsChanneling() then
+			self:GetAbility():EndChannel(false)
+			self:GetCaster():MoveToPositionAggressive(self:GetParent():GetAbsOrigin())
+		end
 	end
 end
 

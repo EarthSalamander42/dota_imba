@@ -100,7 +100,7 @@ end
 function modifier_imba_mask_of_madness:OnDestroy()
 	if IsServer() then
 		-- If it is the last MoM in inventory, remove unique modiifer
-		if self:IsNull() or not self.caster:HasModifier("modifier_imba_mask_of_madness") then
+		if not self.caster:IsNull() and not self.caster:HasModifier("modifier_imba_mask_of_madness") then
 			self.caster:RemoveModifierByName("modifier_imba_mask_of_madness_unique")
 		end
 

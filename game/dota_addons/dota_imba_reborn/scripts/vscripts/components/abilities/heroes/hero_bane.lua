@@ -864,6 +864,8 @@ function imba_bane_fiends_grip:OnChannelFinish(bInterrupted)
 				self.fiendgriptable[k]:FindModifierByName("modifier_imba_fiends_grip_handler"):Destroy() -- if our target has been gripped, and it has not been spread by itself, destroy it (which will reinvoke and set propogated to 1)
 			end
 		end
+		
+		StopSoundOn("Hero_Bane.FiendsGrip.Cast", self.fiendcaster)
 	end
 end
 

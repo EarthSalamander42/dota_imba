@@ -13596,7 +13596,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"					"160"
 		"AbilityCastPoint"					"0.3"
-		"AbilityCastAnimation"				"ACT_DOTA_CHANNEL_ABILITY_4"
+		//"AbilityCastAnimation"				"ACT_DOTA_CHANNEL_ABILITY_4" // Starts casting during cast point which is bad
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------

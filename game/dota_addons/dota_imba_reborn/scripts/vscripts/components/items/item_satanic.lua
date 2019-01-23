@@ -45,6 +45,9 @@ function item_imba_satanic:OnSpellStart()
 	-- Ability specials
 	local unholy_rage_duration = ability:GetSpecialValueFor("unholy_rage_duration")
 
+	-- Satanic sound
+	EmitSoundOn("DOTA_Item.Satanic.Activate", caster)
+
 	-- Unholy rage!
 	caster:AddNewModifier(caster, ability, modifier_unholy, {duration = unholy_rage_duration})
 end
