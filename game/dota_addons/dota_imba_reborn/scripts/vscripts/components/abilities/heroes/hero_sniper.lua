@@ -617,8 +617,11 @@ function modifier_imba_headshot_attacks:OnCreated()
 		self.perfectshot_stun_duration = self.ability:GetSpecialValueFor("perfectshot_stun_duration")
 		self.perfectshot_attacks = self.ability:GetSpecialValueFor("perfectshot_attacks")
 
-		-- Set stack count at 1
-		self:SetStackCount(1)
+		-- Illusion crash fix
+		if self:GetAbility():GetLevel() ~= 0 then
+			-- Set stack count at 1
+			self:SetStackCount(1)
+		end
 	end
 end
 

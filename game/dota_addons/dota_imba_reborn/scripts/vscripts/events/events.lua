@@ -638,7 +638,7 @@ function GameMode:OnPlayerChat(keys)
 	local caster = PlayerResource:GetPlayer(keys.playerid):GetAssignedHero()
 
 	for str in string.gmatch(text, "%S+") do
-		if IsInToolsMode() or GameRules:IsCheatMode() and (api.imba ~= nil and api.imba.is_developer(steamid)) then
+		if IsInToolsMode() or GameRules:IsCheatMode() or (api.imba ~= nil and api.imba.is_developer(steamid)) then
 			if str == "-dev_remove_units" then
 				GameMode:RemoveUnits(true, true, true)
 			end
@@ -681,12 +681,7 @@ function GameMode:OnPlayerChat(keys)
 			
 			-- When you don't want to have random match history...
 			if str == "-crashgame" then
-				if IsInToolsMode() then
-					caster:AddNewModifier(caster, nil, nil, {})
-				else
-					while 1 do
-					end
-				end
+				caster:AddNewModifier(caster, nil, nil, {})
 			end
 		end
 
