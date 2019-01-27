@@ -35737,7 +35737,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"int_per_health_pct_loss"	"0.25 0.40 0.65 0.80"
+				"int_per_health_pct_loss"	"0.3 0.5 0.7 0.9"
 				"LinkedSpecialBonus"     	 "special_bonus_imba_unique_sly_king_1"
 			}
 			"02"
@@ -35838,7 +35838,7 @@
 	}
 	
 	//=================================================================================================================
-	// Sly King Unique Talent: +0.15 Hypothermic Wisdom INT/health loss %
+	// Sly King Unique Talent: +0.3 Hypothermic Wisdom INT/health loss %
 	//=================================================================================================================
 	"special_bonus_imba_unique_sly_king_1"
 	{
@@ -35855,7 +35855,7 @@
 			"01"
 			{
 				"var_type"		"FIELD_FLOAT"
-				"value"			"0.15"
+				"value"			"0.3"
 			}
 		}
 	}
