@@ -1,0 +1,1 @@
+"DOTA_Tooltip_ability_keeper_of_the_light_mana_leak_Note1"		"Mana Leak is automatically leveled up at Levels 3, 6, 9, and 12."

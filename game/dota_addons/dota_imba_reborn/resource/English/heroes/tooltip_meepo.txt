@@ -1,0 +1,3 @@
+"DOTA_Tooltip_ability_meepo_poof_Description"					"Drawing mystical energies from the earth, a Meepo can teleport to another Meepo or itself after channeling for %poof_tooltip% seconds, dealing damage in both the departure and arrival locations."
+
+"DOTA_Tooltip_ability_meepo_divided_we_stand_Note1"				"Clones cannot copy custom / IMBA boots."

@@ -1,0 +1,1 @@
+"DOTA_Tooltip_ability_huskar_inner_vitality_Note2"		"Inner Vitality is automatically leveled up at Levels 3, 6, 9, and 12."

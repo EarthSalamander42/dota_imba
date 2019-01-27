@@ -45,13 +45,18 @@ ListenToGameEvent('entity_killed', function(keys)
 	local killed_unit = EntIndexToHScript(keys.entindex_killed)
 	if not killed_unit then return end
 
-	if not killed_unit:IsRealHero() then
+	if not killed_unit:IsRealHero() and not killed_unit:IsClone() then
 		-- Run non-hero scripts here
 
 		return
 	end
 
 	local hero = killed_unit
+
+	-- Ensure that Meepo clone deaths respect respawn timer changes too
+	if hero:IsClone() then
+		hero = killed_unit:GetCloneSource()
+	end
 
 	-- The Killing entity
 	local killer = nil

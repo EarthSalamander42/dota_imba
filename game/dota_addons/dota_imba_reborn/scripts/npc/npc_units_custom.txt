@@ -9368,9 +9368,6 @@
 		}
 	}
 
-	//=================================================================================================================
-	// HERO: Sly King // Need to be duplicated in npc_units_custom.txt
-	//=================================================================================================================
 	"npc_dota_hero_sly_king"
 	{
 		// General
@@ -9379,12 +9376,14 @@
 		"HeroID"					"117"
 		"Model"						"models/heroes/slyli/model_weaver.vmdl"
 		"ModelScale"				"0.940000"
-		//"Portrait"				"vgui/hud/heroportraits/abyssal_underlord"
 		"SoundSet"					"Hero_Weaver"
+
+		//Picking Screen
+		"IsCustom"					"1"
 
 		// Armor
 		//-------------------------------------------------------------------------------------------------------------
-		"ArmorPhysical"				"4"									// Physical protection.
+		"ArmorPhysical"				"3"									// Physical protection.
 		"MagicalResistance"			"25"								// Magical protection (percentage).
 
 		// Attack
@@ -9403,30 +9402,31 @@
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"	// Primary Attribute
 		"AttributeBaseStrength"		"20"						// Base strength
 		"AttributeStrengthGain"		"2.4"						// Strength bonus per level.
-		"AttributeBaseIntelligence"	"24"							// Base intelligence
-		"AttributeIntelligenceGain"	"4.1"						// Intelligence bonus per level.
-		"AttributeBaseAgility"		"26"						// Base agility
-		"AttributeAgilityGain"		"2.3"						// Agility bonus per level.
+		"AttributeBaseIntelligence"	"16"							// Base intelligence
+		"AttributeIntelligenceGain"	"3.3"						// Intelligence bonus per level.
+		"AttributeBaseAgility"		"18"						// Base agility
+		"AttributeAgilityGain"		"1.9"						// Agility bonus per level.
 
 		// Abilities
 		//-------------------------------------------------------------------------------------------------------------
 		"Ability1"					"imba_sly_king_burrow_blast"
 		"Ability2"					"imba_sly_king_frost_gale"
-		"Ability3"					"imba_sly_king_frozen_skin"
+		//"Ability3"					"imba_sly_king_frozen_skin"
+		"Ability3"					"imba_sly_king_hypothermic_wisdom"
 		"Ability4"					"generic_hidden"
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_sly_king_winterbringer"
 
 		// Talents
 		//-------------------------------------------------------------------------------------------------------------
-		"Ability10"					"special_bonus_magic_resistance_15"
-		"Ability11"					"special_bonus_exp_boost_10"
-		"Ability12"					"special_bonus_attack_damage_40"
-		"Ability13"					"special_bonus_mp_300"
-		"Ability14"					"special_bonus_cast_range_150" 
-		"Ability15"					"special_bonus_spell_amplify_10"
+		"Ability10"					"special_bonus_magic_resistance_12"
+		"Ability11"					"special_bonus_armor_6"
+		"Ability12"					"special_bonus_imba_unique_sly_king_1"
+		"Ability13"					"special_bonus_hp_regen_10"
+		"Ability14"					"special_bonus_imba_unique_sly_king_2" 
+		"Ability15"					"special_bonus_attack_damage_90"
 		"Ability16"					"special_bonus_cooldown_reduction_15"
-		"Ability17"					"special_bonus_gold_income_50"
+		"Ability17"					"special_bonus_spell_lifesteal_15"
 
 		// Bounds
 		//-------------------------------------------------------------------------------------------------------------

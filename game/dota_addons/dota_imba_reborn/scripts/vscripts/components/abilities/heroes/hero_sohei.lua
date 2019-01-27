@@ -424,11 +424,11 @@ end
 
 -- Cast animation + playback rate
 function sohei_flurry_of_blows:GetCastAnimation()
-  return ACT_DOTA_CAST_ABILITY_2
+  return ACT_DOTA_OVERRIDE_ABILITY_2
 end
 
 function sohei_flurry_of_blows:GetPlaybackRateOverride()
-  return 0.35
+  return 1.2
 end
 
 --------------------------------------------------------------------------------

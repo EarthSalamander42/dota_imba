@@ -544,10 +544,10 @@ end
 function modifier_imba_winter_wyvern_cold_embrace:OnAttackLanded(keys) 
 	if IsServer() then 
 		local parent = self:GetParent();
-		if keys.target == parent then
+		if keys.target == parent and not keys.attacker:IsTower() then
 			self.damage_taken = self.damage_taken + keys.damage;
 			
-			if self.damage_taken >= self.damage_treshold then
+			if self.damage_taken >= self.damage_treshold and not self.activated then
 				-- Eh...this seems super bootleg. If you want to do this properly use the IgnoreTenacity() function. Removing for now though
 				-- if parent:HasModifier("modifier_frantic") then
 					-- self.freeze_duration = self.freeze_duration * 2;
@@ -602,6 +602,9 @@ function modifier_imba_winter_wyvern_cold_embrace:OnAttackLanded(keys)
 					
 					-- Reset damage taken
 					self.damage_taken = 0
+					
+					-- Only let this thing activate once for now
+					self.activated = true
 					
 					-- Gonna make it not remove for now
 					

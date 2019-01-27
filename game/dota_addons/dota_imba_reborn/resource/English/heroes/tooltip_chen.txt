@@ -1,0 +1,1 @@
+"DOTA_Tooltip_ability_chen_test_of_faith_Note1"		"Test of Faith is automatically leveled up at Levels 3, 6, 9, and 12."

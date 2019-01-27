@@ -568,6 +568,15 @@ function GameMode:OnPlayerLevelUp(keys)
 	if hero:GetUnitName() == "npc_dota_hero_invoker" then
 		hero:FindAbilityByName("invoker_invoke"):SetLevel(min(math.floor(level / 6 + 1), 4))
 	end
+	
+	-- Add some deprecated abilities back to heroes for that "IMBA" factor
+	local subAbilities = {"chen_test_of_faith", "keeper_of_the_light_mana_leak", "huskar_inner_vitality", "tusk_frozen_sigil"}
+	
+	for _, ability in ipairs(subAbilities) do 
+		if hero:HasAbility(ability) then
+			hero:FindAbilityByName(ability):SetLevel(min(math.floor(level / 3), 4))
+		end
+	end
 end
 
 function GameMode:OnPlayerLearnedAbility(keys)

@@ -91,7 +91,7 @@
 			"12"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"mana_cost_scepter"		"40 35 30 25"
+				"mana_cost_scepter"		"40"
 			}
 			"13"
 			{
