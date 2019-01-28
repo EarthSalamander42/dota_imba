@@ -1347,6 +1347,11 @@ function modifier_imba_rubick_spellsteal:IsPurgable() return false end
 
 function modifier_imba_rubick_spellsteal:OnCreated( kv )
 	if IsClient() then return end
+	
+	if kv.spell_amp == nil then
+		return
+	end
+	
 	self.stolen_spell_amp = kv.spell_amp * 100
 
 	if self:GetParent():HasScepter() then
@@ -1363,7 +1368,7 @@ function modifier_imba_rubick_spellsteal:OnRefresh( kv )
 	end
 end
 
-function modifier_imba_rubick_spellsteal:OnDestroy( kv ) 
+function modifier_imba_rubick_spellsteal:OnDestroy( kv )
 	self:GetAbility():ForgetSpell() 
 end
 
