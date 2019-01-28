@@ -1186,7 +1186,7 @@ function imba_rubick_spellsteal:SetStolenSpell( spellData )
 		self.vortex:SetLevel( 4 )
 		self.vortex:SetStolen( true )
 	end
-
+	
 	-- Add new spell
 	if primarySpell~=nil and not primarySpell:IsNull() then
 		self.CurrentPrimarySpell = self:GetCaster():AddAbility( primarySpell:GetAbilityName() )
@@ -1196,9 +1196,10 @@ function imba_rubick_spellsteal:SetStolenSpell( spellData )
 		-- respect IsHiddenWhenStolen()
 		if self.CurrentPrimarySpell:IsHiddenWhenStolen() then
 			self.CurrentPrimarySpell:SetHidden(true)
-		else
-			self:GetCaster():SwapAbilities( self.slot1, self.CurrentPrimarySpell:GetAbilityName(), false, true )
 		end
+		--else
+			self:GetCaster():SwapAbilities( self.slot1, self.CurrentPrimarySpell:GetAbilityName(), false, true )
+		--end
 	end
 	if secondarySpell~=nil and not secondarySpell:IsNull() then
 		self.CurrentSecondarySpell = self:GetCaster():AddAbility( secondarySpell:GetAbilityName() )
@@ -1208,9 +1209,10 @@ function imba_rubick_spellsteal:SetStolenSpell( spellData )
 		-- respect IsHiddenWhenStolen()
 		if self.CurrentSecondarySpell:IsHiddenWhenStolen() then
 			self.CurrentSecondarySpell:SetHidden(true)
-		else
-			self:GetCaster():SwapAbilities( self.slot2, self.CurrentSecondarySpell:GetAbilityName(), false, true )
 		end
+		--else
+			self:GetCaster():SwapAbilities( self.slot2, self.CurrentSecondarySpell:GetAbilityName(), false, true )
+		--end
 	end
 	
 	-- Add Linked Talents 

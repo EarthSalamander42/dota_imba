@@ -81,15 +81,13 @@
 
 // Arcane Rapier
 "DOTA_Tooltip_Ability_item_imba_rapier_magic"                  "Arcane Rapier"
-"DOTA_Tooltip_ability_item_imba_rapier_magic_Description"                   "<h1>Passive: Everlasting</h1> <font color='#e03e2e'>Dropped on death, and cannot be destroyed.</font>"
-"DOTA_Tooltip_Ability_item_imba_rapier_magic_Note0"            "Spell amp does not work when dealing damage to enemies over 2500 range away."
+"DOTA_Tooltip_ability_item_imba_rapier_magic_Description"                   "<h1>Passive: Everlasting</h1> <font color='#e03e2e'>Dropped on death, and cannot be destroyed.</font>\n<font color='#FF0000'>Spell amp does not work when dealing damage to enemies over 2500 range away.</font>"
 "DOTA_Tooltip_ability_item_imba_rapier_magic_Lore"              "So powerful, it cannot have a single owner."
 "DOTA_Tooltip_ability_item_imba_rapier_magic_spell_power"                   "%SPELL AMP:"
 
 // Archmage Rapier
 "DOTA_Tooltip_Ability_item_imba_rapier_magic_2"                "Archmage Rapier"
-"DOTA_Tooltip_ability_item_imba_rapier_magic_2_Description"                 "<h1>Passive: Everlasting</h1> <font color='#e03e2e'>Dropped on death, and cannot be destroyed.</font>\n<h1><font color='#FF7800'>Passive: Beacon of power</font></h1> The absurd power of the Archmage Rapier makes its bearer visible to the enemy team at all times."
-"DOTA_Tooltip_Ability_item_imba_rapier_magic_2_Note0"          "Spell amp does not work when dealing damage to enemies over 2500 range away."
+"DOTA_Tooltip_ability_item_imba_rapier_magic_2_Description"                 "<h1>Passive: Everlasting</h1> <font color='#e03e2e'>Dropped on death, and cannot be destroyed.</font>\n<h1><font color='#FF7800'>Passive: Beacon of Power</font></h1> The absurd power of the Archmage Rapier makes its bearer visible to the enemy team at all times.\n<font color='#FF0000'>Spell amp does not work when dealing damage to enemies over 2500 range away.</font>"
 "DOTA_Tooltip_ability_item_imba_rapier_magic_2_Lore"            "So powerful, it cannot have a single owner."
 "DOTA_Tooltip_ability_item_imba_rapier_magic_2_spell_power"                 "%SPELL AMP:"
 
@@ -298,7 +296,7 @@
 
 // Cursed Rapier
 "DOTA_Tooltip_Ability_item_imba_rapier_cursed"                  "Cursed Rapier"
-"DOTA_Tooltip_ability_item_imba_rapier_cursed_Description"                  "<h1>Passive: Everlasting</h1> <font color='#e03e2e'>Dropped on death, and cannot be destroyed.</font>\n<h1> Passive: REAL ULTIMATE POWER</h1> Provides bonus attack and spell damage, reduces incoming damage from enemies by %damage_reduction%%%, and debuff durations by %tenacity_pct%%%.\n<h1><font color='#e03e2e'>Passive: Cursed By The Gods</font></h1> Wielding the Cursed Rapier costs health. This cost increases over time, forever, until its bearer dies. However, the curse is not fatal, and cannot kill the bearer."
+"DOTA_Tooltip_ability_item_imba_rapier_cursed_Description"                  "<h1>Passive: Everlasting</h1> <font color='#e03e2e'>Dropped on death, and cannot be destroyed.</font>\n<h1> Passive: REAL ULTIMATE POWER</h1> Provides bonus attack and spell damage, reduces incoming damage from enemies by %damage_reduction%%%, and debuff durations by %tenacity_pct%%%.\n<h1><font color='#e03e2e'>Passive: Cursed By The Gods</font></h1> Wielding the Cursed Rapier costs health. This cost increases over time, forever, until its bearer dies. However, the curse is not fatal, and cannot kill the bearer.\n<font color='#FF0000'>Spell amp does not work when dealing damage to enemies over 2500 range away.</font>"
 "DOTA_Tooltip_Ability_item_imba_rapier_cursed_Note0"            "Spell amp stops working when dealing damage to units over 2500 range away from you."
 "DOTA_Tooltip_ability_item_imba_rapier_cursed_Lore"            "So powerful, it hasn't ever accepted a single owner."
 "DOTA_Tooltip_ability_item_imba_rapier_cursed_bonus_damage"                 "DAMAGE:"
@@ -856,9 +854,9 @@
 
 // Octarine Core
 "DOTA_Tooltip_Ability_item_imba_octarine_core"                  "Octarine Core"
-"DOTA_Tooltip_ability_item_imba_octarine_core_Description"                  "<h1>Passive: Magus' Supremacy </h1> Reduces the cooldown of all spells and items by %bonus_cooldown%%%.\n<h1>Passive: Magus' will</h1> Grants %spell_lifesteal%%% spell lifesteal.\n<h1><font color='#FF7800'>Toggle: Magus' presence</font></h1> When off-cooldown, your next spell cast deals damage to nearby enemies based on its mana cost."
+"DOTA_Tooltip_ability_item_imba_octarine_core_Description"                  "<h1>Passive: Magus Supremacy </h1> Reduces the cooldown of all spells and items by %bonus_cooldown%%%. <font color='#FF0000'>Cooldown Reduction does not stack with Frantic.</font>\n<h1>Passive: Magus' will</h1> Grants %spell_lifesteal%%% spell lifesteal.\n<h1><font color='#FF7800'>Toggle: Magus Presence</font></h1> When off-cooldown, your next spell cast deals damage to nearby enemies based on its mana cost."
 "DOTA_Tooltip_ability_item_imba_octarine_core_Lore"            "Masterful spellcraft, performed by incredibly talented Magi, can be both beautiful and terrifying to behold."
-"DOTA_Tooltip_ability_item_imba_octarine_core_Note0"            "Magus' presence deals magical damage. Despite the animation, enemies will be damaged instantly."
+"DOTA_Tooltip_ability_item_imba_octarine_core_Note0"            "Magus Presence deals magical damage. Despite the animation, enemies will be damaged instantly."
 "DOTA_Tooltip_Ability_item_imba_octarine_core_Note1"            "Cooldown reduction does not stack with Kaya and Arcane Nexus cooldown reduction."
 "DOTA_Tooltip_ability_item_imba_octarine_core_bonus_intelligence"           "+$int"
 "DOTA_Tooltip_ability_item_imba_octarine_core_bonus_health"                 "+$health"
