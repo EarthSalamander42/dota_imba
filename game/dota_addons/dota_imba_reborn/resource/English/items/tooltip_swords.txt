@@ -96,7 +96,7 @@
 
 // Yasha and Kaya
 "DOTA_Tooltip_Ability_item_imba_yasha_and_kaya"							"Yasha and Kaya"
-"DOTA_Tooltip_ability_item_imba_yasha_and_kaya_Description"				"<font color='#FF7800'><h1>Active: Shield</h1></font> Grants %bonus_evasion_active%%%  Evasion and %bonus_cdr_active%%  mana cost and cooldown reduction for %active_duration% seconds.\n<h1><font color='#FF7800'>Passive: Quickspell</font></h1> Grants %bonus_cdr%%% nonstacking cooldown reduction."
+"DOTA_Tooltip_ability_item_imba_yasha_and_kaya_Description"				"<h1><font color='#FF7800'>Active: Shield</font></h1> Grants %bonus_evasion_active%%%  Evasion and %bonus_cdr_active%%  mana cost and cooldown reduction for %active_duration% seconds.\n<h1><font color='#FF7800'>Passive: Quickspell</font></h1> Grants %bonus_cdr%%% nonstacking cooldown reduction."
 // "DOTA_Tooltip_ability_item_imba_yasha_and_kaya_Lore"					"#{DOTA_Tooltip_ability_item_yasha_and_kaya_Lore}"
 "DOTA_Tooltip_ability_item_imba_yasha_and_kaya_Note0"					"Movement speed bonus does not stack with itself or other Yasha upgrades."
 "DOTA_Tooltip_ability_item_imba_yasha_and_kaya_bonus_intellect"			"+$int"

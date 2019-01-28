@@ -1357,16 +1357,18 @@
 		"Ability10"					"special_bonus_imba_nyx_assassin_6" //Impale causes random spikes to appear around targets hit
 		"Ability11"					"special_bonus_imba_nyx_assassin_8" //If unit dies during Mana Burn, Nyx gets the parasite
 		"Ability12"					"special_bonus_imba_nyx_assassin_3" //Mana Burn uses targets main attribute
-		"Ability13"					"special_bonus_imba_nyx_assassin_4" //Spiked Carapace returns all damage instances
-		"Ability14"					"special_bonus_imba_nyx_assassin_2" //Vendetta hits apply Mana Burn
-		"Ability15"					"special_bonus_imba_nyx_assassin_10" // +75% Spiked Carapace Damage
+		"Ability13"					"special_bonus_imba_nyx_assassin_13" // +10% Impale Relive Suffering damage
+		"Ability14"					"special_bonus_imba_nyx_assassin_4" //Spiked Carapace returns all damage instances
+		"Ability15"					"special_bonus_imba_nyx_assassin_12" // +1000 Vendetta Maximum Stored Damage
 		"Ability16"					"special_bonus_agility_100"
 		"Ability17"					"special_bonus_imba_nyx_assassin_11" // Vendetta Unobstructed Pathing
 
 		// Removed Abilities
 		// "Ability11"					"special_bonus_imba_nyx_assassin_5" //Spiked Carapace auto-casts < 30% HP
 		// "Ability14"					"special_bonus_imba_nyx_assassin_7" //Impale slows people down the more they move
+		// "Ability14"					"special_bonus_imba_nyx_assassin_2" //Vendetta hits apply Mana Burn
 		// "Ability15"					"special_bonus_imba_nyx_assassin_1" //Vendetta kill doesn't use Eye for Eye stacks
+		// "Ability15"					"special_bonus_imba_nyx_assassin_10" // +75% Spiked Carapace Damage
 		// Unused						"special_bonus_imba_nyx_assassin_9" // Scarab Parasite has no duration
 	}
 

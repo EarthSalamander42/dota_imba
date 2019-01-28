@@ -152,6 +152,7 @@ function modifier_imba_lifesteal_boots_buff:OnCreated()
 	self.ms_limit = self.ability:GetSpecialValueFor("ms_limit")
 	self.drain_damage = self.ability:GetSpecialValueFor("drain_damage")
 	self.drain_radius = self.ability:GetSpecialValueFor("drain_radius")
+	self.ideal_speed = math.min(self:GetParent():GetIdealSpeedNoSlows(), self.ms_limit)
 
 	if IsServer() then
 		-- Apply particle effects
@@ -214,7 +215,7 @@ end
 
 function modifier_imba_lifesteal_boots_buff:DeclareFunctions()
 	local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-		MODIFIER_PROPERTY_MOVESPEED_MAX}
+		MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE_MIN}
 
 	return decFuncs
 end
@@ -223,8 +224,8 @@ function modifier_imba_lifesteal_boots_buff:GetModifierMoveSpeedBonus_Percentage
 	return self.phase_ms
 end
 
-function modifier_imba_lifesteal_boots_buff:GetModifierMoveSpeed_Max()
-	return self.ms_limit
+function modifier_imba_lifesteal_boots_buff:GetModifierMoveSpeed_AbsoluteMin()
+	return self.ideal_speed
 end
 
 function modifier_imba_lifesteal_boots_buff:CheckState()

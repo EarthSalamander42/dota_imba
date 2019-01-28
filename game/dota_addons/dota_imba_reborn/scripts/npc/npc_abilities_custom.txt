@@ -29081,8 +29081,9 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_repeat_pct"		"25"
+				"damage_repeat_pct"		"20"
 				"CalculateSpellDamageTooltip"	"0"
+				"LinkedSpecialBonus"	"special_bonus_imba_nyx_assassin_13"
 			}
 
 			"08"
@@ -29179,7 +29180,7 @@
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"parasite_charge_threshold_pct"	"60 55 50 45"
+				"parasite_charge_threshold_pct"	"50 45 40 35"
 			}
 
 			"05"
@@ -29210,6 +29211,12 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"burrowed_cast_range_increase"	"300"
+			}
+			
+			"10"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"scarring_burn_pct"				"8 10 12 14"
 			}
 		}
 	}
@@ -29356,6 +29363,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"maximum_vendetta_stacks"	"250 400 550"
+				"LinkedSpecialBonus"		"special_bonus_imba_nyx_assassin_12"
 			}
 		}
 	}
@@ -29699,6 +29707,56 @@
 			{
 				"var_type"                  "FIELD_INTEGER"
 				"value"						"20"
+			}
+		}
+	}
+	
+	"special_bonus_imba_nyx_assassin_12" // +1000 Vendetta Maximum Stored Damage
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_nyx_assassin_vendetta"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"						"1000"
+			}
+		}
+	}
+	
+	"special_bonus_imba_nyx_assassin_13" // +10% Impale Relive Suffering damage
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_nyx_assassin_impale"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"						"10"
 			}
 		}
 	}

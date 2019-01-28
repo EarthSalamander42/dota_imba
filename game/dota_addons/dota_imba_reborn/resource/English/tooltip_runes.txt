@@ -124,7 +124,7 @@
 "DOTA_Tooltip_rune_arcane"						"Arcane"
 "DOTA_Tooltip_rune_arcane_description"			"Reduces cooldowns by 30%. <font color='#FF7800'>IMBA: </font> Reduces mana costs by 40%, increases spell amplification by 50%. 50% of the effect is shared with allies in 1800 radius."
 "DOTA_Tooltip_rune_haste"						"Haste"
-"DOTA_Tooltip_rune_haste_description"			"Increases movement speed <font color='#FF7800'>by 100% and remove the 550 movement speed limit.</font><font color='#FF7800'>IMBA: </font> Increase attack speed by 160. 50% of the effect is shared with allies in 1800 radius."
+"DOTA_Tooltip_rune_haste_description"			"Increases movement speed <font color='#FF7800'>by 100% and removes the 550 movement speed limit. </font><font color='#FF7800'>IMBA: </font> Increases attack speed by 160. 50% of the effect is shared with allies in 1800 radius."
 "DOTA_Tooltip_rune_illusion"					"Illusion"
 "DOTA_Tooltip_rune_illusion_description"		"Conjures <font color='#FF7800'>5 </font> illusions of your hero which deal <font color='#FF7800'>100%</font> damage.  Melee illusions take 200% damage.  Ranged illusions take 300% damage.  Illusions last 75 seconds."
 "DOTA_Tooltip_modifier_imba_invisibility_rune_handler"	"Invisibility Fade Time"
