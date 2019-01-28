@@ -1299,11 +1299,11 @@ function FingerOfDeath(caster, ability, main_target, target, damage, enemies_fro
 							 ability = ability
 							}
 	
-		ApplyDamage(damageTable)            
+		ApplyDamage(damageTable)
 
 		-- Find out if target has died, mark it
 		Timers:CreateTimer(FrameTime(), function()
-			if not target:IsAlive() and not target:IsIllusion() then
+			if not target:IsAlive() and not target:IsIllusion() and (target:IsCreep() or (target:IsRealHero() and not target:IsReincarnating())) then
 				ability.enemy_killed = true                                
 			end
 		end)

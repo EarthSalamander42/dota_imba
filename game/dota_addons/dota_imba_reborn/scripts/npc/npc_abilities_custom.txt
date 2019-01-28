@@ -9196,7 +9196,7 @@
 			"01"
 			{
 				"var_type"                  "FIELD_FLOAT"
-				"value"	                    "15"
+				"value"	                    "30"
 			}
 		}
 	}
