@@ -378,7 +378,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health_regen"			"50"
+				"health_regen"			"80"
 			}
 			"03"
 			{
@@ -398,7 +398,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"mana_regen"			"3.6"
+				"mana_regen"			"8.1"
 			}
 		}
 	}
@@ -1160,17 +1160,17 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"15 18 21 24 27"
+				"bonus_intellect"		"18 21 24 27 30"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_all_stats"		"3"
+				"bonus_all_stats"		"5"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"400 500 600 700 800"
+				"damage"				"500 600 700 800 900"
 			}
 			"04"
 			{
@@ -1204,17 +1204,17 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"15 18 21 24 27"
+				"bonus_intellect"		"18 21 24 27 30"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_all_stats"		"3"
+				"bonus_all_stats"		"5"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"400 500 600 700 800"
+				"damage"				"500 600 700 800 900"
 			}
 			"04"
 			{
@@ -1248,17 +1248,17 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"15 18 21 24 27"
+				"bonus_intellect"		"18 21 24 27 30"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_all_stats"		"3"
+				"bonus_all_stats"		"5"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"400 500 600 700 800"
+				"damage"				"500 600 700 800 900"
 			}
 			"04"
 			{
@@ -1292,17 +1292,17 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"15 18 21 24 27"
+				"bonus_intellect"		"18 21 24 27 30"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_all_stats"		"3"
+				"bonus_all_stats"		"5"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"400 500 600 700 800"
+				"damage"				"500 600 700 800 900"
 			}
 			"04"
 			{
@@ -1336,17 +1336,17 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"15 18 21 24 27"
+				"bonus_intellect"		"18 21 24 27 30"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_all_stats"		"3"
+				"bonus_all_stats"		"5"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"400 500 600 700 800"
+				"damage"				"500 600 700 800 900"
 			}
 			"04"
 			{
@@ -1371,14 +1371,14 @@
 	//=================================================================================================================
 	"item_refresher"
 	{
-		"AbilityCooldown"				"90"
+		"AbilityCooldown"				"120"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_health_regen"	"13"
+				"bonus_health_regen"	"16"
 			}
 			"02"
 			{
@@ -1455,12 +1455,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_strength"		"10"
+				"bonus_strength"		"16"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"24"
+				"bonus_damage"			"32"
 			}
 			"03"
 			{
@@ -2251,36 +2251,6 @@
 	}
 
 	//=================================================================================================================
-	//	Bestmaster: Wild Axes damage increase
-	//=================================================================================================================
-	"special_bonus_unique_beastmaster"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"240"
-			}
-		}
-	}	
-
-	//=================================================================================================================
-	//	Beastmaster: bonus Boars summoned
-	//=================================================================================================================
-	"special_bonus_unique_beastmaster_2"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"value"					"1"
-			}
-		}
-	}
-
-	//=================================================================================================================
 	// Beastmaster: Greater Hawk: Invisibility
 	//=================================================================================================================
 	"beastmaster_hawk_invisibility"
@@ -2418,6 +2388,36 @@
 			}
 		}
 	}
+	
+	//=================================================================================================================
+	//	Bestmaster: Wild Axes damage increase
+	//=================================================================================================================
+	"special_bonus_unique_beastmaster"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"value"				"240"
+			}
+		}
+	}	
+
+	//=================================================================================================================
+	//	Beastmaster: Bonus Boar Damage
+	//=================================================================================================================
+	"special_bonus_unique_beastmaster_2"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"40"
+			}
+		}
+	}
 
 	//=================================================================================================================
 	// Brewmaster: Thunder Clap
@@ -2519,25 +2519,23 @@
 	// Brewmaster: Drunken Brawler
 	//=================================================================================================================
 	"brewmaster_drunken_brawler"
-	{		
-		"AbilityCooldown"				"12.0 10.0 8.0 6.0"
-
+	{
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"dodge_chance"				"25 30 35 40"
+				"dodge_chance"				"50 60 70 80"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"crit_chance"				"25 30 35 40"
+				"crit_chance"				"80"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"crit_multiplier"			"250 300 350 400"
+				"crit_multiplier"			"180 220 260 300"
 				"LinkedSpecialBonus"		"special_bonus_unique_brewmaster_4"
 			}
 			"04"
@@ -2548,7 +2546,7 @@
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"max_movement"				"40"
+				"max_movement"				"50"
 			}
 			"06"
 			{
@@ -3385,20 +3383,31 @@
 	//=================================================================================================================
 	"chen_test_of_faith"
 	{
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+	
 		"AbilityCooldown"				"16.0"
-		"AbilityCastRange"				"1200"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_min"			"50 150 275 425"
+				"damage_min"			"75 150 225 300"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_max"			"100 300 475 625"
+				"damage_max"			"125 250 375 500"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"heal_min"				"50 100 150 200"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"heal_max"				"75 175 275 375"
 			}
 		}
 	}
@@ -3486,6 +3495,11 @@
 				"var_type"				"FIELD_INTEGER"
 				"health_min"			"1000 2000 3000 4000"
 				"LinkedSpecialBonus"	"special_bonus_unique_chen_4"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"teleport_delay"	"6.0 5.0 4.0 3.0"
 			}
 		}
 	}
@@ -3793,12 +3807,12 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"duration"				"0.5"
+				"duration"				"0.3 0.4 0.5 0.6"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"40 120 220 340"
+				"damage"				"50 150 250 350"
 			}
 			"04"
 			{
@@ -3861,7 +3875,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"value"				"80"
+				"value"				"150"
 			}
 		}
 	}
@@ -3878,7 +3892,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"duration"				"3.0 5.0 7.0 9.0"
+				"duration"				"6.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"speed_boost"			"40 55 70 85"
 			}
 		}
 	}
@@ -3888,50 +3907,48 @@
 	//=================================================================================================================
 	"dark_seer_wall_of_replica"
 	{
-		"AbilityCastRange"					"500 900 1300"
-
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"duration"					"45"
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"45.0"
 			}			
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"replica_damage_outgoing"	"-40 -10 20"
+				"replica_damage_outgoing"	"0 10 20"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"tooltip_outgoing"			"60 90 120"
+				"tooltip_outgoing"			"100 110 120"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"replica_damage_incoming"	"300 225 150"
+				"replica_damage_incoming"	"75"
 			}	
 			"05"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"tooltip_replica_total_damage_incoming"	"400 325 250"
+				"tooltip_replica_total_damage_incoming"	"175"
 				"CalculateSpellDamageTooltip"			"0"
 			}
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"width"						"3000"
+				"width"						"2000"
 			}
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"replica_scale"				"20"
+				"replica_scale"				"0"
 			}
 			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"range_tooltip"				"500 900 1300"
+				"range_tooltip"				"1300"
 			}
 			"09"
 			{
@@ -3946,12 +3963,12 @@
 			"11"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"movement_slow"				"150"
+				"movement_slow"				"70"
 			}
 			"12"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"slow_duration"				"3.0"
+				"slow_duration"				"1.0"
 			}
 		}
 	}
@@ -5297,37 +5314,39 @@
 	//=================================================================================================================
 	"huskar_inner_vitality"
 	{
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+	
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"heal"					"12 16 20 24"
+				"heal"					"12"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"attrib_bonus"			"0.06 0.1 0.14 0.18"
+				"attrib_bonus"			"0.05 0.1 0.15 0.20"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"hurt_attrib_bonus"		"0.22 0.44 0.66 0.88"
+				"hurt_attrib_bonus"		"0.2 0.4 0.6 0.8"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"hurt_percent"			"0.35 0.40 0.45 0.50"
+				"hurt_percent"			"0.35"
 			}
 			"05"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"tooltip_attrib_bonus"			"6 10 14 18"
+				"tooltip_attrib_bonus"			"6 8 10 12"
 			}
 			"06"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"tooltip_hurt_attrib_bonus"		"22 44 66 88"
+				"var_type"				"FIELD_INTEGER"
+				"tooltip_hurt_attrib_bonus"		"22 30 38 46"
 			}
 		}
 	}
@@ -6264,20 +6283,21 @@
 	//=================================================================================================================
 	"keeper_of_the_light_mana_leak"
 	{
-		"AbilityCooldown"				"16 14 12 10"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		
 		"AbilityCastRange"				"500 600 700 800"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"duration"				"4 5 6 7"
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"4.0 5.0 6.0 7.0"
 			}
 			"02"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"mana_leak_pct"			"5 6 7 8"
+				"var_type"				"FIELD_FLOAT"
+				"mana_leak_pct"			"5.0 5.5 6.0 6.5"
 			}
 			"03"
 			{
@@ -6288,7 +6308,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"cast_range_tooltip"	"550 700 850 1000"
+				"cast_range_tooltip"	"500 600 700 800"
 			}
 		}
 	}	
@@ -7389,13 +7409,13 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_INTEGER"
+				"var_type"				"FIELD_FLOAT"
 				"damage_per_mana"		"1.6 2.4 3.5 4.8"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"absorption_tooltip"	"60 62 64 66"
+				"absorption_tooltip"	"60"
 			}
 		}
 	}
@@ -7467,7 +7487,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"speed"					"857 877 897 917"
+				"speed"					"900 950 1000 1050"
 			}
 			"04"
 			{
@@ -7483,7 +7503,7 @@
 	//=================================================================================================================
 	"meepo_poof"
 	{
-		"AbilityCastPoint"				"1.5 1.49 1.48 1.47"
+		"AbilityCastPoint"				"1.5 1.4 1.3 1.2"
 
 		"AbilitySpecial"
 		{
@@ -7498,6 +7518,11 @@
 				"poof_damage"				"150 200 250 300"
 				"LinkedSpecialBonus"		"special_bonus_unique_meepo_2"
 			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"poof_tooltip"				"1.5 1.4 1.3 1.2"
+			}
 		}
 	}
 
@@ -7506,8 +7531,6 @@
 	//=================================================================================================================
 	"meepo_geostrike"
 	{
-		"AbilityDamage"					"20 40 60 80"
-
 		"AbilitySpecial"
 		{
 			"01"
@@ -7519,6 +7542,62 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"hp_steal"				"6 12 18 24"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Meepo: Ransack
+	//=================================================================================================================
+	"meepo_ransack"
+	{
+		"AbilitySpecial"
+		{		
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"health_steal_heroes"	"12 16 20 24"
+			}			
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"health_steal_creeps"	"10 12 14 16"
+			}			
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_3"
+	}
+
+	//=================================================================================================================
+	// Meepo: Divided We Stand
+	//=================================================================================================================
+	"meepo_divided_we_stand"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tooltip_clones"		"1 2 3"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tooltip_share_percentage"		"20"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tooltip_share_percentage_scepter"		"100"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"respawn"		"50.0"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tooltip_respawn"		"20"
 			}
 		}
 	}
@@ -8297,9 +8376,9 @@
 	{
 		"MaxLevel"						"4"
 
-		"AbilityCastPoint"				"3.0 2.5 2.0 1.5"
+		"AbilityCastPoint"				"3.0 2.75 2.5 2.25"
 
-		"AbilityCooldown"				"50 30 19 17"
+		"AbilityCooldown"				"50 40 30 20"
 	}
 
 	//=================================================================================================================
@@ -8418,7 +8497,7 @@
 	"furion_wrath_of_nature"
 	{
 		"MaxLevel"							"3"
-		"AbilityCooldown"					"90 60 50"
+		"AbilityCooldown"					"60"
 
 		"AbilitySpecial"
 		{
@@ -8435,7 +8514,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_percent_add"		"11 12 13"
+				"damage_percent_add"		"11"
 			}
 			"04"
 			{
@@ -11226,8 +11305,8 @@
 	//=================================================================================================================
 	"tusk_frozen_sigil"
 	{
-		"AbilityCooldown"					"50 45 40 35"
-
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		
 		"AbilitySpecial"
 		{
 			"01"
@@ -11237,8 +11316,8 @@
 			}
 			"02"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"sigil_duration"			"30 35 40 45"
+				"var_type"					"FIELD_FLOAT"
+				"sigil_duration"			"30.0"
 			}
 			"03"
 			{
@@ -14720,7 +14799,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"bonus_health_regen"	"6.5"
+				"bonus_health_regen"	"8.0"
 			}
 			"03"
 			{

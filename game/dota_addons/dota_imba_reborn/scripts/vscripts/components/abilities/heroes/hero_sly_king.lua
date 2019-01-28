@@ -2,6 +2,221 @@
 --     Earth Salamander #42
 --     Lindbrum
 
+-------------------------------
+--       burrowblast        --
+-------------------------------
+imba_sly_king_burrow_blast = class({})
+LinkLuaModifier("modifier_imba_burrowblast_burrow", "components/abilities/heroes/hero_sly_king.lua", LUA_MODIFIER_MOTION_NONE)
+
+function imba_sly_king_burrow_blast:IsHiddenWhenStolen()
+	return false
+end
+
+function imba_sly_king_burrow_blast:IsNetherWardStealable()
+	return false
+end
+--[[
+function imba_sly_king_burrow_blast:GetCastRange(location, target)
+	local caster = self:GetCaster()
+	local cast_range = self:GetSpecialValueFor("cast_range")
+
+	-- #3 Talent: burrowblast cast range increase
+	cast_range = cast_range + caster:FindTalentValue("special_bonus_imba_sand_king_3")
+	return cast_range
+end
+--]]
+function imba_sly_king_burrow_blast:OnSpellStart()
+	-- Ability properties
+	local caster = self:GetCaster()
+	local ability = self
+	local target_point = self:GetCursorPosition()
+	local sound_cast = "Hero_NyxAssassin.Impale"
+	local particle_burrow = "particles/heroes/hero_slyli/sly_king_burrowblast.vpcf"
+	local modifier_burrow = "modifier_imba_burrowblast_burrow"
+
+	-- Ability specials
+	local burrow_speed = ability:GetSpecialValueFor("speed")
+	local burrow_radius = ability:GetSpecialValueFor("radius")
+	--	local burrowblast_time = ability:GetSpecialValueFor("burrowblast_time")
+
+	-- #1 Talent: burrowblast path radius increase
+	burrow_radius = burrow_radius + caster:FindTalentValue("special_bonus_imba_sand_king_1")
+
+	-- Play cast sound
+	EmitSoundOn(sound_cast, caster)
+
+	-- Disjoint projectiles
+	ProjectileManager:ProjectileDodge(caster)
+
+	-- Calculate distance for the projectile to move
+	local distance = (caster:GetAbsOrigin() - target_point):Length2D()
+
+	-- Adjust direction
+	local direction = (target_point - caster:GetAbsOrigin()):Normalized()
+
+	-- Add particle effect
+	local particle_burrow_fx = ParticleManager:CreateParticle(particle_burrow, PATTACH_WORLDORIGIN, caster)
+	ParticleManager:SetParticleControl(particle_burrow_fx, 0, caster:GetAbsOrigin())
+	ParticleManager:SetParticleControl(particle_burrow_fx, 1, target_point)
+
+	-- Projectile information
+	local burrow_projectile = {Ability = ability,
+		vSpawnOrigin = caster:GetAbsOrigin(),
+		fDistance = distance,
+		fStartRadius = burrow_radius,
+		fEndRadius = burrow_radius,
+		Source = caster,
+		bHasFrontalCone = false,
+		bReplaceExisting = false,
+		iUnitTargetTeam = DOTA_UNIT_TARGET_TEAM_ENEMY,
+		iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+		bDeleteOnHit = false,
+		vVelocity = direction * burrow_speed * Vector(1, 1, 0),
+		bProvidesVision = false,
+	}
+
+	-- Launch projectile
+	ProjectileManager:CreateLinearProjectile(burrow_projectile)
+
+	-- Cache target_point in the ability
+	self.target_point = target_point
+
+	-- Set the caster's location at the end
+	caster:SetAbsOrigin(target_point)
+
+	-- Wait a frame, then resolve positions
+	Timers:CreateTimer(FrameTime(), function()
+		ResolveNPCPositions(target_point, 128)
+	end)
+
+	-- Add burrowed status modifier
+	caster:AddNewModifier(caster, ability, modifier_burrow, {duration = self:GetSpecialValueFor("delay_burrow")})
+end
+
+function imba_sly_king_burrow_blast:OnProjectileHit(target, location)
+	-- If there was no target, do nothing
+	if not target then
+		return nil
+	end
+
+	-- If the target is spell immune, do nothing
+	if target:IsMagicImmune() then
+		return nil
+	end
+
+	-- Ability properties
+	local caster = self:GetCaster()
+	local ability = self
+	local target_point = self.target_point
+	local modifier_stun = "modifier_stunned"
+	--	local modifier_poison = "modifier_imba_caustic_finale_poison"
+
+	-- Ability specials
+	local knockback_duration = ability:GetSpecialValueFor("knockback_duration")
+	local stun_duration = ability:GetSpecialValueFor("stun_duration")
+	local damage = ability:GetSpecialValueFor("damage")
+	local max_push_distance = ability:GetSpecialValueFor("max_push_distance")
+	local knockup_height = ability:GetSpecialValueFor("knockup_height")
+	local knockup_duration = ability:GetSpecialValueFor("knockup_duration")
+
+	-- Caustic Finale
+	--	local caustic_ability_name = "imba_sly_king_caustic_finale"
+	local caustic_ability
+	local poison_duration
+	--	if caster:HasAbility(caustic_ability_name) then
+	--		caustic_ability = caster:FindAbilityByName(caustic_ability_name)
+	--		poison_duration = caustic_ability:GetSpecialValueFor("poison_duration")
+	--	end
+
+	-- If an enemy target has Linken's sphere ready, do nothing
+	-- if caster:GetTeamNumber() ~= target:GetTeamNumber() then
+		-- if target:TriggerSpellAbsorb(ability) then
+			-- return nil
+		-- end
+	-- end
+
+	-- Calculate target's distance from target point
+	local push_distance = (target:GetAbsOrigin() - target_point):Length2D()
+
+	-- If the distance is more than the maximum possible, use the maximum instead
+	if push_distance > max_push_distance then
+		push_distance = max_push_distance
+	end
+
+	-- Find a spot that would bring the enemy towards the caster
+	local distance = (target:GetAbsOrigin() - caster:GetAbsOrigin()):Length2D()
+	local direction = (target:GetAbsOrigin() - caster:GetAbsOrigin()):Normalized()
+	local bump_point = caster:GetAbsOrigin() + direction * (distance + 150)
+
+	-- Knockback enemies up and towards the target point
+	local knockbackProperties =
+		{
+			center_x = bump_point.x,
+			center_y = bump_point.y,
+			center_z = bump_point.z,
+			duration = knockup_duration,
+			knockback_duration = knockup_duration,
+			knockback_distance = push_distance,
+			knockback_height = knockup_height
+		}
+
+	target:RemoveModifierByName("modifier_knockback")
+	target:AddNewModifier(target, nil, "modifier_knockback", knockbackProperties)
+
+	-- Stun the target
+	target:AddNewModifier(caster, ability, modifier_stun, {duration = stun_duration})
+
+	-- Apply Caustic Finale to heroes, unless they already have it
+	--	if target:IsHero() and poison_duration and poison_duration > 0 and not target:HasModifier(modifier_poison) then
+	--		target:AddNewModifier(caster, caustic_ability, modifier_poison, {duration = poison_duration})
+	--	end
+
+	-- Deal damage
+	local damageTable = {victim = target,
+		attacker = caster,
+		damage = damage,
+		damage_type = DAMAGE_TYPE_MAGICAL,
+		ability = ability
+	}
+
+	ApplyDamage(damageTable)
+
+	-- Wait until the target lands, then resolve positions
+	Timers:CreateTimer(knockup_duration + FrameTime(), function()
+		ResolveNPCPositions(target_point, 128)
+	end)
+end
+
+
+-- burrowblast burrow modifier
+modifier_imba_burrowblast_burrow = class({})
+
+function modifier_imba_burrowblast_burrow:OnCreated()
+	if IsServer() then
+		-- Remove caster's model
+		self:GetCaster():AddNoDraw()
+	end
+end
+
+function modifier_imba_burrowblast_burrow:CheckState()
+	local state = {[MODIFIER_STATE_STUNNED] = true,
+		[MODIFIER_STATE_OUT_OF_GAME] = true,
+		[MODIFIER_STATE_INVULNERABLE] = true,
+		[MODIFIER_STATE_NO_HEALTH_BAR] = true}
+	return state
+end
+
+function modifier_imba_burrowblast_burrow:OnDestroy()
+	if IsServer() then
+		-- Redraw caster's model
+		self:GetCaster():RemoveNoDraw()
+	end
+end
+
+function modifier_imba_burrowblast_burrow:IsHidden() return true end
+function modifier_imba_burrowblast_burrow:IsPurgable() return false end
+function modifier_imba_burrowblast_burrow:IsDebuff() return false end
+
 ---------------------------------------------------------------
 ----------------------- FROST GALE ----------------------------
 ---------------------------------------------------------------
@@ -203,9 +418,11 @@ end
 function modifier_imba_frost_gale_debuff:OnCreated()
 	--Ability Specials
 	self.chill_damage = self:GetAbility():GetSpecialValueFor("chill_damage")
-	self.tick_interval = self:GetAbility():GetSpecialValueFor("tick_interval") --currently it's 0.5
+	self.tick_interval_base = self:GetAbility():GetSpecialValueFor("tick_interval") --currently it's 0.5
 
 	if IsServer() then
+		-- Make damage ticks change based on parent's status resistance (so it will always tick the same amount)
+		self.tick_interval = self.tick_interval_base * (1 - self:GetParent():GetStatusResistance())
 		self:StartIntervalThink(self.tick_interval)
 		self:GetParent():AddNewModifier(self:GetCaster(), nil, "modifier_rooted", {duration = self:GetAbility():GetSpecialValueFor("chill_duration")})
 		self:GetParent():EmitSound("Hero_Crystal.Frostbite")
@@ -215,227 +432,12 @@ end
 function modifier_imba_frost_gale_debuff:OnIntervalThink()
 	if IsServer() then
 		--apply damage proportional to the tick interval
-		local damage_per_tick = self.chill_damage * self.tick_interval
+		local damage_per_tick = self.chill_damage * self.tick_interval_base
 
 		ApplyDamage({victim = self:GetParent(), attacker = self:GetCaster(), damage = damage_per_tick, damage_type = DAMAGE_TYPE_MAGICAL})
 		SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, self:GetParent(), damage_per_tick, nil)
 	end
 end
-
--------------------------------
---       burrowblast        --
--------------------------------
-imba_sly_king_burrow_blast = class({})
-LinkLuaModifier("modifier_imba_burrowblast_burrow", "components/abilities/heroes/hero_sly_king.lua", LUA_MODIFIER_MOTION_NONE)
-
-function imba_sly_king_burrow_blast:IsHiddenWhenStolen()
-	return false
-end
-
-function imba_sly_king_burrow_blast:IsNetherWardStealable()
-	return false
-end
---[[
-function imba_sly_king_burrow_blast:GetCastRange(location, target)
-	local caster = self:GetCaster()
-	local cast_range = self:GetSpecialValueFor("cast_range")
-
-	-- #3 Talent: burrowblast cast range increase
-	cast_range = cast_range + caster:FindTalentValue("special_bonus_imba_sand_king_3")
-	return cast_range
-end
---]]
-function imba_sly_king_burrow_blast:OnSpellStart()
-	-- Ability properties
-	local caster = self:GetCaster()
-	local ability = self
-	local target_point = self:GetCursorPosition()
-	local sound_cast = "Hero_NyxAssassin.Impale"
-	local particle_burrow = "particles/heroes/hero_slyli/sly_king_burrowblast.vpcf"
-	local modifier_burrow = "modifier_imba_burrowblast_burrow"
-
-	-- Ability specials
-	local burrow_speed = ability:GetSpecialValueFor("speed")
-	local burrow_radius = ability:GetSpecialValueFor("radius")
-	--	local burrowblast_time = ability:GetSpecialValueFor("burrowblast_time")
-
-	-- #1 Talent: burrowblast path radius increase
-	burrow_radius = burrow_radius + caster:FindTalentValue("special_bonus_imba_sand_king_1")
-
-	-- Play cast sound
-	EmitSoundOn(sound_cast, caster)
-
-	-- Disjoint projectiles
-	ProjectileManager:ProjectileDodge(caster)
-
-	-- Calculate distance for the projectile to move
-	local distance = (caster:GetAbsOrigin() - target_point):Length2D()
-
-	-- Adjust direction
-	local direction = (target_point - caster:GetAbsOrigin()):Normalized()
-
-	-- Add particle effect
-	local particle_burrow_fx = ParticleManager:CreateParticle(particle_burrow, PATTACH_WORLDORIGIN, caster)
-	ParticleManager:SetParticleControl(particle_burrow_fx, 0, caster:GetAbsOrigin())
-	ParticleManager:SetParticleControl(particle_burrow_fx, 1, target_point)
-
-	-- Projectile information
-	local burrow_projectile = {Ability = ability,
-		vSpawnOrigin = caster:GetAbsOrigin(),
-		fDistance = distance,
-		fStartRadius = burrow_radius,
-		fEndRadius = burrow_radius,
-		Source = caster,
-		bHasFrontalCone = false,
-		bReplaceExisting = false,
-		iUnitTargetTeam = DOTA_UNIT_TARGET_TEAM_ENEMY,
-		iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-		bDeleteOnHit = false,
-		vVelocity = direction * burrow_speed * Vector(1, 1, 0),
-		bProvidesVision = false,
-	}
-
-	-- Launch projectile
-	ProjectileManager:CreateLinearProjectile(burrow_projectile)
-
-	-- Cache target_point in the ability
-	self.target_point = target_point
-
-	-- Set the caster's location at the end
-	caster:SetAbsOrigin(target_point)
-
-	-- Wait a frame, then resolve positions
-	Timers:CreateTimer(FrameTime(), function()
-		ResolveNPCPositions(target_point, 128)
-	end)
-
-	-- Add burrowed status modifier
-	caster:AddNewModifier(caster, ability, modifier_burrow, {duration = self:GetSpecialValueFor("delay_burrow")})
-end
-
-function imba_sly_king_burrow_blast:OnProjectileHit(target, location)
-	-- If there was no target, do nothing
-	if not target then
-		return nil
-	end
-
-	-- If the target is spell immune, do nothing
-	if target:IsMagicImmune() then
-		return nil
-	end
-
-	-- Ability properties
-	local caster = self:GetCaster()
-	local ability = self
-	local target_point = self.target_point
-	local modifier_stun = "modifier_stunned"
-	--	local modifier_poison = "modifier_imba_caustic_finale_poison"
-
-	-- Ability specials
-	local knockback_duration = ability:GetSpecialValueFor("knockback_duration")
-	local stun_duration = ability:GetSpecialValueFor("stun_duration")
-	local damage = ability:GetSpecialValueFor("damage")
-	local max_push_distance = ability:GetSpecialValueFor("max_push_distance")
-	local knockup_height = ability:GetSpecialValueFor("knockup_height")
-	local knockup_duration = ability:GetSpecialValueFor("knockup_duration")
-
-	-- Caustic Finale
-	--	local caustic_ability_name = "imba_sly_king_caustic_finale"
-	local caustic_ability
-	local poison_duration
-	--	if caster:HasAbility(caustic_ability_name) then
-	--		caustic_ability = caster:FindAbilityByName(caustic_ability_name)
-	--		poison_duration = caustic_ability:GetSpecialValueFor("poison_duration")
-	--	end
-
-	-- If an enemy target has Linken's sphere ready, do nothing
-	if caster:GetTeamNumber() ~= target:GetTeamNumber() then
-		if target:TriggerSpellAbsorb(ability) then
-			return nil
-		end
-	end
-
-	-- Calculate target's distance from target point
-	local push_distance = (target:GetAbsOrigin() - target_point):Length2D()
-
-	-- If the distance is more than the maximum possible, use the maximum instead
-	if push_distance > max_push_distance then
-		push_distance = max_push_distance
-	end
-
-	-- Find a spot that would bring the enemy towards the caster
-	local distance = (target:GetAbsOrigin() - caster:GetAbsOrigin()):Length2D()
-	local direction = (target:GetAbsOrigin() - caster:GetAbsOrigin()):Normalized()
-	local bump_point = caster:GetAbsOrigin() + direction * (distance + 150)
-
-	-- Knockback enemies up and towards the target point
-	local knockbackProperties =
-		{
-			center_x = bump_point.x,
-			center_y = bump_point.y,
-			center_z = bump_point.z,
-			duration = knockup_duration,
-			knockback_duration = knockup_duration,
-			knockback_distance = push_distance,
-			knockback_height = knockup_height
-		}
-
-	target:RemoveModifierByName("modifier_knockback")
-	target:AddNewModifier(target, nil, "modifier_knockback", knockbackProperties)
-
-	-- Stun the target
-	target:AddNewModifier(caster, ability, modifier_stun, {duration = stun_duration})
-
-	-- Apply Caustic Finale to heroes, unless they already have it
-	--	if target:IsHero() and poison_duration and poison_duration > 0 and not target:HasModifier(modifier_poison) then
-	--		target:AddNewModifier(caster, caustic_ability, modifier_poison, {duration = poison_duration})
-	--	end
-
-	-- Deal damage
-	local damageTable = {victim = target,
-		attacker = caster,
-		damage = damage,
-		damage_type = DAMAGE_TYPE_MAGICAL,
-		ability = ability
-	}
-
-	ApplyDamage(damageTable)
-
-	-- Wait until the target lands, then resolve positions
-	Timers:CreateTimer(knockup_duration + FrameTime(), function()
-		ResolveNPCPositions(target_point, 128)
-	end)
-end
-
-
--- burrowblast burrow modifier
-modifier_imba_burrowblast_burrow = class({})
-
-function modifier_imba_burrowblast_burrow:OnCreated()
-	if IsServer() then
-		-- Remove caster's model
-		self:GetCaster():AddNoDraw()
-	end
-end
-
-function modifier_imba_burrowblast_burrow:CheckState()
-	local state = {[MODIFIER_STATE_STUNNED] = true,
-		[MODIFIER_STATE_OUT_OF_GAME] = true,
-		[MODIFIER_STATE_INVULNERABLE] = true,
-		[MODIFIER_STATE_NO_HEALTH_BAR] = true}
-	return state
-end
-
-function modifier_imba_burrowblast_burrow:OnDestroy()
-	if IsServer() then
-		-- Redraw caster's model
-		self:GetCaster():RemoveNoDraw()
-	end
-end
-
-function modifier_imba_burrowblast_burrow:IsHidden() return true end
-function modifier_imba_burrowblast_burrow:IsPurgable() return false end
-function modifier_imba_burrowblast_burrow:IsDebuff() return false end
 
 ---------------------------------------------------------------------
 --------------------------FROZEN SKIN--------------------------------
@@ -545,6 +547,101 @@ end
 function modifier_imba_frozen_skin_debuff:GetEffectName() return "particles/units/heroes/hero_crystalmaiden/maiden_frostbite_buff.vpcf" end
 function modifier_imba_frozen_skin_debuff:GetEffectAttachType() return PATTACH_ABSORIGIN_FOLLOW end
 
+-------------------------------------
+--       Hypothermic Wisdom        --
+-------------------------------------
+
+imba_sly_king_hypothermic_wisdom = class({})
+
+LinkLuaModifier( "modifier_imba_sly_king_hypothermic_wisdom", "components/abilities/heroes/hero_sly_king.lua", LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier( "modifier_imba_sly_king_hypothermic_wisdom_int_tracker", "components/abilities/heroes/hero_sly_king.lua", LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier( "modifier_special_bonus_imba_unique_sly_king_1", "components/abilities/heroes/hero_sly_king.lua", LUA_MODIFIER_MOTION_NONE )
+
+
+function imba_sly_king_hypothermic_wisdom:GetIntrinsicModifierName()
+	return "modifier_imba_sly_king_hypothermic_wisdom"
+end
+
+function imba_sly_king_hypothermic_wisdom:OnOwnerSpawned()
+	if self:GetCaster():HasTalent("special_bonus_imba_unique_sly_king_1") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_unique_sly_king_1") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_special_bonus_imba_unique_sly_king_1", {})
+	end
+end
+
+modifier_imba_sly_king_hypothermic_wisdom = class({})
+
+function modifier_imba_sly_king_hypothermic_wisdom:IsHidden()	return true end
+
+function modifier_imba_sly_king_hypothermic_wisdom:OnCreated()
+	if not IsServer() then return end
+	self.int_modifier = self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_sly_king_hypothermic_wisdom_int_tracker", {})
+end
+
+function modifier_imba_sly_king_hypothermic_wisdom:OnDestroy()
+	if not IsServer() then return end
+	if self.int_modifier then self.int_modifier:Destroy() end
+end
+
+function modifier_imba_sly_king_hypothermic_wisdom:DeclareFunctions()
+	local funcs = {	MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
+					MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE	}
+	return funcs
+end
+
+function modifier_imba_sly_king_hypothermic_wisdom:GetModifierBonusStats_Intellect()
+	if not self:GetParent():PassivesDisabled() then
+		local talent_value = 0
+		
+		if self:GetCaster():HasModifier("modifier_special_bonus_imba_unique_sly_king_1") then
+			talent_value = self:GetParent():GetModifierStackCount("modifier_special_bonus_imba_unique_sly_king_1", self:GetParent()) / 100
+		end
+		
+		return (100 - self:GetParent():GetHealthPercent()) * (self:GetAbility():GetSpecialValueFor("int_per_health_pct_loss") + talent_value)
+	end
+end
+
+function modifier_imba_sly_king_hypothermic_wisdom:GetModifierSpellAmplify_Percentage()
+	if self:GetParent():HasModifier("modifier_imba_sly_king_hypothermic_wisdom_int_tracker") and not self:GetParent():PassivesDisabled() then
+		return self:GetParent():GetModifierStackCount("modifier_imba_sly_king_hypothermic_wisdom_int_tracker", self:GetParent()) * self:GetAbility():GetSpecialValueFor("spell_amp_per_int")
+	end
+end
+
+modifier_imba_sly_king_hypothermic_wisdom_int_tracker = class({})
+
+function modifier_imba_sly_king_hypothermic_wisdom_int_tracker:IsHidden() 		return true end
+function modifier_imba_sly_king_hypothermic_wisdom_int_tracker:IsPurgable() 	return false end
+function modifier_imba_sly_king_hypothermic_wisdom_int_tracker:RemoveOnDeath() 	return false end
+
+function modifier_imba_sly_king_hypothermic_wisdom_int_tracker:OnCreated()
+	self:StartIntervalThink(FrameTime())
+end
+
+function modifier_imba_sly_king_hypothermic_wisdom_int_tracker:OnIntervalThink()
+	self:SetStackCount(self:GetParent():GetIntellect())
+	
+	if not IsServer() then return end
+	
+	-- Add colour change based on Sly King's health for tactility (for the hell of it)
+	if self:GetParent():PassivesDisabled() then
+		self:GetParent():SetRenderColor(255, 255, 255)
+	else
+		local healthPctRender = (self:GetParent():GetHealthPercent() / 100) * 255
+		
+		self:GetParent():SetRenderColor(healthPctRender, healthPctRender, healthPctRender)
+	end
+end
+
+-- Talent to increase INT values
+modifier_special_bonus_imba_unique_sly_king_1 = class({})
+
+function modifier_special_bonus_imba_unique_sly_king_1:IsHidden() 		return true end
+function modifier_special_bonus_imba_unique_sly_king_1:IsPurgable() 	return false end
+function modifier_special_bonus_imba_unique_sly_king_1:RemoveOnDeath() 	return false end
+
+function modifier_special_bonus_imba_unique_sly_king_1:OnCreated()
+	if not IsServer() then return end
+	self:SetStackCount(self:GetParent():FindAbilityByName("special_bonus_imba_unique_sly_king_1"):GetSpecialValueFor("value") * 100)
+end
 
 ----------------------------------------------
 ------       WINTERBRINGER      --------------
@@ -553,6 +650,14 @@ function modifier_imba_frozen_skin_debuff:GetEffectAttachType() return PATTACH_A
 imba_sly_king_winterbringer = imba_sly_king_winterbringer or class({})
 LinkLuaModifier("modifier_imba_winterbringer_pulse", "components/abilities/heroes/hero_sly_king.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_winterbringer_slow", "components/abilities/heroes/hero_sly_king.lua", LUA_MODIFIER_MOTION_NONE)
+
+function imba_sly_king_winterbringer:GetCastAnimation()
+	return ACT_DOTA_DISABLED
+end
+
+function imba_sly_king_winterbringer:GetPlaybackRateOverride()
+  return 0.01
+end
 
 function imba_sly_king_winterbringer:IsHiddenWhenStolen()
 	return false
@@ -616,6 +721,13 @@ function modifier_imba_winterbringer_pulse:OnCreated()
 		self.pull_speed = self:GetAbility():GetSpecialValueFor("pull_speed")
 		self.pulse_interval = self:GetAbility():GetSpecialValueFor("pulse_interval")
 		self.pos = self:GetCaster():GetAbsOrigin()
+
+		-- Check for pulse talent
+		self.pulse_talent = self:GetCaster():FindAbilityByName("special_bonus_imba_unique_sly_king_2")
+		
+		if self.pulse_talent and self.pulse_talent:IsTrained() then
+			self.pulse_interval = self.pulse_interval - self.pulse_talent:GetSpecialValueFor("value")
+		end
 
 		self.wave_fx_played = 0 --will be used to alternate the sound effects on the waves: 0 -> sound_wave_1 will be played; 1 -> sound_wave_2 will be played
 

@@ -369,6 +369,30 @@
 	}
 
 	//=================================================================================================================
+	//	HERO: Chen
+	//=================================================================================================================
+	"npc_dota_hero_chen"
+	{
+		"override_hero"				"npc_dota_hero_chen"
+		
+		"Ability1"					"chen_penitence"
+		"Ability2"					"chen_divine_favor"
+		"Ability3"					"chen_holy_persuasion"
+		"Ability4"					"chen_test_of_faith"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"chen_hand_of_god"
+		
+		"Ability10"					"special_bonus_exp_boost_35"
+		"Ability11"					"special_bonus_cast_range_200"
+		"Ability12"					"special_bonus_armor_7"
+		"Ability13"					"special_bonus_unique_chen_3"
+		"Ability14"					"special_bonus_gold_income_30"
+		"Ability15"					"special_bonus_unique_chen_4"
+		"Ability16"					"special_bonus_unique_chen_1"
+		"Ability17"					"special_bonus_unique_chen_2"
+	}
+
+	//=================================================================================================================
 	//	HERO: Clinkz
 	//=================================================================================================================
 	"npc_dota_hero_clinkz"
@@ -747,6 +771,30 @@
 	}
 	
 	//=================================================================================================================
+	// HERO: Huskar
+	//=================================================================================================================
+	"npc_dota_hero_huskar"
+	{
+		"override_hero"	"npc_dota_hero_huskar"
+		
+		"Ability1"		"huskar_inner_fire"
+		"Ability2"		"huskar_burning_spear"
+		"Ability3"		"huskar_berserkers_blood"
+		"Ability4"		"huskar_inner_vitality"
+		"Ability5"		"generic_hidden"
+		"Ability6"		"huskar_life_break"
+		
+		"Ability10"		"special_bonus_hp_225"
+		"Ability11"		"special_bonus_attack_damage_15"
+		"Ability12"		"special_bonus_unique_huskar_2"
+		"Ability13"		"special_bonus_lifesteal_20"
+		"Ability14"		"special_bonus_strength_20"
+		"Ability15"		"special_bonus_unique_huskar"
+		"Ability16"		"special_bonus_attack_range_175"
+		"Ability17"		"special_bonus_unique_huskar_5"
+	}
+	
+	//=================================================================================================================
 	// HERO: Invoker
 	//=================================================================================================================
 	"npc_dota_hero_invoker"
@@ -839,6 +887,31 @@
 		"Ability15"					"special_bonus_imba_juggernaut_1" // Blade Fury Vacuum
 		"Ability16"					"special_bonus_imba_juggernaut_9" // Omnislash EX
 		"Ability17"					"special_bonus_imba_juggernaut_4" // Secret Blade Triplicate
+	}
+	
+	//=================================================================================================================
+	// HERO: Keeper of the Light
+	//=================================================================================================================
+	"npc_dota_hero_keeper_of_the_light"
+	{
+		"override_hero"	"npc_dota_hero_keeper_of_the_light"
+
+		"Ability1"		"keeper_of_the_light_illuminate"
+		"Ability2"		"keeper_of_the_light_blinding_light"
+		"Ability3"		"keeper_of_the_light_chakra_magic"
+		"Ability4"		"keeper_of_the_light_mana_leak"
+		"Ability5"		"generic_hidden"
+		"Ability6"		"keeper_of_the_light_will_o_wisp"
+		"Ability7"		"keeper_of_the_light_illuminate_end"
+		
+		"Ability10"		"special_bonus_spell_lifesteal_8"
+		"Ability11"		"special_bonus_movement_speed_25"
+		"Ability12"		"special_bonus_exp_boost_40"
+		"Ability13"		"special_bonus_cast_range_350"
+		"Ability14"		"special_bonus_magic_resistance_40"
+		"Ability15"		"special_bonus_unique_keeper_of_the_light_2"
+		"Ability16"		"special_bonus_unique_keeper_of_the_light_3"
+		"Ability17"		"special_bonus_unique_keeper_of_the_light"
 	}
 
 	//=================================================================================================================
@@ -1030,13 +1103,6 @@
 		//Picking Screen
 		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
 
-		"Ability1"					"meepo_earthbind"
-		"Ability2"					"meepo_poof"
-		"Ability3"					"meepo_geostrike"
-		"Ability4"					"generic_hidden"
-		"Ability5"					"generic_hidden"
-		"Ability6"					"meepo_divided_we_stand"
-
 		"Ability10"					"special_bonus_strength_7"
 		"Ability11"					"special_bonus_attack_damage_20"
 		"Ability12"					"special_bonus_lifesteal_10"
@@ -1045,6 +1111,22 @@
 		"Ability15"					"special_bonus_evasion_15"
 		"Ability16"					"special_bonus_hp_600"
 		"Ability17"					"special_bonus_unique_meepo"
+		
+		"Ability1"		"meepo_earthbind"
+		"Ability2"		"meepo_poof"
+		"Ability3"		"meepo_ransack"
+		"Ability4"		"generic_hidden"
+		"Ability5"		"generic_hidden"
+		"Ability6"		"meepo_divided_we_stand"
+		
+		"Ability10"		"special_bonus_strength_10"
+		"Ability11"		"special_bonus_attack_damage_25"
+		"Ability12"		"special_bonus_evasion_15"
+		"Ability13"		"special_bonus_unique_meepo_2"
+		"Ability14"		"special_bonus_unique_meepo_3"
+		"Ability15"		"special_bonus_lifesteal_10"
+		"Ability16"		"special_bonus_hp_600"
+		"Ability17"		"special_bonus_unique_meepo"
 	}
 
 	//=================================================================================================================
@@ -1272,14 +1354,22 @@
 		"Ability5"					"nyx_assassin_unburrow"
 		"Ability6"					"imba_nyx_assassin_vendetta"
 		
-		"Ability10"					"special_bonus_imba_nyx_assassin_4" //Spiked Carapace returns all damage instances
-		"Ability11"					"special_bonus_imba_nyx_assassin_5" //Spiked Carapace auto-casts < 30% HP
+		"Ability10"					"special_bonus_imba_nyx_assassin_6" //Impale causes random spikes to appear around targets hit
+		"Ability11"					"special_bonus_imba_nyx_assassin_8" //If unit dies during Mana Burn, Nyx gets the parasite
 		"Ability12"					"special_bonus_imba_nyx_assassin_3" //Mana Burn uses targets main attribute
-		"Ability13"					"special_bonus_imba_nyx_assassin_8" //If unit dies during Mana Burn, Nyx gets the parasite
-		"Ability14"					"special_bonus_imba_nyx_assassin_7" //Impale slows people down the more they move
-		"Ability15"					"special_bonus_imba_nyx_assassin_1" //Vendetta kill doesn't use Eye for Eye stacks
-		"Ability16"					"special_bonus_imba_nyx_assassin_6" //Impale causes random spikes to appear around targets hit
-		"Ability17"					"special_bonus_imba_nyx_assassin_2" //Vendetta hits apply Mana Burn
+		"Ability13"					"special_bonus_imba_nyx_assassin_13" // +10% Impale Relive Suffering damage
+		"Ability14"					"special_bonus_imba_nyx_assassin_4" //Spiked Carapace returns all damage instances
+		"Ability15"					"special_bonus_imba_nyx_assassin_12" // +1000 Vendetta Maximum Stored Damage
+		"Ability16"					"special_bonus_agility_100"
+		"Ability17"					"special_bonus_imba_nyx_assassin_11" // Vendetta Unobstructed Pathing
+
+		// Removed Abilities
+		// "Ability11"					"special_bonus_imba_nyx_assassin_5" //Spiked Carapace auto-casts < 30% HP
+		// "Ability14"					"special_bonus_imba_nyx_assassin_7" //Impale slows people down the more they move
+		// "Ability14"					"special_bonus_imba_nyx_assassin_2" //Vendetta hits apply Mana Burn
+		// "Ability15"					"special_bonus_imba_nyx_assassin_1" //Vendetta kill doesn't use Eye for Eye stacks
+		// "Ability15"					"special_bonus_imba_nyx_assassin_10" // +75% Spiked Carapace Damage
+		// Unused						"special_bonus_imba_nyx_assassin_9" // Scarab Parasite has no duration
 	}
 
 //	//=================================================================================================================
@@ -1892,6 +1982,9 @@
 	"npc_dota_hero_tiny"
 	{
 		"override_hero"				"npc_dota_hero_tiny"		
+		
+		"Model"						"models/creeps/ice_biome/storegga/storegga.vmdl"
+		"ModelScale"				"0.5"
 
 		//Picking Screen
 		"IsImba"					"1"
@@ -1940,6 +2033,31 @@
 		"Ability15"					"special_bonus_imba_troll_warlord_6"
 		"Ability16"					"special_bonus_imba_troll_warlord_7"
 		"Ability17"					"special_bonus_imba_troll_warlord_8"
+	}
+	
+	//=================================================================================================================
+	// HERO: Tusk
+	//=================================================================================================================
+	"npc_dota_hero_tusk"
+	{
+		"override_hero"	"npc_dota_hero_tusk"	
+	
+		"Ability1"		"tusk_ice_shards"
+		"Ability2"		"tusk_snowball"
+		"Ability3"		"tusk_tag_team"
+		"Ability4"		"tusk_walrus_kick"
+		"Ability5"		"tusk_frozen_sigil"
+		"Ability6"		"tusk_walrus_punch"
+		"Ability7"		"tusk_launch_snowball"
+		
+		"Ability10"		"special_bonus_exp_boost_40"
+		"Ability11"		"special_bonus_gold_income_15"
+		"Ability12"		"special_bonus_hp_350"
+		"Ability13"		"special_bonus_unique_tusk_2"
+		"Ability14"		"special_bonus_unique_tusk_3"
+		"Ability15"		"special_bonus_unique_tusk"
+		"Ability16"		"special_bonus_unique_tusk_4"
+		"Ability17"		"special_bonus_unique_tusk_5"
 	}
 
 	//=================================================================================================================
@@ -2248,21 +2366,22 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"Ability1"					"imba_sly_king_burrow_blast"
 		"Ability2"					"imba_sly_king_frost_gale"
-		"Ability3"					"imba_sly_king_frozen_skin"
+		//"Ability3"					"imba_sly_king_frozen_skin"
+		"Ability3"					"imba_sly_king_hypothermic_wisdom"
 		"Ability4"					"generic_hidden"
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_sly_king_winterbringer"
 
 		// Talents
 		//-------------------------------------------------------------------------------------------------------------
-		"Ability10"					"special_bonus_magic_resistance_15"
-		"Ability11"					"special_bonus_exp_boost_10"
-		"Ability12"					"special_bonus_attack_damage_40"
-		"Ability13"					"special_bonus_mp_300"
-		"Ability14"					"special_bonus_cast_range_150" 
-		"Ability15"					"special_bonus_spell_amplify_10"
+		"Ability10"					"special_bonus_magic_resistance_12"
+		"Ability11"					"special_bonus_armor_6"
+		"Ability12"					"special_bonus_imba_unique_sly_king_1"
+		"Ability13"					"special_bonus_hp_regen_10"
+		"Ability14"					"special_bonus_imba_unique_sly_king_2" 
+		"Ability15"					"special_bonus_attack_damage_90"
 		"Ability16"					"special_bonus_cooldown_reduction_15"
-		"Ability17"					"special_bonus_gold_income_50"
+		"Ability17"					"special_bonus_spell_lifesteal_15"
 
 		// Bounds
 		//-------------------------------------------------------------------------------------------------------------

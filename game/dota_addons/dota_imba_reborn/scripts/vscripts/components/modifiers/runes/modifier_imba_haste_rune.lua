@@ -23,9 +23,13 @@ function modifier_imba_haste_rune:DeclareFunctions()
 	local funcs	=	{
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
-		MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE_MIN
+		MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE_MIN, 
 	}
 	return funcs
+end
+
+function modifier_imba_haste_rune:OnCreated()
+	self.ideal_speed = self:GetCaster():GetIdealSpeedNoSlows()
 end
 
 -- Bonus movespeed
@@ -40,7 +44,8 @@ end
 
 -- Minimum unslowable movement speed
 function modifier_imba_haste_rune:GetModifierMoveSpeed_AbsoluteMin()
-	return CustomNetTables:GetTableValue("game_options", "runes").haste_rune_move_speed_min
+	--return CustomNetTables:GetTableValue("game_options", "runes").haste_rune_move_speed_min
+	return self.ideal_speed
 end
 
 -- Aura properties

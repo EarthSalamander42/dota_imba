@@ -1211,9 +1211,8 @@
 ////===============================================================================================================
 
 "DOTA_Tooltip_ability_imba_nyx_assassin_mana_burn"                      "Mana Burn"
-"DOTA_Tooltip_ability_imba_nyx_assassin_mana_burn_Description"          "Destroys the target hero's mana equal to a multiplier of its Intelligence, and deals damage equal to the mana burned. When burrowed, Mana Burn cast range increases by %burrowed_cast_range_increase%.\n<font color='#FF7800'>Scarab Parasite:</font> Nyx plants a parasite inside the target using the wounds that the Mana Burn created. The parasite leeches mana and feeds from the target's mana, becoming charged with each mana point lost by the target. The parasite becomes charged when it eats mana equal to a portion of the mana that the target had when applying the parasite. After becoming charged, the parasite overloads for a duration, and explodes, dealing damage equal to %parasite_mana_as_damage_pct%% of all mana that it has been fed over the charging duration. At the moment of explosion, if the target has more mana than the starting amount, it does nothing. If the parasite doesn't become charged in the initial duration, it dies, doing nothing as well."
-"DOTA_Tooltip_ability_imba_nyx_assassin_mana_burn_Note0"                "The parasite checks for mana lost every 0.5 seconds."
-"DOTA_Tooltip_ability_imba_nyx_assassin_mana_burn_Note1"                "All sources of lost mana feed the parasite, including the Mana Burn that planted it."
+"DOTA_Tooltip_ability_imba_nyx_assassin_mana_burn_Description"          "Destroys the target hero's mana equal to a multiplier of its Intelligence, and deals damage equal to the mana burned. When burrowed, Mana Burn cast range increases by %burrowed_cast_range_increase%.\n<font color='#FF7800'>Scarab Parasite:</font> Nyx plants a parasite inside the target, leeching mana and charging up. If the parasite drains a percentage of the target's original mana before it expires, it overloads for a short duration before exploding, dealing damage equal to %parasite_mana_as_damage_pct%%% of drained mana.\n<font color='#FF7800'>Arcane Scarring: </font>Units afflicted by Scarab Parasite also have a percentage of any damage taken (post-reductions) drain their mana. This mana is also used to feed and charge the parasite."
+"DOTA_Tooltip_ability_imba_nyx_assassin_mana_burn_Note0"                "Parasites do not stack."
 "DOTA_Tooltip_ability_imba_nyx_assassin_mana_burn_Lore"                "The tome in Ultimyr describes one scarab with the ability to eat away at the minds of lesser beings."
 "DOTA_Tooltip_ability_imba_nyx_assassin_mana_burn_intelligence_mult"                "INTELLIGENCE MULTIPLIER:"
 "DOTA_Tooltip_ability_imba_nyx_assassin_mana_burn_parasite_mana_leech"              "PARASITE MANA LEECH PER SECOND:"
@@ -1221,6 +1220,7 @@
 "DOTA_Tooltip_ability_imba_nyx_assassin_mana_burn_parasite_duration"                "PARASITE DURATION:"
 "DOTA_Tooltip_ability_imba_nyx_assassin_mana_burn_parasite_charge_threshold_pct"    "%PARASITE MANA TO CHARGE:"
 "DOTA_Tooltip_ability_imba_nyx_assassin_mana_burn_explosion_delay"                  "PARASITE EXPLOSION DELAY:"
+"DOTA_Tooltip_ability_imba_nyx_assassin_mana_burn_scarring_burn_pct"				"%ARCANE SCARRING DAMAGE TO MANA:"
 
 "DOTA_Tooltip_modifier_imba_mana_burn_parasite"                        "Scarab Parasite"
 "DOTA_Tooltip_modifier_imba_mana_burn_parasite_Description"            "A mana-eating parasite has been injected into your body. If it eats enough mana, it will charge up and explode."
@@ -1293,11 +1293,17 @@
 "DOTA_Tooltip_ability_special_bonus_imba_nyx_assassin_3"                "Mana Burn based on target main attribute"
 "DOTA_Tooltip_ability_special_bonus_imba_nyx_assassin_4"                "Spiked Carapace returns all damage instances"
 "DOTA_Tooltip_ability_special_bonus_imba_nyx_assassin_5"                "Spiked Carapace auto activate below 30% health"
-"DOTA_Tooltip_ability_special_bonus_imba_nyx_assassin_6"                "Impale adds random mini-spike casts for 3 seconds"
+"DOTA_Tooltip_ability_special_bonus_imba_nyx_assassin_6"                "Impale adds random mini-spike casts for 4 seconds"
+"DOTA_Tooltip_ability_special_bonus_imba_nyx_assassin_6_Description" 	"Every 0.8 seconds, there is a 50% chance of a spike shooting from impact location in a random direction between 75 and 300 range, ministunning for 75 damage."
 "DOTA_Tooltip_ability_special_bonus_imba_nyx_assassin_7"                "Impale gradually slows moving targets after hit"
-"DOTA_Tooltip_ability_special_bonus_imba_nyx_assassin_8"				"Scarab Storage"										
-"DOTA_Tooltip_ability_special_bonus_imba_nyx_assassin_8_Description"    "Units dying under the Mana Burn debuff have scarabs coming out of them, hopping into Nyx for 20 seconds. If an enemy unit comes within 400 AoE of Nyx, the scarabs invade and procs Mana Burn."
-
+"DOTA_Tooltip_ability_special_bonus_imba_nyx_assassin_8"				"Mana Burn Scarab Storage"
+"DOTA_Tooltip_ability_special_bonus_imba_nyx_assassin_8_Description"    "If an enemy dies during Scarab Parasite, scarabs are stored for 20 seconds. If an enemy unit comes within 400 AoE, Mana Burn is cast on them."
+"DOTA_Tooltip_ability_special_bonus_imba_nyx_assassin_9" 				"Mana Burn Scarab Parasite no longer expires"
+"DOTA_Tooltip_ability_special_bonus_imba_nyx_assassin_10" 				"+75% Spiked Carapace Damage"
+"DOTA_Tooltip_ability_special_bonus_imba_nyx_assassin_11" 				"Vendetta Unobstructed Pathing"
+"DOTA_Tooltip_ability_special_bonus_imba_nyx_assassin_12" 				"+1000 Vendetta Maximum Stored Damage"
+"DOTA_Tooltip_ability_special_bonus_imba_nyx_assassin_12_Description" 	"Eye for an Eye modifier must be recreated after this talent is acquired for changes to apply."
+"DOTA_Tooltip_ability_special_bonus_imba_nyx_assassin_13" 				"+10% Impale Relive Suffering damage"
 
 // Phantom Lancer
 ////===============================================================================================================

@@ -48,7 +48,7 @@
 
 // Abaddon's Overchannel
 "DOTA_Tooltip_ability_imba_abaddon_over_channel"                        "Overchannel"
-"DOTA_Tooltip_ability_imba_abaddon_over_channel_Description"            "Abaddon channels a dangerously large amount of mist through his body, empowering Mist Coil (and increasing Mist duration) and Aphotic Shield, but causing those spells to cost health to cast. Also applies to Curse of Avernus active. Each spell cast under the effects of Overchannel also introduces a debuff that increases cooldown of all abilities and items by %reduction_multiplier%%% per stack. The debuff lasts %reduction_duration% seconds, and is refreshed and incremented with successive casts under Overchannel."
+"DOTA_Tooltip_ability_imba_abaddon_over_channel_Description"            "Abaddon channels a dangerously large amount of mist through his body, empowering Mist Coil (and increasing Mist duration) and Aphotic Shield, but causing those spells to cost health to cast. Also applies to Curse of Avernus active. Each spell cast under the effects of Overchannel also introduces a debuff that increases cooldown of all abilities and items by %reduction_multiplier%%% per stack. The debuff lasts %reduction_duration% seconds, and is incremented with successive casts under Overchannel."
 "DOTA_Tooltip_ability_imba_abaddon_over_channel_Note0"                  "Health costs are lethal."
 "DOTA_Tooltip_ability_imba_abaddon_over_channel_Note1"                  "Level upgrades with Borrowed Time."
 "DOTA_Tooltip_ability_imba_abaddon_over_channel_extra_dmg"              "DAMAGE/HEALTH COST:"

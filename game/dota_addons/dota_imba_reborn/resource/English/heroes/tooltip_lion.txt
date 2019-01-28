@@ -106,6 +106,7 @@
 "DOTA_Tooltip_ability_special_bonus_imba_lion_3_Description"    "Any mana absorbed beyond full feeds into a separate pool for %duration% seconds, adding to Finger of Death's damage."
 "DOTA_Tooltip_ability_special_bonus_imba_lion_4"                "Mana Drain slows target based on missing mana"
 "DOTA_Tooltip_ability_special_bonus_imba_lion_5"                "FoD's Trigger Finger no longer requires kills"
+"DOTA_Tooltip_ability_special_bonus_imba_lion_5_Description"	"Trigger Finger's debuff when an enemy is not killed is 30 seconds."
 "DOTA_Tooltip_ability_special_bonus_imba_lion_6"                "Chain Hex spreads to two enemies simultaneously"
 "DOTA_Tooltip_ability_special_bonus_imba_lion_7"                "Death Spike debuff"
 "DOTA_Tooltip_ability_special_bonus_imba_lion_7_Description"  	"Earth Spike slows targets by 25% and increases damage taken from Finger of Death by 20% for 3 seconds."

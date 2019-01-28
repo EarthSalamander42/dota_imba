@@ -103,7 +103,7 @@
 "DOTA_Tooltip_ability_special_bonus_imba_slardar_8"                     "-3 armor per physical damage on Corrosive Haze"
 "DOTA_Tooltip_ability_special_bonus_imba_slardar_9"						"Bash of the Deep affects buildings"
 "DOTA_Tooltip_ability_special_bonus_imba_slardar_10"                    "Depression"
-"DOTA_Tooltip_ability_special_bonus_imba_slardar_10_Description" 		"Rain Cloud moves twice as fast, and passively applies Slithereen Crush's slow and Corrosive Haze (at 1/4 the duration)."
+"DOTA_Tooltip_ability_special_bonus_imba_slardar_10_Description" 		"Rain Cloud (requires Aghanim's Scepter) moves twice as fast, and passively applies Slithereen Crush's slow and Corrosive Haze (at 1/4 the duration)."
 "DOTA_Tooltip_ability_special_bonus_imba_slardar_11"                    "Corrosive Haze Armor Transfer"
 "DOTA_Tooltip_ability_special_bonus_imba_slardar_11_Description" 		"Each instance of physical damage on affected enemy heroes temporarily transfers one armor to the caster, up to the original reduction value."
 "DOTA_Tooltip_ability_special_bonus_imba_slardar_12"                    "Corrosive Haze Undispellable"

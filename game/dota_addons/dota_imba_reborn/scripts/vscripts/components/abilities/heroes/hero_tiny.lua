@@ -1438,7 +1438,7 @@ function imba_tiny_grow:OnUpgrade()
 		if old_stacks == new_stacks then old_stacks = 0 end
 		rolling_stone:SetStackCount(rolling_stone:GetStackCount() - old_stacks + new_stacks)
 		local level = self:GetLevel() + 1
-		if level < 5 then -- model bullshit
+		if level < 5 and caster:GetModelName() ~= "models/creeps/ice_biome/storegga/storegga.vmdl" then -- model bullshit
 			-- Set new model
 			self:GetCaster():SetOriginalModel("models/heroes/tiny_0"..level.."/tiny_0"..level..".vmdl")
 			self:GetCaster():SetModel("models/heroes/tiny_0"..level.."/tiny_0"..level..".vmdl")
@@ -1457,6 +1457,8 @@ function imba_tiny_grow:OnUpgrade()
 			self.rarm:FollowEntity(self:GetCaster(), true)
 			self.larm:FollowEntity(self:GetCaster(), true)
 			self.body:FollowEntity(self:GetCaster(), true)
+		else
+			caster:SetModelScale((level * 0.2) + 0.5)
 		end
 		-- Effects
 		self:GetCaster():StartGesture(ACT_TINY_GROWL)

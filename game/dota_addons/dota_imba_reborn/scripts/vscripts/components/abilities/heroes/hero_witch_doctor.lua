@@ -213,7 +213,8 @@ LinkLuaModifier("modifier_special_bonus_imba_witch_doctor_6", "components/abilit
 
 modifier_special_bonus_imba_witch_doctor_6 = modifier_special_bonus_imba_witch_doctor_6 or class({})
 
-function modifier_special_bonus_imba_witch_doctor_6:IsHidden() return false end
+function modifier_special_bonus_imba_witch_doctor_6:IsHidden() return true end
+function modifier_special_bonus_imba_witch_doctor_6:IsPurgable() return false end
 function modifier_special_bonus_imba_witch_doctor_6:RemoveOnDeath() return false end
 
 -- #6 TALENT : Voodo restoration turns into a passive.
@@ -785,9 +786,12 @@ function imba_witch_doctor_death_ward:CreateWard(vPosition, bIsMiniWard)
 	return death_ward
 end
 
+function imba_witch_doctor_death_ward:GetCastAnimation()
+	return ACT_DOTA_CAST_ABILITY_4
+end
+
 function imba_witch_doctor_death_ward:GetChannelAnimation()
 	if self.dance then return ACT_DOTA_VICTORY end
-	return ACT_DOTA_CHANNEL_ABILITY_4
 end
 
 function imba_witch_doctor_death_ward:OnChannelFinish()

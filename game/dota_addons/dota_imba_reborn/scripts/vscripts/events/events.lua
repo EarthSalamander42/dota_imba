@@ -148,6 +148,10 @@ function GameMode:OnGameRulesStateChange(keys)
 			local danger_zone_pfx = ParticleManager:CreateParticle("particles/ambient/fountain_danger_circle.vpcf", PATTACH_CUSTOMORIGIN, nil)
 			ParticleManager:SetParticleControl(danger_zone_pfx, 0, fountainEnt:GetAbsOrigin())
 			ParticleManager:ReleaseParticleIndex(danger_zone_pfx)
+			
+			local fountain_aura_pfx = ParticleManager:CreateParticle("particles/range_indicator.vpcf", PATTACH_ABSORIGIN_FOLLOW, fountainEnt)
+			ParticleManager:SetParticleControl(fountain_aura_pfx, 1, Vector(255, 255, 0))
+			ParticleManager:SetParticleControl(fountain_aura_pfx, 3, Vector(1200, 0, 0))
 		end
 
 		-- Create a timer to avoid lag spike entering pick screen
@@ -564,6 +568,15 @@ function GameMode:OnPlayerLevelUp(keys)
 	if hero:GetUnitName() == "npc_dota_hero_invoker" then
 		hero:FindAbilityByName("invoker_invoke"):SetLevel(min(math.floor(level / 6 + 1), 4))
 	end
+	
+	-- Add some deprecated abilities back to heroes for that "IMBA" factor
+	local subAbilities = {"chen_test_of_faith", "keeper_of_the_light_mana_leak", "huskar_inner_vitality", "tusk_frozen_sigil"}
+	
+	for _, ability in ipairs(subAbilities) do 
+		if hero:HasAbility(ability) then
+			hero:FindAbilityByName(ability):SetLevel(min(math.floor(level / 3), 4))
+		end
+	end
 end
 
 function GameMode:OnPlayerLearnedAbility(keys)
@@ -634,7 +647,7 @@ function GameMode:OnPlayerChat(keys)
 	local caster = PlayerResource:GetPlayer(keys.playerid):GetAssignedHero()
 
 	for str in string.gmatch(text, "%S+") do
-		if IsInToolsMode() or GameRules:IsCheatMode() and (api.imba ~= nil and api.imba.is_developer(steamid)) then
+		if IsInToolsMode() or GameRules:IsCheatMode() or (api.imba ~= nil and api.imba.is_developer(steamid)) then
 			if str == "-dev_remove_units" then
 				GameMode:RemoveUnits(true, true, true)
 			end

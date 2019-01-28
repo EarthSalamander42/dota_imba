@@ -145,7 +145,7 @@ end
 -- Removes the unique modifier from the caster if this is the last skadi in its inventory
 function modifier_item_imba_skadi:OnDestroy()
 	if IsServer() then
-		if not self.parent:HasModifier("modifier_item_imba_skadi") then
+		if not self.parent:IsNull() and not self.parent:HasModifier("modifier_item_imba_skadi") then
 			self.parent:RemoveModifierByName("modifier_item_imba_skadi_unique")
 		end
 	end
@@ -172,6 +172,8 @@ function modifier_item_imba_skadi:DeclareFunctions()
 		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
 		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
+		MODIFIER_PROPERTY_HEALTH_BONUS,
+		MODIFIER_PROPERTY_MANA_BONUS
 	}
 	return funcs
 end
@@ -184,6 +186,12 @@ function modifier_item_imba_skadi:GetModifierBonusStats_Agility()
 
 function modifier_item_imba_skadi:GetModifierBonusStats_Intellect()
 	return self:GetAbility():GetSpecialValueFor("bonus_all_stats") end
+
+function modifier_item_imba_skadi:GetModifierHealthBonus()
+	return self:GetAbility():GetSpecialValueFor("bonus_health") end
+	
+function modifier_item_imba_skadi:GetModifierManaBonus()
+	return self:GetAbility():GetSpecialValueFor("bonus_mana") end
 
 -----------------------------------------------------------------------------------------------------------
 --	Skadi slow applier

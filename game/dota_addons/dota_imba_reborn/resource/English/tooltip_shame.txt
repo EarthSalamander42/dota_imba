@@ -414,7 +414,7 @@
 //"DOTA_Tooltip_Ability_special_bonus_unique_earthshaker_3"           "+500 Fissure range"
 //"DOTA_Tooltip_Ability_special_bonus_unique_rubick"                  "+400 Telekinesis Land Distance"
 //"DOTA_Tooltip_Ability_special_bonus_unique_dark_seer"               "+80 Ion Shell Damage"
-//"DOTA_Tooltip_Ability_special_bonus_unique_dark_seer_2"             "+100 Vacuum AOE"
+"DOTA_Tooltip_Ability_special_bonus_unique_dark_seer_2"             "+150 Vacuum AOE"
 //"DOTA_Tooltip_Ability_special_bonus_unique_shadow_shaman_1"         "+1 Serpent Wards Attacks HP"
 //"DOTA_Tooltip_Ability_special_bonus_unique_shadow_shaman_2"         "+3s Shackles Duration"
 //"DOTA_Tooltip_Ability_special_bonus_unique_morphling_1"             "+400 Waveform Range"

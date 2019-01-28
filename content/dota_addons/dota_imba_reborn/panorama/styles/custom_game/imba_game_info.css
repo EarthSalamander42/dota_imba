@@ -58,8 +58,9 @@ Label
 #HeroesImage
 {
 	margin-top: 2px;
-	horizontal-align: right;
+	horizontal-align: left;
 	vertical-align: center;
+	height: 100%;
 }
 
 #AbilitiesImage

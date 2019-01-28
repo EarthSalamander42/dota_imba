@@ -57,14 +57,9 @@ function modifier_imba_morbid_mask:OnCreated()
 end
 
 function modifier_imba_morbid_mask:DeclareFunctions()
-	local decFunc = {MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
-		MODIFIER_EVENT_ON_ATTACK_LANDED}
+	local decFunc = {MODIFIER_EVENT_ON_ATTACK_LANDED}
 
 	return decFunc
-end
-
-function modifier_imba_morbid_mask:GetModifierPreAttack_BonusDamage()
-	return self.damage_bonus
 end
 
 function modifier_imba_morbid_mask:OnDestroy()

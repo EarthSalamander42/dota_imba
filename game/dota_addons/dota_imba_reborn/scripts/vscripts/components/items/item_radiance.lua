@@ -75,9 +75,7 @@ function modifier_imba_cloak_of_flames_basic:OnDestroy(keys)
 			self:GetParent():RemoveModifierByName("modifier_imba_cloak_of_flames_aura")
 		end
 	end
-end
-
-function modifier_imba_cloak_of_flames_basic:OnDestroy()
+	
 	if self.particle ~= nil then
 		ParticleManager:DestroyParticle(self.particle, false)
 		ParticleManager:ReleaseParticleIndex(self.particle)

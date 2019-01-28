@@ -998,7 +998,14 @@ function modifier_over_channel_handler:OnAbilityExecuted( keys )
     if not IsServer() then return end
 	
     if keys.unit == self:GetParent() and not keys.ability:IsItem() and keys.ability:GetName() ~= "imba_abaddon_over_channel" then
-        self:GetParent():AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_over_channel_reduction", {duration = self:GetAbility():GetSpecialValueFor("reduction_duration") + 15})
+        self:GetParent():AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_over_channel_reduction", {duration = self:GetAbility():GetSpecialValueFor("reduction_duration")})
+		
+		Timers:CreateTimer(self:GetAbility():GetSpecialValueFor("reduction_duration"), function()
+			local overchannel_modifier = self:GetParent():FindModifierByName("modifier_over_channel_reduction")
+			if overchannel_modifier then
+				overchannel_modifier:DecrementStackCount()
+			end
+		end)
     end
 end
 

@@ -180,6 +180,10 @@ function imba_nyx_assassin_impale:OnProjectileHit_ExtraData(target, location, Ex
 		damage = ability:GetSpecialValueFor("damage")
 	end
 
+	if caster:HasTalent("special_bonus_imba_nyx_assassin_13") then
+		damage_repeat_pct = damage_repeat_pct + caster:FindTalentValue("special_bonus_imba_nyx_assassin_13")
+	end
+
 	-- Play impact sound
 	EmitSoundOn(sound_impact, target)
 
@@ -571,6 +575,11 @@ function imba_nyx_assassin_mana_burn:OnSpellStart(target)
 	local mana_burn_damage_pct = ability:GetSpecialValueFor("mana_burn_damage_pct")
 	local parasite_duration = ability:GetSpecialValueFor("parasite_duration")
 
+	-- Scarab Parasite no duration talent
+	if caster:HasTalent("special_bonus_imba_nyx_assassin_9") then
+		parasite_duration = -1
+	end
+
 	-- Play cast sound
 	EmitSoundOn(sound_cast, target)
 
@@ -635,7 +644,8 @@ end
 modifier_imba_mana_burn_parasite = class({})
 
 function modifier_imba_mana_burn_parasite:DeclareFunctions()
-	local decFuncs = {MODIFIER_EVENT_ON_HERO_KILLED}
+	local decFuncs = {MODIFIER_EVENT_ON_HERO_KILLED,
+	MODIFIER_EVENT_ON_TAKEDAMAGE}
 
 	return decFuncs
 end
@@ -654,6 +664,7 @@ function modifier_imba_mana_burn_parasite:OnCreated()
 		self.parasite_charge_threshold_pct = self.ability:GetSpecialValueFor("parasite_charge_threshold_pct")
 		self.explosion_delay = self.ability:GetSpecialValueFor("explosion_delay")
 		self.leech_interval = self.ability:GetSpecialValueFor("leech_interval")
+		self.scarring_burn_pct = self.ability:GetSpecialValueFor("scarring_burn_pct")
 
 		-- Adjust leech per second
 		self.parasite_mana_leech = self.parasite_mana_leech * self.leech_interval
@@ -669,7 +680,7 @@ function modifier_imba_mana_burn_parasite:OnCreated()
 		self.starting_target_mana = self.parent:GetMana()
 		self.charge_threshold = self.starting_target_mana * self.parasite_charge_threshold_pct * 0.01
 		self.last_known_target_mana = self.starting_target_mana
-
+		
 		-- Start charging/count mana
 		self.parasite_charged_mana = 0
 
@@ -677,6 +688,9 @@ function modifier_imba_mana_burn_parasite:OnCreated()
 		self.particle_flames_fx = ParticleManager:CreateParticle(self.particle_flames, PATTACH_CUSTOMORIGIN_FOLLOW, self.parent)
 		ParticleManager:SetParticleControlEnt(self.particle_flames_fx, 0, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)
 		self:AddParticle(self.particle_flames_fx, false, false, -1, false, false)
+
+		-- Make damage ticks change based on parent's status resistance (so it will always tick the same amount)
+		self.leech_interval = self.leech_interval * (1 - self:GetParent():GetStatusResistance())
 
 		-- Start thinking
 		self:StartIntervalThink(self.leech_interval)
@@ -701,15 +715,17 @@ function modifier_imba_mana_burn_parasite:OnIntervalThink()
 		end
 
 		-- Check if the target has lost mana since the last check. If he has, add it to the charge count
-		if target_current_mana < self.last_known_target_mana then
-			mana_lost = self.last_known_target_mana - target_current_mana - mana_leeched
-		end
+		--if target_current_mana < self.last_known_target_mana then
+		--	mana_lost = self.last_known_target_mana - target_current_mana - mana_leeched
+		--end
 
 		-- Update the charge meter
-		self.parasite_charged_mana = self.parasite_charged_mana + mana_leeched + math.max(mana_lost, 0)
+		self.parasite_charged_mana = self.parasite_charged_mana + mana_leeched --+ math.max(mana_lost, 0)
+
+		self:SetStackCount(self.parasite_charged_mana)
 
 		-- Update last known target mana
-		self.last_known_target_mana = target_current_mana
+		--self.last_known_target_mana = target_current_mana
 
 		-- Check if the threshold has been reached
 		if self.parasite_charged_mana >= self.charge_threshold then
@@ -718,6 +734,7 @@ function modifier_imba_mana_burn_parasite:OnIntervalThink()
 			local modifier_charged_handler = self.parent:AddNewModifier(self.caster, self.ability, self.modifier_charged, {duration = self.explosion_delay})
 			if modifier_charged_handler then
 				modifier_charged_handler.starting_target_mana = self.starting_target_mana
+				modifier_charged_handler.parasite_charged_mana = self.parasite_charged_mana
 			end
 
 			-- Remove self
@@ -737,6 +754,29 @@ function modifier_imba_mana_burn_parasite:OnHeroKilled( keys )
 	end
 
 	self.caster:AddNewModifier(self.caster, self.ability, self.scarab_modifier, { duration = self.scarab_duration })
+end
+
+function modifier_imba_mana_burn_parasite:OnTakeDamage(keys)
+	if IsServer() then
+		local unit = keys.unit
+		local damage = keys.damage
+
+		-- Only apply if the unit taking damage is the parent of the modifier
+		if self.parent == unit and damage > 0 then
+			
+			local mana_burned = damage * (self.scarring_burn_pct / 100) -- 8%/10%/12%/14%
+			
+			if mana_burned > self.parent:GetMana() then
+				mana_burned = self.parent:GetMana()
+			end
+			
+			self.parent:ReduceMana(mana_burned)
+			
+			self.parasite_charged_mana = self.parasite_charged_mana + mana_burned
+			
+			self:SetStackCount(self.parasite_charged_mana)
+		end
+	end
 end
 
 function modifier_imba_mana_burn_parasite:IsHidden() return false end
@@ -807,12 +847,13 @@ function modifier_imba_mana_burn_parasite_charged:OnDestroy()
 		ParticleManager:ReleaseParticleIndex(self.particle_explosion_fx)
 
 		-- If the target now has more mana than what he had when parasite was planted, do nothing
-		if target_current_mana >= self.starting_target_mana then
-			return nil
-		end
+		--if target_current_mana >= self.starting_target_mana then
+		--	return nil
+		--end
 
 		-- Deal damage according to mana lost
-		local damage = (self.starting_target_mana - target_current_mana) * self.parasite_mana_as_damage_pct * 0.01
+		--local damage = (self.starting_target_mana - target_current_mana) * self.parasite_mana_as_damage_pct * 0.01
+		local damage = self.parasite_charged_mana * self.parasite_mana_as_damage_pct * 0.01
 
 		damageTable = {victim = self.parent,
 			attacker = self.caster,
@@ -958,6 +999,13 @@ function modifier_imba_spiked_carapace:OnCreated()
 		self.burrowed_stun_range = self.ability:GetSpecialValueFor("burrow_stun_range")
 		self.burrowed_vendetta_stacks = self.ability:GetSpecialValueFor("burrowed_vendetta_stacks")
 		self.damage_reflection_pct = self.ability:GetSpecialValueFor("damage_reflection_pct")
+
+		-- Increased reflection damage talent
+		self.damage_reflection_pct = self.ability:GetSpecialValueFor("damage_reflection_pct")
+		
+		if self.caster:HasTalent("special_bonus_imba_nyx_assassin_10") then
+			self.damage_reflection_pct = self.damage_reflection_pct + self.caster:FindTalentValue("special_bonus_imba_nyx_assassin_10")
+		end
 
 		-- Add spikes particles
 		self.particle_spikes_fx = ParticleManager:CreateParticle(self.particle_spikes, PATTACH_CUSTOMORIGIN_FOLLOW, self.caster)
@@ -1248,8 +1296,17 @@ function modifier_imba_vendetta:IsPurgable() return false end
 function modifier_imba_vendetta:IsDebuff() return false end
 
 function modifier_imba_vendetta:CheckState()
-	local state = {[MODIFIER_STATE_INVISIBLE] = true,
-		[MODIFIER_STATE_NO_UNIT_COLLISION]= true}
+	local state
+
+	if self:GetCaster():HasTalent("special_bonus_imba_nyx_assassin_11") then
+		state = {[MODIFIER_STATE_INVISIBLE] = true,
+		[MODIFIER_STATE_NO_UNIT_COLLISION] = true,
+		[MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY] = true}
+	else
+		state = {[MODIFIER_STATE_INVISIBLE] = true,
+		[MODIFIER_STATE_NO_UNIT_COLLISION] = true}
+	end
+	
 	return state
 end
 
@@ -1363,6 +1420,10 @@ function modifier_imba_vendetta_charge:OnCreated()
 
 		-- Ability specials
 		self.maximum_vendetta_stacks = self.ability:GetSpecialValueFor("maximum_vendetta_stacks")
+		
+		if self.caster:HasTalent("special_bonus_imba_nyx_assassin_12") then
+			self.maximum_vendetta_stacks = self.maximum_vendetta_stacks + self.caster:FindTalentValue("special_bonus_imba_nyx_assassin_12")
+		end
 	end
 end
 

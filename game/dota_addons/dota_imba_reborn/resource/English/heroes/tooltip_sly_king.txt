@@ -32,9 +32,18 @@
 "DOTA_Tooltip_modifier_imba_frozen_skin_debuff"						"Frozen Skin"
 "DOTA_Tooltip_modifier_imba_frozen_skin_debuff_Description"			"The chill of Sly King envelops. Rooted and taking damage over time."
 
+// Hypothermic Wisdom
+"DOTA_Tooltip_ability_imba_sly_king_hypothermic_wisdom"					"Hypothermic Wisdom"
+"DOTA_Tooltip_ability_imba_sly_king_hypothermic_wisdom_Description"		"As Sly King's health reduces, he becomes battle hardened, increasing his intelligence for each percentange of health below maximum. Sly King also receives additional spell amplification based on his intelligence."
+"DOTA_Tooltip_ability_imba_sly_king_hypothermic_wisdom_int_per_health_pct_loss"	"INT PER LOST HEALTH %:"
+"DOTA_Tooltip_ability_imba_sly_king_hypothermic_wisdom_spell_amp_per_int"		"%ADDITIONAL SPELL AMP PER INT:"
+
+"DOTA_Tooltip_modifier_imba_frozen_skin_debuff"						"Frozen Skin"
+"DOTA_Tooltip_modifier_imba_frozen_skin_debuff_Description"			"The chill of Sly King envelops. Rooted and taking damage over time."
+
 // Winterbringer
 "DOTA_Tooltip_ability_imba_sly_king_winterbringer"					"Winterbringer"
-"DOTA_Tooltip_ability_imba_sly_king_winterbringer_Description"		"Sly King calls the winds of winter, creating a frozen realm of violent reverberation. Enemies caught in the area suffer from strong attack and move speed slow, take heavy damage every %pulse_interval% seconds, and are pulled towards Sly King each pulse."
+"DOTA_Tooltip_ability_imba_sly_king_winterbringer_Description"		"Sly King calls the winds of winter, creating a frozen realm of violent reverberation. Enemies caught in the area suffer from strong attack and move speed slow, take heavy damage, and are pulled towards the realm's center each pulse."
 "DOTA_Tooltip_ability_imba_sly_king_winterbringer_Note0"			"Can only have one instance of Winterbringer up at a time."
 "DOTA_Tooltip_ability_imba_sly_king_winterbringer_duration"			"DURATION:"
 "DOTA_Tooltip_ability_imba_sly_king_winterbringer_damage"			"DMG PER TICK:"
@@ -50,3 +59,7 @@
 
 "DOTA_Tooltip_modifier_imba_winterbringer_slow"						"Winterbringer"
 "DOTA_Tooltip_modifier_imba_winterbringer_slow_Description"			"Caught in Winterbringer, slowing move speed by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%% and attack speed by %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT%."
+
+// Talents
+"DOTA_Tooltip_Ability_special_bonus_imba_unique_sly_king_1"			"+0.3 Hypothermic Wisdom INT per health loss %"
+"DOTA_Tooltip_Ability_special_bonus_imba_unique_sly_king_2"			"-0.15s Winterbringer pulse reduction"

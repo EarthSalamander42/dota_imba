@@ -127,7 +127,7 @@ function modifier_imba_juggernaut_blade_fury:OnIntervalThink()
 		local slash_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_juggernaut/juggernaut_blade_fury_tgt.vpcf", PATTACH_ABSORIGIN_FOLLOW, enemy)
 		ParticleManager:SetParticleControl(slash_pfx, 0, enemy:GetAbsOrigin())
 		ParticleManager:ReleaseParticleIndex(slash_pfx)
-		if self.original_caster:HasTalent("special_bonus_imba_juggernaut_6") then
+		if self.original_caster:HasTalent("special_bonus_imba_juggernaut_6") and self:GetCaster():FindAbilityByName("imba_juggernaut_blade_dance") then
 			self.bladedance = self.bladedance or self:GetCaster():FindAbilityByName("imba_juggernaut_blade_dance")
 			self.prng = self.prng or 0
 			-- Benefits from Wind Dance.
@@ -317,10 +317,11 @@ end
 
 function modifier_imba_juggernaut_blade_fury_succ:OnIntervalThink()
 	-- Remove the succ if conflicting
-	if not self:CheckMotionControllers() then
-		self:Destroy()
-		return nil
-	end
+	-- Commented out because it's interrupting Slark's Pounce
+	-- if not self:CheckMotionControllers() then
+		-- self:Destroy()
+		-- return nil
+	-- end
 		
 	self:HorizontalMotion(self.target, self.succ_tick)
 end
@@ -669,10 +670,12 @@ modifier_imba_juggernaut_healing_ward_aura = modifier_imba_juggernaut_healing_wa
 function modifier_imba_juggernaut_healing_ward_aura:OnCreated()
 	self.caster = self:GetCaster()
 
-	if IsTotem(self.caster) then
-		self.healing = self:GetAbility():GetSpecialValueFor("heal_per_sec_totem")
-	else
-		self.healing = self:GetAbility():GetSpecialValueFor("heal_per_sec")
+	if self:GetAbility() then
+		if IsTotem(self.caster) then
+			self.healing = self:GetAbility():GetSpecialValueFor("heal_per_sec_totem")
+		else
+			self.healing = self:GetAbility():GetSpecialValueFor("heal_per_sec")
+		end
 	end
 	
 	if not IsServer() then return end
@@ -1519,7 +1522,7 @@ function imba_juggernaut_omni_slash:OnSpellStart()
 	
 	-- #7 Talent: Omnislash sends an image to commit the slashes, Juggernaut is free to continue as normal
 	-- Senbonzakura Kageyoshi
-	if self.caster:HasTalent("special_bonus_imba_juggernaut_7") then
+	if self.caster:HasTalent("special_bonus_imba_juggernaut_7") and not self:IsStolen() then
 		-- Superclone Credits: igo95862 & Freeman322
 		local omnislash_image = CreateUnitByName(self.caster:GetUnitName(), self.caster:GetAbsOrigin(), true, self.caster, self.caster:GetOwner(), self.caster:GetTeamNumber())
 

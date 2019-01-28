@@ -499,6 +499,11 @@ function modifier_imba_elder_titan_ancestral_spirit_self:GetModifierMoveSpeed_Ab
 	return self:GetParent().basemovespeed
 end
 
+-- On the edge case where Juggernaut's Omnislash jumps to the Astral Spirit and kills it...give Elder Titan back the skill immediately
+function modifier_imba_elder_titan_ancestral_spirit_self:OnDestroy (keys)
+	self:GetParent():GetOwner():SwapAbilities("imba_elder_titan_ancestral_spirit", "imba_elder_titan_return_spirit", true, false)
+end
+
 -- Natural Order
 imba_elder_titan_natural_order = imba_elder_titan_natural_order or class({})
 LinkLuaModifier("modifier_imba_elder_titan_natural_order_aura", "components/abilities/heroes/hero_elder_titan", LUA_MODIFIER_MOTION_NONE)

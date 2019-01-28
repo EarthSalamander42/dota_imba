@@ -28,15 +28,18 @@
 "DOTA_Tooltip_modifier_imba_winter_wyvern_splinter_blast_slow_Description"			"#{DOTA_Tooltip_modifier_winter_wyvern_splinter_blast_slow_Description}"
 
 "DOTA_Tooltip_ability_imba_winter_wyvern_cold_embrace"							"#{DOTA_Tooltip_ability_winter_wyvern_cold_embrace}"
-"DOTA_Tooltip_ability_imba_winter_wyvern_cold_embrace_Description"				"#{DOTA_Tooltip_ability_winter_wyvern_cold_embrace_Description}\n<font color='#FF7800'>Icy Overload:</font> If the icy coccon suffers %damage_treshold_pct_hp%%% of the target max health as physical damage, it will healing the encased target by that threshold, while also releasing a Splinter Blast with extra damage equal to the amount of damage absorbed.\n<font color='#FF7800'>Protective Shell:</font> The icy cocoon is protected by cold magic. Any physical attacker will be frozen for %freeze_duration% seconds when triggering Icy Overload."
+"DOTA_Tooltip_ability_imba_winter_wyvern_cold_embrace_Description"				"#{DOTA_Tooltip_ability_winter_wyvern_cold_embrace_Description}\n<font color='#FF7800'>Icy Overload:</font> If the icy coccon suffers %damage_treshold_pct_hp%%% of the target max health as attack damage, it will heal the encased target by that threshold, while also releasing a Splinter Blast with extra damage equal to the amount of damage absorbed. This effect can only occur once per cast.\n<font color='#FF7800'>Protective Shell:</font> The icy cocoon is protected by cold magic. Any physical attacker will be frozen for %freeze_duration% seconds when triggering Icy Overload."
 "DOTA_Tooltip_ability_imba_winter_wyvern_cold_embrace_Lore"						"#{DOTA_Tooltip_ability_winter_wyvern_cold_embrace_Lore}"
 "DOTA_Tooltip_ability_imba_winter_wyvern_cold_embrace_Note0"					"#{DOTA_Tooltip_ability_winter_wyvern_cold_embrace_Note0}"
+"DOTA_Tooltip_ability_imba_winter_wyvern_cold_embrace_Note1"					"Protective Shell does not account for damage from towers."
 "DOTA_Tooltip_ability_imba_winter_wyvern_cold_embrace_heal_additive"			"#{DOTA_Tooltip_ability_winter_wyvern_cold_embrace_heal_additive}"
 "DOTA_Tooltip_ability_imba_winter_wyvern_cold_embrace_heal_percentage"			"#{DOTA_Tooltip_ability_winter_wyvern_cold_embrace_heal_percentage}"
 "DOTA_Tooltip_ability_imba_winter_wyvern_cold_embrace_duration"					"DURATION:"
 "DOTA_Tooltip_ability_imba_winter_wyvern_cold_embrace_damage_threshold"			"ICY OVERLOAD DAMAGE THRESHOLD:"
 "DOTA_Tooltip_ability_imba_winter_wyvern_cold_embrace_bonus_magical_resistance"	"%BONUS MAGICAL RESISTANCE:"
 
+"DOTA_Tooltip_modifier_imba_winter_wyvern_cold_embrace_freeze"					"Protective Shell"
+"DOTA_Tooltip_modifier_imba_winter_wyvern_cold_embrace_freeze_Description"		"Frozen in retaliation for attempting to break the Icy Cocoon."
 
 "DOTA_Tooltip_ability_imba_winter_wyvern_winters_curse"						"#{DOTA_Tooltip_ability_winter_wyvern_winters_curse}"
 "DOTA_Tooltip_ability_imba_winter_wyvern_winters_curse_Description"			"#{DOTA_Tooltip_ability_winter_wyvern_winters_curse_Description}\n<font color='#FF7800'>Queen's Resolve:</font> Winter's Curse ignores tenacity."
@@ -50,6 +53,7 @@
 
 "DOTA_Tooltip_ability_special_bonus_imba_winter_wyvern_4"					"+15% Magic Resistance during Cold Embrace"
 "DOTA_Tooltip_ability_special_bonus_imba_winter_wyvern_5"					"Arctic Burn now deals pure damage"
+"DOTA_Tooltip_ability_special_bonus_imba_winter_wyvern_5_Description"		"Does not pierce spell immunity."
 "DOTA_Tooltip_ability_special_bonus_imba_winter_wyvern_6"					"-5s for Cold Embrace"
 "DOTA_Tooltip_ability_special_bonus_imba_winter_wyvern_7"					"Frost Curse"
 "DOTA_Tooltip_ability_special_bonus_imba_winter_wyvern_7_Description"		"Cursed enemies have their passives disabled."

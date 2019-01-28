@@ -96,7 +96,8 @@ function modifier_imba_winter_wyvern_arctic_burn:OnAttackLanded(keys)
 		local caster = self:GetCaster();
 		if keys.attacker == caster and not keys.target:IsBuilding() then
 			local damage_duration = self:GetAbility():GetSpecialValueFor("damage_duration");
-			if not keys.target:HasModifier("modifier_imba_winter_wyvern_arctic_burn_damage") or caster:HasScepter() == true then
+			if (not keys.target:HasModifier("modifier_imba_winter_wyvern_arctic_burn_damage") or caster:HasScepter() == true) and not keys.target:IsMagicImmune()
+			then
 				local ability = self:GetAbility();
 				keys.target:AddNewModifier(caster, ability, "modifier_imba_winter_wyvern_arctic_burn_damage", {duration = damage_duration});
 
@@ -543,10 +544,10 @@ end
 function modifier_imba_winter_wyvern_cold_embrace:OnAttackLanded(keys) 
 	if IsServer() then 
 		local parent = self:GetParent();
-		if keys.target == parent then
+		if keys.target == parent and not keys.attacker:IsTower() then
 			self.damage_taken = self.damage_taken + keys.damage;
 			
-			if self.damage_taken >= self.damage_treshold then
+			if self.damage_taken >= self.damage_treshold and not self.activated then
 				-- Eh...this seems super bootleg. If you want to do this properly use the IgnoreTenacity() function. Removing for now though
 				-- if parent:HasModifier("modifier_frantic") then
 					-- self.freeze_duration = self.freeze_duration * 2;
@@ -601,6 +602,9 @@ function modifier_imba_winter_wyvern_cold_embrace:OnAttackLanded(keys)
 					
 					-- Reset damage taken
 					self.damage_taken = 0
+					
+					-- Only let this thing activate once for now
+					self.activated = true
 					
 					-- Gonna make it not remove for now
 					
@@ -713,7 +717,7 @@ function imba_winter_wyvern_winters_curse:OnSpellStart()
 		end
 
 		caster:AddNewModifier(caster, ability, "winter_wyvern_winters_curse_kill_credit", {});
-		target:AddNewModifier(caster, ability, "modifier_winter_wyvern_winters_curse_aura", {duration = duration});
+		target:AddNewModifier(caster, ability, "modifier_winter_wyvern_winters_curse_aura", {duration = duration}):SetDuration(duration, true);
 	end
 end
 

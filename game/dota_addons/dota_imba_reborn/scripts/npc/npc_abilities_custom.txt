@@ -9063,6 +9063,7 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"kill_grace_duration"			"3"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 		}
 	}
@@ -9195,7 +9196,7 @@
 			"01"
 			{
 				"var_type"                  "FIELD_FLOAT"
-				"value"	                    "15"
+				"value"	                    "30"
 			}
 		}
 	}
@@ -13596,7 +13597,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"					"160"
 		"AbilityCastPoint"					"0.3"
-		"AbilityCastAnimation"				"ACT_DOTA_CHANNEL_ABILITY_4"
+		//"AbilityCastAnimation"				"ACT_DOTA_CHANNEL_ABILITY_4" // Starts casting during cast point which is bad
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
@@ -29081,18 +29082,21 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"damage_repeat_pct"		"20"
+				"CalculateSpellDamageTooltip"	"0"
+				"LinkedSpecialBonus"	"special_bonus_imba_nyx_assassin_13"
 			}
 
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"damage_duration"		"2"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"80 140 200 260"
+				"damage"				"110 200 290 380"
 			}
 
 			"10"
@@ -29176,25 +29180,25 @@
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"parasite_charge_threshold_pct"	"60 55 50 45"
+				"parasite_charge_threshold_pct"	"50 45 40 35"
 			}
 
 			"05"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"explosion_delay"				"6"
+				"explosion_delay"				"3"
 			}
 
 			"06"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"parasite_mana_as_damage_pct"	"80"
+				"parasite_mana_as_damage_pct"	"100"
 			}
 
 			"07"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"parasite_duration"				"6"
+				"parasite_duration"				"10"
 			}
 
 			"08"
@@ -29207,6 +29211,12 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"burrowed_cast_range_increase"	"300"
+			}
+			
+			"10"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"scarring_burn_pct"				"8 10 12 14"
 			}
 		}
 	}
@@ -29271,7 +29281,8 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_to_vendetta_pct"	"100 150 200 250"
+				"damage_to_vendetta_pct"	"100 125 150 175"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 
 			"05"
@@ -29282,8 +29293,10 @@
 
 			"06"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"damage_reflection_pct"		"100"
+				"var_type"						"FIELD_INTEGER"
+				"damage_reflection_pct"			"100"
+				"CalculateSpellDamageTooltip"	"0"
+				"LinkedSpecialBonus"			"special_bonus_imba_nyx_assassin_10"
 			}
 		}
 	}
@@ -29343,12 +29356,14 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_damage"			"250 400 550"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"maximum_vendetta_stacks"	"150 200 250"
+				"maximum_vendetta_stacks"	"250 400 550"
+				"LinkedSpecialBonus"		"special_bonus_imba_nyx_assassin_12"
 			}
 		}
 	}
@@ -29617,6 +29632,131 @@
 			{
 				"var_type"                  "FIELD_FLOAT"
 				"search_radius"             "400"
+			}
+		}
+	}
+	
+	"special_bonus_imba_nyx_assassin_9" // Scarab Parasite has no duration
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_nyx_assassin_mana_burn"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"						"-1"
+			}
+		}
+	}
+	
+	"special_bonus_imba_nyx_assassin_10" // +75% Spiked Carapace Damage
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_nyx_assassin_spiked_carapace"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"						"75"
+			}
+		}
+	}
+	
+	"special_bonus_imba_nyx_assassin_11" // Vendetta Unobstructed Pathing
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_nyx_assassin_vendetta"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"						"20"
+			}
+		}
+	}
+	
+	"special_bonus_imba_nyx_assassin_12" // +1000 Vendetta Maximum Stored Damage
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_nyx_assassin_vendetta"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"						"1000"
+			}
+		}
+	}
+	
+	"special_bonus_imba_nyx_assassin_13" // +10% Impale Relive Suffering damage
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_nyx_assassin_impale"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"						"10"
 			}
 		}
 	}
@@ -33089,7 +33229,7 @@
             "04"
             {
                 "var_type"                  "FIELD_FLOAT"
-                "enrage_cooldown"   "20"
+                "enrage_cooldown"   "60"
             }
 		}
 	}
@@ -33113,7 +33253,7 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_INTEGER"
+				"var_type"				"FIELD_FLOAT"
 				"cooldown_improvement"	"0.01"
 			}
 			"02"
@@ -35389,6 +35529,81 @@
 	}
 
 	//=================================================================================================================
+	// Sly King : Burrow Blast
+	//=================================================================================================================
+	"imba_sly_king_burrow_blast"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile" 					"components/abilities/heroes/hero_sly_king.lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitDamageType"  		"DAMAGE_TYPE_MAGICAL"
+		"AbilityTextureName"			"custom/sly_king_burrowblast"
+		"MaxLevel"						"4"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.2"
+		"AbilityCastRange" 				"700 900 1050 1150"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"20 16 12 8"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"150"
+		"AbilityCastAnimation"  		"ACT_DOTA_CAST_ABILITY_2"
+		"AnimationPlaybackRate" 		"1"
+		"AnimationIgnoresModelScale" 	"1"
+
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_nyx_assassin.vsndevts"
+//			"particle"					""
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"speed"						"3000"		
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"250"		
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage"					"75 175 275 375" 	
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"stun_duration"				"1.2 1.6 2.0 2.4"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"travel_distance"			"700 800 900 1000"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"delay_burrow"				"0.35"
+			}
+		}
+	}
+	
+	//=================================================================================================================
 	// Sly King : Frost Gale
 	//=================================================================================================================
 	"imba_sly_king_frost_gale"
@@ -35489,81 +35704,6 @@
 	}
 
 	//=================================================================================================================
-	// Sly King : Burrow Blast
-	//=================================================================================================================
-	"imba_sly_king_burrow_blast"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile" 					"components/abilities/heroes/hero_sly_king.lua"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
-		"AbilityUnitDamageType"  		"DAMAGE_TYPE_MAGICAL"
-		"AbilityTextureName"			"custom/sly_king_burrowblast"
-		"MaxLevel"						"4"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.3"
-		"AbilityCastRange" 				"700 900 1050 1150"
-
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"20 16 12 8"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"150"
-		"AbilityCastAnimation"  		"ACT_DOTA_CAST_ABILITY_2"
-		"AnimationPlaybackRate" 		"1"
-		"AnimationIgnoresModelScale" 	"1"
-
-		// Data driven
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_nyx_assassin.vsndevts"
-//			"particle"					""
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"speed"						"3000"		
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"250"		
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"damage"					"125 225 325 425" 	
-			}
-			"04"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"stun_duration"				"1.0 1.5 2.0 2.5" 	
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"travel_distance"			"700 800 900 1000"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"delay_burrow"				"0.35"
-			}
-		}
-	}
-
-	//=================================================================================================================
 	// Sly King : Frozen Skin
 	//=================================================================================================================
 	"imba_sly_king_frozen_skin"
@@ -35635,6 +35775,38 @@
 	}
 
 	//=================================================================================================================
+	// Sly King : Hypothermic Wisdom
+	//=================================================================================================================
+	"imba_sly_king_hypothermic_wisdom"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile" 					"components/abilities/heroes/hero_sly_king.lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitDamageType"  		"DAMAGE_TYPE_MAGICAL"
+		"AbilityTextureName"			"custom/sly_king_hypothermic_wisdom"
+		"MaxLevel"						"4"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"int_per_health_pct_loss"	"0.3 0.5 0.7 0.9"
+				"LinkedSpecialBonus"     	 "special_bonus_imba_unique_sly_king_1"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"spell_amp_per_int"			"0.1" 
+			}
+		}
+	}
+
+	//=================================================================================================================
 	// Sly King: Winterbringer
 	//=================================================================================================================
 	"imba_sly_king_winterbringer"
@@ -35686,7 +35858,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"damage"					"75 125 175" 
+				"damage"					"50 100 150" 
 			}
 			"03"
 			{
@@ -35696,12 +35868,14 @@
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"pull_speed"				"50"
+				"pull_speed"				"25"
 			}
 			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"pulse_interval"			"0.5"
+				"LinkedSpecialBonus"     	 "special_bonus_imba_unique_sly_king_2"
+				"LinkedSpecialBonusOperation" "SPECIAL_BONUS_SUBTRACT"
 			}
 			"06"
 			{
@@ -35717,6 +35891,52 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"slow_duration"				"3"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Sly King Unique Talent: +0.3 Hypothermic Wisdom INT/health loss %
+	//=================================================================================================================
+	"special_bonus_imba_unique_sly_king_1"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_undefined"
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_FLOAT"
+				"value"			"0.3"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Sly King Unique Talent: -0.15s Winterbringer pulse reduction
+	//=================================================================================================================
+	"special_bonus_imba_unique_sly_king_2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_undefined"
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_FLOAT"
+				"value"			"0.15"
 			}
 		}
 	}

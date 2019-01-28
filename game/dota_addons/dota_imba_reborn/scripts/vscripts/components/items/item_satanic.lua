@@ -45,6 +45,9 @@ function item_imba_satanic:OnSpellStart()
 	-- Ability specials
 	local unholy_rage_duration = ability:GetSpecialValueFor("unholy_rage_duration")
 
+	-- Satanic sound
+	EmitSoundOn("DOTA_Item.Satanic.Activate", caster)
+
 	-- Unholy rage!
 	caster:AddNewModifier(caster, ability, modifier_unholy, {duration = unholy_rage_duration})
 end
@@ -85,7 +88,8 @@ end
 
 function modifier_imba_satanic:DeclareFunctions()
 	local decFunc = {MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
-		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS}
+		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
+		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING}
 
 	return decFunc
 end
@@ -96,6 +100,10 @@ end
 
 function modifier_imba_satanic:GetModifierBonusStats_Strength()
 	return self.strength_bonus
+end
+
+function modifier_imba_satanic:GetModifierStatusResistanceStacking()
+	return self:GetAbility():GetSpecialValueFor("status_resistance")
 end
 
 function modifier_imba_satanic:IsHidden()

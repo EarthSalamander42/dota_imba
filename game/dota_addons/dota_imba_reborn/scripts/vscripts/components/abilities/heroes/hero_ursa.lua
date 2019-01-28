@@ -1128,7 +1128,7 @@ function modifier_special_bonus_imba_ursa_1:OnCreated()
 	if IsServer() then
 		local ability = self:GetParent():FindAbilityByName("imba_ursa_enrage")
 		if ability then
-			self:GetParent():AddNewModifier(self:GetParent(), ability, "modifier_imba_talent_enrage_damage", {})
+			self:GetParent():AddNewModifier(self:GetParent(), ability, "modifier_imba_talent_enrage_damage", {}):SetStackCount(self:GetCaster():FindTalentValue("special_bonus_imba_ursa_1", "damage_threshold"))
 		end
 	end
 end

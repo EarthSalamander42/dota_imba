@@ -1044,6 +1044,7 @@ end
 function modifier_imba_silencer_arcane_supremacy:DeclareFunctions()
 	local funcs = {
 		MODIFIER_EVENT_ON_DEATH,
+		MODIFIER_EVENT_ON_RESPAWN -- This one is just to remove the vanilla modifier
 	}
 
 	return funcs
@@ -1100,6 +1101,13 @@ function modifier_imba_silencer_arcane_supremacy:OnDeath( params )
 				end
 			end
 		end
+	end
+end
+
+function modifier_imba_silencer_arcane_supremacy:OnRespawn( params )
+	if not IsServer() then return end
+	if params.unit == self.caster and self.caster:HasModifier("modifier_silencer_int_steal") then
+		self.caster:RemoveModifierByName("modifier_silencer_int_steal")
 	end
 end
 

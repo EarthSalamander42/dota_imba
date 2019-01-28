@@ -280,7 +280,7 @@ function modifier_item_imba_yasha:DeclareFunctions()
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE_UNIQUE,
 		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
-		MODIFIER_PROPERTY_EVASION_CONSTANT,
+		--MODIFIER_PROPERTY_EVASION_CONSTANT,
 	}
 	return funcs
 end
@@ -300,10 +300,10 @@ function modifier_item_imba_yasha:GetModifierBonusStats_Agility()
 	return self:GetAbility():GetSpecialValueFor("bonus_agility")
 end
 
-function modifier_item_imba_yasha:GetModifierEvasion_Constant()
-	if not self:GetAbility() then return end
-	return self:GetAbility():GetSpecialValueFor("bonus_evasion")
-end
+-- function modifier_item_imba_yasha:GetModifierEvasion_Constant()
+	-- if not self:GetAbility() then return end
+	-- return self:GetAbility():GetSpecialValueFor("bonus_evasion")
+-- end
 
 -----------------------------------------------------------------------------------------------------------
 --	Yasha attack speed buff (stackable)
@@ -474,7 +474,7 @@ function modifier_item_imba_sange_yasha:DeclareFunctions()
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE_UNIQUE,
 		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
 		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
-		MODIFIER_PROPERTY_EVASION_CONSTANT,
+		--MODIFIER_PROPERTY_EVASION_CONSTANT,
 		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING,
 	}
 
@@ -511,10 +511,10 @@ function modifier_item_imba_sange_yasha:GetModifierStatusResistanceStacking()
 	return self:GetAbility():GetSpecialValueFor("bonus_status_resistance")
 end
 
-function modifier_item_imba_sange_yasha:GetModifierEvasion_Constant()
-	if not self:GetAbility() then return end
-	return self:GetAbility():GetSpecialValueFor("bonus_evasion")
-end
+-- function modifier_item_imba_sange_yasha:GetModifierEvasion_Constant()
+	-- if not self:GetAbility() then return end
+	-- return self:GetAbility():GetSpecialValueFor("bonus_evasion")
+-- end
 
 -----------------------------------------------------------------------------------------------------------
 --	Sange and Yasha maim debuff (stackable)
@@ -714,7 +714,7 @@ function modifier_item_imba_yasha_and_kaya:DeclareFunctions()
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
 		MODIFIER_PROPERTY_MANACOST_PERCENTAGE,
 		MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE,
-		MODIFIER_PROPERTY_EVASION_CONSTANT,
+		--MODIFIER_PROPERTY_EVASION_CONSTANT,
 		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
 	}
 
@@ -756,10 +756,10 @@ function modifier_item_imba_yasha_and_kaya:GetModifierBonusStats_Intellect()
 	return self:GetAbility():GetSpecialValueFor("bonus_intellect")
 end
 
-function modifier_item_imba_yasha_and_kaya:GetModifierEvasion_Constant()
-	if not self:GetAbility() then return end
-	return self:GetAbility():GetSpecialValueFor("bonus_evasion")
-end
+-- function modifier_item_imba_yasha_and_kaya:GetModifierEvasion_Constant()
+	-- if not self:GetAbility() then return end
+	-- return self:GetAbility():GetSpecialValueFor("bonus_evasion")
+-- end
 
 -----------------------------------------------------------------------------------------------------------
 --	kaya and Yasha magic amp debuff (stackable)
