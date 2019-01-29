@@ -464,8 +464,8 @@
 "DOTA_Tooltip_ability_item_imba_skadi_base_duration"            "BASE DURATION:"
 "DOTA_Tooltip_ability_item_imba_skadi_base_damage"              "BASE DAMAGE:"
 "DOTA_Tooltip_ability_item_imba_skadi_bonus_all_stats"          "+$all"
-"DOTA_Tooltip_ability_item_imba_skadi_bonus_health"				+$health"
-"DOTA_Tooltip_ability_item_imba_skadi_bonus_mana"				+$mana"
+"DOTA_Tooltip_ability_item_imba_skadi_bonus_health"				"+$health"
+"DOTA_Tooltip_ability_item_imba_skadi_bonus_mana"				"+$mana"
 
 "DOTA_Tooltip_modifier_item_imba_skadi_slow"                    "Wintergrasp"
 "DOTA_Tooltip_modifier_item_imba_skadi_slow_Description"                    "Movement slowed by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%, attack speed slowed by %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT%."
