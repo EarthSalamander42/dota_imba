@@ -673,6 +673,7 @@ end
 modifier_imba_fiery_soul_talent = class({})
 function modifier_imba_fiery_soul_talent:IsPassive() return true end
 function modifier_imba_fiery_soul_talent:IsPermanent() return true end
+function modifier_imba_fiery_soul_talent:IsHidden() return true end
 
 modifier_imba_fiery_soul_counter = class({})
 
@@ -736,7 +737,8 @@ LinkLuaModifier("modifier_special_bonus_imba_lina_3", "components/abilities/hero
 
 modifier_special_bonus_imba_lina_3 = modifier_special_bonus_imba_lina_3 or class({})
 
-function modifier_special_bonus_imba_lina_3:IsHidden() return false end
+function modifier_special_bonus_imba_lina_3:IsHidden() return true end
+function modifier_special_bonus_imba_lina_3:IsPurgable() return false end
 function modifier_special_bonus_imba_lina_3:RemoveOnDeath() return false end
 
 function modifier_special_bonus_imba_lina_3:OnCreated()

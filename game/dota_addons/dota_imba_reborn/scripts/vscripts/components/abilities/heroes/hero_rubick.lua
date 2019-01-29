@@ -167,7 +167,6 @@ function modifier_imba_telekinesis:IsHidden() return false end
 function modifier_imba_telekinesis:IsPurgable() return false end
 function modifier_imba_telekinesis:IsPurgeException() return false end
 function modifier_imba_telekinesis:IsStunDebuff() return false end
-function modifier_imba_telekinesis:IgnoreTenacity() return true end
 function modifier_imba_telekinesis:IsMotionController() return true end
 function modifier_imba_telekinesis:GetMotionControllerPriority() return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
 -------------------------------------------
@@ -187,6 +186,10 @@ function modifier_imba_telekinesis:OnCreated( params )
 		-- Start thinking
 		self.frametime = FrameTime()
 		self:StartIntervalThink(FrameTime())
+		
+		Timers:CreateTimer(FrameTime(), function()
+			self.duration = self:GetRemainingTime()
+		end)
 	end
 end
 
