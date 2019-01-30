@@ -2249,7 +2249,7 @@
 		// Movement
 		//----------------------------------------------------------------
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"				"320"		// Speed.
+		"MovementSpeed"				"340"		// Speed.
 		"MovementTurnRate"			"0.6"		// Turning rate.
 
 		// Status
@@ -2324,7 +2324,7 @@
 		// Movement
 		//----------------------------------------------------------------
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"				"340"		// Speed.
+		"MovementSpeed"				"360"		// Speed.
 		"MovementTurnRate"			"0.6"		// Turning rate.
 
 		// Status
@@ -2399,7 +2399,7 @@
 		// Movement
 		//----------------------------------------------------------------
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"				"360"		// Speed.
+		"MovementSpeed"				"380"		// Speed.
 		"MovementTurnRate"			"0.6"		// Turning rate.
 
 		// Status
@@ -2474,7 +2474,7 @@
 		// Movement
 		//----------------------------------------------------------------
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"				"380"		// Speed.
+		"MovementSpeed"				"400"		// Speed.
 		"MovementTurnRate"			"0.6"		// Turning rate.
 
 		// Status
@@ -3367,8 +3367,8 @@
 
 		// Armor
 		//----------------------------------------------------------------
-		"ArmorPhysical"				"1"
-		"MagicalResistance"			"80"
+		"ArmorPhysical"				"0"
+		"MagicalResistance"			"70"
 
 		// Attack
 		//----------------------------------------------------------------
@@ -3401,7 +3401,7 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"200"
+		"StatusHealth"				"300"
 		"StatusHealthRegen"			"0.5"
 		"StatusMana"				"0"
 		"StatusManaRegen"			"0"
@@ -3447,8 +3447,8 @@
 
 		// Armor
 		//----------------------------------------------------------------
-		"ArmorPhysical"				"2"
-		"MagicalResistance"			"80"
+		"ArmorPhysical"				"0"
+		"MagicalResistance"			"70"
 
 		// Attack
 		//----------------------------------------------------------------
@@ -3481,7 +3481,7 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"240"
+		"StatusHealth"				"350"
 		"StatusHealthRegen"			"0.5"
 		"StatusMana"				"0"
 		"StatusManaRegen"			"0"
@@ -3527,8 +3527,8 @@
 
 		// Armor
 		//----------------------------------------------------------------
-		"ArmorPhysical"				"3"
-		"MagicalResistance"			"80"
+		"ArmorPhysical"				"0"
+		"MagicalResistance"			"70"
 
 		// Attack
 		//----------------------------------------------------------------
@@ -3561,7 +3561,7 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"280"
+		"StatusHealth"				"400"
 		"StatusHealthRegen"			"0.5"
 		"StatusMana"				"0"
 		"StatusManaRegen"			"0"
@@ -3608,8 +3608,8 @@
 
 		// Armor
 		//----------------------------------------------------------------
-		"ArmorPhysical"				"4"
-		"MagicalResistance"			"80"
+		"ArmorPhysical"				"0"
+		"MagicalResistance"			"70"
 
 		// Attack
 		//----------------------------------------------------------------
@@ -3642,7 +3642,7 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"320"
+		"StatusHealth"				"450"
 		"StatusHealthRegen"			"0.5"
 		"StatusMana"				"0"
 		"StatusManaRegen"			"0"
@@ -3690,8 +3690,8 @@
 
 		// Armor
 		//----------------------------------------------------------------
-		"ArmorPhysical"				"5"
-		"MagicalResistance"			"80"
+		"ArmorPhysical"				"0"
+		"MagicalResistance"			"70"
 
 		// Attack
 		//----------------------------------------------------------------
@@ -3724,7 +3724,7 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"360"
+		"StatusHealth"				"500"
 		"StatusHealthRegen"			"0.5"
 		"StatusMana"				"0"
 		"StatusManaRegen"			"0"
@@ -3771,8 +3771,8 @@
 
 		// Armor
 		//----------------------------------------------------------------
-		"ArmorPhysical"				"6"
-		"MagicalResistance"			"90"
+		"ArmorPhysical"				"0"
+		"MagicalResistance"			"70"
 
 		// Attack
 		//----------------------------------------------------------------
@@ -3805,7 +3805,7 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"400"
+		"StatusHealth"				"550"
 		"StatusHealthRegen"			"0.5"
 		"StatusMana"				"0"
 		"StatusManaRegen"			"0"
@@ -3851,8 +3851,8 @@
 
 		// Armor
 		//----------------------------------------------------------------
-		"ArmorPhysical"				"6"
-		"MagicalResistance"			"90"
+		"ArmorPhysical"				"0"
+		"MagicalResistance"			"70"
 
 		// Attack
 		//----------------------------------------------------------------

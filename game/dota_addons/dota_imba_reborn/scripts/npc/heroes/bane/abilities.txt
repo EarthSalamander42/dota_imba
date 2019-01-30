@@ -23,7 +23,7 @@
 		"AbilityCastRange"				"1000"
 		"AbilityCastPoint"				"0.5"
 		"AbilityCooldown"				"12.0 10.0 8.0 6.0"
-		"AbilityManaCost"				"70 90 110 130"
+		"AbilityManaCost"				"50 75 100 125"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -50,7 +50,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"as_reduction"				"-40 -60 -80 -100"
+				"as_reduction"				"- 50 -75 -100 -125"
 			}
 			"04"
 			{
@@ -278,7 +278,7 @@
 			"01"
 			{
 				"var_type"								"FIELD_FLOAT"
-				"fiends_grip_duration"					"5"
+				"fiends_grip_duration"					"6"
 			}
 
 			"02"

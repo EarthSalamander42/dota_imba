@@ -208,7 +208,7 @@
 
 		// Time
 		//---------------------------------------------
-		"AbilityCooldown"				"28 22 16 10"
+		"AbilityCooldown"				"22 18 14 10"
 		"AbilityDuration"				"4.0"
 
 		// Cost
