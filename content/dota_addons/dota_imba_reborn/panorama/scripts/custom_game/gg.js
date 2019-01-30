@@ -18,8 +18,8 @@ function GenerateGGTopBar(player, team, has_gg) {
 		gg_row.AddClass("GG_Row");
 		gg_row.style.backgroundColor = "gradient(linear,0  100%, 0% 0%, from(#800314b6),color-stop( 0.9, #0a1722ae ), to(#0a1722ae))";
 		gg_row.style.width = "100%";
-		gg_row.style.height = "100%";
-		gg_row.style.align = "center center";
+		gg_row.style.height = "40%";
+		gg_row.style.align = "center bottom";
 		gg_row.style.zIndex = "5";
 		gg_row.style.textAlign = "center center";
 		gg_row.style.flowChildren = "right";

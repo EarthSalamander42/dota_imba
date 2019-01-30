@@ -33,7 +33,7 @@ function GoodGame:Call(event)
 		end
 	end
 
-	CustomGameEventManager:Send_ServerToAllClients("gg_called", {ID = event.ID, team = event.team, has_gg = GG_TABLE[event.ID]})
+	CustomGameEventManager:Send_ServerToAllClients("gg_called", {ID = event.ID, team = event.team, has_gg = GG_TABLE[event.ID][1]})
 
 	local abandon_team = nil
 	local team_counter = 0
