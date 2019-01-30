@@ -1,6 +1,6 @@
 .OverthrowGameInfo
 {
-	width: 100%;
+	width: 95%;
 	margin-top: -50px;
 	flow-children: down;
 }
@@ -69,13 +69,10 @@ Label
 	width: 93%;
 	height: 52px;
 	horizontal-align: left;
+	flow-children: right;
 }
 
-#ItemsTextBox,
-#CreepsTextBox,
-#RoshanTextBox,
-#PowerBalanceTextBox,
-#ContributorsTextBox
+.TextBox
 {
 	flow-children: down;
 	width: 100%;
@@ -87,9 +84,16 @@ Label
 	width: 93%;
 	height: 48px;
 	horizontal-align: left;
+	flow-children: right;
 }
 
 #End
 {
 	font-size: 24;
+}
+
+.AbilityIcon
+{
+	margin: 2px;
+	border: 1px solid #121212FF;
 }

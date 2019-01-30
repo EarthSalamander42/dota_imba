@@ -33,10 +33,10 @@
 "code_credits_npc_dota_hero_ghost_revenant"				"76561198015161808" // EarthSalamander #42
 "code_credits_npc_dota_hero_hell_empress"				"76561198007141460" // Firetoad
 "code_credits_npc_dota_hero_jakiro"						"" // Broccoli
-"code_credits_npc_dota_hero_juggernaut"					"76561197996377179" // yahnich
+"code_credits_npc_dota_hero_juggernaut"					"76561197996377179" // houthakker
 "code_credits_npc_dota_hero_kunkka"						"76561198007141460" // Firetoad
 "code_credits_npc_dota_hero_kunkka_editor_1"			"76561198087803933" // Hewdraw
-"code_credits_npc_dota_hero_kunkka_editor_2"			"76561197996377179" // yahnich
+"code_credits_npc_dota_hero_kunkka_editor_2"			"76561197996377179" // houthakker
 "code_credits_npc_dota_hero_lich"						"76561197994333648" // Shush
 "code_credits_npc_dota_hero_lich_editor_1"				"76561198044195452" // naowin
 "code_credits_npc_dota_hero_lina"						"76561198007141460" // Firetoad
@@ -91,7 +91,7 @@
 // "code_credits_npc_dota_hero_tidehunter"					"76561198098263374" // Fudge (luafied ability)
 // "code_credits_npc_dota_hero_tinker"						"76561198007141460" // Firetoad (IMBAfication disabled atm)
 // "code_credits_npc_dota_hero_tinker_editor_1"			"76561198025685495" // AtroCty (IMBAfication disabled atm)
-"code_credits_npc_dota_hero_tiny"						"76561197996377179" // yahnich
+"code_credits_npc_dota_hero_tiny"						"76561197996377179" // houthakker
 "code_credits_npc_dota_hero_tiny_editor_1"				"76561198044195452" // naowin
 "code_credits_npc_dota_hero_troll_warlord"				"76561198007141460" // Firetoad
 "code_credits_npc_dota_hero_troll_warlord_editor_1"		"76561198025685495" // AtroCty
@@ -104,7 +104,7 @@
 "code_credits_npc_dota_hero_warlock_editor_1"			"76561198044195452" // naowin
 "code_credits_npc_dota_hero_winter_wyvern"				"76561198044195452" // naowin
 "code_credits_npc_dota_hero_winter_wyvern_editor_1"		"76561198015161808" // EarthSalamander #42
-"code_credits_npc_dota_hero_witch_doctor"				"76561197996377179" // yahnich
+"code_credits_npc_dota_hero_witch_doctor"				"76561197996377179" // houthakker
 "code_credits_npc_dota_hero_witch_doctor_editor_1"		"76561198025685495" // AtroCty
 "code_credits_npc_dota_hero_wisp"						"76561198044195452" // naowin
 "code_credits_npc_dota_hero_wisp_editor_1"				"76561198015161808" // EarthSalamander #42
