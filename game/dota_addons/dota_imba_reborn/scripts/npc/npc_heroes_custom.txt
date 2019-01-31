@@ -1661,12 +1661,8 @@
 		//Picking Screen
 		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
 
-		"Ability1"					"spectre_spectral_dagger"
-		"Ability2"					"spectre_desolate"
-		"Ability3"					"spectre_dispersion"
-		"Ability4"					"imba_spectre_reality"
-		"Ability5"					"generic_hidden"
-		"Ability6"					"imba_spectre_haunt"
+		//"Ability4"					"imba_spectre_reality"
+		//"Ability6"					"imba_spectre_haunt"
 	}
 
 	//=================================================================================================================

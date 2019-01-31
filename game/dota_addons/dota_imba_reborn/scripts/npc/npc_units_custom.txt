@@ -2202,302 +2202,55 @@
 	//=================================================================================
 	"npc_dota_lone_druid_bear1"
 	{										
-		// General
-		//----------------------------------------------------------------
-		"Model"						"models/heroes/lone_druid/spirit_bear.vmdl"	// Model.
-		"BaseClass"					"npc_dota_lone_druid_bear"
-		"SoundSet"					"LoneDruid_SpiritBear"
-		"Level"						"1"
-		"ModelScale" 				".65"
-		"ConsideredHero"			"1"
-		"UnitLabel"					"spirit_bear"
 
-		// Abilities
-		//----------------------------------------------------------------
-		"Ability1"					"bear_empty"			// Ability 1
-		"Ability2"					"bear_empty"			// Ability 2
-		"Ability3"					"lone_druid_savage_roar_bear"			// Ability 3
-		"Ability4"					"bear_empty"			// Ability 4
-
-		// Armor
-		//----------------------------------------------------------------
-		"ArmorPhysical"				"3"			// Physical protection.
-
-		// Attack
-		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackDamageMin"			"35"		// Damage range min.
-		"AttackDamageMax"			"35"		// Damage range max.	
-		"AttackRate"				"1.65"		// Speed of attack.
-		"AttackAnimationPoint"		"0.43"		// Normalized time in animation cycle to attack.
-		"AttackAcquisitionRange"	"500"		// Range within a target can be acquired.
-		"AttackRange"				"128"		// Range within a target can be attacked.
-		"ProjectileModel"			""			// Particle system model for projectile.
-		"ProjectileSpeed"			"0"			// Speed of projectile.		   
-
-		// Bounds
-		//----------------------------------------------------------------
-		"RingRadius"				"70"
-		"HealthBarOffset"			"215"
-
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyXP"					"300"		// Experience earn.
-		"BountyGoldMin"				"300"		// Gold earned min.
-		"BountyGoldMax"				"300"		// Gold earned max.
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"				"340"		// Speed.
-		"MovementTurnRate"			"0.6"		// Turning rate.
-
-		// Status
-		//----------------------------------------------------------------
-		"StatusHealth"				"1500"		// Base health.
-		"StatusHealthRegen"			"4"			// Health regeneration rate.
-		"StatusMana"				"300"		// Base mana.
-		"StatusManaRegen"			"0.5"		// Mana regeneration rate.		 
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"1400"		// Range of vision during day light.
-		"VisionNighttimeRange"		"800"		// Range of vision at night time.
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"					"DOTA_TEAM_NEUTRALS"							// Team name.
-		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
-		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
-
-		//Inventory
-		"HasInventory"				"1"
 	}
 
 	"npc_dota_lone_druid_bear2"
 	{										
-		// General
-		//----------------------------------------------------------------
-		"Model"						"models/heroes/lone_druid/spirit_bear.vmdl"	// Model.
-		"BaseClass"					"npc_dota_lone_druid_bear"
-		"SoundSet"					"LoneDruid_SpiritBear"
-		"Level"						"2"
-		"ModelScale" 				".78"
-		"ConsideredHero"			"1"
-		"UnitLabel"			"spirit_bear"
-
-		// Abilities
-		//----------------------------------------------------------------
-		"Ability1"					"lone_druid_spirit_bear_return"			// Ability 1
-		"Ability2"					"lone_druid_spirit_bear_entangle"			// Ability 2
-		"Ability3"					"lone_druid_savage_roar_bear"			// Ability 3
-		"Ability4"					"bear_empty"			// Ability 4
-
 		// Armor
 		//----------------------------------------------------------------
 		"ArmorPhysical"				"5"			// Physical protection.
 
 		// Attack
 		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackDamageMin"			"55"		// Damage range min.
-		"AttackDamageMax"			"55"		// Damage range max.	
 		"AttackRate"				"1.45"		// Speed of attack.
-		"AttackAnimationPoint"		"0.43"		// Normalized time in animation cycle to attack.
-		"AttackAcquisitionRange"	"500"		// Range within a target can be acquired.
-		"AttackRange"				"128"		// Range within a target can be attacked.
-		"ProjectileModel"			""			// Particle system model for projectile.
-		"ProjectileSpeed"			"0"			// Speed of projectile.		   
-
-		// Bounds
-		//----------------------------------------------------------------
-		"RingRadius"				"70"
-		"HealthBarOffset"			"215"
-
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyXP"					"300"		// Experience earn.
-		"BountyGoldMin"				"300"		// Gold earned min.
-		"BountyGoldMax"				"300"		// Gold earned max.
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"				"360"		// Speed.
-		"MovementTurnRate"			"0.6"		// Turning rate.
-
+		
 		// Status
 		//----------------------------------------------------------------
 		"StatusHealth"				"2750"		// Base health.
-		"StatusHealthRegen"			"6"			// Health regeneration rate.
-		"StatusMana"				"300"			// Base mana.
-		"StatusManaRegen"			"0.5"		// Mana regeneration rate.		 
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"1400"		// Range of vision during day light.
-		"VisionNighttimeRange"		"800"		// Range of vision at night time.
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"					"DOTA_TEAM_NEUTRALS"							// Team name.
-		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
-		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
-
-		//Inventory
-		"HasInventory"				"1"
+		"StatusHealthRegen"			"6"			// Health regeneration rate.	 
 	}
 
 	"npc_dota_lone_druid_bear3"
 	{										
-		// General
-		//----------------------------------------------------------------
-		"Model"						"models/heroes/lone_druid/spirit_bear.vmdl"	// Model.
-		"BaseClass"					"npc_dota_lone_druid_bear"
-		"SoundSet"					"LoneDruid_SpiritBear"
-		"Level"						"3"
-		"ModelScale" 				".92"
-		"ConsideredHero"			"1"
-		"UnitLabel"					"spirit_bear"
-
-		// Abilities
-		//----------------------------------------------------------------
-		"Ability1"					"lone_druid_spirit_bear_return"			// Ability 1
-		"Ability2"					"lone_druid_spirit_bear_entangle"			// Ability 2
-		"Ability3"					"lone_druid_savage_roar_bear"			// Ability 3
-		"Ability4"					"bear_empty"			// Ability 4
-
 		// Armor
 		//----------------------------------------------------------------
 		"ArmorPhysical"				"7"			// Physical protection.
 
 		// Attack
 		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackDamageMin"			"75"		// Damage range min.
-		"AttackDamageMax"			"75"		// Damage range max.	
-		"AttackRate"				"1.25"		// Speed of attack.
-		"AttackAnimationPoint"		"0.43"		// Normalized time in animation cycle to attack.
-		"AttackAcquisitionRange"	"500"		// Range within a target can be acquired.
-		"AttackRange"				"128"		// Range within a target can be attacked.
-		"ProjectileModel"			""			// Particle system model for projectile.
-		"ProjectileSpeed"			"0"			// Speed of projectile.		   
-
-		// Bounds
-		//----------------------------------------------------------------
-		"RingRadius"				"70"
-		"HealthBarOffset"			"215"
-
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyXP"					"300"		// Experience earn.
-		"BountyGoldMin"				"300"		// Gold earned min.
-		"BountyGoldMax"				"300"		// Gold earned max.
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"				"380"		// Speed.
-		"MovementTurnRate"			"0.6"		// Turning rate.
+		"AttackRate"				"1.25"		// Speed of attack.   
 
 		// Status
 		//----------------------------------------------------------------
 		"StatusHealth"				"4000"		// Base health.
 		"StatusHealthRegen"			"8"			// Health regeneration rate.
-		"StatusMana"				"300"		// Base mana.
-		"StatusManaRegen"			"0.5"		// Mana regeneration rate.		 
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"1400"		// Range of vision during day light.
-		"VisionNighttimeRange"		"800"		// Range of vision at night time.
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"					"DOTA_TEAM_NEUTRALS"
-		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
-		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
-
-		//Inventory
-		"HasInventory"				"1"
 	}
 
 	"npc_dota_lone_druid_bear4"
 	{										
-		// General
-		//----------------------------------------------------------------
-		"Model"						"models/heroes/lone_druid/spirit_bear.vmdl"	// Model.
-		"BaseClass"					"npc_dota_lone_druid_bear"
-		"SoundSet"					"LoneDruid_SpiritBear"
-		"Level"						"4"
-		"ModelScale" 				"1.06"
-		"ConsideredHero"			"1"
-		"UnitLabel"					"spirit_bear"
-
-		// Abilities
-		//----------------------------------------------------------------
-		"Ability1"					"lone_druid_spirit_bear_return"			// Ability 1
-		"Ability2"					"lone_druid_spirit_bear_entangle"			// Ability 2
-		"Ability3"					"lone_druid_savage_roar_bear"			// Ability 3
-		"Ability4"					"lone_druid_spirit_bear_demolish"			// Ability 4
-
 		// Armor
 		//----------------------------------------------------------------
 		"ArmorPhysical"				"9"			// Physical protection.
 
 		// Attack
 		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackDamageMin"			"95"		// Damage range min.
-		"AttackDamageMax"			"95"		// Damage range max.	
 		"AttackRate"				"1.05"		// Speed of attack.
-		"AttackAnimationPoint"		"0.43"		// Normalized time in animation cycle to attack.
-		"AttackAcquisitionRange"	"500"		// Range within a target can be acquired.
-		"AttackRange"				"128"		// Range within a target can be attacked.
-		"ProjectileModel"			""			// Particle system model for projectile.
-		"ProjectileSpeed"			"0"			// Speed of projectile.		   
-
-		// Bounds
-		//----------------------------------------------------------------
-		"RingRadius"				"70"
-		"HealthBarOffset"			"215"
-
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyXP"					"300"		// Experience earn.
-		"BountyGoldMin"				"300"		// Gold earned min.
-		"BountyGoldMax"				"300"		// Gold earned max.
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"				"400"		// Speed.
-		"MovementTurnRate"			"0.6"		// Turning rate.
 
 		// Status
 		//----------------------------------------------------------------
 		"StatusHealth"				"5250"		// Base health.
 		"StatusHealthRegen"			"10"			// Health regeneration rate.
-		"StatusMana"				"300"		// Base mana.
-		"StatusManaRegen"			"0.5"		// Mana regeneration rate.		 
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"1400"		// Range of vision during day light.
-		"VisionNighttimeRange"		"800"		// Range of vision at night time.
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"					"DOTA_TEAM_NEUTRALS"
-		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
-		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
-
-		//Inventory
-		"HasInventory"				"1"
 	}
 
 	//=================================================================================
