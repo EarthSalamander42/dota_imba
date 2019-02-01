@@ -100,14 +100,27 @@ ListenToGameEvent('entity_killed', function(keys)
 --		print("Wraith King respawn time decrease:", CalculateSkeletonKingRespawnReduction(hero, respawn_time))
 		respawn_time = math.max(respawn_time - CalculateSkeletonKingRespawnReduction(hero, respawn_time), 1)
 
+--		print("Respawn time:", respawn_time)
+
 		-- this fail-safe is probably not necessary, but i don't wanna hear about that high respawn time bug anymore. Ever.
 		if respawn_time == nil or not respawn_time then
 --			print("Something terrible has happened...set respawn timer to something reasonable.")
 			respawn_time = math.min(hero:GetRespawnTime() / 100 * IMBA_RESPAWN_TIME_PCT, 60)
 
+			print("Respawn time is nil, let's fix this mess!")
+
 			return
 		else
 --			print("Set time until respawn for unit " .. tostring(hero:GetUnitName()) .. " to " .. tostring(respawn_time) .. " seconds")
+
+			if hero:HasModifier("modifier_frantic") and (respawn_time * IMBA_FRANTIC_VALUE / 100) > 1 then
+				local respawn_time_reduction = respawn_time * IMBA_FRANTIC_VALUE / 100
+--				print("Respawn time reduction:", respawn_time_reduction)
+
+				respawn_time = respawn_time - respawn_time_reduction
+--				print("Respawn time (frantic):", respawn_time)
+			end
+
 			hero:SetTimeUntilRespawn(respawn_time)
 
 			return

@@ -31,6 +31,14 @@
 
 			if (abilities[i]) {
 				abilityPanel.abilityname = abilities[i];
+//				abilityPanel.showTooltip = function(){
+//					$.DispatchEvent("DOTAShowAbilityTooltipForEntityIndex", abilityPanel, abilityPanel.abilityname, Players.GetPlayerHeroEntityIndex(Players.GetLocalPlayer()));
+//				}
+//				abilityPanel.hideTooltip = function(){ 
+//					$.DispatchEvent("DOTAHideAbilityTooltip", abilityPanel);
+//				}
+//				abilityPanel.SetPanelEvent("onmouseover", abilityPanel.showTooltip );
+//				abilityPanel.SetPanelEvent("onmouseout", abilityPanel.hideTooltip );
 			} else {
 				abilityPanel.abilityname = "";
 			}

@@ -55,7 +55,7 @@ function GameMode:OnHeroFirstSpawn(hero)
 	Imbattlepass:AddItemEffects(hero)
 
 	if USE_TEAM_COURIER == false then
-		TurboCourier:Init(hero)
+		self:InitTurboCourier(hero)
 	end
 
 	if hero:GetUnitName() == "npc_dota_hero_sohei" then

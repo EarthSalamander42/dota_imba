@@ -69,7 +69,7 @@
 "DOTA_Tooltip_ability_special_bonus_imba_obsidian_destroyer_1"				"Intelligence Differential"
 "DOTA_Tooltip_ability_special_bonus_imba_obsidian_destroyer_1_Description"	"Arcane Orb applies the caster's and targets' difference in INT as damage in a 300 AoE radius."
 "DOTA_Tooltip_ability_special_bonus_imba_obsidian_destroyer_2" 				"Sanity's Eclipse cooldown reduction"
-"DOTA_Tooltip_ability_special_bonus_imba_obsidian_destroyer_2_Description" 	"Sanity Eclipse's cooldown is reduced by 1 second for every INT the caster steals while it is off-cooldown. Cannot reduce cooldown by more than 50%."
+"DOTA_Tooltip_ability_special_bonus_imba_obsidian_destroyer_2_Description" 	"Sanity Eclipse's cooldown is reduced by 1 second for every time the caster steals INT while it is off-cooldown. Cannot reduce cooldown by more than 50%."
 "DOTA_Tooltip_ability_special_bonus_imba_obsidian_destroyer_3"				"Essence Synergy Upgrade"
 "DOTA_Tooltip_ability_special_bonus_imba_obsidian_destroyer_3_Description"	"Essence Aura's Essence Synergy can proc from enemies as well."
 "DOTA_Tooltip_ability_special_bonus_imba_obsidian_destroyer_4"				"Astral Imprisonment's sucks up nearby enemy units"

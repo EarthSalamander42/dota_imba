@@ -275,7 +275,14 @@ function GameMode:ItemAddedFilter( keys )
 	if unit == nil then return end
 	local item = EntIndexToHScript(keys.item_entindex_const)
 	if item == nil then return end
-	if item:GetAbilityName() == "item_tpscroll" and item:GetPurchaser() == nil then return false end
+	if item:GetAbilityName() == "item_tpscroll" and item:GetPurchaser() == nil then
+		item:EndCooldown()
+
+		return true
+
+		-- return false to remove it
+--		return false
+	end
 	local item_name = 0
 	if item:GetName() then
 		item_name = item:GetName()
@@ -443,7 +450,17 @@ function GameMode:OrderFilter( keys )
 	if USE_TEAM_COURIER == false then
 		if unit:IsCourier() then
 			local player_id = keys.issuer_player_id_const
-			local rightful_courier = TurboCourier.COURIER_PLAYER[player_id]
+
+			-- if the order is given through lua, allow it
+			if player_id == -1 then
+--				print("Lua order, allow it")
+				unit:GetAbilityByIndex(7):CastAbility()
+				return true
+			end
+
+			local rightful_courier = self.COURIER_PLAYER[player_id]
+
+--			print(self.COURIER_PLAYER)
 
 --			if rightful_courier then
 				-- fix attempt to move items in courier inventory when giving order to a courier wich is not yours [NOT WORKING]
@@ -476,11 +493,14 @@ function GameMode:OrderFilter( keys )
 
 					return false
 				elseif (ability and ability.GetName and ability:GetName() ~= "") then
+--					print("Valid Ability")
 					if unit == rightful_courier then
 --						print("Rightful courier used, everything's okay!")
+
 						return true
 					end
 
+--					print(player_id, rightful_courier)
 					if rightful_courier and rightful_courier:HasAbility(ability:GetName()) then
 						if ability:IsToggle() then
 							rightful_courier:FindAbilityByName(ability:GetName()):ToggleAbility()
@@ -493,49 +513,20 @@ function GameMode:OrderFilter( keys )
 							PlayerResource:NewSelection(player_id, rightful_courier)
 						end
 
+--						print("Return false 1")
 						return false
 					end
 				else
 					DisplayError(player_id, "#dota_hud_error_control_courier_with_abilities_only")
 
+--					print("Return false 2")
 					return false
 				end
 			end
 
+--			print("Return false 3")
 			return false
 		end
-		
-		--print("Is this courier 'owned' by order giver? ")
-		-- for _, ent_id in pairs(units) do
-			-- if EntIndexToHScript(ent_id):IsCourier() then
-				-- if EntIndexToHScript(ent_id):GetPlayerOwnerID() == keys.issuer_player_id_const then
-					-- if keys.order_type == DOTA_UNIT_ORDER_MOVE_TO_POSITION or keys.order_type == DOTA_UNIT_ORDER_MOVE_TO_TARGET or keys.order_type == DOTA_UNIT_ORDER_HOLD_POSITION or keys.order_type == DOTA_UNIT_ORDER_DROP_ITEM or keys.order_type == DOTA_UNIT_ORDER_GIVE_ITEM then
-						-- --return false
-						-- return true
-					-- else
-						-- return true
-					-- end
-				-- else
-					-- local ability = EntIndexToHScript(keys["entindex_ability"])
-					-- if ability then
-						-- if ability.GetName then
-							-- if ability:GetName() ~= "" and ability:GetAbilityName() then
-								-- if TurboCourier.COURIER_PLAYER[keys.issuer_player_id_const] then
-									-- if TurboCourier.COURIER_PLAYER[keys.issuer_player_id_const]:FindAbilityByName(ability:GetAbilityName()) then
-										-- TurboCourier.COURIER_PLAYER[keys.issuer_player_id_const]:FindAbilityByName(ability:GetAbilityName()):CastAbility()
-										-- if PlayerResource:IsUnitSelected(keys.issuer_player_id_const, EntIndexToHScript(ent_id)) then
-											-- PlayerResource:NewSelection(keys.issuer_player_id_const, TurboCourier.COURIER_PLAYER[keys.issuer_player_id_const])
-										-- end
-									-- end
-								-- end
-							-- end
-						-- end
-					-- end
-
-					-- return false
-				-- end
-			-- end
-		-- end
 	end
 
 	------------------------------------------------------------------------------------

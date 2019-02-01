@@ -3,7 +3,7 @@
 
 api = class({});
 
-local baseUrl = "http://api.dota2imba.org/imba/"
+local baseUrl = "http://api.dota2imba.fr/imba/"
 local timeout = 5000
 
 local native_print = print

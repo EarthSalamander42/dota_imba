@@ -196,6 +196,22 @@
 		"AttackDesire"				"1.5"		// How much bots want to attack them vs other non-hero things
 	}
 
+	"npc_dota_courier"
+	{
+		"Ability1"					"courier_return_to_base"
+		"Ability2"					"courier_go_to_secretshop"		
+		"Ability3"					"courier_return_stash_items"
+		"Ability4"					"courier_take_stash_items"
+		"Ability5"					"courier_transfer_items"	
+		"Ability6"					"imba_courier_autodeliver"		
+		"Ability7"					"courier_movespeed"
+		"Ability8"					"courier_take_stash_and_transfer_items"
+		"Ability9"					"courier_transfer_items_to_other_player"
+		"Ability10"					"courier_go_to_enemy_secretshop"
+		"Ability11"					"courier_go_to_sideshop"
+		"Ability12"					"courier_go_to_sideshop2"
+	}
+
 	//=================================================================================
 	// Enigma: Eidolon I
 	//=================================================================================
