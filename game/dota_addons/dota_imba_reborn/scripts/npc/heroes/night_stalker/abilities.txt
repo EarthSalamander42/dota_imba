@@ -241,7 +241,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"base_bonus_ms_pct"	"20 25 30 35"
+				"base_bonus_ms_pct"	"22 28 34 40"
 			}
 			"02"
 			{

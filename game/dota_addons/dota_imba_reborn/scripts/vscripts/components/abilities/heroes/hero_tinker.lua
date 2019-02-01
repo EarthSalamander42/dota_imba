@@ -129,6 +129,17 @@ function imba_tinker_rearm:OnChannelFinish( bInterrupted )
 				"item_sphere",
 				"item_imba_plancks_artifact",
 				"item_imba_white_queen_cape",
+				"item_imba_black_queen_cape",
+				"item_helm_of_the_dominator",
+				"item_imba_sange",
+				"item_imba_heavens_halberd",
+				"item_imba_yasha",
+				"item_imba_kaya",
+				"item_imba_sange_yasha",
+				"item_imba_kaya_and_sange",
+				"item_imba_yasha_and_kaya",
+				"item_imba_arcane_nexus",
+				"item_imba_manta"
 			}
 
 			for i = 0, caster:GetAbilityCount() do

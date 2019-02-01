@@ -281,7 +281,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"heal_additive"			"20 30 40 50"
+				"heal_additive"			"14 18 22 26"
 			}
 			"03"
 			{

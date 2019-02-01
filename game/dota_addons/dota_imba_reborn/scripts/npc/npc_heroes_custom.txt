@@ -183,18 +183,6 @@
 
 		//Picking Screen
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
-
-		"AttackDamageMin"			"24"
-		"AttackDamageMax"			"28"
-
-		"MovementSpeed"				"315"
-
-		"Ability1"					"batrider_sticky_napalm"
-		"Ability2"					"batrider_flamebreak"
-		"Ability3"					"batrider_firefly"
-		"Ability4"					"generic_hidden"
-		"Ability5"					"generic_hidden"
-		"Ability6"					"batrider_flaming_lasso"
 	}
 
 	//=================================================================================================================
@@ -207,21 +195,8 @@
 		//Picking Screen
 		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
 
-		"Ability1"					"beastmaster_wild_axes"
-		"Ability2"					"beastmaster_call_of_the_wild_boar"
-		"Ability3"					"beastmaster_call_of_the_wild_hawk"
-		"Ability4"					"beastmaster_inner_beast"
-		"Ability5"					"generic_hidden"
-		"Ability6"					"beastmaster_primal_roar"
-
-		"Ability10"					"special_bonus_exp_boost_25"
 		"Ability11"					"special_bonus_movement_speed_30"
 		"Ability12"					"special_bonus_armor_7"
-		"Ability13"					"special_bonus_unique_beastmaster_2"
-		"Ability14"					"special_bonus_unique_beastmaster"
-		"Ability15"					"special_bonus_hp_500"
-		"Ability16"					"special_bonus_unique_beastmaster_4"
-		"Ability17"					"special_bonus_unique_beastmaster_3"
 	}
 
 	//=================================================================================================================
@@ -350,22 +325,6 @@
 
 		//Picking Screen
 		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
-
-		"Ability1"					"chaos_knight_chaos_bolt"
-		"Ability2"					"chaos_knight_reality_rift"
-		"Ability3"					"chaos_knight_chaos_strike"
-		"Ability4"					"generic_hidden"
-		"Ability5"					"generic_hidden"
-		"Ability6"					"chaos_knight_phantasm"
-
-		"Ability10"					"special_bonus_all_stats_5"
-		"Ability11"					"special_bonus_movement_speed_20"
-		"Ability12"					"special_bonus_strength_15"
-		"Ability13"					"special_bonus_cooldown_reduction_12"
-		"Ability14"					"special_bonus_gold_income_25"
-		"Ability15"					"special_bonus_unique_chaos_knight"
-		"Ability16"					"special_bonus_unique_chaos_knight_2"
-		"Ability17"					"special_bonus_unique_chaos_knight_3"
 	}
 
 	//=================================================================================================================
@@ -375,21 +334,7 @@
 	{
 		"override_hero"				"npc_dota_hero_chen"
 		
-		"Ability1"					"chen_penitence"
-		"Ability2"					"chen_divine_favor"
-		"Ability3"					"chen_holy_persuasion"
 		"Ability4"					"chen_test_of_faith"
-		"Ability5"					"generic_hidden"
-		"Ability6"					"chen_hand_of_god"
-		
-		"Ability10"					"special_bonus_exp_boost_35"
-		"Ability11"					"special_bonus_cast_range_200"
-		"Ability12"					"special_bonus_armor_7"
-		"Ability13"					"special_bonus_unique_chen_3"
-		"Ability14"					"special_bonus_gold_income_30"
-		"Ability15"					"special_bonus_unique_chen_4"
-		"Ability16"					"special_bonus_unique_chen_1"
-		"Ability17"					"special_bonus_unique_chen_2"
 	}
 
 	//=================================================================================================================
@@ -519,10 +464,6 @@
 		//Picking Screen
 		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
 
-		"ModelScale" 				"1.05"
-
-		"AttackRange"				"266"
-
 		"Ability1"					"doom_bringer_devour"
 		"Ability2"					"doom_bringer_scorched_earth"
 		"Ability3"					"doom_bringer_infernal_blade"
@@ -578,8 +519,6 @@
 		//Picking Screen
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
-
-		"AttackAcquisitionRange"	"900"
 		
 		"Ability1"					"imba_drow_ranger_frost_arrows"
 		"Ability2"					"imba_drow_ranger_gust"
@@ -799,37 +738,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_invoker"
 	{
-		"override_hero"				"npc_dota_hero_invoker"
 
-		//Picking Screen
-		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
-
-		"Ability1"					"invoker_quas"
-		"Ability2"					"invoker_wex"
-		"Ability3"					"invoker_exort"
-		"Ability4"					"invoker_empty1"
-		"Ability5"					"invoker_empty2"
-		"Ability6"					"invoker_invoke"
-
-		"Ability7"					"invoker_cold_snap"
-		"Ability8"					"invoker_ghost_walk"
-		"Ability9"					"invoker_tornado"
-		"Ability10"					"invoker_emp"
-		"Ability11"					"invoker_alacrity"
-		"Ability12"					"invoker_chaos_meteor"
-		"Ability13"					"invoker_sun_strike"
-		"Ability14"					"invoker_forge_spirit"
-		"Ability15"					"invoker_ice_wall"
-		"Ability16"					"invoker_deafening_blast" 
-		
-		"Ability17" 				"special_bonus_unique_invoker_8"
-		"Ability18"					"special_bonus_unique_invoker_6"
-		"Ability19"					"special_bonus_unique_invoker_1"
-		"Ability20"					"special_bonus_unique_invoker_7"
-		"Ability21"					"special_bonus_unique_invoker_4"
-		"Ability22"					"special_bonus_unique_invoker_5"
-		"Ability23"					"special_bonus_unique_invoker_2"
-		"Ability24"					"special_bonus_unique_invoker_3"
 	}
 
 	//=================================================================================================================
@@ -896,22 +805,7 @@
 	{
 		"override_hero"	"npc_dota_hero_keeper_of_the_light"
 
-		"Ability1"		"keeper_of_the_light_illuminate"
-		"Ability2"		"keeper_of_the_light_blinding_light"
-		"Ability3"		"keeper_of_the_light_chakra_magic"
 		"Ability4"		"keeper_of_the_light_mana_leak"
-		"Ability5"		"generic_hidden"
-		"Ability6"		"keeper_of_the_light_will_o_wisp"
-		"Ability7"		"keeper_of_the_light_illuminate_end"
-		
-		"Ability10"		"special_bonus_spell_lifesteal_8"
-		"Ability11"		"special_bonus_movement_speed_25"
-		"Ability12"		"special_bonus_exp_boost_40"
-		"Ability13"		"special_bonus_cast_range_350"
-		"Ability14"		"special_bonus_magic_resistance_40"
-		"Ability15"		"special_bonus_unique_keeper_of_the_light_2"
-		"Ability16"		"special_bonus_unique_keeper_of_the_light_3"
-		"Ability17"		"special_bonus_unique_keeper_of_the_light"
 	}
 
 	//=================================================================================================================
@@ -958,8 +852,10 @@
 		"Ability2"					"imba_lich_frost_armor"
 		"Ability3"					"imba_lich_dark_ritual"
 		"Ability4"					"imba_lich_cold_front"
-		"Ability5"					"generic_hidden"
+		//"Ability5"					"lich_frost_shield"
 		"Ability6"					"imba_lich_chain_frost"
+		//"Ability7"					"imba_lich_frost_shield"
+		
 		
 		"Ability10"					"special_bonus_imba_lich_1" // Chain Frost bounces instantly after hitting a target
 		"Ability11"					"special_bonus_imba_lich_2" // Sacrifice can now be used on self, granting you and nearby allies the damage reduction buff.
@@ -1192,28 +1088,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_morphling"
 	{
-		"override_hero"				"npc_dota_hero_morphling"
 
-		//Picking Screen
-		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
-
-		"Ability1"					"morphling_waveform"
-		"Ability2"					"morphling_adaptive_strike_agi"
-		"Ability3"					"morphling_adaptive_strike_str"
-		"Ability4"					"morphling_morph_agi"
-		"Ability5"					"morphling_morph_str"
-		"Ability6"					"morphling_replicate"
-		"Ability7"					"morphling_morph_replicate"
-		"Ability8"					"morphling_morph"
-
-		"Ability15"					"special_bonus_agility_10"
-		"Ability16"					"special_bonus_unique_morphling_1"
-		"Ability17"					"special_bonus_unique_morphling_8"
-		"Ability18"					"special_bonus_attack_speed_30"
-		"Ability19"					"special_bonus_unique_morphling_5"
-		"Ability20"					"special_bonus_unique_morphling_4"
-		"Ability21"					"special_bonus_unique_morphling_6"
-		"Ability22"					"special_bonus_unique_morphling_3"
 	}
 
 	//=================================================================================================================
@@ -1221,30 +1096,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_furion"
 	{
-		"override_hero"				"npc_dota_hero_furion"
-
-		//Picking Screen
-		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
-
-		"AttackDamageMin"			"34"
-		"AttackDamageMax"			"38"
-		"AttackRate"				"1.3"
-
-		"Ability1"					"furion_sprout"
-		"Ability2"					"furion_teleportation"
-		"Ability3"					"furion_force_of_nature"
-		"Ability4"					"generic_hidden"
-		"Ability5"					"generic_hidden"
-		"Ability6"					"furion_wrath_of_nature"
-
-		"Ability10"					"special_bonus_attack_damage_30"
-		"Ability11"					"special_bonus_movement_speed_40"
-		"Ability12"					"special_bonus_armor_10"
-		"Ability13"					"special_bonus_unique_furion_2"
-		"Ability14"					"special_bonus_attack_speed_40"
-		"Ability15"					"special_bonus_unique_furion_4"
-		"Ability16"					"special_bonus_unique_furion_3"
-		"Ability17"					"special_bonus_unique_furion"
+	
 	}
 
 	//=================================================================================================================
@@ -1252,29 +1104,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_life_stealer"
 	{
-		"override_hero"				"npc_dota_hero_life_stealer"
 
-		//Picking Screen
-		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
-
-		"Ability1"		"life_stealer_rage"
-		"Ability2"		"life_stealer_feast"
-		"Ability3"		"life_stealer_open_wounds"
-		"Ability4"		"life_stealer_assimilate"
-		"Ability5"		"generic_hidden"
-		"Ability6"		"life_stealer_infest"
-		"Ability7"		"life_stealer_control"
-		"Ability8"		"life_stealer_consume"
-		"Ability9"		"life_stealer_assimilate_eject"
-
-		"Ability10"		"special_bonus_hp_200"
-		"Ability11"		"special_bonus_attack_speed_30"
-		"Ability12"		"special_bonus_attack_damage_30"
-		"Ability13"		"special_bonus_movement_speed_35"
-		"Ability14"		"special_bonus_evasion_20"
-		"Ability15"		"special_bonus_unique_lifestealer_2"
-		"Ability16"		"special_bonus_unique_lifestealer_3"
-		"Ability17"		"special_bonus_unique_lifestealer"
 	}
 
 	//=================================================================================================================
@@ -1372,33 +1202,13 @@
 		// Unused						"special_bonus_imba_nyx_assassin_9" // Scarab Parasite has no duration
 	}
 
-//	//=================================================================================================================
-//	// HERO: Naga Siren
-//	//=================================================================================================================
-//	"npc_dota_hero_naga_siren"
-//	{
-//		"override_hero"				"npc_dota_hero_naga_siren"
+	//=================================================================================================================
+	// HERO: Naga Siren
+	//=================================================================================================================
+	"npc_dota_hero_naga_siren"
+	{
 
-//		//Picking Screen
-//		"IsImba"					"0"
-//		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
-
-//		"Ability1"					"imba_naga_siren_mirror_image"
-//		"Ability2"					"naga_siren_ensnare"
-//		"Ability3"					"imba_naga_siren_rip_tide"
-//		"Ability4"					"generic_hidden"
-//		"Ability5"					"generic_hidden"
-//		"Ability6"					"naga_siren_song_of_the_siren"
-//		"Ability7"					"naga_siren_song_of_the_siren_cancel"
-//		"Ability10"					"special_bonus_movement_speed_25"
-//		"Ability11"					"special_bonus_unique_naga_siren_4"
-//		"Ability12"					"special_bonus_agility_15"
-//		"Ability13"					"special_bonus_strength_14"
-//		"Ability14"					"special_bonus_unique_naga_siren_2"
-//		"Ability15"					"special_bonus_unique_naga_siren"
-//		"Ability16"					"special_bonus_evasion_30"
-//		"Ability17"					"special_bonus_unique_naga_siren_3"
-//	}
+	}
 
 	//=================================================================================================================
 	// HERO: Outworld Devourer
@@ -1518,26 +1328,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_phantom_lancer"
 	{
-		"override_hero"				"npc_dota_hero_phantom_lancer"
 
-		//Picking Screen
-		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
-
-		"Ability1"					"phantom_lancer_spirit_lance"
-		"Ability2"					"phantom_lancer_doppelwalk"
-		"Ability3"					"phantom_lancer_phantom_edge"
-		"Ability4"					"generic_hidden"
-		"Ability5"					"generic_hidden"
-		"Ability6"					"phantom_lancer_juxtapose"
-
-		"Ability10"					"special_bonus_evasion_10"
-		"Ability11"					"special_bonus_attack_speed_20"
-		"Ability12"					"special_bonus_hp_250"
-		"Ability13"					"special_bonus_unique_phantom_lancer_2"
-		"Ability14"					"special_bonus_unique_phantom_lancer"
-		"Ability15"					"special_bonus_unique_phantom_lancer_3"
-		"Ability16"					"special_bonus_unique_phantom_lancer_4"
-		"Ability17"					"special_bonus_30_crit_2"
 	}
 
 	//=================================================================================================================
@@ -1577,9 +1368,6 @@
 	"npc_dota_hero_pudge"
 	{
 		"override_hero"				"npc_dota_hero_pudge"
-		"ModelScale"				"1.0"
-		"MovementTurnRate"			"1.0"
-		"AttackRange"				"200"
 		
 		//Picking Screen
 		"IsImba"					"1"
@@ -1873,12 +1661,8 @@
 		//Picking Screen
 		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
 
-		"Ability1"					"spectre_spectral_dagger"
-		"Ability2"					"spectre_desolate"
-		"Ability3"					"spectre_dispersion"
-		"Ability4"					"imba_spectre_reality"
-		"Ability5"					"generic_hidden"
-		"Ability6"					"imba_spectre_haunt"
+		//"Ability4"					"imba_spectre_reality"
+		//"Ability6"					"imba_spectre_haunt"
 	}
 
 	//=================================================================================================================
@@ -1943,18 +1727,7 @@
 	"npc_dota_hero_tidehunter"
 	{
 		"override_hero"				"npc_dota_hero_tidehunter"
-		"ModelScale"				"0.96"
-		"AttributeBaseStrength"		"28"
-		"AttackRange"				"200"
-
-		//Picking Screen
-		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
-
-		"Ability1"					"tidehunter_gush"
-		"Ability2"					"tidehunter_kraken_shell"
-		"Ability3"					"tidehunter_anchor_smash"
-		"Ability4"					"generic_hidden"
-		"Ability5"					"generic_hidden"
+		
 		"Ability6"					"imba_tidehunter_ravage"
 	}
 
@@ -2065,19 +1838,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_undying"
 	{
-		"override_hero"				"npc_dota_hero_undying"
-		"AttributeBaseAgility"		"20"
-		"AttributeAgilityGain"		"2.0"
 
-		//Picking Screen
-		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
-
-		"Ability1"					"undying_decay"
-		"Ability2"					"undying_soul_rip"
-		"Ability3"					"undying_tombstone"
-		"Ability4"					"generic_hidden"
-		"Ability5"					"generic_hidden"
-		"Ability6"					"undying_flesh_golem"
 	}
 
 	//=================================================================================================================
@@ -2114,9 +1875,6 @@
 	"npc_dota_hero_vengefulspirit"
 	{
 		"override_hero"				"npc_dota_hero_vengefulspirit"
-		"AttackDamageMin"			"28"
-		"AttackDamageMax"			"34"
-		"AttackRange"				"425"
 
 		//Picking Screen
 		"IsImba"					"1"
@@ -2145,7 +1903,6 @@
 	"npc_dota_hero_venomancer"
 	{
 		"override_hero"				"npc_dota_hero_venomancer"
-		"AttackRange"				"500"
 
 		//Picking Screen
 		"IsImba"					"1"

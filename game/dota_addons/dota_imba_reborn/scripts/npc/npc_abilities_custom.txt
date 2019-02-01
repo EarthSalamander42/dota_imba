@@ -1,5 +1,6 @@
 // Dota Abilities Override File
 // DataDriven Ability Guide: https://moddota.com/forums/discussion/14/datadriven-ability-breakdown-documentation
+// Vanilla Abilities File: https://raw.githubusercontent.com/SteamDatabase/GameTracking-Dota2/master/game/dota/scripts/npc/npc_abilities.txt
 
 #base heroes/towers.txt
 
@@ -3172,7 +3173,7 @@
 		"AbilityUnitTargetType"							"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"SpellImmunityType"								"SPELL_IMMUNITY_ENEMIES_NO"		
 		"AbilityCastPoint"								"0.3"
-		"AbilityManaCost"								"70"
+		"AbilityManaCost"								"110 120 130 140"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -3308,7 +3309,7 @@
 			"05"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"cast_range"							"550 700 850 1000"
+				"cast_range"							"800 850 950 1000"
 			}
 			
 			"06"
@@ -5388,7 +5389,7 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"75 95 115 135"
+		"AbilityManaCost"				"50 80 110 140"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -7566,6 +7567,103 @@
 				"autocast_radius"       "1100"
 			}
 		}
+	}
+	
+	//=================================================================================================================
+	// Lich: Frost Shield
+	//=================================================================================================================
+	"lich_frost_shield"
+	{
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			//"05"
+			//{
+			//	"var_type"				"FIELD_FLOAT"
+			//	"interval"				"0.1"
+			//}
+			//"06"
+			//{
+			//	"var_type"				"FIELD_INTEGER"
+			//	"radius"				"2000"
+			//}
+		}
+	}
+
+	//=================================================================================================================
+	// Lich: Frost Shield
+	//=================================================================================================================
+	"imba_lich_frost_shield"
+	{
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_lich.lua"
+	
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"		
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_YES"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+		"AbilitySound"					"Hero_Lich.FrostArmor"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1000"
+		"AbilityCastPoint"				"0.2"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"30 25 20 15"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"100 110 120 130"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_reduction"		"30 40 50 60"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"movement_slow"			"20 25 30 35"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"slow_duration"			"0.5"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"20 30 40 50"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"interval"				"1"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"600"
+			}
+			"07"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"duration"			"6"
+				"LinkedSpecialBonus"		"special_bonus_unique_lich_4"
+			}
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_3"
 	}
 
 	//=================================================================================================================
@@ -15331,7 +15429,7 @@
 	
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"85"
+		"AbilityManaCost"				"60 70 80 90"
 
 		"precache"
 		{
@@ -16814,7 +16912,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"525 560 595 630"
+				"radius"				"500 550 600 650"
 			}
 			"03"
 			{
@@ -20126,7 +20224,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"17"
+		"AbilityCooldown"				"26 22 18 14"
 		"AbilityDuration"				"2"
 
 
@@ -21224,7 +21322,7 @@
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"base_damage"			"75 125 175"
+				"base_damage"			"100 150 200"
 			}
 
 			"09"
@@ -21813,7 +21911,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"20"
+		"AbilityCooldown"				"30 26 22 18"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -23836,7 +23934,7 @@
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------		
 		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"10"
+		"AbilityCooldown"				"9"
 		"AbilityManaCost"				"120 130 140 150"
 
 		// Special
@@ -25146,7 +25244,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"bonus_health_regen"			"3 9 16 24"
+				"bonus_health_regen"			"4 10 16 24"
 			}
 			"02"
 			{
@@ -26239,7 +26337,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"area_of_effect"		"725"
+				"area_of_effect"		"775"
 			}
 
 			"02"
@@ -27087,7 +27185,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"130 120 110"
+		"AbilityCooldown"				"130"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -27180,12 +27278,12 @@
 			"02"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"pull_strength"				"0.1"
+				"pull_strength"				"0.05"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"pull_strength_fury"		"0.2"
+				"pull_strength_fury"		"0.1"
 			}
 		}
 	}
@@ -27636,7 +27734,7 @@
 			"11"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"arrow_speed"						"857"
+				"arrow_speed"						"950"
 			}
 			"12"
 			{
@@ -37691,7 +37789,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"			"30 22 14 6"
+		"AbilityCooldown"			"18 14 10 6"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------

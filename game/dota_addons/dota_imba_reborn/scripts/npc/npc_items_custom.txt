@@ -1340,13 +1340,13 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_damage"				"60"
+				"bonus_damage"				"68"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"bonus_mana_regen"			"2.5"
+				"bonus_mana_regen"			"5.5"
 			}
 			"05"
 			{
@@ -3716,7 +3716,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"600"
+		"ItemCost"						"750"
 		"ItemShopTags"					""
 
 		// Recipe
@@ -3754,7 +3754,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"3400"
+		"ItemCost"						"3700"
 		"ItemShopTags"					"armor;boost_armor;regen_health;block;health_pool"
 		"ItemQuality"					"epic"
 		"ItemAlertable"					"1"
@@ -9419,7 +9419,7 @@
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"lifesteal_pct"					"18"
+				"lifesteal_pct"					"20"
 			}
 			"03"
 			{

@@ -2462,7 +2462,7 @@
 "DOTA_Tooltip_ability_imba_tinker_rearm"                "Rearm"
 "DOTA_Tooltip_ability_imba_tinker_rearm_Description"          "Resets the cooldown on most of Tinker's items and abilities.\n\nUpgradable by Aghanim's Scepter."
 "DOTA_Tooltip_ability_imba_tinker_rearm_Lore"             "The Seven Minute War was ended by simple preperations - and the sheer unlimited amount of ammunation."
-"DOTA_Tooltip_ability_imba_tinker_rearm_Note0"              "Does not rearm Arcane Boots, Mekansm, Guardian Greaves, Bloodstone, Hand of Midas, White Queen's Cape, Black King Bar, Necronomicon, Eye of Skadi, Linken's Sphere, or Refresher Orb."
+"DOTA_Tooltip_ability_imba_tinker_rearm_Note0"              "Rearm works on all items except Aeon Disk, Arcane Boots, Black King Bar, Black Queen's Cape, Bloodstone, Eye of Skadi, Guardian Greaves, Hand of Midas, Helm of the Dominator, Kaya/Yasha/Sange Series, Linken's Sphere, Mekansm, Meteor Hammer, Necronomicon, Pipe of Insight, Refresher Orb, and White Queen's Cape."
 "DOTA_Tooltip_ability_imba_tinker_rearm_cooldown_tooltip"       "CHANNEL TIME:"
 
 "DOTA_Tooltip_modifier_imba_rearm_animation"              "Rearm"
