@@ -177,42 +177,55 @@ function modifier_imba_fountain_danger_zone:OnIntervalThink()
 		local fountain = self:GetParent()
 		local fountain_pos = fountain:GetAbsOrigin() 
 		local nearby_enemies = FindUnitsInRadius(fountain:GetTeamNumber(), fountain_pos, nil, self:GetAbility():GetSpecialValueFor("kill_radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
+		local act_on_target = 1 -- 0 = do nothing, 1 = damage, 2 = kill.
+
 		for _, enemy in pairs(nearby_enemies) do
-			if enemy:GetUnitName() == "ent_dota_promo" or enemy:GetUnitName() == "ent_dota_halloffame" or string.find(enemy:GetUnitName(), "roshan") then return end
-
-			if enemy:IsIllusion() or enemy:HasModifier("modifier_illusion_manager_out_of_world") or enemy:HasModifier("modifier_illusion_manager") then enemy:ForceKill(false) return end
-
+			-- Ignore a list of units
 			for _, unit_name in pairs(IGNORE_FOUNTAIN_UNITS) do
 				if unit_name == enemy:GetUnitName() then
-					return
+					act_on_target = 0
+					break
 				end
+			end
+
+			-- Ignore roshan(s)
+			if string.find(enemy:GetUnitName(), "roshan") then
+				act_on_target = 0
+			end
+
+			if enemy:IsIllusion() then
+				act_on_target = 2
 			end
 
 			for _, unit_name in pairs(RESTRICT_FOUNTAIN_UNITS) do
 				if unit_name == enemy:GetUnitName() then
-					enemy:ForceKill(false)
-					return
+					act_on_target = 2
+					break
 				end
 			end
 
-			local damage = enemy:GetMaxHealth() / 100 * self:GetAbility():GetSpecialValueFor("damage_pct")
-			local aura_linger = self:GetAbility():GetSpecialValueFor("aura_linger")
---			print("Damage:", damage)
+			if act_on_target == 1 then
+				local damage = enemy:GetMaxHealth() / 100 * self:GetAbility():GetSpecialValueFor("damage_pct")
+				local aura_linger = self:GetAbility():GetSpecialValueFor("aura_linger")
+--				print("Damage:", damage)
 
-			if enemy:IsInvulnerable() then
-				enemy:SetHealth(math.max(enemy:GetHealth() - damage, 1))
-			else
-				ApplyDamage({attacker = fountain, victim = enemy, damage = damage, damage_type = DAMAGE_TYPE_PURE})
+				if enemy:IsInvulnerable() then
+					enemy:SetHealth(math.max(enemy:GetHealth() - damage, 1))
+				else
+					ApplyDamage({attacker = fountain, victim = enemy, damage = damage, damage_type = DAMAGE_TYPE_PURE})
+				end
+
+--				local damage_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_tinker/tinker_laser.vpcf", PATTACH_CUSTOMORIGIN, enemy)
+--				ParticleManager:SetParticleControl(damage_pfx, 0, fountain_pos)
+--				ParticleManager:SetParticleControlEnt(damage_pfx, 1, enemy, PATTACH_POINT_FOLLOW, "attach_hitloc", enemy:GetAbsOrigin(), true)
+--				ParticleManager:SetParticleControl(damage_pfx, 3, fountain_pos)
+--				ParticleManager:SetParticleControl(damage_pfx, 9, fountain_pos)
+--				ParticleManager:ReleaseParticleIndex(damage_pfx)
+				enemy:AddNewModifier(fountain, self:GetAbility(), "modifier_doom_bringer_doom", {duration = aura_linger})
+				enemy:AddNewModifier(fountain, self:GetAbility(), "modifier_imba_fountain_danger_zone_debuff", {duration = aura_linger})
+			elseif act_on_target == 2 then
+				enemy:ForceKill(false)
 			end
-
---			local damage_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_tinker/tinker_laser.vpcf", PATTACH_CUSTOMORIGIN, enemy)
---			ParticleManager:SetParticleControl(damage_pfx, 0, fountain_pos)
---			ParticleManager:SetParticleControlEnt(damage_pfx, 1, enemy, PATTACH_POINT_FOLLOW, "attach_hitloc", enemy:GetAbsOrigin(), true)
---			ParticleManager:SetParticleControl(damage_pfx, 3, fountain_pos)
---			ParticleManager:SetParticleControl(damage_pfx, 9, fountain_pos)
---			ParticleManager:ReleaseParticleIndex(damage_pfx)
-			enemy:AddNewModifier(fountain, self:GetAbility(), "modifier_doom_bringer_doom", {duration = aura_linger})
-			enemy:AddNewModifier(fountain, self:GetAbility(), "modifier_imba_fountain_danger_zone_debuff", {duration = aura_linger})
 		end
 	end
 end

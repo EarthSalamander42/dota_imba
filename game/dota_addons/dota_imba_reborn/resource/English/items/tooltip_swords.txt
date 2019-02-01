@@ -14,7 +14,7 @@
 
 // Yasha
 "DOTA_Tooltip_Ability_item_imba_yasha"							"#{DOTA_Tooltip_ability_item_yasha}"
-"DOTA_Tooltip_ability_item_imba_yasha_Description"				"<h1><font color='#FF7800'>Active: Sword Dance</font></h1> Grants %bonus_evasion_active%%  Evasion for %active_duration% seconds."
+"DOTA_Tooltip_ability_item_imba_yasha_Description"				"<h1><font color='#FF7800'>Active: Sword Dance</font></h1> Grants %bonus_evasion_active%%%  Evasion for %active_duration% seconds."
 "DOTA_Tooltip_ability_item_imba_yasha_Lore"						"Yasha is regarded as the swiftest weapon ever created."
 "DOTA_Tooltip_ability_item_imba_yasha_Note0"					"Movement speed bonus does not stack with itself or other Yasha upgrades."
 "DOTA_Tooltip_ability_item_imba_yasha_bonus_attack_speed"		"+$attack"

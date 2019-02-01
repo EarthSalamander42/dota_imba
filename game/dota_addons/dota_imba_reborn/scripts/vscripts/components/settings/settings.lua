@@ -381,6 +381,8 @@ IMBA_REINCARNATION_MODIFIERS = {
 }
 
 IGNORE_FOUNTAIN_UNITS = {
+	"ent_dota_promo",
+	"ent_dota_halloffame",
 	"npc_dota_elder_titan_ancestral_spirit",
 	"npc_dummy_unit",
 	"npc_dota_hero_dummy_dummy",

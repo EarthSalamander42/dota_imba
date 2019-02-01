@@ -35,6 +35,9 @@ IMBATTLEPASS_LEVEL_REWARD[9]	= "blink"
 IMBATTLEPASS_LEVEL_REWARD[13]	= "fountain2"
 IMBATTLEPASS_LEVEL_REWARD[16]	= "force_staff"
 IMBATTLEPASS_LEVEL_REWARD[18]	= "blink2"
+if next_reward_shown then
+	IMBATTLEPASS_LEVEL_REWARD[20]	= "zuus_arcana"
+end
 IMBATTLEPASS_LEVEL_REWARD[22]	= "fountain3"
 IMBATTLEPASS_LEVEL_REWARD[26]	= "bottle"
 IMBATTLEPASS_LEVEL_REWARD[27]	= "blink3"
@@ -107,6 +110,7 @@ function Imbattlepass:Init()
 	IMBATTLEPASS_JUGGERNAUT = {}
 	IMBATTLEPASS_ANCIENT_APPARITION = {}
 	IMBATTLEPASS_VENGEFULSPIRIT = {}
+	IMBATTLEPASS_ZUUS = {}
 
 	for k, v in pairs(IMBATTLEPASS_LEVEL_REWARD) do
 		if string.find(v, "fountain") then
@@ -133,6 +137,8 @@ function Imbattlepass:Init()
 			IMBATTLEPASS_ANCIENT_APPARITION[v] = k
 		elseif string.find(v, "vengefulspirit") then
 			IMBATTLEPASS_VENGEFULSPIRIT[v] = k
+		elseif string.find(v, "zuus") then
+			IMBATTLEPASS_ZUUS[v] = k
 		end
 	end
 
@@ -476,6 +482,11 @@ function Imbattlepass:GetHeroEffect(hero)
 				hero.hook_pfx = "particles/econ/items/pudge/pudge_dragonclaw/pudge_meathook_dragonclaw_imba.vpcf"
 				Imbattlepass:SetupImmortal(hero:GetPlayerID(), "models/items/pudge/pudge_skeleton_hook_body.vmdl")
 			end
+
+			if next_reward_shown == true and Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_ZUUS["zuus_arcana"] then
+				hero.hook_pfx = "particles/econ/items/pudge/pudge_dragonclaw/pudge_meathook_dragonclaw_imba.vpcf"
+				Imbattlepass:SetupImmortal(hero:GetPlayerID(), "models/items/pudge/pudge_skeleton_hook_body.vmdl")
+			end
 		elseif hero:GetUnitName() == "npc_dota_hero_vengefulspirit" then
 			if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_VENGEFULSPIRIT["vengefulspirit_immortal"] then
 				Imbattlepass:SetupImmortal(hero:GetPlayerID(), "models/items/vengefulspirit/vs_ti8_immortal_shoulder/vs_ti8_immortal_shoulder.vmdl")
@@ -532,11 +543,21 @@ function HasPudgeArcana(ID)
 end
 
 function HasJuggernautArcana(ID)
-if next_reward_shown == false then return nil end
+	if next_reward_shown == false then return nil end
 
 	if Imbattlepass:GetRewardUnlocked(ID) >= IMBATTLEPASS_JUGGERNAUT["juggernaut_arcana2"] then
 		return 1
 	elseif Imbattlepass:GetRewardUnlocked(ID) >= IMBATTLEPASS_JUGGERNAUT["juggernaut_arcana"] then
+		return 0
+	else
+		return nil
+	end
+end
+
+function HasZuusArcana(ID)
+	if next_reward_shown == false then return nil end
+
+	if Imbattlepass:GetRewardUnlocked(ID) >= IMBATTLEPASS_ZUUS["zuus_arcana"] then
 		return 0
 	else
 		return nil
@@ -549,6 +570,7 @@ function Imbattlepass:BattlepassCheckArcana()
 		local arcana = {}
 		arcana["npc_dota_hero_juggernaut"] = HasJuggernautArcana(i)
 		arcana["npc_dota_hero_pudge"] = HasPudgeArcana(i)
+		arcana["npc_dota_hero_zuus"] = HasZuusArcana(i)
 
 		CustomNetTables:SetTableValue("battlepass", tostring(i), {arcana = arcana})
 	end

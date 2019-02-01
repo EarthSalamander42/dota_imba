@@ -71,6 +71,7 @@
 					"MODIFIER_STATE_NOT_ON_MINIMAP"		"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_NO_HEALTH_BAR"		"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_UNSELECTABLE"		"MODIFIER_STATE_VALUE_ENABLED"
 //					"MODIFIER_STATE_OUT_OF_GAME"		"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
@@ -116,6 +117,34 @@
 					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_MAGICAL"		"1"
 					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE"			"1"
 				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Courier: Transfer Items (vanilla override)
+	//=================================================================================================================
+	"imba_courier_transfer_items"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                     "ability_lua"
+		"ScriptFile"                    "components/courier/abilities.lua"
+		"AbilityTextureName"			"courier_transfer_items"
+		"AbilityType"					"DOTA_ABILITY_TYPE_BASIC"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_TOGGLE"
+
+		"MaxLevel"						"1"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_7"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"handoff_distance"		"400"
 			}
 		}
 	}
@@ -13463,7 +13492,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"base_range"			"1000 1200 1400 1600"
+				"base_range"			"1300 1400 1500 1600"
 			}
 			"05"
 			{
@@ -28080,8 +28109,8 @@
 		{
 			"01"
 			{
-					"var_type"                  "FIELD_INTEGER"
-					"value"	                    "1"
+				"var_type"                  "FIELD_INTEGER"
+				"value"	                    "1"
 			}
 		}
 	}
@@ -28238,38 +28267,38 @@
 		{
 			"01"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"damage"					"100 175 250 325"
+				"var_type"						"FIELD_INTEGER"
+				"damage"						"100 175 250 325"
 			}
 
 			"02"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"raze_radius"				"250 300 350 400"
+				"var_type"						"FIELD_INTEGER"
+				"raze_radius"					"250 300 350 400"
 			}
 
 			"03"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"raze_distance"				"200 150 100 50"
+				"var_type"						"FIELD_INTEGER"
+				"raze_distance"					"200 150 100 50"
 			}
 
 			"04"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"shadow_combo_duration"		"2.5"
+				"var_type"						"FIELD_FLOAT"
+				"shadow_combo_duration"			"2.5"
 			}
 
 			"05"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"combo_prevention_duration"	"30"
+				"var_type"						"FIELD_INTEGER"
+				"combo_prevention_duration"		"30"
 			}
 
 			"06"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"combo_threshold"			"3"
+				"var_type"						"FIELD_INTEGER"
+				"combo_threshold"				"3"
 			}
 
 			"07"
@@ -28292,8 +28321,8 @@
 
 			"10"
 			{
-				"var_type"			"FIELD_INTEGER"
-				"stack_bonus_damage" "50 60 70 80"
+				"var_type"						"FIELD_INTEGER"
+				"stack_bonus_damage"			 "50 60 70 80"
 			}
 			
 			"11"
@@ -28319,7 +28348,7 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"nevermore_shadowraze2"
-		"ScriptFile"				"components/abilities/heroes/hero_nevermore.lua"
+		"ScriptFile"					"components/abilities/heroes/hero_nevermore.lua"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -28355,73 +28384,61 @@
 				"var_type"					"FIELD_INTEGER"
 				"damage"					"100 175 250 325"
 			}
-
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"raze_radius"				"250"
 			}
-
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"raze_distance"				"450"
 			}
-
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"shadow_combo_duration"		"2.5"
 			}
-
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"combo_prevention_duration"	"30"
 			}
-
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"combo_threshold"			"3"
 			}
-
 			"07"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"additional_raze_count"		"0 2 4 6"
 			}
-
 			"08"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"raze_angle"				"35"
 			}
-
 			"09"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"damage_per_soul"				"1"
 			}
-
 			"10"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"souls_per_raze"				"1"
 			}
-
 			"11"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"soul_projectile_speed"			"1500"
 			}
-
 			"12"
 			{
 				"var_type"			"FIELD_INTEGER"
 				"stack_bonus_damage" "50 60 70 80"
 			}
-			
 			"13"
 			{
 				"var_type"						"FIELD_INTEGER"
@@ -28451,7 +28468,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0.55"
 		"AbilityCastAnimation"			"ACT_DOTA_RAZE_1"
-		"AbilityCastRange"				"450"
+		"AbilityCastRange"				"950"
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------

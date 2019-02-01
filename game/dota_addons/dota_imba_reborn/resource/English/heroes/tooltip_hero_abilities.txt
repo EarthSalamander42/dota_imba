@@ -2948,9 +2948,9 @@
 "DOTA_Tooltip_ability_imba_wraith_king_wraithfire_blast_Note0"          "Lifesteal is granted to all units attacking that target. Based on damage dealt, from any source. Illusions cannot benefit from the lifesteal."
 "DOTA_Tooltip_ability_imba_wraith_king_wraithfire_blast_damage"                     "DAMAGE:"
 "DOTA_Tooltip_ability_imba_wraith_king_wraithfire_blast_secondary_targets_radius"   "SECONDARY TARGETS RADIUS:"
-"DOTA_Tooltip_ability_imba_wraith_king_wraithfire_blast_debuff_duration"            "CURSED INVASION DURATION:"
+"DOTA_Tooltip_ability_imba_wraith_king_wraithfire_blast_debuff_duration"            "CURSED WOUNDS DURATION:"
 "DOTA_Tooltip_ability_imba_wraith_king_wraithfire_blast_damage_per_second"          "DAMAGE PER SECOND:"
-"DOTA_Tooltip_ability_imba_wraith_king_wraithfire_blast_attacker_lifesteal_pct"     "%CURSED INVASION LIFESTEAL:"
+"DOTA_Tooltip_ability_imba_wraith_king_wraithfire_blast_attacker_lifesteal_pct"     "%CURSED WOUNDS LIFESTEAL:"
 
 "DOTA_Tooltip_modifier_imba_wraithfire_blast_stun"                      "Wraithfire Blast Stun"
 "DOTA_Tooltip_modifier_imba_wraithfire_blast_stun_Description"          "Stunned"

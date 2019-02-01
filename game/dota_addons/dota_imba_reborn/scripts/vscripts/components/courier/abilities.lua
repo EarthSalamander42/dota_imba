@@ -74,7 +74,7 @@ function modifier_courier_turbo:OnIntervalThink()
 			end
 
 --			if IsNearEntity(courier_point, 100) then
---				print("Courier is at base position, move it to turbo position!")
+--			--	print("Courier is at base position, move it to turbo position!")
 --			end
 		else
 			if IsNearEntity("ent_dota_shop", self:GetParent():GetAbsOrigin(), 100) == false then
@@ -118,16 +118,92 @@ function modifier_courier_turbo:OnModelChanged()
 end
 --]]
 --------------------------------------------
+--[[
 
+imba_courier_transfer_items = class({})
+
+function imba_courier_transfer_items:OnSpellStart()
+	if IsServer() then
+		print("Add item transfer modifier!")
+		self:GetParent():AddNewModifier(self:GetParent(), self, "modifier_imba_courier_transfer_items", {})
+	end
+end
+
+LinkLuaModifier("modifier_imba_courier_transfer_items", "components/courier/abilities.lua", LUA_MODIFIER_MOTION_NONE)
+
+modifier_imba_courier_transfer_items = modifier_imba_courier_transfer_items or class({})
+
+function modifier_imba_courier_transfer_items:IsPurgable() return false end
+function modifier_imba_courier_transfer_items:IsHidden() return false end
+
+function modifier_imba_courier_transfer_items:DeclareFunctions()
+	return {
+		MODIFIER_EVENT_ON_ORDER,
+	}
+end
+
+function modifier_imba_courier_transfer_items:OnCreated()
+	if IsServer() then
+		print("Transfer modifier granted")
+		self:GetParent():MoveToNPC(self:GetParent():GetOwner())
+		self:StartIntervalThink(0.1)
+		self:OnIntervalThink()
+	end
+end
+
+function modifier_imba_courier_transfer_items:OnIntervalThink()
+	local distance = (self:GetParent():GetAbsOrigin() - self:GetParent():GetOwner():GetAbsOrigin()):Length2D()
+
+	print("Distance:", distance)
+	if distance < self:GetAbility():GetSpecialValueFor("handoff_distance") then
+		for itemSlot = 0, 8 do
+			local item = self:GetParent():GetItemInSlot(itemSlot)
+
+			if item then
+				for itemSlotOwner = 0, 8 do
+					print("Free slot in owner inventory?", self:GetParent():GetOwner():HasFreeSlotInInventory())
+					if self:GetParent():GetOwner():HasFreeSlotInInventory() then
+						self:GetParent():RemoveItem(item)
+						self:GetParent():GetOwner():AddItemByName(item:GetName())
+					end
+				end
+			end
+		end
+
+		-- fail-safe probably not required but meh
+		if self:GetParent():HasModifier("modifier_imba_courier_transfer_items") then
+			self:GetParent():RemoveModifierByName("modifier_imba_courier_transfer_items")
+		end
+	end
+end
+
+function modifier_imba_courier_transfer_items:OnOrder(params)
+	-- on any order given, remove the modifier
+	if params.unit == self:GetParent() then
+		-- fail-safe probably not required but meh
+		print(params)
+		if self:GetParent():HasModifier("modifier_imba_courier_transfer_items") then
+			if keys.order_type == DOTA_UNIT_ORDER_CAST_NO_TARGET then
+				local ability = EntIndexToHScript(params.entindex_ability)
+				print(ability)
+
+				if ability then
+					if ability.GetName then
+						if ability:GetName() ~= "modifier_imba_courier_transfer_items" then
+							self:GetParent():RemoveModifierByName("modifier_imba_courier_transfer_items")
+						end
+					end
+				end
+			end
+		end
+	end
+end
+--]]
 imba_courier_autodeliver = class({})
 
 function imba_courier_autodeliver:OnToggle()
---	local buff = self:GetCaster():FindModifierByName("modifier_imba_courier_autodeliver")
-
-	-- if the ability is toggled on, add the autodeliver modifier
 	if self:GetToggleState() == true then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_courier_autodeliver", {})
-	-- else remove the modifier
 	else
 		self:GetCaster():RemoveModifierByName("modifier_imba_courier_autodeliver")
 	end
@@ -144,6 +220,7 @@ function modifier_imba_courier_autodeliver:OnCreated()
 	if IsServer() then
 		self.deliver_time_check = 0.0
 		self:StartIntervalThink(1.0)
+		ExecuteOrderFromTable(newOrder)
 	end
 end
 
@@ -152,6 +229,7 @@ function modifier_imba_courier_autodeliver:OnIntervalThink()
 --	print("Idle?", self:GetParent():IsIdle())
 
 	-- if the courier is moving or is near secret shop, end the script
+--	print("Near secret shop?", IsNearEntity("ent_dota_shop", self:GetParent():GetAbsOrigin(), 100))
 	if not self:GetParent():IsIdle() or IsNearEntity("ent_dota_shop", self:GetParent():GetAbsOrigin(), 100) == true then
 		self.deliver_time_check = 0.0
 		return
@@ -164,18 +242,22 @@ function modifier_imba_courier_autodeliver:OnIntervalThink()
 		local item = self:GetParent():GetItemInSlot(itemSlot)
 
 		if item then
+		--	print("Item to deliver! (in courier)")
 			has_item_to_deliver = true
 			break
 		end
 	end
 
 	-- check if the owner have an item in stash
-	for itemSlot = 9, 14 do
-		local item = self:GetParent():GetOwner():GetItemInSlot(itemSlot)
+	if has_item_to_deliver == false then
+		for itemSlot = 9, 14 do
+			local item = self:GetParent():GetOwner():GetItemInSlot(itemSlot)
 
-		if item then
-			has_item_to_deliver = true
-			break
+			if item then
+			--	print("Item to deliver! (in stash)")
+				has_item_to_deliver = true
+				break
+			end
 		end
 	end
 
@@ -184,39 +266,32 @@ function modifier_imba_courier_autodeliver:OnIntervalThink()
 	if has_item_to_deliver == true then
 		-- if the hero buy an item, reset the timer and end the function
 		if self:GetParent():GetOwner().reset_turbo_deliver == true then
---			print("Hero bought an item, refresh timer!")
+		--	print("Hero bought an item, refresh timer!")
 			self:GetParent():GetOwner().reset_turbo_deliver = false -- TODO: set this value to false only when the courier meets the hero
 			self.deliver_time_check = 0.0
 			return
 		-- if the hero didn't buy an item between the last check, increase the timer
 		else
 			self.deliver_time_check = self.deliver_time_check + 1.0
---			print("Increase timer check:", self.deliver_time_check)
+		--	print("Increase timer check:", self.deliver_time_check)
 		end
 
---		print("Timer check:", self.deliver_time_check.." / "..self:GetAbility():GetSpecialValueFor("delay"))
+	--	print("Timer check:", self.deliver_time_check.." / "..self:GetAbility():GetSpecialValueFor("delay"))
 		-- if the timer is equal or higher than the autodeliver time, deliver items and reset timer to 0
 		if self.deliver_time_check >= self:GetAbility():GetSpecialValueFor("delay") then
 			-- check if the owner have free slots to receive items
-			local has_empty_slot = false
+			local has_free_slot = self:GetParent():GetOwner():HasFreeSlotInInventory()
 
-			for itemSlot = 0, 8 do
-				local item = self:GetParent():GetOwner():GetItemInSlot(itemSlot)
-
-				if not item then
-					has_empty_slot = true
-					break
-				end
-			end
-
---			print("Hero have free slot?", has_empty_slot)
+		--	print("Hero have free slot?", has_free_slot)
 
 			-- if the hero have at least 1 free slot, auto-deliver and reset timer
-			if has_empty_slot == true then
+			if has_free_slot == true then
+--				print(self:GetParent():IsControllableByAnyPlayer())
+--				ExecuteOrderFromTable({ UnitIndex = self:GetParent():entindex(), OrderType = DOTA_UNIT_ORDER_CAST_NO_TARGET, AbilityIndex = self:GetParent():FindAbilityByName("courier_take_stash_and_transfer_items"):GetEntityIndex(), Queue = false})
 				self:GetParent():FindAbilityByName("courier_take_stash_and_transfer_items"):CastAbility()
 				self.deliver_time_check = 0.0
 			else
---				print("hero inventory is full!")
+			--	print("hero inventory is full!")
 			end
 		end
 	end

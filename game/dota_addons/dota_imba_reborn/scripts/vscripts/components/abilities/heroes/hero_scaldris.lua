@@ -137,8 +137,6 @@ function modifier_imba_antipode_passive:OnIntervalThink()
 	end
 end
 
-
-
 -------------------------------------------
 --				 Heatwave
 -------------------------------------------

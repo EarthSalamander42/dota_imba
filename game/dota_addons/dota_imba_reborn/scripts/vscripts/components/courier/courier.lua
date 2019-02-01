@@ -1,11 +1,7 @@
-if TurboCourier == nil then
-	TurboCourier = class({})
-	TurboCourier.COURIER_PLAYER = {}
-end
-
-TurboCourier.courier_counter = {}
-TurboCourier.courier_counter[2] = 1
-TurboCourier.courier_counter[3] = 1
+GameMode.COURIER_PLAYER = {}
+GameMode.courier_counter = {}
+GameMode.courier_counter[2] = 1
+GameMode.courier_counter[3] = 1
 
 IMBA_TURBO_COURIER_POSITION = {}
 
@@ -33,7 +29,7 @@ IMBA_TURBO_COURIER_POSITION[3][8] = Vector(7075, 6575, 256)
 IMBA_TURBO_COURIER_POSITION[3][9] = Vector(6975, 6675, 256)
 IMBA_TURBO_COURIER_POSITION[3][10] = Vector(6875, 6775, 256)
 
-function TurboCourier:Init(hero)
+function GameMode:InitTurboCourier(hero)
 	if GetMapName() == MapOverthrow() then
 		local pos = nil
 
@@ -45,7 +41,7 @@ function TurboCourier:Init(hero)
 		end
 
 		if pos then
-			TurboCourier:Spawn(hero, pos)
+			self:SpawnTurboCourier(hero, pos)
 		end
 	else
 		if Entities:FindByClassname(nil, "info_courier_spawn_radiant") == nil then return end
@@ -55,11 +51,11 @@ function TurboCourier:Init(hero)
 			pos = Entities:FindByClassname(nil, "info_courier_spawn_dire"):GetAbsOrigin()
 		end
 
-		TurboCourier:Spawn(hero, pos)
+		self:SpawnTurboCourier(hero, pos)
 	end
 end
 
-function TurboCourier:Spawn(hero, pos)
+function GameMode:SpawnTurboCourier(hero, pos)
 	local heroID = hero:GetPlayerID()
 
 	self.COURIER_PLAYER[heroID] = CreateUnitByName("npc_dota_courier", pos, true, nil, nil, hero:GetTeam())
@@ -71,15 +67,23 @@ function TurboCourier:Spawn(hero, pos)
 		self.COURIER_PLAYER[heroID]:SetCustomHealthLabel(PlayerResource:GetPlayerName(heroID), PLAYER_COLORS[heroID][1], PLAYER_COLORS[heroID][2], PLAYER_COLORS[heroID][3])
 	end
 
-	self.COURIER_PLAYER[heroID]:SetControllableByPlayer(hero:GetPlayerID(), true)
 	self.COURIER_PLAYER[heroID]:SetOwner(hero)
+	self.COURIER_PLAYER[heroID]:SetControllableByPlayer(hero:GetPlayerID(), true)
 	self.COURIER_PLAYER[heroID]:RemoveModifierByName("modifier_magic_immune")
-	self.COURIER_PLAYER[heroID]:RemoveAbility("courier_morph")
-	self.COURIER_PLAYER[heroID]:RemoveAbility("courier_shield")
-	local autodeliver = self.COURIER_PLAYER[heroID]:AddAbility("imba_courier_autodeliver")
-	autodeliver:SetLevel(1)
---	autodeliver:ToggleAbility()
-	self.COURIER_PLAYER[heroID]:AddAbility("courier_movespeed"):SetLevel(1)
+	self.COURIER_PLAYER[heroID]:AddAbility("courier_movespeed")
+
+	for i = 0, 24 do
+		local ability = self.COURIER_PLAYER[heroID]:GetAbilityByIndex(i)
+
+		if ability and ability:GetLevel() == 0 then
+			ability:SetLevel(1)
+		end
+	end
+
+	if self.COURIER_PLAYER[heroID]:HasAbility("imba_courier_autodeliver") then
+		self.COURIER_PLAYER[heroID]:FindAbilityByName("imba_courier_autodeliver"):ToggleAbility()
+	end
+
 	self.COURIER_PLAYER[heroID]:SetDayTimeVisionRange(0)
 	self.COURIER_PLAYER[heroID]:SetNightTimeVisionRange(0)
 	self.COURIER_PLAYER[heroID].courier_count = self.courier_counter[hero:GetTeamNumber()]

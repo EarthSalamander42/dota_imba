@@ -39,4 +39,8 @@
 
 "imba_tutorial_credits_title"														"SUPPORTERS"
 "imba_tutorial_credits_01"															"These people have supported IMBA throughout its development. Without their help, it would never be what it is today."
-"imba_tutorial_credits_02"															"Alexander Hyslop, Altana, Anees Sabet, Calaminh Tran, Eivind Selnes, just1st, Martyn Garcia, Matt, Maxime Lebled, Mikkel Garcia, Phroureo, Swizard, and Teo Calife."
+"imba_tutorial_credits_02"															"AbyssalMage, Agroboy, Alexander Hyslop, Altana, AndrewR, Anees Sabet, ArcTangent, Arumba, Ash47, AtroCty, avilv, Baumi, BMD, Brice, Broccoli, Bronnen, Calaminh Tran, Call me catchy, Cealdre, Champi Suicidaire, Darthsawyer, DoctorGester, Dozer Senpai, Duke_doto, EarthSalamander, Eivind Selnes, Firetoad, Fudge, Hewdraw, houthakker, jimmidorry, just1st, [MNI]Kael'Thas, Krink, Lindbrum, Lionizer, Martyn Garcia, Matt, Maxime Lebled, Mikkel Garcia, Milski, MissileSpammer, MouJiaoZi, MysteryImp, naowin, Noobsauce, Noya, OveranuS, Phroureo, Pizzalol, remisbest, Repairmanman, Rosalina, Seinken, Sercan Küçükdemirci, Shush, SinZ, Snipered, Swizard, Teo Calife, The motherfucking pterodactyl, Tleety, X-TheDark and zimberzimber."
+
+"imba_developer_credits_title"														"DEVELOPERS"
+"imba_developer_credits_01"															"Current list of IMBA developers:"
+"imba_developer_credits_02"															"EarthSalamander (lead-developer), suthernfriend (backend developer), Altivu (developer), naowin (developer), houthakker (developer), oaeide (website maintainer)."
