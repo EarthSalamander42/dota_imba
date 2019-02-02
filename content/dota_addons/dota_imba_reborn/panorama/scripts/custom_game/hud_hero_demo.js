@@ -35,7 +35,8 @@ function ToggleCheatMenu() {
 
 (function () {
 	if (Game.GetMapInfo().map_display_name != "imba_demo")
-	$.GetContextPanel().DeleteAsync(0)
+		if (!Game.IsInToolsMode())
+			$.GetContextPanel().DeleteAsync(0);
 
 	var herolist = CustomNetTables.GetTableValue('hero_selection', 'herolist').herolist;
 

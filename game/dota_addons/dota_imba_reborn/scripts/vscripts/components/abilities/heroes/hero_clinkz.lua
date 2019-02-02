@@ -1340,7 +1340,7 @@ function imba_clinkz_death_pact:OnSpellStart()
 		target:AddNewModifier(caster, ability, modifier_talent_debuff_mark, {duration = mark_duration})
 	end
 end
-		
+
 -- Dummy Death Pact buff (shows in the UI, but actually does nothing)
 modifier_imba_death_pact_buff = class({})
 
@@ -1540,7 +1540,6 @@ function modifier_imba_death_pact_spirit_aura:OnAttackLanded(keys)
 		else
 			return nil
 		end
-
 	end
 end
 
@@ -1935,5 +1934,38 @@ function modifier_special_bonus_imba_clinkz_5:RemoveOnDeath() 	return false end
 function imba_clinkz_strafe:OnOwnerSpawned()
 	if self:GetCaster():HasTalent("special_bonus_imba_clinkz_5") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_clinkz_5") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_special_bonus_imba_clinkz_5", {})
+	end
+end
+
+-- #5 Talent: Frost Armor adds a portion of the Lich's intelligence to the armor bonus
+LinkLuaModifier("modifier_imba_burning_army", "components/abilities/heroes/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
+
+modifier_imba_burning_army = class({})
+function modifier_imba_burning_army:IsHidden() return true end
+function modifier_imba_burning_army:IsPurgable() return false end
+function modifier_imba_burning_army:IsPurgeException() return false end
+
+function modifier_imba_burning_army:DeclareFunctions()
+	return {
+		MODIFIER_EVENT_ON_ATTACK_LANDED
+	}
+end
+
+function modifier_imba_burning_army:OnCreated(params)
+	if IsServer() then
+		self.mana_burn = params.mana_burn
+	end
+end
+
+function modifier_imba_burning_army:OnAttackLanded(params)
+	if IsServer() then
+		if params.attacker == self:GetParent() then
+			-- Apply mana burn particle effect
+			local particle_manaburn_fx = ParticleManager:CreateParticle("particles/generic_gameplay/generic_manaburn.vpcf", PATTACH_ABSORIGIN_FOLLOW, params.target)
+			ParticleManager:SetParticleControl(particle_manaburn_fx, 0, params.target:GetAbsOrigin())
+			ParticleManager:ReleaseParticleIndex(particle_manaburn_fx)
+
+			params.target:ReduceMana(self.mana_burn)
+		end
 	end
 end

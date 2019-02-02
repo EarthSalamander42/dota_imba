@@ -353,7 +353,7 @@
 		"Ability3"					"imba_clinkz_skeleton_walk"
 		"Ability4"					"generic_hidden"
 		"Ability5"					"generic_hidden"
-		"Ability6"					"imba_clinkz_death_pact"
+		"Ability6"					"clinkz_burning_army"
 
 		"Ability10"					"special_bonus_imba_clinkz_6" //Skeleton Walk move speed persists for a small period
 		"Ability11"					"special_bonus_imba_clinkz_2" //Clinkz gains extra move speed when Skeleton Walking close to enemies

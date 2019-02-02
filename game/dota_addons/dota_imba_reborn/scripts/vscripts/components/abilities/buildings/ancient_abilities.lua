@@ -177,9 +177,15 @@ function modifier_imba_fountain_danger_zone:OnIntervalThink()
 		local fountain = self:GetParent()
 		local fountain_pos = fountain:GetAbsOrigin() 
 		local nearby_enemies = FindUnitsInRadius(fountain:GetTeamNumber(), fountain_pos, nil, self:GetAbility():GetSpecialValueFor("kill_radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
-		local act_on_target = 1 -- 0 = do nothing, 1 = damage, 2 = kill.
+		if #nearby_enemies == 0 then return end
+		local act_on_target = 1 -- 0 = do nothing, 1 = damage, 2 = kill, 3 = remove.
 
 		for _, enemy in pairs(nearby_enemies) do
+			-- do this before the ignore fountain units to prevent killing units that shouldn't be killed!
+			if not enemy:IsRealHero() then
+				act_on_target = 3
+			end
+
 			-- Ignore a list of units
 			for _, unit_name in pairs(IGNORE_FOUNTAIN_UNITS) do
 				if unit_name == enemy:GetUnitName() then
@@ -225,6 +231,8 @@ function modifier_imba_fountain_danger_zone:OnIntervalThink()
 				enemy:AddNewModifier(fountain, self:GetAbility(), "modifier_imba_fountain_danger_zone_debuff", {duration = aura_linger})
 			elseif act_on_target == 2 then
 				enemy:ForceKill(false)
+			elseif act_on_target == 3 then
+				UTIL_Remove(enemy)
 			end
 		end
 	end
