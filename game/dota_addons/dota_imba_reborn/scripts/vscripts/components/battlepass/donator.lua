@@ -149,7 +149,7 @@ function DonatorCompanion(ID, unit_name, js)
 	companion:SetModel(model)
 	companion:SetOriginalModel(model)
 	companion:SetOwner(hero)
-	companion:SetControllableByPlayer(hero:GetPlayerID(), true)
+--	companion:SetControllableByPlayer(hero:GetPlayerID(), true)
 
 	companion:AddNewModifier(companion, nil, "modifier_companion", {})
 
