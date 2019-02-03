@@ -96,7 +96,7 @@
 ////===============================================================================================================
 
 "DOTA_Tooltip_ability_imba_tiny_grow"									"Grow"
-"DOTA_Tooltip_ability_imba_tiny_grow_Description"						"Tiny gains craggy mass that increases his power at the cost of his attack speed. Increases Tossed unit damage and improves movement speed and the area of effect of Tiny's spells.\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
+"DOTA_Tooltip_ability_imba_tiny_grow_Description"						"Tiny gains craggy mass that increases his power at the cost of his attack speed. Increases Tossed unit damage and improves movement speed and the area of effect of Tiny's spells.\n<font color='#FF7800'>Shrug it Off: </font>Passively increases status resistance.\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
 "DOTA_Tooltip_ability_imba_tiny_grow_aghanim_description"				"Tiny gains a tree that lets him cleave, increases his range and lets him do bonus damage to buildings."
 "DOTA_Tooltip_ability_imba_tiny_grow_Lore"								"Watching a hill become a mountain is awe-inspiring - especially if the mountain begins laying waste to adversaries."
 "DOTA_Tooltip_ability_imba_tiny_grow_rolling_stones_stacks"				"ROLLING STONE STACKS:"

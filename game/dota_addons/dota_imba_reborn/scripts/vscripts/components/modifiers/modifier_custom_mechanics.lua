@@ -41,6 +41,8 @@ function modifier_custom_mechanics:OnIntervalThink()
 --		if parent:GetHealthRegen() > 300 then
 --			self:SetStackCount((-1) * parent:GetHealthRegen() - 300)
 --		end
+
+		CustomNetTables:SetTableValue( "status_resistance", string.format("%d", self:GetParent():GetEntityIndex()) , { status_resistance = self:GetParent():GetStatusResistance() } )
 	end
 end
 

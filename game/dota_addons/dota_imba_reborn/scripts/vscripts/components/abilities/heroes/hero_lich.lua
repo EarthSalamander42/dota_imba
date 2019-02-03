@@ -233,6 +233,14 @@ function imba_lich_frost_nova:GetAOERadius()
 	return radius
 end
 
+function imba_lich_frost_nova:GetCooldown(level)
+	if self:GetCaster():HasTalent("special_bonus_imba_lich_11") then
+		return self.BaseClass.GetCooldown(self, level) * self:GetCaster():FindTalentValue("special_bonus_imba_lich_11", "cooldown_mult")
+	else
+		return self.BaseClass.GetCooldown(self, level)
+	end
+end
+
 function imba_lich_frost_nova:OnSpellStart()
 	-- Ability properties
 	local caster = self:GetCaster()
@@ -470,6 +478,93 @@ function FrostNova(caster, ability, target, cold_front)
 			end)
 		end
 	end
+
+	-- Death Blossom
+	if caster:HasTalent("special_bonus_imba_lich_11") and not cold_front then
+		-- Talent properties
+		local particle_nova_flower = "particles/hero/lich/nova_explosions_main.vpcf"
+
+		-- Talent specials
+		local rings				= caster:FindTalentValue("special_bonus_imba_lich_11", "rings")
+		local novae_per_ring	= caster:FindTalentValue("special_bonus_imba_lich_11", "novae_per_ring")
+		local ring_distance		= caster:FindTalentValue("special_bonus_imba_lich_11", "ring_distance")
+		local creation_delay	= caster:FindTalentValue("special_bonus_imba_lich_11", "creation_delay")
+		local explosion_delay	= caster:FindTalentValue("special_bonus_imba_lich_11", "explosion_delay")
+		local cold_front_stacks	= caster:FindTalentValue("special_bonus_imba_lich_11", "cold_front_stacks")
+
+		local target_loc = target:GetAbsOrigin()
+
+		local deviation = RandomInt(0, 359)
+		local angle = 360 / novae_per_ring
+
+		-- Create each nova with increasing delays
+		for i = 1, rings do
+			for j = 1, novae_per_ring do
+				Timers:CreateTimer(creation_delay * i, function()
+
+					local chaos_variable = RandomInt(-15, 15)
+					
+					-- Might save this for a future update (makes a circle instead of a line)
+					local location = target_loc + Vector(math.cos(math.rad((angle * j) + deviation + chaos_variable)), math.sin(math.rad((angle * j) + deviation + chaos_variable))) * (i * ring_distance)
+					
+					location.z = GetGroundHeight(location, nil)
+
+					-- Apply particle effect
+					local particle_nova_flower_fx = ParticleManager:CreateParticle(particle_nova_flower, PATTACH_WORLDORIGIN, nil)
+					ParticleManager:SetParticleControl(particle_nova_flower_fx, 0, location)
+					ParticleManager:SetParticleControl(particle_nova_flower_fx, 3, location)
+
+					-- Start a timer for destruction
+					Timers:CreateTimer(explosion_delay, function()
+
+						-- Emit sound (let's just play it once per ring to not kill ears)
+						if j == 1 then
+							EmitSoundOnLocationWithCaster(location, sound_cast, caster)
+						end
+
+						-- Remove flower particle
+						ParticleManager:DestroyParticle(particle_nova_flower_fx, false)
+						ParticleManager:ReleaseParticleIndex(particle_nova_flower_fx)
+
+						-- Apply explosion particle
+						local particle_nova_fx = ParticleManager:CreateParticle(particle_nova, PATTACH_WORLDORIGIN, nil)
+						ParticleManager:SetParticleControl(particle_nova_fx, 0, location)
+						ParticleManager:SetParticleControl(particle_nova_fx, 1, Vector(damage_radius, damage_radius, damage_radius))
+						ParticleManager:SetParticleControl(particle_nova_fx, 2, location)
+						ParticleManager:ReleaseParticleIndex(particle_nova_fx)
+
+						-- Find all enemies in radius
+						local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
+							location,
+							nil,
+							radius,
+							DOTA_UNIT_TARGET_TEAM_ENEMY,
+							DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO,
+							DOTA_UNIT_TARGET_FLAG_NONE,
+							FIND_ANY_ORDER,
+							false)
+
+						for _, enemy in pairs(enemies) do
+							-- Deal damage to each
+							if not enemy:IsMagicImmune() then
+								local damageTable = {victim = enemy,
+									damage = aoe_damage,
+									damage_type = DAMAGE_TYPE_MAGICAL,
+									attacker = caster,
+									ability = ability
+								}
+
+								ApplyDamage(damageTable)
+
+								-- Add one stack of Cold Front to each enemy hit
+								IncreaseStacksColdFront(caster, enemy, cold_front_stacks)
+							end
+						end
+					end)
+				end)
+			end
+		end
+	end
 end
 
 
@@ -509,6 +604,21 @@ function modifier_imba_frost_nova_debuff:GetModifierAttackSpeedBonus_Constant()
 	return self.as_slow * (-1)
 end
 
+------------------------------------------
+--	FROST NOVA DEATH BLOSSOM TALENT		--
+------------------------------------------
+
+modifier_special_bonus_imba_lich_11 = class({})
+
+function modifier_special_bonus_imba_lich_11:IsHidden()		return true end
+function modifier_special_bonus_imba_lich_11:IsPurgable() 	return false end
+function modifier_special_bonus_imba_lich_11:RemoveOnDeath() return false end
+
+function imba_lich_frost_nova:OnOwnerSpawned()
+	if self:GetCaster():HasTalent("special_bonus_imba_lich_11") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_lich_11") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_special_bonus_imba_lich_11", {})
+	end
+end
 
 -----------------------------------
 --          FROST ARMOR          --
@@ -1641,4 +1751,453 @@ function modifier_imba_chain_frost_talent_buff:OnTakeDamage(keys)
 		-- Remove the buff immediately after
 		self:Destroy()
 	end
+end
+
+-----------------------------------
+--			FROST SHIELD         --
+-----------------------------------
+
+imba_lich_frost_shield = class({})
+
+LinkLuaModifier("modifier_imba_lich_frost_shield", "components/abilities/heroes/hero_lich", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_lich_frost_shield_slow", "components/abilities/heroes/hero_lich", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_lich_9", "components/abilities/heroes/hero_lich", LUA_MODIFIER_MOTION_NONE)
+
+function imba_lich_frost_shield:GetAbilityTextureName()
+	return "lich_frost_shield"
+end
+
+function imba_lich_frost_shield:OnSpellStart()
+	if not IsServer() then return end
+	
+	-- IMBAfication: Remnants of Ice Armor
+	local intellect 	= self:GetCaster():GetIntellect()
+	local armor_bonus 	= intellect * self:GetSpecialValueFor("int_armor_pct") / 100
+
+	EmitSoundOn("Hero_Lich.IceAge", self:GetCursorTarget())
+	
+	self:GetCursorTarget():AddNewModifier(self:GetCaster(), self, "modifier_imba_lich_frost_shield", {duration = self:GetSpecialValueFor("duration")}):SetStackCount(armor_bonus)
+end
+
+--------------------------------------
+--		FROST SHIELD MODIFIER		--
+--------------------------------------
+
+modifier_imba_lich_frost_shield = class({})
+
+function modifier_imba_lich_frost_shield:OnCreated()
+	-- Establish variables
+	self.ability	= self:GetAbility()
+	self.caster		= self:GetCaster()
+	self.parent 	= self:GetParent()
+	
+	-- AbilitySpecial
+	self.damage_reduction	= self.ability:GetSpecialValueFor("damage_reduction")
+	-- self.movement_slow		= self.ability:GetSpecialValueFor("movement_slow")
+	self.slow_duration		= self.ability:GetSpecialValueFor("slow_duration")
+	self.damage				= self.ability:GetSpecialValueFor("damage")
+	self.interval			= self.ability:GetSpecialValueFor("interval")
+	self.radius				= self.ability:GetSpecialValueFor("radius")
+	self.duration			= self.ability:GetSpecialValueFor("duration")
+	self.cold_front_stacks	= self.ability:GetSpecialValueFor("cold_front_stacks")
+
+	if self.caster:HasTalent("special_bonus_imba_lich_9") then
+		self.hp_regen			= self.caster:FindTalentValue("special_bonus_imba_lich_9")
+
+		if self.parent:IsBuilding() then
+			self.hp_regen		= self.hp_regen * (self.caster:FindTalentValue("special_bonus_imba_lich_9", "building_efficacy") / 100)
+		end
+	end
+
+	-- The remainder of the code only needs to be run server-side
+	if not IsServer() then return end
+	
+	-- Add the "encircling orb" particle
+	self.particle = ParticleManager:CreateParticle("particles/units/heroes/hero_lich/lich_ice_age.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.parent)
+	ParticleManager:SetParticleControlEnt(self.particle, 1, self.parent, PATTACH_ABSORIGIN_FOLLOW, nil, self.parent:GetAbsOrigin(), true)
+	self:AddParticle(self.particle, false, false, -1, false, false)
+	
+	-- Add the frost armor particle
+	self.particle2 = ParticleManager:CreateParticle("particles/units/heroes/hero_lich/lich_frost_armor.vpcf", PATTACH_OVERHEAD_FOLLOW, self.parent)
+	self:AddParticle(self.particle2, false, false, -1, false, false)
+	
+	-- Doesn't implement the innate 60 second cooldown on voicelines so percentage chance is reduced from 75% to 60%
+	if self.caster:GetName() == "npc_dota_hero_lich" and RollPercentage(60) then
+		self.caster:EmitSound("lich_lich_ability_armor_0"..math.random(1,5))
+	end
+
+	-- Start the damage emittance
+	self:StartIntervalThink(self.interval)
+end
+
+function modifier_imba_lich_frost_shield:OnRefresh()
+	self:OnCreated()
+end
+
+function modifier_imba_lich_frost_shield:OnIntervalThink()
+	if not IsServer() then return end
+
+	-- Pulse particle
+	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_lich/lich_ice_age_dmg.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+	ParticleManager:SetParticleControlEnt(particle, 1, self.parent, PATTACH_ABSORIGIN_FOLLOW, nil, self.parent:GetAbsOrigin(), true)
+	ParticleManager:SetParticleControl(particle, 2, Vector(self.radius, self.radius, self.radius))
+	
+	ParticleManager:ReleaseParticleIndex(particle)
+	
+	-- Emit tick sound
+	self.parent:EmitSound("Hero_Lich.IceAge.Tick")
+	
+	-- Get a table of all the enemies in radius of Frost Shield's pulse
+	local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(),
+		self.parent:GetAbsOrigin(),
+		nil,
+		self.radius,
+		DOTA_UNIT_TARGET_TEAM_ENEMY,
+		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+		DOTA_UNIT_TARGET_FLAG_NONE,
+		FIND_ANY_ORDER,
+		false)
+	
+	for _,enemy in pairs(enemies) do
+		enemy:EmitSound("Hero_Lich.IceAge.Damage")
+		
+		-- Deal damage
+		local damageTable = {
+			victim = enemy,
+			attacker = self.caster,
+			damage = self.damage,
+			damage_type = DAMAGE_TYPE_MAGICAL,
+			damage_flags = DOTA_DAMAGE_FLAG_NONE,
+			ability = self.ability
+		}
+		
+		ApplyDamage(damageTable)
+		
+		-- Apply the slow modifier
+		enemy:AddNewModifier(self.caster, self.ability, "modifier_imba_lich_frost_shield_slow", {duration = self.slow_duration})
+
+		IncreaseStacksColdFront(self.caster, enemy, self.cold_front_stacks)
+	end
+end
+
+function modifier_imba_lich_frost_shield:DeclareFunctions()
+	local decFuncs = {
+	MODIFIER_PROPERTY_INCOMING_PHYSICAL_DAMAGE_PERCENTAGE,
+	MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
+	MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT}
+
+	return decFuncs
+end
+
+function modifier_imba_lich_frost_shield:GetModifierIncomingPhysicalDamage_Percentage(keys)
+	return self.damage_reduction * (-1)
+end
+
+function modifier_imba_lich_frost_shield:GetModifierPhysicalArmorBonus()
+	return self:GetStackCount()
+end
+
+function modifier_imba_lich_frost_shield:GetModifierConstantHealthRegen()
+	return self.hp_regen or 0
+end
+
+--------------------------------------
+--		FROST SHIELD SLOW MODIFIER	--
+--------------------------------------
+
+modifier_imba_lich_frost_shield_slow = class({})
+
+function modifier_imba_lich_frost_shield_slow:GetHeroEffectName()
+	return "particles/units/heroes/hero_lich/lich_ice_age_debuff.vpcf"
+end
+
+function modifier_imba_lich_frost_shield_slow:GetStatusEffectName()
+	return "particles/status_fx/status_effect_lich_ice_age.vpcf"
+end
+
+function modifier_imba_lich_frost_shield_slow:OnCreated()
+	-- Establish variables
+	self.ability	= self:GetAbility()
+	
+	-- AbilitySpecial
+	self.movement_slow		= self.ability:GetSpecialValueFor("movement_slow")
+end
+
+function modifier_imba_lich_frost_shield_slow:DeclareFunctions()
+	local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE}
+
+	return decFuncs
+end
+
+function modifier_imba_lich_frost_shield_slow:GetModifierMoveSpeedBonus_Percentage()
+	return self.movement_slow * (-1)
+end
+
+------------------------------------------
+--	FROST SHIELD HEALTH REGEN TALENT	--
+------------------------------------------
+
+modifier_special_bonus_imba_lich_9 = class({})
+
+function modifier_special_bonus_imba_lich_9:IsHidden()		return true end
+function modifier_special_bonus_imba_lich_9:IsPurgable() 	return false end
+function modifier_special_bonus_imba_lich_9:RemoveOnDeath() return false end
+
+function imba_lich_frost_shield:OnOwnerSpawned()
+	if self:GetCaster():HasTalent("special_bonus_imba_lich_9") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_lich_9") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_special_bonus_imba_lich_9", {})
+	end
+end
+
+-----------------------------------
+--			SINISTER GAZE        --
+-----------------------------------
+
+imba_lich_sinister_gaze = class({})
+
+LinkLuaModifier("modifier_imba_lich_sinister_gaze", "components/abilities/heroes/hero_lich", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_lich_sinister_gaze_bonus_health", "components/abilities/heroes/hero_lich", LUA_MODIFIER_MOTION_NONE)
+
+function imba_lich_sinister_gaze:GetAbilityTextureName()
+	return "lich_sinister_gaze"
+end
+
+function imba_lich_sinister_gaze:GetChannelTime()
+	-- Need to find a way to properly reduce channel bar to match status resistance whilst showing changes on client-side
+	--return self:GetSpecialValueFor("duration") * CustomNetTables:GetTableValue( "status_resistance", string.format("%d", self:GetCursorTarget():GetEntityIndex())).status_resistance / 100
+	return self:GetSpecialValueFor("duration")
+end
+
+function imba_lich_sinister_gaze:CastFilterResultTarget(target)
+	if not IsServer() then return end
+
+	if self:GetCaster():GetTeam() == target:GetTeam() and target:IsConsideredHero() then
+		return UF_FAIL_CUSTOM
+	end
+
+	local nResult = UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
+	return nResult
+end
+
+function imba_lich_sinister_gaze:GetCustomCastErrorTarget(target)
+	return "Ability Can't Target Allied Heroes"
+end
+
+function imba_lich_sinister_gaze:GetCastAnimation()
+	return ACT_DOTA_CHANNEL_ABILITY_3
+end
+
+function imba_lich_sinister_gaze:OnSpellStart()
+	self.caster			= self:GetCaster()
+	self.target			= self:GetCursorTarget()
+
+	if self.target:TriggerSpellAbsorb(self) then self.caster:Interrupt() return end
+
+	-- AbilitySpecial
+	self.duration					= self:GetSpecialValueFor("duration")
+	self.soul_consumption_duration	= self:GetSpecialValueFor("soul_consumption_duration")
+	self.retaliatory_chains_dmg_pct	= self:GetSpecialValueFor("retaliatory_chains_dmg_pct")
+	self.sacrifice_mana_pct			= self:GetSpecialValueFor("sacrifice_mana_pct")
+	self.sacrifice_health_pct		= self:GetSpecialValueFor("sacrifice_health_pct")
+	self.cold_front_stacks			= self:GetSpecialValueFor("cold_front_stacks")
+
+	self.caster:EmitSound("Hero_Lich.SinisterGaze.Cast")
+	self.target:EmitSound("Hero_Lich.SinisterGaze.Target")
+
+	self.target:AddNewModifier(self:GetCaster(), self, "modifier_imba_lich_sinister_gaze", {duration = self.duration})
+	self.target:AddNewModifier(self:GetCaster(), nil, "modifier_truesight", {duration = self.duration})
+
+	IncreaseStacksColdFront(self.caster, self.target, self.cold_front_stacks)
+
+	-- Doesn't implement the innate 60 second cooldown on voicelines so percentage chance is reduced from 75% to 40%
+	if self.caster:GetName() == "npc_dota_hero_lich" and RollPercentage(40) then
+		self.caster:EmitSound("lich_lich_ability_ritual_0"..math.random(2,5))
+	end
+end
+
+-- function imba_lich_sinister_gaze:OnChannelThink()
+
+-- end
+
+function imba_lich_sinister_gaze:OnChannelFinish(bInterrupted)
+	if not IsServer() then return end
+
+	-- IMBAfication: Remnants of Sacrifice (gain mana and kill creeps with full channel; gains health from allied creeps)
+	if not bInterrupted and self.target:IsCreep() and not self.target:IsRoshan() then -- Extrenuous Roshan line in case someone ruins targetting
+		local creep_health	= self.target:GetHealth()
+		local mana_gained	= creep_health * (sacrifice_mana_pct / 100)
+		local health_gained	= creep_health * (sacrifice_health_pct / 100)
+
+		self.caster:GiveMana(mana_gained)
+	    SendOverheadEventMessage(nil, OVERHEAD_ALERT_MANA_ADD, self.caster, mana_gained, nil)
+
+		if self.target:GetTeam() == self.caster:GetTeam() then
+			self.caster:Heal(health_gained, self.caster)
+			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, self.caster, health_gained, nil)
+		end
+
+		self.target:Kill(self, self.caster)
+
+	else
+		Timers:CreateTimer(FrameTime(), function()
+			-- IMBAfication: Soul Consumption
+			if not self.target:IsAlive() and not self.target:IsReincarnating() then
+				local consumption_health = self.target:GetMaxHealth()
+
+				self.caster:AddNewModifier(self.caster, self, "modifier_imba_lich_sinister_gaze_bonus_health", {duration = self.soul_consumption_duration}):SetStackCount(consumption_health)
+				
+				-- Sure takes a while to add that max health through the modifier...
+				Timers:CreateTimer(0.5, function()
+					self.caster:Heal(consumption_health, self.caster)
+					SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, self.caster, consumption_health, nil)
+				end)
+			
+			-- IMBAfication: Retaliatory Chains
+			elseif not self.caster:IsAlive() and not self.target:IsReincarnating() then
+				local retaliation_damage = self.caster:GetMaxHealth() * (self.retaliatory_chains_dmg_pct / 100)
+
+				local damageTable = {victim = self.target,
+					damage = retaliation_damage,
+					damage_type = DAMAGE_TYPE_PURE,
+					damage_flags = DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION, DOTA_DAMAGE_FLAG_NO_SPELL_LIFESTEAL,
+					attacker = self.caster,
+					ability = self
+				}
+				SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, self.target, retaliation_damage, nil)
+
+				ApplyDamage(damageTable)
+			end
+		end)
+	end
+
+	Timers:CreateTimer(FrameTime(), function()
+		if not self.target:IsAlive() and (not self.target.IsReincarnating or (self.target.IsReincarnating and not self.target:IsReincarnating())) then
+		
+			local particle_name	= ""
+		
+			if self.target:GetTeam() == self.caster:GetTeam() then
+				particle_name = "particles/units/heroes/hero_lich/lich_dark_ritual.vpcf"
+			else
+				particle_name = "particles/hero/lich/lich_dark_ritual_enemy.vpcf"
+			end
+
+			local particle = ParticleManager:CreateParticle(particle_name, PATTACH_CUSTOMORIGIN_FOLLOW, self.caster)
+			ParticleManager:SetParticleControlEnt(particle, 0, self.target, PATTACH_POINT_FOLLOW, "attach_hitloc", self.target:GetAbsOrigin(), true)
+			ParticleManager:SetParticleControlEnt(particle, 1, self.caster, PATTACH_POINT_FOLLOW, "attach_hitloc", self.caster:GetAbsOrigin(), true)
+			ParticleManager:ReleaseParticleIndex(particle)
+		end
+	end)
+
+	self.caster:StopSound("Hero_Lich.SinisterGaze.Cast")
+	self.target:StopSound("Hero_Lich.SinisterGaze.Target")
+
+	if self.target:HasModifier("modifier_imba_lich_sinister_gaze") then
+		self.target:RemoveModifierByName("modifier_imba_lich_sinister_gaze")
+	end
+end
+
+-----------------------------------
+--	SINISTER GAZE MODIFIER 		 --
+-----------------------------------
+
+modifier_imba_lich_sinister_gaze = class({})
+
+function modifier_imba_lich_sinister_gaze:GetStatusEffectName()
+	return "particles/status_fx/status_effect_lich_gaze.vpcf"
+end
+
+function modifier_imba_lich_sinister_gaze:OnCreated()
+	self.ability 			= self:GetAbility()
+	self.caster				= self:GetCaster()
+	self.parent				= self:GetParent()
+
+	self.destination		= self.ability:GetSpecialValueFor("destination") + self.caster:FindTalentValue("special_bonus_imba_lich_10")
+	self.distance 			= CalcDistanceBetweenEntityOBB(self:GetCaster(), self:GetParent()) * (self.destination / 100)
+
+	-- Status Resistance net table calculates in custom mechanics modifier
+	if self.parent:HasModifier("modifier_custom_mechanics") then
+		self.status_resistance	= CustomNetTables:GetTableValue( "status_resistance", string.format("%d", self.parent:GetEntityIndex()) ).status_resistance
+	else
+		self.status_resistance	= 0
+	end
+
+	if not IsServer() then return end
+	
+	-- This is so errors don't pop up if the spell gets reflected
+	if self.caster:GetName() == "npc_dota_hero_lich" then
+		-- Particle attachments aren't perfect but they're good enough...I guess
+		-- Add the gaze particles
+		self.particle = ParticleManager:CreateParticle("particles/units/heroes/hero_lich/lich_gaze.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.parent)
+		ParticleManager:SetParticleControlEnt(self.particle, 0, self.parent, PATTACH_ABSORIGIN_FOLLOW, nil, self.parent:GetAbsOrigin(), true)
+		ParticleManager:SetParticleControlEnt(self.particle, 2, self.caster, PATTACH_POINT_FOLLOW, "attach_portrait", self.caster:GetAbsOrigin(), true)
+		ParticleManager:SetParticleControlEnt(self.particle, 3, self.caster, PATTACH_ABSORIGIN_FOLLOW, nil, self.caster:GetAbsOrigin(), true)
+		ParticleManager:SetParticleControlEnt(self.particle, 10, self.parent, PATTACH_ABSORIGIN_FOLLOW, nil, self.parent:GetAbsOrigin(), true)
+		self:AddParticle(self.particle, false, false, -1, false, false)
+
+		-- Add the red eyes particle
+		self.particle2 = ParticleManager:CreateParticle("particles/units/heroes/hero_lich/lich_gaze_eyes.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.parent)
+		ParticleManager:SetParticleControlEnt(self.particle2, 1, self.caster, PATTACH_POINT_FOLLOW, "attach_eye_l", self.caster:GetAbsOrigin(), true)
+		ParticleManager:SetParticleControlEnt(self.particle2, 2, self.caster, PATTACH_POINT_FOLLOW, "attach_eye_r", self.caster:GetAbsOrigin(), true)
+		self:AddParticle(self.particle2, false, false, -1, false, false)
+	end
+
+	self.parent:Interrupt()
+	self.parent:MoveToNPC(self.caster)
+end
+
+function modifier_imba_lich_sinister_gaze:OnDestroy()
+	if not IsServer() then return end
+
+	self.parent:Interrupt()
+	
+	-- Why 100? IDK random number
+	GridNav:DestroyTreesAroundPoint(self.parent:GetAbsOrigin(), 100, false)
+
+	if self.ability:IsChanneling() then
+		self.ability:EndChannel(false)
+		self.caster:MoveToPositionAggressive(self.caster:GetAbsOrigin())
+	end
+end
+
+function modifier_imba_lich_sinister_gaze:CheckState()
+	local state = {
+	[MODIFIER_STATE_HEXED] = true,	-- Using this as substitute for Fear which isn't a provided state
+	[MODIFIER_STATE_SILENCED] = true,
+	[MODIFIER_STATE_MUTED] = true,
+	[MODIFIER_STATE_COMMAND_RESTRICTED] = true,
+	[MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY] = true
+	}
+
+	return state
+end
+
+function modifier_imba_lich_sinister_gaze:DeclareFunctions()
+	local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE}
+
+	return decFuncs
+end
+
+function modifier_imba_lich_sinister_gaze:GetModifierMoveSpeed_Absolute()
+	return self.distance / (self.ability:GetChannelTime() * (1 - math.min(self.status_resistance, 0.9999))) -- If target has 100% status resistance, make non-divide by 0 so target zips to caster
+end
+
+-------------------------------------------
+--	SINISTER GAZE MODIFIER BONUS HEALTH	 --
+-------------------------------------------
+
+modifier_imba_lich_sinister_gaze_bonus_health = class({})
+
+function modifier_imba_lich_sinister_gaze_bonus_health:IsDebuff()		return false end
+function modifier_imba_lich_sinister_gaze_bonus_health:IsPurgable()		return false end
+function modifier_imba_lich_sinister_gaze_bonus_health:RemoveOnDeath()	return false end
+function modifier_imba_lich_sinister_gaze_bonus_health:GetAttributes() 	return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_imba_lich_sinister_gaze_bonus_health:DeclareFunctions()
+	local decFuncs = {MODIFIER_PROPERTY_EXTRA_HEALTH_BONUS }
+
+	return decFuncs
+end
+
+function modifier_imba_lich_sinister_gaze_bonus_health:GetModifierExtraHealthBonus()
+	return self:GetStackCount()
 end
