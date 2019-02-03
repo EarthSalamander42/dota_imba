@@ -12,5 +12,6 @@
 		"battlepass",
 		"mutations",
 		"mutation_info",
+		"status_resistance"
 	]
 }

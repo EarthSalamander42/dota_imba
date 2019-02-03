@@ -1529,5 +1529,5 @@ function modifier_imba_tiny_grow_passive:OnAttackLanded( params )
 end
 
 function modifier_imba_tiny_grow_passive:GetModifierStatusResistanceStacking()
-	return self:GetSpecialValueFor("status_resistance")
+	return self:GetAbility():GetSpecialValueFor("status_resistance")
 end

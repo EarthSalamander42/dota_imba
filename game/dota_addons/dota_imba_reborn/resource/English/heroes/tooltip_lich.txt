@@ -82,6 +82,42 @@
 "DOTA_Tooltip_modifier_imba_chain_frost_talent_buff"                "Orb of Frost"
 "DOTA_Tooltip_modifier_imba_chain_frost_talent_buff_Description"          "When an enemy hero deals damage to this unit, the orb will be launched at it, becoming a Chain Frost."
 
+//
+// Frost Shield
+//
+"DOTA_Tooltip_ability_imba_lich_frost_shield"											"Frost Shield"
+"DOTA_Tooltip_ability_imba_lich_frost_shield_Description"								"Applies a magical frost shield around you, reducing damage from a limited number of attacks against you. While the shield is active, ice magic will be launched towards the nearest enemy unit every %interval% seconds, doing minor damage and slowing.\n<font color='#FF7800'>Remnants of Ice Armor: </font>Additionally increases armor by %int_armor_pct%%% of the caster's intelligence, rounded up.\n<font color='#9ADBDA'>Cold Front:</font> Applies %cold_front_stacks% stack of Cold Front on all affected enemies per pulse."
+"DOTA_Tooltip_ability_imba_lich_frost_shield_Lore"									"First conceived of to protect him in his mortal years, the frost magic that Ethreain weaves around himself has only grown colder with time."
+"DOTA_Tooltip_ability_imba_lich_frost_shield_attack_count"							"ATTACK COUNT:"
+"DOTA_Tooltip_ability_imba_lich_frost_shield_damage_reduction"						"%DAMAGE REDUCTION:"
+"DOTA_Tooltip_ability_imba_lich_frost_shield_damage"									"DAMAGE:"
+"DOTA_Tooltip_ability_imba_lich_frost_shield_movement_slow"							"%SLOW:"
+"DOTA_Tooltip_ability_imba_lich_frost_shield_range"									"RANGE:"
+"DOTA_Tooltip_ability_imba_lich_frost_shield_slow_duration"							"SLOW DURATION:"
+"DOTA_Tooltip_ability_imba_lich_frost_shield_duration"								"BUFF DURATION:"
+
+"DOTA_Tooltip_modifier_imba_lich_frost_shield"	"Frost Shield"
+"DOTA_Tooltip_modifier_imba_lich_frost_shield_Description"	"Reducing physical attack damage against you. Armor increased by %dMODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS% and health regeneration increased by %dMODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT%."
+
+"DOTA_Tooltip_modifier_imba_lich_frost_shield_slow"	"Frost Shield"
+"DOTA_Tooltip_modifier_imba_lich_frost_shield_slow_Description"	"Movement speed slowed by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%."
+
+//
+// Sinister Gaze
+//
+"DOTA_Tooltip_ability_imba_lich_sinister_gaze"									"Sinister Gaze"
+"DOTA_Tooltip_ability_imba_lich_sinister_gaze_Description"						"CHANNELED - Hypnotizes an enemy unit, causing it to move towards a point between the two of you.\n<font color='#FF7800'>Soul Consumption: </font>If the targetted hero dies while Sinister Gaze is channelling, Lich consumes their essence, temporarily gaining their max health as his own and healing for that amount. Lasts for %soul_consumption_duration% seconds, is unpurgable, can stack multiple times, and persists through death.\n<font color='#FF7800'>Retaliatory Chains: </font>If Lich dies while Sinister Gaze is channelling, the target's soul is wrenched by his dying breath, dealing pure damage equal to %retaliatory_chains_dmg_pct%%% of Lich's max health. Damage is not affected by spell amplification.\n<font color='#FF7800'>Remnants of Sacrifice: </font>Sinister Gaze can be cast on allied creeps. If this ability is fully channeled on a non-ancient creep, it is sacrificed, converting %sacrifice_mana_pct%%% of its current health into mana for Lich. If it is an allied creep, %sacrifice_health_pct%%% of its current health is also converted into health.\n<font color='#9ADBDA'>Cold Front:</font> Immediately applies %cold_front_stacks% stacks of Cold Front on target on ability cast."
+"DOTA_Tooltip_ability_imba_lich_sinister_gaze_Lore"						"Mind the cold..."
+"DOTA_Tooltip_ability_imba_lich_sinister_gaze_duration"						"DURATION:"
+"DOTA_Tooltip_ability_imba_lich_sinister_gaze_destination"					"%DISTANCE MOVED:"
+"DOTA_Tooltip_ability_imba_lich_sinister_gaze_cast_range_tooltip"					"CAST RANGE:"
+
+"DOTA_Tooltip_modifier_imba_lich_sinister_gaze"	"Sinister Gaze"
+"DOTA_Tooltip_modifier_imba_lich_sinister_gaze_Description"	"You are helpless against Lich's Sinister Gaze!"
+
+"DOTA_Tooltip_modifier_imba_lich_sinister_gaze_bonus_health"				"Soul Consumption"
+"DOTA_Tooltip_modifier_imba_lich_sinister_gaze_bonus_health_Description"	"Temporarily consumed a hero's soul, gaining %dMODIFIER_PROPERTY_EXTRA_HEALTH_BONUS% bonus health."
+
 // Lich's Custom Talents
 "DOTA_Tooltip_ability_special_bonus_imba_lich_1"            	"Chain Frost bounces instantly after hitting a target"
 "DOTA_Tooltip_ability_special_bonus_imba_lich_2"            	"Self Offering"
@@ -98,3 +134,9 @@
 "DOTA_Tooltip_ability_special_bonus_imba_lich_7_Description"	"Chain Frost now also generates three Mini Chain Frosts at 33% of the original damage."
 "DOTA_Tooltip_ability_special_bonus_imba_lich_8"            	"Frost Aura"
 "DOTA_Tooltip_ability_special_bonus_imba_lich_8_Description"	"Ice Armor is now an aura that slows nearby enemies in a small range around the target. The slow gets stronger each time the target is attacked."
+"DOTA_Tooltip_ability_special_bonus_imba_lich_9"            	"Frost Shield Provides +60 HP Regen"
+"DOTA_Tooltip_ability_special_bonus_imba_lich_9_Description"	"Regeneration effect only has 10% efficacy on buildings."
+"DOTA_Tooltip_ability_special_bonus_imba_lich_10"            	"+30% Sinister Gaze Distance Moved"
+"DOTA_Tooltip_ability_special_bonus_imba_lich_11"            	"Death Blossom"
+"DOTA_Tooltip_ability_special_bonus_imba_lich_11_Description"   "Increases Frost Nova cooldown by 300%. Casting this creates 10 expanding rings of novae around the target, exploding after 4 seconds."
+

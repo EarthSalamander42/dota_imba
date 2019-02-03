@@ -226,6 +226,8 @@ end
 
 -- BUG TODO: courier don't deliver any items when it spawn until you give him any order
 function modifier_imba_courier_autodeliver:OnIntervalThink()
+	if self:GetParent():GetOwner() == nil then self:StartIntervalThink(-1) return end
+
 --	print("Idle?", self:GetParent():IsIdle())
 
 	-- if the courier is moving or is near secret shop, end the script
