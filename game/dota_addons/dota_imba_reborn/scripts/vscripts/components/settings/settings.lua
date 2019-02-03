@@ -549,12 +549,12 @@ if GetMapName() == MapOverthrow() then
 end
 
 -- IMBA override vanilla systems
-USE_TEAM_COURIER = false -- Should we use vanilla couriers?
+USE_TEAM_COURIER = true -- Should we use vanilla couriers?
 IMBA_RUNE_SYSTEM = false -- Should we use custom runes script spawner?
 IMBA_COMBAT_EVENTS = false -- Should we use custom combat events notifications?
 IMBA_GOLD_SYSTEM = false -- Should we use custom gold system?
-IMBA_PICK_SCREEN = false
-IMBA_GREEVILING = true
+IMBA_PICK_SCREEN = false -- Should we use custom pick screen?
+IMBA_GREEVILING = true -- Should we use fancy greevil creeps?
 
 IMBA_DIRETIDE = false -- Should we enable diretide?
 

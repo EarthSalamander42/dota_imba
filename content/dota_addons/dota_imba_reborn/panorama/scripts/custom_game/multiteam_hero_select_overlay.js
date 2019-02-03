@@ -48,6 +48,16 @@ function UpdatePlayer( teamPanel, playerId )
 		playerPanel.AddClass( "is_local_player" );
 	}
 
+	var player_table = CustomNetTables.GetTableValue("player_table", playerId.toString());
+//	$.Msg(player_table.donator_level)
+//	$.Msg(player_table.donator_color)
+
+	if (player_table && player_table.donator_level && player_table.donator_color) {
+		if (player_table.donator_level < 10) {
+			playerPortrait.style.border = "1px solid " + player_table.donator_color;
+		}
+	}
+
 	if ( playerInfo.player_selected_hero !== "" )
 	{
 		playerPortrait.SetImage( "file://{images}/heroes/" + playerInfo.player_selected_hero + ".png" );

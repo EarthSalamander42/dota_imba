@@ -31,14 +31,15 @@
 
 			if (abilities[i]) {
 				abilityPanel.abilityname = abilities[i];
-//				abilityPanel.showTooltip = function(){
-//					$.DispatchEvent("DOTAShowAbilityTooltipForEntityIndex", abilityPanel, abilityPanel.abilityname, Players.GetPlayerHeroEntityIndex(Players.GetLocalPlayer()));
-//				}
-//				abilityPanel.hideTooltip = function(){ 
-//					$.DispatchEvent("DOTAHideAbilityTooltip", abilityPanel);
-//				}
-//				abilityPanel.SetPanelEvent("onmouseover", abilityPanel.showTooltip );
-//				abilityPanel.SetPanelEvent("onmouseout", abilityPanel.hideTooltip );
+
+				(function (abilityPanel, ability) {
+					abilityPanel.SetPanelEvent("onmouseover", function () {
+						$.DispatchEvent("DOTAShowAbilityTooltip", abilityPanel, ability);
+					})
+					abilityPanel.SetPanelEvent("onmouseout", function () {
+						$.DispatchEvent("DOTAHideAbilityTooltip", abilityPanel);
+					})
+				})(abilityPanel, abilities[i]);
 			} else {
 				abilityPanel.abilityname = "";
 			}
