@@ -14820,4 +14820,46 @@
 			}
 		}
 	}
+
+	//=================================================================================================================
+	// Ability: Clinkz Burning Army
+	//=================================================================================================================
+	"clinkz_burning_army"
+	{
+		"AbilityCastRange"				"1200"
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"110.0"
+		"AbilityManaCost"				"125 175 225"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"range"				"1300"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"duration"			"20.0"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"count"				"4 5 6"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"attack_rate"		"1.75 1.6 1.45"
+			}
+			"05"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"spawn_interval"	"0.8"
+			}
+		}
+	}
 }

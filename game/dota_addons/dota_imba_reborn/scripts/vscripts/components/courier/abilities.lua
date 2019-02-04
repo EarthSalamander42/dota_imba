@@ -55,16 +55,21 @@ end
 function modifier_courier_turbo:OnIntervalThink()
 	if self:GetParent():IsIdle() then
 		if IsNearEntity("ent_dota_fountain", self:GetParent():GetAbsOrigin(), 1200) == true then
-			local courier_point = "info_courier_spawn_radiant"
+			local courier_point = Entities:FindByClassname(nil, "info_courier_spawn_radiant"):GetAbsOrigin()
+
 			if self:GetParent():GetTeamNumber() == 3 then
-				courier_point = "info_courier_spawn_dire"
+				courier_point = Entities:FindByClassname(nil, "info_courier_spawn_dire"):GetAbsOrigin()
 			end
 
-			local turbo_pos = IMBA_TURBO_COURIER_POSITION[self:GetParent():GetTeamNumber()][self:GetParent().courier_count]
-			local distance = (self:GetParent():GetAbsOrigin() - turbo_pos):Length2D()
+			if USE_TEAM_COURIER == false then
+--				print("Turbo pos!")
+				courier_point = IMBA_TURBO_COURIER_POSITION[self:GetParent():GetTeamNumber()][self:GetParent().courier_count]
+			end
+
+			local distance = (self:GetParent():GetAbsOrigin() - courier_point):Length2D()
 
 			if distance > 100 then
-				self:GetParent():MoveToPosition(turbo_pos)
+				self:GetParent():MoveToPosition(courier_point)
 				-- move to turbo point using ability
 			else
 				if self.fv_set == false then

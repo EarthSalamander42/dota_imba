@@ -25,7 +25,6 @@ LinkLuaModifier("modifier_imba_frost_arrows_slow", "components/abilities/heroes/
 LinkLuaModifier("modifier_imba_frost_arrows_freeze", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_frost_arrows_buff", "components/abilities/heroes/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
 
-
 function imba_drow_ranger_frost_arrows:GetAbilityTextureName()
 	return "drow_ranger_frost_arrows"
 end
@@ -237,7 +236,19 @@ function modifier_imba_frost_arrows_thinker:OnOrder(keys)
 	end
 end
 
-function SetArrowAttackProjectile(caster, frost_attack)
+function SetArrowAttackProjectile(caster, frost_attack, marksmanship_attack)
+	if marksmanship_attack then
+		local marksmanship_arrow = "particles/units/heroes/hero_drow/drow_marksmanship_attack.vpcf"
+
+		if frost_attack then
+			marksmanship_arrow = "particles/units/heroes/hero_drow/drow_marksmanship_frost_arrow.vpcf"
+		end
+
+		caster:SetRangedProjectileName(marksmanship_arrow)
+
+		return
+	end
+
 	-- modifiers
 	local skadi_modifier = "modifier_item_imba_skadi"
 	local deso_modifier = "modifier_item_imba_desolator"
@@ -317,26 +328,27 @@ function SetArrowAttackProjectile(caster, frost_attack)
 			caster:SetRangedProjectileName(frost_arrow)
 			return
 		end
-	else -- Non frost attack
+	-- Non frost attack
+	else
 		-- Skadi + desolator
 		if has_skadi and has_desolator then
 			caster:SetRangedProjectileName(deso_skadi_projectile)
 			return
-			-- Skadi
-	elseif has_skadi then
-		caster:SetRangedProjectileName(skadi_projectile)
+		-- Skadi
+		elseif has_skadi then
+			caster:SetRangedProjectileName(skadi_projectile)
 		-- Desolator
-	elseif has_desolator then
-		caster:SetRangedProjectileName(deso_projectile)
-		return
-			Lifesteal
-	elseif has_lifesteal then
-		caster:SetRangedProjectileName(lifesteal_projectile)
+		elseif has_desolator then
+			caster:SetRangedProjectileName(deso_projectile)
+			return
+		-- Lifesteal
+		elseif has_lifesteal then
+			caster:SetRangedProjectileName(lifesteal_projectile)
 		-- Basic arrow
-	else
-		caster:SetRangedProjectileName(basic_arrow)
-		return
-	end
+		else
+			caster:SetRangedProjectileName(basic_arrow)
+			return
+		end
 	end
 end
 
@@ -1120,10 +1132,10 @@ function modifier_imba_trueshot:OnIntervalThink()
 end
 
 function modifier_imba_trueshot:DeclareFunctions()
-	local decFunc = {MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
-		MODIFIER_PROPERTY_STATS_AGILITY_BONUS}
-
-	return decFunc
+	return {
+		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
+		MODIFIER_PROPERTY_STATS_AGILITY_BONUS
+	}
 end
 
 function modifier_imba_trueshot:GetModifierPreAttack_BonusDamage()
@@ -1297,7 +1309,6 @@ function modifier_imba_marksmanship:OnCreated()
 	self.talent_aura = "modifier_imba_markmanship_aura" -- talent #5
 
 	-- Ability specials
-	self.agility_bonus = self.ability:GetSpecialValueFor("agility_bonus")
 	self.range_bonus = self.ability:GetSpecialValueFor("range_bonus")
 	self.radius = self.ability:GetSpecialValueFor("radius")
 	self.damage_reduction_scepter = self.ability:GetSpecialValueFor("damage_reduction_scepter")
@@ -1313,7 +1324,6 @@ end
 
 function modifier_imba_marksmanship:OnIntervalThink()
 	if IsServer() then
-
 		-- #5 Talent: enable the aura if Markmanship isn't disabled, other way around if it's disabled
 		if self.caster:HasTalent("special_bonus_imba_drow_ranger_5") then
 			if self.marksmanship_enabled and not self.caster:HasModifier(self.talent_aura) then
@@ -1325,7 +1335,8 @@ function modifier_imba_marksmanship:OnIntervalThink()
 
 		-- #8 Talent: Marksmanship no longer disables itself
 		-- Find enemies nearby
-		local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(),
+		local enemies = FindUnitsInRadius(
+			self.caster:GetTeamNumber(),
 			self.caster:GetAbsOrigin(),
 			nil,
 			self.radius,
@@ -1333,7 +1344,8 @@ function modifier_imba_marksmanship:OnIntervalThink()
 			DOTA_UNIT_TARGET_HERO,
 			DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS,
 			FIND_ANY_ORDER,
-			false)
+			false
+		)
 
 		if not self.caster:HasTalent("special_bonus_imba_drow_ranger_8") then
 			-- If there are enemies near drow, destroy particles and disable Marksmanship
@@ -1368,11 +1380,13 @@ function modifier_imba_marksmanship:OnIntervalThink()
 end
 
 function modifier_imba_marksmanship:DeclareFunctions()
-	local decFunc = {MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
+	return {
+--		MODIFIER_PROPERTY_IGNORE_PHYSICAL_ARMOR,
+		MODIFIER_PROPERTY_TOTALDAMAGEOUTGOING_PERCENTAGE,
 		MODIFIER_PROPERTY_ATTACK_RANGE_BONUS,
-		MODIFIER_EVENT_ON_ATTACK_LANDED}
-
-	return decFunc
+		MODIFIER_EVENT_ON_ATTACK_START,
+		MODIFIER_EVENT_ON_ATTACK_LANDED,
+	}
 end
 
 function modifier_imba_marksmanship:GetModifierAttackRangeBonus()
@@ -1381,21 +1395,81 @@ function modifier_imba_marksmanship:GetModifierAttackRangeBonus()
 		return nil
 	end
 
+	if self.marksmanship_enabled == false then
+		return nil
+	end
+
 	return self.range_bonus
 end
 
-function modifier_imba_marksmanship:GetModifierBonusStats_Agility()
-	if IsServer() then
-		-- Do nothing if caster is disabled by break
+--[[
+-- not ignoring armor for reasons
+function modifier_imba_marksmanship:GetModifierIgnorePhysicalArmor()
+	
+	-- Do nothing if caster is disabled by break
 		if self.caster:PassivesDisabled() then
-			return nil
+			print("Passive disabled")
+			return 0
 		end
 
 		-- Only apply if Marksmanship is enabled
-		if self.marksmanship_enabled then
-			local agility_bonus = self.agility_bonus
-			return agility_bonus
+		if self.marksmanship_enabled == false then
+			print("Marksmanship disabled")
+			return 0
 		end
+
+	print("Everything's fine! Proc?", self:GetStackCount())
+	return self:GetStackCount()
+end
+--]]
+
+function modifier_imba_marksmanship:OnAttackStart(keys)
+	if IsServer() then
+		local target = keys.target
+		local attacker = keys.attacker
+
+		-- Only apply on caster's attacks
+		if self.caster == attacker then
+			-- Instantly kill creeps if the luck is with you
+			if RandomInt(1, 100) < self:GetAbility():GetSpecialValueFor("proc_chance") then
+				self:SetStackCount(1)
+				SetArrowAttackProjectile(attacker, false, true)
+			end
+		end
+	end
+end
+
+function modifier_imba_marksmanship:GetModifierTotalDamageOutgoing_Percentage( params )
+	if IsServer() then
+		if params.target and not params.inflictor and self:GetStackCount() == 1 then
+			if params.target:IsBuilding() or params.attacker:GetTeamNumber() == params.target:GetTeamNumber() then
+				-- ignore buildings and allies
+			elseif not params.target:IsCreep() or params.target:IsRoshan() and self.marksmanship_enabled and not self.caster:PassivesDisabled() then
+				if params.target:GetHealthPercent() <= self:GetAbility():GetSpecialValueFor("instakill_threshold") then
+					if not params.target:IsRoshan() then
+						params.target:Kill(self:GetAbility(), params.attacker)
+					end
+				else
+					local armor = params.target:GetPhysicalArmorValue()
+					local real_damage
+
+					if armor > 0 then
+						real_damage = CalculateReductionFromArmor_Percentage((armor - armor), armor) * 100
+					end
+
+					self:SetStackCount(0)
+
+					return real_damage * (-1)
+				end
+			else
+				params.target:Kill(self:GetAbility(), params.attacker)
+			end
+
+			self:SetStackCount(0)
+			params.target:EmitSound("Hero_DrowRanger.Marksmanship.Target")
+		end
+
+		return 0
 	end
 end
 
@@ -1406,43 +1480,46 @@ function modifier_imba_marksmanship:OnAttackLanded(keys)
 		local attacker = keys.attacker
 		local modifier_frost = "modifier_imba_frost_arrows_thinker"
 
-		-- Only apply on caster's attacks, and only when she has scepter
-		if self.caster == attacker and scepter then
-			-- Find enemies near the target's hit location
-			local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(),
-				target:GetAbsOrigin(),
-				nil,
-				self.splinter_radius_scepter,
-				DOTA_UNIT_TARGET_TEAM_ENEMY,
-				DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-				DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NO_INVIS,
-				FIND_ANY_ORDER,
-				false)
+		-- Only apply on caster's attacks
+		if self.caster == attacker then
+			-- Only apply when she has scepter
+			if scepter then
+				-- Find enemies near the target's hit location
+				local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(),
+					target:GetAbsOrigin(),
+					nil,
+					self.splinter_radius_scepter,
+					DOTA_UNIT_TARGET_TEAM_ENEMY,
+					DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+					DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NO_INVIS,
+					FIND_ANY_ORDER,
+					false)
 
-			-- If any enemies were found, splinter an attack towards them
-			if #enemies > 0 then
-				for _,enemy in pairs(enemies) do
-					-- Ignore the original target
-					if enemy ~= target then
-						-- Launch an arrow
-						local arrow_projectile
+				-- If any enemies were found, splinter an attack towards them
+				if #enemies > 0 then
+					for _,enemy in pairs(enemies) do
+						-- Ignore the original target
+						if enemy ~= target then
+							-- Launch an arrow
+							local arrow_projectile
 
-						arrow_projectile = {hTarget = enemy,
-							hCaster = target,
-							hAbility = self.ability,
-							iMoveSpeed = self.caster:GetProjectileSpeed(),
-							EffectName = self.caster:GetRangedProjectileName(),
-							SoundName = "",
-							flRadius = 1,
-							bDodgeable = true,
-							bDestroyOnDodge = true,
-							iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_HITLOCATION,
-							OnProjectileHitUnit = function(params, projectileID)
-								SplinterArrowHit(params, projectileID, self)
-							end
-						}
+							arrow_projectile = {hTarget = enemy,
+								hCaster = target,
+								hAbility = self.ability,
+								iMoveSpeed = self.caster:GetProjectileSpeed(),
+								EffectName = self.caster:GetRangedProjectileName(),
+								SoundName = "",
+								flRadius = 1,
+								bDodgeable = true,
+								bDestroyOnDodge = true,
+								iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_HITLOCATION,
+								OnProjectileHitUnit = function(params, projectileID)
+									SplinterArrowHit(params, projectileID, self)
+								end
+							}
 
-						TrackingProjectiles:Projectile(arrow_projectile)
+							TrackingProjectiles:Projectile(arrow_projectile)
+						end
 					end
 				end
 			end
@@ -1508,7 +1585,6 @@ end
 function modifier_imba_marksmanship_scepter_dmg_reduction:GetModifierBaseDamageOutgoing_Percentage()
 	return self.damage_reduction_scepter * (-1)
 end
-
 
 --Talent aura
 modifier_imba_markmanship_aura = class({})
@@ -1600,7 +1676,6 @@ function modifier_imba_markmanship_buff:OnAttackLanded(keys)
 
 		-- Only apply on the hero attack
 		if self.parent == attacker then
-
 			-- Only apply if the target isn't magic immune or a building
 			if not target:IsMagicImmune() and not target:IsBuilding() then
 				target:AddNewModifier(self.caster, self.ability, self.modifier, {duration = self.duration})
@@ -1620,7 +1695,6 @@ end
 function modifier_imba_markmanship_buff:IsDebuff()
 	return false
 end
-
 
 -- talent aura slow modifier
 modifier_imba_markmanship_slow = class({})

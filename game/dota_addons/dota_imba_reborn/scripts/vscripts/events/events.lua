@@ -158,8 +158,18 @@ function GameMode:OnGameRulesStateChange(keys)
 		Timers:CreateTimer(3.0, function()
 			if USE_TEAM_COURIER == true then
 				COURIER_TEAM = {}
-				COURIER_TEAM[2] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_radiant"):GetAbsOrigin(), true, nil, nil, 2)
-				COURIER_TEAM[3] = CreateUnitByName("npc_dota_courier", Entities:FindByClassname(nil, "info_courier_spawn_dire"):GetAbsOrigin(), true, nil, nil, 3)
+				for i = 2, 3 do
+					local pos = {}
+					pos[2] = Entities:FindByClassname(nil, "info_courier_spawn_radiant")
+					pos[3] = Entities:FindByClassname(nil, "info_courier_spawn_dire")
+
+					COURIER_TEAM[i] = CreateUnitByName("npc_dota_courier", pos[i]:GetAbsOrigin(), true, nil, nil, i)
+					COURIER_TEAM[i]:UpgradeToFlyingCourier()
+					COURIER_TEAM[i]:AddNewModifier(COURIER_TEAM[i], nil, "modifier_courier_turbo", {})
+					COURIER_TEAM[i]:RemoveModifierByName("modifier_magic_immune")
+					COURIER_TEAM[i]:AddAbility("courier_movespeed"):SetLevel(1)
+					COURIER_TEAM[i]:RemoveAbility("imba_courier_autodeliver")
+				end
 			end
 
 			-- IMBA: Custom maximum level EXP tables adjustment

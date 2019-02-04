@@ -2,7 +2,9 @@
 -- GameEvent:OnGameRulesStateChange
 --------------------------------------------------------------------------------
 ListenToGameEvent('game_rules_state_change', function()
-	if GetMapName() ~= "imba_demo" then return end
+	if IsInToolsMode() == false then
+		if GetMapName() ~= "imba_demo" then return end
+	end
 
 	local state = GameRules:State_Get()
 
@@ -49,9 +51,6 @@ function GameMode:InitDemo()
 --	CustomGameEventManager:RegisterListener("fix_newly_picked_hero", Dynamic_Wrap(self, 'OnNewHeroChosen'))
 	CustomGameEventManager:RegisterListener("demo_select_hero", Dynamic_Wrap(self, 'OnNewHeroSelected'))
 
-	GameRules:SetCustomGameTeamMaxPlayers(2, 1)
-	GameRules:SetCustomGameTeamMaxPlayers(3, 0)
-
 	SendToServerConsole( "sv_cheats 1" )
 	SendToServerConsole( "dota_hero_god_mode 0" )
 	SendToServerConsole( "dota_ability_debug 0" )
@@ -80,7 +79,15 @@ function GameMode:InitDemo()
 	self.i_broadcast_message_duration = 5.0
 
 	local hNeutralSpawn = Entities:FindByName( nil, "neutral_caster_spawn" )
-	self.hNeutralCaster = CreateUnitByName( "npc_dota_neutral_caster", hNeutralSpawn:GetAbsOrigin(), false, nil, nil, DOTA_TEAM_GOODGUYS )
+	local hNeutralSpawnPos
+
+	if hNeutralSpawn ~= nil then
+		hNeutralSpawnPos = hNeutralSpawn:GetAbsOrigin()
+	else
+		hNeutralSpawnPos = Vector(0, 0, 256)
+	end
+
+	self.hNeutralCaster = CreateUnitByName( "npc_dota_neutral_caster", hNeutralSpawnPos, false, nil, nil, DOTA_TEAM_GOODGUYS )
 
 	require("components/demo/events")
 end

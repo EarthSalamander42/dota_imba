@@ -20839,55 +20839,30 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"02"
+			"01"
 			{
 				"var_type"							"FIELD_INTEGER"
 				"rolling_stone_scale_reduction"		"20 35 50"
 			}
-			"03"
+			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"rolling_stones_stacks"		"20 50 60"
+				"rolling_stones_stacks"		"20 40 60"
 			}
-			"04"
+			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"rolling_stones_aoe"		"0 1 2"
 			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"bonus_range_scepter"		"150"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"cleave_starting_width"			"150"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"cleave_ending_width"			"400"
-			}
-			"08"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"cleave_distance"			"600"
-			}
-			"09"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"bonus_cleave_damage_scepter"	"50"
-			}
-			"10"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"bonus_building_damage_scepter"	"75"
-			}
-			"11"
+			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"status_resistance"			"15 20 25"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_armor"				"7 16 25"
 			}
 		}
 	}
@@ -25223,7 +25198,7 @@
 		}
 	}
 
-	"special_bonus_imba_clinkz_8" // Death Pact bonuses stay permanently if target dies quickly
+	"special_bonus_imba_clinkz_8" // Burning Army Skeletons attacks burn 25 mana
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -25233,7 +25208,7 @@
 
 		"LinkedAbility"
 		{
-			"01" 	"imba_clinkz_death_pact"
+			"01" 	"blinkz_burning_army"
 		}
 
 		// Special
@@ -25242,14 +25217,8 @@
 		{
 			"01"
 			{
-				"var_type"                  "FIELD_INTEGER"
-				"mark_duration"	            "5"
-			}
-
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"stacks_pct"				"10"
+				"var_type"			"FIELD_INTEGER"
+				"value"				"25"
 			}
 		}
 	}
@@ -26108,31 +26077,32 @@
 			"01"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"agility_bonus"						"40 60 80"
+				"proc_chance"						"20 30 40"
 			}
-
 			"02"
 			{
 				"var_type"							"FIELD_INTEGER"
 				"range_bonus"						"25 50 100"
 			}
-
 			"03"
 			{
 				"var_type"							"FIELD_INTEGER"
 				"radius"							"400"
 			}
-
 			"04"
 			{
 				"var_type"							"FIELD_INTEGER"
 				"damage_reduction_scepter"			"50"
 			}
-
 			"05"
 			{
 				"var_type"							"FIELD_INTEGER"
 				"splinter_radius_scepter"			"375"
+			}
+			"05"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"instakill_threshold"				"20"
 			}
 		}
 	}

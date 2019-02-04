@@ -353,7 +353,7 @@
 		"Ability3"					"imba_clinkz_skeleton_walk"
 		"Ability4"					"generic_hidden"
 		"Ability5"					"generic_hidden"
-		"Ability6"					"imba_clinkz_death_pact"
+		"Ability6"					"clinkz_burning_army"
 
 		"Ability10"					"special_bonus_imba_clinkz_6" //Skeleton Walk move speed persists for a small period
 		"Ability11"					"special_bonus_imba_clinkz_2" //Clinkz gains extra move speed when Skeleton Walking close to enemies
@@ -528,7 +528,7 @@
 		"Ability6"					"imba_drow_ranger_marksmanship"
 
 		"Ability10"					"special_bonus_imba_drow_ranger_7" //Deadeye becomes an aura
-		"Ability11"					"special_bonus_imba_drow_ranger_2" //Chance to kill creeps instantly
+		"Ability11"					"special_bonus_agility_15"
 		"Ability12"					"special_bonus_imba_drow_ranger_4" //Each Chilled enemy grants drow +10 flat movespeed bonus for the duration. Stacks with itself, depending on amounts of Chill stacks on enemies.
 		"Ability13"					"special_bonus_imba_drow_ranger_5" //While Marksmanship is active (not disabled by nearby enemies), Drow Ranger emits an aura on nearby allies that makes their attack chill their targets, slowing them by 15%.
 		"Ability14"					"special_bonus_imba_drow_ranger_1" //Gust can be self cast, making a wave that moves Drow Ranger herself forward. This wave silences all enemies that it comes in contact with normally.

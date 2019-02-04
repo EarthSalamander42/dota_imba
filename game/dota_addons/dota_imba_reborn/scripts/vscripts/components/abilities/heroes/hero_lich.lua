@@ -2025,8 +2025,8 @@ function imba_lich_sinister_gaze:OnChannelFinish(bInterrupted)
 	-- IMBAfication: Remnants of Sacrifice (gain mana and kill creeps with full channel; gains health from allied creeps)
 	if not bInterrupted and self.target:IsCreep() and not self.target:IsRoshan() then -- Extrenuous Roshan line in case someone ruins targetting
 		local creep_health	= self.target:GetHealth()
-		local mana_gained	= creep_health * (sacrifice_mana_pct / 100)
-		local health_gained	= creep_health * (sacrifice_health_pct / 100)
+		local mana_gained	= creep_health * (self.sacrifice_mana_pct / 100)
+		local health_gained	= creep_health * (self.sacrifice_health_pct / 100)
 
 		self.caster:GiveMana(mana_gained)
 	    SendOverheadEventMessage(nil, OVERHEAD_ALERT_MANA_ADD, self.caster, mana_gained, nil)

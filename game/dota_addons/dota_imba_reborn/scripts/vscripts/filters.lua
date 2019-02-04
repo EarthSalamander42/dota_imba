@@ -509,7 +509,7 @@ function GameMode:OrderFilter( keys )
 						end
 
 						if EntIndexToHScript(PlayerResource:GetMainSelectedEntity(player_id)) == unit then
-							print("Select rightful courier!")
+--							print("Select rightful courier!")
 							PlayerResource:NewSelection(player_id, rightful_courier)
 						end
 
@@ -526,6 +526,36 @@ function GameMode:OrderFilter( keys )
 
 --			print("Return false 3")
 			return false
+		end
+	else
+		if unit:IsCourier() then
+			local ability = EntIndexToHScript(keys["entindex_ability"])
+
+			if keys.issuer_player_id_const then
+				-- allow buy order!
+				if keys.order_type == DOTA_UNIT_ORDER_PURCHASE_ITEM then
+					return true
+				end
+
+				if (ability and ability.GetName and ability:GetName() ~= "") then
+--					print("Valid Ability")
+					if unit:HasAbility(ability:GetName()) then
+						return true
+					end
+				else
+					-- Prevent the courier from moving on right-click
+					DisplayError(keys.issuer_player_id_const, "#dota_hud_error_control_courier_with_abilities_only")
+
+					return false
+				end
+
+				-- Prevent the courier from moving if already moving (therefore being used by another player)
+--				if unit:IsMoving() then
+--					DisplayError(keys.issuer_player_id_const, "#dota_hud_error_courier_in_use")
+
+--					return false
+--				end
+			end
 		end
 	end
 

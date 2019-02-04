@@ -235,9 +235,7 @@ function imba_tiny_tree_modifier:OnRemoved()
 			caster:RemoveModifierByName("imba_tiny_tree_damage_modifier")
 		end
 
-		if not caster:HasScepter() then 
-			caster:RemoveModifierByName("imba_tiny_tree_animation_modifier")
-		end
+		caster:RemoveModifierByName("imba_tiny_tree_animation_modifier")
 	end
 end
 
@@ -369,10 +367,7 @@ function imba_tiny_tree_throw:OnSpellStart()
 		end
 
 		caster:RemoveModifierByName("imba_tiny_tree_modifier")
-
-		if not caster:HasScepter() then 
-			caster:RemoveModifierByName("imba_tiny_tree_animation_modifier")
-		end
+		caster:RemoveModifierByName("imba_tiny_tree_animation_modifier")
 	end
 end
 
@@ -1496,38 +1491,17 @@ function modifier_imba_tiny_grow_passive:DeclareFunctions()
 		MODIFIER_EVENT_ON_ATTACK_LANDED,
 		MODIFIER_PROPERTY_TOTALDAMAGEOUTGOING_PERCENTAGE,
 		MODIFIER_PROPERTY_ATTACK_RANGE_BONUS,
-		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING
+		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING,
+		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
 	}
 
 	return funcs
 end
 
-----------------------------------------------------------------------------
-
-function modifier_imba_tiny_grow_passive:GetModifierAttackRangeBonus( params )
-	if self:GetCaster():HasScepter() then
-		return self.attackrange
-	else
-		return 0
-	end
-end
-
-function modifier_imba_tiny_grow_passive:GetModifierTotalDamageOutgoing_Percentage( params )
-	if IsServer() then
-		if params.attacker == self:GetParent() and params.target:IsBuilding() and self:GetParent():HasScepter() and not params.inflictor then
-			return self.buildingdmg
-		end
-	end
-end
-
-function modifier_imba_tiny_grow_passive:OnAttackLanded( params )
-	if IsServer() then
-		if params.attacker == self:GetParent() and not params.target:IsBuilding() and self:GetParent():HasScepter() then
-			DoCleaveAttack( params.attacker, params.target, self:GetAbility(), params.damage * self.cleave_pct / 100, self.cleave_startwidth, self.cleave_endwidth, self.cleave_distance, "particles/units/heroes/hero_tiny/tiny_grow_cleave.vpcf" )
-		end
-	end
-end
-
 function modifier_imba_tiny_grow_passive:GetModifierStatusResistanceStacking()
 	return self:GetAbility():GetSpecialValueFor("status_resistance")
+end
+
+function modifier_imba_tiny_grow_passive:GetModifierPhysicalArmorBonus()
+	return self:GetAbility():GetSpecialValueFor("bonus_armor")
 end

@@ -72,6 +72,14 @@ end
 function modifier_companion:OnIntervalThink()
 	if IsServer() then
 		local companion = self:GetParent()
+
+		-- vanilla baseclass bug
+		if companion:IsMoving() then
+			companion:StartGesture(ACT_DOTA_RUN)
+		else
+			companion:FadeGesture(ACT_DOTA_RUN)
+		end
+
 		if companion:GetPlayerOwner():GetAssignedHero() == nil then return end
 		local hero = companion:GetPlayerOwner():GetAssignedHero()
 		hero.companion = companion

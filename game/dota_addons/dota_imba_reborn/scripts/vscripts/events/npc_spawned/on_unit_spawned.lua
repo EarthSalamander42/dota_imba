@@ -16,7 +16,7 @@
 function GameMode:OnUnitFirstSpawn(unit)
 	if string.find(unit:GetUnitName(), "npc_dota_lone_druid_bear") then
 		unit:SetupHealthBarLabel()
-		
+
 		if unit:GetOwner() and unit:GetOwner():HasModifier("modifier_frantic") then
 			local main_hero = unit:GetOwner()
 			local shared_buff_modifier = main_hero:FindModifierByName("modifier_frantic")
@@ -38,6 +38,31 @@ function GameMode:OnUnitFirstSpawn(unit)
 		end
 	end
 
+	-- Burning Army override (skeletons invulnerable + fix not dying when duration ends)
+	if unit:GetClassname() == "npc_dota_clinkz_skeleton_archer" then
+		-- IMBA effect
+--		unit:AddNewModifier(unit, nil, "modifier_invulnerable_hidden", {})
+
+		for _, hero in pairs(HeroList:GetAllHeroes()) do
+			if hero:GetUnitName() == "npc_dota_hero_clinkz" then
+				if hero:HasTalent("special_bonus_imba_clinkz_8") then
+					unit:AddNewModifier(unit, nil, "modifier_imba_burning_army", {mana_burn=hero:FindTalentValue("special_bonus_imba_clinkz_8")})
+				end
+
+				break
+			end
+		end
+
+		Timers:CreateTimer(GetAbilitySpecial("clinkz_burning_army", "duration"), function()
+			if unit then
+				if unit:IsAlive() then
+					unit:ForceKill(false)
+				end
+			end
+		end)
+	end
+
+	-- Unit cosmetics
 	Timers:CreateTimer(FrameTime(), function()
 		if not unit:IsNull() and UNIT_EQUIPMENT[unit:GetModelName()] then
 			for _, wearable in pairs(UNIT_EQUIPMENT[unit:GetModelName()]) do
