@@ -1,6 +1,6 @@
 if not Wearables then Wearables = {} end
 
-local hats = LoadKeyValues("scripts/kv/wearables.kv")
+local cool_hats = LoadKeyValues("scripts/kv/wearables.kv")
 
 function Wearables:SwapWearable( unit, target_model, new_model )
 	local wearable = unit:FirstMoveChild()
@@ -22,7 +22,7 @@ function Wearables:SwapWearableSlot(unit, new_model, material_group)
 	local cosmetic
 	while wearable ~= nil do
 		if wearable:GetClassname() == "dota_item_wearable" then
-			for model_name, model_table in pairs(hats) do
+			for model_name, model_table in pairs(cool_hats) do
 				if new_model == model_name then
 					for particle_type, particle_table in pairs(model_table) do
 						if particle_type == "wearable_slot" then
@@ -36,7 +36,7 @@ function Wearables:SwapWearableSlot(unit, new_model, material_group)
 --											wearable:SetMaterialGroup(material_group)
 --										end
 									else
-										print("Create new cosmetic:", new_model)
+--										print("Create new cosmetic:", new_model)
 										cosmetic = SpawnEntityFromTableSynchronous("prop_dynamic", {model = new_model})
 										cosmetic:FollowEntity(unit, true)
 										if material_group then
@@ -74,15 +74,30 @@ function Wearables:SwapWearableSlot(unit, new_model, material_group)
 				end
 			end
 		end
+
 		wearable = wearable:NextMovePeer()
+
 		if wearable_slot ~= "hook" then
 			if old_wearable and not old_wearable:IsNull() then
-				print("Remove wearable:", old_wearable:GetModelName())
-				old_wearable:RemoveSelf()
+				Wearables:RemoveWearable(old_wearable)
 				return -- When a cosmetic is replaced, end the function
 			end
 		end
 	end
+end
+
+function Wearables:RemoveWearable(wearable)
+	Timers:CreateTimer(0.1, function()
+		if wearable and wearable.GetModelName then
+			print("Wearable hidden:", wearable:GetModelName())
+			wearable:SetModel("models/development/invisiblebox.vmdl")
+			wearable:AddEffects(EF_NODRAW)
+--			UTIL_Remove(wearable)
+--			return 0.1
+--		else
+--			return nil
+		end
+	end)
 end
 
 -- Returns a wearable handle if its the passed target_model
@@ -141,7 +156,7 @@ function Wearables:PrintWearables( unit )
 end
 
 function Wearables:PrecacheWearables(context)
-	for model_name, model_table in pairs(hats) do
+	for model_name, model_table in pairs(cool_hats) do
 		PrecacheModel(model_name, context)
 		for particle_type, particle_table in pairs(model_table) do
 			if particle_type == "precache_particle" then
@@ -177,7 +192,7 @@ end
 
 function Wearables:GetModelStringFinders(target_model)
 	local table = {}
-	for model_name, model_table in pairs(hats) do
+	for model_name, model_table in pairs(cool_hats) do
 		if target_model == model_name then
 			for particle_type, particle_table in pairs(model_table) do
 				if particle_type == "wearable_slot" then

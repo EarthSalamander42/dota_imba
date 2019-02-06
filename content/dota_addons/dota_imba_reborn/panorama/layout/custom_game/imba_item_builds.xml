@@ -1,0 +1,14 @@
+<root>
+	<styles>
+		<include src="file://{resources}/styles/custom_game/imba_item_builds.css" />
+	</styles>
+
+	<scripts>
+		<include src="file://{resources}/scripts/custom_game/util.js" />
+		<include src="file://{resources}/scripts/custom_game/imba_item_builds.js" />
+	</scripts>
+
+	<Panel>
+
+	</Panel>
+</root>

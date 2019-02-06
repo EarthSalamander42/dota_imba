@@ -13,14 +13,14 @@
 -- limitations under the License.
 --
 -- Editors:
---     Earth Salamander #42
+--     EarthSalamander #42
 
 -- Battlepass
 
 -- to add soon:
--- Maelstrom (particles/econ/events/ti8/maelstorm_ti8.vpcf)
--- Mjollnir shield (particles/econ/events/ti8/mjollnir_shield_ti8.vpcf)
--- Phase Boots (particles/econ/events/ti8/phase_boots_ti8.vpcf)
+-- Maelstrom (particles/econ/events/ti8/maelstorm_ti8.vpcf) -- jarnbjorn use a yellow particle while others use the blue one
+-- Mjollnir shield (particles/econ/events/ti8/mjollnir_shield_ti8.vpcf) -- jarnbjorn use a yellow particle while others use the blue one
+-- Phase Boots (particles/econ/events/ti8/phase_boots_ti8.vpcf) -- lifesteal boots use ti8 cosmetic
 
 if Imbattlepass == nil then Imbattlepass = class({}) end
 local next_reward = true
@@ -33,14 +33,16 @@ IMBATTLEPASS_LEVEL_REWARD = {}
 IMBATTLEPASS_LEVEL_REWARD[4]	= "fountain"
 IMBATTLEPASS_LEVEL_REWARD[9]	= "blink"
 IMBATTLEPASS_LEVEL_REWARD[13]	= "fountain2"
+IMBATTLEPASS_LEVEL_REWARD[15]	= "vengefulspirit_immortal"
 IMBATTLEPASS_LEVEL_REWARD[16]	= "force_staff"
 IMBATTLEPASS_LEVEL_REWARD[18]	= "blink2"
 if next_reward_shown then
-	IMBATTLEPASS_LEVEL_REWARD[20]	= "zuus_arcana"
+	IMBATTLEPASS_LEVEL_REWARD[20]	= "lina_arcana"
 end
 IMBATTLEPASS_LEVEL_REWARD[22]	= "fountain3"
 IMBATTLEPASS_LEVEL_REWARD[26]	= "bottle"
 IMBATTLEPASS_LEVEL_REWARD[27]	= "blink3"
+IMBATTLEPASS_LEVEL_REWARD[30]	= "zuus_arcana"
 IMBATTLEPASS_LEVEL_REWARD[31]	= "fountain4"
 IMBATTLEPASS_LEVEL_REWARD[32]	= "force_staff2"
 IMBATTLEPASS_LEVEL_REWARD[35]	= "mekansm"
@@ -77,7 +79,6 @@ end
 IMBATTLEPASS_LEVEL_REWARD[98]	= "bottle4"
 IMBATTLEPASS_LEVEL_REWARD[99]	= "blink11"
 IMBATTLEPASS_LEVEL_REWARD[100]	= "shiva"
-IMBATTLEPASS_LEVEL_REWARD[101]	= "vengefulspirit_immortal"
 IMBATTLEPASS_LEVEL_REWARD[103]	= "fountain12"
 IMBATTLEPASS_LEVEL_REWARD[105]	= "mekansm3"
 IMBATTLEPASS_LEVEL_REWARD[106]	= "fountain16"
@@ -93,7 +94,7 @@ IMBATTLEPASS_LEVEL_REWARD[132]	= "radiance3"
 IMBATTLEPASS_LEVEL_REWARD[146]	= "fountain18"
 IMBATTLEPASS_LEVEL_REWARD[150]	= "shiva2"
 IMBATTLEPASS_LEVEL_REWARD[200]	= "shiva3"
-IMBATTLEPASS_LEVEL_REWARD[275]	= "pudge_dragonclaw"
+IMBATTLEPASS_LEVEL_REWARD[275]	= "pudge_immortal"
 
 CustomNetTables:SetTableValue("game_options", "battlepass", {battlepass = IMBATTLEPASS_LEVEL_REWARD})
 
@@ -111,6 +112,7 @@ function Imbattlepass:Init()
 	IMBATTLEPASS_ANCIENT_APPARITION = {}
 	IMBATTLEPASS_VENGEFULSPIRIT = {}
 	IMBATTLEPASS_ZUUS = {}
+	IMBATTLEPASS_LINA = {}
 
 	for k, v in pairs(IMBATTLEPASS_LEVEL_REWARD) do
 		if string.find(v, "fountain") then
@@ -139,6 +141,8 @@ function Imbattlepass:Init()
 			IMBATTLEPASS_VENGEFULSPIRIT[v] = k
 		elseif string.find(v, "zuus") then
 			IMBATTLEPASS_ZUUS[v] = k
+		elseif string.find(v, "lina") then
+			IMBATTLEPASS_LINA[v] = k
 		end
 	end
 
@@ -156,6 +160,8 @@ function Imbattlepass:AddItemEffects(hero)
 	Imbattlepass:GetMekansmEffect(hero)
 	Imbattlepass:GetFountainEffect(hero)
 	Imbattlepass:GetBottleEffect(hero)
+
+	-- some effects override some items effects, need to call it after items setup
 	Imbattlepass:GetHeroEffect(hero)
 end
 
@@ -478,7 +484,7 @@ function Imbattlepass:GetHeroEffect(hero)
 				Imbattlepass:SetupArcana(hero:GetPlayerID(), "models/items/pudge/arcana/pudge_arcana_back.vmdl", "models/items/pudge/arcana/pudge_arcana_base.vmdl", HasPudgeArcana(hero:GetPlayerID()))
 			end
 
-			if next_reward_shown == true and Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_PUDGE["pudge_dragonclaw"] then
+			if next_reward_shown == true and Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_PUDGE["pudge_immortal"] then
 				hero.hook_pfx = "particles/econ/items/pudge/pudge_dragonclaw/pudge_meathook_dragonclaw_imba.vpcf"
 				Imbattlepass:SetupImmortal(hero:GetPlayerID(), "models/items/pudge/pudge_skeleton_hook_body.vmdl")
 			end
@@ -494,6 +500,42 @@ function Imbattlepass:GetHeroEffect(hero)
 				hero.magic_missile_icon = 1
 				hero.magic_missile_sound = "Hero_VengefulSpirit.MagicMissile.TI8"
 				hero.magic_missile_sound_hit = "Hero_VengefulSpirit.MagicMissileImpact.TI8"
+			end
+		elseif hero:GetUnitName() == "npc_dota_hero_lina" then
+			if next_reward_shown == true and Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LINA["lina_arcana"] then
+				Imbattlepass:SetupArcana(hero:GetPlayerID(), "models/items/lina/origins_flamehair/origins_flamehair.vmdl", nil, HasLinaArcana(hero:GetPlayerID()))
+				hero.dragon_slave_effect = "particles/econ/items/lina/lina_head_headflame/lina_spell_dragon_slave_headflame.vpcf"
+				hero.dragon_slave_icon = 1
+				hero.fiery_soul_icon = 1
+
+				local pfx = ParticleManager:CreateParticle("particles/econ/items/lina/lina_head_headflame/lina_headflame.vpcf", PATTACH_POINT_FOLLOW, hero)
+				ParticleManager:SetParticleControlEnt(pfx, 0, hero, PATTACH_POINT_FOLLOW, "attach_head", hero:GetAbsOrigin(), true)
+
+				local pfx2 = ParticleManager:CreateParticle("particles/econ/items/lina/lina_head_headflame/lina_flame_hand_dual_headflame.vpcf", PATTACH_POINT_FOLLOW, hero)
+				ParticleManager:SetParticleControlEnt(pfx2, 0, hero, PATTACH_POINT_FOLLOW, "attach_attack1", hero:GetAbsOrigin(), true)
+				ParticleManager:SetParticleControlEnt(pfx2, 1, hero, PATTACH_POINT_FOLLOW, "attach_attack2", hero:GetAbsOrigin(), true)
+			end
+		elseif hero:GetUnitName() == "npc_dota_hero_zuus" then
+			if next_reward_shown == true and Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_ZUUS["zuus_arcana"] then
+				Imbattlepass:SetupArcana(hero:GetPlayerID(), "models/heroes/zeus/zeus_hair_arcana.vmdl", "models/heroes/zeus/zeus_arcana.vmdl", HasZuusArcana(hero:GetPlayerID()))
+				hero.static_field_icon = 1
+				hero.static_field_effect = "particles/econ/items/zeus/arcana_chariot/zeus_arcana_static_field.vpcf"
+				hero.thundergods_wrath_start_effect = "particles/econ/items/zeus/arcana_chariot/zeus_arcana_thundergods_wrath_start_bolt_parent.vpcf"
+				hero.thundergods_wrath_effect = "particles/econ/items/zeus/arcana_chariot/zeus_arcana_thundergods_wrath.vpcf"
+				hero.thundergods_wrath_icon = 1
+				hero.thundergods_wrath_pre_sound = "Hero_Zuus.GodsWrath.PreCast.Arcana"
+
+				hero.blink_effect = "particles/econ/items/zeus/arcana_chariot/zeus_arcana_blink_start.vpcf"
+				hero.blink_effect_end = "particles/econ/items/zeus/arcana_chariot/zeus_arcana_blink_end.vpcf"
+				hero.blink_icon = "zuus"
+				hero.blink_sound = "Hero_Zeus.BlinkDagger.Arcana"
+
+				local pfx = ParticleManager:CreateParticle("particles/econ/items/zeus/arcana_chariot/zeus_arcana_chariot.vpcf", PATTACH_ABSORIGIN_FOLLOW, hero)
+--				ParticleManager:SetParticleControlEnt(pfx, 0, hero, PATTACH_POINT_FOLLOW, "attach_head", hero:GetAbsOrigin(), true)
+
+--				local pfx2 = ParticleManager:CreateParticle("particles/econ/items/lina/lina_head_headflame/lina_flame_hand_dual_headflame.vpcf", PATTACH_POINT_FOLLOW, hero)
+--				ParticleManager:SetParticleControlEnt(pfx2, 0, hero, PATTACH_POINT_FOLLOW, "attach_attack1", hero:GetAbsOrigin(), true)
+--				ParticleManager:SetParticleControlEnt(pfx2, 1, hero, PATTACH_POINT_FOLLOW, "attach_attack2", hero:GetAbsOrigin(), true)
 			end
 		end
 	end
@@ -523,11 +565,23 @@ function Imbattlepass:SetupArcana(ID, wearable_model, arcana_model, arcana_type)
 	end
 
 	local hero = PlayerResource:GetSelectedHeroEntity(ID)
-	Wearables:SwapWearableSlot(hero, wearable_model, tostring(arcana_type))
 
-	hero:SetModel(arcana_model)
-	hero:SetOriginalModel(arcana_model)
-	hero:SetMaterialGroup(tostring(arcana_type))
+	if wearable_model then
+		print("Run arcana swap cosmetic:", wearable_model)
+		Wearables:SwapWearableSlot(hero, wearable_model, tostring(arcana_type))
+	end
+
+	if arcana_model then
+		hero:SetModel(arcana_model)
+		hero:SetOriginalModel(arcana_model)
+	end
+
+	if arcana_type ~= true then
+		hero:SetMaterialGroup(tostring(arcana_type))
+	else
+		arcana_type = 0
+	end
+
 	hero.battlepass_arcana = arcana_type
 	CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "override_hero_image", {arcana = arcana_type, hero_name = string.gsub(hero:GetUnitName(), "npc_dota_hero_", "")})
 end
@@ -564,6 +618,16 @@ function HasZuusArcana(ID)
 	end
 end
 
+function HasLinaArcana(ID)
+	if next_reward_shown == false then return nil end
+
+	if Imbattlepass:GetRewardUnlocked(ID) >= IMBATTLEPASS_LINA["lina_arcana"] then
+		return 0
+	else
+		return nil
+	end
+end
+
 -- override pick screen and top bar image
 function Imbattlepass:BattlepassCheckArcana()
 	for i = 0, PlayerResource:GetPlayerCount() - 1 do
@@ -571,6 +635,7 @@ function Imbattlepass:BattlepassCheckArcana()
 		arcana["npc_dota_hero_juggernaut"] = HasJuggernautArcana(i)
 		arcana["npc_dota_hero_pudge"] = HasPudgeArcana(i)
 		arcana["npc_dota_hero_zuus"] = HasZuusArcana(i)
+		arcana["npc_dota_hero_lina"] = HasLinaArcana(i)
 
 		CustomNetTables:SetTableValue("battlepass", tostring(i), {arcana = arcana})
 	end
