@@ -13,6 +13,7 @@ game/*
 !game/dota_addons/
 game/dota_addons/*
 !game/dota_addons/dota_imba_reborn/
+!.gitmodules
 
 # Cache crap that Valve autogenerates
 *.bin
