@@ -285,7 +285,11 @@ function ImbaRunes:PickupRune(rune_name, unit, bActiveByBottle)
 			end
 
 			for i = 1, images_count do
-				unit:CreateIllusion(duration, 200, 75)
+				if not unit:IsRangedAttacker() then
+					unit:CreateIllusion(duration, 100, -40)
+				else
+					unit:CreateIllusion(duration, 200, -40)
+				end
 			end
 
 			FindClearSpaceForUnit(unit, unit:GetAbsOrigin() + RandomVector(72), true)

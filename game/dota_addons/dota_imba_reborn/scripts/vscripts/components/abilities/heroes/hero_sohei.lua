@@ -1187,7 +1187,7 @@ if IsServer() then
 	end
 
 	function modifier_sohei_momentum_passive:GetModifierPreAttack_CriticalStrike( event )
-		if (self.force_casting == true or self:GetAbility():GetAutoCastState() == true) and self:IsMomentumReady() and (self:GetAbility():IsCooldownReady() or self:GetParent():HasModifier( "modifier_sohei_flurry_self" )) then
+		if (self.force_casting == true or self:GetAbility():GetAutoCastState() == true) and self:IsMomentumReady() and (self:GetAbility():IsCooldownReady() or self:GetParent():HasModifier( "modifier_sohei_flurry_self" )) and not self:GetParent():IsIllusion() then
 
 			-- make sure the target is valid
 			local ufResult = UnitFilter(
@@ -1224,6 +1224,10 @@ if IsServer() then
 			end
 
 			if target:IsBuilding() then
+				return nil
+			end
+
+			if self:GetParent():IsIllusion() then
 				return nil
 			end
 

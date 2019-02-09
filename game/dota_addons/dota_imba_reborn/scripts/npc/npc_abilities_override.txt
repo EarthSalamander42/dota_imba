@@ -66,8 +66,8 @@
 	"item_greater_crit"						"REMOVE"
 	"item_recipe_basher"					"REMOVE"
 	"item_basher"							"REMOVE"
-	"item_recipe_manta"						"REMOVE"
-	"item_manta"							"REMOVE"
+//	"item_recipe_manta"						"REMOVE"
+//	"item_manta"							"REMOVE"
 	"item_recipe_lesser_crit"				"REMOVE"
 	"item_lesser_crit"						"REMOVE"
 	"item_recipe_armlet"					"REMOVE"
@@ -178,6 +178,8 @@
 	"item_imba_blade_mail"					"REMOVE"
 	"item_recipe_imba_spell_fencer"			"REMOVE"
 	"item_imba_spell_fencer"				"REMOVE"
+	"item_imba_recipe_manta"				"REMOVE"
+	"item_imba_manta"						"REMOVE" // Holy god damn lag
 
 	//=================================================================================================================
 	//-----------------------------------------------------------------------------------------------------------------
@@ -3173,6 +3175,7 @@
 	{
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 	
+		"AbilityCastRange"				"800"
 		"AbilityCooldown"				"16.0"
 
 		"AbilitySpecial"
@@ -3243,6 +3246,11 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"heal_amp"				"50"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_bonus"			"12 24 36 48"
 			}
 		}
 	}
@@ -9059,7 +9067,7 @@
 	"shadow_demon_soul_catcher"
 	{
 		"AbilityCooldown"				"13 11 9 7"
-		"AbilityCastRange"				"600 700 800 900"
+		"AbilityCastRange"				"700 800 900 1000"
 
 		"AbilitySpecial"
 		{
@@ -9078,41 +9086,6 @@
 				"var_type"				"FIELD_FLOAT"
 				"duration"				"12.0"
 			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"illusion_outgoing_damage"	"-70 -55 -40 -25"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"illusion_outgoing_damage_tooltip"	"30 45 60 75"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"illusion_incoming_damage"	"100"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"illusion_incoming_damage_tooltip"	"200"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	//	Shadow Demon: Soul Catcher cooldown reduction
-	//=================================================================================================================
-	"special_bonus_unique_shadow_demon_2"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"value"					"4"
-			}
 		}
 	}
 
@@ -9121,7 +9094,6 @@
 	//=================================================================================================================
 	"shadow_demon_shadow_poison"
 	{
-		"AbilityCooldown"				"2.5"
 		"AbilityCastPoint"				"0.2"
 		"AbilityDamage"					"50"
 
@@ -9145,32 +9117,12 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"190 205 220 235"
+				"radius"				"200 215 230 245"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"speed"					"1000 1125 1250 1375"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"tooltip_duration"		"10"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	//	Shadow Demon: Shadow Poison cooldown reduction
-	//=================================================================================================================
-	"special_bonus_unique_shadow_demon_3"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"value"					"1.0"
 			}
 		}
 	}
@@ -9181,7 +9133,6 @@
 	"shadow_demon_demonic_purge"
 	{
 		"AbilityCooldown"				"50 40 30"
-		"AbilityDuration"				"5 6 7"
 
 		"AbilitySpecial"
 		{
@@ -9190,11 +9141,6 @@
 				"var_type"				"FIELD_INTEGER"
 				"purge_damage"			"225 425 475"
 				"LinkedSpecialBonus"	"special_bonus_unique_shadow_demon_1"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"tooltip_duration"		"5 6 7"
 			}
 			"03"
 			{
@@ -9210,21 +9156,6 @@
 			{
 				"var_type"								"FIELD_INTEGER"
 				"charge_restore_time_tooltip_scepter"	"30"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	//	Shadow Demon: bonus Demonic Purge damage
-	//=================================================================================================================
-	"special_bonus_unique_shadow_demon_1"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"400"
 			}
 		}
 	}
@@ -10460,7 +10391,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"fade_time"					"6.0 4.0 2.8 2.4"
+				"fade_time"					"4.0 3.2 2.4 1.6"
 			}
 			"02"
 			{
@@ -10480,13 +10411,13 @@
 			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"bash_duration"				"1.0 1.8 2.5 3"
+				"bash_duration"				"1.0 1.6 2.4 3.0"
 				"LinkedSpecialBonus"		"special_bonus_unique_treant_4"
 			}
 			"06"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"total_damage"				"30 80 130 180"
+				"total_damage"				"60 120 180 240"
 			}
 			"07"
 			{
@@ -10530,27 +10461,12 @@
 			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"duration"					"4.5 5.0 5.5 6.0"
+				"duration"					"5.25 5.50 5.75 6.00"
 			}
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"projectile_speed"			"400 450 500 550"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	//	Treant Protector: bonus Leech Seed damage/heal
-	//=================================================================================================================
-	"special_bonus_unique_treant_2"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"value"					"30"
 			}
 		}
 	}
@@ -10573,7 +10489,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health_regen"			"4 12 18 22"
+				"health_regen"			"4 10 16 22"
 			}
 			"03"
 			{
@@ -10612,7 +10528,7 @@
 
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"100 70 60"
+		"AbilityCooldown"				"100 80 60"
 		"AbilityManaCost"				"0"
 
 		"AbilitySpecial"
@@ -10637,8 +10553,6 @@
 	//=================================================================================================================
 	"treant_eyes_in_the_forest"
 	{
-		"AbilityCooldown"				"25"
-
 		"AbilitySpecial"
 		{
 			"01"
@@ -14860,6 +14774,118 @@
 				"var_type"			"FIELD_FLOAT"
 				"spawn_interval"	"0.8"
 			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Manta
+	//=================================================================================================================
+	"item_manta"
+	{	
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_strength"		"10"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_agility"			"31"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_intellect"		"10"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_attack_speed"	"21"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_movement_speed"	"20"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"images_count"			"3"
+			}			
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tooltip_illusion_duration"			"20"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"images_do_damage_percent_melee"	"-58"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tooltip_damage_outgoing_melee"			"42"
+			}	
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"images_take_damage_percent_melee"	"250"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tooltip_damage_incoming_melee_total_pct"			"350"
+			}			
+			"12"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"images_do_damage_percent_ranged"	"-62"
+			}
+			"13"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tooltip_damage_outgoing_ranged"			"38"
+			}
+			"14"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"images_take_damage_percent_ranged"	"300"
+			}
+			"15"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tooltip_damage_incoming_ranged_total_pct"			"400"
+			}
+			"16"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cooldown_melee"		"30"
+			}
+			"17"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cooldown_ranged_tooltip"		"45"
+			}
+			"18"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"invuln_duration"		"0.1"
+			}
+			"19"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"vision_radius"			"1000"
+			}
+			"20"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"tooltip_ranged_cooldown_increase"	"15"
+			}		
 		}
 	}
 }

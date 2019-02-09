@@ -436,7 +436,7 @@ function imba_magnataur_shockwave:OnSpellStart()
 				bDeleteOnHit		= false,
 				vVelocity			= Vector(direction.x,direction.y,0) * speed,
 				bProvidesVision		= false,
-				ExtraData			= {index = index, damage = damage, secondary_damage = damage/2, spread_angle = spread_angle, secondary_amount = secondary_amount, distance = distance, polarize_duration = polarize_duration, magnetize_duration = magnetize_duration, speed = speed, direction_x = direction.x, direction_y = direction.y, radius = radius, magnetize_shockwave = 0, talent = 1, caster_loc_x = caster_loc.x, caster_loc_y = caster_loc.y}
+				ExtraData			= {index = index, damage = damage, secondary_damage = secondary_damage, spread_angle = spread_angle, secondary_amount = secondary_amount, distance = distance, polarize_duration = polarize_duration, magnetize_duration = magnetize_duration, speed = speed, direction_x = direction.x, direction_y = direction.y, radius = radius, magnetize_shockwave = 0, talent = 1, caster_loc_x = caster_loc.x, caster_loc_y = caster_loc.y}
 			}
 		ProjectileManager:CreateLinearProjectile(projectile)
 	end
@@ -479,7 +479,7 @@ function imba_magnataur_shockwave:OnProjectileThink_ExtraData(location, ExtraDat
 						bDeleteOnHit		= false,
 						vVelocity			= Vector(velocity.x,velocity.y,0),
 						bProvidesVision		= false,
-						ExtraData			= {index = ExtraData.index, damage = ExtraData.damage, secondary_damage = ExtraData.damage/2, spread_angle = ExtraData.spread_angle, secondary_amount = ExtraData.secondary_amount, distance = ExtraData.distance, polarize_duration = ExtraData.polarize_duration,  magnetize_duration = ExtraData.magnetize_duration, speed = ExtraData.speed, direction_x = new_direction.x, direction_y = new_direction.y, radius = ExtraData.radius, magnetize_shockwave = 0, talent = 0}
+						ExtraData			= {index = ExtraData.index, damage = ExtraData.damage, secondary_damage = ExtraData.secondary_damage, spread_angle = ExtraData.spread_angle, secondary_amount = ExtraData.secondary_amount, distance = ExtraData.distance, polarize_duration = ExtraData.polarize_duration,  magnetize_duration = ExtraData.magnetize_duration, speed = ExtraData.speed, direction_x = new_direction.x, direction_y = new_direction.y, radius = ExtraData.radius, magnetize_shockwave = 0, talent = 0}
 					}
 				ProjectileManager:CreateLinearProjectile(projectile)
 			end
@@ -590,7 +590,7 @@ function imba_magnataur_shockwave:OnProjectileHit_ExtraData(target, location, Ex
 									bDeleteOnHit		= false,
 									vVelocity			= Vector(velocity.x,velocity.y,0),
 									bProvidesVision		= false,
-									ExtraData			= {index = ExtraData.index, damage = ExtraData.damage, secondary_damage = ExtraData.damage/2, spread_angle = ExtraData.spread_angle, secondary_amount = ExtraData.secondary_amount, distance = ExtraData.distance, polarize_duration = ExtraData.polarize_duration,  magnetize_duration = ExtraData.magnetize_duration, speed = ExtraData.speed, direction_x = new_direction.x, direction_y = new_direction.y, radius = ExtraData.radius, magnetize_shockwave = 0, talent = 0}
+									ExtraData			= {index = ExtraData.index, damage = ExtraData.damage, secondary_damage = ExtraData.secondary_damage, spread_angle = ExtraData.spread_angle, secondary_amount = ExtraData.secondary_amount, distance = ExtraData.distance, polarize_duration = ExtraData.polarize_duration,  magnetize_duration = ExtraData.magnetize_duration, speed = ExtraData.speed, direction_x = new_direction.x, direction_y = new_direction.y, radius = ExtraData.radius, magnetize_shockwave = 0, talent = 0}
 								}
 							ProjectileManager:CreateLinearProjectile(projectile)
 						end
@@ -1880,9 +1880,9 @@ function imba_magnataur_reverse_polarity:OnSpellStart()
 		-- Parameters
 		local damage = self:GetTalentSpecialValueFor("damage")
 		local radius = self:GetTalentSpecialValueFor("main_radius")
-		local hero_stun_duration = self:GetSpecialValueFor("hero_stun_duration")
+		local hero_stun_duration = self:GetSpecialValueFor("hero_stun_duration") + caster:FindTalentValue("special_bonus_imba_magnataur_9")
 		local polarize_slow_duration = hero_stun_duration -- In case this needs to be changed
-		local creep_stun_duration = self:GetSpecialValueFor("creep_stun_duration")
+		local creep_stun_duration = self:GetSpecialValueFor("creep_stun_duration") + caster:FindTalentValue("special_bonus_imba_magnataur_9")
 		local pull_offset = self:GetSpecialValueFor("pull_offset")
 		local pull_per_stack = self:GetTalentSpecialValueFor("pull_per_stack")
 		local polarize_duration = self:GetSpecialValueFor("polarize_duration")

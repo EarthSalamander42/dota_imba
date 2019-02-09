@@ -285,7 +285,7 @@
 		"MaxLevel"						"3"
 		"LevelsBetweenUpgrades"			"6"
 		"ScriptFile"					"components/abilities/heroes/hero_night_stalker.lua"
-		"HasScepterUpgrade"				"1"
+		//"HasScepterUpgrade"				"1"
 
 		// Unit Targeting
 		//-------------------------------------------------------------------------------------------------------------

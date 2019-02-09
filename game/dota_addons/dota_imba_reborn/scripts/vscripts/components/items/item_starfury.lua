@@ -270,7 +270,7 @@ end
 
 function modifier_imba_starfury_passive:OnAttackLanded(params)
 	if IsServer() then
-		if params.attacker == self.parent then
+		if params.attacker == self.parent and not self.parent:IsIllusion() then
 
 			if (RollPseudoRandom(self.proc_chance, self.item) and (self:CheckUniqueValue(1,{}) == 1) and (self.parent:IsClone() or self.parent:IsRealHero())) then
 				self.parent:AddNewModifier(self.parent, self.item, "modifier_imba_starfury_buff_increase", {duration = self.proc_duration})

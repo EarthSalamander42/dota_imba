@@ -604,6 +604,7 @@ function imba_ember_spirit_sleight_of_fist:OnSpellStart()
 		local caster_loc = caster:GetAbsOrigin()
 		local original_direction = (caster:GetAbsOrigin() - target_loc):Normalized()
 		local effect_radius = self:GetSpecialValueFor("effect_radius")
+		local remnant_radius = effect_radius * 0.75
 		local attack_interval = self:GetSpecialValueFor("attack_interval")
 		local sleight_targets = {}
 
@@ -625,7 +626,7 @@ function imba_ember_spirit_sleight_of_fist:OnSpellStart()
 		local active_remnants = FindActiveRemnants(caster)
 		if active_remnants then
 			for _, remnant in pairs(active_remnants) do
-				nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), remnant:GetAbsOrigin(), nil, effect_radius / 2, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ATTACK_IMMUNE + DOTA_UNIT_TARGET_FLAG_NO_INVIS, FIND_ANY_ORDER, false)
+				nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), remnant:GetAbsOrigin(), nil, remnant_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ATTACK_IMMUNE + DOTA_UNIT_TARGET_FLAG_NO_INVIS, FIND_ANY_ORDER, false)
 				for _, enemy in pairs(nearby_enemies) do
 					sleight_targets[#sleight_targets + 1] = enemy:GetEntityIndex()
 					enemy:AddNewModifier(caster, self, "modifier_imba_sleight_of_fist_marker", {duration = (#sleight_targets - 1) * attack_interval})
@@ -635,7 +636,7 @@ function imba_ember_spirit_sleight_of_fist:OnSpellStart()
 				remnant:EmitSound("Hero_EmberSpirit.SleightOfFist.Cast")
 				local remnant_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_ember_spirit/ember_spirit_sleight_of_fist_cast.vpcf", PATTACH_CUSTOMORIGIN, nil)
 				ParticleManager:SetParticleControl(remnant_pfx, 0, remnant:GetAbsOrigin())
-				ParticleManager:SetParticleControl(remnant_pfx, 1, Vector(effect_radius / 2, 1, 1))
+				ParticleManager:SetParticleControl(remnant_pfx, 1, Vector(remnant_radius, 1, 1))
 				ParticleManager:ReleaseParticleIndex(remnant_pfx)
 			end
 		end
