@@ -94,8 +94,14 @@ end
 
 imba_lina_dragon_slave = class({})
 
+function imba_lina_dragon_slave:GetIntrinsicModifierName()
+	return "modifier_imba_lina_dragon_slave_handler"
+end
+
 function imba_lina_dragon_slave:GetAbilityTextureName()
-	return "lina_dragon_slave"
+	if not IsClient() then return end
+	if not self:GetCaster().dragon_slave_icon then return "lina_dragon_slave" end
+	return "custom/imba_lina_dragon_slave_arcana_"..self:GetCaster().dragon_slave_icon
 end
 
 function imba_lina_dragon_slave:OnUpgrade()
@@ -131,10 +137,15 @@ function imba_lina_dragon_slave:OnSpellStart()
 		local velocity = direction * speed
 		local primary_velocity = primary_direction * speed
 
+		local particle_effect = "particles/units/heroes/hero_lina/lina_spell_dragon_slave.vpcf"
+		if caster.dragon_slave_effect then
+			particle_effect = caster.dragon_slave_effect
+		end
+
 		local projectile =
 			{
 				Ability				= self,
-				EffectName			= "particles/units/heroes/hero_lina/lina_spell_dragon_slave.vpcf",
+				EffectName			= particle_effect,
 				vSpawnOrigin		= caster_loc,
 				fDistance			= primary_distance,
 				fStartRadius		= width_initial,
@@ -192,7 +203,7 @@ function imba_lina_dragon_slave:OnSpellStart()
 				local projectile =
 					{
 						Ability				= self,
-						EffectName			= "particles/units/heroes/hero_lina/lina_spell_dragon_slave.vpcf",
+						EffectName			= particle_effect,
 						vSpawnOrigin		= target_loc,
 						fDistance			= secondary_distance,
 						fStartRadius		= secondary_width_initial,
@@ -223,7 +234,7 @@ function imba_lina_dragon_slave:OnSpellStart()
 				local projectile =
 					{
 						Ability				= self,
-						EffectName			= "particles/units/heroes/hero_lina/lina_spell_dragon_slave.vpcf",
+						EffectName			= particle_effect,
 						vSpawnOrigin		= new_loc,
 						fDistance			= primary_distance,
 						fStartRadius		= width_initial,
@@ -294,16 +305,33 @@ function imba_lina_dragon_slave:GetCooldown( nLevel )
 	return cooldown
 end
 
+LinkLuaModifier("modifier_imba_lina_dragon_slave_handler", "components/abilities/heroes/hero_lina", LUA_MODIFIER_MOTION_NONE)
+
+if modifier_imba_lina_dragon_slave_handler == nil then modifier_imba_lina_dragon_slave_handler = class({}) end
+
+function modifier_imba_lina_dragon_slave_handler:IsHidden() return true end
+function modifier_imba_lina_dragon_slave_handler:RemoveOnDeath() return false end
+
+function modifier_imba_lina_dragon_slave_handler:OnCreated()
+	if self:GetCaster():IsIllusion() then self:Destroy() return end
+
+	if IsServer() then
+		if self:GetCaster().dragon_slave_icon == nil then self:Destroy() return end
+		self:SetStackCount(self:GetCaster().dragon_slave_icon)
+	end
+
+	if IsClient() then
+		if self:GetStackCount() == 0 then self:Destroy() return end
+		self:GetCaster().dragon_slave_icon = self:GetStackCount()
+	end
+end
+
 -------------------------------------------
 --			LIGHT STRIKE ARRAY
 -------------------------------------------
 
 imba_lina_light_strike_array = class({})
 LinkLuaModifier("modifier_imba_lsa_talent_magma", "components/abilities/heroes/hero_lina", LUA_MODIFIER_MOTION_NONE)
-
-function imba_lina_light_strike_array:GetAbilityTextureName()
-	return "lina_light_strike_array"
-end
 
 function imba_lina_light_strike_array:OnSpellStart()
 	if IsServer() then
@@ -514,18 +542,22 @@ end
 -------------------------------------------
 
 imba_lina_fiery_soul = class({})
+
 LinkLuaModifier("modifier_imba_fiery_soul", "components/abilities/heroes/hero_lina", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_fiery_soul_counter", "components/abilities/heroes/hero_lina", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_fiery_soul_blaze_burn", "components/abilities/heroes/hero_lina", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_fiery_soul_talent", "components/abilities/heroes/hero_lina", LUA_MODIFIER_MOTION_NONE)
+
 function imba_lina_fiery_soul:IsStealable() return false end
+
 function imba_lina_fiery_soul:GetIntrinsicModifierName()
 	return "modifier_imba_fiery_soul"
 end
 
-
 function imba_lina_fiery_soul:GetAbilityTextureName()
-	return "lina_fiery_soul"
+	if not IsClient() then return end
+	if not self:GetCaster().fiery_soul_icon then return "lina_fiery_soul" end
+	return "custom/imba_lina_fiery_soul_arcana_"..self:GetCaster().fiery_soul_icon
 end
 
 function imba_lina_fiery_soul:GetCooldown()
@@ -599,7 +631,6 @@ function imba_lina_fiery_soul:OnSpellStart()
 				end
 			end
 		end
-
 	end
 end
 
@@ -609,6 +640,12 @@ function modifier_imba_fiery_soul:OnCreated()
 	-- Turns the skill into passive, tooltip purposes
 	self:GetAbility().GetBehavior = function() return DOTA_ABILITY_BEHAVIOR_PASSIVE end
 	self:GetAbility():GetBehavior()
+
+	if IsServer() then
+		if not self:GetParent():HasModifier("modifier_imba_lina_fiery_soul_handler") then
+			self:GetParent():AddNewModifier(self:GetParent(), nil, "modifier_imba_lina_fiery_soul_handler", {})
+		end
+	end
 end
 
 function modifier_imba_fiery_soul:DeclareFunctions()
@@ -847,6 +884,27 @@ function modifier_imba_fiery_soul_blaze_burn:OnDestroy()
 		else
 			self.parent:SetRenderColor(255,255,255)
 		end
+	end
+end
+
+LinkLuaModifier("modifier_imba_lina_fiery_soul_handler", "components/abilities/heroes/hero_lina", LUA_MODIFIER_MOTION_NONE)
+
+if modifier_imba_lina_fiery_soul_handler == nil then modifier_imba_lina_fiery_soul_handler = class({}) end
+
+function modifier_imba_lina_fiery_soul_handler:IsHidden() return true end
+function modifier_imba_lina_fiery_soul_handler:RemoveOnDeath() return false end
+
+function modifier_imba_lina_fiery_soul_handler:OnCreated()
+	if self:GetCaster():IsIllusion() then self:Destroy() return end
+
+	if IsServer() then
+		if self:GetCaster().fiery_soul_icon == nil then self:Destroy() return end
+		self:SetStackCount(self:GetCaster().fiery_soul_icon)
+	end
+
+	if IsClient() then
+		if self:GetStackCount() == 0 then self:Destroy() return end
+		self:GetCaster().fiery_soul_icon = self:GetStackCount()
 	end
 end
 

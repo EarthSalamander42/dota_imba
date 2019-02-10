@@ -584,7 +584,8 @@ function imba_centaur_double_edge:OnSpellStart()
 					attacker = caster,
 					damage = damage,
 					damage_type = DAMAGE_TYPE_MAGICAL,
-					ability = ability}
+					ability = ability
+				}
 
 				ApplyDamage(damageTable)
 

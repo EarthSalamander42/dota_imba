@@ -503,10 +503,18 @@ end
 --  			Static Field  				--
 ----------------------------------------------
 LinkLuaModifier("modifier_imba_zuus_static_field", "components/abilities/heroes/hero_zuus.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_zuus_static_field_handler", "components/abilities/heroes/hero_zuus", LUA_MODIFIER_MOTION_NONE)
+
 imba_zuus_static_field = class({})
 
 function imba_zuus_static_field:GetIntrinsicModifierName()
 	return "modifier_imba_zuus_static_field"
+end
+
+function imba_zuus_static_field:GetAbilityTextureName()
+	if not IsClient() then return end
+	if not self:GetCaster().static_field_icon then return "zuus_static_field" end
+	return "custom/imba_zuus_static_field_arcana"
 end
 
 ------------------------------------------------------
@@ -522,6 +530,14 @@ function modifier_imba_zuus_static_field:DeclareFunctions()
 	}
 
 	return decFuncs
+end
+
+function modifier_imba_zuus_static_field:OnCreated()
+	if IsClient() then return end
+
+	if not self:GetParent():HasModifier("modifier_imba_zuus_static_field_handler") then
+		self:GetParent():AddNewModifier(self:GetParent(), nil, "modifier_imba_zuus_static_field_handler", {})
+	end
 end
 
 function modifier_imba_zuus_static_field:OnAbilityExecuted(keys)
@@ -545,7 +561,12 @@ function modifier_imba_zuus_static_field:OnAbilityExecuted(keys)
 			)
 
 			local caster_position = caster:GetAbsOrigin()
-			local zuus_static_field = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_static_field.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+			local particle_effect = "particles/units/heroes/hero_zuus/zuus_static_field.vpcf"
+			if caster.static_field_effect then
+				particle_effect = caster.static_field_effect
+			end
+
+			local zuus_static_field = ParticleManager:CreateParticle(particle_effect, PATTACH_ABSORIGIN_FOLLOW, caster)
 			ParticleManager:SetParticleControl(zuus_static_field, 0, Vector(caster_position.x, caster_position.y, caster_position.z))		
 			ParticleManager:SetParticleControl(zuus_static_field, 1, Vector(caster_position.x, caster_position.y, caster_position.z) * 100)	
 			
@@ -572,7 +593,24 @@ function modifier_imba_zuus_static_field:OnAbilityExecuted(keys)
 	end
 end
 
+if modifier_imba_zuus_static_field_handler == nil then modifier_imba_zuus_static_field_handler = class({}) end
 
+function modifier_imba_zuus_static_field_handler:IsHidden() return true end
+function modifier_imba_zuus_static_field_handler:RemoveOnDeath() return false end
+
+function modifier_imba_zuus_static_field_handler:OnCreated()
+	if self:GetCaster():IsIllusion() then self:Destroy() return end
+
+	if IsServer() then
+		if self:GetCaster().static_field_icon == nil then self:Destroy() return end
+		self:SetStackCount(self:GetCaster().static_field_icon)
+	end
+
+	if IsClient() then
+		if self:GetStackCount() == 0 then self:Destroy() return end
+		self:GetCaster().static_field_icon = self:GetStackCount()
+	end
+end
 
 ------------------------------------------------------
 --				Static Charge Modifier  			--
@@ -1081,8 +1119,23 @@ modifier_imba_zuus_on_nimbus = class({})
 ----------------------------------------------
 imba_zuus_thundergods_wrath = class({})
 
+function imba_zuus_thundergods_wrath:GetIntrinsicModifierName()
+	return "modifier_imba_zuus_thundergods_wrath_handler"
+end
+
+function imba_zuus_thundergods_wrath:GetAbilityTextureName()
+	if not IsClient() then return end
+	if not self:GetCaster().thundergods_wrath_icon then return "zuus_thundergods_wrath" end
+	return "custom/imba_zuus_thundergods_wrath_arcana"
+end
+
 function imba_zuus_thundergods_wrath:OnAbilityPhaseStart()
-	self:GetCaster():EmitSound("Hero_Zuus.GodsWrath.PreCast")
+	local sound_name = "Hero_Zuus.GodsWrath.PreCast"
+	if self:GetCaster().thundergods_wrath_pre_sound then
+		sound_name = self:GetCaster().thundergods_wrath_pre_sound
+	end
+
+	self:GetCaster():EmitSound(sound_name)
 
 	return true
 end
@@ -1099,7 +1152,11 @@ function imba_zuus_thundergods_wrath:OnSpellStart()
 
 		local position 				= self:GetCaster():GetAbsOrigin()	
 		local attack_lock 			= caster:GetAttachmentOrigin(self:GetCaster():ScriptLookupAttachment("attach_attack1"))
-		local thundergod_spell_cast = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_thundergods_wrath_start_bolt_parent.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+		local particle_effect		= "particles/econ/items/zeus/arcana_chariot/zeus_arcana_thundergods_wrath_start_bolt_parent.vpcf"
+		if self:GetCaster().thundergods_wrath_start_effect then
+			particle_effect = self:GetCaster().thundergods_wrath_start_effect
+		end
+		local thundergod_spell_cast = ParticleManager:CreateParticle(particle_effect, PATTACH_ABSORIGIN_FOLLOW, caster)
 		ParticleManager:SetParticleControl(thundergod_spell_cast, 0, Vector(attack_lock.x, attack_lock.y, attack_lock.z))		
 		ParticleManager:SetParticleControl(thundergod_spell_cast, 1, Vector(attack_lock.x, attack_lock.y, attack_lock.z))		
 
@@ -1127,9 +1184,14 @@ function imba_zuus_thundergods_wrath:OnSpellStart()
 		for _,hero in pairs(HeroList:GetAllHeroes()) do 
 			if hero:IsAlive() and hero:GetTeam() ~= caster:GetTeam() and (not hero:IsIllusion()) then 
 				local target_point = hero:GetAbsOrigin()
-				local thundergod_strike_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_thundergods_wrath.vpcf", PATTACH_ABSORIGIN_FOLLOW, hero)
-				ParticleManager:SetParticleControl(thundergod_strike_particle, 0, Vector(target_point.x, target_point.y, target_point.z + hero:GetBoundingMaxs().z))		
-				ParticleManager:SetParticleControl(thundergod_strike_particle, 1, Vector(target_point.x, target_point.y, 2000))	
+				local particle_effect = "particles/units/heroes/hero_zuus/zuus_thundergods_wrath.vpcf"
+				if self:GetCaster().thundergods_wrath_effect then
+					particle_effect = self:GetCaster().thundergods_wrath_effect
+				end
+
+				local thundergod_strike_particle = ParticleManager:CreateParticle(particle_effect, PATTACH_ABSORIGIN_FOLLOW, hero)
+				ParticleManager:SetParticleControl(thundergod_strike_particle, 0, Vector(target_point.x, target_point.y, target_point.z + hero:GetBoundingMaxs().z))
+				ParticleManager:SetParticleControl(thundergod_strike_particle, 1, Vector(target_point.x, target_point.y, 2000))
 				ParticleManager:SetParticleControl(thundergod_strike_particle, 2, Vector(target_point.x, target_point.y, target_point.z + hero:GetBoundingMaxs().z))
 				
 				if caster:HasAbility("imba_zuus_static_field") and caster:FindAbilityByName("imba_zuus_static_field"):IsTrained() then
@@ -1147,13 +1209,26 @@ function imba_zuus_thundergods_wrath:OnSpellStart()
 				if pierce_spellimmunity and hero:IsMagicImmune() then
 					damage_table.damage_type = DAMAGE_TYPE_PURE
 				end
-				
+
 				if (not hero:IsMagicImmune() or pierce_spellimmunity) and (not hero:IsInvisible() or caster:CanEntityBeSeenByMyTeam(hero)) then
 					damage_table.damage	 = self:GetAbilityDamage()
 					damage_table.victim  = hero
 					ApplyDamage(damage_table)
+
+					if HasZuusArcana(self:GetCaster():GetPlayerID()) then
+						Timers:CreateTimer(FrameTime(), function()
+							if not hero:IsAlive() then
+								local thundergod_kill_particle = ParticleManager:CreateParticle("particles/econ/items/zeus/arcana_chariot/zeus_arcana_kill_remnant.vpcf", PATTACH_WORLDORIGIN, nil)
+								ParticleManager:SetParticleControl(thundergod_kill_particle, 0, hero:GetAbsOrigin())
+								ParticleManager:SetParticleControl(thundergod_kill_particle, 1, hero:GetAbsOrigin())
+								ParticleManager:SetParticleControl(thundergod_kill_particle, 2, hero:GetAbsOrigin())
+								ParticleManager:SetParticleControl(thundergod_kill_particle, 3, hero:GetAbsOrigin())
+								ParticleManager:SetParticleControl(thundergod_kill_particle, 6, hero:GetAbsOrigin())
+							end
+						end)
+					end
 				end
-				
+
 				hero:EmitSound("Hero_Zuus.GodsWrath.Target")
 				hero:AddNewModifier(caster, ability, "modifier_imba_zuus_lightning_fow", {duration = sight_duration, radius = true_sight_radius})
 				
@@ -1193,6 +1268,27 @@ function imba_zuus_thundergods_wrath:OnSpellStart()
 			ScreenShake(caster:GetAbsOrigin(), 50, 1, 1.0, 1000, 0, true)
 			caster:AddNewModifier(caster, self, "modifier_imba_zuus_thundergods_awakening", {duration = min(thundergods_focus_stacks * 3, 42)})
 		end
+	end
+end
+
+LinkLuaModifier("modifier_imba_zuus_thundergods_wrath_handler", "components/abilities/heroes/hero_zuus", LUA_MODIFIER_MOTION_NONE)
+
+if modifier_imba_zuus_thundergods_wrath_handler == nil then modifier_imba_zuus_thundergods_wrath_handler = class({}) end
+
+function modifier_imba_zuus_thundergods_wrath_handler:IsHidden() return true end
+function modifier_imba_zuus_thundergods_wrath_handler:RemoveOnDeath() return false end
+
+function modifier_imba_zuus_thundergods_wrath_handler:OnCreated()
+	if self:GetCaster():IsIllusion() then self:Destroy() return end
+
+	if IsServer() then
+		if self:GetCaster().thundergods_wrath_icon == nil then self:Destroy() return end
+		self:SetStackCount(self:GetCaster().thundergods_wrath_icon)
+	end
+
+	if IsClient() then
+		if self:GetStackCount() == 0 then self:Destroy() return end
+		self:GetCaster().thundergods_wrath_icon = self:GetStackCount()
 	end
 end
 

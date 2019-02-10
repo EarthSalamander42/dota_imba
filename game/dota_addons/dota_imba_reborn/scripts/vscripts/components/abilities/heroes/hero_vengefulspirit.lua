@@ -188,10 +188,6 @@ function imba_vengefulspirit_magic_missile:IsStealable() return true end
 function imba_vengefulspirit_magic_missile:IsNetherWardStealable() return true end
 
 function imba_vengefulspirit_magic_missile:GetAbilityTextureName()
-	return "vengefulspirit_magic_missile"
-end
-
-function imba_vengefulspirit_magic_missile:GetAbilityTextureName()
 	if not IsClient() then return end
 	if not self:GetCaster().magic_missile_icon then return "vengefulspirit_magic_missile" end
 	return "custom/imba_vengefulspirit_magic_missile_immortal"..self:GetCaster().magic_missile_icon

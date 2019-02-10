@@ -94,6 +94,7 @@ function modifier_imba_blink_dagger_handler:OnIntervalThink()
 	if caster:IsIllusion() then return end
 	if IsServer() then
 		if caster.blink_icon then
+			if caster.blink_icon == "zuus" then caster.blink_icon = 100 end
 			self:SetStackCount(caster.blink_icon)
 		end
 	end
@@ -102,6 +103,8 @@ function modifier_imba_blink_dagger_handler:OnIntervalThink()
 		local icon = self:GetStackCount()
 		if icon == 0 then
 			caster.blink_icon_client = nil
+		elseif icon == 100 then
+			caster.blink_icon_client = "zuus"
 		else
 			caster.blink_icon_client = icon
 		end

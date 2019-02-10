@@ -1,19 +1,3 @@
-# Ignore everything
-/*
-
-# Except the relevant folders
-!content/
-content/*
-!content/dota_addons/
-content/dota_addons/*
-!content/dota_addons/dota_imba_reborn/
-
-!game/
-game/*
-!game/dota_addons/
-game/dota_addons/*
-!game/dota_addons/dota_imba_reborn/
-
 # Cache crap that Valve autogenerates
 *.bin
 *.cfg
