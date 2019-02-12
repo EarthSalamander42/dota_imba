@@ -845,7 +845,7 @@ function modifier_imba_empower:OnAttackLanded( params )
 				-- Deal damage
 				for _,enemy in pairs(enemies) do
 					if enemy ~= params.target and not enemy:IsAttackImmune() then
-						ApplyDamage({attacker = params.attacker, victim = enemy, ability = ability, damage = (params.damage * cleave_damage_ranged), damage_type = DAMAGE_TYPE_PURE})
+						ApplyDamage({attacker = params.attacker, victim = enemy, ability = ability, damage = (params.damage * cleave_damage_ranged), damage_type = DAMAGE_TYPE_PHYSICAL})
 					end
 				end
 
@@ -886,7 +886,7 @@ function modifier_imba_empower:OnAttackLanded( params )
 					-- Deal damage
 					for _,enemy in pairs(enemies) do
 						if enemy ~= params.target and not enemy:IsAttackImmune() then
-							ApplyDamage({attacker = params.attacker, victim = enemy, ability = ability, damage = (params.damage * cleave_damage_pct), damage_type = DAMAGE_TYPE_PURE})
+							ApplyDamage({attacker = params.attacker, victim = enemy, ability = ability, damage = (params.damage * cleave_damage_pct), damage_type = DAMAGE_TYPE_PHYSICAL})
 						end
 					end
 
