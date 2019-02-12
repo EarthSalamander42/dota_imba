@@ -16,7 +16,7 @@
 "DOTA_Tooltip_modifier_imba_winter_wyvern_arctic_burn_damage_Description"		"#{DOTA_Tooltip_modifier_winter_wyvern_arctic_burn_slow_Description}"
 
 "DOTA_Tooltip_ability_imba_winter_wyvern_splinter_blast"						"#{DOTA_Tooltip_ability_winter_wyvern_splinter_blast}"
-"DOTA_Tooltip_ability_imba_winter_wyvern_splinter_blast_Description"			"#{DOTA_Tooltip_ability_winter_wyvern_splinter_blast_Description}\n<font color='#FF7800'>Chain Reaction:</font> Splinter Blast triggers a second volley uppon impact with %splinter_aoe_efficiency%%  reduced aoe, dealing %splinter_dmg_efficiency%%  reduced damage."
+"DOTA_Tooltip_ability_imba_winter_wyvern_splinter_blast_Description"			"#{DOTA_Tooltip_ability_winter_wyvern_splinter_blast_Description}\n<font color='#FF7800'>Chain Reaction:</font> Splinter Blast triggers a second volley uppon impact at %splinter_aoe_efficiency%%% of standard radius, and dealing %splinter_dmg_efficiency%%% of standard damage."
 "DOTA_Tooltip_ability_imba_winter_wyvern_splinter_blast_Lore"					"#{DOTA_Tooltip_ability_winter_wyvern_splinter_blast_Lore}"
 "DOTA_Tooltip_ability_imba_winter_wyvern_splinter_blast_Note0"					"#{DOTA_Tooltip_ability_winter_wyvern_splinter_blast_Note0}"
 "DOTA_Tooltip_ability_imba_winter_wyvern_splinter_blast_Note1"					"#{DOTA_Tooltip_ability_winter_wyvern_splinter_blast_Note1}"
