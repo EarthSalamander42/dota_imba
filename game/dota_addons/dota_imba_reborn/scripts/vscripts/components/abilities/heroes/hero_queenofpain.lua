@@ -313,6 +313,14 @@ function imba_queenofpain_blink:OnSpellStart()
 			target_pos = caster_pos + (distance:Normalized() * blink_range)
 		end
 
+		-- Use Scream of Pain if avaible
+		if caster:HasAbility("imba_queenofpain_scream_of_pain") then
+			local scream = caster:FindAbilityByName("imba_queenofpain_scream_of_pain")
+			if scream:GetLevel() >= 1 then
+				scream:OnSpellStart(scream_damage_pct)
+			end
+		end
+
 		-- Disjointing everything
 		ProjectileManager:ProjectileDodge(caster)
 
@@ -594,9 +602,13 @@ function imba_queenofpain_sonic_wave:OnSpellStart()
 		if caster:HasScepter() then
 			damage = self:GetSpecialValueFor("damage_scepter")
 		end
-
-		caster:EmitSound("Hero_QueenOfPain.SonicWave")
-
+		
+		-- Let's not make the percentage too high...
+		if USE_MEME_SOUNDS and RollPercentage(20) then
+			caster:EmitSound("Imba.QueenOfPainWutFace")
+		else
+			caster:EmitSound("Hero_QueenOfPain.SonicWave")
+		end
 		-- Talent #2 handling
 		local projectiles = 1
 		if caster:HasTalent("special_bonus_imba_queenofpain_2") then

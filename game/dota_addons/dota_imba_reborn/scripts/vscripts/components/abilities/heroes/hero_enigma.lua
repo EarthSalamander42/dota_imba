@@ -368,9 +368,9 @@ function modifier_imba_enigma_eidolon:GetModifierMoveSpeedBonus_Constant() retur
 function modifier_imba_enigma_eidolon:GetModifierAttackSpeedBonus_Constant()
 	if self.parent:HasModifier("modifier_imba_echo_rapier_haste") and IsServer() then
 		local echo_buf = self.parent:FindModifierByName("modifier_imba_echo_rapier_haste")
-		return (self.parent:GetAttackSpeed() - echo_buf.attack_speed_buff) * self.trans_pct * 0.01
+		return ((self.parent:GetAttacksPerSecond() * self.parent:GetBaseAttackTime() * 100) - echo_buf.attack_speed_buff) * self.trans_pct * 0.01
 	end
-	return self.parent:GetAttackSpeed() * self.trans_pct * 0.01
+	return (self.parent:GetAttacksPerSecond() * self.parent:GetBaseAttackTime() * 100) * self.trans_pct * 0.01
 end
 function modifier_imba_enigma_eidolon:GetModifierPreAttack_BonusDamage()
 	if IsServer() then

@@ -85,7 +85,7 @@ function modifier_imba_power_treads_2:DeclareFunctions()
 		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
 		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
-		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 	}
 	return funcs
 end
@@ -213,10 +213,10 @@ function modifier_imba_power_treads_2:GetModifierBonusStats_Intellect()
 	return stat_bonus
 end
 
-function modifier_imba_power_treads_2:GetModifierPreAttack_BonusDamage()
+function modifier_imba_power_treads_2:GetModifierAttackSpeedBonus_Constant()
 	local ability = self:GetAbility()
-	local bonus_damage = ability:GetSpecialValueFor("bonus_damage")
-	return bonus_damage
+	local bonus_attack_speed = ability:GetSpecialValueFor("bonus_attack_speed")
+	return bonus_attack_speed
 end
 
 

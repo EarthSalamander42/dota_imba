@@ -1633,11 +1633,13 @@ function modifier_imba_wisp_relocate:OnCreated(params)
 
 		-- Move units
 		FindClearSpaceForUnit(caster, ability.relocate_target_point, true)
+		caster:Interrupt()
 
 		if caster:HasModifier("modifier_imba_wisp_tether") and ally ~= nil and ally:IsHero() then
 			self.ally_teleport_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_wisp/wisp_relocate_teleport.vpcf", PATTACH_CUSTOMORIGIN, ally)
 			ParticleManager:SetParticleControlEnt(self.ally_teleport_pfx, 0, ally, PATTACH_POINT, "attach_hitloc", ally:GetAbsOrigin(), true)
 			FindClearSpaceForUnit(ally, ability.relocate_target_point + Vector( 0, 100, 0 ), true)
+			ally:Interrupt()
 		end
 
 		self.relocate_timerPfx = ParticleManager:CreateParticle("particles/units/heroes/hero_wisp/wisp_relocate_timer.vpcf", PATTACH_OVERHEAD_FOLLOW, caster)
@@ -1672,6 +1674,7 @@ function modifier_imba_wisp_relocate:OnRemoved()
 		ParticleManager:DestroyParticle(self.caster_origin_pfx, false)
 
 		self:GetCaster():SetAbsOrigin(ability.origin)
+		self:GetCaster():Interrupt()
 
 		local tether_ability 	= caster:FindAbilityByName("imba_wisp_tether")
 		if caster:HasModifier("modifier_imba_wisp_tether") and tether_ability.target ~= nil and tether_ability.target:IsHero() and caster:IsAlive() then
@@ -1682,6 +1685,7 @@ function modifier_imba_wisp_relocate:OnRemoved()
 				ability.ally_origin = ability.origin + Vector( 0, 100, 0 ) 
 			end
 			tether_ability.target:SetAbsOrigin(ability.ally_origin)
+			tether_ability.target:Interrupt()
 		end
 
 		caster:SwapAbilities("imba_wisp_relocate_break", "imba_wisp_relocate", false, true)

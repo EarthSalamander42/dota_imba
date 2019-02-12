@@ -1527,6 +1527,10 @@ function imba_pangolier_gyroshell:OnAbilityPhaseStart()
 	--Play ability cast sound
 	EmitSoundOnLocationWithCaster(caster:GetAbsOrigin(), sound_cast, caster)
 
+	if USE_MEME_SOUNDS and RollPercentage(30) then
+		caster:EmitSound("Imba.PangolierRollin")
+	end
+
 	--Play the effect and animation
 	self.cast_effect = ParticleManager:CreateParticle(cast_particle, PATTACH_WORLDORIGIN, nil)
 	ParticleManager:SetParticleControl(self.cast_effect, 0, caster:GetAbsOrigin()) -- 0: Spotlight position,
@@ -1541,6 +1545,8 @@ function imba_pangolier_gyroshell:OnAbilityPhaseInterrupted()
 	--Destroy cast particle
 	ParticleManager:DestroyParticle(self.cast_effect, true)
 	ParticleManager:ReleaseParticleIndex(self.cast_effect)
+	
+	self:GetCaster():StopSound("Imba.PangolierRollin")
 end
 
 function imba_pangolier_gyroshell:OnSpellStart()
@@ -1762,6 +1768,8 @@ function modifier_imba_gyroshell_impact_check:OnRemoved()
 		if self:GetCaster():HasTalent("special_bonus_imba_pangolier_4") then
 			self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_gyroshell_linger", {duration = self.talent_duration})
 		end
+		
+		self:GetCaster():StopSound("Imba.PangolierRollin")
 	end
 end
 

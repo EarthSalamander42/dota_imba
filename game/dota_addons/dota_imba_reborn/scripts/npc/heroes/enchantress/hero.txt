@@ -1,0 +1,38 @@
+"DOTAHeroes"
+{
+	"Version"		"1"
+
+	//=================================================================================================================
+	// HERO: Enchantress
+	//=================================================================================================================
+	"npc_dota_hero_enchantress"
+	{
+		"override_hero"				"npc_dota_hero_enchantress"
+		"IsImba"					"1"
+		
+		"Ability1"		"imba_enchantress_untouchable"
+		"Ability2"		"imba_enchantress_enchant"
+		"Ability3"		"imba_enchantress_natures_attendants"
+		"Ability4"		"imba_enchantress_natura_shift"
+		"Ability5"		"generic_hidden"
+		"Ability6"		"imba_enchantress_impetus"
+				
+		"Ability10"		"special_bonus_imba_enchantress_1"
+		"Ability11"		"special_bonus_imba_enchantress_2"
+		"Ability12"		"special_bonus_imba_enchantress_3"
+		"Ability13"		"special_bonus_imba_enchantress_4"
+		"Ability14"		"special_bonus_imba_enchantress_5"
+		"Ability15"		"special_bonus_imba_enchantress_6"
+		"Ability16"		"special_bonus_imba_enchantress_7"
+		"Ability17"		"special_bonus_imba_enchantress_8"
+		
+		//"Ability10"		"special_bonus_magic_resistance_15"
+		//"Ability11"		"special_bonus_movement_speed_20"
+		//"Ability12"		"special_bonus_attack_damage_50"
+		//"Ability13"		"special_bonus_unique_enchantress_2"
+		//"Ability14"		"special_bonus_unique_enchantress_3"
+		//"Ability15"		"special_bonus_unique_enchantress_1"
+		//"Ability16"		"special_bonus_unique_enchantress_4"
+		//"Ability17"		"special_bonus_unique_enchantress_5"
+	}
+}

@@ -88,7 +88,7 @@
 "npc_dota_hero_earthshaker"                                "Earthshaker"
 "npc_dota_hero_earth_spirit"                                "Earth Spirit (IMBA)"
 "npc_dota_hero_elder_titan"                                "Elder Titan (IMBA)"
-"npc_dota_hero_enchantress"                                "Enchantress"
+"npc_dota_hero_enchantress"                                "Enchantress (IMBA)"
 "npc_dota_hero_enigma"                                      "Enigma (IMBA)"
 "npc_dota_hero_ember_spirit"                                "Ember Spirit (IMBA)"
 "npc_dota_hero_faceless_void"                              "Faceless Void (IMBA)"
@@ -378,7 +378,7 @@
 
 "DOTA_tooltip_ability_ogre_magi_unrefined_fireblast_description"		"Blasts an enemy unit with a wave of fire, dealing damage and stunning the target. Its mana cost is <font color='#FF7800'>%scepter_mana%x</font> of the hero's current mana."
 
-"DOTA_Tooltip_ability_slark_dark_pact_Description"                      "After a short delay, Slark sacrifices some of his life blood, purging most negative debuffs and dealing damage to enemy units around him and to himself.  Slark only takes 50%% of the damage.\n<font color='#FF7800'>Burn the fish oil:</font> applies 10/10/10/10/12/14/16 instances of Dispel, over 1/1/1/1/1.2/1.4/1.6 seconds.\n\nDISPEL TYPE: Strong Dispel"
+"DOTA_Tooltip_ability_shadow_demon_shadow_poison_Description"				"Deals damage in a line, and afflicts enemy units with a poison effect. The poison deals 1/2/4/8/16/32/64/128/256/512 times the stack damage based on the number of stacks on the target, up to %max_multiply_stacks% stacks. Additional stacks cause %bonus_stack_damage% damage each.  This deferred damage is dealt when Shadow Poison's duration is expired, or the Release sub-ability is used."
 
 //    "DOTA_Tooltip_ability_templar_assassin_psionic_trap_Description"                    "Templar Assassin places mystical traps that invisibly monitor enemy movement. When sprung at her command, they exert a slowing influence of 30%% in the area. Traps charge up to slow an additional <font color='#FF7800'>10%%</font> every second, up to <font color='#FF7800'>90%%.</font>"
 
@@ -404,7 +404,7 @@
 //"DOTA_Tooltip_Ability_special_bonus_unique_clockwerk"				"+10s Battery Assault Duration"
 //"DOTA_Tooltip_Ability_special_bonus_unique_clockwerk_2"			"+75 Rocket Flare damage"
 //"DOTA_Tooltip_Ability_special_bonus_unique_underlord"				"+0.2s Pit of Malice Root"
-//"DOTA_Tooltip_Ability_special_bonus_unique_treant"				"+5 Living Armor Block Instances"
+"DOTA_Tooltip_Ability_special_bonus_unique_treant"					"+5 Living Armor Block Instances"
 //"DOTA_Tooltip_Ability_special_bonus_unique_razor"					"+20 Static Link Damage Steal"
 //"DOTA_Tooltip_Ability_special_bonus_unique_razor_2"				"+125 Unstable Current damage"
 //"DOTA_Tooltip_Ability_special_bonus_unique_visage_1"				"+18 Familiar Attack Per Charge"
@@ -522,6 +522,8 @@
 "DOTA_Tooltip_ability_special_bonus_unique_ember_spirit_5"        "-20 Remnant Charge Restore Time"
 "DOTA_Tooltip_Ability_special_bonus_unique_gyrocopter_2"        "+10 Flak Cannon attacks"
 "DOTA_Tooltip_Ability_special_bonus_unique_gyrocopter_4"        "-10 cooldown reduction for Call Down"
+
+"DOTA_Tooltip_modifier_special_bonus_corruption_debuff_description"		"Armor currently corrupted by a talent."
 
 //=================================================================================================================
 //=================================================================================================================

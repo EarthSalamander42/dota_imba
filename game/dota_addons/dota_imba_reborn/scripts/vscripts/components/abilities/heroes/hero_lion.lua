@@ -845,7 +845,7 @@ function modifier_imba_manadrain_aura_debuff:IsPurgable() return false end
 function modifier_imba_manadrain_aura_debuff:IsDebuff() return true end
 
 function modifier_imba_manadrain_aura_debuff:OnIntervalThink()
-	if IsServer() then
+	if IsServer() and not self.caster:IsNull() then
 		-- Calculate mana drain per second
 		local mana_drain_per_sec = self.parent:GetMaxMana() * self.aura_mana_drain_pct * 0.01
 
