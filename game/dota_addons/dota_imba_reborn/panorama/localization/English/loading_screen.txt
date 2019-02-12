@@ -1,5 +1,5 @@
-"game_version_name"						"Winter is coming!"
-"loading_screen_description"			"Dota IMBA 7.09 is out! This update contains most of 7.20 reworked abilities, remaining ones will be added in minor patches."
+"game_version_name"						"Nature's Flourishing!"
+"loading_screen_description"			"Dota IMBA 7.10 brings Enchantress to the front line, including scheduled updates! Every tuesday, experience a new gameplay patch. Dota IMBA is now part of Frostrose Studio, directed by EarthSalamander."
 "loading_screen_button"					"Dota 2 IMBA website is currently unavailable."
 
 "loading_screen_promote"				"Translate Dota IMBA in your native language!"
@@ -7,7 +7,13 @@
 "loading_screen_promote_button"			"Click here to redirect to Transifex!"
 
 "loading_screen_patreon"				"Patreon"
-"loading_screen_patreon_description"	"Earthsalamander #42 is developing IMBA at full time! We also have to pay servers for the Battlepass, Statistics and XP System. Feel free to donate, even small amounts matter!"
+"loading_screen_patreon_description"	"Support Frostrose Studio on Patreon! Servers for the Websites, Battlepass, Statistics and XP Systems are expensive. Donations support the development of:"
+"loading_screen_patreon_modlist1"		"- Battlegrounds Legends"
+"loading_screen_patreon_modlist2"		"- Dota IMBA"
+"loading_screen_patreon_modlist3"		"- X Hero Siege"
+"loading_screen_patreon_modlist4"		"- Pudge Wars"
+"loading_screen_patreon_modlist5"		"- Hero Line Wars"
+"loading_screen_patreon_modlist6"		"- Diretide (unofficial)"
 
 "vote_gamemode"							"Gamemode Vote"
 "vote_gamemode_1"						"Standard"
