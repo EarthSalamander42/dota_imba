@@ -27,6 +27,9 @@
 					<Button id="ImbaLoadingSocialOfficialWebsite" class="SocialButtons" onactivate="DOTADisplayURL('https://preview.dota2imba.org/statistics/rankings');">
 						<Label text="Official Website" />
 					</Button>
+					<Button id="ImbaLoadingSocialSteamWorkshop" class="SocialButtons" onactivate="DOTADisplayURL('https://steamcommunity.com/id/DendiR/myworkshopfiles/');">
+						<Label text="Frostrose Workshop" />
+					</Button>
 					<Button id="ImbaLoadingSocialSteamChat" class="SocialButtons" onactivate="DOTADisplayURL('https://s.team/chat/OgFfP2Rx');">
 						<Label text="Official Steam Chat" />
 					</Button>
@@ -36,11 +39,11 @@
 					<Button id="ImbaLoadingSocialTwitter" class="SocialButtons" onactivate="DOTADisplayURL('https://twitter.com/dota2imba');">
 						<Label text="Twitter" />
 					</Button>
-					<Button id="ImbaLoadingSocialDiscordEn" class="SocialButtons" onactivate="DOTADisplayURL('http://tinyurl.com/imba-discord');">
-						<Label text="English Discord" />
+					<Button id="ImbaLoadingSocialReddit" class="SocialButtons" onactivate="DOTADisplayURL('https://www.reddit.com/r/dotaimba/');">
+						<Label text="Reddit" />
 					</Button>
-					<Button id="ImbaLoadingSocialDiscordRu" class="SocialButtons" onactivate="DOTADisplayURL('https://discord.gg/HcybJKt');">
-						<Label text="Русский Дискорд" />
+					<Button id="ImbaLoadingSocialDiscordEn" class="SocialButtons" onactivate="DOTADisplayURL('http://tinyurl.com/imba-discord');">
+						<Label text="Discord" />
 					</Button>
 				</Panel>
 			</Panel>
@@ -75,10 +78,16 @@
 				</Panel>
 			</Panel>
 
-			<Panel id="imba-loading-title-patreon">
+			<Panel id="imba-loading-title-patreon" class="loading-title">
 				<Panel class="down">
 					<Label id="imba-loading-title-text-patreon" text="#loading_screen_patreon"/>
-					<Label id="imba-loading-content-text-patreon" html="true" text="#loading_screen_patreon_description" />
+					<Label class="imba-loading-content-text-patreon" html="true" text="#loading_screen_patreon_description" />
+					<Label class="imba-loading-content-text-patreon" html="true" text="#loading_screen_patreon_modlist1" />
+					<Label class="imba-loading-content-text-patreon" html="true" text="#loading_screen_patreon_modlist2" />
+					<Label class="imba-loading-content-text-patreon" html="true" text="#loading_screen_patreon_modlist3" />
+					<Label class="imba-loading-content-text-patreon" html="true" text="#loading_screen_patreon_modlist4" />
+					<Label class="imba-loading-content-text-patreon" html="true" text="#loading_screen_patreon_modlist5" />
+					<Label class="imba-loading-content-text-patreon" html="true" text="#loading_screen_patreon_modlist6" />
 					<Button id="imba-loading-link-patreon" onactivate="DOTADisplayURL('https://www.patreon.com/bePatron?u=2533325');">
 					</Button>
 				</Panel>

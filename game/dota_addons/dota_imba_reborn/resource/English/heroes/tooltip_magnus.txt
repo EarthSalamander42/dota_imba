@@ -10,7 +10,7 @@
 "DOTA_Tooltip_modifier_imba_magnetize_debuff_Description"				"Releasing a Mini-shockwave every 3 seconds."
 
 "DOTA_Tooltip_ability_imba_magnataur_empower"						"#{DOTA_Tooltip_ability_magnataur_empower}"
-"DOTA_Tooltip_ability_imba_magnataur_empower_Description"			"#{DOTA_Tooltip_ability_magnataur_empower_Description}\n<font color='#FF7800'>Overpowered:</font> Empower is always active on Magnus, is not dispelled by Spell Immunity, and works on ranged allies (at reduced potency).\n<font color='#FF7800'>Empolarizer:</font> Empowered units will always grants Polarized debuff to nearby enemies within 900 radius from the unit. Polarized debuff granted from Empolarizer lasts 5 seconds. If the target is within the range of Empolarizer, the duration is refreshed every second.\n<font color='#FF7800'>Supercharge:</font> When using Empower on an already empowered ally, they will gain %supercharge_ms%%% movement and %supercharge_as% attack speed.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
+"DOTA_Tooltip_ability_imba_magnataur_empower_Description"			"#{DOTA_Tooltip_ability_magnataur_empower_Description}\n<font color='#FF7800'>Overpowered:</font> Empower is always active on Magnus, is not dispelled by Spell Immunity, and works on ranged allies (at reduced potency).\n<font color='#FF7800'>Empolarizer:</font> Empowered units will always grants Polarized debuff to nearby enemies within %search_radius% radius from the unit. Polarized debuff granted from Empolarizer lasts 5 seconds. If the target is within the range of Empolarizer, the duration is refreshed every second.\n<font color='#FF7800'>Supercharge:</font> When using Empower on an already empowered ally, they will gain %supercharge_ms%%% movement and %supercharge_as% attack speed.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
 "DOTA_Tooltip_ability_imba_magnataur_empower_Note0"					"Empower's ranged splash damage is centered on the enemy target."
 "DOTA_Tooltip_ability_imba_magnataur_empower_Lore"					"#{DOTA_Tooltip_ability_magnataur_empower_Lore}"
 "DOTA_Tooltip_ability_imba_magnataur_empower_aghanim_description"	"Continuously applies a reduced-duration Empower to allies. Lingers for 12 seconds after leaving the radius."
@@ -60,7 +60,7 @@
 "DOTA_Tooltip_modifier_imba_skewer_entangle_Description"			"Entangled inside another unit and unable to move."
 
 "DOTA_Tooltip_ability_imba_magnataur_reverse_polarity"						"#{DOTA_Tooltip_ability_magnataur_reverse_polarity}"
-"DOTA_Tooltip_ability_imba_magnataur_reverse_polarity_Description"			"#{DOTA_Tooltip_ability_magnataur_reverse_polarity_Description}\n<font color='#FF7800'>Polarize:</font> Polarizes enemy heroes hit for %polarize_duration% seconds. Stacks with, but does not refresh, itself.\n<font color='#FF7800'>Shake the world:</font> Pulls all enemy heroes on the map.\n<font color='#FF7800'>Non-reverse Polarity:</font> Polarized enemies are pulled from much longer. This extra pull increases even further with more Polarize stacks."
+"DOTA_Tooltip_ability_imba_magnataur_reverse_polarity_Description"			"#{DOTA_Tooltip_ability_magnataur_reverse_polarity_Description}\n<font color='#FF7800'>Polarize:</font> Polarizes enemy heroes hit for %polarize_duration% seconds. Stacks with, but does not refresh, itself.\n<font color='#FF7800'>Shake the World:</font> Pulls all enemy heroes on the map.\n<font color='#FF7800'>Non-Reverse Polarity:</font> Polarized enemies are pulled for greater distances. This extra pull increases with more Polarize stacks."
 "DOTA_Tooltip_ability_imba_magnataur_reverse_polarity_Note0"				"Movement, slow and stun all pierce Magic Immunity."
 "DOTA_Tooltip_ability_imba_magnataur_reverse_polarity_Note1"				"Breaks trees around the targets' trajectory."
 "DOTA_Tooltip_ability_imba_magnataur_reverse_polarity_Lore"					"#{DOTA_Tooltip_ability_magnataur_reverse_polarity_Lore}"
@@ -92,3 +92,4 @@
 "DOTA_Tooltip_ability_special_bonus_imba_magnataur_7_Description"		"Polarized enemies are constantly pulled towards their closest ally."
 "DOTA_Tooltip_ability_special_bonus_imba_magnataur_8"					"Ubercharge"
 "DOTA_Tooltip_ability_special_bonus_imba_magnataur_8_Description"		"Applying Empower on an already Supercharged target makes it Ubercharged."
+"DOTA_Tooltip_ability_special_bonus_imba_magnataur_9"					"+1s Reverse Polarity Stun Duration"

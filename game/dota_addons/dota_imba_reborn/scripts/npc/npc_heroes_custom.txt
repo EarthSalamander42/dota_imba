@@ -1,3 +1,4 @@
+#base heroes/enchantress/hero.txt
 #base heroes/rubick/hero.txt
 #base heroes/shadow_shaman/hero.txt
 #base heroes/silencer/hero.txt
@@ -20,12 +21,7 @@
 		//Picking Screen
 		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
 
-		"Ability1"					"arc_warden_flux"
-		"Ability2"					"arc_warden_magnetic_field"
-		"Ability3"					"arc_warden_spark_wraith"
-		"Ability4"					"generic_hidden"
-		"Ability5"					"generic_hidden"
-		"Ability6"					"arc_warden_tempest_double"
+		"Ability12"					"special_bonus_magic_resistance_20"
 	}
 
 	//=================================================================================================================
@@ -335,6 +331,8 @@
 		"override_hero"				"npc_dota_hero_chen"
 		
 		"Ability4"					"chen_test_of_faith"
+		
+		"Ability17"					"special_bonus_corruption_5"
 	}
 
 	//=================================================================================================================
@@ -990,8 +988,11 @@
 		"Ability13"					"special_bonus_imba_magnataur_4"
 		"Ability14"					"special_bonus_imba_magnataur_5"
 		"Ability15"					"special_bonus_imba_magnataur_6"
-		"Ability16"					"special_bonus_imba_magnataur_7"
-		"Ability17"					"special_bonus_imba_magnataur_8"
+		"Ability16"					"special_bonus_imba_magnataur_8"
+		"Ability17"					"special_bonus_imba_magnataur_9"
+		
+		// Removed Talents
+		//"Ability16"					"special_bonus_imba_magnataur_7"
 	}
 
 	//=================================================================================================================
@@ -1445,7 +1446,7 @@
 		"Ability11"					"special_bonus_imba_queenofpain_2"
 		"Ability12"					"special_bonus_imba_queenofpain_3"
 		"Ability13"					"special_bonus_imba_queenofpain_4"
-		"Ability14"					"special_bonus_spell_amplify_25"
+		"Ability14"					"special_bonus_spell_lifesteal_30"
 		"Ability15"					"special_bonus_imba_queenofpain_6"
 		"Ability16"					"special_bonus_spell_block_15"
 		"Ability17"					"special_bonus_imba_queenofpain_8"

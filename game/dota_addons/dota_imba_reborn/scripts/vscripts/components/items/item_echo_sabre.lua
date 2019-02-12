@@ -107,7 +107,7 @@ end
 function modifier_imba_echo_sabre_passive:OnAttack(keys)
 	local item = self:GetAbility()
 	local parent = self:GetParent()
-	if parent:IsRangedAttacker() then return nil end
+	if parent:IsRangedAttacker() or parent:IsIllusion() then return nil end
 	if item then
 		if (keys.attacker == parent) then
 			if item:IsCooldownReady() then
@@ -219,7 +219,7 @@ end
 function modifier_imba_reverb_rapier_passive:OnAttack(keys)
 	local item = self:GetAbility()
 	local parent = self:GetParent()
-	if parent:IsRangedAttacker() then return nil end
+	if parent:IsRangedAttacker() or parent:IsIllusion() then return nil end
 	if item then
 		if (keys.attacker == parent) then
 			if item:IsCooldownReady() then

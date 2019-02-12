@@ -363,7 +363,7 @@ function imba_zuus_lightning_bolt:CastLightningBolt(caster, ability, target, tar
 		elseif target ~= nil and target:GetTeam() ~= caster:GetTeam() then
 			
 			if caster:HasAbility("imba_zuus_static_field") and caster:FindAbilityByName("imba_zuus_static_field"):IsTrained() then
-				local static_charge_modifier = target:AddNewModifier(caster, self, "modifier_imba_zuus_static_charge", {duration = 5.0})
+				local static_charge_modifier = target:AddNewModifier(caster, caster:FindAbilityByName("imba_zuus_static_field"), "modifier_imba_zuus_static_charge", {duration = 5.0})
 				
 				if static_charge_modifier ~= nil then 
 					static_charge_modifier:SetStackCount(static_charge_modifier:GetStackCount() + ability:GetSpecialValueFor("static_charge_stacks"))

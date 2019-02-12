@@ -1536,11 +1536,17 @@ function imba_nevermore_requiem:GetAssociatedSecondaryAbilities()
 end
 
 function imba_nevermore_requiem:OnAbilityPhaseStart()
+	if USE_MEME_SOUNDS and RollPercentage(MEME_SOUNDS_CHANCE) and self:GetCaster():HasModifier("modifier_imba_necromastery_souls") and self:GetCaster():FindModifierByName("modifier_imba_necromastery_souls"):GetStackCount() >= self:GetCaster():FindModifierByName("modifier_imba_necromastery_souls").base_max_souls then
+        self.sound = "Imba.NevermoreJohnCena"
+    else
+        self.sound = "Hero_Nevermore.RequiemOfSoulsCast"
+    end
+
 	-- Play sound
 	if self:GetCaster():IsImbaInvisible() then
-		EmitSoundOnLocationForAllies(self:GetCaster():GetAbsOrigin(), "Hero_Nevermore.RequiemOfSoulsCast", self:GetCaster())
+		EmitSoundOnLocationForAllies(self:GetCaster():GetAbsOrigin(), self.sound, self:GetCaster())
 	else
-		self:GetCaster():EmitSound("Hero_Nevermore.RequiemOfSoulsCast")
+		self:GetCaster():EmitSound(self.sound)
 	end
 
 	-- Start cast animation
@@ -1558,6 +1564,8 @@ function imba_nevermore_requiem:OnAbilityPhaseInterrupted()
 
 	-- Remove phased movement from caster
 	self:GetCaster():RemoveModifierByName("modifier_imba_reqiuem_phase_buff")
+	
+	self:GetCaster():StopSound(self.sound)
 end
 
 function imba_nevermore_requiem:OnSpellStart(death_cast)

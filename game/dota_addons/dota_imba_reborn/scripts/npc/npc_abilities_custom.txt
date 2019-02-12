@@ -8,6 +8,7 @@
 #base heroes/bane/abilities.txt
 #base heroes/bloodseeker/abilities.txt
 #base heroes/earth_spirit/abilities.txt
+#base heroes/enchantress/abilities.txt
 #base custom_heroes/malfurion/abilities.txt
 #base heroes/night_stalker/abilities.txt
 #base heroes/rubick/abilities.txt
@@ -5519,12 +5520,12 @@
 			"08"
 			{
 				"var_type" 					"FIELD_INTEGER"
-				"singularity_pull_radius_increment_per_stack" "50"
+				"singularity_pull_radius_increment_per_stack" "40"
 			}
 			"09"
 			{
 				"var_type" 										"FIELD_INTEGER"
-				"singularity_stun_radius_increment_per_stack" 	"25"
+				"singularity_stun_radius_increment_per_stack" 	"20"
 			}
 			"10"
 			{
@@ -9361,7 +9362,7 @@
 			"09"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"enemies_frog_duration"			"1.4 1.6 1.8"
+				"enemies_frog_duration"			"0.4 0.6 0.8"
 			}			
 
 			"10"
@@ -9734,7 +9735,7 @@
 			"06"
 			{
 				"var_type" 						"FIELD_INTEGER"
-				"wolf_health_tooltip"			"200 240 280 320 360 400"
+				"wolf_health_tooltip"			"300 350 400 450 500 550"
 			}
 			"07"
 			{
@@ -9744,7 +9745,7 @@
 			"08"
 			{
 				"var_type" 						"FIELD_INTEGER"
-				"wolf_armor_tooltip"			"1 2 3 4 5 6"
+				"wolf_armor_tooltip"			"0"
 			}
 			"04"
 			{
@@ -10502,7 +10503,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"secondary_damage"			"25 25 50 50"
+				"secondary_damage"			"30 40 50 60"
 			}
 			"03"
 			{
@@ -10618,12 +10619,12 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"cleave_damage_pct"		"20 30 40 50"
+				"cleave_damage_pct"		"14 34 54 74"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"cleave_damage_ranged"	"10 15 20 25"
+				"cleave_damage_ranged"	"7 17 27 37"
 			}
 			"05"
 			{
@@ -10693,7 +10694,7 @@
 			"18"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"search_radius"			"900"
+				"search_radius"			"500"
 			}
 			"19"
 			{
@@ -10849,11 +10850,11 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"120"
+		"AbilityCooldown"				"130"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"200 300 350"
+		"AbilityManaCost"				"200 250 300"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -10872,7 +10873,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"50 200 300"
+				"damage"				"75 150 225"
 			}
 			"02"
 			{
@@ -10882,12 +10883,14 @@
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"hero_stun_duration"	"2.25 3.75 4.25"
+				"hero_stun_duration"	"3.0 3.5 4.0"
+				"LinkedSpecialBonus"	"special_bonus_imba_magnataur_9"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"creep_stun_duration"	"3.0 4.2 5.4"
+				"LinkedSpecialBonus"	"special_bonus_imba_magnataur_9"
 			}
 			"05"
 			{
@@ -11147,6 +11150,34 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"refresh_interval"			"1"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Magnus Talent 9: +1s Reverse Polarity Stun Duration	
+	//=================================================================================================================
+	"special_bonus_imba_magnataur_9"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_magnataur_reverse_polarity"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"1"
 			}
 		}
 	}
@@ -15019,6 +15050,7 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"damage_interval"		"3 2.5 2 1.5"
+				"CalculateSpellDamageTooltip"		"0"
 			}
 			"04"
 			{
@@ -15097,7 +15129,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"scream_damage_pct"		"20 40 60 80"
+				"scream_damage_pct"		"50"
 			}
 			"03"
 			{
@@ -15558,6 +15590,7 @@
 			{
 				"var_type"							"FIELD_INTEGER"
 				"big_remnant_damage_radius"			"260"
+				"CalculateSpellDamageTooltip"		"0"
 			}
 			"03"
 			{
@@ -15590,7 +15623,7 @@
 			"08"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"vortex_time_pct" 					"25"
+				"vortex_time_pct" 					"50"
 			}
 		}
 	}
@@ -15794,7 +15827,7 @@
 			"03"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"travel_mana_cost_base"					"30"		
+				"travel_mana_cost_base"					"24"		
 			}
 			"04"
 			{
@@ -15809,7 +15842,8 @@
 			"06"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"damage_radius"							"200"		
+				"damage_radius"							"200"
+				"CalculateSpellDamageTooltip"			"0"
 			}
 			"07"
 			{
@@ -29800,7 +29834,7 @@
 			"02"
 			{
 				"var_type"                  "FIELD_FLOAT"
-				"air_time"	                "0.25"
+				"air_time"	                "0.1"
 			}
 			"03"
 			{
@@ -37345,7 +37379,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"					"ability_lua"
 		"ID"						"9500"
-		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
 		"AbilityUnitDamageType"		"DAMAGE_TYPE_NONE"
 		"AbilityTextureName"		"custom/ronin_dash"
 		"ScriptFile"				"components/abilities/heroes/hero_sohei.lua"
@@ -37504,7 +37538,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"25 20 15 10"
+		"AbilityCooldown"				"22"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -37525,7 +37559,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"charges_required"		"2"
+				"charges_required"		"4"
 			}
 			"02"
 			{
@@ -37617,7 +37651,7 @@
 			"07"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"slow_duration"				"1.0 2.0 3.0 4.0"
+				"slow_duration"				"1.0"
 			}
 		}
 	}
@@ -37786,7 +37820,7 @@
       "01"
       {
         "var_type"        "FIELD_FLOAT"
-        "value"         "4.0"     // Cooldown reduction in seconds
+        "value"         "3.0"     // Cooldown reduction in seconds
       }
     }
   }

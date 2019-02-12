@@ -1421,7 +1421,7 @@
 // Queen of Pain's Blink
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_queenofpain_blink"                          "Blink"
-"DOTA_Tooltip_ability_imba_queenofpain_blink_Description"              "Short distance teleportation that allows Queen of Pain to move in and out of combat.\n<font color='#FF7800'>Swift Encore:</font> Releases Scream of Pain on the end of the blink dealing portion of its damage."
+"DOTA_Tooltip_ability_imba_queenofpain_blink_Description"              "Short distance teleportation that allows Queen of Pain to move in and out of combat.\n<font color='#FF7800'>Swift Encore:</font> Releases Scream of Pain on the beginning and end of the blink dealing portion of its damage."
 "DOTA_Tooltip_ability_imba_queenofpain_blink_Lore"                      "The Secret Queen lives up to her title, making her Pain impossible to escape."
 "DOTA_Tooltip_ability_imba_queenofpain_blink_blink_range"              "MAXIMUM DISTANCE:"
 "DOTA_Tooltip_ability_imba_queenofpain_blink_scream_damage_pct"                     "%SCREAM DAMAGE EFFICIENCY:"

@@ -1390,8 +1390,10 @@ end
 function modifier_imba_rubick_spellsteal:OnAbilityStart( params )
 	if IsServer() then
 		if params.unit==self:GetParent() then
-			-- No cast point is what Rubick is known for...
-			params.ability:SetOverrideCastPoint(0)
+			if params.ability:GetBehavior() - 67108864 <= 0 and (params.ability:GetBehavior() - 67108864) % 67108864 ~= 0 then
+				-- No cast point is what Rubick is known for...
+				params.ability:SetOverrideCastPoint(0)
+			end
 			
 			if params.ability==self:GetAbility().currentSpell then
 				-- Destroy previous animation

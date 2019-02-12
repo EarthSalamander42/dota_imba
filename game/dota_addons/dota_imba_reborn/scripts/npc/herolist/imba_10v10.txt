@@ -95,7 +95,7 @@
 	"npc_dota_hero_sly_king"			"1"
 	"npc_dota_hero_sniper" 				"1"
 	"npc_dota_hero_sohei"				"1"
-	"npc_dota_hero_spectre" 			"0" // ultimate lags
+	"npc_dota_hero_spectre" 			"1" // ultimate lags
 	"npc_dota_hero_spirit_breaker" 		"1"
 	"npc_dota_hero_storm_spirit" 		"1"
 	"npc_dota_hero_sven" 				"1"

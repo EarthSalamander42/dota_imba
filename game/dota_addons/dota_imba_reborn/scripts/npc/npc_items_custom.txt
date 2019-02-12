@@ -3326,7 +3326,7 @@
 			"09"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"mana_regen_per_charge"		"1.0"
+				"mana_regen_per_charge"		"0.5"
 			}
 			"09"
 			{
@@ -3339,11 +3339,16 @@
 				"bonus_mana_regen_pct"		"200"
 			}
 			"10"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_mana_regen_mult"		"2"					//Take the above value and divide by 100
+			}
+			"11"
 			{	
 				"var_type"					"FIELD_INTEGER"
 				"initial_charges"			"16"
 			}
-			"11"
+			"12"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"health_regen_per_charge"	"0.3"
@@ -3399,6 +3404,7 @@
 					"MODIFIER_PROPERTY_MANA_BONUS" 						"%bonus_mana"
 					"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT" 			"%bonus_mana_regen"
 					//"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"			"%bonus_mana_regen_pct" // Doesn't work
+					"MODIFIER_PROPERTY_MANA_REGEN_TOTAL_PERCENTAGE"		"%bonus_mana_regen_mult"
 				}
 				
 				"OnCreated"
@@ -4920,7 +4926,7 @@
 			"04"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"bonus_status_resistance_active"	"100"
+				"bonus_status_resistance_active"	"42"
 			}
 			"05"
 			{
@@ -4983,7 +4989,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_evasion_active"	"100"
+				"bonus_evasion_active"	"42"
 			}
 			"06"
 			{
@@ -5117,7 +5123,7 @@
 			"07"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"bonus_status_resistance_active"	"100"
+				"bonus_status_resistance_active"	"42"
 			}
 			"08"
 			{
@@ -5127,7 +5133,7 @@
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_evasion_active"	"100"
+				"bonus_evasion_active"	"42"
 			}
 			"10"
 			{
@@ -5282,7 +5288,7 @@
 		"ItemResult"					"item_imba_skadi"
 		"ItemRequirements"
 		{
-			"01"						"item_ultimate_orb;item_ultimate_orb;item_ultimate_orb;item_orb_of_venom"
+			"01"						"item_ultimate_orb;item_ultimate_orb;item_point_booster"
 		}
 	}
 
@@ -5306,7 +5312,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"6600"
+		"ItemCost"						"5500"
 		"ItemShopTags"					"agi;str;int;hard_to_tag;unique"
 		"ItemQuality"					"artifact"
 		"ItemAliases"					"eos;eye of skadi"
@@ -5326,7 +5332,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_all_stats"			"36"
+				"bonus_all_stats"			"28"
 			}
 			"02"
 			{
@@ -6397,12 +6403,12 @@
 			"10"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_resist"			"-10"
+				"aura_resist"			"-5"
 			}
 			"11"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_spell_power"		"10"
+				"aura_spell_power"		"5"
 			}
 		}
 	}
@@ -6502,7 +6508,7 @@
 			"07"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"bonus_status_resistance_active"	"100"
+				"bonus_status_resistance_active"	"42"
 			}
 			"08"
 			{
@@ -7320,7 +7326,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_damage"				"32"
+				"bonus_attack_speed"		"40"
 			}
 			"04"
 			{
@@ -10674,7 +10680,7 @@
 			"27"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_evasion_active"		"100"
+				"bonus_evasion_active"		"42"
 			}
 			"28"
 			{
@@ -12106,13 +12112,13 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"50"
+				"bonus_damage"			"30"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"phase_ms"				"30"
+				"phase_ms"				"28"
 			}
 			"04"
 			{
@@ -12142,7 +12148,7 @@
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"armor"					"5"
+				"armor"					"6"
 			}
 		}
 	}
@@ -12229,7 +12235,7 @@
 			"05"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"bonus_status_resistance_active"	"100"
+				"bonus_status_resistance_active"	"42"
 			}
 			"06"
 			{
@@ -12365,7 +12371,7 @@
 			"10"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_evasion_active"	"100"
+				"bonus_evasion_active"	"42"
 			}
 			"11"
 			{
