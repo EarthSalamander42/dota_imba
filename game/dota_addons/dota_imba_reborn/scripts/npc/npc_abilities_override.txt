@@ -3163,7 +3163,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_attack_speed"	"30 60 90 120"
+				"bonus_attack_speed"	"60 120 180 240"
 			}
 		}
 	}

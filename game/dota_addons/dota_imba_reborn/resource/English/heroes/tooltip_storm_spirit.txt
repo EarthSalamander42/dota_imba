@@ -73,3 +73,5 @@
 "DOTA_Tooltip_ability_special_bonus_imba_storm_spirit_7"					"+2 Remnants for Static Remnant"
 "DOTA_Tooltip_ability_special_bonus_imba_storm_spirit_7_Description"		"Spawns 3 remnants in a triangle around Storm Spirit. (north, south-west, south-east)"
 "DOTA_Tooltip_ability_special_bonus_imba_storm_spirit_8"					"+25% movespeed for Electric Vortex"
+
+"DOTA_Tooltip_ability_special_bonus_unique_storm_spirit_4_Description"		"Every 500 distance travelled in Ball Lightning creates a Static Remnant. These remnants do not apply Static Vortex."

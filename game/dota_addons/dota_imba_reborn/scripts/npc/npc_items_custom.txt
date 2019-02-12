@@ -3403,8 +3403,6 @@
 					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"			"%bonus_health_regen"
 					"MODIFIER_PROPERTY_MANA_BONUS" 						"%bonus_mana"
 					"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT" 			"%bonus_mana_regen"
-					//"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"			"%bonus_mana_regen_pct" // Doesn't work
-					"MODIFIER_PROPERTY_MANA_REGEN_TOTAL_PERCENTAGE"		"%bonus_mana_regen_mult"
 				}
 				
 				"OnCreated"
@@ -3414,6 +3412,20 @@
 						"ScriptFile"	"components/items/item_bloodstone.lua"
 						"Function"		"SetCharges"
 					}
+				}
+			}
+			
+			"modifier_item_imba_bloodstone_mana_regen_pct"
+			{
+				"Passive"					"1"
+				"IsHidden"					"1"
+				"IsDebuff"					"0"
+
+				"Attributes"				"MODIFIER_ATTRIBUTE_PERMANENT"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MANA_REGEN_TOTAL_PERCENTAGE"		"%bonus_mana_regen_mult"
 				}
 			}
 
