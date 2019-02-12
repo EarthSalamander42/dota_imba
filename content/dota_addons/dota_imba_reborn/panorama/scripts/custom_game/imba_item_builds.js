@@ -3,12 +3,12 @@
 "use strict";
 
 (function() {
-	var ItemPanel = FindDotaHudElement("ItemBuild").FindChildTraverse("Categories");
+//	var ItemPanel = FindDotaHudElement("ItemBuild").FindChildTraverse("Categories");
 
-	for (var i = 0; i < ItemPanel.GetChildCount(); i++) {
-		var category = ItemPanel.GetChild(i).FindChildTraverse("ItemList");
-		GenerateItemBuildForCategory(category, i);
-	}
+//	for (var i = 0; i < ItemPanel.GetChildCount(); i++) {
+//		var category = ItemPanel.GetChild(i).FindChildTraverse("ItemList");
+//		GenerateItemBuildForCategory(category, i);
+//	}
 })();
 
 function GenerateItemBuildForCategory(panel, index) {
