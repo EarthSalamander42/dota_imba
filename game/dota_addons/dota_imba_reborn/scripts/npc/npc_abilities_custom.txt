@@ -15623,7 +15623,7 @@
 			"08"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"vortex_time_pct" 					"50"
+				"vortex_time_pct" 					"25"
 			}
 		}
 	}
