@@ -210,6 +210,11 @@ function modifier_imba_fountain_danger_zone:OnIntervalThink()
 				end
 			end
 
+			-- Potential fix to another unidentified bug
+			if enemy:IsCourier() then
+				act_on_target = 2
+			end
+
 			if act_on_target == 1 then
 				local damage = enemy:GetMaxHealth() / 100 * self:GetAbility():GetSpecialValueFor("damage_pct")
 				local aura_linger = self:GetAbility():GetSpecialValueFor("aura_linger")
@@ -232,7 +237,10 @@ function modifier_imba_fountain_danger_zone:OnIntervalThink()
 			elseif act_on_target == 2 then
 				enemy:ForceKill(false)
 			elseif act_on_target == 3 then
-				UTIL_Remove(enemy)
+				-- Potential fix for a bug not clearly identified (it's everyday bro)
+				if not enemy:IsRealHero() then
+					UTIL_Remove(enemy)
+				end
 			end
 		end
 	end

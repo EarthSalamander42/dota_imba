@@ -733,7 +733,7 @@ function GameMode:OnThink()
 		end
 
 		-- Make courier controllable, repeat every second to avoid uncontrollable issues
-		if COURIER_TEAM then
+		if COURIER_TEAM and IsValidEntity(COURIER_TEAM[hero:GetTeamNumber()]) then
 			if COURIER_TEAM[hero:GetTeamNumber()] and not COURIER_TEAM[hero:GetTeamNumber()]:IsControllableByAnyPlayer() then
 				COURIER_TEAM[hero:GetTeamNumber()]:SetControllableByPlayer(hero:GetPlayerID(), true)
 			end
