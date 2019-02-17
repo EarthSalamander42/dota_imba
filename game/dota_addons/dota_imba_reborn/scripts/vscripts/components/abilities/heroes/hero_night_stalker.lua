@@ -1050,3 +1050,215 @@ end
 function modifier_imba_darkness_fogvision:GetModifierProvidesFOWVision()
 	return 1
 end
+
+LinkLuaModifier("modifier_imba_night_stalker_crippling_fear_720", "components/abilities/heroes/hero_night_stalker", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_night_stalker_crippling_fear_positive_720", "components/abilities/heroes/hero_night_stalker", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_night_stalker_crippling_fear_aura_720", "components/abilities/heroes/hero_night_stalker", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_night_stalker_crippling_fear_aura_positive_720", "components/abilities/heroes/hero_night_stalker", LUA_MODIFIER_MOTION_NONE)
+
+imba_night_stalker_crippling_fear_720							= class({})
+modifier_imba_night_stalker_crippling_fear_aura_720				= class({})
+modifier_imba_night_stalker_crippling_fear_aura_positive_720	= class({})
+modifier_imba_night_stalker_crippling_fear_720					= class({})
+modifier_imba_night_stalker_crippling_fear_positive_720			= class({})
+
+function imba_night_stalker_crippling_fear_720:GetBehavior()
+	if self:GetCaster():HasScepter() then
+		return DOTA_ABILITY_BEHAVIOR_UNIT_TARGET
+	else
+		return DOTA_ABILITY_BEHAVIOR_NO_TARGET
+	end
+end
+
+function imba_night_stalker_crippling_fear_720:GetAbilityTargetTeam()
+	if self:GetCaster():HasScepter() then
+		return DOTA_UNIT_TARGET_TEAM_FRIENDLY
+	else
+		return DOTA_UNIT_TARGET_TEAM_NONE
+	end
+end
+
+function imba_night_stalker_crippling_fear_720:GetAbilityTargetType()
+	if self:GetCaster():HasScepter() then
+		return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
+	else
+		return DOTA_UNIT_TARGET_NONE
+	end
+end
+
+function imba_night_stalker_crippling_fear_720:GetCastRange(location, target)
+	if self:GetCaster():HasScepter() then
+		return self:GetSpecialValueFor("scepter_cast_range")
+	else
+		return self.BaseClass.GetCastRange(self, location, target)
+	end
+end
+
+function imba_night_stalker_crippling_fear_720:OnSpellStart()
+	self.caster	= self:GetCaster()
+	self.target	= self.caster
+
+	if self:GetCursorTarget() ~= nil then
+		self.target	= self:GetCursorTarget()
+	end
+	
+	-- AbilitySpecials
+	self.duration_day		= self:GetSpecialValueFor("duration_day")
+	self.duration_night		= self:GetSpecialValueFor("duration_night")
+	self.radius				= self:GetSpecialValueFor("radius")
+	
+	if not IsServer() then return end
+	
+	if GameRules:IsDaytime() then
+		self.target:AddNewModifier(self.caster, self, "modifier_imba_night_stalker_crippling_fear_aura_720", {duration = self.duration_day})
+	else
+		self.target:AddNewModifier(self.caster, self, "modifier_imba_night_stalker_crippling_fear_aura_720", {duration = self.duration_night})
+	end
+	
+	if self.caster:GetName() == "npc_dota_hero_night_stalker" and RollPercentage(75) then
+		self.caster:EmitSound("night_stalker_nstalk_ability_cripfear_0"..RandomInt(1,3))
+	end
+	
+	self.target:EmitSound("Hero_Nightstalker.Trickling_Fear")
+	self.target:EmitSound("Hero_Nightstalker.Trickling_Fear_lp")
+	
+	-- Loop sound only plays for a short time at cast start
+	Timers:CreateTimer(1.0, function()
+		if not self:IsNull() and not self.target:IsNull() then
+			self.target:StopSound("Hero_Nightstalker.Trickling_Fear_lp")
+		end
+	end)
+end
+
+-----------------------------------------
+-- CRIPPLING FEAR MODIFIER AURA (7.20) --
+-----------------------------------------
+
+function modifier_imba_night_stalker_crippling_fear_aura_720:IsPurgable() 			return false end
+
+function modifier_imba_night_stalker_crippling_fear_aura_720:IsAura() 				return true end
+function modifier_imba_night_stalker_crippling_fear_aura_720:IsAuraActiveOnDeath() 	return false end
+
+function modifier_imba_night_stalker_crippling_fear_aura_720:GetAuraRadius()		return self:GetAbility():GetSpecialValueFor("radius") * self:GetStackCount() end
+function modifier_imba_night_stalker_crippling_fear_aura_720:GetAuraSearchFlags()	return DOTA_UNIT_TARGET_FLAG_NONE end
+function modifier_imba_night_stalker_crippling_fear_aura_720:GetAuraSearchTeam()	return DOTA_UNIT_TARGET_TEAM_ENEMY end
+function modifier_imba_night_stalker_crippling_fear_aura_720:GetAuraSearchType()	return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC end
+function modifier_imba_night_stalker_crippling_fear_aura_720:GetModifierAura()		return "modifier_imba_night_stalker_crippling_fear_720" end
+
+function modifier_imba_night_stalker_crippling_fear_aura_720:OnCreated()
+	self.ability	= self:GetAbility()
+	self.parent		= self:GetParent()
+
+	-- AbilitySpecials
+	self.duration_day		= self.ability:GetSpecialValueFor("duration_day")
+	self.duration_night		= self.ability:GetSpecialValueFor("duration_night")
+	self.radius				= self.ability:GetSpecialValueFor("radius")
+
+	self:SetStackCount(1)
+	if not IsServer() then return end
+
+	self.particle = ParticleManager:CreateParticle("particles/units/heroes/hero_night_stalker/nightstalker_crippling_fear_aura.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.parent)
+	ParticleManager:SetParticleControl(self.particle, 2, Vector(self.radius, self.radius, self.radius))
+	self:AddParticle(self.particle, false, false, -1, false, false)
+end
+
+function modifier_imba_night_stalker_crippling_fear_aura_720:DeclareFunctions()
+    local decFuncs = {
+		MODIFIER_EVENT_ON_HERO_KILLED,
+		MODIFIER_PROPERTY_TOOLTIP
+    }
+
+    return decFuncs
+end
+
+-- IMBAfication: Night Terror's Growl
+function modifier_imba_night_stalker_crippling_fear_aura_720:OnHeroKilled(keys)
+	if not IsServer() then return end
+
+	-- If the hero was killed within Crippling Fear's aura radius (doesn't have to be by the caster), double radius and add base duration to remaining amount
+	if keys.unit:GetTeam() ~= self.parent:GetTeam() and (keys.unit:GetAbsOrigin() - self.parent:GetAbsOrigin()):Length2D() <= self.radius then
+		self.radius = self.radius * 2
+		self:SetStackCount(self:GetStackCount() * 2)
+		
+		if GameRules:IsDaytime() then
+			self:SetDuration(self:GetRemainingTime() + self.duration_day, true)
+		else
+			self:SetDuration(self:GetRemainingTime() + self.duration_night, true)
+		end
+	
+		-- Destroy/Release particle index and re-draw with updated radius (don't technically have to but it looks better)
+		ParticleManager:DestroyParticle(self.particle, true)
+		ParticleManager:ReleaseParticleIndex(self.particle)
+
+		self.particle = ParticleManager:CreateParticle("particles/units/heroes/hero_night_stalker/nightstalker_crippling_fear_aura.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.parent)
+		ParticleManager:SetParticleControl(self.particle, 2, Vector(self.radius, self.radius, self.radius))
+		self:AddParticle(self.particle, false, false, -1, false, false)
+	end
+end
+
+function modifier_imba_night_stalker_crippling_fear_aura_720:OnTooltip()
+	return self:GetAbility():GetSpecialValueFor("radius") * self:GetStackCount()
+end
+
+function modifier_imba_night_stalker_crippling_fear_aura_720:OnDestroy()
+	if not IsServer() then return end
+	
+	self.parent:EmitSound("Hero_Nightstalker.Trickling_Fear_end")
+end
+
+------------------------------------
+-- CRIPPLING FEAR MODIFIER (7.20) --
+------------------------------------
+
+function modifier_imba_night_stalker_crippling_fear_720:GetEffectName()
+	return "particles/units/heroes/hero_night_stalker/nightstalker_crippling_fear.vpcf"
+end
+
+function modifier_imba_night_stalker_crippling_fear_720:GetEffectAttachType()
+	return PATTACH_OVERHEAD_FOLLOW
+end
+
+function modifier_imba_night_stalker_crippling_fear_720:OnCreated()
+	self.parent	= self:GetParent()
+	
+	if not IsServer() then return end
+
+	self.parent:EmitSound("Hero_Nightstalker.Trickling_Fear_lp")
+end
+
+function modifier_imba_night_stalker_crippling_fear_720:DeclareFunctions()
+	local decFuncs = {MODIFIER_PROPERTY_MISS_PERCENTAGE}
+
+	return decFuncs
+end
+
+function modifier_imba_night_stalker_crippling_fear_720:GetModifierMiss_Percentage()
+	return self:GetCaster():FindTalentValue("special_bonus_imba_night_stalker_2")
+end
+
+function modifier_imba_night_stalker_crippling_fear_720:CheckState()
+	local state = {}
+	
+	if self:GetCaster():HasScepter() then
+		state = {
+		[MODIFIER_STATE_SILENCED] = true,
+		[MODIFIER_STATE_BLOCK_DISABLED] = true,
+		[MODIFIER_STATE_EVADE_DISABLED] = true
+		}
+	else
+		state = {
+		[MODIFIER_STATE_SILENCED] = true
+		}
+	end
+	
+	return state
+end
+
+function modifier_imba_night_stalker_crippling_fear_720:OnDestroy()
+	self.parent	= self:GetParent()
+	
+	if not IsServer() then return end
+	
+	self.parent:StopSound("Hero_Nightstalker.Trickling_Fear_lp")
+	self.parent:EmitSound("Hero_Nightstalker.Trickling_Fear_end")
+end

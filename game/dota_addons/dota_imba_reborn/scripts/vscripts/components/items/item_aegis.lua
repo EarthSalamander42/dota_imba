@@ -63,15 +63,18 @@ end
 function modifier_item_imba_aegis:ReincarnateTime()
 	if IsServer() then
 		local parent = self:GetParent()
+		
+		-- Commenting out ability refreshing
+		
 		-- Refresh all your abilities
-		for i = 0, 15 do
-			local current_ability = parent:GetAbilityByIndex(i)
+		-- for i = 0, 15 do
+			-- local current_ability = parent:GetAbilityByIndex(i)
 
-			-- Refresh
-			if current_ability then
-				current_ability:EndCooldown()
-			end
-		end
+			-- -- Refresh
+			-- if current_ability then
+				-- current_ability:EndCooldown()
+			-- end
+		-- end
 		self:GetAbility():CreateVisibilityNode(parent:GetAbsOrigin(), self.vision_radius, self.reincarnate_time)
 		local particle = ParticleManager:CreateParticle("particles/items_fx/aegis_respawn_timer.vpcf", PATTACH_ABSORIGIN_FOLLOW, parent)
 		ParticleManager:SetParticleControl(particle, 1, Vector(self.reincarnate_time,0,0))

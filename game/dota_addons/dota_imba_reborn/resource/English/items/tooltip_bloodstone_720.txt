@@ -1,0 +1,11 @@
+"DOTA_Tooltip_ability_item_imba_bloodstone_720"									"Bloodstone"
+"DOTA_Tooltip_ability_item_imba_bloodstone_720_Description"						"<h1>Active: Bloodpact</h1> Converts %mana_cost_percentage%%% of your max mana to health regeneration over %restore_duration% seconds.\n <h1>Passive: Mana Battery</h1>Each charge provides %regen_per_charge% HP and MP regen. Nearby kills provide %kill_charges% charges. Dying causes you to lose %death_charges% charges. Starts with %initial_charges_tooltip% charges.\n <h1><font color='#FF7800'>Active: Lingering Will</font></h1> While Bloodpact is active, the caster's health cannot drop below the mana cost spent to activate it, also blocking instant-kill abilities. If their health was lower than this amount prior to Bloodpact being cast, their health is set to that value."
+"DOTA_Tooltip_ability_item_imba_bloodstone_720_Lore"								"The Bloodstone's bright ruby color is unmistakable on the battlefield, as the owner seems to have infinite vitality and spirit."
+"DOTA_Tooltip_ability_item_imba_bloodstone_720_bonus_health"						"+$health"
+"DOTA_Tooltip_ability_item_imba_bloodstone_720_bonus_mana"						"+$mana"
+"DOTA_Tooltip_ability_item_imba_bloodstone_720_mana_regen_multiplier"			"%+Mana Regeneration"
+"DOTA_Tooltip_ability_item_imba_bloodstone_720_bonus_health_regen"				"+$hp_regen"
+"DOTA_Tooltip_ability_item_imba_bloodstone_720_bonus_mana_regen"					"+$mana_regen"
+
+"DOTA_Tooltip_modifier_item_imba_bloodstone_active_720"						"Bloodpact"
+"DOTA_Tooltip_modifier_item_imba_bloodstone_active_720_Description"			"Converting %2fMODIFIER_PROPERTY_TOOLTIP% mana into %2fMODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT% health regeneration. Health cannot drop below %dMODIFIER_PROPERTY_TOOLTIP%."

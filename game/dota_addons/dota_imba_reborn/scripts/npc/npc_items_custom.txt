@@ -12392,5 +12392,131 @@
 			}
 		}
 	}
-	//next free ID: 2295
+	
+	//=================================================================================================================
+	// Recipe: Bloodstone (7.20)
+	//=================================================================================================================
+	"item_recipe_imba_bloodstone_720"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2295"
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"custom/imba_recipe"
+		"Model"							"models/props_gameplay/recipe.vmdl"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"0"	
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_bloodstone_720"
+		"ItemRequirements"
+		{
+			"01"						"item_pers;item_soul_booster" // Temporary item
+		}
+	}
+
+	//=================================================================================================================
+	// Bloodstone
+	//=================================================================================================================
+	"item_imba_bloodstone_720"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2296"		
+		"BaseClass"						"item_lua"
+		"ScriptFile"					"components/items/item_bloodstone_720.lua"
+				
+		"AbilityTextureName" 			"item_bloodstone"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"FightRecapLevel"				"2"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"190.0"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"4900"
+		"ItemShopTags"					"regen_health;regen_mana;mana_pool;health_pool"
+		"ItemQuality"					"epic"
+		"ItemAliases"					"bs;bloodstone"
+		"ItemInitialCharges"			"16"
+		"ItemDisplayCharges"			"1"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+		"AllowedInBackpack"				"0"
+		"ShouldBeSuggested"				"1"
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_health"			"625"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_mana"			"625"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"bonus_health_regen"	"8.0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"bonus_mana_regen"		"4.5"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mana_regen_multiplier"		"200"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"regen_per_charge"		"0.3"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"death_charges"				"3"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"kill_charges"			"1"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"charge_range"			"1600"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"initial_charges_tooltip" "16"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mana_cost_percentage" "30"
+			}
+			"12"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"restore_duration" "2.0"
+			}
+		}
+	}
+	//next free ID: 2297
 }

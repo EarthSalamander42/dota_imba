@@ -31,7 +31,11 @@ function GameMode:OnUnitFirstSpawn(unit)
 		end
 	end
 
-	if unit:GetClassname() == "npc_dota_creep_lane" then
+	if unit:GetClassname() == "npc_dota_creep_lane" or unit:GetClassname() == "npc_dota_creep_siege" then
+		if unit:HasAbility("custom_creep_scaling") then
+			unit:FindAbilityByName("custom_creep_scaling"):SetLevel(1)
+		end
+	
 		if IMBA_GREEVILING == true then
 			Greeviling(unit)
 			return

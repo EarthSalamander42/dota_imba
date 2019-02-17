@@ -47,6 +47,7 @@
 "DOTA_Tooltip_ability_imba_rubick_spellsteal"							"#{DOTA_Tooltip_ability_rubick_spell_steal}"
 "DOTA_Tooltip_ability_imba_rubick_spellsteal_Description"				"#{DOTA_Tooltip_ability_rubick_spell_steal_Description}\n<font color='#FF7800'>Eidetic Memory:</font> Stolen spells don't expire."
 "DOTA_Tooltip_ability_imba_rubick_spellsteal_Lore"						"...but even their lesser magics can be a source of much utility..."
+"DOTA_Tooltip_ability_imba_rubick_spellsteal_Note0"						"Cannot steal Phoenix's Sun Ray or Timbersaw's Chakrams. Doing so sets Rubick's stolen ability slots to empty."
 "DOTA_Tooltip_ability_imba_rubick_spellsteal_aghanim_description"		"Decreases cooldown, increases cast range and upgrades the spell to the Scepter level.\nAdditionally, copies the target's spell amplification values, adding it to Rubick's own. Expires on death or when another spell is stolen."
 "DOTA_Tooltip_ability_imba_rubick_spellsteal_cooldown_scepter"			"SCEPTER COOLDOWN:"
 
@@ -64,4 +65,4 @@
 "DOTA_Tooltip_ability_special_bonus_imba_rubick_5"						"Fade Bolt deals +8% damage per bounce"
 "DOTA_Tooltip_ability_special_bonus_imba_rubick_6"						"+300 radius for Null Field"
 "DOTA_Tooltip_ability_special_bonus_imba_rubick_7"						"Explosive Bolt"
-"DOTA_Tooltip_ability_special_bonus_imba_rubick_7_Description"			"Fade Bolt's final bounce explodes, dealing 150% of its damage in Fade Bolt's radius."
+"DOTA_Tooltip_ability_special_bonus_imba_rubick_7_Description"			"Fade Bolt's final bounce explodes, dealing 150% of its damage in Fade Bolt's radius. Does not affect the target which it explodes off of."

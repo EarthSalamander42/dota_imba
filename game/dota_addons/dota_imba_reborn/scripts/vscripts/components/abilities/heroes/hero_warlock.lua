@@ -443,6 +443,9 @@ function modifier_imba_shadow_word:OnCreated()
 	self.sound_bad = "Hero_Warlock.ShadowWordCastBad"
 	self.particle_good = "particles/units/heroes/hero_warlock/warlock_shadow_word_buff.vpcf"
 	self.particle_bad = "particles/units/heroes/hero_warlock/warlock_shadow_word_debuff.vpcf"
+	
+	-- Minor test for client errors
+	if not self.ability then return end
 
 	-- Ability specials
 	self.tick_value = self.ability:GetSpecialValueFor("tick_value")

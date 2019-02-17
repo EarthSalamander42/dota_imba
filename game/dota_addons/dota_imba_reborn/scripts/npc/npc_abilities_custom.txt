@@ -7,6 +7,7 @@
 #base heroes/alchemist/abilities.txt
 #base heroes/bane/abilities.txt
 #base heroes/bloodseeker/abilities.txt
+#base heroes/bristleback/abilities.txt
 #base heroes/earth_spirit/abilities.txt
 #base heroes/enchantress/abilities.txt
 #base custom_heroes/malfurion/abilities.txt
@@ -8328,7 +8329,7 @@
 			"06"
 			{
 				"var_type"                  "FIELD_INTEGER"
-				"explosion_delay"           "4"
+				"explosion_delay"           "3"
 			}
 
 			"07"
@@ -17094,7 +17095,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
@@ -17351,6 +17352,91 @@
 		}
 	}
 
+	//=================================================================================================================
+	// Ability: Sand King Sand Storm
+	//=================================================================================================================
+	"imba_sandking_sand_storm_720"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_sand_king.lua"
+		"AbilityTextureName"			"sandking_sand_storm"
+		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
+		"FightRecapLevel"				"1"
+		"AbilitySound"					"Ability.SandKing_SandStorm.start"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"0"
+		"AbilityDuration"				"20 25 30 35"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"34 28 22 16"
+		"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"60"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"damage_tick_rate"		"0.5"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"sand_storm_radius"		"500 575 650 725"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"AbilityDuration"		"20 25 30 35"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"sand_storm_damage"		"40 70 100 130"
+				"LinkedSpecialBonus"	"special_bonus_imba_sand_king_2"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"fade_delay"			"0.7"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"pull_speed"			"40 60 80 100"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"coarse_vision_pct"		"-25"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"coarse_movement_pct"	"-25"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"coarse_miss_pct"		"25"
+			}
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+	}
 	//=================================================================================================================
 	// Sand King's Talents
 	//=================================================================================================================
@@ -38467,6 +38553,155 @@
 			{
 				"var_type"                  "FIELD_FLOAT"
 				"duration"                  "17.0 17.0 17.0 17.0"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Custom Creep Scaling
+	//=================================================================================================================
+	"custom_creep_scaling"
+	{
+		// General
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/custom_creep_scaling.lua"
+		
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"MaxLevel"						"1"
+		
+		// Stuff to consider scaling up:
+		// * Attack Damage
+		// * Attack Speed
+		// * Armor
+		// * Magical Resistance
+		// * Movement Speed
+		// * Health
+		// * Health Regen
+		//
+		// Everything will scale up by given values per minute for now
+		
+		// Special
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"melee_attack"		"2"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"melee_aspd"		"5"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"melee_armor"		"0.5"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"melee_mres"		"0.5"
+			}
+			"05"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"melee_ms"			"1.5"
+			}
+			"06"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"melee_hp"			"10"
+			}
+			"07"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"melee_regen"		"0.05"
+			}
+			"08" // Values 08 to 21 are currently unused
+			{
+				"var_type"			"FIELD_INTEGER"
+				"ranged_attack"		"2"
+			}
+			"09"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"ranged_aspd"		"5"
+			}
+			"10"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"ranged_armor"		"0.5"
+			}
+			"11"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"ranged_mres"		"0.5"
+			}
+			"12"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"ranged_ms"			"1.5"
+			}
+			"13"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"ranged_hp"			"10"
+			}
+			"14"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"ranged_regen"		"0.05"
+			}
+			"15"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"siege_attack"		"2"
+			}
+			"16"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"siege_aspd"		"5"
+			}
+			"17"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"siege_armor"		"0.5"
+			}
+			"18"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"siege_mres"		"0.5"
+			}
+			"19"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"siege_ms"			"1.5"
+			}
+			"20"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"siege_hp"			"10"
+			}
+			"21"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"siege_regen"		"0.05"
+			}
+			"22"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"base_mult"			"1.0"
+			}
+			"23"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"super_mult"		"1.5"
+			}
+			"24"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"mega_mult"			"2.0"
 			}
 		}
 	}

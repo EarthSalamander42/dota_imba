@@ -1212,7 +1212,7 @@
 // Phoenix's Supernova
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_phoenix_supernova"                        "Super Nova"
-"DOTA_Tooltip_ability_imba_phoenix_supernova_Description"            "The Phoenix willingly ends its current life for the chance to be reborn. Transforms into a burning sun that scorches enemies in a huge area. The sun can be destroyed by attacks from enemy Heroes. After %duration% seconds the sun explodes, stunning all nearby enemies while restoring Phoenix to full health and mana with refreshed abilities.\n<font color='#FF7800'>Nest Mates: </font>Can be cast on allied heroes without scepter, bringing both into the sun to be reborn together. Does not refresh ultimate abilities.\n<font color='#FF7800'>Flock Assemble: </font>When Super Nova is cast, Phoenix summons %bird_num% fire spirits that are automaticly launched at nearby enemy heroes, prioritizing enemies that are attacking the egg.\n<font color='#FF7800'>Blinding Sun: </font>Enemies that face towards the egg have a %miss_pct_base%%% miss chance. This chance will increase by %miss_pct_perHit%%% for every hitpoint the egg is missing.\n\nUpgradable by Aghanim's Scepter.\n\nDISPEL TYPE: Strong Dispel"
+"DOTA_Tooltip_ability_imba_phoenix_supernova_Description"            "The Phoenix willingly ends its current life for the chance to be reborn. Transforms into a burning sun that scorches enemies in a huge area. The sun can be destroyed by attacks from enemy Heroes. After %duration% seconds the sun explodes, stunning all nearby enemies while restoring Phoenix to full health and mana with refreshed abilities.\n<font color='#FF7800'>Nest Mates: </font>Can be cast on allied heroes without scepter, bringing both into the sun to be reborn together. Does not refresh ultimate abilities.\n<font color='#FF7800'>Flock Assemble: </font>When Super Nova is cast, Phoenix summons %bird_num% fire spirits that are automaticly launched at nearby enemy heroes, prioritizing enemies that are attacking the egg.\nUpgradable by Aghanim's Scepter.\n\nDISPEL TYPE: Strong Dispel"
 "DOTA_Tooltip_ability_imba_phoenix_supernova_Note0"                  "Hero attacks count as 1 hit, and creeps attacks as 1/4 of a hit."
 "DOTA_Tooltip_ability_imba_phoenix_supernova_Note1"                  "If there are no nearby enemies, fire spirits won't be launched."
 "DOTA_Tooltip_ability_imba_phoenix_supernova_Note2"                  "The passive effect for Aghanim's Scepter doesn't trigger when Phoenix is affected by break."
@@ -1628,7 +1628,7 @@
 // Sand King's Epicenter
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_sandking_epicenter"                          "Epicenter"
-"DOTA_Tooltip_ability_imba_sandking_epicenter_Description"              "After channeling for %channel_time% seconds, Sand King causes a massive earthquake, which pulses several times, slowing and damaging enemies each time. Each pulse increases the damage radius by %pulse_radius_increase%, up to %max_pulse_radius%.\n<font color='#FF7800'>Pulses of Malice:</font> Enemies hit by a pulse are also pulled towards you by %pull_speed% units per pulse.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
+"DOTA_Tooltip_ability_imba_sandking_epicenter_Description"              "After channeling for %channel_time% seconds, Sand King causes a massive earthquake, which pulses several times, slowing and damaging enemies each time. Each pulse increases the damage radius by %pulse_radius_increase%, up to %max_pulse_radius%.\n<font color='#FF7800'>Pulses of Malice:</font> Enemies hit by a pulse are also mini-stunned and pulled towards you by %pull_speed% units per pulse.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
 "DOTA_Tooltip_ability_imba_sandking_epicenter_Lore"                    "Many an explorer was lost to the quicksands of the Scintillant Waste."
 "DOTA_Tooltip_ability_imba_sandking_epicenter_Note0"                    "Even with an Aghnaim's Scepter, if Sand King fails to complete the channeling fully, the spell is lost."
 "DOTA_Tooltip_ability_imba_sandking_epicenter_Note1"                    "The slow effect refreshes itself when a slowed enemy is hit again by a pulse."
@@ -1644,10 +1644,24 @@
 "DOTA_Tooltip_modifier_imba_epicenter_slow_Description"                "Slowed by a pulse from Epicenter."
 
 ////===============================================================================================================
+// Sand King's Sand Storm (7.20)
+////===============================================================================================================
+"DOTA_Tooltip_ability_imba_sandking_sand_storm_720"										"Sand Storm"
+"DOTA_Tooltip_ability_imba_sandking_sand_storm_720_Description"							"Sand King creates a fearsome sandstorm that damages enemy units while hiding him from vision.  The effect ends when Sand King leaves the area.\n<font color='#FF7800'>Sands of Betrayal:</font> Constantly pulls enemies towards Sand Storm's center at a speed of %pull_speed% units per second.\n<font color='#FF7800'>It's Coarse and Rough and Irritating: </font>Sand Storm reduces enemies' vision, movement speed, and increases miss chance by %coarse_miss_pct%%%."
+"DOTA_Tooltip_ability_imba_sandking_sand_storm_720_Lore"									"Some say Crixalis is a mirage; his carapace appearing then vanishing between the whirling sands of the Scintillant Waste."
+"DOTA_Tooltip_ability_imba_sandking_sand_storm_720_Note0"								"Sand Storm can be used to dodge projectiles."
+"DOTA_Tooltip_ability_imba_sandking_sand_storm_720_AbilityDuration"						"DURATION:"
+"DOTA_Tooltip_ability_imba_sandking_sand_storm_720_sand_storm_radius"					"RADIUS:"
+"DOTA_Tooltip_ability_imba_sandking_sand_storm_720_sand_storm_damage"					"SAND STORM DAMAGE:"
+
+"DOTA_Tooltip_modifier_imba_sandking_sand_storm_720_thinker_aura"						"It's Coarse and Rough and Irritating"
+"DOTA_Tooltip_modifier_imba_sandking_sand_storm_720_thinker_aura_Description"			"Reducing vision, movement speed, and increasing miss chance by %dMODIFIER_PROPERTY_MISS_PERCENTAGE%%%."
+
+////===============================================================================================================
 // Sand King's Custom Talents
 ////===============================================================================================================
 "DOTA_Tooltip_ability_special_bonus_imba_sand_king_1"                   "+100 Burrowstrike path radius"
-"DOTA_Tooltip_ability_special_bonus_imba_sand_king_2"                   "+40 Sandstorm damage per second"
+"DOTA_Tooltip_ability_special_bonus_imba_sand_king_2"                   "+40 Sand Storm DPS"
 "DOTA_Tooltip_ability_special_bonus_imba_sand_king_3"                   "+275 Burrowstrike cast range"
 "DOTA_Tooltip_ability_special_bonus_imba_sand_king_4"                   "+300 Epicenter pull radius"
 "DOTA_Tooltip_ability_special_bonus_imba_sand_king_5"                   "+20% Caustic Finale slow"
@@ -2342,99 +2356,6 @@
 "DOTA_Tooltip_ability_imba_tidehunter_ravage_damage"                     "DAMAGE:"
 "DOTA_Tooltip_ability_imba_tidehunter_ravage_radius"                     "RADIUS:"
 "DOTA_Tooltip_ability_imba_tidehunter_ravage_duration"                   "DURATION:"
-
-// Tiny
-////===============================================================================================================
-// Tiny's Rolling Stone
-////===============================================================================================================
-
-"DOTA_Tooltip_ability_imba_tiny_rolling_stone"                          "Rolling Stone"
-"DOTA_Tooltip_ability_imba_tiny_rolling_stone_Description"              "Tiny gains mass as he moves, gaining damage and movement speed at the cost of attackspeed. Every second that Tiny moves, he gains a few mass. A stack is granted when reaching one full minute of movement (60 seconds)."
-"DOTA_Tooltip_ability_imba_tiny_rolling_stone_Note0"                    "Movement does not need to be continuous."
-"DOTA_Tooltip_ability_imba_tiny_rolling_stone_Note1"                    "It does not matter how much distance Tiny has covered on each movement, as it only records movement time."
-"DOTA_Tooltip_ability_imba_tiny_rolling_stone_Lore"                    "Tiny's living mass constantly attracts minor pebbles and rocks."
-"DOTA_Tooltip_ability_imba_tiny_rolling_stone_bonus_damage"            "BONUS DAMAGE/STACK:"
-"DOTA_Tooltip_ability_imba_tiny_rolling_stone_attackspeed_reduction"                "ATTACKSPEED REDUCTION/STACK:"
-"DOTA_Tooltip_ability_imba_tiny_rolling_stone_bonus_movespeed"          "BONUS MOVEMENT SPEED/STACK:"
-"DOTA_Tooltip_ability_imba_tiny_rolling_stone_bonus_toss_damage"                    "%BONUS TOSS DAMAGE/STACK:"
-"DOTA_Tooltip_ability_imba_tiny_rolling_stone_stack_per_min"            "STACK/MIN OF MOVEMENT:"
-
-"DOTA_Tooltip_modifier_imba_tiny_rolling_stone"                        "Rolling Stone"
-"DOTA_Tooltip_modifier_imba_tiny_rolling_stone_Description"            "Every stack of Rolling Stone provides movement speed and damage at the cost of attack speed."
-
-////===============================================================================================================
-// Tiny's Avalanche
-////===============================================================================================================
-
-"DOTA_Tooltip_ability_imba_tiny_avalanche"                              "Avalanche"
-"DOTA_Tooltip_ability_imba_tiny_avalanche_Description"                  "Bombards an area with rocks, stunning and damaging enemy land units.\n<font color='#FF7800'>Eruption:</font> Tiny's auto-attacks have a chance to trigger Avalanche passively with reduced power."
-"DOTA_Tooltip_ability_imba_tiny_avalanche_Note0"                        "Units affected by Toss receive Power Surge.\nAvalanche always hits after 0.5 seconds."
-"DOTA_Tooltip_ability_imba_tiny_avalanche_Lore"                        "Inanimate rock becomes animate when called by the Stone Giant."
-"DOTA_Tooltip_ability_imba_tiny_avalanche_radius"                      "RADIUS:"
-"DOTA_Tooltip_ability_imba_tiny_avalanche_stun_duration"                "STUN DURATION:"
-"DOTA_Tooltip_ability_imba_tiny_avalanche_avalanche_damage"            "AVALANCHE DAMAGE:"
-"DOTA_Tooltip_ability_imba_tiny_avalanche_passive_chance"              "%PASSIVE CHANCE:"
-"DOTA_Tooltip_ability_imba_tiny_avalanche_passive_ticks_tooltip"                    "%PASSIVE REDUCED DAMAGE:"
-
-////===============================================================================================================
-// Tiny's Toss
-////===============================================================================================================
-
-"DOTA_Tooltip_ability_imba_tiny_toss"                      "Toss"
-"DOTA_Tooltip_ability_imba_tiny_toss_Description"                      "Grabs the nearest unit in a %grab_radius% radius around Tiny, ally or enemy, and launches it at the target unit or rune to deal damage where they land. If the tossed unit is an enemy, it will take an extra %bonus_damage_pct%% damage. Toss does more damage with each stack of Rolling Stone. Deals %building_dmg%% damage to buildings.\n<font color='#FF7800'>Mountain's Strength:</font> If no other units are available, Tiny will toss himself at the cost of %self_dmg_pct%% of his max health. Upgradable by Aghanim's Scepter."
-"DOTA_Tooltip_ability_imba_tiny_toss_aghanim_description"              "Tossed units will also bounce upwards, stunning enemies damaged for 1 second. Bounce deals 20% of Toss' damage to units in the landing area."
-"DOTA_Tooltip_ability_imba_tiny_toss_Note0"                            "Throw distance is capped at 2308."
-"DOTA_Tooltip_ability_imba_tiny_toss_Lore"                              "Tiny's gargantuan stature allows him to catapult even the sturdiest of warriors."
-"DOTA_Tooltip_ability_imba_tiny_toss_radius"                            "RADIUS:"
-"DOTA_Tooltip_ability_imba_tiny_toss_duration"                          "TOSS DURATION:"
-"DOTA_Tooltip_ability_imba_tiny_toss_cast_range"                        "TOSS RANGE:"
-"DOTA_Tooltip_ability_imba_tiny_toss_toss_damage"                      "TOSS DAMAGE:"
-"DOTA_Tooltip_ability_imba_tiny_toss_scepter_bounce_duration"          "SCEPTER BOUNCE DURATION:"
-"DOTA_Tooltip_ability_imba_tiny_toss_scepter_stun_duration"            "SCEPTER BOUNCE STUN DURATION:"
-
-////===============================================================================================================
-// Tiny's Craggy Exterior
-////===============================================================================================================
-
-"DOTA_Tooltip_ability_imba_tiny_craggy_exterior"                        "Craggy Exterior"
-"DOTA_Tooltip_ability_imba_tiny_craggy_exterior_Description"            "Causes damage to bounce back on Tiny's attackers. Attackers have a chance of being stunned.\n<font color='#FF7800'>Bluntstone:</font> Every hit taken by Tiny reduces the attacker's damage."
-"DOTA_Tooltip_ability_imba_tiny_craggy_exterior_Note0"                  "Hits melee and ranged attackers."
-"DOTA_Tooltip_ability_imba_tiny_craggy_exterior_Lore"                  "Many warriors tend to find attacking the Stone Giant largely ineffective."
-"DOTA_Tooltip_ability_imba_tiny_craggy_exterior_stun_chance"            "%CRAGGY CHANCE:"
-"DOTA_Tooltip_ability_imba_tiny_craggy_exterior_stun_duration"          "STUN DURATION:"
-"DOTA_Tooltip_ability_imba_tiny_craggy_exterior_bonus_armor"            "BONUS ARMOR:"
-"DOTA_Tooltip_ability_imba_tiny_craggy_exterior_damage"                "CRAGGY DAMAGE:"
-"DOTA_Tooltip_ability_imba_tiny_craggy_exterior_damage_reduction"                   "DAMAGE REDUCTION:"
-"DOTA_Tooltip_ability_imba_tiny_craggy_exterior_reduction_duration"                 "REDUCTION DURATION:"
-
-"DOTA_Tooltip_modifier_craggy_exterior_blunt"                          "Blunted Weapon"
-"DOTA_Tooltip_modifier_craggy_exterior_blunt_Description"              "Damage reduced by %dMODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE%."
-
-////===============================================================================================================
-// Tiny's Grow
-////===============================================================================================================
-
-"DOTA_Tooltip_ability_imba_tiny_grow"                      "Grow"
-"DOTA_Tooltip_ability_imba_tiny_grow_Description"                      "Tiny gains craggy mass that increases his power at the cost of his attack speed. Increases Tossed unit damage and improves movement speed and the area of effect of Tiny's spells.\n\nUpgradable by Aghanim's Scepter."
-"DOTA_Tooltip_ability_imba_tiny_grow_aghanim_description"              "Tiny gains a tree that lets him cleave, increases his range and lets him do bonus damage to buildings."
-"DOTA_Tooltip_ability_imba_tiny_grow_Lore"                              "Watching a hill become a mountain is awe-inspiring - especially if the mountain begins laying waste to adversaries."
-"DOTA_Tooltip_ability_imba_tiny_grow_rolling_stones_stacks"            "ROLLING STONE STACKS:"
-"DOTA_Tooltip_ability_imba_tiny_grow_rolling_stones_aoe"                "ROLLING STONE BONUS RADIUS:"
-"DOTA_Tooltip_ability_imba_tiny_grow_bonus_cleave_damage_scepter"                   "%CLEAVE DAMAGE:"
-"DOTA_Tooltip_ability_imba_tiny_grow_bonus_building_damage_scepter"                 "%BONUS BUILDING DAMAGE:"
-
-////===============================================================================================================
-// Tiny's Custom Talents
-////===============================================================================================================
-
-"DOTA_Tooltip_ability_special_bonus_imba_tiny_1"            "+25% Passive Avalanche Damage and Stun Duration"
-"DOTA_Tooltip_ability_special_bonus_imba_tiny_2"            "+10 Rolling Stone Stacks"
-"DOTA_Tooltip_ability_special_bonus_imba_tiny_3"            "Avalanche 400 Unit Projectile"
-"DOTA_Tooltip_ability_special_bonus_imba_tiny_4"            "+225 AoE Craggy Exterior"
-"DOTA_Tooltip_ability_special_bonus_imba_tiny_5"            "+15 Craggy Exterior Damage Reduction Per Hit"
-"DOTA_Tooltip_ability_special_bonus_imba_tiny_6"            "+200 Bonus Total Avalanche Damage"
-"DOTA_Tooltip_ability_special_bonus_imba_tiny_7"            "Toss Grabs All Units"
-"DOTA_Tooltip_ability_special_bonus_imba_tiny_8"            "Rolling Stone Attackspeed Penalty Removed"
 
 // Troll Warlord
 ////===============================================================================================================

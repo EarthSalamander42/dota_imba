@@ -33,8 +33,10 @@ function imba_enchantress_untouchable:OnSpellStart()
 	end
 	
 	for _, enemy in pairs(enemies) do
-		enemy:Stop()
-		enemy:AddNewModifier(caster, self, "modifier_imba_enchantress_untouchable_peace_on_earth", {duration = peace_on_earth_duration})
+		if not enemy:IsCourier() then
+			enemy:Stop()
+			enemy:AddNewModifier(caster, self, "modifier_imba_enchantress_untouchable_peace_on_earth", {duration = peace_on_earth_duration})
+		end
 	end
 	
 	caster:AddNewModifier(caster, self, "modifier_imba_enchantress_untouchable_peace_on_earth", {duration = peace_on_earth_duration})
@@ -246,7 +248,7 @@ function imba_enchantress_enchant:OnSpellStart()
 	
 	self.caster:EmitSound("Hero_Enchantress.EnchantCast")
 	
-	if (not self.target:IsHero() or self.target:IsIllusion()) and not self.target:IsRoshan() then
+	if (not self.target:IsConsideredHero() or self.target:IsIllusion()) and not self.target:IsRoshan() then
 		-- Basic dispel (buffs and debuffs)
 		self.target:Purge(true, true, false, false, false)
 		
