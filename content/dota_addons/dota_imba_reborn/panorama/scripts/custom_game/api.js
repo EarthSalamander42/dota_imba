@@ -3,19 +3,19 @@
 var api = {
 
 	timeout: 5000,
-	base: "http://api.dota2imba.org/imba/",
+	base: "http://api.dota2imba.fr/imba/",
 	endpoints: {
 		meta: {
-			companions: "meta/companions",
-			statues: "meta/ingame-statues",
-			modify_companion: "meta/modify-companion",
-			modify_statue: "meta/modify-ingame-statue",
-			player_info: "meta/player-info",
-			multi_player_info: "meta/multi-player-info",
-			game_info: "meta/game-info",
-			loading_screen: "meta/loading-screen",
-			resolve_map_name: "meta/resolve-map-name",
-//			diretide_highscores: "meta/diretide/high-scores",
+			companions: "companions",
+			statues: "ingame-statues",
+			modify_companion: "modify-companion",
+			modify_statue: "modify-ingame-statue",
+			player_info: "player-info",
+			multi_player_info: "multi-player-info",
+			game_info: "game-info",
+			loading_screen: "loading-screen",
+			resolve_map_name: "resolve-map-name",
+//			diretide_highscores: "diretide/high-scores",
 		}
 	},
 
