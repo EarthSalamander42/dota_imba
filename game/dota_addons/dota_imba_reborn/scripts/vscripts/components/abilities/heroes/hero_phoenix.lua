@@ -2234,7 +2234,7 @@ function modifier_imba_phoenix_supernova_dmg:IsPurgable() return false end
 
 function modifier_imba_phoenix_supernova_dmg:DeclareFunctions()
 	local decFuns = {
-		MODIFIER_PROPERTY_MISS_PERCENTAGE,
+		--MODIFIER_PROPERTY_MISS_PERCENTAGE,
 	}
 	return decFuns
 end
@@ -2255,38 +2255,39 @@ function modifier_imba_phoenix_supernova_dmg:OnCreated()
 
 end
 
-function modifier_imba_phoenix_supernova_dmg:GetModifierMiss_Percentage()
-	if not IsServer() then
-		return
-	end
-	local enemy = self:GetParent()
-	local caster = self:GetCaster()
-	local ability = self:GetAbility()
-	-- Get the miss pct
-	local egg = caster.egg
-	if egg then
-		local miss_pct = ability:GetSpecialValueFor("miss_pct_base") + ability:GetSpecialValueFor("miss_pct_perHit") * egg.current_attack
-		local miss_radius = self:GetAbility():GetSpecialValueFor("cast_range")
-		local miss_angle = self:GetAbility():GetSpecialValueFor("miss_angle")
-		local caster_location = caster:GetAbsOrigin()
-		local enemy_location = enemy:GetAbsOrigin()
-		local distance = CalcDistanceBetweenEntityOBB(caster, enemy)
-		if distance <= miss_radius then
-			local enemy_to_caster_direction = (caster_location - enemy_location):Normalized()
-			local enemy_forward_vector =  enemy:GetForwardVector()
-			local view_angle = math.abs(RotationDelta(VectorToAngles(enemy_to_caster_direction), VectorToAngles(enemy_forward_vector)).y)
-			if view_angle <= ( miss_angle / 2 ) and enemy:CanEntityBeSeenByMyTeam(caster) then
-				return miss_pct
-			else
-				return 0
-			end
-		else
-			return 0
-		end
-	else
-		return 0
-	end
-end
+-- Kit is overloaded so I'm removing this for now
+-- function modifier_imba_phoenix_supernova_dmg:GetModifierMiss_Percentage()
+	-- if not IsServer() then
+		-- return
+	-- end
+	-- local enemy = self:GetParent()
+	-- local caster = self:GetCaster()
+	-- local ability = self:GetAbility()
+	-- -- Get the miss pct
+	-- local egg = caster.egg
+	-- if egg then
+		-- local miss_pct = ability:GetSpecialValueFor("miss_pct_base") + ability:GetSpecialValueFor("miss_pct_perHit") * egg.current_attack
+		-- local miss_radius = self:GetAbility():GetSpecialValueFor("cast_range")
+		-- local miss_angle = self:GetAbility():GetSpecialValueFor("miss_angle")
+		-- local caster_location = caster:GetAbsOrigin()
+		-- local enemy_location = enemy:GetAbsOrigin()
+		-- local distance = CalcDistanceBetweenEntityOBB(caster, enemy)
+		-- if distance <= miss_radius then
+			-- local enemy_to_caster_direction = (caster_location - enemy_location):Normalized()
+			-- local enemy_forward_vector =  enemy:GetForwardVector()
+			-- local view_angle = math.abs(RotationDelta(VectorToAngles(enemy_to_caster_direction), VectorToAngles(enemy_forward_vector)).y)
+			-- if view_angle <= ( miss_angle / 2 ) and enemy:CanEntityBeSeenByMyTeam(caster) then
+				-- return miss_pct
+			-- else
+				-- return 0
+			-- end
+		-- else
+			-- return 0
+		-- end
+	-- else
+		-- return 0
+	-- end
+-- end
 
 function modifier_imba_phoenix_supernova_dmg:OnDestroy()
 	if not IsServer() then

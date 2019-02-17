@@ -176,11 +176,6 @@ function modifier_imba_satanic_unique:OnAttackLanded(keys)
 				return nil
 			end
 
-			local will_incarnate
-			if target:IsHero() then
-				will_incarnate =  target:WillReincarnate()
-			end
-
 			-- Wait a gametick to let things die
 			Timers:CreateTimer(FrameTime(), function()
 				-- If the target is an illusion, do nothing
@@ -189,7 +184,7 @@ function modifier_imba_satanic_unique:OnAttackLanded(keys)
 				end
 
 				-- Check if the target died as a result of that attack
-				if not target:IsAlive() and not will_incarnate then
+				if not target:IsAlive() and (not target.IsReincarnating or target.IsReincarnating and not target:IsReincarnating()) then
 
 					-- Calculate soul worth in health and stacks
 					local soul_health = target:GetMaxHealth() * (self.soul_slaughter_hp_increase_pct * 0.01)

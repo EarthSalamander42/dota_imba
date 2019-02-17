@@ -180,6 +180,8 @@
 	"item_imba_spell_fencer"				"REMOVE"
 	"item_imba_recipe_manta"				"REMOVE"
 	"item_imba_manta"						"REMOVE" // Holy god damn lag
+	"item_recipe_imba_bloodstone"			"REMOVE"
+	"item_imba_bloodstone"					"REMOVE"
 
 	//=================================================================================================================
 	//-----------------------------------------------------------------------------------------------------------------
@@ -5793,20 +5795,19 @@
 	"keeper_of_the_light_illuminate"
 	{
 		"AbilityCastRange"				"2000 2100 2200 2300"
-		"AbilityChannelTime"			"2.0 3.0 4.0 5.0"
-		"AbilityManaCost"				"150 160 170 180"
+		"AbilityChannelTime"			"2.0 2.66 3.33 4.0"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_per_second"		"90 120 150 180"
+				"var_type"				"FIELD_FLOAT"
+				"damage_per_second"		"100.0 159.375 195 218.75"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"max_channel_time"		"2.0 3.0 4.0 5.0"
+				"max_channel_time"		"2.0 2.66 3.33 4.0"
 			}
 			"03"
 			{
@@ -5828,30 +5829,21 @@
 				"var_type"				"FIELD_INTEGER"
 				"vision_radius"			"800 1200 1400 1600"
 			}
-			"07"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"vision_duration"		"3.34"
-			}
 			"08"
 			{	
 				"var_type"				"FIELD_INTEGER"
 				"channel_vision_radius"	"375 450 525 600"
 			}
-			"09"
-			{	
-				"var_type"					"FIELD_FLOAT"
-				"channel_vision_interval"	"0.5"
-			}
-			"10"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"channel_vision_duration"	"10.34"
-			}
 			"11"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"channel_vision_step"		"150 225 300 375"
+			}
+			"12"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"total_damage"				"200 425 650 875"
+				"LinkedSpecialBonus"		"special_bonus_unique_keeper_of_the_light"
 			}
 		}
 	}
@@ -13913,6 +13905,11 @@
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"ItemCost"						"600"	
+		
+		"ItemRequirements"
+		{
+			"01"						"item_imba_urn_of_shadows;item_vitality_booster;item_wind_lace"
+		}
 	}
 	
 	//=================================================================================================================
