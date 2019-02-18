@@ -6090,6 +6090,111 @@
 	}
 
 	//=================================================================================================================
+	// Keeper of the Light: Will-O-Wisp
+	//=================================================================================================================
+	"keeper_of_the_light_will_o_wisp"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"7316"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilitySound"					"Hero_KeeperOfTheLight.ManaLeak.Cast"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.1"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"120"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"250 350 450"		
+
+		// Cast Range
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"900"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"on_count"					"3 4 5"
+				"LinkedSpecialBonus"		"special_bonus_unique_keeper_of_the_light_3"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"675"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"hit_count"					"6 9 12"
+				"LinkedSpecialBonus"		"special_bonus_unique_keeper_of_the_light_4"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"off_duration"				"1.85"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"on_duration"				"1.5"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"off_duration_initial"		"1.0"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"fixed_movement_speed"		"25"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bounty"		"100 125 150"
+			}
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+	}
+
+	//=================================================================================================================
+	// Ability: Special Bonus
+	//=================================================================================================================
+	"special_bonus_unique_keeper_of_the_light_4"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"					"7398"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"				"3"
+			}
+		}
+	}
+
+	//=================================================================================================================
 	// Legion Commander: Overwhelming Odds
 	//=================================================================================================================
 	"legion_commander_overwhelming_odds"
@@ -9535,7 +9640,7 @@
 	//=================================================================================================================
 	"templar_assassin_refraction"
 	{
-		"AbilityCooldown"					"17 16 15 14"
+		"AbilityCooldown"					"17.0 16.0 15.0 14.0"
 
 		"AbilitySpecial"
 		{
@@ -9548,7 +9653,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_damage"				"30 70 115 165"
+				"bonus_damage"				"40 80 120 160"
 			}
 			"03"
 			{
@@ -9557,8 +9662,8 @@
 			}
 			"04"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"duration"					"17"
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"17.0"
 			}
 		}
 	}
@@ -9583,15 +9688,15 @@
 	//=================================================================================================================
 	"templar_assassin_meld"
 	{
-		"AbilityCooldown"					"6 5.5 5.0 4.5"
-		"AbilityDuration"					"10"
+		"AbilityCooldown"					"6.0 5.5 5.0 4.5"
+		"AbilityDuration"					"10.0"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"bonus_damage"							"80 160 220 260"
+				"bonus_damage"							"80 150 220 290"
 			}
 			"02"
 			{
@@ -9634,7 +9739,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_attack_range"		"90 190 270 330"
+				"bonus_attack_range"		"90 180 270 360"
 			}
 			"02"
 			{
@@ -9646,6 +9751,11 @@
 				"var_type"					"FIELD_INTEGER"
 				"attack_spill_width"		"75 90 105 120"
 			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"attack_spill_pct"			"100"
+			}
 		}
 	}	
 	
@@ -9655,14 +9765,14 @@
 	"templar_assassin_psionic_trap"
 	{
 		"MaxLevel"							"3"
-		"AbilityCooldown"					"11 5 3"
+		"AbilityCooldown"					"10.0 7.0 4.0"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"max_traps"						"5 11 23"
+				"max_traps"						"10 20 30"
 				"LinkedSpecialBonus"			"special_bonus_unique_templar_assassin_6"
 			}
 			"02"
@@ -9805,7 +9915,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"illusion_outgoing_tooltip"	"25 50 75 100 "
+				"illusion_outgoing_tooltip"	"25 50 75 100"
 			}
 			"04"
 			{

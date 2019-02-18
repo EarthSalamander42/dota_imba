@@ -3869,7 +3869,7 @@
 		"ID"							"2184"
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"components/items/item_sogat_cuirass.lua"
-		"AbilityTextureName"			"custom/imba_greatwyrm_plate"
+		"AbilityTextureName"			"custom/imba_sogat_cuirass"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
@@ -5021,7 +5021,7 @@
 		"ID"							"2108"
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"components/items/item_swords.lua"
-		"AbilityTextureName"			"item_kaya"
+		"AbilityTextureName"			"custom/imba_kaya"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 
 		// Stats

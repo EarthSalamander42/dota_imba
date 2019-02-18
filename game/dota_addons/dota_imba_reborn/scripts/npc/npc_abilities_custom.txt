@@ -12539,25 +12539,21 @@
 				"var_type"					"FIELD_INTEGER"
 				"duration"					"6 7 8"
 			}
-
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"scepter_duration"			"8 9 10"
 			}
-
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"shield_duration"			"6 7 8"
 			}
-
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"radius"					"600"
 			}
-
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
