@@ -64,7 +64,7 @@
 "DOTA_Tooltip_ability_imba_ursa_enrage_duration"					"DURATION:"
 "DOTA_Tooltip_ability_imba_ursa_enrage_fury_swipes_multiplier"		"FURY SWIPES MULTIPLIER:"
 "DOTA_Tooltip_ability_imba_ursa_enrage_bonus_radius_skills"			"RAW INSTINCTS BONUS RADIUS:"
-"DOTA_Tooltip_ability_imba_ursa_enrage_damage_reduction"			"BONUS DAMAGE REDUCTION:"
+"DOTA_Tooltip_ability_imba_ursa_enrage_damage_reduction"			"BONUS DAMAGE REDUCTION/STATUS RESISTANCE:"
 "DOTA_Tooltip_ability_imba_ursa_enrage_scepter_cooldown"			"SCEPTER COOLDOWN:"
 
 "DOTA_Tooltip_modifier_imba_enrage_buff"							"Enrage"
@@ -98,6 +98,6 @@
 "DOTA_Tooltip_ability_special_bonus_imba_ursa_5"				"Fury Swipes health as damage"
 "DOTA_Tooltip_ability_special_bonus_imba_ursa_5_Description"	"Fury Swipes' Devastating Blow deals 3.5%% of the target's maximum health if the target has more than 50%% health."
 "DOTA_Tooltip_ability_special_bonus_imba_ursa_6"				"Overpower now also roots affected targets"
-"DOTA_Tooltip_ability_special_bonus_imba_ursa_7"				"Enrage adds 8%% of your current health as damage."
+"DOTA_Tooltip_ability_special_bonus_imba_ursa_7"				"Enrage adds 8%% of current health as damage"
 "DOTA_Tooltip_ability_special_bonus_imba_ursa_8"				"Overpower Passive"
 "DOTA_Tooltip_ability_special_bonus_imba_ursa_8_Description"	"Overpower becomes a passive, triggering a 3.5 second attack speed bonus when Ursa starts an attack and it's off cooldown."
