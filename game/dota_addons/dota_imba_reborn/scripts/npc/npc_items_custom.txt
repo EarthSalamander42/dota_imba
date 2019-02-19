@@ -3056,7 +3056,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_strength"		"30"
+				"bonus_strength"		"45"
 			}
 			"02"
 			{
@@ -3092,6 +3092,11 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"regen_cooldown_ranged"	"7"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"hp_regen_amp"			"50"
 			}
 		}
 	}

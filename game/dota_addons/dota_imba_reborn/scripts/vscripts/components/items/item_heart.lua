@@ -52,7 +52,7 @@ function modifier_item_imba_heart:OnCreated()
 
 	-- Ability specials
 	self.bonus_strength = self:GetAbility():GetSpecialValueFor("bonus_strength")
-	self.bonus_health = self:GetAbility():GetSpecialValueFor("bonus_health")	
+	self.bonus_health = self:GetAbility():GetSpecialValueFor("bonus_health")
 
 	if IsServer() then
 		-- If this is the first heart, add the unique modifier
@@ -99,6 +99,7 @@ function modifier_item_imba_heart_unique:OnCreated()
 	self.aura_radius = self:GetAbility():GetSpecialValueFor("aura_radius")
 	self.base_regen = self:GetAbility():GetSpecialValueFor("base_regen")
 	self.noncombat_regen = self:GetAbility():GetSpecialValueFor("noncombat_regen")
+	self.hp_regen_amp = self:GetAbility():GetSpecialValueFor("hp_regen_amp")
 end
 
 function modifier_item_imba_heart_unique:IsAura() return true end
@@ -110,7 +111,8 @@ function modifier_item_imba_heart_unique:GetModifierAura() return "modifier_item
 
 function modifier_item_imba_heart_unique:DeclareFunctions()
 	local decFuncs = {MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE,
-		MODIFIER_EVENT_ON_TAKEDAMAGE}
+		MODIFIER_EVENT_ON_TAKEDAMAGE,
+		MODIFIER_PROPERTY_HP_REGEN_AMPLIFY_PERCENTAGE }
 
 	return decFuncs
 end
@@ -148,6 +150,10 @@ function modifier_item_imba_heart_unique:OnTakeDamage(keys)
 			end
 		end
 	end
+end
+
+function modifier_item_imba_heart_unique:GetModifierHPRegenAmplify_Percentage()
+	return self.hp_regen_amp
 end
 
 -- Aura buff

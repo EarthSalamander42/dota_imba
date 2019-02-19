@@ -23,10 +23,16 @@ end
 function imba_sandking_burrowstrike:GetCastRange(location, target)
     local caster = self:GetCaster()
     local cast_range = self:GetSpecialValueFor("cast_range")
-
+	
+	if caster:HasScepter() then
+		return self:GetSpecialValueFor("cast_range_scepter")
+	else
+		return cast_range 
+	end
+	
     -- #3 Talent: Burrowstrike cast range increase
-    cast_range = cast_range + caster:FindTalentValue("special_bonus_imba_sand_king_3")
-    return cast_range
+    --cast_range = cast_range + caster:FindTalentValue("special_bonus_imba_sand_king_3")
+    --return cast_range
 end
 
 function imba_sandking_burrowstrike:OnSpellStart()
@@ -175,7 +181,7 @@ function imba_sandking_burrowstrike:OnProjectileHit(target, location)
     target:AddNewModifier(caster, ability, modifier_stun, {duration = stun_duration})
 
     -- Apply Caustic Finale to heroes, unless they already have it
-    if target:IsHero() and poison_duration and poison_duration > 0 and not target:HasModifier(modifier_poison) then
+    if target:IsHero() and not target:IsIllusion() and poison_duration and poison_duration > 0 and not target:HasModifier(modifier_poison) then
         target:AddNewModifier(caster, caustic_ability, modifier_poison, {duration = poison_duration})
     end
 
@@ -1089,7 +1095,9 @@ function modifier_imba_epicenter_pulse:OnIntervalThink()
             -- Apply Epicenter slow
             enemy:AddNewModifier(self.caster, self.ability, self.modifier_slow, {duration = self.slow_duration})
 			
-			enemy:AddNewModifier(self.caster, self.ability, "modifier_stunned", {duration = 0.1})
+			if self.caster:HasTalent("special_bonus_imba_sand_king_4") then
+				enemy:AddNewModifier(self.caster, self.ability, "modifier_stunned", {duration = 0.1})
+			end
         end
 
         -- Find all nearby enemies in the pull radius
@@ -1243,7 +1251,7 @@ function modifier_imba_sandking_sand_storm_720_thinker:OnCreated()
 	
 	-- AbilitySpecials
 	self.damage_tick_rate 	= self.ability:GetSpecialValueFor("damage_tick_rate") + self.caster:FindTalentValue("special_bonus_imba_sand_king_2")
-	self.sand_storm_radius 	= self.ability:GetSpecialValueFor("sand_storm_radius")
+	self.sand_storm_radius 	= self.ability:GetSpecialValueFor("sand_storm_radius") + self.caster:FindTalentValue("special_bonus_imba_sand_king_9")
 	self.AbilityDuration 	= self.ability:GetSpecialValueFor("AbilityDuration")
 	self.sand_storm_damage 	= self.ability:GetSpecialValueFor("sand_storm_damage")
 	self.fade_delay 		= self.ability:GetSpecialValueFor("fade_delay")

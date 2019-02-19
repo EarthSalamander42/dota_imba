@@ -11805,7 +11805,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"mana_pool_damage_pct"		"6 7 8 9"
-				//"LinkedSpecialBonus"		"special_bonus_imba_obsidian_destroyer_1"
+				"LinkedSpecialBonus"		"special_bonus_imba_obsidian_destroyer_1"
 			}
 			"02"
 			{
@@ -11821,11 +11821,17 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"int_steal_duration"		"80"
+				"LinkedSpecialBonus"		"special_bonus_imba_obsidian_destroyer_9"	
 			}
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"splash_radius"				"400 475 550 625"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"175"
 			}
 		}
 	}
@@ -11974,6 +11980,67 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"int_proc_duration"		"10"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Obsidian Destroyer: Equilibrium
+	//=================================================================================================================
+	"imba_obsidian_destroyer_equilibrium"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"AbilityTextureName"			"obsidian_destroyer_essence_aura"
+		"ScriptFile"					"components/abilities/heroes/hero_obsidian_destroyer.lua"
+
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"18"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"50"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_3"
+		"AbilityCastGestureSlot"		"DEFAULT"
+						
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"mana_steal"		"65 90 115 140"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"movement_slow"		"12 22 32 42"
+				"LinkedSpecialBonus"	"special_bonus_unique_outworld_devourer_2"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"slow_duration"		"1.75"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"duration"			"7"
+			}
+			"05"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"atk_speed_diff"	"3 4 5 6"
 			}
 		}
 	}
@@ -12267,6 +12334,31 @@
 			{
 				"var_type"                  "FIELD_INTEGER"
 				"value"						"10"
+			}
+		}
+	}
+	
+	"special_bonus_imba_obsidian_destroyer_9" // +60s Arcane Orb Int Steal
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_obsidian_destroyer_arcane_orb"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"						"60"
 			}
 		}
 	}
@@ -17000,7 +17092,9 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"sandking_burrowstrike"
-		"ScriptFile"				"components/abilities/heroes/hero_sand_king.lua"		
+		"ScriptFile"				"components/abilities/heroes/hero_sand_king.lua"	
+
+		"HasScepterUpgrade"				"1"		
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
@@ -17081,8 +17175,14 @@
 			"10"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"cast_range"			"350 550 750 950"
+				"cast_range"			"350 500 650 800"
 				"LinkedSpecialBonus"	"special_bonus_imba_sand_king_3"
+			}
+			
+			"11"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cast_range_scepter"	"700 1000 1300 1600"
 			}
 		}
 	}
@@ -17397,6 +17497,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"sand_storm_radius"		"500 575 650 725"
+				"LinkedSpecialBonus"	"special_bonus_imba_sand_king_9"
 			}
 			"03"
 			{
@@ -17636,6 +17737,31 @@
 			{
 				"var_type"                  "FIELD_INTEGER"
 				"value"                     "1"
+			}
+		}
+	}
+	
+	"special_bonus_imba_sand_king_9" // Increased Sand Storm radius
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_sandking_sand_storm_720"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"                     "225"
 			}
 		}
 	}

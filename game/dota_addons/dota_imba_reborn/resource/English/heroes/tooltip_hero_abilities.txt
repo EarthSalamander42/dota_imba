@@ -1575,7 +1575,7 @@
 // Sand King's Burrowstrike
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_sandking_burrowstrike"                      "Burrowstrike"
-"DOTA_Tooltip_ability_imba_sandking_burrowstrike_Description"          "Sand King burrows into the ground and tunnels forward, damaging and stunning enemy units above him as he resurfaces. Disjoints projectiles.\n<font color='#FF7800'>Devil Spines:</font> Pushes enemies towards the destination point, or a maximum of distance.\n<font color='#FF7800'>Stingstrike:</font> Enemy heroes hit by Burrowstrike are stung, suffering the effects of Caustic Finale."
+"DOTA_Tooltip_ability_imba_sandking_burrowstrike_Description"          "Sand King burrows into the ground and tunnels forward, damaging and stunning enemy units above him as he resurfaces. Disjoints projectiles.\n<font color='#FF7800'>Devil Spines:</font> Pushes enemies towards the destination point, or a maximum of distance.\n<font color='#FF7800'>Stingstrike:</font> Enemy heroes hit by Burrowstrike are stung, suffering the effects of Caustic Finale. Does not affect illusions.\n\nUpgradable by Aghanim's Scepter."
 "DOTA_Tooltip_ability_imba_sandking_burrowstrike_Lore"                  "Crixalis often lies in wait, burrowing under the surface to ambush his adversaries."
 "DOTA_Tooltip_ability_imba_sandking_burrowstrike_Note0"                "If the distance is closer than the maximum distance, units will be moved to the target point."
 "DOTA_Tooltip_ability_imba_sandking_burrowstrike_cast_range"            "CAST RANGE:"
@@ -1583,6 +1583,9 @@
 "DOTA_Tooltip_ability_imba_sandking_burrowstrike_stun_duration"                     "STUN DURATION:"
 "DOTA_Tooltip_ability_imba_sandking_burrowstrike_damage"                "DAMAGE:"
 "DOTA_Tooltip_ability_imba_sandking_burrowstrike_max_push_distance"                 "MAXIMUM DISTANCE:"
+"DOTA_Tooltip_ability_imba_sandking_burrowstrike_cast_range_scepter"	"SCEPTER RANGE:"
+
+"DOTA_Tooltip_ability_imba_sandking_burrowstrike_aghanim_description"	"Doubles cast range."
 
 "DOTA_Tooltip_modifier_imba_burrowstrike_stun"                          "Burrowstrike"
 "DOTA_Tooltip_modifier_imba_burrowstrike_stun_Description"              "Stunned."
@@ -1663,11 +1666,12 @@
 "DOTA_Tooltip_ability_special_bonus_imba_sand_king_1"                   "+100 Burrowstrike path radius"
 "DOTA_Tooltip_ability_special_bonus_imba_sand_king_2"                   "+40 Sand Storm DPS"
 "DOTA_Tooltip_ability_special_bonus_imba_sand_king_3"                   "+275 Burrowstrike cast range"
-"DOTA_Tooltip_ability_special_bonus_imba_sand_king_4"                   "+300 Epicenter pull radius"
+"DOTA_Tooltip_ability_special_bonus_imba_sand_king_4"                   "+300 Epicenter pull radius + pulses now mini-stun"
 "DOTA_Tooltip_ability_special_bonus_imba_sand_king_5"                   "+20% Caustic Finale slow"
 "DOTA_Tooltip_ability_special_bonus_imba_sand_king_6"                   "+4 Epicenter pulses"
 "DOTA_Tooltip_ability_special_bonus_imba_sand_king_7"                   "Passive Sandstorm aura with half Sandstorm values"
 "DOTA_Tooltip_ability_special_bonus_imba_sand_king_8"                   "Caustic Finale triggers from all sources of damage"
+"DOTA_Tooltip_ability_special_bonus_imba_sand_king_9"                   "+225 Sand Storm radius"
 
 ////===============================================================================================================
 // Shadow Fiend's Shadowrazes
