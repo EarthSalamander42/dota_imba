@@ -367,7 +367,7 @@ function modifier_item_imba_kaya:IsPermanent() return true end
 -- Declare modifier events/properties
 function modifier_item_imba_kaya:DeclareFunctions()
 	local funcs = {
-		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
+		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE_UNIQUE,
 		MODIFIER_PROPERTY_MANACOST_PERCENTAGE,
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
 		MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE
@@ -375,7 +375,7 @@ function modifier_item_imba_kaya:DeclareFunctions()
 	return funcs
 end
 
-function modifier_item_imba_kaya:GetModifierSpellAmplify_Percentage()
+function modifier_item_imba_kaya:GetModifierSpellAmplify_PercentageUnique()
 	if not self:GetAbility() then return end
 	return self:GetAbility():GetSpecialValueFor("spell_amp")
 end
@@ -593,13 +593,13 @@ function modifier_item_imba_kaya_and_sange:DeclareFunctions()
 		MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE,
 		MODIFIER_PROPERTY_MANACOST_PERCENTAGE,
 		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING,
-		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
+		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE_UNIQUE,
 	}
 
 	return funcs
 end
 
-function modifier_item_imba_kaya_and_sange:GetModifierSpellAmplify_Percentage()
+function modifier_item_imba_kaya_and_sange:GetModifierSpellAmplify_PercentageUnique()
 	if not self:GetAbility() then return end
 	return self:GetAbility():GetSpecialValueFor("spell_amp")
 end
@@ -715,13 +715,13 @@ function modifier_item_imba_yasha_and_kaya:DeclareFunctions()
 		MODIFIER_PROPERTY_MANACOST_PERCENTAGE,
 		MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE,
 		--MODIFIER_PROPERTY_EVASION_CONSTANT,
-		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
+		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE_UNIQUE,
 	}
 
 	return funcs
 end
 
-function modifier_item_imba_yasha_and_kaya:GetModifierSpellAmplify_Percentage()
+function modifier_item_imba_yasha_and_kaya:GetModifierSpellAmplify_PercentageUnique()
 	if not self:GetAbility() then return end
 	return self:GetAbility():GetSpecialValueFor("spell_amp")
 end

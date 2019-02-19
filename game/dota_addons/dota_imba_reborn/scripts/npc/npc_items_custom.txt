@@ -3959,13 +3959,19 @@
 			"13"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_reduction_pct"	"40"
+				"damage_reduction_pct"	"25"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"14"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"tooltip_reapply_time"	"40"
+			}
+			"15"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_reduction_pct_passive"		"10"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 		}
 	}
@@ -12484,7 +12490,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"regen_per_charge"		"0.3"
+				"regen_per_charge"		"0.5"
 			}
 			"07"
 			{

@@ -64,7 +64,7 @@
 "DOTA_Tooltip_ability_imba_ursa_enrage_duration"					"DURATION:"
 "DOTA_Tooltip_ability_imba_ursa_enrage_fury_swipes_multiplier"		"FURY SWIPES MULTIPLIER:"
 "DOTA_Tooltip_ability_imba_ursa_enrage_bonus_radius_skills"			"RAW INSTINCTS BONUS RADIUS:"
-"DOTA_Tooltip_ability_imba_ursa_enrage_damage_reduction"			"BONUS DAMAGE REDUCTION/TENACITY:"
+"DOTA_Tooltip_ability_imba_ursa_enrage_damage_reduction"			"BONUS DAMAGE REDUCTION:"
 "DOTA_Tooltip_ability_imba_ursa_enrage_scepter_cooldown"			"SCEPTER COOLDOWN:"
 
 "DOTA_Tooltip_modifier_imba_enrage_buff"							"Enrage"

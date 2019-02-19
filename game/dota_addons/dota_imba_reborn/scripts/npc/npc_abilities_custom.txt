@@ -440,7 +440,7 @@
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"damage_pct"					"15"
+				"damage_pct"					"25"
 			}
 			"03"
 			{
@@ -11805,7 +11805,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"mana_pool_damage_pct"		"6 7 8 9"
-				"LinkedSpecialBonus"		"special_bonus_imba_obsidian_destroyer_1"
+				//"LinkedSpecialBonus"		"special_bonus_imba_obsidian_destroyer_1"
 			}
 			"02"
 			{
@@ -17687,7 +17687,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"base_damage"				"60 100 130 150"
+				"base_damage"				"60 90 120 150"
 			}
 
 			"02"

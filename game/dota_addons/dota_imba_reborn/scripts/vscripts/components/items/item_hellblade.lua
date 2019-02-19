@@ -105,14 +105,18 @@ function item_imba_hellblade:TransferAllDebuffs(caster, target)
 				local modifier_duration = modifier:GetDuration()
 				caster:RemoveModifierByName(modifier_name)
 
+				print("Transferring modifier '"..modifier_name.."' via Hellblade.")
+				
 				-- Find if it is a lua based ability or datadriven and assign the correct function
 				local modifier_ability = modifier:GetAbility()
 				local modifier_class = modifier:GetClass()
-
-				if modifier_class == datadrive_baseclass then
-					modifier_ability:ApplyDataDrivenModifier(caster, target, modifier_name, {duration = modifier_duration})
-				else
-					target:AddNewModifier(caster, modifier_ability, modifier_name, {duration = modifier_duration})
+				
+				if modifier_ability ~= nil then
+					if modifier_class == datadrive_baseclass then
+						modifier_ability:ApplyDataDrivenModifier(caster, target, modifier_name, {duration = modifier_duration})
+					else
+						target:AddNewModifier(caster, modifier_ability, modifier_name, {duration = modifier_duration})
+					end
 				end
 			end
 		end

@@ -179,10 +179,10 @@
 	"item_recipe_imba_spell_fencer"			"REMOVE"
 	"item_imba_spell_fencer"				"REMOVE"
 	"item_imba_recipe_manta"				"REMOVE"
-	"item_imba_manta"						"REMOVE" // Holy god damn lag (ES: indeed!)
+	"item_imba_manta"						"REMOVE" // Holy god damn lag
 	"item_recipe_imba_bloodstone"			"REMOVE"
 	"item_imba_bloodstone"					"REMOVE"
-  
+
 	//=================================================================================================================
 	//-----------------------------------------------------------------------------------------------------------------
 	// 								ITEM OVERRIDES
@@ -691,35 +691,9 @@
 	{
 		"AbilityCastRange"				"800"
 		"ItemCost"						"75"
-		"ItemInitialCharges"			"1"
 
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"lifetime"					"360"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"vision_range"				"250"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"true_sight_range"			"1000"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"health"					"200"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"duration_minutes_tooltip"	"6"
-			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
@@ -735,60 +709,11 @@
 	{
 		"ItemCost"									"95"
 
-		"AbilityCastRange"							"750"
+		"AbilityCastRange"							"800"
 
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"bonus_health"						"100"
-			}
-			"02"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"observer_cost"						"25"
-			}
-			"03"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"sentry_cost"						"75"
-			}
-			"04"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"lifetime_observer"					"360"
-			}
-			"05"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"lifetime_sentry"					"240"
-			}
-			"06"
-			{
-				"var_type"							"FIELD_FLOAT"
-				"creation_delay"					"0"
-			}
-			"07"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"observer_vision_range_tooltip"		"1600"
-			}
-			"08"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"observer_duration_minutes_tooltip"	"6"
-			}
-			"09"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"true_sight_range"					"1000"
-			}
-			"10"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"sentry_duration_minutes_tooltip"	"4"
-			}
+
 		}
 	}
 
@@ -3252,7 +3177,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_bonus"			"12 24 36 48"
+				"damage_bonus"			"24 36 48 60"
 			}
 		}
 	}
@@ -4485,7 +4410,7 @@
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"pre_flight_time"			"3 2 1 0"
+				"pre_flight_time"			"3"
 			}
 			"08"
 			{
@@ -8488,55 +8413,22 @@
 	}
 
 	//=================================================================================================================
-	//	Oracle: bonus False Promise duration
-	//=================================================================================================================
-	"special_bonus_unique_oracle"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"3"
-			}
-		}
-	}
-
-	//=================================================================================================================
 	// Phantom Lancer: Spirit Lance
 	//=================================================================================================================
 	"phantom_lancer_spirit_lance"
 	{
-		"AbilityCooldown"				"7"
-		"AbilityDamage"					"100 200 275 325"
-
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"lance_damage"				"100 150 200 250"
+				"lance_damage"				"125 185 245 305"
 				"LinkedSpecialBonus"		"special_bonus_unique_phantom_lancer_2"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"lance_speed"				"1000"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"duration"					"3.25"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"movement_speed_pct"		"-10 -30 -40 -40"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"illusion_duration"			"2 4 6 8"
+				"movement_speed_pct"		"-10 -20 -30 -40"
 			}
 			"10"
 			{
@@ -8561,11 +8453,7 @@
 	//=================================================================================================================
 	"phantom_lancer_doppelwalk"
 	{
-		"MaxLevel"							"4"
-
 		"AbilityCastRange"					"600 700 800 900"
-
-		"AbilityCooldown"					"25 20 15 10"
 	}
 
 	//=================================================================================================================
@@ -8573,9 +8461,7 @@
 	//=================================================================================================================
 	"phantom_lancer_phantom_edge"
 	{
-		"MaxLevel"							"4"
-
-		"AbilityCooldown"					"16 8 3 1"
+		"AbilityCooldown"					"14 10 6 2"
 		
 		"AbilitySpecial"
 		{
@@ -8593,18 +8479,13 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_agility"				"6 22 32 36"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"agility_duration"			"2"
+				"bonus_agility"				"10 20 30 40"
 			}
 		}
 	}
-
+	
 	//=================================================================================================================
-	// Phantom Lancer: bonus phantom rush maximum distance
+	// Ability: Special Bonus
 	//=================================================================================================================
 	"special_bonus_unique_phantom_lancer"
 	{
@@ -8613,30 +8494,33 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"600"
+				"value"				"600"
 			}
 		}
 	}
-
+	
 	//=================================================================================================================
 	// Phantom Lancer: Juxtapose
 	//=================================================================================================================
 	"phantom_lancer_juxtapose"
 	{
-		"MaxLevel"							"3"
-
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"max_illusions"				"6 10 12"
+				"max_illusions"				"6 9 12"
 				"LinkedSpecialBonus"		"special_bonus_unique_phantom_lancer_3"
 			}
-			"02"
+			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"proc_chance_pct"			"40 45 50"
+				"illusion_damage_out_pct"	"-82"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"tooltip_illusion_damage"	"18"
 			}
 		}
 	}
@@ -8869,15 +8753,10 @@
 
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"drain_length"			"8"
-			}
 			"02"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"drain_duration"		"20"
+				"var_type"				"FIELD_FLOAT"
+				"drain_duration"		"20.0"
 			}
 			"03"
 			{
@@ -8888,42 +8767,19 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"drain_range_buffer"	"200 275 350 425"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"200"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"speed"					"900"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"vision_radius"			"800"
-			}
-			"08"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"vision_duration"		"3.34"
+				"drain_range_buffer"	"250 300 350 400"
 			}
 		}
 	}
 
-	//=================================================================================================================
-	// Razor: bonus static link damage drain per second
-	//=================================================================================================================
 	"special_bonus_unique_razor"
 	{
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"value"					"20"
+				"var_type"					"FIELD_INTEGER"
+				"value"				"20"
 			}
 		}
 	}
@@ -8938,39 +8794,19 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"movement_speed_pct"	"6 14 20 24"
+				"movement_speed_pct"	"8 12 16 20"
 				"LinkedSpecialBonus"	"special_bonus_unique_razor_3"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"passive_area_damage"	"60 80 100 120"		
+				"passive_area_damage"	"60 100 140 180"		
 				"LinkedSpecialBonus"	"special_bonus_unique_razor_4"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"passive_area_interval"	"6 5 4 3"		
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"500"		
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Razor: bonus Unstable Current proc damage
-	//=================================================================================================================
-	"special_bonus_unique_razor_2"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"value"					"0.1"
+				"passive_area_interval"	"5 4 3 2"		
 			}
 		}
 	}
@@ -8980,9 +8816,6 @@
 	//=================================================================================================================
 	"razor_eye_of_the_storm"
 	{
-		"MaxLevel"							"3"
-		"AbilityCastRange"					"500 575 650"
-
 		"AbilitySpecial"
 		{
 			"01"
@@ -9058,7 +8891,7 @@
 	//=================================================================================================================
 	"shadow_demon_soul_catcher"
 	{
-		"AbilityCooldown"				"13 11 9 7"
+		"AbilityCooldown"				"22 20 18 16" 
 		"AbilityCastRange"				"700 800 900 1000"
 
 		"AbilitySpecial"
@@ -9066,7 +8899,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health_lost"			"25 30 35 40"
+				"health_lost"			"30 36 42 48"
 			}
 			"02"
 			{
@@ -9131,13 +8964,8 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"purge_damage"			"225 425 475"
+				"purge_damage"			"300 400 500"
 				"LinkedSpecialBonus"	"special_bonus_unique_shadow_demon_1"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"max_charges"			"3"
 			}
 			"04"
 			{
@@ -9158,8 +8986,6 @@
 	"slark_dark_pact"
 	{
 		"AbilityCastRange"				"325 350 375 400"
-		"AbilityCooldown"				"9.0 8.0 7.0 6.0"
-		"AbilityManaCost"				"55 45 35 25"
 
 		"AbilitySpecial"
 		{
@@ -9171,7 +8997,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"total_damage"			"75 225 320 360"
+				"total_damage"			"90 180 270 360"
 				"LinkedSpecialBonus"	"special_bonus_unique_slark_2"
 			}
 		}
@@ -9203,42 +9029,16 @@
 	}
 
 	//=================================================================================================================
-	//	Slark: Pounce duration increase
-	//=================================================================================================================
-	"special_bonus_unique_slark"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"3"
-			}
-		}
-	}
-
-	//=================================================================================================================
 	// Slark: Essence Shift
 	//=================================================================================================================
 	"slark_essence_shift"
 	{
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"agi_gain"				"3"
-			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"stat_loss"				"2"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"duration"				"15 30 60 120"
-				"LinkedSpecialBonus"	"special_bonus_unique_slark_4"
 			}
 		}
 	}
@@ -9248,7 +9048,7 @@
 	//=================================================================================================================
 	"slark_shadow_dance"
 	{
-		"AbilityCooldown"					"60 50 40"
+		"AbilityCooldown"					"70 60 50"
 
 		"AbilitySpecial"
 		{
@@ -9257,11 +9057,6 @@
 				"var_type"					"FIELD_FLOAT"
 				"duration"					"4.0 4.5 5.0"
 				"LinkedSpecialBonus"		"special_bonus_unique_slark_3"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"fade_time"					"0.0"
 			}
 			"03"
 			{
@@ -9273,11 +9068,6 @@
 				"var_type"					"FIELD_INTEGER"
 				"bonus_regen_pct"			"3 6 9"
 			}
-			"05"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"activation_delay"			"0.5"
-			}
 			"06"
 			{
 				"var_type"					"FIELD_FLOAT"
@@ -9287,11 +9077,6 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"scepter_aoe"				"425"
-			}
-			"08"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"cooldown_scepter"			"30"
 			}
 		}
 	}
@@ -9332,18 +9117,18 @@
 			}
 		}
 	}
-
+	
 	//=================================================================================================================
-	//	Spirit Breaker: Bulldoze cdr
+	// Ability: Bulldoze
 	//=================================================================================================================
-	"special_bonus_unique_spirit_breaker_2"
-	{
+	"spirit_breaker_bulldoze"
+	{		
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"7"
+				"var_type"						"FIELD_INTEGER"
+				"movement_speed"				"16 22 28 34"
 			}
 		}
 	}
@@ -9386,87 +9171,37 @@
 	}
 
 	//=================================================================================================================
-	// Ability: +% chance Greater Bash
-	//=================================================================================================================
-	"special_bonus_unique_spirit_breaker_1"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"				"17"
-			}
-		}
-	}
-
-	//=================================================================================================================
 	// Spirit Breaker: Greater Bash
 	//=================================================================================================================
 	"spirit_breaker_greater_bash"
 	{
-		"MaxLevel"						"4"
-
-		"AbilityCooldown"				"1.5"
-
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"chance_pct"			"17"
-				"LinkedSpecialBonus"	"special_bonus_unique_spirit_breaker_1"
-			}
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"damage"				"24 40 50 54"
+				"damage"				"24.0 32.0 40.0 48.0"
 				"LinkedSpecialBonus"	"special_bonus_unique_spirit_breaker_3"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"duration"				"1.0 1.4 1.65 1.75"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"knockback_duration"	"0.5"
+				"duration"				"1.3 1.5 1.7 1.9"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"knockback_distance"	"160"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"knockback_height"		"50"
+				"knockback_distance"	"143 152 158 162"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_movespeed_pct"	"15 20 25 30"
+				"bonus_movespeed_pct"	"17 21 25 29"
 			}
 			"08"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"movespeed_duration"	"5"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	//	Spirit Breaker: bonus Greater Bash damage
-	//=================================================================================================================
-	"special_bonus_unique_spirit_breaker_3"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"30"
+				"var_type"				"FIELD_FLOAT"
+				"movespeed_duration"	"5.0"
 			}
 		}
 	}
@@ -9478,7 +9213,7 @@
 	{
 		"AbilityCastRange"				"700 1200 1700"
 		"AbilityCastRangeBuffer"		"3500"
-		"AbilityCooldown"				"70 60 40"
+		"AbilityCooldown"				"60 50 40"
 
 		"AbilitySpecial"
 		{
@@ -9486,11 +9221,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"damage"				"200 350 500"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"fade_time"				"1.0"
 			}
 			"03"
 			{
@@ -9506,11 +9236,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bash_radius_scepter"	"375"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"cooldown_scepter"		"20"
 			}
 		}
 	}
@@ -13822,14 +13547,14 @@
 	//=================================================================================================================
 	"dark_willow_bramble_maze"
 	{
-		"AbilityCooldown"				"25 21 18 15"
+		"AbilityCooldown"				"25 20 15 10"
 		
 		"AbilitySpecial"
 		{
 			"04"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"latch_duration"	"1 2 3 4"
+				"latch_duration"	"1.0 1.8 2.6 3.4"
 			}
 			"06"
 			{
@@ -13844,7 +13569,7 @@
 	//=================================================================================================================
 	"dark_willow_shadow_realm"
 	{
-		"AbilityCooldown"				"22 18 14 8"
+		"AbilityCooldown"				"30 24 18 12"
 		
 		"AbilitySpecial"
 		{
@@ -13854,6 +13579,11 @@
 				"damage"						"120 280 380 420"
 				"LinkedSpecialBonus"			"special_bonus_unique_dark_willow_1"
 			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"attack_range_bonus"			"800"
+			}
 		}
 	}
 
@@ -13862,14 +13592,17 @@
 	//=================================================================================================================
 	"dark_willow_cursed_crown"
 	{
-		"AbilityCooldown"				"18 16 14 12"
-
 		"AbilitySpecial"
 		{
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"stun_duration"			"2.5 3.1 3.7 4.3"
+				"stun_duration"			"2.4 3.0 3.6 4.2"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"stun_radius"			"900"
 			}
 		}
 	}
@@ -13886,6 +13619,11 @@
 				"var_type"				"FIELD_INTEGER"
 				"attack_damage"			"80 240 400"
 			}
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"roaming_seconds_per_rotation"				"0.9"
+			}
 		}
 	}
 
@@ -13895,6 +13633,18 @@
 	"dark_willow_terrorize"
 	{
 		"AbilityCooldown"				"100 75 50"
+		
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"destination_radius"		"600"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_FLOAT"
+			"destination_status_duration"	"5"
+			"LinkedSpecialBonus"		"special_bonus_unique_dark_willow_2"
+		}	
 	}
 
 	//=================================================================================================================
@@ -14883,32 +14633,6 @@
 				"var_type"				"FIELD_FLOAT"
 				"tooltip_ranged_cooldown_increase"	"15"
 			}		
-		}
-	}
-
-	//=================================================================================================================
-	// Recipe: Manta
-	//=================================================================================================================
-	"item_recipe_manta"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"146"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
-		"Model"							"models/props_gameplay/recipe.vmdl"
-		"FightRecapLevel"				"1"
-		
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"500"	
-		"ItemShopTags"					""
-		
-		// Recipe
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemRecipe"					"1"
-		"ItemResult"					"item_manta"
-		"ItemRequirements"
-		{
-			"01"						"item_imba_yasha;item_ultimate_orb"
 		}
 	}
 }
