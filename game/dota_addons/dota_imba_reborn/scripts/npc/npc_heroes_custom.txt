@@ -1,4 +1,4 @@
-#base heroes/bristleback/hero.txt
+// #base heroes/bristleback/hero.txt
 #base heroes/enchantress/hero.txt
 #base heroes/rubick/hero.txt
 #base heroes/shadow_shaman/hero.txt
