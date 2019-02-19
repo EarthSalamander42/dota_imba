@@ -82,6 +82,7 @@ function modifier_imba_arcane_orb_thinker:OnCreated()
 	self.int_steal_duration = self.ability:GetSpecialValueFor("int_steal_duration")
 	self.int_steal_count = self.ability:GetSpecialValueFor("int_steal_count")
 	self.splash_radius = self.ability:GetSpecialValueFor("splash_radius")
+	self.radius = self.ability:GetSpecialValueFor("radius")
 end
 
 function modifier_imba_arcane_orb_thinker:OnAttackStart(keys)
@@ -102,7 +103,7 @@ function modifier_imba_arcane_orb_thinker:OnAttackStart(keys)
 			-- Get variables
 			self.auto_cast = self.ability:GetAutoCastState()
 			self.current_mana = self.caster:GetMana()
-			self.mana_cost = self.ability:GetManaCost(-1) * attacker:GetStatusResistance()
+			-- self.mana_cost = self.ability:GetManaCost(-1) * attacker:GetStatusResistance() -- Why was this even here
 
 			-- If the caster is silenced, mark attack as non-orb
 			if self.caster:IsSilenced() then
@@ -125,9 +126,13 @@ function modifier_imba_arcane_orb_thinker:OnAttackStart(keys)
 			end     
 
 			-- If there isn't enough mana to cast an Arcane Orb, assign as a non-orb attack
-			if self.current_mana < self.mana_cost then
+			-- if self.current_mana < self.mana_cost then
+				-- orb_attack = false
+			-- end
+			
+			if not self.ability:IsFullyCastable() then
 				orb_attack = false
-			end         
+			end
 
 			if orb_attack then
 				--mark that attack as an Arcane Orb attack
@@ -198,28 +203,42 @@ function modifier_imba_arcane_orb_thinker:ApplyArcaneOrbAttack(target)
 
 	-- Apply effect if the target didn't suddenly become magic immune              
 	if not target:IsMagicImmune() then
-
 		-- Calculate bonus pure damage according to a percent of current mana
 		local damage = self.caster:GetMana() * self.mana_pool_damage_pct * 0.01
 
-		-- Add damage if the target is a summoned unit or an illusion
-		if target:IsSummoned() or target:IsIllusion() then
-			damage = damage + self.illusion_bonus_dmg
+		-- Find all units in radius
+		local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(),
+										  target:GetAbsOrigin(),
+										  nil,
+										  self.radius,
+										  DOTA_UNIT_TARGET_TEAM_ENEMY,
+										  DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+										  DOTA_UNIT_TARGET_FLAG_NONE,
+										  FIND_ANY_ORDER,
+										  false)
+										  
+		for _, enemy in pairs(enemies) do
+			local damage_instance = damage
+		
+			-- Add damage if the target is a summoned unit or an illusion
+			if enemy:IsSummoned() or enemy:IsIllusion() then
+				damage_instance = damage + self.illusion_bonus_dmg
+			end
+
+			-- Deal damage
+			local damageTable = {victim = enemy,
+								damage = damage_instance,
+								damage_type = DAMAGE_TYPE_PURE,
+								damage_flags = DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION,
+								attacker = self.caster,
+								ability = self.ability
+								}
+								
+			ApplyDamage(damageTable)
+
+			-- Show damage alert
+			SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, enemy, damage_instance, nil)
 		end
-
-		-- Deal damage
-		local damageTable = {victim = target,
-							damage = damage,
-							damage_type = DAMAGE_TYPE_PURE,
-							damage_flags = DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION,
-							attacker = self.caster,
-							ability = self.ability
-							}
-							
-		ApplyDamage(damageTable)
-
-		-- Show damage alert
-		SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, target, damage, nil)
 
 		-- If a target is an illusion or a summoned unit, check if it's still alive after the damage instance
 		if target:IsSummoned() or target:IsIllusion() then
@@ -277,6 +296,9 @@ function modifier_imba_arcane_orb_thinker:ApplyArcaneOrbAttack(target)
 		end
 
 		local int_steal_count = self.int_steal_count
+	
+		-- Since there's a talent that increases this need to call it again outside of creation function
+		self.int_steal_duration = self.ability:GetSpecialValueFor("int_steal_duration") + self.caster:FindTalentValue("special_bonus_imba_obsidian_destroyer_9")
 
 		-- Steal intelligence from target
 		ApplyIntelligenceSteal(self.caster, self.ability, target, int_steal_count, self.int_steal_duration)
@@ -531,7 +553,7 @@ function modifier_imba_arcane_orb_buff:OnCreated()
 		self.parent = self:GetParent()        
 
 		-- Ability specials
-		self.int_steal_duration = self.ability:GetSpecialValueFor("int_steal_duration")
+		self.int_steal_duration = self.ability:GetSpecialValueFor("int_steal_duration") + self.caster:FindTalentValue("special_bonus_imba_obsidian_destroyer_9")
 
 		-- Initialize table
 		self.stacks_table = {}        
@@ -612,7 +634,7 @@ function modifier_imba_arcane_orb_debuff:OnCreated()
 		self.mana_per_int = 12
 
 		-- Ability specials
-		self.int_steal_duration = self.ability:GetSpecialValueFor("int_steal_duration")
+		self.int_steal_duration = self.ability:GetSpecialValueFor("int_steal_duration") + self.caster:FindTalentValue("special_bonus_imba_obsidian_destroyer_9")
 
 		-- Initialize table
 		self.stacks_table = {}        
@@ -695,7 +717,7 @@ function modifier_imba_arcane_orb_instance:OnCreated()
         self.parent = self:GetParent()        
 
         -- Ability specials
-        self.int_steal_duration = self.ability:GetSpecialValueFor("int_steal_duration")
+        self.int_steal_duration = self.ability:GetSpecialValueFor("int_steal_duration") + self.caster:FindTalentValue("special_bonus_imba_obsidian_destroyer_9")
 
         -- Initialize table
         self.stacks_table = {}        
@@ -1865,3 +1887,144 @@ function imba_obsidian_destroyer_sanity_eclipse:OnSpellStart()
 		end
 	end
 end
+
+LinkLuaModifier("modifier_imba_obsidian_destroyer_equilibrium", "components/abilities/heroes/hero_obsidian_destroyer.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_obsidian_destroyer_equilibrium_debuff", "components/abilities/heroes/hero_obsidian_destroyer.lua", LUA_MODIFIER_MOTION_NONE)
+
+imba_obsidian_destroyer_equilibrium = class({})
+modifier_imba_obsidian_destroyer_equilibrium = class({})
+modifier_imba_obsidian_destroyer_equilibrium_debuff = class({})
+
+-----------------
+-- EQUILIBRIUM --
+-----------------
+
+function imba_obsidian_destroyer_equilibrium:OnSpellStart()
+	self.caster	= self:GetCaster()
+	
+	-- AbilitySpecials
+	self.duration	= self:GetSpecialValueFor("duration")
+	
+	if not IsServer() then return end
+	
+	self.caster:EmitSound("Hero_ObsidianDestroyer.Equilibrium.Cast")
+	
+	self.caster:AddNewModifier(self.caster, self, "modifier_imba_obsidian_destroyer_equilibrium", {duration = self.duration})
+end
+
+--------------------------
+-- EQUILIBRIUM MODIFIER --
+--------------------------
+
+function modifier_imba_obsidian_destroyer_equilibrium:GetEffectName()
+	return "particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_matter_buff.vpcf"
+end
+
+function modifier_imba_obsidian_destroyer_equilibrium:GetEffectAttachType()
+	return PATTACH_OVERHEAD_FOLLOW
+end
+
+function modifier_imba_obsidian_destroyer_equilibrium:GetStatusEffectName()
+	return "particles/status_fx/status_effect_obsidian_matter.vpcf"
+end
+
+function modifier_imba_obsidian_destroyer_equilibrium:OnCreated()
+	self.ability	= self:GetAbility()
+	self.caster		= self:GetCaster()
+	self.parent		= self:GetParent()
+	
+	-- AbilitySpecials
+	self.mana_steal			= self.ability:GetSpecialValueFor("mana_steal")
+	self.movement_slow		= self.ability:GetSpecialValueFor("movement_slow")
+	self.slow_duration		= self.ability:GetSpecialValueFor("slow_duration")
+	self.duration			= self.ability:GetSpecialValueFor("duration")
+	self.atk_speed_diff		= self.ability:GetSpecialValueFor("atk_speed_diff")
+end
+
+function modifier_imba_obsidian_destroyer_equilibrium:DeclareFunctions()
+	local decFuncs = {
+		MODIFIER_EVENT_ON_TAKEDAMAGE,
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT
+    }
+
+    return decFuncs
+end
+
+function modifier_imba_obsidian_destroyer_equilibrium:GetModifierAttackSpeedBonus_Constant()
+	return self.atk_speed_diff * self:GetStackCount()
+end
+
+--- Enum DamageCategory_t
+-- DOTA_DAMAGE_CATEGORY_ATTACK = 1
+-- DOTA_DAMAGE_CATEGORY_SPELL = 0
+function modifier_imba_obsidian_destroyer_equilibrium:OnTakeDamage(keys)
+	if not IsServer() then return end
+
+	if keys.attacker == self.caster and keys.damage_category == 0 then
+		keys.unit:EmitSound("Hero_ObsidianDestroyer.Equilibrium.Damage")
+
+		self.particle = ParticleManager:CreateParticle("particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_loadout.vpcf", PATTACH_ABSORIGIN, self.caster)
+		ParticleManager:ReleaseParticleIndex(self.particle)
+		
+		self.caster:GiveMana(keys.damage * (self.mana_steal / 100))
+	
+		keys.unit:AddNewModifier(self.caster, self.ability, "modifier_imba_obsidian_destroyer_equilibrium_debuff", {duration = self.slow_duration})
+		
+		self:IncrementStackCount()
+	end
+end
+
+---------------------------------
+-- EQUILIBRIUM DEBUFF MODIFIER --
+---------------------------------
+
+function modifier_imba_obsidian_destroyer_equilibrium_debuff:GetStatusEffectName()
+	return "particles/status_fx/status_effect_obsidian_matter_debuff.vpcf"
+end
+
+function modifier_imba_obsidian_destroyer_equilibrium_debuff:OnCreated()
+	self.ability	= self:GetAbility()
+	self.caster		= self:GetCaster()
+	self.parent		= self:GetParent()
+	
+	-- AbilitySpecials
+	--self.mana_steal			= self.ability:GetSpecialValueFor("mana_steal")
+	self.movement_slow		= self.ability:GetSpecialValueFor("movement_slow")
+	self.slow_duration		= self.ability:GetSpecialValueFor("slow_duration")
+	--self.duration			= self.ability:GetSpecialValueFor("duration")
+	self.atk_speed_diff		= self.ability:GetSpecialValueFor("atk_speed_diff")
+	
+	if not IsServer() then return end
+	
+	-- Mana particles aren't flying to the caster so this isn't really correct
+	self.particle = ParticleManager:CreateParticle("particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_matter_debuff.vpcf", PATTACH_ABSORIGIN, self.caster)
+	ParticleManager:SetParticleControl(self.particle, 0, self.parent:GetAbsOrigin())
+	ParticleManager:SetParticleControl(self.particle, 2, self.parent:GetAbsOrigin())
+	self:AddParticle(self.particle, false, false, -1, false, false)
+end
+
+function modifier_imba_obsidian_destroyer_equilibrium_debuff:OnRefresh()
+	if not IsServer() then return end
+	
+	self:SetDuration(self.slow_duration * (1 - self.parent:GetStatusResistance()), true)
+	
+	self:IncrementStackCount()
+end
+
+function modifier_imba_obsidian_destroyer_equilibrium_debuff:DeclareFunctions()
+	local decFuncs = {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT 
+    }
+
+    return decFuncs
+end
+
+function modifier_imba_obsidian_destroyer_equilibrium_debuff:GetModifierMoveSpeedBonus_Percentage()
+	return self.movement_slow * (-1)
+end
+
+function modifier_imba_obsidian_destroyer_equilibrium_debuff:GetModifierAttackSpeedBonus_Constant()
+    return self.atk_speed_diff * self:GetStackCount() * (-1)
+end
+	

@@ -700,7 +700,18 @@ function GameMode:OnPlayerChat(keys)
 			
 			-- When you don't want to have random match history...
 			if str == "-crashgame" then
-				caster:AddNewModifier(caster, nil, nil, {})
+				print(PlayerResource:GetPlayerName(caster:GetPlayerID()), "(", PlayerResource:GetSteamID(caster:GetPlayerID()), ") has called a crash command.")
+				Notifications:BottomToAll({ text = "Game is attempting to be crashed by "..PlayerResource:GetPlayerName(caster:GetPlayerID()).." in 5 seconds.", duration = 5.0, style = { color = "Red" } })
+				
+				-- Others may be potentially abusing this so putting a failsafe
+				-- Crash if teams are less than half full (likely just testing stuff), otherwise make them auto-lose for attempting to crash
+				Timers:CreateTimer(5.0, function()
+					if PlayerResource:GetPlayerCountForTeam(caster:GetTeam()) / GameRules:GetCustomGameTeamMaxPlayers(caster:GetTeam()) < 0.5 then
+						caster:AddNewModifier(caster, nil, nil, {})
+					else
+						GameRules:MakeTeamLose(caster:GetTeam())
+					end
+				end)
 			end
 		end
 
@@ -733,7 +744,7 @@ function GameMode:OnThink()
 		end
 
 		-- Make courier controllable, repeat every second to avoid uncontrollable issues
-		if COURIER_TEAM then
+		if COURIER_TEAM and IsValidEntity(COURIER_TEAM[hero:GetTeamNumber()]) then
 			if COURIER_TEAM[hero:GetTeamNumber()] and not COURIER_TEAM[hero:GetTeamNumber()]:IsControllableByAnyPlayer() then
 				COURIER_TEAM[hero:GetTeamNumber()]:SetControllableByPlayer(hero:GetPlayerID(), true)
 			end

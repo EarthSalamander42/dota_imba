@@ -106,6 +106,11 @@ function modifier_imba_sogat_cuirass:GetModifierBonusStats_Intellect()
 	return self:GetAbility():GetSpecialValueFor("bonus_stats")
 end
 
+-- Custom unique damage reduction property
+function modifier_imba_sogat_cuirass:GetCustomIncomingDamageReductionUnique()
+	return self:GetAbility():GetSpecialValueFor("damage_reduction_pct_passive")
+end
+
 function modifier_imba_sogat_cuirass:IsHidden() return true end
 function modifier_imba_sogat_cuirass:IsPurgable() return false end
 function modifier_imba_sogat_cuirass:IsDebuff() return false end

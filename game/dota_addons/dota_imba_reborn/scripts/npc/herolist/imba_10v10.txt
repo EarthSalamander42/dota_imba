@@ -23,7 +23,7 @@
 	"npc_dota_hero_chen" 				"1"
 	"npc_dota_hero_clinkz" 				"1"
 	"npc_dota_hero_crystal_maiden" 		"1"
-	"npc_dota_hero_dark_seer" 			"1" // ultmate lags
+	"npc_dota_hero_dark_seer" 			"0" // ultmate lags
 	"npc_dota_hero_dark_willow" 		"1"
 	"npc_dota_hero_dazzle"				"1"
 	"npc_dota_hero_death_prophet" 		"1"

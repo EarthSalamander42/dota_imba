@@ -100,6 +100,7 @@ function modifier_item_imba_arcane_nexus_passive:IsPurgable() return false end
 function modifier_item_imba_arcane_nexus_passive:IsPurgeException() return false end
 function modifier_item_imba_arcane_nexus_passive:IsStunDebuff() return false end
 function modifier_item_imba_arcane_nexus_passive:RemoveOnDeath() return false end
+function modifier_item_imba_arcane_nexus_passive:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 function modifier_item_imba_arcane_nexus_passive:OnDestroy()
 	self:CheckUnique(false)
 end
@@ -121,7 +122,7 @@ end
 function modifier_item_imba_arcane_nexus_passive:DeclareFunctions()
 	local decFuns =
 		{
-			MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
+			MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE_UNIQUE,
 			MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
 			MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 			MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
@@ -131,7 +132,7 @@ function modifier_item_imba_arcane_nexus_passive:DeclareFunctions()
 	return decFuns
 end
 
-function modifier_item_imba_arcane_nexus_passive:GetModifierSpellAmplify_Percentage()
+function modifier_item_imba_arcane_nexus_passive:GetModifierSpellAmplify_PercentageUnique()
 	return self.spell_amp
 end
 

@@ -49,7 +49,7 @@ end
 function imba_clinkz_strafe:GetManaCost(level)
 	local caster = self:GetCaster()
 	-- If Clinkz is currently mounted, remove the mana cost
-	if caster:HasModifier("modifier_imba_strafe_mount") then
+	if caster:HasModifier("modifier_imba_strafe_mount") or caster:HasModifier("modifier_imba_strafe_self_root") then
 		return 0    
 	end
 
@@ -75,6 +75,7 @@ function imba_clinkz_strafe:OnSpellStart()
 		--    CANCEL ROOT    --
 		-----------------------
 		if caster:HasModifier("modifier_imba_strafe_self_root") then
+			ability.time_remaining = caster:FindModifierByName("modifier_imba_strafe_self_root"):GetRemainingTime()
 			caster:RemoveModifierByName("modifier_imba_strafe_self_root")
 			
 			-- Renew cooldown so it would use the new time remaining variable
@@ -110,7 +111,7 @@ function imba_clinkz_strafe:OnSpellStart()
 					ability:EndCooldown()
 					local modifier_self_root = "modifier_imba_strafe_self_root"
 					
-					print("Root duration: ", duration)
+					--print("Root duration: ", duration)
 					
 					caster:AddNewModifier(caster, ability, modifier_self_root, {duration = duration})
 				end
@@ -123,6 +124,7 @@ function imba_clinkz_strafe:OnSpellStart()
 			-- Assign the time remaining to the ability and remove modifier
 			local modifier_mount_handler = caster:FindModifierByName(modifier_mount)
 			ability.time_remaining = modifier_mount_handler:GetRemainingTime()
+			
 			caster:RemoveModifierByName(modifier_mount)   
 
 			-- Renew cooldown so it would use the new time remaining variable
@@ -256,7 +258,7 @@ function modifier_imba_strafe_mount:OnIntervalThink()
 		else
 			-- Move Clinkz toward it
 			direction = (mount_point - current_loc):Normalized()            
-			local target_movespeed = self.target:GetMoveSpeedModifier(self.target:GetBaseMoveSpeed())
+			local target_movespeed = self.target:GetMoveSpeedModifier(self.target:GetBaseMoveSpeed(), false)
 
 			local new_point = current_loc + direction * ((target_movespeed * 1.25) * FrameTime())
 			local ground_point = GetGroundPosition(new_point, self:GetCaster())

@@ -7,6 +7,7 @@
 #base heroes/alchemist/abilities.txt
 #base heroes/bane/abilities.txt
 #base heroes/bloodseeker/abilities.txt
+#base heroes/bristleback/abilities.txt
 #base heroes/earth_spirit/abilities.txt
 #base heroes/enchantress/abilities.txt
 #base custom_heroes/malfurion/abilities.txt
@@ -439,7 +440,7 @@
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"damage_pct"					"15"
+				"damage_pct"					"25"
 			}
 			"03"
 			{
@@ -8328,7 +8329,7 @@
 			"06"
 			{
 				"var_type"                  "FIELD_INTEGER"
-				"explosion_delay"           "4"
+				"explosion_delay"           "3"
 			}
 
 			"07"
@@ -11820,11 +11821,17 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"int_steal_duration"		"80"
+				"LinkedSpecialBonus"		"special_bonus_imba_obsidian_destroyer_9"	
 			}
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"splash_radius"				"400 475 550 625"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"175"
 			}
 		}
 	}
@@ -11973,6 +11980,67 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"int_proc_duration"		"10"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Obsidian Destroyer: Equilibrium
+	//=================================================================================================================
+	"imba_obsidian_destroyer_equilibrium"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"AbilityTextureName"			"obsidian_destroyer_essence_aura"
+		"ScriptFile"					"components/abilities/heroes/hero_obsidian_destroyer.lua"
+
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"18"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"50"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_3"
+		"AbilityCastGestureSlot"		"DEFAULT"
+						
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"mana_steal"		"65 90 115 140"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"movement_slow"		"12 22 32 42"
+				"LinkedSpecialBonus"	"special_bonus_unique_outworld_devourer_2"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"slow_duration"		"1.75"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"duration"			"7"
+			}
+			"05"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"atk_speed_diff"	"3 4 5 6"
 			}
 		}
 	}
@@ -12269,6 +12337,31 @@
 			}
 		}
 	}
+	
+	"special_bonus_imba_obsidian_destroyer_9" // +60s Arcane Orb Int Steal
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_obsidian_destroyer_arcane_orb"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"						"60"
+			}
+		}
+	}
 
 	//=================================================================================================================
 	// Omniknight's Purification
@@ -12538,25 +12631,21 @@
 				"var_type"					"FIELD_INTEGER"
 				"duration"					"6 7 8"
 			}
-
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"scepter_duration"			"8 9 10"
 			}
-
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"shield_duration"			"6 7 8"
 			}
-
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"radius"					"600"
 			}
-
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -15623,7 +15712,7 @@
 			"08"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"vortex_time_pct" 					"50"
+				"vortex_time_pct" 					"25"
 			}
 		}
 	}
@@ -16999,7 +17088,9 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"sandking_burrowstrike"
-		"ScriptFile"				"components/abilities/heroes/hero_sand_king.lua"		
+		"ScriptFile"				"components/abilities/heroes/hero_sand_king.lua"	
+
+		"HasScepterUpgrade"				"1"		
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
@@ -17080,8 +17171,14 @@
 			"10"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"cast_range"			"350 550 750 950"
+				"cast_range"			"350 500 650 800"
 				"LinkedSpecialBonus"	"special_bonus_imba_sand_king_3"
+			}
+			
+			"11"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cast_range_scepter"	"700 1000 1300 1600"
 			}
 		}
 	}
@@ -17094,7 +17191,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
@@ -17352,6 +17449,92 @@
 	}
 
 	//=================================================================================================================
+	// Ability: Sand King Sand Storm
+	//=================================================================================================================
+	"imba_sandking_sand_storm_720"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_sand_king.lua"
+		"AbilityTextureName"			"sandking_sand_storm"
+		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
+		"FightRecapLevel"				"1"
+		"AbilitySound"					"Ability.SandKing_SandStorm.start"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"0"
+		"AbilityDuration"				"20 25 30 35"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"34 28 22 16"
+		"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"60"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"damage_tick_rate"		"0.5"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"sand_storm_radius"		"500 575 650 725"
+				"LinkedSpecialBonus"	"special_bonus_imba_sand_king_9"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"AbilityDuration"		"20 25 30 35"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"sand_storm_damage"		"40 70 100 130"
+				"LinkedSpecialBonus"	"special_bonus_imba_sand_king_2"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"fade_delay"			"0.7"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"pull_speed"			"40 60 80 100"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"coarse_vision_pct"		"-25"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"coarse_movement_pct"	"-25"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"coarse_miss_pct"		"25"
+			}
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+	}
+	//=================================================================================================================
 	// Sand King's Talents
 	//=================================================================================================================
 	"special_bonus_imba_sand_king_1" // Burrowstrike path radius increase
@@ -17554,6 +17737,31 @@
 		}
 	}
 	
+	"special_bonus_imba_sand_king_9" // Increased Sand Storm radius
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_sandking_sand_storm_720"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"                     "225"
+			}
+		}
+	}
+	
 	//=================================================================================================================
 	// Skywrath's Arcane Bolt
 	//=================================================================================================================
@@ -17601,7 +17809,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"base_damage"				"60 100 130 150"
+				"base_damage"				"60 90 120 150"
 			}
 
 			"02"
@@ -33416,7 +33624,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"50 40 30"
+		"AbilityCooldown"				"50.0 40.0 30.0"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -38467,6 +38675,155 @@
 			{
 				"var_type"                  "FIELD_FLOAT"
 				"duration"                  "17.0 17.0 17.0 17.0"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Custom Creep Scaling
+	//=================================================================================================================
+	"custom_creep_scaling"
+	{
+		// General
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/custom_creep_scaling.lua"
+		
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"MaxLevel"						"1"
+		
+		// Stuff to consider scaling up:
+		// * Attack Damage
+		// * Attack Speed
+		// * Armor
+		// * Magical Resistance
+		// * Movement Speed
+		// * Health
+		// * Health Regen
+		//
+		// Everything will scale up by given values per minute for now
+		
+		// Special
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"melee_attack"		"2"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"melee_aspd"		"5"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"melee_armor"		"0.5"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"melee_mres"		"0.5"
+			}
+			"05"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"melee_ms"			"1.5"
+			}
+			"06"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"melee_hp"			"10"
+			}
+			"07"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"melee_regen"		"0.05"
+			}
+			"08" // Values 08 to 21 are currently unused
+			{
+				"var_type"			"FIELD_INTEGER"
+				"ranged_attack"		"2"
+			}
+			"09"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"ranged_aspd"		"5"
+			}
+			"10"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"ranged_armor"		"0.5"
+			}
+			"11"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"ranged_mres"		"0.5"
+			}
+			"12"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"ranged_ms"			"1.5"
+			}
+			"13"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"ranged_hp"			"10"
+			}
+			"14"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"ranged_regen"		"0.05"
+			}
+			"15"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"siege_attack"		"2"
+			}
+			"16"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"siege_aspd"		"5"
+			}
+			"17"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"siege_armor"		"0.5"
+			}
+			"18"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"siege_mres"		"0.5"
+			}
+			"19"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"siege_ms"			"1.5"
+			}
+			"20"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"siege_hp"			"10"
+			}
+			"21"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"siege_regen"		"0.05"
+			}
+			"22"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"base_mult"			"1.0"
+			}
+			"23"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"super_mult"		"1.5"
+			}
+			"24"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"mega_mult"			"2.0"
 			}
 		}
 	}

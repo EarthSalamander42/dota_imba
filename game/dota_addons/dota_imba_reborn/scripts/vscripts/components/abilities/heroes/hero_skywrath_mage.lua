@@ -458,8 +458,8 @@ function imba_skywrath_mage_concussive_shot:OnProjectileHit_ExtraData(target, lo
 											  FIND_CLOSEST,
 											  false)
 											  
-			-- If no heroes were found, do nothing            
-			if #enemies == 0 then                
+			-- If no heroes were found, do nothing
+			if #enemies <= 1 then                
 				return nil
 			end
 

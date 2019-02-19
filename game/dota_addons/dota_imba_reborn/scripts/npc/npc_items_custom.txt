@@ -3056,7 +3056,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_strength"		"30"
+				"bonus_strength"		"45"
 			}
 			"02"
 			{
@@ -3092,6 +3092,11 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"regen_cooldown_ranged"	"7"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"hp_regen_amp"			"50"
 			}
 		}
 	}
@@ -3403,8 +3408,6 @@
 					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"			"%bonus_health_regen"
 					"MODIFIER_PROPERTY_MANA_BONUS" 						"%bonus_mana"
 					"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT" 			"%bonus_mana_regen"
-					//"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"			"%bonus_mana_regen_pct" // Doesn't work
-					"MODIFIER_PROPERTY_MANA_REGEN_TOTAL_PERCENTAGE"		"%bonus_mana_regen_mult"
 				}
 				
 				"OnCreated"
@@ -3414,6 +3417,20 @@
 						"ScriptFile"	"components/items/item_bloodstone.lua"
 						"Function"		"SetCharges"
 					}
+				}
+			}
+			
+			"modifier_item_imba_bloodstone_mana_regen_pct"
+			{
+				"Passive"					"1"
+				"IsHidden"					"1"
+				"IsDebuff"					"0"
+
+				"Attributes"				"MODIFIER_ATTRIBUTE_PERMANENT"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MANA_REGEN_TOTAL_PERCENTAGE"		"%bonus_mana_regen_mult"
 				}
 			}
 
@@ -3857,7 +3874,7 @@
 		"ID"							"2184"
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"components/items/item_sogat_cuirass.lua"
-		"AbilityTextureName"			"custom/imba_greatwyrm_plate"
+		"AbilityTextureName"			"custom/imba_sogat_cuirass"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
@@ -3947,13 +3964,19 @@
 			"13"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_reduction_pct"	"40"
+				"damage_reduction_pct"	"25"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"14"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"tooltip_reapply_time"	"40"
+			}
+			"15"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_reduction_pct_passive"		"10"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 		}
 	}
@@ -5009,7 +5032,7 @@
 		"ID"							"2108"
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"components/items/item_swords.lua"
-		"AbilityTextureName"			"item_kaya"
+		"AbilityTextureName"			"custom/imba_kaya"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 
 		// Stats
@@ -12380,5 +12403,131 @@
 			}
 		}
 	}
-	//next free ID: 2295
+	
+	//=================================================================================================================
+	// Recipe: Bloodstone (7.20)
+	//=================================================================================================================
+	"item_recipe_imba_bloodstone_720"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2295"
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"custom/imba_recipe"
+		"Model"							"models/props_gameplay/recipe.vmdl"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"0"	
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_bloodstone_720"
+		"ItemRequirements"
+		{
+			"01"						"item_pers;item_soul_booster" // Temporary item
+		}
+	}
+
+	//=================================================================================================================
+	// Bloodstone
+	//=================================================================================================================
+	"item_imba_bloodstone_720"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2296"		
+		"BaseClass"						"item_lua"
+		"ScriptFile"					"components/items/item_bloodstone_720.lua"
+				
+		"AbilityTextureName" 			"item_bloodstone"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"FightRecapLevel"				"2"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"190.0"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"4900"
+		"ItemShopTags"					"regen_health;regen_mana;mana_pool;health_pool"
+		"ItemQuality"					"epic"
+		"ItemAliases"					"bs;bloodstone"
+		"ItemInitialCharges"			"16"
+		"ItemDisplayCharges"			"1"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+		"AllowedInBackpack"				"0"
+		"ShouldBeSuggested"				"1"
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_health"			"625"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_mana"			"625"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"bonus_health_regen"	"8.0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"bonus_mana_regen"		"4.5"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mana_regen_multiplier"		"200"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"regen_per_charge"		"0.5"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"death_charges"				"3"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"kill_charges"			"1"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"charge_range"			"1600"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"initial_charges_tooltip" "16"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mana_cost_percentage" "30"
+			}
+			"12"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"restore_duration" "2.0"
+			}
+		}
+	}
+	//next free ID: 2297
 }

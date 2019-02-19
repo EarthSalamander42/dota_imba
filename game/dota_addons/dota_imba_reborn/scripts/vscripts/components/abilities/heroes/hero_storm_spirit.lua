@@ -42,7 +42,7 @@ end
 
 modifier_imba_static_remnant = modifier_imba_static_remnant or class({})
 
-function modifier_imba_static_remnant:OnCreated()
+function modifier_imba_static_remnant:OnCreated( params )
 	if IsServer() then
 
 		--Ability properties
@@ -50,7 +50,10 @@ function modifier_imba_static_remnant:OnCreated()
 		local remnant_particle	=	"particles/units/heroes/hero_stormspirit/stormspirit_static_remnant.vpcf"
 		self.dummy				=	self:GetParent()
 		self.caster_location	=	self.dummy:GetAbsOrigin()
-
+		
+		-- Check to see if Remnant was created by Ball Lightning or not
+		self.ballLightning		=	params.ballLightning or false
+		
 		--Ability paramaters
 		local activation_delay = self.ability:GetSpecialValueFor("big_remnant_activation_delay")
 		if self:GetCaster():HasTalent("special_bonus_imba_storm_spirit_6") then
@@ -79,6 +82,12 @@ end
 function modifier_imba_static_remnant:OnIntervalThink()
 	if IsServer() then
 
+		-- ReplaceHeroWith and Rubick stuff
+		if self.ability:IsNull() then
+			self:StartIntervalThink(-1)
+			return
+		end
+		
 		--Ability properties
 		local remnant_location = self.dummy:GetAbsOrigin()
 		--Ability paramaters
@@ -104,8 +113,13 @@ function modifier_imba_static_remnant:OnIntervalThink()
 	end
 end
 
-function modifier_imba_static_remnant:OnDestroy()
+function modifier_imba_static_remnant:OnDestroy( params )
 	if IsServer() then
+		-- ReplaceHeroWith and Rubick stuff
+		if self.ability:IsNull() then
+			return
+		end
+	
 		--Ability properties
 		local remnant_blowup_sound		=	"Hero_StormSpirit.StaticRemnantExplode"
 		local remnant_location			=	self.dummy:GetAbsOrigin()
@@ -130,7 +144,9 @@ function modifier_imba_static_remnant:OnDestroy()
 
 		local pull_duration = self:GetCaster():FindAbilityByName("imba_storm_spirit_electric_vortex"):GetSpecialValueFor("pull_duration") + self:GetCaster():FindTalentValue("special_bonus_imba_storm_spirit_1")
 		local speed = self:GetCaster():FindAbilityByName("imba_storm_spirit_electric_vortex"):GetSpecialValueFor("pull_units_per_second") + self:GetCaster():FindTalentValue("special_bonus_imba_storm_spirit_2")
-		pull_duration = pull_duration / (100/self:GetAbility():GetSpecialValueFor("vortex_time_pct"))
+		
+		-- Description says vortex_time_pct is percentage shorter (so 0% means the vortex is full duration)
+		pull_duration =  pull_duration * (100 - self:GetAbility():GetSpecialValueFor("vortex_time_pct")) / 100
 
 		local lingering_sound	=	"Hero_StormSpirit.ElectricVortex"
 		local cast_sound		=	"Hero_StormSpirit.ElectricVortexCast"
@@ -154,13 +170,13 @@ function modifier_imba_static_remnant:OnDestroy()
 				end
 
 				-- cast shorter Electric Vortex
-				if pull_duration ~= 0 then
+				if pull_duration ~= 0 and not self.ballLightning then
 					enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_vortex_root", {duration = pull_duration, speed = speed, pos_x = remnant_location.x, pos_y = remnant_location.y, pos_z = remnant_location.z})
 				end
 			end
 		end
 
-		if pull_duration ~= 0 and electric_sound == true then
+		if pull_duration ~= 0 and not self.ballLightning and electric_sound == true then
 			self:GetCaster():EmitSound(cast_sound)
 			EmitSoundOn(lingering_sound, self:GetCaster())
 		end
@@ -819,7 +835,7 @@ function imba_storm_spirit_ball_lightning:OnProjectileThink_ExtraData(location, 
 				--Create remnant
 				local dummy = CreateUnitByName( "npc_imba_dota_stormspirit_remnant", caster:GetAbsOrigin(), false, caster, nil, caster:GetTeamNumber() )
 				-- Give it the necessary modifier
-				dummy:AddNewModifier(caster, self.remnant, "modifier_imba_static_remnant", {duration = self.remnant:GetSpecialValueFor("big_remnant_duration")})
+				dummy:AddNewModifier(caster, self.remnant, "modifier_imba_static_remnant", {duration = self.remnant:GetSpecialValueFor("big_remnant_duration"), ballLightning = true})
 			end
 		end
 		-- Once the caster can no longer travel, remove this projectile

@@ -146,7 +146,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"100 180 260 340"
+				"damage"					"100 160 220 280"
 			}
 			"02"
 			{
@@ -328,7 +328,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"loss_pct"					"33"
+				"loss_pct"					"50"
 			}
 		}
 	}
@@ -526,7 +526,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"value"						"150" // % damage of current fade bolt level as explosion damage
+				"value"						"125" // % damage of current fade bolt level as explosion damage
 			}
 		}
 	}

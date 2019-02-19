@@ -433,13 +433,15 @@ function imba_rubick_fade_bolt:OnSpellStart()
 				EmitSoundOn("ParticleDriven.Rocket.Explode", current_target)
 
 				for _, unit in pairs(units) do
-					ApplyDamage({
-						attacker = self:GetCaster(),
-						victim = unit,
-						ability = self,
-						damage = damage / (100 / self:GetCaster():FindTalentValue("special_bonus_imba_rubick_7")),
-						damage_type = self:GetAbilityDamageType()
-					})
+					if unit ~= current_target then
+						ApplyDamage({
+							attacker = self:GetCaster(),
+							victim = unit,
+							ability = self,
+							damage = damage / (100 / self:GetCaster():FindTalentValue("special_bonus_imba_rubick_7")),
+							damage_type = self:GetAbilityDamageType()
+						})
+					end
 				end
 
 				return nil
@@ -901,7 +903,7 @@ LinkLuaModifier("modifier_rubick_spellsteal_hidden", "components/abilities/heroe
 --	BANNED ABILITIES
 -------------------------------------------
 
-imba_rubick_spellsteal.banned_abilities = {"imba_sniper_headshot", "imba_phoenix_sun_ray", "imba_phoenix_sun_ray_toggle_move", "imba_rubick_spellsteal"}
+imba_rubick_spellsteal.banned_abilities = {"imba_sniper_headshot", "imba_phoenix_sun_ray", "imba_phoenix_sun_ray_toggle_move", "imba_rubick_spellsteal", "shredder_chakram", "shredder_chakram_2", "shredder_return_chakram", "shredder_return_chakram_2"}
 
 --------------------------------------------------------------------------------
 -- Passive Modifier
