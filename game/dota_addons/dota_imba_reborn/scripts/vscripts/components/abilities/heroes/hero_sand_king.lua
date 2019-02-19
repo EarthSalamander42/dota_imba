@@ -1250,10 +1250,10 @@ function modifier_imba_sandking_sand_storm_720_thinker:OnCreated()
 	self.parent		= self:GetParent()
 	
 	-- AbilitySpecials
-	self.damage_tick_rate 	= self.ability:GetSpecialValueFor("damage_tick_rate") + self.caster:FindTalentValue("special_bonus_imba_sand_king_2")
+	self.damage_tick_rate 	= self.ability:GetSpecialValueFor("damage_tick_rate")
 	self.sand_storm_radius 	= self.ability:GetSpecialValueFor("sand_storm_radius") + self.caster:FindTalentValue("special_bonus_imba_sand_king_9")
 	self.AbilityDuration 	= self.ability:GetSpecialValueFor("AbilityDuration")
-	self.sand_storm_damage 	= self.ability:GetSpecialValueFor("sand_storm_damage")
+	self.sand_storm_damage 	= self.ability:GetSpecialValueFor("sand_storm_damage") + self.caster:FindTalentValue("special_bonus_imba_sand_king_2")
 	self.fade_delay 		= self.ability:GetSpecialValueFor("fade_delay")
 	self.pull_speed			= self.ability:GetSpecialValueFor("pull_speed")
 	
@@ -1318,7 +1318,7 @@ function modifier_imba_sandking_sand_storm_720_thinker:OnIntervalThink()
 			self.invis_counter		= self.invis_counter + FrameTime()
 			
 			if self.invis_counter >= self.fade_delay then
-				self.caster:AddNewModifier(self.caster, self.ability, "modifier_invisible", {duration = self:GetRemainingTime()})
+				self.caster:AddNewModifier(self.caster, self.ability, "modifier_invisible", {duration = self:GetRemainingTime(), cancelattack = false})
 				
 				self.invis_counter	= 0
 			end
@@ -1335,6 +1335,8 @@ function modifier_imba_sandking_sand_storm_720_thinker:OnIntervalThink()
 end
 
 function modifier_imba_sandking_sand_storm_720_thinker:OnDestroy()
+	if not IsServer() then return end
+
 	if self:GetRemainingTime() <= 0 then
 		self.caster:StopSound("Ability.SandKing_SandStorm.loop")
 		self.caster:StopSound("Imba.SandKingSandStorm")

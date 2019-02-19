@@ -59,7 +59,7 @@ function modifier_custom_creep_scaling:DeclareFunctions()
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT,
 		MODIFIER_PROPERTY_HEALTH_BONUS, -- Doesn't actually work but gonna use this for tooltips
 		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
-		MODIFIER_EVENT_ON_UNIT_MOVED
+		-- MODIFIER_EVENT_ON_UNIT_MOVED -- Supposedly causes major lag even with it only doing rest of logic in one frame
     }
 
     return decFuncs
@@ -93,24 +93,24 @@ function modifier_custom_creep_scaling:GetModifierConstantHealthRegen()
     return self.melee_regen
 end
 
-function modifier_custom_creep_scaling:OnUnitMoved(keys)
-	if keys.unit == self.parent and not self.initialized then
+-- function modifier_custom_creep_scaling:OnUnitMoved(keys)
+	-- if keys.unit == self.parent and not self.initialized then
 	
-		self.initialized = true
-		self:SetStackCount(math.floor(GameRules:GetDOTATime(false, false) / 60))
+		-- self.initialized = true
+		-- self:SetStackCount(math.floor(GameRules:GetDOTATime(false, false) / 60))
 	
-		-- AbilitySpecials (Gonna use one set to deal with all creep types at first test)
-		self.melee_attack	= self.ability:GetSpecialValueFor("melee_attack")	* self:GetStackCount()	* self.multiplier
-		self.melee_aspd		= self.ability:GetSpecialValueFor("melee_aspd")		* self:GetStackCount()	* self.multiplier
-		self.melee_armor	= self.ability:GetSpecialValueFor("melee_armor")	* self:GetStackCount()	* self.multiplier
-		self.melee_mres		= self.ability:GetSpecialValueFor("melee_mres")		* self:GetStackCount()	* self.multiplier
-		self.melee_ms		= self.ability:GetSpecialValueFor("melee_ms")		* self:GetStackCount()	* self.multiplier
-		self.melee_hp		= self.ability:GetSpecialValueFor("melee_hp")		* self:GetStackCount()	* self.multiplier
-		self.melee_regen 	= self.ability:GetSpecialValueFor("melee_regen")	* self:GetStackCount()	* self.multiplier
+		-- -- AbilitySpecials (Gonna use one set to deal with all creep types at first test)
+		-- self.melee_attack	= self.ability:GetSpecialValueFor("melee_attack")	* self:GetStackCount()	* self.multiplier
+		-- self.melee_aspd		= self.ability:GetSpecialValueFor("melee_aspd")		* self:GetStackCount()	* self.multiplier
+		-- self.melee_armor	= self.ability:GetSpecialValueFor("melee_armor")	* self:GetStackCount()	* self.multiplier
+		-- self.melee_mres		= self.ability:GetSpecialValueFor("melee_mres")		* self:GetStackCount()	* self.multiplier
+		-- self.melee_ms		= self.ability:GetSpecialValueFor("melee_ms")		* self:GetStackCount()	* self.multiplier
+		-- self.melee_hp		= self.ability:GetSpecialValueFor("melee_hp")		* self:GetStackCount()	* self.multiplier
+		-- self.melee_regen 	= self.ability:GetSpecialValueFor("melee_regen")	* self:GetStackCount()	* self.multiplier
 		
-		if not IsServer() then return end
-		-- Have to call this separately cause the health bonus modifier doesn't work on lane creeps?
-		self.parent:SetBaseMaxHealth(self.parent:GetMaxHealth() + self.melee_hp)
-	end
-end
+		-- if not IsServer() then return end
+		-- -- Have to call this separately cause the health bonus modifier doesn't work on lane creeps?
+		-- self.parent:SetBaseMaxHealth(self.parent:GetMaxHealth() + self.melee_hp)
+	-- end
+-- end
 
