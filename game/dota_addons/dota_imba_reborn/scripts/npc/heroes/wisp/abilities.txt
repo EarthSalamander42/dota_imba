@@ -259,26 +259,31 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"bonus_attack_speed"		"40 50 60 70"
+				"LinkedSpecialBonus"		"special_bonus_imba_wisp_1"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_missile_speed"		"150 300 450 650"
+				"bonus_missile_speed"		"100 200 300 400"
+				"LinkedSpecialBonus"		"special_bonus_imba_wisp_1"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_cast_speed"			"40 50 60 70"
+				"bonus_cast_speed"			"20 25 30 35"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_attack_range"		"30 50 70 100"
+				"bonus_attack_range"		"30 45 60 75"
+				"LinkedSpecialBonus"		"special_bonus_imba_wisp_1"
 			}
 			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"bonus_damage_pct"			"-5 -10 -15 -20"
+				"LinkedSpecialBonus"		"special_bonus_imba_wisp_4"
+				"LinkedSpecialBonusOperation"		"SPECIAL_BONUS_SUBTRACT"
 			}
 			"06"
 			{
@@ -467,7 +472,7 @@
 	}
 
 	//=================================================================================================================
-	// Wisp Talent 1 (Level 10): Overcharge bonus + 150
+	// Wisp Talent 1 (Level 10): Overcharge bonus
 	//=================================================================================================================
 	"special_bonus_imba_wisp_1"
 	{
@@ -488,8 +493,8 @@
 		{
 			"01"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"bonus_effect"				"150"
+				"var_type"			"FIELD_INTEGER"
+				"value"				"100"
 			}
 		}
 	}
@@ -573,7 +578,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_reduction"			"15"
+				"value"			"10"
 			}
 		}
 	}

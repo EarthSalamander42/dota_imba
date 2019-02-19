@@ -527,13 +527,14 @@
 
 // Heart of Tarrasque
 "DOTA_Tooltip_Ability_item_imba_heart"                          "Heart of Tarrasque"
-"DOTA_Tooltip_ability_item_imba_heart_Description"              "<h1>Passive: Heart of the Dragon</h1> Restores %regen_tooltip%%% of the bearer's max health every second. The regeneration is reduced to %base_regen%%% for a few seconds after taking damage from heroes or Roshan. The cooldown is higher on ranged heroes.\n<h1><font color='#FF7800'>Passive: Tarrasque Breath</font></h1> Increases nearby heroes' strength by %aura_str%."
+"DOTA_Tooltip_ability_item_imba_heart_Description"              "<h1>Passive: Heart of the Dragon</h1> Restores %noncombat_regen%%% of the bearer's max health every second. The regeneration is reduced to %base_regen%%% for a few seconds after taking damage from heroes or Roshan. The cooldown is higher on ranged heroes.\n<h1><font color='#FF7800'>Passive: Tarrasque Breath</font></h1> Increases nearby heroes' strength by %aura_str%."
 "DOTA_Tooltip_ability_item_imba_heart_Lore"                    "Preserved heart of an extinct monster, it bolsters the bearer's fortitude."
 "DOTA_Tooltip_ability_item_imba_heart_Note0"                    "Tarrasque Breath and the passive regeneration do not stack."
 "DOTA_Tooltip_ability_item_imba_heart_aura_str"                "AURA BONUS STRENGTH:"
 "DOTA_Tooltip_ability_item_imba_heart_aura_radius"              "AURA RANGE:"
 "DOTA_Tooltip_ability_item_imba_heart_bonus_strength"          "+$str"
 "DOTA_Tooltip_ability_item_imba_heart_bonus_health"            "+$health"
+"DOTA_Tooltip_ability_item_imba_heart_hp_regen_amp"				"%+Health Regen Amplification"
 "DOTA_Tooltip_Ability_item_imba_heart_regen_cooldown_melee"                 "MELEE COOLDOWN:"
 "DOTA_Tooltip_Ability_item_imba_heart_regen_cooldown_ranged"                "RANGED COOLDOWN:"
 

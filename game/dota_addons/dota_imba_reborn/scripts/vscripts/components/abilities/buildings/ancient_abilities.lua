@@ -167,8 +167,10 @@ function modifier_imba_fountain_danger_zone:CheckState()
 end
 
 function modifier_imba_fountain_danger_zone:OnCreated()
+	self.interval = 0.2
+
 	if IsServer() then
-		self:StartIntervalThink(0.2)
+		self:StartIntervalThink(self.interval)
 	end
 end
 
@@ -176,7 +178,7 @@ function modifier_imba_fountain_danger_zone:OnIntervalThink()
 	if IsServer() then
 		local fountain = self:GetParent()
 		local fountain_pos = fountain:GetAbsOrigin() 
-		local nearby_enemies = FindUnitsInRadius(fountain:GetTeamNumber(), fountain_pos, nil, self:GetAbility():GetSpecialValueFor("kill_radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
+		local nearby_enemies = FindUnitsInRadius(fountain:GetTeamNumber(), fountain_pos, nil, self:GetAbility():GetSpecialValueFor("kill_radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 		if #nearby_enemies == 0 then return end
 		local act_on_target = 1 -- 0 = do nothing, 1 = damage, 2 = kill, 3 = remove.
 
@@ -210,20 +212,15 @@ function modifier_imba_fountain_danger_zone:OnIntervalThink()
 				end
 			end
 
-			-- Potential fix to another unidentified bug
-			if enemy:IsCourier() then
-				act_on_target = 2
-			end
-
 			if act_on_target == 1 then
-				local damage = enemy:GetMaxHealth() / 100 * self:GetAbility():GetSpecialValueFor("damage_pct")
+				local damage = (enemy:GetMaxHealth() * self:GetAbility():GetSpecialValueFor("damage_pct") / 100) * self.interval
 				local aura_linger = self:GetAbility():GetSpecialValueFor("aura_linger")
 --				print("Damage:", damage)
 
 				if enemy:IsInvulnerable() then
 					enemy:SetHealth(math.max(enemy:GetHealth() - damage, 1))
 				else
-					ApplyDamage({attacker = fountain, victim = enemy, damage = damage, damage_type = DAMAGE_TYPE_PURE})
+					ApplyDamage({attacker = fountain, victim = enemy, damage = damage, damage_type = DAMAGE_TYPE_PURE, damage_flags = DOTA_DAMAGE_FLAG_BYPASSES_INVULNERABILITY + DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION})
 				end
 
 --				local damage_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_tinker/tinker_laser.vpcf", PATTACH_CUSTOMORIGIN, enemy)
@@ -237,10 +234,7 @@ function modifier_imba_fountain_danger_zone:OnIntervalThink()
 			elseif act_on_target == 2 then
 				enemy:ForceKill(false)
 			elseif act_on_target == 3 then
-				-- Potential fix for a bug not clearly identified (it's everyday bro)
-				if not enemy:IsRealHero() then
-					UTIL_Remove(enemy)
-				end
+				UTIL_Remove(enemy)
 			end
 		end
 	end

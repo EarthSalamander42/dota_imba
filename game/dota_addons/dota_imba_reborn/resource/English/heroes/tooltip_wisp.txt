@@ -106,10 +106,10 @@
 ////===============================================================================================================
 // Wisp's Talents
 ////===============================================================================================================
-"DOTA_Tooltip_Ability_special_bonus_imba_wisp_1"						"+120 Overcharge attack speed, attack range, and missile speed"
+"DOTA_Tooltip_Ability_special_bonus_imba_wisp_1"						"+100 Overcharge attack speed, attack range, and missile speed"
 "DOTA_Tooltip_Ability_special_bonus_imba_wisp_2"						"Tether Grants Scepter Bonus"
 "DOTA_Tooltip_Ability_special_bonus_imba_wisp_3"						"Spirits grant truesight in 300 AOE radius"
-"DOTA_Tooltip_Ability_special_bonus_imba_wisp_4"						"+15% Overcharge Damage Reduction"
+"DOTA_Tooltip_Ability_special_bonus_imba_wisp_4"						"+10% Overcharge Damage Reduction"
 "DOTA_Tooltip_Ability_special_bonus_imba_wisp_5"						"+500 Tether cast range, and max distance"
 "DOTA_Tooltip_Ability_special_bonus_imba_wisp_6"						"Attack Tethered Ally's Target"
 "DOTA_Tooltip_Ability_special_bonus_imba_wisp_7"						"Relocate grants spell immunity for 5s to Io and Tethered ally"

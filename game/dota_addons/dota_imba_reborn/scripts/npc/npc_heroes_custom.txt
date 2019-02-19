@@ -359,9 +359,12 @@
 		"Ability12"					"special_bonus_imba_clinkz_3" //Skeleton Walking through an enemy causes Clinkz to lose his invisibility, but roots the target
 		"Ability13"					"special_bonus_imba_clinkz_4" //Searing Arrow active hits in an AoE  
 		"Ability14"					"special_bonus_imba_clinkz_5" //Strafe can be self cast to root Clinkz for the duration but grant him a huge range bonus
-		"Ability15"					"special_bonus_imba_clinkz_1" //Death Pact Spirits can now attack with spirit strikes
+		"Ability15"					"special_bonus_hp_regen_16"
 		"Ability16"					"special_bonus_imba_clinkz_7" //Searing Arrows has a chance to attack the same target again
 		"Ability17"					"special_bonus_imba_clinkz_8" //Death Pact bonuses stay permanently if target dies quickly
+		
+		// Removed Talents
+		//"Ability15"					"special_bonus_imba_clinkz_1" //Death Pact Spirits can now attack with spirit strikes
 	}
 
 	//=================================================================================================================
@@ -1234,20 +1237,27 @@
 
 		"Ability1"					"imba_obsidian_destroyer_arcane_orb"
 		"Ability2"					"imba_obsidian_destroyer_astral_imprisonment"
-		"Ability3"					"imba_obsidian_destroyer_essence_aura"
+		"Ability3"					"imba_obsidian_destroyer_equilibrium"
 		"Ability4"					"generic_hidden"
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_obsidian_destroyer_sanity_eclipse"
 
-		"Ability10"					"special_bonus_imba_obsidian_destroyer_1"
+		"Ability10"					"special_bonus_hp_250"
 		"Ability11"					"special_bonus_imba_obsidian_destroyer_2"
-		"Ability12"					"special_bonus_imba_obsidian_destroyer_3"
+		"Ability12"					"special_bonus_movement_speed_25"
 		"Ability13"					"special_bonus_imba_obsidian_destroyer_4"
-		"Ability14"					"special_bonus_imba_obsidian_destroyer_5"
+		"Ability14"					"special_bonus_strength_20"
 		"Ability15"					"special_bonus_imba_obsidian_destroyer_6"
-		//"Ability16"					"special_bonus_imba_obsidian_destroyer_7"
-		"Ability16"					"special_bonus_imba_obsidian_destroyer_8"
+		"Ability16"					"special_bonus_imba_obsidian_destroyer_9"
 		"Ability17"					"special_bonus_spell_lifesteal_15"
+		
+		// Removed Talents (All Essence Aura based)
+		// "Ability10"					"special_bonus_imba_obsidian_destroyer_1"
+		// "Ability12"					"special_bonus_imba_obsidian_destroyer_3"
+		// "Ability14"					"special_bonus_imba_obsidian_destroyer_5"
+		// "Ability16"					"special_bonus_imba_obsidian_destroyer_8"
+		
+		// "Ability16"					"special_bonus_imba_obsidian_destroyer_7"
 	}
 
 	//=================================================================================================================
@@ -1505,7 +1515,7 @@
 
 		"Ability10"					"special_bonus_imba_sand_king_1"
 		"Ability11"					"special_bonus_imba_sand_king_2"
-		"Ability12"					"special_bonus_imba_sand_king_3"
+		"Ability12"					"special_bonus_imba_sand_king_9"
 		"Ability13"					"special_bonus_imba_sand_king_4"
 		"Ability14"					"special_bonus_armor_10"
 		"Ability15"					"special_bonus_imba_sand_king_6"
@@ -1513,6 +1523,7 @@
 		"Ability17"					"special_bonus_imba_sand_king_8"
 		
 		// Removed Talents
+		// "Ability12"					"special_bonus_imba_sand_king_3"
 		// "Ability14"					"special_bonus_imba_sand_king_5"
 		// "Ability16"					"special_bonus_imba_sand_king_7"
 	}

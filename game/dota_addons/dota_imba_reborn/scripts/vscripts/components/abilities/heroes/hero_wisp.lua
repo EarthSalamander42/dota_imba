@@ -1241,15 +1241,15 @@ function imba_wisp_overcharge:AddOvercharge(caster, target, efficiency, overchar
 		local bonus_attack_range 	= ability:GetSpecialValueFor("bonus_attack_range")
 
 		if caster:HasTalent("special_bonus_imba_wisp_1") then 
-			local bonus_effect 		= caster:FindTalentValue("special_bonus_imba_wisp_1", "bonus_effect")
+			local bonus_effect 		= caster:FindTalentValue("special_bonus_imba_wisp_1")
 			bonus_attack_speed 		= bonus_attack_speed + bonus_effect
-			bonus_cast_speed 		= bonus_cast_speed + bonus_effect
+			bonus_cast_speed 		= bonus_cast_speed
 			bonus_missile_speed 	= bonus_missile_speed + bonus_effect
 			bonus_attack_range 		= bonus_attack_range + bonus_effect
 		end
 
 		if caster:HasTalent("special_bonus_imba_wisp_4") then 
-			local damage_reduction 		= caster:FindTalentValue("special_bonus_imba_wisp_4", "damage_reduction")
+			local damage_reduction 		= caster:FindTalentValue("special_bonus_imba_wisp_4")
 			bonus_damage_pct 			= bonus_damage_pct - damage_reduction
 		end
 

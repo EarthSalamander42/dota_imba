@@ -503,6 +503,10 @@ function modifier_imba_poison_sting_debuff:OnCreated(params)
 end
 
 function modifier_imba_poison_sting_debuff:OnRefresh(params)
+	if not IsServer() then return end
+	
+	self:SetDuration(self:GetAbility():GetSpecialValueFor("duration") * (1 - self:GetParent():GetStatusResistance()), true)
+
 	self:OnCreated(params)
 end
 
