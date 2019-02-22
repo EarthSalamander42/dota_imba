@@ -14,7 +14,7 @@ var toggle = false;
 var first_time = false;
 
 var api = {
-	base : "http://api.dota2imba.org/imba/",
+	base : "http://api.dota2imba.fr/imba/",
 	urls : {
 		companions : "companions",
 		statues : "statues",
