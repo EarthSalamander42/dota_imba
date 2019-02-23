@@ -1,9 +1,9 @@
 // Night Stalker's Stalker in the Night
 "DOTA_Tooltip_ability_imba_night_stalker_stalker_in_the_night"						"Stalker in the Night"
-"DOTA_Tooltip_ability_imba_night_stalker_stalker_in_the_night_Description"          "Passively decreases Night Stalker's Day vision, but drastically increases his night vision. Each time a night comes naturally, or a night inducing spell is used, Stalker in the Night gains a stack. Stacks are used to increase Hunter in the Dark's potency."
+"DOTA_Tooltip_ability_imba_night_stalker_stalker_in_the_night_Description"          "Drastically increases his night vision. Each time a night comes naturally, or a night inducing spell is used, Stalker in the Night gains a stack. Stacks are used to increase Hunter in the Dark's potency."
 "DOTA_Tooltip_ability_imba_night_stalker_stalker_in_the_night_Lore"                 "A very fearsome creature, Night Stalker operates in the dark. In the long time since the First Day, Balanar's eyes have adjusted to the dark, and his body welcomes the night."
 "DOTA_Tooltip_ability_imba_night_stalker_stalker_in_the_night_Note0"                "When Balanar is afflicted with Break, this skill's effect stops, effectively turning Balanar into a normal hero in terms of vision."
-"DOTA_Tooltip_ability_imba_night_stalker_stalker_in_the_night_vision_day_loss"      "DAY VISION REDUCTION:"
+//"DOTA_Tooltip_ability_imba_night_stalker_stalker_in_the_night_vision_day_loss"      "DAY VISION REDUCTION:"
 "DOTA_Tooltip_ability_imba_night_stalker_stalker_in_the_night_vision_night_gain"    "BONUS NIGHT VISION:"
 
 "DOTA_Tooltip_modifier_imba_stalker_in_the_night"                      "Stalker in the Night"

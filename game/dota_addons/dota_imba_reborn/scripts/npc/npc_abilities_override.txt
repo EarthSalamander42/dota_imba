@@ -155,6 +155,12 @@
 	"item_kaya_and_sange"					"REMOVE"
 	"item_recipe_yasha_and_kaya"			"REMOVE"
 	"item_yasha_and_kaya"					"REMOVE"
+	"item_recipe_meteor_hammer"				"REMOVE"
+	"item_meteor_hammer"					"REMOVE"
+	"item_meteor_hammer"					"REMOVE" // Apparently only calling this once didn't work
+	"item_recipe_spirit_vessel"				"REMOVE"
+	"item_spirit_vessel"					"REMOVE"
+	"item_spirit_vessel"					"REMOVE" // Apparently only calling this once didn't work
 
 	//Banned items
 	"item_imba_ironleaf_boots"				"REMOVE"
@@ -14631,6 +14637,17 @@
 				"var_type"			"FIELD_FLOAT"
 				"spawn_interval"	"0.8"
 			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Recipe: Manta
+	//=================================================================================================================
+	"item_recipe_manta"
+	{
+		"ItemRequirements"
+		{
+			"01"						"item_imba_yasha;item_ultimate_orb"
 		}
 	}
 	

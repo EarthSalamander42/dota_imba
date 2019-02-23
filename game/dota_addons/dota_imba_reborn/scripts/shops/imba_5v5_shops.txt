@@ -108,7 +108,7 @@
 		"item"		"item_imba_vladmir"
 		"item"		"item_imba_mekansm"			
 		"item"		"item_holy_locket"	
-		"item"		"item_spirit_vessel"			
+		"item"		"item_imba_spirit_vessel"			
 		"item"		"item_imba_pipe"
 		"item" 		"item_imba_guardian_greaves"
 		"item"		"item_imba_arcane_nexus"
@@ -158,7 +158,7 @@
 	{
 		"item"		"item_imba_lesser_crit"
 		"item"		"item_imba_armlet"
-		"item"		"item_meteor_hammer"	
+		"item"		"item_imba_meteor_hammer"	
 		"item"		"item_imba_shadow_blade"
 		"item"		"item_imba_skull_basher"
 		"item"		"item_imba_monkey_king_bar"

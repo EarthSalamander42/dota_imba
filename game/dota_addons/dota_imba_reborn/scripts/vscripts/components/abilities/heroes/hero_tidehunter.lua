@@ -61,7 +61,7 @@ function imba_tidehunter_ravage:OnSpellStart()
 				enemy:EmitSound(hit_sound)
 
 				-- Apply stun and air time modifiers
-				enemy:AddNewModifier(caster, self, "modifier_stunned", {duration = stun_duration})
+				enemy:AddNewModifier(caster, self, "modifier_stunned", {duration = stun_duration}):SetDuration(stun_duration * (1 - enemy:GetStatusResistance()), true)
 
 				-- Knock the enemy into the air
 				local knockback =

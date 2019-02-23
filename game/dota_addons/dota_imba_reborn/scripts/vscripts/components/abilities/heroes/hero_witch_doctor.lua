@@ -81,7 +81,13 @@ function imba_witch_doctor_paralyzing_cask:OnProjectileHit_ExtraData(hTarget, vL
 							hTarget:AddNewModifier(self:GetCaster(), maledict_ability, "modifier_imba_maledict", {duration = maledict_ability:GetSpecialValueFor("duration") + FrameTime()} )
 						end
 					end
-					hTarget:AddNewModifier(hTarget, self, "modifier_stunned", {duration = ExtraData.hero_duration})
+					
+					if hTarget:HasModifier("modifier_stunned") then
+						hTarget:AddNewModifier(hTarget, self, "modifier_stunned", {duration = ExtraData.hero_duration * (1 - hTarget:GetStatusResistance())})
+					else
+						hTarget:AddNewModifier(hTarget, self, "modifier_stunned", {duration = ExtraData.hero_duration})
+					end
+					
 					ApplyDamage({victim = hTarget, attacker = self:GetCaster(), damage = ExtraData.hero_damage, damage_type = self:GetAbilityDamageType()})
 				end
 			else

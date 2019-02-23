@@ -79,9 +79,9 @@ function GameMode:OnHeroFirstSpawn(hero)
 			PlayerResource:SetGold(playerId, initial_gold, false)
 		end
 	else
-		-- Give players a 10% boost in gold if they random
+		-- Give players an additional 250 boost in gold if they random
 		if PlayerResource:HasRandomed(hero:GetPlayerID()) then
-			PlayerResource:SetGold(hero:GetPlayerID(), hero:GetGold() * 0.1, false)
+			PlayerResource:SetGold(hero:GetPlayerID(), hero:GetGold() + 250, false)
 		end
 	end
 

@@ -1,0 +1,85 @@
+"DOTA_Tooltip_ability_item_imba_meteor_hammer"								"Meteor Hammer"
+"DOTA_Tooltip_ability_item_imba_meteor_hammer_Description"                   "<h1>Active: Meteor Hammer</h1> CHANNELED - After a successful channel, summons a meteor that strikes a %impact_radius% AoE, stunning enemies for %stun_duration% seconds and dealing impact damage. Continues to deal damage over time to enemies units and buildings for %burn_duration% seconds.<BR><BR>Building Impact Damage: %impact_damage_buildings% <BR>Building Over Time Damage: %burn_dps_buildings% <BR><BR>Non-Building Impact Damage: %impact_damage_units% <BR>Non-Building Over Time Damage: %burn_dps_units% <BR><BR>Channel Duration: %max_duration% seconds.<BR>Landing Time: %land_time% seconds.
+
+\n<h1><font color='#FF7800'>Active: Rock Burial</font></h1>Meteor Hammer's burn is fully stackable.
+\n<h1><font color='#FF7800'>Active: Galaxy Enduement</font></h1>Meteor Hammer gains impact radius and damage based on its level. Additionally, each level provides new effects to its active. Hold Alt to see the list of effects."
+
+"DOTA_Tooltip_ability_item_imba_meteor_hammer_Note0"						"<b>Level 1:</b> The burn from Meteor Hammer is radioactive, spreading to units within impact radius of the victim each damage tick at half its duration. Does not spread to units who have already received that instance of burn."
+"DOTA_Tooltip_ability_item_imba_meteor_hammer_Note1"						"<b>Level 2:</b> Applies Break for the duration of the burn."
+"DOTA_Tooltip_ability_item_imba_meteor_hammer_Note2"						"<b>Level 3:</b> Reduces spell amplification by 50% for the duration of the burn."
+"DOTA_Tooltip_ability_item_imba_meteor_hammer_Note3"						"<b>Level 4:</b> Stun and burn application pierces spell immunity."
+
+"DOTA_Tooltip_ability_item_imba_meteor_hammer_lore"                   "An enchanted hammer forged of metals discovered in the ruins of a village destroyed by a great star storm."		
+"DOTA_Tooltip_ability_item_imba_meteor_hammer_bonus_strength"				"+$str"
+"DOTA_Tooltip_ability_item_imba_meteor_hammer_bonus_intellect"				"+$int"
+"DOTA_Tooltip_ability_item_imba_meteor_hammer_bonus_health_regen"			"+$hp_regen"
+"DOTA_Tooltip_ability_item_imba_meteor_hammer_bonus_mana_regen"				"+$mana_regen"
+
+"DOTA_Tooltip_modifier_item_imba_meteor_hammer_burn"						"Meteor Hammer Burn"
+"DOTA_Tooltip_modifier_item_imba_meteor_hammer_burn_Description"			"Taking damage over time."
+
+
+
+"DOTA_Tooltip_ability_item_imba_meteor_hammer_2"								"Meteor Hammer 2"
+"DOTA_Tooltip_ability_item_imba_meteor_hammer_2_Description"                   "<h1>Active: Meteor Hammer</h1> CHANNELED - After a successful channel, summons a meteor that strikes a %impact_radius% AoE, stunning enemies for %stun_duration% seconds and dealing impact damage. Continues to deal damage over time to enemies units and buildings for %burn_duration% seconds.<BR><BR>Building Impact Damage: %impact_damage_buildings% <BR>Building Over Time Damage: %burn_dps_buildings% <BR><BR>Non-Building Impact Damage: %impact_damage_units% <BR>Non-Building Over Time Damage: %burn_dps_units% <BR><BR>Channel Duration: %max_duration% seconds.<BR>Landing Time: %land_time% seconds.
+
+\n<h1><font color='#FF7800'>Active: Rock Burial</font></h1>Meteor Hammer's burn is fully stackable.
+\n<h1><font color='#FF7800'>Active: Galaxy Enduement</font></h1>Meteor Hammer gains impact radius and damage based on its level. Additionally, each level provides new effects to its active. Hold Alt to see the list of effects."
+
+"DOTA_Tooltip_ability_item_imba_meteor_hammer_2_Note0"						"<b>Level 1:</b> The burn from Meteor Hammer is radioactive, spreading to units within impact radius of the victim each damage tick at half its duration. Does not spread to units who have already received that instance of burn."
+"DOTA_Tooltip_ability_item_imba_meteor_hammer_2_Note1"						"<b>Level 2:</b> Applies Break for the duration of the burn."
+"DOTA_Tooltip_ability_item_imba_meteor_hammer_2_Note2"						"<b>Level 3:</b> Reduces spell amplification by 50% for the duration of the burn."
+"DOTA_Tooltip_ability_item_imba_meteor_hammer_2_Note3"						"<b>Level 4:</b> Stun and burn application pierces spell immunity."
+
+"DOTA_Tooltip_ability_item_imba_meteor_hammer_2_lore"                   "An enchanted hammer forged of metals discovered in the ruins of a village destroyed by a great star storm."		
+"DOTA_Tooltip_ability_item_imba_meteor_hammer_2_bonus_strength"				"+$str"
+"DOTA_Tooltip_ability_item_imba_meteor_hammer_2_bonus_intellect"				"+$int"
+"DOTA_Tooltip_ability_item_imba_meteor_hammer_2_bonus_health_regen"			"+$hp_regen"
+"DOTA_Tooltip_ability_item_imba_meteor_hammer_2_bonus_mana_regen"				"+$mana_regen"
+
+"DOTA_Tooltip_modifier_item_imba_meteor_hammer_2_burn"						"Meteor Hammer Burn"
+"DOTA_Tooltip_modifier_item_imba_meteor_hammer_2_burn_Description"			"Taking damage over time."
+
+
+
+"DOTA_Tooltip_ability_item_imba_meteor_hammer_3"								"Meteor Hammer 3"
+"DOTA_Tooltip_ability_item_imba_meteor_hammer_3_Description"                   "<h1>Active: Meteor Hammer</h1> CHANNELED - After a successful channel, summons a meteor that strikes a %impact_radius% AoE, stunning enemies for %stun_duration% seconds and dealing impact damage. Continues to deal damage over time to enemies units and buildings for %burn_duration% seconds.<BR><BR>Building Impact Damage: %impact_damage_buildings% <BR>Building Over Time Damage: %burn_dps_buildings% <BR><BR>Non-Building Impact Damage: %impact_damage_units% <BR>Non-Building Over Time Damage: %burn_dps_units% <BR><BR>Channel Duration: %max_duration% seconds.<BR>Landing Time: %land_time% seconds.
+
+\n<h1><font color='#FF7800'>Active: Rock Burial</font></h1>Meteor Hammer's burn is fully stackable.
+\n<h1><font color='#FF7800'>Active: Galaxy Enduement</font></h1>Meteor Hammer gains impact radius and damage based on its level. Additionally, each level provides new effects to its active. Hold Alt to see the list of effects."
+
+"DOTA_Tooltip_ability_item_imba_meteor_hammer_3_Note0"						"<b>Level 1:</b> The burn from Meteor Hammer is radioactive, spreading to units within impact radius of the victim each damage tick at half its duration. Does not spread to units who have already received that instance of burn."
+"DOTA_Tooltip_ability_item_imba_meteor_hammer_3_Note1"						"<b>Level 2:</b> Applies Break for the duration of the burn."
+"DOTA_Tooltip_ability_item_imba_meteor_hammer_3_Note2"						"<b>Level 3:</b> Reduces spell amplification by 50% for the duration of the burn."
+"DOTA_Tooltip_ability_item_imba_meteor_hammer_3_Note3"						"<b>Level 4:</b> Stun and burn application pierces spell immunity."
+
+"DOTA_Tooltip_ability_item_imba_meteor_hammer_3_lore"                   "An enchanted hammer forged of metals discovered in the ruins of a village destroyed by a great star storm."		
+"DOTA_Tooltip_ability_item_imba_meteor_hammer_3_bonus_strength"				"+$str"
+"DOTA_Tooltip_ability_item_imba_meteor_hammer_3_bonus_intellect"				"+$int"
+"DOTA_Tooltip_ability_item_imba_meteor_hammer_3_bonus_health_regen"			"+$hp_regen"
+"DOTA_Tooltip_ability_item_imba_meteor_hammer_3_bonus_mana_regen"				"+$mana_regen"
+
+"DOTA_Tooltip_modifier_item_imba_meteor_hammer_3_burn"						"Meteor Hammer Burn"
+"DOTA_Tooltip_modifier_item_imba_meteor_hammer_3_burn_Description"			"Taking damage over time."
+
+
+
+"DOTA_Tooltip_ability_item_imba_meteor_hammer_4"								"Meteor Hammer EX"
+"DOTA_Tooltip_ability_item_imba_meteor_hammer_4_Description"                   "<h1>Active: Meteor Hammer</h1> CHANNELED - After a successful channel, summons a meteor that strikes a %impact_radius% AoE, stunning enemies for %stun_duration% seconds and dealing impact damage. Continues to deal damage over time to enemies units and buildings for %burn_duration% seconds.<BR><BR>Building Impact Damage: %impact_damage_buildings% <BR>Building Over Time Damage: %burn_dps_buildings% <BR><BR>Non-Building Impact Damage: %impact_damage_units% <BR>Non-Building Over Time Damage: %burn_dps_units% <BR><BR>Channel Duration: %max_duration% seconds.<BR>Landing Time: %land_time% seconds.
+
+\n<h1><font color='#FF7800'>Active: Rock Burial</font></h1>Meteor Hammer's burn is fully stackable.
+\n<h1><font color='#FF7800'>Active: Galaxy Enduement</font></h1>Meteor Hammer gains impact radius and damage based on its level. Additionally, each level provides new effects to its active. Hold Alt to see the list of effects."
+
+"DOTA_Tooltip_ability_item_imba_meteor_hammer_4_Note0"						"<b>Level 1:</b> The burn from Meteor Hammer is radioactive, spreading to units within impact radius of the victim each damage tick at half its duration. Does not spread to units who have already received that instance of burn."
+"DOTA_Tooltip_ability_item_imba_meteor_hammer_4_Note1"						"<b>Level 2:</b> Applies Break for the duration of the burn."
+"DOTA_Tooltip_ability_item_imba_meteor_hammer_4_Note2"						"<b>Level 3:</b> Reduces spell amplification by 50% for the duration of the burn."
+"DOTA_Tooltip_ability_item_imba_meteor_hammer_4_Note3"						"<b>Level 4:</b> Stun and burn application pierces spell immunity."
+
+"DOTA_Tooltip_ability_item_imba_meteor_hammer_4_lore"                   "An enchanted hammer forged of metals discovered in the ruins of a village destroyed by a great star storm."		
+"DOTA_Tooltip_ability_item_imba_meteor_hammer_4_bonus_strength"				"+$str"
+"DOTA_Tooltip_ability_item_imba_meteor_hammer_4_bonus_intellect"				"+$int"
+"DOTA_Tooltip_ability_item_imba_meteor_hammer_4_bonus_health_regen"			"+$hp_regen"
+"DOTA_Tooltip_ability_item_imba_meteor_hammer_4_bonus_mana_regen"				"+$mana_regen"
+
+"DOTA_Tooltip_modifier_item_imba_meteor_hammer_4_burn"						"Meteor Hammer Burn"
+"DOTA_Tooltip_modifier_item_imba_meteor_hammer_4_burn_Description"			"Taking damage over time."
