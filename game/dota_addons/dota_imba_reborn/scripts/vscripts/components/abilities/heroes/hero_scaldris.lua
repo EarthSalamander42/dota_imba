@@ -242,6 +242,7 @@ function modifier_imba_heatwave_dps:IsPurgable() return false end
 function modifier_imba_heatwave_dps:IsPurgeException() return true end
 function modifier_imba_heatwave_dps:IsStunDebuff() return false end
 function modifier_imba_heatwave_dps:RemoveOnDeath() return true end
+function modifier_imba_heatwave_dps:IgnoreTenacity() return true end
 
 function modifier_imba_heatwave_dps:OnCreated(keys)
 	if IsServer() then
@@ -425,6 +426,7 @@ function modifier_imba_cold_front_dps:IsPurgable() return false end
 function modifier_imba_cold_front_dps:IsPurgeException() return true end
 function modifier_imba_cold_front_dps:IsStunDebuff() return false end
 function modifier_imba_cold_front_dps:RemoveOnDeath() return true end
+function modifier_imba_cold_front_dps:IgnoreTenacity() return true end
 
 function modifier_imba_cold_front_dps:OnCreated(keys)
 	if IsServer() then
@@ -559,6 +561,7 @@ function modifier_imba_scorch_dps:IsPurgable() return false end
 function modifier_imba_scorch_dps:IsPurgeException() return true end
 function modifier_imba_scorch_dps:IsStunDebuff() return false end
 function modifier_imba_scorch_dps:RemoveOnDeath() return true end
+function modifier_imba_scorch_dps:IgnoreTenacity() return true end
 
 function modifier_imba_scorch_dps:OnCreated(keys)
 	if IsServer() then
@@ -715,6 +718,7 @@ function modifier_imba_freeze_dps:IsPurgable() return false end
 function modifier_imba_freeze_dps:IsPurgeException() return true end
 function modifier_imba_freeze_dps:IsStunDebuff() return false end
 function modifier_imba_freeze_dps:RemoveOnDeath() return true end
+function modifier_imba_freeze_dps:IgnoreTenacity() return true end
 
 function modifier_imba_freeze_dps:OnCreated(keys)
 	if IsServer() then
@@ -861,6 +865,7 @@ function modifier_imba_jet_blaze_dps:IsPurgable() return false end
 function modifier_imba_jet_blaze_dps:IsPurgeException() return true end
 function modifier_imba_jet_blaze_dps:IsStunDebuff() return false end
 function modifier_imba_jet_blaze_dps:RemoveOnDeath() return true end
+function modifier_imba_jet_blaze_dps:IgnoreTenacity() return true end
 
 function modifier_imba_jet_blaze_dps:OnCreated(keys)
 	if IsServer() then
@@ -1090,6 +1095,7 @@ function modifier_imba_ice_floes_dps:IsPurgable() return false end
 function modifier_imba_ice_floes_dps:IsPurgeException() return true end
 function modifier_imba_ice_floes_dps:IsStunDebuff() return false end
 function modifier_imba_ice_floes_dps:RemoveOnDeath() return true end
+function modifier_imba_ice_floes_dps:IgnoreTenacity() return true end
 
 function modifier_imba_ice_floes_dps:OnCreated(keys)
 	if IsServer() then
@@ -1207,6 +1213,7 @@ function modifier_imba_living_flame_dps:IsPurgable() return false end
 function modifier_imba_living_flame_dps:IsPurgeException() return true end
 function modifier_imba_living_flame_dps:IsStunDebuff() return false end
 function modifier_imba_living_flame_dps:RemoveOnDeath() return true end
+function modifier_imba_living_flame_dps:IgnoreTenacity() return true end
 
 function modifier_imba_living_flame_dps:OnCreated(keys)
 	if IsServer() then
@@ -1435,6 +1442,7 @@ function modifier_imba_absolute_zero_dps:IsPurgable() return false end
 function modifier_imba_absolute_zero_dps:IsPurgeException() return true end
 function modifier_imba_absolute_zero_dps:IsStunDebuff() return false end
 function modifier_imba_absolute_zero_dps:RemoveOnDeath() return true end
+function modifier_imba_absolute_zero_dps:IgnoreTenacity() return true end
 
 function modifier_imba_absolute_zero_dps:OnCreated(keys)
 	if IsServer() then

@@ -6842,6 +6842,8 @@
 		"ItemAliases"					"mana;mb;octarine core"
 		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
 		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_ALWAYS"
+		
+		"ItemRequiresCharges"			"0"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -12075,7 +12077,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"1240"
+		"ItemCost"						"1740"
 		"ItemShopTags"					""
 
 		// Recipe
@@ -12104,7 +12106,7 @@
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"6"
+		"AbilityCooldown"				"8"
 		"AbilitySharedCooldown"			"phase"
 
 		// Precache
@@ -12117,7 +12119,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"3600"
+		"ItemCost"						"4020"
 		"ItemShopTags"					"damage;move_speed;hard_to_tag"
 		"ItemQuality"					"common"
 		"ItemAliases"					"lifesteal boots"
@@ -12529,7 +12531,7 @@
 			}
 		}
 	}
-	
+		
 	//=================================================================================================================
 	// Recipe: Meteor Hammer
 	//=================================================================================================================
@@ -13291,5 +13293,247 @@
 		}
 	}
 	
-	//next free ID: 2307
+	//=================================================================================================================
+	// Recipe: Rod of Atos
+	//=================================================================================================================
+	"item_recipe_imba_rod_of_atos"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"custom/imba_recipe"
+
+		"ID"							"2307"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"850"	
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_rod_of_atos"
+		"ItemRequirements"
+		{
+			"01"						"item_staff_of_wizardry;item_crown;item_crown"
+		}
+	}
+	
+	
+	//=================================================================================================================
+	// Rod of Atos
+	//=================================================================================================================
+	"item_imba_rod_of_atos"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_lua"
+		"ScriptFile"					"components/items/item_rod_of_atos.lua"
+		"AbilityTextureName"			"item_rod_of_atos"
+
+		"ID"							"2308"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"FightRecapLevel"				"1"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+
+		// Stats		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"16"
+		"AbilityCastRange"				"1400"
+		"AbilityCastPoint"				"0.0"
+		"AbilitySharedCooldown"			"atos"
+
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"50"
+		"ItemCost"						"2750"
+		"ItemShopTags"					"int;regen_health"
+		"ItemQuality"					"rare"
+		"ItemAliases"					"rod of atos"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+		"ShouldBeSuggested"				"1"
+
+		"MaxUpgradeLevel"				"2"
+		"ItemBaseLevel"					"1"
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{		
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_intellect"		"20"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_strength"		"12"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_agility"			"12"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"2.5"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tooltip_range"			"1400"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"projectile_speed"		"1500"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Recipe: Rod of Atos EX
+	//=================================================================================================================
+	"item_recipe_imba_rod_of_atos_2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"custom/imba_recipe"
+
+		"ID"							"2309"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"1750"	
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_rod_of_atos_2"
+		"ItemRequirements"
+		{
+			"01"						"item_imba_rod_of_atos;item_imba_rod_of_atos;item_imba_rod_of_atos"
+		}
+	}
+	
+	
+	//=================================================================================================================
+	// Rod of Atos EX
+	//=================================================================================================================
+	"item_imba_rod_of_atos_2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_lua"
+		"ScriptFile"					"components/items/item_rod_of_atos.lua"
+		"AbilityTextureName"			"custom/imba_rod_of_atos_2"
+
+		"ID"							"2310"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"FightRecapLevel"				"1"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+
+		// Stats		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"16"
+		"AbilityCastRange"				"1400"
+		"AbilityCastPoint"				"0.0"
+		"AbilitySharedCooldown"			"atos"
+
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"50"
+		"ItemCost"						"10000"
+		"ItemShopTags"					"int;regen_health"
+		"ItemQuality"					"rare"
+		"ItemAliases"					"rod of atos"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+		"ShouldBeSuggested"				"1"
+	
+		"MaxUpgradeLevel"				"2"
+		"ItemBaseLevel"					"2"
+		
+		"ItemRequiresCharges"			"0"
+		"ItemDisplayCharges"			"1"
+		"ItemInitialCharges"			"2"
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{		
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_intellect"		"60"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_strength"		"36"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_agility"			"36"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"2.5"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tooltip_range"			"1400"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"projectile_speed"		"1500"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"curtain_fire_radius"	"1000"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"curtain_fire_length"	"1600"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"curtain_fire_shot_count"	"50"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"curtain_fire_delay"	"0.08"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"curtain_fire_speed"	"800"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"curtain_fire_activation_charge"	"3"
+			}
+		}
+	}
+	
+	//next free ID: 2311
 }

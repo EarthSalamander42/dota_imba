@@ -123,7 +123,7 @@
 		"item"		"item_imba_necronomicon"
 		"item"		"item_dagon"
 		"item"		"item_cyclone"
-		"item"		"item_rod_of_atos"
+		"item"		"item_imba_rod_of_atos"
 		"item"		"item_solar_crest"
 		"item"		"item_imba_orchid"
 		"item"		"item_ultimate_scepter"

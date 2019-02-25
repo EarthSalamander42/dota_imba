@@ -60,18 +60,18 @@ function item_imba_meteor_hammer:OnSpellStart()
 
 	if not IsServer() then return end
 
-	self.position	= self:GetCursorPosition()
+	local position	= self:GetCursorPosition()
 	
 	-- Play the channel sound
 	self.caster:EmitSound("DOTA_Item.MeteorHammer.Channel")
 	
 	-- Create FOWViwer for caster team on position
 	-- Looks like vision duration isn't explicitly in ability KVs
-	AddFOWViewer(self.caster:GetTeam(), self.position, self.impact_radius, 3.8, false)
+	AddFOWViewer(self.caster:GetTeam(), position, self.impact_radius, 3.8, false)
 
 	-- Impact location particles
 	self.particle	= ParticleManager:CreateParticleForTeam("particles/items4_fx/meteor_hammer_aoe.vpcf", PATTACH_WORLDORIGIN, self.caster, self.caster:GetTeam())
-	ParticleManager:SetParticleControl(self.particle, 0, self.position)
+	ParticleManager:SetParticleControl(self.particle, 0, position)
 	ParticleManager:SetParticleControl(self.particle, 1, Vector(self.impact_radius, 1, 1))
 	
 	-- Caster location particles
@@ -82,6 +82,8 @@ end
 
 function item_imba_meteor_hammer:OnChannelFinish(bInterrupted)
 	if not IsServer() then return end
+
+	self.position = self:GetCursorPosition()
 
 	self.caster:RemoveGesture(ACT_DOTA_GENERIC_CHANNEL_1)
 

@@ -44,9 +44,7 @@ function item_imba_spirit_vessel:OnSpellStart()
 
 	-- -- Level 2 (and above?) does...something
 	-- if self:GetLevel() >= 2 then
-		-- self.targetFlag = DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES
-	-- else
-		-- self.targetFlag = DOTA_UNIT_TARGET_FLAG_NONE
+
 	-- end
 
 	if not IsServer() then return end

@@ -161,6 +161,9 @@
 	"item_recipe_spirit_vessel"				"REMOVE"
 	"item_spirit_vessel"					"REMOVE"
 	"item_spirit_vessel"					"REMOVE" // Apparently only calling this once didn't work
+	"item_recipe_rod_of_atos"				"REMOVE"
+	"item_rod_of_atos"						"REMOVE"
+	"item_rod_of_atos"						"REMOVE" // Not even gonna bother testing this one and just double tap
 
 	//Banned items
 	"item_imba_ironleaf_boots"				"REMOVE"
