@@ -858,7 +858,7 @@ end
 function modifier_imba_enchantress_impetus:OnAttackStart( keys )
     if not IsServer() then return end
 
-	if keys.attacker == self.caster and self.ability:IsOwnersManaEnough() and not keys.target:IsBuilding() and (self.ability:GetAutoCastState() or self.impetus_orb) then
+	if keys.attacker == self.caster and self.ability:IsFullyCastable() and not self.caster:IsSilenced() and not keys.target:IsBuilding() and not keys.target:IsOther() and (self.ability:GetAutoCastState() or self.impetus_orb) then
 		self.parent:SetRangedProjectileName(self.impetus_attack)
 	else
 		self.parent:SetRangedProjectileName(self.base_attack)
@@ -869,7 +869,7 @@ function modifier_imba_enchantress_impetus:OnAttack( keys )
     if not IsServer() then return end
 	
 	if keys.attacker == self.caster then
-		if not self.caster:IsIllusion() and self.ability:IsOwnersManaEnough() and not keys.target:IsBuilding() and (self.ability:GetAutoCastState() or self.impetus_orb) then
+		if not self.caster:IsIllusion() and self.ability:IsFullyCastable() and not self.caster:IsSilenced() and not keys.target:IsBuilding() and not keys.target:IsOther() and (self.ability:GetAutoCastState() or self.impetus_orb) then
 			table.insert(self.attack_queue, true)
 			self.ability:UseResources(true, false, false)
 			self.caster:EmitSound(self.impetus_start)

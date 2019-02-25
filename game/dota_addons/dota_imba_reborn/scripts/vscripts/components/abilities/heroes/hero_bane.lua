@@ -946,6 +946,7 @@ function modifier_imba_fiends_grip_handler:IsPurgableException() return true end
 function modifier_imba_fiends_grip_handler:GetEffectName() return "particles/units/heroes/hero_bane/bane_fiends_grip.vpcf" end
 function modifier_imba_fiends_grip_handler:GetEffectAttachType() return PATTACH_OVERHEAD_FOLLOW end
 function modifier_imba_fiends_grip_handler:GetOverrideAnimation() return ACT_DOTA_FLAIL end
+function modifier_imba_fiends_grip_handler:IgnoreTenacity() return true end
 
 function modifier_imba_fiends_grip_handler:DeclareFunctions()
 	local funcs = {MODIFIER_PROPERTY_OVERRIDE_ANIMATION}
@@ -1078,7 +1079,7 @@ function modifier_imba_fiends_grip_handler:OnDestroy()
 
 		parent:AddNewModifier(	caster,
 			ability, "modifier_imba_fiends_grip_handler",
-			{duration = fiends_grip_linger_duration, propogated = 1})
+			{duration = fiends_grip_linger_duration, propogated = 1}):SetDuration(fiends_grip_linger_duration * (1 - parent:GetStatusResistance()), true)
 		end
 
 		if not self.baby then

@@ -17514,7 +17514,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"pull_speed"			"40 60 80 100"
+				"pull_speed"			"25 40 55 70"
 			}
 			"07"
 			{

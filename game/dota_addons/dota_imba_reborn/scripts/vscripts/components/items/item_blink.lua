@@ -123,7 +123,7 @@ function modifier_imba_blink_dagger_handler:OnTakeDamage( keys )
 	local parent = self:GetParent()					-- Modifier carrier
 	local unit = keys.unit							-- Who took damage
 
-	if parent == unit then
+	if parent == unit and keys.attacker:GetTeam() ~= parent:GetTeam() then
 		-- Custom function from funcs.lua
 		if keys.attacker:IsHeroDamage(keys.damage) then
 			if ability:GetCooldownTimeRemaining() < blink_damage_cooldown then
@@ -228,7 +228,7 @@ function modifier_imba_blink_boots_handler:OnTakeDamage( keys )
 	local parent = self:GetParent()					-- Modifier carrier
 	local unit = keys.unit							-- Who took damage
 	
-	if parent == unit then
+	if parent == unit and keys.attacker:GetTeam() ~= parent:GetTeam() then
 		-- Custom function from funcs.lua
 		if keys.attacker:IsHeroDamage(keys.damage) then
 			if ability:GetCooldownTimeRemaining() < blink_damage_cooldown then

@@ -968,7 +968,7 @@ function imba_warlock_rain_of_chaos:OnSpellStart()
 			local bonus_damage = caster:GetIntellect() * bonus_damage_per_int
 			local bonus_armor = caster:GetAgility() * bonus_armor_per_agi
 			local bonus_attack_speed = caster:GetAgility() * bonus_aspeed_per_agi
-			local bonus_move_speed = caster:GetMoveSpeedModifier(caster:GetBaseMoveSpeed()) - caster:GetBaseMoveSpeed()
+			local bonus_move_speed = caster:GetMoveSpeedModifier(caster:GetBaseMoveSpeed(), false) - caster:GetBaseMoveSpeed()
 
 			-- Set Golem's properties according to the bonus properties
 			-- Health:

@@ -1281,7 +1281,9 @@ function modifier_imba_phoenix_sun_ray_caster_dummy:OnDestroy()
 			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
 			DOTA_UNIT_TARGET_FLAG_NONE)
 		for _,unit in pairs(units) do
-			unit:Purge(false, true, false, true, true)
+			if unit ~= caster then
+				unit:Purge(false, true, false, true, true)
+			end
 		end
 	end
 	caster:RemoveGesture(ACT_DOTA_OVERRIDE_ABILITY_3)

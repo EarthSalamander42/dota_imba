@@ -437,6 +437,11 @@ function modifier_imba_vortex_root:OnCreated( params )
 		self.speed = params.speed * FrameTime()
 
 		self:StartIntervalThink(FrameTime())
+		
+		-- Weird stuff with this not being affected by status resist so I'm forcing it here
+		Timers:CreateTimer(FrameTime(), function()
+			self:SetDuration(self:GetDuration() * (1 - self:GetParent():GetStatusResistance()), true)
+		end)
 	end
 end
 

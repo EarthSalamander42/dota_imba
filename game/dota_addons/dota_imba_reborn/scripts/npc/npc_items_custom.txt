@@ -9096,7 +9096,7 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"800"
-		"AbilityCooldown"				"25"
+		"AbilityCooldown"				"30"
 		"AbilityManaCost"				"75"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
@@ -9236,7 +9236,7 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"800"
-		"AbilityCooldown"				"25"
+		"AbilityCooldown"				"30"
 		"AbilityManaCost"				"75"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
@@ -9312,7 +9312,7 @@
 			"10"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"transfer_chance"				"20"
+				"transfer_chance"				"10"
 			}
 	
 			"11"

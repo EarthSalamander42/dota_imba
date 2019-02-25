@@ -262,6 +262,19 @@ function imba_pudge_meat_hook:OnOwnerDied()
 	end
 end
 
+function imba_pudge_meat_hook:CastFilterResultLocation(vLocation)
+	if not IsServer() then return end
+
+	if IsNearFountain(vLocation, 1700) then
+		return UF_FAIL_CUSTOM
+	end
+end
+
+function imba_pudge_meat_hook:GetCustomCastErrorLocation(vLocation)
+	return "Cannot Hook Units Located Within Fountain"
+end
+
+
 function imba_pudge_meat_hook:OnSpellStart()
 	self.launched = true
 

@@ -1268,7 +1268,7 @@
 "DOTA_Tooltip_ability_special_bonus_imba_phoenix_1_Description"		"Double Dive speed, removed cast point, and doubled hp cost on Icarus Dive."
 "DOTA_Tooltip_ability_special_bonus_imba_phoenix_2"             	"Icarus Dive stuns for 0.5 seconds"
 "DOTA_Tooltip_ability_special_bonus_imba_phoenix_3"             	"Fire spirits can stack up to 3"
-"DOTA_Tooltip_ability_special_bonus_imba_phoenix_4"             	"Sun Ray applies a strong dispell on allies on end"
+"DOTA_Tooltip_ability_special_bonus_imba_phoenix_4"             	"Sun Ray applies a strong dispel on allies on end"
 "DOTA_Tooltip_ability_special_bonus_imba_phoenix_5"             	"Second Wind"
 "DOTA_Tooltip_ability_special_bonus_imba_phoenix_5_Description"     "If a Supernova egg is destroyed, Phoenix and any absorbed ally will survive at 10% of their max HP and MP with refreshed abilities."
 "DOTA_Tooltip_ability_special_bonus_imba_phoenix_6"             	"Second Sun"
@@ -1650,7 +1650,7 @@
 // Sand King's Sand Storm (7.20)
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_sandking_sand_storm_720"										"Sand Storm"
-"DOTA_Tooltip_ability_imba_sandking_sand_storm_720_Description"							"Sand King creates a fearsome sandstorm that damages enemy units while hiding him from vision.  The effect ends when Sand King leaves the area.\n<font color='#FF7800'>Sands of Betrayal:</font> Constantly pulls enemies towards Sand Storm's center at a speed of %pull_speed% units per second.\n<font color='#FF7800'>It's Coarse and Rough and Irritating: </font>Sand Storm reduces enemies' vision, movement speed, and increases miss chance by %coarse_miss_pct%%%."
+"DOTA_Tooltip_ability_imba_sandking_sand_storm_720_Description"							"Sand King creates a fearsome sandstorm that damages enemy units while hiding him from vision.  The effect ends when Sand King leaves the area.\n<font color='#FF7800'>Sands of Betrayal:</font> Constantly pulls enemies towards Sand Storm's center at a speed of %pull_speed% units per second. <font color='#FF0000'>Does not pull enemies that are in the fountain area.</font>\n<font color='#FF7800'>It's Coarse and Rough and Irritating: </font>Sand Storm reduces enemies' vision, movement speed, and increases miss chance by %coarse_miss_pct%%%."
 "DOTA_Tooltip_ability_imba_sandking_sand_storm_720_Lore"									"Some say Crixalis is a mirage; his carapace appearing then vanishing between the whirling sands of the Scintillant Waste."
 "DOTA_Tooltip_ability_imba_sandking_sand_storm_720_Note0"								"Sand Storm can be used to dodge projectiles."
 "DOTA_Tooltip_ability_imba_sandking_sand_storm_720_AbilityDuration"						"DURATION:"

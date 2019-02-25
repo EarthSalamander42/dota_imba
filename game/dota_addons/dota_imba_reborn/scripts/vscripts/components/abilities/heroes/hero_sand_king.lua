@@ -1283,16 +1283,18 @@ function modifier_imba_sandking_sand_storm_720_thinker:OnIntervalThink()
 
 	for _, enemy in pairs(enemies) do
 
-		-- Calculate direction / angle to pull enemy to (towards center)
-		local direction = (self.parent:GetAbsOrigin() - enemy:GetAbsOrigin()):Normalized()
-		
-		local pull_location = enemy:GetAbsOrigin() + (direction * self.pull_speed * frameTime)
+		if not IsNearFountain(enemy:GetAbsOrigin(), 1200) then
+			-- Calculate direction / angle to pull enemy to (towards center)
+			local direction = (self.parent:GetAbsOrigin() - enemy:GetAbsOrigin()):Normalized()
+			
+			local pull_location = enemy:GetAbsOrigin() + (direction * self.pull_speed * frameTime)
 
-		-- Set the enemy at that location
-		enemy:SetAbsOrigin(pull_location)
+			-- Set the enemy at that location
+			enemy:SetAbsOrigin(pull_location)
 
-		-- Resolve NPC positions
-		ResolveNPCPositions(enemy:GetAbsOrigin(), enemy:GetHullRadius())
+			-- Resolve NPC positions
+			ResolveNPCPositions(enemy:GetAbsOrigin(), enemy:GetHullRadius())
+		end
 	end
 
 	if self.damage_counter >= self.damage_tick_rate then
