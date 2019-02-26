@@ -11129,21 +11129,6 @@
 	}
 
 	//=================================================================================================================
-	//	Viper: Poison Attack ability to affect towers-
-	//=================================================================================================================
-	"special_bonus_unique_viper_1"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"6"
-			}
-		}
-	}
-
-	//=================================================================================================================
 	// Viper: Nethertoxin
 	//=================================================================================================================
 	"viper_nethertoxin"
@@ -11238,27 +11223,11 @@
 	}
 
 	//=================================================================================================================
-	//	Viper: bonus Viper Strike dps
-	//=================================================================================================================
-	"special_bonus_unique_viper_2"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"100"
-			}
-		}
-	}
-
-	//=================================================================================================================
 	// Visage: Grave Chill
 	//=================================================================================================================
 	"visage_grave_chill"
 	{
-		"AbilityCooldown"				"16 12 9 7"
-		"AbilityManaCost"				"100 80 60 40"
+		"AbilityCooldown"				"16 13 10 7"
 		"AbilityCastRange"				"650 700 750 800"
 
 		"AbilitySpecial"
@@ -11286,34 +11255,15 @@
 	//=================================================================================================================
 	"visage_soul_assumption"
 	{
-		"MaxLevel"						"4"
-
-		"AbilityCooldown"				"4 3 2 1"
-
-		"AbilityManaCost"				"170 150 130 110"		
+		"AbilityCooldown"				"4 3 2 1"	
 
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"bolt_speed"				"1000"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"soul_base_damage"			"20"
-			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"soul_charge_damage"		"65 85 100 110"
 				"LinkedSpecialBonus"		"special_bonus_unique_visage_4"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"stack_limit"				"3 4 5 6"
 			}
 			"05"
 			{
@@ -11324,21 +11274,6 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"damage_limit"				"110 90 70 50"
-			}
-			"07"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"1375"
-			}
-			"08"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"damage_min"				"2.0"
-			}
-			"09"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"damage_max"				"3000.0"
 			}
 		}
 	}
@@ -11363,35 +11298,12 @@
 	//=================================================================================================================
 	"visage_gravekeepers_cloak"
 	{
-		"MaxLevel"								"4"
-
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"max_layers"					"10"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"damage_reduction"				"5 7 9 10"
-			}
-			"03"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"recovery_time"					"6 5 4 3"
-				"LinkedSpecialBonus"			"special_bonus_unique_visage_5"
-			}
-			"04"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"minimum_damage"				"20"
-			}
-			"05"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"radius"						"900"
+				"max_layers"					"5"
 			}
 		}
 	}
@@ -11401,32 +11313,49 @@
 	//=================================================================================================================
 	"visage_summon_familiars"
 	{
-		"MaxLevel"							"3"
-
-		"AbilityCooldown"					"160 120 80"
+		"AbilityCooldown"					"130 110 90"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"familiar_hp"				"300 600 900"
+				"familiar_hp"				"500 850 1200"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"familiar_armor"			"0 1 2"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"familiar_speed"			"430"
-				"LinkedSpecialBonus"		"special_bonus_unique_visage_2"
+				"familiar_armor"			"0 2 4"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"familiar_attack_damage"	"48 96 144"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Visage: Summon Familiars Stone Form Self Cast
+	//=================================================================================================================
+	"visage_stone_form_self_cast"
+	{
+		"AbilitySpecial"
+		{		
+			"03"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"stun_damage"						"80 140 200"
+			}
+			"04"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"stun_duration"						"1.25 1.5 1.75"
+			}
+			"06"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"hp_regen"							"150 200 250"
 			}
 		}
 	}
@@ -11436,56 +11365,22 @@
 	//=================================================================================================================
 	"visage_summon_familiars_stone_form"
 	{
-		"MaxLevel"							"3"
-
-		"AbilityCooldown"					"14"
-
 		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"stun_radius"				"350"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"stun_delay"				"0.55"
-			}			
+		{		
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"stun_damage"				"60 140 180"
+				"stun_damage"				"80 140 200"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"stun_duration"				"1.0 1.25 1.5"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"stone_duration"			"6"
+				"stun_duration"				"1.25 1.5 1.75"
 			}
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"hp_regen"					"150 200 250"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	//	Visage: bonus familiar attack damage per charge
-	//=================================================================================================================
-	"special_bonus_unique_visage_1"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"18"
 			}
 		}
 	}
@@ -11511,55 +11406,24 @@
 	"weaver_the_swarm"
 	{
 		"MaxLevel"						"4"
-		"AbilityCooldown"				"35 25 18 14"
+		"AbilityCooldown"				"36 28 20 14"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"damage"			"15 21 25 27"
+				"damage"			"18 22 26 30"
 			}
 			"02"
 			{
 				"var_type"			"FIELD_FLOAT"
 				"attack_rate"		"1.25 0.95 0.75 0.65"
 			}
-			"03"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"count"				"12"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"armor_reduction"		"1"
-				"LinkedSpecialBonus"	"special_bonus_unique_weaver_3"
-			}
-			"05"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"duration"			"16"
-			}
-			"06"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"destroy_attacks"	"8"
-			}
-			"07"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"radius"			"100"
-			}
 			"08"
 			{
 				"var_type"			"FIELD_INTEGER"
 				"speed"				"600 700 800 900"
-			}
-			"09"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"spawn_radius"		"300"
 			}
 		}
 	}
@@ -11579,36 +11443,6 @@
 				"var_type"				"FIELD_INTEGER"
 				"damage"				"100 140 180 220"
 				"LinkedSpecialBonus"	"special_bonus_unique_weaver_1"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"175"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"fade_time"				"0.25"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"4.0"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	//	Weaver: Shukuchi bonus damage
-	//=================================================================================================================
-	"special_bonus_unique_weaver_1"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"35"
 			}
 		}
 	}
@@ -11633,9 +11467,7 @@
 	//=================================================================================================================
 	"weaver_geminate_attack"
 	{
-		"MaxLevel"						"4"
-
-		"AbilityCooldown"				"6.0 4.0 2.5 1.5"
+		"AbilityCooldown"				"6.0 4.5 3.0 1.5"
 
 		"AbilitySpecial"
 		{
@@ -11653,25 +11485,16 @@
 	"weaver_time_lapse"
 	{
 		"AbilityUnitTargetTeam"					"DOTA_UNIT_TARGET_TEAM_BOTH"
-
-		"MaxLevel"								"3"
-
-		"AbilityCooldown"						"50 30 20"
-
-		"AbilityManaCost"						"150 75 0"
-
+		
+		"AbilityCooldown"						"50 35 20"
+		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"cooldown_scepter"				"15"
-			}	
-			"02"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"cast_range_tooltip_scepter"	"1000"
-			}				
+			}			
 		}
 	}
 
@@ -11680,8 +11503,6 @@
 	//=================================================================================================================
 	"windrunner_shackleshot"
 	{
-		"MaxLevel"						"4"
-
 		"AbilitySpecial"
 		{
 			"01"
@@ -11698,11 +11519,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"shackle_distance"		"575 620 665 710"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"arrow_speed"			"1650"
 			}
 			"05"
 			{
@@ -11722,7 +11538,6 @@
 	//=================================================================================================================
 	"windrunner_powershot"
 	{
-		"MaxLevel"						"4"
 		"AbilityCastRange"				"2600 2800 3000 3200"
 		"AbilityCooldown"				"12 10 8.5 7.5"
 
@@ -11748,21 +11563,6 @@
 	}
 
 	//=================================================================================================================
-	//	Windrunner: bonus Powershot damage
-	//=================================================================================================================
-	"special_bonus_unique_windranger_3"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"120"
-			}
-		}
-	}
-
-	//=================================================================================================================
 	// Windrunner: Windrun
 	//=================================================================================================================
 	"windrunner_windrun"
@@ -11778,11 +11578,6 @@
 				"var_type"					"FIELD_INTEGER"
 				"movespeed_bonus_pct"		"60 70 80 90"		
 			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"evasion_pct_tooltip"		"100"
-			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -11794,52 +11589,15 @@
 				"var_type"					"FIELD_INTEGER"
 				"radius"					"325 375 405 475"
 			}
-			"05"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"duration"					"3 4 5 6"
-			}
 		}
 	}
 
-	//=================================================================================================================
-	//	Windrunner: Windrun grants invisibility
-	//=================================================================================================================
-	"special_bonus_unique_windranger"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"1"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Windrunner: Bonus Windrun slow
-	//=================================================================================================================
-	"special_bonus_unique_windranger_2"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"-30"
-			}
-		}
-	}
-		
 	//=================================================================================================================
 	// Windrunner: Focus Fire
 	//=================================================================================================================
 	"windrunner_focusfire"
 	{
-		"MaxLevel"						"3"
 		"AbilityCooldown"				"60 50 40"
-		"AbilityDuration"				"20"
 		"AbilityCastRange"				"1200"
 
 		"AbilitySpecial"
@@ -11849,26 +11607,11 @@
 				"var_type"						"FIELD_INTEGER"
 				"bonus_attack_speed"			"500 700 900"
 			}
-			"02"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"focusfire_damage_reduction"	"-50 -40 -30"
-			}						
-			"03"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"focusfire_duration_tooltip"	"20"
-			}
-			"04"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"cooldown_scepter"				"15"
-			}
 			"05"
 			{
 				"var_type"								"FIELD_INTEGER"
 				"focusfire_damage_reduction_scepter"	"0 0 0"
-			}			
+			}	
 		}
 	}
 
