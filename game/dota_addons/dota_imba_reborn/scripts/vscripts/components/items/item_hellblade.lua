@@ -397,10 +397,12 @@ function modifier_item_imba_hellblade_unique:OnAttacked(keys)
 						local modifier_ability = modifier:GetAbility()
 						local modifier_class = modifier:GetClass()
 
-						if modifier_class == self.datadrive_baseclass then
-							modifier_ability:ApplyDataDrivenModifier(self.caster, target, modifier_name, {duration = modifier_duration})
-						else
-							target:AddNewModifier(self.caster, modifier_ability, modifier_name, {duration = modifier_duration})
+						if modifier_ability ~= nil then
+							if modifier_class == self.datadrive_baseclass then
+								modifier_ability:ApplyDataDrivenModifier(self.caster, target, modifier_name, {duration = modifier_duration})
+							else
+								target:AddNewModifier(self.caster, modifier_ability, modifier_name, {duration = modifier_duration})
+							end
 						end
 					end
 				end

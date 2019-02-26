@@ -274,6 +274,13 @@ function modifier_imba_dragon_tail_debuff:CheckState()
 	return state
 end
 
+function modifier_imba_dragon_tail_debuff:OnRefresh()
+	if not IsServer() then return end
+
+	-- Custom Status Resist nonsense (need to learn how to make an all-encompassing function for this...)
+	self:SetDuration(self:GetDuration() * (1 - self:GetParent():GetStatusResistance()), true)
+end
+
 function modifier_imba_dragon_tail_debuff:DeclareFunctions()
 	local decFuncs = {MODIFIER_PROPERTY_OVERRIDE_ANIMATION}
 

@@ -66,7 +66,7 @@ end
 if modifier_imba_dust_of_appearance == nil then modifier_imba_dust_of_appearance = class({}) end
 function modifier_imba_dust_of_appearance:IsDebuff() return true end
 function modifier_imba_dust_of_appearance:IsHidden() return false end
-function modifier_imba_dust_of_appearance:IsPurgable() return true end
+function modifier_imba_dust_of_appearance:IsPurgable() return false end
 
 function modifier_imba_dust_of_appearance:DeclareFunctions()
 	local decFuncs = {	MODIFIER_PROPERTY_PROVIDES_FOW_POSITION,

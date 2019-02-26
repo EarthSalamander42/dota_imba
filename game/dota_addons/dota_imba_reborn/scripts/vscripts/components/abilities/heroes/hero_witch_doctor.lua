@@ -81,7 +81,13 @@ function imba_witch_doctor_paralyzing_cask:OnProjectileHit_ExtraData(hTarget, vL
 							hTarget:AddNewModifier(self:GetCaster(), maledict_ability, "modifier_imba_maledict", {duration = maledict_ability:GetSpecialValueFor("duration") + FrameTime()} )
 						end
 					end
-					hTarget:AddNewModifier(hTarget, self, "modifier_stunned", {duration = ExtraData.hero_duration})
+					
+					if hTarget:HasModifier("modifier_stunned") then
+						hTarget:AddNewModifier(hTarget, self, "modifier_stunned", {duration = ExtraData.hero_duration * (1 - hTarget:GetStatusResistance())})
+					else
+						hTarget:AddNewModifier(hTarget, self, "modifier_stunned", {duration = ExtraData.hero_duration})
+					end
+					
 					ApplyDamage({victim = hTarget, attacker = self:GetCaster(), damage = ExtraData.hero_damage, damage_type = self:GetAbilityDamageType()})
 				end
 			else
@@ -228,6 +234,8 @@ function modifier_special_bonus_imba_witch_doctor_6:OnCreated()
 				return nil
 			end
 
+			if not ability:IsTrained() or self:GetParent():IsIllusion() then return nil end
+	
 			return 1.0
 		end, 0 )
 	end
@@ -328,7 +336,7 @@ end
 
 modifier_imba_voodoo_restoration = class({})
 function modifier_imba_voodoo_restoration:OnCreated()
-	if IsServer() then
+	if IsServer() and self:GetAbility():IsTrained() then
 		local ability = self:GetAbility()
 		self.interval = ability:GetSpecialValueFor("heal_interval")
 		self.cleanse_interval = ability:GetSpecialValueFor("cleanse_interval")
@@ -345,8 +353,10 @@ end
 function modifier_imba_voodoo_restoration:OnDestroy()
 	if IsServer() then
 		self:StartIntervalThink(-1)
-		ParticleManager:DestroyParticle(self.mainParticle, false)
-		ParticleManager:ReleaseParticleIndex(self.mainParticle)
+		if self.mainParticle then
+			ParticleManager:DestroyParticle(self.mainParticle, false)
+			ParticleManager:ReleaseParticleIndex(self.mainParticle)
+		end
 	end
 end
 
@@ -425,7 +435,7 @@ function modifier_imba_voodoo_restoration_heal:IsPurgable() return false end
 function modifier_imba_voodoo_restoration_heal:IsPurgeException() return false end
 function modifier_imba_voodoo_restoration_heal:IsStunDebuff() return false end
 function modifier_imba_voodoo_restoration_heal:RemoveOnDeath() return true end
-function modifier_imba_voodoo_restoration_heal:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+-- function modifier_imba_voodoo_restoration_heal:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end -- Why was this made to stack
 -------------------------------------------
 function modifier_imba_voodoo_restoration_heal:OnCreated()
 	if IsServer() then

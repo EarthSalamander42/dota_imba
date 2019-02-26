@@ -616,7 +616,7 @@ function modifier_imba_vampiric_aura_buff:OnTakeDamage(keys)
 			end)
 		end
 
-		if self:GetCaster():HasTalent("special_bonus_imba_skeleton_king_1") and self.parent == target and target ~= self.caster then
+		if self.parent == target and target ~= self.caster and self:GetCaster():HasTalent("special_bonus_imba_skeleton_king_1") then
 			local heal_amount = 0
 
 			-- If the target is on the same team, do nothing
@@ -687,6 +687,7 @@ imba_wraith_king_mortal_strike = class({})
 LinkLuaModifier("modifier_imba_mortal_strike", "components/abilities/heroes/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_mortal_strike_buff", "components/abilities/heroes/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_mortal_strike_buff_talent", "components/abilities/heroes/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_mortal_strike_skeleton", "components/abilities/heroes/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_wraith_king_mortal_strike:GetAbilityTextureName()
    return "skeleton_king_mortal_strike"
@@ -696,6 +697,114 @@ function imba_wraith_king_mortal_strike:GetIntrinsicModifierName()
 	return "modifier_imba_mortal_strike"
 end
 
+function imba_wraith_king_mortal_strike:OnSpellStart()
+	self.caster	= self:GetCaster()
+	
+	-- AbilitySpecials
+	self.skeleton_duration		=	self:GetSpecialValueFor("skeleton_duration")
+	self.max_skeleton_charges	=	self:GetSpecialValueFor("max_skeleton_charges")
+	self.spawn_interval			=	self:GetSpecialValueFor("spawn_interval")
+	self.reincarnate_time		=	self:GetSpecialValueFor("reincarnate_time")
+	self.skeletons_per_charge	=	self:GetSpecialValueFor("skeletons_per_charge")
+	
+	if self.caster:HasModifier("modifier_imba_mortal_strike") then
+		local skeleton_modifier = self.caster:FindModifierByName("modifier_imba_mortal_strike")
+		
+		for unit = 0, skeleton_modifier:GetStackCount() - 1 do
+			Timers:CreateTimer(unit * self.spawn_interval, function()
+				for units_per_charge = 1, self.skeletons_per_charge do
+					CreateUnitByNameAsync("npc_dota_wraith_king_skeleton_warrior", self.caster:GetAbsOrigin() + RandomVector(100), true, self.caster, self.caster, self.caster:GetTeam(), function(skeleton) -- IDK how accurate 100 is but w/e I don't want too much overlap
+						skeleton:AddNewModifier(self.caster, self, "modifier_kill", {duration = self.skeleton_duration})
+						skeleton:AddNewModifier(self.caster, self, "modifier_imba_mortal_strike_skeleton", {duration = self.skeleton_duration - FrameTime()})
+						skeleton:SetControllableByPlayer( self.caster:GetPlayerID(),  true )
+						skeleton:SetOwner(self.caster)
+						
+						-- No gold/exp on first death
+						skeleton:SetMaximumGoldBounty(0)
+						skeleton:SetMinimumGoldBounty(0)
+						skeleton:SetDeathXP(0)
+						
+						-- First spawn, so it will reincarnate if it dies once
+						skeleton.fresh	= true
+						
+						-- Issue one aggressive move command to the enemy's ancient and that's it
+						Timers:CreateTimer(FrameTime(), function()
+							if self.caster:GetTeam() == DOTA_TEAM_GOODGUYS then
+								skeleton:MoveToPositionAggressive(Vector(5654, 4939, 0))
+							elseif self.caster:GetTeam() == DOTA_TEAM_BADGUYS then
+								skeleton:MoveToPositionAggressive(Vector(-5864, -5340, 0))
+							end
+						end)
+					end)
+				end
+				
+				skeleton_modifier.skeleton_counter = skeleton_modifier.skeleton_counter - 1
+				skeleton_modifier:DecrementStackCount()
+			end)
+		end
+	end
+	
+	self.caster:EmitSound("Hero_SkeletonKing.MortalStrike.Cast")
+end
+
+-- Skeleton Modifier (mostly handles reincarnation)
+modifier_imba_mortal_strike_skeleton	= class ({})
+
+function modifier_imba_mortal_strike_skeleton:RemoveOnDeath()	return end
+
+function modifier_imba_mortal_strike_skeleton:OnCreated()
+	self.ability	= self:GetAbility()
+	self.caster		= self:GetCaster()
+	self.parent		= self:GetParent()
+	
+	-- AbilitySpecials
+	self.skeleton_duration		=	self.ability:GetSpecialValueFor("skeleton_duration")
+	self.max_skeleton_charges	=	self.ability:GetSpecialValueFor("max_skeleton_charges")
+	self.spawn_interval			=	self.ability:GetSpecialValueFor("spawn_interval")
+	self.reincarnate_time		=	self.ability:GetSpecialValueFor("reincarnate_time")
+end
+
+function modifier_imba_mortal_strike_skeleton:DeclareFunctions()
+	local decFuncs = {MODIFIER_EVENT_ON_DEATH}
+
+	return decFuncs
+end
+
+function modifier_imba_mortal_strike_skeleton:OnDeath(keys)
+	if not IsServer() then return end
+	
+	if self.parent == keys.unit and self:GetParent().fresh and self.parent ~= keys.attacker then
+		self.remaining_time = math.max(self.parent:FindModifierByName("modifier_kill"):GetRemainingTime() - self.reincarnate_time, 0)
+		self:StartIntervalThink(self.reincarnate_time)
+	end
+end
+
+function modifier_imba_mortal_strike_skeleton:OnIntervalThink()
+	CreateUnitByNameAsync("npc_dota_wraith_king_skeleton_warrior", self.parent:GetOrigin(), true, self.caster, self.caster, self.caster:GetTeam(), function(skeleton)
+		skeleton:AddNewModifier(self.caster, self.ability, "modifier_kill", {duration = self.remaining_time})
+		skeleton:AddNewModifier(self.caster, self.ability, "modifier_imba_mortal_strike_skeleton", {duration = self.remaining_time - FrameTime()})
+		skeleton:SetControllableByPlayer( self.caster:GetPlayerID(),  true )
+		skeleton:SetOwner(self.caster)
+		skeleton.fresh	= false
+		
+		-- Issue one aggressive move command to the enemy's ancient and that's it
+		Timers:CreateTimer(FrameTime(), function()
+			if self.caster:GetTeam() == DOTA_TEAM_GOODGUYS then
+				skeleton:MoveToPositionAggressive(Vector(5654, 4939, 0))
+			elseif self.caster:GetTeam() == DOTA_TEAM_BADGUYS then
+				skeleton:MoveToPositionAggressive(Vector(-5864, -5340, 0))
+			end
+		end)
+	end)
+	
+	self:StartIntervalThink(-1)
+end
+
+function modifier_imba_mortal_strike_skeleton:OnRemoved()
+	if not IsServer() then return end
+
+	self.parent:ForceKill(false)
+end
 
 -- Critical strikes modifier
 modifier_imba_mortal_strike = class({})
@@ -715,20 +824,29 @@ function modifier_imba_mortal_strike:OnCreated()
 	self.bonus_health_duration = self.ability:GetSpecialValueFor("bonus_health_duration")
 	self.bonus_health_hero_mult = self.ability:GetSpecialValueFor("bonus_health_hero_mult")
 	self.stack_value = self.ability:GetSpecialValueFor("stack_value")
+	
+	self.skeleton_duration		=	self.ability:GetSpecialValueFor("skeleton_duration")
+	self.max_skeleton_charges	=	self.ability:GetSpecialValueFor("max_skeleton_charges")
+	self.spawn_interval			=	self.ability:GetSpecialValueFor("spawn_interval")
+	self.reincarnate_time		=	self.ability:GetSpecialValueFor("reincarnate_time")
+	
+	-- Initialize skeleton stacks
+	self.skeleton_counter	= self.skeleton_counter or 0
 end
 
 function modifier_imba_mortal_strike:OnRefresh()
 	self:OnCreated()
 end
 
-function modifier_imba_mortal_strike:IsHidden() return true end
+function modifier_imba_mortal_strike:IsHidden() return false end
 function modifier_imba_mortal_strike:IsPurgable() return false end
 function modifier_imba_mortal_strike:IsDebuff() return false end
 
 function modifier_imba_mortal_strike:DeclareFunctions()
 	local decFuncs = {
 		MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE,
-		MODIFIER_EVENT_ON_ATTACK_LANDED
+		MODIFIER_EVENT_ON_ATTACK_LANDED,
+		MODIFIER_EVENT_ON_DEATH
 	}
 
 	return decFuncs
@@ -841,6 +959,15 @@ function modifier_imba_mortal_strike:OnAttackLanded(keys)
 				ApplyDamage(damageTable)
 			end
 		end
+	end
+end
+
+function modifier_imba_mortal_strike:OnDeath(keys)
+	if not IsServer() then return end
+	
+	if self.caster == keys.attacker and (not keys.unit.WillReincarnate or keys.unit.WillReincarnate and not keys.unit:WillReincarnate()) then
+		self.skeleton_counter = math.min(self.skeleton_counter + 0.5, self.max_skeleton_charges)
+		self:SetStackCount(self.skeleton_counter)
 	end
 end
 
@@ -1068,6 +1195,11 @@ function imba_wraith_king_reincarnation:TheWillOfTheKing( OnDeathKeys, BuffInfo 
 		-- Use the Reincarnation's ability cooldown
 		BuffInfo.ability:UseResources(false, false, true)
 
+		-- THIS BLOCK FORCES NO CDR FOR """BALANCE""" REASONS IN MUTATION/FRANTIC
+		if GameRules:GetCustomGameDifficulty() >= 1 then
+			BuffInfo.ability:StartCooldown(BuffInfo.ability:GetCooldown(BuffInfo.ability:GetLevel() - 1))
+		end
+
 		-- Play reincarnate sound
 		if BuffInfo.caster == unit then
 			local heroes = FindUnitsInRadius(
@@ -1155,7 +1287,7 @@ function modifier_imba_reincarnation:IsDebuff() return false end
 
 function modifier_imba_reincarnation:OnIntervalThink()
 	-- If caster has sufficent mana and the ability is ready, apply
-	if (self.caster:GetMana() >= self.ability:GetManaCost(-1)) and (self.ability:IsCooldownReady()) and (not self.caster:HasModifier("modifier_item_imba_aegis")) then
+	if (self.ability:IsOwnersManaEnough()) and (self.ability:IsCooldownReady()) and (not self.caster:HasModifier("modifier_item_imba_aegis")) then
 		self.can_die = false
 	else
 		self.can_die = true

@@ -320,6 +320,7 @@ modifier_imba_starfall_talent_seed_debuff = modifier_imba_starfall_talent_seed_d
 function modifier_imba_starfall_talent_seed_debuff:IsHidden() return false end
 function modifier_imba_starfall_talent_seed_debuff:IsPurgable() return true end
 function modifier_imba_starfall_talent_seed_debuff:IsDebuff() return true end
+function modifier_imba_starfall_talent_seed_debuff:IgnoreTenacity()	return true end
 
 function modifier_imba_starfall_talent_seed_debuff:OnCreated()
 	-- Talent properties
@@ -356,8 +357,8 @@ function modifier_imba_starfall_talent_seed_debuff:OnAttackLanded(keys)
 		-- Drop a star!
 		SecondaryStarfallTarget(self.caster, self.ability, target, self.secondary_damage)
 
-		-- Destroy modifier
-		self:Destroy()
+		-- Destroy modifier (let's not for MAXIMUM CARNAGE)
+		-- self:Destroy()
 	end
 end
 
@@ -457,7 +458,7 @@ function FireSacredArrow(caster, ability, spawn_point, direction)
 		iUnitTargetTeam = DOTA_UNIT_TARGET_TEAM_ENEMY,
 		iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
 		bDeleteOnHit = true,
-		vVelocity = direction * arrow_speed * Vector(1, 1, 0),
+		vVelocity = direction * (arrow_speed + caster:FindTalentValue("special_bonus_imba_mirana_10")) * Vector(1, 1, 0),
 		bProvidesVision = true,
 		iVisionRadius = vision_radius,
 		iVisionTeamNumber = caster:GetTeamNumber(),
@@ -634,6 +635,7 @@ function modifier_imba_sacred_arrow_stun:OnOrder(keys)
 	end
 end
 
+-- The actual crit damage modifier is handled in the Damage Filter in filters.lua
 function modifier_imba_sacred_arrow_stun:OnTakeDamage(keys)
 	if IsServer() then
 		local attacker = keys.attacker
@@ -736,6 +738,11 @@ function imba_mirana_leap:GetIntrinsicModifierName()
 	return "modifier_imba_mirana_leap"
 end
 
+-- Calling it here differently so the UI just shows point target but you can still self-cast
+function imba_mirana_leap:GetBehavior()
+	return DOTA_ABILITY_BEHAVIOR_POINT + DOTA_ABILITY_BEHAVIOR_UNIT_TARGET + DOTA_ABILITY_BEHAVIOR_AUTOCAST + DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES
+end
+
 function imba_mirana_leap:GetCastRange(location, target)
 --	if IsServer() then return end
 	local leap_range = self:GetSpecialValueFor("leap_range")
@@ -752,12 +759,32 @@ function imba_mirana_leap:IsHiddenWhenStolen()
 	return false
 end
 
+-- In case this skill somehow glitches and stays deactivated after a Leap
+function imba_mirana_leap:OnOwnerDied()
+	self:SetActivated(true) 
+end
+
+function imba_mirana_leap:OnOwnerSpawned()
+	self:SetActivated(true) 
+end
+
 function imba_mirana_leap:OnSpellStart()
 	-- Ability properties
 	local caster = self:GetCaster()
 	local target_point = self:GetCursorPosition()
 	local modifier_movement = "modifier_imba_leap_movement"
 	local sound_cast = "Ability.Leap"
+
+	-- Adding a little more useability with self-cast to propel forward
+	if target_point == caster:GetAbsOrigin() and not self:GetAutoCastState() then
+		if IsDaytime() then
+			target_point = caster:GetAbsOrigin() + (caster:GetForwardVector() * self:GetSpecialValueFor("leap_range"))
+		else
+			target_point = caster:GetAbsOrigin() + (caster:GetForwardVector() * (self:GetSpecialValueFor("leap_range") + self:GetSpecialValueFor("night_leap_range_bonus")))
+		end
+	else
+		target_point = target_point + caster:GetForwardVector()
+	end
 
 	-- Ability specials
 	local jump_speed = self:GetSpecialValueFor("jump_speed")
@@ -815,6 +842,9 @@ function imba_mirana_leap:OnSpellStart()
 			FireSacredArrow(caster, sacred_arrow_ability, spawn_point, direction)
 		end)
 	end
+	
+	-- Prevents spamming (and "wasting") multiple charges in one leap
+	self:SetActivated(false)
 end
 
 function imba_mirana_leap:OnUpgrade()
@@ -843,6 +873,11 @@ function modifier_imba_mirana_leap:OnIntervalThink()
 	self:IncrementStackCount()
 
 	if self:GetStackCount() < self:GetAbility():GetSpecialValueFor("max_charges") then
+		-- +1 Leap Charge Replenish
+		if self:GetCaster():HasTalent("special_bonus_imba_mirana_9") then
+			self:IncrementStackCount()
+		end
+	
 		self:SetDuration(self:GetAbility():GetSpecialValueFor("charge_restore_time"), true)
 	else
 		self:SetDuration(-1, true)
@@ -992,6 +1027,9 @@ function modifier_imba_leap_movement:OnRemoved()
 	if IsServer() then
 		self.caster:SetUnitOnClearGround()
 		self.caster:AddNewModifier(self.caster, self.ability, self.modifier_aura, {duration = self.aura_duration})
+		
+		-- Allow usage of Leap again
+		self.ability:SetActivated(true) 
 	end
 end
 
@@ -1334,7 +1372,7 @@ end
 function modifier_imba_moonlight_shadow_invis:GetModifierMoveSpeedBonus_Percentage()
 	-- #3 Talent: Moonlight Shadow grants bonus move speed to invisible allies
 	if self:GetStackCount() > 0 then
-		return self.caster:FindTalentValue("special_bonus_imba_mirana_3")
+		return self.ability:GetSpecialValueFor("bonus_movement_speed") + self.caster:FindTalentValue("special_bonus_imba_mirana_3")
 	end
 
 	return 0
@@ -1460,8 +1498,8 @@ function modifier_imba_moonlight_shadow_talent_starstorm:OnCreated()
 				-- Think immediately
 				self:OnIntervalThink()
 
-				-- Set thinker to think every second
-				self:StartIntervalThink(1)
+				-- Set thinker to think every half second
+				self:StartIntervalThink(0.5)
 			end
 		end)
 	end
@@ -1470,7 +1508,7 @@ end
 function modifier_imba_moonlight_shadow_talent_starstorm:OnIntervalThink()
 	if IsServer() then
 		-- If the parent is invisible, do nothing
-		if self.parent:IsImbaInvisible() then
+		if self.parent:IsInvisible() then
 			return nil
 		end
 

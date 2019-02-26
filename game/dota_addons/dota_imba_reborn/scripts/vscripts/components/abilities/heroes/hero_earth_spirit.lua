@@ -24,6 +24,8 @@ LinkLuaModifier("modifier_imba_stone_remnant", "components/abilities/heroes/hero
 LinkLuaModifier("modifier_imba_earths_mark", "components/abilities/heroes/hero_earth_spirit.lua", LUA_MODIFIER_MOTION_NONE)					-- Earths Mark
 LinkLuaModifier("modifier_imba_earth_spirit_layout_fix", "components/abilities/heroes/hero_earth_spirit.lua", LUA_MODIFIER_MOTION_NONE)		-- 6 slot layout fix
 
+LinkLuaModifier("modifier_imba_earth_spirit_stone_caller_charge_counter", "components/abilities/heroes/hero_earth_spirit.lua", LUA_MODIFIER_MOTION_NONE) -- Visible counter for how many free remnants there are
+
 function imba_earth_spirit_stone_remnant:IsNetherWardStealable() return false end
 function imba_earth_spirit_stone_remnant:IsInnateAbility() return true end
 function imba_earth_spirit_stone_remnant:IsStealable() return false end
@@ -154,6 +156,8 @@ function modifier_imba_earth_spirit_remnant_handler:OnCreated()
 		if self:GetParent():HasTalent("special_bonus_imba_earth_spirit_6") then
 			self.noCostRemnants = self.noCostRemnants + self:GetCaster():FindTalentValue("special_bonus_imba_earth_spirit_6")
 		end
+		
+		self:GetParent():AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_earth_spirit_stone_caller_charge_counter", {})
 	end
 end
 
@@ -232,7 +236,7 @@ function modifier_imba_stone_remnant:OnCreated()
 		if self:GetParent():GetUnitName() == "npc_imba_dota_earth_spirit_stone" then
 			local particle = "particles/units/heroes/hero_earth_spirit/espirit_stoneremnant.vpcf"
 			self.remnantParticle = ParticleManager:CreateParticle(particle, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
-			ParticleManager:SetParticleControlEnt(self.remnantParticle, 1, self:GetParent(), PATTACH_POINT, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
+			ParticleManager:SetParticleControl(self.remnantParticle, 1, self:GetParent():GetAbsOrigin())
 		end
 		
 		self.exploded = false
@@ -303,6 +307,33 @@ function modifier_imba_stone_remnant:SetPetrify(petrify)
 		self.PetrifyHandler = petrify
 	end
 end
+
+-- Visible no charge Stone Remnant counter
+modifier_imba_earth_spirit_stone_caller_charge_counter = class({})
+
+function modifier_imba_earth_spirit_stone_caller_charge_counter:IsHidden()		return false end
+function modifier_imba_earth_spirit_stone_caller_charge_counter:IsPurgable()	return false end
+function modifier_imba_earth_spirit_stone_caller_charge_counter:RemoveOnDeath()	return false end
+
+function modifier_imba_earth_spirit_stone_caller_charge_counter:OnCreated()
+	if not IsServer() then return end
+
+	self.handler	= self:GetParent():FindModifierByName("modifier_imba_earth_spirit_remnant_handler")
+	self.no_cost	= self:GetAbility():GetSpecialValueFor("no_cost_remnants")
+
+	if self.handler and self.handler.remnants then
+		self:SetStackCount(self.no_cost - #self.handler.remnants)
+		self:StartIntervalThink(FrameTime()*3)
+	end
+end
+
+function modifier_imba_earth_spirit_stone_caller_charge_counter:OnIntervalThink()
+	if not IsServer() then return end
+	
+	self:SetStackCount(self.no_cost - #self.handler.remnants)
+end
+
+-- "DOTA_Tooltip_modifier_earth_spirit_stone_caller_charge_counter_Description"			"You can only place a Stone Remnant when you have a charge available.  Charges slowly restore over time."
 
 -----	Earths Mark
 modifier_imba_earths_mark = modifier_imba_earths_mark or class({})

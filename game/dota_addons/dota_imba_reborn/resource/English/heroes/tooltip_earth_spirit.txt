@@ -1,6 +1,9 @@
 "DOTA_Tooltip_modifier_imba_earths_mark"								"Earth's Mark"
 "DOTA_Tooltip_modifier_imba_earths_mark_Description"					"Susceptible to extra effects from Earth Spirits spells"
 
+"DOTA_Tooltip_modifier_imba_earth_spirit_stone_caller_charge_counter"	"Stone Remnant Charges"
+"DOTA_Tooltip_modifier_imba_earth_spirit_stone_caller_charge_counter_Description"	"Amount of no cost remnants available before Overdraw. Charges slowly restore over time."
+
 "DOTA_Tooltip_modifier_imba_earth_spirit_remnant_handler"				"Overdraw Cooldown"
 
 "DOTA_Tooltip_modifier_imba_stone_remnant"								"Enhchanted Remnant"

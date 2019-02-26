@@ -410,12 +410,9 @@
 
 // Dust of Appearance
 "DOTA_Tooltip_ability_item_imba_dust_of_appearance"            "Dust of Appearance"
-"DOTA_Tooltip_ability_item_imba_dust_of_appearance_Description"             "<h1>Use: Reveal</h1> spreads a special dust on enemies around the user that slows and reveals invisible enemy units, even through the fog of war. Has 3 charges.\n<h1><font color='#FF7800'>Passive: Dust Fortune</font></h1> If at least one invisible unit was found by using Dust of Appearance, no charge is spent. All other cases spends a charge normally."
+"DOTA_Tooltip_ability_item_imba_dust_of_appearance_Description"             "<h1>Use: Reveal</h1>Reveals and slows invisible heroes by %invisible_slow%%% in a %area_of_effect% radius around the caster for %reveal_duration% seconds.\n<h1><font color='#FF7800'>Passive: Dust Fortune</font></h1> If at least one invisible unit was found by using Dust of Appearance, no charge is spent. Additionally, Dust of Appearance is unpurgable."
 "DOTA_Tooltip_ability_item_imba_dust_of_appearance_Lore"                    "One may hide visage, but never volume."
-"DOTA_Tooltip_ability_item_imba_dust_of_appearance_Note0"                   "Affects units as long as they should be invisible, but are revealed."
-"DOTA_Tooltip_ability_item_imba_dust_of_appearance_Note1"                   "Fog vision applies to heroes only"
-"DOTA_Tooltip_ability_item_imba_dust_of_appearance_invisible_slow"          "%MOVEMENT SLOW:"
-"DOTA_Tooltip_ability_item_imba_dust_of_appearance_reveal_duration"         "DURATION:"
+"DOTA_Tooltip_ability_item_imba_dust_of_appearance_Note0"                   "Places a debuff on enemy units in the area that reveals them when they are invisible."
 
 "DOTA_Tooltip_modifier_imba_dust_of_appearance"                "Dusty"
 "DOTA_Tooltip_modifier_imba_dust_of_appearance_Description"                 "Slowed and revealed through fog, but only if you are invisible."

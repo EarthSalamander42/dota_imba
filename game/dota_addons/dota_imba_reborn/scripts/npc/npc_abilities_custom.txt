@@ -5779,7 +5779,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"							"ability_lua"
 		"ScriptFile"				"components/abilities/heroes/hero_jakiro.lua"
-		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
 		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"				"DAMAGE_TYPE_MAGICAL"
@@ -5834,7 +5834,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"20 40 60 80"
+				"damage"					"40 60 80 100"
 				"LinkedSpecialBonus"		"special_bonus_imba_jakiro_2"
 			}
 
@@ -5874,7 +5874,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"							"ability_lua"
 		"ScriptFile"				"components/abilities/heroes/hero_jakiro.lua"
-		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
 		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"				"DAMAGE_TYPE_MAGICAL"
@@ -5926,7 +5926,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"10 20 30 40"
+				"damage"					"20 30 40 50"
 			}
 			"05"
 			{
@@ -6075,7 +6075,7 @@
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"					"20 15 10 5"
+		"AbilityCooldown"					"20 15 10 4"
 		"AbilityCastPoint"					"0.25"
 		"AbilityCastAnimation"				"ACT_DOTA_ATTACK2"
 
@@ -6097,7 +6097,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"attack_slow" 				"30 45 60 75"
+				"attack_slow" 				"50 80 110 140"
 			}
 			"02"
 			{
@@ -6197,7 +6197,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"100 180 220"
+				"damage"					"100 170 240"
 			}
 			"04"
 			{
@@ -6233,6 +6233,11 @@
 			{
 				"var_type"                  "FIELD_FLOAT"
 				"stickyness"				"1.0"
+			}
+			"11"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage_scepter"			"150 215 280"
 			}
 		}
 	}
@@ -17514,7 +17519,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"pull_speed"			"40 60 80 100"
+				"pull_speed"			"25 40 55 70"
 			}
 			"07"
 			{
@@ -18374,7 +18379,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
@@ -22860,13 +22865,25 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"AbilityTextureName"			"skeleton_king_mortal_strike"
 		"MaxLevel"						"4"
 		"ScriptFile"				"components/abilities/heroes/hero_skeleton_king.lua"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.1"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"50"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"30 45 60 75"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -22912,6 +22929,32 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"stack_value"			 	"10"
+			}
+			
+			"08"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"skeleton_duration"			"90"
+			}
+			"09"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"max_skeleton_charges"		"2 4 6 8"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"spawn_interval"			"0.25"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"reincarnate_time"			"3"
+			}
+			"12"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"skeletons_per_charge"			"2"
 			}
 		}
 	}
@@ -23044,7 +23087,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"passive_respawn_haste"		"4 10 16"
+				"passive_respawn_haste"		"4 7 10"
 			}
 
 			"04"
@@ -28007,7 +28050,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"75 150 225 300"
+				"damage"					"90 170 250 330"
 			}
 			"04"
 			{
@@ -28072,12 +28115,12 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"3000"
+		"AbilityCastRange"				"6000"
 		"AbilityCastPoint"				"0.5"
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"17"
+		"AbilityCooldown"				"15"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -28125,12 +28168,13 @@
 			"08"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"on_prowl_movespeed"				"600"
+				"on_prowl_movespeed"				"550"
 			}
 			"09"
 			{
 				"var_type"							"FIELD_INTEGER"
 				"on_prow_crit_damage_pct"			"140 160 180 200"
+				"CalculateSpellDamageTooltip"		"0"
 			}
 			"10"
 			{
@@ -28141,6 +28185,7 @@
 			{
 				"var_type"							"FIELD_INTEGER"
 				"arrow_speed"						"950"
+				"LinkedSpecialBonus"				"special_bonus_imba_mirana_10"
 			}
 			"12"
 			{
@@ -28211,7 +28256,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"night_leap_range_bonus"	"550"
+				"night_leap_range_bonus"	"800"
 			}
 			"03"
 			{
@@ -28241,7 +28286,7 @@
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"leap_range"			"550"
+				"leap_range"			"800"
 			}
 			"09"
 			{
@@ -28316,8 +28361,14 @@
 
 			"03"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"duration"					"17 19 21"
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"18 19.5 21"
+			}
+			
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_movement_speed"		"15"
 			}
 		}
 	}
@@ -28515,8 +28566,58 @@
 		{
 			"01"
 			{
+				"var_type"                  "FIELD_FLOAT"
+				"value"	                    "1.5"
+			}
+		}
+	}
+	
+	"special_bonus_imba_mirana_9" // +1 Leap Charge Replenish
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_mirana_leap"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
 				"var_type"                  "FIELD_INTEGER"
 				"value"	                    "1"
+			}
+		}
+	}
+	
+	"special_bonus_imba_mirana_10" // Increased Sacred Arrow speed
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_mirana_arrow"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"	                    "750"
 			}
 		}
 	}
@@ -36545,6 +36646,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"dps"						"10 20 30 40"
+				"CalculateSpellDamageTooltip"	"1"
 			}
 		}
 	}
@@ -36614,11 +36716,13 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"damage_duration"		"5.0"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"dps"					"15 25 35 45"
+				"CalculateSpellDamageTooltip"	"1"
 			}
 		}
 	}
@@ -36692,6 +36796,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"dps"						"15 30 40 60"
+				"CalculateSpellDamageTooltip"	"1"
 			}
 		}
 	}
@@ -36774,11 +36879,13 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"damage_duration"			"4.0"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"dps"						"15 25 35 45"
+				"CalculateSpellDamageTooltip"	"1"
 			}
 		}
 	}
@@ -36791,7 +36898,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
@@ -36862,11 +36969,13 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"damage_duration"			"4.0"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"dps"						"15 30 45 60"
+				"CalculateSpellDamageTooltip"	"1"
 			}
 		}
 	}
@@ -36935,11 +37044,13 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"damage_duration"		"5.0"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"dps"					"15 25 35 45"
+				"CalculateSpellDamageTooltip"	"1"
 			}
 		}
 	}
@@ -37003,6 +37114,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"dps"						"20 40 60"
+				"CalculateSpellDamageTooltip"	"1"
 			}
 		}
 	}
@@ -37073,11 +37185,13 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"damage_duration"			"10.0"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"dps"						"10 25 40"
+				"CalculateSpellDamageTooltip"	"1"
 			}
 		}
 	}
