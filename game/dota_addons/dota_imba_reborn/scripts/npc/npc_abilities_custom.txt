@@ -5779,7 +5779,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"							"ability_lua"
 		"ScriptFile"				"components/abilities/heroes/hero_jakiro.lua"
-		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
 		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"				"DAMAGE_TYPE_MAGICAL"
@@ -5834,7 +5834,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"20 40 60 80"
+				"damage"					"40 60 80 100"
 				"LinkedSpecialBonus"		"special_bonus_imba_jakiro_2"
 			}
 
@@ -5874,7 +5874,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"							"ability_lua"
 		"ScriptFile"				"components/abilities/heroes/hero_jakiro.lua"
-		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
 		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"				"DAMAGE_TYPE_MAGICAL"
@@ -5926,7 +5926,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"10 20 30 40"
+				"damage"					"20 30 40 50"
 			}
 			"05"
 			{
@@ -6075,7 +6075,7 @@
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"					"20 15 10 5"
+		"AbilityCooldown"					"20 15 10 4"
 		"AbilityCastPoint"					"0.25"
 		"AbilityCastAnimation"				"ACT_DOTA_ATTACK2"
 
@@ -6097,7 +6097,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"attack_slow" 				"30 45 60 75"
+				"attack_slow" 				"50 80 110 140"
 			}
 			"02"
 			{
@@ -6197,7 +6197,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"100 180 220"
+				"damage"					"100 170 240"
 			}
 			"04"
 			{
@@ -6233,6 +6233,11 @@
 			{
 				"var_type"                  "FIELD_FLOAT"
 				"stickyness"				"1.0"
+			}
+			"11"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage_scepter"			"150 215 280"
 			}
 		}
 	}
