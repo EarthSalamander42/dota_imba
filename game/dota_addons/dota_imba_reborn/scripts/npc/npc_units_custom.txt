@@ -13451,4 +13451,18 @@
 		//Inventory
 		"HasInventory"				"0"
 	}
+	
+	"npc_dota_wraith_king_skeleton_warrior"
+	{
+		// Attack
+		//----------------------------------------------------------------
+		"AttackDamageMin"			"70"		// Damage range min.
+		"AttackDamageMax"			"75"		// Damage range max.
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"5"		// Experience earn.
+		"BountyGoldMin"				"5"			// Gold earned min.
+		"BountyGoldMax"				"5"		// Gold earned max.
+	}
 }

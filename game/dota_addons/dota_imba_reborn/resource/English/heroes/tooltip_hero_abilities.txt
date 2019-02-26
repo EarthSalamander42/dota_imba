@@ -2687,7 +2687,7 @@
 ////===============================================================================================================
 
 "DOTA_Tooltip_ability_imba_wraith_king_mortal_strike"                  "Mortal Strike"
-"DOTA_Tooltip_ability_imba_wraith_king_mortal_strike_Description"		"The King's strikes have a chance to crit, increasing damage signifcantly. Deals higher damage to creeps.\n<font color='#FF7800'>Behold Your King:</font> Whenever a critical strike occurs, Wraith King gains bonus health based on damage dealt to the enemy. Bonus health stacks infinitely, but each stack has its own duration. Critting a hero multiplies the stacks gained.\n<font color='#FF7800'>Guillotine:</font> Instantly kills non-ancient creeps on critical strike, dealing their health as pure damage."
+"DOTA_Tooltip_ability_imba_wraith_king_mortal_strike_Description"		"Wraith King passively gains a chance to deal bonus damage on an attack. Every two kills on an enemy unit adds a skeleton charge, <font color='#FF7800'>spawning %skeletons_per_charge% skeletons each with 70-75 attack damage.</font> Skeletons respawn once when killed. \n<font color='#FF7800'>Behold Your King:</font> Whenever a critical strike occurs, Wraith King gains bonus health based on damage dealt to the enemy. Bonus health stacks infinitely, but each stack has its own duration. Critting a hero multiplies the stacks gained.\n<font color='#FF7800'>Guillotine:</font> Instantly kills non-ancient creeps on critical strike, dealing their health as pure damage. Otherwise, deals bonus critical damage.\n<font color='#FF7800'>One Button King No Longer:</font> Skeletons do not have any (artificial) intelligence or command restrictions, allowing Wraith King free control of his minions."
 "DOTA_Tooltip_ability_imba_wraith_king_mortal_strike_Note0"            "Each stack represents 10 health, and it is also rounded up when calculating stacks."
 "DOTA_Tooltip_ability_imba_wraith_king_mortal_strike_Lore"              "One blow to crush a foe."
 "DOTA_Tooltip_ability_imba_wraith_king_mortal_strike_crit_chance"                   "%CRIT CHANCE:"
@@ -2696,6 +2696,14 @@
 "DOTA_Tooltip_ability_imba_wraith_king_mortal_strike_bonus_health_pct"              "%DAMAGE TO HEALTH CONVERTION:"
 "DOTA_Tooltip_ability_imba_wraith_king_mortal_strike_bonus_health_duration"         "BONUS HEALTH DURATION:"
 "DOTA_Tooltip_ability_imba_wraith_king_mortal_strike_bonus_health_hero_mult"        "HERO STACKS MULTIPLICATION:"
+"DOTA_Tooltip_ability_imba_wraith_king_mortal_strike_max_skeleton_charges"			"MAX CHARGES:"
+"DOTA_Tooltip_ability_imba_wraith_king_mortal_strike_skeleton_duration"				"SKELETON DURATION:"
+
+"DOTA_Tooltip_modifier_imba_mortal_strike"								"Skeleton Charges"
+"DOTA_Tooltip_modifier_imba_mortal_strike_Description"					"Upon spawn, skeletons immediately path towards the enemy's Ancient once, but otherwise are fully controllable."
+
+"DOTA_Tooltip_modifier_imba_mortal_strike_skeleton"						"Skeleton Controller"
+"DOTA_Tooltip_modifier_imba_mortal_strike_skeleton_Description"			"If this modifier is dispelled, its owner instantly dies without reincarnating."
 
 "DOTA_Tooltip_modifier_imba_mortal_strike_buff"                        "Behold Your King"
 "DOTA_Tooltip_modifier_imba_mortal_strike_buff_Description"            "Gains bonus health based on stacks from successful Mortal Strikes."
@@ -2731,7 +2739,7 @@
 ////===============================================================================================================
 
 "DOTA_Tooltip_ability_imba_wraith_king_reincarnation"                  "Reincarnation"
-"DOTA_Tooltip_ability_imba_wraith_king_reincarnation_Description"                   "The One True King's form regroups, allowing him to ressurrect when killed in battle.\n<font color='#FF7800'>The King Returns:</font> Passively reduces respawn time.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font>"
+"DOTA_Tooltip_ability_imba_wraith_king_reincarnation_Description"                   "The One True King's form regroups, allowing him to ressurrect when killed in battle.\n<font color='#FF7800'>The King Returns:</font> Passively reduces respawn time.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font>\n<font color='#E03E2E'>This ability is not affected by Cooldown Reductions in Mutation/Frantic mode.</font>"
 "DOTA_Tooltip_ability_imba_wraith_king_reincarnation_Note0"            "Reincarnation will not trigger if its owner hasn't got enough mana for it."
 "DOTA_Tooltip_ability_imba_wraith_king_reincarnation_Note1"            "Even if Reincarnation is ready, it will trigger Kingdom Come."
 "DOTA_Tooltip_ability_imba_wraith_king_reincarnation_Lore"              "Conspirators against the Wraith King wonder why he never stays dead."

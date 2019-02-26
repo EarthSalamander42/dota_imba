@@ -18374,7 +18374,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
@@ -22860,13 +22860,25 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"AbilityTextureName"			"skeleton_king_mortal_strike"
 		"MaxLevel"						"4"
 		"ScriptFile"				"components/abilities/heroes/hero_skeleton_king.lua"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.1"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"50"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"30 45 60 75"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -22912,6 +22924,32 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"stack_value"			 	"10"
+			}
+			
+			"08"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"skeleton_duration"			"90"
+			}
+			"09"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"max_skeleton_charges"		"2 4 6 8"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"spawn_interval"			"0.25"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"reincarnate_time"			"3"
+			}
+			"12"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"skeletons_per_charge"			"2"
 			}
 		}
 	}
@@ -23044,7 +23082,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"passive_respawn_haste"		"4 10 16"
+				"passive_respawn_haste"		"4 7 10"
 			}
 
 			"04"

@@ -544,7 +544,9 @@ function imba_slardar_slithereen_crush:OnSpellStart()
 		Timers:CreateTimer(delay, function()
 			caster:StartGesture(ACT_DOTA_CAST_ABILITY_2)
 			Timers:CreateTimer(self:GetCastPoint(), function()
-				SlithereenCrush(self)
+				if caster:IsAlive() and not caster:IsNightmared() and not caster:IsOutOfGame() and not caster:IsSilenced() and not caster:IsStunned() then
+					SlithereenCrush(self)
+				end
 			end)
 		end)
 	end
