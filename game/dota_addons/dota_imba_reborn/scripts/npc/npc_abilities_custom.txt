@@ -28251,7 +28251,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"night_leap_range_bonus"	"550"
+				"night_leap_range_bonus"	"800"
 			}
 			"03"
 			{
@@ -28281,7 +28281,7 @@
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"leap_range"			"550"
+				"leap_range"			"800"
 			}
 			"09"
 			{
