@@ -284,6 +284,11 @@ function base_modifier_dot_debuff:_UpdateDebuffLevelValues()
 	if IsServer() then
 		local ability = self.ability
 		local damage = ability:GetSpecialValueFor("damage")
+		
+		if ability:GetName() == "imba_jakiro_macropyre" and self:GetCaster():HasScepter() then
+			damage = ability:GetSpecialValueFor("damage_scepter")
+		end
+		
 		self.tick_damage = damage * self.damage_interval
 	end
 
@@ -320,7 +325,12 @@ function base_modifier_dot_debuff:OnCreated()
 		-- Apply damage immediately
 		self:OnIntervalThink()
 		-- Run interval applying of damage
-		self:StartIntervalThink(self.damage_interval)
+		
+		if ability:GetName() == "imba_jakiro_macropyre" then
+			self:StartIntervalThink(self.damage_interval)
+		else
+			self:StartIntervalThink(self.damage_interval * (1 - self.parent:GetStatusResistance()))
+		end
 	end
 end
 
@@ -871,7 +881,7 @@ function modifier_imba_liquid_fire_caster:_ApplyAOELiquidFire( keys )
 			-- Apply liquid fire modifier to enemies in the area
 			local enemies = FindUnitsInRadius(caster:GetTeamNumber(), target:GetAbsOrigin(), nil, radius, ability:GetAbilityTargetTeam(), ability:GetAbilityTargetType(), DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 			for _,enemy in pairs(enemies) do
-				enemy:AddNewModifier(caster, ability, modifier_liquid_fire_debuff, { duration = duration })
+				enemy:AddNewModifier(caster, ability, modifier_liquid_fire_debuff, { duration = duration }):SetDuration(duration * (1 - enemy:GetStatusResistance()), true)
 			end
 		end
 	end

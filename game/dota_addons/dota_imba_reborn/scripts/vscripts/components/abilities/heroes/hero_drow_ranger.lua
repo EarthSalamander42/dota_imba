@@ -1444,8 +1444,8 @@ function modifier_imba_marksmanship:GetModifierTotalDamageOutgoing_Percentage( p
 		if params.target and not params.inflictor and self:GetStackCount() == 1 then
 			if params.target:IsBuilding() or params.attacker:GetTeamNumber() == params.target:GetTeamNumber() then
 				-- ignore buildings and allies
-			elseif not params.target:IsCreep() or params.target:IsRoshan() and self.marksmanship_enabled and not self.caster:PassivesDisabled() then
-				if params.target:GetHealthPercent() <= self:GetAbility():GetSpecialValueFor("instakill_threshold") then
+			elseif params.target:IsConsideredHero() or params.target:IsRoshan() and self.marksmanship_enabled and not self.caster:PassivesDisabled() then
+				if params.target:GetHealthPercent() <= self:GetAbility():GetSpecialValueFor("instakill_threshold") and not params.target:HasModifier("modifier_oracle_false_promise_timer") then
 					if not params.target:IsRoshan() then
 						params.target:Kill(self:GetAbility(), params.attacker)
 					end

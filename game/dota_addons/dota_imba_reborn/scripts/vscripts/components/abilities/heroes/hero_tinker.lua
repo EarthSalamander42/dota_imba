@@ -139,7 +139,12 @@ function imba_tinker_rearm:OnChannelFinish( bInterrupted )
 				"item_imba_kaya_and_sange",
 				"item_imba_yasha_and_kaya",
 				"item_imba_arcane_nexus",
-				"item_imba_manta"
+				"item_imba_manta",
+				"item_imba_meteor_hammer",
+				"item_imba_meteor_hammer_2",
+				"item_imba_meteor_hammer_3",
+				"item_imba_meteor_hammer_4",
+				"item_imba_rod_of_atos_2"
 			}
 
 			for i = 0, caster:GetAbilityCount() do

@@ -322,6 +322,6 @@ end
 modifier_item_imba_sogat_cuirass_nostack = class ({})
 
 function modifier_item_imba_sogat_cuirass_nostack:IsHidden() 		return false end
-function modifier_item_imba_sogat_cuirass_nostack:IsDebuff() 		return false end
+function modifier_item_imba_sogat_cuirass_nostack:IsDebuff() 		return true end
 function modifier_item_imba_sogat_cuirass_nostack:IsPurgable() 		return false end
 function modifier_item_imba_sogat_cuirass_nostack:RemoveOnDeath() 	return false end

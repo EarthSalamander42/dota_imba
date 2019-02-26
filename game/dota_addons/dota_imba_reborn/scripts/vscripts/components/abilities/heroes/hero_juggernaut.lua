@@ -1875,7 +1875,7 @@ function modifier_imba_omni_slash_caster:BounceAndSlaughter()
 			end
 
 			-- If the target is not Roshan or a hero, instantly kill it
-			if enemy:IsHero() or enemy:IsRoshan() or enemy:GetUnitName() == "npc_dota_mutation_golem" then
+			if enemy:IsConsideredHero() or enemy:IsRoshan() or enemy:GetUnitName() == "npc_dota_mutation_golem" then
 			else
 				enemy:Kill(self:GetAbility(), self.original_caster)
 			end

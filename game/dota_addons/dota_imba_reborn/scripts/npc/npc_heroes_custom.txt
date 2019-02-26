@@ -533,10 +533,13 @@
 		"Ability11"					"special_bonus_agility_15"
 		"Ability12"					"special_bonus_imba_drow_ranger_4" //Each Chilled enemy grants drow +10 flat movespeed bonus for the duration. Stacks with itself, depending on amounts of Chill stacks on enemies.
 		"Ability13"					"special_bonus_imba_drow_ranger_5" //While Marksmanship is active (not disabled by nearby enemies), Drow Ranger emits an aura on nearby allies that makes their attack chill their targets, slowing them by 15%.
-		"Ability14"					"special_bonus_imba_drow_ranger_1" //Gust can be self cast, making a wave that moves Drow Ranger herself forward. This wave silences all enemies that it comes in contact with normally.
+		"Ability14"					"special_bonus_evasion_25"
 		"Ability15"					"special_bonus_imba_drow_ranger_3" //After casting Gust, all auto attacks hitting a target casts a small Gust for 5 seconds. This small gust wave pushes the main target back 50 units, deals no damage, and does not silence.
 		"Ability16"					"special_bonus_imba_drow_ranger_8" //Marksmanship no longer disables itself
 		"Ability17"					"special_bonus_imba_drow_ranger_6" //While Trueshot Aura is active, Drow gains agility equal to 5% of every allied hero's agility.
+		
+		// Removed Talents
+		// "Ability14"					"special_bonus_imba_drow_ranger_1" //Gust can be self cast, making a wave that moves Drow Ranger herself forward. This wave silences all enemies that it comes in contact with normally.
 	}
 
 	//=================================================================================================================
@@ -1053,15 +1056,20 @@
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_mirana_moonlight_shadow"
 
-		"Ability10"					"special_bonus_imba_mirana_3" // Moonlight Shadow grants bonus move speed to invisible allies.
-		"Ability11"					"special_bonus_imba_mirana_7" // Leap can now be cast without needing to turn. Makes Mirana invisible for the duration of the jump, causing her to dodge projectiles. 
-		"Ability12"					"special_bonus_imba_mirana_4" // Two additional Sacred Arrows to the sides
-		//"Ability13"					"special_bonus_imba_mirana_5" // Standing in the same spot for a few seconds grants Mirana invisibility until she moves or attack. Casting spells does not break the invisibility.
-		"Ability13"					"special_bonus_mana_break_25"
-		"Ability14"					"special_bonus_imba_mirana_2" // Sacred Arrows allow allies to trigger On The Prowls' critical as long as there is at least enough seconds remaining to the stun.
-		"Ability15"					"special_bonus_imba_mirana_6" // Free Sacred Arrow after Leap ends
-		"Ability16"					"special_bonus_imba_mirana_1" // Upon using Moonlight Shadow, allies are given a stack of Starstorm which will proc when they go out of invisibility near an enemy unit.
-		"Ability17"					"special_bonus_imba_mirana_8" // Each Starstorm wave marks the target. If Mirana lands an attack on the target, she drops an additional secondary star on it.
+		"Ability10"					"special_bonus_imba_mirana_1" // Upon using Moonlight Shadow, allies are given a stack of Starstorm which will proc when they go out of invisibility near an enemy unit.
+		"Ability11"					"special_bonus_imba_mirana_6" // Free Sacred Arrow after Leap ends
+		"Ability12"					"special_bonus_mana_break_25"
+		"Ability13"					"special_bonus_imba_mirana_9" // +1 Leap Charge Replenish
+		"Ability14"					"special_bonus_corruption_4"
+		"Ability15"					"special_bonus_imba_mirana_4" // Two additional Sacred Arrows to the sides
+		"Ability16"					"special_bonus_imba_mirana_8" // Each Starstorm wave marks the target. If Mirana lands an attack on the target, she drops an additional secondary star on it.
+		"Ability17"					"special_bonus_imba_mirana_10" // +1000 Sacred Arrow speed
+		
+		// Removed Talents
+		// "Ability10"					"special_bonus_imba_mirana_3" // Moonlight Shadow grants bonus move speed to invisible allies.
+		// "Ability11"					"special_bonus_imba_mirana_7" // Leap can now be cast without needing to turn. Makes Mirana invisible for the duration of the jump, causing her to dodge projectiles. 
+		// "Ability13"					"special_bonus_imba_mirana_5" // Standing in the same spot for a few seconds grants Mirana invisibility until she moves or attack. Casting spells does not break the invisibility.
+		// "Ability14"					"special_bonus_imba_mirana_2" // Sacred Arrows allow allies to trigger On The Prowls' critical as long as there is at least enough seconds remaining to the stun.
 	}
 
 	//=================================================================================================================
@@ -1668,13 +1676,16 @@
 		"Ability6"					"imba_sniper_assassinate"
 
 		"Ability10"					"special_bonus_imba_sniper_1"
-		"Ability11"					"special_bonus_imba_sniper_2"
+		"Ability11"					"special_bonus_attack_speed_30"
 		"Ability12"					"special_bonus_imba_sniper_3" // Enemy units under Shrapnel's lose armor and can miss attacks.
 		"Ability13"					"special_bonus_imba_sniper_4" // Double max Shrapnel charges. Each recharge grants twice as much
 		"Ability14"					"special_bonus_imba_sniper_5" // Normal headshots have a chance to become Perfectshots
 		"Ability15"					"special_bonus_imba_sniper_6" // Assassination's cast point increases. When executed, it launches three projectiles towards the target. 
 		"Ability16"					"special_bonus_imba_sniper_7" // Take Aim's Aimed Assaults cause the target to bleed and lose vision
 		"Ability17"					"special_bonus_imba_sniper_8" // Shrapnel attacks increase the damage done to the target instead of lowering it
+		
+		// Removed Talents
+		// "Ability11"					"special_bonus_imba_sniper_2" // Infamous Assassinate knockback talent
 	}
 
 	//=================================================================================================================

@@ -130,7 +130,7 @@ function modifier_custom_mechanics:OnAttackLanded( keys )
 		end
 
 		-- Calculate actual lifesteal amount
-		local damage = parent:GetRealDamageDone(target)
+		local damage = math.max(parent:GetRealDamageDone(target), 0)
 		local heal = damage * lifesteal_amount / 100
 
 

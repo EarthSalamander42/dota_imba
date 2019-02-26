@@ -50,6 +50,7 @@ function modifier_item_imba_sange:IsHidden() return true end
 function modifier_item_imba_sange:IsDebuff() return false end
 function modifier_item_imba_sange:IsPurgable() return false end
 function modifier_item_imba_sange:IsPermanent() return true end
+function modifier_item_imba_sange:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 -- Declare modifier events/properties
 function modifier_item_imba_sange:DeclareFunctions()
@@ -154,6 +155,7 @@ function modifier_item_imba_heavens_halberd:IsHidden() return true end
 function modifier_item_imba_heavens_halberd:IsDebuff() return false end
 function modifier_item_imba_heavens_halberd:IsPurgable() return false end
 function modifier_item_imba_heavens_halberd:IsPermanent() return true end
+function modifier_item_imba_heavens_halberd:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 -- Declare modifier events/properties
 function modifier_item_imba_heavens_halberd:DeclareFunctions()
@@ -270,6 +272,7 @@ function modifier_item_imba_yasha:IsHidden() return true end
 function modifier_item_imba_yasha:IsDebuff() return false end
 function modifier_item_imba_yasha:IsPurgable() return false end
 function modifier_item_imba_yasha:IsPermanent() return true end
+function modifier_item_imba_yasha:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 -- Declare modifier events/properties
 function modifier_item_imba_yasha:DeclareFunctions()
@@ -360,6 +363,7 @@ function modifier_item_imba_kaya:IsHidden() return true end
 function modifier_item_imba_kaya:IsDebuff() return false end
 function modifier_item_imba_kaya:IsPurgable() return false end
 function modifier_item_imba_kaya:IsPermanent() return true end
+function modifier_item_imba_kaya:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 -- Declare modifier events/properties
 function modifier_item_imba_kaya:DeclareFunctions()
@@ -461,6 +465,7 @@ function modifier_item_imba_sange_yasha:IsHidden() return true end
 function modifier_item_imba_sange_yasha:IsDebuff() return false end
 function modifier_item_imba_sange_yasha:IsPurgable() return false end
 function modifier_item_imba_sange_yasha:IsPermanent() return true end
+function modifier_item_imba_sange_yasha:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 -- Declare modifier events/properties
 function modifier_item_imba_sange_yasha:DeclareFunctions()
@@ -578,6 +583,7 @@ function modifier_item_imba_kaya_and_sange:IsHidden() return true end
 function modifier_item_imba_kaya_and_sange:IsDebuff() return false end
 function modifier_item_imba_kaya_and_sange:IsPurgable() return false end
 function modifier_item_imba_kaya_and_sange:IsPermanent() return true end
+function modifier_item_imba_kaya_and_sange:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 -- Declare modifier events/properties
 function modifier_item_imba_kaya_and_sange:DeclareFunctions()
@@ -698,6 +704,7 @@ function modifier_item_imba_yasha_and_kaya:IsHidden() return true end
 function modifier_item_imba_yasha_and_kaya:IsDebuff() return false end
 function modifier_item_imba_yasha_and_kaya:IsPurgable() return false end
 function modifier_item_imba_yasha_and_kaya:IsPermanent() return true end
+function modifier_item_imba_yasha_and_kaya:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 -- Declare modifier events/properties
 function modifier_item_imba_yasha_and_kaya:DeclareFunctions()
@@ -825,6 +832,7 @@ function modifier_item_imba_triumvirate:IsHidden() return true end
 function modifier_item_imba_triumvirate:IsDebuff() return false end
 function modifier_item_imba_triumvirate:IsPurgable() return false end
 function modifier_item_imba_triumvirate:IsPermanent() return true end
+function modifier_item_imba_triumvirate:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 -- Declare modifier events/properties
 function modifier_item_imba_triumvirate:DeclareFunctions()

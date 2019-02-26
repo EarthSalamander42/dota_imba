@@ -129,7 +129,7 @@ function modifier_imba_berserkers_rage_melee:OnAttackLanded( params )
 				local bash_damage = ability:GetSpecialValueFor("bash_damage")
 				local bash_duration = ability:GetSpecialValueFor("bash_duration")
 				ApplyDamage({victim = params.target, attacker = parent, ability = ability, damage = bash_damage, damage_type = ability:GetAbilityDamageType()})
-				params.target:AddNewModifier(parent, ability, "modifier_stunned", {duration = bash_duration})
+				params.target:AddNewModifier(parent, ability, "modifier_stunned", {duration = bash_duration}):SetDuration(bash_duration * (1 - params.target:GetStatusResistance()), true)
 				params.target:EmitSound("DOTA_Item.SkullBasher")
 			end
 		end

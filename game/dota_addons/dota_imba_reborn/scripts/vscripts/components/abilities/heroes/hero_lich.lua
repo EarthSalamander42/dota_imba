@@ -15,6 +15,7 @@
 -- Editors:
 --     Shush, 22.03.2017
 --     naowin, 25.06.2018
+--	   AltiV, IDK sometime in 2019
 
 -----------------------------------
 --          COLD FRONT           --
@@ -1545,11 +1546,11 @@ function imba_lich_chain_frost:OnProjectileHit_ExtraData(target, location, extra
 				FIND_ANY_ORDER,
 				false)
 
-			-- Remove the current enemy target from the table of possible targets
-			for i = 1, #enemies do
-				if target == enemies[i] then
+			-- Remove the current enemy target from the table of possible targets (as well as Undying Zombies)
+			for i = #enemies, 1, -1 do
+				if enemies[i] ~= nil and (target == enemies[i] or enemies[i]:GetName() == "npc_dota_unit_undying_zombie") then
 					table.remove(enemies, i)
-					break
+					--break
 				end
 			end
 

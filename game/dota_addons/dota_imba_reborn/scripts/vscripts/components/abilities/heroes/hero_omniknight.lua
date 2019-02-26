@@ -290,8 +290,8 @@ function modifier_imba_purification_omniguard_ready:OnTakeDamage(keys)
                 return nil
             end
 
-            -- If the caster is broken, do nothing
-            if self.caster:PassivesDisabled() then
+            -- If the caster is broken or an illusion, do nothing
+            if self.caster:PassivesDisabled() or self.caster:IsIllusion() then
                 return nil
             end
 

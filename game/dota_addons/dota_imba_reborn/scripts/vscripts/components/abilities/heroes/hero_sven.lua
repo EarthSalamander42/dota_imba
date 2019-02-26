@@ -278,8 +278,9 @@ function modifier_imba_great_cleave_active:GetModifierTotalDamageOutgoing_Percen
 			else
 				reduction_feedback = CalculateReductionFromArmor_Percentage( (armor - armor_ignore), armor )
 			end
-			reduction_feedback = reduction_feedback * (1 + ( reduction_feedback / 100))
-			return reduction_feedback
+			-- reduction_feedback = reduction_feedback * (1 + ( reduction_feedback / 100))
+			
+			return reduction_feedback * -100
 		end
 		return 0
 	end

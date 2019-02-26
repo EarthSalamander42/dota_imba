@@ -21,7 +21,7 @@
 "DOTA_Tooltip_modifier_imba_fire_breath_debuff_Description"            "Taking damage over time, and slowed by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%."
 
 "DOTA_Tooltip_modifier_imba_ice_breath_debuff"                          "Frost Breath"
-"DOTA_Tooltip_modifier_imba_ice_breath_debuff_Description"              "Slowed by Frost Breath, Taking damage over time."
+"DOTA_Tooltip_modifier_imba_ice_breath_debuff_Description"              "Taking damage over time, movement speed slowed by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%, and attack speed slowed by %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT%."
 
 // Jakiro's Ice Path
 "DOTA_Tooltip_ability_imba_jakiro_ice_path"                            "Ice Path"
@@ -60,11 +60,12 @@
 "DOTA_Tooltip_ability_imba_jakiro_macropyre_Note1"                      "Jakiro's debuff durations increase by 0.25s for every 0.5s standing on Macropyre."
 "DOTA_Tooltip_ability_imba_jakiro_macropyre_Lore"                      "Ice and fire combine to rip the battlefield to shreds with extreme temperatures."
 "DOTA_Tooltip_ability_imba_jakiro_macropyre_damage"                    "DAMAGE PER SECOND:"
+"DOTA_Tooltip_ability_imba_jakiro_macropyre_damage_scepter"          "SCEPTER DAMAGE PER SECOND:"
 "DOTA_Tooltip_ability_imba_jakiro_macropyre_range"                      "LENGTH:"
 "DOTA_Tooltip_ability_imba_jakiro_macropyre_range_scepter"              "SCEPTER LENGTH:"
 "DOTA_Tooltip_ability_imba_jakiro_macropyre_duration"                  "DURATION:"
 "DOTA_Tooltip_ability_imba_jakiro_macropyre_duration_scepter"          "SCEPTER DURATION:"
-"DOTA_Tooltip_ability_imba_jakiro_macropyre_aghanim_description"		"Increases Macropyre's size and duration."
+"DOTA_Tooltip_ability_imba_jakiro_macropyre_aghanim_description"		"Increases flame length, duration, and damage."
 
 "DOTA_Tooltip_modifier_imba_macropyre_debuff"                          "Macropyre"
 "DOTA_Tooltip_modifier_imba_macropyre_debuff_Description"              "You're on fire! Taking massive damage over time."

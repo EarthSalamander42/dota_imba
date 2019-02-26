@@ -381,6 +381,8 @@
 
 //    "DOTA_Tooltip_ability_templar_assassin_psionic_trap_Description"                    "Templar Assassin places mystical traps that invisibly monitor enemy movement. When sprung at her command, they exert a slowing influence of 30%% in the area. Traps charge up to slow an additional <font color='#FF7800'>10%%</font> every second, up to <font color='#FF7800'>90%%.</font>"
 
+"DOTA_Tooltip_ability_weaver_geminate_attack_Note0"						"The second attack leaves Weaver 0.2 seconds after the first, and has no range limit."
+
 "DOTA_Tooltip_ability_weaver_time_lapse_aghanim_description"            "Reduces cooldown, and allows Weaver to cast Time Lapse on allies <font color='#FF7800'>and enemies</font>."
 
 "DOTA_Tooltip_ability_winter_wyvern_splinter_blast_Description"                     "Launches a ball of brittle ice toward an enemy <font color='#FF7800'>or ally</font>. The ice shatters on impact, leaving the primary target completely unaffected, while hurling damaging splinters into nearby enemies in a %split_radius% radius. Enemies struck by these splinters are slowed by %movespeed_slow_tooltip%%%."
@@ -390,6 +392,7 @@
 "DOTA_Tooltip_ability_item_tango_Lore"                      "Treant Protector glares sternly at your lack of respect for the forest."
 "DOTA_Tooltip_ability_item_tango_single_Lore"                          "Treant Protector glares sternly at your lack of respect for the forest."
 
+"DOTA_Tooltip_ability_batrider_flaming_lasso_Note1"					"If Batrider moves more than 3000 units in 0.05 seconds the lasso breaks."
 
 //=================================================================================================================
 //=================================================================================================================
@@ -407,7 +410,7 @@
 "DOTA_Tooltip_Ability_special_bonus_unique_razor"					"+20 Static Link Damage Steal"
 //"DOTA_Tooltip_Ability_special_bonus_unique_razor_2"				"+125 Unstable Current damage"
 //"DOTA_Tooltip_Ability_special_bonus_unique_visage_1"				"+18 Familiar Attack Per Charge"
-//"DOTA_Tooltip_Ability_special_bonus_unique_visage_2"				"+120 Familiar Movement Speed"
+"DOTA_Tooltip_Ability_special_bonus_unique_visage_2"				"+120 Familiar Movement Speed"
 "DOTA_Tooltip_Ability_special_bonus_unique_earthshaker"             "-2s Enchant Totem Cooldown"
 //"DOTA_Tooltip_Ability_special_bonus_unique_earthshaker_2"           "+100 Echo Damage"
 //"DOTA_Tooltip_Ability_special_bonus_unique_earthshaker_3"           "+500 Fissure range"
@@ -438,8 +441,9 @@
 //"DOTA_Tooltip_Ability_special_bonus_unique_enchantress_2"           "+6 Nature's Attendants Wisps"
 //"DOTA_Tooltip_Ability_special_bonus_unique_enchantress_3"           "+75 Untouchable slow"
 //"DOTA_Tooltip_Ability_special_bonus_unique_enchantress_4"           "+6% Impetus damage"
-//"DOTA_Tooltip_Ability_special_bonus_unique_batrider_1"              "+10s Firefly Duration"
-//"DOTA_Tooltip_Ability_special_bonus_unique_batrider_2"              "+250 Flamebreak AoE/Knockback"
+"DOTA_Tooltip_Ability_special_bonus_unique_batrider_1"              "+10s Firefly Duration"
+"DOTA_Tooltip_Ability_special_bonus_unique_batrider_2"              "-15s Flamebreak Cooldown"
+"DOTA_Tooltip_Ability_special_bonus_unique_batrider_3"              "+3s Flamebreak Burn Duration"
 //"DOTA_Tooltip_Ability_special_bonus_unique_dragon_knight"           "2x Dragon Blood HP Regen/Armor"
 //"DOTA_Tooltip_Ability_special_bonus_unique_invoker_1"               "+2 Forged Spirit Summoned"
 //"DOTA_Tooltip_Ability_special_bonus_unique_invoker_2"               "AoE Deafening Blast"
@@ -452,7 +456,7 @@
 //"DOTA_Tooltip_Ability_special_bonus_unique_luna_1"                  "+50 Lucent Beam Damage"
 //"DOTA_Tooltip_Ability_special_bonus_unique_luna_2"                  "-4s Lucent Beam Cooldown"
 //"DOTA_Tooltip_Ability_special_bonus_unique_weaver_1"                "+35 Shukuchi Damage"
-//"DOTA_Tooltip_Ability_special_bonus_unique_weaver_2"                "+250 Shukuchi Movement Speed"
+"DOTA_Tooltip_Ability_special_bonus_unique_weaver_2"                "+250 Shukuchi Movement Speed"
 //"DOTA_Tooltip_Ability_special_bonus_unique_chaos_knight"            "Reality Rift Pierces Spell Immunity"
 //"DOTA_Tooltip_Ability_special_bonus_unique_windranger"              "Windrun turns Windranger invisible"
 "DOTA_Tooltip_Ability_special_bonus_unique_phantom_lancer"          "+600 Phantom Rush Range"
@@ -524,6 +528,8 @@
 "DOTA_Tooltip_ability_special_bonus_unique_ember_spirit_5"        "-20 Remnant Charge Restore Time"
 "DOTA_Tooltip_Ability_special_bonus_unique_gyrocopter_2"        "+10 Flak Cannon attacks"
 "DOTA_Tooltip_Ability_special_bonus_unique_gyrocopter_4"        "-10 cooldown reduction for Call Down"
+"DOTA_Tooltip_Ability_special_bonus_unique_visage_3"			"Soul Assumption Hits 5 Targets"
+"DOTA_Tooltip_Ability_special_bonus_unique_visage_3_Description"	"Four additional Soul Assumptions are launched towards random enemy units within the cast range, prioritizing Heroes."
 
 "DOTA_Tooltip_modifier_special_bonus_corruption_debuff_description"		"Armor currently corrupted by a talent."
 

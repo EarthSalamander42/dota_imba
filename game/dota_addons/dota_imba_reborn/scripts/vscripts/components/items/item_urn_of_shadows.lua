@@ -104,6 +104,23 @@ function modifier_imba_urn_of_shadows_passive:OnCreated()
 	self.bonus_intelligence = self.item:GetSpecialValueFor("bonus_intelligence")
 end
 
+-- Let Urn of Shadows transfer its charges to Spirit Vessel or Black Queen Cape (whichever it was built into)
+function modifier_imba_urn_of_shadows_passive:OnDestroy()
+	if self:GetParent():HasItemInInventory("item_imba_black_queen_cape") or self:GetParent():HasItemInInventory("item_imba_spirit_vessel") then
+		for itemSlot = 0, 5 do
+			if self:GetParent().GetItemInSlot then
+				local item = self:GetParent():GetItemInSlot(itemSlot)
+			
+				if (item:GetName() == "item_imba_black_queen_cape" or item:GetName() == "item_imba_spirit_vessel") and item:GetPurchaseTime() - self:GetDieTime() <= 3 then -- Arbitrary time differential to ensure it gets the item that was created shortly after Urn was destroyed
+					item:SetCurrentCharges(math.max(self:GetAbility():GetCurrentCharges(), 0))
+					
+					break
+				end
+			end
+		end
+	end
+end
+
 function modifier_imba_urn_of_shadows_passive:DeclareFunctions()
 	local decFuns =
 		{
@@ -169,7 +186,7 @@ function modifier_imba_urn_of_shadows_passive:OnHeroKilled( params )
 					-- if we find a BQC, end immediately, it gets the charges, regardless of ally's distance
 					-- if Urn found, check if the ally in question is closer than we are and that the Urn actually belongs to the cheeky bastard
 					if item then
-						if ( item:GetName() == urn_item_name ) and ( item:GetPurchaser() == ally ) then
+						if ( item:GetName() == urn_item_name or item:GetName() == "item_imba_spirit_vessel" ) and ( item:GetPurchaser() == ally ) then
 							if (ally:GetAbsOrigin() - target:GetAbsOrigin()):Length2D() < our_distance then
 								return nil
 							end

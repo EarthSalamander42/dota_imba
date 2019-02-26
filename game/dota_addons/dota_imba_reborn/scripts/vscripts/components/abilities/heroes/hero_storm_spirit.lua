@@ -62,11 +62,12 @@ function modifier_imba_static_remnant:OnCreated( params )
 
 		local check_interval = self.ability:GetSpecialValueFor("explosion_check_interval")
 		-- Create remnant in the location
-		self.remnant_particle_fx = ParticleManager:CreateParticle(remnant_particle, PATTACH_ABSORIGIN, self:GetCaster())
+		-- PATTACH_ABSORIGIN shows the proper particles but makes them invisible if vision of Storm Spirit is lost which is arguably worse -_-
+		self.remnant_particle_fx = ParticleManager:CreateParticle(remnant_particle, PATTACH_WORLDORIGIN, self:GetCaster())
 		ParticleManager:SetParticleControl(self.remnant_particle_fx, 0, self.caster_location)
 		-- Make the remnant clone the hero
 		ParticleManager:SetParticleControlEnt(self.remnant_particle_fx, 1, self:GetCaster(), PATTACH_POINT_FOLLOW, "attach_hitloc", self.caster_location, true)
-		ParticleManager:SetParticleControl(self.remnant_particle_fx, 2, Vector(100, 1, 100) )
+		ParticleManager:SetParticleControl(self.remnant_particle_fx, 2, Vector(RandomInt(37, 52), 1, 100) )
 		ParticleManager:SetParticleControl(self.remnant_particle_fx, 11, self.caster_location)
 
 		--Create a timer to delay the remnant explosion
@@ -331,6 +332,13 @@ function modifier_imba_vortex_pull:OnCreated( params )
 	end
 end
 
+function modifier_imba_vortex_pull:OnRefresh()
+	if not IsServer() then return end
+
+	-- Custom Status Resist nonsense (need to learn how to make an all-encompassing function for this...)
+	self:SetDuration(self:GetDuration() * (1 - self:GetParent():GetStatusResistance()), true)
+end
+
 function modifier_imba_vortex_pull:OnIntervalThink()
 	-- Check for motion controllers
 	if not self:CheckMotionControllers() then
@@ -429,7 +437,19 @@ function modifier_imba_vortex_root:OnCreated( params )
 		self.speed = params.speed * FrameTime()
 
 		self:StartIntervalThink(FrameTime())
+		
+		-- Weird stuff with this not being affected by status resist so I'm forcing it here
+		Timers:CreateTimer(FrameTime(), function()
+			self:SetDuration(self:GetDuration() * (1 - self:GetParent():GetStatusResistance()), true)
+		end)
 	end
+end
+
+function modifier_imba_vortex_root:OnRefresh()
+	if not IsServer() then return end
+
+	-- Custom Status Resist nonsense (need to learn how to make an all-encompassing function for this...)
+	self:SetDuration(self:GetDuration() * (1 - self:GetParent():GetStatusResistance()), true)
 end
 
 function modifier_imba_vortex_root:OnIntervalThink()

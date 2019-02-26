@@ -95,7 +95,8 @@ function modifier_imba_stalker_in_the_night:IsDebuff() return false end
 function modifier_imba_stalker_in_the_night:IsPermanent() return true end
 
 function modifier_imba_stalker_in_the_night:DeclareFunctions()
-	return {MODIFIER_PROPERTY_BONUS_DAY_VISION, MODIFIER_PROPERTY_BONUS_NIGHT_VISION, MODIFIER_EVENT_ON_ABILITY_FULLY_CAST} end
+	return {--MODIFIER_PROPERTY_BONUS_DAY_VISION, 
+	MODIFIER_PROPERTY_BONUS_NIGHT_VISION, MODIFIER_EVENT_ON_ABILITY_FULLY_CAST} end
 
 function modifier_imba_stalker_in_the_night:OnAbilityFullyCast(keys)
 	if IsServer() then
@@ -121,11 +122,11 @@ function modifier_imba_stalker_in_the_night:OnAbilityFullyCast(keys)
 	end
 end
 
-function modifier_imba_stalker_in_the_night:GetBonusDayVision()
-	-- If the caster is afflicted with Break, do nothing
-	if self.caster:PassivesDisabled() then return 0 end
-	return self.vision_day_loss * (-1)
-end
+-- function modifier_imba_stalker_in_the_night:GetBonusDayVision()
+	-- -- If the caster is afflicted with Break, do nothing
+	-- if self.caster:PassivesDisabled() then return 0 end
+	-- return self.vision_day_loss * (-1)
+-- end
 
 function modifier_imba_stalker_in_the_night:GetBonusNightVision()
 	-- If the caster is afflicted with Break, do nothing
@@ -1176,7 +1177,7 @@ function modifier_imba_night_stalker_crippling_fear_aura_720:OnHeroKilled(keys)
 	if not IsServer() then return end
 
 	-- If the hero was killed within Crippling Fear's aura radius (doesn't have to be by the caster), double radius and add base duration to remaining amount
-	if keys.unit:GetTeam() ~= self.parent:GetTeam() and (keys.unit:GetAbsOrigin() - self.parent:GetAbsOrigin()):Length2D() <= self.radius then
+	if keys.target:GetTeam() ~= self.parent:GetTeam() and (keys.target:GetAbsOrigin() - self.parent:GetAbsOrigin()):Length2D() <= self.radius then
 		self.radius = self.radius * 2
 		self:SetStackCount(self:GetStackCount() * 2)
 		

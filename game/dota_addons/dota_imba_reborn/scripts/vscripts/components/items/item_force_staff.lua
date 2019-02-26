@@ -499,7 +499,8 @@ end
 
 function modifier_item_imba_hurricane_pike_attack_speed:OnOrder( keys )
 	if not IsServer() then return end
-	if keys.target == self.target and keys.unit == self:GetParent() and keys.ordertype == 4 then
+	
+	if keys.target == self.target and keys.unit == self:GetParent() and keys.order_type == 4 then
 		self.ar = 999999
 	end
 end
