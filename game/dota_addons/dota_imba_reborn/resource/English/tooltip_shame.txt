@@ -392,6 +392,7 @@
 "DOTA_Tooltip_ability_item_tango_Lore"                      "Treant Protector glares sternly at your lack of respect for the forest."
 "DOTA_Tooltip_ability_item_tango_single_Lore"                          "Treant Protector glares sternly at your lack of respect for the forest."
 
+"DOTA_Tooltip_ability_batrider_flaming_lasso_Note1"					"If Batrider moves more than 3000 units in 0.05 seconds the lasso breaks."
 
 //=================================================================================================================
 //=================================================================================================================
@@ -440,8 +441,9 @@
 //"DOTA_Tooltip_Ability_special_bonus_unique_enchantress_2"           "+6 Nature's Attendants Wisps"
 //"DOTA_Tooltip_Ability_special_bonus_unique_enchantress_3"           "+75 Untouchable slow"
 //"DOTA_Tooltip_Ability_special_bonus_unique_enchantress_4"           "+6% Impetus damage"
-//"DOTA_Tooltip_Ability_special_bonus_unique_batrider_1"              "+10s Firefly Duration"
-//"DOTA_Tooltip_Ability_special_bonus_unique_batrider_2"              "+250 Flamebreak AoE/Knockback"
+"DOTA_Tooltip_Ability_special_bonus_unique_batrider_1"              "+10s Firefly Duration"
+"DOTA_Tooltip_Ability_special_bonus_unique_batrider_2"              "-15s Flamebreak Cooldown"
+"DOTA_Tooltip_Ability_special_bonus_unique_batrider_3"              "+3s Flamebreak Burn Duration"
 //"DOTA_Tooltip_Ability_special_bonus_unique_dragon_knight"           "2x Dragon Blood HP Regen/Armor"
 //"DOTA_Tooltip_Ability_special_bonus_unique_invoker_1"               "+2 Forged Spirit Summoned"
 //"DOTA_Tooltip_Ability_special_bonus_unique_invoker_2"               "AoE Deafening Blast"
