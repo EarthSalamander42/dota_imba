@@ -71,7 +71,7 @@
 "npc_dota_hero_beastmaster"                                "Bestmaster"
 "npc_dota_hero_bloodseeker"                                "Bloodseeker (IMBA)"
 "npc_dota_hero_bounty_hunter"                              "Bounty Hunter (IMBA)"
-"npc_dota_hero_bristleback"                                "Bristleback"
+"npc_dota_hero_bristleback"                                "Bristleback (IMBA)"
 "npc_dota_hero_broodmother"                                "Broodmother"
 "npc_dota_hero_centaur"                                    "Centaur (IMBA)"
 "npc_dota_hero_chaos_knight"                                "Chaos Knight"
