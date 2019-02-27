@@ -251,7 +251,7 @@ end
 function modifier_imba_bristleback_viscous_nasal_goo_autocaster:OnIntervalThink()
 	if not IsServer() then return end
 
-	if self.ability:GetAutoCastState() and self.ability:IsFullyCastable() and not self.ability:IsInAbilityPhase() and not self.caster:IsNightmared() and not self.caster:IsOutOfGame() and not self.caster:IsSilenced() and not self.caster:IsStunned() and not self.caster:IsChanneling() then
+	if self.ability:GetAutoCastState() and self.ability:IsFullyCastable() and not self.ability:IsInAbilityPhase() and not self.caster:IsHexed() and not self.caster:IsNightmared() and not self.caster:IsOutOfGame() and not self.caster:IsSilenced() and not self.caster:IsStunned() and not self.caster:IsChanneling() then
 		if self.caster:HasScepter() then
 			self.caster:CastAbilityNoTarget(self.ability, self.caster:GetPlayerID())
 		else
@@ -483,7 +483,7 @@ end
 function modifier_imba_bristleback_quill_spray_autocaster:OnIntervalThink()
 	if not IsServer() then return end
 
-	if self.ability:GetAutoCastState() and self.ability:IsFullyCastable() and not self.caster:IsNightmared() and not self.caster:IsOutOfGame() and not self.caster:IsSilenced() and not self.caster:IsStunned() and not self.caster:IsChanneling() then
+	if self.ability:GetAutoCastState() and self.ability:IsFullyCastable() and not self.caster:IsHexed() and not self.caster:IsNightmared() and not self.caster:IsOutOfGame() and not self.caster:IsSilenced() and not self.caster:IsStunned() and not self.caster:IsChanneling() then
 		self.caster:CastAbilityImmediately(self.ability, self.caster:GetPlayerID())
 	end
 	
