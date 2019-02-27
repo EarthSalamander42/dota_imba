@@ -821,6 +821,8 @@ function modifier_imba_bristleback_warpath_revenge:OnCreated()
 	
 	-- AbilitySpecials
 	self.revenge_inc_dmg_pct	= self.ability:GetSpecialValueFor("revenge_inc_dmg_pct")
+	
+	self:SetStackCount(self.revenge_inc_dmg_pct)
 end
 
 function modifier_imba_bristleback_warpath_revenge:OnRefresh()	
