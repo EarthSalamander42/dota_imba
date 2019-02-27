@@ -491,7 +491,7 @@ function modifier_imba_bristleback_quill_spray_autocaster:OnIntervalThink()
 	self.distance			= self.distance + (self.caster:GetAbsOrigin() - self.last_position):Length()
 	self.last_position		= self.caster:GetAbsOrigin()
 	
-	if self.distance >= self.cardio_threshold then
+	if self.distance >= self.cardio_threshold and not self.parent:IsIllusion() then
 		self.ability:OnSpellStart()
 		self.distance = 0
 	end
@@ -702,6 +702,28 @@ function modifier_imba_bristleback_warpath:OnCreated()
 	
 	self.counter				= self.counter or 0
 	self.particle_table			= self.particle_table or {}
+	
+	if not IsServer() then return end
+	
+	-- Give the current Warpath charges to illusions (also pretty bootleg cause GetOwner() isn't working at all
+	if self.parent:IsIllusion() then
+		local owners = Entities:FindAllByNameWithin("npc_dota_hero_bristleback", self.parent:GetAbsOrigin(), 100)
+		
+		for _, owner in pairs(owners) do
+			if not owner:IsIllusion() and owner:HasModifier("modifier_imba_bristleback_warpath") and owner:GetTeam() == self.parent:GetTeam() then
+				self:SetStackCount(owner:FindModifierByName("modifier_imba_bristleback_warpath"):GetStackCount())
+				self:SetDuration(self.stack_duration, true)
+				
+				Timers:CreateTimer(self.stack_duration, function()
+					if self ~= nil and not self:IsNull() and not self.ability:IsNull() and not self.parent:IsNull() and not self.caster:IsNull() and self:GetStackCount() > 0 then
+						self:SetStackCount(0)
+					end
+				end)
+				
+				break
+			end
+		end
+	end
 end
 
 function modifier_imba_bristleback_warpath:OnRefresh()
