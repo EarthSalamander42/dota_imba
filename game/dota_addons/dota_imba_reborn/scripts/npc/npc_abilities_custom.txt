@@ -14001,13 +14001,11 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"base_health_regen"		"6 9 12 15"
-				"LinkedSpecialBonus"	"special_bonus_imba_pudge_4"
 			}
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"stack_health_regen"	"3"
-				"LinkedSpecialBonus"	"special_bonus_imba_pudge_4"
 			}
 		}
 	}
