@@ -105,46 +105,49 @@ function item_imba_spirit_vessel:OnSpellStart()
 end
 
 -- This function SEEMS to call if the enemy hero dying is like within 1625 range or something (must be non-reincarnation and real hero)
-function item_imba_spirit_vessel:OnHeroDiedNearby(unit, attacker, tableParam)
-	local caster		= self:GetCaster()
-	local soul_radius	= self:GetSpecialValueFor("soul_radius")
 
-	-- First check: Is the unit within capture range?
-	if (caster:GetAbsOrigin() - unit:GetAbsOrigin()):Length2D() <= soul_radius then
+-- Never mind this function doesn't activate consistently so just using the MODIFIER_EVENT_ON_DEATH function instead...
+
+-- function item_imba_spirit_vessel:OnHeroDiedNearby(unit, attacker, tableParam)
+	-- local caster		= self:GetCaster()
+	-- local soul_radius	= self:GetSpecialValueFor("soul_radius")
+
+	-- -- First check: Is the unit within capture range?
+	-- if (caster:GetAbsOrigin() - unit:GetAbsOrigin()):Length2D() <= soul_radius then
 	
-		-- Second check: Is there no one closer than the item owner that also has a Spirit Vessel?
-		local nearbyAllies = FindUnitsInRadius(caster:GetTeamNumber(), unit:GetAbsOrigin(), nil, soul_radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, FIND_CLOSEST, false)
+		-- -- Second check: Is there no one closer than the item owner that also has a Spirit Vessel?
+		-- local nearbyAllies = FindUnitsInRadius(caster:GetTeamNumber(), unit:GetAbsOrigin(), nil, soul_radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, FIND_CLOSEST, false)
 		
-		for _, ally in pairs(nearbyAllies) do
-			-- If the check reaches the item owner then break out of loop and continue checks
-			if ally == caster then
-				break
-			-- If anyone closer has the same item, the owner of this item will not get any charges
-			elseif ally:HasItemInInventory(self:GetName()) then
-				return
-			end
-		end
+		-- for _, ally in pairs(nearbyAllies) do
+			-- -- If the check reaches the item owner then break out of loop and continue checks
+			-- if ally == caster then
+				-- break
+			-- -- If anyone closer has the same item, the owner of this item will not get any charges
+			-- elseif ally:HasItemInInventory(self:GetName()) then
+				-- return
+			-- end
+		-- end
 		
-		-- If the parent has multiple Spirit Vessels, only apply the charge gain to the first one
-		if caster:FindModifierByName("modifier_item_imba_spirit_vessel") == caster:FindAllModifiersByName("modifier_item_imba_spirit_vessel")[1] then
-			for itemSlot = 0, 5 do
-				local item = caster:GetItemInSlot(itemSlot)
+		-- -- If the parent has multiple Spirit Vessels, only apply the charge gain to the first one
+		-- if caster:FindModifierByName("modifier_item_imba_spirit_vessel") == caster:FindAllModifiersByName("modifier_item_imba_spirit_vessel")[1] then
+			-- for itemSlot = 0, 5 do
+				-- local item = caster:GetItemInSlot(itemSlot)
 			
-				if item:GetName() == self:GetName() then
-					-- 2 charges if current count is 0, 1 charge otherwise
-					if item:GetCurrentCharges() == 0 then
-						item:SetCurrentCharges(item:GetCurrentCharges() + self:GetSpecialValueFor("soul_initial_charge"))
-					else
-						item:SetCurrentCharges(item:GetCurrentCharges() + self:GetSpecialValueFor("soul_additional_charges"))
-					end
+				-- if item:GetName() == self:GetName() then
+					-- -- 2 charges if current count is 0, 1 charge otherwise
+					-- if item:GetCurrentCharges() == 0 then
+						-- item:SetCurrentCharges(item:GetCurrentCharges() + self:GetSpecialValueFor("soul_initial_charge"))
+					-- else
+						-- item:SetCurrentCharges(item:GetCurrentCharges() + self:GetSpecialValueFor("soul_additional_charges"))
+					-- end
 					
-					-- Don't continue checking for any other Spirit Vessels cause it only adds to one
-					break
-				end
-			end
-		end	
-	end
-end
+					-- -- Don't continue checking for any other Spirit Vessels cause it only adds to one
+					-- break
+				-- end
+			-- end
+		-- end	
+	-- end
+-- end
 
 ---------------------------------
 -- SPIRIT VESSEL HEAL MODIFIER --
@@ -331,7 +334,9 @@ function modifier_item_imba_spirit_vessel:DeclareFunctions()
 		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
 		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
-		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS
+		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
+		
+		MODIFIER_EVENT_ON_DEATH
     }
 	
     return decFuncs
@@ -363,4 +368,46 @@ end
 
 function modifier_item_imba_spirit_vessel:GetModifierPhysicalArmorBonus()
 	return self.bonus_armor
+end
+
+
+function modifier_item_imba_spirit_vessel:OnDeath(keys)
+	local caster		= self:GetCaster()
+	local soul_radius	= self.ability:GetSpecialValueFor("soul_radius")
+
+	-- First check: Is the unit within capture range and an enemy and not reincarnating?
+	if keys.unit:IsRealHero() and caster:IsRealHero() and caster:GetTeam() ~= keys.unit:GetTeam() and (not keys.unit.IsReincarnating or (keys.unit.IsReincarnating and not keys.unit:IsReincarnating())) and caster:IsAlive() and (caster:GetAbsOrigin() - keys.unit:GetAbsOrigin()):Length2D() <= soul_radius then
+	
+		-- Second check: Is there no one closer than the item owner that also has a Spirit Vessel?
+		local nearbyAllies = FindUnitsInRadius(caster:GetTeamNumber(), keys.unit:GetAbsOrigin(), nil, soul_radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, FIND_CLOSEST, false)
+		
+		for _, ally in pairs(nearbyAllies) do
+			-- If the check reaches the item owner then break out of loop and continue checks
+			if ally == caster then
+				break
+			-- If anyone closer has the same item, the owner of this item will not get any charges
+			elseif ally:HasItemInInventory(self:GetAbility():GetName()) then
+				return
+			end
+		end
+		
+		-- If the parent has multiple Spirit Vessels, only apply the charge gain to the first one
+		if self == caster:FindAllModifiersByName("modifier_item_imba_spirit_vessel")[1] then
+			for itemSlot = 0, 5 do
+				local item = caster:GetItemInSlot(itemSlot)
+			
+				if item and item:GetName() == self:GetAbility():GetName() then
+					-- 2 charges if current count is 0, 1 charge otherwise
+					if item:GetCurrentCharges() == 0 then
+						item:SetCurrentCharges(item:GetCurrentCharges() + self.ability:GetSpecialValueFor("soul_initial_charge"))
+					else
+						item:SetCurrentCharges(item:GetCurrentCharges() + self.ability:GetSpecialValueFor("soul_additional_charges"))
+					end
+					
+					-- Don't continue checking for any other Spirit Vessels cause it only adds to one
+					break
+				end
+			end
+		end	
+	end
 end
