@@ -822,10 +822,13 @@ function modifier_imba_bristleback_warpath_revenge:OnCreated()
 	-- AbilitySpecials
 	self.revenge_inc_dmg_pct	= self.ability:GetSpecialValueFor("revenge_inc_dmg_pct")
 	
+	if not IsServer() then return end
+	
 	self:SetStackCount(self.revenge_inc_dmg_pct)
 end
 
-function modifier_imba_bristleback_warpath_revenge:OnRefresh()	
+function modifier_imba_bristleback_warpath_revenge:OnRefresh()
+	if not IsServer() then return end
 	self:SetStackCount(self:GetStackCount() + self.revenge_inc_dmg_pct)
 end
 

@@ -156,9 +156,9 @@ function modifier_item_imba_bloodstone_720:GetModifierTotalPercentageManaRegen()
 end
 
 function modifier_item_imba_bloodstone_720:OnDeath(keys)
-	if keys.unit:IsRealHero() and self.parent:IsRealHero() and self.parent:IsAlive() then
+	if keys.unit:IsRealHero() and self.parent:IsRealHero() then
 		-- Checks for real enemy heroes that have died within vicinity or if the parent is the killer
-		if self.parent:GetTeam() ~= keys.unit:GetTeam() and ((keys.unit:GetAbsOrigin() - self.parent:GetAbsOrigin()):Length2D() <= self.charge_range or self.parent == keys.attacker) then
+		if self.parent:GetTeam() ~= keys.unit:GetTeam() and ((keys.unit:GetAbsOrigin() - self.parent:GetAbsOrigin()):Length2D() <= self.charge_range or self.parent == keys.attacker) and self.parent:IsAlive() then
 			-- If the parent has multiple Bloodstones, only apply the charge gain to the top-left most one
 			if self == self.parent:FindAllModifiersByName(self:GetName())[1] then
 				for itemSlot = 0, 5 do
