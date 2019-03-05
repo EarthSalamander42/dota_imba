@@ -19,6 +19,7 @@ function GameMode:OnHeroFirstSpawn(hero)
 
 	if hero:IsIllusion() then
 		hero:SetupHealthBarLabel()
+		hero:AddNewModifier(hero, nil, "modifier_custom_mechanics", {})
 		return
 	end -- Illusions will not be affected by scripts written under this line
 

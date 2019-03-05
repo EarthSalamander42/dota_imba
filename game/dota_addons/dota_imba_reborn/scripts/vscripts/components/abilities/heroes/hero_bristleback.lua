@@ -259,15 +259,15 @@ function modifier_imba_bristleback_viscous_nasal_goo_autocaster:OnIntervalThink(
 			
 			if #enemies > 0 then
 				self.caster:CastAbilityOnTarget(enemies[1], self.ability, self.caster:GetPlayerID())
+				
+				Timers:CreateTimer(self.ability:GetBackswingTime(), function()
+					-- This is just to prevent Bristleback from bricking up in super low CD situations, but he won't target people after cast then
+					if not self.ability:IsNull() and self.ability:GetCooldownTimeRemaining() > self.ability:GetBackswingTime() then
+						self.caster:MoveToPositionAggressive(self.caster:GetAbsOrigin())
+					end
+				end)
 			end
 		end
-
-		Timers:CreateTimer(self.ability:GetBackswingTime(), function()
-			-- This is just to prevent Bristleback from bricking up in super low CD situations, but he won't target people after cast then
-			if not self.ability:IsNull() and self.ability:GetCooldownTimeRemaining() > self.ability:GetBackswingTime() then
-				self.caster:MoveToPositionAggressive(self.caster:GetAbsOrigin())
-			end
-		end)
 	end
 end
 
@@ -488,12 +488,14 @@ function modifier_imba_bristleback_quill_spray_autocaster:OnIntervalThink()
 	end
 	
 	-- IMBAfication: Cardio
-	self.distance			= self.distance + (self.caster:GetAbsOrigin() - self.last_position):Length()
-	self.last_position		= self.caster:GetAbsOrigin()
-	
-	if self.distance >= self.cardio_threshold and not self.parent:IsIllusion() and not self.parent:PassivesDisabled() then
-		self.ability:OnSpellStart()
-		self.distance = 0
+	if self.ability:GetAutoCastState() then
+		self.distance			= self.distance + (self.caster:GetAbsOrigin() - self.last_position):Length()
+		self.last_position		= self.caster:GetAbsOrigin()
+		
+		if self.distance >= self.cardio_threshold and not self.parent:IsIllusion() and not self.parent:PassivesDisabled() then
+			self.ability:OnSpellStart()
+			self.distance = 0
+		end
 	end
 end
 
@@ -952,7 +954,7 @@ function modifier_special_bonus_imba_bristleback_3:RemoveOnDeath() 		return fals
 -- function modifier_special_bonus_imba_bristleback_8:RemoveOnDeath() 		return false end
 
 function imba_bristleback_warpath:OnOwnerSpawned()
-	if self:GetCaster():HasTalent("modifier_special_bonus_imba_bristleback_3") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_bristleback_3") then
+	if self:GetCaster():HasTalent("special_bonus_imba_bristleback_3") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_bristleback_3") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_bristleback_3"), "modifier_special_bonus_imba_bristleback_3", {})
 	end
 end

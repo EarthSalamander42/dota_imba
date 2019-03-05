@@ -29,7 +29,7 @@
 "DOTA_Tooltip_ability_imba_vengefulspirit_command_aura_Note0"          "Bonus damage may appear wrong in the UI, but does correct damage nonetheless."
 "DOTA_Tooltip_ability_imba_vengefulspirit_command_aura_aura_radius"					   "EFFECT RADIUS:"
 "DOTA_Tooltip_ability_imba_vengefulspirit_command_aura_bonus_damage_pct"            "%ATTACK DAMAGE BONUS:"
-"DOTA_Tooltip_ability_imba_vengefulspirit_command_aura_spell_power"					   "%spell amp BONUS:"
+"DOTA_Tooltip_ability_imba_vengefulspirit_command_aura_spell_power"					   "%SPELL AMP BONUS:"
 
 "DOTA_Tooltip_modifier_imba_command_aura_positive"					        "Vengeance Aura"
 "DOTA_Tooltip_modifier_imba_command_aura_positive_Description"          "Increased attack damage and spell amp"
@@ -44,7 +44,7 @@
 "DOTA_Tooltip_ability_imba_vengefulspirit_rancor_Note0"					  "Can maximum gain %max_stacks% stacks."
 "DOTA_Tooltip_ability_imba_vengefulspirit_rancor_Note1"					  "Break does only prevent gaining new stacks."
 "DOTA_Tooltip_ability_imba_vengefulspirit_rancor_damage_pct"            "BONUS DAMAGE PER STACK:"
-"DOTA_Tooltip_ability_imba_vengefulspirit_rancor_spell_power"          "%spell amp PER STACK:"
+"DOTA_Tooltip_ability_imba_vengefulspirit_rancor_spell_power"          "%SPELL AMP PER STACK:"
 "DOTA_Tooltip_ability_imba_vengefulspirit_rancor_stack_duration"					      "STACK DECAY DELAY:"
 
 "DOTA_Tooltip_modifier_imba_rancor_stack"										  "Rancor"

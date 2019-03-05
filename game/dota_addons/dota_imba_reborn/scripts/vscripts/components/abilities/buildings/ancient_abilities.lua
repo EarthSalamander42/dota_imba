@@ -184,7 +184,7 @@ function modifier_imba_fountain_danger_zone:OnIntervalThink()
 
 		for _, enemy in pairs(nearby_enemies) do
 			-- do this before the ignore fountain units to prevent killing units that shouldn't be killed!
-			if not enemy:IsRealHero() then
+			if not enemy:IsConsideredHero() then
 				act_on_target = 3
 			end
 
@@ -241,7 +241,10 @@ function modifier_imba_fountain_danger_zone:OnIntervalThink()
 			elseif act_on_target == 3 then
 				-- Potential fix for a bug not clearly identified (it's everyday bro)
 				if not enemy:IsRealHero() then
-					UTIL_Remove(enemy)
+					-- Can we like not use this remove thing cause it's causing stupid errors with deleted entities
+					--UTIL_Remove(enemy)
+					
+					enemy:ForceKill(false)
 				end
 			end
 		end

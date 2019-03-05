@@ -56,6 +56,8 @@ function item_imba_rod_of_atos:OnSpellStart()
 	self.curtain_fire_speed				=	self:GetSpecialValueFor("curtain_fire_speed")
 	self.curtain_fire_activation_charge	=	self:GetSpecialValueFor("curtain_fire_activation_charge")
 	
+	self.curtain_fire_radius_second		=	self:GetSpecialValueFor("curtain_fire_radius_second")
+	
 	if not IsServer() then return end
 	
 	local caster_location	= self.caster:GetAbsOrigin()
@@ -147,7 +149,7 @@ function item_imba_rod_of_atos:OnSpellStart()
 			local random_spawn_distance		=	RandomInt(-self.curtain_fire_length, self.curtain_fire_length)
 
 			local random_spawn_location		=	curtain_fire_starting_point + Vector(direction.y * random_spawn_distance, -direction.x * random_spawn_distance, 100) -- 100 is so the projectiles don't all spawn sunk into the ground
-			local random_target_location	=	GetGroundPosition(target_location + RandomVector(self.curtain_fire_radius * 0.5), nil)
+			local random_target_location	=	GetGroundPosition(target_location + RandomVector(self.curtain_fire_radius_second * 0.5), nil)
 			local random_fire_direction		=	random_target_location - random_spawn_location
 			
 			-- So the console doesn't yell at us for non-zero vertical velocity
@@ -157,7 +159,7 @@ function item_imba_rod_of_atos:OnSpellStart()
 				Ability				= self,
 				EffectName			= "particles/hero/scaldris/ice_spell_projectile.vpcf", -- Borrowing pre-made projectile...
 				vSpawnOrigin		= random_spawn_location,
-				fDistance			= random_fire_direction:Length2D() + self.curtain_fire_radius,
+				fDistance			= random_fire_direction:Length2D() + self.curtain_fire_radius_second,
 				fStartRadius		= 70,
 				fEndRadius			= 70,
 				Source				= self.caster,

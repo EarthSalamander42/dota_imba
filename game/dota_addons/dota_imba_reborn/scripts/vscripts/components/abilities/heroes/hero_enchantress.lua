@@ -783,6 +783,7 @@ end
 -------------
 
 LinkLuaModifier("modifier_imba_enchantress_impetus", "components/abilities/heroes/hero_enchantress.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_enchantress_impetus_huntmastery_timer", "components/abilities/heroes/hero_enchantress.lua", LUA_MODIFIER_MOTION_NONE)
 
 imba_enchantress_impetus						= class({})
 
@@ -819,6 +820,14 @@ function modifier_imba_enchantress_impetus:OnCreated()
 	--self.distance_cap 				= self.ability:GetSpecialValueFor("distance_cap")
 	self.bonus_attack_range_scepter 	= self.ability:GetSpecialValueFor("bonus_attack_range_scepter")
 	self.attack_cast_stack				= self.ability:GetSpecialValueFor("attack_cast_stack")
+	self.huntmastery_grace_period		= self.ability:GetSpecialValueFor("huntmastery_grace_period")
+end
+
+function modifier_imba_enchantress_impetus:OnRefresh()
+	self.distance_damage_pct 			= self.ability:GetSpecialValueFor("distance_damage_pct")
+	self.bonus_attack_range_scepter 	= self.ability:GetSpecialValueFor("bonus_attack_range_scepter")
+	self.attack_cast_stack				= self.ability:GetSpecialValueFor("attack_cast_stack")
+	self.huntmastery_grace_period		= self.ability:GetSpecialValueFor("huntmastery_grace_period")
 end
 
 function modifier_imba_enchantress_impetus:DeclareFunctions()
@@ -887,6 +896,10 @@ function modifier_imba_enchantress_impetus:OnAttackLanded( keys )
 		
 		-- If the attack is flagged as Impetus, apply the effects
 		if self.attack_queue[1] and not keys.target:IsBuilding() and keys.target:IsAlive() then
+		
+			-- IMBAfication: Huntmastery
+			keys.target:AddNewModifier(self.caster, self.ability, "modifier_imba_enchantress_impetus_huntmastery_timer", {duration = self.huntmastery_grace_period})
+			
 			-- Remove distance cap on damage
 			-- Note that CalcDistanceBetweenEntityOBB(self.caster, keys.target) actually gives different / "wrong" results...
 			--local distance 			= math.min(CalcDistanceBetweenEntityOBB(self.caster, keys.target), self.distance_cap)
@@ -939,17 +952,17 @@ function modifier_imba_enchantress_impetus:OnAttackLanded( keys )
 				end)
 			end
 			
-			-- IMBAfication: Huntmastery
+			-- IMBAfication: Huntmastery (deprecated to now allow a small grace period with modifier modifier_imba_enchantress_impetus_huntmastery_timer but leaving this for reference
 			-- Gotta wait a bit before potential kills are registered
-			Timers:CreateTimer(FrameTime(), function()
-				if not keys.target:IsAlive() and keys.target:IsRealHero() and (keys.target.IsReincarnating and not keys.target:IsReincarnating()) then
-					self:IncrementStackCount()
+			-- Timers:CreateTimer(FrameTime(), function()
+				-- if not keys.target:IsAlive() and keys.target:IsRealHero() and (keys.target.IsReincarnating and not keys.target:IsReincarnating()) then
+					-- self:IncrementStackCount()
 					
-					if self.caster:GetName() == "npc_dota_hero_enchantress" then
-						self.caster:EmitSound("enchantress_ench_ability_impetus_0"..math.random(1,7))
-					end
-				end
-			end)
+					-- if self.caster:GetName() == "npc_dota_hero_enchantress" then
+						-- self.caster:EmitSound("enchantress_ench_ability_impetus_0"..math.random(1,7))
+					-- end
+				-- end
+			-- end)
 		end
 		
 		table.remove(self.attack_queue, 1)
@@ -971,6 +984,41 @@ function modifier_imba_enchantress_impetus:OnOrder(keys)
 			self.impetus_orb = true
 		else
 			self.impetus_orb = false
+		end
+	end
+end
+
+----------------------------------------
+-- IMPETUS HUNTMASTERY TIMER MODIFIER --
+----------------------------------------
+
+modifier_imba_enchantress_impetus_huntmastery_timer	= class({})
+
+function modifier_imba_enchantress_impetus_huntmastery_timer:IgnoreTenacity()	return true end
+function modifier_imba_enchantress_impetus_huntmastery_timer:IsHidden() 		return true end
+function modifier_imba_enchantress_impetus_huntmastery_timer:IsPurgable()		return false end
+function modifier_imba_enchantress_impetus_huntmastery_timer:RemoveOnDeath()	return false end -- Destroys itself rather promptly
+
+function modifier_imba_enchantress_impetus_huntmastery_timer:DeclareFunctions()
+    local decFuncs = {
+		MODIFIER_EVENT_ON_DEATH
+    }
+
+    return decFuncs
+end
+
+function modifier_imba_enchantress_impetus_huntmastery_timer:OnDeath(keys)
+	if keys.unit == self:GetParent() and keys.unit:IsRealHero() and (keys.unit.IsReincarnating and not keys.unit:IsReincarnating()) then
+		self.caster	= self:GetCaster()
+		
+		local impetus_modifier	= self.caster:FindModifierByName("modifier_imba_enchantress_impetus")
+		
+		if impetus_modifier then
+			impetus_modifier:IncrementStackCount()
+			
+			if self.caster:GetName() == "npc_dota_hero_enchantress" then
+				self.caster:EmitSound("enchantress_ench_ability_impetus_0"..math.random(1,7))
+			end
 		end
 	end
 end

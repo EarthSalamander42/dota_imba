@@ -122,6 +122,12 @@ function GameMode:OnGameRulesStateChange(keys)
 				end
 			end
 		end
+		
+		-- IDK how to get this to print only once
+		Timers:CreateTimer(FrameTime(), function()
+			Say(GameRules:GetGameModeEntity(), "Game Mode Selected: "..GetCustomGameVote(), false)
+		end)
+		
 	elseif newState == DOTA_GAMERULES_STATE_STRATEGY_TIME then
 		for i = 0, PlayerResource:GetPlayerCount() - 1 do
 			if PlayerResource:IsValidPlayer(i) and not PlayerResource:HasSelectedHero(i) and PlayerResource:GetConnectionState(i) == DOTA_CONNECTION_STATE_CONNECTED then
@@ -226,7 +232,7 @@ function GameMode:OnGameRulesStateChange(keys)
 		if GetMapName() == Map1v1() then
 			Setup1v1()
 		else
-			if IsMutationMap() or IsSuperFranticMap() then
+			if GameMode:GetCustomGameDifficulty() > 1 then
 				SpawnEasterEgg()
 			end
 

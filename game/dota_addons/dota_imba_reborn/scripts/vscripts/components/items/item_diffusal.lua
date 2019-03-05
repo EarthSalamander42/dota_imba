@@ -177,8 +177,8 @@ function modifier_item_imba_diffusal_unique:GetModifierProcAttack_BonusDamage_Ph
 
 		-- Only apply if the attacker is the caster
 		if attacker == self.caster then
-			-- If the attacker has higher level diffusal blades, do nothing
-			if self.caster:HasModifier("modifier_item_imba_diffusal_2_unique") then
+			-- If the attacker has higher level diffusal blades or AM's mana break, do nothing
+			if self.caster:HasModifier("modifier_item_imba_diffusal_2_unique") or self.caster:HasModifier("modifier_item_imba_witchblade") or self.caster:HasModifier("modifier_imba_mana_break_passive") then
 				return nil
 			end
 
@@ -511,6 +511,10 @@ function modifier_item_imba_diffusal_2_unique:GetModifierProcAttack_BonusDamage_
 
 		-- Only apply if the attacker is the caster
 		if attacker == self.caster then
+			-- If the attacker has higher level diffusal blades or AM's mana break, do nothing
+			if self.caster:HasModifier("modifier_item_imba_witchblade") or self.caster:HasModifier("modifier_imba_mana_break_passive") then
+				return nil
+			end
 
 			-- Don't apply when attacking teammates
 			if attacker:GetTeamNumber() == target:GetTeamNumber() then

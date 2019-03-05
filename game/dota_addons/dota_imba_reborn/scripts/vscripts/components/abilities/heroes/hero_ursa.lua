@@ -1067,7 +1067,7 @@ function modifier_imba_enrage_buff:GetModifierIncomingDamage_Percentage()
 end
 
 function modifier_imba_enrage_buff:GetModifierStatusResistanceStacking()
-	return self:GetAbility():GetSpecialValueFor("damage_reduction")
+	return self:GetAbility():GetSpecialValueFor("status_resist")
 end
 
 -- #7 Talent: Increases Ursa's damage as a portion of his current health

@@ -242,8 +242,8 @@ function imba_storm_spirit_electric_vortex:OnSpellStart()
 		EmitSoundOn(lingering_sound, caster)
 
 
-		-- Apply pull slow side effect on caster
-		caster:AddNewModifier(caster, self, "modifier_imba_vortex_self_slow",	{duration = self_slow_duration} )
+		-- Apply pull slow side effect on caster (removed in official patch 7.21c)
+		-- caster:AddNewModifier(caster, self, "modifier_imba_vortex_self_slow",	{duration = self_slow_duration} )
 
 		if not caster:HasScepter() then
 			local target			=	self:GetCursorTarget()

@@ -327,7 +327,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"distance_damage_pct"	"16 21 26"
+				"distance_damage_pct"	"16 22 28"
 				"LinkedSpecialBonus"	"special_bonus_unique_enchantress_4"			
 			}
 			"02"
@@ -344,6 +344,11 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"attack_cast_stack"			"20"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"huntmastery_grace_period"	"0.5"
 			}
 		}
 	}

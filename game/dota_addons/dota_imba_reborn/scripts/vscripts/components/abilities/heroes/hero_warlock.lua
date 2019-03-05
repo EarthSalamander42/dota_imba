@@ -1210,7 +1210,10 @@ function modifier_imba_rain_of_chaos_demon_link:OnTakeDamage(keys)
 			-- Add a particle for indicating the damage
 			local particle_link_damage_fx = ParticleManager:CreateParticle(self.particle_link_damage, PATTACH_CUSTOMORIGIN_FOLLOW, self.parent)
 			ParticleManager:SetParticleControlEnt(particle_link_damage_fx, 0, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)
-			ParticleManager:SetParticleControlEnt(particle_link_damage_fx, 1, self.demon_table[chosen_demon], PATTACH_POINT_FOLLOW, "attach_hitloc", self.demon_table[chosen_demon]:GetAbsOrigin(), true)
+			
+			if not self.demon_table[chosen_demon]:IsNull() then
+				ParticleManager:SetParticleControlEnt(particle_link_damage_fx, 1, self.demon_table[chosen_demon], PATTACH_POINT_FOLLOW, "attach_hitloc", self.demon_table[chosen_demon]:GetAbsOrigin(), true)
+			end
 
 			Timers:CreateTimer(0.5, function()
 				ParticleManager:DestroyParticle(particle_link_damage_fx, false)
@@ -1271,9 +1274,11 @@ end
 function modifier_imba_rain_of_chaos_demon_link:OnRemoved()
 	-- Severe all remaining particles and kill all remaining demons
 	for i = 1, #self.demon_table do
-		self.demon_table[i]:Kill(self.ability, self.caster)
-		ParticleManager:DestroyParticle(self.particle_table[i], false)
-		ParticleManager:ReleaseParticleIndex(self.particle_table[i])
+		if self.particle_table[i] then
+			self.demon_table[i]:Kill(self.ability, self.caster)
+			ParticleManager:DestroyParticle(self.particle_table[i], false)
+			ParticleManager:ReleaseParticleIndex(self.particle_table[i])
+		end
 	end
 end
 

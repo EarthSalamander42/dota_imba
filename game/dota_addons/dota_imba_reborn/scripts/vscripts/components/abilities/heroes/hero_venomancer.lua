@@ -313,8 +313,6 @@ end
 modifier_imba_venomous_gale = class({})
 function modifier_imba_venomous_gale:IsDebuff() return true end
 function modifier_imba_venomous_gale:IsHidden() return false end
-function modifier_imba_venomous_gale:IsPurgable() return false end
-function modifier_imba_venomous_gale:IsPurgeException() return true end
 function modifier_imba_venomous_gale:IsStunDebuff() return false end
 function modifier_imba_venomous_gale:RemoveOnDeath() return true end
 -------------------------------------------
@@ -460,9 +458,13 @@ function modifier_imba_poison_sting:OnAttackLanded( params )
 			if (params.attacker:GetPlayerOwnerID() == caster:GetPlayerID()) and params.attacker.bIsScourge and (params.target.IsCreep or params.target.IsHero) then
 				if not params.target:IsBuilding() then
 					local poison = params.target:FindModifierByNameAndCaster("modifier_imba_poison_sting_debuff",caster)
+					
 					if poison then
 						poison:SetDuration(poison:GetDuration(), true)
+					else -- Scrouge Wards can now apply poison sting but it won't make it stack like crazy without talent
+						params.target:AddNewModifier(caster, ability, "modifier_imba_poison_sting_debuff", {duration = duration})
 					end
+					
 					if caster:HasTalent("special_bonus_imba_venomancer_8") then
 						local mod = params.target:AddNewModifier(caster, ability, "modifier_imba_poison_sting_debuff_ward", {duration = duration})
 						if mod then
@@ -479,8 +481,6 @@ end
 modifier_imba_poison_sting_debuff = class({})
 function modifier_imba_poison_sting_debuff:IsDebuff() return true end
 function modifier_imba_poison_sting_debuff:IsHidden() return false end
-function modifier_imba_poison_sting_debuff:IsPurgable() return false end
-function modifier_imba_poison_sting_debuff:IsPurgeException() return false end
 function modifier_imba_poison_sting_debuff:IsStunDebuff() return false end
 function modifier_imba_poison_sting_debuff:RemoveOnDeath() return true end
 -------------------------------------------
@@ -550,8 +550,6 @@ end
 modifier_imba_poison_sting_debuff_ward = class({})
 function modifier_imba_poison_sting_debuff_ward:IsDebuff() return true end
 function modifier_imba_poison_sting_debuff_ward:IsHidden() return false end
-function modifier_imba_poison_sting_debuff_ward:IsPurgable() return false end
-function modifier_imba_poison_sting_debuff_ward:IsPurgeException() return false end
 function modifier_imba_poison_sting_debuff_ward:IsStunDebuff() return false end
 function modifier_imba_poison_sting_debuff_ward:RemoveOnDeath() return true end
 -------------------------------------------
@@ -731,6 +729,10 @@ function modifier_imba_plague_ward:IsStunDebuff() return false end
 function modifier_imba_plague_ward:RemoveOnDeath() return true end
 -------------------------------------------
 
+function modifier_imba_plague_ward:GetEffectName()
+	return "particles/items_fx/black_king_bar_avatar.vpcf"
+end
+
 function modifier_imba_plague_ward:DeclareFunctions()
 	local decFuns =
 		{
@@ -855,6 +857,7 @@ function modifier_imba_poison_nova:IsPurgable() return false end
 function modifier_imba_poison_nova:IsPurgeException() return false end
 function modifier_imba_poison_nova:IsStunDebuff() return false end
 function modifier_imba_poison_nova:RemoveOnDeath() return true end
+function modifier_imba_poison_nova:IgnoreTenacity() return true end
 -------------------------------------------
 
 function modifier_imba_poison_nova:OnCreated( params )
@@ -936,3 +939,57 @@ function modifier_imba_poison_nova:GetAttributes()
 end
 
 -------------------------------------------
+
+-- Client-side helper functions --
+LinkLuaModifier("modifier_special_bonus_imba_venomancer_1", "components/abilities/heroes/hero_venomancer", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_venomancer_2", "components/abilities/heroes/hero_venomancer", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_venomancer_3", "components/abilities/heroes/hero_venomancer", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_venomancer_1		= class({})
+modifier_special_bonus_imba_venomancer_2		= class({})
+modifier_special_bonus_imba_venomancer_3		= class({})
+
+-- -----------------------
+-- -- TALENT 1 MODIFIER --
+-- -----------------------
+-- +x% Venomous Gale Slow
+
+function modifier_special_bonus_imba_venomancer_1:IsHidden() 		return true end
+function modifier_special_bonus_imba_venomancer_1:IsPurgable() 		return false end
+function modifier_special_bonus_imba_venomancer_1:RemoveOnDeath() 	return false end
+
+-- -----------------------
+-- -- TALENT 2 MODIFIER --
+-- -----------------------
+-- Poison Sting now adds +x% slow per stack
+
+function modifier_special_bonus_imba_venomancer_2:IsHidden() 		return true end
+function modifier_special_bonus_imba_venomancer_2:IsPurgable() 		return false end
+function modifier_special_bonus_imba_venomancer_2:RemoveOnDeath() 	return false end
+
+-- -----------------------
+-- -- TALENT 3 MODIFIER --
+-- -----------------------
+-- +x% Compound Toxicity Magic Resistance Reduction
+
+function modifier_special_bonus_imba_venomancer_3:IsHidden() 		return true end
+function modifier_special_bonus_imba_venomancer_3:IsPurgable() 		return false end
+function modifier_special_bonus_imba_venomancer_3:RemoveOnDeath() 	return false end
+
+function imba_venomancer_venomous_gale:OnOwnerSpawned()
+	if self:GetCaster():HasTalent("special_bonus_imba_venomancer_1") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_venomancer_1") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_venomancer_1"), "modifier_special_bonus_imba_venomancer_1", {})
+	end
+end
+
+function imba_venomancer_poison_sting:OnOwnerSpawned()
+	if self:GetCaster():HasTalent("special_bonus_imba_venomancer_2") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_venomancer_2") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_venomancer_2"), "modifier_special_bonus_imba_venomancer_2", {})
+	end
+end
+
+function imba_venomancer_toxicity:OnOwnerSpawned()
+	if self:GetCaster():HasTalent("special_bonus_imba_venomancer_3") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_venomancer_3") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_venomancer_3"), "modifier_special_bonus_imba_venomancer_3", {})
+	end
+end

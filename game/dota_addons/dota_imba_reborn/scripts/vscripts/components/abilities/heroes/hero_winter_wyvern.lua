@@ -483,6 +483,14 @@ function imba_winter_wyvern_cold_embrace:GetCooldown(nLevel)
 	return self.BaseClass.GetCooldown( self, nLevel ) - self:GetCaster():FindTalentValue("special_bonus_imba_winter_wyvern_6", "cooldown_reduction")
 end
 
+function imba_winter_wyvern_cold_embrace:CastFilterResultTarget( hTarget )
+	if not IsServer() then return end
+
+	if PlayerResource:IsDisableHelpSetForPlayerID(hTarget:GetPlayerOwnerID(), self:GetCaster():GetPlayerOwnerID()) then 	
+		return UF_FAIL_DISABLE_HELP
+	end
+end
+
 function imba_winter_wyvern_cold_embrace:OnSpellStart()
 	if IsServer() then 
 		local caster 					= self:GetCaster();
