@@ -48,7 +48,7 @@
 			"03"
 			{
                 "var_type"					"FIELD_FLOAT"
-                "stopgap_bat_increase"		"-0.2"		
+                "stopgap_bat_increase"		"-0.1"		
 			}
 			"04"
 			{
@@ -343,7 +343,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"attack_cast_stack"			"20"
+				"attack_cast_stack"			"16"
 			}
 			"05"
 			{

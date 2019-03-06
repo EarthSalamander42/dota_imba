@@ -15228,7 +15228,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"scream_damage_pct"		"50"
+				"scream_damage_pct"		"25 30 35 40"
 			}
 			"03"
 			{

@@ -144,7 +144,8 @@ function GameMode:OnGameRulesStateChange(keys)
 			GoodCamera:AddNewModifier(GoodCamera, nil, "modifier_overthrow_gold_xp_granter", {})
 			GoodCamera:AddNewModifier(GoodCamera, nil, "modifier_overthrow_gold_xp_granter_global", {})
 		else
-			self:SetupContributors()
+			-- No point of these right now until the names are visible again (also probably causing a bit of lag)
+			-- self:SetupContributors()
 			self:SetupFrostivus()
 			self:SetupShrines()
 		end
@@ -232,7 +233,7 @@ function GameMode:OnGameRulesStateChange(keys)
 		if GetMapName() == Map1v1() then
 			Setup1v1()
 		else
-			if GameMode:GetCustomGameDifficulty() > 1 then
+			if GameRules:GetCustomGameDifficulty() > 1 then
 				SpawnEasterEgg()
 			end
 

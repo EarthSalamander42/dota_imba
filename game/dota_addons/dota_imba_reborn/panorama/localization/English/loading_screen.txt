@@ -1,5 +1,5 @@
-"game_version_name"						"Nature's Flourishing!"
-"loading_screen_description"			"Dota IMBA 7.10 brings Enchantress to the front line, including scheduled updates! Every tuesday, experience a new gameplay patch. Dota IMBA is now part of Frostrose Studio, directed by EarthSalamander."
+"game_version_name"						"Bristle is Back!"
+"loading_screen_description"			"Dota IMBA 7.11 brings forth a powered up Bristleback, along with unique updates to some underutilized items to bring new chaos to the battlefield! Dota IMBA is part of Frostrose Studio, directed by EarthSalamander."
 "loading_screen_button"					"Dota 2 IMBA website is currently unavailable."
 
 "loading_screen_promote"				"Translate Dota IMBA in your native language!"
