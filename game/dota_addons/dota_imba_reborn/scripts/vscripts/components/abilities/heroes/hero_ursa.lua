@@ -1197,7 +1197,7 @@ function modifier_imba_talent_enrage_damage:OnTakeDamage( keys )
 		local damage_taken = keys.damage
 
 		-- Only apply if the target taking damage is the caster
-		if target == self.caster then
+		if target == self.caster and not self.caster:IsIllusion() then
 			if not self.caster:HasTalent("special_bonus_imba_ursa_1") then
 				return nil
 			end

@@ -176,6 +176,13 @@ function GameMode:OnHeroFirstSpawn(hero)
 --		if not IsInToolsMode() then
 			hero:SetupHealthBarLabel()
 --		end
+
+		-- Refresh TP on first spawn
+		local teleport_scroll = hero:GetItemInSlot(15)
+		
+		if teleport_scroll then
+			teleport_scroll:EndCooldown()
+		end
 	end
 end
 

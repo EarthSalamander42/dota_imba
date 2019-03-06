@@ -489,6 +489,10 @@ function imba_winter_wyvern_cold_embrace:CastFilterResultTarget( hTarget )
 	if PlayerResource:IsDisableHelpSetForPlayerID(hTarget:GetPlayerOwnerID(), self:GetCaster():GetPlayerOwnerID()) then 	
 		return UF_FAIL_DISABLE_HELP
 	end
+	
+	local nResult = UnitFilter( hTarget, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
+	
+	return nResult
 end
 
 function imba_winter_wyvern_cold_embrace:OnSpellStart()
