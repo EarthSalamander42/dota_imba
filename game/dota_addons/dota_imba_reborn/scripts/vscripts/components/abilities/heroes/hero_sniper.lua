@@ -616,6 +616,12 @@ function modifier_imba_headshot_attacks:OnCreated()
 		self.perfectshot_critical_dmg_pct = self.ability:GetSpecialValueFor("perfectshot_critical_dmg_pct")
 		self.perfectshot_stun_duration = self.ability:GetSpecialValueFor("perfectshot_stun_duration")
 		self.perfectshot_attacks = self.ability:GetSpecialValueFor("perfectshot_attacks")
+		self.proc_chance = self.ability:GetSpecialValueFor("proc_chance")
+		self.knockback_distance = self.ability:GetSpecialValueFor("knockback_distance")
+		self.knockback_duration = self.ability:GetSpecialValueFor("knockback_duration")
+		
+		self.proc_chance_pseudo		= self.proc_chance_pseudo or 0
+		self.PRNG_forty_pct_chance	= 20.20	-- Change this number if you change the headshot proc chance
 
 		-- Illusion crash fix
 		if self:GetAbility():GetLevel() ~= 0 then
@@ -672,24 +678,25 @@ function modifier_imba_headshot_attacks:OnAttackStart(keys)
 			if target:IsBuilding() then
 				return nil
 			end
-
-			-- Decide if this attack should be a headshot
-			if stacks % self.headshot_attacks == 0 then
-
-				-- Check if that attack would also be a perfectshot
-				if stacks == self.perfectshot_attacks then
+			
+			-- Why was there no proc chance thing implemented for like the longest time...anyways gonna simulate pseudo-random here since the base function is already taken by the perfectshot one below
+			if (RollPercentage(self.proc_chance_pseudo + self.PRNG_forty_pct_chance)) then
+				-- #5 Talent: Normal headshots have a chance to become Perfectshots
+				if self.caster:HasTalent("special_bonus_imba_sniper_5") and RollPseudoRandom(self.caster:FindTalentValue("special_bonus_imba_sniper_5"), self) then
 					self:ApplyAllMarks()
-					self.increment_stacks = true
 				else
-					-- #5 Talent: Normal headshots have a chance to become Perfectshots
-					if self.caster:HasTalent("special_bonus_imba_sniper_5") and RollPseudoRandom(self.caster:FindTalentValue("special_bonus_imba_sniper_5"), self) then
-						self:ApplyAllMarks()
-					else
-						self:ApplyHeadshotMarks()
-					end
+					self:ApplyHeadshotMarks()
+				end	
 
-					self.increment_stacks = true
-				end
+				self.proc_chance_pseudo = 0
+			else
+				self.proc_chance_pseudo = self.proc_chance_pseudo + self.PRNG_forty_pct_chance
+			end
+
+			-- Decide if this attack should be a perfectshot
+			if stacks % self.perfectshot_attacks == 0 then
+				self:ApplyAllMarks()
+				self.increment_stacks = true
 			end
 
 			-- Take Aim guaranteed Perfectshot
@@ -779,6 +786,20 @@ function modifier_imba_headshot_attacks:OnAttackLanded(keys)
 				ParticleManager:SetParticleControl(particle_stun_fx, 0, target:GetAbsOrigin())
 				ParticleManager:SetParticleControl(particle_stun_fx, 1, target:GetAbsOrigin())
 
+				-- Knocknback enemy
+				local knockback = {
+					center_x = self.caster:GetAbsOrigin()[1]+1,
+					center_y = self.caster:GetAbsOrigin()[2]+1,
+					center_z = self.caster:GetAbsOrigin()[3],
+					duration = self.knockback_duration,
+					knockback_duration = self.knockback_duration,
+					knockback_distance = self.knockback_distance,
+					knockback_height = 0,
+					should_stun = 0
+				}
+
+				target:AddNewModifier(self.caster, self.ability, "modifier_knockback", knockback):SetDuration(self.knockback_duration * (1 - target:GetStatusResistance()), true)
+
 				-- Remove particles when they end
 				Timers:CreateTimer(self.headshot_duration, function()
 					ParticleManager:DestroyParticle(particle_stun_fx, false)
@@ -792,6 +813,20 @@ function modifier_imba_headshot_attacks:OnAttackLanded(keys)
 				-- Add Headshot particle effects
 				local particle_slow_fx = ParticleManager:CreateParticle(self.particle_slow, PATTACH_OVERHEAD_FOLLOW, target)
 				ParticleManager:SetParticleControl(particle_slow_fx, 0, target:GetAbsOrigin())
+
+				-- Knocknback enemy
+				local knockback = {
+					center_x = self.caster:GetAbsOrigin()[1]+1,
+					center_y = self.caster:GetAbsOrigin()[2]+1,
+					center_z = self.caster:GetAbsOrigin()[3],
+					duration = self.knockback_duration,
+					knockback_duration = self.knockback_duration,
+					knockback_distance = self.knockback_distance,
+					knockback_height = 0,
+					should_stun = 0
+				}
+
+				target:AddNewModifier(self.caster, self.ability, "modifier_knockback", knockback):SetDuration(self.knockback_duration * (1 - target:GetStatusResistance()), true)
 
 				-- Remove particles when they end
 				Timers:CreateTimer(self.headshot_duration, function()

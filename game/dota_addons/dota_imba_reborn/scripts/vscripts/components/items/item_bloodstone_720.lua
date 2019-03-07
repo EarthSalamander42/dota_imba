@@ -156,15 +156,15 @@ function modifier_item_imba_bloodstone_720:GetModifierTotalPercentageManaRegen()
 end
 
 function modifier_item_imba_bloodstone_720:OnDeath(keys)
-	if keys.unit:IsRealHero() and self.parent:IsRealHero() and self.parent:IsAlive() then
+	if keys.unit:IsRealHero() and self.parent:IsRealHero() then
 		-- Checks for real enemy heroes that have died within vicinity or if the parent is the killer
-		if self.parent:GetTeam() ~= keys.unit:GetTeam() and ((keys.unit:GetAbsOrigin() - self.parent:GetAbsOrigin()):Length2D() <= self.charge_range or self.parent == keys.attacker) then
+		if self.parent:GetTeam() ~= keys.unit:GetTeam() and ((keys.unit:GetAbsOrigin() - self.parent:GetAbsOrigin()):Length2D() <= self.charge_range or self.parent == keys.attacker) and self.parent:IsAlive() then
 			-- If the parent has multiple Bloodstones, only apply the charge gain to the top-left most one
 			if self == self.parent:FindAllModifiersByName(self:GetName())[1] then
 				for itemSlot = 0, 5 do
 					local item = self.parent:GetItemInSlot(itemSlot)
 				
-					if item:GetName() == self.ability:GetName() then
+					if item and item:GetName() == self.ability:GetName() then
 						item:SetCurrentCharges(item:GetCurrentCharges() + self.kill_charges)
 						break
 					end
@@ -172,7 +172,7 @@ function modifier_item_imba_bloodstone_720:OnDeath(keys)
 			end
 			
 		-- Check if the owner of the Bloodstone died and is not reincarnating
-		elseif self.parent == keys.unit and (not self.IsReincarnating or (self.IsReincarnating and not self:IsReincarnating())) then
+		elseif self.parent == keys.unit and (not keys.unit.IsReincarnating or (keys.unit.IsReincarnating and not keys.unit:IsReincarnating())) then
 			self.ability:SetCurrentCharges(math.max(self.ability:GetCurrentCharges() - self.death_charges, 0))
 		end
 		

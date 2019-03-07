@@ -158,6 +158,7 @@ function modifier_imba_thunder_strike_debuff:GetEffectName() 	return "particles/
 function modifier_imba_thunder_strike_debuff:GetEffectAttachType()	return PATTACH_OVERHEAD_FOLLOW end
 function modifier_imba_thunder_strike_debuff:IsDebuff()	return true end
 function modifier_imba_thunder_strike_debuff:IsPurgable()	return true end
+function modifier_imba_thunder_strike_debuff:IgnoreTenacity()	return true end
 
 function modifier_imba_thunder_strike_debuff:OnCreated()	
 	if IsServer() then

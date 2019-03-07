@@ -2218,7 +2218,9 @@
 	//=================================================================================
 	"npc_dota_lone_druid_bear1"
 	{										
-
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealthRegen"			"6"			// Health regeneration rate.
 	}
 
 	"npc_dota_lone_druid_bear2"
@@ -2233,8 +2235,8 @@
 		
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"2750"		// Base health.
-		"StatusHealthRegen"			"6"			// Health regeneration rate.	 
+		"StatusHealth"				"2600"		// Base health.
+		"StatusHealthRegen"			"8"			// Health regeneration rate.	 
 	}
 
 	"npc_dota_lone_druid_bear3"
@@ -2249,8 +2251,8 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"4000"		// Base health.
-		"StatusHealthRegen"			"8"			// Health regeneration rate.
+		"StatusHealth"				"3700"		// Base health.
+		"StatusHealthRegen"			"10"			// Health regeneration rate.
 	}
 
 	"npc_dota_lone_druid_bear4"
@@ -2265,8 +2267,8 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"5250"		// Base health.
-		"StatusHealthRegen"			"10"			// Health regeneration rate.
+		"StatusHealth"				"4800"		// Base health.
+		"StatusHealthRegen"			"12"			// Health regeneration rate.
 	}
 
 	//=================================================================================
@@ -7118,8 +7120,8 @@
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"        "DOTA_UNIT_CAP_RANGED_ATTACK"
-		"AttackDamageMin"           "60"            				// Damage range min.
-		"AttackDamageMax"           "60"            				// Damage range max.
+		"AttackDamageMin"           "50"            				// Damage range min.
+		"AttackDamageMax"           "50"            				// Damage range max.
 		"AttackDamageType"          "DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"                "1.5"      						// Speed of attack.
 		"AttackAnimationPoint"      "0.3"       					// Normalized time in animation cycle to attack.
@@ -7130,7 +7132,7 @@
 
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"            "DOTA_HULL_SIZE_SMALL"          // Hull type used for navigation/locomotion.
+		"BoundsHullName"            "DOTA_HULL_SIZE_REGULAR"          // Hull type used for navigation/locomotion.
 		"HealthBarOffset"           "200"
 
 		// Movement
@@ -7147,7 +7149,7 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"              "1"     	// Base health.
+		"StatusHealth"              "2"     	// Base health.
 		"StatusHealthRegen"         "0"     	// Health regeneration rate.
 		"StatusMana"                "0"         // Base mana.
 		"StatusManaRegen"           "0"         // Mana regeneration rate.
@@ -7188,8 +7190,8 @@
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"        "DOTA_UNIT_CAP_RANGED_ATTACK"
-		"AttackDamageMin"           "120"            				// Damage range min.
-		"AttackDamageMax"           "120"            				// Damage range max.
+		"AttackDamageMin"           "100"            				// Damage range min.
+		"AttackDamageMax"           "100"            				// Damage range max.
 		"AttackDamageType"          "DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"                "1.5"      						// Speed of attack.
 		"AttackAnimationPoint"      "0.3"       					// Normalized time in animation cycle to attack.
@@ -7200,7 +7202,7 @@
 
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"            "DOTA_HULL_SIZE_SMALL"          // Hull type used for navigation/locomotion.
+		"BoundsHullName"            "DOTA_HULL_SIZE_REGULAR"          // Hull type used for navigation/locomotion.
 		"HealthBarOffset"           "200"
 
 		// Movement
@@ -7217,7 +7219,7 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"              "1"     	// Base health.
+		"StatusHealth"              "2"     	// Base health.
 		"StatusHealthRegen"         "0"     	// Health regeneration rate.
 		"StatusMana"                "0"         // Base mana.
 		"StatusManaRegen"           "0"         // Mana regeneration rate.
@@ -7258,8 +7260,8 @@
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"        "DOTA_UNIT_CAP_RANGED_ATTACK"
-		"AttackDamageMin"           "180"            				// Damage range min.
-		"AttackDamageMax"           "180"            				// Damage range max.
+		"AttackDamageMin"           "150"            				// Damage range min.
+		"AttackDamageMax"           "150"            				// Damage range max.
 		"AttackDamageType"          "DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"                "1.5"      						// Speed of attack.
 		"AttackAnimationPoint"      "0.3"       					// Normalized time in animation cycle to attack.
@@ -7270,7 +7272,7 @@
 
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"            "DOTA_HULL_SIZE_SMALL"          // Hull type used for navigation/locomotion.
+		"BoundsHullName"            "DOTA_HULL_SIZE_REGULAR"          // Hull type used for navigation/locomotion.
 		"HealthBarOffset"           "200"
 
 		// Movement
@@ -7287,7 +7289,7 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"              "1"     	// Base health.
+		"StatusHealth"              "3"     	// Base health.
 		"StatusHealthRegen"         "0"     	// Health regeneration rate.
 		"StatusMana"                "0"         // Base mana.
 		"StatusManaRegen"           "0"         // Mana regeneration rate.
@@ -13464,5 +13466,9 @@
 		"BountyXP"					"5"		// Experience earn.
 		"BountyGoldMin"				"5"			// Gold earned min.
 		"BountyGoldMax"				"5"		// Gold earned max.
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"600"		// Base health.
 	}
 }

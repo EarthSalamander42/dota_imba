@@ -38,7 +38,7 @@
 	"npc_dota_hero_enchantress" 		"1"
 	"npc_dota_hero_enigma" 				"1"
 	"npc_dota_hero_faceless_void" 		"1"
-	"npc_dota_hero_furion" 				"1" // ultimate lags
+	"npc_dota_hero_furion" 				"1"
 	"npc_dota_hero_grimstroke"	 		"1"
 	"npc_dota_hero_gyrocopter" 			"1"
 	"npc_dota_hero_huskar" 				"1"
@@ -56,7 +56,8 @@
 	"npc_dota_hero_lone_druid" 			"1"
 	"npc_dota_hero_luna" 				"1"
 	"npc_dota_hero_lycan" 				"1"
-	"npc_dota_hero_magnataur" 			"1" // he lags, but no idea why
+	"npc_dota_hero_magnataur" 			"1"
+	"npc_dota_hero_mars"				"1"
 	"npc_dota_hero_medusa" 				"1"
 	"npc_dota_hero_meepo" 				"0"
 	"npc_dota_hero_mirana" 				"1"

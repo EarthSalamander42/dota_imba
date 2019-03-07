@@ -593,7 +593,7 @@ end
 
 function GreavesActivate(caster, ability, heal_amount, mana_amount, heal_radius, heal_duration)
 	-- Purge debuffs from the caster
-	caster:Purge(false, true, false, true, false)
+	caster:Purge(false, true, false, false, false)
 
 	-- Play activation sound and particle
 	caster:EmitSound("Item.GuardianGreaves.Activate")

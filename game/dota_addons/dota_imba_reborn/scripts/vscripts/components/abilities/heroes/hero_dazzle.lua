@@ -1220,7 +1220,7 @@ function imba_dazzle_shadow_wave:WaveHit(unit, isAlly, poisonTouched)
 
 			-- dispel
 			if caster:HasTalent("special_bonus_imba_dazzle_8") then
-				unit:Purge(false, true, false, true, false)
+				unit:Purge(false, true, false, false, false)
 			end
 
 			targetTeam = DOTA_UNIT_TARGET_TEAM_ENEMY

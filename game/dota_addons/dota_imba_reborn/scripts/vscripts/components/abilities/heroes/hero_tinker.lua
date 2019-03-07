@@ -157,13 +157,13 @@ function imba_tinker_rearm:OnChannelFinish( bInterrupted )
 			end
 
 			-- Refresh items
-			for i = 0, 5 do
+			for i = 0, 8 do
 				local current_item = caster:GetItemInSlot(i)
 				local should_refresh = true
 
 				-- If this item is forbidden, do not refresh it
 				for _,forbidden_item in pairs(forbidden_items) do
-					if current_item and current_item:GetName() == forbidden_item then
+					if current_item and (current_item:GetName() == forbidden_item or current_item:GetPurchaser() ~= caster) then
 						should_refresh = false
 					end
 				end
@@ -172,6 +172,13 @@ function imba_tinker_rearm:OnChannelFinish( bInterrupted )
 				if current_item and should_refresh then
 					current_item:EndCooldown()
 				end
+			end
+			
+			-- Refresh TP slot as well
+			local teleport_scroll = caster:GetItemInSlot(15)
+			
+			if teleport_scroll then
+				teleport_scroll:EndCooldown()
 			end
 		end
 		caster:FadeGesture(ACT_DOTA_TINKER_REARM1)

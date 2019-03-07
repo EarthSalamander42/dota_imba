@@ -48,7 +48,7 @@
 //      Impetus
 //---------------------------------------------------------------------------
 "DOTA_Tooltip_ability_imba_enchantress_impetus"										"Impetus"
-"DOTA_Tooltip_ability_imba_enchantress_impetus_Description"							"Places an enchantment on each attack while activated, causing it to deal additional damage based on how far away the target is.  The farther the target, the greater the damage dealt. <font color='#FF7800'>The damage has no distance cap.</font>\n\nUpgradable by Aghanim's Scepter.\n<font color='#FF7800'>Huntmastery: </font>Killing an enemy hero with Impetus permanently increases Enchantress's attack and cast range by %attack_cast_stack%."
+"DOTA_Tooltip_ability_imba_enchantress_impetus_Description"							"Places an enchantment on each attack while activated, causing it to deal additional damage based on how far away the target is.  The farther the target, the greater the damage dealt. <font color='#FF7800'>The damage has no distance cap.</font>\n\nUpgradable by Aghanim's Scepter.\n<font color='#FF7800'>Huntmastery: </font>If an enemy is killed within %huntmastery_grace_period% seconds of being hit by Impetus, Enchantress's attack and cast range is permanently increased by %attack_cast_stack%."
 "DOTA_Tooltip_ability_imba_enchantress_impetus_Lore"								"While Aiushtha favors peaceful means, she is capable of a magical onslaught from a distance, her spears gaining energy from the natural life around her."
 //"DOTA_Tooltip_ability_imba_enchantress_impetus_Note0"								"The damage is capped at 1750 distance."
 "DOTA_Tooltip_ability_imba_enchantress_impetus_Note1"								"Distance to target is measured when the projectile hits."

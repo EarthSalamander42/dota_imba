@@ -1255,11 +1255,13 @@ function modifier_imba_track_debuff_mark:OnHeroKilled(keys)
 
 			-- If the target was an illusion, do nothing
 			if not target:IsRealHero() then
+				self:Destroy()
 				return nil
 			end
 
 			-- If the target is reincarnating, do nothing
 			if reincarnate then
+				self:Destroy()
 				return nil
 			end
 

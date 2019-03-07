@@ -81,7 +81,7 @@ function modifier_custom_mechanics:OnTakeDamage( keys )
 			local lifesteal_amount = parent:GetSpellLifesteal()
 
 			-- Do nothing if the victim is not a valid target, or if the lifesteal amount is nonpositive
-			if target:IsBuilding() or target:IsIllusion() or (target:GetTeam() == caster:GetTeam()) or (lifesteal_amount <= 0) or bit.band(damage_flags, DOTA_DAMAGE_FLAG_NO_SPELL_LIFESTEAL) == DOTA_DAMAGE_FLAG_NO_SPELL_LIFESTEAL then
+			if target:IsBuilding() or target:IsOther() or (target:GetTeam() == caster:GetTeam()) or (lifesteal_amount <= 0) or bit.band(damage_flags, DOTA_DAMAGE_FLAG_NO_SPELL_LIFESTEAL) == DOTA_DAMAGE_FLAG_NO_SPELL_LIFESTEAL then
 				return end
 
 			-- Also do nothing if the inflictor is forbidden
@@ -97,7 +97,11 @@ function modifier_custom_mechanics:OnTakeDamage( keys )
 			local lifesteal_pfx = ParticleManager:CreateParticle("particles/items3_fx/octarine_core_lifesteal.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
 			ParticleManager:SetParticleControl(lifesteal_pfx, 0, caster:GetAbsOrigin())
 			ParticleManager:ReleaseParticleIndex(lifesteal_pfx)
-				
+			
+			if caster:IsIllusion() or target:IsIllusion() then
+				return
+			end
+			
 			-- If the target is a real hero, heal for the full value
 			if target:IsRealHero() then
 				caster:Heal(damage * lifesteal_amount * 0.01, caster)

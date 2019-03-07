@@ -15,7 +15,7 @@
 
 // Dazzle's Shallow Grave
 "DOTA_Tooltip_ability_imba_dazzle_shallow_grave"                        "Shallow Grave"
-"DOTA_Tooltip_ability_imba_dazzle_shallow_grave_Description"            "An ally blessed with Shallow Grave, no matter how close to death, cannot die under its protection.\n<font color='#FF7800'>Gravely mistaken:</font>Lethal damage taken while under Shallow Grave is converted to healing upon expiration, as well as granting armor and magic resistance per lethal damage instance for a short duration.\n<font color='#FF7800'>Nothl protection:</font> if Dazzle is mortally wounded, a shorter duration Shallow Grave will trigger automatically. Nothl Protection needs to cool down for some time after activation. Applies <font color='#FF7800'>Gravely mistaken:</font> as well upon expiration."
+"DOTA_Tooltip_ability_imba_dazzle_shallow_grave_Description"            "An ally blessed with Shallow Grave, no matter how close to death, cannot die under its protection.\n<font color='#FF7800'>Gravely Mistaken:</font> Lethal damage taken while under Shallow Grave is converted to healing upon expiration, as well as granting armor and magic resistance per lethal damage instance for a short duration.\n<font color='#FF7800'>Nothl Protection:</font> If Dazzle is mortally wounded, a shorter duration Shallow Grave will trigger automatically. Nothl Protection needs to cool down for some time after activation. Applies Gravely Mistaken as well upon expiration."
 "DOTA_Tooltip_ability_imba_dazzle_shallow_grave_Note0"                  "Damage instances which would not kill the target are not counted for Gravely mistaken."
 "DOTA_Tooltip_ability_imba_dazzle_shallow_grave_Lore"                  "Only a seasoned acolyte of the Shadow can properly perform the rite of preventing death."
 "DOTA_Tooltip_ability_imba_dazzle_shallow_grave_cast_range"            "CAST RANGE:"
@@ -24,7 +24,7 @@
 "DOTA_Tooltip_ability_imba_dazzle_shallow_grave_nothl_protection_cooldown"          "NOTHL PROTECTION COOLDOWN:"
 "DOTA_Tooltip_ability_imba_dazzle_shallow_grave_post_grave_duration"                "GRAVELY MISTAKEN DURATION:"
 "DOTA_Tooltip_ability_imba_dazzle_shallow_grave_post_grave_armor_per_hit"           "GRAVELY MISTAKEN ARMOR PER INSTANCE:"
-"DOTA_Tooltip_ability_imba_dazzle_shallow_grave_post_grave_resist_per_hit"          "GRAVELY MISTAKEN RESISTANCE PER INSTANCE:"
+"DOTA_Tooltip_ability_imba_dazzle_shallow_grave_post_grave_resist_per_hit"          "GRAVELY MISTAKEN MAGIC RESISTANCE PER INSTANCE:"
 
 "DOTA_Tooltip_modifier_imba_dazzle_shallow_grave"                      "Shallow Grave"
 "DOTA_Tooltip_modifier_imba_dazzle_shallow_grave_Description"          "Protected from death for the duration."
@@ -106,8 +106,8 @@
 "DOTA_Tooltip_Ability_special_bonus_imba_dazzle_4"				"Increased Potency"
 "DOTA_Tooltip_Ability_special_bonus_imba_dazzle_4_Description" 	"Poison Touch's poison slows target by 3% for every 3% of target's max health damage."
 "DOTA_Tooltip_Ability_special_bonus_imba_dazzle_5"				"Poison Spread"
-"DOTA_Tooltip_Ability_special_bonus_imba_dazzle_5"          	"Enemies interacting with Poison Touched allies get Poison Touched as well."
+"DOTA_Tooltip_Ability_special_bonus_imba_dazzle_5_Description" 	"Enemies casting abilities on Poison Touched allies also receive the debuff."
 "DOTA_Tooltip_Ability_special_bonus_imba_dazzle_6"				"Together We Stand"
-"DOTA_Tooltip_Ability_special_bonus_imba_dazzle_6_Description"	"Nothl Protection now applies on every allied hero within 900 AoE of Dazzle."
+"DOTA_Tooltip_Ability_special_bonus_imba_dazzle_6_Description"	"Nothl Protection now applies on every allied hero within 500 AoE of Dazzle."
 "DOTA_Tooltip_Ability_special_bonus_imba_dazzle_7"				"Bad Juju now fully affects buildings as well"
-"DOTA_Tooltip_Ability_special_bonus_imba_dazzle_8"				"Shadow Wave applies a strong debuff"
+"DOTA_Tooltip_Ability_special_bonus_imba_dazzle_8"				"Shadow Wave Applies Allied Basic Dispel"

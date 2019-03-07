@@ -1,5 +1,6 @@
 #base heroes/bristleback/hero.txt
 #base heroes/enchantress/hero.txt
+//#base heroes/keeper_of_the_light/hero.txt
 #base heroes/rubick/hero.txt
 #base heroes/shadow_shaman/hero.txt
 #base heroes/silencer/hero.txt
@@ -331,6 +332,8 @@
 	{
 		"override_hero"				"npc_dota_hero_chen"
 		
+		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
+		
 		"Ability4"					"chen_test_of_faith"
 		
 		"Ability17"					"special_bonus_corruption_5"
@@ -356,14 +359,15 @@
 
 		"Ability10"					"special_bonus_imba_clinkz_6" //Skeleton Walk move speed persists for a small period
 		"Ability11"					"special_bonus_imba_clinkz_2" //Clinkz gains extra move speed when Skeleton Walking close to enemies
-		"Ability12"					"special_bonus_imba_clinkz_3" //Skeleton Walking through an enemy causes Clinkz to lose his invisibility, but roots the target
+		"Ability12"					"special_bonus_imba_clinkz_8"
 		"Ability13"					"special_bonus_imba_clinkz_4" //Searing Arrow active hits in an AoE  
 		"Ability14"					"special_bonus_imba_clinkz_5" //Strafe can be self cast to root Clinkz for the duration but grant him a huge range bonus
 		"Ability15"					"special_bonus_hp_regen_16"
-		"Ability16"					"special_bonus_imba_clinkz_7" //Searing Arrows has a chance to attack the same target again
-		"Ability17"					"special_bonus_imba_clinkz_8" //Death Pact bonuses stay permanently if target dies quickly
+		"Ability16"					"special_bonus_imba_clinkz_9"
+		"Ability17"					"special_bonus_imba_clinkz_7" //Searing Arrows has a chance to attack the same target again
 		
 		// Removed Talents
+		//"Ability12"					"special_bonus_imba_clinkz_3" //Skeleton Walking through an enemy causes Clinkz to lose his invisibility, but roots the target
 		//"Ability15"					"special_bonus_imba_clinkz_1" //Death Pact Spirits can now attack with spirit strikes
 	}
 
@@ -416,12 +420,15 @@
 
 		"Ability10"					"special_bonus_imba_dazzle_4" // Poison Touch slows the target after setting in appropriate to damage taken
 		"Ability11"					"special_bonus_imba_dazzle_5" // Enemies that interact with a poisoned touched teammate of their get poison touched as well
-		"Ability12"					"special_bonus_imba_dazzle_8" // Causes Weave to tick twice as fast
+		"Ability12"					"special_bonus_imba_dazzle_8" // Shadow Wave applies a basic dispel
 		"Ability13"					"special_bonus_imba_dazzle_7" // Weave now fully affects buildings
 		"Ability14"					"special_bonus_imba_dazzle_2" // Shadow Wave heals allies around allies, damages enemies around enemies
-		"Ability15"					"special_bonus_imba_dazzle_1" // Shadow Wave now bounces after a small delay
+		"Ability15"					"special_bonus_movement_speed_40"
 		"Ability16"					"special_bonus_imba_dazzle_6" // Nothl Protection is now an aura around Dazzle
 		"Ability17"					"special_bonus_imba_dazzle_3" // Shallow Grave releases a shadow wave to heal allies when it ends
+		
+		// Removed Talents
+		// "Ability15"					"special_bonus_imba_dazzle_1" // Shadow Wave now bounces after a small delay
 	}
 
 	//=================================================================================================================
@@ -524,21 +531,25 @@
 		
 		"Ability1"					"imba_drow_ranger_frost_arrows"
 		"Ability2"					"imba_drow_ranger_gust"
-		"Ability3"					"imba_drow_ranger_trueshot"
+		"Ability3"					"imba_drow_ranger_trueshot_720"
 		"Ability4"					"imba_drow_ranger_deadeye"
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_drow_ranger_marksmanship"
 
 		"Ability10"					"special_bonus_imba_drow_ranger_7" //Deadeye becomes an aura
-		"Ability11"					"special_bonus_agility_15"
-		"Ability12"					"special_bonus_imba_drow_ranger_4" //Each Chilled enemy grants drow +10 flat movespeed bonus for the duration. Stacks with itself, depending on amounts of Chill stacks on enemies.
-		"Ability13"					"special_bonus_imba_drow_ranger_5" //While Marksmanship is active (not disabled by nearby enemies), Drow Ranger emits an aura on nearby allies that makes their attack chill their targets, slowing them by 15%.
+		"Ability11"					"special_bonus_all_stats_6"
+		"Ability12"					"special_bonus_imba_drow_ranger_5" //While Marksmanship is active (not disabled by nearby enemies), Drow Ranger emits an aura on nearby allies that makes their attack chill their targets, slowing them by x%.
+		"Ability13"					"special_bonus_imba_drow_ranger_9" //+x Gust Distance/Knockback
 		"Ability14"					"special_bonus_evasion_25"
-		"Ability15"					"special_bonus_imba_drow_ranger_3" //After casting Gust, all auto attacks hitting a target casts a small Gust for 5 seconds. This small gust wave pushes the main target back 50 units, deals no damage, and does not silence.
-		"Ability16"					"special_bonus_imba_drow_ranger_8" //Marksmanship no longer disables itself
-		"Ability17"					"special_bonus_imba_drow_ranger_6" //While Trueshot Aura is active, Drow gains agility equal to 5% of every allied hero's agility.
+		"Ability15"					"special_bonus_imba_drow_ranger_6" //While Trueshot Aura is active, Drow gains agility equal to 5% of every allied hero's agility.
+		"Ability16"					"special_bonus_imba_drow_ranger_8" //Marksmanship no longer disabled by distance
+		"Ability17"					"special_bonus_imba_drow_ranger_3" //After casting Gust, all auto attacks hitting a target casts a small Gust for x seconds. This small gust wave pushes the main target back x units for x seconds, deals no damage, and does not silence.
+		
+		// Removed Abilities
+		// "Ability3"				"imba_drow_ranger_trueshot"
 		
 		// Removed Talents
+		// "Ability12"					"special_bonus_imba_drow_ranger_4" //Each Chilled enemy grants drow +10 flat movespeed bonus for the duration. Stacks with itself, depending on amounts of Chill stacks on enemies.
 		// "Ability14"					"special_bonus_imba_drow_ranger_1" //Gust can be self cast, making a wave that moves Drow Ranger herself forward. This wave silences all enemies that it comes in contact with normally.
 	}
 
@@ -721,6 +732,8 @@
 	{
 		"override_hero"	"npc_dota_hero_huskar"
 		
+		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
+		
 		"Ability1"		"huskar_inner_fire"
 		"Ability2"		"huskar_burning_spear"
 		"Ability3"		"huskar_berserkers_blood"
@@ -743,7 +756,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_invoker"
 	{
-
+		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
 	}
 
 	//=================================================================================================================
@@ -809,6 +822,8 @@
 	"npc_dota_hero_keeper_of_the_light"
 	{
 		"override_hero"	"npc_dota_hero_keeper_of_the_light"
+		
+		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
 
 		"Ability4"		"keeper_of_the_light_mana_leak"
 	}
@@ -1106,7 +1121,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_morphling"
 	{
-
+		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
 	}
 
 	//=================================================================================================================
@@ -1114,7 +1129,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_furion"
 	{
-	
+		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
 	}
 
 	//=================================================================================================================
@@ -1122,7 +1137,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_life_stealer"
 	{
-
+		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
 	}
 
 	//=================================================================================================================
@@ -1229,7 +1244,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_naga_siren"
 	{
-
+		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
 	}
 
 	//=================================================================================================================
@@ -1357,7 +1372,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_phantom_lancer"
 	{
-
+		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
 	}
 
 	//=================================================================================================================
@@ -1875,7 +1890,7 @@
 	//=================================================================================================================
 	"npc_dota_hero_undying"
 	{
-
+		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
 	}
 
 	//=================================================================================================================
@@ -1953,9 +1968,9 @@
 		"Ability6"					"imba_venomancer_poison_nova"
 
 		"Ability10"					"special_bonus_imba_venomancer_1"
-		"Ability11"					"special_bonus_imba_venomancer_2"
+		"Ability11"					"special_bonus_imba_venomancer_4"
 		"Ability12"					"special_bonus_imba_venomancer_3"
-		"Ability13"					"special_bonus_imba_venomancer_4"
+		"Ability13"					"special_bonus_imba_venomancer_2"
 		"Ability14"					"special_bonus_imba_venomancer_5"
 		"Ability15"					"special_bonus_imba_venomancer_6"
 		"Ability16"					"special_bonus_imba_venomancer_7"

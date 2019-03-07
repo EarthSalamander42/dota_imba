@@ -107,9 +107,9 @@ end
 function modifier_imba_echo_sabre_passive:OnAttack(keys)
 	local item = self:GetAbility()
 	local parent = self:GetParent()
-	if parent:IsRangedAttacker() or parent:IsIllusion() then return nil end
-	if item then
-		if (keys.attacker == parent) then
+	
+	if keys.attacker == parent and item and not parent:IsIllusion() then
+		if not parent:IsRangedAttacker() then 
 			if item:IsCooldownReady() then
 				if self:CheckUniqueValue(1,{"modifier_imba_reverb_rapier_passive"}) == 1 then
 					item:UseResources(false,false,true)
@@ -117,13 +117,13 @@ function modifier_imba_echo_sabre_passive:OnAttack(keys)
 					keys.target:AddNewModifier(self.parent, self:GetAbility(), "modifier_imba_echo_rapier_debuff_slow", {duration = self.slow_duration})
 				end
 			end
+		end
 			
-			if parent:HasModifier("modifier_imba_echo_rapier_haste") then
-				local mod = parent:FindModifierByName("modifier_imba_echo_rapier_haste")
-				mod:DecrementStackCount()
-				if mod:GetStackCount() < 1 then
-					mod:Destroy()
-				end
+		if parent:HasModifier("modifier_imba_echo_rapier_haste") then
+			local mod = parent:FindModifierByName("modifier_imba_echo_rapier_haste")
+			mod:DecrementStackCount()
+			if mod:GetStackCount() < 1 then
+				mod:Destroy()
 			end
 		end
 	end
@@ -219,9 +219,9 @@ end
 function modifier_imba_reverb_rapier_passive:OnAttack(keys)
 	local item = self:GetAbility()
 	local parent = self:GetParent()
-	if parent:IsRangedAttacker() or parent:IsIllusion() then return nil end
-	if item then
-		if (keys.attacker == parent) then
+	
+	if keys.attacker == parent and item and not parent:IsIllusion() then
+		if not parent:IsRangedAttacker() then 
 			if item:IsCooldownReady() then
 				if self:CheckUniqueValue(1,nil) == 1 then
 					item:UseResources(false,false,true)
@@ -229,13 +229,13 @@ function modifier_imba_reverb_rapier_passive:OnAttack(keys)
 					keys.target:AddNewModifier(self.parent, self:GetAbility(), "modifier_imba_echo_rapier_debuff_slow", {duration = self.slow_duration})
 				end
 			end
+		end
 			
-			if parent:HasModifier("modifier_imba_echo_rapier_haste") then
-				local mod = parent:FindModifierByName("modifier_imba_echo_rapier_haste")
-				mod:DecrementStackCount()
-				if mod:GetStackCount() < 1 then
-					mod:Destroy()
-				end
+		if parent:HasModifier("modifier_imba_echo_rapier_haste") then
+			local mod = parent:FindModifierByName("modifier_imba_echo_rapier_haste")
+			mod:DecrementStackCount()
+			if mod:GetStackCount() < 1 then
+				mod:Destroy()
 			end
 		end
 	end

@@ -19,7 +19,7 @@ function imba_clinkz_strafe:IsNetherWardStealable() return false end
 function imba_clinkz_strafe:GetCooldown(level)
 	if IsServer() then
 		local caster = self:GetCaster()
-		local duration = self:GetSpecialValueFor("duration")        
+		local duration = self:GetSpecialValueFor("duration") + caster:FindTalentValue("special_bonus_imba_clinkz_9")
 		local modifier_mount = "modifier_imba_strafe_mount"
 		
 		-- Assign correct cooldown. No need to update the UI
@@ -69,7 +69,7 @@ function imba_clinkz_strafe:OnSpellStart()
 		local modifier_mount = "modifier_imba_strafe_mount"
 
 		-- Ability specials
-		local duration = ability:GetSpecialValueFor("duration")
+		local duration = ability:GetSpecialValueFor("duration") + caster:FindTalentValue("special_bonus_imba_clinkz_9")  
 
 		-----------------------
 		--    CANCEL ROOT    --
@@ -143,6 +143,14 @@ function modifier_imba_strafe_aspd:OnCreated()
 
 	self.as_bonus = self:GetAbility():GetSpecialValueFor("as_bonus")
 	self.bonus_attack_range = self:GetAbility():GetSpecialValueFor("bonus_attack_range")
+	
+	self:StartIntervalThink(FrameTime())
+end
+
+function modifier_imba_strafe_aspd:OnIntervalThink()
+	if not IsServer() then return end
+	
+	ProjectileManager:ProjectileDodge(self:GetParent())
 end
 
 function modifier_imba_strafe_aspd:IsHidden() return false end

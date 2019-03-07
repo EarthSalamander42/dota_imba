@@ -429,7 +429,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"1500"
+		"ItemCost"						"1650"
 		"ItemShopTags"					""
 		"ItemAliases"					"midas; hand of midas; hom"
 
@@ -468,7 +468,7 @@
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"0"
-		"ItemCost"						"2000"
+		"ItemCost"						"2150"
 		"ItemShopTags"					"attack_speed;hard_to_tag"
 		"ItemQuality"					"common"
 		"ItemAliases"					"midas; hand of midas; hom"
@@ -481,17 +481,17 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_attack_speed"	"30"
+				"bonus_attack_speed"	"40"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"xp_multiplier"			"2.1"
+				"xp_multiplier"			"1.85"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_gold"			"200"
+				"bonus_gold"			"160"
 			}
 			// Hardcoded into the gold gain filter
 			"04"
@@ -2873,7 +2873,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"6900"
+		"ItemCost"						"7000"
 		"ItemShopTags"					"str;agi;int;damage;move_speed;attack_speed;armor;hard_to_tag"
 		"ItemQuality"					"rare"
 		"ItemAliases"					"siege cuirass"
@@ -3851,7 +3851,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"0"
+		"ItemCost"						"695"
 		"ItemShopTags"					""
 
 		// Recipe
@@ -6016,7 +6016,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"600"
 		"AbilityCastPoint"				"0"
-		"AbilityCooldown"				"8.0"
+		"AbilityCooldown"				"15"
 		"AbilityManaCost"				"0"
 		"AbilitySharedCooldown"			"diffusal"
 		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
@@ -6107,7 +6107,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"600"
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"7.0"
+		"AbilityCooldown"				"15"
 		"AbilitySharedCooldown"			"diffusal"
 		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
 
@@ -6202,7 +6202,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"500"
+		"ItemCost"						"600"
 		"ItemShopTags"					""
 
 		// Recipe
@@ -6829,6 +6829,7 @@
 		"ID"							"2121"
 		"BaseClass"						"item_lua"
 		"AbilityTextureName" 			"item_octarine_core"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
 		"ScriptFile"                    "components/items/item_octarine_core.lua"
 
@@ -9231,7 +9232,7 @@
 		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
 		"ItemShopTags"					"agi;str;unique;hard_to_tag"
 		"ItemQuality"					"artifact"
-		"ItemAliases"					"diffusal blade 3;hellblade;curse"
+		"ItemAliases"					"hellblade;curse"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -13515,7 +13516,7 @@
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"curtain_fire_shot_count"	"50"
+				"curtain_fire_shot_count"	"66"
 			}
 			"10"
 			{
@@ -13530,10 +13531,160 @@
 			"11"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"curtain_fire_activation_charge"	"3"
+				"curtain_fire_activation_charge"	"4"
+			}
+			"12"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"curtain_fire_radius_second"	"1600"
 			}
 		}
 	}
 	
-	//next free ID: 2311
+	//=================================================================================================================
+	// Recipe: Diffusal Blade
+	//=================================================================================================================
+	"item_recipe_imba_witchblade"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2311"
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"custom/imba_recipe"
+		"Model"							"models/props_gameplay/recipe.mdl"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"1100"
+		"ItemShopTags"					""
+
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_witchblade"
+		"ItemRequirements"
+		{
+			"01"						"item_imba_diffusal_blade_2;item_blade_of_alacrity;item_robe"
+		}
+	}
+	
+	//=================================================================================================================
+	// Witchblade
+	//=================================================================================================================
+	"item_imba_witchblade"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_lua"
+		"ScriptFile"					"components/items/item_witchblade.lua"
+		"AbilityTextureName"			"custom/imba_diffusal_blade_3"
+		
+		"ID"							"2312"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+		"FightRecapLevel"				"1"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"600"
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"15.0"
+		"AbilitySharedCooldown"			"diffusal"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+		"ItemCost"						"7050"
+		"ItemShopTags"					"agi;int;unique;hard_to_tag"
+		"ItemQuality"					"artifact"
+		"ItemAliases"					"witchblade;diffusal blade 3"
+		"ItemPermanent"					"1"
+
+		"ShouldBeSuggested"				"1"
+		
+		"MaxUpgradeLevel"				"3"
+		"ItemBaseLevel"					"3"
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_agility"			"60"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_intellect"		"26"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"feedback_mana_burn"	"100"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"feedback_mana_burn_illusion_melee"	"32"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"feedback_mana_burn_illusion_ranged"	"16"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"purge_rate"			"5"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"purge_root_duration"	"3.0"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"purge_slow_duration"	"4.0"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"damage_per_burn"		"1"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cast_range_tooltip"		"600"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"combust_mana_loss"		"100"
+			}
+			"12"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"severance_chance"		"10"
+			}
+			"13"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"severance_chance"		"10"
+			}
+			"14"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bypass_cd_mult"		"3"
+			}
+		}
+	}
+	
+	//next free ID: 2313
 }

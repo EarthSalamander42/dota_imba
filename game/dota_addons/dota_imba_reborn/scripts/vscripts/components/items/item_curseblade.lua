@@ -174,7 +174,7 @@ function modifier_imba_souldrain:OnIntervalThink()
 		local valid_enemies = 0
 		for _,enemy in pairs(enemies) do
 			if enemy:HasModifier("modifier_imba_souldrain_damage") then
-				local actual_damage = ApplyDamage({victim = enemy, attacker = caster, ability = item, damage = heal_per_enemy * heal_interval, damage_type = DAMAGE_TYPE_PURE, damage_flags = DOTA_DAMAGE_FLAG_HPLOSS, ability = item})
+				local actual_damage = ApplyDamage({victim = enemy, attacker = caster, ability = item, damage = heal_per_enemy * heal_interval, damage_type = DAMAGE_TYPE_PURE, damage_flags = DOTA_DAMAGE_FLAG_HPLOSS + DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION, ability = item})
 
 				-- Apply aura damage and heal
 				caster:Heal(actual_damage, caster)
@@ -193,7 +193,7 @@ modifier_imba_souldrain_damage = modifier_imba_souldrain_damage or class ({})
 function modifier_imba_souldrain_damage:IsHidden() return false end
 function modifier_imba_souldrain_damage:IsDebuff() return true end
 function modifier_imba_souldrain_damage:IsPurgable() return false end
-function modifier_imba_souldrain_damage:GetEffectName()	return "particles/item/curseblade/imba_curseblade_curse_rope_pnt.vpcf" end
+-- function modifier_imba_souldrain_damage:GetEffectName()	return "particles/item/curseblade/imba_curseblade_curse_rope_pnt.vpcf" end
 
 
 -----------------------------------------
@@ -336,7 +336,7 @@ function modifier_item_imba_curseblade_debuff:OnIntervalThink()
 		local damageTable = {victim = self.parent,
 			attacker = self.caster,
 			damage = lifedrain,
-			damage_flags = DOTA_DAMAGE_FLAG_HPLOSS,
+			damage_flags = DOTA_DAMAGE_FLAG_HPLOSS + DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION,
 			damage_type = DAMAGE_TYPE_MAGICAL}
 
 		ApplyDamage(damageTable)

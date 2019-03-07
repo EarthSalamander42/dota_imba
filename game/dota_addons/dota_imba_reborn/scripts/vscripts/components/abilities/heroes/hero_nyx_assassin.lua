@@ -1164,7 +1164,7 @@ function modifier_imba_spiked_carapace:OnTakeDamage(keys)
 			end
 
 			-- Stun it
-			attacker:AddNewModifier(self.caster, self.ability, self.modifier_stun, {duration = self.stun_duration})
+			attacker:AddNewModifier(self.caster, self.ability, self.modifier_stun, {duration = self.stun_duration}):SetDuration(self.stun_duration * (1 - attacker:GetStatusResistance()), true)
 		end
 	end
 

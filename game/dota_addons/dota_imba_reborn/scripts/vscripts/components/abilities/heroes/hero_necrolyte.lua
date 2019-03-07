@@ -608,8 +608,9 @@ function modifier_imba_heartstopper_aura:OnCreated()
 	if IsServer() then
 		self.radius = self:GetAbility():GetSpecialValueFor("radius")
 		self.damage_pct = self:GetAbility():GetTalentSpecialValueFor("damage_pct")
+		self.tick_rate	= self:GetAbility():GetTalentSpecialValueFor("tick_rate")
 		if not self.timer then
-			self:StartIntervalThink(1)
+			self:StartIntervalThink(self.tick_rate)
 			self.timer = true
 		end
 	end
@@ -630,9 +631,9 @@ function modifier_imba_heartstopper_aura:OnIntervalThink()
 				local modifier = enemy:FindModifierByNameAndCaster("modifier_imba_heartstopper_aura_damage",caster)
 				if modifier then
 					-- Calculates damage
-					local damage = enemy:GetMaxHealth() * self.damage_pct / 100
-					ApplyDamage({attacker = caster, victim = enemy, ability = self:GetAbility(), damage = damage, damage_type = DAMAGE_TYPE_PURE, damage_flags = DOTA_DAMAGE_FLAG_HPLOSS})
-					if (math.random(1,1000) <= 2) and (caster:GetName() == "npc_dota_hero_necrolyte") then
+					local damage = enemy:GetMaxHealth() * (self.damage_pct * self.tick_rate) / 100
+					ApplyDamage({attacker = caster, victim = enemy, ability = self:GetAbility(), damage = damage, damage_type = DAMAGE_TYPE_PURE, damage_flags = DOTA_DAMAGE_FLAG_HPLOSS + DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION})
+					if (math.random(1,1000) <= 1) and (caster:GetName() == "npc_dota_hero_necrolyte") then
 						caster:EmitSound("necrolyte_necr_ability_aura_0"..math.random(1,3))
 					end
 				end
@@ -710,7 +711,9 @@ function modifier_imba_heartstopper_aura_damage:DeclareFunctions()
 end
 
 function modifier_imba_heartstopper_aura_damage:GetModifierHPRegenAmplify_Percentage()
-	return ( self:GetAbility():GetTalentSpecialValueFor("heal_reduce_pct") * (-1) )
+	if self:GetAbility() ~= nil then
+		return ( self:GetAbility():GetTalentSpecialValueFor("heal_reduce_pct") * (-1) )
+	end
 end
 
 -------------------------------------------
