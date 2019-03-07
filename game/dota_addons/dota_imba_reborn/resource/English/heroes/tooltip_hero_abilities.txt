@@ -942,7 +942,7 @@
 "DOTA_Tooltip_ability_imba_necrolyte_reapers_scythe_Lore"							"The amount of death and suffering in the air increases the power of the Necrophos's plague magic."
 "DOTA_Tooltip_ability_imba_necrolyte_reapers_scythe_damage"							"DAMAGE PER MISSING HEALTH:"
 "DOTA_Tooltip_ability_imba_necrolyte_reapers_scythe_damage_reduction_pct"           "%DAMAGE REDUCTION:"
-"DOTA_Tooltip_ability_imba_necrolyte_reapers_scythe_spellpower_reduction"           "%spell amp REDUCTION:"
+"DOTA_Tooltip_ability_imba_necrolyte_reapers_scythe_spellpower_reduction"           "%SPELL AMP REDUCTION:"
 "DOTA_Tooltip_ability_imba_necrolyte_reapers_scythe_respawn_increase"               "RESPAWN TIMER SECONDS:"
 
 "DOTA_Tooltip_modifier_imba_reapers_scythe"                            "Reaper's Scythe"
@@ -957,7 +957,7 @@
 
 "DOTA_Tooltip_ability_special_bonus_imba_necrolyte_1"                   "+125 Death Pulse radius"
 "DOTA_Tooltip_ability_special_bonus_imba_necrolyte_2"                   "Attacking enemy heroes now grants Sadist"
-"DOTA_Tooltip_ability_special_bonus_imba_necrolyte_3"                   "-1 Death Pulse cooldown"
+"DOTA_Tooltip_ability_special_bonus_imba_necrolyte_3"                   "-2s Death Pulse cooldown"
 "DOTA_Tooltip_ability_special_bonus_imba_necrolyte_4"                   "+25% Heartstopper Aura healing reduction"
 "DOTA_Tooltip_ability_special_bonus_imba_necrolyte_5"                   "+300 Ghost Shroud effect radius"
 "DOTA_Tooltip_ability_special_bonus_imba_necrolyte_6"                   "+1% Sadist health/mana regen"
@@ -1195,7 +1195,7 @@
 "DOTA_Tooltip_ability_imba_phoenix_sun_ray_hp_perc_damage"            "%MAX DAMAGE:"
 "DOTA_Tooltip_ability_imba_phoenix_sun_ray_base_heal"                "BASE HEAL PER SECOND:"
 "DOTA_Tooltip_ability_imba_phoenix_sun_ray_hp_perc_heal"              "%MAX HEAL:"
-"DOTA_Tooltip_ability_imba_phoenix_sun_ray_beam_range"                "Ray lenth:"
+"DOTA_Tooltip_ability_imba_phoenix_sun_ray_beam_range"                "RAY LENGTH:"
 "DOTA_Tooltip_ability_imba_phoenix_sun_ray_duration"                  "DURATION:"
 "DOTA_Tooltip_ability_imba_phoenix_sun_ray_explode_dmg"              "FIRE COMBUSTION DAMAGE:"
 
@@ -1350,9 +1350,9 @@
 // Pugna's Life Drain
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_pugna_life_drain"                            "Life Drain"
-"DOTA_Tooltip_ability_imba_pugna_life_drain_Description"                "Latches to an enemy, draining its health over time while healing Pugna for the same amount. Can be cast on allies to drain life into them. If the unit being healed has maximum health, it will recover mana instead.\n<font color='#FF7800'>Soul Master:</font> Does not require channeling. Can still be interrupted by silences and stuns.\n<font color='#FF7800'>Oblivion's Reach:</font> The break distance is extended with any cast range increases that the user wields.\n<font color='#FF7800'>Essence of Life:</font> Immediately slows enemy targets. Every second ramps the slow up, until the link is severed.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
+"DOTA_Tooltip_ability_imba_pugna_life_drain_Description"                "Latches to an enemy, draining its health over time while healing Pugna for the same amount. Can be cast on allies to drain life into them. If the unit being healed has maximum health, it will recover mana instead.\n<font color='#FF7800'>Soul Master:</font> Does not require channeling. Can still be interrupted by silences and stuns.\n<font color='#FF7800'>Oblivion's Reach:</font> The break distance is extended with any cast range increases that the user wields (%break_distance_extend% above standard cast range).\n<font color='#FF7800'>Essence of Life:</font> Immediately slows enemy targets. Every second ramps the slow up, until the link is severed.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
 "DOTA_Tooltip_ability_imba_pugna_life_drain_Lore"                      "Pugna has truly become more powerful than even the grandmaster of Oblivion."
-"DOTA_Tooltip_ability_imba_pugna_life_drain_Note0"                      "The link will break if the target becomes invisible, out of world, invulnerable, go into the fog of war, or go farther than the break distance."
+"DOTA_Tooltip_ability_imba_pugna_life_drain_Note0"                      "The link will break if the target becomes invisible, out of world, invulnerable, go into the fog of war, or goes farther than the break distance."
 "DOTA_Tooltip_ability_imba_pugna_life_drain_Note1"                      "Healing is proportional to the damage done, and can be reduced or amplified by magic damage reduction/amplification on the target."
 "DOTA_Tooltip_ability_imba_pugna_life_drain_health_drain"              "HEALTH PER SECOND:"
 "DOTA_Tooltip_ability_imba_pugna_life_drain_scepter_health_drain"                   "SCEPTER HEALTH PER SECOND:"
@@ -1539,7 +1539,7 @@
 // Riki's Tricks of the Trade
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade"								"Tricks of the Trade"
-"DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_Description"                    "Riki phases out of the world while striking random enemy heroes from behind in an area around him.\n<font color='#FF7800'>Martyr Strikes:</font> Also strikes extra random units inside the area, based on the caster's attack speed.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
+"DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_Description"                    "Riki phases out of the world while striking random enemy heroes from behind in an area around him. <font color='#FF0000'>Does not do any damage if Cloak and Dagger is not skilled.</font>\n<font color='#FF7800'>Martyr Strikes:</font> Also strikes extra random units inside the area, based on the caster's attack speed.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
 "DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_Lore"              "What the eye doesn't see, the heart is pierced by."
 "DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_area_of_effect"                 "RADIUS:"
 "DOTA_Tooltip_ability_imba_riki_tricks_of_the_trade_channel_duration"               "DURATION:"
@@ -2007,13 +2007,15 @@
 // Sniper's Headshot
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_sniper_headshot"                            "Headshot"
-"DOTA_Tooltip_ability_imba_sniper_headshot_Description"                "Sniper increases his accuracy on every shot, attempting to hit enemies vital spots.\n<font color='#FF7800'>Boom Headshot:</font> Every %headshot_attacks% attacks, Sniper is guaranteed to proc a headshot, dealing bonus damage and completely halting the target's movement for %headshot_duration% seconds.\n<font color='#FF7800'>Perfect Shot:</font> When Sniper accumulates %perfectshot_attacks% attacks, Sniper lands a Perfect Shot on his next attack, dealing critical damage and stunning the enemy for %perfectshot_stun_duration% seconds."
+"DOTA_Tooltip_ability_imba_sniper_headshot_Description"                "Sniper increases his accuracy, giving him a chance to deal extra damage and briefly stop the movements of his enemies.\n<font color='#FF7800'>Perfect Shot:</font> When Sniper accumulates %perfectshot_attacks% attacks, Sniper lands a Perfect Shot on his next attack, dealing critical damage and stunning the enemy for %perfectshot_stun_duration% seconds."
 "DOTA_Tooltip_ability_imba_sniper_headshot_Lore"                        "Taking potshots at steepstalkers in his childhood has been thoroughly refined into perfect leads on enemy combatants."
 "DOTA_Tooltip_ability_imba_sniper_headshot_Note0"                      "Headshot attacks are accumulated and kept forever, even if Sniper changes targets."
 "DOTA_Tooltip_ability_imba_sniper_headshot_Note1"                      "When landing a Perfect Shot, it also lands a Headshot, dealing bonus damage and slowing."
-"DOTA_Tooltip_ability_imba_sniper_headshot_headshot_damage"            "HEADSHOT DAMAGE:"
-"DOTA_Tooltip_ability_imba_sniper_headshot_headshot_ms_slow_pct"                    "%HEADSHOT MOVE/ATTACK SLOW:"
-"DOTA_Tooltip_ability_imba_sniper_headshot_perfectshot_critical_dmg_pct"            "%PERFECT SHOT CRITICAL DAMAGE:"
+"DOTA_Tooltip_ability_imba_sniper_headshot_knockback_distance"				"KNOCKBACK DISTANCE:"
+"DOTA_Tooltip_ability_imba_sniper_headshot_proc_chance"						"%CHANCE:"
+"DOTA_Tooltip_ability_imba_sniper_headshot_headshot_damage"					"HEADSHOT DAMAGE:"
+"DOTA_Tooltip_ability_imba_sniper_headshot_headshot_ms_slow_pct"			"%HEADSHOT MOVE/ATTACK SLOW:"
+"DOTA_Tooltip_ability_imba_sniper_headshot_perfectshot_critical_dmg_pct"	"%PERFECT SHOT CRITICAL DAMAGE:"
 
 "DOTA_Tooltip_modifier_imba_headshot_slow"                              "Headshot"
 "DOTA_Tooltip_modifier_imba_headshot_slow_Description"                  "Slowed by Headshot."

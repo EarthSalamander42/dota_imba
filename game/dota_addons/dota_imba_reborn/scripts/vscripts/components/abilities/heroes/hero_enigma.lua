@@ -243,6 +243,7 @@ function modifier_imba_enigma_malefice:IsDebuff() return true end
 function modifier_imba_enigma_malefice:IsHidden() return false end
 function modifier_imba_enigma_malefice:IsPurgable() return true end
 function modifier_imba_enigma_malefice:IsStunDebuff() return false end
+function modifier_imba_enigma_malefice:IgnoreTenacity() return true end
 
 function modifier_imba_enigma_malefice:GetEffectName() return "particles/units/heroes/hero_enigma/enigma_malefice.vpcf" end
 

@@ -48,7 +48,7 @@
 			"03"
 			{
                 "var_type"					"FIELD_FLOAT"
-                "stopgap_bat_increase"		"-0.2"		
+                "stopgap_bat_increase"		"-0.1"		
 			}
 			"04"
 			{
@@ -327,7 +327,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"distance_damage_pct"	"16 21 26"
+				"distance_damage_pct"	"16 22 28"
 				"LinkedSpecialBonus"	"special_bonus_unique_enchantress_4"			
 			}
 			"02"
@@ -343,7 +343,12 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"attack_cast_stack"			"20"
+				"attack_cast_stack"			"16"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"huntmastery_grace_period"	"0.5"
 			}
 		}
 	}

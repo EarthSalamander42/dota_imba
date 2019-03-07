@@ -1369,8 +1369,8 @@ function modifier_imba_reincarnation:GetAuraRadius()
 end
 
 function modifier_imba_reincarnation:GetAuraEntityReject(target)
-	-- Aura ignores everyone that are already under the effects of Wraith Form 
-	if target:HasModifier(self.modifier_wraith) then
+	-- Aura ignores everyone that are already under the effects of Wraith Form (also edge case for Phoenix Scepter Supernova -_-)
+	if target:HasModifier(self.modifier_wraith) or (target:HasModifier("modifier_imba_phoenix_supernova_scepter_passive") and target:HasScepter() and not target:HasModifier("modifier_imba_phoenix_supernova_scepter_passive_cooldown")) then
 		return true 
 	end
 

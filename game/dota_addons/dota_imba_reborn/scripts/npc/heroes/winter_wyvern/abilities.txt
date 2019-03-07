@@ -209,7 +209,7 @@
 			"11"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"splinter_dmg_efficiency"		"75"
+				"splinter_dmg_efficiency"		"25"
 			}
 			"12"
 			{

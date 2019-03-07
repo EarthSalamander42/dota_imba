@@ -1176,10 +1176,10 @@ end
 function modifier_imba_night_stalker_crippling_fear_aura_720:OnHeroKilled(keys)
 	if not IsServer() then return end
 
-	-- If the hero was killed within Crippling Fear's aura radius (doesn't have to be by the caster), double radius and add base duration to remaining amount
+	-- If the hero was killed within Crippling Fear's aura radius (doesn't have to be by the caster), add base radius to radius and add base duration to remaining amount
 	if keys.target:GetTeam() ~= self.parent:GetTeam() and (keys.target:GetAbsOrigin() - self.parent:GetAbsOrigin()):Length2D() <= self.radius then
-		self.radius = self.radius * 2
-		self:SetStackCount(self:GetStackCount() * 2)
+		self.radius = self.radius + self.radius
+		self:IncrementStackCount()
 		
 		if GameRules:IsDaytime() then
 			self:SetDuration(self:GetRemainingTime() + self.duration_day, true)

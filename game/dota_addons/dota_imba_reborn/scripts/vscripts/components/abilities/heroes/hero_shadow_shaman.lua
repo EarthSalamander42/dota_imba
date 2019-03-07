@@ -54,13 +54,20 @@ function imba_shadow_shaman_mass_serpent_ward:OnSpellStart()
 	]]
 
 	-- Create 8 wards in a box formation (note the vectors) + more wards near them
-	local formation_vectors = {
-		Vector(-128 , 64 ,0), 	Vector(-64, 64, 0), 	Vector(0, 64 ,0), 		
-		Vector(64, 64 ,0), 		Vector(128 , 64 ,0),	Vector(-64, 0, 0),   	
-		Vector(64, 0 ,0),		Vector(-64, -64, 0), 	Vector(0, -64 ,0), 		
-		Vector(64, -64 ,0), 	Vector(-192, 64 ,0),	Vector(192, 64 ,0),
-		Vector(-128, -64 ,0),	Vector(128, -64 ,0),
-	}
+	-- local formation_vectors = {
+		-- Vector(-128 , 64 ,0), 	Vector(-64, 64, 0), 	Vector(0, 64 ,0), 		
+		-- Vector(64, 64 ,0), 		Vector(128 , 64 ,0),	Vector(-64, 0, 0),   	
+		-- Vector(64, 0 ,0),		Vector(-64, -64, 0), 	Vector(0, -64 ,0), 		
+		-- Vector(64, -64 ,0), 	Vector(-192, 64 ,0),	Vector(192, 64 ,0),
+		-- Vector(-128, -64 ,0),	Vector(128, -64 ,0),
+	-- }
+	
+	-- It's a circle now...
+	local formation_vectors = {}
+	
+	for i = 1, ward_count do
+		table.insert(formation_vectors, Vector(math.cos(math.rad(((360 / ward_count) * i))), math.sin(math.rad(((360 / ward_count) * i))), 0) * 150)
+	end
 
 	local find_clear_space 	= true
 	local npc_owner 		= caster
@@ -74,7 +81,12 @@ function imba_shadow_shaman_mass_serpent_ward:OnSpellStart()
 		ward:SetControllableByPlayer(caster:GetPlayerID(), true)
 		-- Update Health
 		local new_hp = base_hp + bonus_hp
+		
+		-- Just gonna spam all the health functions to see what sticks cause this is super inconsistent
 		ward:SetBaseMaxHealth(new_hp)
+		ward:SetMaxHealth(new_hp)
+		ward:SetHealth(new_hp)
+		
 		-- Update Damage
 		if bonus_dmg > 0 then
 			ward:SetBaseDamageMin(ward:GetBaseDamageMin() + bonus_dmg)
@@ -132,9 +144,9 @@ function modifier_imba_mass_serpent_ward:OnAttackLanded(params) -- health handli
 	if IsServer() then
 		if params.target == self:GetParent() then
 			local damage = 1
-			if params.attacker:IsRealHero() then
-				damage = 2
-			end
+			-- if params.attacker:IsRealHero() then -- Everyone should do 1 damage
+				-- damage = 2
+			-- end
 
 			if self:GetParent():GetHealth() > damage then
 				self:GetParent():SetHealth( self:GetParent():GetHealth() - damage)

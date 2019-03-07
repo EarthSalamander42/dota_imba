@@ -19,6 +19,7 @@ function GameMode:OnHeroFirstSpawn(hero)
 
 	if hero:IsIllusion() then
 		hero:SetupHealthBarLabel()
+		hero:AddNewModifier(hero, nil, "modifier_custom_mechanics", {})
 		return
 	end -- Illusions will not be affected by scripts written under this line
 
@@ -175,6 +176,13 @@ function GameMode:OnHeroFirstSpawn(hero)
 --		if not IsInToolsMode() then
 			hero:SetupHealthBarLabel()
 --		end
+
+		-- Refresh TP on first spawn
+		local teleport_scroll = hero:GetItemInSlot(15)
+		
+		if teleport_scroll then
+			teleport_scroll:EndCooldown()
+		end
 	end
 end
 

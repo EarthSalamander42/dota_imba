@@ -10,6 +10,8 @@
 		"override_hero"				"npc_dota_hero_enchantress"
 		"IsImba"					"1"
 		
+		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
+		
 		"Ability1"		"imba_enchantress_untouchable"
 		"Ability2"		"imba_enchantress_enchant"
 		"Ability3"		"imba_enchantress_natures_attendants"

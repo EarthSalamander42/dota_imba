@@ -1475,6 +1475,10 @@ function modifier_imba_riki_tricks_of_the_trade_primary:OnIntervalThink()
 
 		local targets = FindUnitsInRadius(caster:GetTeamNumber(), origin, nil, aoe, DOTA_UNIT_TARGET_TEAM_ENEMY , DOTA_UNIT_TARGET_HERO , DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, FIND_ANY_ORDER , false)
 
+		if #targets == 0 then
+			targets = FindUnitsInRadius(caster:GetTeamNumber(), origin, nil, aoe, DOTA_UNIT_TARGET_TEAM_ENEMY , DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NO_INVIS, FIND_ANY_ORDER , false)
+		end
+
 		for _,unit in pairs(targets) do
 			if unit:IsAlive() and not unit:IsAttackImmune() then
 				caster:PerformAttack(unit, true, true, true, false, false, false, false)
@@ -1541,6 +1545,10 @@ function modifier_imba_riki_tricks_of_the_trade_secondary:OnIntervalThink()
 		local backstab_sound = "Hero_Riki.Backstab"
 
 		local targets = FindUnitsInRadius(caster:GetTeamNumber(), origin, nil, aoe, DOTA_UNIT_TARGET_TEAM_ENEMY , DOTA_UNIT_TARGET_HERO , DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, FIND_ANY_ORDER , false)
+
+		if #targets == 0 then
+			targets = FindUnitsInRadius(caster:GetTeamNumber(), origin, nil, aoe, DOTA_UNIT_TARGET_TEAM_ENEMY , DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NO_INVIS, FIND_ANY_ORDER , false)
+		end
 
 		-- #2 Talent: Tricks of the Trade now applies martyrs Mark on the target, targets with martyrs Mark becomes more likely to be targetted by Marty's Strike
 		local martyrs_mark_targets = nil

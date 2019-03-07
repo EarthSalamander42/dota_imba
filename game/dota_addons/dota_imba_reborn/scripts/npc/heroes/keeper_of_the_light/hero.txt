@@ -1,0 +1,32 @@
+"DOTAHeroes"
+{
+	//=================================================================================================================
+	// HERO: Keeper of the Light
+	//=================================================================================================================
+	"npc_dota_hero_keeper_of_the_light"
+	{
+		"override_hero"				"npc_dota_hero_keeper_of_the_light"
+		"IsImba"					"1"
+		
+		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
+		
+		//"Ability1"		"keeper_of_the_light_illuminate"
+		//"Ability2"		"keeper_of_the_light_blinding_light"
+		//"Ability3"		"keeper_of_the_light_chakra_magic"
+		//"Ability4"		"generic_hidden"
+		"Ability5"		"imba_keeper_of_the_light_illuminate"
+		//"Ability6"		"keeper_of_the_light_will_o_wisp"
+		//"Ability7"		"keeper_of_the_light_illuminate_end"
+		"Ability8"			"imba_keeper_of_the_light_illuminate_end"
+		"Ability9"			"imba_keeper_of_the_light_will_o_wisp"
+		
+		//"Ability10"		"special_bonus_exp_boost_30"
+		//"Ability11"		"special_bonus_movement_speed_25"
+		//"Ability12"		"special_bonus_unique_keeper_of_the_light_4"
+		//"Ability13"		"special_bonus_cast_range_350"
+		//"Ability14"		"special_bonus_magic_resistance_40"
+		//"Ability15"		"special_bonus_unique_keeper_of_the_light_2"
+		//"Ability16"		"special_bonus_unique_keeper_of_the_light_3"
+		//"Ability17"		"special_bonus_unique_keeper_of_the_light"
+	}
+}

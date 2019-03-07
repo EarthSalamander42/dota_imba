@@ -56,6 +56,8 @@ function item_imba_rod_of_atos:OnSpellStart()
 	self.curtain_fire_speed				=	self:GetSpecialValueFor("curtain_fire_speed")
 	self.curtain_fire_activation_charge	=	self:GetSpecialValueFor("curtain_fire_activation_charge")
 	
+	self.curtain_fire_radius_second		=	self:GetSpecialValueFor("curtain_fire_radius_second")
+	
 	if not IsServer() then return end
 	
 	local caster_location	= self.caster:GetAbsOrigin()
@@ -66,8 +68,8 @@ function item_imba_rod_of_atos:OnSpellStart()
 	-- Play the cast sound
 	self.caster:EmitSound("DOTA_Item.RodOfAtos.Cast")
 
-	-- Only the upgraded version with enough charges gets Curtain Fire Shooting
-	if self:GetLevel() < 2 or self:GetCurrentCharges() < self.curtain_fire_activation_charge then 
+	-- Only the upgraded version with enough charges gets Curtain Fire Shooting (also no tempest doubles allowed cause anti-fun)
+	if self:GetLevel() < 2 or self:GetCurrentCharges() < self.curtain_fire_activation_charge or self.caster:IsTempestDouble() then 
 		local projectile =
 				{
 					Target 				= target,
@@ -89,7 +91,7 @@ function item_imba_rod_of_atos:OnSpellStart()
 		
 		-- Increment a charge towards Curtain Fire Shooting
 		if self:GetLevel() >= 2 then
-			self:SetCurrentCharges(self:GetCurrentCharges() + 1)
+			self:SetCurrentCharges(math.min(self:GetCurrentCharges() + 1, self.curtain_fire_activation_charge))
 			-- This is just for client-side showing AoE radius when it is ready
 			self.caster:FindModifierByName("modifier_item_imba_rod_of_atos"):SetStackCount(self:GetCurrentCharges())
 		end
@@ -147,7 +149,7 @@ function item_imba_rod_of_atos:OnSpellStart()
 			local random_spawn_distance		=	RandomInt(-self.curtain_fire_length, self.curtain_fire_length)
 
 			local random_spawn_location		=	curtain_fire_starting_point + Vector(direction.y * random_spawn_distance, -direction.x * random_spawn_distance, 100) -- 100 is so the projectiles don't all spawn sunk into the ground
-			local random_target_location	=	GetGroundPosition(target_location + RandomVector(self.curtain_fire_radius * 0.5), nil)
+			local random_target_location	=	GetGroundPosition(target_location + RandomVector(self.curtain_fire_radius_second * 0.5), nil)
 			local random_fire_direction		=	random_target_location - random_spawn_location
 			
 			-- So the console doesn't yell at us for non-zero vertical velocity
@@ -157,7 +159,7 @@ function item_imba_rod_of_atos:OnSpellStart()
 				Ability				= self,
 				EffectName			= "particles/hero/scaldris/ice_spell_projectile.vpcf", -- Borrowing pre-made projectile...
 				vSpawnOrigin		= random_spawn_location,
-				fDistance			= random_fire_direction:Length2D() + self.curtain_fire_radius,
+				fDistance			= random_fire_direction:Length2D() + self.curtain_fire_radius_second,
 				fStartRadius		= 70,
 				fEndRadius			= 70,
 				Source				= self.caster,
@@ -187,8 +189,17 @@ function item_imba_rod_of_atos:OnProjectileHit(target, location)
 	-- Check if a valid target has been hit
 	if target and not target:IsMagicImmune() then
 	
-		-- Check for Linken's / Lotus Orb
-		if target:TriggerSpellAbsorb(self) then return nil end
+		-- This is where we get really jank...again. Try to differentiate between the targetted and the linear projectiles to apply different affects. More difficult on items cause apparently they don't get access to ExtraData.
+		
+		local contactDistance	= (target:GetAbsOrigin() - location):Length2D()
+		local targetHullRadius	= target:GetHullRadius()
+		
+		-- Assumption: If contact distance is within hull radius, then it's the targetted projectile. Otherwise it's the linear
+		-- Problem arises if people blink directly onto the projectile in which case it'd be treated like a targetted but eh.....
+		if contactDistance <= targetHullRadius then
+			-- Check for Linken's / Lotus Orb
+			if target:TriggerSpellAbsorb(self) then return nil end
+		end
 		
 		-- Otherwise, play the sound...
 		target:EmitSound("DOTA_Item.RodOfAtos.Target")
@@ -205,11 +216,13 @@ function item_imba_rod_of_atos:OnProjectileHit(target, location)
 								
 		ApplyDamage(damageTable)		
 		
-		-- ...and apply the Cripple modifier.
-		local cripple_modifier = target:AddNewModifier(self.caster, self, "modifier_item_imba_rod_of_atos_debuff", {duration = self.duration})
-		
-		if cripple_modifier then
-			cripple_modifier:SetDuration(self.duration * (1 - target:GetStatusResistance()), true)
+		if contactDistance <= targetHullRadius then
+			-- ...and apply the Cripple modifier.
+			local cripple_modifier = target:AddNewModifier(self.caster, self, "modifier_item_imba_rod_of_atos_debuff", {duration = self.duration})
+			
+			if cripple_modifier then
+				cripple_modifier:SetDuration(self.duration * (1 - target:GetStatusResistance()), true)
+			end
 		end
 	end
 end
@@ -247,6 +260,8 @@ function modifier_item_imba_rod_of_atos:OnCreated()
 	self.bonus_intellect	=	self.ability:GetSpecialValueFor("bonus_intellect")
 	self.bonus_strength		=	self.ability:GetSpecialValueFor("bonus_strength")
 	self.bonus_agility		=	self.ability:GetSpecialValueFor("bonus_agility")
+	
+	if not IsServer() then return end
 end
 
 function modifier_item_imba_rod_of_atos:DeclareFunctions()

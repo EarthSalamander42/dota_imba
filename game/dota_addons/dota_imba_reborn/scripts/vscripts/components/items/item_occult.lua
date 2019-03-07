@@ -122,8 +122,8 @@ function modifier_imba_occult_mask_unique:OnIntervalThink()
 				local damageTable = {victim = enemy,
 					attacker = self.caster,
 					damage = self.damage_per_second * self.interval,
-					damage_type = DAMAGE_TYPE_MAGICAL,
-					damage_flags = DOTA_DAMAGE_FLAG_HPLOSS,
+					damage_type = DAMAGE_TYPE_PURE,
+					damage_flags = DOTA_DAMAGE_FLAG_HPLOSS + DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION,
 					ability = self.ability}
 
 				local actual_damage = ApplyDamage(damageTable)

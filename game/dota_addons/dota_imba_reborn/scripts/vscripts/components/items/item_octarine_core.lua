@@ -31,9 +31,6 @@ function item_imba_octarine_core:GetAbilityTextureName()
 	return "custom/imba_octarine_core"
 end
 
-function item_imba_octarine_core:GetBehavior()
-	return DOTA_ABILITY_BEHAVIOR_IMMEDIATE + DOTA_ABILITY_BEHAVIOR_NO_TARGET + DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL + DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE + DOTA_ABILITY_BEHAVIOR_ITEM end
-
 function item_imba_octarine_core:GetIntrinsicModifierName()
 	return "modifier_imba_octarine_core_basic" end
 

@@ -122,6 +122,12 @@ function GameMode:OnGameRulesStateChange(keys)
 				end
 			end
 		end
+		
+		-- IDK how to get this to print only once
+		Timers:CreateTimer(FrameTime(), function()
+			Say(GameRules:GetGameModeEntity(), "Game Mode Selected: "..GetCustomGameVote(), false)
+		end)
+		
 	elseif newState == DOTA_GAMERULES_STATE_STRATEGY_TIME then
 		for i = 0, PlayerResource:GetPlayerCount() - 1 do
 			if PlayerResource:IsValidPlayer(i) and not PlayerResource:HasSelectedHero(i) and PlayerResource:GetConnectionState(i) == DOTA_CONNECTION_STATE_CONNECTED then
@@ -138,7 +144,8 @@ function GameMode:OnGameRulesStateChange(keys)
 			GoodCamera:AddNewModifier(GoodCamera, nil, "modifier_overthrow_gold_xp_granter", {})
 			GoodCamera:AddNewModifier(GoodCamera, nil, "modifier_overthrow_gold_xp_granter_global", {})
 		else
-			self:SetupContributors()
+			-- No point of these right now until the names are visible again (also probably causing a bit of lag)
+			-- self:SetupContributors()
 			self:SetupFrostivus()
 			self:SetupShrines()
 		end
@@ -226,7 +233,7 @@ function GameMode:OnGameRulesStateChange(keys)
 		if GetMapName() == Map1v1() then
 			Setup1v1()
 		else
-			if IsMutationMap() or IsSuperFranticMap() then
+			if GameRules:GetCustomGameDifficulty() > 1 then
 				SpawnEasterEgg()
 			end
 

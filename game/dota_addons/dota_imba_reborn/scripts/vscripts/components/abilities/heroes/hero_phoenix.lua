@@ -1049,7 +1049,7 @@ function imba_phoenix_sun_ray:OnSpellStart()
 
 			ParticleManager:SetParticleControl(pfx, 0, caster:GetAttachmentOrigin(attach_point))
 			-- Check the Debuff that can interrupt spell
-			if imba_phoenix_check_for_canceled( caster ) then
+			if imba_phoenix_check_for_canceled( caster ) or caster:HasModifier("modifier_legion_commander_duel") or caster:HasModifier("modifier_lone_druid_savage_roar") then
 				caster:RemoveModifierByName("modifier_imba_phoenix_sun_ray_caster_dummy")
 			end
 
@@ -2045,7 +2045,7 @@ function modifier_imba_phoenix_supernova_egg_thinker:OnCreated()
 	StartSoundEvent( "Hero_Phoenix.SuperNova.Cast", egg)
 
 	local ability = self:GetAbility()
-	GridNav:DestroyTreesAroundPoint(egg:GetAbsOrigin(), ability:GetSpecialValueFor("cast_range") * 1.5 , false)
+	GridNav:DestroyTreesAroundPoint(egg:GetAbsOrigin(), ability:GetSpecialValueFor("cast_range") , false)
 	self:StartIntervalThink(1.0)
 end
 
@@ -2210,10 +2210,10 @@ function modifier_imba_phoenix_supernova_egg_thinker:OnAttacked( keys )
 	local max_attack = egg.max_attack
 	local current_attack = egg.current_attack
 
-	if attacker:IsRealHero() then
+	if attacker:IsRealHero() or attacker:IsClone() or attacker:IsTempestDouble() then
 		egg.current_attack = egg.current_attack + 1
-	else
-		egg.current_attack = egg.current_attack + 0.25
+--	else
+--		egg.current_attack = egg.current_attack + 0.25
 	end
 	if egg.current_attack >= egg.max_attack then
 		egg:Kill(ability, attacker)

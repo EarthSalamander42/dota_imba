@@ -736,6 +736,17 @@ function modifier_imba_hook_target_enemy:RemoveOnDeath() return false end
 function modifier_imba_hook_target_enemy:IsMotionController()  return true end
 function modifier_imba_hook_target_enemy:GetMotionControllerPriority()  return DOTA_MOTION_CONTROLLER_PRIORITY_HIGHEST end
 
+-- Adding this to prevent bricking from Rubick
+function modifier_imba_hook_target_enemy:OnCreated()
+	self:StartIntervalThink(1)
+end
+
+function modifier_imba_hook_target_enemy:OnIntervalThink()
+	if not self:GetAbility() then
+		self:Destroy()
+	end
+end
+
 function modifier_imba_hook_target_enemy:CheckState()
 	local state_ally =
 		{

@@ -907,6 +907,11 @@ function modifier_tiny_toss_movement:GetMotionControllerPriority()
 	return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM
 end
 
+-- Without this Tiny can fly to world origin with Hellblade transfer
+function modifier_tiny_toss_movement:IsPurgable()
+	return false
+end
+
 --------------------------------------------------------------------------------
 
 function modifier_tiny_toss_movement:OnCreated( kv )
@@ -1161,6 +1166,11 @@ end
 
 function modifier_tiny_toss_scepter_bounce:GetMotionControllerPriority()
 	return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM
+end
+
+-- Without this it seems like server just straight crashes on Hellblade transfer
+function modifier_tiny_toss_scepter_bounce:IsPurgable()
+	return false
 end
 
 --------------------------------------------------------------------------------
