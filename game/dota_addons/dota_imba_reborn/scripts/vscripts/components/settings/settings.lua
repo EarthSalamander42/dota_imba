@@ -14,7 +14,7 @@
 
 require('components/settings/settings_donator')
 
-IMBA_VERSION = "7.10"
+IMBA_VERSION = "7.11"
 CustomNetTables:SetTableValue("game_options", "game_version", {value = IMBA_VERSION})
 
 -- Picking screen constants
