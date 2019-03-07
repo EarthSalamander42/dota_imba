@@ -13516,7 +13516,7 @@
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"curtain_fire_shot_count"	"50"
+				"curtain_fire_shot_count"	"66"
 			}
 			"10"
 			{
