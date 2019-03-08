@@ -13542,7 +13542,7 @@
 	}
 	
 	//=================================================================================================================
-	// Recipe: Diffusal Blade
+	// Recipe: Witchblade
 	//=================================================================================================================
 	"item_recipe_imba_witchblade"
 	{
@@ -13686,5 +13686,132 @@
 		}
 	}
 	
-	//next free ID: 2313
+	//=================================================================================================================
+	// Recipe: Ethereal Blade
+	//=================================================================================================================
+	"item_recipe_imba_ethereal_blade"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"custom/imba_recipe"
+		"Model"							"models/props_gameplay/recipe.mdl"
+
+		"ID"							"2315"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"0"	
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_ethereal_blade"
+		"ItemRequirements"
+		{
+			//"01"						"item_eagle;item_ghost"
+			"01"						"item_branches;item_ghost"
+		}
+	}	
+
+	//=================================================================================================================
+	// Ethereal Blade
+	//=================================================================================================================
+	"item_imba_ethereal_blade"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_lua"
+		"ScriptFile"					"components/items/item_ethereal_blade.lua"
+		"AbilityTextureName"			"item_ethereal_blade"
+		
+		"ID"							"2316"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY | DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
+		"FightRecapLevel"				"1"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"800"
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"20.0"	    
+		"AbilitySharedCooldown"			"ethereal"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"100"
+		"ItemCost"						"4700"
+		"ItemShopTags"					"agi;str;int;hard_to_tag"
+		"ItemQuality"					"epic"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_ALWAYS"
+		"ItemAliases"					"eb;ethereal blade;eblade"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
+		"ShouldBeSuggested"				"1"
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_agility"			"40"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_strength"		"10"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_intellect"		"10"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"blast_movement_slow"	"-80"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"4.0"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"blast_agility_multiplier"			"2.0"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"blast_damage_base"			"75"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration_ally"				"4.0"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"ethereal_damage_bonus"	"-40"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"projectile_speed"	"1275"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tooltip_range"			"800"
+			}
+		}
+	}
+	//next free ID: 2317
 }
