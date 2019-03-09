@@ -128,9 +128,22 @@ function modifier_item_imba_ethereal_blade_ethereal:OnRefresh()
 	self:OnCreated()
 end
 
+function modifier_item_imba_ethereal_blade_ethereal:CheckState()
+	local state = {
+		[MODIFIER_STATE_ATTACK_IMMUNE] = true,
+		[MODIFIER_STATE_DISARMED] = true
+	}
+	
+	return state
+end
+
 function modifier_item_imba_ethereal_blade_ethereal:DeclareFunctions()
     local decFuncs = {
-		MODIFIER_PROPERTY_MAGICAL_RESISTANCE_DECREPIFY_UNIQUE
+		MODIFIER_PROPERTY_MAGICAL_RESISTANCE_DECREPIFY_UNIQUE,
+		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL,
+		
+		-- IMBAfication: Extrasensory
+		MODIFIER_PROPERTY_IGNORE_CAST_ANGLE
     }
 	
 	return decFuncs
@@ -140,12 +153,22 @@ function modifier_item_imba_ethereal_blade_ethereal:GetModifierMagicalResistance
     return self.ethereal_damage_bonus
 end
 
+function modifier_item_imba_ethereal_blade_ethereal:GetAbsoluteNoDamagePhysical()
+	return 1
+end
+
+function modifier_item_imba_ethereal_blade_ethereal:GetModifierIgnoreCastAngle()
+	if self:GetParent():GetTeam() == self:GetCaster():GetTeam() then
+		return 1
+	end
+end
 ----------------------------------
 -- ETHEREAL BLADE SLOW MODIFIER --
 ----------------------------------
 
 function modifier_item_imba_ethereal_blade_slow:OnCreated()
-	self.blast_movement_slow		=	self:GetAbility():GetSpecialValueFor("blast_movement_slow")
+	self.blast_movement_slow				=	self:GetAbility():GetSpecialValueFor("blast_movement_slow")
+	self.realms_grasp_turn_rate_reduction	= 	self:GetAbility():GetSpecialValueFor("realms_grasp_turn_rate_reduction")
 end
 
 function modifier_item_imba_ethereal_blade_slow:OnRefresh()
@@ -154,7 +177,10 @@ end
 
 function modifier_item_imba_ethereal_blade_slow:DeclareFunctions()
     local decFuncs = {
-		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		
+		-- IMBAfication: Realm's Grasp
+		MODIFIER_PROPERTY_TURN_RATE_PERCENTAGE
     }
 	
 	return decFuncs
@@ -162,6 +188,10 @@ end
 
 function modifier_item_imba_ethereal_blade_slow:GetModifierMoveSpeedBonus_Percentage()
     return self.blast_movement_slow
+end
+
+function modifier_item_imba_ethereal_blade_slow:GetModifierTurnRate_Percentage()
+	return self.realms_grasp_turn_rate_reduction
 end
 
 -----------------------------

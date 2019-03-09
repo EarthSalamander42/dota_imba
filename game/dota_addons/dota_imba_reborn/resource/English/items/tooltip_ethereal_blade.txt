@@ -1,10 +1,9 @@
 "DOTA_Tooltip_Ability_item_imba_ethereal_blade"			"Ethereal Blade"
 
-"DOTA_Tooltip_ability_item_imba_ethereal_blade_Description"					"<h1>Active: Ether Blast</h1>Converts the target unit to ethereal form, rendering them immune to physical damage, but unable to attack and %ethereal_damage_bonus%%% more vulnerable to magic damage.  Lasts for %duration_ally% seconds on allies and %duration% seconds on enemies.<br><br>  Enemy targets are also slowed by %blast_movement_slow%%%, and take %blast_agility_multiplier%x your primary attribute + %blast_damage_base% as magical damage.<br><br>Range: %tooltip_range%"
+"DOTA_Tooltip_ability_item_imba_ethereal_blade_Description"					"<h1>Active: Ether Blast</h1>Converts the target unit to ethereal form, rendering them immune to physical damage, but unable to attack and %ethereal_damage_bonus%%% more vulnerable to magic damage.  Lasts for %duration_ally% seconds on allies and %duration% seconds on enemies.<br><br>  Enemy targets are also slowed by %blast_movement_slow%%%, and take %blast_agility_multiplier%x your primary attribute + %blast_damage_base% as magical damage.<br><br>Range: %tooltip_range%\n<h1><font color='#FF7800'>Active: Extrasensory</font></h1>Ether Blast allows the ally target to ignore cast angles (abilities can begin their ability phase before the unit needs to turn to face their target).\n<h1><font color='#FF7800'>Active: Realm's Grasp</font></h1>Ether Blast reduces enemy target's turn rate by %realms_grasp_turn_rate_reduction%%%."
 "DOTA_Tooltip_ability_item_imba_ethereal_blade_Note0"						"Shares cooldown with Ghost Scepter."
 "DOTA_Tooltip_ability_item_imba_ethereal_blade_Note1"						"Ethereal units take 40% bonus magic damage."
-"DOTA_Tooltip_ability_item_imba_ethereal_blade_Note2"						"Lasts an extra second on Self or Allied cast."
-"DOTA_Tooltip_ability_item_imba_ethereal_blade_Note3"						"Using a Town Portal Scroll or Boots of Travel will not dispel Ethereal Form."
+"DOTA_Tooltip_ability_item_imba_ethereal_blade_Note2"						"Using a Town Portal Scroll or Boots of Travel will not dispel Ethereal Form."
 "DOTA_Tooltip_ability_item_imba_ethereal_blade_bonus_agility"				"+$agi"
 "DOTA_Tooltip_ability_item_imba_ethereal_blade_bonus_strength"				"+$str"
 "DOTA_Tooltip_ability_item_imba_ethereal_blade_bonus_intellect"				"+$int"

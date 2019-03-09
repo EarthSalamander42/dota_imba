@@ -13811,6 +13811,11 @@
 				"var_type"				"FIELD_INTEGER"
 				"tooltip_range"			"800"
 			}
+			"12"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"realms_grasp_turn_rate_reduction"	"-80"
+			}
 		}
 	}
 	//next free ID: 2317
