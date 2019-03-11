@@ -51,7 +51,7 @@ function item_imba_witchblade:OnSpellStart()
 	
 	-- If the target has Linken sphere, trigger it and do nothing else
 	if target:GetTeam() ~= self.caster:GetTeam() then
-		if target:TriggerSpellAbsorb(ability) then
+		if target:TriggerSpellAbsorb(self) then
 			return nil
 		end
 	end
@@ -107,23 +107,23 @@ function item_imba_witchblade:OnSpellStart()
 			ParticleManager:SetParticleControl(particle, 0, target:GetAbsOrigin())
 			ParticleManager:ReleaseParticleIndex(particle)
 		end
-
-		-- If the target is not a hero (or a creep hero), root it
-		if not target:IsHero() and not target:IsRoshan() and not target:IsConsideredHero() then
-			target:AddNewModifier(self.caster, self, "modifier_item_imba_witchblade_root", {duration = self.purge_root_duration})
-		end
-
-		-- Add the slow modifier
-		target:AddNewModifier(self.caster, self, "modifier_item_imba_witchblade_slow", {duration = self.purge_slow_duration})
-		
-		-- IMBAfication: Internal Bypass
-		if target:IsMagicImmune() or target:IsBuilding() then
-			self:EndCooldown()
-			self.bypass = true
-			self:UseResources(false, false, true)
-			self.bypass = false
-		end
 	end)
+	
+	-- If the target is not a hero (or a creep hero), root it
+	if not target:IsHero() and not target:IsRoshan() and not target:IsConsideredHero() then
+		target:AddNewModifier(self.caster, self, "modifier_item_imba_witchblade_root", {duration = self.purge_root_duration})
+	end
+
+	-- Add the slow modifier
+	target:AddNewModifier(self.caster, self, "modifier_item_imba_witchblade_slow", {duration = self.purge_slow_duration})
+	
+	-- IMBAfication: Internal Bypass
+	if target:IsMagicImmune() or target:IsBuilding() then
+		self:EndCooldown()
+		self.bypass = true
+		self:UseResources(false, false, true)
+		self.bypass = false
+	end
 end
 
 ------------------------------
@@ -138,6 +138,8 @@ function modifier_item_imba_witchblade_slow:OnCreated()
 	self.ability	= self:GetAbility()
 	self.caster		= self:GetCaster()
 	self.parent		= self:GetParent()
+	
+	if not self.ability then return end
 	
 	-- AbilitySpecials
 	self.bonus_agility							= self.ability:GetSpecialValueFor("bonus_agility")

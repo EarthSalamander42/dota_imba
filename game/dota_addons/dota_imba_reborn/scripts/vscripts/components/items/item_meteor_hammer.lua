@@ -163,6 +163,8 @@ function modifier_item_imba_meteor_hammer_burn:OnCreated()
 	self.caster		= self:GetCaster()
 	self.parent		= self:GetParent()
 	
+	if self.ability == nil then return end
+	
 	-- AbilitySpecials
 	-- self.bonus_strength				=	self.ability:GetSpecialValueFor("bonus_strength")
 	-- self.bonus_intellect			=	self.ability:GetSpecialValueFor("bonus_intellect")
@@ -242,7 +244,7 @@ function modifier_item_imba_meteor_hammer_burn:CheckState()
 	local state = {}
 	
 	-- Level 2 and above applies Break
-	if self.ability:GetLevel() >= 2 then
+	if self ~= nil and self.ability ~= nil and not self.ability:IsNull() and self.ability:GetLevel() >= 2 then
 		state = {
 			[MODIFIER_STATE_PASSIVES_DISABLED] = true
 		}
@@ -261,7 +263,7 @@ end
 
 function modifier_item_imba_meteor_hammer_burn:GetModifierSpellAmplify_Percentage()
 	-- Level 3 and above reduces spell amp
-	if self.ability:GetLevel() >= 3 then
+	if self ~= nil and self.ability ~= nil and not self.ability:IsNull() and self.ability:GetLevel() >= 3 then
 		return self.spell_reduction_pct * (-1)
 	end
 end
@@ -280,6 +282,8 @@ function modifier_item_imba_meteor_hammer:OnCreated()
 	self.ability	= self:GetAbility()
 	self.caster		= self:GetCaster()
 	self.parent		= self:GetParent()
+	
+	if self.ability == nil then return end
 	
 	-- AbilitySpecials
 	self.bonus_strength				=	self.ability:GetSpecialValueFor("bonus_strength")
