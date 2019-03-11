@@ -164,6 +164,10 @@
 	"item_recipe_rod_of_atos"				"REMOVE"
 	"item_rod_of_atos"						"REMOVE"
 	"item_rod_of_atos"						"REMOVE" // Not even gonna bother testing this one and just double tap
+	"item_ghost"							"REMOVE"
+	"item_ghost"							"REMOVE" 
+	"item_recipe_ethereal_blade"			"REMOVE" 
+	"item_ethereal_blade"					"REMOVE" 
 
 	//Banned items
 	"item_imba_ironleaf_boots"				"REMOVE"

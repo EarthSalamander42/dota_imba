@@ -90,6 +90,7 @@ function item_imba_ethereal_blade:OnProjectileHit(target, location)
 		-- ...apply the Ethereal modifier...
 		if target:GetTeam() == self.caster:GetTeam() then
 			target:AddNewModifier(self.caster, self, "modifier_item_imba_ethereal_blade_ethereal", {duration = self.duration_ally})
+			target:AddNewModifier(self.caster, self, "modifier_item_gem_of_true_sight", {duration = self.duration}) -- The radius was designated with the "radius" KV for the item in npc_items_custom.txt (guess that's just how it works)
 		else
 			target:AddNewModifier(self.caster, self, "modifier_item_imba_ethereal_blade_ethereal", {duration = self.duration}):SetDuration(self.duration * (1 - target:GetStatusResistance()), true)
 						
@@ -106,7 +107,9 @@ function item_imba_ethereal_blade:OnProjectileHit(target, location)
 			ApplyDamage(damageTable)		
 			
 			-- ...and apply the slow modifier.
-			target:AddNewModifier(self.caster, self, "modifier_item_imba_ethereal_blade_slow", {duration = self.duration}):SetDuration(self.duration * (1 - target:GetStatusResistance()), true)
+			if target:IsAlive() then
+				target:AddNewModifier(self.caster, self, "modifier_item_imba_ethereal_blade_slow", {duration = self.duration}):SetDuration(self.duration * (1 - target:GetStatusResistance()), true)
+			end
 		end
 	end
 end
@@ -121,7 +124,20 @@ function modifier_item_imba_ethereal_blade_ethereal:GetStatusEffectName()
 end
 
 function modifier_item_imba_ethereal_blade_ethereal:OnCreated()
-	self.ethereal_damage_bonus		=	self:GetAbility():GetSpecialValueFor("ethereal_damage_bonus")
+	self.ability					= self:GetAbility()
+	self.caster						= self:GetCaster()
+	self.parent						= self:GetParent()
+	
+	self.ethereal_damage_bonus		= self.ability:GetSpecialValueFor("ethereal_damage_bonus")
+	self.luminate_radius			= self.ability:GetSpecialValueFor("luminate_radius")
+	
+	self:StartIntervalThink(FrameTime())
+end
+
+function modifier_item_imba_ethereal_blade_ethereal:OnIntervalThink()
+	if not IsServer() then return end
+
+	AddFOWViewer(self.caster:GetTeam(), self.parent:GetAbsOrigin(), self.luminate_radius, FrameTime(), false) 
 end
 
 function modifier_item_imba_ethereal_blade_ethereal:OnRefresh()
@@ -162,6 +178,7 @@ function modifier_item_imba_ethereal_blade_ethereal:GetModifierIgnoreCastAngle()
 		return 1
 	end
 end
+
 ----------------------------------
 -- ETHEREAL BLADE SLOW MODIFIER --
 ----------------------------------
@@ -169,6 +186,7 @@ end
 function modifier_item_imba_ethereal_blade_slow:OnCreated()
 	self.blast_movement_slow				=	self:GetAbility():GetSpecialValueFor("blast_movement_slow")
 	self.realms_grasp_turn_rate_reduction	= 	self:GetAbility():GetSpecialValueFor("realms_grasp_turn_rate_reduction")
+	self.realms_grasp_cast_time_lag	= 	self:GetAbility():GetSpecialValueFor("realms_grasp_cast_time_lag")
 end
 
 function modifier_item_imba_ethereal_blade_slow:OnRefresh()
@@ -180,7 +198,8 @@ function modifier_item_imba_ethereal_blade_slow:DeclareFunctions()
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 		
 		-- IMBAfication: Realm's Grasp
-		MODIFIER_PROPERTY_TURN_RATE_PERCENTAGE
+		MODIFIER_PROPERTY_TURN_RATE_PERCENTAGE,
+		MODIFIER_PROPERTY_CASTTIME_PERCENTAGE 
     }
 	
 	return decFuncs
@@ -194,6 +213,10 @@ function modifier_item_imba_ethereal_blade_slow:GetModifierTurnRate_Percentage()
 	return self.realms_grasp_turn_rate_reduction
 end
 
+function modifier_item_imba_ethereal_blade_slow:GetModifierPercentageCasttime()
+	return self.realms_grasp_cast_time_lag
+end
+	
 -----------------------------
 -- ETHEREAL BLADE MODIFIER --
 -----------------------------

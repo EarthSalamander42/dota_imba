@@ -13687,6 +13687,67 @@
 	}
 	
 	//=================================================================================================================
+	// Ghost
+	//=================================================================================================================
+	"item_imba_ghost"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_lua"
+		"ScriptFile"					"components/items/item_ghost.lua"
+		"AbilityTextureName"			"item_ghost"		
+		
+		"ID"							"2313"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"FightRecapLevel"				"1"
+		
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"20.0"		 
+		"AbilitySharedCooldown"			"ethereal"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"1500"
+		"ItemShopTags"					"int;agi;str;hard_to_tag"
+		"ItemQuality"					"component"
+		"ItemAliases"					"ghost scepter"
+		"ShouldBeSuggested"				"1"
+
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_all_stats"		"5"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"4.0"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"extra_spell_damage_percent"	"-40"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"luminate_radius"		"600"		
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"600"
+			}
+		}
+	}	
+	
+	//=================================================================================================================
 	// Recipe: Ethereal Blade
 	//=================================================================================================================
 	"item_recipe_imba_ethereal_blade"
@@ -13697,7 +13758,7 @@
 		"AbilityTextureName" 			"custom/imba_recipe"
 		"Model"							"models/props_gameplay/recipe.mdl"
 
-		"ID"							"2315"
+		"ID"							"2314"
 		
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -13710,8 +13771,7 @@
 		"ItemResult"					"item_imba_ethereal_blade"
 		"ItemRequirements"
 		{
-			//"01"						"item_eagle;item_ghost"
-			"01"						"item_branches;item_ghost"
+			"01"						"item_eagle;item_imba_ghost"
 		}
 	}	
 
@@ -13726,7 +13786,7 @@
 		"ScriptFile"					"components/items/item_ethereal_blade.lua"
 		"AbilityTextureName"			"item_ethereal_blade"
 		
-		"ID"							"2316"
+		"ID"							"2315"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY | DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
@@ -13816,7 +13876,22 @@
 				"var_type"				"FIELD_INTEGER"
 				"realms_grasp_turn_rate_reduction"	"-80"
 			}
+			"13"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"realms_grasp_cast_time_lag"	"-20"
+			}
+			"14"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"luminate_radius"		"600"		
+			}
+			"15"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"600"
+			}
 		}
 	}
-	//next free ID: 2317
+	//next free ID: 2316
 }
