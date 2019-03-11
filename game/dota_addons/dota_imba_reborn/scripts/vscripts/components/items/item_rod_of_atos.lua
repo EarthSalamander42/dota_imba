@@ -93,7 +93,11 @@ function item_imba_rod_of_atos:OnSpellStart()
 		if self:GetLevel() >= 2 then
 			self:SetCurrentCharges(math.min(self:GetCurrentCharges() + 1, self.curtain_fire_activation_charge))
 			-- This is just for client-side showing AoE radius when it is ready
-			self.caster:FindModifierByName("modifier_item_imba_rod_of_atos"):SetStackCount(self:GetCurrentCharges())
+			local modifier = self.caster:FindModifierByName("modifier_item_imba_rod_of_atos")
+			
+			if modifier then
+				modifier:SetStackCount(self:GetCurrentCharges())
+			end
 		end
 		
 		return 
