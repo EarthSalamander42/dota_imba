@@ -80,7 +80,7 @@ function modifier_companion:OnIntervalThink()
 			companion:FadeGesture(ACT_DOTA_RUN)
 		end
 
-		if companion:GetPlayerOwner():GetAssignedHero() == nil then return end
+		if companion:GetPlayerOwner() == nil or companion:GetPlayerOwner():GetAssignedHero() == nil then return end
 		local hero = companion:GetPlayerOwner():GetAssignedHero()
 		hero.companion = companion
 		local fountain
