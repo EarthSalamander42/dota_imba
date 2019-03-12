@@ -947,6 +947,17 @@ function modifier_imba_ball_lightning:GetEffectName()
 	return "particles/units/heroes/hero_stormspirit/stormspirit_ball_lightning.vpcf"
 end
 
+-- Once again with the Rubick exceptions...
+function modifier_imba_ball_lightning:OnCreated()
+	self:StartIntervalThink(1)
+end
+
+function modifier_imba_ball_lightning:OnIntervalThink()
+	if not self:GetAbility() then
+		self:Destroy()
+	end
+end
+
 function modifier_imba_ball_lightning:CheckState()
 	local state	=	{
 --		[MODIFIER_STATE_MAGIC_IMMUNE] = true

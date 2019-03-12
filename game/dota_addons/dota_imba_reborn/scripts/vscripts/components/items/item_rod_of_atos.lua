@@ -93,7 +93,11 @@ function item_imba_rod_of_atos:OnSpellStart()
 		if self:GetLevel() >= 2 then
 			self:SetCurrentCharges(math.min(self:GetCurrentCharges() + 1, self.curtain_fire_activation_charge))
 			-- This is just for client-side showing AoE radius when it is ready
-			self.caster:FindModifierByName("modifier_item_imba_rod_of_atos"):SetStackCount(self:GetCurrentCharges())
+			local modifier = self.caster:FindModifierByName("modifier_item_imba_rod_of_atos")
+			
+			if modifier then
+				modifier:SetStackCount(self:GetCurrentCharges())
+			end
 		end
 		
 		return 
@@ -192,11 +196,13 @@ function item_imba_rod_of_atos:OnProjectileHit(target, location)
 		-- This is where we get really jank...again. Try to differentiate between the targetted and the linear projectiles to apply different affects. More difficult on items cause apparently they don't get access to ExtraData.
 		
 		local contactDistance	= (target:GetAbsOrigin() - location):Length2D()
-		local targetHullRadius	= target:GetHullRadius()
+		
+		-- Arbitrary numerical value based on super rough testing (still might break on super high movement speeds)
+		local targetted_projectile = (self:GetLevel() == 1 or contactDistance <= 65)
 		
 		-- Assumption: If contact distance is within hull radius, then it's the targetted projectile. Otherwise it's the linear
 		-- Problem arises if people blink directly onto the projectile in which case it'd be treated like a targetted but eh.....
-		if contactDistance <= targetHullRadius then
+		if targetted_projectile  then
 			-- Check for Linken's / Lotus Orb
 			if target:TriggerSpellAbsorb(self) then return nil end
 		end
@@ -216,7 +222,7 @@ function item_imba_rod_of_atos:OnProjectileHit(target, location)
 								
 		ApplyDamage(damageTable)		
 		
-		if contactDistance <= targetHullRadius then
+		if targetted_projectile then
 			-- ...and apply the Cripple modifier.
 			local cripple_modifier = target:AddNewModifier(self.caster, self, "modifier_item_imba_rod_of_atos_debuff", {duration = self.duration})
 			
