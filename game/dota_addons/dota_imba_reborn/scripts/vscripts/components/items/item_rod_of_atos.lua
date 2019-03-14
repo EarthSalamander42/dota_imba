@@ -266,8 +266,17 @@ function modifier_item_imba_rod_of_atos:OnCreated()
 	self.bonus_intellect	=	self.ability:GetSpecialValueFor("bonus_intellect")
 	self.bonus_strength		=	self.ability:GetSpecialValueFor("bonus_strength")
 	self.bonus_agility		=	self.ability:GetSpecialValueFor("bonus_agility")
+	self.initial_charges		=	self.ability:GetSpecialValueFor("initial_charges")
 	
 	if not IsServer() then return end
+	
+	-- Need to do this instead of using the "ItemInitialCharges" KV because the latter messes with sell prices
+	if self.ability:GetLevel() >= 2 then
+		if not self.ability.initialized then
+			self.ability:SetCurrentCharges(self.initial_charges)
+			self.ability.initialized = true
+		end	
+	end
 end
 
 function modifier_item_imba_rod_of_atos:DeclareFunctions()

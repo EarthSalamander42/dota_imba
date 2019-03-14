@@ -200,11 +200,14 @@ function item_imba_hurricane_pike:OnSpellStart()
 		buff:SetStackCount(ability:GetSpecialValueFor("max_attacks"))
 		EmitSoundOn("DOTA_Item.ForceStaff.Activate", target)
 		EmitSoundOn("DOTA_Item.ForceStaff.Activate", self:GetCaster())
-		local startAttack = {
-			UnitIndex = self:GetCaster():entindex(),
-			OrderType = DOTA_UNIT_ORDER_ATTACK_TARGET,
-			TargetIndex = target:entindex(),}
-		ExecuteOrderFromTable(startAttack)
+		
+		if self:GetCaster():IsRangedAttacker() then
+			local startAttack = {
+				UnitIndex = self:GetCaster():entindex(),
+				OrderType = DOTA_UNIT_ORDER_ATTACK_TARGET,
+				TargetIndex = target:entindex(),}
+			ExecuteOrderFromTable(startAttack)
+		end
 	end
 end
 
@@ -462,9 +465,7 @@ function modifier_item_imba_hurricane_pike_attack_speed:OnIntervalThink()
 		end
 	else
 		self.as = 0
-		if self:GetParent():IsRangedAttacker() then
-			self.ar = 0
-		end
+		self.ar = 0
 	end
 end
 
@@ -501,6 +502,10 @@ function modifier_item_imba_hurricane_pike_attack_speed:OnOrder( keys )
 	if not IsServer() then return end
 	
 	if keys.target == self.target and keys.unit == self:GetParent() and keys.order_type == 4 then
-		self.ar = 999999
+		if self:GetParent():IsRangedAttacker() then
+			self.ar = 999999
+		end
+		
+		self.as = self:GetAbility():GetSpecialValueFor("bonus_attack_speed")
 	end
 end

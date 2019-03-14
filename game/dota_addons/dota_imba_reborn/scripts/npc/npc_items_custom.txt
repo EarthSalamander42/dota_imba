@@ -3996,7 +3996,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"1500"
+		"ItemCost"						"1100"
 		"ItemShopTags"					"damage"
 		"ItemQuality"					"component"
 		"ItemAliases"					"javelin"
@@ -4009,7 +4009,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_damage"			"10"
-				"CalculateSpellDamageTooltip"	"0"
 			}
 			"02"
 			{
@@ -4019,13 +4018,12 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"pierce_count"			"3"
+				"bonus_chance"			"25"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"pierce_damage"			"125"
-				"CalculateSpellDamageTooltip"	"0"
+				"bonus_chance_damage"	"100"
 			}
 		}
 	}
@@ -4052,7 +4050,7 @@
 		"ItemResult"					"item_imba_monkey_king_bar"
 		"ItemRequirements"
 		{
-			"01"						"item_imba_javelin;item_imba_javelin;item_demon_edge"
+			"01"						"item_demon_edge;item_imba_javelin;item_quarterstaff;"
 		}
 	}
 
@@ -4071,7 +4069,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"5400"
+		"ItemCost"						"4175"
 		"ItemShopTags"					"damage;attack_speed;str;agi;hard_to_tag"
 		"ItemQuality"					"epic"
 		"ItemAliases"					"mkb;monkey king bar"
@@ -4084,29 +4082,27 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"66"
-				"CalculateSpellDamageTooltip"	"0"
+				"bonus_damage"			"62"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_range"			"100"
+				"bonus_range"			"85"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"pulverize_count"		"3"
+				"bonus_chance"			"100"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"pulverize_damage"		"200"
-				"CalculateSpellDamageTooltip"	"1"
+				"bonus_chance_damage"	"75"
 			}
 			"05"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"pulverize_stun"		"0.01"
+				"var_type"				"FIELD_INTEGER"
+				"bonus_attack_speed"	"10"
 			}
 		}
 	}
@@ -12460,7 +12456,7 @@
 		"ItemShopTags"					"regen_health;regen_mana;mana_pool;health_pool"
 		"ItemQuality"					"epic"
 		"ItemAliases"					"bs;bloodstone"
-		"ItemInitialCharges"			"16"
+		//"ItemInitialCharges"			"16"
 		"ItemDisplayCharges"			"1"
 		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
 		"AllowedInBackpack"				"0"
@@ -13467,7 +13463,7 @@
 		
 		"ItemRequiresCharges"			"0"
 		"ItemDisplayCharges"			"1"
-		"ItemInitialCharges"			"2"
+		//"ItemInitialCharges"			"2"
 		
 		// Special	
 		//-------------------------------------------------------------------------------------------------------------
@@ -13537,6 +13533,11 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"curtain_fire_radius_second"	"1600"
+			}
+			"13"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"initial_charges"		"2"
 			}
 		}
 	}
@@ -13893,5 +13894,335 @@
 			}
 		}
 	}
-	//next free ID: 2316
+	//=================================================================================================================
+	// Recipe: The Triumvirate v2
+	//=================================================================================================================
+	"item_recipe_imba_the_triumvirate_v2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"custom/imba_recipe"
+		"Model"							"models/props_gameplay/recipe.mdl"		
+		
+		"ID"							"2316"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"0"
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_the_triumvirate_v2"
+		"ItemRequirements"
+		{
+			"01"						"item_imba_sange_yasha;item_imba_kaya"
+			"02"						"item_imba_kaya_and_sange;item_imba_yasha"
+			"03"						"item_imba_yasha_and_kaya;item_imba_sange"
+		}
+	}
+	
+	//=================================================================================================================
+	// The Triumvirate v2
+	//=================================================================================================================
+	"item_imba_the_triumvirate_v2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_lua"
+		"ScriptFile"					"components/items/item_the_triumvirate_v2.lua"
+		"AbilityTextureName"			"custom/imba_the_triumvirate"		
+		
+		"ID"							"2317"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"42.0"
+		"AbilityManaCost"				"50"
+		"AbilitySharedCooldown"			"swords"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"6150"
+		"ItemShopTags"					"damage;str;agi;int;unique"
+		"ItemQuality"					"artifact"
+		"ItemAliases"					"triumvirate;sky;kys"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_strength"		"21"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_agility"			"21"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_intellect"		"21"
+			}			
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"21"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_attack_speed"	"21"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"spell_amp"				"21"
+			}
+			"07"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"status_resistance"				"16"
+			}
+			"08"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"movement_speed_percent_bonus"	"16"
+			}		
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"manacost_reduction"	"16"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_cdr"				"10"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_status_resistance_active"	"42"
+			}
+			"12"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_evasion_active"				"42"
+			}
+			"13"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_cdr_active"					"25"
+			}
+			"14"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"active_duration"					"4"
+			}
+			"15"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"sange_extension"		"0.1"
+			}
+			"16"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"yasha_extension"		"0.1"
+			}
+			"17"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"kaya_extension"		"0.1"
+			}
+			"18"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"kaya_min_health_dmg"	"40"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Recipe: Gungnir
+	//=================================================================================================================
+	"item_recipe_imba_gungnir"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"custom/imba_recipe"
+		"Model"							"models/props_gameplay/recipe.mdl"		
+		
+		"ID"							"2318"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"3225"
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_gungnir"
+		"ItemRequirements"
+		{
+			"01"						"item_imba_monkey_king_bar;item_imba_hurricane_pike"
+		}
+	}
+	
+	//=================================================================================================================
+	// Gungnir
+	//=================================================================================================================
+	"item_imba_gungnir"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_lua"
+		"ScriptFile"					"components/items/item_gungnir.lua"
+		"AbilityTextureName"			"custom/imba_gungnir"		
+		
+		"ID"							"2319"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH | DOTA_UNIT_TARGET_TEAM_CUSTOM"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_CUSTOM"
+		"FightRecapLevel"				"1"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"800"
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"15.0"
+		"AbilitySharedCooldown"			"force"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"50"
+		"ItemCost"						"11000"
+		"ItemShopTags"					"damage;attack_speed;int;str;hard_to_tag"
+		"ItemQuality"					"artifact"
+		"ItemAliases"					"gungnir"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
+		"ShouldBeSuggested"				"1"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_intellect"		"13"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"bonus_health_regen"	"5.0"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_agility"			"20"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_strength"		"15"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"base_attack_range"		"150"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"push_length"			"600"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"enemy_length"			"450"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"range_duration"		"5"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cast_range_enemy"		"400"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_attacks"			"4"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_attack_speed"	"100"
+			}
+			"12"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tooltip_range"			"800"
+			}
+			"13"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"enemy_distance_melee"	"400"
+			}
+			"14"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"enemy_distance_ranged"	"400"
+			}			
+			
+			
+			"15"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"62"
+			}
+			"16"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"base_attack_range_melee"		"90"
+			}
+			"17"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_chance"			"100"
+			}
+			"18"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_chance_damage"	"75"
+			}
+			"19"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_attack_speed_passive"	"10"
+			}
+			
+			"20"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"0.4"
+			}
+			"21"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"god_piercing_radius"	"160"
+			}
+		}
+	}
+	//next free ID: 2320
 }
