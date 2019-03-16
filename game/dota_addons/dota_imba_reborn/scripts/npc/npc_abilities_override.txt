@@ -3365,7 +3365,7 @@
 	"rattletrap_rocket_flare"
 	{
 		"AbilityCooldown"			"20 16.6 13.3 11"
-		"AbilityDamage"				"80 160 250 350"
+		"AbilityDamage"				"90 180 270 360"
 		"MaxLevel"					"4"
 
 		"AbilitySpecial"
@@ -3383,7 +3383,7 @@
 			"03"
 			{	
 				"var_type"			"FIELD_INTEGER"
-				"speed"				"1750"
+				"speed"				"2250"
 			}
 			"04"
 			{	
@@ -4009,7 +4009,7 @@
 		"AbilityCooldown"				"18 16 12 7"
 		"AbilityCastRange"				"1400 1575 1750 1925"
 		"AbilityDuration"				"1.0 1.5 2.0 2.5"
-		"AbilityDamage"					"110 210 290 400"
+		"AbilityDamage"					"115 230 345 460"
 
 		"AbilitySpecial"
 		{
@@ -4059,7 +4059,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"totem_damage_percentage"	"200 340 480 620"
+				"totem_damage_percentage"	"200 350 500 650"
 			}
 			"02"
 			{
@@ -8881,7 +8881,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"movement_speed"		"300 350 400 450"
+				"movement_speed"		"400 450 500 550"
 			}
 			"02"
 			{
@@ -9061,7 +9061,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_damage"				"40 80 120 160"
+				"bonus_damage"				"70 110 150 190"
 			}
 			"03"
 			{
@@ -9667,12 +9667,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"bonus_armor"			"1 1.5 2.0 2.5"
+				"bonus_armor"			"1.0 1.2 1.4 1.6"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"bonus_hp_regen"		"1.0 1.5 2.0 2.5"
+				"bonus_hp_regen"		"1.0 1.2 1.4 1.6"
 			}
 			"04"
 			{
@@ -9919,7 +9919,7 @@
 			"06"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"total_damage"				"60 120 180 240"
+				"total_damage"				"100 160 120 280"
 			}
 			"07"
 			{
@@ -14161,7 +14161,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"100 175 250 325"
+				"damage"				"150 225 300 375"
 				"LinkedSpecialBonus"	"special_bonus_unique_mars_spear_bonus_damage"
 			}
 			"02"
@@ -14237,7 +14237,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"duration"				"6 7 8"
+				"duration"				"6.0 7.0 8.0"
 			}
 			"04"
 			{
