@@ -30,6 +30,7 @@ LinkLuaModifier("modifier_imba_regen_rune", "components/modifiers/runes/modifier
 --	LinkLuaModifier("modifier_imba_ember_rune", "components/modifiers/runes/modifier_imba_ember_rune", LUA_MODIFIER_MOTION_NONE)
 --	LinkLuaModifier("modifier_imba_stone_rune", "components/modifiers/runes/modifier_imba_stone_rune", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_invisibility_rune_handler", "components/modifiers/runes/modifier_imba_invisibility_rune", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_illusion_rune", "components/modifiers/runes/modifier_imba_illusion_rune", LUA_MODIFIER_MOTION_NONE)
 
 function ImbaRunes:Init()
 	bounty_rune_spawners = {}
@@ -279,20 +280,24 @@ function ImbaRunes:PickupRune(rune_name, unit, bActiveByBottle)
 			unit:AddNewModifier(unit, item, "modifier_imba_haste_rune", {duration=duration})
 			EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Haste", unit)
 		elseif rune_name == "illusion" then
-			local images_count = 3
-			if IMBA_MUTATION and IMBA_MUTATION["terrain"] == "super_runes" then
-				images_count = 6
-			end
+			-- Massive lag for custom illusions (plus some bad glitches) so let's remove this
+			-- local images_count = 3
+			-- if IMBA_MUTATION and IMBA_MUTATION["terrain"] == "super_runes" then
+				-- images_count = 6
+			-- end
 
-			for i = 1, images_count do
-				if not unit:IsRangedAttacker() then
-					unit:CreateIllusion(duration, 100, -40)
-				else
-					unit:CreateIllusion(duration, 200, -40)
-				end
-			end
+			-- for i = 1, images_count do
+				-- if not unit:IsRangedAttacker() then
+					-- unit:CreateIllusion(duration, 100, -40)
+				-- else
+					-- unit:CreateIllusion(duration, 200, -40)
+				-- end
+			-- end
 
-			FindClearSpaceForUnit(unit, unit:GetAbsOrigin() + RandomVector(72), true)
+			-- FindClearSpaceForUnit(unit, unit:GetAbsOrigin() + RandomVector(72), true)
+			
+			-- Adding a quick thing to make it give bonus vision as an IMBAfication cause...meh
+			unit:AddNewModifier(unit, nil, "modifier_imba_illusion_rune", {duration = 40.0})
 			EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Illusion", unit)
 		elseif rune_name == "invis" then
 			unit:AddNewModifier(unit, nil, "modifier_imba_invisibility_rune_handler", {duration=2.0, rune_duration=duration})

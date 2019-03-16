@@ -472,7 +472,6 @@ end
 
 
 imba_centaur_double_edge = class({})
-LinkLuaModifier("modifier_imba_double_edge_death_prevent", "components/abilities/heroes/hero_centaur", LUA_MODIFIER_MOTION_NONE)
 
 function imba_centaur_double_edge:GetAbilityTextureName()
 	return "centaur_double_edge"
@@ -492,7 +491,6 @@ function imba_centaur_double_edge:OnSpellStart()
 		local cast_response
 		local kill_response = "centaur_cent_doub_edge_0"..RandomInt(5, 6)
 		local particle_edge = "particles/units/heroes/hero_centaur/centaur_double_edge.vpcf"
-		local modifier_prevent = "modifier_imba_double_edge_death_prevent"
 
 		-- Ability specials
 		-- #4 Talent: Damage increased by 2*strength
@@ -545,27 +543,6 @@ function imba_centaur_double_edge:OnSpellStart()
 		ParticleManager:SetParticleControl(particle_edge_fx, 5, target:GetAbsOrigin())
 		ParticleManager:ReleaseParticleIndex(particle_edge_fx)
 
-		-- Apply death prevention modifier to caster
-		caster:AddNewModifier(caster, ability, modifier_prevent, {})
-
-		-- Calculate self damage, using Centaur's Strength
-		local strength = caster:GetStrength() * (str_damage_reduction/100)
-		local self_damage = damage - strength
-
-		-- Damage caster
-		local damageTable = {victim = caster,
-			attacker = caster,
-			damage = self_damage,
-			damage_type = DAMAGE_TYPE_MAGICAL,
-			ability = ability}
-
-		ApplyDamage(damageTable)
-
-		-- Remove death prevention modifier
-		if caster:HasModifier(modifier_prevent) then
-			caster:RemoveModifierByName(modifier_prevent)
-		end
-
 		-- Find all enemies in the target's radius
 		local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
 			target:GetAbsOrigin(),
@@ -598,37 +575,21 @@ function imba_centaur_double_edge:OnSpellStart()
 			end
 		end
 
+		-- Calculate self damage, using Centaur's Strength
+		local strength = caster:GetStrength() * (str_damage_reduction/100)
+		local self_damage = damage - strength
+
+		-- Damage caster
+		local damageTable = {victim = caster,
+			attacker = caster,
+			damage = self_damage,
+			damage_type = DAMAGE_TYPE_MAGICAL,
+			damage_flags = DOTA_DAMAGE_FLAG_NON_LETHAL,
+			ability = ability}
+
+		ApplyDamage(damageTable)
 	end
-
 end
-
-
--- Death prevention modifier for the caster
-modifier_imba_double_edge_death_prevent = class({})
-
-function modifier_imba_double_edge_death_prevent:IsHidden()
-	return true
-end
-
-function modifier_imba_double_edge_death_prevent:IsPurgable()
-	return false
-end
-
-function modifier_imba_double_edge_death_prevent:IsDebuff()
-	return false
-end
-
-function modifier_imba_double_edge_death_prevent:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_MIN_HEALTH}
-
-	return decFuncs
-end
-
-function modifier_imba_double_edge_death_prevent:GetMinHealth()
-	return 1
-end
-
-
 
 ---------------------------------
 -- 		   Return 		       --
@@ -814,7 +775,7 @@ function modifier_imba_return_passive:OnTakeDamage(keys)
 				attacker = parent,
 				damage = final_damage,
 				damage_type = DAMAGE_TYPE_PHYSICAL,
-				damage_flags = DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION,
+				damage_flags = DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION + DOTA_DAMAGE_FLAG_REFLECTION,
 				ability = ability}
 
 			ApplyDamage(damageTable)

@@ -1,0 +1,10 @@
+"DOTA_Tooltip_ability_item_imba_stonework_pendant"								"Stonework Pendant"
+"DOTA_Tooltip_ability_item_imba_stonework_pendant_Description"				"<h1>Passive: Blood Magic</h1>Spells now cost hit points equal to %mana_hp_convert_mult%x their mana cost, and the wearer gains bonus hit points and health regen equal to the size of their mana pool and mana regen. <font color='#FF0000'>Does not work with abilities that require a constant source of mana.</font>\n"
+"DOTA_Tooltip_ability_item_imba_stonework_pendant_Lore"						"You CAN get blood from a stone."
+"DOTA_Tooltip_ability_item_imba_stonework_pendant_spell_lifesteal"				"%SPELL LIFESTEAL:"
+
+"DOTA_Tooltip_ability_item_imba_stonework_pendant_Note0"					"Some examples of abilities that do not work properly with Blood Magic include Storm Spirit's Ball Lightning and Leshrac's Pulse Nova."
+"DOTA_Tooltip_ability_item_imba_stonework_pendant_Note1"					"Updates the owner's health and health regeneration in 0.5 second intervals."
+"DOTA_Tooltip_ability_item_imba_stonework_pendant_Note2"					"The owner's mana bar disappears while holding this item."
+"DOTA_Tooltip_ability_item_imba_stonework_pendant_Note3"					"Upon dropping the item, the hero's current mana pool starts at 0 and has to regenerate back up."
+"DOTA_Tooltip_ability_item_imba_stonework_pendant_Note4"					"Trying to cast a spell while not having enough health for it kills the caster, without the spell getting cast."

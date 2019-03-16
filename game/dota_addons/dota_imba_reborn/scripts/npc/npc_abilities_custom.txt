@@ -9346,7 +9346,7 @@
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"cooldown_scepter"			"100 60 20"
+				"cooldown_scepter"			"100 60 20"	// This line is literally useless
 			}
 
 			"06"
@@ -9387,13 +9387,19 @@
 			"12"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"damage_per_kill"				"20"
+				"damage_per_kill"				"25"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"13"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"kill_grace_duration"			"3"
 				"CalculateSpellDamageTooltip"	"0"
+			}
+			"14"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"triggerfinger_cooldown"		"1"	
 			}
 		}
 	}
@@ -31986,7 +31992,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO | DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
 		"FightRecapLevel"				"2"
 		"HasScepterUpgrade"				"1"
 

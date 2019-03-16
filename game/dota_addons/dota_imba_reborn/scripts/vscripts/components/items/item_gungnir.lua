@@ -306,6 +306,7 @@ function modifier_item_imba_gungnir_force_enemy_ranged:IsPurgable() return false
 function modifier_item_imba_gungnir_force_enemy_ranged:IsStunDebuff() return false end
 function modifier_item_imba_gungnir_force_enemy_ranged:IsMotionController()  return true end
 function modifier_item_imba_gungnir_force_enemy_ranged:GetMotionControllerPriority()  return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
+function modifier_item_imba_gungnir_force_enemy_ranged:IgnoreTenacity()  return true end
 
 function modifier_item_imba_gungnir_force_enemy_ranged:OnCreated()
 	if not IsServer() then return end
@@ -396,6 +397,7 @@ function modifier_item_imba_gungnir_force_enemy_melee:IsPurgable() return false 
 function modifier_item_imba_gungnir_force_enemy_melee:IsStunDebuff() return false end
 function modifier_item_imba_gungnir_force_enemy_melee:IsMotionController()  return true end
 function modifier_item_imba_gungnir_force_enemy_melee:GetMotionControllerPriority()  return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
+function modifier_item_imba_gungnir_force_enemy_melee:IgnoreTenacity()  return true end
 
 function modifier_item_imba_gungnir_force_enemy_melee:OnCreated()
 	if not IsServer() then return end

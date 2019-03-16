@@ -57,12 +57,6 @@ function item_imba_urn_of_shadows:OnSpellStart()
 	local caster = self:GetCaster()
 	local target = self:GetCursorTarget()
 
-	if target:GetTeam() ~= caster:GetTeam() then
-		if target:TriggerSpellAbsorb(self) then
-			return
-		end
-	end
-
 	EmitSoundOn("DOTA_Item.UrnOfShadows.Activate", target)
 
 	-- Create and release particle
@@ -307,6 +301,10 @@ function modifier_imba_urn_of_shadows_active_enemy:IsHidden() return false end
 function modifier_imba_urn_of_shadows_active_enemy:IsPurgable() return true end
 function modifier_imba_urn_of_shadows_active_enemy:IsStunDebuff() return false end
 function modifier_imba_urn_of_shadows_active_enemy:RemoveOnDeath() return true end
+-- Not affected by status resistance (this is vanilla)
+function modifier_imba_urn_of_shadows_active_enemy:IgnoreTenacity()
+	return true
+end
 
 function modifier_imba_urn_of_shadows_active_enemy:GetEffectName()
 	return "particles/items2_fx/urn_of_shadows_damage.vpcf"

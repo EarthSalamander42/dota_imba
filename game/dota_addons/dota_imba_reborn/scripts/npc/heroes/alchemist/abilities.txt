@@ -272,7 +272,7 @@
 			"10"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bounty_multiplier"			"200 250 300 350"
+				"bounty_multiplier"			"350"
 				"LinkedSpecialBonus"		"special_bonus_imba_alchemist_7"
 			}
 		}
@@ -348,7 +348,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_health_regen"	"50 75 100"				
+				"bonus_health_regen"	"40 80 120"				
 			}
 			"06"
 			{

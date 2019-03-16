@@ -14224,5 +14224,291 @@
 			}
 		}
 	}
-	//next free ID: 2320
+	//=================================================================================================================
+	// Wand of the Brine Recipe
+	//=================================================================================================================
+	"item_recipe_imba_wand_of_the_brine"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"custom/imba_recipe"
+		"Model"							"models/props_gameplay/recipe.mdl"		
+		
+		"ID"							"2320"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"750"
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_wand_of_the_brine"
+		"ItemRequirements"
+		{
+			"01"						"item_mystic_staff;item_mystic_staff;item_void_stone"
+		}
+	}
+	
+	//=================================================================================================================
+	// Wand of the Brine
+	//=================================================================================================================
+	"item_imba_wand_of_the_brine"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2321"		
+		"BaseClass"						"item_lua"
+		"AbilityTextureName"			"custom/wand_of_the_brine"
+		"ScriptFile"					"components/items/item_wand_of_the_brine"
+
+		"Model"							"models/props_gameplay/treasure_chest001.vmdl"
+		"Effect"						"particles/generic_gameplay/dropped_aegis.vpcf"
+
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+
+		//"DungeonItemDef"				"12063"
+		//"DungeonAction"					"dungeon_in_game_item_12063"
+		//"DungeonCurrencyCost"			"110"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.2"
+		"AbilityCooldown"				"25.0"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		//"ItemCost"						"0"
+		"ItemCost"						"7000"
+		//"ItemPurchasable"				"0"
+		//"ItemQuality"					""
+		"ItemQuality"					"artifact"
+		"ItemStackable"					"0"
+		//"ItemSellable"					"0"
+		//"ItemShareability"				"ITEM_NOT_SHAREABLE"
+		//"ItemPermanent"					"0"
+		//"ItemKillable"					"0"
+		//"ItemDisplayOwnership"			"1"
+		//"CustomShop"					"1"
+		
+		"ItemShopTags"					"int;regen_mana;hard_to_tag"
+		"ItemAliases"					"brine"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
+		"ShouldBeSuggested"				"1"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"required_level"		"20"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_intelligence"	"50"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_mana_regen_pct"	"175"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"bubble_duration"		"3.0"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bubble_heal_per_tick"	"150"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"heal_tick_interval"	"0.5"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"total_heal_tooltip"	"900"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Stonework Pendant
+	//=================================================================================================================
+	"item_imba_stonework_pendant"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2322"			
+		"BaseClass"						"item_lua"
+		"AbilityTextureName"			"custom/stonework_pendant"
+		"ScriptFile"					"components/items/item_stonework_pendant"
+
+		"Model"							"models/props_gameplay/treasure_chest001.vmdl"
+		"Effect"						"particles/generic_gameplay/dropped_aegis.vpcf"
+
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		//"DungeonItemDef"				"12061"
+		//"DungeonAction"					"dungeon_in_game_item_12061"
+		//"DungeonCurrencyCost"			"65"
+		
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"100"
+		"AbilityCastPoint"				"0.0"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"5555"
+		
+		"ItemQuality"					"artifact"
+		"ItemShopTags"					"spell_lifesteal;blood_magic;hard_to_tag"
+		"ItemAliases"					"stonework;pendant"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
+		"ShouldBeSuggested"				"1"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"required_level"		"15"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"spell_lifesteal"		"10"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mana_hp_convert_mult"	"2"
+			}
+		}
+	}
+	//=================================================================================================================
+	// Glimmerdark Shield Recipe
+	//=================================================================================================================
+	"item_recipe_imba_glimmerdark_shield"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"custom/imba_recipe"
+		"Model"							"models/props_gameplay/recipe.mdl"		
+		
+		"ID"							"2323"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"2900"
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_glimmerdark_shield"
+		"ItemRequirements"
+		{
+			"01"						"item_ultimate_orb;item_imba_ghost;item_ring_of_health;item_platemail"
+		}
+	}
+	//=================================================================================================================
+	// Glimmerdark Shield
+	//=================================================================================================================
+	"item_imba_glimmerdark_shield"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2324"	
+		"BaseClass"						"item_lua"
+		"AbilityTextureName"			"custom/glimmerdark_shield"
+		"ScriptFile"					"components/items/item_glimmerdark_shield"
+
+		"Model"							"models/props_gameplay/treasure_chest001.vmdl"
+		"Effect"						"particles/generic_gameplay/dropped_aegis.vpcf"
+		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"40.0"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"8800"
+		"ItemQuality"					"artifact"
+		
+		"ItemShopTags"					"str;agi;int;regen_health;armor;hard_to_tag"
+		"ItemAliases"					"glimmerdark"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
+		"ShouldBeSuggested"				"1"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"required_level"		"21"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_strength"		"20"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_agility"			"20"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_intellect"		"20"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_health_regen"	"20"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_armor"			"20"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"prism_duration"		"6"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"prism_bonus_magic_dmg"	"-120"
+			}
+			"09"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"tooltip_prism_bonus_magic_dmg"		"120"
+			}
+		}
+	}
+	//next free ID: 2325
 }
