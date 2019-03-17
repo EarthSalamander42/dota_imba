@@ -14444,6 +14444,7 @@
 		"Effect"						"particles/generic_gameplay/dropped_aegis.vpcf"
 		
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -14510,5 +14511,126 @@
 			}
 		}
 	}
-	//next free ID: 2325
+	
+	//=================================================================================================================
+	// Transient Boots Recipe
+	//=================================================================================================================
+	"item_recipe_imba_transient_boots"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"custom/imba_recipe"
+		"Model"							"models/props_gameplay/recipe.mdl"		
+		
+		"ID"							"2325"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"500"
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_transient_boots"
+		"ItemRequirements"
+		{
+			"01"						"item_tranquil_boots;item_glimmer_cape"
+		}
+	}
+	
+	//=================================================================================================================
+	// Transient Boots
+	//=================================================================================================================
+	"item_imba_transient_boots"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2326"
+		"BaseClass"						"item_lua"
+		"AbilityTextureName"			"custom/imba_transient_boots"
+		"ScriptFile"					"components/items/item_transient_boots"
+		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_MOVEMENT"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"FightRecapLevel"				"1"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1050"
+		"AbilityCooldown"				"14.0"
+		"AbilityManaCost"				"90"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"3400"
+		"ItemQuality"					"rare"
+		
+		"ItemShopTags"					"move_speed;regen_health;armor"
+		"ItemAliases"					"transient boots"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
+		"ShouldBeSuggested"				"1"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_movement_speed"	"30"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_health_regen"	"18"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"break_time"			"6"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"broken_movement_speed"	"20"
+			}
+			
+			
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_attack_speed"	"20"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_magical_armor"	"15"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"fade_delay"				"0.6"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"active_magical_armor"	"70"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"	"5"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tooltip_range"			"1050"
+			}
+		}
+	}
+	//next free ID: 2327
 }

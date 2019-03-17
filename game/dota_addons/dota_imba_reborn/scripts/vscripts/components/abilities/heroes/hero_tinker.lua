@@ -146,8 +146,10 @@ function imba_tinker_rearm:OnChannelFinish( bInterrupted )
 				"item_imba_meteor_hammer_4",
 				"item_imba_rod_of_atos_2"
 			}
-
-			for i = 0, caster:GetAbilityCount() do
+			
+			-- Get script error when using caster:GetAbilityCount() cause it goes up to 30 for some reason
+			-- for i = 0, caster:GetAbilityCount() do
+			for i = 0, 8 do
 				local current_ability = caster:GetAbilityByIndex(i)
 
 				-- Refresh

@@ -19760,6 +19760,7 @@
 		"ScriptFile"				"components/abilities/heroes/hero_tinker"
 		"AbilityTextureName"			"tinker_rearm"
 		"FightRecapLevel"				"1"
+		"HasScepterUpgrade"				"1"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -39077,6 +39078,36 @@
 				"var_type"			"FIELD_FLOAT"
 				"mega_mult"			"2.0"
 			}
+			
+			
+			"25"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"jungle_bounty"		"1.5"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Arena of Blood ENHANCE
+	//=================================================================================================================
+	"imba_mars_arena_of_blood_enhance"
+	{
+		// General
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_mars.lua"
+		
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"MaxLevel"						"1"
+		
+		// Special
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"expansion_pct"		"100"
+			}			
 		}
 	}
 }

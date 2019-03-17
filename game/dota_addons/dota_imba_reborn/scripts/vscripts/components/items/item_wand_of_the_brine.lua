@@ -121,6 +121,7 @@ function modifier_item_imba_wand_of_the_brine_bubble:CheckState()
 		state[ MODIFIER_STATE_INVULNERABLE ] = true
 		state[ MODIFIER_STATE_OUT_OF_GAME ] = true
 		state[ MODIFIER_STATE_UNSELECTABLE ] = true
+		state[ MODIFIER_STATE_NO_HEALTH_BAR ] = true -- This is extraneuous but seems appropriate
 	end
 
 	return state

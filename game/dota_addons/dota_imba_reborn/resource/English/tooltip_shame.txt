@@ -395,6 +395,8 @@
 
 "DOTA_Tooltip_ability_batrider_flaming_lasso_Note1"					"If Batrider moves more than 3000 units in 0.05 seconds the lasso breaks."
 
+"DOTA_Tooltip_ability_mars_arena_of_blood_Note0"					"Mars grows to double his size while in the arena. This is primarily for intimidation purposes, and has no other effects."
+
 //=================================================================================================================
 //=================================================================================================================
 // Vanilla talent overrides

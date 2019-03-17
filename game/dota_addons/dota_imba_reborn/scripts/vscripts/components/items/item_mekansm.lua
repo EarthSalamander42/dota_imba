@@ -413,13 +413,13 @@ function modifier_item_imba_guardian_greaves:DeclareFunctions()
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
 		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
 		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
-		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_UNIQUE,
 		MODIFIER_PROPERTY_MANA_BONUS,
 	}
 	return funcs
 end
 
-function modifier_item_imba_guardian_greaves:GetModifierMoveSpeedBonus_Percentage()
+function modifier_item_imba_guardian_greaves:GetModifierMoveSpeedBonus_Special_Boots()
 	return self:GetAbility():GetSpecialValueFor("bonus_ms") end
 
 function modifier_item_imba_guardian_greaves:GetModifierManaBonus()
@@ -464,6 +464,8 @@ function modifier_item_imba_guardian_greaves_aura_emitter:GetModifierAura()
 end
 
 function modifier_item_imba_guardian_greaves_aura_emitter:GetAuraRadius()
+	if not self:GetAbility() then return 0 end
+	
 	return self:GetAbility():GetSpecialValueFor("aura_radius") end
 
 -- Declare modifier events/properties

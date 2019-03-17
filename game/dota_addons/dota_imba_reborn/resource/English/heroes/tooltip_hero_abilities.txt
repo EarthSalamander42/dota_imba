@@ -930,7 +930,7 @@
 "DOTA_Tooltip_ability_imba_necrolyte_heartstopper_aura_heal_reduce_pct"             "%HEALING REDUCTION:"
 
 "DOTA_Tooltip_modifier_imba_heartstopper_aura_damage"                  "Heartstopper Aura"
-"DOTA_Tooltip_modifier_imba_heartstopper_aura_damage_Description"                   "Losing health over time. Natural health regen and received healing decreased by %dMODIFIER_PROPERTY_HEAL_AMPLIFY_PERCENTAGE%%%."
+"DOTA_Tooltip_modifier_imba_heartstopper_aura_damage_Description"                   "Losing health over time. Natural health regen and received healing decreased by %dMODIFIER_PROPERTY_HP_REGEN_AMPLIFY_PERCENTAGE%%%."
 
 ////===============================================================================================================
 // Necrophos's Reaper's Scythe
@@ -2260,16 +2260,18 @@
 // Tinker's Rearm
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_tinker_rearm"                "Rearm"
-"DOTA_Tooltip_ability_imba_tinker_rearm_Description"          "Resets the cooldown on most of Tinker's items and abilities.\n\nUpgradable by Aghanim's Scepter."
+"DOTA_Tooltip_ability_imba_tinker_rearm_Description"          "Resets the cooldown on most of Tinker's items and abilities.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
 "DOTA_Tooltip_ability_imba_tinker_rearm_Lore"             "The Seven Minute War was ended by simple preperations - and the sheer unlimited amount of ammunation."
 "DOTA_Tooltip_ability_imba_tinker_rearm_Note0"              "Rearm works on all items except Aeon Disk, Arcane Boots, Black King Bar, Black Queen's Cape, Bloodstone, Eye of Skadi, Guardian Greaves, Hand of Midas, Helm of the Dominator, Kaya/Yasha/Sange Series, Linken's Sphere, Mekansm, Meteor Hammer, Necronomicon, Pipe of Insight, Refresher Orb, and White Queen's Cape."
 "DOTA_Tooltip_ability_imba_tinker_rearm_cooldown_tooltip"       "CHANNEL TIME:"
+
+"DOTA_Tooltip_ability_imba_tinker_rearm_aghanim_description"               "Grants bonus spell amplification based on every 3% of missing mana, up to a maximum of 34% at 0 mana."
 
 "DOTA_Tooltip_modifier_imba_rearm_animation"              "Rearm"
 "DOTA_Tooltip_modifier_imba_rearm_animation_Description"        "Currently reloading your arsenal."
 
 "DOTA_Tooltip_modifier_imba_rearm_overdrive"              "Overdrive!"
-"DOTA_Tooltip_modifier_imba_rearm_overdrive_Description"        "Increased spell amp by %dMODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE% for its missing mana."
+"DOTA_Tooltip_modifier_imba_rearm_overdrive_Description"        "Increasing spell amp by %dMODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE%%% from missing mana."
 
 "DOTA_Tooltip_modifier_imba_rearm_shield"               "Shield"
 "DOTA_Tooltip_modifier_imba_rearm_shield_Description"         "Absorbs incoming damage."
