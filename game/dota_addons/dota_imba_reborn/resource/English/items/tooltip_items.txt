@@ -652,7 +652,7 @@
 
 // Javelin
 "DOTA_Tooltip_ability_item_imba_javelin"                        "Javelin"
-"DOTA_Tooltip_ability_item_imba_javelin_Description"            "<h1>Passive: Pierce</h1> <font color='#FF7800'>Deals bonus magical damage every %pierce_count% attacks.</font>\n<h1><font color='#FF7800'>Passive: Long Reach</font></h1> Grants %bonus_range% bonus attack range to melee wielders. Does not benefit ranged heroes."
+"DOTA_Tooltip_ability_item_imba_javelin_Description"            "<h1>Passive: Pierce</h1>Grants each attack a %bonus_chance%%% chance to pierce through evasion and deal %bonus_chance_damage% bonus magical damage.\n<h1><font color='#FF7800'>Passive: Long Reach</font></h1> Grants %bonus_range% bonus attack range to melee wielders. Does not benefit ranged heroes."
 "DOTA_Tooltip_ability_item_imba_javelin_Lore"                  "A rather typical spear that can sometimes pierce through an enemy's armor when used to attack."
 
 // Maelstrom
