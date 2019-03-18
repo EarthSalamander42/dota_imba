@@ -44,13 +44,24 @@ if IsServer() then
 				self.ampout = self.ampout -	self:GetCaster():FindTalentValue("special_bonus_imba_bloodseeker_1")
 			end
 		end
-		self:StartIntervalThink(1)
+		
+		local tick_interval = 1
+		
+		if self:GetParent():GetTeam() ~= self:GetCaster():GetTeam() then
+			tick_interval = tick_interval * (1 - self:GetParent():GetStatusResistance())
+		end
+
+		self:StartIntervalThink(tick_interval)
 	end
 
 	function modifier_imba_bloodrage_buff_stats:IsHidden() return false end
 	function modifier_imba_bloodrage_buff_stats:IsPurgable() return true end
 
 	function modifier_imba_bloodrage_buff_stats:OnRefresh()
+		if not IsServer() then return end
+	
+		self:SetDuration(self:GetDuration() * (1 - self:GetParent():GetStatusResistance()), true)
+
 		self:OnCreated()
 	end
 
@@ -289,7 +300,7 @@ function imba_bloodseeker_blood_bath:FormBloodRiteCircle(caster, vPos)
 
 		for _,target in pairs(targets) do
 			local damage = self:GetSpecialValueFor("damage")
-			target:AddNewModifier(caster, self, "modifier_imba_blood_bath_debuff_silence", {duration = self:GetSpecialValueFor("silence_duration")})
+			target:AddNewModifier(caster, self, "modifier_imba_blood_bath_debuff_silence", {duration = self:GetSpecialValueFor("silence_duration")}):SetDuration(self:GetSpecialValueFor("silence_duration") * (1 - target:GetStatusResistance()), true)
 			if rupture then
 				if rupture:GetLevel() >= 1 then
 					rupture.from_blood_rite = true
@@ -462,6 +473,8 @@ function modifier_imba_thirst_passive:OnCreated()
 	self.damage = self:GetAbility():GetSpecialValueFor("bonus_damage") / (self.minhp - self.maxhp)
 	self.deathstick = self:GetAbility():GetSpecialValueFor("stick_time")
 
+	if not IsServer() then return end
+	
 	if not self:GetCaster():HasModifier("modifier_bloodseeker_thirst") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_bloodseeker_thirst", {})
 	end
@@ -500,6 +513,11 @@ function modifier_imba_thirst_passive:OnIntervalThink()
 						hpDeficit = hpDeficit + enemyHp
 					end
 				end
+				
+				-- Second check cause there's some logic skipping happening in the above block
+				if enemy:GetHealthPercent() > self.maxhp and enemy:HasModifier("modifier_imba_thirst_debuff_vision") then
+					enemy:RemoveModifierByName("modifier_imba_thirst_debuff_vision")
+				end
 			end
 		end
 		self:SetStackCount(hpDeficit)
@@ -508,7 +526,7 @@ end
 
 function modifier_imba_thirst_passive:DeclareFunctions()
 	local funcs = {
-		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 		MODIFIER_EVENT_ON_TAKEDAMAGE,
 		MODIFIER_PROPERTY_MOVESPEED_MAX,
@@ -517,7 +535,7 @@ function modifier_imba_thirst_passive:DeclareFunctions()
 	return funcs
 end
 
-function modifier_imba_thirst_passive:GetModifierPreAttack_BonusDamage(params)
+function modifier_imba_thirst_passive:GetModifierAttackSpeedBonus_Constant(params)
 	return self:GetStackCount() * self.damage
 end
 
@@ -583,13 +601,13 @@ end
 
 function modifier_imba_thirst_haste:DeclareFunctions()
 	local funcs = {
-		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 	}
 	return funcs
 end
 
-function modifier_imba_thirst_haste:GetModifierPreAttack_BonusDamage(params)
+function modifier_imba_thirst_haste:GetModifierAttackSpeedBonus_Constant(params)
 	return self:GetStackCount() * self.damage
 end
 
@@ -670,11 +688,13 @@ function imba_bloodseeker_rupture:OnSpellStart(target)
 	local caster = self:GetCaster()
 	local modifier_rupture_charges = "modifier_imba_rupture_charges"
 
+	if not IsServer() then return end
+	
 	if target then
 		hTarget:AddNewModifier(caster, self, "modifier_imba_rupture_debuff_dot", {duration = 0.3})
 	else
 		if hTarget:TriggerSpellAbsorb(self) then return end --if target has spell absorption, stop.
-		hTarget:AddNewModifier(caster, self, "modifier_imba_rupture_debuff_dot", {duration = self:GetSpecialValueFor("duration")})
+		hTarget:AddNewModifier(caster, self, "modifier_imba_rupture_debuff_dot", {duration = self:GetSpecialValueFor("duration")}):SetDuration(self:GetSpecialValueFor("duration") * (1 - hTarget:GetStatusResistance()), true)
 		EmitSoundOn("hero_bloodseeker.rupture.cast", caster)
 		EmitSoundOn("hero_bloodseeker.rupture", hTarget)
 		--How bad was their day?
@@ -727,7 +747,7 @@ if IsServer() then
 		self.ability = self:GetAbility()
 		self.parent = self:GetParent()
 
-		self.movedamage = self.ability:GetSpecialValueFor("movement_damage_pct") * 0.01
+		self.movedamage = self:GetParent():GetHealth() * self.ability:GetSpecialValueFor("movement_damage_pct") / 100
 		self.attackdamage = self.ability:GetSpecialValueFor("attack_damage")
 		self.castdamage = self.ability:GetSpecialValueFor("cast_damage")
 		self.damagecap = self.ability:GetTalentSpecialValueFor("damage_cap_amount")
@@ -741,9 +761,11 @@ if IsServer() then
 
 	function modifier_imba_rupture_debuff_dot:OnIntervalThink()
 		if CalculateDistance(self.prevLoc, self.parent) < self.damagecap then
+			self.movedamage = self:GetParent():GetHealth() * self.ability:GetSpecialValueFor("movement_damage_pct") / 100
+		
 			local move_damage = CalculateDistance(self.prevLoc, self.parent) * self.movedamage
 			if move_damage > 0 then
-				ApplyDamage({victim = self.parent, attacker = self.caster, damage = move_damage, damage_type = self.ability:GetAbilityDamageType(), ability = self.ability})
+				ApplyDamage({victim = self.parent, attacker = self.caster, damage = move_damage, damage_type = self.ability:GetAbilityDamageType(), damage_flags = DOTA_DAMAGE_FLAG_NON_LETHAL, ability = self.ability})
 				if self.caster:HasTalent("special_bonus_imba_bloodseeker_3") then
 					self.caster:Heal(move_damage, self.caster)
 					local healFX = ParticleManager:CreateParticle("particles/generic_gameplay/generic_lifesteal.vpcf", PATTACH_POINT_FOLLOW, self.caster)
@@ -765,7 +787,7 @@ if IsServer() then
 
 	function modifier_imba_rupture_debuff_dot:OnAbilityStart(params)
 		if params.unit == self.parent then
-			ApplyDamage({victim = self.parent, attacker = self.caster, damage = self.castdamage, damage_type = self.ability:GetAbilityDamageType(), ability = self.ability})
+			ApplyDamage({victim = self.parent, attacker = self.caster, damage = self.castdamage, damage_type = self.ability:GetAbilityDamageType(), damage_flags = DOTA_DAMAGE_FLAG_NON_LETHAL, ability = self.ability})
 			if self.caster:HasTalent("special_bonus_imba_bloodseeker_3") then
 				self.caster:Heal(self.castdamage, self.caster)
 				local healFX = ParticleManager:CreateParticle("particles/generic_gameplay/generic_lifesteal.vpcf", PATTACH_POINT_FOLLOW, self.caster)
@@ -776,7 +798,7 @@ if IsServer() then
 
 	function modifier_imba_rupture_debuff_dot:OnAttackStart(params)
 		if params.attacker == self.parent then
-			ApplyDamage({victim = self.parent, attacker = self.caster, damage = self.castdamage, damage_type = self.ability:GetAbilityDamageType(), ability = self.ability})
+			ApplyDamage({victim = self.parent, attacker = self.caster, damage = self.castdamage, damage_type = self.ability:GetAbilityDamageType(), damage_flags = DOTA_DAMAGE_FLAG_NON_LETHAL, ability = self.ability})
 			if self.caster:HasTalent("special_bonus_imba_bloodseeker_3") then
 				self.caster:Heal(self.castdamage, self.caster)
 				local healFX = ParticleManager:CreateParticle("particles/generic_gameplay/generic_lifesteal.vpcf", PATTACH_POINT_FOLLOW, self.caster)

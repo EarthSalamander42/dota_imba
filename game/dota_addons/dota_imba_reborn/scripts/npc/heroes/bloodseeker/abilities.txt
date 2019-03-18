@@ -24,7 +24,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"12 10 8 6"
+		"AbilityCooldown"				"9 8 7 6"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -59,11 +59,12 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"damage_increase_pct"		"25 30 35 40"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"health_bonus_pct"			"19 21 23 25"
+				"health_bonus_pct"			"18 22 26 30"
 			}
 			"04"
 			{
@@ -146,12 +147,12 @@
 			"02"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"silence_duration"			"3 4 5 6"
+				"silence_duration"			"3.5 4.5 5.5 6.5"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"150 200 250 300"
+				"damage"					"175 225 275 325"
 			}
 			"04"
 			{
@@ -233,12 +234,12 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_movement_speed"		"16 24 32 40"
+				"bonus_movement_speed"		"14 26 38 50"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_damage"				"16 24 32 40"
+				"bonus_damage"				"35 50 65 80"
 			}
 			"06"
 			{
@@ -248,7 +249,7 @@
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_damage_atk"			"2 4 6 8"
+				"bonus_damage_atk"			"4 8 12 16"
 			}
 			"08"
 			{
@@ -301,7 +302,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"60"
+		"AbilityCooldown"				"60 50 40"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -327,7 +328,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"movement_damage_pct"		"33 66 99"
+				"movement_damage_pct"		"8 9 10"
 			}
 			"03"
 			{

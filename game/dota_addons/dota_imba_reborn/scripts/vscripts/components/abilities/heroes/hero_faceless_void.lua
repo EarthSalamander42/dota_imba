@@ -307,7 +307,7 @@ function modifier_imba_faceless_void_time_walk_cast:OnIntervalThink()
 			-- If the enemy is a real hero index their move and attack speed, and grant a chronocharge
 			if enemy:IsRealHero() then
 				self.as_stolen = self.as_stolen + enemy:GetAttackSpeed() * as_steal
-				self.ms_stolen = self.ms_stolen + enemy:GetMoveSpeedModifier(enemy:GetBaseMoveSpeed()) * ms_steal
+				self.ms_stolen = self.ms_stolen + enemy:GetMoveSpeedModifier(enemy:GetBaseMoveSpeed(), false) * ms_steal
 				chronocharges = chronocharges + 1
 			end
 
@@ -983,7 +983,13 @@ function imba_faceless_void_chronosphere:OnSpellStart( mini_chrono, target_locat
 		-- Decide which cast sound to play
 		local enemies = FindUnitsInRadius(caster:GetTeamNumber(), chrono_center, nil, total_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, FIND_ANY_ORDER, false)
 		enemies_count = #enemies
-		if enemies_count >= PlayerResource:GetPlayerCount() * 0.35 then
+		
+		-- Note who the enemy team is
+		local enemy_team = DOTA_TEAM_BADGUYS
+		
+		if caster:GetTeam() == DOTA_TEAM_BADGUYS then enemy_team = DOTA_TEAM_GOODGUYS end
+		
+		if enemies_count >= math.max(PlayerResource:GetPlayerCountForTeam(enemy_team) * 0.5, 1) then
 			if self:IsStolen() then
 				caster:EmitSound("Imba.StolenZaWarudo")		-- If stolen, Star Platinum ZA WARUDO
 			else

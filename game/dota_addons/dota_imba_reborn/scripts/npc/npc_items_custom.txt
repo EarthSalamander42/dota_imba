@@ -13682,7 +13682,7 @@
 			"14"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bypass_cd_mult"		"3"
+				"bypass_cd_mult"		"4"
 			}
 		}
 	}

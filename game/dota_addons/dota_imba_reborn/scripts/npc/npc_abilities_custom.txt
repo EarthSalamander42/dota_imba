@@ -1244,6 +1244,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"scepter_damage_reduction"	"-30"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"07"
 			{
@@ -1331,6 +1332,7 @@
 			{
 				"var_type"								"FIELD_INTEGER"
 				"taunted_damage_bonus_pct"				"10 15 20 25"
+				"CalculateSpellDamageTooltip"			"0"
 			}
 		}
 	}
@@ -2049,7 +2051,8 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"str_damage_reduction"	"100"				
+				"str_damage_reduction"	"100"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 		}
 	}
@@ -2095,11 +2098,13 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"str_pct_as_damage"		"40 60 80 100"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"damage_block"			"3 6 9 12"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"04"
 			{
@@ -2125,6 +2130,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_damage"			"6 9 12 15" // %
+				"CalculateSpellDamageTooltip"	"0"
 			}
 		}
 	}
@@ -2178,6 +2184,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"strength_damage"			"100 200 300"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"03"
 			{
@@ -2193,6 +2200,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"damage_reduction_scepter"	"40"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"06"
 			{
@@ -2218,6 +2226,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"nether_ward_damage"		"20"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 		}
 	}
@@ -2672,6 +2681,7 @@
 			{
 				"var_type"								"FIELD_FLOAT"
 				"damage_interval"						"0.5"
+				"CalculateSpellDamageTooltip"			"0"
 			}
 
 			"09"
@@ -2684,6 +2694,7 @@
 			{
 				"var_type"								"FIELD_INTEGER"
 				"ally_damage_reduction"					"-50"
+				"CalculateSpellDamageTooltip"			"0"
 			}
 
 			"11"
@@ -3238,6 +3249,7 @@
 			{
 				"var_type"								"FIELD_INTEGER"
 				"talent_slow_per_damage"				"3"
+				"CalculateSpellDamageTooltip"			"0"
 			}
 			"12"
 			{
@@ -3248,6 +3260,7 @@
 			{
 				"var_type"								"FIELD_INTEGER"
 				"talent_damage_for_slow_proc"			"3"
+				"CalculateSpellDamageTooltip"			"0"
 			}
 		}
 	}
@@ -36714,6 +36727,30 @@
 		"AbilityTextureName"			"custom/scaldris_antipode"
 		"ScriptFile"					"components/abilities/heroes/hero_scaldris.lua"
 		"MaxLevel"						"1"
+		"HasScepterUpgrade"     	"1"
+		
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"					"particles/econ/items/doom/doom_ti8_immortal_arms/doom_ti8_immortal_devour_ring.vpcf"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"scepter_max_mana_pct_cost"			"2.5"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"scepter_refresh_chance"			"25"
+			}
+		}
 	}
 
 	//=================================================================================================================

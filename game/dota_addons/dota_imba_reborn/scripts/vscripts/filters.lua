@@ -1056,30 +1056,64 @@ function GameMode:DamageFilter( keys )
 	return true
 end
 
+-- This function runs once for each hero that gets affected by a picked up bounty rune, and keys.player_id_const is ONLY the player who actually picked it up, so the previous implementation gave Alcehmist 5 or 10 instances of boosted gold if he picked it up himself which is...bad.
+-- Need to try a different (aka. jank) way to implement this.
 function GameMode:BountyRuneFilter(keys)
 	local hero = PlayerResource:GetPlayer(keys.player_id_const):GetAssignedHero()
 
-	if hero:GetUnitName() == "npc_dota_hero_alchemist" then
-		local alchemy_bounty = 0
-		if hero:FindAbilityByName("imba_alchemist_goblins_greed") and hero:FindAbilityByName("imba_alchemist_goblins_greed"):GetLevel() > 0 then
-			alchemy_bounty = keys.gold_bounty * (hero:FindAbilityByName("imba_alchemist_goblins_greed"):GetSpecialValueFor("bounty_multiplier") / 100)
+	self.player_counter = self.player_counter or 1
 
-			-- #7 Talent: Moar gold from bounty runes
-			if hero:HasTalent("special_bonus_imba_alchemist_7") then
-				alchemy_bounty = (alchemy_bounty * (hero:FindTalentValue("special_bonus_imba_alchemist_7") / 100)) - keys.gold_bounty
+	-- Initialize the table of people on the bounty rune acquirer's team on the first instance
+	if self.player_counter == 1 then
+		local heroes = HeroList:GetAllHeroes()
+		self.allies = {}
+		
+		for _, unit in pairs(heroes) do
+			if unit:GetTeam() == hero:GetTeam() and unit:IsRealHero() and not unit:IsClone() and not unit:IsTempestDouble() then
+				table.insert(self.allies, unit)
 			end
-
-			hero:ModifyGold(alchemy_bounty, false, DOTA_ModifyGold_Unspecified)
-			SendOverheadEventMessage(PlayerResource:GetPlayer(hero:GetPlayerOwnerID()), OVERHEAD_ALERT_GOLD, hero, alchemy_bounty, nil)
 		end
 	end
-
+	
+	-- Okay now we should have the list of allies, so for each instance of BountyRuneFilter that is run, go through and check gold/exp; if Greevil's Greed owner, give an extra amount accordingly	
 	local custom_gold_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "bounty_multiplier")["1"])
 	local custom_xp_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "exp_multiplier")["1"])
-
+	
+	-- Base gold and EXP; if the hero does not have Greevil's Greed this is basically the end
 	keys.gold_bounty = keys.gold_bounty * (custom_gold_bonus / 100)
 	keys.xp_bounty = keys.xp_bounty * (custom_xp_bonus / 100)
+	
+	-- Greevil's Greed  logic
+	local target = self.allies[self.player_counter]
+	
+	if target:FindAbilityByName("imba_alchemist_goblins_greed") and target:FindAbilityByName("imba_alchemist_goblins_greed"):IsTrained() then
+		local alchemy_bounty = 0
+	
+		-- #7 Talent: Moar gold from bounty runes (should return 0 for that if the owner doesn't have it)
+		alchemy_bounty = keys.gold_bounty * (target:FindAbilityByName("imba_alchemist_goblins_greed"):GetSpecialValueFor("bounty_multiplier") + target:FindTalentValue("special_bonus_imba_alchemist_7")) / 100
+		
+		-- Balancing for stacking gold multipliers to not go out of control in mutation/frantic maps
+		if GameRules:GetCustomGameDifficulty() > 1 then
+			local bountyReductionPct = 0.5 -- 0.0 to 1.0, with 0.0 being reduce nothing, and 1.0 being remove greevil's greed effect
+			-- Set variable to number between current_bounty and alchemy_bounty based on bountyReductionPct
+			alchemy_bounty = max(current_bounty, alchemy_bounty - ((alchemy_bounty - current_bounty) * bountyReductionPct))
+		end
+		
+		-- Return the DIFFERENCE between the calculated boost and the standard bounty rune amount since the Greevil's Greed owner is already getting keys.gold_bounty
+		local additional_bounty = alchemy_bounty - keys.gold_bounty
+		
+		target:ModifyGold(additional_bounty, false, DOTA_ModifyGold_Unspecified)
+		SendOverheadEventMessage(PlayerResource:GetPlayer(target:GetPlayerOwnerID()), OVERHEAD_ALERT_GOLD, target, additional_bounty, nil)
+	end
 
+	if #self.allies == self.player_counter then
+		self.player_counter = nil
+		self.allies = nil
+	else
+		self.player_counter = self.player_counter + 1
+	end
+	
+	-- I don't even think this return statement does anything
 	return true
 end
 

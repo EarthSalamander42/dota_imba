@@ -280,12 +280,12 @@
 // Bloodseeker's Thirst
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_bloodseeker_thirst"                          "Thirst"
-"DOTA_Tooltip_ability_imba_bloodseeker_thirst_Description"              "Bloodseeker is invigorated by the wounds of his enemies, gaining bonus movement speed and attack damage whenever an enemy hero's health falls below %max_threshold_pct%%%, with the bonuses increasing as their health falls further. If an enemy hero's health falls below %visibility_threshold_pct%%%, he will also gain vision and True Sight of that hero. Bonuses stack per hero.\n<font color='#FF7800'>Sanguinary:</font> Whenever an enemy hero is damaged, Bloodseeker also gains a smaller amount of damage and movement speed for %atk_buff_duration% seconds. These bonuses are doubled when the attacker is Bloodseeker himself. Those bonuses stack when attacking different heroes, and will override if the new damage bonus is higher."
+"DOTA_Tooltip_ability_imba_bloodseeker_thirst_Description"              "Bloodseeker is invigorated by the wounds of his enemies, gaining bonus movement speed and attack speed whenever an enemy hero's health falls below %max_threshold_pct%%%, with the bonuses increasing as their health falls further. If an enemy hero's health falls below %visibility_threshold_pct%%%, he will also gain vision and True Sight of that hero. Bonuses stack per hero.\n<font color='#FF7800'>Sanguinary:</font> Whenever an enemy hero is damaged, Bloodseeker also gains a smaller amount of attack speed and movement speed for %atk_buff_duration% seconds. These bonuses are doubled when the attacker is Bloodseeker himself. Those bonuses stack when attacking different heroes, and will override if the new bonus is higher."
 "DOTA_Tooltip_ability_imba_bloodseeker_thirst_Lore"                    "Strygwyr becomes frenzied when blood is spilled."
 "DOTA_Tooltip_ability_imba_bloodseeker_thirst_bonus_movement_speed"                 "%MAX MOVE SPEED PER HERO:"
-"DOTA_Tooltip_ability_imba_bloodseeker_thirst_bonus_damage"            "MAX DAMAGE PER HERO:"
+"DOTA_Tooltip_ability_imba_bloodseeker_thirst_bonus_damage"            "MAX ATTACK SPEED PER HERO:"
 "DOTA_Tooltip_ability_imba_bloodseeker_thirst_bonus_movement_speed_atk"             "%SANGUINARY MOVE SPEED:"
-"DOTA_Tooltip_ability_imba_bloodseeker_thirst_bonus_damage_atk"                     "SANGUINARY DAMAGE:"
+"DOTA_Tooltip_ability_imba_bloodseeker_thirst_bonus_damage_atk"                     "SANGUINARY ATTACK SPEED:"
 
 "DOTA_Tooltip_modifier_imba_thirst_debuff_vision"                      "Thirst"
 "DOTA_Tooltip_modifier_imba_thirst_debuff_vision_Description"          "Bloodseeker's thirst for blood exposes you."
@@ -294,12 +294,12 @@
 // Bloodseeker's Rupture
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_bloodseeker_rupture"                        "Rupture"
-"DOTA_Tooltip_ability_imba_bloodseeker_rupture_Description"            "Causes an enemy unit's skin to rupture. If the unit moves, it takes a percentage of the distance traveled as pure damage.\n<font color='#FF7800'>Haemophilia:</font> When Rupture is applied to a unit above %damage_initial_pct%%% health, it will instantly drop them down to %damage_initial_pct%%%.\n<font color='#FF7800'>Varicose Veins:</font> Rupture will deal damage whenever the afflicted unit starts casting an ability or starts attacking.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
+"DOTA_Tooltip_ability_imba_bloodseeker_rupture_Description"            "Causes an enemy unit's skin to rupture. If the unit moves, it takes a percentage of current health as damage per 100 units moved. The damage is dealt through spell immunity. Rupture damage is non-lethal.\n<font color='#FF7800'>Haemophilia:</font> When Rupture is applied to a unit above %damage_initial_pct%%% health, it will instantly drop them down to %damage_initial_pct%%%.\n<font color='#FF7800'>Varicose Veins:</font> Rupture will deal damage whenever the afflicted unit starts casting an ability or starts attacking.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
 "DOTA_Tooltip_ability_imba_bloodseeker_rupture_Lore"                    "When the Bloodseeker hunts you, injuries become fatalities."
 "DOTA_Tooltip_ability_imba_bloodseeker_rupture_Note0"                  "Moving more than 1300 units in under 0.25 seconds will cause Rupture to ignore that movement."
 "DOTA_Tooltip_ability_imba_bloodseeker_rupture_Note1"                  "Scepter Rupture charges can be fully refreshed by using a Refresher."
 "DOTA_Tooltip_ability_imba_bloodseeker_rupture_duration"                "DURATION:"
-"DOTA_Tooltip_ability_imba_bloodseeker_rupture_movement_damage_pct"                 "%DISTANCE TRAVELLED TO DAMAGE:"
+"DOTA_Tooltip_ability_imba_bloodseeker_rupture_movement_damage_pct"                 "%CURRENT HEALTH AS DAMAGE PER 100 MOVED DISTANCE:"
 "DOTA_Tooltip_ability_imba_bloodseeker_rupture_attack_damage"          "DAMAGE PER ATTACK:"
 "DOTA_Tooltip_ability_imba_bloodseeker_rupture_cast_damage"            "DAMAGE PER CAST:"
 "DOTA_Tooltip_ability_imba_bloodseeker_rupture_aghanim_description"                 "Allows Rupture to store up to 2 charges. A charge is replenished every 40 seconds and can be reduced with cooldown reductions effects."

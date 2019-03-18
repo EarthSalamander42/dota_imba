@@ -228,8 +228,10 @@ function base_modifier_dual_breath_caster:HorizontalMotion()
 		local breath_traveled = self.breath_traveled
 
 		self:_DualBreathAOEApplyModifier()
-
-		if breath_traveled < self.breath_distance and not caster:IsStunned() and not caster:IsSilenced() and not caster:IsHexed() and not caster:IsNightmared() then
+		
+		-- Let Jakiro still complete the Dual Breath if disabled
+		-- if breath_traveled < self.breath_distance and not caster:IsStunned() and not caster:IsSilenced() and not caster:IsHexed() and not caster:IsNightmared() then
+		if breath_traveled < self.breath_distance then
 			local set_point = caster:GetAbsOrigin() + self.breath_direction * breath_speed
 			caster:SetAbsOrigin(Vector(set_point.x, set_point.y, GetGroundPosition(set_point, caster).z))
 			self.breath_traveled = breath_traveled + breath_speed
