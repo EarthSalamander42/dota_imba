@@ -98,6 +98,7 @@ function imba_wisp_tether:OnSpellStart()
 
 	if caster:HasTalent("special_bonus_imba_wisp_2") then
 		self.tether_ally:SetStolenScepter(true)
+		self.tether_ally:CalculateStatBonus()
 	end
 
 	if caster:HasTalent("special_bonus_imba_wisp_6") then
@@ -250,6 +251,7 @@ function modifier_imba_wisp_tether:OnRemoved()
 
 		if self:GetCaster():HasTalent("special_bonus_imba_wisp_2") then
 			self.target:SetStolenScepter(false)
+			self.target:CalculateStatBonus()
 		end
 
 		self:GetCaster():EmitSound("Hero_Wisp.Tether.Stop")

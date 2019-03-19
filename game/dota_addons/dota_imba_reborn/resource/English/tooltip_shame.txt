@@ -395,6 +395,8 @@
 
 "DOTA_Tooltip_ability_batrider_flaming_lasso_Note1"					"If Batrider moves more than 3000 units in 0.05 seconds the lasso breaks."
 
+"DOTA_Tooltip_ability_mars_arena_of_blood_Note0"					"Mars grows to double his size while in the arena. This is primarily for intimidation purposes, and has no other effects."
+
 //=================================================================================================================
 //=================================================================================================================
 // Vanilla talent overrides
@@ -645,10 +647,17 @@
 ////===============================================================================================================
 "npc_dota_hero_scaldris"                      "Scaldris"
 
+"npc_dota_hero_scaldris_hype"			"Hope you like button mashing."
+
 "DOTA_Tooltip_ability_imba_scaldris_antipode"           "Antipode"
-"DOTA_Tooltip_ability_imba_scaldris_antipode_Description"     "Scaldris' spells have a dual nature; he picks one of two elemental aspects when casting them.\n\nCasting the <font color='#FF7800'>fire</font> version of a spell switches it aspect to <font color='#427CFF'>cold</font>, and vice-versa.\n\nAdditionally, hitting a target with a <font color='#FF7800'>fire</font> spell causes any existing <font color='#427CFF'>cold</font>-based damage over time effects to end, dealing all their remaining damage instantly. The reverse is also true."
+"DOTA_Tooltip_ability_imba_scaldris_antipode_Description"     "Scaldris' spells have a dual nature; he picks one of two elemental aspects when casting them.\n\nCasting the <font color='#FF7800'>fire</font> version of a spell switches it aspect to <font color='#427CFF'>cold</font>, and vice-versa.\n\nAdditionally, hitting a target with a <font color='#FF7800'>fire</font> spell causes any existing <font color='#427CFF'>cold</font>-based damage over time effects to end, dealing all their remaining damage instantly. The reverse is also true.\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
 "DOTA_Tooltip_ability_imba_scaldris_antipode_Lore"          "The Antipode's signature style is to torment his enemies with an incessant barrage of alternating blazing and freezing energies, causing victims' bodies to collapse repeatedly into thermal shock."
 "DOTA_Tooltip_ability_imba_scaldris_antipode_Note0"         "Each of the spells' elemental aspects has an independent cooldown."
+"DOTA_Tooltip_ability_imba_scaldris_antipode_Note1"         "Aghanim's Scepter refresh mechanic must be able to spend at least 1 mana."
+
+"DOTA_Tooltip_ability_imba_scaldris_antipode_aghanim_description"		"Antipode can now be cast to swap all abilities to their other elemental aspect. Additionally, setting this to autocast spends a portion of Scaldris's max mana for each non-ultimate ability that was swapped in and on cooldown for a chance to be refreshed."
+"DOTA_Tooltip_ability_imba_scaldris_antipode_scepter_max_mana_pct_cost"	"%SCEPTER % OF MAX MANA COST PER ABILITY:"
+"DOTA_Tooltip_ability_imba_scaldris_antipode_scepter_refresh_chance"	"%SCEPTER REFRESH CHANCE:"
 
 "DOTA_Tooltip_ability_imba_scaldris_heatwave"           "Heatwave"
 "DOTA_Tooltip_ability_imba_scaldris_heatwave_Description"     "Launches a wave of smoldering hot air in a straight line. Deals <font color='#FF7800'>fire</font> damage to any enemies hit."

@@ -604,41 +604,14 @@ function imba_necrolyte_heartstopper_aura:GetCastRange( location , target)
 end
 
 modifier_imba_heartstopper_aura = class({})
+
 function modifier_imba_heartstopper_aura:OnCreated()
-	if IsServer() then
-		self.radius = self:GetAbility():GetSpecialValueFor("radius")
-		self.damage_pct = self:GetAbility():GetTalentSpecialValueFor("damage_pct")
-		self.tick_rate	= self:GetAbility():GetTalentSpecialValueFor("tick_rate")
-		if not self.timer then
-			self:StartIntervalThink(self.tick_rate)
-			self.timer = true
-		end
-	end
+	self.radius = self:GetAbility():GetSpecialValueFor("radius")
 end
 
 function modifier_imba_heartstopper_aura:OnRefresh()
 	if IsServer() then
 		self:OnCreated()
-	end
-end
-
-function modifier_imba_heartstopper_aura:OnIntervalThink()
-	if IsServer() then
-		local caster = self:GetCaster()
-		if not caster:PassivesDisabled() then
-			local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, 25000, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
-			for _,enemy in ipairs(enemies) do
-				local modifier = enemy:FindModifierByNameAndCaster("modifier_imba_heartstopper_aura_damage",caster)
-				if modifier then
-					-- Calculates damage
-					local damage = enemy:GetMaxHealth() * (self.damage_pct * self.tick_rate) / 100
-					ApplyDamage({attacker = caster, victim = enemy, ability = self:GetAbility(), damage = damage, damage_type = DAMAGE_TYPE_PURE, damage_flags = DOTA_DAMAGE_FLAG_HPLOSS + DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION})
-					if (math.random(1,1000) <= 1) and (caster:GetName() == "npc_dota_hero_necrolyte") then
-						caster:EmitSound("necrolyte_necr_ability_aura_0"..math.random(1,3))
-					end
-				end
-			end
-		end
 	end
 end
 
@@ -690,8 +663,12 @@ function modifier_imba_heartstopper_aura:GetEffectAttachType()
 end
 
 modifier_imba_heartstopper_aura_damage = modifier_imba_heartstopper_aura_damage or class({})
+
+
 function modifier_imba_heartstopper_aura_damage:IsHidden()
-	return false
+	if self:GetStackCount() == 0 then
+		return true
+	end
 end
 
 function modifier_imba_heartstopper_aura_damage:IsDebuff()
@@ -701,6 +678,51 @@ end
 function modifier_imba_heartstopper_aura_damage:IsPurgable()
 	return false
 end
+
+function modifier_imba_heartstopper_aura_damage:OnCreated()
+	if IsServer() then
+		self.parent	= self:GetParent()
+	
+		self.radius = self:GetAbility():GetSpecialValueFor("radius")
+		self.damage_pct = self:GetAbility():GetTalentSpecialValueFor("damage_pct")
+		self.tick_rate	= self:GetAbility():GetTalentSpecialValueFor("tick_rate")
+		
+		if self:GetParent():CanEntityBeSeenByMyTeam(self:GetCaster()) then
+			self:SetStackCount(self:GetAbility():GetTalentSpecialValueFor("heal_reduce_pct"))
+		end
+		
+		if not self.timer then
+			self:StartIntervalThink(self.tick_rate)
+			self.timer = true
+		end
+	end
+end
+
+function modifier_imba_heartstopper_aura_damage:OnIntervalThink()
+	if IsServer() then
+		local caster = self:GetCaster()
+		
+		-- Jank way of hiding modifier if the caster is invisible (client/server issues...as usual)
+		if self:GetParent():CanEntityBeSeenByMyTeam(caster) then
+			self:SetStackCount(self:GetAbility():GetTalentSpecialValueFor("heal_reduce_pct"))
+		else
+			self:SetStackCount(0)
+		end
+		
+		if not caster:PassivesDisabled() then
+			-- Calculates damage
+			local damage = self.parent:GetMaxHealth() * (self.damage_pct * self.tick_rate) / 100
+			ApplyDamage({attacker = caster, victim = self.parent, ability = self:GetAbility(), damage = damage, damage_type = DAMAGE_TYPE_PURE, damage_flags = DOTA_DAMAGE_FLAG_HPLOSS + DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION})
+			
+			if (math.random(1,1000) <= 1) and (caster:GetName() == "npc_dota_hero_necrolyte") then
+				caster:EmitSound("necrolyte_necr_ability_aura_0"..math.random(1,3))
+			end
+			
+			
+		end
+	end
+end
+
 
 function modifier_imba_heartstopper_aura_damage:DeclareFunctions()
 	local decFuncs =

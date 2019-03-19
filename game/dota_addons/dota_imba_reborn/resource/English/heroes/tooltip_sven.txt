@@ -28,17 +28,16 @@
 
 // Sven's Warcry
 "DOTA_Tooltip_ability_imba_sven_warcry"									"Warcry"
-"DOTA_Tooltip_ability_imba_sven_warcry_Description"						"Sven's Warcry heartens his allies for battle, increasing their movement speed and armor. Lasts 8 seconds.\n<font color='#FF7800'>WAAARGH!:</font> Activating Warcry applies a basic dispel on Sven.\n<font color='#FF7800'>Knightly presence:</font> Warcry also increases allies status resistance."
+"DOTA_Tooltip_ability_imba_sven_warcry_Description"						"Sven's Warcry heartens his allied heroes for battle, increasing their movement speed and provides them with an attack damage shield. Buff ends if the shield is consumed. Shield health grows based on Sven's strength.\n<font color='#FF7800'>WAAARGH!:</font> Activating Warcry applies a basic dispel on Sven.\n<font color='#FF7800'>Knightly Presence:</font> Warcry also increases allies' status resistance by %tenacity_bonus_pct%%%."
 "DOTA_Tooltip_ability_imba_sven_warcry_Lore"							"Calling a few lines from the Vigil Codex fortifies Sven's obedience to his rogue code. So poetic!"
-"DOTA_Tooltip_ability_imba_sven_warcry_Note0"							"Status Resistance decreases the duration of most debuffs."
-"DOTA_Tooltip_ability_imba_sven_warcry_ms_bonus_pct"					"%MOVEMENT SPEED:"
-"DOTA_Tooltip_ability_imba_sven_warcry_armor_bonus"						"BONUS ARMOR:"
-"DOTA_Tooltip_ability_imba_sven_warcry_tenacity_bonus_pct"				"%STATUS RESISTANCE:"
-"DOTA_Tooltip_ability_imba_sven_warcry_radius"							"EFFECT RADIUS:"
+"DOTA_Tooltip_ability_imba_sven_warcry_ms_bonus_pct"					"%BONUS SPEED:"
+"DOTA_Tooltip_ability_imba_sven_warcry_hp_shield"						"SHIELD HEALTH:"
+"DOTA_Tooltip_ability_imba_sven_warcry_hp_shield_str_mult"				"SHIELD HEALTH STR MULTIPLIER:"
+"DOTA_Tooltip_ability_imba_sven_warcry_radius"							"RADIUS:"
 "DOTA_Tooltip_ability_imba_sven_warcry_duration"						"DURATION:"
 
-"DOTA_Tooltip_modifier_imba_warcry"                        "Warcry!!!"
-"DOTA_Tooltip_modifier_imba_warcry_Description"                        "Sven's here to pump you up! Increased armor, move speed and status resistance."
+"DOTA_Tooltip_modifier_imba_warcry"										"Warcry"
+"DOTA_Tooltip_modifier_imba_warcry_Description"							"Movement speed increased by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%% and fully blocking a limited amount of attack damage."
 
 "DOTA_Tooltip_modifier_imba_warcry_immunity"                            "Magic Immune"
 "DOTA_Tooltip_modifier_imba_warcry_immunity_Description"                "You're so pumped up, you're actually immune to magic."

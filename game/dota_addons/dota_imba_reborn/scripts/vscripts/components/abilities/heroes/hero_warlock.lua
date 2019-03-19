@@ -496,6 +496,8 @@ end
 
 function modifier_imba_shadow_word:IsHidden() return false end
 function modifier_imba_shadow_word:IsPurgable() return true end
+function modifier_imba_shadow_word:IgnoreTenacity()	return true end
+
 
 function modifier_imba_shadow_word:IsDebuff()
 	if self.good_guy then

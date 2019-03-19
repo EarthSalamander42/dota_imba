@@ -3035,6 +3035,171 @@
 	}
 }
 
+"Imba.QueenOfPain.AHHHHH1"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"				"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"	"sounds/hero/queen_of_pain/ahhhhh1.vsnd"
+						}
+					}
+					"volume"            
+					{   
+						"value"     "4.00000"  
+					}
+					"memory_type"
+					{
+						"value"			"0"
+					}
+				}
+			}
+		}
+	}
+}
+
+"Imba.QueenOfPain.AHHHHH2"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"				"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"	"sounds/hero/queen_of_pain/ahhhhh2.vsnd"
+						}
+					}
+					"volume"            
+					{   
+						"value"     "4.00000"  
+					}
+					"memory_type"
+					{
+						"value"			"0"
+					}
+				}
+			}
+		}
+	}
+}
+
+"Imba.QueenOfPain.AHHHHH3"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"				"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"	"sounds/hero/queen_of_pain/ahhhhh3.vsnd"
+						}
+					}
+					"volume"            
+					{   
+						"value"     "4.00000"  
+					}
+					"memory_type"
+					{
+						"value"			"0"
+					}
+				}
+			}
+		}
+	}
+}
+
+"Imba.QueenOfPain.AHHHHH4"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"				"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"	"sounds/hero/queen_of_pain/ahhhhh4.vsnd"
+						}
+					}
+					"volume"            
+					{   
+						"value"     "4.00000"  
+					}
+					"memory_type"
+					{
+						"value"			"0"
+					}
+				}
+			}
+		}
+	}
+}
+
+"Imba.QueenOfPain.AHHHHH5"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"				"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"	"sounds/hero/queen_of_pain/ahhhhh5.vsnd"
+						}
+					}
+					"volume"            
+					{   
+						"value"     "4.00000"  
+					}
+					"memory_type"
+					{
+						"value"			"0"
+					}
+				}
+			}
+		}
+	}
+}
+
 "Imba.PangolierRollin"
 {
 	"operator_stacks"

@@ -64,6 +64,11 @@ function Dagon( keys )
 	-- Play hit sound
 	target:EmitSound(sound_hit)
 
+	-- Kill the target instantly if it is an illusion
+	if target:IsIllusion() then
+		target:Kill(ability, caster)
+	end
+	
 	-- Dagonize the main target
 	DagonizeIt(caster, ability, caster, target, damage, particle_hit, dagon_colors[ability:GetAbilityName()])
 
@@ -110,6 +115,8 @@ function DagonizeIt(caster, ability, source, target, damage, particle, color)
 	ParticleManager:SetParticleControl(dagon_pfx, 3, color)
 	ParticleManager:ReleaseParticleIndex(dagon_pfx)
 
-	-- Deal damage to the target
-	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
+	if target:IsAlive() then
+		-- Deal damage to the target
+		ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
+	end
 end

@@ -71,7 +71,7 @@ function modifier_custom_mechanics:OnTakeDamage( keys )
 		local parent = self:GetParent()
 		local caster = keys.attacker
 		local target = keys.unit
-		local damage = keys.damage
+		local damage = math.max(keys.damage, 0) -- IDK if this will fix it but there's reports of health randomly getting deleted and I assume it has to do with the custom lifesteal
 		local damage_flags = keys.damage_flags
 		local inflictor = keys.inflictor
 		

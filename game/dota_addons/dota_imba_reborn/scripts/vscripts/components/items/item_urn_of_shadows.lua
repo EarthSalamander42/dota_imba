@@ -57,12 +57,6 @@ function item_imba_urn_of_shadows:OnSpellStart()
 	local caster = self:GetCaster()
 	local target = self:GetCursorTarget()
 
-	if target:GetTeam() ~= caster:GetTeam() then
-		if target:TriggerSpellAbsorb(self) then
-			return
-		end
-	end
-
 	EmitSoundOn("DOTA_Item.UrnOfShadows.Activate", target)
 
 	-- Create and release particle
@@ -111,7 +105,7 @@ function modifier_imba_urn_of_shadows_passive:OnDestroy()
 			if self:GetParent().GetItemInSlot then
 				local item = self:GetParent():GetItemInSlot(itemSlot)
 			
-				if (item:GetName() == "item_imba_black_queen_cape" or item:GetName() == "item_imba_spirit_vessel") and item:GetPurchaseTime() - self:GetDieTime() <= 3 then -- Arbitrary time differential to ensure it gets the item that was created shortly after Urn was destroyed
+				if item and (item:GetName() == "item_imba_black_queen_cape" or item:GetName() == "item_imba_spirit_vessel") and item:GetPurchaseTime() - self:GetDieTime() <= 3 then -- Arbitrary time differential to ensure it gets the item that was created shortly after Urn was destroyed
 					item:SetCurrentCharges(math.max(self:GetAbility():GetCurrentCharges(), 0))
 					
 					break
@@ -307,6 +301,10 @@ function modifier_imba_urn_of_shadows_active_enemy:IsHidden() return false end
 function modifier_imba_urn_of_shadows_active_enemy:IsPurgable() return true end
 function modifier_imba_urn_of_shadows_active_enemy:IsStunDebuff() return false end
 function modifier_imba_urn_of_shadows_active_enemy:RemoveOnDeath() return true end
+-- Not affected by status resistance (this is vanilla)
+function modifier_imba_urn_of_shadows_active_enemy:IgnoreTenacity()
+	return true
+end
 
 function modifier_imba_urn_of_shadows_active_enemy:GetEffectName()
 	return "particles/items2_fx/urn_of_shadows_damage.vpcf"

@@ -693,6 +693,10 @@ function imba_zuus_cloud:OnInventoryContentsChanged()
 	end
 end
 
+function imba_zuus_cloud:OnHeroCalculateStatBonus()
+	self:OnInventoryContentsChanged()
+end
+
 function imba_zuus_cloud:OnSpellStart()
 	if IsServer() then
 		self.target_point 			= self:GetCursorPosition()
@@ -883,6 +887,10 @@ function imba_zuus_nimbus_zap:OnInventoryContentsChanged()
 			self:SetHidden(true)
 		end
 	end
+end
+
+function imba_zuus_nimbus_zap:OnHeroCalculateStatBonus()
+	self:OnInventoryContentsChanged()
 end
 
 function imba_zuus_nimbus_zap:GetManaCost( nLevel )

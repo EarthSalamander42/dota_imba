@@ -70,7 +70,7 @@
 		"item"		"item_gem"
 		"item"		"item_imba_morbid_mask"
 		"item"		"item_shadow_amulet"	
-		"item"		"item_ghost"
+		"item"		"item_imba_ghost"
 		"item"		"item_imba_blink"
 	}
 	
@@ -163,7 +163,7 @@
 		"item"		"item_imba_skull_basher"
 		"item"		"item_imba_monkey_king_bar"
 		"item"		"item_bfury"
-		"item"		"item_ethereal_blade"
+		"item"		"item_imba_ethereal_blade"
 		"item"		"item_imba_radiance"
 		"item"		"item_imba_greater_crit"
 		"item"		"item_imba_butterfly"

@@ -113,6 +113,61 @@ function imba_scaldris_antipode:GetIntrinsicModifierName()
 	return "modifier_imba_antipode_passive"
 end
 
+-- Scepter Behavior
+function imba_scaldris_antipode:GetBehavior()
+	if self:GetCaster():HasScepter() then
+		return DOTA_ABILITY_BEHAVIOR_NO_TARGET + DOTA_ABILITY_BEHAVIOR_AUTOCAST + DOTA_ABILITY_BEHAVIOR_IMMEDIATE
+	else
+		return DOTA_ABILITY_BEHAVIOR_PASSIVE
+	end
+end
+
+-- Helper function (this should only be activated in server-side so I'm not going to put the check in here)
+function imba_scaldris_antipode:ScepterSwap(ability1, ability2)
+	local caster			= self:GetCaster()
+	local active_ability	= ability1				-- Stores string of ability name
+	
+	-- Not affected by manaloss reduction...hmm
+	local refresh_mana_cost	= caster:GetMaxMana() * (self:GetSpecialValueFor("scepter_max_mana_pct_cost") / 100)
+	
+	-- Make sure abilities exist before committing to function logic
+	if caster:FindAbilityByName(ability1) and caster:FindAbilityByName(ability2) then
+		-- If the first ability is hidden, swap it in. Otherwise, swap it out
+		if caster:FindAbilityByName(ability1):IsHidden() then
+			caster:SwapAbilities(ability1, ability2, true, false)
+		else
+			caster:SwapAbilities(ability1, ability2, false, true)
+			active_ability	= ability2
+		end
+	end
+	
+	-- Autocast addendum; spend some mana for a chance to immediately refresh the non-ultimate ability that was swapped in
+	if not caster:FindAbilityByName(active_ability):IsCooldownReady() and caster:FindAbilityByName(active_ability):GetAbilityType() ~= ABILITY_TYPE_ULTIMATE and self:GetAutoCastState() and caster:GetMana() >= refresh_mana_cost and refresh_mana_cost >= 1 then
+		caster:ReduceMana(refresh_mana_cost)
+		
+		if RollPercentage(self:GetSpecialValueFor("scepter_refresh_chance")) then
+			caster:FindAbilityByName(active_ability):EndCooldown()
+		end
+	end
+end
+
+function imba_scaldris_antipode:OnSpellStart()
+	if not IsServer() then return end
+	
+	local caster			= self:GetCaster()
+	local antipode_modifier = caster:FindModifierByName("modifier_imba_antipode_passive")
+	
+	if antipode_modifier then
+		self:ScepterSwap("imba_scaldris_heatwave", "imba_scaldris_cold_front")
+		self:ScepterSwap("imba_scaldris_scorch", "imba_scaldris_freeze")
+		self:ScepterSwap("imba_scaldris_jet_blaze", "imba_scaldris_ice_floes")
+		self:ScepterSwap("imba_scaldris_living_flame", "imba_scaldris_absolute_zero")
+	end
+
+	local particle = ParticleManager:CreateParticle("particles/econ/items/doom/doom_ti8_immortal_arms/doom_ti8_immortal_devour_ring.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+	ParticleManager:ReleaseParticleIndex(particle)
+end
+
 -- Passive modifier
 modifier_imba_antipode_passive = class({})
 function modifier_imba_antipode_passive:IsDebuff() return false end

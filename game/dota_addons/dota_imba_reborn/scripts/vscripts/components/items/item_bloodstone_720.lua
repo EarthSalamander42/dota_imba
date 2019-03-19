@@ -114,11 +114,17 @@ function modifier_item_imba_bloodstone_720:OnCreated()
 	self.death_charges				= self.ability:GetSpecialValueFor("death_charges")
 	self.kill_charges				= self.ability:GetSpecialValueFor("kill_charges")
 	self.charge_range				= self.ability:GetSpecialValueFor("charge_range")
-	-- self.initial_charges_tooltip	= self.ability:GetSpecialValueFor("initial_charges_tooltip")
+	self.initial_charges_tooltip	= self.ability:GetSpecialValueFor("initial_charges_tooltip")
 	-- self.mana_cost_percentage		= self.ability:GetSpecialValueFor("mana_cost_percentage")
 	-- self.restore_duration			= self.ability:GetSpecialValueFor("restore_duration")
 	
 	if not IsServer() then return end
+	
+	-- Need to do this instead of using the "ItemInitialCharges" KV because the latter messes with sell prices
+	if not self.ability.initialized then
+		self.ability:SetCurrentCharges(self.initial_charges_tooltip)
+		self.ability.initialized = true
+	end
 	
 	self:SetStackCount(self.ability:GetCurrentCharges())
 end

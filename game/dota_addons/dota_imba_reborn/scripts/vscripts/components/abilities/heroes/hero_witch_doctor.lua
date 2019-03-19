@@ -500,6 +500,7 @@ function modifier_imba_maledict:IsPurgable() return false end
 function modifier_imba_maledict:IsPurgeException() return false end
 function modifier_imba_maledict:IsStunDebuff() return false end
 function modifier_imba_maledict:RemoveOnDeath() return true end
+function modifier_imba_maledict:IgnoreTenacity() return true end
 -------------------------------------------
 function modifier_imba_maledict:OnCreated()
 	local hAbility 	 = self:GetAbility()

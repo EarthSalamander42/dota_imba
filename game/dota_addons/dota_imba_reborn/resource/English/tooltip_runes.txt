@@ -118,6 +118,9 @@
 "DOTA_Tooltip_modifier_imba_invisibility_rune"						"Invisibility Rune"
 "DOTA_Tooltip_modifier_imba_invisibility_rune_Description"			"Invisible with +20%% movement speed. Attacking removes invisibility, dealing 200%% damage."
 
+"DOTA_Tooltip_modifier_imba_illusion_rune"							"Illusion Rune"
+"DOTA_Tooltip_modifier_imba_illusion_rune_Description"				"Gaining a 20%%% chance to negate damage taken."
+
 // Vanilla runes override
 "DOTA_Tooltip_rune_doubledamage"				"Double Damage"
 "DOTA_Tooltip_rune_doubledamage_description"	"Increases base damage <font color='#FF7800'>and main attribute</font> by 100%. 50% of the effect is shared with allies in 1800 radius."
@@ -126,10 +129,10 @@
 "DOTA_Tooltip_rune_haste"						"Haste"
 "DOTA_Tooltip_rune_haste_description"			"Increases movement speed <font color='#FF7800'>by 100% and removes the 550 movement speed limit. </font><font color='#FF7800'>IMBA: </font> Increases attack speed by 160. 50% of the effect is shared with allies in 1800 radius."
 "DOTA_Tooltip_rune_illusion"					"Illusion"
-"DOTA_Tooltip_rune_illusion_description"		"Conjures <font color='#FF7800'>5 </font> illusions of your hero which deal <font color='#FF7800'>100%</font> damage.  Melee illusions take 200% damage.  Ranged illusions take 300% damage.  Illusions last 75 seconds."
+"DOTA_Tooltip_rune_illusion_description"		"Conjures 2 illusions of your hero which deal 35% damage.  Melee illusions take 200% damage.  Ranged illusions take 300% damage.  Illusions last 75 seconds. <font color='#FF7800'>IMBA: </font> Gain a 20% chance to negate damage taken for 40 seconds."
 "DOTA_Tooltip_modifier_imba_invisibility_rune_handler"	"Invisibility Fade Time"
 "DOTA_Tooltip_rune_invisibility"				"Invisibility"
-"DOTA_Tooltip_rune_invisibility_description"	"Become invisible for 45 seconds. This invisibility is broken by attacking or by using an ability or item. <font color='#FF7800'>IMBA: </font> Next attack deals 200% damage. Movement speed increased by 20%."
+"DOTA_Tooltip_rune_invisibility_description"	"After a 2 second delay, become invisible for 45 seconds. <font color='#FF7800'>This invisibility is only broken by attacking, and persists when using an ability or item.</font> <font color='#FF7800'>IMBA: </font> Next attack deals 200% damage. Movement speed increased by 20%."
 "DOTA_Tooltip_rune_regeneration"				"Regeneration"
 "DOTA_Tooltip_rune_regeneration_description"	"Regenerates health and mana to maximum. <font color='#FF7800'>IMBA: </font> Grants 25 stacks, the regen stops only if stacks reach 0. 50% of the effect is shared with allies in 1800 radius."
 "DOTA_Tooltip_rune_bounty"						"Bounty"

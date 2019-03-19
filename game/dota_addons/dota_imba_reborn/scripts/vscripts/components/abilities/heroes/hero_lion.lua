@@ -1041,11 +1041,9 @@ function imba_lion_finger_of_death:IsHiddenWhenStolen()
 end
 
 function imba_lion_finger_of_death:GetAOERadius()
-	local caster = self:GetCaster()
-	local ability = self
-	local enemies_frog_radius = ability:GetSpecialValueFor("enemies_frog_radius")
-
-	return enemies_frog_radius
+	if self:GetCaster():HasScepter() then
+		return self:GetSpecialValueFor("enemies_frog_radius")
+	end
 end
 
 function imba_lion_finger_of_death:GetManaCost(level)
@@ -1208,6 +1206,7 @@ function imba_lion_finger_of_death:OnSpellStart()
 			-- Refresh cooldown completely            
 			Timers:CreateTimer(FrameTime(), function()
 				ability:EndCooldown()
+				ability:StartCooldown(self:GetSpecialValueFor("triggerfinger_cooldown"))
 			end)      
 		-- #5 Talent: Trigger Finger always triggers
 		elseif caster:HasTalent("special_bonus_imba_lion_5") then
@@ -1223,6 +1222,7 @@ function imba_lion_finger_of_death:OnSpellStart()
 			-- Refresh cooldown completely            
 			Timers:CreateTimer(FrameTime(), function()
 				ability:EndCooldown()
+				ability:StartCooldown(self:GetSpecialValueFor("triggerfinger_cooldown"))
 			end)		
 		end
 	end)
@@ -1253,24 +1253,26 @@ function FingerOfDeath(caster, ability, main_target, target, damage, enemies_fro
 	Timers:CreateTimer(damage_delay, function()
 
 		-- Hex all nearby units when Finger hits, however, only if this the main target being fingered
-		if main_target == target then
-			local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
-											  target:GetAbsOrigin(),
-											  nil,
-											  enemies_frog_radius,
-											  DOTA_UNIT_TARGET_TEAM_ENEMY,
-											  DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-											  DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS,
-											  FIND_ANY_ORDER,
-											  false)
+		
+		-- Frog Panic IMBAfication removed for now
+		-- if main_target == target then
+			-- local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
+											  -- target:GetAbsOrigin(),
+											  -- nil,
+											  -- enemies_frog_radius,
+											  -- DOTA_UNIT_TARGET_TEAM_ENEMY,
+											  -- DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+											  -- DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS,
+											  -- FIND_ANY_ORDER,
+											  -- false)
 
-			for _, enemy in pairs(enemies) do
-				-- Hex them
-				if not enemy:IsMagicImmune() and not enemy:HasModifier(modifier_hex) then
-					enemy:AddNewModifier(caster, ability, modifier_hex, {duration = enemies_frog_duration})
-				end
-			end
-		end
+			-- for _, enemy in pairs(enemies) do
+				-- -- Hex them
+				-- if not enemy:IsMagicImmune() and not enemy:HasModifier(modifier_hex) then
+					-- enemy:AddNewModifier(caster, ability, modifier_hex, {duration = enemies_frog_duration})
+				-- end
+			-- end
+		-- end
 
 		-- Make sure the target is not magic immune
 		if target:IsMagicImmune() then
@@ -1374,10 +1376,14 @@ function modifier_imba_finger_of_death_counter:IsPurgable() 	return false end
 function modifier_imba_finger_of_death_counter:RemoveOnDeath() 	return false end
 
 function modifier_imba_finger_of_death_counter:OnCreated()
+	if not IsServer() then return end
+
 	self:SetStackCount(1)
 end
 
 function modifier_imba_finger_of_death_counter:OnRefresh()
+	if not IsServer() then return end
+
 	self:IncrementStackCount()
 end
 

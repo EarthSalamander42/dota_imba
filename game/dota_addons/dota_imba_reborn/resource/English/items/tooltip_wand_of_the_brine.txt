@@ -1,0 +1,15 @@
+"DOTA_Tooltip_Ability_item_imba_wand_of_the_brine"						"Wand of the Brine"
+
+"DOTA_Tooltip_Ability_item_recipe_imba_wand_of_the_brine"				"Wand of the Brine Recipe"
+
+"DOTA_Tooltip_Ability_item_imba_wand_of_the_brine_Lore"						"Were it not for this revered wand, there would have been no Conclave survivors at the Battle of Stonefish Gate."
+"DOTA_Tooltip_Ability_item_imba_wand_of_the_brine_Description"			"<h1>Active: Brinefoam</h1> Puts a friendly unit in a protective healing bubble for %bubble_duration% seconds, healing for %bubble_heal_per_tick% health every %heal_tick_interval% seconds for a total of %total_heal_tooltip% health. The target is stunned, rooted, disarmed, hidden, spell immune, invulnerable and unselectable during the effect."
+"DOTA_Tooltip_Ability_item_imba_wand_of_the_brine_bonus_intelligence"	"+$int"
+"DOTA_Tooltip_Ability_item_imba_wand_of_the_brine_bonus_mana_regen_pct"	"%+$mana_regen"
+
+"DOTA_Tooltip_Ability_item_imba_wand_of_the_brine_Note0"	"Multiple Wand of the Brines' stats do not stack."
+"DOTA_Tooltip_Ability_item_imba_wand_of_the_brine_Note1"	"Can be cast on spell immune allies. Can be prevented by the Disable Help option."
+"DOTA_Tooltip_Ability_item_imba_wand_of_the_brine_Note2"	"Has a cast point of 0.2 seconds."
+
+"DOTA_Tooltip_modifier_item_imba_wand_of_the_brine_bubble"				"Brinefoam" 
+"DOTA_Tooltip_modifier_item_imba_wand_of_the_brine_bubble_Description"	"This unit is protected by Brinefoam.  Healing 300 hp/sec."

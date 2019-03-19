@@ -605,7 +605,16 @@ function imba_queenofpain_sonic_wave:OnSpellStart()
 		
 		-- Let's not make the percentage too high...
 		if USE_MEME_SOUNDS and RollPercentage(20) then
-			caster:EmitSound("Imba.QueenOfPainWutFace")
+			--caster:EmitSound("Imba.QueenOfPainWutFace") -- Complaints of gay orgasms so let's use something else
+			if not self.meme_index then self.meme_index = 1 end
+		
+			caster:EmitSound("Imba.QueenOfPain.AHHHHH"..self.meme_index)
+			
+			if self.meme_index == 5 then
+				self.meme_index = 1
+			else
+				self.meme_index = self.meme_index + 1
+			end
 		else
 			caster:EmitSound("Hero_QueenOfPain.SonicWave")
 		end
