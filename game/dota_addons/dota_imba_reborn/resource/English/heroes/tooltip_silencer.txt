@@ -2,7 +2,8 @@
 // Silencer's Arcane Curse
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_silencer_arcane_curse"                      "Arcane Curse"
-"DOTA_Tooltip_ability_imba_silencer_arcane_curse_Description"          "Curses the target area, causing enemies to take damage and have their movement speed slowed. Anytime affected enemies cast a spell, the duration is increased by %penalty_duration% seconds.\n<font color='#FF7800'>Sins of the Cursed:</font> Every time the cursed target casts a spell, the damage dealt by the curse increases by a flat amount."
+"DOTA_Tooltip_ability_imba_silencer_arcane_curse_Description"          "Curses the target area, causing enemies to take damage and have their movement speed slowed. Anytime affected enemies cast a spell, the duration is increased by %penalty_duration% seconds.\n<font color='#FF7800'>Sins of the Cursed:</font> Every time the cursed target casts a spell, the damage dealt by the curse increases by a flat amount.\n<font color='#FF7800'>Shhhhh...:</font> Arcane Curse's duration is paused while the target is silenced or under the effects of Global Silence."
+"DOTA_Tooltip_ability_imba_silencer_arcane_curse_Note0" 				"Arcane Curse ticks back up one second every second if the target is silenced."
 "DOTA_Tooltip_ability_imba_silencer_arcane_curse_Lore"                  "Nortrom's lack of incantations is less of a problem for him than it is for his adversaries."
 "DOTA_Tooltip_ability_imba_silencer_arcane_curse_damage_per_second"                 "DAMAGE PER SECOND:"
 "DOTA_Tooltip_ability_imba_silencer_arcane_curse_damage_per_stack"                  "ADDITIONAL DAMAGE PER STACK:"

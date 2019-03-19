@@ -30904,6 +30904,26 @@
 	}
 
 	//=================================================================================================================
+	// Pangolier: Gyroshell Stop
+	//=================================================================================================================
+	"imba_pangolier_gyroshell_stop"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_pangolier"
+		"AbilityTextureName"			"pangolier_gyroshell_stop"
+		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
+		"AbilityCastAnimation"			"ACT_INVALID"
+	}
+	
+	//=================================================================================================================
 	// Pangolier's Talents
 	//=================================================================================================================
 	"special_bonus_imba_pangolier_1" // Pangolier strikes any enemy in his dash path during Swashbuckle
@@ -36743,7 +36763,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"scepter_max_mana_pct_cost"			"2.5"
+				"scepter_max_mana_pct_cost"			"4.0"
 			}
 			"02"
 			{

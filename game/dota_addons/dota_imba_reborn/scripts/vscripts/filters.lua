@@ -1092,13 +1092,6 @@ function GameMode:BountyRuneFilter(keys)
 		-- #7 Talent: Moar gold from bounty runes (should return 0 for that if the owner doesn't have it)
 		alchemy_bounty = keys.gold_bounty * (target:FindAbilityByName("imba_alchemist_goblins_greed"):GetSpecialValueFor("bounty_multiplier") + target:FindTalentValue("special_bonus_imba_alchemist_7")) / 100
 		
-		-- Balancing for stacking gold multipliers to not go out of control in mutation/frantic maps
-		if GameRules:GetCustomGameDifficulty() > 1 then
-			local bountyReductionPct = 0.5 -- 0.0 to 1.0, with 0.0 being reduce nothing, and 1.0 being remove greevil's greed effect
-			-- Set variable to number between current_bounty and alchemy_bounty based on bountyReductionPct
-			alchemy_bounty = max(current_bounty, alchemy_bounty - ((alchemy_bounty - current_bounty) * bountyReductionPct))
-		end
-		
 		-- Return the DIFFERENCE between the calculated boost and the standard bounty rune amount since the Greevil's Greed owner is already getting keys.gold_bounty
 		local additional_bounty = alchemy_bounty - keys.gold_bounty
 		

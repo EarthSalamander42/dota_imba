@@ -1326,6 +1326,7 @@
 		"Ability1"					"imba_pangolier_swashbuckle"
 		"Ability2"					"imba_pangolier_shield_crash"
 		"Ability3"					"imba_pangolier_heartpiercer"
+		"Ability5"					"imba_pangolier_gyroshell_stop"
 		"Ability6"					"imba_pangolier_gyroshell"
 
 		"Ability10"					"special_bonus_imba_pangolier_1"

@@ -1506,6 +1506,7 @@ end
 function imba_pangolier_gyroshell:IsHiddenWhenStolen() return false end
 function imba_pangolier_gyroshell:IsStealable() return true end
 function imba_pangolier_gyroshell:IsNetherWardStealable() return false end
+function imba_pangolier_gyroshell:GetAssociatedSecondaryAbilities()	return "imba_pangolier_gyroshell_stop" end
 
 function imba_pangolier_gyroshell:GetManaCost(level)
 	local manacost = self.BaseClass.GetManaCost(self, level)
@@ -1629,7 +1630,7 @@ function imba_pangolier_gyroshell:OnSpellStart()
 			end
 	end, 8.6)
 
-
+	caster:SwapAbilities("imba_pangolier_gyroshell", "imba_pangolier_gyroshell_stop", false, true)
 end
 
 
@@ -1770,6 +1771,8 @@ function modifier_imba_gyroshell_impact_check:OnRemoved()
 		end
 		
 		self:GetCaster():StopSound("Imba.PangolierRollin")
+		
+		self:GetCaster():SwapAbilities("imba_pangolier_gyroshell", "imba_pangolier_gyroshell_stop", true, false)
 	end
 end
 
@@ -2046,3 +2049,19 @@ function modifier_imba_gyroshell_ricochet:IsHidden() return true end
 function modifier_imba_gyroshell_ricochet:IsPurgable() return true end
 function modifier_imba_gyroshell_ricochet:IsDebuff() return false end
 ]]
+
+
+imba_pangolier_gyroshell_stop = class ({})
+
+function imba_pangolier_gyroshell_stop:IsInnateAbility()				return true end
+function imba_pangolier_gyroshell_stop:IsStealable()					return false end
+function imba_pangolier_gyroshell_stop:GetAssociatedPrimaryAbilities()	return "imba_pangolier_gyroshell" end
+
+function imba_pangolier_gyroshell_stop:OnSpellStart()
+	if not IsServer() then return end
+	
+	if self:GetCaster():HasModifier("modifier_pangolier_gyroshell") then
+		self:GetCaster():RemoveModifierByName("modifier_pangolier_gyroshell")
+		--self:GetCaster():SwapAbilities("imba_pangolier_gyroshell", "imba_pangolier_gyroshell_stop", true, false)
+	end
+end

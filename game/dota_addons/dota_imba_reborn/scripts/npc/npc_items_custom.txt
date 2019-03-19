@@ -9266,7 +9266,7 @@
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"strength_bonus"				"50"
+				"strength_bonus"				"45"
 			}
 
 			"04"
