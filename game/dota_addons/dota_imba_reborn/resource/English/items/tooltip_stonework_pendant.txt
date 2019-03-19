@@ -1,5 +1,5 @@
 "DOTA_Tooltip_ability_item_imba_stonework_pendant"								"Stonework Pendant"
-"DOTA_Tooltip_ability_item_imba_stonework_pendant_Description"				"<h1>Passive: Blood Magic</h1>Spells now cost hit points equal to %mana_hp_convert_mult%x their mana cost, and the wearer gains bonus hit points and health regen equal to the size of their mana pool and mana regen. <font color='#FF0000'>Does not work with abilities that require a constant source of mana.</font>\n"
+"DOTA_Tooltip_ability_item_imba_stonework_pendant_Description"				"<h1>Passive: Blood Magic</h1><font color='#FF0000'>Removes the owner's mana bar.</font> Spells now cost hit points equal to %mana_hp_convert_mult%x their mana cost, and the wearer gains bonus hit points and health regen equal to the size of their mana pool and mana regen. <font color='#FF0000'>Does not work with abilities that require a constant source of mana.</font>\n"
 "DOTA_Tooltip_ability_item_imba_stonework_pendant_Lore"						"You CAN get blood from a stone."
 "DOTA_Tooltip_ability_item_imba_stonework_pendant_spell_lifesteal"				"%SPELL LIFESTEAL:"
 
