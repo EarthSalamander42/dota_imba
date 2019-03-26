@@ -1,20 +1,15 @@
 -- Creator:
 --	   AltiV, March 1st, 2019
 
-LinkLuaModifier("modifier_imba_keeper_of_the_light_illuminate_self_thinker", "components/abilities/heroes/hero_keeper_of_the_light.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_keeper_of_the_light_illuminate", "components/abilities/heroes/hero_keeper_of_the_light.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_keeper_of_the_light_spirit_form_illuminate", "components/abilities/heroes/hero_keeper_of_the_light.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_keeper_of_the_light_blinding_light", "components/abilities/heroes/hero_keeper_of_the_light.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_blinding_light_knockback", "components/abilities/heroes/hero_keeper_of_the_light.lua", LUA_MODIFIER_MOTION_HORIZONTAL)
-LinkLuaModifier("modifier_imba_keeper_of_the_light_chakra_magic", "components/abilities/heroes/hero_keeper_of_the_light.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_keeper_of_the_light_mana_leak", "components/abilities/heroes/hero_keeper_of_the_light.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_keeper_of_the_light_spotlights", "components/abilities/heroes/hero_keeper_of_the_light.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_blinding_light_knockback", "components/abilities/heroes/hero_keeper_of_the_light.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_keeper_of_the_light_charka_magic", "components/abilities/heroes/hero_keeper_of_the_light.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_keeper_of_the_light_will_o_wisp", "components/abilities/heroes/hero_keeper_of_the_light.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_keeper_of_the_light_will_o_wisp_aura", "components/abilities/heroes/hero_keeper_of_the_light.lua", LUA_MODIFIER_MOTION_HORIZONTAL)
-LinkLuaModifier("modifier_imba_keeper_of_the_light_will_o_wisp_blessing", "components/abilities/heroes/hero_keeper_of_the_light.lua", LUA_MODIFIER_MOTION_NONE)
 
 imba_keeper_of_the_light_illuminate							= class({})
-modifier_imba_keeper_of_the_light_illuminate_self_thinker	= class({}) -- Custom class for attempting non-channel logic
 modifier_imba_keeper_of_the_light_illuminate				= class({})
 modifier_imba_keeper_of_the_light_spirit_form_illuminate	= class({})
 
@@ -24,28 +19,24 @@ imba_keeper_of_the_light_blinding_light						= class({})
 modifier_imba_keeper_of_the_light_blinding_light			= class({})
 modifier_imba_blinding_light_knockback						= class({})		
 
-imba_keeper_of_the_light_chakra_magic						= class({})
-modifier_imba_keeper_of_the_light_chakra_magic				= class({})
-
-modifier_imba_keeper_of_the_light_mana_leak					= class({})
+imba_keeper_of_the_light_charka_magic						= class({})
+modifier_imba_keeper_of_the_light_charka_magic				= class({})
 
 imba_keeper_of_the_light_spotlights							= class({})
-modifier_imba_keeper_of_the_light_spotlights				= class({})
 
 imba_keeper_of_the_light_will_o_wisp						= class({})
 modifier_imba_keeper_of_the_light_will_o_wisp				= class({})
 modifier_imba_keeper_of_the_light_will_o_wisp_aura			= class({})
-modifier_imba_keeper_of_the_light_will_o_wisp_blessing		= class({})
 
 ----------------
--- ILLUMINATE --
+-- Illuminate --
 ----------------
 
 function imba_keeper_of_the_light_illuminate:GetAssociatedSecondaryAbilities()
 	return "imba_keeper_of_the_light_illuminate_end"
 end
 
--- Level-up of Illuminate also levels up the Illuminate End ability
+-- First level-up of Illuminate also levels up the Illuminate End ability
 function imba_keeper_of_the_light_illuminate:OnUpgrade()
 	if not IsServer() then return end
 	
@@ -57,66 +48,20 @@ function imba_keeper_of_the_light_illuminate:OnUpgrade()
 end
 
 function imba_keeper_of_the_light_illuminate:OnSpellStart()
-	self.caster		= self:GetCaster()
-
-	-- Get the position of where Illuminate was cast towards
-	self.position	= self:GetCursorPosition()
+	self.caster	= self:GetCaster()
 	
-	if not IsServer() then return end
-	
-	-- Emit casting sound
-	self.caster:EmitSound("Hero_KeeperOfTheLight.Illuminate.Charge")
-	
-	self.caster:AddNewModifier(self.caster, self, "modifier_imba_keeper_of_the_light_illuminate_self_thinker", {duration = self:GetSpecialValueFor("max_channel_time")})
-end
-
-function imba_keeper_of_the_light_illuminate:OnChannelThink()
-	-- Logic was moved to the "modifier_imba_keeper_of_the_light_illuminate_self_thinker" modifier's OnIntervalThink(FrameTime())
-end
-
-function imba_keeper_of_the_light_illuminate:OnChannelFinish(bInterrupted)
-	-- Logic was moved to the "modifier_imba_keeper_of_the_light_illuminate_self_thinker" modifier's OnDestroy()
-end
-
------------------------------
--- ILLUMINATE SELF THINKER --
------------------------------
-
-function modifier_imba_keeper_of_the_light_illuminate_self_thinker:GetEffectName()
-	return "particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_spirit_form_ambient.vpcf"
-end
-
-function modifier_imba_keeper_of_the_light_illuminate_self_thinker:GetStatusEffectName()
-	return "particles/status_fx/status_effect_keeper_spirit_form.vpcf"
-end
-
-function modifier_imba_keeper_of_the_light_illuminate_self_thinker:OnCreated()
-	self.ability	= self:GetAbility()
-	self.caster		= self:GetCaster()
-	
-	-- AbilitySpecials
-	self.damage_per_second				= self.ability:GetSpecialValueFor("damage_per_second")
-	self.max_channel_time				= self.ability:GetSpecialValueFor("max_channel_time")
-	--self.radius						= self.ability:GetSpecialValueFor("radius")
-	self.range							= self.ability:GetSpecialValueFor("range")
-	self.speed							= self.ability:GetSpecialValueFor("speed")
-	self.vision_radius					= self.ability:GetSpecialValueFor("vision_radius")
-	self.vision_duration				= self.ability:GetSpecialValueFor("vision_duration")
-	self.channel_vision_radius			= self.ability:GetSpecialValueFor("channel_vision_radius")
-	self.channel_vision_interval		= self.ability:GetSpecialValueFor("channel_vision_interval")
-	self.channel_vision_duration		= self.ability:GetSpecialValueFor("channel_vision_duration")
-	self.channel_vision_step			= self.ability:GetSpecialValueFor("channel_vision_step")
-	self.total_damage					= self.ability:GetSpecialValueFor("total_damage")
-	self.transient_form_ms_reduction	= self.ability:GetSpecialValueFor("transient_form_ms_reduction")
+	self.speed				= self:GetSpecialValueFor("speed")
 	
 	-- Save the position of the caster into variable (since caster might move before wave is fired)
 	self.caster_location	= self.caster:GetAbsOrigin()
 	
 	-- Get the position of where Illuminate was cast towards
-	self.position			= self.ability.position
+	self.position			= self:GetCursorPosition()
 
-	-- Distance between vision nodes (vanilla is 150 but this has better vision spread)
-	self.vision_node_distance	= self.channel_vision_radius * 0.5
+	-- Vision parameters
+	self.vision_node_radius		= 450
+	self.vision_node_distance	= self.vision_node_radius * 0.5
+	self.vision_node_duration	= 10.34
 	
 	if not IsServer() then return end
 	
@@ -130,109 +75,84 @@ function modifier_imba_keeper_of_the_light_illuminate_self_thinker:OnCreated()
 	self.vision_counter 		= 1
 	self.vision_time_count		= GameRules:GetGameTime()
 	
+	-- Emit casting sound
+	self.caster:EmitSound("Hero_KeeperOfTheLight.Illuminate.Charge")
+	
 	-- Emit glowing staff particle
 	self.weapon_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_keeper_of_the_light/kotl_illuminate_cast.vpcf", PATTACH_POINT_FOLLOW, self.caster)
 	ParticleManager:SetParticleControlEnt(self.weapon_particle, 0, self.caster, PATTACH_POINT_FOLLOW, "attach_attack1", self.caster:GetAbsOrigin(), true)
-	self:AddParticle(self.weapon_particle, false, false, -1, false, false)
 	
 	self.caster:SwapAbilities("imba_keeper_of_the_light_illuminate", "imba_keeper_of_the_light_illuminate_end", false, true)
-	
-	-- I can't restore the standard spirit form models so I'll have to use some abstractions...
-	CreateUnitByNameAsync("npc_dummy_unit", self.caster_location, true, self.caster, self.caster, self.caster:GetTeam(), function(npc_dummy_unit)
-		self.spirit = npc_dummy_unit
-		-- Add the hypnotizing aura modifier
-		npc_dummy_unit:SetForwardVector(self.direction)
-		npc_dummy_unit:AddNewModifier(self.caster, self, "modifier_imba_keeper_of_the_light_spirit_form_illuminate", {duration = self.duration})
-	end)
-	
-	self:StartIntervalThink(FrameTime())
 end
 
-function modifier_imba_keeper_of_the_light_illuminate_self_thinker:OnIntervalThink()
+function imba_keeper_of_the_light_illuminate:OnChannelThink()
 	if not IsServer() then return end
 	
 	-- Every 0.5 seconds, create a visibility node further ahead
-	if GameRules:GetGameTime() - self.vision_time_count >= self.channel_vision_interval then
+	if GameRules:GetGameTime() - self.vision_time_count >= 0.5 then
 		self.vision_time_count = GameRules:GetGameTime()
-		self.ability:CreateVisibilityNode(self.caster_location + (self.direction * self.channel_vision_step * self.vision_counter), self.channel_vision_radius, self.channel_vision_duration)
+		self:CreateVisibilityNode(self.caster_location + (self.direction * self.vision_node_distance * self.vision_counter), self.vision_node_radius, self.vision_node_duration)
 		self.vision_counter = self.vision_counter + 1
 	end
-	
-	self:SetStackCount(math.min((GameRules:GetGameTime() - self.game_time_start + self.ability:GetCastPoint()) * self.damage_per_second, self.total_damage))
 end
 
-function modifier_imba_keeper_of_the_light_illuminate_self_thinker:OnDestroy()
+-- TODO: Add response sounds and do Transient/Spirit form for channeling while moving
+-- need horse hitting enemy sounds
+function imba_keeper_of_the_light_illuminate:OnChannelFinish(bInterrupted)
 	if not IsServer() then return end
+
+	-- AbilitySpecials
+	self.damage_per_second			= self:GetSpecialValueFor("damage_per_second")
+	self.max_channel_time			= self:GetSpecialValueFor("max_channel_time")
+	self.radius						= self:GetSpecialValueFor("radius")
+	self.range						= self:GetSpecialValueFor("range")
+	self.speed						= self:GetSpecialValueFor("speed")
+	self.vision_radius				= self:GetSpecialValueFor("vision_radius")
+	self.vision_duration			= self:GetSpecialValueFor("vision_duration")
+	self.channel_vision_radius		= self:GetSpecialValueFor("channel_vision_radius")
+	self.channel_vision_interval	= self:GetSpecialValueFor("channel_vision_interval")
+	self.channel_vision_duration	= self:GetSpecialValueFor("channel_vision_duration")
+	self.channel_vision_step		= self:GetSpecialValueFor("channel_vision_step")
+	self.total_damage				= self:GetSpecialValueFor("total_damage")
 
 	self.direction					= (self.position - self.caster_location):Normalized()
 	self.duration 					= self.range / self.speed
 
 	self.game_time_end				= GameRules:GetGameTime()
-	
-	self.caster:EmitSound("Hero_KeeperOfTheLight.Illuminate.Discharge")
 
-	self.caster:StartGesture(ACT_DOTA_CAST_ABILITY_1_END)
+	--if bInterrupted then
+		--ACT_DOTA_CAST_ABILITY_7
+		-- Create the Illuminate particle with CP1 being the velocity and CP3 being the origin
+		-- Why is the circle particle so bright
+		-- self.particle = ParticleManager:CreateParticle("particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate_spiritform.vpcf", PATTACH_WORLDORIGIN, self.caster)
+		-- ParticleManager:SetParticleControlEnt(self.particle, 0, self.caster, PATTACH_WORLDORIGIN, "attach_hitloc", self.caster:GetAbsOrigin(), true)
+		-- ParticleManager:SetParticleControl(self.particle, 1, self.direction * self.speed)
+		-- ParticleManager:SetParticleControl(self.particle, 3, self.caster:GetAbsOrigin())
+		-- ParticleManager:ReleaseParticleIndex(self.particle)
+		
+		-- how do i get this to work ugh
+		-- local asdf = ParticleManager:CreateParticle("particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_spirit_form_illuminate_spirit.vpcf", PATTACH_WORLDORIGIN, self.caster)
+		-- ParticleManager:SetParticleControlEnt(asdf, 0, self.caster, PATTACH_WORLDORIGIN, "attach_hitloc", self.caster:GetAbsOrigin(), true)
+		-- ParticleManager:ReleaseParticleIndex(asdf)
+	--else
+		self.caster:EmitSound("Hero_KeeperOfTheLight.Illuminate.Discharge")
+
+		self.caster:StartGesture(ACT_DOTA_CAST_ABILITY_1_END)
+		
+		CreateModifierThinker(self.caster, self, "modifier_imba_keeper_of_the_light_illuminate", {
+			duration		= self.range / self.speed,
+			direction_x 	= self.direction.x,	-- x direction of where Illuminate will travel
+			direction_y 	= self.direction.y,	-- y direction of where Illuminate will travel
+			channel_time 	= self.game_time_end - self.game_time_start	-- total time Illuminate was channeled for
+		}, 
+		self.caster:GetAbsOrigin(), self.caster:GetTeamNumber(), false)
+		
+		-- Remove the glowing staff particle effect
+		ParticleManager:DestroyParticle(self.weapon_particle, false)
+		ParticleManager:ReleaseParticleIndex(self.weapon_particle)
+	--end
 	
-	CreateModifierThinker(self.caster, self.ability, "modifier_imba_keeper_of_the_light_illuminate", {
-		duration		= self.range / self.speed,
-		direction_x 	= self.direction.x,	-- x direction of where Illuminate will travel
-		direction_y 	= self.direction.y,	-- y direction of where Illuminate will travel
-		channel_time 	= self.game_time_end - self.game_time_start	-- total time Illuminate was channeled for
-	}, 
-	self.caster_location, self.caster:GetTeamNumber(), false)
-	
-	-- Swap the main ability back in
 	self.caster:SwapAbilities("imba_keeper_of_the_light_illuminate_end", "imba_keeper_of_the_light_illuminate", false, true)
-	
-	-- Remove the "spirit" channeling Illuminate
-	if self.spirit then
-		self.spirit:RemoveSelf()
-	end
-	
-	-- Voice response
-	if self.caster:GetName() == "npc_dota_hero_keeper_of_the_light" then
-		if RollPercentage(5) then
-			self.caster:EmitSound("keeper_of_the_light_keep_illuminate_06")
-		elseif RollPercentage(50) then
-			if RollPercentage(50) then
-				self.caster:EmitSound("keeper_of_the_light_keep_illuminate_05")
-			else
-				self.caster:EmitSound("keeper_of_the_light_keep_illuminate_07")
-			end
-		end
-	end
-end
-
-function modifier_imba_keeper_of_the_light_illuminate_self_thinker:DeclareFunctions()
-	local decFuncs = {
-		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
-    }
-
-    return decFuncs
-end
-
-function modifier_imba_keeper_of_the_light_illuminate_self_thinker:GetModifierMoveSpeedBonus_Percentage()
-	if not self.caster:HasScepter() then
-		return self.transient_form_ms_reduction * (-1)
-	end
-end
-
-function modifier_imba_keeper_of_the_light_illuminate_self_thinker:CheckState()
-	if not IsServer() then return end
-
-	local state = {}
-	
-	if not self.ability:IsChanneling() then
-		if not self.caster:HasScepter() then
-			state[MODIFIER_STATE_PROVIDES_VISION] = true
-		end
-		
-		if self.caster:HasTalent("special_bonus_imba_keeper_of_the_light_travelling_light") then
-			state[MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY] = true
-		end
-	end
-		
-	return state
 end
 
 -----------------------------
@@ -248,16 +168,16 @@ function modifier_imba_keeper_of_the_light_illuminate:OnCreated( params )
 
 	-- AbilitySpecials
 	self.damage_per_second			= self.ability:GetSpecialValueFor("damage_per_second")
-	--self.max_channel_time			= self.ability:GetSpecialValueFor("max_channel_time")
+	self.max_channel_time			= self.ability:GetSpecialValueFor("max_channel_time")
 	self.radius						= self.ability:GetSpecialValueFor("radius")
-	--self.range						= self.ability:GetSpecialValueFor("range")
+	self.range						= self.ability:GetSpecialValueFor("range")
 	self.speed						= self.ability:GetSpecialValueFor("speed")
-	--self.vision_radius				= self.ability:GetSpecialValueFor("vision_radius")
-	--self.vision_duration			= self.ability:GetSpecialValueFor("vision_duration")
-	--self.channel_vision_radius		= self.ability:GetSpecialValueFor("channel_vision_radius")
-	--self.channel_vision_interval	= self.ability:GetSpecialValueFor("channel_vision_interval")
-	--self.channel_vision_duration	= self.ability:GetSpecialValueFor("channel_vision_duration")
-	--self.channel_vision_step		= self.ability:GetSpecialValueFor("channel_vision_step")
+	self.vision_radius				= self.ability:GetSpecialValueFor("vision_radius")
+	self.vision_duration			= self.ability:GetSpecialValueFor("vision_duration")
+	self.channel_vision_radius		= self.ability:GetSpecialValueFor("channel_vision_radius")
+	self.channel_vision_interval	= self.ability:GetSpecialValueFor("channel_vision_interval")
+	self.channel_vision_duration	= self.ability:GetSpecialValueFor("channel_vision_duration")
+	self.channel_vision_step		= self.ability:GetSpecialValueFor("channel_vision_step")
 	self.total_damage				= self.ability:GetSpecialValueFor("total_damage")
 
 	self.duration			= params.duration
@@ -267,108 +187,80 @@ function modifier_imba_keeper_of_the_light_illuminate:OnCreated( params )
 	
 	-- Create the Illuminate particle with CP1 being the velocity and CP3 being the origin
 	-- Why is the circle particle so bright
-	self.particle = ParticleManager:CreateParticle("particles/units/heroes/hero_keeper_of_the_light/kotl_illuminate.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.parent)
+	self.particle = ParticleManager:CreateParticle("particles/units/heroes/hero_keeper_of_the_light/kotl_illuminate.vpcf", PATTACH_WORLDORIGIN, self.caster)
 	ParticleManager:SetParticleControl(self.particle, 1, self.direction * self.speed)
 	ParticleManager:SetParticleControl(self.particle, 3, self.parent:GetAbsOrigin())
 	
 	self:AddParticle(self.particle, false, false, -1, false, false)
 	
 	-- Initialize table of enemies hit so we don't hit things more than once
-	self.hit_targets = {}
+	self.hit_enemies = {}
 	
 	self:OnIntervalThink()
 	self:StartIntervalThink(FrameTime())
 end
 
+-- TODO: Change from enemy to both teams for ally healing in daytime
 -- TODO: Make the particle not visible in fog...
 function modifier_imba_keeper_of_the_light_illuminate:OnIntervalThink()
-	if not IsServer() then return end
-
-	local targets 	= FindUnitsInRadius(self.caster:GetTeamNumber(), self.parent:GetAbsOrigin(), nil, self.radius, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
-	local damage	= math.min((self.channel_time + self.ability:GetCastPoint()) * self.damage_per_second, self.total_damage)
+	local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(), self.parent:GetAbsOrigin(), nil, self.radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 	
-	local valid_targets	=	{}
-	
-	-- Borrowed from Bristleback logic which I still don't fully understand, but essentially this checks to make sure the target is within the "front" of the wave, because the local targets table returns everything in a circle
-	for _, target in pairs(targets) do
-		local target_pos 	= target:GetAbsOrigin()
-		local target_angle	= math.deg(math.atan2((target_pos.x - self.parent:GetAbsOrigin().x), target_pos.y - self.parent:GetAbsOrigin().y))
+	-- Borrowed from Bristleback logic which I still don't fully understand, but essentially this checks to make sure the enemy is within the "front" of the wave, because the local enemies table returns everything in a circle
+	for _, enemy in pairs(enemies) do
+		local enemy_pos 	= enemy:GetAbsOrigin()
+		local enemy_angle	= math.deg(math.atan2((enemy_pos.x - self.parent:GetAbsOrigin().x), enemy_pos.y - self.parent:GetAbsOrigin().y))
 		
-		local difference = math.abs(self.direction_angle - target_angle)
+		local difference = math.abs(self.direction_angle - enemy_angle)
 		
 		-- If the enemy's position is not within the front semi-circle, remove them from the table
-		if difference <= 90 or difference >= 270 then
-			table.insert(valid_targets, target)
+		if difference > 90 and difference < 270 then
+			table.remove(enemies, _)
 		end
 	end
 	
-	-- By the end, the valid_targets table SHOULD have every unit that's actually in the "front" (semi-circle) of the wave, aka they should actually be hit by the wave
-	for _, target in pairs(valid_targets) do
+	-- By the end, the enemies table SHOULD have every unit that's actually in the "front" (semi-circle) of the wave, aka they should actually be hit by the wave
+	for _, enemy in pairs(enemies) do
 	
 		local hit_already = false
 	
-		for _, hit_target in pairs(self.hit_targets) do
-			if hit_target == target then
+		for _, hit_enemy in pairs(self.hit_enemies) do
+			if hit_enemy == enemy then
 				hit_already = true
 				break
 			end
 		end
 		
 		if not hit_already then
-			-- Deal damage to enemies...
-			if target:GetTeam() ~= self.caster:GetTeam() then
-				local damage_type	= DAMAGE_TYPE_MAGICAL
-				
-				if self.caster:HasTalent("special_bonus_imba_keeper_of_the_light_pure_illuminate") then
-					damage_type		= DAMAGE_TYPE_PURE
-				end
-			
-				local damageTable = {
-					victim 			= target,
-					-- Damage starts ramping from when cast time starts, so just gonna simiulate the effects by adding the cast point
-					damage 			= damage,
-					damage_type		= damage_type,
-					damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
-					attacker 		= self.caster,
-					ability 		= self.ability
-				}
-				
-				ApplyDamage(damageTable)
-				
-				-- Spotlights
-				local spotlight_modifier = self.caster:FindModifierByName("modifier_imba_keeper_of_the_light_spotlights")
-				
-				if spotlight_modifier then
-					spotlight_modifier:Spotlight(target:GetAbsOrigin(), self.radius, spotlight_modifier:GetAbility():GetSpecialValueFor("attack_duration"))
-				end
-			--...and heal allies
-			elseif GameRules:IsDaytime() and self.caster:HasScepter() then
-				target:Heal(damage, self.caster)
-				
-				-- Apparently the vanilla skill only shows the mana number if it's a hero?...
-				if target:IsHero() then
-					SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, damage, nil)
-				end
-			end
+			local damageTable = {
+				victim 			= enemy,
+				-- Damage starts ramping from when cast time starts, so just gonna simiulate the effects by adding the cast point
+				damage 			= math.min((self.channel_time + self.ability:GetCastPoint()) * self.damage_per_second, self.max_channel_time * self.damage_per_second),
+				damage_type		= DAMAGE_TYPE_MAGICAL,
+				damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
+				attacker 		= self.caster,
+				ability 		= self.ability
+			}
+									
+			ApplyDamage(damageTable)
 			
 			-- Apply sounds (wave sound + horse sounds)
-			target:EmitSound("Hero_KeeperOfTheLight.Illuminate.Target")
-			target:EmitSound("Hero_KeeperOfTheLight.Illuminate.Target.Secondary")
+			enemy:EmitSound("Hero_KeeperOfTheLight.Illuminate.Target")
+			enemy:EmitSound("Hero_KeeperOfTheLight.Illuminate.Target.Secondary")
 			
 			-- Apply the "hit by Illuminate" particle
 			local particle_name = "particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate_impact_small.vpcf"
 			
 			-- Heroes get a larger particle (supposedly)
-			if target:IsHero() then
+			if enemy:IsHero() then
 				particle_name = "particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate_impact.vpcf"
 			end
 			
-			local particle = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN_FOLLOW, target)
-			ParticleManager:SetParticleControl(particle, 1, target:GetAbsOrigin())
+			local particle = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN_FOLLOW, enemy)
+			ParticleManager:SetParticleControl(particle, 1, enemy:GetAbsOrigin())
 			ParticleManager:ReleaseParticleIndex(particle)
 			
-			-- Add the target to the list of targets hit so they can't get hit again
-			table.insert(self.hit_targets, target)
+			-- Add the enemy to the list of enemies hit so they can't get hit again
+			table.insert(self.hit_enemies, enemy)
 		end
 	end
 
@@ -381,26 +273,6 @@ function modifier_imba_keeper_of_the_light_illuminate:OnDestroy()
 	if not IsServer() then return end
 
 	self.parent:RemoveSelf()
-end
-
--------------------------------------
--- ILLUMINATE SPIRIT FORM MODIFIER --
--------------------------------------
-
-function modifier_imba_keeper_of_the_light_spirit_form_illuminate:GetStatusEffectName()
-	return "particles/status_fx/status_effect_keeper_spirit_form.vpcf"
-end
-
-function modifier_imba_keeper_of_the_light_spirit_form_illuminate:DeclareFunctions()
-	local decFuncs = {
-		MODIFIER_PROPERTY_MODEL_CHANGE
-    }
-
-    return decFuncs
-end
-
-function modifier_imba_keeper_of_the_light_spirit_form_illuminate:GetModifierModelChange()
-	return "models/items/keeper_of_the_light/ti7_immortal_mount/kotl_ti7_immortal_horsefx_proxy.vmdl"
 end
 
 --------------------
@@ -416,17 +288,12 @@ function imba_keeper_of_the_light_illuminate_end:OnSpellStart()
 
 	self.caster	= self:GetCaster()
 	
-	-- Check if the caster has the Illuminate ability
-	local illuminate	= self.caster:FindAbilityByName("imba_keeper_of_the_light_illuminate")
-	
-	if illuminate then
+	if self.caster:IsChanneling() then
+		local illuminate	= self.caster:FindAbilityByName("imba_keeper_of_the_light_illuminate")
 		
-		-- Then check if the caster is currently "channeling" the illuminate (which they should be if this end ability is castable in the first place)
-		local illuminate_self_thinker = self.caster:FindModifierByName("modifier_imba_keeper_of_the_light_illuminate_self_thinker")
-
-		-- If so, destroy it (which will release the wave)
-		if illuminate_self_thinker then
-			illuminate_self_thinker:Destroy()
+		if illuminate then
+			illuminate:EndChannel(false)
+			self.caster:SwapAbilities("imba_keeper_of_the_light_illuminate_end", "imba_keeper_of_the_light_illuminate", false, true)
 		end
 	end
 end
@@ -435,512 +302,19 @@ end
 -- BLINDING LIGHT --
 --------------------
 
-function imba_keeper_of_the_light_blinding_light:GetCooldown(level)
-	return self.BaseClass.GetCooldown(self, level) * (math.max(self:GetCaster():FindTalentValue("special_bonus_imba_keeper_of_the_light_luminous_burster", "cooldown_mult"), 1))
-end
-
--- Strobe IMBAfication will be an "opt-out" add-on
-function imba_keeper_of_the_light_blinding_light:OnUpgrade()
-	if self:GetLevel() == 1 then
-		self:ToggleAutoCast()
-	end
-end
-
-function imba_keeper_of_the_light_blinding_light:GetBehavior()
-	return DOTA_ABILITY_BEHAVIOR_AOE + DOTA_ABILITY_BEHAVIOR_POINT + DOTA_ABILITY_BEHAVIOR_AUTOCAST
-end
-
-function imba_keeper_of_the_light_blinding_light:GetAOERadius()
-	return self:GetSpecialValueFor("radius")
-end
-
-function imba_keeper_of_the_light_blinding_light:OnSpellStart()
-	self.caster		= self:GetCaster()
-	
-	-- AbilitySpecials
-	self.miss_rate				= self:GetSpecialValueFor("miss_rate")
-	self.duration				= self:GetSpecialValueFor("duration")
-	self.radius					= self:GetSpecialValueFor("radius")
-	self.knockback_duration		= self:GetSpecialValueFor("knockback_duration")
-	self.knockback_distance		= self:GetSpecialValueFor("knockback_distance")
-	self.damage					= self:GetSpecialValueFor("damage")
-	self.cast_range_tooltip		= self:GetSpecialValueFor("cast_range_tooltip")
-	self.strobe_count			= self:GetSpecialValueFor("strobe_count")
-	self.strobe_delay			= self:GetSpecialValueFor("strobe_delay")
-	
-	if not IsServer() then return end
-	
-	if self.caster:GetName() == "npc_dota_hero_keeper_of_the_light" and RollPercentage(15) then
-		self.caster:EmitSound("keeper_of_the_light_keep_illuminate_02")
-	end
-	
-	-- IMBAfication: Strobe
-	local counter 	= 1
-	local position	= self:GetCursorPosition()
-	
-	Timers:CreateTimer(0, function()
-		self:Pulse(position)
-		
-		if self:GetAutoCastState() and counter <= self.strobe_count then
-			counter = counter + 1
-			return self.strobe_delay
-		end
-	end)
-	
-	if self.caster:HasTalent("special_bonus_imba_keeper_of_the_light_luminous_burster") then
-		local bursts			= 0
-		local max_bursts		= self.caster:FindTalentValue("special_bonus_imba_keeper_of_the_light_luminous_burster")
-		local burst_delay		= self.caster:FindTalentValue("special_bonus_imba_keeper_of_the_light_luminous_burster", "delay")
-		
-		local burst_direction	= (position - self.caster:GetAbsOrigin()):Normalized()
-		
-		Timers:CreateTimer(burst_delay, function()
-			local burst_position	= position + (burst_direction * self.radius * (bursts + 1))
-		
-			self:Pulse(burst_position)
-			
-			bursts = bursts + 1
-			
-			if bursts < max_bursts then
-				return burst_delay
-			end
-		end)
-	end
-end
-
-function imba_keeper_of_the_light_blinding_light:Pulse(position)
-	if not IsServer() then return end
-
-	-- Emit sound
-	self.caster:EmitSound("Hero_KeeperOfTheLight.BlindingLight")
-	
-	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_blinding_light_aoe.vpcf", PATTACH_POINT_FOLLOW, self.caster)
-	ParticleManager:SetParticleControl(particle, 0, position)
-	ParticleManager:SetParticleControl(particle, 1, position)
-	ParticleManager:SetParticleControl(particle, 2, Vector(self.radius, 0, 0))
-	ParticleManager:ReleaseParticleIndex(particle)
-	
-	-- Spotlights
-	local spotlight_modifier = self.caster:FindModifierByName("modifier_imba_keeper_of_the_light_spotlights")
-	
-	if spotlight_modifier then
-		spotlight_modifier:Spotlight(position, self.radius, spotlight_modifier:GetAbility():GetSpecialValueFor("attack_duration"))
-	end
-	
-	-- Apply Blinding Light modifier and blind to all applicable enemies in radius
-	local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(), position, nil, self.radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
-	
-	for _, enemy in pairs(enemies) do
-		local damageTable = {
-			victim 			= enemy,
-			damage 			= self.damage,
-			damage_type		= DAMAGE_TYPE_MAGICAL,
-			damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
-			attacker 		= self.caster,
-			ability 		= self
-		}
-								
-		ApplyDamage(damageTable)
-		
-		enemy:FaceTowards(position * (-1))
-		enemy:SetForwardVector((enemy:GetAbsOrigin() - position):Normalized())
-		
-		-- nil checks cause of timer shenanigans
-		local blind_mod 	= enemy:AddNewModifier(self.caster, self, "modifier_imba_keeper_of_the_light_blinding_light", {duration = self.duration})
-		
-		if blind_mod then
-			blind_mod:SetDuration(self.duration * (1 - enemy:GetStatusResistance()), true)
-		end
-		
-		local knockback_mod	= enemy:AddNewModifier(self.caster, self, "modifier_imba_blinding_light_knockback", {x = position.x, y = position.y, z = position.z, duration = self.knockback_duration})
-		
-		if knockback_mod then
-			knockback_mod:SetDuration(self.knockback_duration * (1 - enemy:GetStatusResistance()), true)
-		end
-	end
-end
-
------------------------------
--- BLINDING LIGHT MODIFIER --
------------------------------
-
-function modifier_imba_keeper_of_the_light_blinding_light:GetEffectName()
-	return "particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_blinding_light_debuff.vpcf"
-end
-
-function modifier_imba_keeper_of_the_light_blinding_light:OnCreated()
-	self.ability	= self:GetAbility()
-	self.caster		= self:GetCaster()
-	self.parent		= self:GetParent()
-	
-	-- AbilitySpecials
-	self.miss_rate				= self.ability:GetSpecialValueFor("miss_rate")
-end
-
-function modifier_imba_keeper_of_the_light_blinding_light:DeclareFunctions()
-	local decFuncs = {
-		MODIFIER_PROPERTY_MISS_PERCENTAGE
-    }
-
-    return decFuncs
-end
-
-function modifier_imba_keeper_of_the_light_blinding_light:GetModifierMiss_Percentage()
-    return self.miss_rate
-end
-
-------------------------------
--- BLINDING LIGHT KNOCKBACK --
-------------------------------
-
-function modifier_imba_blinding_light_knockback:IsHidden() return true end
-
-function modifier_imba_blinding_light_knockback:OnCreated(params)
-	if not IsServer() then return end
-	
-	self.ability				= self:GetAbility()
-	self.parent					= self:GetParent()
-	
-	-- AbilitySpecials
-	self.knockback_duration		= self.ability:GetSpecialValueFor("knockback_duration")
-	self.knockback_distance		= self.ability:GetSpecialValueFor("knockback_distance")
-	
-	-- Calculate speed at which modifier owner will be knocked back
-	self.knockback_speed		= self.knockback_distance / self.knockback_duration
-	
-	-- Get the center of the Blinding Light sphere to know which direction to get knocked back
-	self.position	= Vector(params.x, params.y, params.z)
-
-	self.parent:StartGesture(ACT_DOTA_FLAIL)
-	
-	if self:ApplyHorizontalMotionController() == false then 
-		self:Destroy()
-		return
-	end
-end
-
-function modifier_imba_blinding_light_knockback:UpdateHorizontalMotion( me, dt )
-	if not IsServer() then return end
-
-	local distance = (me:GetOrigin() - self.position):Normalized()
-	
-	me:SetOrigin( me:GetOrigin() + distance * self.knockback_speed * dt )
-end
-
-function modifier_imba_blinding_light_knockback:OnDestroy()
-	if not IsServer() then return end
-
-	-- Destroy trees around landing zone
-	GridNav:DestroyTreesAroundPoint( self.parent:GetOrigin(), 150, true )
-	
-	self.parent:FadeGesture(ACT_DOTA_FLAIL)
-	
-	self.parent:RemoveHorizontalMotionController( self )
-end
-
-function modifier_imba_blinding_light_knockback:DeclareFunctions()
-	local decFuncs = {
-		MODIFIER_PROPERTY_DISABLE_TURNING
-    }
-
-    return decFuncs
-end
-
-function modifier_imba_blinding_light_knockback:GetModifierDisableTurning()
-	return 1
-end
-
 ------------------
 -- CHAKRA MAGIC --
 ------------------
-
-function imba_keeper_of_the_light_chakra_magic:OnAbilityPhaseStart()
-	if self:GetCursorTarget():GetTeam() ~= self:GetCaster():GetTeam() then
-		self:GetCaster():StartGesture(ACT_DOTA_CAST_ABILITY_2)
-	end
-	
-	return true
-end
-
-function imba_keeper_of_the_light_chakra_magic:OnAbilityPhaseInterrupted()
-	if self:GetCursorTarget():GetTeam() ~= self:GetCaster():GetTeam() then
-		self:GetCaster():FadeGesture(ACT_DOTA_CAST_ABILITY_2)
-	end
-end
-
-function imba_keeper_of_the_light_chakra_magic:OnSpellStart()
-	self.caster		= self:GetCaster()
-	self.target		= self:GetCursorTarget()
-	
-	-- AbilitySpecials
-	self.mana_restore		= self:GetSpecialValueFor("mana_restore")
-	self.cooldown_reduction	= self:GetSpecialValueFor("cooldown_reduction")
-	self.duration			= self:GetSpecialValueFor("duration")
-	-- self.mana_leak_pct		= self:GetSpecialValueFor("mana_leak_pct")
-	-- self.stun_duration		= self:GetSpecialValueFor("stun_duration")
-	
-	if not IsServer() then return end
-	
-	if self.target:GetTeam() == self.caster:GetTeam() then
-		-- Emit cast sound
-		self.caster:EmitSound("Hero_KeeperOfTheLight.ChakraMagic.Target")
-		
-		-- Emit particle
-		self.particle = ParticleManager:CreateParticle("particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_chakra_magic.vpcf", PATTACH_POINT_FOLLOW, self.caster)
-		ParticleManager:SetParticleControlEnt(self.particle, 0, self.caster, PATTACH_POINT_FOLLOW, "attach_attack1", self.caster:GetAbsOrigin(), true)
-		ParticleManager:SetParticleControl(self.particle, 1, self.target:GetAbsOrigin())
-		ParticleManager:ReleaseParticleIndex(self.particle)
-		
-		-- The lengths we go to to replicate hero responses (nah prob just me)
-		if self.caster:GetName() == "npc_dota_hero_keeper_of_the_light" then
-			if RollPercentage(15) then
-				self.caster:EmitSound("keeper_of_the_light_keep_chakramagic_02")
-			elseif RollPercentage(25) then
-				if self.caster == self.target then
-					self.caster:EmitSound("keeper_of_the_light_keep_chakramagic_06")
-				else
-					if RollPercentage(50) then
-						self.caster:EmitSound("keeper_of_the_light_keep_chakramagic_03")
-					else
-						self.caster:EmitSound("keeper_of_the_light_keep_chakramagic_06")
-					end
-				end
-			end
-		end
-		
-		self.target:GiveMana(self.mana_restore)
-		
-		-- Apparently the vanilla skill only shows the mana number if it's a hero?...
-		if self.target:IsHero() then
-			SendOverheadEventMessage(nil, OVERHEAD_ALERT_MANA_ADD, self.target, self.mana_restore, nil)
-		end
-		
-		for abilities = 0, 23 do
-			local ability = self.target:GetAbilityByIndex(abilities)
-		
-			if ability and ability:GetAbilityType() ~= ABILITY_TYPE_ULTIMATE then
-				local remaining_cooldown = ability:GetCooldownTimeRemaining()
-				
-				if remaining_cooldown > 0 then
-					ability:EndCooldown()
-					ability:StartCooldown(math.max(remaining_cooldown - self.cooldown_reduction, 0))
-				end
-			end
-		end
-	-- Enemy logic
-	else
-		-- Emit cast sound
-		self.caster:EmitSound("Imba.Hero_KeeperOfTheLight.ManaLeak.Cast")
-		self.target:EmitSound("Imba.Hero_KeeperOfTheLight.ManaLeak.Target")
-		self.target:EmitSound("Imba.Hero_KeeperOfTheLight.ManaLeak.Target.FP")
-		
-		--particles/units/heroes/hero_keeper_of_the_light/keeper_mana_leak.vpcf CP0
-		--particles/units/heroes/hero_keeper_of_the_light/keeper_mana_leak_cast.vpcf CP0 CP1
-		
-		-- Emit particle
-		self.particle = ParticleManager:CreateParticle("particles/units/heroes/hero_keeper_of_the_light/keeper_mana_leak_cast.vpcf", PATTACH_POINT_FOLLOW, self.caster)
-		ParticleManager:SetParticleControlEnt(self.particle, 0, self.caster, PATTACH_POINT_FOLLOW, "attach_attack1", self.caster:GetAbsOrigin(), true)
-		ParticleManager:SetParticleControl(self.particle, 1, self.target:GetAbsOrigin())
-		ParticleManager:ReleaseParticleIndex(self.particle)
-		
-		if self.caster:GetName() == "npc_dota_hero_keeper_of_the_light" then
-			if RollPercentage(50) then
-				self.caster:EmitSound("keeper_of_the_light_keep_manaleak_0"..math.random(1, 5))
-			end
-		end
-		
-		-- IMBAfication: Mana Leak
-		self.target:AddNewModifier(self.caster, self, "modifier_imba_keeper_of_the_light_mana_leak", {duration = self.duration}):SetDuration(self.duration * (1 - self.target:GetStatusResistance()), true)
-		
-		-- Flow Inhibition Talent
-		if self.caster:HasTalent("special_bonus_imba_keeper_of_the_light_flow_inhibition") then
-			local inhibition_multiplier = self.caster:FindTalentValue("special_bonus_imba_keeper_of_the_light_flow_inhibition")
-		
-			self.target:ReduceMana(self.mana_restore * inhibition_multiplier)
-			
-			-- Apparently the vanilla skill only shows the mana number if it's a hero?...
-			if self.target:IsHero() then
-				SendOverheadEventMessage(nil, OVERHEAD_ALERT_MANA_LOSS, self.target, self.mana_restore * inhibition_multiplier, nil)
-			end
-			
-			for abilities = 0, 23 do
-				local ability = self.target:GetAbilityByIndex(abilities)
-			
-				if ability and ability:GetAbilityType() ~= ABILITY_TYPE_ULTIMATE then
-					local remaining_cooldown = ability:GetCooldownTimeRemaining()
-					
-					ability:EndCooldown()
-					ability:StartCooldown(remaining_cooldown + (self.cooldown_reduction * inhibition_multiplier))
-				end
-			end
-		end
-	end
-end
 
 ---------------
 -- MANA LEAK --
 ---------------
 
-function modifier_imba_keeper_of_the_light_mana_leak:GetTexture()
-	return "keeper_of_the_light_mana_leak"
-end
-
--- function modifier_imba_keeper_of_the_light_mana_leak:GetEffectName()
-	-- return "particles/units/heroes/hero_keeper_of_the_light/keeper_mana_leak.vpcf"
--- end
-
-function modifier_imba_keeper_of_the_light_mana_leak:OnCreated()
-	self.ability	= self:GetAbility()
-	self.caster		= self:GetCaster()
-	self.parent		= self:GetParent()
-	
-	-- AbilitySpecials
-	self.mana_leak_pct		= self.ability:GetSpecialValueFor("mana_leak_pct")
-	self.stun_duration		= self.ability:GetSpecialValueFor("stun_duration")
-	
-	if not IsServer() then return end
-	
-	self.starting_position	= self.parent:GetAbsOrigin()
-	
-	if self.parent:GetMaxMana() <= 0 then
-		self.parent:AddNewModifier(self.caster, self.ability, "modifier_stunned", {duration = self.stun_duration}):SetDuration(self.stun_duration * (1 - self.parent:GetStatusResistance()), true)
-		self:Destroy()
-	else
-		local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_keeper_of_the_light/keeper_mana_leak.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.parent)
-		ParticleManager:ReleaseParticleIndex(particle)
-		self:StartIntervalThink(0.1)
-	end
-end
-
-function modifier_imba_keeper_of_the_light_mana_leak:OnRefresh()
-	self:OnCreated()
-end
-
-function modifier_imba_keeper_of_the_light_mana_leak:OnIntervalThink()
-	if not IsServer() then return end
-	
-	local new_position		= self.parent:GetAbsOrigin()
-	local distance			= (self.starting_position - new_position):Length2D()
-	local max_mana			= self.parent:GetMaxMana()
-	
-	if distance > 0 and distance <= 300 then
-		self.parent:ReduceMana((distance * 0.01) * (max_mana * self.mana_leak_pct * 0.01))
-		local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_keeper_of_the_light/keeper_mana_leak.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.parent)
-		ParticleManager:ReleaseParticleIndex(particle)
-	end
-	
-	if self.parent:GetMana() <= 0 then
-		self.parent:AddNewModifier(self.caster, self.ability, "modifier_stunned", {duration = self.stun_duration}):SetDuration(self.stun_duration * (1 - self.parent:GetStatusResistance()), true)
-		self:Destroy()
-	end
-	
-	self.starting_position = new_position
-end
-
-function modifier_imba_keeper_of_the_light_mana_leak:OnDestroy()
-	if not IsServer() then return end
-
-	self.parent:StopSound("Imba.Hero_KeeperOfTheLight.ManaLeak.Target.FP")
-end
-
-function modifier_imba_keeper_of_the_light_mana_leak:DeclareFunctions()
-	local decFuncs = {
-		MODIFIER_EVENT_ON_ORDER
-    }
-
-    return decFuncs
-end
-
-function modifier_imba_keeper_of_the_light_mana_leak:OnOrder(keys)
-	if not IsServer() then return end
-
-	if keys.unit == self.parent and (keys.order_type == 1 or keys.order_type == 2 or keys.order_type == 3) then
-		-- Spotlights
-		local spotlight_modifier = self.caster:FindModifierByName("modifier_imba_keeper_of_the_light_spotlights")
-		
-		if spotlight_modifier then
-			spotlight_modifier:Spotlight(self.parent:GetAbsOrigin(), spotlight_modifier:GetAbility():GetSpecialValueFor("passive_radius"), spotlight_modifier:GetAbility():GetSpecialValueFor("damaged_duration"))
-		end
-	end
-end
-
-----------------
--- SPOTLIGHTS --
-----------------
-
-function imba_keeper_of_the_light_spotlights:IsInnateAbility()	return true end
-
-function imba_keeper_of_the_light_spotlights:GetIntrinsicModifierName()
-	return "modifier_imba_keeper_of_the_light_spotlights"
-end
-
--------------------------
--- SPOTLIGHTS MODIFIER --
--------------------------
-
-function modifier_imba_keeper_of_the_light_spotlights:IsHidden()	return true end
-
-function modifier_imba_keeper_of_the_light_spotlights:OnCreated()
-	self.ability			= self:GetAbility()
-	self.parent				= self:GetParent()
-	
-	-- AbilitySpecials
-	self.passive_radius		= self.ability:GetSpecialValueFor("passive_radius")
-	self.attack_duration	= self.ability:GetSpecialValueFor("attack_duration")
-	self.damaged_duration	= self.ability:GetSpecialValueFor("damaged_duration")
-end
-
-function modifier_imba_keeper_of_the_light_spotlights:DeclareFunctions()
-	local decFuncs = {
-		MODIFIER_EVENT_ON_ATTACK_LANDED,
-		MODIFIER_EVENT_ON_TAKEDAMAGE
-    }
-
-    return decFuncs
-end
-
-function modifier_imba_keeper_of_the_light_spotlights:OnAttackLanded(keys)
-	if not IsServer() then return end
-
-	if keys.attacker == self.parent and not self.parent:PassivesDisabled() and self.ability:IsCooldownReady() then
-		self:Spotlight(keys.target:GetAbsOrigin(), self.passive_radius, self.attack_duration)
-		self.ability:UseResources(false, false, true)
-	end
-end
-
-function modifier_imba_keeper_of_the_light_spotlights:OnTakeDamage(keys)
-	if not IsServer() then return end
-
-	if keys.unit == self.parent and not self.parent:PassivesDisabled() and self.ability:IsCooldownReady() then
-		self:Spotlight(keys.attacker:GetAbsOrigin(), self.passive_radius, self.damaged_duration)
-		self.ability:UseResources(false, false, true)
-	end
-end
-
-function modifier_imba_keeper_of_the_light_spotlights:Spotlight(position, radius, duration)
-	if not IsServer() or self.parent:PassivesDisabled() then return end
-	
-	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_keeper_of_the_light/keeper_dazzling.vpcf", PATTACH_POINT, self.parent)
-	ParticleManager:SetParticleControl(particle, 0, position)
-	ParticleManager:SetParticleControl(particle, 1, Vector(radius, 1, 1))
-	
-	AddFOWViewer(self.parent:GetTeam(), position, radius, duration, false)
-	
-	Timers:CreateTimer(duration, function()
-		if self and particle then
-			ParticleManager:DestroyParticle(particle, false)
-			ParticleManager:ReleaseParticleIndex(particle)
-		end
-	end)
-end
+-- Might remove this / incorporate into talent
 
 -----------------
 -- WILL O WISP --
 -----------------
-
-function imba_keeper_of_the_light_will_o_wisp:GetAOERadius()
-	return self:GetSpecialValueFor("radius")
-end
 
 function imba_keeper_of_the_light_will_o_wisp:OnSpellStart()
 	self.caster		= self:GetCaster()
@@ -957,12 +331,10 @@ function imba_keeper_of_the_light_will_o_wisp:OnSpellStart()
 	self.bounty					= self:GetSpecialValueFor("bounty")
 
 	-- Calculate total duration that the wisp will be present for using on and off durations
-	-- The initial off duration + total amount of time it's on + total amount of time it's off minus one instace
-	self.duration = self.off_duration_initial + (self.on_duration * self.on_count) + (self.off_duration * (self.on_count - 1))
+	self.duration = self.off_duration_initial + (self.on_duration * self.on_count) + (self.off_duration + (self.on_count - 1))
 
 	if not IsServer() then return end
 
-	-- Issue: This thing actually has a slightly larger hitbox than the standard wisp -_-
 	CreateUnitByNameAsync("npc_dota_ignis_fatuus", self.position, true, self.caster, self.caster, self.caster:GetTeam(), function(ignis_fatuus)
 		-- Add the hypnotizing aura modifier
 		ignis_fatuus:AddNewModifier(self.caster, self, "modifier_imba_keeper_of_the_light_will_o_wisp", {duration = self.duration})
@@ -971,18 +343,6 @@ function imba_keeper_of_the_light_will_o_wisp:OnSpellStart()
 		ignis_fatuus:SetMaximumGoldBounty(self.bounty)
 		ignis_fatuus:SetMinimumGoldBounty(self.bounty)
 	end)
-	
-	if self.caster:GetName() == "npc_dota_hero_keeper_of_the_light" then
-		-- 6 responses, but #4 is unused
-		local response = math.random(1, 5)
-		
-		if response >= 4 then
-			response = (response + 1)
-		end
-
-		-- This thing gets interrupted a lot by KOTL moving right after and IDK how to fix that
-		self.caster:EmitSound("keeper_of_the_light_keep_spiritform_0"..response)
-	end
 end
 
 --------------------------
@@ -997,25 +357,19 @@ function modifier_imba_keeper_of_the_light_will_o_wisp:OnCreated()
 	self.parent		= self:GetParent()
 	
 	-- AbilitySpecials
-	self.on_count						= self.ability:GetSpecialValueFor("on_count")
-	self.radius							= self.ability:GetSpecialValueFor("radius")
-	self.hit_count						= self.ability:GetSpecialValueFor("hit_count")
-	self.off_duration					= self.ability:GetSpecialValueFor("off_duration")
-	self.on_duration					= self.ability:GetSpecialValueFor("on_duration")
-	self.off_duration_initial			= self.ability:GetSpecialValueFor("off_duration_initial")
-	self.fixed_movement_speed			= self.ability:GetSpecialValueFor("fixed_movement_speed")
-	self.bounty							= self.ability:GetSpecialValueFor("bounty")
-	self.ignis_blessing_duration		= self.ability:GetSpecialValueFor("ignis_blessing_duration")
+	self.on_count				= self.ability:GetSpecialValueFor("on_count")
+	self.radius					= self.ability:GetSpecialValueFor("radius")
+	self.hit_count				= self.ability:GetSpecialValueFor("hit_count")
+	self.off_duration			= self.ability:GetSpecialValueFor("off_duration")
+	self.on_duration			= self.ability:GetSpecialValueFor("on_duration")
+	self.off_duration_initial	= self.ability:GetSpecialValueFor("off_duration_initial")
+	self.fixed_movement_speed	= self.ability:GetSpecialValueFor("fixed_movement_speed")
+	self.bounty					= self.ability:GetSpecialValueFor("bounty")
 	
 	if not IsServer() then return end
 	
 	-- Calculate health chunks that Ignis Fatuus will lose on getting attacked
 	self.health_increments		= self.parent:GetMaxHealth() / self.hit_count
-	
-	-- Emit cast sounds
-	self.parent:EmitSound("Hero_KeeperOfTheLight.Wisp.Cast")
-	self.parent:EmitSound("Hero_KeeperOfTheLight.Wisp.Spawn")
-	self.parent:EmitSound("Hero_KeeperOfTheLight.Wisp.Aura")
 	
 	-- This gives Ignis Fatuus a visible model
 	-- CP1 = Vector(radius, 1, 1)
@@ -1024,93 +378,35 @@ function modifier_imba_keeper_of_the_light_will_o_wisp:OnCreated()
 	self.particle = ParticleManager:CreateParticle("particles/units/heroes/hero_keeper_of_the_light/keeper_dazzling.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.parent)
 	ParticleManager:SetParticleControl(self.particle, 1, Vector(self.radius, 1, 1))
 	ParticleManager:SetParticleControl(self.particle, 2, Vector(0, 0, 0))
+	
 	self:AddParticle(self.particle, false, false, -1, false, false)
-	
-	self.particle2 = ParticleManager:CreateParticle("particles/units/heroes/hero_keeper_of_the_light/keeper_dazzling_on.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.parent)
-	ParticleManager:SetParticleControl(self.particle2, 2, Vector(0, 0, 0))
-	self:AddParticle(self.particle2, false, false, -1, false, false)
-	
 	
 	--particles/units/heroes/hero_keeper_of_the_light/keeper_dazzling_debuff.vpcf
 	--particles/units/heroes/hero_keeper_of_the_light/keeper_dazzling_on.vpcf
 	--particles/units/heroes/hero_keeper_of_the_light/keeper_dazzling_start.vpcf
-	
-	--"Hero_KeeperOfTheLight.Wisp.Cast"
-	--"Hero_KeeperOfTheLight.Wisp.Spawn"
-	--"Hero_KeeperOfTheLight.Wisp.Aura"
-	--"Hero_KeeperOfTheLight.Wisp.Active"
-	--"Hero_KeeperOfTheLight.Wisp.Target"
-	--"Hero_KeeperOfTheLight.Wisp.Destroy"
-	
-	-- Destroy trees around cast point
-	GridNav:DestroyTreesAroundPoint( self.parent:GetOrigin(), self.radius, true )
-	
-	self.timer = 0
-	self.pulses = 0
-	self.is_on = false
-	
-	self:StartIntervalThink(FrameTime())
-end
-
-function modifier_imba_keeper_of_the_light_will_o_wisp:OnIntervalThink()
-	if not IsServer() then return end
-
-	self.timer = self.timer + FrameTime()
-	
-	if not self.is_on and (self.pulses == 0 and self.timer >= self.off_duration_initial) or (self.pulses > 0 and self.timer >= self.off_duration)  then
-		self.is_on 	= true
-		self.pulses = self.pulses + 1
-		
-		self.parent:EmitSound("Hero_KeeperOfTheLight.Wisp.Active")
-		ParticleManager:SetParticleControl(self.particle, 2, Vector(1, 0, 0))
-		ParticleManager:SetParticleControl(self.particle2, 2, Vector(1, 0, 0))
-
-		self.timer = 0		
-	elseif self.is_on then
-		if self.timer >= self.on_duration then
-			self.is_on = false
-			ParticleManager:SetParticleControl(self.particle, 2, Vector(0, 0, 0))
-			ParticleManager:SetParticleControl(self.particle2, 2, Vector(0, 0, 0))
-			self.timer = 0
-		else
-			local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(), self.parent:GetAbsOrigin(), nil, self.radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
-			
-			for _, enemy in pairs(enemies) do
-				if not enemy:HasModifier("modifier_imba_keeper_of_the_light_will_o_wisp_aura") then
-					enemy:AddNewModifier(self.parent, self.ability, "modifier_imba_keeper_of_the_light_will_o_wisp_aura", {duration = self.on_duration - self.timer})
-				end
-				
-				-- CALLING THIS A BILLION TIMES CAUSE IDK WHY IT KEEPS FAILING
-				enemy:FaceTowards(self.parent:GetAbsOrigin())
-			end
-			
-			local truesight_modifier = self.parent:FindModifierByName("modifier_item_gem_of_true_sight")
-			
-			if not truesight_modifier then
-				self.parent:AddNewModifier(self.caster, self.caster:FindAbilityByName("special_bonus_imba_keeper_of_the_light_ignis_truesight"), "modifier_item_gem_of_true_sight", {duration = self.on_duration})
-			end
-		end
-	end
 end
 
 function modifier_imba_keeper_of_the_light_will_o_wisp:OnRemoved()
 	if not IsServer() then return end
 	
-	self.parent:EmitSound("Hero_KeeperOfTheLight.Wisp.Destroy")
-	self.parent:StopSound("Hero_KeeperOfTheLight.Wisp.Aura")
-	
-	local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(), self.parent:GetAbsOrigin(), nil, self.radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
-	
-	-- Remove exisiting hypnotize modifiers on everyone if the wisp is destroyed during this
-	for _, enemy in pairs(enemies) do
-		local hypnotize_modifier = enemy:FindModifierByNameAndCaster("modifier_imba_keeper_of_the_light_will_o_wisp_aura", self.parent)
-		
-		if hypnotize_modifier then
-			hypnotize_modifier:Destroy()
-		end
-	end
-	
 	self.parent:ForceKill(false)
+end
+
+function modifier_imba_keeper_of_the_light_will_o_wisp:IsAura() 				return true end
+function modifier_imba_keeper_of_the_light_will_o_wisp:IsAuraActiveOnDeath() 	return false end
+
+function modifier_imba_keeper_of_the_light_will_o_wisp:GetAuraRadius()			return 625 end
+function modifier_imba_keeper_of_the_light_will_o_wisp:GetAuraSearchFlags()		return DOTA_UNIT_TARGET_FLAG_NONE end
+function modifier_imba_keeper_of_the_light_will_o_wisp:GetAuraSearchTeam()		return DOTA_UNIT_TARGET_TEAM_ENEMY end
+function modifier_imba_keeper_of_the_light_will_o_wisp:GetAuraSearchType()		return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC end
+function modifier_imba_keeper_of_the_light_will_o_wisp:GetModifierAura()		return "modifier_imba_keeper_of_the_light_will_o_wisp_aura" end
+
+function modifier_imba_keeper_of_the_light_will_o_wisp:GetAuraEntityReject(hEntity)
+	if not IsServer() then return end
+
+	-- -- Aura should not be active while it is off
+	
+	return false
 end
 
 -- IMBAfication: I forget what I named this need to find my notes
@@ -1127,7 +423,6 @@ function modifier_imba_keeper_of_the_light_will_o_wisp:DeclareFunctions()
 		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_MAGICAL,
 		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL,
 		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE,
-		MODIFIER_PROPERTY_MODEL_SCALE,
 		
 		MODIFIER_EVENT_ON_ATTACKED
     }
@@ -1145,11 +440,6 @@ end
 
 function modifier_imba_keeper_of_the_light_will_o_wisp:GetAbsoluteNoDamagePure()
     return 1
-end
-
--- Arbitrary size reduction to try and match vanila
-function modifier_imba_keeper_of_the_light_will_o_wisp:GetModifierModelScale()
-    return -40
 end
 
 function modifier_imba_keeper_of_the_light_will_o_wisp:OnAttacked(keys)
@@ -1170,7 +460,7 @@ function modifier_imba_keeper_of_the_light_will_o_wisp:OnAttacked(keys)
 		
 		-- Then with ally logic
 		else
-			keys.attacker:AddNewModifier(self.caster, self.ability, "modifier_imba_keeper_of_the_light_will_o_wisp_blessing", {duration = self.ignis_blessing_duration})
+		
 		end
 	end
 end
@@ -1178,151 +468,901 @@ end
 -------------------------------
 -- WILL O WISP MODIFIER AURA --
 -------------------------------
--- I guess this isn't technically an aura but w/e using vanilla descriptions
-
-function modifier_imba_keeper_of_the_light_will_o_wisp_aura:IgnoreTenacity()	return true end
-function modifier_imba_keeper_of_the_light_will_o_wisp_aura:IsPurgable() 		return false end
-
-function modifier_imba_keeper_of_the_light_will_o_wisp_aura:GetEffectName()
-	return "particles/units/heroes/hero_keeper_of_the_light/keeper_dazzling_debuff.vpcf"
-end
-
--- Doesn't feel like this is working for some reason
-function modifier_imba_keeper_of_the_light_will_o_wisp_aura:GetStatusEffectName()
-	return "particles/status_fx/status_effect_keeper_dazzle.vpcf"
-end
 
 function modifier_imba_keeper_of_the_light_will_o_wisp_aura:OnCreated()
-	self.ability				= self:GetAbility()
-	self.caster					= self:GetCaster()
-	self.parent					= self:GetParent()
-	
-	-- AbilitySpecials
-	self.fixed_movement_speed		= self.ability:GetSpecialValueFor("fixed_movement_speed")
-	self.tunnel_vision_reduction	= self.ability:GetSpecialValueFor("tunnel_vision_reduction")
-	
-	if not IsServer() then return end
-	
-	if self:ApplyHorizontalMotionController() == false then 
-		self:Destroy()
-		return
-	end
-	
-	self.parent:FaceTowards(self.caster:GetAbsOrigin())
-	self.parent:Stop()
-	
-	self.parent:StartGesture(ACT_DOTA_DISABLED)
+
 end
 
-function modifier_imba_keeper_of_the_light_will_o_wisp_aura:UpdateHorizontalMotion( me, dt )
-	if not IsServer() then return end
+-- function imba_bristleback_viscous_nasal_goo:GetIntrinsicModifierName()
+	-- return "modifier_imba_bristleback_viscous_nasal_goo_autocaster"
+-- end
 
-	local distance = (self.caster:GetOrigin() - me:GetOrigin()):Normalized()
+-- function imba_bristleback_viscous_nasal_goo:GetBehavior()
+	-- if self:GetCaster():HasScepter() then
+		-- return DOTA_ABILITY_BEHAVIOR_NO_TARGET + DOTA_ABILITY_BEHAVIOR_AUTOCAST + DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING
+	-- else
+		-- return self.BaseClass.GetBehavior(self)
+	-- end
+-- end
+
+-- function imba_bristleback_viscous_nasal_goo:OnSpellStart()
+	-- self.caster	= self:GetCaster()
 	
-	me:SetOrigin( me:GetOrigin() + distance * self.fixed_movement_speed * dt )
-end
-
-function modifier_imba_keeper_of_the_light_will_o_wisp_aura:OnDestroy()
-	if not IsServer() then return end
-
-	self.parent:RemoveHorizontalMotionController( self )
-	self.parent:FadeGesture(ACT_DOTA_DISABLED)
-end
-
--- Creeps don't turn to face the wisp zzzzzzzzzz
-function modifier_imba_keeper_of_the_light_will_o_wisp_aura:CheckState()
-	local state = {
-	[MODIFIER_STATE_HEXED] = true,	-- Using this as substitute for Sleep which isn't a provided state
-	[MODIFIER_STATE_DISARMED] = true,
-	[MODIFIER_STATE_SILENCED] = true,
-	[MODIFIER_STATE_MUTED] = true,
-	[MODIFIER_STATE_COMMAND_RESTRICTED] = true,
-	[MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY] = true
-	}
-
-	return state
-end
-
-function modifier_imba_keeper_of_the_light_will_o_wisp_aura:DeclareFunctions()
-	local decFuncs = {
-		MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE,
+	-- -- AbilitySpecials
+	-- self.goo_speed					= self:GetSpecialValueFor("goo_speed")
+	-- self.goo_duration				= self:GetSpecialValueFor("goo_duration")
+	-- self.base_armor					= self:GetSpecialValueFor("base_armor")
+	-- self.armor_per_stack			= self:GetSpecialValueFor("armor_per_stack")
+	-- self.base_move_slow				= self:GetSpecialValueFor("base_move_slow")
+	-- self.move_slow_per_stack		= self:GetSpecialValueFor("move_slow_per_stack")
+	-- --self.stack_limit 				= self:GetSpecialValueFor("stack_limit")
+	-- self.goo_duration_creep			= self:GetSpecialValueFor("goo_duration_creep")
+	-- self.radius_scepter 			= self:GetSpecialValueFor("radius_scepter")
+	
+	-- self.disgust_knockback 			= self:GetSpecialValueFor("disgust_knockback")
+	-- self.disgust_knockup 			= self:GetSpecialValueFor("disgust_knockup")
+	-- self.base_disgust_duration 		= self:GetSpecialValueFor("base_disgust_duration")
+	-- self.disgust_duration_per_stack	= self:GetSpecialValueFor("disgust_duration_per_stack")
+	
+	-- if not IsServer() then return end
+	
+	-- self.caster:EmitSound("Hero_Bristleback.ViscousGoo.Cast")
+	
+	-- if self.caster:HasScepter() then
+		-- local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(), self.caster:GetAbsOrigin(), nil, self.radius_scepter, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS, FIND_ANY_ORDER, false)
 		
-		MODIFIER_PROPERTY_BONUS_VISION_PERCENTAGE 
-    }
-
-    return decFuncs
-end
-
-function modifier_imba_keeper_of_the_light_will_o_wisp_aura:GetModifierMoveSpeed_Absolute()
-    return self.fixed_movement_speed
-end
-
-function modifier_imba_keeper_of_the_light_will_o_wisp_aura:GetBonusVisionPercentage()
-    return self.tunnel_vision_reduction * (-1)
-end
-
------------------------------------
--- WILL O WISP BLESSING MODIFIER --
------------------------------------
-
-function modifier_imba_keeper_of_the_light_will_o_wisp_blessing:GetEffectName()
-	return "particles/hero/keeper_of_the_light/ignis_blessing.vpcf"
-end
-
-function modifier_imba_keeper_of_the_light_will_o_wisp_blessing:GetStatusEffectName()
-	return "particles/status_fx/status_effect_keeper_spirit_form.vpcf"
-end
-
-function modifier_imba_keeper_of_the_light_will_o_wisp_blessing:OnCreated()
-	self.ability						= self:GetAbility()
-	self.caster							= self:GetCaster()
-	self.parent							= self:GetParent()
+		-- for _, enemy in pairs(enemies) do
+			-- local projectile =
+			-- {
+				-- Target 				= enemy,
+				-- Source 				= self.caster,
+				-- Ability 			= self,
+				-- EffectName 			= "particles/units/heroes/hero_bristleback/bristleback_viscous_nasal_goo.vpcf",
+				-- iMoveSpeed 			= self.goo_speed,
+				-- vSourceLoc			= self.caster:GetAbsOrigin(),
+				-- bDrawsOnMinimap		= false,
+				-- bDodgeable			= true,
+				-- bIsAttack 			= false,
+				-- bVisibleToEnemies	= true,
+				-- bReplaceExisting 	= false,
+				-- flExpireTime 		= GameRules:GetGameTime() + 10,
+				-- bProvidesVision 	= false,
+				-- iVisionRadius 		= 0,
+				-- iVisionTeamNumber 	= self.caster:GetTeamNumber()
+			-- }
+			
+			-- ProjectileManager:CreateTrackingProjectile(projectile)
+		-- end
+	-- else
+		-- self.target	= self:GetCursorTarget()
 	
-	-- AbilitySpecials
-	self.ignis_blessing_int_to_damage	= self.ability:GetSpecialValueFor("ignis_blessing_int_to_damage")
-
-	if not IsServer() then return end
+		-- -- Stop if target has linkens
+		-- if self.target:TriggerSpellAbsorb(self) then return end
 	
-	if self.caster.GetIntellect then
-		self:SetStackCount(self.caster:GetIntellect() * self.ignis_blessing_int_to_damage * 0.01)
-	end
-end
+		-- local projectile =
+		-- {
+			-- Target 				= self.target,
+			-- Source 				= self.caster,
+			-- Ability 			= self,
+			-- EffectName 			= "particles/units/heroes/hero_bristleback/bristleback_viscous_nasal_goo.vpcf",
+			-- iMoveSpeed 			= self.goo_speed,
+			-- vSourceLoc			= self.caster:GetAbsOrigin(),
+			-- bDrawsOnMinimap		= false,
+			-- bDodgeable			= true,
+			-- bIsAttack 			= false,
+			-- bVisibleToEnemies	= true,
+			-- bReplaceExisting 	= false,
+			-- flExpireTime 		= GameRules:GetGameTime() + 10,
+			-- bProvidesVision 	= false,
+			-- iVisionRadius 		= 0,
+			-- iVisionTeamNumber 	= self.caster:GetTeamNumber()
+		-- }
+		
+		-- ProjectileManager:CreateTrackingProjectile(projectile)
+	-- end
+		
+	-- if self.caster:GetName() == "npc_dota_hero_bristleback" and RollPercentage(40) then
+		-- self.caster:EmitSound("bristleback_bristle_nasal_goo_0"..math.random(1,7))
+	-- end
+-- end
 
-function modifier_imba_keeper_of_the_light_will_o_wisp_blessing:OnRefresh()
-	self:OnCreated()
-end
+-- function imba_bristleback_viscous_nasal_goo:OnProjectileHit(hTarget, vLocation)
+	-- if hTarget ~= nil and hTarget:IsAlive() and not hTarget:IsMagicImmune() then
+		-- local goo_modifier = hTarget:AddNewModifier(self.caster, self, "modifier_imba_bristleback_viscous_nasal_goo", {duration = self.goo_duration})
+		
+		-- hTarget:EmitSound("Hero_Bristleback.ViscousGoo.Target")
+		
+		-- -- IMBAfication: Disgust
+		-- local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(), hTarget:GetAbsOrigin(), nil, self.radius_scepter, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+		
+		-- for	_, enemy in pairs(enemies) do
+			-- if enemy ~= hTarget then
+				-- local knockback = {
+					-- should_stun 		= 0,
+					-- knockback_distance 	= self.disgust_knockback * goo_modifier:GetStackCount(), 
+					-- knockback_height 	= self.disgust_knockup * goo_modifier:GetStackCount(),
+					-- center_x			= hTarget:GetAbsOrigin().x,
+					-- center_y			= hTarget:GetAbsOrigin().y,
+					-- center_z			= hTarget:GetAbsOrigin().z,
+					-- knockback_duration	= self.base_disgust_duration + (self.disgust_duration_per_stack * goo_modifier:GetStackCount()) -- This doesn't work or something?
+				-- }
 
-function modifier_imba_keeper_of_the_light_will_o_wisp_blessing:DeclareFunctions()
-	local decFuncs = {
-		MODIFIER_PROPERTY_PROCATTACK_BONUS_DAMAGE_PURE
-    }
+				-- enemy:AddNewModifier(self.caster, self, "modifier_knockback", knockback):SetDuration(self.base_disgust_duration + (self.disgust_duration_per_stack * goo_modifier:GetStackCount()), true)
+			-- end
+		-- end
+	-- end
+-- end
 
-    return decFuncs
-end
+-- --------------------------------
+-- -- VISCOUS NASAL GOO MODIFIER --
+-- --------------------------------
 
-function modifier_imba_keeper_of_the_light_will_o_wisp_blessing:GetModifierProcAttack_BonusDamage_Pure()
-    return self:GetStackCount()
-end
+-- function modifier_imba_bristleback_viscous_nasal_goo:GetEffectName()
+	-- return "particles/units/heroes/hero_bristleback/bristleback_viscous_nasal_goo_debuff.vpcf"
+-- end
+
+-- -- IDK which status effect it uses for this one and I can't find it so might just leave it, cause it's not this one...
+-- function modifier_imba_bristleback_viscous_nasal_goo:GetStatusEffectName()
+	-- return "particles/status_fx/status_effect_goo.vpcf"
+-- end
+
+-- function modifier_imba_bristleback_viscous_nasal_goo:OnCreated()
+	-- self.ability	= self:GetAbility()
+	-- self.caster		= self:GetCaster()
+	-- self.parent		= self:GetParent()
+	
+	-- -- AbilitySpecials
+	-- self.goo_speed				= self.ability:GetSpecialValueFor("goo_speed")
+	-- self.goo_duration			= self.ability:GetSpecialValueFor("goo_duration")
+	-- self.base_armor				= self.ability:GetSpecialValueFor("base_armor")
+	-- self.armor_per_stack		= self.ability:GetSpecialValueFor("armor_per_stack")
+	-- self.base_move_slow			= self.ability:GetSpecialValueFor("base_move_slow")
+	-- self.move_slow_per_stack	= self.ability:GetSpecialValueFor("move_slow_per_stack")
+	-- self.stack_limit 			= self.ability:GetSpecialValueFor("stack_limit") + self.caster:FindTalentValue("special_bonus_unique_bristleback")
+	-- self.goo_duration_creep		= self.ability:GetSpecialValueFor("goo_duration_creep")
+	-- self.radius_scepter 		= self.ability:GetSpecialValueFor("radius_scepter")
+
+	-- if not IsServer() then return end
+
+	-- self:SetStackCount(1)
+	
+	-- self.particle = ParticleManager:CreateParticle("particles/units/heroes/hero_bristleback/bristleback_viscous_nasal_stack.vpcf", PATTACH_OVERHEAD_FOLLOW, self.parent)
+	-- ParticleManager:SetParticleControl(self.particle, 1, Vector(0, self:GetStackCount(), 0))
+	-- self:AddParticle(self.particle, false, false, -1, false, false)
+	
+-- end
+
+-- function modifier_imba_bristleback_viscous_nasal_goo:OnRefresh()
+	-- if not IsServer() then return end
+
+	-- if self:GetStackCount() < self.stack_limit then
+		-- self:IncrementStackCount()
+		-- ParticleManager:SetParticleControl(self.particle, 1, Vector(0, self:GetStackCount(), 0))
+	-- end
+	
+	-- -- Custom Status Resist nonsense (need to learn how to make an all-encompassing function for this...)
+	-- self:SetDuration(self.goo_duration * (1 - self.parent:GetStatusResistance()), true)
+-- end
+
+-- function modifier_imba_bristleback_viscous_nasal_goo:DeclareFunctions()
+	-- local decFuncs = {
+		-- MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+        -- MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS
+    -- }
+
+    -- return decFuncs
+-- end
+
+-- function modifier_imba_bristleback_viscous_nasal_goo:GetModifierMoveSpeedBonus_Percentage()
+    -- return ((self.base_move_slow + (self.move_slow_per_stack * self:GetStackCount())) * (-1))
+-- end
+
+-- function modifier_imba_bristleback_viscous_nasal_goo:GetModifierPhysicalArmorBonus()
+    -- return ((self.base_armor + (self.armor_per_stack * self:GetStackCount())) * (-1))
+-- end
+
+-- -------------------------------------------
+-- -- VISCOUS NASAL GOO AUTOCASTER MODIFIER --
+-- -------------------------------------------
+
+-- function modifier_imba_bristleback_viscous_nasal_goo_autocaster:IsHidden()	return true end
+
+-- function modifier_imba_bristleback_viscous_nasal_goo_autocaster:OnCreated()
+	-- if not IsServer() then return end
+
+	-- self.ability	= self:GetAbility()
+	-- self.caster		= self:GetCaster()
+	-- self.parent		= self:GetParent()
+
+	-- self:StartIntervalThink(0.1)
+-- end
+
+-- function modifier_imba_bristleback_viscous_nasal_goo_autocaster:OnRefresh()
+	-- if not IsServer() then return end
+
+	-- self:StartIntervalThink(-1)
+
+	-- self:OnCreated()
+-- end
+
+-- function modifier_imba_bristleback_viscous_nasal_goo_autocaster:OnIntervalThink()
+	-- if not IsServer() then return end
+
+	-- if self.ability:GetAutoCastState() and self.ability:IsFullyCastable() and not self.ability:IsInAbilityPhase() then
+		-- if self.caster:HasScepter() then
+			-- self.caster:CastAbilityNoTarget(self.ability, self.caster:GetPlayerID())
+		-- else
+			-- local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(), self.caster:GetAbsOrigin(), nil, self.ability:GetCastRange(self.caster:GetAbsOrigin(), self.caster), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS, FIND_CLOSEST, false)
+			
+			-- if #enemies > 0 then
+				-- self.caster:CastAbilityOnTarget(enemies[1], self.ability, self.caster:GetPlayerID())
+			-- end
+		-- end
+
+		-- Timers:CreateTimer(self.ability:GetBackswingTime(), function()
+			-- -- This is just to prevent Bristleback from bricking up in super low CD situations, but he won't target people after cast then
+			-- if not self.ability:IsNull() and self.ability:GetCooldownTimeRemaining() > self.ability:GetBackswingTime() then
+				-- self.caster:MoveToPositionAggressive(self.caster:GetAbsOrigin())
+			-- end
+		-- end)
+	-- end
+-- end
+
+-- -----------------
+-- -- Quill Spray --
+-- -----------------
+
+-- function imba_bristleback_quill_spray:GetIntrinsicModifierName()
+	-- return "modifier_imba_bristleback_quill_spray_autocaster"
+-- end
+
+-- function imba_bristleback_quill_spray:OnSpellStart()
+	-- self.caster	= self:GetCaster()
+	
+	-- -- AbilitySpecials
+	-- self.radius					= self:GetSpecialValueFor("radius") -- Note that the particle doesn't seem to support proper radius change so be warned...
+	-- -- self.quill_base_damage		= self:GetSpecialValueFor("quill_base_damage")
+	-- -- self.quill_stack_damage		= self:GetSpecialValueFor("quill_stack_damage")
+	-- -- self.quill_stack_duration	= self:GetSpecialValueFor("quill_stack_duration")
+	-- -- self.max_damage				= self:GetSpecialValueFor("max_damage")
+	-- self.projectile_speed		= self:GetSpecialValueFor("projectile_speed")
+	
+	-- -- Calculate amount of time quills should "exist" based on speed and radius
+	-- self.duration				= self.radius / self.projectile_speed
+	
+	-- if not IsServer() then return end
+	
+	-- CreateModifierThinker(self.caster, self, "modifier_imba_bristleback_quillspray_thinker", {duration = self.duration}, self.caster:GetAbsOrigin(), self.caster:GetTeamNumber(), false)
+	
+	-- self.caster:EmitSound("Hero_Bristleback.QuillSpray.Cast")
+-- end 
+
+-- -------------------------
+-- -- QUILL SPRAY THINKER --
+-- -------------------------
+
+-- function modifier_imba_bristleback_quillspray_thinker:OnCreated()
+	-- self.ability	= self:GetAbility()
+	-- self.caster		= self:GetCaster()
+	-- self.parent		= self:GetParent()
+	
+	-- -- AbilitySpecials
+	-- self.radius					= self.ability:GetSpecialValueFor("radius")
+	-- self.quill_base_damage		= self.ability:GetSpecialValueFor("quill_base_damage")
+	-- self.quill_stack_damage		= self.ability:GetSpecialValueFor("quill_stack_damage") + self.caster:FindTalentValue("special_bonus_unique_bristleback_2")
+	-- self.quill_stack_duration	= self.ability:GetSpecialValueFor("quill_stack_duration")
+	-- self.max_damage				= self.ability:GetSpecialValueFor("max_damage")
+	-- -- self.projectile_speed		= self.ability:GetSpecialValueFor("projectile_speed")
+	
+	-- if not IsServer() then return end
+	
+	-- -- CP60 for colour, CP61 Vector(1, 0, 0) to activate it
+	-- self.particle = ParticleManager:CreateParticle("particles/units/heroes/hero_bristleback/bristleback_quill_spray.vpcf", PATTACH_ABSORIGIN, self.parent)
+	-- -- For the hell of it
+	-- ParticleManager:SetParticleControl(self.particle, 60, Vector(RandomInt(0, 255), RandomInt(0, 255), RandomInt(0, 255)))
+	-- ParticleManager:SetParticleControl(self.particle, 61, Vector(1, 0, 0))
+	-- self:AddParticle(self.particle, false, false, -1, false, false)
+	
+	-- -- Establish table to populate hit enemies with (so they only get hit once per quill spray)
+	-- self.hit_enemies = {}
+	
+	-- self:StartIntervalThink(FrameTime())
+-- end
+
+-- function modifier_imba_bristleback_quillspray_thinker:OnIntervalThink()
+	-- if not IsServer() then return end
+
+	-- -- From 0 to 1 to track how far the quills have spread and the damage radius
+	-- local radius_pct = math.min((self:GetDuration() - self:GetRemainingTime()) / self:GetDuration(), 1)
+	
+	-- local enemies = FindUnitsInRadius(self.parent:GetTeamNumber(), self.parent:GetAbsOrigin(), nil, self.radius * radius_pct, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
+	
+	-- for _, enemy in pairs(enemies) do
+	
+		-- local hit_already = false
+	
+		-- for _, hit_enemy in pairs(self.hit_enemies) do
+			-- if hit_enemy == enemy then
+				-- hit_already = true
+				-- break
+			-- end
+		-- end
+
+		-- if not hit_already then
+			-- local quill_spray_stacks 	= 0
+			-- local quill_spray_modifier	= enemy:FindModifierByName("modifier_imba_bristleback_quill_spray")
+			
+			-- if quill_spray_modifier then
+				-- quill_spray_stacks		= quill_spray_modifier:GetStackCount()
+			-- end
+		
+			-- local damageTable = {
+				-- victim 			= enemy,
+				-- damage 			= math.min(self.quill_base_damage + (self.quill_stack_damage * quill_spray_stacks), self.max_damage),
+				-- damage_type		= DAMAGE_TYPE_PHYSICAL,
+				-- damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
+				-- attacker 		= self.caster,
+				-- ability 		= self.ability
+			-- }
+									
+			-- ApplyDamage(damageTable)
+			
+			-- -- Blood particle is smaller than vanilla...but IDK how much people care about this
+			-- local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_bristleback/bristleback_quill_spray_impact.vpcf", PATTACH_ABSORIGIN_FOLLOW, enemy)
+			-- ParticleManager:SetParticleControl(particle, 1, enemy:GetAbsOrigin())
+			-- ParticleManager:ReleaseParticleIndex(particle)
+			
+			-- enemy:EmitSound("Hero_Bristleback.QuillSpray.Target")
+			
+			-- enemy:AddNewModifier(self.caster, self.ability, "modifier_imba_bristleback_quill_spray", {duration = self.quill_stack_duration})
+			
+			-- table.insert(self.hit_enemies, enemy)
+			
+			-- if not enemy:IsAlive() and enemy:IsRealHero() and (enemy.IsReincarnating and not enemy:IsReincarnating()) then
+				-- self.caster:EmitSound("bristleback_bristle_quill_spray_0"..math.random(1,6))
+			-- end
+		-- end
+	-- end
+-- end
+
+-- -- IDK if I really need this but I'm hearing potential horror stories
+-- function modifier_imba_bristleback_quillspray_thinker:OnDestroy()
+	-- if not IsServer() then return end
+
+	-- self.parent:RemoveSelf()
+-- end
+
+-- --------------------------
+-- -- QUILL SPRAY MODIFIER --
+-- --------------------------
+
+-- function modifier_imba_bristleback_quill_spray:IsPurgable()	return false end
+
+-- function modifier_imba_bristleback_quill_spray:OnCreated()
+	-- self.ability	= self:GetAbility()
+	-- self.caster		= self:GetCaster()
+	-- self.parent		= self:GetParent()
+	
+	-- -- AbilitySpecials
+	-- self.radius					= self.ability:GetSpecialValueFor("radius")
+	-- self.quill_base_damage		= self.ability:GetSpecialValueFor("quill_base_damage")
+	-- self.quill_stack_damage		= self.ability:GetSpecialValueFor("quill_stack_damage")
+	-- self.quill_stack_duration	= self.ability:GetSpecialValueFor("quill_stack_duration")
+	-- self.max_damage				= self.ability:GetSpecialValueFor("max_damage")
+	-- self.projectile_speed		= self.ability:GetSpecialValueFor("projectile_speed")
+
+	-- self:IncrementStackCount()
+	
+	-- if not IsServer() then return end
+	
+	-- -- Why does the normal particle emit so many quills
+	-- --if self:GetParent():IsCreep() then
+		-- self.particle = ParticleManager:CreateParticle("particles/units/heroes/hero_bristleback/bristleback_quill_spray_hit_creep.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.parent)
+	-- --else
+	-- --	self.particle = ParticleManager:CreateParticle("particles/units/heroes/hero_bristleback/bristleback_quill_spray_hit.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.parent)
+	-- --end
+
+	-- ParticleManager:SetParticleControlEnt(self.particle, 1, self.parent, PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)
+	-- self:AddParticle(self.particle, false, false, -1, false, false)
+	
+	-- -- Stacks don't get refreshed with subsequent stacks
+	-- Timers:CreateTimer(self.quill_stack_duration * (1 - self.parent:GetStatusResistance()), function()
+		-- -- Really don't want errors here...
+		-- if self ~= nil and not self:IsNull() and not self.ability:IsNull() and not self.parent:IsNull() and not self.caster:IsNull() then
+			-- self:DecrementStackCount()
+		-- end
+	-- end)
+-- end
+
+-- function modifier_imba_bristleback_quill_spray:OnRefresh()
+	-- if not IsServer() then return end
+
+	-- self:OnCreated()
+	
+	-- -- Custom Status Resist nonsense (need to learn how to make an all-encompassing function for this...)
+	-- self:SetDuration(self.quill_stack_duration * (1 - self.parent:GetStatusResistance()), true)
+-- end
+
+-- --------------------------------
+-- -- QUILL SPRAY STACK MODIFIER --
+-- --------------------------------
+
+-- -- IDK why this thing uses two modifiers for vanilla seems like just one can handle it
+
+-- -------------------------------------
+-- -- QUILL SPRAY AUTOCASTER MODIFIER --
+-- -------------------------------------
+
+-- function modifier_imba_bristleback_quill_spray_autocaster:IsHidden()	return true end
+
+-- function modifier_imba_bristleback_quill_spray_autocaster:OnCreated()
+	-- if not IsServer() then return end
+
+	-- self.ability	= self:GetAbility()
+	-- self.caster		= self:GetCaster()
+	-- self.parent		= self:GetParent()
+	
+	-- self.cardio_threshold	= self.ability:GetSpecialValueFor("cardio_threshold")
+	-- self.last_position		= self.caster:GetAbsOrigin()
+	-- self.distance			= self.distance or 0
+
+	-- self:StartIntervalThink(0.1) -- Could make this every frame but that might be too much of a crutch lul
+-- end
+
+-- function modifier_imba_bristleback_quill_spray_autocaster:OnRefresh()
+	-- if not IsServer() then return end
+
+	-- self:StartIntervalThink(-1)
+
+	-- self:OnCreated()
+-- end
+
+-- function modifier_imba_bristleback_quill_spray_autocaster:OnIntervalThink()
+	-- if not IsServer() then return end
+
+	-- if self.ability:GetAutoCastState() and self.ability:IsFullyCastable() then
+		-- self.caster:CastAbilityImmediately(self.ability, self.caster:GetPlayerID())
+	-- end
+	
+	-- -- IMBAfication: Cardio
+	-- self.distance			= self.distance + (self.caster:GetAbsOrigin() - self.last_position):Length()
+	-- self.last_position		= self.caster:GetAbsOrigin()
+	
+	-- if self.distance >= self.cardio_threshold then
+		-- self.ability:OnSpellStart()
+		-- self.distance = 0
+	-- end
+-- end
+
+-- -----------------
+-- -- Bristleback --
+-- -----------------
+
+-- function imba_bristleback_bristleback:ResetToggleOnRespawn()	return true end
+
+-- function imba_bristleback_bristleback:GetIntrinsicModifierName()
+	-- return "modifier_imba_bristleback_bristleback"
+-- end
+
+-- -- IMBAfication: Heavy Arms Shell
+-- function imba_bristleback_bristleback:OnToggle()
+	-- self.caster	= self:GetCaster()
+
+	-- if self:GetToggleState() then
+		-- self.caster:AddNewModifier(self.caster, self, "modifier_imba_bristleback_bristleback_has", {})
+	-- else
+		-- self.caster:RemoveModifierByName("modifier_imba_bristleback_bristleback_has")
+	-- end
+-- end
+
+-- --------------------------
+-- -- BRISTLEBACK MODIFIER --
+-- --------------------------
+
+-- function modifier_imba_bristleback_bristleback:OnCreated()
+	-- self.ability	= self:GetAbility()
+	-- self.caster		= self:GetCaster()
+	-- self.parent		= self:GetParent()
+	
+	-- -- AbilitySpecials
+	-- self.front_damage_reduction		= 0
+	-- self.side_damage_reduction		= self.ability:GetSpecialValueFor("side_damage_reduction")
+	-- self.back_damage_reduction		= self.ability:GetSpecialValueFor("back_damage_reduction")
+	-- self.side_angle					= self.ability:GetSpecialValueFor("side_angle")
+	-- self.back_angle					= self.ability:GetSpecialValueFor("back_angle")
+	-- self.quill_release_threshold	= self.ability:GetSpecialValueFor("quill_release_threshold")
+	
+	-- self.cumulative_damage			= self.cumulative_damage or 0
+-- end
+
+-- function modifier_imba_bristleback_bristleback:OnRefresh()
+	-- self:OnCreated()
+-- end
+
+-- function modifier_imba_bristleback_bristleback:DeclareFunctions()
+    -- local decFuncs = {
+        -- MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
+		-- MODIFIER_EVENT_ON_TAKEDAMAGE
+    -- }
+
+    -- return decFuncs
+-- end
+
+-- function modifier_imba_bristleback_bristleback:GetModifierIncomingDamage_Percentage(keys)
+	-- if self.parent:PassivesDisabled() then return 0 end
+
+	-- local forwardVector			= self.caster:GetForwardVector()
+	-- local forwardAngle			= math.deg(math.atan2(forwardVector.x, forwardVector.y))
+			
+	-- local reverseEnemyVector	= (self.caster:GetAbsOrigin() - keys.attacker:GetAbsOrigin()):Normalized()
+	-- local reverseEnemyAngle		= math.deg(math.atan2(reverseEnemyVector.x, reverseEnemyVector.y))
+
+	-- local difference = math.abs(forwardAngle - reverseEnemyAngle)
+
+	-- --print(difference)
+	
+	-- -- Check for Heavy Arms Shell modifier
+	-- if self.caster:HasModifier("modifier_imba_bristleback_bristleback_has") then
+		-- self.front_damage_reduction		= self.ability:GetSpecialValueFor("HAS_damage_reduction_inc")
+		-- self.side_damage_reduction		= self.ability:GetSpecialValueFor("side_damage_reduction") + self.ability:GetSpecialValueFor("HAS_damage_reduction_inc")
+		-- self.back_damage_reduction		= self.ability:GetSpecialValueFor("back_damage_reduction") + self.ability:GetSpecialValueFor("HAS_damage_reduction_inc")
+		-- self.quill_release_threshold	= self.ability:GetSpecialValueFor("HAS_quill_release_threshold")
+	-- else
+		-- self.front_damage_reduction		= 0
+		-- self.side_damage_reduction		= self.ability:GetSpecialValueFor("side_damage_reduction")
+		-- self.back_damage_reduction		= self.ability:GetSpecialValueFor("back_damage_reduction")
+		-- self.quill_release_threshold	= self.ability:GetSpecialValueFor("quill_release_threshold")
+	-- end
+	
+	-- -- There's 100% a more straightforward way to calculate this but I can't think properly right now
+	-- if (difference <= (self.back_angle / 2)) or (difference >= (360 - (self.back_angle / 2))) then
+		-- --print("Hit the back ", (self.back_damage_reduction), "%")
+		-- local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_bristleback/bristleback_back_dmg.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.parent)
+		-- ParticleManager:SetParticleControl(particle, 1, self.parent:GetAbsOrigin())
+		-- ParticleManager:SetParticleControlEnt(particle, 1, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)
+		-- ParticleManager:ReleaseParticleIndex(particle)
+	
+		-- local particle2 = ParticleManager:CreateParticle("particles/units/heroes/hero_bristleback/bristleback_back_lrg_dmg.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.parent)
+		-- ParticleManager:SetParticleControlEnt(particle2, 1, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)
+		-- ParticleManager:ReleaseParticleIndex(particle2)
+		
+		-- self.parent:EmitSound("Hero_Bristleback.Bristleback")
+		
+		-- return self.back_damage_reduction * (-1)
+	-- elseif (difference <= (self.side_angle / 2)) or (difference >= (360 - (self.side_angle / 2))) then 
+		-- --print("Hit the side", (self.side_damage_reduction), "%")
+		-- local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_bristleback/bristleback_back_dmg.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.parent)
+		-- ParticleManager:SetParticleControl(particle, 1, self.parent:GetAbsOrigin())
+		-- ParticleManager:SetParticleControlEnt(particle, 1, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)
+		-- ParticleManager:ReleaseParticleIndex(particle)
+		
+		-- return self.side_damage_reduction * (-1)
+	-- else
+		-- --print("Hit the front")
+		-- return self.front_damage_reduction * (-1)
+	-- end
+-- end
+
+-- function modifier_imba_bristleback_bristleback:OnTakeDamage( keys )
+	-- if keys.unit == self.parent then
+		-- if self.parent:PassivesDisabled() or bit.band(keys.damage_flags, DOTA_DAMAGE_FLAG_REFLECTION) == DOTA_DAMAGE_FLAG_REFLECTION then return end
+	
+		-- -- Pretty inefficient to calculate this stuff twice but I don't want to make these class variables due to how much damage might stack in a single frame...
+		-- local forwardVector			= self.caster:GetForwardVector()
+		-- local forwardAngle			= math.deg(math.atan2(forwardVector.x, forwardVector.y))
+				
+		-- local reverseEnemyVector	= (self.caster:GetAbsOrigin() - keys.attacker:GetAbsOrigin()):Normalized()
+		-- local reverseEnemyAngle		= math.deg(math.atan2(reverseEnemyVector.x, reverseEnemyVector.y))
+
+		-- local difference = math.abs(forwardAngle - reverseEnemyAngle)
+
+		-- if (difference <= (self.back_angle / 2)) or (difference >= (360 - (self.back_angle / 2))) then
+			-- self:SetStackCount(self:GetStackCount() + keys.damage)
+			
+			-- local quill_spray_ability = self.parent:FindAbilityByName("imba_bristleback_quill_spray")
+			
+			-- if quill_spray_ability and quill_spray_ability:IsTrained() and self:GetStackCount() >= self.quill_release_threshold then
+				-- quill_spray_ability:OnSpellStart()
+				-- -- IMBAfication: Overflow Harnessing
+				-- self:SetStackCount(self:GetStackCount() - self.quill_release_threshold)
+			-- end
+		-- end
+	-- end
+-- end
+
+-- -------------------------------------------
+-- -- BRISTLEBACK HEAVY ARMS SHELL MODIFIER --
+-- -------------------------------------------
+
+-- function modifier_imba_bristleback_bristleback_has:IsPurgable() return false end
+
+-- function modifier_imba_bristleback_bristleback_has:OnCreated()
+	-- self.parent	= self:GetParent()
+	
+	-- if not IsServer() then return end
+
+	-- self.particle = ParticleManager:CreateParticle("particles/econ/items/pangolier/pangolier_ti8_immortal/pangolier_ti8_immortal_shield_buff.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.parent)
+	-- ParticleManager:SetParticleControl(self.particle, 1, self.parent:GetAbsOrigin())
+	-- ParticleManager:SetParticleControl(self.particle, 3, Vector(50, 0, 0))
+	-- self:AddParticle(self.particle, false, false, -1, false, false)
+	
+	-- self.parent:EmitSound("Imba.BristlebackHASStart")
+-- end
+
+-- function modifier_imba_bristleback_bristleback_has:CheckState(keys)
+	-- local state = {
+	-- [MODIFIER_STATE_ROOTED] = true,
+	-- [MODIFIER_STATE_DISARMED] = true
+	-- }
+
+	-- return state
+-- end
+
+-- -------------
+-- -- Warpath --
+-- -------------
+
+-- function imba_bristleback_warpath:GetIntrinsicModifierName()
+	-- return "modifier_imba_bristleback_warpath"
+-- end
+
+-- ----------------------
+-- -- WARPATH MODIFIER --
+-- ----------------------
+
+-- function modifier_imba_bristleback_warpath:IsHidden()
+	-- if self:GetStackCount() >= 1 then 
+		-- return false
+	-- else
+		-- return true
+	-- end
+-- end
+
+-- function modifier_imba_bristleback_warpath:DestroyOnExpire() return false end
+
+-- function modifier_imba_bristleback_warpath:GetEffectName()
+	-- if self:GetStackCount() >= 1 then 
+		-- return "particles/units/heroes/hero_bristleback/bristleback_warpath_dust.vpcf"
+	-- end
+-- end
+
+-- function modifier_imba_bristleback_warpath:OnCreated()
+	-- self.ability	= self:GetAbility()
+	-- self.caster		= self:GetCaster()
+	-- self.parent		= self:GetParent()
+	
+	-- -- AbilitySpecials
+	-- self.damage_per_stack		= self.ability:GetSpecialValueFor("damage_per_stack") + self.caster:FindTalentValue("special_bonus_imba_bristleback_3")
+	-- self.move_speed_per_stack	= self.ability:GetSpecialValueFor("move_speed_per_stack")
+	-- self.stack_duration			= self.ability:GetSpecialValueFor("stack_duration")
+	-- self.max_stacks				= self.ability:GetSpecialValueFor("max_stacks")
+	
+	-- self.counter				= self.counter or 0
+	-- self.particle_table			= self.particle_table or {}
+-- end
+
+-- function modifier_imba_bristleback_warpath:OnRefresh()
+	-- self:OnCreated()
+-- end
+
+-- function modifier_imba_bristleback_warpath:DeclareFunctions()
+	-- local decFuncs = {
+		-- MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
+		-- MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+        -- MODIFIER_EVENT_ON_ABILITY_FULLY_CAST,
+		-- MODIFIER_PROPERTY_MODEL_SCALE,
+		-- -- IMBAfication: I Swear On Me Mum
+		-- MODIFIER_EVENT_ON_HERO_KILLED
+    -- }
+
+    -- return decFuncs
+-- end
+
+-- function modifier_imba_bristleback_warpath:GetModifierPreAttack_BonusDamage(keys)
+	-- if not self.parent:IsIllusion() then
+		-- -- Need to call this somewhere other than OnCreated since it can be boosted by talent
+		-- self.damage_per_stack		= self.ability:GetSpecialValueFor("damage_per_stack") + self.caster:FindTalentValue("special_bonus_imba_bristleback_3")
+		
+		-- return self.damage_per_stack * self:GetStackCount()
+	-- end
+-- end
+
+-- function modifier_imba_bristleback_warpath:GetModifierMoveSpeedBonus_Percentage(keys)
+	-- return self.move_speed_per_stack * self:GetStackCount()
+-- end
+
+-- -- Gonna ignore the mechanic that updates stacks for illusions too for now
+-- function modifier_imba_bristleback_warpath:OnAbilityFullyCast(keys)
+	-- if keys.ability and keys.unit == self.parent and not self.parent:PassivesDisabled() and not keys.ability:IsItem() then
+		
+		-- -- Keep a separate variable for "virtual" stacks so as to proper handle refreshing and decrementing when going past standard max stacks
+		-- self.counter = self.counter + 1
+		
+		-- self:SetStackCount(math.min(self.counter, self.max_stacks))
+		
+		-- if self:GetStackCount() < self.max_stacks then
+			-- local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_bristleback/bristleback_warpath.vpcf", PATTACH_POINT_FOLLOW, self:GetParent())
+			-- ParticleManager:SetParticleControlEnt(particle, 3, self:GetCaster(), PATTACH_POINT_FOLLOW, "attach_attack1", self:GetCaster():GetAbsOrigin(), true)
+			-- ParticleManager:SetParticleControlEnt(particle, 4, self:GetCaster(), PATTACH_POINT_FOLLOW, "attach_attack2", self:GetCaster():GetAbsOrigin(), true)
+			-- table.insert(self.particle_table, particle)
+		-- end
+		
+		-- self:SetDuration(self.stack_duration, true)
+		
+		-- -- Stacks don't get refreshed with subsequent stacks
+		-- Timers:CreateTimer(self.stack_duration, function()
+			-- if self ~= nil and not self:IsNull() and not self.ability:IsNull() and not self.parent:IsNull() and not self.caster:IsNull() and self:GetStackCount() > 0 then
+				-- self.counter = self.counter - 1
+				
+				-- self:SetStackCount(math.min(self.counter, self.max_stacks))
+
+				-- if #self.particle_table > 0 then
+					-- ParticleManager:DestroyParticle(self.particle_table[1], false)
+					-- ParticleManager:ReleaseParticleIndex(self.particle_table[1])
+					-- table.remove(self.particle_table, 1)
+				-- end
+			-- end
+		-- end)
+	-- end
+-- end
+
+-- function modifier_imba_bristleback_warpath:GetModifierModelScale()
+	-- return self:GetStackCount() * 5
+-- end
+
+-- function modifier_imba_bristleback_warpath:OnHeroKilled(keys)
+	-- if keys.target == self.caster and keys.attacker ~= self.caster then
+		-- keys.attacker:AddNewModifier(self.caster, self.ability, "modifier_imba_bristleback_warpath_revenge", {})
+	-- end
+-- end
+
+-- ----------------------------
+-- -- WARPATH STACK MODIFIER --
+-- ----------------------------
+
+-- -- Nothing to see here...
+
+-- ------------------------------
+-- -- WARPATH REVENGE MODIFIER --
+-- ------------------------------
+
+-- function modifier_imba_bristleback_warpath_revenge:IsPurgable()		return false end
+-- function modifier_imba_bristleback_warpath_revenge:RemoveOnDeath()	return false end
+
+-- function modifier_imba_bristleback_warpath_revenge:OnCreated()
+	-- self.ability	= self:GetAbility()
+	-- self.caster		= self:GetCaster()
+	-- self.parent		= self:GetParent()
+	
+	-- -- AbilitySpecials
+	-- self.revenge_inc_dmg_pct	= self.ability:GetSpecialValueFor("revenge_inc_dmg_pct")
+-- end
+
+-- function modifier_imba_bristleback_warpath_revenge:OnRefresh()	
+	-- self:SetStackCount(self:GetStackCount() + self.revenge_inc_dmg_pct)
+-- end
+
+-- function modifier_imba_bristleback_warpath_revenge:DeclareFunctions()
+    -- local decFuncs = {
+        -- MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
+		-- MODIFIER_EVENT_ON_DEATH,
+		-- MODIFIER_PROPERTY_TOOLTIP
+    -- }
+
+    -- return decFuncs
+-- end
+
+-- function modifier_imba_bristleback_warpath_revenge:GetModifierIncomingDamage_Percentage(keys)
+	-- if keys.target == self.parent then
+		-- if keys.attacker == self.caster then
+			-- return self:GetStackCount()
+		-- else
+			-- return 0
+		-- end
+	-- end
+-- end
+
+-- function modifier_imba_bristleback_warpath_revenge:OnDeath(keys)
+	-- if keys.unit == self.parent and keys.attacker == self.caster then
+		-- self:Destroy()
+	-- end
+-- end
+
+-- function modifier_imba_bristleback_warpath_revenge:OnTooltip()
+	-- return self:GetStackCount()
+-- end
 
 -- ---------------------
 -- -- TALENT HANDLERS --
 -- ---------------------
 
+-- -- Gonna leave everything here vanilla for now cause his talents seem really strong as is and I don't want to destroy the balance and thematics for now
+
+-- -- # Talents
+-- -- * Level 10: +3 Mana Regen | +20 Movement Speed
+-- -- * Level 15: +6 Max Goo Stacks | +250 Health
+-- -- * Level 20: +25 Quill Stack Damage | +25 Health Regen
+-- -- * Level 25: +30 Warpath Damage Per Stack | 15% Spell Lifesteal
+
 -- -- Client-side helper functions --
 
-LinkLuaModifier("modifier_special_bonus_imba_keeper_of_the_light_luminous_burster", "components/abilities/heroes/hero_keeper_of_the_light", LUA_MODIFIER_MOTION_NONE)
+-- -- LinkLuaModifier("modifier_special_bonus_imba_bristleback_1", "components/abilities/heroes/hero_bristleback", LUA_MODIFIER_MOTION_NONE)
+-- -- LinkLuaModifier("modifier_special_bonus_imba_bristleback_2", "components/abilities/heroes/hero_bristleback", LUA_MODIFIER_MOTION_NONE)
+ -- LinkLuaModifier("modifier_special_bonus_imba_bristleback_3", "components/abilities/heroes/hero_bristleback", LUA_MODIFIER_MOTION_NONE)
+-- -- LinkLuaModifier("modifier_special_bonus_imba_bristleback_4", "components/abilities/heroes/hero_bristleback", LUA_MODIFIER_MOTION_NONE)
+-- -- LinkLuaModifier("modifier_special_bonus_imba_bristleback_5", "components/abilities/heroes/hero_bristleback", LUA_MODIFIER_MOTION_NONE)
+-- -- LinkLuaModifier("modifier_special_bonus_imba_bristleback_6", "components/abilities/heroes/hero_bristleback", LUA_MODIFIER_MOTION_NONE)
+-- -- LinkLuaModifier("modifier_special_bonus_imba_bristleback_7", "components/abilities/heroes/hero_bristleback", LUA_MODIFIER_MOTION_NONE)
+-- -- LinkLuaModifier("modifier_special_bonus_imba_bristleback_8", "components/abilities/heroes/hero_bristleback", LUA_MODIFIER_MOTION_NONE)
 
-modifier_special_bonus_imba_keeper_of_the_light_luminous_burster		= class({})
+-- -- modifier_special_bonus_imba_bristleback_1		= class({})
+-- -- modifier_special_bonus_imba_bristleback_2		= class({})
+ -- modifier_special_bonus_imba_bristleback_3		= class({})
+-- -- modifier_special_bonus_imba_bristleback_4		= class({})
+-- -- modifier_special_bonus_imba_bristleback_5		= class({})
+-- -- modifier_special_bonus_imba_bristleback_6		= class({})
+-- -- modifier_special_bonus_imba_bristleback_7		= class({})
+-- -- modifier_special_bonus_imba_bristleback_8		= class({})
 
--- -------------------------------
--- -- LUMINOUS BURSTER MODIFIER --
--- -------------------------------
-function modifier_special_bonus_imba_keeper_of_the_light_luminous_burster:IsHidden() 		return true end
-function modifier_special_bonus_imba_keeper_of_the_light_luminous_burster:IsPurgable() 		return false end
-function modifier_special_bonus_imba_keeper_of_the_light_luminous_burster:RemoveOnDeath() 	return false end
+-- -- -----------------------
+-- -- -- TALENT 1 MODIFIER --
+-- -- -----------------------
+-- -- function modifier_special_bonus_imba_bristleback_1:IsHidden() 			return true end
+-- -- function modifier_special_bonus_imba_bristleback_1:IsPurgable() 		return false end
+-- -- function modifier_special_bonus_imba_bristleback_1:RemoveOnDeath() 		return false end
 
-function imba_keeper_of_the_light_blinding_light:OnOwnerSpawned()
-	if self:GetCaster():HasTalent("special_bonus_imba_keeper_of_the_light_luminous_burster") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_keeper_of_the_light_luminous_burster") then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_keeper_of_the_light_luminous_burster"), "modifier_special_bonus_imba_keeper_of_the_light_luminous_burster", {})
-	end
-end
+-- -- -----------------------
+-- -- -- TALENT 2 MODIFIER --
+-- -- -----------------------
+-- -- function modifier_special_bonus_imba_bristleback_2:IsHidden() 			return true end
+-- -- function modifier_special_bonus_imba_bristleback_2:IsPurgable() 		return false end
+-- -- function modifier_special_bonus_imba_bristleback_2:RemoveOnDeath() 		return false end
+
+-- -- -----------------------
+-- -- -- TALENT 3 MODIFIER --
+-- -- -----------------------
+-- -- +30 Warpath Damage Per Stack
+-- function modifier_special_bonus_imba_bristleback_3:IsHidden() 			return true end
+-- function modifier_special_bonus_imba_bristleback_3:IsPurgable() 		return false end
+-- function modifier_special_bonus_imba_bristleback_3:RemoveOnDeath() 		return false end
+
+-- -- -----------------------
+-- -- -- TALENT 4 MODIFIER --
+-- -- -----------------------
+-- -- function modifier_special_bonus_imba_bristleback_4:IsHidden() 			return true end
+-- -- function modifier_special_bonus_imba_bristleback_4:IsPurgable() 		return false end
+-- -- function modifier_special_bonus_imba_bristleback_4:RemoveOnDeath() 		return false end
+
+-- -- -----------------------
+-- -- -- TALENT 5 MODIFIER --
+-- -- -----------------------
+-- -- function modifier_special_bonus_imba_bristleback_5:IsHidden() 			return true end
+-- -- function modifier_special_bonus_imba_bristleback_5:IsPurgable() 		return false end
+-- -- function modifier_special_bonus_imba_bristleback_5:RemoveOnDeath() 		return false end
+
+-- -- -----------------------
+-- -- -- TALENT 6 MODIFIER --
+-- -- -----------------------
+-- -- function modifier_special_bonus_imba_bristleback_6:IsHidden() 			return true end
+-- -- function modifier_special_bonus_imba_bristleback_6:IsPurgable() 		return false end
+-- -- function modifier_special_bonus_imba_bristleback_6:RemoveOnDeath() 		return false end
+
+-- -- -----------------------
+-- -- -- TALENT 7 MODIFIER --
+-- -- -----------------------
+-- -- function modifier_special_bonus_imba_bristleback_7:IsHidden() 			return true end
+-- -- function modifier_special_bonus_imba_bristleback_7:IsPurgable() 		return false end
+-- -- function modifier_special_bonus_imba_bristleback_7:RemoveOnDeath() 		return false end
+
+-- -- -----------------------
+-- -- -- TALENT 8 MODIFIER --
+-- -- -----------------------
+-- -- function modifier_special_bonus_imba_bristleback_8:IsHidden() 			return true end
+-- -- function modifier_special_bonus_imba_bristleback_8:IsPurgable() 		return false end
+-- -- function modifier_special_bonus_imba_bristleback_8:RemoveOnDeath() 		return false end
+
+-- function imba_bristleback_warpath:OnOwnerSpawned()
+	-- if self:GetCaster():HasTalent("modifier_special_bonus_imba_bristleback_3") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_bristleback_3") then
+		-- self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_bristleback_3"), "modifier_special_bonus_imba_bristleback_3", {})
+	-- end
+-- end

@@ -72,8 +72,8 @@ function item_imba_curseblade:OnSpellStart()
 			local modifier_found = false
 			local modifier_name = modifier:GetName()
 
-			-- Check via IsDebuff function (also try not to transfer motion controllers)
-			if modifier.IsDebuff and modifier.IsPurgable and modifier.ApplyHorizontalMotionController == nil and modifier.ApplyVerticalMotionController == nil then
+			-- Check via IsDebuff function
+			if modifier.IsDebuff and modifier.IsPurgable then
 				if modifier:IsDebuff() and modifier:IsPurgable() then
 					modifier_found = true
 				end

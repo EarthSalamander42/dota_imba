@@ -1,6 +1,6 @@
 #base heroes/bristleback/hero.txt
 #base heroes/enchantress/hero.txt
-#base heroes/keeper_of_the_light/hero.txt
+//#base heroes/keeper_of_the_light/hero.txt
 #base heroes/rubick/hero.txt
 #base heroes/shadow_shaman/hero.txt
 #base heroes/silencer/hero.txt
@@ -819,8 +819,15 @@
 	//=================================================================================================================
 	// HERO: Keeper of the Light
 	//=================================================================================================================
-	// Separate file
-	
+	"npc_dota_hero_keeper_of_the_light"
+	{
+		"override_hero"	"npc_dota_hero_keeper_of_the_light"
+		
+		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
+
+		"Ability4"		"keeper_of_the_light_mana_leak"
+	}
+
 	//=================================================================================================================
 	// HERO: Kunkka
 	//=================================================================================================================
