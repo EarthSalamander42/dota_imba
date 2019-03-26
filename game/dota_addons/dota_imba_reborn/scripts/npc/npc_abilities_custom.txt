@@ -15927,7 +15927,7 @@
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_vo_stormspirit.vsndevts"
 			"particle"					"particles/units/heroes/hero_stormspirit/stormspirit_ball_lightning.vpcf"
 		}
-		
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -15955,7 +15955,7 @@
 			"05"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"ball_speed"							"1200 2500 3500"		
+				"ball_speed"							"1500 2500 3500"		
 			}
 			"06"
 			{
@@ -17260,7 +17260,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"40 80 110 130"
+				"damage"				"40 70 100 130"
 				"LinkedSpecialBonus"	"special_bonus_imba_sand_king_2"
 			}
 			"02"
@@ -18146,49 +18146,41 @@
 				"damage_radius"			"170"
 				"LinkedSpecialBonus"	"special_bonus_imba_skywrath_mage_4"
 			}
-
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"600 1400 1800"
+				"damage"				"800 1400 2000"
 			}
-
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"damage_duration"		"2.4"
 			}
-
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"damage_interval"		"0.1"
 			}
-
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"explosion_delay"		"0.6"
 			}
-
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"explosion_radius"		"250 300 400"
 			}
-
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"int_as_damage_pct"		"50 100 200"
 			}
-
 			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"int_increase_per_stack"	"15"
 			}
-
 			"09"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -25888,7 +25880,7 @@
 			"09"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"frost_bonus_movement_speed"	"-30"
+				"frost_bonus_movement_speed"	"-40"
 			}
 			"10"
 			{
@@ -27688,7 +27680,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"crit_damage"			"200"
+				"crit_damage"			"200 220 240 260"
 			}
 			"03"
 			{

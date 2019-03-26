@@ -815,7 +815,7 @@ function modifier_imba_nether_ward_degen:OnSpentMana(keys)
 			"death_prophet_exorcism",
 			"treant_eyes_in_the_forest",
 			"treant_living_armor",
-			"enchantress_impetus",
+			"imba_enchantress_impetus",
 			"chen_holy_persuasion",
 			"batrider_firefly",
 			"undying_decay",

@@ -28,7 +28,7 @@ function GoodGame:Call(event)
 		GG_TABLE[event.ID][2] = false
 	elseif event.vote == 1 then -- call '-gg' chat command
 		if GG_TABLE[event.ID][1] == false then
-			Notifications:BottomToTeam(PlayerResource:GetTeam(event.ID), {text = PlayerResource:GetPlayerName(event.ID).." called GG through the -gg chat command!", duration = 4.0, style = {color = "DodgerBlue"} })
+			Notifications:BottomToTeam(PlayerResource:GetTeam(event.ID), {text = PlayerResource:GetPlayerName(event.ID).." called GG through the -gg chat command!", duration = 5.0, style = {color = "White"} })
 			GG_TABLE[event.ID][1] = true
 		end
 	end
@@ -73,7 +73,7 @@ function GoodGame:Call(event)
 			winner = 2
 		end
 		
-		Notifications:BottomToAll({text = text[abandon_team], duration = 5.0, style = {color = "DodgerBlue"}})
+		Notifications:BottomToAll({text = text[abandon_team], duration = 5.0, style = {color = "White"}})
 
 		Timers:CreateTimer(5.0, function()
 			GAME_WINNER_TEAM = winner

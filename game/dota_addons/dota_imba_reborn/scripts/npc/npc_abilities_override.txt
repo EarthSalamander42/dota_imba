@@ -3415,7 +3415,7 @@
 	"rattletrap_hookshot"
 	{
 		"AbilityCooldown"			"70 40 30"
-		"AbilityCastRange"			"2000 3000 5000"
+		"AbilityCastRange"			"2000 4000 6000"
 		"MaxLevel"					"3"
 		
 		"AbilitySpecial"
@@ -3438,17 +3438,17 @@
 			"04"
 			{	
 				"var_type"			"FIELD_INTEGER"
-				"speed"				"4000 6000 10000"
+				"speed"				"4000 7000 10000"
 			}
 			"05"
 			{	
 				"var_type"			"FIELD_INTEGER"
-				"tooltip_range"		"2000 3000 5000"
+				"tooltip_range"		"2000 4000 6000"
 			}
 			"06"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"damage"			"100 300 400"
+				"damage"			"100 300 500"
 			}
 			"07"
 			{	
@@ -3465,7 +3465,7 @@
 	{
 		"AbilityCooldown"				"32 28 24 20"
 		"MaxLevel"						"4"
-		
+
 		"AbilitySpecial"
 		{
 			"01"
@@ -3482,7 +3482,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"50 150 250 350"
+				"damage"				"110 220 330 440"
 			}
 			"04"
 			{
@@ -3587,12 +3587,12 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"replica_damage_outgoing"	"0 10 20"
+				"replica_damage_outgoing"	"25"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"tooltip_outgoing"			"100 110 120"
+				"tooltip_outgoing"			"125"
 			}
 			"04"
 			{
@@ -3932,7 +3932,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"duration"					"10 20 14 16"
+				"duration"					"10 13 16 19"
 			}
 		}
 	}
@@ -4007,7 +4007,7 @@
 	//=================================================================================================================
 	"earthshaker_fissure"
 	{
-		"AbilityCooldown"				"18 16 12 7"
+		"AbilityCooldown"				"18.0 16.0 14.0 12.0"
 		"AbilityCastRange"				"1400 1575 1750 1925"
 		"AbilityDuration"				"1.0 1.5 2.0 2.5"
 		"AbilityDamage"					"115 230 345 460"
@@ -4218,100 +4218,6 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"value"				"50"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Enchantress: Untouchable
-	//=================================================================================================================
-	"enchantress_untouchable"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"slow_attack_speed"		"-50 -100 -150 -200"
-				"LinkedSpecialBonus"	"special_bonus_unique_enchantress_3"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"slow_duration"			"4"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Enchantress: Enchant
-	//=================================================================================================================
-	"enchantress_enchant"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"dominate_duration"		"80 120 180 240"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"slow_movement_speed"	"-55 -60 -65 -70"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Enchantress: Nature's Attendants
-	//=================================================================================================================
-	"enchantress_natures_attendants"
-	{
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
-		"AbilityCastPoint"				"0.0"
-
-		"AbilitySpecial"
-		{
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"heal"					"10.0 12.0 14.0 16.0"
-				"LinkedSpecialBonus"	"special_bonus_unique_enchantress_5"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"275 350 425 500"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Enchantress: Impetus
-	//=================================================================================================================
-	"enchantress_impetus"
-	{
-		"AbilityCastRange"						"800"
-		"AbilityManaCost"						"50 45 40"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"distance_damage_pct"			"16 21 26"
-				"LinkedSpecialBonus"			"special_bonus_unique_enchantress_4"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"distance_cap"					"99999"
-			}
-			"03"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"bonus_attack_range_scepter"	"400"
 			}
 		}
 	}
@@ -8405,7 +8311,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"100 200 300 400"
+				"damage"					"120 240 360 480"
 				"LinkedSpecialBonus"		"special_bonus_unique_puck_4"
 			}
 		}

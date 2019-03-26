@@ -5,7 +5,7 @@ end
 -- clientside KV loading
 require('addon_init')
 
-require('components/api/imba')
+require('components/api/init')
 require('libraries/adv_log')
 
 require('libraries/animations')

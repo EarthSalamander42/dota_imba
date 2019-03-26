@@ -516,7 +516,7 @@ function Imbattlepass:GetHeroEffect(hero)
 				ParticleManager:SetParticleControlEnt(pfx2, 1, hero, PATTACH_POINT_FOLLOW, "attach_attack2", hero:GetAbsOrigin(), true)
 			end
 		elseif hero:GetUnitName() == "npc_dota_hero_zuus" then
-			if next_reward_shown == true and Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_ZUUS["zuus_arcana"] then
+			if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_ZUUS["zuus_arcana"] then
 				Imbattlepass:SetupArcana(hero:GetPlayerID(), "models/heroes/zeus/zeus_hair_arcana.vmdl", "models/heroes/zeus/zeus_arcana.vmdl", HasZuusArcana(hero:GetPlayerID()))
 				hero.static_field_icon = 1
 				hero.static_field_effect = "particles/econ/items/zeus/arcana_chariot/zeus_arcana_static_field.vpcf"
@@ -552,7 +552,7 @@ function Imbattlepass:SetupImmortal(ID, wearable_model)
 
 	local hero = PlayerResource:GetSelectedHeroEntity(ID)
 	print("Run immortal swap cosmetic:", wearable_model)
-	Wearables:SwapWearableSlot(hero, wearable_model)
+	Wearables:SwapWearable(hero, wearable_model)
 end
 
 function Imbattlepass:SetupArcana(ID, wearable_model, arcana_model, arcana_type)
@@ -568,7 +568,7 @@ function Imbattlepass:SetupArcana(ID, wearable_model, arcana_model, arcana_type)
 
 	if wearable_model then
 		print("Run arcana swap cosmetic:", wearable_model)
-		Wearables:SwapWearableSlot(hero, wearable_model, tostring(arcana_type))
+		Wearables:SwapWearable(hero, wearable_model, tostring(arcana_type))
 	end
 
 	if arcana_model then
