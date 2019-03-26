@@ -98,7 +98,7 @@
 "npc_dota_hero_invoker"                                    "Invoker"
 "npc_dota_hero_jakiro"                                      "Jakiro (IMBA)"
 "npc_dota_hero_juggernaut"                                  "Juggernaut (IMBA)"
-"npc_dota_hero_keeper_of_the_light"                        "Keeper of the Light"
+"npc_dota_hero_keeper_of_the_light"                        "Keeper of the Light (IMBA)"
 "npc_dota_hero_kunkka"                                      "Kunkka (IMBA)"
 "npc_dota_hero_legion_commander"                            "Legion Commander"
 "npc_dota_hero_leshrac"                                    "Leshrac"

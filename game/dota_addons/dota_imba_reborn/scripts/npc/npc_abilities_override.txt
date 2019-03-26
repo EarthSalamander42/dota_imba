@@ -198,6 +198,8 @@
 	"item_imba_bloodstone"					"REMOVE"
 	"item_recipe_imba_stonework_pendant"	"REMOVE"
 	"item_imba_stonework_pendant"			"REMOVE" // Too many bugs associated with it which cannot be fixed without overhauling dozens of abilities
+	"item_recipe_imba_ogre_seal_totem"		"REMOVE"
+	"item_imba_ogre_seal_totem"				"REMOVE" // Missing sounds
 
 	//=================================================================================================================
 	//-----------------------------------------------------------------------------------------------------------------
