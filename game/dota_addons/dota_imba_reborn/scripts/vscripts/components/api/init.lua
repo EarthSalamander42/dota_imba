@@ -194,6 +194,8 @@ function api:Request(endpoint, okCallback, failCallback, method, payload)
 		header_key = LoadKeyValues("scripts/vscripts/components/api/backend_key.kv").server_key
 	end
 
+	CustomNetTables:SetTableValue("game_options", "server_key", {header_key})
+
 	request:SetHTTPRequestHeaderValue("X-Dota-Server-Key", header_key)
 
 	-- encode payload
@@ -257,7 +259,8 @@ function api:RegisterGame(callback)
 		map = GetMapName(),
 		match_id = self:GetMatchID(),
 		players = self:GetAllPlayerSteamIds(),
-		cheat_mode = self:IsCheatGame()
+		cheat_mode = self:IsCheatGame(),
+--		custom_game = "imba"
 	});
 end
 

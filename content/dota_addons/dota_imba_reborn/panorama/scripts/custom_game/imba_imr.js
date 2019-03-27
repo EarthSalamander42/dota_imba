@@ -13,6 +13,8 @@ function HideBattlepass() {
 var toggle = false;
 var first_time = false;
 
+var secret_key = CustomNetTables.GetTableValue("game_options", "server_key")["1"];
+
 var api = {
 	base : "http://api.dota2imba.fr/imba/",
 	urls : {
@@ -30,6 +32,7 @@ var api = {
 			type : "GET",
 			dataType : "json",
 			timeout : 5000,
+			headers : {'X-Dota-Server-Key' : secret_key},
 			success : function(obj) {
 				if (obj.error || !obj.data)
 					$.Msg("Error Loading Companions! " + JSON.stringify(obj.message));
@@ -48,6 +51,7 @@ var api = {
 			type : "POST",
 			data : data,
 			timeout : 5000,
+			headers : {'X-Dota-Server-Key' : secret_key},
 			success : function(obj) {
 				if (obj.error) {
 					$.Msg("Error updating companion");
@@ -68,6 +72,7 @@ var api = {
 			type : "GET",
 			dataType : "json",
 			timeout : 5000,
+			headers : {'X-Dota-Server-Key' : secret_key},
 			success : function(obj) {
 				if (obj.error || !obj.data || !obj.data.ingame_statues)
 					$.Msg("Error Loading Statues! " + JSON.stringify(obj.message));
@@ -86,6 +91,7 @@ var api = {
 			type : "POST",
 			data : data,
 			timeout : 5000,
+			headers : {'X-Dota-Server-Key' : secret_key},
 			success : function(obj) {
 				if (obj.error) {
 					$.Msg("Error updating statue");
@@ -256,10 +262,13 @@ function SetCompanion(companion, name, id) {
 		return;
 	}
 
+	$.Msg("POST modify companion:")
+	$.Msg(id)
+	$.Msg(Game.GetLocalPlayerInfo().player_steamid)
+
 	api.updateCompanion({
 		companion_id : id,
 		steamid : Game.GetLocalPlayerInfo().player_steamid,
-		companion_enabled : true
 	}, function() {
 		$("#CompanionNotification").AddClass("success");
 		$("#CompanionNotificationLabel").text = $.Localize("companion_success") + $.Localize(name) + "!";
@@ -656,14 +665,14 @@ function GenerateCompanionPanel(companions, player, panel, retainSubTab) {
 }
 
 function CompanionSkin(unit, j) {
-	$.Msg(unit, j)
+//	$.Msg(unit, j)
 	GameEvents.SendCustomGameEventToServer("change_companion_skin", {
 		ID : Players.GetLocalPlayer(),
 		unit : unit,
 		skin : j
 	})
 }
-
+/*
 function ToggleCompanion() {
 	if ($("#CompanionNotification").BHasClass("not_donator")) {
 		$("#CompanionNotification").RemoveClass("not_donator");
@@ -702,7 +711,7 @@ function ToggleCompanion() {
 		}
 	});
 }
-
+*/
 (function() {
 	// Update the game options display
 	var bounty_multiplier = CustomNetTables.GetTableValue("game_options", "bounty_multiplier");
