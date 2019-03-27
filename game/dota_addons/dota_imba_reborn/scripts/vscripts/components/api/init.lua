@@ -176,7 +176,7 @@ function api:Request(endpoint, okCallback, failCallback, method, payload)
 	if method == nil then
 		method = "GET"
 	end
-	
+
 	local request = CreateHTTPRequestScriptVM(method, self:GetUrl(endpoint))
 
 	if request == nil then
@@ -185,7 +185,16 @@ function api:Request(endpoint, okCallback, failCallback, method, payload)
 	end
 
 	request:SetHTTPRequestAbsoluteTimeoutMS(timeout)
-	request:SetHTTPRequestHeaderValue("X-Dota-Server-Key", GetDedicatedServerKey("2"))
+
+	local header_key = nil
+
+	if IsDedicatedServer() then
+		header_key = GetDedicatedServerKeyV2("2")
+	else
+		header_key = LoadKeyValues("scripts/vscripts/components/api/backend_key.kv").server_key
+	end
+
+	request:SetHTTPRequestHeaderValue("X-Dota-Server-Key", header_key)
 
 	-- encode payload
 	if payload ~= nil then
@@ -194,7 +203,6 @@ function api:Request(endpoint, okCallback, failCallback, method, payload)
 	end
 
 	request:Send(function(result)
-
 		local code = result.StatusCode;
 
 		local fail = function(message)
@@ -313,3 +321,5 @@ function api:CompleteGame(successCallback, failCallback)
 		end
 	end, failCallback, "POST", payload);
 end
+
+require("components/api/events")

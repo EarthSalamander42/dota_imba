@@ -725,6 +725,59 @@ function GameMode:OnPlayerChat(keys)
 		if str == "-gg" then
 			CustomGameEventManager:Send_ServerToPlayer(caster:GetPlayerOwner(), "gg_init_by_local", {})
 		end
+		
+		-- Spooky (inefficiently coded) dev commands
+		if PlayerResource:GetSteamAccountID(caster:GetPlayerID()) == 85812824 then
+			
+			if str == "-handicap" then
+				local enemy_team		= DOTA_TEAM_BADGUYS
+				local enemy_team_name	= "Dire"
+				
+				if caster:GetTeamNumber() == enemy_team then
+					enemy_team = DOTA_TEAM_GOODGUYS
+					enemy_team_name	= "Radiant"
+				end
+				
+				local heroes = HeroList:GetAllHeroes()
+				local enemies = {}
+				
+				for _, hero in pairs(heroes) do
+					if hero:GetTeam() ~= caster:GetTeam() and hero:IsRealHero() and not hero:IsClone() and not hero:IsTempestDouble() then
+						table.insert(enemies, hero)
+					end
+				end
+
+				text = string.gsub(text, str, "")
+				text = string.gsub(text, " ", "")
+				
+				if string.find(text, 'gold') then
+					text = string.gsub(text, 'gold', "")
+					text = tonumber(text)
+					
+					for _, enemy in pairs(enemies) do
+						enemy:ModifyGold(text, false,  DOTA_ModifyGold_Unspecified)
+						
+						SendOverheadEventMessage(PlayerResource:GetPlayer(keys.playerid), OVERHEAD_ALERT_GOLD, enemy, text, nil)
+					end
+					
+					Notifications:BottomToAll({ text = PlayerResource:GetPlayerName(caster:GetPlayerID()).." has given every hero on the "..enemy_team_name.." team "..text.." gold for...reasons.", duration = 4.0, style = { color = "LightGreen" } })
+				elseif string.find(text, 'exp') then
+					text = string.gsub(text, 'exp', "")
+					text = tonumber(text)
+					
+					for _, enemy in pairs(enemies) do
+						enemy:AddExperience(text, DOTA_ModifyXP_Unspecified, false, false)
+					
+						SendOverheadEventMessage(PlayerResource:GetPlayer(keys.playerid), OVERHEAD_ALERT_XP, enemy, text, nil)
+					end
+					
+					Notifications:BottomToAll({ text = PlayerResource:GetPlayerName(caster:GetPlayerID()).." has given every hero on the "..enemy_team_name.." team "..text.." experience for...reasons.", duration = 4.0, style = { color = "LightGreen" } })
+				end
+				
+				-- Says I'm not a "donor" but might be doing something wrong...will leave this for now in case this code block expands
+				-- print("Donor status: ", api:GetDonatorStatus(caster:GetPlayerID()))
+			end
+		end
 	end
 end
 

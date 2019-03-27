@@ -11,7 +11,7 @@ LinkLuaModifier("modifier_special_bonus_imba_lina_8", "components/abilities/hero
 
 modifier_special_bonus_imba_lina_8 = modifier_special_bonus_imba_lina_8 or class({})
 
-function modifier_special_bonus_imba_lina_8:IsHidden() return false end
+function modifier_special_bonus_imba_lina_8:IsHidden() return true end
 function modifier_special_bonus_imba_lina_8:RemoveOnDeath() return false end
 
 function modifier_special_bonus_imba_lina_8:DeclareFunctions()

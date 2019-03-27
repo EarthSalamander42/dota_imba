@@ -15,6 +15,8 @@
 -- Author:
 --    naowin, 19.08.2018
 
+-- Multiple revisions by AltiV
+
 --------------------------------------------------------------
 --			  			Arctic Burn  						--
 --------------------------------------------------------------
@@ -23,6 +25,17 @@ LinkLuaModifier("modifier_imba_winter_wyvern_arctic_burn_slow", "components/abil
 LinkLuaModifier("modifier_imba_winter_wyvern_arctic_burn_damage", "components/abilities/heroes/hero_winter_wyvern.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_winter_wyvern_arctic_burn_flight", "components/abilities/heroes/hero_winter_wyvern.lua", LUA_MODIFIER_MOTION_NONE)
 imba_winter_wyvern_arctic_burn = class({})
+
+function imba_winter_wyvern_arctic_burn:GetCooldown( nLevel )
+	local cooldown = self.BaseClass.GetCooldown( self, nLevel )
+	
+	if self:GetCaster():HasScepter() then
+		return 0
+	else
+		return cooldown
+	end
+end
+
 function imba_winter_wyvern_arctic_burn:GetBehavior()
 	local caster = self:GetCaster()
 	if caster:HasScepter() == true then 
@@ -57,6 +70,11 @@ end
 
 function imba_winter_wyvern_arctic_burn:ToggleOn(caster, ability)
 	local duration = ability:GetSpecialValueFor("duration");
+	
+	-- This is to prevent Scepter pickup/refresh abuse into a 0 mana infinite duration modifier
+	caster:RemoveModifierByName("modifier_winter_wyvern_arctic_burn_flight");
+	caster:RemoveModifierByName("modifier_imba_winter_wyvern_arctic_burn");
+	
 	if caster:HasScepter() == true then 
 		duration = -1;
 	end
@@ -71,6 +89,21 @@ function imba_winter_wyvern_arctic_burn:ToggleOn(caster, ability)
 	local attack_range_bonus = ability:GetSpecialValueFor("attack_range_bonus");
 	local arctic_burn_modifier = caster:AddNewModifier(caster, ability, "modifier_imba_winter_wyvern_arctic_burn", {duration = duration});
 	arctic_burn_modifier:SetStackCount(attack_range_bonus);
+end
+
+function imba_winter_wyvern_arctic_burn:OnInventoryContentsChanged()
+	local caster	= self:GetCaster()
+	
+	if not caster:HasScepter() then
+		if caster:HasModifier("modifier_winter_wyvern_arctic_burn_flight") and caster:FindModifierByName("modifier_winter_wyvern_arctic_burn_flight"):GetDuration() == -1 then
+			caster:RemoveModifierByName("modifier_winter_wyvern_arctic_burn_flight")
+		end
+		
+		if caster:HasModifier("modifier_imba_winter_wyvern_arctic_burn") and caster:FindModifierByName("modifier_imba_winter_wyvern_arctic_burn"):GetDuration() == -1  then
+			caster:RemoveModifierByName("modifier_imba_winter_wyvern_arctic_burn")
+			self:ToggleAbility()
+		end	
+	end
 end
 
 --------------------------------------------------------------
@@ -176,10 +209,11 @@ function modifier_imba_winter_wyvern_arctic_burn_damage:OnIntervalThink()
 	local current_health 	= parent:GetHealth();
 	local damage 			= current_health * self.health_dmg_conversion;
 	
-	if caster:HasScepter() == true then
-		local max_health = parent:GetMaxHealth();
-		damage = damage + (max_health * self.scepter_dmg_pct);
-	end
+	-- naowin...tooltips...
+	-- if caster:HasScepter() == true then
+		-- local max_health = parent:GetMaxHealth();
+		-- damage = damage + (max_health * self.scepter_dmg_pct);
+	-- end
 
 	local damage_type = DAMAGE_TYPE_MAGICAL;
 	if caster:HasTalent("special_bonus_imba_winter_wyvern_5") then 

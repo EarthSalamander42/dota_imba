@@ -68,7 +68,7 @@
 ////===============================================================================================================
 
 "DOTA_Tooltip_ability_imba_lion_finger_of_death"						"Finger of Death"
-"DOTA_Tooltip_ability_imba_lion_finger_of_death_Description"			"Rips at an enemy unit, trying to turn it inside-out. Deals massive damage and grows stronger with each life it consumes.\n<font color='#FF7800'>Frog Panic:</font> Enemies close to the main target panic, becoming hexed briefly.\n<font color='#FF7800'>Trigger Finger:</font> Killing an enemy with this skill resets its cooldown, but increases its mana cost by %triggerfinger_mana_inc_pct%%% for %triggerfinger_duration% seconds.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
+"DOTA_Tooltip_ability_imba_lion_finger_of_death_Description"			"Rips at an enemy unit, trying to turn it inside-out. Deals massive damage and grows stronger with each life it consumes.\n<font color='#FF7800'>Trigger Finger:</font> Killing an enemy with this skill reduces its cooldown to %triggerfinger_cooldown% second, but increases its mana cost by %triggerfinger_mana_inc_pct%%% for %triggerfinger_duration% seconds.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
 "DOTA_Tooltip_ability_imba_lion_finger_of_death_Lore"					"Lion's disfigured hand is also the source of his greatest power, capable of flooding victims with malefic force."
 "DOTA_Tooltip_ability_imba_lion_finger_of_death_Note0"					"Finger of Death has a 0.25 delay before the damage is applied after the spell is cast, allowing certain abilities to avoid the damage."
 "DOTA_Tooltip_ability_imba_lion_finger_of_death_Note1"					"Only gains damage from kills on real heroes or clones."
@@ -77,12 +77,12 @@
 "DOTA_Tooltip_ability_imba_lion_finger_of_death_damage"					"DAMAGE:"
 "DOTA_Tooltip_ability_imba_lion_finger_of_death_damage_per_kill"		"DAMAGE PER KILL:"
 "DOTA_Tooltip_ability_imba_lion_finger_of_death_mana_add_duration"		"TRIGGER FINGER DURATION:"
-"DOTA_Tooltip_ability_imba_lion_finger_of_death_enemies_frog_radius"	"FROG PANIC RADIUS:"
-"DOTA_Tooltip_ability_imba_lion_finger_of_death_enemies_frog_duration"	"FROG PANIC DURATION:"
+//"DOTA_Tooltip_ability_imba_lion_finger_of_death_enemies_frog_radius"	"FROG PANIC RADIUS:"
+//"DOTA_Tooltip_ability_imba_lion_finger_of_death_enemies_frog_duration"	"FROG PANIC DURATION:"
 "DOTA_Tooltip_ability_imba_lion_finger_of_death_scepter_damage"			"SCEPTER DAMAGE:"
 "DOTA_Tooltip_ability_imba_lion_finger_of_death_scepter_radius"			"SCEPTER RADIUS:"
-"DOTA_Tooltip_ability_imba_lion_finger_of_death_cooldown_scepter"		"SCEPTER COOLDOWN:"
-"DOTA_Tooltip_ability_imba_lion_finger_of_death_aghanim_description"	"Lowers cooldown, increases damage, and causes Finger of Death to hit every enemy in 900 radius that is either stunned or hexed."
+"DOTA_Tooltip_ability_imba_lion_finger_of_death_scepter_cooldown"		"SCEPTER COOLDOWN:"
+"DOTA_Tooltip_ability_imba_lion_finger_of_death_aghanim_description"	"Lowers cooldown, increases damage, and causes Finger of Death to hit every enemy in 325 radius, or 1000 radius if the secondary enemy is either stunned or hexed."
 
 "DOTA_Tooltip_modifier_imba_trigger_finger_debuff"						"Trigger Finger"
 "DOTA_Tooltip_modifier_imba_trigger_finger_debuff_Description"			"Recharged from killing an enemy. Casting Finger of Death again will cost more mana."

@@ -88,7 +88,7 @@
 
 // Custom Creep Scaling
 "DOTA_Tooltip_ability_custom_creep_scaling"						"Custom Creep Scaling"
-"DOTA_Tooltip_ability_custom_creep_scaling_Description"			"Lane creeps receive additional scaling effects based on game time. Every minute, their attack damage, speed, armor, magic resistance, movement speed, health, and health regeneration values are increased, stacking with the standard scaling mechanics. Super creeps gain %super_mult% x this amount, and mega creeps gain %mega_mult% x this amount."
+"DOTA_Tooltip_ability_custom_creep_scaling_Description"			"Creeps receive additional scaling effects based on game time. Every minute, their attack damage, speed, armor, magic resistance, movement speed, health, and health regeneration values are increased, stacking with the standard scaling mechanics. Super creeps gain %super_mult% x this amount, and mega creeps gain %mega_mult% x this amount."
 "DOTA_Tooltip_ability_custom_creep_scaling_melee_attack"		"BONUS ATTACK DAMAGE:"
 "DOTA_Tooltip_ability_custom_creep_scaling_melee_aspd"			"BONUS ATTACK SPEED:"
 "DOTA_Tooltip_ability_custom_creep_scaling_melee_armor"			"BONUS ARMOR:"
@@ -96,6 +96,7 @@
 "DOTA_Tooltip_ability_custom_creep_scaling_melee_ms"			"BONUS MOVEMENT SPEED:"
 "DOTA_Tooltip_ability_custom_creep_scaling_melee_hp"			"BONUS HEALTH:"
 "DOTA_Tooltip_ability_custom_creep_scaling_melee_regen"			"BONUS HEALTH REGEN:"
+"DOTA_Tooltip_ability_custom_creep_scaling_jungle_bounty"		"BONUS GOLD BOUNTY (JUNGLE CREEPS):"
 
 "DOTA_Tooltip_modifier_custom_creep_scaling"					"Custom Creep Scaling"
 "DOTA_Tooltip_modifier_custom_creep_scaling_Description"		"This creep is gaining an additional:<br>

@@ -92,7 +92,7 @@ function imba_earth_spirit_stone_remnant:OnSpellStart()
 			if mark then
 				mark:IncrementStackCount()
 			else
-				enemy:AddNewModifier(caster, self, "modifier_imba_earths_mark", {duration = self:GetSpecialValueFor("earths_mark_duration")})
+				enemy:AddNewModifier(caster, self, "modifier_imba_earths_mark", {duration = self:GetSpecialValueFor("earths_mark_duration")}):SetDuration(self:GetSpecialValueFor("earths_mark_duration") * (1 - enemy:GetStatusResistance()), true)
 			end
 		end
 	end
@@ -221,7 +221,7 @@ function modifier_imba_earth_spirit_remnant_handler:OnAttackLanded(keys)
 			if mark then
 				mark:IncrementStackCount()
 			else
-				keys.target:AddNewModifier(self.parent, self:GetAbility(), "modifier_imba_earths_mark", {duration = self:GetAbility():GetSpecialValueFor("earths_mark_duration")})
+				keys.target:AddNewModifier(self.parent, self:GetAbility(), "modifier_imba_earths_mark", {duration = self:GetAbility():GetSpecialValueFor("earths_mark_duration")}):SetDuration(self:GetAbility():GetSpecialValueFor("earths_mark_duration") * (1 - keys.target:GetStatusResistance()), true)
 			end
 		end
 	end
@@ -421,7 +421,7 @@ end
 function modifier_imba_earths_mark:RefreshDuration(talentRefresh)
 	if IsServer() then
 		if talentRefresh or not self.caster:HasTalent("special_bonus_imba_earth_spirit_8") then
-			local newDuration = self.duration -- * tenacity modifier and so on
+			local newDuration = self.duration * (1 - self:GetParent():GetStatusResistance()) -- * tenacity modifier and so on
 			self:SetDuration(newDuration, true)
 		end
 	end
@@ -718,7 +718,7 @@ function modifier_imba_boulder_smash_push:OnIntervalThink()
 						damage = damage + self.markStackDamage * mark:GetStackCount()
 						mark:IncrementStackCount()
 					else
-						target:AddNewModifier(self.caster, self.ability, "modifier_imba_earths_mark", {duration = self.earthsMarkDuration})
+						target:AddNewModifier(self.caster, self.ability, "modifier_imba_earths_mark", {duration = self.earthsMarkDuration}):SetDuration(self.earthsMarkDuration * (1 - target:GetStatusResistance()), true)
 					end
 				end
 
@@ -974,7 +974,7 @@ function modifier_imba_rolling_boulder:OnIntervalThink()
 					mark:IncrementStackCount()
 					hero:AddNewModifier(self.caster, self.ability, "modifier_imba_rolling_boulder_disarm", {duration = mark:GetStackCount() * self.disarmDurationPerMark})
 				else
-					hero:AddNewModifier(self.caster, self.ability, "modifier_imba_earths_mark", {duration = self.earthsMarkDuration})
+					hero:AddNewModifier(self.caster, self.ability, "modifier_imba_earths_mark", {duration = self.earthsMarkDuration}):SetDuration(self.earthsMarkDuration * (1 - hero:GetStatusResistance()), true)
 				end
 				
 				if self.hitRemnant then
@@ -1243,7 +1243,7 @@ function modifier_imba_geomagnetic_grip_pull:OnIntervalThink()
 						target:AddNewModifier(self.caster, self.ability, "modifier_imba_geomagnetic_grip_root", {duration = self.rootTimePerMark * mark:GetStackCount()})
 						mark:IncrementStackCount()
 					else
-						target:AddNewModifier(self.caster, self.ability, "modifier_imba_earths_mark", {duration = self.earthsMarkDuration})
+						target:AddNewModifier(self.caster, self.ability, "modifier_imba_earths_mark", {duration = self.earthsMarkDuration}):SetDuration(self.earthsMarkDuration * (1 - target:GetStatusResistance()), true)
 					end
 				end
 			end
@@ -1333,6 +1333,7 @@ end
 modifier_imba_magnetize = modifier_imba_magnetize or class({})
 function modifier_imba_magnetize:IsDebuff() return true end
 function modifier_imba_magnetize:IsPurgable() return true end
+function modifier_imba_magnetize:IgnoreTenacity() return true end
 
 function modifier_imba_magnetize:OnCreated()
 	if IsServer() then
@@ -1373,7 +1374,7 @@ function modifier_imba_magnetize:OnIntervalThink()
 		ApplyDamage({ victim = self.parent, attacker = self.caster, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL })
 		
 		EmitSoundOn("Hero_EarthSpirit.Magnetize.Debris", self.parent)
-		if self.parent:IsHero() then EmitSoundOn("Hero_EarthSpirit.Magnetize.Tick", self.parent) end
+		if self.parent:IsHero() then EmitSoundOn("Hero_EarthSpirit.Magnetize.Target.Tick", self.parent) end
 		
 		local tickParticle = ParticleManager:CreateParticle("particles/units/heroes/hero_earth_spirit/espirit_magnetize_target.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.parent)
 		ParticleManager:SetParticleControl(tickParticle, 1, Vector(self.remnantSearchRadius, self.remnantSearchRadius, self.remnantSearchRadius))
@@ -1409,7 +1410,7 @@ function modifier_imba_magnetize:OnIntervalThink()
 						unitMark:IncrementStackCount()
 						self.parent:AddNewModifier(self.caster, self.ability, "modifier_stunned", {duration = self.markedStunDuration})
 					else
-						unit:AddNewModifier(unit, self.ability, "modifier_imba_earths_mark", {duration = self.earthsMarkDuration})
+						unit:AddNewModifier(unit, self.ability, "modifier_imba_earths_mark", {duration = self.earthsMarkDuration}):SetDuration(self.earthsMarkDuration * (1 - unit:GetStatusResistance()), true)
 					end
 				end
 				
@@ -1418,7 +1419,7 @@ function modifier_imba_magnetize:OnIntervalThink()
 					mark:IncrementStackCount()
 					self.parent:AddNewModifier(self.caster, self.ability, "modifier_stunned", {duration = self.markedStunDuration})
 				else
-					mark = self.parent:AddNewModifier(self.parent, self.ability, "modifier_imba_earths_mark", {duration = self.earthsMarkDuration})
+					mark = self.parent:AddNewModifier(self.parent, self.ability, "modifier_imba_earths_mark", {duration = self.earthsMarkDuration}):SetDuration(self.earthsMarkDuration * (1 - self.parent:GetStatusResistance()), true)
 				end
 				
 				remnantModifier:SetDuration(math.min(self.remnantNewLifespan, remnantModifier:GetRemainingTime()), true)
@@ -1485,5 +1486,24 @@ function imba_earth_spirit_petrify:OnSpellStart()
 		EmitSoundOn("Hero_EarthSpirit.Petrify", target)
 		local mod = target:AddNewModifier(self:GetCaster(), self, "modifier_imba_stone_remnant", {duration = duration})
 		mod:SetPetrify(self)
+	end
+end
+
+-- Client-side helper functions --
+
+LinkLuaModifier("modifier_special_bonus_imba_earth_spirit_4", "components/abilities/heroes/hero_earth_spirit", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_earth_spirit_4		= class({})
+
+-----------------------
+-- TALENT 4 MODIFIER --
+-----------------------
+function modifier_special_bonus_imba_earth_spirit_4:IsHidden() 			return true end
+function modifier_special_bonus_imba_earth_spirit_4:IsPurgable() 		return false end
+function modifier_special_bonus_imba_earth_spirit_4:RemoveOnDeath() 	return false end
+
+function imba_earth_spirit_stone_remnant:OnOwnerSpawned()
+	if self:GetCaster():HasTalent("special_bonus_imba_earth_spirit_4") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_earth_spirit_4") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_earth_spirit_4"), "modifier_special_bonus_imba_earth_spirit_4", {})
 	end
 end

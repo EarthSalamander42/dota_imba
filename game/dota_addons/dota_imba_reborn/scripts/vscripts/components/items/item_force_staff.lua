@@ -46,6 +46,11 @@ function item_imba_force_staff:OnSpellStart()
 	local ability = self
 	local target = self:GetCursorTarget()
 
+	-- If the target possesses a ready Linken's Sphere, do nothing
+	if target:TriggerSpellAbsorb(ability) then
+		return nil
+	end
+	
 	EmitSoundOn("DOTA_Item.ForceStaff.Activate", target)
 	target:AddNewModifier(self:GetCaster(), ability, "modifier_item_imba_force_staff_active", {duration = ability:GetSpecialValueFor("duration")})
 end
@@ -120,6 +125,7 @@ function modifier_item_imba_force_staff_active:IsPurgable() return false end
 function modifier_item_imba_force_staff_active:IsStunDebuff() return false end
 function modifier_item_imba_force_staff_active:IsMotionController()  return true end
 function modifier_item_imba_force_staff_active:GetMotionControllerPriority()  return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
+function modifier_item_imba_force_staff_active:IgnoreTenacity()	return true end
 
 function modifier_item_imba_force_staff_active:OnCreated()
 	if not IsServer() then return end
@@ -193,6 +199,11 @@ function item_imba_hurricane_pike:OnSpellStart()
 		EmitSoundOn("DOTA_Item.ForceStaff.Activate", target)
 		target:AddNewModifier(self:GetCaster(), ability, "modifier_item_imba_hurricane_pike_force_ally", {duration = duration })
 	else
+		-- If the target possesses a ready Linken's Sphere, do nothing
+		if target:TriggerSpellAbsorb(ability) then
+			return nil
+		end
+	
 		target:AddNewModifier(self:GetCaster(), ability, "modifier_item_imba_hurricane_pike_force_enemy", {duration = duration})
 		self:GetCaster():AddNewModifier(target, ability, "modifier_item_imba_hurricane_pike_force_self", {duration = duration})
 		local buff = self:GetCaster():AddNewModifier(self:GetCaster(), ability, "modifier_item_imba_hurricane_pike_attack_speed", {duration = ability:GetSpecialValueFor("range_duration")})
@@ -200,11 +211,14 @@ function item_imba_hurricane_pike:OnSpellStart()
 		buff:SetStackCount(ability:GetSpecialValueFor("max_attacks"))
 		EmitSoundOn("DOTA_Item.ForceStaff.Activate", target)
 		EmitSoundOn("DOTA_Item.ForceStaff.Activate", self:GetCaster())
-		local startAttack = {
-			UnitIndex = self:GetCaster():entindex(),
-			OrderType = DOTA_UNIT_ORDER_ATTACK_TARGET,
-			TargetIndex = target:entindex(),}
-		ExecuteOrderFromTable(startAttack)
+		
+		if self:GetCaster():IsRangedAttacker() then
+			local startAttack = {
+				UnitIndex = self:GetCaster():entindex(),
+				OrderType = DOTA_UNIT_ORDER_ATTACK_TARGET,
+				TargetIndex = target:entindex(),}
+			ExecuteOrderFromTable(startAttack)
+		end
 	end
 end
 
@@ -357,6 +371,7 @@ function modifier_item_imba_hurricane_pike_force_enemy:IsPurgable() return false
 function modifier_item_imba_hurricane_pike_force_enemy:IsStunDebuff() return false end
 function modifier_item_imba_hurricane_pike_force_enemy:IsMotionController()  return true end
 function modifier_item_imba_hurricane_pike_force_enemy:GetMotionControllerPriority()  return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
+function modifier_item_imba_hurricane_pike_force_enemy:IgnoreTenacity()	return true end
 
 function modifier_item_imba_hurricane_pike_force_enemy:OnCreated()
 	if not IsServer() then return end
@@ -462,9 +477,7 @@ function modifier_item_imba_hurricane_pike_attack_speed:OnIntervalThink()
 		end
 	else
 		self.as = 0
-		if self:GetParent():IsRangedAttacker() then
-			self.ar = 0
-		end
+		self.ar = 0
 	end
 end
 
@@ -501,6 +514,10 @@ function modifier_item_imba_hurricane_pike_attack_speed:OnOrder( keys )
 	if not IsServer() then return end
 	
 	if keys.target == self.target and keys.unit == self:GetParent() and keys.order_type == 4 then
-		self.ar = 999999
+		if self:GetParent():IsRangedAttacker() then
+			self.ar = 999999
+		end
+		
+		self.as = self:GetAbility():GetSpecialValueFor("bonus_attack_speed")
 	end
 end

@@ -10,6 +10,9 @@ modifier_custom_creep_scaling	= class({})
 -- CUSTOM CREEP SCALING ABILITY --
 ----------------------------------
 
+function custom_creep_scaling:IsInnateAbility() return true end
+function custom_creep_scaling:IsStealable() 	return false end
+
 function custom_creep_scaling:GetIntrinsicModifierName()
 	return "modifier_custom_creep_scaling"
 end
@@ -18,10 +21,19 @@ end
 -- CUSTOM CREEP SCALING MODIFIER --
 -----------------------------------
 
+function modifier_custom_creep_scaling:IsHidden()
+	if self:GetStackCount() == 0 then
+		return true
+	end
+end
+
 -- Problem: Creeps "spawn" before the actual :00 / :30 mark and their stats don't seem to change at all again after OnCreated runs
 function modifier_custom_creep_scaling:OnCreated()
 	self.ability		= self:GetAbility()
 	self.parent			= self:GetParent()
+	
+	-- Yeah let's not give Doom the bonuses
+	if not self.ability or not self.parent:IsCreep() then return end
 	
 	self.initialized	= false
 	
@@ -48,6 +60,12 @@ function modifier_custom_creep_scaling:OnCreated()
 	if not IsServer() then return end
 	-- Have to call this separately cause the health bonus modifier doesn't work on lane creeps?
 	self.parent:SetBaseMaxHealth(self.parent:GetMaxHealth() + self.melee_hp)
+	
+	-- For Jungle Creeps
+	if string.find(self.parent:GetUnitName(), "_neutral_") then
+		self.parent:SetMinimumGoldBounty(self.parent:GetMinimumGoldBounty() + (self:GetStackCount() * self.ability:GetSpecialValueFor("jungle_bounty")))
+		self.parent:SetMaximumGoldBounty(self.parent:GetMaximumGoldBounty() + (self:GetStackCount() * self.ability:GetSpecialValueFor("jungle_bounty")))
+	end
 end
 
 function modifier_custom_creep_scaling:DeclareFunctions()

@@ -217,19 +217,24 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"hp_shield"				"110 220 330 440"
+				"hp_shield"				"80 110 140 170"
 			}
 			"03"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"tenacity_bonus_pct"	"10 15 20 25"
+				"var_type"				"FIELD_FLOAT"
+				"hp_shield_str_mult"	"1.0 1.5 2.0 2.5"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"900"
+				"tenacity_bonus_pct"	"10 15 20 25"
 			}
 			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"900"
+			}
+			"06"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"duration"				"10.0"

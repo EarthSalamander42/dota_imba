@@ -257,7 +257,7 @@
 	}
 
 	//=================================================================================================================
-	// HERO: Beastmaster
+	// HERO: Brewmaster
 	//=================================================================================================================
 	"npc_dota_hero_brewmaster"
 	{
@@ -716,7 +716,7 @@
 		"Ability6"					"gyrocopter_call_down"
 
 		"Ability10"					"special_bonus_attack_damage_25"
-		"Ability11"					"special_bonus_hp_200"
+		"Ability11"					"special_bonus_hp_250"
 		"Ability12"					"special_bonus_unique_gyrocopter_2"
 		"Ability13"					"special_bonus_unique_gyrocopter_3"
 		"Ability14"					"special_bonus_movement_speed_50"
@@ -1326,6 +1326,7 @@
 		"Ability1"					"imba_pangolier_swashbuckle"
 		"Ability2"					"imba_pangolier_shield_crash"
 		"Ability3"					"imba_pangolier_heartpiercer"
+		"Ability5"					"imba_pangolier_gyroshell_stop"
 		"Ability6"					"imba_pangolier_gyroshell"
 
 		"Ability10"					"special_bonus_imba_pangolier_1"
@@ -2437,5 +2438,15 @@
 		"BaseClass"			"npc_dota_hero"
 		"HeroID"			"255"
 		"Model"				"models/development/invisiblebox.vmdl"
+	}
+	
+	//=================================================================================================================
+	// HERO: Mars
+	//=================================================================================================================
+	"npc_dota_hero_mars"
+	{
+		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
+		
+		"Ability4"		"imba_mars_arena_of_blood_enhance"
 	}
 }

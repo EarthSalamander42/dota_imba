@@ -29,6 +29,8 @@ resource/overviews/*
 *.stackdump
 
 game/dota_addons/dota_imba_reborn/scripts/vscripts/components/statcollection/settings.kv
+game/dota_addons/dota_imba_reborn/scripts/vscripts/components/api/backend_key.kv
+
 game/dota_addons/dota_imba_reborn/network_measurement\.txt
 game/dota_addons/dota_imba_reborn/rich_presence_persistent_data\.txt
 

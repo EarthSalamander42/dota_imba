@@ -112,7 +112,12 @@ function item_imba_sheepstick:OnSpellStart()
 			local nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, self:GetSpecialValueFor("self_debuff_radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 
 			for _,enemy in pairs(nearby_enemies) do
-				enemy:AddNewModifier(caster, self, "modifier_item_imba_sheepstick_debuff", {duration = modified_duration})
+				-- Kill the target instantly if it is an illusion
+				if enemy:IsIllusion() then
+					enemy:ForceKill(true)
+				else
+					enemy:AddNewModifier(caster, self, "modifier_item_imba_sheepstick_debuff", {duration = modified_duration})
+				end
 			end
 		else
 

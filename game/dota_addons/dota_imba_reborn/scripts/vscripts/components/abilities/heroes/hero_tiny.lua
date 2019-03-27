@@ -687,7 +687,7 @@ if IsServer() then
 					self.repeat_increase = true
 				end
 				ApplyDamage({victim = enemy, attacker = caster, damage = damage, damage_type = self:GetAbilityDamageType(), ability = self})
-				enemy:AddNewModifier(caster, self, "modifier_stunned", {duration = duration})
+				enemy:AddNewModifier(caster, self, "modifier_stunned", {duration = duration}):SetDuration(duration * (1 - enemy:GetStatusResistance()), true)
 			end
 			hitLoc = hitLoc + offset / ticks
 			extradata.ticks = extradata.ticks - 1

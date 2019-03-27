@@ -357,7 +357,7 @@ function modifier_imba_warcry:DeclareFunctions()
 		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
 		MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS,
 		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING,
-		MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK,
+		MODIFIER_PROPERTY_TOTAL_CONSTANT_BLOCK,
 	}
 end
 
@@ -373,10 +373,11 @@ function modifier_imba_warcry:OnCreated()
 	self.ms_bonus_pct = self:GetAbility():GetTalentSpecialValueFor("ms_bonus_pct")
 	self.armor_bonus = self:GetAbility():GetSpecialValueFor("armor_bonus")
 	self.tenacity_pct = self:GetAbility():GetSpecialValueFor("tenacity_bonus_pct")
-	self.hp_shield = self:GetAbility():GetSpecialValueFor("hp_shield")
-
+	
 	if IsServer() then
-		self.shield_size = 100
+		self.hp_shield = self:GetAbility():GetSpecialValueFor("hp_shield") + (self:GetCaster():GetStrength() * self:GetAbility():GetSpecialValueFor("hp_shield_str_mult"))
+
+		self.shield_size = 120
 
 		if self:GetParent() == self:GetCaster() then
 			self:GetCaster():EmitSound("Hero_Sven.WarCry")
@@ -419,6 +420,8 @@ function modifier_imba_warcry:OnCreated()
 		ParticleManager:SetParticleControl(self.buff2_fx, 1, Vector(self.shield_size, 0, 0))
 		ParticleManager:SetParticleControlEnt(self.buff2_fx, 0, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
 		self:AddParticle(self.buff2_fx, false, false, -1, false, false)
+		
+		self:SetStackCount(self.hp_shield)
 	end
 end
 
@@ -438,10 +441,14 @@ function modifier_imba_warcry:GetModifierPhysicalArmorBonus()
 	return self.armor_bonus
 end
 
-function modifier_imba_warcry:GetModifierPhysical_ConstantBlock(keys)	
+function modifier_imba_warcry:GetModifierTotal_ConstantBlock(keys)
+	if not IsServer() then return end
+	
 	-- Block for the smaller value between total current stacks and total damage
 
 --	local real_damage = keys.damage - (keys.damage * GetReductionFromArmor(self:GetParent():GetPhysicalArmorValue()))
+
+	if keys.damage_category ~= DOTA_DAMAGE_CATEGORY_ATTACK then return 0 end
 
 	if keys.damage >= self.hp_shield then
 		if self.cast_fx then
@@ -475,6 +482,8 @@ function modifier_imba_warcry:GetModifierPhysical_ConstantBlock(keys)
 
 	self.hp_shield = self.hp_shield - keys.damage
 	SendOverheadEventMessage(self:GetParent(), OVERHEAD_ALERT_BLOCK , self:GetParent(), math.min(self.hp_shield, keys.damage), self:GetParent())
+	
+	self:SetStackCount(self.hp_shield)
 
 	return keys.damage
 end

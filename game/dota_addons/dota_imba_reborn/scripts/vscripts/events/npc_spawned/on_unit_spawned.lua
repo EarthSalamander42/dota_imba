@@ -34,6 +34,11 @@ function GameMode:OnUnitFirstSpawn(unit)
 		end
 	end
 
+	-- Let's give jungle creeps some love too...I guess
+	if string.find(unit:GetUnitName(), "_neutral_") then
+		unit:AddAbility("custom_creep_scaling")
+	end
+	
 	if unit:GetClassname() == "npc_dota_creep_lane" or unit:GetClassname() == "npc_dota_creep_siege" then
 		if unit:HasAbility("custom_creep_scaling") then
 			unit:FindAbilityByName("custom_creep_scaling"):SetLevel(1)

@@ -2382,6 +2382,8 @@ function modifier_imba_phoenix_supernova_scepter_passive:OnTakeDamage( keys )
 
 		caster.egg = egg
 
+		-- Set health to max here as compromise to prevent easy insta-gibs I guess
+		caster:SetHealth(caster:GetMaxHealth())
 	end
 
 end

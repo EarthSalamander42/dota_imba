@@ -4,8 +4,8 @@ CustomNetTables:SetTableValue("game_options", "game_count", {value = 1})
 local XP_level_table = {}
 XP_level_table[0] = 0
 
--- xp needed increased by 500 every 25 levels
-for i = 1, 500 do
+-- xp needed increased by 500 xp every 25 levels
+for i = 1, 1000 do
 	XP_level_table[i] = XP_level_table[i-1] + (500 * (math.floor(i / 25) + 1))
 end
 
@@ -18,7 +18,7 @@ function GetXPLevelByXp(xp)
 		end
 	end
 
-	return 500
+	return 1000
 end
 
 function GetXpProgressToNextLevel(xp)

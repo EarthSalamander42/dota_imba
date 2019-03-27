@@ -1244,6 +1244,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"scepter_damage_reduction"	"-30"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"07"
 			{
@@ -1331,6 +1332,7 @@
 			{
 				"var_type"								"FIELD_INTEGER"
 				"taunted_damage_bonus_pct"				"10 15 20 25"
+				"CalculateSpellDamageTooltip"			"0"
 			}
 		}
 	}
@@ -2049,7 +2051,8 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"str_damage_reduction"	"100"				
+				"str_damage_reduction"	"100"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 		}
 	}
@@ -2095,11 +2098,13 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"str_pct_as_damage"		"40 60 80 100"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"damage_block"			"3 6 9 12"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"04"
 			{
@@ -2125,6 +2130,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_damage"			"6 9 12 15" // %
+				"CalculateSpellDamageTooltip"	"0"
 			}
 		}
 	}
@@ -2178,6 +2184,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"strength_damage"			"100 200 300"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"03"
 			{
@@ -2193,6 +2200,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"damage_reduction_scepter"	"40"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"06"
 			{
@@ -2218,6 +2226,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"nether_ward_damage"		"20"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 		}
 	}
@@ -2672,6 +2681,7 @@
 			{
 				"var_type"								"FIELD_FLOAT"
 				"damage_interval"						"0.5"
+				"CalculateSpellDamageTooltip"			"0"
 			}
 
 			"09"
@@ -2684,6 +2694,7 @@
 			{
 				"var_type"								"FIELD_INTEGER"
 				"ally_damage_reduction"					"-50"
+				"CalculateSpellDamageTooltip"			"0"
 			}
 
 			"11"
@@ -3238,6 +3249,7 @@
 			{
 				"var_type"								"FIELD_INTEGER"
 				"talent_slow_per_damage"				"3"
+				"CalculateSpellDamageTooltip"			"0"
 			}
 			"12"
 			{
@@ -3248,6 +3260,7 @@
 			{
 				"var_type"								"FIELD_INTEGER"
 				"talent_damage_for_slow_proc"			"3"
+				"CalculateSpellDamageTooltip"			"0"
 			}
 		}
 	}
@@ -9346,7 +9359,7 @@
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"cooldown_scepter"			"100 60 20"
+				"cooldown_scepter"			"100 60 20"	// This line is literally useless
 			}
 
 			"06"
@@ -9387,13 +9400,19 @@
 			"12"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"damage_per_kill"				"20"
+				"damage_per_kill"				"25"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"13"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"kill_grace_duration"			"3"
 				"CalculateSpellDamageTooltip"	"0"
+			}
+			"14"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"triggerfinger_cooldown"		"1"	
 			}
 		}
 	}
@@ -15908,7 +15927,7 @@
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_vo_stormspirit.vsndevts"
 			"particle"					"particles/units/heroes/hero_stormspirit/stormspirit_ball_lightning.vpcf"
 		}
-		
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -15936,7 +15955,7 @@
 			"05"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"ball_speed"							"1200 2500 3500"		
+				"ball_speed"							"1500 2500 3500"		
 			}
 			"06"
 			{
@@ -17241,7 +17260,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"40 80 110 130"
+				"damage"				"40 70 100 130"
 				"LinkedSpecialBonus"	"special_bonus_imba_sand_king_2"
 			}
 			"02"
@@ -18127,49 +18146,41 @@
 				"damage_radius"			"170"
 				"LinkedSpecialBonus"	"special_bonus_imba_skywrath_mage_4"
 			}
-
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"600 1400 1800"
+				"damage"				"800 1400 2000"
 			}
-
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"damage_duration"		"2.4"
 			}
-
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"damage_interval"		"0.1"
 			}
-
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"explosion_delay"		"0.6"
 			}
-
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"explosion_radius"		"250 300 400"
 			}
-
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"int_as_damage_pct"		"50 100 200"
 			}
-
 			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"int_increase_per_stack"	"15"
 			}
-
 			"09"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -19754,6 +19765,7 @@
 		"ScriptFile"				"components/abilities/heroes/hero_tinker"
 		"AbilityTextureName"			"tinker_rearm"
 		"FightRecapLevel"				"1"
+		"HasScepterUpgrade"				"1"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -25868,7 +25880,7 @@
 			"09"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"frost_bonus_movement_speed"	"-30"
+				"frost_bonus_movement_speed"	"-40"
 			}
 			"10"
 			{
@@ -27668,7 +27680,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"crit_damage"			"200"
+				"crit_damage"			"200 220 240 260"
 			}
 			"03"
 			{
@@ -30884,6 +30896,26 @@
 	}
 
 	//=================================================================================================================
+	// Pangolier: Gyroshell Stop
+	//=================================================================================================================
+	"imba_pangolier_gyroshell_stop"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_pangolier"
+		"AbilityTextureName"			"pangolier_gyroshell_stop"
+		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
+		"AbilityCastAnimation"			"ACT_INVALID"
+	}
+	
+	//=================================================================================================================
 	// Pangolier's Talents
 	//=================================================================================================================
 	"special_bonus_imba_pangolier_1" // Pangolier strikes any enemy in his dash path during Swashbuckle
@@ -31986,7 +32018,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO | DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
 		"FightRecapLevel"				"2"
 		"HasScepterUpgrade"				"1"
 
@@ -36707,6 +36739,30 @@
 		"AbilityTextureName"			"custom/scaldris_antipode"
 		"ScriptFile"					"components/abilities/heroes/hero_scaldris.lua"
 		"MaxLevel"						"1"
+		"HasScepterUpgrade"     	"1"
+		
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"					"particles/econ/items/doom/doom_ti8_immortal_arms/doom_ti8_immortal_devour_ring.vpcf"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"scepter_max_mana_pct_cost"			"4.0"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"scepter_refresh_chance"			"25"
+			}
+		}
 	}
 
 	//=================================================================================================================
@@ -39071,6 +39127,36 @@
 				"var_type"			"FIELD_FLOAT"
 				"mega_mult"			"2.0"
 			}
+			
+			
+			"25"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"jungle_bounty"		"1.5"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Arena of Blood ENHANCE
+	//=================================================================================================================
+	"imba_mars_arena_of_blood_enhance"
+	{
+		// General
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_mars.lua"
+		
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"MaxLevel"						"1"
+		
+		// Special
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"expansion_pct"		"100"
+			}			
 		}
 	}
 }

@@ -80,7 +80,7 @@
 "DOTA_Tooltip_ability_item_imba_kaya_and_sange_Description"			"<h1><font color='#FF7800'>Active: Shield</font></h1> Grants %bonus_status_resistance_active%%% status resistance and %bonus_cdr_active%%% mana cost and cooldown reduction for %active_duration% seconds.\n<h1><font color='#FF7800'>Passive: Quickspell</font></h1> Grants %bonus_cdr%%% nonstacking cooldown reduction."
 // "DOTA_Tooltip_ability_item_imba_kaya_and_sange_Lore"				"#{DOTA_Tooltip_ability_item_kaya_and_sange_Lore}"
 "DOTA_Tooltip_ability_item_imba_kaya_and_sange_Note0"				"Movement speed bonus does not stack with itself or other Yasha upgrades."
-"DOTA_Tooltip_ability_item_imba_kaya_and_sange_bonus_int"			"+$int"
+"DOTA_Tooltip_ability_item_imba_kaya_and_sange_bonus_intellect"		"+$int"
 "DOTA_Tooltip_ability_item_imba_kaya_and_sange_spell_amp"			"%+Spell Amplification"
 "DOTA_Tooltip_ability_item_imba_kaya_and_sange_bonus_cdr"			"%+Manacost and Manaloss Reduction"
 "DOTA_Tooltip_ability_item_imba_kaya_and_sange_bonus_status_resistance"	"%+Status Resistance"

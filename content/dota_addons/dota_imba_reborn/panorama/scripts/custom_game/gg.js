@@ -13,7 +13,11 @@ function GenerateGGTopBar(player, team, has_gg) {
 	// ERROR: find traverse of null when full team has gg
 	var TopBarHud = FindDotaHudElement(team_string + 'Player' + player).FindChildTraverse('SlantedContainerPanel');
 
+	$.Msg(TopBarHud.FindChildTraverse("GGBar-" + player))
+	$.Msg(has_gg)
+
 	if (!TopBarHud.FindChildTraverse("GGBar-" + player) && has_gg == 1) {
+		$.Msg("Create gg bar for player: " + player)
 		var gg_row = $.CreatePanel("Panel", TopBarHud, "GGBar-" + player);
 		gg_row.AddClass("GG_Row");
 		gg_row.style.backgroundColor = "gradient(linear,0  100%, 0% 0%, from(#800314b6),color-stop( 0.9, #0a1722ae ), to(#0a1722ae))";
@@ -80,10 +84,11 @@ function GGInitCountDown() {
 }
 
 function GGCalled(event) {
-	$.Msg("GG Called...")
+//	$.Msg(event);
+//	$.Msg("GG Called: " + event.has_gg);
 
 	var has_gg = false
-	if (event.has_gg[1] == true || event.has_gg[2] == true)
+	if (event.has_gg == true)
 		has_gg = true
 
 	GenerateGGTopBar(event.ID, event.team, has_gg);

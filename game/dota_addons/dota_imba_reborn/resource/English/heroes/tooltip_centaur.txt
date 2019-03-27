@@ -10,7 +10,7 @@
 
 // Centaur Warrunner's Hoof Stomp
 "DOTA_Tooltip_ability_imba_centaur_hoof_stomp"                          "Hoof Stomp"
-"DOTA_Tooltip_ability_imba_centaur_hoof_stomp_Description"              "Slams the ground, stunning and damaging nearby enemies.\n<font color='#FF7800'>Gladiators' pit:</font> creates an arena where Centaur and his enemies can fight. Enemies cannot leave the arena by any means, and the Warrunner, while inside it, takes reduced damage from all sources."
+"DOTA_Tooltip_ability_imba_centaur_hoof_stomp_Description"              "Slams the ground, stunning and damaging nearby enemies.\n<font color='#FF7800'>Gladiators' Pit:</font> Creates an arena where Centaur and his enemies can fight. Enemies cannot leave the arena by any means, and the Warrunner, while inside it, takes reduced damage from all sources."
 "DOTA_Tooltip_ability_imba_centaur_hoof_stomp_Note0"                    "Enemies which enter the arena after its creation are also stuck inside."
 "DOTA_Tooltip_ability_imba_centaur_hoof_stomp_Note1"                    "Enemies can escape the arena if they move more than 2000 units instantly."
 "DOTA_Tooltip_ability_imba_centaur_hoof_stomp_Lore"                    "The champion of the pit can create his own arena with a mighty hoof stomp."
@@ -31,14 +31,14 @@
 
 // Centaur Warrunner's Double Edge
 "DOTA_Tooltip_ability_imba_centaur_double_edge"                        "Double Edge"
-"DOTA_Tooltip_ability_imba_centaur_double_edge_Description"            "Centaur strikes a vicious blow at melee range, damaging both himself and a small area around the target.\n<font color='#FF7800'>Shake it off:</font> self-damage from Double Edge is reduced by an amount equal to %str_damage_reduction%%% of your strength.\n<font color='#00FF40'>Centaur cannot die from Double Edge's damage.</font>"
+"DOTA_Tooltip_ability_imba_centaur_double_edge_Description"            "Centaur strikes a vicious blow at melee range, damaging both himself and a small area around the target.\n<font color='#FF7800'>Shake It Off:</font> Self-damage from Double Edge is reduced by an amount equal to %str_damage_reduction%%% of your strength.\n<font color='#00FF40'>Centaur cannot die from Double Edge's damage.</font>"
 "DOTA_Tooltip_ability_imba_centaur_double_edge_Lore"                    "In the spurs of combat, Bradwarden's mighty strikes sometimes cause self-inflicted collateral damage."
 "DOTA_Tooltip_ability_imba_centaur_double_edge_radius"                  "RADIUS:"
 "DOTA_Tooltip_ability_imba_centaur_double_edge_damage"                  "DAMAGE:"
 
 // Centaur Warrunner's Return
 "DOTA_Tooltip_ability_imba_centaur_return"								"Return"
-"DOTA_Tooltip_ability_imba_centaur_return_Description"                  "Centaur immediately counters every attack, damaging his attacker. Return damage is based on base damage and a percentage of Centaur's strength.\n<font color='#FF7800'>Bulging hide:</font> Centaur gains passive damage block each time he is hit by an attack. Damage block stacks, but each stack has its own independent duration."
+"DOTA_Tooltip_ability_imba_centaur_return_Description"                  "Centaur immediately counters every attack, damaging his attacker. Return damage is based on base damage and a percentage of Centaur's strength.\n<font color='#FF7800'>Bulging Hide:</font> Centaur gains passive damage block each time he is hit by an attack. Damage block stacks, but each stack has its own independent duration."
 "DOTA_Tooltip_ability_imba_centaur_return_Lore"                        "Bradwarden has no need to parry his opponent's attacks; his armor-like hide does it for him."
 "DOTA_Tooltip_ability_imba_centaur_return_Note"                        "Bulging Hide does not trigger from tower attacks."
 "DOTA_Tooltip_ability_imba_centaur_return_damage"                      "BASE DAMAGE:"
@@ -60,7 +60,7 @@
 
 // Centaur Warrunner's Stampede
 "DOTA_Tooltip_ability_imba_centaur_stampede"                            "Stampede"
-"DOTA_Tooltip_ability_imba_centaur_stampede_Description"                "Centaur leads all allies into a vicious charge, causing them to move through units at max speed. Trampled enemies take damage based on the Warrunner's strength.\n<font color='#FF7800'>Charging impact:</font> stuns any enemies hit by the Stampede, then slows them afterwards.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
+"DOTA_Tooltip_ability_imba_centaur_stampede_Description"                "Centaur leads all allies into a vicious charge, causing them to move through units at max speed. Trampled enemies take damage based on the Warrunner's strength.\n<font color='#FF7800'>Charging Impact:</font> Stuns any enemies hit by the Stampede, then slows them afterwards.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
 "DOTA_Tooltip_ability_imba_centaur_stampede_Lore"                      "rumblerumbleRUMBLERUMBLE"
 "DOTA_Tooltip_ability_imba_centaur_stampede_Note0"                      "If Nether Ward steals this spell, it makes every trample deal fixed damage instead of being based on strength."
 "DOTA_Tooltip_ability_imba_centaur_stampede_strength_damage"            "%CENTAUR'S STRENGTH AS DAMAGE:"

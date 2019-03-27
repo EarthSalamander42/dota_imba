@@ -81,7 +81,7 @@ function modifier_imba_power_treads_2:GetAttributes() return MODIFIER_ATTRIBUTE_
 
 function modifier_imba_power_treads_2:DeclareFunctions()
 	local funcs = {
-		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_UNIQUE,
 		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
 		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
@@ -174,7 +174,7 @@ function modifier_imba_power_treads_2:OnDestroy()
 	end
 end
 
-function modifier_imba_power_treads_2:GetModifierMoveSpeedBonus_Percentage()
+function modifier_imba_power_treads_2:GetModifierMoveSpeedBonus_Special_Boots()
 	local ability = self:GetAbility()
 	local speed_bonus = ability:GetSpecialValueFor("bonus_movement_speed")
 	return speed_bonus

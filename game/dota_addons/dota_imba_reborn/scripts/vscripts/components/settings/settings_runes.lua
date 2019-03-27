@@ -20,10 +20,13 @@ if IMBA_MUTATION and IMBA_MUTATION["terrain"] == "super_runes" then
 	IMBA_RUNE_HASTE_MOVE_SPEED_BONUS = 100 -- %
 	IMBA_RUNE_HASTE_MOVE_SPEED_MIN = 800
 
+	--Illusion
+	IMBA_RUNE_ILLUSION_DODGE_PCT = 40 -- %
+	
 	-- Invis
 	IMBA_RUNE_INVIS_CRITICAL_DAMAGE = 400 -- %
 	IMBA_RUNE_INVIS_BONUS_MOVE_SPEED = 40 -- %
-
+	
 	-- Regen
 	IMBA_RUNE_REGEN_STACKS = 50
 	IMBA_RUNE_REGEN_HEAL_BASE = 100
@@ -51,6 +54,9 @@ else
 	IMBA_RUNE_HASTE_MOVE_SPEED_BONUS = 60 -- %
 	IMBA_RUNE_HASTE_MOVE_SPEED_MIN = 550
 
+	--Illusion
+	IMBA_RUNE_ILLUSION_DODGE_PCT = 20 -- %
+	
 	-- Invis
 	IMBA_RUNE_INVIS_CRITICAL_DAMAGE = 200 -- %
 	IMBA_RUNE_INVIS_BONUS_MOVE_SPEED = 20 -- %
@@ -77,6 +83,7 @@ CustomNetTables:SetTableValue("game_options", "runes",
 	haste_rune_attack_speed = IMBA_RUNE_HASTE_ATTACK_SPEED_BONUS,
 	haste_rune_move_speed = IMBA_RUNE_HASTE_MOVE_SPEED_BONUS,
 	haste_rune_move_speed_min = IMBA_RUNE_HASTE_MOVE_SPEED_MIN,
+	illusion_rune_dodge_pct = IMBA_RUNE_ILLUSION_DODGE_PCT,
 	invis_rune_critical_damage = IMBA_RUNE_INVIS_CRITICAL_DAMAGE,
 	invis_rune_move_speed = IMBA_RUNE_INVIS_BONUS_MOVE_SPEED,
 	regen_rune_stacks = IMBA_RUNE_REGEN_STACKS,

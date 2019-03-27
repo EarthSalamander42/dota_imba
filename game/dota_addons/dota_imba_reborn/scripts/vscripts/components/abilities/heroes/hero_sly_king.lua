@@ -589,7 +589,7 @@ function modifier_imba_sly_king_hypothermic_wisdom:DeclareFunctions()
 end
 
 function modifier_imba_sly_king_hypothermic_wisdom:GetModifierBonusStats_Intellect()
-	if not self:GetParent():PassivesDisabled() then
+	if not self:GetParent():PassivesDisabled() and self:GetParent():GetHealthPercent() > 0 then
 		local talent_value = 0
 		
 		if self:GetCaster():HasModifier("modifier_special_bonus_imba_unique_sly_king_1") then
@@ -601,7 +601,7 @@ function modifier_imba_sly_king_hypothermic_wisdom:GetModifierBonusStats_Intelle
 end
 
 function modifier_imba_sly_king_hypothermic_wisdom:GetModifierSpellAmplify_Percentage()
-	if self:GetParent():HasModifier("modifier_imba_sly_king_hypothermic_wisdom_int_tracker") and not self:GetParent():PassivesDisabled() then
+	if self:GetParent():HasModifier("modifier_imba_sly_king_hypothermic_wisdom_int_tracker") and not self:GetParent():PassivesDisabled() and self:GetParent():GetHealthPercent() > 0 then
 		return self:GetParent():GetModifierStackCount("modifier_imba_sly_king_hypothermic_wisdom_int_tracker", self:GetParent()) * self:GetAbility():GetSpecialValueFor("spell_amp_per_int")
 	end
 end
@@ -622,7 +622,7 @@ function modifier_imba_sly_king_hypothermic_wisdom_int_tracker:OnIntervalThink()
 	if not IsServer() then return end
 	
 	-- Add colour change based on Sly King's health for tactility (for the hell of it)
-	if self:GetParent():PassivesDisabled() then
+	if self:GetParent():PassivesDisabled() or self:GetParent():GetHealthPercent() == 0 then
 		self:GetParent():SetRenderColor(255, 255, 255)
 	else
 		local healthPctRender = (self:GetParent():GetHealthPercent() / 100) * 255
