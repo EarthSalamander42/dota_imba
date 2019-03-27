@@ -49,6 +49,7 @@ var api = {
 	updateCompanion : function(data, success_callback, error_callback) {
 		$.AsyncWebRequest(api.base + api.urls.modifyCompanion, {
 			type : "POST",
+			dataType : "json",
 			data : data,
 			timeout : 5000,
 			headers : {'X-Dota-Server-Key' : secret_key},
@@ -89,6 +90,7 @@ var api = {
 	updateStatue : function(data, success_callback, error_callback) {
 		$.AsyncWebRequest(api.base + api.urls.modifyStatue, {
 			type : "POST",
+			dataType : "json",
 			data : data,
 			timeout : 5000,
 			headers : {'X-Dota-Server-Key' : secret_key},
