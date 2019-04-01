@@ -82,6 +82,8 @@ end
 -- ILLUMINATE SELF THINKER --
 -----------------------------
 
+function modifier_imba_keeper_of_the_light_illuminate_self_thinker:IsPurgable()	return false end
+
 function modifier_imba_keeper_of_the_light_illuminate_self_thinker:GetEffectName()
 	return "particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_spirit_form_ambient.vpcf"
 end

@@ -36,7 +36,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"movespeed"					"35 40 45 50"
+				"movespeed"					"5 10 15 20"
 			}
 			"03"
 			{
@@ -51,12 +51,12 @@
 			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"tether_heal_amp"			"1.5"
+				"tether_heal_amp"			"1.05 1.2 1.35 1.5"
 			}
 			"06"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"tooltip_heal_amp"			"50"
+				"tooltip_heal_amp"			"5 20 35 50"
 			}
 			"07"
 			{
@@ -155,7 +155,7 @@
 			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"slow_duration"				"1.0"
+				"slow_duration"				"0.3"
 			}
 			"06"
 			{
@@ -311,7 +311,85 @@
 				"scepter_efficiency"		"0.25"
 			}
 		}
-	}	
+	}
+	
+	//=================================================================================================================
+	// Wisp: Overcharge 7.21
+	//=================================================================================================================
+	"imba_wisp_overcharge_721"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_wisp.lua"
+		"AbilityTextureName"			"wisp_overcharge"
+		"HasScepterUpgrade"				"1"
+		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0 0 0 0"
+   		"AbilityCastAnimation"			"ACT_INVALID"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"18.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"40 60 80 100"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_attack_speed"		"50 80 110 140"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_damage_pct"			"-5 -10 -15 -20"
+				"LinkedSpecialBonus"		"special_bonus_imba_wisp_4"
+				"LinkedSpecialBonusOperation"		"SPECIAL_BONUS_SUBTRACT"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"8"
+			}
+			
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_missile_speed"		"100 200 300 400"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_cast_speed"			"20 25 30 35"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_attack_range"		"30 45 60 75"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"scepter_radius"			"900"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"scepter_efficiency"		"0.25"
+			}
+		}
+	}
 
 	//=================================================================================================================
 	// Wisp: Swap Spirits
@@ -352,11 +430,11 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"130.0 110.0 90.0"
+		"AbilityCooldown"				"90 75 60"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"100 100 100"
+		"AbilityManaCost"				"175"
 		
 		
 		//-------------------------------------------------------------------------------------------------------------
@@ -382,7 +460,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"return_time"				"10.0 12.5 15.0"
+				"return_time"				"12.0"
 			}
 			"03"
 			{
@@ -569,6 +647,7 @@
 		"LinkedAbility"
 		{
 			"01" 	"imba_wisp_overcharge"
+			"02" 	"imba_wisp_overcharge_721"
 		}
 
 		// Special
@@ -691,6 +770,67 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_regen"			"3"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Wisp Talent 9 (Level 25): Reduced Relocate CD
+	//=================================================================================================================
+	"special_bonus_imba_wisp_9"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"LinkedAbility"
+		{
+			"01" 	"imba_wisp_relocate"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"35"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Wisp Talent 10: Large Hadron Collider
+	//=================================================================================================================
+	"special_bonus_imba_wisp_10"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"LinkedAbility"
+		{
+			"01" 	"imba_wisp_spirits"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"2"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"cdr_mult"				"1.5"
 			}
 		}
 	}

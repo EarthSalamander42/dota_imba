@@ -1,6 +1,6 @@
 #base heroes/bristleback/hero.txt
 #base heroes/enchantress/hero.txt
-//#base heroes/keeper_of_the_light/hero.txt
+#base heroes/keeper_of_the_light/hero.txt
 #base heroes/rubick/hero.txt
 #base heroes/shadow_shaman/hero.txt
 #base heroes/silencer/hero.txt
@@ -107,12 +107,15 @@
 
 		"Ability10"					"special_bonus_imba_antimage_3" //Blink cast point decrease
 		"Ability11"					"special_bonus_imba_antimage_7" //Mana Break attacks burn mana of nearby enemies in AoE, equal to a portion of the mana burned.
-		"Ability12"					"special_bonus_imba_antimage_2" //Spell Shield can be used even while stunned.
-		"Ability13"					"special_bonus_imba_antimage_6" //Mana Void explosion is delayed. Each point of mana lost is worth as 2 missing mana points
+		"Ability12"					"special_bonus_imba_antimage_6" //Mana Void explosion is delayed. Each point of mana lost is worth as 2 missing mana points
+		"Ability13"					"special_bonus_agility_15"
 		"Ability14"					"special_bonus_imba_antimage_1" //Blink now has charges
 		"Ability15"					"special_bonus_imba_antimage_5" //Blinking grants a 1 second magic immunity shield.
 		"Ability16"					"special_bonus_imba_antimage_8" //Mana Void counts missing mana from all targets in the AOE
 		"Ability17"					"special_bonus_imba_antimage_4" //% of target's missing mana added to Mana Break damage
+		
+		// Removed Abilities
+		// "Ability12"					"special_bonus_imba_antimage_2" //Spell Shield can be used even while stunned.
 	}
 
 	//=================================================================================================================
@@ -125,9 +128,7 @@
 		//Picking Screen
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
-
-		"ModelScale"				"1.08"
-
+		
 		"Ability1"					"imba_axe_berserkers_call"
 		"Ability2"					"imba_axe_battle_hunger"
 		"Ability3"					"imba_axe_counter_helix"
@@ -317,9 +318,6 @@
 	"npc_dota_hero_chaos_knight"
 	{
 		"override_hero"				"npc_dota_hero_chaos_knight"
-		"AttackDamageMin"			"29"
-		"AttackDamageMax"			"89"
-		"AttackRange"				"200"
 
 		//Picking Screen
 		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
@@ -487,7 +485,7 @@
 		"Ability14"					"special_bonus_unique_doom_5"
 		"Ability15"					"special_bonus_unique_doom_2"
 		"Ability16"					"special_bonus_unique_doom_1"
-		"Ability17"					"special_bonus_cleave_100"
+		"Ability17"					"special_bonus_cleave_130"
 	}
 
 	//=================================================================================================================
@@ -1317,7 +1315,6 @@
 	"npc_dota_hero_pangolier"
 	{
 		"override_hero"				"npc_dota_hero_pangolier"
-		"AttackRate"				"1.5"
 
 		//Picking Screen
 		"IsImba"					"1"
@@ -1325,7 +1322,8 @@
 
 		"Ability1"					"imba_pangolier_swashbuckle"
 		"Ability2"					"imba_pangolier_shield_crash"
-		"Ability3"					"imba_pangolier_heartpiercer"
+		//"Ability3"					"imba_pangolier_heartpiercer"
+		"Ability3"					"imba_pangolier_lucky_shot"
 		"Ability5"					"imba_pangolier_gyroshell_stop"
 		"Ability6"					"imba_pangolier_gyroshell"
 
@@ -1333,10 +1331,14 @@
 		"Ability11"					"special_bonus_imba_pangolier_2"
 		"Ability12"					"special_bonus_imba_pangolier_3"
 		"Ability13"					"special_bonus_imba_pangolier_4"
-		"Ability14"					"special_bonus_imba_pangolier_5"
-		"Ability15"					"special_bonus_imba_pangolier_6"
+		"Ability14"					"special_bonus_imba_pangolier_lucky_shot_status_resist"
+		"Ability15"					"special_bonus_strength_20"
 		"Ability16"					"special_bonus_imba_pangolier_7"
 		"Ability17"					"special_bonus_imba_pangolier_8"
+		
+		// Removed Talents
+		// "Ability14"					"special_bonus_imba_pangolier_5"	// Heartpiercer Damage
+		// "Ability15"					"special_bonus_imba_pangolier_6"	// Heartpiercer Tenacity
 	}
 
 	//=================================================================================================================
@@ -1345,7 +1347,6 @@
 	"npc_dota_hero_phantom_assassin"
 	{
 		"override_hero"				"npc_dota_hero_phantom_assassin"
-		"AttackRate"				"1.5"
 
 		//Picking Screen
 		"IsImba"					"1"
@@ -1736,14 +1737,18 @@
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_storm_spirit_ball_lightning"
 
-		"Ability10"					"special_bonus_imba_storm_spirit_8"
-		"Ability11"					"special_bonus_mp_regen_175"
-		"Ability12"					"special_bonus_unique_storm_spirit_5"
+		"Ability10"					"special_bonus_hp_275"
+		"Ability11"					"special_bonus_mp_regen_3"
+		"Ability12"					"special_bonus_imba_storm_spirit_6"
 		"Ability13"					"special_bonus_imba_storm_spirit_2"
-		"Ability14"					"special_bonus_unique_storm_spirit"
-		"Ability15"					"special_bonus_imba_storm_spirit_6"
+		"Ability14"					"special_bonus_imba_storm_spirit_1"
+		"Ability15"					"special_bonus_unique_storm_spirit_3"
 		"Ability16"					"special_bonus_imba_storm_spirit_7"
 		"Ability17"					"special_bonus_unique_storm_spirit_4"
+		
+		// Removed Talents
+		//"Ability10"				"special_bonus_imba_storm_spirit_8"		// Increased self move speed during Electric Vortex (obsolete)
+		//"Ability12"				"special_bonus_unique_storm_spirit_5"	// Increased Static Remnant damage; didn't even work
 	}
 
 	//=================================================================================================================
@@ -1867,6 +1872,8 @@
 	"npc_dota_hero_tusk"
 	{
 		"override_hero"	"npc_dota_hero_tusk"	
+	
+		"AttributePrimary"	"DOTA_ATTRIBUTE_STRENGTH"
 	
 		"Ability1"		"tusk_ice_shards"
 		"Ability2"		"tusk_snowball"

@@ -712,7 +712,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"1700"
+		"ItemCost"						"1800"
 		"ItemShopTags"					""
 
 		// Recipe
@@ -749,7 +749,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"5375"
+		"ItemCost"						"5355"
 		"ItemShopTags"					"agi;int;str;armor;regen_health;boost_health;move_speed;boost_mana;mana_pool"
 		"ItemQuality"					"rare"
 		"ItemAliases"					"guardian greaves"
@@ -13338,7 +13338,7 @@
 
 		// Stats		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"16"
+		"AbilityCooldown"				"18"
 		"AbilityCastRange"				"1400"
 		"AbilityCastPoint"				"0.0"
 		"AbilitySharedCooldown"			"atos"
@@ -14416,7 +14416,7 @@
 		
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"2900"
+		"ItemCost"						"1300"
 		"ItemShopTags"					""
 		
 		// Recipe
@@ -14452,7 +14452,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"8800"
+		"ItemCost"						"7200"
 		"ItemQuality"					"artifact"
 		
 		"ItemShopTags"					"str;agi;int;regen_health;armor;hard_to_tag"
@@ -14502,12 +14502,12 @@
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"prism_bonus_magic_dmg"	"-120"
+				"prism_bonus_magic_dmg"	"-60"
 			}
 			"09"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"tooltip_prism_bonus_magic_dmg"		"120"
+				"tooltip_prism_bonus_magic_dmg"		"60"
 			}
 		}
 	}
@@ -14682,8 +14682,8 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"1800"
 		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"40.0"
-        "AbilityManaCost"               "75"
+		"AbilityCooldown"				"0.0"	// 40.0
+        "AbilityManaCost"               "0"		// 0
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -14738,5 +14738,109 @@
             } 
         }
 	}
-	//next free ID: 2329
+	
+	//=================================================================================================================
+	// Recipe: Armlet of Dementor
+	//=================================================================================================================
+	"item_recipe_imba_armlet_of_dementor"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"custom/imba_recipe"
+		"Model"							"models/props_gameplay/recipe.mdl"		
+		
+		"ID"							"2329"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"150"
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_armlet_of_dementor"
+		"ItemRequirements"
+		{
+			"01"						"item_imba_nether_wand;item_void_stone;item_cloak"
+		}
+	}
+	
+	//=================================================================================================================
+	// Armlet of Dementor
+	//=================================================================================================================
+	"item_imba_armlet_of_dementor"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_lua"
+		"ScriptFile"					"components/items/item_armlet_of_dementor.lua"
+		"AbilityTextureName"			"custom/armlet_of_dementor_inactive"
+		
+		"ID"							"2330"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		// Technically should have DOTA_ABILITY_BEHAVIOR_TOGGLE but I don't want it to be able to toggle off during CD so...
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"5.0"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"2800"
+		"ItemShopTags"					"hard_to_tag"
+		"ItemQuality"					"rare"
+		"ItemAliases"					"armlet of the dementor;dementor;mana armlet;marmlet"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+		"ShouldBeSuggested"				"1"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_spell_amp"		"10"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_spell_cd"		"10"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_magic_res"		"15"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_mana_regen"		"5"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mind_bonus_int"		"30"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mind_bonus_magic_res"	"15"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mind_bonus_spell_amp"	"15"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mind_mana_drain_mult"	"2"
+			}
+		}
+	}
+	
+	//next free ID: 2331
 }

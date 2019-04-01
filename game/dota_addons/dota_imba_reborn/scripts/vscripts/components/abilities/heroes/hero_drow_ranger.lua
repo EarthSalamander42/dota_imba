@@ -1390,6 +1390,8 @@ function modifier_imba_marksmanship:DeclareFunctions()
 		MODIFIER_PROPERTY_ATTACK_RANGE_BONUS,
 		MODIFIER_EVENT_ON_ATTACK_START,
 		MODIFIER_EVENT_ON_ATTACK_LANDED,
+		
+		MODIFIER_PROPERTY_PROJECTILE_NAME
 	}
 end
 
@@ -1427,6 +1429,12 @@ function modifier_imba_marksmanship:GetModifierIgnorePhysicalArmor()
 end
 --]]
 
+function modifier_imba_marksmanship:GetModifierProjectileName()
+	if self:GetStackCount() == 1 then
+		return "particles/units/heroes/hero_drow/drow_marksmanship_attack.vpcf"
+	end
+end
+
 function modifier_imba_marksmanship:OnAttackStart(keys)
 	if IsServer() then
 		local target = keys.target
@@ -1435,9 +1443,9 @@ function modifier_imba_marksmanship:OnAttackStart(keys)
 		-- Only apply on caster's attacks
 		if self.caster == attacker then
 			-- Instantly kill creeps if the luck is with you
-			if RandomInt(1, 100) < self:GetAbility():GetSpecialValueFor("proc_chance") and self.marksmanship_enabled and not self.caster:PassivesDisabled() and (not target:IsBuilding() and not target:IsOther() and attacker:GetTeamNumber() ~= target:GetTeamNumber()) then
+			if not self.caster:IsIllusion() and RandomInt(1, 100) < self:GetAbility():GetSpecialValueFor("proc_chance") and self.marksmanship_enabled and not self.caster:PassivesDisabled() and (not target:IsBuilding() and not target:IsOther() and attacker:GetTeamNumber() ~= target:GetTeamNumber()) then
 				self:SetStackCount(1)
-				SetArrowAttackProjectile(attacker, false, true)
+				--SetArrowAttackProjectile(attacker, false, true)
 			end
 		end
 	end
@@ -1445,7 +1453,7 @@ end
 
 function modifier_imba_marksmanship:GetModifierTotalDamageOutgoing_Percentage( params )
 	if IsServer() then
-		if params.target and not params.inflictor and self:GetStackCount() == 1 then
+		if not self.caster:IsIllusion() and params.target and not params.inflictor and self:GetStackCount() == 1 then
 			if params.target:IsBuilding() or params.target:IsOther() or params.attacker:GetTeamNumber() == params.target:GetTeamNumber() then
 				-- ignore buildings and allies
 			elseif params.target:IsConsideredHero() or params.target:IsRoshan() then

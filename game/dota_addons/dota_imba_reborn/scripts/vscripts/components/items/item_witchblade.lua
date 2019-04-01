@@ -244,8 +244,8 @@ end
 function modifier_item_imba_witchblade:GetModifierProcAttack_BonusDamage_Physical(keys)
 	if not IsServer() then return end
 
-	-- Only apply if the attacker is the caster / non-ally team / target has mana / target is not spell immune / only applies to one item / doesn't have AM's mana break
-	if keys.attacker == self.caster and keys.attacker:GetTeam() ~= keys.target:GetTeam() and keys.target:GetMaxMana() > 0 and not keys.target:IsMagicImmune() and self.caster:FindAllModifiersByName(self:GetName())[1] == self and not self.caster:HasModifier("modifier_imba_mana_break_passive") then
+	-- Only apply if the attacker is the caster / non-ally team / target has mana / target is not spell immune / only applies to one item
+	if keys.attacker == self.caster and keys.attacker:GetTeam() ~= keys.target:GetTeam() and keys.target:GetMaxMana() > 0 and not keys.target:IsMagicImmune() and self.caster:FindAllModifiersByName(self:GetName())[1] == self then
 
 		-- Apply mana burn particle effect
 		local particle = ParticleManager:CreateParticle("particles/item/diffusal/diffusal_manaburn_3.vpcf", PATTACH_ABSORIGIN_FOLLOW, keys.target)
@@ -263,7 +263,12 @@ function modifier_item_imba_witchblade:GetModifierProcAttack_BonusDamage_Physica
 		else
 			mana_burn = self.feedback_mana_burn
 		end
-
+		
+		-- Anti Mage Compromise?...
+		if self.caster:HasAbility("imba_antimage_mana_break") then
+			mana_burn = math.max(mana_burn - self.caster:FindAbilityByName("imba_antimage_mana_break"):GetSpecialValueFor("base_mana_burn"), 0)
+		end
+		
 		-- Get the target's mana, to check how much we're burning him
 		local target_mana = keys.target:GetMana()
 

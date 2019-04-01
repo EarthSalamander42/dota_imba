@@ -492,7 +492,10 @@ function modifier_item_imba_bloodthorn_attacker_crit:OnAttackLanded(keys)
 
 			-- Increase the crit damage count
 			local debuff_modifier = keys.target:FindModifierByName("modifier_item_imba_bloodthorn_debuff")
-			debuff_modifier.target_crit_multiplier = debuff_modifier.target_crit_multiplier + self:GetAbility():GetSpecialValueFor("crit_mult_increase")
+			
+			if debuff_modifier then
+				debuff_modifier.target_crit_multiplier = debuff_modifier.target_crit_multiplier + self:GetAbility():GetSpecialValueFor("crit_mult_increase")
+			end
 		end
 	end
 end

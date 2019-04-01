@@ -177,8 +177,8 @@ function modifier_item_imba_diffusal_unique:GetModifierProcAttack_BonusDamage_Ph
 
 		-- Only apply if the attacker is the caster
 		if attacker == self.caster then
-			-- If the attacker has higher level diffusal blades or AM's mana break, do nothing
-			if self.caster:HasModifier("modifier_item_imba_diffusal_2_unique") or self.caster:HasModifier("modifier_item_imba_witchblade") or self.caster:HasModifier("modifier_imba_mana_break_passive") then
+			-- If the attacker has higher level diffusal blades, do nothing
+			if self.caster:HasModifier("modifier_item_imba_diffusal_2_unique") or self.caster:HasModifier("modifier_item_imba_witchblade") then
 				return nil
 			end
 
@@ -213,6 +213,11 @@ function modifier_item_imba_diffusal_unique:GetModifierProcAttack_BonusDamage_Ph
 				mana_burn = self.illusion_mana_burn
 			else
 				mana_burn = self.mana_burn
+			end
+
+			-- Anti Mage Compromise?...
+			if self.caster:HasAbility("imba_antimage_mana_break") then
+				mana_burn = math.max(mana_burn - self.caster:FindAbilityByName("imba_antimage_mana_break"):GetSpecialValueFor("base_mana_burn"), 0)
 			end
 
 			-- Get the target's mana, to check how much we're burning him
@@ -512,7 +517,7 @@ function modifier_item_imba_diffusal_2_unique:GetModifierProcAttack_BonusDamage_
 		-- Only apply if the attacker is the caster
 		if attacker == self.caster then
 			-- If the attacker has higher level diffusal blades or AM's mana break, do nothing
-			if self.caster:HasModifier("modifier_item_imba_witchblade") or self.caster:HasModifier("modifier_imba_mana_break_passive") then
+			if self.caster:HasModifier("modifier_item_imba_witchblade") then
 				return nil
 			end
 
@@ -547,6 +552,11 @@ function modifier_item_imba_diffusal_2_unique:GetModifierProcAttack_BonusDamage_
 				mana_burn = self.illusion_mana_burn
 			else
 				mana_burn = self.mana_burn
+			end
+
+			-- Anti Mage Compromise?...
+			if self.caster:HasAbility("imba_antimage_mana_break") then
+				mana_burn = math.max(mana_burn - self.caster:FindAbilityByName("imba_antimage_mana_break"):GetSpecialValueFor("base_mana_burn"), 0)
 			end
 
 			-- Get the target's mana, to check how much we're burning him

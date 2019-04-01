@@ -81,12 +81,13 @@ function imba_wisp_tether:OnSpellStart()
 
 	caster:AddNewModifier(self:GetCaster(), self, "modifier_imba_wisp_tether", {})
 
-	local self_regen_bonus = caster:AddNewModifier(self:GetCaster(), self, "modifier_imba_wisp_tether_bonus_regen", {})
-	self_regen_bonus:SetStackCount(regen_bonus)
+	-- Why are there always so many stupid hidden OP buffs programmed in I'm commenting these out
+	-- local self_regen_bonus = caster:AddNewModifier(self:GetCaster(), self, "modifier_imba_wisp_tether_bonus_regen", {})
+	-- self_regen_bonus:SetStackCount(regen_bonus)
 	local tether_modifier = self:GetCursorTarget():AddNewModifier(self:GetCaster(), ability, "modifier_imba_wisp_tether_ally", {})
 	tether_modifier:SetStackCount(movespeed)
-	local target_regen_bonus = self:GetCursorTarget():AddNewModifier(self:GetCaster(), ability, "modifier_imba_wisp_tether_bonus_regen", {})
-	target_regen_bonus:SetStackCount(regen_bonus)
+	-- local target_regen_bonus = self:GetCursorTarget():AddNewModifier(self:GetCaster(), ability, "modifier_imba_wisp_tether_bonus_regen", {})
+	-- target_regen_bonus:SetStackCount(regen_bonus)
 
 	if caster:HasModifier("modifier_imba_wisp_overcharge") then
 		if self.target:HasModifier("modifier_imba_wisp_overcharge") then 
@@ -94,6 +95,11 @@ function imba_wisp_tether:OnSpellStart()
 		end
 		
 		imba_wisp_overcharge:AddOvercharge(self:GetCaster(), self.target)
+	end
+
+	--7.21 version
+	if caster:HasAbility("imba_wisp_overcharge_721") and caster:HasModifier("modifier_imba_wisp_overcharge_721") then
+		self.target:AddNewModifier(caster, caster:FindAbilityByName("imba_wisp_overcharge_721"), "modifier_imba_wisp_overcharge_721", {})
 	end
 
 	if caster:HasTalent("special_bonus_imba_wisp_2") then
@@ -157,10 +163,12 @@ end
 
 function modifier_imba_wisp_tether:DeclareFunctions()
 	local decFuncs = {
-		MODIFIER_EVENT_ON_HEALTH_GAINED,
+		--MODIFIER_EVENT_ON_HEALTH_GAINED,	-- Why does this not work at full HP but the mana one does
 		MODIFIER_EVENT_ON_MANA_GAINED,
 		MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE,
-		MODIFIER_PROPERTY_MOVESPEED_MAX
+		MODIFIER_PROPERTY_MOVESPEED_MAX,
+		
+		MODIFIER_EVENT_ON_HEAL_RECEIVED
 	}
 
 	return decFuncs
@@ -210,13 +218,13 @@ function modifier_imba_wisp_tether:OnIntervalThink()
 	end
 end
 
-function modifier_imba_wisp_tether:OnHealthGained(keys)
-	if keys.unit == self:GetParent() then
-		self.target:Heal(keys.gain * self.tether_heal_amp, self:GetAbility())
-		-- in order to avoid spam in "OnGained" we group it up in total_gained. Value is sent and reset each 1s
-		self.total_gained_health = self.total_gained_health + keys.gain
-	end
-end
+-- function modifier_imba_wisp_tether:OnHealthGained(keys)
+	-- if keys.unit == self:GetParent() then
+		-- self.target:Heal(keys.gain * self.tether_heal_amp, self:GetAbility())
+		-- -- in order to avoid spam in "OnGained" we group it up in total_gained. Value is sent and reset each 1s
+		-- self.total_gained_health = self.total_gained_health + keys.gain
+	-- end
+-- end
 
 function modifier_imba_wisp_tether:OnManaGained(keys)
 	if keys.unit == self:GetParent() then
@@ -235,20 +243,28 @@ function modifier_imba_wisp_tether:GetModifierMoveSpeed_Max()
 	return 3000
 end
 
+function modifier_imba_wisp_tether:OnHealReceived(keys)
+	if keys.unit == self:GetParent() then
+		self.target:Heal(keys.gain * self.tether_heal_amp, self:GetAbility())
+		-- in order to avoid spam in "OnGained" we group it up in total_gained. Value is sent and reset each 1s
+		self.total_gained_health = self.total_gained_health + keys.gain
+	end
+end
+
 function modifier_imba_wisp_tether:OnRemoved()
 	if IsServer() then
 		if self:GetParent():HasModifier("modifier_imba_wisp_tether_latch") then
 			self:GetParent():RemoveModifierByName("modifier_imba_wisp_tether_latch")
 		end
 
-		if self:GetParent():HasModifier("modifier_imba_wisp_tether_bonus_regen") then
-			self:GetParent():RemoveModifierByName("modifier_imba_wisp_tether_bonus_regen")
-		end
+		-- if self:GetParent():HasModifier("modifier_imba_wisp_tether_bonus_regen") then
+			-- self:GetParent():RemoveModifierByName("modifier_imba_wisp_tether_bonus_regen")
+		-- end
 
 		if self.target:HasModifier("modifier_imba_wisp_tether_ally") then
 			self.target:RemoveModifierByName("modifier_imba_wisp_overcharge")
 			self.target:RemoveModifierByName("modifier_imba_wisp_tether_ally")
-			self.target:RemoveModifierByName("modifier_imba_wisp_tether_bonus_regen")
+			--self.target:RemoveModifierByName("modifier_imba_wisp_tether_bonus_regen")
 		end
 
 		if self:GetCaster():HasTalent("special_bonus_imba_wisp_2") then
@@ -381,6 +397,13 @@ function modifier_imba_wisp_tether_ally:OnRemoved()
 		self:GetCaster():RemoveModifierByName("modifier_imba_wisp_tether_slow_immune")
 		self:GetParent():RemoveModifierByName("modifier_imba_wisp_tether_ally_attack")
 		self:GetCaster():RemoveModifierByName("modifier_imba_wisp_tether")
+		
+		--7.21 version
+		local overcharge_modifier = self:GetParent():FindModifierByNameAndCaster("modifier_imba_wisp_overcharge_721", self:GetCaster())
+		if overcharge_modifier then
+			overcharge_modifier:Destroy()
+		end
+		
 		self:GetParent():StopSound("Hero_Wisp.Tether.Target")
 		ParticleManager:DestroyParticle(self.pfx, false)
 		ParticleManager:ReleaseParticleIndex(self.pfx)
@@ -546,6 +569,10 @@ LinkLuaModifier("modifier_imba_wisp_spirits_slow", "components/abilities/heroes/
 LinkLuaModifier("modifier_imba_wisp_spirit_damage_handler", "components/abilities/heroes/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_wisp_spirits_true_sight", "components/abilities/heroes/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
 
+function imba_wisp_spirits:GetCooldown(level)
+	return self.BaseClass.GetCooldown(self, level) * math.max(self:GetCaster():FindTalentValue("special_bonus_imba_wisp_10", "cdr_mult"), 1)
+end
+
 function imba_wisp_spirits:OnSpellStart()
 	if IsServer() then
 		self.caster 					= self:GetCaster()
@@ -568,6 +595,14 @@ function imba_wisp_spirits:OnSpellStart()
 		local vision_duration 			= self.ability:GetSpecialValueFor("vision_duration")
 		local slow_duration 			= self.ability:GetSpecialValueFor("slow_duration")
 		local damage_interval			= self.ability:GetSpecialValueFor("damage_interval")
+
+		-- Large Hadron Collider talent
+		if self.caster:HasTalent("special_bonus_imba_wisp_10") then
+			spirit_movement_rate 	= spirit_movement_rate		* math.max(self.caster:FindTalentValue("special_bonus_imba_wisp_10"), 1)
+			spirit_summon_interval	= spirit_summon_interval	/ math.max(self.caster:FindTalentValue("special_bonus_imba_wisp_10"), 1)
+			max_spirits				= max_spirits				* math.max(self.caster:FindTalentValue("special_bonus_imba_wisp_10"), 1)
+			spirit_turn_rate		= spirit_turn_rate			* math.max(self.caster:FindTalentValue("special_bonus_imba_wisp_10"), 1)
+		end
 
 		self.spirits_movementFactor				= 1	
 		self.ability.spirits_spiritsSpawned		= {}
@@ -832,7 +867,6 @@ function modifier_imba_wisp_spirits:Explode(caster, spirit, explosion_radius, ex
 			if enemy ~= nil then
 				damage_table.victim = enemy
 
-				-- getting random lua errors here... not sure whats up
 				ApplyDamage(damage_table)
 			end
 		end
@@ -1044,16 +1078,16 @@ function modifier_imba_wisp_spirit_handler:OnHit(caster, spirit, enemies_hit, cr
 
 			damage_table.victim = enemy
 
-			if enemy:IsHero() then
+			if enemy:IsConsideredHero() and not enemy:IsIllusion() then
 				enemy:AddNewModifier(caster, ability, "modifier_imba_wisp_spirits_hero_hit", {duration = 0.03, slow_duration = slow_duration, slow = slow})
 				if caster:HasModifier("modifier_imba_wisp_swap_spirits_disarm") then
-					enemy:AddNewModifier(caster, ability, "modifier_disarmed", {duration=ability:GetSpecialValueFor("spirit_debuff_duration")})
+					enemy:AddNewModifier(caster, ability, "modifier_disarmed", {duration=ability:GetSpecialValueFor("spirit_debuff_duration")}):SetDuration(ability:GetSpecialValueFor("spirit_debuff_duration") * (1 - enemy:GetStatusResistance()), true)
 				elseif caster:HasModifier("modifier_imba_wisp_swap_spirits_silence") then
-					enemy:AddNewModifier(caster, ability, "modifier_silence", {duration=ability:GetSpecialValueFor("spirit_debuff_duration")})
+					enemy:AddNewModifier(caster, ability, "modifier_silence", {duration=ability:GetSpecialValueFor("spirit_debuff_duration")}):SetDuration(ability:GetSpecialValueFor("spirit_debuff_duration") * (1 - enemy:GetStatusResistance()), true)
 				end
 
 				hit_hero = true
-				hit = true
+				--hit = true
 			else
 				if spirit.hit_table[enemy] == nil then
 					spirit.hit_table[enemy] = true
@@ -1503,6 +1537,11 @@ imba_wisp_relocate = class({})
 LinkLuaModifier("modifier_imba_wisp_relocate", "components/abilities/heroes/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_wisp_relocate_cast_delay", "components/abilities/heroes/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_wisp_relocate_talent", "components/abilities/heroes/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
+
+function imba_wisp_relocate:GetCooldown(level)
+	return self.BaseClass.GetCooldown(self, level) - self:GetCaster():FindTalentValue("special_bonus_imba_wisp_9")
+end
+
 function imba_wisp_relocate:GetBehavior()
 	if IsServer() then
 		return DOTA_ABILITY_BEHAVIOR_UNIT_TARGET + DOTA_ABILITY_BEHAVIOR_OPTIONAL_POINT
@@ -1538,7 +1577,7 @@ function imba_wisp_relocate:OnSpellStart()
 		-- remember where too return
 		ability.relocate_target_point = target_point
 
-		local pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_wisp/wisp_relocate_marker_endpoint.vpcf", PATTACH_CUSTOMORIGIN, caster)
+		local pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_wisp/wisp_relocate_marker_endpoint.vpcf", PATTACH_WORLDORIGIN, caster)
 		ParticleManager:SetParticleControl(pfx, 0, target_point)
 
 		-- Store the particle ID
@@ -1631,7 +1670,7 @@ function modifier_imba_wisp_relocate:OnCreated(params)
 		self.return_time	= params.return_time
 
 		-- Create marker at origin
-		self.caster_origin_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_wisp/wisp_relocate_marker.vpcf", PATTACH_CUSTOMORIGIN, caster)
+		self.caster_origin_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_wisp/wisp_relocate_marker.vpcf", PATTACH_WORLDORIGIN, caster)
 		ParticleManager:SetParticleControl(self.caster_origin_pfx, 0, caster:GetAbsOrigin())
 
 		-- Add teleport effect
@@ -1731,5 +1770,222 @@ function imba_wisp_relocate_break:OnSpellStart()
 	if IsServer() then
 		local caster = self:GetCaster()
 		caster:RemoveModifierByName("modifier_imba_wisp_relocate")
+	end
+end
+
+-------------------------------
+-- OVERCHARGE (7.21 VERSION) --
+-------------------------------
+
+LinkLuaModifier("modifier_imba_wisp_overcharge_721", "components/abilities/heroes/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_wisp_overcharge_721_aura", "components/abilities/heroes/hero_wisp.lua", LUA_MODIFIER_MOTION_NONE)
+
+imba_wisp_overcharge_721				= class({})
+modifier_imba_wisp_overcharge_721		= class({})
+modifier_imba_wisp_overcharge_721_aura	= class({})
+
+function imba_wisp_overcharge_721:OnSpellStart()
+	if not IsServer() then return end
+
+	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_wisp_overcharge_721", {duration = self:GetSpecialValueFor("duration")})
+end
+
+----------------------------------------
+-- OVERCHARGE MODIFIER (7.21 VERSION) --
+----------------------------------------
+
+function modifier_imba_wisp_overcharge_721:IsPurgable()	return false end
+
+function modifier_imba_wisp_overcharge_721:GetEffectName()
+	return "particles/units/heroes/hero_wisp/wisp_overcharge.vpcf"
+end
+
+function modifier_imba_wisp_overcharge_721:OnCreated()
+	self.ability			= self:GetAbility()
+	self.caster				= self:GetCaster()
+	self.parent				= self:GetParent()
+	
+	-- AbilitySpecials
+	self.bonus_attack_speed		= self.ability:GetSpecialValueFor("bonus_attack_speed")
+	self.bonus_damage_pct		= self.ability:GetSpecialValueFor("bonus_damage_pct") - self.caster:FindTalentValue("special_bonus_imba_wisp_4")
+	
+	self.bonus_missile_speed	= self.ability:GetSpecialValueFor("bonus_missile_speed")
+	self.bonus_cast_speed		= self.ability:GetSpecialValueFor("bonus_cast_speed")
+	self.bonus_attack_range		= self.ability:GetSpecialValueFor("bonus_attack_range")
+	
+	if not IsServer() then return end
+	
+	local tether_ability = self:GetCaster():FindAbilityByName("imba_wisp_tether")
+	
+	if tether_ability and tether_ability.target and not tether_ability.target:HasModifier("modifier_imba_wisp_overcharge_721") then
+		tether_ability.target:AddNewModifier(self.caster, self.ability, "modifier_imba_wisp_overcharge_721", {})
+	end
+end
+
+function modifier_imba_wisp_overcharge_721:OnRefresh()
+	self:OnCreated()
+end
+
+function modifier_imba_wisp_overcharge_721:OnDestroy()
+	if not IsServer() then return end
+	
+	local tether_ability = self:GetCaster():FindAbilityByName("imba_wisp_tether")
+	
+	if tether_ability and tether_ability.target then
+		local overcharge_modifier = tether_ability.target:FindModifierByNameAndCaster("modifier_imba_wisp_overcharge_721", self:GetCaster())
+	
+		if overcharge_modifier then
+			overcharge_modifier:Destroy()
+		end
+	end
+end
+
+function modifier_imba_wisp_overcharge_721:DeclareFunctions()
+	local decFuncs = {
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
+		
+		-- IMBAfication: Fundamental Shift
+		MODIFIER_PROPERTY_PROJECTILE_SPEED_BONUS,
+		MODIFIER_PROPERTY_CASTTIME_PERCENTAGE,
+		MODIFIER_PROPERTY_ATTACK_RANGE_BONUS,
+	}
+
+	return decFuncs
+end
+
+function modifier_imba_wisp_overcharge_721:GetModifierAttackSpeedBonus_Constant()
+	return self.bonus_attack_speed
+end
+
+function modifier_imba_wisp_overcharge_721:GetModifierIncomingDamage_Percentage()
+	return self.bonus_damage_pct
+end
+
+function modifier_imba_wisp_overcharge_721:GetModifierProjectileSpeedBonus()
+	return self.bonus_missile_speed
+end
+
+function modifier_imba_wisp_overcharge_721:GetModifierPercentageCasttime()
+	return self.bonus_cast_speed
+end
+
+function modifier_imba_wisp_overcharge_721:GetModifierAttackRangeBonus()
+	return self.bonus_attack_range
+end
+
+-- Scepter stuff
+function modifier_imba_wisp_overcharge_721:IsAura() 					return self:GetParent() == self:GetCaster() and self:GetCaster():HasScepter() end
+function modifier_imba_wisp_overcharge_721:IsAuraActiveOnDeath() 		return false end
+
+function modifier_imba_wisp_overcharge_721:GetAuraRadius()				return self:GetAbility():GetSpecialValueFor("scepter_radius") end
+function modifier_imba_wisp_overcharge_721:GetAuraSearchFlags()			return DOTA_UNIT_TARGET_FLAG_NONE end
+function modifier_imba_wisp_overcharge_721:GetAuraSearchTeam()			return DOTA_UNIT_TARGET_TEAM_FRIENDLY end
+function modifier_imba_wisp_overcharge_721:GetAuraSearchType()			return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC end
+function modifier_imba_wisp_overcharge_721:GetModifierAura()			return "modifier_imba_wisp_overcharge_721_aura" end
+
+function modifier_imba_wisp_overcharge_721:GetAuraEntityReject(hEntity)	return hEntity:HasModifier("modifier_imba_wisp_overcharge_721") end
+---------------------------------------------
+-- OVERCHARGE AURA MODIFIER (7.21 VERSION) --
+---------------------------------------------
+
+function modifier_imba_wisp_overcharge_721_aura:IsPurgable()	return false end
+
+function modifier_imba_wisp_overcharge_721_aura:GetEffectName()
+	return "particles/units/heroes/hero_wisp/wisp_overcharge.vpcf"
+end
+
+function modifier_imba_wisp_overcharge_721_aura:OnCreated()
+	self.ability			= self:GetAbility()
+	self.caster				= self:GetCaster()
+	self.parent				= self:GetParent()
+	
+	-- AbilitySpecials
+	self.scepter_efficiency		= self.ability:GetSpecialValueFor("scepter_efficiency")
+	
+	self.bonus_attack_speed		= self.ability:GetSpecialValueFor("bonus_attack_speed")		* self.scepter_efficiency
+	self.bonus_damage_pct		= self.ability:GetSpecialValueFor("bonus_damage_pct") 		- self.caster:FindTalentValue("special_bonus_imba_wisp_4") * self.scepter_efficiency
+	
+	self.bonus_missile_speed	= self.ability:GetSpecialValueFor("bonus_missile_speed")	* self.scepter_efficiency
+	self.bonus_cast_speed		= self.ability:GetSpecialValueFor("bonus_cast_speed")		* self.scepter_efficiency
+	self.bonus_attack_range		= self.ability:GetSpecialValueFor("bonus_attack_range")		* self.scepter_efficiency
+end
+
+function modifier_imba_wisp_overcharge_721_aura:OnRefresh()
+	self:OnCreated()
+end
+
+function modifier_imba_wisp_overcharge_721_aura:DeclareFunctions()
+	local decFuncs = {
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
+		
+		-- IMBAfication: Fundamental Shift
+		MODIFIER_PROPERTY_PROJECTILE_SPEED_BONUS,
+		MODIFIER_PROPERTY_CASTTIME_PERCENTAGE,
+		MODIFIER_PROPERTY_ATTACK_RANGE_BONUS,
+	}
+
+	return decFuncs
+end
+
+function modifier_imba_wisp_overcharge_721_aura:GetModifierAttackSpeedBonus_Constant()
+	return self.bonus_attack_speed
+end
+
+function modifier_imba_wisp_overcharge_721_aura:GetModifierIncomingDamage_Percentage()
+	return self.bonus_damage_pct
+end
+
+function modifier_imba_wisp_overcharge_721_aura:GetModifierProjectileSpeedBonus()
+	return self.bonus_missile_speed
+end
+
+function modifier_imba_wisp_overcharge_721_aura:GetModifierPercentageCasttime()
+	return self.bonus_cast_speed
+end
+
+function modifier_imba_wisp_overcharge_721_aura:GetModifierAttackRangeBonus()
+	return self.bonus_attack_range
+end
+
+-- Client-side helper functions
+LinkLuaModifier("modifier_special_bonus_imba_wisp_4", "components/abilities/heroes/hero_wisp", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_wisp_9", "components/abilities/heroes/hero_wisp", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_wisp_10", "components/abilities/heroes/hero_wisp", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_wisp_4	= class({})
+
+function modifier_special_bonus_imba_wisp_4:IsHidden() 			return true end
+function modifier_special_bonus_imba_wisp_4:IsPurgable() 		return false end
+function modifier_special_bonus_imba_wisp_4:RemoveOnDeath() 	return false end
+
+modifier_special_bonus_imba_wisp_9	= class({})
+
+function modifier_special_bonus_imba_wisp_9:IsHidden() 			return true end
+function modifier_special_bonus_imba_wisp_9:IsPurgable() 		return false end
+function modifier_special_bonus_imba_wisp_9:RemoveOnDeath() 	return false end
+
+modifier_special_bonus_imba_wisp_10	= class({})
+
+function modifier_special_bonus_imba_wisp_10:IsHidden() 		return true end
+function modifier_special_bonus_imba_wisp_10:IsPurgable() 		return false end
+function modifier_special_bonus_imba_wisp_10:RemoveOnDeath() 	return false end
+
+function imba_wisp_spirits:OnOwnerSpawned()
+	if self:GetCaster():HasTalent("special_bonus_imba_wisp_10") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_wisp_10") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_wisp_10"), "modifier_special_bonus_imba_wisp_10", {})
+	end
+end
+
+function imba_wisp_overcharge_721:OnOwnerSpawned()
+	if self:GetCaster():HasTalent("special_bonus_imba_wisp_4") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_wisp_4") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_wisp_4"), "modifier_special_bonus_imba_wisp_4", {})
+	end
+end
+
+function imba_wisp_relocate:OnOwnerSpawned()
+	if self:GetCaster():HasTalent("special_bonus_imba_wisp_9") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_wisp_9") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_wisp_9"), "modifier_special_bonus_imba_wisp_9", {})
 	end
 end

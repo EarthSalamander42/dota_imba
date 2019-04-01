@@ -612,6 +612,8 @@ function imba_antimage_spell_shield:OnSpellStart()
 		local shield_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_antimage/antimage_blink_end_glow.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
 		ParticleManager:ReleaseParticleIndex(shield_pfx)
 		caster:EmitSound("Hero_Antimage.Counterspell.Cast")
+		
+		caster:StartGesture(ACT_DOTA_CAST_ABILITY_3)
 	end
 end
 
@@ -828,7 +830,9 @@ end
 -- Initialize old-spell-checker
 function modifier_imba_spell_shield_buff_reflect:OnCreated( params )
 	if IsServer() then
-
+		self.particle = ParticleManager:CreateParticle("particles/units/heroes/hero_antimage/antimage_counter.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+		-- Random numbers
+		ParticleManager:SetParticleControl(self.particle, 1, Vector(150, 150, 150))
 	end
 end
 
@@ -863,6 +867,12 @@ function modifier_imba_spell_shield_buff_passive:OnIntervalThink()
 	end
 end
 
+function modifier_imba_spell_shield_buff_reflect:OnDestroy()
+	if IsServer() then
+		ParticleManager:DestroyParticle(self.particle, false)
+		ParticleManager:ReleaseParticleIndex(self.particle)
+	end
+end
 
 
 -- Scepter block Ready modifier
@@ -901,7 +911,7 @@ function modifier_imba_spellshield_scepter_recharge:IsHidden()
 end
 
 function modifier_imba_spellshield_scepter_recharge:IsPurgable() return false end
-function modifier_imba_spellshield_scepter_recharge:IsDebuff() return false end
+function modifier_imba_spellshield_scepter_recharge:IsDebuff() return true end
 function modifier_imba_spellshield_scepter_recharge:RemoveOnDeath() return false end
 
 

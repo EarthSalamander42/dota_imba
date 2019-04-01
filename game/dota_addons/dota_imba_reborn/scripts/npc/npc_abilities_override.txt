@@ -2167,7 +2167,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"duration"					"3.0 4.0 4.5"
+				"duration"					"3.0 4.0 5.0"
 			}
 			"02"
 			{
@@ -2909,11 +2909,15 @@
 	//=================================================================================================================
 	"chaos_knight_chaos_bolt"
 	{
-		"AbilityManaCost"				"140"
 		"AbilityCooldown"				"9"
 
 		"AbilitySpecial"
 		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"chaos_bolt_speed"		"1000"
+			}
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
@@ -2956,17 +2960,17 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"pull_distance"				"250 300 350 400"
+				"pull_distance"				"300 400 500 600"
 			}		
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"movement_slow"				"15 25 35 45"
+				"movement_slow"				"20 30 40 50"
 			}		
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"attack_slow"				"30 50 70 90"
+				"attack_slow"				"50 80 110 140"
 			}		
 		}
 	}
@@ -2976,12 +2980,19 @@
 	//=================================================================================================================
 	"chaos_knight_chaos_strike"
 	{
+		"AbilityCooldown"				"3"
+	
 		"AbilitySpecial"
 		{
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"crit_max"				"180 220 260 300"
+			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lifesteal"				"75 85 100 120"
+				"lifesteal"				"60 80 100 120"
 			}
 		}
 	}
@@ -2991,8 +3002,7 @@
 	//=================================================================================================================
 	"chaos_knight_phantasm"
 	{
-		"AbilityCooldown"				"130.0"
-		"AbilityManaCost"				"125 200 275"
+		"AbilityCooldown"				"130 120 110"
 
 		"AbilitySpecial"
 		{
@@ -3039,7 +3049,7 @@
 			"09"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"cooldown_scepter"			"90"
+				"cooldown_scepter"			"80"
 			}		
 		}
 	}
@@ -3261,7 +3271,7 @@
 	//=================================================================================================================
 	"rattletrap_battery_assault"
 	{
-		"AbilityCooldown"				"32 24 18 14"
+		"AbilityCooldown"				"32 26 20 14"
 		"AbilityDamage"					"35 75 115 155"
 
 		"AbilitySpecial"
@@ -3367,7 +3377,7 @@
 	//=================================================================================================================
 	"rattletrap_rocket_flare"
 	{
-		"AbilityCooldown"			"20 16.6 13.3 11"
+		"AbilityCooldown"			"20 17 14 11"
 		"AbilityDamage"				"90 180 270 360"
 		"MaxLevel"					"4"
 
@@ -3397,26 +3407,11 @@
 	}
 
 	//=================================================================================================================
-	//	Clockwerk: bonus Rocket Flare damage
-	//=================================================================================================================
-	"special_bonus_unique_clockwerk_2"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"75"
-			}
-		}
-	}
-
-	//=================================================================================================================
 	// Clockwerk: Hookshot
 	//=================================================================================================================
 	"rattletrap_hookshot"
 	{
-		"AbilityCooldown"			"70 40 30"
+		"AbilityCooldown"			"70 50 30"
 		"AbilityCastRange"			"2000 4000 6000"
 		"MaxLevel"					"3"
 		
@@ -3435,7 +3430,7 @@
 			"03"
 			{	
 				"var_type"			"FIELD_FLOAT"
-				"duration"			"1.0 2.0 2.5"
+				"duration"			"1.5 2.0 2.5"
 			}
 			"04"
 			{	
@@ -3859,7 +3854,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_gold"			"30 90 140 180"
+				"bonus_gold"			"30 80 130 180"
 				"LinkedSpecialBonus"	"special_bonus_unique_doom_3"
 			}
 			"02"
@@ -3958,7 +3953,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"burn_damage_pct"		"1.25 3.75 5.25 5.75"
+				"burn_damage_pct"		"1.25 2.75 4.25 5.75"
 				"LinkedSpecialBonus"	"special_bonus_unique_doom_1"
 			}
 			"03"
@@ -3970,21 +3965,6 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"ministun_duration"		"0.4 0.6 0.8 1.0"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	//	Doom: bonus Infernal Blade damage per second
-	//=================================================================================================================
-	"special_bonus_unique_doom_1"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"value"					"3"
 			}
 		}
 	}
@@ -4845,21 +4825,6 @@
 				"var_type"						"FIELD_INTEGER"
 				"burn_damage"					"8 13 18 23"
 				"LinkedSpecialBonus"			"special_bonus_unique_huskar_2"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Huskar: bonus Burning Spear DPS
-	//=================================================================================================================
-	"special_bonus_unique_huskar_2"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"value"							"10"
 			}
 		}
 	}
@@ -6010,7 +5975,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_per_unit"		"15 25 32 36"
+				"damage_per_unit"		"18 24 30 36"
 			}
 			"03"
 			{
@@ -6373,12 +6338,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"slow_steps"			"-70 -60 -50 -40"
+				"slow_steps"			"-70 -70 -60 -50 -40 -30 -20 -10" 
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"heal_percent"			"50 67 83 100"
+				"heal_percent"			"50 60 70 80"
 				"LinkedSpecialBonus"	"special_bonus_unique_lifestealer_2"
 			}
 			"03"
@@ -6404,7 +6369,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"180 360 520"
+				"damage"				"180 360 540"
 			}
 		}
 	}
@@ -8783,7 +8748,7 @@
 	//=================================================================================================================
 	"spirit_breaker_charge_of_darkness"
 	{
-		"AbilityCooldown"				"12.0 11.0 10.0 9.0"
+		"AbilityCooldown"				"11.0 10.5 10 9.5"
 
 		"AbilitySpecial"
 		{
@@ -9006,7 +8971,6 @@
 	"templar_assassin_meld"
 	{
 		"AbilityCooldown"					"6.0 5.5 5.0 4.5"
-		"AbilityDuration"					"10.0"
 
 		"AbilitySpecial"
 		{
@@ -9020,11 +8984,6 @@
 				"var_type"								"FIELD_INTEGER"
 				"bonus_armor"							"-4 -7 -10 -13"
 				"LinkedSpecialBonus"					"special_bonus_unique_templar_assassin_2"
-			}
-			"03"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"armor_reduction_duration_tooltip"		"10"
 			}
 		}
 	}
@@ -9453,7 +9412,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_cleanse"		"600 500 425 375"
+				"damage_cleanse"		"550 500 450 400"
 			}
 			"03"
 			{
@@ -9609,7 +9568,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"200 220 250"
+				"radius"				"200 225 250"
 			}
 			"03"
 			{
@@ -9667,7 +9626,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"200 220 250"
+				"radius"				"200 225 250"
 			}
 			"03"
 			{
@@ -9811,7 +9770,7 @@
 	"treant_natures_guise"
 	{
 		"MaxLevel"							"4"
-		"AbilityCastRange"					"265 265 310 400"
+		"AbilityCastRange"					"265 310 355 400"
 
 		"AbilitySpecial"
 		{
@@ -9823,33 +9782,23 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"265 265 310 400"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"grace_time"				"0.75"
+				"radius"					"265 310 355 400"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"movement_speed"			"12 28 38 42"
+				"movement_speed"			"14 24 34 44"
 			}
 			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"bash_duration"				"1.0 1.6 2.4 3.0"
+				"bash_duration"				"1.0 1.6 2.2 2.8"
 				"LinkedSpecialBonus"		"special_bonus_unique_treant_4"
 			}
 			"06"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"total_damage"				"100 160 120 280"
-			}
-			"07"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"tick_count"				"3"
+				"total_damage"				"60 160 260 360"
 			}
 		}
 	}	
@@ -9872,13 +9821,13 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"leech_damage"				"16 32 50 70"
+				"leech_damage"				"16 30 44 58"
 				"LinkedSpecialBonus"		"special_bonus_unique_treant_2"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"movement_slow"				"-16 -24 -30 -34"
+				"movement_slow"				"-20 -28 -36 -42"
 			}
 			"04"
 			{
@@ -10019,7 +9968,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"shard_damage"			"100 200 280 340"
+				"shard_damage"			"90 180 270 360"
 			}
 			"03"
 			{
@@ -10061,14 +10010,14 @@
 	{
 		"MaxLevel"							"4"
 		"AbilityCastRange"					"1250 1400 1550 1700"
-		"AbilityCooldown"					"21 19 16 12"
+		"AbilityCooldown"					"21 19 17 15"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"snowball_damage"			"80 160 220 260"
+				"snowball_damage"			"80 140 200 260"
 				"LinkedSpecialBonus"		"special_bonus_unique_tusk_2"
 			}
 			"02"
@@ -10116,21 +10065,6 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"snowball_grab_radius"		"350 450 550 650"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	//	Tusk: bonus Snowball damage
-	//=================================================================================================================
-	"special_bonus_unique_tusk_2"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"140"
 			}
 		}
 	}
@@ -10366,21 +10300,6 @@
 	}
 
 	//=================================================================================================================
-	//	Underlord: Pit of Malice root duration increase
-	//=================================================================================================================
-	"special_bonus_unique_underlord"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"value"						"0.8"
-			}
-		}
-	}
-
-	//=================================================================================================================
 	// Underlord: Atrophy Aura
 	//=================================================================================================================
 	"abyssal_underlord_atrophy_aura"
@@ -10531,12 +10450,12 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"tombstone_health"			"8 12 20 28"
+				"tombstone_health"			"10 14 28 22"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"hits_to_destroy_tooltip"	"5 7 9 12"
+				"hits_to_destroy_tooltip"	"5 7 9 11"
 				"LinkedSpecialBonus"		"special_bonus_unique_undying_5"
 			}
 			"03"
@@ -10653,35 +10572,10 @@
 
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"slow"						"24 32 40"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"damage"					"7"
-			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"radius"					"750 900 1050"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"health_bonus"				"400 1000 1600"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"duration"					"30"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"tick_rate"					"0.5"
 			}
 		}
 	}
@@ -10875,7 +10769,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"max_layers"					"5"
+				"max_layers"					"7"
 			}
 		}
 	}
@@ -10985,17 +10879,17 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"damage"			"18 22 26 30"
+				"damage"			"20 26 32 38"
 			}
 			"02"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"attack_rate"		"1.25 0.95 0.75 0.65"
+				"attack_rate"		"1.1 0.9 0.7 0.5"
 			}
 			"08"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"speed"				"600 700 800 900"
+				"speed"				"600 800 1000 1200"
 			}
 		}
 	}
@@ -11005,7 +10899,6 @@
 	//=================================================================================================================
 	"weaver_shukuchi"
 	{
-		"AbilityCooldown"				"10 8 6 4"
 		"AbilityManaCost"				"60 50 40 30"
 
 		"AbilitySpecial"
@@ -11048,6 +10941,11 @@
 				"var_type"				"FIELD_FLOAT"
 				"delay"					"0.2"
 			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"15 30 45 60"
+			}
 		}		
 	}
 
@@ -11077,15 +10975,10 @@
 	{
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"fail_stun_duration"	"0.75 1.0 1.25 1.5"
-			}
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"stun_duration"			"2.25 2.75 3.25 3.75"
+				"stun_duration"			"2.2 2.8 3.4 4.0"
 			}
 			"03"
 			{
@@ -11111,7 +11004,7 @@
 	"windrunner_powershot"
 	{
 		"AbilityCastRange"				"2600 2800 3000 3200"
-		"AbilityCooldown"				"12 10 8.5 7.5"
+		"AbilityCooldown"				"12 10.5 9 7.5"
 
 		"AbilitySpecial"
 		{
@@ -11140,8 +11033,7 @@
 	"windrunner_windrun"
 	{
 		"MaxLevel"						"4"
-		"AbilityCooldown"				"12 11 10 9"
-		"AbilityDuration"				"3 4 5 6"
+		"AbilityCooldown"				"14 13 12 11"
 
 		"AbilitySpecial"
 		{
@@ -11153,13 +11045,13 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"enemy_movespeed_bonus_pct"	"-15 -25 -33 -40"
+				"enemy_movespeed_bonus_pct"	"-15 -25 -35 -45"
 				"LinkedSpecialBonus"		"special_bonus_unique_windranger_2"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"325 375 405 475"
+				"radius"					"325 375 425 475"
 			}
 		}
 	}
@@ -11178,6 +11070,11 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"bonus_attack_speed"			"500 700 900"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"focusfire_damage_reduction"	"-45 -30 -15"
 			}
 			"05"
 			{

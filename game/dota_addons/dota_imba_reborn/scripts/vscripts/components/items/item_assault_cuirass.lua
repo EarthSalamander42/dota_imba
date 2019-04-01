@@ -201,8 +201,10 @@ function modifier_imba_assault_cuirass_aura_negative:OnCreated()
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
 
-	-- Ability specials
-	self.radius = self.ability:GetSpecialValueFor("radius")
+	if self.ability then
+		-- Ability specials
+		self.radius = self.ability:GetSpecialValueFor("radius")
+	end
 end
 
 function modifier_imba_assault_cuirass_aura_negative:IsDebuff() return false end

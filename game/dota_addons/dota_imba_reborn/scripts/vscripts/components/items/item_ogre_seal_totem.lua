@@ -133,7 +133,8 @@ function item_imba_ogre_seal_totem:TryToDamage()
 						ParticleManager:SetParticleControlForward( nFXIndex, 1, -self:GetCaster():GetForwardVector() )
 						ParticleManager:SetParticleControlEnt( nFXIndex, 10, enemy, PATTACH_ABSORIGIN_FOLLOW, nil, enemy:GetOrigin(), true )
 						ParticleManager:ReleaseParticleIndex( nFXIndex )
-
+						
+						-- IDK why this sound won't play so w/e...
 						EmitSoundOn( "Dungeon.BloodSplatterImpact", enemy )
 					else
 						enemy:AddNewModifier( self:GetCaster(), self, "modifier_stunned", { duration = self.stun_duration } )
@@ -204,9 +205,9 @@ function modifier_ogreseal_flop:OnCreated( kv )
 			end
 			local nFXIndex = ParticleManager:CreateParticle( "particles/item/ogre_seal_totem/ogre_seal_warcry.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent() )
 			ParticleManager:SetParticleControlEnt( nFXIndex, 1, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetParent():GetOrigin(), true )
-			ParticleManager:SetParticleControlEnt( nFXIndex, 2, self:GetParent(), PATTACH_POINT_FOLLOW, "mouth", self:GetParent():GetOrigin(), true )
-			ParticleManager:SetParticleControlEnt( nFXIndex, 6, self:GetParent(), PATTACH_POINT_FOLLOW, "eye_L", self:GetParent():GetOrigin(), true )
-			ParticleManager:SetParticleControlEnt( nFXIndex, 7, self:GetParent(), PATTACH_POINT_FOLLOW, "eye_R", self:GetParent():GetOrigin(), true )
+			-- ParticleManager:SetParticleControlEnt( nFXIndex, 2, self:GetParent(), PATTACH_POINT_FOLLOW, "mouth", self:GetParent():GetOrigin(), true )
+			-- ParticleManager:SetParticleControlEnt( nFXIndex, 6, self:GetParent(), PATTACH_POINT_FOLLOW, "eye_L", self:GetParent():GetOrigin(), true )
+			-- ParticleManager:SetParticleControlEnt( nFXIndex, 7, self:GetParent(), PATTACH_POINT_FOLLOW, "eye_R", self:GetParent():GetOrigin(), true )
 			self:AddParticle( nFXIndex, false, false, -1, false, false )
 		end
 

@@ -51,8 +51,27 @@ function GameMode:GoldFilter(keys)
 		end
 
 		if keys.reason_const == DOTA_ModifyGold_Unspecified then return true end
+		
+		-- Testing gold multiplier based on networth differentials
+		local ally_networth = 0
+		local enemy_networth = 0
+		
+		for num = 1, PlayerResource:GetPlayerCountForTeam(player:GetTeam()) do
+			ally_networth = ally_networth + PlayerResource:GetNetWorth(PlayerResource:GetNthPlayerIDOnTeam(player:GetTeam(), num))
+		end
+		
+		for num = 1, PlayerResource:GetPlayerCountForTeam(hero:GetOpposingTeamNumber()) do
+			enemy_networth = enemy_networth + PlayerResource:GetNetWorth(PlayerResource:GetNthPlayerIDOnTeam(hero:GetOpposingTeamNumber(), num))
+		end
+		
+		local networth_difference = enemy_networth - ally_networth
+		
+		-- Let's try linear scaling with max of 2x gold granted at a 200k networth differential (IDK good numbers without more input)
+		if networth_difference > 0 then
+			keys.gold = keys.gold * math.min(1 + (networth_difference / 200000), 2)
+		end
 	end
-
+	
 	return true
 end
 
@@ -71,6 +90,33 @@ function GameMode:ExperienceFilter( keys )
 
 	if custom_xp_bonus ~= nil then
 		keys.experience = keys.experience * (custom_xp_bonus / 100)
+	end
+	
+	-- Testing exp multiplier based on networth differentials
+	local player = PlayerResource:GetPlayer(keys.player_id_const)
+	
+	if player == nil then return end
+	
+	local hero = player:GetAssignedHero()
+	
+	if hero == nil then return end
+	
+	local ally_level = 0
+	local enemy_level = 0
+	
+	for num = 1, PlayerResource:GetPlayerCountForTeam(player:GetTeam()) do
+		ally_level = ally_level + PlayerResource:GetLevel(PlayerResource:GetNthPlayerIDOnTeam(player:GetTeam(), num))
+	end
+	
+	for num = 1, PlayerResource:GetPlayerCountForTeam(hero:GetOpposingTeamNumber()) do
+		enemy_level = enemy_level + PlayerResource:GetLevel(PlayerResource:GetNthPlayerIDOnTeam(hero:GetOpposingTeamNumber(), num))
+	end
+	
+	local level_difference = enemy_level - ally_level
+	
+	-- Let's try linear scaling with max of 2x experience granted at a 100 level differential (IDK good numbers without more input)
+	if level_difference > 0 then
+		keys.experience = keys.experience * math.min(1 + (level_difference / 100), 2)
 	end
 
 --	if PlayerResource:GetPlayer(keys.player_id_const) == nil then return true end

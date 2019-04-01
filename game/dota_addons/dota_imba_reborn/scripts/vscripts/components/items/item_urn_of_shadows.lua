@@ -100,19 +100,28 @@ end
 
 -- Let Urn of Shadows transfer its charges to Spirit Vessel or Black Queen Cape (whichever it was built into)
 function modifier_imba_urn_of_shadows_passive:OnDestroy()
-	if self:GetParent():HasItemInInventory("item_imba_black_queen_cape") or self:GetParent():HasItemInInventory("item_imba_spirit_vessel") then
-		for itemSlot = 0, 5 do
-			if self:GetParent().GetItemInSlot then
-				local item = self:GetParent():GetItemInSlot(itemSlot)
-			
-				if item and (item:GetName() == "item_imba_black_queen_cape" or item:GetName() == "item_imba_spirit_vessel") and item:GetPurchaseTime() - self:GetDieTime() <= 3 then -- Arbitrary time differential to ensure it gets the item that was created shortly after Urn was destroyed
-					item:SetCurrentCharges(math.max(self:GetAbility():GetCurrentCharges(), 0))
-					
-					break
+	if not IsServer() then return end
+	
+	-- Moving things to local variables so they can be references in a timer after all the other references have been lost
+	local die_time	= self:GetDieTime()
+	local charges	= self:GetAbility():GetCurrentCharges()
+	local parent 	= self:GetParent()
+	
+	Timers:CreateTimer(0.5, function()
+		if parent:HasItemInInventory("item_imba_black_queen_cape") or parent:HasItemInInventory("item_imba_spirit_vessel") then
+			for itemSlot = 0, 5 do
+				if parent.GetItemInSlot then
+					local item = parent:GetItemInSlot(itemSlot)
+				
+					if item and (item:GetName() == "item_imba_black_queen_cape" or item:GetName() == "item_imba_spirit_vessel") and item:GetPurchaseTime() - die_time <= 3 then -- Arbitrary time differential to ensure it gets the item that was created shortly after Urn was destroyed
+						item:SetCurrentCharges(math.max(charges, 0))
+						
+						break
+					end
 				end
 			end
 		end
-	end
+	end)
 end
 
 function modifier_imba_urn_of_shadows_passive:DeclareFunctions()

@@ -2065,3 +2065,215 @@ function imba_pangolier_gyroshell_stop:OnSpellStart()
 		--self:GetCaster():SwapAbilities("imba_pangolier_gyroshell", "imba_pangolier_gyroshell_stop", true, false)
 	end
 end
+
+----------------
+-- LUCKY SHOT --
+----------------
+
+LinkLuaModifier("modifier_imba_pangolier_lucky_shot", "components/abilities/heroes/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_pangolier_lucky_shot_disarm", "components/abilities/heroes/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_pangolier_lucky_shot_silence", "components/abilities/heroes/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_pangolier_lucky_shot_heartpiercer", "components/abilities/heroes/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE)
+
+imba_pangolier_lucky_shot							= class({})
+modifier_imba_pangolier_lucky_shot					= class({})
+modifier_imba_pangolier_lucky_shot_disarm			= class({})
+modifier_imba_pangolier_lucky_shot_silence			= class({})
+modifier_imba_pangolier_lucky_shot_heartpiercer		= class({})
+
+function imba_pangolier_lucky_shot:GetIntrinsicModifierName()
+	return "modifier_imba_pangolier_lucky_shot"
+end
+
+-------------------------
+-- LUCKY SHOT MODIFIER --
+-------------------------
+
+function modifier_imba_pangolier_lucky_shot:IsHidden()	return true end
+
+function modifier_imba_pangolier_lucky_shot:DeclareFunctions()
+	local funcs = {MODIFIER_EVENT_ON_ATTACK_LANDED}
+
+	return funcs
+end
+
+function modifier_imba_pangolier_lucky_shot:OnAttackLanded(keys)
+	if not IsServer() then return end
+
+	-- A bunch of conditionals that need to be passed to continue
+	if keys.attacker == self:GetParent() and not self:GetParent():IsIllusion() and not self:GetParent():PassivesDisabled() and not keys.target:IsMagicImmune() and not keys.target:IsBuilding() then
+		
+		-- Roll!
+		if RollPseudoRandom(self:GetAbility():GetSpecialValueFor("chance_pct"), self) then
+			
+			-- Apply the same modifiers if they already exist
+			if keys.target:HasModifier("modifier_imba_pangolier_lucky_shot_disarm") then
+				keys.target:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_pangolier_lucky_shot_disarm", {duration = self:GetAbility():GetSpecialValueFor("duration")}):SetDuration(self:GetAbility():GetSpecialValueFor("duration") * (1 - keys.target:GetStatusResistance()), true)
+			elseif keys.target:HasModifier("modifier_imba_pangolier_lucky_shot_silence") then
+				keys.target:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_pangolier_lucky_shot_silence", {duration = self:GetAbility():GetSpecialValueFor("duration")}):SetDuration(self:GetAbility():GetSpecialValueFor("duration") * (1 - keys.target:GetStatusResistance()), true)
+			-- If the target doesn't have either of the modifiers, randomly apply one of them
+			else
+				if RollPercentage(50) then
+					keys.target:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_pangolier_lucky_shot_disarm", {duration = self:GetAbility():GetSpecialValueFor("duration")}):SetDuration(self:GetAbility():GetSpecialValueFor("duration") * (1 - keys.target:GetStatusResistance()), true)				
+				else
+					keys.target:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_pangolier_lucky_shot_silence", {duration = self:GetAbility():GetSpecialValueFor("duration")}):SetDuration(self:GetAbility():GetSpecialValueFor("duration") * (1 - keys.target:GetStatusResistance()), true)
+				end
+			end
+			
+			-- Emit sound
+			if keys.target:IsConsideredHero() then
+				keys.target:EmitSound("Hero_Pangolier.LuckyShot.Proc")
+			else
+				keys.target:EmitSound("Hero_Pangolier.LuckyShot.Proc.Creep")
+			end
+			
+			-- Play particle effect
+			local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_pangolier/pangolier_luckyshot_disarm_cast.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+			-- This CP isn't editable in particle manager so hopefully I'm not doing something wrong here
+			ParticleManager:SetParticleControl(particle, 1, keys.target:GetAbsOrigin())
+			ParticleManager:ReleaseParticleIndex(particle)
+		end
+		
+		-- IMBAfication: Remnants of Heartpiercer
+		if keys.target:HasModifier("modifier_imba_pangolier_lucky_shot_disarm") or keys.target:HasModifier("modifier_imba_pangolier_lucky_shot_silence") then
+			if RollPercentage(self:GetAbility():GetSpecialValueFor("heartpiercer_chance")) then
+				keys.target:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_pangolier_lucky_shot_heartpiercer", {duration = self:GetAbility():GetSpecialValueFor("duration")}):SetDuration(self:GetAbility():GetSpecialValueFor("duration") * (1 - keys.target:GetStatusResistance()), true)
+			end
+			
+			-- Emit sound
+			if keys.target:IsConsideredHero() then
+				keys.target:EmitSound("Hero_Pangolier.HeartPiercer")
+			else
+				keys.target:EmitSound("Hero_Pangolier.HeartPiercer.Creep")
+			end
+		end
+	end
+end
+
+--------------------------------
+-- LUCKY SHOT DISARM MODIFIER --
+--------------------------------
+
+function modifier_imba_pangolier_lucky_shot_disarm:GetEffectName()
+	return "particles/units/heroes/hero_pangolier/pangolier_luckyshot_disarm_debuff.vpcf"
+end
+
+function modifier_imba_pangolier_lucky_shot_disarm:GetEffectAttachType()
+	return PATTACH_OVERHEAD_FOLLOW
+end
+
+function modifier_imba_pangolier_lucky_shot_disarm:OnCreated()
+	self.ability	= self:GetAbility()
+	self.caster		= self:GetCaster()
+	self.parent		= self:GetParent()
+	
+	-- AbilitySpecials
+	self.chance_pct	= self.ability:GetSpecialValueFor("chance_pct")
+	self.slow		= self.ability:GetSpecialValueFor("slow")
+end
+
+function modifier_imba_pangolier_lucky_shot_disarm:CheckState()
+	state = {
+			[MODIFIER_STATE_DISARMED] = true
+			}
+
+	return state
+end
+
+function modifier_imba_pangolier_lucky_shot_disarm:DeclareFunctions()
+	local funcs =	{
+					MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
+					}
+
+	return funcs
+end
+
+function modifier_imba_pangolier_lucky_shot_disarm:GetModifierMoveSpeedBonus_Percentage()
+	return self.slow * (-1)
+end
+
+---------------------------------
+-- LUCKY SHOT SILENCE MODIFIER --
+---------------------------------
+
+function modifier_imba_pangolier_lucky_shot_silence:GetEffectName()
+	return "particles/units/heroes/hero_pangolier/pangolier_luckyshot_silence_debuff.vpcf"
+end
+
+function modifier_imba_pangolier_lucky_shot_silence:GetEffectAttachType()
+	return PATTACH_OVERHEAD_FOLLOW
+end
+
+function modifier_imba_pangolier_lucky_shot_silence:OnCreated()
+	self.ability	= self:GetAbility()
+	self.caster		= self:GetCaster()
+	self.parent		= self:GetParent()
+	
+	-- AbilitySpecials
+	self.chance_pct	= self.ability:GetSpecialValueFor("chance_pct")
+	self.slow		= self.ability:GetSpecialValueFor("slow")
+end
+
+function modifier_imba_pangolier_lucky_shot_silence:CheckState()
+	state = {
+			[MODIFIER_STATE_SILENCED] = true
+			}
+
+	return state
+end
+
+function modifier_imba_pangolier_lucky_shot_silence:DeclareFunctions()
+	local funcs =	{
+					MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
+					}
+
+	return funcs
+end
+
+function modifier_imba_pangolier_lucky_shot_silence:GetModifierMoveSpeedBonus_Percentage()
+	return self.slow * (-1)
+end
+
+
+--------------------------------------
+-- LUCKY SHOT HEARTPIERCER MODIFIER --
+--------------------------------------
+
+function modifier_imba_pangolier_lucky_shot_heartpiercer:OnCreated()
+	if not IsServer() then return end
+	
+	if self:GetCaster():HasTalent("special_bonus_imba_pangolier_lucky_shot_status_resist") then
+		-- Multiplier by 10000 and dividing by 100 later to preserve two decimal places
+		self:SetStackCount(((1 / (1 - self:GetParent():GetStatusResistance())) - 1) * 10000)
+	end
+end
+
+function modifier_imba_pangolier_lucky_shot_heartpiercer:GetTexture()
+	return "pangolier_heartpiercer"
+end
+
+function modifier_imba_pangolier_lucky_shot_heartpiercer:GetEffectName()
+	return "particles/units/heroes/hero_pangolier/pangolier_heartpiercer_debuff.vpcf"
+end
+
+function modifier_imba_pangolier_lucky_shot_heartpiercer:GetEffectAttachType()
+	return PATTACH_OVERHEAD_FOLLOW
+end
+
+function modifier_imba_pangolier_lucky_shot_heartpiercer:DeclareFunctions()
+	local funcs =	{
+					MODIFIER_PROPERTY_IGNORE_PHYSICAL_ARMOR,
+					
+					MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING
+					}
+
+	return funcs
+end
+
+function modifier_imba_pangolier_lucky_shot_heartpiercer:GetModifierIgnorePhysicalArmor()
+	return 1
+end
+
+function modifier_imba_pangolier_lucky_shot_heartpiercer:GetModifierStatusResistanceStacking()
+	return self:GetStackCount() / (-100)
+end
