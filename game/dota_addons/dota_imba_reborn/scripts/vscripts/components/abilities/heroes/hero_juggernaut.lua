@@ -1509,6 +1509,17 @@ function imba_juggernaut_omni_slash:GetAbilityTextureName()
 	return "juggernaut_omni_slash"
 end
 
+-- Grimstroke edge case (really should be cleaner than this but...yeah)
+function imba_juggernaut_omni_slash:OnOwnerDied()
+	if not self:IsActivated() then
+		self:SetActivated(true)
+	end
+end
+
+function imba_juggernaut_omni_slash:OnOwnerSpawned()
+	self:OnOwnerDied()
+end
+
 function imba_juggernaut_omni_slash:OnAbilityPhaseStart()
 	local caster = self:GetCaster()
 	local rand = math.random
@@ -1863,6 +1874,12 @@ function modifier_imba_omni_slash_caster:OnIntervalThink()
 end
 
 function modifier_imba_omni_slash_caster:BounceAndSlaughter(first_slash)
+	local order = FIND_ANY_ORDER
+	
+	if first_slash then
+		order = FIND_CLOSEST
+	end
+	
 	self.nearby_enemies = FindUnitsInRadius(
 		self.parent:GetTeamNumber(),
 		self.parent:GetAbsOrigin(),
@@ -1871,15 +1888,16 @@ function modifier_imba_omni_slash_caster:BounceAndSlaughter(first_slash)
 		DOTA_UNIT_TARGET_TEAM_ENEMY,
 		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP,
 		DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_INVULNERABLE,
-		FIND_ANY_ORDER,
+		order,
 		false
 	)
 
 	if #self.nearby_enemies >= 1 then
 		for _,enemy in pairs(self.nearby_enemies) do
 			local previous_position = self.parent:GetAbsOrigin()
-			FindClearSpaceForUnit(self.parent, enemy:GetAbsOrigin() + RandomVector(128), false)
-
+			-- Used to be 128 but it seems to interrupt a lot at fast speeds if there's Lotus battles...
+			FindClearSpaceForUnit(self.parent, enemy:GetAbsOrigin() + RandomVector(100), false)
+			
 			if not self:GetAbility() then break end
 
 			local current_position = self.parent:GetAbsOrigin()
@@ -1998,7 +2016,7 @@ function modifier_imba_omni_slash_caster:GetModifierPreAttack_BonusDamage(kv)
 end
 
 function modifier_imba_omni_slash_caster:OnDestroy()
-	if IsServer() then		
+	if IsServer() then
 		self:GetAbility():SetActivated(true)
 
 		-- Re-enable Blade Fury during Omnislash (vanilla)
@@ -2012,6 +2030,8 @@ function modifier_imba_omni_slash_caster:OnDestroy()
 		end
 
 		self.parent:FadeGesture(ACT_DOTA_OVERRIDE_ABILITY_4)
+		
+		self.parent:MoveToPositionAggressive(self.parent:GetAbsOrigin())
 
 		-- Create the delay effect before the image destroys itself.
 		if self.parent:HasModifier("modifier_imba_omni_slash_image") then
