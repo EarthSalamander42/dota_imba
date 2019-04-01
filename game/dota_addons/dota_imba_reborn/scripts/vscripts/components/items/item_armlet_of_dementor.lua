@@ -54,6 +54,10 @@ end
 
 function modifier_item_imba_armlet_of_dementor_active:IsPurgable() 	return false end
 
+function modifier_item_imba_armlet_of_dementor_active:GetEffectName()
+	return "particles/item/armlet_of_dementor/armlet_of_dementor.vpcf"
+end
+
 function modifier_item_imba_armlet_of_dementor_active:OnCreated()
 	self.ability	= self:GetAbility()
 	self.caster		= self:GetCaster()

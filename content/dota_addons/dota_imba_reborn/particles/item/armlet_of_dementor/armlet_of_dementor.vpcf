@@ -3,7 +3,7 @@
 	_class = "CParticleSystemDefinition"
 	m_bShouldHitboxesFallbackToRenderBounds = false
 	m_nMaxParticles = 64
-	m_ConstantColor = [ 199, 254, 255, 130 ]
+	m_ConstantColor = [ 70, 130, 180, 130 ]
 	m_Renderers = 
 	[
 		{
@@ -90,13 +90,13 @@
 	m_Children = 
 	[
 		{
-			m_ChildRef = resource:"particles/hero/keeper_of_the_light/ignis_blessing_b.vpcf"
+			m_ChildRef = resource:"particles/item/armlet_of_dementor/armlet_of_dementor_b.vpcf"
 		},
 		{
-			m_ChildRef = resource:"particles/hero/keeper_of_the_light/ignis_blessing_c.vpcf"
+			m_ChildRef = resource:"particles/item/armlet_of_dementor/armlet_of_dementor_c.vpcf"
 		},
 		{
-			m_ChildRef = resource:"particles/hero/keeper_of_the_light/ignis_blessing_d.vpcf"
+			m_ChildRef = resource:"particles/item/armlet_of_dementor/armlet_of_dementor_d.vpcf"
 		},
 	]
 	m_nBehaviorVersion = 9

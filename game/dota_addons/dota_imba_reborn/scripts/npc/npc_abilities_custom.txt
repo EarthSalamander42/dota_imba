@@ -199,7 +199,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"movespeed"				"1500"
+				"movespeed"				"2500"
 			}
 		}
 	}
@@ -9123,7 +9123,6 @@
 		"AbilityBehavior"        	"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AbilityUnitTargetTeam"	 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"  	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitTargetFlags" 	"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
 		"SpellImmunityType" 	 	"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"			"1"
 		"AbilityTextureName"     	"lion_voodoo"
@@ -27741,7 +27740,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
 		"AbilityTextureName"			"juggernaut_omni_slash"
 		"HasScepterUpgrade"				"1"
 
@@ -34363,7 +34362,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"100 175 250 325"
+				"damage"				"125 200 275 350"
 				"LinkedSpecialBonus"	"special_bonus_imba_vengefulspirit_1"
 			}
 			"02"
@@ -34408,7 +34407,7 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_NO_INVIS"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"vengefulspirit_wave_of_terror"
@@ -34421,7 +34420,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"22 20 18 16"
+		"AbilityCooldown"				"14 12 10 8"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -34525,7 +34524,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"aura_radius"				"900"
+				"aura_radius"				"1200"
 			}
 		}
 	}
@@ -34609,7 +34608,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"					"700 950 1200"
+		"AbilityCastRange"					"900 1200 1500"
 		"AbilityCastPoint"					"0.3"
 
 		// Time
@@ -34637,12 +34636,12 @@
 			"01"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"range"								"900 1200 1500"
+				"range"								""
 			}
 			"02"
 			{
-				"var_type"							"FIELD_INTEGER"
-				"swapback_delay"					"3"
+				"var_type"							"FIELD_FLOAT"
+				"swapback_delay"					"2.5"
 				"LinkedSpecialBonus"				"special_bonus_imba_vengefulspirit_2"
 			}
 			"03"
@@ -34792,7 +34791,7 @@
 	}
 
 	//=================================================================================================================
-	// Vengeful Spirit Talent 4 (Level 20): Rancor now benefits from damage nearby (900 radius) allies take, at with % the normal rate
+	// Vengeful Spirit Talent 4 (Level 20): Rancor now benefits from damage nearby (1200 radius) allies take, at with % the normal rate
 	//=================================================================================================================
 	"special_bonus_imba_vengefulspirit_4"
 	{
@@ -34819,7 +34818,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"900"
+				"radius"					"1200"
 			}
 		}
 	}
@@ -34876,12 +34875,12 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"100"
+				"damage"					"350"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"stun_duration"				"1.0"
+				"stun_duration"				"1.8"
 			}
 			"03"
 			{

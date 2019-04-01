@@ -1,8 +1,11 @@
 "DOTA_Tooltip_Ability_item_imba_armlet_of_dementor"								"Armlet of Dementor"
-"DOTA_Tooltip_Ability_item_imba_armlet_of_dementor_Description"					"<h1>Toggle: Mind's Despair</h1>When active, Mind's Eye grants +%mind_bonus_spell_amp%%% spell amp, +%mind_bonus_int% intellect and +%mind_bonus_magic_res%%% magic resistance, but reverses all mana gained. <font color='#FF0000'>Cannot be toggled off while on cooldown.</font>\n<h1>Passive: Cooldown Reduction</h1>Reduces the cooldown time of all spells and items by %bonus_spell_cd%%%. <font color='#FF0000'>Cooldown reduction does not stack with Frantic or itself.</font>"
+"DOTA_Tooltip_Ability_item_imba_armlet_of_dementor_Description"					"<h1>Toggle: Mind's Despair</h1>When active, Mind's Despair grants +%mind_bonus_spell_amp%%% spell amp, +%mind_bonus_int% intellect and +%mind_bonus_magic_res%%% magic resistance, but reverses all mana gained. <font color='#FF0000'>Cannot be toggled off while on cooldown.</font>\n<h1>Passive: Cooldown Reduction</h1>Reduces the cooldown time of all spells and items by %bonus_spell_cd%%%. <font color='#FF0000'>Cooldown reduction does not stack with Frantic or itself.</font>"
 "DOTA_Tooltip_Ability_item_imba_armlet_of_dementor_Lore"						"A lost artifact of spectral, grotesque beings. One may attempt to harness their unnatural dark powers, potentially at the cost of their own soul."
 "DOTA_Tooltip_Ability_item_imba_armlet_of_dementor_bonus_spell_amp"		"%+Spell Amplification"
 "DOTA_Tooltip_Ability_item_imba_armlet_of_dementor_bonus_magic_res"		"%+$spell_resist"
 "DOTA_Tooltip_Ability_item_imba_armlet_of_dementor_bonus_mana_regen"	"+$mana_regen"
 
 "DOTA_Tooltip_Ability_item_imba_armlet_of_dementor_Note0"				"Spell amplification from multiple Armlets of Dementor do not stack."
+
+"DOTA_Tooltip_modifier_item_imba_armlet_of_dementor_active"				"Mind's Despair"
+"DOTA_Tooltip_modifier_item_imba_armlet_of_dementor_active_Description"	"Spell amplification increased by %dMODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE%%%.<br>Intellect increased by %dMODIFIER_PROPERTY_STATS_INTELLECT_BONUS%.<br>Magic resistance increased by %dMODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS%%%.<br>All mana gained is reversed."

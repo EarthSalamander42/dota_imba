@@ -3,20 +3,17 @@
 	_class = "CParticleSystemDefinition"
 	m_bShouldHitboxesFallbackToRenderBounds = false
 	m_nMaxParticles = 64
-	m_ConstantColor = [ 199, 254, 255, 130 ]
+	m_flConstantLifespan = 0.25
+	m_ConstantColor = [ 70, 130, 180, 30 ]
 	m_Renderers = 
 	[
 		{
 			_class = "C_OP_RenderSprites"
 			m_nSequenceCombineMode = "SEQUENCE_COMBINE_MODE_USE_SEQUENCE_0"
-			m_flStartFadeSize = 0.575
-			m_flEndFadeSize = 0.65
-			m_flMaxSize = 0.75
-			m_flOverbrightFactor = 3.0
-			m_flAddSelfAmount = 1.5
-			m_bSaturateColorPreAlphaBlend = false
-			m_hTexture = resource:"materials/particle/fire_particle_8/fire_particle_8_low.vtex"
-			m_flAnimationRate = 15.0
+			m_bAdditive = true
+			m_flOverbrightFactor = 2.0
+			m_hTexture = resource:"materials/particle/particle_ring_wavy6.vtex"
+			m_flAnimationRate = 20.0
 			m_bAnimateInFPS = true
 		},
 	]
@@ -31,12 +28,11 @@
 		},
 		{
 			_class = "C_OP_BasicMovement"
-			m_Gravity = [ 0.0, 0.0, 35.0 ]
 		},
 		{
 			_class = "C_OP_InterpolateRadius"
-			m_flEndScale = 0.15
 			m_flBias = 0.75
+			m_flStartScale = 0.0
 		},
 		{
 			_class = "C_OP_LockToBone"
@@ -52,23 +48,20 @@
 	[
 		{
 			_class = "C_INIT_RandomRadius"
-			m_flRadiusMin = 52.0
-			m_flRadiusMax = 64.0
-		},
-		{
-			_class = "C_INIT_RandomSequence"
-			m_nSequenceMax = 2
-		},
-		{
-			_class = "C_INIT_RandomRotation"
+			m_flRadiusMin = 72.0
+			m_flRadiusMax = 80.0
 		},
 		{
 			_class = "C_INIT_CreateOnModel"
 			m_HitboxSetName = "hands"
+			m_flHitBoxScale = 0.5
 		},
 		{
-			_class = "C_INIT_SequenceLifeTime"
-			m_flFramerate = 12.0
+			_class = "C_INIT_CreationNoise"
+			m_flOutputMax = 360.0
+			m_nFieldOutput = "4"
+			m_flNoiseScaleLoc = 1.0
+			m_flNoiseScale = 1.0
 		},
 		{
 			_class = "C_INIT_InitialVelocityNoise"
@@ -83,24 +76,12 @@
 			m_flEmitRate = 
 			{
 				m_nType = "PF_TYPE_LITERAL"
-				m_flLiteralValue = 30.0
+				m_flLiteralValue = 120.0
 			}
 		},
 	]
-	m_Children = 
-	[
-		{
-			m_ChildRef = resource:"particles/hero/keeper_of_the_light/ignis_blessing_b.vpcf"
-		},
-		{
-			m_ChildRef = resource:"particles/hero/keeper_of_the_light/ignis_blessing_c.vpcf"
-		},
-		{
-			m_ChildRef = resource:"particles/hero/keeper_of_the_light/ignis_blessing_d.vpcf"
-		},
-	]
 	m_nBehaviorVersion = 9
-	m_nFirstMultipleOverride_BackwardCompat = 4
+	m_nFirstMultipleOverride_BackwardCompat = 3
 	m_controlPointConfigurations = 
 	[
 		{

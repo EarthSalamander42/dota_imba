@@ -344,6 +344,14 @@ function imba_lion_hex:IsHiddenWhenStolen()
 	return false
 end
 
+function imba_lion_hex:GetBehavior()
+	if self:GetCaster():HasTalent("special_bonus_imba_lion_10") then
+		return DOTA_ABILITY_BEHAVIOR_POINT + DOTA_ABILITY_BEHAVIOR_AOE
+	else
+		return DOTA_ABILITY_BEHAVIOR_UNIT_TARGET
+	end
+end
+
 function imba_lion_hex:GetAOERadius()
 	if self:GetCaster():HasTalent("special_bonus_imba_lion_10") then
 		return self:GetCaster():FindTalentValue("special_bonus_imba_lion_10")
@@ -353,8 +361,6 @@ function imba_lion_hex:GetAOERadius()
 end
 
 function imba_lion_hex:OnSpellStart()
-	print(self:GetCaster():FindTalentValue("special_bonus_imba_lion_10"))
-
 	-- Ability properties
 	local caster = self:GetCaster()
 	local ability = self
@@ -372,44 +378,46 @@ function imba_lion_hex:OnSpellStart()
 		EmitSoundOn(cast_response[math.random(1,7)], caster)
 	end
 
-	-- Play cast sound
-	EmitSoundOn(sound_cast, target)
+	if not caster:HasTalent("special_bonus_imba_lion_10") then
+		-- Play cast sound
+		EmitSoundOn(sound_cast, target)
 
-	-- If target has Linken's Sphere off cooldown, do nothing
-	if target:GetTeam() ~= caster:GetTeam() then
-		if target:TriggerSpellAbsorb(ability) then
-			return nil
+		-- If target has Linken's Sphere off cooldown, do nothing
+		if target:GetTeam() ~= caster:GetTeam() then
+			if target:TriggerSpellAbsorb(ability) then
+				return nil
+			end
 		end
-	end     
 
-	-- Add particle effect
-	local particle_hex_fx = ParticleManager:CreateParticle(particle_hex, PATTACH_CUSTOMORIGIN, target)     
-	ParticleManager:SetParticleControl(particle_hex_fx, 0, target:GetAbsOrigin())      
-	ParticleManager:ReleaseParticleIndex(particle_hex_fx)
+		-- Add particle effect
+		local particle_hex_fx = ParticleManager:CreateParticle(particle_hex, PATTACH_CUSTOMORIGIN, target)     
+		ParticleManager:SetParticleControl(particle_hex_fx, 0, target:GetAbsOrigin())      
+		ParticleManager:ReleaseParticleIndex(particle_hex_fx)
 
-	-- Transform your enemy into a frog
-	target:AddNewModifier(caster, ability, modifier_hex, {duration = duration})
+		-- Transform your enemy into a frog
+		target:AddNewModifier(caster, ability, modifier_hex, {duration = duration}):SetDuration(duration * (1 - target:GetStatusResistance()), true)
+	else
+		target = self:GetCursorPosition()
 	
 	-- AoE Hex talent
-	if caster:HasTalent("special_bonus_imba_lion_10") then
+		EmitSoundOnLocationWithCaster(target, sound_cast, caster)
+	
 		local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
-								  target:GetAbsOrigin(),
+								  target,
 								  nil,
 								  self:GetCaster():FindTalentValue("special_bonus_imba_lion_10"),
 								  DOTA_UNIT_TARGET_TEAM_ENEMY,
 								  DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-								  DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS,
+								  DOTA_UNIT_TARGET_FLAG_NONE,
 								  FIND_ANY_ORDER,
 								  false)
 								  
 		for _, enemy in pairs(enemies) do
-			if enemy ~= target then
-				local particle_hex_fx = ParticleManager:CreateParticle(particle_hex, PATTACH_CUSTOMORIGIN, enemy)     
-				ParticleManager:SetParticleControl(particle_hex_fx, 0, enemy:GetAbsOrigin())      
-				ParticleManager:ReleaseParticleIndex(particle_hex_fx)
-				
-				enemy:AddNewModifier(caster, ability, modifier_hex, {duration = duration})
-			end
+			local particle_hex_fx = ParticleManager:CreateParticle(particle_hex, PATTACH_CUSTOMORIGIN, enemy)     
+			ParticleManager:SetParticleControl(particle_hex_fx, 0, enemy:GetAbsOrigin())      
+			ParticleManager:ReleaseParticleIndex(particle_hex_fx)
+			
+			enemy:AddNewModifier(caster, ability, modifier_hex, {duration = duration}):SetDuration(duration * (1 - enemy:GetStatusResistance()), true)
 		end
 	end
 end
@@ -1416,12 +1424,12 @@ function modifier_special_bonus_imba_lion_10:RemoveOnDeath() 	return false end
 
 function imba_lion_earth_spike:OnOwnerSpawned()
 	if self:GetCaster():HasTalent("special_bonus_imba_lion_9") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_lion_9") then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_special_bonus_imba_lion_9", {})
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_lion_9"), "modifier_special_bonus_imba_lion_9", {})
 	end
 end
 
 function imba_lion_hex:OnOwnerSpawned()
 	if self:GetCaster():HasTalent("special_bonus_imba_lion_10") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_lion_10") then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_special_bonus_imba_lion_10", {})
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_lion_10"), "modifier_special_bonus_imba_lion_10", {})
 	end
 end

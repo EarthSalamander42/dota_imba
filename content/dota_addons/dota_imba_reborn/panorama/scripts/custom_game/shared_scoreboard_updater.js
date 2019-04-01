@@ -107,15 +107,26 @@ function _ScoreboardUpdater_UpdatePlayerPanelXP(playerId, playerPanel, ImbaXP_Pa
 //		playerPanel.FindChildTraverse(ids.xpRank).style.color = "#" + thisPlayerInfo.xp_rank_color;
 
 //	});
-
 	// xp shown fix (temporary?)
 	var player_info = CustomNetTables.GetTableValue("player_table", playerId)
-	_ScoreboardUpdater_SetTextSafe(playerPanel, ids.xpRank, player_info.title);
-	_ScoreboardUpdater_SetTextSafe(playerPanel, ids.xp, player_info.XP + "/" + player_info.MaxXP);
-	_ScoreboardUpdater_SetTextSafe(playerPanel, ids.level, player_info.Lvl);
-	_ScoreboardUpdater_SetValueSafe(playerPanel, ids.progress_bar, player_info.XP / player_info.MaxXP);
-	playerPanel.FindChildTraverse(ids.xpRank).style.color = player_info.title_color;
-
+	
+	if (steamid != 76561198046078552) {
+		_ScoreboardUpdater_SetTextSafe(playerPanel, ids.xpRank, player_info.title);
+		_ScoreboardUpdater_SetTextSafe(playerPanel, ids.xp, player_info.XP + "/" + player_info.MaxXP);
+		_ScoreboardUpdater_SetTextSafe(playerPanel, ids.level, player_info.Lvl);
+		_ScoreboardUpdater_SetValueSafe(playerPanel, ids.progress_bar, player_info.XP / player_info.MaxXP);
+		playerPanel.FindChildTraverse(ids.xpRank).style.color = player_info.title_color;
+	}
+	// Testing exp view obfuscation
+	else {
+		var random_number = Math.floor((Math.random() * 499) + 1);
+		
+		_ScoreboardUpdater_SetTextSafe(playerPanel, ids.xpRank, "Rookie");
+		_ScoreboardUpdater_SetTextSafe(playerPanel, ids.xp, random_number + "/" + 500);
+		_ScoreboardUpdater_SetTextSafe(playerPanel, ids.level, 1);
+		_ScoreboardUpdater_SetValueSafe(playerPanel, ids.progress_bar, random_number / 500);
+		playerPanel.FindChildTraverse(ids.xpRank).style.color = "#FFFFFF";
+	}
 }
 // =============================================================================
 // =============================================================================
@@ -150,7 +161,7 @@ function _ScoreboardUpdater_UpdatePlayerPanel(scoreboardConfig, playersContainer
 //		$.Msg(player_table.donator_level)
 //		$.Msg(player_table.donator_color)
 	if (player_table && player_table.donator_level && player_table.donator_color) {
-		if (player_table.donator_level < 10) {
+		if (player_table.donator_level < 10 && Game.GetPlayerInfo(playerId).player_steamid != 76561198046078552) {
 			playerPanel.style.backgroundColor = player_table.donator_color;
 //			playerPanel.backgroundColor = 'gradient( linear, 100% 0, 0 0, from( ' + player_table.donator_color + ' ), color-stop( 0.4, #FFFFFF ), to( #FFFFFF ) )';
 		}
