@@ -21,7 +21,7 @@
 				
 		"Ability10"		"special_bonus_imba_enchantress_1"
 		"Ability11"		"special_bonus_imba_enchantress_2"
-		"Ability12"		"special_bonus_imba_enchantress_3"
+		"Ability12"		"special_bonus_attack_damage_75"
 		"Ability13"		"special_bonus_imba_enchantress_4"
 		"Ability14"		"special_bonus_imba_enchantress_5"
 		"Ability15"		"special_bonus_imba_enchantress_6"
@@ -36,5 +36,8 @@
 		//"Ability15"		"special_bonus_unique_enchantress_1"
 		//"Ability16"		"special_bonus_unique_enchantress_4"
 		//"Ability17"		"special_bonus_unique_enchantress_5"
+		
+		// Removed Talents
+		// "Ability12"		"special_bonus_imba_enchantress_3" // Bonus damage AND spell amp
 	}
 }
