@@ -4,7 +4,7 @@
 ////===============================================================================================================
 
 "DOTA_Tooltip_ability_imba_wisp_tether"                         "Tether"
-"DOTA_Tooltip_ability_imba_wisp_tether_description"             "Tethers Io to an allied unit, granting bonus movement speed to both <font color='#FF7800'>and setting both to the faster unit's speed.</font color='#FF7800'> When Io restores health or mana, tethered units target gains a larger portion of that amount. The tether breaks when the allied unit moves too far away, or Io cancels the tether. \n<font color='#FF7800'>Entwine</font color='#FF7800'>: Enemies hit by tether have their movement and attack speed slowed."
+"DOTA_Tooltip_ability_imba_wisp_tether_description"             "Tethers Io to an allied unit, granting bonus movement speed to both <font color='#FF7800'>and setting both to the faster unit's speed.</font color='#FF7800'> When Io restores health or mana, tethered units target gains a larger portion of that amount. The tether breaks when the allied unit moves too far away, or Io cancels the tether.\n<font color='#FF7800'>Magnetic Bond:</font> Io and the tethered target have hasted movement.\n<font color='#FF7800'>Entwine:</font color='#FF7800'> Enemies hit by tether have their movement and attack speed slowed."
 "DOTA_Tooltip_ability_imba_wisp_tether_Note0"                   "If you try to tether a unit that is 1800 (2300 with talent) distance or futher away from Io, he will latch on and pull himself close to the tethered unit (to a distance of 700). The tethered unit will heal faster."
 "DOTA_Tooltip_ability_imba_wisp_tether_Note1"                   "Pierces ally magic immunity."
 "DOTA_Tooltip_ability_imba_wisp_tether_lore"                    "The benevolent touch of Io brings strength from between the planes."
@@ -76,10 +76,30 @@
 "DOTA_Tooltip_modifier_imba_wisp_overcharge_aura_Description"		"Emitting a 900 radius aura, providing allied units with the Overcharge buff at 25%% efficiency."
 
 ////===============================================================================================================
+// Wisp's Overcharge 7.21
+////===============================================================================================================
+
+"DOTA_Tooltip_ability_imba_wisp_overcharge_721"									"Overcharge"
+"DOTA_Tooltip_ability_imba_wisp_overcharge_721_Lore"							"Drawing on the energy of matter from all worlds, Io begins the unravelling of time."
+"DOTA_Tooltip_ability_imba_wisp_overcharge_721_Description"						"Io gains bonus attack speed and damage reduction. If Io is tethered to an ally, that unit also gains the bonuses.\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>\n<font color='#FF7800'>Fundamental Shift</font color='#FF7800'>: Also grants the following bonuses: \nProjectile Speed: + %bonus_missile_speed%<br>Cast Speed: + %bonus_cast_speed%%%<br>Attack Range: + %bonus_attack_range%"
+"DOTA_Tooltip_ability_imba_wisp_overcharge_721_bonus_attack_speed"					"ATTACK SPEED:"
+"DOTA_Tooltip_ability_imba_wisp_overcharge_721_bonus_damage_pct"					"%INCOMING DAMAGE REDUCTION:"
+
+"DOTA_Tooltip_ability_imba_wisp_overcharge_721_aghanim_description"   	"Overcharge also provides nearby allied units with the buff at reduced efficiency. Does not affect units that already have the main Overcharge buff."
+"DOTA_Tooltip_ability_imba_wisp_overcharge_721_scepter_radius"			"SCEPTER RADIUS:"
+"DOTA_Tooltip_ability_imba_wisp_overcharge_721_scepter_efficiency"		"SCEPTER EFFICIENCY:"
+
+"DOTA_Tooltip_modifier_imba_wisp_overcharge_721"								"Overcharged"
+"DOTA_Tooltip_modifier_imba_wisp_overcharge_721_description"					"Attack speed increased by %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT%, incoming damage reduced by %dMODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE%%%. Attack range also increased by %dMODIFIER_PROPERTY_ATTACK_RANGE_BONUS%, cast speed by %dMODIFIER_PROPERTY_CASTTIME_PERCENTAGE%, and projectile speed by %dMODIFIER_PROPERTY_PROJECTILE_SPEED_BONUS%."
+
+"DOTA_Tooltip_modifier_imba_wisp_overcharge_721_aura"								"Overcharged Proxy"
+"DOTA_Tooltip_modifier_imba_wisp_overcharge_721_aura_description"					"Attack speed increased by %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT%, incoming damage reduced by %dMODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE%%%. Attack range also increased by %dMODIFIER_PROPERTY_ATTACK_RANGE_BONUS%, cast speed by %dMODIFIER_PROPERTY_CASTTIME_PERCENTAGE%, and projectile speed by %dMODIFIER_PROPERTY_PROJECTILE_SPEED_BONUS%."
+
+////===============================================================================================================
 // Wisp's Relocate
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_wisp_relocate"          				"Relocate"
-"DOTA_Tooltip_ability_imba_wisp_relocate_description"          	"Teleports Io and any tethered ally to any location. After the spell expires Io and any tethered ally will return to their original location. Double-click to teleport to your team's base fountain.\n<font color='#FF7800'>Castling</font color='#FF7800'>: While relocated, Io can choose to break Relocate at any given moment. When breaking Relocate, both Io and any tethered ally will return to Io's original location.\n<font color='#FF7800'>Fundamental Strength</font color='#FF7800'>: Relocate has a cast time instead of channel time, but cannot be manually cancelled once started."
+"DOTA_Tooltip_ability_imba_wisp_relocate_description"          	"Teleports Io and any tethered ally to any location. After the spell expires Io and any tethered ally will return to their original location. Double-click to teleport to your team's base fountain.\n<font color='#FF7800'>Castling</font color='#FF7800'>: While relocated, Io can choose to break Relocate at any given moment. When breaking Relocate, both Io and any tethered ally will return to Io's original location."
 "DOTA_Tooltip_ability_imba_wisp_relocate_Note0"					"Enemies receive a visual indicator in the world and on the minimap of the target location during the cast delay. If Io is disabled as the cast delay ends, Relocate is cancelled. If an allied hero is Tethered, that hero will teleport along with you. You can break the tether at any time to prevent that hero from teleporting back with you."
 "DOTA_Tooltip_ability_imba_wisp_relocate_lore"					"Io is the embodiment of the mystery of the universe."
 "DOTA_Tooltip_ability_imba_wisp_relocate_cast_delay"			"CAST DELAY:"	
@@ -115,3 +135,6 @@
 "DOTA_Tooltip_Ability_special_bonus_imba_wisp_7"						"Relocate grants spell immunity for 5s to Io and Tethered ally"
 "DOTA_Tooltip_Ability_special_bonus_imba_wisp_8"						"Draw from the Fount"
 "DOTA_Tooltip_Ability_special_bonus_imba_wisp_8_Description"			"Overcharge additionally provides 3% max mana regeneration per second to the caster."
+"DOTA_Tooltip_Ability_special_bonus_imba_wisp_9"						"-35s Relocate Cooldown"
+"DOTA_Tooltip_Ability_special_bonus_imba_wisp_10"						"Large Hadron Collider"
+"DOTA_Tooltip_Ability_special_bonus_imba_wisp_10_Description"			"Increases Spirits cooldown by 50%. Doubles Spirits count, in/out move speed, and oscillation speed, and halves formation delay."

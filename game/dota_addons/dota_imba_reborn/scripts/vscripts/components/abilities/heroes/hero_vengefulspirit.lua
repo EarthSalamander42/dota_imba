@@ -332,7 +332,7 @@ function imba_vengefulspirit_magic_missile:OnProjectileHit_ExtraData(target, loc
 			end
 			ApplyDamage({victim = target, attacker = caster, ability = self, damage = ExtraData.damage, damage_type = self:GetAbilityDamageType()})
 			if (not target:IsMagicImmune()) or caster:HasTalent("special_bonus_imba_vengefulspirit_5") then
-				target:AddNewModifier(caster, self, "modifier_stunned", {duration = ExtraData.stun_duration})
+				target:AddNewModifier(caster, self, "modifier_stunned", {duration = ExtraData.stun_duration}):SetDuration(ExtraData.stun_duration * (1 - target:GetStatusResistance()), true)
 			end
 		else
 			target = CreateUnitByName("npc_dummy_unit", location, false, caster, caster, caster:GetTeamNumber() )
@@ -482,7 +482,7 @@ function imba_vengefulspirit_wave_of_terror:OnProjectileHit_ExtraData(target, lo
 	if target then
 		local caster = self:GetCaster()
 		ApplyDamage({victim = target, attacker = caster, ability = self, damage = ExtraData.damage, damage_type = self:GetAbilityDamageType()})
-		target:AddNewModifier(caster, self, "modifier_imba_wave_of_terror", {duration = ExtraData.duration})
+		target:AddNewModifier(caster, self, "modifier_imba_wave_of_terror", {duration = ExtraData.duration}):SetDuration(ExtraData.duration * (1 - target:GetStatusResistance()), true)
 	else
 		self:CreateVisibilityNode(location, self:GetSpecialValueFor("vision_aoe"), self:GetSpecialValueFor("vision_duration"))
 	end
@@ -796,7 +796,7 @@ function imba_vengefulspirit_nether_swap:CastTalentMeteor(target)
 			Source 				= caster,
 			Ability 			= self,
 			EffectName 			= "particles/hero/vengefulspirit/rancor_magic_missile.vpcf",
-			iMoveSpeed			= 1350,
+			iMoveSpeed			= 1250,
 			vSpawnOrigin 		= caster:GetAbsOrigin(),
 			bDrawsOnMinimap 	= false,
 			bDodgeable 			= true,
@@ -926,7 +926,7 @@ function imba_vengefulspirit_nether_swap:OnProjectileHit(target, location)
 		local stun_duration = caster:FindTalentValue("special_bonus_imba_vengefulspirit_6", "stun_duration")
 		ApplyDamage({victim = target, attacker = caster, ability = self, damage = damage, damage_type = self:GetAbilityDamageType()})
 		if not target:IsMagicImmune() then
-			target:AddNewModifier(caster, self, "modifier_stunned", {duration = stun_duration})
+			target:AddNewModifier(caster, self, "modifier_stunned", {duration = stun_duration}):SetDuration(stun_duration * (1 - target:GetStatusResistance()), true)
 		end
 	end
 
@@ -1081,5 +1081,29 @@ function modifier_imba_swap_back:RemoveOnDeath() return false end
 function modifier_imba_swap_back:OnCreated()
 	if IsServer() then
 		self:GetAbility():SetActivated(false)
+	end
+end
+
+-- Client-side helper functions --
+LinkLuaModifier("modifier_special_bonus_imba_vengefulspirit_3", "components/abilities/heroes/hero_vengefulspirit", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_vengefulspirit_8", "components/abilities/heroes/hero_vengefulspirit", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_vengefulspirit_3 = class({})
+function modifier_special_bonus_imba_vengefulspirit_3:IsHidden() 		return true end
+function modifier_special_bonus_imba_vengefulspirit_3:IsPurgable() 		return false end
+function modifier_special_bonus_imba_vengefulspirit_3:RemoveOnDeath() 	return false end
+
+modifier_special_bonus_imba_vengefulspirit_8 = class({})
+function modifier_special_bonus_imba_vengefulspirit_8:IsHidden() 		return true end
+function modifier_special_bonus_imba_vengefulspirit_8:IsPurgable() 		return false end
+function modifier_special_bonus_imba_vengefulspirit_8:RemoveOnDeath() 	return false end
+
+function imba_vengefulspirit_command_aura:OnOwnerSpawned()
+	if self:GetCaster():HasTalent("special_bonus_imba_vengefulspirit_3") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_vengefulspirit_3") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_vengefulspirit_3"), "modifier_special_bonus_imba_vengefulspirit_3", {})
+	end
+	
+	if self:GetCaster():HasTalent("special_bonus_imba_vengefulspirit_8") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_vengefulspirit_8") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_vengefulspirit_8"), "modifier_special_bonus_imba_vengefulspirit_8", {})
 	end
 end

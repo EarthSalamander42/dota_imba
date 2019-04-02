@@ -18,10 +18,10 @@
 
 // Venomancer's Poison Sting
 "DOTA_Tooltip_ability_imba_venomancer_poison_sting"                    "Poison Sting"
-"DOTA_Tooltip_ability_imba_venomancer_poison_sting_Description"                     "Adds poison damage to Venomancer's normal attacks, slowing movement speed and removing health over time.\n<font color='#FF7800'>Infinite Poison:</font> Poison Sting can stack with itself indefinitely. Each attack from Venomancer will add more stacks, each increasing the health loss.\n<font color='#FF7800'>Fresh Malignancy:</font> Attacks from Scourge Wards refresh the duration of Poison Sting."
+"DOTA_Tooltip_ability_imba_venomancer_poison_sting_Description"                     "Adds poison damage to Venomancer's normal attacks, slowing movement speed and removing health over time.\n<font color='#FF7800'>Fresh Sting:</font> Poison Sting immediately damages whenever the debuff is refreshed.\n<font color='#FF7800'>Infinite Poison:</font> Poison Sting can stack with itself indefinitely. Each attack from Venomancer will add more stacks, each increasing the health loss.\n<font color='#FF7800'>Fresh Malignancy:</font> Attacks from Scourge Wards refresh the duration of Poison Sting."
 "DOTA_Tooltip_ability_imba_venomancer_poison_sting_Lore"                "The paralytic sting of the creature which caused his transformation now belongs to the Venomancer."
-"DOTA_Tooltip_ability_imba_venomancer_poison_sting_Note0"              "The damage from Poison Sting is flagged as HP Removal, so it does not trigger any on-damage effects."
-"DOTA_Tooltip_ability_imba_venomancer_poison_sting_Note1"              "The damage ticks in 1 second intervals, starting immediately when the debuff is placed, resulting in 7/10/13/16/17/18/19 damage ticks."
+"DOTA_Tooltip_ability_imba_venomancer_poison_sting_Note0"              "Poison Sting damage can be lethal."
+"DOTA_Tooltip_ability_imba_venomancer_poison_sting_Note1"              "Damage from Poison Sting does not interrupt healing from items, nor does it activate the cooldown on Blink Dagger."
 "DOTA_Tooltip_ability_imba_venomancer_poison_sting_duration"            "DURATION:"
 "DOTA_Tooltip_ability_imba_venomancer_poison_sting_damage"              "DAMAGE PER SECOND:"
 "DOTA_Tooltip_ability_imba_venomancer_poison_sting_movement_speed_pct"	"%SLOW:"

@@ -4,18 +4,18 @@
 ////===============================================================================================================
 
 "DOTA_Tooltip_ability_imba_tiny_rolling_stone"                          "Rolling Stone"
-"DOTA_Tooltip_ability_imba_tiny_rolling_stone_Description"              "Tiny gains mass as he moves, gaining damage and movement speed at the cost of attackspeed. Every second that Tiny moves, he gains a few mass. A stack is granted when reaching one full minute of movement (60 seconds)."
+"DOTA_Tooltip_ability_imba_tiny_rolling_stone_Description"              "Tiny gains mass as he moves, gaining damage and movement speed at the cost of attackspeed. Every second that Tiny moves, he gains a small amount of mass. A stack is granted when reaching one full minute of movement (60 seconds)."
 "DOTA_Tooltip_ability_imba_tiny_rolling_stone_Note0"                    "Movement does not need to be continuous."
 "DOTA_Tooltip_ability_imba_tiny_rolling_stone_Note1"                    "It does not matter how much distance Tiny has covered on each movement, as it only records movement time."
 "DOTA_Tooltip_ability_imba_tiny_rolling_stone_Lore"                    "Tiny's living mass constantly attracts minor pebbles and rocks."
 "DOTA_Tooltip_ability_imba_tiny_rolling_stone_bonus_damage"            "BONUS DAMAGE/STACK:"
-"DOTA_Tooltip_ability_imba_tiny_rolling_stone_attackspeed_reduction"                "ATTACKSPEED REDUCTION/STACK:"
+"DOTA_Tooltip_ability_imba_tiny_rolling_stone_attackspeed_reduction"                "ATTACK SPEED REDUCTION/STACK:"
 "DOTA_Tooltip_ability_imba_tiny_rolling_stone_bonus_movespeed"          "BONUS MOVEMENT SPEED/STACK:"
 "DOTA_Tooltip_ability_imba_tiny_rolling_stone_bonus_toss_damage"                    "%BONUS TOSS DAMAGE/STACK:"
 "DOTA_Tooltip_ability_imba_tiny_rolling_stone_stack_per_min"            "STACK/MIN OF MOVEMENT:"
 
 "DOTA_Tooltip_modifier_imba_tiny_rolling_stone"                        "Rolling Stone"
-"DOTA_Tooltip_modifier_imba_tiny_rolling_stone_Description"            "Every stack of Rolling Stone provides movement speed and damage at the cost of attack speed."
+"DOTA_Tooltip_modifier_imba_tiny_rolling_stone_Description"            "Gaining %dMODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE% bonus damage, gaining %dMODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT% move speed, and losing %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT% attack speed."
 
 ////===============================================================================================================
 // Tiny's Avalanche
@@ -96,13 +96,10 @@
 ////===============================================================================================================
 
 "DOTA_Tooltip_ability_imba_tiny_grow"									"Grow"
-"DOTA_Tooltip_ability_imba_tiny_grow_Description"						"Tiny gains craggy mass that increases his power at the cost of his attack speed. Increases Tossed unit damage and improves movement speed and the area of effect of Tiny's spells.\n<font color='#FF7800'>Shrug it Off: </font>Passively increases status resistance."
+"DOTA_Tooltip_ability_imba_tiny_grow_Description"						"Tiny gains craggy mass, increases his power and causes him to shrug off debuffs.\n<font color='#FF7800'>Inertial Nullification:</font> Grow has no direct attack speed loss.\n<font color='#FF7800'>Shrug it Off:</font> Passively increases status resistance by %status_resistance%%%.\n<font color='#FF7800'>Boulder Rising:</font> Grants %rolling_stones_stacks% stacks of Rolling Stone.\n<font color='#FF7800'>Seismic Plaything:</font> Increases Toss radius by %rolling_stones_aoe% times its base value."
 "DOTA_Tooltip_ability_imba_tiny_grow_Lore"								"Watching a hill become a mountain is awe-inspiring - especially if the mountain begins laying waste to adversaries."
-"DOTA_Tooltip_ability_imba_tiny_grow_rolling_stones_stacks"				"ROLLING STONE STACKS:"
-"DOTA_Tooltip_ability_imba_tiny_grow_rolling_stones_aoe"				"ROLLING STONE BONUS RADIUS:"
-"DOTA_Tooltip_ability_imba_tiny_grow_bonus_cleave_damage_scepter"		"%CLEAVE DAMAGE:"
-"DOTA_Tooltip_ability_imba_tiny_grow_bonus_building_damage_scepter"		"%BONUS BUILDING DAMAGE:"
-"DOTA_Tooltip_ability_imba_tiny_grow_status_resistance"					"%STATUS RESISTANCE:"
+//"DOTA_Tooltip_ability_imba_tiny_grow_bonus_cleave_damage_scepter"		"%CLEAVE DAMAGE:"
+//"DOTA_Tooltip_ability_imba_tiny_grow_bonus_building_damage_scepter"	"%BONUS BUILDING DAMAGE:"
 "DOTA_Tooltip_ability_imba_tiny_grow_bonus_armor"						"BONUS ARMOR:"
 
 ////===============================================================================================================
@@ -116,4 +113,4 @@
 "DOTA_Tooltip_ability_special_bonus_imba_tiny_5"            "Tree Throw knockbacks enemies on impact"
 "DOTA_Tooltip_ability_special_bonus_imba_tiny_6"            "+200 Bonus Total Avalanche Damage"
 "DOTA_Tooltip_ability_special_bonus_imba_tiny_7"            "Toss Grabs All Units"
-"DOTA_Tooltip_ability_special_bonus_imba_tiny_8"            "Rolling Stone Attackspeed Penalty Removed"
+"DOTA_Tooltip_ability_special_bonus_imba_tiny_8"            "Rolling Stone Attack Speed Penalty Removed"

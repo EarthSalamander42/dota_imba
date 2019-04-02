@@ -458,6 +458,10 @@ function imba_lycan_howl:GetAbilityTextureName()
    return "lycan_howl"
 end
 
+function imba_lycan_howl:GetBehavior()
+	return DOTA_ABILITY_BEHAVIOR_NO_TARGET + DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING + DOTA_ABILITY_BEHAVIOR_AUTOCAST
+end
+
 function imba_lycan_howl:OnSpellStart()
 	-- Ability properties
 	local caster = self:GetCaster()
@@ -471,8 +475,7 @@ function imba_lycan_howl:OnSpellStart()
 	local day = GameRules:IsDaytime()	
 	
 	-- Ability specials
-	local duration = ability:GetSpecialValueFor("duration")
-	local bonus_health_heroes = ability:GetSpecialValueFor("bonus_health_heroes")	
+	local duration = ability:GetSpecialValueFor("howl_duration")	
 		
 	-- Play global cast sound, only for allies
 	EmitSoundOnLocationForAllies(caster:GetAbsOrigin(), sound_cast, caster)
@@ -550,19 +553,14 @@ function imba_lycan_howl:OnUpgrade()
 	end
 end
 
---heroes howl modifier
+-------------------
+-- HOWL MODIFIER --
+-------------------
+
 modifier_imba_howl_buff = class({})
 
-function modifier_imba_howl_buff:IsHidden()
-	return false
-end
-
-function modifier_imba_howl_buff:IsDebuff()
-	return false
-end
-
-function modifier_imba_howl_buff:IsPurgable()
-	return true
+function modifier_imba_howl_buff:GetEffectName()
+	return "particles/units/heroes/hero_lycan/lycan_howl_buff.vpcf"
 end
 
 function modifier_imba_howl_buff:OnCreated()
@@ -570,71 +568,45 @@ function modifier_imba_howl_buff:OnCreated()
     self.ability = self:GetAbility()
     self.parent = self:GetParent()
 	
-	-- Only need to put bonus health value up here because this one doesn't change on day-night cycle
-	if self.parent:IsHero() then
-		self.bonus_health	=	self.ability:GetSpecialValueFor("bonus_health_heroes")
-	else
-		self.bonus_health	=	self.ability:GetSpecialValueFor("bonus_health_units")
-	end
+	--AbilitySpecials
+	self.attack_speed	= self.ability:GetSpecialValueFor("attack_speed")
+	self.armor			= self.ability:GetSpecialValueFor("armor")
+	self.hp_regen		= self.ability:GetSpecialValueFor("hp_regen")
 	
-	if not IsDaytime() then
-		self.bonus_health	=	self.bonus_health * 2
-	end
+	self.move_speed		= self.ability:GetSpecialValueFor("move_speed")
 end
 
-function modifier_imba_howl_buff:GetEffectName()
-	return "particles/units/heroes/hero_lycan/lycan_howl_buff.vpcf"
-end
-
-function modifier_imba_howl_buff:GetEffectAttachType()
-	return PATTACH_ABSORIGIN_FOLLOW
+function modifier_imba_howl_buff:OnRefresh()
+	self:OnCreated()
 end
 
 function modifier_imba_howl_buff:DeclareFunctions()		
-		local decFuncs = {MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE ,
-						  MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT,
-						  MODIFIER_PROPERTY_HEALTH_BONUS						  
-						  }		
-		return decFuncs			
+	local decFuncs = 	{
+						MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+						MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
+						MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
+						
+						-- IMBAfication: The Wolf Is At Your Door
+						MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT,
+						}		
+	return decFuncs			
 end
 
-function modifier_imba_howl_buff:GetModifierPreAttack_BonusDamage()
-	-- Check if unit is hero or not
-	if self.parent:IsHero() then
-		self.bonus_damage	= self.ability:GetSpecialValueFor("bonus_damage_hero")
-	else
-		self.bonus_damage	= self.ability:GetSpecialValueFor("bonus_damage_units")
-	end
-	
-	-- Check if night time (double bonus)
-	if not IsDaytime() then
-		self.bonus_damage	= self.bonus_damage * 2
-	end
-		
-	return self.bonus_damage
+function modifier_imba_howl_buff:GetModifierAttackSpeedBonus_Constant()
+	return self.attack_speed
 end
 
-function modifier_imba_howl_buff:GetModifierHealthBonus()
-	return self.bonus_health
+function modifier_imba_howl_buff:GetModifierPhysicalArmorBonus()
+	return self.armor
 end
 
+function modifier_imba_howl_buff:GetModifierConstantHealthRegen()
+	return self.hp_regen
+end
 
 function modifier_imba_howl_buff:GetModifierMoveSpeedBonus_Constant()
-	-- Check if unit is hero or not
-	if self.parent:IsHero() then
-		self.bonus_ms	= self.ability:GetSpecialValueFor("bonus_ms_heroes")
-	else
-		self.bonus_ms	= self.ability:GetSpecialValueFor("bonus_ms_units")
-	end
-	
-	-- Check if night time (double bonus)
-	if not IsDaytime() then
-		self.bonus_ms	= self.bonus_ms * 2
-	end
-
-	return self.bonus_ms
+	return self.move_speed
 end
-
 
 function modifier_imba_howl_buff:CheckState()
 	if IsServer() then

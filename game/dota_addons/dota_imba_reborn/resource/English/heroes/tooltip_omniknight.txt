@@ -1,6 +1,6 @@
 // Omniknight's Purification
 "DOTA_Tooltip_ability_imba_omniknight_purification"                    "Purification"
-"DOTA_Tooltip_ability_imba_omniknight_purification_Description"                     "Instantly heals a friendly unit and damaging all nearby enemy units.\n<font color='#FF7800'>Purifiception:</font> Blesses the target with a buff that amplifies all heals and health regeneration it receives by %purifiception_heal_amp_pct%% for each stack of the buff. Can stack with itself up to a maximum. Whenever the target recovers %purifiception_stack_threshold% or more of its health from any source, it gains a stack. However, only successive casts of Purification can refresh the duration."
+"DOTA_Tooltip_ability_imba_omniknight_purification_Description"                     "Instantly heals a friendly unit and damaging all nearby enemy units.\n<font color='#FF7800'>Purifiception:</font> Blesses the target with a buff that amplifies all heals and health regeneration it receives by %purifiception_heal_amp_pct%%% for each stack of the buff. Can stack with itself up to a maximum. Whenever the target recovers %purifiception_stack_threshold% or more of its health from any source, it gains a stack. However, only successive casts of Purification can refresh the duration."
 "DOTA_Tooltip_ability_imba_omniknight_purification_Note0"              "Can be cast on spell immune allies."
 "DOTA_Tooltip_ability_imba_omniknight_purification_Note1"              "Stacks of Purifiception can only be gained through actual healing done."
 "DOTA_Tooltip_ability_imba_omniknight_purification_Lore"                "Priests of the Omniscience are adept at removing impurities from fellow warriors."
@@ -20,7 +20,7 @@
 
 // Omniknight's Repel
 "DOTA_Tooltip_ability_imba_omniknight_repel"                            "Repel"
-"DOTA_Tooltip_ability_imba_omniknight_repel_Description"                "Creates a divine barrier around a target unit which grants it Spell Immunity and 100% resistance to Magic Damage.\n<font color='#FF7800'>Degen Aura:</font> Greatly degenerates the movement and attack capabilities of enemy units that stray too near. Lingers briefly after going out of range or aura ends.\n<font color='#FF7800'>Chosen of the Omniscience:</font> Units blessed with Repel temporarily get a Degen Aura of their own for the duration. Auras does not stack with itself.\n<font color='#FF7800'>Be fearless:</font> Purification can be cast on Repelled targets."
+"DOTA_Tooltip_ability_imba_omniknight_repel_Description"                "Creates a divine barrier around a target unit which grants it Spell Immunity and 100% resistance to Magic Damage.\n<font color='#FF7800'>Degen Aura:</font> Greatly degenerates the movement and attack capabilities of enemy units that stray too near. Lingers briefly after going out of range or the aura ends.\n<font color='#FF7800'>Chosen of the Omniscience:</font> Units blessed with Repel temporarily get a Degen Aura of their own for the duration. Aura does not stack with itself."
 "DOTA_Tooltip_ability_imba_omniknight_repel_Note0"                      "Degen Aura has been combined with Repel and those two skills now act as one."
 "DOTA_Tooltip_ability_imba_omniknight_repel_Lore"                      "When faced with the pit of sacrifice, Purist's resilience to magic was tested and affirmed."
 "DOTA_Tooltip_ability_imba_omniknight_repel_duration"                  "DURATION:"
@@ -29,11 +29,11 @@
 "DOTA_Tooltip_ability_imba_omniknight_repel_as_slow"                    "ATTACK SPEED SLOW:"
 "DOTA_Tooltip_ability_imba_omniknight_repel_linger_duration"            "DEGEN AURA LINGER DURATION:"
 
-"DOTA_Tooltip_modifier_imba_repel"                          "Repel"
-"DOTA_Tooltip_modifier_imba_repel_Description"                          "Grants Spell Immunity and 100% Magic Resistance."
+"DOTA_Tooltip_modifier_imba_repel"										"Repel"
+"DOTA_Tooltip_modifier_imba_repel_Description"							"Grants Spell Immunity and 100% Magic Resistance."
 
-"DOTA_Tooltip_modifier_imba_degen_debuff"                              "Degen Aura Slow"
-"DOTA_Tooltip_modifier_imba_degen_debuff_Description"                  "Slowed. Attack and move speed decreased."
+"DOTA_Tooltip_modifier_imba_degen_debuff"								"Degen Aura Slow"
+"DOTA_Tooltip_modifier_imba_degen_debuff_Description"					"Slowed. Attack and move speed decreased."
 
 // Omniknight's Hammer of Virtue
 "DOTA_Tooltip_ability_imba_omniknight_hammer_of_virtue"                "Hammer of Virtue"

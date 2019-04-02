@@ -1,0 +1,148 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:vpcf19:version{aafc65d8-7a5a-4e01-bd8d-3ac118422503} -->
+{
+	_class = "CParticleSystemDefinition"
+	m_nMaxParticles = 4
+	m_flConstantRadius = 1.5
+	m_ConstantColor = [ 0, 0, 0, 255 ]
+	m_nConstantSequenceNumber1 = 1
+	m_bShouldSort = false
+	m_Renderers = 
+	[
+		{
+			_class = "C_OP_RenderProjected"
+			m_hProjectedMaterial = resource:"materials/particle/projected_cracks.vmat"
+			m_flMinProjectionDepth = -40.0
+			m_flMaxProjectionDepth = 40.0
+		},
+	]
+	m_Operators = 
+	[
+		{
+			_class = "C_OP_Decay"
+		},
+		{
+			_class = "C_OP_BasicMovement"
+			m_bDisableOperator = true
+			m_fDrag = 0.1
+		},
+		{
+			_class = "C_OP_RampScalarSpline"
+			m_flStartTime_max = 0.7
+			m_flStartTime_min = 0.6
+			m_nField = "13"
+			m_RateMin = 2.0
+			m_RateMax = 3.0
+			m_flEndTime_min = 0.9
+		},
+		{
+			_class = "C_OP_RampScalarSpline"
+			m_bEaseOut = true
+			m_RateMax = -1.8
+			m_RateMin = -1.0
+			m_nField = "13"
+			m_flEndTime_min = 0.095
+			m_flEndTime_max = 0.22
+		},
+		{
+			_class = "C_OP_Decay"
+		},
+		{
+			_class = "C_OP_FadeOut"
+			m_bEaseInAndOut = false
+			m_bProportional = false
+			m_flFadeOutTimeMax = 1.0
+			m_flFadeOutTimeMin = 1.0
+		},
+	]
+	m_Initializers = 
+	[
+		{
+			_class = "C_INIT_RandomRotation"
+			m_flDegreesMax = 0.0
+		},
+		{
+			_class = "C_INIT_RandomScalar"
+			m_nFieldOutput = "13"
+			m_flMax = 1.31
+			m_flMin = 1.31
+		},
+		{
+			_class = "C_INIT_RandomLifeTime"
+			m_fLifetimeMax = 4.5
+			m_fLifetimeMin = 4.0
+		},
+		{
+			_class = "C_INIT_RandomAlpha"
+		},
+		{
+			_class = "C_INIT_RandomRadius"
+		},
+		{
+			_class = "C_INIT_CreateWithinSphere"
+		},
+		{
+			_class = "C_INIT_RemapCPtoScalar"
+			m_flOutputMax = 900.0
+			m_flOutputMin = 100.0
+			m_flInputMax = 900.0
+			m_flInputMin = 100.0
+			m_nCPInput = 1
+		},
+		{
+			_class = "C_INIT_DistanceToCPInit"
+			m_flOutputMin = 1.0
+			m_flInputMax = 450.0
+			m_flInputMin = 1.0
+			m_bScaleInitialRange = true
+		},
+		{
+			_class = "C_INIT_PositionOffset"
+			m_OffsetMax = [ 0.0, 0.0, 5.0 ]
+			m_OffsetMin = [ 0.0, 0.0, 5.0 ]
+		},
+	]
+	m_Emitters = 
+	[
+		{
+			_class = "C_OP_InstantaneousEmitter"
+			m_nParticlesToEmit = 
+			{
+				m_nType = "PF_TYPE_LITERAL"
+				m_flLiteralValue = 3.0
+			}
+		},
+	]
+	m_Children = 
+	[
+		{
+			m_ChildRef = resource:"particles/item/ogre_seal_totem/ogre_melee_smash_scorch.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/item/ogre_seal_totem/ogre_melee_smash_pulse.vpcf"
+		},
+	]
+	m_controlPointConfigurations = 
+	[
+		{
+			m_name = "preview"
+			m_drivers = 
+			[
+				{
+					m_iAttachType = "PATTACH_WORLDORIGIN"
+					m_vecOffset = [ 0.0, 0.0, 0.0 ]
+					m_angOffset = [ null, null, null ]
+					m_entityName = "self"
+				},
+				{
+					m_iControlPoint = 1
+					m_iAttachType = "PATTACH_WORLDORIGIN"
+					m_vecOffset = [ 1.0, 0.0, 0.0 ]
+					m_angOffset = [ null, null, null ]
+					m_entityName = "self"
+				},
+			]
+		},
+	]
+	m_nBehaviorVersion = 4
+	m_nFirstMultipleOverride_BackwardCompat = 6
+}

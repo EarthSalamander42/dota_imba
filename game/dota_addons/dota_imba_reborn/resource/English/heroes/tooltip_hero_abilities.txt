@@ -30,13 +30,13 @@
 ////===============================================================================================================
 // Anti Mage's Spell Shield
 ////===============================================================================================================
-"DOTA_Tooltip_ability_imba_antimage_spell_shield"                      "Spell Shield"
-"DOTA_Tooltip_ability_imba_antimage_spell_shield_Description"          "Passively increases magic resistance.\n<font color='#FF7800'>Purity of Will:</font> Can be activated to block and reflect every targeted spell for a short duration.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
+"DOTA_Tooltip_ability_imba_antimage_spell_shield"                      "Counterspell"
+"DOTA_Tooltip_ability_imba_antimage_spell_shield_Description"          "Passively grants you magic resistance. Can be activated to create an anti-magic shell around you that sends any targeted spells back towards enemies instead of affecting you.\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
 "DOTA_Tooltip_ability_imba_antimage_spell_shield_Note0"                "Increases the magic resistance bonus additively, not multiplicatively."
 "DOTA_Tooltip_ability_imba_antimage_spell_shield_Lore"                  "Anti-Mage's burning hatred for magic makes him impervious against most of its vile effects."
 "DOTA_Tooltip_ability_imba_antimage_spell_shield_magic_resistance"                  "%MAGIC RESISTANCE:"
-"DOTA_Tooltip_ability_imba_antimage_spell_shield_active_duration"                   "PURITY OF WILL DURATION:"
-"DOTA_Tooltip_ability_imba_antimage_spell_shield_aghanim_description"               "Automatically shields and reflects one spell to its original caster upon getting hit by a targeted spell. This effect has an internal cooldown of 12 seconds."
+"DOTA_Tooltip_ability_imba_antimage_spell_shield_active_duration"                   "DURATION:"
+"DOTA_Tooltip_ability_imba_antimage_spell_shield_aghanim_description"               "Automatically shields and reflects one spell to its original caster upon getting hit by a targeted spell. This effect has an internal cooldown of 6 seconds."
 
 "DOTA_Tooltip_modifier_imba_spell_shield_buff_reflect"                  "Spell Shield"
 "DOTA_Tooltip_modifier_imba_spell_shield_buff_reflect_Description"                  "Counter and reflect every spell for a short duration"
@@ -62,8 +62,8 @@
 "DOTA_Tooltip_ability_imba_antimage_mana_void_mana_void_aoe_radius"                 "RADIUS:"
 "DOTA_Tooltip_ability_imba_antimage_mana_void_mana_void_mana_burn_pct"              "%MANA BURN:"
 
-"DOTA_Tooltip_modifier_imba_mana_void_ministun"                        "Mana Void"
-"DOTA_Tooltip_modifier_imba_mana_void_ministun_Description"            "Stunned by Anti-mage's mana void"
+"DOTA_Tooltip_modifier_imba_mana_void_stunned"                        "Mana Void"
+"DOTA_Tooltip_modifier_imba_mana_void_stunned_Description"            "Stunned by Anti-Mage's mana void."
 
 ////===============================================================================================================
 // Anti Mage's Custom Talents
@@ -630,11 +630,10 @@
 "DOTA_Tooltip_modifier_imba_dragon_tail_debuff_Description"             "Stunned!"
 
 "DOTA_Tooltip_ability_imba_dragon_knight_dragon_blood"                "Dragon Blood"
-"DOTA_Tooltip_ability_imba_dragon_knight_dragon_blood_Description"          "The life blood of the Dragon improves health regeneration and strengthens armor.\n<font color='#FF7800'>Fluid Blood:</font> Health regeneration and armor multiplied by %dragon_form_mult% while in Elder Dragon Form."
+"DOTA_Tooltip_ability_imba_dragon_knight_dragon_blood_Description"          "The life blood of the Dragon improves health regeneration and strengthens armor.\n<font color='#FF7800'>Fluid Blood:</font> Health regeneration and armor is multiplied by %dragon_form_mult% while in Elder Dragon Form."
 "DOTA_Tooltip_ability_imba_dragon_knight_dragon_blood_Lore"             "Slyrak's blood still courses through Davion's veins, giving him twice the vitality of an ordinary knight."
 "DOTA_Tooltip_ability_imba_dragon_knight_dragon_blood_bonus_health_regen"     "HEALTH REGEN:"
 "DOTA_Tooltip_ability_imba_dragon_knight_dragon_blood_bonus_armor"          "ARMOR:"
-"DOTA_Tooltip_ability_imba_dragon_knight_dragon_blood_dragon_form_mult"       "DRAGON FORM MULTIPLIER:"
 
 "DOTA_Tooltip_modifier_imba_dragon_blood"                     "Dragon Blood"
 "DOTA_Tooltip_modifier_imba_dragon_blood_Description"               "Gaining bonus health regen and armor."
@@ -644,12 +643,10 @@
 "DOTA_Tooltip_ability_imba_dragon_knight_elder_dragon_charge_rush_distance"     "DISTANCE:"
 
 "DOTA_Tooltip_ability_imba_dragon_knight_elder_dragon_form"             "Elder Dragon Form"
-"DOTA_Tooltip_ability_imba_dragon_knight_elder_dragon_form_Description"       "Dragon Knight takes the form of one of three powerful elder dragons, increasing his speed and Dragon Tail's range, while granting him new powers.\n<font color=\"#9acd32\">LEVEL 1 Green Dragon</font> - Corrosive Breath: attacks deal 20 poison damage per second for 5 seconds. Works on structures.\n<font color=\"#ff0000\">LEVEL 2 Red Dragon</font> - Splash Attack: attacks damage all enemy units in a 300 radius, with Corrosive Breath added to the targets.\n<font color=\"#87ceeb\">LEVEL 3 Blue Dragon</font> - Frost Breath: slows movement speed by 30%% and attack speed by 30 of enemy units in Splash Attack range for 3 seconds, with Corrosive Breath added to the targets.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
+"DOTA_Tooltip_ability_imba_dragon_knight_elder_dragon_form_Description"       "Dragon Knight takes the form of one of three powerful elder dragons, increasing his speed and Dragon Tail's range, while granting him new powers.\n<font color=\"#9acd32\">LEVEL 1 Green Dragon</font> - Corrosive Breath: attacks deal %corrosive_breath_damage% poison damage per second for %corrosive_breath_duration% seconds. Works on structures.\n<font color=\"#ff0000\">LEVEL 2 Red Dragon</font> - Splash Attack: attacks damage all enemy units in a %splash_radius% radius at %splash_damage_percent%%% damage, with Corrosive Breath added to the targets.\n<font color=\"#87ceeb\">LEVEL 3 Blue Dragon</font> - Frost Breath: slows movement speed by %frost_bonus_movement_speed%%% and attack speed by %frost_bonus_attack_speed% of enemy units in Splash Attack range for %frost_duration% seconds, with Corrosive Breath added to the targets.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
 "DOTA_Tooltip_ability_imba_dragon_knight_elder_dragon_form_Lore"          "The dormant dragon power springs forth from within Davion, combining the powers of a legendary knight with a legendary Eldwurm."
 "DOTA_Tooltip_ability_imba_dragon_knight_elder_dragon_form_Note0"         "Corrosive Breath poison damage is lethal."
-"DOTA_Tooltip_ability_imba_dragon_knight_elder_dragon_form_Note1"         "Splash Attack deals 100/75/50% damage in a 150/225/300 radius. Splash damage does not affect buildings."
-"DOTA_Tooltip_ability_imba_dragon_knight_elder_dragon_form_Note2"         "Frost Breath stacks with Unique Attack Modifiers."
-"DOTA_Tooltip_ability_imba_dragon_knight_elder_dragon_form_Note3"         "Manta Style's cooldown time will be based on whether Dragon Knight was in his ranged or melee form when the item was used."
+"DOTA_Tooltip_ability_imba_dragon_knight_elder_dragon_form_Note1"         "Manta Style's cooldown time will be based on whether Dragon Knight was in his ranged or melee form when the item was used."
 "DOTA_Tooltip_ability_imba_dragon_knight_elder_dragon_form_duration"        "DURATION:"
 "DOTA_Tooltip_ability_imba_dragon_knight_elder_dragon_form_bonus_movement_speed"  "BONUS MOVE SPEED:"
 "DOTA_Tooltip_ability_imba_dragon_knight_elder_dragon_form_bonus_attack_range"    "BONUS ATTACK RANGE:"
@@ -1611,7 +1608,7 @@
 // Sand King's Caustic Finale
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_sandking_caustic_finale"                    "Caustic Finale"
-"DOTA_Tooltip_ability_imba_sandking_caustic_finale_Description"                     "Sand King poisons his enemies with every attack. When the poison debuff expires, the poison inside the enemies' body explodes, slowing and dealing damage to all nearby enemies.\n<font color='#FF7800'>Desert Poison:</font> When the poison explodes, any enemies that have been hit and are affected by Caustic Finale trigger their own poison immediately, causing a chain reaction."
+"DOTA_Tooltip_ability_imba_sandking_caustic_finale_Description"                     "Sand King poisons his enemies with every attack. When the poison debuff expires, the poison inside the enemies' body explodes, slowing and dealing damage to all nearby enemies.\n<font color='#FF7800'>Potent Consistency:</font> Expiry damage is the same as the explosion damage.\n<font color='#FF7800'>Desert Poison:</font> When the poison explodes, any enemies that have been hit and are affected by Caustic Finale trigger their own poison immediately, causing a chain reaction."
 "DOTA_Tooltip_ability_imba_sandking_caustic_finale_Lore"                "An injection from Crixalis makes one as brittle as the sands of his home."
 "DOTA_Tooltip_ability_imba_sandking_caustic_finale_Note0"              "Also activates if the affected unit dies, or if the debuff is purged."
 "DOTA_Tooltip_ability_imba_sandking_caustic_finale_Note1"              "Damaging an unit already affected by Caustic Finale does not refresh the debuff."
@@ -1721,7 +1718,7 @@
 // Shadow Fiend's Necromastery
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_nevermore_necromastery"                      "Necromastery"
-"DOTA_Tooltip_ability_imba_nevermore_necromastery_Description"          "Shadow Fiend steals the soul from units he kills, gaining bonus damage. If the killed unit is a hero, he gains %hero_kill_soul_count% souls. On death, he releases half of them from bondage.\n<font color='#FF7800'>Engorge:</font> Can gain more souls over the limit that lasts %temporary_soul_duration% secondseach, giving the same benefits as permanent souls. Can only store a percentage of the max souls.\n<font color='#FF7800'>Soul Harvester:</font> Grants %hero_attack_soul_count% soul when attacking or razing an enemy hero."
+"DOTA_Tooltip_ability_imba_nevermore_necromastery_Description"          "Shadow Fiend steals the soul from units he kills, gaining bonus damage. If the killed unit is a hero, he gains %hero_kill_soul_count% souls. On death, he releases half of them from bondage.\n<font color='#FF7800'>Engorge:</font> Can gain more souls over the limit that lasts %temporary_soul_duration% seconds each, giving the same benefits as permanent souls. Can only store a percentage of the max souls.\n<font color='#FF7800'>Soul Harvester:</font> Grants %hero_attack_soul_count% soul when attacking or razing an enemy hero."
 "DOTA_Tooltip_ability_imba_nevermore_necromastery_Note0"                "Can't steal the soul of units which don't have one in the first place."
 "DOTA_Tooltip_ability_imba_nevermore_necromastery_Lore"                "Harvested souls swirl in and out of the Abysm, empowering the Shadow Fiend to increase the size of his collection."
 "DOTA_Tooltip_ability_imba_nevermore_necromastery_damage_per_soul"                  "DAMAGE PER SOUL:"

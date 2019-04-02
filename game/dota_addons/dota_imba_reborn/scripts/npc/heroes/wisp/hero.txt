@@ -15,7 +15,8 @@
 
 		"Ability1"					"imba_wisp_tether"
 		"Ability2"					"imba_wisp_spirits"
-		"Ability3"					"imba_wisp_overcharge"		
+		//"Ability3"					"imba_wisp_overcharge"
+		"Ability3"					"imba_wisp_overcharge_721"
 		"Ability4"					"imba_wisp_swap_spirits"
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_wisp_relocate"
@@ -25,11 +26,16 @@
 
 		"Ability10"					"special_bonus_imba_wisp_3"
 		"Ability11"					"special_bonus_imba_wisp_2"
-		"Ability12"					"special_bonus_imba_wisp_1"
-		"Ability13"					"special_bonus_imba_wisp_5"
+		"Ability12"					"special_bonus_imba_wisp_5"
+		"Ability13"					"special_bonus_hp_regen_10"
 		"Ability14"					"special_bonus_imba_wisp_4"
-		"Ability15"					"special_bonus_imba_wisp_8"
-		"Ability16"					"special_bonus_imba_wisp_7"
+		"Ability15"					"special_bonus_imba_wisp_10"
+		"Ability16"					"special_bonus_imba_wisp_9"
 		"Ability17"					"special_bonus_imba_wisp_6"
+		
+		// Removed Talents
+		//"Ability12"					"special_bonus_imba_wisp_1"	// Overcharge Bonus
+		//"Ability16"					"special_bonus_imba_wisp_7" // Relocate grants spell immunity
+		// Ability15"					"special_bonus_imba_wisp_8" // Overcharge grants max mana
 	}
 }

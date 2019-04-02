@@ -43,6 +43,13 @@ function modifier_custom_mechanics:OnIntervalThink()
 --		end
 
 		CustomNetTables:SetTableValue( "status_resistance", string.format("%d", self:GetParent():GetEntityIndex()) , { status_resistance = self:GetParent():GetStatusResistance() } )
+		
+		-- Rough Out of Bounds warp back logic
+		if parent:GetAbsOrigin().x >= 8000 then
+			FindClearSpaceForUnit(parent, GetGroundPosition(Vector(7500, parent:GetAbsOrigin().y, parent:GetAbsOrigin().z), nil), true)
+		elseif parent:GetAbsOrigin().x <= -8000 then
+			FindClearSpaceForUnit(parent, GetGroundPosition(Vector(-7500, parent:GetAbsOrigin().y, parent:GetAbsOrigin().z), nil), true)
+		end
 	end
 end
 

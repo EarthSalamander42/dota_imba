@@ -66,6 +66,8 @@ function modifier_imba_juggernaut_blade_fury:OnCreated()
 	self.deflect_chance = self:GetAbility():GetTalentSpecialValueFor("deflect_chance")
 	self.deflect = true
 
+	self.damage_penalty	= self:GetAbility():GetTalentSpecialValueFor("damage_penalty")
+
 	if IsServer() then
 		if self:GetCaster():IsAlive() then
 			local fury_particle = "particles/units/heroes/hero_juggernaut/juggernaut_blade_fury.vpcf"
@@ -378,10 +380,15 @@ end
 
 function modifier_imba_juggernaut_blade_fury:DeclareFunctions()
  	local funcs = {
-		MODIFIER_EVENT_ON_ATTACK_LANDED,
-		MODIFIER_EVENT_ON_TAKEDAMAGE
+		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE
  	}
  	return funcs
+end
+
+function modifier_imba_juggernaut_blade_fury:GetModifierPreAttack_BonusDamage(keys)
+	if keys.target and not keys.target:IsMagicImmune() and not keys.target:IsBuilding() then
+		return self.damage_penalty
+	end
 end
 
 -- Deflected kill credited to the caster.
@@ -1481,6 +1488,15 @@ LinkLuaModifier("modifier_imba_omni_slash_talent", "components/abilities/heroes/
 LinkLuaModifier("modifier_omnislash_image_afterimage_fade", "components/abilities/heroes/hero_juggernaut", LUA_MODIFIER_MOTION_NONE)
 
 function imba_juggernaut_omni_slash:IsNetherWardStealable() return false end
+
+function imba_juggernaut_omni_slash:GetCooldown(level)
+	if self:GetCaster():HasScepter() then
+		return self:GetSpecialValueFor("cooldown_scepter")
+	else
+		return self.BaseClass.GetCooldown(self, level)
+	end
+end
+
 function imba_juggernaut_omni_slash:GetIntrinsicModifierName()
 	return	"modifier_imba_juggernaut_omni_slash_cdr"
 end
@@ -1493,17 +1509,31 @@ function imba_juggernaut_omni_slash:GetAbilityTextureName()
 	return "juggernaut_omni_slash"
 end
 
+-- Grimstroke edge case (really should be cleaner than this but...yeah)
+function imba_juggernaut_omni_slash:OnOwnerDied()
+	if not self:IsActivated() then
+		self:SetActivated(true)
+	end
+end
+
+function imba_juggernaut_omni_slash:OnOwnerSpawned()
+	self:OnOwnerDied()
+end
+
 function imba_juggernaut_omni_slash:OnAbilityPhaseStart()
 	local caster = self:GetCaster()
 	local rand = math.random
 	local im_the_juggernaut_lich = 10
 	local ryujinnokenwokurae = 10
-	if RollPercentage(im_the_juggernaut_lich) then
-		caster:EmitSound("juggernaut_jug_rare_17")
-	elseif RollPercentage(im_the_juggernaut_lich) then
-		caster:EmitSound("Imba.JuggernautGenji")
-	else
-		caster:EmitSound("juggernaut_jug_ability_omnislash_0"..rand(3))
+	
+	if caster:GetName() == "npc_dota_hero_juggernaut" then
+		if RollPercentage(im_the_juggernaut_lich) then
+			caster:EmitSound("juggernaut_jug_rare_17")
+		elseif RollPercentage(im_the_juggernaut_lich) then
+			caster:EmitSound("Imba.JuggernautGenji")
+		else
+			caster:EmitSound("juggernaut_jug_ability_omnislash_0"..rand(3))
+		end
 	end
 
 	if caster:HasTalent("special_bonus_imba_juggernaut_9") then
@@ -1582,7 +1612,13 @@ function imba_juggernaut_omni_slash:OnSpellStart()
 		-- Add the image indicator
 		omnislash_image:AddNewModifier(self.caster, self, "modifier_imba_omni_slash_image", {})
 
-		local omnislash_modifier_handler = omnislash_image:AddNewModifier(omnislash_image, self, "modifier_imba_omni_slash_caster", {duration = 15.0})
+		local omnislash_modifier_handler
+		
+		if self.caster:HasScepter() then
+			omnislash_modifier_handler = omnislash_image:AddNewModifier(self.caster, self, "modifier_imba_omni_slash_caster", {duration = self:GetSpecialValueFor("duration_scepter")})
+		else
+			omnislash_modifier_handler = omnislash_image:AddNewModifier(self.caster, self, "modifier_imba_omni_slash_caster", {duration = self:GetSpecialValueFor("duration")})
+		end
 		
 		if omnislash_modifier_handler then
 			omnislash_modifier_handler.original_caster = self.caster
@@ -1617,7 +1653,13 @@ function imba_juggernaut_omni_slash:OnSpellStart()
 		end
 		end)
 	else
-		local omnislash_modifier_handler = self.caster:AddNewModifier(self.caster, self, "modifier_imba_omni_slash_caster", {duration = 15.0})
+		local omnislash_modifier_handler
+		
+		if self.caster:HasScepter() then
+			omnislash_modifier_handler = self.caster:AddNewModifier(self.caster, self, "modifier_imba_omni_slash_caster", {duration = self:GetSpecialValueFor("duration_scepter")})
+		else
+			omnislash_modifier_handler = self.caster:AddNewModifier(self.caster, self, "modifier_imba_omni_slash_caster", {duration = self:GetSpecialValueFor("duration")})
+		end
 
 		if omnislash_modifier_handler then
 			omnislash_modifier_handler.original_caster = self.caster
@@ -1662,12 +1704,6 @@ function imba_juggernaut_omni_slash:OnSpellStart()
 		ParticleManager:SetParticleControl(trail_pfx, 0, self.previous_position)
 		ParticleManager:SetParticleControl(trail_pfx, 1, self.current_position)
 		ParticleManager:ReleaseParticleIndex(trail_pfx)
-		
-		if self.target:TriggerSpellAbsorb(self) then
-			return nil
-		end
-
-		self.caster:PerformAttack(self.target, true, true, true, true, true, false, false)
 	end
 end
 
@@ -1709,6 +1745,7 @@ end
 
 function modifier_imba_omni_slash_image:GetModifierDamageOutgoing_Percentage()
 	local image_outgoing_damage_percent = (100 - self:GetCaster():FindTalentValue("special_bonus_imba_juggernaut_7")) * (-1)
+	
 	return image_outgoing_damage_percent
 end
 
@@ -1766,6 +1803,7 @@ end
 -- Damage reduction from Omnislash Talent
 function modifier_imba_omni_slash_talent:GetModifierDamageOutgoing_Percentage()
 	local caster_outgoing_damage_percent = (100 - self:GetCaster():FindTalentValue("special_bonus_imba_juggernaut_7","caster_outgoing_damage")) * (-1)
+
 	return caster_outgoing_damage_percent
 end
 
@@ -1788,7 +1826,7 @@ end
 modifier_imba_omni_slash_caster = modifier_imba_omni_slash_caster or class({})
 
 function modifier_imba_omni_slash_caster:OnCreated()
-	self.caster = self:GetParent()
+	self.caster = self:GetCaster()
 	self.parent = self:GetParent()
 	self.base_bonus_damage = self:GetAbility():GetTalentSpecialValueFor("bonus_damage_att")
 	self.minimum_damage = self:GetAbility():GetTalentSpecialValueFor("min_damage")
@@ -1805,28 +1843,19 @@ function modifier_imba_omni_slash_caster:OnCreated()
 	-- Seriously!? Took me 2 hours to fix this. >:(
 	if IsServer() then
 		Timers:CreateTimer(FrameTime(), function()
-			if (not self.caster:IsNull()) then
-				if not self.original_caster:HasScepter() then
-					self.bounce_range = self:GetAbility():GetTalentSpecialValueFor("bounce_range")
-					self.bounce_amt = self:GetAbility():GetTalentSpecialValueFor("jump_amount")
-				else
-					self.bounce_range = self:GetAbility():GetTalentSpecialValueFor("scepter_bounce_range")
-					self.bounce_amt = self:GetAbility():GetTalentSpecialValueFor("scepter_jump_amt")
-				end
+			if (not self.parent:IsNull()) then
+				
+				self.bounce_range = self:GetAbility():GetSpecialValueFor("omni_slash_radius")
 				
 				self.hero_agility = self.original_caster:GetAgility()
 				self:GetAbility():SetRefCountsModifiers(false)
 
-				-- Saving the bounce amount as a separate value in case of having first slash being spell blocked
-				self.original_bounce_amt = self.bounce_amt
-
-				self:BounceAndSlaughter()
+				self:BounceAndSlaughter(true)
 				
-				if self.caster:HasTalent("special_bonus_imba_juggernaut_9") then
-					self:StartIntervalThink(self:GetAbility():GetSpecialValueFor("bounce_delay") - self.caster:FindTalentValue("special_bonus_imba_juggernaut_9","bounce_delay_reduction"))
-				else
-					self:StartIntervalThink(self:GetAbility():GetSpecialValueFor("bounce_delay"))
-				end
+				-- Well this looks messy as hell
+				local slash_rate = (1 / ( self.caster:GetAttackSpeed() * (math.max(self:GetAbility():GetSpecialValueFor("attack_rate_multiplier"), 1)))) / math.max(self.caster:FindTalentValue("special_bonus_imba_juggernaut_9"), 1)
+				
+				self:StartIntervalThink(slash_rate)
 			end
 		end)
 	end
@@ -1836,42 +1865,56 @@ function modifier_imba_omni_slash_caster:OnIntervalThink()
 	-- Get the hero Agility while casting Omnislash
 	self.hero_agility = self.original_caster:GetAgility()
 	self:BounceAndSlaughter()
+	
+	-- Slash interval updates as attack speed updates
+	local slash_rate = (1 / ( self.caster:GetAttackSpeed() * (math.max(self:GetAbility():GetSpecialValueFor("attack_rate_multiplier"), 1)))) / math.max(self.caster:FindTalentValue("special_bonus_imba_juggernaut_9"), 1)
+
+	self:StartIntervalThink(-1)
+	self:StartIntervalThink(slash_rate)
 end
 
-function modifier_imba_omni_slash_caster:BounceAndSlaughter()
+function modifier_imba_omni_slash_caster:BounceAndSlaughter(first_slash)
+	local order = FIND_ANY_ORDER
+	
+	if first_slash then
+		order = FIND_CLOSEST
+	end
+	
 	self.nearby_enemies = FindUnitsInRadius(
-		self.caster:GetTeamNumber(),
-		self.caster:GetAbsOrigin(),
+		self.parent:GetTeamNumber(),
+		self.parent:GetAbsOrigin(),
 		nil,
 		self.bounce_range,
 		DOTA_UNIT_TARGET_TEAM_ENEMY,
 		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP,
 		DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_INVULNERABLE,
-		FIND_ANY_ORDER,
+		order,
 		false
 	)
 
-	if self.bounce_amt >= 1 and #self.nearby_enemies >= 1 then
+	if #self.nearby_enemies >= 1 then
 		for _,enemy in pairs(self.nearby_enemies) do
-			local previous_position = self.caster:GetAbsOrigin()
-			FindClearSpaceForUnit(self.caster, enemy:GetAbsOrigin() + RandomVector(128), false)
+			local previous_position = self.parent:GetAbsOrigin()
+			-- Used to be 128 but it seems to interrupt a lot at fast speeds if there's Lotus battles...
+			FindClearSpaceForUnit(self.parent, enemy:GetAbsOrigin() + RandomVector(100), false)
+			
+			if not self:GetAbility() then break end
 
-			self.caster:MoveToTargetToAttack(enemy)
-
-			local current_position = self.caster:GetAbsOrigin()
+			local current_position = self.parent:GetAbsOrigin()
 
 			-- Face the enemy every slash
-			self.caster:FaceTowards(enemy:GetAbsOrigin())
+			self.parent:FaceTowards(enemy:GetAbsOrigin())
 			
 			-- Provide vision of the target for a short duration
 			self:GetAbility():CreateVisibilityNode(current_position, 300, 1.0)
 
 			-- Perform the slash
 			self.slash = true
-
-			-- First slash handled by spell start
-			if self.bounce_amt ~= self.original_bounce_amt then
-				self.caster:PerformAttack(enemy, true, true, true, true, true, false, false)
+			
+			if first_slash and enemy:TriggerSpellAbsorb(self:GetAbility()) then
+				break
+			else
+				self.parent:PerformAttack(enemy, true, true, true, true, true, false, false)
 			end
 
 			-- If the target is not Roshan or a hero, instantly kill it
@@ -1879,9 +1922,6 @@ function modifier_imba_omni_slash_caster:BounceAndSlaughter()
 			else
 				enemy:Kill(self:GetAbility(), self.original_caster)
 			end
-
-			-- Count down amount of slashes
-			self.bounce_amt = self.bounce_amt - 1
 
 			-- Play hit sound
 			enemy:EmitSound("Hero_Juggernaut.OmniSlash.Damage")
@@ -1892,14 +1932,14 @@ function modifier_imba_omni_slash_caster:BounceAndSlaughter()
 			ParticleManager:ReleaseParticleIndex(hit_pfx)
 
 			-- Play particle trail when moving
-			local trail_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_juggernaut/juggernaut_omni_slash_trail.vpcf", PATTACH_ABSORIGIN, self.caster)
+			local trail_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_juggernaut/juggernaut_omni_slash_trail.vpcf", PATTACH_ABSORIGIN, self.parent)
 			ParticleManager:SetParticleControl(trail_pfx, 0, previous_position)
 			ParticleManager:SetParticleControl(trail_pfx, 1, current_position)
 			ParticleManager:ReleaseParticleIndex(trail_pfx)
 
 			self.last_enemy = enemy
 
-			if self.caster:HasModifier("modifier_imba_omni_slash_image") then
+			if self.parent:HasModifier("modifier_imba_omni_slash_image") then
 				if (not self.original_caster:HasModifier("modifier_imba_omni_slash_talent")) then
 					self.original_caster:AddNewModifier(self.original_caster,self:GetAbility(),"modifier_imba_omni_slash_talent",{})
 				end
@@ -1917,7 +1957,8 @@ end
 function modifier_imba_omni_slash_caster:DeclareFunctions()
 	local decFuncs = {
 		MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE,
-		MODIFIER_PROPERTY_PROCATTACK_BONUS_DAMAGE_PHYSICAL,
+		--MODIFIER_PROPERTY_PROCATTACK_BONUS_DAMAGE_PHYSICAL,
+		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE
 	}
 
 	return decFuncs
@@ -1942,35 +1983,40 @@ function modifier_imba_omni_slash_caster:GetModifierBaseAttack_BonusDamage()
     return 0
 end
 
+-- Removing Sword Master IMBAfication due to Omnislash vanilla 7.20 changes
 -- Omnislash's minimum damage handler
-function modifier_imba_omni_slash_caster:GetModifierProcAttack_BonusDamage_Physical(kv)
-	if IsServer() then
+-- function modifier_imba_omni_slash_caster:GetModifierProcAttack_BonusDamage_Physical(kv)
+	-- if IsServer() then
 
-		-- If the damage is not conducted by the ability itself, do nothing.
-		if not self.slash then
-			return nil
-		end
+		-- -- If the damage is not conducted by the ability itself, do nothing.
+		-- if not self.slash then
+			-- return nil
+		-- end
 
-		-- If Omnislash's slash damage is less than minimum damage according to the damage reduction from #7 Talent, add the bonus till minimum threshold
-		if self.caster:HasModifier("modifier_imba_omni_slash_image") then
-			if kv.attacker == self.caster and kv.damage <= (self.minimum_damage / (100 - self.original_caster:FindTalentValue("special_bonus_imba_juggernaut_7")) * 0.01) then
-				-- Set the slash ability to false so it won't trigger for normal attacks
-				self.slash = false
-				return ((self.minimum_damage - kv.damage) / (100 - self.original_caster:FindTalentValue("special_bonus_imba_juggernaut_7")) * 0.01 )
-			end
-		end
+		-- -- If Omnislash's slash damage is less than minimum damage according to the damage reduction from #7 Talent, add the bonus till minimum threshold
+		-- if self.parent:HasModifier("modifier_imba_omni_slash_image") then
+			-- if kv.attacker == self.parent and kv.damage <= (self.minimum_damage / (100 - self.original_caster:FindTalentValue("special_bonus_imba_juggernaut_7")) * 0.01) then
+				-- -- Set the slash ability to false so it won't trigger for normal attacks
+				-- self.slash = false
+				-- return ((self.minimum_damage - kv.damage) / (100 - self.original_caster:FindTalentValue("special_bonus_imba_juggernaut_7")) * 0.01 )
+			-- end
+		-- end
 
-		-- If Omnislash's slash damage is less than minimum damage, add the bonus till minimum threshold
-		if kv.attacker == self.caster and kv.damage <= self.minimum_damage then
-			-- Set the slash ability to false so it won't trigger for normal attacks
-			self.slash = false
-			return self.minimum_damage - kv.damage
-		end
-	end
+		-- -- If Omnislash's slash damage is less than minimum damage, add the bonus till minimum threshold
+		-- if kv.attacker == self.parent and kv.damage <= self.minimum_damage then
+			-- -- Set the slash ability to false so it won't trigger for normal attacks
+			-- self.slash = false
+			-- return self.minimum_damage - kv.damage
+		-- end
+	-- end
+-- end
+
+function modifier_imba_omni_slash_caster:GetModifierPreAttack_BonusDamage(kv)
+	return self:GetAbility():GetSpecialValueFor("bonus_damage")
 end
 
 function modifier_imba_omni_slash_caster:OnDestroy()
-	if IsServer() then		
+	if IsServer() then
 		self:GetAbility():SetActivated(true)
 
 		-- Re-enable Blade Fury during Omnislash (vanilla)
@@ -1982,21 +2028,15 @@ function modifier_imba_omni_slash_caster:OnDestroy()
 		if self.caster:HasAbility("imba_juggernaut_blade_dance") then
 			self.caster:FindAbilityByName("imba_juggernaut_blade_dance"):SetActivated(true)
 		end
-		
-		if self.bounce_amt > 1 then
-			local rand = RandomInt(1, 2)
-			self.caster:EmitSound("juggernaut_jug_ability_waste_0"..rand)
-		end
 
-		-- If jugg has stopped bouncing, stop the animation.
-		if self.bounce_amt == 0 or  #self.nearby_enemies == 0 then
-			self.caster:FadeGesture(ACT_DOTA_OVERRIDE_ABILITY_4)
-		end
+		self.parent:FadeGesture(ACT_DOTA_OVERRIDE_ABILITY_4)
+		
+		self.parent:MoveToPositionAggressive(self.parent:GetAbsOrigin())
 
 		-- Create the delay effect before the image destroys itself.
-		if self.caster:HasModifier("modifier_imba_omni_slash_image") then
-			if self.caster:HasModifier("modifier_imba_juggernaut_blade_fury") then
-				self.caster:RemoveModifierByName("modifier_imba_juggernaut_blade_fury")
+		if self.parent:HasModifier("modifier_imba_omni_slash_image") then
+			if self.parent:HasModifier("modifier_imba_juggernaut_blade_fury") then
+				self.parent:RemoveModifierByName("modifier_imba_juggernaut_blade_fury")
 			end
 
 			if self.original_caster:HasModifier("modifier_imba_omni_slash_talent") then
@@ -2014,26 +2054,26 @@ function modifier_imba_omni_slash_caster:OnDestroy()
 			self:GetParent():RemoveModifierByName("modifier_imba_omni_slash_image")
 
 			for item_id=0, 5 do
-				local item_in_caster = self.caster:GetItemInSlot(item_id)
+				local item_in_caster = self.parent:GetItemInSlot(item_id)
 				if item_in_caster ~= nil then
 					UTIL_Remove(item_in_caster)
 				end
 			end
 
 			-- Search for buffs and debuffs
-			local caster_modifiers = self.caster:FindAllModifiers()
+			local caster_modifiers = self.parent:FindAllModifiers()
 			for _,modifier in pairs(caster_modifiers) do
 				if modifier then
 					UTIL_Remove(modifier)
 				end
 			end
 
-			if (not self:GetCaster():IsNull()) then
+			if (not self:GetParent():IsNull()) then
 				-- self:GetCaster():SetAbsOrigin(Vector(0,0,99999))
 				-- self:GetCaster():AddNoDraw()
 
-				local icaster = self:GetCaster()
-				UTIL_Remove(icaster)
+				local iparent = self:GetParent()
+				UTIL_Remove(iparent)
 			end
 		end
 	end
@@ -2060,6 +2100,8 @@ function modifier_imba_omni_slash_caster:CheckState()
 		[MODIFIER_STATE_MAGIC_IMMUNE] = true,
 		-- [MODIFIER_STATE_STUNNED] = true,
 		-- [MODIFIER_STATE_SILENCED] = true,
+		[MODIFIER_STATE_DISARMED] = true,
+		[MODIFIER_STATE_ROOTED] = true
 	}
 
 	return state
@@ -2097,5 +2139,19 @@ function modifier_imba_juggernaut_omni_slash_cdr:OnAttackLanded(params) -- healt
 		local cd = self:GetAbility():GetCooldownTimeRemaining()
 		self:GetAbility():EndCooldown()
 		self:GetAbility():StartCooldown(cd)
+	end
+end
+
+-- Client-side helper functions --
+LinkLuaModifier("modifier_special_bonus_imba_juggernaut_7", "components/abilities/heroes/hero_juggernaut", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_juggernaut_7 = class({})
+function modifier_special_bonus_imba_juggernaut_7:IsHidden() 		return true end
+function modifier_special_bonus_imba_juggernaut_7:IsPurgable() 		return false end
+function modifier_special_bonus_imba_juggernaut_7:RemoveOnDeath() 	return false end
+
+function imba_juggernaut_omni_slash:OnOwnerSpawned()
+	if self:GetCaster():HasTalent("special_bonus_imba_juggernaut_7") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_juggernaut_7") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_juggernaut_7"), "modifier_special_bonus_imba_juggernaut_7", {})
 	end
 end

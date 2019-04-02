@@ -446,6 +446,9 @@ function modifier_imba_poison_sting:OnAttackLanded( params )
 		local caster = self:GetCaster()
 		local ability = self:GetAbility()
 		local duration = ability:GetSpecialValueFor("duration")
+		
+		if caster:PassivesDisabled() then return end
+		
 		if (caster == params.attacker) and (params.target.IsCreep or params.target.IsHero) then
 			if not params.target:IsBuilding() then
 				local mod = params.target:AddNewModifier(caster, ability, "modifier_imba_poison_sting_debuff", {duration = duration})
@@ -519,14 +522,16 @@ function modifier_imba_poison_sting_debuff:DamageTick(bFirstHit)
 	end
 	local parent = self:GetParent()
 	if IsServer() then
-		SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_POISON_DAMAGE, parent, damage, nil)
-		-- If the enemy is at low enough HP, kill it
-		if parent:GetHealth() <= (damage + 5) then
-			ApplyDamage({attacker = self:GetCaster(), victim = parent, ability = self:GetAbility(), damage = damage + 10, damage_type = DAMAGE_TYPE_PURE})
-			-- Else, remove some HP from it
-		else
-			parent:SetHealth(parent:GetHealth() - damage)
-		end
+		local final_damage 	= ApplyDamage({
+			attacker 		= self:GetCaster(),
+			victim 			= parent,
+			ability 		= self:GetAbility(),
+			damage 			= damage,
+			damage_type 	= DAMAGE_TYPE_MAGICAL,
+			damage_flags	= DOTA_DAMAGE_FLAG_HPLOSS
+		})
+		
+		SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_POISON_DAMAGE, parent, final_damage, nil)
 	end
 end
 
@@ -584,14 +589,16 @@ function modifier_imba_poison_sting_debuff_ward:DamageTick(bFirstHit)
 	end
 	local parent = self:GetParent()
 	if IsServer() then
-		SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_POISON_DAMAGE, parent, damage, nil)
-		-- If the enemy is at low enough HP, kill it
-		if parent:GetHealth() <= (damage + 5) then
-			ApplyDamage({attacker = self:GetCaster(), victim = parent, ability = self:GetAbility(), damage = damage + 10, damage_type = DAMAGE_TYPE_PURE})
-			-- Else, remove some HP from it
-		else
-			parent:SetHealth(parent:GetHealth() - damage)
-		end
+		local final_damage 	= ApplyDamage({
+			attacker 		= self:GetCaster(),
+			victim 			= parent,
+			ability 		= self:GetAbility(),
+			damage 			= damage,
+			damage_type 	= DAMAGE_TYPE_MAGICAL,
+			damage_flags	= DOTA_DAMAGE_FLAG_HPLOSS
+		})
+		
+		SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_POISON_DAMAGE, parent, final_damage, nil)
 	end
 end
 

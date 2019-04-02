@@ -38,6 +38,11 @@ function imba_zuus_arc_lightning:OnSpellStart()
 		false
 	)
 
+	--7.21 changes (why you gotta complicate things Valve)
+	if caster:HasModifier("modifier_imba_zuus_static_field") then
+		caster:FindModifierByName("modifier_imba_zuus_static_field"):Apply(target)
+	end
+
 	local damage_table 			= {}
 	damage_table.attacker 		= caster
 	damage_table.ability 		= ability
@@ -91,6 +96,11 @@ function imba_zuus_arc_lightning:Chain(caster, origin_target, chained_target, ab
 			FIND_CLOSEST, 
 			false
 		)
+
+		--7.21 changes (why you gotta complicate things Valve)
+		if caster:HasModifier("modifier_imba_zuus_static_field") then
+			caster:FindModifierByName("modifier_imba_zuus_static_field"):Apply(chained_target)
+		end
 
 		local damage_table 			= {}
 		damage_table.attacker 		= caster
@@ -383,6 +393,11 @@ function imba_zuus_lightning_bolt:CastLightningBolt(caster, ability, target, tar
 				target:AddNewModifier(caster, ability, "modifier_rooted", {duration = root_duration})
 			end
 
+			--7.21 changes (why you gotta complicate things Valve)
+			if caster:HasModifier("modifier_imba_zuus_static_field") then
+				caster:FindModifierByName("modifier_imba_zuus_static_field"):Apply(target)
+			end
+
 			local damage_table 			= {}
 			damage_table.attacker 		= caster
 			damage_table.ability 		= ability
@@ -391,7 +406,7 @@ function imba_zuus_lightning_bolt:CastLightningBolt(caster, ability, target, tar
 			damage_table.victim 		= target
 
 			-- Cannot deal magic dmg to immune... change to pure
-			if pierce_spellimmunity and target:IsMagicImmune() then
+			if pierce_spellimmunity then
 				damage_table.damage_type = DAMAGE_TYPE_PURE
 			end
 
@@ -526,7 +541,7 @@ function modifier_imba_zuus_static_field:IsPurgable() return false end
 function modifier_imba_zuus_static_field:IsHidden() return true end
 function modifier_imba_zuus_static_field:DeclareFunctions()
 	local decFuncs = {
-		MODIFIER_EVENT_ON_ABILITY_EXECUTED
+		--MODIFIER_EVENT_ON_ABILITY_EXECUTED
 	}
 
 	return decFuncs
@@ -590,6 +605,44 @@ function modifier_imba_zuus_static_field:OnAbilityExecuted(keys)
 				end
 			end
 		end
+	end
+end
+
+function modifier_imba_zuus_static_field:Apply(target)
+	if not IsServer() then return end	
+	
+	if not target:IsAlive() or target == caster or target:IsRoshan() then return end
+	
+	local ability			= self:GetAbility()
+	local caster			= self:GetCaster()
+	
+	local damage_health_pct	= ability:GetSpecialValueFor("damage_health_pct")
+	local duration			= ability:GetSpecialValueFor("duration")
+
+	local particle_effect = "particles/units/heroes/hero_zuus/zuus_static_field.vpcf"
+	if caster.static_field_effect then
+		particle_effect = caster.static_field_effect
+	end
+
+	local zuus_static_field = ParticleManager:CreateParticle(particle_effect, PATTACH_ABSORIGIN_FOLLOW, target)
+	ParticleManager:SetParticleControl(zuus_static_field, 1, target:GetAbsOrigin() * 100)	
+	
+	local current_health = target:GetHealth()
+	
+	local damage_table 			= {}
+	damage_table.attacker 		= self:GetCaster()
+	damage_table.ability 		= ability
+	damage_table.damage_type 	= ability:GetAbilityDamageType()
+	damage_table.damage_flag	= DOTA_DAMAGE_FLAG_HPLOSS
+	damage_table.damage			= (current_health / 100) * damage_health_pct
+	damage_table.victim 		= target
+			
+	ApplyDamage(damage_table)
+
+	-- Add a static charge 
+	local static_charge_modifier = target:AddNewModifier(caster, ability, "modifier_imba_zuus_static_charge", {duration = duration}):SetDuration(duration * (1 - target:GetStatusResistance()), true)
+	if static_charge_modifier ~= nil then
+		static_charge_modifier:SetStackCount(static_charge_modifier:GetStackCount() + 1)	
 	end
 end
 
@@ -1202,7 +1255,8 @@ function imba_zuus_thundergods_wrath:OnSpellStart()
 				ParticleManager:SetParticleControl(thundergod_strike_particle, 1, Vector(target_point.x, target_point.y, 2000))
 				ParticleManager:SetParticleControl(thundergod_strike_particle, 2, Vector(target_point.x, target_point.y, target_point.z + hero:GetBoundingMaxs().z))
 				
-				if caster:HasAbility("imba_zuus_static_field") and caster:FindAbilityByName("imba_zuus_static_field"):IsTrained() then
+				-- Does not apply the static charge stacks on heroes that are greater than 2500 distance away
+				if caster:HasAbility("imba_zuus_static_field") and caster:FindAbilityByName("imba_zuus_static_field"):IsTrained() and (caster:GetAbsOrigin() - hero:GetAbsOrigin()):Length2D() <= 2500 then
 					-- Add static charges prior to inflicting the damage
 					local static_charge_modifier = hero:AddNewModifier(caster, caster:FindAbilityByName("imba_zuus_static_field"), "modifier_imba_zuus_static_charge", {duration = 5.0})
 					
@@ -1210,15 +1264,23 @@ function imba_zuus_thundergods_wrath:OnSpellStart()
 						static_charge_modifier:SetStackCount(static_charge_modifier:GetStackCount() + 1)
 						-- Add Thundergod's Focus stack count to Static Charge count if applicable
 						static_charge_modifier:SetStackCount(static_charge_modifier:GetStackCount() + thundergods_focus_stacks)
+						
+						-- If I call the set duration directly on the modifier creation it returns nil or something...
+						static_charge_modifier:SetDuration(5.0 * (1 - hero:GetStatusResistance()), true)
 					end
 				end
 				
 				-- Cannot deal magic dmg to immune... change to pure
-				if pierce_spellimmunity and hero:IsMagicImmune() then
+				if pierce_spellimmunity then
 					damage_table.damage_type = DAMAGE_TYPE_PURE
 				end
 
 				if (not hero:IsMagicImmune() or pierce_spellimmunity) and (not hero:IsInvisible() or caster:CanEntityBeSeenByMyTeam(hero)) then
+					--7.21 changes (why you gotta complicate things Valve)
+					if caster:HasModifier("modifier_imba_zuus_static_field") then
+						caster:FindModifierByName("modifier_imba_zuus_static_field"):Apply(hero)
+					end
+					
 					damage_table.damage	 = self:GetAbilityDamage()
 					damage_table.victim  = hero
 					ApplyDamage(damage_table)
@@ -1258,7 +1320,7 @@ function imba_zuus_thundergods_wrath:OnSpellStart()
 					end
 					if caster:HasAbility("imba_zuus_lightning_bolt") then
 						local thundergods_focus_modifier = caster:AddNewModifier(caster, self, "modifier_imba_zuus_thundergods_focus", {duration = caster:FindAbilityByName("imba_zuus_lightning_bolt"):GetSpecialValueFor("thundergods_focus_duration")})
-						thundergods_focus_modifier:SetStackCount(thundergods_focus_modifier:GetStackCount() + 1)
+						thundergods_focus_modifier:SetStackCount(thundergods_focus_modifier:GetStackCount() + caster:FindTalentValue("special_bonus_imba_zuus_9"))
 					end
 				end
 				
@@ -1414,6 +1476,11 @@ function modifier_imba_zuus_thundergods_awakening:OnAttackLanded(keys)
 			local lightningBolt = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_arc_lightning_.vpcf", PATTACH_WORLDORIGIN, caster)
 			ParticleManager:SetParticleControl(lightningBolt, 0, Vector(caster:GetAbsOrigin().x, caster:GetAbsOrigin().y , caster:GetAbsOrigin().z + caster:GetBoundingMaxs().z ))   
 			ParticleManager:SetParticleControl(lightningBolt, 1, Vector(keys.attacker:GetAbsOrigin().x, keys.attacker:GetAbsOrigin().y, keys.attacker:GetAbsOrigin().z + keys.attacker:GetBoundingMaxs().z ))
+
+			--7.21 changes (why you gotta complicate things Valve)
+			if caster:HasModifier("modifier_imba_zuus_static_field") then
+				caster:FindModifierByName("modifier_imba_zuus_static_field"):Apply(keys.attacker)
+			end
 
 			local damage_table 			= {}
 			damage_table.attacker 		= caster

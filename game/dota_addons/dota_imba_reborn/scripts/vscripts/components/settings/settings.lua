@@ -512,9 +512,7 @@ IMBA_WEATHER_EFFECT = {}
 IMBA_WEATHER_EFFECT[1] = "particles/rain_fx/econ_snow.vpcf"
 
 IMBA_ABILITIES_IGNORE_CDR = {
-	"imba_venomancer_plague_ward",
-	"life_stealer_rage",
-	"weaver_shukuchi"
+	"imba_venomancer_plague_ward"
 }
 
 IMBA_MODIFIER_IGNORE_FRANTIC = {

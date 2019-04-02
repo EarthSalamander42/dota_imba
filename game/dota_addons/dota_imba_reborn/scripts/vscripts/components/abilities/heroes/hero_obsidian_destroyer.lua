@@ -229,15 +229,15 @@ function modifier_imba_arcane_orb_thinker:ApplyArcaneOrbAttack(target)
 			local damageTable = {victim = enemy,
 								damage = damage_instance,
 								damage_type = DAMAGE_TYPE_PURE,
-								damage_flags = DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION,
+								damage_flags = DOTA_DAMAGE_FLAG_NONE,
 								attacker = self.caster,
 								ability = self.ability
 								}
-								
-			ApplyDamage(damageTable)
+
+			local final_damage = ApplyDamage(damageTable)
 
 			-- Show damage alert
-			SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, enemy, damage_instance, nil)
+			SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, enemy, final_damage, nil)
 		end
 
 		-- If a target is an illusion or a summoned unit, check if it's still alive after the damage instance
