@@ -98,8 +98,10 @@ function modifier_imba_morbid_mask_unique:OnCreated()
 	-- Ability properties
 	self.ability = self:GetAbility()
 
-	-- Ability specials
-	self.lifesteal_pct = self.ability:GetSpecialValueFor("lifesteal_pct")
+	if self.ability then
+		-- Ability specials
+		self.lifesteal_pct = self.ability:GetSpecialValueFor("lifesteal_pct")
+	end
 end
 
 function modifier_imba_morbid_mask_unique:OnRefresh()

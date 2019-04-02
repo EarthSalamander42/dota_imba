@@ -286,7 +286,7 @@ function modifier_imba_stone_remnant:OnDestroy()
 				local damageRadius = self.PetrifyHandler:GetSpecialValueFor("damage_radius")
 				local units = FindUnitsInRadius(self.PetrifyHandler:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, damageRadius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
 				for _, unit in ipairs(units) do
-					ApplyDamage({victim = unit, attacker = self.PetrifyHandler:GetCaster(), damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
+					ApplyDamage({victim = unit, attacker = self.PetrifyHandler:GetCaster(), damage = damage, damage_type = DAMAGE_TYPE_MAGICAL, ability = self:GetAbility()})
 				end
 			end
 		end
@@ -538,7 +538,7 @@ function imba_earth_spirit_boulder_smash:OnAbilityPhaseStart()
 				target:AddNewModifier(caster, self, "modifier_imba_boulder_smash_push", {})
 				
 				if caster:GetTeamNumber() ~= target:GetTeamNumber() then
-					ApplyDamage({victim = target, attacker = caster, damage = self:GetSpecialValueFor("damage"), damage_type = DAMAGE_TYPE_MAGICAL})
+					ApplyDamage({victim = target, attacker = caster, damage = self:GetSpecialValueFor("damage"), damage_type = DAMAGE_TYPE_MAGICAL, ability = self:GetAbility()})
 				end
 				
 				local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_earth_spirit/espirit_bouldersmash_caster.vpcf", PATTACH_ABSORIGIN, caster)
@@ -722,7 +722,7 @@ function modifier_imba_boulder_smash_push:OnIntervalThink()
 					end
 				end
 
-				ApplyDamage({victim = target, attacker = self.caster, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
+				ApplyDamage({victim = target, attacker = self.caster, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL, ability = self:GetAbility()})
 			end
 		end
 	end
@@ -960,14 +960,14 @@ function modifier_imba_rolling_boulder:OnIntervalThink()
 			for _, nonHero in ipairs(nonHeroes) do
 				if not self.hitEnemies[nonHero:GetEntityIndex()] then
 					self.hitEnemies[nonHero:GetEntityIndex()] = true
-					ApplyDamage({victim = nonHero, attacker = self.caster, damage = self.damage, damage_type = DAMAGE_TYPE_MAGICAL})
+					ApplyDamage({victim = nonHero, attacker = self.caster, damage = self.damage, damage_type = DAMAGE_TYPE_MAGICAL, ability = self:GetAbility()})
 				end
 			end
 			
 			local heroes = FindUnitsInRadius(self.casterTeam, self.caster:GetAbsOrigin(), nil, self.hitRadius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_CLOSEST, false)
 			for i, hero in ipairs(heroes) do
 				
-				ApplyDamage({victim = hero, attacker = self.caster, damage = self.damage, damage_type = DAMAGE_TYPE_MAGICAL})
+				ApplyDamage({victim = hero, attacker = self.caster, damage = self.damage, damage_type = DAMAGE_TYPE_MAGICAL, ability = self:GetAbility()})
 				
 				local mark = hero:FindModifierByName("modifier_imba_earths_mark")
 				if mark then
@@ -1234,7 +1234,7 @@ function modifier_imba_geomagnetic_grip_pull:OnIntervalThink()
 				
 				-- checking for modifier instead of isRemnant because enchant remnant retains movement qualities after expiring, but doesnt damage anymore
 				if self.parent:HasModifier("modifier_imba_stone_remnant") then
-					ApplyDamage({victim = target, attacker = self.caster, damage = self.damage, damage_type = DAMAGE_TYPE_MAGICAL})
+					ApplyDamage({victim = target, attacker = self.caster, damage = self.damage, damage_type = DAMAGE_TYPE_MAGICAL, ability = self:GetAbility()})
 					EmitSoundOn("Hero_EarthSpirit.GeomagneticGrip.Cast", Damage)
 					
 					-- Earths mark effect
@@ -1371,7 +1371,7 @@ function modifier_imba_magnetize:OnIntervalThink()
 			end
 		end
 		
-		ApplyDamage({ victim = self.parent, attacker = self.caster, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL })
+		ApplyDamage({ victim = self.parent, attacker = self.caster, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL, ability = self:GetAbility()})
 		
 		EmitSoundOn("Hero_EarthSpirit.Magnetize.Debris", self.parent)
 		if self.parent:IsHero() then EmitSoundOn("Hero_EarthSpirit.Magnetize.Target.Tick", self.parent) end

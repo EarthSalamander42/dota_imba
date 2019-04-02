@@ -17,10 +17,9 @@
 //      Zeus: Static Field
 //---------------------------------------------------------------------------
 "DOTA_Tooltip_Ability_imba_zuus_static_field"					"Static Field"
-"DOTA_Tooltip_Ability_imba_zuus_static_field_description"		"Zeus shocks all nearby enemy units whenever he casts a spell, causing damage proportional to their current health.\n<font color='#FF7800'>Static Charge:</font> Each time Static Field deals damage it also applies one stack of <font color='#FFFFFF'>Static Charge</font>. Each stack of <font color='#FFFFFF'>Static Charge</font> reduces magic resistance by: %reduced_magic_resistance%%%. Additionally, at five stacks, affected units are revealed, and at nine stacks, afected units are Muted."
-"DOTA_Tooltip_Ability_imba_zuus_static_field_note0"				"The damage from Static Field is dealt before the damage from the used spell.\nUsing items dosen't trigger Static Field.\nDoes not require unit visibility to take effect."
+"DOTA_Tooltip_Ability_imba_zuus_static_field_description"		"Zeus shocks any enemy hit by his abilities, causing damage proportional to their current health.\n<font color='#FF7800'>Static Charge:</font> Each time Static Field deals damage it also applies one stack of <font color='#FFFFFF'>Static Charge</font>. Each stack of <font color='#FFFFFF'>Static Charge</font> reduces magic resistance by: %reduced_magic_resistance%%%. Additionally, at five stacks, affected units are revealed, and at nine stacks, afected units are Muted."
+"DOTA_Tooltip_Ability_imba_zuus_static_field_note0"				"The damage from Static Field is dealt before the damage from the used spell."
 "DOTA_Tooltip_Ability_imba_zuus_static_field_lore"				"The air crackles with static when the Thundergod walks the world."
-"DOTA_Tooltip_Ability_imba_zuus_static_field_radius"			"RADIUS:"
 "DOTA_Tooltip_Ability_imba_zuus_static_field_damage_health_pct" "%HEALTH REDUCTION:"
 
 //---------------------------------------------------------------------------
@@ -38,7 +37,7 @@
 //      Zeus: Thundergods Wrath
 //---------------------------------------------------------------------------
 "DOTA_Tooltip_Ability_imba_zuus_thundergods_wrath"								"Thundergod's Wrath"
-"DOTA_Tooltip_Ability_imba_zuus_thundergods_wrath_description"					"Strikes all enemy heroes with a bolt of lightning, no matter where they may be. Thundergod's Wrath also provides True Sight around each hero struck. If an enemy hero is invisible, it takes no damage, but the True Sight is still created at that hero's location.\n<font color='#FF7800'>Redirection: </font>Consumes all Thundergod's Focus stacks, converting them into Static Charge stacks on all enemies hit. Half of the Static Charge stacks are also consumed on enemies when struck with Thundergod's Wrath.\n<font color='#FF7800'>Awakening:</font> With %stacks_to_awaken% or more stacks of Thundergod's Focus, Zeus gains the Awaken buff. Awaken lasts for three seconds per Thundergod's Focus stack consumed, up to a maximum of 42 seconds.\n<font color='#FF7800'>Awaken:</font> In Awaken, Zeus improves cast time by %cast_time_increase_pct%%%, and increases vision by %vision_increase_pct%%%. Additionally, any physical attack landed on Zeus triggers Arc Lightning damage on his attacker (does not jump between enemies)."
+"DOTA_Tooltip_Ability_imba_zuus_thundergods_wrath_description"					"Strikes all enemy heroes with a bolt of lightning, no matter where they may be. Thundergod's Wrath also provides True Sight around each hero struck. If an enemy hero is invisible, it takes no damage, but the True Sight is still created at that hero's location.\n<font color='#FF7800'>Redirection: </font>Consumes all Thundergod's Focus stacks, converting them into Static Charge stacks on all enemies hit. Half of the Static Charge stacks are also consumed on enemies when struck with Thundergod's Wrath. <font color='#FF0000'>Does not place Static Charge stacks on enemies more than 2500 distance away.</font>\n<font color='#FF7800'>Awakening:</font> With %stacks_to_awaken% or more stacks of Thundergod's Focus, Zeus gains the Awaken buff. Awaken lasts for three seconds per Thundergod's Focus stack consumed, up to a maximum of 42 seconds.\n<font color='#FF7800'>Awaken:</font> In Awaken, Zeus improves cast time by %cast_time_increase_pct%%%, and increases vision by %vision_increase_pct%%%. Additionally, any physical attack landed on Zeus triggers Arc Lightning damage on his attacker (does not jump between enemies)."
 "DOTA_Tooltip_Ability_imba_zuus_thundergods_wrath_lore"							"The Lord of Heaven smites all who oppose him, near or far."
 "DOTA_Tooltip_Ability_imba_zuus_thundergods_wrath_sight_duration"				"DURATION:"
 "DOTA_Tooltip_Ability_imba_zuus_thundergods_wrath_true_sight_radius_tooltip"	"TRUE SIGHT RADIUS:"
@@ -102,4 +101,4 @@
 "DOTA_Tooltip_Ability_special_bonus_imba_zuus_8"				"Master of Lightning"
 "DOTA_Tooltip_Ability_special_bonus_imba_zuus_8_description"	"Arc Lightning chains between the same targets up to 3 times."
 "DOTA_Tooltip_Ability_special_bonus_imba_zuus_9"				"\"Kill Secured\""
-"DOTA_Tooltip_Ability_special_bonus_imba_zuus_9_description"	"Killing enemies with Thundergod's Wrath refreshes Nimbus and Ascend cooldowns, and adds a Thundergod's Focus stack per kill."
+"DOTA_Tooltip_Ability_special_bonus_imba_zuus_9_description"	"Killing enemies with Thundergod's Wrath refreshes Nimbus and Ascend cooldowns, and adds five Thundergod's Focus stacks per kill."

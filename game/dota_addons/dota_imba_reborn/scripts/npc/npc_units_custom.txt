@@ -3144,9 +3144,9 @@
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackDamageMin"			"15"
-		"AttackDamageMax"			"20"
-		"AttackRate"				"1.25"
+		"AttackDamageMin"			"24"
+		"AttackDamageMax"			"28"
+		"AttackRate"				"1.2"
 		"AttackAnimationPoint"		"0.33"
 		"AttackAcquisitionRange"	"500"
 		"AttackRange"				"90"
@@ -3224,9 +3224,9 @@
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackDamageMin"			"25"
-		"AttackDamageMax"			"30"
-		"AttackRate"				"1.2"
+		"AttackDamageMin"			"32"
+		"AttackDamageMax"			"36"
+		"AttackRate"				"1.1"
 		"AttackAnimationPoint"		"0.33"
 		"AttackAcquisitionRange"	"500"
 		"AttackRange"				"90"
@@ -3304,9 +3304,9 @@
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackDamageMin"			"33"
-		"AttackDamageMax"			"39"
-		"AttackRate"				"1.15"
+		"AttackDamageMin"			"40"
+		"AttackDamageMax"			"44"
+		"AttackRate"				"1.0"
 		"AttackAnimationPoint"		"0.33"
 		"AttackAcquisitionRange"	"500"
 		"AttackRange"				"90"
@@ -3385,9 +3385,9 @@
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackDamageMin"			"42"
-		"AttackDamageMax"			"48"
-		"AttackRate"				"1.1"
+		"AttackDamageMin"			"48"
+		"AttackDamageMax"			"52"
+		"AttackRate"				"0.9"
 		"AttackAnimationPoint"		"0.33"
 		"AttackAcquisitionRange"	"500"
 		"AttackRange"				"90"
@@ -3467,9 +3467,9 @@
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackDamageMin"			"52"
-		"AttackDamageMax"			"56"
-		"AttackRate"				"0.9"
+		"AttackDamageMin"			"56"
+		"AttackDamageMax"			"60"
+		"AttackRate"				"0.8"
 		"AttackAnimationPoint"		"0.33"
 		"AttackAcquisitionRange"	"500"
 		"AttackRange"				"90"
@@ -3548,9 +3548,9 @@
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackDamageMin"			"70"
-		"AttackDamageMax"			"70"
-		"AttackRate"				"0.8"
+		"AttackDamageMin"			"64"
+		"AttackDamageMax"			"68"
+		"AttackRate"				"0.7"
 		"AttackAnimationPoint"		"0.33"
 		"AttackAcquisitionRange"	"500"
 		"AttackRange"				"90"
@@ -3628,8 +3628,8 @@
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackDamageMin"			"70"
-		"AttackDamageMax"			"70"
+		"AttackDamageMin"			"64"
+		"AttackDamageMax"			"68"
 		"AttackRate"				"0.8"
 		"AttackAnimationPoint"		"0.33"
 		"AttackAcquisitionRange"	"500"

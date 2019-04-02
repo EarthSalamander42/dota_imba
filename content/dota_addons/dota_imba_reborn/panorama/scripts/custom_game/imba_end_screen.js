@@ -131,18 +131,31 @@ function EndScoreboard() {
 			// XP
 			var player_table = CustomNetTables.GetTableValue("player_table", player.id.toString());
 			if (player_table) {
-				values.xp.rank.text = Math.floor(player_table.XP) + "/" + Math.floor(player_table.MaxXP);
-				values.xp.level.text = $.Localize("#battlepass_level") + player_table.Lvl;
-				values.xp.rank_name.text = player_table.title;
-				values.xp.rank_name.style.color = player_table.title_color;
-				values.xp.booster.style.color = player_table.donator_color;
-//				$.Msg(Math.floor(player_table.XP) / Math.floor(player_table.MaxXP))
-//				if (Math.floor(player_table.XP) / Math.floor(player_table.MaxXP) >= 1) {
-//					$.Msg("Level Up!")
-//					values.xp.bar[0].AddClass("level-up");
-//				}
-				var progress = Math.round((100.0 * Math.floor(player_table.XP)) / Math.floor(player_table.MaxXP));
-				values.xp.progress.style.width = progress + "%";
+				$.Msg(player.info.player_steamid);
+				
+				// Testing exp view obfuscation
+				if (player.info.player_steamid != 76561198046078552) {
+					values.xp.rank.text = Math.floor(player_table.XP) + "/" + Math.floor(player_table.MaxXP);
+					values.xp.level.text = $.Localize("#battlepass_level") + player_table.Lvl;
+					values.xp.rank_name.text = player_table.title;
+					values.xp.rank_name.style.color = player_table.title_color;
+					values.xp.booster.style.color = player_table.donator_color;
+	//				$.Msg(Math.floor(player_table.XP) / Math.floor(player_table.MaxXP))
+	//				if (Math.floor(player_table.XP) / Math.floor(player_table.MaxXP) >= 1) {
+	//					$.Msg("Level Up!")
+	//					values.xp.bar[0].AddClass("level-up");
+	//				}
+					var progress = Math.round((100.0 * Math.floor(player_table.XP)) / Math.floor(player_table.MaxXP));
+					values.xp.progress.style.width = progress + "%";
+				}
+				else {
+					values.xp.rank.text = "0/500";
+					values.xp.level.text = $.Localize("#battlepass_level") + 1;
+					values.xp.rank_name.text = "Rookie";
+					values.xp.rank_name.style.color = "#FFFFFF";
+					values.xp.booster.style.color = "#21272F";
+					values.xp.progress.style.width = 0 + "%";					
+				}
 			}
 
 			// IMR

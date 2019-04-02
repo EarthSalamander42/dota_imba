@@ -687,7 +687,10 @@ if IsServer() then
 					self.repeat_increase = true
 				end
 				ApplyDamage({victim = enemy, attacker = caster, damage = damage, damage_type = self:GetAbilityDamageType(), ability = self})
-				enemy:AddNewModifier(caster, self, "modifier_stunned", {duration = duration}):SetDuration(duration * (1 - enemy:GetStatusResistance()), true)
+				
+				if enemy:IsAlive() then
+					enemy:AddNewModifier(caster, self, "modifier_stunned", {duration = duration}):SetDuration(duration * (1 - enemy:GetStatusResistance()), true)
+				end
 			end
 			hitLoc = hitLoc + offset / ticks
 			extradata.ticks = extradata.ticks - 1
@@ -1515,3 +1518,13 @@ end
 function modifier_imba_tiny_grow_passive:GetModifierPhysicalArmorBonus()
 	return self:GetAbility():GetSpecialValueFor("bonus_armor")
 end
+
+--- Someone forgot to initialize this zzz
+
+LinkLuaModifier("modifier_special_bonus_imba_tiny_8", "components/abilities/heroes/hero_tiny", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_tiny_8 = class({})
+
+function modifier_special_bonus_imba_tiny_8:IsHidden()		return true end
+function modifier_special_bonus_imba_tiny_8:IsPurgable()	return false end
+function modifier_special_bonus_imba_tiny_8:RemoveOnDeath()	return false end

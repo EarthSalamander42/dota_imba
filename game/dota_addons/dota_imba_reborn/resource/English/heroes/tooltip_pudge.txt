@@ -79,7 +79,7 @@
 "DOTA_Tooltip_modifier_imba_rot_slow_Description"				"Slowed and taking damage"
 
 "DOTA_Tooltip_modifier_imba_flesh_heap_stacks"					"Flesh Heap"
-"DOTA_Tooltip_modifier_imba_flesh_heap_stacks_Description"		"Gaining bonus strength and magic resistance"
+"DOTA_Tooltip_modifier_imba_flesh_heap_stacks_Description"		"Gaining bonus strength and health regeneration"
 
 "DOTA_Tooltip_ability_special_bonus_imba_pudge_1"				"+10 Power and Swift stacks"
 "DOTA_Tooltip_ability_special_bonus_imba_pudge_2"				"+300 Meat Hook speed"

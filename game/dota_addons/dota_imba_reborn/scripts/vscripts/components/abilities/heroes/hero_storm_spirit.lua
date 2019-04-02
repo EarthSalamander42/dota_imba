@@ -8,7 +8,6 @@ LinkLuaModifier("modifier_imba_static_remnant", "components/abilities/heroes/her
 ---		    STATIC REMNANT		   ---
 --------------------------------------
 
--- TODO: give it a animation
 function imba_storm_spirit_static_remnant:OnSpellStart()
 	if IsServer() then
 		local caster = self:GetCaster()
@@ -118,6 +117,10 @@ function modifier_imba_static_remnant:OnDestroy( params )
 	if IsServer() then
 		-- ReplaceHeroWith and Rubick stuff
 		if self.ability:IsNull() then
+			--Get rid of the dummy
+			ParticleManager:DestroyParticle(self.remnant_particle_fx, false)
+			ParticleManager:ReleaseParticleIndex(self.remnant_particle_fx)
+			UTIL_Remove(self.dummy)
 			return
 		end
 	
@@ -143,11 +146,19 @@ function modifier_imba_static_remnant:OnDestroy( params )
 			FIND_ANY_ORDER, false
 		)
 
-		local pull_duration = self:GetCaster():FindAbilityByName("imba_storm_spirit_electric_vortex"):GetSpecialValueFor("pull_duration") + self:GetCaster():FindTalentValue("special_bonus_imba_storm_spirit_1")
-		local speed = self:GetCaster():FindAbilityByName("imba_storm_spirit_electric_vortex"):GetSpecialValueFor("pull_units_per_second") + self:GetCaster():FindTalentValue("special_bonus_imba_storm_spirit_2")
+		-- Dumb Rubick stuff
+		local pull_duration					= 0
+		local speed 						= 0
+		local electric_vortex_pull_distance	= 0
 		
-		-- Description says vortex_time_pct is percentage shorter (so 0% means the vortex is full duration)
-		pull_duration =  pull_duration * (100 - self:GetAbility():GetSpecialValueFor("vortex_time_pct")) / 100
+		if self:GetCaster():HasAbility("imba_storm_spirit_electric_vortex") then
+			pull_duration = self:GetCaster():FindAbilityByName("imba_storm_spirit_electric_vortex"):GetSpecialValueFor("pull_duration") + self:GetCaster():FindTalentValue("special_bonus_imba_storm_spirit_1")
+			speed = self:GetCaster():FindAbilityByName("imba_storm_spirit_electric_vortex"):GetSpecialValueFor("pull_units_per_second") --+ self:GetCaster():FindTalentValue("special_bonus_imba_storm_spirit_2")
+			electric_vortex_pull_distance = self:GetCaster():FindAbilityByName("imba_storm_spirit_electric_vortex"):GetSpecialValueFor("electric_vortex_pull_distance")
+			
+			-- Description says vortex_time_pct is percentage shorter (so 0% means the vortex is full duration)
+			pull_duration =  pull_duration * (100 - self:GetAbility():GetSpecialValueFor("vortex_time_pct")) / 100
+		end
 
 		local lingering_sound	=	"Hero_StormSpirit.ElectricVortex"
 		local cast_sound		=	"Hero_StormSpirit.ElectricVortexCast"
@@ -172,7 +183,7 @@ function modifier_imba_static_remnant:OnDestroy( params )
 
 				-- cast shorter Electric Vortex
 				if pull_duration ~= 0 and not self.ballLightning then
-					enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_vortex_root", {duration = pull_duration, speed = speed, pos_x = remnant_location.x, pos_y = remnant_location.y, pos_z = remnant_location.z})
+					enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_vortex_root", {duration = pull_duration, speed = speed, pos_x = remnant_location.x, pos_y = remnant_location.y, pos_z = remnant_location.z, electric_vortex_pull_distance = electric_vortex_pull_distance})
 				end
 			end
 		end
@@ -235,7 +246,8 @@ function imba_storm_spirit_electric_vortex:OnSpellStart()
 		-- Ability paramaters															-- #1 TALENT: more pull duration
 		local pull_duration			=	self:GetSpecialValueFor("pull_duration") + caster:FindTalentValue("special_bonus_imba_storm_spirit_1")
 		local self_slow_duration	=	self:GetSpecialValueFor("self_slow_duration")	-- #2 TALENT: more pull speed
-		local speed =	self:GetSpecialValueFor("pull_units_per_second") + caster:FindTalentValue("special_bonus_imba_storm_spirit_2")
+		local speed =	self:GetSpecialValueFor("pull_units_per_second") --+ caster:FindTalentValue("special_bonus_imba_storm_spirit_2")
+		local electric_vortex_pull_distance = self:GetSpecialValueFor("electric_vortex_pull_distance")
 
 		-- Sound effect
 		caster:EmitSound(cast_sound)
@@ -253,7 +265,7 @@ function imba_storm_spirit_electric_vortex:OnSpellStart()
 			if target:TriggerSpellAbsorb(self) then return end
 
 			-- Apply pull modifier on target
-			target:AddNewModifier(caster, self, "modifier_imba_vortex_pull", {duration = pull_duration, speed = speed})
+			target:AddNewModifier(caster, self, "modifier_imba_vortex_pull", {duration = pull_duration, speed = speed, electric_vortex_pull_distance = electric_vortex_pull_distance})
 		else
 			-- AGHANIM'S SCEPTER: Electric Vortex affects multiple targets around Storm.
 			--Find nearby enemies
@@ -271,7 +283,7 @@ function imba_storm_spirit_electric_vortex:OnSpellStart()
 			for _,enemy in pairs(enemies) do
 				local direction 		= 	(caster:GetAbsOrigin() - enemy:GetAbsOrigin()):Normalized()
 				-- Apply vortex on enemy
-				enemy:AddNewModifier(caster, self, "modifier_imba_vortex_pull", {duration = pull_duration, speed = speed} )
+				enemy:AddNewModifier(caster, self, "modifier_imba_vortex_pull", {duration = pull_duration, speed = speed, electric_vortex_pull_distance = electric_vortex_pull_distance} )
 			end
 		end
 
@@ -327,6 +339,10 @@ function modifier_imba_vortex_pull:OnCreated( params )
 
 		-- Motion controller (moves the target)
 		self.speed = params.speed * FrameTime()
+
+		--7.21d version (fixed distance instead of fixed speed)
+		self.electric_vortex_pull_distance	= params.electric_vortex_pull_distance
+		self.speed							= (self.electric_vortex_pull_distance / self:GetDuration()) * FrameTime()
 
 		self:StartIntervalThink(FrameTime())
 	end
@@ -435,6 +451,10 @@ function modifier_imba_vortex_root:OnCreated( params )
 
 		-- Motion controller (moves the target)
 		self.speed = params.speed * FrameTime()
+
+		--7.21d version (fixed distance instead of fixed speed)
+		self.electric_vortex_pull_distance	= params.electric_vortex_pull_distance
+		self.speed							= (self.electric_vortex_pull_distance / self:GetDuration()) * FrameTime()
 
 		self:StartIntervalThink(FrameTime())
 		
@@ -1000,3 +1020,19 @@ end
 function imba_storm_spirit_static_remnant:IsHiddenWhenStolen() return false end
 function imba_storm_spirit_electric_vortex:IsHiddenWhenStolen() return false end
 function imba_storm_spirit_ball_lightning:IsHiddenWhenStolen() return false end
+
+-- CLient-side stuff
+
+LinkLuaModifier("modifier_special_bonus_imba_storm_spirit_2", "components/abilities/heroes/hero_storm_spirit", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_storm_spirit_2 = class({})
+
+function modifier_special_bonus_imba_storm_spirit_2:IsHidden()		return true end
+function modifier_special_bonus_imba_storm_spirit_2:IsPurgable()	return false end
+function modifier_special_bonus_imba_storm_spirit_2:RemoveOnDeath()	return false end
+
+function imba_storm_spirit_electric_vortex:OnOwnerSpawned()
+	if self:GetCaster():HasTalent("special_bonus_imba_storm_spirit_2") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_storm_spirit_2") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_storm_spirit_2"), "modifier_special_bonus_imba_storm_spirit_2", {})
+	end
+end

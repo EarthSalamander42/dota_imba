@@ -37,15 +37,15 @@ function modifier_imba_roshan_ai:OnIntervalThink()
 	end
 end
 
-function modifier_imba_roshan_ai:OnAttackLanded(keys)
-	if IsServer() then
-		if self:GetParent() == keys.target then
-			if keys.attacker:IsIllusion() then
-				keys.attacker:ForceKill(true)
-			end
-		end
-	end
-end
+-- function modifier_imba_roshan_ai:OnAttackLanded(keys)
+	-- if IsServer() then
+		-- if self:GetParent() == keys.target then
+			-- if keys.attacker:IsIllusion() then
+				-- keys.attacker:ForceKill(true)
+			-- end
+		-- end
+	-- end
+-- end
 
 function modifier_imba_roshan_ai:OnDeath( keys )
 	if keys.unit ~= self:GetParent() then return end

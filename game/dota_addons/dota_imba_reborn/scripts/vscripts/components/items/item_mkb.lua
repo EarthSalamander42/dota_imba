@@ -103,7 +103,7 @@ function modifier_item_imba_javelin:GetModifierProcAttack_BonusDamage_Magical(ke
 		if record == keys.record then
 			table.remove(self.pierce_records, _)
 
-			if not self.parent:IsIllusion() then
+			if not self.parent:IsIllusion() and not keys.target:IsBuilding() then
 				self.parent:EmitSound("DOTA_Item.MKB.proc")
 				return self.bonus_chance_damage
 			end
@@ -200,8 +200,8 @@ function modifier_item_imba_monkey_king_bar:GetModifierProcAttack_BonusDamage_Ma
 		if record == keys.record then
 			table.remove(self.pierce_records, _)
 
-			if not self.parent:IsIllusion() and self:GetStackCount() == 1 then
-				self.parent:EmitSound("DOTA_Item.MKB.proc")
+			if not self.parent:IsIllusion() and self:GetStackCount() == 1 and not keys.target:IsBuilding() then
+				-- self.parent:EmitSound("DOTA_Item.MKB.proc")
 				return self.bonus_chance_damage
 			end
 		end

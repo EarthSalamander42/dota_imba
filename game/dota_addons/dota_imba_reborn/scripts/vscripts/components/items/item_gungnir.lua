@@ -176,13 +176,13 @@ end
 -- Gungnir Pierces do not stack
 function modifier_item_imba_gungnir:GetModifierProcAttack_BonusDamage_Magical(keys)
 	if not IsServer() then return end
-
+	
 	for _, record in pairs(self.pierce_records) do	
 		if record == keys.record then
 			table.remove(self.pierce_records, _)
 
-			if not self.parent:IsIllusion() and self:GetStackCount() == 1 then
-				self.parent:EmitSound("DOTA_Item.MKB.proc")
+			if not self.parent:IsIllusion() and self:GetStackCount() == 1 and not keys.target:IsBuilding() then
+				-- self.parent:EmitSound("DOTA_Item.MKB.proc")
 				return self.bonus_chance_damage
 			end
 		end

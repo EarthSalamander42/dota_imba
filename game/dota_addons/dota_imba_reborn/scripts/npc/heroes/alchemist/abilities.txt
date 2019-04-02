@@ -166,7 +166,7 @@
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius_increase"			"45 90 145 180"
+				"radius_increase"			"45 90 135 180"
 			}
 			"07"
 			{
@@ -352,8 +352,8 @@
 			}
 			"06"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"bonus_mana_regen"		"3 12 20"
+				"var_type"				"FIELD_INTEGER"
+				"bonus_mana_regen"		"4 13 22"
 			}
 			"07"
 			{
