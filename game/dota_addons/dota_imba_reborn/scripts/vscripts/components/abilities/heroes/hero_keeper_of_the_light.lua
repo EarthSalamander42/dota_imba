@@ -142,7 +142,7 @@ function modifier_imba_keeper_of_the_light_illuminate_self_thinker:OnCreated()
 	-- I can't restore the standard spirit form models so I'll have to use some abstractions...
 	CreateUnitByNameAsync("npc_dummy_unit", self.caster_location, true, self.caster, self.caster, self.caster:GetTeam(), function(npc_dummy_unit)
 		self.spirit = npc_dummy_unit
-		-- Add the hypnotizing aura modifier
+		-- Set the unit/horse facing in the direction of where the wave will shoot
 		npc_dummy_unit:SetForwardVector(self.direction)
 		npc_dummy_unit:AddNewModifier(self.caster, self, "modifier_imba_keeper_of_the_light_spirit_form_illuminate", {duration = self.duration})
 	end)
@@ -282,7 +282,6 @@ function modifier_imba_keeper_of_the_light_illuminate:OnCreated( params )
 	self:StartIntervalThink(FrameTime())
 end
 
--- TODO: Make the particle not visible in fog...
 function modifier_imba_keeper_of_the_light_illuminate:OnIntervalThink()
 	if not IsServer() then return end
 
@@ -347,7 +346,7 @@ function modifier_imba_keeper_of_the_light_illuminate:OnIntervalThink()
 			elseif GameRules:IsDaytime() and self.caster:HasScepter() then
 				target:Heal(damage, self.caster)
 				
-				-- Apparently the vanilla skill only shows the mana number if it's a hero?...
+				-- Apparently the vanilla skill only shows the heal number if it's a hero?...
 				if target:IsHero() then
 					SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, damage, nil)
 				end
@@ -1032,18 +1031,6 @@ function modifier_imba_keeper_of_the_light_will_o_wisp:OnCreated()
 	ParticleManager:SetParticleControl(self.particle2, 2, Vector(0, 0, 0))
 	self:AddParticle(self.particle2, false, false, -1, false, false)
 	
-	
-	--particles/units/heroes/hero_keeper_of_the_light/keeper_dazzling_debuff.vpcf
-	--particles/units/heroes/hero_keeper_of_the_light/keeper_dazzling_on.vpcf
-	--particles/units/heroes/hero_keeper_of_the_light/keeper_dazzling_start.vpcf
-	
-	--"Hero_KeeperOfTheLight.Wisp.Cast"
-	--"Hero_KeeperOfTheLight.Wisp.Spawn"
-	--"Hero_KeeperOfTheLight.Wisp.Aura"
-	--"Hero_KeeperOfTheLight.Wisp.Active"
-	--"Hero_KeeperOfTheLight.Wisp.Target"
-	--"Hero_KeeperOfTheLight.Wisp.Destroy"
-	
 	-- Destroy trees around cast point
 	GridNav:DestroyTreesAroundPoint( self.parent:GetOrigin(), self.radius, true )
 	
@@ -1115,7 +1102,7 @@ function modifier_imba_keeper_of_the_light_will_o_wisp:OnRemoved()
 	self.parent:ForceKill(false)
 end
 
--- IMBAfication: I forget what I named this need to find my notes
+-- IMBAfication: Ignis Blessing
 function modifier_imba_keeper_of_the_light_will_o_wisp:CheckState(keys)
 	local state = {
 	[MODIFIER_STATE_SPECIALLY_DENIABLE] = true
@@ -1306,9 +1293,9 @@ function modifier_imba_keeper_of_the_light_will_o_wisp_blessing:GetModifierProcA
     return self:GetStackCount()
 end
 
--- ---------------------
--- -- TALENT HANDLERS --
--- ---------------------
+---------------------
+-- TALENT HANDLERS --
+---------------------
 
 -- -- Client-side helper functions --
 
@@ -1316,9 +1303,9 @@ LinkLuaModifier("modifier_special_bonus_imba_keeper_of_the_light_luminous_burste
 
 modifier_special_bonus_imba_keeper_of_the_light_luminous_burster		= class({})
 
--- -------------------------------
--- -- LUMINOUS BURSTER MODIFIER --
--- -------------------------------
+-------------------------------
+-- LUMINOUS BURSTER MODIFIER --
+-------------------------------
 function modifier_special_bonus_imba_keeper_of_the_light_luminous_burster:IsHidden() 		return true end
 function modifier_special_bonus_imba_keeper_of_the_light_luminous_burster:IsPurgable() 		return false end
 function modifier_special_bonus_imba_keeper_of_the_light_luminous_burster:RemoveOnDeath() 	return false end
