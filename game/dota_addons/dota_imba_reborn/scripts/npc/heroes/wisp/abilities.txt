@@ -101,7 +101,6 @@
 		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
 		"AbilitySound"					"Hero_Wisp.Spirits.Cast"
 		"AbilityTextureName"			"wisp_spirits"
-		"HasScepterUpgrade"				"1"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------

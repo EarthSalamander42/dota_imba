@@ -71,7 +71,7 @@
 "DOTA_Tooltip_ability_special_bonus_imba_vengefulspirit_2"					"-1s Nether Swap Swapback Delay"
 "DOTA_Tooltip_ability_special_bonus_imba_vengefulspirit_3"					"+15%/5% Vengeance Aura Damage/Spell Amp"
 "DOTA_Tooltip_ability_special_bonus_imba_vengefulspirit_4"					"Allied Rancor"
-"DOTA_Tooltip_ability_special_bonus_imba_vengefulspirit_4_Description"		"Rancor also triggers from nearby allies (900 radius) at 1/3 the normal rate."
+"DOTA_Tooltip_ability_special_bonus_imba_vengefulspirit_4_Description"		"Rancor also triggers from nearby allies (1200 radius) at 1/3 the normal rate."
 "DOTA_Tooltip_ability_special_bonus_imba_vengefulspirit_5"					"Magic Missile Pierces Spell Immunity"
 "DOTA_Tooltip_ability_special_bonus_imba_vengefulspirit_6"					"Nether Missile"
 "DOTA_Tooltip_ability_special_bonus_imba_vengefulspirit_6_Description"		"Nether Swap/Swapback launches Level 4 Magic Missiles to enemies in 600 radius of Vengeful Spirit's swap location."
