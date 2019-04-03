@@ -813,18 +813,6 @@
 		"Ability16"					"special_bonus_imba_juggernaut_9" // Omnislash EX
 		"Ability17"					"special_bonus_imba_juggernaut_4" // Secret Blade Triplicate
 	}
-	
-	//=================================================================================================================
-	// HERO: Keeper of the Light
-	//=================================================================================================================
-	"npc_dota_hero_keeper_of_the_light"
-	{
-		"override_hero"	"npc_dota_hero_keeper_of_the_light"
-		
-		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
-
-		"Ability4"		"keeper_of_the_light_mana_leak"
-	}
 
 	//=================================================================================================================
 	// HERO: Kunkka
