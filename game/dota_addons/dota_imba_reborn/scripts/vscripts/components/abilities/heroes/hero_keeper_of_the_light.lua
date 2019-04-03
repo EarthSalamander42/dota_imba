@@ -719,7 +719,7 @@ function imba_keeper_of_the_light_chakra_magic:OnSpellStart()
 		for abilities = 0, 23 do
 			local ability = self.target:GetAbilityByIndex(abilities)
 		
-			if ability and ability:GetAbilityType() ~= ABILITY_TYPE_ULTIMATE then
+			if ability and ability:GetAbilityType() ~= ABILITY_TYPE_ULTIMATE and ability ~= self then
 				local remaining_cooldown = ability:GetCooldownTimeRemaining()
 				
 				if remaining_cooldown > 0 then
