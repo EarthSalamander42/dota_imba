@@ -197,6 +197,7 @@ function api:Request(endpoint, okCallback, failCallback, method, payload)
 	CustomNetTables:SetTableValue("game_options", "server_key", {header_key})
 
 	request:SetHTTPRequestHeaderValue("X-Dota-Server-Key", header_key)
+	request:SetHTTPRequestHeaderValue("X-Dota-Game-Type", CUSTOM_GAME_TYPE)
 
 	-- encode payload
 	if payload ~= nil then
@@ -315,7 +316,8 @@ function api:CompleteGame(successCallback, failCallback)
 		game_id = self.game_id,
 		players = players,
 		radiant_score = self:GetKillsForTeam(2),
-		dire_score = self:GetKillsForTeam(3)
+		dire_score = self:GetKillsForTeam(3),
+		game_time = GameRules:GetDOTATime(false, false)
 	}
 
 	self:Request("game-complete", function(data)

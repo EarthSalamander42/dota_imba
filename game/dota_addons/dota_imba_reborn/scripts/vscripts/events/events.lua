@@ -246,19 +246,6 @@ function GameMode:OnGameRulesStateChange(keys)
 		for _, tower in pairs(towers) do
 			SetupTower(tower)
 		end
-	elseif newState == DOTA_GAMERULES_STATE_POST_GAME then
-		api:CompleteGame(function(data, payload)
-			CustomGameEventManager:Send_ServerToAllClients("end_game", {
-				players = payload.players,
-				data = data,
-				info = {
-					winner = GAME_WINNER_TEAM,
-					id = api:GetApiGameId(),
-					radiant_score = GetTeamHeroKills(2),
-					dire_score = GetTeamHeroKills(3),
-				},
-			})
-		end)
 	end
 end
 
