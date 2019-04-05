@@ -351,9 +351,9 @@ function Diretide:CreateCandy(pos)
 	item:LaunchLoot(false, 300, 0.5, random_pos)
 	item:EmitSound("Item.DropGemWorld")
 
-	local find_trees = GridNav:GetAllTreesAroundPoint(random_pos, 100, true)
+--	local find_trees = GridNav:GetAllTreesAroundPoint(random_pos, 100, true)
 
-	for _, tree in pairs(find_trees) do
-		tree:CutDownRegrowAfter(99999, -1)
-	end
+--	for _, tree in pairs(find_trees) do
+--		tree:CutDownRegrowAfter(99999, -1)
+--	end
 end

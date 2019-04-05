@@ -14,6 +14,8 @@
 
 require('components/settings/settings_donator')
 
+CUSTOM_GAME_TYPE = "IMBA"
+
 IMBA_VERSION = "7.12"
 CustomNetTables:SetTableValue("game_options", "game_version", {value = IMBA_VERSION})
 
