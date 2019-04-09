@@ -1,5 +1,5 @@
 "DOTA_Tooltip_ability_imba_juggernaut_blade_fury"						"#{DOTA_Tooltip_ability_juggernaut_blade_fury}"
-"DOTA_Tooltip_ability_imba_juggernaut_blade_fury_Description"			"#{DOTA_Tooltip_ability_juggernaut_blade_fury_Description}\n<font color='#FF7800'>Windfury:</font> The first ranged attack directed to Juggernaut is deflected towards a random enemy in %deflect_radius% radius. Further attacks while the attacker is in range of Blade Fury are deflected at %deflect_chance%%% chance.\n<font color='#FF7800'>Multitasker:</font> Can deal standard attack damage while in Blade Fury, but damage is reduced by %damage_penalty%."
+"DOTA_Tooltip_ability_imba_juggernaut_blade_fury_Description"			"#{DOTA_Tooltip_ability_juggernaut_blade_fury_Description}\n<font color='#FF7800'>Windfury:</font> The first ranged attack directed to Juggernaut is deflected towards a random enemy in %deflect_radius% radius. Further attacks while the attacker is in range of Blade Fury are deflected at %deflect_chance%%% chance.\n<font color='#FF7800'>Multitasker:</font> Can deal standard attack damage while in Blade Fury, but damage is reduced by %damage_penalty%%%."
 "DOTA_Tooltip_ability_imba_juggernaut_blade_fury_Lore"					"#{DOTA_Tooltip_ability_juggernaut_blade_fury_Lore}"
 "DOTA_Tooltip_ability_imba_juggernaut_blade_fury_Note0"					"#{DOTA_Tooltip_ability_juggernaut_blade_fury_Note0}"
 "DOTA_Tooltip_ability_imba_juggernaut_blade_fury_Note1"					"#{DOTA_Tooltip_ability_juggernaut_blade_fury_Note1}"
@@ -97,6 +97,8 @@
 "Dota_Tooltip_Ability_special_bonus_imba_juggernaut_8_Description"		"Each stack lasts for 6 seconds (does not refresh itself) and adds 1 extra bonus damage while Omnislashing."
 "Dota_Tooltip_Ability_special_bonus_imba_juggernaut_9"                  "Omnislash EX"
 "Dota_Tooltip_Ability_special_bonus_imba_juggernaut_9_Description"		"Sets cast point of Omnislash to 0 and doubles slashes rate multiplier."
+"Dota_Tooltip_Ability_special_bonus_imba_juggernaut_10"					"+1s Omnislash Duration"
+
 
 // Juggernaut's summoned unit: Healing Ward, Healing Totem
 "npc_imba_juggernaut_healing_ward"										"Healing Ward"

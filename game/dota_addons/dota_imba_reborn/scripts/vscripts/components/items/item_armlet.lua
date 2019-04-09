@@ -79,6 +79,15 @@ function modifier_imba_armlet_basic:IsDebuff() return false end
 function modifier_imba_armlet_basic:IsPurgable() return false end
 function modifier_imba_armlet_basic:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
+function modifier_imba_armlet_basic:OnCreated()
+	if not IsServer() then return end
+
+	-- Check for illusions to add Unoly Strength to if active (there's probably a less convoluted way to do this...)
+	if self:GetParent():IsIllusion() and self:GetParent():GetPlayerOwner():GetAssignedHero():HasModifier("modifier_imba_armlet_unholy_strength") then
+		self:GetParent():AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_armlet_unholy_strength", {})
+	end
+end
+
 function modifier_imba_armlet_basic:DeclareFunctions()
 	return {	MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
 		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
@@ -129,7 +138,7 @@ function modifier_imba_armlet_unholy_strength:DeclareFunctions()
 end
 
 function modifier_imba_armlet_unholy_strength:OnCreated()
-	if IsServer() then
+	if IsServer() and not self:GetParent():IsIllusion() then
 
 		-- Adjust caster's health
 		local caster = self:GetCaster()
@@ -186,14 +195,17 @@ function modifier_imba_armlet_unholy_strength:GetModifierBonusStats_Strength()		
 end
 
 function modifier_imba_armlet_unholy_strength:GetModifierPreAttack_BonusDamage()		-- Static + stacks
+	if self:GetParent():IsIllusion() then return 0 end
 	return self:GetAbility():GetSpecialValueFor("unholy_bonus_damage") + self:GetStackCount() * self:GetAbility():GetSpecialValueFor("stack_damage")
 end
 
 function modifier_imba_armlet_unholy_strength:GetModifierPhysicalArmorBonus()			-- Static + stacks
+	if self:GetParent():IsIllusion() then return 0 end
 	return self:GetAbility():GetSpecialValueFor("unholy_bonus_armor") + self:GetStackCount() * self:GetAbility():GetSpecialValueFor("stack_armor")
 end
 
 function modifier_imba_armlet_unholy_strength:GetModifierAttackSpeedBonus_Constant()	-- Stacks only
+	if self:GetParent():IsIllusion() then return 0 end
 	return self:GetStackCount() * self:GetAbility():GetSpecialValueFor("stack_as")
 end
 

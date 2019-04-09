@@ -55,7 +55,7 @@
 
 // Storm Spirit's Ball Lightning
 "DOTA_Tooltip_ability_imba_storm_spirit_ball_lightning"							"#{DOTA_Tooltip_ability_storm_spirit_ball_lightning}"
-"DOTA_Tooltip_ability_imba_storm_spirit_ball_lightning_Description"				"#{DOTA_Tooltip_ability_storm_spirit_ball_lightning_Description}\n<font color='#FF7800'>Lotus Ball:</font> Storm Spirit sends back target abilities that hit while in Ball Lightning."
+"DOTA_Tooltip_ability_imba_storm_spirit_ball_lightning_Description"				"Storm Spirit becomes volatile electricity, charging across the battlefield until he depletes his mana or reaches his target. The activation mana cost is %initial_mana_cost_base%+%initial_mana_cost_pct%%% of his total mana pool, and the cost per 100 units traveled is %travel_mana_cost_base%+%travel_mana_cost_pct%%% of his total mana pool.  Damage is expressed in damage per 100 units traveled.\n<font color='#FF7800'>Lotus Ball:</font> Storm Spirit sends back target abilities that hit while in Ball Lightning."
 "DOTA_Tooltip_ability_imba_storm_spirit_ball_lightning_Lore"					"#{DOTA_Tooltip_ability_storm_spirit_ball_lightning_Lore}"
 "DOTA_Tooltip_ability_imba_storm_spirit_ball_lightning_Note0"					"#{DOTA_Tooltip_ability_storm_spirit_ball_lightning_Note0}"
 "DOTA_Tooltip_ability_imba_storm_spirit_ball_lightning_Note1"					"#{DOTA_Tooltip_ability_storm_spirit_ball_lightning_Note1}"

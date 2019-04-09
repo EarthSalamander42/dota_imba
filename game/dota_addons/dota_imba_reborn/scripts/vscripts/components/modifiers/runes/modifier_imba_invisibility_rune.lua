@@ -19,6 +19,10 @@ function modifier_imba_invisibility_rune_handler:IsHidden() return false  end
 function modifier_imba_invisibility_rune_handler:IsPurgable() return false end
 function modifier_imba_invisibility_rune_handler:IsPurgeException() return false end
 
+function modifier_imba_invisibility_rune_handler:GetTexture()
+	return "custom/imba_rune_invisibility"
+end
+
 function modifier_imba_invisibility_rune_handler:OnCreated(keys)
 	if IsServer() then
 		self.rune_duration = keys.rune_duration

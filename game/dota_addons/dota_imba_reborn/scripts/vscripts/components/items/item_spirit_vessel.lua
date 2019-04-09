@@ -287,7 +287,7 @@ function modifier_item_imba_spirit_vessel_damage:OnDestroy()
 	if not IsServer() then return end
 	
 	if (self:GetRemainingTime() / self:GetDuration()) >= 0.5 then
-		local modifier = self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_item_imba_spirit_vessel_damage", {duration = self:GetRemainingTime(), curse_stack = math.max(self:GetStackCount(), 1) * self:GetAbility():GetSpecialValueFor("curse_activation_mult")})
+		local modifier = self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_item_imba_spirit_vessel_damage", {duration = self:GetRemainingTime() / 2, curse_stack = math.max(self:GetStackCount(), 1) * self:GetAbility():GetSpecialValueFor("curse_activation_mult")})
 	end
 end
 

@@ -34,7 +34,10 @@ function imba_enchantress_untouchable:OnSpellStart()
 	
 	for _, enemy in pairs(enemies) do
 		if not enemy:IsCourier() then
-			enemy:Stop()
+			if not (enemy:GetCurrentActiveAbility() and (enemy:GetCurrentActiveAbility():GetName() == "item_tpscroll" or string.find(enemy:GetCurrentActiveAbility():GetName(), "item_travel_boots"))) then
+				enemy:Stop()
+			end
+			
 			enemy:AddNewModifier(caster, self, "modifier_imba_enchantress_untouchable_peace_on_earth", {duration = peace_on_earth_duration})
 		end
 	end
@@ -904,7 +907,7 @@ function modifier_imba_enchantress_impetus:OnAttackLanded( keys )
 			-- Note that CalcDistanceBetweenEntityOBB(self.caster, keys.target) actually gives different / "wrong" results...
 			--local distance 			= math.min(CalcDistanceBetweenEntityOBB(self.caster, keys.target), self.distance_cap)
 			local distance 			= (self.caster:GetAbsOrigin() - keys.target:GetAbsOrigin()):Length()
-			local impetus_damage	= distance * (self.distance_damage_pct / 100)
+			local impetus_damage	= distance * ((self.distance_damage_pct + self.caster:FindTalentValue("special_bonus_imba_enchantress_9")) / 100)
 			
 			local damageTable = {victim = keys.target,
 								damage = impetus_damage,
@@ -1045,6 +1048,7 @@ LinkLuaModifier("modifier_special_bonus_imba_enchantress_5", "components/abiliti
 LinkLuaModifier("modifier_special_bonus_imba_enchantress_6", "components/abilities/heroes/hero_enchantress", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_enchantress_7", "components/abilities/heroes/hero_enchantress", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_enchantress_8", "components/abilities/heroes/hero_enchantress", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_enchantress_9", "components/abilities/heroes/hero_enchantress", LUA_MODIFIER_MOTION_NONE)
 
 modifier_special_bonus_imba_enchantress_2_aura	= class({})
 modifier_special_bonus_imba_enchantress_3		= class({})
@@ -1053,6 +1057,7 @@ modifier_special_bonus_imba_enchantress_5		= class({})
 modifier_special_bonus_imba_enchantress_6		= class({})
 modifier_special_bonus_imba_enchantress_7		= class({})
 modifier_special_bonus_imba_enchantress_8		= class({})
+modifier_special_bonus_imba_enchantress_9		= class({})
 
 -----------------------
 -- TALENT 1 MODIFIER --
@@ -1209,6 +1214,14 @@ function modifier_special_bonus_imba_enchantress_7:RemoveOnDeath() 		return fals
 function modifier_special_bonus_imba_enchantress_8:IsHidden() 			return true end
 function modifier_special_bonus_imba_enchantress_8:IsPurgable() 		return false end
 function modifier_special_bonus_imba_enchantress_8:RemoveOnDeath() 		return false end
+
+-----------------------
+-- TALENT 9 MODIFIER --
+-----------------------
+-- +X% Impetus Damage
+function modifier_special_bonus_imba_enchantress_9:IsHidden() 			return true end
+function modifier_special_bonus_imba_enchantress_9:IsPurgable() 		return false end
+function modifier_special_bonus_imba_enchantress_9:RemoveOnDeath() 		return false end
 
 -- Since modifiers can't be applied on a dead unit, make sure they get slapped onto Enchantress on respawn if she skills a talent while dead
 -- Let's do this by just attaching all the modifiers to respective abilities (and default to Untouchable if the talent isn't related to an ability)

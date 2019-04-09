@@ -10,6 +10,7 @@
 "DOTA_Tooltip_ability_imba_enchantress_untouchable_Lore"							"After attacking Aiushtha, most opponents are overwhelmed with guilt having attacked such a natural beauty."
 "DOTA_Tooltip_ability_imba_enchantress_untouchable_Note0"							"All units who directly attack Enchantress will get slowed."
 "DOTA_Tooltip_ability_imba_enchantress_untouchable_Note1"							"The slow is applied on the attacking unit when the attack starts, not when damage is applied."
+"DOTA_Tooltip_ability_imba_enchantress_untouchable_Note2"							"Peace on Earth does not interrupt Teleport Scroll or Boots of Travel."
 "DOTA_Tooltip_ability_imba_enchantress_untouchable_slow_attack_speed"				"ATTACK SLOW:"
 "DOTA_Tooltip_ability_imba_enchantress_untouchable_aghanim_description"				"Peace on Earth now affects ALL enemy units."
 
@@ -95,3 +96,4 @@
 "DOTA_Tooltip_Ability_special_bonus_imba_enchantress_7_Description"		"A percentage of Impetus damage is also dealt as physical/magical damage based on 100%%/25%% of the target's spell amp/attack damage values respectively."
 "DOTA_Tooltip_Ability_special_bonus_imba_enchantress_8"					"Sprites' Attraction"
 "DOTA_Tooltip_Ability_special_bonus_imba_enchantress_8_Description"		"2x Nature's Attendants wisps, heal amount, Rest for the Weary health threshold, and Fundemental's Essence values."
+"DOTA_Tooltip_Ability_special_bonus_imba_enchantress_9"					"+8% Impetus Damage"
