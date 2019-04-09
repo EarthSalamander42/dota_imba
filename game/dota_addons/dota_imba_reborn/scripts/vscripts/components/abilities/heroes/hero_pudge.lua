@@ -1037,9 +1037,9 @@ function modifier_imba_pudge_flesh_heap_handler:OnCreated()
 		end
 		
 		-- Let's not give random unfair advantages now, shall we?
-		Timers:CreateTimer(FrameTime(), function()           
+		Timers:CreateTimer(1.0, function()           
 			self:SetStackCount(0)
-		end)    
+		end)
 	end
 
 	if IsClient() then
@@ -1131,6 +1131,7 @@ imba_pudge_dismember = imba_pudge_dismember or class({})
 LinkLuaModifier("modifier_dismember","components/abilities/heroes/hero_pudge", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_pudge_dismember_buff","components/abilities/heroes/hero_pudge", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_pudge_dismember_handler","components/abilities/heroes/hero_pudge", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_pudge_dismember_pull", "components/abilities/heroes/hero_pudge", LUA_MODIFIER_MOTION_HORIZONTAL)
 
 function imba_pudge_dismember:GetChannelTime()
 	return self.channelTime
@@ -1237,6 +1238,9 @@ function modifier_dismember:OnCreated()
 	self:OnIntervalThink()
 
 	if IsServer() then
+		-- Add the pull towards modifier
+		self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_pudge_dismember_pull", {})
+	
 		self:GetParent():StartGesture(ACT_DOTA_DISABLED)
 	end
 end
@@ -1283,6 +1287,50 @@ function modifier_imba_pudge_dismember_buff:IsStunDebuff() return false end
 
 function modifier_imba_pudge_dismember_buff:GetModifierSpellLifesteal()
 	return self:GetAbility():GetSpecialValueFor("spell_lifesteal")
+end
+
+-----------------------------
+-- DISMEMBER PULL MODIFIER --
+-----------------------------
+
+modifier_imba_pudge_dismember_pull = class({})
+
+function modifier_imba_pudge_dismember_pull:OnCreated(params)
+	if not IsServer() then return end
+	
+	self.ability				= self:GetAbility()
+	self.caster					= self:GetCaster()
+	self.parent					= self:GetParent()
+	
+	-- AbilitySpecials
+	self.pull_units_per_second		= self.ability:GetSpecialValueFor("pull_units_per_second")
+	self.pull_distance_limit		= self.ability:GetSpecialValueFor("pull_distance_limit")
+
+	if self:ApplyHorizontalMotionController() == false then 
+		self:Destroy()
+		return
+	end
+end
+
+function modifier_imba_pudge_dismember_pull:UpdateHorizontalMotion( me, dt )
+	if not IsServer() then return end
+
+	local distance = self.caster:GetOrigin() - me:GetOrigin()
+	
+	-- Check to see if the victim is farther than the minimum distance or not and is actually being Dismembered
+	if distance:Length2D() > self.pull_distance_limit and self.parent:HasModifier("modifier_dismember") then
+		-- Pull victim towards Pudge
+		me:SetOrigin( me:GetOrigin() + distance:Normalized() * self.pull_units_per_second * dt )
+	else
+		-- Victim is probably close enough or no longer being Dismembered; remove modifier
+		self:Destroy()
+	end
+end
+
+function modifier_imba_pudge_dismember_pull:OnDestroy()
+	if not IsServer() then return end
+	
+	self.parent:RemoveHorizontalMotionController( self )
 end
 
 -- util

@@ -6,11 +6,9 @@ LinkLuaModifier("modifier_special_bonus_imba_vengefulspirit_4", "components/abil
 
 modifier_special_bonus_imba_vengefulspirit_4 = modifier_special_bonus_imba_vengefulspirit_4 or class({})
 
-function modifier_special_bonus_imba_vengefulspirit_4:IsHidden() return false end
-function modifier_special_bonus_imba_vengefulspirit_4:RemoveOnDeath() return false end
-function modifier_special_bonus_imba_vengefulspirit_4:IsAura()
-	return true
-end
+function modifier_special_bonus_imba_vengefulspirit_4:IsHidden() 		return true end
+function modifier_special_bonus_imba_vengefulspirit_4:RemoveOnDeath() 	return false end
+function modifier_special_bonus_imba_vengefulspirit_4:IsAura()			return true	end
 
 function modifier_special_bonus_imba_vengefulspirit_4:GetAuraEntityReject(target)
 	if IsServer() then

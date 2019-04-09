@@ -3,9 +3,10 @@ if IMBA_MUTATION and IMBA_MUTATION["terrain"] == "super_runes" then
 	-- TODO: add illusion rune incoming and outgoing damage + duration in parameters here
 
 	-- Arcane
-	IMBA_RUNE_ARCANE_CDR = 50 -- %
-	IMBA_RUNE_ARCANE_SPELL_AMP = 100 -- %
+	IMBA_RUNE_ARCANE_CDR = 80 -- %
+	IMBA_RUNE_ARCANE_SPELL_AMP = 60 -- %
 	IMBA_RUNE_ARCANE_MANA_COST_REDUCTION = 80 -- %
+	IMBA_RUNE_ARCANE_MANA_CAST_TIME_PCT = 60 -- %
 
 	-- Double Damage
 	IMBA_RUNE_DOUBLE_DAMAGE_MULTIPLIER = 2 -- 300% damage, attribute x3
@@ -28,18 +29,19 @@ if IMBA_MUTATION and IMBA_MUTATION["terrain"] == "super_runes" then
 	IMBA_RUNE_INVIS_BONUS_MOVE_SPEED = 40 -- %
 	
 	-- Regen
-	IMBA_RUNE_REGEN_STACKS = 50
+	IMBA_RUNE_REGEN_STACKS = 10
 	IMBA_RUNE_REGEN_HEAL_BASE = 100
-	IMBA_RUNE_REGEN_HEAL_PCT = 10 -- %
+	IMBA_RUNE_REGEN_HEAL_PCT = 12 -- %
 	IMBA_RUNE_REGEN_MANA_BASE = 40
-	IMBA_RUNE_REGEN_MANA_PCT = 4 -- %
+	IMBA_RUNE_REGEN_MANA_PCT = 12 -- %
 
 	IMBA_RUNE_ALLIES_RADIUS_EFFECT = 1200
 else
 	-- Arcane
-	IMBA_RUNE_ARCANE_CDR = 30 -- %
-	IMBA_RUNE_ARCANE_SPELL_AMP = 50 -- %
+	IMBA_RUNE_ARCANE_CDR = 40 -- %
+	IMBA_RUNE_ARCANE_SPELL_AMP = 30 -- %
 	IMBA_RUNE_ARCANE_MANA_COST_REDUCTION = 40 -- %
+	IMBA_RUNE_ARCANE_MANA_CAST_TIME_PCT = 30 -- %
 
 	-- Double Damage
 	IMBA_RUNE_DOUBLE_DAMAGE_MULTIPLIER = 1 -- 200% damage, attribute x2
@@ -62,11 +64,11 @@ else
 	IMBA_RUNE_INVIS_BONUS_MOVE_SPEED = 20 -- %
 
 	-- Regen
-	IMBA_RUNE_REGEN_STACKS = 25
+	IMBA_RUNE_REGEN_STACKS = 5
 	IMBA_RUNE_REGEN_HEAL_BASE = 50
-	IMBA_RUNE_REGEN_HEAL_PCT = 5 -- %
+	IMBA_RUNE_REGEN_HEAL_PCT = 6 -- %
 	IMBA_RUNE_REGEN_MANA_BASE = 20
-	IMBA_RUNE_REGEN_MANA_PCT = 2 -- %
+	IMBA_RUNE_REGEN_MANA_PCT = 6 -- %
 
 	IMBA_RUNE_ALLIES_RADIUS_EFFECT = 1200
 end
@@ -76,6 +78,7 @@ CustomNetTables:SetTableValue("game_options", "runes",
 	arcane_rune_cdr = IMBA_RUNE_ARCANE_CDR,
 	arcane_rune_spell_amp = IMBA_RUNE_ARCANE_SPELL_AMP,
 	arcane_rune_mana_cost_reduction = IMBA_RUNE_ARCANE_MANA_COST_REDUCTION,
+	arcane_rune_cast_time_pct = IMBA_RUNE_ARCANE_MANA_CAST_TIME_PCT,
 	double_damage_rune_multiplier = IMBA_RUNE_DOUBLE_DAMAGE_MULTIPLIER,
 	frost_rune_attack_slow = IMBA_RUNE_FROST_ATTACK_SPEED_SLOW,
 	frost_rune_move_slow = IMBA_RUNE_FROST_MOVE_SPEED_SLOW,

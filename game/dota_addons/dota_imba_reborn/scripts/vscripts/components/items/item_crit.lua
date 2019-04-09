@@ -234,7 +234,7 @@ function modifier_item_imba_greater_crit_buff:OnAttackLanded( params )
 				return nil
 			end
 
-			if not self.crit_succeeded then
+			if not self.crit_succeeded and params.original_damage > 0 then
 				local stacks = self:GetStackCount()
 				local crit_modifiers = self.caster:FindAllModifiersByName("modifier_item_imba_greater_crit")
 				self:SetStackCount(stacks + self.crit_increase * #crit_modifiers)

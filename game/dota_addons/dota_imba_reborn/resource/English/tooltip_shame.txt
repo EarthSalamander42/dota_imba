@@ -362,10 +362,8 @@
 
 "DOTA_Tooltip_ability_chen_test_of_faith_teleport_Description"          "Teleports an allied or enemy unit back to its base. Creeps are teleported instantly, while Heroes have a delay before teleporting. If cast on Chen, all units controlled by Chen through Holy Persuasion will be teleported to him after a delay."
 
-"DOTA_Tooltip_ability_gyrocopter_rocket_barrage_Description"            "Launches a salvo of rockets at nearby enemy units in a radius around the Gyrocopter. Lasts <font color='#FF7800'>3/3.3/3.6/4</font> seconds."
-"DOTA_Tooltip_ability_gyrocopter_flak_cannon_Description"              "Gyrocopter's attacks hit all enemy units in an area around it for a limited number of attacks. Only the main target of attacks will receive attack bonuses such as Critical Strike. Lasts 15 seconds."
-"DOTA_Tooltip_ability_gyrocopter_call_down_Description"                "Call down an aerial missile strike on enemy units in a target area. Two missiles arrive in succession, <font color='#FF7800'>both</font> dealing major damage. The first missile slows for %slow_duration_first% seconds; the second, for %slow_duration_second% seconds.\n\nUpgradable by Aghanim's Scepter."
-"DOTA_Tooltip_ability_gyrocopter_call_down_aghanim_description"                     "Adds a Side Gunner that at random attacks enemy units within a <font color='#FF7800'>1000</font> radius every <font color='#FF7800'>0.7</font> seconds."
+"DOTA_Tooltip_ability_gyrocopter_rocket_barrage_Description"            "Launches a salvo of rockets at nearby enemy units in a radius around the Gyrocopter. Lasts 3/3.3/3.6/4 seconds."
+"DOTA_Tooltip_ability_gyrocopter_call_down_aghanim_description"                     "Adds a Side Gunner that at random attacks enemy units within a 1000 radius every 0.7 seconds."
 
 "DOTA_Tooltip_ability_invoker_alacrity_Description"                    "Invoker infuses an ally with an immense surge of energy, increasing their attack speed based on the level of <font color='#d671a9'>Wex</font> and their damage based on the level of <font color='#cabe68'>Exort</font>.\n<font color='#FF7800'>Stone Enchanter:</font> can be used on buildings."
 "DOTA_Tooltip_ability_invoker_invoke_Description"                      "Combines the properties of the elements currently being manipulated to create a new spell for Invoker to use.\n<font color='#FF7800'>Invocation Mastery:</font> Invoke grants several extra passive bonuses as it is leveled.\nAutomatically level up on level 6, 12 and 18.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
@@ -428,7 +426,7 @@
 //"DOTA_Tooltip_Ability_special_bonus_unique_leshrac_1"               "+50 Diabolic Edict Explosions"
 //"DOTA_Tooltip_Ability_special_bonus_unique_leshrac_2"               "+3s Lightning Storm Slow Duration"
 //"DOTA_Tooltip_Ability_special_bonus_unique_templar_assassin"        "+4 Refraction Instances"
-"DOTA_Tooltip_Ability_special_bonus_unique_templar_assassin_2"		"-10 Meld Armor Reduction"
+"DOTA_Tooltip_Ability_special_bonus_unique_templar_assassin_2"		"-6 Meld Armor Reduction"
 //"DOTA_Tooltip_Ability_special_bonus_unique_doom_1"                  "+2.25% Infernal Blade DPS"
 //"DOTA_Tooltip_Ability_special_bonus_unique_doom_2"                  "Devour Can Target Ancients"
 //"DOTA_Tooltip_Ability_special_bonus_unique_doom_3"                  "+60 Devour bonus gold"
@@ -480,7 +478,7 @@
 //"DOTA_Tooltip_Ability_special_bonus_unique_lifestealer"             "+1.5s Rage duration"
 //"DOTA_Tooltip_Ability_special_bonus_unique_medusa"                  "+2s Stone Gaze Stun"
 //"DOTA_Tooltip_Ability_special_bonus_unique_medusa_2"                "+10 Split Shot targets"
-//"DOTA_Tooltip_Ability_special_bonus_unique_ogre_magi"               "+45 Bloodlust attack speed"
+"DOTA_Tooltip_Ability_special_bonus_unique_ogre_magi"               "+45 Bloodlust AS"
 //"DOTA_Tooltip_Ability_special_bonus_unique_death_prophet"           "+8 Exorcism Spirits"
 //"DOTA_Tooltip_Ability_special_bonus_unique_tusk"                    "+150% Walrus Punch Crit"
 //"DOTA_Tooltip_Ability_special_bonus_unique_tusk_2"                  "+140 Snowball damage"
@@ -531,7 +529,6 @@
 "DOTA_Tooltip_ability_special_bonus_unique_ember_spirit_4"        "3 Sleight of Fist Charges"
 "DOTA_Tooltip_ability_special_bonus_unique_ember_spirit_5"        "-20 Remnant Charge Restore Time"
 "DOTA_Tooltip_Ability_special_bonus_unique_gyrocopter_2"        "+10 Flak Cannon attacks"
-"DOTA_Tooltip_Ability_special_bonus_unique_gyrocopter_4"        "-10 cooldown reduction for Call Down"
 "DOTA_Tooltip_Ability_special_bonus_unique_visage_3"			"Soul Assumption Hits 5 Targets"
 "DOTA_Tooltip_Ability_special_bonus_unique_visage_3_Description"	"Four additional Soul Assumptions are launched towards random enemy units within the cast range, prioritizing Heroes."
 

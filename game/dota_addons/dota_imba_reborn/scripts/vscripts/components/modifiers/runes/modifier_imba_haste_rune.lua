@@ -98,7 +98,7 @@ function modifier_imba_haste_rune_aura:IsHidden() 	return false end
 function modifier_imba_haste_rune_aura:IsPurgable()	return false end
 function modifier_imba_haste_rune_aura:IsDebuff() 	return false end
 
-function modifier_imba_haste_rune_aura:GetTextureName()
+function modifier_imba_haste_rune_aura:GetTexture()
 	return "rune_haste"
 end
 

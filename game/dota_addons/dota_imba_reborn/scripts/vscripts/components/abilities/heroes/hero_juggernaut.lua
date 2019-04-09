@@ -380,12 +380,12 @@ end
 
 function modifier_imba_juggernaut_blade_fury:DeclareFunctions()
  	local funcs = {
-		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE
+		MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE  
  	}
  	return funcs
 end
 
-function modifier_imba_juggernaut_blade_fury:GetModifierPreAttack_BonusDamage(keys)
+function modifier_imba_juggernaut_blade_fury:GetModifierDamageOutgoing_Percentage(keys)
 	if keys.target and not keys.target:IsMagicImmune() and not keys.target:IsBuilding() then
 		return self.damage_penalty
 	end
@@ -1615,9 +1615,9 @@ function imba_juggernaut_omni_slash:OnSpellStart()
 		local omnislash_modifier_handler
 		
 		if self.caster:HasScepter() then
-			omnislash_modifier_handler = omnislash_image:AddNewModifier(self.caster, self, "modifier_imba_omni_slash_caster", {duration = self:GetSpecialValueFor("duration_scepter")})
+			omnislash_modifier_handler = omnislash_image:AddNewModifier(self.caster, self, "modifier_imba_omni_slash_caster", {duration = self:GetSpecialValueFor("duration_scepter") + self.caster:FindTalentValue("special_bonus_imba_juggernaut_10")})
 		else
-			omnislash_modifier_handler = omnislash_image:AddNewModifier(self.caster, self, "modifier_imba_omni_slash_caster", {duration = self:GetSpecialValueFor("duration")})
+			omnislash_modifier_handler = omnislash_image:AddNewModifier(self.caster, self, "modifier_imba_omni_slash_caster", {duration = self:GetSpecialValueFor("duration") + self.caster:FindTalentValue("special_bonus_imba_juggernaut_10")})
 		end
 		
 		if omnislash_modifier_handler then
@@ -1656,9 +1656,9 @@ function imba_juggernaut_omni_slash:OnSpellStart()
 		local omnislash_modifier_handler
 		
 		if self.caster:HasScepter() then
-			omnislash_modifier_handler = self.caster:AddNewModifier(self.caster, self, "modifier_imba_omni_slash_caster", {duration = self:GetSpecialValueFor("duration_scepter")})
+			omnislash_modifier_handler = self.caster:AddNewModifier(self.caster, self, "modifier_imba_omni_slash_caster", {duration = self:GetSpecialValueFor("duration_scepter") + self.caster:FindTalentValue("special_bonus_imba_juggernaut_10")})
 		else
-			omnislash_modifier_handler = self.caster:AddNewModifier(self.caster, self, "modifier_imba_omni_slash_caster", {duration = self:GetSpecialValueFor("duration")})
+			omnislash_modifier_handler = self.caster:AddNewModifier(self.caster, self, "modifier_imba_omni_slash_caster", {duration = self:GetSpecialValueFor("duration") + self.caster:FindTalentValue("special_bonus_imba_juggernaut_10")})
 		end
 
 		if omnislash_modifier_handler then

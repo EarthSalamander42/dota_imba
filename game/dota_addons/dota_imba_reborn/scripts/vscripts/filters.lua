@@ -1,5 +1,8 @@
 -- TODO: FORMAT FILTERS CODE IT LOOKS LIKE SHIT
 
+-- Testing a gold reduction on hero kills to reduce "snowballing"; 1 is default
+HERO_KILL_MULTIPLIER = 0.8
+
 -- Gold gain filter function
 function GameMode:GoldFilter(keys)
 	-- reason_const		12
@@ -43,6 +46,11 @@ function GameMode:GoldFilter(keys)
 		-- Lobby options adjustment
 		local custom_gold_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "bounty_multiplier")["1"]) or 100
 
+		-- Test gold reduction for hero kills
+		if keys.reason_const == DOTA_ModifyGold_HeroKill then
+			custom_gold_bonus = custom_gold_bonus * HERO_KILL_MULTIPLIER
+		end
+
 		keys.gold = keys.gold * custom_gold_bonus / 100
 
 		local reliable = false
@@ -71,7 +79,7 @@ function GameMode:GoldFilter(keys)
 			keys.gold = keys.gold * math.min(1 + (networth_difference / 200000), 2)
 		end
 	end
-	
+
 	return true
 end
 
@@ -87,6 +95,11 @@ function GameMode:ExperienceFilter( keys )
 	end
 
 	local custom_xp_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "exp_multiplier")["1"])
+
+	-- Test exp reduction for hero kills
+	if keys.reason_const == DOTA_ModifyXP_HeroKill then
+		custom_xp_bonus = custom_xp_bonus * HERO_KILL_MULTIPLIER
+	end
 
 	if custom_xp_bonus ~= nil then
 		keys.experience = keys.experience * (custom_xp_bonus / 100)
@@ -882,6 +895,56 @@ function GameMode:OrderFilter( keys )
 		end
 	end
 
+	------------------------------------------------------------------------------------
+	-- Troll Warlord Battle Trance (7.20 Version) Order Restrictions
+	------------------------------------------------------------------------------------
+	-- This only has to be put in here cause of dumb stop/interrupt orders not having a good state to prevent bricking up
+	
+	-- Based on very quick tests of vanilla, Troll Warlord can still buy/sell items while under targetted Battle Trance
+	if unit:GetModifierStackCount("modifier_imba_battle_trance_720", unit) == 1 then
+		-- First check if the ability is something Troll Warlord is allowed to cast
+		if keys.order_type >= DOTA_UNIT_ORDER_CAST_POSITION and keys.order_type <= DOTA_UNIT_ORDER_CAST_TOGGLE then
+			
+			local valid_abilities = 
+			{
+				"imba_troll_warlord_berserkers_rage",
+				"imba_troll_warlord_whirling_axes_melee",
+				"imba_troll_warlord_whirling_axes_ranged"
+			}
+
+			if keys.entindex_ability and EntIndexToHScript(keys.entindex_ability) then
+				for ability = 1, #valid_abilities do
+					if EntIndexToHScript(keys.entindex_ability):GetName() == valid_abilities[ability] then
+						return true
+					end
+				end
+			end
+			
+		-- Next check if it's some other randomly allowed command (might be more but can't be assed to dig THAT deep)
+		else
+			local other_valid_orders = 
+			{
+				DOTA_UNIT_ORDER_TRAIN_ABILITY,
+				DOTA_UNIT_ORDER_PURCHASE_ITEM,
+				DOTA_UNIT_ORDER_SELL_ITEM,
+				DOTA_UNIT_ORDER_DISASSEMBLE_ITEM,
+				DOTA_UNIT_ORDER_MOVE_ITEM,
+				DOTA_UNIT_ORDER_GLYPH,
+				DOTA_UNIT_ORDER_EJECT_ITEM_FROM_STASH
+			}
+			
+			for order = 1, #other_valid_orders do
+				if keys.order_type == other_valid_orders[order] then
+					return true
+				end
+			end
+		end
+		
+		-- If the above checks failed, then it shouldn't be a valid order
+		DisplayError(unit:GetPlayerID(), "Cannot Act")
+		return false
+	end
+
 	return true
 end
 
@@ -1177,3 +1240,13 @@ function GameMode:HealingFilter( filterTable )
 	return true
 end
 --]]
+
+function GameMode:RuneSpawnFilter(keys)
+    keys.rune_type = RandomInt(0, 5)
+    
+    if keys.rune_type == 5 then
+        keys.rune_type = keys.rune_type + 1
+    end
+    
+    return true
+end

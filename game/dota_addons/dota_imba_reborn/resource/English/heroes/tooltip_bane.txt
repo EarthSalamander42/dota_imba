@@ -1,33 +1,35 @@
 // Bane's Enfeeble
 "DOTA_Tooltip_ability_imba_bane_enfeeble"								"Enfeeble"
-"DOTA_Tooltip_ability_imba_bane_enfeeble_Description"					"Weakens an enemy unit, reducing its physical damage. Lasts %enfeeble_duration% seconds. Can stack up to %max_stacks% times.\n<font color='#FF7800'>The Terror Within:</font> Affected enemies have their vision reduced for every stack of enfeeble. The vision reduction has diminishing returns, and is weaker with each additional stack."
+"DOTA_Tooltip_ability_imba_bane_enfeeble_Description"					"Lower's the target's status resistance and attack speed.\n<font color='#FF7800'>Growing Discomfort: </font>Enfeeble can stack up to %max_stacks% times, affecting attack speed reduction linearly. Does not refresh previous stacks or further boost status resistance reduction.\n<font color='#FF7800'>The Terror Within:</font> Affected enemies have their vision reduced for every stack of Enfeeble. The vision reduction has diminishing returns, and is weaker with each additional stack."
 "DOTA_Tooltip_ability_imba_bane_enfeeble_Lore"                          "Even the mightiest of warriors crumble before the terror of Atropos."
 "DOTA_Tooltip_ability_imba_bane_enfeeble_as_reduction"					"ATTACK SPEED REDUCTION:"
 "DOTA_Tooltip_ability_imba_bane_enfeeble_max_stacks"                    "MAX STACKS:"
 "DOTA_Tooltip_ability_imba_bane_enfeeble_vision_reduction"              "BASE VISION REDUCTION:"
 "DOTA_Tooltip_ability_imba_bane_enfeeble_stack_vision_efficiency"		"%VISION DEGRADE PER STACK:"
 "DOTA_Tooltip_ability_imba_bane_enfeeble_bonus_status_resistance"		"%STATUS RESISTANCE REDUCTION:"
+"DOTA_Tooltip_ability_imba_bane_enfeeble_enfeeble_duration"					"DURATION:"
+
 
 "DOTA_Tooltip_modifier_imba_enfeeble_debuff"                            "Enfeeble"
-"DOTA_Tooltip_modifier_imba_enfeeble_debuff_Description"                "Losing attack damage and vision."
+"DOTA_Tooltip_modifier_imba_enfeeble_debuff_Description"                "Affected by %dMODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING%%% negative status resistance, and attack speed reduced by %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT%."
 
 // Bane's Brain Sap
 "DOTA_Tooltip_ability_imba_bane_brain_sap"                              "Brain Sap"
-"DOTA_Tooltip_ability_imba_bane_brain_sap_Description"                  "Feasts on the vital energies of an enemy unit, healing Bane and dealing damage.\n<font color='#FF7800'>Addlebrain:</font> Sets the target unit's intelligence and mana to 0.\n<font color='#FF7800'>Mind Feast:</font> Using Brain Sap on an enfeebled target consumes Enfeeble stacks on the target, and deals bonus damage to it depending on the stack count.\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
+"DOTA_Tooltip_ability_imba_bane_brain_sap_Description"                  "Feasts on the vital energies of an enemy unit, healing Bane and dealing damage.\n<font color='#FF7800'>Addlebrain:</font> Sets the target unit's intelligence and mana to 0 for a short duration.\n<font color='#FF7800'>Mind Feast:</font> Using Brain Sap on an enfeebled target consumes Enfeeble stacks on the target, and deals bonus damage to it depending on the stack count.\nUpgradable by Aghanim's Scepter."
 "DOTA_Tooltip_ability_imba_bane_brain_sap_Lore"                        "Atropos finds no greater pleasure than to harvest the fear he creates."
 "DOTA_Tooltip_ability_imba_bane_brain_sap_Note0"                        "Self heal from Brain Sap is always the stated value, regardless of actual damage dealt."
 "DOTA_Tooltip_ability_imba_bane_brain_sap_Note1"                        "Both damage and self heal scale with Spell Amp."
 "DOTA_Tooltip_ability_imba_bane_brain_sap_brain_sap_duration"          "ADDLEBRAIN DURATION:"
 "DOTA_Tooltip_ability_imba_bane_brain_sap_brain_sap_damage"            "DAMAGE/HEAL:"
 "DOTA_Tooltip_ability_imba_bane_brain_sap_enfeeble_stack_to_damage"                 "ENFEEBLE STACKS TO DAMAGE:"
-"DOTA_Tooltip_ability_imba_bane_brain_sap_aghanim_description"          "Improves cooldown to 1.5 seconds, and causes Brain Sap to pierce spell immunity."
+"DOTA_Tooltip_ability_imba_bane_brain_sap_aghanim_description"          "Decreases cooldown and makes Brain Sap pierce spell immunity."
 
 "DOTA_Tooltip_modifier_imba_brain_sap_mana"                            "Addlebrain"
 "DOTA_Tooltip_modifier_imba_brain_sap_mana_Description"                "Losing your mana pool and int."
 
 // Bane's Nightmare / Nightmare End
 "DOTA_Tooltip_ability_imba_bane_nightmare"                              "Nightmare"
-"DOTA_Tooltip_ability_imba_bane_nightmare_Description"                  "Puts the target enemy or friendly Hero to sleep and deals damage per second. Sleeping units are awakened when attacked, but the Nightmare passes to the attacking unit. The nightmared unit instantly wakes up if it takes damage.\n<font color='#FF7800'>Baleful Visions:</font> Upon waking up from Nightmare, the target is still foggy and dazed, having 0 vision range for a moderate duration, and cannot see anything himself."
+"DOTA_Tooltip_ability_imba_bane_nightmare_Description"                  "Puts the target enemy or friendly Hero to sleep <font color='#FF7800'>and deals damage per second.</font> Sleeping units are awakened when attacked, but the Nightmare passes to the attacking unit. Bane can attack nightmared targets freely.\n<font color='#FF7800'>Baleful Visions:</font> Upon waking up from Nightmare, the target is still foggy and dazed, having 0 vision range for a period of time."
 "DOTA_Tooltip_ability_imba_bane_nightmare_Lore"                        "A stolen prowess from the goddess Nyctasha is to put prey into forever sleep."
 "DOTA_Tooltip_ability_imba_bane_nightmare_Note0"                        "The target becomes briefly invulnerable upon being Nightmared."
 "DOTA_Tooltip_ability_imba_bane_nightmare_nightmare_duration"          "DURATION:"
@@ -71,10 +73,13 @@
 
 // Bane's Custom Talents
 "DOTA_Tooltip_ability_special_bonus_imba_bane_1"            "3 Enfeeble stacks on Nightmare targets"
-"DOTA_Tooltip_ability_special_bonus_imba_bane_2"            "Enfeeble is 450 aoe"
+"DOTA_Tooltip_ability_special_bonus_imba_bane_2"            "+600 AoE Enfeeble"
+"DOTA_Tooltip_ability_special_bonus_imba_bane_2_Description"            "Still requires a target to cast on."
 "DOTA_Tooltip_ability_special_bonus_imba_bane_3"            "Fiend's Grip is no longer channeled"
-"DOTA_Tooltip_ability_special_bonus_imba_bane_4"            "Enfeeble reduces 10% of stats for each stack"
+"DOTA_Tooltip_ability_special_bonus_imba_bane_3_Description"	"Can still be interrupted by disables."
+"DOTA_Tooltip_ability_special_bonus_imba_bane_4"            "Enfeeble reduces 10% of stats per stack"
 "DOTA_Tooltip_ability_special_bonus_imba_bane_5"            "Brain Sap casts Fiend's Grip for 0.5 seconds"
-"DOTA_Tooltip_ability_special_bonus_imba_bane_6"            "Nightmare applies mute for 2 seconds"
-"DOTA_Tooltip_ability_special_bonus_imba_bane_7"            "+6s invulnerability duration on allies"
-"DOTA_Tooltip_ability_special_bonus_imba_bane_8"            "Fiend's Grip now also affects enemies looking at its channeling"
+"DOTA_Tooltip_ability_special_bonus_imba_bane_6"            "Nightmare 2 Second Mute After End"
+"DOTA_Tooltip_ability_special_bonus_imba_bane_7"            "Nightmare +6s Ally Invulnerability Duration"
+"DOTA_Tooltip_ability_special_bonus_imba_bane_8"            "Fiend's Grip affects all enemies looking at caster"
+"DOTA_Tooltip_ability_special_bonus_imba_bane_8_Description"            "Affects enemies within 900 range and a vision cone within 45 degrees. Does not affect spell immune enemies."

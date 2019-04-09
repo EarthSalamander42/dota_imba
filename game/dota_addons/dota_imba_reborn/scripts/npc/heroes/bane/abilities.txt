@@ -21,7 +21,7 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"1000"
-		"AbilityCastPoint"				"0.5"
+		"AbilityCastPoint"				"0.3"
 		"AbilityCooldown"				"12.0 10.0 8.0 6.0"
 		"AbilityManaCost"				"50 75 100 125"
 
@@ -50,7 +50,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"as_reduction"				"-50 -75 -100 -125"
+				"as_reduction"				"-100 -125 -150 -175"
 			}
 			"04"
 			{
@@ -70,7 +70,7 @@
 			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_status_resistance"	"-36 -44 -52 -60"
+				"bonus_status_resistance"	"-40 -50 -60 -70"
 			}
 		}
 	}
@@ -99,7 +99,7 @@
 		"AbilityCastRange"				"600"
 		"AbilityCastPoint"				"0.5"
 		"AbilityCooldown"				"14 12 10 8"
-		"AbilityManaCost"				"70 100 130 160"
+		"AbilityManaCost"				"70 95 120 145"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -127,7 +127,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"brain_sap_damage"			"100 200 300 400"
+				"brain_sap_damage"			"125 225 325 425"
 			}
 			"04"
 			{
@@ -137,7 +137,7 @@
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"enfeeble_stack_to_damage"	"50 100 150 200"
+				"enfeeble_stack_to_damage"	"80 120 160 200"
 			}
 		}
 	}
@@ -256,7 +256,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------		
-		"AbilityCastPoint"				"0.5"
+		"AbilityCastPoint"				"0.4"
 		"AbilityCooldown"				"100 90 80"
 		"AbilityManaCost"				"200 300 400"
 
@@ -278,7 +278,7 @@
 			"01"
 			{
 				"var_type"								"FIELD_FLOAT"
-				"fiends_grip_duration"					"6"
+				"fiends_grip_duration"					"9"
 			}
 
 			"02"
@@ -314,7 +314,7 @@
 			"07"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"demon_damage"							"30 70 90"
+				"demon_damage"							"50 70 90"
 			}
 
 			"08"
@@ -380,7 +380,7 @@
 			"01"
 			{
 				"var_type"		"FIELD_INTEGER"
-				"value"			"450"
+				"value"			"600"
 			}
 		}
 	}

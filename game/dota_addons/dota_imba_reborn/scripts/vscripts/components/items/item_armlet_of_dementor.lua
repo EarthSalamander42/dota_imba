@@ -89,16 +89,20 @@ function modifier_item_imba_armlet_of_dementor_active:GetModifierBonusStats_Inte
 end
 
 function modifier_item_imba_armlet_of_dementor_active:GetModifierMagicalResistanceBonus()
+	if self.parent:IsIllusion() then return 0 end
+	
 	return self.mind_bonus_magic_res
 end
 
 function modifier_item_imba_armlet_of_dementor_active:GetModifierSpellAmplify_Percentage()
+	if self.parent:IsIllusion() then return 0 end
+
 	return self.mind_bonus_spell_amp
 end
 
 function modifier_item_imba_armlet_of_dementor_active:OnManaGained(keys)
-	if keys.unit == self:GetParent() then
-		self:GetParent():ReduceMana(math.min(keys.gain * self.mind_mana_drain_mult, self:GetParent():GetMana()))
+	if keys.unit == self:GetParent() and not self:GetParent():IsIllusion() then
+		self:GetParent():SpendMana(keys.gain * self.mind_mana_drain_mult, self.ability)
 		
 		if keys.gain >= self:GetParent():GetMana() then
 
@@ -124,6 +128,13 @@ function modifier_item_imba_armlet_of_dementor:OnCreated()
 	self.bonus_spell_cd		=	self.ability:GetSpecialValueFor("bonus_spell_cd")
 	self.bonus_magic_res	=	self.ability:GetSpecialValueFor("bonus_magic_res")
 	self.bonus_mana_regen	=	self.ability:GetSpecialValueFor("bonus_mana_regen")
+	
+	if not IsServer() then return end
+	
+	-- Check for illusions to add Mind's Despair to if active (there's probably a less convoluted way to do this...)
+	if self.parent:IsIllusion() and self.parent:GetPlayerOwner():GetAssignedHero():HasModifier("modifier_item_imba_armlet_of_dementor_active") then
+		self.parent:AddNewModifier(self.parent, self.ability, "modifier_item_imba_armlet_of_dementor_active", {})
+	end
 end
 
 -- This is just to make sure the CD modifier doesn't stack with itself or frantic modifier, without having to make an additional modifier to check

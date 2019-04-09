@@ -684,7 +684,6 @@
 	"item_ward_observer"
 	{
 		"AbilityCastRange"				"800"
-		"ItemCost"						"40"
 		"ItemInitialCharges"			"1"
 		"ItemStockMax"					"6"
 		"ItemStockInitial"				"2"
@@ -706,7 +705,6 @@
 	"item_ward_sentry"
 	{
 		"AbilityCastRange"				"800"
-		"ItemCost"						"75"
 
 		"AbilitySpecial"
 		{
@@ -723,13 +721,15 @@
 	//=================================================================================================================
 	"item_ward_dispenser"
 	{
-		"ItemCost"									"95"
-
 		"AbilityCastRange"							"800"
 
 		"AbilitySpecial"
 		{
-
+			"11"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tooltip_range"			"800"
+			}
 		}
 	}
 
@@ -2381,7 +2381,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_building_damage"	"90 270 370"
+				"bonus_building_damage"	"100 250 400"
 			}
 		}
 	}
@@ -2392,9 +2392,6 @@
 	"brewmaster_storm_dispel_magic"
 	{
 		"AbilityCastRange"				"500 600 700 800"
-		"AbilityCooldown"				"4"
-		"AbilityCastPoint"				"0.4"
-		"AbilityManaCost"				"75 75 75 75"		
 
 		"AbilitySpecial"
 		{
@@ -2416,32 +2413,7 @@
 	//=================================================================================================================
 	"brewmaster_storm_cyclone"
 	{
-		"AbilityCastRange"				"600"
-
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"8.0"
-		"AbilityCastPoint"				"0.4"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"150"		
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"duration_hero"				"6.0"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"duration_unit"				"20.0"
-			}
-		}
+		"AbilityCastRange"				"1200"
 	}
 
 	//=================================================================================================================
@@ -2449,25 +2421,12 @@
 	//=================================================================================================================
 	"brewmaster_storm_wind_walk"
 	{
-		"AbilityCooldown"				"5"
-		"AbilityManaCost"				"75"		
-
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"bonus_damage"				"100 160 220"
-			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"bonus_movement_speeed"		"50 55 60"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"duration"					"20.0"
 			}
 			"04"
 			{
@@ -4239,7 +4198,6 @@
 	"gyrocopter_homing_missile"
 	{
 		"AbilityCooldown"				"20 17 14 11"
-		"AbilityManaCost"				"120 130 140 150"
 		"AbilityDamage"					"150 225 300 475"
 
 		"AbilitySpecial"
@@ -4254,31 +4212,10 @@
 				"var_type"						"FIELD_INTEGER"
 				"tower_hits_to_kill_tooltip"	"6 8 10 12"
 			}
-			"03"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"stun_duration"				"2.25 2.5 2.75 3.0"
-				"LinkedSpecialBonus"		"special_bonus_unique_gyrocopter_6"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"attack_speed_bonus_pct"	"400"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"min_damage"				"50"
-			}
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"max_distance"				"1800"
-			}
-			"07"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"pre_flight_time"			"3"
 			}
 			"08"
 			{
@@ -4290,30 +4227,10 @@
 				"var_type"					"FIELD_INTEGER"
 				"acceleration"				"20 30 40 50"
 			}
-			"11"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"enemy_vision_time"			"4"
-			}
 			"12"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"charge_restore_time"		"20 17 14 11"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	//	Gyrocopter: bonus Homing Missile charges
-	//=================================================================================================================
-	"special_bonus_unique_gyrocopter_1"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"3"
 			}
 		}
 	}
@@ -4332,11 +4249,6 @@
 				"var_type"				"FIELD_INTEGER"
 				"max_attacks"			"4 6 8 10"
 				"LinkedSpecialBonus"	"special_bonus_unique_gyrocopter_2"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"projectile_speed"		"800"
 			}
 			"04"
 			{
@@ -4372,69 +4284,34 @@
 	"gyrocopter_call_down"
 	{
 		"AbilityCastRange"					"1000 1500 2000"
-		"AbilityCooldown"					"55 45 35"
+		"AbilityCooldown"					"50 45 40"
 
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"slow_duration_first"		"4"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"slow_duration_second"		"2"
-			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_first"				"200 350 400"
+				"damage_first"				"300 400 500"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_second"				"200 350 400"
+				"damage_second"				"150 225 300"
 			}
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"slow_first"				"30 50 70"
+				"slow_first"				"30 40 50"
 			}
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"slow_second"				"60 70 80"
 			}
-			"07"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"600"
-			}
-			"08"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"range_scepter"				"0"
-			}
 			"09"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"damage_second_scepter"		"325 425 525"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Ability: Special Bonus
-	//=================================================================================================================
-	"special_bonus_unique_gyrocopter_4"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"10"
 			}
 		}
 	}
@@ -6040,21 +5917,6 @@
 	}
 
 	//=================================================================================================================
-	// Legion Commander: Press the Attack cooldown reduction
-	//=================================================================================================================
-	"special_bonus_unique_legion_commander_2"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"value"					"8"
-			}
-		}
-	}
-
-	//=================================================================================================================
 	// Legion Commander: Moment of Courage
 	//=================================================================================================================
 	"legion_commander_moment_of_courage"
@@ -6083,21 +5945,6 @@
 	}
 
 	//=================================================================================================================
-	//	Legion Commander: bonus Moment of Courage proc chance
-	//=================================================================================================================
-	"special_bonus_unique_legion_commander_3"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"value"					"10"
-			}
-		}
-	}
-
-	//=================================================================================================================
 	// Legion Commander: Duel
 	//=================================================================================================================
 	"legion_commander_duel"
@@ -6121,21 +5968,6 @@
 				"var_type"				"FIELD_INTEGER"
 				"reward_damage"			"12 20 28"
 				"LinkedSpecialBonus"	"special_bonus_unique_legion_commander"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	//	Legion Commander: bonus Duel damage
-	//=================================================================================================================
-	"special_bonus_unique_legion_commander"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"40"
 			}
 		}
 	}
@@ -6236,21 +6068,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"radius_scepter"		"750"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Ability:	Lightning Storm slow duration increase
-	//=================================================================================================================
-	"special_bonus_unique_leshrac_2"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"3"
 			}
 		}
 	}
@@ -7232,7 +7049,7 @@
 		"MaxLevel"							"4"
 		"AbilityCastRange"					"1000 1100 1200 1300"
 		"AbilityCooldown"					"11 10 9 8"
-		"AbilityDamage"						"120 260 350 390"
+		"AbilityDamage"						"100 200 300 400"
 		"AbilityManaCost"					"140"
 
 		"AbilitySpecial"
@@ -7242,20 +7059,10 @@
 				"var_type"					"FIELD_INTEGER"
 				"speed"						"1250 1375 1500 1625"
 			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"width"						"200"
-			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"charge_restore_time"		"11"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"range_tooltip"				"1000 1100 1200 1300"
+				"charge_restore_time"		"11 10 9 8"
 			}
 		}
 	}
@@ -7281,7 +7088,7 @@
 	"morphling_adaptive_strike_agi"
 	{
 		"MaxLevel"						"4"
-		"AbilityCastRange"				"600 800 950 1050"
+		"AbilityCastRange"				"600 750 900 1050"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -7300,12 +7107,17 @@
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"damage_max"			"1.0 2.0 2.65 2.95"
+				"damage_max"			"1.5 2 2.5 3"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"range_tooltip"			"600 800 950 1050"
+				"range_tooltip"			"600 750 900 1050"
+			}
+			"05"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"projectile_speed"					"3000"
 			}
 		}
 	}
@@ -7316,7 +7128,7 @@
 	"morphling_adaptive_strike_str"
 	{
 		"MaxLevel"						"4"
-		"AbilityCastRange"				"600 800 950 1050"
+		"AbilityCastRange"				"600 750 900 1050"
 
 		"AbilitySpecial"
 		{
@@ -7328,7 +7140,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"stun_max"				"1.5 2.5 3.15 3.45"
+				"stun_max"				"2.0 2.5 3.0 3.5"
 			}
 			"03"
 			{
@@ -7343,7 +7155,12 @@
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"range_tooltip"			"600 800 950 1050"
+				"range_tooltip"			"600 750 900 1050"
+			}
+			"06"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"projectile_speed"				"3000"
 			}
 		}
 	}
@@ -7382,17 +7199,17 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"morph_cooldown"		"1.0 0.1 0.035 0.025"
+				"morph_cooldown"		"0.5 0.1 0.03125 0.02"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_attributes"		"4 6 8 10"
+				"bonus_attributes"		"4 7 10 13"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"morph_rate_tooltip"	"1 10 28 40"
+				"morph_rate_tooltip"	"2 10 32 50"
 			}
 		}
 	}
@@ -7414,17 +7231,17 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"morph_cooldown"		"1.0 0.1 0.035 0.025"
+				"morph_cooldown"		"0.5 0.1 0.03125 0.02"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_attributes"		"4 6 8 10"
+				"bonus_attributes"		"4 7 10 13"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"morph_rate_tooltip"	"1 10 28 40"
+				"morph_rate_tooltip"	"2 10 32 50"
 			}
 		}
 	}
@@ -7434,9 +7251,6 @@
 	//=================================================================================================================
 	"morphling_replicate"
 	{
-		"MaxLevel"						"3"
-		"AbilityCooldown"				"160 100 40"
-
 		"AbilitySpecial"
 		{
 			"01"
@@ -7444,11 +7258,6 @@
 				"var_type"				"FIELD_INTEGER"
 				"duration"				"30 35 40"
 				"LinkedSpecialBonus"	"special_bonus_unique_morphling_8"
-			}
-				"02"
-			{
-					"var_type"				"FIELD_INTEGER"
-					"range_tooltip"			"1000"
 			}
 		}
 	}
@@ -7761,7 +7570,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"fireblast_damage"		"70 210 300 340"
+				"fireblast_damage"		"100 180 260 340"
 				"LinkedSpecialBonus"	"special_bonus_unique_ogre_magi_2"
 			}
 		}
@@ -7812,7 +7621,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"burn_damage"			"29 36 43 50"
+				"burn_damage"			"30 40 50 60"
 			}		
 
 			"03"
@@ -7820,11 +7629,6 @@
 				"var_type"					"FIELD_INTEGER"
 				"slow_movement_speed_pct"	"-20 -24 -28 -32"
 			}
-			"05"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"multicast_delay"		"0.2"
-			}	
 		}
 	}
 
@@ -7834,15 +7638,9 @@
 	"ogre_magi_bloodlust"
 	{
 		"AbilityCastRange"				"600 700 800 900"
-		"AbilityCooldown"				"20"
 
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"modelscale"			"25"
-			}	
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
@@ -7857,7 +7655,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"self_bonus"			"30 50 70 90"
+				"self_bonus"			"30 60 90 120"
 				"LinkedSpecialBonus"	"special_bonus_unique_ogre_magi"
 			}
 			"05"
@@ -7893,12 +7691,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"multicast_2_times"		"0.6 0.8 1.0"
+				"multicast_2_times"		"0.7 0.85 1.0"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"multicast_3_times"		"0.2 0.4 0.8"
+				"multicast_3_times"		"0.2 0.4 0.6"
 			}
 			"03"
 			{
@@ -7913,12 +7711,12 @@
 			"05"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"multicast_2_times_tooltip"		"50 75 100"
+				"multicast_2_times_tooltip"		"70 85 100"
 			}
 			"06"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"multicast_3_times_tooltip"		"20 40 80"
+				"multicast_3_times_tooltip"		"20 40 60"
 			}
 			"07"
 			{
@@ -7966,22 +7764,7 @@
 			"06"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"max_channel_time_tooltip"	"2.5"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	//	Oracle: bonus Fortune's End maximum duration
-	//=================================================================================================================
-	"special_bonus_unique_oracle_2"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"value"					"0.75"
+				"max_channel_time_tooltip"	"3.0"
 			}
 		}
 	}
@@ -8014,7 +7797,7 @@
 	//=================================================================================================================
 	"oracle_purifying_flames"
 	{
-		"AbilityCooldown"				"2.25 2.25 2.0 1.5"
+		"AbilityCooldown"				"2.25 2 1.75 1.5"
 
 		"AbilitySpecial"
 		{
@@ -8510,41 +8293,40 @@
 	//=================================================================================================================
 	"shadow_demon_disruption"
 	{
-		"AbilityCooldown"									"26 23 20 17"
+		"AbilityCooldown"									"24 21 18 15"
 
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"									"FIELD_FLOAT"
-				"disruption_duration"						"2.5"
-				"LinkedSpecialBonus"						"special_bonus_unique_shadow_demon_5"
-			}
 			"02"
 			{
 				"var_type"									"FIELD_INTEGER"
-				"illusion_duration"							"8 10 12 14"
+				"illusion_duration"							"11 14 17 20"
 			}
 			"03"
 			{
 				"var_type"									"FIELD_INTEGER"
-				"illusion_outgoing_damage"					"-65 -35 -10 10"
+				"illusion_outgoing_damage"					"-65 -35 -5 25"
 			}
 			"04"
 			{
 				"var_type"									"FIELD_INTEGER"
-				"illusion_outgoing_tooltip"					"35 65 90 110"
+				"illusion_outgoing_tooltip"					"35 65 95 125"
 			}
 			"05"
 			{
 				"var_type"									"FIELD_INTEGER"
-				"illusion_incoming_damage"					"200"
+				"illusion_incoming_damage"					"100"
 			}
 			"06"
 			{
 				"var_type"									"FIELD_INTEGER"
-				"tooltip_total_illusion_incoming_damage"	"300"
-			}			
+				"tooltip_total_illusion_incoming_damage"	"200"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"charge_restore_time"	"24 21 18 15"
+			}
 		}
 	}
 
@@ -8572,6 +8354,16 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"duration"				"12.0"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"illusion_outgoing_damage"	"-65 -35 -5 25"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"illusion_outgoing_damage_tooltip"	"35 65 95 125"
 			}
 		}
 	}
@@ -8626,7 +8418,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"purge_damage"			"300 400 500"
+				"purge_damage"			"400 500 600"
 				"LinkedSpecialBonus"	"special_bonus_unique_shadow_demon_1"
 			}
 			"04"
@@ -8922,8 +8714,6 @@
 	//=================================================================================================================
 	"templar_assassin_refraction"
 	{
-		"AbilityCooldown"					"17.0 16.0 15.0 14.0"
-
 		"AbilitySpecial"
 		{
 			"01"
@@ -8937,31 +8727,6 @@
 				"var_type"					"FIELD_INTEGER"
 				"bonus_damage"				"70 110 150 190"
 			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"damage_threshold"			"5"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"duration"					"17.0"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	//	Templar Assassin: bonus Refraction instances
-	//=================================================================================================================
-	"special_bonus_unique_templar_assassin"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"4"
-			}
 		}
 	}
 
@@ -8970,8 +8735,6 @@
 	//=================================================================================================================
 	"templar_assassin_meld"
 	{
-		"AbilityCooldown"					"6.0 5.5 5.0 4.5"
-
 		"AbilitySpecial"
 		{
 			"01"
@@ -8998,7 +8761,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"value"					"-10"
+				"value"					"-6"
 			}
 		}
 	}
@@ -9027,13 +8790,8 @@
 				"var_type"					"FIELD_INTEGER"
 				"attack_spill_width"		"75 90 105 120"
 			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"attack_spill_pct"			"100"
-			}
 		}
-	}	
+	}
 	
 	//=================================================================================================================
 	// Templar Assassin: Psionic Trap
@@ -9051,11 +8809,6 @@
 				"max_traps"						"10 20 30"
 				"LinkedSpecialBonus"			"special_bonus_unique_templar_assassin_6"
 			}
-			"02"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"trap_fade_time"				"2.0"
-			}
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
@@ -9066,21 +8819,11 @@
 				"var_type"						"FIELD_INTEGER"
 				"movement_speed_max"			"100"
 			}
-			"05"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"trap_duration_tooltip"			"5"
-			}
 			"06"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"trap_bonus_damage"				"250 450 650"
 				"LinkedSpecialBonus"			"special_bonus_unique_templar_assassin_3"
-			}
-			"07"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"trap_max_charge_duration"		"4"
 			}
 		}
 	}
@@ -9099,11 +8842,6 @@
 				"var_type"						"FIELD_INTEGER"
 				"trap_radius"					"400 450 500"
 			}
-			"02"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"trap_duration"					"5.0"
-			}
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
@@ -9112,17 +8850,12 @@
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"movement_speed_min"			"30"
+				"movement_speed_min"			"50 70 90"
 			}
 			"05"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"movement_speed_max"			"60"
-			}
-			"06"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"trap_max_charge_duration"		"4"
+				"movement_speed_max"			"100"
 			}
 		}
 	}
@@ -9139,11 +8872,6 @@
 				"var_type"						"FIELD_INTEGER"
 				"trap_radius"					"400 450 500"
 			}
-			"02"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"trap_duration"					"5.0"
-			}
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
@@ -9152,17 +8880,12 @@
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"movement_speed_min"			"30"
+				"movement_speed_min"			"50 70 90"
 			}
 			"05"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"movement_speed_max"			"60"
-			}
-			"06"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"trap_max_charge_duration"		"4"
+				"movement_speed_max"			"100"
 			}
 		}
 	}
@@ -9172,9 +8895,7 @@
 	//=================================================================================================================
 	"terrorblade_reflection"
 	{
-		"AbilityCastRange"					"900"
-
-		"AbilityCooldown"					"22 18 15 13"
+		"AbilityCooldown"					"22 19 16 13"
 
 		"AbilitySpecial"
 		{
@@ -9183,25 +8904,10 @@
 				"var_type"					"FIELD_FLOAT"
 				"illusion_duration"			"5.5"
 			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"illusion_outgoing_damage"	"-75 -50 -25 0"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"illusion_outgoing_tooltip"	"25 50 75 100"
-			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"move_slow"					"25 28 31 34"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"range"						"900"
 			}
 		}
 	}
@@ -9225,12 +8931,12 @@
 			"02"
 			{
 				"var_type"									"FIELD_INTEGER"
-				"illusion_outgoing_damage"					"-70 -50 -35 -25"
+				"illusion_outgoing_damage"					"-70 -55 -40 -25"
 			}
 			"03"
 			{
 				"var_type"									"FIELD_INTEGER"
-				"illusion_outgoing_tooltip"					"30 50 65 75"
+				"illusion_outgoing_tooltip"					"30 45 60 75"
 			}
 			"04"
 			{
@@ -9259,42 +8965,20 @@
 				"var_type"				"FIELD_INTEGER"
 				"duration"				"40 48 56 64"
 			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"transformation_time"	"0.35"
-			}
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"base_attack_time"		"1.5 1.5 1.45 1.4"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_range"			"400 400 450 450"
-				"LinkedSpecialBonus"	"special_bonus_unique_terrorblade_3"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"tooltip_attack_range"	"550 550 600 600"
-				"LinkedSpecialBonus"	"special_bonus_unique_terrorblade_3"
+				"base_attack_time"		"1.5 1.46 1.42 1.38"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"30 70 100 120"
+				"bonus_damage"			"30 60 90 120"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"speed_loss"			"25 15 5 0"
-			}
-			"08"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"metamorph_aura_tooltip"	"900"
+				"speed_loss"			"30 24 18 12"
 			}
 		}
 	}
@@ -9304,13 +8988,7 @@
 	//=================================================================================================================
 	"terrorblade_sunder"
 	{
-		"MaxLevel"						"3"
-
-		"AbilityCooldown"				"120 40 30"
-
-		"AbilityManaCost"				"200 100 0"
-
-		"AbilityCastPoint"				"0.35 0.3 0.25"
+		"AbilityCooldown"				"115 75 35"
 
 		"AbilitySpecial"
 		{
@@ -9318,21 +8996,6 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"hit_point_minimum_pct"		"24 16 8"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	//	Terrorblade: Sunder cooldown reduction
-	//=================================================================================================================
-	"special_bonus_unique_terrorblade"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"20"
 			}
 		}
 	}
@@ -9377,21 +9040,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"aoe_scepter"			"350"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	//	Tidehunter: increased Gush armor reduction
-	//=================================================================================================================
-	"special_bonus_unique_tidehunter"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"5"
 			}
 		}
 	}
@@ -11085,492 +10733,6 @@
 	}
 
 	//=================================================================================================================
-	// Wisp: Tether
-	//=================================================================================================================
-	"wisp_tether"
-	{
-		"AbilityCooldown"				"5.0"
-		"AbilityManaCost"				"0"
-		"AbilityCastRange"				"1800"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"900 1000 1100 1200"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"movespeed"					"13 15 18 22"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"latch_distance"			"700"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"latch_speed"				"1000"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"tether_heal_amp"			"1.5"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"slow"						"-100"
-			}
-			"07"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"attackslow_tooltip"		"-100"
-			}
-			"08"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"stun_duration"				"0.75 1.25 1.75 2.25"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	//	Wisp: causes Tether to stun instead of slow
-	//=================================================================================================================
-	"special_bonus_unique_wisp_2"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"1"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Wisp: Spirits
-	//=================================================================================================================
-	"wisp_spirits"
-	{
-		"AbilityCooldown"				"20 16 13 11"
-		"AbilityDuration"				"19"
-		"AbilityManaCost"				"120 140 155 165"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"creep_damage"				"9 21 33 45"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"hero_damage"				"35 85 120 140"
-				"LinkedSpecialBonus"		"special_bonus_unique_wisp"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"slow"						"20 40 60 80"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"slow_duration"				"0.3"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"revolution_time"			"2.5"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"min_range"					"100"
-			}
-			"07"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"max_range"					"875"
-				"LinkedSpecialBonus"		"special_bonus_unique_wisp_3"
-			}
-			"08"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"hero_hit_radius"			"70"
-			}
-			"09"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"explode_radius"			"300 350 400 450"
-			}
-			"10"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"hit_radius"				"150"
-			}
-			"11"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"spirit_movement_rate"		"400"
-			}
-			"12"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"spirit_duration"			"19"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	//	Wisp: bonus Spirit impact damage
-	//=================================================================================================================
-	"special_bonus_unique_wisp"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"135"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Wisp: Overcharge
-	//=================================================================================================================
-	"wisp_overcharge"
-	{
-		"MaxLevel"							"4"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"bonus_attack_speed"		"50 70 90 110"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"bonus_damage_pct"			"-8 -16 -22 -26"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"drain_interval"			"0.2"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"drain_pct"					"0.045"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"drain_pct_tooltip"			"4.5"
-			}
-		}
-	}	
-
-	//=================================================================================================================
-	// Wisp: Relocate
-	//=================================================================================================================
-	"wisp_relocate"
-	{
-		"AbilityCooldown"					"100 95 90"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"cast_delay"				"2.7 1.85 1.0"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"return_time"				"12"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	//	Zeus: Arc Lightning
-	//=================================================================================================================
-	"zuus_arc_lightning"
-	{
-		"AbilityCastRange"				"850 900 950 1000"
-		"AbilityCastPoint"				"0.2 0.16 0.13 0.1"
-		"AbilityManaCost"				"65"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"arc_damage"			"85 110 135 160"
-				"LinkedSpecialBonus"	"special_bonus_unique_zeus_2"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"500 600 700 800"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"jump_count"			"5 10 15 20"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"jump_delay"			"0.25 0.2 0.15 0.1"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Zeus: bonus Arc Lightning damage
-	//=================================================================================================================
-	"special_bonus_unique_zeus_2"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"value"					"60"
-			}
-		}
-	}
-	
-	//=================================================================================================================
-	//	Zeus: Lightning Bolt
-	//=================================================================================================================
-	"zuus_lightning_bolt"
-	{
-		"AbilityCastRange"				"700 800 900 1000"
-		"AbilityDamage"					"125 200 275 350"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"cast_range_tooltip"	"700 800 900 1000"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"true_sight_radius"		"750"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"sight_radius_day"		"750"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"sight_radius_night"	"750"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"sight_duration"		"5.0"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"spread_aoe"			"325 375 425 475"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	//	Zeus: bonus Lightning Bolt stun duration
-	//=================================================================================================================
-	"special_bonus_unique_zeus_3"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"value"					"0.7"
-			}
-		}
-	}
-	
-	//=================================================================================================================
-	// Zuus: Static Field
-	//=================================================================================================================
-	"zuus_static_field"
-	{
-		"MaxLevel"							"4"
-
-		"AbilityCastRange"					"1200 1400 1600 1800"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"1200 1400 1600 1800"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"damage_health_pct"			"4 6 8 10"
-				"LinkedSpecialBonus"		"special_bonus_unique_zeus"
-			}
-		}
-	}	
-
-	//=================================================================================================================
-	// Zuus: Cloud
-	//=================================================================================================================
-	"zuus_cloud"
-	{
-		"AbilityCooldown"				"30"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"cloud_duration"		"40"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"cloud_bolt_interval"	"2.5"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"cloud_radius"			"500"
-			}
-		}
-	}
-	
-	//=================================================================================================================
-	// Zuus: Thundergod's Wrath
-	//=================================================================================================================
-	"zuus_thundergods_wrath"
-	{
-		"MaxLevel"						"3"
-		"AbilityCooldown"				"90 75 60"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"true_sight_radius"		"1100"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"true_sight_radius_tooltip"	"500 700 900"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"sight_radius_day"		"500 700 900"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"sight_radius_night"	"500 700 900"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"sight_duration"		"3 4 5"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"250 350 450"
-			}
-		}
-	}
-	
-	//=================================================================================================================
-	// Zuus: +% damage to Static Field Talent
-	//=================================================================================================================
-	"special_bonus_unique_zeus"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"					"6157"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"value"				"2.0"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Zuus: +damage to Chain Lightning Talent
-	//=================================================================================================================
-	"special_bonus_unique_zeus_2"	
-	{		
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"				"75"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Zuus: +ministun duration
-	//=================================================================================================================
-	"special_bonus_unique_zeus_3"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"					"6518"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"value"				"0.5"
-			}
-		}
-	}
-
-	//=================================================================================================================
 	//-----------------------------------------------------------------------------------------------------------------
 	// 								STRUCTURES, NEUTRALS AND OTHER UNIT OVERRIDES
 	//-----------------------------------------------------------------------------------------------------------------
@@ -11757,20 +10919,15 @@
 
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"900"
-			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"ms_bonus"				"6 7 8 9 10"
+				"ms_bonus"				"5 7 9 11 13"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"as_bonus"				"6 7 8 9 10"
+				"as_bonus"				"5 7 9 11 13"
 			}
 		}
 	}
@@ -11897,59 +11054,23 @@
 	//=================================================================================================================
 	"spectre_spectral_dagger"
 	{
-		"MaxLevel"						"4"
-		"AbilityCastRange"				"2000"
-		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"16.0"
-		"AbilityManaCost"				"130"
-
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"50 150 250 350"
+				"damage"				"90 180 270 360"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_movespeed"		"8 16 22 26"
+				"bonus_movespeed"		"10 16 22 28"
 				"LinkedSpecialBonus"	"special_bonus_unique_spectre_3"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"dagger_path_duration"	"12.0"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"hero_path_duration"	"7.0"
-			}
-			"05"	
-			{
-				"var_type"				"FIELD_FLOAT"
-				"buff_persistence"		"4.0"
-			}
-			"08"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"dagger_radius"			"125"
-			}
-			"09"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"path_radius"			"175"
-			}
-			"10"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"vision_radius"			"200"
 			}
 			"11"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"speed"					"800"
+				"speed"					"1000"
 			}
 			"12"
 			{
@@ -11964,24 +11085,20 @@
 	//=================================================================================================================
 	"spectre_desolate"
 	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"5335"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"AbilitySound"					"Hero_Spectre.Desolate"
-		"MaxLevel"						"4"
-
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"bonus_damage"			"20.0 50.0 72.5 87.5"
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"20 40 60 80"
 				"LinkedSpecialBonus"	"special_bonus_unique_spectre_2"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"400"
 			}
 			"03"
 			{
@@ -11996,13 +11113,6 @@
 	//=================================================================================================================
 	"spectre_dispersion"
 	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"5336"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"MaxLevel"						"4"
-
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -12014,6 +11124,14 @@
 				"LinkedSpecialBonus"	"special_bonus_unique_spectre_5"
 			}		
 		}
+	}
+
+	//=================================================================================================================
+	// Spectre: Haunt
+	//=================================================================================================================
+	"spectre_haunt"
+	{
+
 	}
 
 	//=================================================================================================================
@@ -13169,7 +12287,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"150 225 300 375"
+				"damage"				"175 250 325 400"
 				"LinkedSpecialBonus"	"special_bonus_unique_mars_spear_bonus_damage"
 			}
 			"02"
@@ -13208,6 +12326,11 @@
 				"var_type"					"FIELD_INTEGER"
 				"radius"					"700"
 			}
+			"09"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_damage_vs_heroes"	"75"
+			}
 		}
 	}
 
@@ -13245,7 +12368,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"duration"				"6.0 7.0 8.0"
+				"duration"				"7.0 8.0 9.0"
 			}
 			"04"
 			{
