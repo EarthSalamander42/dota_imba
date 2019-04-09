@@ -249,7 +249,6 @@ function api:Request(endpoint, okCallback, failCallback, method, payload)
 end
 
 function api:RegisterGame(callback)
-
 	self:Request("game-register", function(data)
 		api.game_id = data.game_id
 		api.players = data.players
@@ -261,7 +260,7 @@ function api:RegisterGame(callback)
 		match_id = self:GetMatchID(),
 		players = self:GetAllPlayerSteamIds(),
 		cheat_mode = self:IsCheatGame(),
---		custom_game = "imba"
+		game_time = GameRules:GetDOTATime(false, false),
 	});
 end
 

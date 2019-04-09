@@ -313,7 +313,7 @@
 	"loading_heroes_button" "Lade Held..."
 	"loading_pre_game" "Lade Helden, Bitte Warten..."
 	"loading_screen_button" "Die „Dota 2 IMBA“-Webseite ist momentan leider nicht verfügbar."
-	"loading_screen_description" "Dota IMBA 7.12 brings forth a shining Keeper of the Light, along with many typo in heroes abilities scaling values! Dota IMBA is part of Frostrose Studio, directed by EarthSalamander."
+	"loading_screen_description" "Dota IMBA 7.12 brings forth a shining Keeper of the Light, along with the continuation of ability updates and new items! Dota IMBA is part of Frostrose Studio, directed by EarthSalamander."
 	"loading_screen_patreon" "Patreon"
 	"loading_screen_patreon_description" "Support Frostrose Studio on Patreon! Servers for the Websites, Battlepass, Statistics and XP Systems are expensive. Donations support the development of:"
 	"loading_screen_patreon_modlist1" "- Battlegrounds Legends"
