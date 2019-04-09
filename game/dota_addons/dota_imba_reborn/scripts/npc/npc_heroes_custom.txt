@@ -684,7 +684,7 @@
 		//"Ability3"					"imba_faceless_void_time_lock"
 		"Ability3"					"imba_faceless_void_time_lock_720"
 		"Ability4"					"imba_faceless_void_timelord"
-		"Ability5"					"imba_faceless_void_time_lock"
+		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_faceless_void_chronosphere"
 
 		"Ability10"					"special_bonus_imba_faceless_void_7" // Time Dilation no longer spends chronocharges to affect allies

@@ -96,7 +96,7 @@
 "DOTA_Tooltip_ability_custom_creep_scaling_melee_ms"			"BONUS MOVEMENT SPEED:"
 "DOTA_Tooltip_ability_custom_creep_scaling_melee_hp"			"BONUS HEALTH:"
 "DOTA_Tooltip_ability_custom_creep_scaling_melee_regen"			"BONUS HEALTH REGEN:"
-"DOTA_Tooltip_ability_custom_creep_scaling_jungle_bounty"		"BONUS GOLD BOUNTY (JUNGLE CREEPS):"
+//"DOTA_Tooltip_ability_custom_creep_scaling_jungle_bounty"		"BONUS GOLD BOUNTY (JUNGLE CREEPS):"
 
 "DOTA_Tooltip_modifier_custom_creep_scaling"					"Custom Creep Scaling"
 "DOTA_Tooltip_modifier_custom_creep_scaling_Description"		"This creep is gaining an additional:<br>
@@ -106,5 +106,5 @@
 * %2fMODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS% armor<br>
 * %2fMODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS%%% magic resistance<br>
 * %2fMODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT% move speed<br>
-* %2fMODIFIER_PROPERTY_HEALTH_BONUS% health<br>
+* %2fMODIFIER_PROPERTY_EXTRA_HEALTH_BONUS% health<br>
 * %2fMODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT% health regeneration"
