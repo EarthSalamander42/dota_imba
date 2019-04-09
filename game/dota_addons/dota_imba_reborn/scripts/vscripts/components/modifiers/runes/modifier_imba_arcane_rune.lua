@@ -11,7 +11,7 @@ function modifier_imba_arcane_rune:GetAuraSearchFlags() return DOTA_UNIT_TARGET_
 function modifier_imba_arcane_rune:GetModifierAura() return "modifier_imba_arcane_rune_aura" end
 
 function modifier_imba_arcane_rune:GetTexture()
-	return "custom/imba_rune_arcane"
+	return "rune_arcane"
 end
 
 function modifier_imba_arcane_rune:GetEffectName()
@@ -34,7 +34,8 @@ function modifier_imba_arcane_rune:DeclareFunctions()
 	local funcs = {
 		MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE,
 		MODIFIER_PROPERTY_MANACOST_PERCENTAGE,
-		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE
+		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
+		MODIFIER_PROPERTY_CASTTIME_PERCENTAGE
 	}
 	return funcs
 end
@@ -51,13 +52,17 @@ function modifier_imba_arcane_rune:GetModifierPercentageManacost()
 	return CustomNetTables:GetTableValue("game_options", "runes").arcane_rune_mana_cost_reduction
 end
 
+function modifier_imba_arcane_rune:GetModifierPercentageCasttime()
+	return CustomNetTables:GetTableValue("game_options", "runes").arcane_rune_cast_time_pct
+end
+
 ----------------------------------------------------------------------
--- Double Damage team aura
+-- Arcane Rune team aura
 ----------------------------------------------------------------------
 modifier_imba_arcane_rune_aura = modifier_imba_arcane_rune_aura or class({})
 function modifier_imba_arcane_rune_aura:IsDebuff() return false end
 
-function modifier_imba_arcane_rune_aura:GetTextureName()
+function modifier_imba_arcane_rune_aura:GetTexture()
 	return "rune_arcane"
 end
 
@@ -73,7 +78,8 @@ function modifier_imba_arcane_rune_aura:DeclareFunctions()
 	local funcs = {
 		MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE,
 		MODIFIER_PROPERTY_MANACOST_PERCENTAGE,
-		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE
+		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
+		MODIFIER_PROPERTY_CASTTIME_PERCENTAGE
 	}
 	return funcs
 end
@@ -88,4 +94,8 @@ end
 
 function modifier_imba_arcane_rune_aura:GetModifierPercentageManacost()
 	return CustomNetTables:GetTableValue("game_options", "runes").arcane_rune_mana_cost_reduction / 2
+end
+
+function modifier_imba_arcane_rune_aura:GetModifierPercentageCasttime()
+	return CustomNetTables:GetTableValue("game_options", "runes").arcane_rune_cast_time_pct / 2
 end

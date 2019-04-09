@@ -1192,7 +1192,7 @@ function modifier_imba_silencer_global_silence:OnCreated()
 
 		if self.tickInterval > 0 then self:StartIntervalThink(self.tickInterval) end
 
-		if self.parent:IsChanneling() or self.parent:GetCurrentActiveAbility() then
+		if self.parent:GetCurrentActiveAbility() and not self.parent:GetCurrentActiveAbility():IsItem() and self.parent:GetCurrentActiveAbility():GetName() ~= "item_tpscroll" and not string.find(self.parent:GetCurrentActiveAbility():GetName(), "item_travel_boots") then
 			self.particle = ParticleManager:CreateParticle(self.silenceParticle, PATTACH_OVERHEAD_FOLLOW, self.parent)
 			self.particleState = 1
 			self.spellCast = true

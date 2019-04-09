@@ -14,20 +14,17 @@
 
 // Faceless Void's Time Dilation
 "DOTA_Tooltip_ability_imba_faceless_void_time_dilation"                "Time Dilation"
-"DOTA_Tooltip_ability_imba_faceless_void_time_dilation_Description"                 "Faceless Void traps all nearby enemies in a time dilation field.\n<font color='#FF7800'>Every Second Counts:</font> Void increases the cooldown of enemies' abilities that are currently cooling down, slowing them by %ms_debuff%% / %as_debuff% move/attack speed for each ability that was affected.\n<font color='#FF7800'>Chronocharges:</font> Faceless Void gets a Chronocharge for each enemy ability affected by Time Dilation.\n<font color='#FF7800'>The March of Time:</font> After stealing time from enemies' abilities, Void consumes Chronocharges to decrease the cooldowns of his and nearby allies. Each ability currently on cooldown consumes a Chronocharge, reducing its cooldown by a few seconds. Each affected ability grants that ally %ms_buff%% / %as_buff% move/attack speed for the duration. If Faceless Void has no more Chronocharges to consume, no more abilities can be affected."
+"DOTA_Tooltip_ability_imba_faceless_void_time_dilation_Description"                 "Faceless Void traps all nearby enemies in a time dilation field for %cd_increase% seconds, freezing their cooldowns and slowing their movement and attack speed by %ms_debuff%%% / %as_debuff% for each cooldown frozen.\n<font color='#FF7800'>Chronocharges:</font> Faceless Void gets %charge_gain% Chronocharges for each enemy ability affected by Time Dilation.\n<font color='#FF7800'>The March of Time:</font> For every Chronocharge, allied heroes caught in Time Dilation have an ability currently on cooldown reduced by %cd_decrease% seconds, consuming a Chronocharge in the process. Each affected ability also grants that ally %ms_buff%%% / %as_buff% move/attack speed for the duration."
 "DOTA_Tooltip_ability_imba_faceless_void_time_dilation_Lore"            "Time is just another currency for Darkterror's race, and he isn't above pilfering some from his enemies in the heat of battle."
-"DOTA_Tooltip_ability_imba_faceless_void_time_dilation_Note0"          "Abilities cooldowns are checked from left to right, consuming Chronocharges stacks in that order."
-"DOTA_Tooltip_ability_imba_faceless_void_time_dilation_Note1"          "Does not affect item cooldowns or Time Dilation itself."
+"DOTA_Tooltip_ability_imba_faceless_void_time_dilation_Note0"          "Does not affect item cooldowns or Time Dilation itself."
+"DOTA_Tooltip_ability_imba_faceless_void_time_dilation_Note1"          "The March of Time ability cooldowns are checked from left to right, consuming Chronocharges stacks in that order."
+"DOTA_Tooltip_ability_imba_faceless_void_time_dilation_Note2"          "The March of Time first checks Faceless Void's abilities, then allies in order of close proximity."
 "DOTA_Tooltip_ability_imba_faceless_void_time_dilation_area_of_effect"              "RADIUS:"
-"DOTA_Tooltip_ability_imba_faceless_void_time_dilation_charge_gain"                 "CHRONOCHARGES STACKS PER ABILITY:"
-"DOTA_Tooltip_ability_imba_faceless_void_time_dilation_duration"                    "SLOW/HASTE DURATION:"
-"DOTA_Tooltip_ability_imba_faceless_void_time_dilation_cd_increase"                 "ENEMIES COOLDOWN INCREASE:"
-"DOTA_Tooltip_ability_imba_faceless_void_time_dilation_cd_decrease"                 "ALLIES COOLDOWN DECREASE:"
 
-"DOTA_Tooltip_modifier_imba_faceless_void_time_dilation_buff"          "Time Dilation"
+"DOTA_Tooltip_modifier_imba_faceless_void_time_dilation_buff"          				"Time Dilation"
 "DOTA_Tooltip_modifier_imba_faceless_void_time_dilation_buff_Description"           "Move and attack speed increased for each stack."
 
-"DOTA_Tooltip_modifier_imba_faceless_void_time_dilation_slow"          "Time Dilation"
+"DOTA_Tooltip_modifier_imba_faceless_void_time_dilation_slow"          				"Time Dilation"
 "DOTA_Tooltip_modifier_imba_faceless_void_time_dilation_slow_Description"           "Move and attack speed reduced for each stack."
 
 "DOTA_Tooltip_modifier_imba_time_dilation_talent"                      "Backtrack"
@@ -46,6 +43,20 @@
 
 "DOTA_Tooltip_modifier_imba_faceless_void_time_lock_stun"              "Time Lock"
 "DOTA_Tooltip_modifier_imba_faceless_void_time_lock_stun_Description"               "Frozen in time. Cannot move for the duration."
+
+// Faceless Void's Timelock (7.20 Version)
+"DOTA_Tooltip_ability_imba_faceless_void_time_lock_720"									"Time Lock"
+"DOTA_Tooltip_ability_imba_faceless_void_time_lock_720_Description"						"Adds the chance for an attack to lock an enemy unit in time while attacking it a second time.\n<font color='#FF7800'>Chronocharges:</font> Each proc of Time Lock on an enemy hero grants a Chronocharge.\n<font color='#FF7800'>Lost In The Moment:</font> When Time Lock procs, the cooldown of all target abilities currently on cooldown is increased by %moment_cd_increase% seconds.\n<font color='#FF7800'>Chrono Lock:</font> Proccing Time Lock on an enemy affected by Chronosphere also procs it on all other enemies also affected by Chronosphere."
+"DOTA_Tooltip_ability_imba_faceless_void_time_lock_720_Lore"								"The strike of the Faceless Void lands with dimension shifting force."
+"DOTA_Tooltip_ability_imba_faceless_void_time_lock_720_Note1"							"Does not stack with Skull Basher."
+"DOTA_Tooltip_ability_imba_faceless_void_time_lock_720_Note0"							"Stun works on Spell Immune units."
+"DOTA_Tooltip_ability_imba_faceless_void_time_lock_720_chance_pct"						"%CHANCE:"
+"DOTA_Tooltip_ability_imba_faceless_void_time_lock_720_duration"							"DURATION:"
+"DOTA_Tooltip_ability_imba_faceless_void_time_lock_720_duration_creep"						"CREEP DURATION:"
+"DOTA_Tooltip_ability_imba_faceless_void_time_lock_720_bonus_damage"						"BONUS DAMAGE:"
+
+"DOTA_Tooltip_modifier_imba_faceless_void_time_lock_720_freeze"							"Time Lock Freeze"
+"DOTA_Tooltip_modifier_imba_faceless_void_time_lock_720_freeze_Description"				"Stunned, frozen, and on the receiving end of another attack."
 
 // Faceless Void's Timelord
 "DOTA_Tooltip_ability_imba_faceless_void_timelord"                      "Timelord"
@@ -76,13 +87,15 @@
 "DOTA_Tooltip_ability_special_bonus_imba_faceless_void_1_Description"	"Time Dilation gives Void 5% Backtrack chance for every enemy affected."
 "DOTA_Tooltip_ability_special_bonus_imba_faceless_void_2"				"Time Dilation bonus health/mana regen"
 "DOTA_Tooltip_ability_special_bonus_imba_faceless_void_2_Description"	"+12/+6 health/mana regen per Time Dilation Chronocharge spent."
-"DOTA_Tooltip_ability_special_bonus_imba_faceless_void_3"				"Dodges projectiles while in Chronosphere"
-"DOTA_Tooltip_ability_special_bonus_imba_faceless_void_3_Description"	"Instant Chronosphere movement; Void constantly dodges projectiles in it."
+"DOTA_Tooltip_ability_special_bonus_imba_faceless_void_3"				"Speed Barrier"
+"DOTA_Tooltip_ability_special_bonus_imba_faceless_void_3_Description"	"Increases Faceless Void's Chronosphere haste speed to 3000 and constantly dodges projectiles while inside Chronosphere."
 "DOTA_Tooltip_ability_special_bonus_imba_faceless_void_4"				"Back to the Future"
 "DOTA_Tooltip_ability_special_bonus_imba_faceless_void_4_Description"	"Time Lock increases target's CDs by 0.5 and reduces his CDs by 0.5 seconds."
 "DOTA_Tooltip_ability_special_bonus_imba_faceless_void_5"				"Time Lock spawns a mini-Chronosphere"
-"DOTA_Tooltip_ability_special_bonus_imba_faceless_void_6"				"Time Lord bonuses doubled in Chronosphere."
+"DOTA_Tooltip_ability_special_bonus_imba_faceless_void_5_Description"	"The mini-Chronosphere is centered around the target, is 180 radius, and lasts for 1 second."
+"DOTA_Tooltip_ability_special_bonus_imba_faceless_void_6"				"Time Lord bonuses doubled in Chronosphere"
 "DOTA_Tooltip_ability_special_bonus_imba_faceless_void_7"				"Focused Time Dilation"
-"DOTA_Tooltip_ability_special_bonus_imba_faceless_void_7_Description"	"Time Dilation no longer spends Chronocharges on allies."
+"DOTA_Tooltip_ability_special_bonus_imba_faceless_void_7_Description"	"Time Dilation's The March of Time no longer requires Chronocharges."
 "DOTA_Tooltip_ability_special_bonus_imba_faceless_void_8"				"Chrono-cleave"
-"DOTA_Tooltip_ability_special_bonus_imba_faceless_void_8_Description"	"Chronosphere causes Faceless Void's attacks to cleave 600 units away."
+"DOTA_Tooltip_ability_special_bonus_imba_faceless_void_8_Description"	"Chronosphere causes Faceless Void's attacks to cleave 600 units away at 50% damage."
+"DOTA_Tooltip_ability_special_bonus_imba_faceless_void_9"				"+500 Time Walk Cast Range"

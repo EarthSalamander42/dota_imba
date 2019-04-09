@@ -698,7 +698,7 @@ end
 -----------------------------
 imba_elder_titan_earth_splitter = class({})
 LinkLuaModifier("modifier_imba_earth_splitter", "components/abilities/heroes/hero_elder_titan.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_earth_splitter_scepter", "hero/hero_elder_titan.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_earth_splitter_scepter", "components/abilities/heroes/hero_elder_titan.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_elder_titan_earth_splitter:GetAbilityTextureName()
 	return "elder_titan_earth_splitter"

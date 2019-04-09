@@ -2095,7 +2095,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"1200"
+		"ItemCost"						"1300"
 		"ItemShopTags"					""
 
 		// Recipe
@@ -2104,7 +2104,7 @@
 		"ItemResult"					"item_imba_necronomicon"
 		"ItemRequirements"
 		{
-			"01"						"item_staff_of_wizardry;item_belt_of_strength"
+			"01"						"item_sobi_mask;item_sobi_mask;item_belt_of_strength"
 		}
 	}
 
@@ -2226,8 +2226,8 @@
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"50"
-		"ItemCost"						"2650"
-		"ItemShopTags"					"int;str;hard_to_tag;see_invis"
+		"ItemCost"						"2400"
+		"ItemShopTags"					"int;mana_regen;hard_to_tag;see_invis"
 		"ItemQuality"					"rare"
 		"ItemAliases"					"necronomicon 1; lesser necronomicon"
 		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
@@ -2240,32 +2240,82 @@
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
-		{
+		{			
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"15"
+				"bonus_strength"		"10 15 20 25 30"
 			}
 			"02"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_strength"		"8"
+				"var_type"				"FIELD_FLOAT"
+				"bonus_mana_regen"		"2 2.5 3.0 3.5 4"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"summon_duration"		"40"
-			}
+				"summon_duration"		"60"
+			}			
 			"04"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"warrior_health"		"600"
+				"var_type"					"FIELD_INTEGER"
+				"warrior_health_tooltip"	"700 1000 1300 1600 1900"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"archer_health"			"600"
+				"warrior_damage_tooltip"	"75 100 125 150 175"
 			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"warrior_mana_feedback"	"20 30 40 50 60"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"warrior_mana_break_tooltip"	"20 30 40 50 60"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"explosion"				"600 700 800 900 1000"
+			}			
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"warrior_truesight"		"1000 1000 1000 1000 1000"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"archer_health_tooltip"	"700 1000 1300 1600 1900"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"archer_damage_tooltip"	"60 90 120 150 180"
+			}
+			"12"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"archer_mana_burn"		"125 175 225 275 325"
+			}
+			"13"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"archer_aura_radius_tooltip"	"1200"
+			}
+			"14"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"archer_move_speed"	"5 7 9 11 13"
+			}
+			"15"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"archer_attack_speed"	"5 7 9 11 13"
+			}	
 		}
 
 		// Datadriven
@@ -2333,8 +2383,8 @@
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"50"
-		"ItemCost"						"3850"
-		"ItemShopTags"					"int;str;hard_to_tag;see_invis"
+		"ItemCost"						"3700"
+		"ItemShopTags"					"int;mana_regen;hard_to_tag;see_invis"
 		"ItemQuality"					"rare"
 		"ItemAliases"					"necronomicon 2; necronomicon"
 		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
@@ -2347,32 +2397,82 @@
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
-		{
+				{			
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"21"
+				"bonus_strength"		"10 15 20 25 30"
 			}
 			"02"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_strength"		"12"
+				"var_type"				"FIELD_FLOAT"
+				"bonus_mana_regen"		"2 2.5 3.0 3.5 4"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"summon_duration"		"40"
-			}
+				"summon_duration"		"60"
+			}			
 			"04"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"warrior_health"		"800"
+				"var_type"					"FIELD_INTEGER"
+				"warrior_health_tooltip"	"700 1000 1300 1600 1900"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"archer_health"			"800"
+				"warrior_damage_tooltip"	"75 100 125 150 175"
 			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"warrior_mana_feedback"	"20 30 40 50 60"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"warrior_mana_break_tooltip"	"20 30 40 50 60"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"explosion"				"600 700 800 900 1000"
+			}			
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"warrior_truesight"		"1000 1000 1000 1000 1000"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"archer_health_tooltip"	"700 1000 1300 1600 1900"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"archer_damage_tooltip"	"60 90 120 150 180"
+			}
+			"12"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"archer_mana_burn"		"125 175 225 275 325"
+			}
+			"13"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"archer_aura_radius_tooltip"	"1200"
+			}
+			"14"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"archer_move_speed"	"5 7 9 11 13"
+			}
+			"15"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"archer_attack_speed"	"5 7 9 11 13"
+			}	
 		}
 
 		// Datadriven
@@ -2401,7 +2501,7 @@
 
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS" 		"%bonus_intellect"
+					"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT" 		"%bonus_mana_regen"
 					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS" 		"%bonus_strength"
 				}
 			}
@@ -2440,8 +2540,8 @@
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"50"
-		"ItemCost"						"5050"
-		"ItemShopTags"					"int;str;hard_to_tag;see_invis"
+		"ItemCost"						"5000"
+		"ItemShopTags"					"int;mana_regen;hard_to_tag;see_invis"
 		"ItemQuality"					"rare"
 		"ItemAliases"					"necronomicon 3; greater necronomicon"
 		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
@@ -2454,32 +2554,82 @@
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
-		{
+				{			
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"24"
+				"bonus_strength"		"10 15 20 25 30"
 			}
 			"02"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_strength"		"16"
+				"var_type"				"FIELD_FLOAT"
+				"bonus_mana_regen"		"2 2.5 3.0 3.5 4"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"summon_duration"		"40"
-			}
+				"summon_duration"		"60"
+			}			
 			"04"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"warrior_health"		"900"
+				"var_type"					"FIELD_INTEGER"
+				"warrior_health_tooltip"	"700 1000 1300 1600 1900"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"archer_health"			"900"
+				"warrior_damage_tooltip"	"75 100 125 150 175"
 			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"warrior_mana_feedback"	"20 30 40 50 60"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"warrior_mana_break_tooltip"	"20 30 40 50 60"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"explosion"				"600 700 800 900 1000"
+			}			
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"warrior_truesight"		"1000 1000 1000 1000 1000"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"archer_health_tooltip"	"700 1000 1300 1600 1900"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"archer_damage_tooltip"	"60 90 120 150 180"
+			}
+			"12"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"archer_mana_burn"		"125 175 225 275 325"
+			}
+			"13"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"archer_aura_radius_tooltip"	"1200"
+			}
+			"14"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"archer_move_speed"	"5 7 9 11 13"
+			}
+			"15"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"archer_attack_speed"	"5 7 9 11 13"
+			}	
 		}
 
 		// Datadriven
@@ -2547,8 +2697,8 @@
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"50"
-		"ItemCost"						"6250"
-		"ItemShopTags"					"int;str;hard_to_tag;see_invis"
+		"ItemCost"						"6300"
+		"ItemShopTags"					"int;mana_regen;hard_to_tag;see_invis"
 		"ItemQuality"					"rare"
 		"ItemAliases"					"necronomicon 4; draconomicon"
 		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
@@ -2561,32 +2711,82 @@
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
-		{
+				{			
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"27"
+				"bonus_strength"		"10 15 20 25 30"
 			}
 			"02"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_strength"		"18"
+				"var_type"				"FIELD_FLOAT"
+				"bonus_mana_regen"		"2 2.5 3.0 3.5 4"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"summon_duration"		"40"
-			}
+				"summon_duration"		"60"
+			}			
 			"04"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"warrior_health"		"1000"
+				"var_type"					"FIELD_INTEGER"
+				"warrior_health_tooltip"	"700 1000 1300 1600 1900"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"archer_health"			"1000"
+				"warrior_damage_tooltip"	"75 100 125 150 175"
 			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"warrior_mana_feedback"	"20 30 40 50 60"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"warrior_mana_break_tooltip"	"20 30 40 50 60"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"explosion"				"600 700 800 900 1000"
+			}			
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"warrior_truesight"		"1000 1000 1000 1000 1000"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"archer_health_tooltip"	"700 1000 1300 1600 1900"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"archer_damage_tooltip"	"60 90 120 150 180"
+			}
+			"12"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"archer_mana_burn"		"125 175 225 275 325"
+			}
+			"13"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"archer_aura_radius_tooltip"	"1200"
+			}
+			"14"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"archer_move_speed"	"5 7 9 11 13"
+			}
+			"15"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"archer_attack_speed"	"5 7 9 11 13"
+			}	
 		}
 
 		// Datadriven
@@ -2654,8 +2854,8 @@
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"50"
-		"ItemCost"						"7450"
-		"ItemShopTags"					"int;str;hard_to_tag;see_invis"
+		"ItemCost"						"7600"
+		"ItemShopTags"					"int;mana_regen;hard_to_tag;see_invis"
 		"ItemQuality"					"rare"
 		"ItemAliases"					"necronomicon 5; demonomicon"
 		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
@@ -2665,32 +2865,82 @@
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
-		{
+				{			
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"30"
+				"bonus_strength"		"10 15 20 25 30"
 			}
 			"02"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_strength"		"20"
+				"var_type"				"FIELD_FLOAT"
+				"bonus_mana_regen"		"2 2.5 3.0 3.5 4"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"summon_duration"		"40"
-			}
+				"summon_duration"		"60"
+			}			
 			"04"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"warrior_health"		"1100"
+				"var_type"					"FIELD_INTEGER"
+				"warrior_health_tooltip"	"700 1000 1300 1600 1900"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"archer_health"			"1100"
+				"warrior_damage_tooltip"	"75 100 125 150 175"
 			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"warrior_mana_feedback"	"20 30 40 50 60"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"warrior_mana_break_tooltip"	"20 30 40 50 60"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"explosion"				"600 700 800 900 1000"
+			}			
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"warrior_truesight"		"1000 1000 1000 1000 1000"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"archer_health_tooltip"	"700 1000 1300 1600 1900"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"archer_damage_tooltip"	"60 90 120 150 180"
+			}
+			"12"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"archer_mana_burn"		"125 175 225 275 325"
+			}
+			"13"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"archer_aura_radius_tooltip"	"1200"
+			}
+			"14"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"archer_move_speed"	"5 7 9 11 13"
+			}
+			"15"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"archer_attack_speed"	"5 7 9 11 13"
+			}	
 		}
 
 		// Datadriven

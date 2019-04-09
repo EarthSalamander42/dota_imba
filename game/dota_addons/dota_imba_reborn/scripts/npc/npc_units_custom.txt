@@ -3694,7 +3694,6 @@
 		//----------------------------------------------------------------
 		"Ability1"					"necronomicon_warrior_mana_burn"
 		"Ability2"					"necronomicon_warrior_last_will"
-		"Ability3"					"necronomicon_warrior_sight"
 
 		// Armor
 		//----------------------------------------------------------------
@@ -3747,8 +3746,8 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"600"
-		"StatusHealthRegen"			"5.0"
+		"StatusHealth"				"700"
+		"StatusHealthRegen"			"5"
 		"StatusMana"				"0"
 		"StatusManaRegen"			"0"
 
@@ -3785,7 +3784,6 @@
 		//----------------------------------------------------------------
 		"Ability1"					"necronomicon_warrior_mana_burn"
 		"Ability2"					"necronomicon_warrior_last_will"
-		"Ability3"					"necronomicon_warrior_sight"
 
 		// Armor
 		//----------------------------------------------------------------
@@ -3838,8 +3836,8 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"900"
-		"StatusHealthRegen"			"7.0"
+		"StatusHealth"				"1000"
+		"StatusHealthRegen"			"7"
 		"StatusMana"				"0"
 		"StatusManaRegen"			"0"
 
@@ -3930,7 +3928,7 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"1200"
+		"StatusHealth"				"1300"
 		"StatusHealthRegen"			"9"
 		"StatusMana"				"0"
 		"StatusManaRegen"			"0"
@@ -4025,8 +4023,8 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"1500"
-		"StatusHealthRegen"			"12"
+		"StatusHealth"				"1600"
+		"StatusHealthRegen"			"11"
 		"StatusMana"				"0"
 		"StatusManaRegen"			"0"
 
@@ -4039,7 +4037,7 @@
 		
 		// Vision
 		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"1650"
+		"VisionDaytimeRange"		"1600"
 		"VisionNighttimeRange"		"800"
 	}
 
@@ -4121,8 +4119,8 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"1800"
-		"StatusHealthRegen"			"15"
+		"StatusHealth"				"1900"
+		"StatusHealthRegen"			"13"
 		"StatusMana"				"0"
 		"StatusManaRegen"			"0"
 
@@ -4135,7 +4133,7 @@
 		
 		// Vision
 		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"1800"
+		"VisionDaytimeRange"		"1700"
 		"VisionNighttimeRange"		"800"
 	}
 
@@ -4157,8 +4155,8 @@
 		
 		// Abilities
 		//----------------------------------------------------------------
-		"Ability1"					"necronomicon_archer_mana_burn"
-		"Ability2"					"necronomicon_archer_aoe"
+		"Ability1"					"necronomicon_archer_aoe"
+		"Ability2"					"necronomicon_archer_mana_burn"
 
 		// Armor
 		//----------------------------------------------------------------
@@ -4211,7 +4209,7 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"600"
+		"StatusHealth"				"700"
 		"StatusHealthRegen"			"5.0"
 		"StatusMana"				"0"
 		"StatusManaRegen"			"0"
@@ -4247,8 +4245,8 @@
 		
 		// Abilities
 		//----------------------------------------------------------------
-		"Ability1"					"necronomicon_archer_mana_burn"
-		"Ability2"					"necronomicon_archer_aoe"
+		"Ability1"					"necronomicon_archer_aoe"
+		"Ability2"					"necronomicon_archer_mana_burn"
 
 		// Armor
 		//----------------------------------------------------------------
@@ -4301,7 +4299,7 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"900"
+		"StatusHealth"				"1000"
 		"StatusHealthRegen"			"6.0"
 		"StatusMana"				"0"
 		"StatusManaRegen"			"0"
@@ -4337,8 +4335,9 @@
 		
 		// Abilities
 		//----------------------------------------------------------------
-		"Ability1"					"necronomicon_archer_mana_burn"
-		"Ability2"					"necronomicon_archer_aoe"
+		"Ability1"					"necronomicon_archer_aoe"
+		"Ability2"					"necronomicon_archer_mana_burn"
+		"Ability3"					"necronomicon_archer_purge"
 		"Ability3"					"forest_troll_high_priest_mana_aura"
 
 		// Armor
@@ -4392,7 +4391,7 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"1200"
+		"StatusHealth"				"1300"
 		"StatusHealthRegen"			"7.0"
 		"StatusMana"				"0"
 		"StatusManaRegen"			"0"
@@ -4431,8 +4430,9 @@
 		//----------------------------------------------------------------
 		"Ability1"					"necronomicon_archer_mana_burn"
 		"Ability2"					"necronomicon_archer_aoe"
-		"Ability3"					"forest_troll_high_priest_mana_aura"
-		"Ability4"					"big_thunder_lizard_wardrums_aura"
+		"Ability3"					"necronomicon_archer_purge"
+		"Ability4"					"forest_troll_high_priest_mana_aura"
+		"Ability5"					"big_thunder_lizard_wardrums_aura"
 
 		// Armor
 		//----------------------------------------------------------------
@@ -4448,7 +4448,7 @@
 		"AttackRate"				"0.75"
 		"AttackAnimationPoint"		"0.7"
 		"AttackAcquisitionRange"	"900"
-		"AttackRange"				"625"
+		"AttackRange"				"600"
 		"ProjectileModel"			"particles/items2_fx/necronomicon_archer_projectile.vpcf"
 		"ProjectileSpeed"			"1000"
 
@@ -4485,7 +4485,7 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"1500"
+		"StatusHealth"				"1600"
 		"StatusHealthRegen"			"8.0"
 		"StatusMana"				"0"
 		"StatusManaRegen"			"0"
@@ -4499,7 +4499,7 @@
 		
 		// Vision
 		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"1650"
+		"VisionDaytimeRange"		"1600"
 		"VisionNighttimeRange"		"800"
 	}
 
@@ -4524,9 +4524,10 @@
 		//----------------------------------------------------------------
 		"Ability1"					"necronomicon_archer_mana_burn"
 		"Ability2"					"necronomicon_archer_aoe"
-		"Ability3"					"forest_troll_high_priest_mana_aura"
-		"Ability4"					"big_thunder_lizard_wardrums_aura"
-		"Ability5"					"imba_necronomicon_archer_multishot"
+		"Ability3"					"necronomicon_archer_purge"
+		"Ability4"					"forest_troll_high_priest_mana_aura"
+		"Ability5"					"big_thunder_lizard_wardrums_aura"
+		"Ability6"					"imba_necronomicon_archer_multishot"
 
 		// Armor
 		//----------------------------------------------------------------
@@ -4542,7 +4543,7 @@
 		"AttackRate"				"0.75"
 		"AttackAnimationPoint"		"0.7"
 		"AttackAcquisitionRange"	"900"
-		"AttackRange"				"700"
+		"AttackRange"				"650"
 		"ProjectileModel"			"particles/items2_fx/necronomicon_archer_projectile.vpcf"
 		"ProjectileSpeed"			"1000"
 
@@ -4579,7 +4580,7 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"1800"
+		"StatusHealth"				"1900"
 		"StatusHealthRegen"			"10.0"
 		"StatusMana"				"0"
 		"StatusManaRegen"			"0"
@@ -4593,7 +4594,7 @@
 		
 		// Vision
 		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"1800"
+		"VisionDaytimeRange"		"1700"
 		"VisionNighttimeRange"		"800"
 	}
 
@@ -4601,207 +4602,54 @@
 	// Brewmaster Units
 	//=================================================================================
 	"npc_dota_brewmaster_earth_1"
-	{                                       
-		// General
+	{
+		// Status
 		//----------------------------------------------------------------
-		"Model"                     "models/heroes/brewmaster/brewmaster_earthspirit.vmdl"  // Model.
-		"BaseClass"                 "npc_dota_brewmaster_earth"
-		"IdleExpression"            "scenes/brewmaster/brewmaster_spirits_exp_idle_01.vcd"      // custom facial animation idle
-		"SoundSet"                  "Brewmaster_Earth"          // Name of sound set.
-		"Level"                     "7"
-		"ModelScale"                "0.85"
-		"IsSummoned"                "0"
-		"IsAncient"                 "1"
-		"ConsideredHero"            "1"
-		"IgnoreAddSummonedToSelection" "1"
-		"UnitLabel"                 "brewmaster_earth"
-
-		// Abilities
-		//----------------------------------------------------------------
-		"Ability1"                  "brewmaster_earth_hurl_boulder"     // Ability 1
-		"Ability2"                  "brewmaster_earth_spell_immunity"   // Ability 2
-		"Ability3"                  "brewmaster_earth_pulverize"        // Ability 3
-		"Ability4"                  "brewmaster_thunder_clap"       // Ability 4    
-
+		"StatusHealth"				"2250"		// Base health.
+		
 		// Armor
 		//----------------------------------------------------------------
 		"ArmorPhysical"             "5"         // Physical protection.
-
+				
 		// Attack
 		//----------------------------------------------------------------
-		"AttackCapabilities"        "DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackDamageMin"           "25"        // Damage range min.
-		"AttackDamageMax"           "35"        // Damage range max.    
-		"AttackRate"                "1.25"      // Speed of attack.
-		"AttackAnimationPoint"      "0.3"       // Normalized time in animation cycle to attack.
-		"AttackAcquisitionRange"    "600"       // Range within a target can be acquired.
-		"AttackRange"               "150"       // Range within a target can be attacked.
-
-		// Bounds
-		//----------------------------------------------------------------
-		"HealthBarOffset"           "160"
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"             "325"       // Speed.
-
-		"BoundsHullName"            "DOTA_HULL_SIZE_SMALL"          // Hull type used for navigation/locomotion.
-
-		// Status
-		//----------------------------------------------------------------
-		"StatusHealth"              "1500"      // Base health.
-		"StatusHealthRegen"         "1"         // Health regeneration rate.
-		"StatusMana"                "400"       // Base mana.
-		"StatusManaRegen"           "2"         // Mana regeneration rate.
-
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"        "1800"      // Range of vision during day light.
-		"VisionNighttimeRange"      "800"       // Range of vision at night time.
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"                  "DOTA_TEAM_NEUTRALS"                            // Team name.
-		"CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_HERO"
-		"CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_HERO"
-		"UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"40"		// Damage range min.
+		"AttackDamageMax"			"50"		// Damage range max.	
 	}   
 
 	"npc_dota_brewmaster_earth_2"
-	{                                       
-		// General
+	{
+		// Status
 		//----------------------------------------------------------------
-		"Model"                     "models/heroes/brewmaster/brewmaster_earthspirit.vmdl"  // Model.
-		"BaseClass"                 "npc_dota_brewmaster_earth"
-		"IdleExpression"            "scenes/brewmaster/brewmaster_spirits_exp_idle_01.vcd"      // custom facial animation idle
-		"SoundSet"                  "Brewmaster_Earth"          // Name of sound set.
-		"Level"                     "8"
-		"ModelScale"                "0.9"
-		"IsSummoned"                "0"
-		"IsAncient"                 "1"
-		"ConsideredHero"            "1"
-		"IgnoreAddSummonedToSelection" "1"
-		"UnitLabel"                 "brewmaster_earth"
-
-		// Abilities
-		//----------------------------------------------------------------
-		"Ability1"                  "brewmaster_earth_hurl_boulder"     // Ability 1
-		"Ability2"                  "brewmaster_earth_spell_immunity"   // Ability 2
-		"Ability3"                  "brewmaster_earth_pulverize"        // Ability 3
-		"Ability4"                  "brewmaster_thunder_clap"       // Ability 4    
+		"StatusHealth"				"3300"		// Base health.	
 
 		// Armor
 		//----------------------------------------------------------------
 		"ArmorPhysical"             "5"         // Physical protection.
-
+		
 		// Attack
 		//----------------------------------------------------------------
-		"AttackCapabilities"        "DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackDamageMin"           "55"        // Damage range min.
-		"AttackDamageMax"           "65"        // Damage range max.    
-		"AttackRate"                "1.25"      // Speed of attack.
-		"AttackAnimationPoint"      "0.3"       // Normalized time in animation cycle to attack.
-		"AttackAcquisitionRange"    "600"       // Range within a target can be acquired.
-		"AttackRange"               "150"       // Range within a target can be attacked.
-
-		// Bounds
-		//----------------------------------------------------------------
-		"HealthBarOffset"           "165"
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"             "325"       // Speed.
-
-		"BoundsHullName"            "DOTA_HULL_SIZE_SMALL"          // Hull type used for navigation/locomotion.
-
-		// Status
-		//----------------------------------------------------------------
-		"StatusHealth"              "2200"      // Base health.
-		"StatusHealthRegen"         "2"     // Health regeneration rate.
-		"StatusMana"                "500"       // Base mana.
-		"StatusManaRegen"           "2"         // Mana regeneration rate.
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"        "1800"      // Range of vision during day light.
-		"VisionNighttimeRange"      "800"       // Range of vision at night time.
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"                  "DOTA_TEAM_NEUTRALS"                            // Team name.
-		"CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_HERO"
-		"CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_HERO"
-		"UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"70"		// Damage range min.
+		"AttackDamageMax"			"80"		// Damage range max.	
 	}   
 
 	"npc_dota_brewmaster_earth_3"
-	{                                       
-		// General
-		//----------------------------------------------------------------
-		"Model"                     "models/heroes/brewmaster/brewmaster_earthspirit.vmdl"  // Model.
-		"BaseClass"                 "npc_dota_brewmaster_earth"
-		"IdleExpression"            "scenes/brewmaster/brewmaster_spirits_exp_idle_01.vcd"      // custom facial animation idle
-		"SoundSet"                  "Brewmaster_Earth"          // Name of sound set.
-		"Level"                     "8"
-		"ModelScale"                ".95"
-		"IsSummoned"                "0"
-		"IsAncient"                 "1"
-		"ConsideredHero"            "1"
-		"IgnoreAddSummonedToSelection" "1"
-		"UnitLabel"                 "brewmaster_earth"
-
-		// Abilities
-		//----------------------------------------------------------------
-		"Ability1"                  "brewmaster_earth_hurl_boulder"     // Ability 1
-		"Ability2"                  "brewmaster_earth_spell_immunity"   // Ability 2
-		"Ability3"                  "brewmaster_earth_pulverize"        // Ability 3
-		"Ability4"                  "brewmaster_thunder_clap"       // Ability 4    
-
-		// Armor
-		//----------------------------------------------------------------
-		"ArmorPhysical"             "5"         // Physical protection.
-
-		// Attack
-		//----------------------------------------------------------------
-		"AttackCapabilities"        "DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackDamageMin"           "85"        // Damage range min.
-		"AttackDamageMax"           "95"        // Damage range max.    
-		"AttackRate"                "1.25"      // Speed of attack.
-		"AttackAnimationPoint"      "0.3"       // Normalized time in animation cycle to attack.
-		"AttackAcquisitionRange"    "600"       // Range within a target can be acquired.
-		"AttackRange"               "150"       // Range within a target can be attacked.
-
-		// Bounds
-		//----------------------------------------------------------------
-		"HealthBarOffset"           "175"
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"             "325"       // Speed.
-
-		"BoundsHullName"            "DOTA_HULL_SIZE_SMALL"          // Hull type used for navigation/locomotion.
-
+	{
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"              "3000"      // Base health.
-		"StatusHealthRegen"         "2"     // Health regeneration rate.
-		"StatusMana"                "600"       // Base mana.
-		"StatusManaRegen"           "2"         // Mana regeneration rate.
-		
-		// Vision
+		"StatusHealth"				"4500"		// Base health.
+	
+		// Armor
 		//----------------------------------------------------------------
-		"VisionDaytimeRange"        "1800"      // Range of vision during day light.
-		"VisionNighttimeRange"      "800"       // Range of vision at night time.
-
-		// Team
+		"ArmorPhysical"             "5"         // Physical protection.	
+				
+		// Attack
 		//----------------------------------------------------------------
-		"TeamName"                  "DOTA_TEAM_NEUTRALS"                            // Team name.
-		"CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_HERO"
-		"CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_HERO"
-		"UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"100"		// Damage range min.
+		"AttackDamageMax"			"110"		// Damage range max.	
 	}   
 
 	"npc_dota_brewmaster_earth_4"
@@ -5010,216 +4858,56 @@
 
 	"npc_dota_brewmaster_storm_1"
 	{                                       
-		// General
+		// Status
 		//----------------------------------------------------------------
-		"Model"                     "models/heroes/brewmaster/brewmaster_windspirit.vmdl"   // Model.
-		"BaseClass"                 "npc_dota_brewmaster_storm"
-		"IdleExpression"            "scenes/brewmaster/brewmaster_spirits_exp_idle_01.vcd"      // custom facial animation idle
-		"SoundSet"                  "Brewmaster_Storm"          // Name of sound set.
-		"IdleSoundLoop"             "Brewmaster_Storm.Move_Loop"
-		"Level"                     "7"
-		"ModelScale"                "0.85"
-		"IsSummoned"                "0"
-		"IsAncient"                 "1"
-		"ConsideredHero"            "1"
-		"IgnoreAddSummonedToSelection" "1"
-		"UnitLabel"                 "brewmaster_storm"
-
-		// Abilities
-		//----------------------------------------------------------------
-		"Ability1"                  "brewmaster_storm_dispel_magic"     // Ability 1
-		"Ability2"                  "brewmaster_storm_cyclone"          // Ability 2
-		"Ability3"                  "brewmaster_storm_wind_walk"        // Ability 3
-		"Ability4"                  "brewmaster_drunken_haze"       // Ability 4    
-
-		// Armor
-		//----------------------------------------------------------------
-		"ArmorPhysical"             "2"         // Physical protection.
+		"StatusHealth"				"1250"		// Base health.
 
 		// Attack
 		//----------------------------------------------------------------
-		"AttackCapabilities"        "DOTA_UNIT_CAP_RANGED_ATTACK"
-		"AttackDamageMin"           "15"        // Damage range min.
-		"AttackDamageMax"           "25"        // Damage range max.    
-		"AttackRate"                "1.5"       // Speed of attack.
-		"AttackAnimationPoint"      "0.4"       // Normalized time in animation cycle to attack.
-		"AttackAcquisitionRange"    "600"       // Range within a target can be acquired.
-		"AttackRange"               "600"       // Range within a target can be attacked.
-		"ProjectileModel"           "particles/units/heroes/hero_brewmaster/brewmaster_storm_attack.vpcf" // Particle system model for projectile.
-		"ProjectileSpeed"           "1200"      // Speed of projectile.
-
-		// Bounds
-		//----------------------------------------------------------------
-		"HealthBarOffset"           "160"
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"             "350"       // Speed.
-
-		"BoundsHullName"            "DOTA_HULL_SIZE_SMALL"          // Hull type used for navigation/locomotion.
-
-		// Status
-		//----------------------------------------------------------------
-		"StatusHealth"              "1000"      // Base health.
-		"StatusHealthRegen"         "1"         // Health regeneration rate.
-		"StatusMana"                "500"       // Base mana.
-		"StatusManaRegen"           "1.5"       // Mana regeneration rate.
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"30"		// Damage range min.
+		"AttackDamageMax"			"40"		// Damage range max.			
 
 		// Vision
 		//----------------------------------------------------------------
-		"VisionDaytimeRange"        "1800"      // Range of vision during day light.
-		"VisionNighttimeRange"      "800"       // Range of vision at night time.
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"                  "DOTA_TEAM_NEUTRALS"                            // Team name.
-		"CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_HERO"
-		"CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_HERO"
-		"UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		"VisionDaytimeRange"		"3600"		// Range of vision during day light.
+		"VisionNighttimeRange"		"1600"		// Range of vision at night time.		
 	}   
 
 	"npc_dota_brewmaster_storm_2"
 	{                                       
-		// General
-		//----------------------------------------------------------------
-		"Model"                     "models/heroes/brewmaster/brewmaster_windspirit.vmdl"   // Model.
-		"BaseClass"                 "npc_dota_brewmaster_storm"
-		"IdleExpression"            "scenes/brewmaster/brewmaster_spirits_exp_idle_01.vcd"      // custom facial animation idle
-		"SoundSet"                  "Brewmaster_Storm"          // Name of sound set.
-		"IdleSoundLoop"             "Brewmaster_Storm.Move_Loop"
-		"Level"                     "8"
-		"ModelScale"                "0.9"
-		"IsSummoned"                "0"
-		"IsAncient"                 "1"
-		"ConsideredHero"            "1"
-		"IgnoreAddSummonedToSelection" "1"
-		"UnitLabel"                 "brewmaster_storm"
-
-		// Abilities
-		//----------------------------------------------------------------
-		"Ability1"                  "brewmaster_storm_dispel_magic"     // Ability 1
-		"Ability2"                  "brewmaster_storm_cyclone"          // Ability 2
-		"Ability3"                  "brewmaster_storm_wind_walk"        // Ability 3
-		"Ability4"                  "brewmaster_drunken_haze"       // Ability 4    
-
-		// Armor
-		//----------------------------------------------------------------
-		"ArmorPhysical"             "2"         // Physical protection.
-
-		// Attack
-		//----------------------------------------------------------------
-		"AttackCapabilities"        "DOTA_UNIT_CAP_RANGED_ATTACK"
-		"AttackDamageMin"           "35"        // Damage range min.
-		"AttackDamageMax"           "45"        // Damage range max.    
-		"AttackRate"                "1.5"       // Speed of attack.
-		"AttackAnimationPoint"      "0.4"       // Normalized time in animation cycle to attack.
-		"AttackAcquisitionRange"    "600"       // Range within a target can be acquired.
-		"AttackRange"               "600"       // Range within a target can be attacked.
-		"ProjectileModel"           "particles/units/heroes/hero_brewmaster/brewmaster_storm_attack.vpcf" // Particle system model for projectile.
-		"ProjectileSpeed"           "1200"      // Speed of projectile.
-
-		// Bounds
-		//----------------------------------------------------------------
-		"HealthBarOffset"           "165"
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"             "350"       // Speed.
-
-		"BoundsHullName"            "DOTA_HULL_SIZE_SMALL"          // Hull type used for navigation/locomotion.
-
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"              "1500"      // Base health.
-		"StatusHealthRegen"         "2"         // Health regeneration rate.
-		"StatusMana"                "750"       // Base mana.
-		"StatusManaRegen"           "1.5"       // Mana regeneration rate.
+		"StatusHealth"				"1875"		// Base health.
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"50"		// Damage range min.
+		"AttackDamageMax"			"60"		// Damage range max.	
 
 		// Vision
 		//----------------------------------------------------------------
-		"VisionDaytimeRange"        "1800"      // Range of vision during day light.
-		"VisionNighttimeRange"      "800"       // Range of vision at night time.
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"                  "DOTA_TEAM_NEUTRALS"                            // Team name.
-		"CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_HERO"
-		"CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_HERO"
-		"UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		"VisionDaytimeRange"		"3600"		// Range of vision during day light.
+		"VisionNighttimeRange"		"1600"		// Range of vision at night time.		
 	}   
 
 	"npc_dota_brewmaster_storm_3"
 	{                                       
-		// General
-		//----------------------------------------------------------------
-		"Model"                     "models/heroes/brewmaster/brewmaster_windspirit.vmdl"   // Model.
-		"BaseClass"                 "npc_dota_brewmaster_storm"
-		"IdleExpression"            "scenes/brewmaster/brewmaster_spirits_exp_idle_01.vcd"      // custom facial animation idle
-		"SoundSet"                  "Brewmaster_Storm"          // Name of sound set.
-		"IdleSoundLoop"             "Brewmaster_Storm.Move_Loop"
-		"Level"                     "8"
-		"ModelScale"                ".95"
-		"IsSummoned"                "0"
-		"IsAncient"                 "1"
-		"ConsideredHero"            "1"
-		"IgnoreAddSummonedToSelection" "1"
-		"UnitLabel"                 "brewmaster_storm"
-
-		// Abilities
-		//----------------------------------------------------------------
-		"Ability1"                  "brewmaster_storm_dispel_magic"     // Ability 1
-		"Ability2"                  "brewmaster_storm_cyclone"          // Ability 2
-		"Ability3"                  "brewmaster_storm_wind_walk"        // Ability 3
-		"Ability4"                  "brewmaster_drunken_haze"       // Ability 4    
-
-		// Armor
-		//----------------------------------------------------------------
-		"ArmorPhysical"             "2"         // Physical protection.
-
-		// Attack
-		//----------------------------------------------------------------
-		"AttackCapabilities"        "DOTA_UNIT_CAP_RANGED_ATTACK"
-		"AttackDamageMin"           "55"        // Damage range min.
-		"AttackDamageMax"           "65"        // Damage range max.    
-		"AttackRate"                "1.5"       // Speed of attack.
-		"AttackAnimationPoint"      "0.4"       // Normalized time in animation cycle to attack.
-		"AttackAcquisitionRange"    "600"       // Range within a target can be acquired.
-		"AttackRange"               "600"       // Range within a target can be attacked.
-		"ProjectileModel"           "particles/units/heroes/hero_brewmaster/brewmaster_storm_attack.vpcf" // Particle system model for projectile.
-		"ProjectileSpeed"           "1200"      // Speed of projectile.
-
-		// Bounds
-		//----------------------------------------------------------------
-		"HealthBarOffset"           "175"
-
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"             "350"       // Speed.
-
-		"BoundsHullName"            "DOTA_HULL_SIZE_SMALL"          // Hull type used for navigation/locomotion.
-
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"              "1900"      // Base health.
-		"StatusHealthRegen"         "2"         // Health regeneration rate.
-		"StatusMana"                "750"       // Base mana.
-		"StatusManaRegen"           "1.5"       // Mana regeneration rate.
-
+		"StatusHealth"				"2375"		// Base health.
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"70"		// Damage range min.
+		"AttackDamageMax"			"80"		// Damage range max.		
+		
 		// Vision
 		//----------------------------------------------------------------
-		"VisionDaytimeRange"        "1800"      // Range of vision during day light.
-		"VisionNighttimeRange"      "800"       // Range of vision at night time.
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"                  "DOTA_TEAM_NEUTRALS"                            // Team name.
-		"CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_HERO"
-		"CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_HERO"
-		"UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		"VisionDaytimeRange"		"3600"		// Range of vision during day light.
+		"VisionNighttimeRange"		"1600"		// Range of vision at night time.
 	} 
 
 	"npc_dota_brewmaster_storm_4"
@@ -5440,199 +5128,44 @@
 
 	"npc_dota_brewmaster_fire_1"
 	{                                       
-		// General
-		//----------------------------------------------------------------
-		"Model"                     "models/heroes/brewmaster/brewmaster_firespirit.vmdl"   // Model.
-		"BaseClass"                 "npc_dota_brewmaster_fire"
-		"IdleExpression"            "scenes/brewmaster/brewmaster_spirits_exp_idle_01.vcd"      // custom facial animation idle
-		"SoundSet"                  "Brewmaster_Fire"           // Name of sound set.
-		"IdleSoundLoop"             "Brewmaster_Fire.Move_Loop"
-		"Level"                     "7"
-		"ModelScale"                "0.85"
-		"IsSummoned"                "0"
-		"IsAncient"                 "1"
-		"ConsideredHero"            "1"
-		"IgnoreAddSummonedToSelection" "1"
-		"UnitLabel"                 "brewmaster_fire"
-
-		// Abilities
-		//----------------------------------------------------------------
-		"Ability1"                  "brewmaster_fire_permanent_immolation"      // Ability 1
-		"Ability2"                  "brewmaster_drunken_brawler"        // Ability 2        
-
-		// Armor
-		//----------------------------------------------------------------
-		"ArmorPhysical"             "0"         // Physical protection.
-
-		// Attack
-		//----------------------------------------------------------------
-		"AttackCapabilities"        "DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackDamageMin"           "75"        // Damage range min.
-		"AttackDamageMax"           "85"        // Damage range max.    
-		"AttackRate"                "1.35"      // Speed of attack.
-		"AttackAnimationPoint"      "0.3"       // Normalized time in animation cycle to attack.
-		"AttackAcquisitionRange"    "600"       // Range within a target can be acquired.
-		"AttackRange"               "150"       // Range within a target can be attacked.
-
-		// Bounds
-		//----------------------------------------------------------------
-		"HealthBarOffset"           "160"
-
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"             "550"       // Speed.
-
-		"BoundsHullName"            "DOTA_HULL_SIZE_SMALL"          // Hull type used for navigation/locomotion.
-
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"              "1300"      // Base health.
-		"StatusHealthRegen"         "2"     // Health regeneration rate.
+		"StatusHealth"				"1625"		// Base health.
 		
-		// Vision
+		// Attack
 		//----------------------------------------------------------------
-		"VisionDaytimeRange"        "1800"      // Range of vision during day light.
-		"VisionNighttimeRange"      "800"       // Range of vision at night time.
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"                  "DOTA_TEAM_NEUTRALS"                            // Team name.
-		"CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_HERO"
-		"CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_HERO"
-		"UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"100"		// Damage range min.
+		"AttackDamageMax"			"110"		// Damage range max.		
+		"AttackRate"				"1.35"		// Speed of attack.
 	}   
 
 	"npc_dota_brewmaster_fire_2"
 	{                                       
-		// General
-		//----------------------------------------------------------------
-		"Model"                     "models/heroes/brewmaster/brewmaster_firespirit.vmdl"   // Model.
-		"BaseClass"                 "npc_dota_brewmaster_fire"
-		"IdleExpression"            "scenes/brewmaster/brewmaster_spirits_exp_idle_01.vcd"      // custom facial animation idle
-		"SoundSet"                  "Brewmaster_Fire"           // Name of sound set.
-		"IdleSoundLoop"             "Brewmaster_Fire.Move_Loop"
-		"Level"                     "8"
-		"ModelScale"                "0.9"
-		"IsSummoned"                "0"
-		"IsAncient"                 "1"
-		"ConsideredHero"            "1"
-		"IgnoreAddSummonedToSelection" "1"
-		"UnitLabel"                 "brewmaster_fire"
-
-		// Abilities
-		//----------------------------------------------------------------
-		"Ability1"                  "brewmaster_fire_permanent_immolation"      // Ability 1
-		"Ability2"                  "brewmaster_drunken_brawler"        // Ability 2        
-
-		// Armor
-		//----------------------------------------------------------------
-		"ArmorPhysical"             "3"         // Physical protection.
-
-		// Attack
-		//----------------------------------------------------------------
-		"AttackCapabilities"        "DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackDamageMin"           "115"       // Damage range min.
-		"AttackDamageMax"           "125"       // Damage range max.    
-		"AttackRate"                "1.35"      // Speed of attack.
-		"AttackAnimationPoint"      "0.3"       // Normalized time in animation cycle to attack.
-		"AttackAcquisitionRange"    "600"       // Range within a target can be acquired.
-		"AttackRange"               "150"       // Range within a target can be attacked.
-
-		// Bounds
-		//----------------------------------------------------------------
-		"HealthBarOffset"           "165"
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"             "550"       // Speed.
-
-		"BoundsHullName"            "DOTA_HULL_SIZE_SMALL"          // Hull type used for navigation/locomotion.
-
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"              "1300"      // Base health.
-		"StatusHealthRegen"         "4"     // Health regeneration rate.
+		"StatusHealth"				"1625"		// Base health.
 		
-		// Vision
+		// Attack
 		//----------------------------------------------------------------
-		"VisionDaytimeRange"        "1800"      // Range of vision during day light.
-		"VisionNighttimeRange"      "800"       // Range of vision at night time.
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"                  "DOTA_TEAM_NEUTRALS"                            // Team name.
-		"CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_HERO"
-		"CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_HERO"
-		"UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"200"		// Damage range min.
+		"AttackDamageMax"			"210"		// Damage range max.		
+		"AttackRate"				"1.2"		// Speed of attack.	
 	}   
 
 	"npc_dota_brewmaster_fire_3"
 	{                                       
-		// General
-		//----------------------------------------------------------------
-		"Model"                     "models/heroes/brewmaster/brewmaster_firespirit.vmdl"   // Model.
-		"BaseClass"                 "npc_dota_brewmaster_fire"
-		"IdleExpression"            "scenes/brewmaster/brewmaster_spirits_exp_idle_01.vcd"      // custom facial animation idle
-		"SoundSet"                  "Brewmaster_Fire"           // Name of sound set.
-		"IdleSoundLoop"             "Brewmaster_Fire.Move_Loop"
-		"Level"                     "8"
-		"ModelScale"                ".95"
-		"IsSummoned"                "0"
-		"IsAncient"                 "1"
-		"ConsideredHero"            "1"
-		"IgnoreAddSummonedToSelection" "1"
-		"UnitLabel"                 "brewmaster_fire"
-
-		// Abilities
-		//----------------------------------------------------------------
-		"Ability1"                  "brewmaster_fire_permanent_immolation"      // Ability 1
-		"Ability2"                  "brewmaster_drunken_brawler"        // Ability 2        
-
-		// Armor
-		//----------------------------------------------------------------
-		"ArmorPhysical"             "6"         // Physical protection.
-
-		// Attack
-		//----------------------------------------------------------------
-		"AttackCapabilities"        "DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackDamageMin"           "155"       // Damage range min.
-		"AttackDamageMax"           "165"       // Damage range max.    
-		"AttackRate"                "1.35"      // Speed of attack.
-		"AttackAnimationPoint"      "0.3"       // Normalized time in animation cycle to attack.
-		"AttackAcquisitionRange"    "600"       // Range within a target can be acquired.
-		"AttackRange"               "150"       // Range within a target can be attacked.
-
-		// Bounds
-		//----------------------------------------------------------------
-		"HealthBarOffset"           "175"
-
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"             "550"       // Speed.
-
-		"BoundsHullName"            "DOTA_HULL_SIZE_SMALL"          // Hull type used for navigation/locomotion.
-
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"              "1300"      // Base health.
-		"StatusHealthRegen"         "4"     // Health regeneration rate.
+		"StatusHealth"				"1625"		// Base health.
 		
-		// Vision
+		// Attack
 		//----------------------------------------------------------------
-		"VisionDaytimeRange"        "1800"      // Range of vision during day light.
-		"VisionNighttimeRange"      "800"       // Range of vision at night time.
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"                  "DOTA_TEAM_NEUTRALS"                            // Team name.
-		"CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_HERO"
-		"CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_HERO"
-		"UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"300"		// Damage range min.
+		"AttackDamageMax"			"310"		// Damage range max.		
+		"AttackRate"				"1.05"		// Speed of attack.
 	}
 
 	"npc_dota_brewmaster_fire_4"

@@ -328,7 +328,8 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"distance_damage_pct"	"16 22 28"
-				"LinkedSpecialBonus"	"special_bonus_unique_enchantress_4"			
+				//"LinkedSpecialBonus"	"special_bonus_unique_enchantress_4"
+				"LinkedSpecialBonus"	"special_bonus_imba_enchantress_9"
 			}
 			"02"
 			{
@@ -583,6 +584,34 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"value"						"2"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// 
+	//=================================================================================================================
+	"special_bonus_imba_enchantress_9"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_enchantress_impetus"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"8"
 			}
 		}
 	}

@@ -89,6 +89,8 @@ function GameMode:OnAllPlayersLoaded()
 	GameRules:GetGameModeEntity():SetBountyRunePickupFilter(Dynamic_Wrap(GameMode, "BountyRuneFilter"), self)
 	GameRules:GetGameModeEntity():SetThink("OnThink", self, 1)
 	GameRules:GetGameModeEntity():SetPauseEnabled(not IMBA_PICK_SCREEN)
+	
+	GameRules:GetGameModeEntity():SetRuneSpawnFilter(Dynamic_Wrap(GameMode, "RuneSpawnFilter"), self)
 end
 
 -- CAREFUL, FOR REASONS THIS FUNCTION IS ALWAYS CALLED TWICE

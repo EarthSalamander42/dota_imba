@@ -67,6 +67,8 @@ function modifier_imba_arcane_dynamo:DeclareFunctions()
 end
 
 function modifier_imba_arcane_dynamo:GetModifierMoveSpeedBonus_Percentage()
+	if not self.caster or self.caster:IsNull() then return end
+
 	-- Does nothing if hero has break
 	if self.caster:PassivesDisabled() then
 		return nil
@@ -742,6 +744,8 @@ end
 
 function modifier_imba_crystal_maiden_brilliance_aura:OnIntervalThink()
 	if IsServer() then
+		if not self:GetAbility() then return end
+	
 		-- Only apply if the parent has more than the spellpower threshold
 		if self.parent and self.parent:GetManaPercent() > self.spellpower_threshold_pct then
 			if self.parent == self.caster then
@@ -769,6 +773,8 @@ function modifier_imba_crystal_maiden_brilliance_aura:DeclareFunctions()
 end
 
 function modifier_imba_crystal_maiden_brilliance_aura:GetModifierConstantManaRegen()
+	if not self:GetAbility() then return end
+
 	if self.parent == self.caster then
 		return self:GetAbility():GetSpecialValueFor("mana_regen")* self.bonus_self
 	else
@@ -777,6 +783,8 @@ function modifier_imba_crystal_maiden_brilliance_aura:GetModifierConstantManaReg
 end
 
 function modifier_imba_crystal_maiden_brilliance_aura:GetModifierBonusStats_Intellect()
+	if not self:GetAbility() then return end
+
 	if self.parent == self.caster then
 		return self:GetAbility():GetSpecialValueFor("bonus_int")* self.bonus_self
 	else
@@ -797,6 +805,7 @@ function modifier_imba_crystal_maiden_brilliance_aura:IsPurgable() return false 
 ---------------------------------
 LinkLuaModifier("modifier_imba_crystal_maiden_freezing_field_aura", "components/abilities/heroes/hero_crystal_maiden.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_crystal_maiden_freezing_field_slow", "components/abilities/heroes/hero_crystal_maiden.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_crystal_maiden_freezing_field_armor_bonus", "components/abilities/heroes/hero_crystal_maiden.lua", LUA_MODIFIER_MOTION_NONE)
 
 imba_crystal_maiden_freezing_field = class({})
 
@@ -893,6 +902,9 @@ function imba_crystal_maiden_freezing_field:OnSpellStart()
 			self:EmitSound("hero_Crystal.freezingField.wind")
 		end
 	end
+	
+	-- Self armor modifier
+	self.caster:AddNewModifier(self.caster, self, "modifier_imba_crystal_maiden_freezing_field_armor_bonus", {duration = duration})
 end
 
 function imba_crystal_maiden_freezing_field:OnChannelThink()
@@ -1039,6 +1051,11 @@ function imba_crystal_maiden_freezing_field:OnChannelFinish(bInterrupted)
 					end
 			end)
 		end
+		
+		-- Remove self armor modifier
+		if self.caster:HasModifier("modifier_imba_crystal_maiden_freezing_field_armor_bonus") then
+			self.caster:RemoveModifierByName("modifier_imba_crystal_maiden_freezing_field_armor_bonus")
+		end
 	end
 end
 
@@ -1074,8 +1091,8 @@ function modifier_imba_crystal_maiden_freezing_field_slow:OnCreated()
 	self.ability = self:GetAbility()
 	self.parent = self:GetParent()
 
-	self.move_slow_pct = self.ability:GetSpecialValueFor("slow")
-	self.attack_speed_slow = self.move_slow_pct
+	self.move_slow_pct 		= self.ability:GetSpecialValueFor("slow")
+	self.attack_speed_slow	= self.ability:GetSpecialValueFor("attack_slow")
 
 	-- Talent (Level 30) : Freezing field applies a Frostbite every 3 seconds (after the previous frostbite ended) at half the regular duration
 	if self.caster:HasTalent("special_bonus_imba_crystal_maiden_6") then
@@ -1106,3 +1123,31 @@ function modifier_imba_crystal_maiden_freezing_field_slow:GetModifierAttackSpeed
 function modifier_imba_crystal_maiden_freezing_field_slow:IsHidden() return false end
 function modifier_imba_crystal_maiden_freezing_field_slow:IsDebuff() return true end
 function modifier_imba_crystal_maiden_freezing_field_slow:IsPurgable() return false end
+
+----------------------------------------
+-- FREEZING FIELD SELF ARMOR MODIFIER --
+----------------------------------------
+
+modifier_imba_crystal_maiden_freezing_field_armor_bonus = class({})
+
+function modifier_imba_crystal_maiden_freezing_field_armor_bonus:IsHidden()		return true end
+function modifier_imba_crystal_maiden_freezing_field_armor_bonus:IsPurgable()	return false end
+
+function modifier_imba_crystal_maiden_freezing_field_armor_bonus:OnCreated()
+	self.ability		= self:GetAbility()
+	
+	self.bonus_armor	= self.ability:GetSpecialValueFor("bonus_armor")
+end
+
+
+function modifier_imba_crystal_maiden_freezing_field_armor_bonus:DeclareFunctions()
+	local decFuncs = {
+		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
+	}
+
+	return decFuncs
+end
+
+function modifier_imba_crystal_maiden_freezing_field_armor_bonus:GetModifierPhysicalArmorBonus()
+	return self.bonus_armor
+end

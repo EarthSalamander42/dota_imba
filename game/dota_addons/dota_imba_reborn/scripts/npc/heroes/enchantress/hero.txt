@@ -25,7 +25,7 @@
 		"Ability13"		"special_bonus_imba_enchantress_4"
 		"Ability14"		"special_bonus_imba_enchantress_5"
 		"Ability15"		"special_bonus_imba_enchantress_6"
-		"Ability16"		"special_bonus_imba_enchantress_7"
+		"Ability16"		"special_bonus_imba_enchantress_9"
 		"Ability17"		"special_bonus_imba_enchantress_8"
 		
 		//"Ability10"		"special_bonus_magic_resistance_15"
@@ -39,5 +39,6 @@
 		
 		// Removed Talents
 		// "Ability12"		"special_bonus_imba_enchantress_3" // Bonus damage AND spell amp
+		// "Ability17"		"special_bonus_imba_enchantress_7" // Equivalent Armanents
 	}
 }

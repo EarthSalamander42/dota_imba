@@ -1,5 +1,6 @@
 -- Editors:
 --     zimberzimber, 22.03.2017
+--	   AltiV, 06.04.2019 (adding 7.20 Time Lock)
 
 LinkLuaModifier("modifier_imba_faceless_void_chronocharges", "components/abilities/heroes/hero_faceless_void.lua", LUA_MODIFIER_MOTION_NONE)	-- Chronocharges counter
 if modifier_imba_faceless_void_chronocharges == nil then modifier_imba_faceless_void_chronocharges = class({}) end
@@ -94,10 +95,7 @@ function imba_faceless_void_time_walk:IsHiddenWhenStolen() return false end
 function imba_faceless_void_time_walk:IsNetherWardStealable() return false end
 
 function imba_faceless_void_time_walk:GetCastRange()
-	-- Affects only the cast range indicator so you can see the max jump range
-	if IsClient() then
-		return self:GetSpecialValueFor("range")
-	end
+	return self:GetSpecialValueFor("range") + self:GetCaster():FindTalentValue("special_bonus_imba_faceless_void_9")
 end
 
 function imba_faceless_void_time_walk:GetIntrinsicModifierName()
@@ -130,9 +128,11 @@ function imba_faceless_void_time_walk:OnSpellStart()
 	local caster = self:GetCaster()
 	local slow_radius = self:GetSpecialValueFor("slow_radius")
 
+	local position	= self:GetCursorPosition()
+
 	-- Play sound and apply casting modifier
 	caster:EmitSound("Hero_FacelessVoid.TimeWalk")
-	caster:AddNewModifier(caster, self, "modifier_imba_faceless_void_time_walk_cast", {})
+	caster:AddNewModifier(caster, self, "modifier_imba_faceless_void_time_walk_cast", {x = position.x, y = position.y, z = position.z})
 
 	-- Heal recent damage
 	if caster.time_walk_damage_taken then
@@ -255,18 +255,20 @@ function modifier_imba_faceless_void_time_walk_cast:CheckState()
 	end
 end
 
-function modifier_imba_faceless_void_time_walk_cast:OnCreated()
+function modifier_imba_faceless_void_time_walk_cast:OnCreated(params)
 	if IsServer() then
 		local caster = self:GetCaster()
 		local ability = self:GetAbility()
 
+		local position = GetGroundPosition(Vector(params.x, params.y, params.z), nil)
+
 		-- Compare distance to cast point and max distance, use whichever is closer
-		local max_distance = ability:GetSpecialValueFor("range") + GetCastRangeIncrease(caster)
-		local distance = (caster:GetAbsOrigin() - caster:GetCursorPosition()):Length2D()
-		if distance > max_distance then distance = max_distance end
+		--local max_distance = ability:GetSpecialValueFor("range") + GetCastRangeIncrease(caster)
+		local distance = (caster:GetAbsOrigin() - position):Length2D()
+		--if distance > max_distance then distance = max_distance end
 
 		self.velocity = ability:GetSpecialValueFor("speed")
-		self.direction = (caster:GetCursorPosition() - caster:GetAbsOrigin()):Normalized()
+		self.direction = (position - caster:GetAbsOrigin()):Normalized()
 		self.distance_traveled = 0
 		self.distance = distance
 
@@ -493,7 +495,7 @@ function imba_faceless_void_time_dilation:OnSpellStart()
 			end
 
 			if abilities_on_cooldown > 0 then
-				local debuff = enemy:AddNewModifier(caster, self, "modifier_imba_faceless_void_time_dilation_slow", {duration = duration})
+				local debuff = enemy:AddNewModifier(caster, self, "modifier_imba_faceless_void_time_dilation_slow", {duration = cd_increase}):SetDuration(cd_increase * (1 - enemy:GetStatusResistance()), true)
 				debuff:SetStackCount(abilities_on_cooldown)
 
 				enemy:EmitSound("Hero_FacelessVoid.TimeDilation.Target")
@@ -542,7 +544,7 @@ function imba_faceless_void_time_dilation:OnSpellStart()
 
 		-- If the ally had any cooldowns tweaked apply positive buff with stacks equal to affected skills
 		if abilities_on_cooldown > 0 then
-			local buff = ally:AddNewModifier(caster, self, "modifier_imba_faceless_void_time_dilation_buff", {duration = duration})
+			local buff = ally:AddNewModifier(caster, self, "modifier_imba_faceless_void_time_dilation_buff", {duration = cd_increase})
 			buff:SetStackCount(abilities_on_cooldown)
 
 			ally:EmitSound("Hero_FacelessVoid.TimeDilation.Target")
@@ -730,7 +732,7 @@ function modifier_imba_faceless_void_time_lock:GetModifierProcAttack_BonusDamage
 		local bonus_damage_to_main_target = 0
 
 		-- See if the passive owner is the attacker, and that they're not broken
-		if parent == attacker and not target:IsRoshan() and not target:IsBuilding() and not parent:PassivesDisabled() and parent:GetTeamNumber() ~= target:GetTeamNumber() then
+		if parent == attacker and not target:IsOther() and not target:IsBuilding() and not parent:PassivesDisabled() and parent:GetTeamNumber() ~= target:GetTeamNumber() then
 			local bashChance = ability:GetSpecialValueFor("bash_chance")
 			local bashDamage = ability:GetSpecialValueFor("bash_damage")
 			local bashDuration = ability:GetSpecialValueFor("bash_duration")
@@ -1022,7 +1024,7 @@ function modifier_imba_faceless_void_chronosphere_aura:IsAura() return true end
 function modifier_imba_faceless_void_chronosphere_aura:IsNetherWardStealable() return false end
 
 function modifier_imba_faceless_void_chronosphere_aura:GetAuraDuration()
-	if self:GetAbility():GetCaster():HasTalent("special_bonus_imba_faceless_void_3") then return 0.01 end
+	if self:GetAbility():GetCaster():HasTalent("special_bonus_imba_faceless_void_3") then return FrameTime() end
 	return 0.1
 end
 
@@ -1315,3 +1317,223 @@ end
 
 function modifier_imba_faceless_void_chronosphere_caster_buff:GetModifierAttackSpeedBonus_Constant()
 	return self:GetAbility():GetSpecialValueFor("chronocharge_attackspeed") * self:GetStackCount() end
+
+
+LinkLuaModifier("modifier_imba_faceless_void_time_lock_720", "components/abilities/heroes/hero_faceless_void", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_faceless_void_time_lock_720_freeze", "components/abilities/heroes/hero_faceless_void", LUA_MODIFIER_MOTION_NONE)
+
+imba_faceless_void_time_lock_720					= class({})
+modifier_imba_faceless_void_time_lock_720			= class({})
+modifier_imba_faceless_void_time_lock_720_freeze	= class({})
+
+------------------------------
+-- TIME LOCK (7.20 Version) --
+------------------------------
+
+function imba_faceless_void_time_lock_720:GetIntrinsicModifierName()
+	if not self:GetCaster():IsIllusion() then
+		return "modifier_imba_faceless_void_time_lock_720"
+	end
+end
+
+--------------------------------------------
+-- TIME LOCK SELF MODIFIER (7.20 Version) --
+--------------------------------------------
+
+function modifier_imba_faceless_void_time_lock_720:IsHidden()	return true end
+
+function modifier_imba_faceless_void_time_lock_720:DeclareFunctions()
+	local funcs =
+	{
+		MODIFIER_EVENT_ON_ATTACK_LANDED
+	}
+	
+	return funcs
+end
+
+function modifier_imba_faceless_void_time_lock_720:OnAttackLanded(keys)
+	if not IsServer() then return end
+	
+	-- Make sure the attacker and target are valid
+	if keys.attacker == self:GetParent() and not self:GetParent():PassivesDisabled() and not keys.target:IsOther() and not keys.target:IsBuilding() then
+		local ability			= self:GetAbility()
+		
+		-- local duration 			= ability:GetSpecialValueFor("duration")
+		-- local duration_creep 	= ability:GetSpecialValueFor("duration_creep")
+		local chance_pct 		= ability:GetSpecialValueFor("chance_pct")
+		-- local bonus_damage 		= ability:GetSpecialValueFor("bonus_damage")
+
+		-- See if the chance passed
+		if RollPseudoRandom(chance_pct, self) then
+			self:ApplyTimeLock(keys.target)
+			
+			-- IMBAfication: Chrono Lock
+			if keys.target:HasModifier("modifier_imba_faceless_void_chronosphere_handler") then
+				-- Find enemies
+				local enemies	= FindUnitsInRadius(
+					keys.attacker:GetTeamNumber(),
+					keys.target:GetAbsOrigin(),
+					nil,
+					FIND_UNITS_EVERYWHERE,
+					DOTA_UNIT_TARGET_TEAM_ENEMY,
+					DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+					DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ATTACK_IMMUNE,
+					FIND_ANY_ORDER,
+					false)
+				
+				-- Proc Time Lock on all enemies affected by Chronosphere
+				for _, enemy in pairs(enemies) do
+					if enemy ~= keys.target and enemy:HasModifier("modifier_imba_faceless_void_chronosphere_handler") then
+						self:ApplyTimeLock(enemy)
+					end
+				end
+			end
+		end
+	end
+end
+
+-- Putting this in a separate function so it can be procced more easily in other situations
+function modifier_imba_faceless_void_time_lock_720:ApplyTimeLock(target)
+	if not IsServer() or not self:GetAbility() then return end
+
+	local ability			= self:GetAbility()
+	
+	local duration 				= ability:GetSpecialValueFor("duration")
+	local duration_creep 		= ability:GetSpecialValueFor("duration_creep")
+	-- local chance_pct 		= ability:GetSpecialValueFor("chance_pct")
+	local bonus_damage 			= ability:GetSpecialValueFor("bonus_damage")
+	local moment_cd_increase	= ability:GetSpecialValueFor("moment_cd_increase")
+
+	-- Emit sound
+	target:EmitSound("Hero_FacelessVoid.TimeLockImpact")
+
+	-- Hero stun duration
+	if target:IsConsideredHero() or target:IsRoshan() then
+		target:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_faceless_void_time_lock_720_freeze", {duration = duration}):SetDuration(duration * (1 - target:GetStatusResistance()), true)
+	-- Creep stun duration
+	else
+		target:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_faceless_void_time_lock_720_freeze", {duration = duration_creep}):SetDuration(duration_creep * (1 - target:GetStatusResistance()), true)
+	end
+	
+	-- IMBAfication: Chronocharges
+	-- Add a chronocharge if a hero was bashed
+	if target:IsRealHero() and self:GetParent():FindModifierByName("modifier_imba_faceless_void_chronocharges") then
+		self:GetParent():FindModifierByName("modifier_imba_faceless_void_chronocharges"):SetStackCount(self:GetParent():FindModifierByName("modifier_imba_faceless_void_chronocharges"):GetStackCount() + 1)
+	end
+	
+	-- IMBAfication: Lost In The Moment
+	-- Iterate through all the victim's abilities
+	for i = 0, 23 do
+		local targetAbility = target:GetAbilityByIndex(i)
+
+		-- If there is an ability, it's learned, not a talent/attribute bonus, and on cooldown, apply cooldown increase
+		if targetAbility and targetAbility:GetLevel() > 0 and not targetAbility:IsAttributeBonus() and not targetAbility:IsCooldownReady() then
+			local newCooldown = targetAbility:GetCooldownTimeRemaining() + moment_cd_increase
+			targetAbility:EndCooldown()
+			targetAbility:StartCooldown(newCooldown)
+		end
+	end
+	
+	-- #5 TALENT: Bash spawns Chronospheres
+	if self:GetParent():HasTalent("special_bonus_imba_faceless_void_5") and self:GetParent():FindAbilityByName("imba_faceless_void_chronosphere") and self:GetParent():FindAbilityByName("imba_faceless_void_chronosphere"):IsTrained() then
+		self:GetParent():FindAbilityByName("imba_faceless_void_chronosphere"):OnSpellStart(true, target:GetAbsOrigin())
+	end
+	
+	-- Prepare for the second attack
+	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_faceless_void/faceless_void_time_lock_bash.vpcf", PATTACH_CUSTOMORIGIN, nil)
+	ParticleManager:SetParticleControl(particle, 0, target:GetAbsOrigin() )
+	ParticleManager:SetParticleControl(particle, 1, target:GetAbsOrigin() )
+	ParticleManager:SetParticleControlEnt(particle, 2, self:GetParent(), PATTACH_CUSTOMORIGIN, "attach_hitloc", target:GetAbsOrigin(), true)
+	
+	ParticleManager:ReleaseParticleIndex(particle)
+		
+	-- Second attack delay is hard-coded to 0.33 seconds as per the particle constraints
+	Timers:CreateTimer(0.33, function()
+		-- In case of some weird null stuff that happens -_-
+		if not ability:IsNull() and target:IsAlive() then
+			-- Perform the second attack (can trigger attack modifiers)
+			self:GetParent():PerformAttack(target, false, true, true, false, false, false, false)
+			
+			-- Apply the bonus damage
+			local damageTable = {
+				victim 			= target,
+				damage 			= bonus_damage,
+				damage_type		= DAMAGE_TYPE_MAGICAL,
+				damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
+				attacker 		= self:GetParent(),
+				ability 		= ability
+			}
+		
+			ApplyDamage(damageTable)
+		end
+	end)
+end
+
+----------------------------------------------
+-- TIME LOCK FREEZE MODIFIER (7.20 Version) --
+----------------------------------------------
+
+function modifier_imba_faceless_void_time_lock_720_freeze:IsPurgable()		return false end
+function modifier_imba_faceless_void_time_lock_720_freeze:IsPurgeException()	return true end
+
+function modifier_imba_faceless_void_time_lock_720_freeze:GetEffectName()
+	return "particles/generic_gameplay/generic_stunned.vpcf"
+end
+
+function modifier_imba_faceless_void_time_lock_720_freeze:GetEffectAttachType()
+	return PATTACH_OVERHEAD_FOLLOW
+end
+
+function modifier_imba_faceless_void_time_lock_720_freeze:OnCreated()
+	if not IsServer() then return end
+	
+	self:GetParent():SetRenderColor(128,128,255)
+end
+
+function modifier_imba_faceless_void_time_lock_720_freeze:OnDestroy()
+	if not IsServer() then return end 
+	
+	self:GetParent():SetRenderColor(255,255,255)
+end
+
+function modifier_imba_faceless_void_time_lock_720_freeze:CheckState()
+	local state = {
+		[MODIFIER_STATE_STUNNED] = true,
+		[MODIFIER_STATE_FROZEN] = true
+	}
+	
+	return state
+end
+
+-- Client-side helper functions --
+LinkLuaModifier("modifier_special_bonus_imba_faceless_void_3", "components/abilities/heroes/hero_faceless_void", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_faceless_void_9", "components/abilities/heroes/hero_faceless_void", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_faceless_void_3		= class({})
+modifier_special_bonus_imba_faceless_void_9		= class({})
+
+-------------------
+-- SPEED BARRIER --
+-------------------
+function modifier_special_bonus_imba_faceless_void_3:IsHidden() 		return true end
+function modifier_special_bonus_imba_faceless_void_3:IsPurgable() 		return false end
+function modifier_special_bonus_imba_faceless_void_3:RemoveOnDeath() 	return false end
+
+function imba_faceless_void_chronosphere:OnOwnerSpawned()
+	if self:GetCaster():HasTalent("special_bonus_imba_faceless_void_3") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_faceless_void_3") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_faceless_void_3"), "modifier_special_bonus_imba_faceless_void_3", {})
+	end
+end
+
+----------------------------------
+-- INCREASED TIME WALK DISTANCE --
+----------------------------------
+function modifier_special_bonus_imba_faceless_void_9:IsHidden() 		return true end
+function modifier_special_bonus_imba_faceless_void_9:IsPurgable() 		return false end
+function modifier_special_bonus_imba_faceless_void_9:RemoveOnDeath() 	return false end
+
+function imba_faceless_void_time_walk:OnOwnerSpawned()
+	if self:GetCaster():HasTalent("special_bonus_imba_faceless_void_9") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_faceless_void_9") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_faceless_void_9"), "modifier_special_bonus_imba_faceless_void_9", {})
+	end
+end

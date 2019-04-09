@@ -59,27 +59,27 @@
 
 // Crystal Maiden's Arcane Aura
 "DOTA_Tooltip_ability_imba_crystal_maiden_brilliance_aura"              "Arcane Aura"
-"DOTA_Tooltip_ability_imba_crystal_maiden_brilliance_aura_Description"              "Grants bonus mana regeneration to all allied heroes. Arcane Aura's bonuses are doubled on Crystal Maiden herself.\n<font color='#FF7800'>True Brilliance:</font> Also grants allied heroes bonus intelligence.\n<font color='#FF7800'>Blue Heart:</font> Also grants bonus spell amp to heroes with more than %spellpower_threshold_pct%% remaining mana."
+"DOTA_Tooltip_ability_imba_crystal_maiden_brilliance_aura_Description"              "Gives additional mana regeneration to all friendly units on the map. Arcane Aura's bonuses are %bonus_self%x as effective for Crystal Maiden.\n<font color='#FF7800'>True Brilliance:</font> Also grants allied heroes bonus intelligence.\n<font color='#FF7800'>Blue Heart:</font> Also grants bonus spell amp to heroes with more than %spellpower_threshold_pct%%% remaining mana."
 "DOTA_Tooltip_ability_imba_crystal_maiden_brilliance_aura_Lore"                     "Cold temperatures promote the essence of magic, causing Rylai's presence to allow spell usage in abundance."
 "DOTA_Tooltip_ability_imba_crystal_maiden_brilliance_aura_mana_regen"               "BONUS MANA REGEN:"
 "DOTA_Tooltip_ability_imba_crystal_maiden_brilliance_aura_bonus_int"                "BONUS INTELLIGENCE:"
-"DOTA_Tooltip_ability_imba_crystal_maiden_brilliance_aura_bonus_spellpower"         "BONUS SPELLPOWER:"
+"DOTA_Tooltip_ability_imba_crystal_maiden_brilliance_aura_bonus_spellpower"         "%BONUS SPELLPOWER:"
 
 "DOTA_Tooltip_modifier_imba_crystal_maiden_brilliance_aura"            "Arcane Aura"
 "DOTA_Tooltip_modifier_imba_crystal_maiden_brilliance_aura_Description"             "Gaining bonus mana regeneration, intellect, and spell amp in Crystal Maiden's presence."
 
 // Crystal Maiden's Freezing Field
 "DOTA_Tooltip_ability_imba_crystal_maiden_freezing_field"              "Freezing Field"
-"DOTA_Tooltip_ability_imba_crystal_maiden_freezing_field_Description"               "Surrounds Crystal Maiden with random icy explosions that slow enemies and deal massive damage. Channeled, lasts up to 10 seconds.\n<font color='#FF7800'>Heart of the Glacier:</font> Also briefly inflicts frostbite to enemies in the area.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
+"DOTA_Tooltip_ability_imba_crystal_maiden_freezing_field_Description"               "CHANNELED - Surrounds Crystal Maiden with random icy explosions that slow enemies and deal massive damage.  Lasts %duration% seconds.\n<font color='#FF7800'>Heart of the Glacier:</font> Also briefly inflicts frostbite to enemies in the area.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
 "DOTA_Tooltip_ability_imba_crystal_maiden_freezing_field_aghanim_description"       "Allows Freezing Field to be cast on a target area up to 900 range away."
 "DOTA_Tooltip_ability_imba_crystal_maiden_freezing_field_Note0"                     "The slow effect pierces Spell Immunity."
 "DOTA_Tooltip_ability_imba_crystal_maiden_freezing_field_Lore"          "Once the place of her exile, Thickset Venue has become an anchor for Rylai's frigid onslaught."
 "DOTA_Tooltip_ability_imba_crystal_maiden_freezing_field_radius"                    "FIELD RADIUS:"
 "DOTA_Tooltip_ability_imba_crystal_maiden_freezing_field_explosion_radius"          "EXPLOSION RADIUS:"
-"DOTA_Tooltip_ability_imba_crystal_maiden_freezing_field_slow"          "%MOVE SPEED SLOW:"
+"DOTA_Tooltip_ability_imba_crystal_maiden_freezing_field_slow"						"%MOVE SPEED SLOW:"
+"DOTA_Tooltip_ability_imba_crystal_maiden_freezing_field_attack_slow"				"ATTACK SLOW:"
 "DOTA_Tooltip_ability_imba_crystal_maiden_freezing_field_damage"                    "EXPLOSION DAMAGE:"
 "DOTA_Tooltip_ability_imba_crystal_maiden_freezing_field_frostbite_duration"        "FROSTBITE DURATION:"
-"DOTA_Tooltip_ability_imba_crystal_maiden_freezing_field_duration"                  "MAX DURATION:"
 "DOTA_Tooltip_ability_imba_crystal_maiden_freezing_field_scepter_bonus_cast_range"  "SCEPTER CAST RANGE:"
 
 "DOTA_Tooltip_modifier_imba_crystal_maiden_freezing_field_slow"                     "Freezing Field"

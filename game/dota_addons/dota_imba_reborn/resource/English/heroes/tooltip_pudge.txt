@@ -63,6 +63,9 @@
 "DOTA_Tooltip_modifier_dismember"								"Dismember"
 "DOTA_Tooltip_modifier_dismember_Description"					"FRESH MEAT!!!"
 
+"DOTA_Tooltip_modifier_imba_pudge_dismember_pull"				"Dismember Pull"
+"DOTA_Tooltip_modifier_imba_pudge_dismember_pull_Description"	"Being sucked in by a large mass..."
+
 "DOTA_Tooltip_modifier_imba_hook_sharp_stack"					"Power Hook"
 "DOTA_Tooltip_modifier_imba_hook_sharp_stack_Description"		"Increases Meat Hook's damage"
 

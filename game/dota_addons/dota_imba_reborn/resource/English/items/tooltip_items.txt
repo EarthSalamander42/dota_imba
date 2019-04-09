@@ -269,7 +269,7 @@
 
 // Crystalys
 "DOTA_Tooltip_Ability_item_imba_lesser_crit"                   "Crystalys"
-"DOTA_Tooltip_ability_item_imba_lesser_crit_Description"                   "<h1>Passive: Critical Strike</h1> Grants each attack a %crit_chance% chance to deal %base_crit%% damage.  <br><br>Critical Strike does not work against buildings."
+"DOTA_Tooltip_ability_item_imba_lesser_crit_Description"                   "<h1>Passive: Critical Strike</h1> Grants each attack a %crit_chance%%% chance to deal %base_crit%% damage.  <br><br>Critical Strike does not work against buildings."
 "DOTA_Tooltip_ability_item_imba_lesser_crit_Lore"             "A blade forged from rare crystals, it seeks weak points in enemy armor."
 "DOTA_Tooltip_ability_item_imba_lesser_crit_bonus_damage"                  "+$damage"
 
@@ -771,46 +771,51 @@
 
 // Necronomicon 1-5
 "DOTA_Tooltip_Ability_item_imba_necronomicon"                  "Necronomicon"
-"DOTA_Tooltip_ability_item_imba_necronomicon_Description"                   "<h1>Active: Summon Undead</h1> Summons a durable Necrowarrior and its artillery companion, the Necroarcher.<br><br><font color='#00FF40'>Necrowarrior:</font> Burns mana on every attack, deals high magical damage to its killer, and has True Sight.<br><br><font color='#00FF40'>Necroarcher:</font> Can burn enemies' mana on command, and has one supportive aura.\nUpgradable."
-"DOTA_Tooltip_ability_item_imba_necronomicon_Lore"              "Considered the holy grail of necromancy and demonology, a powerful malefic force is locked within its pages."
-"DOTA_Tooltip_ability_item_imba_necronomicon_bonus_intellect"               "+$int"
+"DOTA_Tooltip_ability_item_imba_necronomicon_Description"                   "<h1>Active: Demonic Summoning</h1>Summons a Warrior and an Archer to fight for you for %summon_duration% seconds.<br><br><h1>Warrior:</h1>Burns mana every hit, and deals magical damage to whoever kills it.  Gains True Sight <font color='#FF7800'>and Dragonhide Aura</font> at Level 3, <font color='#FF7800'>Granite Aura at Level 4, and Prowler Aura at Level 5.</font><br>Health: %warrior_health_tooltip%<br>Damage: %warrior_damage_tooltip%<br>Mana Break Damage: %warrior_mana_break_tooltip%<br>Last Will Damage: %explosion%<br><br><h1>Archer:</h1>Has a passive movement and attack speed aura <font color='#FF7800'>as well as an active mana burn ability</font>. Gains Purge <font color='#FF7800'>and Mana Aura</font> at Level 3, <font color='#FF7800'>War Drums Aura at Level 4, and Spread Shot at Level 5</font>.<br>Health: %archer_health_tooltip%<br>Damage: %archer_damage_tooltip%<br>Aura Move Speed: %archer_move_speed%<br>Aura Attack Speed: %archer_attack_speed%<br>Aura Radius: %archer_aura_radius_tooltip%\n<h1><font color='#FF7800'>Active: Own Entity</font></h1> Recasting Necronomicon does not replace any existing summons."
+"DOTA_Tooltip_ability_item_imba_necronomicon_Lore"              "Considered the ultimate in necromancy and demonology, a powerful malefic force is locked within its pages."
+
 "DOTA_Tooltip_ability_item_imba_necronomicon_bonus_strength"                "+$str"
+"DOTA_Tooltip_ability_item_imba_necronomicon_bonus_mana_regen"				"+$mana_regen"
 "DOTA_Tooltip_ability_item_imba_necronomicon_summon_duration"               "DURATION:"
 "DOTA_Tooltip_ability_item_imba_necronomicon_warrior_health"                "WARRIOR HEALTH:"
 "DOTA_Tooltip_ability_item_imba_necronomicon_archer_health"                 "ARCHER HEALTH:"
 
 "DOTA_Tooltip_Ability_item_imba_necronomicon_2"                "Necronomicon MK2"
-"DOTA_Tooltip_ability_item_imba_necronomicon_2_Description"                 "<h1>Active: Summon Undead</h1> Summons a durable Necrowarrior and its artillery companion, the Necroarcher.<br><br><font color='#00FF40'>Necrowarrior:</font> Burns mana on every attack, deals high magical damage to its killer, and has True Sight.<br><br><font color='#00FF40'>Necroarcher:</font> Can burn enemies' mana on command, and has one supportive aura.\nUpgradable."
-"DOTA_Tooltip_ability_item_imba_necronomicon_2_Lore"            "Considered the holy grail of necromancy and demonology, a powerful malefic force is locked within its pages."
-"DOTA_Tooltip_ability_item_imba_necronomicon_2_bonus_intellect"             "+$int"
+"DOTA_Tooltip_ability_item_imba_necronomicon_2_Description"                 "<h1>Active: Demonic Summoning</h1>Summons a Warrior and an Archer to fight for you for %summon_duration% seconds.<br><br><h1>Warrior:</h1>Burns mana every hit, and deals magical damage to whoever kills it.  Gains True Sight <font color='#FF7800'>and Dragonhide Aura</font> at Level 3, <font color='#FF7800'>Granite Aura at Level 4, and Prowler Aura at Level 5.</font><br>Health: %warrior_health_tooltip%<br>Damage: %warrior_damage_tooltip%<br>Mana Break Damage: %warrior_mana_break_tooltip%<br>Last Will Damage: %explosion%<br><br><h1>Archer:</h1>Has a passive movement and attack speed aura <font color='#FF7800'>as well as an active mana burn ability</font>. Gains Purge <font color='#FF7800'>and Mana Aura</font> at Level 3, <font color='#FF7800'>War Drums Aura at Level 4, and Spread Shot at Level 5</font>.<br>Health: %archer_health_tooltip%<br>Damage: %archer_damage_tooltip%<br>Aura Move Speed: %archer_move_speed%<br>Aura Attack Speed: %archer_attack_speed%<br>Aura Radius: %archer_aura_radius_tooltip%\n<h1><font color='#FF7800'>Active: Own Entity</font></h1> Recasting Necronomicon does not replace any existing summons."
+"DOTA_Tooltip_ability_item_imba_necronomicon_2_Lore"            "Considered the ultimate in necromancy and demonology, a powerful malefic force is locked within its pages."
+
 "DOTA_Tooltip_ability_item_imba_necronomicon_2_bonus_strength"              "+$str"
+"DOTA_Tooltip_ability_item_imba_necronomicon_2_bonus_mana_regen"				"+$mana_regen"
 "DOTA_Tooltip_ability_item_imba_necronomicon_2_summon_duration"             "DURATION:"
 "DOTA_Tooltip_ability_item_imba_necronomicon_2_warrior_health"              "WARRIOR HEALTH:"
 "DOTA_Tooltip_ability_item_imba_necronomicon_2_archer_health"               "ARCHER HEALTH:"
 
 "DOTA_Tooltip_Ability_item_imba_necronomicon_3"                "Necronomicon MK3"
-"DOTA_Tooltip_ability_item_imba_necronomicon_3_Description"                 "<h1>Active: Summon Undead</h1> Summons a durable Necrowarrior and its artillery companion, the Necroarcher.<br><br><font color='#00FF40'>Necrowarrior:</font> Burns mana on every attack, deals high magical damage to its killer, has True Sight, and one supportive aura.<br><br><font color='#00FF40'>Necroarcher:</font> Can burn enemies' mana on command, and has two supportive auras.\nUpgradable."
-"DOTA_Tooltip_ability_item_imba_necronomicon_3_Lore"            "Considered the holy grail of necromancy and demonology, a powerful malefic force is locked within its pages."
-"DOTA_Tooltip_ability_item_imba_necronomicon_3_bonus_intellect"             "+$int"
+"DOTA_Tooltip_ability_item_imba_necronomicon_3_Description"                 "<h1>Active: Demonic Summoning</h1>Summons a Warrior and an Archer to fight for you for %summon_duration% seconds.<br><br><h1>Warrior:</h1>Burns mana every hit, and deals magical damage to whoever kills it.  Gains True Sight <font color='#FF7800'>and Dragonhide Aura</font> at Level 3, <font color='#FF7800'>Granite Aura at Level 4, and Prowler Aura at Level 5.</font><br>Health: %warrior_health_tooltip%<br>Damage: %warrior_damage_tooltip%<br>Mana Break Damage: %warrior_mana_break_tooltip%<br>Last Will Damage: %explosion%<br><br><h1>Archer:</h1>Has a passive movement and attack speed aura <font color='#FF7800'>as well as an active mana burn ability</font>. Gains Purge <font color='#FF7800'>and Mana Aura</font> at Level 3, <font color='#FF7800'>War Drums Aura at Level 4, and Spread Shot at Level 5</font>.<br>Health: %archer_health_tooltip%<br>Damage: %archer_damage_tooltip%<br>Aura Move Speed: %archer_move_speed%<br>Aura Attack Speed: %archer_attack_speed%<br>Aura Radius: %archer_aura_radius_tooltip%\n<h1><font color='#FF7800'>Active: Own Entity</font></h1> Recasting Necronomicon does not replace any existing summons."
+"DOTA_Tooltip_ability_item_imba_necronomicon_3_Lore"            "Considered the ultimate in necromancy and demonology, a powerful malefic force is locked within its pages."
+
 "DOTA_Tooltip_ability_item_imba_necronomicon_3_bonus_strength"              "+$str"
+"DOTA_Tooltip_ability_item_imba_necronomicon_3_bonus_mana_regen"				"+$mana_regen"
 "DOTA_Tooltip_ability_item_imba_necronomicon_3_summon_duration"             "DURATION:"
 "DOTA_Tooltip_ability_item_imba_necronomicon_3_warrior_health"              "WARRIOR HEALTH:"
 "DOTA_Tooltip_ability_item_imba_necronomicon_3_archer_health"               "ARCHER HEALTH:"
 
 "DOTA_Tooltip_Ability_item_imba_necronomicon_4"                "Necronomicon MK4"
-"DOTA_Tooltip_ability_item_imba_necronomicon_4_Description"                 "<h1>Active: Summon Undead</h1> Summons a durable Necrowarrior and its artillery companion, the Necroarcher.<br><br><font color='#00FF40'>Necrowarrior:</font> Burns mana on every attack, deals high magical damage to its killer, has True Sight, and two supportive auras.<br><br><font color='#00FF40'>Necroarcher:</font> Can burn enemies' mana on command, and has three supportive auras.\nUpgradable."
-"DOTA_Tooltip_ability_item_imba_necronomicon_4_Lore"            "Considered the holy grail of necromancy and demonology, a powerful malefic force is locked within its pages."
-"DOTA_Tooltip_ability_item_imba_necronomicon_4_bonus_intellect"             "+$int"
+"DOTA_Tooltip_ability_item_imba_necronomicon_4_Description"                 "<h1>Active: Demonic Summoning</h1>Summons a Warrior and an Archer to fight for you for %summon_duration% seconds.<br><br><h1>Warrior:</h1>Burns mana every hit, and deals magical damage to whoever kills it.  Gains True Sight <font color='#FF7800'>and Dragonhide Aura</font> at Level 3, <font color='#FF7800'>Granite Aura at Level 4, and Prowler Aura at Level 5.</font><br>Health: %warrior_health_tooltip%<br>Damage: %warrior_damage_tooltip%<br>Mana Break Damage: %warrior_mana_break_tooltip%<br>Last Will Damage: %explosion%<br><br><h1>Archer:</h1>Has a passive movement and attack speed aura <font color='#FF7800'>as well as an active mana burn ability</font>. Gains Purge <font color='#FF7800'>and Mana Aura</font> at Level 3, <font color='#FF7800'>War Drums Aura at Level 4, and Spread Shot at Level 5</font>.<br>Health: %archer_health_tooltip%<br>Damage: %archer_damage_tooltip%<br>Aura Move Speed: %archer_move_speed%<br>Aura Attack Speed: %archer_attack_speed%<br>Aura Radius: %archer_aura_radius_tooltip%\n<h1><font color='#FF7800'>Active: Own Entity</font></h1> Recasting Necronomicon does not replace any existing summons."
+"DOTA_Tooltip_ability_item_imba_necronomicon_4_Lore"            "Considered the ultimate in necromancy and demonology, a powerful malefic force is locked within its pages."
+
 "DOTA_Tooltip_ability_item_imba_necronomicon_4_bonus_strength"              "+$str"
+"DOTA_Tooltip_ability_item_imba_necronomicon_4_bonus_mana_regen"				"+$mana_regen"
 "DOTA_Tooltip_ability_item_imba_necronomicon_4_summon_duration"             "DURATION:"
 "DOTA_Tooltip_ability_item_imba_necronomicon_4_warrior_health"              "WARRIOR HEALTH:"
 "DOTA_Tooltip_ability_item_imba_necronomicon_4_archer_health"               "ARCHER HEALTH:"
 
 "DOTA_Tooltip_Ability_item_imba_necronomicon_5"                "Necronomicon (1st edition)"
-"DOTA_Tooltip_ability_item_imba_necronomicon_5_Description"                 "<h1>Active: Summon Elder Gods</h1> Summons a durable Necrowarrior and its artillery companion, the Necroarcher.<br><br><font color='#00FF40'>Necrowarrior:</font> Burns mana on every attack, deals high magical damage to its killer, has True Sight, and three supportive auras.<br><br><font color='#00FF40'>Necroarcher:</font> Can burn enemies' mana on command, has three supportive auras, and hits every enemy in range."
-"DOTA_Tooltip_ability_item_imba_necronomicon_5_Lore"            "Considered the holy grail of necromancy and demonology, a powerful malefic force is locked within its pages."
-"DOTA_Tooltip_ability_item_imba_necronomicon_5_bonus_intellect"             "+$int"
+"DOTA_Tooltip_ability_item_imba_necronomicon_5_Description"                 "<h1>Active: Demonic Summoning</h1>Summons a Warrior and an Archer to fight for you for %summon_duration% seconds.<br><br><h1>Warrior:</h1>Burns mana every hit, and deals magical damage to whoever kills it.  Gains True Sight <font color='#FF7800'>and Dragonhide Aura</font> at Level 3, <font color='#FF7800'>Granite Aura at Level 4, and Prowler Aura at Level 5.</font><br>Health: %warrior_health_tooltip%<br>Damage: %warrior_damage_tooltip%<br>Mana Break Damage: %warrior_mana_break_tooltip%<br>Last Will Damage: %explosion%<br><br><h1>Archer:</h1>Has a passive movement and attack speed aura <font color='#FF7800'>as well as an active mana burn ability</font>. Gains Purge <font color='#FF7800'>and Mana Aura</font> at Level 3, <font color='#FF7800'>War Drums Aura at Level 4, and Spread Shot at Level 5</font>.<br>Health: %archer_health_tooltip%<br>Damage: %archer_damage_tooltip%<br>Aura Move Speed: %archer_move_speed%<br>Aura Attack Speed: %archer_attack_speed%<br>Aura Radius: %archer_aura_radius_tooltip%\n<h1><font color='#FF7800'>Active: Own Entity</font></h1> Recasting Necronomicon does not replace any existing summons."
+"DOTA_Tooltip_ability_item_imba_necronomicon_5_Lore"            "Considered the ultimate in necromancy and demonology, a powerful malefic force is locked within its pages."
+
 "DOTA_Tooltip_ability_item_imba_necronomicon_5_bonus_strength"              "+$str"
+"DOTA_Tooltip_ability_item_imba_necronomicon_5_bonus_mana_regen"				"+$mana_regen"
 "DOTA_Tooltip_ability_item_imba_necronomicon_5_summon_duration"             "DURATION:"
 "DOTA_Tooltip_ability_item_imba_necronomicon_5_warrior_health"              "WARRIOR HEALTH:"
 "DOTA_Tooltip_ability_item_imba_necronomicon_5_archer_health"               "ARCHER HEALTH:"

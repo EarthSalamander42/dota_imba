@@ -1050,7 +1050,7 @@ function imba_warlock_rain_of_chaos:OnSpellStart()
 					demon:SetBaseMaxHealth(scepter_demon_hp)
 					demon:SetHealth(scepter_demon_hp)
 
-					demon:AddNewModifier(caster, ability, "modifier_imba_rain_of_chaos_demon_visible", {})
+					demon:AddNewModifier(golem, ability, "modifier_imba_rain_of_chaos_demon_visible", {})
 					
 					-- Assign the demons to that golem
 					if demon_link_modifier then
@@ -1160,12 +1160,14 @@ function modifier_imba_rain_of_chaos_demon_link:OnCreated()
 					ParticleManager:SetParticleControlEnt(self.particle_table[i], 0, self.demon_table[i], PATTACH_POINT_FOLLOW, "attach_hitloc", self.demon_table[i]:GetAbsOrigin(), true)
 					ParticleManager:SetParticleControlEnt(self.particle_table[i], 1, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)
 				end
-
-				-- Set the stack count of the modifier to the amount of demons linked
-				self:SetStackCount(self.scepter_demon_count)
-
-				-- Start thinking
-				self:StartIntervalThink(FrameTime())
+				
+				if self and not self:IsNull() then
+					-- Set the stack count of the modifier to the amount of demons linked
+					self:SetStackCount(self.scepter_demon_count)
+					
+					-- Start thinking
+					self:StartIntervalThink(FrameTime())
+				end
 			end
 		end)
 	end
@@ -1174,8 +1176,10 @@ end
 function modifier_imba_rain_of_chaos_demon_link:OnIntervalThink()
 	-- Set the forward vectors of all current demons to face towards the golem they're linked to
 	for i = 1, #self.demon_table do
-		local direction = (self.parent:GetAbsOrigin() - self.demon_table[i]:GetAbsOrigin()):Normalized()
-		self.demon_table[i]:SetForwardVector(direction)
+		if not self.parent:IsNull() and self.parent.GetAbsOrigin and not self.demon_table[i]:IsNull() and self.demon_table[i].GetAbsOrigin then
+			local direction = (self.parent:GetAbsOrigin() - self.demon_table[i]:GetAbsOrigin()):Normalized()
+			self.demon_table[i]:SetForwardVector(direction)
+		end
 	end
 end
 
@@ -1189,6 +1193,12 @@ function modifier_imba_rain_of_chaos_demon_link:DeclareFunctions()
 end
 
 function modifier_imba_rain_of_chaos_demon_link:GetModifierIncomingDamage_Percentage()
+	for i = 1, #self.demon_table do
+		if not self.demon_table[i] or not self.demon_table[i]:IsAlive() then 
+			return 0
+		end
+	end
+	
 	return -100
 end
 
@@ -1256,6 +1266,8 @@ function modifier_imba_rain_of_chaos_demon_link:OnDeath(keys)
 				-- Reduce stack count
 				self:DecrementStackCount()
 
+				if not self.particle_table[i] then break end
+
 				-- Stop the particle effect
 				ParticleManager:DestroyParticle(self.particle_table[i], false)
 				ParticleManager:ReleaseParticleIndex(self.particle_table[i])
@@ -1290,10 +1302,18 @@ modifier_imba_rain_of_chaos_demon_visible = class ({})
 function modifier_imba_rain_of_chaos_demon_visible:IsPurgable()		return false end
 function modifier_imba_rain_of_chaos_demon_visible:IsHidden()		return true end
 
-function modifier_imba_rain_of_chaos_demon_visible:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_PROVIDES_FOW_POSITION}
+function modifier_imba_rain_of_chaos_demon_visible:OnCreated()
+	if not IsServer() then return end
+	
+	self:StartIntervalThink(1)
+end
 
-	return decFuncs
+function modifier_imba_rain_of_chaos_demon_visible:OnIntervalThink()
+	if not IsServer() then return end
+	
+	if not self:GetCaster():IsAlive() then
+		self:GetParent():ForceKill(false)
+	end
 end
 
 function modifier_imba_rain_of_chaos_demon_visible:DeclareFunctions()

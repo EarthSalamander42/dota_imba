@@ -39,6 +39,10 @@ function modifier_imba_regen_rune:OnCreated()
 	self:SetStackCount(CustomNetTables:GetTableValue("game_options", "runes").regen_rune_stacks)
 end
 
+function modifier_imba_regen_rune:OnRefresh()
+	self:OnCreated()
+end
+
 function modifier_imba_regen_rune:DeclareFunctions()
 	local funcs = { MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
 				MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE,
@@ -70,7 +74,7 @@ function modifier_imba_regen_rune:OnTakeDamage(params)
 	local attacker = params.attacker
 
 	-- Only damage from hero/roshan units count towards the damage instances
-	if self:GetCaster() == victim and (attacker:IsHeroDamage(params.damage) or attacker:IsTower()) then
+	if self:GetCaster() == victim and (attacker:IsHeroDamage(params.damage)) then --or attacker:IsTower()) then
 		local current_stacks = self:GetStackCount()
 
 		-- last stack, remove modifier
@@ -89,7 +93,7 @@ end
 modifier_imba_regen_rune_aura = modifier_imba_regen_rune_aura or class({})
 function modifier_imba_regen_rune_aura:IsDebuff() return false end
 
-function modifier_imba_regen_rune_aura:GetTextureName()
+function modifier_imba_regen_rune_aura:GetTexture()
 	return "rune_regen"
 end
 

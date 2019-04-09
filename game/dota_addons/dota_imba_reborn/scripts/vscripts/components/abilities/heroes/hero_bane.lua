@@ -52,12 +52,12 @@ function imba_bane_enfeeble:OnSpellStart()
 				FIND_ANY_ORDER,
 				false)
 			for _, enemy in pairs(enemies) do
-				enemy:AddNewModifier( caster, self, "modifier_imba_enfeeble_debuff", {duration = enfeeble_duration} )
+				enemy:AddNewModifier( caster, self, "modifier_imba_enfeeble_debuff", {duration = enfeeble_duration} ):SetDuration(enfeeble_duration * (1 - enemy:GetStatusResistance()), true)
 			end
 		else
 
 			-- Apply enfeeble debuff
-			target:AddNewModifier(caster, self, "modifier_imba_enfeeble_debuff", {duration = enfeeble_duration})
+			target:AddNewModifier(caster, self, "modifier_imba_enfeeble_debuff", {duration = enfeeble_duration}):SetDuration(enfeeble_duration * (1 - target:GetStatusResistance()), true)
 		end
 
 		-- Emit sound effect
@@ -98,9 +98,6 @@ end
 -- Enfeeble Debuff
 modifier_imba_enfeeble_debuff = modifier_imba_enfeeble_debuff or class({})
 
-function modifier_imba_enfeeble_debuff:IsDebuff() return true end
-function modifier_imba_enfeeble_debuff:IsPurgable() return false end
-function modifier_imba_enfeeble_debuff:IsPurgableException() return false end
 function modifier_imba_enfeeble_debuff:GetEffectName() return "particles/units/heroes/hero_bane/bane_enfeeble.vpcf" end
 function modifier_imba_enfeeble_debuff:GetEffectAttachType() return PATTACH_OVERHEAD_FOLLOW end
 
@@ -112,7 +109,7 @@ function modifier_imba_enfeeble_debuff:OnCreated()
 		self.parent = self:GetParent()
 
 		-- Ability paramaters
-		self.duration = self:GetDuration()
+		self.duration = self:GetDuration() * (1 - self.parent:GetStatusResistance())
 		self.max_stacks	= ability:GetSpecialValueFor("max_stacks")
 
 		-- Initialize table
@@ -368,7 +365,7 @@ function imba_bane_brain_sap:OnSpellStart()
 		caster:Heal(sapdamage, caster)
 
 		-- Apply brain sap debuff
-		target:AddNewModifier(caster, self, "modifier_imba_brain_sap_mana", {duration = sapduration})
+		target:AddNewModifier(caster, self, "modifier_imba_brain_sap_mana", {duration = sapduration}):SetDuration(sapduration * (1 - target:GetStatusResistance()), true)
 
 		-- Emit brain sap particle
 		local sapFX = ParticleManager:CreateParticle("particles/units/heroes/hero_bane/bane_sap.vpcf", PATTACH_ABSORIGIN, caster)
@@ -395,6 +392,8 @@ function imba_bane_brain_sap:GetCooldown(level)
 end
 
 function imba_bane_brain_sap:CastFilterResultTarget(target)
+	if not IsServer() then return end
+
 	local caster = self:GetCaster()
 
 	if caster:HasScepter() and caster:GetTeamNumber() ~= target:GetTeamNumber() and target:IsMagicImmune() then
@@ -531,7 +530,7 @@ function imba_bane_nightmare:OnSpellStart()
 
 		if caster:GetTeamNumber() ~= target:GetTeamNumber() and caster:HasTalent("special_bonus_imba_bane_1") then
 			for i=1, talent_enfeeble_stacks do
-				target:AddNewModifier(caster, enfeeble, "modifier_imba_enfeeble_debuff", {duration = enfeeble_duration} )
+				target:AddNewModifier(caster, enfeeble, "modifier_imba_enfeeble_debuff", {duration = enfeeble_duration} ):SetDuration(enfeeble_duration * (1 - target:GetStatusResistance()), true)
 			end
 		end
 
@@ -1077,9 +1076,13 @@ function modifier_imba_fiends_grip_handler:OnDestroy()
 				parent:InterruptChannel()
 		end
 
-		parent:AddNewModifier(	caster,
+		local modifier = parent:AddNewModifier(	caster,
 			ability, "modifier_imba_fiends_grip_handler",
-			{duration = fiends_grip_linger_duration, propogated = 1}):SetDuration(fiends_grip_linger_duration * (1 - parent:GetStatusResistance()), true)
+			{duration = fiends_grip_linger_duration, propogated = 1})
+			
+			if modifier then
+				modifier:SetDuration(fiends_grip_linger_duration * (1 - parent:GetStatusResistance()), true)
+			end
 		end
 
 		if not self.baby then
@@ -1235,3 +1238,22 @@ function imba_bane_brain_sap:IsHiddenWhenStolen() return false end
 function imba_bane_nightmare:IsHiddenWhenStolen() return false end
 function imba_bane_nightmare_end:IsHiddenWhenStolen() return false end
 function imba_bane_fiends_grip:IsHiddenWhenStolen() return false end
+
+-- -- Client-side helper functions --
+
+LinkLuaModifier("modifier_special_bonus_imba_bane_2", "components/abilities/heroes/hero_bane", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_bane_2		= class({})
+
+-------------------------
+-- ENFEEBLE AOE TALENT --
+-------------------------
+function modifier_special_bonus_imba_bane_2:IsHidden() 		return true end
+function modifier_special_bonus_imba_bane_2:IsPurgable() 		return false end
+function modifier_special_bonus_imba_bane_2:RemoveOnDeath() 	return false end
+
+function imba_bane_enfeeble:OnOwnerSpawned()
+	if self:GetCaster():HasTalent("special_bonus_imba_bane_2") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_bane_2") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_bane_2"), "modifier_special_bonus_imba_bane_2", {})
+	end
+end

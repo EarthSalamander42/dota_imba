@@ -506,8 +506,7 @@ UNIT_EQUIPMENT["models/heroes/enchantress/enchantress.vmdl"] = {
 IMBA_DISABLED_SKULL_BASHER = {
 	"npc_dota_hero_faceless_void",
 	"npc_dota_hero_slardar",
-	"npc_dota_hero_spirit_breaker",
-	"npc_dota_hero_troll_warlord",
+	"npc_dota_hero_spirit_breaker"
 }
 
 IMBA_WEATHER_EFFECT = {}
