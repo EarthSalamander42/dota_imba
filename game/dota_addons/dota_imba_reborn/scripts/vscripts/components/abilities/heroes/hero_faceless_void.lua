@@ -94,10 +94,6 @@ end
 function imba_faceless_void_time_walk:IsHiddenWhenStolen() return false end
 function imba_faceless_void_time_walk:IsNetherWardStealable() return false end
 
-function imba_faceless_void_time_walk:GetCastRange()
-	return self:GetSpecialValueFor("range") + self:GetCaster():FindTalentValue("special_bonus_imba_faceless_void_9")
-end
-
 function imba_faceless_void_time_walk:GetIntrinsicModifierName()
 	if not self:GetCaster():IsIllusion() then
 		return "modifier_imba_faceless_void_time_walk_damage_counter"
@@ -263,14 +259,20 @@ function modifier_imba_faceless_void_time_walk_cast:OnCreated(params)
 		local position = GetGroundPosition(Vector(params.x, params.y, params.z), nil)
 
 		-- Compare distance to cast point and max distance, use whichever is closer
-		--local max_distance = ability:GetSpecialValueFor("range") + GetCastRangeIncrease(caster)
+		local max_distance = ability:GetSpecialValueFor("range") + GetCastRangeIncrease(caster) + caster:FindTalentValue("special_bonus_imba_faceless_void_9")
 		local distance = (caster:GetAbsOrigin() - position):Length2D()
-		--if distance > max_distance then distance = max_distance end
+		if distance > max_distance then distance = max_distance end
 
 		self.velocity = ability:GetSpecialValueFor("speed")
 		self.direction = (position - caster:GetAbsOrigin()):Normalized()
 		self.distance_traveled = 0
 		self.distance = distance
+		
+		local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_faceless_void/faceless_void_time_walk_preimage.vpcf", PATTACH_ABSORIGIN, caster)
+		ParticleManager:SetParticleControl(particle, 0, caster:GetAbsOrigin())
+		ParticleManager:SetParticleControl(particle, 1, caster:GetAbsOrigin() + self.direction * distance)
+		ParticleManager:SetParticleControlEnt(particle, 2, self:GetParent(), PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", caster:GetForwardVector(), true)
+		ParticleManager:ReleaseParticleIndex(particle)
 
 		-- Enemy effect handler
 		self.as_stolen = 0

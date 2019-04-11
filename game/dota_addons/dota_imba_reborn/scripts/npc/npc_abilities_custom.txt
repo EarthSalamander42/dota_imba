@@ -26815,7 +26815,7 @@
 		"AbilityCooldown"				"24 18 12 6"
 		"AbilityManaCost"				"40"
 
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_DIRECTIONAL | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
@@ -39318,17 +39318,17 @@
 			"02"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"melee_aspd"		"5"
+				"melee_aspd"		"3"
 			}
 			"03"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"melee_armor"		"0.5"
+				"melee_armor"		"0"
 			}
 			"04"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"melee_mres"		"0.5"
+				"melee_mres"		"0"
 			}
 			"05"
 			{
@@ -39338,7 +39338,7 @@
 			"06"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"melee_hp"			"20"
+				"melee_hp"			"16"
 			}
 			"07"
 			{

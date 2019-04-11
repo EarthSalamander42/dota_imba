@@ -663,7 +663,7 @@ function imba_lion_mana_drain:OnSpellStart()
 	local modifier_drain_ally = "modifier_imba_manadrain_buff"
 	
 	-- Ability specials    
-	local break_distance = ability:GetSpecialValueFor("break_distance")
+	local break_distance = ability:GetSpecialValueFor("break_distance") + GetCastRangeIncrease(caster)
 	local interval = ability:GetSpecialValueFor("interval")    
 	local aura_radius = ability:GetSpecialValueFor("aura_radius")
 
