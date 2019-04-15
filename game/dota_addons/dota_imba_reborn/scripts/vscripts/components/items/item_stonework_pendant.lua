@@ -60,20 +60,45 @@ end
 ----------------------------------------
 
 function modifier_item_imba_stonework_pendant:OnCreated( kv )
-	self.spell_lifesteal = self:GetAbility():GetSpecialValueFor( "spell_lifesteal" )
-	self.flBonusHP = self:GetParent():GetMaxMana()
-	self.flBonusHPRegen = self:GetParent():GetManaRegen()
-	self:StartIntervalThink( 0.5 )
+	self.spell_lifesteal 	= self:GetAbility():GetSpecialValueFor( "spell_lifesteal" )
+	self.mana_to_hp_pct	= (100 + self:GetAbility():GetSpecialValueFor("mana_to_hp_pct")) / 100
+	self.mana_to_hp_damage	= self:GetAbility():GetSpecialValueFor("mana_to_hp_damage")
+	
+	self.flBonusHP 			= self:GetParent():GetMaxMana() 	* self.mana_to_hp_pct
+	self.flBonusHPRegen 	= self:GetParent():GetManaRegen() 	* self.mana_to_hp_pct
+	
+	self:StartIntervalThink( FrameTime() )
+	
+	-- Start tracking mana percentages and mana values to determine if mana was lost
+	if not IsServer() then return end
+	
+	self.mana_pct = self:GetParent():GetManaPercent()
+	self.mana_raw = self:GetParent():GetMana()
 end
 
 --------------------------------------------------------------------------------
 
 function modifier_item_imba_stonework_pendant:OnIntervalThink()
-	self.flBonusHP = self.flBonusHP + self:GetParent():GetMaxMana()
-	self.flBonusHPRegen = self.flBonusHPRegen + self:GetParent():GetManaRegen()
-	if IsServer() then
-		self:GetParent():CalculateStatBonus()
+	self.flBonusHP 			= self:GetParent():GetMaxMana() 	* self.mana_to_hp_pct
+	self.flBonusHPRegen 	= self:GetParent():GetManaRegen() 	* self.mana_to_hp_pct
+	
+	if not IsServer() then return end
+	
+	-- If mana percentage at any frame is lower than the frame before it, set stacks
+	if self:GetParent():GetManaPercent() < self.mana_pct and self:GetParent():GetMana() < self.mana_raw then		
+		self:GetParent():SetHealth(math.max(self:GetParent():GetHealth() - (self.mana_raw - self:GetParent():GetMana()) * self.mana_to_hp_damage, 1))
+		
+		if self:GetParent():GetHealth() <= 1 then
+			self:GetParent():Kill(self:GetAbility(), self:GetParent())
+		end
+		
+		self:GetParent():SetMana(math.min(math.max(self.mana_raw, 0), self:GetParent():GetMaxMana()))
 	end
+		
+	self.mana_raw = self:GetParent():GetMana()
+	self.mana_pct = self:GetParent():GetManaPercent()
+	
+	--self:GetParent():CalculateStatBonus()
 end
 
 --------------------------------------------------------------------------------
@@ -83,10 +108,9 @@ function modifier_item_imba_stonework_pendant:DeclareFunctions()
 	{
 		MODIFIER_PROPERTY_HEALTH_BONUS,
 		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
-		MODIFIER_PROPERTY_MANA_REGEN_CONSTANT,
-		MODIFIER_PROPERTY_MANA_BONUS,
-		MODIFIER_EVENT_ON_TAKEDAMAGE,
-		MODIFIER_PROPERTY_SPELLS_REQUIRE_HP,
+		-- MODIFIER_PROPERTY_MANA_REGEN_CONSTANT,
+		-- MODIFIER_PROPERTY_MANA_BONUS,
+		-- MODIFIER_EVENT_ON_TAKEDAMAGE,
 	}
 	return funcs
 end
@@ -105,49 +129,55 @@ end
 
 --------------------------------------------------------------------------------
 
-function modifier_item_imba_stonework_pendant:GetModifierManaBonus( params )
-	return -self.flBonusHP
-end
+-- function modifier_item_imba_stonework_pendant:GetModifierManaBonus( params )
+	-- return -self.flBonusHP
+-- end
 
 --------------------------------------------------------------------------------
 
-function modifier_item_imba_stonework_pendant:GetModifierConstantManaRegen( params )
-	if self.flBonusHPRegen then
-		return -self.flBonusHPRegen
-	end
-end
+-- function modifier_item_imba_stonework_pendant:GetModifierConstantManaRegen( params )
+	-- if self.flBonusHPRegen then
+		-- return -self.flBonusHPRegen
+	-- end
+-- end
 
 --------------------------------------------------------------------------------
 
-function modifier_item_imba_stonework_pendant:OnTakeDamage( params )
-	if IsServer() then
-		local Attacker = params.attacker
-		local Target = params.unit
-		local Ability = params.inflictor
-		local flDamage = params.damage
+-- function modifier_item_imba_stonework_pendant:OnTakeDamage( params )
+	-- if IsServer() then
+		-- local Attacker = params.attacker
+		-- local Target = params.unit
+		-- local Ability = params.inflictor
+		-- local flDamage = params.damage
 
-		if Attacker ~= self:GetParent() or Ability == nil or Target == nil then
-			return 0
-		end
+		-- if Attacker ~= self:GetParent() or Ability == nil or Target == nil or Target == self:GetParent() then
+			-- return 0
+		-- end
 
-		if bit.band( params.damage_flags, DOTA_DAMAGE_FLAG_REFLECTION ) == DOTA_DAMAGE_FLAG_REFLECTION then
-			return 0
-		end
-		if bit.band( params.damage_flags, DOTA_DAMAGE_FLAG_NO_SPELL_LIFESTEAL ) == DOTA_DAMAGE_FLAG_NO_SPELL_LIFESTEAL then
-			return 0
-		end
+		-- if bit.band( params.damage_flags, DOTA_DAMAGE_FLAG_REFLECTION ) == DOTA_DAMAGE_FLAG_REFLECTION then
+			-- return 0
+		-- end
+		-- if bit.band( params.damage_flags, DOTA_DAMAGE_FLAG_NO_SPELL_LIFESTEAL ) == DOTA_DAMAGE_FLAG_NO_SPELL_LIFESTEAL then
+			-- return 0
+		-- end
 
-		local nFXIndex = ParticleManager:CreateParticle( "particles/items3_fx/octarine_core_lifesteal.vpcf", PATTACH_ABSORIGIN_FOLLOW, Attacker )
-		ParticleManager:ReleaseParticleIndex( nFXIndex )
+		-- local nFXIndex = ParticleManager:CreateParticle( "particles/items3_fx/octarine_core_lifesteal.vpcf", PATTACH_ABSORIGIN_FOLLOW, Attacker )
+		-- ParticleManager:ReleaseParticleIndex( nFXIndex )
 
-		local flLifesteal = flDamage * self.spell_lifesteal / 100
-		Attacker:Heal( flLifesteal, self:GetAbility() )
-	end
-	return 0
-end
+		-- local flLifesteal = flDamage * self.spell_lifesteal / 100
+		-- Attacker:Heal( flLifesteal, self:GetAbility() )
+	-- end
+	-- return 0
+-- end
 
 --------------------------------------------------------------------------------
 
-function modifier_item_imba_stonework_pendant:GetModifierSpellsRequireHP( params )
-	return self:GetAbility():GetSpecialValueFor("mana_hp_convert_mult")
-end 
+-- function modifier_item_imba_stonework_pendant:GetModifierSpellsRequireHP( params )
+	-- return self:GetAbility():GetSpecialValueFor("mana_hp_convert_mult")
+-- end
+
+--------------------------------------------------------------------------------
+
+function modifier_item_imba_stonework_pendant:GetModifierSpellLifesteal()
+	return self.spell_lifesteal
+end

@@ -563,7 +563,12 @@ modifier_imba_elder_titan_natural_order = modifier_imba_elder_titan_natural_orde
 function modifier_imba_elder_titan_natural_order:IsDebuff() return true end
 function modifier_imba_elder_titan_natural_order:IsHidden() return false end
 function modifier_imba_elder_titan_natural_order:IsPurgable() return false end
-function modifier_imba_elder_titan_natural_order:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+-- function modifier_imba_elder_titan_natural_order:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end -- WTF do NOT make these stack
+
+function modifier_imba_elder_titan_natural_order:GetEffectName()
+	return "particles/units/heroes/hero_elder_titan/elder_titan_natural_order_physical.vpcf"
+	-- particles/units/heroes/hero_elder_titan/elder_titan_natural_order_magical.vpcf
+end
 
 function modifier_imba_elder_titan_natural_order:OnCreated()
 	local ability = self:GetAbility()

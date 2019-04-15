@@ -18,7 +18,11 @@ function imba_lion_earth_spike:IsHiddenWhenStolen()
 end 
 
 function imba_lion_earth_spike:GetCastRange(location, target)
-	return self.BaseClass.GetCastRange(self, location, target) + (self:GetCaster():FindTalentValue("special_bonus_imba_lion_9") / 2)
+	if IsClient() then
+		return self.BaseClass.GetCastRange(self, location, target)
+	else
+		return self.BaseClass.GetCastRange(self, location, target) + self:GetCaster():FindTalentValue("special_bonus_imba_lion_9")
+	end
 end
  
 function imba_lion_earth_spike:OnSpellStart()
@@ -665,7 +669,7 @@ function imba_lion_mana_drain:OnSpellStart()
 	-- Ability specials    
 	local break_distance = ability:GetSpecialValueFor("break_distance") + GetCastRangeIncrease(caster)
 	local interval = ability:GetSpecialValueFor("interval")    
-	local aura_radius = ability:GetSpecialValueFor("aura_radius")
+	local aura_radius = ability:GetSpecialValueFor("aura_radius") + GetCastRangeIncrease(caster)
 
 	-- Play cast sound
 	caster:EmitSound(sound_cast)

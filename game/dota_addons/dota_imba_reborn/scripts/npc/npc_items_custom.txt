@@ -14649,6 +14649,17 @@
 				"var_type"				"FIELD_INTEGER"
 				"mana_hp_convert_mult"	"2"
 			}
+
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mana_to_hp_pct"		"50"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mana_to_hp_damage"		"2"
+			}
 		}
 	}
 	//=================================================================================================================
@@ -14752,12 +14763,12 @@
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"prism_bonus_magic_dmg"	"-60"
+				"prism_bonus_magic_dmg"	"-40"
 			}
 			"09"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"tooltip_prism_bonus_magic_dmg"		"60"
+				"tooltip_prism_bonus_magic_dmg"		"40"
 			}
 		}
 	}
@@ -15092,5 +15103,343 @@
 		}
 	}
 	
-	//next free ID: 2331
+	//=================================================================================================================
+	// Recipe: Lance of Longinus
+	//=================================================================================================================
+	"item_recipe_imba_lance_of_longinus"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"custom/imba_recipe"
+		"Model"							"models/props_gameplay/recipe.mdl"		
+		
+		"ID"							"2331"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"1000"
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_lance_of_longinus"
+		"ItemRequirements"
+		{
+			"01"						"item_imba_hurricane_pike;item_soul_booster;item_ring_of_tarrasque"
+		}
+	}
+	
+	//=================================================================================================================
+	// Lance of Longinus
+	//=================================================================================================================
+	"item_imba_lance_of_longinus"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_lua"
+		"ScriptFile"					"components/items/item_lance_of_longinus.lua"
+		"AbilityTextureName"			"custom/lance_of_longinus"		
+		
+		"ID"							"2332"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH | DOTA_UNIT_TARGET_TEAM_CUSTOM"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_CUSTOM"
+		"FightRecapLevel"				"1"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"800"
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"15.0"
+		"AbilitySharedCooldown"			"force"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"50"
+		"ItemCost"						"9500"
+		"ItemShopTags"					"damage;attack_speed;int;str;hard_to_tag"
+		"ItemQuality"					"artifact"
+		"ItemAliases"					"lance;longinus;lance of longinus"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
+		"ShouldBeSuggested"				"1"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_intellect"		"13"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"bonus_health_regen"	"10.0"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_agility"			"20"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_strength"		"15"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"base_attack_range"		"150"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"push_length"			"600"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"enemy_length"			"450"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"range_duration"		"5"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cast_range_enemy"		"400"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_attacks"			"4"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_attack_speed"	"100"
+			}
+			"12"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tooltip_range"			"800"
+			}
+			"13"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"enemy_distance_melee"	"400"
+			}
+			"14"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"enemy_distance_ranged"	"400"
+			}			
+			
+			
+			"15"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_health"			"800"
+			}
+			"16"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_mana"			"800"
+			}
+
+			
+			"17"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"0.4"
+			}
+			"18"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"god_piercing_radius"	"160"
+			}
+			"19"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"god_piercing_duration"	"3"
+			}
+			"20"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"divergent_thrust_duration"	"3"
+			}
+			"21"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"base_attack_range_melee"	"90"
+			}
+		}
+	}
+	//=================================================================================================================
+	// Recipe: Origin
+	//=================================================================================================================
+	"item_recipe_imba_origin"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"custom/imba_recipe"
+		"Model"							"models/props_gameplay/recipe.mdl"		
+		
+		"ID"							"2333"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"1125"
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_origin"
+		"ItemRequirements"
+		{
+			"01"						"item_imba_spirit_vessel;item_blade_mail;item_ultimate_orb;item_oblivion_staff"
+		}
+	}
+	
+	//=================================================================================================================
+	// Origin
+	//=================================================================================================================
+	"item_imba_origin"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"item_lua"
+		"ScriptFile"					"components/items/item_origin.lua"
+		"AbilityTextureName"			"custom/origin_health"		
+		
+		"ID"							"2334"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"950"
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"24.0"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"100"
+		"ItemCost"						"10000"
+		"ItemShopTags"					"damage;attack_speed;int;str;agi;hard_to_tag"
+		"ItemQuality"					"artifact"
+		"ItemAliases"					"origin"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
+		"ShouldBeSuggested"				"1"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_strength"		"12"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_agility"			"12"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_intellect"		"30"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"32"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_aspd"			"10"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_armor"			"8"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_health"			"325"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"bonus_mana_regen"		"3.75"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_move_speed"		"20"
+			}
+			
+			
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"health_passive"		"10"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"power_passive"			"10"
+			}
+			"12"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"chaos_passive"			"10"
+			}
+			
+			"13"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"active_duration"		"7"
+			}
+			"14"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"health_damage_amount"	"70"
+			}
+			"15"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"enemy_hp_drain"		"7"
+			}
+			
+			"16"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"power_stat_reduction"	"35"
+			}
+			
+			"17"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"chaos_radius"			"600"
+			}
+			"18"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"chaos_dmg_pct"			"130"
+			}
+		}
+	}	
+	//next free ID: 2335
 }

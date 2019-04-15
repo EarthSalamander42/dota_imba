@@ -1,6 +1,6 @@
 // Enigma's Malefice
 "DOTA_Tooltip_ability_imba_enigma_malefice"                            "Malefice"
-"DOTA_Tooltip_ability_imba_enigma_malefice_Description"                "Focuses Enigma's power on a target, causing it to take damage and become repeatedly stunned for multiple instances. An instance strikes every %tick_interval% seconds.\n<font color='#FF7800'>Reality Glitch:</font> Each time Malefice occurs, the target is triggered and pulled towards the strongest force.\n<font color='#FF7800'> Tormenting Malefice:</font> For every 25% hp target misses, the duration gets extended by 2 seconds."
+"DOTA_Tooltip_ability_imba_enigma_malefice_Description"                "Focuses Enigma's power on a target, causing it to take damage and become repeatedly stunned for multiple instances. An instance strikes every %tick_interval% seconds.\n<font color='#FF7800'>Reality Glitch:</font> If auto-cast is on, each time Malefice occurs, the target is triggered and pulled towards the strongest force.\n<font color='#FF7800'> Tormenting Malefice:</font> For every 25% hp target misses, the duration gets extended by 2 seconds."
 "DOTA_Tooltip_ability_imba_enigma_malefice_Lore"                        "Strange gravities pull at the core of those who would oppose you, holding them in place."
 "DOTA_Tooltip_ability_imba_enigma_malefice_Note0"                      "Damage, stun and pull do not pierce Spell Immunity."
 "DOTA_Tooltip_ability_imba_enigma_malefice_tick_damage"                "DAMAGE PER STUN:"

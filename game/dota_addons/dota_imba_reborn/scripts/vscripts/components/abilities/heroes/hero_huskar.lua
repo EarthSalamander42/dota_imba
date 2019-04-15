@@ -292,13 +292,119 @@ modifier_imba_huskar_life_break_slow					= class({})
 -- INNER FIRE --
 ----------------
 
+function imba_huskar_inner_fire:OnSpellStart()
+	if not IsServer() then return end
+
+	local damage				= self:GetSpecialValueFor("damage")
+	local radius				= self:GetSpecialValueFor("radius")
+	local disarm_duration		= self:GetSpecialValueFor("disarm_duration")
+	local knockback_distance	= self:GetSpecialValueFor("knockback_distance")
+	local knockback_duration	= self:GetSpecialValueFor("knockback_duration")
+	
+	-- Emit sound
+	self:GetCaster():EmitSound("Hero_Huskar.Inner_Fire.Cast")
+	
+	-- Particle effects
+	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_huskar/huskar_inner_fire.vpcf", PATTACH_ABSORIGIN, self:GetCaster())
+	ParticleManager:SetParticleControl(particle, 3, self:GetCaster():GetAbsOrigin())
+	ParticleManager:ReleaseParticleIndex(particle)
+	
+	-- Find enemies in the radius
+	local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+
+	-- "Inner Fire first applies the damage, then the debuffs."
+	for _, enemy in pairs(enemies) do
+		local damageTable = {
+			victim 			= enemy,
+			damage 			= damage,
+			damage_type		= DAMAGE_TYPE_MAGICAL, -- Maybe have the Pure Burning Spears talent make this pure damage too
+			damage_flags 	= DOTA_DAMAGE_FLAG_NONE,
+			attacker 		= self:GetCaster(),
+			ability 		= self
+		}
+		
+		ApplyDamage(damageTable)
+		
+		--particles/units/heroes/hero_huskar/huskar_inner_fire_push.vpcf
+		
+		-- Apply the knockback (and pass the caster's location coordinates to know which way to knockback)
+		enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_huskar_inner_fire_knockback", {duration = knockback_duration, x = self:GetCaster():GetAbsOrigin.x, y = self:GetCaster():GetAbsOrigin.y})
+		
+		-- Apply the disarm
+		enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_huskar_inner_fire_disarm", {duration = disarm_duration})
+	end
+	
+	-- IMBAfication: Raze Land
+	-- modifier_imba_huskar_inner_fire_raze_land			= class({})
+	-- modifier_imba_huskar_inner_fire_raze_land_aura		= class({})
+end
+
 -----------------------------------
 -- INNER FIRE KNOCKBACK MODIFIER --
 -----------------------------------
 
+function modifier_imba_huskar_inner_fire_knockback:IsHidden() return true end
+
+function modifier_imba_huskar_inner_fire_knockback:OnCreated(params)
+	if not IsServer() then return end
+	
+	self.ability				= self:GetAbility()
+	self.caster					= self:GetCaster()
+	self.parent					= self:GetParent()
+	
+	-- AbilitySpecials
+	self.knockback_duration		= self.ability:GetSpecialValueFor("knockback_duration")
+	-- Knockbacks a set distance, so change this value based on distance from caster and parent
+	self.knockback_distance		= math.max(self.ability:GetSpecialValueFor("knockback_distance") - (self.caster:GetAbsOrigin() - self.parent:GetAbsOrigin()):Length2D(), 50)
+	
+	-- Calculate speed at which modifier owner will be knocked back
+	self.knockback_speed		= self.knockback_distance / self.knockback_duration
+	
+	-- Get the center of the Blinding Light sphere to know which direction to get knocked back
+	self.position	= GetGroundPosition(Vector(params.x, params.y, 0), nil)
+
+	self.parent:StartGesture(ACT_DOTA_FLAIL)
+	
+	if self:ApplyHorizontalMotionController() == false then 
+		self:Destroy()
+		return
+	end
+end
+
+function modifier_imba_huskar_inner_fire_knockback:UpdateHorizontalMotion( me, dt )
+	if not IsServer() then return end
+
+	local distance = (me:GetOrigin() - self.position):Normalized()
+	
+	me:SetOrigin( me:GetOrigin() + distance * self.knockback_speed * dt )
+	
+	-- Destroy any trees passed through
+	GridNav:DestroyTreesAroundPoint( self.parent:GetOrigin(), self.parent:GetHullRadius(), true )
+end
+
+function modifier_imba_huskar_inner_fire_knockback:OnDestroy()
+	if not IsServer() then return end
+	
+	self.parent:FadeGesture(ACT_DOTA_FLAIL)
+	
+	self.parent:RemoveHorizontalMotionController( self )
+end
+
 --------------------------------
 -- INNER FIRE DISARM MODIFIER --
 --------------------------------
+
+function modifier_imba_huskar_inner_fire_disarm:GetEffectName()
+	return "particles/units/heroes/hero_huskar/huskar_inner_fire_debuff.vpcf"
+end
+
+function modifier_imba_huskar_inner_fire_disarm:GetEffectAttachType()
+	return PATTACH_OVERHEAD_FOLLOW
+end
+
+function modifier_imba_huskar_inner_fire_disarm:CheckState()
+	return {[MODIFIER_STATE_DISARMED] = true}
+end
 
 -----------------------------------
 -- INNER FIRE RAZE LAND MODIFIER --
@@ -322,6 +428,23 @@ end
 
 function modifier_imba_huskar_burning_spear_self:IsHidden()	return true end
 
+function modifier_imba_huskar_burning_spear_self:OnCreated()
+	self.ability	= self:GetAbility()
+	self.caster		= self:GetCaster()
+
+				-- "01"
+			-- {
+				-- "var_type"						"FIELD_INTEGER"
+				-- "health_cost"					"15"
+			-- }
+			-- "02"
+			-- {
+				-- "var_type"						"FIELD_INTEGER"
+				-- "burn_damage"					"5 10 15 20"
+				-- "LinkedSpecialBonus"			"special_bonus_unique_huskar_2"
+			-- }
+end
+
 function modifier_imba_huskar_burning_spear_self:DeclareFunctions()
 	local funcs = {
 		MODIFIER_EVENT_ON_ATTACK,
@@ -335,6 +458,35 @@ function modifier_imba_huskar_burning_spear_self:DeclareFunctions()
 	}
 
 	return funcs
+end
+
+--"Hero_Huskar.Burning_Spear.Cast"
+--"Hero_Huskar.Burning_Spear"
+
+function modifier_imba_huskar_burning_spear_self:OnAttack(keys)
+
+end
+
+function modifier_imba_huskar_burning_spear_self:OnAttackFail(keys)
+
+end
+
+function modifier_imba_huskar_burning_spear_self:GetModifierProcAttack_Feedback(keys)
+
+end
+
+function modifier_imba_huskar_burning_spear_self:OnAttackRecordDestroy(keys)
+
+end
+
+function modifier_imba_huskar_burning_spear_self:OnOrder(keys)
+
+end
+
+function modifier_imba_huskar_burning_spear_self:GetProjectileName()
+	if self.cast or (self.ability:GetAutoCastState() and self.ability:IsFullyCastable()) then
+		return "particles/units/heroes/hero_huskar/huskar_burning_spear.vpcf"
+	end
 end
 
 ------------------------------------
@@ -360,6 +512,9 @@ end
 ----------------
 -- LIFE BREAK --
 ----------------
+
+--"Hero_Huskar.Life_Break"
+--"Hero_Huskar.Life_Break.Impact"
 
 --------------------------------
 -- LIFE BREAK CHARGE MODIFIER --

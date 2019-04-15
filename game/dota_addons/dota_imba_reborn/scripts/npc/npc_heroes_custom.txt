@@ -693,13 +693,14 @@
 		"Ability13"					"special_bonus_imba_faceless_void_8" // Chronosphere causes Faceless Void attacks to cleave
 		"Ability14"					"special_bonus_imba_faceless_void_3" // Movement inside Chronosphere is instant, Void constantly dodges projectiles
 		"Ability15"					"special_bonus_imba_faceless_void_9" // Increased Time Walk cast range
-		"Ability16"					"special_bonus_imba_faceless_void_5" // Time Lock now spawns mini chronospheres
-		"Ability17"					"special_bonus_unique_faceless_void_4" // Backtrack
+		"Ability16"					"special_bonus_unique_faceless_void_4" // Backtrack
+		"Ability17"					"special_bonus_imba_faceless_void_10" // Increased Chronosphere radius
 		
 		// Removed Talents
 		
 		//"Ability11"					"special_bonus_imba_faceless_void_2" // Time Dilation grants bonus health and mana per charge spent on them
 		//"Ability15"					"special_bonus_imba_faceless_void_4" // Bashing enemies with the Time Dilation debuff increases their active spells' CD while decreasing all of Voids cooldowns
+		//"Ability16"					"special_bonus_imba_faceless_void_5" // Time Lock now spawns mini chronospheres
 		//"Ability17"					"special_bonus_imba_faceless_void_1" // Time Dilation grants Faceless Void a chance to backtrack damage instances that increases per ability affected by Time Dilation
 	}
 
