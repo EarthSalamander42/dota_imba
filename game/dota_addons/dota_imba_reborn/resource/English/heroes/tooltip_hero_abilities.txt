@@ -2475,7 +2475,7 @@
 "DOTA_Tooltip_ability_special_bonus_imba_troll_warlord_7"              	"+10 Ranged Whirling Axes, +80 Spread Degrees"
 "DOTA_Tooltip_ability_special_bonus_imba_troll_warlord_8"               "-0.2 Battle Trance BAT improvement"
 "DOTA_Tooltip_ability_special_bonus_imba_troll_warlord_9"               "Remnants of Berserker's Rage"
-"DOTA_Tooltip_ability_special_bonus_imba_troll_warlord_9_Description"	"Ensnare chance is replaced with bash chance for 20/30/40/50 magical damage; this proc pierces spell immunity."
+"DOTA_Tooltip_ability_special_bonus_imba_troll_warlord_9_Description"	"Replaces ensnare with bash chance for 20/30/40/50 magical damage, piercing spell immunity. Can no longer use other passive bash abilities."
 
 // Visage
 ////===============================================================================================================
@@ -2749,7 +2749,7 @@
 ////===============================================================================================================
 
 "DOTA_Tooltip_ability_imba_wraith_king_reincarnation"                  "Reincarnation"
-"DOTA_Tooltip_ability_imba_wraith_king_reincarnation_Description"                   "The One True King's form regroups, allowing him to ressurrect when killed in battle.\n<font color='#FF7800'>The King Returns:</font> Passively reduces respawn time.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font>\n<font color='#E03E2E'>This ability is not affected by Cooldown Reductions in Mutation/Frantic mode.</font>"
+"DOTA_Tooltip_ability_imba_wraith_king_reincarnation_Description"                   "The One True King's form regroups, allowing him to ressurrect when killed in battle.\n<font color='#FF7800'>The King Returns:</font> Passively reduces respawn time.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font>"
 "DOTA_Tooltip_ability_imba_wraith_king_reincarnation_Note0"            "Reincarnation will not trigger if its owner hasn't got enough mana for it."
 "DOTA_Tooltip_ability_imba_wraith_king_reincarnation_Note1"            "Even if Reincarnation is ready, it will trigger Kingdom Come."
 "DOTA_Tooltip_ability_imba_wraith_king_reincarnation_Lore"              "Conspirators against the Wraith King wonder why he never stays dead."

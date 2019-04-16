@@ -538,7 +538,7 @@ function imba_earth_spirit_boulder_smash:OnAbilityPhaseStart()
 				target:AddNewModifier(caster, self, "modifier_imba_boulder_smash_push", {})
 				
 				if caster:GetTeamNumber() ~= target:GetTeamNumber() then
-					ApplyDamage({victim = target, attacker = caster, damage = self:GetSpecialValueFor("damage"), damage_type = DAMAGE_TYPE_MAGICAL, ability = self:GetAbility()})
+					ApplyDamage({victim = target, attacker = caster, damage = self:GetSpecialValueFor("damage"), damage_type = DAMAGE_TYPE_MAGICAL, ability = self})
 				end
 				
 				local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_earth_spirit/espirit_bouldersmash_caster.vpcf", PATTACH_ABSORIGIN, caster)

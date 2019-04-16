@@ -1219,27 +1219,33 @@ function GameMode:BountyRuneFilter(keys)
 	return true
 end
 
--- MAKE HEALTH REGEN AMP CODE HERE
 --[[
 function GameMode:HealingFilter( filterTable )
-	local nHeal = filterTable["heal"]
-	if filterTable["entindex_healer_const"] == nil then
-		return true
-	end
+	-- Values:
+	--	filterTable.entindex_target_const (probably want to use EntIndexToHScript(filterTable.entindex_target_const) to get the unit reference)
+	--	filterTable.heal
+	--
+	-- Yeah that's it.
 
-	local hHealingHero = EntIndexToHScript( filterTable["entindex_healer_const"] )
-	if nHeal > 0 and hHealingHero ~= nil and hHealingHero:IsRealHero() then
-		for _,Zone in pairs( self.Zones ) do
-			if Zone:ContainsUnit( hHealingHero ) then
-				Zone:AddStat( hHealingHero:GetPlayerID(), ZONE_STAT_HEALING, nHeal )
-				return true
-			end
-		end
-	end
+	-- MAKE HEALTH REGEN AMP CODE HERE
+	-- local nHeal = filterTable["heal"]
+	-- if filterTable["entindex_healer_const"] == nil then
+		-- return true
+	-- end
 
-	return true
+	-- local hHealingHero = EntIndexToHScript( filterTable["entindex_healer_const"] )
+	-- if nHeal > 0 and hHealingHero ~= nil and hHealingHero:IsRealHero() then
+		-- for _,Zone in pairs( self.Zones ) do
+			-- if Zone:ContainsUnit( hHealingHero ) then
+				-- Zone:AddStat( hHealingHero:GetPlayerID(), ZONE_STAT_HEALING, nHeal )
+				-- return true
+			-- end
+		-- end
+	-- end
+
+	-- return true
 end
---]]
+]]--
 
 function GameMode:RuneSpawnFilter(keys)
     keys.rune_type = RandomInt(0, 5)

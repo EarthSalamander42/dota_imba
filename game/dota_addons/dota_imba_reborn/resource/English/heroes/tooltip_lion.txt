@@ -111,6 +111,7 @@
 "DOTA_Tooltip_ability_special_bonus_imba_lion_7"                "Death Spike debuff"
 "DOTA_Tooltip_ability_special_bonus_imba_lion_7_Description"  	"Earth Spike slows targets by 25% and increases damage taken from Finger of Death by 20% for 3 seconds."
 "DOTA_Tooltip_ability_special_bonus_imba_lion_8"            	"Mana Drain targets all enemies in aura range"
+"DOTA_Tooltip_ability_special_bonus_imba_lion_8_Description"	"Range for this talent is affected by cast range increasing abilities. Constantly checks for valid enemies in radius."
 "DOTA_Tooltip_ability_special_bonus_imba_lion_9"            	"+1000 Earth Spike Range"
-"DOTA_Tooltip_ability_special_bonus_imba_lion_9_Description"	"Does not increase Hell Spike search radius. Note that cast range indicators are inaccurate."
+"DOTA_Tooltip_ability_special_bonus_imba_lion_9_Description"	"Does not increase Hell Spike search radius."
 "DOTA_Tooltip_ability_special_bonus_imba_lion_10"            	"+325 AoE Hex"

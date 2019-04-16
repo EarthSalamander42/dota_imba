@@ -94,10 +94,6 @@ end
 function imba_faceless_void_time_walk:IsHiddenWhenStolen() return false end
 function imba_faceless_void_time_walk:IsNetherWardStealable() return false end
 
-function imba_faceless_void_time_walk:GetCastRange()
-	return self:GetSpecialValueFor("range") + self:GetCaster():FindTalentValue("special_bonus_imba_faceless_void_9")
-end
-
 function imba_faceless_void_time_walk:GetIntrinsicModifierName()
 	if not self:GetCaster():IsIllusion() then
 		return "modifier_imba_faceless_void_time_walk_damage_counter"
@@ -263,14 +259,20 @@ function modifier_imba_faceless_void_time_walk_cast:OnCreated(params)
 		local position = GetGroundPosition(Vector(params.x, params.y, params.z), nil)
 
 		-- Compare distance to cast point and max distance, use whichever is closer
-		--local max_distance = ability:GetSpecialValueFor("range") + GetCastRangeIncrease(caster)
+		local max_distance = ability:GetSpecialValueFor("range") + GetCastRangeIncrease(caster) + caster:FindTalentValue("special_bonus_imba_faceless_void_9")
 		local distance = (caster:GetAbsOrigin() - position):Length2D()
-		--if distance > max_distance then distance = max_distance end
+		if distance > max_distance then distance = max_distance end
 
 		self.velocity = ability:GetSpecialValueFor("speed")
 		self.direction = (position - caster:GetAbsOrigin()):Normalized()
 		self.distance_traveled = 0
 		self.distance = distance
+		
+		local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_faceless_void/faceless_void_time_walk_preimage.vpcf", PATTACH_ABSORIGIN, caster)
+		ParticleManager:SetParticleControl(particle, 0, caster:GetAbsOrigin())
+		ParticleManager:SetParticleControl(particle, 1, caster:GetAbsOrigin() + self.direction * distance)
+		ParticleManager:SetParticleControlEnt(particle, 2, self:GetParent(), PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", caster:GetForwardVector(), true)
+		ParticleManager:ReleaseParticleIndex(particle)
 
 		-- Enemy effect handler
 		self.as_stolen = 0
@@ -927,7 +929,7 @@ function imba_faceless_void_chronosphere:IsHiddenWhenStolen() return false end
 function imba_faceless_void_chronosphere:GetAOERadius()
 	local caster = self:GetCaster()
 	local chronocharge_radius = self:GetSpecialValueFor("chronocharge_radius")
-	local aoe = self:GetSpecialValueFor("base_radius")
+	local aoe = self:GetSpecialValueFor("base_radius") + caster:FindTalentValue("special_bonus_imba_faceless_void_10")
 
 	if caster:HasModifier("modifier_imba_faceless_void_chronocharges") then
 		aoe = aoe + chronocharge_radius * caster:GetModifierStackCount("modifier_imba_faceless_void_chronocharges", caster)
@@ -955,7 +957,7 @@ function imba_faceless_void_chronosphere:OnSpellStart( mini_chrono, target_locat
 	local sound_cast = "Hero_FacelessVoid.Chronosphere"
 
 	-- Parameters
-	local base_radius = self:GetSpecialValueFor("base_radius")
+	local base_radius = self:GetSpecialValueFor("base_radius") + caster:FindTalentValue("special_bonus_imba_faceless_void_10")
 	local chronocharge_radius = self:GetSpecialValueFor("chronocharge_radius")
 	local duration = self:GetSpecialValueFor("duration")
 	local total_radius
@@ -1063,7 +1065,7 @@ function modifier_imba_faceless_void_chronosphere_aura:OnCreated()
 			self:SetStackCount(chronocharges)
 		end
 
-		self.base_radius = self.ability:GetSpecialValueFor("base_radius")
+		self.base_radius = self.ability:GetSpecialValueFor("base_radius") + self.caster:FindTalentValue("special_bonus_imba_faceless_void_10")
 		self.bonus_radius = self.ability:GetSpecialValueFor("chronocharge_radius")
 		self.total_radius = self.base_radius + self.bonus_radius * self:GetStackCount()
 
@@ -1508,9 +1510,11 @@ end
 -- Client-side helper functions --
 LinkLuaModifier("modifier_special_bonus_imba_faceless_void_3", "components/abilities/heroes/hero_faceless_void", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_special_bonus_imba_faceless_void_9", "components/abilities/heroes/hero_faceless_void", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_special_bonus_imba_faceless_void_10", "components/abilities/heroes/hero_faceless_void", LUA_MODIFIER_MOTION_NONE)
 
 modifier_special_bonus_imba_faceless_void_3		= class({})
 modifier_special_bonus_imba_faceless_void_9		= class({})
+modifier_special_bonus_imba_faceless_void_10	= class({})
 
 -------------------
 -- SPEED BARRIER --
@@ -1519,9 +1523,20 @@ function modifier_special_bonus_imba_faceless_void_3:IsHidden() 		return true en
 function modifier_special_bonus_imba_faceless_void_3:IsPurgable() 		return false end
 function modifier_special_bonus_imba_faceless_void_3:RemoveOnDeath() 	return false end
 
+-----------------------------------
+-- INCREASED CHRONOSPHERE RADIUS --
+-----------------------------------
+function modifier_special_bonus_imba_faceless_void_10:IsHidden() 		return true end
+function modifier_special_bonus_imba_faceless_void_10:IsPurgable() 		return false end
+function modifier_special_bonus_imba_faceless_void_10:RemoveOnDeath() 	return false end
+
 function imba_faceless_void_chronosphere:OnOwnerSpawned()
 	if self:GetCaster():HasTalent("special_bonus_imba_faceless_void_3") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_faceless_void_3") then
 		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_faceless_void_3"), "modifier_special_bonus_imba_faceless_void_3", {})
+	end
+	
+	if self:GetCaster():HasTalent("special_bonus_imba_faceless_void_10") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_faceless_void_10") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_faceless_void_10"), "modifier_special_bonus_imba_faceless_void_10", {})
 	end
 end
 

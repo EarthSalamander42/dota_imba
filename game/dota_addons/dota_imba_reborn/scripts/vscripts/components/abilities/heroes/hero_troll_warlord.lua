@@ -160,6 +160,14 @@ function modifier_imba_berserkers_rage_melee:OnAttackLanded( params )
 			
 			-- Bash is now a talent, get bent lul
 			if parent:HasTalent("special_bonus_imba_troll_warlord_9") then
+				
+				-- Add Troll Warlord to Skull Basher restriction since he has this talent now
+				if not self.bash_talent then
+					table.insert(IMBA_DISABLED_SKULL_BASHER, "npc_dota_hero_troll_warlord")
+					
+					self.bash_talent = true
+				end
+				
 				if RollPseudoRandom(ability:GetSpecialValueFor("ensnare_chance"), ability) then
 					local bash_damage = ability:GetSpecialValueFor("bash_damage")
 					local ensnare_duration = ability:GetSpecialValueFor("ensnare_duration")

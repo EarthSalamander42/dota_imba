@@ -787,7 +787,7 @@ function modifier_imba_counter_helix_passive:Spin( repeat_allowed )
 			SendOverheadEventMessage(nil, OVERHEAD_ALERT_DAMAGE, enemy, damage, nil)
 		end
 
-		ApplyDamage({attacker = self.caster, victim = enemy, ability = self.ability, damage = self.total_damage, damage_type = DAMAGE_TYPE_PURE})
+		ApplyDamage({attacker = self.caster, victim = enemy, ability = self.ability, damage = damage, damage_type = DAMAGE_TYPE_PURE})
 	end
 
 	if spin_to_win then
