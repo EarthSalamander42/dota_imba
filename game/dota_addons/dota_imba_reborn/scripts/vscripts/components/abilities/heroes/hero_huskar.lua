@@ -1,282 +1,29 @@
 -- Creator:
 --	   AltiV, April 3rd, 2019
 
--- //=================================================================================================================
-	-- // Huskar: Inner Fire
-	-- //=================================================================================================================
-	-- "huskar_inner_fire"
-	-- {
-		-- // General
-		-- //-------------------------------------------------------------------------------------------------------------
-		-- "ID"							"7300"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
-		-- "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		-- "SpellDispellableType"			"SPELL_DISPELLABLE_YES"					
-		-- "AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		-- "SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"   
-		-- "AbilitySound"					"Hero_Huskar.Inner_Vitality"
-
-		-- // Casting
-		-- //-------------------------------------------------------------------------------------------------------------
-		-- "AbilityCastRange"				"500"
-		-- "AbilityCastPoint"				"0.2"
-		
-		-- // Time		
-		-- //-------------------------------------------------------------------------------------------------------------
-		-- "AbilityCooldown"				"18 16 14 12"
-
-		-- // Cost
-		-- //-------------------------------------------------------------------------------------------------------------
-		-- "AbilityManaCost"				"75 100 125 150"
-		
-		-- // Stats
-		-- //-------------------------------------------------------------------------------------------------------------
-		-- "AbilityModifierSupportValue"	"0.0"	// already gets credit for the healing
-
-		
-		-- // Special
-		-- //-------------------------------------------------------------------------------------------------------------
-		-- "AbilitySpecial"
-		-- {
-			-- "01"
-			-- {
-				-- "var_type"				"FIELD_INTEGER"
-				-- "damage"				"100 155 210 265"
-			-- }
-			-- "02"
-			-- {
-				-- "var_type"				"FIELD_INTEGER"
-				-- "radius"				"500"
-			-- }
-			-- "03"
-			-- {
-				-- "var_type"				"FIELD_FLOAT"
-				-- "disarm_duration"		"1.75 2.5 3.25 4"
-			-- }
-			-- "04"
-			-- {
-				-- "var_type"				"FIELD_INTEGER"
-				-- "knockback_distance"	"550"
-			-- }
-			-- "05"
-			-- {
-				-- "var_type"				"FIELD_FLOAT"
-				-- "knockback_duration"	"0.6"
-			-- }
-		-- }
-		-- "AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
-	-- }	
-	
-	-- //=================================================================================================================
-	-- // Huskar: Burning Spear
-	-- //=================================================================================================================
-	-- "huskar_burning_spear"
-	-- {
-		-- // General
-		-- //-------------------------------------------------------------------------------------------------------------
-		-- "ID"							"5272"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
-		-- "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK"
-		-- "AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		-- "AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		-- "AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		-- "SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		-- "SpellDispellableType"			"SPELL_DISPELLABLE_NO"
-		-- "AbilitySound"					"Hero_Huskar.Burning_Spear"
-
-		-- // Casting
-		-- //-------------------------------------------------------------------------------------------------------------
-		-- "AbilityCastRange"				"450"
-		-- "AbilityCastPoint"				"0.0 0.0 0.0 0.0"
-
-		-- // Time		
-		-- //-------------------------------------------------------------------------------------------------------------
-		-- "AbilityCooldown"				"0.0 0.0 0.0 0.0"
-		-- "AbilityDuration"				"8"
-
-		-- // Cost
-		-- //-------------------------------------------------------------------------------------------------------------
-		-- "AbilityManaCost"				"0 0 0 0"
-
-		-- // Special
-		-- //-------------------------------------------------------------------------------------------------------------
-		-- "AbilitySpecial"
-		-- {
-			-- "01"
-			-- {
-				-- "var_type"						"FIELD_INTEGER"
-				-- "health_cost"					"15"
-			-- }
-			-- "02"
-			-- {
-				-- "var_type"						"FIELD_INTEGER"
-				-- "burn_damage"					"5 10 15 20"
-				-- "LinkedSpecialBonus"			"special_bonus_unique_huskar_2"
-			-- }
-		-- }
-		-- "AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
-	-- }
-	
-	-- //=================================================================================================================
-	-- // Huskar: Berserker's Blood
-	-- //=================================================================================================================
-	-- "huskar_berserkers_blood"
-	-- {
-		-- // General
-		-- //-------------------------------------------------------------------------------------------------------------
-		-- "ID"							"5273"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
-		-- "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-				
-		-- // Special
-		-- //-------------------------------------------------------------------------------------------------------------
-		-- "AbilitySpecial"
-		-- {
-			-- "01"
-			-- {
-				-- "var_type"						"FIELD_INTEGER"
-				-- "maximum_attack_speed"			"160 220 280 340"
-			-- }
-			-- "02"
-			-- {
-				-- "var_type"						"FIELD_INTEGER"
-				-- "maximum_health_regen"			"20 40 60 80"
-			-- }
-			-- "03"
-			-- {
-				-- "var_type"						"FIELD_INTEGER"
-				-- "hp_threshold_max"				"10"
-			-- }
-		-- }
-		-- "AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_3"
-	-- }
-	
-	-- //=================================================================================================================
-	-- // Huskar: Life Break
-	-- //=================================================================================================================
-	-- "huskar_life_break"
-	-- {
-		-- // General
-		-- //-------------------------------------------------------------------------------------------------------------
-		-- "ID"							"5274"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
-		-- "AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-		-- "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"		
-		-- "AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		-- "AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
-		-- "AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-		-- "AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		-- "SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
-		-- "SpellDispellableType"			"SPELL_DISPELLABLE_YES"
-		-- "FightRecapLevel"				"2"
-		-- "AbilitySound"					"Hero_Huskar.Life_Break"
-
-		-- "HasScepterUpgrade"			"1"
-
-		-- // Casting
-		-- //-------------------------------------------------------------------------------------------------------------
-		-- "AbilityCastPoint"				"0.3 0.3 0.3"
-		-- "AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
-
-		-- // Time		
-		-- //-------------------------------------------------------------------------------------------------------------
-		-- "AbilityCooldown"				"12"
-
-		-- // Cost
-		-- //-------------------------------------------------------------------------------------------------------------
-		-- "AbilityManaCost"				"0 0 0"		
-		
-		-- // Cast Range
-		-- //-------------------------------------------------------------------------------------------------------------
-		-- "AbilityCastRange"				"550"
-		
-		-- // Casting
-		-- //-------------------------------------------------------------------------------------------------------------
-		-- "AbilityDuration"				"4 5 6"
-		
-		-- // Special
-		-- //-------------------------------------------------------------------------------------------------------------
-		-- "AbilitySpecial"
-		-- {
-			-- "01"
-			-- {
-				-- "var_type"					"FIELD_FLOAT"
-				-- "health_cost_percent"		"0.32 0.38 0.44"
-			-- }
-			-- "02"
-			-- {
-				-- "var_type"					"FIELD_FLOAT"
-				-- "health_damage"				"0.32 0.38 0.44"
-			-- }
-			-- "03"
-			-- {
-				-- "var_type"					"FIELD_FLOAT"
-				-- "health_damage_scepter"		"0.65"
-			-- }
-			-- "04"
-			-- {
-				-- "var_type"					"FIELD_INTEGER"
-				-- "charge_speed"				"1200"
-			-- }
-			-- "05"
-			-- {
-				-- "var_type"							"FIELD_INTEGER"
-				-- "tooltip_health_damage"				"32 38 44"
-			-- }
-			-- "06"
-			-- {
-				-- "var_type"							"FIELD_INTEGER"
-				-- "tooltip_health_cost_percent"		"32 38 44"
-				-- "CalculateSpellDamageTooltip"		"1"
-			-- }
-			-- "07"
-			-- {
-				-- "var_type"					"FIELD_INTEGER"
-				-- "movespeed"					"-40 -50 -60"
-			-- }
-			-- "08"
-			-- {
-				-- "var_type"					"FIELD_FLOAT"
-				-- "slow_durtion_tooltip"		"4 5 6"
-			-- }
-			-- "09"
-			-- {
-				-- "var_type"							"FIELD_INTEGER"
-				-- "tooltip_health_damage_scepter"		"65"
-			-- }
-			-- "10"
-			-- {
-				-- "var_type"					"FIELD_FLOAT"
-				-- "cooldown_scepter"			"4"
-			-- }
-		-- }
-	-- }
-
- -- modifier_huskar_burning_spear_self
--- modifier_huskar_burning_spear_counter
--- modifier_huskar_burning_spear_debuff
--- modifier_huskar_berserkers_blood
--- modifier_huskar_life_break_charge
--- modifier_huskar_life_break_slow
-
 LinkLuaModifier("modifier_imba_huskar_inner_fire_knockback", "components/abilities/heroes/hero_huskar", LUA_MODIFIER_MOTION_HORIZONTAL)
 LinkLuaModifier("modifier_imba_huskar_inner_fire_disarm", "components/abilities/heroes/hero_huskar", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_huskar_inner_fire_raze_land", "components/abilities/heroes/hero_huskar", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_huskar_inner_fire_raze_land_aura", "components/abilities/heroes/hero_huskar", LUA_MODIFIER_MOTION_NONE)
 
-LinkLuaModifier("modifier_imba_huskar_burning_spear_self", "components/abilities/heroes/hero_huskar", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_huskar_burning_spear_counter", "components/abilities/heroes/hero_huskar", LUA_MODIFIER_MOTION_NONE) -- This one might be redundant depending on how it's coded
+LinkLuaModifier("modifier_generic_orb_effect_lua", "components/modifiers/generic/modifier_generic_orb_effect_lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_huskar_burning_spear_counter", "components/abilities/heroes/hero_huskar", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_huskar_burning_spear_debuff", "components/abilities/heroes/hero_huskar", LUA_MODIFIER_MOTION_NONE)
 
 LinkLuaModifier("modifier_imba_huskar_berserkers_blood", "components/abilities/heroes/hero_huskar", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_huskar_berserkers_blood_crimson_priest", "components/abilities/heroes/hero_huskar", LUA_MODIFIER_MOTION_NONE)
 
+LinkLuaModifier("modifier_imba_huskar_life_break", "components/abilities/heroes/hero_huskar", LUA_MODIFIER_MOTION_HORIZONTAL)
 LinkLuaModifier("modifier_imba_huskar_life_break_charge", "components/abilities/heroes/hero_huskar", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_huskar_life_break_slow", "components/abilities/heroes/hero_huskar", LUA_MODIFIER_MOTION_NONE)
 
-imba_huskar_inner_fire								= class({})
+imba_huskar_inner_fire									= class({})
 modifier_imba_huskar_inner_fire_knockback				= class({})
 modifier_imba_huskar_inner_fire_disarm					= class({})
-modifier_imba_huskar_inner_fire_raze_land			= class({})
-modifier_imba_huskar_inner_fire_raze_land_aura		= class({})
+modifier_imba_huskar_inner_fire_raze_land				= class({})
+modifier_imba_huskar_inner_fire_raze_land_aura			= class({})
 
 imba_huskar_burning_spear								= class({})
-modifier_imba_huskar_burning_spear_self					= class({})
 modifier_imba_huskar_burning_spear_counter				= class({})
 modifier_imba_huskar_burning_spear_debuff				= class({})		
 
@@ -285,8 +32,10 @@ modifier_imba_huskar_berserkers_blood					= class({})
 modifier_imba_huskar_berserkers_blood_crimson_priest	= class({})
 
 imba_huskar_life_break									= class({})
+modifier_imba_huskar_life_break							= class({})
 modifier_imba_huskar_life_break_charge					= class({})
 modifier_imba_huskar_life_break_slow					= class({})
+
 
 ----------------
 -- INNER FIRE --
@@ -305,7 +54,8 @@ function imba_huskar_inner_fire:OnSpellStart()
 	self:GetCaster():EmitSound("Hero_Huskar.Inner_Fire.Cast")
 	
 	-- Particle effects
-	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_huskar/huskar_inner_fire.vpcf", PATTACH_ABSORIGIN, self:GetCaster())
+	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_huskar/huskar_inner_fire.vpcf", PATTACH_POINT, self:GetCaster())
+	ParticleManager:SetParticleControl(particle, 1, Vector(radius, 0, 0))
 	ParticleManager:SetParticleControl(particle, 3, self:GetCaster():GetAbsOrigin())
 	ParticleManager:ReleaseParticleIndex(particle)
 	
@@ -328,14 +78,19 @@ function imba_huskar_inner_fire:OnSpellStart()
 		--particles/units/heroes/hero_huskar/huskar_inner_fire_push.vpcf
 		
 		-- Apply the knockback (and pass the caster's location coordinates to know which way to knockback)
-		enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_huskar_inner_fire_knockback", {duration = knockback_duration, x = self:GetCaster():GetAbsOrigin.x, y = self:GetCaster():GetAbsOrigin.y})
+		enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_huskar_inner_fire_knockback", {duration = knockback_duration, x = self:GetCaster():GetAbsOrigin().x, y = self:GetCaster():GetAbsOrigin().y})
 		
 		-- Apply the disarm
 		enemy:AddNewModifier(self:GetCaster(), self, "modifier_imba_huskar_inner_fire_disarm", {duration = disarm_duration})
 	end
 	
 	-- IMBAfication: Raze Land
+	CreateModifierThinker(self:GetCaster(), self, "modifier_imba_huskar_inner_fire_raze_land_aura", {
+		duration		= 5
+	}, 
+	self:GetCaster():GetAbsOrigin(), self:GetCaster():GetTeamNumber(), false)
 	-- modifier_imba_huskar_inner_fire_raze_land			= class({})
+	
 	-- modifier_imba_huskar_inner_fire_raze_land_aura		= class({})
 end
 
@@ -362,8 +117,6 @@ function modifier_imba_huskar_inner_fire_knockback:OnCreated(params)
 	
 	-- Get the center of the Blinding Light sphere to know which direction to get knocked back
 	self.position	= GetGroundPosition(Vector(params.x, params.y, 0), nil)
-
-	self.parent:StartGesture(ACT_DOTA_FLAIL)
 	
 	if self:ApplyHorizontalMotionController() == false then 
 		self:Destroy()
@@ -382,10 +135,20 @@ function modifier_imba_huskar_inner_fire_knockback:UpdateHorizontalMotion( me, d
 	GridNav:DestroyTreesAroundPoint( self.parent:GetOrigin(), self.parent:GetHullRadius(), true )
 end
 
+function modifier_imba_huskar_inner_fire_knockback:DeclareFunctions()
+	local decFuncs = {
+		MODIFIER_PROPERTY_OVERRIDE_ANIMATION
+    }
+
+    return decFuncs
+end
+
+function modifier_imba_huskar_inner_fire_knockback:GetOverrideAnimation()
+	 return ACT_DOTA_FLAIL
+end
+
 function modifier_imba_huskar_inner_fire_knockback:OnDestroy()
 	if not IsServer() then return end
-	
-	self.parent:FadeGesture(ACT_DOTA_FLAIL)
 	
 	self.parent:RemoveHorizontalMotionController( self )
 end
@@ -410,122 +173,613 @@ end
 -- INNER FIRE RAZE LAND MODIFIER --
 -----------------------------------
 
+function modifier_imba_huskar_inner_fire_raze_land:GetEffectName()
+	return "particles/units/heroes/hero_huskar/huskar_burning_spear_debuff.vpcf"
+end
+
+function modifier_imba_huskar_inner_fire_raze_land:OnCreated()
+	self.raze_land_strength_pct	= self:GetAbility():GetSpecialValueFor("raze_land_strength_pct")
+	
+	if not IsServer() then return end
+	
+	self.damage		= self:GetCaster():GetStrength() * self.raze_land_strength_pct * 0.01
+	
+	self:OnIntervalThink()
+	self:StartIntervalThink(0.5)
+end
+
+function modifier_imba_huskar_inner_fire_raze_land:OnIntervalThink()
+	if not IsServer() then return end
+	
+	-- Update strength damage periodically if the caster still exists
+	if self:GetCaster() then
+		self.damage		= self:GetCaster():GetStrength() * self.raze_land_strength_pct * 0.01
+	end
+	
+	local damageTable = {
+		victim 			= self:GetParent(),
+		attacker 		= self:GetCaster(),
+		damage 			= self.damage,
+		damage_type 	= DAMAGE_TYPE_MAGICAL,
+		ability 		= self:GetAbility(),
+		damage_flags	= DOTA_DAMAGE_FLAG_NONE
+	}
+	ApplyDamage(damageTable)
+end
+
 ----------------------------------------
 -- INNER FIRE RAZE LAND AURA MODIFIER --
 ----------------------------------------
+
+function modifier_imba_huskar_inner_fire_raze_land_aura:IsAura() 				return true end
+
+function modifier_imba_huskar_inner_fire_raze_land_aura:GetAuraRadius()			return self:GetAbility():GetSpecialValueFor("radius") end
+function modifier_imba_huskar_inner_fire_raze_land_aura:GetAuraSearchFlags()	return DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES end
+function modifier_imba_huskar_inner_fire_raze_land_aura:GetAuraSearchTeam()		return DOTA_UNIT_TARGET_TEAM_ENEMY end
+function modifier_imba_huskar_inner_fire_raze_land_aura:GetAuraSearchType()		return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC end
+function modifier_imba_huskar_inner_fire_raze_land_aura:GetModifierAura()		return "modifier_imba_huskar_inner_fire_raze_land" end
+
+function modifier_imba_huskar_inner_fire_raze_land_aura:OnCreated()
+	self.radius	= self:GetAbility():GetSpecialValueFor("radius")
+
+	if not IsServer() then return end
+	-- Man I am so garbage with particles
+	self.particle = ParticleManager:CreateParticle("particles/hero/huskar/huskar_inner_fire_raze_land.vpcf", PATTACH_WORLDORIGIN, self:GetParent())
+	ParticleManager:SetParticleControl(self.particle, 1, self:GetParent():GetAbsOrigin())
+	self:AddParticle(self.particle, false, false, -1, false, false)
+	
+	self:StartIntervalThink(0.5)
+end
+
+function modifier_imba_huskar_inner_fire_raze_land_aura:OnIntervalThink()
+	GridNav:DestroyTreesAroundPoint( self:GetParent():GetOrigin(), self.radius, true )
+	
+	local wards = FindUnitsInRadius(self:GetParent():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_OTHER, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NO_INVIS, FIND_ANY_ORDER, false)
+	
+	for _, ward in pairs(wards) do
+		if ward:GetUnitName() == "npc_dota_observer_wards" or ward:GetUnitName() == "npc_dota_sentry_wards" then
+			ward:Kill(self:GetAbility(), self:GetCaster())
+		end
+	end
+end
 
 -------------------
 -- BURNING SPEAR --
 -------------------
 
 function imba_huskar_burning_spear:GetIntrinsicModifierName()
-	return "modifier_imba_huskar_burning_spear_self"
+	return "modifier_generic_orb_effect_lua"
 end
 
----------------------------------
--- BURNING SPEAR SELF MODIFIER --
----------------------------------
-
-function modifier_imba_huskar_burning_spear_self:IsHidden()	return true end
-
-function modifier_imba_huskar_burning_spear_self:OnCreated()
-	self.ability	= self:GetAbility()
-	self.caster		= self:GetCaster()
-
-				-- "01"
-			-- {
-				-- "var_type"						"FIELD_INTEGER"
-				-- "health_cost"					"15"
-			-- }
-			-- "02"
-			-- {
-				-- "var_type"						"FIELD_INTEGER"
-				-- "burn_damage"					"5 10 15 20"
-				-- "LinkedSpecialBonus"			"special_bonus_unique_huskar_2"
-			-- }
+function imba_huskar_burning_spear:GetProjectileName()
+	return "particles/units/heroes/hero_huskar/huskar_burning_spear.vpcf"
 end
 
-function modifier_imba_huskar_burning_spear_self:DeclareFunctions()
-	local funcs = {
-		MODIFIER_EVENT_ON_ATTACK,
-		MODIFIER_EVENT_ON_ATTACK_FAIL,
-		MODIFIER_PROPERTY_PROCATTACK_FEEDBACK,
-		MODIFIER_EVENT_ON_ATTACK_RECORD_DESTROY,
-
-		MODIFIER_EVENT_ON_ORDER,
-
-		MODIFIER_PROPERTY_PROJECTILE_NAME,
-	}
-
-	return funcs
-end
-
---"Hero_Huskar.Burning_Spear.Cast"
---"Hero_Huskar.Burning_Spear"
-
-function modifier_imba_huskar_burning_spear_self:OnAttack(keys)
-
-end
-
-function modifier_imba_huskar_burning_spear_self:OnAttackFail(keys)
-
-end
-
-function modifier_imba_huskar_burning_spear_self:GetModifierProcAttack_Feedback(keys)
-
-end
-
-function modifier_imba_huskar_burning_spear_self:OnAttackRecordDestroy(keys)
-
-end
-
-function modifier_imba_huskar_burning_spear_self:OnOrder(keys)
-
-end
-
-function modifier_imba_huskar_burning_spear_self:GetProjectileName()
-	if self.cast or (self.ability:GetAutoCastState() and self.ability:IsFullyCastable()) then
-		return "particles/units/heroes/hero_huskar/huskar_burning_spear.vpcf"
+function imba_huskar_burning_spear:GetAbilityTargetFlags()
+	if self:GetCaster():HasTalent("special_bonus_imba_huskar_pure_burning_spears") then
+		return DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES
+	else
+		return DOTA_UNIT_TARGET_FLAG_NONE
 	end
+end
+
+function imba_huskar_burning_spear:OnOrbFire()
+	self:GetCaster():EmitSound("Hero_Huskar.Burning_Spear.Cast")
+	
+	-- Vanilla version doesn't actually show Huskar taking damage so I assume it's a SetHealth thing
+	self:GetCaster():SetHealth(math.max(self:GetCaster():GetHealth() - self:GetSpecialValueFor("health_cost"), 1))
+end
+
+function imba_huskar_burning_spear:OnOrbImpact( keys )
+	local duration = self:GetDuration()
+	
+	keys.target:EmitSound("Hero_Huskar.Burning_Spear")
+	
+	keys.target:AddNewModifier(self:GetCaster(), self, "modifier_imba_huskar_burning_spear_debuff", { duration = duration })
+	keys.target:AddNewModifier(self:GetCaster(), self, "modifier_imba_huskar_burning_spear_counter", { duration = duration })
 end
 
 ------------------------------------
 -- BURNING SPEAR COUNTER MODIFIER --
 ------------------------------------
 
+-- This will be the visible, non-multiple, stacking modifier
+function modifier_imba_huskar_burning_spear_counter:IgnoreTenacity()	return true end
+function modifier_imba_huskar_burning_spear_counter:IsPurgable()		return false end
+
+function modifier_imba_huskar_burning_spear_counter:GetEffectName()
+	return "particles/units/heroes/hero_huskar/huskar_burning_spear_debuff.vpcf"
+end
+
+function modifier_imba_huskar_burning_spear_counter:OnCreated()
+	if not IsServer() then return end
+	
+	self:IncrementStackCount()
+
+	self.burn_damage 				= self:GetAbility():GetSpecialValueFor("burn_damage")
+	self.pain_reflection_per_stack	= self:GetAbility():GetSpecialValueFor("pain_reflection_per_stack")
+
+	-- Precache damage table
+	self.damageTable = {
+		victim = self:GetParent(),
+		attacker = self:GetCaster(),
+		-- damage = to be handled in the intervalthink due to stacks
+		-- damage_type = to be handled in the intervalthink due to potential talent switch
+		ability = self:GetAbility()
+	}
+	
+	self:StartIntervalThink(1)
+end
+
+function modifier_imba_huskar_burning_spear_counter:OnRefresh()
+	if not IsServer() then return end
+	
+	self:IncrementStackCount()
+end
+
+function modifier_imba_huskar_burning_spear_counter:OnIntervalThink()
+	if not IsServer() then return end
+	
+	local damage_type = DAMAGE_TYPE_MAGICAL
+	
+	if self:GetCaster() and self:GetCaster():HasTalent("special_bonus_imba_huskar_pure_burning_spears") then
+		damage_type = DAMAGE_TYPE_PURE
+	end
+	
+	self.damageTable.damage 		= self:GetStackCount() * self.burn_damage
+	self.damageTable.damage_type	= damage_type
+
+	ApplyDamage( self.damageTable )
+end
+
+function modifier_imba_huskar_burning_spear_counter:OnDestroy()
+	if not IsServer() then return end
+	
+	self:GetParent():StopSound("Hero_Huskar.Burning_Spear")
+end
+
+function modifier_imba_huskar_burning_spear_counter:DeclareFunctions()
+	local decFuncs = {
+		MODIFIER_EVENT_ON_TAKEDAMAGE, -- IMBAfication: Know My Pain!
+		MODIFIER_PROPERTY_TOOLTIP,
+		MODIFIER_PROPERTY_TOOLTIP2
+    }
+
+    return decFuncs
+end
+
+function modifier_imba_huskar_burning_spear_counter:OnTakeDamage(keys)
+	if not IsServer() then return end
+	
+	-- No infinite loops plz
+	if keys.unit == self:GetCaster() and bit.band( keys.damage_flags, DOTA_DAMAGE_FLAG_REFLECTION ) ~= DOTA_DAMAGE_FLAG_REFLECTION then
+	
+		self:GetParent():EmitSound("DOTA_Item.BladeMail.Damage")
+		
+		local damageTable = {
+			victim 			= self:GetParent(),
+			damage 			= keys.original_damage * (self:GetStackCount() * self.pain_reflection_per_stack * 0.01),
+			damage_type		= keys.damage_type,
+			damage_flags 	= DOTA_DAMAGE_FLAG_REFLECTION + DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION + DOTA_DAMAGE_FLAG_NO_SPELL_LIFESTEAL,
+			attacker 		= self:GetCaster(),
+			ability 		= self:GetAbility()
+		}
+								
+		ApplyDamage(damageTable)
+	end
+end
+
+function modifier_imba_huskar_burning_spear_counter:OnTooltip()
+	return self:GetStackCount() * self.pain_reflection_per_stack
+end
+
 -----------------------------------
 -- BURNING SPEAR DEBUFF MODIFIER --
 -----------------------------------
+
+-- This will be the hidden, multiple, non-stacking modifier
+
+function modifier_imba_huskar_burning_spear_debuff:IgnoreTenacity()	return true end
+function modifier_imba_huskar_burning_spear_debuff:IsHidden() 		return true end
+function modifier_imba_huskar_burning_spear_debuff:IsPurgable()		return false end
+function modifier_imba_huskar_burning_spear_debuff:GetAttributes()	return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_imba_huskar_burning_spear_debuff:OnDestroy()
+	if not IsServer() then return end
+	
+	local burning_spear_counter = self:GetParent():FindModifierByNameAndCaster("modifier_imba_huskar_burning_spear_counter", self:GetCaster())
+	
+	if burning_spear_counter then
+		burning_spear_counter:DecrementStackCount()
+	end
+end
 
 -----------------------
 -- BERSERKER'S BLOOD --
 -----------------------
 
+-- IMBAfication: Crimson Priest
+function imba_huskar_berserkers_blood:GetBehavior()
+	return DOTA_ABILITY_BEHAVIOR_NO_TARGET + DOTA_ABILITY_BEHAVIOR_AUTOCAST
+end
+
+-- Crimson Priest IMBAfication will be an "opt-out" add-on
+function imba_huskar_berserkers_blood:OnUpgrade()
+	if self:GetLevel() == 1 then
+		self:ToggleAutoCast()
+	end
+end
+
+-- Not castable
+function imba_huskar_berserkers_blood:OnAbilityPhaseStart() return false end
+
+function imba_huskar_berserkers_blood:GetIntrinsicModifierName()
+	return "modifier_imba_huskar_berserkers_blood"
+end
+
 --------------------------------
 -- BERSERKER'S BLOOD MODIFIER --
 --------------------------------
+
+function modifier_imba_huskar_berserkers_blood:IsHidden()	return true end
+	
+function modifier_imba_huskar_berserkers_blood:OnCreated()
+	self.ability	= self:GetAbility()
+	self.caster		= self:GetCaster()
+	self.parent		= self:GetParent()
+	
+	-- AbilitySpecials
+	self.maximum_attack_speed		= self.ability:GetSpecialValueFor("maximum_attack_speed")
+	self.maximum_health_regen		= self.ability:GetSpecialValueFor("maximum_health_regen")
+	self.hp_threshold_max 			= self.ability:GetSpecialValueFor("hp_threshold_max")
+	self.maximum_resistance 		= self.ability:GetSpecialValueFor("maximum_resistance")
+	self.crimson_priest_duration	= self.ability:GetSpecialValueFor("crimson_priest_duration")
+	
+	self.range 					= 100 - self.hp_threshold_max
+	
+	-- Max size in pct that Huskar increases to
+	self.max_size = 35
+	
+	if not IsServer() then return end
+	
+	-- Create the Berserker's Blood particle (glow + heal)
+	self.particle = ParticleManager:CreateParticle("particles/units/heroes/hero_huskar/huskar_berserkers_blood.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.parent )
+	
+	-- Create the "blood" particle (big thanks to DarkDice from ModDota for making this for me; as he said, it's not perfect, but it looks much better than the stupid color render solution I was using before)
+	-- ...Now only if he could show me how to get it to actually work in-game
+	-- self.particle2 = ParticleManager:CreateParticle("particles/hero/huskar/status_effect_berserker_blood_mod.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.parent )
+	
+	self:StartIntervalThink(0.1)
+end
+
+-- When the ability gets leveled up
+function modifier_imba_huskar_berserkers_blood:OnRefresh()
+	-- AbilitySpecials
+	self.maximum_attack_speed		= self.ability:GetSpecialValueFor("maximum_attack_speed")
+	self.maximum_health_regen		= self.ability:GetSpecialValueFor("maximum_health_regen")
+	self.hp_threshold_max 			= self.ability:GetSpecialValueFor("hp_threshold_max")
+	self.maximum_resistance 		= self.ability:GetSpecialValueFor("maximum_resistance")
+	self.crimson_priest_duration	= self.ability:GetSpecialValueFor("crimson_priest_duration")
+	
+	self.range 						= 100 - self.hp_threshold_max
+end
+
+function modifier_imba_huskar_berserkers_blood:OnIntervalThink()
+	if not IsServer() then return end
+	
+	-- Use the stack count to store strength value for proper client/server interaction
+	self:SetStackCount(self.parent:GetStrength())
+end
+
+-- Realistically speaking, this function will never be called...but just in case...
+function modifier_imba_huskar_berserkers_blood:OnDestroy()
+	if not IsServer() then return end
+
+	ParticleManager:DestroyParticle(self.particle, false)
+	ParticleManager:ReleaseParticleIndex(self.particle)
+	
+	-- ParticleManager:DestroyParticle(self.particle2, false)
+	-- ParticleManager:ReleaseParticleIndex(self.particle2)
+end
+
+function modifier_imba_huskar_berserkers_blood:DeclareFunctions()
+	local funcs = {
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
+		MODIFIER_PROPERTY_MODEL_SCALE,
+		MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS,
+		
+		MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS, -- IMBAfication: Remnants of Berserker's Blood
+		MODIFIER_PROPERTY_MIN_HEALTH,				-- IMBAfication: Crimson Priest
+		MODIFIER_EVENT_ON_TAKEDAMAGE
+	}
+
+	return funcs
+end
+
+function modifier_imba_huskar_berserkers_blood:GetModifierAttackSpeedBonus_Constant()
+	if self.parent:PassivesDisabled() then return end
+
+	-- This percentage gets lower as health drops, which in turn increases the returned value
+	local pct = math.max((self.parent:GetHealthPercent() - self.hp_threshold_max) / self.range, 0)
+	
+	return self.maximum_attack_speed * (1 - pct)
+end
+
+function modifier_imba_huskar_berserkers_blood:GetModifierConstantHealthRegen()
+	if self.parent:PassivesDisabled() then return end
+
+	local pct = math.max((self.parent:GetHealthPercent() - self.hp_threshold_max) / self.range, 0)
+	
+	-- Strength * max health regen value pct converted to decimal * the reverse range
+	return self:GetStackCount() * self.maximum_health_regen  * 0.01 * (1 - pct)
+end
+
+-- This doesn't change if the modifier owner is broken
+function modifier_imba_huskar_berserkers_blood:GetModifierModelScale()
+	if not IsServer() then return end
+	
+	local pct = math.max((self.parent:GetHealthPercent() - self.hp_threshold_max) / self.range, 0)
+
+	-- Glow / regen particles are controlled by CP1 of the particle
+	ParticleManager:SetParticleControl(self.particle, 1, Vector( (1 - pct) * 100, 0, 0))
+	
+	-- I haven't seen any examples of how to replicate the blood particles (and can't figure it myself) so time for massive bootleg instead	
+	self.parent:SetRenderColor(255, 255 * pct, 255 * pct)
+	
+	-- Let's use DarkDice's particles (seems to work through a scaling CP0 second value from 0 to 1.4)
+	-- ParticleManager:SetParticleControlEnt(self.particle2, 0, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc", Vector( 0, 1.4 * (1 - pct), 0), true)
+	-- return self.max_size * (1 - pct)
+end
+
+function modifier_imba_huskar_berserkers_blood:GetActivityTranslationModifiers()
+	return "berserkers_blood"
+end
+
+function modifier_imba_huskar_berserkers_blood:GetModifierMagicalResistanceBonus()
+	local pct = math.max((self.parent:GetHealthPercent() - self.hp_threshold_max) / self.range, 0)
+	
+	return self.maximum_resistance * (1 - pct)
+end
+
+function modifier_imba_huskar_berserkers_blood:GetMinHealth()
+	if (self:GetAbility():GetAutoCastState() and self:GetAbility():IsCooldownReady()) or self:GetParent():HasModifier("modifier_imba_huskar_berserkers_blood_crimson_priest") then
+		return 1
+	else
+		return 0
+	end
+end
+
+function modifier_imba_huskar_berserkers_blood:OnTakeDamage(keys)
+	if not IsServer() then return end
+	
+	-- Don't waste it if caster has Shallow Grave or Cheese Death Prevention
+	if keys.unit == self.caster and self.caster:GetHealth() <= 1 and (self.ability:GetAutoCastState() and self.ability:IsCooldownReady()) and not self.caster:HasModifier("modifier_imba_dazzle_shallow_grave") and not self.caster:HasModifier("modifier_imba_dazzle_nothl_protection_aura_talent") and not self.caster:HasModifier("modifier_imba_cheese_death_prevention") and not self.caster:HasModifier("modifier_imba_huskar_berserkers_blood_crimson_priest") then
+		self.ability:UseResources(false, false, true)
+	
+		self.caster:AddNewModifier(self.caster, self.ability, "modifier_imba_huskar_berserkers_blood_crimson_priest", {duration = self.crimson_priest_duration})
+	end
+end
 
 -----------------------------------------------
 -- BERSERKER'S BLOOD CRIMSON PRIEST MODIFIER --
 -----------------------------------------------
 
+function modifier_imba_huskar_berserkers_blood_crimson_priest:IsPurgable()	return false end
+
+function modifier_imba_huskar_berserkers_blood_crimson_priest:GetEffectName()
+	return "particles/econ/items/dazzle/dazzle_ti6_gold/dazzle_ti6_shallow_grave_gold.vpcf"
+end
+
 ----------------
 -- LIFE BREAK --
 ----------------
 
---"Hero_Huskar.Life_Break"
---"Hero_Huskar.Life_Break.Impact"
+function imba_huskar_life_break:GetCooldown(level)
+	if self:GetCaster():HasScepter() then
+		return self:GetSpecialValueFor("cooldown_scepter")
+	else
+		return self.BaseClass.GetCooldown(self, level)
+	end
+end
+
+function imba_huskar_life_break:OnSpellStart()
+	if not IsServer() then return end
+
+	self:GetCaster():EmitSound("Hero_Huskar.Life_Break")
+
+	-- Applies a basic purge on caster
+	self:GetCaster():Purge(false, true, false, false, false)
+
+	-- Yeah this is a thing
+	local life_break_charge_max_duration = 5
+	
+	-- Create Life Break standard (motion controller) and charge modifier and feed the entity index as a parameter, which will be converted back into an entity to handle targeting
+	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_huskar_life_break", {ent_index = self:GetCursorTarget():GetEntityIndex()})
+	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_huskar_life_break_charge", {duration = life_break_charge_max_duration})
+end
+
+-------------------------
+-- LIFE BREAK MODIFIER --
+-------------------------
+
+function modifier_imba_huskar_life_break:IsHidden()		return true end
+function modifier_imba_huskar_life_break:IsPurgable()	return false end
+
+function modifier_imba_huskar_life_break:OnCreated(params)
+	self.ability	= self:GetAbility()
+	self.caster		= self:GetCaster()
+	self.parent		= self:GetParent()
+
+	-- AbilitySpecials
+	self.health_cost_percent	= self.ability:GetSpecialValueFor("health_cost_percent")
+	self.health_damage			= self.ability:GetSpecialValueFor("health_damage")
+	self.health_damage_scepter	= self.ability:GetSpecialValueFor("health_damage_scepter")
+	self.charge_speed			= self.ability:GetSpecialValueFor("charge_speed")
+
+	if not IsServer() then return end
+
+	self.target			= EntIndexToHScript(params.ent_index)
+	-- As per the wiki; Life Break stops if the target exceeds this distance away from the caster
+	self.break_range	= 1450
+
+	-- Begin the motion controller
+	if self:ApplyHorizontalMotionController() == false then
+		self:Destroy()
+	end
+end
+
+-- Need to fix this so using position changing effects mid-leap doesn't brick the skill until respawn
+function modifier_imba_huskar_life_break:UpdateHorizontalMotion( me, dt )
+	if not IsServer() then return end
+	
+	me:FaceTowards(self.target:GetOrigin())
+
+	local distance = (self.target:GetOrigin() - me:GetOrigin()):Normalized()
+	me:SetOrigin( me:GetOrigin() + distance * self.charge_speed * dt )
+	
+	-- IDK aribtrary numbers again
+	if (self.target:GetOrigin() - me:GetOrigin()):Length2D() <= 128 or (self.target:GetOrigin() - me:GetOrigin()):Length2D() > self.break_range or self.parent:IsHexed() or self.parent:IsNightmared() or self.parent:IsStunned() then
+		self:Destroy()
+	end
+end
+
+-- This typically gets called if the caster uses a position breaking tool (ex. Blink Dagger) while in mid-motion
+function modifier_imba_huskar_life_break:OnHorizontalMotionInterrupted()
+	self:Destroy()
+end
+
+function modifier_imba_huskar_life_break:OnDestroy()
+	if not IsServer() then return end
+
+	self.parent:RemoveHorizontalMotionController( self )
+	
+	if self.parent:HasModifier("modifier_imba_huskar_life_break_charge") then
+		self.parent:RemoveModifierByName("modifier_imba_huskar_life_break_charge")
+	end
+	
+	-- Assumption is that if the caster's within range when the modifier is destroyed, then the cast landed (probably some extreme edge cases but like come on now)
+	if (self.target:GetOrigin() - self.parent:GetOrigin()):Length2D() <= 128 then
+		-- Do nothing else if blocked
+		if self.target:TriggerSpellAbsorb(self.ability) then
+			return nil
+		end
+		
+		-- Play ending cast animation if applicable
+		if self.parent:GetName() == "npc_dota_hero_huskar" then
+			self.parent:StartGesture(ACT_DOTA_CAST_LIFE_BREAK_END)
+		end
+		
+		-- Emit sound
+		self.target:EmitSound("Hero_Huskar.Life_Break.Impact")
+		
+		-- Emit particle
+		local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_huskar/huskar_life_break.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.target)
+		ParticleManager:SetParticleControl(particle, 1, self.target:GetOrigin())
+		ParticleManager:ReleaseParticleIndex(particle)
+
+		local enemy_damage_to_use = self.health_damage
+		
+		if self.parent:HasScepter() then
+			enemy_damage_to_use = self.health_damage_scepter
+		end
+
+		-- Deal damage to enemy and self
+		local damageTable_enemy = {
+			victim 			= self.target,
+			attacker 		= self.parent,
+			damage 			= math.max(enemy_damage_to_use * self.target:GetHealth(), self.health_damage * self.target:GetHealth()), -- IMBAfication: Greater Sacrifice
+			damage_type 	= DAMAGE_TYPE_MAGICAL,
+			ability 		= self.ability,
+			damage_flags	= DOTA_DAMAGE_FLAG_NONE
+		}
+		ApplyDamage(damageTable_enemy)
+
+		local damageTable_self = {
+			victim 			= self.parent,
+			attacker 		= self.parent,
+			damage 			= self.health_cost_percent * self.parent:GetHealth(),
+			damage_type 	= DAMAGE_TYPE_MAGICAL,
+			ability		 	= self.ability,
+			damage_flags 	= DOTA_DAMAGE_FLAG_NON_LETHAL
+		}
+		ApplyDamage(damageTable_self)
+
+		-- Apply the slow modifier
+		local slow_modifier = self.target:AddNewModifier(self.parent, self.ability, "modifier_imba_huskar_life_break_slow", {duration = self.ability:GetDuration()})
+		
+		if slow_modifier then
+			slow_modifier:SetDuration(self.ability:GetDuration() * (1 - self.target:GetStatusResistance()), true)
+		end
+		
+		-- This is optional I guess but it replicates vanilla Life Break being reflected by Lotus Orb a bit closer (cause the target starts attacking you)
+		self.parent:MoveToTargetToAttack( self.target ) 
+	end
+end
 
 --------------------------------
 -- LIFE BREAK CHARGE MODIFIER --
 --------------------------------
 
+--"This modifier turns him spell immune, disarms him, forces him to face the target and is responsible for the leap animation."
+-- I'm gonna put the "forces him to face the target" in the other modifier cause it seems to make sense to just deal with that logic in the motion controller
+
+function modifier_imba_huskar_life_break_charge:IsHidden()		return true end
+function modifier_imba_huskar_life_break_charge:IsPurgable()	return false end
+
+function modifier_imba_huskar_life_break_charge:CheckState()
+	local state = {
+		[MODIFIER_STATE_MAGIC_IMMUNE] = true,
+		[MODIFIER_STATE_DISARMED] = true,
+	}
+
+	return state
+end
+
+function modifier_imba_huskar_life_break_charge:DeclareFunctions()
+	local decFuncs = {
+		MODIFIER_PROPERTY_OVERRIDE_ANIMATION
+    }
+
+    return decFuncs
+end
+
+function modifier_imba_huskar_life_break_charge:GetOverrideAnimation()
+	return ACT_DOTA_CAST_LIFE_BREAK_START
+end
+
 ------------------------------
 -- LIFE BREAK SLOW MODIFIER --
 ------------------------------
 
+function modifier_imba_huskar_life_break_slow:GetStatusEffectName()
+	return "particles/status_fx/status_effect_huskar_lifebreak.vpcf"
+end
 
+function modifier_imba_huskar_life_break_slow:OnCreated()
+	self.ability	= self:GetAbility()
+	self.caster		= self:GetCaster()
+	self.parent		= self:GetParent()
+	
+	-- AbilitySpecials
+	self.movespeed	= self.ability:GetSpecialValueFor("movespeed")
+end
 
+function modifier_imba_huskar_life_break_slow:OnRefresh()
+	self:OnCreated()
+end
+
+function modifier_imba_huskar_life_break_slow:DeclareFunctions()
+	local decFuncs = {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
+    }
+
+    return decFuncs
+end
+
+function modifier_imba_huskar_life_break_slow:GetModifierMoveSpeedBonus_Percentage()
+    return self.movespeed
+end
 
 
 -- ----------------

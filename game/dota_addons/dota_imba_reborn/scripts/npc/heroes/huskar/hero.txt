@@ -1,0 +1,33 @@
+"DOTAHeroes"
+{
+	"Version"		"1"
+
+	//=================================================================================================================
+	// HERO: Huskar
+	//=================================================================================================================
+	"npc_dota_hero_huskar"
+	{
+		"override_hero"				"npc_dota_hero_huskar"
+		"IsImba"					"1"
+		
+		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
+		
+		"Ability1"		"imba_huskar_inner_fire"
+		"Ability2"		"imba_huskar_burning_spear"
+		"Ability3"		"imba_huskar_berserkers_blood"
+		"Ability4"		"generic_hidden"
+		"Ability5"		"generic_hidden"
+		"Ability6"		"imba_huskar_life_break"
+		
+		"Ability10"		"special_bonus_hp_225"
+		"Ability11"		"special_bonus_attack_damage_15"
+		"Ability12"		"special_bonus_unique_huskar_2"
+		"Ability13"		"special_bonus_lifesteal_20"
+		"Ability14"		"special_bonus_strength_20"
+		"Ability15"		"special_bonus_unique_huskar"
+		"Ability16"		"special_bonus_attack_range_175"
+		"Ability17"		"special_bonus_unique_huskar_5"
+		
+		// Removed Talents
+	}
+}

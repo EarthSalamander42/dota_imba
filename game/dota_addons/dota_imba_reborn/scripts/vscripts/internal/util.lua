@@ -373,6 +373,10 @@ function TrueKill(caster, target, ability)
 	if not ( target:HasModifier("modifier_imba_reincarnation") or target:HasModifier("modifier_imba_reincarnation_wraith_form_buff") or target:HasModifier("modifier_imba_reincarnation_wraith_form") ) then
 		target:Kill(ability, caster)
 	end
+	
+	if target:HasAbility("imba_huskar_berserkers_blood") and target:FindAbilityByName("imba_huskar_berserkers_blood"):IsCooldownReady() then
+		target:FindAbilityByName("imba_huskar_berserkers_blood"):StartCooldown(FrameTime())
+	end
 
 	-- Removes the relevant modifiers
 	target:RemoveModifierByName("modifier_invulnerable")
@@ -391,6 +395,7 @@ function TrueKill(caster, target, ability)
 	target:RemoveModifierByName("modifier_imba_rapier_cursed")
 	target:RemoveModifierByName("modifier_imba_dazzle_nothl_protection_aura_talent")
 	target:RemoveModifierByName("modifier_imba_battle_trance_720")
+	target:RemoveModifierByName("modifier_imba_huskar_berserkers_blood_crimson_priest")
 
 	-- Kills the target
 	if not target:HasModifier("modifier_imba_reincarnation_wraith_form") then
