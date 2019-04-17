@@ -1,306 +1,268 @@
 "DOTAAbilities"
 {
 	//=================================================================================================================
-	// Huskar: Inner Vitality
+    // Enchantress: Untouchable
+    //=================================================================================================================
+    "imba_enchantress_untouchable"
+    {
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_enchantress.lua"
+		"AbilityTextureName"			"enchantress_untouchable"
+		
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityBehavior"                "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+        "SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_NO"
+        "SpellDispellableType"            "SPELL_DISPELLABLE_YES"
+		
+		"HasScepterUpgrade"				"1"
+       
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.3"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"130"   
+	   
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"300"
+	   
+        // Special   
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                "FIELD_INTEGER"
+                "slow_attack_speed"        "-50 -100 -150 -200"
+                //"LinkedSpecialBonus"    "special_bonus_unique_enchantress_3"
+				"LinkedSpecialBonus"		"special_bonus_imba_enchantress_5"
+            }
+            "02"
+            {
+                "var_type"                "FIELD_INTEGER"
+                "slow_duration"            "4"
+            }
+			"03"
+			{
+                "var_type"					"FIELD_FLOAT"
+                "stopgap_bat_increase"		"-0.1"		
+			}
+			"04"
+			{
+                "var_type"			"FIELD_INTEGER"
+                "regret_stacks"		"2 3 3 4"		
+			}
+			"05"
+			{
+                "var_type"					"FIELD_FLOAT"
+                "peace_on_earth_duration"	"4 4.5 5 5.5"
+			}
+        }
+        "AbilityCastAnimation"        "ACT_DOTA_CAST_ABILITY_1"
+    }
+	
 	//=================================================================================================================
-	"imba_huskar_inner_vitality"
+	// Enchantress: Enchant
+	//=================================================================================================================
+	"imba_enchantress_enchant"
 	{
 		"BaseClass"						"ability_lua"
-		"ScriptFile"					"components/abilities/heroes/hero_huskar.lua"
-		"AbilityTextureName"			"huskar_inner_vitality"	
+		"ScriptFile"					"components/abilities/heroes/hero_enchantress.lua"
+		"AbilityTextureName"			"enchantress_enchant"
 	
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"	
-		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"					   
-		"AbilitySound"					"Hero_Huskar.Inner_Vitality"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+		"AbilitySound"					"Hero_Enchantress.EnchantCreep"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"800"
+		"AbilityCastRange"				"700"
 		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"22 18 14 10"
-		"AbilityDuration"				"16 16 16 16"
-
+		"AbilityDuration"				"3.75 4.5 5.25 6"
+		
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"140 150 160 170"
-		
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityModifierSupportValue"	"0.0"	// already gets credit for the healing
-
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"heal"					"12"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"attrib_bonus"			"0.05 0.1 0.15 0.20"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"hurt_attrib_bonus"		"0.2 0.4 0.6 0.8"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"hurt_percent"			"0.35"
-			}
-			"05"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"tooltip_attrib_bonus"			"6 8 10 12"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"tooltip_hurt_attrib_bonus"		"22 30 38 46"
-			}
-		}
-		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
-	}	
-	//=================================================================================================================
-	// Huskar: Inner Fire
-	//=================================================================================================================
-	"imba_huskar_inner_fire"
-	{
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"components/abilities/heroes/hero_huskar.lua"
-		"AbilityTextureName"			"huskar_inner_fire"		
-	
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"					
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"   
-		"AbilitySound"					"Hero_Huskar.Inner_Vitality"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"500"
-		"AbilityCastPoint"				"0.2"
-		
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"18 16 14 12"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"75 100 125 150"
-		
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityModifierSupportValue"	"0.0"	// already gets credit for the healing
-
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"100 155 210 265"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"500"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"disarm_duration"		"1.75 2.5 3.25 4"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"knockback_distance"	"550"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"knockback_duration"	"0.6"
-			}
+		"AbilityManaCost"				"40 50 60 70"
 			
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"raze_land_duration"	"5"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"raze_land_strength_pct"	"40"
-			}					
-		}
-		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
-	}	
-	
-	//=================================================================================================================
-	// Huskar: Burning Spear
-	//=================================================================================================================
-	"imba_huskar_burning_spear"
-	{
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"components/abilities/heroes/hero_huskar.lua"
-		"AbilityTextureName"			"huskar_burning_spear"	
-		
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
-		"AbilitySound"					"Hero_Huskar.Burning_Spear"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"450"
-		"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
-
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"0.0 0.0 0.0 0.0"
-		"AbilityDuration"				"8"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"0 0 0 0"
-
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"health_cost"					"15"
+				"var_type"						"FIELD_FLOAT"
+				"dominate_duration"				"26 44 62 80"
+				"LinkedSpecialBonus"			"special_bonus_imba_enchantress_6"
+				"LinkedSpecialBonusOperation"	"SPECIAL_BONUS_MULTIPLY"
 			}
 			"02"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"burn_damage"					"5 10 15 20"
-				"LinkedSpecialBonus"			"special_bonus_unique_huskar_2"
-			}
-			
+				"var_type"				"FIELD_INTEGER"
+				"slow_movement_speed"	"-55"
+			}			
 			"03"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"pain_reflection_per_stack"		"2"
-			}		
+				"var_type"				"FIELD_FLOAT"
+				"tooltip_duration"		"3.75 4.5 5.25 6"
+				"LinkedSpecialBonus"	"special_bonus_imba_enchantress_6"
+			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 	}
-	
+
 	//=================================================================================================================
-	// Huskar: Berserker's Blood
+	// Enchantress: Nature's Attendants
 	//=================================================================================================================
-	"imba_huskar_berserkers_blood"
+	"imba_enchantress_natures_attendants"
 	{
 		"BaseClass"						"ability_lua"
-		"ScriptFile"					"components/abilities/heroes/hero_huskar.lua"
-		"AbilityTextureName"			"huskar_berserkers_blood"
-
+		"ScriptFile"					"components/abilities/heroes/hero_enchantress.lua"
+		"AbilityTextureName"			"enchantress_natures_attendants"
+		
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-				
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
+		"AbilitySound"					"Hero_Enchantress.NaturesAttendantsCast"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"35"
+		"AbilityDuration"				"11"
+
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"170 160 150 140"
+		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"maximum_attack_speed"			"160 220 280 340"
+				"var_type"				"FIELD_FLOAT"
+				"heal_interval"			"1.0"
 			}
 			"02"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"maximum_health_regen"			"20 40 60 80"
+				"var_type"				"FIELD_FLOAT"
+				"heal"					"10.0 11.0 12.0 13.0"
+				//"LinkedSpecialBonus"	"special_bonus_unique_enchantress_5"
+				"LinkedSpecialBonus"	"special_bonus_imba_enchantress_8"
+				"LinkedSpecialBonusOperation"	"SPECIAL_BONUS_MULTIPLY"
 			}
 			"03"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"hp_threshold_max"				"10"
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"275 275 275 275"
 			}
-			
 			"04"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"maximum_resistance"				"30 40 50 60"
+				"var_type"				"FIELD_INTEGER"
+				"wisp_count"			"4 6 8 10"
+				//"LinkedSpecialBonus"	"special_bonus_unique_enchantress_2"
+				"LinkedSpecialBonus"	"special_bonus_imba_enchantress_8"
+				"LinkedSpecialBonusOperation"	"SPECIAL_BONUS_MULTIPLY"
 			}
-			"05"
+			"06"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"crimson_priest_duration"		"5"
+				"var_type"				"FIELD_INTEGER"
+				"critical_health_pct"	"40"
+				"LinkedSpecialBonus"	"special_bonus_imba_enchantress_8"
+				"LinkedSpecialBonusOperation"	"SPECIAL_BONUS_MULTIPLY"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"wisp_count_mini"		"2 3 4 5"
+				"LinkedSpecialBonus"	"special_bonus_imba_enchantress_8"
+				"LinkedSpecialBonusOperation"	"SPECIAL_BONUS_MULTIPLY"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"base_damage_reduction_pct"	"-10"
+				"LinkedSpecialBonus"	"special_bonus_imba_enchantress_8"
+				"LinkedSpecialBonusOperation"	"SPECIAL_BONUS_MULTIPLY"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cyan_mana_restore"		"5 6 7 8"
+				"LinkedSpecialBonus"	"special_bonus_imba_enchantress_8"
+				"LinkedSpecialBonusOperation"	"SPECIAL_BONUS_MULTIPLY"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"green_heal_amp"		"20"
+				"LinkedSpecialBonus"	"special_bonus_imba_enchantress_8"
+				"LinkedSpecialBonusOperation"	"SPECIAL_BONUS_MULTIPLY"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"orange_day_vision"		"250"
+				"LinkedSpecialBonus"	"special_bonus_imba_enchantress_8"
+				"LinkedSpecialBonusOperation"	"SPECIAL_BONUS_MULTIPLY"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"orange_night_vision"	"750"
+				"LinkedSpecialBonus"	"special_bonus_imba_enchantress_8"
+				"LinkedSpecialBonusOperation"	"SPECIAL_BONUS_MULTIPLY"
+			}
+			"12"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"pink_movespeed_pct"	"5"
+				"LinkedSpecialBonus"	"special_bonus_imba_enchantress_8"
+				"LinkedSpecialBonusOperation"	"SPECIAL_BONUS_MULTIPLY"
 			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_3"
 	}
 	
 	//=================================================================================================================
-	// Huskar: Life Break
+	// Enchantress: Natura Shift
 	//=================================================================================================================
-	"imba_huskar_life_break"
+	"imba_enchantress_natura_shift"
 	{
 		"BaseClass"						"ability_lua"
-		"ScriptFile"					"components/abilities/heroes/hero_huskar.lua"
-		"AbilityTextureName"			"huskar_life_break"	
+		"ScriptFile"					"components/abilities/heroes/hero_enchantress.lua"
+		"AbilityTextureName"			"custom/natura_shift_inactive"
 		
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"		
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
-		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
-		"FightRecapLevel"				"2"
-		"AbilitySound"					"Hero_Huskar.Life_Break"
-
-		"HasScepterUpgrade"			"1"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.3 0.3 0.3"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
-
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
+		//"AbilitySound"					""
+		"MaxLevel"						"1"
+		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"12"
-
+		"AbilityCooldown"				"1"
+		
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"0 0 0"		
-		
-		// Cast Range
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"550"
-		
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDuration"				"4 5 6"
+		"AbilityManaCost"				"30"
 		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -308,54 +270,86 @@
 		{
 			"01"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"health_cost_percent"		"0.32 0.38 0.44"
+				"var_type"				"FIELD_INTEGER"
+				"speed_fast"			"500"
 			}
 			"02"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"health_damage"				"0.32 0.38 0.44"
+				"var_type"				"FIELD_INTEGER"
+				"speed_slow"			"-500"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Enchantress: Impetus
+	//=================================================================================================================
+	"imba_enchantress_impetus"
+	{
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_enchantress.lua"
+		"AbilityTextureName"			"enchantress_impetus"
+		//"AbilityTextureName"			"custom/virga's_arc_impetus"
+	
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
+		"FightRecapLevel"				"1"
+		"AbilitySound"					"Hero_Enchantress.Impetus"
+
+		"HasScepterUpgrade"			"1"
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"550"
+		"AbilityCastPoint"				"0.0 0.0 0.0"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0.0 0.0 0.0"
+		"AbilityDuration"				"1.5 1.5 1.5"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"40 55 70"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"distance_damage_pct"	"16 22 28"
+				//"LinkedSpecialBonus"	"special_bonus_unique_enchantress_4"
+				"LinkedSpecialBonus"	"special_bonus_imba_enchantress_9"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"distance_cap"			"1750"
 			}
 			"03"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"health_damage_scepter"		"0.65"
+				"var_type"						"FIELD_INTEGER"
+				"bonus_attack_range_scepter"	"190 190 190"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"charge_speed"				"1200"
+				"attack_cast_stack"			"16"
 			}
 			"05"
 			{
-				"var_type"							"FIELD_INTEGER"
-				"tooltip_health_damage"				"32 38 44"
-			}
-			"06"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"tooltip_health_cost_percent"		"32 38 44"
-				"CalculateSpellDamageTooltip"		"1"
-			}
-			"07"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"movespeed"					"-40 -50 -60"
-			}
-			"08"
-			{
 				"var_type"					"FIELD_FLOAT"
-				"slow_durtion_tooltip"		"4 5 6"
-			}
-			"09"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"tooltip_health_damage_scepter"		"65"
-			}
-			"10"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"cooldown_scepter"			"4"
+				"huntmastery_grace_period"	"0.5"
 			}
 		}
 	}
@@ -622,5 +616,3 @@
 		}
 	}
 }
-
-
