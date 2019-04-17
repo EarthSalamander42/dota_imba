@@ -895,10 +895,13 @@ function imba_storm_spirit_ball_lightning:OnProjectileThink_ExtraData(location, 
 		-- Find a clear space to stand on
 		caster:SetUnitOnClearGround()
 
-		caster:StopSound("Hero_StormSpirit.BallLightning.Loop")
+		-- Destroying sound handled in the Ball Lightning modifier (doing it here results in looping sound not stopping if ability is cast in place)
+		-- caster:StopSound("Hero_StormSpirit.BallLightning.Loop")
 
 		-- Get rid of the Ball
-		caster:FindModifierByName("modifier_imba_ball_lightning"):Destroy()
+		if caster:FindModifierByName("modifier_imba_ball_lightning") then
+			caster:FindModifierByName("modifier_imba_ball_lightning"):Destroy()
+		end
 		ProjectileManager:DestroyLinearProjectile(self.projectileID)
 	end
 end
@@ -977,6 +980,18 @@ function modifier_imba_ball_lightning:OnIntervalThink()
 		self:Destroy()
 	end
 end
+
+function modifier_imba_ball_lightning:OnDestroy()
+	if not IsServer() then return end
+	
+	local parent = self:GetParent()
+	
+	Timers:CreateTimer(FrameTime(), function()
+		parent:StopSound("Hero_StormSpirit.BallLightning.Loop")
+	end)
+end
+
+
 
 function modifier_imba_ball_lightning:CheckState()
 	local state	=	{

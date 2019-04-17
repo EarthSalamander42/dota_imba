@@ -99,3 +99,4 @@
 "DOTA_Tooltip_ability_special_bonus_imba_faceless_void_8"				"Chrono-cleave"
 "DOTA_Tooltip_ability_special_bonus_imba_faceless_void_8_Description"	"Chronosphere causes Faceless Void's attacks to cleave 600 units away at 50% damage."
 "DOTA_Tooltip_ability_special_bonus_imba_faceless_void_9"				"+500 Time Walk Cast Range"
+"DOTA_Tooltip_ability_special_bonus_imba_faceless_void_10"				"+175 Chronosphere AoE"

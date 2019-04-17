@@ -180,6 +180,12 @@ function imba_enigma_malefice:IsRefreshable() 			return true  end
 function imba_enigma_malefice:IsStealable() 			return true  end
 function imba_enigma_malefice:IsNetherWardStealable() 	return false end
 
+function imba_enigma_malefice:OnUpgrade()
+	if self:GetLevel() == 1 then
+		self:ToggleAutoCast()
+	end
+end
+
 function imba_enigma_malefice:OnOwnerSpawned()
 	if not IsServer() then return end
 	-- Two ways to ensure talents get added properly I guess
@@ -198,6 +204,10 @@ function imba_enigma_malefice:GetAOERadius()
 	else
 		return 0
 	end
+end
+
+function imba_enigma_malefice:GetBehavior()
+	return DOTA_ABILITY_BEHAVIOR_AOE + DOTA_ABILITY_BEHAVIOR_UNIT_TARGET + DOTA_ABILITY_BEHAVIOR_AUTOCAST
 end
 
 function imba_enigma_malefice:OnSpellStart()
@@ -271,7 +281,10 @@ function modifier_imba_enigma_malefice:OnIntervalThink()
 	ApplyDamage(damageTable)
 	target:AddNewModifier(caster, ability, "modifier_stunned", {duration = self.stun_duration})
 	EmitSoundOn("Hero_Enigma.MaleficeTick", target)
-	SearchForEngimaThinker(caster, self:GetParent(), ability:GetSpecialValueFor("pull_strength"))
+	
+	if ability:GetAutoCastState() then
+		SearchForEngimaThinker(caster, self:GetParent(), ability:GetSpecialValueFor("pull_strength"))
+	end
 end
 
 --=================================================================================================================

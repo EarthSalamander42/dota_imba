@@ -4646,7 +4646,7 @@
 		"AbilityCastPoint"				"0.0"
 		"AbilityCastRange"				"500"
 		"AbilityCooldown"				"14.0 13.0 12.0 11.0"
-		"AbilityManaCost"				"125"
+		"AbilityManaCost"				"100"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -4673,7 +4673,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"sleep_duration"			"2.0 2.75 3.5 4.25"
+				"sleep_duration"			"2.0 3.0 4.0 5.0"
 			}
 			"04"
 			{
@@ -4738,7 +4738,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"sleep_duration"			"2.0 2.75 3.5 4.25"
+				"sleep_duration"			"2.0 3.0 4.0 5.0"
 			}
 			"04"
 			{
@@ -4928,11 +4928,11 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"100.0"
+		"AbilityCooldown"				"60.0"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"125 175 225 275"
+		"AbilityManaCost"				"125 175 225"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -10507,7 +10507,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"10 9 8 7"
+		"AbilityCooldown"				"14 13 12 11"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -10550,7 +10550,7 @@
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"speed"						"1050"
+				"speed"						"900"
 			}
 			"08"
 			{
@@ -10566,6 +10566,42 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"cast_range"				"1150"
+			}
+			
+			"11"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"pull_duration"				"0.2"
+			}
+			"12"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"movement_slow"				"60"
+			}
+			"13"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"slow_duration"				"2"
+			}
+			"14"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"scepter_distance"		"1725"
+			}
+			"15"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"scepter_speed"		"1200"
+			}
+			"16"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"pull_distance"		"100"
+			}
+			"17"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"basic_slow_duration"		"0.75"
 			}
 		}
 	}
@@ -10661,12 +10697,12 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"cleave_distance"		"625"
+				"cleave_distance"		"650"
 			}
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"splash_radius"			"330"
+				"splash_radius"			"360"
 			}
 			"09"
 			{
@@ -10706,7 +10742,7 @@
 			"16"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius_scepter"		"900"
+				"radius_scepter"		"1200"
 			}
 			"17"
 			{
@@ -10770,7 +10806,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"25"
+		"AbilityCooldown"				"26 24 22 20"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -10783,7 +10819,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"100 150 200 250"
+				"damage"				"80 160 240 320"
 			}
 			"02"
 			{
@@ -10798,7 +10834,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"slow_duration"			"2.5 3.0 3.5 4.0"
+				"slow_duration"			"3.25"
 			}
 			"05"
 			{
@@ -26815,7 +26851,7 @@
 		"AbilityCooldown"				"24 18 12 6"
 		"AbilityManaCost"				"40"
 
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_DIRECTIONAL | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
@@ -27531,6 +27567,34 @@
 		}
 	}	
 
+	//=================================================================================================================
+	// Increased Chronosphere Radius
+	//=================================================================================================================
+	"special_bonus_imba_faceless_void_10" 
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"        "imba_faceless_void_chronosphere"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"175"
+			}
+		}
+	}
+	
 	//=================================================================================================================
 	// Juggernaut's Blade Fury
 	//=================================================================================================================
@@ -39318,17 +39382,17 @@
 			"02"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"melee_aspd"		"5"
+				"melee_aspd"		"3"
 			}
 			"03"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"melee_armor"		"0.5"
+				"melee_armor"		"0"
 			}
 			"04"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"melee_mres"		"0.5"
+				"melee_mres"		"0"
 			}
 			"05"
 			{
@@ -39338,7 +39402,7 @@
 			"06"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"melee_hp"			"20"
+				"melee_hp"			"16"
 			}
 			"07"
 			{

@@ -1315,12 +1315,12 @@ function modifier_rubick_spellsteal_hidden:OnDestroy() end
 
 function modifier_rubick_spellsteal_hidden:DeclareFunctions()
 	local funcs = {
-		MODIFIER_EVENT_ON_ABILITY_FULLY_CAST,
+		MODIFIER_EVENT_ON_ABILITY_EXECUTED,
 	}
 	return funcs
 end
 
-function modifier_rubick_spellsteal_hidden:OnAbilityFullyCast( params )
+function modifier_rubick_spellsteal_hidden:OnAbilityExecuted( params )
 	if IsServer() then
 		if params.unit==self:GetParent() and (not params.ability:IsItem()) then
 			return

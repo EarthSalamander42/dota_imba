@@ -537,8 +537,29 @@ function Imbattlepass:GetHeroEffect(hero)
 --				ParticleManager:SetParticleControlEnt(pfx2, 0, hero, PATTACH_POINT_FOLLOW, "attach_attack1", hero:GetAbsOrigin(), true)
 --				ParticleManager:SetParticleControlEnt(pfx2, 1, hero, PATTACH_POINT_FOLLOW, "attach_attack2", hero:GetAbsOrigin(), true)
 			end
+		-- elseif hero:GetUnitName() == "npc_dota_hero_enigma" then
+			-- if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= 0 then -- idk think of a number later
+				-- Imbattlepass:SetupMythical(hero:GetPlayerID(), "models/items/enigma/absolute_zero_updated_armour/absolute_zero_updated_armour.vmdl")
+				-- Imbattlepass:SetupMythical(hero:GetPlayerID(), "models/items/enigma/absolute_zero_updated_arms/absolute_zero_updated_arms.vmdl")
+				-- Imbattlepass:SetupMythical(hero:GetPlayerID(), "models/items/enigma/absolute_zero_updated_head/absolute_zero_updated_head.vmdl")
+			-- end
 		end
 	end
+end
+
+function Imbattlepass:SetupMythical(ID, wearable_model)
+	-- This is to keep running the function until the proper hero is found
+	if PlayerResource:GetSelectedHeroEntity(ID) == nil then
+		Timers:CreateTimer(0.1, function()
+			Imbattlepass:SetupMythical(ID, wearable_model)
+		end)
+
+		return
+	end
+
+	local hero = PlayerResource:GetSelectedHeroEntity(ID)
+	print("Run mythical swap cosmetic:", wearable_model)
+	Wearables:SwapWearable(hero, wearable_model)
 end
 
 function Imbattlepass:SetupImmortal(ID, wearable_model)

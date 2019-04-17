@@ -196,8 +196,9 @@
 	"item_imba_manta"						"REMOVE" // Holy god damn lag
 	"item_recipe_imba_bloodstone"			"REMOVE"
 	"item_imba_bloodstone"					"REMOVE"
-	"item_recipe_imba_stonework_pendant"	"REMOVE"
-	"item_imba_stonework_pendant"			"REMOVE" // Too many bugs associated with it which cannot be fixed without overhauling dozens of abilities
+	"item_recipe_imba_gungnir"				"REMOVE"
+	"item_imba_gungnir"						"REMOVE" // Goodbye sweet prince
+
 
 	//=================================================================================================================
 	//-----------------------------------------------------------------------------------------------------------------
@@ -932,40 +933,20 @@
 				"var_type"				"FIELD_INTEGER"
 				"bonus_stats"			"5"
 			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"attack_speed_aura"		"20"
-			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"hp_regen_aura"			"12"
 			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"aura_radius"			"900"
-			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health_min"			"2500"
+				"health_min"			"3000"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"speed_base"			"425"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"tooltip_range"			"700"
-			}
-			"08"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"tooltip_bounty"		"200"
+				"speed_base"			"550"
 			}
 		}
 	}
@@ -975,7 +956,7 @@
 	//=================================================================================================================
 	"item_recipe_headdress"
 	{
-		"ItemCost"						"295"	
+		"ItemCost"						"220"	
 	}
 
 	//=================================================================================================================
@@ -1010,7 +991,7 @@
 	//=================================================================================================================
 	"item_recipe_buckler"
 	{
-	
+		"ItemCost"						"245"
 	}
 
 	//=================================================================================================================
