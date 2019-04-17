@@ -35,7 +35,7 @@
 "DOTA_Tooltip_ability_imba_huskar_berserkers_blood_hp_threshold_max" 				"%HP FOR MAX BONUS:"
 
 "DOTA_Tooltip_ability_imba_huskar_life_break"										"Life Break"
-"DOTA_Tooltip_ability_imba_huskar_life_break_Description"							"Huskar draws upon his health to break an enemy's life, leaping at a target within attack range to shatter a percentage of that hero's current health, and slowing them.  While leaping, Huskar is Spell Immune.\n\nDISPEL TYPE: Basic Dispel\n\nUpgradable by Aghanim's Scepter."
+"DOTA_Tooltip_ability_imba_huskar_life_break_Description"							"Huskar draws upon his health to break an enemy's life, leaping at a target within attack range to shatter a percentage of that hero's current health, and slowing them.  While leaping, Huskar is Spell Immune.\n\nDISPEL TYPE: Basic Dispel\n\nUpgradable by Aghanim's Scepter.\n<font color='#FF7800'>Greater Sacrifice: </font>If the amount of damage that Huskar receives from Life Break (before reductions) is greater than the damage to be inflicted, use the self-damage value instead."
 "DOTA_Tooltip_ability_imba_huskar_life_break_Lore"									"No matter the danger, Huskar thrusts himself into melees that only he can survive."
 "DOTA_Tooltip_ability_imba_huskar_life_break_Note0"									"If Huskar is disabled during the charge or the target moves more than 1400 units in 0.015 seconds, the charge stops."
 "DOTA_Tooltip_ability_imba_huskar_life_break_Note1"									"Slow works on Spell Immune units."

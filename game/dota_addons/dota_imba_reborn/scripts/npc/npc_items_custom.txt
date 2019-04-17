@@ -15118,7 +15118,7 @@
 		
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"1000"
+		"ItemCost"						"500"
 		"ItemShopTags"					""
 		
 		// Recipe
@@ -15158,7 +15158,7 @@
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"50"
-		"ItemCost"						"9500"
+		"ItemCost"						"9000"
 		"ItemShopTags"					"damage;attack_speed;int;str;hard_to_tag"
 		"ItemQuality"					"artifact"
 		"ItemAliases"					"lance;longinus;lance of longinus"
@@ -15266,14 +15266,9 @@
 			"19"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"god_piercing_duration"	"3"
+				"god_piercing_duration"	"5"
 			}
 			"20"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"divergent_thrust_duration"	"3"
-			}
-			"21"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"base_attack_range_melee"	"90"
@@ -15295,7 +15290,7 @@
 		
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"1125"
+		"ItemCost"						"600"
 		"ItemShopTags"					""
 		
 		// Recipe
@@ -15304,7 +15299,7 @@
 		"ItemResult"					"item_imba_origin"
 		"ItemRequirements"
 		{
-			"01"						"item_imba_spirit_vessel;item_blade_mail;item_ultimate_orb;item_oblivion_staff"
+			"01"						"item_soul_booster;item_ultimate_orb;item_oblivion_staff;item_platemail"
 		}
 	}
 	
@@ -15347,22 +15342,22 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_strength"		"12"
+				"bonus_strength"		"10"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_agility"			"12"
+				"bonus_agility"			"10"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"30"
+				"bonus_intellect"		"20"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"32"
+				"bonus_damage"			"10"
 			}
 			"05"
 			{
@@ -15372,22 +15367,22 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_armor"			"8"
+				"bonus_armor"			"10"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_health"			"325"
+				"bonus_health"			"625"
 			}
 			"08"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"bonus_mana_regen"		"3.75"
+				"var_type"				"FIELD_INTEGER"
+				"bonus_mana"			"625"
 			}
 			"09"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_move_speed"		"20"
+				"var_type"				"FIELD_FLOAT"
+				"bonus_mana_regen"		"1.25"
 			}
 			
 			
