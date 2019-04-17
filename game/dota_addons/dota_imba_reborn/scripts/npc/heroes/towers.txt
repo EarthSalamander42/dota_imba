@@ -92,7 +92,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"splash_damage_pct"				"25 35 45"
+				"splash_damage_pct"				"25 35 45 55"
 			}
 
 			"02"

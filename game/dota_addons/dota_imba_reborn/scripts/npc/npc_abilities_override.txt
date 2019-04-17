@@ -198,6 +198,7 @@
 	"item_imba_bloodstone"					"REMOVE"
 	"item_recipe_imba_gungnir"				"REMOVE"
 	"item_imba_gungnir"						"REMOVE" // Goodbye sweet prince
+	"item_imba_stonework_pendant"			"REMOVE" // Currently all sorts of broken
 
 
 	//=================================================================================================================
@@ -1875,7 +1876,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_per_second"		"10 40 70 100"
+				"damage_per_second"		"30 60 90 120"
 			}
 			"03"
 			{
