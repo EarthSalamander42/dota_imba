@@ -1,6 +1,6 @@
 #base heroes/bristleback/hero.txt
 #base heroes/enchantress/hero.txt
-//#base heroes/huskar/hero.txt
+#base heroes/huskar/hero.txt
 #base heroes/keeper_of_the_light/hero.txt
 #base heroes/rubick/hero.txt
 #base heroes/shadow_shaman/hero.txt

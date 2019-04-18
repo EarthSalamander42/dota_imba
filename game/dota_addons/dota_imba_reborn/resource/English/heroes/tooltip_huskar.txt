@@ -2,16 +2,18 @@
 
 //Huskar
 "DOTA_Tooltip_ability_imba_huskar_inner_vitality"									"Inner Vitality"
-"DOTA_Tooltip_ability_imba_huskar_inner_vitality_Description"						"Unlocks the regenerative power of a friendly unit, with healing based upon its primary attribute. If the target is below 35%%, it will heal faster.  Lasts 16 seconds."
+"DOTA_Tooltip_ability_imba_huskar_inner_vitality_Description"						"Unlocks the regenerative power of a friendly unit, with healing based upon its primary attribute. If the target is below 35%%, it will heal faster.  Lasts 16 seconds.\n<font color='#FF7800'>Final Stand: </font>If the target is below %final_stand_hp_threshold%%% health, they gain %final_stand_status_resist%%% status resistance."
 "DOTA_Tooltip_ability_imba_huskar_inner_vitality_Lore"								"While Huskar has little use for magic, this minor enchantment was learned from the Dazzle and the Dezun priests, to be used in times of great injury."
 "DOTA_Tooltip_ability_imba_huskar_inner_vitality_Note0"								"The HP percentage is checked every second and the regeneration adjusted accordingly."
 "DOTA_Tooltip_ability_imba_huskar_inner_vitality_Note1"								"Can be cast on Spell Immune units."
+"DOTA_Tooltip_ability_imba_huskar_inner_vitality_Note2"								"Inner Vitality is automatically leveled up at Levels 3, 6, 9, and 12."
 "DOTA_Tooltip_ability_imba_huskar_inner_vitality_heal"								"HEALTH REGEN:"
 "DOTA_Tooltip_ability_imba_huskar_inner_vitality_tooltip_attrib_bonus"				"%BONUS FROM ATTRIBUTE:"
 "DOTA_Tooltip_ability_imba_huskar_inner_vitality_tooltip_hurt_attrib_bonus"			"%BONUS WHEN HURT:"
 
 "DOTA_Tooltip_ability_imba_huskar_inner_fire"									"Inner Fire"
-"DOTA_Tooltip_ability_imba_huskar_inner_fire_Description"						"In a fiery rage, knocks all nearby enemies away from you to a fixed distance, dealing damage and disarming them.\n<font color='#FF7800'>Raze Land:</font> Inner Fire also sets the affected radius ablaze for %raze_land_duration% seconds, dealing damage equal to %raze_land_strength_pct%%% of the caster's strength every %raze_land_damage_interval% seconds. Each tick also destroys any trees and visible enemy observer/sentry wards within the radius."
+"DOTA_Tooltip_ability_imba_huskar_inner_fire_Description"						"In a fiery rage, knocks all nearby enemies away from you to a fixed distance, dealing damage and disarming them.\n<font color='#FF7800'>Raze Land:</font> Inner Fire also sets the affected radius ablaze for %raze_land_duration% seconds, dealing damage equal to %raze_land_strength_pct%%% of the caster's strength and applying a Burning Spear stack every %raze_land_damage_interval% seconds. Each tick also destroys any trees and visible enemy observer/sentry wards within the radius."
+"DOTA_Tooltip_ability_imba_huskar_inner_fire_Note0"								"Raze Land does not apply any Burning Spear stacks if the caster does not have the ability or it is not yet learned."
 "DOTA_Tooltip_ability_imba_huskar_inner_fire_damage"								"DAMAGE:"
 "DOTA_Tooltip_ability_imba_huskar_inner_fire_disarm_duration"						"DISARM DURATION:"
 "DOTA_Tooltip_ability_imba_huskar_inner_fire_radius"								"RADIUS:"
@@ -35,11 +37,13 @@
 "DOTA_Tooltip_ability_imba_huskar_berserkers_blood_hp_threshold_max" 				"%HP FOR MAX BONUS:"
 
 "DOTA_Tooltip_ability_imba_huskar_life_break"										"Life Break"
-"DOTA_Tooltip_ability_imba_huskar_life_break_Description"							"Huskar draws upon his health to break an enemy's life, leaping at a target within attack range to shatter a percentage of that hero's current health, and slowing them.  While leaping, Huskar is Spell Immune.\n\nDISPEL TYPE: Basic Dispel\n\nUpgradable by Aghanim's Scepter.\n<font color='#FF7800'>Greater Sacrifice: </font>If the amount of damage that Huskar receives from Life Break (before reductions) is greater than the damage to be inflicted, use the self-damage value instead."
+"DOTA_Tooltip_ability_imba_huskar_life_break_Description"							"Huskar draws upon his health to break an enemy's life, leaping at a target within attack range to shatter a percentage of that hero's current health, and slowing them.  While leaping, Huskar is Spell Immune.\n\nDISPEL TYPE: Basic Dispel\n\nUpgradable by Aghanim's Scepter.\n<font color='#FF7800'>Harakiri: </font>If auto-cast is on, Life Break can be self-cast. Huskar is still affected by the slow debuff.\n<font color='#FF7800'>Sacrificial Dagger: </font>Upon successfully landing Life Break, creates a burning dagger for %sac_dagger_duration% seconds which rotates around Huskar. Deals damage equal to %sac_dagger_dmg_pct%%% of the Life Break damage dealt (after reductions). Half of this damage is physical, while the other half is magical."
 "DOTA_Tooltip_ability_imba_huskar_life_break_Lore"									"No matter the danger, Huskar thrusts himself into melees that only he can survive."
-"DOTA_Tooltip_ability_imba_huskar_life_break_Note0"									"If Huskar is disabled during the charge or the target moves more than 1400 units in 0.015 seconds, the charge stops."
+"DOTA_Tooltip_ability_imba_huskar_life_break_Note0"									"If Huskar is disabled during the charge or the target moves more than 1450 units in 0.015 seconds, the charge stops."
 "DOTA_Tooltip_ability_imba_huskar_life_break_Note1"									"Slow works on Spell Immune units."
 "DOTA_Tooltip_ability_imba_huskar_life_break_Note2"									"Life Break cannot be disjointed."
+"DOTA_Tooltip_ability_imba_huskar_life_break_Note3"									"Sacrificial Dagger spawns in a random direction 150 distance away from the caster, rotates at a speed of 150, and has a collision radius of 150."
+"DOTA_Tooltip_ability_imba_huskar_life_break_Note4"									"Sacrificial Dagger deals damage every frame, with the total damage per second  equal to the Life Break damage."
 "DOTA_Tooltip_ability_imba_huskar_life_break_tooltip_health_damage"					"%DAMAGE DEALT:"
 "DOTA_Tooltip_ability_imba_huskar_life_break_tooltip_health_cost_percent"			"%DAMAGE TAKEN:"
 "DOTA_Tooltip_ability_imba_huskar_life_break_movespeed"								"%MOVEMENT SLOW:"
@@ -50,12 +54,21 @@
 
 "DOTA_Tooltip_modifier_imba_huskar_inner_vitality"					"Inner Vitality"
 "DOTA_Tooltip_modifier_imba_huskar_inner_vitality_Description"		"Restoring %fMODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT% health a second."
+
 "DOTA_Tooltip_modifier_imba_huskar_burning_spear_counter"				"Burning Spear"
 "DOTA_Tooltip_modifier_imba_huskar_burning_spear_counter_Description"	"YOU ARE ON FIRE! Taking periodic damage."
-"DOTA_Tooltip_modifier_imba_huskar_berserkers_blood"					"Berserker's Blood"
-"DOTA_Tooltip_modifier_imba_huskar_berserkers_blood_Description"		"Attack Speed increased by %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT% and Magic Damage Resistance by %dMODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS%%%."
+
+"DOTA_Tooltip_modifier_imba_huskar_berserkers_blood_crimson_priest"					"Crimson Priest"
+"DOTA_Tooltip_modifier_imba_huskar_berserkers_blood_crimson_priest_Description"		"Dazzle's magical essence lingers on, preventing death while under this effect."
+
 "DOTA_Tooltip_modifier_imba_huskar_life_break_slow"					"Life Break"
 "DOTA_Tooltip_modifier_imba_huskar_life_break_slow_Description"		"Movement speed reduced by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%."
 
+"DOTA_Tooltip_modifier_imba_huskar_life_break_sac_dagger_tracker"					"Sacrificial Dagger"
+"DOTA_Tooltip_modifier_imba_huskar_life_break_sac_dagger_tracker_Description"		"A flaming dagger is rotating around you, dealing physical and magical damage on contact every frame, up to %dMODIFIER_PROPERTY_TOOLTIP% damage a second."
+
 "DOTA_Tooltip_modifier_imba_huskar_inner_fire_disarm"	"Inner Fire"
 "DOTA_Tooltip_modifier_imba_huskar_inner_fire_disarm_Description"	"Disarmed by Huskar's Inner Fire"
+
+"DOTA_Tooltip_modifier_imba_huskar_inner_fire_raze_land"				"Raze Land"
+"DOTA_Tooltip_modifier_imba_huskar_inner_fire_raze_land_Description"	"Taking periodic damage and gaining Burning Spear stacks."

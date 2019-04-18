@@ -78,18 +78,6 @@ function modifier_generic_orb_effect_lua:OnAttack( params )
 
 		-- run OrbFire script if available
 		if self.ability.OnOrbFire then self.ability:OnOrbFire( params ) end
-
-		-- create custom projectile
-		-- if self.ability.GetProjectileName then 
-		-- 	local info = {
-		-- 		Target = params.target,
-		-- 		Source = self:GetParent(),
-		-- 		Ability = self.ability,	
-		-- 		EffectName = self.ability:GetProjectileName(),
-		-- 		iMoveSpeed = self:GetParent():GetProjectileSpeed(),
-		-- 	}
-		-- 	ProjectileManager:CreateTrackingProjectile(info)
-		-- end
 	end
 
 	self.cast = false
@@ -150,12 +138,13 @@ function modifier_generic_orb_effect_lua:OnOrder( params )
 	end
 end
 
+-- This isn't perfect because it will still show the orb if you autocast it against a magic immune target, even if the orb cannot be cast on them
 function modifier_generic_orb_effect_lua:GetModifierProjectileName( params )
-	-- print("MODIFIER_PROPERTY_PROJECTILE_NAME")
-	-- for k,v in pairs(params) do
-		-- print(k,v)
-	-- end
-	return true
+	if self.ability.GetProjectileName then
+		if self.cast or (self.ability:GetAutoCastState() and self.ability:IsFullyCastable()) then
+			return self.ability:GetProjectileName()
+		end
+	end
 end
 
 --------------------------------------------------------------------------------
