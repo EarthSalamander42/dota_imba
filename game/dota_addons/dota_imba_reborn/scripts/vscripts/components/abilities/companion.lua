@@ -14,7 +14,6 @@
 --
 -- Editors:
 --     Cookies, 01.2016
---     suthernfriend, 03.02.2018
 
 if companion_morph == nil then companion_morph = class({}) end
 
