@@ -278,24 +278,28 @@ TOWER_ABILITIES = {}
 TOWER_ABILITIES["tower1"] = {
 	"imba_tower_healing_tower",
 	"imba_tower_tenacity",
+	"imba_tower_thorns",
 }
 TOWER_ABILITIES["tower2"] = {
 	"imba_tower_healing_tower",
-	"imba_tower_regeneration",
 	"imba_tower_tenacity",
-	"imba_tower_toughness",
+	"imba_tower_thorns",
+	"imba_tower_regeneration",
 }
 TOWER_ABILITIES["tower3"] = {
 	"imba_tower_healing_tower",
-	"imba_tower_regeneration",
 	"imba_tower_tenacity",
+	"imba_tower_thorns",
+	"imba_tower_regeneration",
 	"imba_tower_toughness",
 }
 TOWER_ABILITIES["tower4"] = {
 	"imba_tower_healing_tower",
-	"imba_tower_regeneration",
 	"imba_tower_tenacity",
+	"imba_tower_thorns",
+	"imba_tower_regeneration",
 	"imba_tower_toughness",
+	"imba_tower_doppleganger",
 }
 
 
@@ -388,7 +392,7 @@ IGNORE_FOUNTAIN_UNITS = {
 	"npc_dota_elder_titan_ancestral_spirit",
 	"npc_dummy_unit",
 	"npc_dota_hero_dummy_dummy",
-	"npc_imba_donator_companion",
+	"npc_donator_companion",
 	"npc_dota_wisp_spirit",
 	"npc_dota_mutation_golem"
 }

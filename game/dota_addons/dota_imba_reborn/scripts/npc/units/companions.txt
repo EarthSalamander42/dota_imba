@@ -5,7 +5,7 @@
 	//=================================================================================
 	// Donator Companion following hero
 	//=================================================================================
-	"npc_imba_donator_companion"
+	"npc_donator_companion"
 	{
 		// General
 		//----------------------------------------------------------------
@@ -70,193 +70,193 @@
 		"VisionNighttimeRange"      "0"
 	}
 
-	"npc_imba_donator_companion_demi_doom"
+	"npc_donator_companion_demi_doom"
 	{
-		"BaseClass"					"npc_imba_donator_companion"
+		"BaseClass"					"npc_donator_companion"
 		"Model"						"models/courier/doom_demihero_courier/doom_demihero_courier.vmdl"
 		"ModelScale"				"0.9"
 	}
 
-	"npc_imba_donator_companion_carty"
+	"npc_donator_companion_carty"
 	{
-		"BaseClass"					"npc_imba_donator_companion"
+		"BaseClass"					"npc_donator_companion"
 		"Model"						"models/items/courier/carty/carty.vmdl"
 		"ModelScale"				"0.9"
 	}
 
-	"npc_imba_donator_companion_carty_dire"
+	"npc_donator_companion_carty_dire"
 	{
-		"BaseClass"					"npc_imba_donator_companion"
+		"BaseClass"					"npc_donator_companion"
 		"Model"						"models/items/courier/carty_dire/carty_dire_flying.vmdl"
 		"ModelScale"				"0.9"
 	}
 
-	"npc_imba_donator_companion_llama"
+	"npc_donator_companion_llama"
 	{
-		"BaseClass"					"npc_imba_donator_companion"
+		"BaseClass"					"npc_donator_companion"
 		"Model"						"models/items/courier/livery_llama_courier/livery_llama_courier.vmdl"
 		"ModelScale"				"0.9"
 	}
 
-	"npc_imba_donator_companion_jumo"
+	"npc_donator_companion_jumo"
 	{
-		"BaseClass"					"npc_imba_donator_companion"
+		"BaseClass"					"npc_donator_companion"
 		"Model"						"models/items/courier/jumo/jumo.vmdl"
 		"ModelScale"				"0.9"
 	}
 
-	"npc_imba_donator_companion_jin"
+	"npc_donator_companion_jin"
 	{
-		"BaseClass"					"npc_imba_donator_companion"
+		"BaseClass"					"npc_donator_companion"
 		"Model"						"models/items/courier/jin_yin_white_fox/jin_yin_white_fox.vmdl"
 		"ModelScale"				"0.9"
 	}
 
-	"npc_imba_donator_companion_amaterasu"
+	"npc_donator_companion_amaterasu"
 	{
-		"BaseClass"					"npc_imba_donator_companion"
+		"BaseClass"					"npc_donator_companion"
 		"Model"						"models/items/courier/amaterasu/amaterasu.vmdl"        
 		"ModelScale"				"0.9"
 	}
 
-	"npc_imba_donator_companion_boooofus"
+	"npc_donator_companion_boooofus"
 	{
-		"BaseClass"					"npc_imba_donator_companion"
+		"BaseClass"					"npc_donator_companion"
 		"Model"						"models/items/courier/boooofus_courier/boooofus_courier.vmdl"        
 		"ModelScale"				"0.9"
 	}
 
-	"npc_imba_donator_companion_duskie"
+	"npc_donator_companion_duskie"
 	{
-		"BaseClass"					"npc_imba_donator_companion"
+		"BaseClass"					"npc_donator_companion"
 		"Model"						"models/items/courier/duskie/duskie.vmdl"        
 		"ModelScale"				"0.9"
 	}
 
-	"npc_imba_donator_companion_baekho"
+	"npc_donator_companion_baekho"
 	{
-		"BaseClass"					"npc_imba_donator_companion"
+		"BaseClass"					"npc_donator_companion"
 		"Model"						"models/items/courier/baekho/baekho.vmdl"        
 		"ModelScale"				"0.9"
 	}
 
-	"npc_imba_donator_companion_devourling"
+	"npc_donator_companion_devourling"
 	{
-		"BaseClass"					"npc_imba_donator_companion"
+		"BaseClass"					"npc_donator_companion"
 		"Model"						"models/items/courier/devourling/devourling.vmdl"        
 		"ModelScale"				"0.9"
 	}
 
-	"npc_imba_donator_companion_sappling"
+	"npc_donator_companion_sappling"
 	{
-		"BaseClass"					"npc_imba_donator_companion"
+		"BaseClass"					"npc_donator_companion"
 		"Model"						"models/items/courier/little_sappling_style1/little_sappling_style1.vmdl"        
 		"ModelScale"				"0.9"
 	}
 
-	"npc_imba_donator_companion_itsy"
+	"npc_donator_companion_itsy"
 	{
-		"BaseClass"					"npc_imba_donator_companion"
+		"BaseClass"					"npc_donator_companion"
 		"Model"						"models/items/courier/itsy/itsy.vmdl"        
 		"ModelScale"				"0.85"
 	}
 
-	"npc_imba_donator_companion_golem"
+	"npc_donator_companion_golem"
 	{
-		"BaseClass"					"npc_imba_donator_companion"
+		"BaseClass"					"npc_donator_companion"
 		"Model"						"models/items/warlock/golem/ti_8_warlock_darkness_apostate_golem/ti_8_warlock_darkness_apostate_golem.vmdl"        
 		"ModelScale"				"0.35"
 	}
 
 	// UNIQUE COMPANIONS
 	// EarthSalamander #42
-	"npc_imba_donator_companion_cookies"
+	"npc_donator_companion_cookies"
 	{
 		"BaseClass"					"npc_dota_roshan"
 		"Model"						"models/courier/baby_rosh/babyroshan.vmdl"
 		"ModelScale"				"0.65"
 	}
 
-	"npc_imba_donator_companion_baumi"
+	"npc_donator_companion_baumi"
 	{
-		"BaseClass"					"npc_imba_donator_companion"
+		"BaseClass"					"npc_donator_companion"
 		"Model"						"models/courier/baby_rosh/babyroshan.vmdl"        
 		"ModelScale"				"0.6"
 	}
 
-	"npc_imba_donator_companion_icefrog"
+	"npc_donator_companion_icefrog"
 	{
-		"BaseClass"					"npc_imba_donator_companion"
+		"BaseClass"					"npc_donator_companion"
 		"Model"						"models/courier/frog/frog.vmdl"        
 		"ModelScale"				"0.9"
 	}
 
-	"npc_imba_donator_companion_admiral_bulldog"
+	"npc_donator_companion_admiral_bulldog"
 	{
-		"BaseClass"					"npc_imba_donator_companion"
+		"BaseClass"					"npc_donator_companion"
 		"Model"						"models/items/lone_druid/true_form/elemental_curse_set_elemental_curse_true_form/elemental_curse_set_elemental_curse_true_form.vmdl"        
 		"ModelScale"				"0.3"
 	}
 
-	"npc_imba_donator_companion_hamahe"
+	"npc_donator_companion_hamahe"
 	{
-		"BaseClass"					"npc_imba_donator_companion"
+		"BaseClass"					"npc_donator_companion"
 		"Model"						"models/items/courier/shibe_dog_cat/shibe_dog_cat.vmdl"        
 		"ModelScale"				"0.9"
 	}
 
-	"npc_imba_donator_companion_suthernfriend"
+	"npc_donator_companion_suthernfriend"
 	{
-		"BaseClass"					"npc_imba_donator_companion"
+		"BaseClass"					"npc_donator_companion"
 		"Model"						"models/creeps/roshan/roshan.vmdl"        
 		"ModelScale"				"0.45"
 	}
 
-	"npc_imba_donator_companion_acalia"
+	"npc_donator_companion_acalia"
 	{
-		"BaseClass"					"npc_imba_donator_companion"
+		"BaseClass"					"npc_donator_companion"
 		"Model"						"models/heroes/enchantress/enchantress.vmdl"
 		"ModelScale"				"0.5"
 	}
 
-	"npc_imba_donator_companion_zonnoz"
+	"npc_donator_companion_zonnoz"
 	{
-		"BaseClass"					"npc_imba_donator_companion"
+		"BaseClass"					"npc_donator_companion"
 		"Model"						"models/items/pudge/arcana/pudge_arcana_base.vmdl"
 		"ModelScale"				"0.5"
 	}
 
-	"npc_imba_donator_companion_terdic"
+	"npc_donator_companion_terdic"
 	{
-		"BaseClass"					"npc_imba_donator_companion"
+		"BaseClass"					"npc_donator_companion"
 		"Model"						"models/items/courier/shagbark/shagbark.vmdl"
 		"ModelScale"				"0.9"
 	}
 
-	"npc_imba_donator_companion_vaal"
+	"npc_donator_companion_vaal"
 	{
-		"BaseClass"					"npc_imba_donator_companion"
+		"BaseClass"					"npc_donator_companion"
 		"Model"						"models/items/courier/vaal_the_animated_constructradiant/vaal_the_animated_constructradiant.vmdl"
 		"ModelScale"				"0.9"
 	}
 
-	"npc_imba_donator_companion_exzas"
+	"npc_donator_companion_exzas"
 	{
-		"BaseClass"					"npc_imba_donator_companion"
+		"BaseClass"					"npc_donator_companion"
 		"Model"						"models/items/io/io_ti7/io_ti7.vmdl"        
 		"ModelScale"				"0.5"
 	}
 
-	"npc_imba_donator_companion_the_blind_dog"
+	"npc_donator_companion_the_blind_dog"
 	{
-		"BaseClass"					"npc_imba_donator_companion"
+		"BaseClass"					"npc_donator_companion"
 		"Model"						"models/items/courier/gnomepig/gnomepig_flying.vmdl"
 		"ModelScale"				"0.75"
 	}
 
-	"npc_imba_donator_companion_acalia"
+	"npc_donator_companion_acalia"
 	{
-		"BaseClass"					"npc_imba_donator_companion"
+		"BaseClass"					"npc_donator_companion"
 		"Model"						"models/heroes/enchantress/enchantress.vmdl"
 		"ModelScale"				"0.5"
 	}
