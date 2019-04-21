@@ -324,8 +324,8 @@ function modifier_item_imba_origin:OnCreated()
 	self.bonus_armor			=	self.ability:GetSpecialValueFor("bonus_armor")
 	
 	self.bonus_health			=	self.ability:GetSpecialValueFor("bonus_health")
+	self.bonus_mana				= 	self.ability:GetSpecialValueFor("bonus_mana")
 	self.bonus_mana_regen		=	self.ability:GetSpecialValueFor("bonus_mana_regen")
-	self.bonus_move_speed		=	self.ability:GetSpecialValueFor("bonus_move_speed")
 	
 	self.health_passive			=	self.ability:GetSpecialValueFor("health_passive")
 	self.power_passive			=	self.ability:GetSpecialValueFor("power_passive")
@@ -352,8 +352,8 @@ function modifier_item_imba_origin:DeclareFunctions()
 		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS, --GetModifierPhysicalArmorBonus
 		
 		MODIFIER_PROPERTY_HEALTH_BONUS,
+		MODIFIER_PROPERTY_MANA_BONUS,
 		MODIFIER_PROPERTY_MANA_REGEN_CONSTANT,
-		MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT,
 		
 		-- The special ability passive
 		MODIFIER_PROPERTY_HP_REGEN_AMPLIFY_PERCENTAGE,	-- Health (1)
@@ -408,12 +408,12 @@ function modifier_item_imba_origin:GetModifierHealthBonus()
 	return self.bonus_health
 end
 
-function modifier_item_imba_origin:GetModifierConstantManaRegen()
-	return self.bonus_mana_regen
+function modifier_item_imba_origin:GetModifierManaBonus()
+	return self.bonus_mana
 end
 
-function modifier_item_imba_origin:GetModifierMoveSpeedBonus_Constant()
-	return self.bonus_move_speed
+function modifier_item_imba_origin:GetModifierConstantManaRegen()
+	return self.bonus_mana_regen
 end
 
 

@@ -102,7 +102,7 @@
 // Axe's Battle Hunger
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_axe_battle_hunger"                          "Battle Hunger"
-"DOTA_Tooltip_ability_imba_axe_battle_hunger_Description"              "Enrages an enemy unit, causing it to be slowed and take damage over time until it kills enough units or until it returns to its team's fountain or the debuff expires. Axe gains movement speed for each unit affected with Battle Hunger.\n<font color='#FF7800'>Advancing Hunger:</font> If no harm is done by the target for %pause_time% seconds, freeze the duration.\n<font color='#FF7800'>Trial of Death:</font> Targets can kill a number of units in order to dispel Battle Hunger.\n<font color='#FF7800'>Blinding Rage:</font> Every attack the target has a %miss_chance_pct%% chance to attack another target in it's attack range, unless attacking Axe himself.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font>."
+"DOTA_Tooltip_ability_imba_axe_battle_hunger_Description"              "Enrages an enemy unit, causing it to be slowed and take damage over time until it kills <font color='##F7800'>enough</font> units or until it returns to its team's fountain or the debuff expires. Axe gains movement speed for each unit affected with Battle Hunger.\n<font color='#FF7800'>Advancing Hunger:</font> If no harm is done by the target for %pause_time% seconds, the duration is frozen.\n<font color='#FF7800'>Blinding Rage:</font> Every attack the target has a %maddening_chance_pct%% chance to attack another target in its attack range, unless attacking Axe himself.\n\nUpgradable by Aghanim's Scepter."
 "DOTA_Tooltip_ability_imba_axe_battle_hunger_Lore"                      "Ordinary heroes cannot withstand Mogul Khan's rage for battle, such that it injures them until it is satisfied."
 "DOTA_Tooltip_ability_imba_axe_battle_hunger_Note0"                    "Denies are also counted towards dispelling Battle Hunger."
 "DOTA_Tooltip_ability_imba_axe_battle_hunger_slow"                      "%MOVE SPEED SLOW:"
@@ -123,7 +123,7 @@
 // Axe's Counter Helix
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_axe_counter_helix"                          "Counter Helix"
-"DOTA_Tooltip_ability_imba_axe_counter_helix_Description"              "When attacked, Axe has a chance to perform a helix counter attack, dealing damage to all nearby enemies.\n<font color='#FF7800'>Brute Force:</font> When an enemy that is taunted by Berserker Call procs Counter Helix, it lets his guard down. Axe uses that chance to pierce through the flesh, dealing bonus damage.\n<font color='#FF7800'>Spin To Win:</font> On successful Counter Helix, you gain a stack of a buff (up to %stack_limit% stacks). Each stack increases radius by %radius_increase_per_stack%. Stacks last %stack_duration% and are refreshed on spin."
+"DOTA_Tooltip_ability_imba_axe_counter_helix_Description"              "When attacked, Axe has a chance to perform a helix counter attack, dealing damage to all nearby enemies.\n<font color='#FF7800'>Unceasing Top:</font> Counter Helix has no cooldown.\n<font color='#FF7800'>Brute Force:</font> When an enemy that is taunted by Berserker Call procs Counter Helix, it lets his guard down. Axe uses that chance to pierce through the flesh, dealing bonus damage.\n<font color='#FF7800'>Spin To Win:</font> On successful Counter Helix, you gain a stack of a buff (up to %stack_limit% stacks). Each stack increases radius by %radius_increase_per_stack%. Stacks last %stack_duration% and are refreshed on spin."
 "DOTA_Tooltip_ability_imba_axe_counter_helix_Lore"                      "Axe is the only reinforcement this army needs."
 "DOTA_Tooltip_ability_imba_axe_counter_helix_radius"                    "RADIUS:"
 "DOTA_Tooltip_ability_imba_axe_counter_helix_proc_chance"              "%HELIX CHANCE:"
@@ -137,7 +137,7 @@
 // Axe's Culling Blade
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_axe_culling_blade"                          "Culling Blade"
-"DOTA_Tooltip_ability_imba_axe_culling_blade_Description"              "Axe spots a weakness and strikes, instantly killing an enemy unit with low health, or dealing moderate damage otherwise. When an enemy hero is killed with Culling Blade, its cooldown is reset, and Axe and nearby allied units in %speed_aoe% radius gain bonus movement speed and attack speed.\n<font color='#FF7800'>War Spoils:</font> Killing an enemy hero with Culling Blade heals Axe by %max_health_kill_heal_pct%% of his max health.\n<font color='#FF7800'>Dunkmaster:</font> Successfully killing an enemy grants a stack of buff (up to %stack_limit% stacks). Each stack increases kill threshold by %threshold_increase% as well as max hp threshold by %threshold_max_hp_pct_increase%%. Stacks are refreshed on a successful kill and last %stack_duration% seconds. If you fail to kill a hero with Culling Blade, lose all Dunkmaster stacks."
+"DOTA_Tooltip_ability_imba_axe_culling_blade_Description"              "Axe spots a weakness and strikes, instantly killing an enemy unit with low health, or dealing moderate damage otherwise. When an enemy hero is killed with Culling Blade, its cooldown is reset, and Axe and nearby allied units in %speed_aoe% radius gain bonus movement speed and attack speed.\n<font color='#FF7800'>War Spoils:</font> Killing an enemy hero with Culling Blade heals Axe by %max_health_kill_heal_pct%%% of his max health.\n<font color='#FF7800'>Dunkmaster:</font> Successfully killing an enemy with Culling Blade grants a stack of Dunkmaster (up to %stack_limit% stacks). Each stack increases Culling Blade's kill threshold by %threshold_increase%, as well as its max HP kill threshold by %threshold_max_hp_pct_increase%%%. Stacks are refreshed on a successful kill and last %stack_duration% seconds. If Culling Blade fails to kill a hero, all Dunkmaster stacks are lost."
 "DOTA_Tooltip_ability_imba_axe_culling_blade_Note0"                    "Ignores all buffs on the target, including Shallow Grave and False Promise."
 "DOTA_Tooltip_ability_imba_axe_culling_blade_Lore"                      "YOU GET NOTHING. GOOD DAY, SIR!"
 "DOTA_Tooltip_ability_imba_axe_culling_blade_kill_threshold"            "KILL THRESHOLD:"
@@ -170,7 +170,8 @@
 "Dota_Tooltip_Ability_special_bonus_imba_axe_6_Description"             "When Counter Helix procs, it has 25% chance to immediately proc again."
 "Dota_Tooltip_Ability_special_bonus_imba_axe_7"             "Armored Helix"
 "Dota_Tooltip_Ability_special_bonus_imba_axe_7_Description"             "Counter Helix's damage is increased by 1 for each point of Armor Axe has."
-"Dota_Tooltip_Ability_special_bonus_imba_axe_8"            "+650 Culling Blade cast range"
+"Dota_Tooltip_Ability_special_bonus_imba_axe_8"            "+500 Culling Blade Cast Range"
+"Dota_Tooltip_Ability_special_bonus_imba_axe_9"				"Attacking Procs Counter Helix"
 
 // Beastmaster
 ////===============================================================================================================

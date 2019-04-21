@@ -1,0 +1,461 @@
+"DOTAAbilities"
+{
+	//=================================================================================================================
+	// Dark Seer: Vacuum
+	//=================================================================================================================
+	"imba_dark_seer_vacuum"
+	{
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_dark_seer.lua"
+		"AbilityTextureName"			"dark_seer_vacuum"			
+	
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES_STRONG"
+		"FightRecapLevel"				"1"
+		"AbilitySound"					"Hero_Dark_Seer.Vacuum"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"450 500 550 600"
+		"AbilityCastPoint"				"0.4"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"45 40 35 30"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"100 130 160 190"
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"450 550 650 750"
+				"LinkedSpecialBonus"	"special_bonus_unique_dark_seer_2"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"0.3 0.4 0.5 0.6"
+				"LinkedSpecialBonus"	"special_bonus_imba_dark_seer_vacuum_increased_duration"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"90 160 230 300"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius_tree"				"275"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cast_range_tooltip"	"450 500 550 600"
+			}
+			
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"wormhole_duration"		"1.75"
+			}
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
+	}
+
+	//=================================================================================================================
+	// Dark Seer: Wormhole
+	//=================================================================================================================
+	"imba_dark_seer_wormhole"
+	{
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_dark_seer.lua"
+		"AbilityTextureName"			"custom/vacuum_wormhole"			
+	
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES_STRONG"
+		"FightRecapLevel"				"1"
+		"AbilitySound"					"Hero_Dark_Seer.Vacuum"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"450 500 550 600"
+		"AbilityCastPoint"				"0.4"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"45 40 35 30"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"450 550 650 750"
+				"LinkedSpecialBonus"	"special_bonus_unique_dark_seer_2"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"0.3 0.4 0.5 0.6"
+				"LinkedSpecialBonus"	"special_bonus_imba_dark_seer_vacuum_increased_duration"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"90 160 230 300"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius_tree"				"275"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cast_range_tooltip"	"450 500 550 600"
+			}
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
+	}
+	
+	//=================================================================================================================
+	// Dark Seer: Ion Shell
+	//=================================================================================================================
+	"imba_dark_seer_ion_shell"
+	{
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_dark_seer.lua"
+		"AbilityTextureName"			"dark_seer_ion_shell"	
+	
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"FightRecapLevel"				"1"
+		"AbilitySound"					"Hero_Dark_Seer.Ion_Shield_Start"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"600"
+		"AbilityCastPoint"				"0.4 0.4 0.4 0.4"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"9"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"100 110 120 130"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityModifierSupportValue"	"0.0"	// just does damage
+			
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"250 275 300 325"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_per_second"		"30 60 90 120"
+				"LinkedSpecialBonus"	"special_bonus_unique_dark_seer"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"25"
+			}
+			
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"proton_explosion_radius"	"675"
+			}
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+	}
+
+	//=================================================================================================================
+	// Dark Seer: Surge
+	//=================================================================================================================
+	"imba_dark_seer_surge"
+	{
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_dark_seer.lua"
+		"AbilityTextureName"			"dark_seer_surge"
+	
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_OPTIONAL_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"  
+		"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_YES"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+		"AbilitySound"					"Hero_Dark_Seer.Surge"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"600"
+		"AbilityCastPoint"				"0.4"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"16 14 12 10"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"50"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityModifierSupportValue"	"2.5"	// Value much higher than manacost
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"6.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"speed_boost"			"35 50 65 80"
+			}
+			
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"surge_radius"			"175 250 325 400"
+			}
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_3"
+	}
+	
+	//=================================================================================================================
+	// Dark Seer: Wall of Replica
+	//=================================================================================================================
+	"imba_dark_seer_wall_of_replica"
+	{
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"components/abilities/heroes/hero_dark_seer.lua"
+		"AbilityTextureName"			"dark_seer_wall_of_replica"	
+	
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"FightRecapLevel"				"2"
+		"AbilitySound"					"Hero_Dark_Seer.Wall_of_Replica_Start"
+
+		"HasScepterUpgrade"			"1"
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1300"
+		"AbilityCastPoint"				"0.2"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"100.0 100.0 100.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"125 250 375"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"45.0"
+			}			
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"replica_damage_outgoing"	"-30 -15 0"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tooltip_outgoing"	"70 85 100"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"replica_damage_incoming"	"100"
+			}	
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tooltip_replica_total_damage_incoming"	"200"
+				"CalculateSpellDamageTooltip"	"0"
+			}				
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"width"					"1300 1450 1600"
+			}			
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"replica_scale"	"0"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"range_tooltip"			"1300 1450 1600"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"replica_damage_outgoing_scepter"	"0 20 40"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tooltip_outgoing_scepter"	"100 120 140"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"movement_slow"					"50 60 70"
+			}
+			"12"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"slow_duration"			"1.4 1.8 2.2"
+				"LinkedSpecialBonus"	"special_bonus_imba_dark_seer_wall_of_replica_increased_slow_duration"
+			}
+			
+			"13"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"scepter_rotation_speed"	"45"		
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// 
+	//=================================================================================================================
+	"special_bonus_imba_dark_seer_surge_cast_range"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_dark_seer_surge"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"400"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// 
+	//=================================================================================================================
+	"special_bonus_imba_dark_seer_vacuum_increased_duration"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_dark_seer_vacuum"
+			"02" 	"imba_dark_seer_wormhole"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"value"						"0.6"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// 
+	//=================================================================================================================
+	"special_bonus_imba_dark_seer_wall_of_replica_increased_slow_duration"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_dark_seer_wall_of_replica"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"value"						"1.5"
+			}
+		}
+	}
+}

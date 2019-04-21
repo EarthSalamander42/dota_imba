@@ -198,6 +198,7 @@
 	"item_imba_bloodstone"					"REMOVE"
 	"item_recipe_imba_gungnir"				"REMOVE"
 	"item_imba_gungnir"						"REMOVE" // Goodbye sweet prince
+	"item_imba_stonework_pendant"			"REMOVE" // Currently all sorts of broken
 
 
 	//=================================================================================================================
@@ -12093,11 +12094,6 @@
 	//=================================================================================================================
 	"clinkz_burning_army"
 	{
-		"AbilityCastRange"				"1200"
-		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"110.0"
-		"AbilityManaCost"				"125 175 225"
-
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -12115,7 +12111,7 @@
 			"03"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"count"				"4 5 6"
+				"count"				"8 10 12"
 			}
 			"04"
 			{
@@ -12125,7 +12121,7 @@
 			"05"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"spawn_interval"	"0.8"
+				"spawn_interval"	"0.4"
 			}
 		}
 	}

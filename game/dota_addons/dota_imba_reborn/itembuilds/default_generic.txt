@@ -38,8 +38,8 @@
 			"item"		"item_imba_meteor_hammer_4"
 			"item"		"item_imba_necronomicon_5"
 			"item"		"item_imba_lance_of_longinus"
-			"item"		"item_imba_rod_of_atos_2"
 			"item"		"item_imba_origin"
+			"item"		"item_imba_rod_of_atos_2"
 			"item"		"item_imba_ultimate_scepter_synth"
 			"item"		"item_imba_dagon_10"
 			"item"		"item_imba_rapier_magic"
@@ -55,9 +55,9 @@
 			"item"		"item_imba_vladmir_2"
 			"item"		"item_imba_curseblade"
 			"item"		"item_imba_stonework_pendant"
-			"item"		"item_imba_glimmerdark_shield"
 			"item"		"item_imba_siege_cuirass"
 			"item"		"item_imba_wand_of_the_brine"
+			"item"		"item_imba_glimmerdark_shield"
 			"item"		"item_imba_angelic_alliance"
 			"item"		"item_imba_hellblade"
 			"item"		"item_imba_sogat_cuirass"
@@ -71,6 +71,7 @@
 			"item"		"item_black_king_bar"
 			"item"		"item_refresher"
 			"item"		"item_imba_meteor_hammer_4"
+			"item"		"item_imba_lance_of_longinus"
 			"item"		"item_imba_rapier_cursed"
 		}
 

@@ -17,7 +17,7 @@
 
 // Clinkz's Searing Arrows
 "DOTA_Tooltip_ability_imba_clinkz_searing_arrows"                      "Searing Arrows"
-"DOTA_Tooltip_ability_imba_clinkz_searing_arrows_Description"          "Passively imbues Clinkz's arrows with fire for extra damage.\n<font color='#FF7800'>Light My Way:</font> Clinkz shoots a huge flaming arrow at the target enemy, lighting it on fire, burning %armor_burn_per_stack% of its armor every second and granting vision in %vision_radius% radius around it for some seconds."
+"DOTA_Tooltip_ability_imba_clinkz_searing_arrows_Description"          "<font color='#FF7800'>Passively</font> imbues Clinkz's arrows with fire for extra damage.\n<font color='#FF7800'>Light My Way:</font> Clinkz shoots a huge flaming arrow at the target enemy, lighting it on fire, burning %armor_burn_per_stack% of its armor every second and granting vision in %vision_radius% radius around it for some seconds."
 "DOTA_Tooltip_ability_imba_clinkz_searing_arrows_Note0"                "Passive Searing Arrows are fully disabled by Break."
 "DOTA_Tooltip_ability_imba_clinkz_searing_arrows_Note1"                "When the active debuff is removed, the armor lost is immediately returned to the target."
 "DOTA_Tooltip_ability_imba_clinkz_searing_arrows_Lore"                  "Clinkz simply lights his arrows from his flaming essence for quite the destructive effect."

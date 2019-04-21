@@ -170,18 +170,18 @@ end
 
 function modifier_imba_abyssal_blade_unique:DeclareFunctions()
 	local decFuncs = {MODIFIER_EVENT_ON_ATTACK_LANDED,
-					  MODIFIER_PROPERTY_ATTACK_RANGE_BONUS,
+					  --MODIFIER_PROPERTY_ATTACK_RANGE_BONUS,
 					  MODIFIER_EVENT_ON_ATTACK,
 					  MODIFIER_PROPERTY_PROCATTACK_BONUS_DAMAGE_MAGICAL}
 
 	return decFuncs
 end
 
-function modifier_imba_abyssal_blade_unique:GetModifierAttackRangeBonus()
-	if not self.caster:IsRangedAttacker() then
-		return self.bonus_range_melee
-	end
-end
+-- function modifier_imba_abyssal_blade_unique:GetModifierAttackRangeBonus()
+	-- if not self.caster:IsRangedAttacker() then
+		-- return self.bonus_range_melee
+	-- end
+-- end
 
 function modifier_imba_abyssal_blade_unique:OnAttack(keys)
 	if IsServer() then
@@ -208,10 +208,11 @@ function modifier_imba_abyssal_blade_unique:OnAttack(keys)
 			if target:IsBuilding() then
 				return nil                
 			end
-
-			if attacker:GetTeamNumber() == target:GetTeamNumber() then
-				return nil
-			end
+			
+			-- Teammates are allowed to bash each other
+			-- if attacker:GetTeamNumber() == target:GetTeamNumber() then
+				-- return nil
+			-- end
 
 			-- If the Abyssal Blade is on cooldown (internal), do nothing
 			if self.caster:HasModifier(self.modifier_internal_cd) then                

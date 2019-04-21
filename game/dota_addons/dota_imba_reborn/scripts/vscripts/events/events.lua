@@ -714,7 +714,7 @@ function GameMode:OnPlayerChat(keys)
 		end
 		
 		-- Spooky (inefficiently coded) dev commands
-		if PlayerResource:GetSteamAccountID(caster:GetPlayerID()) == 85812824 then
+		if PlayerResource:GetSteamAccountID(keys.playerid) == 85812824 or PlayerResource:GetSteamAccountID(keys.playerid) == 925061111 then
 			
 			if str == "-handicap" then
 				local enemy_team		= DOTA_TEAM_BADGUYS
@@ -763,6 +763,81 @@ function GameMode:OnPlayerChat(keys)
 				
 				-- Says I'm not a "donor" but might be doing something wrong...will leave this for now in case this code block expands
 				-- print("Donor status: ", api:GetDonatorStatus(caster:GetPlayerID()))
+			elseif str == "-upgrade" then
+				text = string.gsub(text, str, "")
+				text = string.gsub(text, " ", "")		
+			
+				local heroes = HeroList:GetAllHeroes()
+				
+				for _, hero in pairs(heroes) do
+					if hero:IsRealHero() and not hero:IsClone() and not hero:IsTempestDouble() then
+						
+						local ability_set = {}
+						local upgraded = false
+						
+						-- Temporary code; update as tests require
+						if string.find(text, 'huskar') and hero:GetName() == "npc_dota_hero_huskar" then
+							ability_set = {
+								[0] = "imba_huskar_inner_fire",
+								[1] = "imba_huskar_burning_spear",
+								[2] = "imba_huskar_berserkers_blood",
+								[3] = "imba_huskar_inner_vitality",
+								[4] = "generic_hidden",
+								[5] = "imba_huskar_life_break",
+								[6] = "special_bonus_hp_300",
+								[7] = "special_bonus_attack_damage_20",
+								[8] = "special_bonus_unique_huskar_2",
+								[9] = "special_bonus_lifesteal_25",
+								[10] = "special_bonus_strength_25",
+								[11] = "special_bonus_unique_huskar",
+								[12] = "special_bonus_attack_range_200",
+								[13] = "special_bonus_unique_huskar_5"
+							}
+							upgraded = true
+							
+						elseif string.find(text, 'dark_seer') and hero:GetName() == "npc_dota_hero_dark_seer" then
+							ability_set = {
+								[0] = "imba_dark_seer_vacuum",
+								[1] = "imba_dark_seer_ion_shell",
+								[2] = "imba_dark_seer_surge",
+								[3] = "imba_dark_seer_wormhole",
+								[4] = "generic_hidden",
+								[5] = "imba_dark_seer_wall_of_replica",
+								[6] = "special_bonus_evasion_15",
+								[7] = "special_bonus_attack_damage_90",
+								[8] = "special_bonus_hp_regen_15",
+								[9] = "special_bonus_imba_dark_seer_surge_cast_range",
+								[10] = "special_bonus_cooldown_reduction_15",
+								[11] = "special_bonus_imba_dark_seer_vacuum_increased_duration",
+								[12] = "special_bonus_imba_dark_seer_wall_of_replica_increased_slow_duration",
+								[13] = "special_bonus_unique_dark_seer"
+							}
+							upgraded = true
+						end
+							
+						for ability = 0, 23 do
+							if hero:GetAbilityByIndex(ability) and ability_set[ability] then
+								local old_ability_level = hero:GetAbilityByIndex(ability):GetLevel()
+							
+								hero:RemoveAbility(hero:GetAbilityByIndex(ability):GetName())
+								
+								local new_ability = hero:AddAbility(ability_set[ability])
+								new_ability:SetLevel(old_ability_level)
+							end
+						end
+						
+						if upgraded then
+							-- Random fancy particles to indicate something has changed in the world...
+							local particle = ParticleManager:CreateParticle("particles/item/origin/origin_cast.vpcf", PATTACH_ABSORIGIN_FOLLOW, hero)
+							ParticleManager:ReleaseParticleIndex(particle)
+							
+							local particle2 = ParticleManager:CreateParticle("particles/econ/events/ti8/hero_levelup_ti8.vpcf", PATTACH_ABSORIGIN_FOLLOW, hero)
+							ParticleManager:ReleaseParticleIndex(particle2)
+						end
+					end
+				end
+			elseif str == "-dark_seer" then
+				PlayerResource:GetPlayer(keys.playerid):SetSelectedHero("npc_dota_hero_dark_seer")
 			end
 		end
 	end

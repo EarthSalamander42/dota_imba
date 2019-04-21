@@ -97,9 +97,9 @@ end
 
 function modifier_item_imba_butterfly:GetModifierEvasion_Constant()
 	-- If the caster has Wind Song active, his evasion is perfect
-	if self.caster:HasModifier(self.modifier_active_song) then
-		return self.wind_song_evasion
-	end
+	-- if self.caster:HasModifier(self.modifier_active_song) then
+		-- return self.wind_song_evasion
+	-- end
 
 	-- Otherwise, just return normal evasion
 	return self.bonus_evasion
@@ -182,20 +182,42 @@ end
 -- Flutter modifier
 modifier_item_imba_butterfly_flutter = class({})
 
+function modifier_item_imba_butterfly_flutter:IsPurgable()	return false end
+
 function modifier_item_imba_butterfly_flutter:OnCreated()
 	-- Ability properties
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
-	self.particle_flutter = "particles/items2_fx/butterfly_active.vpcf"
+	-- self.particle_flutter = "particles/items2_fx/butterfly_active.vpcf"
 
 	-- Ability specials
 	self.flutter_movespeed_pct = self.ability:GetSpecialValueFor("flutter_movespeed_pct")
 
 	-- Apply Flutter effect on caster
-	local particle_flutter_fx = ParticleManager:CreateParticle(self.particle_flutter, PATTACH_ABSORIGIN_FOLLOW, self.caster)
+	-- local particle_flutter_fx = ParticleManager:CreateParticle(self.particle_flutter, PATTACH_ABSORIGIN_FOLLOW, self.caster)
+	-- ParticleManager:SetParticleControl(particle_flutter_fx, 0, self.caster:GetAbsOrigin())
+	-- ParticleManager:SetParticleControl(particle_flutter_fx, 1, self.caster:GetAbsOrigin())
+	-- ParticleManager:ReleaseParticleIndex(particle_flutter_fx)
+	
+	if not IsServer() then return end
+	
+	local particle_flutter_fx = ParticleManager:CreateParticle("particles/item/butterfly/butterfly_wind_song.vpcf", PATTACH_POINT_FOLLOW, self.caster)
 	ParticleManager:SetParticleControl(particle_flutter_fx, 0, self.caster:GetAbsOrigin())
-	ParticleManager:SetParticleControl(particle_flutter_fx, 1, self.caster:GetAbsOrigin())
-	ParticleManager:ReleaseParticleIndex(particle_flutter_fx)
+	ParticleManager:SetParticleControlEnt(particle_flutter_fx, 3, self.caster, PATTACH_POINT_FOLLOW, "attach_hitloc", self.caster:GetAbsOrigin(), true)
+	
+	self:AddParticle(particle_flutter_fx, false, false, -1, false, false)
+	
+	self:StartIntervalThink(FrameTime())
+end
+
+function modifier_item_imba_butterfly_flutter:OnIntervalThink()
+	if not IsServer() then return end
+
+	AddFOWViewer(self.caster:GetTeam(), self.caster:GetAbsOrigin(), self.caster:GetCurrentVisionRange(), FrameTime(), false)
+end
+
+function modifier_item_imba_butterfly_flutter:CheckState()
+	return {[MODIFIER_STATE_FLYING] = true}
 end
 
 function modifier_item_imba_butterfly_flutter:DeclareFunctions()

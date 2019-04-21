@@ -180,6 +180,12 @@ end
 
 function modifier_imba_wisp_tether:OnIntervalThink()
 	if IsServer() then
+		-- Morphling/Rubick exception...as per usual
+		if not self:GetAbility() or not self:GetAbility().tether_ally then
+			self:Destroy()
+			return
+		end
+		
 		self.update_timer = self.update_timer + FrameTime()
 	
 		CustomNetTables:SetTableValue(
@@ -332,6 +338,13 @@ end
 
 function modifier_imba_wisp_tether_ally:OnIntervalThink()
 	if IsServer() then
+		
+		-- Morphling/Rubick exception
+		if not self:GetAbility() then
+			self:Destroy()
+			return
+		end
+	
 		local velocity = self:GetParent():GetAbsOrigin() - self:GetCaster():GetAbsOrigin()
 		local vVelocity = velocity / FrameTime()
 		vVelocity.z = 0
@@ -387,12 +400,21 @@ function imba_wisp_tether:OnProjectileHit_ExtraData(target, location, ExtraData)
 end
 
 function modifier_imba_wisp_tether_ally:GetModifierMoveSpeedBonus_Percentage()
-	return self:GetAbility():GetSpecialValueFor("movespeed")
+	if self:GetAbility() then
+		return self:GetAbility():GetSpecialValueFor("movespeed")
+	end
 end
 
 function modifier_imba_wisp_tether_ally:OnRemoved() 
 	if IsServer() then
-		self:GetAbility().target = nil
+		self:GetParent():StopSound("Hero_Wisp.Tether.Target")
+		ParticleManager:DestroyParticle(self.pfx, false)
+		ParticleManager:ReleaseParticleIndex(self.pfx)
+	
+		if self:GetAbility() then
+			self:GetAbility().target = nil
+		end
+		
 		self:GetParent():RemoveModifierByName("modifier_imba_wisp_tether_slow_immune")
 		self:GetCaster():RemoveModifierByName("modifier_imba_wisp_tether_slow_immune")
 		self:GetParent():RemoveModifierByName("modifier_imba_wisp_tether_ally_attack")
@@ -403,10 +425,6 @@ function modifier_imba_wisp_tether_ally:OnRemoved()
 		if overcharge_modifier then
 			overcharge_modifier:Destroy()
 		end
-		
-		self:GetParent():StopSound("Hero_Wisp.Tether.Target")
-		ParticleManager:DestroyParticle(self.pfx, false)
-		ParticleManager:ReleaseParticleIndex(self.pfx)
 	end
 end
 
@@ -1606,13 +1624,13 @@ function imba_wisp_relocate:OnSpellStart()
 					GridNav:DestroyTreesAroundPoint(target_point, destroy_tree_radius, false)
 
 					-- Here we go again (Rubick)
-					if not caster:HasAbility("imba_wisp_relocate_break") then
-						caster:AddAbility("imba_wisp_relocate_break")
-					end
+					-- if not caster:HasAbility("imba_wisp_relocate_break") then
+						-- caster:AddAbility("imba_wisp_relocate_break")
+					-- end
 					
-					caster:SwapAbilities("imba_wisp_relocate", "imba_wisp_relocate_break", false, true)
-					local break_ability = caster:FindAbilityByName("imba_wisp_relocate_break")
-					break_ability:SetLevel(1)
+					-- caster:SwapAbilities("imba_wisp_relocate", "imba_wisp_relocate_break", false, true)
+					-- local break_ability = caster:FindAbilityByName("imba_wisp_relocate_break")
+					-- break_ability:SetLevel(1)
 				
 					ability.origin = caster:GetAbsOrigin()
 
@@ -1632,7 +1650,7 @@ function imba_wisp_relocate:OnSpellStart()
 end
 
 function imba_wisp_relocate:InterruptRelocate(caster, ability, tether_ability)
-	if not caster:IsAlive() or caster:IsStunned() or caster:IsHexed() or caster:IsNightmared() or caster:IsOutOfGame() then
+	if not caster:IsAlive() or caster:IsStunned() or caster:IsHexed() or caster:IsNightmared() or caster:IsOutOfGame() or caster:IsRooted() then
 		return true
 	end
 
@@ -1734,7 +1752,7 @@ function modifier_imba_wisp_relocate:OnRemoved()
 			tether_ability.target:Interrupt()
 		end
 
-		caster:SwapAbilities("imba_wisp_relocate_break", "imba_wisp_relocate", false, true)
+		--caster:SwapAbilities("imba_wisp_relocate_break", "imba_wisp_relocate", false, true)
 	end
 end
 

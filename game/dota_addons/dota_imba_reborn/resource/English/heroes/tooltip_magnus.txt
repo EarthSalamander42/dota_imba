@@ -5,6 +5,7 @@
 "DOTA_Tooltip_ability_imba_magnataur_shockwave_damage"					"#{DOTA_Tooltip_ability_magnataur_shockwave_shock_damage}"
 "DOTA_Tooltip_ability_imba_magnataur_shockwave_shock_distance"			"RANGE:"
 "DOTA_Tooltip_ability_imba_magnataur_shockwave_polarize_duration"		"POLARIZE DURATION:"
+"DOTA_Tooltip_ability_imba_magnataur_shockwave_aghanim_description"			"Increases travel distance and speed, and causes Shockwave to come back. Return wave slows units, but deals half damage to creeps."
 
 "DOTA_Tooltip_modifier_imba_shockwave_pull"								"Shockwave Pull"
 

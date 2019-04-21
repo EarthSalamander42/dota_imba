@@ -76,8 +76,6 @@ function item_imba_lance_of_longinus:OnSpellStart()
 			caster:AddNewModifier(target, ability, "modifier_item_imba_lance_of_longinus_force_self_melee", {duration = duration})
 		end
 		
-		-- target:AddNewModifier(caster, ability, "modifier_item_imba_lance_of_longinus_divergent_thrust", {duration = self:GetSpecialValueFor("divergent_thrust_duration")})
-		
 		local god_piercing_modifier = caster:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_lance_of_longinus_god_piercing_ally", {duration = self:GetSpecialValueFor("god_piercing_duration")})
 
 		if god_piercing_modifier then
@@ -140,6 +138,14 @@ function modifier_item_imba_lance_of_longinus:OnCreated()
 	-- Tracking when to give the true strike + bonus magical damage
 	self.pierce_proc 			= true
 	self.pierce_records			= {}
+end
+
+function modifier_item_imba_lance_of_longinus:OnDestroy()
+	if not IsServer() then return end
+	
+	for _, modifier in pairs(self:GetParent():FindAllModifiersByName(self:GetName())) do
+		modifier:SetStackCount(_)
+	end
 end
 
 function modifier_item_imba_lance_of_longinus:DeclareFunctions()
@@ -206,6 +212,8 @@ function modifier_item_imba_lance_of_longinus_force_ally:IsMotionController()  r
 function modifier_item_imba_lance_of_longinus_force_ally:GetMotionControllerPriority()  return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
 
 function modifier_item_imba_lance_of_longinus_force_ally:OnCreated()
+	
+	
 	if not IsServer() then return end
 	
 	-- This doesn't seem like a proper way to do things but w/e MouJiao's legacy code
@@ -223,6 +231,7 @@ function modifier_item_imba_lance_of_longinus_force_ally:OnCreated()
 	self.attacked_target = {}
 	
 	self.god_piercing_radius	= self:GetAbility():GetSpecialValueFor("god_piercing_radius")
+	self.average_attack_damage	= self:GetParent():GetAverageTrueAttackDamage(self:GetParent())
 end
 
 function modifier_item_imba_lance_of_longinus_force_ally:OnDestroy()
@@ -290,6 +299,18 @@ function modifier_item_imba_lance_of_longinus_force_ally:CheckState()
 			[MODIFIER_STATE_INVULNERABLE] = true,
 		}
 	return state
+end
+
+function modifier_item_imba_lance_of_longinus_force_ally:DeclareFunctions()
+	local decFuncs = {
+		MODIFIER_PROPERTY_PROCATTACK_BONUS_DAMAGE_PURE
+	}
+	
+	return decFuncs
+end
+
+function modifier_item_imba_lance_of_longinus_force_ally:GetModifierProcAttack_BonusDamage_Pure()
+	return self.average_attack_damage
 end
 
 modifier_item_imba_lance_of_longinus_force_enemy_ranged = modifier_item_imba_lance_of_longinus_force_enemy_ranged or class({})
