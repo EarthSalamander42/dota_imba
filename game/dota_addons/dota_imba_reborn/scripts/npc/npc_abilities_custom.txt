@@ -10512,6 +10512,7 @@
 		"ScriptFile"				"components/abilities/heroes/hero_magnataur"
 		"MaxLevel"						"4"
 		"LevelsBetweenUpgrades"			"2"
+		"HasScepterUpgrade"				"1"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
