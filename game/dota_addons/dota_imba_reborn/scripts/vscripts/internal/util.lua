@@ -194,19 +194,6 @@ function UpdateRoshanBar(roshan)
 	return time
 end
 
-function CheatDetector()
-	if CustomNetTables:GetTableValue("game_options", "game_count").value == 1 then
-		if Convars:GetBool("sv_cheats") == true or GameRules:IsCheatMode() then
---			if not IsInToolsMode() then
-				print("Cheats have been enabled, game don't count.")
-				CustomNetTables:SetTableValue("game_options", "game_count", {value = 0})
-				CustomGameEventManager:Send_ServerToAllClients("safe_to_leave", {})
-				GameRules:SetSafeToLeave(true)
---			end
-		end
-	end
-end
-
 -- TODO: Maybe this is laggy, format it later
 function InitItemIds()
 	GameMode.itemIDs = {}

@@ -852,8 +852,6 @@ function GameMode:OnThink()
 		return 1
 	end
 
-	CheatDetector()
-
 	for _, hero in pairs(HeroList:GetAllHeroes()) do
 		if api:GetDonatorStatus(hero:GetPlayerID()) == 10 then
 			if not IsNearFountain(hero:GetAbsOrigin(), 1200) then
