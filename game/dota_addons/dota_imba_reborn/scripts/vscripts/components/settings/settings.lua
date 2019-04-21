@@ -392,7 +392,7 @@ IGNORE_FOUNTAIN_UNITS = {
 	"npc_dota_elder_titan_ancestral_spirit",
 	"npc_dummy_unit",
 	"npc_dota_hero_dummy_dummy",
-	"npc_imba_donator_companion",
+	"npc_donator_companion",
 	"npc_dota_wisp_spirit",
 	"npc_dota_mutation_golem"
 }

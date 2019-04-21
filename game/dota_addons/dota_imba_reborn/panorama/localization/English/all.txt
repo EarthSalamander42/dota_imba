@@ -139,28 +139,6 @@
 "imba_dire_team_title"                          "The Dire"
 "average_mmr"									"Average MMR: "
 
-//Donator Tab
-"donator_companion"				"Companion"
-"donator_statue"				"Statue"
-"donator_info"					"Select a Companion"
-"companion_enabled"				"Companion enabled."
-"companion_disabled"			"Companion disabled."
-//	"companion_enabled"				"Companion enabled. (Click to disable)"
-//	"companion_disabled"			"Companion disabled. (Click to enable)"
-"companion_success"				"Companion changed with: "
-"companion_error"				"Oops! Something went wrong."
-"companion_not_donator"			"This feature is only for Patreon donators. Click here to pledge!"
-"toggle_companion"				"Toggle Companion"
-
-"statue_success"				"Statue changed with: "
-
-//Leaderboard
-"leaderboard"					"Leaderboard"
-"leaderboard_loading"			"Loading leaderboard, please wait"
-"leaderboard_rank"				"Rank"
-"leaderboard_steam_avatar"		"Steam"
-"leaderboard_xp"				"Experience (click to sort)"
-
 //	"DOTA_GoodGuys"   								"Teal Tiger"
 //	"DOTA_BadGuys"    								"Yellow Monkey"
 "DOTA_Custom1"    								"Pink Dragon"

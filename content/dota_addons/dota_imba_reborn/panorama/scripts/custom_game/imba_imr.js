@@ -546,24 +546,24 @@ function GenerateCompanionPanel(companions, player, panel, retainSubTab) {
 			companion_unit[i] = companions[i].file;
 			companion_name[i] = companions[i].name;
 			companion_id[i] = companions[i].id;
-			if (companions[i].file == "npc_imba_donator_companion_sappling")
+			if (companions[i].file == "npc_donator_companion_sappling")
 				companion_skin[i] = 3;
 		} else {
 			var steamId = Game.GetLocalPlayerInfo().player_steamid;
 			if (steamId == "76561198015161808") {
-				companion_unit[i] = "npc_imba_donator_companion_cookies";
+				companion_unit[i] = "npc_donator_companion_cookies";
 				vip = true;
 			} else if (steamId == "76561198003571172") {
-				companion_unit[i] = "npc_imba_donator_companion_baumi";
+				companion_unit[i] = "npc_donator_companion_baumi";
 				vip = true;
 			} else if (steamId == "76561198014254115") {
-				companion_unit[i] = "npc_imba_donator_companion_icefrog";
+				companion_unit[i] = "npc_donator_companion_icefrog";
 				vip = true;
 			} else if (steamId == "76561198003571172") {
-				companion_unit[i] = "npc_imba_donator_companion_admiral_bulldog";
+				companion_unit[i] = "npc_donator_companion_admiral_bulldog";
 				vip = true;
 			} else if (steamId == "76561198021465788") {
-				companion_unit[i] = "npc_imba_donator_companion_suthernfriend";
+				companion_unit[i] = "npc_donator_companion_suthernfriend";
 				vip = true;
 			} else {
 				return;
