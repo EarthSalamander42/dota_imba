@@ -11,7 +11,11 @@ function OnHeroSelectionPressed() {
 }
 
 function OnHeroSelected(hero) {
-	ToggleCheatMenu();
+	if (toggle == true) {
+		toggle = false;
+	}
+
+	$("#PickScreen").style.visibility = "collapse";
 
 	GameEvents.SendCustomGameEventToServer('demo_select_hero', {
 		hero: hero

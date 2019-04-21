@@ -530,7 +530,7 @@ function SetupTower(tower)
 		for _, ability in pairs(TOWER_ABILITIES["tower"..i]) do
 			if string.find(tower:GetUnitName(), "tower"..i) then
 --				print("Tower found:", ability) -- tower spawned from pocket tower mutation are found and print well, abilities are not given for reasons
-				tower:AddAbility(ability):SetLevel(tower:GetLevel())
+				tower:AddAbility(ability):SetLevel(i)
 				tower.initialized = true
 			end
 		end
