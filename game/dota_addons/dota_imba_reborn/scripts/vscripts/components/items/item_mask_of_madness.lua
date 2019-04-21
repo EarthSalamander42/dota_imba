@@ -102,10 +102,10 @@ function modifier_imba_mask_of_madness:OnDestroy()
 		-- If it is the last MoM in inventory, remove unique modiifer
 		if not self.caster:IsNull() and not self.caster:HasModifier("modifier_imba_mask_of_madness") then
 			self.caster:RemoveModifierByName("modifier_imba_mask_of_madness_unique")
+			
+			-- Remove lifesteal projectile
+			ChangeAttackProjectileImba(self.caster)
 		end
-
-		-- Remove lifesteal projectile
-		ChangeAttackProjectileImba(self.caster)
 	end
 end
 

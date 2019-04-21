@@ -46,7 +46,7 @@
 
 // Faceless Void's Timelock (7.20 Version)
 "DOTA_Tooltip_ability_imba_faceless_void_time_lock_720"									"Time Lock"
-"DOTA_Tooltip_ability_imba_faceless_void_time_lock_720_Description"						"Adds the chance for an attack to lock an enemy unit in time while attacking it a second time.\n<font color='#FF7800'>Chronocharges:</font> Each proc of Time Lock on an enemy hero grants a Chronocharge.\n<font color='#FF7800'>Lost In The Moment:</font> When Time Lock procs, the cooldown of all target abilities currently on cooldown is increased by %moment_cd_increase% seconds.\n<font color='#FF7800'>Chrono Lock:</font> Proccing Time Lock on an enemy affected by Chronosphere also procs it on all other enemies also affected by Chronosphere."
+"DOTA_Tooltip_ability_imba_faceless_void_time_lock_720_Description"						"Adds the chance for an attack to lock an enemy unit in time while attacking it a second time.\n<font color='#FF7800'>Chronocharges:</font> Each proc of Time Lock on an enemy hero grants a Chronocharge.\n<font color='#FF7800'>Lost In The Moment:</font> When Time Lock procs, the cooldown of all target abilities currently on cooldown is increased by %moment_cd_increase% seconds.\n<font color='#FF7800'>Chrono Lock:</font> Proccing Time Lock on an enemy affected by Chronosphere also procs it on all other enemies also affected by Chronosphere and not already affected by Time Lock."
 "DOTA_Tooltip_ability_imba_faceless_void_time_lock_720_Lore"								"The strike of the Faceless Void lands with dimension shifting force."
 "DOTA_Tooltip_ability_imba_faceless_void_time_lock_720_Note1"							"Does not stack with Skull Basher."
 "DOTA_Tooltip_ability_imba_faceless_void_time_lock_720_Note0"							"Stun works on Spell Immune units."

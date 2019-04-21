@@ -4564,12 +4564,12 @@
 			"09"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"wind_song_bonus_ms_pct"	"35"
+				"wind_song_bonus_ms_pct"	"40"
 			}
 			"10"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"wind_song_bonus_as"	"75"
+				"wind_song_bonus_as"	"120"
 			}
 			"11"
 			{
@@ -4589,7 +4589,7 @@
 			"14"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"wind_song_slow_radius"	"180"
+				"wind_song_slow_radius"	"360"
 			}
 		}
 	}
@@ -5723,7 +5723,7 @@
 		"ItemResult"					"item_imba_maelstrom"
 		"ItemRequirements"
 		{
-			"01"						"item_imba_javelin;item_mithril_hammer"
+			"01"						"item_mithril_hammer;item_imba_javelin"
 		}
 	}
 
@@ -10533,7 +10533,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"750"
+		"ItemCost"						"900"
 		"ItemShopTags"					""
 
 		// Recipe
@@ -10542,7 +10542,7 @@
 		"ItemResult"					"item_imba_skull_basher"
 		"ItemRequirements"
 		{
-			"01"						"item_imba_javelin;item_belt_of_strength"
+			"01"						"item_mithril_hammer;item_belt_of_strength"
 		}
 	}
 
@@ -10558,7 +10558,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost" 						"2700"
+		"ItemCost" 						"2950"
 		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
 		"ItemShopTags"					"str;damage"
 		"ItemQuality"					"rare"
@@ -10576,7 +10576,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"bonus_damage"					"10"
+				"bonus_damage"					"25"
 			}
 			"02"
 			{
@@ -10601,7 +10601,7 @@
 			"06"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"stun_duration"					"1.2"
+				"stun_duration"					"1.5"
 			}
 			"07"
 			{
@@ -10709,7 +10709,7 @@
 			"06"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"stun_duration"					"1.2"
+				"stun_duration"					"1.5"
 			}
 			"07"
 			{

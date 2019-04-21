@@ -720,7 +720,12 @@ function modifier_imba_counter_helix_passive:OnRefresh()
 end
 
 function modifier_imba_counter_helix_passive:DeclareFunctions()
-	local decFuncs = {MODIFIER_EVENT_ON_ATTACKED}
+	local decFuncs =
+	{
+		MODIFIER_EVENT_ON_ATTACKED,
+		MODIFIER_EVENT_ON_ATTACK_LANDED
+	}
+	
 	return decFuncs
 end
 
@@ -749,11 +754,35 @@ function modifier_imba_counter_helix_passive:OnAttacked(keys)
 			end
 
 			--calculate chance to counter helix
-			if RollPercentage(self.proc_chance) then
+			if RollPseudoRandom(self.proc_chance, self) then
 				self:Spin(self.allow_repeat)
 			end
 			return true
 		end
+	end
+end
+
+function modifier_imba_counter_helix_passive:OnAttackLanded(keys)
+	if not IsServer() or keys.attacker ~= self:GetParent() or self.caster:PassivesDisabled() then return end
+
+	-- +30% of your strength added to Counter Helix damage.
+	if self.caster:HasTalent("special_bonus_imba_axe_4") then
+		self.str = self.caster:GetStrength() / 100
+		self.talent_4_value = self.caster:FindTalentValue("special_bonus_imba_axe_4")
+		self.bonus_damage = self.str * self.talent_4_value
+		self.total_damage = self.base_damage + self.bonus_damage
+	else
+		self.total_damage = self.base_damage
+	end
+
+	-- Talent : Your armor value is added to Counter Helix damage
+	if self.caster:HasTalent("special_bonus_imba_axe_7") then
+		self.total_damage = self.total_damage + self.caster:GetPhysicalArmorValue() * self.caster:FindTalentValue("special_bonus_imba_axe_7")
+	end
+
+	--calculate chance to counter helix
+	if RollPseudoRandom(self.proc_chance, self) then
+		self:Spin(self.allow_repeat)
 	end
 end
 
@@ -861,8 +890,12 @@ function imba_axe_culling_blade:GetAbilityTextureName()
 	return "axe_culling_blade"
 end
 
-function imba_axe_culling_blade:GetCastRange()
-	return 150 + self:GetCaster():FindTalentValue("special_bonus_imba_axe_8");
+function imba_axe_culling_blade:GetCastRange(location, target)
+	if IsClient() then
+		return self.BaseClass.GetCastRange(self, location, target)
+	else
+		return self.BaseClass.GetCastRange(self, location, target) + self:GetCaster():FindTalentValue("special_bonus_imba_axe_8")
+	end
 end
 
 function imba_axe_culling_blade:OnSpellStart()

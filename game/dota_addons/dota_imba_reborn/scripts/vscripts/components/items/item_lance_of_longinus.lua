@@ -140,6 +140,14 @@ function modifier_item_imba_lance_of_longinus:OnCreated()
 	self.pierce_records			= {}
 end
 
+function modifier_item_imba_lance_of_longinus:OnDestroy()
+	if not IsServer() then return end
+	
+	for _, modifier in pairs(self:GetParent():FindAllModifiersByName(self:GetName())) do
+		modifier:SetStackCount(_)
+	end
+end
+
 function modifier_item_imba_lance_of_longinus:DeclareFunctions()
 	local decFuncs = {
 		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,

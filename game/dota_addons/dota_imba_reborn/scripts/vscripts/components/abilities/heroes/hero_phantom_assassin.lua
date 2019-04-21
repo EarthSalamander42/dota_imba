@@ -543,18 +543,19 @@ end
 modifier_imba_blur = class({})
 
 function modifier_imba_blur:OnCreated()
+	-- Ability properties
+	self.caster = self:GetCaster()
+	self.parent = self:GetParent()
+	self.modifier_aura = "modifier_imba_blur_blur"
+	self.modifier_speed = "modifier_imba_blur_speed"
+
+	-- Ability specials
+	self.radius = self:GetAbility():GetSpecialValueFor("radius")
+	self.evasion = self:GetAbility():GetSpecialValueFor("evasion")
+	self.ms_duration = self:GetAbility():GetSpecialValueFor("speed_bonus_duration")
+
 	if IsServer() then
-		-- Ability properties
-		self.caster = self:GetCaster()
-		self.parent = self:GetParent()
-		self.modifier_aura = "modifier_imba_blur_blur"
-		self.modifier_speed = "modifier_imba_blur_speed"
-
-		-- Ability specials
-		self.radius = self:GetAbility():GetSpecialValueFor("radius")
-		self.evasion = self:GetAbility():GetSpecialValueFor("evasion")
-		self.ms_duration = self:GetAbility():GetSpecialValueFor("speed_bonus_duration")
-
+	
 		-- Start thinking
 		self:StartIntervalThink(0.2)
 	end

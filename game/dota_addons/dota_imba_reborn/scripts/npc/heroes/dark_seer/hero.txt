@@ -1,0 +1,36 @@
+"DOTAHeroes"
+{
+	"Version"		"1"
+
+	//=================================================================================================================
+	// HERO: Dark Seer
+	//=================================================================================================================
+	"npc_dota_hero_dark_seer"
+	{
+		"override_hero"				"npc_dota_hero_dark_seer"
+		"IsImba"					"1"
+		
+		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
+		
+		"Ability1"		"imba_dark_seer_vacuum"
+		"Ability2"		"imba_dark_seer_ion_shell"
+		"Ability3"		"imba_dark_seer_surge"
+		"Ability4"		"imba_dark_seer_wormhole"
+		"Ability5"		"generic_hidden"
+		"Ability6"		"imba_dark_seer_wall_of_replica"
+		
+		"Ability10"		"special_bonus_evasion_15"
+		"Ability11"		"special_bonus_attack_damage_90"
+		"Ability12"		"special_bonus_hp_regen_15"
+		"Ability13"		"special_bonus_imba_dark_seer_surge_cast_range"
+		"Ability14"		"special_bonus_cooldown_reduction_15"
+		"Ability15"		"special_bonus_imba_dark_seer_vacuum_increased_duration"
+		"Ability16"		"special_bonus_imba_dark_seer_wall_of_replica_increased_slow_duration"
+		"Ability17"		"special_bonus_unique_dark_seer"
+		
+		// Removed Talents
+		// "Ability13"		"special_bonus_unique_dark_seer_2" // Increased Vacuum AoE
+		// "Ability15"		"special_bonus_unique_dark_seer_3" // AoE Surge
+		// "Ability16"		"special_bonus_unique_dark_seer_4" // Parallel Wall
+	}
+}

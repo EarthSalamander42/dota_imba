@@ -136,14 +136,18 @@
 		"Ability4"					"generic_hidden"
 		"Ability6"					"imba_axe_culling_blade"
 
-		"Ability10"					"special_bonus_imba_axe_2" // +1 armor with every hit taken during Berserker's Call, lasts for 3 seconds after it ends.
-		"Ability11"					"special_bonus_imba_axe_7" // Counter Helix's damage is increased by 1 for each point of Armor Axe has.
-		"Ability12"					"special_bonus_imba_axe_5" // Counter Helix chance doubles, but each Counter Helix deals 66% of the original base damage.
-		"Ability13"					"special_bonus_imba_axe_1" // If an enemy unit with Battle Hunger attacks an ally, that ally also gains the Battle Hunger debuff
-		"Ability14"					"special_bonus_imba_axe_3" // Allows self-casting of Battle Hunger - applies it to everyone affected by Berserker's Call.
-		"Ability15"					"special_bonus_imba_axe_4" // +30% of your strength added to Counter Helix damage.
-		"Ability16"					"special_bonus_imba_axe_6" // When Counter Helix procs, it has 25% chance to immediately proc again. Psuedo Random chance. The extra proc cannot trigger this again.
-		"Ability17"					"special_bonus_imba_axe_8" // +650 Culling Blade cast range (leaps into the target to execute it).
+		"Ability10"					"special_bonus_imba_axe_1" // If an enemy unit with Battle Hunger attacks an ally, that ally also gains the Battle Hunger debuff
+		"Ability11"					"special_bonus_imba_axe_2" // +1 armor with every hit taken during Berserker's Call, lasts for 3 seconds after it ends.
+		"Ability12"					"special_bonus_imba_axe_3" // Allows self-casting of Battle Hunger - applies it to everyone affected by Berserker's Call.
+		"Ability13"					"special_bonus_imba_axe_8" // +X Culling Blade cast range (leaps into the target to execute it).
+		"Ability14"					"special_bonus_hp_regen_30"
+		"Ability15"					"special_bonus_imba_axe_9" // Attacking procs Counter Helix
+		"Ability16"					"special_bonus_imba_axe_4" // +30% of your strength added to Counter Helix damage.
+		"Ability17"					"special_bonus_imba_axe_5" // Counter Helix chance doubles, but each Counter Helix deals 66% of the original base damage. 
+		
+		// Removed Talents
+		// "Ability11"					"special_bonus_imba_axe_7" // Counter Helix's damage is increased by 1 for each point of Armor Axe has.
+		// "Ability16"					"special_bonus_imba_axe_6" // When Counter Helix procs, it has 25% chance to immediately proc again. Psuedo Random chance. The extra proc cannot trigger this again.
 	}
 
 	//=================================================================================================================
@@ -356,17 +360,20 @@
 		"Ability5"					"generic_hidden"
 		"Ability6"					"clinkz_burning_army"
 
-		"Ability10"					"special_bonus_imba_clinkz_6" //Skeleton Walk move speed persists for a small period
-		"Ability11"					"special_bonus_imba_clinkz_2" //Clinkz gains extra move speed when Skeleton Walking close to enemies
+		"Ability10"					"special_bonus_magic_resistance_15"
+		"Ability11"					"special_bonus_armor_6"
 		"Ability12"					"special_bonus_imba_clinkz_8"
-		"Ability13"					"special_bonus_imba_clinkz_4" //Searing Arrow active hits in an AoE  
+		"Ability13"					"special_bonus_strength_15"
 		"Ability14"					"special_bonus_imba_clinkz_5" //Strafe can be self cast to root Clinkz for the duration but grant him a huge range bonus
 		"Ability15"					"special_bonus_hp_regen_16"
 		"Ability16"					"special_bonus_imba_clinkz_9"
 		"Ability17"					"special_bonus_imba_clinkz_7" //Searing Arrows has a chance to attack the same target again
 		
 		// Removed Talents
+		//"Ability10"					"special_bonus_imba_clinkz_6" //Skeleton Walk move speed persists for a small period
+		//"Ability11"					"special_bonus_imba_clinkz_2" //Clinkz gains extra move speed when Skeleton Walking close to enemies
 		//"Ability12"					"special_bonus_imba_clinkz_3" //Skeleton Walking through an enemy causes Clinkz to lose his invisibility, but roots the target
+		// "Ability13"					"special_bonus_imba_clinkz_4" //Searing Arrow active hits in an AoE  
 		//"Ability15"					"special_bonus_imba_clinkz_1" //Death Pact Spirits can now attack with spirit strikes
 	}
 

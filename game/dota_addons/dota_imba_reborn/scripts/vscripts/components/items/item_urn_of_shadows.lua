@@ -107,13 +107,13 @@ function modifier_imba_urn_of_shadows_passive:OnDestroy()
 	local charges	= self:GetAbility():GetCurrentCharges()
 	local parent 	= self:GetParent()
 	
-	Timers:CreateTimer(0.5, function()
-		if parent:HasItemInInventory("item_imba_black_queen_cape") or parent:HasItemInInventory("item_imba_spirit_vessel") then
+	Timers:CreateTimer(0.75, function()
+		if not parent:IsNull() and parent:HasItemInInventory("item_imba_black_queen_cape") or parent:HasItemInInventory("item_imba_spirit_vessel") then
 			for itemSlot = 0, 5 do
 				if parent.GetItemInSlot then
 					local item = parent:GetItemInSlot(itemSlot)
 				
-					if item and (item:GetName() == "item_imba_black_queen_cape" or item:GetName() == "item_imba_spirit_vessel") and item:GetPurchaseTime() - die_time <= 3 then -- Arbitrary time differential to ensure it gets the item that was created shortly after Urn was destroyed
+					if item and (item:GetName() == "item_imba_black_queen_cape" or item:GetName() == "item_imba_spirit_vessel") and item:GetPurchaseTime() - die_time <= 5 then -- Arbitrary time differential to ensure it gets the item that was created shortly after Urn was destroyed
 						item:SetCurrentCharges(math.max(charges, 0))
 						
 						break

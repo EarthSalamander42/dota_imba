@@ -8,6 +8,7 @@
 #base heroes/bane/abilities.txt
 #base heroes/bloodseeker/abilities.txt
 #base heroes/bristleback/abilities.txt
+#base heroes/dark_seer/abilities.txt
 #base heroes/earth_spirit/abilities.txt
 #base heroes/enchantress/abilities.txt
 #base heroes/huskar/abilities.txt
@@ -1207,7 +1208,7 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"75"
+		"AbilityManaCost"				"50 60 70 80"
 
 		// Cast Range
 		//-------------------------------------------------------------------------------------------------------------
@@ -1251,7 +1252,7 @@
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"duration"					"10"
+				"duration"					"12"
 			}
 			"08"
 			{
@@ -1641,7 +1642,7 @@
 		}
 	}
 
-	"special_bonus_imba_axe_8"  // +650 Culling Blade cast range (leaps into the target to execute it).
+	"special_bonus_imba_axe_8"  // +X Culling Blade cast range (leaps into the target to execute it).
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -1661,7 +1662,32 @@
 			"01"
 			{
 				"var_type"      "FIELD_INTEGER"
-				"value"         "650"
+				"value"         "500"
+			}
+		}
+	}
+	
+	"special_bonus_imba_axe_9"  // Attacking procs Counter Helix
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"             "special_bonus_undefined"
+		"AbilityType"           "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"       "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"    "imba_axe_counter_helix"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"      "FIELD_INTEGER"
+				"value"         "1"
 			}
 		}
 	}
@@ -17590,7 +17616,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"pull_speed"			"25 40 55 70"
+				"pull_speed"			"20 30 40 50"
 			}
 			"07"
 			{
@@ -25106,12 +25132,12 @@
 			"01"
 			{
 				"var_type"                  "FIELD_INTEGER"
-				"as_bonus"                  "110 160 210 260"
+				"as_bonus"                  "160 220 280 340"
 			}
 			"02"
 			{
 				"var_type"                  "FIELD_FLOAT"
-				"duration"                  "4.0"
+				"duration"                  "4.0 4.4 4.8 5.2"
 				"LinkedSpecialBonus"		"special_bonus_imba_clinkz_9"
 			}
 			"03"
@@ -25173,7 +25199,7 @@
 			"01"
 			{
 				"var_type"                  "FIELD_INTEGER"
-				"bonus_damage"              "30 40 50 60"    
+				"bonus_damage"              "40 50 60 70"    
 			}
 			"02"
 			{

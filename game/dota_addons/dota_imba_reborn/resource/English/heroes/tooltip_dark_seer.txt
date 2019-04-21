@@ -1,0 +1,79 @@
+//DARK SEER
+"DOTA_Tooltip_ability_imba_dark_seer_vacuum"											"Vacuum"
+"DOTA_Tooltip_ability_imba_dark_seer_vacuum_Description"								"Dark Seer creates a vacuum over the target area that sucks in enemy units, disrupting them and dealing damage.\n<font color='#FF7800'>Potent Suction:</font> Unaffected by status resistance.\n<font color='#FF7800'>Wormhole:</font> For %wormhole_duration% seconds after casting Vacuum, gain the additional ability to cast Wormhole. Any units that have recently been affected by Vacuum are instantly ported to the Wormhole location and forced outwards. Ability values are similar to Vacuum. <font color='#FF0000'>Cannot directly port enemies into or out of the fountain danger zone area.</font>"
+"DOTA_Tooltip_ability_imba_dark_seer_vacuum_Lore"									"Ish'Kafel modifies the center of gravity to a place of his choosing."
+"DOTA_Tooltip_ability_imba_dark_seer_vacuum_Note0"									"This ability interrupts channeling."
+"DOTA_Tooltip_ability_imba_dark_seer_vacuum_Note1"									"Pulls units over a short duration before dealing damage."
+"DOTA_Tooltip_ability_imba_dark_seer_vacuum_Note2"									"Doesn't pull invulnerable units."
+"DOTA_Tooltip_ability_imba_dark_seer_vacuum_Note3"									"Trees near the center of the vacuum will be destroyed."
+"DOTA_Tooltip_ability_imba_dark_seer_vacuum_Note4"									"Refreshing this ability while it replaced by Wormhole immediately swaps it back in."
+"DOTA_Tooltip_ability_imba_dark_seer_vacuum_radius"									"RADIUS:"
+"DOTA_Tooltip_ability_imba_dark_seer_vacuum_damage"									"DAMAGE:"
+"DOTA_Tooltip_ability_imba_dark_seer_vacuum_cast_range_tooltip"						"CAST RANGE:"
+
+"DOTA_Tooltip_ability_imba_dark_seer_wormhole"											"Wormhole"
+"DOTA_Tooltip_ability_imba_dark_seer_wormhole_Description"								"Dark Seer creates a wormhole over the target area that teleports enemy units affected by Vacuum's Wormhole modifier to it and pushes them outwards, disrupting them and dealing damage. Unaffected by status resistance. <font color='#FF0000'>Cannot directly port enemies into or out of the fountain danger zone area.</font>"
+"DOTA_Tooltip_ability_imba_dark_seer_wormhole_Lore"									"Ish'Kafel modifies the center of gravity to a place of his choosing."
+"DOTA_Tooltip_ability_imba_dark_seer_wormhole_Note0"									"This ability interrupts channeling."
+"DOTA_Tooltip_ability_imba_dark_seer_wormhole_Note1"									"Pushes units over a short duration before dealing damage."
+"DOTA_Tooltip_ability_imba_dark_seer_wormhole_Note2"									"Doesn't push invulnerable units."
+"DOTA_Tooltip_ability_imba_dark_seer_wormhole_Note3"									"Trees near the center of the wormhole will be destroyed."
+"DOTA_Tooltip_ability_imba_dark_seer_vacuum_Note4"										"Refreshing this ability while it is replacing Vacuum immediately swaps it back out."
+"DOTA_Tooltip_ability_imba_dark_seer_wormhole_radius"									"RADIUS:"
+"DOTA_Tooltip_ability_imba_dark_seer_wormhole_damage"									"DAMAGE:"
+"DOTA_Tooltip_ability_imba_dark_seer_wormhole_cast_range_tooltip"						"CAST RANGE:"
+
+"DOTA_Tooltip_ability_imba_dark_seer_ion_shell"										"Ion Shell"
+"DOTA_Tooltip_ability_imba_dark_seer_ion_shell_Description"							"Surrounds the target unit with a bristling shield that damages enemy units in an area around it.\n<font color='#FF7800'>Glass Prison:</font> If cast on an enemy target, they are visible through the fog of war.\n<font color='#FF7800'>Proton Explosion:</font> Ion Shell keeps track of the total damage it has dealt over time (after reductions, rounded down). If Ion Shell perists for its full duration, it explodes, dealing the stored damage to all enemies within %proton_explosion_radius% radius and applying Ion Shell to them. The stored damage is then split equally amongst the created Ion Shells."
+"DOTA_Tooltip_ability_imba_dark_seer_ion_shell_Lore"									"The Dark Seer slices holes into the 'Land Behind the Wall,' causing prismatic energy to seep forth."
+"DOTA_Tooltip_ability_imba_dark_seer_ion_shell_Note0"								"Deals small amounts of damage in 0.1 intervals."
+"DOTA_Tooltip_ability_imba_dark_seer_ion_shell_Note1"								"Doesn't damage the target it is cast on."
+"DOTA_Tooltip_ability_imba_dark_seer_ion_shell_Note2"								"If cast on a unit that already has Ion Shell, the new Shell replaces the old one."
+"DOTA_Tooltip_ability_imba_dark_seer_ion_shell_Note3"								"Proton Explosion does not refresh existing Ion Shell durations."
+"DOTA_Tooltip_ability_imba_dark_seer_ion_shell_radius"								"RADIUS:"
+"DOTA_Tooltip_ability_imba_dark_seer_ion_shell_duration"								"DURATION:"
+"DOTA_Tooltip_ability_imba_dark_seer_ion_shell_damage_per_second"					"DAMAGE PER SECOND:"
+
+
+"DOTA_Tooltip_ability_imba_dark_seer_surge"											"Surge"
+"DOTA_Tooltip_ability_imba_dark_seer_surge_Description"								"Charges a target friendly unit with power, giving it a brief burst of movement speed and removes unit collisions. Allows the unit to surpass the movement speed limit and cannot be slowed.\n<font color='#FF7800'>Group Advancement: </font>Surge is a ground targeted, %surge_radius% radius ability. Can be self-cast to center the AoE around the caster's position."
+"DOTA_Tooltip_ability_imba_dark_seer_surge_Lore"										"Ish'Kafel once used his speed of mind to navigate the maze between the walls."
+"DOTA_Tooltip_ability_imba_dark_seer_surge_Note0"									"Units with Surge cannot be slowed unless the Surge effect is removed."
+"DOTA_Tooltip_ability_imba_dark_seer_surge_duration"									"DURATION:"
+"DOTA_Tooltip_ability_imba_dark_seer_surge_speed_boost"								"%SPEED BONUS:"
+
+
+"DOTA_Tooltip_ability_imba_dark_seer_wall_of_replica"								"Prismatic Bisector"
+"DOTA_Tooltip_ability_imba_dark_seer_wall_of_replica_Description"					"Raises two crossing walls of warping light that slow any enemy hero who crosses it, while also causing them to take equal to their attack damage and attack speed for the slow duration. \n\nUpgradable by Aghanim's Scepter. <font color='#FF0000'>Warrants a light sensitivity warning; for those who are prone to epileptic attacks, it would be best to avoid this ability if possible.</font>"
+"DOTA_Tooltip_ability_imba_dark_seer_wall_of_replica_Lore"							"The Dark Seer, while unable to return to his natural realm, can channel part of the prismatic wall with powerful strength of mind, sowing confusion amongst enemy ranks."
+"DOTA_Tooltip_ability_imba_dark_seer_wall_of_replica_Note0"							"Each wall functions separately from the other, allowing two instances of slow and self-attacks at the same time."
+"DOTA_Tooltip_ability_imba_dark_seer_wall_of_replica_duration"						"WALL DURATION:"
+"DOTA_Tooltip_ability_imba_dark_seer_wall_of_replica_range_tooltip"					"CAST RANGE:"
+"DOTA_Tooltip_ability_imba_dark_seer_wall_of_replica_movement_slow"		            "%MOVEMENT SLOW:"
+"DOTA_Tooltip_ability_imba_dark_seer_wall_of_replica_slow_duration"		            "SLOW DURATION:"
+"DOTA_Tooltip_ability_imba_dark_seer_wall_of_replica_scepter_rotation_speed"		"SCEPTER ROTATIONAL DEGREES PER SECOND:"
+"DOTA_Tooltip_ability_imba_dark_seer_wall_of_replica_aghanim_description"			"The walls now rotate clockwise around the cast point."
+
+"DOTA_Tooltip_modifier_imba_dark_seer_vacuum"						"Vacuum"
+"DOTA_Tooltip_modifier_imba_dark_seer_vacuum_Description"			"Being pulled."
+
+"DOTA_Tooltip_modifier_imba_dark_seer_vacuum_wormhole"						"Vacuum Wormhole"
+"DOTA_Tooltip_modifier_imba_dark_seer_vacuum_wormhole_Description"			"Susceptible to being warped somewhere else..."
+
+"DOTA_Tooltip_modifier_imba_dark_seer_wormhole"						"Wormhole"
+"DOTA_Tooltip_modifier_imba_dark_seer_wormhole_Description"			"Being pushed out into a new location."
+
+"DOTA_Tooltip_modifier_imba_dark_seer_ion_shell"						"Ion Shell"
+"DOTA_Tooltip_modifier_imba_dark_seer_ion_shell_Description"			"Dealing damage to nearby enemies. If this is a debuff, grants fog vision of the Ion Shell target. Upon naturally expiring, explodes and deals magical damage equal to its stack count, while applying a new Ion Shield to affected enemies."
+
+
+"DOTA_Tooltip_modifier_imba_dark_seer_surge"							"Surge"
+"DOTA_Tooltip_modifier_imba_dark_seer_surge_Description"				"Gaining phased and hasted movement, and moving at %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%% increased move speed."
+
+
+"DOTA_Tooltip_modifier_imba_dark_seer_wall_of_replica_slow"					"Prismatic Bisector Slow"
+"DOTA_Tooltip_modifier_imba_dark_seer_wall_of_replica_slow_Description"		"Move speed slowed by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%, and being attacked by yourself."
+
+"DOTA_Tooltip_Ability_special_bonus_imba_dark_seer_surge_cast_range"							"+400 Surge Cast Range"
+"DOTA_Tooltip_Ability_special_bonus_imba_dark_seer_vacuum_increased_duration"					"+0.6s Vacuum/Wormhole Pull/Push Duration"
+"DOTA_Tooltip_Ability_special_bonus_imba_dark_seer_wall_of_replica_increased_slow_duration"		"+1.5s Prismatic Bisector Slow Duration"
