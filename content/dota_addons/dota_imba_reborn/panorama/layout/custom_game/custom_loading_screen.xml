@@ -13,11 +13,11 @@
 		<Panel id="imba-loading">
 			<Panel id="imba-loading-title">
 				<Panel class="down">
-					<Label id="imba-loading-title-text" text="Dota IMBA 8.0 - Leaked EarthSalamander sextape"/>
-					<Label id="imba-loading-map-text" text="Loading ..."/>
-					<Label id="imba-loading-content-text" html="true" text="Loading ..." />
-					<Button id="imba-loading-link" onactivate="link_clicked();">
-						<Label id="imba-loading-link-text" text="Loading ..." />
+					<Label id="loading-title-text" text="Dota IMBA 8.0 - Leaked EarthSalamander sextape"/>
+					<Label id="loading-map-text" text="Loading ..."/>
+					<Label id="loading-content-text" html="true" text="Loading ..." />
+					<Button id="loading-link" onactivate="link_clicked();">
+						<Label id="loading-link-text" text="Loading ..." />
 					</Button>
 				</Panel>
 			</Panel>
@@ -50,7 +50,7 @@
 
 			<Panel id="imba-loading-title-vote">
 				<Panel class="down">
-					<Label id="imba-loading-title-text-vote" text="#vote_gamemode"/>
+					<Label id="loading-title-text-vote" text="#vote_gamemode"/>
 					<Panel id="vote-content">
 						<Panel class="VoteButton" hittest="false">
 							<RadioButton id="VoteGameMode1" class="CGSRadio" group="GameLength" onactivate="OnVoteButtonPressed('gamemode', 1)" />
@@ -70,35 +70,35 @@
 
 			<Panel id="imba-loading-title-promote">
 				<Panel class="down">
-					<Label id="imba-loading-title-text-promote" text="#loading_screen_promote"/>
-					<Label id="imba-loading-content-text-promote" html="true" text="#loading_screen_promote_description" />
-					<Button id="imba-loading-link-promote" onactivate="DOTADisplayURL('https://www.transifex.com/dota-imba/dota-imba/dashboard/');">
-						<Label id="imba-loading-link-text-promote" text="#loading_screen_promote_button" />
+					<Label id="loading-title-text-promote" text="#loading_screen_promote"/>
+					<Label id="loading-content-text-promote" html="true" text="#loading_screen_promote_description" />
+					<Button id="loading-link-promote" onactivate="DOTADisplayURL('https://www.transifex.com/dota-imba/dota-imba/dashboard/');">
+						<Label id="loading-link-text-promote" text="#loading_screen_promote_button" />
 					</Button>
 				</Panel>
 			</Panel>
 
 			<Panel id="imba-loading-title-patreon" class="loading-title">
 				<Panel class="down">
-					<Label id="imba-loading-title-text-patreon" text="#loading_screen_patreon"/>
-					<Label class="imba-loading-content-text-patreon" html="true" text="#loading_screen_patreon_description" />
-					<Label class="imba-loading-content-text-patreon" html="true" text="#loading_screen_patreon_modlist1" />
-					<Label class="imba-loading-content-text-patreon" html="true" text="#loading_screen_patreon_modlist2" />
-					<Label class="imba-loading-content-text-patreon" html="true" text="#loading_screen_patreon_modlist3" />
-					<Label class="imba-loading-content-text-patreon" html="true" text="#loading_screen_patreon_modlist4" />
-					<Label class="imba-loading-content-text-patreon" html="true" text="#loading_screen_patreon_modlist5" />
-					<Label class="imba-loading-content-text-patreon" html="true" text="#loading_screen_patreon_modlist6" />
-					<Button id="imba-loading-link-patreon" onactivate="DOTADisplayURL('https://www.patreon.com/bePatron?u=2533325');">
+					<Label id="loading-title-text-patreon" text="#loading_screen_patreon"/>
+					<Label class="loading-content-text-patreon" html="true" text="#loading_screen_patreon_description" />
+					<Label class="loading-content-text-patreon" html="true" text="#loading_screen_patreon_modlist1" />
+					<Label class="loading-content-text-patreon" html="true" text="#loading_screen_patreon_modlist2" />
+					<Label class="loading-content-text-patreon" html="true" text="#loading_screen_patreon_modlist3" />
+					<Label class="loading-content-text-patreon" html="true" text="#loading_screen_patreon_modlist4" />
+					<Label class="loading-content-text-patreon" html="true" text="#loading_screen_patreon_modlist5" />
+					<Label class="loading-content-text-patreon" html="true" text="#loading_screen_patreon_modlist6" />
+					<Button id="loading-link-patreon" onactivate="DOTADisplayURL('https://www.patreon.com/bePatron?u=2533325');">
 					</Button>
 				</Panel>
 			</Panel>
 <!--
 			<Panel id="imba-loading-title-promote">
 				<Panel class="down">
-					<Label id="imba-loading-title-text-promote" text="X Hero Siege now have an experience system!"/>
-					<Label id="imba-loading-content-text-promote" html="true" text="You can now earn experience when playing X Hero Siege! A custom battlepass will be implented soon to unlock cosmetics." />
-					<Button id="imba-loading-link-promote" onactivate="DOTADisplayURL('https://www.facebook.com/D2IMBA/');">
-						<Label id="imba-loading-link-text-promote" text="Click here to download X Hero Siege!" />
+					<Label id="loading-title-text-promote" text="X Hero Siege now have an experience system!"/>
+					<Label id="loading-content-text-promote" html="true" text="You can now earn experience when playing X Hero Siege! A custom battlepass will be implented soon to unlock cosmetics." />
+					<Button id="loading-link-promote" onactivate="DOTADisplayURL('https://www.facebook.com/D2IMBA/');">
+						<Label id="loading-link-text-promote" text="Click here to download X Hero Siege!" />
 					</Button>
 				</Panel>
 			</Panel>

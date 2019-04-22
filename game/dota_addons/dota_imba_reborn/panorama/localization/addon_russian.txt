@@ -226,7 +226,7 @@
 	"imba_community_header" "Сообщество IMBA (нажмите чтобы скрыть)"
 	"imba_custom_hero_pick_list_title" "По особым"
 	"imba_developer_credits_01" "Список текущих разработчиков IMBA:"
-	"imba_developer_credits_02" "EarthSalamander (главный разработчик), suthernfriend (backend разработчик), Altivu (разработчик), naowin (разработчик), houthakker (разработчик), oaeide (администратор сайта)."
+	"imba_developer_credits_02" "EarthSalamander (lead-developer), Altivu (developer), oaeide (backend/website) and Gafu Ji (backend/website)."
 	"imba_developer_credits_title" "РАЗРАБОТЧИКИ"
 	"imba_dire_team_title" "Тьма"
 	"imba_enter_game_button" "Войти в игру!"

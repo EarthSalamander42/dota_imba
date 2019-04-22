@@ -226,7 +226,7 @@
 	"imba_community_header" "IMBA COMMUNITY (click to hide)"
 	"imba_custom_hero_pick_list_title" "Heroes personalizados"
 	"imba_developer_credits_01" "Current list of IMBA developers:"
-	"imba_developer_credits_02" "EarthSalamander (lead-developer), suthernfriend (backend developer), Altivu (developer), naowin (developer), houthakker (developer), oaeide (website maintainer)."
+	"imba_developer_credits_02" "EarthSalamander (lead-developer), Altivu (developer), oaeide (backend/website) and Gafu Ji (backend/website)."
 	"imba_developer_credits_title" "DEVELOPERS"
 	"imba_dire_team_title" "Los Dire"
 	"imba_enter_game_button" "¡Entrar a la partida!"

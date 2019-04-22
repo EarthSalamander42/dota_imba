@@ -1,11 +1,11 @@
 "use strict";
 
 var view = {
-	title: $("#imba-loading-title-text"),
-	text: $("#imba-loading-content-text"),
-	map: $("#imba-loading-map-text"),
-	link: $("#imba-loading-link"),
-	link_text:  $("#imba-loading-link-text")
+	title: $("#loading-title-text"),
+	text: $("#loading-content-text"),
+	map: $("#loading-map-text"),
+	link: $("#loading-link"),
+	link_text:  $("#loading-link-text")
 };
 
 var link_targets = "";
@@ -20,36 +20,45 @@ function info_already_available() {
 	return Game.GetMapInfo().map_name != "";
 }
 
+function isInt(n) {
+   return n % 1 === 0;
+}
+
 function fetch() {
-	var game_options = CustomNetTables.GetTableValue("game_options", "game_version");
-	if (game_options == undefined) {
-		$.Schedule(1.0, fetch);
-		return;
-	}
-
-	view.title.text = "Dota IMBA " + game_options.value + " - " + $.Localize("#game_version_name");
-	view.text.text = $.Localize("#loading_screen_description");
-	view.link_text.text = $.Localize("#loading_screen_button");
-
 	// if data is not available yet, reschedule
 	if (!info_already_available()) {
 		$.Schedule(0.1, fetch);
 		return;
 	}
 
-	$.Msg("Fetching and setting loading screen data");
+	var game_options = CustomNetTables.GetTableValue("game_options", "game_version");
+	if (game_options == undefined) {
+		$.Schedule(0.1, fetch);
+		return;
+	}
+
+	var game_version = game_options[1]
+
+	if (isInt(game_version))
+		game_version = game_version.toString() + ".0";
+
+	view.title.text = $.Localize("#addon_game_name") + " " + game_version + " - " + $.Localize("#game_version_name");
+	view.text.text = $.Localize("#loading_screen_description");
+	view.link_text.text = $.Localize("#loading_screen_button");
+
+//	$.Msg("Fetching and setting loading screen data");
 	
 	var mapInfo = Game.GetMapInfo();
 	var map_name = ucwords(mapInfo.map_display_name.replace('_', " "));
- 
+
+	view.map.text = map_name;
+/*
 	api.resolve_map_name(mapInfo.map_display_name).then(function (data) {
 		view.map.text = data;
 	}).catch(function (err) {
 		$.Msg("Failed to resolve map name: " + err.message);
 		view.map.text = map_name;
 	});
-
-	view.map.text = map_name;
 
 	api.loading_screen().then(function (data) {
 		var lang = $.Language();
@@ -72,6 +81,7 @@ function fetch() {
 
 		view.text.text = "News currently unavailable.";
 	});
+	*/
 	/*
 	var player_info = Game.GetPlayerInfo(Game.GetLocalPlayerID());
 	
@@ -113,7 +123,7 @@ function OnVotesReceived(data)
 	vote_count[4] = 0;
 	vote_count[5] = 0;
 
-	var map_name_cut = Game.GetMapInfo().map_display_name.replace('imba_', "");
+	var map_name_cut = Game.GetMapInfo().map_display_name.replace('_', " ");
 
 	// Reset tooltips
 	for (var i = 1; i <= 3; i++) {
@@ -138,7 +148,7 @@ function OnVotesReceived(data)
 
 //	}
 }
-
+/*
 function SetGameModeTooltips() {
 	// if data is not available yet, reschedule
 	if (!info_already_available()) {
@@ -146,16 +156,16 @@ function SetGameModeTooltips() {
 		return;
 	}
 
-	var map_name_cut = Game.GetMapInfo().map_display_name.replace('imba_', "");
+	var map_name_cut = Game.GetMapInfo().map_display_name.replace('_', " ");
 	for (var i = 1; i <= 3; i++) {
 		$("#VoteGameModeText" + i).text = map_name_cut + " " + $.Localize("#vote_gamemode_" + i) + " (0 vote)";
 	}
 }
-
+*/
 (function(){
 	HoverableLoadingScreen();
 	fetch();
-	SetGameModeTooltips();
+//	SetGameModeTooltips();
 
 	GameEvents.Subscribe("send_votes", OnVotesReceived);
 })();
