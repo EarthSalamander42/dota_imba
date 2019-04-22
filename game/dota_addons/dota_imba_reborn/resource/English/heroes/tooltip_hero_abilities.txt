@@ -1629,7 +1629,7 @@
 // Sand King's Epicenter
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_sandking_epicenter"                          "Epicenter"
-"DOTA_Tooltip_ability_imba_sandking_epicenter_Description"              "After channeling for %channel_time% seconds, Sand King causes a massive earthquake, which pulses several times, slowing and damaging enemies each time. Each pulse increases the damage radius by %pulse_radius_increase%, up to %max_pulse_radius%.\n<font color='#FF7800'>Pulses of Malice:</font> Enemies hit by a pulse are also mini-stunned and pulled towards you by %pull_speed% units per pulse.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
+"DOTA_Tooltip_ability_imba_sandking_epicenter_Description"              "After channeling for %channel_time% seconds, Sand King causes a massive earthquake, which pulses several times, slowing and damaging enemies each time. Each pulse increases the damage radius by %pulse_radius_increase%, up to %max_pulse_radius%.\n<font color='#FF7800'>Pulses of Malice:</font> Enemies hit by a pulse are pulled towards you by %pull_speed% units per pulse.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
 "DOTA_Tooltip_ability_imba_sandking_epicenter_Lore"                    "Many an explorer was lost to the quicksands of the Scintillant Waste."
 "DOTA_Tooltip_ability_imba_sandking_epicenter_Note0"                    "Even with an Aghnaim's Scepter, if Sand King fails to complete the channeling fully, the spell is lost."
 "DOTA_Tooltip_ability_imba_sandking_epicenter_Note1"                    "The slow effect refreshes itself when a slowed enemy is hit again by a pulse."
@@ -1664,7 +1664,7 @@
 "DOTA_Tooltip_ability_special_bonus_imba_sand_king_1"                   "+100 Burrowstrike path radius"
 "DOTA_Tooltip_ability_special_bonus_imba_sand_king_2"                   "+40 Sand Storm DPS"
 "DOTA_Tooltip_ability_special_bonus_imba_sand_king_3"                   "+275 Burrowstrike cast range"
-"DOTA_Tooltip_ability_special_bonus_imba_sand_king_4"                   "+300 Epicenter pull radius + pulses now mini-stun"
+"DOTA_Tooltip_ability_special_bonus_imba_sand_king_4"                   "+300 Epicenter pull radius"
 "DOTA_Tooltip_ability_special_bonus_imba_sand_king_5"                   "+20% Caustic Finale slow"
 "DOTA_Tooltip_ability_special_bonus_imba_sand_king_6"                   "+4 Epicenter pulses"
 "DOTA_Tooltip_ability_special_bonus_imba_sand_king_7"                   "Passive Sandstorm aura with half Sandstorm values"

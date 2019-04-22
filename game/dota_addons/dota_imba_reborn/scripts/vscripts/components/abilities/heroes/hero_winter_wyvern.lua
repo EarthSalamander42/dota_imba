@@ -345,8 +345,8 @@ function imba_winter_wyvern_splinter_blast:CreateTrackingProjectile(keys)
 end
 
 function imba_winter_wyvern_splinter_blast:OnTrackingProjectileHit(keys)
-	-- Stop if target has linkens
-	if keys.target:TriggerSpellAbsorb(keys.ability) then return end
+	-- Stop if target has linkens (removing line for now cause of Grimstroke ult crashes)
+	-- if keys.splinter_proc == 0 and keys.target:TriggerSpellAbsorb(keys.ability) then return end
 
 	local nearby_enemy_units = FindUnitsInRadius(
 		keys.caster:GetTeam(),
