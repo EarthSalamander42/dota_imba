@@ -1095,9 +1095,10 @@ function modifier_imba_epicenter_pulse:OnIntervalThink()
             -- Apply Epicenter slow
             enemy:AddNewModifier(self.caster, self.ability, self.modifier_slow, {duration = self.slow_duration})
 			
-			if self.caster:HasTalent("special_bonus_imba_sand_king_4") then
-				enemy:AddNewModifier(self.caster, self.ability, "modifier_stunned", {duration = 0.1})
-			end
+			-- Nah too strong
+			-- if self.caster:HasTalent("special_bonus_imba_sand_king_4") then
+				-- enemy:AddNewModifier(self.caster, self.ability, "modifier_stunned", {duration = 0.1})
+			-- end
         end
 
         -- Find all nearby enemies in the pull radius
