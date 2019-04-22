@@ -226,7 +226,7 @@
 	"imba_community_header" "IMBA讨论组（点击隐藏）"
 	"imba_custom_hero_pick_list_title" "原创"
 	"imba_developer_credits_01" "Current list of IMBA developers:"
-	"imba_developer_credits_02" "EarthSalamander (lead-developer), suthernfriend (backend developer), Altivu (developer), naowin (developer), houthakker (developer), oaeide (website maintainer)."
+	"imba_developer_credits_02" "EarthSalamander (lead-developer), Altivu (developer), oaeide (backend/website) and Gafu Ji (backend/website)."
 	"imba_developer_credits_title" "DEVELOPERS"
 	"imba_dire_team_title" "夜魇"
 	"imba_enter_game_button" "开始游戏！"

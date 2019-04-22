@@ -18,6 +18,7 @@ end
 function modifier_custom_mechanics:DeclareFunctions()
 	local funcs = {
 		MODIFIER_EVENT_ON_TAKEDAMAGE,
+		MODIFIER_EVENT_ON_ATTACK_START,
 		MODIFIER_EVENT_ON_ATTACK_LANDED,
 		MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK,
 		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
@@ -118,6 +119,16 @@ function modifier_custom_mechanics:OnTakeDamage( keys )
 				caster:Heal(damage * lifesteal_amount * 0.005, caster)
 			end
 		end
+	end
+end
+
+-- Test fix for invincible 0 HP illusions
+function modifier_custom_mechanics:OnAttackStart( keys )
+	if not IsServer() then return end
+	
+	-- Don't know if this is going to work but might as well try something to remedy the illusion issue
+	if self:GetParent() == keys.attacker and not self:GetParent():IsRealHero() and self:GetParent():GetHealth() <= 0 then
+		UTIL_Remove(self:GetParent())
 	end
 end
 

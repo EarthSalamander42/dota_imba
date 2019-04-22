@@ -64,12 +64,12 @@ end
 
 function modifier_imba_morbid_mask:OnDestroy()
 	if IsServer() then
-		if not self.caster:HasModifier("modifier_imba_morbid_mask") then
+		if not self.caster:IsNull() and not self.caster:HasModifier("modifier_imba_morbid_mask") then
 			self.caster:RemoveModifierByName("modifier_imba_morbid_mask_unique")
+			
+			-- Remove lifesteal projectile
+			ChangeAttackProjectileImba(self.caster)
 		end
-
-		-- Remove lifesteal projectile
-		ChangeAttackProjectileImba(self.caster)
 	end
 end
 

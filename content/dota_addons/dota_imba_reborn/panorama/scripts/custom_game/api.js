@@ -15,7 +15,6 @@ var api = {
 			game_info: "game-info",
 			loading_screen: "loading-screen",
 			resolve_map_name: "resolve-map-name",
-//			diretide_highscores: "diretide/high-scores",
 		}
 	},
 
@@ -51,10 +50,6 @@ var api = {
 		return this.request(this.get_url(this.endpoints.meta.game_info));
 	},
 
-//	diretide_highscores: function () {
-//		return this.request(this.get_url(this.endpoints.meta.diretide_highscores));
-//	},
-
 	request: function (url, data) {
 
 		var self = this;
@@ -73,6 +68,7 @@ var api = {
 				data: data,
 				dataType: "json",
 				timeout: self.timeout,
+				headers : {'X-Dota-Server-Key' : CustomNetTables.GetTableValue("game_options", "server_key")["1"]},
 				success: function (obj) {
 					if (obj.error || !obj.data)
 						reject("Request to '" + url + "' failed: " + (obj.message ? obj.message : "unknown error"));

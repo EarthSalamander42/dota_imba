@@ -17,8 +17,8 @@
 "DOTA_Tooltip_Ability_item_imba_origin_bonus_armor"             "+$armor"
 
 "DOTA_Tooltip_ability_item_imba_origin_bonus_health"			"+$health"
+"DOTA_Tooltip_ability_item_imba_origin_bonus_mana"				"+$mana"
 "DOTA_Tooltip_ability_item_imba_origin_bonus_mana_regen"		"+$mana_regen"
-"DOTA_Tooltip_Ability_item_imba_origin_bonus_move_speed"		"+$move_speed"
 
 "DOTA_Tooltip_modifier_item_imba_origin_health"					"Origin - Health"
 "DOTA_Tooltip_modifier_item_imba_origin_health_Description"		"Unable to heal, and taking %dMODIFIER_PROPERTY_TOOLTIP% + %dMODIFIER_PROPERTY_TOOLTIP2%%% of current health as damage every tick."

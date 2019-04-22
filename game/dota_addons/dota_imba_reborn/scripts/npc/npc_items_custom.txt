@@ -4564,12 +4564,12 @@
 			"09"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"wind_song_bonus_ms_pct"	"35"
+				"wind_song_bonus_ms_pct"	"40"
 			}
 			"10"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"wind_song_bonus_as"	"75"
+				"wind_song_bonus_as"	"120"
 			}
 			"11"
 			{
@@ -4589,7 +4589,7 @@
 			"14"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"wind_song_slow_radius"	"180"
+				"wind_song_slow_radius"	"360"
 			}
 		}
 	}
@@ -5723,7 +5723,7 @@
 		"ItemResult"					"item_imba_maelstrom"
 		"ItemRequirements"
 		{
-			"01"						"item_imba_javelin;item_mithril_hammer"
+			"01"						"item_mithril_hammer;item_imba_javelin"
 		}
 	}
 
@@ -10533,7 +10533,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"750"
+		"ItemCost"						"900"
 		"ItemShopTags"					""
 
 		// Recipe
@@ -10542,7 +10542,7 @@
 		"ItemResult"					"item_imba_skull_basher"
 		"ItemRequirements"
 		{
-			"01"						"item_imba_javelin;item_belt_of_strength"
+			"01"						"item_mithril_hammer;item_belt_of_strength"
 		}
 	}
 
@@ -10558,7 +10558,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost" 						"2700"
+		"ItemCost" 						"2950"
 		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
 		"ItemShopTags"					"str;damage"
 		"ItemQuality"					"rare"
@@ -10576,7 +10576,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"bonus_damage"					"10"
+				"bonus_damage"					"25"
 			}
 			"02"
 			{
@@ -10601,7 +10601,7 @@
 			"06"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"stun_duration"					"1.2"
+				"stun_duration"					"1.5"
 			}
 			"07"
 			{
@@ -10709,7 +10709,7 @@
 			"06"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"stun_duration"					"1.2"
+				"stun_duration"					"1.5"
 			}
 			"07"
 			{
@@ -15118,7 +15118,7 @@
 		
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"1000"
+		"ItemCost"						"500"
 		"ItemShopTags"					""
 		
 		// Recipe
@@ -15158,7 +15158,7 @@
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"50"
-		"ItemCost"						"9500"
+		"ItemCost"						"9000"
 		"ItemShopTags"					"damage;attack_speed;int;str;hard_to_tag"
 		"ItemQuality"					"artifact"
 		"ItemAliases"					"lance;longinus;lance of longinus"
@@ -15266,14 +15266,9 @@
 			"19"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"god_piercing_duration"	"3"
+				"god_piercing_duration"	"5"
 			}
 			"20"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"divergent_thrust_duration"	"3"
-			}
-			"21"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"base_attack_range_melee"	"90"
@@ -15295,7 +15290,7 @@
 		
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"1125"
+		"ItemCost"						"600"
 		"ItemShopTags"					""
 		
 		// Recipe
@@ -15304,7 +15299,7 @@
 		"ItemResult"					"item_imba_origin"
 		"ItemRequirements"
 		{
-			"01"						"item_imba_spirit_vessel;item_blade_mail;item_ultimate_orb;item_oblivion_staff"
+			"01"						"item_soul_booster;item_ultimate_orb;item_oblivion_staff;item_platemail"
 		}
 	}
 	
@@ -15347,22 +15342,22 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_strength"		"12"
+				"bonus_strength"		"10"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_agility"			"12"
+				"bonus_agility"			"10"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"30"
+				"bonus_intellect"		"20"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"32"
+				"bonus_damage"			"10"
 			}
 			"05"
 			{
@@ -15372,22 +15367,22 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_armor"			"8"
+				"bonus_armor"			"10"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_health"			"325"
+				"bonus_health"			"625"
 			}
 			"08"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"bonus_mana_regen"		"3.75"
+				"var_type"				"FIELD_INTEGER"
+				"bonus_mana"			"625"
 			}
 			"09"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_move_speed"		"20"
+				"var_type"				"FIELD_FLOAT"
+				"bonus_mana_regen"		"1.25"
 			}
 			
 			

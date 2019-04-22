@@ -89,65 +89,65 @@
 	border: 2px solid COLOR_INFO_BACKGROUND_DARK_GREY;
 }
 
-#imba-loading-title-text,
-#imba-loading-title-text-patreon,
-#imba-loading-title-text-promote,
-#imba-loading-title-text-vote {
+#loading-title-text,
+#loading-title-text-patreon,
+#loading-title-text-promote,
+#loading-title-text-vote {
 	width: 100%;
 	font-size: 36px;
 }
 
-#imba-loading-title-text {
+#loading-title-text {
 	color: COLOR_INFO_TEXT_GREEN;
 }
 
-#imba-loading-title-text-patreon {
+#loading-title-text-patreon {
 	color: COLOR_INFO_TEXT_ORANGE;
 }
 
-#imba-loading-title-text-promote {
+#loading-title-text-promote {
 	color: COLOR_INFO_TEXT_BLUE;
 }
 
-#imba-loading-title-text-vote {
+#loading-title-text-vote {
 	color: COLOR_INFO_TEXT_RED;
 }
 
-#imba-loading-content-text,
-.imba-loading-content-text-patreon,
-#imba-loading-content-text-promote,
-#imba-loading-content-text-vote, {
+#loading-content-text,
+.loading-content-text-patreon,
+#loading-content-text-promote,
+#loading-content-text-vote, {
 	margin-bottom: 5px;
 	font-size: 20px;
 	color: #cccccc;
 	width: 100%;
 }
 
-#imba-loading-map-text {
+#loading-map-text {
 	margin: 20px 0px;
 	color: #ddddff;
 	font-size: 24px;
 }
 
-#imba-loading-link {
+#loading-link {
 	background-color: COLOR_INFO_BACKGROUND_DARK_GREY;
 	border: 2px solid COLOR_INFO_BACKGROUND_DARK_GREY;
 	box-shadow: 0 0 10px #111;
 }
 
-#imba-loading-link-promote {
+#loading-link-promote {
 	background-color: COLOR_INFO_BACKGROUND_DARK_GREY;
 	border: 2px solid COLOR_INFO_BACKGROUND_DARK_GREY;
 	box-shadow: 0 0 10px #111;
 }
 
-#imba-loading-link-vote {
+#loading-link-vote {
 	background-color: COLOR_INFO_BACKGROUND_DARK_RED;
 	border: 2px solid COLOR_INFO_BACKGROUND_DARK_RED;
 	box-shadow: 0 0 10px #111;
 }
 
-#imba-loading-link-patreon {
+#loading-link-patreon {
 	width: 340px;
 	height: 80px;
 	background-image: url("file://{images}/custom_game/patreon.png");
@@ -158,24 +158,24 @@
 	transition-property: box-shadow;
 }
 
-#imba-loading-link-patreon:hover {
+#loading-link-patreon:hover {
 	box-shadow: 0 0 10px orange;
 }
 
-#imba-loading-link-text,
-#imba-loading-link-text-promote {
+#loading-link-text,
+#loading-link-text-promote {
 	padding: 0px 10px;
 	font-size: 24px;
 	text-shadow: 0 0 5px #000;
 	color: #cccccc;	
 }
 
-#imba-loading-link-text:hover {
+#loading-link-text:hover {
 	text-decoration: underline;
 	background-color: #003339;
 }
 
-#imba-loading-link-text-promote:hover {
+#loading-link-text-promote:hover {
 	text-decoration: underline;
 	background-color: #003339;
 }

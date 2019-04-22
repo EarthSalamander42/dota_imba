@@ -1385,7 +1385,7 @@ function modifier_imba_faceless_void_time_lock_720:OnAttackLanded(keys)
 				
 				-- Proc Time Lock on all enemies affected by Chronosphere
 				for _, enemy in pairs(enemies) do
-					if enemy ~= keys.target and enemy:HasModifier("modifier_imba_faceless_void_chronosphere_handler") then
+					if enemy ~= keys.target and enemy:HasModifier("modifier_imba_faceless_void_chronosphere_handler") and not enemy:HasModifier("modifier_imba_faceless_void_time_lock_720_freeze") then
 						self:ApplyTimeLock(enemy)
 					end
 				end

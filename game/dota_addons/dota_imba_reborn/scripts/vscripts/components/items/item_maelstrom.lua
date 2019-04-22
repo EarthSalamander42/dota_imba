@@ -81,8 +81,9 @@ function modifier_item_imba_maelstrom:OnAttackLanded( keys )
 
 		-- If the target is invalid, still do nothing
 		local target = keys.target
-		if (not target:IsHeroOrCreep()) then -- or attacker:GetTeam() == target:GetTeam() then
-			return end
+		if (not target:IsHeroOrCreep()) or attacker:GetTeam() == target:GetTeam() then
+			return
+		end
 
 		-- All conditions met, stack the proc counter up
 		local ability = self:GetAbility()
@@ -174,7 +175,7 @@ function modifier_item_imba_mjollnir:OnAttackLanded( keys )
 
 		-- If the target is invalid, still do nothing
 		local target = keys.target
-		if (not target:IsHeroOrCreep()) then -- or attacker:GetTeam() == target:GetTeam() then
+		if (not target:IsHeroOrCreep()) or attacker:GetTeam() == target:GetTeam() then
 			return
 		end
 
@@ -412,7 +413,7 @@ function modifier_item_imba_jarnbjorn:OnAttackLanded( keys )
 
 		-- If the target is invalid, still do nothing
 		local target = keys.target
-		if (not target:IsHeroOrCreep()) then -- or attacker:GetTeam() == target:GetTeam() then
+		if (not target:IsHeroOrCreep()) or attacker:GetTeam() == target:GetTeam() then
 			return
 		end
 
