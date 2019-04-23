@@ -213,7 +213,7 @@ function GameMode:OnGameRulesStateChange(keys)
 				-- First line
 				Notifications:BottomToAll( {text = "#imba_introduction_line_01", duration = line_duration, style = {color = "DodgerBlue"} } )
 				Notifications:BottomToAll( {text = "#imba_introduction_line_02", duration = line_duration, style = {color = "Orange"}, continue = true})
-				Notifications:BottomToAll( {text = "("..IMBA_VERSION..")", duration = line_duration, style = {color = "Orange"}, continue = true})
+				Notifications:BottomToAll( {text = "("..GAME_VERSION..")", duration = line_duration, style = {color = "Orange"}, continue = true})
 
 				-- Second line
 				Timers:CreateTimer(line_duration, function()
@@ -266,6 +266,13 @@ function GameMode:OnNPCSpawned(keys)
 		--			tostring(player)
 		--		})
 
+		-- Let's try to make Meepo a bit more playable
+		if npc:GetUnitName() == "npc_dota_hero_meepo" then
+			local caster = npc
+			if npc:IsClone() then caster = npc:GetCloneSource() end
+			npc:AddNewModifier(caster, nil, "modifier_meepo_divided_we_stand_lua", {})
+		end
+
 		if npc:IsCourier() then
 			if npc.first_spawn == true then
 				CombatEvents("generic", "courier_respawn", npc)
@@ -275,7 +282,7 @@ function GameMode:OnNPCSpawned(keys)
 			end
 
 			return
-		elseif npc:IsRealHero() or npc:IsFakeHero() then
+		elseif npc:IsRealHero() or npc:IsFakeHero() or npc:IsClone() then
 			if npc.first_spawn ~= true then
 				npc.first_spawn = true
 
