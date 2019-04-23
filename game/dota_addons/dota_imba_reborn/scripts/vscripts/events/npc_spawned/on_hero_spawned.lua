@@ -48,11 +48,6 @@ function GameMode:OnHeroFirstSpawn(hero)
 		hero:AddNewModifier(hero, hero:FindAbilityByName("invoker_invoke"), "modifier_imba_invoke_buff", {})
 	end
 
-	-- Let's try to make Meepo a bit more playable
-	if hero:GetName() == "npc_dota_hero_meepo" and not hero:IsClone() then
-		hero:AddItemByName("item_travel_boots"):SetSellable(false)
-	end
-
 	Imbattlepass:AddItemEffects(hero)
 
 	if USE_TEAM_COURIER == false then
@@ -121,13 +116,6 @@ function GameMode:OnHeroFirstSpawn(hero)
 		end
 	else
 		hero.picked = true
-
-		-- fix for custom boots not copied in inventory (not working if another item than the boots are in inventory)
---		if hero:GetUnitName() == "npc_dota_hero_meepo" then
---			local caster = hero
---			if hero:IsClone() then caster = hero:GetCloneSource() end
---			hero:AddNewModifier(caster, nil, "modifier_meepo_divided_we_stand_lua", {})
---		end
 
 		if hero:IsClone() then
 			hero:SetRespawnsDisabled(true)

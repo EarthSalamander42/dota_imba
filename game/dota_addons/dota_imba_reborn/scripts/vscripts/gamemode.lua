@@ -6,7 +6,7 @@ end
 require('addon_init')
 
 require('components/api/init')
-require('libraries/adv_log')
+require('libraries/adv_log') -- be careful! this library can hide lua errors in rare cases
 
 require('libraries/animations')
 require('libraries/keyvalues')
