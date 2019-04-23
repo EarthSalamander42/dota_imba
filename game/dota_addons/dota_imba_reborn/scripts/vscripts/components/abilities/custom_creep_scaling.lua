@@ -21,6 +21,8 @@ end
 -- CUSTOM CREEP SCALING MODIFIER --
 -----------------------------------
 
+function modifier_custom_creep_scaling:IsDebuff()	return false end
+
 function modifier_custom_creep_scaling:IsHidden()
 	if self:GetStackCount() == 0 then
 		return true
