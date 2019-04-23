@@ -226,7 +226,7 @@
 	"imba_community_header" "Communauté IMBA (cliquer pour masquer)"
 	"imba_custom_hero_pick_list_title" "Héros Custom"
 	"imba_developer_credits_01" "Liste des développeurs actuels de Dota IMBA:"
-	"imba_developer_credits_02" "EarthSalamander (lead-developer), Altivu (developer), oaeide (backend/website) and Gafu Ji (backend/website)."
+	"imba_developer_credits_02" "EarthSalamander (ldéveloppeur en chef), Altivu (développeur), oaeide (backend/site web) et Gafu Ji (backend/site web)."
 	"imba_developer_credits_title" "DEVELOPPEURS"
 	"imba_dire_team_title" "Le Dire"
 	"imba_enter_game_button" "Entrer dans la partie !"

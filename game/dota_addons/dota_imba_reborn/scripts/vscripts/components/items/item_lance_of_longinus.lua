@@ -63,10 +63,10 @@ function item_imba_lance_of_longinus:OnSpellStart()
 		EmitSoundOn("DOTA_Item.ForceStaff.Activate", target)
 		target:AddNewModifier(caster, ability, "modifier_item_imba_lance_of_longinus_force_ally", {duration = duration})
 	else
-		-- If the target possesses a ready Linken's Sphere, do nothing
-		if target:TriggerSpellAbsorb(ability) then
-			return nil
-		end
+		-- If the target possesses a ready Linken's Sphere, do nothing (removing this due to Lotus Orb crashes / too many conflicting functions to cleanly resolve)
+		-- if target:TriggerSpellAbsorb(ability) then
+			-- return nil
+		-- end
 
 		if caster:IsRangedAttacker() then
 			target:AddNewModifier(caster, ability, "modifier_item_imba_lance_of_longinus_force_enemy_ranged", {duration = duration})

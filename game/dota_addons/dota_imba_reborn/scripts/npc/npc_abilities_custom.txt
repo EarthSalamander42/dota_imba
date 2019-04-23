@@ -29616,7 +29616,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"armor_reduction"			"5 6 7 8"
+				"armor_reduction"			"6 7 8 9"
 			}
 
 			"03"
@@ -29686,7 +29686,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"80 120 160"
+				"damage"					"100 130 160"
 			}
 
 			"02"
@@ -29756,7 +29756,7 @@
 			}
 		}
 	}
-	
+
 	//=================================================================================================================
 	// Shadow Fiend's Talents
 	//=================================================================================================================
@@ -38317,35 +38317,35 @@
 		{
 			"01"
 			{
-				"var_type"          "FIELD_INTEGER"
-				"dash_distance"       "305 320 335 350"
+				"var_type"			"FIELD_INTEGER"
+				"dash_distance"		"305 320 335 350"
 			}
 			"02"
 			{
-				"var_type"          "FIELD_INTEGER"
-				"dash_speed"        "2400"
+				"var_type"			"FIELD_INTEGER"
+				"dash_speed"		"2400"
 			}
 			"03"
 			{
-				"var_type"          "FIELD_INTEGER"
-				"max_charges"       "2 4 6 8"
+				"var_type"			"FIELD_INTEGER"
+				"max_charges"		"2 4 6 8"
 			}
 			"04"
 			{
-				"var_type"          "FIELD_INTEGER"
-				"tree_radius"       "175"
+				"var_type"			"FIELD_INTEGER"
+				"tree_radius"		"175"
 			}
 			"05"
 			{
-				"var_type"            "FIELD_INTEGER"
-				"charge_restore_time" "7"
-				"LinkedSpecialBonus"      "special_bonus_sohei_dash_recharge"
-				"LinkedSpecialBonusOperation" "SPECIAL_BONUS_SUBTRACT"
+				"var_type"						"FIELD_INTEGER"
+				"charge_restore_time"			"7"
+				"LinkedSpecialBonus"			"special_bonus_sohei_dash_recharge"
+				"LinkedSpecialBonusOperation"	"SPECIAL_BONUS_SUBTRACT"
 			}
 			"06"
 			{
-				"var_type"            "FIELD_INTEGER"
-				"momentum_cd_refund"  "100"
+				"var_type"				"FIELD_INTEGER"
+				"momentum_cd_refund"	"100"
 			}
 		}
 	}
@@ -39375,7 +39375,7 @@
 			}
 		}
 	}
-	
+
 	//=================================================================================================================
 	// Custom Creep Scaling
 	//=================================================================================================================
@@ -39384,7 +39384,7 @@
 		// General
 		"BaseClass"						"ability_lua"
 		"ScriptFile"					"components/abilities/custom_creep_scaling.lua"
-		
+		"AbilityTextureName"			"custom/unlimited_level_powerup"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 		"MaxLevel"						"1"
 		
@@ -39522,8 +39522,6 @@
 				"var_type"			"FIELD_FLOAT"
 				"mega_mult"			"2.0"
 			}
-			
-			
 			"25"
 			{
 				"var_type"			"FIELD_FLOAT"

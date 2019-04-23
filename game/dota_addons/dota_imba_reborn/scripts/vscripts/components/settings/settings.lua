@@ -16,8 +16,8 @@ require('components/settings/settings_donator')
 
 CUSTOM_GAME_TYPE = "IMBA"
 
-IMBA_VERSION = "7.12"
-CustomNetTables:SetTableValue("game_options", "game_version", {value = IMBA_VERSION})
+GAME_VERSION = "7.12d"
+CustomNetTables:SetTableValue("game_options", "game_version", {value = GAME_VERSION})
 
 -- Picking screen constants
 PICKING_SCREEN_OVER = false
@@ -47,11 +47,10 @@ AP_BAN_TIME = 10.0
 if IsInToolsMode() then
 	AP_BAN_TIME = 0.0
 end
+AP_GAME_TIME = 60.0
 if GetMapName() == MapOverthrow() or GetMapName() == "imba_demo" then
-	AP_GAME_TIME = 45.0
 	PRE_GAME_TIME = 10.0 + AP_GAME_TIME
 else
-	AP_GAME_TIME = 45.0					-- How long should we let people select their hero?
 	PRE_GAME_TIME = 90 + AP_GAME_TIME	-- How long after people select their heroes should the horn blow and the game start?
 end
 TREE_REGROW_TIME = 180.0				-- How long should it take individual trees to respawn after being cut down/destroyed?
@@ -556,7 +555,7 @@ IMBA_RUNE_SYSTEM = false -- Should we use custom runes script spawner?
 IMBA_COMBAT_EVENTS = false -- Should we use custom combat events notifications?
 IMBA_GOLD_SYSTEM = false -- Should we use custom gold system?
 IMBA_PICK_SCREEN = false -- Should we use custom pick screen?
-IMBA_GREEVILING = true -- Should we use fancy greevil creeps?
+IMBA_GREEVILING = false -- Should we use fancy greevil creeps?
 
 IMBA_DIRETIDE = false -- Should we enable diretide?
 
