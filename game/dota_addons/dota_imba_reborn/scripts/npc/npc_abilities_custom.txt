@@ -39375,7 +39375,7 @@
 			}
 		}
 	}
-	
+
 	//=================================================================================================================
 	// Custom Creep Scaling
 	//=================================================================================================================
@@ -39384,7 +39384,7 @@
 		// General
 		"BaseClass"						"ability_lua"
 		"ScriptFile"					"components/abilities/custom_creep_scaling.lua"
-		
+		"AbilityTextureName"			"custom/unlimited_level_powerup"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 		"MaxLevel"						"1"
 		
@@ -39522,8 +39522,6 @@
 				"var_type"			"FIELD_FLOAT"
 				"mega_mult"			"2.0"
 			}
-			
-			
 			"25"
 			{
 				"var_type"			"FIELD_FLOAT"
