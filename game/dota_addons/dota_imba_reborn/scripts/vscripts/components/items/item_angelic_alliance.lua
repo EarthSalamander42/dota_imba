@@ -203,7 +203,7 @@ function modifier_imba_angelic_alliance_passive_effect:OnAttackLanded( keys )
 		-- Proc once every 6 seconds, regardless of if it's us attacking or being attacked
 		if caster:HasModifier("modifier_imba_angelic_alliance_passive_disarm_cooldown") then return nil end
 		-- Don't disarm towers
-		if attacker:IsBuilding() or target:IsBuilding() then
+		if attacker:IsBuilding() or target:IsBuilding() or attacker:IsCreep() then
 			return nil
 		end
 
