@@ -459,6 +459,10 @@ function modifier_imba_chen_holy_persuasion_tracker:GetAttributes()	return MODIF
 -- HOLY PERSUASION TELEPORT MODIFIER --
 ---------------------------------------
 
+function modifier_imba_chen_holy_persuasion_teleport:GetEffectName()
+	return "particles/units/heroes/hero_chen/chen_teleport.vpcf"
+end
+
 function modifier_imba_chen_holy_persuasion_teleport:OnCreated()
 	self.distance	= 120 -- Something something HELLO ABILITYSPECIAL???
 end
@@ -473,12 +477,15 @@ function modifier_imba_chen_holy_persuasion_teleport:OnDestroy()
 		if self:GetAbility() and self:GetCaster() and self:GetCaster():IsAlive() then
 			
 			-- If the initial teleport vector for the ability hasn't been set yet, do so now (starts North)
-			if self:GetAbility().teleport_vector then
+			if not self:GetAbility().teleport_vector then
 				self:GetAbility().teleport_vector = Vector(0, self.distance, 0)
 			end
 			
 			-- Teleport the parent to the caster's position + the teleport vector
 			self:GetParent():SetAbsOrigin(self:GetCaster():GetAbsOrigin() + self:GetAbility().teleport_vector)
+			
+			-- Send a stop command
+			self:GetParent():Stop()
 			
 			-- Rotate the teleport vector 90 degrees clockwise to use for the next unit that gets ported
 			self:GetAbility().teleport_vector = RotatePosition(Vector(0, 0, 0), QAngle(0, -90, 0), self:GetAbility().teleport_vector)
@@ -486,12 +493,40 @@ function modifier_imba_chen_holy_persuasion_teleport:OnDestroy()
 	end
 end
 
+function modifier_imba_chen_holy_persuasion_teleport:DeclareFunctions()
+	local decFuncs = {
+		MODIFIER_EVENT_ON_TAKEDAMAGE
+    }
+
+    return decFuncs
+end
+
+-- "Damage greater than 0 (before reductions) from any player (including allies, excluding self) or Roshan dispels the effect."
+function modifier_imba_chen_holy_persuasion_teleport:OnTakeDamage(keys)
+	if not IsServer() then return end
+	
+	if keys.unit == self:GetParent() and keys.attacker ~= self:GetParent() and (keys.attacker:IsRealHero() or keys.attacker:IsRoshan()) and keys.original_damage > 0 then
+		self:Destroy()
+	end
+end
+
 -------------------
 -- TEST OF FAITH --
 -------------------
 
-function imba_chen_test_of_faith:OnSpellStart()
+-- Self leveling function (since this is technically a completely separate ability)
+function imba_chen_test_of_faith:OnHeroLevelUp()
+	self:SetLevel(min(math.floor(self:GetCaster():GetLevel() / 3), 4))
+end
 
+function imba_chen_test_of_faith:OnSpellStart()
+	
+	
+	-- PlayerResource:GetAssists(int iPlayerID)
+	-- PlayerResource:GetDenies(int iPlayerID)
+	-- PlayerResource:GetGoldSpentOnConsumables(int iPlayerID)
+	-- PlayerResource:GetGoldSpentOnSupport(int iPlayerID)
+	-- PlayerResource:GetRunePickups(int iPlayerID) 
 end
 
 -----------------
@@ -502,19 +537,19 @@ function imba_chen_hand_of_god:OnSpellStart()
 	if not IsServer() then return end
 	
 	local allies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
-	
+
 	local voiceline = nil
 	
 	if self:GetCaster():GetName() == "npc_dota_hero_chen" then
-		local voiceline = "chen_chen_ability_handgod_0"..RandomInt(1, 3)
+		voiceline = "chen_chen_ability_handgod_0"..RandomInt(1, 3)
 	end
 	
 	for _, ally in pairs(allies) do
-		if ally:IsPlayer() or ally:IsClone() or ally:GetOwner() == self:GetCaster() then
+		if ally:IsRealHero() or ally:IsClone() or ally:GetOwner() == self:GetCaster() then
 			
 			-- Let's try not to blow up eardrums
-			if voiceline and ally:IsRealHero() and ally:GetPlayerOwner() then
-				EmitSoundOnClient(voiceline, ally:GetPlayerOwner())
+			if voiceline and ally:IsRealHero() then
+				ally:EmitSound(voiceline)
 			end
 
 			if ally:IsRealHero() then
@@ -528,6 +563,8 @@ function imba_chen_hand_of_god:OnSpellStart()
 			ParticleManager:ReleaseParticleIndex(particle)
 	
 			ally:Heal(self:GetTalentSpecialValueFor("heal_amount"), self:GetCaster())
+			
+			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, ally, self:GetTalentSpecialValueFor("heal_amount"), nil)
 		end
 	end
 end
