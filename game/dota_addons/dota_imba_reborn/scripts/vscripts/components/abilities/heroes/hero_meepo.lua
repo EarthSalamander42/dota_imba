@@ -3,7 +3,7 @@
 modifier_meepo_divided_we_stand_lua = modifier_meepo_divided_we_stand_lua or class({})
 
 function modifier_meepo_divided_we_stand_lua:IsHidden()
-	return false
+	return true
 end
 
 function modifier_meepo_divided_we_stand_lua:IsPermanent()
