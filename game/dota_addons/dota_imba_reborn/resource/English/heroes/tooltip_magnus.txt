@@ -3,7 +3,7 @@
 "DOTA_Tooltip_ability_imba_magnataur_shockwave_Note0"					"Units take primary damage on their first shockwave hit, then secondary damage on all other instances based on the same cast of the ability."
 "DOTA_Tooltip_ability_imba_magnataur_shockwave_Lore"					"#{DOTA_Tooltip_ability_magnataur_shockwave_Lore}"
 "DOTA_Tooltip_ability_imba_magnataur_shockwave_damage"					"#{DOTA_Tooltip_ability_magnataur_shockwave_shock_damage}"
-"DOTA_Tooltip_ability_imba_magnataur_shockwave_shock_distance"			"RANGE:"
+"DOTA_Tooltip_ability_imba_magnataur_shockwave_shock_distance"			"#{DOTA_Tooltip_ability_antimage_blink_blink_range}"
 "DOTA_Tooltip_ability_imba_magnataur_shockwave_polarize_duration"		"POLARIZE DURATION:"
 "DOTA_Tooltip_ability_imba_magnataur_shockwave_aghanim_description"			"Increases travel distance and speed, and causes Shockwave to come back. Return wave slows units, but deals half damage to creeps."
 
@@ -21,7 +21,7 @@
 "DOTA_Tooltip_ability_imba_magnataur_empower_Lore"					"#{DOTA_Tooltip_ability_magnataur_empower_Lore}"
 "DOTA_Tooltip_ability_imba_magnataur_empower_aghanim_description"	"Continuously applies a reduced-duration Empower to allies. Lingers for 12 seconds after leaving the radius."
 
-"DOTA_Tooltip_ability_imba_magnataur_empower_empower_duration"		"DURATION:"
+"DOTA_Tooltip_ability_imba_magnataur_empower_empower_duration"		"#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 "DOTA_Tooltip_ability_imba_magnataur_empower_bonus_damage_pct"		"#{DOTA_Tooltip_ability_magnataur_empower_bonus_damage_pct}"
 "DOTA_Tooltip_ability_imba_magnataur_empower_cleave_damage_pct"		"%CLEAVE DAMAGE:"
 
@@ -48,7 +48,7 @@
 "DOTA_Tooltip_ability_imba_magnataur_skewer_slow"					"#{DOTA_Tooltip_ability_magnataur_skewer_slow_pct}"
 "DOTA_Tooltip_ability_imba_magnataur_skewer_pardon_slow"			"%BONUS SLOW:"
 "DOTA_Tooltip_ability_imba_magnataur_skewer_slow_duration"			"#{DOTA_Tooltip_ability_magnataur_skewer_slow_duration}"
-"DOTA_Tooltip_ability_imba_magnataur_skewer_skewer_radius"			"RADIUS:"
+"DOTA_Tooltip_ability_imba_magnataur_skewer_skewer_radius"			"#{DOTA_Tooltip_ability_filler_ability_radius}"
 "DOTA_Tooltip_ability_imba_magnataur_skewer_entangle_dur"			"ENTANGLE DURATION:"
 "DOTA_Tooltip_ability_imba_magnataur_skewer_pardon_extra_dmg"		"BONUS DAMAGE:"
 

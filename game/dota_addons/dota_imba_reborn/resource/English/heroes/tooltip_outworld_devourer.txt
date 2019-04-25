@@ -22,7 +22,7 @@
 "DOTA_Tooltip_ability_imba_obsidian_destroyer_astral_imprisonment_Description"      "Places a target hero into an astral prison, where it is invulnerable and disabled. When the prison implodes, it deals damage to it and nearby enemies.\n<font color='#FF7800'>Universal Movement:</font> While Astral Imprisonment is in effect, casting it again on a location will move the prison slowly towards it, carrying the imprisoned target. The prison can be moved indefinitely until it ends. \n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
 "DOTA_Tooltip_ability_imba_obsidian_destroyer_astral_imprisonment_Lore"             "Locked away in the pocket between this world and the Outworld, victims realize their infantile knowledge and mortality."
 "DOTA_Tooltip_ability_imba_obsidian_destroyer_astral_imprisonment_radius"           "IMPLOSION RADIUS:"
-"DOTA_Tooltip_ability_imba_obsidian_destroyer_astral_imprisonment_damage"           "DAMAGE:"
+"DOTA_Tooltip_ability_imba_obsidian_destroyer_astral_imprisonment_damage"           "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
 "DOTA_Tooltip_ability_imba_obsidian_destroyer_astral_imprisonment_prison_duration"  "PRISON DURATION:"
 "DOTA_Tooltip_ability_imba_obsidian_destroyer_astral_imprisonment_prison_movespeed" "PRISON MOVE SPEED:"
 "DOTA_Tooltip_ability_imba_obsidian_destroyer_astral_imprisonment_aghanim_description"  "Astral Imprisonment now steals 5 intelligence when it is applied on an enemy target."
@@ -54,11 +54,11 @@
 
 // Obsidian Destroyer's Equilibrium
 "DOTA_Tooltip_ability_imba_obsidian_destroyer_equilibrium"					"Equilibrium"
-"DOTA_Tooltip_ability_imba_obsidian_destroyer_equilibrium_Description"		"Causes any spell damage you deal to slow enemies and restore mana based on how much damage was dealt.\n<font color='#FF7800'>More Equal Than Others </font>Each instance of spell damage done also transfers %atk_speed_diff% attack speed from the enemies to Outworld Devourer for the duration of the buff."
+"DOTA_Tooltip_ability_imba_obsidian_destroyer_equilibrium_Description"		"Causes any spell damage you deal to slow enemies and restore mana based on how much damage was dealt.\n<font color='#FF7800'>More Equal Than Others</font> Each instance of spell damage done also transfers %atk_speed_diff% attack speed from the enemies to Outworld Devourer for the duration of the buff."
 "DOTA_Tooltip_ability_imba_obsidian_destroyer_equilibrium_mana_steal"		"%SPELL MANA STEAL:"
-"DOTA_Tooltip_ability_imba_obsidian_destroyer_equilibrium_movement_slow"	"%MOVEMENT SLOW:"
-"DOTA_Tooltip_ability_imba_obsidian_destroyer_equilibrium_slow_duration"			"SLOW DURATION:"
-"DOTA_Tooltip_ability_imba_obsidian_destroyer_equilibrium_duration"			"BUFF DURATION:"
+"DOTA_Tooltip_ability_imba_obsidian_destroyer_equilibrium_movement_slow"	"#{DOTA_Tooltip_ability_queenofpain_shadow_strike_movement_slow}"
+"DOTA_Tooltip_ability_imba_obsidian_destroyer_equilibrium_slow_duration"			"#{DOTA_Tooltip_ability_leshrac_lightning_storm_slow_duration}"
+"DOTA_Tooltip_ability_imba_obsidian_destroyer_equilibrium_duration"			"#{DOTA_Tooltip_ability_razor_static_link_drain_duration}"
 
 "DOTA_Tooltip_modifier_imba_obsidian_destroyer_equilibrium"	"Equilibrium"
 "DOTA_Tooltip_modifier_imba_obsidian_destroyer_equilibrium_Description"	"Your spell damage steals mana and slows your enemies. Additionally gaining %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT% attack speed."
@@ -72,7 +72,7 @@
 "DOTA_Tooltip_ability_imba_obsidian_destroyer_sanity_eclipse_Note0"                 "The damage is based on the intelligence difference times the intelligence multiplier."
 "DOTA_Tooltip_ability_imba_obsidian_destroyer_sanity_eclipse_Note1"                 "Intelligence steal and Scepter's Astral Imprisonments are applied even if the target wasn't damaged by the spell."
 "DOTA_Tooltip_ability_imba_obsidian_destroyer_sanity_eclipse_Lore"                  "When an Outworld crystal ruptures, cataclysmic energies are released, and the reverberations of this power are felt interdimensionally."
-"DOTA_Tooltip_ability_imba_obsidian_destroyer_sanity_eclipse_radius"                "RADIUS:"
+"DOTA_Tooltip_ability_imba_obsidian_destroyer_sanity_eclipse_radius"                "#{DOTA_Tooltip_ability_filler_ability_radius}"
 "DOTA_Tooltip_ability_imba_obsidian_destroyer_sanity_eclipse_int_multiplier"        "INTELLIGENCE MULTIPLIER:"
 "DOTA_Tooltip_ability_imba_obsidian_destroyer_sanity_eclipse_max_mana_burn_pct"     "%MAX MANA LOSS:"
 "DOTA_Tooltip_ability_imba_obsidian_destroyer_sanity_eclipse_int_steal_count"       "INTELLIGENCE STEAL:"

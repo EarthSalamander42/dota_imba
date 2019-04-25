@@ -21,7 +21,7 @@
 "DOTA_Tooltip_ability_imba_pangolier_shield_crash_Note3"			"Subsequent casts will refresh the buff duration and upgrade the effect if an higher amount of stacks would result. Won't refresh if no enemy heroes were damaged."
 "DOTA_Tooltip_ability_imba_pangolier_shield_crash_Lore"				"#{DOTA_Tooltip_ability_pangolier_shield_crash_Lore}"
 "DOTA_Tooltip_ability_imba_pangolier_shield_crash_damage"			"#{DOTA_Tooltip_ability_pangolier_shield_crash_damage}"
-"DOTA_Tooltip_ability_imba_pangolier_shield_crash_radius"			"RADIUS:"
+"DOTA_Tooltip_ability_imba_pangolier_shield_crash_radius"			"#{DOTA_Tooltip_ability_filler_ability_radius}"
 "DOTA_Tooltip_ability_imba_pangolier_shield_crash_hero_stacks"		"#{DOTA_Tooltip_ability_pangolier_shield_crash_hero_stacks}"
 "DOTA_Tooltip_ability_imba_pangolier_shield_crash_duration"			"#{DOTA_Tooltip_ability_pangolier_shield_crash_duration}"
 
@@ -56,7 +56,7 @@
 "DOTA_Tooltip_ability_imba_pangolier_lucky_shot_Description"				"Pangolier rolls the dice and lets fate decide the outcome for his enemies. Grants a chance to slow and apply either a Silence or a Disarm.\n<font color='#FF7800'>Remnants of Heartpiercer:</font> Every attack Pangolier inflicts on enemies already afflicted by Lucky Shot's Disarm or Silence has a %heartpiercer_chance%%% chance to apply a debuff that nullifies their armor for %duration% seconds."
 "DOTA_Tooltip_ability_imba_pangolier_lucky_shot_Note0"					"Lucky Shot uses pseudo-random distribution, while Remnants of Heartpiercer uses standard random chance."
 "DOTA_Tooltip_ability_imba_pangolier_lucky_shot_chance_pct"				"%CHANCE:"
-"DOTA_Tooltip_ability_imba_pangolier_lucky_shot_duration"				"DURATION:"
+"DOTA_Tooltip_ability_imba_pangolier_lucky_shot_duration"				"#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 "DOTA_Tooltip_ability_imba_pangolier_lucky_shot_slow"					"%SLOW:"
 
 "DOTA_Tooltip_modifier_imba_pangolier_lucky_shot_disarm"					"Lucky Shot Disarm"
@@ -74,7 +74,7 @@
 "DOTA_Tooltip_ability_imba_pangolier_gyroshell_Note1"				"Attempting to jump out of the map boundaries with Shield Crash will interrupt Rolling Thunder."
 "DOTA_Tooltip_ability_imba_pangolier_gyroshell_Note2"				"Movement speed is fixed during the skill."
 "DOTA_Tooltip_ability_imba_pangolier_gyroshell_Lore"				"#{DOTA_Tooltip_ability_pangolier_gyroshell_Lore}"
-"DOTA_Tooltip_ability_imba_pangolier_gyroshell_damage"				"DAMAGE:"
+"DOTA_Tooltip_ability_imba_pangolier_gyroshell_damage"				"#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
 "DOTA_Tooltip_ability_imba_pangolier_gyroshell_cast_time_tooltip"	"#{DOTA_Tooltip_ability_pangolier_gyroshell_cast_time_tooltip}"
 "DOTA_Tooltip_ability_imba_pangolier_gyroshell_forward_move_speed"	"#{DOTA_Tooltip_ability_pangolier_gyroshell_forward_move_speed}"
 "DOTA_Tooltip_ability_imba_pangolier_turn_rate"						"TURN RATE:"

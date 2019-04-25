@@ -159,6 +159,11 @@ function DonatorCompanion(ID, unit_name, js)
 		particle_name[5] = "particles/econ/courier/courier_roshan_ti8/courier_roshan_ti8.vpcf"
 		particle_name[6] = "particles/econ/courier/courier_roshan_lava/courier_roshan_lava.vpcf"
 		particle_name[7] = "particles/econ/courier/courier_roshan_frost/courier_roshan_frost_ambient.vpcf"
+		particle_name[8] = "particles/econ/courier/courier_babyroshan_winter18/courier_babyroshan_winter18_ambient.vpcf"
+
+		if RandomInt(1, 2) == 2 then
+			model = model.."_flying"
+		end
 
 		-- also attach eyes effect later
 		local random_int = RandomInt(0, #particle_name)
@@ -166,10 +171,13 @@ function DonatorCompanion(ID, unit_name, js)
 		local particle = ParticleManager:CreateParticle(particle_name[random_int], PATTACH_ABSORIGIN_FOLLOW, companion)
 		if random_int <= 5 then
 			companion:SetMaterialGroup(tostring(random_int))
-		else
+		elseif random_int == 6 or random_int == 7 then
 			companion:SetModel("models/courier/baby_rosh/babyroshan_elemental.vmdl")
 			companion:SetOriginalModel("models/courier/baby_rosh/babyroshan_elemental.vmdl")
 			companion:SetMaterialGroup(tostring(random_int - 5))
+		elseif random_int == 8 then
+			companion:SetModel("models/courier/baby_rosh/babyroshan_winter18.vmdl")
+			companion:SetOriginalModel("models/courier/baby_rosh/babyroshan_winter18.vmdl")
 		end
 	elseif unit_name == "npc_donator_companion_suthernfriend" then
 		companion:SetMaterialGroup("1")
@@ -187,6 +195,9 @@ function DonatorCompanion(ID, unit_name, js)
 		ParticleManager:ReleaseParticleIndex(particle)
 	elseif unit_name == "npc_donator_companion_golem" then
 		local particle = ParticleManager:CreateParticle("particles/econ/courier/courier_greevil_orange/courier_greevil_orange_ambient_3.vpcf", PATTACH_ABSORIGIN_FOLLOW, companion)
+		ParticleManager:ReleaseParticleIndex(particle)
+	elseif model == "models/courier/donkey_unicorn/donkey_unicorn_flying.vmdl" then
+		local particle = ParticleManager:CreateParticle("particles/econ/courier/courier_donkey_unicorn/courier_donkey_unicorn_ambient.vpcf", PATTACH_ABSORIGIN_FOLLOW, companion)
 		ParticleManager:ReleaseParticleIndex(particle)
 	end
 

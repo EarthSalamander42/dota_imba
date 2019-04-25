@@ -78,6 +78,9 @@ ListenToGameEvent('entity_killed', function(keys)
 	if hero:IsImbaReincarnating() then
 		hero:SetTimeUntilRespawn(IMBA_REINCARNATION_TIME)
 		return
+	elseif hero:IsClone() then
+		hero:SetTimeUntilRespawn(-1)
+		return
 	else
 		local respawn_time = 0
 
@@ -85,8 +88,10 @@ ListenToGameEvent('entity_killed', function(keys)
 		if hero:GetLevel() > 25 then
 			respawn_time = IMBA_MAX_RESPAWN_TIME
 		else
-			respawn_time = math.min(hero:GetRespawnTime() / 100 * IMBA_RESPAWN_TIME_PCT, IMBA_MAX_RESPAWN_TIME)
+			respawn_time = math.min(RESPAWN_TIME_VANILLA[hero:GetLevel()] / 100 * IMBA_RESPAWN_TIME_PCT, IMBA_MAX_RESPAWN_TIME)
 		end
+
+--		print("Respawn time:", respawn_time)
 
 		-- Increase respawn timer if dead by Reaper's Scythe
 --		print("Reaper Scythe respawn time increase:", CalculateReaperScytheRespawnReduction(killer, hero, respawn_time))
@@ -104,10 +109,10 @@ ListenToGameEvent('entity_killed', function(keys)
 
 		-- this fail-safe is probably not necessary, but i don't wanna hear about that high respawn time bug anymore. Ever.
 		if respawn_time == nil or not respawn_time then
---			print("Something terrible has happened...set respawn timer to something reasonable.")
-			respawn_time = math.min(hero:GetRespawnTime() / 100 * IMBA_RESPAWN_TIME_PCT, 60)
+			print("Something terrible has happened...set respawn timer to something reasonable.")
+			respawn_time = math.min(RESPAWN_TIME_VANILLA[hero:GetLevel()] / 100 * IMBA_RESPAWN_TIME_PCT, IMBA_MAX_RESPAWN_TIME)
 
-			print("Respawn time is nil, let's fix this mess!")
+			print("Respawn time is nil, can you hear me backend?")
 
 			return
 		else
@@ -120,6 +125,8 @@ ListenToGameEvent('entity_killed', function(keys)
 				respawn_time = respawn_time - respawn_time_reduction
 --				print("Respawn time (frantic):", respawn_time)
 			end
+
+--			print("Respawn time:", respawn_time)
 
 			hero:SetTimeUntilRespawn(respawn_time)
 

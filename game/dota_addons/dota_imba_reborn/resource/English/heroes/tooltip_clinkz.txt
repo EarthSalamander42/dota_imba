@@ -32,7 +32,7 @@
 "DOTA_Tooltip_ability_imba_clinkz_skeleton_walk_Description"            "Clinkz gains bonus movement speed, phasing, and invisibility until the moment he attacks or uses an ability.\n<font color='#FF7800'>Spooky Scary Skeleton:</font> When breaking out of invisibility, all enemy heroes in %spook_radius% radius become spooked. While spooked, they are unable to do anything, and are forced to run in circles in terror. The closer Clinkz is when breaking invisibility, the longer enemies will be spooked. Does nothing if Clinkz could be seen by the enemy before breaking out of invisiblity.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
 "DOTA_Tooltip_ability_imba_clinkz_skeleton_walk_Note0"                  "Any form of detection renders Spooky Scary Skeleton useless."
 "DOTA_Tooltip_ability_imba_clinkz_skeleton_walk_Lore"                  "With a burst of fire and puff of smoke, the Bone Fletcher is nowhere to be seen."
-"DOTA_Tooltip_ability_imba_clinkz_skeleton_walk_duration"              "DURATION:"
+"DOTA_Tooltip_ability_imba_clinkz_skeleton_walk_duration"              "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 "DOTA_Tooltip_ability_imba_clinkz_skeleton_walk_ms_bonus_pct"          "%BONUS MOVEMENT SPEED:"
 "DOTA_Tooltip_ability_imba_clinkz_skeleton_walk_base_spook_duration"                "MINIMUM SPOOK DURATION:"
 "DOTA_Tooltip_ability_imba_clinkz_skeleton_walk_max_spook_duration"                 "MAX SPOOK DURATION:"

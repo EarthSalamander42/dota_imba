@@ -53,9 +53,9 @@
 "DOTA_Tooltip_ability_imba_roshan_diretide_apocalypse"							"Apocalypse"
 "DOTA_Tooltip_ability_imba_roshan_diretide_apocalypse_Description"				"Roshan launches devastating beams of incineration from the sky at all enemy heroes outside of 400 range, but within 1200 range."
 "DOTA_Tooltip_ability_imba_roshan_diretide_apocalypse_Lore"						"Roshans anger exceeds the knowledge of the oldest and smartest beings, allowing him to focus the entire sun on his planet."
-"DOTA_Tooltip_ability_imba_roshan_diretide_apocalypse_area_of_effect"			"RADIUS:"
+"DOTA_Tooltip_ability_imba_roshan_diretide_apocalypse_area_of_effect"			"#{DOTA_Tooltip_ability_filler_ability_radius}"
 "DOTA_Tooltip_ability_imba_roshan_diretide_apocalypse_delay"					"DELAY:"
-"DOTA_Tooltip_ability_imba_roshan_diretide_apocalypse_damage"					"DAMAGE:"
+"DOTA_Tooltip_ability_imba_roshan_diretide_apocalypse_damage"					"#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
 
 "DOTA_Tooltip_ability_imba_roshan_diretide_summon_roshlings"					"Summon Roshlings"
 "DOTA_Tooltip_ability_imba_roshan_diretide_summon_roshlings_Description"		"Roshan summons Roshlings to aid him in combat."
@@ -70,7 +70,7 @@
 
 "DOTA_Tooltip_ability_roshan_halloween_wave_of_force"							"Wave of Force"
 "DOTA_Tooltip_ability_roshan_halloween_wave_of_force_Description"				"After a delay, Roshan smashes the ground, causing massive radial damage in an area around him, knocking back all enemies.  The closer to Roshan the enemy is, the more damage it takes."
-"DOTA_Tooltip_ability_roshan_halloween_wave_of_force_radius"					"RADIUS:"
+"DOTA_Tooltip_ability_roshan_halloween_wave_of_force_radius"					"#{DOTA_Tooltip_ability_filler_ability_radius}"
 
 "DOTA_Tooltip_ability_roshan_halloween_shell"									"Shell"
 "DOTA_Tooltip_ability_roshan_halloween_shell_Description"						"Roshan becomes immune to physical damage, but takes enhanced magical damage for a brief time.  When Roshan uses Shell, all ability and item cooldowns are refreshed."

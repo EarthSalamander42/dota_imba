@@ -38,7 +38,7 @@
 "DOTA_Tooltip_ability_imba_lycan_howl"							"#{DOTA_Tooltip_ability_lycan_howl}"
 "DOTA_Tooltip_ability_imba_lycan_howl_Description"				"Grants bonus attack speed, armor, and health regen to Lycan, all allied heroes and all units under their control.\n<font color='#FF7800'>The Wolf Is At Your Door:</font> Also increases movement speed by %move_speed%.\n<font color='#FF7800'>Moon Phase:</font> When toggled on and cast at night, Howl also grants phased movement."
 "DOTA_Tooltip_ability_imba_lycan_howl_Lore"						"#{DOTA_Tooltip_ability_lycan_howl_Lore}"
-"DOTA_Tooltip_ability_imba_lycan_howl_howl_duration"			"DURATION:"
+"DOTA_Tooltip_ability_imba_lycan_howl_howl_duration"			"#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 "DOTA_Tooltip_ability_imba_lycan_howl_attack_speed"				"ATTACK SPEED:"
 "DOTA_Tooltip_ability_imba_lycan_howl_armor"					"ARMOR:"
 "DOTA_Tooltip_ability_imba_lycan_howl_hp_regen"					"HEALTH REGEN:"
@@ -83,7 +83,7 @@
 "DOTA_Tooltip_ability_imba_summoned_wolf_wicked_crunch_Note0"          "Attack speed loss does not depend on stack amount."
 "DOTA_Tooltip_ability_imba_summoned_wolf_wicked_crunch_Lore"            "Wolf packs are incredibly organized, even amidst the chaos of the hunt. Lower ranked wolves will rip apart their prey's flesh, only for the Alpha to feast on the tender meat within."
 "DOTA_Tooltip_ability_imba_summoned_wolf_wicked_crunch_damage_bonus_per_stack"      "DAMAGE PER STACK:"
-"DOTA_Tooltip_ability_imba_summoned_wolf_wicked_crunch_duration"                    "DURATION:"
+"DOTA_Tooltip_ability_imba_summoned_wolf_wicked_crunch_duration"                    "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 "DOTA_Tooltip_ability_imba_summoned_wolf_wicked_crunch_attack_speed_reduction"      "ATTACK SPEED SLOW PER STACK:"
 
 "DOTA_Tooltip_modifier_imba_summoned_wolf_wicked_crunch_debuff"                     "Wicked Crunch"

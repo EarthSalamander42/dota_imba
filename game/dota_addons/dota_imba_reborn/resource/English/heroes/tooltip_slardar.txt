@@ -4,7 +4,7 @@
 "DOTA_Tooltip_ability_imba_slardar_guardian_sprint_Lore"                	"As Slardar has made the transition from the Deeps, it has been necessary to use his powerful tail for sprinting instead of swimming."
 
 "DOTA_Tooltip_ability_imba_slardar_guardian_sprint_ms_bonus_pct"			"%BONUS MOVE SPEED:"
-"DOTA_Tooltip_ability_imba_slardar_guardian_sprint_duration"				"DURATION:"
+"DOTA_Tooltip_ability_imba_slardar_guardian_sprint_duration"				"#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 "DOTA_Tooltip_ability_imba_slardar_guardian_sprint_radius"					"RIP CURRENT RADIUS:"
 "DOTA_Tooltip_ability_imba_slardar_guardian_sprint_damage"					"RIP CURRENT DAMAGE:"
 "DOTA_Tooltip_ability_imba_slardar_guardian_sprint_aghanim_description"		"While inside your Rain Cloud, gain 15% additional movement speed and decrease damage taken by 10%."
@@ -26,12 +26,12 @@
 "DOTA_Tooltip_ability_imba_slardar_slithereen_crush_Description"			"Slams the ground, stunning and damaging nearby enemies. After the stun, the affected units are slowed.\n<font color='#FF7800'>Royal Break:</font> Enemies hit by Slithereen Crush are affected by Royal Break for %royal_break_duration% seconds, becoming unable to block or evade the next %royal_break_attacks% attacks.\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
 "DOTA_Tooltip_ability_imba_slardar_slithereen_crush_aghanim_description"	"While inside your Rain Cloud, Slithereen Crush's radius is increased by 50%."
 "DOTA_Tooltip_ability_imba_slardar_slithereen_crush_Lore"					"A swift crush of might and water breaks even the toughest of defenses."
-"DOTA_Tooltip_ability_imba_slardar_slithereen_crush_radius"					"RADIUS:"
-"DOTA_Tooltip_ability_imba_slardar_slithereen_crush_ms_slow_pct"			"%MOVE SLOW:"
+"DOTA_Tooltip_ability_imba_slardar_slithereen_crush_radius"					"#{DOTA_Tooltip_ability_filler_ability_radius}"
+"DOTA_Tooltip_ability_imba_slardar_slithereen_crush_ms_slow_pct"			"#{DOTA_Tooltip_ability_queenofpain_shadow_strike_movement_slow}"
 "DOTA_Tooltip_ability_imba_slardar_slithereen_crush_as_slow"				"ATTACK SLOW:"
 "DOTA_Tooltip_ability_imba_slardar_slithereen_crush_stun_duration"			"STUN DURATION:"
-"DOTA_Tooltip_ability_imba_slardar_slithereen_crush_slow_duration"			"SLOW DURATION:"
-"DOTA_Tooltip_ability_imba_slardar_slithereen_crush_damage"					"DAMAGE:"
+"DOTA_Tooltip_ability_imba_slardar_slithereen_crush_slow_duration"			"#{DOTA_Tooltip_ability_leshrac_lightning_storm_slow_duration}"
+"DOTA_Tooltip_ability_imba_slardar_slithereen_crush_damage"					"#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
 
 "DOTA_Tooltip_modifier_imba_slithereen_crush_stun"                      "Slithereen Crush"
 "DOTA_Tooltip_modifier_imba_slithereen_crush_stun_Description"          "Stunned."
@@ -50,7 +50,7 @@
 "DOTA_Tooltip_ability_imba_slardar_bash_of_the_deep_Lore"				"Thieves of the wealth of the Deep Ones meet the brutality of the Slithereen Guard in melee combat."
 "DOTA_Tooltip_ability_imba_slardar_bash_of_the_deep_bash_chance_pct"	"%CHANCE:"
 "DOTA_Tooltip_ability_imba_slardar_bash_of_the_deep_bash_damage"		"BONUS DAMAGE:"
-"DOTA_Tooltip_ability_imba_slardar_bash_of_the_deep_duration" 			"DURATION:"
+"DOTA_Tooltip_ability_imba_slardar_bash_of_the_deep_duration" 			"#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 
 "DOTA_Tooltip_modifier_imba_bash_of_the_deep_stun"                      "Bash of The Deep"
 "DOTA_Tooltip_modifier_imba_bash_of_the_deep_stun_Description"          "Stunned, bashed, IN YOUR FACE!"
@@ -61,7 +61,7 @@
 "DOTA_Tooltip_ability_imba_slardar_corrosive_haze_aghanim_description"		"Adds a new ability: Rain Cloud. Passively creates a cloud that follows Slardar around. While the cloud soaks Slardar in rainwater, many of his skills are improved. While inside your Rain Cloud, enemies affected by Corrosive Haze take 30% increased damage from any source while they are stunned."
 "DOTA_Tooltip_ability_imba_slardar_corrosive_haze_Lore"						"Even the strongest armor counts for little when left to the brine of the sea."
 "DOTA_Tooltip_ability_imba_slardar_corrosive_haze_armor_reduction"			"ARMOR REDUCTION:"
-"DOTA_Tooltip_ability_imba_slardar_corrosive_haze_duration"					"DURATION:"
+"DOTA_Tooltip_ability_imba_slardar_corrosive_haze_duration"					"#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 "DOTA_Tooltip_ability_imba_slardar_corrosive_haze_slip_up_chance_pct"		"%SLIPSTREAM CHANCE:"
 
 "DOTA_Tooltip_modifier_imba_corrosive_haze_debuff"                      	"Corrosive Haze"

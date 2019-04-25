@@ -7,7 +7,7 @@
 "DOTA_Tooltip_ability_imba_lina_dragon_slave_Description"              "Lina channels the breath of a dragon, sending out a wave of fire that scorches enemies in its path.\n<font color='#FF7800'>Three-headed Dragon:</font> Spawns %secondary_amount% additional Dragon Slaves on the targeted area after a delay, which do less damage than the original.\n<font color='#FF7800'>Feed the Flame:</font> Every time an enemy hero is hit by Dragon Slave, Laguna Blade's cooldown is decreased by %cdr_hero% seconds (%cdr_units% when hitting creeps or illusions)."
 "DOTA_Tooltip_ability_imba_lina_dragon_slave_Note0"                    "Secondary Dragon Slaves spawn at the targeted point after a short delay. Enemies can be hit by all of them separately, with good enough aim."
 "DOTA_Tooltip_ability_imba_lina_dragon_slave_Lore"                      "In the scorched barren of Misrule, Lina learned to manipulate the fiery breath of the Desert Wyrm as a form of entertainment."
-"DOTA_Tooltip_ability_imba_lina_dragon_slave_primary_damage"            "DAMAGE:"
+"DOTA_Tooltip_ability_imba_lina_dragon_slave_primary_damage"            "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
 "DOTA_Tooltip_ability_imba_lina_dragon_slave_secondary_damage"          "SECONDARY DAMAGE:"
 "DOTA_Tooltip_ability_imba_lina_dragon_slave_split_delay"              "SPLIT DELAY:"
 
@@ -18,10 +18,10 @@
 "DOTA_Tooltip_ability_imba_lina_light_strike_array"                    "Light Strike Array"
 "DOTA_Tooltip_ability_imba_lina_light_strike_array_Description"         "Summons a column of flames that damages and stuns enemies.\n<font color='#FF7800'>Spontaneous Destruction:</font> Summons %array_count_tooltip% instances of extra pillars in a circle %rings_delay% seconds after the first explosion occurs, each with a %cast_delay% seconds interval.\n<font color='#FF7800'>Blast Matrix Designation:</font> Spontaneous Destruction summons %array_rings_count% pillars with %rings_radius% radius to the original explosion, with each time being further from the previous explosion."
 "DOTA_Tooltip_ability_imba_lina_light_strike_array_Lore"                "Lina's essence allows her to focus the sun's energies, causing air to combust at will."
-"DOTA_Tooltip_ability_imba_lina_light_strike_array_aoe_radius"          "RADIUS:"
+"DOTA_Tooltip_ability_imba_lina_light_strike_array_aoe_radius"          "#{DOTA_Tooltip_ability_filler_ability_radius}"
 "DOTA_Tooltip_ability_imba_lina_light_strike_array_cast_delay"          "CAST DELAY:"
 "DOTA_Tooltip_ability_imba_lina_light_strike_array_stun_duration"                   "STUN DURATION:"
-"DOTA_Tooltip_ability_imba_lina_light_strike_array_damage"              "DAMAGE:"
+"DOTA_Tooltip_ability_imba_lina_light_strike_array_damage"              "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
 
 ////===============================================================================================================
 // Lina's Fiery Soul
@@ -47,7 +47,7 @@
 "DOTA_Tooltip_ability_imba_lina_laguna_blade_Note0"                    "Bounce targets are chosen at random, including illusions and creeps."
 "DOTA_Tooltip_ability_imba_lina_laguna_blade_Lore"                      "The air around Lina becomes so intensely torrid that it scorches foes with white-hot lightning."
 "DOTA_Tooltip_ability_imba_lina_laguna_blade_aghanim_description"                   "Changes the damage type to pure, and allows Laguna Blade to slice through Spell Immunity."
-"DOTA_Tooltip_ability_imba_lina_laguna_blade_damage"                    "DAMAGE:"
+"DOTA_Tooltip_ability_imba_lina_laguna_blade_damage"                    "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
 
 ////===============================================================================================================
 // Lina's Custom Talents

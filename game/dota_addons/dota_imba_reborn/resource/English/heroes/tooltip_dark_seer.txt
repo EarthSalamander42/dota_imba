@@ -7,8 +7,8 @@
 "DOTA_Tooltip_ability_imba_dark_seer_vacuum_Note2"									"Doesn't pull invulnerable units."
 "DOTA_Tooltip_ability_imba_dark_seer_vacuum_Note3"									"Trees near the center of the vacuum will be destroyed."
 "DOTA_Tooltip_ability_imba_dark_seer_vacuum_Note4"									"Refreshing this ability while it replaced by Wormhole immediately swaps it back in."
-"DOTA_Tooltip_ability_imba_dark_seer_vacuum_radius"									"RADIUS:"
-"DOTA_Tooltip_ability_imba_dark_seer_vacuum_damage"									"DAMAGE:"
+"DOTA_Tooltip_ability_imba_dark_seer_vacuum_radius"									"#{DOTA_Tooltip_ability_filler_ability_radius}"
+"DOTA_Tooltip_ability_imba_dark_seer_vacuum_damage"									"#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
 "DOTA_Tooltip_ability_imba_dark_seer_vacuum_cast_range_tooltip"						"CAST RANGE:"
 
 "DOTA_Tooltip_ability_imba_dark_seer_wormhole"											"Wormhole"
@@ -19,8 +19,8 @@
 "DOTA_Tooltip_ability_imba_dark_seer_wormhole_Note2"									"Doesn't push invulnerable units."
 "DOTA_Tooltip_ability_imba_dark_seer_wormhole_Note3"									"Trees near the center of the wormhole will be destroyed."
 "DOTA_Tooltip_ability_imba_dark_seer_vacuum_Note4"										"Refreshing this ability while it is replacing Vacuum immediately swaps it back out."
-"DOTA_Tooltip_ability_imba_dark_seer_wormhole_radius"									"RADIUS:"
-"DOTA_Tooltip_ability_imba_dark_seer_wormhole_damage"									"DAMAGE:"
+"DOTA_Tooltip_ability_imba_dark_seer_wormhole_radius"									"#{DOTA_Tooltip_ability_filler_ability_radius}"
+"DOTA_Tooltip_ability_imba_dark_seer_wormhole_damage"									"#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
 "DOTA_Tooltip_ability_imba_dark_seer_wormhole_cast_range_tooltip"						"CAST RANGE:"
 
 "DOTA_Tooltip_ability_imba_dark_seer_ion_shell"										"Ion Shell"
@@ -30,8 +30,8 @@
 "DOTA_Tooltip_ability_imba_dark_seer_ion_shell_Note1"								"Doesn't damage the target it is cast on."
 "DOTA_Tooltip_ability_imba_dark_seer_ion_shell_Note2"								"If cast on a unit that already has Ion Shell, the new Shell replaces the old one."
 "DOTA_Tooltip_ability_imba_dark_seer_ion_shell_Note3"								"Proton Explosion does not refresh existing Ion Shell durations."
-"DOTA_Tooltip_ability_imba_dark_seer_ion_shell_radius"								"RADIUS:"
-"DOTA_Tooltip_ability_imba_dark_seer_ion_shell_duration"								"DURATION:"
+"DOTA_Tooltip_ability_imba_dark_seer_ion_shell_radius"								"#{DOTA_Tooltip_ability_filler_ability_radius}"
+"DOTA_Tooltip_ability_imba_dark_seer_ion_shell_duration"								"#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 "DOTA_Tooltip_ability_imba_dark_seer_ion_shell_damage_per_second"					"DAMAGE PER SECOND:"
 
 
@@ -39,7 +39,7 @@
 "DOTA_Tooltip_ability_imba_dark_seer_surge_Description"								"Charges a target friendly unit with power, giving it a brief burst of movement speed and removes unit collisions. Allows the unit to surpass the movement speed limit and cannot be slowed.\n<font color='#FF7800'>Group Advancement: </font>Surge is a ground targeted, %surge_radius% radius ability. Can be self-cast to center the AoE around the caster's position."
 "DOTA_Tooltip_ability_imba_dark_seer_surge_Lore"										"Ish'Kafel once used his speed of mind to navigate the maze between the walls."
 "DOTA_Tooltip_ability_imba_dark_seer_surge_Note0"									"Units with Surge cannot be slowed unless the Surge effect is removed."
-"DOTA_Tooltip_ability_imba_dark_seer_surge_duration"									"DURATION:"
+"DOTA_Tooltip_ability_imba_dark_seer_surge_duration"									"#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 "DOTA_Tooltip_ability_imba_dark_seer_surge_speed_boost"								"%SPEED BONUS:"
 
 
@@ -49,8 +49,8 @@
 "DOTA_Tooltip_ability_imba_dark_seer_wall_of_replica_Note0"							"Each wall functions separately from the other, allowing two instances of slow and self-attacks at the same time."
 "DOTA_Tooltip_ability_imba_dark_seer_wall_of_replica_duration"						"WALL DURATION:"
 "DOTA_Tooltip_ability_imba_dark_seer_wall_of_replica_range_tooltip"					"CAST RANGE:"
-"DOTA_Tooltip_ability_imba_dark_seer_wall_of_replica_movement_slow"		            "%MOVEMENT SLOW:"
-"DOTA_Tooltip_ability_imba_dark_seer_wall_of_replica_slow_duration"		            "SLOW DURATION:"
+"DOTA_Tooltip_ability_imba_dark_seer_wall_of_replica_movement_slow"		            "#{DOTA_Tooltip_ability_queenofpain_shadow_strike_movement_slow}"
+"DOTA_Tooltip_ability_imba_dark_seer_wall_of_replica_slow_duration"		            "#{DOTA_Tooltip_ability_leshrac_lightning_storm_slow_duration}"
 "DOTA_Tooltip_ability_imba_dark_seer_wall_of_replica_scepter_rotation_speed"		"SCEPTER ROTATIONAL DEGREES PER SECOND:"
 "DOTA_Tooltip_ability_imba_dark_seer_wall_of_replica_aghanim_description"			"The walls now rotate clockwise around the cast point."
 

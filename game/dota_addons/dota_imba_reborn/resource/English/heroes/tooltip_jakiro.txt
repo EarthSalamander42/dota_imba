@@ -29,11 +29,11 @@
 "DOTA_Tooltip_ability_imba_jakiro_ice_path_Lore"                        "Jakiro glazes the earth with blistering cold."
 "DOTA_Tooltip_ability_imba_jakiro_ice_path_path_duration"              "PATH DURATION:"
 "DOTA_Tooltip_ability_imba_jakiro_ice_path_stun_duration"              "STUN DURATION:"
-"DOTA_Tooltip_ability_imba_jakiro_ice_path_damage"						"DAMAGE:"
+"DOTA_Tooltip_ability_imba_jakiro_ice_path_damage"						"#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
 "DOTA_Tooltip_ability_imba_jakiro_ice_path_dmg_amp"                    "%ANTIPODE BONUS:"
 "DOTA_Tooltip_ability_imba_jakiro_ice_path_attack_slow"                "ATTACK SLOW:"
-"DOTA_Tooltip_ability_imba_jakiro_ice_path_move_slow"                  "%MOVEMENT SLOW:"
-"DOTA_Tooltip_ability_imba_jakiro_ice_path_range"                      "RANGE:"
+"DOTA_Tooltip_ability_imba_jakiro_ice_path_move_slow"                  "#{DOTA_Tooltip_ability_queenofpain_shadow_strike_movement_slow}"
+"DOTA_Tooltip_ability_imba_jakiro_ice_path_range"                      "#{DOTA_Tooltip_ability_antimage_blink_blink_range}"
 
 "DOTA_Tooltip_modifier_imba_ice_path_freeze_debuff"                    "Ice Path"
 "DOTA_Tooltip_modifier_imba_ice_path_freeze_debuff_Description"                     "Stunned."
@@ -63,7 +63,7 @@
 "DOTA_Tooltip_ability_imba_jakiro_macropyre_damage_scepter"          "SCEPTER DAMAGE PER SECOND:"
 "DOTA_Tooltip_ability_imba_jakiro_macropyre_range"                      "LENGTH:"
 "DOTA_Tooltip_ability_imba_jakiro_macropyre_range_scepter"              "SCEPTER LENGTH:"
-"DOTA_Tooltip_ability_imba_jakiro_macropyre_duration"                  "DURATION:"
+"DOTA_Tooltip_ability_imba_jakiro_macropyre_duration"                  "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 "DOTA_Tooltip_ability_imba_jakiro_macropyre_duration_scepter"          "SCEPTER DURATION:"
 "DOTA_Tooltip_ability_imba_jakiro_macropyre_aghanim_description"		"Increases flame length, duration, and damage."
 

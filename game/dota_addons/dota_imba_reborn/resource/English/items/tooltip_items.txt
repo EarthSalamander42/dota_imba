@@ -174,7 +174,7 @@
 "DOTA_Tooltip_Ability_item_imba_blink_boots"						"Blink Boots"
 "DOTA_Tooltip_ability_item_imba_blink_boots_Description"			"<h1>Active: Blink</h1> Instantly teleport to a target point up to %max_blink_range% units away. If hero-based damage is taken, Blink Boots cannot be used for %blink_damage_cooldown% seconds.\n<h1>Passive: Perfect Control</h1> Targeting over the maximum range will not result in a shorter blink.\n<h1>Passive: Flash Step</h1>If the user manually blinks between %sweet_spot_min% and %max_blink_range%, Blink Boots immediately goes off cooldown. Flash Step has an innate cooldown of %flash_step_cooldown% seconds when activated."
 "DOTA_Tooltip_ability_item_imba_blink_boots_Lore"					"Blink, and you'll miss it."
-"DOTA_Tooltip_ability_item_imba_blink_boots_max_blink_range"		"RANGE:"
+"DOTA_Tooltip_ability_item_imba_blink_boots_max_blink_range"		"#{DOTA_Tooltip_ability_antimage_blink_blink_range}"
 "DOTA_Tooltip_ability_item_imba_blink_boots_bonus_movement_speed"	"%+$move_speed"
 
 "DOTA_Tooltip_modifier_imba_blink_boots_flash_step"					"Flash Step Cooldown"
@@ -183,7 +183,7 @@
 "DOTA_Tooltip_Ability_item_imba_blink"                          "Blink Dagger"
 "DOTA_Tooltip_ability_item_imba_blink_Description"              "<h1>Active: Blink</h1> Instantly teleport to a target point up to %max_blink_range% units away. If hero-based damage is taken, Blink Dagger cannot be used for %blink_damage_cooldown% seconds.\n<h1><font color='#FF7800'>Passive: Perfect Control</font></h1> Targeting over the maximum range will not result in a shorter blink."
 "DOTA_Tooltip_ability_item_imba_blink_Lore"                    "The fabled dagger used by the fastest assassin ever to walk the lands."
-"DOTA_Tooltip_ability_item_imba_blink_max_blink_range"          "RANGE:"
+"DOTA_Tooltip_ability_item_imba_blink_max_blink_range"          "#{DOTA_Tooltip_ability_antimage_blink_blink_range}"
 
 // Bloodstone
 "DOTA_Tooltip_Ability_item_imba_bloodstone"                    "Bloodstone"
@@ -299,7 +299,7 @@
 "DOTA_Tooltip_ability_item_imba_rapier_cursed_Description"                  "<h1>Passive: Everlasting</h1> <font color='#e03e2e'>Dropped on death, and cannot be destroyed.</font>\n<h1> Passive: REAL ULTIMATE POWER</h1> Provides bonus attack and spell damage, reduces incoming damage from enemies by %damage_reduction%%%, and debuff durations by %tenacity_pct%%%.\n<h1><font color='#e03e2e'>Passive: Cursed By The Gods</font></h1> Wielding the Cursed Rapier costs health. This cost increases over time, forever, until its bearer dies. However, the curse is not fatal, and cannot kill the bearer.\n<font color='#FF0000'>Spell amp does not work when dealing damage to enemies over 2500 range away.</font>"
 "DOTA_Tooltip_Ability_item_imba_rapier_cursed_Note0"            "Spell amp stops working when dealing damage to units over 2500 range away from you."
 "DOTA_Tooltip_ability_item_imba_rapier_cursed_Lore"            "So powerful, it hasn't ever accepted a single owner."
-"DOTA_Tooltip_ability_item_imba_rapier_cursed_bonus_damage"                 "DAMAGE:"
+"DOTA_Tooltip_ability_item_imba_rapier_cursed_bonus_damage"                 "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
 "DOTA_Tooltip_ability_item_imba_rapier_cursed_spell_power"                  "%SPELL AMP:"
 "DOTA_Tooltip_ability_item_imba_rapier_cursed_damage_reduction"             "%DAMAGE REDUCTION:"
 "DOTA_Tooltip_ability_item_imba_rapier_cursed_tenacity_pct"                 "%TENACITY:"
@@ -320,7 +320,7 @@
 "DOTA_Tooltip_ability_item_imba_dagon_6_Description"            "<h1>Active: Wild Burst</h1> Shoots a beam of raw magical energy,<font color='#FF7800'> which bounces from the main target to all enemies in %bounce_range% radius. Deals %damage% damage to the main target, and %bounce_damage% damage on every bounce.</font> Upgradable."
 "DOTA_Tooltip_ability_item_imba_dagon_6_Lore"                  "A lesser wand that grows in power the longer it is used, it brings magic to the fingertips of the user."
 "DOTA_Tooltip_ability_item_imba_dagon_6_Note0"					"Primary beam instantly kills illusions."
-"DOTA_Tooltip_ability_item_imba_dagon_6_damage"                "DAMAGE:"
+"DOTA_Tooltip_ability_item_imba_dagon_6_damage"                "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
 "DOTA_Tooltip_ability_item_imba_dagon_6_bounce_damage"          "BOUNCE DAMAGE:"
 "DOTA_Tooltip_ability_item_imba_dagon_6_bounce_range"          "BOUNCE RADIUS:"
 "DOTA_Tooltip_ability_item_imba_dagon_6_bonus_intellect"                    "+$int"
@@ -332,7 +332,7 @@
 "DOTA_Tooltip_ability_item_imba_dagon_7_Description"            "<h1>Active: Wild Burst</h1> Shoots a beam of raw magical energy,<font color='#FF7800'> which bounces from the main target to all enemies in %bounce_range% radius. Deals %damage% damage to the main target, and %bounce_damage% damage on every bounce.</font> Upgradable."
 "DOTA_Tooltip_ability_item_imba_dagon_7_Lore"                  "A lesser wand that grows in power the longer it is used, it brings magic to the fingertips of the user."
 "DOTA_Tooltip_ability_item_imba_dagon_7_Note0"					"Primary beam instantly kills illusions."
-"DOTA_Tooltip_ability_item_imba_dagon_7_damage"                "DAMAGE:"
+"DOTA_Tooltip_ability_item_imba_dagon_7_damage"                "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
 "DOTA_Tooltip_ability_item_imba_dagon_7_bounce_damage"          "BOUNCE DAMAGE:"
 "DOTA_Tooltip_ability_item_imba_dagon_7_bounce_range"          "BOUNCE RADIUS:"
 "DOTA_Tooltip_ability_item_imba_dagon_7_bonus_intellect"                    "+$int"
@@ -344,7 +344,7 @@
 "DOTA_Tooltip_ability_item_imba_dagon_8_Description"            "<h1>Active: Wild Burst</h1> Shoots a beam of raw magical energy,<font color='#FF7800'> which bounces from the main target to all enemies in %bounce_range% radius. Deals %damage% damage to the main target, and %bounce_damage% damage on every bounce.</font> Upgradable."
 "DOTA_Tooltip_ability_item_imba_dagon_8_Lore"                  "A lesser wand that grows in power the longer it is used, it brings magic to the fingertips of the user."
 "DOTA_Tooltip_ability_item_imba_dagon_8_Note0"					"Primary beam instantly kills illusions."
-"DOTA_Tooltip_ability_item_imba_dagon_8_damage"                "DAMAGE:"
+"DOTA_Tooltip_ability_item_imba_dagon_8_damage"                "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
 "DOTA_Tooltip_ability_item_imba_dagon_8_bounce_damage"          "BOUNCE DAMAGE:"
 "DOTA_Tooltip_ability_item_imba_dagon_8_bounce_range"          "BOUNCE RADIUS:"
 "DOTA_Tooltip_ability_item_imba_dagon_8_bonus_intellect"                    "+$int"
@@ -356,7 +356,7 @@
 "DOTA_Tooltip_ability_item_imba_dagon_9_Description"            "<h1>Active: Wild Burst</h1> Shoots a beam of raw magical energy,<font color='#FF7800'> which bounces from the main target to all enemies in %bounce_range% radius. Deals %damage% damage to the main target, and %bounce_damage% damage on every bounce.</font> Upgradable."
 "DOTA_Tooltip_ability_item_imba_dagon_9_Lore"                  "A lesser wand that grows in power the longer it is used, it brings magic to the fingertips of the user."
 "DOTA_Tooltip_ability_item_imba_dagon_9_Note0"					"Primary beam instantly kills illusions."
-"DOTA_Tooltip_ability_item_imba_dagon_9_damage"                "DAMAGE:"
+"DOTA_Tooltip_ability_item_imba_dagon_9_damage"                "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
 "DOTA_Tooltip_ability_item_imba_dagon_9_bounce_damage"          "BOUNCE DAMAGE:"
 "DOTA_Tooltip_ability_item_imba_dagon_9_bounce_range"          "BOUNCE RADIUS:"
 "DOTA_Tooltip_ability_item_imba_dagon_9_bonus_intellect"                    "+$int"
@@ -368,7 +368,7 @@
 "DOTA_Tooltip_ability_item_imba_dagon_10_Description"          "<h1>Active: Wild Burst</h1> Shoots a beam of raw magical energy,<font color='#FF7800'> which bounces from the main target to all enemies in %bounce_range% radius. Deals %damage% damage to the main target, and %bounce_damage% damage on every bounce.</font>"
 "DOTA_Tooltip_ability_item_imba_dagon_10_Lore"                  "A lesser wand that grows in power the longer it is used, it brings magic to the fingertips of the user."
 "DOTA_Tooltip_ability_item_imba_dagon_10_Note0"					"Primary beam instantly kills illusions."
-"DOTA_Tooltip_ability_item_imba_dagon_10_damage"                "DAMAGE:"
+"DOTA_Tooltip_ability_item_imba_dagon_10_damage"                "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
 "DOTA_Tooltip_ability_item_imba_dagon_10_bounce_damage"                     "BOUNCE DAMAGE:"
 "DOTA_Tooltip_ability_item_imba_dagon_10_bounce_range"          "BOUNCE RADIUS:"
 "DOTA_Tooltip_ability_item_imba_dagon_10_bonus_intellect"                   "+$int"
@@ -460,7 +460,7 @@
 "DOTA_Tooltip_ability_item_imba_skadi_Note0"                    "Slow lasts at most 5, at least 1 second."
 "DOTA_Tooltip_ability_item_imba_skadi_Note1"                    "Minimum slow duration happens beyond 1000 range."
 "DOTA_Tooltip_ability_item_imba_skadi_Note2"                    "Activation grants flying vision in the same radius as the effect."
-"DOTA_Tooltip_ability_item_imba_skadi_slow_ms"                  "%MOVEMENT SLOW:"
+"DOTA_Tooltip_ability_item_imba_skadi_slow_ms"                  "#{DOTA_Tooltip_ability_queenofpain_shadow_strike_movement_slow}"
 "DOTA_Tooltip_ability_item_imba_skadi_slow_as"                  "ATTACK SLOW:"
 "DOTA_Tooltip_ability_item_imba_skadi_base_radius"              "BASE RADIUS:"
 "DOTA_Tooltip_ability_item_imba_skadi_base_duration"            "BASE DURATION:"
@@ -776,7 +776,7 @@
 
 "DOTA_Tooltip_ability_item_imba_necronomicon_bonus_strength"                "+$str"
 "DOTA_Tooltip_ability_item_imba_necronomicon_bonus_mana_regen"				"+$mana_regen"
-"DOTA_Tooltip_ability_item_imba_necronomicon_summon_duration"               "DURATION:"
+"DOTA_Tooltip_ability_item_imba_necronomicon_summon_duration"               "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 "DOTA_Tooltip_ability_item_imba_necronomicon_warrior_health"                "WARRIOR HEALTH:"
 "DOTA_Tooltip_ability_item_imba_necronomicon_archer_health"                 "ARCHER HEALTH:"
 
@@ -786,7 +786,7 @@
 
 "DOTA_Tooltip_ability_item_imba_necronomicon_2_bonus_strength"              "+$str"
 "DOTA_Tooltip_ability_item_imba_necronomicon_2_bonus_mana_regen"				"+$mana_regen"
-"DOTA_Tooltip_ability_item_imba_necronomicon_2_summon_duration"             "DURATION:"
+"DOTA_Tooltip_ability_item_imba_necronomicon_2_summon_duration"             "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 "DOTA_Tooltip_ability_item_imba_necronomicon_2_warrior_health"              "WARRIOR HEALTH:"
 "DOTA_Tooltip_ability_item_imba_necronomicon_2_archer_health"               "ARCHER HEALTH:"
 
@@ -796,7 +796,7 @@
 
 "DOTA_Tooltip_ability_item_imba_necronomicon_3_bonus_strength"              "+$str"
 "DOTA_Tooltip_ability_item_imba_necronomicon_3_bonus_mana_regen"				"+$mana_regen"
-"DOTA_Tooltip_ability_item_imba_necronomicon_3_summon_duration"             "DURATION:"
+"DOTA_Tooltip_ability_item_imba_necronomicon_3_summon_duration"             "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 "DOTA_Tooltip_ability_item_imba_necronomicon_3_warrior_health"              "WARRIOR HEALTH:"
 "DOTA_Tooltip_ability_item_imba_necronomicon_3_archer_health"               "ARCHER HEALTH:"
 
@@ -806,7 +806,7 @@
 
 "DOTA_Tooltip_ability_item_imba_necronomicon_4_bonus_strength"              "+$str"
 "DOTA_Tooltip_ability_item_imba_necronomicon_4_bonus_mana_regen"				"+$mana_regen"
-"DOTA_Tooltip_ability_item_imba_necronomicon_4_summon_duration"             "DURATION:"
+"DOTA_Tooltip_ability_item_imba_necronomicon_4_summon_duration"             "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 "DOTA_Tooltip_ability_item_imba_necronomicon_4_warrior_health"              "WARRIOR HEALTH:"
 "DOTA_Tooltip_ability_item_imba_necronomicon_4_archer_health"               "ARCHER HEALTH:"
 
@@ -816,7 +816,7 @@
 
 "DOTA_Tooltip_ability_item_imba_necronomicon_5_bonus_strength"              "+$str"
 "DOTA_Tooltip_ability_item_imba_necronomicon_5_bonus_mana_regen"				"+$mana_regen"
-"DOTA_Tooltip_ability_item_imba_necronomicon_5_summon_duration"             "DURATION:"
+"DOTA_Tooltip_ability_item_imba_necronomicon_5_summon_duration"             "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 "DOTA_Tooltip_ability_item_imba_necronomicon_5_warrior_health"              "WARRIOR HEALTH:"
 "DOTA_Tooltip_ability_item_imba_necronomicon_5_archer_health"               "ARCHER HEALTH:"
 
@@ -880,7 +880,7 @@
 "DOTA_Tooltip_ability_item_imba_orb_of_venom_poison_damage"                 "POISON DAMAGE:"
 "DOTA_Tooltip_ability_item_imba_orb_of_venom_poison_movement_speed_melee"   "%MELEE SLOW:"
 "DOTA_Tooltip_ability_item_imba_orb_of_venom_poison_movement_speed_range"   "%RANGED SLOW:"
-"DOTA_Tooltip_ability_item_imba_orb_of_venom_poison_duration"               "DURATION:"
+"DOTA_Tooltip_ability_item_imba_orb_of_venom_poison_duration"               "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 
 // Orchid Malevolence
 "DOTA_Tooltip_Ability_item_imba_orchid"                        "Orchid Malevolence"
@@ -1126,7 +1126,7 @@
 "DOTA_Tooltip_ability_item_imba_soul_of_truth_Description"                  "<h1>Use: Embedded Truth</h1>When used, grants its bearer armor, health regeneration, and True Sight in %radius% radius for %duration_tooltip% minutes.<br><font color='#e03e2e'>The buff is lost on death.</font>"
 "DOTA_Tooltip_ability_item_imba_soul_of_truth_Lore"            "The golden soul of a being incapable of lies or deceit. Its gaze can pierce any disguise or veil."
 "DOTA_Tooltip_ability_item_imba_soul_of_truth_Note0"            "Does not stack. Using Soul of Truth again only refreshes the buff's duration."
-"DOTA_Tooltip_ability_item_imba_soul_of_truth_duration_tooltip"             "DURATION:"
+"DOTA_Tooltip_ability_item_imba_soul_of_truth_duration_tooltip"             "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 "DOTA_Tooltip_ability_item_imba_soul_of_truth_radius"          "TRUE SIGHT RADIUS:"
 "DOTA_Tooltip_ability_item_imba_soul_of_truth_armor"            "+$armor"
 "DOTA_Tooltip_ability_item_imba_soul_of_truth_health_regen"                 "+$hp_regen"
@@ -1220,7 +1220,7 @@
 "DOTA_Tooltip_ability_item_imba_urn_of_shadows_bonus_mana_regen"            "+$mana_regen"
 "DOTA_Tooltip_ability_item_imba_urn_of_shadows_damage"          "ENEMY TOTAL DAMAGE:"
 "DOTA_Tooltip_ability_item_imba_urn_of_shadows_heal"            "ALLY TOTAL HEAL:"
-"DOTA_Tooltip_ability_item_imba_urn_of_shadows_duration"                    "DURATION:"
+"DOTA_Tooltip_ability_item_imba_urn_of_shadows_duration"                    "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 
 "DOTA_Tooltip_modifier_imba_urn_of_shadows_active_ally"                     "Soul Release"
 "DOTA_Tooltip_modifier_imba_urn_of_shadows_active_ally_Description"         "Healing over time."
@@ -1301,7 +1301,7 @@
 "DOTA_Tooltip_ability_item_imba_white_queen_cape_Note1"                     "Using White Queen Cape may remove some positive buffs."
 "DOTA_Tooltip_ability_item_imba_white_queen_cape_bonus_strength"            "+$str"
 "DOTA_Tooltip_ability_item_imba_white_queen_cape_bonus_damage"              "+$damage"
-"DOTA_Tooltip_ability_item_imba_white_queen_cape_duration"                  "DURATION:"
+"DOTA_Tooltip_ability_item_imba_white_queen_cape_duration"                  "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 
 // Vanilla Items
 "DOTA_Tooltip_modifier_item_imba_medallion_buff"                "Valor"
@@ -1324,7 +1324,7 @@
 "DOTA_Tooltip_ability_item_imba_black_king_bar_Note1"          "Using Black King Bar may remove some positive buffs."
 "DOTA_Tooltip_ability_item_imba_black_king_bar_bonus_strength"              "+$str"
 "DOTA_Tooltip_ability_item_imba_black_king_bar_bonus_damage"                "+$damage"
-"DOTA_Tooltip_ability_item_imba_black_king_bar_duration"                    "DURATION:"
+"DOTA_Tooltip_ability_item_imba_black_king_bar_duration"                    "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 
 "DOTA_Tooltip_ability_item_courier_Lore"                        "Losing the donkey is punishable by death."
 "DOTA_Tooltip_ability_item_imba_sphere_Description"            "Spellblock - Passively blocks most targeted spells once every 10 seconds. Can be cast on an allied unit to temporarily transfer the buff."
