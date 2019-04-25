@@ -77,22 +77,6 @@ function IsRankedMap()
 	return false
 end
 
-function IsSuperFranticMap()
-	if GetMapName() == MapSuperFrantic5v5() or GetMapName() == MapSuperFrantic10v10() then
-		return true
-	end
-
-	return false
-end
-
-function Is1v1Map()
-	if GetMapName() == Map1v1() then
-		return true
-	end
-
-	return false
-end
-
 function Is10v10Map()
 	if GetMapName() == "imba_10v10" or GetMapName() == MapRanked10v10() or GetMapName() == MapMutation10v10() or GetMapName() == MapSuperFrantic10v10() then
 		return true
@@ -977,7 +961,16 @@ function Setup1v1()
 		ent:RemoveSelf()
 	end
 
+	local towers = Entities:FindAllByClassname("npc_dota_tower")
+
+	for _, tower in pairs(towers) do
+		if string.find(tower:GetUnitName(), "tower1_top") or string.find(tower:GetUnitName(), "tower1_bot") then
+			tower:AddNewModifier(tower, nil, "modifier_invulnerable", {})
+		end
+	end
+
 	BlockJungleCamps()
+	GameRules:SetSameHeroSelectionEnabled(true)
 end
 
 function BlockJungleCamps()

@@ -24,6 +24,11 @@
 		"MaxPlayers"				"20"
 	}
 
+	"imba_1v1"
+	{
+		"MaxPlayers"				"2"
+	}
+
 	"imba_demo"
 	{
 		"MaxPlayers"				"1"
