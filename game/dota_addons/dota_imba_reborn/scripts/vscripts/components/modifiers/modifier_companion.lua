@@ -58,7 +58,7 @@ function modifier_companion:OnCreated()
 			self:GetParent():ForceKill(false)
 			return
 		else
-			self:StartIntervalThink(0.2)
+			self:StartIntervalThink(0.1)
 		end
 
 		if not self:GetParent().base_model then
@@ -69,7 +69,7 @@ function modifier_companion:OnCreated()
 			self:GetParent():AddNewModifier(self:GetParent(), nil, "modifier_bloodseeker_thirst", {})
 		end
 
-		if string.find(self:GetParent():GetModelName(), "flying") then
+		if string.find(self:GetParent():GetModelName(), "flying") or DONATOR_COMPANION_ADDITIONAL_INFO[self:GetParent():GetModelName()] and DONATOR_COMPANION_ADDITIONAL_INFO[self:GetParent():GetModelName()][2] == true then
 			self:SetStackCount(1)
 		end
 	end

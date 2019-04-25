@@ -267,4 +267,25 @@
 		"Model"						"models/courier/donkey_unicorn/donkey_unicorn_flying.vmdl"
 		"ModelScale"				"0.65"
 	}
+
+	"npc_donator_companion_gordon_ramsay"
+	{
+		"BaseClass"					"npc_donator_companion"
+		"Model"						"models/heroes/phoenix/phoenix_bird.vmdl"
+		"ModelScale"				"0.4"
+	}
+
+	"npc_donator_companion_rayzone"
+	{
+		"BaseClass"					"npc_donator_companion"
+		"Model"						"models/heroes/bristleback/bristleback.vmdl"
+		"ModelScale"				"0.5"
+	}
+
+	"npc_donator_companion_carry_me_senpai"
+	{
+		"BaseClass"					"npc_donator_companion"
+		"Model"						"models/items/rubick/rubick_arcana/rubick_arcana_base.vmdl"
+		"ModelScale"				"0.35"
+	}
 }

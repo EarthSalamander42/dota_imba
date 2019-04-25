@@ -22,12 +22,12 @@ function modifier_imba_donator:OnIntervalThink()
 		end
 	end
 
-	if self:GetStackCount() == 1 then
+	if self:GetStackCount() == 1 or self:GetStackCount() >= 4 then
 		self.effect_name =  "particles/econ/events/ti7/ti7_hero_effect_2.vpcf"
-	elseif self:GetStackCount() == 4 then
+--	elseif self:GetStackCount() == 7 then
+--		self.effect_name =  "particles/econ/events/ti8/ti8_hero_effect.vpcf"
+	elseif self:GetStackCount() == 8 then
 		self.effect_name =  "particles/econ/events/ti7/ti7_hero_effect.vpcf"
-	elseif self:GetStackCount() == 7 or self:GetStackCount() == 8 then
-		self.effect_name =  "particles/econ/events/ti8/ti8_hero_effect.vpcf"
 	end
 
 --	print(self.effect_name)

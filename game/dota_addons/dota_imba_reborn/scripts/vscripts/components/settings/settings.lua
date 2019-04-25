@@ -533,6 +533,24 @@ UNIT_EQUIPMENT["models/heroes/enchantress/enchantress.vmdl"] = {
 	"models/items/enchantress/anuxi_summer_shoulder/anuxi_summer_shoulder.vmdl",
 	"models/items/enchantress/anuxi_wildkin_arm/anuxi_wildkin_arm.vmdl",
 }
+UNIT_EQUIPMENT["models/heroes/bristleback/bristleback_back.vmdl"] = {
+	"models/heroes/phoenix/phoenix_wings.vmdl",
+	"models/heroes/phoenix/phoenix_bird_head.vmdl",
+}
+UNIT_EQUIPMENT["models/heroes/bristleback/bristleback.vmdl"] = {
+	"models/heroes/bristleback/bristleback_back.vmdl",
+	"models/heroes/bristleback/bristleback_bracer.vmdl",
+	"models/heroes/bristleback/bristleback_head.vmdl",
+	"models/heroes/bristleback/bristleback_necklace.vmdl",
+	"models/heroes/bristleback/bristleback_weapon.vmdl",
+--	"models/heroes/bristleback/bristleback_offhand_weapon.vmdl",
+}
+UNIT_EQUIPMENT["models/items/rubick/rubick_arcana/rubick_arcana_base.vmdl"] = {
+	"models/items/rubick/rubick_arcana/rubick_arcana_back.vmdl",
+	"models/heroes/rubick/rubick_head.vmdl",
+	"models/heroes/rubick/rubick_staff.vmdl",
+	"models/heroes/rubick/shoulder.vmdl",
+}
 
 IMBA_DISABLED_SKULL_BASHER = {
 	"npc_dota_hero_faceless_void",
@@ -604,4 +622,9 @@ IMBA_DIRETIDE_EASTER_EGG = false
 if IMBA_DIRETIDE == true then
 	IMBA_DIRETIDE_EASTER_EGG = false
 	require("components/diretide/diretide")
+end
+
+SAME_HERO_SELECTION = IMBA_PICK_SCREEN
+if GetMapName() == "imba_1v1" then
+	SAME_HERO_SELECTION = true
 end

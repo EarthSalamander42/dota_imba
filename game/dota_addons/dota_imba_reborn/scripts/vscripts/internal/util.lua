@@ -970,7 +970,6 @@ function Setup1v1()
 	end
 
 	BlockJungleCamps()
-	GameRules:SetSameHeroSelectionEnabled(true)
 end
 
 function BlockJungleCamps()

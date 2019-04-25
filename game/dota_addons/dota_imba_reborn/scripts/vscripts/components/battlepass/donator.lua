@@ -113,7 +113,12 @@ end
 function DonatorCompanion(ID, unit_name, js)
 	-- set mini doom as default companion if something goes wrong
 	if unit_name == nil then
-		unit_name = "npc_donator_companion_demi_doom"
+		-- enable this when the backend part is done
+--		if api.players[PlayerResource:GetSteamID(ID)] then
+--			unit_name = api.players[PlayerResource:GetSteamID(ID)].companion.file
+--		else
+			unit_name = "npc_donator_companion_demi_doom"
+--		end
 	end
 
 	if IMBA_DONATOR_COMPANION[tostring(PlayerResource:GetSteamID(ID))] and not js then 
@@ -143,7 +148,6 @@ function DonatorCompanion(ID, unit_name, js)
 	companion:SetModel(model)
 	companion:SetOriginalModel(model)
 	companion:SetOwner(hero)
---	companion:SetControllableByPlayer(hero:GetPlayerID(), true)
 
 	companion:AddNewModifier(companion, nil, "modifier_companion", {})
 
@@ -181,30 +185,13 @@ function DonatorCompanion(ID, unit_name, js)
 		end
 	elseif unit_name == "npc_donator_companion_suthernfriend" then
 		companion:SetMaterialGroup("1")
-	elseif model == "models/items/courier/devourling/devourling.vmdl" then
-		local particle = ParticleManager:CreateParticle("particles/econ/courier/courier_devourling/courier_devourling_ambient.vpcf", PATTACH_ABSORIGIN_FOLLOW, companion)
-		ParticleManager:ReleaseParticleIndex(particle)
-	elseif unit_name == "npc_donator_companion_baekho" then
-		local particle = ParticleManager:CreateParticle("particles/econ/courier/courier_baekho/courier_baekho_ambient.vpcf", PATTACH_ABSORIGIN_FOLLOW, companion)
-		ParticleManager:ReleaseParticleIndex(particle)
-	elseif unit_name == "npc_donator_companion_terdic" then
-		local particle = ParticleManager:CreateParticle("particles/econ/courier/courier_shagbark/courier_shagbark_ambient.vpcf", PATTACH_ABSORIGIN_FOLLOW, companion)
-		ParticleManager:ReleaseParticleIndex(particle)
-	elseif model == "models/items/io/io_ti7/io_ti7.vmdl" then
-		local particle = ParticleManager:CreateParticle("particles/econ/items/wisp/wisp_ambient_ti7.vpcf", PATTACH_ABSORIGIN_FOLLOW, companion)
-		ParticleManager:ReleaseParticleIndex(particle)
-	elseif unit_name == "npc_donator_companion_golem" then
-		local particle = ParticleManager:CreateParticle("particles/econ/courier/courier_greevil_orange/courier_greevil_orange_ambient_3.vpcf", PATTACH_ABSORIGIN_FOLLOW, companion)
-		ParticleManager:ReleaseParticleIndex(particle)
-	elseif model == "models/courier/donkey_unicorn/donkey_unicorn_flying.vmdl" then
-		local particle = ParticleManager:CreateParticle("particles/econ/courier/courier_donkey_unicorn/courier_donkey_unicorn_ambient.vpcf", PATTACH_ABSORIGIN_FOLLOW, companion)
-		ParticleManager:ReleaseParticleIndex(particle)
 	end
 
 	companion:SetModelScale(model_scale)
 
-	if string.find(model, "flying") then
-		companion:SetMoveCapability(DOTA_UNIT_CAP_MOVE_FLY)
+	if DONATOR_COMPANION_ADDITIONAL_INFO[model] and DONATOR_COMPANION_ADDITIONAL_INFO[model][1] then
+		local particle = ParticleManager:CreateParticle(DONATOR_COMPANION_ADDITIONAL_INFO[model][1], PATTACH_ABSORIGIN_FOLLOW, companion)
+		ParticleManager:ReleaseParticleIndex(particle)
 	end
 
 --	if super_donator then
@@ -217,8 +204,8 @@ end
 function DonatorCompanionSkin(id, unit, skin)
 	local hero = PlayerResource:GetPlayer(id):GetAssignedHero()
 
-	print("Material Group:", skin)
-	print(hero.companion, hero.companion:GetUnitName(), unit)
+--	print("Material Group:", skin)
+--	print(hero.companion, hero.companion:GetUnitName(), unit)
 	if hero.companion and hero.companion:GetUnitName() == unit then
 		hero.companion:SetMaterialGroup(tostring(skin))
 	end

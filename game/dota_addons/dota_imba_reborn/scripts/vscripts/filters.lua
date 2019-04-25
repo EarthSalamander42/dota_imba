@@ -815,18 +815,20 @@ function GameMode:OrderFilter( keys )
 		local ability = EntIndexToHScript(keys.entindex_ability)
 		if ability then
 			for m = 1, #meepo_table do
-				if keys.order_type == DOTA_UNIT_ORDER_CAST_NO_TARGET then
-					if ability:GetName() == "item_black_king_bar" then
-						local duration = ability:GetLevelSpecialValueFor("duration", ability:GetLevel() -1)
-						meepo_table[m]:AddNewModifier(meepo_table[m], ability, "modifier_black_king_bar_immune", {duration = duration})
-					elseif ability:GetName() == "item_imba_white_queen_cape" then
-						local duration = ability:GetLevelSpecialValueFor("duration", ability:GetLevel() -1)
-						meepo_table[m]:AddNewModifier(meepo_table[m], ability, "modifier_black_king_bar_immune", {duration = duration})
-					end
-				elseif keys.order_type == DOTA_UNIT_ORDER_CAST_TARGET then
-					if ability:GetName() == "item_imba_black_queen_cape" then
-						local duration = ability:GetLevelSpecialValueFor("bkb_duration", ability:GetLevel() -1)
-						meepo_table[m]:AddNewModifier(meepo_table[m], nil, "modifier_imba_black_queen_cape_active_bkb", {duration = duration})
+				if meepo_table[m]:GetTeamNumber() == unit:GetTeamNumber() then
+					if keys.order_type == DOTA_UNIT_ORDER_CAST_NO_TARGET then
+						if ability:GetName() == "item_black_king_bar" then
+							local duration = ability:GetLevelSpecialValueFor("duration", ability:GetLevel() -1)
+							meepo_table[m]:AddNewModifier(meepo_table[m], ability, "modifier_black_king_bar_immune", {duration = duration})
+						elseif ability:GetName() == "item_imba_white_queen_cape" then
+							local duration = ability:GetLevelSpecialValueFor("duration", ability:GetLevel() -1)
+							meepo_table[m]:AddNewModifier(meepo_table[m], ability, "modifier_black_king_bar_immune", {duration = duration})
+						end
+					elseif keys.order_type == DOTA_UNIT_ORDER_CAST_TARGET then
+						if ability:GetName() == "item_imba_black_queen_cape" then
+							local duration = ability:GetLevelSpecialValueFor("bkb_duration", ability:GetLevel() -1)
+							meepo_table[m]:AddNewModifier(meepo_table[m], nil, "modifier_imba_black_queen_cape_active_bkb", {duration = duration})
+						end
 					end
 				end
 			end
