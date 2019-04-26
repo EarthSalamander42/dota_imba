@@ -14,24 +14,51 @@ function modifier_companion:CheckState()
 		[MODIFIER_STATE_INVULNERABLE] = true,
 	}
 
+	if self:GetStackCount() == 1 then
+		state[MODIFIER_STATE_FLYING] = true
+	end
+
 	return state
 end
 
 function modifier_companion:DeclareFunctions()
 	local decFuncs = {
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT,
+		MODIFIER_PROPERTY_VISUAL_Z_DELTA,
 	}
 
 	return decFuncs
 end
 
+function modifier_companion:DeclareFunctions()
+	local funcs = {
+		MODIFIER_PROPERTY_VISUAL_Z_DELTA,
+		MODIFIER_EVENT_ON_ATTACKED,
+		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL,
+		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_MAGICAL,
+		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE,
+	}
+
+	return funcs
+end
+
+function modifier_companion:GetVisualZDelta()
+	if self:GetStackCount() == 1 then
+		return 290
+	end
+
+	return 0
+end
+
 function modifier_companion:OnCreated()
 	if IsServer() then
+		self.companion_movespeed = 0
+
 		if GetMapName() == Map1v1() then
 			self:GetParent():ForceKill(false)
 			return
 		else
-			self:StartIntervalThink(0.2)
+			self:StartIntervalThink(0.1)
 		end
 
 		if not self:GetParent().base_model then
@@ -42,7 +69,9 @@ function modifier_companion:OnCreated()
 			self:GetParent():AddNewModifier(self:GetParent(), nil, "modifier_bloodseeker_thirst", {})
 		end
 
-		self:SetStackCount(0)
+		if string.find(self:GetParent():GetModelName(), "flying") or DONATOR_COMPANION_ADDITIONAL_INFO[self:GetParent():GetModelName()] and DONATOR_COMPANION_ADDITIONAL_INFO[self:GetParent():GetModelName()][2] == true then
+			self:SetStackCount(1)
+		end
 	end
 end
 
@@ -66,7 +95,7 @@ end
 --]]
 
 function modifier_companion:GetModifierMoveSpeedBonus_Constant()
-	return self:GetStackCount()
+	return self.companion_movespeed
 end
 
 function modifier_companion:OnIntervalThink()
@@ -114,12 +143,19 @@ function modifier_companion:OnIntervalThink()
 
 		for _,v in pairs(IMBA_INVISIBLE_MODIFIERS) do
 			if not hero:HasModifier(v) then
-				if companion:HasModifier(v) then
-					companion:RemoveModifierByName(v)
+--				if companion:HasModifier(v) then
+--					companion:RemoveModifierByName(v)
+--				end
+
+				if companion:HasModifier("modifier_item_imba_shadow_blade_invis") then
+					companion:RemoveModifierByName("modifier_item_imba_shadow_blade_invis")
+					break -- remove this break if you want to add multiple modifiers at the same time
 				end
 			else
 				if not companion:HasModifier(v) then
-					companion:AddNewModifier(companion, nil, v, {})
+--					companion:AddNewModifier(companion, nil, v, {}) -- might be the not walking anymore issue
+					companion:AddNewModifier(companion, nil, "modifier_item_imba_shadow_blade_invis", {})
+					break -- remove this break if you want to add multiple modifiers at the same time
 				end
 			end
 		end
@@ -141,7 +177,7 @@ function modifier_companion:OnIntervalThink()
 			end
 		end
 
-		self:SetStackCount(hero_distance / 4)
+		self.companion_movespeed = hero_distance / 4
 
 		for _, v in ipairs(SHARED_NODRAW_MODIFIERS) do
 			if hero:HasModifier(v) or self:IsOnMountain() then

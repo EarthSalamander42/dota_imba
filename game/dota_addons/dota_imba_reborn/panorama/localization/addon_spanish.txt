@@ -166,6 +166,7 @@
 	"companion_not_donator" "Esta característica es solo para donadores de Patreon. ¡Haz click aquí para comprometerte!"
 	"companion_success" "Compañero cambiado con:"
 	"confirm_pick_button" "Seleccionar héroe"
+	"custom_end_screen_legend_battlepass_xp" "Battlepass XP"
 	"custom_end_screen_legend_imr" "IMR"
 	"custom_end_screen_legend_imr1v1" "IMR 1v1"
 	"custom_end_screen_legend_imr10v10" "IMR 10v10"

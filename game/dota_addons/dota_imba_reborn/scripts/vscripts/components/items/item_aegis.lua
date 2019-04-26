@@ -85,7 +85,7 @@ function modifier_item_imba_aegis:ReincarnateTime()
 end
 
 function modifier_item_imba_aegis:OnDeath(keys)
-	if keys.unit == self:GetParent() then
+	if keys.unit == self:GetParent() or keys.unit:GetCloneSource() == self:GetParent() then
 		Timers:CreateTimer(FrameTime(), function()
 			self:Destroy()
 		end)

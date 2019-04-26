@@ -260,4 +260,53 @@
 		"Model"						"models/heroes/enchantress/enchantress.vmdl"
 		"ModelScale"				"0.5"
 	}
+
+	"npc_donator_companion_conjurist"
+	{
+		"BaseClass"					"npc_donator_companion"
+		"Model"						"models/courier/donkey_unicorn/donkey_unicorn_flying.vmdl"
+		"ModelScale"				"0.65"
+	}
+
+	"npc_donator_companion_gordon_ramsay"
+	{
+		"BaseClass"					"npc_donator_companion"
+		"Model"						"models/heroes/phoenix/phoenix_bird.vmdl"
+		"ModelScale"				"0.4"
+	}
+
+	"npc_donator_companion_rayzone"
+	{
+		"BaseClass"					"npc_donator_companion"
+		"Model"						"models/heroes/bristleback/bristleback.vmdl"
+		"ModelScale"				"0.5"
+	}
+
+	"npc_donator_companion_rubick_arcana"
+	{
+		"BaseClass"					"npc_donator_companion"
+		"Model"						"models/items/rubick/rubick_arcana/rubick_arcana_base.vmdl"
+		"ModelScale"				"0.35"
+	}
+
+	"npc_donator_companion_crux"
+	{
+		"BaseClass"					"npc_donator_companion"
+		"Model"						"models/courier/donkey_crummy_wizard_2014/donkey_crummy_wizard_2014_flying.vmdl"
+		"ModelScale"				"0.55"
+	}
+
+	"npc_donator_companion_phish"
+	{
+		"BaseClass"					"npc_donator_companion"
+		"Model"						"models/courier/sw_donkey/sw_donkey_flying.vmdl"
+		"ModelScale"				"0.6"
+	}
+
+	"npc_donator_companion_cookies_2" // no walk animation (use a modifier with animation translation?)
+	{
+		"BaseClass"					"npc_donator_companion"
+		"Model"						"models/heroes/juggernaut/juggernaut_arcana.vmdl"
+		"ModelScale"				"0.45"
+	}
 }

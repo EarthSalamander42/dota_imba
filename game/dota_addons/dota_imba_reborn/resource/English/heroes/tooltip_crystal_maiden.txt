@@ -16,7 +16,7 @@
 "DOTA_Tooltip_ability_imba_crystal_maiden_crystal_nova"                "Crystal Nova"
 "DOTA_Tooltip_ability_imba_crystal_maiden_crystal_nova_Description"                 "A burst of damaging frost slows enemy movement and attack rate in the targeted area for %nova_slow_duration% seconds.\n<font color='#FF7800'>Hail Storm:</font> Creates a hail storm on the target location for %snowfield_duration% seconds, which increases allies' move speed while slowing and damaging enemies in it."
 "DOTA_Tooltip_ability_imba_crystal_maiden_crystal_nova_Lore"            "The air temperature around Rylai drops rapidly, chilling all around her to the core."
-"DOTA_Tooltip_ability_imba_crystal_maiden_crystal_nova_nova_radius"                 "RADIUS:"
+"DOTA_Tooltip_ability_imba_crystal_maiden_crystal_nova_nova_radius"                 "#{DOTA_Tooltip_ability_filler_ability_radius}"
 "DOTA_Tooltip_ability_imba_crystal_maiden_crystal_nova_nova_slow_percentage"        "%NOVA SLOW:"
 "DOTA_Tooltip_ability_imba_crystal_maiden_crystal_nova_nova_damage"                 "NOVA DAMAGE:"
 "DOTA_Tooltip_ability_imba_crystal_maiden_crystal_nova_snowfield_damage_per_tick"   "HAIL STORM DAMAGE:"
@@ -38,7 +38,7 @@
 "DOTA_Tooltip_ability_imba_crystal_maiden_frostbite_Note0"              "Frostbite's passive effect always uses the level 1 duration."
 "DOTA_Tooltip_ability_imba_crystal_maiden_frostbite_Lore"              "Rylai channels winds from the Blueheart Glacier, imprisoning attackers in thick blocks of ice."
 "DOTA_Tooltip_ability_imba_crystal_maiden_frostbite_damage_per_second_tooltip"      "DAMAGE PER SECOND:"
-"DOTA_Tooltip_ability_imba_crystal_maiden_frostbite_duration"          "DURATION:"
+"DOTA_Tooltip_ability_imba_crystal_maiden_frostbite_duration"          "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 "DOTA_Tooltip_ability_imba_crystal_maiden_frostbite_damage_interval"                "TICK INTERVAL:"
 "DOTA_Tooltip_ability_imba_crystal_maiden_frostbite_duration_passive_recharge"      "ICY TOUCH COOLDOWN:"
 

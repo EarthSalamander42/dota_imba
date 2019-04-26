@@ -37,6 +37,10 @@ function fetch() {
 		return;
 	}
 
+	if (Game.GetMapInfo().map_display_name == "imba_1v1")
+		DisableVoting();
+
+
 	var game_version = game_options[1]
 
 	if (isInt(game_version))
@@ -162,6 +166,12 @@ function SetGameModeTooltips() {
 	}
 }
 */
+
+function DisableVoting() {
+		$("#imba-loading-title-vote").style.visibility = "collapse";
+}
+
+
 (function(){
 	HoverableLoadingScreen();
 	fetch();

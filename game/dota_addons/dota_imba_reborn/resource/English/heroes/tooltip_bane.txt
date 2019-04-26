@@ -7,7 +7,7 @@
 "DOTA_Tooltip_ability_imba_bane_enfeeble_vision_reduction"              "BASE VISION REDUCTION:"
 "DOTA_Tooltip_ability_imba_bane_enfeeble_stack_vision_efficiency"		"%VISION DEGRADE PER STACK:"
 "DOTA_Tooltip_ability_imba_bane_enfeeble_bonus_status_resistance"		"%STATUS RESISTANCE REDUCTION:"
-"DOTA_Tooltip_ability_imba_bane_enfeeble_enfeeble_duration"					"DURATION:"
+"DOTA_Tooltip_ability_imba_bane_enfeeble_enfeeble_duration"					"#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 
 
 "DOTA_Tooltip_modifier_imba_enfeeble_debuff"                            "Enfeeble"
@@ -32,7 +32,7 @@
 "DOTA_Tooltip_ability_imba_bane_nightmare_Description"                  "Puts the target enemy or friendly Hero to sleep <font color='#FF7800'>and deals damage per second.</font> Sleeping units are awakened when attacked, but the Nightmare passes to the attacking unit. Bane can attack nightmared targets freely.\n<font color='#FF7800'>Baleful Visions:</font> Upon waking up from Nightmare, the target is still foggy and dazed, having 0 vision range for a period of time."
 "DOTA_Tooltip_ability_imba_bane_nightmare_Lore"                        "A stolen prowess from the goddess Nyctasha is to put prey into forever sleep."
 "DOTA_Tooltip_ability_imba_bane_nightmare_Note0"                        "The target becomes briefly invulnerable upon being Nightmared."
-"DOTA_Tooltip_ability_imba_bane_nightmare_nightmare_duration"          "DURATION:"
+"DOTA_Tooltip_ability_imba_bane_nightmare_nightmare_duration"          "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 "DOTA_Tooltip_ability_imba_bane_nightmare_nightmare_damage"            "DAMAGE PER SECOND:"
 "DOTA_Tooltip_ability_imba_bane_nightmare_nightmare_invuln_duration"                "INVULNERABILITY DURATION:"
 "DOTA_Tooltip_ability_imba_bane_nightmare_nightmare_baleful_visions_duration"       "BALEFUL VISIONS DURATION:"
@@ -59,7 +59,7 @@
 "DOTA_Tooltip_ability_imba_bane_fiends_grip_Lore"                      "Victims of Atropos are frequently torn apart by vivid conjurations of their own nightmares."
 "DOTA_Tooltip_ability_imba_bane_fiends_grip_fiends_grip_duration"                   "CHANNEL DURATION:"
 "DOTA_Tooltip_ability_imba_bane_fiends_grip_fiends_grip_linger_duration"            "NEVERENDING SUFFERING DURATION:"
-"DOTA_Tooltip_ability_imba_bane_fiends_grip_fiends_grip_damage"                     "DAMAGE:"
+"DOTA_Tooltip_ability_imba_bane_fiends_grip_fiends_grip_damage"                     "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
 "DOTA_Tooltip_ability_imba_bane_fiends_grip_fiends_grip_mana_damage"                "%MANA STEAL:"
 "DOTA_Tooltip_ability_imba_bane_fiends_grip_demon_damage"              "DEMON DAMAGE:"
 "DOTA_Tooltip_ability_imba_bane_fiends_grip_demon_mana_drain"          "%DEMON MANA DRAIN:"

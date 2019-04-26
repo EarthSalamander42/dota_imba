@@ -7,7 +7,7 @@
 "DOTA_Tooltip_ability_item_imba_sange_bonus_damage"				"+$damage"
 "DOTA_Tooltip_ability_item_imba_sange_bonus_status_resistance"	"%+Status Resistance"
 "DOTA_Tooltip_ability_item_imba_sange_bonus_status_resistance_active"		"%STATUS RESISTANCE:"
-"DOTA_Tooltip_ability_item_imba_sange_active_duration"			"BUFF DURATION:"
+"DOTA_Tooltip_ability_item_imba_sange_active_duration"			"#{DOTA_Tooltip_ability_razor_static_link_drain_duration}"
 
 "DOTA_Tooltip_modifier_item_imba_sange_active"					"Shield"
 "DOTA_Tooltip_modifier_item_imba_sange_active_Description"		"Grants %dMODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING%%% status resistance."
@@ -21,7 +21,7 @@
 "DOTA_Tooltip_ability_item_imba_yasha_bonus_agility"			"+$agi"
 "DOTA_Tooltip_ability_item_imba_yasha_bonus_ms"					"%+$move_speed"
 //"DOTA_Tooltip_ability_item_imba_yasha_bonus_evasion"			"%EVASION:"
-"DOTA_Tooltip_ability_item_imba_yasha_active_duration"			"BUFF DURATION:"
+"DOTA_Tooltip_ability_item_imba_yasha_active_duration"			"#{DOTA_Tooltip_ability_razor_static_link_drain_duration}"
 
 "DOTA_Tooltip_modifier_item_imba_yasha_active"					"Shield"
 "DOTA_Tooltip_modifier_item_imba_yasha_active_Description"		"Grants %dMODIFIER_PROPERTY_EVASION_CONSTANT%%% evasion."
@@ -35,7 +35,7 @@
 "DOTA_Tooltip_ability_item_imba_kaya_spell_amp"					"%+Spell Amplification"
 "DOTA_Tooltip_ability_item_imba_kaya_bonus_cdr"					"%+Manacost and Manaloss Reduction"
 "DOTA_Tooltip_ability_item_imba_kaya_bonus_cdr_active"			"CDR AND MANALOSS BUFF:"
-"DOTA_Tooltip_ability_item_imba_kaya_active_duration"			"BUFF DURATION:"
+"DOTA_Tooltip_ability_item_imba_kaya_active_duration"			"#{DOTA_Tooltip_ability_razor_static_link_drain_duration}"
 
 "DOTA_Tooltip_modifier_item_imba_kaya_active"					"Spell Trader"
 "DOTA_Tooltip_modifier_item_imba_kaya_active_Description"		"Grants %dMODIFIER_PROPERTY_COOLDOWN_PERCENTAGE%%% cooldown reduction on the next spell cast."
@@ -51,7 +51,7 @@
 "DOTA_Tooltip_ability_item_imba_sange_yasha_bonus_agility"		"#{DOTA_Tooltip_ability_item_sange_and_yasha_bonus_agility}"
 "DOTA_Tooltip_ability_item_imba_sange_yasha_bonus_ms"			"%+$move_speed"
 "DOTA_Tooltip_ability_item_imba_sange_yasha_bonus_status_resistance"	"%+Status Resistance"
-"DOTA_Tooltip_ability_item_imba_sange_yasha_active_duration"	"BUFF DURATION:"
+"DOTA_Tooltip_ability_item_imba_sange_yasha_active_duration"	"#{DOTA_Tooltip_ability_razor_static_link_drain_duration}"
 
 "DOTA_Tooltip_modifier_item_imba_sange_yasha_active"				"Shield"
 "DOTA_Tooltip_modifier_item_imba_sange_yasha_active_Description"	"Grants %dMODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING%%% status resistance and %dMODIFIER_PROPERTY_EVASION_CONSTANT%%% evasion."
@@ -67,7 +67,7 @@
 "DOTA_Tooltip_ability_item_imba_heavens_halberd_bonus_strength"		"+$str"
 "DOTA_Tooltip_ability_item_imba_heavens_halberd_bonus_evasion"		"%+$evasion"
 "DOTA_Tooltip_ability_item_imba_heavens_halberd_bonus_status_resistance"	"%+Status Resistance"
-"DOTA_Tooltip_ability_item_imba_heavens_halberd_active_duration"	"BUFF DURATION:"
+"DOTA_Tooltip_ability_item_imba_heavens_halberd_active_duration"	"#{DOTA_Tooltip_ability_razor_static_link_drain_duration}"
 
 "DOTA_Tooltip_modifier_item_imba_heavens_halberd_ally_buff"					"Heaven's Halberd"
 "DOTA_Tooltip_modifier_item_imba_heavens_halberd_ally_buff_Description"		"Disarm immunity. Status Resistance increased by %dMODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING%%."
@@ -89,7 +89,7 @@
 "DOTA_Tooltip_ability_item_imba_kaya_and_sange_bonus_attack_speed"	"#{DOTA_Tooltip_ability_item_sange_and_yasha_bonus_attack_speed}"
 "DOTA_Tooltip_ability_item_imba_kaya_and_sange_bonus_agility"		"#{DOTA_Tooltip_ability_item_sange_and_yasha_bonus_agility}"
 "DOTA_Tooltip_ability_item_imba_kaya_and_sange_bonus_ms"			"%+$move_speed"
-"DOTA_Tooltip_ability_item_imba_kaya_and_sange_active_duration"		"BUFF DURATION:"
+"DOTA_Tooltip_ability_item_imba_kaya_and_sange_active_duration"		"#{DOTA_Tooltip_ability_razor_static_link_drain_duration}"
 
 "DOTA_Tooltip_modifier_item_imba_kaya_and_sange_active"				"Shield"
 "DOTA_Tooltip_modifier_item_imba_kaya_and_sange_active_Description"	"Grants %dMODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING%%% status resistance and %dMODIFIER_PROPERTY_EVASION_CONSTANT%%% mana loss and cooldown reduction."
@@ -107,7 +107,7 @@
 "DOTA_Tooltip_ability_item_imba_yasha_and_kaya_bonus_ms"				"%+$move_speed"
 //"DOTA_Tooltip_ability_item_imba_yasha_and_kaya_bonus_evasion"			"%+$evasion"
 //"DOTA_Tooltip_ability_item_imba_yasha_and_kaya_bonus_evasion_active"	"ACTIVE EVASION:"
-"DOTA_Tooltip_ability_item_imba_yasha_and_kaya_active_duration"			"BUFF DURATION:"
+"DOTA_Tooltip_ability_item_imba_yasha_and_kaya_active_duration"			"#{DOTA_Tooltip_ability_razor_static_link_drain_duration}"
 
 "DOTA_Tooltip_modifier_item_imba_yasha_and_kaya_active"					"Shield"
 "DOTA_Tooltip_modifier_item_imba_yasha_and_kaya_active_Description"		"Grants %dMODIFIER_PROPERTY_EVASION_CONSTANT%%% evasion and %dMODIFIER_PROPERTY_COOLDOWN_PERCENTAGE%%% mana loss and cooldown reduction."

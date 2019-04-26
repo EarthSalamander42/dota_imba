@@ -22,7 +22,7 @@
 "DOTA_Tooltip_ability_imba_rubick_fade_bolt_hero_attack_damage_reduction"	"#{DOTA_Tooltip_ability_rubick_fade_bolt_hero_attack_damage_reduction}"
 "DOTA_Tooltip_ability_imba_rubick_fade_bolt_creep_attack_damage_reduction"	"#{DOTA_Tooltip_ability_rubick_fade_bolt_creep_attack_damage_reduction}"
 "DOTA_Tooltip_ability_imba_rubick_fade_bolt_duration"						"#{DOTA_Tooltip_ability_rubick_fade_bolt_duration}"
-"DOTA_Tooltip_ability_imba_rubick_fade_bolt_radius"							"RADIUS:"
+"DOTA_Tooltip_ability_imba_rubick_fade_bolt_radius"							"#{DOTA_Tooltip_ability_filler_ability_radius}"
 "DOTA_Tooltip_ability_imba_rubick_fade_bolt_jump_delay"						"JUMP DELAY:"
 
 "DOTA_Tooltip_modifier_imba_rubick_fade_bolt"							"Fade Bolt"

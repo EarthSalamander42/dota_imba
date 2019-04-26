@@ -14,7 +14,7 @@
 "DOTA_Tooltip_ability_imba_drow_ranger_frost_arrows_Note0"              "The movement slow lasts much longer on creeps."
 "DOTA_Tooltip_ability_imba_drow_ranger_frost_arrows_Note1"              "Stacks reset when freezing an enemy, but are not removed."
 "DOTA_Tooltip_ability_imba_drow_ranger_frost_arrows_Lore"              "Ice-encased arrows pierce the silence, chilling their victims to the core."
-"DOTA_Tooltip_ability_imba_drow_ranger_frost_arrows_ms_slow_pct"                    "%MOVEMENT SLOW:"
+"DOTA_Tooltip_ability_imba_drow_ranger_frost_arrows_ms_slow_pct"                    "#{DOTA_Tooltip_ability_queenofpain_shadow_strike_movement_slow}"
 "DOTA_Tooltip_ability_imba_drow_ranger_frost_arrows_as_slow"            "ATTACK SPEED SLOW:"
 "DOTA_Tooltip_ability_imba_drow_ranger_frost_arrows_hero_duration"                  "HERO SLOW DURATION:"
 "DOTA_Tooltip_ability_imba_drow_ranger_frost_arrows_creep_duration"                 "CREEP SLOW DURATION:"
@@ -38,7 +38,7 @@
 "DOTA_Tooltip_ability_imba_drow_ranger_gust_silence_duration"          "SILENCE DURATION:"
 "DOTA_Tooltip_ability_imba_drow_ranger_gust_knockback_duration"                     "KNOCKBACK DURATION:"
 "DOTA_Tooltip_ability_imba_drow_ranger_gust_chill_stacks"              "CHILL STACKS:"
-"DOTA_Tooltip_ability_imba_drow_ranger_gust_damage"                    "DAMAGE:"
+"DOTA_Tooltip_ability_imba_drow_ranger_gust_damage"                    "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
 
 "DOTA_Tooltip_modifier_imba_gust_silence"                              "Gust"
 "DOTA_Tooltip_modifier_imba_gust_silence_Description"                  "Silenced."

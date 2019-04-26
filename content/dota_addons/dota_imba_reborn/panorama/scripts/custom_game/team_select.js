@@ -296,9 +296,6 @@ function UpdateGameState() {
 // Entry point called when the team select panel is created
 // --------------------------------------------------------------------------------------------------
 (function () {
-
-	$.Msg("Init Team Selection...")
-	$.Msg(Game.GetState())
 	if (Game.GetState() != 2)
 		return;
 	

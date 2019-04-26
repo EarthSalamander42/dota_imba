@@ -114,12 +114,6 @@
 		"DOTA_Tooltip_Ability_item_deployable_shop"							"Pocket Shop"
 		"DOTA_Tooltip_Ability_item_deployable_shop_Description"				"Deploys a shop at the target location."
 
-		"DOTA_Tooltip_ability_beastmaster_statue_boar_poison"					"Poison"
-		"DOTA_Tooltip_ability_beastmaster_statue_boar_poison_Description"		"Inflicts a poison that slows attack and movement speeds."
-		"DOTA_Tooltip_ability_beastmaster_statue_boar_poison_attack_speed"		"ATTACK SLOW:"
-		"DOTA_Tooltip_ability_beastmaster_statue_boar_poison_movement_speed"	"%MOVEMENT SLOW:"
-		"DOTA_Tooltip_ability_beastmaster_statue_boar_poison_duration"			"DURATION:"		
-
 		"DOTA_Tooltip_Ability_item_cavern_treasure_tier1"						"Small Cheese Wedge"
 		"DOTA_Tooltip_Ability_item_cavern_treasure_tier1_Description"			"It's fragrant."
 
@@ -146,8 +140,8 @@
 		"DOTA_Tooltip_ability_creature_viper_nethertoxin_Lore"				"Poison from the Nether Reaches turns wounds into fatalities, and fatigue into death."
 		"DOTA_Tooltip_ability_creature_viper_nethertoxin_damage"			"DAMAGE PER SECOND:"
 		"DOTA_Tooltip_ability_creature_viper_nethertoxin_magic_resistance"	"MAGIC RESISTANCE REDUCTION:"
-		"DOTA_Tooltip_ability_creature_viper_nethertoxin_radius"			"RADIUS:"
-		"DOTA_Tooltip_ability_creature_viper_nethertoxin_duration"			"DURATION:"
+		"DOTA_Tooltip_ability_creature_viper_nethertoxin_radius"			"#{DOTA_Tooltip_ability_filler_ability_radius}"
+		"DOTA_Tooltip_ability_creature_viper_nethertoxin_duration"			"#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 
 		"DOTA_Tooltip_modifier_antechamber_start"							"Pre-game"
 		"DOTA_Tooltip_modifier_antechamber_start_Description"				"Silenced until the game begins."

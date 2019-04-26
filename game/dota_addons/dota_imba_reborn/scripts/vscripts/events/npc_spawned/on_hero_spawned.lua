@@ -91,6 +91,7 @@ function GameMode:OnHeroFirstSpawn(hero)
 				if api:GetDonatorStatus(hero:GetPlayerID()) ~= 6 then
 					Timers:CreateTimer(1.5, function()
 						local steam_id = tostring(PlayerResource:GetSteamID(hero:GetPlayerID()))
+--						print(api.players[steam_id])
 						DonatorCompanion(hero:GetPlayerID(), nil)
 					end)
 				end

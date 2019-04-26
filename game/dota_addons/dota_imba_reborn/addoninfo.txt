@@ -3,7 +3,7 @@
 	"addonSteamAppID"				"570"
 	"addontitle"					"Dota IMBA"
 	"addon_game_name"				"Dota IMBA"
-	"addonversion"					"7.11"
+	"addonversion"					"7.12"
 	"addontagline"					"IMBA"
 	"addonauthor"					"EarthSalamander #42"
 	"addonSteamGroupName"			""
@@ -11,7 +11,7 @@
 	"addonContent_Campaign"			"0"
 	"addonDescription"				"A modified version of Dota, where everything is insanely powerful."
 	"HeroGuidesSupported"			"1"
-	"PenaltiesEnabled"				"1"
+	"PenaltiesEnabled"				"0"
 	"CheckAFKPlayers"				"1"
 	"EnablePickRules"				"1"
 
@@ -22,6 +22,11 @@
 	"imba_10v10"
 	{
 		"MaxPlayers"				"20"
+	}
+
+	"imba_1v1"
+	{
+		"MaxPlayers"				"2"
 	}
 
 	"imba_demo"

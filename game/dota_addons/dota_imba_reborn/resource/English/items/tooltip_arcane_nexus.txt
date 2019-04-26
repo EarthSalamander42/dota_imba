@@ -7,4 +7,4 @@
 "DOTA_Tooltip_ability_item_imba_arcane_nexus_bonus_intellect"		"+$int"
 "DOTA_Tooltip_ability_item_imba_arcane_nexus_spell_amp"				"%+Spell Amplification"
 "DOTA_Tooltip_ability_item_imba_arcane_nexus_bonus_cdr"				"%+Manacost and Manaloss Reduction"
-"DOTA_Tooltip_ability_item_imba_arcane_nexus_active_duration"		"BUFF DURATION:"
+"DOTA_Tooltip_ability_item_imba_arcane_nexus_active_duration"		"#{DOTA_Tooltip_ability_razor_static_link_drain_duration}"

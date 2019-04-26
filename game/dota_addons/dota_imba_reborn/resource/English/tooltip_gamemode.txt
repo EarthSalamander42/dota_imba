@@ -38,8 +38,6 @@
 "imba_deathstreak_9"                                        " is <font color='#FF0000'><b>GHOSTLIKE!!</b></font>"
 "imba_deathstreak_10"                                      " is beyond <font color='#FF8000'><b>GHOSTLIKE</b></font>, someone FEED them!!"
 
-"imba_arena_points_objective"                              "TARGET"
-
 "tower_abilities_radiant_upgrade"                          "<font color='#FF0000'>Radiant's</font> Ancient feels threatened, and upgrades all its towers!"
 "tower_abilities_dire_upgrade"                              "<font color='#FF0000'>Dire's</font> Ancient feels threatened, and upgrades all its towers!"
 
