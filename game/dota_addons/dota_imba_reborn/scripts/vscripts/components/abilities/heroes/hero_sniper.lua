@@ -675,7 +675,7 @@ function modifier_imba_headshot_attacks:OnAttackStart(keys)
 			end
 
 			-- If the target is a buidling, do nothing
-			if target:IsBuilding() then
+			if target and target:IsBuilding() then
 				return nil
 			end
 			
@@ -1282,9 +1282,11 @@ function imba_sniper_assassinate:OnAbilityPhaseStart()
 		-- "Reload" animation, to make it look good with the entire visual of the assassination talent
 		caster:StartGestureWithPlaybackRate(ACT_DOTA_CAST_ABILITY_1,0.75)
 
-		Timers:CreateTimer(1.75, function()
-			caster:FadeGesture(ACT_DOTA_CAST_ABILITY_1)
-			caster:StartGesture(ACT_DOTA_CAST_ABILITY_4)
+		self.timer = Timers:CreateTimer(1.75, function()
+			if caster:GetCurrentActiveAbility() and caster:GetCurrentActiveAbility():GetName() == "imba_sniper_assassinate" then
+				caster:FadeGesture(ACT_DOTA_CAST_ABILITY_1)
+				caster:StartGesture(ACT_DOTA_CAST_ABILITY_4)
+			end
 		end)
 	else
 		-- Play assassination animation
@@ -1339,6 +1341,12 @@ function imba_sniper_assassinate:OnAbilityPhaseInterrupted()
 	-- Stop animations
 	caster:FadeGesture(ACT_DOTA_CAST_ABILITY_1)
 	caster:FadeGesture(ACT_DOTA_CAST_ABILITY_4)
+
+	-- If the timer for the True Assassination animations is still running, destroy it
+	if self.timer then
+		Timers:RemoveTimer(self.timer)
+		self.timer = nil
+	end
 
 	-- Find all enemies
 	local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
@@ -1767,4 +1775,24 @@ end
 
 function modifier_imba_assassinate_ministun:GetEffectAttachType()
 	return PATTACH_OVERHEAD_FOLLOW
+end
+
+---------------------
+-- TALENT HANDLERS --
+---------------------
+
+LinkLuaModifier("modifier_special_bonus_imba_sniper_6", "components/abilities/heroes/hero_sniper", LUA_MODIFIER_MOTION_NONE)
+
+modifier_special_bonus_imba_sniper_6		= class({})
+
+function modifier_special_bonus_imba_sniper_6:IsHidden() 		return true end
+function modifier_special_bonus_imba_sniper_6:IsPurgable() 		return false end
+function modifier_special_bonus_imba_sniper_6:RemoveOnDeath() 	return false end
+
+function imba_sniper_assassinate:OnOwnerSpawned()
+	if not IsServer() then return end
+
+	if self:GetCaster():HasTalent("special_bonus_imba_sniper_6") and not self:GetCaster():HasModifier("modifier_special_bonus_imba_sniper_6") then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self:GetCaster():FindAbilityByName("special_bonus_imba_sniper_6"), "modifier_special_bonus_imba_sniper_6", {})
+	end
 end

@@ -780,6 +780,24 @@ function GameMode:OnPlayerChat(keys)
 								[13] = "special_bonus_unique_dark_seer"
 							}
 							upgraded = true
+						elseif string.find(text, 'chen') and hero:GetName() == "npc_dota_hero_chen" then
+							ability_set = {
+								[0] = "imba_chen_penitence",
+								[1] = "imba_chen_divine_favor",
+								[2] = "imba_chen_holy_persuasion",
+								[3] = "imba_chen_test_of_faith",
+								[4] = "generic_hidden",
+								[5] = "imba_chen_hand_of_god",
+								[6] = "special_bonus_exp_boost_60",
+								[7] = "special_bonus_cast_range_200",
+								[8] = "special_bonus_armor_8",
+								[9] = "special_bonus_imba_chen_divine_favor_cd_reduction",
+								[10] = "special_bonus_gold_income_50",
+								[11] = "special_bonus_imba_chen_test_of_faith_cd_reduction",
+								[12] = "special_bonus_imba_chen_holy_persuasion_max_unit_increase",
+								[13] = "special_bonus_imba_chen_remnants_of_penitence"
+							}
+							upgraded = true
 						end
 							
 						for ability = 0, 23 do
