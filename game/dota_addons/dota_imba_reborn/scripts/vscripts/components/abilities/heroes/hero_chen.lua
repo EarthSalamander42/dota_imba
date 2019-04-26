@@ -1027,7 +1027,7 @@ end
 function modifier_imba_chen_hand_of_god_overheal:OnIntervalThink()
 	if not IsServer() then return end
 
-	self:SetStackCount(self:GetStackCount() - self:GetAbility():GetSpecialValueFor("overheal_loss_per_tick"))
+	self:SetStackCount(self:GetStackCount() - self.overheal_loss_per_tick)
 	
 	if self:GetParent().CalculateStatBonus then
 		self:GetParent():CalculateStatBonus()

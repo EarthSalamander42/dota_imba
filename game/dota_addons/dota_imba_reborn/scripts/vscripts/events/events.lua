@@ -910,49 +910,49 @@ function GameMode:OnThink()
 
 	if GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
 		-- End the game if one team completely abandoned
-		-- if CustomNetTables:GetTableValue("game_options", "game_count").value == 1 then
-			-- if not TEAM_ABANDON then
-				-- TEAM_ABANDON = {} -- 15 second to abandon, is_abandoning?, player_count.
-				-- TEAM_ABANDON[2] = { FULL_ABANDON_TIME, false, 0 }
-				-- TEAM_ABANDON[3] = { FULL_ABANDON_TIME, false, 0 }
-			-- end
+		if CustomNetTables:GetTableValue("game_options", "game_count").value == 1 then
+			if not TEAM_ABANDON then
+				TEAM_ABANDON = {} -- 15 second to abandon, is_abandoning?, player_count.
+				TEAM_ABANDON[2] = { FULL_ABANDON_TIME, false, 0 }
+				TEAM_ABANDON[3] = { FULL_ABANDON_TIME, false, 0 }
+			end
 
-			-- TEAM_ABANDON[2][3] = PlayerResource:GetPlayerCountForTeam(2)
-			-- TEAM_ABANDON[3][3] = PlayerResource:GetPlayerCountForTeam(3)
+			TEAM_ABANDON[2][3] = PlayerResource:GetPlayerCountForTeam(2)
+			TEAM_ABANDON[3][3] = PlayerResource:GetPlayerCountForTeam(3)
 
-			-- for ID = 0, PlayerResource:GetPlayerCount() - 1 do
-				-- local team = PlayerResource:GetTeam(ID)
+			for ID = 0, PlayerResource:GetPlayerCount() - 1 do
+				local team = PlayerResource:GetTeam(ID)
 
-				-- if PlayerResource:GetConnectionState(ID) ~= 2 then
-					-- -- if disconnected then
-					-- TEAM_ABANDON[team][3] = TEAM_ABANDON[team][3] - 1
-				-- end
+				if PlayerResource:GetConnectionState(ID) ~= 2 then
+					-- if disconnected then
+					TEAM_ABANDON[team][3] = TEAM_ABANDON[team][3] - 1
+				end
 
-				-- if TEAM_ABANDON[team][3] > 0 then
-					-- TEAM_ABANDON[team][2] = false
-				-- else
-					-- if TEAM_ABANDON[team][2] == false then
-						-- local abandon_text = "#imba_team_good_abandon_message"
-						-- if team == 3 then
-							-- abandon_text = "#imba_team_bad_abandon_message"
-						-- end
-						-- Notifications:BottomToAll({ text = abandon_text, duration = 1.0, style = { color = "DodgerBlue" } })
-						-- Notifications:BottomToAll({ text = " (" .. tostring(TEAM_ABANDON[team][1]) .. ")", duration = 1.0, style = { color = "DodgerBlue" }, continue = true })
-					-- end
+				if TEAM_ABANDON[team][3] > 0 then
+					TEAM_ABANDON[team][2] = false
+				else
+					if TEAM_ABANDON[team][2] == false then
+						local abandon_text = "#imba_team_good_abandon_message"
+						if team == 3 then
+							abandon_text = "#imba_team_bad_abandon_message"
+						end
+						Notifications:BottomToAll({ text = abandon_text, duration = 1.0, style = { color = "DodgerBlue" } })
+						Notifications:BottomToAll({ text = " (" .. tostring(TEAM_ABANDON[team][1]) .. ")", duration = 1.0, style = { color = "DodgerBlue" }, continue = true })
+					end
 
-					-- TEAM_ABANDON[team][2] = true
-					-- TEAM_ABANDON[team][1] = TEAM_ABANDON[team][1] - 1
+					TEAM_ABANDON[team][2] = true
+					TEAM_ABANDON[team][1] = TEAM_ABANDON[team][1] - 1
 
-					-- if TEAM_ABANDON[2][1] <= 0 then
-						-- GAME_WINNER_TEAM = 3
-						-- GameRules:SetGameWinner(3)
-					-- elseif TEAM_ABANDON[3][1] <= 0 then
-						-- GAME_WINNER_TEAM = 2
-						-- GameRules:SetGameWinner(2)
-					-- end
-				-- end
-			-- end
-		-- end
+					if TEAM_ABANDON[2][1] <= 0 then
+						GAME_WINNER_TEAM = 3
+						GameRules:SetGameWinner(3)
+					elseif TEAM_ABANDON[3][1] <= 0 then
+						GAME_WINNER_TEAM = 2
+						GameRules:SetGameWinner(2)
+					end
+				end
+			end
+		end
 	end
 
 	if i == nil then
