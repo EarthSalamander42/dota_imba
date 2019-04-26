@@ -12,7 +12,7 @@ DONATOR_COLOR[9] = {185, 75, 10} -- Gaben Donator
 DONATOR_COLOR[10] = {255, 255, 255}
 
 IMBA_DONATOR_COMPANION = {}
-IMBA_DONATOR_COMPANION["76561198015161808"] = "npc_donator_companion_zonnoz"
+IMBA_DONATOR_COMPANION["76561198015161808"] = "npc_donator_companion_crux"
 IMBA_DONATOR_COMPANION["76561198094835750"] = "npc_donator_companion_zonnoz"
 IMBA_DONATOR_COMPANION["76561198003571172"] = "npc_donator_companion_baumi"
 IMBA_DONATOR_COMPANION["76561198014254115"] = "npc_donator_companion_icefrog"
@@ -26,7 +26,10 @@ IMBA_DONATOR_COMPANION["76561198009727790"] = "npc_donator_companion_acalia"
 IMBA_DONATOR_COMPANION["76561198194491261"] = "npc_donator_companion_conjurist"
 IMBA_DONATOR_COMPANION["76561198109559236"] = "npc_donator_companion_gordon_ramsay"
 IMBA_DONATOR_COMPANION["76561198081698794"] = "npc_donator_companion_rayzone"
-IMBA_DONATOR_COMPANION["76561198148311002"] = "npc_donator_companion_carry_me_senpai"
+IMBA_DONATOR_COMPANION["76561198148311002"] = "npc_donator_companion_rubick_arcana" -- Carry Me Senpai
+IMBA_DONATOR_COMPANION["76561197995265925"] = "npc_donator_companion_rubick_arcana" -- General Atrox
+IMBA_DONATOR_COMPANION["76561198046069202"] = "npc_donator_companion_crux"
+IMBA_DONATOR_COMPANION["76561197969985809"] = "npc_donator_companion_phish"
 -- IMBA_DONATOR_COMPANION["76561198330946475"] = "npc_donator_companion_deadknight"
 
 IMBA_DONATOR_STATUE = {}
@@ -53,4 +56,6 @@ DONATOR_COMPANION_ADDITIONAL_INFO["models/items/courier/shagbark/shagbark.vmdl"]
 DONATOR_COMPANION_ADDITIONAL_INFO["models/items/io/io_ti7/io_ti7.vmdl"] = {"particles/econ/items/wisp/wisp_ambient_ti7.vpcf"}
 DONATOR_COMPANION_ADDITIONAL_INFO["models/courier/donkey_unicorn/donkey_unicorn_flying.vmdl"] = {"particles/econ/courier/courier_donkey_unicorn/courier_donkey_unicorn_ambient.vpcf"}
 DONATOR_COMPANION_ADDITIONAL_INFO["models/heroes/phoenix/phoenix_bird.vmdl"] = {"particles/units/heroes/hero_phoenix/phoenix_ambient.vpcf", true}
+DONATOR_COMPANION_ADDITIONAL_INFO["models/courier/donkey_crummy_wizard_2014/donkey_crummy_wizard_2014_flying.vmdl"] = {"particles/econ/courier/courier_hwytty/courier_hwytty_ambient.vpcf"}
+DONATOR_COMPANION_ADDITIONAL_INFO["models/courier/sw_donkey/sw_donkey_flying.vmdl"] = {"particles/econ/courier/courier_dolfrat_and_roshinante/courier_dolfrat_and_roshinante_a.vpcf"}
 -- DONATOR_COMPANION_ADDITIONAL_INFO["models/items/rubick/rubick_arcana/rubick_arcana_base.vmdl"] = {""}

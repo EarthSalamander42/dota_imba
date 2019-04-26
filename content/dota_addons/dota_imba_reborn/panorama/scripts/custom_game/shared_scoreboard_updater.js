@@ -26,44 +26,25 @@ function _ScoreboardUpdater_SetValueSafe(panel, childName, Value) {
 function _ScoreboardUpdater_UpdatePlayerPanelImr(playerId, playerPanel) {
 
 //	$.Msg("Updating player imr panel");
-	
-	var map_info = Game.GetMapInfo();
-
-	var ids = {
-		_5v5: {
-			teammate: "TeammateIMRAmount",
-			player: "PlayerIMRAmount"
-		},
-		_10v10: {
-			teammate: "TeammateIMR10v10Amount",
-			player: "PlayerIMR10v10Amount"
-		}
-	};
 
 	// set labels
-
 	var steamid = Game.GetPlayerInfo(playerId).player_steamid;
 	
 	LoadPlayerInfo(function (playerInfo) {
 		var thisPlayerInfo = null;
 		playerInfo.forEach(function (i) {
-			if (i.username == steamid)
+			if (i.steamid == steamid)
 				thisPlayerInfo = i;
 		});
 
 		if (thisPlayerInfo == null) // wtf
 			return;
 
-		var imr5v5 = "TBD";
-		var imr10v10 = "TBD";
-		if (!thisPlayerInfo.imr5v5_callibrating)
-			imr5v5 = Math.floor(thisPlayerInfo.imr5v5);
-		if (!thisPlayerInfo.imr10v10_callibrating)
-			imr10v10 = Math.floor(thisPlayerInfo.imr10v10)
+		var imr1v1 = "TBD";
+		if (!thisPlayerInfo.imr1v1_callibrating)
+			imr1v1 = Math.floor(thisPlayerInfo.imr1v1);
 
-		_ScoreboardUpdater_SetTextSafe(playerPanel, ids._5v5.teammate, imr5v5);
-		_ScoreboardUpdater_SetTextSafe(playerPanel, ids._10v10.teammate, imr10v10);
-		
+		_ScoreboardUpdater_SetTextSafe(playerPanel, "PlayerIMRAmount", imr1v1);
 	});
 }
 
@@ -88,25 +69,28 @@ function _ScoreboardUpdater_UpdatePlayerPanelXP(playerId, playerPanel, ImbaXP_Pa
 	ImbaXP_Panel.BCreateChildren("<Label id='ImbaXPEarned" + playerId + "' text='+0'/>");
 
 	var steamid = Game.GetPlayerInfo(playerId).player_steamid;
-
+/*
 	// load player data from api
-//	LoadPlayerInfo(function (data) {
-//		var thisPlayerInfo = null;
-//		playerInfo.forEach(function (i) {
-//			if (i.steamid == steamid)
-//				thisPlayerInfo = i;
-//		});
+	LoadPlayerInfo(function (data) {
+		var thisPlayerInfo = null;
+		playerInfo.forEach(function (i) {
+			if (i.steamid == steamid)
+				thisPlayerInfo = i;
+		});
 
-//		if (thisPlayerInfo == null) // wtf
-//			return;
+		if (thisPlayerInfo == null) // wtf
+			return;
 
-//		_ScoreboardUpdater_SetTextSafe(playerPanel, ids.xpRank, thisPlayerInfo.xp_rank_title);
-//		_ScoreboardUpdater_SetTextSafe(playerPanel, ids.xp, thisPlayerInfo.xp_in_current_level + "/" + thisPlayerInfo.total_xp_for_current_level);
-//		_ScoreboardUpdater_SetTextSafe(playerPanel, ids.level, thisPlayerInfo.xp_level);
-//		_ScoreboardUpdater_SetValueSafe(playerPanel, ids.progress_bar, thisPlayerInfo.xp_in_current_level / thisPlayerInfo.total_xp_for_current_level);
-//		playerPanel.FindChildTraverse(ids.xpRank).style.color = "#" + thisPlayerInfo.xp_rank_color;
+		$.Msg(thisPlayerInfo)
 
-//	});
+		_ScoreboardUpdater_SetTextSafe(playerPanel, ids.xpRank, thisPlayerInfo.xp_rank_title);
+		_ScoreboardUpdater_SetTextSafe(playerPanel, ids.xp, thisPlayerInfo.xp_in_current_level + "/" + thisPlayerInfo.total_xp_for_current_level);
+		_ScoreboardUpdater_SetTextSafe(playerPanel, ids.level, thisPlayerInfo.xp_level);
+		_ScoreboardUpdater_SetValueSafe(playerPanel, ids.progress_bar, thisPlayerInfo.xp_in_current_level / thisPlayerInfo.total_xp_for_current_level);
+		playerPanel.FindChildTraverse(ids.xpRank).style.color = "#" + thisPlayerInfo.xp_rank_color;
+	});
+*/
+
 	// xp shown fix (temporary?)
 	var player_info = CustomNetTables.GetTableValue("player_table", playerId)
 	
@@ -150,7 +134,8 @@ function _ScoreboardUpdater_UpdatePlayerPanel(scoreboardConfig, playersContainer
 				_ScoreboardUpdater_UpdatePlayerPanelXP(playerId, playerPanel, ImbaXP_Panel);
 
 				// set imr values
-				_ScoreboardUpdater_UpdatePlayerPanelImr(playerId, playerPanel);
+				if (Game.GetMapInfo().map_display_name == "imba_1v1")
+					_ScoreboardUpdater_UpdatePlayerPanelImr(playerId, playerPanel);
 			}
 		}
 	}

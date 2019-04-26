@@ -16,16 +16,16 @@ var first_time = false;
 var secret_key = CustomNetTables.GetTableValue("game_options", "server_key")["1"];
 
 var api = {
-	base : "http://api.dota2imba.fr/imba/",
+	base : "http://api.dota2imba.fr/",
 	urls : {
-		companions : "companions",
-		statues : "statues",
-		modifyCompanion : "modify-companion",
-		modifyStatue : "modify-statue",
-//		rankingsImr5v5 : "meta/rankings/imr-5v5",
-//		rankingsImr10v10 : "meta/rankings/imr-10v10",
-//		rankingsXp : "meta/rankings/xp",
-//		rankingsLevel1v1 : "meta/rankings/level-1v1"
+		companions : "imba/companions",
+		statues : "imba/statues",
+		modifyCompanion : "imba/modify-companion",
+		modifyStatue : "imba/modify-statue",
+//		rankingsImr5v5 : "imba/meta/rankings/imr-5v5",
+//		rankingsImr10v10 : "imba/meta/rankings/imr-10v10",
+		rankingsXp : "website/statistics/ranking/xp",
+//		rankingsLevel1v1 : "imba/meta/rankings/level-1v1"
 	},
 	loadCompanions : function(callback) {
 		$.AsyncWebRequest(api.base + api.urls.companions, {
@@ -108,6 +108,24 @@ var api = {
 				error_callback();
 			}
 		});
+	},
+	getTopPlayerXP : function(callback) {
+		$.AsyncWebRequest(api.base + api.urls.rankingsXp, {
+			type : "GET",
+			dataType : "json",
+			timeout : 5000,
+			headers : {'X-Dota-Server-Key' : secret_key},
+			success : function(obj) {
+				if (obj.error || !obj.data || !obj.data.players)
+					$.Msg("Error finding top xp");
+				else {
+					callback(obj.data.players);
+				}
+			},
+			error : function(err) {
+				$.Msg("Error finding top xp " + JSON.stringify(err));
+			}
+		});
 	}
 };
 
@@ -117,7 +135,6 @@ function ToggleBattlepass() {
 		if (first_time === false) {
 			first_time = true;
 			Battlepass();
-			HallOfFame("XP");
 		}
 
 		if ($("#BattlepassWindow").BHasClass("sethidden")) {
@@ -222,6 +239,7 @@ function SwitchDonatorWrapper(type) {
 }
 
 var companions = null;
+var top_xp = [];
 
 function Battlepass(retainSubTab) {
 	if (typeof retainSubTab == "undefined") {retainSubTab = false;};
@@ -230,6 +248,14 @@ function Battlepass(retainSubTab) {
 	api.loadStatues(function(statues) {
 		$.Msg("Statues and Battlepass information available");
 		GenerateCompanionPanel(statues, Players.GetLocalPlayer(), "Statue", retainSubTab);
+	});
+
+	api.getTopPlayerXP(function(players) {
+		for (player in players) {
+			top_xp[player] = players[player];
+		}
+
+		HallOfFame("XP");
 	});
 
 	GenerateBattlepassPanel(BattlepassRewards, Players.GetLocalPlayer());
@@ -349,13 +375,14 @@ function HallOfFame(type) {
 	current_type = type;
 
 	for (var i = 1; i <= 25; i++) {
-		if (type == "XP") {
-			var top_users = CustomNetTables.GetTableValue("top_xp", i.toString());
-		} else if (type == "IMR") {
-			var top_users = CustomNetTables.GetTableValue("top_imr5v5", i.toString());
-		}
+//		if (type == "XP") {
+//			var top_users = CustomNetTables.GetTableValue("top_xp", i.toString());
+//		} else if (type == "IMR") {
+//			var top_users = CustomNetTables.GetTableValue("top_imr5v5", i.toString());
+//		}
 
-		if (top_users === undefined) {
+		if (top_xp === undefined) {
+			$.Msg("Top PLayers not defined...")
 			return;
 		}
 
@@ -371,14 +398,14 @@ function HallOfFame(type) {
 
 		var steam_id = $.CreatePanel("DOTAAvatarImage", player, "player_steamid_" + i);
 		steam_id.AddClass("LeaderboardAvatar");
-		steam_id.steamid = top_users.SteamID64;
+		steam_id.steamid = top_xp[i - 1].steamid;
 		steam_id.style.width = "38px";
 		steam_id.style.height = "38px";
 		steam_id.style.marginLeft = "40px";
 		steam_id.style.marginRight = "40px";
 		steam_id.style.align = "center center";
 
-		var leaderboard_border = []
+		var leaderboard_border = [];
 		leaderboard_border[1] = "darkred"
 		leaderboard_border[2] = "red"
 		leaderboard_border[3] = "blue"
@@ -389,9 +416,9 @@ function HallOfFame(type) {
 		leaderboard_border[8] = "dodgerblue"
 		leaderboard_border[9] = "brown"
 
-//		if (top_users.donator_level)
+//		if (top_xp[i - 1].donator_level)
 //			steam_id.style.border = "2px solid " + leaderboard_border[top_users.donator_level];
-			steam_id.style.border = "2px solid " + leaderboard_border[i];
+//			steam_id.style.border = "2px solid " + leaderboard_border[i];
 //		else
 //			steam_id.style.border = "2px solid #3f464ecc";
 
@@ -399,30 +426,31 @@ function HallOfFame(type) {
 		imbar_container.AddClass("LeaderboardXP");
 		var imbar = $.CreatePanel("ProgressBar", imbar_container, "imbar_" + i);
 		imbar.AddClass("imbar-progress-bar");
-		imbar.value = top_users.XP / top_users.MaxXP;
+		imbar.value = parseFloat(top_xp[i - 1].next_level_progress) / 100;
 
 		var imbar_lvl = $.CreatePanel("Label", imbar_container, "imbar_lvl" + i);
 		imbar_lvl.AddClass("imbar-lvl");
-		imbar_lvl.text = "Level: " + top_users.Lvl;
+		imbar_lvl.text = "Level: " + top_xp[i - 1].xp_level;
 
 		var imbar_rank_wrapper = $.CreatePanel("Panel", imbar_container, "imbar_rank" + i);
 		imbar_rank_wrapper.AddClass("imbar-rank-wrapper");
 
 		var imbar_rank_circle = $.CreatePanel("Panel", imbar_rank_wrapper, "");
 		imbar_rank_circle.AddClass("imbar-rank-cicle");
-		imbar_rank_circle.style.backgroundColor = top_users.title_color;
+		imbar_rank_circle.style.backgroundColor = "white";
+//		imbar_rank_circle.style.backgroundColor = top_users.title_color;
 
 		var imbar_rank = $.CreatePanel("Label", imbar_rank_wrapper, "");
 		imbar_rank.AddClass("imbar-rank");
-		imbar_rank.text = top_users.title;
+		imbar_rank.text = top_xp[i - 1].rank_title;
 
-		var imbar_xp = $.CreatePanel("Label", imbar_container, "imbar_xp" + i);
-		imbar_xp.AddClass("imbar-xp");
-		imbar_xp.text = top_users.XP + "/" + top_users.MaxXP;
+//		var imbar_xp = $.CreatePanel("Label", imbar_container, "imbar_xp" + i);
+//		imbar_xp.AddClass("imbar-xp");
+//		imbar_xp.text = top_users.XP + "/" + top_users.MaxXP;
 
 		var imr = $.CreatePanel("Label", player, "rank_" + i);
 		imr.AddClass("LeaderboardIMR");
-		imr.text = top_users.IMR_5v5.toFixed([0]);
+		imr.text = 0;
 	}
 }
 

@@ -143,12 +143,19 @@ function modifier_companion:OnIntervalThink()
 
 		for _,v in pairs(IMBA_INVISIBLE_MODIFIERS) do
 			if not hero:HasModifier(v) then
-				if companion:HasModifier(v) then
-					companion:RemoveModifierByName(v)
+--				if companion:HasModifier(v) then
+--					companion:RemoveModifierByName(v)
+--				end
+
+				if companion:HasModifier("modifier_item_imba_shadow_blade_invis") then
+					companion:RemoveModifierByName("modifier_item_imba_shadow_blade_invis")
+					break -- remove this break if you want to add multiple modifiers at the same time
 				end
 			else
 				if not companion:HasModifier(v) then
-					companion:AddNewModifier(companion, nil, v, {})
+--					companion:AddNewModifier(companion, nil, v, {}) -- might be the not walking anymore issue
+					companion:AddNewModifier(companion, nil, "modifier_item_imba_shadow_blade_invis", {})
+					break -- remove this break if you want to add multiple modifiers at the same time
 				end
 			end
 		end

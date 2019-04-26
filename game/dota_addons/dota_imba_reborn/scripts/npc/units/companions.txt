@@ -282,10 +282,31 @@
 		"ModelScale"				"0.5"
 	}
 
-	"npc_donator_companion_carry_me_senpai"
+	"npc_donator_companion_rubick_arcana"
 	{
 		"BaseClass"					"npc_donator_companion"
 		"Model"						"models/items/rubick/rubick_arcana/rubick_arcana_base.vmdl"
 		"ModelScale"				"0.35"
+	}
+
+	"npc_donator_companion_crux"
+	{
+		"BaseClass"					"npc_donator_companion"
+		"Model"						"models/courier/donkey_crummy_wizard_2014/donkey_crummy_wizard_2014_flying.vmdl"
+		"ModelScale"				"0.55"
+	}
+
+	"npc_donator_companion_phish"
+	{
+		"BaseClass"					"npc_donator_companion"
+		"Model"						"models/courier/sw_donkey/sw_donkey_flying.vmdl"
+		"ModelScale"				"0.6"
+	}
+
+	"npc_donator_companion_cookies_2" // no walk animation (use a modifier with animation translation?)
+	{
+		"BaseClass"					"npc_donator_companion"
+		"Model"						"models/heroes/juggernaut/juggernaut_arcana.vmdl"
+		"ModelScale"				"0.45"
 	}
 }

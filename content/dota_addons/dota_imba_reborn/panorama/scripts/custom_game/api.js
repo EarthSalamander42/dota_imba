@@ -11,7 +11,7 @@ var api = {
 			modify_companion: "modify-companion",
 			modify_statue: "modify-ingame-statue",
 			player_info: "player-info",
-			multi_player_info: "multi-player-info",
+			multi_player_info: "meta/multi-player-info",
 			game_info: "game-info",
 			loading_screen: "loading-screen",
 			resolve_map_name: "resolve-map-name",

@@ -94,6 +94,10 @@ function GameMode:OnUnitFirstSpawn(unit)
 					ParticleManager:CreateParticle("particles/econ/items/pudge/pudge_arcana/pudge_arcana_ambient_flies.vpcf", PATTACH_ABSORIGIN_FOLLOW, unit)
 				elseif wearable == "models/items/rubick/rubick_arcana/rubick_arcana_back.vmdl" then
 					ParticleManager:CreateParticle("particles/econ/items/rubick/rubick_arcana/rubick_arc_ambient_default.vpcf", PATTACH_ABSORIGIN_FOLLOW, cosmetic)
+--				elseif wearable == "models/items/juggernaut/arcana/juggernaut_arcana_mask.vmdl" then
+--					ParticleManager:CreateParticle("particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_ambient.vpcf", PATTACH_ABSORIGIN_FOLLOW, cosmetic)
+				elseif wearable == "models/items/juggernaut/jugg_ti8/jugg_ti8_sword.vmdl" then
+					ParticleManager:CreateParticle("particles/econ/items/juggernaut/jugg_ti8_sword/jugg_ti8_crimson_sword_ambient.vpcf", PATTACH_ABSORIGIN_FOLLOW, cosmetic)
 				end
 			end
 		end

@@ -551,6 +551,12 @@ UNIT_EQUIPMENT["models/items/rubick/rubick_arcana/rubick_arcana_base.vmdl"] = {
 	"models/heroes/rubick/rubick_staff.vmdl",
 	"models/heroes/rubick/shoulder.vmdl",
 }
+UNIT_EQUIPMENT["models/heroes/juggernaut/juggernaut_arcana.vmdl"] = {
+	"models/items/juggernaut/arcana/juggernaut_arcana_mask.vmdl",
+	"models/items/juggernaut/jugg_ti8/jugg_ti8_sword.vmdl",
+	"models/heroes/juggernaut/jugg_cape.vmdl",
+	"models/heroes/juggernaut/juggernaut_pants.vmdl",
+}
 
 IMBA_DISABLED_SKULL_BASHER = {
 	"npc_dota_hero_faceless_void",
