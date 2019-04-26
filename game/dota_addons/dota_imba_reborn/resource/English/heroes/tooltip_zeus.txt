@@ -8,7 +8,7 @@
 "DOTA_Tooltip_Ability_imba_zuus_arc_lightning"					"Arc Lightning"
 "DOTA_Tooltip_Ability_imba_zuus_arc_lightning_description"		"Hurls a bolt of lightning that leaps through nearby enemy units.\n<font color='#FF7800'>Static Chain:</font> When Arc Lightning runs out of targets, it will jump to the nearest enemy hero with at least one stack of <font color='#FFFFFF'>Static Charge</font> within %static_chain_mult%x chain radius of the previous unit."
 "DOTA_Tooltip_Ability_imba_zuus_arc_lightning_lore"				"Arc Lightning is Zeus' favorite spell to use against puny mortals."
-"DOTA_Tooltip_Ability_imba_zuus_arc_lightning_arc_damage"		"DAMAGE:"
+"DOTA_Tooltip_Ability_imba_zuus_arc_lightning_arc_damage"		"#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
 "DOTA_Tooltip_Ability_imba_zuus_arc_lightning_jump_count"		"JUMPS:"
 "DOTA_Tooltip_Ability_imba_zuus_arc_lightning_jump_delay"		"JUMP DELAY:"
 "DOTA_Tooltip_Ability_imba_zuus_arc_lightning_radius"			"CHAIN RADIUS:"
@@ -39,7 +39,7 @@
 "DOTA_Tooltip_Ability_imba_zuus_thundergods_wrath"								"Thundergod's Wrath"
 "DOTA_Tooltip_Ability_imba_zuus_thundergods_wrath_description"					"Strikes all enemy heroes with a bolt of lightning, no matter where they may be. Thundergod's Wrath also provides True Sight around each hero struck. If an enemy hero is invisible, it takes no damage, but the True Sight is still created at that hero's location.\n<font color='#FF7800'>Redirection: </font>Consumes all Thundergod's Focus stacks, converting them into Static Charge stacks on all enemies hit. Half of the Static Charge stacks are also consumed on enemies when struck with Thundergod's Wrath. <font color='#FF0000'>Does not place Static Charge stacks on enemies more than 2500 distance away.</font>\n<font color='#FF7800'>Awakening:</font> With %stacks_to_awaken% or more stacks of Thundergod's Focus, Zeus gains the Awaken buff. Awaken lasts for three seconds per Thundergod's Focus stack consumed, up to a maximum of 42 seconds.\n<font color='#FF7800'>Awaken:</font> In Awaken, Zeus improves cast time by %cast_time_increase_pct%%%, and increases vision by %vision_increase_pct%%%. Additionally, any physical attack landed on Zeus triggers Arc Lightning damage on his attacker (does not jump between enemies)."
 "DOTA_Tooltip_Ability_imba_zuus_thundergods_wrath_lore"							"The Lord of Heaven smites all who oppose him, near or far."
-"DOTA_Tooltip_Ability_imba_zuus_thundergods_wrath_sight_duration"				"DURATION:"
+"DOTA_Tooltip_Ability_imba_zuus_thundergods_wrath_sight_duration"				"#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 "DOTA_Tooltip_Ability_imba_zuus_thundergods_wrath_true_sight_radius_tooltip"	"TRUE SIGHT RADIUS:"
 
 //---------------------------------------------------------------------------
@@ -48,7 +48,7 @@
 "DOTA_Tooltip_Ability_imba_zuus_cloud"							"Nimbus"
 "DOTA_Tooltip_Ability_imba_zuus_cloud_description"				"Creates a controllable storm cloud anywhere on the map that automatically casts Lightning Bolt on nearby enemies.\n<font color='#FF7800'>Divine Intervention: </font>Zeus is now the damage source when taking damage calculations of Nimbus, meaning spell amplification and on-damage effects will direct to Zeus. Lightning Bolt intervals are not affected by cooldown reduction.\n<font color='#FF7800'>Zap:</font> At any time, Zeus can choose to travel to the cloud by lightning."
 "DOTA_Tooltip_Ability_imba_zuus_cloud_lore"						"Where the thunder god's ire grows, storm clouds quickly gather."
-"DOTA_Tooltip_Ability_imba_zuus_cloud_cloud_duration"			"DURATION:"
+"DOTA_Tooltip_Ability_imba_zuus_cloud_cloud_duration"			"#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 "DOTA_Tooltip_Ability_imba_zuus_cloud_cloud_bolt_interval"		"LIGHTNING BOLT INTERVAL:"
 
 //---------------------------------------------------------------------------

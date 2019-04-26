@@ -9,7 +9,7 @@
 "DOTA_Tooltip_ability_imba_silencer_arcane_curse_damage_per_stack"                  "ADDITIONAL DAMAGE PER STACK:"
 "DOTA_Tooltip_ability_imba_silencer_arcane_curse_radius"                "EFFECT RADIUS:"
 "DOTA_Tooltip_ability_imba_silencer_arcane_curse_base_duration"                     "BASE DURATION:"
-"DOTA_Tooltip_ability_imba_silencer_arcane_curse_curse_slow"            "%MOVEMENT SLOW:"
+"DOTA_Tooltip_ability_imba_silencer_arcane_curse_curse_slow"            "#{DOTA_Tooltip_ability_queenofpain_shadow_strike_movement_slow}"
 
 "DOTA_Tooltip_modifier_imba_arcane_curse_debuff"                        "Arcane Curse"
 "DOTA_Tooltip_modifier_imba_arcane_curse_debuff_Description"            "Slowed and taking damage. Casting spells will extend the debuff's duration and increase damage dealt."
@@ -40,7 +40,7 @@
 "DOTA_Tooltip_ability_imba_silencer_last_word_Description"              "Enchants a target, causing them to be damaged and silenced if they cast a spell or if the enchantment timer expires.\n<font color='#FF7800'>Damned If You Do:</font> If the target casts a spell, Last Word will be recast on them after the silence expires (or is purged).\n<font color='#FF7800'>Damned If You Don't:</font> Reduces the target's mana regeneration by %m_regen_reduct_pct%x for the duration of the initial cast."
 "DOTA_Tooltip_ability_imba_silencer_last_word_Lore"                    "Nortrom ensures that spells uttered by his opponents will be their last."
 "DOTA_Tooltip_ability_imba_silencer_last_word_duration"                "INITIAL DURATION:"
-"DOTA_Tooltip_ability_imba_silencer_last_word_damage"                  "DAMAGE:"
+"DOTA_Tooltip_ability_imba_silencer_last_word_damage"                  "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
 "DOTA_Tooltip_ability_imba_silencer_last_word_silence_duration"                     "SILENCE DURATION:"
 
 "DOTA_Tooltip_modifier_imba_silencer_last_word_debuff"                  "Last Word"
@@ -77,7 +77,7 @@
 "DOTA_Tooltip_ability_imba_silencer_global_silence_Description"                     "Silencer curses all enemy heroes and units.\n<font color='#FF7800'>Silence! Do Not Speak:</font> Should a cursed enemy attempt to cast a spell, be mid cast or channel any spell while under the curse, they are immediately silenced for the rest of the duration, and have Last Word applied on them."
 "DOTA_Tooltip_ability_imba_silencer_global_silence_Note0"              "Until a unit attempts to cast, it is not actually silenced. If it does, it becomes silenced for the rest of the duration."
 "DOTA_Tooltip_ability_imba_silencer_global_silence_Lore"                "After years of dealing with loud-mouthed spellcasters, Nortrom came up with a warning curse. Should an afflicted being not heed it, they will know Nortroms wrath. Unfortunetly for them, people can rarely keep their mouths shuts."
-"DOTA_Tooltip_ability_imba_silencer_global_silence_duration"            "DURATION:"
+"DOTA_Tooltip_ability_imba_silencer_global_silence_duration"            "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 
 "DOTA_Tooltip_modifier_imba_silencer_global_silence"                    "Global Silence"
 "DOTA_Tooltip_modifier_imba_silencer_global_silence_Description"                    "Casting a spell or being mid spell cast will silence you for the rest of the duration."

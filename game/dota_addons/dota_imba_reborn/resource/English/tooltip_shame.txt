@@ -218,7 +218,7 @@
 "DOTA_Tooltip_ability_roshan_deafening_blast_Description"           "Roshan's unleashes a mighty sonic wave in front of him, dealing damage to any enemy unit it collides with. The sheer impact from the blast is enough to knock those enemy units back for a duration, then disarm their attacks for a duration."
 "DOTA_Tooltip_ability_roshan_deafening_blast_Lore"                "Buluphont's Aureal Incapacitator."
 "DOTA_Tooltip_ability_roshan_deafening_blast_travel_distance"         "TRAVEL DISTANCE:"
-"DOTA_Tooltip_ability_roshan_deafening_blast_damage"              "DAMAGE:"
+"DOTA_Tooltip_ability_roshan_deafening_blast_damage"              "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
 "DOTA_Tooltip_ability_roshan_deafening_blast_knockback_duration"        "KNOCKBACK DURATION:"
 "DOTA_Tooltip_ability_roshan_deafening_blast_disarm_duration"         "DISARM DURATION:"
 
@@ -228,14 +228,14 @@
 
 "DOTA_Tooltip_ability_roshan_true_sight"                    "True Sight"
 "DOTA_Tooltip_ability_roshan_true_sight_Description"              "Reveals invisible units."
-"DOTA_Tooltip_ability_roshan_true_sight_radius"                 "RADIUS:"
+"DOTA_Tooltip_ability_roshan_true_sight_radius"                 "#{DOTA_Tooltip_ability_filler_ability_radius}"
 
 "DOTA_Tooltip_ability_imba_roshan_diretide_apocalypse"              "Apocalypse"
 "DOTA_Tooltip_ability_imba_roshan_diretide_apocalypse_Description"        "Roshan launches devastating beams of incineration from the sky at all enemy heroes outside of 400 range, but within 1200 range."
 "DOTA_Tooltip_ability_imba_roshan_diretide_apocalypse_Lore"           "Roshans anger exceeds the knowledge of the oldest and smartest beings, allowing him to focus the entire sun on his planet."
-"DOTA_Tooltip_ability_imba_roshan_diretide_apocalypse_area_of_effect"     "RADIUS:"
+"DOTA_Tooltip_ability_imba_roshan_diretide_apocalypse_area_of_effect"     "#{DOTA_Tooltip_ability_filler_ability_radius}"
 "DOTA_Tooltip_ability_imba_roshan_diretide_apocalypse_delay"          "DELAY:"
-"DOTA_Tooltip_ability_imba_roshan_diretide_apocalypse_damage"         "DAMAGE:"
+"DOTA_Tooltip_ability_imba_roshan_diretide_apocalypse_damage"         "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
 
 "DOTA_Tooltip_ability_imba_roshan_diretide_summon_roshlings"          "Summon Roshlings"
 "DOTA_Tooltip_ability_imba_roshan_diretide_summon_roshlings_Description"    "Roshan summons Roshlings to aid him in combat."
@@ -245,9 +245,9 @@
 "DOTA_Tooltip_ability_roshan_toss_Description"                  "Grabs the nearest unit in a 275 radius around Roshan, ally or enemy, and launches it at the target unit or rune to deal damage where they land.  If the tossed unit is an enemy, it will take an extra 20%% damage."
 "DOTA_Tooltip_ability_roshan_toss_Lore"                     "Roshan's gargantuan stature allows him to catapult even the sturdiest of warriors."
 "DOTA_Tooltip_ability_roshan_toss_Note0"                    "You can toss allies, but they don't take damage."
-"DOTA_Tooltip_ability_roshan_toss_radius"                   "RADIUS:"
-"DOTA_Tooltip_ability_roshan_toss_tooltip_range"                "RANGE:"
-"DOTA_Tooltip_ability_roshan_toss_toss_damage"                  "DAMAGE:"
+"DOTA_Tooltip_ability_roshan_toss_radius"                   "#{DOTA_Tooltip_ability_filler_ability_radius}"
+"DOTA_Tooltip_ability_roshan_toss_tooltip_range"                "#{DOTA_Tooltip_ability_antimage_blink_blink_range}"
+"DOTA_Tooltip_ability_roshan_toss_toss_damage"                  "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
 
 "DOTA_Tooltip_ability_roshan_berserkers_blood"                  "Berserker's Blood"
 "DOTA_Tooltip_ability_roshan_berserkers_blood_Description"            "Roshan's injuries feed his power, giving increased attack speed and magic damage resistance based on missing health."
@@ -260,7 +260,7 @@
 
 "DOTA_Tooltip_ability_roshan_halloween_wave_of_force"             "Wave of Force"
 "DOTA_Tooltip_ability_roshan_halloween_wave_of_force_Description"       "After a delay, Roshan smashes the ground, causing massive radial damage in an area around him, knocking back all enemies.  The closer to Roshan the enemy is, the more damage it takes."
-"DOTA_Tooltip_ability_roshan_halloween_wave_of_force_radius"          "RADIUS:"
+"DOTA_Tooltip_ability_roshan_halloween_wave_of_force_radius"          "#{DOTA_Tooltip_ability_filler_ability_radius}"
 
 "DOTA_Tooltip_ability_roshan_halloween_shell"                 "Shell"
 "DOTA_Tooltip_ability_roshan_halloween_shell_Description"           "Roshan becomes immune to physical damage, but takes enhanced magical damage for a brief time.  When Roshan uses Shell, all ability and item cooldowns are refreshed."
@@ -296,13 +296,13 @@
 "DOTA_Tooltip_ability_imba_fountain_grievous_wounds_Description"		"Inflicts additional damage on each attack."
 "DOTA_Tooltip_ability_imba_fountain_grievous_wounds_Lore"				"The fountain is evil. Don't piss off the fountain."
 "DOTA_Tooltip_ability_imba_fountain_grievous_wounds_damage_increase"	"%DAMAGE INCREASE:"
-"DOTA_Tooltip_ability_imba_fountain_grievous_wounds_debuff_duration"	"DEBUFF DURATION:"
+"DOTA_Tooltip_ability_imba_fountain_grievous_wounds_debuff_duration"	"#{DOTA_Tooltip_ability_vengefulspirit_wave_of_terror_tooltip_duration}"
 
 "DOTA_Tooltip_ability_imba_fountain_relief"								"Relief Aura"
 "DOTA_Tooltip_ability_imba_fountain_relief_Description"					"Relieves the tension on nearby units, drastically increasing their Tenacity and their damage reduction. Dealing damage in any way to an enemy unit or hero rejects the buff from the attacker for %aura_reject_time% seconds.\n<font color='#FF7800'>Relieved From Command:</font> Disconnected players get %disconnected_dmg_reduction%% damage reduction, and cannot be harmed. However, they're still suspectible for the aura rejection."
 "DOTA_Tooltip_ability_imba_fountain_relief_Lore"						"Everyone loves to be near the fountain. Even the bad guys."
 "DOTA_Tooltip_ability_imba_fountain_relief_tenacity"					"%TENACITY BONUS:"
-"DOTA_Tooltip_ability_imba_fountain_relief_aura_radius"					"RADIUS:"
+"DOTA_Tooltip_ability_imba_fountain_relief_aura_radius"					"#{DOTA_Tooltip_ability_filler_ability_radius}"
 
 "DOTA_Tooltip_modifier_imba_fountain_relief_aura_buff"					"Relief Aura"
 "DOTA_Tooltip_modifier_imba_fountain_relief_aura_buff_Description"		"Massively increases your Tenacity and damage reduction as long as you don't deal damage to enemies."
@@ -543,8 +543,8 @@
 // Storegga
 "DOTA_Tooltip_ability_storegga_arm_slam"            "Slam"
 "DOTA_Tooltip_ability_storegga_arm_slam_Description"      "Slam an unit on the ground so hard that his head end up in his ass."
-"DOTA_Tooltip_ability_storegga_arm_slam_damage"         "DAMAGE:"
-"DOTA_Tooltip_ability_storegga_arm_damage_radius"       "RADIUS:"
+"DOTA_Tooltip_ability_storegga_arm_slam_damage"         "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
+"DOTA_Tooltip_ability_storegga_arm_damage_radius"       "#{DOTA_Tooltip_ability_filler_ability_radius}"
 "DOTA_Tooltip_ability_storegga_arm_stun_duration"       "STUN DURATION:"
 
 "DOTA_Tooltip_ability_storegga_grab"              "Storeggrab (:nofun:)"
@@ -565,11 +565,11 @@
 
 "DOTA_Tooltip_ability_storegga_avalanche"           "Avalanche"
 "DOTA_Tooltip_ability_storegga_avalanche_Description"     "Digging to find the Immortal Earth Salamander, where is he?"
-"DOTA_Tooltip_ability_storegga_avalanche_damage"        "DAMAGE:"
+"DOTA_Tooltip_ability_storegga_avalanche_damage"        "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
 
 "DOTA_Tooltip_ability_holdout_sindragosa"           "Summon Sindragosa"
 "DOTA_Tooltip_ability_holdout_sindragosa_Description"     "Calls Sindragosa down from the sky, dealing damage and stunning enemy land units for 2 seconds in an area. Sindragosa lasts 60 seconds."
-"DOTA_Tooltip_ability_holdout_sindragosa_radius"        "RADIUS:"
+"DOTA_Tooltip_ability_holdout_sindragosa_radius"        "#{DOTA_Tooltip_ability_filler_ability_radius}"
 "DOTA_Tooltip_ability_holdout_sindragosa_infernal_duration"   "SINDRAGOSA DURATION:"
 "DOTA_Tooltip_ability_holdout_sindragosa_stun_hero_duration"  "STUN HERO DURATION:"
 "DOTA_Tooltip_ability_holdout_sindragosa_stun_creep_duration" "STUN CREEP DURATION:"
@@ -581,8 +581,8 @@
 "DOTA_Tooltip_ability_holdout_lordaeron_smash_Note0"      "Works fully on Spell Immune units."
 "DOTA_Tooltip_ability_holdout_lordaeron_smash_crit_multiplier"  "%CRIT MULTIPLIER:"
 "DOTA_Tooltip_ability_holdout_lordaeron_smash_air_time"     "AIR TIME:"
-"DOTA_Tooltip_ability_holdout_lordaeron_smash_slow_duration"  "SLOW DURATION:"
-"DOTA_Tooltip_ability_holdout_lordaeron_smash_move_slow"    "%MOVEMENT SLOW:"
+"DOTA_Tooltip_ability_holdout_lordaeron_smash_slow_duration"  "#{DOTA_Tooltip_ability_leshrac_lightning_storm_slow_duration}"
+"DOTA_Tooltip_ability_holdout_lordaeron_smash_move_slow"    "#{DOTA_Tooltip_ability_queenofpain_shadow_strike_movement_slow}"
 
 // Hellion, General of the Eight Circle
 ////===============================================================================================================
@@ -616,8 +616,8 @@
 "DOTA_Tooltip_ability_imba_empress_hurl_through_hell_Lore"            "Hellion's poor enemies benefit from a quick trip to the Eight Circle, where every cell of their being screams against the anathema of lava, biting cold, acid fog and ear-splitting wailing. Reactions vary, but are always dramatic."
 "DOTA_Tooltip_ability_imba_empress_hurl_through_hell_Note0"           "Hurl Through Hell's initial effect and debuffs pierce spell immunity."
 "DOTA_Tooltip_ability_imba_empress_hurl_through_hell_hurl_radius"       "EFFECT RADIUS:"
-"DOTA_Tooltip_ability_imba_empress_hurl_through_hell_hurl_damage"       "DAMAGE:"
-"DOTA_Tooltip_ability_imba_empress_hurl_through_hell_debuff_duration"     "DEBUFF DURATION:"
+"DOTA_Tooltip_ability_imba_empress_hurl_through_hell_hurl_damage"       "#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
+"DOTA_Tooltip_ability_imba_empress_hurl_through_hell_debuff_duration"     "#{DOTA_Tooltip_ability_vengefulspirit_wave_of_terror_tooltip_duration}"
 "DOTA_Tooltip_ability_imba_empress_hurl_through_hell_cast_range"        "CAST RANGE:"
 "DOTA_Tooltip_ability_imba_empress_hurl_through_hell_aghanim_description"   "Causes targets to be affected by four random debuffs instead of two."
 
@@ -705,7 +705,7 @@
 "DOTA_Tooltip_ability_imba_scaldris_freeze_Lore"          "Glacial winds run through the battlefield, chilling all they touch to the very bones."
 "DOTA_Tooltip_ability_imba_scaldris_freeze_Note0"         "The wave travels at 450 speed."
 "DOTA_Tooltip_ability_imba_scaldris_freeze_wave_distance"     "MAXIMUM RANGE:"
-"DOTA_Tooltip_ability_imba_scaldris_freeze_slow_duration"     "SLOW DURATION:"
+"DOTA_Tooltip_ability_imba_scaldris_freeze_slow_duration"     "#{DOTA_Tooltip_ability_leshrac_lightning_storm_slow_duration}"
 "DOTA_Tooltip_ability_imba_scaldris_freeze_damage_duration"     "DAMAGE DURATION:"
 "DOTA_Tooltip_ability_imba_scaldris_freeze_dps"           "DAMAGE PER SECOND:"
 

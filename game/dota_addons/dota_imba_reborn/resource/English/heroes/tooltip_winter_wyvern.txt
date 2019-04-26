@@ -34,7 +34,7 @@
 "DOTA_Tooltip_ability_imba_winter_wyvern_cold_embrace_Note1"					"Protective Shell does not account for damage from towers."
 "DOTA_Tooltip_ability_imba_winter_wyvern_cold_embrace_heal_additive"			"#{DOTA_Tooltip_ability_winter_wyvern_cold_embrace_heal_additive}"
 "DOTA_Tooltip_ability_imba_winter_wyvern_cold_embrace_heal_percentage"			"#{DOTA_Tooltip_ability_winter_wyvern_cold_embrace_heal_percentage}"
-"DOTA_Tooltip_ability_imba_winter_wyvern_cold_embrace_duration"					"DURATION:"
+"DOTA_Tooltip_ability_imba_winter_wyvern_cold_embrace_duration"					"#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 "DOTA_Tooltip_ability_imba_winter_wyvern_cold_embrace_damage_threshold"			"ICY OVERLOAD DAMAGE THRESHOLD:"
 "DOTA_Tooltip_ability_imba_winter_wyvern_cold_embrace_bonus_magical_resistance"	"%BONUS MAGICAL RESISTANCE:"
 

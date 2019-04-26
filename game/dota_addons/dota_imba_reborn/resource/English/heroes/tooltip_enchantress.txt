@@ -36,7 +36,7 @@
 "DOTA_Tooltip_ability_imba_enchantress_natures_attendants_Note2"					"The stack number on the modifier indicates what Fundmental's Essence sprites they are, with 1 being base and 5 being pink."
 "DOTA_Tooltip_ability_imba_enchantress_natures_attendants_wisp_count"				"WISPS:"
 "DOTA_Tooltip_ability_imba_enchantress_natures_attendants_heal"						"HEAL PER SECOND:"
-"DOTA_Tooltip_ability_imba_enchantress_natures_attendants_radius"					"RADIUS:"
+"DOTA_Tooltip_ability_imba_enchantress_natures_attendants_radius"					"#{DOTA_Tooltip_ability_filler_ability_radius}"
 
 //---------------------------------------------------------------------------
 //      Natura Shift

@@ -17,7 +17,7 @@
 "DOTA_Tooltip_ability_imba_abaddon_aphotic_shield_Description"          "Creates a shield around an allied unit that absorbs a set amount of damage (<font color='#FF7800'>blocks damage after reductions</font>) before expiring. When destroyed, the shield will burst, dealing damage equal to the amount it could absorb to an area around it. Removes most debuffs and disables on cast.\n<font color='#FF7800'>Cursed Shield:</font> Applies Curse of Avernus on enemies hit by the explosion."
 "DOTA_Tooltip_ability_imba_abaddon_aphotic_shield_Note0"                "Self-castable, can be casted on buildings."
 "DOTA_Tooltip_ability_imba_abaddon_aphotic_shield_Lore"                "The powers of the black mist rise to absorb attacks like the black mist absorbs light."
-"DOTA_Tooltip_ability_imba_abaddon_aphotic_shield_duration"            "DURATION:"
+"DOTA_Tooltip_ability_imba_abaddon_aphotic_shield_duration"            "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 "DOTA_Tooltip_ability_imba_abaddon_aphotic_shield_radius"              "DAMAGE RADIUS:"
 "DOTA_Tooltip_ability_imba_abaddon_aphotic_shield_shield"              "DAMAGE BLOCK:"
 
@@ -29,11 +29,11 @@
 "DOTA_Tooltip_ability_imba_abaddon_curse_of_avernus_Description"                    "Abaddon strikes enemies with a chilling curse on every attack, causing all units who attack the slowed enemy to gain increased movement and attack speed.\n<font color='#FF7800'>Health Hex:</font> Damaging enemies with this debuff will heal a %% of the damage to Abaddon."
 "DOTA_Tooltip_ability_imba_abaddon_mist_coil_Note0"                    "Illusions do not apply this debuff."
 "DOTA_Tooltip_ability_imba_abaddon_curse_of_avernus_Lore"              "The curse that slows an enemy, speeds an ally."
-"DOTA_Tooltip_ability_imba_abaddon_curse_of_avernus_buff_duration"                  "BUFF DURATION:"
-"DOTA_Tooltip_ability_imba_abaddon_curse_of_avernus_move_slow"          "%MOVE SLOW:"
+"DOTA_Tooltip_ability_imba_abaddon_curse_of_avernus_buff_duration"                  "#{DOTA_Tooltip_ability_razor_static_link_drain_duration}"
+"DOTA_Tooltip_ability_imba_abaddon_curse_of_avernus_move_slow"          "#{DOTA_Tooltip_ability_queenofpain_shadow_strike_movement_slow}"
 "DOTA_Tooltip_ability_imba_abaddon_curse_of_avernus_attack_slow"                    "ATTACK SLOW:"
 "DOTA_Tooltip_ability_imba_abaddon_curse_of_avernus_heal_convert"                   "%DAMAGE CONVERT:"
-"DOTA_Tooltip_ability_imba_abaddon_curse_of_avernus_debuff_duration"                "DEBUFF DURATION:"
+"DOTA_Tooltip_ability_imba_abaddon_curse_of_avernus_debuff_duration"                "#{DOTA_Tooltip_ability_vengefulspirit_wave_of_terror_tooltip_duration}"
 "DOTA_Tooltip_ability_imba_abaddon_curse_of_avernus_move_increase"                  "%BONUS MOVE SPEED:"
 "DOTA_Tooltip_ability_imba_abaddon_curse_of_avernus_attack_increase"                "BONUS ATTACK SPEED:"
 
@@ -69,7 +69,7 @@
 "DOTA_Tooltip_ability_imba_abaddon_borrowed_time_Note0"                "Damage redirected from allies will heal Abaddon normally."
 "DOTA_Tooltip_ability_imba_abaddon_borrowed_time_Note1"                "Borrowed Time will not activate if the incoming damage is more than Abaddon's current health."
 "DOTA_Tooltip_ability_imba_abaddon_borrowed_time_Lore"                 "The most unnatural of all the gifts of the Font of Avernus, this power defies mortal understanding. What should hurt, instead heals; and what should kill gives strength anew."
-"DOTA_Tooltip_ability_imba_abaddon_borrowed_time_duration"             "DURATION:"
+"DOTA_Tooltip_ability_imba_abaddon_borrowed_time_duration"             "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 "DOTA_Tooltip_ability_imba_abaddon_borrowed_time_redirect_range"       "BORROWED PAIN RANGE:"
 "DOTA_Tooltip_ability_imba_abaddon_borrowed_time_redirect"             "%DAMAGE REDIRECTED:"
 

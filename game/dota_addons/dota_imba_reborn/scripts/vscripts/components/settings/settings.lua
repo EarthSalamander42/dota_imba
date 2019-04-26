@@ -339,6 +339,34 @@ XP_PER_LEVEL_TABLE[23] =	22155	-- +2000
 XP_PER_LEVEL_TABLE[24] =	24405	-- +2250
 XP_PER_LEVEL_TABLE[25] =	26905	-- +2500
 
+-- Was using GetRespawnTime() but Meepo respawn time is always 3, so let's use static values instead...
+RESPAWN_TIME_VANILLA = {}
+RESPAWN_TIME_VANILLA[1] = 6
+RESPAWN_TIME_VANILLA[2] = 8
+RESPAWN_TIME_VANILLA[3] = 10
+RESPAWN_TIME_VANILLA[4] = 14
+RESPAWN_TIME_VANILLA[5] = 16
+RESPAWN_TIME_VANILLA[6] = 26
+RESPAWN_TIME_VANILLA[7] = 28
+RESPAWN_TIME_VANILLA[8] = 30
+RESPAWN_TIME_VANILLA[9] = 32
+RESPAWN_TIME_VANILLA[10] = 34
+RESPAWN_TIME_VANILLA[11] = 36
+RESPAWN_TIME_VANILLA[12] = 44
+RESPAWN_TIME_VANILLA[13] = 46
+RESPAWN_TIME_VANILLA[14] = 48
+RESPAWN_TIME_VANILLA[15] = 50
+RESPAWN_TIME_VANILLA[16] = 52
+RESPAWN_TIME_VANILLA[17] = 54
+RESPAWN_TIME_VANILLA[18] = 65
+RESPAWN_TIME_VANILLA[19] = 70
+RESPAWN_TIME_VANILLA[20] = 75
+RESPAWN_TIME_VANILLA[21] = 80
+RESPAWN_TIME_VANILLA[22] = 85
+RESPAWN_TIME_VANILLA[23] = 90
+RESPAWN_TIME_VANILLA[24] = 95
+RESPAWN_TIME_VANILLA[25] = 100
+
 -- XP AWARDED per level table (how much bounty heroes are worth beyond level 25)
 HERO_XP_BOUNTY_PER_LEVEL = {}
 HERO_XP_BOUNTY_PER_LEVEL[1] = 100
@@ -505,6 +533,30 @@ UNIT_EQUIPMENT["models/heroes/enchantress/enchantress.vmdl"] = {
 	"models/items/enchantress/anuxi_summer_shoulder/anuxi_summer_shoulder.vmdl",
 	"models/items/enchantress/anuxi_wildkin_arm/anuxi_wildkin_arm.vmdl",
 }
+UNIT_EQUIPMENT["models/heroes/bristleback/bristleback_back.vmdl"] = {
+	"models/heroes/phoenix/phoenix_wings.vmdl",
+	"models/heroes/phoenix/phoenix_bird_head.vmdl",
+}
+UNIT_EQUIPMENT["models/heroes/bristleback/bristleback.vmdl"] = {
+	"models/heroes/bristleback/bristleback_back.vmdl",
+	"models/heroes/bristleback/bristleback_bracer.vmdl",
+	"models/heroes/bristleback/bristleback_head.vmdl",
+	"models/heroes/bristleback/bristleback_necklace.vmdl",
+	"models/heroes/bristleback/bristleback_weapon.vmdl",
+--	"models/heroes/bristleback/bristleback_offhand_weapon.vmdl",
+}
+UNIT_EQUIPMENT["models/items/rubick/rubick_arcana/rubick_arcana_base.vmdl"] = {
+	"models/items/rubick/rubick_arcana/rubick_arcana_back.vmdl",
+	"models/heroes/rubick/rubick_head.vmdl",
+	"models/heroes/rubick/rubick_staff.vmdl",
+	"models/heroes/rubick/shoulder.vmdl",
+}
+UNIT_EQUIPMENT["models/heroes/juggernaut/juggernaut_arcana.vmdl"] = {
+	"models/items/juggernaut/arcana/juggernaut_arcana_mask.vmdl",
+	"models/items/juggernaut/jugg_ti8/jugg_ti8_sword.vmdl",
+	"models/heroes/juggernaut/jugg_cape.vmdl",
+	"models/heroes/juggernaut/juggernaut_pants.vmdl",
+}
 
 IMBA_DISABLED_SKULL_BASHER = {
 	"npc_dota_hero_faceless_void",
@@ -576,4 +628,9 @@ IMBA_DIRETIDE_EASTER_EGG = false
 if IMBA_DIRETIDE == true then
 	IMBA_DIRETIDE_EASTER_EGG = false
 	require("components/diretide/diretide")
+end
+
+SAME_HERO_SELECTION = IMBA_PICK_SCREEN
+if GetMapName() == "imba_1v1" then
+	SAME_HERO_SELECTION = true
 end

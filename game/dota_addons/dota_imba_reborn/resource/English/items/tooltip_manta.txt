@@ -11,7 +11,7 @@
 "DOTA_Tooltip_ability_item_imba_manta_bonus_attack_speed"		"+$attack"
 "DOTA_Tooltip_ability_item_imba_manta_bonus_movement_speed"		"%+$move_speed"
 "DOTA_Tooltip_ability_item_imba_manta_bonus_evasion"			"%EVASION:"
-"DOTA_Tooltip_ability_item_imba_manta_active_duration"			"BUFF DURATION:"
+"DOTA_Tooltip_ability_item_imba_manta_active_duration"			"#{DOTA_Tooltip_ability_razor_static_link_drain_duration}"
 //    "DOTA_Tooltip_ability_item_manta_images_count"                "NUMBER OF IMAGES:"
 //    "DOTA_Tooltip_ability_item_manta_tooltip_damage_incoming_melee_total_pct" "%MELEE IMAGE DAMAGE TAKEN:"
 //    "DOTA_Tooltip_ability_item_manta_tooltip_damage_outgoing_melee"       "%MELEE IMAGE DAMAGE:"

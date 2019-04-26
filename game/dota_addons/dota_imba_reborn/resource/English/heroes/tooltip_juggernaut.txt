@@ -8,7 +8,7 @@
 "DOTA_Tooltip_ability_imba_juggernaut_blade_fury_effect_radius"			"#{DOTA_Tooltip_ability_juggernaut_blade_fury_blade_fury_radius}"
 "DOTA_Tooltip_ability_imba_juggernaut_blade_fury_damage_per_sec"		"DAMAGE PER SECOND:"
 "DOTA_Tooltip_ability_imba_juggernaut_blade_fury_deflect_chance"		"%DEFLECT CHANCE:"
-"DOTA_Tooltip_ability_imba_juggernaut_blade_fury_duration"				"DURATION:"
+"DOTA_Tooltip_ability_imba_juggernaut_blade_fury_duration"				"#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 
 "DOTA_Tooltip_modifier_imba_juggernaut_blade_fury"						"Blade Fury"
 "DOTA_Tooltip_modifier_imba_juggernaut_blade_fury_Description"			"Dealing damage every 0.2 seconds."
@@ -28,7 +28,7 @@
 "DOTA_Tooltip_ability_imba_juggernaut_healing_ward_health_bonus_totem"	"TOTEM BONUS HEALTH:"
 "DOTA_Tooltip_ability_imba_juggernaut_healing_ward_heal_bonus_totem"	"%TOTEM BONUS HEALING:"
 "DOTA_Tooltip_ability_imba_juggernaut_healing_ward_radius_bonus_totem"	"TOTEM BONUS RADIUS:"
-"DOTA_Tooltip_ability_imba_juggernaut_healing_ward_duration"			"DURATION:"
+"DOTA_Tooltip_ability_imba_juggernaut_healing_ward_duration"			"#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 
 "DOTA_Tooltip_ability_imba_juggernaut_healing_ward_passive"						"Healing Aura"
 "DOTA_Tooltip_ability_imba_juggernaut_healing_ward_passive_Description"			"Heals all nearby allied units.\n<font color='#FF7800'>Use this ability to transform into a totem.</font>"
@@ -71,7 +71,7 @@
 "DOTA_Tooltip_ability_imba_juggernaut_omni_slash_Note2"					"Creeps are killed in one hit of Omnislash."
 "DOTA_Tooltip_ability_imba_juggernaut_omni_slash_attack_rate_multiplier"	"SLASHES RATE MULTIPLIER:"
 "DOTA_Tooltip_ability_imba_juggernaut_omni_slash_bonus_damage"				"BONUS DAMAGE:"
-"DOTA_Tooltip_ability_imba_juggernaut_omni_slash_duration"					"DURATION:"
+"DOTA_Tooltip_ability_imba_juggernaut_omni_slash_duration"					"#{DOTA_Tooltip_ability_fountain_glyph_duration}"
 "DOTA_Tooltip_ability_imba_juggernaut_omni_slash_omni_slash_radius"			"SLASH JUMP RADIUS:"
 "DOTA_Tooltip_ability_imba_juggernaut_omni_slash_duration_scepter"			"SCEPTER DURATION:"
 "DOTA_Tooltip_ability_imba_juggernaut_omni_slash_cooldown_scepter"			"SCEPTER COOLDOWN:"

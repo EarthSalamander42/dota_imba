@@ -1,4 +1,4 @@
-<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:vpcf1:version{d47d07e6-072c-49cb-9718-5bfd8d6c3d21} -->
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:vpcf19:version{aafc65d8-7a5a-4e01-bd8d-3ac118422503} -->
 {
 	_class = "CParticleSystemDefinition"
 	m_bShouldHitboxesFallbackToRenderBounds = false
@@ -51,12 +51,6 @@
 			m_flStartTime_min = 0.1
 			m_flStartTime_max = 0.1
 		},
-		{
-			_class = "C_OP_RemapSpeedtoCP"
-			m_nOutControlPointNumber = 2
-			m_flInputMax = 150.0
-			m_flInputMin = 100.0
-		},
 	]
 	m_Initializers = 
 	[
@@ -77,14 +71,11 @@
 		},
 		{
 			_class = "C_INIT_RandomColor"
-			m_ColorMax = [ 119, 191, 239, 255 ]
-			m_ColorMin = [ 80, 252, 237, 255 ]
+			m_ColorMax = [ 195, 119, 239, 255 ]
+			m_ColorMin = [ 223, 80, 252, 255 ]
 		},
 		{
 			_class = "C_INIT_RandomRotation"
-		},
-		{
-			_class = "C_INIT_RandomYawFlip"
 		},
 		{
 			_class = "C_INIT_RandomRotation"
@@ -100,11 +91,6 @@
 			m_LocalCoordinateSystemSpeedMax = [ 0.0, 0.0, 250.0 ]
 		},
 		{
-			_class = "C_INIT_PositionOffset"
-			m_OffsetMin = [ 0.0, 0.0, 5.0 ]
-			m_OffsetMax = [ 0.0, 0.0, 20.0 ]
-		},
-		{
 			_class = "C_INIT_RandomSequence"
 			m_nSequenceMax = 1
 		},
@@ -112,13 +98,27 @@
 			_class = "C_INIT_RandomRotationSpeed"
 			m_flDegreesMax = 90.0
 		},
+		{
+			_class = "C_INIT_RandomYawFlip"
+		},
+		{
+			_class = "C_INIT_PositionOffset"
+			m_OffsetMin = [ 0.0, 0.0, 5.0 ]
+			m_OffsetMax = [ 0.0, 0.0, 20.0 ]
+		},
 	]
 	m_Emitters = 
 	[
 		{
 			_class = "C_OP_ContinuousEmitter"
-			m_nScaleControlPoint = 2
-			m_flEmitRate = 20.0
+			m_flEmitRate = 
+			{
+				m_nType = "PF_TYPE_CONTROL_POINT_COMPONENT"
+				m_nControlPoint = 2
+				m_nVectorComponent = 0
+				m_nMapType = "PF_MAP_TYPE_MULT"
+				m_flMultFactor = 20.0
+			}
 		},
 	]
 	m_controlPointConfigurations = 
@@ -134,13 +134,6 @@
 					m_entityName = "self"
 				},
 				{
-					m_iControlPoint = 1
-					m_iAttachType = "PATTACH_WORLDORIGIN"
-					m_vecOffset = [ 0.0, 0.0, 0.0 ]
-					m_angOffset = [ null, null, null ]
-					m_entityName = "self"
-				},
-				{
 					m_iControlPoint = 2
 					m_iAttachType = "PATTACH_WORLDORIGIN"
 					m_vecOffset = [ 1.0, 0.0, 0.0 ]
@@ -150,4 +143,15 @@
 			]
 		},
 	]
+	m_PreEmissionOperators = 
+	[
+		{
+			_class = "C_OP_RemapSpeedtoCP"
+			m_nOutControlPointNumber = 2
+			m_flInputMax = 150.0
+			m_flInputMin = 100.0
+		},
+	]
+	m_nBehaviorVersion = 4
+	m_nFirstMultipleOverride_BackwardCompat = 9
 }
