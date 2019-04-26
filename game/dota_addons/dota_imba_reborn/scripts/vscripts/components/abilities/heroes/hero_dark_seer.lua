@@ -809,7 +809,11 @@ end
 
 -- Is this how you use the function?
 function modifier_imba_dark_seer_wall_of_replica_slow:OnTakeDamageKillCredit(keys)
-	if self:GetParent():GetHealth() <= keys.damage then
-		self:GetParent():Kill(self:GetAbility(), self:GetCaster())
+	if keys.target == self:GetParent() and self:GetParent():GetHealth() <= keys.damage then
+		if keys.attacker == self:GetParent() then
+			self:GetParent():Kill(self:GetAbility(), self:GetCaster())
+		else
+			self:GetParent():Kill(self:GetAbility(), keys.attacker)
+		end
 	end
 end

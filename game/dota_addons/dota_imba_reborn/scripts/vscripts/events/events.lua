@@ -827,7 +827,15 @@ function GameMode:OnPlayerChat(keys)
 								[2] = "imba_chen_holy_persuasion",
 								[3] = "imba_chen_test_of_faith",
 								[4] = "generic_hidden",
-								[5] = "imba_chen_hand_of_god"
+								[5] = "imba_chen_hand_of_god",
+								[6] = "special_bonus_exp_boost_60",
+								[7] = "special_bonus_cast_range_200",
+								[8] = "special_bonus_armor_8",
+								[9] = "special_bonus_imba_chen_divine_favor_cd_reduction",
+								[10] = "special_bonus_gold_income_50",
+								[11] = "special_bonus_imba_chen_test_of_faith_cd_reduction",
+								[12] = "special_bonus_imba_chen_holy_persuasion_max_unit_increase",
+								[13] = "special_bonus_imba_chen_remnants_of_penitence"
 							}
 							upgraded = true
 						end
@@ -940,8 +948,8 @@ function GameMode:OnThink()
 		--		end
 	end
 
-	-- if GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
-		-- -- End the game if one team completely abandoned
+	if GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
+		-- End the game if one team completely abandoned
 		-- if CustomNetTables:GetTableValue("game_options", "game_count").value == 1 then
 			-- if not TEAM_ABANDON then
 				-- TEAM_ABANDON = {} -- 15 second to abandon, is_abandoning?, player_count.
@@ -985,7 +993,7 @@ function GameMode:OnThink()
 				-- end
 			-- end
 		-- end
-	-- end
+	end
 
 	if i == nil then
 		i = AP_GAME_TIME - 1

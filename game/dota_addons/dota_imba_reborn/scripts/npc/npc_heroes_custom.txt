@@ -1,4 +1,5 @@
 #base heroes/bristleback/hero.txt
+//#base heroes/chen/hero.txt
 //#base heroes/dark_seer/hero.txt
 #base heroes/enchantress/hero.txt
 //#base heroes/huskar/hero.txt

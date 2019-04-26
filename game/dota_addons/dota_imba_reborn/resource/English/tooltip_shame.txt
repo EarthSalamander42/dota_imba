@@ -508,7 +508,7 @@
 //"DOTA_Tooltip_Ability_special_bonus_unique_broodmother_4"       "+22 Spiders damage"
 "DOTA_Tooltip_Ability_special_bonus_unique_chen_1"          "+6 Holy Persuasion max units"
 //"DOTA_Tooltip_Ability_special_bonus_unique_chen_2"          "+800 Hand of God healing"
-//"DOTA_Tooltip_Ability_special_bonus_unique_chen_3"          "-7s Test of Faith cooldown"
+//"DOTA_Tooltip_Ability_special_bonus_unique_chen_3"          "-7s Divine Favor Cooldown"
 "DOTA_Tooltip_Ability_special_bonus_unique_chen_4"          "+1400 Holy Persuasion minimum creep health"
 //"DOTA_Tooltip_Ability_special_bonus_unique_lone_druid_1"        "+30 Spirit Bear Damage"
 //"DOTA_Tooltip_Ability_special_bonus_unique_lone_druid_2"        "+7 Spirit Bear Armor"

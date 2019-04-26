@@ -941,9 +941,6 @@ end
 -- LIFE BREAK SLOW MODIFIER --
 ------------------------------
 
--- Only need this line cause Huskar can self-cast it with IMBAfication
-function modifier_imba_huskar_life_break_slow:IsDebuff()	return true end
-
 function modifier_imba_huskar_life_break_slow:GetStatusEffectName()
 	return "particles/status_fx/status_effect_huskar_lifebreak.vpcf"
 end
@@ -970,7 +967,12 @@ function modifier_imba_huskar_life_break_slow:DeclareFunctions()
 end
 
 function modifier_imba_huskar_life_break_slow:GetModifierMoveSpeedBonus_Percentage()
-    return self.movespeed
+	-- Casting it on self boosts speed instead of slows
+    if self:GetParent() == self:GetCaster() then
+		return self.movespeed * (-1)
+	else
+		return self.movespeed
+	end
 end
 
 ------------------------------------

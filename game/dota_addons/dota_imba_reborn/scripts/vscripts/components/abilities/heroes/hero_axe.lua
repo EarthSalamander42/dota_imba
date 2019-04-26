@@ -763,7 +763,7 @@ function modifier_imba_counter_helix_passive:OnAttacked(keys)
 end
 
 function modifier_imba_counter_helix_passive:OnAttackLanded(keys)
-	if not IsServer() or keys.attacker ~= self:GetParent() or self.caster:PassivesDisabled() then return end
+	if not IsServer() or keys.attacker ~= self:GetParent() or self.caster:PassivesDisabled() or not self.caster:HasTalent("special_bonus_imba_axe_9") then return end
 
 	-- +30% of your strength added to Counter Helix damage.
 	if self.caster:HasTalent("special_bonus_imba_axe_4") then
