@@ -190,7 +190,7 @@ function EndScoreboard(args) {
 		// XP
 		var player_table = CustomNetTables.GetTableValue("player_table", player.id.toString());
 
-		var player_xp = 400;
+		var player_xp = player_table.XP;
 
 		if (player_table) {
 			values.xp.rank.text = Math.floor(player_xp) + "/" + Math.floor(player_table.MaxXP);
