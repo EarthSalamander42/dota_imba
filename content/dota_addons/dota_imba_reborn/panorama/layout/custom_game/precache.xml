@@ -93,6 +93,7 @@
 			<Image src="file://panorama/images/heroes/npc_dota_hero_pudge_arcana1.png" hittest="false" />
 			<Image src="file://panorama/images/heroes/npc_dota_hero_juggernaut_arcana0.png" hittest="false" />
 			<Image src="file://panorama/images/heroes/npc_dota_hero_juggernaut_arcana1.png" hittest="false" />
+			<Image src="file://panorama/images/heroes/npc_dota_hero_lina_arcana0.png" hittest="false" />
 
 			<Image src="file://panorama/images/heroes/icons/npc_dota_hero_hell_malfurion.png" hittest="false" />
 			<Image src="file://panorama/images/heroes/icons/npc_dota_hero_hell_empress.png" hittest="false" />

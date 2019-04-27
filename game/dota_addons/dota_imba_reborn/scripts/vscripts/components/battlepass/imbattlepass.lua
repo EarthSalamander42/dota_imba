@@ -36,9 +36,6 @@ IMBATTLEPASS_LEVEL_REWARD[13]	= "fountain2"
 IMBATTLEPASS_LEVEL_REWARD[15]	= "vengefulspirit_immortal"
 IMBATTLEPASS_LEVEL_REWARD[16]	= "force_staff"
 IMBATTLEPASS_LEVEL_REWARD[18]	= "blink2"
-if next_reward_shown then
-	IMBATTLEPASS_LEVEL_REWARD[20]	= "lina_arcana"
-end
 IMBATTLEPASS_LEVEL_REWARD[22]	= "fountain3"
 IMBATTLEPASS_LEVEL_REWARD[26]	= "bottle"
 IMBATTLEPASS_LEVEL_REWARD[27]	= "blink3"
@@ -54,6 +51,7 @@ IMBATTLEPASS_LEVEL_REWARD[48]	= "force_staff3"
 IMBATTLEPASS_LEVEL_REWARD[49]	= "fountain6"
 IMBATTLEPASS_LEVEL_REWARD[50]	= "bottle2"
 IMBATTLEPASS_LEVEL_REWARD[54]	= "blink6"
+IMBATTLEPASS_LEVEL_REWARD[55]	= "lina_arcana"
 IMBATTLEPASS_LEVEL_REWARD[58]	= "fountain7"
 IMBATTLEPASS_LEVEL_REWARD[60]	= "sheepstick"
 IMBATTLEPASS_LEVEL_REWARD[63]	= "blink7"
@@ -91,6 +89,9 @@ IMBATTLEPASS_LEVEL_REWARD[122]	= "bottle5"
 IMBATTLEPASS_LEVEL_REWARD[126]	= "fountain17"
 IMBATTLEPASS_LEVEL_REWARD[130]	= "fountain15"
 IMBATTLEPASS_LEVEL_REWARD[132]	= "radiance3"
+if next_reward_shown then
+	IMBATTLEPASS_LEVEL_REWARD[140]	= "wisp_arcana"
+end
 IMBATTLEPASS_LEVEL_REWARD[146]	= "fountain18"
 IMBATTLEPASS_LEVEL_REWARD[150]	= "shiva2"
 IMBATTLEPASS_LEVEL_REWARD[200]	= "shiva3"
@@ -113,6 +114,7 @@ function Imbattlepass:Init()
 	IMBATTLEPASS_VENGEFULSPIRIT = {}
 	IMBATTLEPASS_ZUUS = {}
 	IMBATTLEPASS_LINA = {}
+	IMBATTLEPASS_WISP = {}
 
 	for k, v in pairs(IMBATTLEPASS_LEVEL_REWARD) do
 		if string.find(v, "fountain") then
@@ -143,6 +145,8 @@ function Imbattlepass:Init()
 			IMBATTLEPASS_ZUUS[v] = k
 		elseif string.find(v, "lina") then
 			IMBATTLEPASS_LINA[v] = k
+		elseif string.find(v, "wisp") then
+			IMBATTLEPASS_WISP[v] = k
 		end
 	end
 
@@ -459,65 +463,61 @@ function Imbattlepass:GetHeroEffect(hero)
 	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) ~= nil then
 		if hero:GetUnitName() == "npc_dota_hero_juggernaut" then
 			if next_reward_shown == true and Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_JUGGERNAUT["juggernaut_arcana"] then
-				Imbattlepass:SetupArcana(hero:GetPlayerID(), "models/items/juggernaut/arcana/juggernaut_arcana_mask.vmdl", "models/heroes/juggernaut/juggernaut_arcana.vmdl", HasJuggernautArcana(hero:GetPlayerID()))
+				local style = 0
+				if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_JUGGERNAUT["juggernaut_arcana2"] then
+					style = 1
+				end
+
+				Wearable:_WearProp(hero, "9059", "head", style)
+
 				hero.blade_fury_effect = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_blade_fury.vpcf"
 			end
 		elseif hero:GetUnitName() == "npc_dota_hero_pudge" then
-			-- TODO: Temporary, later replace dragonclaw hook model name by "pudge_hook_string_finders" in wearables.kv
-			local string_finders = Wearables:GetModelStringFinders("models/items/pudge/pudge_skeleton_hook_body.vmdl")
-			for _, string in pairs(string_finders) do
-				if Wearables:GetWearable(hero, string) then
-					hero.hook_wearable = Wearables:GetWearable(hero, string)
-					print(hero.hook_wearable:GetModelName())
-					break
+			if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_PUDGE["pudge_arcana"] then
+				local style = 0
+				if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_PUDGE["pudge_arcana2"] then
+					style = 1
 				end
-			end
 
-			if hero.hook_wearable == nil then
-				print("Couldn't find hook wearable, string finder missing in table for 1 of these models:")
-				Wearables:PrintWearables(hero)
+				Wearable:_WearProp(hero, "7756", "back", style)
 			end
 
 			hero.hook_pfx = "particles/units/heroes/hero_pudge/pudge_meathook.vpcf"
 
-			if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_PUDGE["pudge_arcana"] then
-				Imbattlepass:SetupArcana(hero:GetPlayerID(), "models/items/pudge/arcana/pudge_arcana_back.vmdl", "models/items/pudge/arcana/pudge_arcana_base.vmdl", HasPudgeArcana(hero:GetPlayerID()))
-			end
-
-			if next_reward_shown == true and Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_PUDGE["pudge_immortal"] then
+			if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_PUDGE["pudge_immortal"] then
 				hero.hook_pfx = "particles/econ/items/pudge/pudge_dragonclaw/pudge_meathook_dragonclaw_imba.vpcf"
-				Imbattlepass:SetupImmortal(hero:GetPlayerID(), "models/items/pudge/pudge_skeleton_hook_body.vmdl")
-			end
-
-			if next_reward_shown == true and Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_ZUUS["zuus_arcana"] then
-				hero.hook_pfx = "particles/econ/items/pudge/pudge_dragonclaw/pudge_meathook_dragonclaw_imba.vpcf"
-				Imbattlepass:SetupImmortal(hero:GetPlayerID(), "models/items/pudge/pudge_skeleton_hook_body.vmdl")
+				Wearable:_WearProp(hero, "4007", "weapon")
 			end
 		elseif hero:GetUnitName() == "npc_dota_hero_vengefulspirit" then
 			if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_VENGEFULSPIRIT["vengefulspirit_immortal"] then
-				Imbattlepass:SetupImmortal(hero:GetPlayerID(), "models/items/vengefulspirit/vs_ti8_immortal_shoulder/vs_ti8_immortal_shoulder.vmdl")
+				Wearable:_WearProp(hero, "9749", "back")
 				hero.magic_missile_effect = "particles/econ/items/vengeful/vs_ti8_immortal_shoulder/vs_ti8_immortal_magic_missle.vpcf"
 				hero.magic_missile_icon = 1
 				hero.magic_missile_sound = "Hero_VengefulSpirit.MagicMissile.TI8"
 				hero.magic_missile_sound_hit = "Hero_VengefulSpirit.MagicMissileImpact.TI8"
 			end
 		elseif hero:GetUnitName() == "npc_dota_hero_lina" then
-			if next_reward_shown == true and Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LINA["lina_arcana"] then
-				Imbattlepass:SetupArcana(hero:GetPlayerID(), "models/items/lina/origins_flamehair/origins_flamehair.vmdl", nil, HasLinaArcana(hero:GetPlayerID()))
+			if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LINA["lina_arcana"] then
+				Wearable:_WearProp(hero, "4794", "head")
+
 				hero.dragon_slave_effect = "particles/econ/items/lina/lina_head_headflame/lina_spell_dragon_slave_headflame.vpcf"
 				hero.dragon_slave_icon = 1
 				hero.fiery_soul_icon = 1
+			end
+		elseif hero:GetUnitName() == "npc_dota_hero_wisp" then
+			if next_reward_shown == true and Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_WISP["wisp_arcana"] then
+				Wearable:_WearProp(hero, "9235", "head")
 
-				local pfx = ParticleManager:CreateParticle("particles/econ/items/lina/lina_head_headflame/lina_headflame.vpcf", PATTACH_POINT_FOLLOW, hero)
-				ParticleManager:SetParticleControlEnt(pfx, 0, hero, PATTACH_POINT_FOLLOW, "attach_head", hero:GetAbsOrigin(), true)
-
-				local pfx2 = ParticleManager:CreateParticle("particles/econ/items/lina/lina_head_headflame/lina_flame_hand_dual_headflame.vpcf", PATTACH_POINT_FOLLOW, hero)
-				ParticleManager:SetParticleControlEnt(pfx2, 0, hero, PATTACH_POINT_FOLLOW, "attach_attack1", hero:GetAbsOrigin(), true)
-				ParticleManager:SetParticleControlEnt(pfx2, 1, hero, PATTACH_POINT_FOLLOW, "attach_attack2", hero:GetAbsOrigin(), true)
+				hero.tether_effect = "particles/econ/items/wisp/wisp_tether_ti7.vpcf"
+				hero.tether_icon = 1
+				hero.spirits_explosion_effect = "particles/econ/items/wisp/wisp_guardian_explosion_ti7.vpcf"
+				hero.spirits_icon = 1
+				hero.overcharge_effect = "particles/econ/items/wisp/wisp_overcharge_ti7.vpcf"
 			end
 		elseif hero:GetUnitName() == "npc_dota_hero_zuus" then
 			if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_ZUUS["zuus_arcana"] then
-				Imbattlepass:SetupArcana(hero:GetPlayerID(), "models/heroes/zeus/zeus_hair_arcana.vmdl", "models/heroes/zeus/zeus_arcana.vmdl", HasZuusArcana(hero:GetPlayerID()))
+				Wearable:_WearProp(hero, "6914", "head")
+
 				hero.static_field_icon = 1
 				hero.static_field_effect = "particles/econ/items/zeus/arcana_chariot/zeus_arcana_static_field.vpcf"
 				hero.thundergods_wrath_start_effect = "particles/econ/items/zeus/arcana_chariot/zeus_arcana_thundergods_wrath_start_bolt_parent.vpcf"
@@ -529,82 +529,14 @@ function Imbattlepass:GetHeroEffect(hero)
 				hero.blink_effect_end = "particles/econ/items/zeus/arcana_chariot/zeus_arcana_blink_end.vpcf"
 				hero.blink_icon = "zuus"
 				hero.blink_sound = "Hero_Zeus.BlinkDagger.Arcana"
-
-				local pfx = ParticleManager:CreateParticle("particles/econ/items/zeus/arcana_chariot/zeus_arcana_chariot.vpcf", PATTACH_ABSORIGIN_FOLLOW, hero)
---				ParticleManager:SetParticleControlEnt(pfx, 0, hero, PATTACH_POINT_FOLLOW, "attach_head", hero:GetAbsOrigin(), true)
-
---				local pfx2 = ParticleManager:CreateParticle("particles/econ/items/lina/lina_head_headflame/lina_flame_hand_dual_headflame.vpcf", PATTACH_POINT_FOLLOW, hero)
---				ParticleManager:SetParticleControlEnt(pfx2, 0, hero, PATTACH_POINT_FOLLOW, "attach_attack1", hero:GetAbsOrigin(), true)
---				ParticleManager:SetParticleControlEnt(pfx2, 1, hero, PATTACH_POINT_FOLLOW, "attach_attack2", hero:GetAbsOrigin(), true)
+--			elseif hero:GetUnitName() == "npc_dota_hero_enigma" then
+--				if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_ENIGMA["enigma_immortal"] then -- idk think of a number later
+--					Wearable:_WearProp(hero, "12329", "arms")
+--					Wearable:_WearProp(hero, "12330", "armor")
+--				end
 			end
-		-- elseif hero:GetUnitName() == "npc_dota_hero_enigma" then
-			-- if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= 0 then -- idk think of a number later
-				-- Imbattlepass:SetupMythical(hero:GetPlayerID(), "models/items/enigma/absolute_zero_updated_armour/absolute_zero_updated_armour.vmdl")
-				-- Imbattlepass:SetupMythical(hero:GetPlayerID(), "models/items/enigma/absolute_zero_updated_arms/absolute_zero_updated_arms.vmdl")
-				-- Imbattlepass:SetupMythical(hero:GetPlayerID(), "models/items/enigma/absolute_zero_updated_head/absolute_zero_updated_head.vmdl")
-			-- end
 		end
 	end
-end
-
-function Imbattlepass:SetupMythical(ID, wearable_model)
-	-- This is to keep running the function until the proper hero is found
-	if PlayerResource:GetSelectedHeroEntity(ID) == nil then
-		Timers:CreateTimer(0.1, function()
-			Imbattlepass:SetupMythical(ID, wearable_model)
-		end)
-
-		return
-	end
-
-	local hero = PlayerResource:GetSelectedHeroEntity(ID)
-	print("Run mythical swap cosmetic:", wearable_model)
-	Wearables:SwapWearable(hero, wearable_model)
-end
-
-function Imbattlepass:SetupImmortal(ID, wearable_model)
-	if PlayerResource:GetSelectedHeroEntity(ID) == nil then
-		Timers:CreateTimer(0.1, function()
-			Imbattlepass:SetupImmortal(ID, wearable_model)
-		end)
-
-		return
-	end
-
-	local hero = PlayerResource:GetSelectedHeroEntity(ID)
-	print("Run immortal swap cosmetic:", wearable_model)
-	Wearables:SwapWearable(hero, wearable_model)
-end
-
-function Imbattlepass:SetupArcana(ID, wearable_model, arcana_model, arcana_type)
-	if PlayerResource:GetSelectedHeroEntity(ID) == nil then
-		Timers:CreateTimer(0.1, function()
-			Imbattlepass:SetupArcana(ID, wearable_model, arcana_model, arcana_type)
-		end)
-
-		return
-	end
-
-	local hero = PlayerResource:GetSelectedHeroEntity(ID)
-
-	if wearable_model then
-		print("Run arcana swap cosmetic:", wearable_model)
-		Wearables:SwapWearable(hero, wearable_model, tostring(arcana_type))
-	end
-
-	if arcana_model then
-		hero:SetModel(arcana_model)
-		hero:SetOriginalModel(arcana_model)
-	end
-
-	if arcana_type ~= true then
-		hero:SetMaterialGroup(tostring(arcana_type))
-	else
-		arcana_type = 0
-	end
-
-	hero.battlepass_arcana = arcana_type
-	CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "override_hero_image", {arcana = arcana_type, hero_name = string.gsub(hero:GetUnitName(), "npc_dota_hero_", "")})
 end
 
 function HasPudgeArcana(ID)
@@ -630,8 +562,6 @@ function HasJuggernautArcana(ID)
 end
 
 function HasZuusArcana(ID)
-	if next_reward_shown == false then return nil end
-
 	if Imbattlepass:GetRewardUnlocked(ID) >= IMBATTLEPASS_ZUUS["zuus_arcana"] then
 		return 0
 	else
@@ -640,6 +570,14 @@ function HasZuusArcana(ID)
 end
 
 function HasLinaArcana(ID)
+	if Imbattlepass:GetRewardUnlocked(ID) >= IMBATTLEPASS_LINA["lina_arcana"] then
+		return 0
+	else
+		return nil
+	end
+end
+
+function HasWispArcana(ID)
 	if next_reward_shown == false then return nil end
 
 	if Imbattlepass:GetRewardUnlocked(ID) >= IMBATTLEPASS_LINA["lina_arcana"] then
@@ -656,7 +594,7 @@ function Imbattlepass:BattlepassCheckArcana()
 		arcana["npc_dota_hero_juggernaut"] = HasJuggernautArcana(i)
 		arcana["npc_dota_hero_pudge"] = HasPudgeArcana(i)
 		arcana["npc_dota_hero_zuus"] = HasZuusArcana(i)
-		arcana["npc_dota_hero_lina"] = HasLinaArcana(i)
+		arcana["npc_dota_hero_wisp"] = HasWispArcana(i)
 
 		CustomNetTables:SetTableValue("battlepass", tostring(i), {arcana = arcana})
 	end

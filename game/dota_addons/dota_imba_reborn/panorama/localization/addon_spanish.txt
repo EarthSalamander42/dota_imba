@@ -424,6 +424,7 @@
 	"overtime" "¡TIEMPO EXTRA!"
 	"overtimeinstructions" "PUNTÚA PARA GANAR"
 	"picked_hero" "Elegido"
+	"playback_buttoncategory" "Controllers"
 	"remaining" "RESTANTE"
 	"repick_button" "Reelegir héroe"
 	"scoreboard_tool_tip_active_disable_help" "(DESACTIVADO)"

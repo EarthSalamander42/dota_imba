@@ -16,18 +16,17 @@ require('libraries/player')
 require('libraries/player_resource')
 require('libraries/projectiles')
 require('libraries/rgb_to_hex')
-require('libraries/selection')
+-- require('libraries/selection')
 require('libraries/timers')
 require('libraries/wearables')
+require('libraries/wearables_warmful_ancient')
 
 require('internal/gamemode')
 require('internal/events')
 
 -- add components below the api
 require('components/abandon')
-require('components/battlepass/donator')
-require('components/battlepass/experience')
-require('components/battlepass/imbattlepass')
+require('components/battlepass/init')
 require('components/courier/abilities')
 require('components/courier/courier')
 require("components/demo/init")
@@ -39,7 +38,7 @@ require('components/mutation/init')
 require('components/respawn_timer') -- Respawn time system override
 require('components/runes') -- Rune system override
 require('components/settings/settings')
-require('components/team_selection')
+-- require('components/team_selection')
 
 require('events/events')
 require('filters')

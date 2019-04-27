@@ -424,6 +424,7 @@
 	"overtime" "ДОПОЛНИТЕЛЬНОЕ ВРЕМЯ!"
 	"overtimeinstructions" "УБИЙСТВ ДЛЯ ПОБЕДЫ"
 	"picked_hero" "Уже выбран"
+	"playback_buttoncategory" "Controllers"
 	"remaining" "ОСТАЛОСЬ"
 	"repick_button" "Перевыбрать"
 	"scoreboard_tool_tip_active_disable_help" "(Отключено)"

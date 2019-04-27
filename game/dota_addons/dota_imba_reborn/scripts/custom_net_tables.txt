@@ -8,10 +8,11 @@
 		"top_xp",
 		"game_state",
 		"hero_selection",
-		"selection",
 		"battlepass",
 		"mutations",
 		"mutation_info",
-		"status_resistance"
+		"status_resistance",
+		"hero_wearables",
+		"other_available_items"
 	]
 }

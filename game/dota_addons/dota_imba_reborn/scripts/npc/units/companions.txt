@@ -309,4 +309,11 @@
 		"Model"						"models/heroes/juggernaut/juggernaut_arcana.vmdl"
 		"ModelScale"				"0.45"
 	}
+
+	"npc_donator_companion_miku"
+	{
+		"BaseClass"					"npc_donator_companion"
+		"Model"						"models/items/courier/nian_courier/nian_courier.vmdl"
+		"ModelScale"				"0.75"
+	}
 }

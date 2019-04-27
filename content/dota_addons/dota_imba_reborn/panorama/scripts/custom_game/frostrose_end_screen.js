@@ -82,7 +82,7 @@ function RawTimetoGameTime(time) {
 }
 
 function EndScoreboard(args) {
-	$.Msg(args)
+//	$.Msg(args)
 
 	// Hide all other UI
 	var MainPanel = $.GetContextPanel().GetParent().GetParent().GetParent().GetParent()

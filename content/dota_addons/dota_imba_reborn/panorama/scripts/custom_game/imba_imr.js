@@ -526,7 +526,7 @@ function GenerateBattlepassPanel(BattlepassRewards, player) {
 				reward_icon.AddClass("BattlepassRewardIcon_locked")
 				var reward_label_locked = $.CreatePanel("Label", reward_icon, BattlepassRewards[i] + "_label");
 				reward_label_locked.AddClass("BattlepassRewardLabelLocked");
-				reward_label_locked.text = $.Localize("battlepass_reward_locked") + $.Localize("#battlepass_" + "\n" +  BattlepassRewards[i]);
+				reward_label_locked.text = $.Localize("battlepass_reward_locked") + $.Localize("#battlepass_" + BattlepassRewards[i]);
 			}
 		}
 	}
