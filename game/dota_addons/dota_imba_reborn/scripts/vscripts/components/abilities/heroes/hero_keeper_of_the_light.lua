@@ -140,12 +140,12 @@ function modifier_imba_keeper_of_the_light_illuminate_self_thinker:OnCreated()
 	self.caster:SwapAbilities("imba_keeper_of_the_light_illuminate", "imba_keeper_of_the_light_illuminate_end", false, true)
 	
 	-- I can't restore the standard spirit form models so I'll have to use some abstractions...
-	CreateUnitByNameAsync("npc_dummy_unit", self.caster_location, true, self.caster, self.caster, self.caster:GetTeam(), function(npc_dummy_unit)
-		self.spirit = npc_dummy_unit
-		-- Set the unit/horse facing in the direction of where the wave will shoot
-		npc_dummy_unit:SetForwardVector(self.direction)
-		npc_dummy_unit:AddNewModifier(self.caster, self, "modifier_imba_keeper_of_the_light_spirit_form_illuminate", {duration = self.duration})
-	end)
+	local npc_dummy_unit = CreateUnitByName("npc_dummy_unit", self.caster_location, true, self.caster, self.caster, self.caster:GetTeam())
+	
+	self.spirit = npc_dummy_unit
+	-- Set the unit/horse facing in the direction of where the wave will shoot
+	npc_dummy_unit:SetForwardVector(self.direction)
+	npc_dummy_unit:AddNewModifier(self.caster, self, "modifier_imba_keeper_of_the_light_spirit_form_illuminate", {duration = self.duration})
 	
 	self:StartIntervalThink(FrameTime())
 end

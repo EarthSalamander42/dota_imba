@@ -100,9 +100,11 @@ function modifier_imba_assault_cuirass_aura_positive:OnCreated()
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
 	self.modifier_assault = "modifier_imba_assault_cuirass_aura_positive_effect"
-
-	-- Ability specials
-	self.radius = self.ability:GetSpecialValueFor("radius")
+	
+	if self.ability then
+		-- Ability specials
+		self.radius = self.ability:GetSpecialValueFor("radius")
+	end
 end
 
 function modifier_imba_assault_cuirass_aura_positive:IsDebuff() return false end
@@ -255,8 +257,10 @@ function modifier_imba_assault_cuirass_aura_negative_effect:OnCreated()
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
 
-	-- Ability specials
-	self.aura_armor_reduction_enemy = self.ability:GetSpecialValueFor("aura_armor_reduction_enemy")
+	if self.ability then
+		-- Ability specials
+		self.aura_armor_reduction_enemy = self.ability:GetSpecialValueFor("aura_armor_reduction_enemy")
+	end
 end
 
 function modifier_imba_assault_cuirass_aura_negative_effect:IsHidden() return false end

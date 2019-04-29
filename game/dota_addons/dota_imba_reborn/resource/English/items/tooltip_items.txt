@@ -110,20 +110,17 @@
 
 // Assault Cuirass
 "DOTA_Tooltip_Ability_item_imba_assault"                    "Assault Cuirass"
-"DOTA_Tooltip_ability_item_imba_assault_Description"                    "<h1>Passive: Assault Aura</h1> Grants bonus armor and attack speed to nearby allies, while decreasing nearby enemies' armor."
+"DOTA_Tooltip_ability_item_imba_assault_Description"                    "<h1>Passive: Assault Aura</h1>Grants %aura_as_ally% attack speed and %aura_armor_ally% armor to nearby allied units and structures, and decreases nearby enemy unit and structure armor by %aura_armor_reduction_enemy%."
 "DOTA_Tooltip_ability_item_imba_assault_Lore"                          "Forged in the depths of the nether reaches, this hellish mail provides an army with increased armor and attack speed."
 "DOTA_Tooltip_ability_item_imba_assault_Note0"                          "Assault Aura does not stack with itself, and is overriden by Siege Aura."
-"DOTA_Tooltip_ability_item_imba_assault_aura_as_ally"                  "AURA ATTACK SPEED:"
-"DOTA_Tooltip_ability_item_imba_assault_aura_armor_ally"                "AURA ARMOR:"
-"DOTA_Tooltip_ability_item_imba_assault_aura_armor_enemy"              "ENEMY ARMOR REDUCTION:"
 "DOTA_Tooltip_ability_item_imba_assault_bonus_armor"                    "+$armor"
 "DOTA_Tooltip_ability_item_imba_assault_bonus_as"                      "+$attack"
 
 "DOTA_Tooltip_modifier_imba_assault_cuirass_aura_positive_effect"                   "Assault Aura"
-"DOTA_Tooltip_modifier_imba_assault_cuirass_aura_positive_effect_Description"       "Increased armor and attack speed."
+"DOTA_Tooltip_modifier_imba_assault_cuirass_aura_positive_effect_Description"       "Armor enhanced by %dMODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS%.\nAttack speed increased by %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT%."
 
 "DOTA_Tooltip_modifier_imba_assault_cuirass_aura_negative_effect"                   "Assault Aura"
-"DOTA_Tooltip_modifier_imba_assault_cuirass_aura_negative_effect_Description"       "Reduced armor."
+"DOTA_Tooltip_modifier_imba_assault_cuirass_aura_negative_effect_Description"       "Armor decreased by %dMODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS%."
 
 // Black Queen Cape
 "DOTA_Tooltip_Ability_item_imba_black_queen_cape"              "Black Queen Cape"
@@ -1047,30 +1044,25 @@
 
 // Siege Cuirass
 "DOTA_Tooltip_Ability_item_imba_siege_cuirass"                  "Siege Cuirass"
-"DOTA_Tooltip_ability_item_imba_siege_cuirass_Description"                  "<h1><font color='#FF7800'>Active: Hellish Siege</h1> Grants every ally in range bonus attack and movement speed, based on the amount of nearby allies. Heroes grant stronger bonuses.\n<h1>Passive: Siege Aura</h1> Grants bonus armor, attack <font color='#FF7800'>and movement speed</font> to nearby allies, while decreasing armor,<font color='#FF7800'>attack and movement speed</font> of nearby enemies by the same amount."
+"DOTA_Tooltip_ability_item_imba_siege_cuirass_Description"                  "<h1>Active: Hellish Siege</h1> Gives +%bonus_attack_speed_pct% attack speed and +%bonus_movement_speed_pct%%% movement speed to nearby allies for %duration% seconds. Also further boosts attack speed by %active_as_per_ally% and movement speed by %active_ms_per_ally%%% for every affected ally. Heroes count as %active_hero_multiplier% units.<br><br>Radius: %radius%\n<h1>Passive: Siege Aura</h1> Grants %aura_as_ally% attack speed, %aura_armor_ally% armor, and %aura_ms_ally%%% movement speed to nearby allies, and decreases nearby enemy unit and structure attack speed, armor, and movement speed by the same amounts.<br><br>Radius: %radius%"
 "DOTA_Tooltip_ability_item_imba_siege_cuirass_Lore"            "Hellish mail used by the highest-ranking demon lords. Legends tell of entire armies collapsing into confusion and uselessness simply by witnessing this armor in battle."
 "DOTA_Tooltip_ability_item_imba_siege_cuirass_Note0"            "Siege Aura does not stack with itself, and overrides both Assault Aura and Swiftness Aura."
 "DOTA_Tooltip_ability_item_imba_siege_cuirass_Note1"            "Hellish Siege does not stack with itself - using it while it's still active will result either in extending the current bonus, or overwriting it with a stronger one."
-"DOTA_Tooltip_ability_item_imba_siege_cuirass_Note2"            "Drum of Endurance's Strength in Numbers and Siege Cuirass's Hellish Siege can both extend the duration or overwrite each other's effects with a stronger one, but never stack."
-"DOTA_Tooltip_ability_item_imba_siege_cuirass_aura_as_ally"                 "AURA ATTACK SPEED:"
-"DOTA_Tooltip_ability_item_imba_siege_cuirass_aura_ms_ally"                 "AURA MOVE SPEED:"
-"DOTA_Tooltip_ability_item_imba_siege_cuirass_aura_armor_ally"              "AURA ARMOR:"
-"DOTA_Tooltip_ability_item_imba_siege_cuirass_active_as_per_hero"           "MOVE/ATTACK SPEED PER HERO:"
-"DOTA_Tooltip_ability_item_imba_siege_cuirass_active_as_per_creep"          "MOVE/ATTACK SPEED PER CREEP:"
+"DOTA_Tooltip_ability_item_imba_siege_cuirass_Note2"            "Drum of Endurance's Endurance and Siege Cuirass's Hellish Siege can both extend the duration or overwrite each other's effects with a stronger one, but never stack."
 "DOTA_Tooltip_ability_item_imba_siege_cuirass_bonus_int"                    "+$all"
-"DOTA_Tooltip_ability_item_imba_siege_cuirass_bonus_damage"                 "+$damage"
+"DOTA_Tooltip_ability_item_imba_siege_cuirass_bonus_movement_speed"			"+$move_speed"
 "DOTA_Tooltip_ability_item_imba_siege_cuirass_bonus_armor"                  "+$armor"
 "DOTA_Tooltip_ability_item_imba_siege_cuirass_bonus_mana_regen_pct"         "+$mana_regen"
 "DOTA_Tooltip_ability_item_imba_siege_cuirass_bonus_as"                     "+$attack"
 
 "DOTA_Tooltip_modifier_imba_siege_cuirass_aura_positive_effect"             "Siege Aura"
-"DOTA_Tooltip_modifier_imba_siege_cuirass_aura_positive_effect_Description" "Increased move speed, armor, and attack speed."
+"DOTA_Tooltip_modifier_imba_siege_cuirass_aura_positive_effect_Description" "Attack speed increased by %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT%, armor increased by %dMODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS%, and movement speed increased by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%."
 
 "DOTA_Tooltip_modifier_imba_siege_cuirass_aura_negative_effect"             "Siege Aura"
-"DOTA_Tooltip_modifier_imba_siege_cuirass_aura_negative_effect_Description" "Reduced move speed, armor, and attack speed."
+"DOTA_Tooltip_modifier_imba_siege_cuirass_aura_negative_effect_Description" "Attack speed reduced by %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT%, armor reduced by %dMODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS%, and movement speed reduced by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%."
 
-"DOTA_Tooltip_modifier_imba_siege_cuirass_active"              "Hellish Siege"
-"DOTA_Tooltip_modifier_imba_siege_cuirass_active_Description"               "Gaining bonus move and attack speed."
+"DOTA_Tooltip_modifier_imba_siege_cuirass_active"				"Hellish Siege"
+"DOTA_Tooltip_modifier_imba_siege_cuirass_active_Description"	"Attack speed increased by %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT% and movement speed increased by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%."
 
 
 // Silver Edge

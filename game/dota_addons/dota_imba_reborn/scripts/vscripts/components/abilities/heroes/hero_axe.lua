@@ -959,7 +959,7 @@ function imba_axe_culling_blade:OnSpellStart()
 
 	-- Check if the target HP is equal or below the threshold
 	if ( self.target:GetHealth() <= self.kill_threshold or (self.target:GetHealth()/self.target:GetMaxHealth() <= self.kill_threshold_max_hp_pct) ) and not self.target:HasModifier("modifier_imba_reincarnation_scepter_wraith") then
-		if self.caster:HasTalent("special_bonus_imba_axe_8") then
+		if self.caster:HasTalent("special_bonus_imba_axe_8") and (self:GetCaster():GetAbsOrigin() - self.target_location):Length2D() > self.BaseClass.GetCastRange(self, self.target_location, self.target) then
 			self:GetCaster():AddNewModifier( self:GetCaster(), self, "modifier_imba_culling_blade_motion", kv )
 			self:GetCaster():StartGestureWithPlaybackRate( ACT_DOTA_CAST_ABILITY_4, 1 )
 			Timers:CreateTimer(0.40, function()
@@ -1017,16 +1017,18 @@ function imba_axe_culling_blade:OnSpellStart()
 		end
 
 	else
-		if self.caster:HasTalent("special_bonus_imba_axe_8") then
+		if self.caster:HasTalent("special_bonus_imba_axe_8") and (self:GetCaster():GetAbsOrigin() - self.target_location):Length2D() > self.BaseClass.GetCastRange(self, self.target_location, self.target) then
 			self:GetCaster():AddNewModifier( self:GetCaster(), self, "modifier_imba_culling_blade_motion", kv )
 			self:GetCaster():StartGestureWithPlaybackRate( ACT_DOTA_CAST_ABILITY_4, 1 )
-			Timers:CreateTimer(0.50, function()
+			Timers:CreateTimer(0.4, function()
+				EmitSoundOn("Hero_Axe.Culling_Blade_Fail", self:GetCaster())
 				ApplyDamage( self.damageTable )
 			end)
 		else
+			EmitSoundOn("Hero_Axe.Culling_Blade_Fail", self:GetCaster())
 			ApplyDamage( self.damageTable )
 		end
-		EmitSoundOn("Hero_Axe.Culling_Blade_Fail", self:GetCaster())
+		
 		-- You get nothing! You lose! Good day, sir!
 		self.caster:RemoveModifierByName(self.culling_modifier)
 	end
@@ -1050,7 +1052,7 @@ function imba_axe_culling_blade:KillUnit(target)
 end
 
 function imba_axe_culling_blade:GetCastAnimation(target)
-	if self:GetCaster():HasTalent("special_bonus_imba_axe_8") then
+	if self:GetCaster():HasTalent("special_bonus_imba_axe_8") and (self:GetCaster():GetAbsOrigin() - self.target_location):Length2D() > self.BaseClass.GetCastRange(self, self.target_location, self.target) then
 		return ACT_SHOTGUN_PUMP
 	else
 		return ACT_DOTA_CAST_ABILITY_4

@@ -1,9 +1,10 @@
 #base heroes/bristleback/hero.txt
-//#base heroes/chen/hero.txt
-//#base heroes/dark_seer/hero.txt
+#base heroes/chen/hero.txt
+#base heroes/dark_seer/hero.txt
 #base heroes/enchantress/hero.txt
-//#base heroes/huskar/hero.txt
+#base heroes/huskar/hero.txt
 #base heroes/keeper_of_the_light/hero.txt
+#base heroes/rattletrap/hero.txt
 #base heroes/rubick/hero.txt
 #base heroes/shadow_shaman/hero.txt
 #base heroes/silencer/hero.txt
@@ -328,20 +329,6 @@
 
 		//Picking Screen
 		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
-	}
-
-	//=================================================================================================================
-	//	HERO: Chen
-	//=================================================================================================================
-	"npc_dota_hero_chen"
-	{
-		"override_hero"				"npc_dota_hero_chen"
-		
-		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
-		
-		"Ability4"					"chen_test_of_faith"
-		
-		"Ability17"					"special_bonus_corruption_5"
 	}
 
 	//=================================================================================================================
@@ -739,32 +726,6 @@
 		"Ability15"					"special_bonus_unique_gyrocopter_4"
 		"Ability16"					"special_bonus_unique_gyrocopter_1"
 		"Ability17"					"special_bonus_unique_gyrocopter_5"
-	}
-	
-	//=================================================================================================================
-	// HERO: Huskar
-	//=================================================================================================================
-	"npc_dota_hero_huskar"
-	{
-		"override_hero"	"npc_dota_hero_huskar"
-		
-		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
-		
-		"Ability1"		"huskar_inner_fire"
-		"Ability2"		"huskar_burning_spear"
-		"Ability3"		"huskar_berserkers_blood"
-		"Ability4"		"huskar_inner_vitality"
-		"Ability5"		"generic_hidden"
-		"Ability6"		"huskar_life_break"
-		
-		"Ability10"		"special_bonus_hp_225"
-		"Ability11"		"special_bonus_attack_damage_15"
-		"Ability12"		"special_bonus_unique_huskar_2"
-		"Ability13"		"special_bonus_lifesteal_20"
-		"Ability14"		"special_bonus_strength_20"
-		"Ability15"		"special_bonus_unique_huskar"
-		"Ability16"		"special_bonus_attack_range_175"
-		"Ability17"		"special_bonus_unique_huskar_5"
 	}
 	
 	//=================================================================================================================

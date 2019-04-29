@@ -16,6 +16,7 @@
 #base heroes/keeper_of_the_light/abilities.txt
 #base custom_heroes/malfurion/abilities.txt
 #base heroes/night_stalker/abilities.txt
+#base heroes/rattletrap/abilities.txt
 #base heroes/rubick/abilities.txt
 #base heroes/silencer/abilities.txt
 #base heroes/shadow_shaman/abilities.txt

@@ -220,7 +220,7 @@
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"pain_reflection_per_stack"		"2"
+				"pain_reflection_per_stack"		"3"
 			}		
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"

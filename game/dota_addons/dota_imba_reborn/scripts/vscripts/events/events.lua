@@ -797,6 +797,24 @@ function GameMode:OnPlayerChat(keys)
 								[13] = "special_bonus_imba_chen_remnants_of_penitence"
 							}
 							upgraded = true
+						elseif (string.find(text, 'rattletrap') or string.find(text, 'clockwerk'))and hero:GetName() == "npc_dota_hero_rattletrap" then
+							ability_set = {
+								[0] = "imba_rattletrap_battery_assault",
+								[1] = "imba_rattletrap_power_cogs",
+								[2] = "imba_rattletrap_rocket_flare",
+								[3] = "generic_hidden",
+								[4] = "generic_hidden",
+								[5] = "imba_rattletrap_hookshot",
+								[6] = "special_bonus_armor_5",
+								[7] = "special_bonus_movement_speed_20",
+								[8] = "special_bonus_strength_15",
+								[9] = "special_bonus_imba_rattletrap_battery_assault_aura",
+								[10] = "special_bonus_imba_rattletrap_rocket_flare_truesight",
+								[11] = "special_bonus_imba_rattletrap_second_gear",
+								[12] = "special_bonus_magic_resistance_50",
+								[13] = "special_bonus_imba_rattletrap_battery_assault_interval"
+							}
+							upgraded = true
 						end
 							
 						for ability = 0, 23 do
@@ -909,7 +927,7 @@ function GameMode:OnThink()
 
 	if GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
 		-- End the game if one team completely abandoned
-		if CustomNetTables:GetTableValue("game_options", "game_count").value == 1 then
+		if CustomNetTables:GetTableValue("game_options", "game_count").value == 1 and not IsInToolsMode() then
 			if not TEAM_ABANDON then
 				TEAM_ABANDON = {} -- 15 second to abandon, is_abandoning?, player_count.
 				TEAM_ABANDON[2] = { FULL_ABANDON_TIME, false, 0 }

@@ -95,6 +95,9 @@ function modifier_imba_drums_active:OnCreated()
 	self.particle_buff = "particles/items_fx/drum_of_endurance_buff.vpcf"
 
 	-- Ability specials
+	self.bonus_attack_speed_pct		= self:GetAbility():GetSpecialValueFor("bonus_attack_speed_pct")
+	self.bonus_movement_speed_pct	= self:GetAbility():GetSpecialValueFor("bonus_movement_speed_pct")
+	
 	self.active_as_per_ally = self:GetAbility():GetSpecialValueFor("active_as_per_ally")
 	self.active_ms_per_ally = self:GetAbility():GetSpecialValueFor("active_ms_per_ally")
 
@@ -115,11 +118,11 @@ function modifier_imba_drums_active:DeclareFunctions()
 end
 
 function modifier_imba_drums_active:GetModifierMoveSpeedBonus_Percentage()
-	return self.active_ms_per_ally * self:GetStackCount()
+	return self.bonus_movement_speed_pct + self.active_ms_per_ally * self:GetStackCount()
 end
 
 function modifier_imba_drums_active:GetModifierAttackSpeedBonus_Constant()
-	return self.active_as_per_ally * self:GetStackCount()
+	return self.bonus_attack_speed_pct + self.active_as_per_ally * self:GetStackCount()
 end
 
 
@@ -131,8 +134,8 @@ function modifier_imba_drums:OnCreated()
 	self.bonus_int = self:GetAbility():GetSpecialValueFor("bonus_int")
 	self.bonus_str = self:GetAbility():GetSpecialValueFor("bonus_str")
 	self.bonus_agi = self:GetAbility():GetSpecialValueFor("bonus_agi")
-	self.bonus_damage = self:GetAbility():GetSpecialValueFor("bonus_damage")
 	self.bonus_mana_regen = self:GetAbility():GetSpecialValueFor("bonus_mana_regen")
+	self.bonus_movement_speed	= self:GetAbility():GetSpecialValueFor("bonus_movement_speed")
 
 	if IsServer() then
 		-- If it is the first drums in inventory, add the aura modifier
@@ -148,11 +151,14 @@ function modifier_imba_drums:IsDebuff() return false end
 function modifier_imba_drums:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_drums:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
+	local decFuncs = {
+		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
 		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
 		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
-		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
-		MODIFIER_PROPERTY_MANA_REGEN_CONSTANT}
+		MODIFIER_PROPERTY_MANA_REGEN_CONSTANT,
+		
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT
+	}
 
 	return decFuncs
 end
@@ -169,12 +175,12 @@ function modifier_imba_drums:GetModifierBonusStats_Agility()
 	return self.bonus_agi
 end
 
-function modifier_imba_drums:GetModifierPreAttack_BonusDamage()
-	return self.bonus_damage
-end
-
 function modifier_imba_drums:GetModifierConstantManaRegen()
 	return self.bonus_mana_regen
+end
+
+function modifier_imba_drums:GetModifierMoveSpeedBonus_Constant()
+	return self.bonus_movement_speed
 end
 
 function modifier_imba_drums:OnDestroy()
