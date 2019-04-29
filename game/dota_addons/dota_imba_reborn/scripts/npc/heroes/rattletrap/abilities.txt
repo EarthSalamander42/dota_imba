@@ -1,383 +1,400 @@
 "DOTAAbilities"
 {
 	//=================================================================================================================
-	// Chen: Penitence
+	// Rattletrap: Battery Assault
 	//=================================================================================================================
-	"imba_chen_penitence"
+	"imba_rattletrap_battery_assault"
 	{
 		"BaseClass"						"ability_lua"
-		"ScriptFile"					"components/abilities/heroes/hero_chen.lua"
-		"AbilityTextureName"			"chen_penitence"		
+		"ScriptFile"					"components/abilities/heroes/hero_rattletrap.lua"
+		"AbilityTextureName"			"rattletrap_battery_assault"
 	
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
-		"AbilitySound"					"Hero_Chen.PenitenceCast"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
+		"FightRecapLevel"				"1"
+		"AbilitySound"					"Hero_Rattletrap.Battery_Assault_Impact"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"800"
-		"AbilityCooldown"				"14.0 12.0 10.0 8.0"
+		"AbilityCooldown"				"32.0 28.0 24.0 20.0"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"70"
+		"AbilityManaCost"				"100"
+		
+		// Damage.
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityDamage"					"40 70 100 130"
 
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityModifierSupportValue"	"0.2"	// applies many mini-stuns
+		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"8 10 12 14"
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"275 275 275 275"
 			}
 			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"speed"					"2000"
+			{	
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"10.5 10.5 10.5 10.5"
 			}
 			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_movement_speed"	"-18 -30 -38 -42"
+			{	
+				"var_type"			"FIELD_FLOAT"
+				"interval"			"0.69 0.66 0.63 0.6"
+				//"LinkedSpecialBonus"		"special_bonus_unique_clockwerk"
+				"LinkedSpecialBonus"		"special_bonus_imba_rattletrap_battery_assault_interval"
 			}
+			
 			"04"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_attack_speed"	"60 120 180 240"
+				"var_type"			"FIELD_INTEGER"
+				"fragmentation_mult"	"4"
 			}
-
 			"05"
 			{
-				"var_type"				"FIELD_INTEGER"		
-				"buff_duration"			"2"
-			}			
+				"var_type"			"FIELD_INTEGER"
+				"fragmentation_damage"	"15"
+			}
 			"06"
 			{
-				"var_type"				"FIELD_INTEGER"		
-				"creep_mult"			"2"
+				"var_type"			"FIELD_FLOAT"
+				"fragmentation_vuln"	"0.7"
+			}
+			"07"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"fragmentation_resist"	"-1.0"
+			}		
+			"08"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"fragmentation_vision"	"-1.3"
+			}
+			"09"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"fragmentation_duration"	"4"
+			}
+			
+			"10"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"percussive_maint_radius"	"0"
+				"LinkedSpecialBonus"		"special_bonus_imba_rattletrap_battery_assault_aura"
+			}
+			"11"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"percussive_maint_base_chance"	"20"
+			}
+			"12"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"percussive_maint_frag_chance"	"40"
 			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
 	}
-
-	
+		
 	//=================================================================================================================
-	// Chen: Test of Faith
+	// Rattletrap: Power Cogs
 	//=================================================================================================================
-	"imba_chen_test_of_faith"
+	"imba_rattletrap_power_cogs"
 	{
 		"BaseClass"						"ability_lua"
-		"ScriptFile"					"components/abilities/heroes/hero_chen.lua"
-		"AbilityTextureName"			"chen_test_of_faith"	
+		"ScriptFile"					"components/abilities/heroes/hero_rattletrap.lua"
+		"AbilityTextureName"			"rattletrap_power_cogs"	
 	
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
-		"FightRecapLevel"				"1"
-		"AbilitySound"					"Hero_Chen.TestOfFaith.Target"
+		"AbilitySound"					"Hero_Rattletrap.Power_Cogs"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
-
+		"AbilityCastPoint"				"0.2"
+		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"800"
-		"AbilityCooldown"				"16"
-
+		"AbilityCooldown"				"15"
+		
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"60 80 100 120"
-
+		"AbilityManaCost"				"80"
+		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
 			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_min"			"75 150 225 300"
+			{	
+				"var_type"			"FIELD_FLOAT"
+				"duration"			"5.0 6.0 7.0 8.0"
 			}
 			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_max"			"125 250 375 500"
+			{	
+				"var_type"			"FIELD_INTEGER"
+				"damage"		"50 125 200 275"
 			}
 			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"heal_min"			"50 100 150 200"
+			{	
+				"var_type"			"FIELD_INTEGER"
+				"mana_burn"		"50 100 150 200"
 			}
 			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"heal_max"			"75 175 275 375"
+			{	
+				"var_type"			"FIELD_INTEGER"
+				"attacks_to_destroy"	"2"
 			}
-			
 			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"faithful_assist_mult"			"5"
+			{	
+				"var_type"			"FIELD_INTEGER"
+				"push_length"		"300"
+				"LinkedSpecialBonus"	"special_bonus_imba_rattletrap_power_cogs_push_length"
 			}
 			"06"
+			{	
+				"var_type"			"FIELD_FLOAT"
+				"push_duration"		"1"
+			}
+			"07"
+			{	
+				"var_type"			"FIELD_INTEGER"
+				"cogs_radius"			"215"
+			}
+			"08"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"unfaithful_assist_mult"		"25"
+				"var_type"			"FIELD_INTEGER"
+				"trigger_distance"			"170"
+			}
+			"09"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"extra_pull_buffer"			"-10"
+			}
+			
+			"10"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"rotational_speed"		"90"
+			}
+			"11"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"charge_coil_duration"	"12"
 			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 	}
 
-	
-
-	
 	//=================================================================================================================
-	// Chen: Divine Favor
+	// Rattletrap: Rocket Flare
 	//=================================================================================================================
-	"imba_chen_divine_favor"
+	"imba_rattletrap_rocket_flare"
 	{
 		"BaseClass"						"ability_lua"
-		"ScriptFile"					"components/abilities/heroes/hero_chen.lua"
-		"AbilityTextureName"			"chen_divine_favor"
-		
+		"ScriptFile"					"components/abilities/heroes/hero_rattletrap.lua"
+		"AbilityTextureName"			"rattletrap_rocket_flare"
+	
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_YES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
-		"AbilitySound"					"Hero_Chen.TestOfFaith.Target"
+		"AbilitySound"					"Hero_Rattletrap.Rocket_Flare.Fire"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
-
+		"AbilityCastRange"				"0"
+		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"800"
-		"AbilityCooldown"				"26 24 22 20"
-
+		"AbilityCooldown"				"20.0 18.0 16.0 14.0"
+		
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"70 80 90 100"
-
+		"AbilityManaCost"				"35 40 45 50"
+		
+		// Damage.
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityDamage"					"90 180 270 360"
+		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"heal_amp"				"50"
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"600 650 700 750"
 			}
 			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"heal_rate"					"7 13 19 25"
+			{	
+				"var_type"			"FIELD_FLOAT"
+				"duration"			"10.0 10.0 10.0 10.0"
 			}
 			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_bonus"		"24 36 48 60"
+			{	
+				"var_type"			"FIELD_INTEGER"
+				"speed"				"2250"
 			}
 			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"8 10 12 14"
+			{	
+				"var_type"			"FIELD_INTEGER"
+				"vision_radius"		"600 650 700 750"
 			}
 			
 			"05"
-			{
-				"var_type"				"FIELD_INTEGER"			
-				"creep_damage_mult"		"5"
+			{	
+				"var_type"			"FIELD_INTEGER"
+				"carpet_fire_rockets"		"14"
 			}
+			"06"
+			{	
+				"var_type"			"FIELD_FLOAT"
+				"carpet_fire_delay"		"0.04"
+			}
+			"07"
+			{	
+				"var_type"			"FIELD_INTEGER"
+				"carpet_fire_damage"		"40"
+			}
+			"08"
+			{	
+				"var_type"			"FIELD_INTEGER"
+				"carpet_fire_spread"		"4"
+			}
+			
+			"09"
+			{	
+				"var_type"				"FIELD_INTEGER"
+				"system_min_distance"	"2500"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"system_radius"			"250"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"system_crit"			"175"
+			}
+			"12"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"system_mana_loss_pct"	"-1000"			
+			}
+			"12"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"system_duration"		"4"
+			}
+			
 		}
-		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_3"
 	}
-
+	
 	//=================================================================================================================
-	// Chen: Holy Persuasion
+	// Rattletrap: Hookshot
 	//=================================================================================================================
-	"imba_chen_holy_persuasion"
+	"imba_rattletrap_hookshot"
 	{
 		"BaseClass"						"ability_lua"
-		"ScriptFile"					"components/abilities/heroes/hero_chen.lua"
-		"AbilityTextureName"			"chen_holy_persuasion"		
+		"ScriptFile"					"components/abilities/heroes/hero_rattletrap.lua"
+		"AbilityTextureName"			"rattletrap_hookshot"	
 	
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
-		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
-		"AbilitySound"					"Hero_Chen.HolyPersuasionCast"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES_STRONG"
+		"FightRecapLevel"				"2"
+		"AbilitySound"					"Hero_Rattletrap.Hookshot.Fire"
 
 		"HasScepterUpgrade"			"1"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
-
+		"AbilityCastRange"				"2000 4000 6000"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
+		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1500"
-		"AbilityCooldown"				"0.5"
-
+		"AbilityCooldown"				"70 50 30"
+		
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"70 90 110 130"
-
+		"AbilityManaCost"				"150 150 150"
+		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"max_units"				"2 3 4 5"
-				//"LinkedSpecialBonus"	"special_bonus_unique_chen_1"
-				"LinkedSpecialBonus"	"special_bonus_unique_chen_4"
+				"var_type"			"FIELD_INTEGER"
+				"latch_radius"		"125 125 125"
 			}
 			"02"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"level_req"				"4 5 6 6"
+				"var_type"			"FIELD_INTEGER"
+				"stun_radius"		"175 175 175"
 			}
 			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"health_min"			"1000 2000 3000 4000"
-				"LinkedSpecialBonus"	"special_bonus_unique_chen_4"
+			{	
+				"var_type"			"FIELD_FLOAT"
+				"duration"			"1.5 2.0 2.5"
 			}
+			
 			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"teleport_delay"	"6.0 5.0 4.0 3.0"
+			{	
+				"var_type"			"FIELD_INTEGER"
+				"speed"				"4000 7000 10000"
 			}
-			
-			
 			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"teleport_distance"		"120"
+			{	
+				"var_type"			"FIELD_INTEGER"
+				"tooltip_range"		"2000 4000 6000"
 			}
 			"06"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"commonwealth_pct"	"22 28 34 40"
+				"damage"			"100 300 500"
 			}
-			
 			"07"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"commonwealth_caster_pct"	"50"
-			}
-			"08"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"immortalize_max_units"	"1 2 3 4"
-			}
-		}
-		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_3"
-	}
-
-	//=================================================================================================================
-	// Chen: Hand of God
-	//=================================================================================================================
-	"imba_chen_hand_of_god"
-	{
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"components/abilities/heroes/hero_chen.lua"
-		"AbilityTextureName"			"chen_hand_of_god"			
-	
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_YES"
-		"FightRecapLevel"				"2"
-		"AbilitySound"					"Hero_Chen.HandOfGodHealHero"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.3 0.3 0.3"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
-
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"160 140 120"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"200 300 400"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"heal_amount"			"500 1500 2500"
-				"LinkedSpecialBonus"	"special_bonus_unique_chen_2"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"ancient_creeps_scepter"		"2 3 4"
+			{	
+				"var_type"			"FIELD_FLOAT"
+				"cooldown_scepter"	"12.0 12.0 12.0"
 			}
 			
-			"03"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"overheal_loss_per_tick"		"5"
+			"08"
+			{	
+				"var_type"			"FIELD_INTEGER"
+				"razor_wind_radius"	"275"
 			}
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"overheal_tick_rate"	"0.1"
-			}
-		}
-	}
-	
-	//=================================================================================================================
-	// 
-	//=================================================================================================================
-	"special_bonus_imba_chen_divine_favor_cd_reduction"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_undefined"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_chen_divine_favor"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"8"
+			"09"
+			{	
+				"var_type"			"FIELD_INTEGER"
+				"razor_wind_damage"	"50"
 			}
 		}
 	}
@@ -385,7 +402,7 @@
 	//=================================================================================================================
 	// 
 	//=================================================================================================================
-	"special_bonus_imba_chen_test_of_faith_cd_reduction"
+	"special_bonus_imba_rattletrap_rocket_flare_truesight"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -395,92 +412,7 @@
 
 		"LinkedAbility"
 		{
-			"01" 	"imba_chen_test_of_faith"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"8"
-			}
-		}
-	}
-	
-	//=================================================================================================================
-	// 
-	//=================================================================================================================
-	"special_bonus_imba_chen_holy_persuasion_max_unit_increase"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_undefined"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_chen_holy_persuasion"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"5"
-			}
-		}
-	}	
-	
-	//=================================================================================================================
-	// 
-	//=================================================================================================================
-	"special_bonus_imba_chen_remnants_of_penitence"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_undefined"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_chen_penitence"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"60"
-			}
-		}
-	}
-	
-	//=================================================================================================================
-	// 
-	//=================================================================================================================
-	"special_bonus_imba_chen_divine_favor_hand_of_god"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_undefined"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_chen_divine_favor"
-			"02" 	"imba_chen_hand_of_god"
+			"01" 	"imba_rattletrap_rocket_flare"
 		}
 
 		// Special
@@ -491,6 +423,118 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"value"						"1"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// 
+	//=================================================================================================================
+	"special_bonus_imba_rattletrap_battery_assault_interval"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_rattletrap_battery_assault"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"value"						"-0.3"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// 
+	//=================================================================================================================
+	"special_bonus_imba_rattletrap_second_gear"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_rattletrap_power_cogs"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"1"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// 
+	//=================================================================================================================
+	"special_bonus_imba_rattletrap_power_cogs_push_length"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_rattletrap_power_cogs"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"500"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// 
+	//=================================================================================================================
+	"special_bonus_imba_rattletrap_battery_assault_aura"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_rattletrap_battery_assault"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"600"
 			}
 		}
 	}

@@ -356,7 +356,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"proj_speed"				"1700"
+				"proj_speed"				"2000"
 			}
 			"02"
 			{
@@ -366,7 +366,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"crit_bonus_pct"			"175 200 225"
+				"crit_bonus_pct"			"200 300 400"
 			}
 			"04"
 			{
@@ -376,12 +376,12 @@
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"range_multiplier"			"20 40 60"
+				"range_multiplier"			"30 45 60"
 			}
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_dmg_pct"				"100 200 250"
+				"bonus_dmg_pct"				"80 160 240"
 				"LinkedSpecialBonus"		"special_bonus_imba_sven_8"
 			}
 		}

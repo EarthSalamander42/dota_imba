@@ -123,4 +123,9 @@ function GameMode:OnUnitSpawned(unit)
 		UTIL_Remove(unit)
 		return
 	end
+	
+	-- Prevent zombies from spawning inside of units?
+	if unit:GetName() == "npc_dota_unit_undying_zombie" then
+		ResolveNPCPositions(unit:GetAbsOrigin(), unit:GetHullRadius())
+	end
 end

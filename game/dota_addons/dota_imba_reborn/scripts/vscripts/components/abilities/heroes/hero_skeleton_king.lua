@@ -719,6 +719,9 @@ function imba_wraith_king_mortal_strike:OnSpellStart()
 						skeleton:SetControllableByPlayer( self.caster:GetPlayerID(),  true )
 						skeleton:SetOwner(self.caster)
 						
+						-- Resolve NPC positions to try and make sure skeletons don't get stuck on each other
+						ResolveNPCPositions(skeleton:GetAbsOrigin(), skeleton:GetHullRadius())
+						
 						-- No gold/exp on first death
 						skeleton:SetMaximumGoldBounty(0)
 						skeleton:SetMinimumGoldBounty(0)
