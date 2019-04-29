@@ -266,7 +266,7 @@
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"maximum_resistance"			"30 40 50 60"
+				"maximum_resistance"			"40 50 60 70"
 			}
 			"05"
 			{
@@ -407,6 +407,22 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"sac_dagger_dmg_pct"		"60"
+			}
+		}
+	}
+	
+	// Using vanilla talent reference for custom ability
+	//=================================================================================================================
+	//	Huskar: Bonus Life Break Cast Range
+	//=================================================================================================================
+	"special_bonus_unique_huskar"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"value"				"550"
 			}
 		}
 	}

@@ -100,6 +100,18 @@ function modifier_item_imba_heart_unique:OnCreated()
 	self.base_regen = self:GetAbility():GetSpecialValueFor("base_regen")
 	self.noncombat_regen = self:GetAbility():GetSpecialValueFor("noncombat_regen")
 	self.hp_regen_amp = self:GetAbility():GetSpecialValueFor("hp_regen_amp")
+	
+	self:StartIntervalThink(FrameTime())
+end
+
+function modifier_item_imba_heart_unique:OnIntervalThink()
+	if not IsServer() then return end
+
+	if self:GetAbility():GetCooldownTimeRemaining() == 0 then
+		self:SetStackCount(self.noncombat_regen)
+	else
+		self:SetStackCount(self.base_regen)
+	end
 end
 
 function modifier_item_imba_heart_unique:IsAura() return true end
@@ -118,13 +130,7 @@ function modifier_item_imba_heart_unique:DeclareFunctions()
 end
 
 function modifier_item_imba_heart_unique:GetModifierHealthRegenPercentage()
-	if IsClient() then return end
-
-	if self:GetAbility():GetCooldownTimeRemaining() == 0 then
-		return self.noncombat_regen
-	end
-
-	return self.base_regen
+	return self:GetStackCount()
 end
 
 function modifier_item_imba_heart_unique:OnTakeDamage(keys)

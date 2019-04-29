@@ -23,9 +23,6 @@ function GameMode:OnGameRulesStateChange(keys)
 	if newState == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
 		InitItemIds()
 		GameMode:OnSetGameMode() -- setup gamemode rules
-		InitializeTeamSelection()
-		GetPlayerInfoIXP() -- Add a class later
-		Imbattlepass:Init() -- Initialize Battle Pass
 
 		-- setup Player colors into hex for panorama
 		local hex_colors = {}
@@ -130,12 +127,14 @@ function GameMode:OnGameRulesStateChange(keys)
 					pos[2] = Entities:FindByClassname(nil, "info_courier_spawn_radiant")
 					pos[3] = Entities:FindByClassname(nil, "info_courier_spawn_dire")
 
-					COURIER_TEAM[i] = CreateUnitByName("npc_dota_courier", pos[i]:GetAbsOrigin(), true, nil, nil, i)
-					COURIER_TEAM[i]:UpgradeToFlyingCourier()
-					COURIER_TEAM[i]:AddNewModifier(COURIER_TEAM[i], nil, "modifier_courier_turbo", {})
-					COURIER_TEAM[i]:RemoveModifierByName("modifier_magic_immune")
-					COURIER_TEAM[i]:AddAbility("courier_movespeed"):SetLevel(1)
-					COURIER_TEAM[i]:RemoveAbility("imba_courier_autodeliver")
+					if pos[i] then
+						COURIER_TEAM[i] = CreateUnitByName("npc_dota_courier", pos[i]:GetAbsOrigin(), true, nil, nil, i)
+						COURIER_TEAM[i]:UpgradeToFlyingCourier()
+						COURIER_TEAM[i]:AddNewModifier(COURIER_TEAM[i], nil, "modifier_courier_turbo", {})
+						COURIER_TEAM[i]:RemoveModifierByName("modifier_magic_immune")
+						COURIER_TEAM[i]:AddAbility("courier_movespeed"):SetLevel(1)
+						COURIER_TEAM[i]:RemoveAbility("imba_courier_autodeliver")
+					end
 				end
 			end
 
@@ -778,6 +777,24 @@ function GameMode:OnPlayerChat(keys)
 								[11] = "special_bonus_imba_dark_seer_vacuum_increased_duration",
 								[12] = "special_bonus_imba_dark_seer_wall_of_replica_increased_slow_duration",
 								[13] = "special_bonus_unique_dark_seer"
+							}
+							upgraded = true
+						elseif string.find(text, 'chen') and hero:GetName() == "npc_dota_hero_chen" then
+							ability_set = {
+								[0] = "imba_chen_penitence",
+								[1] = "imba_chen_divine_favor",
+								[2] = "imba_chen_holy_persuasion",
+								[3] = "imba_chen_test_of_faith",
+								[4] = "generic_hidden",
+								[5] = "imba_chen_hand_of_god",
+								[6] = "special_bonus_exp_boost_60",
+								[7] = "special_bonus_cast_range_200",
+								[8] = "special_bonus_armor_8",
+								[9] = "special_bonus_imba_chen_divine_favor_cd_reduction",
+								[10] = "special_bonus_gold_income_50",
+								[11] = "special_bonus_imba_chen_test_of_faith_cd_reduction",
+								[12] = "special_bonus_imba_chen_holy_persuasion_max_unit_increase",
+								[13] = "special_bonus_imba_chen_remnants_of_penitence"
 							}
 							upgraded = true
 						end

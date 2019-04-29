@@ -424,6 +424,7 @@
 	"overtime" "AO LONGO DO TEMPO!"
 	"overtimeinstructions" "PONTUAÇÃO PARA GANHAR"
 	"picked_hero" "Escolhido"
+	"playback_buttoncategory" "Controllers"
 	"remaining" "RESTANTE"
 	"repick_button" "Re-escolha"
 	"scoreboard_tool_tip_active_disable_help" "(DESATIVADO)"

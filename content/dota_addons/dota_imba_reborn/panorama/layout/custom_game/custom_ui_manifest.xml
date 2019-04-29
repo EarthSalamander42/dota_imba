@@ -144,17 +144,17 @@
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/statcollection.xml"/>
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/barebones_notifications.xml" /> 
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/hud_hero_demo.xml" /> 
-		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/ardm_precache.xml" /> 
+<!--	<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/ardm_precache.xml" /> -->
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/gg.xml" /> 
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/combat_events.xml" /> 
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/hero_selection.xml" /> 
-		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/selection.xml" /> 
-<!--		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/diretide.xml" />
+<!--	<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/selection.xml" /> -->
+<!--	<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/diretide.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/diretide_note.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/roshan_health_bar.xml" /> --> <!-- Enable only during diretide -->
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/imba_imr.xml" /> 
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/mutation.xml" /> 
-		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/precache.xml" /> 
+<!--	<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/precache.xml" /> -->
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/overthrow_item_notification.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/imba_item_builds.xml" />
 

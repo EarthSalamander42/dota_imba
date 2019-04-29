@@ -424,6 +424,7 @@
 	"overtime" "TEMPS SUPPLÉMENTAIRE !"
 	"overtimeinstructions" "SCORE POUR GAGNER"
 	"picked_hero" "Déja pris"
+	"playback_buttoncategory" "Controllers"
 	"remaining" "RESTANT"
 	"repick_button" "Rechoisir un héros"
 	"scoreboard_tool_tip_active_disable_help" "(DISABLED)"

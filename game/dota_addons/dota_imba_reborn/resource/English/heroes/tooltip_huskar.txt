@@ -37,7 +37,7 @@
 "DOTA_Tooltip_ability_imba_huskar_berserkers_blood_hp_threshold_max" 				"%HP FOR MAX BONUS:"
 
 "DOTA_Tooltip_ability_imba_huskar_life_break"										"Life Break"
-"DOTA_Tooltip_ability_imba_huskar_life_break_Description"							"Huskar draws upon his health to break an enemy's life, leaping at a target within attack range to shatter a percentage of that hero's current health, and slowing them.  While leaping, Huskar is Spell Immune.\n\nDISPEL TYPE: Basic Dispel\n\nUpgradable by Aghanim's Scepter.\n<font color='#FF7800'>Harakiri: </font>If auto-cast is on, Life Break can be self-cast. Huskar is still affected by the slow debuff.\n<font color='#FF7800'>Sacrificial Dagger: </font>Upon successfully landing Life Break, creates a burning dagger for %sac_dagger_duration% seconds which rotates around Huskar. Deals damage equal to %sac_dagger_dmg_pct%%% of the Life Break damage dealt (after reductions). Half of this damage is physical, while the other half is magical."
+"DOTA_Tooltip_ability_imba_huskar_life_break_Description"							"Huskar draws upon his health to break an enemy's life, leaping at a target within attack range to shatter a percentage of that hero's current health, and slowing them.  While leaping, Huskar is Spell Immune.\n\nDISPEL TYPE: Basic Dispel\n\nUpgradable by Aghanim's Scepter.\n<font color='#FF7800'>Harakiri: </font>If auto-cast is on, Life Break can be self-cast. Huskar's move speed is increased instead of slowed.\n<font color='#FF7800'>Sacrificial Dagger: </font>Upon successfully landing Life Break, creates a burning dagger for %sac_dagger_duration% seconds which rotates around Huskar. Deals damage equal to %sac_dagger_dmg_pct%%% of the Life Break damage dealt (after reductions). Half of this damage is physical, while the other half is magical."
 "DOTA_Tooltip_ability_imba_huskar_life_break_Lore"									"No matter the danger, Huskar thrusts himself into melees that only he can survive."
 "DOTA_Tooltip_ability_imba_huskar_life_break_Note0"									"If Huskar is disabled during the charge or the target moves more than 1450 units in 0.015 seconds, the charge stops."
 "DOTA_Tooltip_ability_imba_huskar_life_break_Note1"									"Slow works on Spell Immune units."
@@ -62,7 +62,7 @@
 "DOTA_Tooltip_modifier_imba_huskar_berserkers_blood_crimson_priest_Description"		"Dazzle's magical essence lingers on, preventing death while under this effect."
 
 "DOTA_Tooltip_modifier_imba_huskar_life_break_slow"					"Life Break"
-"DOTA_Tooltip_modifier_imba_huskar_life_break_slow_Description"		"Movement speed reduced by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%."
+"DOTA_Tooltip_modifier_imba_huskar_life_break_slow_Description"		"Movement speed reduced by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%, or increased by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%% if this is the caster."
 
 "DOTA_Tooltip_modifier_imba_huskar_life_break_sac_dagger_tracker"					"Sacrificial Dagger"
 "DOTA_Tooltip_modifier_imba_huskar_life_break_sac_dagger_tracker_Description"		"A flaming dagger is rotating around you, dealing physical and magical damage on contact every frame, up to %dMODIFIER_PROPERTY_TOOLTIP% damage a second."

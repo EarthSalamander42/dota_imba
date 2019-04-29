@@ -326,7 +326,11 @@ end
 
 function modifier_imba_wisp_tether_ally:OnCreated()
 	if IsServer() then
-		self.pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_wisp/wisp_tether.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+		local particle_effect = "particles/units/heroes/hero_wisp/wisp_tether.vpcf"
+		if self:GetCaster().tether_effect then
+			particle_effect = self:GetCaster().tether_effect
+		end
+		self.pfx = ParticleManager:CreateParticle(particle_effect, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 		ParticleManager:SetParticleControlEnt(self.pfx, 0, self:GetCaster(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetCaster():GetAbsOrigin(), true)
 		ParticleManager:SetParticleControlEnt(self.pfx, 1, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
 
@@ -859,7 +863,11 @@ end
 function modifier_imba_wisp_spirits:Explode(caster, spirit, explosion_radius, explosion_damage, ability)
 	if IsServer() then
 		EmitSoundOn("Hero_Wisp.Spirits.Target", spirit)
-		ParticleManager:CreateParticle("particles/units/heroes/hero_wisp/wisp_guardian_explosion.vpcf", PATTACH_ABSORIGIN_FOLLOW, spirit)
+		local particle_effect = "particles/units/heroes/hero_wisp/wisp_guardian_explosion.vpcf"
+		if self:GetCaster().spirits_explosion_effect then
+			particle_effect = self:GetCaster().spirits_explosion_effect
+		end
+		ParticleManager:CreateParticle(particle_effect, PATTACH_ABSORIGIN_FOLLOW, spirit)
 
 		-- Check if we hit stuff
 		local nearby_enemy_units = FindUnitsInRadius(
@@ -971,7 +979,11 @@ function modifier_imba_wisp_spirits_creep_hit:OnCreated()
 	if IsServer() then
 		local target = self:GetParent()
 		EmitSoundOn("Hero_Wisp.Spirits.TargetCreep", target)
-		self.pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_wisp/wisp_guardian_explosion_small.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
+		local particle_effect = "particles/units/heroes/hero_wisp/wisp_guardian_explosion_small.vpcf"
+		if self:GetCaster().spirits_explosion_small_effect then
+			particle_effect = self:GetCaster().spirits_explosion_small_effect
+		end
+		self.pfx = ParticleManager:CreateParticle(particle_effect, PATTACH_ABSORIGIN_FOLLOW, target)
 	end
 end
 
@@ -1459,7 +1471,11 @@ end
 
 function modifier_imba_wisp_overcharge:OnCreated(params)
 	if IsServer() then
-		self.overcharge_pfx 		= ParticleManager:CreateParticle("particles/units/heroes/hero_wisp/wisp_overcharge.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+		local particle_effect = "particles/units/heroes/hero_wisp/wisp_overcharge.vpcf"
+		if self:GetCaster().overcharge_effect then
+			particle_effect = self:GetCaster().overcharge_effect
+		end
+		self.overcharge_pfx 		= ParticleManager:CreateParticle(particle_effect, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 		self.bonus_attack_speed 	= params.bonus_attack_speed
 		self.bonus_cast_speed 		= params.bonus_cast_speed
 		self.bonus_missile_speed 	= params.bonus_missile_speed
