@@ -23,9 +23,6 @@ function GameMode:OnGameRulesStateChange(keys)
 	if newState == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
 		InitItemIds()
 		GameMode:OnSetGameMode() -- setup gamemode rules
-		InitializeTeamSelection()
-		GetPlayerInfoIXP() -- Add a class later
-		Imbattlepass:Init() -- Initialize Battle Pass
 
 		-- setup Player colors into hex for panorama
 		local hex_colors = {}
@@ -130,12 +127,14 @@ function GameMode:OnGameRulesStateChange(keys)
 					pos[2] = Entities:FindByClassname(nil, "info_courier_spawn_radiant")
 					pos[3] = Entities:FindByClassname(nil, "info_courier_spawn_dire")
 
-					COURIER_TEAM[i] = CreateUnitByName("npc_dota_courier", pos[i]:GetAbsOrigin(), true, nil, nil, i)
-					COURIER_TEAM[i]:UpgradeToFlyingCourier()
-					COURIER_TEAM[i]:AddNewModifier(COURIER_TEAM[i], nil, "modifier_courier_turbo", {})
-					COURIER_TEAM[i]:RemoveModifierByName("modifier_magic_immune")
-					COURIER_TEAM[i]:AddAbility("courier_movespeed"):SetLevel(1)
-					COURIER_TEAM[i]:RemoveAbility("imba_courier_autodeliver")
+					if pos[i] then
+						COURIER_TEAM[i] = CreateUnitByName("npc_dota_courier", pos[i]:GetAbsOrigin(), true, nil, nil, i)
+						COURIER_TEAM[i]:UpgradeToFlyingCourier()
+						COURIER_TEAM[i]:AddNewModifier(COURIER_TEAM[i], nil, "modifier_courier_turbo", {})
+						COURIER_TEAM[i]:RemoveModifierByName("modifier_magic_immune")
+						COURIER_TEAM[i]:AddAbility("courier_movespeed"):SetLevel(1)
+						COURIER_TEAM[i]:RemoveAbility("imba_courier_autodeliver")
+					end
 				end
 			end
 

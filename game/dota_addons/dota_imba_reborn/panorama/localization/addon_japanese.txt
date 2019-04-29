@@ -424,6 +424,7 @@
 	"overtime" "OVERTIME!"
 	"overtimeinstructions" "SCORE TO WIN"
 	"picked_hero" "Picked"
+	"playback_buttoncategory" "Controllers"
 	"remaining" "REMAINING"
 	"repick_button" "Repick Hero"
 	"scoreboard_tool_tip_active_disable_help" "(DISABLED)"

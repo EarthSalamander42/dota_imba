@@ -424,6 +424,7 @@
 	"overtime" "加时赛"
 	"overtimeinstructions" "目标点数："
 	"picked_hero" "已选择"
+	"playback_buttoncategory" "Controllers"
 	"remaining" "剩余"
 	"repick_button" "重新选择（Repick）"
 	"scoreboard_tool_tip_active_disable_help" "（已生效）"

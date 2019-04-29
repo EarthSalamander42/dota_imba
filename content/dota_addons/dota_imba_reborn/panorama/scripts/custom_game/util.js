@@ -147,7 +147,15 @@ function HideIMR(panel) {
 }
 
 function OverrideTopBarHeroImage(args) {
-	var arcana_level = args.arcana
+	var arcana_level = 0;
+	var ply_battlepass = CustomNetTables.GetTableValue("battlepass", Game.GetLocalPlayerID());
+
+	if (ply_battlepass) {
+		if (ply_battlepass.arcana[args.hero_name]) {
+			arcana_level = ply_battlepass.arcana[args.hero_name];
+		}
+	}
+
 	var team = "Radiant"
 	if (Players.GetTeam(Players.GetLocalPlayer()) == 3) {
 		team = "Dire"
@@ -162,13 +170,16 @@ GameEvents.Subscribe("override_hero_image", OverrideTopBarHeroImage);
 if (FindDotaHudElement("RadiantPlayer" + Players.GetLocalPlayer()).FindChildTraverse("HeroImage")) {
 	var panel =  FindDotaHudElement("RadiantPlayer" + Players.GetLocalPlayer()).FindChildTraverse("HeroImage")
 	$.Msg(panel)
-	OverrideHeroImage("2", panel, "pudge", "topbar")
+	OverrideHeroImage("0", panel, "lina")
 }
 */
 
 function OverrideHeroImage(arcana_level, panel, hero_name) {
-	if (arcana_level != false) {
-		if (arcana_level > 1) {arcana_level = 1}
+	for (var i = 0; i < panel.GetChildCount(); i++) {
+		panel.GetChild(i).DeleteAsync(0);
+	}
+
+	if (arcana_level !== false) {
 		// list of heroes wich have arcana implented in imbattlepass
 		var newheroimage = $.CreatePanel('Panel', panel, '');
 		newheroimage.style.width = "100%";

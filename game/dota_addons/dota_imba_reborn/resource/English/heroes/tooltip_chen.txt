@@ -55,7 +55,7 @@
 "DOTA_Tooltip_modifier_imba_chen_penitence_Description"					"Reducing movement speed by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%."
 
 "DOTA_Tooltip_modifier_imba_chen_penitence_buff"						"Penitence Buff"
-"DOTA_Tooltip_modifier_imba_chen_penitence_buff_Description"			"Increasing attack speed by %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT%.
+"DOTA_Tooltip_modifier_imba_chen_penitence_buff_Description"			"Increasing attack speed by %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT%."
 
 "DOTA_Tooltip_modifier_imba_chen_holy_persuasion"						"Holy Persuasion"
 "DOTA_Tooltip_modifier_imba_chen_holy_persuasion_Description"			"Persuaded to Chen's cause."

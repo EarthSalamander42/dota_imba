@@ -424,6 +424,7 @@
 	"overtime" "NACHSPIELZEIT!"
 	"overtimeinstructions" "PUNKTE FÜR SIEG"
 	"picked_hero" "Benutzt"
+	"playback_buttoncategory" "Controllers"
 	"remaining" "VERBLEIBEND"
 	"repick_button" "Anderen Helden Wählen"
 	"scoreboard_tool_tip_active_disable_help" "(DEAKTIVIERT)"

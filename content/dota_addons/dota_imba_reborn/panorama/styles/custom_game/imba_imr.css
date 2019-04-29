@@ -47,6 +47,42 @@
 	}
 }
 
+@keyframes 'breathe_arcana'
+{
+	0%
+	{
+		box-shadow: inset #88ff4d 0 0 1px 0;
+	}
+
+	50%
+	{
+		box-shadow: inset #88ff4d 0 0 5px 0;
+	}
+
+	100%
+	{
+		box-shadow: inset #88ff4d 0 0 1px 0;
+	}
+}
+
+@keyframes 'breathe_immortal'
+{
+	0%
+	{
+		box-shadow: inset #e6b800 0 0 1px 0;
+	}
+
+	50%
+	{
+		box-shadow: inset #e6b800 0 0 5px 0;
+	}
+
+	100%
+	{
+		box-shadow: inset #e6b800 0 0 1px 0;
+	}
+}
+
 .Battlepass
 {
 	width: 100%;
@@ -707,6 +743,7 @@
 	opacity: 1;
 }
 .BattlepassRewardLabel {
+	width: 92%;
 	horizontal-align: left;
 	font-size: 12px;
 	vertical-align: top;
@@ -733,8 +770,9 @@
 }
 
 .BattlepassRewardLabelLocked {
+	width: 92%;
 	horizontal-align: left;
-	font-size: 12px;
+	font-size: 10px;
 	vertical-align: top;
 	letter-spacing: 1px;
 	align: center center;
@@ -991,11 +1029,17 @@
 /* colors */
 
 .arcana_border {
-	border: 1px solid #88ff4d;
+	animation-name: breathe_arcana;
+	animation-duration: 2.0s;
+	animation-timing-function: ease-in;
+	animation-iteration-count: infinite;
 }
 
 .immortal_border {
-	border: 1px solid #e6b800;
+	animation-name: breathe_immortal;
+	animation-duration: 2.0s;
+	animation-timing-function: ease-in;
+	animation-iteration-count: infinite;
 }
 
 .arcana_text {

@@ -12,7 +12,7 @@ DONATOR_COLOR[9] = {185, 75, 10} -- Gaben Donator
 DONATOR_COLOR[10] = {255, 255, 255}
 
 IMBA_DONATOR_COMPANION = {}
-IMBA_DONATOR_COMPANION["76561198015161808"] = "npc_donator_companion_crux"
+IMBA_DONATOR_COMPANION["76561198015161808"] = "npc_donator_companion_zonnoz"
 IMBA_DONATOR_COMPANION["76561198094835750"] = "npc_donator_companion_zonnoz"
 IMBA_DONATOR_COMPANION["76561198003571172"] = "npc_donator_companion_baumi"
 IMBA_DONATOR_COMPANION["76561198014254115"] = "npc_donator_companion_icefrog"
@@ -30,6 +30,7 @@ IMBA_DONATOR_COMPANION["76561198148311002"] = "npc_donator_companion_rubick_arca
 IMBA_DONATOR_COMPANION["76561197995265925"] = "npc_donator_companion_rubick_arcana" -- General Atrox
 IMBA_DONATOR_COMPANION["76561198046069202"] = "npc_donator_companion_crux"
 IMBA_DONATOR_COMPANION["76561197969985809"] = "npc_donator_companion_phish"
+IMBA_DONATOR_COMPANION["76561198065838676"] = "npc_donator_companion_miku"
 -- IMBA_DONATOR_COMPANION["76561198330946475"] = "npc_donator_companion_deadknight"
 
 IMBA_DONATOR_STATUE = {}
@@ -58,4 +59,5 @@ DONATOR_COMPANION_ADDITIONAL_INFO["models/courier/donkey_unicorn/donkey_unicorn_
 DONATOR_COMPANION_ADDITIONAL_INFO["models/heroes/phoenix/phoenix_bird.vmdl"] = {"particles/units/heroes/hero_phoenix/phoenix_ambient.vpcf", true}
 DONATOR_COMPANION_ADDITIONAL_INFO["models/courier/donkey_crummy_wizard_2014/donkey_crummy_wizard_2014_flying.vmdl"] = {"particles/econ/courier/courier_hwytty/courier_hwytty_ambient.vpcf"}
 DONATOR_COMPANION_ADDITIONAL_INFO["models/courier/sw_donkey/sw_donkey_flying.vmdl"] = {"particles/econ/courier/courier_dolfrat_and_roshinante/courier_dolfrat_and_roshinante_a.vpcf"}
+DONATOR_COMPANION_ADDITIONAL_INFO["models/items/courier/nian_courier/nian_courier.vmdl"] = {"particles/econ/courier/courier_nian/courier_nian_ambient.vpcf"}
 -- DONATOR_COMPANION_ADDITIONAL_INFO["models/items/rubick/rubick_arcana/rubick_arcana_base.vmdl"] = {""}
