@@ -250,7 +250,7 @@
 				"var_type"				"FIELD_INTEGER"
 				"max_units"				"2 3 4 5"
 				//"LinkedSpecialBonus"	"special_bonus_unique_chen_1"
-				"LinkedSpecialBonus"	"special_bonus_unique_chen_4"
+				"LinkedSpecialBonus"	"special_bonus_imba_chen_holy_persuasion_max_unit_increase"
 			}
 			"02"
 			{

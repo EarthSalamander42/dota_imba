@@ -29,7 +29,7 @@
 		"Ability17"		"special_bonus_imba_chen_remnants_of_penitence"
 		
 		// Removed Talents
-		"Ability16"		"special_bonus_unique_chen_1"
-		"Ability17"		"special_bonus_unique_chen_2"
+		//"Ability16"		"special_bonus_unique_chen_1"
+		//"Ability17"		"special_bonus_unique_chen_2"
 	}
 }
