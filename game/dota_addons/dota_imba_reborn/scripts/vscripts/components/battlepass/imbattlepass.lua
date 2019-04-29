@@ -20,7 +20,7 @@
 -- to add soon:
 -- Maelstrom (particles/econ/events/ti8/maelstorm_ti8.vpcf) -- jarnbjorn use a yellow particle while others use the blue one
 -- Mjollnir shield (particles/econ/events/ti8/mjollnir_shield_ti8.vpcf) -- jarnbjorn use a yellow particle while others use the blue one
--- Phase Boots (particles/econ/events/ti8/phase_boots_ti8.vpcf) -- lifesteal boots use ti8 cosmetic
+-- Phase Boots (particles/econ/events/ti8/phase_boots_ti8.vpcf) -- lifesteal boots use ti8 cosmetic already
 
 if Imbattlepass == nil then Imbattlepass = class({}) end
 local next_reward = true
@@ -37,7 +37,7 @@ IMBATTLEPASS_LEVEL_REWARD[15]	= "vengefulspirit_immortal"
 IMBATTLEPASS_LEVEL_REWARD[16]	= "force_staff"
 IMBATTLEPASS_LEVEL_REWARD[18]	= "blink2"
 IMBATTLEPASS_LEVEL_REWARD[22]	= "fountain3"
-IMBATTLEPASS_LEVEL_REWARD[26]	= "bottle"
+-- IMBATTLEPASS_LEVEL_REWARD[26]	= "bottle"
 IMBATTLEPASS_LEVEL_REWARD[27]	= "blink3"
 IMBATTLEPASS_LEVEL_REWARD[30]	= "zuus_arcana"
 IMBATTLEPASS_LEVEL_REWARD[31]	= "fountain4"
@@ -49,7 +49,8 @@ IMBATTLEPASS_LEVEL_REWARD[44]	= "radiance"
 IMBATTLEPASS_LEVEL_REWARD[45]	= "blink5"
 IMBATTLEPASS_LEVEL_REWARD[48]	= "force_staff3"
 IMBATTLEPASS_LEVEL_REWARD[49]	= "fountain6"
-IMBATTLEPASS_LEVEL_REWARD[50]	= "bottle2"
+-- IMBATTLEPASS_LEVEL_REWARD[50]	= "bottle2"
+IMBATTLEPASS_LEVEL_REWARD[52]	= "enigma_mythical"
 IMBATTLEPASS_LEVEL_REWARD[54]	= "blink6"
 IMBATTLEPASS_LEVEL_REWARD[55]	= "lina_arcana"
 IMBATTLEPASS_LEVEL_REWARD[58]	= "fountain7"
@@ -62,7 +63,7 @@ end
 IMBATTLEPASS_LEVEL_REWARD[67]	= "fountain8"
 IMBATTLEPASS_LEVEL_REWARD[70]	= "mekansm2"
 IMBATTLEPASS_LEVEL_REWARD[72]	= "blink8"
-IMBATTLEPASS_LEVEL_REWARD[74]	= "bottle3"
+-- IMBATTLEPASS_LEVEL_REWARD[74]	= "bottle3"
 IMBATTLEPASS_LEVEL_REWARD[76]	= "fountain9"
 IMBATTLEPASS_LEVEL_REWARD[80]	= "force_staff5"
 IMBATTLEPASS_LEVEL_REWARD[75]	= "pudge_arcana"
@@ -74,7 +75,7 @@ IMBATTLEPASS_LEVEL_REWARD[94]	= "fountain11"
 if next_reward_shown then
 	IMBATTLEPASS_LEVEL_REWARD[95]	= "juggernaut_arcana2"
 end
-IMBATTLEPASS_LEVEL_REWARD[98]	= "bottle4"
+-- IMBATTLEPASS_LEVEL_REWARD[98]	= "bottle4"
 IMBATTLEPASS_LEVEL_REWARD[99]	= "blink11"
 IMBATTLEPASS_LEVEL_REWARD[100]	= "shiva"
 IMBATTLEPASS_LEVEL_REWARD[103]	= "fountain12"
@@ -85,15 +86,14 @@ IMBATTLEPASS_LEVEL_REWARD[110]	= "pudge_arcana2"
 IMBATTLEPASS_LEVEL_REWARD[112]	= "fountain13"
 IMBATTLEPASS_LEVEL_REWARD[120]	= "sheepstick2"
 IMBATTLEPASS_LEVEL_REWARD[121]	= "fountain14"
-IMBATTLEPASS_LEVEL_REWARD[122]	= "bottle5"
+-- IMBATTLEPASS_LEVEL_REWARD[122]	= "bottle5"
 IMBATTLEPASS_LEVEL_REWARD[126]	= "fountain17"
 IMBATTLEPASS_LEVEL_REWARD[130]	= "fountain15"
 IMBATTLEPASS_LEVEL_REWARD[132]	= "radiance3"
-if next_reward_shown then
-	IMBATTLEPASS_LEVEL_REWARD[140]	= "wisp_arcana"
-end
+IMBATTLEPASS_LEVEL_REWARD[140]	= "wisp_arcana"
 IMBATTLEPASS_LEVEL_REWARD[146]	= "fountain18"
 IMBATTLEPASS_LEVEL_REWARD[150]	= "shiva2"
+IMBATTLEPASS_LEVEL_REWARD[175]	= "enigma_immortal"
 IMBATTLEPASS_LEVEL_REWARD[200]	= "shiva3"
 IMBATTLEPASS_LEVEL_REWARD[275]	= "pudge_immortal"
 
@@ -115,6 +115,7 @@ function Imbattlepass:Init()
 	IMBATTLEPASS_ZUUS = {}
 	IMBATTLEPASS_LINA = {}
 	IMBATTLEPASS_WISP = {}
+	IMBATTLEPASS_ENIGMA = {}
 
 	for k, v in pairs(IMBATTLEPASS_LEVEL_REWARD) do
 		if string.find(v, "fountain") then
@@ -147,6 +148,8 @@ function Imbattlepass:Init()
 			IMBATTLEPASS_LINA[v] = k
 		elseif string.find(v, "wisp") then
 			IMBATTLEPASS_WISP[v] = k
+		elseif string.find(v, "enigma") then
+			IMBATTLEPASS_ENIGMA[v] = k
 		end
 	end
 
@@ -163,14 +166,14 @@ function Imbattlepass:AddItemEffects(hero)
 	Imbattlepass:GetShivaEffect(hero)
 	Imbattlepass:GetMekansmEffect(hero)
 	Imbattlepass:GetFountainEffect(hero)
-	Imbattlepass:GetBottleEffect(hero)
+--	Imbattlepass:GetBottleEffect(hero)
 
 	-- some effects override some items effects, need to call it after items setup
 	Imbattlepass:GetHeroEffect(hero)
 end
 
 function Imbattlepass:GetRewardUnlocked(ID)
-	if IsInToolsMode() then return 500 end
+	if IsInToolsMode() then return 1000 end
 	if CustomNetTables:GetTableValue("player_table", tostring(ID)) then
 		if CustomNetTables:GetTableValue("player_table", tostring(ID)).Lvl then
 			return CustomNetTables:GetTableValue("player_table", tostring(ID)).Lvl
@@ -404,7 +407,7 @@ function Imbattlepass:GetFountainEffect(hero)
 		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FOUNTAIN["fountain12"] then
 			effect = "particles/econ/events/ti6/radiant_fountain_regen_ti6_lvl2.vpcf"
 		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FOUNTAIN["fountain11"] then
-			effect = "particles/econ/events/ti5/radiant_fountain_regen_ti6.vpcf"
+			effect = "particles/econ/events/ti6/radiant_fountain_regen_ti6.vpcf"
 		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FOUNTAIN["fountain10"] then
 			effect = "particles/econ/events/ti4/radiant_fountain_regen_ti4.vpcf"
 		elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_FOUNTAIN["fountain9"] then
@@ -460,17 +463,88 @@ function Imbattlepass:GetBottleEffect(hero)
 end
 
 function Imbattlepass:GetHeroEffect(hero)
+	if hero:GetUnitName() == "npc_dota_hero_juggernaut" then
+		hero.blade_dance_effect = "particles/units/heroes/hero_juggernaut/juggernaut_crit_tgt.vpcf"
+		hero.blade_dance_sound = "Hero_Juggernaut.BladeDance"
+		hero.omni_slash_hit_effect = "particles/units/heroes/hero_juggernaut/juggernaut_omni_slash_tgt.vpcf"
+		hero.omni_slash_trail_effect = "particles/units/heroes/hero_juggernaut/juggernaut_omni_slash_trail.vpcf"
+		hero.omni_slash_dash_effect = "particles/units/heroes/hero_juggernaut/juggernaut_omni_dash.vpcf"
+		hero.omni_slash_status_effect = "particles/status_fx/status_effect_omnislash.vpcf"
+		hero.omni_slash_end = "particles/units/heroes/hero_juggernaut/juggernaut_omni_end.vpcf"
+		hero.omni_slash_light = "particles/units/heroes/hero_juggernaut/juggernaut_omnislash_light.vpcf"
+	elseif hero:GetUnitName() == "npc_dota_hero_wisp" then
+		print("setup wisp basic override")
+		hero.tether_effect = "particles/units/heroes/hero_wisp/wisp_tether.vpcf"
+		hero.spirits_effect = "particles/units/heroes/hero_wisp/wisp_guardian.vpcf"
+		hero.spirits_explosion_effect = "particles/units/heroes/hero_wisp/wisp_guardian_explosion.vpcf"
+		hero.spirits_explosion_small_effect = "particles/units/heroes/hero_wisp/wisp_guardian_explosion_small.vpcf"
+		hero.overcharge_effect = "particles/units/heroes/hero_wisp/wisp_overcharge.vpcf"
+		hero.relocate_channel_effect = "particles/units/heroes/hero_wisp/wisp_relocate_channel.vpcf"
+		hero.relocate_marker_effect = "particles/units/heroes/hero_wisp/wisp_relocate_marker.vpcf"
+		hero.relocate_teleport_effect = "particles/units/heroes/hero_wisp/wisp_relocate_teleport.vpcf"
+		hero.relocate_teleport_out_effect = "particles/units/heroes/hero_wisp/wisp_relocate_teleport_out.vpcf"
+		hero.relocate_marker_endpoint_effect = "particles/units/heroes/hero_wisp/wisp_relocate_marker_endpoint.vpcf"
+		hero.death_effect = "particles/units/heroes/hero_wisp/wisp_death.vpcf"
+		hero.relocate_timer_buff = "particles/units/heroes/hero_wisp/wisp_relocate_timer_buff.vpcf"
+
+		hero.relocate_sound = "Hero_Wisp.Relocate"
+		hero.relocate_return_in_sound = "Hero_Wisp.Return"
+		hero.relocate_return_out_sound = "Hero_Wisp.TeleportOut"
+	end
+
 	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) ~= nil then
-		if hero:GetUnitName() == "npc_dota_hero_juggernaut" then
+		if hero:GetUnitName() == "npc_dota_hero_enigma" then
+			if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_ENIGMA["enigma_immortal"] then
+				Wearable:_WearProp(hero, "8326", "arms")
+
+				hero.black_hole_effect = "particles/hero/enigma/enigma_blackhole_ti5_scaleable.vpcf"
+				hero.black_hole_sound = "Imba.EnigmaBlackHoleTi5"
+				hero.black_hole_icon = 1
+			elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_ENIGMA["enigma_mythical"] then
+				Wearable:_WearProp(hero, "12329", "arms")
+				Wearable:_WearProp(hero, "12330", "armor")
+				Wearable:_WearProp(hero, "12332", "head")
+				hero.eidolon_model = "models/items/enigma/eidolon/absolute_zero_updated_eidolon/absolute_zero_updated_eidolon.vmdl"
+			end
+		elseif hero:GetUnitName() == "npc_dota_hero_juggernaut" then
 			if next_reward_shown == true and Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_JUGGERNAUT["juggernaut_arcana"] then
 				local style = 0
 				if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_JUGGERNAUT["juggernaut_arcana2"] then
 					style = 1
 				end
 
-				Wearable:_WearProp(hero, "9059", "head", style)
+				if style == 0 then
+					hero.blade_dance_effect = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_crit_tgt.vpcf"
+					hero.omni_slash_hit_effect = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_omni_slash_tgt.vpcf"
+					hero.omni_slash_trail_effect = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_omni_slash_trail.vpcf"
+					hero.omni_slash_dash_effect = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_omni_dash.vpcf"
+					hero.omni_slash_status_effect = "particles/econ/items/juggernaut/jugg_arcana/status_effect_jugg_arcana_omni.vpcf"
+					hero.omni_slash_end = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_omni_end.vpcf"
+					hero.arcana_trigger_effect = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_trigger.vpcf"
+					hero.omni_slash_light = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_omnislash_light.vpcf"
+				elseif style == 1 then
+					hero.blade_dance_effect = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_v2_crit_tgt.vpcf"
+					hero.omni_slash_hit_effect = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_v2_omni_slash_tgt.vpcf"
+					hero.omni_slash_trail_effect = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_v2_omni_slash_trail.vpcf"
+					hero.omni_slash_dash_effect = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_v2_omni_dash.vpcf"
+					hero.omni_slash_status_effect = "particles/econ/items/juggernaut/jugg_arcana/status_effect_jugg_arcana_v2_omni.vpcf"
+					hero.omni_slash_end = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_v2_omni_end.vpcf"
+					hero.arcana_trigger_effect = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_v2_trigger.vpcf"
+					hero.omni_slash_light = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_v2_omnislash_light.vpcf"
+				end
 
-				hero.blade_fury_effect = "particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_blade_fury.vpcf"
+				hero.blade_dance_sound = "Hero_Juggernaut.BladeDance.Arcana"
+
+				hero:AddNewModifier(hero, nil, "modifier_juggernaut_arcana", {})
+				hero:AddNewModifier(hero, nil, "modifier_wearable_arcana_spellicons", {style = style})
+				Wearable:_WearProp(hero, "9059", "head", style)
+			end
+		elseif hero:GetUnitName() == "npc_dota_hero_lina" then
+			if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LINA["lina_arcana"] then
+				Wearable:_WearProp(hero, "4794", "head")
+
+				hero.dragon_slave_effect = "particles/econ/items/lina/lina_head_headflame/lina_spell_dragon_slave_headflame.vpcf"
+				hero:AddNewModifier(hero, nil, "modifier_wearable_arcana_spellicons", {})
 			end
 		elseif hero:GetUnitName() == "npc_dota_hero_pudge" then
 			if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_PUDGE["pudge_arcana"] then
@@ -480,6 +554,9 @@ function Imbattlepass:GetHeroEffect(hero)
 				end
 
 				Wearable:_WearProp(hero, "7756", "back", style)
+
+				-- custom icons
+				hero:AddNewModifier(hero, nil, "modifier_wearable_arcana_spellicons", {style = style})
 			end
 
 			hero.hook_pfx = "particles/units/heroes/hero_pudge/pudge_meathook.vpcf"
@@ -496,27 +573,37 @@ function Imbattlepass:GetHeroEffect(hero)
 				hero.magic_missile_sound = "Hero_VengefulSpirit.MagicMissile.TI8"
 				hero.magic_missile_sound_hit = "Hero_VengefulSpirit.MagicMissileImpact.TI8"
 			end
-		elseif hero:GetUnitName() == "npc_dota_hero_lina" then
-			if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LINA["lina_arcana"] then
-				Wearable:_WearProp(hero, "4794", "head")
-
-				hero.dragon_slave_effect = "particles/econ/items/lina/lina_head_headflame/lina_spell_dragon_slave_headflame.vpcf"
-				hero.dragon_slave_icon = 1
-				hero.fiery_soul_icon = 1
-			end
 		elseif hero:GetUnitName() == "npc_dota_hero_wisp" then
-			if next_reward_shown == true and Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_WISP["wisp_arcana"] then
+			if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_WISP["wisp_arcana"] then
 				Wearable:_WearProp(hero, "9235", "head")
 
 				hero.tether_effect = "particles/econ/items/wisp/wisp_tether_ti7.vpcf"
-				hero.tether_icon = 1
+				hero.spirits_effect = "particles/econ/items/wisp/wisp_guardian_ti7.vpcf"
 				hero.spirits_explosion_effect = "particles/econ/items/wisp/wisp_guardian_explosion_ti7.vpcf"
-				hero.spirits_icon = 1
+				hero.spirits_explosion_small_effect = "particles/econ/items/wisp/wisp_guardian_explosion_small_ti7.vpcf"
 				hero.overcharge_effect = "particles/econ/items/wisp/wisp_overcharge_ti7.vpcf"
+				hero.relocate_channel_effect = "particles/econ/items/wisp/wisp_relocate_channel_ti7.vpcf"
+				hero.relocate_marker_effect = "particles/econ/items/wisp/wisp_relocate_marker_ti7.vpcf"
+				hero.relocate_teleport_effect = "particles/econ/items/wisp/wisp_relocate_teleport_ti7.vpcf"
+				hero.relocate_teleport_out_effect = "particles/econ/items/wisp/wisp_relocate_teleport_ti7_out.vpcf"
+				hero.relocate_marker_endpoint_effect = "particles/econ/items/wisp/wisp_relocate_marker_ti7_endpoint.vpcf"
+				hero.death_effect = "particles/econ/items/wisp/wisp_death_ti7.vpcf"
+				hero.relocate_timer_buff = "particles/econ/items/wisp/wisp_relocate_timer_buff_ti7.vpcf"
+
+				hero.relocate_sound = "Hero_Wisp.Relocate.Arc"
+				hero.relocate_return_in_sound = "Hero_Wisp.Return.Arc"
+				hero.relocate_return_out_sound = "Hero_Wisp.TeleportOut.Arc"
+
+				hero.tether_icon = 1
+				hero.spirits_icon = 1
+
+				hero:AddNewModifier(hero, nil, "modifier_wearable_arcana_spellicons", {})
 			end
 		elseif hero:GetUnitName() == "npc_dota_hero_zuus" then
 			if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_ZUUS["zuus_arcana"] then
 				Wearable:_WearProp(hero, "6914", "head")
+				Wearable:_WearProp(hero, "8692", "arms")
+				Wearable:_WearProp(hero, "8693", "back")
 
 				hero.static_field_icon = 1
 				hero.static_field_effect = "particles/econ/items/zeus/arcana_chariot/zeus_arcana_static_field.vpcf"
@@ -529,11 +616,7 @@ function Imbattlepass:GetHeroEffect(hero)
 				hero.blink_effect_end = "particles/econ/items/zeus/arcana_chariot/zeus_arcana_blink_end.vpcf"
 				hero.blink_icon = "zuus"
 				hero.blink_sound = "Hero_Zeus.BlinkDagger.Arcana"
---			elseif hero:GetUnitName() == "npc_dota_hero_enigma" then
---				if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_ENIGMA["enigma_immortal"] then -- idk think of a number later
---					Wearable:_WearProp(hero, "12329", "arms")
---					Wearable:_WearProp(hero, "12330", "armor")
---				end
+				hero:AddNewModifier(hero, nil, "modifier_wearable_arcana_spellicons", {})
 			end
 		end
 	end
@@ -578,8 +661,6 @@ function HasLinaArcana(ID)
 end
 
 function HasWispArcana(ID)
-	if next_reward_shown == false then return nil end
-
 	if Imbattlepass:GetRewardUnlocked(ID) >= IMBATTLEPASS_LINA["lina_arcana"] then
 		return 0
 	else

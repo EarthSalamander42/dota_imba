@@ -14,11 +14,11 @@ function GetXPLevelByXp(xp)
 
 	for k, v in pairs(XP_level_table) do
 		if v > xp then
-			return k - 1
+			return k
 		end
 	end
 
-	return 1000
+	return 1
 end
 
 function GetXpProgressToNextLevel(xp)

@@ -518,7 +518,6 @@ end
 --  			Static Field  				--
 ----------------------------------------------
 LinkLuaModifier("modifier_imba_zuus_static_field", "components/abilities/heroes/hero_zuus.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_zuus_static_field_handler", "components/abilities/heroes/hero_zuus", LUA_MODIFIER_MOTION_NONE)
 
 imba_zuus_static_field = class({})
 
@@ -528,7 +527,7 @@ end
 
 function imba_zuus_static_field:GetAbilityTextureName()
 	if not IsClient() then return end
-	if not self:GetCaster().static_field_icon then return "zuus_static_field" end
+	if not self:GetCaster().arcana_style then return "zuus_static_field" end
 	return "custom/imba_zuus_static_field_arcana"
 end
 
@@ -545,14 +544,6 @@ function modifier_imba_zuus_static_field:DeclareFunctions()
 	}
 
 	return decFuncs
-end
-
-function modifier_imba_zuus_static_field:OnCreated()
-	if IsClient() then return end
-
-	if not self:GetParent():HasModifier("modifier_imba_zuus_static_field_handler") then
-		self:GetParent():AddNewModifier(self:GetParent(), nil, "modifier_imba_zuus_static_field_handler", {})
-	end
 end
 
 function modifier_imba_zuus_static_field:OnAbilityExecuted(keys)
@@ -643,25 +634,6 @@ function modifier_imba_zuus_static_field:Apply(target)
 	local static_charge_modifier = target:AddNewModifier(caster, ability, "modifier_imba_zuus_static_charge", {duration = duration}):SetDuration(duration * (1 - target:GetStatusResistance()), true)
 	if static_charge_modifier ~= nil then
 		static_charge_modifier:SetStackCount(static_charge_modifier:GetStackCount() + 1)	
-	end
-end
-
-if modifier_imba_zuus_static_field_handler == nil then modifier_imba_zuus_static_field_handler = class({}) end
-
-function modifier_imba_zuus_static_field_handler:IsHidden() return true end
-function modifier_imba_zuus_static_field_handler:RemoveOnDeath() return false end
-
-function modifier_imba_zuus_static_field_handler:OnCreated()
-	if self:GetCaster():IsIllusion() then self:Destroy() return end
-
-	if IsServer() then
-		if self:GetCaster().static_field_icon == nil then self:Destroy() return end
-		self:SetStackCount(self:GetCaster().static_field_icon)
-	end
-
-	if IsClient() then
-		if self:GetStackCount() == 0 then self:Destroy() return end
-		self:GetCaster().static_field_icon = self:GetStackCount()
 	end
 end
 
@@ -1180,13 +1152,9 @@ modifier_imba_zuus_on_nimbus = class({})
 ----------------------------------------------
 imba_zuus_thundergods_wrath = class({})
 
-function imba_zuus_thundergods_wrath:GetIntrinsicModifierName()
-	return "modifier_imba_zuus_thundergods_wrath_handler"
-end
-
 function imba_zuus_thundergods_wrath:GetAbilityTextureName()
 	if not IsClient() then return end
-	if not self:GetCaster().thundergods_wrath_icon then return "zuus_thundergods_wrath" end
+	if not self:GetCaster().arcana_style then return "zuus_thundergods_wrath" end
 	return "custom/imba_zuus_thundergods_wrath_arcana"
 end
 
@@ -1338,27 +1306,6 @@ function imba_zuus_thundergods_wrath:OnSpellStart()
 			ScreenShake(caster:GetAbsOrigin(), 50, 1, 1.0, 1000, 0, true)
 			caster:AddNewModifier(caster, self, "modifier_imba_zuus_thundergods_awakening", {duration = min(thundergods_focus_stacks * 3, 42)})
 		end
-	end
-end
-
-LinkLuaModifier("modifier_imba_zuus_thundergods_wrath_handler", "components/abilities/heroes/hero_zuus", LUA_MODIFIER_MOTION_NONE)
-
-if modifier_imba_zuus_thundergods_wrath_handler == nil then modifier_imba_zuus_thundergods_wrath_handler = class({}) end
-
-function modifier_imba_zuus_thundergods_wrath_handler:IsHidden() return true end
-function modifier_imba_zuus_thundergods_wrath_handler:RemoveOnDeath() return false end
-
-function modifier_imba_zuus_thundergods_wrath_handler:OnCreated()
-	if self:GetCaster():IsIllusion() then self:Destroy() return end
-
-	if IsServer() then
-		if self:GetCaster().thundergods_wrath_icon == nil then self:Destroy() return end
-		self:SetStackCount(self:GetCaster().thundergods_wrath_icon)
-	end
-
-	if IsClient() then
-		if self:GetStackCount() == 0 then self:Destroy() return end
-		self:GetCaster().thundergods_wrath_icon = self:GetStackCount()
 	end
 end
 

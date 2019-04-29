@@ -83,6 +83,24 @@
 	}
 }
 
+@keyframes 'breathe_mythical'
+{
+	0%
+	{
+		box-shadow: inset #720585 0 0 1px 0;
+	}
+
+	50%
+	{
+		box-shadow: inset #720585 0 0 5px 0;
+	}
+
+	100%
+	{
+		box-shadow: inset #720585 0 0 1px 0;
+	}
+}
+
 .Battlepass
 {
 	width: 100%;
@@ -739,6 +757,13 @@
 	wash-color: #000000a0;
 	brightness: 0.6;
 }
+
+.BattlepassRewardHeroIcon {
+	width: 25px;
+	height: 25px;
+	horizontal-align: right;
+	background-size: cover;
+}
 .BattlepassReward:hover .BattlepassRewardPanelUnlocked {
 	opacity: 1;
 }
@@ -1042,12 +1067,23 @@
 	animation-iteration-count: infinite;
 }
 
+.mythical_border {
+	animation-name: breathe_mythical;
+	animation-duration: 2.0s;
+	animation-timing-function: ease-in;
+	animation-iteration-count: infinite;
+}
+
 .arcana_text {
 	color:#88ff4d;
 }
 
 .immortal_text {
 	color:#e6b800;
+}
+
+.mythical_text {
+	color:#720585;
 }
 
 .gold {

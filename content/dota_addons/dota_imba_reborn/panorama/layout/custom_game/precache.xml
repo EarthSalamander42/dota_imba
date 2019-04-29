@@ -81,6 +81,9 @@
 			<Image src="file://panorama/images/custom_game/battlepass/hurricane_pike3.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/hurricane_pike4.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/hurricane_pike5.png" hittest="false" />
+			<Image src="file://panorama/images/custom_game/battlepass/enigma_immortal.png" hittest="false" />
+			<Image src="file://panorama/images/custom_game/battlepass/enigma_mythical.png" hittest="false" />
+			<Image src="file://panorama/images/custom_game/battlepass/wisp_arcana.png" hittest="false" />
 
 			<Image src="file://panorama/images/heroes/npc_dota_hero_malfurion.png" hittest="false" />
 			<Image src="file://panorama/images/heroes/npc_dota_hero_sohei.png" hittest="false" />
@@ -89,11 +92,13 @@
 			<Image src="file://panorama/images/heroes/npc_dota_hero_sly_king.png" hittest="false" />
 			<Image src="file://panorama/images/heroes/npc_dota_hero_storegga.png" hittest="false" />
 			<Image src="file://panorama/images/heroes/npc_dota_hero_dummy_dummy.png" hittest="false" />
-			<Image src="file://panorama/images/heroes/npc_dota_hero_pudge_arcana0.png" hittest="false" />
-			<Image src="file://panorama/images/heroes/npc_dota_hero_pudge_arcana1.png" hittest="false" />
 			<Image src="file://panorama/images/heroes/npc_dota_hero_juggernaut_arcana0.png" hittest="false" />
 			<Image src="file://panorama/images/heroes/npc_dota_hero_juggernaut_arcana1.png" hittest="false" />
+			<Image src="file://panorama/images/heroes/npc_dota_hero_pudge_arcana0.png" hittest="false" />
+			<Image src="file://panorama/images/heroes/npc_dota_hero_pudge_arcana1.png" hittest="false" />
 			<Image src="file://panorama/images/heroes/npc_dota_hero_lina_arcana0.png" hittest="false" />
+			<Image src="file://panorama/images/heroes/npc_dota_hero_wisp_arcana0.png" hittest="false" />
+			<Image src="file://panorama/images/heroes/npc_dota_hero_zuus_arcana0.png" hittest="false" />
 
 			<Image src="file://panorama/images/heroes/icons/npc_dota_hero_hell_malfurion.png" hittest="false" />
 			<Image src="file://panorama/images/heroes/icons/npc_dota_hero_hell_empress.png" hittest="false" />
