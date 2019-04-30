@@ -32,7 +32,7 @@
 		"Ability15"					"special_bonus_imba_wisp_10"
 		"Ability16"					"special_bonus_imba_wisp_9"
 		"Ability17"					"special_bonus_imba_wisp_6"
-		
+
 		// Removed Talents
 		//"Ability10"					"special_bonus_imba_wisp_3" // Spirits Truesight
 		//"Ability12"					"special_bonus_imba_wisp_1"	// Overcharge Bonus

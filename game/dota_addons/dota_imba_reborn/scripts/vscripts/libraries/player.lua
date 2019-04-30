@@ -195,8 +195,12 @@ function CDOTA_BaseNPC:DropRapier(hItem, sNewItemName)
 	hRapier:LaunchLoot(false, 250, 0.5, vLocation + vRandomVector)
 end
 
-function CDOTA_BaseNPC:FindItemByName(ItemName, bStash)
-	local count = 8
+function CDOTA_BaseNPC:FindItemByName(ItemName, bBackpack, bStash)
+	local count = 5
+
+	if bBackpack == true then
+		count = 8
+	end
 
 	if bStash == true then
 		count = 14

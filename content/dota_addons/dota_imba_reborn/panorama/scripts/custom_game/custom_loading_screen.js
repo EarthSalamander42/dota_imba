@@ -40,8 +40,7 @@ function fetch() {
 	if (Game.GetMapInfo().map_display_name == "imba_1v1")
 		DisableVoting();
 
-
-	var game_version = game_options[1]
+	var game_version = game_options.value
 
 	if (isInt(game_version))
 		game_version = game_version.toString() + ".0";
@@ -168,9 +167,8 @@ function SetGameModeTooltips() {
 */
 
 function DisableVoting() {
-		$("#imba-loading-title-vote").style.visibility = "collapse";
+	$("#imba-loading-title-vote").style.visibility = "collapse";
 }
-
 
 (function(){
 	HoverableLoadingScreen();

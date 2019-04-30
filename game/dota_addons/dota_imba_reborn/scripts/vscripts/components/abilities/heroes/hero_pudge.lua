@@ -10,9 +10,7 @@ imba_pudge_sharp_hook = imba_pudge_sharp_hook or class({})
 imba_pudge_light_hook = imba_pudge_light_hook or class({})
 
 LinkLuaModifier("modifier_imba_hook_sharp_stack","components/abilities/heroes/hero_pudge", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_pudge_sharp_hook_handler","components/abilities/heroes/hero_pudge", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_hook_light_stack","components/abilities/heroes/hero_pudge", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_pudge_light_hook_handler","components/abilities/heroes/hero_pudge", LUA_MODIFIER_MOTION_NONE)
 
 function imba_pudge_sharp_hook:GetIntrinsicModifierName() return "modifier_imba_hook_sharp_stack" end
 function imba_pudge_light_hook:GetIntrinsicModifierName() return "modifier_imba_hook_light_stack" end
@@ -71,14 +69,14 @@ end
 
 function imba_pudge_sharp_hook:GetAbilityTextureName()
 	if not IsClient() then return end
-	if not self:GetCaster().sharp_hook_icon then return "custom/pudge_sharp_hook" end
-	return "custom/pudge_sharp_hook_arcana_style"..self:GetCaster().sharp_hook_icon
+	if not self:GetCaster().arcana_style then return "custom/pudge_sharp_hook" end
+	return "custom/pudge_sharp_hook_arcana_style"..self:GetCaster().arcana_style
 end
 
 function imba_pudge_light_hook:GetAbilityTextureName()
 	if not IsClient() then return end
-	if not self:GetCaster().light_hook_icon then return "custom/pudge_light_hook" end
-	return "custom/pudge_light_hook_arcana_style"..self:GetCaster().light_hook_icon
+	if not self:GetCaster().arcana_style then return "custom/pudge_light_hook" end
+	return "custom/pudge_light_hook_arcana_style"..self:GetCaster().arcana_style
 end
 
 modifier_imba_hook_sharp_stack = modifier_imba_hook_sharp_stack or class({})
@@ -96,12 +94,6 @@ function modifier_imba_hook_sharp_stack:OnCreated()
 	if self:GetCaster() and self:GetCaster().FindAbilityByName and self:GetCaster():FindAbilityByName("imba_pudge_meat_hook") then
 		self:SetStackCount(UpdateHookStacks(self:GetCaster()))
 	end
-
-	if IsServer() then
-		if not self:GetCaster():HasModifier("modifier_imba_pudge_sharp_hook_handler") then
-			self:GetCaster():AddNewModifier(self:GetCaster(), nil, "modifier_imba_pudge_sharp_hook_handler", {})
-		end
-	end
 end
 
 function modifier_imba_hook_sharp_stack:OnIntervalThink()
@@ -117,25 +109,6 @@ function modifier_imba_hook_sharp_stack:OnIntervalThink()
 	end
 end
 
-if modifier_imba_pudge_sharp_hook_handler == nil then modifier_imba_pudge_sharp_hook_handler = class({}) end
-
-function modifier_imba_pudge_sharp_hook_handler:IsHidden() return true end
-function modifier_imba_pudge_sharp_hook_handler:RemoveOnDeath() return false end
-
-function modifier_imba_pudge_sharp_hook_handler:OnCreated()
-	if self:GetCaster():IsIllusion() then self:Destroy() return end
-
-	if IsServer() then
-		if self:GetCaster().battlepass_arcana == nil then self:Destroy() return end
-		self:SetStackCount(self:GetCaster().battlepass_arcana + 1)
-	end
-
-	if IsClient() then
-		if self:GetStackCount() == 0 then self:Destroy() return end
-		self:GetCaster().sharp_hook_icon = self:GetStackCount() - 1
-	end
-end
-
 function modifier_imba_hook_light_stack:IsDebuff() return false end
 function modifier_imba_hook_light_stack:IsHidden() return false end
 function modifier_imba_hook_light_stack:IsPurgable() return false end
@@ -147,12 +120,6 @@ function modifier_imba_hook_light_stack:OnCreated()
 
 	if self:GetCaster() and self:GetCaster().FindAbilityByName and self:GetCaster():FindAbilityByName("imba_pudge_meat_hook") then
 		self:SetStackCount(UpdateHookStacks(self:GetCaster()))
-	end
-
-	if IsServer() then
-		if not self:GetCaster():HasModifier("modifier_imba_pudge_light_hook_handler") then
-			self:GetCaster():AddNewModifier(self:GetCaster(), nil, "modifier_imba_pudge_light_hook_handler", {})
-		end
 	end
 end
 
@@ -166,24 +133,6 @@ function modifier_imba_hook_light_stack:OnIntervalThink()
 		else
 			self:GetAbility():ToggleAbility()
 		end
-	end
-end
-
-if modifier_imba_pudge_light_hook_handler == nil then modifier_imba_pudge_light_hook_handler = class({}) end
-
-function modifier_imba_pudge_light_hook_handler:IsHidden() return true end
-
-function modifier_imba_pudge_light_hook_handler:OnCreated()
-	if self:GetCaster():IsIllusion() then self:Destroy() return end
-
-	if IsServer() then
-		if self:GetCaster().battlepass_arcana == nil then self:Destroy() return end
-		self:SetStackCount(self:GetCaster().battlepass_arcana + 1)
-	end
-
-	if IsClient() then
-		if self:GetStackCount() == 0 then self:Destroy() return end
-		self:GetCaster().light_hook_icon = self:GetStackCount() - 1
 	end
 end
 
@@ -627,8 +576,8 @@ end
 
 function imba_pudge_meat_hook:GetAbilityTextureName()
 	if not IsClient() then return end
-	if self:GetCaster().meat_hook_icon then
-		return "custom/pudge_meat_hook_arcana_style"..self:GetCaster().meat_hook_icon
+	if self:GetCaster().arcana_style then
+		return "custom/pudge_meat_hook_arcana_style"..self:GetCaster().arcana_style
 	else
 		return "pudge_meat_hook"
 	end
@@ -649,30 +598,16 @@ end
 
 function modifier_imba_pudge_meat_hook_handler:OnCreated()
 	if self:GetCaster():IsIllusion() then self:Destroy() return end
-
-	if IsServer() then
-		if self:GetCaster().battlepass_arcana == nil then self:Destroy() return end
-		self:SetStackCount(self:GetCaster().battlepass_arcana + 1)
-	end
-
-	if IsClient() then
-		if self:GetStackCount() == 0 then self:Destroy() return end
-		self:GetCaster().meat_hook_icon = self:GetStackCount() - 1
-	end
 end
 
 function modifier_imba_pudge_meat_hook_handler:GetActivityTranslationModifiers()
---	print(self:GetCaster().successful_hooks)
 	if self:GetCaster().successful_hooks == nil then self:GetCaster().successful_hooks = 0 end
 
 	if self:GetCaster().successful_hooks >= 1 and self:GetCaster().successful_hooks < 3 then
---		print("Small Streak!")
 		return "hook_streak_small"
 	elseif self:GetCaster().successful_hooks >= 3 and self:GetCaster().successful_hooks < 5 then
---		print("Medium Streak!")
 		return "hook_streak_medium"
 	elseif self:GetCaster().successful_hooks >= 5 then
---		print("Large Streak!")
 		return "hook_streak_large"
 	end
 end
@@ -804,7 +739,6 @@ imba_pudge_rot = imba_pudge_rot or class({})
 
 LinkLuaModifier("imba_pudge_rot_active","components/abilities/heroes/hero_pudge", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_rot_slow","components/abilities/heroes/hero_pudge", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_pudge_rot_handler","components/abilities/heroes/hero_pudge", LUA_MODIFIER_MOTION_NONE)
 
 function imba_pudge_rot:IsHiddenWhenStolen() 	return false end
 function imba_pudge_rot:IsRefreshable() 		return true  end
@@ -838,32 +772,10 @@ function imba_pudge_rot:OnToggle()
 	end
 end
 
-function imba_pudge_rot:GetIntrinsicModifierName()
-	return "modifier_imba_pudge_rot_handler"
-end
-
 function imba_pudge_rot:GetAbilityTextureName()
 	if not IsClient() then return end
-	if not self:GetCaster().rot_icon then return "pudge_rot" end
-	return "custom/pudge_rot_arcana_style"..self:GetCaster().rot_icon
-end
-
-if modifier_imba_pudge_rot_handler == nil then modifier_imba_pudge_rot_handler = class({}) end
-
-function modifier_imba_pudge_rot_handler:IsHidden() return true end
-
-function modifier_imba_pudge_rot_handler:OnCreated()
-	if self:GetCaster():IsIllusion() then self:Destroy() return end
-
-	if IsServer() then
-		if self:GetCaster().battlepass_arcana == nil then self:Destroy() return end
-		self:SetStackCount(self:GetCaster().battlepass_arcana + 1)
-	end
-
-	if IsClient() then
-		if self:GetStackCount() == 0 then self:Destroy() return end
-		self:GetCaster().rot_icon = self:GetStackCount() - 1
-	end
+	if not self:GetCaster().arcana_style then return "pudge_rot" end
+	return "custom/pudge_rot_arcana_style"..self:GetCaster().arcana_style
 end
 
 imba_pudge_rot_active = imba_pudge_rot_active or class({})
@@ -985,8 +897,8 @@ end
 
 function imba_pudge_flesh_heap:GetAbilityTextureName()
 	if not IsClient() then return end
-	if not self:GetCaster().flesh_heap_icon then return "pudge_flesh_heap" end
-	return "custom/pudge_flesh_heap_arcana_style"..self:GetCaster().flesh_heap_icon
+	if not self:GetCaster().arcana_style then return "pudge_flesh_heap" end
+	return "custom/pudge_flesh_heap_arcana_style"..self:GetCaster().arcana_style
 end
 
 modifier_imba_pudge_flesh_heap_handler = class({})
@@ -1020,32 +932,6 @@ function modifier_imba_pudge_flesh_heap_handler:OnDeath(params)
 			self:SetStackCount(self:GetStackCount() + 1)
 			local pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_pudge/pudge_fleshheap_count.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
 			ParticleManager:ReleaseParticleIndex(pfx)
-		end
-	end
-end
-
-function modifier_imba_pudge_flesh_heap_handler:OnCreated()
-	if self:GetCaster():IsIllusion() then self:Destroy() return end
-
-	if IsServer() then
-		self.max_stacks = self:GetAbility():GetSpecialValueFor("max_stacks")
-		if self:GetCaster().battlepass_arcana == nil then
-			self:GetCaster().battlepass_arcana = 0
-			self:SetStackCount(0)
-		else
-			self:SetStackCount(self:GetCaster().battlepass_arcana + 1)
-		end
-		
-		-- Let's not give random unfair advantages now, shall we?
-		Timers:CreateTimer(1.0, function()           
-			self:SetStackCount(0)
-		end)
-	end
-
-	if IsClient() then
-		if self:GetStackCount() ~= 0 then
-			self:GetCaster().flesh_heap_icon = self:GetStackCount() - 1
-			self:SetStackCount(0)
 		end
 	end
 end
@@ -1128,9 +1014,8 @@ end
 
 imba_pudge_dismember = imba_pudge_dismember or class({})
 
-LinkLuaModifier("modifier_dismember","components/abilities/heroes/hero_pudge", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_dismember","components/abilities/heroes/hero_pudge", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_pudge_dismember_buff","components/abilities/heroes/hero_pudge", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_pudge_dismember_handler","components/abilities/heroes/hero_pudge", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_pudge_dismember_pull", "components/abilities/heroes/hero_pudge", LUA_MODIFIER_MOTION_HORIZONTAL)
 
 function imba_pudge_dismember:GetChannelTime()
@@ -1156,11 +1041,11 @@ function imba_pudge_dismember:OnSpellStart()
 		end
 	end
 
-	self:GetCaster():StartGesture(ACT_DOTA_CHANNEL_ABILITY_4)
+--	self:GetCaster():StartGesture(ACT_DOTA_CHANNEL_ABILITY_4)
 
 	self.target = target
 	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_pudge_dismember_buff", {})
-	target:AddNewModifier(self:GetCaster(), self, "modifier_dismember", {duration = self.channelTime})
+	target:AddNewModifier(self:GetCaster(), self, "modifier_imba_dismember", {duration = self.channelTime})
 
 	if self:GetCaster().battlepass_arcana then
 		self.pfx = ParticleManager:CreateParticle("particles/econ/items/pudge/pudge_arcana/pudge_arcana_dismember_"..target:GetHeroType()..".vpcf", PATTACH_ABSORIGIN, target)
@@ -1169,22 +1054,23 @@ function imba_pudge_dismember:OnSpellStart()
 		ParticleManager:SetParticleControl(self.pfx, 15, target:GetFittingColor())
 	else
 		self.pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_pudge/pudge_dismember.vpcf", PATTACH_ABSORIGIN, target)
+		ParticleManager:SetParticleControlEnt(self.pfx, 0, self:GetCaster(), PATTACH_POINT_FOLLOW, "attach_attack1", self:GetCaster():GetAbsOrigin(), true)
 	end
 end
 
 function imba_pudge_dismember:OnChannelFinish(bInterrupted)
 	if self.target then
-		local target_buff = self.target:FindModifierByNameAndCaster("modifier_dismember", self:GetCaster())
+		local target_buff = self.target:FindModifierByNameAndCaster("modifier_imba_dismember", self:GetCaster())
 
 		if bInterrupted then
-			self.target:RemoveModifierByName("modifier_dismember")
+			self.target:RemoveModifierByName("modifier_imba_dismember")
 		end
 	end
 
 	local caster_buff = self:GetCaster():FindModifierByNameAndCaster("modifier_imba_pudge_dismember_buff", self:GetCaster())
 
 	--anti mage Spell Shield handle
-	local caster_debuff = self:GetCaster():FindModifierByName("modifier_dismember")
+	local caster_debuff = self:GetCaster():FindModifierByName("modifier_imba_dismember")
 
 	if caster_debuff then
 		caster_debuff:SetDuration(self.channelTime, true)
@@ -1194,45 +1080,23 @@ function imba_pudge_dismember:OnChannelFinish(bInterrupted)
 	if caster_buff then caster_buff:Destroy() end
 
 	if self.pfx then
-		ParticleManager:DestroyParticle(self.pfx, true)
+		ParticleManager:DestroyParticle(self.pfx, false)
 		ParticleManager:ReleaseParticleIndex(self.pfx)
 	end
 end
 
-function imba_pudge_dismember:GetIntrinsicModifierName()
-	return "modifier_imba_pudge_dismember_handler"
-end
-
 function imba_pudge_dismember:GetAbilityTextureName()
 	if not IsClient() then return end
-	if not self:GetCaster().dismember_icon then return "pudge_dismember" end
-	return "custom/pudge_dismember_arcana_style"..self:GetCaster().dismember_icon
+	if not self:GetCaster().arcana_style then return "pudge_dismember" end
+	return "custom/pudge_dismember_arcana_style"..self:GetCaster().arcana_style
 end
 
-if modifier_imba_pudge_dismember_handler == nil then modifier_imba_pudge_dismember_handler = class({}) end
+modifier_imba_dismember = class({})
 
-function modifier_imba_pudge_dismember_handler:IsHidden() return true end
+function modifier_imba_dismember:IsDebuff() return true end
+function modifier_imba_dismember:IsHidden() return false end
 
-function modifier_imba_pudge_dismember_handler:OnCreated()
-	if self:GetCaster():IsIllusion() then self:Destroy() return end
-
-	if IsServer() then
-		if self:GetCaster().battlepass_arcana == nil then self:Destroy() return end
-		self:SetStackCount(self:GetCaster().battlepass_arcana + 1)
-	end
-
-	if IsClient() then
-		if self:GetStackCount() == 0 then self:Destroy() return end
-		self:GetCaster().dismember_icon = self:GetStackCount() - 1
-	end
-end
-
-modifier_dismember = class({})
-
-function modifier_dismember:IsDebuff() return true end
-function modifier_dismember:IsHidden() return false end
-
-function modifier_dismember:OnCreated()
+function modifier_imba_dismember:OnCreated()
 	self:StartIntervalThink(1.0)
 
 	self:OnIntervalThink()
@@ -1245,7 +1109,7 @@ function modifier_dismember:OnCreated()
 	end
 end
 
-function modifier_dismember:OnIntervalThink()
+function modifier_imba_dismember:OnIntervalThink()
 	if not IsServer() then return end
 	local ability = self:GetAbility()
 	local dmg = ability:GetSpecialValueFor("dismember_damage") + self:GetCaster():GetStrength() * ability:GetSpecialValueFor("strength_damage") * 0.01
@@ -1260,7 +1124,7 @@ function modifier_dismember:OnIntervalThink()
 	ApplyDamage(damageTable)
 end
 
-function modifier_dismember:OnDestroy()
+function modifier_imba_dismember:OnDestroy()
 	if IsServer() then
 		self:GetParent():FadeGesture(ACT_DOTA_DISABLED)
 		self:GetCaster():FadeGesture(ACT_DOTA_CHANNEL_ABILITY_4)
@@ -1273,7 +1137,7 @@ function modifier_dismember:OnDestroy()
 	end
 end
 
-function modifier_dismember:CheckState()
+function modifier_imba_dismember:CheckState()
 	local state = {[MODIFIER_STATE_STUNNED] = true,}
 	return state
 end
@@ -1287,6 +1151,26 @@ function modifier_imba_pudge_dismember_buff:IsStunDebuff() return false end
 
 function modifier_imba_pudge_dismember_buff:GetModifierSpellLifesteal()
 	return self:GetAbility():GetSpecialValueFor("spell_lifesteal")
+end
+
+function modifier_imba_pudge_dismember_buff:DeclareFunctions()
+	local table = {
+		MODIFIER_PROPERTY_OVERRIDE_ANIMATION,
+		MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS,
+	}
+	return table
+end
+
+function modifier_imba_pudge_dismember_buff:GetActivityTranslationModifiers()
+	if self:GetCaster():HasItemInInventory("item_imba_aether_lens") then
+		return "long_dismember"
+	else
+		return ""
+	end
+end
+
+function modifier_imba_pudge_dismember_buff:GetOverrideAnimation()
+	return ACT_DOTA_CHANNEL_ABILITY_4
 end
 
 -----------------------------
@@ -1318,7 +1202,7 @@ function modifier_imba_pudge_dismember_pull:UpdateHorizontalMotion( me, dt )
 	local distance = self.caster:GetOrigin() - me:GetOrigin()
 	
 	-- Check to see if the victim is farther than the minimum distance or not and is actually being Dismembered
-	if distance:Length2D() > self.pull_distance_limit and self.parent:HasModifier("modifier_dismember") then
+	if distance:Length2D() > self.pull_distance_limit and self.parent:HasModifier("modifier_imba_dismember") then
 		-- Pull victim towards Pudge
 		me:SetOrigin( me:GetOrigin() + distance:Normalized() * self.pull_units_per_second * dt )
 	else

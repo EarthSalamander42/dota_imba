@@ -100,8 +100,8 @@ end
 
 function imba_lina_dragon_slave:GetAbilityTextureName()
 	if not IsClient() then return end
-	if not self:GetCaster().dragon_slave_icon then return "lina_dragon_slave" end
-	return "custom/imba_lina_dragon_slave_arcana_"..self:GetCaster().dragon_slave_icon
+	if not self:GetCaster().arcana_style then return "lina_dragon_slave" end
+	return "custom/imba_lina_dragon_slave_arcana_"..self:GetCaster().arcana_style
 end
 
 function imba_lina_dragon_slave:OnUpgrade()
@@ -303,27 +303,6 @@ function imba_lina_dragon_slave:GetCooldown( nLevel )
 	local cooldown = self.BaseClass.GetCooldown( self, nLevel )
 	local caster = self:GetCaster()
 	return cooldown
-end
-
-LinkLuaModifier("modifier_imba_lina_dragon_slave_handler", "components/abilities/heroes/hero_lina", LUA_MODIFIER_MOTION_NONE)
-
-if modifier_imba_lina_dragon_slave_handler == nil then modifier_imba_lina_dragon_slave_handler = class({}) end
-
-function modifier_imba_lina_dragon_slave_handler:IsHidden() return true end
-function modifier_imba_lina_dragon_slave_handler:RemoveOnDeath() return false end
-
-function modifier_imba_lina_dragon_slave_handler:OnCreated()
-	if self:GetCaster():IsIllusion() then self:Destroy() return end
-
-	if IsServer() then
-		if self:GetCaster().dragon_slave_icon == nil then self:Destroy() return end
-		self:SetStackCount(self:GetCaster().dragon_slave_icon)
-	end
-
-	if IsClient() then
-		if self:GetStackCount() == 0 then self:Destroy() return end
-		self:GetCaster().dragon_slave_icon = self:GetStackCount()
-	end
 end
 
 -------------------------------------------
@@ -558,8 +537,8 @@ end
 
 function imba_lina_fiery_soul:GetAbilityTextureName()
 	if not IsClient() then return end
-	if not self:GetCaster().fiery_soul_icon then return "lina_fiery_soul" end
-	return "custom/imba_lina_fiery_soul_arcana_"..self:GetCaster().fiery_soul_icon
+	if not self:GetCaster().arcana_style then return "lina_fiery_soul" end
+	return "custom/imba_lina_fiery_soul_arcana_"..self:GetCaster().arcana_style
 end
 
 function imba_lina_fiery_soul:GetCooldown()
@@ -642,12 +621,6 @@ function modifier_imba_fiery_soul:OnCreated()
 	-- Turns the skill into passive, tooltip purposes
 	self:GetAbility().GetBehavior = function() return DOTA_ABILITY_BEHAVIOR_PASSIVE end
 	self:GetAbility():GetBehavior()
-
-	if IsServer() then
-		if not self:GetParent():HasModifier("modifier_imba_lina_fiery_soul_handler") then
-			self:GetParent():AddNewModifier(self:GetParent(), nil, "modifier_imba_lina_fiery_soul_handler", {})
-		end
-	end
 end
 
 function modifier_imba_fiery_soul:DeclareFunctions()
@@ -886,27 +859,6 @@ function modifier_imba_fiery_soul_blaze_burn:OnDestroy()
 		else
 			self.parent:SetRenderColor(255,255,255)
 		end
-	end
-end
-
-LinkLuaModifier("modifier_imba_lina_fiery_soul_handler", "components/abilities/heroes/hero_lina", LUA_MODIFIER_MOTION_NONE)
-
-if modifier_imba_lina_fiery_soul_handler == nil then modifier_imba_lina_fiery_soul_handler = class({}) end
-
-function modifier_imba_lina_fiery_soul_handler:IsHidden() return true end
-function modifier_imba_lina_fiery_soul_handler:RemoveOnDeath() return false end
-
-function modifier_imba_lina_fiery_soul_handler:OnCreated()
-	if self:GetCaster():IsIllusion() then self:Destroy() return end
-
-	if IsServer() then
-		if self:GetCaster().fiery_soul_icon == nil then self:Destroy() return end
-		self:SetStackCount(self:GetCaster().fiery_soul_icon)
-	end
-
-	if IsClient() then
-		if self:GetStackCount() == 0 then self:Destroy() return end
-		self:GetCaster().fiery_soul_icon = self:GetStackCount()
 	end
 end
 

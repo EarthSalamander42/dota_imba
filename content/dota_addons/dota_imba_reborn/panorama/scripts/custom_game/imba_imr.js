@@ -470,16 +470,20 @@ function GenerateBattlepassPanel(BattlepassRewards, player) {
 		if (BattlepassRewards[i] != undefined) {
 			var is_arcana = false;
 			var is_immortal = false;
+			var is_mythical = false;
 
 			i_count++;
 
 			var arcana = BattlepassRewards[i].search("arcana");
 			var immortal = BattlepassRewards[i].search("immortal");
+			var mythical = BattlepassRewards[i].search("mythical");
 
 			if (arcana != -1)
 				is_arcana = true;
 			else if (immortal != -1)
 				is_immortal = true;
+			else if (mythical != -1)
+				is_mythical = true;
 
 			if (i_count > 10) {
 				class_option_count = class_option_count + 1;
@@ -495,16 +499,25 @@ function GenerateBattlepassPanel(BattlepassRewards, player) {
 			reward_icon.AddClass("BattlepassRewardIcon");
 			if (is_arcana == true)
 				reward_icon.AddClass("arcana_border");
-			if (is_immortal == true)
+			else if (is_immortal == true)
 				reward_icon.AddClass("immortal_border");
+			else if (is_mythical == true)
+				reward_icon.AddClass("mythical_border");
 
 			var reward_label = $.CreatePanel("Label", reward, BattlepassRewards[i] + "_label");
 			reward_label.AddClass("BattlepassRewardLabel");
 			reward_label.text = $.Localize("battlepass_level") + i;
 			if (is_arcana == true)
 				reward_label.AddClass("arcana_text");
-			if (is_immortal == true)
+			else if (is_immortal == true)
 				reward_label.AddClass("immortal_text");
+			else if (is_mythical == true)
+				reward_label.AddClass("mythical_text");
+
+			var hero_name = BattlepassRewards[i].replace("_arcana", "").replace("_immortal", "").replace("_mythical", "").replace("_rare", "");
+			var reward_hero_icon = $.CreatePanel("Panel", reward_icon, BattlepassRewards[i] + "_icon");
+			reward_hero_icon.style.backgroundImage = 'url("file://{images}/heroes/icons/npc_dota_hero_' + hero_name + '.png")';
+			reward_hero_icon.AddClass("BattlepassRewardHeroIcon");
 
 			if (plyData != null) {
 				if (i <= plyData.Lvl) {

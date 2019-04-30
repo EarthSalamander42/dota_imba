@@ -710,6 +710,37 @@ end
 -- LIFE BREAK --
 ----------------
 
+LinkLuaModifier("modifier_imba_huskar_life_break_handler", "components/abilities/heroes/hero_huskar", LUA_MODIFIER_MOTION_NONE)
+
+if modifier_imba_huskar_life_break_handler == nil then modifier_imba_huskar_life_break_handler = class({}) end
+
+function modifier_imba_huskar_life_break_handler:IsHidden() return true end
+function modifier_imba_huskar_life_break_handler:RemoveOnDeath() return false end
+
+function modifier_imba_huskar_life_break_handler:OnCreated()
+	if self:GetCaster():IsIllusion() then self:Destroy() return end
+
+	if IsServer() then
+		if self:GetCaster().life_break_icon == nil then self:Destroy() return end
+		self:SetStackCount(self:GetCaster().life_break_icon)
+	end
+
+	if IsClient() then
+		if self:GetStackCount() == 0 then self:Destroy() return end
+		self:GetCaster().life_break_icon = self:GetStackCount()
+	end
+end
+
+function imba_huskar_life_break:GetAbilityTextureName()
+	if not IsClient() then return end
+	if not self:GetCaster().life_break_icon then return "huskar_life_break" end
+	return "custom/imba_huskar_life_break_immortal_"..self:GetCaster().life_break_icon
+end
+
+function imba_huskar_life_break:GetIntrinsicModifierName()
+	return "modifier_imba_huskar_life_break_handler"
+end
+
 function imba_huskar_life_break:CastFilterResultTarget(target)
 	if IsServer() then
 		if target == self:GetCaster() and self:GetAutoCastState() then
@@ -844,7 +875,11 @@ function modifier_imba_huskar_life_break:OnDestroy()
 		self.target:EmitSound("Hero_Huskar.Life_Break.Impact")
 		
 		-- Emit particle
-		local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_huskar/huskar_life_break.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.target)
+		local particle = ParticleManager:CreateParticle(self.parent.life_break_effect, PATTACH_ABSORIGIN_FOLLOW, self.target)
+		ParticleManager:SetParticleControl(particle, 1, self.target:GetOrigin())
+		ParticleManager:ReleaseParticleIndex(particle)
+
+		local particle = ParticleManager:CreateParticle(self.parent.life_break_start_effect, PATTACH_ABSORIGIN_FOLLOW, self.target)
 		ParticleManager:SetParticleControl(particle, 1, self.target:GetOrigin())
 		ParticleManager:ReleaseParticleIndex(particle)
 
@@ -927,7 +962,8 @@ end
 
 function modifier_imba_huskar_life_break_charge:DeclareFunctions()
 	local decFuncs = {
-		MODIFIER_PROPERTY_OVERRIDE_ANIMATION
+		MODIFIER_PROPERTY_OVERRIDE_ANIMATION,
+		MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS,
     }
 
     return decFuncs
@@ -935,6 +971,33 @@ end
 
 function modifier_imba_huskar_life_break_charge:GetOverrideAnimation()
 	return ACT_DOTA_CAST_LIFE_BREAK_START
+end
+
+function modifier_imba_huskar_life_break_charge:GetActivityTranslationModifiers()
+	if self:GetStackCount() == 1 then
+		return "dominator"
+	else
+		return ""
+	end
+end
+
+function modifier_imba_huskar_life_break_charge:OnCreated()
+	if IsServer() then
+		if Imbattlepass:GetRewardUnlocked(self:GetParent():GetPlayerID()) >= IMBATTLEPASS_HUSKAR["huskar_immortal"] then
+			self:SetStackCount(1)
+			self.pfx = ParticleManager:CreateParticle(self:GetCaster().life_break_cast_effect, PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
+--			ParticleManager:SetParticleControl(self.pfx, 0, self:GetCaster():GetAbsOrigin())
+		end
+	end
+end
+
+function modifier_imba_huskar_life_break_charge:OnDestroy()
+	if IsServer() then
+		if self.pfx then
+			ParticleManager:DestroyParticle(self.pfx, false)
+			ParticleManager:ReleaseParticleIndex(self.pfx)
+		end
+	end
 end
 
 ------------------------------

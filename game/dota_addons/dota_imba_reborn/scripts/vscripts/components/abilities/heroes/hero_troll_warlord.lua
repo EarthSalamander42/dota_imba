@@ -1001,6 +1001,10 @@ function modifier_imba_battle_trance_720:OnDestroy()
 	end	
 end
 
+function modifier_imba_battle_trance_720:GetPriority()
+	return 10
+end
+
 -- More logic in the order filter cause of stupid potential stops/interrupts
 function modifier_imba_battle_trance_720:CheckState()
 	-- Use stack count to track if the caster has locked onto a target (for client/server purposes...assuming this is important)
@@ -1060,8 +1064,8 @@ function modifier_imba_battle_trance_720:OnTooltip()
 	return self.lifesteal
 end
 
-function modifier_imba_battle_trance_720:GetModifierAttackSpeedBonus_Constant()
-	return self.bonus_as
+function modifier_imba_battle_trance_720:GetModifierBaseAttackTimeConstant()
+	return self.bonus_bat
 end
 
 --------------------------------------------------

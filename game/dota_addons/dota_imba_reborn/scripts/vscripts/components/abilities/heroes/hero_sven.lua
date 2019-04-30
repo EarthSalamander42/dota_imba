@@ -865,6 +865,9 @@ end
 
 function modifier_imba_colossal_slash_crit:OnCreated()
 	self.crit_bonus_pct = self:GetAbility():GetSpecialValueFor("crit_bonus_pct") - 100
+	
+	if not IsServer() then return end
+	
 	if self:GetCaster():HasModifier("modifier_imba_god_strength") then
 		self.bonus_dmg_pct = 0
 	else

@@ -1192,6 +1192,15 @@ function imba_rubick_spellsteal:SetStolenSpell( spellData )
 		self.vortex:SetStolen( true )
 	end
 	
+	-- Vanilla Leshrac has some scepter thinker associated with Pulse Nova/Lightning Storm that is required, otherwise the lightning storms strike every frame -_-
+	if self:GetCaster():HasModifier("modifier_leshrac_lightning_storm_scepter_thinker") then
+		self:GetCaster():RemoveModifierByName("modifier_leshrac_lightning_storm_scepter_thinker")
+	end
+	
+	if secondarySpell~=nil and not secondarySpell:IsNull() and secondarySpell:GetName() == "leshrac_lightning_storm" then
+		self:GetCaster():AddNewModifier(self:GetCaster(), secondarySpell, "modifier_leshrac_lightning_storm_scepter_thinker", {})
+	end
+	
 	-- Add new spell
 	if primarySpell~=nil and not primarySpell:IsNull() then
 		self.CurrentPrimarySpell = self:GetCaster():AddAbility( primarySpell:GetAbilityName() )
@@ -1392,7 +1401,7 @@ end
 function modifier_imba_rubick_spellsteal:OnAbilityStart( params )
 	if IsServer() then
 		if params.unit==self:GetParent() then
-			if params.ability:GetBehavior() - 67108864 <= 0 and (params.ability:GetBehavior() - 67108864) % 67108864 ~= 0 then
+			if bit.band(params.ability:GetBehavior(), DOTA_ABILITY_BEHAVIOR_NORMAL_WHEN_STOLEN) ~= DOTA_ABILITY_BEHAVIOR_NORMAL_WHEN_STOLEN then
 				-- No cast point is what Rubick is known for...
 				params.ability:SetOverrideCastPoint(0)
 			end

@@ -49,8 +49,19 @@ end
 
 function modifier_fountain_aura_effect_lua:OnCreated()
 	if IsServer() then
-		self.pfx = ParticleManager:CreateParticle(self:GetParent().fountain_effect, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 		self:StartIntervalThink(0.1)
+
+		Timers:CreateTimer(1.0, function()
+			local fountain_effect = self:GetParent().fountain_effect
+
+			if self:GetParent():IsClone() then
+				fountain_effect = self:GetParent():GetCloneSource().fountain_effect
+			elseif not self:GetParent():IsRealHero() and self:GetParent():IsControllableByAnyPlayer() and not self:GetParent():IsCourier() then
+				fountain_effect = self:GetParent():GetOwnerEntity().fountain_effect
+			end
+
+			self.pfx = ParticleManager:CreateParticle(fountain_effect, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+		end)
 	end
 end
 
@@ -61,7 +72,7 @@ function modifier_fountain_aura_effect_lua:OnIntervalThink()
 		self:GetParent():AddNewModifier(self:GetParent(), nil, "modifier_fountain_invulnerable", {})
 
 		if self:GetParent():HasItemInInventory("item_bottle") then
-			local bottle = self:GetParent():FindItemByName("item_bottle", false)
+			local bottle = self:GetParent():FindItemByName("item_bottle", true, true)
 
 			if bottle then
 				if bottle:GetCurrentCharges() < bottle:GetSpecialValueFor("max_charges") then
@@ -87,8 +98,11 @@ function modifier_fountain_aura_effect_lua:OnDestroy()
 		if self:GetParent():HasModifier("modifier_fountain_invulnerable") then
 			self:GetParent():RemoveModifierByName("modifier_fountain_invulnerable")
 		end
-		ParticleManager:DestroyParticle(self.pfx, false)
-		ParticleManager:ReleaseParticleIndex(self.pfx)
+
+		if self.pfx then
+			ParticleManager:DestroyParticle(self.pfx, false)
+			ParticleManager:ReleaseParticleIndex(self.pfx)
+		end
 	end
 end
 
