@@ -303,7 +303,7 @@ function Diretide:OnEntityKilled(killer, victim)
 					end)
 				end
 
-				victim:RemoveItem(victim:FindItemByName("item_diretide_candy", false))
+				victim:RemoveItem(victim:FindItemByName("item_diretide_candy", true))
 			end
 
 			victim:SetTimeUntilRespawn(victim:GetTimeUntilRespawn() / 2)

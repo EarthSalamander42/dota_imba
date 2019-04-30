@@ -12,7 +12,7 @@ DONATOR_COLOR[9] = {185, 75, 10} -- Gaben Donator
 DONATOR_COLOR[10] = {255, 255, 255}
 
 IMBA_DONATOR_COMPANION = {}
-IMBA_DONATOR_COMPANION["76561198015161808"] = "npc_donator_companion_zonnoz"
+IMBA_DONATOR_COMPANION["76561198015161808"] = "npc_donator_companion_cookies"
 IMBA_DONATOR_COMPANION["76561198094835750"] = "npc_donator_companion_zonnoz"
 IMBA_DONATOR_COMPANION["76561198003571172"] = "npc_donator_companion_baumi"
 IMBA_DONATOR_COMPANION["76561198014254115"] = "npc_donator_companion_icefrog"
