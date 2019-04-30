@@ -702,7 +702,7 @@ function modifier_imba_dark_seer_wall_of_replica:OnCreated(params)
 	self.wall_start 		= self.cursor_position + self.wall_vector * self.width * 0.5
 	self.wall_end			= self.cursor_position - self.wall_vector * self.width * 0.5
 	
-	self.particle = ParticleManager:CreateParticle("particles/units/heroes/hero_dark_seer/dark_seer_wall_of_replica.vpcf", PATTACH_POINT, self:GetCaster())
+	self.particle = ParticleManager:CreateParticle("particles/units/heroes/hero_dark_seer/dark_seer_wall_of_replica.vpcf", PATTACH_WORLDORIGIN, self:GetCaster())
 	ParticleManager:SetParticleControl(self.particle, 0, self.wall_start)
 	ParticleManager:SetParticleControl(self.particle, 1, self.wall_end)
 	
@@ -739,7 +739,7 @@ function modifier_imba_dark_seer_wall_of_replica:OnIntervalThink()
 		ParticleManager:DestroyParticle(self.particle, false)
 		ParticleManager:ReleaseParticleIndex(self.particle)
 		
-		self.particle = ParticleManager:CreateParticle("particles/units/heroes/hero_dark_seer/dark_seer_wall_of_replica.vpcf", PATTACH_POINT, self:GetCaster())
+		self.particle = ParticleManager:CreateParticle("particles/units/heroes/hero_dark_seer/dark_seer_wall_of_replica.vpcf", PATTACH_WORLDORIGIN, self:GetCaster())
 		ParticleManager:SetParticleControl(self.particle, 0, self.wall_start)
 		ParticleManager:SetParticleControl(self.particle, 1, self.wall_end)
 		ParticleManager:SetParticleControl(self.particle, 61, Vector(1, 0, 0))
