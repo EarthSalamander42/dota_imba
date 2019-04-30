@@ -321,6 +321,6 @@
 	{
 		"BaseClass"					"npc_donator_companion"
 		"Model"						"models/heroes/phoenix/phoenix_egg.vmdl"
-		"ModelScale"				"0.45"
+		"ModelScale"				"0.4"
 	}
 }

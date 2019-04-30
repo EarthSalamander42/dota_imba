@@ -81,7 +81,7 @@ function GameMode:OnHeroFirstSpawn(hero)
 		end
 	end
 
-	if api:IsDonator(hero:GetPlayerID()) and PlayerResource:GetConnectionState(hero:GetPlayerID()) ~= 1 then
+	if (IsInToolsMode() or api:IsDonator(hero:GetPlayerID())) and PlayerResource:GetConnectionState(hero:GetPlayerID()) ~= 1 then
 		if hero:GetUnitName() ~= FORCE_PICKED_HERO then
 			if api:GetDonatorStatus(hero:GetPlayerID()) == 10 then
 				hero:SetOriginalModel("models/items/courier/kanyu_shark/kanyu_shark.vmdl")
