@@ -422,7 +422,8 @@ end
 function imba_dark_seer_ion_shell:OnSpellStart()
 	if not IsServer() then return end
 	
-	self:GetCursorTarget():EmitSound(self:GetCaster().ion_shield_sound)
+	-- self:GetCursorTarget():EmitSound(self:GetCaster().ion_shield_sound) ???
+	self:GetCursorTarget():EmitSound("Hero_Dark_Seer.Ion_Shield_Start")
 	
 	if self:GetCaster():GetName() == "npc_dota_hero_dark_seer" and RollPercentage(50) then
 		self:GetCaster():EmitSound("dark_seer_dkseer_ability_surge_0"..math.random(1,2))
@@ -456,12 +457,18 @@ function modifier_imba_dark_seer_ion_shell:OnCreated()
 	ParticleManager:SetParticleControl(self.particle, 1, Vector(50, 50, 50)) -- Arbitrary
 	self:AddParticle(self.particle, false, false, -1, false, false)
 	
+	self:SetStackCount(0)
+	
 	self:StartIntervalThink(self.interval)
 end
 
 function modifier_imba_dark_seer_ion_shell:OnRefresh()
 	self.radius				= self:GetAbility():GetSpecialValueFor("radius")
 	self.damage_per_second	= self:GetAbility():GetTalentSpecialValueFor("damage_per_second")
+	
+	if not IsServer() then return end
+	
+	self:SetStackCount(0)
 end
 
 function modifier_imba_dark_seer_ion_shell:OnIntervalThink()
@@ -494,7 +501,7 @@ function modifier_imba_dark_seer_ion_shell:OnIntervalThink()
 			local damage_dealt = ApplyDamage(damageTable)
 			
 			--IMBAfication: Proton Explosion
-			self:SetStackCount((self:GetStackCount() or 0) + math.floor(damage_dealt))
+			self:SetStackCount(self:GetStackCount() + math.floor(damage_dealt))
 		end
 	end
 end
@@ -503,7 +510,7 @@ function modifier_imba_dark_seer_ion_shell:OnDestroy()
 	if not IsServer() then return end
 	
 	self:GetParent():StopSound("Hero_Dark_Seer.Ion_Shield_lp")
-	self:GetParent():EmitSound(self:GetCaster().ion_shield_end_sound)
+	-- self:GetParent():EmitSound(self:GetCaster().ion_shield_end_sound) ??
 	
 	if self:GetRemainingTime() <= 0 then
 		self:GetParent():EmitSound("Hero_Abaddon.AphoticShield.Destroy")
@@ -528,7 +535,7 @@ function modifier_imba_dark_seer_ion_shell:OnDestroy()
 				ApplyDamage(damageTable)
 				
 				-- Only reapply the ability if it exists and they don't already have a shield
-				if self:GetCaster() and self:GetAbility() and not enemy:FindModifierByNameAndCaster(self:GetName(), self:GetCaster()) then
+				if self:GetCaster() and self:GetAbility() and not enemy:FindModifierByNameAndCaster("modifier_imba_dark_seer_ion_shell", self:GetCaster()) then
 					local ion_shell_modifier = enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_dark_seer_ion_shell", {duration = self:GetAbility():GetSpecialValueFor("duration")})
 					
 					if ion_shell_modifier then
@@ -536,7 +543,7 @@ function modifier_imba_dark_seer_ion_shell:OnDestroy()
 						ion_shell_modifier:SetDuration(self:GetAbility():GetSpecialValueFor("duration") * (1 - enemy:GetStatusResistance()), true)
 						
 						-- Split the previous stack count evenly amongst all affected enemies
-						ion_shell_modifier:SetStackCount(self:GetStackCount() / (#enemies - 1))
+						-- ion_shell_modifier:SetStackCount(self:GetStackCount() / (#enemies - 1))
 					end
 				end
 			end

@@ -569,7 +569,7 @@ function modifier_imba_huskar_berserkers_blood:GetModifierMagicalResistanceBonus
 end
 
 function modifier_imba_huskar_berserkers_blood:GetMinHealth()
-	if (self:GetAbility():GetAutoCastState() and self:GetAbility():IsCooldownReady()) or self:GetParent():HasModifier("modifier_imba_huskar_berserkers_blood_crimson_priest") then
+	if (self:GetAbility():GetAutoCastState() and self:GetAbility():IsCooldownReady() and not self:GetCaster():PassivesDisabled()) or self:GetParent():HasModifier("modifier_imba_huskar_berserkers_blood_crimson_priest") then
 		return 1
 	else
 		return 0

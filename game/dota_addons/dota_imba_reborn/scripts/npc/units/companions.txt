@@ -316,4 +316,11 @@
 		"Model"						"models/items/courier/nian_courier/nian_courier.vmdl"
 		"ModelScale"				"0.75"
 	}
+	
+	"npc_donator_companion_vivi"
+	{
+		"BaseClass"					"npc_donator_companion"
+		"Model"						"models/heroes/phoenix/phoenix_egg.vmdl"
+		"ModelScale"				"0.45"
+	}
 }

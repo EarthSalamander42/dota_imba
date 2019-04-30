@@ -278,51 +278,81 @@ function imba_rattletrap_power_cogs:OnSpellStart()
 	local num_of_cogs		= 8 -- You're probably gonna get some really weird results if you change this number
 	local cogs_radius		= self:GetSpecialValueFor("cogs_radius")
 	
+	-- Static value cause this is kinda hot-fixing for now
+	local square_dist		= 180
+	
 	local cog_vector 		= GetGroundPosition(caster_pos + Vector(0, cogs_radius, 0), nil)
 	local second_cog_vector	= GetGroundPosition(caster_pos + Vector(0, cogs_radius * 2, 0), nil)
 	
 	self:GetCaster():StartGesture(ACT_DOTA_RATTLETRAP_POWERCOGS)
 	
-	for cog = 1, num_of_cogs do
-		local cog = CreateUnitByName("npc_dota_rattletrap_cog", cog_vector, false, self:GetCaster(), self:GetCaster(), self:GetCaster():GetTeamNumber())
-		
-		cog:EmitSound("Hero_Rattletrap.Power_Cogs")
-		
-		cog:AddNewModifier(self:GetCaster(), self, "modifier_imba_rattletrap_power_cogs",
-		{
-			duration 	= self:GetSpecialValueFor("duration"),
-			x 			= (cog_vector - caster_pos).x,
-			y 			= (cog_vector - caster_pos).y,
+	if not self:GetAutoCastState() then
+		for cog = 1, num_of_cogs do
+			local cog = CreateUnitByName("npc_dota_rattletrap_cog", cog_vector, false, self:GetCaster(), self:GetCaster(), self:GetCaster():GetTeamNumber())
 			
-			-- Also need to store these for the Rotational IMBAfication
-			center_x	= caster_pos.x,
-			center_y	= caster_pos.y,
-			center_z	= caster_pos.z
-		})
-		
-		-- Talent: Second Gear (might be too laggy with Rotational...)
-		if self:GetCaster():HasTalent("special_bonus_imba_rattletrap_second_gear") then
-			local second_cog = CreateUnitByName("npc_dota_rattletrap_cog", second_cog_vector, false, self:GetCaster(), self:GetCaster(), self:GetCaster():GetTeamNumber())
+			cog:EmitSound("Hero_Rattletrap.Power_Cogs")
 			
-			second_cog:EmitSound("Hero_Rattletrap.Power_Cogs")
-			
-			second_cog:AddNewModifier(self:GetCaster(), self, "modifier_imba_rattletrap_power_cogs",
+			cog:AddNewModifier(self:GetCaster(), self, "modifier_imba_rattletrap_power_cogs",
 			{
 				duration 	= self:GetSpecialValueFor("duration"),
-				x 			= (second_cog_vector - caster_pos).x,
-				y 			= (second_cog_vector - caster_pos).y,
+				x 			= (cog_vector - caster_pos).x,
+				y 			= (cog_vector - caster_pos).y,
 				
 				-- Also need to store these for the Rotational IMBAfication
 				center_x	= caster_pos.x,
 				center_y	= caster_pos.y,
-				center_z	= caster_pos.z,
-				second_gear	= true
+				center_z	= caster_pos.z
 			})
 			
-			second_cog_vector	= RotatePosition(caster_pos, QAngle(0, 360 / num_of_cogs, 0), second_cog_vector)
+			-- Talent: Second Gear (might be too laggy with Rotational...)
+			if self:GetCaster():HasTalent("special_bonus_imba_rattletrap_second_gear") then
+				local second_cog = CreateUnitByName("npc_dota_rattletrap_cog", second_cog_vector, false, self:GetCaster(), self:GetCaster(), self:GetCaster():GetTeamNumber())
+				
+				second_cog:EmitSound("Hero_Rattletrap.Power_Cogs")
+				
+				second_cog:AddNewModifier(self:GetCaster(), self, "modifier_imba_rattletrap_power_cogs",
+				{
+					duration 	= self:GetSpecialValueFor("duration"),
+					x 			= (second_cog_vector - caster_pos).x,
+					y 			= (second_cog_vector - caster_pos).y,
+					
+					-- Also need to store these for the Rotational IMBAfication
+					center_x	= caster_pos.x,
+					center_y	= caster_pos.y,
+					center_z	= caster_pos.z,
+					second_gear	= true
+				})
+				
+				second_cog_vector	= RotatePosition(caster_pos, QAngle(0, 360 / num_of_cogs, 0), second_cog_vector)
+			end
+			
+			cog_vector		= RotatePosition(caster_pos, QAngle(0, 360 / num_of_cogs, 0), cog_vector)
 		end
+	else
+		local cog_vectors = 
+		{
+			Vector(-square_dist, square_dist, 0), Vector(0, square_dist, 0), Vector(square_dist, square_dist, 0),
+			Vector(-square_dist, 0, 0), Vector(square_dist, 0, 0),
+			Vector(-square_dist, -square_dist, 0), Vector(0, -square_dist, 0), Vector(square_dist, -square_dist, 0)
+		}
 		
-		cog_vector		= RotatePosition(caster_pos, QAngle(0, 360 / num_of_cogs, 0), cog_vector)
+		for cog = 1, #cog_vectors do
+			local cog = CreateUnitByName("npc_dota_rattletrap_cog", self:GetCaster():GetAbsOrigin() + cog_vectors[cog], false, self:GetCaster(), self:GetCaster(), self:GetCaster():GetTeamNumber())
+			
+			cog:EmitSound("Hero_Rattletrap.Power_Cogs")
+			
+			cog:AddNewModifier(self:GetCaster(), self, "modifier_imba_rattletrap_power_cogs",
+			{
+				duration 	= self:GetSpecialValueFor("duration"),
+				x 			= (cog:GetAbsOrigin() - self:GetCaster():GetAbsOrigin()).x,
+				y 			= (cog:GetAbsOrigin() - self:GetCaster():GetAbsOrigin()).y,
+				
+				-- Also need to store these for the Rotational IMBAfication
+				center_x	= self:GetCaster():GetAbsOrigin().x,
+				center_y	= self:GetCaster():GetAbsOrigin().y,
+				center_z	= self:GetCaster():GetAbsOrigin().z
+			})
+		end
 	end
 	
 	local deploy_particle	= ParticleManager:CreateParticle("particles/units/heroes/hero_rattletrap/rattletrap_cog_deploy.vpcf", PATTACH_ABSORIGIN, self:GetCaster())
@@ -401,19 +431,20 @@ end
 function modifier_imba_rattletrap_power_cogs:OnIntervalThink()
 	if not IsServer() then return end
 	
-	if self:GetAbility() and self:GetAbility():GetAutoCastState() then
+	-- Lag...
+	-- if self:GetAbility() and self:GetAbility():GetAutoCastState() then
 		
-		if not self.second_gear then
-			self:GetParent():SetAbsOrigin(GetGroundPosition(RotatePosition(self.center_loc, QAngle(0, self.rotational_speed * FrameTime(), 0), self:GetParent():GetAbsOrigin()), nil))
-		else
-			self:GetParent():SetAbsOrigin(GetGroundPosition(RotatePosition(self.center_loc, QAngle(0, self.rotational_speed * FrameTime() * (-1), 0), self:GetParent():GetAbsOrigin()), nil))		
-		end
+		-- if not self.second_gear then
+			-- self:GetParent():SetAbsOrigin(GetGroundPosition(RotatePosition(self.center_loc, QAngle(0, self.rotational_speed * FrameTime(), 0), self:GetParent():GetAbsOrigin()), nil))
+		-- else
+			-- self:GetParent():SetAbsOrigin(GetGroundPosition(RotatePosition(self.center_loc, QAngle(0, self.rotational_speed * FrameTime() * (-1), 0), self:GetParent():GetAbsOrigin()), nil))		
+		-- end
 		
-		-- Update forward vector to face away from the center
-		self:GetParent():SetForwardVector(self:GetParent():GetAbsOrigin() - self.center_loc)
-		-- Try to make sure people don't get stuck in-between the cogs if they slip in a gap
-		ResolveNPCPositions(self:GetParent():GetAbsOrigin(), self:GetParent():GetHullRadius())
-	end
+		-- -- Update forward vector to face away from the center
+		-- self:GetParent():SetForwardVector(self:GetParent():GetAbsOrigin() - self.center_loc)
+		-- -- Try to make sure people don't get stuck in-between the cogs if they slip in a gap
+		-- ResolveNPCPositions(self:GetParent():GetAbsOrigin(), self:GetParent():GetHullRadius())
+	-- end
 	
 	local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.trigger_distance, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MANA_ONLY, FIND_CLOSEST, false)
 	
@@ -771,7 +802,7 @@ function imba_rattletrap_rocket_flare:OnSpellStart()
 		local rocket_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_rattletrap/rattletrap_rocket_flare.vpcf", PATTACH_CUSTOMORIGIN, nil)
 		ParticleManager:SetParticleControl(rocket_particle, 0, self:GetCaster():GetAttachmentOrigin(self:GetCaster():ScriptLookupAttachment("attach_rocket")))
 		ParticleManager:SetParticleControl(rocket_particle, 1, self:GetCursorPosition())
-		ParticleManager:SetParticleControl(rocket_particle, 2, Vector(self:GetSpecialValueFor("speed"), 0, 0))
+		ParticleManager:SetParticleControl(rocket_particle, 2, Vector(self:GetTalentSpecialValueFor("speed"), 0, 0))
 		
 		local rocket =
 			{
@@ -779,7 +810,7 @@ function imba_rattletrap_rocket_flare:OnSpellStart()
 				Source 				= self:GetCaster(),
 				Ability 			= self,
 				--EffectName 			= "particles/units/heroes/hero_rattletrap/rattletrap_rocket_flare.vpcf", // IDK why this works as a projectile but you have to use it like a particle anyways and split everything up ugh
-				iMoveSpeed			= self:GetSpecialValueFor("speed"),
+				iMoveSpeed			= self:GetTalentSpecialValueFor("speed"),
 				vSourceLoc 			= self:GetCaster():GetAttachmentOrigin(self:GetCaster():ScriptLookupAttachment("attach_rocket")),
 				bDrawsOnMinimap 	= true,
 				bDodgeable 			= true,
@@ -822,7 +853,7 @@ function imba_rattletrap_rocket_flare:OnSpellStart()
 					local rocket_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_rattletrap/rattletrap_rocket_flare.vpcf", PATTACH_CUSTOMORIGIN, nil)
 					ParticleManager:SetParticleControl(rocket_particle, 0, self:GetCaster():GetAttachmentOrigin(self:GetCaster():ScriptLookupAttachment("attach_rocket")))
 					ParticleManager:SetParticleControl(rocket_particle, 1, random_position)
-					ParticleManager:SetParticleControl(rocket_particle, 2, Vector(self:GetSpecialValueFor("speed"), 0, 0))
+					ParticleManager:SetParticleControl(rocket_particle, 2, Vector(self:GetTalentSpecialValueFor("speed"), 0, 0))
 					
 					local rocket =
 						{
@@ -830,7 +861,7 @@ function imba_rattletrap_rocket_flare:OnSpellStart()
 							Source 				= self:GetCaster(),
 							Ability 			= self,
 							--EffectName 			= "particles/units/heroes/hero_rattletrap/rattletrap_rocket_flare.vpcf", // IDK why this works as a projectile but you have to use it like a particle anyways and split everything up ugh
-							iMoveSpeed			= self:GetSpecialValueFor("speed"),
+							iMoveSpeed			= self:GetTalentSpecialValueFor("speed"),
 							vSourceLoc 			= self:GetCaster():GetAttachmentOrigin(self:GetCaster():ScriptLookupAttachment("attach_rocket")),
 							bDrawsOnMinimap 	= true,
 							bDodgeable 			= true,
