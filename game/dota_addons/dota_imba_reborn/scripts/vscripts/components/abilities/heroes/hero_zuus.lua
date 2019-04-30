@@ -1181,13 +1181,14 @@ function imba_zuus_thundergods_wrath:OnSpellStart()
 
 		local position 				= self:GetCaster():GetAbsOrigin()	
 		local attack_lock 			= caster:GetAttachmentOrigin(self:GetCaster():ScriptLookupAttachment("attach_attack1"))
-		local particle_effect		= "particles/econ/items/zeus/arcana_chariot/zeus_arcana_thundergods_wrath_start_bolt_parent.vpcf"
+		local particle_effect		= "particles/units/heroes/hero_zuus/zuus_thundergods_wrath_start.vpcf"
 		if self:GetCaster().thundergods_wrath_start_effect then
 			particle_effect = self:GetCaster().thundergods_wrath_start_effect
 		end
 		local thundergod_spell_cast = ParticleManager:CreateParticle(particle_effect, PATTACH_ABSORIGIN_FOLLOW, caster)
 		ParticleManager:SetParticleControl(thundergod_spell_cast, 0, Vector(attack_lock.x, attack_lock.y, attack_lock.z))		
 		ParticleManager:SetParticleControl(thundergod_spell_cast, 1, Vector(attack_lock.x, attack_lock.y, attack_lock.z))		
+		ParticleManager:SetParticleControl(thundergod_spell_cast, 2, Vector(attack_lock.x, attack_lock.y, attack_lock.z))		
 
 		if caster:HasTalent("special_bonus_imba_zuus_7") then
 			if caster:HasModifier("modifier_imba_zuus_thundergods_focus") and caster:FindModifierByName("modifier_imba_zuus_thundergods_focus"):GetStackCount() >= caster:FindTalentValue("special_bonus_imba_zuus_7", "value") then

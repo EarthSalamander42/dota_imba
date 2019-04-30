@@ -514,9 +514,9 @@ function GenerateBattlepassPanel(BattlepassRewards, player) {
 			else if (is_mythical == true)
 				reward_label.AddClass("mythical_text");
 
-			var hero_name = BattlepassRewards[i].split("_");
+			var hero_name = BattlepassRewards[i].replace("_arcana", "").replace("_immortal", "").replace("_mythical", "").replace("_rare", "");
 			var reward_hero_icon = $.CreatePanel("Panel", reward_icon, BattlepassRewards[i] + "_icon");
-			reward_hero_icon.style.backgroundImage = 'url("file://{images}/heroes/icons/npc_dota_hero_' + hero_name[0] + '.png")';
+			reward_hero_icon.style.backgroundImage = 'url("file://{images}/heroes/icons/npc_dota_hero_' + hero_name + '.png")';
 			reward_hero_icon.AddClass("BattlepassRewardHeroIcon");
 
 			if (plyData != null) {

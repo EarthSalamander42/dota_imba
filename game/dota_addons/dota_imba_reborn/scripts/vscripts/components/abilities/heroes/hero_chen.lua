@@ -756,13 +756,8 @@ function modifier_imba_chen_holy_persuasion_immortalized:OnIntervalThink()
 	if not IsServer() then return end
 	
 	if self:GetCaster() and not self:GetCaster():IsNull() and self:GetAbility() and self:GetParent():IsAlive() and self:GetCaster():IsAlive() then
-		--self:GetParent():MoveToNPC(self:GetCaster())
-		
 		self:GetParent():SetAbsOrigin(GetGroundPosition(self:GetCaster():GetAbsOrigin() + self.immortalize_vector, nil))
 		self:GetParent():SetForwardVector(self.immortalize_vector)
-		
-		-- Dunno if recalling this all the time is necessary but I'm assuming frame time changes constantly
-		self:StartIntervalThink(FrameTime())
 	else
 		self:GetParent():ForceKill(false)
 		self:StartIntervalThink(-1)
@@ -956,18 +951,18 @@ end
 
 function imba_chen_hand_of_god:OnSpellStart()
 	if not IsServer() then return end
-	
+
 	local allies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetCaster():GetAbsOrigin(), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED, FIND_ANY_ORDER, false)
 
 	local voiceline = nil
-	
+
 	if self:GetCaster():GetName() == "npc_dota_hero_chen" then
 		voiceline = "chen_chen_ability_handgod_0"..RandomInt(1, 3)
 	end
-	
+
 	for _, ally in pairs(allies) do
 		if ally:IsRealHero() or ally:IsClone() or ally:GetOwnerEntity() == self:GetCaster() or (ally.GetPlayerID and self:GetCaster().GetPlayerID and ally:GetPlayerID() == self:GetCaster():GetPlayerID()) then
-			
+
 			-- Let's try not to blow up eardrums
 			if voiceline and ally:IsRealHero() then
 				ally:EmitSound(voiceline)

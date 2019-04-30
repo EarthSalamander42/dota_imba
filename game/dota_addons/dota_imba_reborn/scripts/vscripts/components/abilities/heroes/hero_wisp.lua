@@ -1605,7 +1605,6 @@ function imba_wisp_relocate:OnSpellStart()
 		local unit 					= self:GetCursorTarget()
 		local tether_ability 		= self:GetCaster():FindAbilityByName("imba_wisp_tether")
 		self.relocate_target_point 	= self:GetCursorPosition()
-		self.return_point			= self:GetCaster():GetAbsOrigin()
 		local vision_radius 		= self:GetSpecialValueFor("vision_radius")
 		local cast_delay 			= self:GetSpecialValueFor("cast_delay")
 		local return_time 			= self:GetSpecialValueFor("return_time")
@@ -1713,6 +1712,7 @@ function modifier_imba_wisp_relocate:OnCreated(params)
 		local ally 			= ability.ally
 
 		self.return_time	= params.return_time
+		self.return_point	= self:GetCaster():GetAbsOrigin()
 
 		-- Create marker at origin
 		self.caster_origin_pfx = ParticleManager:CreateParticle(caster.relocate_marker_effect, PATTACH_WORLDORIGIN, caster)
@@ -1767,14 +1767,14 @@ function modifier_imba_wisp_relocate:OnRemoved()
 		ParticleManager:DestroyParticle(self.caster_origin_pfx, false)
 		ParticleManager:DestroyParticle(self.timer_buff, false)
 
-		self:GetCaster():SetAbsOrigin(self:GetAbility().return_point)
+		self:GetCaster():SetAbsOrigin(self.return_point)
 		self:GetCaster():Interrupt()
 
 		local tether_ability 	= self:GetCaster():FindAbilityByName("imba_wisp_tether")
 		if self:GetCaster():HasModifier("modifier_imba_wisp_tether") and tether_ability.target ~= nil and tether_ability.target:IsHero() and self:GetCaster():IsAlive() then
 			self.ally_teleport_pfx 	= ParticleManager:CreateParticle(self:GetCaster().relocate_teleport_effect, PATTACH_CUSTOMORIGIN, tether_ability.target)
 			ParticleManager:SetParticleControlEnt(self.ally_teleport_pfx, 0, tether_ability.target, PATTACH_POINT, "attach_hitloc", tether_ability.target:GetAbsOrigin(), true)
-			tether_ability.target:SetAbsOrigin(self:GetAbility().return_point + Vector( 100, 0, 0 ) )
+			tether_ability.target:SetAbsOrigin(self.return_point + Vector( 100, 0, 0 ) )
 			tether_ability.target:Interrupt()
 		end
 

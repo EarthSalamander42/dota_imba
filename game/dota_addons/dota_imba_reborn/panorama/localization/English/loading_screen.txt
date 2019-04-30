@@ -1,6 +1,6 @@
-"game_version_name"						"Primordial Light"
-"loading_screen_description"			"Dota IMBA 7.12 brings forth a shining Keeper of the Light, along with the continuation of ability updates and new items! Dota IMBA is part of Frostrose Studio, directed by EarthSalamander."
-"loading_screen_button"					"Dota 2 IMBA website is currently unavailable."
+"game_version_name"						"Chromatic Drive"
+"loading_screen_description"			"Chen, Dark Seer and Huskar have been imbafied! Battlepass received a major update including new cosmetics and bugfixes. Dota IMBA is part of Frostrose Studio, directed by EarthSalamander."
+"loading_screen_button"					"Dota 2 IMBA website"
 
 "loading_screen_promote"				"Translate Dota IMBA in your native language!"
 "loading_screen_promote_description"	"You can translate Dota IMBA on Transifex website, it's easy! Just create an account and subscribe to a language. Give it a try! Don't forgot to request your Discord role! (English Discord only)"
@@ -8,7 +8,7 @@
 
 "loading_screen_patreon"				"Patreon"
 "loading_screen_patreon_description"	"Support Frostrose Studio on Patreon! Servers for the Websites, Battlepass, Statistics and XP Systems are expensive. Donations support the development of:"
-"loading_screen_patreon_modlist1"		"- Battlegrounds Legends"
+"loading_screen_patreon_modlist1"		"- Frostrose Battlefield (unreleased)"
 "loading_screen_patreon_modlist2"		"- Dota IMBA"
 "loading_screen_patreon_modlist3"		"- X Hero Siege"
 "loading_screen_patreon_modlist4"		"- Pudge Wars"

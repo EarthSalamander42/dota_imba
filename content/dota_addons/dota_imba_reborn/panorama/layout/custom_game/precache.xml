@@ -84,6 +84,12 @@
 			<Image src="file://panorama/images/custom_game/battlepass/enigma_immortal.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/enigma_mythical.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/wisp_arcana.png" hittest="false" />
+			<Image src="file://panorama/images/custom_game/battlepass/chen_mythical.png" hittest="false" />
+			<Image src="file://panorama/images/custom_game/battlepass/dark_seer_immortal.png" hittest="false" />
+			<Image src="file://panorama/images/custom_game/battlepass/dark_seer_immortal2.png" hittest="false" />
+			<Image src="file://panorama/images/custom_game/battlepass/huskar_immortal.png" hittest="false" />
+			<Image src="file://panorama/images/custom_game/battlepass/bristleback_rare.png" hittest="false" />
+			<Image src="file://panorama/images/custom_game/battlepass/bristleback_rare2.png" hittest="false" />
 
 			<Image src="file://panorama/images/heroes/npc_dota_hero_malfurion.png" hittest="false" />
 			<Image src="file://panorama/images/heroes/npc_dota_hero_sohei.png" hittest="false" />

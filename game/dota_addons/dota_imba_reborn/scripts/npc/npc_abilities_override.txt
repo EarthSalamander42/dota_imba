@@ -9864,7 +9864,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"wave_damage"				"25 55 75 85"
+				"wave_damage"				"25 50 75 100"
 				"LinkedSpecialBonus"		"special_bonus_unique_underlord_2"
 			}
 			"05"
@@ -9961,13 +9961,13 @@
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"bonus_damage_from_hero"		"30 42 52 60"
+				"bonus_damage_from_hero"		"30 50 70 90"
 				"LinkedSpecialBonus"			"special_bonus_unique_underlord_3"
 			}
 			"05"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"bonus_damage_duration"			"20 40 60 80"
+				"bonus_damage_duration"			"30 45 60 75"
 			}
 			"06"
 			{

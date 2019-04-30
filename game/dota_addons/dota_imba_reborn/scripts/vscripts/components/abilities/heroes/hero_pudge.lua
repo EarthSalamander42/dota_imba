@@ -1054,6 +1054,7 @@ function imba_pudge_dismember:OnSpellStart()
 		ParticleManager:SetParticleControl(self.pfx, 15, target:GetFittingColor())
 	else
 		self.pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_pudge/pudge_dismember.vpcf", PATTACH_ABSORIGIN, target)
+		ParticleManager:SetParticleControlEnt(self.pfx, 0, self:GetCaster(), PATTACH_POINT_FOLLOW, "attach_attack1", self:GetCaster():GetAbsOrigin(), true)
 	end
 end
 

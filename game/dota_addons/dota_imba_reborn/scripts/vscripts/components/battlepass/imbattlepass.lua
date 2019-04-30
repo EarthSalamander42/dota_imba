@@ -23,15 +23,17 @@
 -- Phase Boots (particles/econ/events/ti8/phase_boots_ti8.vpcf) -- lifesteal boots use ti8 cosmetic already
 
 if Imbattlepass == nil then Imbattlepass = class({}) end
-local next_reward = true
+
 local next_reward_shown = false
-if IsInToolsMode() and next_reward == true then
+if IsInToolsMode() then
 	next_reward_shown = true
 end
 
 IMBATTLEPASS_LEVEL_REWARD = {}
 IMBATTLEPASS_LEVEL_REWARD[4]	= "fountain"
+IMBATTLEPASS_LEVEL_REWARD[6]	= "bristleback_rare"
 IMBATTLEPASS_LEVEL_REWARD[9]	= "blink"
+IMBATTLEPASS_LEVEL_REWARD[11]	= "chen_mythical"
 IMBATTLEPASS_LEVEL_REWARD[13]	= "fountain2"
 IMBATTLEPASS_LEVEL_REWARD[15]	= "vengefulspirit_immortal"
 IMBATTLEPASS_LEVEL_REWARD[16]	= "force_staff"
@@ -39,11 +41,13 @@ IMBATTLEPASS_LEVEL_REWARD[18]	= "blink2"
 IMBATTLEPASS_LEVEL_REWARD[22]	= "fountain3"
 -- IMBATTLEPASS_LEVEL_REWARD[26]	= "bottle"
 IMBATTLEPASS_LEVEL_REWARD[27]	= "blink3"
+IMBATTLEPASS_LEVEL_REWARD[28]	= "dark_seer_immortal"
 IMBATTLEPASS_LEVEL_REWARD[30]	= "zuus_arcana"
 IMBATTLEPASS_LEVEL_REWARD[31]	= "fountain4"
 IMBATTLEPASS_LEVEL_REWARD[32]	= "force_staff2"
 IMBATTLEPASS_LEVEL_REWARD[35]	= "mekansm"
 IMBATTLEPASS_LEVEL_REWARD[36]	= "blink4"
+IMBATTLEPASS_LEVEL_REWARD[38]	= "bristleback_rare2"
 IMBATTLEPASS_LEVEL_REWARD[40]	= "fountain5"
 IMBATTLEPASS_LEVEL_REWARD[44]	= "radiance"
 IMBATTLEPASS_LEVEL_REWARD[45]	= "blink5"
@@ -53,6 +57,7 @@ IMBATTLEPASS_LEVEL_REWARD[49]	= "fountain6"
 IMBATTLEPASS_LEVEL_REWARD[52]	= "enigma_mythical"
 IMBATTLEPASS_LEVEL_REWARD[54]	= "blink6"
 IMBATTLEPASS_LEVEL_REWARD[55]	= "lina_arcana"
+IMBATTLEPASS_LEVEL_REWARD[56]	= "huskar_immortal"
 IMBATTLEPASS_LEVEL_REWARD[58]	= "fountain7"
 IMBATTLEPASS_LEVEL_REWARD[60]	= "sheepstick"
 IMBATTLEPASS_LEVEL_REWARD[63]	= "blink7"
@@ -88,6 +93,7 @@ IMBATTLEPASS_LEVEL_REWARD[120]	= "sheepstick2"
 IMBATTLEPASS_LEVEL_REWARD[121]	= "fountain14"
 -- IMBATTLEPASS_LEVEL_REWARD[122]	= "bottle5"
 IMBATTLEPASS_LEVEL_REWARD[126]	= "fountain17"
+IMBATTLEPASS_LEVEL_REWARD[128]	= "dark_seer_immortal2"
 IMBATTLEPASS_LEVEL_REWARD[130]	= "fountain15"
 IMBATTLEPASS_LEVEL_REWARD[132]	= "radiance3"
 IMBATTLEPASS_LEVEL_REWARD[140]	= "wisp_arcana"
@@ -116,6 +122,10 @@ function Imbattlepass:Init()
 	IMBATTLEPASS_LINA = {}
 	IMBATTLEPASS_WISP = {}
 	IMBATTLEPASS_ENIGMA = {}
+	IMBATTLEPASS_CHEN = {}
+	IMBATTLEPASS_DARK_SEER = {}
+	IMBATTLEPASS_HUSKAR = {}
+	IMBATTLEPASS_BRISTLEBACK = {}
 
 	for k, v in pairs(IMBATTLEPASS_LEVEL_REWARD) do
 		if string.find(v, "fountain") then
@@ -150,6 +160,14 @@ function Imbattlepass:Init()
 			IMBATTLEPASS_WISP[v] = k
 		elseif string.find(v, "enigma") then
 			IMBATTLEPASS_ENIGMA[v] = k
+		elseif string.find(v, "chen") then
+			IMBATTLEPASS_CHEN[v] = k
+		elseif string.find(v, "dark_seer") then
+			IMBATTLEPASS_DARK_SEER[v] = k
+		elseif string.find(v, "huskar") then
+			IMBATTLEPASS_HUSKAR[v] = k
+		elseif string.find(v, "bristleback") then
+			IMBATTLEPASS_BRISTLEBACK[v] = k
 		end
 	end
 
@@ -173,7 +191,7 @@ function Imbattlepass:AddItemEffects(hero)
 end
 
 function Imbattlepass:GetRewardUnlocked(ID)
-	if IsInToolsMode() then return 1000 end
+	if IsInToolsMode() then return 1 end
 	if CustomNetTables:GetTableValue("player_table", tostring(ID)) then
 		if CustomNetTables:GetTableValue("player_table", tostring(ID)).Lvl then
 			return CustomNetTables:GetTableValue("player_table", tostring(ID)).Lvl
@@ -463,7 +481,16 @@ function Imbattlepass:GetBottleEffect(hero)
 end
 
 function Imbattlepass:GetHeroEffect(hero)
-	if hero:GetUnitName() == "npc_dota_hero_juggernaut" then
+	if hero:GetUnitName() == "npc_dota_hero_dark_seer" then
+		hero.ion_shell_effect = "particles/units/heroes/hero_dark_seer/dark_seer_ion_shell.vpcf"
+		hero.ion_shell_damage_effect = "particles/units/heroes/hero_dark_seer/dark_seer_ion_shell_damage.vpcf"
+		hero.ion_shell_sound = "Hero_Dark_Seer.Ion_Shield_Start"
+		hero.ion_shell_end_sound = "Hero_Dark_Seer.Ion_Shield_end"
+	elseif hero:GetUnitName() == "npc_dota_hero_huskar" then
+		hero.life_break_cast_effect = "particles/units/heroes/hero_huskar/huskar_life_break_cast.vpcf"
+		hero.life_break_start_effect = "particles/units/heroes/hero_huskar/huskar_life_break_spellstart.vpcf"
+		hero.life_break_effect = "particles/units/heroes/hero_huskar/huskar_life_break.vpcf"
+	elseif hero:GetUnitName() == "npc_dota_hero_juggernaut" then
 		hero.blade_dance_effect = "particles/units/heroes/hero_juggernaut/juggernaut_crit_tgt.vpcf"
 		hero.blade_dance_sound = "Hero_Juggernaut.BladeDance"
 		hero.omni_slash_hit_effect = "particles/units/heroes/hero_juggernaut/juggernaut_omni_slash_tgt.vpcf"
@@ -473,7 +500,6 @@ function Imbattlepass:GetHeroEffect(hero)
 		hero.omni_slash_end = "particles/units/heroes/hero_juggernaut/juggernaut_omni_end.vpcf"
 		hero.omni_slash_light = "particles/units/heroes/hero_juggernaut/juggernaut_omnislash_light.vpcf"
 	elseif hero:GetUnitName() == "npc_dota_hero_wisp" then
-		print("setup wisp basic override")
 		hero.tether_effect = "particles/units/heroes/hero_wisp/wisp_tether.vpcf"
 		hero.spirits_effect = "particles/units/heroes/hero_wisp/wisp_guardian.vpcf"
 		hero.spirits_explosion_effect = "particles/units/heroes/hero_wisp/wisp_guardian_explosion.vpcf"
@@ -493,7 +519,45 @@ function Imbattlepass:GetHeroEffect(hero)
 	end
 
 	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) ~= nil then
-		if hero:GetUnitName() == "npc_dota_hero_enigma" then
+		if hero:GetUnitName() == "npc_dota_hero_bristleback" then
+			if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BRISTLEBACK["bristleback_rare2"] then
+				Wearable:_WearProp(hero, "9786", "back", "1")
+				Wearable:_WearProp(hero, "9787", "arms", "1")
+				Wearable:_WearProp(hero, "9788", "head", "1")
+				Wearable:_WearProp(hero, "9789", "neck", "1")
+				Wearable:_WearProp(hero, "9790", "weapon", "1")
+			elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_BRISTLEBACK["bristleback_rare"] then
+				Wearable:_WearProp(hero, "9786", "back", "0")
+				Wearable:_WearProp(hero, "9787", "arms", "0")
+				Wearable:_WearProp(hero, "9788", "head", "0")
+				Wearable:_WearProp(hero, "9789", "neck", "0")
+				Wearable:_WearProp(hero, "9790", "weapon", "0")
+			end
+		elseif hero:GetUnitName() == "npc_dota_hero_chen" then
+			if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_CHEN["chen_mythical"] then
+				Wearable:_WearProp(hero, "9950", "head")
+				Wearable:_WearProp(hero, "9951", "weapon")
+				Wearable:_WearProp(hero, "9952", "mount")
+				Wearable:_WearProp(hero, "9953", "shoulder")
+				Wearable:_WearProp(hero, "9954", "arms")
+			end
+		elseif hero:GetUnitName() == "npc_dota_hero_dark_seer" then
+			if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_DARK_SEER["dark_seer_immortal2"] then
+				Wearable:_WearProp(hero, "12299", "arms")
+				hero.ion_shell_effect = "particles/econ/items/dark_seer/dark_seer_ti8_immortal_arms/dark_seer_ti8_immortal_ion_shell_golden.vpcf"
+				hero.ion_shell_damage_effect = "particles/econ/items/dark_seer/dark_seer_ti8_immortal_arms/dark_seer_ti8_immortal_ion_shell_dmg_golden.vpcf"
+				hero.ion_shell_icon = 2
+				hero.ion_shell_sound = "Hero_Dark_Seer.Ion_Shield_Start.TI8"
+				hero.ion_shell_end_sound = "Hero_Dark_Seer.Ion_Shield_end.TI8"
+			elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_DARK_SEER["dark_seer_immortal"] then
+				Wearable:_WearProp(hero, "9740", "arms")
+				hero.ion_shell_effect = "particles/econ/items/dark_seer/dark_seer_ti8_immortal_arms/dark_seer_ti8_immortal_ion_shell.vpcf"
+				hero.ion_shell_damage_effect = "particles/econ/items/dark_seer/dark_seer_ti8_immortal_arms/dark_seer_ti8_immortal_ion_shell_dmg.vpcf"
+				hero.ion_shell_icon = 1
+				hero.ion_shell_sound = "Hero_Dark_Seer.Ion_Shield_Start.TI8"
+				hero.ion_shell_end_sound = "Hero_Dark_Seer.Ion_Shield_end.TI8"
+			end
+		elseif hero:GetUnitName() == "npc_dota_hero_enigma" then
 			if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_ENIGMA["enigma_immortal"] then
 				Wearable:_WearProp(hero, "8326", "arms")
 
@@ -505,6 +569,14 @@ function Imbattlepass:GetHeroEffect(hero)
 				Wearable:_WearProp(hero, "12330", "armor")
 				Wearable:_WearProp(hero, "12332", "head")
 				hero.eidolon_model = "models/items/enigma/eidolon/absolute_zero_updated_eidolon/absolute_zero_updated_eidolon.vmdl"
+			end
+		elseif hero:GetUnitName() == "npc_dota_hero_huskar" then
+			if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_HUSKAR["huskar_immortal"] then
+				Wearable:_WearProp(hero, "8188", "head")
+				hero.life_break_cast_effect = "particles/econ/items/huskar/huskar_searing_dominator/huskar_searing_lifebreak_cast.vpcf"
+				hero.life_break_start_effect = "particles/econ/items/huskar/huskar_searing_dominator/huskar_searing_lifebreak_spellstart.vpcf"
+				hero.life_break_effect = "particles/econ/items/huskar/huskar_searing_dominator/huskar_searing_life_break.vpcf"
+				hero.life_break_icon = 1
 			end
 		elseif hero:GetUnitName() == "npc_dota_hero_juggernaut" then
 			if next_reward_shown == true and Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_JUGGERNAUT["juggernaut_arcana"] then
@@ -607,7 +679,7 @@ function Imbattlepass:GetHeroEffect(hero)
 
 				hero.static_field_icon = 1
 				hero.static_field_effect = "particles/econ/items/zeus/arcana_chariot/zeus_arcana_static_field.vpcf"
-				hero.thundergods_wrath_start_effect = "particles/econ/items/zeus/arcana_chariot/zeus_arcana_thundergods_wrath_start_bolt_parent.vpcf"
+				hero.thundergods_wrath_start_effect = "particles/econ/items/zeus/arcana_chariot/zeus_arcana_thundergods_wrath_start.vpcf"
 				hero.thundergods_wrath_effect = "particles/econ/items/zeus/arcana_chariot/zeus_arcana_thundergods_wrath.vpcf"
 				hero.thundergods_wrath_icon = 1
 				hero.thundergods_wrath_pre_sound = "Hero_Zuus.GodsWrath.PreCast.Arcana"
