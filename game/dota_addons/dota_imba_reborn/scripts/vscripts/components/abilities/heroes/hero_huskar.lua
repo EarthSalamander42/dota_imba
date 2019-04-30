@@ -1056,6 +1056,9 @@ function modifier_imba_huskar_life_break_sac_dagger:OnCreated(params)
 	self.contact_radius		= params.contact_radius
 	self.damage				= params.damage
 	
+	self.damage_interval	= 0.1
+	self.counter			= 0
+	
 	self:OnIntervalThink()
 	self:StartIntervalThink(FrameTime())
 end
@@ -1076,23 +1079,29 @@ function modifier_imba_huskar_life_break_sac_dagger:OnIntervalThink()
 	local forward_vector = (self:GetCaster():GetOrigin() - self:GetParent():GetOrigin()):Normalized()
 	self:GetParent():SetForwardVector(Vector(forward_vector.y, forward_vector.x * (-1), forward_vector.z))
 	
-	local enemies = FindUnitsInRadius(self:GetParent():GetTeamNumber(), self:GetParent():GetOrigin(), nil, self.contact_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+	self.counter = self.counter + FrameTime()
+	
+	if self.counter >= self.damage_interval then
+		self.counter = 0
+	
+		local enemies = FindUnitsInRadius(self:GetParent():GetTeamNumber(), self:GetParent():GetOrigin(), nil, self.contact_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 
-	for _, enemy in pairs(enemies) do
-		-- Apply half the damage as physical
-		local damageTable = {
-			victim 			= enemy,
-			damage 			= self.damage * FrameTime() * 0.5,
-			damage_type		= DAMAGE_TYPE_PHYSICAL,
-			damage_flags 	= DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
-			attacker 		= self:GetCaster(),
-			ability 		= self:GetAbility()
-		}
-		ApplyDamage(damageTable)
-		
-		-- and the other half as magical
-		damageTable.damage_type		= DAMAGE_TYPE_MAGICAL
-		ApplyDamage(damageTable)
+		for _, enemy in pairs(enemies) do
+			-- Apply half the damage as physical
+			local damageTable = {
+				victim 			= enemy,
+				damage 			= self.damage * self.damage_interval * 0.5,
+				damage_type		= DAMAGE_TYPE_PHYSICAL,
+				damage_flags 	= DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
+				attacker 		= self:GetCaster(),
+				ability 		= self:GetAbility()
+			}
+			ApplyDamage(damageTable)
+			
+			-- and the other half as magical
+			damageTable.damage_type		= DAMAGE_TYPE_MAGICAL
+			ApplyDamage(damageTable)
+		end
 	end
 end
 
