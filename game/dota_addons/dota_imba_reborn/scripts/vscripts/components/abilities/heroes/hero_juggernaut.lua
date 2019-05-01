@@ -152,7 +152,11 @@ function modifier_imba_juggernaut_blade_fury:OnIntervalThink()
 				end
 				ParticleManager:SetParticleControl(crit_pfx, 0, self:GetParent():GetAbsOrigin())
 				ParticleManager:ReleaseParticleIndex(crit_pfx)
-				self:GetParent():EmitSound(hero.blade_dance_sound)
+				
+				if self:GetCaster().blade_dance_sound then
+					self:GetParent():EmitSound(self:GetCaster().blade_dance_sound)
+				end
+				
 				self:GetParent():EmitSound("Hero_Juggernaut.PreAttack")
 				damage = damage * crit
 				SendOverheadEventMessage(self:GetCaster(), OVERHEAD_ALERT_CRITICAL, enemy, damage, self:GetCaster())
@@ -1030,7 +1034,9 @@ function modifier_imba_juggernaut_blade_dance_empowered_slice:StatusEffectPriori
 end
 
 function modifier_imba_juggernaut_blade_dance_empowered_slice:GetStatusEffectName()
-	return hero.omni_slash_status_effect
+	if self:GetCaster().omni_slash_status_effect then
+		return self:GetCaster().omni_slash_status_effect
+	end
 end
 
 function modifier_imba_juggernaut_blade_dance_empowered_slice:SeekAndDestroyPtTooAnnihilation()
@@ -1834,7 +1840,9 @@ function modifier_imba_omni_slash_talent:GetAttributes()
 end
 
 function modifier_imba_omni_slash_talent:GetStatusEffectName()
-	return hero.omni_slash_status_effect
+	if self:GetCaster().omni_slash_status_effect then
+		return self:GetCaster().omni_slash_status_effect
+	end
 end
 
 modifier_imba_omni_slash_caster = modifier_imba_omni_slash_caster or class({})
@@ -2119,11 +2127,14 @@ modifier_omnislash_image_afterimage_fade = modifier_omnislash_image_afterimage_f
 function modifier_omnislash_image_afterimage_fade:OnCreated(keys)
 	if IsServer() then
 		local caster = self:GetCaster()
-		local trail_pfx = ParticleManager:CreateParticle(hero.omni_slash_trail_effect, PATTACH_CUSTOMORIGIN, self:GetCaster())
+		
+		if self:GetCaster().omni_slash_trail_effect then
+			local trail_pfx = ParticleManager:CreateParticle(self:GetCaster().omni_slash_trail_effect, PATTACH_CUSTOMORIGIN, self:GetCaster())
 
-		ParticleManager:SetParticleControl(trail_pfx, 0, Vector(keys.previous_position_x, keys.previous_position_y, keys.previous_position_z))
-		ParticleManager:SetParticleControl(trail_pfx, 1, caster:GetAbsOrigin())
-		ParticleManager:ReleaseParticleIndex(trail_pfx)
+			ParticleManager:SetParticleControl(trail_pfx, 0, Vector(keys.previous_position_x, keys.previous_position_y, keys.previous_position_z))
+			ParticleManager:SetParticleControl(trail_pfx, 1, caster:GetAbsOrigin())
+			ParticleManager:ReleaseParticleIndex(trail_pfx)
+		end
 	end
 end
 
@@ -2147,7 +2158,9 @@ function modifier_imba_omni_slash_caster:StatusEffectPriority()
 end
 
 function modifier_imba_omni_slash_caster:GetStatusEffectName()
-	return hero.omni_slash_status_effect
+	if self:GetCaster().omni_slash_status_effect then
+		return self:GetCaster().omni_slash_status_effect
+	end
 end
 
 function modifier_imba_omni_slash_caster:IsHidden() return false end
@@ -2273,9 +2286,11 @@ function modifier_juggernaut_arcana_kill:OnCreated(keys)
 		self:GetParent():EmitSound("Hero_Juggernaut.ArcanaTrigger")
 
 		if keys.kills == nil then keys.kills = 0 end
-
-		local pfx = ParticleManager:CreateParticle(hero.arcana_trigger_effect, PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
-		ParticleManager:SetParticleControl(pfx, 3, Vector(math.min(keys.kills, 5), 0, 0))
+	
+		if self:GetCaster().arcana_trigger_effect then
+			local pfx = ParticleManager:CreateParticle(self:GetCaster().arcana_trigger_effect, PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
+			ParticleManager:SetParticleControl(pfx, 3, Vector(math.min(keys.kills, 5), 0, 0))
+		end
 
 		if keys.kills > 0 then
 			local pfx = ParticleManager:CreateParticle("particles/econ/items/juggernaut/jugg_arcana/juggernaut_arcana_counter.vpcf", PATTACH_OVERHEAD_FOLLOW, self:GetCaster())
