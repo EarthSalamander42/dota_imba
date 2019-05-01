@@ -268,7 +268,7 @@ function imba_chen_holy_persuasion:CastFilterResultTarget(hTarget)
 	end
 	
 	if hTarget == self:GetCaster() 
-	or (hTarget:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() and hTarget:IsCreep() and not hTarget:IsRoshan()) and hTarget:GetLevel() <= self:GetSpecialValueFor("level_req") and (not hTarget:IsAncient() or (hTarget:IsAncient() and self:GetCaster():HasAbility("imba_chen_hand_of_god") and self:GetCaster():FindAbilityByName("imba_chen_hand_of_god"):IsTrained()))
+	or (hTarget:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() and hTarget:IsCreep() and not hTarget:IsRoshan()) and hTarget:GetLevel() <= self:GetSpecialValueFor("level_req") and (not hTarget:IsAncient() or (hTarget:IsAncient() and self:GetCaster():HasAbility("imba_chen_hand_of_god") and self:GetCaster():FindAbilityByName("imba_chen_hand_of_god"):IsTrained() and self:GetCaster():HasScepter()))
 	or (hTarget:GetTeamNumber() == self:GetCaster():GetTeamNumber() and (hTarget:IsRealHero() or hTarget:IsClone() or hTarget:GetOwnerEntity() == self:GetCaster() or (hTarget.GetPlayerID and self:GetCaster().GetPlayerID and hTarget:GetPlayerID() == self:GetCaster():GetPlayerID()) or hTarget:IsOther())) then
 		return UF_SUCCESS
 	elseif hTarget:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() and hTarget:IsCreep() and not hTarget:IsRoshan() and hTarget:GetLevel() > self:GetSpecialValueFor("level_req") then
