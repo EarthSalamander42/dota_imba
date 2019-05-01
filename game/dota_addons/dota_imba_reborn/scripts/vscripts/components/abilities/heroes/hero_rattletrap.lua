@@ -937,9 +937,9 @@ function imba_rattletrap_rocket_flare:OnProjectileHit_ExtraData(hTarget, vLocati
 			-- For every multiple of "self:GetSpecialValueFor("system_min_distance")" (2500 is the original number) that the travel_distance is, the damage is boosted by self:GetSpecialValueFor("system_crit") as a percentage (175% is the original number)
 			
 			-- So if the flare lands true from exactly 2500 range away for example, the damage should be multiplied by 2.75 (175% critical = 275% of base damage)
-			flare_damage = damage * (travel_distance / self:GetSpecialValueFor("system_min_distance")) * (self:GetSpecialValueFor("system_crit") + 100) * 0.01
+			-- flare_damage = damage * (travel_distance / self:GetSpecialValueFor("system_min_distance")) * (self:GetSpecialValueFor("system_crit") + 100) * 0.01
 			
-			SendOverheadEventMessage(nil, OVERHEAD_ALERT_CRITICAL, enemy, flare_damage, nil)
+			-- SendOverheadEventMessage(nil, OVERHEAD_ALERT_CRITICAL, enemy, flare_damage, nil)
 			
 			-- Destroy all their mana (only if not a Carpet Fire shot cause """balance""")
 			if enemy.SetMana and not ExtraData.carpet_fire then

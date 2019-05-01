@@ -32,7 +32,8 @@ IMBA_DONATOR_COMPANION["76561198046069202"] = "npc_donator_companion_crux"
 IMBA_DONATOR_COMPANION["76561197969985809"] = "npc_donator_companion_phish"
 IMBA_DONATOR_COMPANION["76561198065838676"] = "npc_donator_companion_miku"
 IMBA_DONATOR_COMPANION["76561198054347194"] = "npc_donator_companion_vivi"
-IMBA_DONATOR_COMPANION["76561198885326839"] = "npc_donator_companion_vivi"	-- test string
+IMBA_DONATOR_COMPANION["76561198046078552"] = "npc_donator_companion_altivu"
+IMBA_DONATOR_COMPANION["76561198885326839"] = "npc_donator_companion_altivu"	-- test string
 -- IMBA_DONATOR_COMPANION["76561198330946475"] = "npc_donator_companion_deadknight"
 
 IMBA_DONATOR_STATUE = {}
@@ -62,5 +63,6 @@ DONATOR_COMPANION_ADDITIONAL_INFO["models/heroes/phoenix/phoenix_bird.vmdl"] = {
 DONATOR_COMPANION_ADDITIONAL_INFO["models/courier/donkey_crummy_wizard_2014/donkey_crummy_wizard_2014_flying.vmdl"] = {"particles/econ/courier/courier_hwytty/courier_hwytty_ambient.vpcf"}
 DONATOR_COMPANION_ADDITIONAL_INFO["models/courier/sw_donkey/sw_donkey_flying.vmdl"] = {"particles/econ/courier/courier_dolfrat_and_roshinante/courier_dolfrat_and_roshinante_a.vpcf"}
 DONATOR_COMPANION_ADDITIONAL_INFO["models/items/courier/nian_courier/nian_courier.vmdl"] = {"particles/econ/courier/courier_nian/courier_nian_ambient.vpcf"}
-DONATOR_COMPANION_ADDITIONAL_INFO["models/heroes/phoenix/phoenix_egg.vmdl"] = {nil, true} -- Technically there is "particles/units/heroes/hero_phoenix/phoenix_supernova_egg.vpcf" but the effects are probably too crazy for like a permanent entity
+DONATOR_COMPANION_ADDITIONAL_INFO["models/items/phoenix/ultimate/golden_nirvana_golden_nirvana_nova/golden_nirvana_golden_nirvana_nova.vmdl"] = {"particles/units/heroes/hero_phoenix/phoenix_supernova_egg.vpcf", true} -- Effects might be too crazy for like a permanent entity
+DONATOR_COMPANION_ADDITIONAL_INFO["models/courier/donkey_ti7/donkey_ti7_flying.vmdl"] = {"particles/econ/courier/courier_donkey_ti7/courier_donkey_ti7_ambient.vpcf", true}
 -- DONATOR_COMPANION_ADDITIONAL_INFO["models/items/rubick/rubick_arcana/rubick_arcana_base.vmdl"] = {""}
