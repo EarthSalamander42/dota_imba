@@ -1015,7 +1015,7 @@ end
 
 function imba_rattletrap_hookshot:GetCooldown(iLevel)
 	if self:GetCaster():HasScepter() then 
-		self:GetSpecialValueFor("cooldown_scepter")
+		return self:GetSpecialValueFor("cooldown_scepter")
 	else
 		return self.BaseClass.GetCooldown(self, iLevel)
 	end
