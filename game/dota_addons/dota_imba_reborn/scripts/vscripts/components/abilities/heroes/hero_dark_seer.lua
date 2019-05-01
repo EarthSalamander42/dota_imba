@@ -422,8 +422,7 @@ end
 function imba_dark_seer_ion_shell:OnSpellStart()
 	if not IsServer() then return end
 	
-	-- self:GetCursorTarget():EmitSound(self:GetCaster().ion_shield_sound) ???
-	self:GetCursorTarget():EmitSound("Hero_Dark_Seer.Ion_Shield_Start")
+	self:GetCursorTarget():EmitSound(self:GetCaster().ion_shell_sound)
 	
 	if self:GetCaster():GetName() == "npc_dota_hero_dark_seer" and RollPercentage(50) then
 		self:GetCaster():EmitSound("dark_seer_dkseer_ability_surge_0"..math.random(1,2))
@@ -509,8 +508,7 @@ end
 function modifier_imba_dark_seer_ion_shell:OnDestroy()
 	if not IsServer() then return end
 	
-	self:GetParent():StopSound("Hero_Dark_Seer.Ion_Shield_lp")
-	-- self:GetParent():EmitSound(self:GetCaster().ion_shield_end_sound) ??
+	self:GetParent():EmitSound(self:GetCaster().ion_shield_end_sound)
 	
 	if self:GetRemainingTime() <= 0 then
 		self:GetParent():EmitSound("Hero_Abaddon.AphoticShield.Destroy")
