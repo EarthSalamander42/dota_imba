@@ -24,7 +24,7 @@
 		"Ability12"		"special_bonus_strength_15"
 		"Ability13"		"special_bonus_imba_rattletrap_battery_assault_aura"
 		"Ability14"		"special_bonus_imba_rattletrap_rocket_flare_truesight"
-		"Ability15"		"special_bonus_imba_rattletrap_second_gear"
+		"Ability15"		"special_bonus_imba_rattletrap_rocket_flare_speed"
 		"Ability16"		"special_bonus_magic_resistance_50"
 		"Ability17"		"special_bonus_imba_rattletrap_battery_assault_interval"
 		
@@ -32,6 +32,7 @@
 		//"Ability13"		"special_bonus_unique_clockwerk_3" // Extra Battery Assault damage
 		//"Ability14"		"special_bonus_unique_clockwerk_4" // Rocket Flare Truesight (Vanilla)
 		//"Ability15"		"special_bonus_unique_clockwerk_2" // Extra Rocket Flare damage
+		//"Ability15"		"special_bonus_imba_rattletrap_second_gear"
 		//					"special_bonus_imba_rattletrap_power_cogs_push_length" 
 	}
 }

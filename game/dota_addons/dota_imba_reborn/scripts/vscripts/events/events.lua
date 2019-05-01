@@ -797,7 +797,7 @@ function GameMode:OnPlayerChat(keys)
 								[13] = "special_bonus_imba_chen_remnants_of_penitence"
 							}
 							upgraded = true
-						elseif (string.find(text, 'rattletrap') or string.find(text, 'clockwerk'))and hero:GetName() == "npc_dota_hero_rattletrap" then
+						elseif (string.find(text, 'rattletrap') or string.find(text, 'clockwerk')) and hero:GetName() == "npc_dota_hero_rattletrap" then
 							ability_set = {
 								[0] = "imba_rattletrap_battery_assault",
 								[1] = "imba_rattletrap_power_cogs",
@@ -813,6 +813,24 @@ function GameMode:OnPlayerChat(keys)
 								[11] = "special_bonus_imba_rattletrap_second_gear",
 								[12] = "special_bonus_magic_resistance_50",
 								[13] = "special_bonus_imba_rattletrap_battery_assault_interval"
+							}
+							upgraded = true
+						elseif string.find(text, 'medusa') and hero:GetName() == "npc_dota_hero_medusa" then
+							ability_set = {
+								[0] = "imba_medusa_split_shot",
+								[1] = "imba_medusa_mystic_snake",
+								[2] = "imba_medusa_mana_shield",
+								[3] = "generic_hidden",
+								[4] = "generic_hidden",
+								[5] = "imba_medusa_stone_gaze",
+								-- [6] = "special_bonus_armor_5",
+								-- [7] = "special_bonus_movement_speed_20",
+								-- [8] = "special_bonus_strength_15",
+								-- [9] = "special_bonus_imba_rattletrap_battery_assault_aura",
+								-- [10] = "special_bonus_imba_rattletrap_rocket_flare_truesight",
+								-- [11] = "special_bonus_imba_rattletrap_second_gear",
+								-- [12] = "special_bonus_magic_resistance_50",
+								-- [13] = "special_bonus_imba_rattletrap_battery_assault_interval"
 							}
 							upgraded = true
 						end

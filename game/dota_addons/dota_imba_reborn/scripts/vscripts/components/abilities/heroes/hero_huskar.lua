@@ -569,7 +569,7 @@ function modifier_imba_huskar_berserkers_blood:GetModifierMagicalResistanceBonus
 end
 
 function modifier_imba_huskar_berserkers_blood:GetMinHealth()
-	if (self:GetAbility():GetAutoCastState() and self:GetAbility():IsCooldownReady()) or self:GetParent():HasModifier("modifier_imba_huskar_berserkers_blood_crimson_priest") then
+	if (self:GetAbility():GetAutoCastState() and self:GetAbility():IsCooldownReady() and not self:GetCaster():PassivesDisabled() and not self:GetCaster():IsIllusion()) or self:GetParent():HasModifier("modifier_imba_huskar_berserkers_blood_crimson_priest") then
 		return 1
 	else
 		return 0
@@ -580,7 +580,7 @@ function modifier_imba_huskar_berserkers_blood:OnTakeDamage(keys)
 	if not IsServer() then return end
 	
 	-- Don't waste it if caster has Shallow Grave or Cheese Death Prevention
-	if keys.unit == self.caster and self.caster:GetHealth() <= 1 and (self.ability:GetAutoCastState() and self.ability:IsCooldownReady()) and not self.caster:PassivesDisabled() and not self.caster:HasModifier("modifier_imba_dazzle_shallow_grave") and not self.caster:HasModifier("modifier_imba_dazzle_nothl_protection_aura_talent") and not self.caster:HasModifier("modifier_imba_cheese_death_prevention") and not self.caster:HasModifier("modifier_imba_huskar_berserkers_blood_crimson_priest") then
+	if keys.unit == self.caster and self.caster:GetHealth() <= 1 and not self.caster:IsIllusion() and (self.ability:GetAutoCastState() and self.ability:IsCooldownReady()) and not self.caster:PassivesDisabled() and not self.caster:HasModifier("modifier_imba_dazzle_shallow_grave") and not self.caster:HasModifier("modifier_imba_dazzle_nothl_protection_aura_talent") and not self.caster:HasModifier("modifier_imba_cheese_death_prevention") and not self.caster:HasModifier("modifier_imba_huskar_berserkers_blood_crimson_priest") then
 		self.ability:UseResources(false, false, true)
 	
 		self.caster:EmitSound("Hero_Dazzle.Shallow_Grave")
@@ -1056,6 +1056,9 @@ function modifier_imba_huskar_life_break_sac_dagger:OnCreated(params)
 	self.contact_radius		= params.contact_radius
 	self.damage				= params.damage
 	
+	self.damage_interval	= 0.1
+	self.counter			= 0
+	
 	self:OnIntervalThink()
 	self:StartIntervalThink(FrameTime())
 end
@@ -1076,23 +1079,29 @@ function modifier_imba_huskar_life_break_sac_dagger:OnIntervalThink()
 	local forward_vector = (self:GetCaster():GetOrigin() - self:GetParent():GetOrigin()):Normalized()
 	self:GetParent():SetForwardVector(Vector(forward_vector.y, forward_vector.x * (-1), forward_vector.z))
 	
-	local enemies = FindUnitsInRadius(self:GetParent():GetTeamNumber(), self:GetParent():GetOrigin(), nil, self.contact_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+	self.counter = self.counter + FrameTime()
+	
+	if self.counter >= self.damage_interval then
+		self.counter = 0
+	
+		local enemies = FindUnitsInRadius(self:GetParent():GetTeamNumber(), self:GetParent():GetOrigin(), nil, self.contact_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 
-	for _, enemy in pairs(enemies) do
-		-- Apply half the damage as physical
-		local damageTable = {
-			victim 			= enemy,
-			damage 			= self.damage * FrameTime() * 0.5,
-			damage_type		= DAMAGE_TYPE_PHYSICAL,
-			damage_flags 	= DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
-			attacker 		= self:GetCaster(),
-			ability 		= self:GetAbility()
-		}
-		ApplyDamage(damageTable)
-		
-		-- and the other half as magical
-		damageTable.damage_type		= DAMAGE_TYPE_MAGICAL
-		ApplyDamage(damageTable)
+		for _, enemy in pairs(enemies) do
+			-- Apply half the damage as physical
+			local damageTable = {
+				victim 			= enemy,
+				damage 			= self.damage * self.damage_interval * 0.5,
+				damage_type		= DAMAGE_TYPE_PHYSICAL,
+				damage_flags 	= DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
+				attacker 		= self:GetCaster(),
+				ability 		= self:GetAbility()
+			}
+			ApplyDamage(damageTable)
+			
+			-- and the other half as magical
+			damageTable.damage_type		= DAMAGE_TYPE_MAGICAL
+			ApplyDamage(damageTable)
+		end
 	end
 end
 

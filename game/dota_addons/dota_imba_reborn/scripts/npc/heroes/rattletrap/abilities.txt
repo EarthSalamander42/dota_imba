@@ -252,6 +252,7 @@
 			{	
 				"var_type"			"FIELD_INTEGER"
 				"speed"				"2250"
+				"LinkedSpecialBonus"	"special_bonus_imba_rattletrap_rocket_flare_speed"
 			}
 			"04"
 			{	
@@ -262,7 +263,7 @@
 			"05"
 			{	
 				"var_type"			"FIELD_INTEGER"
-				"carpet_fire_rockets"		"14"
+				"carpet_fire_rockets"		"6"
 			}
 			"06"
 			{	
@@ -272,7 +273,7 @@
 			"07"
 			{	
 				"var_type"			"FIELD_INTEGER"
-				"carpet_fire_damage"		"40"
+				"carpet_fire_damage"		"60"
 			}
 			"08"
 			{	
@@ -283,7 +284,7 @@
 			"09"
 			{	
 				"var_type"				"FIELD_INTEGER"
-				"system_min_distance"	"2500"
+				"system_min_distance"	"4000"
 			}
 			"10"
 			{
@@ -535,6 +536,34 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"value"						"600"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// 
+	//=================================================================================================================
+	"special_bonus_imba_rattletrap_rocket_flare_speed"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_rattletrap_battery_assault"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"1000"
 			}
 		}
 	}

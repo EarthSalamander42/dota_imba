@@ -316,4 +316,18 @@
 		"Model"						"models/items/courier/nian_courier/nian_courier.vmdl"
 		"ModelScale"				"0.75"
 	}
+	
+	"npc_donator_companion_vivi"
+	{
+		"BaseClass"					"npc_donator_companion"
+		"Model"						"models/items/phoenix/ultimate/golden_nirvana_golden_nirvana_nova/golden_nirvana_golden_nirvana_nova.vmdl"
+		"ModelScale"				"0.6"
+	}
+	
+	"npc_donator_companion_altivu"
+	{
+		"BaseClass"					"npc_donator_companion"
+		"Model"						"models/courier/donkey_ti7/donkey_ti7_flying.vmdl"
+		"ModelScale"				"0.65"
+	}
 }

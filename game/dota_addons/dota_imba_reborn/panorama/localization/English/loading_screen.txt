@@ -1,5 +1,5 @@
 "game_version_name"						"Chromatic Drive"
-"loading_screen_description"			"Chen, Dark Seer and Huskar have been imbafied! Battlepass received a major update including new cosmetics and bugfixes. Dota IMBA is part of Frostrose Studio, directed by EarthSalamander."
+"loading_screen_description"			"Chen, Clockwork, Dark Seer and Huskar have all received powerups! Battlepass has also received a major update, including new cosmetics and bugfixes. Dota IMBA is part of Frostrose Studio, directed by EarthSalamander."
 "loading_screen_button"					"Dota 2 IMBA website"
 
 "loading_screen_promote"				"Translate Dota IMBA in your native language!"
