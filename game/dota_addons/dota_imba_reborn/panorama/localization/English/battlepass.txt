@@ -109,3 +109,7 @@
 "leaderboard_rank"				"Rank"
 "leaderboard_steam_avatar"		"Steam"
 "leaderboard_xp"				"Experience (click to sort)"
+
+// settings
+"toggle_ingame_tag"				"Toggle health bar label"
+"disable_companion"				"Toggle Companion"

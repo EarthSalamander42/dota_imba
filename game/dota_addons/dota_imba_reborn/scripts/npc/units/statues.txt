@@ -2,7 +2,7 @@
 {
 	"Version"	"1"
 
-	"npc_imba_donator_pedestal"
+	"npc_donator_pedestal"
 	{
 		// General
 		//----------------------------------------------------------------
@@ -11,7 +11,7 @@
 		"ModelScale"				"1.0"
 	}
 
-	"npc_imba_donator_pedestal_cookies"
+	"npc_donator_pedestal_cookies"
 	{
 		// General
 		//----------------------------------------------------------------
@@ -20,7 +20,7 @@
 		"ModelScale"				"2.0"
 	}
 
-	"npc_imba_donator_pedestal_developer_good"
+	"npc_donator_pedestal_developer_good"
 	{
 		// General
 		//----------------------------------------------------------------
@@ -29,7 +29,7 @@
 		"ModelScale"				"1.0"
 	}
 
-	"npc_imba_donator_pedestal_developer_bad"
+	"npc_donator_pedestal_developer_bad"
 	{
 		// General
 		//----------------------------------------------------------------
@@ -38,7 +38,7 @@
 		"ModelScale"				"1.0"
 	}
 
-	"npc_imba_donator_pedestal_golden_good"
+	"npc_donator_pedestal_golden_good"
 	{
 		// General
 		//----------------------------------------------------------------
@@ -47,7 +47,7 @@
 		"ModelScale"				"1.0"
 	}
 
-	"npc_imba_donator_pedestal_golden_bad"
+	"npc_donator_pedestal_golden_bad"
 	{
 		// General
 		//----------------------------------------------------------------
@@ -56,7 +56,7 @@
 		"ModelScale"				"1.0"
 	}
 
-	"npc_imba_donator_pedestal_ember_good"
+	"npc_donator_pedestal_ember_good"
 	{
 		// General
 		//----------------------------------------------------------------
@@ -65,7 +65,7 @@
 		"ModelScale"				"1.0"
 	}
 
-	"npc_imba_donator_pedestal_ember_bad"
+	"npc_donator_pedestal_ember_bad"
 	{
 		// General
 		//----------------------------------------------------------------
@@ -74,7 +74,7 @@
 		"ModelScale"				"1.0"
 	}
 
-	"npc_imba_donator_pedestal_salamander_good"
+	"npc_donator_pedestal_salamander_good"
 	{
 		// General
 		//----------------------------------------------------------------
@@ -83,7 +83,7 @@
 		"ModelScale"				"1.0"
 	}
 
-	"npc_imba_donator_pedestal_salamander_bad"
+	"npc_donator_pedestal_salamander_bad"
 	{
 		// General
 		//----------------------------------------------------------------
@@ -92,7 +92,7 @@
 		"ModelScale"				"1.0"
 	}
 
-	"npc_imba_donator_pedestal_icefrog"
+	"npc_donator_pedestal_icefrog"
 	{
 		// General
 		//----------------------------------------------------------------
@@ -101,7 +101,7 @@
 		"ModelScale"				"1.0"
 	}
 
-	"npc_imba_donator_pedestal_pudge_arcana"
+	"npc_donator_pedestal_pudge_arcana"
 	{
 		// General
 		//----------------------------------------------------------------
@@ -110,7 +110,7 @@
 		"ModelScale"				"1.0"
 	}
 
-	"npc_imba_donator_statue_brewmaster_earth_spirit"
+	"npc_donator_statue_brewmaster_earth_spirit"
 	{
 		// General
 		//----------------------------------------------------------------
@@ -196,7 +196,7 @@
 		"VisionNighttimeRange"		"600"		// Range of vision at night time.
 	}
 
-	"npc_imba_donator_statue_brewmaster_ember_spirit"
+	"npc_donator_statue_brewmaster_ember_spirit"
 	{
 		// General
 		//----------------------------------------------------------------
@@ -282,7 +282,7 @@
 		"VisionNighttimeRange"		"600"		// Range of vision at night time.
 	}
 
-	"npc_imba_donator_statue_brewmaster_storm_spirit"
+	"npc_donator_statue_brewmaster_storm_spirit"
 	{
 		// General
 		//----------------------------------------------------------------
@@ -368,7 +368,7 @@
 		"VisionNighttimeRange"		"600"		// Range of vision at night time.
 	}
 
-	"npc_imba_donator_statue_grillhound"
+	"npc_donator_statue_grillhound"
 	{
 		// General
 		//----------------------------------------------------------------
@@ -455,7 +455,7 @@
 		"VisionNighttimeRange"		"600"		// Range of vision at night time.
 	}
 
-	"npc_imba_donator_statue_llama"
+	"npc_donator_statue_llama"
 	{
 		// General
 		//----------------------------------------------------------------
@@ -541,7 +541,7 @@
 		"VisionNighttimeRange"		"600"		// Range of vision at night time.
 	}
 
-	"npc_imba_donator_statue_roshan"
+	"npc_donator_statue_roshan"
 	{
 		// General
 		//----------------------------------------------------------------
@@ -628,7 +628,7 @@
 		"VisionNighttimeRange"		"600"		// Range of vision at night time.
 	}
 
-	"npc_imba_donator_statue_crystal_maiden_arcana"
+	"npc_donator_statue_crystal_maiden_arcana"
 	{
 		// General
 		//----------------------------------------------------------------
@@ -715,7 +715,7 @@
 	}
 
 	// Unique Effigies
-	"npc_imba_donator_statue_cookies"
+	"npc_donator_statue_cookies"
 	{
 		// General
 		//----------------------------------------------------------------
@@ -802,7 +802,7 @@
 		"VisionNighttimeRange"		"600"		// Range of vision at night time.
 	}
 
-	"npc_imba_donator_statue_acalia"
+	"npc_donator_statue_acalia"
 	{
 		// General
 		//----------------------------------------------------------------
@@ -889,7 +889,7 @@
 		"VisionNighttimeRange"		"600"		// Range of vision at night time.
 	}
 
-	"npc_imba_donator_statue_lily"
+	"npc_donator_statue_lily"
 	{
 		// General
 		//----------------------------------------------------------------
@@ -976,7 +976,7 @@
 		"VisionNighttimeRange"		"600"		// Range of vision at night time.
 	}
 
-	"npc_imba_donator_statue_suthernfriend"
+	"npc_donator_statue_suthernfriend"
 	{
 		// General
 		//----------------------------------------------------------------
@@ -1063,7 +1063,7 @@
 		"VisionNighttimeRange"		"600"		// Range of vision at night time.
 	}
 
-	"npc_imba_donator_statue_exzas"
+	"npc_donator_statue_exzas"
 	{
 		// General
 		//----------------------------------------------------------------
@@ -1150,7 +1150,7 @@
 		"VisionNighttimeRange"		"600"		// Range of vision at night time.
 	}
 
-	"npc_imba_donator_statue_zonnoz"
+	"npc_donator_statue_zonnoz"
 	{
 		// General
 		//----------------------------------------------------------------
@@ -1237,7 +1237,7 @@
 		"VisionNighttimeRange"		"600"		// Range of vision at night time.
 	}
 
-	"npc_imba_donator_statue_tabisama"
+	"npc_donator_statue_tabisama"
 	{
 		// General
 		//----------------------------------------------------------------
@@ -1324,7 +1324,7 @@
 		"VisionNighttimeRange"		"600"		// Range of vision at night time.
 	}
 
-	"npc_imba_donator_statue_january0000"
+	"npc_donator_statue_january0000"
 	{
 		// General
 		//----------------------------------------------------------------
@@ -1411,7 +1411,7 @@
 		"VisionNighttimeRange"		"600"		// Range of vision at night time.
 	}
 
-	"npc_imba_donator_statue_terdic"
+	"npc_donator_statue_terdic"
 	{
 		// General
 		//----------------------------------------------------------------
@@ -1498,7 +1498,7 @@
 		"VisionNighttimeRange"		"600"		// Range of vision at night time.
 	}
 
-	"npc_imba_donator_statue_toc"
+	"npc_donator_statue_toc"
 	{
 		// General
 		//----------------------------------------------------------------
@@ -1585,7 +1585,7 @@
 		"VisionNighttimeRange"		"600"		// Range of vision at night time.
 	}
 
-	"npc_imba_donator_statue_oviakin"
+	"npc_donator_statue_oviakin"
 	{
 		// General
 		//----------------------------------------------------------------
@@ -1672,7 +1672,7 @@
 		"VisionNighttimeRange"		"600"		// Range of vision at night time.
 	}
 
-	"npc_imba_donator_statue_hamahe"
+	"npc_donator_statue_hamahe"
 	{
 		// General
 		//----------------------------------------------------------------
@@ -1759,7 +1759,7 @@
 		"VisionNighttimeRange"		"600"		// Range of vision at night time.
 	}
 
-	"npc_imba_donator_statue_deadknight"
+	"npc_donator_statue_deadknight"
 	{
 		// General
 		//----------------------------------------------------------------
