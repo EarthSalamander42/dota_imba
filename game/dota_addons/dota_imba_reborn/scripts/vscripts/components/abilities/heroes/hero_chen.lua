@@ -784,6 +784,10 @@ function modifier_imba_chen_holy_persuasion_immortalized:CheckState()
 		[MODIFIER_STATE_UNSELECTABLE] = true,
 		[MODIFIER_STATE_UNTARGETABLE] = true
 	}
+	
+	if self:GetCaster():IsInvisible() then
+		state[MODIFIER_STATE_INVISIBLE] = true
+	end
 
 	return state
 end

@@ -133,7 +133,6 @@ function GameMode:OnGameRulesStateChange(keys)
 						COURIER_TEAM[i]:AddNewModifier(COURIER_TEAM[i], nil, "modifier_courier_turbo", {})
 						COURIER_TEAM[i]:RemoveModifierByName("modifier_magic_immune")
 						COURIER_TEAM[i]:AddAbility("courier_movespeed"):SetLevel(1)
-						COURIER_TEAM[i]:RemoveAbility("imba_courier_autodeliver")
 					end
 				end
 			end
@@ -432,7 +431,7 @@ function GameMode:OnEntityKilled(keys)
 				local units = FindUnitsInRadius(killed_unit:GetTeamNumber(), Vector(0, 0, 0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
 
 				for _, building in pairs(units) do
-					if building:GetUnitName() == unit_name or string.find(building:GetUnitName(), "npc_imba_donator_statue_") then
+					if building:GetUnitName() == unit_name or string.find(building:GetUnitName(), "npc_donator_statue_") then
 						if building:HasModifier("modifier_invulnerable") then
 							building:RemoveModifierByName("modifier_invulnerable")
 						end

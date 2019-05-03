@@ -54,7 +54,7 @@
 
 // Obsidian Destroyer's Equilibrium
 "DOTA_Tooltip_ability_imba_obsidian_destroyer_equilibrium"					"Equilibrium"
-"DOTA_Tooltip_ability_imba_obsidian_destroyer_equilibrium_Description"		"Causes any spell damage you deal to slow enemies and restore mana based on how much damage was dealt.\n<font color='#FF7800'>More Equal Than Others</font> Each instance of spell damage done also transfers %atk_speed_diff% attack speed from the enemies to Outworld Devourer for the duration of the buff."
+"DOTA_Tooltip_ability_imba_obsidian_destroyer_equilibrium_Description"		"Causes any spell damage you deal to slow enemies and restore mana based on how much damage was dealt.\n<font color='#FF7800'>More Equal Than Others:</font> Each instance of spell damage done also transfers %atk_speed_diff% attack speed from the enemies to Outworld Devourer for the duration of the buff."
 "DOTA_Tooltip_ability_imba_obsidian_destroyer_equilibrium_mana_steal"		"%SPELL MANA STEAL:"
 "DOTA_Tooltip_ability_imba_obsidian_destroyer_equilibrium_movement_slow"	"#{DOTA_Tooltip_ability_queenofpain_shadow_strike_movement_slow}"
 "DOTA_Tooltip_ability_imba_obsidian_destroyer_equilibrium_slow_duration"			"#{DOTA_Tooltip_ability_leshrac_lightning_storm_slow_duration}"

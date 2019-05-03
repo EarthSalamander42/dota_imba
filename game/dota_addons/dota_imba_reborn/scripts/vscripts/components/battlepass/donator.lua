@@ -3,7 +3,7 @@ function DonatorStatue(ID, statue_unit)
 		statue_unit = IMBA_DONATOR_STATUE[tostring(PlayerResource:GetSteamID(ID))]
 	end
 
-	local pedestal_name = "npc_imba_donator_pedestal"
+	local pedestal_name = "npc_donator_pedestal"
 	local hero = PlayerResource:GetSelectedHeroEntity(ID)
 
 --	if hero.donator_statue then
@@ -63,35 +63,35 @@ function DonatorStatue(ID, statue_unit)
 
 			if api:GetDonatorStatus(ID) == 1 then
 				unit:SetCustomHealthLabel(name, 160, 20, 20)
-				pedestal_name = "npc_imba_donator_pedestal_cookies"
+				pedestal_name = "npc_donator_pedestal_cookies"
 			elseif api:GetDonatorStatus(ID) == 2 then
 				unit:SetCustomHealthLabel("sutherncuck", 0, 204, 255)
-				pedestal_name = "npc_imba_donator_pedestal_developer_"..team
+				pedestal_name = "npc_donator_pedestal_developer_"..team
 			elseif api:GetDonatorStatus(ID) == 3 then
 				unit:SetCustomHealthLabel(name, 160, 20, 20)
 			elseif api:GetDonatorStatus(ID) == 4 then
 				unit:SetCustomHealthLabel(name, 240, 50, 50)
-				pedestal_name = "npc_imba_donator_pedestal_ember_"..team
+				pedestal_name = "npc_donator_pedestal_ember_"..team
 			elseif api:GetDonatorStatus(ID) == 5 then
 				unit:SetCustomHealthLabel(name, 218, 165, 32)
-				pedestal_name = "npc_imba_donator_pedestal_golden_"..team
+				pedestal_name = "npc_donator_pedestal_golden_"..team
 			elseif api:GetDonatorStatus(ID) == 7 then
 				unit:SetCustomHealthLabel(name, 47, 91, 151)
-				pedestal_name = "npc_imba_donator_pedestal_salamander_"..team
+				pedestal_name = "npc_donator_pedestal_salamander_"..team
 			elseif api:GetDonatorStatus(ID) == 8 then
 				unit:SetCustomHealthLabel(name, 153, 51, 153)
-				pedestal_name = "npc_imba_donator_pedestal_icefrog"
+				pedestal_name = "npc_donator_pedestal_icefrog"
 			elseif api:GetDonatorStatus(ID) then -- 6: donator, 0: lesser donator
 				unit:SetCustomHealthLabel(name, 45, 200, 45)
 			end
 
-			if statue_unit == "npc_imba_donator_statue_suthernfriend" then
+			if statue_unit == "npc_donator_statue_suthernfriend" then
 				unit:SetMaterialGroup("1")
-			elseif statue_unit == "npc_imba_donator_statue_tabisama" then
+			elseif statue_unit == "npc_donator_statue_tabisama" then
 				unit:SetAbsOrigin(unit:GetAbsOrigin() + Vector(0, 0, 40))
-			elseif statue_unit == "npc_imba_donator_statue_zonnoz" then
-				pedestal_name = "npc_imba_donator_pedestal_pudge_arcana"
-			elseif statue_unit == "npc_imba_donator_statue_crystal_maiden_arcana" then
+			elseif statue_unit == "npc_donator_statue_zonnoz" then
+				pedestal_name = "npc_donator_pedestal_pudge_arcana"
+			elseif statue_unit == "npc_donator_statue_crystal_maiden_arcana" then
 				local particle = ParticleManager:CreateParticle("particles/econ/items/crystal_maiden/crystal_maiden_maiden_of_icewrack/maiden_arcana_base_ambient.vpcf", PATTACH_ABSORIGIN_FOLLOW, unit)
 				ParticleManager:ReleaseParticleIndex(particle)
 			end
@@ -101,7 +101,7 @@ function DonatorStatue(ID, statue_unit)
 			pedestal:SetAbsOrigin(abs + Vector(0, 0, 45))
 			unit.pedestal = pedestal
 
-			if statue_unit == "npc_imba_donator_statue_zonnoz" then
+			if statue_unit == "npc_donator_statue_zonnoz" then
 				pedestal:SetMaterialGroup("1")
 			end
 
@@ -111,24 +111,35 @@ function DonatorStatue(ID, statue_unit)
 end
 
 function DonatorCompanion(ID, unit_name, js)
+	local hero = PlayerResource:GetPlayer(ID):GetAssignedHero()
+
+	if hero.companion then
+		hero.companion:ForceKill(false)
+	end
+
+	-- Disabled companion
+	if unit_name == "" then
+		hero.companion = nil
+		return
+	end
+
 	-- set mini doom as default companion if something goes wrong
 	if unit_name == nil then
-		-- enable this when the backend part is done
---		if api.players[PlayerResource:GetSteamID(ID)] then
---			unit_name = api.players[PlayerResource:GetSteamID(ID)].companion.file
---		else
+		if api:GetPlayerCompanion(ID) then
+			print("Player companion unit name:", api:GetPlayerCompanion(ID))
+			unit_name = api:GetPlayerCompanion(ID)
+		else
 			unit_name = "npc_donator_companion_demi_doom"
---		end
+		end
 	end
 
 	if IMBA_DONATOR_COMPANION[tostring(PlayerResource:GetSteamID(ID))] and not js then 
 		unit_name = IMBA_DONATOR_COMPANION[tostring(PlayerResource:GetSteamID(ID))]
 	end
 
-	local hero = PlayerResource:GetPlayer(ID):GetAssignedHero()
-	local color = hero:GetFittingColor()
 	local model
 	local model_scale
+--	local color = hero:GetFittingColor()
 
 	for key, value in pairs(LoadKeyValues("scripts/npc/units/companions.txt")) do
 		if key == unit_name then
@@ -139,10 +150,6 @@ function DonatorCompanion(ID, unit_name, js)
 	end
 
 --	print(unit_name, model, model_scale)
-
-	if hero.companion then
-		hero.companion:ForceKill(false)
-	end
 
 	local companion = CreateUnitByName("npc_donator_companion", hero:GetAbsOrigin() + RandomVector(200), true, hero, hero, hero:GetTeamNumber())
 	companion:SetModel(model)
@@ -209,4 +216,10 @@ function DonatorCompanionSkin(id, unit, skin)
 	if hero.companion and hero.companion:GetUnitName() == unit then
 		hero.companion:SetMaterialGroup(tostring(skin))
 	end
+end
+
+function DonatorTag(id)
+	local hero = PlayerResource:GetPlayer(id):GetAssignedHero()
+
+	hero:SetCustomHealthLabel("", 0, 0, 0)
 end

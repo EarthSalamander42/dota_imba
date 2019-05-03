@@ -901,15 +901,3 @@ function CDOTA_BaseNPC:SetAverageBaseDamage(average, variance) -- variance is in
 	self:SetBaseDamageMax(math.ceil(average*(1+(var/100))))
 	self:SetBaseDamageMin(math.floor(average*(1-(var/100))))
 end
-
-function CDOTA_BaseNPC:HasFreeSlotInInventory()
-	for itemSlot = 0, 8 do
-		local item = self:GetItemInSlot(itemSlot)
-
-		if not item then
-			return true
-		end
-	end
-
-	return false
-end

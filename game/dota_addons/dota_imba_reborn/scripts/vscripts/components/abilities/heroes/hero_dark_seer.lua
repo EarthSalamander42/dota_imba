@@ -508,7 +508,7 @@ end
 function modifier_imba_dark_seer_ion_shell:OnDestroy()
 	if not IsServer() then return end
 	
-	self:GetParent():EmitSound(self:GetCaster().ion_shield_end_sound)
+	self:GetParent():EmitSound(self:GetCaster().ion_shell_end_sound)
 	
 	if self:GetRemainingTime() <= 0 then
 		self:GetParent():EmitSound("Hero_Abaddon.AphoticShield.Destroy")

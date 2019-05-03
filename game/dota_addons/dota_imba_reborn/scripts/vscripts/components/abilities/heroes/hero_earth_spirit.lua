@@ -956,15 +956,15 @@ function modifier_imba_rolling_boulder:OnIntervalThink()
 				end
 			end
 			
-			local nonHeroes = FindUnitsInRadius(self.casterTeam, self.caster:GetAbsOrigin(), nil, self.hitRadius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_CREEP, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
+			local nonHeroes = FindUnitsInRadius(self.casterTeam, self.caster:GetAbsOrigin(), nil, self.hitRadius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
 			for _, nonHero in ipairs(nonHeroes) do
-				if not self.hitEnemies[nonHero:GetEntityIndex()] then
+				if not self.hitEnemies[nonHero:GetEntityIndex()] and not nonHero:IsRealHero() and not nonHero:IsClone() and not nonHero:IsTempestDouble() then
 					self.hitEnemies[nonHero:GetEntityIndex()] = true
 					ApplyDamage({victim = nonHero, attacker = self.caster, damage = self.damage, damage_type = DAMAGE_TYPE_MAGICAL, ability = self:GetAbility()})
 				end
 			end
 			
-			local heroes = FindUnitsInRadius(self.casterTeam, self.caster:GetAbsOrigin(), nil, self.hitRadius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_CLOSEST, false)
+			local heroes = FindUnitsInRadius(self.casterTeam, self.caster:GetAbsOrigin(), nil, self.hitRadius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, FIND_CLOSEST, false)
 			for i, hero in ipairs(heroes) do
 				
 				ApplyDamage({victim = hero, attacker = self.caster, damage = self.damage, damage_type = DAMAGE_TYPE_MAGICAL, ability = self:GetAbility()})
@@ -974,7 +974,11 @@ function modifier_imba_rolling_boulder:OnIntervalThink()
 					mark:IncrementStackCount()
 					hero:AddNewModifier(self.caster, self.ability, "modifier_imba_rolling_boulder_disarm", {duration = mark:GetStackCount() * self.disarmDurationPerMark})
 				else
-					hero:AddNewModifier(self.caster, self.ability, "modifier_imba_earths_mark", {duration = self.earthsMarkDuration}):SetDuration(self.earthsMarkDuration * (1 - hero:GetStatusResistance()), true)
+					local modifier = hero:AddNewModifier(self.caster, self.ability, "modifier_imba_earths_mark", {duration = self.earthsMarkDuration})
+					
+					if modifier then
+						modifier:SetDuration(self.earthsMarkDuration * (1 - hero:GetStatusResistance()), true)
+					end
 				end
 				
 				if self.hitRemnant then

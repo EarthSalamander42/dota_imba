@@ -829,6 +829,9 @@ function imba_rattletrap_rocket_flare:OnSpellStart()
 		rocket_dummy:EmitSound("Hero_Rattletrap.Rocket_Flare.Travel")
 		
 		ProjectileManager:CreateTrackingProjectile(rocket)
+		
+		-- Just in case this thing isn't destroying itself
+		rocket_target:RemoveSelf()
 	else
 		-- IMBAfication: Carpet Fire
 		for instance = 0, self:GetSpecialValueFor("carpet_fire_rockets") - 1 do
@@ -880,6 +883,9 @@ function imba_rattletrap_rocket_flare:OnSpellStart()
 					rocket_dummy:EmitSound("Hero_Rattletrap.Rocket_Flare.Travel")
 					
 					ProjectileManager:CreateTrackingProjectile(rocket)
+					
+					-- Just in case this thing isn't destroying itself
+					rocket_target:RemoveSelf()
 				end
 			end)
 		end

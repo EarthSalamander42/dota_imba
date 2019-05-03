@@ -53,23 +53,16 @@ function modifier_courier_turbo:OnCreated()
 end
 
 function modifier_courier_turbo:OnIntervalThink()
+	if self:GetParent().return_position == nil then
+		return
+	end
+
 	if self:GetParent():IsIdle() then
 		if IsNearEntity("ent_dota_fountain", self:GetParent():GetAbsOrigin(), 1200) == true then
-			local courier_point = Entities:FindByClassname(nil, "info_courier_spawn_radiant"):GetAbsOrigin()
-
-			if self:GetParent():GetTeamNumber() == 3 then
-				courier_point = Entities:FindByClassname(nil, "info_courier_spawn_dire"):GetAbsOrigin()
-			end
-
-			if USE_TEAM_COURIER == false then
---				print("Turbo pos!")
-				courier_point = IMBA_TURBO_COURIER_POSITION[self:GetParent():GetTeamNumber()][self:GetParent().courier_count]
-			end
-
-			local distance = (self:GetParent():GetAbsOrigin() - courier_point):Length2D()
+			local distance = (self:GetParent():GetAbsOrigin() - self:GetParent().return_position):Length2D()
 
 			if distance > 100 then
-				self:GetParent():MoveToPosition(courier_point)
+				self:GetParent():MoveToPosition(self:GetParent().return_position)
 				-- move to turbo point using ability
 			else
 				if self.fv_set == false then
@@ -77,10 +70,6 @@ function modifier_courier_turbo:OnIntervalThink()
 					-- set forward vector to point over enemy ancient
 				end
 			end
-
---			if IsNearEntity(courier_point, 100) then
---			--	print("Courier is at base position, move it to turbo position!")
---			end
 		else
 			if IsNearEntity("ent_dota_shop", self:GetParent():GetAbsOrigin(), 100) == false then
 				self:GetParent():FindAbilityByName("courier_return_to_base"):CastAbility()
@@ -166,8 +155,8 @@ function modifier_imba_courier_transfer_items:OnIntervalThink()
 
 			if item then
 				for itemSlotOwner = 0, 8 do
-					print("Free slot in owner inventory?", self:GetParent():GetOwner():HasFreeSlotInInventory())
-					if self:GetParent():GetOwner():HasFreeSlotInInventory() then
+					print("Free slot in owner inventory?", self:GetParent():GetOwner():HasAnyAvailableInventorySpace())
+					if self:GetParent():GetOwner():HasAnyAvailableInventorySpace() then
 						self:GetParent():RemoveItem(item)
 						self:GetParent():GetOwner():AddItemByName(item:GetName())
 					end
@@ -204,24 +193,24 @@ function modifier_imba_courier_transfer_items:OnOrder(params)
 	end
 end
 --]]
-imba_courier_autodeliver = class({})
+courier_autodeliver_override = class({})
 
-function imba_courier_autodeliver:OnToggle()
+function courier_autodeliver_override:OnToggle()
 	if self:GetToggleState() == true then
-		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_courier_autodeliver", {})
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_courier_autodeliver_override", {})
 	else
-		self:GetCaster():RemoveModifierByName("modifier_imba_courier_autodeliver")
+		self:GetCaster():RemoveModifierByName("modifier_courier_autodeliver_override")
 	end
 end
 
-LinkLuaModifier("modifier_imba_courier_autodeliver", "components/courier/abilities.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_courier_autodeliver_override", "components/courier/abilities.lua", LUA_MODIFIER_MOTION_NONE)
 
-modifier_imba_courier_autodeliver = modifier_imba_courier_autodeliver or class({})
+modifier_courier_autodeliver_override = modifier_courier_autodeliver_override or class({})
 
-function modifier_imba_courier_autodeliver:IsPurgable() return false end
-function modifier_imba_courier_autodeliver:IsHidden() return false end
+function modifier_courier_autodeliver_override:IsPurgable() return false end
+function modifier_courier_autodeliver_override:IsHidden() return false end
 
-function modifier_imba_courier_autodeliver:OnCreated()
+function modifier_courier_autodeliver_override:OnCreated()
 	if IsServer() then
 		self.deliver_time_check = 0.0
 		self:StartIntervalThink(1.0)
@@ -230,7 +219,7 @@ function modifier_imba_courier_autodeliver:OnCreated()
 end
 
 -- BUG TODO: courier don't deliver any items when it spawn until you give him any order
-function modifier_imba_courier_autodeliver:OnIntervalThink()
+function modifier_courier_autodeliver_override:OnIntervalThink()
 	if self:GetParent():GetOwner() == nil then self:StartIntervalThink(-1) return end
 
 --	print("Idle?", self:GetParent():IsIdle())
@@ -287,7 +276,7 @@ function modifier_imba_courier_autodeliver:OnIntervalThink()
 		-- if the timer is equal or higher than the autodeliver time, deliver items and reset timer to 0
 		if self.deliver_time_check >= self:GetAbility():GetSpecialValueFor("delay") then
 			-- check if the owner have free slots to receive items
-			local has_free_slot = self:GetParent():GetOwner():HasFreeSlotInInventory()
+			local has_free_slot = self:GetParent():GetOwner():HasAnyAvailableInventorySpace()
 
 		--	print("Hero have free slot?", has_free_slot)
 

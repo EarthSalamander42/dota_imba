@@ -122,13 +122,12 @@
 		GridCore.style.height = "605px";
 		PreMinimapContainer.style.height = "270px";
 
-		HidePickScreen()
+		HidePickScreen();
 
 		function HidePickScreen() {
 			if (!Game.GameStateIs(3)) {
-//				$.Msg("Hide Pick Screen and Repeat!")
 				PreGame.style.opacity = "0";
-				$.Schedule(1.0, HidePickScreen)
+				$.Schedule(0.25, HidePickScreen)
 			}
 			else {
 				PreGame.style.opacity = "1";				
@@ -152,7 +151,7 @@
 <!--	<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/diretide.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/diretide_note.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/roshan_health_bar.xml" /> --> <!-- Enable only during diretide -->
-		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/imba_imr.xml" /> 
+		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/battlepass.xml" /> 
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/mutation.xml" /> 
 <!--	<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/precache.xml" /> -->
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/overthrow_item_notification.xml" />
