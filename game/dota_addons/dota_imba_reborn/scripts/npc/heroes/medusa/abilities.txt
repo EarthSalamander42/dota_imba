@@ -44,6 +44,17 @@
 				"var_type"						"FIELD_INTEGER"
 				"split_shot_bonus_range"		"100"
 			}
+			
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"serpent_shot_damage_pct"		"40"
+			}
+			"06"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"serpent_shot_mana_burn_pct"	"30"
+			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
 	}
@@ -137,6 +148,47 @@
 				"var_type"				"FIELD_FLOAT"
 				"stone_form_scepter_increment"		"0.3"
 			}
+			
+			"11"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"myotoxin_duration"		"2.5"
+			}
+			"12"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"myotoxin_stack_deal"	"1"
+			}
+			"13"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"myotoxin_stack_take"	"2"
+			}
+			"14"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"myotoxin_duration_inc"	"0.1"
+			}
+			"15"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"myotoxin_base_aspd"	"-30"
+			}
+			"16"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"myotoxin_stack_aspd"	"-2"
+			}
+			"17"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"myotoxin_base_cast"	"-10"
+			}
+			"18"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"myotoxin_stack_cast"	"-1"
+			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 	}
@@ -176,6 +228,11 @@
 				"absorption_tooltip"		"60"
 			}
 		
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"meditate_mana_acquire_pct"		"2 4 6 8"
+			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_3"
 	}
