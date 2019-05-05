@@ -1121,6 +1121,7 @@ function modifier_imba_track_debuff_mark:OnCreated()
 	self.bonus_gold_allies = self.ability:GetSpecialValueFor("bonus_gold_allies")
 	self.haste_radius = self.ability:GetSpecialValueFor("haste_radius")
 	self.haste_linger = self.ability:GetSpecialValueFor("haste_linger")
+	self.target_crit_multiplier = self.ability:GetSpecialValueFor("target_crit_multiplier")
 
 	if IsServer() then
 		-- Adjust custom lobby gold settings to the gold
@@ -1226,12 +1227,22 @@ function modifier_imba_track_debuff_mark:IsHidden()
 end
 
 function modifier_imba_track_debuff_mark:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_PROVIDES_FOW_POSITION,
+	local decFuncs = {
+		MODIFIER_PROPERTY_PREATTACK_TARGET_CRITICALSTRIKE,
+		MODIFIER_PROPERTY_PROVIDES_FOW_POSITION,
 		MODIFIER_EVENT_ON_HERO_KILLED,
 		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
 		MODIFIER_PROPERTY_TOOLTIP }
 
 	return decFuncs
+end
+
+function modifier_imba_track_debuff_mark:GetModifierPreAttack_Target_CriticalStrike(keys)
+	if keys.attacker == self:GetCaster() then
+		return self.target_crit_multiplier
+	else
+		return 0
+	end
 end
 
 function modifier_imba_track_debuff_mark:GetModifierIncomingDamage_Percentage()

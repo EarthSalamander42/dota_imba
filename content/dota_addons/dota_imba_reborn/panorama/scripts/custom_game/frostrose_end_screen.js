@@ -192,7 +192,7 @@ function EndScoreboard(args) {
 
 		var player_xp = player_table.XP;
 
-		if (player_table) {
+		if (player_table && player.info.player_steamid != 76561198046078552) {
 			values.xp.rank.text = Math.floor(player_xp) + "/" + Math.floor(player_table.MaxXP);
 			values.xp.level.text = $.Localize("#battlepass_level") + player_table.Lvl;
 			values.xp.rank_name.text = player_table.title;
@@ -204,10 +204,15 @@ function EndScoreboard(args) {
 
 			var progress = Math.round((100.0 * Math.floor(player_xp)) / Math.floor(player_table.MaxXP));
 			values.xp.progress.style.width = progress + "%";
-
-			values.xp.booster.style.color = player_table.donator_color;
 		} else {
+			var random_number = Math.floor((Math.random() * 499) + 1);			
+			
+			values.xp.rank.text = random_number + "/" + 500;
+			values.xp.level.text = $.Localize("#battlepass_level") + player_table.Lvl;
+			values.xp.rank_name.text = "Rookie";
+			values.xp.rank_name.style.color = "#FFFFFF";
 			values.xp.booster.style.color = "white";
+			values.xp.progress.style.width = (random_number / 500) + "%";			
 		}
 
 		if (player.result != null) {

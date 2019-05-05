@@ -24787,13 +24787,18 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"haste_radius"			"900"
+				"haste_radius"			"1200"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"haste_linger"			"0.5"
 			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"target_crit_multiplier"	"140 170 200"
+			}			
 		}
 	}
 
@@ -30364,6 +30369,12 @@
 				"var_type"					"FIELD_INTEGER"
 				"maximum_vendetta_stacks"	"250 400 550"
 				"LinkedSpecialBonus"		"special_bonus_imba_nyx_assassin_12"
+			}
+			
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"break_duration"		"4.0"
 			}
 		}
 	}

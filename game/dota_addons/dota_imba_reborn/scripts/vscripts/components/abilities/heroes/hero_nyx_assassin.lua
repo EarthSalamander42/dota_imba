@@ -1218,6 +1218,7 @@ end
 imba_nyx_assassin_vendetta = class({})
 LinkLuaModifier("modifier_imba_vendetta", "components/abilities/heroes/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_vendetta_charge", "components/abilities/heroes/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_vendetta_break", "components/abilities/heroes/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
 
 function imba_nyx_assassin_vendetta:GetAbilityTextureName()
 	return "nyx_assassin_vendetta"
@@ -1273,6 +1274,7 @@ function modifier_imba_vendetta:OnCreated()
 	-- Ability specials
 	self.movement_speed_pct = self.ability:GetSpecialValueFor("movement_speed_pct")
 	self.bonus_damage = self.ability:GetSpecialValueFor("bonus_damage")
+	self.break_duration = self.ability:GetSpecialValueFor("break_duration")
 
 	-- Talent: If Vendetta kills an enemy unit, it doesn't consume the Eye for Eye stacks
 	if self.caster:HasTalent("special_bonus_imba_nyx_assassin_1") then
@@ -1402,6 +1404,9 @@ function modifier_imba_vendetta:OnAttackLanded(keys)
 					modifier_charged_handler:Destroy()
 				end
 			end
+			
+			-- Add the break debuff
+			target:AddNewModifier(self.caster, self.ability, "modifier_imba_vendetta_break", {duration = self.break_duration})
 
 			-- Remove modifier
 			self:Destroy()
@@ -1444,6 +1449,18 @@ function modifier_imba_vendetta_charge:OnStackCountChanged()
 			self:SetStackCount(self.maximum_vendetta_stacks)
 		end
 	end
+end
+
+-----------------------------
+-- VENDETTA BREAK MODIFIER --
+-----------------------------
+
+modifier_imba_vendetta_break	= class({})
+
+function modifier_imba_vendetta_break:CheckState()
+	local state = {[MODIFIER_STATE_PASSIVES_DISABLED] = true}
+	
+	return state
 end
 
 -----------------------------------------------------------------

@@ -57,13 +57,14 @@
 // Bounty Hunter's Track
 ////===============================================================================================================
 "DOTA_Tooltip_ability_imba_bounty_hunter_track"                        "Track"
-"DOTA_Tooltip_ability_imba_bounty_hunter_track_Description"            "Tracks an enemy hero, granting vision and True Sight of the target, and information on how much gold it is carrying. Allies within %haste_radius% radius of the hunted are granted bonus movement speed. If the target dies, Bounty Hunter and nearby heroes collect a bonus bounty of gold."
+"DOTA_Tooltip_ability_imba_bounty_hunter_track_Description"            "Tracks an enemy hero, granting True Sight of the target, and information on how much gold it is carrying. You move fast when near the tracked unit and deal critical strikes when attacking it. If the target dies, Bounty Hunter and nearby heroes collect a bonus bounty of gold. Casting Track does not take you out of invisibility.\n<font color='#FF7800'>Hired Help:</font> All allies receive the bonus move speed."
 "DOTA_Tooltip_ability_imba_bounty_hunter_track_Note0"					"Casting Track does not break Shadow Walk."
 "DOTA_Tooltip_ability_imba_bounty_hunter_track_Note1"					"Bounty Hunter always collects the gold, regardless of distance."
 "DOTA_Tooltip_ability_imba_bounty_hunter_track_Note2"					"The allies that are receiving the bonus speed from Track are the ones that will receive the bonus gold."
 "DOTA_Tooltip_ability_imba_bounty_hunter_track_Lore"                    "Using his elevated senses of sight and smell, Gondar's hunts have quite a good chance of success."
 "DOTA_Tooltip_ability_imba_bounty_hunter_track_ms_bonus_allies_pct"		"%ALLIED MOVE SPEED BONUS:"
 "DOTA_Tooltip_ability_imba_bounty_hunter_track_duration"				"#{DOTA_Tooltip_ability_fountain_glyph_duration}"
+"DOTA_Tooltip_ability_imba_bounty_hunter_track_target_crit_multiplier"	"%SELF CRITICAL STRIKE AGAINST TARGET:"
 "DOTA_Tooltip_ability_imba_bounty_hunter_track_bonus_gold_self"			"BOUNTY GOLD (SELF):"
 "DOTA_Tooltip_ability_imba_bounty_hunter_track_bonus_gold_allies"		"BOUNTY GOLD (ALLIES):"
 

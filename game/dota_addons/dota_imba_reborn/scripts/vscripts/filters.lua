@@ -624,6 +624,17 @@ function GameMode:OrderFilter( keys )
 	if keys.order_type == DOTA_UNIT_ORDER_BUYBACK then
 		if unit:IsImbaReincarnating() then
 			return false
+		else
+			-- Trying to add a custom buyback respawn timer penalty modifier
+			-- Doing a rough safeguard using gold so people don't get the modifier when spamming the buyback button a frame before they respawn like an idiot
+			local gold_before_buyback = unit:GetGold() or -1
+			
+			Timers:CreateTimer(FrameTime(), function()
+				-- If these checks pass, this assumes that the person actually bought back
+				if unit:IsAlive() and gold_before_buyback >= (unit:GetGold() or 0) then
+					unit:AddNewModifier(unit, nil, "modifier_buyback_penalty", {})
+				end
+			end)
 		end
 	end
 

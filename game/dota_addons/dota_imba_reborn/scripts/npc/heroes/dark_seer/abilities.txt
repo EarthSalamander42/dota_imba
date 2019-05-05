@@ -202,6 +202,12 @@
 				"var_type"					"FIELD_INTEGER"
 				"proton_explosion_radius"	"675"
 			}
+
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"proton_damage_pct"			"50"
+			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 	}
@@ -305,7 +311,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"duration"				"45.0"
+				"duration"				"20.0 25.0 30.0"
 			}			
 			"02"
 			{
@@ -331,7 +337,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"width"					"1000 1200 1400"
+				"width"					"1000"
 			}			
 			"07"
 			{
@@ -341,7 +347,7 @@
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"range_tooltip"			"1000 1200 1400"
+				"range_tooltip"			"1000"
 			}
 			"09"
 			{
@@ -361,7 +367,7 @@
 			"12"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"slow_duration"			"1.2 1.5 1.8"
+				"slow_duration"			"1.0 1.25 1.5"
 				"LinkedSpecialBonus"	"special_bonus_imba_dark_seer_wall_of_replica_increased_slow_duration"
 			}
 			
