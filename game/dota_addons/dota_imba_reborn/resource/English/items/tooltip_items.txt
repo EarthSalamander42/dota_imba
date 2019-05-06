@@ -757,6 +757,9 @@
 "DOTA_Tooltip_modifier_imba_moon_shard_stacks_dummy"            "Moon Shard"
 "DOTA_Tooltip_modifier_imba_moon_shard_stacks_dummy_Description"            "Increased attack speed and night vision"
 
+"DOTA_Tooltip_modifier_item_imba_moon_shard"					"Working Moon Shards"
+"DOTA_Tooltip_modifier_item_imba_moon_shard_Description"		"Gaining %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT% attack speed and %dMODIFIER_PROPERTY_BONUS_NIGHT_VISION% bonus night vision fron unconsumed Moon Shards."
+
 "DOTA_Tooltip_modifier_item_imba_moon_shard_active"					"Moon Shard"
 "DOTA_Tooltip_modifier_item_imba_moon_shard_active_Description"		"Attack speed increased by %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT% and night vision increased by %dMODIFIER_PROPERTY_BONUS_NIGHT_VISION% after consuming Moon Shard(s)."
 
