@@ -64,7 +64,7 @@
 			"05"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"fragmentation_damage"	"15"
+				"fragmentation_damage"	"18"
 			}
 			"06"
 			{
@@ -369,7 +369,7 @@
 			"04"
 			{	
 				"var_type"			"FIELD_INTEGER"
-				"speed"				"4000 7000 10000"
+				"speed"				"4000 6000 8000"
 			}
 			"05"
 			{	

@@ -1033,7 +1033,7 @@
 ////===============================================================================================================
 
 "DOTA_Tooltip_ability_imba_nyx_assassin_vendetta"                      "Vendetta"
-"DOTA_Tooltip_ability_imba_nyx_assassin_vendetta_Description"          "Nyx becomes invisible and gains a speed bonus. If Nyx Assassin attacks to break the invisibility, massive bonus damage is dealt with the attack.\n<font color='#FF7800'>Return The Favor:</font> When Nyx strikes from Vendetta, he injects the target's mind with his stored sensations, dealing extra damage equal to the damage stored through Spiked Carapace's reflections.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
+"DOTA_Tooltip_ability_imba_nyx_assassin_vendetta_Description"          "Allows Nyx Assassin to become invisible and gain a speed bonus. If Nyx Assassin attacks to break the invisibility, massive bonus damage is dealt with the attack. Applies a break status on the enemy for %break_duration% seconds.\nUpgradable by Aghanim's Scepter.\n<font color='#FF7800'>Return The Favor:</font> When Nyx strikes from Vendetta, he injects the target's mind with his stored sensations, dealing extra damage equal to the damage stored through Spiked Carapace's reflections."
 "DOTA_Tooltip_ability_imba_nyx_assassin_vendetta_Note0"                "Stored damage is lost after being used. Damage is stored through Spiked Carapace's reflections."
 "DOTA_Tooltip_ability_imba_nyx_assassin_vendetta_Lore"                  "The scarab kills for the glory of his queen."
 "DOTA_Tooltip_ability_imba_nyx_assassin_vendetta_duration"              "#{DOTA_Tooltip_ability_fountain_glyph_duration}"
@@ -1047,17 +1047,20 @@
 
 "DOTA_Tooltip_modifier_imba_vendetta_charge"                            "Eye for an Eye"
 "DOTA_Tooltip_modifier_imba_vendetta_charge_Description"                "Each stack adds damage to your next Vendetta strike."
+		
+"DOTA_Tooltip_modifier_imba_vendetta_break"				"Vendetta"
+"DOTA_Tooltip_modifier_imba_vendetta_break_Description"	"Passive abilities disabled."
 
 ////===============================================================================================================
 // Nyx Assassin's Burrow
 ////===============================================================================================================
 
 "DOTA_Tooltip_ability_nyx_assassin_burrow"                              "Burrow"
-"DOTA_Tooltip_ability_nyx_assassin_burrow_Description"                  "Nyx Assasssin buries himself beneath the battlefield over %burrow_delay% seconds, becoming stationary, unable to attack, and invisible, but gaining increased health and mana regeneration, %damage_reduction%%% damage reduction, and bonuses to all his abilities:\n<font color='#00FF40'>Spiked Carapace</font> instantly stuns nearby enemies when cast.\n<font color='#00FF40'>Mana Burn</font> and <font color='#00FF40'>Impale</font>'s ranges are increased by %impale_burn_range_increase_pct_tooltip%%%.\n<font color='#00FF40'>Vendetta</font> can be activated to unburrow instantly, while staying invisible."
+"DOTA_Tooltip_ability_nyx_assassin_burrow_Description"                  "Nyx Assassin buries himself beneath the battlefield over a short duration. Once burrowed, Spiked Carapace instantly stuns nearby enemies when cast, the range of Mana Burn and Impale is increased, and Impale's cooldown is decreased. While burrowed, Nyx Assassin is stationary, unable to attack, and invisible. His health and mana regeneration are also increased, and he gains damage reduction from all damage sources."
 "DOTA_Tooltip_ability_nyx_assassin_burrow_Lore"                        "Some castes of zealot scarab are known to create small burrows to lie in wait, ready to ambush their prey."
 "DOTA_Tooltip_ability_nyx_assassin_burrow_Note0"                        "Casting Vendetta will cancel Burrow."
 "DOTA_Tooltip_ability_nyx_assassin_burrow_health_regen_rate"            "%BURROW HEALTH/MANA REGEN:"
-"DOTA_Tooltip_ability_nyx_assassin_burrow_damage_reduction"            "BURROW DAMAGE REDUCTION:"
+"DOTA_Tooltip_ability_nyx_assassin_burrow_damage_reduction"            "%BURROW DAMAGE REDUCTION:"
 "DOTA_Tooltip_ability_nyx_assassin_burrow_mana_burn_burrow_range_tooltip"           "BURROW MANA BURN RANGE:"
 "DOTA_Tooltip_ability_nyx_assassin_burrow_impale_burrow_range_tooltip"              "BURROW IMPALE RANGE:"
 "DOTA_Tooltip_ability_nyx_assassin_burrow_carapace_burrow_range_tooltip"            "BURROW SPIKED CARAPACE RANGE:"

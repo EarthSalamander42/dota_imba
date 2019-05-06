@@ -24,7 +24,7 @@
 "DOTA_Tooltip_ability_imba_dark_seer_wormhole_cast_range_tooltip"						"CAST RANGE:"
 
 "DOTA_Tooltip_ability_imba_dark_seer_ion_shell"										"Ion Shell"
-"DOTA_Tooltip_ability_imba_dark_seer_ion_shell_Description"							"Surrounds the target unit with a bristling shield that damages enemy units in an area around it.\n<font color='#FF7800'>Glass Prison:</font> If cast on an enemy target, they are visible through the fog of war.\n<font color='#FF7800'>Proton Explosion:</font> Ion Shell keeps track of the total damage it has dealt over time (after reductions, rounded down). If Ion Shell perists for its full duration, it explodes, dealing the stored damage to all enemies within %proton_explosion_radius% radius and applying Ion Shell to them."
+"DOTA_Tooltip_ability_imba_dark_seer_ion_shell_Description"							"Surrounds the target unit with a bristling shield that damages enemy units in an area around it.\n<font color='#FF7800'>Glass Prison:</font> If cast on an enemy target, they are visible through the fog of war.\n<font color='#FF7800'>Proton Explosion:</font> Ion Shell keeps track of %proton_damage_pct%%% of the total damage it has dealt over time (after reductions, rounded down). If Ion Shell perists for its full duration, it explodes, dealing the stored damage to all enemies within %proton_explosion_radius% radius and applying Ion Shell to them."
 "DOTA_Tooltip_ability_imba_dark_seer_ion_shell_Lore"									"The Dark Seer slices holes into the 'Land Behind the Wall,' causing prismatic energy to seep forth."
 "DOTA_Tooltip_ability_imba_dark_seer_ion_shell_Note0"								"Deals small amounts of damage in 0.1 intervals."
 "DOTA_Tooltip_ability_imba_dark_seer_ion_shell_Note1"								"Doesn't damage the target it is cast on."

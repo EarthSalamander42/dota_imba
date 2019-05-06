@@ -75,7 +75,7 @@ function item_imba_lance_of_longinus:OnSpellStart()
 			target:AddNewModifier(caster, ability, "modifier_item_imba_lance_of_longinus_force_enemy_melee", {duration = duration})
 			caster:AddNewModifier(target, ability, "modifier_item_imba_lance_of_longinus_force_self_melee", {duration = duration})
 		end
-		
+	
 		local god_piercing_modifier = caster:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_lance_of_longinus_god_piercing_ally", {duration = self:GetSpecialValueFor("god_piercing_duration")})
 
 		if god_piercing_modifier then
@@ -599,8 +599,9 @@ end
 
 function modifier_item_imba_lance_of_longinus_god_piercing_ally:OnHealReceived(keys)
 	if not IsServer() then return end
-
-	if keys.unit == self.enemy then
+	
+	-- No longer able to apply multiple times on the same unit due to crash issues
+	if keys.unit == self.enemy and not keys.unit:HasModifier("modifier_item_imba_lance_of_longinus_god_piercing_ally") then
 		self:GetParent():Heal(keys.gain, self:GetAbility())
 		-- in order to avoid spam in "OnGained" we group it up in total_gained. Value is sent and reset each 1s
 		self.total_gained_health = self.total_gained_health + keys.gain

@@ -727,6 +727,150 @@ function modifier_imba_rubick_null_field_debuff:GetModifierStatusResistanceStack
 end
 --]]
 
+----------------------
+-- ARCANE SUPREMACY --
+----------------------
+
+LinkLuaModifier("modifier_imba_rubick_arcane_supremacy", "components/abilities/heroes/hero_rubick", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_rubick_arcane_supremacy_flip_aura", "components/abilities/heroes/hero_rubick", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_rubick_arcane_supremacy_flip", "components/abilities/heroes/hero_rubick", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_rubick_arcane_supremacy_debuff", "components/abilities/heroes/hero_rubick", LUA_MODIFIER_MOTION_NONE)
+
+imba_rubick_arcane_supremacy		 			= class({})
+modifier_imba_rubick_arcane_supremacy			= class({})
+modifier_imba_rubick_arcane_supremacy_flip_aura	= class({})
+modifier_imba_rubick_arcane_supremacy_flip		= class({})
+modifier_imba_rubick_arcane_supremacy_debuff	= class({})
+
+function imba_rubick_arcane_supremacy:GetAbilityTextureName()
+	if self:GetCaster():HasModifier("modifier_imba_rubick_arcane_supremacy_flip_aura") then
+		return "rubick_null_field_offensive"
+	else
+		return "rubick_null_field"
+	end
+end
+
+-- IMBAfication: Magus Adaption
+function imba_rubick_arcane_supremacy:GetBehavior()
+	return DOTA_ABILITY_BEHAVIOR_TOGGLE + DOTA_ABILITY_BEHAVIOR_IMMEDIATE + DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL
+end
+
+function imba_rubick_arcane_supremacy:GetIntrinsicModifierName()
+	return "modifier_imba_rubick_arcane_supremacy"
+end
+
+function imba_rubick_arcane_supremacy:OnToggle()
+	if not IsServer() then return end
+	
+	self:GetCaster():RemoveGesture(ACT_DOTA_CAST_ABILITY_4)
+	self:GetCaster():StartGesture(ACT_DOTA_CAST_ABILITY_4)
+	
+	if self:GetToggleState() then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_rubick_arcane_supremacy_flip_aura", {})
+	else
+		self:GetCaster():RemoveModifierByNameAndCaster("modifier_imba_rubick_arcane_supremacy_flip_aura", self:GetCaster())
+	end
+end
+
+-------------------------------
+-- ARCANE SUPREMACY MODIFIER --
+-------------------------------
+
+function modifier_imba_rubick_arcane_supremacy:IsHidden()	return true end
+
+function modifier_imba_rubick_arcane_supremacy:DeclareFunctions()
+	local funcs = {
+		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
+		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING,
+		
+		MODIFIER_EVENT_ON_ABILITY_EXECUTED
+	}
+
+	return funcs
+end
+
+-- This is innate
+function modifier_imba_rubick_arcane_supremacy:GetModifierSpellAmplify_Percentage()
+	if not self:GetCaster():HasModifier("modifier_imba_rubick_arcane_supremacy_flip_aura") then
+		return self:GetAbility():GetSpecialValueFor("spell_amp") or 0
+	end
+end
+
+-- This is IMBAfication for when flipped to the other side
+function modifier_imba_rubick_arcane_supremacy:GetModifierStatusResistanceStacking()
+	if self:GetCaster():HasModifier("modifier_imba_rubick_arcane_supremacy_flip_aura") then
+		return self:GetAbility():GetSpecialValueFor("status_resistance") or 0
+	end
+end
+
+-- This handles the debuff amplification
+function modifier_imba_rubick_arcane_supremacy:OnAbilityExecuted(keys)
+	if not IsServer() or self:GetCaster():HasModifier("modifier_imba_rubick_arcane_supremacy_flip_aura") then return end
+	
+	if keys.unit == self:GetParent() and keys.target and keys.target:GetTeamNumber() ~= self:GetParent():GetTeamNumber() then		
+		keys.target:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_rubick_arcane_supremacy_debuff", {})
+		
+		Timers:CreateTimer(FrameTime() * 2, function()
+			keys.target:RemoveModifierByNameAndCaster("modifier_imba_rubick_arcane_supremacy_debuff", self:GetCaster())
+		end)
+	end
+end
+
+--------------------------------
+-- ARCANE SUPREMACY FLIP AURA --
+--------------------------------
+
+function modifier_imba_rubick_arcane_supremacy_flip_aura:IsHidden()				return true end
+
+function modifier_imba_rubick_arcane_supremacy_flip_aura:IsAura() 				return true end
+
+function modifier_imba_rubick_arcane_supremacy_flip_aura:GetAuraRadius()
+	return self.radius or self:GetAbility():GetTalentSpecialValueFor("radius")
+end
+
+function modifier_imba_rubick_arcane_supremacy_flip_aura:GetAuraSearchFlags()	return DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES end
+function modifier_imba_rubick_arcane_supremacy_flip_aura:GetAuraSearchTeam()	return DOTA_UNIT_TARGET_TEAM_ENEMY end
+function modifier_imba_rubick_arcane_supremacy_flip_aura:GetAuraSearchType()	return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC end
+function modifier_imba_rubick_arcane_supremacy_flip_aura:GetModifierAura()		return "modifier_imba_rubick_arcane_supremacy_flip" end
+
+------------------------------------
+-- ARCANE SUPREMACY FLIP MODIFIER --
+------------------------------------
+
+function modifier_imba_rubick_arcane_supremacy_flip:DeclareFunctions()
+	local funcs = {
+		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE
+	}
+
+	return funcs
+end
+
+function modifier_imba_rubick_arcane_supremacy_flip:GetModifierSpellAmplify_Percentage()
+	return (self:GetAbility():GetSpecialValueFor("spell_amp") * (-1)) or 0
+end
+
+--------------------------------------
+-- ARCANE SUPREMACY DEBUFF MODIFIER --
+--------------------------------------
+
+function modifier_imba_rubick_arcane_supremacy_debuff:IsHidden()	return true end
+
+function modifier_imba_rubick_arcane_supremacy_debuff:OnCreated()
+	self.status_resistance	= self:GetAbility():GetSpecialValueFor("status_resistance")
+end
+
+function modifier_imba_rubick_arcane_supremacy_debuff:DeclareFunctions()
+	local funcs = {
+		MODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING
+	}
+
+	return funcs
+end
+
+function modifier_imba_rubick_arcane_supremacy_debuff:GetModifierStatusResistanceStacking()
+	return self.status_resistance * (-1)
+end
+
 -------------------------------------------
 --			CLANDESTINE LIBRARIAN
 -------------------------------------------

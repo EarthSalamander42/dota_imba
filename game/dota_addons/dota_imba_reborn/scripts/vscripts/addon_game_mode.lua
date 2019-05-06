@@ -4,6 +4,7 @@ require('internal/util')
 require('gamemode')
 
 function Precache( context )
+	LinkLuaModifier("modifier_buyback_penalty", "components/modifiers/modifier_buyback_penalty.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_command_restricted", "components/modifiers/modifier_command_restricted.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_companion", "components/modifiers/modifier_companion.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_custom_mechanics", "components/modifiers/modifier_custom_mechanics.lua", LUA_MODIFIER_MOTION_NONE )

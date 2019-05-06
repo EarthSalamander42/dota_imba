@@ -12,7 +12,7 @@
 "DOTA_Tooltip_ability_imba_huskar_inner_vitality_tooltip_hurt_attrib_bonus"			"%BONUS WHEN HURT:"
 
 "DOTA_Tooltip_ability_imba_huskar_inner_fire"									"Inner Fire"
-"DOTA_Tooltip_ability_imba_huskar_inner_fire_Description"						"In a fiery rage, knocks all nearby enemies away from you to a fixed distance, dealing damage and disarming them.\n<font color='#FF7800'>Raze Land:</font> Inner Fire also sets the affected radius ablaze for %raze_land_duration% seconds, dealing damage equal to %raze_land_strength_pct%%% of the caster's strength and applying a Burning Spear stack every %raze_land_damage_interval% seconds. Each tick also destroys any trees and visible enemy observer/sentry wards within the radius."
+"DOTA_Tooltip_ability_imba_huskar_inner_fire_Description"						"In a fiery rage, knocks all nearby enemies away from you to a fixed distance, dealing damage and disarming them.\n<font color='#FF7800'>Raze Land:</font> Inner Fire also sets the affected radius ablaze for %raze_land_duration% seconds, dealing damage equal to %raze_land_strength_pct%%% of the caster's strength every %raze_land_damage_interval% seconds. Each tick also destroys any trees and visible enemy observer/sentry wards within the radius."
 "DOTA_Tooltip_ability_imba_huskar_inner_fire_Note0"								"Raze Land does not apply any Burning Spear stacks if the caster does not have the ability or it is not yet learned."
 "DOTA_Tooltip_ability_imba_huskar_inner_fire_damage"								"#{DOTA_Tooltip_ability_antimage_mana_void_mana_void_damage_per_mana}"
 "DOTA_Tooltip_ability_imba_huskar_inner_fire_disarm_duration"						"DISARM DURATION:"

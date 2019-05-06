@@ -249,6 +249,10 @@ end
 -- Assault Cuirass negative aura effect
 modifier_imba_sogat_cuirass_aura_negative_effect = class({})
 
+function modifier_imba_sogat_cuirass_aura_negative_effect:GetTexture()
+	return "/custom/imba_sogat_cuirass"
+end
+
 function modifier_imba_sogat_cuirass_aura_negative_effect:OnCreated()
 	-- Ability specials
 	self.aura_armor_reduction_enemy = self:GetAbility():GetSpecialValueFor("aura_armor_reduction_enemy")

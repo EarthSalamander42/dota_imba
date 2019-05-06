@@ -102,6 +102,8 @@ BUYBACK_COST_PER_SECOND = 0.25												-- Time-based buyback cost
 
 BUYBACK_COOLDOWN_MAXIMUM = 180												-- Maximum buyback cooldown
 
+BUYBACK_RESPAWN_PENALTY	= 15												-- Increased respawn time when dying after a buyback
+
 ABANDON_TIME = 180															-- Time for a player to be considered as having abandoned the game (in seconds)
 FULL_ABANDON_TIME = 15														-- Time for a team to be considered as having abandoned the game (in seconds)
 
@@ -178,6 +180,7 @@ GG_TEAM = {}
 GG_TEAM[2] = 0
 GG_TEAM[3] = 0
 
+IMBA_FRANTIC_RESPAWN_REDUCTION_PCT = 16
 IMBA_BASE_FRANTIC_VALUE = 25
 IMBA_SUPER_FRANTIC_VALUE = 40 -- Do not exceed 40% EVER, causing many broken spells to be used permanently
 CustomNetTables:SetTableValue("game_options", "frantic", {frantic = IMBA_BASE_FRANTIC_VALUE, super_frantic = IMBA_SUPER_FRANTIC_VALUE})

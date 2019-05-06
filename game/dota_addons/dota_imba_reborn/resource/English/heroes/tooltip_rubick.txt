@@ -44,6 +44,15 @@
 "DOTA_Tooltip_modifier_imba_rubick_null_field_debuff"					"Null Field (Offensive)"
 "DOTA_Tooltip_modifier_imba_rubick_null_field_debuff_Description"		"Magical resistance reduced by %dMODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS%%%. Status Resistance reduced by %dMODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING%%%."
 
+"DOTA_Tooltip_ability_imba_rubick_arcane_supremacy"								"Arcane Supremacy"
+"DOTA_Tooltip_ability_imba_rubick_arcane_supremacy_Description"					"Rubick's mastery of the arcane allows him to deal more spell damage and create spells that last longer on enemies.\n<font color='#FF7800'>Magus Adaption:</font> Can be freely toggled to the reverse affinity, instead reducing spell damage of all enemies within %radius% radius and increasing Rubick's status resistance by the same amounts."
+"DOTA_Tooltip_ability_imba_rubick_arcane_supremacy_Lore"							"Not every magus can be a Grand Magus..."
+"DOTA_Tooltip_ability_imba_rubick_arcane_supremacy_spell_amp"				"%SPELL AMPLIFICATION:"
+"DOTA_Tooltip_ability_imba_rubick_arcane_supremacy_status_resistance"				"%DEBUFF AMPLIFICATION:"
+
+"DOTA_Tooltip_modifier_imba_rubick_arcane_supremacy_flip"						"Magus Adaption"
+"DOTA_Tooltip_modifier_imba_rubick_arcane_supremacy_flip_Description"			"Spell amplification reduced by %dMODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE%%%."
+
 "DOTA_Tooltip_ability_imba_rubick_spellsteal"							"#{DOTA_Tooltip_ability_rubick_spell_steal}"
 "DOTA_Tooltip_ability_imba_rubick_spellsteal_Description"				"#{DOTA_Tooltip_ability_rubick_spell_steal_Description}\n<font color='#FF7800'>Eidetic Memory:</font> Stolen spells don't expire."
 "DOTA_Tooltip_ability_imba_rubick_spellsteal_Lore"						"...but even their lesser magics can be a source of much utility..."

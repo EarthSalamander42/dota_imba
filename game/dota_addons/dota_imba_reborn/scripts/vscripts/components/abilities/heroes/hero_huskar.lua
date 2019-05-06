@@ -212,12 +212,12 @@ function modifier_imba_huskar_inner_fire_raze_land:OnIntervalThink()
 	ApplyDamage(damageTable)
 
 	-- Apply burning spear stacks if applicable
-	local burning_spears_ability = self:GetCaster():FindAbilityByName("imba_huskar_burning_spear")
+	-- local burning_spears_ability = self:GetCaster():FindAbilityByName("imba_huskar_burning_spear")
 	
-	if burning_spears_ability and burning_spears_ability:IsTrained() then
-		self:GetParent():AddNewModifier(self:GetCaster(), burning_spears_ability, "modifier_imba_huskar_burning_spear_debuff", { duration = burning_spears_ability:GetDuration() })
-		self:GetParent():AddNewModifier(self:GetCaster(), burning_spears_ability, "modifier_imba_huskar_burning_spear_counter", { duration = burning_spears_ability:GetDuration() })
-	end
+	-- if burning_spears_ability and burning_spears_ability:IsTrained() then
+		-- self:GetParent():AddNewModifier(self:GetCaster(), burning_spears_ability, "modifier_imba_huskar_burning_spear_debuff", { duration = burning_spears_ability:GetDuration() })
+		-- self:GetParent():AddNewModifier(self:GetCaster(), burning_spears_ability, "modifier_imba_huskar_burning_spear_counter", { duration = burning_spears_ability:GetDuration() })
+	-- end
 end
 
 ----------------------------------------
@@ -226,7 +226,10 @@ end
 
 function modifier_imba_huskar_inner_fire_raze_land_aura:IsAura() 				return true end
 
-function modifier_imba_huskar_inner_fire_raze_land_aura:GetAuraRadius()			return self:GetAbility():GetSpecialValueFor("radius") end
+function modifier_imba_huskar_inner_fire_raze_land_aura:GetAuraRadius()
+	if not self.radius then self.radius = self:GetAbility():GetSpecialValueFor("radius") end
+	return self.radius
+end
 function modifier_imba_huskar_inner_fire_raze_land_aura:GetAuraSearchFlags()	return DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES end
 function modifier_imba_huskar_inner_fire_raze_land_aura:GetAuraSearchTeam()		return DOTA_UNIT_TARGET_TEAM_ENEMY end
 function modifier_imba_huskar_inner_fire_raze_land_aura:GetAuraSearchType()		return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC end

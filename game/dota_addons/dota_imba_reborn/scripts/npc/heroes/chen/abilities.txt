@@ -332,7 +332,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"heal_amount"			"500 1500 2500"
+				"heal_amount"			"400 1100 1800"
 				"LinkedSpecialBonus"	"special_bonus_unique_chen_2"
 			}
 			"02"

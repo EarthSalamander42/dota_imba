@@ -161,7 +161,7 @@ end
 ---------------------------------------
 modifier_item_imba_moon_shard = modifier_item_imba_moon_shard or class({})
 
-function modifier_item_imba_moon_shard:IsHidden() return true end
+function modifier_item_imba_moon_shard:IsHidden() return false end
 function modifier_item_imba_moon_shard:IsDebuff() return false end
 function modifier_item_imba_moon_shard:IsPurgable() return false end
 function modifier_item_imba_moon_shard:RemoveOnDeath() return false end

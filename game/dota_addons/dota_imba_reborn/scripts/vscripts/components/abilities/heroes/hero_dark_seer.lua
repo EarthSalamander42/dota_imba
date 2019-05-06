@@ -444,6 +444,7 @@ function modifier_imba_dark_seer_ion_shell:OnCreated()
 	self.radius						= self:GetAbility():GetSpecialValueFor("radius")
 	self.damage_per_second			= self:GetAbility():GetTalentSpecialValueFor("damage_per_second")
 	self.proton_explosion_radius	= self:GetAbility():GetSpecialValueFor("proton_explosion_radius")
+	self.proton_damage_pct			= self:GetAbility():GetSpecialValueFor("proton_damage_pct")
 
 	self.interval 			= 0.1
 	
@@ -497,7 +498,7 @@ function modifier_imba_dark_seer_ion_shell:OnIntervalThink()
 				ability 		= self:GetAbility()
 			}
 			
-			local damage_dealt = ApplyDamage(damageTable)
+			local damage_dealt = ApplyDamage(damageTable) * self.proton_damage_pct * 0.01
 			
 			--IMBAfication: Proton Explosion
 			self:SetStackCount(self:GetStackCount() + math.floor(damage_dealt))
